@@ -1,0 +1,51 @@
+# System Design for Vibe Coders
+
+**You can ship code faster than any generation of programmers before you. This course teaches you the things your AI won't warn you about until production is down.**
+
+## What this is
+
+A written course on practical system design for **AI-first builders** — people shipping real products with Claude Code, Cursor, and friends, who never formally studied distributed systems, and who hit the wall the day their prototype meets real users.
+
+It is not a FAANG-interview prep course. There are no whiteboard exercises about designing Twitter. Every lesson in this course is anchored to a **real production incident** from a real product: a bilingual audio-streaming platform serving a global audience across web, iOS, Android, and TV — built and operated largely *by* AI agents under human direction. The scars are real; the fixes shipped.
+
+## How the course works
+
+Every lesson has the same four-part shape:
+
+1. **🔥 The War Story** — a real incident: the symptoms as they appeared, the wrong theories, the actual root cause, the fix that shipped.
+2. **📐 The Principle** — the system-design concept the incident teaches, explained from first principles for someone who has never read a distributed-systems textbook.
+3. **🔨 The Build-Along** — you apply the principle to **Muraja'a**, the audio-library app you build across the whole course, from local prototype to zero-downtime production. Each module leaves your app one production-grade capability stronger.
+4. **🤖 Prompting Your Agent** — how to get your AI coding agent to do this *right*: the context to give it, the guardrail to install, and the review question that catches the failure mode before it ships. Because in vibe coding, *you* are the architect and the reviewer — the agent is the typist.
+
+## Who it's for
+
+- You've shipped something real with an AI coding agent and people actually use it.
+- You can read code but you've never had to reason about caches, CDNs, deploys, or backups.
+- You've been bitten (or are about to be) by something that "worked locally."
+
+## Who it's not for
+
+- Interview preppers — go do the Grokking course.
+- People who want theory without operating anything.
+
+## Curriculum
+
+See [OUTLINE.md](./OUTLINE.md) for the full module-by-module curriculum, and [war-stories/incident-bank.md](./war-stories/incident-bank.md) for the raw incident material the lessons are built from.
+
+| # | Module | The wall you hit |
+|---|--------|------------------|
+| 0 | The Vibe Coder's Gap | "It works" and "it's a system" are different claims |
+| 1 | Anatomy of a Real App | You can't reason about what you can't draw |
+| 2 | Data, Storage & Backups | The database is not the only thing that can lose data |
+| 3 | Caching — the Sharpest Knife | Every cache is a bug you haven't met yet |
+| 4 | Deploys Without Downtime | Shipping is a system, not a command |
+| 5 | Real Users, Real Abuse | Rate limits, auth, and the first attacker |
+| 6 | One Backend, Many Clients | Web, mobile, TV — and the update problem |
+| 7 | Observability | You can't fix what you can't see |
+| 8 | Safety Nets for AI-Generated Code | Tests, guardrails, and git hygiene at agent speed |
+| 9 | Directing an AI Team | Specs, context engineering, and review-to-guardrail |
+| 10 | Capstone: Incident Response | You get paged. Diagnose it. |
+
+## Status
+
+Early draft. Outline complete; lessons being written module by module.
