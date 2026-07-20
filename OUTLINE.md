@@ -54,6 +54,11 @@ Why fast code generation makes system design *more* important, not less.
   🔨 Write Muraja'a's backup script + a restore drill. A backup you've never restored is a hope, not a backup.
   🤖 Asking the agent "what did this backup actually capture?" — verifying agent-written ops scripts.
 
+- **2.4 Retention, deletion, and the data you promised to erase.**
+  🔥 Analytics TTLs deliberately removed → millions of rows/year growing forever on the same disk as the primary DB. And account deletion that removed one document while ~13 linked collections kept personal data the privacy policy promised to erase.
+  📐 Retention is a reliability control, not just privacy. The golden rule for destructive retention migrations: backfill → verify → *then* expire. "Delete" is defined over the whole data graph.
+  🔨 Add TTLs + a tested deletion cascade to Muraja'a; write the retention table (what, how long, why).
+
 ## Module 3 — Caching: the Sharpest Knife in the Drawer
 
 - **3.1 Why caching is where correctness goes to die.**
@@ -70,6 +75,11 @@ Why fast code generation makes system design *more* important, not less.
   📐 Invalidate through one function or you'll invalidate through zero. Cache-key discipline.
   🔨 Centralize Muraja'a's cache keys; write the test that proves mutation clears what reads populate.
   🤖 A drift-guard test template: making the agent keep two lists in sync forever.
+
+- **3.4 When the cache takes you down.**
+  🔥 Three ways one Redis nearly (or actually) caused an outage: no memory cap (`noeviction` default → on OOM every cache write fails and 100% of traffic lands on the DB); no single-flight lock (cold cache after deploy = thundering herd of identical expensive queries); and a `FLUSHDB` cache-clear that also wiped live-presence state sharing the same DB — the "listening now" counter dropped to zero instantly.
+  📐 "Cache down" must degrade to *slow*, never *down*. Cap memory, coalesce misses, and never colocate disposable and non-disposable state — or only ever evict by key prefix.
+  🔨 Cap Muraja'a's Redis, add a single-flight lock, and split presence state from response cache.
 
 ## Module 4 — Deploys Without Downtime
 
@@ -93,6 +103,12 @@ Why fast code generation makes system design *more* important, not less.
   📐 Staging environments, feature flags vs deploys, and default-hidden as a publishing model.
   🔨 Add a staging target + rollback command to Muraja'a.
 
+- **4.5 Verify the artifact, not the source.**
+  🔥 TV apps submitted to two app stores with `localhost:3105` baked in as the API — a stray gitignored `.env.local` was inlined at build time, invisible in every diff; one store rejected it, the other nearly shipped it. Plus the deploy that served stale JS twice because the webpack build cache reused old modules.
+  📐 Build-time config inlining + local overrides = silent corruption. Release checks must inspect the compiled output (grep the bundle), not the source tree.
+  🔨 Add a postbuild verifier to Muraja'a that fails loudly if the artifact contains localhost or lacks the production origin.
+  🤖 Agents can't see gitignored files in diffs either — the verifier is the only reviewer that catches this class.
+
 ## Module 5 — Real Users, Real Abuse
 
 - **5.1 Your first attacker is a script.**
@@ -110,6 +126,12 @@ Why fast code generation makes system design *more* important, not less.
   🔥 The URL that betrayed you: user-facing links built from a CORS-origin env var that was `localhost` in prod — password-reset emails pointing nowhere. Env vars have *audiences*.
   🔨 Add sessions + refresh rotation to Muraja'a; write the env-var audience table.
   🤖 Security review prompts that actually catch things; making the agent enumerate env-var consumers.
+
+- **5.4 Input you didn't realize you were trusting.**
+  🔥 Three audit finds on one app: a streaming proxy that followed redirects anywhere and would sign internal URLs (read-SSRF, with a secret that silently fell back to a hardcoded dev literal); an anonymous telemetry endpoint with no auth, limits, or length caps — free listen-count inflation and metric pollution; and the realization that the CDN-provided client-IP header is forgeable if anyone can reach the origin directly.
+  📐 Adversarial-input inventory: URLs you fetch, headers you trust, metrics you rank by. A security primitive only helps if *every* code path uses it; secrets must fail closed, never fall back.
+  🔨 Threat-model Muraja'a's three anonymous endpoints; route all outbound fetches through one SSRF-guarded function.
+  🤖 The standing prompt: "list every place this handler trusts something the client controls."
 
 ## Module 6 — One Backend, Many Clients
 
@@ -151,6 +173,11 @@ Why fast code generation makes system design *more* important, not less.
   📐 Instrument the failure paths of discovery features — they're free user research.
   🔨 Log Muraja'a's zero-result searches; fix the top normalization miss.
 
+- **7.4 Background jobs: the code nobody watches.**
+  🔥 Scheduled push jobs that could run twice (no claim lock), left no audit record, and never checked delivery receipts — duplicates and silent failures both undetectable. Same pattern found in the newsletter sender and render queue (no lease → jobs stuck forever).
+  📐 Every background job needs three things: an idempotency lock (SET NX EX), an audit trail, and reconciliation of what was actually delivered. Fire-and-forget means forget.
+  🔨 Give Muraja'a a scheduled job done right: claim key, audit row, receipt check, stale-job sweep.
+
 ## Module 8 — Safety Nets for AI-Generated Code
 
 - **8.1 The 600-file near-miss.**
@@ -190,7 +217,7 @@ Why fast code generation makes system design *more* important, not less.
 
 ## Module 10 — Capstone: You Get Paged
 
-Six incident simulations. Each gives you symptoms only (user reports, status codes,
+Eight incident simulations. Each gives you symptoms only (user reports, status codes,
 graphs); you diagnose, propose the fix, then compare against what actually happened
 in production. Drawn from the incident bank:
 
@@ -200,6 +227,8 @@ in production. Drawn from the incident bank:
 4. Legit users hit 429s the day after a traffic spike.
 5. A deleted file keeps coming back.
 6. Your mobile fix disappears a week after you shipped it.
+7. The app store rejects your build for content that plays fine on your machine.
+8. Your live-listeners counter drops to zero the moment someone "clears the cache."
 
 Passing bar: correct layer identified, plausible root cause, a fix that survives
 the follow-up question "and how do you know it worked?"
