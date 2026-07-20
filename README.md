@@ -44,7 +44,19 @@ See [OUTLINE.md](./OUTLINE.md) for the full module-by-module curriculum, and [wa
 | 7 | Observability | You can't fix what you can't see |
 | 8 | Safety Nets for AI-Generated Code | Tests, guardrails, and git hygiene at agent speed |
 | 9 | Directing an AI Team | Specs, context engineering, and review-to-guardrail |
-| 10 | Capstone: Incident Response | You get paged. Diagnose it. |
+| 10 | Scaling Beyond One Server | Load balancing, queues, DB scaling, realtime, performance |
+| 11 | Reaching the World | DNS & TLS, i18n & RTL, SEO & sitemaps, cost engineering |
+| 12 | Capstone: Incident Response | You get paged. Diagnose it. |
+
+The curriculum is a **complete** practical system-design set: incident-backed where
+we have scars, concept-complete everywhere else (lessons without a war story are
+marked as concept lessons and gain one as incidents accumulate).
+
+## Languages
+
+The course is **bilingual**: every document ships in English and Arabic (RTL).
+English files are the source of truth during drafting; Arabic mirrors live beside
+them (`README.ar.md`, `OUTLINE.ar.md`, `lesson-N.ar.md`).
 
 ## Status
 

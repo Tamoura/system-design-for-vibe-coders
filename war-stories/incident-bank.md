@@ -171,12 +171,12 @@ Status key: 🟢 used in a lesson · ⚪ unassigned
 - **Fix (prescribed):** Pseudonymize PII in the staging-refresh script.
 - **Principle:** Every copy of production data inherits production's blast radius.
 
-### ⚪ One dashboard load evicted the whole working set
+### 🟢 One dashboard load evicted the whole working set *(→ Lesson 2.5)*
 - **Symptoms:** A single admin page ran eight unbounded whole-collection scans over the largest table, evicting the hot catalog data from memory.
 - **Fix (prescribed):** Cache + date-bound the query; add compound indexes.
 - **Principle:** One unbounded analytical query on a hot OLTP store is a cache-eviction bomb; bound and index heavy aggregations.
 
-### ⚪ 350MB sitemap + build-time prerender froze on a dead API
+### 🟢 350MB sitemap + build-time prerender froze on a dead API *(→ Lesson 11.3)*
 - **Symptoms:** A monolithic 350MB sitemap; the split version froze the build when the API was unreachable at build time.
 - **Fix:** Sitemap index + ~21 dynamically-served chunks; no build-time data dependency.
 - **Principle:** Don't couple build success to runtime data availability; chunk large generated documents.
@@ -264,7 +264,7 @@ Status key: 🟢 used in a lesson · ⚪ unassigned
 - **Fix:** Handle qualified paths + a drift-guard test that fails when list and router disagree + loop detection with a terminal failure state.
 - **Principle:** Two sources of truth always diverge — derive one or install a tripwire. When your own links can re-open your own app, fallback logic needs loop detection.
 
-### ⚪ Universal links opened the app on Home — and the tests were green
+### 🟢 Universal links opened the app on Home — and the tests were green *(→ Lesson 11.2)*
 - **Symptoms:** Tapping a real website link opened the app on the Home screen, not the linked content. The deep-link E2E suite passed.
 - **Root cause:** Web paths are locale-prefixed + plural; app routes are locale-less + singular; real HTTPS links were never translated. The tests only exercised the custom `app://` scheme — a proxy input that skipped the broken path entirely.
 - **Fix:** A single translation hook that rewrites every inbound link (cold + warm start) through one shared resolver.

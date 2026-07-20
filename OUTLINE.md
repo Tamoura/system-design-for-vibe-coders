@@ -9,6 +9,14 @@ phrased so you can apply it to your own app instead; Relay is just the reference
 
 Legend per lesson: 🔥 war story · 📐 principle · 🔨 build-along · 🤖 agent technique
 
+Coverage policy: the curriculum is a **complete** practical system-design set —
+incident-backed where we have scars, concept-complete everywhere else. Lessons
+without a 🔥 line are concept lessons; as real incidents accumulate they get one.
+
+Language policy: the course ships **bilingual** — every lesson is authored in
+English (`lesson-N.md`) and Arabic (`lesson-N.ar.md`, RTL). Outline mirrors:
+`OUTLINE.md` / `OUTLINE.ar.md`.
+
 ---
 
 ## Module 0 — The Vibe Coder's Gap
@@ -59,6 +67,12 @@ Why fast code generation makes system design *more* important, not less.
   🔥 Analytics TTLs deliberately removed → millions of rows/year growing forever on the same disk as the primary DB. And account deletion that removed one document while ~13 linked collections kept personal data the privacy policy promised to erase.
   📐 Retention is a reliability control, not just privacy. The golden rule for destructive retention migrations: backfill → verify → *then* expire. "Delete" is defined over the whole data graph.
   🔨 Add TTLs + a tested deletion cascade to Relay; write the retention table (what, how long, why).
+
+- **2.5 Indexes, queries, and the working set.**
+  🔥 One admin dashboard load ran eight unbounded whole-collection scans over the largest table — evicting the hot catalog data every DB actually serves from memory.
+  📐 How indexes actually work (and what they cost); compound indexes; reading a query plan; N+1 queries; why an OLTP database has a "working set" and what evicts it. SQL vs document vs key-value — choosing boring, and when each fits.
+  🔨 Add indexes to Relay's two hottest queries; read the query plans before and after; find and fix one N+1.
+  🤖 Agents write queries that pass tests on 50 rows and die on 5 million — the standing prompt: "what does this query's plan look like at 10M rows, and which index serves it?"
 
 ## Module 3 — Caching: the Sharpest Knife in the Drawer
 
@@ -169,6 +183,12 @@ Why fast code generation makes system design *more* important, not less.
   🔨 Wire Google + Apple sign-in into Relay's web and mobile clients against one backend; write the audience table (platform → client ID → token aud).
   🤖 The review question: "which token audiences does this endpoint accept, and which client produces each?"
 
+- **6.6 API design that survives its clients.**
+  🔥 A 502 landed exactly between "files stored" and "upload confirmed" — orphaning files because the confirm wasn't idempotent. And a client that swallowed server error bodies, turning a one-line config fix into a blind debugging session.
+  📐 Pagination (cursor vs offset), idempotency keys, partial failure across a two-step boundary, error contracts (machine-readable codes + human messages), consistent envelopes. Rate-limit headers as part of the contract.
+  🔨 Give Relay's API cursor pagination, an idempotent upload-confirm, and a single error envelope every client parses.
+  🤖 Have the agent generate the API contract table first (endpoint → auth → idempotency → error codes) and implement against it.
+
 ## Module 7 — Observability: You Can't Fix What You Can't See
 
 - **7.1 The dashboard that lies and the metric that doesn't.**
@@ -228,7 +248,57 @@ Why fast code generation makes system design *more* important, not less.
   📐 "Done" requires evidence from the layer the user touches. Screenshots of localhost are not evidence.
   🔨 Write Relay's definition-of-done checklist; make the agent produce evidence, not assurances.
 
-## Module 10 — Capstone: You Get Paged
+## Module 10 — Scaling Beyond One Server
+
+Concept-complete module: the classic scaling canon, taught through the lens of a
+product that grew — with incidents cited where we have them.
+
+- **10.1 Stateless services and load balancing.**
+  📐 Why state in the process kills horizontal scaling (sessions, in-memory counters, local uploads); load balancer types (L4/L7); health checks; sticky sessions and why to avoid them.
+  🔥 Echo from 5.2: in-memory rate-limit counters that reset per deploy and didn't share across instances — the same trap in miniature.
+  🔨 Run two instances of Relay's API behind a load balancer; find and evict every piece of process state.
+
+- **10.2 Queues and asynchronous work.**
+  📐 When a request shouldn't do the work: queues, workers, at-least-once delivery (so consumers must be idempotent), backpressure, dead-letter queues, exactly-once as a lie.
+  🔥 Echo from 7.4: the fire-and-forget jobs with no locks, no audit, no receipts — a queue-shaped problem solved without understanding queues.
+  🔨 Move Relay's media processing and email sending onto a queue with a dead-letter lane and a stale-job sweep.
+
+- **10.3 Scaling the database.**
+  📐 The escalation ladder: indexes → caching → read replicas (and replication lag's lies) → vertical scaling → partitioning/sharding as the last resort. Backup/restore implications at each rung. Why most products never need rung five.
+  🔨 Add a read replica to Relay; route analytics reads to it; demonstrate replication lag and handle it honestly.
+
+- **10.4 Realtime: presence, websockets, and heartbeats.**
+  🔥 The live-presence system from the incident bank: heartbeat ZSETs, the FLUSHDB wipe, the client-trusted counter inflation.
+  📐 Polling vs SSE vs websockets; presence as soft state that self-heals; capping cardinality; why realtime data must never be your source of truth.
+  🔨 Add a "who's online" presence feature to Relay that survives a cache flush and a malicious client.
+
+- **10.5 Performance and capacity.**
+  📐 Latency budgets end-to-end; percentiles (p50 lies, p99 pays the bills); load testing before launch days; Core Web Vitals as the frontend contract; back-of-envelope capacity math a vibe coder can actually do.
+  🔥 Echo from 2.5: the dashboard COLLSCAN — a capacity problem invisible until the working set was evicted.
+  🔨 Load-test Relay to its breaking point; write down the number; fix the first bottleneck; measure again.
+
+## Module 11 — Reaching the World
+
+- **11.1 Domains, DNS, and TLS.**
+  📐 What actually happens before your server hears anything: DNS records and propagation lies, apex vs subdomains, TLS certificates and auto-renewal, why the CDN terminates TLS, CDN-only ingress (echo of the forgeable client-IP header from 5.4).
+  🔨 Put Relay on a real domain with TLS, a www redirect, and origin locked to CDN-only ingress.
+
+- **11.2 Internationalization and RTL.**
+  🔥 Real bilingual-product scars: web URLs locale-prefixed while app routes weren't (deep links landed on Home); text-normalization gaps that made search miss valid queries in a non-Latin script; layouts that broke mirrored.
+  📐 Locale routing strategies; translation files as a drift surface (drift-guard tests again); RTL as a first-class layout mode, not a patch; dates, numbers, and collation.
+  🔨 Ship Relay in two locales — one RTL — with a locale-drift guard test.
+
+- **11.3 SEO, sitemaps, and sharing.**
+  🔥 The 350MB monolithic sitemap, and the split version that froze the build when the API was down at build time.
+  📐 What crawlers actually fetch; sitemaps at scale (chunked, dynamic); canonical URLs and hreflang; Open Graph cards; don't couple build success to runtime data.
+  🔨 Give Relay chunked sitemaps, hreflang pairs for its two locales, and OG cards — all served dynamically.
+
+- **11.4 Cost engineering.**
+  📐 The bills that surprise you: egress (why object-storage egress fees drove a real GCS→R2 migration), storage tiers, database growth (echo of the analytics timebomb), CDN as a cost shield, the cost of "free" background jobs. Reading your first cloud bill like an SRE.
+  🔥 Echo from 2.3: the backup that tripled — cost bugs and correctness bugs are often the same bug.
+  🔨 Build Relay's monthly cost model (storage, egress, compute) at 1×, 10×, 100× users; find the line item that scales worst.
+
+## Module 12 — Capstone: You Get Paged
 
 Eight incident simulations. Each gives you symptoms only (user reports, status codes,
 graphs); you diagnose, propose the fix, then compare against what actually happened
