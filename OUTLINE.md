@@ -154,6 +154,12 @@ Why fast code generation makes system design *more* important, not less.
   🔨 Add transactional email + a newsletter to Relay: owned From address, dedicated link base URL, per-email cooldowns, an idempotent send job.
   🤖 Making the agent enumerate every code path that sends mail — and what each one costs when abused.
 
+- **5.6 The OWASP Top 10, mapped to a real app.**
+  🔥 A full security audit of the reference platform scored it against OWASP — and the failures weren't exotic: SSRF in a proxy (A10), secrets falling back to defaults (A05), no server-side error tracking (A09), a credential-bearing CI runner executing untrusted PR code (A08, supply chain), tag-pinned third-party actions.
+  📐 The OWASP Top 10 as a working checklist, not a certification: injection, broken access control, misconfiguration, vulnerable dependencies, SSRF — each mapped to where it actually appears in an agent-built codebase. Supply-chain hygiene: lockfiles, SHA-pinning, dependency audit gates.
+  🔨 Run an OWASP-structured self-audit of Relay; fix the top three findings; add a dependency-audit gate to CI.
+  🤖 The standing security prompt: "review this diff as an attacker: what can I reach, forge, inject, or exhaust?" — and why security review needs its own pass, separate from correctness review.
+
 ## Module 6 — One Backend, Many Clients
 
 - **6.1 The client fleet problem.**
@@ -211,6 +217,12 @@ Why fast code generation makes system design *more* important, not less.
   📐 Every background job needs three things: an idempotency lock (SET NX EX), an audit trail, and reconciliation of what was actually delivered. Fire-and-forget means forget.
   🔨 Give Relay a scheduled job done right: claim key, audit row, receipt check, stale-job sweep.
 
+- **7.5 Product analytics in practice: GA, Cloudflare, and owning your events.**
+  🔥 Echoes from the bank: "returning users" measured logins (7.1); offline usage invisible (sampling bias); analytics tables growing without retention (2.4); a heartbeat endpoint anyone could inflate (5.4). Every one is an *analytics* failure before it's anything else.
+  📐 The three tiers and what each answers: Cloudflare Web Analytics (edge truth: requests, cache ratio, bots — no JS, no consent baggage), Google Analytics 4 (behavioral funnels — events model, consent mode, sampling caveats), and first-party events in your own DB (the only tier you can join against your domain data). When to use which; why edge numbers and GA numbers never match; privacy and consent as design constraints, not banners.
+  🔨 Instrument Relay with all three tiers; define one funnel (visit → signup → first action) and reconcile the three tiers' counts for it — the differences are the lesson.
+  🤖 Agents love adding events; nobody deletes them. The standing rule: every event has an owner question ("what decision does this inform?") or it doesn't ship.
+
 ## Module 8 — Safety Nets for AI-Generated Code
 
 - **8.1 The 600-file near-miss.**
@@ -247,6 +259,24 @@ Why fast code generation makes system design *more* important, not less.
   🔥 The deploy "verified" through a CDN cache; the push notifications "shipped" that were never wired to the sender; the flag that was "on" in a config nobody read.
   📐 "Done" requires evidence from the layer the user touches. Screenshots of localhost are not evidence.
   🔨 Write Relay's definition-of-done checklist; make the agent produce evidence, not assurances.
+
+- **9.5 Claude Code power techniques.**
+  📐 The toolbox that separates casual use from directing a fleet: CLAUDE.md hierarchy (global vs project) and persistent memory files; hooks that enforce rules mechanically (the pre-commit guards from 8.1 are hooks); custom slash commands and skills for repeatable workflows; subagents and git worktrees for parallel isolated work; headless runs for CI and cron; permission settings that reduce prompts without reducing safety.
+  🔥 Real artifacts from the reference project: a deploy skill, a staging-deploy skill, an audit skill, spec-kit commands — each one a workflow that used to live in someone's head.
+  🔨 Build your first three: a project CLAUDE.md that passes the "new agent cold-start" test, one hook that enforces a rule you keep repeating, one skill for your most common workflow.
+  🤖 Meta-rule: whenever you correct the agent twice for the same thing, the correction belongs in CLAUDE.md, a hook, or a skill — never in the chat.
+
+- **9.6 Building your agent team: custom agents and skills.**
+  🔥 The reference platform runs as an AI-first company: an Orchestrator routing work to specialist agents (backend, frontend, mobile, QA, security, code-reviewer...), spec-kit commands for spec → plan → tasks, checkpoints where the human decides. It shipped hundreds of PRs this way — and its failure modes shaped every rule in this module.
+  📐 When one agent is enough vs when to specialize; agent definitions as job descriptions (scope, tools, escalation rules); skills as the team's standard operating procedures; quality gates between agents; the human as CEO, not reviewer-of-everything.
+  🔨 Define two specialist agents for Relay (e.g. reviewer + QA) with explicit scopes, and one orchestration workflow that uses both with a gate between them.
+  🤖 The escalation contract: agents never make product decisions — ambiguity goes up, not sideways. Write it into every agent definition.
+
+- **9.7 Code audit and review at agent speed.**
+  🔥 The reference project's periodic full audits (an agent sweeping the entire codebase against a structured checklist) produced the incident bank's best finds: the SSRF proxy, the analytics timebomb, the mocked-test blind spot, the CI supply-chain exposure — none of which any single PR review would have caught.
+  📐 Three review layers with different jobs: per-PR review (catch defects before merge), adversarial multi-pass review (independent reviewers per dimension — correctness, security, performance — then verify each finding to kill false positives), and periodic whole-system audits (find what no diff shows: drift, dead code, contradicted docs, systemic risk). Audit reports as living documents with severity, owner, and status.
+  🔨 Run all three on Relay: agent-review one PR, adversarially re-review it on the security dimension, then run a whole-repo audit against a 10-point checklist and file the findings.
+  🤖 Review prompts that work: assign one dimension per pass; require a failure scenario for every finding ("what input makes this break?"); verify findings adversarially before acting.
 
 ## Module 10 — Scaling Beyond One Server
 
@@ -288,15 +318,21 @@ product that grew — with incidents cited where we have them.
   📐 Locale routing strategies; translation files as a drift surface (drift-guard tests again); RTL as a first-class layout mode, not a patch; dates, numbers, and collation.
   🔨 Ship Relay in two locales — one RTL — with a locale-drift guard test.
 
-- **11.3 SEO, sitemaps, and sharing.**
+- **11.3 SEO and AEO: being found by crawlers and cited by answer engines.**
   🔥 The 350MB monolithic sitemap, and the split version that froze the build when the API was down at build time.
-  📐 What crawlers actually fetch; sitemaps at scale (chunked, dynamic); canonical URLs and hreflang; Open Graph cards; don't couple build success to runtime data.
-  🔨 Give Relay chunked sitemaps, hreflang pairs for its two locales, and OG cards — all served dynamically.
+  📐 SEO: what crawlers actually fetch; sitemaps at scale (chunked, dynamic); canonical URLs and hreflang; Open Graph cards; Core Web Vitals as a ranking input; don't couple build success to runtime data. AEO (answer-engine optimization): AI assistants and answer engines are becoming the front door — structured data (schema.org/JSON-LD) so machines can parse your meaning, content written to be *citable* (direct answers, stable anchors), llms.txt as an emerging convention, and monitoring AI crawlers in your logs (they don't behave like Googlebot).
+  🔨 Give Relay chunked sitemaps, hreflang pairs, OG cards, and JSON-LD on its two main page types; then ask three AI assistants a question your product answers and see whether — and how — you're cited.
 
 - **11.4 Cost engineering.**
   📐 The bills that surprise you: egress (why object-storage egress fees drove a real GCS→R2 migration), storage tiers, database growth (echo of the analytics timebomb), CDN as a cost shield, the cost of "free" background jobs. Reading your first cloud bill like an SRE.
   🔥 Echo from 2.3: the backup that tripled — cost bugs and correctness bugs are often the same bug.
   🔨 Build Relay's monthly cost model (storage, egress, compute) at 1×, 10×, 100× users; find the line item that scales worst.
+
+- **11.5 Your edge platform in practice: Cloudflare end to end.**
+  🔥 The reference platform's whole edge story in one place: the `Vary` header it ignores (3.2), the client-IP header it provides (5.2), the 5-minute HTML cache that fooled deploy verification (4.3), the WAF that blocked the team's own automation, Turnstile in the abuse defenses (5.1), R2 as primary storage with its egress economics (11.4).
+  📐 One platform, many products — and each is a system-design decision: DNS + proxy mode (orange cloud), cache rules and what "respect origin headers" really means, WAF and bot management (and your own robots), Turnstile, R2, Workers as edge compute, and Cloudflare's analytics as the edge-truth tier from 7.5. The recurring rule: the edge is configuration you own on a platform you don't — version it, test through it, never assume defaults.
+  🔨 Put Relay fully behind Cloudflare: proxy mode, one cache rule, WAF on, Turnstile on signup, CDN-only origin ingress — then re-run the lesson 3.2 poisoning attempt and the 5.2 rate-limit test through the real edge.
+  🤖 Agents configure the edge blind (they can't see your dashboard). Export/document the edge config in the repo so the agent designs *with* it, not around it.
 
 ## Module 12 — Capstone: You Get Paged
 

@@ -89,13 +89,13 @@ Status key: 🟢 used in a lesson · ⚪ unassigned
 - **Fix:** Deploy script asserts the config points at the upstream block and aborts otherwise.
 - **Principle:** Indirection you rely on at deploy time must be enforced by an automated precondition, not convention.
 
-### ⚪ Sibling subdomains kept pointing at the dead color
+### 🟢 Sibling subdomains kept pointing at the dead color *(→ Lesson 1.1)*
 - **Symptoms:** After a flip, the admin uploader on a secondary subdomain broke with generic network errors.
 - **Root cause:** Secondary nginx configs (`upload.`, `direct.`) proxied to a hardcoded port and weren't updated by the flip — only the main site block was.
 - **Fix:** Bootstrap script patches all sibling configs to route through the same shared upstream (idempotent).
 - **Principle:** Every consumer must go through one source of routing truth; parallel hardcoded copies drift and one gets missed at cutover.
 
-### ⚪ `location /api` swallowed `/api-next/*`
+### 🟢 `location /api` swallowed `/api-next/*` *(→ Lesson 1.2)*
 - **Symptoms:** Next.js route handlers under `/api-next/` were misrouted to the Express API.
 - **Root cause:** nginx prefix match without a trailing slash also captures sibling paths.
 - **Fix:** `location /api/` (trailing slash).
