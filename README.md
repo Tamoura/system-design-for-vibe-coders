@@ -4,29 +4,40 @@
 
 ## What this is
 
-A written course on practical system design for **AI-first builders** — people shipping real products with Claude Code, Cursor, and friends, who never formally studied distributed systems, and who hit the wall the day their prototype meets real users.
+A written course on practical system design for **AI-first builders** — people shipping real products with Claude Code, Cursor, and friends, **whether or not they have ever written code**. If you build by directing an agent, this course teaches the two skills that replace reading code: knowing what to *ask for*, and knowing how to *check it*.
 
 It is not a FAANG-interview prep course. There are no whiteboard exercises about designing Twitter. Every lesson in this course is anchored to a **real production incident** from a real product: a real multi-client production platform (web, iOS, Android, and TV, serving a global audience) — built and operated largely *by* AI agents under human direction. The incidents span the whole surface a real product grows: caching and CDNs, data and backups, deploys, auth and OAuth, email and newsletters, feature flags, mobile releases, security and abuse, observability. The scars are real; the fixes shipped.
 
 ## How the course works
 
-Every lesson has the same four-part shape:
+**You do not need to know how to code.** In this course you are the architect and
+the safety inspector; your AI agent is the builder. Every hands-on step is written
+as instructions *you give the agent* and evidence *you demand back* — never as code
+you must write yourself. Readers who do code get optional **🔧 Under the Hood**
+boxes with the manual commands and source.
+
+Every lesson has the same four pillars:
 
 1. **🔥 The War Story** — a real incident: the symptoms as they appeared, the wrong theories, the actual root cause, the fix that shipped.
-2. **📐 The Principle** — the system-design concept the incident teaches, explained from first principles for someone who has never read a distributed-systems textbook.
-3. **🔨 The Build-Along** — you apply the principle to **Relay**, a deliberately generic product you build across the whole course — accounts, creator content, media uploads, feeds, email, a mobile client — from local prototype to zero-downtime production. Every step is written so you can apply it to *your own* app instead; Relay is just the reference. Each module leaves your app one production-grade capability stronger.
-4. **🤖 Prompting Your Agent** — how to get your AI coding agent to do this *right*: the context to give it, the guardrail to install, and the review question that catches the failure mode before it ships. Because in vibe coding, *you* are the architect and the reviewer — the agent is the typist.
+2. **📐 The Principle** — the system-design concept the incident teaches, in plain language and diagrams, every term defined before it's used (backed by the [Glossary](./GLOSSARY.md)).
+3. **🎛️ Direct Your Agent** — you apply the principle to **Relay**, a deliberately generic product (accounts, creator content, media uploads, feeds, email, a mobile client) built across the course from prototype to zero-downtime production — by telling your agent *what* to build: the exact prompts to give, the context that makes it build the right thing, and the guardrail to install so the rule outlives the chat. Apply every step to your own app instead if you have one.
+4. **✅ Verify It** — the pillar that makes vibe coding safe: an evidence checklist proving the step actually worked, written so checking it requires **zero code reading** — things you can see, click, or make the agent demonstrate from the layer users touch.
 
 ## Who it's for
 
-- You've shipped something real with an AI coding agent and people actually use it.
-- You can read code but you've never had to reason about caches, CDNs, deploys, or backups.
-- You've been bitten (or are about to be) by something that "worked locally."
+- You build (or want to build) real products by directing an AI agent — with or without a programming background.
+- You've been bitten (or are about to be) by something that "worked" until real users arrived.
+- You want to stop trusting and start verifying — without needing to read the code.
 
 ## Who it's not for
 
 - Interview preppers — go do the Grokking course.
 - People who want theory without operating anything.
+
+**Completely new to this world?** Start at **Part 0 — Foundations**: five
+plain-language lessons with no prerequisites at all (what a server is, what happens
+when you open a website, what code/repos/deploys are, how to work with your agent,
+and putting your first page live — with proof).
 
 ## Curriculum
 
@@ -34,6 +45,7 @@ See [OUTLINE.md](./OUTLINE.md) for the full module-by-module curriculum, and [wa
 
 | # | Module | The wall you hit |
 |---|--------|------------------|
+| F | Part 0: Foundations | You don't code — and you don't need to. Start here. |
 | 0 | The Vibe Coder's Gap | "It works" and "it's a system" are different claims |
 | 1 | Anatomy of a Real App | You can't reason about what you can't draw |
 | 2 | Data, Storage & Backups | The database is not the only thing that can lose data |

@@ -158,30 +158,40 @@ an agent that *guesses* where uploads go and an agent that *knows*.
 
 ---
 
-## 🔨 The Build-Along
+## 🎛️ Direct Your Agent
 
 Time to start Relay — the accounts + creator content + media + feeds product you'll
-carry through the whole course.
+carry through the whole course. You direct; the agent builds. You never need to
+write a line yourself — the 🔧 boxes are optional, for readers who want to.
 
-1. **Draw before you generate.** By hand or in Mermaid, draw Relay's container
-   diagram for v1: browser → app → database, nothing else. Resist adding boxes you
-   don't need yet — every box you add is a seam you now own.
-2. **Scaffold it.** One web app (any framework you're fluent in), one API process,
-   one database. Local only.
-3. **Write the boxes table.** For each box in your drawing: its one job, and what
-   it must not become. Commit it as `docs/architecture.md` with the diagram.
-4. **Install the contract rule.** Add to your repo's agent memory: *"Any PR that
-   adds a service, store, subdomain, or external dependency must update
-   docs/architecture.md in the same PR."*
-5. **Predict the future.** Mark with dashed lines the boxes you *expect* to add by
-   the end of the course (CDN, cache, object storage, queue). You now have a map of
-   the seams you'll be learning.
+1. **Draw before anyone generates.** Tell your agent:
+   > *"Before writing any code: draw Relay v1's architecture as a Mermaid diagram —
+   > browser → web app → database, nothing else — save it as `docs/architecture.md`,
+   > and explain each box's single job to me in plain language."*
+   Push back on any box you didn't ask for. Every box is a seam you now own.
+2. **Scaffold it.**
+   > *"Scaffold Relay exactly as the diagram shows: one web app, one API process,
+   > one database, running locally. Then show it to me running in the browser, and
+   > tell me which box each thing I can see came from."*
+3. **The boxes table.**
+   > *"Add a table to `docs/architecture.md`: each box, its one job, and what it
+   > must never become."*
+4. **Install the contract rule.**
+   > *"Add to CLAUDE.md: any change that adds a service, store, subdomain, or
+   > external dependency must update `docs/architecture.md` in the same PR."*
+5. **Predict the future.**
+   > *"Add dashed boxes to the diagram for what we expect to add later: CDN, cache,
+   > object storage, queue."*
+   You now have a map of the seams you'll be learning, drawn before you need them.
 
-Commit checkpoint: `01-1-boxes-drawn`.
+Finish: *"Commit everything with the message `01-1-boxes-drawn`."*
 
----
+> 🔧 **Under the hood** (optional): the diagram is plain text — Mermaid's `graph TD`
+> syntax inside markdown. The scaffold is `npx create-next-app` (or your stack's
+> equivalent) plus a database via Docker. Read `docs/architecture.md` in the repo
+> after the agent writes it; it's the most readable file you own.
 
-## 🤖 Prompting Your Agent
+### The context and the guardrail
 
 **The failure mode:** agents make *locally correct, globally wrong* decisions.
 The agent that wrote the sibling subdomain configs did nothing wrong — it matched
@@ -212,6 +222,24 @@ would invalidate the pattern. Global knowledge is your job to supply.
 **Guardrail to install:** a deploy-time assertion for every claim the diagram
 makes about routing — the exact fix the incident shipped. Grep your proxy configs
 for literal ports in CI; fail if any appear outside the upstream block.
+
+---
+
+## ✅ Verify It
+
+Accept this lesson as done only when every box is checked — none requires reading code:
+
+- [ ] `docs/architecture.md` exists and the diagram **renders as boxes and arrows**
+      (open the file preview; if you see text soup, it's not done).
+- [ ] The running app matches the drawing: for each box, you can name the thing you
+      *clicked or saw* that proves it exists (page loads → web app is real; data
+      survives a restart → database is real — ask the agent to restart it and show you).
+- [ ] **Cold-start test:** open a brand-new agent session and ask *"where does
+      uploaded media go, and what must never live only in the cache?"* It answers
+      correctly from CLAUDE.md alone, without you explaining anything.
+- [ ] Ask the agent: *"search all proxy/config files for hardcoded ports and show me
+      the raw output."* The output is empty outside the shared upstream block.
+- [ ] You can redraw the seven-box diagram from memory on paper. (This one is for you.)
 
 ---
 

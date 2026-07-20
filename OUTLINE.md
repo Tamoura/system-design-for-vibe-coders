@@ -7,7 +7,13 @@ system. Every module upgrades it with the capability the module teaches, in the
 same order a real product forces you to learn them. Every build-along step is
 phrased so you can apply it to your own app instead; Relay is just the reference.
 
-Legend per lesson: 🔥 war story · 📐 principle · 🔨 build-along · 🤖 agent technique
+Legend per lesson: 🔥 war story · 📐 principle · 🎛️ direct your agent · ✅ verify it
+(🔧 = optional "under the hood" material for readers who code; 🤖 lines describe
+agent-direction techniques and fold into 🎛️ in the written lessons)
+
+Audience policy: **non-coders first.** Every 🎛️ step is an instruction to give an
+agent, never code to write; every ✅ step is evidence checkable without reading
+code. Coders get optional 🔧 boxes. Terms are defined before use (see GLOSSARY.md).
 
 Coverage policy: the curriculum is a **complete** practical system-design set —
 incident-backed where we have scars, concept-complete everywhere else. Lessons
@@ -18,6 +24,36 @@ English (`lesson-N.md`) and Arabic (`lesson-N.ar.md`, RTL). Outline mirrors:
 `OUTLINE.md` / `OUTLINE.ar.md`.
 
 ---
+
+## Part 0 — Foundations (no prerequisites)
+
+Five plain-language lessons for readers who have never coded. Diagram-first,
+zero jargon without definition, each ends with something you can *see* working.
+
+- **F.1 What happens when you open a website.**
+  📐 The whole journey in plain words: your browser asks a directory (DNS) where the site lives, reaches a computer that never sleeps (a server), which sends back the page. Every later lesson zooms into one part of this picture.
+  🎛️ Ask your agent to draw this journey for any website you use daily — then for the app you dream of building.
+  ✅ You can explain to a friend, in one minute with a napkin sketch, what happens between typing an address and seeing a page.
+
+- **F.2 What a server actually is (and what code is).**
+  📐 A server is a computer that runs your product's instructions all day; code is those instructions written precisely enough for a machine; a database is the notebook it never loses. Your laptop vs "the cloud" — same thing, different room.
+  🎛️ Have your agent show you a running program on your own machine, stop it, start it — feel the difference between "the code exists" and "the code is running."
+  ✅ You can answer: where does my app live when my laptop is closed? What's the difference between the app being *written* and being *on*?
+
+- **F.3 Versions, repos, and deploys — how software moves.**
+  📐 A repo is the product's full history of saved drafts (git); a deploy is copying a chosen draft onto the always-on computer; a rollback is choosing yesterday's draft. Why "it's on my machine" and "it's live" are different places.
+  🎛️ Direct your agent to create a repo for a tiny page, make two saved versions, and show you the history — then restore the older one.
+  ✅ You can point at the history and say which version is live, and get back to the previous one without panic.
+
+- **F.4 Meet your agent: how to direct a builder you can't watch.**
+  📐 What an AI coding agent can and can't know; why context files (CLAUDE.md) are its memory; the three sentences every good instruction has (goal, constraint, evidence demanded); why "make it production ready" fails and "add a login page; don't touch the database; show me it working at the real URL" succeeds.
+  🎛️ Write your first CLAUDE.md with the agent: what the product is, what it must never do, how you want evidence delivered.
+  ✅ A fresh agent session, given only your CLAUDE.md, correctly answers three questions about your product without you repeating yourself.
+
+- **F.5 Your first live page — with proof.**
+  📐 Putting the pieces together: repo → deploy → a real URL anyone on earth can open. The habit that defines this course: never accept "done" — accept *evidence*.
+  🎛️ Direct your agent end-to-end: create a one-page site, put it live on a real URL (a managed host is fine), then change one word and ship the change.
+  ✅ Open the URL on your *phone* (not the agent's screenshot), see the change, and check the old version still exists in history. That's your first verified deploy — and the standard for everything that follows.
 
 ## Module 0 — The Vibe Coder's Gap
 

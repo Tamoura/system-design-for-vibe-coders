@@ -145,32 +145,39 @@ For each header you rely on, know which hop writes it and which hops may rewrite
 
 ---
 
-## 🔨 The Build-Along
+## 🎛️ Direct Your Agent
 
 Make Relay's request journey observable before there's any traffic to observe.
+You direct; the agent builds; you watch the evidence arrive.
 
-1. **Stamp every request.** In your outermost middleware, generate a request ID
-   (`crypto.randomUUID()`), attach it to `res` as `X-Request-Id`, and include it in
-   every log line for that request. (This is the poor man's W3C Trace Context —
-   see references — and it's 10 lines.)
-2. **Log the journey's far end.** Log method, path, status, duration, and whether
-   each store call was a cache hit or miss.
-3. **Walk one request end-to-end.** Open your app, click one thing, then find that
-   exact request by ID in your logs. Narrate every hop out loud. If any hop is a
-   mystery, you've found this week's homework.
-4. **Reproduce the prefix trap.** Add a `location /api` (no slash) block to a local
-   nginx in front of Relay, create an `/api-next/ping` route, and watch it get
-   swallowed. Fix with the trailing slash. You'll never forget it again.
-5. **Time the ladder.** `curl -w` gives you DNS, TLS, and total timings. Record
-   your app's numbers for one cached and one uncached request; commit them to
-   `docs/latency-baseline.md`. Every performance conversation for the rest of the
-   course compares against this file.
+1. **Stamp every request.** Tell your agent:
+   > *"Give every incoming request a unique ID, return it in an `X-Request-Id`
+   > header, and include it in every log line about that request. Then make one
+   > request and show me: the header in the response, and the matching log lines."*
+2. **Log the far end.**
+   > *"Log method, path, status, duration, and cache hit/miss for every store call.
+   > Show me one example line and explain each field in one sentence."*
+3. **Walk one request end-to-end.** Open the app yourself, click one thing, then:
+   > *"Here's what I clicked and when. Find that exact request by its ID and walk me
+   > through every hop it took, in order."*
+   If any hop is a mystery *to you*, that's this week's homework — ask until it isn't.
+4. **Reproduce the prefix trap — on purpose.**
+   > *"Put a local proxy in front of the app with a `location /api` block (no
+   > trailing slash), add an `/api-next/ping` route, and demonstrate the swallow:
+   > show me the wrong response, fix the slash, show me the right one."*
+   Watching the before-and-after once beats reading about it ten times.
+5. **Record the latency baseline.**
+   > *"Measure one cached and one uncached request (DNS, TLS, total). Write the
+   > numbers to `docs/latency-baseline.md` with today's date."*
+   Every performance conversation for the rest of the course compares to this file.
 
-Commit checkpoint: `01-2-journey-traced`.
+Finish: *"Commit with the message `01-2-journey-traced`."*
 
----
+> 🔧 **Under the hood** (optional): the request ID is `crypto.randomUUID()` in your
+> outermost middleware (~10 lines); the timings come from `curl -w` format strings;
+> the trap is any nginx prefix `location` without a trailing slash.
 
-## 🤖 Prompting Your Agent
+### The context and the guardrail
 
 **The failure mode:** an agent debugging a request failure starts *at the code* —
 because the code is what it can see. It will happily refactor a handler for an
@@ -196,6 +203,23 @@ the layers the agent can't see; say so explicitly.
 route family through the full local stack (proxy included, not just the app) and
 asserts which process answered. It would have caught the `/api-next` swallow in CI
 instead of production.
+
+---
+
+## ✅ Verify It
+
+No code reading required — accept the lesson only when:
+
+- [ ] You clicked one thing in the running app, and the agent showed you **that exact
+      request's** log trail, found by the ID from the response header you saw.
+- [ ] You watched the prefix trap live: the wrong answer before the slash, the right
+      answer after. You saw both responses yourself — not a summary of them.
+- [ ] `docs/latency-baseline.md` exists, is dated, and the cached number is clearly
+      smaller than the uncached one. You can say *why* in one sentence.
+- [ ] Using the sequence diagram, you can narrate the eleven stops from memory —
+      and name which stops belong to you and which belong to someone else.
+- [ ] The routing-table guardrail runs in CI: ask the agent to break the routing on
+      purpose in a branch and show you the check failing, then passing after revert.
 
 ---
 
