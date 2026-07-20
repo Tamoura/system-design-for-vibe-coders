@@ -2,7 +2,7 @@
 
 Raw material for lessons. Every entry: symptoms → root cause → fix → principle.
 Lessons cite these; new incidents land here first. Details are drawn from a real
-production audio-streaming platform (web + iOS + Android + TV, global audience,
+multi-client production platform (web + iOS + Android + TV, global audience,
 Cloudflare CDN, VPS origin, MongoDB/Redis/R2 object storage).
 
 Status key: 🟢 used in a lesson · ⚪ unassigned
@@ -52,7 +52,7 @@ Status key: 🟢 used in a lesson · ⚪ unassigned
 - **Principle:** Cache expiry is a synchronized load spike aimed at your weakest moment; coalesce misses.
 
 ### ⚪ FLUSHDB wiped live-presence state along with the cache
-- **Symptoms:** Real-time "listening now" counter dropped instantly to zero.
+- **Symptoms:** Real-time live-presence counter dropped instantly to zero.
 - **Root cause:** Response cache and semi-durable presence state (heartbeat ZSETs) shared one Redis DB; a blunt `FLUSHDB` cache-clear destroyed both.
 - **Fix:** Never flush; evict by narrow key prefix (`SCAN` + `UNLINK`). Presence self-healed via heartbeats in ~60s.
 - **Principle:** Colocating disposable and non-disposable state in one store turns cache maintenance into data loss. Segregate, or only ever evict by prefix.
@@ -140,8 +140,8 @@ Status key: 🟢 used in a lesson · ⚪ unassigned
 - **Principle:** A migration isn't done until the old system can no longer act. Dual-read/write phases need explicit end dates.
 
 ### 🟢 Schema keyed on the wrong identity *(→ Lesson 2.1)*
-- **Symptoms:** A reciter with two recitation styles in the same narration — one style unrepresentable.
-- **Root cause:** Recitations keyed by narration only; style existed in storage layout but not in the data model's identity.
+- **Symptoms:** A creator with two variants of the same edition in the catalog — one variant unrepresentable.
+- **Root cause:** Catalog entries keyed by edition only; the variant existed in the storage layout but not in the data model's identity.
 - **Principle:** The keys you choose early are the constraints you live with longest. Model identity from the domain's edge cases.
 
 ### ⚪ Analytics retention removed → unbounded growth timebomb
@@ -203,13 +203,13 @@ Status key: 🟢 used in a lesson · ⚪ unassigned
 - **Principle:** Rate-limit the expensive side effect, not the user action. Any anonymous endpoint that triggers outbound email is a weapon against third parties. Naive global caps become self-DoS.
 
 ### ⚪ The streaming proxy was a read-SSRF
-- **Symptoms:** Audit: an unauthenticated audio-proxy endpoint followed redirects and signed URLs from the *redirected* upstream — an attacker-influenced source could get the server to sign internal URLs (cloud metadata service, local Redis).
+- **Symptoms:** Audit: an unauthenticated media-proxy endpoint followed redirects and signed URLs from the *redirected* upstream — an attacker-influenced source could get the server to sign internal URLs (cloud metadata service, local Redis).
 - **Root cause:** Raw `fetch(..., {redirect:"follow"})` instead of the project's own SSRF-guarded fetch; the signing secret silently fell back to the JWT secret and finally to a hardcoded dev literal.
 - **Fix (prescribed):** Every hop through the guarded fetch with manual redirects + private-IP checks; dedicated secret that fails closed if unset.
 - **Principle:** A security primitive only helps if every code path uses it. Re-validate per redirect hop. Secrets must never silently fall back.
 
 ### ⚪ Anonymous telemetry endpoints fully client-trusted
-- **Symptoms:** Audit: the "now playing" heartbeat had no auth, no rate limit, no schema, no length caps, keyed on a client-chosen session ID — anyone could inflate listen counts, pollute rankings, and flood the store.
+- **Symptoms:** Audit: the live-activity heartbeat had no auth, no rate limit, no schema, no length caps, keyed on a client-chosen session ID — anyone could inflate usage counts, pollute rankings, and flood the store.
 - **Fix (prescribed):** Length-cap fields, per-IP limits, cap the presence set's cardinality, treat ranking inputs as adversarial. (Also learned: dedup blocks *replay*, not *forged-unique* inflation.)
 - **Principle:** Data that drives product decisions is adversarial input. Anonymous + unlimited + unvalidated writes corrupt metrics and invite write-amplification DoS.
 
@@ -221,6 +221,12 @@ Status key: 🟢 used in a lesson · ⚪ unassigned
 - **Symptoms:** Audit stop-item: the error-report store kept raw URLs (which can contain live password-reset tokens) and free-form metadata, with no TTL.
 - **Fix (prescribed):** Redact URLs on ingest, allowlist metadata, add retention.
 - **Principle:** Diagnostics are a data-exfiltration surface; redact on ingest, expire on schedule.
+
+### 🟢 SMTP rejects mail from a From address you don't own *(→ Lesson 5.5)*
+- **Symptoms:** Outbound mail silently failing; newsletter CLI sending nothing.
+- **Root cause:** The SMTP provider rejects senders that aren't owned mailboxes on the account; separately, the From address was read at module load — before config was populated — so the process saw an empty value.
+- **Fix:** Send only from an owned mailbox; read config at send time, not import time.
+- **Principle:** Deliverability is policy, not just code — providers enforce sender ownership. Module-load-time config reads are a timing bug waiting for a refactor.
 
 ### ⚪ Rotating refresh tokens with reuse detection
 - **Design:** 180-day sliding refresh tokens; reuse of a rotated token burns the whole chain.
@@ -264,19 +270,19 @@ Status key: 🟢 used in a lesson · ⚪ unassigned
 - **Fix:** A single translation hook that rewrites every inbound link (cold + warm start) through one shared resolver.
 - **Principle:** Two clients sharing a URL space need an explicit translation layer at the boundary. Tests that use a proxy input instead of the real one produce false green.
 
-### ⚪ OAuth deep-link interception bricked the app
+### 🟢 OAuth deep-link interception bricked the app *(→ Lesson 6.5)*
 - **Symptoms:** Google sign-in returned to a permanently blank app — surviving restarts.
 - **Root cause:** The deep-link resolver's scheme test required `://`, but the OAuth library redirects with a *single-slash* scheme URL; the resolver mangled it into a junk route, and persisted navigation state made the wreckage permanent. Latent for months until the native scheme registration finally let redirects reach the app.
 - **Fix:** Auth-redirect URLs pass through untouched; cold-start handler skips navigation for them.
 - **Principle:** Catch-all URL interceptors will eventually mangle a shape they didn't anticipate; let auth flows own their URLs. Persisted state can turn a transient bug into a brick.
 
-### ⚪ Apple sign-in: right token, wrong audience, misleading error
+### 🟢 Apple sign-in: right token, wrong audience, misleading error *(→ Lesson 6.5)*
 - **Symptoms:** "Continue with Apple" failed with "Invalid email or password."
 - **Root cause:** Server verified tokens against the *web* client ID; native iOS tokens carry the app bundle ID as audience. The client swallowed the server's error body, so a one-line config mismatch presented as a generic login failure.
 - **Fix:** Accept both audiences; parse and surface real server error messages app-wide.
 - **Principle:** OAuth audiences differ per platform — multi-client backends must accept all valid ones. Swallowed error messages turn config fixes into blind debugging sessions.
 
-### ⚪ The sign-in button that silently didn't exist
+### 🟢 The sign-in button that silently didn't exist *(→ Lesson 6.5)*
 - **Symptoms:** No "Continue with Google" button on mobile at all.
 - **Root cause:** The button renders only if a client ID is present — and the IDs are build-time-embedded env vars that the shipped build was made without. Not OTA-fixable.
 - **Principle:** Build-time-embedded config produces features that silently no-op. Know exactly which fixes are OTA-able and which need a store rebuild.
@@ -295,8 +301,8 @@ Status key: 🟢 used in a lesson · ⚪ unassigned
 - **Fix:** Explicit `backTo` return path carrying the exact instance; pure, unit-tested resolver.
 - **Principle:** Model return targets explicitly; type-level tracking loses identity.
 
-### ⚪ Offline listeners systematically invisible
-- **Symptoms:** Users who download and listen offline (subway, rural, airplane) never appeared in analytics — biasing rankings toward online-heavy regions and against the most loyal users.
+### ⚪ Offline usage systematically invisible
+- **Symptoms:** Users who use downloaded content offline (subway, rural, airplane) never appeared in analytics — biasing rankings toward online-heavy regions and against the most loyal users.
 - **Fix:** Local queue of offline events, batch-synced idempotently on reconnect to an endpoint that deliberately does *not* feed real-time counters.
 - **Principle:** Connectivity-gated telemetry has systematic sampling bias. Capture-and-reconcile fixes it — but sync must be idempotent under retries and must not inflate live signals.
 
@@ -353,8 +359,8 @@ Status key: 🟢 used in a lesson · ⚪ unassigned
 
 ### 🟢 "Returning users" measured logins, not returns *(→ Lesson 7.1)*
 - **Symptoms:** Retention numbers didn't match observed reality.
-- **Root cause:** Metric counted login events; listening happens without logins.
-- **Fix:** Redefined returning = 2+ distinct listening days.
+- **Root cause:** Metric counted login events; real usage happens without logins.
+- **Fix:** Redefined returning = 2+ distinct days of real use.
 - **Principle:** Metrics must measure the user's reality, not the system's convenient events.
 
 ### 🟢 Zero-result searches as free user research *(→ Lesson 7.3)*

@@ -6,7 +6,7 @@
 
 A written course on practical system design for **AI-first builders** — people shipping real products with Claude Code, Cursor, and friends, who never formally studied distributed systems, and who hit the wall the day their prototype meets real users.
 
-It is not a FAANG-interview prep course. There are no whiteboard exercises about designing Twitter. Every lesson in this course is anchored to a **real production incident** from a real product: a bilingual audio-streaming platform serving a global audience across web, iOS, Android, and TV — built and operated largely *by* AI agents under human direction. The scars are real; the fixes shipped.
+It is not a FAANG-interview prep course. There are no whiteboard exercises about designing Twitter. Every lesson in this course is anchored to a **real production incident** from a real product: a real multi-client production platform (web, iOS, Android, and TV, serving a global audience) — built and operated largely *by* AI agents under human direction. The incidents span the whole surface a real product grows: caching and CDNs, data and backups, deploys, auth and OAuth, email and newsletters, feature flags, mobile releases, security and abuse, observability. The scars are real; the fixes shipped.
 
 ## How the course works
 
@@ -14,7 +14,7 @@ Every lesson has the same four-part shape:
 
 1. **🔥 The War Story** — a real incident: the symptoms as they appeared, the wrong theories, the actual root cause, the fix that shipped.
 2. **📐 The Principle** — the system-design concept the incident teaches, explained from first principles for someone who has never read a distributed-systems textbook.
-3. **🔨 The Build-Along** — you apply the principle to **Muraja'a**, the audio-library app you build across the whole course, from local prototype to zero-downtime production. Each module leaves your app one production-grade capability stronger.
+3. **🔨 The Build-Along** — you apply the principle to **Relay**, a deliberately generic product you build across the whole course — accounts, creator content, media uploads, feeds, email, a mobile client — from local prototype to zero-downtime production. Every step is written so you can apply it to *your own* app instead; Relay is just the reference. Each module leaves your app one production-grade capability stronger.
 4. **🤖 Prompting Your Agent** — how to get your AI coding agent to do this *right*: the context to give it, the guardrail to install, and the review question that catches the failure mode before it ships. Because in vibe coding, *you* are the architect and the reviewer — the agent is the typist.
 
 ## Who it's for

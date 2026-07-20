@@ -31,8 +31,8 @@ within the app, the framework doesn't fetch a full HTML page — it fetches a co
 JSON payload (called a "flight" response) describing just the parts of the UI that
 change. Same URL, two different response bodies:
 
-- Browser address bar → `GET /surah/1` → **full HTML page**
-- In-app navigation → `GET /surah/1` (with a special request header) → **flight JSON**
+- Browser address bar → `GET /item/42` → **full HTML page**
+- In-app navigation → `GET /item/42` (with a special request header) → **flight JSON**
 
 The framework signals this distinction with request headers, and dutifully sets a
 `Vary` header on the response — which is the HTTP way of telling caches: *"responses
@@ -147,7 +147,7 @@ that fetches a page URL with flight headers and asserts the response is uncachea
 
 ## 🔨 The Build-Along
 
-Muraja'a is now behind a CDN (from lesson 3.1). Time to poison it yourself — on
+Relay is now behind a CDN (from lesson 3.1). Time to poison it yourself — on
 purpose, in staging — so you never have to debug this symptom cold.
 
 1. **Create the variance.** Add a route that returns HTML to browsers but JSON when a
