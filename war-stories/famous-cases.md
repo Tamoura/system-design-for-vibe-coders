@@ -31,6 +31,11 @@ These are public, well-documented, and excellent for readers who want to go deep
 - **Lesson:** the CDN is part of your system; edge platforms fail too, and "valid input triggers latent bug" is a classic shape.
 - **Source:** Fastly's postmortem ("Summary of June 8 outage").
 
+### Roblox's 73-hour outage — monitoring died with the system (Oct 28–31, 2021) *(→ 7.6)*
+- **What happened:** a subtle bug in a new Consul feature under load took Roblox fully offline for 73 hours — one of the longest outages of any major platform. Recovery was brutally slow partly because **their own telemetry and monitoring ran on the same infrastructure that had failed**: the tools that should have shown responders where the problem was were themselves dark.
+- **Lesson:** monitoring must never share fate with what it monitors — the industrial restatement of the AWS status-page irony. Externalize at least one uptime check and one alert path.
+- **Source:** Roblox's public postmortem ("Roblox Return to Service 10/28-10/31 2021") — unusually detailed and honest.
+
 ## Deploys and data loss
 
 ### Knight Capital: $440M in 45 minutes (Aug 1, 2012) *(→ F.3, 4.x)*

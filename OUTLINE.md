@@ -259,6 +259,12 @@ Why fast code generation makes system design *more* important, not less.
   🔨 Instrument Relay with all three tiers; define one funnel (visit → signup → first action) and reconcile the three tiers' counts for it — the differences are the lesson.
   🤖 Agents love adding events; nobody deletes them. The standing rule: every event has an owner question ("what decision does this inform?") or it doesn't ship.
 
+- **7.6 Your monitoring stack: Sentry, uptime checks, metrics, and alerts.**
+  🔥 The reference platform ran "blind in production" for years — no server-side error tracking, no alerting; 3am failures were discovered by user complaints. When error tracking finally existed (Sentry, mobile), its loudest "error" was a success message (7.2). Famous case: Roblox's 73-hour outage (2021) — their monitoring ran on the same infrastructure that failed, so responders flew blind; same shape as AWS's status page dying with S3.
+  📐 The four instruments and the question each answers: **error tracking** (Sentry: what broke, for whom, in which release — source maps, release tagging, severity = actionability); **uptime/synthetic checks** (UptimeRobot / Better Stack / Pingdom: "is it up *from the outside*" — lesson F.5's phone-test, industrialized and running every minute from another continent); **metrics & dashboards** (Grafana/Prometheus or hosted: Google SRE's four golden signals — latency, traffic, errors, saturation); **alerting** (route to a phone; alert on symptoms users feel, not causes; every alert actionable or deleted). OpenTelemetry as the vendor-neutral wiring between them. Iron rule from Roblox/AWS: monitoring must never share fate with the thing it monitors.
+  🔨 Wire Relay end to end: Sentry on server + web + mobile with release tags; one external uptime check on the real URL; a four-golden-signals dashboard; two alerts (down ≥2 min, error-rate spike). Then break staging on purpose and watch the pager fire.
+  🤖 The standing question for every new service the agent adds: "if our server dies right now, what — running on someone else's infrastructure — tells us within five minutes?"
+
 ## Module 8 — Safety Nets for AI-Generated Code
 
 - **8.1 The 600-file near-miss.**
