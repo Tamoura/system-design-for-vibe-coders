@@ -210,7 +210,121 @@ The exercise that turns the map into *your* map:
 - Krebs on Security on the **Dyn/Mirai attack** (2016) — abuse economics, told like a thriller.
 - This course's `war-stories/famous-cases.md` — the full bank behind the table, with sources for every case.
 
-**End of Module 0.** You now carry the two ideas that make the rest of the
-course land: systems fail at seams, and the seams are a short, known list.
-Module 1 hands you the drawing tools; Module 2 starts defending the first seam —
-the notebook itself.
+---
+
+# 0.3 — Build vs Buy: the Highest-Leverage Decision You'll Make
+
+## 🔥 The Story: the disasters all lived in the built things
+
+Open this course's two war-story banks and sort every incident by one question:
+did it happen in something the team **built**, or something they **bought**?
+
+The reference platform behind this course made its purchases deliberately: it
+*bought* its edge and security (Cloudflare), its file storage (R2), its email
+delivery (an SMTP provider), its push notifications (Apple's and Google's
+services), its error tracking (Sentry). It *built* the thing that made it
+unique — its content catalog, its player experience, its community features.
+
+Now look where the scars are. The cache poisoning, the orphaned uploads, the
+backup bloat, the hand-rolled rate limiter that 429'd the world, the roll-your-own
+telemetry endpoint that anyone could inflate — **built**. The bought things
+appear in the incident bank mostly as *configuration* mistakes, not construction
+ones. Buying didn't remove failure — the CDN stars in several disasters — but
+the failure surface shrank to "did we configure it right?", which is a far
+kinder question than "did we build a correct distributed system by accident?"
+
+This ratio isn't unique to one platform. It's the oldest pattern in the
+industry, and it has a famous essay: Dan McKinley's **"Choose Boring
+Technology."**
+
+## 📐 The Principle: innovation tokens and the 2×2
+
+McKinley's idea, compressed: every team gets about **three innovation tokens** —
+three places where they can afford to do something novel, custom, or exciting.
+Spend them on what makes your product *yours*. Everything else should be boring,
+bought, and battle-tested by somebody else's decade of pain.
+
+The decision fits on a napkin:
+
+```mermaid
+quadrantChart
+    title Should you build it or buy it?
+    x-axis "Commodity — many sell it" --> "Differentiating — it IS your product"
+    y-axis "Easy to run well" --> "Brutal to run well"
+    quadrant-1 "BUILD — spend a token"
+    quadrant-2 "BUY — never build here"
+    quadrant-3 "Either — smallest option"
+    quadrant-4 "BUY, integrate carefully"
+    "Auth and login": [0.15, 0.85]
+    "Payments": [0.1, 0.9]
+    "Email delivery": [0.15, 0.7]
+    "Search infra": [0.35, 0.75]
+    "Monitoring": [0.2, 0.6]
+    "Your catalog and its rules": [0.85, 0.55]
+    "Your core experience": [0.9, 0.35]
+    "A marketing page": [0.25, 0.15]
+```
+
+Read the top-left corner and memorize its residents: **auth, payments, email
+delivery**. These are simultaneously commodity (dozens of excellent providers)
+and brutal (security, deliverability, compliance, edge cases measured in
+decades). Building any of them yourself is spending an innovation token on
+being worse than the free tier of a company that does only this.
+
+**Why this lesson exists in a vibe-coding course:** agents invert the old
+economics. Hand-rolling auth used to cost three weeks — a natural deterrent.
+Your agent will do it in an afternoon, competently-looking, tests green. The
+*construction* cost collapsed; the *operation* cost — patching, token rotation,
+password reset edge cases, the 3am breach — did not. **The agent quotes you the
+afternoon and you pay the years.** So the discipline moves to you, as a standing
+question asked before anything is built: *who sells this as a service, and why
+exactly aren't we buying it?* "Because the agent can build it" is not an answer.
+
+One honest counterweight so the pendulum doesn't overswing: buying has its own
+costs — vendor lock-in, per-unit pricing that scales with success (see 11.4),
+and someone else's outage becoming yours (see 6.7 and the Fastly story). The 2×2
+already prices this in: the answer to "brutal to run *and* differentiating" may
+genuinely be *build* — that's what the tokens are for.
+
+## 🎛️ Direct Your Agent
+
+1. > *"List every capability my product needs — login, payments, email, storage,
+   > search, monitoring, the works. For each: is it differentiating or commodity?
+   > Easy or brutal to run well? Then recommend build or buy with a one-line
+   > reason, and name the 2–3 leading services for every 'buy'."*
+2. Challenge one of its answers — agents sometimes flatter your product by
+   calling commodities "differentiating":
+   > *"Defend why [X] is differentiating for us in two sentences, or reclassify it."*
+3. > *"Add to CLAUDE.md: before implementing any new capability, first answer in
+   > one line — who sells this as a service, and why aren't we buying it? Flag
+   > the answer to me before building."*
+4. Name your innovation tokens:
+   > *"Based on the table, which 2–3 things should we deliberately build and be
+   > excellent at? Write them at the top of docs/architecture.md as our
+   > innovation tokens."*
+
+## ✅ Verify It
+
+- [ ] The capabilities table exists; you read every row and changed at least one
+      classification yourself.
+- [ ] Auth, payments, and email say **buy** — or carry a written justification
+      you'd defend to a skeptical friend.
+- [ ] Your innovation tokens (2–3, no more) are written down, and they describe
+      what users actually choose you for.
+- [ ] The CLAUDE.md rule is in place — and on the next feature, the agent
+      actually surfaced the build-vs-buy question before building. (Test it.)
+
+## 📚 References & further wandering
+
+- Dan McKinley, **"Choose Boring Technology"** — mcfunley.com/choose-boring-technology; the essay this lesson compresses. Read the slides version if you're short on time.
+- Joel Spolsky, **"In Defense of Not-Invented-Here Syndrome"** (2001) — the classic counterweight: build what is your core business competency, whatever it costs.
+- Camille Fournier and others have variations of "innovation tokens" talks — search the term when you want war stories from bigger companies.
+- This course's Module 6.7 (when the services you buy fail) and 11.4 (what buying costs at scale) — the two honest footnotes to every "buy."
+
+---
+
+**End of Module 0.** You now carry the three ideas that make the rest of the
+course land: systems fail at seams; the seams are a short, known list; and the
+fewer non-differentiating things you build, the fewer seams you own. Module 1
+hands you the drawing tools; Module 2 starts defending the first seam — the
+notebook itself.
