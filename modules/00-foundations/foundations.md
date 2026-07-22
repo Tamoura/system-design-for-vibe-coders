@@ -105,6 +105,13 @@ and say, word for word if you like:
 - [ ] Bonus: you can retell the Facebook story and name the step of the four-step
       trip that failed. (Answer: step 1 — the phone book.)
 
+## 🧾 Recap card
+
+- The web is four steps: ask the phone book (DNS), get an address, knock (request), get an answer (response).
+- The internet is computers **plus directions** — Facebook lost only the directions and vanished.
+- Distance is real (ocean-floor cables); the CDN keeps copies close so faraway isn't slow.
+- Every later module zooms into one part of this one picture.
+
 ## 📚 References & further wandering
 
 - Cloudflare Learning Center, **"How does the Internet work?"** — cloudflare.com/learning — the best plain-language explainers on the web.
@@ -195,6 +202,13 @@ of awe; see references.)
       *on*, using the recipe analogy, to someone who's never coded.
 - [ ] You've seen a photo of a real data center and can honestly say "the cloud"
       no longer feels like magic.
+
+## 🧾 Recap card
+
+- A server is just a computer that never goes home; "the cloud" is a building full of them.
+- Code is a recipe; a running program is cooking; a database is the notebook that's never lost.
+- "The code exists" and "the app is up" are different facts — outages hinge on the gap.
+- Nine servers ran a top-100 site: efficiency beats headcount.
 
 ## 📚 References & further wandering
 
@@ -291,6 +305,13 @@ that was almost complete, verified by no one.
 - [ ] You can retell Knight Capital and name the missing discipline (every copy,
       same version, verified) — and say which arrow of the environments diagram
       it lived on.
+
+## 🧾 Recap card
+
+- A repo is your product's full history of saved drafts; a commit is one saved draft with a note.
+- A deploy copies one chosen draft onto the always-on computer; a rollback picks yesterday's.
+- "On my machine" and "live" are different places — the arrow between them is where Knight lost $440M.
+- Every copy, same version, verified: the discipline that one forgotten server broke.
 
 ## 📚 References & further wandering
 
@@ -402,6 +423,13 @@ agent asks before deleting, overwriting, or spending. Set them; test them.
 - [ ] You've rewritten one real instruction into the three-part form and felt the
       difference in what came back.
 
+## 🧾 Recap card
+
+- Your agent has amnesia every session; it knows only its window — CLAUDE.md is the memory you write.
+- Every good instruction has three parts: goal, constraints, and the evidence you demand back.
+- Correct the same thing twice → it becomes a rule, never a third chat correction.
+- Dangerous actions require your explicit yes — test the brakes before you trust them.
+
 ## 📚 References & further wandering
 
 - Anthropic, **Claude Code best practices** (docs.anthropic.com) — the official guide to CLAUDE.md, permissions, and memory.
@@ -498,6 +526,13 @@ The graduation exercise. All five foundation lessons, one run:
 drafts, the director's contract, and evidence-over-trust — that the other
 thirteen modules are built on. From here, the war stories get bigger, the
 diagrams get deeper, and your product gets real.
+
+## 🧾 Recap card
+
+- The pipeline: repo → managed host → real URL → verified by you, from a device that isn't the builder's.
+- "Done" is a claim; evidence is a fact — never accept the claim when evidence is one request away.
+- Evidence comes from where users stand, survives a fresh look, and knows the way back before it's needed.
+- You now hold the five ideas the other thirteen modules are built on.
 
 ## 📚 References & further wandering
 
