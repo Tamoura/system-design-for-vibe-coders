@@ -96,6 +96,13 @@ answer all three is a component claim wearing a system costume.
 - [ ] Your CLAUDE.md now defines "done" as a system claim (evidence from where
       users stand — the F.5 habit, now permanent).
 
+## 🧾 Recap card
+
+- "It works" is a claim about a moment and a machine; a system is a claim about all of them.
+- Components (what the agent writes) work; seams (what nobody wrote) are where products break.
+- Upgrade every "done" to works-where / works-when / works-for-whom.
+- One valid config change met a latent bug and darkened the web — every component "worked."
+
 ## 📚 References & further wandering
 
 - Fastly, **"Summary of June 8 outage"** (2021) — the one-customer global outage, in the company's own words.
@@ -202,6 +209,13 @@ The exercise that turns the map into *your* map:
 - [ ] The famous-case table above: you can retell any three of the eight from
       memory, matching each to its seam.
 - [ ] CLAUDE.md now requires every feature proposal to declare its seams.
+
+## 🧾 Recap card
+
+- Failure isn't exotic: the same eight seams, at startups and giants alike.
+- You don't defend all eight at once — growth activates them in a predictable order (the module order).
+- Each seam has a cheapest moment; the map's job is to catch it there.
+- The threat map is a living conversation with your agent, not a document for a drawer.
 
 ## 📚 References & further wandering
 
@@ -313,6 +327,13 @@ genuinely be *build* — that's what the tokens are for.
       what users actually choose you for.
 - [ ] The CLAUDE.md rule is in place — and on the next feature, the agent
       actually surfaced the build-vs-buy question before building. (Test it.)
+
+## 🧾 Recap card
+
+- Three innovation tokens: build what makes you *you*; buy every solved commodity.
+- Auth, payments, email live in the top-left corner — buy them, always.
+- Agents invert the economics: they quote you the afternoon and you pay the years.
+- Before building any capability: who sells this as a service, and why aren't we buying it?
 
 ## 📚 References & further wandering
 
