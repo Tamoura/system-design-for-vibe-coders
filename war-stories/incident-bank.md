@@ -155,7 +155,7 @@ Status key: 🟢 used in a lesson · ⚪ unassigned
 - **Also found:** The rollup grouped on session *start* timestamp while age was measured on *last* timestamp — a midnight-spanning session could be purged before the aggregate captured it.
 - **Principle:** Ordering turns an irreversible operation into a safe one. Retention and aggregation jobs must key on the same time semantics or boundaries silently lose data.
 
-### ⚪ Concurrent uploads clobbered each other → forced sequential
+### 🟢 Concurrent uploads clobbered each other → forced sequential *(→ Lesson 2.6)*
 - **Symptoms:** Admin bulk upload took 15–30 minutes for 114 files, one at a time, and felt hung.
 - **Root cause:** Server did read-modify-write on one big document per file (`findOne` → push → `save`), so parallel requests dropped each other's files — sequential was the workaround, not the design.
 - **Fix:** Direct-to-storage signed-URL uploads in parallel (independent keys, raceless) + one atomic confirm.

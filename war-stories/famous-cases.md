@@ -48,7 +48,12 @@ These are public, well-documented, and excellent for readers who want to go deep
 - **Lesson:** backups that are never restored are hopes, not backups (they said it themselves); label environments so wrong-server mistakes are hard; transparency turns disaster into trust.
 - **Source:** GitLab's public postmortem ("Postmortem of database outage of January 31").
 
-### The left-pad incident (Mar 22, 2016) *(→ 5.6, 8.x)*
+### Uber's keys in the repo (2016, disclosed 2017) *(→ 5.7)*
+- **What happened:** attackers accessed a private GitHub repo used by Uber engineers and found AWS credentials inside the code; those keys unlocked data on 57 million riders and drivers. Uber then paid the attackers $100k to keep quiet — and the concealment ultimately cost more than the breach, including criminal charges for the CSO.
+- **Lesson:** a secret in a repo is a leak with a delay on it — "private repo" is not a secret manager. And covering up costs more than confessing.
+- **Source:** FTC and DOJ filings; extensive 2017–2022 coverage of the breach and the CSO conviction.
+
+### The left-pad incident (Mar 22, 2016) *(→ 8.4)*
 - **What happened:** a developer unpublished an 11-line npm package (`left-pad`); thousands of projects' builds — including major frameworks — broke worldwide within minutes.
 - **Lesson:** your product includes every dependency you didn't write; supply chain is architecture.
 - **Source:** "How one programmer broke the internet by deleting a tiny piece of code" (Quartz); npm's response post.

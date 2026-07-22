@@ -19,6 +19,19 @@ Coverage policy: the curriculum is a **complete** practical system-design set �
 incident-backed where we have scars, concept-complete everywhere else. Lessons
 without a 🔥 line are concept lessons; as real incidents accumulate they get one.
 
+Tool-dated lessons (7.5, 7.6, 11.5): principles are taught first and survive the
+tools; named products (GA4, Sentry, Cloudflare…) are the current best defaults and
+get an annual refresh pass — each of these lessons says so in its framing.
+
+App track: lessons marked *(app track)* — Module 6's mobile-specific lessons and
+10.4 — matter most if you ship a mobile/TV app; web-only builders may skim and
+return.
+
+Positioning note: this course is honestly **production engineering for
+AI-assisted builders** — not interview-style "system design" (no CAP theorem
+drills, no whiteboard estimation). The name keeps the audience's own word for it;
+marketing should set that expectation explicitly.
+
 Language policy: the course ships **bilingual** — every lesson is authored in
 English (`lesson-N.md`) and Arabic (`lesson-N.ar.md`, RTL). Outline mirrors:
 `OUTLINE.md` / `OUTLINE.ar.md`.
@@ -69,6 +82,12 @@ Why fast code generation makes system design *more* important, not less.
   📐 The eight seams: data, cache, deploy, auth, abuse, clients, observability, cost. Course roadmap as a threat model.
   🔨 Write Relay's one-page "what could kill this" doc.
 
+- **0.3 Build vs buy: the highest-leverage decision you'll make.**
+  🔥 The reference platform's actual ledger: bought the edge (Cloudflare), bought storage (R2), bought email delivery, bought push — built only the domain itself. Every module's disasters happened in *built* things; almost none in bought ones.
+  📐 Dan McKinley's "choose boring technology" and innovation tokens: build what differentiates you, buy every solved commodity (auth, payments, email, queues, monitoring). The 2×2: differentiating? × hard to run? Agents flip the economics trap — they'll happily hand-roll auth in an afternoon, and you'll pay for it for years.
+  🎛️ With your agent, list every capability your product needs; classify each build/buy with a one-line reason; add the CLAUDE.md rule: "before building any capability, first answer: who sells this as a service, and why aren't we buying it?"
+  ✅ The capabilities table exists; auth, payments, and email say "buy" or carry a written justification; you can name your one or two innovation tokens out loud.
+
 ## Module 1 — Anatomy of a Real App
 
 - **1.1 Draw the boxes before the agent writes the code.**
@@ -80,6 +99,12 @@ Why fast code generation makes system design *more* important, not less.
 - **1.2 The request's journey.**
   📐 Trace one GET from browser → CDN → proxy → app → cache → DB and back. Every hop is a place to be wrong.
   🔨 Add request tracing headers to Relay; follow one request end-to-end in the logs.
+
+- **1.3 Day-one eyes: your first error tracker and uptime check.**
+  🔥 The reference platform ran blind for years — 3am failures discovered from user complaints. The fix took one afternoon and should have been day one.
+  📐 Two instruments before any real user: an error tracker (Sentry's free tier) so crashes report themselves, and an external uptime check so a dead site texts you within minutes. Iron rule (full story in 7.6): monitoring never shares fate with what it monitors. This is the primer; the full stack — metrics, dashboards, alert design — is Module 7.
+  🎛️ Direct the agent: wire Sentry with release tags; add a free uptime check on the real URL; then *throw one error on purpose and kill staging on purpose* — watch both alarms arrive.
+  ✅ You broke it deliberately and your phone knew before you refreshed; the test error shows the right release; you can answer "if the server dies right now, what tells us?"
 
 ## Module 2 — Data, Storage & Backups
 
@@ -109,6 +134,12 @@ Why fast code generation makes system design *more* important, not less.
   📐 How indexes actually work (and what they cost); compound indexes; reading a query plan; N+1 queries; why an OLTP database has a "working set" and what evicts it. SQL vs document vs key-value — choosing boring, and when each fits.
   🔨 Add indexes to Relay's two hottest queries; read the query plans before and after; find and fix one N+1.
   🤖 Agents write queries that pass tests on 50 rows and die on 5 million — the standing prompt: "what does this query's plan look like at 10M rows, and which index serves it?"
+
+- **2.6 Two clicks at once: races, transactions, and idempotent writes.**
+  🔥 From the bank: an admin bulk upload where parallel requests silently dropped each other's files — the server read the record, added one file, and wrote it back, so two simultaneous writes erased each other. "Fixed" for months by uploading one at a time.
+  📐 The read-modify-write race, drawn slowly; why "it worked when I tested it" is guaranteed (you tested alone). Transactions as all-or-nothing envelopes; unique constraints as the last line (concurrent signup); idempotency keys so a double-click or a retry can't double-charge. This is the single most common class of AI-generated-code defect.
+  🎛️ Direct the agent: "find every read-modify-write in this codebase and list what happens if two requests interleave"; fix the worst one with an atomic operation or transaction; add a unique constraint where signup could double.
+  ✅ Run the agent's own concurrency test: fire 20 simultaneous copies of the risky action and show the final state is correct; double-click the paid action and show one charge.
 
 ## Module 3 — Caching: the Sharpest Knife in the Drawer
 
@@ -196,7 +227,16 @@ Why fast code generation makes system design *more* important, not less.
   🔨 Run an OWASP-structured self-audit of Relay; fix the top three findings; add a dependency-audit gate to CI.
   🤖 The standing security prompt: "review this diff as an attacker: what can I reach, forge, inject, or exhaust?" — and why security review needs its own pass, separate from correctness review.
 
+- **5.7 Secrets and configuration: the keys to the kingdom.**
+  🔥 Uber, 2016: engineers left AWS keys in code on a private GitHub repo; attackers who got into the repo used the keys to pull data on 57 million riders — then Uber concealed it, and the cover-up cost more than the breach. From our own bank: a signing secret that silently fell back to a hardcoded dev literal (5.4), and an env var whose two audiences broke password resets (5.3).
+  📐 A secret is anything that grants access: API keys, DB passwords, signing tokens. The four laws: never in the repo (git history is forever — one commit is a leak); never in client bundles (everything shipped to a browser/app is public — build-time inlining makes this easy to do by accident, see 4.5); separated per environment; rotatable in minutes (you will leak one eventually — the plan is rotation, not hope). Where secrets actually live: env vars from a manager (host-provided or a vault), plus scanning (gitleaks/GitHub secret scanning) as the tripwire. **This is the #1 vibe-coder failure mode: agents will hardcode keys to make things work.**
+  🎛️ Direct the agent: "scan this repo's full git history for anything that looks like a secret and report — then move every live secret to the host's secret manager, and add a pre-commit secret scan"; then rotate one key on purpose, end to end, and time it.
+  ✅ The history scan ran and you saw its output; a planted fake key in a test commit gets blocked by the hook; you rotated a real key in under 15 minutes; ask the agent "show me every place a secret would appear in what we ship to browsers" — empty.
+
 ## Module 6 — One Backend, Many Clients
+
+*(Lessons 6.1–6.5 are the **app track** — essential if you ship mobile/TV apps;
+web-only builders may skim them and return. 6.6–6.7 are for everyone.)*
 
 - **6.1 The client fleet problem.**
   📐 Web deploys in minutes; mobile releases live for months. API versioning, tolerant readers, force-update gates as the last resort.
@@ -225,7 +265,11 @@ Why fast code generation makes system design *more* important, not less.
   🔨 Wire Google + Apple sign-in into Relay's web and mobile clients against one backend; write the audience table (platform → client ID → token aud).
   🤖 The review question: "which token audiences does this endpoint accept, and which client produces each?"
 
-- **6.6 API design that survives its clients.**
+- **6.7 You are someone's client too: surviving third-party APIs.**
+  🔥 The shape of a thousand first incidents: the payment/AI/SMS provider slows down, your app retries in a tight loop, the provider rate-limits you, your queue of retries becomes a **retry storm** — and somewhere in it, a customer gets charged twice. From our bank: the upload confirm that 502'd *after* storage succeeded (6.6's orphaned files) is this same seam from the other side.
+  📐 Your app is built on other people's APIs (Stripe, OpenAI, Twilio, maps, email) — each one a seam you don't control. The toolkit: timeouts on every call (no timeout = a hung app waiting politely forever); retries **with exponential backoff and jitter**, only for retryable errors; **idempotency keys** on anything that moves money or sends messages (Stripe's header is the canonical example — a retry with the same key can't double-charge); webhooks verified, deduplicated, and safe to replay; a circuit breaker (stop calling a dead service; degrade honestly); and a status answer for "what do users see while the provider is down?"
+  🎛️ Direct the agent: "list every external API we call; for each: timeout? retry policy? idempotency key? what does the user see if it's down for an hour?" Fix the worst gap. Then simulate the provider failing (block the call) and demo the degraded experience.
+  ✅ The external-calls table exists with all four columns filled; you watched the app survive a fake provider outage without a retry storm (call count stays sane); the double-charge test: retry a payment call with the same idempotency key and show one charge.
   🔥 A 502 landed exactly between "files stored" and "upload confirmed" — orphaning files because the confirm wasn't idempotent. And a client that swallowed server error bodies, turning a one-line config fix into a blind debugging session.
   📐 Pagination (cursor vs offset), idempotency keys, partial failure across a two-step boundary, error contracts (machine-readable codes + human messages), consistent envelopes. Rate-limit headers as part of the contract.
   🔨 Give Relay's API cursor pagination, an idempotent upload-confirm, and a single error envelope every client parses.
@@ -283,6 +327,12 @@ Why fast code generation makes system design *more* important, not less.
   📐 A check that can be ignored will be. Fix it or delete it; never let it lie.
   🔨 Add a preflight script to Relay; prove every check can actually fail *and* actually pass.
 
+- **8.4 The software you didn't write: dependencies and supply chain.**
+  🔥 March 2016: one developer unpublished `left-pad` — eleven lines of code — and builds broke across the industry within minutes. And from our bank: all of CI running on a credential-bearing personal machine executing untrusted PR code, with third-party actions pinned only by tag.
+  📐 Your product is mostly code you didn't write: every package, plus *its* packages (the transitive tree), plus the build actions. The risks, plainly: typosquats (one letter off from the real package), abandoned or hijacked maintainers, known CVEs deep in the tree, and install scripts that run on your machine the moment the agent types "install." The toolkit: lockfiles committed and respected; an audit gate in CI (fail on known-critical vulnerabilities); SHA-pinning for build actions; a "new dependency" bar — and the agent rule, because **agents install whatever makes the error go away**: every new package needs a one-line justification, a popularity/maintenance sanity check, and your yes.
+  🎛️ Direct the agent: "list every direct dependency with one line on why we need it, its weekly downloads, and last release date; flag anything unmaintained, near-duplicate, or removable"; run the audit; remove two packages you don't need; add the CI gate and the CLAUDE.md rule.
+  ✅ The dependency ledger exists and you read it; the audit gate is proven (it fails on a planted known-bad version, passes after); the agent asked permission on the next install instead of just installing.
+
 ## Module 9 — Directing an AI Team
 
 - **9.1 You are the architect now.**
@@ -339,7 +389,7 @@ product that grew — with incidents cited where we have them.
   📐 The escalation ladder: indexes → caching → read replicas (and replication lag's lies) → vertical scaling → partitioning/sharding as the last resort. Backup/restore implications at each rung. Why most products never need rung five.
   🔨 Add a read replica to Relay; route analytics reads to it; demonstrate replication lag and handle it honestly.
 
-- **10.4 Realtime: presence, websockets, and heartbeats.**
+- **10.4 Realtime: presence, websockets, and heartbeats.** *(app track)*
   🔥 The live-presence system from the incident bank: heartbeat ZSETs, the FLUSHDB wipe, the client-trusted counter inflation.
   📐 Polling vs SSE vs websockets; presence as soft state that self-heals; capping cardinality; why realtime data must never be your source of truth.
   🔨 Add a "who's online" presence feature to Relay that survives a cache flush and a malicious client.
