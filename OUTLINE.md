@@ -265,15 +265,18 @@ web-only builders may skim them and return. 6.6–6.7 are for everyone.)*
   🔨 Wire Google + Apple sign-in into Relay's web and mobile clients against one backend; write the audience table (platform → client ID → token aud).
   🤖 The review question: "which token audiences does this endpoint accept, and which client produces each?"
 
+
+- **6.6 API design that survives its clients.**
+  🔥 A 502 landed exactly between "files stored" and "upload confirmed" — orphaning files because the confirm wasn't idempotent. And a client that swallowed server error bodies, turning a one-line config fix into a blind debugging session.
+  📐 Pagination (cursor vs offset), idempotency keys, partial failure across a two-step boundary, error contracts (machine-readable codes + human messages), consistent envelopes. Rate-limit headers as part of the contract.
+  🔨 Give Relay's API cursor pagination, an idempotent upload-confirm, and a single error envelope every client parses.
+  🤖 Have the agent generate the API contract table first (endpoint → auth → idempotency → error codes) and implement against it.
+
 - **6.7 You are someone's client too: surviving third-party APIs.**
   🔥 The shape of a thousand first incidents: the payment/AI/SMS provider slows down, your app retries in a tight loop, the provider rate-limits you, your queue of retries becomes a **retry storm** — and somewhere in it, a customer gets charged twice. From our bank: the upload confirm that 502'd *after* storage succeeded (6.6's orphaned files) is this same seam from the other side.
   📐 Your app is built on other people's APIs (Stripe, OpenAI, Twilio, maps, email) — each one a seam you don't control. The toolkit: timeouts on every call (no timeout = a hung app waiting politely forever); retries **with exponential backoff and jitter**, only for retryable errors; **idempotency keys** on anything that moves money or sends messages (Stripe's header is the canonical example — a retry with the same key can't double-charge); webhooks verified, deduplicated, and safe to replay; a circuit breaker (stop calling a dead service; degrade honestly); and a status answer for "what do users see while the provider is down?"
   🎛️ Direct the agent: "list every external API we call; for each: timeout? retry policy? idempotency key? what does the user see if it's down for an hour?" Fix the worst gap. Then simulate the provider failing (block the call) and demo the degraded experience.
   ✅ The external-calls table exists with all four columns filled; you watched the app survive a fake provider outage without a retry storm (call count stays sane); the double-charge test: retry a payment call with the same idempotency key and show one charge.
-  🔥 A 502 landed exactly between "files stored" and "upload confirmed" — orphaning files because the confirm wasn't idempotent. And a client that swallowed server error bodies, turning a one-line config fix into a blind debugging session.
-  📐 Pagination (cursor vs offset), idempotency keys, partial failure across a two-step boundary, error contracts (machine-readable codes + human messages), consistent envelopes. Rate-limit headers as part of the contract.
-  🔨 Give Relay's API cursor pagination, an idempotent upload-confirm, and a single error envelope every client parses.
-  🤖 Have the agent generate the API contract table first (endpoint → auth → idempotency → error codes) and implement against it.
 
 ## Module 7 — Observability: You Can't Fix What You Can't See
 

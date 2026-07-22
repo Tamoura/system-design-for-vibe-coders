@@ -1,7 +1,8 @@
 # Module 0 — The Vibe Coder's Gap
 
-*Two short lessons that reframe everything: why "it works" and "it's a system"
-are different claims, and the map of the eight seams where systems actually break.*
+*Three lessons that reframe everything: why "it works" and "it's a system" are
+different claims, the map of the eight seams where systems actually break, and
+build-vs-buy — the decision that sets how many seams you own.*
 
 ---
 

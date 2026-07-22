@@ -243,7 +243,7 @@ Accept this lesson as done only when every box is checked — none requires read
 
 ---
 
-## Recap card
+## 🧾 Recap card
 
 - Seven boxes: client, CDN, proxy, app, cache, database, object storage. One job each.
 - Every box lies; the incident bank is a catalog of the lies.

@@ -223,7 +223,7 @@ No code reading required — accept the lesson only when:
 
 ---
 
-## Recap card
+## 🧾 Recap card
 
 - Eleven stops, six owners; a "backend bug" can live at any of them.
 - Bisect outside-in: origin-direct, then process-direct, then logs, then data —
