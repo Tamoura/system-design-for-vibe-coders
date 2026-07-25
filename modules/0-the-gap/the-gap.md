@@ -286,6 +286,15 @@ and brutal (security, deliverability, compliance, edge cases measured in
 decades). Building any of them yourself is spending an innovation token on
 being worse than the free tier of a company that does only this.
 
+"Buy" also means *buy the one that fits your market*. Payments is the clearest
+case: a global product reaches for **Stripe** or **Paddle**, but if your users
+are in the Gulf or the wider Arab world, the right "buy" is a regional processor
+that actually supports local cards, currencies, and mada/KNET — **Tap, Moyasar,
+or HyperPay**. Same lesson, localized: you are still buying, not building — you're
+just buying the provider your customers can actually pay through. (The same
+market lens applies to SMS and, as you'll see in 5.5, to email deliverability
+into Arab inboxes.)
+
 **Why this lesson exists in a vibe-coding course:** agents invert the old
 economics. Hand-rolling auth used to cost three weeks — a natural deterrent.
 Your agent will do it in an afternoon, competently-looking, tests green. The

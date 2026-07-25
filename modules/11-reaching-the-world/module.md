@@ -266,6 +266,18 @@ ships every lesson in English and RTL Arabic — the discipline is not theoretic
   and use locale-aware comparison — the search-miss half of the war story is this
   rule unlearned.
 
+**The Arabic edition of that rule** — because it's likely your market. Arabic has
+its own normalization landmines, and they're exactly what caused our real
+search-miss: the alef forms (أ / إ / آ collapse to ا), taa marbuta vs haa
+(ة / ه), the tatweel stretch character (ـ), and optional diacritics (harakat) all
+mean the *same word* is typed several byte-different ways. If you don't normalize
+them to one form on both write and search, a user searching a valid Arabic term
+gets zero results and assumes your product is empty. Two more Arab-market
+specifics worth a line: Arabic-Indic numerals (٠١٢٣ vs 0123 — accept both on
+input, and pick a display form per locale), and the Hijri calendar, which many
+users expect alongside Gregorian. `Intl` handles the display side; the
+normalization side is yours to own.
+
 ## 🎛️ Direct Your Agent
 
 Relay is about to speak two languages, one of them RTL.

@@ -383,6 +383,11 @@ column is the same length and takes thirty extra seconds. The evidence clause is
 the one that changes your life: it converts "the agent says it's done" into
 "I watched it be true."
 
+> **⚠️ Common pitfall:** writing a vague ask like "make it professional," then
+> being surprised the agent guessed an intent that wasn't yours. The agent can't
+> read your mind — only your words. The more precise the ask, the less it guesses,
+> and the less you fix afterward.
+
 **3. Corrections become rules — the ratchet.**
 The second time you correct the agent about the same thing, the correction goes
 into CLAUDE.md (or better, a mechanical rule it can't ignore). Never correct the

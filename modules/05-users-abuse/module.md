@@ -732,6 +732,17 @@ Protecting reputation is why owned From addresses, authentication records (SPF,
 DKIM, DMARC), and abuse limits aren't optional niceties — they're what keeps your
 critical mail deliverable.
 
+**A note if your users are in the Arab world.** Deliverability isn't universal —
+it's per-inbox-provider, and the mix in MENA leans heavily on Gmail plus regional
+and ISP mailboxes, where a cold sending domain lands in spam fast. Two practical
+consequences: (1) the three authentication records above (SPF, DKIM, DMARC) are
+not optional here — send without them and Arab inboxes will quietly junk you from
+day one; and (2) if you send Arabic content, keep the message genuinely bilingual
+and clean (a good subject line, real unsubscribe, no link-shorteners), because
+Arabic marketing mail is aggressively filtered. The provider you *buy* (Resend,
+SES, Postmark…) handles the plumbing, but the reputation is still yours to protect
+in the market you actually send to.
+
 ### 3. Verification and reset flows are security surfaces
 
 The links in these emails are keys. A password-reset link is a temporary
