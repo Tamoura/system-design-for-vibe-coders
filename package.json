@@ -1,0 +1,16 @@
+{
+  "name": "system-design-for-vibe-coders",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production engineering for AI-assisted builders — a bilingual (EN/AR) written course anchored in real production incidents.",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/build.mjs --check"
+  },
+  "devDependencies": {
+    "marked": "^15.0.7",
+    "mermaid": "^11.4.1",
+    "puppeteer": "^24.2.0"
+  }
+}

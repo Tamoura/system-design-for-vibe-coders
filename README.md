@@ -70,6 +70,22 @@ The course is **bilingual**: every document ships in English and Arabic (RTL).
 English files are the source of truth during drafting; Arabic mirrors live beside
 them (`README.ar.md`, `OUTLINE.ar.md`, `lesson-N.ar.md`).
 
+## Reading it as one page
+
+The whole course also builds into a single self-contained page, [`index.html`](./index.html) —
+all 68 lessons in both languages, with a language toggle, a clickable course map, dark mode,
+and every diagram pre-rendered. Open the file in a browser; it needs no server and no network.
+
+```
+npm install     # once — marked, mermaid, puppeteer (build-time only)
+npm run build   # regenerate index.html from the markdown
+npm run check   # fail if index.html is out of date (for CI)
+```
+
+**The markdown under `modules/` is the source of truth.** `index.html` is generated output —
+never edit it by hand; edit the lesson and rebuild. The build fails loudly if a module's
+English and Arabic lesson counts diverge, or if any Mermaid diagram fails to render.
+
 ## Status
 
 Early draft. Outline complete; lessons being written module by module.
