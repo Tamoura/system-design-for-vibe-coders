@@ -45,20 +45,20 @@ See [OUTLINE.md](./OUTLINE.md) for the full module-by-module curriculum, and [wa
 
 | # | Module | The wall you hit |
 |---|--------|------------------|
-| F | Part 0: Foundations | You don't code — and you don't need to. Start here. |
+| F | Part 0: Foundations | You don't code — and you don't need to. No prerequisites. |
 | 0 | The Vibe Coder's Gap | "It works" and "it's a system" are different claims |
 | 1 | Anatomy of a Real App | You can't reason about what you can't draw |
 | 2 | Data, Storage & Backups | The database is not the only thing that can lose data |
-| 3 | Caching — the Sharpest Knife | Every cache is a bug you haven't met yet |
+| 3 | Caching: the Sharpest Knife in the Drawer | Every cache is a bug you haven't met yet |
 | 4 | Deploys Without Downtime | Shipping is a system, not a command |
 | 5 | Real Users, Real Abuse | Rate limits, auth, and the first attacker |
 | 6 | One Backend, Many Clients | Web, mobile, TV — and the update problem |
 | 7 | Observability | You can't fix what you can't see |
 | 8 | Safety Nets for AI-Generated Code | Tests, guardrails, and git hygiene at agent speed |
 | 9 | Directing an AI Team | Specs, context engineering, and review-to-guardrail |
-| 10 | Scaling Beyond One Server | Load balancing, queues, DB scaling, realtime, performance |
+| 10 | Scaling Beyond One Server | The classic scaling canon, through the lens of a product that grew |
 | 11 | Reaching the World | DNS & TLS, i18n & RTL, SEO & sitemaps, cost engineering |
-| 12 | Capstone: Incident Response | You get paged. Diagnose it. |
+| 12 | Capstone: You Get Paged | Symptoms only. Diagnose it. |
 
 The curriculum is a **complete** practical system-design set: incident-backed where
 we have scars, concept-complete everywhere else (lessons without a war story are
