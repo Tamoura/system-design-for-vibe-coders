@@ -96,6 +96,13 @@ npm run dist    # the above, plus PDF and EPUB per language into dist/
 npm run check   # fail if the committed HTML is out of date (used by CI)
 ```
 
+`check` compares a fingerprint of the sources — lessons, README tables, glossaries, and the
+build's own templates — against the one embedded in each committed page. It deliberately does
+not diff the rendered bytes: Mermaid sizes its boxes by measuring text, so the same input
+renders to different SVG geometry on a machine with different fonts. The fingerprint answers
+the question that actually matters ("was this page built from this markdown?") in half a
+second, without launching a browser.
+
 **The markdown under `modules/` is the source of truth.** Everything above is generated
 output — never edit it by hand; edit the lesson and rebuild. The build fails loudly if a
 module's English and Arabic lesson counts diverge, if any Mermaid diagram fails to render,

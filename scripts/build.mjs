@@ -14,6 +14,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
 import puppeteer from 'puppeteer';
@@ -80,6 +81,28 @@ const T = {
     contents: 'المحتويات',
   },
 };
+
+/* Fingerprint of everything the output is derived from: the lessons, the
+   README tables, the glossaries, and this build's own templates.
+   `--check` compares this against the committed pages instead of diffing the
+   rendered bytes — Mermaid sizes its boxes by measuring text, so identical
+   input renders to different SVG geometry on a machine with different fonts,
+   and a byte comparison would fail on CI while passing locally. */
+const SOURCE_FILES = [
+  'README.md', 'README.ar.md', 'GLOSSARY.md', 'GLOSSARY.ar.md',
+  'scripts/build.mjs', 'scripts/style.css', 'scripts/print.css',
+];
+const SOURCE_DIGEST = (() => {
+  const h = crypto.createHash('sha256');
+  const files = [...SOURCE_FILES];
+  for (const mod of MODULES) {
+    for (const f of mod.files) {
+      files.push(`modules/${mod.dir}/${f}`, `modules/${mod.dir}/${f.replace(/\.md$/, '.ar.md')}`);
+    }
+  }
+  for (const f of files.sort()) h.update(f).update('\0').update(fs.readFileSync(path.join(ROOT, f)));
+  return h.digest('hex').slice(0, 16);
+})();
 
 const LESSON_RE = /^((?:F|\d+)\.\d+|12)\s+—\s+(.+)$/;
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -340,6 +363,7 @@ const docShell = ({ lang, dir, title, css, body, scripts = '' }) => `<!doctype h
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="sd4vc-source" content="${SOURCE_DIGEST}">
 <title>${esc(title)}</title>
 <style>
 ${css}
@@ -708,6 +732,23 @@ C.diagramCount = MODULES.reduce((n, mod) => n + mod.files.reduce((m, f) => {
   return m + (md.match(/```mermaid/g) || []).length;
 }, 0), 0);
 
+/* Staleness is a question about the source, not the pixels, so answer it from
+   the fingerprint and skip the browser entirely. */
+if (CHECK) {
+  const stale = ['index.html', 'index.en.html', 'index.ar.html'].filter((f) => {
+    const p = path.join(ROOT, f);
+    if (!fs.existsSync(p)) return true;
+    const m = fs.readFileSync(p, 'utf8').match(/<meta name="sd4vc-source" content="([^"]+)">/);
+    return !m || m[1] !== SOURCE_DIGEST;
+  });
+  if (stale.length) {
+    console.error(`out of date — run \`npm run build\`: ${stale.join(', ')}`);
+    process.exit(1);
+  }
+  console.log(`generated pages are up to date (source ${SOURCE_DIGEST}).`);
+  process.exit(0);
+}
+
 /* Emit every page first so all placeholders exist, then render each distinct
    diagram once and inline the SVG into whichever outputs reference it. */
 const pages = {
@@ -724,23 +765,11 @@ if (failed.length) {
 }
 for (const f of Object.keys(pages)) pages[f] = inlineDiagrams(pages[f]);
 
-if (CHECK) {
-  const stale = Object.keys(pages).filter((f) => {
-    const p = path.join(ROOT, f);
-    return !fs.existsSync(p) || fs.readFileSync(p, 'utf8') !== pages[f];
-  });
-  if (stale.length) {
-    console.error(`out of date — run \`npm run build\`: ${stale.join(', ')}`);
-    process.exit(1);
-  }
-  console.log('generated pages are up to date.');
-} else {
-  for (const [file, html] of Object.entries(pages)) {
-    fs.writeFileSync(path.join(ROOT, file), html);
-    console.log(`${file.padEnd(24)} ${(html.length / 1e6).toFixed(1)} MB`);
-  }
-  console.log(`${C.lessonCount} lessons × 2 languages · ${diagramIds.size} diagrams`);
+for (const [file, html] of Object.entries(pages)) {
+  fs.writeFileSync(path.join(ROOT, file), html);
+  console.log(`${file.padEnd(24)} ${(html.length / 1e6).toFixed(1)} MB`);
 }
+console.log(`${C.lessonCount} lessons × 2 languages · ${diagramIds.size} diagrams · source ${SOURCE_DIGEST}`);
 
 if (WANT_PDF || WANT_EPUB) fs.mkdirSync(DIST, { recursive: true });
 
