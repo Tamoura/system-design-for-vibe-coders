@@ -70,21 +70,43 @@ The course is **bilingual**: every document ships in English and Arabic (RTL).
 English files are the source of truth during drafting; Arabic mirrors live beside
 them (`README.ar.md`, `OUTLINE.ar.md`, `lesson-N.ar.md`).
 
-## Reading it as one page
+## Reading it
 
-The whole course also builds into a single self-contained page, [`index.html`](./index.html) —
-all 68 lessons in both languages, with a language toggle, a clickable course map, dark mode,
-and every diagram pre-rendered. Open the file in a browser; it needs no server and no network.
+The whole course builds into several self-contained editions. Read online at
+**[tamoura.github.io/system-design-for-vibe-coders](https://tamoura.github.io/system-design-for-vibe-coders/)**,
+or take it with you:
+
+| Edition | File | What it's for |
+|---|---|---|
+| Bilingual page | [`index.html`](./index.html) | Everything, with a language toggle |
+| English page | [`index.en.html`](./index.en.html) | Single language, half the weight |
+| Arabic page | [`index.ar.html`](./index.ar.html) | Single language, RTL throughout |
+| PDF | `course-en.pdf` · `course-ar.pdf` | Print and offline reading (~350pp) |
+| EPUB | `course-en.epub` · `course-ar.epub` | E-readers and Kindle |
+
+Every edition carries all 68 lessons with the diagrams pre-rendered — no server, no network,
+no CDN. The HTML pages also have a clickable course map, the glossary appendix, and dark mode.
+PDF and EPUB are published with each release rather than committed; build them locally with
+`npm run dist`.
 
 ```
-npm install     # once — marked, mermaid, puppeteer (build-time only)
-npm run build   # regenerate index.html from the markdown
-npm run check   # fail if index.html is out of date (for CI)
+npm install     # once — marked, mermaid, puppeteer, archiver (build-time only)
+npm run build   # regenerate the HTML pages from the markdown
+npm run dist    # the above, plus PDF and EPUB per language into dist/
+npm run check   # fail if the committed HTML is out of date (used by CI)
 ```
 
-**The markdown under `modules/` is the source of truth.** `index.html` is generated output —
-never edit it by hand; edit the lesson and rebuild. The build fails loudly if a module's
-English and Arabic lesson counts diverge, or if any Mermaid diagram fails to render.
+`check` compares a fingerprint of the sources — lessons, README tables, glossaries, and the
+build's own templates — against the one embedded in each committed page. It deliberately does
+not diff the rendered bytes: Mermaid sizes its boxes by measuring text, so the same input
+renders to different SVG geometry on a machine with different fonts. The fingerprint answers
+the question that actually matters ("was this page built from this markdown?") in half a
+second, without launching a browser.
+
+**The markdown under `modules/` is the source of truth.** Everything above is generated
+output — never edit it by hand; edit the lesson and rebuild. The build fails loudly if a
+module's English and Arabic lesson counts diverge, if any Mermaid diagram fails to render,
+or if an EPUB document is not well-formed XHTML.
 
 ## Status
 

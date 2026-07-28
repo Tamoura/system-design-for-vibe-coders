@@ -1,0 +1,64 @@
+name: Publish course
+
+# Builds every distributable form of the course and publishes it to GitHub Pages.
+# The committed HTML is verified against the markdown first, so a stale page
+# fails the run instead of quietly shipping.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify the committed HTML matches the markdown
+        run: npm run check
+
+      - name: Build PDF and EPUB editions
+        run: npm run dist
+
+      - name: Assemble the site
+        run: |
+          mkdir -p _site
+          cp index.html index.en.html index.ar.html _site/
+          cp dist/course-en.pdf dist/course-ar.pdf _site/
+          cp dist/course-en.epub dist/course-ar.epub _site/
+          ls -lh _site
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    # Only the default branch publishes; pull requests stop after the build.
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
