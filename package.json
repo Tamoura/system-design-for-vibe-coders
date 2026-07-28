@@ -6,9 +6,11 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
+    "dist": "node scripts/build.mjs --all",
     "check": "node scripts/build.mjs --check"
   },
   "devDependencies": {
+    "archiver": "^7.0.1",
     "marked": "^15.0.7",
     "mermaid": "^11.4.1",
     "puppeteer": "^24.2.0"

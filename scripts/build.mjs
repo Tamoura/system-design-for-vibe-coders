@@ -1,24 +1,30 @@
 #!/usr/bin/env node
 /**
- * Builds index.html — the whole bilingual course as one self-contained page —
- * from the module markdown.
+ * Builds every distributable form of the course from the module markdown.
  *
- * The markdown under modules/ is the source of truth. This script only renders
- * it, so nothing can drift: run `npm run build` after editing any lesson.
- * `npm run check` rebuilds in memory and fails if index.html is out of date.
+ *   npm run build   index.html (bilingual) + index.en.html + index.ar.html
+ *   npm run dist    the above, plus PDF and EPUB per language into dist/
+ *   npm run check   rebuild in memory; fail if the committed HTML is stale
  *
- * Mermaid diagrams are pre-rendered to inline SVG in a headless browser, so the
- * output page needs no network at runtime.
+ * The markdown under modules/ is the source of truth. Everything here is
+ * generated output — never hand-edit it, edit the lesson and rebuild.
+ *
+ * Mermaid diagrams are pre-rendered to inline SVG in a headless browser, so
+ * every output is self-contained and needs no network at read time.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
 import puppeteer from 'puppeteer';
+import archiver from 'archiver';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const OUT = path.join(ROOT, 'index.html');
-const CHECK = process.argv.includes('--check');
+const DIST = path.join(ROOT, 'dist');
+const argv = process.argv.slice(2);
+const CHECK = argv.includes('--check');
+const WANT_PDF = argv.includes('--pdf') || argv.includes('--all');
+const WANT_EPUB = argv.includes('--epub') || argv.includes('--all');
 
 /* Course order. Lessons are gathered from every file listed and then sorted by
    lesson number, so a module split across files (3.2 lives on its own) still
@@ -51,22 +57,61 @@ const PILLARS = [
   { emoji: '📚', box: 'refs',         label: { en: 'References', ar: 'المراجع' } },
 ];
 
+const T = {
+  en: {
+    title: 'System Design for Vibe Coders', dir: 'ltr',
+    eyebrow: 'The complete course · English', appendix: 'Appendix', map: 'Map', mapTitle: 'Course map',
+    modWord: (k) => (k === 'F' ? 'Part 0' : `Module ${k}`),
+    blurb: `Production engineering for AI-assisted builders. Every lesson is anchored in a real
+  incident — from a real product's war-story bank or a famous industry outage — then turned
+  into a principle, literal prompts to give your agent, and an evidence checklist so you can
+  verify the work without reading code.`,
+    mapBlurb: 'Fourteen modules, in the order a real product forces them on you. Click a module to see its lessons; click a lesson to jump to it.',
+    stats: ['modules', 'lessons', 'languages', 'diagrams'],
+    contents: 'Contents',
+  },
+  ar: {
+    title: 'تصميم الأنظمة لمبرمجي الفايب', dir: 'rtl',
+    eyebrow: 'الدورة كاملة · العربية', appendix: 'ملحق', map: 'الخريطة', mapTitle: 'خريطة الدورة',
+    modWord: (k) => (k === 'F' ? 'الجزء 0' : `الوحدة ${k}`),
+    blurb: 'هندسة الإنتاج لمن يبني بمساعدة الذكاء الاصطناعي. كل درس يبدأ من حادثة حقيقية — من بنك حوادث منتج حقيقي أو عطل صناعي شهير — ثم يتحول إلى مبدأ، وتعليمات حرفية توجّه بها وكيلك، وقائمة أدلة تتحقق بها من العمل دون قراءة كود.',
+    mapBlurb: 'أربع عشرة وحدة، بالترتيب الذي يفرضه المنتج الحقيقي. اضغط على الوحدة لترى دروسها، وعلى الدرس للانتقال إليه.',
+    stats: ['وحدة', 'درسًا', 'لغتان', 'مخططًا'],
+    contents: 'المحتويات',
+  },
+};
+
 const LESSON_RE = /^((?:F|\d+)\.\d+|12)\s+—\s+(.+)$/;
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 /** Anchor for a lesson: "F.1" -> lF-1, "10.3" -> l10-3, "12" -> l12. */
 const anchor = (num) => 'l' + num.replace('.', '-');
 
+/* ---------------------------------------------------------------- diagrams */
+
+/* Every distinct Mermaid source gets one id, so rendering the same lesson into
+   several outputs reuses one SVG instead of re-registering it. */
+const diagramIds = new Map();
+const diagramId = (src) => {
+  if (!diagramIds.has(src)) diagramIds.set(src, diagramIds.size);
+  return diagramIds.get(src);
+};
+let SVGS = [];
+
+const inlineDiagrams = (html) =>
+  html.replace(/<div data-diagram="(\d+)"><\/div>/g, (_, i) => {
+    const svg = SVGS[+i];
+    return typeof svg === 'string'
+      ? `<figure class="diagram">${svg}</figure>`
+      : `<figure class="diagram"><pre>${esc([...diagramIds.keys()][+i])}</pre></figure>`;
+  });
+
 /* ---------------------------------------------------------------- markdown */
 
-const diagrams = [];   // mermaid source, in document order; index === placeholder id
-
 /** Links in the markdown are written for GitHub; retarget them for one page. */
-function retargetLinks(md) {
-  return md
-    .replace(/\]\((?:\.\.\/)*\.?\/?GLOSSARY(?:\.ar)?\.md\)/g, '](#glossary)')
-    .replace(/\]\((?:\.\.\/)+([^)]+)\)/g, ']($1)');
-}
+const retargetLinks = (md) => md
+  .replace(/\]\((?:\.\.\/)*\.?\/?GLOSSARY(?:\.ar)?\.md\)/g, '](#glossary)')
+  .replace(/\]\((?:\.\.\/)+([^)]+)\)/g, ']($1)');
 
 /** Split a file on top-level `# ` headings, ignoring anything inside a fence. */
 function splitBlocks(md) {
@@ -100,14 +145,11 @@ const trim = (s) => s.replace(/^\s*(?:---\s*)?\n?/, '').replace(/\n\s*---\s*$/, 
 
 /** Markdown -> HTML for one chunk: diagrams pulled out, headings pushed down. */
 function render(md) {
-  const withPlaceholders = md.replace(/```mermaid\n([\s\S]*?)```/g, (_, code) => {
-    const i = diagrams.push(code.trim()) - 1;
-    return `\n<div data-diagram="${i}"></div>\n`;
-  });
+  const withPlaceholders = md.replace(/```mermaid\n([\s\S]*?)```/g,
+    (_, code) => `\n<div data-diagram="${diagramId(code.trim())}"></div>\n`);
   let html = marked.parse(retargetLinks(withPlaceholders), { async: false, gfm: true, breaks: false });
   html = html.replace(/<(\/?)h([1-5])(\s[^>]*)?>/g, (_, slash, n, rest) => `<${slash}h${+n + 1}${rest || ''}>`);
-  html = html.replace(/<table>/g, '<div class="table-scroll"><table>').replace(/<\/table>/g, '</table></div>');
-  return html;
+  return html.replace(/<table>/g, '<div class="table-scroll"><table>').replace(/<\/table>/g, '</table></div>');
 }
 
 /** One `## ` section -> its pillar heading or coloured box. */
@@ -124,8 +166,7 @@ function renderSection(section, lang) {
   // "The Story: the day Facebook forgot where it lived" -> keep the subtitle only;
   // the tag chip already says which pillar this is.
   const m = rest.match(/^[^:—]*[:：]\s*(.+)$/) || rest.match(/^[^—]*—\s*(.+)$/);
-  const subtitle = m ? m[1].trim() : '';
-  return `<h3 class="${pillar.cls}"><span class="tag">${esc(pillar.label[lang])}</span>${esc(subtitle)}</h3>\n${inner}`;
+  return `<h3 class="${pillar.cls}"><span class="tag">${esc(pillar.label[lang])}</span>${esc(m ? m[1].trim() : '')}</h3>\n${inner}`;
 }
 
 /** Parse one module's markdown for a language into {intro, lessons}. */
@@ -142,11 +183,10 @@ function parseModule(mod, lang) {
       const m = block.heading.match(LESSON_RE);
       if (m) {
         let body = trim(block.body);
-        // A leading *italic line* is the module kicker, not prose.
         let kicker = '';
-        const k = body.match(/^\*([^*\n][^\n]*)\*\s*(?:\n|$)/);
+        const k = body.match(/^\*([^*\n][^\n]*)\*\s*(?:\n|$)/);   // leading *italic* is the module kicker
         if (k) { kicker = k[1].trim(); body = trim(body.slice(k[0].length)); }
-        lessons.push({ num: m[1], title: m[2].trim(), kicker, body });
+        lessons.push({ num: m[1], title: m[2].trim(), kicker, body, lang });
       } else if (!intro) {
         intro = { title: block.heading, html: render(trim(block.body)) };
       }
@@ -215,15 +255,25 @@ async function renderDiagrams(sources) {
   }
 }
 
-/* -------------------------------------------------------------------- page */
+/* ------------------------------------------------------------- html pieces */
 
-const pair = (en, ar) =>
-  `<div class="en-only">${en}</div>\n<div class="ar-only" lang="ar" dir="rtl">${ar}</div>`;
+const CSS = () => fs.readFileSync(path.join(ROOT, 'scripts/style.css'), 'utf8');
+const PRINT_CSS = () => fs.readFileSync(path.join(ROOT, 'scripts/print.css'), 'utf8');
 
-function lessonArticle(lesson, mod, walls, lang) {
+/** Wrap a per-language pair for a page that carries one language or both. */
+function block(parts, langs) {
+  if (langs.length === 1) {
+    return langs[0] === 'ar' ? `<div lang="ar" dir="rtl">${parts.ar}</div>` : parts.en;
+  }
+  return `<div class="en-only">${parts.en}</div>\n<div class="ar-only" lang="ar" dir="rtl">${parts.ar}</div>`;
+}
+
+function lessonArticle(lesson, langs) {
+  const cls = langs.length === 1
+    ? (lesson.lang === 'ar' ? 'lesson-full" lang="ar" dir="rtl' : 'lesson-full')
+    : (lesson.lang === 'ar' ? 'lesson-full ar-only" lang="ar" dir="rtl' : 'lesson-full en-only');
   const kicker = lesson.kicker ? `<p class="kicker">${esc(lesson.kicker)}</p>` : '';
-  const sections = splitSections(lesson.body).map((s) => renderSection(s, lang)).join('\n');
-  const cls = lang === 'ar' ? 'lesson-full ar-only" lang="ar" dir="rtl' : 'lesson-full en-only';
+  const sections = splitSections(lesson.body).map((s) => renderSection(s, lesson.lang)).join('\n');
   return `<article class="${cls}">
 ${kicker}
 <h2>${esc(lesson.num)} — ${esc(lesson.title)}</h2>
@@ -231,98 +281,149 @@ ${sections}
 </article>`;
 }
 
-function build(en, ar, wallsEn, wallsAr, glossEn, glossAr) {
+function moduleDivider(mod, C, langs) {
+  const parts = {};
+  for (const lang of ['en', 'ar']) {
+    const w = C.walls[lang][mod.key];
+    const intro = C[lang][mod.key].intro;
+    parts[lang] = `<p class="eyebrow">${T[lang].modWord(mod.key)}</p><h2>${esc(w.title)}</h2>` +
+      (intro ? `<div class="mod-intro">${intro.html}</div>` : '');
+  }
+  return `<section class="mod-div" id="m${mod.key}"><div class="wrap">
+${block(parts, langs)}
+</div></section>`;
+}
+
+function tocFor(C, langs) {
+  return MODULES.map((mod) => {
+    const items = C.en[mod.key].lessons.map((l, i) => {
+      const arL = C.ar[mod.key].lessons[i] || l;
+      const titles = langs.length === 1
+        ? esc(langs[0] === 'ar' ? arL.title : l.title)
+        : `<span class="en-only">${esc(l.title)}</span><span class="ar-only" lang="ar" dir="rtl">${esc(arL.title)}</span>`;
+      return `<li><a href="#${anchor(l.num)}"><span class="lno">${esc(l.num)}</span>${titles}</a></li>`;
+    }).join('');
+    const heads = {};
+    for (const lang of ['en', 'ar']) {
+      const w = C.walls[lang][mod.key];
+      heads[lang] = `${esc(w.title)}<span class="twall">${esc(w.wall)}</span>`;
+    }
+    const summary = langs.length === 1
+      ? (langs[0] === 'ar' ? `<span lang="ar" dir="rtl">${heads.ar}</span>` : heads.en)
+      : `<span class="en-only">${heads.en}</span>\n<span class="ar-only" lang="ar" dir="rtl">${heads.ar}</span>`;
+    return `<details class="toc-mod" id="t${mod.key}">
+<summary><span class="tnum">${mod.key}</span><span class="ttl">
+${summary}
+</span></summary><ol class="toc-lessons">${items}</ol></details>`;
+  }).join('\n');
+}
+
+function heroFor(C, langs) {
+  const parts = {};
+  for (const lang of ['en', 'ar']) {
+    const t = T[lang];
+    const stats = [MODULES.length, C.lessonCount, 2, C.diagramCount]
+      .map((v, i) => `<div><b>${v}</b><span>${t.stats[i]}</span></div>`).join('');
+    const eyebrow = langs.length > 1
+      ? (lang === 'en' ? 'The complete course · Bilingual · English / العربية' : 'الدورة كاملة · بلغتين · English / العربية')
+      : t.eyebrow;
+    parts[lang] = `<p class="eyebrow">${eyebrow}</p>
+  <h1>${esc(t.title)}</h1>
+  <p>${t.blurb}</p>
+  <div class="stats">${stats}</div>`;
+  }
+  return block(parts, langs);
+}
+
+const docShell = ({ lang, dir, title, css, body, scripts = '' }) => `<!doctype html>
+<html lang="${lang}"${dir ? ` dir="${dir}"` : ''}>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${esc(title)}</title>
+<style>
+${css}
+</style>
+</head>
+<body>
+${body}
+${scripts}
+</body>
+</html>
+`;
+
+/* --------------------------------------------------------- the reading app */
+
+function appPage(C, langs) {
+  const bilingual = langs.length > 1;
+  const primary = bilingual ? 'en' : langs[0];
+
   const chips = [...MODULES.map((m) => `<a class="chip" href="#m${m.key}">${m.key}</a>`),
     '<a class="chip" href="#glossary" title="Glossary">📖</a>'].join('');
 
-  const toc = MODULES.map((mod) => {
-    const e = wallsEn[mod.key], a = wallsAr[mod.key];
-    const items = en[mod.key].lessons.map((l, i) => {
-      const arL = ar[mod.key].lessons[i];
-      return `<li><a href="#${anchor(l.num)}"><span class="lno">${esc(l.num)}</span>` +
-        `<span class="en-only">${esc(l.title)}</span>` +
-        `<span class="ar-only" lang="ar" dir="rtl">${esc(arL ? arL.title : l.title)}</span></a></li>`;
-    }).join('');
-    return `<details class="toc-mod" id="t${mod.key}">
-<summary><span class="tnum">${mod.key}</span><span class="ttl">
-<span class="en-only">${esc(e.title)}<span class="twall">${esc(e.wall)}</span></span>
-<span class="ar-only" lang="ar" dir="rtl">${esc(a.title)}<span class="twall">${esc(a.wall)}</span></span>
-</span></summary><ol class="toc-lessons">${items}</ol></details>`;
-  }).join('\n');
-
   const templates = MODULES.map((mod) => {
-    const e = wallsEn[mod.key], a = wallsAr[mod.key];
-    const divider = `<section class="mod-div" id="m${mod.key}"><div class="wrap">
-${pair(
-    `<p class="eyebrow">${mod.key === 'F' ? 'Part 0' : 'Module ' + mod.key}</p><h2>${esc(e.title)}</h2>` +
-      (en[mod.key].intro ? `<div class="mod-intro">${en[mod.key].intro.html}</div>` : ''),
-    `<p class="eyebrow">${mod.key === 'F' ? 'الجزء 0' : 'الوحدة ' + mod.key}</p><h2>${esc(a.title)}</h2>` +
-      (ar[mod.key].intro ? `<div class="mod-intro">${ar[mod.key].intro.html}</div>` : ''))}
-</div></section>`;
-
-    const lessons = en[mod.key].lessons.map((l, i) => {
-      const arL = ar[mod.key].lessons[i] || l;
-      return `<section class="lpair" id="${anchor(l.num)}">
-${lessonArticle(l, mod, wallsEn, 'en')}
-${lessonArticle(arL, mod, wallsAr, 'ar')}
-</section>`;
+    const lessons = C.en[mod.key].lessons.map((l, i) => {
+      const arL = C.ar[mod.key].lessons[i] || l;
+      const articles = bilingual
+        ? `${lessonArticle(l, langs)}\n${lessonArticle(arL, langs)}`
+        : lessonArticle(primary === 'ar' ? arL : l, langs);
+      return `<section class="lpair" id="${anchor(l.num)}">\n${articles}\n</section>`;
     }).join('\n');
-
-    return `<template id="tpl-${mod.key}">${divider}<div class="wrap">
-${lessons}
-</div></template>`;
+    return `<template id="tpl-${mod.key}">${moduleDivider(mod, C, langs)}<div class="wrap">\n${lessons}\n</div></template>`;
   }).join('\n');
 
   const l2m = {};
-  MODULES.forEach((mod) => en[mod.key].lessons.forEach((l) => { l2m[anchor(l.num)] = mod.key; }));
+  MODULES.forEach((mod) => C.en[mod.key].lessons.forEach((l) => { l2m[anchor(l.num)] = mod.key; }));
 
-  const lessonCount = MODULES.reduce((n, m) => n + en[m.key].lessons.length, 0);
-  const diagramCount = diagrams.length / 2;   // every diagram exists in both languages
+  const gloss = block({
+    en: `<p class="eyebrow">${T.en.appendix}</p><h2>${esc(C.gloss.en.title)}</h2>${C.gloss.en.html}`,
+    ar: `<p class="eyebrow">${T.ar.appendix}</p><h2>${esc(C.gloss.ar.title)}</h2>${C.gloss.ar.html}`,
+  }, langs);
 
-  return `<title>System Design for Vibe Coders — The Complete Course</title>
-<style>
-${fs.readFileSync(path.join(ROOT, 'scripts/style.css'), 'utf8')}
-</style>
-<header class="masthead"><div class="wrap">
+  const mapLabel = bilingual
+    ? '<span class="en-only">Map</span><span class="ar-only" lang="ar">الخريطة</span>'
+    : esc(T[primary].map);
+  const langBtn = bilingual ? '\n  <button class="lang-btn" id="langBtn" type="button">عربي</button>' : '';
+
+  const mapHead = bilingual
+    ? `<h2 class="en-only">Course map</h2><h2 class="ar-only" lang="ar" dir="rtl">خريطة الدورة</h2>
+<p class="en-only" style="color:var(--muted)">${T.en.mapBlurb}</p>
+<p class="ar-only" lang="ar" dir="rtl" style="color:var(--muted)">${T.ar.mapBlurb}</p>`
+    : `<h2>${esc(T[primary].mapTitle)}</h2>\n<p style="color:var(--muted)">${T[primary].mapBlurb}</p>`;
+
+  const otherEditions = bilingual ? '' :
+    `<p class="build-note">${primary === 'en'
+      ? '<a href="index.ar.html">العربية</a> · <a href="index.html">Bilingual</a>'
+      : '<a href="index.en.html">English</a> · <a href="index.html">نسخة بلغتين</a>'}</p>`;
+
+  const body = `<header class="masthead"><div class="wrap">
   <a class="brand" href="#top">SD4VC</a>
   <div class="chips">${chips}</div>
-  <nav><a href="#map"><span class="en-only">Map</span><span class="ar-only" lang="ar">الخريطة</span></a>
-  <button class="lang-btn" id="langBtn" type="button">عربي</button></nav>
+  <nav><a href="#map">${mapLabel}</a>${langBtn}</nav>
 </div></header>
 <section class="hero" id="top"><div class="wrap">
-${pair(
-    `<p class="eyebrow">The complete course · Bilingual · English / العربية</p>
-  <h1>System Design for Vibe Coders</h1>
-  <p>Production engineering for AI-assisted builders. Every lesson is anchored in a real
-  incident — from a real product's war-story bank or a famous industry outage — then turned
-  into a principle, literal prompts to give your agent, and an evidence checklist so you can
-  verify the work without reading code.</p>
-  <div class="stats"><div><b>${MODULES.length}</b><span>modules</span></div><div><b>${lessonCount}</b><span>lessons</span></div><div><b>2</b><span>languages</span></div><div><b>${diagramCount}</b><span>diagrams</span></div></div>`,
-    `<p class="eyebrow">الدورة كاملة · بلغتين · English / العربية</p>
-  <h1>تصميم الأنظمة لمبرمجي الفايب</h1>
-  <p>هندسة الإنتاج لمن يبني بمساعدة الذكاء الاصطناعي. كل درس يبدأ من حادثة حقيقية — من بنك حوادث منتج حقيقي أو عطل صناعي شهير — ثم يتحول إلى مبدأ، وتعليمات حرفية توجّه بها وكيلك، وقائمة أدلة تتحقق بها من العمل دون قراءة كود.</p>
-  <div class="stats"><div><b>${MODULES.length}</b><span>وحدة</span></div><div><b>${lessonCount}</b><span>درسًا</span></div><div><b>2</b><span>لغتان</span></div><div><b>${diagramCount}</b><span>مخططًا</span></div></div>`)}
+${heroFor(C, langs)}
+${otherEditions}
 </div></section>
 <section class="map" id="map"><div class="wrap">
-<h2 class="en-only">Course map</h2><h2 class="ar-only" lang="ar" dir="rtl">خريطة الدورة</h2>
-<p class="en-only" style="color:var(--muted)">Fourteen modules, in the order a real product forces them on you. Click a module to see its lessons; click a lesson to jump to it.</p>
-<p class="ar-only" lang="ar" dir="rtl" style="color:var(--muted)">أربع عشرة وحدة، بالترتيب الذي يفرضه المنتج الحقيقي. اضغط على الوحدة لترى دروسها، وعلى الدرس للانتقال إليه.</p>
-${toc}
+${mapHead}
+${tocFor(C, langs)}
 </div></section>
 <main id="view"></main>
 ${templates}
 <template id="tpl-glossary"><section class="appendix" id="glossary"><div class="wrap">
-${pair(`<p class="eyebrow">Appendix</p><h2>${esc(glossEn.title)}</h2>${glossEn.html}`,
-    `<p class="eyebrow">ملحق</p><h2>${esc(glossAr.title)}</h2>${glossAr.html}`)}
+${gloss}
 </div></section></template>
 <footer><div class="wrap">
-${pair(
-    `<p>Generated from the module markdown by <code>npm run build</code> — the markdown is the source of truth.
+${block({
+    en: `<p>Generated from the module markdown by <code>npm run build</code> — the markdown is the source of truth.
      Source: <a href="https://github.com/Tamoura/system-design-for-vibe-coders">github.com/Tamoura/system-design-for-vibe-coders</a></p>`,
-    `<p>مولَّدة من ملفات الماركداون عبر <code>npm run build</code> — والماركداون هو مصدر الحقيقة.
-     المصدر: <a href="https://github.com/Tamoura/system-design-for-vibe-coders">github.com/Tamoura/system-design-for-vibe-coders</a></p>`)}
-</div></footer>
-<script>
+    ar: `<p>مولَّدة من ملفات الماركداون عبر <code>npm run build</code> — والماركداون هو مصدر الحقيقة.
+     المصدر: <a href="https://github.com/Tamoura/system-design-for-vibe-coders">github.com/Tamoura/system-design-for-vibe-coders</a></p>`,
+  }, langs)}
+</div></footer>`;
+
+  const langScript = bilingual ? `<script>
 (function(){
   var btn=document.getElementById('langBtn');
   function setLang(l){
@@ -339,7 +440,9 @@ ${pair(
   setLang(saved);
 })();
 </script>
-<script>
+` : '';
+
+  const navScript = `<script>
 (function(){
   var view=document.getElementById('view');
   var L2M=${JSON.stringify(l2m)};
@@ -377,49 +480,288 @@ ${pair(
   window.addEventListener('hashchange',function(){ apply(decodeURIComponent(location.hash.slice(1))); });
   apply(decodeURIComponent(location.hash.slice(1)));
 })();
-</script>
+</script>`;
+
+  // Diagrams are inlined later, once every page has registered its placeholders.
+  return docShell({
+    lang: primary,
+    dir: !bilingual && T[primary].dir === 'rtl' ? 'rtl' : '',
+    title: bilingual ? `${T.en.title} — The Complete Course` : T[primary].title,
+    css: CSS(),
+    body,
+    scripts: langScript + navScript,
+  });
+}
+
+/* -------------------------------------------------------- the printed book */
+
+/** Everything inline, in reading order — the source document for the PDF. */
+function flatPage(C, lang) {
+  const t = T[lang];
+  const langs = [lang];
+
+  const contents = MODULES.map((mod) => {
+    const w = C.walls[lang][mod.key];
+    const items = C[lang][mod.key].lessons
+      .map((l) => `<li><span class="lno">${esc(l.num)}</span> ${esc(l.title)}</li>`).join('');
+    return `<li class="toc-m"><b>${mod.key} · ${esc(w.title)}</b><ol>${items}</ol></li>`;
+  }).join('');
+
+  const chapters = MODULES.map((mod) => {
+    const lessons = C[lang][mod.key].lessons
+      .map((l) => `<section class="lpair" id="${anchor(l.num)}">${lessonArticle(l, langs)}</section>`).join('\n');
+    return `${moduleDivider(mod, C, langs)}<div class="wrap">\n${lessons}\n</div>`;
+  }).join('\n');
+
+  const body = `<section class="hero titlepage"><div class="wrap">
+${heroFor(C, langs)}
+</div></section>
+<section class="print-toc"><div class="wrap"><h2>${esc(t.contents)}</h2><ol class="toc-book">${contents}</ol></div></section>
+${chapters}
+<section class="appendix" id="glossary"><div class="wrap">
+<p class="eyebrow">${esc(t.appendix)}</p><h2>${esc(C.gloss[lang].title)}</h2>
+${C.gloss[lang].html}
+</div></section>`;
+
+  return docShell({
+    lang, dir: t.dir === 'rtl' ? 'rtl' : '',
+    title: t.title, css: CSS() + '\n' + PRINT_CSS(), body,
+  });
+}
+
+async function writePdf(C, lang) {
+  const html = inlineDiagrams(flatPage(C, lang));
+  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  try {
+    const page = await browser.newPage();
+    await page.setContent(html, { waitUntil: 'load', timeout: 180000 });
+    await page.emulateMediaType('print');
+    const file = path.join(DIST, `course-${lang}.pdf`);
+    await page.pdf({
+      path: file, format: 'A4', printBackground: true, timeout: 600000,
+      margin: { top: '16mm', bottom: '16mm', left: '15mm', right: '15mm' },
+      displayHeaderFooter: true,
+      headerTemplate: '<div></div>',
+      footerTemplate: '<div style="width:100%;font-size:8px;color:#888;text-align:center;font-family:sans-serif"><span class="pageNumber"></span></div>',
+    });
+    return file;
+  } finally {
+    await browser.close();
+  }
+}
+
+/* -------------------------------------------------------------------- epub */
+
+const VOID = 'area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr';
+
+/** HTML -> well-formed XHTML (every EPUB document must parse as XML). */
+function toXhtml(html) {
+  return html
+    .replace(new RegExp(`<(${VOID})((?:\\s[^>]*?)?)\\s*/?>`, 'gi'), (_, tag, attrs) => `<${tag}${attrs}/>`)
+    .replace(/&nbsp;/g, '&#160;')
+    .replace(/&mdash;/g, '&#8212;')
+    .replace(/&ndash;/g, '&#8211;')
+    .replace(/&hellip;/g, '&#8230;');
+}
+
+const xhtmlDoc = (lang, dir, title, body) => `<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="${lang}" xml:lang="${lang}"${dir ? ` dir="${dir}"` : ''}>
+<head><meta charset="utf-8"/><title>${esc(title)}</title><link rel="stylesheet" type="text/css" href="style.css"/></head>
+<body>
+${body}
+</body>
+</html>
 `;
+
+function epubDocs(C, lang) {
+  const t = T[lang];
+  const dir = t.dir === 'rtl' ? 'rtl' : '';
+  const docs = [];
+
+  docs.push({
+    id: 'titlepage', file: 'titlepage.xhtml', title: t.title,
+    xhtml: xhtmlDoc(lang, dir, t.title, toXhtml(
+      `<section class="titlepage"><h1>${esc(t.title)}</h1><p>${t.blurb}</p></section>`)),
+  });
+
+  for (const mod of MODULES) {
+    const w = C.walls[lang][mod.key];
+    const intro = C[lang][mod.key].intro;
+    docs.push({
+      id: `m${mod.key.replace('.', '')}`, file: `m${mod.key}.xhtml`, title: `${t.modWord(mod.key)} — ${w.title}`,
+      xhtml: xhtmlDoc(lang, dir, w.title, toXhtml(inlineDiagrams(
+        `<section class="mod-div"><p class="eyebrow">${t.modWord(mod.key)}</p><h1>${esc(w.title)}</h1>` +
+        `<p><i>${esc(w.wall)}</i></p>${intro ? `<div class="mod-intro">${intro.html}</div>` : ''}</section>`))),
+    });
+    for (const l of C[lang][mod.key].lessons) {
+      docs.push({
+        id: anchor(l.num), file: `${anchor(l.num)}.xhtml`, title: `${l.num} — ${l.title}`,
+        xhtml: xhtmlDoc(lang, dir, `${l.num} — ${l.title}`,
+          toXhtml(inlineDiagrams(lessonArticle(l, [lang])))),
+      });
+    }
+  }
+
+  docs.push({
+    id: 'glossary', file: 'glossary.xhtml', title: C.gloss[lang].title,
+    xhtml: xhtmlDoc(lang, dir, C.gloss[lang].title, toXhtml(inlineDiagrams(
+      `<section class="appendix"><h1>${esc(C.gloss[lang].title)}</h1>${C.gloss[lang].html}</section>`))),
+  });
+
+  const navItems = docs.filter((d) => d.id !== 'titlepage')
+    .map((d) => `<li><a href="${d.file}">${esc(d.title)}</a></li>`).join('\n');
+  docs.push({
+    id: 'nav', file: 'nav.xhtml', title: t.contents, nav: true,
+    xhtml: xhtmlDoc(lang, dir, t.contents,
+      `<nav epub:type="toc" id="toc"><h1>${esc(t.contents)}</h1><ol>\n${navItems}\n</ol></nav>`),
+  });
+
+  return docs;
+}
+
+async function writeEpub(C, lang) {
+  const t = T[lang];
+  const docs = epubDocs(C, lang);
+  const file = path.join(DIST, `course-${lang}.epub`);
+  const spine = docs.filter((d) => !d.nav);
+
+  const opf = `<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="uid" xml:lang="${lang}"${t.dir === 'rtl' ? ' dir="rtl"' : ''}>
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:identifier id="uid">urn:uuid:5d4bc5a0-0000-4000-8000-00000000${lang === 'en' ? '0001' : '0002'}</dc:identifier>
+    <dc:title>${esc(t.title)}</dc:title>
+    <dc:language>${lang}</dc:language>
+    <dc:creator>Tamoura</dc:creator>
+    <meta property="dcterms:modified">2026-07-28T00:00:00Z</meta>
+  </metadata>
+  <manifest>
+    <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
+    <item id="css" href="style.css" media-type="text/css"/>
+${spine.map((d) => `    <item id="${d.id}" href="${d.file}" media-type="application/xhtml+xml"/>`).join('\n')}
+  </manifest>
+  <spine${t.dir === 'rtl' ? ' page-progression-direction="rtl"' : ''}>
+${spine.map((d) => `    <itemref idref="${d.id}"/>`).join('\n')}
+  </spine>
+</package>
+`;
+
+  const container = `<?xml version="1.0" encoding="utf-8"?>
+<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
+  <rootfiles><rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/></rootfiles>
+</container>
+`;
+
+  await new Promise((resolve, reject) => {
+    const out = fs.createWriteStream(file);
+    const zip = archiver('zip', { zlib: { level: 9 } });
+    out.on('close', resolve);
+    zip.on('error', reject);
+    zip.pipe(out);
+    const date = new Date('2026-07-28T00:00:00Z');   // fixed, so repeated builds match
+    zip.append('application/epub+zip', { name: 'mimetype', store: true, date });
+    zip.append(container, { name: 'META-INF/container.xml', date });
+    zip.append(opf, { name: 'OEBPS/content.opf', date });
+    zip.append(CSS() + '\n' + PRINT_CSS(), { name: 'OEBPS/style.css', date });
+    for (const d of docs) zip.append(d.xhtml, { name: `OEBPS/${d.file}`, date });
+    zip.finalize();
+  });
+
+  return { file, docs };
+}
+
+/** EPUB documents must be valid XML; parse them all before shipping. */
+async function validateXhtml(docs, lang) {
+  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  try {
+    const page = await browser.newPage();
+    await page.setContent('<!doctype html><html><body></body></html>');
+    return await page.evaluate((files) => {
+      const bad = [];
+      for (const f of files) {
+        const doc = new DOMParser().parseFromString(f.xhtml, 'application/xml');
+        const err = doc.querySelector('parsererror');
+        if (err) bad.push({ file: f.file, error: err.textContent.replace(/\s+/g, ' ').slice(0, 180) });
+      }
+      return bad;
+    }, docs.map((d) => ({ file: `${lang}/${d.file}`, xhtml: d.xhtml })));
+  } finally {
+    await browser.close();
+  }
 }
 
 /* -------------------------------------------------------------------- main */
 
-const en = {}, ar = {};
+const C = { en: {}, ar: {}, walls: { en: readWalls('README.md'), ar: readWalls('README.ar.md') } };
 for (const mod of MODULES) {
-  en[mod.key] = parseModule(mod, 'en');
-  ar[mod.key] = parseModule(mod, 'ar');
-  const [e, a] = [en[mod.key].lessons.length, ar[mod.key].lessons.length];
+  C.en[mod.key] = parseModule(mod, 'en');
+  C.ar[mod.key] = parseModule(mod, 'ar');
+  const [e, a] = [C.en[mod.key].lessons.length, C.ar[mod.key].lessons.length];
   if (e !== a) throw new Error(`module ${mod.key}: ${e} English lessons but ${a} Arabic`);
 }
+C.gloss = { en: readGlossary('en'), ar: readGlossary('ar') };
+C.lessonCount = MODULES.reduce((n, m) => n + C.en[m.key].lessons.length, 0);
 
-const glossEn = readGlossary('en');
-const glossAr = readGlossary('ar');
-let html = build(en, ar, readWalls('README.md'), readWalls('README.ar.md'), glossEn, glossAr);
+/* Counted from the markdown rather than from diagramIds, because the hero is
+   emitted before the lesson bodies have registered their own diagrams. */
+C.diagramCount = MODULES.reduce((n, mod) => n + mod.files.reduce((m, f) => {
+  const md = fs.readFileSync(path.join(ROOT, 'modules', mod.dir, f), 'utf8');
+  return m + (md.match(/```mermaid/g) || []).length;
+}, 0), 0);
 
-const svgs = await renderDiagrams(diagrams);
-const failed = [];
-svgs.forEach((svg, i) => {
-  const figure = typeof svg === 'string'
-    ? `<figure class="diagram">${svg}</figure>`
-    : `<figure class="diagram"><pre>${esc(diagrams[i])}</pre></figure>`;
-  if (typeof svg !== 'string') failed.push({ i, error: svg.error });
-  html = html.replace(`<div data-diagram="${i}"></div>`, () => figure);
-});
+/* Emit every page first so all placeholders exist, then render each distinct
+   diagram once and inline the SVG into whichever outputs reference it. */
+const pages = {
+  'index.html': appPage(C, ['en', 'ar']),
+  'index.en.html': appPage(C, ['en']),
+  'index.ar.html': appPage(C, ['ar']),
+};
 
-const lessons = MODULES.reduce((n, m) => n + en[m.key].lessons.length, 0);
+SVGS = await renderDiagrams([...diagramIds.keys()]);
+const failed = SVGS.map((s, i) => (typeof s === 'string' ? null : i)).filter((i) => i !== null);
 if (failed.length) {
   console.error(`\n${failed.length} diagram(s) failed to render:`);
-  for (const f of failed.slice(0, 5)) console.error(`  #${f.i}: ${f.error}`);
+  for (const i of failed.slice(0, 5)) console.error(`  #${i}: ${SVGS[i].error}`);
 }
+for (const f of Object.keys(pages)) pages[f] = inlineDiagrams(pages[f]);
 
 if (CHECK) {
-  const current = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
-  if (current !== html) {
-    console.error('index.html is out of date — run `npm run build`.');
+  const stale = Object.keys(pages).filter((f) => {
+    const p = path.join(ROOT, f);
+    return !fs.existsSync(p) || fs.readFileSync(p, 'utf8') !== pages[f];
+  });
+  if (stale.length) {
+    console.error(`out of date — run \`npm run build\`: ${stale.join(', ')}`);
     process.exit(1);
   }
-  console.log('index.html is up to date.');
+  console.log('generated pages are up to date.');
 } else {
-  fs.writeFileSync(OUT, html);
-  console.log(`index.html — ${lessons} lessons ×2 languages, ${diagrams.length} diagrams, ${(html.length / 1e6).toFixed(1)} MB`);
+  for (const [file, html] of Object.entries(pages)) {
+    fs.writeFileSync(path.join(ROOT, file), html);
+    console.log(`${file.padEnd(24)} ${(html.length / 1e6).toFixed(1)} MB`);
+  }
+  console.log(`${C.lessonCount} lessons × 2 languages · ${diagramIds.size} diagrams`);
 }
+
+if (WANT_PDF || WANT_EPUB) fs.mkdirSync(DIST, { recursive: true });
+
+if (WANT_EPUB) {
+  for (const lang of ['en', 'ar']) {
+    const { file, docs } = await writeEpub(C, lang);
+    const bad = await validateXhtml(docs, lang);
+    if (bad.length) {
+      console.error(`\n${bad.length} invalid XHTML document(s) in the ${lang} EPUB:`);
+      for (const b of bad.slice(0, 5)) console.error(`  ${b.file}: ${b.error}`);
+      process.exitCode = 1;
+    }
+    console.log(`${path.relative(ROOT, file).padEnd(24)} ${(fs.statSync(file).size / 1e6).toFixed(1)} MB · ${docs.length} documents${bad.length ? ' · INVALID XHTML' : ''}`);
+  }
+}
+
+if (WANT_PDF) {
+  for (const lang of ['en', 'ar']) {
+    const file = await writePdf(C, lang);
+    console.log(`${path.relative(ROOT, file).padEnd(24)} ${(fs.statSync(file).size / 1e6).toFixed(1)} MB`);
+  }
+}
+
 if (failed.length) process.exit(1);
