@@ -373,6 +373,12 @@ web-only builders may skim them and return. 6.6–6.7 are for everyone.)*
   🔨 Run all three on Relay: agent-review one PR, adversarially re-review it on the security dimension, then run a whole-repo audit against a 10-point checklist and file the findings.
   🤖 Review prompts that work: assign one dimension per pass; require a failure scenario for every finding ("what input makes this break?"); verify findings adversarially before acting.
 
+- **9.8 The governance glance: you own what your agent ships.**
+  🔥 Air Canada's chatbot invented a bereavement-fare policy; in court the airline argued the bot was "a separate legal entity responsible for its own actions" — the tribunal rejected it and the airline paid (*Moffatt v. Air Canada*, 2024).
+  📐 Governance at vibe-coder scale = five questions answerable at a glance: who owns it (a named human); what can it touch (data ladder: yours → other people's → money, least privilege); what needs a human yes (the approval list, enforced mechanically — default-hidden from 4.4 is governance in disguise); can you see what it did (audit trail, 7.4); can you turn it off (kill switch + rollback, drilled). Escalation triggers: other people's personal data, money, an employer, a regulated industry.
+  🎛️ Write Relay's one-page `GOVERNANCE.md`; add the "human yes" escalation rule to CLAUDE.md; audit promises-vs-code for contradictions; pull the off-switch once, for real, and time it.
+  ✅ A friend answers the five questions from the doc alone; the agent refuses a restricted action and escalates; the drill timing is written down; you can retell Air Canada and land "the AI did it" losing in court.
+
 ## Module 10 — Scaling Beyond One Server
 
 Concept-complete module: the classic scaling canon, taught through the lens of a
