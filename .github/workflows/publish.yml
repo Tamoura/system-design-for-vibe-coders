@@ -17,7 +17,9 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  # Never cancel an in-flight Pages deployment — interrupting it is what
+  # produced 'cancelled' deploys. Let a running deploy finish; queue the next.
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -61,9 +63,13 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 40
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          timeout: 1800000   # 30 min: wait out a slow Pages backend, don't abort at 10
+          error_count: 25     # tolerate more transient status-poll errors before failing
