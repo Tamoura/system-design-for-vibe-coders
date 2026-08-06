@@ -1,3 +1,14 @@
+# Module 1 — Anatomy of a Real App
+
+*Three lessons on seeing the system you already have. Before you can protect a
+product you have to be able to draw it: the boxes it is made of, what each one is
+for, and what each one quietly lies about. Then you follow a single request all
+the way through those boxes, and wire the two instruments that tell you when one
+of them breaks. Terms are defined on first use; the
+[Glossary](../../GLOSSARY.md) has the rest.*
+
+---
+
 # 1.1 — Draw the Boxes Before the Agent Writes the Code
 
 *Module 1: Anatomy of a Real App*

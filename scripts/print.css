@@ -1,0 +1,45 @@
+/* Print / EPUB layer, loaded on top of style.css.
+   Used by the PDF build (flat page, print media) and as the EPUB stylesheet. */
+
+.masthead, .lang-btn, .chips, .build-note { display: none !important; }
+
+body { background: #fff; color: #17202a; font-size: 10.5pt; line-height: 1.55; }
+.wrap { max-width: none; padding: 0; }
+
+/* Title page */
+.titlepage { border: 0; padding: 6rem 0 2rem; text-align: start; }
+.titlepage h1 { font-size: 30pt; margin: .3rem 0 1rem; }
+.titlepage .stats { gap: 1.4rem; }
+.titlepage .stats b { font-size: 15pt; }
+
+/* Table of contents */
+.print-toc { break-after: page; padding-top: 1rem; }
+.print-toc h2 { font-size: 18pt; margin: 0 0 1rem; }
+.toc-book { list-style: none; padding-inline-start: 0; font-family: var(--sans); font-size: 9.5pt; }
+.toc-book > li.toc-m { margin: .7rem 0; break-inside: avoid; }
+.toc-book > li.toc-m > b { display: block; margin-bottom: .2rem; }
+.toc-book ol { list-style: none; padding-inline-start: 1.2rem; color: var(--muted); }
+.toc-book .lno { font-family: var(--mono); font-size: 8.5pt; display: inline-block; min-width: 2.4rem; }
+
+/* One module divider and one lesson per page */
+.mod-div { break-before: page; border-top: 0; background: none; padding: 5rem 0 1rem; }
+.mod-div h2 { font-size: 24pt; }
+article.lesson-full { break-before: page; border: 0; border-radius: 0; background: none; padding: 0; margin: 0; }
+article.lesson-full > h2 { font-size: 16pt; margin-bottom: 1rem; }
+article.lesson-full h3 { font-size: 11.5pt; }
+.appendix { break-before: page; border-top: 0; background: none; }
+
+/* Keep atoms together across page breaks */
+figure.diagram, table, pre, blockquote, .verify, .recap, .refs { break-inside: avoid; }
+h3, h4 { break-after: avoid; }
+figure.diagram { border-color: #d8dee3; }
+figure.diagram svg { max-height: 210mm; }
+
+/* Links read as text on paper; keep them legible rather than loud */
+a { color: inherit; text-decoration: none; }
+.refs a, .mod-intro a { text-decoration: underline; }
+
+/* The reading app's collapsible map is meaningless in print */
+details.toc-mod, .map { display: none !important; }
+footer { display: none !important; }
+main#view { display: none !important; }

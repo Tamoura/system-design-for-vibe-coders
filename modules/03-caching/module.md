@@ -1,3 +1,14 @@
+# Module 3 — Caching: the Sharpest Knife in the Drawer
+
+*Four lessons on the one optimization that makes everything faster and every bug
+stranger. A cache is a second copy of the truth, and the moment it exists you own
+a new question: what happens when the two copies disagree? This module covers the
+three hard parts — keys, expiry, invalidation — the poisoning incident that hit
+all three at once, and the day the cache itself takes the site down with it.
+Terms are defined on first use; the [Glossary](../../GLOSSARY.md) has the rest.*
+
+---
+
 # 3.1 — Why caching is where correctness goes to die
 
 *Module 3: Caching — the Sharpest Knife in the Drawer*

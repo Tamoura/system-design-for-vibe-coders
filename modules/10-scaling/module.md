@@ -1,3 +1,15 @@
+# Module 10 — Scaling Beyond One Server
+
+*Five lessons on the classic scaling canon, taught through the lens of a product
+that grew — with real incidents cited where we have them. One server is a fine
+place to start and a bad place to stay. This module is the move to many: services
+that keep no state of their own, work that happens later instead of now, a
+database that has outgrown a single machine, connections that stay open, and the
+numbers that tell you which of those you actually need. Terms are defined on
+first use; the [Glossary](../../GLOSSARY.md) has the rest.*
+
+---
+
 # 10.1 — Stateless Services and Load Balancing
 
 *Module 10: Scaling Beyond One Server*

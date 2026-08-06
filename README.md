@@ -45,20 +45,20 @@ See [OUTLINE.md](./OUTLINE.md) for the full module-by-module curriculum, and [wa
 
 | # | Module | The wall you hit |
 |---|--------|------------------|
-| F | Part 0: Foundations | You don't code — and you don't need to. Start here. |
+| F | Part 0: Foundations | You don't code — and you don't need to. No prerequisites. |
 | 0 | The Vibe Coder's Gap | "It works" and "it's a system" are different claims |
 | 1 | Anatomy of a Real App | You can't reason about what you can't draw |
 | 2 | Data, Storage & Backups | The database is not the only thing that can lose data |
-| 3 | Caching — the Sharpest Knife | Every cache is a bug you haven't met yet |
+| 3 | Caching: the Sharpest Knife in the Drawer | Every cache is a bug you haven't met yet |
 | 4 | Deploys Without Downtime | Shipping is a system, not a command |
 | 5 | Real Users, Real Abuse | Rate limits, auth, and the first attacker |
 | 6 | One Backend, Many Clients | Web, mobile, TV — and the update problem |
 | 7 | Observability | You can't fix what you can't see |
 | 8 | Safety Nets for AI-Generated Code | Tests, guardrails, and git hygiene at agent speed |
 | 9 | Directing an AI Team | Specs, context engineering, and review-to-guardrail |
-| 10 | Scaling Beyond One Server | Load balancing, queues, DB scaling, realtime, performance |
+| 10 | Scaling Beyond One Server | The classic scaling canon, through the lens of a product that grew |
 | 11 | Reaching the World | DNS & TLS, i18n & RTL, SEO & sitemaps, cost engineering |
-| 12 | Capstone: Incident Response | You get paged. Diagnose it. |
+| 12 | Capstone: You Get Paged | Symptoms only. Diagnose it. |
 
 The curriculum is a **complete** practical system-design set: incident-backed where
 we have scars, concept-complete everywhere else (lessons without a war story are
@@ -69,6 +69,44 @@ marked as concept lessons and gain one as incidents accumulate).
 The course is **bilingual**: every document ships in English and Arabic (RTL).
 English files are the source of truth during drafting; Arabic mirrors live beside
 them (`README.ar.md`, `OUTLINE.ar.md`, `lesson-N.ar.md`).
+
+## Reading it
+
+The whole course builds into several self-contained editions. Read online at
+**[tamoura.github.io/system-design-for-vibe-coders](https://tamoura.github.io/system-design-for-vibe-coders/)**,
+or take it with you:
+
+| Edition | File | What it's for |
+|---|---|---|
+| Bilingual page | [`index.html`](./index.html) | Everything, with a language toggle |
+| English page | [`index.en.html`](./index.en.html) | Single language, half the weight |
+| Arabic page | [`index.ar.html`](./index.ar.html) | Single language, RTL throughout |
+| PDF | `course-en.pdf` · `course-ar.pdf` | Print and offline reading (~350pp) |
+| EPUB | `course-en.epub` · `course-ar.epub` | E-readers and Kindle |
+
+Every edition carries all 68 lessons with the diagrams pre-rendered — no server, no network,
+no CDN. The HTML pages also have a clickable course map, the glossary appendix, and dark mode.
+PDF and EPUB are published with each release rather than committed; build them locally with
+`npm run dist`.
+
+```
+npm install     # once — marked, mermaid, puppeteer, archiver (build-time only)
+npm run build   # regenerate the HTML pages from the markdown
+npm run dist    # the above, plus PDF and EPUB per language into dist/
+npm run check   # fail if the committed HTML is out of date (used by CI)
+```
+
+`check` compares a fingerprint of the sources — lessons, README tables, glossaries, and the
+build's own templates — against the one embedded in each committed page. It deliberately does
+not diff the rendered bytes: Mermaid sizes its boxes by measuring text, so the same input
+renders to different SVG geometry on a machine with different fonts. The fingerprint answers
+the question that actually matters ("was this page built from this markdown?") in half a
+second, without launching a browser.
+
+**The markdown under `modules/` is the source of truth.** Everything above is generated
+output — never edit it by hand; edit the lesson and rebuild. The build fails loudly if a
+module's English and Arabic lesson counts diverge, if any Mermaid diagram fails to render,
+or if an EPUB document is not well-formed XHTML.
 
 ## Status
 
