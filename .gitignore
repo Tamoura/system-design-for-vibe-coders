@@ -2,3 +2,6 @@ node_modules/
 .DS_Store
 dist/
 _site/
+
+# Transient artifact-publish source
+*.artifact.html
