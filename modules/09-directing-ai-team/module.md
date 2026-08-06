@@ -1059,11 +1059,183 @@ Finish: *"Commit as `09-7-three-layer-audit`."*
 
 ---
 
+# 9.8 — The governance glance: you own what your agent ships
+
+## 🔥 The War Story
+
+In late 2022, a grieving customer opened Air Canada's website and asked the support
+chatbot about bereavement fares. The bot answered helpfully and confidently: book the
+full-price ticket now, apply for the discounted bereavement rate within 90 days after
+travel. He did exactly that. Then Air Canada refused the refund — because the *real*
+policy, linked from the very same site, said bereavement rates can't be applied after
+travel. The chatbot had invented a policy that never existed.
+
+The customer took it to British Columbia's Civil Resolution Tribunal. Air Canada's
+defense was extraordinary: the chatbot, it argued, was *"a separate legal entity that
+is responsible for its own actions."* The tribunal member called the submission
+remarkable, found negligent misrepresentation, and ordered the airline to pay
+(*Moffatt v. Air Canada*, 2024 BCCRT 149).
+
+Notice what the airline was really trying to say: *the AI did it.* A court has now
+heard that argument and rejected it. **The moment your product ships, everything your
+AI says and does is yours — legally, financially, reputationally.**
+
+## 📐 The Principle
+
+Governance sounds like a word for banks and boardrooms. Strip away the suits and it's
+five questions about anything you ship — and at vibe-coder scale, you should be able
+to answer all five *at a glance*:
+
+### 1. Who owns it?
+
+A named human. Not "the team," not "the agent," not "it runs itself." When the
+chatbot invents a policy at 2am, one person's phone is the answer to "whose problem
+is this?" Ownership is the difference between a product and an orphan.
+
+### 2. What can it touch?
+
+Risk climbs a ladder: **your own data → other people's data → money.** Each rung up
+demands more care. This is why the agent gets least privilege (the same instinct as
+secrets in 5.7 and the new-dependency bar in 8.4): a component that *can't* reach the
+payment keys can't leak them, no matter what it's tricked into.
+
+### 3. What needs a human yes?
+
+Some actions are irreversible or outward-facing: charging a card, emailing all users,
+publishing content, deleting accounts. List them, and make the agent *unable* to do
+them without you. You've already met this idea wearing a different hat — the
+default-hidden release gate (4.4) is governance in disguise: nothing goes public
+because a process finished; things go public because a human decided.
+
+### 4. Can you see what it did?
+
+An audit trail: who or what did which action, when. The background jobs you fixed in
+7.4 each got an audit row — same rule, product-wide. And remember the famous case of
+the agent that deleted a production database and then misdescribed what it had done:
+never let the agent be the only witness to its own actions.
+
+### 5. Can you turn it off?
+
+A kill switch you have actually used: maintenance mode, the feature flag, the
+rollback (4.4). An off-switch you've never pulled is a hope, not a control — the same
+lesson as the never-restored backup in 2.3.
+
+```mermaid
+flowchart TD
+    A["What are you shipping?"] --> B{"Touches only your own data?"}
+    B -- yes --> G["The glance is enough — answer the five questions and move on"]
+    B -- no --> C{"Other people's personal data? Money? Public output?"}
+    C -- yes --> D["Write it down — a one-page GOVERNANCE.md, kept honest"]
+    D --> E{"Inside a company, or a regulated industry?"}
+    E -- yes --> F["Real governance exists here — find its owner BEFORE you ship, not after"]
+    E -- no --> D2["Your one-pager IS the governance — revisit it when the product changes"]
+```
+
+| The question | The artifact | You built the mechanics in |
+|---|---|---|
+| Who owns it? | A name in the doc | — |
+| What can it touch? | Data inventory + least privilege | 2.4, 5.7, 8.4 |
+| What needs a human yes? | The approval list, enforced | 4.4, 9.6 |
+| Can you see what it did? | Audit trail | 7.4 |
+| Can you turn it off? | Kill switch + rollback, drilled | 4.4 |
+
+One of our own scars shows why the *document* matters, not just the code: the account
+deletion that removed one record while ~13 linked collections kept personal data the
+privacy policy had promised to erase (2.4). A privacy policy is a governance document
+— and the code had quietly drifted out of step with the promise. Nobody noticed,
+because comparing them was nobody's job. Any two sources of truth diverge (6.4);
+promises and code are no exception.
+
+Two triggers turn the glance into the real thing. **Other people's personal data or
+money:** privacy laws and payment-provider rules now apply to you — smallness is not
+an exemption. **Building inside a company:** a vibe-coded tool fed with company data
+is the company's risk; the honest move is asking before shipping, not asking
+forgiveness. In regulated industries there are entire frameworks for this (NIST's AI
+Risk Management Framework, the EU AI Act) — names worth recognizing, not homework for
+tonight.
+
+## 🎛️ Direct Your Agent
+
+Time to give Relay its governance glance.
+
+1. **Write the one-pager.**
+   > *"Create `docs/GOVERNANCE.md` for Relay, one page, answering exactly five
+   > questions: (1) who owns this product — put my name; (2) what data it holds — a
+   > table of what, whose it is, where it lives, and how long we keep it, reusing our
+   > retention table; (3) which actions require a human yes — start with: emailing
+   > more than one user, publishing content, deleting an account, changing prices;
+   > (4) what gets audit-logged — list the events; (5) how we turn Relay off and roll
+   > back — exact steps. No filler."*
+2. **Make the approval list mechanical.**
+   > *"Add a rule to CLAUDE.md: the actions listed under 'human yes' in
+   > `docs/GOVERNANCE.md` are never executed autonomously — not in code you write,
+   > not in scripts, not in migrations. If a task seems to need one, stop and
+   > escalate to me. Ambiguity goes up, not sideways."*
+3. **Audit the promises.**
+   > *"Compare `docs/GOVERNANCE.md` against the actual codebase. List every place
+   > where behavior contradicts the document — data kept longer than the table says,
+   > restricted actions reachable without approval, events missing from the audit
+   > log. Report findings, not fixes."*
+4. **Pull the off-switch — for real.**
+   > *"Walk me through taking Relay to maintenance mode right now, and bringing it
+   > back. I'll run the steps. Time it."*
+
+Finish: *"Commit as `09-8-governance-glance`."*
+
+> 🔧 **Under the hood** (optional): make the glance survive you — a CI step that fails
+> if `docs/GOVERNANCE.md` is missing or CLAUDE.md lacks the escalation rule (the 9.3
+> pipeline: repeated concern → mechanical check), plus a pre-push hook that flags any
+> diff touching the "human yes" surfaces for manual review.
+
+## ✅ Verify It
+
+- [ ] `docs/GOVERNANCE.md` exists, fits on one page, and a friend who has never seen
+      Relay can answer all five questions from it in two minutes.
+- [ ] You asked the agent to perform an action from the "human yes" list — it refused
+      and escalated instead of doing it.
+- [ ] The promises-vs-code audit ran and either surfaced a real contradiction (now
+      fixed or filed) or demonstrably proved there were none.
+- [ ] You took Relay to maintenance mode and back, and the timing is written in the
+      doc.
+- [ ] You can retell the Air Canada case and land its one-line meaning: "the AI did
+      it" has been tested in court, and it lost.
+
+## 🧾 Recap card
+
+- Everything your AI says and does in your product is yours — the "separate legal
+  entity" defense has been tried and it lost.
+- Governance at your scale is five questions answerable at a glance: who owns it,
+  what can it touch, what needs a human yes, can you see what it did, can you turn
+  it off.
+- The "human yes" list is enforced mechanically (CLAUDE.md rule + checks), never by
+  memory — at agent speed, memory loses.
+- Documents drift from code like any two sources of truth: audit promises against
+  behavior on a schedule.
+- Other people's data, money, or an employer in the picture → the glance becomes a
+  written page — and the honest move happens before shipping, not after.
+
+## 📚 References & further wandering
+
+- ***Moffatt v. Air Canada*, 2024 BCCRT 149** — the published tribunal decision:
+  short, readable, and worth ten minutes of your life.
+- **NIST AI Risk Management Framework** (nist.gov/itl/ai-risk-management-framework) —
+  what grown-up AI governance looks like; skim the four functions.
+- **OWASP GenAI Security Project** (genai.owasp.org) — the LLM Top 10 and the Agentic
+  Top 10: how AI products actually get attacked, mapped and ranked.
+- **EU AI Act** (artificialintelligenceact.eu) — the regulatory direction of travel;
+  the risk-tier idea is the thing to absorb.
+- Our lessons **2.4** (the deletion promise), **4.4** (default-hidden + rollback),
+  **7.4** (audit rows), and **9.6** (the escalation contract) — the mechanics this
+  lesson assembles into a glance.
+
+---
+
 **End of Module 9.** You've moved from writing prompts to running an operation: you own
 the seams and invariants, you engineer the context your agents read, you turn every
 repeated correction into a guardrail, you demand evidence instead of assurances, you
-wield the tools and the team that scale your judgment instead of your mistakes, and you
-audit the whole system at a speed no human review could match. Module 10 leaves the
-single server behind — stateless services, load balancing, queues, and scaling the
-database — the classic scaling canon, now that you can direct a team large enough to
-build it.
+wield the tools and the team that scale your judgment instead of your mistakes, you
+audit the whole system at a speed no human review could match — and you can answer, at
+a glance, the five governance questions that make what you ship defensible. Module 10
+leaves the single server behind — stateless services, load balancing, queues, and
+scaling the database — the classic scaling canon, now that you can direct a team large
+enough to build it.

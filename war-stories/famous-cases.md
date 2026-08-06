@@ -96,6 +96,11 @@ These are public, well-documented, and excellent for readers who want to go deep
 - **Lesson:** agents act at machine speed with your permissions: separate environments, least privilege, mechanical guardrails, and never let the agent be the only witness to what it did. Exactly why ✅ Verify It exists.
 - **Source:** contemporaneous coverage (The Register, Business Insider, Tom's Hardware, Jul 2025) and the platform CEO's public statements.
 
+### Air Canada's chatbot invents a policy — and the airline pays (Feb 2024) *(→ 9.8)*
+- **What happened:** a customer asked Air Canada's website chatbot about bereavement fares; the bot confidently described a refund-after-travel policy that didn't exist (the real policy, linked on the same site, said the opposite). When the airline refused the refund, the case went to British Columbia's Civil Resolution Tribunal — where Air Canada argued the chatbot was "a separate legal entity that is responsible for its own actions." The tribunal called that submission remarkable, found negligent misrepresentation, and ordered Air Canada to pay.
+- **Lesson:** everything your AI says and does in your product is yours — legally, financially, reputationally. "The AI did it" has already been tested in court and lost.
+- **Source:** *Moffatt v. Air Canada*, 2024 BCCRT 149 (published tribunal decision); coverage by CBC, Ars Technica, The Guardian (Feb 2024).
+
 ### "Vibe coding" coined (Feb 2025) *(→ F.4)*
 - **What happened:** Andrej Karpathy described "a new kind of coding … where you fully give in to the vibes" — building by talking to AI and accepting what comes back. The term (and audience) this course exists for.
 - **Source:** Karpathy's original post; Simon Willison's commentary distinguishing vibe coding from AI-assisted engineering.
