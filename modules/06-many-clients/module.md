@@ -69,13 +69,15 @@ always weeks or months behind. Your backend is therefore not talking to "the
 app." It's talking to **every version of the app you've ever shipped, all at
 once.**
 
-The famous version is Knight Capital (2012). A deploy pushed new trading code to
-seven of eight servers; the eighth kept old code in which a reused flag meant
-something else entirely. At market open, that one stale server fired millions of
-unintended orders — $440M gone in 45 minutes, the firm finished. Knight's eighth
-server is your mobile fleet, permanently: **old code you can't reach, talking to
-a backend that assumes everyone moved on.** The difference is Knight had one
-straggler by accident; you have a straggler population by design.
+You have felt the web-scale version of this yourself: a browser tab left open
+overnight, still running last week's JavaScript, that suddenly throws errors
+because the API it calls was redeployed hours ago. That tab is a **straggler** —
+a version you shipped and can no longer reach, still making requests against a
+backend that assumes everyone refreshed. On the web the straggler heals the
+instant the user reloads. On mobile it never reloads on its own: **old code you
+can't reach, talking to a backend that assumes everyone moved on** — and not one
+accidental straggler but a straggler *population*, by design. Every version of
+the app you have ever shipped is out there right now, calling your API.
 
 ### 2. The backend is a public contract you can't take back
 
@@ -155,14 +157,14 @@ Finish: *"Commit with the message `06-1-client-fleet-version-gate`."*
 ## 🧾 Recap card
 
 - Web time is minutes; app time is months — your backend serves every version at once.
-- A shipped app is Knight Capital's eighth server, by design, forever.
+- A shipped app is a permanent straggler: old code you can't reach, calling today's backend.
 - Tolerant readers (ignore unknown fields) let the backend grow without an app release.
 - Version breaking changes at a new path; never hand-mirror route tables.
 - Kill switches need an ordering contract: enable the dependency, *then* arm the switch.
 
 ## 📚 References & further wandering
 
-- SEC administrative filing on **Knight Capital** (2013) — the eighth-server, reused-flag disaster in the regulator's own words.
+- Android **platform version distribution** (developer.android.com) — the straggler population quantified: months after a release, a large share of devices still run older versions.
 - **Semantic Versioning** (semver.org) — the version grammar your min-version check parses.
 - Apple, **"Minimum system version" / app update** and Google Play **in-app updates** docs — how each store surfaces a forced update.
 - The System Design Primer (open source), **API design** section — versioning and backward-compatibility basics.
@@ -226,11 +228,11 @@ OTA #1 puts the fix on the channel. OTA #2, built from main, replaces the whole
 bundle with one that never had the fix. The channel doesn't merge; it overwrites.
 If the fix isn't in main, the fix is one routine publish away from vanishing.
 
-This is Knight Capital's shape wearing new clothes: a divergent copy (the branch)
-that briefly served users, silently replaced by the "official" build that lacked
-its change. Whenever two versions of the truth can both reach production, the
-next routine action decides which one wins — and it won't be the one you forgot
-to merge.
+This is the divergent-version trap in new clothes: a copy (the branch) that
+briefly served users, silently replaced by the "official" build that lacked its
+change. Whenever two versions of the truth can both reach production, the next
+routine action decides which one wins — and it won't be the one you forgot to
+merge.
 
 ### 2. One source of truth, verified in the artifact
 
@@ -309,7 +311,7 @@ Finish: *"Commit with the message `06-2-ota-source-of-truth`."*
 
 - Expo, **EAS Update** docs — channels, branches, and the runtime-version contract that OTA depends on.
 - Expo, **"Environment variables and `EXPO_PUBLIC_`"** — why runtime config gets stripped without an explicit environment.
-- SEC filing on **Knight Capital** — the canonical "divergent copy silently replaces the fix" shape.
+- Microsoft **CodePush / App Center** OTA docs — rollback, mandatory-update, and how a later release overwrites the current bundle.
 - Lesson 4.5 (Verify the artifact, not the source) — the same rule for web build caches and baked-in localhost.
 - **Trunk-based development** (trunkbaseddevelopment.com) — why "one source of truth is main" is an industry default, not a preference.
 
@@ -365,12 +367,15 @@ flowchart TD
     end
 ```
 
-Knight Capital, again, is the ancestor of this bug — and this time the match is
-exact. Its $440M root cause was **a single flag that meant one thing on the new
-code and something else on the old**. Same flag, two interpretations, live at
-once. Knight's two interpretations lived on two servers; this team's lived on two
-code paths in one app. The lesson is identical: **a flag with more than one
-interpreter is a loaded gun.**
+The divergent-version trap from 6.1 and 6.2 wears its sharpest form here. Picture
+a single flag, `new_checkout`, that means *"route to the redesigned checkout"* in
+today's app — but three months ago, in a version thousands of users still run,
+the same flag name meant *"show the beta banner."* Flip it on for the redesign
+and every one of those stragglers lights up a banner for a screen that no longer
+exists. Same flag, two interpretations, live at once — one on today's client, one
+on a version you can't reach. It need not even span versions: the same team's two
+*code paths in one app* reading a flag differently is the identical bug. The
+lesson: **a flag with more than one interpreter is a loaded gun.**
 
 ### 2. Resolve once, at runtime, consume everywhere
 
@@ -385,7 +390,7 @@ The nav and the route are not two features that happen to share a name — they 
 one feature with two faces, and both faces must consult the same source in the
 same instant. If flipping the flag off can leave a link pointing at a missing
 page for even one client, the flag has more than one interpreter and you're back
-to Knight.
+in the divergence trap.
 
 ### 3. Flags accumulate; give them a resolver and a graveyard
 
@@ -443,11 +448,11 @@ Finish: *"Commit with the message `06-3-one-flag-one-resolver`."*
 - Contradictions = independent readers minus one. Get to one reader.
 - One runtime resolver; whole surfaces (route + nav + promo) move together.
 - Compile-time flag checks freeze a value that config can change — ban them.
-- Knight Capital was a two-interpretation flag; so was the 404 link.
+- One flag read two ways — by two client versions, or two code paths — is the trap; so was the 404 link.
 
 ## 📚 References & further wandering
 
-- SEC filing on **Knight Capital** — a feature flag with two interpretations, priced at $440M.
+- Stripe, **"APIs as infrastructure: future-proofing Stripe with versioning"** — how one backend serves many client versions without a name meaning two things.
 - Martin Fowler, **"Feature Toggles (aka Feature Flags)"** — the taxonomy and the "keep them short-lived" discipline.
 - **OpenFeature** (openfeature.dev) — a vendor-neutral flag standard; note that its core idea is *one evaluation API*.
 - Pete Hodgson, **"Feature Toggles"** on martinfowler.com — managing toggle debt and the graveyard problem.
@@ -978,7 +983,9 @@ a queue that holds the work, and a message that tells the truth ("we'll send you
 receipt shortly") is a system that degrades instead of dying. Netflix built an
 entire library (Hystrix) around this idea and a whole practice (Chaos Engineering)
 around *proving* it works — because a failure you've never rehearsed is a failure
-you don't survive.
+you don't survive. (Hystrix itself went into maintenance mode around 2018;
+**resilience4j** is the current equivalent on the JVM. The *pattern* is what
+matters — every language has one — not the specific library.)
 
 ## 🎛️ Direct Your Agent
 

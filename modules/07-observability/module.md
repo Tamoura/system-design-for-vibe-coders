@@ -496,7 +496,15 @@ these can start the same job twice, and without a lock, "send the batch" becomes
 "send the batch twice." The fix is a single atomic claim: **`SET NX EX`** — set
 this key *only if it doesn't exist* (`NX`), with an expiry (`EX`). The first
 worker gets the key and runs; every other worker fails to get it and stands
-down. One winner, by construction.
+down. One winner *of the claim race*.
+
+Winning the claim is not the same as sending exactly once. The lock stops two
+workers from both starting; it does not save you if the winner crashes after
+sending but before it records that it sent, or if the key expires mid-run and a
+second worker claims it. Exactly-once *send* comes from the same place it does
+for queues in lesson 10.2: the idempotent audit/dedup row below. The claim race
+thins the field to one runner; the audit row is what makes that runner's effect
+safe to repeat.
 
 ```mermaid
 sequenceDiagram

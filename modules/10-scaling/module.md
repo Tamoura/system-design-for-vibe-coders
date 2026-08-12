@@ -274,6 +274,19 @@ jobs off it and do them. The API and the workers scale *independently* — a flo
 of uploads lengthens the queue instead of melting the API, and you add workers to
 drain it faster.
 
+> 🔧 **The enqueue itself is a dual-write seam.** Look again at that innocent
+> "save record, then enqueue" step: it writes to *two* systems — the database and
+> the queue. If the DB commit succeeds and the enqueue then fails (queue blip,
+> process crash in between), you've lost the job with no error the user ever sees
+> — the exact silent-divergence trap from lesson 2.6. Two robust fixes: the
+> **transactional outbox** — write the job into an `outbox` row *in the same DB
+> transaction* as the record, and a separate relay reads that table and pushes to
+> the queue (the write is atomic because it's one transaction); or a
+> **reconciliation sweep** — periodically scan for records in a "pending" state
+> with no corresponding completed job and re-enqueue them. Either way the
+> principle is the same as everywhere else in this course: *make the two writes
+> one, or build something that notices when they diverge.*
+
 ### 2. At-least-once delivery: so consumers must be idempotent
 
 Here is the fact that surprises everyone. A durable queue promises your job will
