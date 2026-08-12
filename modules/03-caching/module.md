@@ -128,8 +128,9 @@ buying you.
    > on a cache hit (warm), and the cache hit-rate under a realistic burst of
    > repeated requests. If the hit-rate is low, tell me why — maybe this endpoint
    > isn't as cacheable as we thought."*
-   A cache with a 4% hit-rate is slower than no cache (you pay the lookup and
-   still miss). The honest number is the point.
+   A low hit-rate cache adds lookup overhead for little benefit, and can be
+   net-negative for cheap-to-compute endpoints — measure before trusting it. The
+   honest number is the point.
 4. **Prove staleness is bounded, not infinite.**
    > *"Change the underlying data, then hit the endpoint repeatedly and show me
    > exactly how long the old value is served before the TTL expires and the new
@@ -168,7 +169,7 @@ No code reading required — accept the lesson only when:
 - The two hard things: cache keys and invalidation. TTL is a third: your staleness budget.
 - A TTL is a product decision ("how wrong can this be?"), chosen per data, not copied.
 - Layered caches multiply the ways to be stale — know which layers cache what, and each TTL.
-- Measure honestly: cold vs warm and hit-rate. A low-hit cache is slower than none.
+- Measure honestly: cold vs warm and hit-rate. A low-hit cache adds overhead for little benefit — net-negative for cheap-to-compute endpoints.
 
 ## 📚 References & further wandering
 

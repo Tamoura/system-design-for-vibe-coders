@@ -46,7 +46,10 @@ In words:
 
 1. **You ask the phone book.** Your device asks the internet's directory — called
    **DNS** — to turn a name humans can remember (`relay.app`) into an address
-   machines can dial. This is exactly what broke in the Facebook story.
+   machines can dial. This is exactly what broke in the Facebook story. (The
+   deeper cause was one layer down: a **BGP** route withdrawal — BGP is the
+   protocol that advertises those "directions" — made Facebook's own DNS
+   nameservers unreachable, so the phone book itself couldn't be dialed.)
 2. **You get an address.** Numbers, like a street address for computers.
 3. **You knock on the door.** Your device sends a **request** — a small, polite,
    structured message: "please give me this page."

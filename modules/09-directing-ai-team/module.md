@@ -1,11 +1,12 @@
 # Module 9 — Directing an AI Team
 
-*Seven lessons on the job that's actually yours once agents write the code: owning
+*Eight lessons on the job that's actually yours once agents write the code: owning
 the seams instead of the components, engineering the context they read, turning
 every repeated correction into a guardrail, demanding evidence instead of
 assurances, wielding the tools that separate casual use from directing a fleet,
-building a team of specialist agents with an escalation contract, and auditing
-the whole system at a speed no human review could match.*
+building a team of specialist agents with an escalation contract, auditing
+the whole system at a speed no human review could match, and answering — at a
+glance — the governance questions that make what you ship defensible.*
 
 ---
 
@@ -1059,7 +1060,9 @@ Finish: *"Commit as `09-7-three-layer-audit`."*
 
 ---
 
-# 9.8 — The governance glance: you own what your agent ships
+# 9.8 — The Governance Glance: You Own What Your Agent Ships
+
+*Module 9: Directing an AI Team*
 
 ## 🔥 The War Story
 
