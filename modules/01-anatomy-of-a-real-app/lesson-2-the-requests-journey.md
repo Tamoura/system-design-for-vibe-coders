@@ -232,7 +232,7 @@ No code reading required — accept the lesson only when:
 - Headers are hop-to-hop messages, not facts; know who writes and who rewrites each.
 - `location /api` matches `/api-next`. Trailing slashes are load-bearing.
 
-## 📚 References
+## 📚 References & further wandering
 
 - MDN, **An overview of HTTP** and **HTTP caching** — [developer.mozilla.org/docs/Web/HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP). The canonical plain-language reference for every header in this lesson.
 - RFC 9110, **HTTP Semantics** (2022) — the actual contract every hop is supposed to honor (and, as lesson 3.2 showed, sometimes doesn't).

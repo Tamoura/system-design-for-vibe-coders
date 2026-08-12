@@ -86,6 +86,15 @@ users. If you throttle the *email send* — the thing that actually damages you 
 harasses strangers — the attacker can spin the form uselessly while nothing bad
 leaves your system, and legitimate signups elsewhere still complete.
 
+One honest caveat: a *single global* budget on outbound email has the same
+self-DoS shape this lesson warns about — when it trips, a real user signing up in
+that same window also gets no email, even though they did nothing wrong. So make
+your **primary** control a per-IP and per-recipient budget (an attacker from one
+IP, or hammering one address, is stopped without touching anyone else), and keep
+the global budget only as a last-resort backstop with the ceiling set high enough
+that normal traffic never reaches it. Alert when the global cap trips — it means
+either an attack got past the finer limits or the ceiling is set too low.
+
 ### 4. Disposable-email rejection and constant responses
 
 Two cheap finishing moves. Reject known disposable/throwaway email domains at
@@ -261,10 +270,19 @@ again in 11.1 as CDN-only origin ingress.)
 ### 4. Fail open, not closed
 
 If the shared counter store (Redis) is briefly unreachable, what should the
-limiter do — block everyone, or let requests through uncounted? For a rate
-limiter, **fail open**: a limiter that hard-fails closed turns a Redis blip into a
-full outage. The limiter is a guardrail, not a load-bearing wall; degrade to
-"unlimited for a moment" rather than "down."
+limiter do — block everyone, or let requests through uncounted? For a *general
+abuse* limiter, **fail open**: a limiter that hard-fails closed turns a Redis blip
+into a full outage. The limiter is a guardrail, not a load-bearing wall; degrade
+to "unlimited for a moment" rather than "down."
+
+**One exception, and it matters: auth limiters fail *closed*.** The limiter that
+caps login attempts, password-reset guesses, and one-time-code tries is a
+brute-force defense, not a comfort feature. If it fails open, a Redis blip becomes
+an open window for credential-stuffing — exactly when you're least able to notice.
+So on store errors, a login/OTP/reset limiter should either reject (fail closed)
+or fall back to a strict **local** in-process limit (say, a handful of attempts
+per minute per instance) so the ceiling never disappears entirely. The rule:
+*general abuse limiters fail open; anything guarding a secret fails closed.*
 
 ## 🎛️ Direct Your Agent
 
@@ -846,7 +864,7 @@ shipping app:
 - No server-side error tracking at all, so failures were invisible — **A09, Security Logging & Monitoring Failures** (Module 7).
 - All of CI running on a credential-bearing personal machine that executed untrusted pull-request code, with third-party actions pinned by *tag* (mutable) instead of by SHA (fixed) — **A08, Software & Data Integrity Failures** / supply chain (Module 8.4).
 
-Four findings, four Top-10 categories, zero zero-days. **The Top 10 isn't a exam
+Four findings, four Top-10 categories, zero zero-days. **The Top 10 isn't an exam
 you pass once — it's a checklist you walk every time, because the failures it
 names are the boring, common ones that ship in real apps built fast.**
 

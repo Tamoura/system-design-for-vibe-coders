@@ -263,7 +263,7 @@ Accept this lesson as done only when every box is checked — none requires read
   or watch it guess.
 - A claim with no assertion is a hope.
 
-## 📚 References
+## 📚 References & further wandering
 
 - Simon Brown, **The C4 Model for visualising software architecture** — [c4model.com](https://c4model.com). The container-diagram level used in this lesson.
 - Martin Kleppmann, **Designing Data-Intensive Applications** (O'Reilly, 2017) — ch. 1 on reliability, scalability, maintainability; the deep version of "every box lies."

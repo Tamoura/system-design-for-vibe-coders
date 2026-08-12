@@ -10,7 +10,7 @@ edge platform that ties the whole story together.*
 
 # 11.1 — Domains, DNS, and TLS
 
-## 🔥 The War Story: the day Facebook forgot where it lived
+## 🔥 The War Story
 
 On October 4, 2021, Facebook, Instagram, and WhatsApp vanished for roughly six
 hours — not "slow," *gone*, for billions of people. Nobody hacked anything. No
@@ -176,7 +176,7 @@ Finish: *"Commit with the message `11-1-domain-dns-tls`."*
 
 # 11.2 — Internationalization and RTL
 
-## 🔥 The War Story: the link that always opened on Home — with green tests
+## 🔥 The War Story
 
 A bilingual product — English and Arabic, one right-to-left — shipped deep links
 so that tapping a shared article link on a phone would open that article *inside
@@ -349,7 +349,7 @@ Finish: *"Commit with the message `11-2-i18n-rtl`."*
 > are the current best defaults and get an annual refresh. Learn the principle;
 > re-check the tool.
 
-## 🔥 The War Story: the 350-megabyte sitemap that froze the build
+## 🔥 The War Story
 
 A large content product wanted search engines to index all of it, so it generated
 a **sitemap** — the machine-readable list of every URL you want crawled. As the
@@ -500,7 +500,7 @@ Finish: *"Commit with the message `11-3-seo-aeo`."*
 
 # 11.4 — Cost Engineering
 
-## 🔥 The War Story: the migration driven by a bill, and the backup that tripled
+## 🔥 The War Story
 
 Two cost stories from one platform, and they rhyme.
 
@@ -647,7 +647,7 @@ Finish: *"Commit the cost model as `11-4-cost-model.md` with the message
 > never assume defaults** — survives any vendor. Swap the product names, keep the
 > discipline.
 
-## 🔥 The War Story: one platform, five scars, one lesson
+## 🔥 The War Story
 
 Every earlier module left a mark on the same edge platform. Gathered in one place,
 they tell a single story:

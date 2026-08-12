@@ -9,7 +9,7 @@
 
 ---
 
-## 🔥 The Story: blind for years, fixed in an afternoon
+## 🔥 The War Story
 
 The reference platform behind this course — real product, global users, four
 client platforms — operated for *years* with no server-side error tracking, no
@@ -88,6 +88,8 @@ Module 7. Don't skip ahead; these two are enough until you have real traffic.
    > right now, what tells us within five minutes?' there must always be an
    > answer running on infrastructure we don't own."*
 
+Finish: *"Commit with the message `01-3-day-one-eyes`."*
+
 ## ✅ Verify It
 
 - [ ] You threw a test error and **saw its report arrive** — with the right
@@ -100,6 +102,21 @@ Module 7. Don't skip ahead; these two are enough until you have real traffic.
       and within how many minutes?"*
 - [ ] The CLAUDE.md rule exists, so every future service gets eyes on day one
       without you remembering.
+- [ ] You can retell the "blind for years, the loudest error was a success
+      message" story and name the two instruments that would have caught it.
+
+## 🧾 Recap card
+
+- Two instruments belong in your app's anatomy on day one: an error tracker
+  (*what broke?*) and an external uptime check (*are we even up?*).
+- Tag every deploy with a release, so an error names the version that broke it —
+  the difference between "something's wrong" and "v2 broke it, roll back."
+- The thing that tells you "it's fine" must not share fate with the thing it
+  monitors; an external checker on someone else's infrastructure is
+  fate-independence for free.
+- Watching the alarm actually fire — kill staging on purpose — is the difference
+  between *having* monitoring and *hoping* you have it.
+- Wiring both takes an afternoon; there is no engineering reason it isn't day one.
 
 ## 📚 References & further wandering
 
