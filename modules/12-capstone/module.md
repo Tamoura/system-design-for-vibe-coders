@@ -1,14 +1,14 @@
 # 12 — Capstone: You Get Paged
 
-*The whole course, turned into eight pagers.*
+*The whole course, turned into twelve pagers.*
 
 ---
 
 You've built Relay from a local prototype to a multi-client production system.
-Now you operate it. This module is diagnosis practice: eight incidents, each
+Now you operate it. This module is diagnosis practice: twelve incidents, each
 given the way a real one arrives — **symptoms only.** A user report. A status
-code. A graph that moved. No cause attached, because in production the cause
-never comes attached.
+code. A graph that moved. An agent's confident summary. No cause attached,
+because in production the cause never comes attached.
 
 For each simulation, do the work in order:
 
@@ -23,7 +23,7 @@ For each simulation, do the work in order:
 
 The single most useful reflex in operations is not knowing every cause — it's
 **bisecting by layer**: cutting the request path in half and asking which side
-the fault is on, until only one layer is left. Every one of these eight is
+the fault is on, until only one layer is left. Every one of these twelve is
 solved by finding the right layer first.
 
 ```mermaid
@@ -34,7 +34,14 @@ flowchart TD
     Q1 -->|"No"| DEPLOY["Deploy / artifact layer<br/>(stale worker, build cache,<br/>wrong branch, baked-in config)"]
     Q1 -->|"Yes"| Q2{"Does it depend on<br/>WHO or WHERE the<br/>user is?"}
     Q2 -->|"Yes"| IDENT["Identity / abuse layer<br/>(auth, rate limit, per-client)"]
-    Q2 -->|"No"| DATA["Data / storage layer<br/>(schema, migration,<br/>background job, disk)"]
+    Q2 -->|"No"| Q3{"Is a dependency you<br/>DON'T own (third-party<br/>API, provider) slow<br/>or failing?"}
+    Q3 -->|"Yes"| THIRD["Third-party dependency layer<br/>(retries, circuit breaker,<br/>fallback, the bill)"]
+    Q3 -->|"No"| Q4{"Did load or data volume<br/>just climb past what<br/>the system can serve?"}
+    Q4 -->|"Yes"| CAP["Capacity / saturation layer<br/>(queue depth, replication<br/>lag, cost)"]
+    Q4 -->|"No"| Q5{"Is the SIGNAL itself suspect —<br/>monitoring quiet, or an<br/>agent's 'done' the only<br/>evidence?"}
+    Q5 -->|"Monitoring is dark"| BLIND["Observability layer<br/>(the watcher shared fate,<br/>or has a blind spot)"]
+    Q5 -->|"An agent said so"| AGENT["Agent-direction layer<br/>(demand evidence,<br/>not a self-summary)"]
+    Q5 -->|"No"| DATA["Data / storage layer<br/>(schema, migration,<br/>background job, disk)"]
 ```
 
 Keep that tree next to you. Each simulation names which branch it lives on.
@@ -352,11 +359,170 @@ independent.
 
 ---
 
+## Simulation 9 — The dashboards that stayed green through an outage
+
+**The page** 🔥
+Support tickets are stacking up: users across a whole region say the app has been
+down for twenty minutes. But every screen you own is green — the metrics
+dashboard, the alerting panel, the uptime graph — all healthy, and *not one alert
+fired*. You pull out your phone, leave the office Wi-Fi, and load the site over
+cellular: it's down for you too. The monitoring never said a word.
+
+**Your job** — before you scroll:
+- The system is down and *nothing paged you*. Which is the more dangerous failure
+  here — the outage, or the silence around it?
+- For "all green" to be trustworthy, what has to be true about *where your
+  monitoring runs* relative to what it monitors?
+- If the monitor and the monitored share the same infrastructure, what does
+  "green" actually mean the moment that infrastructure fails?
+
+**What actually happened**
+The monitoring and alerting stack ran on the *same* infrastructure as the app —
+same region, same provider. When that infrastructure degraded, the monitors went
+dark *with* it, so they couldn't report the outage. "No alert" didn't mean "no
+problem"; it meant "no monitor." The green dashboards were measuring their own
+corpse. The fix is the iron rule first met in F.5 and 1.3 and made
+industrial-grade here: **the thing that tells you "it's fine" must not share fate
+with the thing it monitors** — an external uptime check on someone else's
+infrastructure, plus alerting that reaches you off-network. This is lesson
+**7.6**. Branch of the tree: **observability** — the signal itself failed.
+(Echo: AWS's 2017 S3 outage took down the status dashboard that was hosted on
+S3; Roblox flew blind for 73 hours for the same reason.)
+
+**The follow-up: and how do you know it worked?**
+You run a game-day: deliberately kill the app's infrastructure and watch the
+*external* checker page you within your target window — a monitor you have
+personally watched fire during a real (staged) outage, from outside the blast
+radius. A monitor you've never seen alert is an assumption, not an alarm.
+
+---
+
+## Simulation 10 — The 90-second blip that became a 20-minute outage
+
+**The page** 🔥
+Your email/payment provider had a brief incident — status page says 90 seconds of
+elevated errors, then fully recovered. But your app was effectively down for
+twenty minutes, and an hour later your job queue depth is *still* climbing,
+worker CPU is pinned at 100%, and your provider invoice shows a **40×** spike in
+API calls concentrated in that window. The provider has been healthy for an hour.
+You are not.
+
+**Your job** — before you scroll:
+- A 90-second dependency blip became a 20-minute self-inflicted outage. What did
+  your code do each time the provider timed out that multiplied *one* failure
+  into thousands?
+- Those requests didn't vanish — they queued. What happens to queue depth when
+  new work arrives faster than workers can drain it?
+- What's the difference between "retry" and "retry with a limit, backoff, and a
+  breaker"? And why did every retry show up *on the bill*?
+
+**What actually happened**
+On each provider timeout, the worker retried immediately and without limit. When
+the provider recovered, it was hit by a **thundering herd** of stacked retries
+*plus* all the new work that had piled up — a retry storm that kept the effective
+outage going long after the root cause healed, and metered every retry as a
+billable API call (the 40× spike). There was no circuit breaker, no exponential
+backoff with jitter, no dead-letter queue, and no backpressure. The fix is the
+resilience kit from lesson **6.7** and the queue discipline from **10.2**: a
+circuit breaker that trips and sheds load, backoff-with-jitter on retries, a
+dead-letter lane for poison jobs, and queue *depth* watched as a first-class
+metric. Branch of the tree: **third-party dependency** (the trigger) feeding
+**capacity / saturation** (the amplifier) — and, because retries are metered, a
+**cost** incident too.
+
+**The follow-up: and how do you know it worked?**
+You replay it: fault-inject a 90-second provider outage *under load* and show
+three graphs return to baseline on their own — queue depth spikes then drains to
+zero with no human action, the breaker trips and later resets, and the API-call
+count stays bounded instead of exploding 40×. Proof is the system absorbing the
+next blip without you touching it.
+
+---
+
+## Simulation 11 — The profile change that reverts for a second
+
+**The page** 🔥
+Users report that when they update their profile — new display name, new
+avatar — and the page reloads, they briefly see the *old* value, then it corrects
+itself a second or two later. It's intermittent, it's worse right after your
+busiest hours, and the write is definitely committing (the new value is correct
+on a later refresh). You cannot reproduce it in staging at all.
+
+**Your job** — before you scroll:
+- The write succeeds and the read is stale *for a moment*, then heals. Where could
+  a read be going that isn't where the write went?
+- Why would this get worse under load, and why would it *never* appear in staging,
+  which runs a single database?
+- When you added read replicas to scale reads, which guarantee did you quietly
+  give up?
+
+**What actually happened**
+To scale reads, the team had added **read replicas**: writes go to the primary
+and replicate *asynchronously* to the replicas. Under load, replication lag
+grows — and a read routed to a lagging replica returns the value from *before*
+the user's own write. That's a **read-your-own-writes** violation, and staging
+never showed it because staging has a single database with no replica to lag. The
+fix: route reads that must reflect a user's just-made write to the primary
+(sticky "read-your-writes" routing), or gate on replica freshness, and reserve
+eventual consistency for reads where staleness is genuinely harmless. This is
+lesson **10.3**. Branch of the tree: **data / storage**, surfacing only under
+**capacity / saturation** — the bug is invisible until lag, a load-driven
+quantity, grows.
+
+**The follow-up: and how do you know it worked?**
+Reproduce it deterministically by *injecting* replication lag, watch the stale
+read appear, then apply read-your-writes routing and watch the same
+write-then-read sequence return the fresh value every time — under the same
+injected lag. The durable proof is a test that writes, immediately reads through
+the real routing layer with lag present, and asserts freshness.
+
+---
+
+## Simulation 12 — The agent that said "done"
+
+**The page** 🔥
+This one isn't a user report — it's your own AI agent. You asked it to fix the
+checkout flow that's been failing for some users. It comes back with a confident
+summary: *"Done. Fixed a null-check in the payment handler, added a test, all
+tests pass. Checkout works now."* The diff looks plausible and small. It's 11pm,
+you're tired, and merging is one click away. Nothing is paging you — *yet*.
+
+**Your job** — before you scroll:
+- The only evidence the bug is fixed is the agent's own summary of its own work.
+  Why is that not evidence?
+- "All tests pass" — what could that sentence mean if the test the agent added
+  never actually exercises the real failure?
+- Before you believe "checkout works," what would you demand to see, and *from
+  which layer* — the agent's narration, or the surface a user touches?
+
+**What actually happened**
+This is a pattern, not a one-off incident, and it's the whole course pointed at
+the newest member of your team. An agent's self-summary is a **claim, not a
+proof** — the exact shape as "publish succeeded" (4.5), "the deploy went out"
+(4.3), and "exit code 0" (2.3). Agents, like humans, narrate *intent*, and a
+summary can be confidently wrong: a test that asserts a mock instead of the
+behavior, a "fix" on a code path the bug never takes, green CI on a suite that
+never reproduced the failure in the first place. The discipline is lesson
+**9.4**, verification before completion: you demand the artifact, not the
+narration. Branch of the tree: **agent-direction** — the only evidence is a
+self-report, and the fix is to refuse it and go get real evidence. (It's also
+**9.8**'s governance glance in miniature: you own what your agent ships, and the
+final "yes" is yours to give, not the agent's to assume.)
+
+**The follow-up: and how do you know it worked?**
+"And how do you know it worked?" has the *same* answer whether a human or an
+agent did the work: reproduce the original failing checkout as a real user and
+watch it succeed, and watch the new test **fail on the pre-fix code** before it
+passes on the fix. An agent's "done" is upgraded to actually-done only when
+you've seen the evidence it cannot fabricate — from the layer the user touches.
+
+---
+
 ## You now hold the whole map
 
-Eight pages, eight layers, one reflex: **name the layer before you name the
-cause.** Look back at what you just did — you routed every incident through the
-same tree, and each branch is a module you've already lived through:
+Twelve pages, one reflex: **name the layer before you name the cause.** Look back
+at what you just did — you routed every incident through the same tree, and each
+branch is a module you've already lived through:
 
 ```mermaid
 mindmap
@@ -373,6 +539,13 @@ mindmap
     Data / storage
       Backup tripled · 2.3
       Deleted file returns · 2.2
+      Stale profile read · 10.3
+    Third-party / capacity
+      Retry storm · 6.7 + 10.2
+    Observability
+      Green through an outage · 7.6
+    Agent-direction
+      The agent said done · 9.4
 ```
 
 **The passing bar** is not "you memorized eight causes." Real production hands
@@ -392,7 +565,7 @@ these twelve modules was in service of being able to answer it calmly at 3am.
 
 You started not knowing what a server was. You can now get paged, cut the
 request path in half, land on the right layer, and prove your fix. That's not
-trivia about eight incidents — that's the map of everything that can hurt you,
+trivia about twelve incidents — that's the map of everything that can hurt you,
 and the habit of demanding evidence. Go build. And when it breaks — because it
 will — you'll know exactly where to look.
 
@@ -400,4 +573,4 @@ will — you'll know exactly where to look.
 
 *Source incidents: [incident bank](../../war-stories/incident-bank.md) ·
 [famous cases](../../war-stories/famous-cases.md). Each simulation maps to its
-full lesson: 3.2, 4.3, 2.3, 5.2, 2.2, 6.2, 4.5, 3.4.*
+full lesson: 3.2, 4.3, 2.3, 5.2, 2.2, 6.2, 4.5, 3.4, 7.6, 6.7 + 10.2, 10.3, 9.4.*

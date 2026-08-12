@@ -437,18 +437,26 @@ product that grew — with incidents cited where we have them.
 
 ## Module 12 — Capstone: You Get Paged
 
-Eight incident simulations. Each gives you symptoms only (user reports, status codes,
-graphs); you diagnose, propose the fix, then compare against what actually happened
-in production. Drawn from the incident bank:
+Twelve incident simulations. Each gives you symptoms only (user reports, status codes,
+graphs, an agent's confident summary); you diagnose, propose the fix, then compare
+against what actually happened in production. They sample the whole course — early
+data/cache/deploy modules through observability, scaling, and directing an AI team —
+so the bisect tree grows branches for the later layers too (third-party dependency,
+capacity/saturation, cost, observability, agent-direction). Drawn from the incident
+bank:
 
-1. Pages render as raw JSON for some users, some of the time.
-2. Flapping 502s that stop when you restart something you "shouldn't have to."
-3. Nightly backup size triples with no data growth.
-4. Legit users hit 429s the day after a traffic spike.
-5. A deleted file keeps coming back.
-6. Your mobile fix disappears a week after you shipped it.
-7. The app store rejects your build for content that plays fine on your machine.
-8. Your live-presence counter drops to zero the moment someone "clears the cache."
+1. Pages render as raw JSON for some users, some of the time. (3.2)
+2. Flapping 502s that stop when you restart something you "shouldn't have to." (4.3)
+3. Nightly backup size triples with no data growth. (2.3)
+4. Legit users hit 429s the day after a traffic spike. (5.2)
+5. A deleted file keeps coming back. (2.2)
+6. Your mobile fix disappears a week after you shipped it. (6.2)
+7. The app store rejects your build for content that plays fine on your machine. (4.5)
+8. Your live-presence counter drops to zero the moment someone "clears the cache." (3.4)
+9. Dashboards stay green through a real outage — monitoring shared fate with the app. (7.6)
+10. A 90-second provider blip becomes a 20-minute retry-storm and a 40× bill. (6.7 + 10.2)
+11. A profile edit shows the old value for a second — read-your-writes under replication lag. (10.3)
+12. Your AI agent reports "done" with a confident, wrong self-summary — what evidence do you demand? (9.4 / 9.8)
 
 Passing bar: correct layer identified, plausible root cause, a fix that survives
 the follow-up question "and how do you know it worked?"
