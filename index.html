@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="sd4vc-source" content="857a3d2ef7552665">
+<meta name="sd4vc-source" content="b76eb77c37e02948">
 <title>System Design for Vibe Coders — The Complete Course</title>
 <style>
 
@@ -91,6 +91,8 @@ body.lang-ar .en-only{position:absolute;left:-9999px;top:0;width:44rem;}
 [lang="ar"] h1,[lang="ar"] h2,[lang="ar"] h3,[lang="ar"] h4{font-family:"Noto Kufi Arabic","Geeza Pro","Al Bayan",var(--sans); letter-spacing:0;}
 [lang="ar"] .eyebrow,[lang="ar"] .kicker{letter-spacing:0;}
 [lang="ar"] pre,[lang="ar"] code{direction:ltr; text-align:left;}
+/* Mermaid positions SVG text for LTR; an inherited dir=rtl flips text-anchor and pushes gitGraph branch and commit labels out of their boxes. Other diagram types are unaffected. */
+.diagram svg[aria-roledescription="gitGraph"]{direction:ltr;}
 .lang-btn{font-family:var(--mono); font-size:.72rem; letter-spacing:.06em; background:none; border:1px solid var(--line); border-radius:4px; color:var(--ink); padding:.25rem .7rem; cursor:pointer;}
 .lang-btn:hover{border-color:var(--ember); color:var(--ember);}
 ol,ul{padding-inline-start:1.3rem;}
