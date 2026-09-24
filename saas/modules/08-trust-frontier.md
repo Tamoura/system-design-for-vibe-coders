@@ -73,7 +73,7 @@ A **data encryption key (DEK)** encrypts the data. A **key encryption key (KEK)*
 | Flavours | **Type I**: controls designed correctly at a point in time. **Type II**: controls *operated* effectively over a period, commonly 3–12 months | Certification audit, then yearly surveillance audits, recertification every 3 years |
 | Who asks | Mostly North American buyers | Europe and global enterprises |
 
-A **control** is a specific commitment: "production access requires SSO and MFA", "every code change is reviewed before merge", "access is reviewed quarterly", "backups are restored in a test at least yearly", "departing employees lose access within 24 hours". **Evidence** is proof, such as screenshots, exported logs, tickets and signed policies. Most of the work is engineering hygiene you should do anyway, plus a lot of record-keeping. **Compliance automation** platforms connect to your cloud, GitHub and HR system, check controls continuously and collect evidence: Vanta and Drata are the managed leaders, and trycompai/comp and getprobo/probo are open-source alternatives.
+A **control** is a specific commitment: "production access requires SSO and MFA", "every code change is reviewed before merge", "access is reviewed quarterly", "backups are restored in a test at least yearly", "departing employees lose access within 24 hours". **Evidence** is proof, such as screenshots, exported logs, tickets and signed policies. Most of it is hygiene you should do anyway, plus record-keeping. **Compliance automation** platforms connect to your cloud, GitHub and HR system, check controls continuously and collect evidence: Vanta and Drata are the managed leaders, and trycompai/comp and getprobo/probo are open-source alternatives.
 
 **GDPR basics for a SaaS.** If you have EU users (and a B2B SaaS almost always does), you need to know the roles. Your **customer** (Acme) is usually the *controller* of their data, meaning their team and their status-page subscribers. **You** are the *processor*. That brings obligations:
 
@@ -97,7 +97,7 @@ Policy: https://beacon.dev/security/disclosure
 Preferred-Languages: en
 ```
 
-**The trust center.** Mature SaaS publish a trust page (`trust.beacon.dev`) that answers the security questionnaire before it's sent: compliance status (SOC 2 Type II, ISO 27001), downloadable reports behind an NDA click-through, the subprocessor list, the DPA, uptime history (Beacon can show its own status page), pen-test summary, encryption and data residency details. It saves sales and engineering weeks per enterprise deal. Vanta and Drata offer hosted versions, and some teams simply build a page.
+**The trust center.** Mature SaaS publish a trust page (`trust.beacon.dev`) that answers the security questionnaire before it's sent: compliance status (SOC 2 Type II, ISO 27001), downloadable reports behind an NDA click-through, the subprocessor list, the DPA, uptime history (Beacon can show its own status page), pen-test summary, encryption and data residency details. Vanta and Drata offer hosted versions, and some teams simply build a page.
 
 **Enterprise security features become product.** SSO/SCIM (1.4), audit logs (7.3), IP allowlists, custom data retention, BYOK, data residency (2.4), and session timeout policies are all things security teams will *require* in contracts. Put them on the Business plan as entitlements (3.2). Tenant isolation must also hold in your support tooling: impersonation in the admin panel (7.1) needs its own audit trail and, for strict customers, their consent.
 
