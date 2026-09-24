@@ -45,6 +45,7 @@ export default async function SettingsPage({ params }: { params: Promise<{ orgSl
         <div className="card grid" data-testid="integrations">
           <strong>Integrations</strong>
           <Link href={`/${ctx.orgSlug}/settings/api-keys`}>API keys →</Link>
+          <Link href={`/${ctx.orgSlug}/settings/webhooks`}>Webhooks →</Link>
         </div>
       )}
       {/* Lesson 2.2 (🟢): the status page logo, uploaded straight to storage. */}

@@ -7,6 +7,7 @@ import { countStateChanges, FLAPPING, isFlapping } from '@/core/notifications';
 import { enqueueNotify } from './notifications/incidents';
 import type { JobData } from './queue';
 import { publishInTx } from './realtime';
+import { recordIncidentWebhook } from './webhooks';
 
 const { monitors, checkResults, incidents, incidentUpdates } = schema;
 
@@ -75,6 +76,9 @@ export async function recordCheckResult(
       // Lesson 2.3: the first update, so the incident is searchable from the start.
       await tx.insert(incidentUpdates).values({ organizationId: org.id, incidentId: incident.id, body: `Opened automatically: ${cause}` });
       event = { orgId: org.id, event: 'incident.opened', incidentId: incident.id };
+      // Lesson 5.3: the webhook event and its deliveries, in this transaction too.
+      // Machines get every change; only people are spared the flapping (below).
+      await recordIncidentWebhook(tx, org.id, 'incident.opened', incident.id, now);
       await publishInTx(tx, org.id, { type: 'incident.changed', monitorId: monitor.id, incidentId: incident.id, state: 'opened' });
       line = `  ✗ ${monitor.name}: incident opened (${cause})`;
     } else if (decision === 'resolve' && open) {
@@ -84,6 +88,7 @@ export async function recordCheckResult(
         .where(and(eq(incidents.organizationId, org.id), eq(incidents.id, open.id)));
       await tx.insert(incidentUpdates).values({ organizationId: org.id, incidentId: open.id, body: 'Resolved automatically: checks are passing again.' });
       event = { orgId: org.id, event: 'incident.resolved', incidentId: open.id };
+      await recordIncidentWebhook(tx, org.id, 'incident.resolved', open.id, now);
       await publishInTx(tx, org.id, { type: 'incident.changed', monitorId: monitor.id, incidentId: open.id, state: 'resolved' });
       line = `  ✓ ${monitor.name}: incident resolved`;
     }

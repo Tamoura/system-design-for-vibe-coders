@@ -147,7 +147,7 @@ const TENANT_TABLES = [
   // Module 4
   'notifications', 'notificationPreferences', 'orgNotificationPolicies', 'notificationDeliveries', 'statusPageSubscribers', 'presence',
   // Module 5
-  'apiIdempotencyKeys',
+  'apiIdempotencyKeys', 'webhookEndpoints', 'webhookEvents', 'webhookMessages', 'webhookAttempts',
 ];
 const SCANNED = ['src', 'scripts/run-checks.ts', 'scripts/report-usage.ts', 'scripts/worker.ts', 'scripts/jobs.ts'];
 const EXEMPT = ['src/db/tenant.ts', 'src/db/schema.ts', 'src/db/index.ts'];

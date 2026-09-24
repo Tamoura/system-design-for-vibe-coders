@@ -8,6 +8,7 @@ import { assertCanCreateMonitor, assertCanRunAnotherMonitor, assertIntervalAllow
 import { BlockedUrlError, assertPublicUrl } from '@/core/safe-fetch';
 import { AccessError, InvalidRequestError } from './errors';
 import { enqueueNotify } from './notifications/incidents';
+import { recordIncidentWebhook } from './webhooks';
 import { publishInTx } from './realtime';
 
 const { monitors, checkResults, incidents } = schema;
@@ -261,6 +262,7 @@ export async function resolveIncident(ctx: OrgScope, incidentId: string): Promis
     const [monitor] = await tx.select().from(monitors).where(and(eq(monitors.organizationId, ctx.orgId), eq(monitors.id, incident.monitorId)));
     await publishInTx(tx, ctx.orgId, { type: 'incident.changed', monitorId: monitor.id, incidentId: incident.id, state: 'resolved' });
     await enqueueNotify(tx, { orgId: ctx.orgId, event: 'incident.resolved', incidentId: incident.id });
+    await recordIncidentWebhook(tx, ctx.orgId, 'incident.resolved', incident.id); // lesson 5.3
     return true;
   });
 }

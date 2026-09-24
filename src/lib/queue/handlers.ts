@@ -4,6 +4,7 @@ import { deliverNotification } from '../notifications/deliver';
 import { notifyIncident } from '../notifications/incidents';
 import { runScheduledCheck, scheduleChecks } from '../scheduler';
 import { reportPendingUsage } from '../usage';
+import { deliverWebhook } from '../webhooks';
 import type { JobContext, JobData, QueueName } from './queues';
 
 /*
@@ -24,6 +25,7 @@ export const HANDLERS: { [Q in QueueName]?: Handler<Q> } = {
   'incident.notify': (data) => notifyIncident(data),
   'notification.deliver': (data, job) => deliverNotification(data.orgId, data.deliveryId, job),
   'email.send': (data, job) => sendQueuedEmail(data.emailId, job),
+  'webhook.deliver': (data, job) => deliverWebhook(data, job),
   'file.process': (data) => processUploadedFile({ orgId: data.orgId }, data.fileId),
   'usage.report': () => reportPendingUsage(),
 };

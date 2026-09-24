@@ -3,6 +3,7 @@ import { createElement, type ReactElement } from 'react';
 import { Invitation, ResetPassword, VerifyEmail } from './account';
 import { PlanDowngraded, UsageAlert } from './billing';
 import { IncidentOpened, IncidentResolved, MonitorFlapping, SmsHeldBack } from './incidents';
+import { WebhookDisabled } from './integrations';
 import { ConfirmSubscription, StatusUpdate } from './status-page';
 
 /*
@@ -86,6 +87,11 @@ export const TEMPLATES = {
     component: UsageAlert,
     subject: (p) => `${p.orgName} has used ${p.threshold}% of its included SMS alerts`,
     sample: { orgName: 'Acme', threshold: 80, used: 80, included: 100, planName: 'Pro', url: `${APP}/acme/billing` },
+  }),
+  'webhook-disabled': define({
+    component: WebhookDisabled,
+    subject: (p) => `[${p.orgName}] Webhook endpoint disabled after repeated failures`,
+    sample: { orgName: 'Acme', endpointUrl: 'https://hooks.acme.test/beacon', failingSince: '2026-09-19T03:12:00.000Z', lastError: 'HTTP 502', url: `${APP}/acme/settings/webhooks/1` },
   }),
   'confirm-subscription': define({
     component: ConfirmSubscription,

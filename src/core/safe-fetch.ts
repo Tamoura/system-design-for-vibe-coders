@@ -69,9 +69,10 @@ export async function assertPublicUrl(raw: string, opts: { ports?: readonly numb
   } catch {
     throw new BlockedUrlError('not a valid URL');
   }
-  const problem = urlSyntaxProblem(url, opts);
+  const allowed = allowListed(url); // development only: a named host:port, any port
+  const problem = urlSyntaxProblem(url, allowed ? {} : opts);
   if (problem) throw new BlockedUrlError(problem);
-  if (allowListed(url)) return url;
+  if (allowed) return url;
   try {
     await resolvePublic(hostOf(url));
   } catch (err) {
@@ -113,10 +114,10 @@ export async function safeFetch(raw: string, init: RequestInit = {}, opts: SafeF
   let current = raw;
   for (let hop = 0; ; hop++) {
     const url = new URL(current);
-    const problem = urlSyntaxProblem(url, opts);
+    const allowed = allowListed(url);
+    const problem = urlSyntaxProblem(url, allowed ? {} : opts);
     if (problem) throw new BlockedUrlError(problem);
     // An IP address in the URL never reaches the lookup: check it here.
-    const allowed = allowListed(url);
     if (!allowed && isIP(hostOf(url))) await resolvePublic(hostOf(url));
     const res = await undiciFetch(url, { ...init, redirect: 'manual', dispatcher: allowed ? undefined : guardedAgent });
     const location = res.headers.get('location');

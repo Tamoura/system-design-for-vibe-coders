@@ -14,6 +14,8 @@ import type { Queue } from 'pg-boss';
  *   notification.deliver / email.send
  *                     one message to one person on one channel: a provider can
  *                     be down for an hour, so 8 attempts with exponential backoff
+ *   webhook.deliver   one signed POST to a customer's endpoint (lesson 5.3):
+ *                     retried for about a day and a half, then dead-lettered
  *   file.process      a thumbnail (lesson 2.2)
  *   usage.report      send SMS usage to the billing meter (lesson 3.3), every 5 minutes
  *
@@ -60,6 +62,11 @@ export const QUEUES = {
   'incident.notify': { ...PROVIDER_RETRIES, expireInSeconds: 300 },
   'notification.deliver': { ...PROVIDER_RETRIES, expireInSeconds: 120 },
   'email.send': { ...PROVIDER_RETRIES, expireInSeconds: 120 },
+  // Lesson 5.3: "a customer's endpoint being down during their deploy should not
+  // lose events". 18 attempts, 5 s doubling to a 6-hour cap: about 30-40 hours.
+  // A request times out after 10 s (src/lib/webhooks.ts), so the job's own
+  // expiry can stay short.
+  'webhook.deliver': { retryLimit: 17, retryDelay: 5, retryBackoff: true, retryDelayMax: 6 * 3600, deadLetter: DEAD_LETTER, expireInSeconds: 60 },
   'file.process': { retryLimit: 3, retryDelay: 10, retryBackoff: true, deadLetter: DEAD_LETTER, expireInSeconds: 300 },
   'usage.report': { policy: 'singleton', retryLimit: 2, retryDelay: 60, expireInSeconds: 600, deleteAfterSeconds: 24 * 3600 },
 } as const satisfies Record<string, Omit<Queue, 'name'>>;
@@ -78,6 +85,7 @@ export type JobData = {
   'incident.notify': { orgId: string; event: 'incident.opened' | 'incident.resolved'; incidentId: string } | { orgId: string; event: 'monitor.flapping'; monitorId: string; since: string; changes: number };
   'notification.deliver': { orgId: string; deliveryId: string };
   'email.send': { emailId: string };
+  'webhook.deliver': { orgId: string; messageId: string; manual?: boolean };
   'file.process': { orgId: string; fileId: string };
   'usage.report': Record<string, never>;
 };

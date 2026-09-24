@@ -675,6 +675,96 @@ export const rateLimitBuckets = pgTable('rate_limit_buckets', {
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull(),
 });
 
+/*
+ * Lesson 5.3: outbound webhooks. The data model is Svix's, the reference the
+ * lesson recommends reading: an EVENT happened once; it becomes one MESSAGE
+ * per subscribed endpoint; each message has ATTEMPTS. src/lib/webhooks.ts.
+ */
+
+/**
+ * An org's receiving URL, the event types it wants, and its signing secret.
+ * The secret must be readable to sign, so it cannot be hashed like an API key:
+ * it is shown once in the UI and never sent back. TODO(8.1): encrypt at rest.
+ */
+export const webhookEndpoints = pgTable(
+  'webhook_endpoints',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    url: text('url').notNull(),
+    description: text('description'),
+    eventTypes: text('event_types').array().notNull(),
+    secret: text('secret').notNull(),
+    enabled: boolean('enabled').notNull().default(true),
+    disabledReason: text('disabled_reason'),
+    // Lesson 5.3 (🟡): set on the first failed delivery, cleared by the next
+    // success. Failing for 5 days in a row disables the endpoint.
+    failingSince: timestamp('failing_since', { withTimezone: true }),
+    createdBy: uuid('created_by').references(() => users.id, { onDelete: 'set null' }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [index('webhook_endpoints_org_idx').on(t.organizationId, t.createdAt)],
+);
+
+/** Something happened ("incident.opened"), once, with its payload. Immutable. */
+export const webhookEvents = pgTable(
+  'webhook_events',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    type: text('type').notNull(),
+    payload: jsonb('payload').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('webhook_events_org_created_idx').on(t.organizationId, t.createdAt)],
+);
+
+export const webhookMessageStatus = pgEnum('webhook_message_status', ['pending', 'delivered', 'failed']);
+
+/**
+ * One event for one endpoint: what `webhook-id` names (the same on every
+ * retry, so receivers can drop duplicates). Unique per (endpoint, event).
+ */
+export const webhookMessages = pgTable(
+  'webhook_messages',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    endpointId: uuid('endpoint_id').notNull().references(() => webhookEndpoints.id, { onDelete: 'cascade' }),
+    eventId: uuid('event_id').notNull().references(() => webhookEvents.id, { onDelete: 'cascade' }),
+    status: webhookMessageStatus('status').notNull().default('pending'),
+    attempts: integer('attempts').notNull().default(0),
+    lastAttemptAt: timestamp('last_attempt_at', { withTimezone: true }),
+    deliveredAt: timestamp('delivered_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [
+    uniqueIndex('webhook_messages_endpoint_event_idx').on(t.endpointId, t.eventId),
+    // The delivery log: an endpoint's messages, newest first; "replay failed since…".
+    index('webhook_messages_endpoint_created_idx').on(t.organizationId, t.endpointId, t.createdAt),
+  ],
+);
+
+/** Every HTTP attempt of a message, for the customer-facing delivery log. */
+export const webhookAttempts = pgTable(
+  'webhook_attempts',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    messageId: uuid('message_id').notNull().references(() => webhookMessages.id, { onDelete: 'cascade' }),
+    // 'automatic' (the queue, retries included) or 'manual' (Resend / Replay in the UI).
+    trigger: text('trigger').notNull(),
+    statusCode: integer('status_code'),
+    durationMs: integer('duration_ms').notNull(),
+    responseBody: text('response_body'), // the first 500 characters
+    error: text('error'),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('webhook_attempts_message_idx').on(t.messageId, t.createdAt)],
+);
+
 export type Organization = typeof organizations.$inferSelect;
 export type Membership = typeof memberships.$inferSelect;
 export type Invitation = typeof invitations.$inferSelect;
@@ -690,3 +780,5 @@ export type Notification = typeof notifications.$inferSelect;
 export type NotificationDelivery = typeof notificationDeliveries.$inferSelect;
 export type StatusPageSubscriber = typeof statusPageSubscribers.$inferSelect;
 export type ApiKey = typeof apiKeys.$inferSelect;
+export type WebhookEndpoint = typeof webhookEndpoints.$inferSelect;
+export type WebhookMessage = typeof webhookMessages.$inferSelect;

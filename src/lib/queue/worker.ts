@@ -16,9 +16,9 @@ import { asOutput, jobContext } from './run';
  *
  * localConcurrency  how many jobs of that queue this process runs at once
  * groupConcurrency  lesson 5.1 fairness: how many jobs of ONE group (one
- *                   organization) may run at once across ALL workers. An org
- *                   with 20,000 monitors gets 5 check slots at a time; the
- *                   other 15 slots stay free for everyone else.
+ *                   organization, or one webhook endpoint) may run at once
+ *                   across ALL workers. An org with 20,000 monitors gets 5
+ *                   check slots at a time; the other 15 stay free for everyone else.
  */
 export const WORKERS: Partial<Record<QueueName, WorkOptions>> = {
   'checks.schedule': { localConcurrency: 1, pollingIntervalSeconds: 2 },
@@ -26,6 +26,9 @@ export const WORKERS: Partial<Record<QueueName, WorkOptions>> = {
   'incident.notify': { localConcurrency: 5 },
   'notification.deliver': { localConcurrency: 10, groupConcurrency: 5 },
   'email.send': { localConcurrency: 10 },
+  // Lesson 5.3: groups are ENDPOINTS here. A slow endpoint holds at most 2 of
+  // the 10 slots (each for at most 10 s), so it cannot delay anyone else's.
+  'webhook.deliver': { localConcurrency: 10, groupConcurrency: 2 },
   'file.process': { localConcurrency: 2 },
   'usage.report': { localConcurrency: 1, pollingIntervalSeconds: 5 },
 };
