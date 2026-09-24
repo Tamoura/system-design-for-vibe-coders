@@ -25,3 +25,9 @@ export function toMonitorDto(m: Monitor): MonitorDto {
     createdAt: m.createdAt.toISOString(),
   };
 }
+
+export type MemberDto = { userId: string; name: string; email: string; role: string; joinedAt: string };
+
+export function toMemberDto(m: { userId: string; name: string; email: string; role: string; joinedAt: Date }): MemberDto {
+  return { userId: m.userId, name: m.name, email: m.email, role: m.role, joinedAt: m.joinedAt.toISOString() };
+}

@@ -1,7 +1,9 @@
 import { and, desc, eq, isNull, sql as dsql } from 'drizzle-orm';
 import { db, schema } from '@/db';
 import { uptimePercent } from '@/core/incidents';
-import type { CreateMonitorInput } from '@/core/validation';
+import { canEditMonitor, type Actor } from '@/core/permissions';
+import type { CreateMonitorInput, UpdateMonitorInput } from '@/core/validation';
+import { AccessError } from './errors';
 
 const { monitors, checkResults, incidents } = schema;
 
@@ -117,15 +119,33 @@ export async function createMonitor(ctx: OrgScope & { userId: string }, input: C
   return row;
 }
 
-/** Delete a monitor, only inside this org. Returns false when there was no such monitor here. */
-export async function deleteMonitor({ orgId }: OrgScope, id: string): Promise<boolean> {
-  if (!isUuid(id)) return false;
+/**
+ * Load a monitor the actor may change. Lesson 1.3: two checks, in this order —
+ * object-level (is it in this org? else 404) then the ABAC rule (may this
+ * actor edit *this* monitor? else 403).
+ */
+async function getEditableMonitor(ctx: OrgScope & Actor, id: string) {
+  const monitor = await getMonitor(ctx, id);
+  if (!monitor) throw new AccessError('not_found');
+  if (!canEditMonitor(ctx, monitor)) throw new AccessError('forbidden');
+  return monitor;
+}
+
+export async function updateMonitor(ctx: OrgScope & Actor, id: string, input: UpdateMonitorInput) {
+  await getEditableMonitor(ctx, id);
+  // TODO(7.3): record "monitor.updated" in the audit log.
+  const [row] = await db
+    .update(monitors)
+    .set(input) // parsed by updateMonitorInput: only name, url, intervalSeconds, paused
+    .where(and(eq(monitors.organizationId, ctx.orgId), eq(monitors.id, id)))
+    .returning();
+  return row;
+}
+
+export async function deleteMonitor(ctx: OrgScope & Actor, id: string): Promise<void> {
+  await getEditableMonitor(ctx, id);
   // TODO(7.3): record "monitor.deleted" in the audit log.
-  const deleted = await db
-    .delete(monitors)
-    .where(and(eq(monitors.organizationId, orgId), eq(monitors.id, id)))
-    .returning({ id: monitors.id });
-  return deleted.length > 0;
+  await db.delete(monitors).where(and(eq(monitors.organizationId, ctx.orgId), eq(monitors.id, id)));
 }
 
 /** Mark an open incident as resolved by hand (the checker also resolves it on the next success). */

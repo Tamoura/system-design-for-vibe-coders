@@ -35,6 +35,17 @@ export const signUpInput = z.object({
 
 export type SignUpInput = z.infer<typeof signUpInput>;
 
+/**
+ * Lesson 1.3 (🟡): "edit a monitor". Every field optional, and only these
+ * fields: z.object drops unknown keys, so organizationId or createdBy in a
+ * request body are silently ignored (no mass assignment).
+ */
+export const updateMonitorInput = createMonitorInput.extend({ paused: z.boolean() }).partial();
+export type UpdateMonitorInput = z.infer<typeof updateMonitorInput>;
+
+/** Lesson 1.3 (🟡): "change a member's role". Who may do it is roleChangeRefusal()'s job. */
+export const changeRoleInput = z.object({ role: z.enum(ROLES) });
+
 /** Lesson 1.2: "create an organization". The slug is derived from the name (src/core/slugs.ts). */
 export const createOrganizationInput = z.object({
   name: z.string().trim().min(2, 'Use at least 2 characters').max(60),

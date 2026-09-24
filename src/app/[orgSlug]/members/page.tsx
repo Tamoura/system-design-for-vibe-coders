@@ -1,17 +1,17 @@
-import { can, canGrantRole } from '@/core/permissions';
+import { can, canGrantRole, roleChangeRefusal } from '@/core/permissions';
 import { ROLES } from '@/core/roles';
-import { forPage, requireMembership } from '@/lib/access';
+import { forPage, requirePermission } from '@/lib/access';
 import { listOpenInvitations } from '@/lib/invitations';
 import { listMembers } from '@/lib/members';
-import { resendInvitationAction, revokeInvitationAction } from './actions';
+import { changeRoleAction, resendInvitationAction, revokeInvitationAction } from './actions';
 import { InviteForm } from './invite-form';
 
 export const dynamic = 'force-dynamic';
 
 export default async function MembersPage({ params }: { params: Promise<{ orgSlug: string }> }) {
   const { orgSlug } = await params;
-  // Every member may see who else is in the org; changing it needs "member.manage".
-  const ctx = await forPage(requireMembership(orgSlug), `/${orgSlug}/members`);
+  // Every role may see who is in the org; changing it needs "member.manage".
+  const ctx = await forPage(requirePermission(orgSlug, 'member.read'), `/${orgSlug}/members`);
   const members = await listMembers(ctx);
   const manage = can(ctx.role, 'member.manage');
   const invitations = manage ? await listOpenInvitations(ctx) : [];
@@ -22,13 +22,27 @@ export default async function MembersPage({ params }: { params: Promise<{ orgSlu
       <div className="card">
         <table>
           <tbody>
-            {members.map((m) => (
-              <tr key={m.userId}>
-                <td><strong>{m.name}</strong></td>
-                <td className="muted">{m.email}</td>
-                <td data-testid={`role-${m.email}`}>{m.role}</td>
-              </tr>
-            ))}
+            {members.map((m) => {
+              // Only offer the role changes the server would accept.
+              const options = ROLES.filter((r) => r !== m.role && !roleChangeRefusal(ctx, m, r));
+              return (
+                <tr key={m.userId}>
+                  <td><strong>{m.name}</strong>{m.userId === ctx.userId && <span className="muted"> (you)</span>}</td>
+                  <td className="muted">{m.email}</td>
+                  <td data-role={m.email}>{m.role}</td>
+                  <td>
+                    {options.length > 0 && (
+                      <form action={changeRoleAction.bind(null, ctx.orgSlug, m.userId)} className="row">
+                        <select name="role" aria-label={`New role for ${m.email}`} defaultValue={options[0]}>
+                          {options.map((r) => <option key={r} value={r}>{r}</option>)}
+                        </select>
+                        <button className="link-btn">Change role</button>
+                      </form>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

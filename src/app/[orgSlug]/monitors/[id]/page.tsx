@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation';
-import { can } from '@/core/permissions';
+import { can, canEditMonitor } from '@/core/permissions';
 import { forPage, requirePermission } from '@/lib/access';
 import { getMonitor, getMonitorHistory } from '@/lib/monitors';
 import { deleteMonitorAction, resolveIncidentAction } from './actions';
+import { EditMonitorForm } from './edit-form';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,19 +14,27 @@ export default async function MonitorPage({ params }: { params: Promise<{ orgSlu
   const monitor = await getMonitor(ctx, id);
   if (!monitor) notFound();
   const history = await getMonitorHistory(ctx, monitor.id);
+  // Lesson 1.3 (🟡): the same ABAC rule the server enforces decides what to show.
+  const editable = canEditMonitor(ctx, monitor);
   return (
     <section className="grid">
       <h1 style={{ margin: 0 }}>{monitor.name}</h1>
       <div className="card grid">
         <div><span className="muted">URL</span> {monitor.url}</div>
         <div><span className="muted">Checked every</span> {monitor.intervalSeconds}s{monitor.paused ? ' (paused)' : ''}</div>
-        {/* Lesson 1.3: hidden for roles without the permission; the action checks again on the server. */}
-        {can(ctx.role, 'monitor.write') && (
+        {/* Lesson 1.3: hidden when the rules say no; the actions check again on the server. */}
+        {editable && (
           <form action={deleteMonitorAction.bind(null, ctx.orgSlug, monitor.id)}>
             <button className="btn secondary">Delete monitor</button>
           </form>
         )}
       </div>
+      {editable && (
+        <EditMonitorForm
+          orgSlug={ctx.orgSlug}
+          monitor={{ id: monitor.id, name: monitor.name, url: monitor.url, intervalSeconds: monitor.intervalSeconds, paused: monitor.paused }}
+        />
+      )}
       <h2 style={{ margin: 0, fontSize: '1.1rem' }}>Incidents</h2>
       <div className="card">
         {history.incidents.length === 0 ? (

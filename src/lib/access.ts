@@ -2,6 +2,7 @@ import { cache } from 'react';
 import { forbidden, notFound, redirect } from 'next/navigation';
 import { can, type Permission } from '@/core/permissions';
 import type { Role } from '@/core/roles';
+import { AccessError } from './errors';
 import { findMembership } from './organizations';
 import { getCurrentUser } from './session';
 
@@ -19,12 +20,7 @@ export type OrgContext = {
   role: Role;
 };
 
-/** Why access was refused. Pages, server actions and API routes turn this into a redirect, a 404 page or a status code. */
-export class AccessError extends Error {
-  constructor(readonly reason: 'unauthenticated' | 'not_found' | 'forbidden') {
-    super(reason);
-  }
-}
+export { AccessError };
 
 /**
  * Lesson 1.2: resolve the org from the URL *and* check the membership, on

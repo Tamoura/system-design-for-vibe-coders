@@ -37,7 +37,8 @@ describe('data access is scoped to the organization', () => {
   });
 
   it('cannot delete another org’s monitor by id', async () => {
-    expect(await deleteMonitor({ orgId: globex.id }, acmeMonitorId)).toBe(false);
+    const globexOwner = { orgId: globex.id, userId: globex.users.owner.id, role: 'owner' as const };
+    await expect(deleteMonitor(globexOwner, acmeMonitorId)).rejects.toEqual(new AccessError('not_found'));
     expect(await getMonitor({ orgId: acme.id }, acmeMonitorId)).not.toBeNull();
   });
 });

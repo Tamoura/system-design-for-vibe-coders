@@ -1,5 +1,5 @@
 import { ZodError } from 'zod';
-import { AccessError } from './access';
+import { AccessError } from './errors';
 
 const STATUS = { unauthenticated: 401, not_found: 404, forbidden: 403 } as const;
 
