@@ -17,6 +17,9 @@ import * as screenshotsRoute from '@/app/api/orgs/[orgSlug]/incidents/[incidentI
 import * as fileRoute from '@/app/api/orgs/[orgSlug]/files/[fileId]/route';
 import * as completeRoute from '@/app/api/orgs/[orgSlug]/files/[fileId]/complete/route';
 import * as searchRoute from '@/app/api/orgs/[orgSlug]/search/route';
+import * as billingRoute from '@/app/api/orgs/[orgSlug]/billing/route';
+import * as checkoutRoute from '@/app/api/orgs/[orgSlug]/billing/checkout/route';
+import * as portalRoute from '@/app/api/orgs/[orgSlug]/billing/portal/route';
 import { makeOrg, signInAs } from './helpers/fixtures';
 
 /*
@@ -35,6 +38,7 @@ let globex: Awaited<ReturnType<typeof makeOrg>>;
 const A: Record<string, string> = {}; // ids of Acme's resources
 
 beforeAll(async () => {
+  vi.stubEnv('BILLING_PROVIDER', 'fake'); // lesson 3.1: Stripe is replaced by the in-memory fake
   acme = await makeOrg('Acme');
   globex = await makeOrg('Globex');
   const m = await createMonitor({ orgId: acme.id, userId: acme.users.owner.id }, { name: 'acme-secret', url: 'https://acme.test', intervalSeconds: 60 });
@@ -47,6 +51,11 @@ beforeAll(async () => {
     .values({ organizationId: acme.id, kind: 'incident_screenshot', incidentId: incident.id, key: `orgs/${acme.id}/screenshots/${crypto.randomUUID()}`, originalName: 'acme-secret.png', declaredType: 'image/png', declaredSize: 10, status: 'ready' })
     .returning();
   A.file = file.id;
+  // Lesson 3.1: Acme is a paying customer, with its own Stripe customer and subscription.
+  await db.update(schema.organizations).set({ stripeCustomerId: 'cus_acme_secret' }).where(eq(schema.organizations.id, acme.id));
+  await db.insert(schema.subscriptions).values({ id: 'sub_acme_secret', organizationId: acme.id, stripeCustomerId: 'cus_acme_secret', status: 'active', priceId: 'price_fake_business' });
+  A.customer = 'cus_acme_secret';
+  A.subscription = 'sub_acme_secret';
 });
 
 const req = (method: string, body?: unknown) =>
@@ -81,6 +90,14 @@ const CASES: Record<string, Case> = {
   'POST files/[fileId]/complete': { kind: 'item', call: (orgSlug) => completeRoute.POST(req('POST'), p({ orgSlug, fileId: A.file })) },
   // Lesson 2.3: searching for Acme's words from Globex finds nothing of Acme's.
   'GET search': { kind: 'list', call: (orgSlug) => searchRoute.GET(new Request('http://test/x?q=acme-secret'), p({ orgSlug })) },
+  // Lesson 3.1: billing. Under Globex's own slug these act on Globex's own
+  // customer: never Acme's, whatever the body says.
+  'GET billing': { kind: 'list', call: (orgSlug) => billingRoute.GET(req('GET'), p({ orgSlug })) },
+  'POST billing/checkout': {
+    kind: 'list',
+    call: (orgSlug) => checkoutRoute.POST(req('POST', { plan: 'pro', orgId: acme.id, customer: A.customer }), p({ orgSlug })),
+  },
+  'POST billing/portal': { kind: 'list', call: (orgSlug) => portalRoute.POST(req('POST', { customer: A.customer }), p({ orgSlug })) },
 };
 
 describe('org B cannot reach org A through any route', () => {

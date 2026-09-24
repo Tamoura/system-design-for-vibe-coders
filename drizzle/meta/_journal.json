@@ -85,6 +85,13 @@
       "when": 1790285258788,
       "tag": "0011_existing_orgs_on_free",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1790285259763,
+      "tag": "0012_subscriptions",
+      "breakpoints": true
     }
   ]
 }

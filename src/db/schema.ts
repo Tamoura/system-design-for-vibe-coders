@@ -40,6 +40,9 @@ export const organizations = pgTable('organizations', {
   statusPagePublic: boolean('status_page_public').notNull().default(true),
   // Lesson 2.2: the status page logo, a row in `files` (the bytes are in object storage).
   logoFileId: uuid('logo_file_id').references((): AnyPgColumn => files.id, { onDelete: 'set null' }),
+  // Lesson 3.1: the Stripe Customer belongs to the ORGANIZATION, not to the
+  // person who clicked "Upgrade". When that person leaves, billing stays.
+  stripeCustomerId: text('stripe_customer_id').unique(),
   // Lesson 3.2 (🟡): a snapshot of the plan the org's subscriptions entitle
   // it to. Only syncCustomerFromStripe() writes it (src/lib/billing/sync.ts);
   // getEntitlements() reads it, so a monitor create costs no Stripe call and
@@ -274,6 +277,51 @@ export const files = pgTable(
   (t) => [index('files_org_created_idx').on(t.organizationId, t.createdAt), index('files_incident_idx').on(t.incidentId)],
 );
 
+/*
+ * Module 3: money.
+ */
+
+/**
+ * Lesson 3.1 (🟡): our COPY of each Stripe subscription. Stripe owns the truth
+ * about money; webhooks keep this table in sync (src/lib/billing/sync.ts) and
+ * nothing else writes it. The id is Stripe's (`sub_…`), so a re-sync upserts
+ * the same row instead of adding one.
+ */
+export const subscriptions = pgTable(
+  'subscriptions',
+  {
+    id: text('id').primaryKey(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    stripeCustomerId: text('stripe_customer_id').notNull(),
+    // Stripe's status, stored as-is (trialing, active, past_due, canceled, …).
+    // What each one grants is decided in one place: statusGrantsAccess() in src/core/plans.ts.
+    status: text('status').notNull(),
+    priceId: text('price_id'),
+    currentPeriodStart: timestamp('current_period_start', { withTimezone: true }),
+    currentPeriodEnd: timestamp('current_period_end', { withTimezone: true }),
+    cancelAtPeriodEnd: boolean('cancel_at_period_end').notNull().default(false),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [index('subscriptions_org_idx').on(t.organizationId)],
+);
+
+/**
+ * Lesson 3.1 (🟡): every webhook event we have seen, by Stripe's event id.
+ * Stripe delivers at least once, so the same event can arrive twice; the
+ * primary key makes the second insert a no-op and the handler skips it.
+ * `processed_at` stays null if handling failed, so Stripe's retry is handled
+ * again instead of being skipped as a duplicate.
+ * Not a tenant table: the org is only known after reading the event.
+ */
+export const stripeEvents = pgTable('stripe_events', {
+  id: text('id').primaryKey(),
+  type: text('type').notNull(),
+  processedAt: timestamp('processed_at', { withTimezone: true }),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: updatedAt(),
+});
+
 export type Organization = typeof organizations.$inferSelect;
 export type Membership = typeof memberships.$inferSelect;
 export type Invitation = typeof invitations.$inferSelect;
@@ -282,3 +330,4 @@ export type CheckResult = typeof checkResults.$inferSelect;
 export type Incident = typeof incidents.$inferSelect;
 export type StoredFile = typeof files.$inferSelect;
 export type IncidentUpdate = typeof incidentUpdates.$inferSelect;
+export type Subscription = typeof subscriptions.$inferSelect;

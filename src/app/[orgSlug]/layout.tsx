@@ -34,6 +34,8 @@ export default async function OrgLayout({ children, params }: { children: React.
         <Link href={`/${ctx.orgSlug}/members`}>Members</Link>
         <Link href={`/status/${ctx.orgSlug}`}>Status page</Link>
         {can(ctx.role, 'page.publish') && <Link href={`/${ctx.orgSlug}/settings`}>Settings</Link>}
+        {/* Lesson 3.1: only roles that may manage billing see it (the page checks again). */}
+        {can(ctx.role, 'billing.manage') && <Link href={`/${ctx.orgSlug}/billing`}>Billing</Link>}
         {/* Lesson 2.3 (🟡): Ctrl+K / ⌘K search across monitors, incidents and pages. */}
         <CommandPalette orgSlug={ctx.orgSlug} />
       </nav>

@@ -19,15 +19,16 @@ import { ROLES, type Role } from './roles';
  * | incident.write  update incidents            |   ✓   |   ✓   |   ✓    |        |
  * | page.publish    publish the status page     |   ✓   |   ✓   |        |        |
  * | member.manage   invite, change roles        |   ✓   |   ✓   |        |        |
- * | billing.manage  (used from lesson 3.1)      |   ✓   |       |        |        |
+ * | billing.read    see the plan and usage      |   ✓   |   ✓   |        |        |
+ * | billing.manage  upgrade, manage billing     |   ✓   |       |        |        |
  * | org.delete      (1.2's 🔴 exercise)         |   ✓   |       |        |        |
  */
 export const PERMISSIONS = {
   owner: [
     'monitor.read', 'member.read', 'monitor.write', 'monitor.write_any', 'incident.write',
-    'page.publish', 'member.manage', 'billing.manage', 'org.delete',
+    'page.publish', 'member.manage', 'billing.read', 'billing.manage', 'org.delete',
   ],
-  admin: ['monitor.read', 'member.read', 'monitor.write', 'monitor.write_any', 'incident.write', 'page.publish', 'member.manage'],
+  admin: ['monitor.read', 'member.read', 'monitor.write', 'monitor.write_any', 'incident.write', 'page.publish', 'member.manage', 'billing.read'],
   member: ['monitor.read', 'member.read', 'monitor.write', 'incident.write'],
   viewer: ['monitor.read', 'member.read'],
 } as const satisfies Record<Role, readonly string[]>;

@@ -6,6 +6,7 @@
 export const RESERVED_SLUGS = new Set([
   'account', 'api', 'dashboard', 'forgot-password', 'invite', 'login', 'logout', 'orgs',
   'reset-password', 'settings', 'signup', 'status', 'admin', 'app', 'www', 'help', 'docs', '_next',
+  'fake-billing', // lesson 3.1: the fake Stripe pages (BILLING_PROVIDER=fake)
 ]);
 
 export function slugify(name: string): string {
