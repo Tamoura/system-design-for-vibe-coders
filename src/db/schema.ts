@@ -169,8 +169,13 @@ export const checkResults = pgTable(
     statusCode: integer('status_code'),
     latencyMs: integer('latency_ms'),
     error: text('error'),
+    // Lesson 5.1: the scheduler's slot this result belongs to (null for results
+    // from before Module 5). Unique per monitor: a check job that runs twice
+    // (queues deliver at least once) stores one result, not two.
+    scheduledAt: timestamp('scheduled_at', { withTimezone: true }),
   },
   (t) => [
+    uniqueIndex('check_results_monitor_slot_idx').on(t.monitorId, t.scheduledAt).where(sql`${t.scheduledAt} is not null`),
     /*
      * Lesson 2.1 (🟡): the index behind the dashboard (listMonitors). Every
      * query here filters by org AND monitor (the tenant_id rule), then walks
@@ -386,8 +391,8 @@ export const usageAlerts = pgTable(
  */
 
 /**
- * Lesson 4.1 (🟡): the email queue. sendEmail() only inserts a row here and
- * returns; a worker sends it after the response (src/lib/email/index.ts).
+ * Lesson 4.1 (🟡): the email outbox. sendEmail() only inserts a row here (and
+ * its job) and returns; the worker sends it (src/lib/email/index.ts).
  * A slow or broken provider therefore delays emails but never fails the
  * request that asked for one, and a failed send is retried with backoff.
  *
@@ -396,8 +401,9 @@ export const usageAlerts = pgTable(
  *    provider, which drops a duplicate send (Resend's Idempotency-Key).
  *  - the template name and its props are stored, not the HTML: the worker
  *    renders at send time.
- *  - next_attempt_at doubles as a lease: a worker that claims a row pushes it
- *    a few minutes ahead, so a crashed worker's rows come back by themselves.
+ *  - lesson 5.1: each row has an `email.send` job in the queue (enqueued in
+ *    the same transaction), and the QUEUE owns retries and backoff. The row
+ *    records the outcome: status, attempts, last error, provider message id.
  *
  * Not a tenant table: verification and password-reset emails belong to no
  * organization. Notification emails have their own queue with the org on
@@ -417,15 +423,14 @@ export const emailOutbox = pgTable(
     listUnsubscribe: text('list_unsubscribe'),
     status: emailStatus('status').notNull().default('pending'),
     attempts: integer('attempts').notNull().default(0),
-    nextAttemptAt: timestamp('next_attempt_at', { withTimezone: true }).notNull().defaultNow(),
     lastError: text('last_error'),
     providerMessageId: text('provider_message_id'),
     sentAt: timestamp('sent_at', { withTimezone: true }),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
     updatedAt: updatedAt(),
   },
-  // The worker's question: "which pending emails are due?" Only pending rows are in the index.
-  (t) => [index('email_outbox_due_idx').on(t.nextAttemptAt).where(sql`${t.status} = 'pending'`)],
+  // The worker's start-up check: "which emails are still pending?" (lesson 5.1). Only pending rows are in the index.
+  (t) => [index('email_outbox_pending_idx').on(t.createdAt).where(sql`${t.status} = 'pending'`)],
 );
 
 /**
@@ -537,10 +542,11 @@ export const statusPageSubscribers = pgTable(
 export const deliveryStatus = pgEnum('delivery_status', ['pending', 'sent', 'failed', 'skipped', 'throttled', 'suppressed']);
 
 /**
- * Lesson 4.2 (🟡): one row per message on one channel. It is both the job
- * ("pending": a worker will send it, retrying with backoff) and the delivery
- * log ("was our on-call paged at 03:12, and did they get it?"): channel,
- * status, provider message id, error, time.
+ * Lesson 4.2 (🟡): one row per message on one channel: the delivery log ("was
+ * our on-call paged at 03:12, and did they get it?"): channel, status,
+ * provider message id, error, time. Lesson 5.1: the sending is a
+ * `notification.deliver` job in the queue, enqueued with the row; the unique
+ * dedupe_key (event, recipient, channel) makes it exactly-once in effect.
  *
  * Recipients: a member (user_id, via a notification), a status-page
  * subscriber (subscriber_id), or the org's Slack channel (neither).
@@ -561,7 +567,6 @@ export const notificationDeliveries = pgTable(
     payload: jsonb('payload').notNull(),
     status: deliveryStatus('status').notNull().default('pending'),
     attempts: integer('attempts').notNull().default(0),
-    nextAttemptAt: timestamp('next_attempt_at', { withTimezone: true }).notNull().defaultNow(),
     providerMessageId: text('provider_message_id'),
     error: text('error'),
     sentAt: timestamp('sent_at', { withTimezone: true }),
@@ -569,8 +574,8 @@ export const notificationDeliveries = pgTable(
     updatedAt: updatedAt(),
   },
   (t) => [
-    // The channel workers' queue.
-    index('notification_deliveries_due_idx').on(t.organizationId, t.nextAttemptAt).where(sql`${t.status} = 'pending'`),
+    // Lesson 5.1: pending deliveries (each has a `notification.deliver` job; the worker's start-up check reads this).
+    index('notification_deliveries_pending_idx').on(t.organizationId, t.createdAt).where(sql`${t.status} = 'pending'`),
     // The SMS throttle: "how many SMS did this person get in the last hour?"
     index('notification_deliveries_user_channel_idx').on(t.organizationId, t.userId, t.channel, t.sentAt),
     index('notification_deliveries_notification_idx').on(t.notificationId),

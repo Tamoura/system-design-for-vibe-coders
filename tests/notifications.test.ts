@@ -8,12 +8,10 @@ import { db, schema } from '@/db';
 import { withOrg } from '@/db/tenant';
 import type { CheckOutcome } from '@/core/check';
 import { recordCheckResult } from '@/lib/checks';
-import { deliverPendingEmails } from '@/lib/email';
 import { memoryTransport } from '@/lib/email/memory';
 import { createMonitor, resolveIncident } from '@/lib/monitors';
 import {
   countUnread,
-  deliverPendingNotifications,
   getPreferenceMatrix,
   listNotifications,
   markAllNotificationsRead,
@@ -31,6 +29,7 @@ import { InvalidRequestError } from '@/lib/errors';
 import * as notificationsRoute from '@/app/api/orgs/[orgSlug]/notifications/route';
 import * as unsubscribeRoute from '@/app/api/unsubscribe/route';
 import { makeOrg, signInAs } from './helpers/fixtures';
+import { jobsIn, retriesAreDue, runQueuedJobs } from './helpers/queue';
 
 /*
  * Lesson 4.2: the notification pipeline end to end, on a real (in-memory)
@@ -49,13 +48,27 @@ beforeAll(() => {
 });
 afterAll(() => vi.unstubAllEnvs());
 
+/**
+ * Lesson 5.1: the checker stores the result and ENQUEUES `incident.notify`;
+ * the fan-out to people happens when a worker runs that job. This is both.
+ */
+async function checkAndFanOut(...args: Parameters<typeof recordCheckResult>) {
+  const line = await recordCheckResult(...args);
+  await runQueuedJobs({ queues: ['incident.notify'] });
+  return line;
+}
+
+/** The channel workers (lesson 5.1: the `notification.deliver` and `email.send` jobs), once. */
+const deliverPendingNotifications = (_scope?: { orgId: string }) => runQueuedJobs();
+const deliverPendingEmails = () => runQueuedJobs();
+
 async function newMonitor(org: Org, name: string) {
   return createMonitor({ orgId: org.id, userId: org.users.owner.id }, { name, url: `https://${name}.test`, intervalSeconds: 300 });
 }
 
 /** Three failed checks in a row: the lesson's threshold for opening an incident. */
 async function breakMonitor(org: Org, monitor: { id: string; name: string; url: string }, start = Date.now() - 60_000) {
-  for (let i = 0; i < 3; i++) await recordCheckResult(org, monitor, DOWN, new Date(start + i * 1000));
+  for (let i = 0; i < 3; i++) await checkAndFanOut(org, monitor, DOWN, new Date(start + i * 1000));
 }
 
 async function notificationsOf(org: Org, userId?: string) {
@@ -81,10 +94,10 @@ describe('the in-app inbox (🟢)', () => {
   });
 
   it('does not open an incident on two failures; the third opens it and notifies every eligible member once', async () => {
-    await recordCheckResult(acme, monitor, DOWN);
-    await recordCheckResult(acme, monitor, DOWN);
+    await checkAndFanOut(acme, monitor, DOWN);
+    await checkAndFanOut(acme, monitor, DOWN);
     expect(await notificationsOf(acme)).toHaveLength(0);
-    await recordCheckResult(acme, monitor, DOWN);
+    await checkAndFanOut(acme, monitor, DOWN);
     const rows = await notificationsOf(acme);
     expect(rows.map((r) => r.userId).sort()).toEqual(Object.values(acme.users).map((u) => u.id).sort()); // owner, admin, member, viewer
     expect(rows.every((r) => r.category === 'incident.opened' && r.title === 'checkout is down')).toBe(true);
@@ -153,7 +166,9 @@ describe('channels, preferences and the delivery log (🟡)', () => {
     await breakMonitor(acme, m);
     expect(memoryTransport.messages).toHaveLength(0); // nothing is sent inside the check runner's transaction
     const counts = await deliverPendingNotifications({ orgId: acme.id });
-    expect(counts.sent).toBe(4);
+    expect(counts.failed).toBe(0);
+    const emails = (await deliveriesOf(acme)).filter((d) => d.channel === 'email');
+    expect(emails.map((d) => d.status)).toEqual(['sent', 'sent', 'sent', 'sent']); // one job per email delivery
     const mail = memoryTransport.to(acme.users.member.email)[0];
     expect(mail.subject).toBe('[Channels] api is down');
     expect(mail.text).toContain('/unsubscribe?token=');
@@ -176,7 +191,7 @@ describe('channels, preferences and the delivery log (🟡)', () => {
     await savePreferences(member, { checked: new Set(['incident.opened:email']), phoneNumber: '' }); // resolved:email unticked
     const m = await newMonitor(acme, 'search');
     await breakMonitor(acme, m);
-    await recordCheckResult(acme, m, UP); // resolves
+    await checkAndFanOut(acme, m, UP); // resolves
     await deliverPendingNotifications({ orgId: acme.id });
 
     const resolved = (await notificationsOf(acme, member.userId)).filter((n) => n.category === 'incident.resolved');
@@ -245,7 +260,10 @@ describe('SMS: metered, throttled, with email fallback (🟡)', () => {
     expect(admin.filter((d) => d.status === 'sent')).toHaveLength(5);
     expect(admin.filter((d) => d.status === 'throttled')).toHaveLength(1);
     const fallback = memoryTransport.to(acme.users.admin.email).find((e) => e.subject.includes('SMS limit reached'))!;
-    expect(fallback.subject).toBe('svc4 is down (SMS limit reached)');
+    // Which of the five is the sixth SMS depends on the order the worker took the
+    // jobs in, and a queue does not promise an order (lesson 5.3 says it too).
+    const throttled = admin.find((d) => d.status === 'throttled')!;
+    expect(fallback.subject).toBe(`${(throttled.payload as { title: string }).title} (SMS limit reached)`);
     expect(fallback.text).toContain('1 SMS alert has been held back');
   });
 
@@ -258,8 +276,10 @@ describe('SMS: metered, throttled, with email fallback (🟡)', () => {
     await deliverPendingNotifications({ orgId: acme.id });
     const [pending] = (await deliveriesOf(acme)).filter((d) => d.id === m!.id);
     expect(pending).toMatchObject({ status: 'pending', error: expect.stringContaining('unavailable') });
+    const [job] = (await jobsIn('notification.deliver')).filter((j) => j.data.deliveryId === m!.id);
+    expect(job.state).toBe('retry'); // lesson 5.1: the queue retries it, with backoff
     fakeSms.outage = false;
-    await withOrg(acme.id, (tx) => tx.update(notificationDeliveries).set({ nextAttemptAt: new Date(0) }).where(eq(notificationDeliveries.id, m!.id)));
+    await retriesAreDue();
     await deliverPendingNotifications({ orgId: acme.id });
     const [sent] = (await deliveriesOf(acme)).filter((d) => d.id === m!.id);
     expect(sent.status).toBe('sent');
@@ -307,7 +327,7 @@ describe('anti-flapping (🟡)', () => {
     const org = await makeOrg('Alternating');
     const m = await newMonitor(org, 'wobbly');
     const start = Date.now() - 3 * 3600_000;
-    for (let i = 0; i < 120; i++) await recordCheckResult(org, m, i % 2 ? UP : DOWN, new Date(start + i * 30_000));
+    for (let i = 0; i < 120; i++) await checkAndFanOut(org, m, i % 2 ? UP : DOWN, new Date(start + i * 30_000));
     expect(await notificationsOf(org)).toHaveLength(0);
   });
 
@@ -320,7 +340,7 @@ describe('anti-flapping (🟡)', () => {
     let t = start;
     for (let cycle = 0; cycle < 30; cycle++) {
       for (const outcome of [DOWN, DOWN, DOWN, UP]) {
-        await recordCheckResult(org, m, outcome, new Date(t));
+        await checkAndFanOut(org, m, outcome, new Date(t));
         t += 30_000;
       }
     }
@@ -332,11 +352,11 @@ describe('anti-flapping (🟡)', () => {
     // opened, resolved, opened, resolved, then "flapping": 5, instead of 60.
     expect(mine.map((n) => n.category)).toEqual(['incident.opened', 'incident.resolved', 'incident.opened', 'incident.resolved', 'monitor.flapping']);
     expect(memoryTransport.to(org.users.member.email)).toHaveLength(5); // per channel: a handful
-    expect(memoryTransport.to(org.users.member.email).at(-1)!.subject).toBe('[Flappy] flappy is flapping');
+    expect(memoryTransport.to(org.users.member.email).map((e) => e.subject)).toContain('[Flappy] flappy is flapping');
 
     // Quiet for over an hour, then a real outage: notified normally again.
     t += 61 * 60_000;
-    await recordCheckResult(org, m, UP, new Date(t)); // settles
+    await checkAndFanOut(org, m, UP, new Date(t)); // settles
     const [{ flappingSince }] = await withOrg(org.id, (tx) => tx.select({ flappingSince: schema.monitors.flappingSince }).from(schema.monitors).where(eq(schema.monitors.id, m.id)));
     expect(flappingSince).toBeNull();
     await breakMonitor(org, m, t + 30_000);
@@ -351,8 +371,76 @@ describe('manual resolve notifies too', () => {
     const m = await newMonitor(org, 'manual');
     await breakMonitor(org, m);
     const [incident] = await withOrg(org.id, (tx) => tx.select().from(incidents).where(eq(incidents.monitorId, m.id)));
-    expect(await resolveIncident({ orgId: org.id, orgSlug: org.slug, orgName: 'Manual' }, incident.id)).toBe(true);
+    expect(await resolveIncident({ orgId: org.id }, incident.id)).toBe(true);
+    await runQueuedJobs({ queues: ['incident.notify'] }); // lesson 5.1: enqueued with the resolve
     expect((await notificationsOf(org, org.users.viewer.id)).map((n) => n.category)).toEqual(['incident.opened', 'incident.resolved']);
+  });
+});
+
+describe('lesson 5.1: notifications leave the checker, exactly once in effect', () => {
+  it('the checker makes no provider call and writes no notification: it commits the incident and an incident.notify job', async () => {
+    const org = await makeOrg('Queued');
+    memoryTransport.reset();
+    const smsBefore = fakeSms.sent.length;
+    const slackBefore = fakeSlack.posts.length;
+    const m = await newMonitor(org, 'queued');
+    for (let i = 0; i < 3; i++) await recordCheckResult(org, m, DOWN, new Date(Date.now() - 10_000 + i));
+    expect(memoryTransport.messages).toHaveLength(0);
+    expect(fakeSms.sent.length).toBe(smsBefore);
+    expect(fakeSlack.posts.length).toBe(slackBefore);
+    expect(await notificationsOf(org)).toHaveLength(0);
+    const [incident] = await withOrg(org.id, (tx) => tx.select().from(incidents).where(eq(incidents.monitorId, m.id)));
+    const jobs = (await jobsIn('incident.notify')).filter((j) => j.data.incidentId === incident.id);
+    expect(jobs).toMatchObject([{ state: 'created', data: { orgId: org.id, event: 'incident.opened', incidentId: incident.id }, group_id: org.id }]);
+    expect(jobs[0].retry_limit).toBe(7); // 8 attempts, then the dead-letter queue
+  });
+
+  it('the job commits with the incident: a transaction that rolls back leaves no job behind', async () => {
+    const org = await makeOrg('Rollback');
+    const before = (await jobsIn('incident.notify')).length;
+    const { enqueueNotify } = await import('@/lib/notifications/incidents');
+    await withOrg(org.id, async (tx) => {
+      await enqueueNotify(tx, { orgId: org.id, event: 'incident.opened', incidentId: '00000000-0000-4000-8000-000000000001' });
+      throw new Error('crash before commit');
+    }).catch(() => {});
+    expect((await jobsIn('incident.notify')).length).toBe(before);
+  });
+
+  it('running the same notify job twice by hand sends each person exactly one email', async () => {
+    const org = await makeOrg('Twice');
+    memoryTransport.reset();
+    const m = await newMonitor(org, 'twice');
+    await breakMonitor(org, m);
+    const [incident] = await withOrg(org.id, (tx) => tx.select().from(incidents).where(eq(incidents.monitorId, m.id)));
+    const { notifyIncident } = await import('@/lib/notifications/incidents');
+    expect(await notifyIncident({ orgId: org.id, event: 'incident.opened', incidentId: incident.id })).toEqual({ notified: 0, deliveries: 0 }); // the second run
+    await runQueuedJobs();
+    for (const user of Object.values(org.users)) expect(memoryTransport.to(user.email)).toHaveLength(1);
+  });
+
+  it('a delivery job that runs twice sends once (the row is no longer pending)', async () => {
+    const org = await makeOrg('Deliver');
+    memoryTransport.reset();
+    await breakMonitor(org, await newMonitor(org, 'once'));
+    const [email] = (await deliveriesOf(org)).filter((d) => d.channel === 'email' && d.userId === org.users.owner.id);
+    const { deliverNotification } = await import('@/lib/notifications');
+    expect(await deliverNotification(org.id, email.id)).toBe('sent');
+    expect(await deliverNotification(org.id, email.id)).toBe('already-done');
+    await runQueuedJobs(); // and the queued job for it, a third time
+    expect(memoryTransport.to(org.users.owner.email)).toHaveLength(1);
+  });
+
+  it('the handler is a no-op for an incident that no longer exists', async () => {
+    const org = await makeOrg('Gone');
+    const m = await newMonitor(org, 'gone');
+    for (let i = 0; i < 3; i++) await recordCheckResult(org, m, DOWN, new Date(Date.now() - 10_000 + i));
+    const [incident] = await withOrg(org.id, (tx) => tx.select().from(incidents).where(eq(incidents.monitorId, m.id)));
+    await withOrg(org.id, (tx) => tx.delete(schema.monitors).where(eq(schema.monitors.id, m.id))); // cascades to the incident
+    const { notifyIncident } = await import('@/lib/notifications/incidents');
+    expect(await notifyIncident({ orgId: org.id, event: 'incident.opened', incidentId: incident.id })).toEqual({ skipped: 'incident deleted' });
+    await runQueuedJobs();
+    expect(await notificationsOf(org)).toHaveLength(0);
+    expect(await deliveriesOf(org)).toHaveLength(0);
   });
 });
 

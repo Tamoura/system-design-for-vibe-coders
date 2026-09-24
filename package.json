@@ -2,7 +2,7 @@
   "name": "beacon",
   "version": "0.1.0",
   "private": true,
-  "description": "Beacon \u2014 uptime monitoring and status pages for teams. The reference SaaS for the SaaS Building Blocks course.",
+  "description": "Beacon — uptime monitoring and status pages for teams. The reference SaaS for the SaaS Building Blocks course.",
   "type": "module",
   "scripts": {
     "dev": "next dev",
@@ -17,9 +17,9 @@
     "db:seed:large": "tsx scripts/seed-large.ts",
     "db:reset": "tsx scripts/reset.ts && npm run db:migrate && npm run db:seed",
     "checks:run": "tsx scripts/run-checks.ts",
-    "files:process": "tsx scripts/process-files.ts",
+    "worker": "tsx scripts/worker.ts",
+    "jobs": "tsx scripts/jobs.ts",
     "usage:report": "tsx scripts/report-usage.ts",
-    "messages:send": "tsx scripts/send-messages.ts",
     "email:preview": "tsx scripts/email-preview.ts",
     "storage:setup": "tsx scripts/storage-setup.ts",
     "org:claim": "tsx scripts/claim-org.ts"
@@ -33,6 +33,7 @@
     "drizzle-orm": "^0.45.3",
     "next": "^16.3.6",
     "nodemailer": "^10.0.10",
+    "pg-boss": "^12.34.0",
     "postgres": "^3.4.9",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",

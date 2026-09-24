@@ -7,7 +7,6 @@ import { eq } from 'drizzle-orm';
 import { db, schema } from '@/db';
 import { withOrg } from '@/db/tenant';
 import { memoryTransport } from '@/lib/email/memory';
-import { deliverPendingNotifications } from '@/lib/notifications';
 import { createMonitor } from '@/lib/monitors';
 import { getEntitlements } from '@/lib/entitlements';
 import { fakeBilling } from '@/lib/billing/provider';
@@ -18,6 +17,7 @@ import * as billingRoute from '@/app/api/orgs/[orgSlug]/billing/route';
 import * as checkoutRoute from '@/app/api/orgs/[orgSlug]/billing/checkout/route';
 import * as portalRoute from '@/app/api/orgs/[orgSlug]/billing/portal/route';
 import { makeOrg, makeUser, signInAs } from './helpers/fixtures';
+import { runQueuedJobs } from './helpers/queue';
 
 /*
  * Lesson 3.1: Checkout, the Portal and the webhook, against the fake provider
@@ -273,7 +273,7 @@ describe('downgrades from the webhook path (3.1 → 3.2 🟡)', () => {
     // Lesson 4.2: the notice is a required "billing" notification: one for the one owner, in-app and by email.
     const notices = await withOrg(org.id, (tx) => tx.select().from(schema.notifications).where(eq(schema.notifications.organizationId, org.id)));
     expect(notices.map((n) => [n.category, n.userId, n.title])).toEqual([['billing', org.users.owner.id, 'Downgrader is now on the Free plan']]);
-    await deliverPendingNotifications({ orgId: org.id });
+    await runQueuedJobs(); // lesson 5.1: the worker sends it
     expect(memoryTransport.messages.map((m) => [m.to, m.subject])).toEqual([[org.users.owner.email, 'Downgrader is now on the Free plan']]); // one owner, one downgrade
 
     // Resubscribe: a new Checkout, a new subscription, and the frozen monitors run again.

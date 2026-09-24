@@ -8,6 +8,7 @@ import { db, schema } from '@/db';
 import { withOrg } from '@/db/tenant';
 import { reconnectDelayMs } from '@/core/retry';
 import { recordCheckResult } from '@/lib/checks';
+import { runQueuedJobs } from '@/lib/queue/run';
 import { createMonitor } from '@/lib/monitors';
 import { notify } from '@/lib/notifications';
 import { incidentOpenedEvent } from '@/lib/notifications/events';
@@ -154,6 +155,7 @@ describe('the SSE endpoint (🟢)', () => {
     await member.waitFor('event: ready');
     await recordCheckResult(acme, acmeMonitor, DOWN);
     await recordCheckResult(acme, acmeMonitor, DOWN); // third failure in a row (one from the test above)
+    await runQueuedJobs({ queues: ['incident.notify'] }); // lesson 5.1: the fan-out is a job
     expect(await member.waitFor('event: incident.changed')).toBe(true);
     expect(await member.waitFor('event: notification')).toBe(true);
     // Every member got a notification, but this stream announced exactly one: the member's own.

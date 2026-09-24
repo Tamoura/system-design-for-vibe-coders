@@ -10,13 +10,14 @@ import { simpleParser, type ParsedMail } from 'mailparser';
 import { SMTPServer } from 'smtp-server';
 import { db, schema } from '@/db';
 import { renderEmail, TEMPLATES, type TemplateName } from '@/emails';
-import { MAX_ATTEMPTS, retryDelayMs } from '@/core/retry';
-import { deliverEmail, deliverPendingEmails, findSuppression, listSuppressions, sendEmail, suppressEmail } from '@/lib/email';
+import { deliverEmail, findSuppression, listSuppressions, sendEmail, suppressEmail } from '@/lib/email';
+import { QUEUES } from '@/lib/queue/queues';
 import { memoryTransport } from '@/lib/email/memory';
 import { createSmtpTransport } from '@/lib/email/smtp';
 import { setEmailTransportForTests } from '@/lib/email/transport';
 import { signWebhookForTests, verifyWebhookSignature } from '@/lib/email/webhook';
 import { POST as webhook } from '@/app/api/email/webhook/route';
+import { jobsIn, retriesAreDue, runQueuedJobs } from './helpers/queue';
 
 /*
  * Lesson 4.1: templates, the queue, suppression, the bounce webhook, and the
@@ -35,10 +36,9 @@ async function outboxRow(to: string) {
   return row;
 }
 
-/** Make every pending row due now, as if the backoff had passed. */
-async function timePasses() {
-  await db.update(emailOutbox).set({ nextAttemptAt: new Date(Date.now() - 1000) }).where(eq(emailOutbox.status, 'pending'));
-}
+/** Lesson 5.1: the worker, once (only the email queue). */
+const deliverPendingEmails = () => runQueuedJobs({ queues: ['email.send'] });
+const MAX_ATTEMPTS = QUEUES['email.send'].retryLimit + 1;
 
 describe('templates (🟢)', () => {
   for (const name of Object.keys(TEMPLATES) as TemplateName[]) {
@@ -61,13 +61,15 @@ describe('templates (🟢)', () => {
   });
 });
 
-describe('the queue (🟡)', () => {
-  it('sendEmail only queues; the worker sends it, with HTML, text and the stream’s From', async () => {
+describe('the queue (🟡, and lesson 5.1)', () => {
+  it('sendEmail only queues (a row and its job); the worker sends it, with HTML, text and the stream’s From', async () => {
     await sendEmail({ to: 'ada@example.test', template: 'verify-email', props: { name: 'Ada', url: 'https://beacon.test/v?t=1' } });
     expect(memoryTransport.messages).toHaveLength(0); // nothing sent inside the "request"
-    expect((await outboxRow('ada@example.test')).status).toBe('pending');
+    const queued = await outboxRow('ada@example.test');
+    expect(queued.status).toBe('pending');
+    expect((await jobsIn('email.send')).map((j) => j.data)).toContainEqual({ emailId: queued.id });
 
-    expect(await deliverPendingEmails()).toMatchObject({ sent: 1 });
+    expect(await deliverPendingEmails()).toMatchObject({ completed: 1 });
     const [sent] = memoryTransport.to('ada@example.test');
     expect(sent.subject).toBe('Confirm your email for Beacon');
     expect(sent.from).toContain('mail.beacon.app');
@@ -97,39 +99,57 @@ describe('the queue (🟡)', () => {
   it('a provider outage delays the email without failing the request, and it goes out after recovery', async () => {
     memoryTransport.outage = true; // like a bad API key
     await expect(sendEmail({ to: 'outage@example.test', template: 'reset-password', props: { name: 'O', url: 'https://beacon.test/r' } })).resolves.toEqual({ queued: true });
-    expect(await deliverPendingEmails()).toMatchObject({ sent: 0, retrying: 1 });
+    expect(await deliverPendingEmails()).toMatchObject({ completed: 0, failed: 1 });
     let row = await outboxRow('outage@example.test');
     expect(row.status).toBe('pending');
     expect(row.lastError).toContain('unavailable');
-    expect(row.nextAttemptAt.getTime()).toBeGreaterThan(Date.now() + 20_000); // backoff: not retried at once
-    expect(await deliverPendingEmails()).toMatchObject({ retrying: 0 }); // not due yet
+    // Lesson 5.1: the QUEUE holds the retry, with backoff: not retried at once.
+    const [job] = (await jobsIn('email.send')).filter((j) => j.data.emailId === row.id);
+    expect(job.state).toBe('retry');
+    expect(job.output).toMatchObject({ message: expect.stringContaining('unavailable') }); // visible in `npm run jobs`
+    expect(new Date(job.start_after).getTime()).toBeGreaterThan(Date.now() + 20_000);
+    expect(await deliverPendingEmails()).toMatchObject({ completed: 0, failed: 0 }); // not due yet
 
     memoryTransport.outage = false; // the provider is back
-    await timePasses();
-    expect(await deliverPendingEmails()).toMatchObject({ sent: 1 });
+    await retriesAreDue();
+    expect(await deliverPendingEmails()).toMatchObject({ completed: 1 });
     row = await outboxRow('outage@example.test');
     expect(row.status).toBe('sent');
     expect(row.attempts).toBe(2);
   });
 
-  it(`gives up after ${MAX_ATTEMPTS} attempts and marks the email failed`, async () => {
+  it(`gives up after ${MAX_ATTEMPTS} attempts: the email is marked failed and the job lands in the dead-letter queue with its error`, async () => {
     memoryTransport.outage = true;
     await sendEmail({ to: 'never@example.test', template: 'verify-email', props: { name: 'N', url: 'https://beacon.test/v' } });
+    const row = await outboxRow('never@example.test');
+    const delays: number[] = [];
     for (let i = 0; i < MAX_ATTEMPTS; i++) {
-      await timePasses();
+      await retriesAreDue();
       await deliverPendingEmails();
+      const [job] = (await jobsIn('email.send')).filter((j) => j.data.emailId === row.id);
+      if (job.state === 'retry') delays.push(new Date(job.start_after).getTime() - Date.now());
     }
     expect((await outboxRow('never@example.test')).status).toBe('failed');
+    expect((await outboxRow('never@example.test')).attempts).toBe(MAX_ATTEMPTS);
+    const [original] = (await jobsIn('email.send')).filter((j) => j.data.emailId === row.id);
+    expect(original).toMatchObject({ state: 'failed', output: { message: expect.stringContaining('unavailable') } });
+    expect((await jobsIn('dead-letter')).map((j) => j.data)).toContainEqual({ emailId: row.id });
+    // Exponential backoff with jitter: each wait lands in [d·2ⁿ⁻¹, d·2ⁿ], so they only grow
+    // (until retryDelayMax), and no two emails that failed together retry in the same second.
+    expect(delays).toHaveLength(MAX_ATTEMPTS - 1);
+    for (let i = 1; i < 5; i++) expect(delays[i]).toBeGreaterThan(delays[i - 1]);
   });
 
-  it('backs off exponentially, capped at six hours', () => {
-    expect(retryDelayMs(1)).toBe(30_000);
-    expect(retryDelayMs(2)).toBe(120_000);
-    expect(retryDelayMs(3)).toBe(480_000);
-    expect(retryDelayMs(20)).toBe(6 * 3600_000);
+  it('a job run twice sends once: the handler only sends a pending email (idempotent)', async () => {
+    await sendEmail({ to: 'twice@example.test', template: 'verify-email', props: { name: 'T', url: 'https://beacon.test/v' } });
+    const row = await outboxRow('twice@example.test');
+    const { sendQueuedEmail } = await import('@/lib/email');
+    await sendQueuedEmail(row.id);
+    await sendQueuedEmail(row.id); // at-least-once: the queue handed it out again
+    expect(memoryTransport.to('twice@example.test')).toHaveLength(1);
   });
 
-  it('a claimed row is not sent twice by two workers running at once', async () => {
+  it('two workers running at once do not send a job twice (SKIP LOCKED)', async () => {
     for (let i = 0; i < 5; i++) await sendEmail({ to: `race${i}@example.test`, template: 'verify-email', props: { name: 'R', url: 'https://beacon.test/v' } });
     await Promise.all([deliverPendingEmails(), deliverPendingEmails()]);
     expect(memoryTransport.messages.filter((m) => m.to.startsWith('race'))).toHaveLength(5);
@@ -151,7 +171,9 @@ describe('suppression list (🟡)', () => {
 
     await sendEmail({ to: 'bounced@example.test', template: 'invitation', props: TEMPLATES.invitation.sample });
     await sendEmail({ to: 'bounced@example.test', template: 'reset-password', props: TEMPLATES['reset-password'].sample }); // not even essential mail
-    expect(await deliverPendingEmails()).toMatchObject({ sent: 0, suppressed: 2 });
+    await deliverPendingEmails();
+    const rows = await db.select().from(emailOutbox).where(eq(emailOutbox.to, 'bounced@example.test'));
+    expect(rows.map((r) => r.status)).toEqual(['suppressed', 'suppressed']);
     expect(memoryTransport.to('bounced@example.test')).toHaveLength(0);
   });
 

@@ -6,8 +6,7 @@ import { canEditMonitor, type Actor } from '@/core/permissions';
 import { isUuid, type CreateMonitorInput, type UpdateMonitorInput } from '@/core/validation';
 import { assertCanCreateMonitor, assertCanRunAnotherMonitor, assertIntervalAllowed, entitlementsInTx } from './entitlements';
 import { AccessError } from './errors';
-import { kickDeliveries, notifyInTx } from './notifications';
-import { incidentResolvedEvent } from './notifications/events';
+import { enqueueNotify } from './notifications/incidents';
 import { publishInTx } from './realtime';
 
 const { monitors, checkResults, incidents } = schema;
@@ -228,11 +227,12 @@ export async function deleteMonitor(ctx: OrgScope & Actor, id: string): Promise<
 
 /**
  * Mark an open incident as resolved by hand (the checker also resolves it on
- * the next success). Lesson 4.2: resolving notifies, in the same transaction.
+ * the next success). Lesson 4.2: resolving notifies; lesson 5.1: through an
+ * `incident.notify` job enqueued in the same transaction.
  */
-export async function resolveIncident(ctx: OrgScope & { orgSlug: string; orgName: string }, incidentId: string): Promise<boolean> {
+export async function resolveIncident(ctx: OrgScope, incidentId: string): Promise<boolean> {
   if (!isUuid(incidentId)) return false;
-  const resolved = await withOrg(ctx.orgId, async (tx) => {
+  return withOrg(ctx.orgId, async (tx) => {
     const [incident] = await tx
       .update(incidents)
       .set({ resolvedAt: new Date() })
@@ -241,9 +241,7 @@ export async function resolveIncident(ctx: OrgScope & { orgSlug: string; orgName
     if (!incident?.resolvedAt) return false;
     const [monitor] = await tx.select().from(monitors).where(and(eq(monitors.organizationId, ctx.orgId), eq(monitors.id, incident.monitorId)));
     await publishInTx(tx, ctx.orgId, { type: 'incident.changed', monitorId: monitor.id, incidentId: incident.id, state: 'resolved' });
-    await notifyInTx(tx, incidentResolvedEvent({ id: ctx.orgId, name: ctx.orgName, slug: ctx.orgSlug }, monitor, { ...incident, resolvedAt: incident.resolvedAt }));
+    await enqueueNotify(tx, { orgId: ctx.orgId, event: 'incident.resolved', incidentId: incident.id });
     return true;
   });
-  if (resolved) kickDeliveries(ctx.orgId);
-  return resolved;
 }

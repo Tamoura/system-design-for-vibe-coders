@@ -1,13 +1,14 @@
 /**
  * Lesson 3.3 (🟡): send recorded usage (SMS segments) to the billing
- * provider's meter. Run it from cron (every few minutes), or by hand:
+ * provider's meter. By hand:
  *
  *   npm run usage:report
  *
  * Safe to run twice, or to crash half-way: each event is sent with its
  * idempotency key as the meter event's identifier, so the provider counts it
  * once. The work is reportPendingUsage() in src/lib/usage.ts.
- * TODO(5.1): a scheduled job in the queue replaces cron + script.
+ * Lesson 5.1: the worker runs the same function every 5 minutes (the
+ * `usage.report` schedule), so cron is no longer needed; this is for by hand.
  */
 import { sql } from '../src/db';
 import { getBillingProvider } from '../src/lib/billing/provider';

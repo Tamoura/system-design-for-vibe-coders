@@ -1,83 +1,52 @@
-import { and, count, eq, gt, inArray, lte, sql } from 'drizzle-orm';
+import { and, count, eq, gt } from 'drizzle-orm';
 import { db, schema } from '@/db';
 import { withOrg } from '@/db/tenant';
 import { SMS_PER_HOUR, smsText } from '@/core/notifications';
-import { MAX_ATTEMPTS, retryDelayMs } from '@/core/retry';
 import type { TemplateName, TemplateProps } from '@/emails';
 import { deliverEmail } from '../email';
+import type { JobContext } from '../queue/queues';
 import { recordSmsSent } from '../usage';
-import type { DeliveryPayload } from './pipeline';
+import { enqueueDeliveries, type DeliveryPayload } from './pipeline';
 import { getSlackSender, getSmsProvider } from './providers';
 
 const { organizations, notificationDeliveries, users } = schema;
 type Delivery = typeof notificationDeliveries.$inferSelect & { payload: DeliveryPayload };
-type Outcome = 'sent' | 'suppressed' | 'throttled' | 'skipped' | 'retrying' | 'failed';
+type Outcome = 'sent' | 'suppressed' | 'throttled' | 'skipped';
 
-/** How long a worker owns the deliveries it claimed; a crashed worker's rows are due again after this. */
-const LEASE_MS = 5 * 60_000;
 const HOUR_MS = 60 * 60 * 1000;
 
 /**
- * Lesson 4.2 (🟡): the channel workers. Each pending delivery is a job for
- * its channel (email, SMS, Slack), claimed with FOR UPDATE SKIP LOCKED,
- * sent outside any transaction, and its outcome written back to the same
- * row, which is the delivery log.
+ * Lesson 4.2 (🟡) + 5.1: the channel worker, as the `notification.deliver`
+ * job. One job per delivery row (enqueued by notifyInTx in the transaction
+ * that wrote the row). The row stays the delivery log: channel, status,
+ * provider message id, error, attempts.
  *
- * Runs after every notify() (after the response) and from
- * `npm run messages:send`. Per org, inside withOrg(), like every tenant job
- * (lesson 2.4). A few rounds per org, because a round can create new work:
- * a throttled SMS becomes a fallback email, an SMS can trigger a usage alert.
+ * Idempotent (lesson 5.1): a delivery that is no longer "pending" was already
+ * handled, so a job that runs twice (at-least-once delivery) or a job enqueued
+ * twice sends once. The provider gets an idempotency key derived from the
+ * delivery too, for the crash between "sent" and "marked sent".
+ *
+ * A provider failure THROWS: the queue retries with backoff (8 attempts, see
+ * src/lib/queue/queues.ts) and dead-letters the job after the last one. On
+ * the last attempt the row is marked "failed", so the log says so.
+ *
+ * Per org, inside withOrg(), like every tenant job (lesson 2.4). The network
+ * call happens outside any transaction.
  */
-export async function deliverPendingNotifications(opts: { orgId?: string; limit?: number } = {}) {
-  const counts: Record<Outcome, number> = { sent: 0, suppressed: 0, throttled: 0, skipped: 0, retrying: 0, failed: 0 };
-  const orgIds = opts.orgId ? [opts.orgId] : (await db.select({ id: organizations.id }).from(organizations)).map((o) => o.id);
-  for (const orgId of orgIds) {
-    for (let round = 0; round < 10; round++) {
-      const claimed = await claimDue(orgId, opts.limit ?? 50);
-      if (claimed.length === 0) break;
-      for (const delivery of claimed) counts[await deliverOne(delivery)]++;
-    }
-  }
-  return counts;
-}
-
-async function claimDue(orgId: string, limit: number): Promise<Delivery[]> {
-  return withOrg(orgId, async (tx) => {
-    const due = tx
-      .select({ id: notificationDeliveries.id })
-      .from(notificationDeliveries)
-      .where(
-        and(
-          eq(notificationDeliveries.organizationId, orgId),
-          eq(notificationDeliveries.status, 'pending'),
-          lte(notificationDeliveries.nextAttemptAt, new Date()),
-        ),
-      )
-      .orderBy(notificationDeliveries.createdAt)
-      .limit(limit)
-      .for('update', { skipLocked: true });
-    const rows = await tx
-      .update(notificationDeliveries)
-      .set({ attempts: sql`${notificationDeliveries.attempts} + 1`, nextAttemptAt: new Date(Date.now() + LEASE_MS) })
-      .where(and(eq(notificationDeliveries.organizationId, orgId), inArray(notificationDeliveries.id, due)))
-      .returning();
-    // RETURNING comes back in storage order, not the subquery's: restore "oldest first".
-    return (rows as Delivery[]).sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
-  });
-}
-
-type Patch = Partial<Pick<Delivery, 'status' | 'providerMessageId' | 'error' | 'sentAt' | 'nextAttemptAt'>>;
-
-async function record(d: Delivery, patch: Patch) {
-  await withOrg(d.organizationId, (tx) =>
+export async function deliverNotification(
+  orgId: string,
+  deliveryId: string,
+  job: Pick<JobContext, 'attempt' | 'lastAttempt'> = { attempt: 1, lastAttempt: false },
+): Promise<Outcome | 'already-done'> {
+  const [row] = await withOrg(orgId, (tx) =>
     tx
-      .update(notificationDeliveries)
-      .set(patch)
-      .where(and(eq(notificationDeliveries.organizationId, d.organizationId), eq(notificationDeliveries.id, d.id))),
+      .select()
+      .from(notificationDeliveries)
+      .where(and(eq(notificationDeliveries.organizationId, orgId), eq(notificationDeliveries.id, deliveryId))),
   );
-}
-
-async function deliverOne(d: Delivery): Promise<Outcome> {
+  if (!row || row.status !== 'pending') return 'already-done'; // gone, or handled by an earlier run
+  const d = row as Delivery;
+  await record(d, { attempts: job.attempt });
   try {
     switch (d.channel) {
       case 'email':
@@ -91,15 +60,32 @@ async function deliverOne(d: Delivery): Promise<Outcome> {
         return 'sent';
     }
   } catch (err) {
-    // The provider refused or is down: retry with backoff, then give up visibly.
-    const giveUp = d.attempts >= MAX_ATTEMPTS;
-    await record(d, {
-      status: giveUp ? 'failed' : 'pending',
-      nextAttemptAt: new Date(Date.now() + retryDelayMs(d.attempts)),
-      error: (err as Error).message.slice(0, 500),
-    });
-    return giveUp ? 'failed' : 'retrying';
+    // The provider refused or is down. Record it, then let the queue retry.
+    await record(d, { status: job.lastAttempt ? 'failed' : 'pending', error: (err as Error).message.slice(0, 500) });
+    throw err;
   }
+}
+
+/** Pending deliveries of one org (for the worker's start-up check, src/lib/queue/worker.ts). */
+export async function listPendingDeliveryIds(orgId: string): Promise<string[]> {
+  const rows = await withOrg(orgId, (tx) =>
+    tx
+      .select({ id: notificationDeliveries.id })
+      .from(notificationDeliveries)
+      .where(and(eq(notificationDeliveries.organizationId, orgId), eq(notificationDeliveries.status, 'pending'))),
+  );
+  return rows.map((r) => r.id);
+}
+
+type Patch = Partial<Pick<Delivery, 'status' | 'providerMessageId' | 'error' | 'sentAt' | 'attempts'>>;
+
+async function record(d: Delivery, patch: Patch) {
+  await withOrg(d.organizationId, (tx) =>
+    tx
+      .update(notificationDeliveries)
+      .set(patch)
+      .where(and(eq(notificationDeliveries.organizationId, d.organizationId), eq(notificationDeliveries.id, d.id))),
+  );
 }
 
 /** Email: the same send step as the outbox (suppression list, template, List-Unsubscribe), keyed by this delivery. */
@@ -143,7 +129,10 @@ async function sendSmsDelivery(d: Delivery): Promise<Outcome> {
     return 'throttled';
   }
 
-  const receipt = await provider.send({ to: d.recipient, body: smsText(d.payload.title, d.payload.url), idempotencyKey: `delivery:${d.id}` });
+  // The key names the event, the person and the channel (the delivery's
+  // dedupe key): a retried job, or a re-run workflow step (lesson 5.4), never
+  // pages twice.
+  const receipt = await provider.send({ to: d.recipient, body: smsText(d.payload.title, d.payload.url), idempotencyKey: d.dedupeKey });
   await record(d, { status: 'sent', providerMessageId: receipt.sid, sentAt: receipt.sentAt, error: null });
   // Lesson 3.3: the cost is certain now. The SID is the idempotency key, so a retried job is not billed twice.
   await recordSmsSent({ orgId: d.organizationId }, { messageSid: receipt.sid, segments: receipt.segments, sentAt: receipt.sentAt });
@@ -176,7 +165,7 @@ async function holdBackSms(d: Delivery, hourAgo: Date) {
   await withOrg(d.organizationId, async (tx) => {
     const [user] = await tx.select({ email: users.email }).from(users).where(eq(users.id, d.userId!));
     if (!user) return;
-    await tx
+    const inserted = await tx
       .insert(notificationDeliveries)
       .values({
         organizationId: d.organizationId,
@@ -194,7 +183,9 @@ async function holdBackSms(d: Delivery, hourAgo: Date) {
           listUnsubscribe: null,
         } satisfies DeliveryPayload,
       })
-      .onConflictDoNothing({ target: notificationDeliveries.dedupeKey });
+      .onConflictDoNothing({ target: notificationDeliveries.dedupeKey })
+      .returning({ id: notificationDeliveries.id, status: notificationDeliveries.status });
+    await enqueueDeliveries(tx, d.organizationId, inserted); // a job of its own, in the same transaction
   });
 }
 

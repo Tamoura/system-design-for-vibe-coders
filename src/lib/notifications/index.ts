@@ -15,13 +15,11 @@ import {
 } from '@/core/notifications';
 import { isUuid } from '@/core/validation';
 import { InvalidRequestError } from '../errors';
-import { runAfterResponse } from '../jobs';
-import { deliverPendingNotifications } from './deliver';
 import { isSlackWebhookUrl } from './providers';
 import { notifyInTx, smsIncluded, type NotifyEvent } from './pipeline';
 
 export { notifyInTx, type NotifyEvent } from './pipeline';
-export { deliverPendingNotifications } from './deliver';
+export { deliverNotification, listPendingDeliveryIds } from './deliver';
 
 const { notifications, notificationDeliveries, notificationPreferences, orgNotificationPolicies, organizations, users } = schema;
 
@@ -35,20 +33,12 @@ const { notifications, notificationDeliveries, notificationPreferences, orgNotif
  */
 
 /**
- * The one entry point. Writes the notifications and their deliveries in one
- * transaction, then has the channel workers send after the response.
- * Code that already has a transaction open (the check runner) calls
- * notifyInTx() inside it instead, and runs the workers itself.
+ * The one entry point. Writes the notifications, their deliveries and one
+ * job per delivery in one transaction; the worker sends them (lesson 5.1).
+ * Code that already has a transaction open calls notifyInTx() inside it.
  */
 export async function notify(event: NotifyEvent) {
-  const result = await withOrg(event.orgId, (tx) => notifyInTx(tx, event));
-  kickDeliveries(event.orgId);
-  return result;
-}
-
-/** Send what notifyInTx() queued, once the current response is out (lesson 4.1's "not in the request"). */
-export function kickDeliveries(orgId: string) {
-  runAfterResponse(() => deliverPendingNotifications({ orgId }));
+  return withOrg(event.orgId, (tx) => notifyInTx(tx, event));
 }
 
 type Me = { orgId: string; userId: string };

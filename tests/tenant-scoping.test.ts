@@ -142,7 +142,7 @@ const TENANT_TABLES = [
   // Module 4
   'notifications', 'notificationPreferences', 'orgNotificationPolicies', 'notificationDeliveries', 'statusPageSubscribers', 'presence',
 ];
-const SCANNED = ['src', 'scripts/run-checks.ts', 'scripts/process-files.ts', 'scripts/report-usage.ts', 'scripts/send-messages.ts'];
+const SCANNED = ['src', 'scripts/run-checks.ts', 'scripts/report-usage.ts', 'scripts/worker.ts', 'scripts/jobs.ts'];
 const EXEMPT = ['src/db/tenant.ts', 'src/db/schema.ts', 'src/db/index.ts'];
 
 function sourceFiles(p: string): string[] {
@@ -177,7 +177,8 @@ describe('lint: tenant tables only through withOrg()', () => {
   });
 
   it('db.transaction() is used only where the tables are not tenant tables', () => {
-    const allowed = ['src/lib/organizations.ts', 'src/lib/invitations.ts'];
+    // email/index.ts: the outbox row and its job (lesson 5.1); email_outbox is not a tenant table.
+    const allowed = ['src/lib/organizations.ts', 'src/lib/invitations.ts', 'src/lib/email/index.ts'];
     const users = files.filter((f) => /\bdb\s*\.\s*transaction\s*\(/.test(readFileSync(f, 'utf8'))).map((f) => f.split(path.sep).join('/'));
     expect(users.filter((f) => !allowed.includes(f))).toEqual([]);
   });

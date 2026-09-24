@@ -21,6 +21,7 @@ import { AccessError, InvalidRequestError } from './errors';
 import { isUuid } from '@/core/validation';
 import type { OrgScope } from './monitors';
 import { findPublicStatusPage } from './organizations';
+import { enqueueInTx } from './queue';
 import { getStorage } from './storage';
 
 const { files, incidents, organizations } = schema;
@@ -128,9 +129,17 @@ export async function completeUpload(ctx: OrgScope, file: StoredFile): Promise<C
   }
 
   if (file.kind === 'incident_screenshot') {
-    // 🟡: the thumbnail is made by a background job (src/lib/jobs.ts); until
-    // then the UI shows "processing".
-    await setFile(ctx, file.id, { status: 'processing', contentType: file.declaredType, sizeBytes: info.size });
+    // 🟡: the thumbnail is made by a background job; until then the UI shows
+    // "processing". Lesson 5.1: the job is enqueued in the same transaction as
+    // the status change, so a "processing" file always has its job. The payload
+    // carries the org (lesson 2.4) and the file id, never the file.
+    await withOrg(ctx.orgId, async (tx) => {
+      await tx
+        .update(files)
+        .set({ status: 'processing', contentType: file.declaredType, sizeBytes: info.size })
+        .where(and(eq(files.organizationId, ctx.orgId), eq(files.id, file.id)));
+      await enqueueInTx(tx, 'file.process', { orgId: ctx.orgId, fileId: file.id }, { key: file.id });
+    });
     return { status: 'processing', needsProcessing: true };
   }
 
@@ -162,7 +171,8 @@ async function replaceLogo(ctx: OrgScope, newFileId: string) {
 /**
  * The background job (🟡): a 400 px wide WebP thumbnail made with sharp. If
  * sharp cannot decode the image, it was not really an image: reject it too.
- * Runs after the response (src/lib/jobs.ts) or from `npm run files:process`.
+ * Lesson 5.1: the `file.process` job in the worker. Idempotent: only a file
+ * still "processing" is touched.
  */
 export async function processUploadedFile(ctx: OrgScope, fileId: string): Promise<void> {
   const file = await getFile(ctx, fileId);

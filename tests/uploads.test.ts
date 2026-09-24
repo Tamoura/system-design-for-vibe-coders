@@ -2,13 +2,10 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 
 vi.mock('@/db', () => import('./helpers/test-db').then((m) => m.testDbModule()));
 vi.mock('@/lib/session', () => ({ getCurrentUser: vi.fn(), requireUser: vi.fn() }));
-// Background jobs: record what would be enqueued; the tests run the job themselves.
-vi.mock('@/lib/jobs', () => ({ enqueue: vi.fn() }));
 
 import { eq } from 'drizzle-orm';
 import sharp from 'sharp';
 import { db, schema } from '@/db';
-import { enqueue } from '@/lib/jobs';
 import { processUploadedFile } from '@/lib/files';
 import { createMonitor } from '@/lib/monitors';
 import * as logoRoute from '@/app/api/orgs/[orgSlug]/logo/route';
@@ -18,6 +15,7 @@ import * as fileRoute from '@/app/api/orgs/[orgSlug]/files/[fileId]/route';
 import * as statusLogoRoute from '@/app/status/[slug]/logo/route';
 import { makeOrg, signInAs } from './helpers/fixtures';
 import { pngBytes, sendToSignedUrl, useTempLocalStorage } from './helpers/storage';
+import { jobsIn, runQueuedJobs } from './helpers/queue';
 
 /*
  * Lesson 2.2: logo uploads (🟢) and incident screenshots (🟡), end to end
@@ -161,10 +159,10 @@ describe('🟡 incident screenshots, private to the org', () => {
     const result = await upload(acme.slug, ask(acme.slug, incidentId), 'error-page.png', 'image/png', await pngBytes(1600, 900));
     expect(result.status).toBe('processing');
     screenshotId = result.fileId;
-    // Lesson 2.4: the job payload carries the org.
-    expect(enqueue).toHaveBeenCalledWith({ type: 'file.thumbnail', orgId: acme.id, fileId: screenshotId });
+    // Lesson 2.4: the job payload carries the org. Lesson 5.1: it is a job in the queue, enqueued with the status change.
+    expect((await jobsIn('file.process')).map((j) => j.data)).toContainEqual({ orgId: acme.id, fileId: screenshotId });
 
-    await processUploadedFile({ orgId: acme.id }, screenshotId);
+    await runQueuedJobs({ queues: ['file.process'] }); // the worker
     const row = await fileRow(screenshotId);
     expect(row.status).toBe('ready');
     const thumb = await sharp(await storage.get(row.thumbnailKey!)).metadata();

@@ -5,6 +5,7 @@ import { CATEGORIES, orgWantsSlack, resolvePersonalChannels, type Category } fro
 import { can } from '@/core/permissions';
 import { entitlementsFor, type PlanId } from '@/core/plans';
 import type { TemplateName, TemplateProps } from '@/emails';
+import { enqueueInTx } from '../queue';
 import { publishInTx } from '../realtime';
 import { appUrl, unsubscribeLinks } from '../urls';
 
@@ -60,11 +61,16 @@ type NewDelivery = typeof notificationDeliveries.$inferInsert & { payload: Deliv
  *   4. deliveries   one row per channel: in-app is written as delivered;
  *                   email and SMS are queued for their channel workers;
  *                   the org's Slack channel and status-page subscribers too
+ *   5. jobs         lesson 5.1: one `notification.deliver` job per new
+ *                   delivery, enqueued in THIS transaction (./deliver.ts runs it)
  *
- * Only database writes happen here. Running inside the transaction that
- * opened the incident means both commit together: no incident without its
- * notifications, no notification for an incident that rolled back. The
- * sending happens after the commit (./deliver.ts).
+ * Only database writes happen here, so both commit together: no notification
+ * without its delivery jobs, no job for a notification that rolled back. The
+ * sending happens in the worker, after the commit.
+ *
+ * Lesson 5.1 (🟡) "exactly once in effect": the unique dedupe_key is one row
+ * per (event, recipient, channel). Calling this twice for the same event
+ * inserts nothing the second time, so it enqueues nothing either.
  */
 export async function notifyInTx(tx: TenantTx, event: NotifyEvent): Promise<{ notified: number; deliveries: number }> {
   const def = CATEGORIES[event.category];
@@ -190,10 +196,32 @@ export async function notifyInTx(tx: TenantTx, event: NotifyEvent): Promise<{ no
   }
 
   // TODO(4.2 🔴): a status page with 50,000 subscribers needs batched, throttled fan-out on its own stream.
+  let written = 0;
   for (let i = 0; i < deliveries.length; i += 500) {
-    await tx.insert(notificationDeliveries).values(deliveries.slice(i, i + 500)).onConflictDoNothing({ target: notificationDeliveries.dedupeKey });
+    const inserted = await tx
+      .insert(notificationDeliveries)
+      .values(deliveries.slice(i, i + 500))
+      .onConflictDoNothing({ target: notificationDeliveries.dedupeKey })
+      .returning({ id: notificationDeliveries.id, status: notificationDeliveries.status });
+    written += inserted.length;
+    await enqueueDeliveries(tx, event.orgId, inserted);
   }
-  return { notified, deliveries: deliveries.length };
+  return { notified, deliveries: written };
+}
+
+/**
+ * Lesson 5.1: one `notification.deliver` job per pending delivery, in the
+ * caller's transaction. The job's key is the delivery id, so enqueuing the same
+ * delivery again adds nothing. In-app deliveries are already "sent".
+ */
+export async function enqueueDeliveries(tx: TenantTx, orgId: string, rows: { id: string; status: string }[]): Promise<number> {
+  let n = 0;
+  for (const row of rows) {
+    if (row.status !== 'pending') continue;
+    await enqueueInTx(tx, 'notification.deliver', { orgId, deliveryId: row.id }, { key: row.id, group: orgId });
+    n++;
+  }
+  return n;
 }
 
 /** Does the plan include SMS alerts at all? (Free: 0 included, and nothing to bill overage to.) */

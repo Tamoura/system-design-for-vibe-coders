@@ -1,9 +1,9 @@
 import { randomUUID } from 'node:crypto';
-import { and, eq, inArray, lte, sql } from 'drizzle-orm';
+import { eq, inArray, sql } from 'drizzle-orm';
 import { db, schema } from '@/db';
 import { renderEmail, TEMPLATES, type TemplateName, type TemplateProps } from '@/emails';
-import { MAX_ATTEMPTS, retryDelayMs } from '@/core/retry';
-import { runAfterResponse } from '../jobs';
+import { enqueueInTx } from '../queue';
+import type { JobContext } from '../queue/queues';
 import { getEmailTransport } from './transport';
 
 const { emailOutbox, emailSuppressions } = schema;
@@ -11,11 +11,11 @@ const { emailOutbox, emailSuppressions } = schema;
 /*
  * Lesson 4.1: transactional email.
  *
- *   sendEmail()  ──► email_outbox (a row; the request returns at once)
- *                        │  after the response, and from cron: deliverPendingEmails()
+ *   sendEmail()  ──► email_outbox (a row) + an `email.send` job, in ONE transaction
+ *                        │  the worker (lesson 5.1, npm run worker): sendQueuedEmail()
  *                        ▼
  *                  deliverEmail(): suppressed? ─► render template ─► transport (SMTP / Resend)
- *                        │ fails? retry with backoff (30 s, 2 min, 8 min …), MAX_ATTEMPTS, then "failed"
+ *                        │ fails? the queue retries with backoff (8 attempts), then "failed"
  *                        ▼
  *                  provider ──webhook──► bounce / complaint ─► email_suppressions
  */
@@ -40,19 +40,26 @@ export type EmailRequest<N extends TemplateName> = {
  * invitation fail; the email goes out a moment later, or after recovery.
  */
 export async function sendEmail<N extends TemplateName>(request: EmailRequest<N>): Promise<{ queued: boolean }> {
-  const inserted = await db
-    .insert(emailOutbox)
-    .values({
-      idempotencyKey: request.idempotencyKey ?? `${request.template}:${randomUUID()}`,
-      to: request.to.trim(),
-      template: request.template,
-      props: request.props,
-      listUnsubscribe: request.listUnsubscribe ?? null,
-    })
-    .onConflictDoNothing({ target: emailOutbox.idempotencyKey })
-    .returning({ id: emailOutbox.id });
-  runAfterResponse(() => deliverPendingEmails());
-  return { queued: inserted.length > 0 };
+  // Lesson 5.1 (🟡): the row and its job commit together. Before Module 5 a
+  // worker was nudged "after the response"; a crash in between left the row
+  // for cron to find. Now the job cannot be lost: it IS a row, in this transaction.
+  // (email_outbox is not a tenant table: verification mail has no org.)
+  return db.transaction(async (tx) => {
+    const inserted = await tx
+      .insert(emailOutbox)
+      .values({
+        idempotencyKey: request.idempotencyKey ?? `${request.template}:${randomUUID()}`,
+        to: request.to.trim(),
+        template: request.template,
+        props: request.props,
+        listUnsubscribe: request.listUnsubscribe ?? null,
+      })
+      .onConflictDoNothing({ target: emailOutbox.idempotencyKey })
+      .returning({ id: emailOutbox.id });
+    // The job's key is the row: queuing the same email twice adds one job.
+    for (const row of inserted) await enqueueInTx(tx, 'email.send', { emailId: row.id }, { key: row.id });
+    return { queued: inserted.length > 0 };
+  });
 }
 
 /** Where mail comes from, per stream (lesson 4.1: separate transactional and subscriber mail). */
@@ -107,54 +114,42 @@ export async function deliverEmail(message: EmailMessage): Promise<DeliveryResul
   return { status: 'sent', providerMessageId: messageId };
 }
 
-/** How long a worker "owns" the rows it claimed. A crashed worker's rows are due again after this. */
-const LEASE_MS = 5 * 60_000;
-
 /**
- * Lesson 4.1 (🟡): the email worker. Claims due rows (FOR UPDATE SKIP LOCKED,
- * so two workers never take the same row), sends each, and records the
- * outcome. Called after every sendEmail() and by `npm run messages:send`.
+ * Lesson 5.1: the `email.send` job. Idempotent: an email that is no longer
+ * pending (sent, suppressed, failed, or gone) is left alone, so running the
+ * job twice sends once. If two copies race (at-least-once delivery), the
+ * provider drops the second: the idempotency key goes with the message.
+ *
+ * A failure throws, and the QUEUE retries it with backoff; the row only
+ * records what happened, for people and for the members page.
  */
-export async function deliverPendingEmails(opts: { limit?: number } = {}) {
-  const counts = { sent: 0, suppressed: 0, retrying: 0, failed: 0 };
-  const due = db
-    .select({ id: emailOutbox.id })
-    .from(emailOutbox)
-    .where(and(eq(emailOutbox.status, 'pending'), lte(emailOutbox.nextAttemptAt, new Date())))
-    .orderBy(emailOutbox.createdAt)
-    .limit(opts.limit ?? 50)
-    .for('update', { skipLocked: true });
-  const claimed = await db
-    .update(emailOutbox)
-    .set({ attempts: sql`${emailOutbox.attempts} + 1`, nextAttemptAt: new Date(Date.now() + LEASE_MS) })
-    .where(inArray(emailOutbox.id, due))
-    .returning();
-
-  for (const row of claimed) {
-    try {
-      const result = await deliverEmail({ ...row, template: row.template as TemplateName, props: row.props as TemplateProps<TemplateName> });
-      if (result.status === 'sent') {
-        await db.update(emailOutbox).set({ status: 'sent', sentAt: new Date(), providerMessageId: result.providerMessageId, lastError: null }).where(eq(emailOutbox.id, row.id));
-        counts.sent++;
-      } else {
-        await db.update(emailOutbox).set({ status: 'suppressed', lastError: `suppressed: ${result.reason}` }).where(eq(emailOutbox.id, row.id));
-        counts.suppressed++;
-      }
-    } catch (err) {
-      const giveUp = row.attempts >= MAX_ATTEMPTS;
+export async function sendQueuedEmail(emailId: string, job: Pick<JobContext, 'attempt' | 'lastAttempt'> = { attempt: 1, lastAttempt: false }) {
+  const [row] = await db.select().from(emailOutbox).where(eq(emailOutbox.id, emailId));
+  if (!row || row.status !== 'pending') return { status: row?.status ?? 'missing', skipped: true };
+  try {
+    const result = await deliverEmail({ ...row, template: row.template as TemplateName, props: row.props as TemplateProps<TemplateName> });
+    if (result.status === 'sent') {
       await db
         .update(emailOutbox)
-        .set({
-          status: giveUp ? 'failed' : 'pending',
-          nextAttemptAt: new Date(Date.now() + retryDelayMs(row.attempts)),
-          lastError: (err as Error).message.slice(0, 500),
-        })
+        .set({ status: 'sent', attempts: job.attempt, sentAt: new Date(), providerMessageId: result.providerMessageId, lastError: null })
         .where(eq(emailOutbox.id, row.id));
-      if (giveUp) counts.failed++;
-      else counts.retrying++;
+    } else {
+      await db.update(emailOutbox).set({ status: 'suppressed', attempts: job.attempt, lastError: `suppressed: ${result.reason}` }).where(eq(emailOutbox.id, row.id));
     }
+    return { status: result.status };
+  } catch (err) {
+    await db
+      .update(emailOutbox)
+      .set({ status: job.lastAttempt ? 'failed' : 'pending', attempts: job.attempt, lastError: (err as Error).message.slice(0, 500) })
+      .where(eq(emailOutbox.id, row.id));
+    throw err; // the queue retries, or dead-letters it after the last attempt
   }
-  return counts;
+}
+
+/** Pending emails (for the worker's start-up check, see src/lib/queue/worker.ts). */
+export async function listPendingEmailIds(): Promise<string[]> {
+  const rows = await db.select({ id: emailOutbox.id }).from(emailOutbox).where(eq(emailOutbox.status, 'pending'));
+  return rows.map((r) => r.id);
 }
 
 /*
