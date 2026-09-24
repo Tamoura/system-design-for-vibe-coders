@@ -3,22 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Course Library — Build with AI · Run AI in Production</title>
+<title>Course Library — Build with AI · Run AI in Production · SaaS Building Blocks</title>
 <style>
 :root{
   --bg:#f6f5f1; --panel:#ffffff; --ink:#1d2128; --muted:#5c6470; --line:#e5e1d9;
   --accent:#7a1f2b; --accent-soft:#f3e3e5;      /* "run" — maroon */
   --build:#2f6f57; --build-soft:#e4efe9;        /* "build" — green */
+  --learn:#2f4f9a; --learn-soft:#e6ebf6;        /* "learn" — indigo */
   --shadow:0 1px 3px rgba(20,20,30,.07); --shadow-lg:0 14px 40px rgba(20,20,30,.13);
 }
 @media (prefers-color-scheme:dark){:root{
   --bg:#131519; --panel:#1b1e24; --ink:#e9e7e2; --muted:#9aa0aa; --line:#2b2f37;
   --accent:#dd8a94; --accent-soft:#39232700;
   --build:#7cc0a4; --build-soft:#1c2b24;
+  --learn:#8fa9e6; --learn-soft:#1f2940;
   --shadow:0 1px 3px rgba(0,0,0,.4); --shadow-lg:0 14px 40px rgba(0,0,0,.55);
 }}
-:root[data-theme="dark"]{--bg:#131519;--panel:#1b1e24;--ink:#e9e7e2;--muted:#9aa0aa;--line:#2b2f37;--accent:#dd8a94;--accent-soft:#2a1e20;--build:#7cc0a4;--build-soft:#1c2b24;--shadow:0 1px 3px rgba(0,0,0,.4);--shadow-lg:0 14px 40px rgba(0,0,0,.55);}
-:root[data-theme="light"]{--bg:#f6f5f1;--panel:#fff;--ink:#1d2128;--muted:#5c6470;--line:#e5e1d9;--accent:#7a1f2b;--accent-soft:#f3e3e5;--build:#2f6f57;--build-soft:#e4efe9;--shadow:0 1px 3px rgba(20,20,30,.07);--shadow-lg:0 14px 40px rgba(20,20,30,.13);}
+:root[data-theme="dark"]{--bg:#131519;--panel:#1b1e24;--ink:#e9e7e2;--muted:#9aa0aa;--line:#2b2f37;--accent:#dd8a94;--accent-soft:#2a1e20;--build:#7cc0a4;--build-soft:#1c2b24;--learn:#8fa9e6;--learn-soft:#1f2940;--shadow:0 1px 3px rgba(0,0,0,.4);--shadow-lg:0 14px 40px rgba(0,0,0,.55);}
+:root[data-theme="light"]{--bg:#f6f5f1;--panel:#fff;--ink:#1d2128;--muted:#5c6470;--line:#e5e1d9;--accent:#7a1f2b;--accent-soft:#f3e3e5;--build:#2f6f57;--build-soft:#e4efe9;--learn:#2f4f9a;--learn-soft:#e6ebf6;--shadow:0 1px 3px rgba(20,20,30,.07);--shadow-lg:0 14px 40px rgba(20,20,30,.13);}
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{margin:0;background:var(--bg);color:var(--ink);
@@ -55,6 +57,7 @@ body{margin:0;background:var(--bg);color:var(--ink);
 :root[data-theme="dark"] .course:hover .go{color:#12141a;}
 .run{--c:var(--accent);--cs:var(--accent-soft);}
 .build{--c:var(--build);--cs:var(--build-soft);}
+.learn{--c:var(--learn);--cs:var(--learn-soft);}
 .more{grid-column:1 / -1;border:1.5px dashed var(--line);border-radius:20px;padding:1.4rem 1.6rem;
   color:var(--muted);font-size:.9rem;display:flex;align-items:center;gap:.7rem;background:transparent;}
 .more .plus{font-size:1.4rem;color:var(--muted);line-height:1;}
@@ -71,13 +74,13 @@ body{margin:0;background:var(--bg);color:var(--ink);
   <header class="hero">
     <div class="brand">Tamoura · Course Library</div>
     <h1><span class="b">Build</span> with AI.<br><span class="r">Run</span> AI in production.</h1>
-    <p>Two courses for the two halves of the job: shipping software with AI agents as your builder, and operating AI agents as governed systems once they reach production. Practical, incident-driven, and free to read.</p>
+    <p>Courses for the whole job: shipping software with AI agents as your builder, operating AI agents as governed systems in production, and learning the building blocks every SaaS shares. Practical, grounded in real systems, and free to read.</p>
   </header>
 
   <div class="rule">Courses</div>
 
   <!-- ── To add a course: copy one <a class="course …"> block, set its verb/title/
-       description/tags/meta/href, and pick a theme class: "build" or "run". ── -->
+       description/tags/meta/href, and pick a theme class: "build", "run" or "learn". ── -->
   <div class="courses">
 
     <a class="course build" href="vibe/">
@@ -95,6 +98,15 @@ body{margin:0;background:var(--bg);color:var(--ink);
       <p>Build, secure, govern, evaluate, and operate AI agents as digital employees in a regulated bank. A zero-to-hero curriculum backed by a runnable reference framework, a production playbook, and a skills assessment.</p>
       <div class="tags"><span class="tag">Engineers → Leadership</span><span class="tag">Regulated / banking</span><span class="tag">Hands-on labs</span></div>
       <div class="meta"><span><b>6</b>levels</span><span><b>28</b>modules</span><span><b>L0–L5</b>gated</span></div>
+      <span class="go">Open course →</span>
+    </a>
+
+    <a class="course learn" href="saas/">
+      <span class="verb">Learn the building blocks</span>
+      <h2>SaaS Building Blocks</h2>
+      <p>Every SaaS is the same app wearing a different product. Learn the ~25 components they all share — auth, orgs, billing, jobs, webhooks, SSO, audit logs — from beginner to advanced, and study the best open-source repos for each one.</p>
+      <div class="tags"><span class="tag">Junior developers</span><span class="tag">Beginner → Advanced</span><span class="tag">Open-source repos</span></div>
+      <div class="meta"><span><b>__MODS__</b>modules</span><span><b>__LESSONS__</b>lessons</span><span><b>__REPOS__</b>repos</span></div>
       <span class="go">Open course →</span>
     </a>
 
