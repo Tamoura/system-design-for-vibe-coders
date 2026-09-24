@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { listMonitors } from '@/lib/monitors';
+import { requireUser } from '@/lib/session';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,7 +13,8 @@ function ago(d: Date | null) {
 }
 
 export default async function Dashboard() {
-  // TODO(1.1): require a signed-in user. TODO(1.2): only this organization's monitors.
+  await requireUser('/dashboard'); // Lesson 1.1: signed-out visitors go to /login.
+  // TODO(1.2): only this organization's monitors.
   const monitors = await listMonitors();
   return (
     <section className="grid">

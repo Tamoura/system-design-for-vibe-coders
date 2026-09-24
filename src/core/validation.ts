@@ -20,3 +20,16 @@ export const createMonitorInput = z.object({
 });
 
 export type CreateMonitorInput = z.infer<typeof createMonitorInput>;
+
+/**
+ * Lesson 1.1: sign-up input. Better Auth re-checks the password length; this
+ * schema gives the form friendly messages. Length beats composition rules
+ * (NIST SP 800-63B), so there is no "one symbol, one capital" rule here.
+ */
+export const signUpInput = z.object({
+  name: z.string().trim().min(1, 'Tell us your name').max(80),
+  email: z.string().trim().toLowerCase().email('Enter a valid email address'),
+  password: z.string().min(12, 'Use at least 12 characters').max(128),
+});
+
+export type SignUpInput = z.infer<typeof signUpInput>;

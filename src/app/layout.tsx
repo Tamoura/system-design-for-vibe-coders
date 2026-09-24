@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { getCurrentUser } from '@/lib/session';
+import { signOutAction } from './(auth)/actions';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -7,7 +9,8 @@ export const metadata: Metadata = {
   description: 'The reference SaaS for the SaaS Building Blocks course.',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const user = await getCurrentUser();
   return (
     <html lang="en">
       <body>
@@ -15,9 +18,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="wrap">
             <Link href="/" className="brand">◉ Beacon</Link>
             <nav>
-              <Link href="/dashboard">Dashboard</Link>
-              <Link href="/status">Status page</Link>
-              {/* TODO(1.1): sign in / sign out. TODO(1.2): organization switcher. */}
+              {user ? (
+                <>
+                  <Link href="/dashboard">Dashboard</Link>
+                  <span className="muted">{user.email}</span>
+                  {/* Lesson 1.1: a real logout is a POST that deletes the session server-side. */}
+                  <form action={signOutAction}>
+                    <button className="link-btn">Sign out</button>
+                  </form>
+                </>
+              ) : (
+                <>
+                  <Link href="/login">Sign in</Link>
+                  <Link href="/signup">Sign up</Link>
+                </>
+              )}
             </nav>
           </div>
         </header>

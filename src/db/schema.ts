@@ -1,5 +1,8 @@
 import { boolean, index, integer, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
 
+// Lesson 1.1: users, sessions and login methods. Better Auth defines their shape.
+export * from './auth-schema';
+
 /*
  * Beacon's core domain: monitors, the results of checking them, and the
  * incidents opened when they fail. This is the ~15% of Beacon that is
