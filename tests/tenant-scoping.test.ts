@@ -137,8 +137,8 @@ describe('every tenant table is protected', () => {
  * here. Admin scripts that connect as the database owner (seed, reset,
  * claim-org) are exempt: they are not reachable from a request.
  */
-const TENANT_TABLES = ['monitors', 'checkResults', 'incidents', 'incidentUpdates', 'files', 'subscriptions'];
-const SCANNED = ['src', 'scripts/run-checks.ts', 'scripts/process-files.ts'];
+const TENANT_TABLES = ['monitors', 'checkResults', 'incidents', 'incidentUpdates', 'files', 'subscriptions', 'usageEvents', 'usageAlerts'];
+const SCANNED = ['src', 'scripts/run-checks.ts', 'scripts/process-files.ts', 'scripts/report-usage.ts'];
 const EXEMPT = ['src/db/tenant.ts', 'src/db/schema.ts', 'src/db/index.ts'];
 
 function sourceFiles(p: string): string[] {

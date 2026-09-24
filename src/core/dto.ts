@@ -37,20 +37,22 @@ export function toMemberDto(m: { userId: string; name: string; email: string; ro
 }
 
 /**
- * Lesson 3.1: what GET /api/orgs/:org/billing returns. No Stripe ids
+ * Lesson 3.1/3.3: what GET /api/orgs/:org/billing returns. No Stripe ids
  * (customer, subscription, price) and no org id: a client needs the plan, the
- * limits and the monitors, nothing it could use against Stripe.
+ * limits and the usage, nothing it could use against Stripe.
  */
 export type BillingDto = {
   plan: string;
   entitlements: Entitlements;
   monitors: { total: number; running: number; frozen: number; max: number };
+  sms: { used: number; included: number; overageUnits: number; overageCents: number; periodStart: string; periodEnd: string };
   subscription: { status: string; cancelAtPeriodEnd: boolean; currentPeriodEnd: string | null } | null;
 };
 
 export function toBillingDto(o: {
   ent: Entitlements & { plan: string };
   monitors: { total: number; running: number; frozen: number };
+  usage: { period: { start: Date; end: Date }; sms: { used: number; included: number; overageUnits: number; overageCents: number } };
   subscription: { status: string; cancelAtPeriodEnd: boolean; currentPeriodEnd: Date | null } | null;
 }): BillingDto {
   const { plan, ...entitlements } = o.ent;
@@ -58,6 +60,7 @@ export function toBillingDto(o: {
     plan,
     entitlements,
     monitors: { total: o.monitors.total, running: o.monitors.running, frozen: o.monitors.frozen, max: entitlements.maxMonitors },
+    sms: { ...o.usage.sms, periodStart: o.usage.period.start.toISOString(), periodEnd: o.usage.period.end.toISOString() },
     subscription: o.subscription
       ? { status: o.subscription.status, cancelAtPeriodEnd: o.subscription.cancelAtPeriodEnd, currentPeriodEnd: o.subscription.currentPeriodEnd?.toISOString() ?? null }
       : null,

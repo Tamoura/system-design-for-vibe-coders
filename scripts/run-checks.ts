@@ -13,7 +13,9 @@
  * TODO(5.1): this is a loop in a script. It has no schedule per monitor, no
  * retries, no concurrency limit per tenant and no protection against two copies
  * running at once. Lesson 5.1 turns it into a proper scheduler + worker queue.
- * TODO(4.2): opening an incident should notify the team.
+ * TODO(4.2): opening an incident should notify the team. An SMS alert calls
+ * recordSmsSent() (src/lib/usage.ts, lesson 3.3) once the SMS provider has
+ * accepted the message, so it is metered and billed.
  *
  * Lesson 1.2: this is a system job, not a user request, so it visits every
  * organization. Everything it writes copies the monitor's organization_id

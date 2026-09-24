@@ -322,6 +322,56 @@ export const stripeEvents = pgTable('stripe_events', {
   updatedAt: updatedAt(),
 });
 
+/**
+ * Lesson 3.3 (🟢): one row per billable fact (one SMS sent). Immutable apart
+ * from `reported_at`, set once the event reached the billing provider.
+ *
+ *  - idempotency_key is UNIQUE and derived from the fact (`sms:{messageSid}`),
+ *    so recording the same SMS twice creates one row;
+ *  - occurred_at is when it happened (the send time), not when the row was
+ *    written, and usage is summed by it, so a late event still lands in the
+ *    right billing period.
+ */
+export const usageEvents = pgTable(
+  'usage_events',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    idempotencyKey: text('idempotency_key').notNull().unique(),
+    meter: text('meter').notNull(),
+    quantity: integer('quantity').notNull(),
+    occurredAt: timestamp('occurred_at', { withTimezone: true }).notNull(),
+    reportedAt: timestamp('reported_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [
+    // "SMS used this period": sum(quantity) for one org, one meter, a time range.
+    index('usage_events_org_meter_time_idx').on(t.organizationId, t.meter, t.occurredAt),
+    // The reporting job's queue: only the rows not yet sent to the provider.
+    index('usage_events_unreported_idx').on(t.organizationId).where(sql`${t.reportedAt} is null`),
+    check('usage_events_quantity_positive', sql`${t.quantity} > 0`),
+  ],
+);
+
+/**
+ * Lesson 3.3 (🟡): usage alerts already sent. The primary key is "this org,
+ * this meter, this billing period, this threshold", so each alert email goes
+ * out at most once per period however many SMS cross the line at once.
+ */
+export const usageAlerts = pgTable(
+  'usage_alerts',
+  {
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    meter: text('meter').notNull(),
+    periodStart: timestamp('period_start', { withTimezone: true }).notNull(),
+    threshold: integer('threshold').notNull(), // percent of the included amount: 80 or 100
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [primaryKey({ columns: [t.organizationId, t.meter, t.periodStart, t.threshold] })],
+);
+
 export type Organization = typeof organizations.$inferSelect;
 export type Membership = typeof memberships.$inferSelect;
 export type Invitation = typeof invitations.$inferSelect;
@@ -331,3 +381,4 @@ export type Incident = typeof incidents.$inferSelect;
 export type StoredFile = typeof files.$inferSelect;
 export type IncidentUpdate = typeof incidentUpdates.$inferSelect;
 export type Subscription = typeof subscriptions.$inferSelect;
+export type UsageEvent = typeof usageEvents.$inferSelect;

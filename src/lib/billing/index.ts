@@ -4,6 +4,7 @@ import { withOrg } from '@/db/tenant';
 import { priceForPlan, statusGrantsAccess, type PaidPlanId } from '@/core/plans';
 import { InvalidRequestError } from '../errors';
 import { getEntitlements, getMonitorUsage } from '../entitlements';
+import { getUsageSummary } from '../usage';
 import { getBillingProvider } from './provider';
 
 const { organizations, subscriptions } = schema;
@@ -89,9 +90,10 @@ export async function getCurrentSubscription({ orgId }: { orgId: string }) {
 
 /** Everything the billing page and GET /api/orgs/:org/billing show. */
 export async function getBillingOverview(ctx: { orgId: string }) {
-  const [ent, monitors, subscription, org] = await Promise.all([
+  const [ent, monitors, usage, subscription, org] = await Promise.all([
     getEntitlements(ctx),
     getMonitorUsage(ctx),
+    getUsageSummary(ctx),
     getCurrentSubscription(ctx),
     db.select({ customerId: organizations.stripeCustomerId }).from(organizations).where(eq(organizations.id, ctx.orgId)),
   ]);
@@ -100,6 +102,7 @@ export async function getBillingOverview(ctx: { orgId: string }) {
     hasCustomer: Boolean(org[0]?.customerId),
     ent,
     monitors,
+    usage,
     subscription,
   };
 }

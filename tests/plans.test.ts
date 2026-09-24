@@ -14,6 +14,7 @@ import {
   statusGrantsAccess,
 } from '@/core/plans';
 import { isDue } from '@/core/schedule';
+import { billingPeriod, rateSms, reachedThresholds, usageKeys } from '@/core/usage';
 
 /* Lesson 3.2: the plan config and the pure rules around it. */
 
@@ -131,3 +132,30 @@ describe('the check runner never runs faster than the plan allows (lesson 3.2 �
   });
 });
 
+describe('usage rules (lesson 3.3)', () => {
+  it('keys are derived from the business fact, so a retry produces the same key', () => {
+    expect(usageKeys.sms('SM123')).toBe('sms:SM123');
+    expect(usageKeys.sms('SM123')).toBe(usageKeys.sms('SM123'));
+  });
+
+  it('rates included + overage: 130 SMS on Pro is 30 × $0.05 = $1.50', () => {
+    expect(rateSms(130, entitlementsFor('pro'))).toEqual({ used: 130, included: 100, overageUnits: 30, overageCents: 150 });
+    expect(rateSms(40, entitlementsFor('pro')).overageCents).toBe(0);
+  });
+
+  it('the period is the subscription’s billing period, else the calendar month', () => {
+    const sub = { currentPeriodStart: new Date('2026-05-14T00:00:00Z'), currentPeriodEnd: new Date('2026-06-14T00:00:00Z') };
+    expect(billingPeriod(sub, new Date('2026-06-01T00:00:00Z'))).toEqual({ start: sub.currentPeriodStart, end: sub.currentPeriodEnd });
+    expect(billingPeriod(null, new Date('2026-06-17T08:00:00Z'))).toEqual({
+      start: new Date('2026-06-01T00:00:00Z'),
+      end: new Date('2026-07-01T00:00:00Z'),
+    });
+  });
+
+  it('alerts at 80% and 100% of the included amount, and never without one', () => {
+    expect(reachedThresholds(79, 100)).toEqual([]);
+    expect(reachedThresholds(80, 100)).toEqual([80]);
+    expect(reachedThresholds(130, 100)).toEqual([80, 100]);
+    expect(reachedThresholds(5, 0)).toEqual([]);
+  });
+});

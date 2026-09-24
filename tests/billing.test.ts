@@ -154,7 +154,7 @@ describe('only billing roles may use billing endpoints (🟢, the 1.3 permission
     const body = await (await billingRoute.GET(json('GET'), p({ orgSlug: org.slug }))).text();
     expect(body).not.toMatch(/cus_|sub_|price_|organization/i);
     expect(body).not.toContain(org.id);
-    expect(JSON.parse(body).data).toMatchObject({ plan: 'free', monitors: { max: 5 } });
+    expect(JSON.parse(body).data).toMatchObject({ plan: 'free', monitors: { max: 5 }, sms: { included: 0 } });
   });
 });
 
