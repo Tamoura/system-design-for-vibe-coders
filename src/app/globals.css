@@ -33,3 +33,7 @@ input, select { font: inherit; padding: .5rem .6rem; border: 1px solid var(--lin
 .link-btn { background: none; border: 0; padding: 0; color: var(--accent); font: inherit; cursor: pointer; text-decoration: underline; }
 header.top nav { align-items: center; }
 .btn.secondary { background: var(--panel); color: var(--ink); border: 1px solid var(--line); }
+.org-nav { border-bottom: 1px solid var(--line); padding-bottom: .8rem; font-size: .95rem; }
+.badge { font-size: .75rem; border: 1px solid var(--line); border-radius: 999px; padding: .05rem .5rem; color: var(--muted); }
+table { width: 100%; border-collapse: collapse; }
+td, th { text-align: left; padding: .4rem .3rem; border-bottom: 1px solid var(--line); font-size: .92rem; }

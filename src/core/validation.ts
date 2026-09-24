@@ -33,3 +33,8 @@ export const signUpInput = z.object({
 });
 
 export type SignUpInput = z.infer<typeof signUpInput>;
+
+/** Lesson 1.2: "create an organization". The slug is derived from the name (src/core/slugs.ts). */
+export const createOrganizationInput = z.object({
+  name: z.string().trim().min(2, 'Use at least 2 characters').max(60),
+});

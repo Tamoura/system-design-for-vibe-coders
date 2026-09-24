@@ -14,7 +14,8 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx scripts/migrate.ts",
     "db:seed": "tsx scripts/seed.ts",
-    "checks:run": "tsx scripts/run-checks.ts"
+    "checks:run": "tsx scripts/run-checks.ts",
+    "org:claim": "tsx scripts/claim-org.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.2.1",

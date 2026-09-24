@@ -4,6 +4,7 @@ import { nextCookies } from 'better-auth/next-js';
 import { db, schema } from '@/db';
 import { hashPassword, verifyPassword } from './password';
 import { sendEmail } from './email';
+import { createPersonalOrganization } from './organizations';
 
 /** "Sign in with GitHub" is switched on by setting both env vars (see .env.example). */
 export const githubEnabled = Boolean(process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET);
@@ -75,6 +76,17 @@ export const auth = betterAuth({
       // method first and click "Link GitHub" on /account; Better Auth then also
       // requires GitHub to report that email as verified.
       disableImplicitLinking: true,
+    },
+  },
+  databaseHooks: {
+    user: {
+      create: {
+        // Lesson 1.2: every new user lands in a working product — their own
+        // personal organization, with them as owner.
+        after: async (user) => {
+          await createPersonalOrganization(user);
+        },
+      },
     },
   },
   session: {

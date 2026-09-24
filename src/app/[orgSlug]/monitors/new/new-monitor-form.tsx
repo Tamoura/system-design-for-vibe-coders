@@ -4,8 +4,9 @@ import { useActionState } from 'react';
 import { ALLOWED_INTERVALS } from '@/core/validation';
 import { createMonitorAction, type FormState } from './actions';
 
-export default function NewMonitor() {
-  const [state, action, pending] = useActionState<FormState, FormData>(createMonitorAction, {});
+export function NewMonitorForm({ orgSlug }: { orgSlug: string }) {
+  // The org travels as a bound argument; the action re-checks the membership on the server.
+  const [state, action, pending] = useActionState<FormState, FormData>(createMonitorAction.bind(null, orgSlug), {});
   const err = (k: string) => state.errors?.[k]?.[0];
   return (
     <section style={{ maxWidth: 520 }}>

@@ -10,10 +10,11 @@ export default function Home() {
         SaaS component is a TODO for you to build, lesson by lesson.
       </p>
       <div className="row">
-        <Link className="btn" href="/dashboard">Open the dashboard</Link>
-        <Link href="/status">See the status page →</Link>
+        <Link className="btn" href="/signup">Create an account</Link>
+        <Link href="/dashboard">Open the dashboard</Link>
+        <Link href="/status/demo">See a status page →</Link>
       </div>
-      {/* TODO(6.1): this is the marketing site. It will move to its own route group with pricing (3.2) and sign-up (1.1). */}
+      {/* TODO(6.1): this is the marketing site. It will move to its own route group with pricing (3.2). */}
     </section>
   );
 }
