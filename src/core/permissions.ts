@@ -22,17 +22,19 @@ import { ROLES, type Role } from './roles';
  * | billing.read    see the plan and usage      |   ✓   |   ✓   |        |        |
  * | notification.manage  org alert policy,     |   ✓   |   ✓   |        |        |
  * |                 Slack channel (lesson 4.2)  |       |       |        |        |
+ * | integration.manage  API keys and webhook    |   ✓   |   ✓   |        |        |
+ * |                 endpoints (lessons 5.2/5.3) |       |       |        |        |
  * | billing.manage  upgrade, manage billing     |   ✓   |       |        |        |
  * | org.delete      (1.2's 🔴 exercise)         |   ✓   |       |        |        |
  */
 export const PERMISSIONS = {
   owner: [
     'monitor.read', 'member.read', 'monitor.write', 'monitor.write_any', 'incident.write',
-    'page.publish', 'member.manage', 'billing.read', 'billing.manage', 'notification.manage', 'org.delete',
+    'page.publish', 'member.manage', 'billing.read', 'billing.manage', 'notification.manage', 'integration.manage', 'org.delete',
   ],
   admin: [
     'monitor.read', 'member.read', 'monitor.write', 'monitor.write_any', 'incident.write',
-    'page.publish', 'member.manage', 'billing.read', 'notification.manage',
+    'page.publish', 'member.manage', 'billing.read', 'notification.manage', 'integration.manage',
   ],
   member: ['monitor.read', 'member.read', 'monitor.write', 'incident.write'],
   viewer: ['monitor.read', 'member.read'],

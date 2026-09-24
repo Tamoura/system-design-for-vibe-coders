@@ -1,7 +1,7 @@
-import { and, asc, eq, inArray } from 'drizzle-orm';
+import { and, asc, desc, eq, inArray, isNotNull, isNull, sql } from 'drizzle-orm';
 import { schema } from '@/db';
 import { withOrg } from '@/db/tenant';
-import { AccessError } from './errors';
+import { AccessError, InvalidRequestError } from './errors';
 import { isUuid } from '@/core/validation';
 import type { OrgScope } from './monitors';
 
@@ -42,4 +42,39 @@ export async function listIncidentUpdates({ orgId }: OrgScope, incidentIds: stri
       .where(and(eq(incidentUpdates.organizationId, orgId), inArray(incidentUpdates.incidentId, incidentIds)))
       .orderBy(asc(incidentUpdates.createdAt)),
   );
+}
+
+/**
+ * Lesson 5.2 (🟢): one page of this org's incidents for the public API,
+ * newest first, with the same cursor pagination as listMonitorsPage().
+ */
+export async function listIncidentsPage(
+  { orgId }: OrgScope,
+  opts: { limit: number; startingAfter?: string; status?: 'open' | 'resolved'; monitorId?: string },
+) {
+  return withOrg(orgId, async (tx) => {
+    const filters = [eq(incidents.organizationId, orgId)];
+    if (opts.status === 'open') filters.push(isNull(incidents.resolvedAt));
+    if (opts.status === 'resolved') filters.push(isNotNull(incidents.resolvedAt));
+    if (opts.monitorId) filters.push(eq(incidents.monitorId, opts.monitorId));
+    if (opts.startingAfter) {
+      const [cursor] = await tx.select({ id: incidents.id }).from(incidents).where(and(eq(incidents.organizationId, orgId), eq(incidents.id, opts.startingAfter)));
+      if (!cursor) throw new InvalidRequestError('invalid_cursor', 'starting_after is not an incident of this organization.');
+      filters.push(sql`(${incidents.createdAt}, ${incidents.id}) < (select i.created_at, i.id from incidents i where i.id = ${cursor.id})`);
+    }
+    const rows = await tx
+      .select()
+      .from(incidents)
+      .where(and(...filters))
+      .orderBy(desc(incidents.createdAt), desc(incidents.id))
+      .limit(opts.limit + 1);
+    return { rows: rows.slice(0, opts.limit), hasMore: rows.length > opts.limit };
+  });
+}
+
+/** One incident of this org, or null (another org's id is null too: 404). */
+export async function getIncident({ orgId }: OrgScope, incidentId: string) {
+  if (!isUuid(incidentId)) return null;
+  const [row] = await withOrg(orgId, (tx) => tx.select().from(incidents).where(and(eq(incidents.organizationId, orgId), eq(incidents.id, incidentId))));
+  return row ?? null;
 }

@@ -1,0 +1,1490 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Beacon API",
+    "version": "1.0.0",
+    "description": "Monitors and incidents of one Beacon organization, for your own scripts and tools.\n\n**Authentication.** Create a key in Settings → API keys and send it as `Authorization: Bearer bk_live_…`. A key belongs to the organization, has scopes, and can be revoked at any time.\n\n**Versioning.** `/v1` only ever gets additive changes: new endpoints, new optional parameters, new response fields. Ignore fields you do not know.\n\n**Errors** are RFC 9457 problem details (`application/problem+json`) with `type`, `title` and `status`.\n\n**Pagination.** Lists are newest first; pass `next_cursor` as `starting_after` while `has_more` is true.\n\n**Retries.** Send an `Idempotency-Key` header (any unique string, e.g. a UUID) on POST: a retry with the same key and body returns the first response instead of creating a second object. Keys are kept 24 hours.\n\n**Rate limits.** A token bucket per organization, sized by plan. Every response carries `RateLimit`/`RateLimit-Policy` (and `X-RateLimit-*`); a 429 has `Retry-After`.\n\n**Problem types:** `invalid-json` (400, The request body is not valid JSON), `invalid-parameter` (400, A query parameter is not valid), `blocked-url` (400, Beacon cannot check this URL), `unauthenticated` (401, Missing or invalid API key), `plan-upgrade-required` (402, Your plan does not include this), `limit-exceeded` (402, Over a plan limit), `insufficient-scope` (403, The API key lacks a scope), `forbidden` (403, Not allowed), `not-found` (404, Not found), `idempotency-key-in-use` (409, A request with this Idempotency-Key is still in progress), `validation-failed` (422, The request has invalid fields), `idempotency-key-reused` (422, This Idempotency-Key was used with a different request), `rate-limited` (429, Too many requests), `internal` (500, Something went wrong on our side)."
+  },
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ],
+  "security": [
+    {
+      "apiKey": []
+    }
+  ],
+  "paths": {
+    "/monitors": {
+      "get": {
+        "operationId": "listMonitors",
+        "summary": "List monitors",
+        "security": [
+          {
+            "apiKey": [
+              "monitors:read"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Page size (at most 100)."
+          },
+          {
+            "name": "starting_after",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Cursor: the `next_cursor` of the previous page (an object id)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of monitors.",
+            "headers": {
+              "RateLimit": {
+                "description": "IETF draft: remaining requests (r) and seconds until the bucket is full (t).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";r=117;t=2"
+              },
+              "RateLimit-Policy": {
+                "description": "IETF draft: the quota (q) per window (w, seconds).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";q=120;w=60"
+              },
+              "X-RateLimit-Limit": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Seconds until the bucket is full again.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonitorList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request: invalid JSON, a bad query parameter, or a URL Beacon refuses to check.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown or revoked API key.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "The organization’s plan does not include the API, or this change is over a plan limit.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The key lacks the scope this endpoint needs.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited. Wait Retry-After seconds.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "RateLimit": {
+                "description": "IETF draft: remaining requests (r) and seconds until the bucket is full (t).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";r=117;t=2"
+              },
+              "RateLimit-Policy": {
+                "description": "IETF draft: the quota (q) per window (w, seconds).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";q=120;w=60"
+              },
+              "X-RateLimit-Limit": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Seconds until the bucket is full again.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createMonitor",
+        "summary": "Create a monitor",
+        "security": [
+          {
+            "apiKey": [
+              "monitors:write"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            },
+            "description": "Makes a retried POST safe (24 hours)."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonitorCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "headers": {
+              "RateLimit": {
+                "description": "IETF draft: remaining requests (r) and seconds until the bucket is full (t).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";r=117;t=2"
+              },
+              "RateLimit-Policy": {
+                "description": "IETF draft: the quota (q) per window (w, seconds).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";q=120;w=60"
+              },
+              "X-RateLimit-Limit": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Seconds until the bucket is full again.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Monitor"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request: invalid JSON, a bad query parameter, or a URL Beacon refuses to check.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown or revoked API key.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "The organization’s plan does not include the API, or this change is over a plan limit.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The key lacks the scope this endpoint needs.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "A request with the same Idempotency-Key is still running.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed; `errors` lists the fields.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited. Wait Retry-After seconds.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "RateLimit": {
+                "description": "IETF draft: remaining requests (r) and seconds until the bucket is full (t).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";r=117;t=2"
+              },
+              "RateLimit-Policy": {
+                "description": "IETF draft: the quota (q) per window (w, seconds).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";q=120;w=60"
+              },
+              "X-RateLimit-Limit": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Seconds until the bucket is full again.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/monitors/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^mon_[0-9a-f]{32}$"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getMonitor",
+        "summary": "Get a monitor",
+        "security": [
+          {
+            "apiKey": [
+              "monitors:read"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The monitor.",
+            "headers": {
+              "RateLimit": {
+                "description": "IETF draft: remaining requests (r) and seconds until the bucket is full (t).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";r=117;t=2"
+              },
+              "RateLimit-Policy": {
+                "description": "IETF draft: the quota (q) per window (w, seconds).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";q=120;w=60"
+              },
+              "X-RateLimit-Limit": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Seconds until the bucket is full again.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Monitor"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request: invalid JSON, a bad query parameter, or a URL Beacon refuses to check.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown or revoked API key.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "The organization’s plan does not include the API, or this change is over a plan limit.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The key lacks the scope this endpoint needs.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such object in this organization.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited. Wait Retry-After seconds.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "RateLimit": {
+                "description": "IETF draft: remaining requests (r) and seconds until the bucket is full (t).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";r=117;t=2"
+              },
+              "RateLimit-Policy": {
+                "description": "IETF draft: the quota (q) per window (w, seconds).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";q=120;w=60"
+              },
+              "X-RateLimit-Limit": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Seconds until the bucket is full again.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateMonitor",
+        "summary": "Update a monitor",
+        "security": [
+          {
+            "apiKey": [
+              "monitors:write"
+            ]
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonitorUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated monitor.",
+            "headers": {
+              "RateLimit": {
+                "description": "IETF draft: remaining requests (r) and seconds until the bucket is full (t).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";r=117;t=2"
+              },
+              "RateLimit-Policy": {
+                "description": "IETF draft: the quota (q) per window (w, seconds).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";q=120;w=60"
+              },
+              "X-RateLimit-Limit": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Seconds until the bucket is full again.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Monitor"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request: invalid JSON, a bad query parameter, or a URL Beacon refuses to check.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown or revoked API key.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "The organization’s plan does not include the API, or this change is over a plan limit.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The key lacks the scope this endpoint needs.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such object in this organization.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed; `errors` lists the fields.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited. Wait Retry-After seconds.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "RateLimit": {
+                "description": "IETF draft: remaining requests (r) and seconds until the bucket is full (t).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";r=117;t=2"
+              },
+              "RateLimit-Policy": {
+                "description": "IETF draft: the quota (q) per window (w, seconds).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";q=120;w=60"
+              },
+              "X-RateLimit-Limit": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Seconds until the bucket is full again.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteMonitor",
+        "summary": "Delete a monitor",
+        "security": [
+          {
+            "apiKey": [
+              "monitors:write"
+            ]
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted.",
+            "headers": {
+              "RateLimit": {
+                "description": "IETF draft: remaining requests (r) and seconds until the bucket is full (t).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";r=117;t=2"
+              },
+              "RateLimit-Policy": {
+                "description": "IETF draft: the quota (q) per window (w, seconds).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";q=120;w=60"
+              },
+              "X-RateLimit-Limit": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Seconds until the bucket is full again.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request: invalid JSON, a bad query parameter, or a URL Beacon refuses to check.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown or revoked API key.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "The organization’s plan does not include the API, or this change is over a plan limit.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The key lacks the scope this endpoint needs.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such object in this organization.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited. Wait Retry-After seconds.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "RateLimit": {
+                "description": "IETF draft: remaining requests (r) and seconds until the bucket is full (t).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";r=117;t=2"
+              },
+              "RateLimit-Policy": {
+                "description": "IETF draft: the quota (q) per window (w, seconds).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";q=120;w=60"
+              },
+              "X-RateLimit-Limit": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Seconds until the bucket is full again.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/incidents": {
+      "get": {
+        "operationId": "listIncidents",
+        "summary": "List incidents",
+        "security": [
+          {
+            "apiKey": [
+              "incidents:read"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Page size (at most 100)."
+          },
+          {
+            "name": "starting_after",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Cursor: the `next_cursor` of the previous page (an object id)."
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "open",
+                "resolved"
+              ]
+            }
+          },
+          {
+            "name": "monitor_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Only this monitor’s incidents."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of incidents.",
+            "headers": {
+              "RateLimit": {
+                "description": "IETF draft: remaining requests (r) and seconds until the bucket is full (t).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";r=117;t=2"
+              },
+              "RateLimit-Policy": {
+                "description": "IETF draft: the quota (q) per window (w, seconds).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";q=120;w=60"
+              },
+              "X-RateLimit-Limit": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Seconds until the bucket is full again.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IncidentList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request: invalid JSON, a bad query parameter, or a URL Beacon refuses to check.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown or revoked API key.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "The organization’s plan does not include the API, or this change is over a plan limit.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The key lacks the scope this endpoint needs.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited. Wait Retry-After seconds.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "RateLimit": {
+                "description": "IETF draft: remaining requests (r) and seconds until the bucket is full (t).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";r=117;t=2"
+              },
+              "RateLimit-Policy": {
+                "description": "IETF draft: the quota (q) per window (w, seconds).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";q=120;w=60"
+              },
+              "X-RateLimit-Limit": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Seconds until the bucket is full again.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/incidents/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^inc_[0-9a-f]{32}$"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getIncident",
+        "summary": "Get an incident",
+        "security": [
+          {
+            "apiKey": [
+              "incidents:read"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The incident.",
+            "headers": {
+              "RateLimit": {
+                "description": "IETF draft: remaining requests (r) and seconds until the bucket is full (t).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";r=117;t=2"
+              },
+              "RateLimit-Policy": {
+                "description": "IETF draft: the quota (q) per window (w, seconds).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";q=120;w=60"
+              },
+              "X-RateLimit-Limit": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Seconds until the bucket is full again.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Incident"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request: invalid JSON, a bad query parameter, or a URL Beacon refuses to check.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown or revoked API key.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "The organization’s plan does not include the API, or this change is over a plan limit.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The key lacks the scope this endpoint needs.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such object in this organization.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited. Wait Retry-After seconds.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "RateLimit": {
+                "description": "IETF draft: remaining requests (r) and seconds until the bucket is full (t).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";r=117;t=2"
+              },
+              "RateLimit-Policy": {
+                "description": "IETF draft: the quota (q) per window (w, seconds).",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "\"api\";q=120;w=60"
+              },
+              "X-RateLimit-Limit": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Seconds until the bucket is full again.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MonitorCreate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "example": "Checkout API"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://api.example.com/health"
+          },
+          "interval_seconds": {
+            "default": 300,
+            "type": "integer",
+            "description": "Seconds between checks: 30, 60, 300 or 900. Never below your plan’s minimum.",
+            "enum": [
+              30,
+              60,
+              300,
+              900
+            ],
+            "example": 300
+          }
+        },
+        "required": [
+          "name",
+          "url"
+        ],
+        "description": "A new monitor."
+      },
+      "MonitorUpdate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "example": "Checkout API"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://api.example.com/health"
+          },
+          "interval_seconds": {
+            "type": "integer",
+            "description": "Seconds between checks: 30, 60, 300 or 900. Never below your plan’s minimum.",
+            "enum": [
+              30,
+              60,
+              300,
+              900
+            ],
+            "example": 300
+          },
+          "paused": {
+            "type": "boolean",
+            "description": "Pause or resume checks."
+          }
+        },
+        "description": "The fields to change; omitted fields stay as they are."
+      },
+      "Monitor": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Prefixed id.",
+            "example": "mon_3f2a9c7e5b1d4e8fa6c0b2d4e6f80a1c"
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "interval_seconds": {
+            "type": "integer"
+          },
+          "paused": {
+            "type": "boolean"
+          },
+          "paused_reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "manual",
+                  "plan_limit"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "\"plan_limit\": frozen after a downgrade."
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the monitor was created.",
+            "example": "2026-03-01T12:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "url",
+          "interval_seconds",
+          "paused",
+          "paused_reason",
+          "created_at"
+        ],
+        "description": "An uptime monitor."
+      },
+      "Incident": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "inc_9f0e1d2c3b4a59687766554433221100"
+          },
+          "monitor_id": {
+            "type": "string",
+            "example": "mon_3f2a9c7e5b1d4e8fa6c0b2d4e6f80a1c"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "open",
+              "resolved"
+            ]
+          },
+          "cause": {
+            "type": "string",
+            "example": "HTTP 503"
+          },
+          "opened_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the outage began.",
+            "example": "2026-03-01T12:00:00.000Z"
+          },
+          "resolved_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "description": "When it was resolved.",
+                "example": "2026-03-01T12:00:00.000Z"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "monitor_id",
+          "status",
+          "cause",
+          "opened_at",
+          "resolved_at"
+        ],
+        "description": "An outage of one monitor."
+      },
+      "MonitorList": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Monitor"
+            }
+          },
+          "has_more": {
+            "type": "boolean",
+            "description": "More items after these: ask again with starting_after = next_cursor."
+          },
+          "next_cursor": {
+            "description": "The id of the last monitor in this page, or null.",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "data",
+          "has_more",
+          "next_cursor"
+        ],
+        "description": "A page of monitors, newest first."
+      },
+      "IncidentList": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Incident"
+            }
+          },
+          "has_more": {
+            "type": "boolean",
+            "description": "More items after these: ask again with starting_after = next_cursor."
+          },
+          "next_cursor": {
+            "description": "The id of the last incident in this page, or null.",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "data",
+          "has_more",
+          "next_cursor"
+        ],
+        "description": "A page of incidents, newest first."
+      },
+      "Problem": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "format": "uri",
+            "description": "Identifies the kind of problem; documented at that URL.",
+            "example": "https://beacon.app/problems/rate-limited"
+          },
+          "title": {
+            "type": "string",
+            "description": "A short, fixed summary of the kind of problem.",
+            "example": "Too many requests"
+          },
+          "status": {
+            "type": "integer",
+            "example": 429
+          },
+          "detail": {
+            "description": "What happened this time.",
+            "type": "string"
+          },
+          "instance": {
+            "description": "The request path.",
+            "type": "string"
+          },
+          "errors": {
+            "description": "Validation problems, one per field.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "field",
+                "message"
+              ]
+            }
+          }
+        },
+        "required": [
+          "type",
+          "title",
+          "status"
+        ],
+        "description": "RFC 9457 problem details."
+      }
+    },
+    "securitySchemes": {
+      "apiKey": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "An organization API key (bk_live_…). Scopes: `monitors:read` (Read monitors), `monitors:write` (Create, change and delete monitors), `incidents:read` (Read incidents)."
+      }
+    }
+  }
+}

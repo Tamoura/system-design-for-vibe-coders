@@ -113,7 +113,12 @@ describe('row-level security (defence in depth)', () => {
  * they are read before the org is known (at login, from an invitation token).
  * Adding a table here is a design decision to explain in review.
  */
-const NOT_UNDER_RLS = ['memberships', 'invitations'];
+const NOT_UNDER_RLS = [
+  'memberships',
+  'invitations',
+  // Lesson 5.2: the key is how an API request finds its org; looked up by hash before any org is known.
+  'api_keys',
+];
 
 describe('every tenant table is protected', () => {
   it('has row-level security enabled with a policy, unless it is on the short list above', async () => {
@@ -141,6 +146,8 @@ const TENANT_TABLES = [
   'monitors', 'checkResults', 'incidents', 'incidentUpdates', 'files', 'subscriptions', 'usageEvents', 'usageAlerts',
   // Module 4
   'notifications', 'notificationPreferences', 'orgNotificationPolicies', 'notificationDeliveries', 'statusPageSubscribers', 'presence',
+  // Module 5
+  'apiIdempotencyKeys',
 ];
 const SCANNED = ['src', 'scripts/run-checks.ts', 'scripts/report-usage.ts', 'scripts/worker.ts', 'scripts/jobs.ts'];
 const EXEMPT = ['src/db/tenant.ts', 'src/db/schema.ts', 'src/db/index.ts'];
@@ -178,7 +185,8 @@ describe('lint: tenant tables only through withOrg()', () => {
 
   it('db.transaction() is used only where the tables are not tenant tables', () => {
     // email/index.ts: the outbox row and its job (lesson 5.1); email_outbox is not a tenant table.
-    const allowed = ['src/lib/organizations.ts', 'src/lib/invitations.ts', 'src/lib/email/index.ts'];
+    // rate-limit.ts: one bucket row locked per request (lesson 5.2); rate_limit_buckets is not a tenant table.
+    const allowed = ['src/lib/organizations.ts', 'src/lib/invitations.ts', 'src/lib/email/index.ts', 'src/lib/rate-limit.ts'];
     const users = files.filter((f) => /\bdb\s*\.\s*transaction\s*\(/.test(readFileSync(f, 'utf8'))).map((f) => f.split(path.sep).join('/'));
     expect(users.filter((f) => !allowed.includes(f))).toEqual([]);
   });

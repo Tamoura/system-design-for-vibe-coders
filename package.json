@@ -21,6 +21,8 @@
     "jobs": "tsx scripts/jobs.ts",
     "usage:report": "tsx scripts/report-usage.ts",
     "email:preview": "tsx scripts/email-preview.ts",
+    "openapi": "tsx scripts/openapi.ts",
+    "openapi:check": "tsx scripts/openapi.ts --check",
     "storage:setup": "tsx scripts/storage-setup.ts",
     "org:claim": "tsx scripts/claim-org.ts"
   },

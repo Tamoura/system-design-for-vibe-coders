@@ -30,6 +30,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run typecheck
+      # Lesson 5.2 (🟡): the committed OpenAPI document must match the code.
+      - run: npm run openapi:check
+      # With DATABASE_URL set, tests/queue.integration.test.ts also runs the
+      # job queue against this real Postgres (lesson 5.1).
       - run: npm test
       - name: Migrations apply to a real Postgres
         run: npm run db:migrate

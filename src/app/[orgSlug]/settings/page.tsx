@@ -40,6 +40,13 @@ export default async function SettingsPage({ params }: { params: Promise<{ orgSl
         <div><button className="btn">Save</button></div>
       </form>
       {notifications && <OrgNotificationsForm orgSlug={ctx.orgSlug} settings={notifications} />}
+      {/* Module 5: what other software uses to reach Beacon, and to hear from it. */}
+      {can(ctx.role, 'integration.manage') && (
+        <div className="card grid" data-testid="integrations">
+          <strong>Integrations</strong>
+          <Link href={`/${ctx.orgSlug}/settings/api-keys`}>API keys →</Link>
+        </div>
+      )}
       {/* Lesson 2.2 (🟢): the status page logo, uploaded straight to storage. */}
       <div className="card grid">
         <strong>Status page logo</strong>

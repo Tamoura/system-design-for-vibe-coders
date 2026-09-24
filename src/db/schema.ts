@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm';
-import { boolean, check, customType, index, integer, jsonb, pgEnum, pgTable, primaryKey, text, timestamp, uniqueIndex, uuid, type AnyPgColumn } from 'drizzle-orm/pg-core';
+import { boolean, check, customType, doublePrecision, index, integer, jsonb, pgEnum, pgTable, primaryKey, text, timestamp, uniqueIndex, uuid, type AnyPgColumn } from 'drizzle-orm/pg-core';
 import { FILE_KINDS } from '../core/files';
 import { CATEGORY_IDS, CHANNELS } from '../core/notifications';
 import { PLAN_IDS } from '../core/plans';
@@ -221,6 +221,8 @@ export const incidents = pgTable(
     // every monitor on the dashboard. A partial index holds only open incidents,
     // so it stays tiny however many resolved ones pile up.
     index('incidents_open_idx').on(t.monitorId).where(sql`${t.resolvedAt} is null`),
+    // Lesson 5.2: GET /api/v1/incidents pages through one org's incidents, newest first (keyset on created_at, id).
+    index('incidents_org_created_idx').on(t.organizationId, t.createdAt, t.id),
   ],
 );
 
@@ -602,6 +604,77 @@ export const presence = pgTable(
   (t) => [primaryKey({ columns: [t.organizationId, t.topic, t.userId] })],
 );
 
+/*
+ * Module 5: background work and integrations.
+ */
+
+/**
+ * Lesson 5.2 (🟢): API keys. The key itself is never stored: only its SHA-256
+ * hash (the lookup), and its first 12 and last 4 characters (for "bk_live_Ab3x…9f2Q"
+ * in the settings list). Rules: src/core/api-keys.ts.
+ *
+ * Not under row-level security, like memberships: a request's key is how
+ * Beacon LEARNS which org the request is for, so the lookup by hash happens
+ * before any org is known. Managing keys (list, create, revoke) still names
+ * the org in every query.
+ */
+export const apiKeys = pgTable(
+  'api_keys',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    name: text('name').notNull(),
+    keyHash: text('key_hash').notNull().unique(),
+    keyStart: text('key_start').notNull(), // "bk_live_Ab3x"
+    keyLast4: text('key_last4').notNull(),
+    scopes: text('scopes').array().notNull(),
+    // Kept for history; the key belongs to the org and outlives its creator.
+    createdBy: uuid('created_by').references(() => users.id, { onDelete: 'set null' }),
+    lastUsedAt: timestamp('last_used_at', { withTimezone: true }),
+    revokedAt: timestamp('revoked_at', { withTimezone: true }),
+    revokedBy: uuid('revoked_by').references(() => users.id, { onDelete: 'set null' }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [index('api_keys_org_idx').on(t.organizationId, t.createdAt)],
+);
+
+/**
+ * Lesson 5.2 (🟡): Idempotency-Key on POST. The first request with a key
+ * stores its response here; a retry with the same key and the same body gets
+ * that response back instead of creating a second monitor. `status_code` is
+ * null while the first request is still running (a concurrent retry gets 409).
+ * Kept 24 hours.
+ */
+export const apiIdempotencyKeys = pgTable(
+  'api_idempotency_keys',
+  {
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    key: text('key').notNull(),
+    // What the key was used for: "POST /api/v1/monitors" and a hash of the body.
+    requestMethod: text('request_method').notNull(),
+    requestPath: text('request_path').notNull(),
+    requestHash: text('request_hash').notNull(),
+    statusCode: integer('status_code'),
+    responseBody: jsonb('response_body'),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [primaryKey({ columns: [t.organizationId, t.key] })],
+);
+
+/**
+ * Lesson 5.2: token buckets for rate limiting (src/core/rate-limit.ts), one row
+ * per bucket ("org:<id>", "ip:<address>"). In Postgres rather than in memory so
+ * every app instance counts against the same bucket. At high traffic this
+ * moves to Redis, the lesson's default; the functions stay the same.
+ */
+export const rateLimitBuckets = pgTable('rate_limit_buckets', {
+  key: text('key').primaryKey(),
+  tokens: doublePrecision('tokens').notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull(),
+});
+
 export type Organization = typeof organizations.$inferSelect;
 export type Membership = typeof memberships.$inferSelect;
 export type Invitation = typeof invitations.$inferSelect;
@@ -616,3 +689,4 @@ export type EmailOutboxRow = typeof emailOutbox.$inferSelect;
 export type Notification = typeof notifications.$inferSelect;
 export type NotificationDelivery = typeof notificationDeliveries.$inferSelect;
 export type StatusPageSubscriber = typeof statusPageSubscribers.$inferSelect;
+export type ApiKey = typeof apiKeys.$inferSelect;

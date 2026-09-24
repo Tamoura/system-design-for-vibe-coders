@@ -18,3 +18,24 @@ export function stableUuid(key: string): string {
   const hex = bytes.toString('hex');
   return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
 }
+
+/*
+ * Lesson 5.2: prefixed, opaque ids in the public API. `mon_3f2a…` says what it
+ * is, in a log line or a support ticket, and a key's `key_…` cannot be pasted
+ * where a monitor id belongs without an obvious error. Inside Beacon the ids
+ * stay plain UUIDs; the API converts at its edge.
+ */
+export const ID_PREFIXES = { monitor: 'mon', incident: 'inc', apiKey: 'key', webhookEndpoint: 'ep', webhookMessage: 'msg' } as const;
+export type IdKind = keyof typeof ID_PREFIXES;
+
+export function toPublicId(kind: IdKind, uuid: string): string {
+  return `${ID_PREFIXES[kind]}_${uuid.replaceAll('-', '')}`;
+}
+
+/** The UUID behind a public id, or null if it is not one of this kind (the caller answers 404). */
+export function fromPublicId(kind: IdKind, publicId: string): string | null {
+  const m = new RegExp(`^${ID_PREFIXES[kind]}_([0-9a-f]{32})$`).exec(publicId);
+  if (!m) return null;
+  const h = m[1];
+  return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`;
+}

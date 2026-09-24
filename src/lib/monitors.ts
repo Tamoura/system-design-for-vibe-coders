@@ -264,3 +264,30 @@ export async function resolveIncident(ctx: OrgScope, incidentId: string): Promis
     return true;
   });
 }
+
+/**
+ * Lesson 5.2 (🟢): one page of monitors for the public API, newest first.
+ * CURSOR pagination: "the monitors created before this one", an indexed
+ * `WHERE (created_at, id) < (…)` (monitors_org_idx), instead of `OFFSET n`,
+ * which gets slower every page and skips or repeats rows while monitors are
+ * added. The cursor row is compared inside Postgres, at full timestamp
+ * precision (a JavaScript Date would round microseconds away). An unknown
+ * cursor is an error rather than a silent first page.
+ */
+export async function listMonitorsPage({ orgId }: OrgScope, opts: { limit: number; startingAfter?: string }) {
+  return withOrg(orgId, async (tx) => {
+    let after = dsql`true`;
+    if (opts.startingAfter) {
+      const [cursor] = await tx.select({ id: monitors.id }).from(monitors).where(and(eq(monitors.organizationId, orgId), eq(monitors.id, opts.startingAfter)));
+      if (!cursor) throw new InvalidRequestError('invalid_cursor', 'starting_after is not a monitor of this organization.');
+      after = dsql`(${monitors.createdAt}, ${monitors.id}) < (select m.created_at, m.id from monitors m where m.id = ${cursor.id})`;
+    }
+    const rows = await tx
+      .select()
+      .from(monitors)
+      .where(and(eq(monitors.organizationId, orgId), after))
+      .orderBy(desc(monitors.createdAt), desc(monitors.id))
+      .limit(opts.limit + 1); // one extra row answers "is there a next page?"
+    return { rows: rows.slice(0, opts.limit), hasMore: rows.length > opts.limit };
+  });
+}

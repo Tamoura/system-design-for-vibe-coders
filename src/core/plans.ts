@@ -32,6 +32,8 @@ export type Entitlements = {
   sso: boolean;
   auditLog: boolean;
   api: boolean;
+  /** Lesson 5.2: public API requests per minute per org (a token bucket: bursts up to this, refilled over a minute). */
+  apiRequestsPerMinute: number;
 };
 
 type Plan = {
@@ -48,19 +50,19 @@ export const PLANS: Record<PlanId, Plan> = {
     name: 'Free',
     priceLabel: '$0',
     pitch: '5 monitors, checked every 5 minutes',
-    entitlements: { maxMonitors: 5, minIntervalSec: 300, smsCreditsPerMonth: 0, sso: false, auditLog: false, api: false },
+    entitlements: { maxMonitors: 5, minIntervalSec: 300, smsCreditsPerMonth: 0, sso: false, auditLog: false, api: false, apiRequestsPerMinute: 0 },
   },
   pro: {
     name: 'Pro',
     priceLabel: '$29/month',
     pitch: '50 monitors, 1-minute checks, 100 SMS alerts a month',
-    entitlements: { maxMonitors: 50, minIntervalSec: 60, smsCreditsPerMonth: 100, sso: false, auditLog: false, api: false },
+    entitlements: { maxMonitors: 50, minIntervalSec: 60, smsCreditsPerMonth: 100, sso: false, auditLog: false, api: false, apiRequestsPerMinute: 0 },
   },
   business: {
     name: 'Business',
     priceLabel: '$99/month',
     pitch: '500 monitors, 30-second checks, 500 SMS, SSO, audit log and API',
-    entitlements: { maxMonitors: 500, minIntervalSec: 30, smsCreditsPerMonth: 500, sso: true, auditLog: true, api: true },
+    entitlements: { maxMonitors: 500, minIntervalSec: 30, smsCreditsPerMonth: 500, sso: true, auditLog: true, api: true, apiRequestsPerMinute: 120 },
   },
 };
 
