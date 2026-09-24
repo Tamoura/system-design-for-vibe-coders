@@ -8,6 +8,14 @@
 
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 4.1*
 
+## ⚡ In 60 seconds
+
+- A background job is a durable record of work, stored in a broker and run later by a separate worker that can retry it.
+- The one rule: queues deliver at least once, so every job must be idempotent. Pass IDs, not objects, and record what you already did.
+- Default for a v1: a Postgres-backed queue (pg-boss, Solid Queue, River) so enqueuing happens in the same transaction as your data.
+- Anything slow, flaky or scheduled leaves the request: retries with backoff and jitter, then a dead-letter queue.
+- Biggest trap: doing "one quick API call" inline, or running cron in every web instance.
+
 ## 🧭 Why every SaaS has this
 
 It is launch week. A Beacon customer's API goes down, and your code in the "monitor failed" path does everything inline: it opens an incident row, sends 40 emails to status-page subscribers, posts to Slack, sends three SMS messages, and calls the customer's webhook. Each of those is a network call to someone else's server. Slack is slow that afternoon and takes 9 seconds to answer. The customer's webhook endpoint is the very server that is down, so that call hangs until your 30-second timeout. Meanwhile the checker that detected the failure is stuck waiting, so the *next* check for 200 other monitors on that process is late. Your uptime monitor now has an uptime problem.
@@ -224,6 +232,48 @@ RETURNING m.id, m.org_id, m.region;
 - At Beacon scale, schedule with shards and jitter, and cap each tenant's share of workers.
 - Monitor the age of the oldest job and the size of the dead-letter queue.
 
+## ✍️ Check yourself
+
+**1. What is a dead-letter queue, and why do you need one?**
+
+<details><summary>Answer</summary>
+
+It is where a job goes after its final failed attempt. Without it, a job that exhausts its retries simply vanishes; with it, a human can inspect the error and replay the job. See the vocabulary list under 🟢 The essentials.
+
+</details>
+
+**2. Why must jobs be idempotent, even on a well-run queue?**
+
+<details><summary>Answer</summary>
+
+Almost every queue delivers at least once. A worker can finish the work and crash before acknowledging, so the broker hands the job to another worker and it runs twice. An idempotent job reaches the same end state no matter how many times it runs. See "At-least-once delivery" under 🟡 Going deeper.
+
+</details>
+
+**3. Beacon writes the incident to Postgres and then enqueues `notify-incident` to Redis. What can go wrong, and what are the two fixes?**
+
+<details><summary>Answer</summary>
+
+If the process dies between the two writes, the incident exists but nobody is notified; if you enqueue first and the transaction rolls back, the worker looks for an incident that does not exist. Fix it with a transactional outbox (an `outbox` row in the same transaction, relayed to the broker), or use a Postgres-backed queue so the enqueue is an `INSERT` in the same transaction. See "The dual-write problem" under 🟡 Going deeper.
+
+</details>
+
+**4. Beacon has 1 million monitors on 1-minute intervals. Why not register a cron entry per monitor and fire them all on the minute?**
+
+<details><summary>Answer</summary>
+
+A million cron entries will hurt your job library, and firing every monitor at `:00` creates a thundering herd each minute with idle workers in between. Store `next_run_at` per monitor, shard the schedule across scheduler processes, claim due monitors with `SKIP LOCKED`, and give each monitor a stable phase offset. See "Scheduling millions of checks" under 🔴 At scale.
+
+</details>
+
+**5. A teammate adds `setInterval(pruneOldResults, 24h)` to the web server. Production runs three web instances. What breaks?**
+
+<details><summary>Answer</summary>
+
+The task runs three times a night, once per instance, and it stops or shifts on every deploy because the timer lives in a process that gets restarted. Recurring work belongs in your queue's scheduler, which takes a lock so only one instance fires. See "Scheduled tasks" under 🟡 Going deeper and "Running cron in every web instance" under ⚠️ Mistakes.
+
+</details>
+
 ## 📚 References
 
 - BullMQ documentation — https://docs.bullmq.io
@@ -240,6 +290,14 @@ RETURNING m.id, m.org_id, m.region;
 # 5.2 — The public API: API keys, versioning and rate limits
 
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 1.3*
+
+## ⚡ In 60 seconds
+
+- A public API is a separate product surface with its own contract, usually REST + JSON described by an OpenAPI document.
+- The one rule: never change the contract silently. Put `/v1` in the URL from day one and make only additive changes within it.
+- Default for a v1: org-owned API keys that are prefixed, random, hashed at rest, shown once, scoped and revocable.
+- Use cursor pagination, one error format (RFC 9457), idempotency keys on writes, and rate limits per key or org with quota headers.
+- Biggest trap: exposing your internal dashboard endpoints, or a session cookie, as "the API".
 
 ## 🧭 Why every SaaS has this
 
@@ -451,6 +509,48 @@ Add plan-aware rate limiting and date-based versioning. Rate limit with a token 
 - Rate limit in layers with a token bucket or sliding window, and tell clients their quota in headers.
 - Use OAuth apps, not collected API keys, when third parties act on behalf of your customers.
 
+## ✍️ Check yourself
+
+**1. Why is a fast hash like SHA-256 acceptable for API keys when passwords need a slow hash?**
+
+<details><summary>Answer</summary>
+
+A password is chosen by a human and can be guessed, so it needs a slow hash. An API key is 32 random bytes, which cannot be brute-forced, so a fast hash is enough, and a database leak still leaks nothing usable. See "API keys" under 🟢 The essentials.
+
+</details>
+
+**2. Why is cursor pagination better than `?page=7` offsets for a public API?**
+
+<details><summary>Answer</summary>
+
+Cursors stay correct while rows are inserted, whereas offsets skip or duplicate rows as data changes. They also stay fast on large tables, because the query is an indexed `WHERE id > $cursor` instead of `OFFSET 350000`. See "Pagination" under 🟢 The essentials.
+
+</details>
+
+**3. A customer's script calls `POST /v1/monitors`, times out, and retries. They now have two identical monitors. What should Beacon support to prevent this?**
+
+<details><summary>Answer</summary>
+
+Idempotency keys. The client sends `Idempotency-Key: <uuid>`, Beacon stores the key with the response for 24 hours, and a repeat with the same key and body returns the stored response instead of creating a second monitor. A repeat with a different body gets a 422. See "Idempotency keys" under 🟡 Going deeper.
+
+</details>
+
+**4. A PagerDuty-style tool wants to act on behalf of hundreds of Beacon customers. Should it ask each of them for an API key?**
+
+<details><summary>Answer</summary>
+
+No. API keys are for a customer's own scripts. Beacon should act as an OAuth 2.0 provider: the tool redirects the user to Beacon, the user approves specific scopes, and the tool gets a token for that org only, which the customer can revoke from Beacon's settings. See "OAuth apps for third parties" under 🟡 Going deeper.
+
+</details>
+
+**5. Beacon rate limits its API only by client IP. A large customer runs all its scripts from behind one corporate NAT. What goes wrong?**
+
+<details><summary>Answer</summary>
+
+Every script at that customer shares one bucket, so they throttle each other, and an attacker with many IPs ignores the limit anyway. Limit by IP before authentication, then by key or org after it (the plan limit), with extra limits on expensive endpoints. See "Rate limiting" under 🔴 At scale and "Rate limiting only by IP" under ⚠️ Mistakes.
+
+</details>
+
 ## 📚 References
 
 - RFC 9457, Problem Details for HTTP APIs — https://www.rfc-editor.org/rfc/rfc9457
@@ -467,6 +567,14 @@ Add plan-aware rate limiting and date-based versioning. Rate limit with a token 
 # 5.3 — Outbound webhooks and third-party integrations
 
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1, 5.2*
+
+## ⚡ In 60 seconds
+
+- An outbound webhook is an HTTP POST Beacon sends to a customer's URL when an event happens. It is a delivery system, not a `fetch` call.
+- The one rule: every customer-supplied URL is an SSRF risk. Resolve, check, pin and proxy before you connect, for webhooks and monitors alike.
+- Default for a v1: an events table, per-endpoint secrets, Standard Webhooks signatures, and queued deliveries with short timeouts and retries.
+- Give customers a delivery log with resend and replay; it saves more support time than any other feature here.
+- Biggest trap: sending webhooks inline, or retrying dead endpoints forever instead of disabling them.
 
 ## 🧭 Why every SaaS has this
 
@@ -663,6 +771,48 @@ Ship the Slack integration. "Add to Slack" runs the OAuth v2 flow with a signed 
 - Integrations are OAuth connections with encrypted, refreshed tokens; Nango exists because that is tedious.
 - For the long tail of tools, publish to Zapier, n8n and Activepieces on top of your API and webhooks.
 
+## ✍️ Check yourself
+
+**1. What three headers does a Standard Webhooks request carry, and what is each for?**
+
+<details><summary>Answer</summary>
+
+`webhook-id` is a unique message ID the receiver uses to deduplicate. `webhook-timestamp` lets the receiver reject old replays. `webhook-signature` is `v1,` plus a base64 HMAC-SHA256 of `id.timestamp.body` with the endpoint's secret. See "Sign every payload" under 🟢 The essentials.
+
+</details>
+
+**2. What is SSRF, and why does Beacon have the problem twice?**
+
+<details><summary>Answer</summary>
+
+Server-side request forgery is when an attacker gets your server to request something only your server can reach, such as the cloud metadata endpoint or an internal Redis. Beacon fetches customer-supplied URLs in two places: webhook endpoints and every HTTP monitor. See "SSRF protection" under 🟡 Going deeper.
+
+</details>
+
+**3. A customer's webhook endpoint is down for their six-hour deploy. What should Beacon do so that no events are lost and nothing retries forever?**
+
+<details><summary>Answer</summary>
+
+Retry with exponential backoff and jitter over a long horizon (the example schedule spans about two days), and record each attempt. After a long run of consecutive failures, disable the endpoint and email the org's admins, with one-click re-enable and a "replay failed since…" button. See "Retries and disabling" and "Replay" under 🟡 Going deeper.
+
+</details>
+
+**4. Beacon's Slack app is installed in a customer's workspace. What must happen before Beacon acts on an "Acknowledge" button click?**
+
+<details><summary>Answer</summary>
+
+Beacon must verify Slack's request signature (`X-Slack-Signature`, an HMAC with the app's signing secret) and reject the request if it does not match. Only then does it update the incident. The bot token itself is stored encrypted per org. See "Integrations: OAuth into third parties" under 🔴 At scale.
+
+</details>
+
+**5. The webhook guard checks that a URL's hostname resolves to a public IP, then lets the HTTP client connect by hostname. What attack gets through?**
+
+<details><summary>Answer</summary>
+
+DNS rebinding. The name resolves to a public address at check time and to a private one when the client resolves it again to connect. Pin the IP you checked and connect to that IP, and do not follow redirects for webhooks. See the SSRF table under 🟡 Going deeper.
+
+</details>
+
 ## 📚 References
 
 - Standard Webhooks specification — https://www.standardwebhooks.com
@@ -678,6 +828,14 @@ Ship the Slack integration. "Add to Slack" runs the OAuth v2 flow with a signed 
 # 5.4 — Workflow engines and durable execution
 
 *Level: 🔴 Advanced* · *Prerequisites: 5.1, 5.3*
+
+## ⚡ In 60 seconds
+
+- A workflow is a multi-step process with state. Durable execution lets you write it as ordinary code whose progress is persisted step by step.
+- The one rule: workflow code must be deterministic. All I/O, clocks and randomness go inside idempotent steps.
+- Default for a v1: one managed engine (Inngest, Trigger.dev or Temporal Cloud), with customer policies stored as data and one coded workflow that interprets them.
+- Waits cost no worker, crashes resume from the last recorded step, and sagas undo earlier steps when a later one fails.
+- Biggest trap: faking a workflow with chained delayed jobs and a status column, or renaming steps while runs are in flight.
 
 ## 🧭 Why every SaaS has this
 
@@ -882,6 +1040,48 @@ Write the custom-domain connection as a saga with compensations, and handle work
 - Sagas pair each step with a compensation, and durable engines make the `catch` reliable days later.
 - Temporal defined the vocabulary; Inngest, Trigger.dev, Hatchet and Restate trade operational weight for different models.
 - Store customer-defined workflows as versioned data, and interpret them with one well-tested durable workflow.
+
+## ✍️ Check yourself
+
+**1. How does a durable execution engine resume a workflow after a crash?**
+
+<details><summary>Answer</summary>
+
+It does not snapshot memory. It re-runs your function from the top and, for every step already in the event history, returns the recorded result instead of executing it again. The code reaches the point it had reached, then continues live. See "How replay works" under 🟡 Going deeper.
+
+</details>
+
+**2. What is a saga, and what is a compensating action?**
+
+<details><summary>Answer</summary>
+
+A saga is a long-running transaction split into steps. Each step has a compensating action that undoes it, and if a later step fails permanently, the compensations run in reverse order. See "Sagas and compensation" under 🟡 Going deeper.
+
+</details>
+
+**3. A customer edits their escalation policy while an incident is already escalating. What should happen, and how does the workflow make sure of it?**
+
+<details><summary>Answer</summary>
+
+The running escalation keeps the policy it started with, and the edit applies to the next incident. The workflow snapshots the policy in its first step (`load-policy`), so replay always sees the same policy. That is both a determinism requirement and what customers expect. See "User-facing workflows vs internal orchestration" under 🔴 At scale.
+
+</details>
+
+**4. The escalation workflow crashes right after tier 1's SMS was sent but before the step's result was recorded. What happens on resume, and how do you keep the on-call engineer from getting two pages?**
+
+<details><summary>Answer</summary>
+
+The step has no recorded result, so it runs again; steps run at least once. Pass the SMS provider an idempotency key derived from the run and tier, such as `${runId}-notify-tier-${i}`, so the retry does not send a second message. See "Determinism — the rules" under 🟡 Going deeper.
+
+</details>
+
+**5. A teammate adds `if (Date.now() > deadline)` directly in the workflow body, outside any step. It passes every test. What breaks later?**
+
+<details><summary>Answer</summary>
+
+On replay the clock returns a different value, so the workflow can take a different branch from the one recorded in its history, or fail with a non-determinism error. Read the clock inside a step or use the SDK's deterministic helper. See "Determinism — the rules" under 🟡 Going deeper and "Doing I/O or reading the clock" under ⚠️ Mistakes.
+
+</details>
 
 ## 📚 References
 

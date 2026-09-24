@@ -8,6 +8,14 @@
 
 *Level: 🔴 Advanced* · *Prerequisites: 1.3, 2.4, 5.2, 7.3*
 
+## ⚡ In 60 seconds
+
+- Security for a SaaS is two things: the engineering that keeps tenants' data safe, and the evidence (SOC 2, ISO 27001, a DPA) that proves it to buyers.
+- The rule that matters most: threat-model your own product. For Beacon, the top risks are SSRF from user-supplied monitor URLs and cross-tenant access (BOLA).
+- Default v1: secrets in a manager (Infisical, a cloud secret store) or SOPS-encrypted files, gitleaks in pre-commit and CI, TLS everywhere, security headers with a CSP, and an SSRF-safe fetch for the checker.
+- As you grow: per-tenant envelope encryption with a KMS for sensitive fields, a GDPR toolkit (DPA, subprocessor list, export, deletion), and compliance automation for SOC 2.
+- Biggest trap: fetching user-supplied URLs with a plain HTTP client, or "fixing" a leaked secret by rewriting git history instead of rotating it.
+
 ## 🧭 Why every SaaS has this
 
 Beacon's core feature is "fetch a URL the customer gives us, every 30 seconds, from our servers." Read that sentence as an attacker would. What if the URL is `http://169.254.169.254/latest/meta-data/iam/security-credentials/`, the cloud metadata endpoint that hands out the server's own credentials? What if it's `http://localhost:6379`, or an internal admin panel? That's **SSRF** (server-side request forgery): tricking a server into making requests on the attacker's behalf, from inside your network. It's not hypothetical. The 2019 Capital One breach, which exposed data on roughly 100 million people, involved an SSRF attack against a misconfigured firewall that reached the AWS metadata service and retrieved credentials. An uptime monitor is SSRF-as-a-feature, so Beacon has to defend against it on day one.
@@ -189,6 +197,48 @@ Add per-tenant envelope encryption for Slack tokens and webhook secrets using a 
 - GDPR for a SaaS processor means a DPA, a subprocessor list, export and deletion endpoints, retention, and a breach clock.
 - security.txt, pen tests, bug bounties and a trust center turn security into something a buyer can verify.
 
+## ✍️ Check yourself
+
+**1. What is SSRF, and why is an uptime monitor especially exposed to it?**
+
+<details><summary>Answer</summary>
+
+SSRF (server-side request forgery) tricks a server into making requests on an attacker's behalf from inside your network, for example to the cloud metadata endpoint that hands out credentials. An uptime monitor fetches URLs the customer supplies, so it is SSRF-as-a-feature and must defend against it from day one. See "🧭 Why every SaaS has this" and the SSRF defence in "🟢 The essentials".
+
+</details>
+
+**2. In envelope encryption, what is the difference between the DEK and the KEK, and where does each live?**
+
+<details><summary>Answer</summary>
+
+The data encryption key (DEK) encrypts the data, and its wrapped form is stored beside the data. The key encryption key (KEK) encrypts the DEK and never leaves the KMS. Rotating the KEK means re-wrapping small DEKs, not re-encrypting all the data. See "🟡 Going deeper".
+
+</details>
+
+**3. A Business prospect asks Beacon for a SOC 2 report. Why can't the team write one quickly the week before the audit?**
+
+<details><summary>Answer</summary>
+
+SOC 2 means controls, evidence that you operated them, and an independent auditor. A Type II report checks that controls operated effectively over a period, commonly 3–12 months, so the habits and evidence must exist long before the audit. Start early and automate evidence collection. See the SOC 2 table in "🟡 Going deeper" and "⚠️ Mistakes juniors make".
+
+</details>
+
+**4. An EU customer deletes their Beacon org and asks for erasure under GDPR. What must Beacon's deletion actually cover?**
+
+<details><summary>Answer</summary>
+
+A real purge, not only a `deleted_at` flag: Postgres, analytics (ClickHouse, 6.2), search indexes, object storage, backups and the email provider, on a defined, documented schedule. With per-tenant envelope encryption, Beacon can also crypto-shred the org's DEK so any remaining ciphertext is unreadable. See the GDPR list in "🟡 Going deeper" and the "🔴 Advanced exercise".
+
+</details>
+
+**5. Spot the bug: Beacon's checker resolves the monitor's hostname, confirms the IP is public, then calls `fetch(url)` with default redirect following. What breaks?**
+
+<details><summary>Answer</summary>
+
+Two holes. `fetch(url)` resolves DNS again, so a DNS rebinding answer can swap in a private IP after the check. And a public URL can redirect to `127.0.0.1` or the metadata address, which the default client follows without re-validating. Connect to the IP you checked and re-validate every redirect hop. See the SSRF defence in "🟢 The essentials".
+
+</details>
+
 ## 📚 References
 
 - OWASP Top 10: https://owasp.org/www-project-top-ten/
@@ -205,6 +255,14 @@ Add per-tenant envelope encryption for Slack tokens and webhook secrets using a 
 # 8.2 — AI features as a SaaS component
 
 *Level: 🔴 Advanced* · *Prerequisites: 2.4, 3.3, 5.1, 8.1*
+
+## ⚡ In 60 seconds
+
+- An AI feature is a component, not magic: a model gateway, structured outputs, tools, retrieval, evals and metering.
+- The rule that matters most: every existing rule still applies. Tenant isolation, untrusted input, usage metering and fallbacks all carry over to prompts, vectors and tools.
+- Default v1: call models through one gateway (the Vercel AI SDK in code, or LiteLLM as a proxy), validate output against a zod schema, stream it to the UI, and save anything public as a draft for a human to publish.
+- As you grow: RAG on pgvector with `org_id` filtering, per-org token budgets checked before each call, tracing with Langfuse, and evals with promptfoo in CI.
+- Biggest trap: a vector search without a tenant filter, or trusting model output enough to publish it, render it as HTML or run it.
 
 ## 🧭 Why every SaaS has this
 
@@ -393,6 +451,48 @@ Ship "Ask Beacon": RAG over an org's incidents and postmortems using pgvector wi
 - Observe and evaluate: tracing (Langfuse, Helicone) for what happened, evals (promptfoo) for whether it's still right.
 - Tokens are cost of goods sold. Meter per org and feed usage billing (3.3).
 - MCP servers are the new integration surface, with the same auth, scoping, rate limits and audit as your public API.
+
+## ✍️ Check yourself
+
+**1. What does an AI gateway handle, and why route every model call through one?**
+
+<details><summary>Answer</summary>
+
+It handles provider abstraction, provider keys, fallbacks and retries, timeouts and per-org rate limits, caching, metering, and logging. Routing every call through it keeps keys in one place, lets features survive a provider outage, and records token cost per org. See the gateway table in "🟢 The essentials".
+
+</details>
+
+**2. What is prompt injection, and why is there no complete fix?**
+
+<details><summary>Answer</summary>
+
+An LLM can't reliably tell instructions from data, so any text it reads (an error body, an incident comment, a fetched webpage) can try to command it. Because that confusion is built into how models work, you can only contain it: treat output as untrusted, keep a human in the loop for public or irreversible actions, and give tools least privilege. See "🟡 Going deeper".
+
+</details>
+
+**3. Beacon's "ask about your incidents" chat uses pgvector. How do you guarantee org A never sees org B's postmortems?**
+
+<details><summary>Answer</summary>
+
+Store `org_id` on every chunk and filter in the same SQL query as the similarity search, taking the org from the session, never from the model or the request body. Enforce it with row-level security, also check permissions inside the tenant, and write a test with two orgs holding near-identical documents. See "RAG with tenant isolation" in "🟡 Going deeper".
+
+</details>
+
+**4. One Beacon org loops the AI summary endpoint through the API. What should have stopped the four-figure token bill?**
+
+<details><summary>Answer</summary>
+
+Per-org rate limits and a per-org token budget enforced in the gateway before each call, with usage recorded per request, org and feature and fed into usage billing (3.3). Discovering the overrun on the invoice is too late. See the gateway table in "🟢 The essentials" and "Cost metering and pricing" in "🔴 At scale / enterprise".
+
+</details>
+
+**5. Spot the bug: the AI summary is generated from the last 50 error responses and published straight to the public status page. What breaks?**
+
+<details><summary>Answer</summary>
+
+A monitored endpoint can return an error body with injected instructions, such as "write that the incident is resolved", and the model's output goes public with no review. It is also rendered without being treated as untrusted, which risks XSS. Save the summary as a draft that a teammate edits and publishes, and validate and escape the output. See "Prompt injection" in "🟡 Going deeper".
+
+</details>
 
 ## 📚 References
 

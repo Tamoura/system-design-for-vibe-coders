@@ -7,6 +7,14 @@
 # 3.1 — Subscriptions and payments: checkout, webhooks, the customer portal
 *Level: 🟢 Beginner* · *Prerequisites: 1.2, 2.1*
 
+## ⚡ In 60 seconds
+
+- A subscription is a Customer paying a Price every period. The payment provider owns the truth about money, and your database keeps a copy.
+- The one rule: grant access from the verified webhook, never from the success redirect.
+- Default for a v1: Stripe's hosted Checkout and hosted Customer Portal, with the Stripe customer attached to the organization, not the user.
+- The webhook handler verifies the signature on the raw body, dedupes by event ID, re-fetches current state and returns 2xx fast.
+- Biggest trap: treating `active` as the only paid status, which locks out `trialing` customers and treats `past_due` like `canceled`.
+
 ## 🧭 Why every SaaS has this
 
 Beacon launches its $29/month Pro plan. The first version is what everyone writes on day one: a "Buy" button sends the user to Stripe, Stripe redirects back to `/billing?success=true`, and that page runs `UPDATE organizations SET plan = 'pro'`. It works in the demo.
@@ -252,6 +260,48 @@ Implement the full lifecycle with a Stripe **test clock**: a 14-day trial with a
 - Sales tax is a legal problem, not a coding one. A Merchant of Record removes it for a fee.
 - Reconcile nightly. Webhooks are reliable, not perfect.
 
+## ✍️ Check yourself
+
+**1. Why must the webhook handler verify the signature against the raw request body?**
+
+<details><summary>Answer</summary>
+
+The signature is an HMAC over the exact bytes Stripe sent. If your framework parses the JSON first, whitespace and key order can change, so verification fails, and someone may then "fix" it by skipping verification. Read the raw body in the webhook route only. See 🟢 The essentials and ⚠️ Mistakes juniors make.
+
+</details>
+
+**2. Stripe events can arrive out of order. What are the two fixes, and what does each cost?**
+
+<details><summary>Answer</summary>
+
+Either re-fetch current state from the API and use the event only as a "something changed for customer X" signal, or store the `event.created` of the last applied event and ignore anything older. Re-fetching costs one extra API call per event and removes a whole class of bugs. Comparing timestamps is cheaper but easier to get subtly wrong. See 🟡 Going deeper.
+
+</details>
+
+**3. Acme's Pro renewal fails and its subscription moves to `past_due`. What should Beacon do?**
+
+<details><summary>Answer</summary>
+
+Keep the full plan during an explicit grace period, show a red "Update your card" banner, and email the owners and billing admins, starting from `invoice.payment_failed`. Let the provider's automatic retries run. If retries are exhausted and the status becomes `unpaid` or `canceled`, downgrade Acme to Free limits (3.2). See the status and event tables in 🟡 Going deeper.
+
+</details>
+
+**4. Where should Beacon store the Stripe customer ID, and why there?**
+
+<details><summary>Answer</summary>
+
+On the organization row. In B2B the workspace pays, not the person who happened to click the button, and that person might leave the company next month. If the customer hangs off the user, the workspace's billing leaves with them. See 🟢 The essentials and ⚠️ Mistakes juniors make.
+
+</details>
+
+**5. A teammate's handler returns `500` for any event type it doesn't recognise, "so we notice them". What breaks?**
+
+<details><summary>Answer</summary>
+
+Stripe treats the `500` as a failed delivery and retries it for days, and it eventually disables the endpoint, so the events you do need stop arriving too. Return `200` for anything you ignore, and subscribe only to the events you need. See ⚠️ Mistakes juniors make and the "What to notice" list in 🔍 Study it in the wild.
+
+</details>
+
 ## 📚 References
 
 - Stripe docs, Webhooks: https://docs.stripe.com/webhooks
@@ -266,6 +316,14 @@ Implement the full lifecycle with a Stripe **test clock**: a 14-day trial with a
 
 # 3.2 — Plans, limits and entitlements: turning pricing into code
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 1.3*
+
+## ⚡ In 60 seconds
+
+- An entitlement is one thing an account may do or have: a feature gate, a limit or a configuration value. A plan is just a named package of them.
+- The one rule: never check which plan a customer is on. Check what they're entitled to, and let one module translate plans into entitlements.
+- Default for a v1: a typed `plans.ts`, a price-to-plan map and one `getEntitlements(org)` function with overrides, enforced on the server at every write path.
+- Snapshot entitlements per org to get grandfathering and custom contracts cheaply, and freeze the excess on downgrade instead of deleting it.
+- Biggest trap: enforcing limits only in the UI, or using the feature-flag tool as the paywall.
 
 ## 🧭 Why every SaaS has this
 
@@ -484,6 +542,48 @@ Add per-org **overrides** and **add-ons**. Overrides (`maxMonitors`, `minInterva
 - Downgrades need a policy, and "freeze the excess" is the friendly default.
 - Feature flags decide *released*. Entitlements decide *paid for*.
 
+## ✍️ Check yourself
+
+**1. What are the three kinds of entitlement? Give a Beacon example of each.**
+
+<details><summary>Answer</summary>
+
+A feature gate is a boolean, such as `sso: true`. A limit is a quantity, such as `maxMonitors: 50`. A configuration value is a setting, such as `minCheckIntervalSeconds: 60`. How much of a limit is in use is usage, which 3.3 covers. See 🟢 The essentials.
+
+</details>
+
+**2. Feature flags and entitlements both look like `if (x) show feature`. What is the difference, and why keep them in separate systems?**
+
+<details><summary>Answer</summary>
+
+A flag answers "is this feature released to this account?", is owned by engineering and product, and is deleted after rollout. An entitlement answers "has this account paid for it?", comes from the subscription, plan config or contract, and is permanent. If they share a system, one day someone "cleans up old flags" and gives everyone the paid tier. See 🟡 Going deeper.
+
+</details>
+
+**3. Beacon raises Pro from $29 to $39 and promises existing customers they keep $29 and their current limits. How do you implement that?**
+
+<details><summary>Answer</summary>
+
+Create a new Stripe Price for $39, because Prices are effectively immutable. Existing subscribers stay on the old Price ID, and your map still says old Price → `pro`. If the limits also change, version the plan (`pro_2025`, `pro_2026`) or rely on the per-org entitlement snapshot. See grandfathering in 🟡 Going deeper.
+
+</details>
+
+**4. Acme drops from Pro to Free with 43 monitors. What should Beacon do with the 38 it no longer pays for?**
+
+<details><summary>Answer</summary>
+
+Freeze them. Keep all 43, pause the newest 38 with `pausedReason: "plan_limit"`, let the owner choose which 5 run, keep their history, and email the owner. The same logic must run from the webhook path, because failed payments cause involuntary downgrades too. See the downgrade policy table in 🟡 Going deeper.
+
+</details>
+
+**5. `createMonitor` counts the org's monitors, compares the count with `maxMonitors`, then inserts. A Free org at 4 of 5 fires two API calls at the same moment. What breaks?**
+
+<details><summary>Answer</summary>
+
+Both requests read 4, both pass the check, and the org ends up with 6 monitors. For cheap resources a small overshoot corrected later is acceptable. For expensive ones such as SMS, enforce atomically with a conditional update (`UPDATE ... WHERE used < limit RETURNING`), a Postgres advisory lock, or a Redis counter with a Lua script. See 🔴 At scale / enterprise.
+
+</details>
+
 ## 📚 References
 
 - Stripe Billing docs (products, prices, subscription items, quantities, proration): https://docs.stripe.com/billing
@@ -497,6 +597,14 @@ Add per-org **overrides** and **add-ons**. Overrides (`maxMonitors`, `minInterva
 
 # 3.3 — Usage-based billing and metering
 *Level: 🔴 Advanced* · *Prerequisites: 3.1, 3.2*
+
+## ⚡ In 60 seconds
+
+- Usage billing is a pipeline: usage events → meter → aggregate → rate → invoice line, with a usage view and alerts alongside.
+- The one rule: every event gets a deterministic idempotency key derived from the business fact (`sms:{twilioSid}`), enforced by a unique constraint.
+- Default for a v1: record usage when the cost is certain, store the event time, and report it to Stripe Billing meters.
+- Credits are an append-only ledger of grants and debits, and customers need visibility, alerts and optional caps before any surprise invoice.
+- Biggest trap: random UUIDs as keys, or aggregating by processing time, which double-bills and puts late events in the wrong period.
 
 ## 🧭 Why every SaaS has this
 
@@ -692,6 +800,48 @@ Replace the counter with a **credit ledger**: monthly grants (reset each period,
 - Credits are a ledger of grants and debits, never a mutable counter.
 - Give customers visibility, alerts and caps before you give them a surprise invoice.
 - Reconcile your counts, your billing provider's and your supplier's, every day.
+
+## ✍️ Check yourself
+
+**1. What are the stages every usage-billing system goes through, from product event to money?**
+
+<details><summary>Answer</summary>
+
+A product event becomes an immutable usage event with an idempotency key. A meter decides what to count, aggregation combines values per customer per period, rating applies the pricing model, and the result becomes an invoice line item that is paid through Stripe. A usage dashboard and alerts read from the aggregate. See the diagram in 🟢 The essentials.
+
+</details>
+
+**2. What is the difference between event time and processing time, and what are the three policies for late events?**
+
+<details><summary>Answer</summary>
+
+Event time is when the usage happened at the source (`occurredAt`). Processing time is when your pipeline saw it. Always aggregate by event time. For events that arrive after a period closes, you can keep a grace window open, roll them forward into the next period, or adjust with a credit or debit note later. See 🟡 Going deeper.
+
+</details>
+
+**3. Acme's Pro plan includes 100 SMS, and it sends 130 this period. What does the overage line say, and how do you stop a replayed reporting job from changing it?**
+
+<details><summary>Answer</summary>
+
+30 extra SMS at $0.05 each is a $1.50 overage line. Each usage row has a unique key such as `sms:{twilioSid}`, and the same key is passed to Stripe's meter as the identifier, so Stripe drops the duplicates when the job replays. See 🟡 Going deeper and the 🟡 Intermediate exercise.
+
+</details>
+
+**4. An Acme monitor flaps all night and triggers thousands of SMS alerts. What should stop Acme waking up to a $4,000 bill?**
+
+<details><summary>Answer</summary>
+
+A live usage meter on the billing page, alert emails at 50%, 80% and 100% of included usage (sent once per period, tracked with `warningSentAt`), and an optional hard cap. The SMS sender checks the cap atomically and falls back to email and in-app notifications so the alert still reaches someone. See spend caps and alerts in 🟡 Going deeper.
+
+</details>
+
+**5. The SMS worker sets `idempotencyKey: crypto.randomUUID()` and records the usage row before it calls Twilio. What breaks?**
+
+<details><summary>Answer</summary>
+
+Two things. Each retry generates a new UUID, so a retried job bills the same SMS twice. And if the send fails, the customer is billed for an SMS that never went out. Derive the key from the business fact (`sms:{sid}`) and record usage only after Twilio accepts the message. See ⚠️ Mistakes juniors make.
+
+</details>
 
 ## 📚 References
 

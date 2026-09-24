@@ -7,6 +7,14 @@
 # 2.1 — The data layer: Postgres, ORMs, migrations and seeds
 *Level: 🟢 Beginner* · *Prerequisites: 1.2*
 
+## ⚡ In 60 seconds
+
+- The data layer is your relational database plus the tools around it: an ORM or query builder, versioned migrations, and seed scripts.
+- Default for v1: managed Postgres, every tenant-owned table with `organization_id`, `created_at`, `updated_at` and real constraints, and time-ordered unguessable ids (UUIDv7, optionally prefixed like `mon_`).
+- The one rule: never change a production schema by hand. Every change is a migration, and risky ones use expand/contract so old and new code can run side by side.
+- Know the SQL your ORM sends: N+1 queries and missing indexes are the most common reasons a dashboard gets slow.
+- The biggest trap: assuming backups work. Turn on point-in-time recovery and rehearse a restore, because a backup you have never restored is a hope.
+
 ## 🧭 Why every SaaS has this
 
 Beacon's first version stores everything in one Postgres database. Three months in, a customer with 400 monitors complains the dashboard takes nine seconds to load. You look, and the page runs 401 queries: one for the monitor list, then one per monitor for its latest check. A week later you rename a column, deploy, and for four minutes every request fails because the old code is still running against the new schema. Then someone runs a cleanup script against production instead of staging.
@@ -230,6 +238,48 @@ Rename `monitor.url` to `monitor.target` with zero downtime using expand/contrac
 - Pool connections, index for your real queries, keep transactions short and side effects outside them.
 - PITR plus a rehearsed restore is what "we have backups" actually means.
 
+## ✍️ Check yourself
+
+**1. What is a migration, and how does every environment end up with the same schema?**
+
+<details><summary>Answer</summary>
+
+A migration is a versioned, checked-in file that changes the schema, such as `0007_add_monitor_timeout.sql`. The migration tool records which migrations have run in a table inside the database itself, so your laptop, CI, staging and production all converge on the same schema. See "Migrations" under 🟢 The essentials.
+
+</details>
+
+**2. What is the N+1 problem, and how do you fix it?**
+
+<details><summary>Answer</summary>
+
+It is one query for a list, then one more query per item to load its relation, so 400 monitors become 401 queries. Fix it by fetching relations in one go: `include` in Prisma, `with` in Drizzle, `includes`/`preload` in Rails, `select_related`/`prefetch_related` in Django, or a single SQL join or `DISTINCT ON`. See "Indexes and the N+1 problem" under 🟡 Going deeper.
+
+</details>
+
+**3. Beacon wants to rename `monitor.url` to `monitor.target` without any downtime. What are the steps?**
+
+<details><summary>Answer</summary>
+
+Use expand and contract across several deploys: add the `target` column, make the code write to both columns, backfill old rows in batches, switch reads to `target`, and only then drop `url` in its own deploy. Each step keeps the database compatible with both the old and new code that run side by side during a rollout. See "Zero-downtime migrations" under 🟡 Going deeper.
+
+</details>
+
+**4. When Beacon opens an incident it must insert the incident, mark the monitor as down, and notify the team by email. How should you structure this?**
+
+<details><summary>Answer</summary>
+
+Put the two database writes in one short transaction so they succeed or fail together, and add an `outbox` row in that same transaction. A background worker then reads the outbox and sends the email. Never call email or Stripe inside the transaction: it holds locks while waiting on the network, and a rollback can't unsend an email. See "Transactions" under 🟡 Going deeper.
+
+</details>
+
+**5. Beacon moves to a serverless platform. Under the first traffic spike the database starts refusing connections, even though queries are fast. What broke, and what is the fix?**
+
+<details><summary>Answer</summary>
+
+Each concurrent function invocation opened its own Postgres connection, and a typical managed instance allows only a few hundred. Create the client once per process and connect through a pooler such as PgBouncer, Supavisor or your provider's pooled connection string. In transaction mode, remember that session-level features behave differently. See "Connection pooling" under 🟡 Going deeper.
+
+</details>
+
 ## 📚 References
 
 - PostgreSQL documentation, especially "Continuous Archiving and Point-in-Time Recovery": https://www.postgresql.org/docs/current/continuous-archiving.html
@@ -244,6 +294,14 @@ Rename `monitor.url` to `monitor.target` with zero downtime using expand/contrac
 
 # 2.2 — File uploads and object storage
 *Level: 🟢 Beginner* · *Prerequisites: 2.1*
+
+## ⚡ In 60 seconds
+
+- Files (logos, screenshots, PDF reports, exports) belong in S3-compatible object storage, not on app server disks or in the database.
+- The one rule: the browser uploads and downloads directly using short-lived presigned URLs that your server signs only after checking permissions.
+- Default for v1: a private bucket, a `file` metadata table in Postgres, keys you generate yourself under `orgs/{orgId}/…`, and server-side validation before signing and again after upload.
+- Serve user uploads from a separate domain and scan anything users share with each other.
+- The biggest trap: a public bucket or a long-lived URL, which puts private files one guessed or forwarded link away from the internet.
 
 ## 🧭 Why every SaaS has this
 
@@ -449,6 +507,48 @@ Implement organization offboarding for files and add hygiene rules. Write a job 
 - Use multipart or tus for big or flaky uploads, and resize images in jobs or an image proxy behind a CDN.
 - Prefix keys by tenant, keep buckets private, and automate expiry and deletion with lifecycle rules.
 
+## ✍️ Check yourself
+
+**1. What is a presigned URL, and why does it keep large files away from your app servers?**
+
+<details><summary>Answer</summary>
+
+It is a normal S3 URL with a signature in the query string that allows one specific operation (PUT or GET on one key) until an expiry time, without handing out your credentials. Your server signs it after checking permissions, then the browser talks straight to storage, so the bytes never pass through your app. See "Presigned URLs" under 🟢 The essentials.
+
+</details>
+
+**2. What goes in Postgres and what goes in the bucket?**
+
+<details><summary>Answer</summary>
+
+The bucket stores the bytes. Postgres stores the metadata row in a `file` table: id, organization_id, key, content type, size, uploaded_by and status. Your authorization checks and UI use the row; the key is only a pointer. See 🟢 The essentials.
+
+</details>
+
+**3. Beacon wants to let org admins upload a status page logo. List the checks before and after the upload.**
+
+<details><summary>Answer</summary>
+
+Before signing, check the session, the admin role and plan limits, and check the declared size and content type against an allowlist (PNG or JPEG, max 2 MB). After upload, `HEAD` the object for its real size and sniff the first bytes to confirm the real type, then mark the row ready. The key is one you generate, such as `orgs/{orgId}/logos/{fileId}`. See the upload diagram and "Validation happens on the server, twice" under 🟡 Going deeper.
+
+</details>
+
+**4. A Beacon customer closes their account. How do you make sure their files are really gone?**
+
+<details><summary>Answer</summary>
+
+Because every object lives under `orgs/{orgId}/`, a job can delete that whole prefix in batches. If bucket versioning is on, a lifecycle rule must also remove noncurrent versions, and a reconciliation job should clean orphaned rows and objects. See "Per-tenant key prefixes" and "Deletion and GDPR" under 🔴 At scale / enterprise.
+
+</details>
+
+**5. A user uploads a file named `logo.svg` that contains a script, and Beacon serves it from `app.beacon.dev/uploads/logo.svg`. What breaks?**
+
+<details><summary>Answer</summary>
+
+This is stored XSS: the SVG runs script on your app's domain with access to your users' session cookies. Serve user uploads from a separate domain such as `beaconusercontent.com`, use `Content-Disposition: attachment` unless you need them inline, and allow SVG only if it is sanitised. See "Validation happens on the server, twice" under 🟡 Going deeper.
+
+</details>
+
 ## 📚 References
 
 - Amazon S3 documentation (presigned URLs, multipart upload, lifecycle rules, Block Public Access): https://docs.aws.amazon.com/s3/
@@ -463,6 +563,14 @@ Implement organization offboarding for files and add hygiene rules. Write a job 
 
 # 2.3 — Search: from `LIKE '%x%'` to a search engine
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1*
+
+## ⚡ In 60 seconds
+
+- Search is a ladder: `ILIKE`, then `pg_trgm`, then Postgres full-text search, then a search engine, then hybrid keyword-plus-vector search.
+- Default for v1: stay in Postgres. `pg_trgm` handles names and typos, and a `tsvector` column with a GIN index handles prose.
+- The one rule: a search index is a copy of tenant data, so it must be filtered by tenant as strictly as the database, with a filter the browser cannot remove.
+- When you add an engine such as Meilisearch or Typesense, feed it through an outbox and a worker, and keep a full reindex from Postgres, which stays the source of truth.
+- The biggest trap: letting the client send the tenant filter, or forgetting that deletes must reach the index too.
 
 ## 🧭 Why every SaaS has this
 
@@ -649,6 +757,48 @@ Move search to Meilisearch or Typesense with an outbox-driven indexer and a nigh
 - Always keep a full reindex path; Postgres is the source of truth.
 - Hybrid keyword-plus-vector search is the modern default for natural-language queries and AI features.
 
+## ✍️ Check yourself
+
+**1. What is an inverted index, and why does it make search fast?**
+
+<details><summary>Answer</summary>
+
+It maps each term to the list of rows that contain it. Instead of reading every row, the engine looks up the term and gets the matching rows directly. See 🟢 The essentials.
+
+</details>
+
+**2. What does the `pg_trgm` extension add, and what is it best for?**
+
+<details><summary>Answer</summary>
+
+It breaks text into trigrams (three-character chunks). With a GIN or GiST index, `ILIKE '%checkout%'` becomes index-assisted, and the `%` similarity operator finds near-misses like "chekout". It is best for short fields: names, slugs, emails and URLs. See "Rung 2" under 🟢 The essentials.
+
+</details>
+
+**3. Beacon's support lead wants to search two years of incident updates for "certificate". Which rung of the ladder fits, and how do you set it up?**
+
+<details><summary>Answer</summary>
+
+Postgres full-text search, because this is prose. Add a generated `tsvector` column on `incident_update` with a GIN index, query it with `websearch_to_tsquery`, order by `ts_rank`, and highlight matches with `ts_headline`. See "Rung 3" under 🟢 The essentials.
+
+</details>
+
+**4. Beacon moves monitor search to Meilisearch. How do you keep the index in sync with Postgres?**
+
+<details><summary>Answer</summary>
+
+In the same transaction as the write, insert a row into an `outbox` table, and let a background worker update the index and retry on failure. Add a full reindex job that rebuilds into a new index and swaps an alias, for mapping changes and drift. Postgres stays the source of truth. See "Indexing pipelines" under 🟡 Going deeper.
+
+</details>
+
+**5. Beacon's cmd-K palette queries the search engine directly from the browser, and the request includes `filter: "organization_id = org_123"`. What breaks?**
+
+<details><summary>Answer</summary>
+
+Anyone can edit the request, change or remove the filter, and read another org's monitors and incidents: a cross-tenant leak through the search box. Your server must mint a tenant token or scoped API key per user with the mandatory `organization_id` filter embedded and signed, or add the filter server-side if search goes through your API. See "Tenant filtering is a security control, not a feature" under 🟡 Going deeper.
+
+</details>
+
 ## 📚 References
 
 - PostgreSQL full-text search chapter: https://www.postgresql.org/docs/current/textsearch.html
@@ -663,6 +813,14 @@ Move search to Meilisearch or Typesense with an outbox-driven indexer and a nigh
 
 # 2.4 — Multi-tenancy deep dive: isolation, noisy neighbours, residency
 *Level: 🔴 Advanced* · *Prerequisites: 1.2, 1.3, 2.1*
+
+## ⚡ In 60 seconds
+
+- Multi-tenancy is a spectrum of isolation: pool (shared tables), bridge (a schema per tenant) and silo (a database or stack per tenant).
+- Default for v1: pool, with `organization_id` on every tenant table and a scoped data-access layer so the tenant filter is structural, not remembered.
+- The one rule: the tenant boundary is enforced by the system (scoped helpers, load-through-parent, 404s, per-route tests, and Postgres RLS as defence in depth).
+- Tenant context must flow through jobs, caches, logs and search, not only HTTP handlers.
+- The biggest trap: fetching an object by id alone, which is the cross-tenant leak waiting to happen.
 
 ## 🧭 Why every SaaS has this
 
@@ -886,6 +1044,48 @@ Add EU data residency and fair scheduling. Create a tenant directory table (org 
 - Carry tenant context through jobs, caches, logs and search, not just HTTP handlers.
 - Noisy neighbours are handled with plan limits, rate limits and fair queuing; sharding by tenant id (Citus) is the scale path.
 - Residency, dedicated deployments and offboarding are enterprise requirements that are far easier if `organization_id` is everywhere from day one.
+
+## ✍️ Check yourself
+
+**1. What are the pool, bridge and silo models?**
+
+<details><summary>Answer</summary>
+
+Pool is shared tables where every row carries a tenant id. Bridge is one database with a Postgres schema per tenant. Silo is a separate database, sometimes a separate stack, per tenant. They trade cost and operational load against strength of isolation. See the table under 🟢 The essentials.
+
+</details>
+
+**2. In an RLS policy, what is the difference between `USING` and `WITH CHECK`?**
+
+<details><summary>Answer</summary>
+
+`USING` filters which rows you can read. `WITH CHECK` stops you from writing rows that belong to another tenant. You usually need both on a tenant table. See "Postgres Row-Level Security" under 🟡 Going deeper.
+
+</details>
+
+**3. A Free-plan org with a script creates 3,000 monitors and Beacon's check scheduler falls behind for everyone. What defences apply, from cheapest?**
+
+<details><summary>Answer</summary>
+
+Plan limits at creation time (Free gets 5 monitors), per-tenant rate limits on the API, fair queuing that caps concurrent jobs per tenant, and database guards like `statement_timeout` and per-tenant query dashboards. See "Noisy neighbours" under 🟡 Going deeper.
+
+</details>
+
+**4. A Business prospect asks for their data to stay in the EU. What does Beacon need, and what does "their data" cover?**
+
+<details><summary>Answer</summary>
+
+It covers all of it: database, object storage, search index, backups, logs and subprocessors such as the email provider. The common design is regional cells, a full stack per region, plus a small global directory that stores only which org lives in which region and routes users there. Decide the region at signup. See "Data residency" under 🔴 At scale / enterprise.
+
+</details>
+
+**5. Beacon uses RLS with `SET app.current_org = ...` at the start of each request and connects through PgBouncer in transaction mode. Occasionally a user sees another org's monitors. What broke?**
+
+<details><summary>Answer</summary>
+
+A session-level `SET` stays on the server connection, and in transaction mode the next request that reuses that connection inherits the previous tenant. Use `set_config('app.current_org', $1, true)` inside a transaction so the setting is local to it. Also connect as a non-owner role, because owners and superusers bypass RLS unless it is forced. See "Postgres Row-Level Security" under 🟡 Going deeper.
+
+</details>
 
 ## 📚 References
 
