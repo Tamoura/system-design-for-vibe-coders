@@ -8,6 +8,14 @@
 
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2*
 
+## ⚡ In 60 seconds
+
+- The app shell is the frame around your product: marketing site, authenticated layout, onboarding, settings, forms, design system and tenant-facing surfaces like custom domains.
+- The rule that matters most: split the marketing site (static/SSR, SEO, edited by non-engineers) from the app (authenticated, with the org slug in the URL).
+- The v1 default: a monorepo with separate marketing and app, shadcn/ui on Radix and Tailwind, and one zod schema shared by the form and the server.
+- Design the empty dashboard and onboarding around one activation event, and store onboarding progress on the org, not in `localStorage`.
+- The biggest trap: treating a hidden button or client-side validation as security. The server checks the schema, the permission and the plan limit every time.
+
 ## 🧭 Why every SaaS has this
 
 Beacon's first version is one Next.js app. The landing page, the pricing page, the login form, the monitor dashboard and the settings screens all live in the same `app/` folder, share one layout, and deploy together. It works right up until three things happen in the same month.
@@ -236,6 +244,48 @@ Ship custom domains for status pages. Add a `custom_domains` table (`org_id`, `h
 - One validation schema, shared by client and server. The server copy is the one that counts.
 - Custom domains mean CNAME, verification, automatic TLS (Caddy on-demand with `ask`, Vercel, or Cloudflare for SaaS) and hostname-based routing.
 
+## ✍️ Check yourself
+
+**1. Why should the marketing site and the app be separate, and what does each need?**
+
+<details><summary>Answer</summary>
+
+They have opposite needs. The marketing site serves anonymous visitors and search engines, so it's static or server-rendered and is often edited by non-engineers. The app serves logged-in users, can be client-heavy, and puts everything behind a session check. See the comparison table under 🟢 The essentials.
+
+</details>
+
+**2. What is activation, and why does it matter for onboarding?**
+
+<details><summary>Answer</summary>
+
+Activation is the event that means a user has actually experienced the product's value, for Beacon something like "created a monitor and received its first check result within 24 hours." You pick one, track it, and design onboarding and empty states to get people there. See "Onboarding and empty states" under 🟢 The essentials.
+
+</details>
+
+**3. A Beacon Member wants to change the org's payment method. Which settings area is that, and how should Beacon enforce who can do it?**
+
+<details><summary>Answer</summary>
+
+It's Billing, scoped to one org and changeable only by the Owner or a Billing role. The org settings route must check the permission on the server (1.3), because hiding the menu item isn't authorization. See the settings table under 🟡 Going deeper.
+
+</details>
+
+**4. Acme wants its Beacon status page at `status.acme.com`. What are the steps?**
+
+<details><summary>Answer</summary>
+
+Acme creates a CNAME from `status.acme.com` to something like `cname.beacon.dev`, and Beacon verifies it through DNS or a TXT record. Beacon then routes requests by the `Host` header to Acme's status page and issues a TLS certificate automatically, for example with Caddy on-demand TLS, Vercel's domains API or Cloudflare for SaaS. See 🔴 At scale / enterprise.
+
+</details>
+
+**5. A developer enables Caddy's `on_demand` TLS but leaves out the `ask` endpoint to save time. What breaks?**
+
+<details><summary>Answer</summary>
+
+Anyone can point any domain at Beacon's server, and Caddy will request a certificate for it during the first TLS handshake. An attacker can make you request certificates for arbitrary names until you hit the CA's rate limits, which also blocks real customers. The `ask` endpoint must return 200 only for verified hostnames. See the Caddy bullet under 🔴 At scale / enterprise and ⚠️ Mistakes juniors make.
+
+</details>
+
 ## 📚 References
 
 - shadcn/ui documentation: https://ui.shadcn.com
@@ -252,6 +302,14 @@ Ship custom domains for status pages. Add a `custom_domains` table (`org_id`, `h
 # 6.2 — Analytics: product, web and the event pipeline
 
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 6.1*
+
+## ⚡ In 60 seconds
+
+- Analytics is three jobs: web analytics (who visits the marketing site), product analytics (what users do in the app) and BI (all your systems joined in a warehouse).
+- The rule that matters most: write a tracking plan with object_action event names before you send any events, and send `group` calls so you can analyse by organization.
+- The v1 default: cookieless web analytics (Plausible or Umami) on the marketing site, and PostHog (or similar) in the app, with business events sent server-side.
+- Keep PII out of event properties. Send IDs, respect consent, and know how your tool deletes a user's events.
+- The biggest trap: tracking everything with no plan, or running analytics queries on production Postgres. High-volume events belong in a store like ClickHouse, scoped by tenant.
 
 ## 🧭 Why every SaaS has this
 
@@ -417,6 +475,48 @@ Build customer-facing uptime analytics. Write every check result to a ClickHouse
 - A CDP collects events once and routes them. The warehouse joins them with app data. Reverse ETL sends insights back out.
 - ClickHouse (columnar) is the standard store for events and for customer-facing analytics like Dub's. Scope every query by tenant.
 
+## ✍️ Check yourself
+
+**1. What are the three kinds of analytics, and which question does each answer?**
+
+<details><summary>Answer</summary>
+
+Web analytics answers who visits the marketing site and from where. Product analytics answers what logged-in users do in the app. BI and the data warehouse answer what the business looks like across all systems, joined together. See the table at the start of 🟢 The essentials.
+
+</details>
+
+**2. What does the `group` call do, and why does B2B SaaS need it?**
+
+<details><summary>Answer</summary>
+
+`group(groupId, traits)` says which organization a user belongs to, for example `org_42` on the Pro plan. In B2B an organization pays you, not a user, so you need to analyse funnels and retention per account instead of per person. See the Segment spec bullets under 🟢 The essentials.
+
+</details>
+
+**3. Should Beacon send `monitor_created` from the browser or from the server? Why?**
+
+<details><summary>Answer</summary>
+
+From the server, after the database insert commits. It's a business event, and browser tracking is partly blocked by ad blockers and can be forged by users. Client-side tracking is for pure UI behaviour such as opening the command palette. See "Client-side vs. server-side tracking" under 🟡 Going deeper.
+
+</details>
+
+**4. Beacon wants to show each customer 90-day uptime charts. Where should the check results live, and what rule must every query follow?**
+
+<details><summary>Answer</summary>
+
+In a column-oriented store such as ClickHouse (or Tinybird), written with batched inserts, while Postgres keeps the app data. Every query must be filtered by `org_id` on the server, taken from the session or status-page lookup and never from a query parameter. Tenant isolation applies to the analytics store just as it does to Postgres. See "Customer-facing analytics" under 🔴 At scale / enterprise.
+
+</details>
+
+**5. A dashboard shows retention as "users who logged in each week", and every event includes the user's email and the monitored URL. What's wrong?**
+
+<details><summary>Answer</summary>
+
+Logging in isn't value, so retention should be measured by a value event such as receiving an alert or viewing incidents. The emails and URLs are PII sent to another vendor, and they make GDPR deletion requests much harder. Send IDs and join in the warehouse if needed. See ⚠️ Mistakes juniors make and "Privacy and consent" under 🟡 Going deeper.
+
+</details>
+
 ## 📚 References
 
 - PostHog documentation, including group analytics: https://posthog.com/docs
@@ -432,6 +532,14 @@ Build customer-facing uptime analytics. Write every check result to a ClickHouse
 # 6.3 — Feature flags and experiments
 
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2, 6.2*
+
+## ⚡ In 60 seconds
+
+- A feature flag is a runtime `if` whose condition you control from outside the code. It separates deploying code from releasing it.
+- The rule that matters most: flags are temporary. Give each one an owner and an expiry date, never reuse a name, and delete the flag with its dead code.
+- The v1 default: evaluate on the server with cached rules and a safe default, roll out per org with a consistent hash of flag key + org ID, and call it through OpenFeature.
+- Entitlements are not flags. Plans and pricing live in the entitlements system (3.2), not in the flag tool.
+- The biggest trap: `Math.random()` rollouts, per-user rollouts in B2B, and peeking at experiments until p < 0.05. Most B2B products lack the traffic for A/B tests, and that's fine.
 
 ## 🧭 Why every SaaS has this
 
@@ -603,6 +711,48 @@ Run a real experiment on onboarding with GrowthBook or PostHog: `onboarding-chec
 - Percentage rollouts use a consistent hash of flag key + stable ID, and in B2B that ID is the org.
 - OpenFeature keeps your call sites vendor-neutral. Flag debt is real, so delete flags with their dead code.
 - Experiments need one metric, a sample size fixed up front, and no peeking. Many B2B products don't have the traffic, and that's fine.
+
+## ✍️ Check yourself
+
+**1. What is the difference between deploying and releasing, and how do feature flags connect them?**
+
+<details><summary>Answer</summary>
+
+Deploying puts code on the servers, and releasing lets users run it. A flag lets you deploy code switched off, then release it gradually or to chosen orgs without another deploy. See 🧭 Why every SaaS has this.
+
+</details>
+
+**2. Name the four flag types and how long each should live.**
+
+<details><summary>Answer</summary>
+
+Release flags live days to weeks, then get deleted. Ops flags or kill switches are long-lived by design. Permission flags for betas last weeks to months. Experiments last until the result is significant, then get deleted. See the flag types table under 🟢 The essentials.
+
+</details>
+
+**3. Beacon's Business plan includes SSO and 30-second checks. Should those be feature flags?**
+
+<details><summary>Answer</summary>
+
+No. They're pricing rules, so they belong in the plans and entitlements system (3.2), which changes when the customer pays. If you model plans as flags, billing and access drift apart. A beta flag can check an entitlement, but they're separate systems. See "Entitlements are not feature flags" under 🟢 The essentials.
+
+</details>
+
+**4. Beacon wants to roll out `new-scheduler` to 5% of orgs. How should the check workers decide which orgs get it?**
+
+<details><summary>Answer</summary>
+
+Hash a stable key such as `flagKey + ":" + orgId` to a bucket from 0 to 99 and turn the flag on if the bucket is below 5. The same org always gets the same answer, and raising the rollout to 20% keeps the original orgs in. The workers should use local evaluation with cached rules and a safe default. See "Percentage rollouts need consistent hashing" under 🟡 Going deeper.
+
+</details>
+
+**5. A developer rolls out a new dashboard with `if (Math.random() < 0.1)` per user. What breaks?**
+
+<details><summary>Answer</summary>
+
+The same user flips between old and new versions on every request, because nothing is sticky. Because it's per user, two teammates at the same org also see different products and file confused support tickets. Hash the org ID with the flag key instead. See ⚠️ Mistakes juniors make.
+
+</details>
 
 ## 📚 References
 

@@ -265,3 +265,89 @@ apptension/saas-boilerplate (Django + React).
 - Do not write a listicle. Every repo you name should come with *why* and *when*.
 - Do not skip any of the eight sections or the three depth/exercise sub-headings.
 - Do not use headings other than the exact ones above at the `##` level.
+
+---
+
+# Version 2 additions
+
+## Two new sections in every lesson (English)
+
+1. `## ⚡ In 60 seconds` — placed **immediately after the level line**, before
+   `## 🧭`. 4–6 bullets a busy junior can read in one minute: what the component
+   is, the one rule that matters most, the default choice for a v1, and the
+   biggest trap. No new facts that the lesson body doesn't support.
+2. `## ✍️ Check yourself` — placed **after `## 🧾 Recap` and before `## 📚
+   References`**. Exactly 5 questions: 2 recall, 2 applied to Beacon, 1 "spot the
+   bug / what breaks" scenario. Each in this exact shape (the blank lines matter):
+
+   ```
+   **1. The question text?**
+
+   <details><summary>Answer</summary>
+
+   Two to four sentences. Point back to the section that explains it.
+
+   </details>
+   ```
+
+## The Arabic mirror
+
+Each module `saas/modules/NN-slug.md` gets a mirror `saas/modules/NN-slug.ar.md`:
+the same lessons, sections, diagrams, tables, exercises, questions and references,
+in the same order — a faithful translation, not a paraphrase or a summary.
+
+### Register
+
+Professional, concise Modern Standard Arabic — the style of good Arabic technical
+documentation (Hsoub Academy / حسوب). Read the "Arabic register" section of
+`notes/LESSON-SPEC.md` (the sister course's rules, which apply here unchanged) and
+calibrate on `modules/03-caching/module.ar.md`. In short:
+
+- Short, clear sentences with verbs and normal connectors (لأن، عندما، لكن، لذلك).
+  No literary flourishes, no rhymed prose, no telegraphic fragments.
+- Technical terms: Arabic first with the English in parentheses on first use,
+  Arabic alone after: المصادقة (Authentication)، التفويض (Authorization)،
+  المستأجر (Tenant)، الاشتراك (Subscription)، الويب هوك (Webhook)، الطابور (Queue)،
+  المهمة الخلفية (Background Job)، سجل التدقيق (Audit Log)، الدخول الموحد (SSO).
+- Product, repo, library and protocol names stay Latin: Stripe, Postgres, Beacon,
+  OAuth, SAML, SCIM, `owner/repo`.
+- Numbers as Western digits (29 دولارًا، 5 دقائق). Keep "SaaS" as SaaS.
+- Code blocks, commands, file paths, identifiers, JSON and URLs are **not**
+  translated. Code comments may stay English.
+- Mermaid: translate node labels and messages to Arabic, keep Latin product
+  names; keep the diagram's structure identical. Quote every label.
+- Table cells: translate prose; keep repo links, stacks and licenses in Latin.
+
+### Exact Arabic headings (the build depends on these)
+
+| English | Arabic |
+|---|---|
+| `# Module N — Title` | `# الوحدة N — العنوان` |
+| `# N.M — Title` | `# N.M — العنوان` (same number) |
+| `*Level: 🟢 Beginner*` / `🟡 Intermediate` / `🔴 Advanced` | `*المستوى: 🟢 مبتدئ*` / `*المستوى: 🟡 متوسط*` / `*المستوى: 🔴 متقدم*` |
+| ` · *Prerequisites: 1.1, 2.1*` | ` · *المتطلبات: 1.1، 2.1*` |
+| `## ⚡ In 60 seconds` | `## ⚡ الدرس في دقيقة` |
+| `## 🧭 Why every SaaS has this` | `## 🧭 لماذا يحتاجه كل SaaS` |
+| `## 📐 How it works` | `## 📐 كيف يعمل` |
+| `### 🟢 The essentials` | `### 🟢 الأساسيات` |
+| `### 🟡 Going deeper` | `### 🟡 التعمق أكثر` |
+| `### 🔴 At scale / enterprise` | `### 🔴 على نطاق واسع وللمؤسسات` |
+| `## 🏆 The best repos` | `## 🏆 أفضل المستودعات` |
+| table header | `\| المستودع \| ما هو \| التقنيات \| الترخيص \| اختره عندما \|` |
+| **If you only study one:** | **إن درست مستودعًا واحدًا فقط:** |
+| **Buy, build, or self-host?** | **اشترِ أم ابنِ أم استضف بنفسك؟** |
+| `## 🔍 Study it in the wild` | `## 🔍 ادرسه في مشاريع حقيقية` |
+| **What to notice** | **ما الذي تلاحظه** |
+| `## 🛠️ Build it into Beacon` | `## 🛠️ ابنِه في Beacon` |
+| `### 🟢 Beginner exercise` | `### 🟢 تمرين المبتدئ` |
+| `### 🟡 Intermediate exercise` | `### 🟡 تمرين المستوى المتوسط` |
+| `### 🔴 Advanced exercise` | `### 🔴 تمرين المستوى المتقدم` |
+| **Done when:** | **يكتمل عندما:** |
+| `## ⚠️ Mistakes juniors make` | `## ⚠️ أخطاء يقع فيها المبتدئون` |
+| `## 🧾 Recap` | `## 🧾 الخلاصة` |
+| `## ✍️ Check yourself` | `## ✍️ اختبر نفسك` |
+| `<summary>Answer</summary>` | `<summary>الإجابة</summary>` |
+| `## 📚 References` | `## 📚 المراجع` |
+
+References keep their original titles and URLs (add an Arabic gloss after the
+dash if helpful). Links like `(../REPOS.md)` stay as they are.

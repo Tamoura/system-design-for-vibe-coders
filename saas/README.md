@@ -28,10 +28,11 @@ already live. This course does both:
 
 ## How every lesson works
 
-Each lesson has the same eight parts, so you always know where you are:
+Each lesson has the same ten parts, so you always know where you are:
 
 | Part | What you get |
 |---|---|
+| ⚡ **In 60 seconds** | Four to six bullets: what the component is, the rule that matters most, the v1 default and the biggest trap. |
 | 🧭 **Why every SaaS has this** | The scenario at Beacon (or a real public case) that makes the component unavoidable. |
 | 📐 **How it works** | The concepts, climbing a ladder: 🟢 *The essentials* → 🟡 *Going deeper* → 🔴 *At scale / enterprise*. |
 | 🏆 **The best repos** | A comparison table of the best open-source options, the one to study first, and a buy / self-host / build verdict. |
@@ -39,6 +40,7 @@ Each lesson has the same eight parts, so you always know where you are:
 | 🛠️ **Build it into Beacon** | Three graded exercises — 🟢 beginner, 🟡 intermediate, 🔴 advanced — each with "done when" criteria. |
 | ⚠️ **Mistakes juniors make** | The traps, and what to do instead. |
 | 🧾 **Recap** | The takeaways worth remembering. |
+| ✍️ **Check yourself** | Five questions with hidden answers: recall, applied to Beacon, and one "what breaks" scenario. |
 | 📚 **References** | Specs, official docs and the repos' own documentation. |
 
 ## Learning paths
@@ -105,6 +107,15 @@ paid for a mention. Two cautions:
   `LICENSE` before you copy code or self-host commercially.
 - **Projects move.** Repos get renamed, archived or acquired. The full list lives in
   the [repo catalog](./REPOS.md); run `npm run saas:repos` to check every link.
+
+## What's new in version 2
+
+- **An Arabic edition of every lesson and page.** Each module has a faithful Arabic
+  mirror (`NN-slug.ar.md`), and so do this README and the [course map](./OUTLINE.md).
+- **60-second summaries.** Every lesson now opens with ⚡ *In 60 seconds*, for a quick
+  read before you dive in or a refresher later.
+- **Self-checks.** Every lesson now ends with ✍️ *Check yourself*: five questions with
+  answers you can reveal, each pointing back to the section that explains it.
 
 ## Where to go next
 

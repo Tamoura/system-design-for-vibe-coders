@@ -62,7 +62,8 @@ jobs:
           # The agentic course (curriculum, playbook, poster, assessment) → /agentic/
           cp -r agentic/. _site/agentic/
           # SaaS Building Blocks (single generated page) → /saas/
-          cp saas/index.html saas/course.html saas/COURSE.md _site/saas/
+          cp saas/index.html saas/course.html saas/COURSE.md saas/REPOS.md \
+             saas/index.ar.html saas/course.ar.html saas/COURSE.ar.md saas/REPOS.ar.md _site/saas/
           ls -lh _site _site/vibe _site/agentic _site/saas
 
       - uses: actions/upload-pages-artifact@v3

@@ -8,6 +8,14 @@
 
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 1.3, 3.2*
 
+## ⚡ In 60 seconds
+
+- An admin panel is the internal app your staff use to find customers, inspect their state, extend trials, comp plans, fix data and impersonate.
+- The one rule: the admin app is a second front door into the same service layer, never a shortcut to the database.
+- Staff are not customers with a flag: a separate `staff_users` table or identity provider, SSO with MFA, a separate hostname and a network control in front.
+- Default for a v1: generated screens for reading (Django admin, react-admin, Filament) plus hand-built write actions that call your services, require a reason and write an audit event.
+- Biggest trap: impersonation that looks like the customer acted. Make it read-only by default, time-limited, bannered, and logged with both actors.
+
 ## 🧭 Why every SaaS has this
 
 It is 11 p.m. and a Beacon customer emails support: their Pro trial expired in the middle of a real outage, their monitors stopped at the Free plan's limit of five, and the account owner who could enter a card is on a plane. They want two more days of trial. Right now. Without an admin panel, the only way to help is for an engineer to open a production `psql` shell and type an `UPDATE` by hand, hoping to remember that the trial end date also lives in Stripe, that the monitor scheduler caches entitlements in Redis, and that nothing else reads that column.
@@ -225,6 +233,48 @@ export function guardImpersonation(req: Req, session: Session) {
 - Impersonation is read-only by default, time-boxed, bannered, dual-actor audited, and customers can opt out.
 - Generate the tables, hand-build the dangerous actions.
 
+## ✍️ Check yourself
+
+**1. Why should staff live in a separate `staff_users` table instead of getting a `superadmin` role in the same `memberships` table customers use?**
+
+<details><summary>Answer</summary>
+
+Because a bug in the customer permission code must never grant back-office access. If staff and customer roles share a table, one confusion between an org "admin" and a staff admin puts a customer in your back office. Keep a separate table (or identity provider) and a separate session cookie, as "🟢 The essentials" and "⚠️ Mistakes juniors make" explain.
+
+</details>
+
+**2. List the safeguards of a safe impersonation design.**
+
+<details><summary>Answer</summary>
+
+Read-only by default, time-limited (30 minutes), an unmissable banner, two actors in every audit event, customer consent for sensitive orgs, and blocked zones such as password, MFA, email, API keys and billing details. See "Impersonation done safely" in "🟡 Going deeper".
+
+</details>
+
+**3. Support wants to give a Beacon customer two more days of trial. Why must the button call `extendTrial(orgId, days)` instead of running an `UPDATE` on `trial_ends_at`?**
+
+<details><summary>Answer</summary>
+
+The trial end also lives in Stripe, and the monitor scheduler caches entitlements in Redis. The service function updates Postgres, updates the Stripe subscription and invalidates the entitlement cache, while raw SQL skips all of that and leaves no record. See rule 2 in "🟢 The essentials".
+
+</details>
+
+**4. A Business prospect asks: "Which of your employees can access our data, and how is that logged?" Which parts of Beacon's admin design let you answer?**
+
+<details><summary>Answer</summary>
+
+Staff roles with least privilege (and just-in-time access at scale), staff SSO with MFA, an org-level setting that lets the customer switch impersonation off, masked PII, and an audit event for every staff action, including detail-page views. See "🟡 Going deeper" and "🔴 At scale / enterprise".
+
+</details>
+
+**5. An engineer implements "log in as customer" by creating a normal session for the customer's user id. A week later a customer's audit log says "Ana deleted the monitor", and Ana says she didn't. What went wrong, and how do you fix it?**
+
+<details><summary>Answer</summary>
+
+The impersonation session was indistinguishable from Ana's own session: no `impersonatorId`, no read-only flag, and only one actor recorded. Flag the session with `impersonatorId` and `readOnly`, reject mutating requests in middleware, expire it after 30 minutes, and record `actor = staff:42` with `on_behalf_of = user:981`. See "🟡 Going deeper" and the advanced exercise.
+
+</details>
+
 ## 📚 References
 
 - react-admin documentation — https://marmelab.com/react-admin/
@@ -240,6 +290,15 @@ export function guardImpersonation(req: Req, session: Session) {
 # 7.2 — Observability: logs, errors, metrics and traces
 
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1*
+
+## ⚡ In 60 seconds
+
+- Observability means you can explain any behavior of production from the data it already emits, without shipping new code to find out.
+- Five signals: logs say what happened, metrics how much, traces where, errors what broke, and outside uptime probes whether anyone can reach you.
+- The one rule: structured JSON logs with a request id and a tenant id on every line.
+- Default for a v1: pino (or your stack's structured logger), Sentry or GlitchTip with release and source maps, OpenTelemetry for traces, and one independent probe outside your infrastructure.
+- Measure your product's own health signal (for Beacon: check lag) and page on SLO burn, not on CPU.
+- Biggest trap: putting `orgId` in Prometheus labels, which explodes cardinality and can take the metrics server down.
 
 ## 🧭 Why every SaaS has this
 
@@ -436,6 +495,48 @@ Define an SLO: "99.9% of scheduled checks run within 15 seconds of schedule, ove
 - SLOs and burn-rate alerts replace "page on everything" with "page when customers are hurt".
 - Watch cardinality and telemetry cost from day one; sample deliberately.
 
+## ✍️ Check yourself
+
+**1. What is the difference between monitoring and observability?**
+
+<details><summary>Answer</summary>
+
+Monitoring asks whether the things you predicted might break are broken. Observability is the ability to ask a new question about production and answer it from the data the system already emits, without shipping new code. See "🧭 Why every SaaS has this".
+
+</details>
+
+**2. What do RED and USE stand for, and why should latency be measured in percentiles?**
+
+<details><summary>Answer</summary>
+
+RED is Rate, Errors, Duration for request-driven services; USE is Utilization, Saturation, Errors for resources such as CPU, DB connections and queues. Averages hide the slow tail: a 200 ms average can hide 5% of requests taking 8 seconds, so use p95/p99. See "🟡 Going deeper" and "⚠️ Mistakes juniors make".
+
+</details>
+
+**3. Beacon's scheduler silently skips some monitors after a deploy. No errors are thrown. Which metrics would have caught it, and why would HTTP metrics not?**
+
+<details><summary>Answer</summary>
+
+Check lag and "checks executed per minute" compared with "checks expected per minute". Every HTTP endpoint stays healthy and nothing crashes, so only a metric of the product's own work shows that checks are missing. See "What to measure: RED and USE" in "🟡 Going deeper".
+
+</details>
+
+**4. A Business customer asks whether last Tuesday's slowdown affected them. Where do you look, and why not add an `orgId` label to your Prometheus metrics to answer it?**
+
+<details><summary>Answer</summary>
+
+Look in logs and traces, which carry `orgId` per event, ideally in a columnar store like ClickHouse. Every distinct label value creates a new time series, so an `orgId` label across tens of thousands of orgs multiplies storage and can take the metrics server down. See "Per-tenant visibility and cardinality" in "🔴 At scale / enterprise".
+
+</details>
+
+**5. In your tracing backend, the trace for "create monitor" ends at the enqueue call, and the worker's check execution shows up as a separate, unrelated trace. What broke?**
+
+<details><summary>Answer</summary>
+
+Trace context is propagated automatically over HTTP through the `traceparent` header, but not across a queue. Put the trace context into the BullMQ job data when enqueuing and restore it in the worker. See "Trace context propagation" in "🟡 Going deeper".
+
+</details>
+
 ## 📚 References
 
 - OpenTelemetry documentation — https://opentelemetry.io/docs/
@@ -452,6 +553,14 @@ Define an SLO: "99.9% of scheduled checks run within 15 seconds of schedule, ove
 # 7.3 — Audit logs and activity feeds
 
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 1.3*
+
+## ⚡ In 60 seconds
+
+- An audit log is an append-only, customer-facing record of who did what to which thing, when and from where. It is evidence, not debugging output.
+- It is not the application log, the activity feed or change history: those serve different audiences, with different content and retention.
+- The one rule: write the audit event in the same database transaction as the change it describes.
+- Default for a v1: one `audit_events` table (actor, action, target, tenant, context, changes, timestamp), a `recordAudit()` helper, and a filtered page for org admins.
+- Biggest trap: secrets or whole rows in `changes`, or an app database role that can update or delete audit rows.
 
 ## 🧭 Why every SaaS has this
 
@@ -683,6 +792,48 @@ END $$ LANGUAGE plpgsql;
 - Enforce append-only with database grants; add hash chains and anchoring for tamper evidence.
 - Customer-facing viewing, export, retention by plan, and SIEM streaming are what enterprise buyers check.
 
+## ✍️ Check yourself
+
+**1. What fields should every audit event carry?**
+
+<details><summary>Answer</summary>
+
+Actor (plus on-behalf-of during impersonation), action as a stable dotted verb, target, tenant, context (IP, user agent, request id, UI/API/SCIM source), changes as before and after values, and a server-set UTC timestamp. Snapshot the actor's name and email, because the user may be deleted later. See "🟢 The essentials".
+
+</details>
+
+**2. Name the three strategies for capturing changes and the main weakness of each.**
+
+<details><summary>Answer</summary>
+
+App-level events know the actor and intent but miss forgotten code paths and raw SQL fixes. Database triggers catch every change but don't know the user or IP unless you pass them in, and they are row-level. CDC is complete but adds infrastructure and still needs app context stitched in. See the table in "🟡 Going deeper".
+
+</details>
+
+**3. Beacon doesn't audit every click, but it does audit "monitor paused" and "notification channel muted". Why?**
+
+<details><summary>Answer</summary>
+
+Both actions silence alerts, so they are security-relevant for a monitoring product. The opening story, where someone paused the payment API monitor and nobody could tell who, is exactly this case. See "🧭 Why every SaaS has this" and "What to audit" in "🟡 Going deeper".
+
+</details>
+
+**4. A Beacon user who performed many audited actions asks to be erased under GDPR. How do you honor it without deleting audit events?**
+
+<details><summary>Answer</summary>
+
+Keep the events and the actor id, but overwrite the name and email snapshot column with "Deleted user", and document that you keep the id under a legitimate-interest or legal-obligation basis. See "PII in audit logs" in "🟡 Going deeper".
+
+</details>
+
+**5. A service commits the monitor update, then calls `sendAudit()` fire-and-forget. The process crashes between the two. What happens, and how do you fix it?**
+
+<details><summary>Answer</summary>
+
+The change exists with no audit record, which is precisely the case an auditor asks about. Write the audit event in the same database transaction as the change (or use a transactional outbox) so both commit or neither does. See "🟢 The essentials" and "⚠️ Mistakes juniors make".
+
+</details>
+
 ## 📚 References
 
 - OWASP Logging Cheat Sheet — https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
@@ -698,6 +849,15 @@ END $$ LANGUAGE plpgsql;
 # 7.4 — Deployment, environments and self-hostable SaaS
 
 *Level: 🔴 Advanced* · *Prerequisites: 2.1, 5.1, 7.2*
+
+## ⚡ In 60 seconds
+
+- Deployment is a pipeline of small, reversible steps from pull request to production.
+- Four isolated environments (local, preview, staging, production), configured only through environment variables validated at startup.
+- The one rule: build one image per commit, tag it with the git SHA, and promote that same image. Never rebuild for production.
+- Old and new code share the database during a rolling deploy, so schema changes go expand, migrate, contract across separate deploys.
+- Default for a v1: a PaaS plus a managed Postgres with point-in-time recovery. Move to Kamal, Coolify or Kubernetes only when a concrete need forces you.
+- Biggest trap: a backup you have never restored. Drill restores and measure RPO and RTO.
 
 ## 🧭 Why every SaaS has this
 
@@ -920,6 +1080,48 @@ export async function loadLicense(token?: string) {
 - Pick the simplest hosting that meets your constraints; declare infrastructure as code.
 - Self-hostable means one-command install, documented config, optional dependencies, and offline license keys; open-core is a directory plus a license.
 - Define RPO and RTO, keep backups elsewhere, and prove them with regular restore drills.
+
+## ✍️ Check yourself
+
+**1. What are the three steps of expand, migrate, contract?**
+
+<details><summary>Answer</summary>
+
+Expand adds the new column or table without removing the old one, and code writes both. Migrate backfills in batches and switches reads to the new thing. Contract drops the old thing in a later deploy, once no running code uses it. See "🟡 Going deeper".
+
+</details>
+
+**2. What is the difference between RPO and RTO?**
+
+<details><summary>Answer</summary>
+
+RPO (recovery point objective) is how much data you can afford to lose; with Postgres point-in-time recovery it can be minutes or less. RTO (recovery time objective) is how long you can be down while restoring. See "Backups and disaster recovery" in "🔴 At scale / enterprise".
+
+</details>
+
+**3. Why do Beacon's checkers deploy differently from its web app?**
+
+<details><summary>Answer</summary>
+
+The checkers must run in several regions by product definition, and they are a stateless data plane that pulls jobs and pushes results, so they suit Fly.io or small per-region VMs managed with Kamal. The web app and primary database are the control plane, which stays in one primary region. See "🟡 Going deeper" and "Multi-region" in "🔴 At scale / enterprise".
+
+</details>
+
+**4. A bank wants to run Beacon inside its own network with no internet access. What must be true of Beacon's self-hosted edition?**
+
+<details><summary>Answer</summary>
+
+A one-command `docker-compose.yml` (and a Helm chart for Kubernetes), documented configuration, migrations that run themselves and survive skipped versions, no hard dependency on Stripe, email or analytics, and a license key verified offline with a public key baked into the image. See "Making your SaaS self-hostable" in "🔴 At scale / enterprise".
+
+</details>
+
+**5. An engineer renames `monitors.url` to `monitors.target` in one migration, then deploys. The migration runs, then new containers roll out. What breaks?**
+
+<details><summary>Answer</summary>
+
+Old containers keep serving during the rollout, and every check worker running old code crashes on the missing column, so checks are missed. Do the rename as expand, migrate, contract across separate deploys. See "🧭 Why every SaaS has this" and "🟡 Going deeper".
+
+</details>
 
 ## 📚 References
 

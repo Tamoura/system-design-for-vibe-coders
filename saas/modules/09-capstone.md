@@ -11,6 +11,19 @@ decisions the way a senior engineer would in a design review.*
 
 *Level: 🔴 Advanced* · *Prerequisites: 0.1, 1.2, 3.1, 5.1*
 
+## ⚡ In 60 seconds
+
+- A SaaS architecture is not a list of components; it is the connections between
+  them and the decisions about which ones you own.
+- Read any SaaS as three rings: the front door (who is this?), the tenant-scoped
+  core (what do they own?), and the machinery (what happens next?).
+- Three rules hold it together: the tenant id goes everywhere, every state change
+  emits an event, and external systems are the truth for what they own.
+- Default for a v1: buy every component that is not your differentiator, build the
+  core domain and the glue, and write each choice down as an ADR with a revisit trigger.
+- The biggest trap is designing components in isolation: each part works and the
+  seams leak. Enterprise readiness is mostly seam work.
+
 ## 🧭 Why every SaaS has this
 
 Every SaaS eventually has the meeting. Someone draws the whole system on a
@@ -289,6 +302,68 @@ minutes to a peer acting as the customer's security team.
   components and close the gaps.
 - The best way to test your design is to put it next to a real open-source one and
   explain every difference.
+
+## ✍️ Check yourself
+
+**1. What are the three rings of a SaaS architecture, and which question does each one answer?**
+
+<details><summary>Answer</summary>
+
+The front door (CDN, app shell, API gateway, authentication, SSO) answers "who is
+this, and are they allowed in?". The core (the domain, the tenant-scoped database,
+authorization, entitlements) answers "what does this customer own, and what may they
+do with it?". The machinery (jobs, notifications, webhooks, billing, audit,
+observability, admin) answers "what happens next, who hears about it, and how do we
+know it worked?". See 🟢 The essentials.
+
+</details>
+
+**2. What is an architecture decision record, and what makes its revisit trigger useful?**
+
+<details><summary>Answer</summary>
+
+An ADR is a one-page file in the repo that records the context, the decision, the
+alternatives and the consequences, so the next engineer knows why a choice was made
+and when it should stop. A useful trigger is a concrete signal, such as "revisit
+when we exceed 10,000 monitors per worker"; "revisit if needed" is not a trigger.
+See 🟡 Going deeper and the intermediate exercise.
+
+</details>
+
+**3. Beacon's product team wants a PagerDuty integration that fires whenever an incident opens. Following the event backbone, what should change in the core?**
+
+<details><summary>Answer</summary>
+
+Nothing in the core should change. The core already writes an `incident.opened`
+event to the outbox in the same transaction as the incident, and a relay publishes
+it to the queue. The integration is a new consumer of that event, just like the
+notifier, the webhook sender and the audit consumer. See 🟡 Going deeper.
+
+</details>
+
+**4. Beacon has two engineers. Should they self-host Temporal for monitor-check jobs and build their own metering service?**
+
+<details><summary>Answer</summary>
+
+Almost certainly not. At the seed stage the starting point is a Postgres queue
+(pg-boss, Graphile Worker) and Stripe Checkout plus the Portal, because engineering
+attention is the scarcest resource and should go to the core domain. Durable
+workflows and a metering service belong to later stages, and the ADR should name
+the signal that triggers the move. See the build-vs-buy table in 🟡 Going deeper
+and "Buy, build, or self-host?".
+
+</details>
+
+**5. A customer's identity provider deprovisions an employee through SCIM. Beacon removes the user and their sessions, but the next day that person's API key still returns the customer's monitors. What went wrong?**
+
+<details><summary>Answer</summary>
+
+This is a seam failure: SCIM, sessions and API keys each work on their own, but
+the deprovisioning flow was never traced across all of them. The fix is to revoke
+keys the user created (or reassign them) as part of the same flow, and prove it with
+a test. See 🔴 At scale / enterprise and the advanced exercise.
+
+</details>
 
 ## 📚 References
 

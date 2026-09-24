@@ -8,6 +8,14 @@
 
 *Level: 🟢 Beginner*
 
+## ⚡ In 60 seconds
+
+- Authentication proves who is making a request. It is a set of flows (sign-up, login, verification, reset, MFA, logout), and an attacker picks the weakest one.
+- The one rule: hash passwords with argon2id or bcrypt, and store only hashes of session, reset and magic-link tokens.
+- Default for a v1: a library such as Better Auth, Devise or django-allauth, with server-side sessions in an `HttpOnly`, `Secure`, `SameSite=Lax` cookie.
+- Social login means the authorization code flow with PKCE, keyed on the provider's `sub`, never on email alone.
+- Biggest trap: the edges, such as reset links that work twice, "email not found" messages, and a logout that only clears the cookie.
+
 ## 🧭 Why every SaaS has this
 
 Beacon's first prototype had no login. One monitor list, one status page, everything on `localhost`. Then a friend asked to try it, and within an hour you had real questions. How does Beacon know that the person editing the `api.acme.com` monitor is someone from Acme? How do they get back in tomorrow? What happens when they forget their password, or sign up with Google on Monday and try email on Tuesday?
@@ -225,6 +233,48 @@ Add passkeys and TOTP as second factors, a "Signed-in devices" page, and step-up
 - Passkeys are phishing-resistant and the future. TOTP with recovery codes is today's solid MFA.
 - Use a library or service for the crypto and protocols. Your job is getting the flows and edge cases right.
 
+## ✍️ Check yourself
+
+**1. Why is SHA-256 the wrong choice for hashing passwords, and what should you use instead?**
+
+<details><summary>Answer</summary>
+
+SHA-256 is designed to be fast, so an attacker who steals the database can try billions of guesses per second. Password hashes must be deliberately slow and salted: use argon2id (the current OWASP recommendation) or bcrypt. See "🟢 The essentials".
+
+</details>
+
+**2. What does PKCE protect against in the OAuth authorization code flow, and what does the `state` parameter protect against?**
+
+<details><summary>Answer</summary>
+
+PKCE makes an intercepted authorization code useless, because exchanging it requires the original `code_verifier` that only Beacon holds. The `state` parameter ties the callback to the browser that started the flow, which stops login CSRF. See "🟡 Going deeper".
+
+</details>
+
+**3. A Beacon customer reports that their laptop was stolen and asks you to sign them out everywhere. Why is this easy with server-side sessions and hard with long-lived JWTs?**
+
+<details><summary>Answer</summary>
+
+With server-side sessions, signing out everywhere is one delete of that user's session rows, and the next request with any old cookie fails. A JWT stays valid until it expires because the server does not look it up, so you need a denylist, which is a session with extra steps. See "Sessions vs JWTs" and "🔴 At scale / enterprise".
+
+</details>
+
+**4. Beacon's IT-security customers say their magic links "never work": the link says it has already been used. What is happening, and how do you fix it?**
+
+<details><summary>Answer</summary>
+
+Corporate email security scanners open links to check them, which consumes the single-use token before the human clicks. Have the link open a page with a "Sign in" button that submits a POST, or send a short code the user types instead. See "Magic links" in "🟡 Going deeper".
+
+</details>
+
+**5. A teammate writes the reset endpoint so it returns "No account with that email" for unknown addresses and "Reset link sent" otherwise. What breaks?**
+
+<details><summary>Answer</summary>
+
+This is account enumeration: attackers can find out which emails are Beacon customers and build target lists. Return one identical message ("If an account exists, we've sent a link") and do the slow work even when the user is missing so timing does not leak. See "🟡 Going deeper" and "⚠️ Mistakes juniors make".
+
+</details>
+
 ## 📚 References
 
 - OWASP Cheat Sheet Series: Authentication, Password Storage, and Session Management cheat sheets — https://cheatsheetseries.owasp.org
@@ -241,6 +291,14 @@ Add passkeys and TOTP as second factors, a "Signed-in devices" page, and step-up
 # 1.2 — Users, organizations & invitations: the multi-tenant skeleton
 
 *Level: 🟢 Beginner* · *Prerequisites: 1.1*
+
+## ⚡ In 60 seconds
+
+- In B2B SaaS the customer is an organization, not a person. Users join it through memberships that carry a role.
+- The one rule: every tenant-owned row carries `org_id` directly, and resources belong to the org, never to a user.
+- Default for a v1: four tables (users, organizations, memberships, invitations), a personal org created at sign-up, and the org slug in the URL.
+- Treat the org id from the URL or cookie as a claim: load the membership on every request.
+- Biggest trap: resources owned by users, which turns every later team feature into a migration or a hack.
 
 ## 🧭 Why every SaaS has this
 
@@ -490,6 +548,48 @@ Implement leave, remove member, ownership transfer and org deletion with a 30-da
 - Put the org in the URL and verify membership on every request.
 - Encode the invariants: at least one owner, deliberate ownership transfer, soft delete with a grace period.
 
+## ✍️ Check yourself
+
+**1. What are the four core entities of the multi-tenant skeleton, and which one is the tenant?**
+
+<details><summary>Answer</summary>
+
+Users, organizations, memberships and invitations. The organization is the tenant: it owns the data and pays the bill, and users join it through memberships that carry a role. See the table in "🟢 The essentials".
+
+</details>
+
+**2. What is the tenant_id rule, and why does `CHECK_RESULT` carry `org_id` even though it could reach the org through its monitor?**
+
+<details><summary>Answer</summary>
+
+Every tenant-owned row carries the tenant id directly. That lets every query filter by org without a join, lets every index start with `org_id`, makes a missing org filter stand out in review, and keeps row-level security and sharding possible later. See "🟢 The essentials".
+
+</details>
+
+**3. A contractor who created 40 of Acme's monitors is removed from Acme's org in Beacon. What should happen to those monitors, and why?**
+
+<details><summary>Answer</summary>
+
+They stay. Ownership is `org_id`; `created_by` is kept only for history and display. Removing the member deletes his membership and revokes anything that acted as him in that org, such as his personal API tokens and pending invites he sent. See "🟢 The essentials" and "Leaving, removing and ownership" in "🟡 Going deeper".
+
+</details>
+
+**4. Priya is the only owner of Acme's Beacon org and clicks "Leave organization". What should Beacon do?**
+
+<details><summary>Answer</summary>
+
+Block it and explain why. An org must always have at least one owner, so the last owner cannot leave or be demoted until ownership is transferred, which is a deliberate, confirmed action with step-up authentication and an email to both parties. See "🟡 Going deeper".
+
+</details>
+
+**5. A monitor page loads with `db.monitor.findUnique({ where: { id } })` after reading the org slug from the URL. What breaks?**
+
+<details><summary>Answer</summary>
+
+The org slug is a claim, not a fact, and the query ignores it, so anyone can read any org's monitor by guessing or changing the id. Load the membership for the org and current user on every request, return 404 when it is missing, and filter the query by `org_id`. See "Org switching" in "🟡 Going deeper" and "⚠️ Mistakes juniors make".
+
+</details>
+
 ## 📚 References
 
 - Better Auth documentation, Organization plugin — https://www.better-auth.com/docs
@@ -504,6 +604,14 @@ Implement leave, remove member, ownership transfer and org deletion with a 30-da
 # 1.3 — Authorization: roles, permissions, and "can this user do this?"
 
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.2*
+
+## ⚡ In 60 seconds
+
+- Authorization decides whether a subject may perform an action on a specific resource. The server asks it on every request, and never takes the answer from the client.
+- The one rule: check permissions, not role names, and put the org id inside every query so objects from other tenants simply do not exist.
+- Default for a v1: per-org RBAC with a role-to-permission map and one `can()` / `requirePermission()` module.
+- Allow-list request bodies and responses. Mass assignment is an authorization bug.
+- Biggest trap: enforcing only in the UI, or fetching objects by id alone (IDOR).
 
 ## 🧭 Why every SaaS has this
 
@@ -726,6 +834,48 @@ Introduce per-status-page sharing with OpenFGA (or SpiceDB): a team or individua
 - Ladder: RBAC, then ABAC in one policy module, then ReBAC (Zanzibar-style) only when you need object-level sharing.
 - Lists need authorization as a query filter, not a loop.
 
+## ✍️ Check yourself
+
+**1. What is the difference between a function-level and an object-level authorization check?**
+
+<details><summary>Answer</summary>
+
+A function-level check asks whether this role may perform this action at all (can a viewer delete monitors?). An object-level check asks whether this specific object is inside the tenant and visible to this user (is monitor 123 in Acme?). IDOR is the missing object-level check. See "🟢 The essentials".
+
+</details>
+
+**2. Why should code check permissions like `monitor.write` rather than role names like `admin`?**
+
+<details><summary>Answer</summary>
+
+Role-name checks are scattered across the codebase and must all be edited whenever a role is added. Permission checks only need the role-to-permission map updated, which also makes custom roles a data change. See "🟢 The essentials" and "Custom roles" in "🟡 Going deeper".
+
+</details>
+
+**3. A Beacon customer asks for an "on-call" role that can update incidents but not edit monitors. How much work is that, given the design in this lesson?**
+
+<details><summary>Answer</summary>
+
+Little, if the code already checks permissions. Store roles as rows with a permission list per org, keep the built-in roles as defaults, and give the on-call role `monitor.read` and `incident.write`. The `can()` function barely changes. See "Custom roles" in "🟡 Going deeper".
+
+</details>
+
+**4. Beacon needs a "my status pages" list where members see only pages they may view. Why not load every page and filter with `can()` in a loop?**
+
+<details><summary>Answer</summary>
+
+Filtering in memory breaks pagination, is slow, and leaks counts and timing. Turn the policy into a query filter: `WHERE org_id = $1` for per-org RBAC, CASL's database conditions or Cerbos's query plan for ABAC, or `ListObjects` / `LookupResources` for ReBAC. See "Filtering lists" in "🟡 Going deeper".
+
+</details>
+
+**5. The member-update endpoint does `db.membership.update({ where: { id }, data: req.body })` after checking that the caller is a member. What breaks?**
+
+<details><summary>Answer</summary>
+
+This is mass assignment, the 2012 GitHub bug: a plain member can send `{"role": "owner"}` or a different `orgId` and the database will accept it. Parse the body with an allow-list schema, enforce the role-change rules (only at or below your own level, never your own role), and require `member.manage`. See "🧭 Why every SaaS has this" and "🟡 Going deeper".
+
+</details>
+
 ## 📚 References
 
 - OWASP API Security Top 10 (2023), including API1 Broken Object Level Authorization and API3 Broken Object Property Level Authorization — https://owasp.org/API-Security/
@@ -742,6 +892,14 @@ Introduce per-status-page sharing with OpenFGA (or SpiceDB): a team or individua
 # 1.4 — Enterprise identity: SSO, SAML, OIDC and SCIM
 
 *Level: 🔴 Advanced* · *Prerequisites: 1.1, 1.2, 1.3*
+
+## ⚡ In 60 seconds
+
+- SSO (SAML or OIDC) lets the customer's identity provider handle login. SCIM lets it create and remove users as employees join and leave.
+- The one rule: never write SAML validation yourself, and verify a domain by DNS before routing logins by it.
+- Default for a v1: buy (WorkOS and similar) or self-host Ory Polis (SAML Jackson), and build only the org-to-connection mapping.
+- JIT provisioning creates users but never removes them. Deprovisioning needs SCIM, and deactivation must revoke sessions and API keys.
+- Biggest trap: enforcing SSO without a break-glass path, so an expired IdP certificate locks everyone out.
 
 ## 🧭 Why every SaaS has this
 
@@ -955,6 +1113,48 @@ Implement a SCIM 2.0 server for Users and Groups (or use Ory Polis's directory s
 - JIT creates users. Only SCIM, or short sessions, removes them. Deactivation must kill sessions and tokens.
 - Enforcement needs a break-glass path, and big customers need multiple IdPs per org.
 - Most teams buy (WorkOS and similar) or self-host Ory Polis, and build only the tenant-mapping rules.
+
+## ✍️ Check yourself
+
+**1. What does SSO handle, what does SCIM handle, and why do enterprises want both?**
+
+<details><summary>Answer</summary>
+
+SSO handles login: the customer's IdP authenticates employees with its own MFA policy. SCIM handles the employee lifecycle: the IdP pushes joins, changes and departures to Beacon. SSO alone cannot tell Beacon that someone was fired. See "🧭 Why every SaaS has this".
+
+</details>
+
+**2. Name four things Beacon must check when it receives a SAML response.**
+
+<details><summary>Answer</summary>
+
+The signature is valid and made by the certificate configured for this connection; `Issuer` equals the IdP entity id; `Audience` equals Beacon's SP entity id and `Destination` or `Recipient` equals the ACS URL; `NotBefore` and `NotOnOrAfter` hold; `InResponseTo` matches a request Beacon sent and the assertion id is not a replay. Any four of these. See "🟢 The essentials".
+
+</details>
+
+**3. BigCo uses SSO with JIT provisioning but no SCIM. Ana leaves BigCo on Friday. What still works for her in Beacon on Monday, and how do you close the gap?**
+
+<details><summary>Answer</summary>
+
+JIT never removes anyone, so any existing Beacon session and any API key she created keep working until something expires. Add SCIM so the IdP's deactivation revokes her membership, sessions and API keys in that org, or at least keep SSO sessions short. See "JIT provisioning" and "SCIM 2.0" in "🟡 Going deeper".
+
+</details>
+
+**4. A new org signs up and claims `bigbank.com` for SSO so BigBank employees log in through its IdP. What must Beacon require first, and why?**
+
+<details><summary>Answer</summary>
+
+Domain verification: the org adds a DNS TXT record that Beacon generates, and Beacon checks it and re-checks it periodically. Without it, anyone could route another company's logins through an IdP they control. Public email domains like `gmail.com` must never be claimable. See "Domain verification" in "🟡 Going deeper".
+
+</details>
+
+**5. Acme turns on "enforce SSO" for its org and allows no exceptions. Months later its IdP certificate expires. What breaks?**
+
+<details><summary>Answer</summary>
+
+Nobody can log in to Acme's org, including the admins who need to fix the connection. Keep a break-glass path: one or two named owners who may log in with password plus strong MFA under enforcement, with loud audit logging and an email to all owners on every use. See "Break-glass access" in "🟡 Going deeper".
+
+</details>
 
 ## 📚 References
 

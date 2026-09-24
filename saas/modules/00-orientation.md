@@ -8,6 +8,14 @@
 
 *Level: 🟢 Beginner*
 
+## ⚡ In 60 seconds
+
+- A SaaS is a small **core domain** (the part customers pay for) surrounded by **generic subdomains** that nearly every product shares: auth, orgs, billing, email, jobs, webhooks, audit logs.
+- Those generic parts come to about 25 components in eight layers. Learn them once and every new product gets faster to build and easier to read.
+- The rule that matters most: spend your creativity on the core, and copy proven designs and tools for everything else.
+- The default for a v1: read a small starter kit such as `nextjs/saas-starter` to see the skeleton, and buy managed services for generic parts when speed matters more than cost.
+- The biggest trap: estimating only the core. The generic parts of a sellable v1 often take longer than the core itself.
+
 ## 🧭 Why every SaaS has this
 
 Imagine you pitch Beacon, our running example, to a friend in one sentence: *"It pings your websites every minute and shows a public status page when something is down."* That sentence is the product. It fits on a napkin, and a decent developer could build the pinging part in a weekend.
@@ -213,6 +221,48 @@ Pick any real SaaS you use daily that is not in this lesson. From its public pri
 - Enterprise features like SSO and audit logs are generic to build but valuable to sell.
 - Starter kits show you the skeleton; read one fully before you trust it.
 
+## ✍️ Check yourself
+
+**1. What is the difference between a core domain and a generic subdomain?**
+
+<details><summary>Answer</summary>
+
+The core domain is what makes your product different and is the reason customers pay; for Beacon it is the check engine and the status page experience. A generic subdomain is something every business needs but no customer chooses you for, such as authentication, billing or email. See "The essentials" under How it works.
+
+</details>
+
+**2. Into which eight layers do the generic components group?**
+
+<details><summary>Answer</summary>
+
+Identity and access, data, money, communication, background work and integrations, product and growth, operations, and trust. The first diagram in "The essentials" shows them around the core domain, and the component table maps each layer to its lessons.
+
+</details>
+
+**3. Beacon's team wants to write its own password hashing and session handling "to keep control". What does the decision flowchart say?**
+
+<details><summary>Answer</summary>
+
+Authentication is not Beacon's core, and solid managed services (Clerk, WorkOS) and mature open-source projects exist, so the flowchart ends at "buy" or "self-host", not "build". Hand-rolling password hashing and sessions is how security bugs happen. See "At scale / enterprise" and "Mistakes juniors make".
+
+</details>
+
+**4. Beacon decides to ship a self-hosted edition for customers who cannot send data to third parties. How does that change its choices for email and analytics?**
+
+<details><summary>Answer</summary>
+
+The flowchart's third question ("Do data residency, compliance or self-hosted customers forbid it?") now answers yes, so managed services give way to self-hosted open-source options such as Listmonk or PostHog. If you ship an on-premises edition, every managed dependency becomes a problem. See the question table in "At scale / enterprise" and "Buy, build, or self-host?".
+
+</details>
+
+**5. A junior designs Beacon's schema with a `user_id` on every monitor and no organization table. Six months later a paying customer asks to invite four teammates. What breaks?**
+
+<details><summary>Answer</summary>
+
+Monitors belong to one person, so there is nothing for teammates to share and no place to attach roles. Adding teams now means migrating every record to a new owner, which is nearly impossible to do cleanly. Assume every B2B record belongs to an org from day one; see "Mistakes juniors make" and lesson 1.2.
+
+</details>
+
 ## 📚 References
 
 - Martin Fowler, "BoundedContext": https://martinfowler.com/bliki/BoundedContext.html
@@ -227,6 +277,14 @@ Pick any real SaaS you use daily that is not in this lesson. From its public pri
 # 0.2 — How to read a giant open-source codebase without drowning
 
 *Level: 🟢 Beginner*
+
+## ⚡ In 60 seconds
+
+- Big codebases are searched and navigated, not read top to bottom. Start from one written question.
+- The method: README and CONTRIBUTING, compose and `.env.example`, package manifests, the database schema, one request end to end, git history, and only then run it.
+- The rule that matters most: the database schema is the Rosetta stone. Its model names map almost one-to-one onto our component list.
+- The default tools: GitHub code search (press `/`) or `rg` locally, searching for strings users see and vendor event names such as `checkout.session.completed`.
+- The biggest trap: following every import from `index.ts`, or fighting `docker compose up` before you know what the services are for.
 
 ## 🧭 Why every SaaS has this
 
@@ -417,6 +475,48 @@ Pick one non-obvious decision in openstatus (for example, why the checker is wri
 - Search for user-visible strings, vendor event names and the cheat-sheet terms with GitHub code search or `rg`.
 - `git blame`, `git log -S` and pull requests explain *why*, which the code alone never does.
 
+## ✍️ Check yourself
+
+**1. Why are `docker-compose.yml` and `.env.example` worth reading before any code?**
+
+<details><summary>Answer</summary>
+
+The compose file lists the services the app needs (Postgres, Redis, a queue, a mail catcher), and the variable names in `.env.example` reveal which third-party services and components exist. You learn the building blocks without reading a line of code, and later errors from `docker compose up` make sense. See step 2 in "The essentials".
+
+</details>
+
+**2. What does `git log -S "maxMonitors"` do, and when would you reach for it?**
+
+<details><summary>Answer</summary>
+
+It is the "pickaxe": it finds commits that added or removed that string. Use it when you want to know when a feature or a limit was introduced, then open the pull request for that commit to learn why. See the commands at the end of "Going deeper".
+
+</details>
+
+**3. You need to find where Beacon's codebase reacts to a Stripe subscription change. What do you search for?**
+
+<details><summary>Answer</summary>
+
+Search for Stripe's fixed event names and helpers: `constructEvent`, `checkout.session.completed`, `customer.subscription`, `invoice.paid`. These strings appear in almost exactly one place, the webhook handler that updates the plan in the database. See the cheat sheet in "Going deeper".
+
+</details>
+
+**4. A new teammate asks how accepting an invitation to a Beacon organization works. How do you answer with the "follow one request" step?**
+
+<details><summary>Answer</summary>
+
+Trace that one action through every layer: the page or button, the API route or server action, the permission check, the database write, and any email or job it triggers. Write down each file with a permalink. Once one vertical slice is clear, the others look similar. See step 5 in "The essentials".
+
+</details>
+
+**5. A junior reads a file called `permissions.ts` and concludes that only admins can delete monitors. The next week a plain member deletes one. What went wrong?**
+
+<details><summary>Answer</summary>
+
+They trusted a file name over the code path. The file may be dead code while the real check lives inline in a route, or is missing there. Confirm rules by following a real request end to end, and read the tests. See "Mistakes juniors make".
+
+</details>
+
 ## 📚 References
 
 - ripgrep user guide: https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md
@@ -431,6 +531,15 @@ Pick one non-obvious decision in openstatus (for example, why the checker is wri
 # 0.3 — The reference shelf: the SaaS codebases and starter kits we study
 
 *Level: 🟢 Beginner*
+
+## ⚡ In 60 seconds
+
+- The reference shelf is a short list of real, production open-source SaaS (openstatus, Cal.com, Documenso, Dub, Sentry, Chatwoot and others) that the course uses to show each component under real load.
+- Start with a mid-sized repo in your own language. Use giants like GitLab and Sentry only for specific questions.
+- The rule that matters most: reading code to learn an idea is always fine, but copying code depends on the licence of that exact folder at that exact commit.
+- Licences come in four families: permissive (MIT, Apache-2.0, BSD), copyleft (GPL), network copyleft (AGPL) and source-available (FSL, BSL, ELv2, fair-code).
+- The default for Beacon: learn from openstatus, the closest real product, then write Beacon's code yourself, because openstatus is AGPL-3.0.
+- The biggest trap: assuming "public on GitHub" means "free to use", or checking only the root licence and missing a stricter `ee/` folder.
 
 ## 🧭 Why every SaaS has this
 
@@ -635,6 +744,48 @@ Do a licence review for Beacon. Suppose the team wants to reuse three pieces of 
 - Licences come in four families: permissive, copyleft, network copyleft (AGPL) and source-available (FSL, BSL, ELv2, fair-code).
 - Reading and learning ideas is always fine; copying code depends on the licence of that exact folder at that exact commit.
 - openstatus is the closest real product to Beacon and the one repo worth knowing inside out.
+
+## ✍️ Check yourself
+
+**1. What does AGPL-3.0 add on top of the GPL, and why do SaaS companies choose it?**
+
+<details><summary>Answer</summary>
+
+The GPL only asks for source when you distribute software, and running it on your own servers is not distribution. AGPL-3.0 also requires offering the source to users who interact with a modified version over a network. That closes the "it's only on our servers" gap, which is exactly what a SaaS company wants to prevent. See the licence table in "At scale / enterprise".
+
+</details>
+
+**2. What is the open-core (`ee/`) pattern, and which licence governs code inside an `ee/` folder?**
+
+<details><summary>Answer</summary>
+
+The main codebase uses an open licence, while a folder, usually `ee/` for "enterprise edition", holds features like SSO, audit logs or advanced RBAC under a commercial licence. The licence file inside that folder governs it, not the one at the repo root. See "Going deeper".
+
+</details>
+
+**3. Beacon wants to reuse Uptime Kuma's notification provider interface. Uptime Kuma is MIT-licensed. May Beacon copy it, and what does that oblige?**
+
+<details><summary>Answer</summary>
+
+Yes. MIT is permissive, so Beacon may copy it into a closed-source product as long as it keeps the copyright and licence notice, for example in a `THIRD_PARTY_NOTICES` file. Still confirm the licence at the exact commit you copy from. See "What this means for you in practice".
+
+</details>
+
+**4. The Beacon team wants to learn billing from real code, and someone suggests reading Sentry or GitLab. Why is that a poor first choice, and where should they look?**
+
+<details><summary>Answer</summary>
+
+Mature products like Sentry, PostHog and GitLab tend to keep billing in a separate private service or in commercial folders, because billing is where the business lives. The best public billing code on the shelf is in the smaller Next.js products (Dub, Documenso) and the starter kits. See the note under the component matrix in "Going deeper".
+
+</details>
+
+**5. A junior pastes openstatus's plan-limit check into Beacon's closed-source backend, reasoning "the repo is public and we only run it on our servers". What is wrong?**
+
+<details><summary>Answer</summary>
+
+openstatus is AGPL-3.0, so the "only on our servers" argument fails: users interact with Beacon over a network, and Beacon would owe them the source of the combined work. Public code is not free code. The fix is to learn the idea and write Beacon's own implementation. See "At scale / enterprise" and "Mistakes juniors make".
+
+</details>
 
 ## 📚 References
 

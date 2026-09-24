@@ -7,6 +7,14 @@
 # 4.1 — Transactional email that actually arrives
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2*
 
+## ⚡ In 60 seconds
+
+- Transactional email (password resets, invites, incident alerts) is triggered by a user action. Its delivery is decided by the receiving mailbox provider, based on your domain's authentication and reputation.
+- The rule that matters most: publish SPF, DKIM and DMARC with an aligned `From:` domain. Since 2024 Gmail and Yahoo reject unauthenticated mail.
+- The v1 default: a provider (Resend, Postmark, SES), templates in React Email or MJML, sending from a queued job, and Mailpit catching everything in development.
+- Keep marketing and transactional mail on separate streams or subdomains, so a bad campaign can't sink your password resets.
+- The biggest trap: ignoring bounces and complaints. Handle the provider's webhooks and check a suppression list before every send.
+
 ## 🧭 Why every SaaS has this
 
 Beacon's first email code is six lines of Nodemailer pointed at the SMTP server of whatever host the app runs on, sending from `alerts@beacon.app`. Nobody set up DNS records for it. In development everything "works", because the developer's own inbox is forgiving. In production, password-reset emails show up twenty minutes late or not at all, and signups stall at "verify your email". Then a customer's API goes down at 3 a.m. and Beacon's incident alert lands in Gmail's spam folder. The customer finds out from their own customers.
@@ -210,6 +218,48 @@ Let Business orgs send status-page subscriber emails from their own domain. Buil
 - Bounces and complaints feed a suppression list that you check before every send.
 - Per-tenant sending domains and big fan-outs are the Business-tier problems. Plan streams for them early.
 
+## ✍️ Check yourself
+
+**1. What do SPF, DKIM and DMARC each prove, and what does "alignment" mean?**
+
+<details><summary>Answer</summary>
+
+SPF lists which servers may send mail for the domain, DKIM proves the message was signed by the domain owner and not altered, and DMARC tells receivers what to do when those checks fail or don't align, and where to send reports. Alignment means the domain that passed SPF or DKIM matches the `From:` domain the human sees. See the domain authentication table in 🟢 The essentials.
+
+</details>
+
+**2. What are the three kinds of feedback a provider sends back, and how should you react to each?**
+
+<details><summary>Answer</summary>
+
+A hard bounce means the address doesn't exist, so never send to it again. A soft bounce is a temporary failure that the provider retries, and you suppress the address after repeated failures. A complaint means the recipient clicked "Report spam", so stop all non-essential mail to them immediately. See "Bounces, complaints and suppression" in 🟡 Going deeper.
+
+</details>
+
+**3. Beacon's status-page subscriber emails go out from the same domain and stream as password resets. Why is that a problem, and what should change?**
+
+<details><summary>Answer</summary>
+
+Subscriber updates are subscribed, bulk-style mail, so a big incident fan-out or a wave of complaints can hurt the reputation that password resets depend on, and delay them. Put subscriber mail on a separate stream or subdomain, with RFC 8058 one-click unsubscribe headers. See the transactional vs marketing table and "Fan-out" in 🔴 At scale / enterprise.
+
+</details>
+
+**4. A Business customer wants status updates sent from `status@acme.com`. What does Beacon need to build, and what happens before their domain verifies?**
+
+<details><summary>Answer</summary>
+
+Beacon onboards the domain with its provider's API, shows the customer the SPF and DKIM records to add, polls verification, and routes each send through the right identity. Until the domain verifies, it sends from Beacon's own domain with the customer's name in the display name. See "Per-tenant custom sending domains" in 🔴 At scale / enterprise.
+
+</details>
+
+**5. The signup handler calls the provider's API directly before returning. During a provider outage, what breaks, and what's the fix?**
+
+<details><summary>Answer</summary>
+
+Provider latency becomes signup latency, and a provider outage turns signups into 500 errors, so users can't create accounts at all. Enqueue an email job and let a worker send it with retries and an idempotency key. The signup then succeeds and the email goes out after recovery. See "Send from a queue" in 🟢 The essentials and the mistakes list.
+
+</details>
+
 ## 📚 References
 
 - Google, Email sender guidelines: https://support.google.com/mail/answer/81126
@@ -225,6 +275,14 @@ Let Business orgs send status-page subscriber emails from their own domain. Buil
 
 # 4.2 — Notifications: in-app, push, Slack, SMS — and preferences
 *Level: 🟡 Intermediate* · *Prerequisites: 4.1, 1.2*
+
+## ⚡ In 60 seconds
+
+- A notification system turns one domain event into the right message, for the right people, on the right channels (in-app, email, push, SMS, Slack, webhooks).
+- The rule that matters most: notify on state changes, not on every event. Hysteresis, dedupe keys, throttles and digests prevent alert fatigue.
+- The v1 default: one `notify()` entry point, a notifications table as the in-app inbox, a category × channel preference matrix, and one job per channel.
+- Some categories (security, billing) are required and can't be turned off, and unsubscribing must work without logging in.
+- The biggest trap: calling Twilio or Slack directly from business code. Rent the channels, but own the decisions in one place.
 
 ## 🧭 Why every SaaS has this
 
@@ -472,6 +530,48 @@ Implement escalation policies per org: step 1 (push + Slack to primary on-call),
 - Escalation is a sequence of cancellable delayed steps, which makes it a job for durable workflows.
 - Rent the channels (Twilio, APNs/FCM, Slack, email providers). Own the decision logic, or adopt Novu, Knock or Courier.
 
+## ✍️ Check yourself
+
+**1. What is the difference between dedupe, throttling and digests?**
+
+<details><summary>Answer</summary>
+
+Dedupe asks "have I already sent this exact thing?" and uses a unique key per incident, state and recipient. Throttling asks "have I sent too much recently?", for example at most 5 SMS per user per hour. A digest asks "can I combine these into one?" and collects non-urgent notifications for a window before sending one summary. See the table in 🟡 Going deeper.
+
+</details>
+
+**2. In what order are notification preferences resolved in a B2B product?**
+
+<details><summary>Answer</summary>
+
+Required categories come first, then org policy, then the user's own preference, then the default. Quiet hours are evaluated in the same step, in the user's timezone. See "Two layers of preferences" in 🟡 Going deeper.
+
+</details>
+
+**3. A customer's API flaps up and down every minute overnight. What should Beacon change so the on-call engineer still notices the real outage at 6 a.m.?**
+
+<details><summary>Answer</summary>
+
+Open an incident only after N consecutive failures and close it after M consecutive successes, notify once per incident state change, and mark a monitor that opens and closes too often as flapping, with one notification and the rest suppressed. Add an SMS throttle with email fallback on top. See "Notify on state changes, not on events" in 🟡 Going deeper.
+
+</details>
+
+**4. How should Beacon escalate an alert that the primary on-call doesn't acknowledge, and what must happen when someone does acknowledge it?**
+
+<details><summary>Answer</summary>
+
+Each escalation step is a delayed job that first checks whether the incident is acknowledged: push and Slack first, SMS after 5 minutes, then the secondary on-call by SMS and phone. The acknowledgement must cancel all pending steps, which calls for a durable workflow engine or delayed jobs with stable IDs you can remove. See the escalation diagram in 🟡 Going deeper.
+
+</details>
+
+**5. Beacon's weekly report email has an unsubscribe link that opens the login page. What goes wrong?**
+
+<details><summary>Answer</summary>
+
+People reading on their phone can't unsubscribe easily, so they click "Report spam" instead, and complaints damage the sending reputation your incident alerts depend on (4.1). Use a signed, per-recipient, per-category token link plus RFC 8058 one-click headers where required. See "Unsubscribe without logging in" in 🟡 Going deeper and the mistakes list.
+
+</details>
+
 ## 📚 References
 
 - Novu documentation: https://docs.novu.co
@@ -486,6 +586,14 @@ Implement escalation policies per org: step 1 (push + Slack to primary on-call),
 
 # 4.3 — Real-time and collaboration: WebSockets to CRDTs
 *Level: 🔴 Advanced* · *Prerequisites: 4.2, 2.4*
+
+## ⚡ In 60 seconds
+
+- Real-time is two separate problems: fan-out (pushing server changes to many clients) and conflicts (many clients editing the same data).
+- The rule that matters most: authorize every channel or room subscription, not just the connection, and re-check it on reconnect.
+- The v1 default: SSE plus Redis pub/sub for dashboards and feeds. Use WebSockets only when clients send often, and CDN-cached polling for huge public pages.
+- For concurrent edits, use optimistic locking for forms and a CRDT (Yjs with Hocuspocus) for shared text. Never hand-roll a CRDT or OT.
+- The biggest trap: assuming pub/sub delivers everything. Clients miss messages during reconnects, so resync on reconnect and back off with jitter.
 
 ## 🧭 Why every SaaS has this
 
@@ -711,6 +819,48 @@ Make the postmortem editor collaborative with Yjs and Hocuspocus: authenticate c
 - Scale fan-out with pub/sub (Redis) between nodes, authorize every channel, and plan for reconnects and missed messages.
 - For concurrent edits, pick deliberately: optimistic locking, server-authoritative merge, OT, or CRDTs (Yjs).
 - Sync engines (Electric, Zero, Liveblocks, PartyKit) can remove a lot of code but reshape your architecture. Adopt them when collaboration is the core product.
+
+## ✍️ Check yourself
+
+**1. When should you choose SSE over WebSockets?**
+
+<details><summary>Answer</summary>
+
+Choose SSE when clients mostly listen, as with dashboards, feeds, notifications and AI token streaming. It's plain HTTP, works through most proxies, and reconnects with `Last-Event-ID` for free. Choose WebSockets when clients also send frequent messages, such as cursors, typing or collaborative edits. See the transport table and rule of thumb in 🟢 The essentials.
+
+</details>
+
+**2. What is a CRDT, and how does it differ from last-write-wins and optimistic locking?**
+
+<details><summary>Answer</summary>
+
+A CRDT is a data structure that merges concurrent changes automatically and deterministically, in any order, so no one's edit is lost. Last-write-wins silently overwrites concurrent work, and optimistic locking rejects stale writes with a 409, so the user must retry or merge. See the strategy table in 🔴 At scale / enterprise.
+
+</details>
+
+**3. Beacon runs three app instances. The check worker detects an outage, but Alice's dashboard is connected to a different instance. How does the update reach her?**
+
+<details><summary>Answer</summary>
+
+The worker publishes the event to a pub/sub channel such as `org:acme` in Redis. Every realtime node subscribed to that channel receives it and forwards it to its own local connections, including Alice's. See the fan-out diagram in 🟢 The essentials.
+
+</details>
+
+**4. A popular customer's public status page gets 50,000 viewers during an outage. How should Beacon deliver updates to them?**
+
+<details><summary>Answer</summary>
+
+Don't hold 50,000 sockets for a page that changes a few times an hour. Serve the page from a CDN with a short cache TTL, and either push updates from a small, cacheable SSE endpoint or have the page poll a CDN-cached JSON file every 30–60 seconds. See "Public status pages at 50,000 viewers" in 🟡 Going deeper.
+
+</details>
+
+**5. The SSE endpoint checks that the user is logged in, then subscribes to whatever `orgId` the URL contains. What's the bug?**
+
+<details><summary>Answer</summary>
+
+It authenticates the connection but doesn't authorize the channel, so any logged-in user can subscribe to `org:someone-else` and read another customer's incidents. Check membership for every subscription, re-check on reconnect, and disconnect users removed from the org. See "Authorization on the connection" in 🟢 The essentials.
+
+</details>
 
 ## 📚 References
 
