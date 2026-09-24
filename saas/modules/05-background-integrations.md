@@ -365,7 +365,7 @@ Rate limit in layers: per IP before auth (stops credential stuffing and junk), p
 
 | Repo | What it is | Stack | License | Pick it when |
 |---|---|---|---|---|
-| [unkeyed/unkey](https://github.com/unkeyed/unkey) | API key management and rate limiting as a service | TS, Go | AGPL-3.0 | You want key issuance, verification, per-key limits and analytics without building them |
+| [unkeyed/unkey](https://github.com/unkeyed/unkey) | API key management and rate limiting as a service | TS, Go | AGPL-3.0 (parts differ; read LICENSE) | You want key issuance, verification, per-key limits and analytics without building them |
 | [upstash/ratelimit-js](https://github.com/upstash/ratelimit-js) | Rate limiting library over Redis (sliding/fixed window, token bucket) | TS | MIT | Serverless or Node app needing app-level rate limits quickly |
 | [arcjet/arcjet-js](https://github.com/arcjet/arcjet-js) | Security SDK: rate limiting, bot detection, shields | TS | Apache-2.0 | You want rate limits plus abuse protection in-app |
 | [Kong/kong](https://github.com/Kong/kong) | API gateway with plugins for auth, rate limits, logging | Lua/Nginx | Apache-2.0 | Many services behind one API surface |
