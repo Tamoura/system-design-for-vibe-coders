@@ -5,16 +5,9 @@ import { listMonitors } from '@/lib/monitors';
 import { getMonitorUsage } from '@/lib/entitlements';
 import { PLANS } from '@/core/plans';
 import { searchMonitors } from '@/lib/search';
+import { LiveMonitorList } from './live-monitor-list';
 
 export const dynamic = 'force-dynamic';
-
-function ago(d: Date | null) {
-  if (!d) return 'never';
-  const s = Math.round((Date.now() - d.getTime()) / 1000);
-  if (s < 60) return `${s}s ago`;
-  if (s < 3600) return `${Math.round(s / 60)}m ago`;
-  return `${Math.round(s / 3600)}h ago`;
-}
 
 export default async function MonitorsPage({
   params,
@@ -90,23 +83,23 @@ export default async function MonitorsPage({
         // TODO(6.1): a real empty state is the first step of onboarding.
         <div className="card muted">No monitors yet. Add one, then run <code>npm run checks:run</code>.</div>
       )}
-      {monitors.map((m) => (
-        <div className="card row" key={m.id}>
-          <span className={`dot ${m.state}`} title={m.state} />
-          <div style={{ flex: 1, minWidth: 200 }}>
-            <Link href={`/${ctx.orgSlug}/monitors/${m.id}`}><strong>{m.name}</strong></Link>
-            <div className="muted">{m.url}</div>
-          </div>
-          <div className="muted">
-            every {m.intervalSeconds}s{m.pausedReason === 'manual' ? ' · paused' : m.pausedReason === 'plan_limit' ? ' · paused (plan limit)' : ''}
-          </div>
-          <div className="muted">{m.uptime24h === null ? '—' : `${m.uptime24h}%`} 24h</div>
-          <div className="muted">
-            {m.lastLatencyMs === null ? '' : `${m.lastLatencyMs} ms · `}checked {ago(m.lastCheckedAt)}
-          </div>
-          {m.openIncident && <div className="error">Incident open: {m.openIncident.cause}</div>}
-        </div>
-      ))}
+      {/* Lesson 4.3 (🟢): tiles update live over SSE instead of polling. */}
+      <LiveMonitorList
+        orgSlug={ctx.orgSlug}
+        renderedAt={Date.now()}
+        monitors={monitors.map((m) => ({
+          id: m.id,
+          name: m.name,
+          url: m.url,
+          intervalSeconds: m.intervalSeconds,
+          pausedReason: m.pausedReason,
+          state: m.state,
+          lastCheckedAt: m.lastCheckedAt?.toISOString() ?? null,
+          lastLatencyMs: m.lastLatencyMs,
+          uptime24h: m.uptime24h,
+          openIncident: m.openIncident ? { cause: m.openIncident.cause } : null,
+        }))}
+      />
     </section>
   );
 }

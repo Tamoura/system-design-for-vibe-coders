@@ -8,6 +8,7 @@ import { assertCanCreateMonitor, assertCanRunAnotherMonitor, assertIntervalAllow
 import { AccessError } from './errors';
 import { kickDeliveries, notifyInTx } from './notifications';
 import { incidentResolvedEvent } from './notifications/events';
+import { publishInTx } from './realtime';
 
 const { monitors, checkResults, incidents } = schema;
 
@@ -239,6 +240,7 @@ export async function resolveIncident(ctx: OrgScope & { orgSlug: string; orgName
       .returning();
     if (!incident?.resolvedAt) return false;
     const [monitor] = await tx.select().from(monitors).where(and(eq(monitors.organizationId, ctx.orgId), eq(monitors.id, incident.monitorId)));
+    await publishInTx(tx, ctx.orgId, { type: 'incident.changed', monitorId: monitor.id, incidentId: incident.id, state: 'resolved' });
     await notifyInTx(tx, incidentResolvedEvent({ id: ctx.orgId, name: ctx.orgName, slug: ctx.orgSlug }, monitor, { ...incident, resolvedAt: incident.resolvedAt }));
     return true;
   });

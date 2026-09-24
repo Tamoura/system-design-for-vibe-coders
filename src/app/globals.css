@@ -59,3 +59,5 @@ mark { background: #ffe58a; color: #1a1f29; border-radius: 2px; padding: 0 1px; 
 .badge.delivery.sent { color: var(--up); border-color: var(--up); }
 .badge.delivery.failed, .badge.delivery.suppressed { color: var(--down); border-color: var(--down); }
 .badge.delivery.throttled, .badge.delivery.skipped { color: #d68910; border-color: #d68910; }
+.live-status { font-size: .8rem; }
+.badge.unread { background: var(--down); color: #fff; border-color: var(--down); }

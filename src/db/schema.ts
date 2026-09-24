@@ -577,6 +577,26 @@ export const notificationDeliveries = pgTable(
   ],
 );
 
+/**
+ * Lesson 4.3 (🟡): who is looking at what, right now ("Alice and Bob are
+ * viewing"). Each open tab heartbeats every 10 s; a row whose last_seen_at is
+ * older than the TTL no longer counts, so a crashed tab disappears by itself.
+ * The lesson keeps this in Redis with TTL keys; Beacon has no Redis yet, and
+ * a small table with a timestamp does the same job (src/lib/presence.ts).
+ */
+export const presence = pgTable(
+  'presence',
+  {
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    topic: text('topic').notNull(), // "monitor:<id>"
+    userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    lastSeenAt: timestamp('last_seen_at', { withTimezone: true }).notNull().defaultNow(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [primaryKey({ columns: [t.organizationId, t.topic, t.userId] })],
+);
+
 export type Organization = typeof organizations.$inferSelect;
 export type Membership = typeof memberships.$inferSelect;
 export type Invitation = typeof invitations.$inferSelect;

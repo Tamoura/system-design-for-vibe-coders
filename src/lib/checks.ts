@@ -8,6 +8,7 @@ import { entitlementsFor } from '@/core/plans';
 import { isDue } from '@/core/schedule';
 import { incidentOpenedEvent, incidentResolvedEvent, monitorFlappingEvent } from './notifications/events';
 import { notifyInTx } from './notifications/pipeline';
+import { publishInTx } from './realtime';
 
 const { organizations, monitors, checkResults, incidents, incidentUpdates } = schema;
 
@@ -67,6 +68,8 @@ export async function runChecks(opts: { all?: boolean; check?: (url: string) => 
 export async function recordCheckResult(org: Pick<Org, 'id' | 'name' | 'slug'>, monitor: Pick<MonitorRow, 'id' | 'name' | 'url'>, outcome: CheckOutcome, now = new Date()): Promise<string> {
   return withOrg(org.id, async (tx) => {
     await tx.insert(checkResults).values({ organizationId: org.id, monitorId: monitor.id, checkedAt: now, ...outcome });
+    // Lesson 4.3: open dashboards turn the tile red or green. Sent when this transaction commits.
+    await publishInTx(tx, org.id, { type: 'monitor.status', monitorId: monitor.id, state: outcome.ok ? 'up' : 'down', checkedAt: now.toISOString(), latencyMs: outcome.latencyMs });
     const recent = await tx
       .select({ ok: checkResults.ok })
       .from(checkResults)
@@ -88,6 +91,7 @@ export async function recordCheckResult(org: Pick<Org, 'id' | 'name' | 'slug'>, 
       // Lesson 2.3: the first update, so the incident is searchable from the start.
       await tx.insert(incidentUpdates).values({ organizationId: org.id, incidentId: incident.id, body: `Opened automatically: ${cause}` });
       event = incidentOpenedEvent(org, monitor, incident);
+      await publishInTx(tx, org.id, { type: 'incident.changed', monitorId: monitor.id, incidentId: incident.id, state: 'opened' });
       line = `  ✗ ${monitor.name}: incident opened (${cause})`;
     } else if (decision === 'resolve' && open) {
       await tx
@@ -96,6 +100,7 @@ export async function recordCheckResult(org: Pick<Org, 'id' | 'name' | 'slug'>, 
         .where(and(eq(incidents.organizationId, org.id), eq(incidents.id, open.id)));
       await tx.insert(incidentUpdates).values({ organizationId: org.id, incidentId: open.id, body: 'Resolved automatically: checks are passing again.' });
       event = incidentResolvedEvent(org, monitor, { ...open, resolvedAt: now });
+      await publishInTx(tx, org.id, { type: 'incident.changed', monitorId: monitor.id, incidentId: open.id, state: 'resolved' });
       line = `  ✓ ${monitor.name}: incident resolved`;
     }
 

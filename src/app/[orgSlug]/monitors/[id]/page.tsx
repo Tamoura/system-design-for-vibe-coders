@@ -9,6 +9,7 @@ import { AutoRefresh } from '@/app/_components/auto-refresh';
 import { FileUploader } from '@/app/_components/file-uploader';
 import { addIncidentUpdateAction, deleteMonitorAction, resolveIncidentAction } from './actions';
 import { EditMonitorForm } from './edit-form';
+import { LiveRefresh, Presence } from './live';
 
 export const dynamic = 'force-dynamic';
 
@@ -29,7 +30,12 @@ export default async function MonitorPage({ params }: { params: Promise<{ orgSlu
   const ent = await getEntitlements(ctx); // lesson 3.2: for the interval picker's hints
   return (
     <section className="grid">
-      <h1 style={{ margin: 0 }}>{monitor.name}</h1>
+      <div className="row">
+        <h1 style={{ margin: 0 }}>{monitor.name}</h1>
+        {/* Lesson 4.3 (🟡): who else has this page open, and live updates for it. */}
+        <Presence orgSlug={ctx.orgSlug} topic={`monitor:${monitor.id}`} me={ctx.userId} />
+        <LiveRefresh monitorId={monitor.id} />
+      </div>
       <div className="card grid">
         <div><span className="muted">URL</span> {monitor.url}</div>
         <div>

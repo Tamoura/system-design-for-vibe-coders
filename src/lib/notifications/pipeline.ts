@@ -5,6 +5,7 @@ import { CATEGORIES, orgWantsSlack, resolvePersonalChannels, type Category } fro
 import { can } from '@/core/permissions';
 import { entitlementsFor, type PlanId } from '@/core/plans';
 import type { TemplateName, TemplateProps } from '@/emails';
+import { publishInTx } from '../realtime';
 import { appUrl, unsubscribeLinks } from '../urls';
 
 const { organizations, memberships, users, notifications, notificationPreferences, orgNotificationPolicies, notificationDeliveries, statusPageSubscribers } =
@@ -129,6 +130,8 @@ export async function notifyInTx(tx: TenantTx, event: NotifyEvent): Promise<{ no
       .returning({ id: notifications.id });
     if (!created) continue;
     notified++;
+    // Lesson 4.3: the bell updates live. The SSE route forwards this only to this user.
+    await publishInTx(tx, event.orgId, { type: 'notification.created', userId: m.userId });
 
     // 3. Preferences, in the lesson's order (src/core/notifications.ts).
     const channels = resolvePersonalChannels({

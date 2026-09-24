@@ -140,7 +140,7 @@ describe('every tenant table is protected', () => {
 const TENANT_TABLES = [
   'monitors', 'checkResults', 'incidents', 'incidentUpdates', 'files', 'subscriptions', 'usageEvents', 'usageAlerts',
   // Module 4
-  'notifications', 'notificationPreferences', 'orgNotificationPolicies', 'notificationDeliveries', 'statusPageSubscribers',
+  'notifications', 'notificationPreferences', 'orgNotificationPolicies', 'notificationDeliveries', 'statusPageSubscribers', 'presence',
 ];
 const SCANNED = ['src', 'scripts/run-checks.ts', 'scripts/process-files.ts', 'scripts/report-usage.ts', 'scripts/send-messages.ts'];
 const EXEMPT = ['src/db/tenant.ts', 'src/db/schema.ts', 'src/db/index.ts'];

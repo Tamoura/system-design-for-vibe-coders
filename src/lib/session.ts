@@ -23,3 +23,14 @@ export async function requireUser(returnTo = '/dashboard'): Promise<CurrentUser>
   if (!user) redirect(`/login?next=${encodeURIComponent(returnTo)}`);
   return user;
 }
+
+/**
+ * Lesson 4.3: is the session behind these request headers still the one for
+ * `userId`? A live stream is opened once and lives for hours, so it asks
+ * again from time to time: signing out (or a password reset, which revokes
+ * every session) then also ends the user's open streams.
+ */
+export async function isSessionValid(requestHeaders: Headers, userId: string): Promise<boolean> {
+  const session = await auth.api.getSession({ headers: requestHeaders });
+  return session?.user.id === userId;
+}

@@ -4,6 +4,8 @@ import { forPage, requireMembership } from '@/lib/access';
 import { listOrganizationsForUser } from '@/lib/organizations';
 import { countUnread } from '@/lib/notifications';
 import { CommandPalette } from './command-palette';
+import { NotificationBell } from './notification-bell';
+import { LiveStatus, RealtimeProvider } from './realtime';
 
 /**
  * Lesson 1.2: everything under /[orgSlug] belongs to one organization. This
@@ -16,7 +18,9 @@ export default async function OrgLayout({ children, params }: { children: React.
   const ctx = await forPage(requireMembership(orgSlug), `/${orgSlug}/monitors`);
   const orgs = await listOrganizationsForUser(ctx.userId);
   const unread = await countUnread(ctx); // lesson 4.2: the bell
+  // Lesson 4.3: one live connection (SSE) for every page of this org, shared by the components below.
   return (
+    <RealtimeProvider orgSlug={ctx.orgSlug}>
     <div className="grid" style={{ gap: '1.4rem' }}>
       <nav className="org-nav row">
         {/* Lesson 1.2 (🟡): the org switcher lists every org the user belongs to. */}
@@ -40,12 +44,12 @@ export default async function OrgLayout({ children, params }: { children: React.
         {can(ctx.role, 'billing.manage') && <Link href={`/${ctx.orgSlug}/billing`}>Billing</Link>}
         {/* Lesson 2.3 (🟡): Ctrl+K / ⌘K search across monitors, incidents and pages. */}
         <CommandPalette orgSlug={ctx.orgSlug} />
-        {/* Lesson 4.2 (🟢): the in-app inbox, with the unread count. */}
-        <Link href={`/${ctx.orgSlug}/notifications`} className="bell" aria-label={`Notifications, ${unread} unread`}>
-          🔔 <span className="badge" data-testid="unread-count">{unread}</span>
-        </Link>
+        {/* Lesson 4.2 (🟢): the in-app inbox, with the unread count (live since 4.3). */}
+        <NotificationBell orgSlug={ctx.orgSlug} unread={unread} />
+        <LiveStatus />
       </nav>
       {children}
     </div>
+    </RealtimeProvider>
   );
 }

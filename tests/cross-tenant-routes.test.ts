@@ -3,7 +3,7 @@ import path from 'node:path';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 
 vi.mock('@/db', () => import('./helpers/test-db').then((m) => m.testDbModule()));
-vi.mock('@/lib/session', () => ({ getCurrentUser: vi.fn(), requireUser: vi.fn() }));
+vi.mock('@/lib/session', () => ({ getCurrentUser: vi.fn(), requireUser: vi.fn(), isSessionValid: vi.fn(async () => true) }));
 
 import { eq } from 'drizzle-orm';
 import { db, schema } from '@/db';
@@ -21,6 +21,9 @@ import * as billingRoute from '@/app/api/orgs/[orgSlug]/billing/route';
 import * as checkoutRoute from '@/app/api/orgs/[orgSlug]/billing/checkout/route';
 import * as portalRoute from '@/app/api/orgs/[orgSlug]/billing/portal/route';
 import * as notificationsRoute from '@/app/api/orgs/[orgSlug]/notifications/route';
+import * as eventsRoute from '@/app/api/orgs/[orgSlug]/events/route';
+import * as presenceRoute from '@/app/api/orgs/[orgSlug]/presence/route';
+import { publish } from '@/lib/realtime';
 import { makeOrg, signInAs } from './helpers/fixtures';
 
 /*
@@ -70,8 +73,12 @@ const req = (method: string, body?: unknown) =>
 const p = <T extends object>(params: T) => ({ params: Promise.resolve(params) });
 
 type Case = {
-  /** 'item': must be 404 under both slugs. 'list': 404 under Acme's slug; 200 under Globex's, without Acme data. */
-  kind: 'item' | 'list';
+  /**
+   * 'item': must be 404 under both slugs. 'list': 404 under Acme's slug; 200 under Globex's, without Acme data.
+   * 'stream' (lesson 4.3): like 'list', for a response that never ends: read it for a moment while Acme
+   * publishes events, then hang up.
+   */
+  kind: 'item' | 'list' | 'stream';
   call: (orgSlug: string) => Promise<Response>;
 };
 
@@ -107,7 +114,34 @@ const CASES: Record<string, Case> = {
   'POST billing/portal': { kind: 'list', call: (orgSlug) => portalRoute.POST(req('POST', { customer: A.customer }), p({ orgSlug })) },
   // Lesson 4.2: the inbox is per org and per person.
   'GET notifications': { kind: 'list', call: (orgSlug) => notificationsRoute.GET(req('GET'), p({ orgSlug })) },
+  // Lesson 4.3: the live stream, and presence on Acme's monitor.
+  'GET events': { kind: 'stream', call: (orgSlug) => eventsRoute.GET(req('GET'), p({ orgSlug })) },
+  'POST presence': { kind: 'item', call: (orgSlug) => presenceRoute.POST(req('POST', { topic: `monitor:${A.monitor}` }), p({ orgSlug })) },
+  'DELETE presence': {
+    kind: 'item',
+    call: (orgSlug) => presenceRoute.DELETE(new Request(`http://test/x?topic=monitor:${A.monitor}`, { method: 'DELETE' }), p({ orgSlug })),
+  },
 };
+
+/** Read a stream for ~200 ms while `meanwhile` runs, then hang up. */
+async function readForAWhile(res: Response, meanwhile: () => Promise<unknown>): Promise<string> {
+  const reader = res.body!.getReader();
+  const decoder = new TextDecoder();
+  let text = '';
+  const until = Date.now() + 200;
+  let published = false;
+  while (Date.now() < until) {
+    const chunk = await Promise.race([reader.read(), new Promise<null>((r) => setTimeout(() => r(null), 50))]);
+    if (chunk && chunk.done) break;
+    if (chunk?.value) text += decoder.decode(chunk.value);
+    if (!published) {
+      published = true;
+      await meanwhile();
+    }
+  }
+  await reader.cancel();
+  return text;
+}
 
 describe('org B cannot reach org A through any route', () => {
   for (const [name, c] of Object.entries(CASES)) {
@@ -121,6 +155,11 @@ describe('org B cannot reach org A through any route', () => {
       const res = await c.call(globex.slug);
       if (c.kind === 'item') {
         expect(res.status).toBe(404);
+      } else if (c.kind === 'stream') {
+        expect(res.status).toBe(200);
+        const body = await readForAWhile(res, () => publish(acme.id, { type: 'monitor.status', monitorId: A.monitor, state: 'down', checkedAt: new Date().toISOString(), latencyMs: 1 }));
+        expect(body).toContain('event: ready'); // it really was streaming
+        for (const secret of [...Object.values(A), 'acme-secret', acme.id]) expect(body).not.toContain(secret);
       } else {
         expect(res.status).toBeLessThan(300);
         const body = await res.text();
