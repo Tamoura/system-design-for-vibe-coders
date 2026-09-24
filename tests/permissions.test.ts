@@ -14,6 +14,7 @@ const EXPECTED: Record<Permission, string[]> = {
   'member.manage': ['owner', 'admin'],
   'billing.read': ['owner', 'admin'], // lesson 3.1: plan and usage
   'billing.manage': ['owner'],
+  'notification.manage': ['owner', 'admin'],
   'org.delete': ['owner'],
 };
 

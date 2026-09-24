@@ -5,13 +5,19 @@
  * recent results (newest first), return what to do. Requiring several failures
  * in a row avoids paging a team for one dropped packet — the cheapest defence
  * against alert fatigue (lesson 4.2).
+ *
+ * Lesson 4.2 (🟡): three failures in a row (it was two on earlier branches).
+ * The other half of anti-flapping, "too many state changes in an hour", is in
+ * src/core/notifications.ts.
  */
+export const FAILURES_TO_OPEN = 3;
+
 export type IncidentDecision = 'open' | 'resolve' | 'none';
 
 export function decideIncident(
   hasOpenIncident: boolean,
   recentOkNewestFirst: boolean[],
-  failuresToOpen = 2,
+  failuresToOpen = FAILURES_TO_OPEN,
 ): IncidentDecision {
   if (recentOkNewestFirst.length === 0) return 'none';
   const latestOk = recentOkNewestFirst[0];

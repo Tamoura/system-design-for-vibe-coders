@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { can } from '@/core/permissions';
 import { forPage, requireMembership } from '@/lib/access';
 import { listOrganizationsForUser } from '@/lib/organizations';
+import { countUnread } from '@/lib/notifications';
 import { CommandPalette } from './command-palette';
 
 /**
@@ -14,6 +15,7 @@ export default async function OrgLayout({ children, params }: { children: React.
   const { orgSlug } = await params;
   const ctx = await forPage(requireMembership(orgSlug), `/${orgSlug}/monitors`);
   const orgs = await listOrganizationsForUser(ctx.userId);
+  const unread = await countUnread(ctx); // lesson 4.2: the bell
   return (
     <div className="grid" style={{ gap: '1.4rem' }}>
       <nav className="org-nav row">
@@ -38,6 +40,10 @@ export default async function OrgLayout({ children, params }: { children: React.
         {can(ctx.role, 'billing.manage') && <Link href={`/${ctx.orgSlug}/billing`}>Billing</Link>}
         {/* Lesson 2.3 (🟡): Ctrl+K / ⌘K search across monitors, incidents and pages. */}
         <CommandPalette orgSlug={ctx.orgSlug} />
+        {/* Lesson 4.2 (🟢): the in-app inbox, with the unread count. */}
+        <Link href={`/${ctx.orgSlug}/notifications`} className="bell" aria-label={`Notifications, ${unread} unread`}>
+          🔔 <span className="badge" data-testid="unread-count">{unread}</span>
+        </Link>
       </nav>
       {children}
     </div>

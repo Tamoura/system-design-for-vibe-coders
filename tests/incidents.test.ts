@@ -5,12 +5,15 @@ describe('decideIncident', () => {
   it('does not open on a single failure', () => {
     expect(decideIncident(false, [false, true, true])).toBe('none');
   });
-  it('opens after two failures in a row', () => {
-    expect(decideIncident(false, [false, false, true])).toBe('open');
+  it('does not open on two failures (lesson 4.2: three in a row)', () => {
+    expect(decideIncident(false, [false, false, true])).toBe('none');
+  });
+  it('opens after three failures in a row', () => {
+    expect(decideIncident(false, [false, false, false, true])).toBe('open');
   });
   it('respects a custom threshold', () => {
-    expect(decideIncident(false, [false, false], 3)).toBe('none');
-    expect(decideIncident(false, [false, false, false], 3)).toBe('open');
+    expect(decideIncident(false, [false], 2)).toBe('none');
+    expect(decideIncident(false, [false, false], 2)).toBe('open');
   });
   it('resolves an open incident on the first success', () => {
     expect(decideIncident(true, [true, false, false])).toBe('resolve');

@@ -2,12 +2,10 @@ import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('@/db', () => import('./helpers/test-db').then((m) => m.testDbModule()));
 vi.mock('@/lib/session', () => ({ getCurrentUser: vi.fn(), requireUser: vi.fn() }));
-vi.mock('@/lib/email', () => ({ sendEmail: vi.fn() }));
 
 import { eq } from 'drizzle-orm';
 import { db, schema } from '@/db';
 import { withOrg } from '@/db/tenant';
-import { sendEmail } from '@/lib/email';
 import { fakeBilling } from '@/lib/billing/provider';
 import { getUsageSummary, recordSmsSent, reportPendingUsage } from '@/lib/usage';
 import { makeOrg } from './helpers/fixtures';
@@ -80,6 +78,12 @@ describe('recording usage (🟢)', () => {
   });
 });
 
+/** Lesson 4.2: usage alerts are notifications in the required "billing" category, for the owner. */
+async function billingNotices(orgId: string) {
+  const rows = await withOrg(orgId, (tx) => tx.select().from(schema.notifications).where(eq(schema.notifications.organizationId, orgId)).orderBy(schema.notifications.createdAt));
+  return rows.filter((n) => n.category === 'billing').map((n) => n.title);
+}
+
 describe('overage, alerts and reporting to the meter (🟡)', () => {
   let org: Awaited<ReturnType<typeof proOrg>>;
   let alertSubjects: string[];
@@ -87,9 +91,8 @@ describe('overage, alerts and reporting to the meter (🟡)', () => {
 
   beforeAll(async () => {
     org = await proOrg('Flappy');
-    vi.mocked(sendEmail).mockClear();
     for (let i = 1; i <= 130; i++) await recordSmsSent({ orgId: org.id }, { messageSid: `SMf${i}`, segments: 1, sentAt: sentAt(i) });
-    alertSubjects = vi.mocked(sendEmail).mock.calls.map(([m]) => `${m.template} ${(m.props as { threshold: number }).threshold}%`); // (mocks are cleared between tests)
+    alertSubjects = await billingNotices(org.id);
   });
 
   beforeEach(() => {
@@ -103,9 +106,8 @@ describe('overage, alerts and reporting to the meter (🟡)', () => {
 
   it('sends each alert (80%, 100%) at most once per org per period', async () => {
     expect(alertSubjects).toEqual([expect.stringContaining('80%'), expect.stringContaining('100%')]);
-    vi.mocked(sendEmail).mockClear();
     await recordSmsSent({ orgId: org.id }, { messageSid: 'SMf-extra', segments: 1, sentAt: sentAt(200) });
-    expect(vi.mocked(sendEmail)).not.toHaveBeenCalled();
+    expect(await billingNotices(org.id)).toEqual(alertSubjects); // nothing new
   });
 
   it('reports every event to the meter with its idempotency key; Beacon’s count and the meter’s match', async () => {

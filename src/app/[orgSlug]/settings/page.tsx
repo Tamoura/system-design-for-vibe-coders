@@ -4,7 +4,9 @@ import { getOrganization } from '@/lib/organizations';
 import { can } from '@/core/permissions';
 import { getBillingOverview } from '@/lib/billing';
 import { FileUploader } from '@/app/_components/file-uploader';
+import { getOrgNotificationSettings } from '@/lib/notifications';
 import { UsageCard } from '../billing/usage-card';
+import { OrgNotificationsForm } from './org-notifications-form';
 import { setStatusPageAction } from './actions';
 
 export const dynamic = 'force-dynamic';
@@ -15,6 +17,8 @@ export default async function SettingsPage({ params }: { params: Promise<{ orgSl
   const org = await getOrganization(ctx);
   // Lessons 3.2/3.3: plan and usage, for roles with "billing.read".
   const billing = can(ctx.role, 'billing.read') ? await getBillingOverview(ctx) : null;
+  // Lesson 4.2 (🟡): the org's notification policy and Slack channel.
+  const notifications = can(ctx.role, 'notification.manage') ? await getOrgNotificationSettings(ctx) : null;
   // TODO(6.1): organization settings (name, custom domain) grow here.
   return (
     <section className="grid" style={{ maxWidth: 560 }}>
@@ -35,6 +39,7 @@ export default async function SettingsPage({ params }: { params: Promise<{ orgSl
         </label>
         <div><button className="btn">Save</button></div>
       </form>
+      {notifications && <OrgNotificationsForm orgSlug={ctx.orgSlug} settings={notifications} />}
       {/* Lesson 2.2 (🟢): the status page logo, uploaded straight to storage. */}
       <div className="card grid">
         <strong>Status page logo</strong>

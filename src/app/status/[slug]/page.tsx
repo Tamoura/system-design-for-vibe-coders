@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { listMonitors } from '@/lib/monitors';
 import { findPublicStatusPage } from '@/lib/organizations';
 import { overallStatus } from '@/core/incidents';
+import { SubscribeForm } from './subscribe-form';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,7 +17,7 @@ const HEADLINE = {
  * The public status page, one per organization (lesson 1.2). No login needed,
  * but it only ever shows the monitors of the org named in the URL.
  * TODO(6.1): serve it on the customer's own domain.
- * TODO(4.2): let visitors subscribe to incident updates.
+ * Lesson 4.2 (🟡): visitors subscribe to incident updates (double opt-in).
  */
 export default async function StatusPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -41,6 +42,9 @@ export default async function StatusPage({ params }: { params: Promise<{ slug: s
           <span className="muted">{m.uptime24h === null ? '—' : `${m.uptime24h}% uptime (24h)`}</span>
         </div>
       ))}
+      <div className="card">
+        <SubscribeForm slug={slug} />
+      </div>
     </section>
   );
 }

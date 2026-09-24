@@ -1,13 +1,12 @@
 import { and, asc, desc, eq, gte, inArray, isNotNull, isNull, lt, sum } from 'drizzle-orm';
 import { db, schema } from '@/db';
 import { withOrg, type TenantTx } from '@/db/tenant';
-import { PLANS, statusGrantsAccess } from '@/core/plans';
+import { statusGrantsAccess } from '@/core/plans';
 import { billingPeriod, METERS, rateSms, reachedThresholds, usageKeys, type Meter, type Period } from '@/core/usage';
 import { getBillingProvider } from './billing/provider';
-import { listBillingContacts } from './billing/sync';
-import { sendEmail } from './email';
-import { appUrl } from './urls';
 import { entitlementsInTx } from './entitlements';
+import { usageAlertEvent } from './notifications/events';
+import { notifyInTx } from './notifications/pipeline';
 
 const { organizations, subscriptions, usageEvents, usageAlerts } = schema;
 
@@ -31,18 +30,19 @@ export async function recordUsage(
   { orgId }: Scope,
   event: { idempotencyKey: string; meter: Meter; quantity: number; occurredAt: Date },
 ): Promise<{ recorded: boolean }> {
-  const { recorded, alerts } = await withOrg(orgId, async (tx) => {
+  return withOrg(orgId, async (tx) => {
     const inserted = await tx
       .insert(usageEvents)
       .values({ organizationId: orgId, ...event })
       .onConflictDoNothing({ target: usageEvents.idempotencyKey })
       .returning({ id: usageEvents.id });
-    if (inserted.length === 0) return { recorded: false, alerts: [] as Alert[] };
-    return { recorded: true, alerts: await newAlerts(tx, orgId, event.meter) };
+    if (inserted.length === 0) return { recorded: false };
+    // Lesson 4.2: an alert is a notification in the required "billing"
+    // category, written in this transaction and sent by the channel workers
+    // (the SMS worker that called us runs them next).
+    await notifyUsageAlerts(tx, orgId, event.meter);
+    return { recorded: true };
   });
-  // Emails go out after the transaction (lesson 2.4: no network inside withOrg).
-  for (const alert of alerts) await emailUsageAlert(orgId, alert);
-  return { recorded };
 }
 
 /**
@@ -105,41 +105,28 @@ export async function getUsageSummary({ orgId }: Scope, now: Date = new Date()) 
   });
 }
 
-type Alert = { threshold: number; used: number; included: number };
-
 /**
  * Lesson 3.3 (🟡): alerts at 80% and 100% of the included SMS, each at most
  * once per org per period. The insert into usage_alerts is the "have we sent
  * it?" check: its primary key lets only the first one through.
  */
-async function newAlerts(tx: TenantTx, orgId: string, meter: Meter): Promise<Alert[]> {
-  if (meter !== METERS.sms) return [];
+async function notifyUsageAlerts(tx: TenantTx, orgId: string, meter: Meter): Promise<void> {
+  if (meter !== METERS.sms) return;
   const ent = await entitlementsInTx(tx, orgId);
   const period = billingPeriod(await currentSubscription(tx, orgId));
   const used = await usageInPeriod(tx, orgId, meter, period);
-  const alerts: Alert[] = [];
   for (const threshold of reachedThresholds(used, ent.smsCreditsPerMonth)) {
     const first = await tx
       .insert(usageAlerts)
       .values({ organizationId: orgId, meter, periodStart: period.start, threshold })
       .onConflictDoNothing()
       .returning({ threshold: usageAlerts.threshold });
-    if (first.length) alerts.push({ threshold, used, included: ent.smsCreditsPerMonth });
-  }
-  return alerts;
-}
-
-async function emailUsageAlert(orgId: string, alert: Alert) {
-  const [org] = await db
-    .select({ name: organizations.name, slug: organizations.slug, plan: organizations.plan })
-    .from(organizations)
-    .where(eq(organizations.id, orgId));
-  for (const person of await listBillingContacts(orgId)) {
-    await sendEmail({
-      to: person.email,
-      template: 'usage-alert',
-      props: { orgName: org.name, planName: PLANS[org.plan].name, url: appUrl(`/${org.slug}/billing`), ...alert },
-    });
+    if (!first.length) continue;
+    const [org] = await tx
+      .select({ id: organizations.id, name: organizations.name, slug: organizations.slug, plan: organizations.plan })
+      .from(organizations)
+      .where(eq(organizations.id, orgId));
+    await notifyInTx(tx, usageAlertEvent(org, { threshold, used, included: ent.smsCreditsPerMonth, periodStart: period.start }));
   }
 }
 

@@ -1,14 +1,13 @@
 import { eq } from 'drizzle-orm';
 import { db, schema } from '@/db';
 import { withOrg } from '@/db/tenant';
-import { can } from '@/core/permissions';
-import { entitlementsFor, isDowngrade, planFromSubscriptions, PLANS, type PlanId } from '@/core/plans';
-import { sendEmail } from '../email';
-import { appUrl } from '../urls';
+import { entitlementsFor, isDowngrade, planFromSubscriptions, type PlanId } from '@/core/plans';
+import { notify } from '../notifications';
+import { planDowngradedEvent } from '../notifications/events';
 import { reconcileMonitorsWithPlan } from '../entitlements';
 import { getBillingProvider } from './provider';
 
-const { organizations, subscriptions, memberships, users } = schema;
+const { organizations, subscriptions } = schema;
 
 export type SyncResult =
   | { synced: false; reason: 'unknown_customer' | 'billing_disabled' }
@@ -79,41 +78,11 @@ export async function syncCustomerFromStripe(customerId: string): Promise<SyncRe
     return { previousPlan, plan, ...changes };
   });
 
-  // Email after the transaction has committed, never inside it.
-  // TODO(5.1): enqueue it as a job; the webhook should only sync and return.
+  // Lesson 3.2 (🟡): "email the owner", once per downgrade. Since 4.2 it is a
+  // notification in the required "billing" category (in-app + email to
+  // everyone who may manage billing), queued here and sent after the response.
   if (isDowngrade(result.previousPlan, result.plan)) {
-    await emailDowngrade(org, result.previousPlan, result.plan, result.frozen);
+    await notify(planDowngradedEvent(org, { from: result.previousPlan, to: result.plan, frozen: result.frozen, at: new Date() }));
   }
   return { synced: true, orgId: org.id, ...result };
-}
-
-/** Lesson 3.2 (🟡): "email the owner", once per downgrade: everyone who may manage billing. */
-async function emailDowngrade(org: { id: string; name: string; slug: string }, from: PlanId, to: PlanId, frozen: number) {
-  const people = await listBillingContacts(org.id);
-  const ent = entitlementsFor(to);
-  for (const person of people) {
-    await sendEmail({
-      to: person.email,
-      template: 'plan-downgraded',
-      props: {
-        orgName: org.name,
-        fromPlan: PLANS[from].name,
-        toPlan: PLANS[to].name,
-        maxMonitors: ent.maxMonitors,
-        minIntervalSec: ent.minIntervalSec,
-        frozen,
-        url: appUrl(`/${org.slug}/${frozen > 0 ? 'monitors/plan-limit' : 'billing'}`),
-      },
-    });
-  }
-}
-
-/** Members whose role may manage billing (lesson 1.3's permission map decides, not a role name). */
-export async function listBillingContacts(orgId: string) {
-  const rows = await db
-    .select({ email: users.email, role: memberships.role })
-    .from(memberships)
-    .innerJoin(users, eq(users.id, memberships.userId))
-    .where(eq(memberships.organizationId, orgId));
-  return rows.filter((r) => can(r.role, 'billing.manage'));
 }

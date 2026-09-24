@@ -41,7 +41,7 @@ export async function makeOrg(name: string, opts: { plan?: PlanId } = {}) {
     users[role] = await makeUser(`${name}-${role}`);
     await db.insert(schema.memberships).values({ organizationId: org.id, userId: users[role].id, role });
   }
-  return { ...org, users };
+  return { ...org, name, users };
 }
 
 /** Make the next requests come from this user (or from nobody). */

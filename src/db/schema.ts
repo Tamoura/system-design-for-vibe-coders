@@ -1,6 +1,7 @@
 import { sql } from 'drizzle-orm';
 import { boolean, check, customType, index, integer, jsonb, pgEnum, pgTable, primaryKey, text, timestamp, uniqueIndex, uuid, type AnyPgColumn } from 'drizzle-orm/pg-core';
 import { FILE_KINDS } from '../core/files';
+import { CATEGORY_IDS, CHANNELS } from '../core/notifications';
 import { PLAN_IDS } from '../core/plans';
 import { ROLES } from '../core/roles';
 import { users } from './auth-schema';
@@ -48,6 +49,10 @@ export const organizations = pgTable('organizations', {
   // getEntitlements() reads it, so a monitor create costs no Stripe call and
   // the API, the UI and the check runner all enforce the same limits.
   plan: orgPlan('plan').notNull().default('free'),
+  // Lesson 4.2 (🟡): the org's Slack channel, as a Slack "incoming webhook" URL
+  // (https://hooks.slack.com/services/…). It is a secret: anyone with it can
+  // post to the channel. TODO(8.1): encrypt secrets at rest.
+  slackWebhookUrl: text('slack_webhook_url'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: updatedAt(),
 });
@@ -129,6 +134,10 @@ export const monitors = pgTable(
     // Lesson 3.2 (🟡): WHY it is paused. 'manual': someone switched it off.
     // 'plan_limit': frozen by a downgrade; an upgrade switches it back on.
     pausedReason: monitorPausedReason('paused_reason'),
+    // Lesson 4.2 (🟡): set when the monitor started flapping (too many state
+    // changes in an hour); cleared once it has been stable for an hour. While
+    // set, "opened"/"resolved" notifications for it are held back.
+    flappingSince: timestamp('flapping_since', { withTimezone: true }),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
     updatedAt: updatedAt(),
   },
@@ -439,6 +448,135 @@ export const emailSuppressions = pgTable('email_suppressions', {
   updatedAt: updatedAt(),
 });
 
+/*
+ * Lesson 4.2: notifications. One event (an incident opened) becomes one row
+ * per recipient in `notifications` (the in-app inbox), and one row per
+ * channel in `notification_deliveries` (the channel jobs AND the delivery
+ * log). Rules: src/core/notifications.ts. Pipeline: src/lib/notifications.
+ */
+export const notificationCategory = pgEnum('notification_category', CATEGORY_IDS);
+export const notificationChannel = pgEnum('notification_channel', CHANNELS);
+
+export const notifications = pgTable(
+  'notifications',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    category: notificationCategory('category').notNull(),
+    // Lesson 4.2 (🟢): "<what happened>:<user>", UNIQUE. Calling notify() twice
+    // for the same event inserts nothing the second time.
+    dedupeKey: text('dedupe_key').notNull().unique(),
+    title: text('title').notNull(),
+    body: text('body').notNull(),
+    url: text('url').notNull(), // a path inside Beacon, e.g. /acme/monitors/…
+    monitorId: uuid('monitor_id').references(() => monitors.id, { onDelete: 'cascade' }),
+    readAt: timestamp('read_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [
+    index('notifications_inbox_idx').on(t.organizationId, t.userId, t.createdAt),
+    // The bell's unread count, on every page: only unread rows are in this index.
+    index('notifications_unread_idx').on(t.organizationId, t.userId).where(sql`${t.readAt} is null`),
+  ],
+);
+
+/**
+ * Lesson 4.2 (🟡): a person's choice for one category × channel, per org
+ * (you may want SMS from your employer's org but not from a side project).
+ * No row = the category's default.
+ */
+export const notificationPreferences = pgTable(
+  'notification_preferences',
+  {
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    category: notificationCategory('category').notNull(),
+    channel: notificationChannel('channel').notNull(),
+    enabled: boolean('enabled').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [primaryKey({ columns: [t.organizationId, t.userId, t.category, t.channel] })],
+);
+
+/** Lesson 4.2 (🟡): the org's policy, set by owners and admins. `enabled = false` switches a channel off for everyone. */
+export const orgNotificationPolicies = pgTable(
+  'org_notification_policies',
+  {
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    category: notificationCategory('category').notNull(),
+    channel: notificationChannel('channel').notNull(),
+    enabled: boolean('enabled').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [primaryKey({ columns: [t.organizationId, t.category, t.channel] })],
+);
+
+/**
+ * Lesson 4.2 (🟡): people who asked for status-page emails. Not users: they
+ * subscribe on the public page, confirm from an email (double opt-in: a
+ * stranger cannot sign you up), and unsubscribe with one click.
+ */
+export const statusPageSubscribers = pgTable(
+  'status_page_subscribers',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    email: text('email').notNull(), // lower-case
+    confirmedAt: timestamp('confirmed_at', { withTimezone: true }),
+    confirmationSentAt: timestamp('confirmation_sent_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [uniqueIndex('status_page_subscribers_org_email').on(t.organizationId, t.email)],
+);
+
+export const deliveryStatus = pgEnum('delivery_status', ['pending', 'sent', 'failed', 'skipped', 'throttled', 'suppressed']);
+
+/**
+ * Lesson 4.2 (🟡): one row per message on one channel. It is both the job
+ * ("pending": a worker will send it, retrying with backoff) and the delivery
+ * log ("was our on-call paged at 03:12, and did they get it?"): channel,
+ * status, provider message id, error, time.
+ *
+ * Recipients: a member (user_id, via a notification), a status-page
+ * subscriber (subscriber_id), or the org's Slack channel (neither).
+ */
+export const notificationDeliveries = pgTable(
+  'notification_deliveries',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    notificationId: uuid('notification_id').references(() => notifications.id, { onDelete: 'cascade' }),
+    userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }),
+    subscriberId: uuid('subscriber_id').references(() => statusPageSubscribers.id, { onDelete: 'cascade' }),
+    channel: notificationChannel('channel').notNull(),
+    // UNIQUE: one delivery per event, recipient and channel, however often it is enqueued.
+    dedupeKey: text('dedupe_key').notNull().unique(),
+    recipient: text('recipient').notNull(), // email address, phone number, "slack" or the user id (in-app)
+    // What to send: { title, body, url, email?: { template, props }, listUnsubscribe? }
+    payload: jsonb('payload').notNull(),
+    status: deliveryStatus('status').notNull().default('pending'),
+    attempts: integer('attempts').notNull().default(0),
+    nextAttemptAt: timestamp('next_attempt_at', { withTimezone: true }).notNull().defaultNow(),
+    providerMessageId: text('provider_message_id'),
+    error: text('error'),
+    sentAt: timestamp('sent_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [
+    // The channel workers' queue.
+    index('notification_deliveries_due_idx').on(t.organizationId, t.nextAttemptAt).where(sql`${t.status} = 'pending'`),
+    // The SMS throttle: "how many SMS did this person get in the last hour?"
+    index('notification_deliveries_user_channel_idx').on(t.organizationId, t.userId, t.channel, t.sentAt),
+    index('notification_deliveries_notification_idx').on(t.notificationId),
+  ],
+);
+
 export type Organization = typeof organizations.$inferSelect;
 export type Membership = typeof memberships.$inferSelect;
 export type Invitation = typeof invitations.$inferSelect;
@@ -450,3 +588,6 @@ export type IncidentUpdate = typeof incidentUpdates.$inferSelect;
 export type Subscription = typeof subscriptions.$inferSelect;
 export type UsageEvent = typeof usageEvents.$inferSelect;
 export type EmailOutboxRow = typeof emailOutbox.$inferSelect;
+export type Notification = typeof notifications.$inferSelect;
+export type NotificationDelivery = typeof notificationDeliveries.$inferSelect;
+export type StatusPageSubscriber = typeof statusPageSubscribers.$inferSelect;

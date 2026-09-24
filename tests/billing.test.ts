@@ -2,12 +2,12 @@ import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('@/db', () => import('./helpers/test-db').then((m) => m.testDbModule()));
 vi.mock('@/lib/session', () => ({ getCurrentUser: vi.fn(), requireUser: vi.fn() }));
-vi.mock('@/lib/email', () => ({ sendEmail: vi.fn() }));
 
 import { eq } from 'drizzle-orm';
 import { db, schema } from '@/db';
 import { withOrg } from '@/db/tenant';
-import { sendEmail } from '@/lib/email';
+import { memoryTransport } from '@/lib/email/memory';
+import { deliverPendingNotifications } from '@/lib/notifications';
 import { createMonitor } from '@/lib/monitors';
 import { getEntitlements } from '@/lib/entitlements';
 import { fakeBilling } from '@/lib/billing/provider';
@@ -169,7 +169,7 @@ describe('the webhook (🟡)', () => {
     expect((await postWebhook(paid)).status).toBe(200);
   });
 
-  beforeEach(() => vi.mocked(sendEmail).mockClear());
+  beforeEach(() => memoryTransport.reset());
 
   it('a valid, signed checkout.session.completed moves the org to Pro and stores the subscription', async () => {
     expect(await planOf(org.id)).toBe('pro');
@@ -255,7 +255,7 @@ describe('downgrades from the webhook path (3.1 → 3.2 🟡)', () => {
     for (let i = 1; i <= 12; i++) {
       await createMonitor({ orgId: org.id, userId: org.users.owner.id }, { name: `svc-${i}`, url: `https://svc${i}.test`, intervalSeconds: 60 });
     }
-    vi.mocked(sendEmail).mockClear();
+    memoryTransport.reset();
 
     // The subscription ends (cancelled now, or the last dunning retry failed).
     const sub = [...fake.subscriptions.values()].find((s) => s.customerId === paid.data.object.customer)!;
@@ -270,8 +270,11 @@ describe('downgrades from the webhook path (3.1 → 3.2 🟡)', () => {
     expect(ms.filter((m) => !m.paused)).toHaveLength(5);
     expect(ms.filter((m) => m.pausedReason === 'plan_limit')).toHaveLength(7);
     expect(ms.every((m) => m.intervalSeconds >= 300)).toBe(true);
-    expect(vi.mocked(sendEmail)).toHaveBeenCalledTimes(1); // one owner, one downgrade
-    expect(vi.mocked(sendEmail).mock.calls[0][0]).toMatchObject({ to: org.users.owner.email, template: 'plan-downgraded', props: expect.objectContaining({ toPlan: 'Free' }) });
+    // Lesson 4.2: the notice is a required "billing" notification: one for the one owner, in-app and by email.
+    const notices = await withOrg(org.id, (tx) => tx.select().from(schema.notifications).where(eq(schema.notifications.organizationId, org.id)));
+    expect(notices.map((n) => [n.category, n.userId, n.title])).toEqual([['billing', org.users.owner.id, 'Downgrader is now on the Free plan']]);
+    await deliverPendingNotifications({ orgId: org.id });
+    expect(memoryTransport.messages.map((m) => [m.to, m.subject])).toEqual([[org.users.owner.email, 'Downgrader is now on the Free plan']]); // one owner, one downgrade
 
     // Resubscribe: a new Checkout, a new subscription, and the frozen monitors run again.
     await postWebhook(await checkoutAndPay(org));

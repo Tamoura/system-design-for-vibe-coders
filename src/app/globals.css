@@ -54,3 +54,8 @@ kbd { font-size: .75rem; border: 1px solid var(--line); border-radius: 4px; padd
 .palette-results .snippet { margin-top: .15rem; }
 .palette-help { font-size: .78rem; }
 mark { background: #ffe58a; color: #1a1f29; border-radius: 2px; padding: 0 1px; }
+.bell { text-decoration: none; }
+.notification.unread { border-color: var(--accent); }
+.badge.delivery.sent { color: var(--up); border-color: var(--up); }
+.badge.delivery.failed, .badge.delivery.suppressed { color: var(--down); border-color: var(--down); }
+.badge.delivery.throttled, .badge.delivery.skipped { color: #d68910; border-color: #d68910; }

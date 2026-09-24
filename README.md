@@ -66,7 +66,10 @@ a real scheduler:
 npm run checks:run -- --all
 ```
 
-Run it twice. One of the seed monitors always fails, and an incident opens after two failures in a row.
+An incident opens after three failures in a row (lesson 4.2) and notifies the team: a notification behind the
+🔔 and an email in Mailpit. The seed's "Always broken" monitor already has an open incident; click **Mark
+resolved** on its page (that notifies too), run the checks again, and a new incident opens. Start the app with
+`SMS_PROVIDER=fake` to see SMS alerts (set a phone number under 🔔 → Preferences) printed and metered.
 Without `--all` it checks only the monitors that are due (their interval, never shorter than the plan's
 minimum, has passed), which is what cron should run every minute.
 

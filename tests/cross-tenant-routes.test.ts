@@ -20,6 +20,7 @@ import * as searchRoute from '@/app/api/orgs/[orgSlug]/search/route';
 import * as billingRoute from '@/app/api/orgs/[orgSlug]/billing/route';
 import * as checkoutRoute from '@/app/api/orgs/[orgSlug]/billing/checkout/route';
 import * as portalRoute from '@/app/api/orgs/[orgSlug]/billing/portal/route';
+import * as notificationsRoute from '@/app/api/orgs/[orgSlug]/notifications/route';
 import { makeOrg, signInAs } from './helpers/fixtures';
 
 /*
@@ -55,6 +56,12 @@ beforeAll(async () => {
   await db.update(schema.organizations).set({ stripeCustomerId: 'cus_acme_secret' }).where(eq(schema.organizations.id, acme.id));
   await db.insert(schema.subscriptions).values({ id: 'sub_acme_secret', organizationId: acme.id, stripeCustomerId: 'cus_acme_secret', status: 'active', priceId: 'price_fake_business' });
   A.customer = 'cus_acme_secret';
+  // Lesson 4.2: Acme's owner has a notification about Acme's incident.
+  const [n] = await db
+    .insert(schema.notifications)
+    .values({ organizationId: acme.id, userId: acme.users.owner.id, category: 'incident.opened', dedupeKey: `acme-secret:${incident.id}`, title: 'acme-secret is down', body: 'acme-secret down', url: `/${acme.slug}/monitors/${m.id}` })
+    .returning();
+  A.notification = n.id;
   A.subscription = 'sub_acme_secret';
 });
 
@@ -98,6 +105,8 @@ const CASES: Record<string, Case> = {
     call: (orgSlug) => checkoutRoute.POST(req('POST', { plan: 'pro', orgId: acme.id, customer: A.customer }), p({ orgSlug })),
   },
   'POST billing/portal': { kind: 'list', call: (orgSlug) => portalRoute.POST(req('POST', { customer: A.customer }), p({ orgSlug })) },
+  // Lesson 4.2: the inbox is per org and per person.
+  'GET notifications': { kind: 'list', call: (orgSlug) => notificationsRoute.GET(req('GET'), p({ orgSlug })) },
 };
 
 describe('org B cannot reach org A through any route', () => {

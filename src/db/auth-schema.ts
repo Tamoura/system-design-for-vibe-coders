@@ -16,6 +16,9 @@ export const users = pgTable('users', {
   email: text('email').notNull().unique(),
   emailVerified: boolean('email_verified').notNull().default(false),
   image: text('image'),
+  // Lesson 4.2 (🟡): where SMS alerts go, E.164 ("+15551234567"). Beacon's
+  // column, not Better Auth's: set on the notification preferences page.
+  phoneNumber: text('phone_number'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 });
