@@ -9,6 +9,28 @@ The other 85% is the machinery every SaaS shares: accounts, organizations, roles
 an API, webhooks, an audit log, SSO. The course teaches those components one lesson at a time, and this
 repo is where you build them.
 
+## Get the code
+
+Beacon lives inside the course repository,
+[Tamoura/system-design-for-vibe-coders](https://github.com/Tamoura/system-design-for-vibe-coders), as a set of
+branches whose root *is* the Beacon project. Clone just the starter as a standalone repo:
+
+```bash
+git clone -b beacon/starter --single-branch https://github.com/Tamoura/system-design-for-vibe-coders.git beacon
+cd beacon
+```
+
+Fetch a solution when you want it:
+
+```bash
+git fetch origin beacon/module-2-solution:module-2-solution
+git diff main module-2-solution
+```
+
+In the table below, `main` means your local `main`, which is `beacon/starter`, and `module-N-solution` is the
+remote branch `beacon/module-N-solution`. A copy of the starter is also in the course repo's
+[`beacon/`](https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/beacon) folder, for browsing.
+
 ## How this repo works
 
 | Branch | What it contains |
