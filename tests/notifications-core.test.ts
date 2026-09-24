@@ -98,6 +98,12 @@ describe('SMS text and segments', () => {
     expect(text).toBe('Beacon: "checkout" is down -  again https://beacon.test/acme/monitors/1');
     expect(smsSegments(text)).toBe(1);
   });
+  it('drops the link’s #fragment so a typical alert stays within one segment', () => {
+    const id = '0f6ef3a4-7b5c-4a53-9b4e-3f1f3c7c2d11';
+    const text = smsText('Always broken (for testing incidents) is down', `https://beacon.example.com/acme/monitors/${id}#incident-${id}`);
+    expect(text).not.toContain('#incident');
+    expect(smsSegments(text)).toBe(1);
+  });
   it('counts GSM-7 at 160/153 and UCS-2 at 70/67 per segment', () => {
     expect(smsSegments('a'.repeat(160))).toBe(1);
     expect(smsSegments('a'.repeat(161))).toBe(2);

@@ -164,6 +164,8 @@ export const SMS_PER_HOUR = 5;
  * The SMS text: short, plain ASCII and a link. Every non-GSM-7 character (an
  * emoji, a curly quote) switches the whole message to UCS-2 and cuts a
  * segment from 160 characters to 70, and SMS is billed per segment (3.3).
+ * The link loses its #fragment: 46 characters of "#incident-<uuid>" can
+ * be the difference between one segment and two.
  */
 export function smsText(title: string, url: string): string {
   const ascii = title
@@ -172,7 +174,7 @@ export function smsText(title: string, url: string): string {
     .replace(/[“”]/g, '"')
     .replace(/[–—]/g, '-')
     .replace(/[^\x20-\x7e]/g, '');
-  return `Beacon: ${ascii.slice(0, 100)} ${url}`;
+  return `Beacon: ${ascii.slice(0, 100)} ${url.split('#')[0]}`;
 }
 
 // The GSM 03.38 basic character set (one septet each) and its extension table (two septets each).
