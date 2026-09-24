@@ -29,7 +29,7 @@ export async function runCheck(url: string, opts: CheckOptions = {}): Promise<Ch
       method: 'GET',
       redirect: 'follow',
       signal: AbortSignal.timeout(timeoutMs),
-      headers: { 'user-agent': 'BeaconBot/0.1 (+https://github.com/Tamoura/beacon)' },
+      headers: { 'user-agent': 'BeaconBot/0.1 (+https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter)' },
     });
     // Drain the body so the connection can be reused; we only need the status.
     await res.arrayBuffer().catch(() => undefined);
