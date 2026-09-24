@@ -27,6 +27,12 @@ export function uptimePercent(results: { ok: boolean }[]): number | null {
   return Math.round((up / results.length) * 1000) / 10;
 }
 
+/** The same, from counts the database already added up (lesson 2.1: aggregate in SQL, not in JS). */
+export function uptimeFromCounts(up: number, total: number): number | null {
+  if (total === 0) return null;
+  return Math.round((up / total) * 1000) / 10;
+}
+
 export type OverallStatus = 'operational' | 'partial_outage' | 'major_outage' | 'unknown';
 
 /** Roll individual monitor states up into the headline on the status page. */

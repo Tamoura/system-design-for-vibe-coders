@@ -14,7 +14,11 @@ import * as schema from '@/db/schema';
  */
 export async function testDbModule() {
   const client = new PGlite();
-  const db = drizzle(client, { schema });
+  // Lesson 2.1: every SQL statement the app sends is recorded here, so a test
+  // can count queries (see tests/data-layer.test.ts, the N+1 test).
+  const queryLog: string[] = [];
+  const db = drizzle(client, { schema, logger: { logQuery: (query) => queryLog.push(query) } });
   await migrate(db, { migrationsFolder: 'drizzle' });
-  return { db, schema, sql: client };
+  queryLog.length = 0;
+  return { db, schema, sql: client, queryLog };
 }

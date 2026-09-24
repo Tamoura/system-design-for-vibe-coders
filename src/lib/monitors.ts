@@ -1,6 +1,6 @@
 import { and, desc, eq, isNull, sql as dsql } from 'drizzle-orm';
 import { db, schema } from '@/db';
-import { uptimePercent } from '@/core/incidents';
+import { uptimeFromCounts } from '@/core/incidents';
 import { canEditMonitor, type Actor } from '@/core/permissions';
 import type { CreateMonitorInput, UpdateMonitorInput } from '@/core/validation';
 import { AccessError } from './errors';
@@ -33,44 +33,82 @@ export async function listMonitorRows({ orgId }: OrgScope) {
   return db.select().from(monitors).where(eq(monitors.organizationId, orgId)).orderBy(monitors.createdAt);
 }
 
-/** Every monitor in one organization, with its latest state. */
+/**
+ * Every monitor in one organization, with its latest state.
+ *
+ * Lesson 2.1 (🟡): ONE query, however many monitors the org has. The first
+ * version ran one query for the list plus two per monitor (an N+1: 401 queries
+ * for 200 monitors). Here each monitor row is joined to three small LATERAL
+ * subqueries, which Postgres runs per monitor *inside the database*, each one
+ * an index lookup:
+ *
+ *   latest check      → check_results_monitor_time_idx, first entry
+ *   last 24h counts   → the same index, a range scan
+ *   open incident     → incidents_open_idx (partial: open incidents only)
+ *
+ * `EXPLAIN ANALYZE` of this query shows index scans only; see docs/SOLUTIONS.md.
+ */
 export async function listMonitors({ orgId }: OrgScope): Promise<MonitorView[]> {
-  const rows = await listMonitorRows({ orgId });
-  return Promise.all(
-    rows.map(async (m) => {
-      const recent = await db
-        .select()
-        .from(checkResults)
-        .where(
-          and(
-            eq(checkResults.organizationId, orgId),
-            eq(checkResults.monitorId, m.id),
-            dsql`${checkResults.checkedAt} > now() - interval '24 hours'`,
-          ),
-        )
-        .orderBy(desc(checkResults.checkedAt));
-      const [open] = await db
-        .select()
-        .from(incidents)
-        .where(and(eq(incidents.organizationId, orgId), eq(incidents.monitorId, m.id), isNull(incidents.resolvedAt)))
-        .limit(1);
-      const latest = recent[0];
-      return {
-        id: m.id,
-        name: m.name,
-        url: m.url,
-        intervalSeconds: m.intervalSeconds,
-        paused: m.paused,
-        state: latest ? (latest.ok ? 'up' : 'down') : 'unknown',
-        lastCheckedAt: latest?.checkedAt ?? null,
-        lastLatencyMs: latest?.latencyMs ?? null,
-        uptime24h: uptimePercent(recent),
-        openIncident: open ? { id: open.id, openedAt: open.openedAt, cause: open.cause } : null,
-      } satisfies MonitorView;
-    }),
-  );
-  // Lesson 2.1: this is an N+1 query (two queries per monitor). Fine for ten
-  // monitors; the 🟡 exercise asks you to replace it with one query.
+  const latest = db
+    .select({ ok: checkResults.ok, checkedAt: checkResults.checkedAt, latencyMs: checkResults.latencyMs })
+    .from(checkResults)
+    .where(and(eq(checkResults.organizationId, orgId), eq(checkResults.monitorId, monitors.id)))
+    .orderBy(desc(checkResults.checkedAt))
+    .limit(1)
+    .as('latest');
+  const day = db
+    .select({
+      total: dsql<number>`count(*)::int`.as('total'),
+      up: dsql<number>`(count(*) filter (where ${checkResults.ok}))::int`.as('up'),
+    })
+    .from(checkResults)
+    .where(
+      and(
+        eq(checkResults.organizationId, orgId),
+        eq(checkResults.monitorId, monitors.id),
+        dsql`${checkResults.checkedAt} > now() - interval '24 hours'`,
+      ),
+    )
+    .as('day');
+  const open = db
+    .select({ id: incidents.id, openedAt: incidents.openedAt, cause: incidents.cause })
+    .from(incidents)
+    .where(and(eq(incidents.organizationId, orgId), eq(incidents.monitorId, monitors.id), isNull(incidents.resolvedAt)))
+    .orderBy(desc(incidents.openedAt))
+    .limit(1)
+    .as('open_incident');
+
+  const rows = await db
+    .select({
+      monitor: monitors,
+      latestOk: latest.ok,
+      latestAt: latest.checkedAt,
+      latestLatencyMs: latest.latencyMs,
+      checks24h: day.total,
+      up24h: day.up,
+      openId: open.id,
+      openedAt: open.openedAt,
+      openCause: open.cause,
+    })
+    .from(monitors)
+    .leftJoinLateral(latest, dsql`true`)
+    .leftJoinLateral(day, dsql`true`)
+    .leftJoinLateral(open, dsql`true`)
+    .where(eq(monitors.organizationId, orgId))
+    .orderBy(monitors.createdAt);
+
+  return rows.map(({ monitor: m, ...r }) => ({
+    id: m.id,
+    name: m.name,
+    url: m.url,
+    intervalSeconds: m.intervalSeconds,
+    paused: m.paused,
+    state: r.latestOk === null ? 'unknown' : r.latestOk ? 'up' : 'down',
+    lastCheckedAt: r.latestAt,
+    lastLatencyMs: r.latestLatencyMs,
+    uptime24h: uptimeFromCounts(r.up24h ?? 0, r.checks24h ?? 0),
+    openIncident: r.openId && r.openedAt && r.openCause !== null ? { id: r.openId, openedAt: r.openedAt, cause: r.openCause } : null,
+  }));
 }
 
 /**

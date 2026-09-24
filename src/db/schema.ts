@@ -15,6 +15,18 @@ export * from './auth-schema';
 
 export const orgRole = pgEnum('org_role', ROLES);
 
+/**
+ * Lesson 2.1: every table Beacon owns gets `created_at` and `updated_at`
+ * (timestamptz, UTC). Drizzle fills `updated_at` on every `.update()` through
+ * `$onUpdate`. A hand-written SQL UPDATE bypasses it; a trigger would not,
+ * at the cost of logic you cannot see in this file.
+ */
+const updatedAt = () =>
+  timestamp('updated_at', { withTimezone: true })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date());
+
 export const organizations = pgTable('organizations', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: text('name').notNull(),
@@ -23,6 +35,7 @@ export const organizations = pgTable('organizations', {
   // The public status page at /status/[slug]. Only roles with "page.publish" may switch it (lesson 1.3).
   statusPagePublic: boolean('status_page_public').notNull().default(true),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: updatedAt(),
 });
 
 export const memberships = pgTable(
@@ -32,6 +45,7 @@ export const memberships = pgTable(
     userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
     role: orgRole('role').notNull(),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
   },
   // One role per person per org: the pair is the primary key.
   (t) => [primaryKey({ columns: [t.organizationId, t.userId] }), index('memberships_user_idx').on(t.userId)],
@@ -59,6 +73,7 @@ export const invitations = pgTable(
     acceptedBy: uuid('accepted_by').references(() => users.id, { onDelete: 'set null' }),
     revokedAt: timestamp('revoked_at', { withTimezone: true }),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
   },
   (t) => [
     index('invitations_org_sent_idx').on(t.organizationId, t.sentAt),
@@ -95,10 +110,16 @@ export const monitors = pgTable(
     intervalSeconds: integer('interval_seconds').notNull().default(300),
     paused: boolean('paused').notNull().default(false),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
   },
   (t) => [index('monitors_org_idx').on(t.organizationId, t.createdAt)],
 );
 
+/**
+ * Lesson 2.1: the one table without `updated_at`, on purpose. A check result
+ * is a fact that never changes (append-only), `checked_at` is its creation
+ * time, and at millions of rows a day every unused column costs disk.
+ */
 export const checkResults = pgTable(
   'check_results',
   {
@@ -111,7 +132,31 @@ export const checkResults = pgTable(
     latencyMs: integer('latency_ms'),
     error: text('error'),
   },
-  (t) => [index('check_results_monitor_time_idx').on(t.monitorId, t.checkedAt.desc())],
+  (t) => [
+    /*
+     * Lesson 2.1 (🟡): the index behind the dashboard (listMonitors). Every
+     * query here filters by org AND monitor (the tenant_id rule), then walks
+     * by time: "latest check" reads the first entry, "last 24 hours" a range.
+     * Column order matters: equality columns first, the range/sort column next.
+     *
+     * `ok` and `latency_ms` ride along at the end so Postgres can answer from
+     * the index alone ("Index Only Scan", no table reads). With 500 monitors ×
+     * 1,000 checks that took the dashboard query from ~1 s to ~0.1 s.
+     * (Postgres can also carry them as `INCLUDE (ok, latency_ms)`; Drizzle
+     * cannot express INCLUDE yet, and extra key columns work the same here.)
+     *
+     * It replaces the starter's (monitor_id, checked_at DESC), which could not
+     * cover the organization_id filter. A trap it also had: Drizzle writes
+     * `.desc()` as DESC NULLS LAST, which does not match `ORDER BY checked_at
+     * DESC` (NULLS FIRST), so Postgres sorted instead of reading the index in
+     * order. A plain ascending column avoids that: Postgres reads a B-tree
+     * backwards just as well.
+     *
+     * It doubles as the index on the organization_id foreign key, which
+     * Postgres does not create by itself.
+     */
+    index('check_results_org_monitor_time_idx').on(t.organizationId, t.monitorId, t.checkedAt, t.ok, t.latencyMs),
+  ],
 );
 
 export const incidents = pgTable(
@@ -123,8 +168,17 @@ export const incidents = pgTable(
     openedAt: timestamp('opened_at', { withTimezone: true }).notNull().defaultNow(),
     resolvedAt: timestamp('resolved_at', { withTimezone: true }),
     cause: text('cause').notNull(),
+    // opened_at is when the outage began; created_at is when the row was written.
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
   },
-  (t) => [index('incidents_monitor_idx').on(t.monitorId, t.openedAt.desc())],
+  (t) => [
+    index('incidents_monitor_idx').on(t.monitorId, t.openedAt.desc()),
+    // Lesson 2.1 (🟡): "is there an open incident for this monitor?" runs for
+    // every monitor on the dashboard. A partial index holds only open incidents,
+    // so it stays tiny however many resolved ones pile up.
+    index('incidents_open_idx').on(t.monitorId).where(sql`${t.resolvedAt} is null`),
+  ],
 );
 
 export type Organization = typeof organizations.$inferSelect;
