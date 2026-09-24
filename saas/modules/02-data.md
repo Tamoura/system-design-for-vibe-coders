@@ -368,7 +368,7 @@ flowchart TD
 | [pingdotgg/uploadthing](https://github.com/pingdotgg/uploadthing) | SDK for the UploadThing hosted upload service | TypeScript | MIT | You're in Next.js and want uploads done this afternoon |
 | [aws/aws-sdk-js-v3](https://github.com/aws/aws-sdk-js-v3) | Official AWS SDK: S3 client, presigner, multipart helpers | TypeScript | Apache-2.0 | You sign URLs yourself against any S3-compatible store |
 | [lovell/sharp](https://github.com/lovell/sharp) | Fast image resizing and conversion for Node | C++, JavaScript | Apache-2.0 | You create thumbnails and avatars in a job |
-| [imgproxy/imgproxy](https://github.com/imgproxy/imgproxy) | On-the-fly image resizing server | Go | MIT | You want URL-based transforms behind a CDN |
+| [imgproxy/imgproxy](https://github.com/imgproxy/imgproxy) | On-the-fly image resizing server | Go | Apache-2.0 | You want URL-based transforms behind a CDN |
 | [supabase/storage](https://github.com/supabase/storage) | Supabase's storage API: S3 backend, Postgres metadata, policies | TypeScript | Apache-2.0 | You want to read a production storage service's source |
 | [seaweedfs/seaweedfs](https://github.com/seaweedfs/seaweedfs) | Distributed blob store with an S3 gateway | Go | Apache-2.0 | You self-host storage at real scale |
 | [minio/minio](https://github.com/minio/minio) | S3-compatible server; community edition source-only since 2025 | Go | AGPL-3.0 | You already run it; evaluate alternatives for new setups |
@@ -567,7 +567,7 @@ Whichever you choose, add a **full reindex** job that rebuilds an index from Pos
 
 | Repo | What it is | Stack | License | Pick it when |
 |---|---|---|---|---|
-| [meilisearch/meilisearch](https://github.com/meilisearch/meilisearch) | Instant, typo-tolerant search engine with tenant tokens | Rust | MIT (Community Edition) | You want the best in-app search experience with the least tuning |
+| [meilisearch/meilisearch](https://github.com/meilisearch/meilisearch) | Instant, typo-tolerant search engine with tenant tokens | Rust | MIT (Community Edition); Enterprise Edition parts BUSL-1.1 | You want the best in-app search experience with the least tuning |
 | [typesense/typesense](https://github.com/typesense/typesense) | Typo-tolerant in-memory search with scoped API keys and clustering | C++ | GPL-3.0 | You want Algolia-like search you can self-host with HA |
 | [opensearch-project/OpenSearch](https://github.com/opensearch-project/OpenSearch) | Community fork of Elasticsearch, Linux Foundation project | Java | Apache-2.0 | Large datasets, aggregations, or you're on AWS |
 | [elastic/elasticsearch](https://github.com/elastic/elasticsearch) | The original distributed search and analytics engine | Java | AGPL-3.0 / SSPL / ELv2 (choice) | You need its ecosystem or use Elastic Cloud |

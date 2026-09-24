@@ -555,7 +555,7 @@ If you only have time for ten repos from the shelf, make it these:
 |---|---|---|---|---|
 | [openstatusHQ/openstatus](https://github.com/openstatusHQ/openstatus) | Status pages and uptime monitoring, a real Beacon | TypeScript monorepo, Go | AGPL-3.0 | You want to see Beacon's exact problems solved in production |
 | [louislam/uptime-kuma](https://github.com/louislam/uptime-kuma) | Self-hosted uptime monitor | Node.js, Vue | MIT | You want Beacon's core without the multi-tenant SaaS layer, for contrast |
-| [calcom/cal.com](https://github.com/calcom/cal.com) | Scheduling infrastructure | Next.js, Prisma | AGPL-3.0 | You want the fullest TypeScript example of teams, orgs, SSO and integrations |
+| [calcom/cal.com](https://github.com/calcom/cal.com) | Scheduling infrastructure | Next.js, Prisma | MIT | You want the fullest TypeScript example of teams, orgs, SSO and integrations |
 | [documenso/documenso](https://github.com/documenso/documenso) | E-signature platform | Next.js, Prisma | AGPL-3.0 | You want a mid-sized, readable TypeScript SaaS with audit trails and webhooks |
 | [dubinc/dub](https://github.com/dubinc/dub) | Link management | Next.js, Prisma | AGPL-3.0 | You want plan limits and usage-driven pricing in real code |
 | [Infisical/infisical](https://github.com/Infisical/infisical) | Secrets management | Node.js, React | MIT | You want enterprise features: RBAC, SSO, SCIM and audit logs |
@@ -580,7 +580,7 @@ Let us compare three shelf repos that sit near Beacon.
 
 **Uptime Kuma** (`louislam/uptime-kuma`). A single-tenant, self-hosted monitor: one install, one owner. Search for `notification-providers` or browse the server folder for the notification provider files; each provider (Slack, Telegram, email and many more) is its own small module with the same interface. There are no organizations or billing, which makes the core unusually easy to see.
 
-**Cal.com** (`calcom/cal.com`). Not a monitoring product, but a model for "the SaaS layer". Open `packages/prisma` and read the schema for `Team`, `Membership` and the organization-related fields. Then search for `ee` folders to see which features sit under the commercial licence.
+**Cal.com** (`calcom/cal.com`). Not a monitoring product, but a model for "the SaaS layer". Open `packages/prisma` and read the schema for `Team`, `Membership` and the organization-related fields. Cal.com is also a lesson in licences: it was AGPL with a commercial `ee` folder for years and is now MIT-licensed with no `ee` folder (at the time of writing) — always read the current LICENSE, not a blog post about it.
 
 **What to notice:**
 

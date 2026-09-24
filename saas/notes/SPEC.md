@@ -152,6 +152,11 @@ Length: **2,000–3,200 words per lesson.** Dense beats long.
 - **Zitadel** relicensed to AGPL-3.0 in 2025. **Sentry** uses the FSL (Functional
   Source License). **n8n** uses the Sustainable Use License (fair-code, not OSI).
 - **Permify** was acquired by FusionAuth in 2025; the repo `Permify/permify` remains.
+- **Cal.com** is now MIT-licensed with no `ee` folder (it used to be AGPL + commercial `ee`).
+  For the open-core pattern, point at PostHog, Infisical or Sentry's history instead.
+- **Unleash** core is AGPL-3.0; **imgproxy** is Apache-2.0; **Flipt** uses the Fair Core
+  License (FCL-1.0-MIT); **Directus** uses the Monospace Sustainable Core License.
+- Verify every license cell against the repo's LICENSE file before merging a lesson.
 - **HyperDX** was acquired by ClickHouse (part of ClickStack); `hyperdxio/hyperdx`.
 
 ### Canonical repos by component (safe to use; add others only if certain)
@@ -201,7 +206,7 @@ Length: **2,000–3,200 words per lesson.** Dense beats long.
   grafana/tempo, prometheus/prometheus, hyperdxio/hyperdx, openobserve/openobserve,
   pinojs/pino, getsentry/sentry-javascript.
 - Audit logs: retracedhq/retraced (BoxyHQ), BemiHQ/bemi, pgaudit/pgaudit,
-  paper-trail-gem/paper_trail, django-simple-history/django-simple-history.
+  paper-trail-gem/paper_trail, django-commons/django-simple-history.
 - Admin/internal tools: marmelab/react-admin, refinedev/refine, SoftwareBrothers/adminjs,
   appsmithorg/appsmith, ToolJet/ToolJet, directus/directus, payloadcms/payload,
   activeadmin/activeadmin, filamentphp/filament, django admin, avo-hq/avo.
@@ -249,7 +254,7 @@ another Beacon to study).
 
 Starter kits / boilerplates (show "what a SaaS skeleton includes"):
 nextjs/saas-starter (official, minimal: auth, Stripe, teams, RBAC, activity log),
-haydenbleasel/next-forge, wasp-lang/open-saas,
+vercel/next-forge (formerly haydenbleasel/next-forge), wasp-lang/open-saas,
 boxyhq/saas-starter-kit (enterprise features: SSO, SCIM, audit, webhooks),
 ixartz/SaaS-Boilerplate, t3-oss/create-t3-app, laravel/laravel + laravel/cashier-stripe,
 apptension/saas-boilerplate (Django + React).

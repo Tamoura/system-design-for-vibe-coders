@@ -184,7 +184,7 @@ adopting anything. Run `npm run saas:repos` to check that every link still resol
 | [tremorlabs/tremor](https://github.com/tremorlabs/tremor) | Dashboard charts and KPI components | React, Tailwind | Apache-2.0 | Customer-facing dashboards (uptime %, response times) |
 | [react-hook-form/react-hook-form](https://github.com/react-hook-form/react-hook-form) | Performant form state for React | React, TypeScript | MIT | Any non-trivial form, paired with a schema resolver |
 | [colinhacks/zod](https://github.com/colinhacks/zod) | TypeScript-first schema validation | TypeScript | MIT | One schema shared by client and server |
-| [haydenbleasel/next-forge](https://github.com/haydenbleasel/next-forge) | Production Turborepo SaaS template | Next.js monorepo | MIT | You want to see marketing/app/api split into separate apps |
+| [vercel/next-forge](https://github.com/vercel/next-forge) | Production Turborepo SaaS template | Next.js monorepo | MIT | You want to see marketing/app/api split into separate apps |
 | [caddyserver/caddy](https://github.com/caddyserver/caddy) | Web server with automatic HTTPS and on-demand TLS | Go | Apache-2.0 | Self-hosted custom domains for tenant pages |
 
 ### 6.2 — Analytics: product, web and the event pipeline
@@ -224,7 +224,7 @@ adopting anything. Run `npm run saas:repos` to check that every link still resol
 | [calcom/cal.com](https://github.com/calcom/cal.com) | Scheduling infrastructure | Next.js, tRPC, Prisma, Turborepo | AGPL-3.0 (with commercial `ee`) | You want nearly every component in one mature monorepo |
 | [makeplane/plane](https://github.com/makeplane/plane) | Project management | Django, Next.js, Celery | AGPL-3.0 | You want the whole architecture in a Python backend |
 | [chatwoot/chatwoot](https://github.com/chatwoot/chatwoot) | Customer support platform | Rails, Vue, Sidekiq | MIT (with `enterprise` folder) | You want the whole architecture in Rails |
-| [haydenbleasel/next-forge](https://github.com/haydenbleasel/next-forge) | Production-grade Turborepo template | Next.js, many integrations | MIT | You want a map of which managed service fills each box |
+| [vercel/next-forge](https://github.com/vercel/next-forge) | Production-grade Turborepo template | Next.js, many integrations | MIT | You want a map of which managed service fills each box |
 | [wasp-lang/open-saas](https://github.com/wasp-lang/open-saas) | Free full-stack SaaS template | Wasp, React, Node, Prisma | MIT | You want a small, readable v1 with auth, payments, admin and jobs |
 
 ## A–Z index
@@ -262,7 +262,7 @@ adopting anything. Run `npm run saas:repos` to check that every link still resol
 - [golang-migrate/migrate](https://github.com/golang-migrate/migrate) — 2.1
 - [graphile/worker](https://github.com/graphile/worker) — 5.1
 - [growthbook/growthbook](https://github.com/growthbook/growthbook) — 6.3
-- [haydenbleasel/next-forge](https://github.com/haydenbleasel/next-forge) — 6.1, 9.1
+- [vercel/next-forge](https://github.com/vercel/next-forge) — 6.1, 9.1
 - [heartcombo/devise](https://github.com/heartcombo/devise) — 1.1
 - [hibiken/asynq](https://github.com/hibiken/asynq) — 5.1
 - [hoppscotch/hoppscotch](https://github.com/hoppscotch/hoppscotch) — 5.2

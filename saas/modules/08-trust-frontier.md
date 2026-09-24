@@ -112,8 +112,8 @@ Preferred-Languages: en
 | [trufflesecurity/trufflehog](https://github.com/trufflesecurity/trufflehog) | Finds and *verifies* leaked credentials | Go | AGPL-3.0 | Scanning history and checking whether found keys are live |
 | [aquasecurity/trivy](https://github.com/aquasecurity/trivy) | Scanner for images, dependencies, IaC, secrets | Go | Apache-2.0 | One scanner in CI covering containers and dependencies |
 | [OWASP/CheatSheetSeries](https://github.com/OWASP/CheatSheetSeries) | Concise, practical security guidance | Markdown | CC BY-SA 4.0 | Looking up how to do SSRF defence, CSP, secrets, auth correctly |
-| [trycompai/comp](https://github.com/trycompai/comp) | Open-source compliance automation (SOC 2, ISO 27001, GDPR) | TypeScript | Open source (see repo) | You want Vanta-style control tracking you can self-host |
-| [getprobo/probo](https://github.com/getprobo/probo) | Open-source compliance platform for startups | Go, TypeScript | Open source (see repo) | An alternative OSS compliance tool to compare with Comp |
+| [trycompai/comp](https://github.com/trycompai/comp) | Open-source compliance automation (SOC 2, ISO 27001, GDPR) | TypeScript | AGPL-3.0 | You want Vanta-style control tracking you can self-host |
+| [getprobo/probo](https://github.com/getprobo/probo) | Open-source compliance platform for startups | Go, TypeScript | MIT | An alternative OSS compliance tool to compare with Comp |
 
 **If you only study one:** study the **OWASP Cheat Sheet Series**. It isn't a tool, but the SSRF Prevention, Secrets Management, Content Security Policy, and Authorization cheat sheets turn this lesson into concrete, peer-reviewed checklists you can apply to Beacon today.
 
@@ -317,7 +317,7 @@ The **cross-tenant leakage** risk is the headline here. A vector search with no 
 | [promptfoo/promptfoo](https://github.com/promptfoo/promptfoo) | Eval and red-teaming CLI for prompts and models | TypeScript | MIT | Prompt and model changes tested in CI |
 | [pgvector/pgvector](https://github.com/pgvector/pgvector) | Vector type and similarity search for Postgres | C | PostgreSQL License | RAG next to your existing tenant-scoped data |
 | [qdrant/qdrant](https://github.com/qdrant/qdrant) | Dedicated vector database with payload filtering | Rust | Apache-2.0 | Vector volume or filtered-search performance outgrows Postgres |
-| [modelcontextprotocol/specification](https://github.com/modelcontextprotocol/specification) | The Model Context Protocol spec and schema | TypeScript schema, Markdown | Open source (see repo) | Designing Beacon's MCP server correctly |
+| [modelcontextprotocol/specification](https://github.com/modelcontextprotocol/specification) | The Model Context Protocol spec and schema | TypeScript schema, Markdown | MIT, moving to Apache-2.0 | Designing Beacon's MCP server correctly |
 | [langchain-ai/langchainjs](https://github.com/langchain-ai/langchainjs) | Framework for chains, agents, retrievers | TypeScript | MIT | You need its large set of loaders and integrations for RAG |
 
 **If you only study one:** study **LiteLLM**. More than any single feature, it shows what "the AI gateway component" means in practice: provider abstraction, virtual keys per team, budgets, fallbacks, caching and spend logging, all in one place. Beacon needs every one of those, whether you run LiteLLM or build a thin version yourself.

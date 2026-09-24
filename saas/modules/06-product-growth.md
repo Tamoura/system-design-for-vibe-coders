@@ -159,7 +159,7 @@ The hard parts at scale are these. Verification must be re-checked, because cust
 | [tremorlabs/tremor](https://github.com/tremorlabs/tremor) | Dashboard charts and KPI components | React, Tailwind | Apache-2.0 | Customer-facing dashboards (uptime %, response times) |
 | [react-hook-form/react-hook-form](https://github.com/react-hook-form/react-hook-form) | Performant form state for React | React, TypeScript | MIT | Any non-trivial form, paired with a schema resolver |
 | [colinhacks/zod](https://github.com/colinhacks/zod) | TypeScript-first schema validation | TypeScript | MIT | One schema shared by client and server |
-| [haydenbleasel/next-forge](https://github.com/haydenbleasel/next-forge) | Production Turborepo SaaS template | Next.js monorepo | MIT | You want to see marketing/app/api split into separate apps |
+| [vercel/next-forge](https://github.com/vercel/next-forge) | Production Turborepo SaaS template | Next.js monorepo | MIT | You want to see marketing/app/api split into separate apps |
 | [caddyserver/caddy](https://github.com/caddyserver/caddy) | Web server with automatic HTTPS and on-demand TLS | Go | Apache-2.0 | Self-hosted custom domains for tenant pages |
 
 **If you only study one:** study **next-forge**. It isn't a component library, but it shows the whole shell in one repo: separate apps for marketing, the product and the API, shared `packages/` for UI and auth, and the wiring between them. Read its folder structure before you create your own monorepo.
@@ -523,10 +523,10 @@ Always define a **default value** for when the flag service is unreachable, and 
 
 | Repo | What it is | Stack | License | Pick it when |
 |---|---|---|---|---|
-| [Unleash/unleash](https://github.com/Unleash/unleash) | Mature open-source feature flag platform | Node.js/TypeScript, Postgres | Apache-2.0 | Self-hosted flags with strong rollout strategies and many SDKs |
+| [Unleash/unleash](https://github.com/Unleash/unleash) | Mature open-source feature flag platform | Node.js/TypeScript, Postgres | AGPL-3.0 | Self-hosted flags with strong rollout strategies and many SDKs |
 | [Flagsmith/flagsmith](https://github.com/Flagsmith/flagsmith) | Flags and remote config, cloud or self-hosted | Python/Django, React | BSD-3-Clause | You want flags plus per-identity remote config values |
 | [growthbook/growthbook](https://github.com/growthbook/growthbook) | Flags plus a warehouse-native experimentation platform | TypeScript, MongoDB | MIT (core) | Experiments with real statistics, on data in your own warehouse |
-| [flipt-io/flipt](https://github.com/flipt-io/flipt) | Lightweight, GitOps-friendly flag server | Go | GPL-3.0 | Single binary, flags stored alongside your config |
+| [flipt-io/flipt](https://github.com/flipt-io/flipt) | Lightweight, GitOps-friendly flag server | Go | Fair Core License (FCL-1.0-MIT) | Single binary, flags stored alongside your config |
 | [open-feature/spec](https://github.com/open-feature/spec) | The vendor-neutral feature flag API specification | Spec (Markdown) | Apache-2.0 | Understanding the standard your SDK calls should follow |
 | [open-feature/js-sdk](https://github.com/open-feature/js-sdk) | OpenFeature SDK for JavaScript/TypeScript | TypeScript | Apache-2.0 | Writing vendor-neutral flag calls in a Node or web app |
 | [PostHog/posthog](https://github.com/PostHog/posthog) | Flags and experiments integrated with product analytics | Python/Django, ClickHouse | MIT (core; `ee/` separately licensed) | You already use PostHog and want flags tied to events and groups |

@@ -161,10 +161,10 @@ not single components.
 | [openstatusHQ/openstatus](https://github.com/openstatusHQ/openstatus) | Open-source uptime monitoring and status pages | TypeScript, Next.js, Turso, Go checkers | AGPL-3.0 | You want to compare your Beacon with a real one, component by component |
 | [louislam/uptime-kuma](https://github.com/louislam/uptime-kuma) | Self-hosted uptime monitor | Node.js, Vue, SQLite | MIT | You want the single-tenant version of Beacon's core, and to see what multi-tenancy adds |
 | [boxyhq/saas-starter-kit](https://github.com/boxyhq/saas-starter-kit) | Enterprise SaaS starter: teams, SSO, SCIM, audit logs, webhooks | Next.js, Prisma | Apache-2.0 | You want to see the enterprise ring wired together in a small codebase |
-| [calcom/cal.com](https://github.com/calcom/cal.com) | Scheduling infrastructure | Next.js, tRPC, Prisma, Turborepo | AGPL-3.0 (with commercial `ee`) | You want nearly every component in one mature monorepo |
+| [calcom/cal.com](https://github.com/calcom/cal.com) | Scheduling infrastructure | Next.js, tRPC, Prisma, Turborepo | MIT | You want nearly every component in one mature monorepo |
 | [makeplane/plane](https://github.com/makeplane/plane) | Project management | Django, Next.js, Celery | AGPL-3.0 | You want the whole architecture in a Python backend |
 | [chatwoot/chatwoot](https://github.com/chatwoot/chatwoot) | Customer support platform | Rails, Vue, Sidekiq | MIT (with `enterprise` folder) | You want the whole architecture in Rails |
-| [haydenbleasel/next-forge](https://github.com/haydenbleasel/next-forge) | Production-grade Turborepo template | Next.js, many integrations | MIT | You want a map of which managed service fills each box |
+| [vercel/next-forge](https://github.com/vercel/next-forge) | Production-grade Turborepo template | Next.js, many integrations | MIT | You want a map of which managed service fills each box |
 | [wasp-lang/open-saas](https://github.com/wasp-lang/open-saas) | Free full-stack SaaS template | Wasp, React, Node, Prisma | MIT | You want a small, readable v1 with auth, payments, admin and jobs |
 
 **If you only study one:** study **openstatus**. It is a real, open-source Beacon:
@@ -200,7 +200,7 @@ one crosses at least two components, so this is the best place to see seams.
 
 **Cal.com** — the reference for scale. Its `apps/` and `packages/` folders (at the
 time of writing) separate the web app, the public API, features and the app store
-of integrations; its `ee` code marks the open-core line (7.4).
+of integrations; and its licence history is worth knowing: it moved from AGPL with a commercial `ee` folder to plain MIT, so for the open-core pattern itself (7.4) look at PostHog or Infisical instead.
 
 **What to notice**
 

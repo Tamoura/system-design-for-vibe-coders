@@ -369,7 +369,7 @@ Rate limit in layers: per IP before auth (stops credential stuffing and junk), p
 | [upstash/ratelimit-js](https://github.com/upstash/ratelimit-js) | Rate limiting library over Redis (sliding/fixed window, token bucket) | TS | MIT | Serverless or Node app needing app-level rate limits quickly |
 | [arcjet/arcjet-js](https://github.com/arcjet/arcjet-js) | Security SDK: rate limiting, bot detection, shields | TS | Apache-2.0 | You want rate limits plus abuse protection in-app |
 | [Kong/kong](https://github.com/Kong/kong) | API gateway with plugins for auth, rate limits, logging | Lua/Nginx | Apache-2.0 | Many services behind one API surface |
-| [TykTechnologies/tyk](https://github.com/TykTechnologies/tyk) | API gateway with keys, quotas, analytics | Go | MPL-2.0 | Go-based gateway with built-in key and quota management |
+| [TykTechnologies/tyk](https://github.com/TykTechnologies/tyk) | API gateway with keys, quotas, analytics | Go | MPL-2.0 (`ee` folder commercial) | Go-based gateway with built-in key and quota management |
 | [apache/apisix](https://github.com/apache/apisix) | Cloud-native API gateway | Lua/Nginx | Apache-2.0 | Dynamic routing and plugins at high traffic |
 | [OAI/OpenAPI-Specification](https://github.com/OAI/OpenAPI-Specification) | The OpenAPI Specification itself | Spec | Apache-2.0 | Understanding what your spec can express |
 | [scalar/scalar](https://github.com/scalar/scalar) | API reference docs and client from an OpenAPI file | TS | MIT | Beautiful, interactive API docs with little effort |
@@ -805,7 +805,7 @@ The two combine well: store the customer's escalation policy as data (tiers, del
 | [triggerdotdev/trigger.dev](https://github.com/triggerdotdev/trigger.dev) | Background tasks and workflows with waits, queues and a run dashboard | TS | Apache-2.0 | Long-running TS tasks (AI, exports, media) with great visibility |
 | [hatchet-dev/hatchet](https://github.com/hatchet-dev/hatchet) | Durable tasks, DAG workflows and fair queueing on Postgres | Go, Postgres | MIT | You want durable execution backed by Postgres with per-tenant fairness |
 | [restatedev/restate](https://github.com/restatedev/restate) | Durable execution runtime with virtual objects and durable RPC | Rust | Business Source License 1.1 | Low-latency durable handlers and stateful per-key services |
-| [windmill-labs/windmill](https://github.com/windmill-labs/windmill) | Scripts, flows and internal apps platform | Rust, many languages | AGPL-3.0 core (enterprise parts proprietary) | Internal automation and ops workflows with a UI |
+| [windmill-labs/windmill](https://github.com/windmill-labs/windmill) | Scripts, flows and internal apps platform | Rust, many languages | Mixed: Apache-2.0 / AGPL-3.0 / proprietary parts | Internal automation and ops workflows with a UI |
 | [n8n-io/n8n](https://github.com/n8n-io/n8n) | Visual workflow automation | TS | Sustainable Use License | Studying how a user-defined workflow graph is stored and executed |
 | [activepieces/activepieces](https://github.com/activepieces/activepieces) | Visual automation platform with typed "pieces" | TS | MIT (community edition; `ee` folders commercial) | Embedding or studying a customer-facing automation builder |
 
