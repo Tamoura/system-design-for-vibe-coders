@@ -87,6 +87,28 @@
 للمرشدين: اجعلوا المبتدئين يعرضون نتائج "🔍 ادرسه في مشاريع حقيقية" على بعضهم. قراءة
 كود حقيقي وشرحه بصوت عالٍ هي المهارة التي تعلّمها هذه الدورة فعلًا.
 
+## مستودع التدريب: Beacon
+
+لكل تمرين من تمارين "🛠️ ابنِه في Beacon" شيفرة حقيقية تعمل عليها. **نسخة البداية من Beacon** تطبيق يعمل مبني
+بـ Next.js وPostgreSQL: المراقِبات، وفحوص التوفر، والحوادث، ولوحة التحكم، وصفحة الحالة العامة. أما المكوّنات
+العامة التي يحتاجها كل تطبيق SaaS فغير موجودة، وكل واحد منها معلَّم بتعليق `TODO(رقم الدرس)`. انسخها كمستودع مستقل:
+
+```bash
+git clone -b beacon/starter --single-branch https://github.com/Tamoura/system-design-for-vibe-coders.git beacon
+```
+
+لكل وحدة **فرع حلٍّ مرجعي** باسم `beacon/module-N-solution`، ينفّذ تمارين 🟢 و🟡 فوق حل الوحدة السابقة.
+أما تمارين 🔴 فتُركت تحديًا إضافيًا. حاول حل كل تمرين أولًا، ثم قارن:
+
+```bash
+git fetch origin beacon/module-3-solution:module-3-solution
+git diff main module-3-solution
+```
+
+تُنشر فروع الحلول تباعًا مع اكتمال كل وحدة. يمكنك أيضًا تصفّح نسخة البداية في مجلد
+[`beacon/`](https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/beacon)، وستجد كل التمارين مع
+معايير اكتمالها في ملف `docs/EXERCISES.md` داخله.
+
 ## ما تحتاجه
 
 - الارتياح في العمل مع تقنية ويب واحدة (الأمثلة تستخدم TypeScript وNext.js وPostgreSQL،

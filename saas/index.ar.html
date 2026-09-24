@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="saas-source" content="1459942a00618203">
+<meta name="saas-source" content="a3656a07a4a18e79">
 <meta name="description" content="لبنات بناء SaaS: المكوّنات التي تشترك فيها كل تطبيقات SaaS، من المبتدئ إلى المتقدم، مع أفضل المستودعات مفتوحة المصدر لتعلّم كل مكوّن.">
 <title>SaaS Building Blocks — لبنات بناء SaaS</title>
 <style>
@@ -582,6 +582,20 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 </tbody></table></div>
 <p>للمرشدين: اجعلوا المبتدئين يعرضون نتائج &quot;🔍 ادرسه في مشاريع حقيقية&quot; على بعضهم. قراءة
 كود حقيقي وشرحه بصوت عالٍ هي المهارة التي تعلّمها هذه الدورة فعلًا.</p>
+<h2>مستودع التدريب: Beacon</h2>
+<p>لكل تمرين من تمارين &quot;🛠️ ابنِه في Beacon&quot; شيفرة حقيقية تعمل عليها. <strong>نسخة البداية من Beacon</strong> تطبيق يعمل مبني
+بـ Next.js وPostgreSQL: المراقِبات، وفحوص التوفر، والحوادث، ولوحة التحكم، وصفحة الحالة العامة. أما المكوّنات
+العامة التي يحتاجها كل تطبيق SaaS فغير موجودة، وكل واحد منها معلَّم بتعليق <code>TODO(رقم الدرس)</code>. انسخها كمستودع مستقل:</p>
+<pre><code class="language-bash">git clone -b beacon/starter --single-branch https://github.com/Tamoura/system-design-for-vibe-coders.git beacon
+</code></pre>
+<p>لكل وحدة <strong>فرع حلٍّ مرجعي</strong> باسم <code>beacon/module-N-solution</code>، ينفّذ تمارين 🟢 و🟡 فوق حل الوحدة السابقة.
+أما تمارين 🔴 فتُركت تحديًا إضافيًا. حاول حل كل تمرين أولًا، ثم قارن:</p>
+<pre><code class="language-bash">git fetch origin beacon/module-3-solution:module-3-solution
+git diff main module-3-solution
+</code></pre>
+<p>تُنشر فروع الحلول تباعًا مع اكتمال كل وحدة. يمكنك أيضًا تصفّح نسخة البداية في مجلد
+<a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/beacon"><code>beacon/</code></a>، وستجد كل التمارين مع
+معايير اكتمالها في ملف <code>docs/EXERCISES.md</code> داخله.</p>
 <h2>ما تحتاجه</h2>
 <ul>
 <li>الارتياح في العمل مع تقنية ويب واحدة (الأمثلة تستخدم TypeScript وNext.js وPostgreSQL،

@@ -88,6 +88,29 @@ Mentors: have juniors present the "🔍 Study it in the wild" findings to each o
 Reading real code and explaining it out loud is the skill this course is really
 teaching.
 
+## The practice repo: Beacon
+
+Every "🛠️ Build it into Beacon" exercise has a real codebase to work in. The **Beacon starter** is a working
+Next.js + PostgreSQL app: monitors, uptime checks, incidents, a dashboard and a public status page. Every generic
+SaaS component is missing and marked `TODO(lesson)`. Clone it as a standalone repo:
+
+```bash
+git clone -b beacon/starter --single-branch https://github.com/Tamoura/system-design-for-vibe-coders.git beacon
+```
+
+Each module has a **reference solution branch**, `beacon/module-N-solution`, that implements the 🟢 and 🟡
+exercises on top of the previous module. The 🔴 exercises are left as stretch goals. Try each exercise first,
+then compare:
+
+```bash
+git fetch origin beacon/module-3-solution:module-3-solution
+git diff main module-3-solution
+```
+
+Solution branches are published as each module is finished. The starter can also be browsed in the
+[`beacon/`](https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/beacon) folder, and every
+exercise with its "done when" criteria is in its `docs/EXERCISES.md`.
+
 ## What you need
 
 - Comfort with one web stack (the examples use TypeScript, Next.js and PostgreSQL,
