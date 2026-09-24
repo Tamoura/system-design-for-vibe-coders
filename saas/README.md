@@ -95,7 +95,7 @@ teaching.
 
 ## A note on the repos
 
-The course names roughly two hundred repositories. They were chosen because they
+The course recommends more than 220 repositories. They were chosen because they
 are widely used, actively maintained, or unusually readable — not because anyone
 paid for a mention. Two cautions:
 

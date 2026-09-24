@@ -5,7 +5,6 @@
 ---
 
 # 3.1 — Subscriptions and payments: checkout, webhooks, the customer portal
-
 *Level: 🟢 Beginner* · *Prerequisites: 1.2, 2.1*
 
 ## 🧭 Why every SaaS has this
@@ -266,7 +265,6 @@ Implement the full lifecycle with a Stripe **test clock**: a 14-day trial with a
 ---
 
 # 3.2 — Plans, limits and entitlements: turning pricing into code
-
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 1.3*
 
 ## 🧭 Why every SaaS has this
@@ -498,8 +496,7 @@ Add per-org **overrides** and **add-ons**. Overrides (`maxMonitors`, `minInterva
 ---
 
 # 3.3 — Usage-based billing and metering
-
-*Level: 🔴 Advanced* · *Prerequisites: 3.1, 3.2, 5.1*
+*Level: 🔴 Advanced* · *Prerequisites: 3.1, 3.2*
 
 ## 🧭 Why every SaaS has this
 
@@ -706,4 +703,4 @@ Replace the counter with a **credit ledger**: monthly grants (reset each period,
 - Kill Bill documentation: https://docs.killbill.io
 - Brandur Leach, "Implementing Stripe-like Idempotency Keys in Postgres": https://brandur.org/idempotency-keys
 
-Next up: [Module 4 — Communication](./04-communication.md), where Beacon learns to tell people things by email, SMS, Slack and in real time.
+Next up: **Module 4 — Communication**, where Beacon learns to tell people things by email, SMS, Slack and in real time.

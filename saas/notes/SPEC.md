@@ -180,7 +180,7 @@ Length: **2,000–3,200 words per lesson.** Dense beats long.
   paradedb/paradedb, quickwit-oss/tantivy, elastic/elasticsearch.
 - Billing: stripe/stripe-node, getlago/lago, killbill/killbill,
   juspay/hyperswitch, polarsource/polar, openmeterio/openmeter,
-  flexprice/flexprice, useautumn/autumn, lemonsqueezy/lemonsqueezy.js.
+  flexprice/flexprice, useautumn/autumn, lmsqueezy/lemonsqueezy.js.
 - Email: resend/react-email, mjmlio/mjml, knadh/listmonk, postalserver/postal,
   mautic/mautic, nodemailer/nodemailer, maizzle/framework, unsend-dev/unsend (now "useSend").
 - Notifications/realtime: novuhq/novu, 
