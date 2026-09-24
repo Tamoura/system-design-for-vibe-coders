@@ -1,0 +1,32 @@
+:root {
+  --bg: #f6f7f9; --panel: #fff; --ink: #1a1f29; --muted: #5d6675; --line: #e3e6eb;
+  --accent: #2f4f9a; --up: #1f8a4c; --down: #c0392b; --unknown: #8a94a3;
+  font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #12151a; --panel: #1a1e25; --ink: #e7e8ea; --muted: #9aa1ac; --line: #2b313a; --accent: #8fa9e6; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); line-height: 1.55; }
+a { color: var(--accent); }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 1rem; }
+header.top { border-bottom: 1px solid var(--line); background: var(--panel); }
+header.top .wrap { display: flex; gap: 1.2rem; align-items: center; height: 56px; }
+header.top .brand { font-weight: 800; text-decoration: none; color: var(--ink); }
+header.top nav { display: flex; gap: 1rem; margin-left: auto; font-size: .92rem; }
+main { padding: 2rem 0 4rem; }
+h1 { font-size: 1.7rem; margin: 0 0 1rem; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.2rem; }
+.grid { display: grid; gap: .8rem; }
+.row { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
+.dot { width: .7rem; height: .7rem; border-radius: 50%; flex: none; }
+.dot.up { background: var(--up); } .dot.down { background: var(--down); } .dot.unknown { background: var(--unknown); }
+.muted { color: var(--muted); font-size: .9rem; }
+.btn { display: inline-block; background: var(--accent); color: #fff; border: 0; border-radius: 8px; padding: .55rem 1rem; font-weight: 600; text-decoration: none; cursor: pointer; font-size: .95rem; }
+form .field { display: grid; gap: .3rem; margin-bottom: 1rem; }
+input, select { font: inherit; padding: .5rem .6rem; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--ink); }
+.error { color: var(--down); font-size: .88rem; }
+.banner { padding: 1rem 1.2rem; border-radius: 12px; font-weight: 700; color: #fff; }
+.banner.operational { background: var(--up); } .banner.partial_outage { background: #d68910; }
+.banner.major_outage { background: var(--down); } .banner.unknown { background: var(--unknown); }
+.todo { border: 1px dashed var(--line); border-radius: 12px; padding: .8rem 1rem; font-size: .88rem; color: var(--muted); margin-top: 2rem; }
