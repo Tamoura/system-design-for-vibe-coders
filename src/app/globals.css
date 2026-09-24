@@ -37,3 +37,6 @@ header.top nav { align-items: center; }
 .badge { font-size: .75rem; border: 1px solid var(--line); border-radius: 999px; padding: .05rem .5rem; color: var(--muted); }
 table { width: 100%; border-collapse: collapse; }
 td, th { text-align: left; padding: .4rem .3rem; border-bottom: 1px solid var(--line); font-size: .92rem; }
+.switcher { position: relative; }
+.switcher summary { cursor: pointer; }
+.switcher-menu { position: absolute; z-index: 10; top: 1.8rem; left: 0; min-width: 240px; display: grid; gap: .5rem; }

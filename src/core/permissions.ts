@@ -1,4 +1,4 @@
-import type { Role } from './roles';
+import { ROLES, type Role } from './roles';
 
 /*
  * Lesson 1.3: the ONE place that says what each role may do.
@@ -31,4 +31,17 @@ export type Permission = (typeof PERMISSIONS)[Role][number];
 /** Function-level check: may this role perform this action at all? */
 export function can(role: Role, permission: Permission): boolean {
   return (PERMISSIONS[role] as readonly string[]).includes(permission);
+}
+
+/** How powerful a role is: owner 3 … viewer 0. Used only to compare roles. */
+export function roleRank(role: Role): number {
+  return ROLES.length - 1 - ROLES.indexOf(role);
+}
+
+/**
+ * Lesson 1.2/1.3: may this role invite someone as `role`? Only with
+ * "member.manage", and never above your own role — an admin cannot mint owners.
+ */
+export function canGrantRole(actorRole: Role, role: Role): boolean {
+  return can(actorRole, 'member.manage') && roleRank(role) <= roleRank(actorRole);
 }

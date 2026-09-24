@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ROLES } from './roles';
 
 /**
  * Validation for "add a monitor". Shared by the form's server action and, later,
@@ -37,4 +38,10 @@ export type SignUpInput = z.infer<typeof signUpInput>;
 /** Lesson 1.2: "create an organization". The slug is derived from the name (src/core/slugs.ts). */
 export const createOrganizationInput = z.object({
   name: z.string().trim().min(2, 'Use at least 2 characters').max(60),
+});
+
+/** Lesson 1.2 (🟡): "invite a teammate". Whether the inviter may grant `role` is checked separately (canGrantRole). */
+export const inviteInput = z.object({
+  email: z.string().trim().toLowerCase().email('Enter a valid email address'),
+  role: z.enum(ROLES),
 });

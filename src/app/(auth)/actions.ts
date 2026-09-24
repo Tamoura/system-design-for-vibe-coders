@@ -44,9 +44,10 @@ export async function signUpAction(_prev: AuthFormState, formData: FormData): Pr
 }
 
 /** Lesson 1.1: logout deletes the session row, not just the cookie. */
-export async function signOutAction() {
+export async function signOutAction(formData: FormData) {
   await auth.api.signOut({ headers: await headers() });
-  redirect('/login');
+  const next = formData.get('next');
+  redirect(next ? `/login?next=${encodeURIComponent(safeRedirect(next))}` : '/login');
 }
 
 /**

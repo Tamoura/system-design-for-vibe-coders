@@ -1,4 +1,5 @@
-import { boolean, index, integer, pgEnum, pgTable, primaryKey, text, timestamp, uuid } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
+import { boolean, index, integer, pgEnum, pgTable, primaryKey, text, timestamp, uniqueIndex, uuid } from 'drizzle-orm/pg-core';
 import { ROLES } from '../core/roles';
 import { users } from './auth-schema';
 
@@ -34,6 +35,38 @@ export const memberships = pgTable(
   },
   // One role per person per org: the pair is the primary key.
   (t) => [primaryKey({ columns: [t.organizationId, t.userId] }), index('memberships_user_idx').on(t.userId)],
+);
+
+/**
+ * Lesson 1.2 (🟡): a pending membership for someone who has not accepted yet.
+ * The emailed link carries a random token; the table stores only its SHA-256
+ * hash, like a password-reset token (lesson 1.1). Single use, 7-day expiry,
+ * and bound to the invited email. Rules live in src/core/invitations.ts.
+ */
+export const invitations = pgTable(
+  'invitations',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    email: text('email').notNull(), // stored lower-case
+    role: orgRole('role').notNull(),
+    tokenHash: text('token_hash').notNull().unique(),
+    invitedBy: uuid('invited_by').references(() => users.id, { onDelete: 'set null' }),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    // Last time the email went out (create or resend); the per-org rate limit counts these.
+    sentAt: timestamp('sent_at', { withTimezone: true }).notNull().defaultNow(),
+    acceptedAt: timestamp('accepted_at', { withTimezone: true }),
+    acceptedBy: uuid('accepted_by').references(() => users.id, { onDelete: 'set null' }),
+    revokedAt: timestamp('revoked_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    index('invitations_org_sent_idx').on(t.organizationId, t.sentAt),
+    // At most one open invitation per email per org. Accepted and revoked ones don't count.
+    uniqueIndex('invitations_one_open_per_email')
+      .on(t.organizationId, t.email)
+      .where(sql`${t.acceptedAt} is null and ${t.revokedAt} is null`),
+  ],
 );
 
 /*
@@ -96,6 +129,7 @@ export const incidents = pgTable(
 
 export type Organization = typeof organizations.$inferSelect;
 export type Membership = typeof memberships.$inferSelect;
+export type Invitation = typeof invitations.$inferSelect;
 export type Monitor = typeof monitors.$inferSelect;
 export type CheckResult = typeof checkResults.$inferSelect;
 export type Incident = typeof incidents.$inferSelect;
