@@ -123,8 +123,11 @@ src/
   db/           Drizzle schema, the Postgres client, and withOrg() (row-level security, lesson 2.4).
   lib/          Data access used by pages and scripts. Every tenant query takes the organization.
   lib/storage/  Object storage behind one interface: S3-compatible or local files (lesson 2.2).
+  lib/email/    sendEmail(): the queue, SMTP/Resend drivers, bounces and suppression (lesson 4.1).
+  lib/notifications/  notify(): recipients, preferences, channels, delivery log (lesson 4.2).
+  emails/       React Email templates, each with a plain-text part (lesson 4.1).
   app/          Next.js App Router: auth pages, /[orgSlug]/… org pages, /status/[slug], /api/….
-scripts/        migrate, seed, reset, run-checks, process-files, storage-setup, claim-org.
+scripts/        migrate, seed, reset, run-checks, process-files, send-messages, email-preview, storage-setup, claim-org.
 drizzle/        SQL migrations (generated; commit them).
 tests/          Vitest tests for src/core, and for src/lib and the API on an in-memory Postgres.
 docs/           EXERCISES.md, SOLUTIONS.md (what each solution branch built and why), later the architecture docs (module 9).

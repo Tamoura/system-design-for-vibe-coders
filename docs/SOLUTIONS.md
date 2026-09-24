@@ -847,3 +847,306 @@ page switches to Pro by itself → 5 of 50, a sixth monitor at 1 minute → thre
 API → a member sees no Billing link, gets the 403 page and 403 from the checkout and portal endpoints →
 the Portal's *Cancel at period end* shows "cancels on …" and keeps Pro → *Cancel now* moves the org to
 Free, freezes the newest monitor, and one downgrade email is logged.
+
+---
+
+## Module 4 — Communication
+
+Modules 1–3 decided who may do what and what they paid for. Module 4 is how Beacon **reaches people**:
+email that arrives (4.1), alerts that reach the right person on the right channel without burying them
+(4.2), and a dashboard that changes while you look at it (4.3).
+
+```
+ check runner ─► recordCheckResult()  ── one withOrg() transaction ──────────────────────────────┐
+                   insert check result ─► NOTIFY monitor.status                                     │
+                   3 failures in a row ─► incident ─► NOTIFY incident.changed                       │
+                   flapping? (>4 changes/h) ─► one "flapping" notification instead                  │
+                   notifyInTx(): members with the permission ─► dedupe ─► preferences ─► deliveries │
+                                 (+ the org's Slack channel, + confirmed status-page subscribers)  │
+                                                                                          COMMIT ───┘
+      after commit ─► channel workers: email (suppression, List-Unsubscribe) · SMS (5/h, fallback,
+                      recordSmsSent) · Slack ─► each delivery row records status + provider id
+      and Postgres delivers the NOTIFYs ─► every app instance ─► SSE ─► open dashboards and bells
+
+ sendEmail() ─► email_outbox ─► worker (after the response, and `npm run messages:send`) ─► SMTP / Resend
+                                                          provider webhook ─► email_suppressions ◄┘
+```
+
+### Try it by hand
+
+```bash
+docker compose up -d                  # Mailpit: SMTP on :1025, inbox on http://localhost:8025
+npm run db:reset
+SMS_PROVIDER=fake SLACK_PROVIDER=fake npm run dev
+```
+
+1. Sign up at <http://localhost:3000/signup>. The verification email is in Mailpit (HTML and a plain-text
+   part: open the *Text* tab). Click its link. `npm run email:preview` renders every template to
+   `.email-preview/` without sending anything.
+2. Sign in as `demo@beacon.test`. The 🔔 in the org navigation is the inbox; **● Live** next to it means the
+   live connection is up. Open **🔔 → Preferences**: *Billing and plan* is locked on (required), in-app is
+   always on, and SMS is locked because Demo is on Free, which includes no SMS. Put Demo on Pro to try
+   SMS (`update organizations set plan = 'pro' where slug = 'demo'`, or upgrade with `BILLING_PROVIDER=fake`),
+   then add a phone number such as `+15551234567` and tick *Incident opened → SMS*.
+3. Sign in as `member@beacon.test` in a private window and untick every *Email* box.
+4. Open `/status/demo` in a third window and subscribe with any address. Confirm from the email in Mailpit.
+5. As the owner, keep **Monitors** open. Open *Always broken*, click **Mark resolved** (that notifies: a
+   resolved email, a bell count, a status update to the subscriber). Run `npm run checks:run -- --all`
+   in a terminal: the tiles change colour while you watch, the incident reopens (the monitor still fails),
+   the bell goes up, the owner gets an email and an SMS (printed by the check run), the member gets only
+   the in-app notification. **🔔** shows each notification's deliveries: *In-app: sent · Email: sent ·
+   SMS: sent*. **Settings** shows *SMS used this period: 1*.
+6. Open the same monitor as owner and as member: each sees "👀 … is also viewing this monitor".
+7. Stop `npm run dev` for a few seconds: the dashboard says *reconnecting…*, then comes back by itself.
+8. In Mailpit, every alert email has `List-Unsubscribe` and `List-Unsubscribe-Post` headers. Clicking the
+   footer's *Unsubscribe* opens a page with a button; mail clients POST the header's URL directly.
+
+Without Docker, `EMAIL_DRIVER=console` prints emails in the terminal instead.
+
+### Lesson 4.1 — Transactional email that actually arrives
+
+**What was built.** React Email templates for every email Beacon sends (verification, password reset,
+invitation, incident opened/resolved, flapping, SMS held back, plan downgraded, usage alert, subscription
+confirmation, status update), each with a plain-text part. One `sendEmail()` that only queues a row in
+`email_outbox`; a worker that sends it after the response through an `EmailTransport` (SMTP via nodemailer
+to Mailpit in development, Resend's HTTP API in production, `console` and `memory` drivers), with retries
+and backoff. A signed bounce/complaint webhook that fills `email_suppressions`, checked before every send,
+and a warning on the members page. The `TODO(4.1)` console mailer is gone.
+
+**Read in this order**
+
+1. `src/emails/layout.tsx`, then `src/emails/incidents.tsx`: templates as components.
+2. `src/emails/index.tsx`: the registry (subject, sample props, stream, "essential") and `renderEmail()`.
+3. `src/lib/email/index.ts`: `sendEmail()` → outbox, `deliverEmail()` (suppression → render → headers →
+   transport), `deliverPendingEmails()` (claim with `SKIP LOCKED`, retry, give up).
+4. `src/lib/email/transport.ts`, `smtp.ts`, `resend.ts`, `memory.ts`: one interface, four drivers.
+5. `src/lib/email/webhook.ts` and `src/app/api/email/webhook/route.ts`: verify, then suppress.
+6. `src/lib/jobs.ts` `runAfterResponse()`; `scripts/send-messages.ts`; `scripts/email-preview.ts`.
+7. `src/lib/auth.ts`, `src/lib/invitations.ts`: the call sites, now one line each.
+8. `tests/email.test.ts`.
+
+**Exercises covered**
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 Mailpit + a production provider, React Email templates (verify, invitation, incident opened), one `sendEmail()` choosing SMTP in development and the provider in production | signing up shows the verify email in Mailpit | Mailpit is in `docker-compose.yml`; the smoke test used a local SMTP server in its place (no Docker in the build environment) and followed the link |
+| | every template has a plain-text part and renders in a preview | `renderEmail()` renders both from one component; `npm run email:preview`; a test per template checks subject, HTML, text and link |
+| | no code outside `sendEmail()` imports the provider SDK | only `src/lib/email/*` knows nodemailer or Resend; a test greps `src/` and `scripts/` |
+| 🟡 SPF, DKIM, DMARC; a queued job with idempotency keys; signed bounce/complaint webhooks; `email_suppressions` checked before every send; a warning in the members UI | SPF, DKIM and DMARC pass and align | **not verified**: needs a real domain and a provider account. The records are below |
+| | a simulated hard bounce adds a suppression row and no further email is attempted | test and smoke: a signed `email.bounced` (Permanent) → row → the next sends are `suppressed`, the transport is never called; the members page shows ⚠ |
+| | a provider outage delays emails without failing requests, and they send after recovery | test: the memory driver in "outage" → `sendEmail()` still resolves, the row stays `pending` with the error and a backoff, then sends once the driver recovers. A bad Resend key throws the same way |
+
+The DNS records for `mail.beacon.app` with Resend (Resend's domain page shows the real values):
+
+```
+send.mail.beacon.app             MX   10 feedback-smtp.us-east-1.amazonses.com   (bounces come back here)
+send.mail.beacon.app             TXT  "v=spf1 include:amazonses.com ~all"     SPF for the Return-Path domain
+resend._domainkey.mail.beacon.app TXT "p=MIGfMA0GCSqGSIb3…"                    DKIM public key, d=mail.beacon.app
+_dmarc.beacon.app                TXT  "v=DMARC1; p=none; rua=mailto:dmarc-reports@beacon.app"
+```
+
+`From: notifications@mail.beacon.app` aligns (relaxed alignment, same organizational domain) with DKIM's
+`d=mail.beacon.app` and SPF's `send.mail.beacon.app`. Status-page mail uses `status@updates.beacon.app`,
+a second domain with its own records, so its reputation is separate.
+
+**Design decisions to notice**
+
+- **A table as the queue until 5.1.** `email_outbox` is the job: unique `idempotency_key`, `attempts`,
+  `next_attempt_at`, `last_error`. Claiming pushes `next_attempt_at` five minutes ahead (a lease), so a
+  crashed worker's rows come back by themselves, and `FOR UPDATE SKIP LOCKED` keeps two workers apart
+  (tested). `after()` sends right after the response; `npm run messages:send` from cron catches retries
+  and anything a restart lost.
+- **The key is the job, not the email.** Asking twice for the same invitation (same invitation, same
+  token) queues one email; *Resend* makes a new token and so a new email. The key also goes to the
+  provider (Resend's `Idempotency-Key`; over SMTP a Message-ID derived from it), so a retry after a crash
+  between "sent" and "marked sent" is dropped there.
+- **Templates render at send time.** The row stores the template name and props (plain JSON), so a fixed
+  typo reaches queued mail too.
+- **Suppression is global, by address.** An address that does not exist does not exist for any org.
+  A hard bounce stops everything; a complaint stops everything except "essential" mail (verification,
+  password reset) the person asks for themselves. A later hard bounce upgrades a complaint, never the
+  reverse. Soft bounces are the provider's to retry and are only logged.
+- **Two streams.** Transactional mail from `EMAIL_FROM`, subscriber mail from `EMAIL_FROM_STATUS` on
+  another subdomain (the lesson's stream separation).
+- **Webhook verification like Stripe's (3.1).** The raw body, an HMAC over `id.timestamp.body` compared in
+  constant time, at most five minutes old, several signatures accepted during a rotation. Written out
+  (about 20 lines) instead of pulling in the `svix` package, so you can see it; `svix` does the same.
+- **Resend was not exercised against its servers** (no internet here). The SMTP driver ran against a real
+  SMTP server in the tests (`smtp-server`) and in the smoke test.
+
+### Lesson 4.2 — Notifications: in-app, email, Slack, SMS, and preferences
+
+**What was built.** `notifications` (the inbox), `notification_deliveries` (one row per channel: the job
+*and* the delivery log), per-person `notification_preferences`, per-org `org_notification_policies`, and
+`status_page_subscribers`, all under row-level security. One entry point, `notify()` / `notifyInTx()`,
+called when an incident opens or resolves (automatically or by hand), when a monitor starts flapping, on a
+downgrade and on a usage alert. Channel workers for email, SMS (fake provider or Twilio, metered with 3.3's
+`recordSmsSent()`, 5 per person per hour with an email fallback) and Slack (incoming webhook, or fake).
+Anti-flapping. A bell with an unread count, an inbox with *Mark as read* / *Mark all as read* and delivery
+badges, a preferences matrix, the org policy and Slack in Settings, status-page subscription with double
+opt-in, and signed one-click unsubscribe links.
+
+**Read in this order**
+
+1. `src/core/notifications.ts`: categories, `resolvePersonalChannels()` (the lesson's resolution order),
+   flapping, SMS text and segments. Then `tests/notifications-core.test.ts`.
+2. `src/lib/checks.ts` `recordCheckResult()`: check → incident → flapping → `notifyInTx()`, one transaction.
+3. `src/lib/notifications/pipeline.ts`: recipients, dedupe, preferences, deliveries.
+4. `src/lib/notifications/deliver.ts`: the channel workers, the SMS throttle and its fallback.
+5. `src/lib/notifications/providers.ts`: `SmsProvider`, `SlackSender`, fakes, and the Slack URL allowlist.
+6. `src/lib/notifications/events.ts`: every event Beacon sends, in one place.
+7. `src/lib/notifications/index.ts`: inbox, preferences, org settings. `subscribers.ts`: double opt-in and
+   unsubscribe. `src/core/tokens.ts`: signed links.
+8. `src/app/[orgSlug]/notifications/`, `src/app/status/[slug]/`, `src/app/unsubscribe/`, `src/app/api/unsubscribe/`.
+9. `tests/notifications.test.ts`.
+
+**Exercises covered**
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 `notifications` table, `notify()` on open/resolve, bell with unread count, mark as read / all | opening an incident creates exactly one notification per eligible member, even if `notify()` is called twice | unique `dedupe_key` = `incident.opened:<incident>:<user>`; test calls `notify()` again: 0 new rows |
+| | the unread count updates after marking as read | `revalidatePath` re-renders the layout's bell; tests; smoke (*Mark all as read* → 0) |
+| | members without access to the monitor receive nothing | recipients are members whose role has the category's permission. In Beacon every role may read every monitor (1.3), so for incidents that is every member; tests show outsiders get nothing and that `billing` (needs `billing.manage`) reaches only the owner |
+| 🟡 email, Slack and SMS behind a channel router with per-channel jobs; preferences matrix with required categories locked; anti-flapping; SMS throttle with email fallback | a monitor flapping for an hour produces at most a handful of notifications per channel | tests: strictly alternating up/down every 30 s opens nothing (3 failures needed); down 1.5 min / up 30 s for an hour (60 state changes) gives opened, resolved, opened, resolved, *flapping*: 5 per channel |
+| | a user who disabled email for "incident resolved" gets no resolved emails but still in-app ones | test; smoke (the member got no email, has the in-app notification with only *In-app: sent*) |
+| | the sixth SMS within an hour is replaced by an email saying how many were held back | test: 5 SMS sent, the 6th `throttled`, an `sms-held-back` email "1 SMS alert has been held back" |
+| | every delivery attempt is recorded with channel, status and provider message ID | `notification_deliveries`; badges in the inbox; tests; smoke (*In-app / Email / SMS: sent*) |
+
+**Design decisions to notice**
+
+- **Notifications commit with the incident.** The check runner calls `notifyInTx()` inside the
+  transaction that opens the incident: both exist or neither. Only rows are written there; sending happens
+  after the commit, outside any transaction (2.4's rule).
+- **The delivery row is the job.** Email, SMS and Slack each claim their pending rows (`SKIP LOCKED`, a
+  lease, backoff, `MAX_ATTEMPTS`), and the same row keeps status, provider id, error and time: the log a
+  customer can be shown. In-app is written as delivered, so the log is complete.
+- **Resolution order** is the lesson's: required → org policy → the person → default. In-app is always on
+  (it is the record). Required categories cannot be turned off by the form, a hand-made POST or an
+  unsubscribe link (tested). Cells the form shows as locked keep the person's choice when saved.
+- **SMS is an entitlement (3.2).** Free includes no SMS and has no subscription to bill overage to, so the
+  pipeline switches SMS off below Pro and the preferences page says why. A sent SMS is metered with
+  `recordSmsSent()` (message SID as key; the fake's SID is derived from the delivery, so a retry is not
+  billed twice). Alert texts are ASCII, and the link drops its `#fragment`: the smoke test caught a
+  typical alert costing two segments.
+- **Flapping lives in the domain**, next to the incident decision: 3 failures to open (was 2), and more
+  than 4 state changes within an hour marks the monitor (`flapping_since`), sends one *flapping*
+  notification and holds back the rest until it has been quiet for an hour.
+- **Slack is the org's channel**, one message per event, not per member. The webhook URL is a secret: never
+  sent back to the browser, only `https://hooks.slack.com/services/…` accepted (anything else would let an
+  admin make Beacon call internal addresses: SSRF). Posting to Slack with OAuth, threads and an
+  *Acknowledge* button is 5.3 and 4.2 🔴.
+- **Links that work without a login** are signed, not stored: an HMAC over the payload with the app
+  secret (`src/core/tokens.ts`). They can only switch mail *off*, or confirm a subscription. A GET never
+  changes anything (link scanners open every link): pages show a button; mail clients use the one-click
+  POST (RFC 8058).
+- **Status-page subscribers are not users.** Double opt-in, the same answer whether or not an address is
+  subscribed, one confirmation per address per 10 minutes and 30 per page per hour, and mail from the
+  status stream. Fan-out is plain rows here; batched, throttled fan-out for 10,000 subscribers is 4.1 🔴.
+- **SMS throttle per person per org.** Deliveries are tenant rows under RLS, so "5 per hour" is counted
+  within one org. Two workers racing could both send a sixth; acceptable at this size.
+
+### Lesson 4.3 — Real-time (🟢 and 🟡)
+
+4.3 is an 🔴 lesson; its 🟢 and 🟡 exercises fit Beacon well. Its 🔴 exercise (a Yjs/Hocuspocus
+postmortem editor and optimistic locking) is left as a stretch goal.
+
+**What was built.** Live updates over Server-Sent Events, fanned out through **Postgres
+`LISTEN/NOTIFY`**: the check runner (another process) and the app publish per-org events inside their
+transactions; every app instance listens once per org and forwards to its browsers. An authorized SSE
+endpoint that re-checks access every 30 seconds. One connection per tab with exponential backoff and full
+jitter, resync on every reconnect, monitor tiles updated in place, a live bell, a *Live* indicator, and
+presence on the monitor page.
+
+**Read in this order**
+
+1. `src/lib/realtime.ts`: `publishInTx()`, `subscribe()`, why NOTIFY, and its limits.
+2. `src/lib/checks.ts` and `src/lib/notifications/pipeline.ts`: where events are published.
+3. `src/lib/realtime-stream.ts` and `src/app/api/orgs/[orgSlug]/events/route.ts`: the stream.
+4. `src/app/[orgSlug]/realtime.tsx`: `RealtimeProvider`, backoff, resync. `src/core/retry.ts` `reconnectDelayMs()`.
+5. `src/app/[orgSlug]/monitors/live-monitor-list.tsx`, `notification-bell.tsx`, `monitors/[id]/live.tsx`.
+6. `src/lib/presence.ts` and `src/app/api/orgs/[orgSlug]/presence/route.ts`.
+7. `tests/realtime.test.ts`, and the new cases in `tests/cross-tenant-routes.test.ts`.
+
+**Exercises covered**
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 SSE instead of polling: the worker publishes `monitor.status` to the org's channel, an authorized endpoint forwards it, the tile updates in place, the list is refetched on reconnect | a monitor going down turns red on an open dashboard within about a second, without polling | smoke: `npm run checks:run` in another process → the tile turns red, same document (no reload) |
+| | a non-member gets 403 from the SSE endpoint | **404**, like every org route in Beacon (lesson 1.2: outsiders cannot learn an org exists); anonymous 401. Tests and smoke |
+| | restarting the server makes dashboards reconnect and resync | smoke: instance B killed → *reconnecting…*; the incident resolved meanwhile on A; B restarted → *Live* again and the tile shows the missed change |
+| 🟡 two instances, presence with TTL heartbeats, backoff with jitter, removed members disconnected within a minute | an event published on instance A reaches clients connected to instance B | smoke: **Mark resolved** on :3100 updates a dashboard on :3101 (and the check runner is a third process) |
+| | presence updates within a few seconds, stale entries expire | heartbeat every 10 s, 30 s TTL, join/leave events, `DELETE` with `keepalive` on `pagehide`; tests and smoke |
+| | killing an instance spreads reconnects over several seconds | full jitter; a test draws 10,000 delays for one attempt and finds them spread evenly (not measured with real browsers) |
+| | a removed member's open dashboard stops receiving events | the stream re-checks membership, role and session every `REALTIME_RECHECK_MS` (30 s): `event: revoked`, stream closed; tests (removal, sign-out) and smoke |
+
+**Design decisions to notice**
+
+- **`LISTEN/NOTIFY` instead of Redis**, because Beacon has no Redis yet and Postgres has two properties
+  worth teaching: a `NOTIFY` inside a transaction is delivered **only if it commits** (tested), so a
+  published event can never describe a rolled-back write; and it already reaches every process connected
+  to the database, which is what "fan out across instances" needs.
+- **Signals, not secrets.** Events carry ids and states. The tile updates its dot and latency; anything
+  else (the incident's cause, the list after a reconnect) is refetched through the normal authorized page.
+  `notification.created` carries a user id and is forwarded **only** to that user's streams; others are not
+  even told it happened (tested).
+- **Authorize the channel, and keep authorizing it.** The route runs `requirePermission()` before any
+  stream exists; the stream listens only on its org's channel (`beacon_org_<id>`); and it asks again every
+  30 s. A single membership row deleted in SQL ended the member's stream in the smoke test.
+- **One connection per tab.** Browsers allow about six HTTP/1.1 connections per origin, so the dashboard,
+  the bell and presence share one `EventSource` through React context. The client closes it on error and
+  reconnects itself (EventSource's own retry has no jitter), and every `ready` after the first triggers a
+  refetch: pub/sub does not replay what was missed.
+- **Presence in a table, not Redis TTL keys**: `presence(org, topic, user, last_seen_at)` under RLS,
+  "viewing" = seen in the last 30 s, rows older than 5 minutes deleted on the next heartbeat. Approximate
+  on purpose, like the lesson says.
+
+**How it scales, and when to switch**
+
+- *Today:* each app instance holds **one** extra Postgres connection for all its `LISTEN`s (postgres.js
+  multiplexes channels on it) and one `LISTEN` per org that has a viewer on that instance; browsers hold
+  sockets on the Node process, not database connections. The 25-second ping keeps load balancers (idle
+  timeouts are often 60 s) from closing quiet streams.
+- *Limits of NOTIFY:* payloads under 8,000 bytes (ours are ~150); a transaction that notifies takes a
+  global lock at commit, so thousands of notifying commits per second serialize; the `LISTEN` connection
+  must be a direct (session) connection, not through PgBouncer in transaction mode; and delivery is
+  fire-and-forget: a listener that is down misses events (hence resync). A very slow listener can fill the
+  8 GB notification queue, after which `NOTIFY` fails.
+- *Next step:* Redis pub/sub (the lesson's default) behind the same two functions: `publishInTx()` becomes
+  "write an outbox row, publish after commit" (5.3), `subscribe()` a Redis subscriber on `org:<id>`.
+  Redis Streams or Centrifugo add history, so a reconnecting client can catch up by event id instead of
+  refetching. Re-authorizing each stream every 30 s is one membership query and one session lookup per
+  stream; at tens of thousands of streams, push a "membership changed" event instead of polling.
+- *Public status pages* stay server-rendered and uncached-per-request here. At 50,000 viewers they should
+  be CDN-cached with a short TTL, not 50,000 streams (the lesson's advice); not built.
+
+### Not done in Module 4 (🔴 exercises and neighbours)
+
+Per-tenant sending domains, the 10,000-subscriber batched fan-out on its own stream (4.1 🔴); escalation
+policies, acknowledgement from Slack or SMS, digests, and an incident timeline of deliveries (4.2 🔴; the
+delivery log is there to build it on); the Yjs/Hocuspocus postmortem editor and optimistic locking for
+monitor settings (4.3 🔴). Also: SPF/DKIM/DMARC not verified and Resend, Twilio and Slack not exercised
+against their servers (no domain or internet here; all three are behind interfaces and ran through fakes or
+a local SMTP server); push notifications and quiet hours; STOP keyword handling for SMS; soft-bounce counting;
+emails and times in the recipient's timezone and locale; a real job queue for the outbox and deliveries
+(5.1); presence and streams through Redis.
+
+### Verification for this branch
+
+`npm test` (386 tests, no database server and no network: PGlite, whose `LISTEN/NOTIFY` the realtime tests
+use, a local SMTP server for the SMTP driver, fake SMS and Slack providers), `npm run typecheck`,
+`npm run db:migrate` on a fresh database and on a database migrated, seeded and checked on
+`module-3-solution` (then the checks opened an incident and notified: 4 in-app and 4 email deliveries),
+`npm run build`, and a headless-browser run against two `next start` instances on one database, with a
+local SMTP server standing in for Mailpit and the fake SMS and Slack providers (42 checks): sign-up →
+multipart verification email over SMTP → its link verifies the address → the owner adds a phone number
+and turns on SMS, the member turns off email → a status-page subscription is confirmed from its email →
+owner and member see each other on the monitor page → **Mark resolved** on instance A updates a dashboard
+on instance B and its bell → a check run in another process turns a tile red and shows the new incident
+without a reload → the owner gets the alert email (with `List-Unsubscribe` and `List-Unsubscribe-Post`),
+an SMS recorded as one usage event (*1 of 100 included*), and in-app; the member only in-app; the subscriber
+a status email from the status stream → *Mark all as read* → another org's user got no events on an open
+stream, no notifications, 404 from the demo org's event stream and inbox API → instance B is killed,
+the dashboard reconnects by itself after the restart and shows what changed meanwhile → one-click
+unsubscribe removes the subscriber → a forged bounce webhook is refused, a signed hard bounce suppresses
+`member@beacon.test` and the members page warns about it → deleting the member's membership ends their
+live stream within seconds.
