@@ -13,6 +13,7 @@ import { canGrantRole } from '@/core/permissions';
 import type { Role } from '@/core/roles';
 import type { OrgContext } from './access';
 import { sendEmail } from './email';
+import { appUrl } from './urls';
 
 const { invitations, memberships, organizations, users } = schema;
 
@@ -58,7 +59,7 @@ export async function createInvitation(ctx: OrgContext, input: { email: string; 
       expiresAt: new Date(Date.now() + INVITE_TTL_MS),
     })
     .returning();
-  await sendInvitationEmail(ctx, invitation.email, invitation.role, token);
+  await sendInvitationEmail(ctx, invitation.id, invitation.email, invitation.role, token);
   return invitation;
 }
 
@@ -73,7 +74,7 @@ export async function resendInvitation(ctx: OrgContext, invitationId: string) {
     .update(invitations)
     .set({ tokenHash: hashToken(token), expiresAt: new Date(Date.now() + INVITE_TTL_MS), sentAt: new Date() })
     .where(and(eq(invitations.organizationId, ctx.orgId), eq(invitations.id, invitationId)));
-  await sendInvitationEmail(ctx, invitation.email, invitation.role, token);
+  await sendInvitationEmail(ctx, invitation.id, invitation.email, invitation.role, token);
 }
 
 export async function revokeInvitation(ctx: OrgContext, invitationId: string) {
@@ -166,11 +167,16 @@ async function assertUnderRateLimit(orgId: string) {
   }
 }
 
-async function sendInvitationEmail(ctx: OrgContext, email: string, role: Role, token: string) {
-  const url = `${process.env.APP_URL ?? 'http://localhost:3000'}/invite/${token}`;
+/**
+ * Lesson 4.1: queued, never sent inside the request. The idempotency key is
+ * the invitation plus its token: a retried request queues this email once,
+ * while "Resend" (a new token) queues a new one.
+ */
+async function sendInvitationEmail(ctx: OrgContext, invitationId: string, email: string, role: Role, token: string) {
   await sendEmail({
     to: email,
-    subject: `${ctx.userEmail} invited you to ${ctx.orgName} on Beacon`,
-    text: `You have been invited to join ${ctx.orgName} as ${role}. The link works once and expires in 7 days:\n${url}`,
+    template: 'invitation',
+    props: { inviterEmail: ctx.userEmail, orgName: ctx.orgName, role, url: appUrl(`/invite/${token}`) },
+    idempotencyKey: `invitation:${invitationId}:${hashToken(token).slice(0, 16)}`,
   });
 }

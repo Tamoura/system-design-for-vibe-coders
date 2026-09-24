@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm';
-import { boolean, check, customType, index, integer, pgEnum, pgTable, primaryKey, text, timestamp, uniqueIndex, uuid, type AnyPgColumn } from 'drizzle-orm/pg-core';
+import { boolean, check, customType, index, integer, jsonb, pgEnum, pgTable, primaryKey, text, timestamp, uniqueIndex, uuid, type AnyPgColumn } from 'drizzle-orm/pg-core';
 import { FILE_KINDS } from '../core/files';
 import { PLAN_IDS } from '../core/plans';
 import { ROLES } from '../core/roles';
@@ -372,6 +372,73 @@ export const usageAlerts = pgTable(
   (t) => [primaryKey({ columns: [t.organizationId, t.meter, t.periodStart, t.threshold] })],
 );
 
+/*
+ * Module 4: communication.
+ */
+
+/**
+ * Lesson 4.1 (🟡): the email queue. sendEmail() only inserts a row here and
+ * returns; a worker sends it after the response (src/lib/email/index.ts).
+ * A slow or broken provider therefore delays emails but never fails the
+ * request that asked for one, and a failed send is retried with backoff.
+ *
+ *  - idempotency_key is UNIQUE: asking twice for the same email (a retried
+ *    request, a double click) queues it once. The key also goes to the
+ *    provider, which drops a duplicate send (Resend's Idempotency-Key).
+ *  - the template name and its props are stored, not the HTML: the worker
+ *    renders at send time.
+ *  - next_attempt_at doubles as a lease: a worker that claims a row pushes it
+ *    a few minutes ahead, so a crashed worker's rows come back by themselves.
+ *
+ * Not a tenant table: verification and password-reset emails belong to no
+ * organization. Notification emails have their own queue with the org on
+ * every row (notification_deliveries, lesson 4.2).
+ */
+export const emailStatus = pgEnum('email_status', ['pending', 'sent', 'failed', 'suppressed']);
+
+export const emailOutbox = pgTable(
+  'email_outbox',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    idempotencyKey: text('idempotency_key').notNull().unique(),
+    to: text('to').notNull(),
+    template: text('template').notNull(),
+    props: jsonb('props').notNull(),
+    // Lesson 4.1: the one-click unsubscribe URL (RFC 8058) for subscribed or optional mail, if any.
+    listUnsubscribe: text('list_unsubscribe'),
+    status: emailStatus('status').notNull().default('pending'),
+    attempts: integer('attempts').notNull().default(0),
+    nextAttemptAt: timestamp('next_attempt_at', { withTimezone: true }).notNull().defaultNow(),
+    lastError: text('last_error'),
+    providerMessageId: text('provider_message_id'),
+    sentAt: timestamp('sent_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  // The worker's question: "which pending emails are due?" Only pending rows are in the index.
+  (t) => [index('email_outbox_due_idx').on(t.nextAttemptAt).where(sql`${t.status} = 'pending'`)],
+);
+
+/**
+ * Lesson 4.1 (🟡): addresses we must not email. Filled by the provider's
+ * bounce and complaint webhooks (src/lib/email/webhook.ts) and checked before
+ * every send. Keyed by the lower-cased address, for every organization at
+ * once: an address that does not exist does not exist for anyone.
+ *
+ *   hard_bounce  the mailbox does not exist: never send again
+ *   complaint    they pressed "Report spam": only essential mail (password
+ *                reset, verification) still goes out
+ */
+export const suppressionReason = pgEnum('suppression_reason', ['hard_bounce', 'complaint', 'manual']);
+
+export const emailSuppressions = pgTable('email_suppressions', {
+  email: text('email').primaryKey(),
+  reason: suppressionReason('reason').notNull(),
+  detail: text('detail'),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: updatedAt(),
+});
+
 export type Organization = typeof organizations.$inferSelect;
 export type Membership = typeof memberships.$inferSelect;
 export type Invitation = typeof invitations.$inferSelect;
@@ -382,3 +449,4 @@ export type StoredFile = typeof files.$inferSelect;
 export type IncidentUpdate = typeof incidentUpdates.$inferSelect;
 export type Subscription = typeof subscriptions.$inferSelect;
 export type UsageEvent = typeof usageEvents.$inferSelect;
+export type EmailOutboxRow = typeof emailOutbox.$inferSelect;

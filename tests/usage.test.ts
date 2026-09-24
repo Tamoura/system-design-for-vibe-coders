@@ -89,7 +89,7 @@ describe('overage, alerts and reporting to the meter (🟡)', () => {
     org = await proOrg('Flappy');
     vi.mocked(sendEmail).mockClear();
     for (let i = 1; i <= 130; i++) await recordSmsSent({ orgId: org.id }, { messageSid: `SMf${i}`, segments: 1, sentAt: sentAt(i) });
-    alertSubjects = vi.mocked(sendEmail).mock.calls.map(([m]) => m.subject); // (mocks are cleared between tests)
+    alertSubjects = vi.mocked(sendEmail).mock.calls.map(([m]) => `${m.template} ${(m.props as { threshold: number }).threshold}%`); // (mocks are cleared between tests)
   });
 
   beforeEach(() => {

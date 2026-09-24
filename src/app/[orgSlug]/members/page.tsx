@@ -3,6 +3,7 @@ import { ROLES } from '@/core/roles';
 import { forPage, requirePermission } from '@/lib/access';
 import { listOpenInvitations } from '@/lib/invitations';
 import { listMembers } from '@/lib/members';
+import { listSuppressions } from '@/lib/email';
 import { changeRoleAction, resendInvitationAction, revokeInvitationAction } from './actions';
 import { InviteForm } from './invite-form';
 
@@ -16,6 +17,9 @@ export default async function MembersPage({ params }: { params: Promise<{ orgSlu
   const manage = can(ctx.role, 'member.manage');
   const invitations = manage ? await listOpenInvitations(ctx) : [];
   const grantable = ROLES.filter((r) => canGrantRole(ctx.role, r));
+  // Lesson 4.1 (🟡): addresses the provider told us bounced or complained.
+  // Saying so here saves a support ticket ("I never got the invite").
+  const suppressed = await listSuppressions([...members.map((m) => m.email), ...invitations.map((i) => i.email)]);
   return (
     <section className="grid">
       <h1 style={{ margin: 0 }}>Members</h1>
@@ -28,7 +32,10 @@ export default async function MembersPage({ params }: { params: Promise<{ orgSlu
               return (
                 <tr key={m.userId}>
                   <td><strong>{m.name}</strong>{m.userId === ctx.userId && <span className="muted"> (you)</span>}</td>
-                  <td className="muted">{m.email}</td>
+                  <td className="muted">
+                    {m.email}
+                    <SuppressionWarning reason={suppressed.get(m.email.toLowerCase())} />
+                  </td>
                   <td data-role={m.email}>{m.role}</td>
                   <td>
                     {options.length > 0 && (
@@ -56,7 +63,10 @@ export default async function MembersPage({ params }: { params: Promise<{ orgSlu
                 <tbody>
                   {invitations.map((i) => (
                     <tr key={i.id}>
-                      <td>{i.email}</td>
+                      <td>
+                        {i.email}
+                        <SuppressionWarning reason={suppressed.get(i.email.toLowerCase())} />
+                      </td>
                       <td>{i.role}</td>
                       <td className={i.state === 'expired' ? 'error' : 'muted'}>
                         {i.state === 'expired' ? 'expired' : `expires ${i.expiresAt.toISOString().slice(0, 10)}`}
@@ -74,5 +84,20 @@ export default async function MembersPage({ params }: { params: Promise<{ orgSlu
         </>
       )}
     </section>
+  );
+}
+
+const SUPPRESSION_TEXT = {
+  hard_bounce: 'Emails to this address bounce: it does not exist. Beacon no longer emails it.',
+  complaint: 'This address marked a Beacon email as spam. Beacon only sends it account emails now.',
+  manual: 'Beacon does not email this address.',
+} as const;
+
+function SuppressionWarning({ reason }: { reason?: keyof typeof SUPPRESSION_TEXT }) {
+  if (!reason) return null;
+  return (
+    <div className="error" data-testid="suppressed-warning">
+      ⚠ {SUPPRESSION_TEXT[reason]}
+    </div>
   );
 }

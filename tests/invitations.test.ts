@@ -14,8 +14,9 @@ import { makeOrg, makeUser, signInAs } from './helpers/fixtures';
 
 /** The token only exists in the emailed link; fish it out of the last "email". */
 function lastEmailedToken(): string {
-  const text = vi.mocked(sendEmail).mock.lastCall![0].text;
-  return text.match(/\/invite\/([\w-]+)/)![1];
+  const { template, props } = vi.mocked(sendEmail).mock.lastCall![0];
+  expect(template).toBe('invitation');
+  return (props as { url: string }).url.match(/\/invite\/([\w-]+)/)![1];
 }
 
 let acme: Awaited<ReturnType<typeof makeOrg>>;

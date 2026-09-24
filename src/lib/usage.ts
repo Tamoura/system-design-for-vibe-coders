@@ -6,6 +6,7 @@ import { billingPeriod, METERS, rateSms, reachedThresholds, usageKeys, type Mete
 import { getBillingProvider } from './billing/provider';
 import { listBillingContacts } from './billing/sync';
 import { sendEmail } from './email';
+import { appUrl } from './urls';
 import { entitlementsInTx } from './entitlements';
 
 const { organizations, subscriptions, usageEvents, usageAlerts } = schema;
@@ -129,14 +130,15 @@ async function newAlerts(tx: TenantTx, orgId: string, meter: Meter): Promise<Ale
 }
 
 async function emailUsageAlert(orgId: string, alert: Alert) {
-  const [org] = await db.select({ name: organizations.name, plan: organizations.plan }).from(organizations).where(eq(organizations.id, orgId));
+  const [org] = await db
+    .select({ name: organizations.name, slug: organizations.slug, plan: organizations.plan })
+    .from(organizations)
+    .where(eq(organizations.id, orgId));
   for (const person of await listBillingContacts(orgId)) {
     await sendEmail({
       to: person.email,
-      subject: `${org.name} has used ${alert.threshold}% of its included SMS alerts`,
-      text:
-        `${org.name} has sent ${alert.used} of the ${alert.included} SMS alerts included in ${PLANS[org.plan].name} this billing period.` +
-        (alert.threshold >= 100 ? ' Further SMS alerts are billed at $0.05 each.' : ''),
+      template: 'usage-alert',
+      props: { orgName: org.name, planName: PLANS[org.plan].name, url: appUrl(`/${org.slug}/billing`), ...alert },
     });
   }
 }

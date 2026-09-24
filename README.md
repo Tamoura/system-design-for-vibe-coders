@@ -54,8 +54,9 @@ npm run dev                   # http://localhost:3000
 `npm run db:reset` does the last three database steps in one go on a local database (it drops everything
 first). Sign in as `demo@beacon.test` (owner) or `member@beacon.test` (member), password
 `beacon-demo-password`, or sign up. Uploaded files go to `.storage/` unless you configure an S3-compatible
-bucket (`STORAGE_DRIVER=s3` in `.env.example`). Until lesson 4.1 adds real email,
-verification, password-reset and invitation links are printed in the `npm run dev` terminal.
+bucket (`STORAGE_DRIVER=s3` in `.env.example`). Every email Beacon sends (verification, password reset,
+invitations, incident alerts) lands in Mailpit at <http://localhost:8025>. No Docker? Start the app with
+`EMAIL_DRIVER=console` and emails are printed in the terminal instead.
 "Sign in with GitHub" appears when `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` are set.
 
 In a second terminal, run the checks. On `main` this is a one-shot script, and lesson 5.1 turns it into
@@ -83,6 +84,8 @@ a signed webhook follows. For real Stripe test mode (test keys, `stripe listen`)
 | `npm run db:seed:large` | Org `big` with 500 monitors × 1,000 checks, for measuring queries (`-- --monitors=50000 --checks=0` for search). |
 | `npm run files:process` | Finish uploads whose background thumbnail job never ran. |
 | `npm run usage:report` | Send recorded SMS usage to Stripe's meter (lesson 3.3). Safe to re-run. |
+| `npm run messages:send` | Send queued emails and notifications that are due, including retries after a provider outage (lessons 4.1, 4.2). Run it from cron. |
+| `npm run email:preview` | Render every email template (HTML and plain text) to `.email-preview/` (lesson 4.1). |
 | `npm run storage:setup` | With `STORAGE_DRIVER=s3`: create the bucket, block public access, set CORS. |
 | `npm run build` | Production build, the same one CI runs. |
 | `npm run org:claim -- <slug> <email>` | Make a user the owner of an org, e.g. the `default` org that migration 0003 creates for monitors from before Module 1. |
@@ -117,6 +120,7 @@ grep -rn "TODO(1.2)" src scripts
 | Stripe (hosted Checkout, Customer Portal, Billing meters) | Card data never touches Beacon; a signed webhook keeps a copy of each subscription | 3.1 |
 | Zod | One validation schema shared by forms and, later, the public API | 5.2 |
 | Vitest | Fast tests for the core logic | — |
+| React Email + nodemailer (Resend in production) | Templates as components with a plain-text part; SMTP to Mailpit locally | 4.1 |
 | Docker Compose | Postgres and Mailpit locally with one command | 7.4 |
 
 The course names the Django, Rails, Laravel and Go equivalents for every component. The ideas carry over,

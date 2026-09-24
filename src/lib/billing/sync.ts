@@ -4,6 +4,7 @@ import { withOrg } from '@/db/tenant';
 import { can } from '@/core/permissions';
 import { entitlementsFor, isDowngrade, planFromSubscriptions, PLANS, type PlanId } from '@/core/plans';
 import { sendEmail } from '../email';
+import { appUrl } from '../urls';
 import { reconcileMonitorsWithPlan } from '../entitlements';
 import { getBillingProvider } from './provider';
 
@@ -33,7 +34,7 @@ export async function syncCustomerFromStripe(customerId: string): Promise<SyncRe
 
   // Which org is this? organizations is not a tenant table (it is how we find the tenant).
   const [org] = await db
-    .select({ id: organizations.id, name: organizations.name })
+    .select({ id: organizations.id, name: organizations.name, slug: organizations.slug })
     .from(organizations)
     .where(eq(organizations.stripeCustomerId, customerId))
     .limit(1);
@@ -87,20 +88,22 @@ export async function syncCustomerFromStripe(customerId: string): Promise<SyncRe
 }
 
 /** Lesson 3.2 (🟡): "email the owner", once per downgrade: everyone who may manage billing. */
-async function emailDowngrade(org: { id: string; name: string }, from: PlanId, to: PlanId, frozen: number) {
+async function emailDowngrade(org: { id: string; name: string; slug: string }, from: PlanId, to: PlanId, frozen: number) {
   const people = await listBillingContacts(org.id);
   const ent = entitlementsFor(to);
   for (const person of people) {
     await sendEmail({
       to: person.email,
-      subject: `${org.name} is now on the ${PLANS[to].name} plan`,
-      text: [
-        `Your ${PLANS[from].name} subscription for ${org.name} has ended, so the organization is now on ${PLANS[to].name}.`,
-        `${PLANS[to].name} runs up to ${ent.maxMonitors} monitors, checked at most every ${ent.minIntervalSec} seconds.`,
-        frozen > 0
-          ? `We paused ${frozen} monitor(s) and kept all their data. Choose which monitors run, or upgrade again to switch them all back on.`
-          : 'All your monitors keep running.',
-      ].join('\n\n'),
+      template: 'plan-downgraded',
+      props: {
+        orgName: org.name,
+        fromPlan: PLANS[from].name,
+        toPlan: PLANS[to].name,
+        maxMonitors: ent.maxMonitors,
+        minIntervalSec: ent.minIntervalSec,
+        frozen,
+        url: appUrl(`/${org.slug}/${frozen > 0 ? 'monitors/plan-limit' : 'billing'}`),
+      },
     });
   }
 }

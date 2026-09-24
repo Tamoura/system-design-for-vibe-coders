@@ -271,7 +271,7 @@ describe('downgrades from the webhook path (3.1 → 3.2 🟡)', () => {
     expect(ms.filter((m) => m.pausedReason === 'plan_limit')).toHaveLength(7);
     expect(ms.every((m) => m.intervalSeconds >= 300)).toBe(true);
     expect(vi.mocked(sendEmail)).toHaveBeenCalledTimes(1); // one owner, one downgrade
-    expect(vi.mocked(sendEmail).mock.calls[0][0]).toMatchObject({ to: org.users.owner.email, subject: expect.stringContaining('Free') });
+    expect(vi.mocked(sendEmail).mock.calls[0][0]).toMatchObject({ to: org.users.owner.email, template: 'plan-downgraded', props: expect.objectContaining({ toPlan: 'Free' }) });
 
     // Resubscribe: a new Checkout, a new subscription, and the frozen monitors run again.
     await postWebhook(await checkoutAndPay(org));

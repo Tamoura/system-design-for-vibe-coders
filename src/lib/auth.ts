@@ -45,12 +45,11 @@ export const auth = betterAuth({
     // with the same body whether or not the email exists.
     resetPasswordTokenExpiresIn: 60 * 60, // one hour
     revokeSessionsOnPasswordReset: true, // "someone else may be in my account"
+    // Lesson 4.1: queued, rendered from a React Email template (src/emails).
+    // Both answers ("sent" / "no such user") take the same time, because
+    // queueing is one INSERT, not a call to the provider.
     sendResetPassword: async ({ user, url }) => {
-      await sendEmail({
-        to: user.email,
-        subject: 'Reset your Beacon password',
-        text: `Someone asked to reset your Beacon password. If it was you, open this link within an hour:\n${url}\nIf it wasn't, ignore this email.`,
-      });
+      await sendEmail({ to: user.email, template: 'reset-password', props: { name: user.name, url } });
     },
   },
   // Lesson 1.1: prove the user controls the address before trusting it for
@@ -59,7 +58,7 @@ export const auth = betterAuth({
     sendOnSignUp: true,
     autoSignInAfterVerification: true,
     sendVerificationEmail: async ({ user, url }) => {
-      await sendEmail({ to: user.email, subject: 'Confirm your email for Beacon', text: `Confirm your email address:\n${url}` });
+      await sendEmail({ to: user.email, template: 'verify-email', props: { name: user.name, url } });
     },
   },
   // Store only a hash of reset tokens and other one-time identifiers, so a

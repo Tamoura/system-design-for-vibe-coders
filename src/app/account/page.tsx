@@ -23,7 +23,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
             <button className="btn secondary">Resend the link</button>
           </form>
         )}
-        {params.verification === 'sent' && <div className="muted">Sent. Check your inbox (in development: the server console).</div>}
+        {params.verification === 'sent' && <div className="muted">Sent. Check your inbox (in development: Mailpit at http://localhost:8025).</div>}
       </div>
       <div className="card grid">
         <strong>Ways to sign in</strong>
