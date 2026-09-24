@@ -4,10 +4,11 @@ import { withOrg } from '@/db/tenant';
 import type { CheckOutcome } from '@/core/check';
 import { decideIncident } from '@/core/incidents';
 import { countStateChanges, FLAPPING, isFlapping } from '@/core/notifications';
-import { enqueueNotify } from './notifications/incidents';
-import type { JobData } from './queue';
+import { enqueueNotify, type NotifyJob } from './notifications/incidents';
 import { publishInTx } from './realtime';
 import { recordIncidentWebhook } from './webhooks';
+import { startEscalationInTx } from './workflows/escalation';
+import { signalRunsInTx } from './workflows/engine';
 
 const { monitors, checkResults, incidents, incidentUpdates } = schema;
 
@@ -29,10 +30,15 @@ type MonitorRow = typeof monitors.$inferSelect;
  *      last hour. More than 4 → it is flapping: send ONE "flapping"
  *      notification and hold back the opened/resolved ones until it has been
  *      quiet for an hour.
- *   4. lesson 5.1 (🟢/🟡): ENQUEUE an `incident.notify` job, in this same
- *      transaction. The checker sends nothing itself: no email, Slack or SMS
- *      call, no recipient lookup. The job exists if and only if the incident
- *      committed, and the worker does the fan-out (src/lib/notifications/incidents.ts).
+ *   4. lesson 5.1 (🟢/🟡): hand the notifications to the worker, in this same
+ *      transaction (enqueueNotify: since lesson 5.4 a three-step workflow
+ *      run, which is a job on the queue). The checker sends nothing itself:
+ *      no email, Slack or SMS call, no recipient lookup. The job exists if and
+ *      only if the incident committed.
+ *   5. lesson 5.3: the webhook event and its deliveries (every change, even
+ *      while flapping: machines want state, people want fewer alerts)
+ *   6. lesson 5.4: an opened incident that is notified starts the org's
+ *      escalation policy, if it has one; resolving it signals the escalation to stop
  *
  * `now` is injectable so the tests can simulate an hour of flapping.
  */
@@ -68,7 +74,7 @@ export async function recordCheckResult(
 
     const decision = decideIncident(Boolean(open), recent.map((r) => r.ok));
     // Lesson 5.1: the job carries ids, not the incident: the worker re-reads it.
-    let event: JobData['incident.notify'] | null = null;
+    let event: NotifyJob | null = null;
     let line = `  ${outcome.ok ? '✓' : '✗'} ${monitor.name}: ${outcome.statusCode ?? outcome.error} in ${outcome.latencyMs} ms`;
     if (decision === 'open') {
       const cause = outcome.error ?? (outcome.statusCode ? `HTTP ${outcome.statusCode}` : 'Check failed');
@@ -89,6 +95,7 @@ export async function recordCheckResult(
       await tx.insert(incidentUpdates).values({ organizationId: org.id, incidentId: open.id, body: 'Resolved automatically: checks are passing again.' });
       event = { orgId: org.id, event: 'incident.resolved', incidentId: open.id };
       await recordIncidentWebhook(tx, org.id, 'incident.resolved', open.id, now);
+      await signalRunsInTx(tx, org.id, open.id, 'incident.resolved'); // lesson 5.4: stops its escalation
       await publishInTx(tx, org.id, { type: 'incident.changed', monitorId: monitor.id, incidentId: open.id, state: 'resolved' });
       line = `  ✓ ${monitor.name}: incident resolved`;
     }
@@ -116,6 +123,7 @@ export async function recordCheckResult(
       await tx.update(monitors).set({ flappingSince: null }).where(and(eq(monitors.organizationId, org.id), eq(monitors.id, monitor.id)));
     }
     if (event) await enqueueNotify(tx, event);
+    if (event?.event === 'incident.opened') await startEscalationInTx(tx, org.id, event.incidentId);
     return line;
   });
 }

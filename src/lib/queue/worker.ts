@@ -23,7 +23,9 @@ import { asOutput, jobContext } from './run';
 export const WORKERS: Partial<Record<QueueName, WorkOptions>> = {
   'checks.schedule': { localConcurrency: 1, pollingIntervalSeconds: 2 },
   'check.run': { localConcurrency: 20, groupConcurrency: 5 },
-  'incident.notify': { localConcurrency: 5 },
+  // Lesson 5.4: groups are RUNS: one job per run at a time, so a timer and a
+  // signal arriving together never replay the same run in parallel.
+  'workflow.run': { localConcurrency: 10, groupConcurrency: 1 },
   'notification.deliver': { localConcurrency: 10, groupConcurrency: 5 },
   'email.send': { localConcurrency: 10 },
   // Lesson 5.3: groups are ENDPOINTS here. A slow endpoint holds at most 2 of

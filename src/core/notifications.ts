@@ -56,6 +56,16 @@ export const CATEGORIES = {
     channels: ['in_app', 'email', 'sms', 'slack'],
     defaults: { in_app: true, email: true, sms: false, slack: true },
   },
+  // Lesson 5.4: a page from the org's escalation policy. Its tiers choose the
+  // people and channels explicitly, so preferences do not apply: required.
+  'incident.escalated': {
+    label: 'Escalation page',
+    description: 'You are on the escalation policy and nobody has acknowledged an incident yet.',
+    required: true,
+    permission: 'monitor.read',
+    channels: ['in_app', 'email', 'sms'],
+    defaults: { in_app: true, email: true, sms: true },
+  },
   billing: {
     label: 'Billing and plan',
     description: 'Plan changes, paused monitors, SMS usage alerts.',

@@ -18,6 +18,7 @@ import { createHmac, randomBytes } from 'node:crypto';
 /** The public catalogue of event types. Endpoints subscribe to some of them. */
 export const WEBHOOK_EVENT_TYPES = {
   'incident.opened': 'A monitor failed 3 checks in a row and an incident opened.',
+  'incident.acknowledged': 'Someone acknowledged the incident, which stops its escalation.',
   'incident.resolved': 'The incident was resolved (checks pass again, or someone marked it resolved).',
 } as const;
 

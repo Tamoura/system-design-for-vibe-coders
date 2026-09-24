@@ -155,7 +155,7 @@ describe('the SSE endpoint (🟢)', () => {
     await member.waitFor('event: ready');
     await recordCheckResult(acme, acmeMonitor, DOWN);
     await recordCheckResult(acme, acmeMonitor, DOWN); // third failure in a row (one from the test above)
-    await runQueuedJobs({ queues: ['incident.notify'] }); // lesson 5.1: the fan-out is a job
+    await runQueuedJobs({ queues: ['workflow.run'] }); // lesson 5.1: the fan-out is a job
     expect(await member.waitFor('event: incident.changed')).toBe(true);
     expect(await member.waitFor('event: notification')).toBe(true);
     // Every member got a notification, but this stream announced exactly one: the member's own.

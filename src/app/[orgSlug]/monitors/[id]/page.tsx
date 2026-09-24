@@ -7,7 +7,9 @@ import { listIncidentScreenshots } from '@/lib/files';
 import { listIncidentUpdates } from '@/lib/incidents';
 import { AutoRefresh } from '@/app/_components/auto-refresh';
 import { FileUploader } from '@/app/_components/file-uploader';
-import { addIncidentUpdateAction, deleteMonitorAction, resolveIncidentAction } from './actions';
+import { listRuns } from '@/lib/workflows';
+import { acknowledgeIncidentAction, addIncidentUpdateAction, deleteMonitorAction, resolveIncidentAction } from './actions';
+import { WorkflowRuns } from './workflow-runs';
 import { EditMonitorForm } from './edit-form';
 import { LiveRefresh, Presence } from './live';
 
@@ -24,6 +26,8 @@ export default async function MonitorPage({ params }: { params: Promise<{ orgSlu
   const screenshots = await listIncidentScreenshots(ctx, history.incidents.map((i) => i.id));
   // Lesson 2.3 (🟡): the updates that full-text search indexes.
   const updates = await listIncidentUpdates(ctx, history.incidents.map((i) => i.id));
+  // Lesson 5.4 (🟢): each incident's workflow runs, step by step (the "engine dashboard").
+  const runs = await listRuns(ctx.orgId, history.incidents.map((i) => i.id));
   const canWriteIncidents = can(ctx.role, 'incident.write');
   // Lesson 1.3 (🟡): the same ABAC rule the server enforces decides what to show.
   const editable = canEditMonitor(ctx, monitor);
@@ -95,11 +99,19 @@ export default async function MonitorPage({ params }: { params: Promise<{ orgSlu
                   </td>
                   <td>
                     {i.resolvedAt ? 'resolved' : <span className="error">open</span>}
+                    {!i.resolvedAt && i.acknowledgedAt && <span className="badge" style={{ marginLeft: '.4rem' }} data-testid="acknowledged">acknowledged</span>}
+                    {/* Lesson 5.4: acknowledging stops the escalation. */}
+                    {!i.resolvedAt && !i.acknowledgedAt && canWriteIncidents && (
+                      <form action={acknowledgeIncidentAction.bind(null, ctx.orgSlug, monitor.id, i.id)} style={{ display: 'inline', marginLeft: '.6rem' }}>
+                        <button className="link-btn">Acknowledge</button>
+                      </form>
+                    )}
                     {!i.resolvedAt && canWriteIncidents && (
                       <form action={resolveIncidentAction.bind(null, ctx.orgSlug, monitor.id, i.id)} style={{ display: 'inline', marginLeft: '.6rem' }}>
                         <button className="link-btn">Mark resolved</button>
                       </form>
                     )}
+                    <WorkflowRuns runs={runs.filter((r) => r.subjectId === i.id)} />
                   </td>
                   <td>
                     <div className="row" style={{ gap: '.4rem' }}>
@@ -134,7 +146,7 @@ export default async function MonitorPage({ params }: { params: Promise<{ orgSlu
       <h2 style={{ margin: 0, fontSize: '1.1rem' }}>Latest checks</h2>
       <div className="card">
         {history.checks.length === 0 ? (
-          <span className="muted">Not checked yet. Run <code>npm run checks:run</code>.</span>
+          <span className="muted">Not checked yet. The worker (<code>npm run worker</code>) checks it at its next slot.</span>
         ) : (
           <table>
             <tbody>

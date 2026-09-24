@@ -40,6 +40,11 @@ export default async function SettingsPage({ params }: { params: Promise<{ orgSl
         <div><button className="btn">Save</button></div>
       </form>
       {notifications && <OrgNotificationsForm orgSlug={ctx.orgSlug} settings={notifications} />}
+      {notifications && (
+        <div className="card">
+          <Link href={`/${ctx.orgSlug}/settings/escalation`}>Escalation policy →</Link> <span className="muted">who is paged when nobody acknowledges an incident</span>
+        </div>
+      )}
       {/* Module 5: what other software uses to reach Beacon, and to hear from it. */}
       {can(ctx.role, 'integration.manage') && (
         <div className="card grid" data-testid="integrations">

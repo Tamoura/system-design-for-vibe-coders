@@ -2,7 +2,7 @@ import { render } from '@react-email/components';
 import { createElement, type ReactElement } from 'react';
 import { Invitation, ResetPassword, VerifyEmail } from './account';
 import { PlanDowngraded, UsageAlert } from './billing';
-import { IncidentOpened, IncidentResolved, MonitorFlapping, SmsHeldBack } from './incidents';
+import { IncidentEscalated, IncidentOpened, IncidentResolved, MonitorFlapping, SmsHeldBack } from './incidents';
 import { WebhookDisabled } from './integrations';
 import { ConfirmSubscription, StatusUpdate } from './status-page';
 
@@ -67,6 +67,11 @@ export const TEMPLATES = {
     component: IncidentResolved,
     subject: (p) => `[${p.orgName}] ${p.monitorName} is back up`,
     sample: { orgName: 'Acme', monitorName: 'checkout-api', openedAt: OPENED, resolvedAt: '2026-09-24T03:41:00.000Z', url: `${APP}/acme/monitors/1`, unsubscribeUrl: `${APP}/unsubscribe?token=sample` },
+  }),
+  'incident-escalated': define({
+    component: IncidentEscalated,
+    subject: (p) => `[${p.orgName}] Escalation tier ${p.tier}: ${p.monitorName} is down`,
+    sample: { orgName: 'Acme', monitorName: 'checkout-api', cause: 'HTTP 503', openedAt: OPENED, tier: 2, url: `${APP}/acme/monitors/1` },
   }),
   'monitor-flapping': define({
     component: MonitorFlapping,

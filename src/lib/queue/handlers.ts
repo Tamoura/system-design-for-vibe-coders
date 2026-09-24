@@ -1,10 +1,10 @@
 import { sendQueuedEmail } from '../email';
 import { processUploadedFile } from '../files';
 import { deliverNotification } from '../notifications/deliver';
-import { notifyIncident } from '../notifications/incidents';
 import { runScheduledCheck, scheduleChecks } from '../scheduler';
 import { reportPendingUsage } from '../usage';
 import { deliverWebhook } from '../webhooks';
+import { runWorkflow } from '../workflows';
 import type { JobContext, JobData, QueueName } from './queues';
 
 /*
@@ -22,7 +22,7 @@ type Handler<Q extends QueueName> = (data: JobData[Q], job: JobContext) => Promi
 export const HANDLERS: { [Q in QueueName]?: Handler<Q> } = {
   'checks.schedule': () => scheduleChecks(),
   'check.run': (data) => runScheduledCheck(data),
-  'incident.notify': (data) => notifyIncident(data),
+  'workflow.run': (data, job) => runWorkflow(data.orgId, data.runId, job),
   'notification.deliver': (data, job) => deliverNotification(data.orgId, data.deliveryId, job),
   'email.send': (data, job) => sendQueuedEmail(data.emailId, job),
   'webhook.deliver': (data, job) => deliverWebhook(data, job),

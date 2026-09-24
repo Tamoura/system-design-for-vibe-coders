@@ -228,3 +228,51 @@ export async function enqueueDeliveries(tx: TenantTx, orgId: string, rows: { id:
 export function smsIncluded(plan: PlanId): boolean {
   return entitlementsFor(plan).smsCreditsPerMonth > 0;
 }
+
+/**
+ * Lesson 5.4 (🟡): a PAGE from the escalation policy. Unlike notifyInTx(),
+ * the policy (not each person's preferences) says who and on which channels:
+ * that is the point of an escalation. What still applies: only members of
+ * the org who may see incidents, SMS only on a plan that includes it and to a
+ * person with a phone number, and the same dedupe keys, so a page that is
+ * written twice (a re-run workflow step) is sent once. The event's key names
+ * the run and the tier, so the SMS's idempotency key does too.
+ */
+export async function pageInTx(tx: TenantTx, event: NotifyEvent, people: { userIds: string[]; channels: readonly ('in_app' | 'email' | 'sms')[] }) {
+  const def = CATEGORIES[event.category];
+  const [org] = await tx.select({ name: organizations.name, plan: organizations.plan }).from(organizations).where(eq(organizations.id, event.orgId));
+  if (!org || people.userIds.length === 0) return { paged: [] as string[], deliveries: 0 };
+  const members = await tx
+    .select({ userId: users.id, name: users.name, email: users.email, phone: users.phoneNumber, role: memberships.role })
+    .from(memberships)
+    .innerJoin(users, eq(users.id, memberships.userId))
+    .where(and(eq(memberships.organizationId, event.orgId), inArray(memberships.userId, people.userIds)));
+  const base = { orgName: org.name, title: event.title, body: event.body, url: appUrl(event.path) };
+  const paged: string[] = [];
+  const deliveries: NewDelivery[] = [];
+  for (const m of members.filter((x) => can(x.role, def.permission))) {
+    const [created] = await tx
+      .insert(notifications)
+      .values({ organizationId: event.orgId, userId: m.userId, category: event.category, dedupeKey: `${event.key}:${m.userId}`, title: event.title, body: event.body, url: event.path, monitorId: event.monitorId ?? null })
+      .onConflictDoNothing({ target: notifications.dedupeKey })
+      .returning({ id: notifications.id });
+    if (!created) continue;
+    paged.push(m.name);
+    await publishInTx(tx, event.orgId, { type: 'notification.created', userId: m.userId });
+    const row = { organizationId: event.orgId, notificationId: created.id, userId: m.userId };
+    for (const channel of people.channels) {
+      const dedupeKey = `${event.key}:${m.userId}:${channel}`;
+      if (channel === 'in_app') deliveries.push({ ...row, channel, dedupeKey, recipient: m.userId, payload: base, status: 'sent', sentAt: new Date(), providerMessageId: created.id });
+      if (channel === 'email') deliveries.push({ ...row, channel, dedupeKey, recipient: m.email, payload: { ...base, email: { template: event.email.template, props: { ...event.email.props, url: base.url } } } });
+      if (channel === 'sms' && m.phone && smsIncluded(org.plan)) deliveries.push({ ...row, channel, dedupeKey, recipient: m.phone, payload: base });
+    }
+  }
+  if (deliveries.length === 0) return { paged, deliveries: 0 };
+  const inserted = await tx
+    .insert(notificationDeliveries)
+    .values(deliveries)
+    .onConflictDoNothing({ target: notificationDeliveries.dedupeKey })
+    .returning({ id: notificationDeliveries.id, status: notificationDeliveries.status });
+  await enqueueDeliveries(tx, event.orgId, inserted);
+  return { paged, deliveries: inserted.length };
+}

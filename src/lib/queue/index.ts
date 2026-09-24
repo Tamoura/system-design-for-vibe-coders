@@ -16,7 +16,7 @@ import { QUEUES, type JobData, type QueueName } from './queues';
  * about. No outbox table, no relay process (docs/SOLUTIONS.md, Module 5).
  *
  *   producer (request, checker, another job)
- *      enqueueInTx(tx, 'incident.notify', { orgId, incidentId })   ← same transaction as the incident
+ *      enqueueInTx(tx, 'file.process', { orgId, fileId })          ← same transaction as the file's row
  *      enqueue('email.send', { emailId })                          ← its own statement
  *            │
  *            ▼

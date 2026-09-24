@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation';
 import { incidentUpdateInput, updateMonitorInput } from '@/core/validation';
 import { forPage, requirePermission } from '@/lib/access';
-import { deleteMonitor, resolveIncident, updateMonitor } from '@/lib/monitors';
+import { acknowledgeIncident, deleteMonitor, resolveIncident, updateMonitor } from '@/lib/monitors';
 import { addIncidentUpdate } from '@/lib/incidents';
 import { InvalidRequestError, LimitExceededError } from '@/lib/errors';
 
@@ -44,6 +44,13 @@ export async function resolveIncidentAction(orgSlug: string, monitorId: string, 
   const ctx = await forPage(requirePermission(orgSlug, 'incident.write'), `/${orgSlug}/monitors/${monitorId}`);
   await resolveIncident(ctx, incidentId);
   redirect(`/${ctx.orgSlug}/monitors/${monitorId}`);
+}
+
+/** Lesson 5.4 (🟡): acknowledge an incident; its escalation stops within seconds. */
+export async function acknowledgeIncidentAction(orgSlug: string, monitorId: string, incidentId: string) {
+  const ctx = await forPage(requirePermission(orgSlug, 'incident.write'), `/${orgSlug}/monitors/${monitorId}`);
+  await acknowledgeIncident(ctx, incidentId);
+  redirect(`/${ctx.orgSlug}/monitors/${monitorId}#incident-${incidentId}`);
 }
 
 /** Lesson 2.3: post an incident update (the text full-text search finds). */

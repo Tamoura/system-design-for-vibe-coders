@@ -63,7 +63,7 @@ describe('resolvePersonalChannels: required → org policy → person → defaul
 
   it('every required category really is required and non-empty', () => {
     const required = Object.entries(CATEGORIES).filter(([, d]) => d.required).map(([id]) => id);
-    expect(required).toEqual(['billing']);
+    expect(required).toEqual(['incident.escalated', 'billing']); // lesson 5.4: a page from the escalation policy
   });
 });
 

@@ -210,6 +210,9 @@ export const incidents = pgTable(
     monitorId: uuid('monitor_id').notNull().references(() => monitors.id, { onDelete: 'cascade' }),
     openedAt: timestamp('opened_at', { withTimezone: true }).notNull().defaultNow(),
     resolvedAt: timestamp('resolved_at', { withTimezone: true }),
+    // Lesson 5.4: someone took ownership ("I'm on it"). Stops the escalation.
+    acknowledgedAt: timestamp('acknowledged_at', { withTimezone: true }),
+    acknowledgedBy: uuid('acknowledged_by').references(() => users.id, { onDelete: 'set null' }),
     cause: text('cause').notNull(),
     // opened_at is when the outage began; created_at is when the row was written.
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
@@ -765,6 +768,87 @@ export const webhookAttempts = pgTable(
   (t) => [index('webhook_attempts_message_idx').on(t.messageId, t.createdAt)],
 );
 
+/*
+ * Lesson 5.4: durable workflows, a small engine on top of the job queue
+ * (src/lib/workflows/engine.ts). A RUN is one execution of a workflow; its
+ * STEPS are the event history ("step notify-tier-0 returned …"), which is what
+ * lets a run resume after a crash without doing a finished step again; SIGNALS
+ * are the events a waiting run is woken by (an incident acknowledged).
+ */
+export const workflowRunStatus = pgEnum('workflow_run_status', ['running', 'waiting', 'completed', 'failed']);
+
+export const workflowRuns = pgTable(
+  'workflow_runs',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    workflow: text('workflow').notNull(), // "incident-escalation"
+    // One run per business key: "incident-escalation:<incident id>". Starting it twice starts it once.
+    key: text('key').notNull().unique(),
+    // What the run is about, for "show this incident's workflows" (an incident id).
+    subjectId: uuid('subject_id'),
+    input: jsonb('input').notNull(),
+    status: workflowRunStatus('status').notNull().default('running'),
+    output: jsonb('output'),
+    error: text('error'),
+    wakeAt: timestamp('wake_at', { withTimezone: true }),
+    completedAt: timestamp('completed_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [index('workflow_runs_subject_idx').on(t.organizationId, t.subjectId)],
+);
+
+export const workflowStepStatus = pgEnum('workflow_step_status', ['running', 'waiting', 'completed', 'failed']);
+
+export const workflowSteps = pgTable(
+  'workflow_steps',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    runId: uuid('run_id').notNull().references(() => workflowRuns.id, { onDelete: 'cascade' }),
+    // Step names are the history's keys: rename one and runs in flight lose their place.
+    name: text('name').notNull(),
+    status: workflowStepStatus('status').notNull(),
+    input: jsonb('input'),
+    output: jsonb('output'),
+    error: text('error'),
+    attempts: integer('attempts').notNull().default(0),
+    // A wait's deadline, fixed the first time the run reaches it (replays reuse it).
+    wakeAt: timestamp('wake_at', { withTimezone: true }),
+    startedAt: timestamp('started_at', { withTimezone: true }).notNull().defaultNow(),
+    finishedAt: timestamp('finished_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [uniqueIndex('workflow_steps_run_name_idx').on(t.runId, t.name)],
+);
+
+export const workflowSignals = pgTable(
+  'workflow_signals',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    runId: uuid('run_id').notNull().references(() => workflowRuns.id, { onDelete: 'cascade' }),
+    name: text('name').notNull(), // "incident.acknowledged"
+    payload: jsonb('payload'),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('workflow_signals_run_idx').on(t.runId, t.createdAt)],
+);
+
+/**
+ * Lesson 5.4 (🟡): the org's escalation policy, as data (src/core/escalation.ts):
+ * ordered tiers of people, channels and a wait. One per org.
+ */
+export const escalationPolicies = pgTable('escalation_policies', {
+  organizationId: uuid('organization_id').primaryKey().references(() => organizations.id, { onDelete: 'cascade' }),
+  tiers: jsonb('tiers').notNull(),
+  updatedBy: uuid('updated_by').references(() => users.id, { onDelete: 'set null' }),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: updatedAt(),
+});
+
 export type Organization = typeof organizations.$inferSelect;
 export type Membership = typeof memberships.$inferSelect;
 export type Invitation = typeof invitations.$inferSelect;
@@ -782,3 +866,4 @@ export type StatusPageSubscriber = typeof statusPageSubscribers.$inferSelect;
 export type ApiKey = typeof apiKeys.$inferSelect;
 export type WebhookEndpoint = typeof webhookEndpoints.$inferSelect;
 export type WebhookMessage = typeof webhookMessages.$inferSelect;
+export type WorkflowRun = typeof workflowRuns.$inferSelect;

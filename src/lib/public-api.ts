@@ -152,6 +152,7 @@ export function toApiIncident(i: Incident) {
     status: i.resolvedAt ? ('resolved' as const) : ('open' as const),
     cause: i.cause,
     opened_at: i.openedAt.toISOString(),
+    acknowledged_at: i.acknowledgedAt?.toISOString() ?? null,
     resolved_at: i.resolvedAt?.toISOString() ?? null,
   };
 }

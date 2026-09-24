@@ -1345,6 +1345,19 @@
             "description": "When the outage began.",
             "example": "2026-03-01T12:00:00.000Z"
           },
+          "acknowledged_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "description": "When someone acknowledged it (this stops the escalation), or null.",
+                "example": "2026-03-01T12:00:00.000Z"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "resolved_at": {
             "anyOf": [
               {
@@ -1365,6 +1378,7 @@
           "status",
           "cause",
           "opened_at",
+          "acknowledged_at",
           "resolved_at"
         ],
         "description": "An outage of one monitor."

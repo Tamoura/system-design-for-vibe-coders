@@ -54,7 +54,7 @@ afterAll(() => vi.unstubAllEnvs());
  */
 async function checkAndFanOut(...args: Parameters<typeof recordCheckResult>) {
   const line = await recordCheckResult(...args);
-  await runQueuedJobs({ queues: ['incident.notify'] });
+  await runQueuedJobs({ queues: ['workflow.run'] });
   return line;
 }
 
@@ -372,7 +372,7 @@ describe('manual resolve notifies too', () => {
     await breakMonitor(org, m);
     const [incident] = await withOrg(org.id, (tx) => tx.select().from(incidents).where(eq(incidents.monitorId, m.id)));
     expect(await resolveIncident({ orgId: org.id }, incident.id)).toBe(true);
-    await runQueuedJobs({ queues: ['incident.notify'] }); // lesson 5.1: enqueued with the resolve
+    await runQueuedJobs({ queues: ['workflow.run'] }); // lesson 5.1: enqueued with the resolve
     expect((await notificationsOf(org, org.users.viewer.id)).map((n) => n.category)).toEqual(['incident.opened', 'incident.resolved']);
   });
 });
@@ -390,20 +390,23 @@ describe('lesson 5.1: notifications leave the checker, exactly once in effect', 
     expect(fakeSlack.posts.length).toBe(slackBefore);
     expect(await notificationsOf(org)).toHaveLength(0);
     const [incident] = await withOrg(org.id, (tx) => tx.select().from(incidents).where(eq(incidents.monitorId, m.id)));
-    const jobs = (await jobsIn('incident.notify')).filter((j) => j.data.incidentId === incident.id);
-    expect(jobs).toMatchObject([{ state: 'created', data: { orgId: org.id, event: 'incident.opened', incidentId: incident.id }, group_id: org.id }]);
+    // Since lesson 5.4 the fan-out is a workflow run, started by a workflow.run job on the queue.
+    const [run] = await withOrg(org.id, (tx) => tx.select().from(schema.workflowRuns).where(eq(schema.workflowRuns.key, `incident-notify:incident.opened:${incident.id}`)));
+    expect(run).toMatchObject({ workflow: 'incident-notify', status: 'running', subjectId: incident.id, input: { orgId: org.id, event: 'incident.opened', incidentId: incident.id } });
+    const jobs = (await jobsIn('workflow.run')).filter((j) => j.data.runId === run.id);
+    expect(jobs).toMatchObject([{ state: 'created', data: { orgId: org.id, runId: run.id } }]);
     expect(jobs[0].retry_limit).toBe(7); // 8 attempts, then the dead-letter queue
   });
 
   it('the job commits with the incident: a transaction that rolls back leaves no job behind', async () => {
     const org = await makeOrg('Rollback');
-    const before = (await jobsIn('incident.notify')).length;
+    const before = (await jobsIn('workflow.run')).length;
     const { enqueueNotify } = await import('@/lib/notifications/incidents');
     await withOrg(org.id, async (tx) => {
       await enqueueNotify(tx, { orgId: org.id, event: 'incident.opened', incidentId: '00000000-0000-4000-8000-000000000001' });
       throw new Error('crash before commit');
     }).catch(() => {});
-    expect((await jobsIn('incident.notify')).length).toBe(before);
+    expect((await jobsIn('workflow.run')).length).toBe(before);
   });
 
   it('running the same notify job twice by hand sends each person exactly one email', async () => {
@@ -412,8 +415,14 @@ describe('lesson 5.1: notifications leave the checker, exactly once in effect', 
     const m = await newMonitor(org, 'twice');
     await breakMonitor(org, m);
     const [incident] = await withOrg(org.id, (tx) => tx.select().from(incidents).where(eq(incidents.monitorId, m.id)));
-    const { notifyIncident } = await import('@/lib/notifications/incidents');
-    expect(await notifyIncident({ orgId: org.id, event: 'incident.opened', incidentId: incident.id })).toEqual({ notified: 0, deliveries: 0 }); // the second run
+    const { loadNotifyEvent } = await import('@/lib/notifications/incidents');
+    const { notifyInTx } = await import('@/lib/notifications/pipeline');
+    const event = await loadNotifyEvent({ orgId: org.id, event: 'incident.opened', incidentId: incident.id });
+    if ('skipped' in event) throw new Error('unexpected');
+    expect(await withOrg(org.id, (tx) => notifyInTx(tx, event))).toEqual({ notified: 0, deliveries: 0 }); // the fan-out, a second time
+    const [run] = await withOrg(org.id, (tx) => tx.select().from(schema.workflowRuns).where(eq(schema.workflowRuns.subjectId, incident.id)));
+    const { runWorkflow } = await import('@/lib/workflows');
+    expect(await runWorkflow(org.id, run.id)).toEqual({ status: 'completed' }); // the whole run, a second time: nothing to do
     await runQueuedJobs();
     for (const user of Object.values(org.users)) expect(memoryTransport.to(user.email)).toHaveLength(1);
   });
@@ -436,9 +445,9 @@ describe('lesson 5.1: notifications leave the checker, exactly once in effect', 
     for (let i = 0; i < 3; i++) await recordCheckResult(org, m, DOWN, new Date(Date.now() - 10_000 + i));
     const [incident] = await withOrg(org.id, (tx) => tx.select().from(incidents).where(eq(incidents.monitorId, m.id)));
     await withOrg(org.id, (tx) => tx.delete(schema.monitors).where(eq(schema.monitors.id, m.id))); // cascades to the incident
-    const { notifyIncident } = await import('@/lib/notifications/incidents');
-    expect(await notifyIncident({ orgId: org.id, event: 'incident.opened', incidentId: incident.id })).toEqual({ skipped: 'incident deleted' });
-    await runQueuedJobs();
+    const { loadNotifyEvent } = await import('@/lib/notifications/incidents');
+    expect(await loadNotifyEvent({ orgId: org.id, event: 'incident.opened', incidentId: incident.id })).toEqual({ skipped: 'incident deleted' });
+    await runQueuedJobs(); // the workflow run's first step finds nothing, and the run ends there
     expect(await notificationsOf(org)).toHaveLength(0);
     expect(await deliveriesOf(org)).toHaveLength(0);
   });

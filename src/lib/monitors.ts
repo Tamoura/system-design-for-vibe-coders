@@ -9,6 +9,7 @@ import { BlockedUrlError, assertPublicUrl } from '@/core/safe-fetch';
 import { AccessError, InvalidRequestError } from './errors';
 import { enqueueNotify } from './notifications/incidents';
 import { recordIncidentWebhook } from './webhooks';
+import { signalRunsInTx } from './workflows/engine';
 import { publishInTx } from './realtime';
 
 const { monitors, checkResults, incidents } = schema;
@@ -263,6 +264,7 @@ export async function resolveIncident(ctx: OrgScope, incidentId: string): Promis
     await publishInTx(tx, ctx.orgId, { type: 'incident.changed', monitorId: monitor.id, incidentId: incident.id, state: 'resolved' });
     await enqueueNotify(tx, { orgId: ctx.orgId, event: 'incident.resolved', incidentId: incident.id });
     await recordIncidentWebhook(tx, ctx.orgId, 'incident.resolved', incident.id); // lesson 5.3
+    await signalRunsInTx(tx, ctx.orgId, incident.id, 'incident.resolved'); // lesson 5.4: stops the escalation
     return true;
   });
 }
@@ -291,5 +293,29 @@ export async function listMonitorsPage({ orgId }: OrgScope, opts: { limit: numbe
       .orderBy(desc(monitors.createdAt), desc(monitors.id))
       .limit(opts.limit + 1); // one extra row answers "is there a next page?"
     return { rows: rows.slice(0, opts.limit), hasMore: rows.length > opts.limit };
+  });
+}
+
+/**
+ * Lesson 5.4 (🟡): "I'm on it". Acknowledging an open incident records who
+ * and when, and SIGNALS its escalation, which stops within seconds: the
+ * signal is stored and a workflow.run job is enqueued at once, in this
+ * transaction. Also an incident update, a live event and a webhook event.
+ */
+export async function acknowledgeIncident(ctx: OrgScope & { userId: string }, incidentId: string): Promise<boolean> {
+  if (!isUuid(incidentId)) return false;
+  return withOrg(ctx.orgId, async (tx) => {
+    const [incident] = await tx
+      .update(incidents)
+      .set({ acknowledgedAt: new Date(), acknowledgedBy: ctx.userId })
+      .where(and(eq(incidents.organizationId, ctx.orgId), eq(incidents.id, incidentId), isNull(incidents.resolvedAt), isNull(incidents.acknowledgedAt)))
+      .returning();
+    if (!incident) return false; // unknown, resolved, or already acknowledged
+    const [who] = await tx.select({ name: schema.users.name }).from(schema.users).where(eq(schema.users.id, ctx.userId));
+    await tx.insert(schema.incidentUpdates).values({ organizationId: ctx.orgId, incidentId, authorId: ctx.userId, body: `Acknowledged by ${who?.name ?? 'someone'}.` });
+    await publishInTx(tx, ctx.orgId, { type: 'incident.changed', monitorId: incident.monitorId, incidentId, state: 'acknowledged' });
+    await signalRunsInTx(tx, ctx.orgId, incidentId, 'incident.acknowledged', { userId: ctx.userId, name: who?.name ?? null });
+    await recordIncidentWebhook(tx, ctx.orgId, 'incident.acknowledged', incidentId);
+    return true;
   });
 }

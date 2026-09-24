@@ -106,3 +106,29 @@ export function SmsHeldBack(p: SmsHeldBackProps) {
     </EmailLayout>
   );
 }
+
+/**
+ * Lesson 5.4: a page from the escalation policy. Required (the policy chose
+ * this person and this channel), so no unsubscribe link; acknowledging the
+ * incident is what stops the pages.
+ */
+export type IncidentEscalatedProps = {
+  orgName: string;
+  monitorName: string;
+  cause: string;
+  openedAt: string;
+  tier: number;
+  url: string;
+};
+
+export function IncidentEscalated(p: IncidentEscalatedProps) {
+  return (
+    <EmailLayout preview={`Escalation tier ${p.tier}: ${p.monitorName} is down and nobody has acknowledged it.`} reason={`You are on the escalation policy of ${p.orgName}.`}>
+      <Text style={text}>
+        <strong>{p.monitorName}</strong> is down ({p.cause}) since {utc(p.openedAt)}, and nobody has acknowledged it{p.tier > 1 ? ' yet' : ''}.
+      </Text>
+      <Text style={text}>You are on tier {p.tier} of the escalation policy. Acknowledge the incident to stop the escalation.</Text>
+      <Action href={p.url} label="Acknowledge in Beacon" />
+    </EmailLayout>
+  );
+}

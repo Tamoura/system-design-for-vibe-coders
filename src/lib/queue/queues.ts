@@ -10,7 +10,8 @@ import type { Queue } from 'pg-boss';
  *
  *   checks.schedule   every minute: decide which checks are due (cron, singleton)
  *   check.run         one uptime check: late is useless, so barely any retries
- *   incident.notify   an incident opened/resolved: fan out to people and channels
+ *   workflow.run      run or resume a durable workflow (lesson 5.4): the
+ *                     incident fan-out to people and channels, escalations
  *   notification.deliver / email.send
  *                     one message to one person on one channel: a provider can
  *                     be down for an hour, so 8 attempts with exponential backoff
@@ -59,7 +60,8 @@ export const QUEUES = {
     // re-enqueues overlapping windows, finds the job id taken (see scheduler.ts).
     deleteAfterSeconds: 3600,
   },
-  'incident.notify': { ...PROVIDER_RETRIES, expireInSeconds: 300 },
+  // Lesson 5.4: each job replays one workflow run until it finishes or waits.
+  'workflow.run': { ...PROVIDER_RETRIES, expireInSeconds: 300 },
   'notification.deliver': { ...PROVIDER_RETRIES, expireInSeconds: 120 },
   'email.send': { ...PROVIDER_RETRIES, expireInSeconds: 120 },
   // Lesson 5.3: "a customer's endpoint being down during their deploy should not
@@ -82,7 +84,7 @@ export type JobData = {
   [DEAD_LETTER]: Record<string, unknown>;
   'checks.schedule': Record<string, never>;
   'check.run': { orgId: string; monitorId: string; scheduledAt: string };
-  'incident.notify': { orgId: string; event: 'incident.opened' | 'incident.resolved'; incidentId: string } | { orgId: string; event: 'monitor.flapping'; monitorId: string; since: string; changes: number };
+  'workflow.run': { orgId: string; runId: string };
   'notification.deliver': { orgId: string; deliveryId: string };
   'email.send': { emailId: string };
   'webhook.deliver': { orgId: string; messageId: string; manual?: boolean };

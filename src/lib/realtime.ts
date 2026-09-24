@@ -26,7 +26,7 @@ import type { TenantTx } from '@/db/tenant';
  */
 export type RealtimeEvent =
   | { type: 'monitor.status'; monitorId: string; state: 'up' | 'down'; checkedAt: string; latencyMs: number | null }
-  | { type: 'incident.changed'; monitorId: string; incidentId: string; state: 'opened' | 'resolved' }
+  | { type: 'incident.changed'; monitorId: string; incidentId: string; state: 'opened' | 'resolved' | 'acknowledged' }
   | { type: 'notification.created'; userId: string }
   | { type: 'presence.changed'; topic: string };
 

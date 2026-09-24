@@ -64,6 +64,8 @@ export const Incident = z
     status: z.enum(['open', 'resolved']),
     cause: z.string().meta({ example: 'HTTP 503' }),
     opened_at: dateTime('When the outage began.'),
+    // Lesson 5.4, added to v1 without breaking it: a new field, never a renamed one.
+    acknowledged_at: dateTime('When someone acknowledged it (this stops the escalation), or null.').nullable(),
     resolved_at: dateTime('When it was resolved.').nullable(),
   })
   .meta({ description: 'An outage of one monitor.' });
