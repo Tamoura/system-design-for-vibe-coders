@@ -5,7 +5,8 @@ import { uptimeFromCounts } from '@/core/incidents';
 import { canEditMonitor, type Actor } from '@/core/permissions';
 import { isUuid, type CreateMonitorInput, type UpdateMonitorInput } from '@/core/validation';
 import { assertCanCreateMonitor, assertCanRunAnotherMonitor, assertIntervalAllowed, entitlementsInTx } from './entitlements';
-import { AccessError } from './errors';
+import { BlockedUrlError, assertPublicUrl } from '@/core/safe-fetch';
+import { AccessError, InvalidRequestError } from './errors';
 import { enqueueNotify } from './notifications/incidents';
 import { publishInTx } from './realtime';
 
@@ -164,7 +165,8 @@ export async function getMonitorHistory({ orgId }: OrgScope, monitorId: string) 
  * request body: `input` has been parsed by an allow-list schema that has no
  * organizationId field (lesson 1.3, mass assignment).
  */
-export async function createMonitor(ctx: OrgScope & { userId: string }, input: CreateMonitorInput) {
+export async function createMonitor(ctx: OrgScope & { userId: string | null }, input: CreateMonitorInput) {
+  await assertMonitorUrl(input.url);
   // TODO(7.3): record "monitor.created" in the audit log.
   return withOrg(ctx.orgId, async (tx) => {
     // Lesson 3.2: entitlements are enforced here, on the server, at the point
@@ -182,6 +184,22 @@ export async function createMonitor(ctx: OrgScope & { userId: string }, input: C
 }
 
 /**
+ * Lesson 5.3 (🟡): refuse a monitor URL that points inside our network
+ * (loopback, private, link-local/cloud metadata, CGNAT, v4 and v6), checked
+ * after DNS. A host that does not resolve right now is accepted: the check
+ * will say so, and the guard runs again on every check (src/core/safe-fetch.ts).
+ * DNS is network: this runs before the transaction, never inside it.
+ */
+async function assertMonitorUrl(url: string) {
+  try {
+    await assertPublicUrl(url, { allowUnresolved: true });
+  } catch (err) {
+    if (err instanceof BlockedUrlError) throw new InvalidRequestError('blocked_url', `Beacon cannot check this URL: ${err.message}.`);
+    throw err;
+  }
+}
+
+/**
  * Load a monitor the actor may change. Lesson 1.3: two checks, in this order —
  * object-level (is it in this org? else 404) then the ABAC rule (may this
  * actor edit *this* monitor? else 403).
@@ -195,6 +213,7 @@ async function getEditableMonitor(ctx: OrgScope & Actor, id: string) {
 
 export async function updateMonitor(ctx: OrgScope & Actor, id: string, input: UpdateMonitorInput) {
   const current = await getEditableMonitor(ctx, id);
+  if (input.url !== undefined && input.url !== current.url) await assertMonitorUrl(input.url);
   // TODO(7.3): record "monitor.updated" in the audit log.
   return withOrg(ctx.orgId, async (tx) => {
     // Lesson 3.2: the limits apply to updates too, not only to creates.

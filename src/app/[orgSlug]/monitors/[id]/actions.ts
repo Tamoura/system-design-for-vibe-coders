@@ -5,7 +5,7 @@ import { incidentUpdateInput, updateMonitorInput } from '@/core/validation';
 import { forPage, requirePermission } from '@/lib/access';
 import { deleteMonitor, resolveIncident, updateMonitor } from '@/lib/monitors';
 import { addIncidentUpdate } from '@/lib/incidents';
-import { LimitExceededError } from '@/lib/errors';
+import { InvalidRequestError, LimitExceededError } from '@/lib/errors';
 
 // Lesson 1.3: each action checks its own permission before doing any work,
 // then passes the org from that check (never from the form) to the query.
@@ -28,6 +28,7 @@ export async function updateMonitorAction(orgSlug: string, monitorId: string, _p
   } catch (err) {
     // Lesson 3.2: a plan limit (interval too short, no free running slot).
     if (err instanceof LimitExceededError) return { errors: { form: [err.message] } };
+    if (err instanceof InvalidRequestError) return { errors: { url: [err.message] } }; // lesson 5.3: SSRF guard
     throw err;
   }
   return { saved: true };

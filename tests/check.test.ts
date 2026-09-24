@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import http from 'node:http';
 import type { AddressInfo } from 'node:net';
 import { runCheck } from '@/core/check';
@@ -16,8 +16,14 @@ beforeAll(async () => {
   });
   await new Promise<void>((r) => server.listen(0, '127.0.0.1', r));
   base = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
+  // Lesson 5.3: 127.0.0.1 is refused by the SSRF guard (tests/ssrf.test.ts);
+  // the development allow-list lets this local test server through.
+  vi.stubEnv('OUTBOUND_ALLOWLIST', '127.0.0.1');
 });
-afterAll(() => new Promise<void>((r) => server.close(() => r())));
+afterAll(() => {
+  vi.unstubAllEnvs();
+  return new Promise<void>((r) => server.close(() => r()));
+});
 
 describe('runCheck', () => {
   it('reports a 200 as up, with latency', async () => {
