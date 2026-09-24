@@ -32,3 +32,4 @@ input, select { font: inherit; padding: .5rem .6rem; border: 1px solid var(--lin
 .todo { border: 1px dashed var(--line); border-radius: 12px; padding: .8rem 1rem; font-size: .88rem; color: var(--muted); margin-top: 2rem; }
 .link-btn { background: none; border: 0; padding: 0; color: var(--accent); font: inherit; cursor: pointer; text-decoration: underline; }
 header.top nav { align-items: center; }
+.btn.secondary { background: var(--panel); color: var(--ink); border: 1px solid var(--line); }

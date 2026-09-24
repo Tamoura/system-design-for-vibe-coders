@@ -21,7 +21,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               {user ? (
                 <>
                   <Link href="/dashboard">Dashboard</Link>
-                  <span className="muted">{user.email}</span>
+                  <Link href="/account" className="muted">{user.email}</Link>
                   {/* Lesson 1.1: a real logout is a POST that deletes the session server-side. */}
                   <form action={signOutAction}>
                     <button className="link-btn">Sign out</button>
