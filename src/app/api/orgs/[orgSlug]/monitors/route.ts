@@ -8,7 +8,8 @@ import { createMonitor, listMonitorRows } from '@/lib/monitors';
  * JSON endpoints for monitors, authenticated by the same session cookie as the
  * UI. Lesson 1.3: each handler starts with requirePermission(), and the org it
  * returns (not anything in the body) scopes the query.
- * TODO(5.2): the public API authenticates with API keys and is versioned.
+ * These are the dashboard's own endpoints. The PUBLIC API (lesson 5.2) is a
+ * separate, versioned surface with API keys: src/app/api/v1.
  */
 
 type Params = { params: Promise<{ orgSlug: string }> };
