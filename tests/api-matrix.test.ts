@@ -153,7 +153,7 @@ describe('response DTOs', () => {
     const m = await acmeMonitor('owner');
     signInAs(acme.users.viewer);
     const { data } = await (await monitorRoute.GET(json('GET'), p({ orgSlug: acme.slug, id: m.id }))).json();
-    expect(Object.keys(data).sort()).toEqual(['createdAt', 'id', 'intervalSeconds', 'name', 'paused', 'url']);
+    expect(Object.keys(data).sort()).toEqual(['createdAt', 'id', 'intervalSeconds', 'name', 'paused', 'pausedReason', 'url']);
   });
 
   it('member responses contain exactly the DTO fields', async () => {

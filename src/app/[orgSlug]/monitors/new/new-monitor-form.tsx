@@ -1,10 +1,12 @@
 'use client';
 
 import { useActionState } from 'react';
-import { ALLOWED_INTERVALS } from '@/core/validation';
+import { IntervalSelect } from '@/app/_components/interval-select';
 import { createMonitorAction, type FormState } from './actions';
 
-export function NewMonitorForm({ orgSlug }: { orgSlug: string }) {
+type Props = { orgSlug: string; minIntervalSec: number; billingHref: string | null };
+
+export function NewMonitorForm({ orgSlug, minIntervalSec, billingHref }: Props) {
   // The org travels as a bound argument; the action re-checks the membership on the server.
   const [state, action, pending] = useActionState<FormState, FormData>(createMonitorAction.bind(null, orgSlug), {});
   const err = (k: string) => state.errors?.[k]?.[0];
@@ -24,14 +26,11 @@ export function NewMonitorForm({ orgSlug }: { orgSlug: string }) {
         </div>
         <div className="field">
           <label htmlFor="intervalSeconds">Check every</label>
-          {/* TODO(3.2): intervals below the plan's minimum should be disabled with an "Upgrade" hint. */}
-          <select id="intervalSeconds" name="intervalSeconds" defaultValue={state.values?.intervalSeconds ?? '300'}>
-            {ALLOWED_INTERVALS.map((s) => (
-              <option key={s} value={s}>{s < 60 ? `${s} seconds` : `${s / 60} minute${s === 60 ? '' : 's'}`}</option>
-            ))}
-          </select>
+          {/* Lesson 3.2: intervals below the plan's minimum are disabled, with an upgrade hint. */}
+          <IntervalSelect minIntervalSec={minIntervalSec} defaultValue={state.values?.intervalSeconds ?? String(Math.max(300, minIntervalSec))} billingHref={billingHref} />
           {err('intervalSeconds') && <span className="error">{err('intervalSeconds')}</span>}
         </div>
+        {err('form') && <p className="error" data-testid="form-error">{err('form')}</p>}
         <button className="btn" disabled={pending}>{pending ? 'Saving…' : 'Add monitor'}</button>
       </form>
     </section>

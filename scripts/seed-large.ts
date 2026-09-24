@@ -31,7 +31,11 @@ const started = Date.now();
 
 await sql.begin(async (tx) => {
   await tx`DELETE FROM organizations WHERE slug = 'big'`; // cascades to its monitors and checks
-  const [org] = await tx`INSERT INTO organizations (name, slug) VALUES ('Big', 'big') RETURNING id`;
+  // Lesson 3.2: on Business (500 monitors, 30-second checks), set directly
+  // like an admin comping a plan. It has no Stripe customer, so no webhook
+  // will ever recompute it. (With --monitors above 500 it is over the limit:
+  // it can add nothing, but this org is for measuring queries.)
+  const [org] = await tx`INSERT INTO organizations (name, slug, plan) VALUES ('Big', 'big', 'business') RETURNING id`;
   await tx`
     INSERT INTO memberships (organization_id, user_id, role)
     SELECT ${org.id}, id, 'owner' FROM users WHERE email = 'demo@beacon.test'`;

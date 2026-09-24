@@ -1,6 +1,14 @@
 /**
- * Check every active monitor once, store the results, and open or resolve
- * incidents. Run it by hand (`npm run checks:run`) or from cron.
+ * Check every monitor that is due, store the results, and open or resolve
+ * incidents. Run it from cron every minute, or by hand:
+ *
+ *   npm run checks:run            only monitors whose interval has passed
+ *   npm run checks:run -- --all   every running monitor now (for trying things out)
+ *
+ * Lesson 3.2 (🟡): workers enforce entitlements too. Paused monitors (by hand
+ * or frozen by the plan limit) never run, and a monitor is due only when its
+ * interval, raised to the org's current plan minimum, has passed
+ * (src/core/schedule.ts). The plan comes from the same snapshot the API uses.
  *
  * TODO(5.1): this is a loop in a script. It has no schedule per monitor, no
  * retries, no concurrency limit per tenant and no protection against two copies
@@ -18,21 +26,32 @@
  * check itself happens outside any transaction: never hold a database
  * connection open while waiting on the network.
  */
-import { and, desc, eq, isNull } from 'drizzle-orm';
+import { and, desc, eq, isNull, max } from 'drizzle-orm';
 import { db, schema, sql } from '../src/db';
 import { withOrg } from '../src/db/tenant';
 import { runCheck } from '../src/core/check';
 import { decideIncident } from '../src/core/incidents';
+import { entitlementsFor } from '../src/core/plans';
+import { isDue } from '../src/core/schedule';
 
 const { organizations, monitors, checkResults, incidents, incidentUpdates } = schema;
+const checkAll = process.argv.includes('--all');
 
-const orgs = await db.select({ id: organizations.id }).from(organizations);
+const orgs = await db.select({ id: organizations.id, plan: organizations.plan }).from(organizations);
 let checked = 0;
 
-for (const { id: orgId } of orgs) {
-  const active = await withOrg(orgId, (tx) =>
-    tx.select().from(monitors).where(and(eq(monitors.organizationId, orgId), eq(monitors.paused, false))),
-  );
+for (const { id: orgId, plan } of orgs) {
+  const ent = entitlementsFor(plan);
+  const active = await withOrg(orgId, async (tx) => {
+    const running = await tx.select().from(monitors).where(and(eq(monitors.organizationId, orgId), eq(monitors.paused, false)));
+    const last = await tx
+      .select({ monitorId: checkResults.monitorId, at: max(checkResults.checkedAt) })
+      .from(checkResults)
+      .where(eq(checkResults.organizationId, orgId))
+      .groupBy(checkResults.monitorId);
+    const lastAt = new Map(last.map((r) => [r.monitorId, r.at]));
+    return running.filter((m) => checkAll || isDue({ ...m, lastCheckedAt: lastAt.get(m.id) ?? null }, ent));
+  });
   for (const m of active) {
     checked++;
     const outcome = await runCheck(m.url); // network: outside the transaction
@@ -73,5 +92,5 @@ for (const { id: orgId } of orgs) {
     console.log(message);
   }
 }
-console.log(`Checked ${checked} monitor(s) in ${orgs.length} organization(s).`);
+console.log(`Checked ${checked} monitor(s) in ${orgs.length} organization(s)${checkAll ? '' : ' (only those due; --all checks every running monitor)'}.`);
 await sql.end();

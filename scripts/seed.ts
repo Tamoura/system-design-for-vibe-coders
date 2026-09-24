@@ -29,12 +29,14 @@ const USERS: { email: string; name: string; role: Role }[] = [
 ];
 
 // `failEvery`: 1 = always fails, 0 = never, n = every nth check fails.
+// Lesson 3.2: "demo" is on Free, so five monitors at 5-minute intervals is
+// exactly its limit: the monitors page shows "Upgrade to add more monitors".
 const MONITORS = [
   { name: 'Example homepage', url: 'https://example.com', intervalSeconds: 300, failEvery: 0 },
-  { name: 'checkout-api', url: 'https://checkout.example.com/health', intervalSeconds: 60, failEvery: 40 },
-  { name: 'billing-api', url: 'https://billing.example.com/health', intervalSeconds: 60, failEvery: 0 },
-  { name: 'Beacon itself', url: 'http://localhost:3000', intervalSeconds: 60, failEvery: 0 },
-  { name: 'Always broken (for testing incidents)', url: 'http://localhost:59999/nothing-listens-here', intervalSeconds: 60, failEvery: 1 },
+  { name: 'checkout-api', url: 'https://checkout.example.com/health', intervalSeconds: 300, failEvery: 40 },
+  { name: 'billing-api', url: 'https://billing.example.com/health', intervalSeconds: 300, failEvery: 0 },
+  { name: 'Beacon itself', url: 'http://localhost:3000', intervalSeconds: 300, failEvery: 0 },
+  { name: 'Always broken (for testing incidents)', url: 'http://localhost:59999/nothing-listens-here', intervalSeconds: 300, failEvery: 1 },
 ];
 
 const CHECKS_PER_MONITOR = 288; // one every 5 minutes for 24 hours

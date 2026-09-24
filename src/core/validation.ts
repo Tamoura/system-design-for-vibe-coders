@@ -7,6 +7,11 @@ import { ROLES } from './roles';
  */
 export const ALLOWED_INTERVALS = [30, 60, 300, 900] as const;
 
+/** 30 → "30 seconds", 60 → "1 minute", 300 → "5 minutes". */
+export function intervalLabel(seconds: number): string {
+  return seconds < 60 ? `${seconds} seconds` : `${seconds / 60} minute${seconds === 60 ? '' : 's'}`;
+}
+
 export const createMonitorInput = z.object({
   name: z.string().trim().min(1, 'Give the monitor a name').max(80),
   url: z
@@ -72,3 +77,8 @@ export const uploadRequestInput = z.object({
 export const incidentUpdateInput = z.object({
   body: z.string().trim().min(1, 'Write something').max(5000),
 });
+
+/** A well-formed UUID? A malformed id cannot exist, so callers answer 404 instead of letting Postgres throw. */
+export function isUuid(value: string): boolean {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
+}

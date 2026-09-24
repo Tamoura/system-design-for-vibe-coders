@@ -5,6 +5,7 @@ import { incidentUpdateInput, updateMonitorInput } from '@/core/validation';
 import { forPage, requirePermission } from '@/lib/access';
 import { deleteMonitor, resolveIncident, updateMonitor } from '@/lib/monitors';
 import { addIncidentUpdate } from '@/lib/incidents';
+import { LimitExceededError } from '@/lib/errors';
 
 // Lesson 1.3: each action checks its own permission before doing any work,
 // then passes the org from that check (never from the form) to the query.
@@ -22,7 +23,13 @@ export async function updateMonitorAction(orgSlug: string, monitorId: string, _p
     paused: formData.get('paused') === 'on',
   });
   if (!parsed.success) return { errors: parsed.error.flatten().fieldErrors };
-  await forPage(updateMonitor(ctx, monitorId, parsed.data), back);
+  try {
+    await forPage(updateMonitor(ctx, monitorId, parsed.data), back);
+  } catch (err) {
+    // Lesson 3.2: a plan limit (interval too short, no free running slot).
+    if (err instanceof LimitExceededError) return { errors: { form: [err.message] } };
+    throw err;
+  }
   return { saved: true };
 }
 

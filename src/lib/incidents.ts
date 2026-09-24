@@ -2,7 +2,8 @@ import { and, asc, eq, inArray } from 'drizzle-orm';
 import { schema } from '@/db';
 import { withOrg } from '@/db/tenant';
 import { AccessError } from './errors';
-import { isUuid, type OrgScope } from './monitors';
+import { isUuid } from '@/core/validation';
+import type { OrgScope } from './monitors';
 
 const { incidents, incidentUpdates, users } = schema;
 

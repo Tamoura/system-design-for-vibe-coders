@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { can } from '@/core/permissions';
 import { forPage, requirePermission } from '@/lib/access';
 import { listMonitors } from '@/lib/monitors';
+import { getMonitorUsage } from '@/lib/entitlements';
+import { PLANS } from '@/core/plans';
 import { searchMonitors } from '@/lib/search';
 
 export const dynamic = 'force-dynamic';
@@ -28,15 +30,41 @@ export default async function MonitorsPage({
   // Lesson 2.3 (🟢): with ?q=…, a fuzzy search of this org's monitors instead of the full list.
   const hits = q ? await searchMonitors(ctx, q) : null;
   const monitors = hits ? [] : await listMonitors(ctx);
+  // Lesson 3.2: where the org stands against its plan, for the hints below.
+  const usage = await getMonitorUsage(ctx);
+  const billingHref = can(ctx.role, 'billing.manage') ? `/${ctx.orgSlug}/billing` : null;
   return (
     <section className="grid">
       <div className="row">
         <h1 style={{ margin: 0 }}>Monitors</h1>
         {/* Lesson 1.3: the UI hides what the role cannot do, using the same map the server enforces. */}
-        {can(ctx.role, 'monitor.write') && (
-          <Link className="btn" href={`/${ctx.orgSlug}/monitors/new`} style={{ marginLeft: 'auto' }}>Add monitor</Link>
-        )}
+        <span className="muted" data-testid="monitor-count">
+          {usage.total} of {usage.ent.maxMonitors} monitors on {PLANS[usage.ent.plan].name}
+        </span>
+        {can(ctx.role, 'monitor.write') &&
+          (usage.atLimit ? (
+            // Lesson 3.2: at the limit the button becomes an upgrade prompt.
+            // (The API refuses a sixth monitor anyway, with a limit_exceeded error.)
+            <span style={{ marginLeft: 'auto' }} data-testid="upgrade-prompt">
+              {billingHref ? (
+                <Link className="btn" href={billingHref}>Upgrade to add more monitors</Link>
+              ) : (
+                <span className="muted">Monitor limit reached. Ask an owner to upgrade.</span>
+              )}
+            </span>
+          ) : (
+            <Link className="btn" href={`/${ctx.orgSlug}/monitors/new`} style={{ marginLeft: 'auto' }}>Add monitor</Link>
+          ))}
       </div>
+      {usage.frozen > 0 && (
+        // Lesson 3.2 (🟡): the freeze policy, explained where people will see it.
+        <div className="card error" data-testid="frozen-banner">
+          {usage.frozen} monitor{usage.frozen === 1 ? ' is' : 's are'} paused because {PLANS[usage.ent.plan].name} runs{' '}
+          {usage.ent.maxMonitors} at a time. Their history is kept.{' '}
+          {can(ctx.role, 'monitor.write_any') && <Link href={`/${ctx.orgSlug}/monitors/plan-limit`}>Choose which monitors run</Link>}
+          {billingHref && <> or <Link href={billingHref}>upgrade</Link></>}.
+        </div>
+      )}
       <form className="row" role="search" action={`/${ctx.orgSlug}/monitors`}>
         <input type="search" name="q" defaultValue={q} placeholder="Search monitors by name or URL (typos welcome)" aria-label="Search monitors" style={{ flex: 1 }} />
         <button className="btn secondary">Search</button>
@@ -69,7 +97,9 @@ export default async function MonitorsPage({
             <Link href={`/${ctx.orgSlug}/monitors/${m.id}`}><strong>{m.name}</strong></Link>
             <div className="muted">{m.url}</div>
           </div>
-          <div className="muted">every {m.intervalSeconds}s</div>
+          <div className="muted">
+            every {m.intervalSeconds}s{m.pausedReason === 'manual' ? ' · paused' : m.pausedReason === 'plan_limit' ? ' · paused (plan limit)' : ''}
+          </div>
           <div className="muted">{m.uptime24h === null ? '—' : `${m.uptime24h}%`} 24h</div>
           <div className="muted">
             {m.lastLatencyMs === null ? '' : `${m.lastLatencyMs} ms · `}checked {ago(m.lastCheckedAt)}

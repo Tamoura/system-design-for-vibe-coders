@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { can, canEditMonitor } from '@/core/permissions';
 import { forPage, requirePermission } from '@/lib/access';
 import { getMonitor, getMonitorHistory } from '@/lib/monitors';
+import { getEntitlements } from '@/lib/entitlements';
 import { listIncidentScreenshots } from '@/lib/files';
 import { listIncidentUpdates } from '@/lib/incidents';
 import { AutoRefresh } from '@/app/_components/auto-refresh';
@@ -25,12 +26,20 @@ export default async function MonitorPage({ params }: { params: Promise<{ orgSlu
   const canWriteIncidents = can(ctx.role, 'incident.write');
   // Lesson 1.3 (🟡): the same ABAC rule the server enforces decides what to show.
   const editable = canEditMonitor(ctx, monitor);
+  const ent = await getEntitlements(ctx); // lesson 3.2: for the interval picker's hints
   return (
     <section className="grid">
       <h1 style={{ margin: 0 }}>{monitor.name}</h1>
       <div className="card grid">
         <div><span className="muted">URL</span> {monitor.url}</div>
-        <div><span className="muted">Checked every</span> {monitor.intervalSeconds}s{monitor.paused ? ' (paused)' : ''}</div>
+        <div>
+          <span className="muted">Checked every</span> {monitor.intervalSeconds}s
+          {monitor.pausedReason === 'manual' && ' (paused)'}
+          {/* Lesson 3.2 (🟡): frozen by a downgrade, not by a person. */}
+          {monitor.pausedReason === 'plan_limit' && (
+            <span className="error"> (paused: over the plan’s monitor limit, <a href={`/${ctx.orgSlug}/monitors/plan-limit`}>choose which run</a>)</span>
+          )}
+        </div>
         {/* Lesson 1.3: hidden when the rules say no; the actions check again on the server. */}
         {editable && (
           <form action={deleteMonitorAction.bind(null, ctx.orgSlug, monitor.id)}>
@@ -42,6 +51,8 @@ export default async function MonitorPage({ params }: { params: Promise<{ orgSlu
         <EditMonitorForm
           orgSlug={ctx.orgSlug}
           monitor={{ id: monitor.id, name: monitor.name, url: monitor.url, intervalSeconds: monitor.intervalSeconds, paused: monitor.paused }}
+          minIntervalSec={ent.minIntervalSec}
+          billingHref={can(ctx.role, 'billing.manage') ? `/${ctx.orgSlug}/billing` : null}
         />
       )}
       <AutoRefresh active={screenshots.some((f) => f.status === 'processing')} />

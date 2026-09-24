@@ -1,6 +1,7 @@
 import { sql } from 'drizzle-orm';
-import { boolean, customType, index, integer, pgEnum, pgTable, primaryKey, text, timestamp, uniqueIndex, uuid, type AnyPgColumn } from 'drizzle-orm/pg-core';
+import { boolean, check, customType, index, integer, pgEnum, pgTable, primaryKey, text, timestamp, uniqueIndex, uuid, type AnyPgColumn } from 'drizzle-orm/pg-core';
 import { FILE_KINDS } from '../core/files';
+import { PLAN_IDS } from '../core/plans';
 import { ROLES } from '../core/roles';
 import { users } from './auth-schema';
 
@@ -15,6 +16,8 @@ export * from './auth-schema';
  */
 
 export const orgRole = pgEnum('org_role', ROLES);
+// Lesson 3.2: the plan names live in src/core/plans.ts; the database only stores which one.
+export const orgPlan = pgEnum('plan_id', PLAN_IDS);
 
 /**
  * Lesson 2.1: every table Beacon owns gets `created_at` and `updated_at`
@@ -37,6 +40,11 @@ export const organizations = pgTable('organizations', {
   statusPagePublic: boolean('status_page_public').notNull().default(true),
   // Lesson 2.2: the status page logo, a row in `files` (the bytes are in object storage).
   logoFileId: uuid('logo_file_id').references((): AnyPgColumn => files.id, { onDelete: 'set null' }),
+  // Lesson 3.2 (🟡): a snapshot of the plan the org's subscriptions entitle
+  // it to. Only syncCustomerFromStripe() writes it (src/lib/billing/sync.ts);
+  // getEntitlements() reads it, so a monitor create costs no Stripe call and
+  // the API, the UI and the check runner all enforce the same limits.
+  plan: orgPlan('plan').notNull().default('free'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: updatedAt(),
 });
@@ -99,6 +107,8 @@ export const invitations = pgTable(
  * a join, and a query that forgets to stands out in review.
  */
 
+export const monitorPausedReason = pgEnum('paused_reason', ['manual', 'plan_limit']);
+
 export const monitors = pgTable(
   'monitors',
   {
@@ -109,13 +119,19 @@ export const monitors = pgTable(
     createdBy: uuid('created_by').references(() => users.id, { onDelete: 'set null' }),
     name: text('name').notNull(),
     url: text('url').notNull(),
-    // How often to check, in seconds. Plans will limit this (TODO(3.2)).
+    // How often to check, in seconds. Lesson 3.2: never below the plan's
+    // minimum (entitlement minIntervalSec), enforced in src/lib/monitors.ts.
     intervalSeconds: integer('interval_seconds').notNull().default(300),
     paused: boolean('paused').notNull().default(false),
+    // Lesson 3.2 (🟡): WHY it is paused. 'manual': someone switched it off.
+    // 'plan_limit': frozen by a downgrade; an upgrade switches it back on.
+    pausedReason: monitorPausedReason('paused_reason'),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
     updatedAt: updatedAt(),
   },
   (t) => [
+    // Paused ⇔ there is a reason. The database keeps the two columns honest.
+    check('monitors_paused_reason_check', sql`${t.paused} = (${t.pausedReason} is not null)`),
     index('monitors_org_idx').on(t.organizationId, t.createdAt),
     // Lesson 2.3 (🟢): trigram indexes (pg_trgm) for fuzzy search on name and
     // URL. They serve ILIKE '%…%' and the similarity operators, so "chekout"

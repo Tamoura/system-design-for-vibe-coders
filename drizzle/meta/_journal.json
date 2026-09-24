@@ -71,6 +71,20 @@
       "when": 1790283336847,
       "tag": "0009_search",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1790285251587,
+      "tag": "0010_plans",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1790285258788,
+      "tag": "0011_existing_orgs_on_free",
+      "breakpoints": true
     }
   ]
 }

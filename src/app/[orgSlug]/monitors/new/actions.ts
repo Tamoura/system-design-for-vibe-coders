@@ -3,6 +3,7 @@
 import { redirect } from 'next/navigation';
 import { createMonitorInput } from '@/core/validation';
 import { forPage, requirePermission } from '@/lib/access';
+import { LimitExceededError } from '@/lib/errors';
 import { createMonitor } from '@/lib/monitors';
 
 export type FormState = { errors?: Record<string, string[] | undefined>; values?: Record<string, string> };
@@ -16,6 +17,12 @@ export async function createMonitorAction(orgSlug: string, _prev: FormState, for
   if (!parsed.success) {
     return { errors: parsed.error.flatten().fieldErrors, values };
   }
-  await createMonitor(ctx, parsed.data);
+  try {
+    await createMonitor(ctx, parsed.data);
+  } catch (err) {
+    // Lesson 3.2: the plan's limit, enforced on the server; show its message in the form.
+    if (err instanceof LimitExceededError) return { errors: { form: [err.message] }, values };
+    throw err;
+  }
   redirect(`/${ctx.orgSlug}/monitors`);
 }

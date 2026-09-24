@@ -3,7 +3,8 @@ import { schema } from '@/db';
 import { withOrg } from '@/db/tenant';
 import { uptimeFromCounts } from '@/core/incidents';
 import { canEditMonitor, type Actor } from '@/core/permissions';
-import type { CreateMonitorInput, UpdateMonitorInput } from '@/core/validation';
+import { isUuid, type CreateMonitorInput, type UpdateMonitorInput } from '@/core/validation';
+import { assertCanCreateMonitor, assertCanRunAnotherMonitor, assertIntervalAllowed, entitlementsInTx } from './entitlements';
 import { AccessError } from './errors';
 
 const { monitors, checkResults, incidents } = schema;
@@ -26,6 +27,7 @@ export type MonitorView = {
   url: string;
   intervalSeconds: number;
   paused: boolean;
+  pausedReason: 'manual' | 'plan_limit' | null;
   state: 'up' | 'down' | 'unknown';
   lastCheckedAt: Date | null;
   lastLatencyMs: number | null;
@@ -110,6 +112,7 @@ export async function listMonitors({ orgId }: OrgScope): Promise<MonitorView[]> 
       url: m.url,
       intervalSeconds: m.intervalSeconds,
       paused: m.paused,
+      pausedReason: m.pausedReason,
       state: r.latestOk === null ? 'unknown' : r.latestOk ? 'up' : 'down',
       lastCheckedAt: r.latestAt,
       lastLatencyMs: r.latestLatencyMs,
@@ -160,15 +163,20 @@ export async function getMonitorHistory({ orgId }: OrgScope, monitorId: string) 
  * organizationId field (lesson 1.3, mass assignment).
  */
 export async function createMonitor(ctx: OrgScope & { userId: string }, input: CreateMonitorInput) {
-  // TODO(3.2): enforce the plan's monitor limit.
   // TODO(7.3): record "monitor.created" in the audit log.
-  const [row] = await withOrg(ctx.orgId, (tx) =>
-    tx
+  return withOrg(ctx.orgId, async (tx) => {
+    // Lesson 3.2: entitlements are enforced here, on the server, at the point
+    // of action. The form, the API and (later) the public API all end up in
+    // this function, so none of them can skip the limits.
+    const ent = await entitlementsInTx(tx, ctx.orgId);
+    await assertCanCreateMonitor(tx, ctx.orgId, ent);
+    assertIntervalAllowed(ent, input.intervalSeconds);
+    const [row] = await tx
       .insert(monitors)
       .values({ ...input, organizationId: ctx.orgId, createdBy: ctx.userId })
-      .returning(),
-  );
-  return row;
+      .returning();
+    return row;
+  });
 }
 
 /**
@@ -184,16 +192,29 @@ async function getEditableMonitor(ctx: OrgScope & Actor, id: string) {
 }
 
 export async function updateMonitor(ctx: OrgScope & Actor, id: string, input: UpdateMonitorInput) {
-  await getEditableMonitor(ctx, id);
+  const current = await getEditableMonitor(ctx, id);
   // TODO(7.3): record "monitor.updated" in the audit log.
-  const [row] = await withOrg(ctx.orgId, (tx) =>
-    tx
+  return withOrg(ctx.orgId, async (tx) => {
+    // Lesson 3.2: the limits apply to updates too, not only to creates.
+    const ent = await entitlementsInTx(tx, ctx.orgId);
+    if (input.intervalSeconds !== undefined) assertIntervalAllowed(ent, input.intervalSeconds);
+    // Lesson 3.2 (🟡): pausing records why. Un-pausing (a monitor paused by
+    // hand, or one a downgrade froze) needs a free running slot.
+    const { paused, ...fields } = input; // parsed by updateMonitorInput: only name, url, intervalSeconds, paused
+    const pause =
+      paused === true && !current.paused
+        ? { paused: true, pausedReason: 'manual' as const }
+        : paused === false && current.paused
+          ? { paused: false, pausedReason: null }
+          : {};
+    if (paused === false && current.paused) await assertCanRunAnotherMonitor(tx, ctx.orgId, ent);
+    const [row] = await tx
       .update(monitors)
-      .set(input) // parsed by updateMonitorInput: only name, url, intervalSeconds, paused
+      .set({ ...fields, ...pause })
       .where(and(eq(monitors.organizationId, ctx.orgId), eq(monitors.id, id)))
-      .returning(),
-  );
-  return row;
+      .returning();
+    return row;
+  });
 }
 
 export async function deleteMonitor(ctx: OrgScope & Actor, id: string): Promise<void> {
@@ -213,8 +234,4 @@ export async function resolveIncident({ orgId }: OrgScope, incidentId: string): 
       .returning({ id: incidents.id }),
   );
   return updated.length > 0;
-}
-
-export function isUuid(value: string): boolean {
-  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
 }

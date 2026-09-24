@@ -18,7 +18,8 @@ import {
 } from '@/core/files';
 import type { StoredFile } from '@/db/schema';
 import { AccessError, InvalidRequestError } from './errors';
-import { isUuid, type OrgScope } from './monitors';
+import { isUuid } from '@/core/validation';
+import type { OrgScope } from './monitors';
 import { findPublicStatusPage } from './organizations';
 import { getStorage } from './storage';
 

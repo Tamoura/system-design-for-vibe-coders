@@ -12,6 +12,8 @@ export type MonitorDto = {
   url: string;
   intervalSeconds: number;
   paused: boolean;
+  /** Lesson 3.2: 'manual', or 'plan_limit' when a downgrade froze it. */
+  pausedReason: 'manual' | 'plan_limit' | null;
   createdAt: string;
 };
 
@@ -22,6 +24,7 @@ export function toMonitorDto(m: Monitor): MonitorDto {
     url: m.url,
     intervalSeconds: m.intervalSeconds,
     paused: m.paused,
+    pausedReason: m.pausedReason,
     createdAt: m.createdAt.toISOString(),
   };
 }
@@ -31,3 +34,4 @@ export type MemberDto = { userId: string; name: string; email: string; role: str
 export function toMemberDto(m: { userId: string; name: string; email: string; role: string; joinedAt: Date }): MemberDto {
   return { userId: m.userId, name: m.name, email: m.email, role: m.role, joinedAt: m.joinedAt.toISOString() };
 }
+

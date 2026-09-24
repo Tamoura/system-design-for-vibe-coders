@@ -1,12 +1,17 @@
 'use client';
 
 import { useActionState } from 'react';
-import { ALLOWED_INTERVALS } from '@/core/validation';
+import { IntervalSelect } from '@/app/_components/interval-select';
 import { updateMonitorAction, type EditState } from './actions';
 
-type Props = { orgSlug: string; monitor: { id: string; name: string; url: string; intervalSeconds: number; paused: boolean } };
+type Props = {
+  orgSlug: string;
+  monitor: { id: string; name: string; url: string; intervalSeconds: number; paused: boolean };
+  minIntervalSec: number;
+  billingHref: string | null;
+};
 
-export function EditMonitorForm({ orgSlug, monitor }: Props) {
+export function EditMonitorForm({ orgSlug, monitor, minIntervalSec, billingHref }: Props) {
   const [state, action, pending] = useActionState<EditState, FormData>(updateMonitorAction.bind(null, orgSlug, monitor.id), {});
   const err = (k: string) => state.errors?.[k]?.[0];
   return (
@@ -24,15 +29,13 @@ export function EditMonitorForm({ orgSlug, monitor }: Props) {
       </div>
       <div className="field">
         <label htmlFor="intervalSeconds">Check every</label>
-        <select id="intervalSeconds" name="intervalSeconds" defaultValue={String(monitor.intervalSeconds)}>
-          {ALLOWED_INTERVALS.map((s) => (
-            <option key={s} value={s}>{s < 60 ? `${s} seconds` : `${s / 60} minute${s === 60 ? '' : 's'}`}</option>
-          ))}
-        </select>
+        {/* Lesson 3.2: the plan's minimum applies to edits too. */}
+        <IntervalSelect minIntervalSec={minIntervalSec} defaultValue={String(monitor.intervalSeconds)} billingHref={billingHref} />
       </div>
       <label className="row" style={{ marginBottom: '1rem' }}>
         <input type="checkbox" name="paused" defaultChecked={monitor.paused} /> Paused
       </label>
+      {err('form') && <p className="error" data-testid="form-error">{err('form')}</p>}
       <div className="row">
         <button className="btn" disabled={pending}>{pending ? 'Saving…' : 'Save changes'}</button>
         {state.saved && <span className="muted">Saved.</span>}
