@@ -226,7 +226,7 @@ describe('Idempotency-Key on POST (🟡)', () => {
     expect(a.status).toBe(201);
     expect(b.status).toBe(201);
     expect(b.headers.get('idempotent-replayed')).toBe('true');
-    expect(await b.json()).toEqual(await a.json());
+    expect(await b.text()).toBe(await a.text()); // byte for byte
     const rows = await db.select().from(schema.monitors).where(eq(schema.monitors.name, 'idem'));
     expect(rows).toHaveLength(1);
   });

@@ -46,7 +46,7 @@
         },
         "response_body": {
           "name": "response_body",
-          "type": "jsonb",
+          "type": "text",
           "primaryKey": false,
           "notNull": false
         },

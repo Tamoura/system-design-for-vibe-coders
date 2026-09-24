@@ -201,7 +201,7 @@ export async function idempotent(req: Request, orgId: string, rawBody: string, r
   if (claim) {
     if (claim.requestHash !== requestHash) return problem('idempotency-key-reused', { detail: 'Use a new Idempotency-Key for a different request.', instance });
     if (claim.statusCode === null) return problem('idempotency-key-in-use', { detail: 'The first request with this key is still running.', instance }, { 'Retry-After': '1' });
-    return Response.json(claim.responseBody, { status: claim.statusCode, headers: { 'Idempotent-Replayed': 'true' } });
+    return new Response(claim.responseBody, { status: claim.statusCode, headers: { 'content-type': 'application/json', 'Idempotent-Replayed': 'true' } });
   }
 
   const release = () => withOrg(orgId, (tx) => tx.delete(t).where(where));
@@ -216,7 +216,7 @@ export async function idempotent(req: Request, orgId: string, rawBody: string, r
     await release();
     return res;
   }
-  const body = await res.clone().json();
+  const body = await res.clone().text();
   await withOrg(orgId, (tx) => tx.update(t).set({ statusCode: res.status, responseBody: body }).where(where));
   return res;
 }

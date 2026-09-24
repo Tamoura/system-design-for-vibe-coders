@@ -5,7 +5,7 @@ CREATE TABLE "api_idempotency_keys" (
 	"request_path" text NOT NULL,
 	"request_hash" text NOT NULL,
 	"status_code" integer,
-	"response_body" jsonb,
+	"response_body" text,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "api_idempotency_keys_organization_id_key_pk" PRIMARY KEY("organization_id","key")

@@ -659,7 +659,8 @@ export const apiIdempotencyKeys = pgTable(
     requestPath: text('request_path').notNull(),
     requestHash: text('request_hash').notNull(),
     statusCode: integer('status_code'),
-    responseBody: jsonb('response_body'),
+    // The response text exactly as sent (not jsonb, which would reorder its keys): a retry gets the same bytes.
+    responseBody: text('response_body'),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
     updatedAt: updatedAt(),
   },
