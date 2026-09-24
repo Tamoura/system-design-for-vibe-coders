@@ -38,13 +38,22 @@ jobs:
       - name: Verify the committed HTML matches the markdown
         run: npm run check
 
+      - name: Verify the SaaS course output matches its markdown
+        run: npm run saas:check
+
+      - name: Check the SaaS course's GitHub repo links (report only)
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: npm run saas:repos
+
       - name: Build PDF and EPUB editions
         run: npm run dist
 
       - name: Assemble the site
         run: |
           # Course library: landing hub at root, each course in its own subpath.
-          mkdir -p _site _site/vibe _site/agentic
+          mkdir -p _site _site/vibe _site/agentic _site/saas
           cp landing.html _site/index.html
           # The vibe course (bilingual pages + downloads) → /vibe/
           cp index.html index.en.html index.ar.html _site/vibe/
@@ -52,7 +61,9 @@ jobs:
           cp dist/course-en.epub dist/course-ar.epub _site/vibe/
           # The agentic course (curriculum, playbook, poster, assessment) → /agentic/
           cp -r agentic/. _site/agentic/
-          ls -lh _site _site/vibe _site/agentic
+          # SaaS Building Blocks (single generated page) → /saas/
+          cp saas/index.html _site/saas/
+          ls -lh _site _site/vibe _site/agentic _site/saas
 
       - uses: actions/upload-pages-artifact@v3
         with:

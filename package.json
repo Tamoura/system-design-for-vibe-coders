@@ -2,12 +2,15 @@
   "name": "system-design-for-vibe-coders",
   "version": "1.0.0",
   "private": true,
-  "description": "Production engineering for AI-assisted builders — a bilingual (EN/AR) written course anchored in real production incidents.",
+  "description": "A course library: production engineering for AI-assisted builders (bilingual EN/AR), and SaaS Building Blocks for junior developers.",
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
     "dist": "node scripts/build.mjs --all",
-    "check": "node scripts/build.mjs --check"
+    "check": "node scripts/build.mjs --check",
+    "saas:build": "node scripts/build-saas.mjs",
+    "saas:check": "node scripts/build-saas.mjs --check",
+    "saas:repos": "node scripts/check-saas-repos.mjs"
   },
   "devDependencies": {
     "archiver": "^7.0.1",
