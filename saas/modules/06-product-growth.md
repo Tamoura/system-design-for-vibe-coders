@@ -178,7 +178,7 @@ The hard parts at scale are these. Verification must be re-checked, because cust
 
 **calcom/cal.com.** Cal.com's onboarding flow and settings split are worth reading. Search for `getting-started` or `onboarding` to find the step-by-step first-run flow, and browse the settings pages to see account-level and team/org-level settings kept apart.
 
-**haydenbleasel/next-forge.** Here the shell *is* the product. Look at the top-level `apps/` folder: marketing and the product app are separate Next.js apps that share `packages/`. Notice what counts as "shared" (design system, auth, analytics) and what doesn't.
+**vercel/next-forge.** Here the shell *is* the product. Look at the top-level `apps/` folder: marketing and the product app are separate Next.js apps that share `packages/`. Notice what counts as "shared" (design system, auth, analytics) and what doesn't.
 
 **What to notice:**
 
