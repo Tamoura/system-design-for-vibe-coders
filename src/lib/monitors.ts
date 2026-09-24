@@ -26,9 +26,14 @@ export type MonitorView = {
   openIncident: { id: string; openedAt: Date; cause: string } | null;
 };
 
+/** The monitor rows of one organization, without check data (for the API). */
+export async function listMonitorRows({ orgId }: OrgScope) {
+  return db.select().from(monitors).where(eq(monitors.organizationId, orgId)).orderBy(monitors.createdAt);
+}
+
 /** Every monitor in one organization, with its latest state. */
 export async function listMonitors({ orgId }: OrgScope): Promise<MonitorView[]> {
-  const rows = await db.select().from(monitors).where(eq(monitors.organizationId, orgId)).orderBy(monitors.createdAt);
+  const rows = await listMonitorRows({ orgId });
   return Promise.all(
     rows.map(async (m) => {
       const recent = await db
@@ -110,6 +115,28 @@ export async function createMonitor(ctx: OrgScope & { userId: string }, input: C
     .values({ ...input, organizationId: ctx.orgId, createdBy: ctx.userId })
     .returning();
   return row;
+}
+
+/** Delete a monitor, only inside this org. Returns false when there was no such monitor here. */
+export async function deleteMonitor({ orgId }: OrgScope, id: string): Promise<boolean> {
+  if (!isUuid(id)) return false;
+  // TODO(7.3): record "monitor.deleted" in the audit log.
+  const deleted = await db
+    .delete(monitors)
+    .where(and(eq(monitors.organizationId, orgId), eq(monitors.id, id)))
+    .returning({ id: monitors.id });
+  return deleted.length > 0;
+}
+
+/** Mark an open incident as resolved by hand (the checker also resolves it on the next success). */
+export async function resolveIncident({ orgId }: OrgScope, incidentId: string): Promise<boolean> {
+  if (!isUuid(incidentId)) return false;
+  const updated = await db
+    .update(incidents)
+    .set({ resolvedAt: new Date() })
+    .where(and(eq(incidents.organizationId, orgId), eq(incidents.id, incidentId), isNull(incidents.resolvedAt)))
+    .returning({ id: incidents.id });
+  return updated.length > 0;
 }
 
 export function isUuid(value: string): boolean {

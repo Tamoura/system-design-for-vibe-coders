@@ -1,5 +1,6 @@
 import { cache } from 'react';
-import { notFound, redirect } from 'next/navigation';
+import { forbidden, notFound, redirect } from 'next/navigation';
+import { can, type Permission } from '@/core/permissions';
 import type { Role } from '@/core/roles';
 import { findMembership } from './organizations';
 import { getCurrentUser } from './session';
@@ -47,8 +48,23 @@ export const requireMembership = cache(async (orgSlug: string): Promise<OrgConte
 });
 
 /**
+ * Lesson 1.3: the check every page, server action and API route makes before
+ * doing any work. It answers, in order:
+ *   1. Who is this?                    no session  → 'unauthenticated' (401)
+ *   2. Are they in this org?           no          → 'not_found' (404, hides the org)
+ *   3. May their role do this action?  no          → 'forbidden' (403)
+ * and returns the context whose orgId goes into every query that follows.
+ * It checks a permission, never a role name.
+ */
+export async function requirePermission(orgSlug: string, permission: Permission): Promise<OrgContext> {
+  const ctx = await requireMembership(orgSlug);
+  if (!can(ctx.role, permission)) throw new AccessError('forbidden');
+  return ctx;
+}
+
+/**
  * For pages and server actions: run an access check and turn a refusal into
- * what a browser expects — the login page, or a 404 page.
+ * what a browser expects — the login page, a 404 page or a 403 page.
  */
 export async function forPage<T>(check: Promise<T>, returnTo: string): Promise<T> {
   try {
@@ -56,6 +72,7 @@ export async function forPage<T>(check: Promise<T>, returnTo: string): Promise<T
   } catch (err) {
     if (!(err instanceof AccessError)) throw err;
     if (err.reason === 'unauthenticated') redirect(`/login?next=${encodeURIComponent(returnTo)}`);
+    if (err.reason === 'forbidden') forbidden(); // renders src/app/forbidden.tsx with status 403
     notFound();
   }
 }

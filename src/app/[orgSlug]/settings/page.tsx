@@ -1,0 +1,26 @@
+import Link from 'next/link';
+import { forPage, requirePermission } from '@/lib/access';
+import { getOrganization } from '@/lib/organizations';
+import { setStatusPageAction } from './actions';
+
+export const dynamic = 'force-dynamic';
+
+export default async function SettingsPage({ params }: { params: Promise<{ orgSlug: string }> }) {
+  const { orgSlug } = await params;
+  const ctx = await forPage(requirePermission(orgSlug, 'page.publish'), `/${orgSlug}/settings`);
+  const org = await getOrganization(ctx);
+  // TODO(6.1): organization settings (name, logo, custom domain) grow here.
+  return (
+    <section className="grid" style={{ maxWidth: 560 }}>
+      <h1 style={{ margin: 0 }}>Settings</h1>
+      <form action={setStatusPageAction.bind(null, ctx.orgSlug)} className="card grid">
+        <strong>Public status page</strong>
+        <label className="row">
+          <input type="checkbox" name="public" defaultChecked={org?.statusPagePublic} />
+          Publish <Link href={`/status/${ctx.orgSlug}`}>/status/{ctx.orgSlug}</Link> for anyone to see
+        </label>
+        <div><button className="btn">Save</button></div>
+      </form>
+    </section>
+  );
+}

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { can } from '@/core/permissions';
 import { forPage, requireMembership } from '@/lib/access';
 
 /**
@@ -17,6 +18,7 @@ export default async function OrgLayout({ children, params }: { children: React.
         <span className="badge">{ctx.role}</span>
         <Link href={`/${ctx.orgSlug}/monitors`}>Monitors</Link>
         <Link href={`/status/${ctx.orgSlug}`}>Status page</Link>
+        {can(ctx.role, 'page.publish') && <Link href={`/${ctx.orgSlug}/settings`}>Settings</Link>}
       </nav>
       {children}
     </div>

@@ -72,6 +72,16 @@ export async function findPublicStatusPage(slug: string) {
   return org && org.statusPagePublic ? org : null;
 }
 
+/** Publish or hide /status/[slug]. The caller has checked "page.publish". */
+export async function setStatusPagePublic({ orgId }: { orgId: string }, isPublic: boolean) {
+  await db.update(organizations).set({ statusPagePublic: isPublic }).where(eq(organizations.id, orgId));
+}
+
+export async function getOrganization({ orgId }: { orgId: string }) {
+  const [org] = await db.select().from(organizations).where(eq(organizations.id, orgId)).limit(1);
+  return org ?? null;
+}
+
 function isUniqueViolation(err: unknown): boolean {
   // Postgres error 23505. Drizzle may wrap the driver error, so look at `cause` too.
   const e = err as { code?: string; cause?: { code?: string } };

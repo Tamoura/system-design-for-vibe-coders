@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { forPage, requireMembership } from '@/lib/access';
+import { can } from '@/core/permissions';
+import { forPage, requirePermission } from '@/lib/access';
 import { listMonitors } from '@/lib/monitors';
 
 export const dynamic = 'force-dynamic';
@@ -14,14 +15,17 @@ function ago(d: Date | null) {
 
 export default async function MonitorsPage({ params }: { params: Promise<{ orgSlug: string }> }) {
   const { orgSlug } = await params;
-  // Lesson 1.2: signed in *and* a member of this org, or no page at all.
-  const ctx = await forPage(requireMembership(orgSlug), `/${orgSlug}/monitors`);
+  // Lesson 1.2/1.3: signed in, a member of this org, and allowed to read monitors.
+  const ctx = await forPage(requirePermission(orgSlug, 'monitor.read'), `/${orgSlug}/monitors`);
   const monitors = await listMonitors(ctx);
   return (
     <section className="grid">
       <div className="row">
         <h1 style={{ margin: 0 }}>Monitors</h1>
-        <Link className="btn" href={`/${ctx.orgSlug}/monitors/new`} style={{ marginLeft: 'auto' }}>Add monitor</Link>
+        {/* Lesson 1.3: the UI hides what the role cannot do, using the same map the server enforces. */}
+        {can(ctx.role, 'monitor.write') && (
+          <Link className="btn" href={`/${ctx.orgSlug}/monitors/new`} style={{ marginLeft: 'auto' }}>Add monitor</Link>
+        )}
       </div>
       {monitors.length === 0 && (
         // TODO(6.1): a real empty state is the first step of onboarding.

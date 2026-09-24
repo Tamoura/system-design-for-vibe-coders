@@ -1,12 +1,14 @@
 import { notFound } from 'next/navigation';
-import { forPage, requireMembership } from '@/lib/access';
+import { can } from '@/core/permissions';
+import { forPage, requirePermission } from '@/lib/access';
 import { getMonitor, getMonitorHistory } from '@/lib/monitors';
+import { deleteMonitorAction, resolveIncidentAction } from './actions';
 
 export const dynamic = 'force-dynamic';
 
 export default async function MonitorPage({ params }: { params: Promise<{ orgSlug: string; id: string }> }) {
   const { orgSlug, id } = await params;
-  const ctx = await forPage(requireMembership(orgSlug), `/${orgSlug}/monitors/${id}`);
+  const ctx = await forPage(requirePermission(orgSlug, 'monitor.read'), `/${orgSlug}/monitors/${id}`);
   // Lesson 1.3: fetched by id *and* org. Another org's monitor id is a 404 here.
   const monitor = await getMonitor(ctx, id);
   if (!monitor) notFound();
@@ -17,6 +19,12 @@ export default async function MonitorPage({ params }: { params: Promise<{ orgSlu
       <div className="card grid">
         <div><span className="muted">URL</span> {monitor.url}</div>
         <div><span className="muted">Checked every</span> {monitor.intervalSeconds}s{monitor.paused ? ' (paused)' : ''}</div>
+        {/* Lesson 1.3: hidden for roles without the permission; the action checks again on the server. */}
+        {can(ctx.role, 'monitor.write') && (
+          <form action={deleteMonitorAction.bind(null, ctx.orgSlug, monitor.id)}>
+            <button className="btn secondary">Delete monitor</button>
+          </form>
+        )}
       </div>
       <h2 style={{ margin: 0, fontSize: '1.1rem' }}>Incidents</h2>
       <div className="card">
@@ -29,7 +37,14 @@ export default async function MonitorPage({ params }: { params: Promise<{ orgSlu
                 <tr key={i.id}>
                   <td>{i.openedAt.toISOString().slice(0, 16).replace('T', ' ')}</td>
                   <td>{i.cause}</td>
-                  <td>{i.resolvedAt ? 'resolved' : <span className="error">open</span>}</td>
+                  <td>
+                    {i.resolvedAt ? 'resolved' : <span className="error">open</span>}
+                    {!i.resolvedAt && can(ctx.role, 'incident.write') && (
+                      <form action={resolveIncidentAction.bind(null, ctx.orgSlug, monitor.id, i.id)} style={{ display: 'inline', marginLeft: '.6rem' }}>
+                        <button className="link-btn">Mark resolved</button>
+                      </form>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
