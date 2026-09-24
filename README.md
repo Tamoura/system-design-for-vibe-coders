@@ -62,10 +62,17 @@ In a second terminal, run the checks. On `main` this is a one-shot script, and l
 a real scheduler:
 
 ```bash
-npm run checks:run
+npm run checks:run -- --all
 ```
 
 Run it twice. One of the seed monitors always fails, and an incident opens after two failures in a row.
+Without `--all` it checks only the monitors that are due (their interval, never shorter than the plan's
+minimum, has passed), which is what cron should run every minute.
+
+Billing (Module 3) is off until you configure it. To try upgrades without a Stripe account, start the app
+with `BILLING_PROVIDER=fake npm run dev`: "Upgrade" then opens a stand-in Checkout page inside Beacon and
+a signed webhook follows. For real Stripe test mode (test keys, `stripe listen`), see
+[docs/SOLUTIONS.md](docs/SOLUTIONS.md#module-3--money).
 
 | Command | What it does |
 |---|---|
@@ -75,6 +82,7 @@ Run it twice. One of the seed monitors always fails, and an incident opens after
 | `npm run db:reset` | Drop, migrate and seed a local database. Refuses anything but localhost. |
 | `npm run db:seed:large` | Org `big` with 500 monitors × 1,000 checks, for measuring queries (`-- --monitors=50000 --checks=0` for search). |
 | `npm run files:process` | Finish uploads whose background thumbnail job never ran. |
+| `npm run usage:report` | Send recorded SMS usage to Stripe's meter (lesson 3.3). Safe to re-run. |
 | `npm run storage:setup` | With `STORAGE_DRIVER=s3`: create the bucket, block public access, set CORS. |
 | `npm run build` | Production build, the same one CI runs. |
 | `npm run org:claim -- <slug> <email>` | Make a user the owner of an org, e.g. the `default` org that migration 0003 creates for monitors from before Module 1. |
@@ -106,6 +114,7 @@ grep -rn "TODO(1.2)" src scripts
 |---|---|---|
 | Next.js (App Router) + TypeScript | One language across UI, server and scripts, and the most common SaaS starter stack | 6.1 |
 | PostgreSQL + Drizzle ORM | Postgres is the default SaaS database; Drizzle keeps SQL visible and migrations in the repo | 2.1 |
+| Stripe (hosted Checkout, Customer Portal, Billing meters) | Card data never touches Beacon; a signed webhook keeps a copy of each subscription | 3.1 |
 | Zod | One validation schema shared by forms and, later, the public API | 5.2 |
 | Vitest | Fast tests for the core logic | — |
 | Docker Compose | Postgres and Mailpit locally with one command | 7.4 |
