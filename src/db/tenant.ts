@@ -1,4 +1,4 @@
-import { sql } from 'drizzle-orm';
+import { sql, type SQL } from 'drizzle-orm';
 import { db } from '@/db';
 
 /**
@@ -37,4 +37,14 @@ export async function withOrg<T>(orgId: string, fn: (tx: TenantTx) => Promise<T>
     await tx.execute(sql`select set_config('app.current_org', ${orgId}, true), set_config('role', ${APP_DB_ROLE}, true)`);
     return fn(tx);
   });
+}
+
+/**
+ * The rows of a hand-written SQL query run with `tx.execute()`. Drizzle hands
+ * back the driver's own result: an array from postgres.js (the app), an
+ * object with `rows` from PGlite (the tests). Column names are as in SQL.
+ */
+export async function selectRows<T>(tx: TenantTx, query: SQL): Promise<T[]> {
+  const result = (await tx.execute(query)) as unknown as T[] | { rows: T[] };
+  return Array.isArray(result) ? result : result.rows;
 }

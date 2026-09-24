@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { can } from '@/core/permissions';
 import { forPage, requirePermission } from '@/lib/access';
 import { listMonitors } from '@/lib/monitors';
+import { searchMonitors } from '@/lib/search';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,11 +14,20 @@ function ago(d: Date | null) {
   return `${Math.round(s / 3600)}h ago`;
 }
 
-export default async function MonitorsPage({ params }: { params: Promise<{ orgSlug: string }> }) {
+export default async function MonitorsPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ orgSlug: string }>;
+  searchParams: Promise<{ q?: string }>;
+}) {
   const { orgSlug } = await params;
   // Lesson 1.2/1.3: signed in, a member of this org, and allowed to read monitors.
   const ctx = await forPage(requirePermission(orgSlug, 'monitor.read'), `/${orgSlug}/monitors`);
-  const monitors = await listMonitors(ctx);
+  const q = ((await searchParams).q ?? '').trim();
+  // Lesson 2.3 (🟢): with ?q=…, a fuzzy search of this org's monitors instead of the full list.
+  const hits = q ? await searchMonitors(ctx, q) : null;
+  const monitors = hits ? [] : await listMonitors(ctx);
   return (
     <section className="grid">
       <div className="row">
@@ -27,7 +37,28 @@ export default async function MonitorsPage({ params }: { params: Promise<{ orgSl
           <Link className="btn" href={`/${ctx.orgSlug}/monitors/new`} style={{ marginLeft: 'auto' }}>Add monitor</Link>
         )}
       </div>
-      {monitors.length === 0 && (
+      <form className="row" role="search" action={`/${ctx.orgSlug}/monitors`}>
+        <input type="search" name="q" defaultValue={q} placeholder="Search monitors by name or URL (typos welcome)" aria-label="Search monitors" style={{ flex: 1 }} />
+        <button className="btn secondary">Search</button>
+        {q && <Link href={`/${ctx.orgSlug}/monitors`}>Clear</Link>}
+      </form>
+      {hits && (
+        <div className="grid" data-testid="search-results">
+          <div className="muted">
+            {hits.length === 0 ? `No monitors match “${q}”.` : `${hits.length} monitor${hits.length === 1 ? '' : 's'} matching “${q}”, best first:`}
+          </div>
+          {hits.map((h) => (
+            <div className="card row" key={h.id}>
+              <div style={{ flex: 1, minWidth: 200 }}>
+                <Link href={`/${ctx.orgSlug}/monitors/${h.id}`}><strong>{h.name}</strong></Link>
+                <div className="muted">{h.url}</div>
+              </div>
+              <div className="muted" title="trigram word similarity, 0–1">{h.score.toFixed(2)}</div>
+            </div>
+          ))}
+        </div>
+      )}
+      {!hits && monitors.length === 0 && (
         // TODO(6.1): a real empty state is the first step of onboarding.
         <div className="card muted">No monitors yet. Add one, then run <code>npm run checks:run</code>.</div>
       )}

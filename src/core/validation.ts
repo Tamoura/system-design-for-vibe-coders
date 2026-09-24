@@ -67,3 +67,8 @@ export const uploadRequestInput = z.object({
   type: z.string().trim().max(100),
   size: z.number().int().nonnegative(),
 });
+
+/** Lesson 2.3: an incident update, the text that full-text search indexes. */
+export const incidentUpdateInput = z.object({
+  body: z.string().trim().min(1, 'Write something').max(5000),
+});

@@ -1,4 +1,5 @@
 import { PGlite } from '@electric-sql/pglite';
+import { pg_trgm } from '@electric-sql/pglite/contrib/pg_trgm';
 import { drizzle } from 'drizzle-orm/pglite';
 import { migrate } from 'drizzle-orm/pglite/migrator';
 import * as schema from '@/db/schema';
@@ -13,7 +14,9 @@ import * as schema from '@/db/schema';
  *   vi.mock('@/db', () => import('./helpers/test-db').then((m) => m.testDbModule()));
  */
 export async function testDbModule() {
-  const client = new PGlite();
+  // pg_trgm is one of PGlite's bundled contrib extensions (lesson 2.3's
+  // fuzzy search); the migrations then CREATE EXTENSION it as on a server.
+  const client = new PGlite({ extensions: { pg_trgm } });
   // Lesson 2.1: every SQL statement the app sends is recorded here, so a test
   // can count queries (see tests/data-layer.test.ts, the N+1 test).
   const queryLog: string[] = [];

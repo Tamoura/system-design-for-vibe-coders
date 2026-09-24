@@ -79,6 +79,17 @@ describe('row-level security (defence in depth)', () => {
     expect(rows).toEqual([]);
   });
 
+  it('the SECURITY DEFINER search functions (lesson 2.3) also return nothing without an org', async () => {
+    const found = await db.transaction(async (tx) => {
+      await tx.execute(sql`select set_config('role', 'beacon_app', true)`);
+      const result = (await tx.execute(sql`select * from search_monitors('api', 10)`)) as unknown as { rows: unknown[] };
+      return result.rows;
+    });
+    expect(found).toEqual([]);
+    const inAcme = await withOrg(acme.id, async (tx) => ((await tx.execute(sql`select id from search_monitors('api', 10)`)) as unknown as { rows: { id: string }[] }).rows);
+    expect(inAcme.map((r) => r.id)).toEqual([acmeMonitorId]);
+  });
+
   it('leaves nothing behind on the connection (safe behind a transaction-mode pooler)', async () => {
     await withOrg(acme.id, (tx) => tx.select().from(monitors));
     // PGlite has exactly one connection, so this is "the next transaction on

@@ -18,6 +18,13 @@ const arg = (name: string, fallback: number) => {
 const MONITORS = arg('monitors', 500);
 const CHECKS = arg('checks', 1000);
 
+const SERVICES = [
+  'checkout', 'billing', 'search', 'auth', 'images', 'reports', 'webhooks', 'status', 'payments', 'invoices',
+  'accounts', 'signup', 'login', 'profile', 'settings', 'exports', 'imports', 'mailer', 'notifier', 'scheduler',
+  'gateway', 'catalog', 'inventory', 'orders', 'shipping', 'tracking', 'reviews', 'ratings', 'analytics', 'metrics',
+  'logging', 'tracing', 'uploads', 'thumbnails', 'videos', 'chat', 'presence', 'feeds', 'comments', 'admin',
+];
+
 const url = process.env.DATABASE_URL ?? 'postgres://beacon:beacon@localhost:5432/beacon';
 const sql = postgres(url, { max: 1, onnotice: () => {} });
 const started = Date.now();
@@ -30,15 +37,16 @@ await sql.begin(async (tx) => {
     SELECT ${org.id}, id, 'owner' FROM users WHERE email = 'demo@beacon.test'`;
 
   // Names like "checkout-api-eu-west-prod-123": realistic material for the
-  // trigram search of lesson 2.3.
+  // trigram search of lesson 2.3. 40 services, so one service is 2.5% of
+  // the rows, a selective search the trigram index is built for.
   await tx`
     INSERT INTO monitors (organization_id, name, url, interval_seconds, created_at)
     SELECT ${org.id},
-           (ARRAY['checkout','billing','search','auth','images','reports','webhooks','status'])[1 + i % 8]
+           (${SERVICES}::text[])[1 + i % ${SERVICES.length}]
              || '-' || (ARRAY['api','web','worker'])[1 + i % 3]
              || '-' || (ARRAY['eu-west','us-east','ap-south'])[1 + i % 3]
              || '-' || (ARRAY['prod','staging'])[1 + i % 2] || '-' || i,
-           'https://' || (ARRAY['checkout','billing','search','auth','images','reports','webhooks','status'])[1 + i % 8]
+           'https://' || (${SERVICES}::text[])[1 + i % ${SERVICES.length}]
              || '-' || i || '.example.com/health',
            60,
            now() - make_interval(secs => i)

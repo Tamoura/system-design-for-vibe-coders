@@ -24,7 +24,7 @@ import { withOrg } from '../src/db/tenant';
 import { runCheck } from '../src/core/check';
 import { decideIncident } from '../src/core/incidents';
 
-const { organizations, monitors, checkResults, incidents } = schema;
+const { organizations, monitors, checkResults, incidents, incidentUpdates } = schema;
 
 const orgs = await db.select({ id: organizations.id }).from(organizations);
 let checked = 0;
@@ -52,7 +52,10 @@ for (const { id: orgId } of orgs) {
 
       const decision = decideIncident(Boolean(open), recent.map((r) => r.ok));
       if (decision === 'open') {
-        await tx.insert(incidents).values({ organizationId: orgId, monitorId: m.id, cause: outcome.error ?? 'Check failed' });
+        const cause = outcome.error ?? 'Check failed';
+        const [incident] = await tx.insert(incidents).values({ organizationId: orgId, monitorId: m.id, cause }).returning();
+        // Lesson 2.3: the first update, so the incident is searchable from the start.
+        await tx.insert(incidentUpdates).values({ organizationId: orgId, incidentId: incident.id, body: `Opened automatically: ${cause}` });
         return `  ✗ ${m.name}: incident opened (${outcome.error})`;
       }
       if (decision === 'resolve' && open) {
@@ -60,6 +63,9 @@ for (const { id: orgId } of orgs) {
           .update(incidents)
           .set({ resolvedAt: new Date() })
           .where(and(eq(incidents.organizationId, orgId), eq(incidents.id, open.id)));
+        await tx
+          .insert(incidentUpdates)
+          .values({ organizationId: orgId, incidentId: open.id, body: 'Resolved automatically: checks are passing again.' });
         return `  ✓ ${m.name}: incident resolved`;
       }
       return `  ${outcome.ok ? '✓' : '✗'} ${m.name}: ${outcome.statusCode ?? outcome.error} in ${outcome.latencyMs} ms`;

@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm';
-import { boolean, index, integer, pgEnum, pgTable, primaryKey, text, timestamp, uniqueIndex, uuid, type AnyPgColumn } from 'drizzle-orm/pg-core';
+import { boolean, customType, index, integer, pgEnum, pgTable, primaryKey, text, timestamp, uniqueIndex, uuid, type AnyPgColumn } from 'drizzle-orm/pg-core';
 import { FILE_KINDS } from '../core/files';
 import { ROLES } from '../core/roles';
 import { users } from './auth-schema';
@@ -115,7 +115,14 @@ export const monitors = pgTable(
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
     updatedAt: updatedAt(),
   },
-  (t) => [index('monitors_org_idx').on(t.organizationId, t.createdAt)],
+  (t) => [
+    index('monitors_org_idx').on(t.organizationId, t.createdAt),
+    // Lesson 2.3 (🟢): trigram indexes (pg_trgm) for fuzzy search on name and
+    // URL. They serve ILIKE '%…%' and the similarity operators, so "chekout"
+    // finds "checkout-api" without reading every row. See src/lib/search.ts.
+    index('monitors_name_trgm_idx').using('gin', t.name.op('gin_trgm_ops')),
+    index('monitors_url_trgm_idx').using('gin', t.url.op('gin_trgm_ops')),
+  ],
 );
 
 /**
@@ -184,6 +191,36 @@ export const incidents = pgTable(
   ],
 );
 
+/** Postgres' full-text search document type (lesson 2.3). Drizzle has no built-in for it. */
+const tsvector = customType<{ data: string }>({ dataType: () => 'tsvector' });
+
+/**
+ * Lesson 2.3 (🟡): what happened during an incident, in the team's words
+ * ("Certificate expired on the load balancer, renewing"). The check runner
+ * writes the first and last ones; people add the rest.
+ *
+ * `search` is a generated column: Postgres keeps the stemmed, searchable form
+ * of `body` up to date on every insert and update, and the GIN index makes
+ * `search @@ websearch_to_tsquery(…)` fast.
+ */
+export const incidentUpdates = pgTable(
+  'incident_updates',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    incidentId: uuid('incident_id').notNull().references(() => incidents.id, { onDelete: 'cascade' }),
+    authorId: uuid('author_id').references(() => users.id, { onDelete: 'set null' }), // null: written by Beacon
+    body: text('body').notNull(),
+    search: tsvector('search').generatedAlwaysAs(sql`to_tsvector('english', body)`),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [
+    index('incident_updates_incident_idx').on(t.incidentId, t.createdAt),
+    index('incident_updates_search_idx').using('gin', t.search),
+  ],
+);
+
 /**
  * Lesson 2.2: metadata for every uploaded file. The bytes live in object
  * storage under `key`; this row is what access checks and the UI use.
@@ -228,3 +265,4 @@ export type Monitor = typeof monitors.$inferSelect;
 export type CheckResult = typeof checkResults.$inferSelect;
 export type Incident = typeof incidents.$inferSelect;
 export type StoredFile = typeof files.$inferSelect;
+export type IncidentUpdate = typeof incidentUpdates.$inferSelect;

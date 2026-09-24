@@ -3,9 +3,10 @@ import { can, canEditMonitor } from '@/core/permissions';
 import { forPage, requirePermission } from '@/lib/access';
 import { getMonitor, getMonitorHistory } from '@/lib/monitors';
 import { listIncidentScreenshots } from '@/lib/files';
+import { listIncidentUpdates } from '@/lib/incidents';
 import { AutoRefresh } from '@/app/_components/auto-refresh';
 import { FileUploader } from '@/app/_components/file-uploader';
-import { deleteMonitorAction, resolveIncidentAction } from './actions';
+import { addIncidentUpdateAction, deleteMonitorAction, resolveIncidentAction } from './actions';
 import { EditMonitorForm } from './edit-form';
 
 export const dynamic = 'force-dynamic';
@@ -19,6 +20,8 @@ export default async function MonitorPage({ params }: { params: Promise<{ orgSlu
   const history = await getMonitorHistory(ctx, monitor.id);
   // Lesson 2.2 (🟡): incident screenshots, private to the org's members.
   const screenshots = await listIncidentScreenshots(ctx, history.incidents.map((i) => i.id));
+  // Lesson 2.3 (🟡): the updates that full-text search indexes.
+  const updates = await listIncidentUpdates(ctx, history.incidents.map((i) => i.id));
   const canWriteIncidents = can(ctx.role, 'incident.write');
   // Lesson 1.3 (🟡): the same ABAC rule the server enforces decides what to show.
   const editable = canEditMonitor(ctx, monitor);
@@ -50,9 +53,29 @@ export default async function MonitorPage({ params }: { params: Promise<{ orgSlu
           <table>
             <tbody>
               {history.incidents.map((i) => (
-                <tr key={i.id}>
+                <tr key={i.id} id={`incident-${i.id}`}>
                   <td>{i.openedAt.toISOString().slice(0, 16).replace('T', ' ')}</td>
-                  <td>{i.cause}</td>
+                  <td>
+                    {i.cause}
+                    <ul className="updates">
+                      {updates
+                        .filter((u) => u.incidentId === i.id)
+                        .map((u) => (
+                          <li key={u.id}>
+                            <span className="muted">
+                              {u.createdAt.toISOString().slice(11, 16)} {u.authorName ?? 'Beacon'}:
+                            </span>{' '}
+                            {u.body}
+                          </li>
+                        ))}
+                    </ul>
+                    {canWriteIncidents && (
+                      <form action={addIncidentUpdateAction.bind(null, ctx.orgSlug, monitor.id, i.id)} className="row" style={{ gap: '.4rem' }}>
+                        <input name="body" placeholder="Post an update…" required maxLength={5000} style={{ flex: 1 }} />
+                        <button className="btn secondary">Post</button>
+                      </form>
+                    )}
+                  </td>
                   <td>
                     {i.resolvedAt ? 'resolved' : <span className="error">open</span>}
                     {!i.resolvedAt && canWriteIncidents && (

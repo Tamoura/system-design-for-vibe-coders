@@ -39,6 +39,29 @@ const MONITORS = [
 
 const CHECKS_PER_MONITOR = 288; // one every 5 minutes for 24 hours
 
+// Past incidents with updates, so full-text search (lesson 2.3) has prose to
+// find. Try '"certificate expired" -staging' in the Ctrl+K palette.
+const PAST_INCIDENTS: Record<string, { hoursAgo: number; cause: string; updates: string[] }[]> = {
+  'checkout-api': [
+    {
+      hoursAgo: 20,
+      cause: 'HTTP 503',
+      updates: [
+        'Opened automatically: HTTP 503',
+        'The TLS certificate expired on the checkout load balancer. Renewing it now.',
+        'Certificate renewed and deployed; checkout is answering again.',
+      ],
+    },
+  ],
+  'billing-api': [
+    {
+      hoursAgo: 30,
+      cause: 'HTTP 502',
+      updates: ['Opened automatically: HTTP 502', 'Only staging is affected: the certificate expired on the staging proxy.', 'Staging certificate replaced.'],
+    },
+  ],
+};
+
 // 1. Users, each with a "credential" login method holding an argon2id hash
 //    (the same rows Better Auth writes on sign-up, lesson 1.1).
 const users: Record<string, string> = {};
@@ -97,13 +120,33 @@ for (const spec of MONITORS) {
   await db.insert(schema.checkResults).values(rows);
   createdChecks += rows.length;
 
+  const incidents = [...(PAST_INCIDENTS[spec.name] ?? [])];
   if (failEvery === 1) {
-    await db.insert(schema.incidents).values({
-      organizationId: org.id,
-      monitorId: monitor.id,
-      openedAt: new Date(now - CHECKS_PER_MONITOR * 5 * 60_000),
-      cause: 'connect ECONNREFUSED 127.0.0.1:59999',
-    });
+    const cause = 'connect ECONNREFUSED 127.0.0.1:59999';
+    incidents.push({ hoursAgo: CHECKS_PER_MONITOR / 12, cause, updates: [`Opened automatically: ${cause}`] });
+  }
+  for (const past of incidents) {
+    const openedAt = new Date(now - past.hoursAgo * 3600_000);
+    const [incident] = await db
+      .insert(schema.incidents)
+      .values({
+        organizationId: org.id,
+        monitorId: monitor.id,
+        openedAt,
+        // Past incidents are resolved; the "always broken" one stays open.
+        resolvedAt: failEvery === 1 ? null : new Date(openedAt.getTime() + 45 * 60_000),
+        cause: past.cause,
+      })
+      .returning();
+    await db.insert(schema.incidentUpdates).values(
+      past.updates.map((body, i) => ({
+        organizationId: org.id,
+        incidentId: incident.id,
+        authorId: i === 0 ? null : ownerId,
+        body,
+        createdAt: new Date(openedAt.getTime() + i * 15 * 60_000),
+      })),
+    );
   }
 }
 

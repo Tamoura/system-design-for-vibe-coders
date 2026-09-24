@@ -1,9 +1,10 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { updateMonitorInput } from '@/core/validation';
+import { incidentUpdateInput, updateMonitorInput } from '@/core/validation';
 import { forPage, requirePermission } from '@/lib/access';
 import { deleteMonitor, resolveIncident, updateMonitor } from '@/lib/monitors';
+import { addIncidentUpdate } from '@/lib/incidents';
 
 // Lesson 1.3: each action checks its own permission before doing any work,
 // then passes the org from that check (never from the form) to the query.
@@ -35,4 +36,13 @@ export async function resolveIncidentAction(orgSlug: string, monitorId: string, 
   const ctx = await forPage(requirePermission(orgSlug, 'incident.write'), `/${orgSlug}/monitors/${monitorId}`);
   await resolveIncident(ctx, incidentId);
   redirect(`/${ctx.orgSlug}/monitors/${monitorId}`);
+}
+
+/** Lesson 2.3: post an incident update (the text full-text search finds). */
+export async function addIncidentUpdateAction(orgSlug: string, monitorId: string, incidentId: string, formData: FormData) {
+  const back = `/${orgSlug}/monitors/${monitorId}`;
+  const ctx = await forPage(requirePermission(orgSlug, 'incident.write'), back);
+  const parsed = incidentUpdateInput.safeParse({ body: formData.get('body') });
+  if (parsed.success) await forPage(addIncidentUpdate(ctx, incidentId, parsed.data.body), back);
+  redirect(`/${ctx.orgSlug}/monitors/${monitorId}#incident-${incidentId}`);
 }

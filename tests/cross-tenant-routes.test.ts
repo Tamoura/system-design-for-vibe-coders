@@ -16,6 +16,7 @@ import * as logoRoute from '@/app/api/orgs/[orgSlug]/logo/route';
 import * as screenshotsRoute from '@/app/api/orgs/[orgSlug]/incidents/[incidentId]/screenshots/route';
 import * as fileRoute from '@/app/api/orgs/[orgSlug]/files/[fileId]/route';
 import * as completeRoute from '@/app/api/orgs/[orgSlug]/files/[fileId]/complete/route';
+import * as searchRoute from '@/app/api/orgs/[orgSlug]/search/route';
 import { makeOrg, signInAs } from './helpers/fixtures';
 
 /*
@@ -78,6 +79,8 @@ const CASES: Record<string, Case> = {
   },
   'GET files/[fileId]': { kind: 'item', call: (orgSlug) => fileRoute.GET(req('GET'), p({ orgSlug, fileId: A.file })) },
   'POST files/[fileId]/complete': { kind: 'item', call: (orgSlug) => completeRoute.POST(req('POST'), p({ orgSlug, fileId: A.file })) },
+  // Lesson 2.3: searching for Acme's words from Globex finds nothing of Acme's.
+  'GET search': { kind: 'list', call: (orgSlug) => searchRoute.GET(new Request('http://test/x?q=acme-secret'), p({ orgSlug })) },
 };
 
 describe('org B cannot reach org A through any route', () => {

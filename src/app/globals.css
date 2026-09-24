@@ -42,3 +42,15 @@ td, th { text-align: left; padding: .4rem .3rem; border-bottom: 1px solid var(--
 .switcher-menu { position: absolute; z-index: 10; top: 1.8rem; left: 0; min-width: 240px; display: grid; gap: .5rem; }
 .logo { max-height: 48px; max-width: 200px; object-fit: contain; }
 .thumb { width: 120px; border-radius: 6px; border: 1px solid var(--line); display: block; }
+.updates { margin: .3rem 0; padding-left: 1rem; font-size: .9rem; }
+.palette-trigger { margin-left: auto; font-weight: 400; font-size: .85rem; padding: .3rem .7rem; }
+kbd { font-size: .75rem; border: 1px solid var(--line); border-radius: 4px; padding: 0 .3rem; margin-left: .3rem; color: var(--muted); }
+.palette-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, .35); z-index: 50; display: flex; justify-content: center; align-items: flex-start; padding-top: 12vh; }
+.palette { width: min(640px, calc(100vw - 2rem)); display: grid; gap: .6rem; }
+.palette input { width: 100%; font-size: 1.05rem; }
+.palette-results { list-style: none; margin: 0; padding: 0; max-height: 50vh; overflow-y: auto; }
+.palette-results li { padding: .45rem .6rem; border-radius: 8px; cursor: pointer; }
+.palette-results li.active { background: var(--bg); outline: 1px solid var(--line); }
+.palette-results .snippet { margin-top: .15rem; }
+.palette-help { font-size: .78rem; }
+mark { background: #ffe58a; color: #1a1f29; border-radius: 2px; padding: 0 1px; }

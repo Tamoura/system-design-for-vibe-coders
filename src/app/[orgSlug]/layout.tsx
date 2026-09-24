@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { can } from '@/core/permissions';
 import { forPage, requireMembership } from '@/lib/access';
 import { listOrganizationsForUser } from '@/lib/organizations';
+import { CommandPalette } from './command-palette';
 
 /**
  * Lesson 1.2: everything under /[orgSlug] belongs to one organization. This
@@ -33,6 +34,8 @@ export default async function OrgLayout({ children, params }: { children: React.
         <Link href={`/${ctx.orgSlug}/members`}>Members</Link>
         <Link href={`/status/${ctx.orgSlug}`}>Status page</Link>
         {can(ctx.role, 'page.publish') && <Link href={`/${ctx.orgSlug}/settings`}>Settings</Link>}
+        {/* Lesson 2.3 (🟡): Ctrl+K / ⌘K search across monitors, incidents and pages. */}
+        <CommandPalette orgSlug={ctx.orgSlug} />
       </nav>
       {children}
     </div>
