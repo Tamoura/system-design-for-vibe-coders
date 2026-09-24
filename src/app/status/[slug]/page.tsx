@@ -26,7 +26,13 @@ export default async function StatusPage({ params }: { params: Promise<{ slug: s
   const status = overallStatus(monitors.map((m) => m.state));
   return (
     <section className="grid">
-      <h1 style={{ margin: 0 }}>{org.name} status</h1>
+      <div className="row">
+        {/* Lesson 2.2: the logo is served through /status/[slug]/logo, a redirect to a short-lived signed URL. */}
+        {org.logoFileId && (
+          <img src={`/status/${slug}/logo`} alt={`${org.name} logo`} className="logo" data-testid="status-logo" />
+        )}
+        <h1 style={{ margin: 0 }}>{org.name} status</h1>
+      </div>
       <div className={`banner ${status}`}>{HEADLINE[status]}</div>
       {monitors.map((m) => (
         <div key={m.id} className="card row">

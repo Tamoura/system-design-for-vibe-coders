@@ -12,6 +12,10 @@ import * as monitorsRoute from '@/app/api/orgs/[orgSlug]/monitors/route';
 import * as monitorRoute from '@/app/api/orgs/[orgSlug]/monitors/[id]/route';
 import * as membersRoute from '@/app/api/orgs/[orgSlug]/members/route';
 import * as memberRoute from '@/app/api/orgs/[orgSlug]/members/[userId]/route';
+import * as logoRoute from '@/app/api/orgs/[orgSlug]/logo/route';
+import * as screenshotsRoute from '@/app/api/orgs/[orgSlug]/incidents/[incidentId]/screenshots/route';
+import * as fileRoute from '@/app/api/orgs/[orgSlug]/files/[fileId]/route';
+import * as completeRoute from '@/app/api/orgs/[orgSlug]/files/[fileId]/complete/route';
 import { makeOrg, signInAs } from './helpers/fixtures';
 
 /*
@@ -37,6 +41,11 @@ beforeAll(async () => {
   A.member = acme.users.viewer.id;
   const [incident] = await db.insert(schema.incidents).values({ organizationId: acme.id, monitorId: m.id, cause: 'acme-secret down' }).returning();
   A.incident = incident.id;
+  const [file] = await db
+    .insert(schema.files)
+    .values({ organizationId: acme.id, kind: 'incident_screenshot', incidentId: incident.id, key: `orgs/${acme.id}/screenshots/${crypto.randomUUID()}`, originalName: 'acme-secret.png', declaredType: 'image/png', declaredSize: 10, status: 'ready' })
+    .returning();
+  A.file = file.id;
 });
 
 const req = (method: string, body?: unknown) =>
@@ -61,6 +70,14 @@ const CASES: Record<string, Case> = {
   'DELETE monitors/[id]': { kind: 'item', call: (orgSlug) => monitorRoute.DELETE(req('DELETE'), p({ orgSlug, id: A.monitor })) },
   'GET members': { kind: 'list', call: (orgSlug) => membersRoute.GET(req('GET'), p({ orgSlug })) },
   'PATCH members/[userId]': { kind: 'item', call: (orgSlug) => memberRoute.PATCH(req('PATCH', { role: 'admin' }), p({ orgSlug, userId: A.member })) },
+  // Lesson 2.2
+  'POST logo': { kind: 'list', call: (orgSlug) => logoRoute.POST(req('POST', { name: 'l.png', type: 'image/png', size: 10, organizationId: acme.id }), p({ orgSlug })) },
+  'POST incidents/[incidentId]/screenshots': {
+    kind: 'item',
+    call: (orgSlug) => screenshotsRoute.POST(req('POST', { name: 's.png', type: 'image/png', size: 10 }), p({ orgSlug, incidentId: A.incident })),
+  },
+  'GET files/[fileId]': { kind: 'item', call: (orgSlug) => fileRoute.GET(req('GET'), p({ orgSlug, fileId: A.file })) },
+  'POST files/[fileId]/complete': { kind: 'item', call: (orgSlug) => completeRoute.POST(req('POST'), p({ orgSlug, fileId: A.file })) },
 };
 
 describe('org B cannot reach org A through any route', () => {

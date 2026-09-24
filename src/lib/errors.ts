@@ -12,3 +12,16 @@ export class AccessError extends Error {
     super(reason);
   }
 }
+
+/**
+ * A request we understood but refuse for a reason the user can fix (a file
+ * too large, of the wrong type…). API routes answer 400 with `code`.
+ */
+export class InvalidRequestError extends Error {
+  constructor(
+    readonly code: string,
+    message: string,
+  ) {
+    super(message);
+  }
+}

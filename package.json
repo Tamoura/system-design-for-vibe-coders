@@ -17,9 +17,13 @@
     "db:seed:large": "tsx scripts/seed-large.ts",
     "db:reset": "tsx scripts/reset.ts && npm run db:migrate && npm run db:seed",
     "checks:run": "tsx scripts/run-checks.ts",
+    "files:process": "tsx scripts/process-files.ts",
+    "storage:setup": "tsx scripts/storage-setup.ts",
     "org:claim": "tsx scripts/claim-org.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1140.0",
+    "@aws-sdk/s3-request-presigner": "^3.1140.0",
     "@node-rs/argon2": "^2.2.1",
     "better-auth": "^1.7.6",
     "drizzle-orm": "^0.45.3",
@@ -27,6 +31,7 @@
     "postgres": "^3.4.9",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
+    "sharp": "^0.35.4",
     "zod": "^4.6.5"
   },
   "devDependencies": {
@@ -34,7 +39,9 @@
     "@types/node": "^22.20.4",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@types/s3rver": "^3.7.4",
     "drizzle-kit": "^0.31.11",
+    "s3rver": "^3.7.1",
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",
     "vitest": "^5.0.1"

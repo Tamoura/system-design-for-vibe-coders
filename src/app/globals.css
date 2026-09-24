@@ -40,3 +40,5 @@ td, th { text-align: left; padding: .4rem .3rem; border-bottom: 1px solid var(--
 .switcher { position: relative; }
 .switcher summary { cursor: pointer; }
 .switcher-menu { position: absolute; z-index: 10; top: 1.8rem; left: 0; min-width: 240px; display: grid; gap: .5rem; }
+.logo { max-height: 48px; max-width: 200px; object-fit: contain; }
+.thumb { width: 120px; border-radius: 6px; border: 1px solid var(--line); display: block; }

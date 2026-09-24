@@ -56,3 +56,14 @@ export const inviteInput = z.object({
   email: z.string().trim().toLowerCase().email('Enter a valid email address'),
   role: z.enum(ROLES),
 });
+
+/**
+ * Lesson 2.2: "I want to upload this file". Only what the browser *claims*;
+ * src/core/files.ts decides whether to sign, and the bytes are checked again
+ * after upload.
+ */
+export const uploadRequestInput = z.object({
+  name: z.string().trim().min(1).max(200),
+  type: z.string().trim().max(100),
+  size: z.number().int().nonnegative(),
+});

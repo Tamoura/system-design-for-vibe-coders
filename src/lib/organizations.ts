@@ -65,7 +65,7 @@ export async function findMembership(orgSlug: string, userId: string): Promise<O
 /** For the public status page: no membership needed, but the org must have published it. */
 export async function findPublicStatusPage(slug: string) {
   const [org] = await db
-    .select({ id: organizations.id, name: organizations.name, statusPagePublic: organizations.statusPagePublic })
+    .select({ id: organizations.id, name: organizations.name, statusPagePublic: organizations.statusPagePublic, logoFileId: organizations.logoFileId })
     .from(organizations)
     .where(eq(organizations.slug, slug))
     .limit(1);
