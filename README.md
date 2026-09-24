@@ -43,13 +43,17 @@ All exercises, copied from the course with their "done when" criteria, are in
 You need Node 22+ and Docker.
 
 ```bash
-cp .env.example .env.local
+cp .env.example .env.local    # then set BETTER_AUTH_SECRET (openssl rand -base64 32)
 docker compose up -d          # Postgres on :5432, Mailpit on :8025
 npm install
 npm run db:migrate
-npm run db:seed               # three sample monitors
+npm run db:seed               # demo user + "demo" org with three monitors
 npm run dev                   # http://localhost:3000
 ```
+
+Sign in as `demo@beacon.test` / `beacon-demo-password`, or sign up. Until lesson 4.1 adds real email,
+verification, password-reset and invitation links are printed in the `npm run dev` terminal.
+"Sign in with GitHub" appears when `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` are set.
 
 In a second terminal, run the checks. On `main` this is a one-shot script, and lesson 5.1 turns it into
 a real scheduler:
@@ -62,23 +66,24 @@ Run it twice. One of the seed monitors always fails, and an incident opens after
 
 | Command | What it does |
 |---|---|
-| `npm test` | Unit tests (Vitest). No database needed. |
+| `npm test` | Tests (Vitest). No database server needed: database tests run the migrations on an in-memory Postgres (PGlite). |
 | `npm run typecheck` | TypeScript, strict mode. |
 | `npm run db:generate` | Create a new migration after you edit `src/db/schema.ts`. |
 | `npm run build` | Production build, the same one CI runs. |
+| `npm run org:claim -- <slug> <email>` | Make a user the owner of an org, e.g. the `default` org that migration 0003 creates for monitors from before Module 1. |
 
 ## Where things live
 
 ```
 src/
-  core/         Beacon's own logic: run a check, decide incidents, validate input. No I/O, fully tested.
+  core/         Pure logic: run a check, decide incidents, validate input, roles and permissions. Fully tested.
   db/           Drizzle schema and the Postgres client.
-  lib/          Data access used by pages and scripts.
-  app/          Next.js App Router pages: landing, dashboard, add-monitor form, status page.
-scripts/        migrate, seed, run-checks.
+  lib/          Data access used by pages and scripts. Every tenant query takes the organization.
+  app/          Next.js App Router: auth pages, /[orgSlug]/… org pages, /status/[slug], /api/….
+scripts/        migrate, seed, run-checks, claim-org.
 drizzle/        SQL migrations (generated; commit them).
-tests/          Vitest tests for src/core.
-docs/           EXERCISES.md, and later the architecture docs (module 9).
+tests/          Vitest tests for src/core, and for src/lib and the API on an in-memory Postgres.
+docs/           EXERCISES.md, SOLUTIONS.md (what each solution branch built and why), later the architecture docs (module 9).
 ```
 
 To find where a lesson plugs in, search for its TODO:

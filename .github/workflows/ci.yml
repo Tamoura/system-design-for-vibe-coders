@@ -19,6 +19,9 @@ jobs:
           --health-cmd "pg_isready -U beacon" --health-interval 2s --health-retries 20
     env:
       DATABASE_URL: postgres://beacon:beacon@localhost:5432/beacon
+      # A throwaway value so the build can load Better Auth. Real secrets live in
+      # the deploy environment, never in the repo (lesson 8.1).
+      BETTER_AUTH_SECRET: ci-only-not-a-real-secret-0123456789abcdef
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
