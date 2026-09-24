@@ -1,5 +1,6 @@
 import { and, desc, eq, isNull, sql as dsql } from 'drizzle-orm';
-import { db, schema } from '@/db';
+import { schema } from '@/db';
+import { withOrg } from '@/db/tenant';
 import { uptimeFromCounts } from '@/core/incidents';
 import { canEditMonitor, type Actor } from '@/core/permissions';
 import type { CreateMonitorInput, UpdateMonitorInput } from '@/core/validation';
@@ -12,6 +13,10 @@ const { monitors, checkResults, incidents } = schema;
  * puts `organization_id = …` into every WHERE clause. There is deliberately no
  * way to ask for "monitor 123" without saying which org you are in, so a
  * monitor from another tenant simply does not exist for these queries.
+ *
+ * Lesson 2.4: and every query runs inside withOrg(orgId), so Postgres
+ * row-level security enforces the same filter a second time. Together they
+ * are the lesson's `forOrg(orgId)`: the only way to reach tenant tables.
  */
 export type OrgScope = { orgId: string };
 
@@ -30,7 +35,7 @@ export type MonitorView = {
 
 /** The monitor rows of one organization, without check data (for the API). */
 export async function listMonitorRows({ orgId }: OrgScope) {
-  return db.select().from(monitors).where(eq(monitors.organizationId, orgId)).orderBy(monitors.createdAt);
+  return withOrg(orgId, (tx) => tx.select().from(monitors).where(eq(monitors.organizationId, orgId)).orderBy(monitors.createdAt));
 }
 
 /**
@@ -42,73 +47,76 @@ export async function listMonitorRows({ orgId }: OrgScope) {
  * subqueries, which Postgres runs per monitor *inside the database*, each one
  * an index lookup:
  *
- *   latest check      → check_results_monitor_time_idx, first entry
- *   last 24h counts   → the same index, a range scan
+ *   latest check      → check_results_org_monitor_time_idx, last entry
+ *   last 24h counts   → the same index, a range scan (index-only)
  *   open incident     → incidents_open_idx (partial: open incidents only)
  *
  * `EXPLAIN ANALYZE` of this query shows index scans only; see docs/SOLUTIONS.md.
+ * The query count stays constant too: tests/data-layer.test.ts counts them.
  */
 export async function listMonitors({ orgId }: OrgScope): Promise<MonitorView[]> {
-  const latest = db
-    .select({ ok: checkResults.ok, checkedAt: checkResults.checkedAt, latencyMs: checkResults.latencyMs })
-    .from(checkResults)
-    .where(and(eq(checkResults.organizationId, orgId), eq(checkResults.monitorId, monitors.id)))
-    .orderBy(desc(checkResults.checkedAt))
-    .limit(1)
-    .as('latest');
-  const day = db
-    .select({
-      total: dsql<number>`count(*)::int`.as('total'),
-      up: dsql<number>`(count(*) filter (where ${checkResults.ok}))::int`.as('up'),
-    })
-    .from(checkResults)
-    .where(
-      and(
-        eq(checkResults.organizationId, orgId),
-        eq(checkResults.monitorId, monitors.id),
-        dsql`${checkResults.checkedAt} > now() - interval '24 hours'`,
-      ),
-    )
-    .as('day');
-  const open = db
-    .select({ id: incidents.id, openedAt: incidents.openedAt, cause: incidents.cause })
-    .from(incidents)
-    .where(and(eq(incidents.organizationId, orgId), eq(incidents.monitorId, monitors.id), isNull(incidents.resolvedAt)))
-    .orderBy(desc(incidents.openedAt))
-    .limit(1)
-    .as('open_incident');
+  return withOrg(orgId, async (tx) => {
+    const latest = tx
+      .select({ ok: checkResults.ok, checkedAt: checkResults.checkedAt, latencyMs: checkResults.latencyMs })
+      .from(checkResults)
+      .where(and(eq(checkResults.organizationId, orgId), eq(checkResults.monitorId, monitors.id)))
+      .orderBy(desc(checkResults.checkedAt))
+      .limit(1)
+      .as('latest');
+    const day = tx
+      .select({
+        total: dsql<number>`count(*)::int`.as('total'),
+        up: dsql<number>`(count(*) filter (where ${checkResults.ok}))::int`.as('up'),
+      })
+      .from(checkResults)
+      .where(
+        and(
+          eq(checkResults.organizationId, orgId),
+          eq(checkResults.monitorId, monitors.id),
+          dsql`${checkResults.checkedAt} > now() - interval '24 hours'`,
+        ),
+      )
+      .as('day');
+    const open = tx
+      .select({ id: incidents.id, openedAt: incidents.openedAt, cause: incidents.cause })
+      .from(incidents)
+      .where(and(eq(incidents.organizationId, orgId), eq(incidents.monitorId, monitors.id), isNull(incidents.resolvedAt)))
+      .orderBy(desc(incidents.openedAt))
+      .limit(1)
+      .as('open_incident');
 
-  const rows = await db
-    .select({
-      monitor: monitors,
-      latestOk: latest.ok,
-      latestAt: latest.checkedAt,
-      latestLatencyMs: latest.latencyMs,
-      checks24h: day.total,
-      up24h: day.up,
-      openId: open.id,
-      openedAt: open.openedAt,
-      openCause: open.cause,
-    })
-    .from(monitors)
-    .leftJoinLateral(latest, dsql`true`)
-    .leftJoinLateral(day, dsql`true`)
-    .leftJoinLateral(open, dsql`true`)
-    .where(eq(monitors.organizationId, orgId))
-    .orderBy(monitors.createdAt);
+    const rows = await tx
+      .select({
+        monitor: monitors,
+        latestOk: latest.ok,
+        latestAt: latest.checkedAt,
+        latestLatencyMs: latest.latencyMs,
+        checks24h: day.total,
+        up24h: day.up,
+        openId: open.id,
+        openedAt: open.openedAt,
+        openCause: open.cause,
+      })
+      .from(monitors)
+      .leftJoinLateral(latest, dsql`true`)
+      .leftJoinLateral(day, dsql`true`)
+      .leftJoinLateral(open, dsql`true`)
+      .where(eq(monitors.organizationId, orgId))
+      .orderBy(monitors.createdAt);
 
-  return rows.map(({ monitor: m, ...r }) => ({
-    id: m.id,
-    name: m.name,
-    url: m.url,
-    intervalSeconds: m.intervalSeconds,
-    paused: m.paused,
-    state: r.latestOk === null ? 'unknown' : r.latestOk ? 'up' : 'down',
-    lastCheckedAt: r.latestAt,
-    lastLatencyMs: r.latestLatencyMs,
-    uptime24h: uptimeFromCounts(r.up24h ?? 0, r.checks24h ?? 0),
-    openIncident: r.openId && r.openedAt && r.openCause !== null ? { id: r.openId, openedAt: r.openedAt, cause: r.openCause } : null,
-  }));
+    return rows.map(({ monitor: m, ...r }) => ({
+      id: m.id,
+      name: m.name,
+      url: m.url,
+      intervalSeconds: m.intervalSeconds,
+      paused: m.paused,
+      state: r.latestOk === null ? 'unknown' : r.latestOk ? 'up' : 'down',
+      lastCheckedAt: r.latestAt,
+      lastLatencyMs: r.latestLatencyMs,
+      uptime24h: uptimeFromCounts(r.up24h ?? 0, r.checks24h ?? 0),
+      openIncident: r.openId && r.openedAt && r.openCause !== null ? { id: r.openId, openedAt: r.openedAt, cause: r.openCause } : null,
+    }));
+  });
 }
 
 /**
@@ -117,29 +125,33 @@ export async function listMonitors({ orgId }: OrgScope): Promise<MonitorView[]> 
  */
 export async function getMonitor({ orgId }: OrgScope, id: string) {
   if (!isUuid(id)) return null; // a malformed id cannot exist; don't let Postgres throw on it
-  const [row] = await db
-    .select()
-    .from(monitors)
-    .where(and(eq(monitors.organizationId, orgId), eq(monitors.id, id)))
-    .limit(1);
+  const [row] = await withOrg(orgId, (tx) =>
+    tx
+      .select()
+      .from(monitors)
+      .where(and(eq(monitors.organizationId, orgId), eq(monitors.id, id)))
+      .limit(1),
+  );
   return row ?? null;
 }
 
 /** The latest check results and incidents for one monitor, for its detail page. */
 export async function getMonitorHistory({ orgId }: OrgScope, monitorId: string) {
-  const checks = await db
-    .select()
-    .from(checkResults)
-    .where(and(eq(checkResults.organizationId, orgId), eq(checkResults.monitorId, monitorId)))
-    .orderBy(desc(checkResults.checkedAt))
-    .limit(20);
-  const recentIncidents = await db
-    .select()
-    .from(incidents)
-    .where(and(eq(incidents.organizationId, orgId), eq(incidents.monitorId, monitorId)))
-    .orderBy(desc(incidents.openedAt))
-    .limit(10);
-  return { checks, incidents: recentIncidents };
+  return withOrg(orgId, async (tx) => {
+    const checks = await tx
+      .select()
+      .from(checkResults)
+      .where(and(eq(checkResults.organizationId, orgId), eq(checkResults.monitorId, monitorId)))
+      .orderBy(desc(checkResults.checkedAt))
+      .limit(20);
+    const recentIncidents = await tx
+      .select()
+      .from(incidents)
+      .where(and(eq(incidents.organizationId, orgId), eq(incidents.monitorId, monitorId)))
+      .orderBy(desc(incidents.openedAt))
+      .limit(10);
+    return { checks, incidents: recentIncidents };
+  });
 }
 
 /**
@@ -150,10 +162,12 @@ export async function getMonitorHistory({ orgId }: OrgScope, monitorId: string) 
 export async function createMonitor(ctx: OrgScope & { userId: string }, input: CreateMonitorInput) {
   // TODO(3.2): enforce the plan's monitor limit.
   // TODO(7.3): record "monitor.created" in the audit log.
-  const [row] = await db
-    .insert(monitors)
-    .values({ ...input, organizationId: ctx.orgId, createdBy: ctx.userId })
-    .returning();
+  const [row] = await withOrg(ctx.orgId, (tx) =>
+    tx
+      .insert(monitors)
+      .values({ ...input, organizationId: ctx.orgId, createdBy: ctx.userId })
+      .returning(),
+  );
   return row;
 }
 
@@ -172,28 +186,32 @@ async function getEditableMonitor(ctx: OrgScope & Actor, id: string) {
 export async function updateMonitor(ctx: OrgScope & Actor, id: string, input: UpdateMonitorInput) {
   await getEditableMonitor(ctx, id);
   // TODO(7.3): record "monitor.updated" in the audit log.
-  const [row] = await db
-    .update(monitors)
-    .set(input) // parsed by updateMonitorInput: only name, url, intervalSeconds, paused
-    .where(and(eq(monitors.organizationId, ctx.orgId), eq(monitors.id, id)))
-    .returning();
+  const [row] = await withOrg(ctx.orgId, (tx) =>
+    tx
+      .update(monitors)
+      .set(input) // parsed by updateMonitorInput: only name, url, intervalSeconds, paused
+      .where(and(eq(monitors.organizationId, ctx.orgId), eq(monitors.id, id)))
+      .returning(),
+  );
   return row;
 }
 
 export async function deleteMonitor(ctx: OrgScope & Actor, id: string): Promise<void> {
   await getEditableMonitor(ctx, id);
   // TODO(7.3): record "monitor.deleted" in the audit log.
-  await db.delete(monitors).where(and(eq(monitors.organizationId, ctx.orgId), eq(monitors.id, id)));
+  await withOrg(ctx.orgId, (tx) => tx.delete(monitors).where(and(eq(monitors.organizationId, ctx.orgId), eq(monitors.id, id))));
 }
 
 /** Mark an open incident as resolved by hand (the checker also resolves it on the next success). */
 export async function resolveIncident({ orgId }: OrgScope, incidentId: string): Promise<boolean> {
   if (!isUuid(incidentId)) return false;
-  const updated = await db
-    .update(incidents)
-    .set({ resolvedAt: new Date() })
-    .where(and(eq(incidents.organizationId, orgId), eq(incidents.id, incidentId), isNull(incidents.resolvedAt)))
-    .returning({ id: incidents.id });
+  const updated = await withOrg(orgId, (tx) =>
+    tx
+      .update(incidents)
+      .set({ resolvedAt: new Date() })
+      .where(and(eq(incidents.organizationId, orgId), eq(incidents.id, incidentId), isNull(incidents.resolvedAt)))
+      .returning({ id: incidents.id }),
+  );
   return updated.length > 0;
 }
 

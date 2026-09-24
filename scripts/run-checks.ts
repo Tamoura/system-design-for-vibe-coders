@@ -7,50 +7,65 @@
  * running at once. Lesson 5.1 turns it into a proper scheduler + worker queue.
  * TODO(4.2): opening an incident should notify the team.
  *
- * Lesson 1.2: this is a system job, not a user request, so it deliberately
- * reads monitors from every organization. Everything it writes copies the
- * monitor's organization_id (the tenant_id rule), and every read about one
- * monitor filters on that org too.
+ * Lesson 1.2: this is a system job, not a user request, so it visits every
+ * organization. Everything it writes copies the monitor's organization_id
+ * (the tenant_id rule), and every read about one monitor filters on that org.
+ *
+ * Lesson 2.4: jobs set the tenant too. The only cross-tenant query is the list
+ * of organizations; everything else runs inside withOrg(org.id), so row-level
+ * security applies to the job exactly as it does to a web request. Each unit
+ * of work carries its orgId (the future job payload of lesson 5.1). The HTTP
+ * check itself happens outside any transaction: never hold a database
+ * connection open while waiting on the network.
  */
 import { and, desc, eq, isNull } from 'drizzle-orm';
 import { db, schema, sql } from '../src/db';
+import { withOrg } from '../src/db/tenant';
 import { runCheck } from '../src/core/check';
 import { decideIncident } from '../src/core/incidents';
 
-const { monitors, checkResults, incidents } = schema;
+const { organizations, monitors, checkResults, incidents } = schema;
 
-const active = await db.select().from(monitors).where(eq(monitors.paused, false));
-console.log(`Checking ${active.length} monitor(s)…`);
+const orgs = await db.select({ id: organizations.id }).from(organizations);
+let checked = 0;
 
-for (const m of active) {
-  const outcome = await runCheck(m.url);
-  const orgId = m.organizationId;
-  await db.insert(checkResults).values({ organizationId: orgId, monitorId: m.id, ...outcome });
+for (const { id: orgId } of orgs) {
+  const active = await withOrg(orgId, (tx) =>
+    tx.select().from(monitors).where(and(eq(monitors.organizationId, orgId), eq(monitors.paused, false))),
+  );
+  for (const m of active) {
+    checked++;
+    const outcome = await runCheck(m.url); // network: outside the transaction
+    const message = await withOrg(orgId, async (tx) => {
+      await tx.insert(checkResults).values({ organizationId: orgId, monitorId: m.id, ...outcome });
+      const recent = await tx
+        .select({ ok: checkResults.ok })
+        .from(checkResults)
+        .where(and(eq(checkResults.organizationId, orgId), eq(checkResults.monitorId, m.id)))
+        .orderBy(desc(checkResults.checkedAt))
+        .limit(5);
+      const [open] = await tx
+        .select()
+        .from(incidents)
+        .where(and(eq(incidents.organizationId, orgId), eq(incidents.monitorId, m.id), isNull(incidents.resolvedAt)))
+        .limit(1);
 
-  const recent = await db
-    .select({ ok: checkResults.ok })
-    .from(checkResults)
-    .where(and(eq(checkResults.organizationId, orgId), eq(checkResults.monitorId, m.id)))
-    .orderBy(desc(checkResults.checkedAt))
-    .limit(5);
-  const [open] = await db
-    .select()
-    .from(incidents)
-    .where(and(eq(incidents.organizationId, orgId), eq(incidents.monitorId, m.id), isNull(incidents.resolvedAt)))
-    .limit(1);
-
-  const decision = decideIncident(Boolean(open), recent.map((r) => r.ok));
-  if (decision === 'open') {
-    await db.insert(incidents).values({ organizationId: orgId, monitorId: m.id, cause: outcome.error ?? 'Check failed' });
-    console.log(`  ✗ ${m.name}: incident opened (${outcome.error})`);
-  } else if (decision === 'resolve' && open) {
-    await db
-      .update(incidents)
-      .set({ resolvedAt: new Date() })
-      .where(and(eq(incidents.organizationId, orgId), eq(incidents.id, open.id)));
-    console.log(`  ✓ ${m.name}: incident resolved`);
-  } else {
-    console.log(`  ${outcome.ok ? '✓' : '✗'} ${m.name}: ${outcome.statusCode ?? outcome.error} in ${outcome.latencyMs} ms`);
+      const decision = decideIncident(Boolean(open), recent.map((r) => r.ok));
+      if (decision === 'open') {
+        await tx.insert(incidents).values({ organizationId: orgId, monitorId: m.id, cause: outcome.error ?? 'Check failed' });
+        return `  ✗ ${m.name}: incident opened (${outcome.error})`;
+      }
+      if (decision === 'resolve' && open) {
+        await tx
+          .update(incidents)
+          .set({ resolvedAt: new Date() })
+          .where(and(eq(incidents.organizationId, orgId), eq(incidents.id, open.id)));
+        return `  ✓ ${m.name}: incident resolved`;
+      }
+      return `  ${outcome.ok ? '✓' : '✗'} ${m.name}: ${outcome.statusCode ?? outcome.error} in ${outcome.latencyMs} ms`;
+    });
+    console.log(message);
   }
 }
+console.log(`Checked ${checked} monitor(s) in ${orgs.length} organization(s).`);
 await sql.end();

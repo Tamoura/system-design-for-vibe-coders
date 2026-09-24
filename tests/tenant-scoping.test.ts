@@ -1,0 +1,169 @@
+import { readdirSync, readFileSync, statSync } from 'node:fs';
+import path from 'node:path';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
+
+vi.mock('@/db', () => import('./helpers/test-db').then((m) => m.testDbModule()));
+vi.mock('@/lib/session', () => ({ getCurrentUser: vi.fn(), requireUser: vi.fn() }));
+
+import { sql } from 'drizzle-orm';
+import { PGlite } from '@electric-sql/pglite';
+import * as dbModule from '@/db';
+import { db, schema } from '@/db';
+import { withOrg } from '@/db/tenant';
+import { createMonitor } from '@/lib/monitors';
+import { makeOrg } from './helpers/fixtures';
+
+/*
+ * Lesson 2.4: the tenant boundary is enforced by the system, not remembered.
+ *   1. Row-level security: queries inside withOrg() see and write only the
+ *      current org's rows, even when the WHERE organization_id is missing.
+ *   2. A "lint rule" as a test: no code reaches a tenant table except
+ *      through withOrg(), and no tenant table lacks a policy.
+ */
+const pg = (dbModule as unknown as { sql: PGlite }).sql;
+const { monitors, incidents } = schema;
+
+let acme: Awaited<ReturnType<typeof makeOrg>>;
+let globex: Awaited<ReturnType<typeof makeOrg>>;
+let acmeMonitorId: string;
+let globexMonitorId: string;
+
+beforeAll(async () => {
+  acme = await makeOrg('Acme');
+  globex = await makeOrg('Globex');
+  // Identical names in both orgs: nothing may tell them apart except the org.
+  acmeMonitorId = (await createMonitor({ orgId: acme.id, userId: acme.users.owner.id }, { name: 'api', url: 'https://acme.test', intervalSeconds: 60 })).id;
+  globexMonitorId = (await createMonitor({ orgId: globex.id, userId: globex.users.owner.id }, { name: 'api', url: 'https://globex.test', intervalSeconds: 60 })).id;
+  await db.insert(incidents).values([
+    { organizationId: acme.id, monitorId: acmeMonitorId, cause: 'acme down' },
+    { organizationId: globex.id, monitorId: globexMonitorId, cause: 'globex down' },
+  ]);
+});
+
+/** The Postgres error behind a Drizzle error (Drizzle wraps it as `cause`). */
+function pgMessage(err: unknown): string {
+  const e = err as { message?: string; cause?: { message?: string } };
+  return e.cause?.message ?? e.message ?? '';
+}
+
+describe('row-level security (defence in depth)', () => {
+  it('a query with the WHERE organization_id deleted still returns only the current org’s rows', async () => {
+    const rows = await withOrg(acme.id, (tx) => tx.select().from(monitors)); // no WHERE at all
+    expect(rows.map((r) => r.id)).toEqual([acmeMonitorId]);
+    const allIncidents = await withOrg(globex.id, (tx) => tx.select().from(incidents));
+    expect(allIncidents.map((i) => i.cause)).toEqual(['globex down']);
+  });
+
+  it('inserting a monitor with another org’s id fails with an RLS violation', async () => {
+    const attempt = withOrg(acme.id, (tx) =>
+      tx.insert(monitors).values({ organizationId: globex.id, name: 'planted', url: 'https://evil.test' }),
+    );
+    await expect(attempt.catch((e) => Promise.reject(new Error(pgMessage(e))))).rejects.toThrow(/row-level security/);
+  });
+
+  it('updates and deletes cannot reach another org’s rows, even by id', async () => {
+    const updated = await withOrg(acme.id, (tx) => tx.update(monitors).set({ name: 'hijacked' }).where(sql`id = ${globexMonitorId}`).returning());
+    const deleted = await withOrg(acme.id, (tx) => tx.delete(monitors).where(sql`id = ${globexMonitorId}`).returning());
+    expect(updated).toEqual([]);
+    expect(deleted).toEqual([]);
+    // Nor can a row be moved into another org.
+    const moved = withOrg(acme.id, (tx) => tx.update(monitors).set({ organizationId: globex.id }).where(sql`id = ${acmeMonitorId}`));
+    await expect(moved.catch((e) => Promise.reject(new Error(pgMessage(e))))).rejects.toThrow(/row-level security/);
+  });
+
+  it('fails closed: as the app role with no org set, a tenant table looks empty', async () => {
+    const rows = await db.transaction(async (tx) => {
+      await tx.execute(sql`select set_config('role', 'beacon_app', true)`);
+      return tx.select().from(monitors);
+    });
+    expect(rows).toEqual([]);
+  });
+
+  it('leaves nothing behind on the connection (safe behind a transaction-mode pooler)', async () => {
+    await withOrg(acme.id, (tx) => tx.select().from(monitors));
+    // PGlite has exactly one connection, so this is "the next transaction on
+    // the same server connection", like the next request through PgBouncer.
+    const { rows } = await pg.query<{ org: string; role: string }>(`select current_setting('app.current_org', true) as org, current_user as role`);
+    expect(rows[0].org).toBe('');
+    expect(rows[0].role).not.toBe('beacon_app');
+  });
+
+  it('a rolled-back transaction does not leak its org either', async () => {
+    await withOrg(acme.id, async () => {
+      throw new Error('boom');
+    }).catch(() => {});
+    const { rows } = await pg.query<{ org: string }>(`select current_setting('app.current_org', true) as org`);
+    expect(rows[0].org).toBe('');
+  });
+});
+
+/*
+ * The tables that carry organization_id but are deliberately NOT under RLS:
+ * they are read before the org is known (at login, from an invitation token).
+ * Adding a table here is a design decision to explain in review.
+ */
+const NOT_UNDER_RLS = ['memberships', 'invitations'];
+
+describe('every tenant table is protected', () => {
+  it('has row-level security enabled with a policy, unless it is on the short list above', async () => {
+    const { rows } = await pg.query<{ table_name: string; rls: boolean; policies: number }>(`
+      select c.table_name, cl.relrowsecurity as rls,
+             (select count(*)::int from pg_policies p where p.tablename = c.table_name) as policies
+      from information_schema.columns c
+      join pg_class cl on cl.relname = c.table_name and cl.relkind = 'r'
+      where c.table_schema = 'public' and c.column_name = 'organization_id'
+      order by 1`);
+    const unprotected = rows.filter((r) => !NOT_UNDER_RLS.includes(r.table_name) && (!r.rls || r.policies === 0));
+    expect(unprotected.map((r) => r.table_name)).toEqual([]);
+    expect(rows.length).toBeGreaterThan(NOT_UNDER_RLS.length); // the query really found tenant tables
+  });
+});
+
+/*
+ * Lesson 2.4 (🟢), "enforced by a lint rule": a test that reads the source.
+ * Tenant tables are touched only through `tx` inside withOrg(); a direct
+ * `db.select()…from(monitors)` anywhere in the app or the check runner fails
+ * here. Admin scripts that connect as the database owner (seed, reset,
+ * claim-org) are exempt: they are not reachable from a request.
+ */
+const TENANT_TABLES = ['monitors', 'checkResults', 'incidents', 'incidentUpdates', 'files'];
+const SCANNED = ['src', 'scripts/run-checks.ts', 'scripts/process-files.ts'];
+const EXEMPT = ['src/db/tenant.ts', 'src/db/schema.ts', 'src/db/index.ts'];
+
+function sourceFiles(p: string): string[] {
+  let stat;
+  try {
+    stat = statSync(p);
+  } catch {
+    return []; // a scanned script that does not exist yet
+  }
+  if (stat.isFile()) return /\.(ts|tsx)$/.test(p) ? [p] : [];
+  return readdirSync(p).flatMap((f) => sourceFiles(path.join(p, f)));
+}
+
+describe('lint: tenant tables only through withOrg()', () => {
+  const files = SCANNED.flatMap(sourceFiles).filter((f) => !EXEMPT.includes(f.split(path.sep).join('/')));
+
+  it('scans the app', () => {
+    expect(files.length).toBeGreaterThan(20);
+  });
+
+  it('no direct db query mentions a tenant table', () => {
+    const offenders: string[] = [];
+    for (const file of files) {
+      const text = readFileSync(file, 'utf8');
+      // Each `db.select(…)`, `db.insert(…)` … up to the end of its statement.
+      for (const m of text.matchAll(/\bdb\s*\.\s*(select|selectDistinct|insert|update|delete|execute|query|\$count)\b[\s\S]*?;/g)) {
+        const hit = TENANT_TABLES.find((t) => new RegExp(`\\b${t}\\b`).test(m[0]));
+        if (hit) offenders.push(`${file}: db.${m[1]}(…) on ${hit}`);
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+
+  it('db.transaction() is used only where the tables are not tenant tables', () => {
+    const allowed = ['src/lib/organizations.ts', 'src/lib/invitations.ts'];
+    const users = files.filter((f) => /\bdb\s*\.\s*transaction\s*\(/.test(readFileSync(f, 'utf8'))).map((f) => f.split(path.sep).join('/'));
+    expect(users.filter((f) => !allowed.includes(f))).toEqual([]);
+  });
+});
