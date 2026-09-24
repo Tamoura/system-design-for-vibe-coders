@@ -3,6 +3,7 @@ import { schema } from '@/db';
 import type { TenantTx } from '@/db/tenant';
 import { CATEGORIES, orgWantsSlack, resolvePersonalChannels, type Category } from '@/core/notifications';
 import { can } from '@/core/permissions';
+import { entitlementsFor, type PlanId } from '@/core/plans';
 import type { TemplateName, TemplateProps } from '@/emails';
 import { appUrl, unsubscribeLinks } from '../urls';
 
@@ -67,7 +68,13 @@ type NewDelivery = typeof notificationDeliveries.$inferInsert & { payload: Deliv
 export async function notifyInTx(tx: TenantTx, event: NotifyEvent): Promise<{ notified: number; deliveries: number }> {
   const def = CATEGORIES[event.category];
   const [org] = await tx
-    .select({ name: organizations.name, slug: organizations.slug, slackWebhookUrl: organizations.slackWebhookUrl, statusPagePublic: organizations.statusPagePublic })
+    .select({
+      name: organizations.name,
+      slug: organizations.slug,
+      plan: organizations.plan,
+      slackWebhookUrl: organizations.slackWebhookUrl,
+      statusPagePublic: organizations.statusPagePublic,
+    })
     .from(organizations)
     .where(eq(organizations.id, event.orgId));
   if (!org) return { notified: 0, deliveries: 0 };
@@ -96,6 +103,9 @@ export async function notifyInTx(tx: TenantTx, event: NotifyEvent): Promise<{ no
     .select({ channel: orgNotificationPolicies.channel, enabled: orgNotificationPolicies.enabled })
     .from(orgNotificationPolicies)
     .where(and(eq(orgNotificationPolicies.organizationId, event.orgId), eq(orgNotificationPolicies.category, event.category)));
+  // Lesson 3.2 meets 4.2: SMS costs money, so it is an entitlement. A plan
+  // with no SMS included (Free) has no subscription to bill them to: off.
+  if (!smsIncluded(org.plan)) policy.push({ channel: 'sms', enabled: false });
 
   const base = { orgName: org.name, title: event.title, body: event.body, url: appUrl(event.path) };
   const deliveries: NewDelivery[] = [];
@@ -181,4 +191,9 @@ export async function notifyInTx(tx: TenantTx, event: NotifyEvent): Promise<{ no
     await tx.insert(notificationDeliveries).values(deliveries.slice(i, i + 500)).onConflictDoNothing({ target: notificationDeliveries.dedupeKey });
   }
   return { notified, deliveries: deliveries.length };
+}
+
+/** Does the plan include SMS alerts at all? (Free: 0 included, and nothing to bill overage to.) */
+export function smsIncluded(plan: PlanId): boolean {
+  return entitlementsFor(plan).smsCreditsPerMonth > 0;
 }

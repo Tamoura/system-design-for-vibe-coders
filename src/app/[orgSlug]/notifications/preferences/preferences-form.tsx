@@ -30,6 +30,7 @@ export function PreferencesForm({ orgSlug, matrix }: { orgSlug: string; matrix: 
                 return (
                   <td key={channel} title={cell.locked ?? undefined}>
                     <input type="checkbox" name={name} aria-label={`${row.label}: ${CHANNEL_LABELS[channel]}`} defaultChecked={cell.enabled} disabled={Boolean(cell.locked)} />
+                    {!cell.locked && <input type="hidden" name="cell" value={name} />}
                   </td>
                 );
               })}

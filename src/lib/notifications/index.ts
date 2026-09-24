@@ -18,7 +18,7 @@ import { InvalidRequestError } from '../errors';
 import { runAfterResponse } from '../jobs';
 import { deliverPendingNotifications } from './deliver';
 import { isSlackWebhookUrl } from './providers';
-import { notifyInTx, type NotifyEvent } from './pipeline';
+import { notifyInTx, smsIncluded, type NotifyEvent } from './pipeline';
 
 export { notifyInTx, type NotifyEvent } from './pipeline';
 export { deliverPendingNotifications } from './deliver';
@@ -147,6 +147,8 @@ export type PreferenceMatrix = {
 /** The matrix as the person will actually experience it (org policy and missing phone included). */
 export async function getPreferenceMatrix(me: Me): Promise<PreferenceMatrix> {
   const [user] = await db.select({ phoneNumber: users.phoneNumber }).from(users).where(eq(users.id, me.userId));
+  const [org] = await db.select({ plan: organizations.plan }).from(organizations).where(eq(organizations.id, me.orgId));
+  const smsOnPlan = org ? smsIncluded(org.plan) : false;
   const { prefs, policy } = await withOrg(me.orgId, async (tx) => ({
     prefs: await tx
       .select()
@@ -154,7 +156,6 @@ export async function getPreferenceMatrix(me: Me): Promise<PreferenceMatrix> {
       .where(and(eq(notificationPreferences.organizationId, me.orgId), eq(notificationPreferences.userId, me.userId))),
     policy: await tx.select().from(orgNotificationPolicies).where(eq(orgNotificationPolicies.organizationId, me.orgId)),
   }));
-  const hasPhone = Boolean(user?.phoneNumber);
   return {
     phoneNumber: user?.phoneNumber ?? null,
     rows: CATEGORY_IDS.map((category) => {
@@ -165,10 +166,15 @@ export async function getPreferenceMatrix(me: Me): Promise<PreferenceMatrix> {
       const cells = Object.fromEntries(
         PERSONAL_CHANNELS.map((channel) => {
           const orgOff = orgPolicy.some((p) => p.channel === channel && !p.enabled) && !def.required && channel !== 'in_app';
+          const noSms = channel === 'sms' && !smsOnPlan && categoryUsesChannel(category, 'sms');
           const locked =
             lockedReason(category, channel) ??
-            (orgOff ? 'Turned off for this organization by an admin' : channel === 'sms' && !hasPhone ? 'Add a phone number first' : null);
-          return [channel, { enabled: on.includes(channel) && !orgOff, locked }];
+            (noSms
+              ? 'SMS alerts need a plan that includes SMS (Pro or Business)'
+              : orgOff
+                ? 'Turned off for this organization by an admin'
+                : null);
+          return [channel, { enabled: on.includes(channel) && !orgOff && !noSms, locked }];
         }),
       ) as Record<PersonalChannel, PreferenceCell>;
       return { category, label: def.label, description: def.description, required: def.required, cells };
@@ -180,14 +186,16 @@ export async function getPreferenceMatrix(me: Me): Promise<PreferenceMatrix> {
  * Save the matrix from the form: a checkbox named "<category>:<channel>" per
  * cell. Locked cells are ignored (a hand-crafted POST cannot turn off a
  * required category). Unchecked boxes send nothing, so every editable cell
- * is written explicitly: true or false.
+ * is written explicitly: true or false. `editable` limits the write to the
+ * cells the form showed as changeable, so a cell disabled for now (SMS on a
+ * plan without SMS, a channel the org switched off) keeps the person's choice.
  */
-export async function savePreferences(me: Me, input: { checked: Set<string>; phoneNumber: string }) {
+export async function savePreferences(me: Me, input: { checked: Set<string>; phoneNumber: string; editable?: Set<string> }) {
   const phone = input.phoneNumber.replace(/[\s()-]/g, '');
   if (phone && !isPhoneNumber(phone)) throw new InvalidRequestError('invalid_phone', 'Enter the phone number in international format, like +15551234567.');
   await db.update(users).set({ phoneNumber: phone || null }).where(eq(users.id, me.userId));
   const rows = CATEGORY_IDS.flatMap((category) =>
-    PERSONAL_CHANNELS.filter((channel) => !lockedReason(category, channel)).map((channel) => ({
+    PERSONAL_CHANNELS.filter((channel) => !lockedReason(category, channel) && (!input.editable || input.editable.has(`${category}:${channel}`))).map((channel) => ({
       organizationId: me.orgId,
       userId: me.userId,
       category,

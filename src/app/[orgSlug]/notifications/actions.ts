@@ -30,7 +30,8 @@ export async function savePreferencesAction(orgSlug: string, _prev: PrefsState, 
   const ctx = await forPage(requirePermission(orgSlug, 'monitor.read'), `/${orgSlug}/notifications/preferences`);
   const checked = new Set([...formData.keys()].filter((k) => k.includes(':')));
   try {
-    await savePreferences(ctx, { checked, phoneNumber: String(formData.get('phoneNumber') ?? '') });
+    const editable = new Set(formData.getAll('cell').map(String));
+    await savePreferences(ctx, { checked, editable, phoneNumber: String(formData.get('phoneNumber') ?? '') });
   } catch (err) {
     if (err instanceof InvalidRequestError) return { error: err.message };
     throw err;

@@ -50,7 +50,7 @@ beforeAll(() => {
 afterAll(() => vi.unstubAllEnvs());
 
 async function newMonitor(org: Org, name: string) {
-  return createMonitor({ orgId: org.id, userId: org.users.owner.id }, { name, url: `https://${name}.test`, intervalSeconds: 60 });
+  return createMonitor({ orgId: org.id, userId: org.users.owner.id }, { name, url: `https://${name}.test`, intervalSeconds: 300 });
 }
 
 /** Three failed checks in a row: the lesson's threshold for opening an incident. */
@@ -263,6 +263,28 @@ describe('SMS: metered, throttled, with email fallback (🟡)', () => {
     await deliverPendingNotifications({ orgId: acme.id });
     const [sent] = (await deliveriesOf(acme)).filter((d) => d.id === m!.id);
     expect(sent.status).toBe('sent');
+  });
+});
+
+describe('SMS is an entitlement (lesson 3.2)', () => {
+  it('a Free org (no SMS included, nothing to bill) sends no SMS, and the preferences page says why', async () => {
+    const free = await makeOrg('Frugal', { plan: 'free' });
+    await savePreferences(me(free, 'owner'), { checked: new Set(['incident.opened:email', 'incident.opened:sms']), phoneNumber: '+15550000099' });
+    const matrix = await getPreferenceMatrix(me(free, 'owner'));
+    expect(matrix.rows[0].cells.sms).toEqual({ enabled: false, locked: expect.stringMatching(/plan that includes SMS/) });
+    await breakMonitor(free, await newMonitor(free, 'cheap'));
+    await deliverPendingNotifications({ orgId: free.id });
+    expect((await deliveriesOf(free)).filter((d) => d.channel === 'sms')).toEqual([]);
+    expect(fakeSms.sent.filter((s) => s.to === '+15550000099')).toEqual([]);
+  });
+
+  it('saving the form keeps the SMS choice of a cell the form showed as locked', async () => {
+    const free = await makeOrg('Keeper', { plan: 'free' });
+    const owner = me(free, 'owner');
+    await savePreferences(owner, { checked: new Set(['incident.opened:sms']), phoneNumber: '+15550000098' }); // chosen on an earlier plan
+    await savePreferences(owner, { checked: new Set(), editable: new Set(['incident.opened:email']), phoneNumber: '+15550000098' });
+    await db.update(schema.organizations).set({ plan: 'pro' }).where(eq(schema.organizations.id, free.id));
+    expect((await getPreferenceMatrix(owner)).rows[0].cells.sms.enabled).toBe(true);
   });
 });
 
