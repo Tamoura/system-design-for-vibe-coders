@@ -47,11 +47,14 @@ cp .env.example .env.local    # then set BETTER_AUTH_SECRET (openssl rand -base6
 docker compose up -d          # Postgres on :5432, Mailpit on :8025
 npm install
 npm run db:migrate
-npm run db:seed               # demo user + "demo" org with three monitors
+npm run db:seed               # "demo" org: an owner, a member, five monitors, a day of checks
 npm run dev                   # http://localhost:3000
 ```
 
-Sign in as `demo@beacon.test` / `beacon-demo-password`, or sign up. Until lesson 4.1 adds real email,
+`npm run db:reset` does the last three database steps in one go on a local database (it drops everything
+first). Sign in as `demo@beacon.test` (owner) or `member@beacon.test` (member), password
+`beacon-demo-password`, or sign up. Uploaded files go to `.storage/` unless you configure an S3-compatible
+bucket (`STORAGE_DRIVER=s3` in `.env.example`). Until lesson 4.1 adds real email,
 verification, password-reset and invitation links are printed in the `npm run dev` terminal.
 "Sign in with GitHub" appears when `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` are set.
 
@@ -69,6 +72,10 @@ Run it twice. One of the seed monitors always fails, and an incident opens after
 | `npm test` | Tests (Vitest). No database server needed: database tests run the migrations on an in-memory Postgres (PGlite). |
 | `npm run typecheck` | TypeScript, strict mode. |
 | `npm run db:generate` | Create a new migration after you edit `src/db/schema.ts`. |
+| `npm run db:reset` | Drop, migrate and seed a local database. Refuses anything but localhost. |
+| `npm run db:seed:large` | Org `big` with 500 monitors × 1,000 checks, for measuring queries (`-- --monitors=50000 --checks=0` for search). |
+| `npm run files:process` | Finish uploads whose background thumbnail job never ran. |
+| `npm run storage:setup` | With `STORAGE_DRIVER=s3`: create the bucket, block public access, set CORS. |
 | `npm run build` | Production build, the same one CI runs. |
 | `npm run org:claim -- <slug> <email>` | Make a user the owner of an org, e.g. the `default` org that migration 0003 creates for monitors from before Module 1. |
 
@@ -77,10 +84,11 @@ Run it twice. One of the seed monitors always fails, and an incident opens after
 ```
 src/
   core/         Pure logic: run a check, decide incidents, validate input, roles and permissions. Fully tested.
-  db/           Drizzle schema and the Postgres client.
+  db/           Drizzle schema, the Postgres client, and withOrg() (row-level security, lesson 2.4).
   lib/          Data access used by pages and scripts. Every tenant query takes the organization.
+  lib/storage/  Object storage behind one interface: S3-compatible or local files (lesson 2.2).
   app/          Next.js App Router: auth pages, /[orgSlug]/… org pages, /status/[slug], /api/….
-scripts/        migrate, seed, run-checks, claim-org.
+scripts/        migrate, seed, reset, run-checks, process-files, storage-setup, claim-org.
 drizzle/        SQL migrations (generated; commit them).
 tests/          Vitest tests for src/core, and for src/lib and the API on an in-memory Postgres.
 docs/           EXERCISES.md, SOLUTIONS.md (what each solution branch built and why), later the architecture docs (module 9).

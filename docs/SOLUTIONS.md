@@ -239,3 +239,323 @@ migrated and seeded on `main`, `npm run build`, and a headless-browser run again
 sign up → create org → add monitor → invite → invitee signs up from the link and accepts as viewer → the
 viewer cannot create or delete a monitor (UI, page and API) → a user of another org gets 404 for the
 monitor by id → identical reset responses → logout invalidates the cookie.
+
+---
+
+## Module 2 — Data
+
+Module 1 decided *who* may see a row. Module 2 is about the rows themselves: keeping the dashboard fast
+as they pile up (2.1), keeping files out of the database (2.2), finding things again (2.3), and making
+the tenant boundary something Postgres enforces, not only something each query remembers (2.4).
+
+```
+request ─► requirePermission() ─► src/lib/* (orgId in every WHERE) ─► withOrg(orgId)
+                                                                         │ BEGIN
+                                                                         │ set_config('app.current_org', orgId, true)
+                                                                         │ set_config('role', 'beacon_app', true)
+                                                                         │ … queries: RLS policies filter and check every row …
+                                                                         │ COMMIT  (both settings end here)
+files:   browser ──signed PUT──► object storage (orgs/{orgId}/…)  ◄──signed GET── browser
+                    ▲ Beacon signs after checking role, size, type; checks the bytes after upload
+```
+
+### Try it by hand
+
+```bash
+npm install
+npm run db:reset             # drop everything, migrate, seed (local databases only)
+npm run db:seed:large        # optional: org "big", 500 monitors × 1,000 checks
+npm run dev
+```
+
+1. Sign in as `demo@beacon.test` / `beacon-demo-password` (owner) or `member@beacon.test` (member).
+2. `DB_LOG=1 npm run dev` and open `/demo/monitors`: one SQL statement for the list, however many
+   monitors. Open `/big/monitors` for the 500-monitor version.
+3. **Settings → Status page logo**: upload a PNG. Open `/status/demo` in a private window and the logo
+   is there. Now rename a text file to `logo.png` and upload it: *Rejected: That file is not the image
+   it claims to be.* Try an `.exe`: refused before any URL is signed.
+4. Open the "Always broken" monitor, add a screenshot to its incident: *processing…*, then a 400 px
+   thumbnail. Copy the image link, sign in as another user in another org, open it: 404.
+5. Type `chekout` in the search box on the monitors page. Press **Ctrl+K** (⌘K) and type
+   `"certificate expired" -staging`: the checkout incident, highlighted, and not the staging one.
+   Arrow keys and Enter open it.
+6. Post an update on an incident, then find it with Ctrl+K.
+
+Files go to `.storage/` by default. To use a real bucket (R2, S3, Garage, SeaweedFS), set
+`STORAGE_DRIVER=s3` and the `S3_*` variables in `.env.local`, then `npm run storage:setup` once.
+
+### Lesson 2.1 — The data layer
+
+**What was built.** The dashboard query as one statement with three `LATERAL` subqueries instead of an
+N+1; a covering index that turns it into index-only scans; `updated_at` on every table Beacon owns; an
+idempotent seed with an owner and a member; `npm run db:reset`; a large seed for measuring; query
+logging; and a `lock_timeout` for migrations.
+
+**Read in this order**
+
+1. `src/lib/monitors.ts` `listMonitors()`: the N+1 fix. Compare with `git show module-1-solution:src/lib/monitors.ts`.
+2. `src/db/schema.ts`: the `check_results` index comment (column order, covering columns, the
+   `DESC NULLS LAST` trap), `incidents_open_idx` (partial), and the `updatedAt()` helper.
+3. `drizzle/0006_timestamps_and_indexes.sql`: why `ADD COLUMN … DEFAULT now()` is cheap, a backfill
+   in the same migration, and why the index is not built `CONCURRENTLY` here.
+4. `scripts/seed.ts`: idempotent by natural keys. `scripts/reset.ts`: refuses non-local databases.
+5. `scripts/seed-large.ts`: rows generated inside Postgres with `generate_series`.
+6. `tests/data-layer.test.ts`: counts SQL statements to prove the query count is constant.
+
+**Exercises covered**
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 schema, first migration, idempotent seed (1 org, owner + member, 5 monitors, a day of checks) | fresh clone + one command → working, seeded database | `npm run db:reset` (reset → migrate → seed) |
+| | every tenant table has `organization_id`, `created_at`, `updated_at` with FKs | migration 0006; `check_results` is the one deliberate exception (below) |
+| | running the seed twice creates no duplicates | lookups by email / slug / monitor name; the second run prints "nothing to do" |
+| 🟡 the dashboard query, fast, with 500 × 1,000 | constant number of queries | `listMonitors()`; `tests/data-layer.test.ts` (3 vs 23 monitors → same count) |
+| | `EXPLAIN ANALYZE` shows no seq scan on `check_result` | plan below |
+| | page loads in under 200 ms locally with the large seed | smoke test: `/big/monitors` median 162 ms (query ~90 ms, the rest is rendering 500 rows) |
+
+`EXPLAIN ANALYZE` of the dashboard query for org "big" (500 monitors × 1,000 checks, Postgres 16):
+
+```
+Nested Loop Left Join (actual time=0.35..92.6 rows=500)
+  -> Index Scan using monitors_org_idx on monitors m (rows=500)
+  -> Limit (rows=1 loops=500)
+       -> Index Only Scan Backward using check_results_org_monitor_time_idx on check_results
+  -> Aggregate (loops=500)
+       -> Index Only Scan using check_results_org_monitor_time_idx on check_results  (rows=1000 loops=500, Heap Fetches: 0)
+  -> Index Scan using incidents_open_idx on incidents (loops=500)
+Execution Time: 92.7 ms          (the starter's index: Bitmap Heap Scan + Sort, 1,036 ms)
+```
+
+**Design decisions to notice**
+
+- **`LATERAL` instead of the lesson's `DISTINCT ON`.** The dashboard also needs 24-hour uptime and the
+  open incident. `DISTINCT ON` gives only the latest check; three small lateral subqueries give all
+  three in one statement, each an index lookup per monitor.
+- **The index already existed and was still wrong.** The starter had `(monitor_id, checked_at DESC)`.
+  Module 1's tenant rule adds `organization_id = …` to every check query, which that index cannot
+  answer, and Drizzle writes `.desc()` as `DESC NULLS LAST`, which does not match `ORDER BY … DESC`
+  (NULLS FIRST), so Postgres sorted. The replacement is `(organization_id, monitor_id, checked_at, ok,
+  latency_ms)`: equality columns, then the range column, then the columns the query reads, so the
+  table is never touched ("Heap Fetches: 0" once autovacuum has run; the large seed runs `VACUUM`).
+  It also serves as the index on the `organization_id` foreign key.
+- **`check_results` has no `updated_at`.** Rows are immutable facts, `checked_at` is their creation
+  time, and it is the table that grows by millions of rows. A deliberate exception, written down in
+  the schema.
+- **`updated_at` via Drizzle's `$onUpdate`**, visible in the schema. A trigger would also catch
+  hand-written SQL; the trade-off is noted in `schema.ts`.
+- **Expand/contract, as house rules** (lesson 2.1, and 1.2's 0002→0004 did it for real):
+  1. Additive first: new columns nullable or with a non-volatile default; new tables; new indexes.
+  2. Backfill in the same migration when it is small (0006, 0009), in batches with a `lock_timeout`
+     when it is not.
+  3. Switch the code to the new shape in a deploy of its own.
+  4. Contract (drop, `NOT NULL`, rename's second half) only after no running code uses the old shape.
+  5. Never `CREATE INDEX` on a big table inside the migrator's transaction: build it `CONCURRENTLY` by
+     hand first, then let the migration's `IF NOT EXISTS` do nothing.
+  6. Roles, grants, policies, extensions and functions go in `drizzle-kit generate --custom` migrations
+     (0007), or at the end of a generated one with a comment (0008, 0009). Never by hand in production.
+- **`lock_timeout` 10 s** on the migration connection: a migration stuck behind a long query fails
+  instead of queueing every request behind itself.
+- **Ids stay plain UUIDs.** No exercise asks for prefixed ids, and changing every id is not a change to
+  make without one. The lesson's `mon_…` prefix at the API boundary is a good stretch.
+
+### Lesson 2.2 — File uploads and object storage
+
+**What was built.** A `files` table, a `Storage` interface with an S3 driver (`@aws-sdk/client-s3`,
+presigned URLs) and a local-filesystem driver, status page logos for owners and admins, incident
+screenshots for members with a background thumbnail job, downloads through a membership-checked
+redirect, and `npm run storage:setup` for a real bucket.
+
+**Read in this order**
+
+1. `src/core/files.ts`: the rules. Allowlists, sizes, magic-number sniffing, keys under `orgs/{orgId}/`.
+2. `src/lib/storage/index.ts`, then `s3.ts` and `local.ts`: one interface, two drivers.
+3. `src/lib/files.ts`: request → upload → complete, the thumbnail job, signed downloads.
+4. `src/app/api/orgs/[orgSlug]/logo/route.ts`, `…/files/[fileId]/complete/route.ts`,
+   `…/files/[fileId]/route.ts`, `src/app/status/[slug]/logo/route.ts`.
+5. `src/app/_components/direct-upload.ts`: the three steps from the browser's side.
+6. `src/app/api/storage/[...key]/route.ts`: the local driver's "bucket".
+7. `tests/uploads.test.ts` and `tests/storage.test.ts` (the S3 driver against s3rver).
+
+**Exercises covered**
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 logo: `file` table, presigned PUT for `orgs/{orgId}/logos/{fileId}`, "complete" marks it ready | the bytes never pass through the app server | S3 driver: browser → bucket. (Local driver: see the first decision below.) |
+| | only admins of the org can request a signed URL | `requirePermission(…, 'page.publish')`; member/viewer 403, other org 404 (tests, smoke) |
+| | a 10 MB file or an `.exe` is rejected before a URL is issued | `checkUploadRequest()`: size, type allowlist, extension; no row is written (tests, smoke) |
+| 🟡 incident screenshots, private; download endpoint → 5-minute presigned GET; sniff after upload; 400 px thumbnail in a job | another org's user gets 404 for the download, even with a valid id | `signedDownloadUrl()` looks the file up *in the org*; tests and smoke, both slugs |
+| | a text file renamed to `.png` is rejected after upload and its object deleted | `completeUpload()` sniffs the first bytes; the object is deleted (tests, smoke) |
+| | thumbnails are generated asynchronously, the UI shows "processing" | `after()` job in `src/lib/jobs.ts`, `npm run files:process` as a safety net; `AutoRefresh` on the monitor page |
+
+**Design decisions to notice**
+
+- **Two drivers, one interface.** No MinIO or Docker is needed to run or test Beacon. The local
+  driver signs URLs with an HMAC and an expiry, and its route checks them like S3 checks a presigned
+  URL (tampered, expired or wrong-type requests get 403). The honest difference: with the local driver
+  the Next.js process plays the bucket, so bytes do pass through it. The S3 driver is the one to
+  deploy; it runs in the tests against s3rver, a small S3-compatible server in Node.
+- **Checked twice.** Before signing: the declared size, type and extension. After upload: `HEAD` for the
+  real size (a presigned PUT does not limit size; a presigned POST policy could), then the first 12
+  bytes against the PNG/JPEG/WebP magic numbers. The thumbnail job is a third check: an "image" that
+  `sharp` cannot decode is rejected and deleted too.
+- **No SVG.** An SVG can carry `<script>`. Allowing it would need a sanitiser; leaving it out is the
+  lesson's default.
+- **Private bucket, even for the public logo.** `/status/[slug]/logo` redirects to a 5-minute signed
+  URL while the status page is published and answers 404 when it is not. A separate public bucket
+  behind a CDN would be the next step for traffic.
+- **User content on Beacon's domain.** The local route serves files with `X-Content-Type-Options:
+  nosniff` and `Content-Security-Policy: sandbox`. In production, point downloads at a separate
+  domain (the bucket's or a CDN's), as the lesson says.
+- **Keys are ours:** `orgs/{orgId}/logos/{fileId}`, never the user's file name. Signing asserts the key
+  is under the caller's org (`keyBelongsToOrg`), a cheap guard against id-swapping bugs.
+- **No network inside transactions.** Rows are written in `withOrg()`, storage is called outside it.
+- **Jobs before lesson 5.1.** `after()` runs the thumbnail after the response; a restart can lose it,
+  so `npm run files:process` finishes anything left "processing". The job payload is
+  `{ type, orgId, fileId }` (lesson 2.4).
+- **Replacing a logo deletes the old one**, row and object, so the bucket does not collect orphans.
+
+### Lesson 2.3 — Search
+
+**What was built.** Trigram search over monitor names and URLs, an `incident_updates` table with a
+generated `tsvector`, full-text search with web-style queries, ranking and highlighted snippets, a
+search box on the monitors page, and a Ctrl+K palette that searches pages, monitors and incidents in
+one call.
+
+**Read in this order**
+
+1. `src/db/schema.ts`: `monitors_*_trgm_idx`, `incidentUpdates` and its generated `search` column.
+2. `drizzle/0009_search.sql`: the extension, the backfill, and at the end the two search functions
+   and *why they are functions* (the RLS/LEAKPROOF comment).
+3. `src/lib/search.ts`, then `src/core/search.ts` (snippets as parts, the pages list).
+4. `src/app/api/orgs/[orgSlug]/search/route.ts` and `src/app/[orgSlug]/command-palette.tsx`.
+5. `tests/search.test.ts`.
+
+**Exercises covered**
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 pg_trgm monitor search, name and URL indexed, ranked, org-filtered | "chekout" finds "checkout-api" | `search_monitors()`; tests; smoke (search box) |
+| | `EXPLAIN ANALYZE` shows the trigram index on 50,000 monitors | plan below |
+| | a test proves a user never gets another org's monitors, even with identical names | `tests/search.test.ts`, `tests/cross-tenant-routes.test.ts`; smoke (a second org's search box and API) |
+| 🟡 FTS over incident updates, `websearch_to_tsquery`, ranking, snippets; cmd-K over monitors, incidents, pages in one call | `"certificate expired" -staging` behaves like a web search | tests and smoke: the checkout incident, not the staging one |
+| | results show a highlighted snippet and the object type | `ts_headline` → `<mark>`; a type badge per result |
+| | keyboard-only, under 150 ms locally | Ctrl+K, ↑/↓, Enter, Esc; smoke measured the API at 6 ms (`Server-Timing`) |
+
+`npm run db:seed:large -- --monitors=50000 --checks=0`, then `search_monitors('chekout', 20)` as the
+app role (plan captured with `auto_explain.log_nested_statements`):
+
+```
+Limit (actual time=20.5 rows=20)
+  -> Sort (top-N heapsort)
+       -> Bitmap Heap Scan on monitors m (rows=1250)
+            -> BitmapOr
+                 -> Bitmap Index Scan on monitors_name_trgm_idx   Index Cond: (name %> $1)
+                 -> Bitmap Index Scan on monitors_url_trgm_idx    Index Cond: (url %> $1)
+                 -> Bitmap Index Scan on monitors_name_trgm_idx   Index Cond: (name ~~* …)
+                 -> Bitmap Index Scan on monitors_url_trgm_idx    Index Cond: (url ~~* …)
+Execution Time: ~21 ms           (the same query as a plain query under RLS: Seq Scan, ~500 ms)
+```
+
+**Design decisions to notice**
+
+- **Where 2.3 meets 2.4.** Under row-level security, Postgres evaluates the policy before any condition
+  whose operator is not `LEAKPROOF`, and cannot use such a condition to search an index. The trigram
+  operators and `@@` are not leakproof, so as `beacon_app` both searches were sequential scans (~0.5 s
+  on 50,000 monitors). They are therefore `SECURITY DEFINER` SQL functions: they run as the table owner
+  (whom RLS does not restrict here), so the indexes work, and they apply the tenant filter themselves
+  from `current_org_id()`, the org `withOrg()` set. They take no org argument, return nothing without
+  `withOrg()`, have a fixed `search_path`, and only `beacon_app` may execute them. This is the one place
+  the tenant filter lives in SQL rather than in both TypeScript and a policy, so the tests cover it
+  directly. Supabase recommends the same pattern for the same problem.
+- **`word_similarity` (the `<%` operator), threshold 0.4.** A short query against a longer name or URL
+  is "is the query like *part of* this text?". pg_trgm's default 0.6 misses one-letter typos in short
+  words ("chekout" scores 0.55); 0.4 still keeps unrelated names out (tested). `ILIKE '%…%'` covers
+  exact substrings, with the user's `%` and `_` escaped.
+- **Snippets are data, not HTML.** `ts_headline` marks matches with `⟦ ⟧`, the API returns
+  `[{ text, hit }]`, and React renders `<mark>` elements. Asking Postgres for `<b>…</b>` and using
+  `dangerouslySetInnerHTML` would be stored XSS through an incident update.
+- **Incident updates are the searchable prose.** The check runner writes the first ("Opened
+  automatically: …") and the last update; people post the rest from the monitor page. Migration 0009
+  backfills one update per existing incident.
+- **One call, filtered server-side.** The palette sends only `q`. Pages are offered only if the role may
+  open them (a viewer is never shown Settings). Debounce 150 ms, and a newer keystroke aborts the older
+  request so results never arrive out of order.
+- **Drizzle for everything else, raw SQL here.** `selectRows()` in `src/db/tenant.ts` smooths over the
+  two drivers' result shapes (postgres.js in the app, PGlite in tests). PGlite ships `pg_trgm`, so the
+  tests run the real operators.
+
+### Lesson 2.4 — Multi-tenancy deep dive (🟢 and 🟡)
+
+2.4 is an 🔴 lesson, but its 🟢 and 🟡 exercises fit Beacon well: Module 1 already scoped every query,
+and row-level security is exactly the "defence in depth" the lesson describes. Its 🔴 exercise (EU
+cells, per-org job fairness) needs infrastructure this solution does not have.
+
+**What was built.** `withOrg()`, the `beacon_app` role, `tenant_isolation` policies on every tenant
+table, the check runner and file job running per org, a source "lint" test, and a cross-tenant test
+that must cover every API route.
+
+**Read in this order**
+
+1. `src/db/tenant.ts`: `withOrg()` and why the settings are transaction-local.
+2. `drizzle/0007_row_level_security.sql`: role, grants, `current_org_id()`, policies, and why no `FORCE`.
+3. `scripts/run-checks.ts`: a job that sets the tenant too, and keeps HTTP outside the transaction.
+4. `tests/tenant-scoping.test.ts`: RLS behaviour, "every tenant table has a policy", and the lint.
+5. `tests/cross-tenant-routes.test.ts`: org B against every org A route, and the coverage check.
+
+**Exercises covered**
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 audit, scoped helper, cross-tenant test for every route | no handler queries a tenant table except through the helper (lint rule or checklist) | lint test: no `db.select/insert/update/delete/execute` touching a tenant table in `src/` or the jobs; `db.transaction` only in two identity files |
+| | logged in as org B → 404 for every org A resource | `tests/cross-tenant-routes.test.ts`: 12 route/method pairs × 2 slugs; fails if a new route has no case |
+| | cache keys and job payloads include `org_id` | no caches yet; job payload `{ type, orgId, fileId }`; storage keys `orgs/{orgId}/…` |
+| 🟡 RLS on monitor, incident, incident_update; non-owner role; `app.current_org` per transaction; jobs too | deleting `WHERE organization_id` still returns only the current org | test: `withOrg(acme, tx => tx.select().from(monitors))` |
+| | inserting a monitor with another org's id fails with an RLS violation | test: "new row violates row-level security policy" (also for moving a row) |
+| | works through PgBouncer in transaction mode | `set_config(…, true)` only; test: nothing is left on the connection after commit or rollback (PGlite's single connection = the next pooled transaction). Not run through a real PgBouncer. |
+
+**Design decisions to notice**
+
+- **Both layers stay.** Every function in `src/lib` still writes `organization_id = …` (Module 1), and
+  runs inside `withOrg()`. Together they are the lesson's `forOrg(orgId)`: Module 1's functions already
+  take the org as a required first argument, so the name did not change.
+- **RLS on every table with `organization_id`**, not only the three the exercise names: monitors,
+  check_results, incidents, incident_updates, files. The exceptions are `memberships` and
+  `invitations`, read *before* the org is known (at login, from an invitation token). A test fails if a
+  new tenant table has no policy.
+- **The role switch happens inside the transaction** (`set_config('role', 'beacon_app', true)`), the
+  way PostgREST/Supabase do it, rather than a separate login role for the app. It works with any
+  connection string and with transaction pooling. The gap: code that skips `withOrg()` runs as the
+  connection's user and is not filtered, which is what the lint test is for. Hardening for production:
+  connect the app as a login role that owns nothing and is only a member of `beacon_app`, so a query
+  outside `withOrg()` fails instead of seeing everything.
+- **No `FORCE ROW LEVEL SECURITY`.** Tenant queries run as `beacon_app`, not as the owner, so policies
+  apply to them without it. The owner (migrations, `db:seed`) keeps seeing every row, so a data
+  migration cannot silently backfill nothing.
+- **Fail closed.** `current_org_id()` is NULL when nothing is set, so as `beacon_app` without `withOrg()`
+  every tenant table looks empty (tested), and so do the search functions.
+- **Jobs set the tenant too.** The check runner and `files:process` list organizations (not a tenant
+  table), then work inside `withOrg(org.id)` per org.
+- **Rules for `withOrg()` callbacks:** only `tx` inside (the global `db` is another connection without
+  the setting), and no network calls: a transaction holds its connection until it ends.
+
+### Not done in Module 2 (🔴 exercises and neighbours)
+
+The rename with zero downtime, PITR and a restore drill (2.1 🔴); retention for `check_results` and
+time partitioning (no exercise asks yet; the covering index keeps the dashboard fast meanwhile);
+prefixed ids; org offboarding for files, lifecycle rules and orphan reconciliation (2.2 🔴; deleting a
+monitor or incident deletes its file rows but not yet its objects); malware scanning; Meilisearch or
+Typesense with an outbox and tenant tokens (2.3 🔴); residency cells and per-org job fairness (2.4 🔴);
+a real PgBouncer in CI; a dedicated app login role (above).
+
+### Verification for this branch
+
+`npm test` (205 tests, no database server: PGlite with `pg_trgm`, s3rver for the S3 driver),
+`npm run typecheck`, `npm run db:migrate` on a fresh database and on a database migrated, seeded and
+checked on `module-1-solution` (existing incidents get their first update), `npm run build`, and a
+headless-browser run against `next start` (27 checks): `/big/monitors` with 500 × 1,000 in under
+200 ms → owner uploads a logo → it shows on the public status page → the object is private without a
+signature → a text file renamed to `.png` is rejected → an `.exe` and a declared 10 MB file are refused
+→ an incident screenshot shows "processing" then a 400 px thumbnail → a member cannot upload a logo
+but can download the screenshot → "chekout" finds checkout-api → Ctrl+K `"certificate expired"
+-staging` finds the checkout incident with highlighted words, Enter opens it → a user of another org
+finds nothing, gets 404 for the demo org's search, and 404 for the screenshot by id under both slugs.
