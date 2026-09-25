@@ -14,7 +14,8 @@ Lesson 7.4. How Beacon gets from a pull request to production, in small, reversi
 Everything that differs between them is an environment variable, checked when a process starts
 (`src/lib/env.ts`; the list is `docs/configuration.md`, generated from the schema). A missing `DATABASE_URL` stops the
 web app, the worker and the migrations with a message that names it. `APP_ENV=production` also refuses
-development-only settings (`BILLING_PROVIDER=fake`, a non-empty `OUTBOUND_ALLOWLIST`, no `BETTER_AUTH_SECRET`).
+development-only settings (`BILLING_PROVIDER=fake`, a non-empty `OUTBOUND_ALLOWLIST`, no `BETTER_AUTH_SECRET`, no
+`ENCRYPTION_KEYS`: lesson 8.1, docs/security/secrets.md).
 
 **Preview environments.** Each PR gets its own URL and its own database: run the PR's image with `migrate`, then
 `seed` (`NODE_ENV=development` for that one container: the seed refuses production), then `web` and `worker`. Give it

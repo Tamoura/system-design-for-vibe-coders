@@ -11,10 +11,11 @@ and staff scripts, and the backup/restore scripts.)
 ## Install
 
 ```bash
-git clone -b beacon/module-7-solution --single-branch https://github.com/Tamoura/system-design-for-vibe-coders.git beacon
+git clone -b beacon/module-8-solution --single-branch https://github.com/Tamoura/system-design-for-vibe-coders.git beacon
 cd beacon
 cat > .env <<EOF
 BETTER_AUTH_SECRET=$(openssl rand -base64 32)
+ENCRYPTION_KEYS=k1:$(openssl rand -base64 32)
 POSTGRES_PASSWORD=$(openssl rand -hex 16)
 APP_URL=http://localhost:3000
 EOF
