@@ -1,6 +1,7 @@
 import { sql } from 'drizzle-orm';
 import { boolean, check, customType, doublePrecision, index, integer, jsonb, pgEnum, pgTable, primaryKey, text, timestamp, uniqueIndex, uuid, type AnyPgColumn } from 'drizzle-orm/pg-core';
 import { FILE_KINDS } from '../core/files';
+import { MILESTONES } from '../core/onboarding';
 import { CATEGORY_IDS, CHANNELS } from '../core/notifications';
 import { PLAN_IDS } from '../core/plans';
 import { ROLES } from '../core/roles';
@@ -38,7 +39,9 @@ export const organizations = pgTable('organizations', {
   // Goes in the URL: /acme/monitors and /status/acme. See src/core/slugs.ts.
   slug: text('slug').notNull().unique(),
   // The public status page at /status/[slug]. Only roles with "page.publish" may switch it (lesson 1.3).
-  statusPagePublic: boolean('status_page_public').notNull().default(true),
+  // Lesson 6.1: new orgs start UNpublished (an empty status page helps nobody);
+  // publishing it is the last onboarding step. Migration 0021 kept existing orgs as they were.
+  statusPagePublic: boolean('status_page_public').notNull().default(false),
   // Lesson 2.2: the status page logo, a row in `files` (the bytes are in object storage).
   logoFileId: uuid('logo_file_id').references((): AnyPgColumn => files.id, { onDelete: 'set null' }),
   // Lesson 3.1: the Stripe Customer belongs to the ORGANIZATION, not to the
@@ -849,6 +852,29 @@ export const escalationPolicies = pgTable('escalation_policies', {
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: updatedAt(),
 });
+
+/*
+ * Module 6 — Product & Growth.
+ */
+
+/**
+ * Lesson 6.1 (🟡): onboarding milestones, stored on the org. One row per
+ * milestone the org has reached, written once (the primary key plus
+ * ON CONFLICT DO NOTHING): the first monitor, the first check result, the
+ * first alert channel, the first invitation, the status page published.
+ * `reached_at` is what "time to activation" is computed from (lesson 6.2).
+ */
+export const orgMilestones = pgTable(
+  'org_milestones',
+  {
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    milestone: text('milestone', { enum: MILESTONES }).notNull(),
+    reachedAt: timestamp('reached_at', { withTimezone: true }).notNull().defaultNow(),
+    // Who got there (null: Beacon itself, e.g. the first check). Deleted users leave the milestone.
+    userId: uuid('user_id').references(() => users.id, { onDelete: 'set null' }),
+  },
+  (t) => [primaryKey({ columns: [t.organizationId, t.milestone] })],
+);
 
 export type Organization = typeof organizations.$inferSelect;
 export type Membership = typeof memberships.$inferSelect;

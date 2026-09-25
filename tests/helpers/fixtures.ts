@@ -31,11 +31,14 @@ export async function makeUser(label: string, opts: { emailVerified?: boolean } 
  * can create monitors with 60-second intervals freely. The plan is written
  * straight into the snapshot column, the way an admin would comp a plan;
  * tests about billing use `{ plan: 'free' }` and go through the real sync.
+ *
+ * Lesson 6.1: new orgs start with an unpublished status page (publishing it
+ * is an onboarding step). Fixture orgs publish theirs, as most tests expect.
  */
 export async function makeOrg(name: string, opts: { plan?: PlanId } = {}) {
   const owner = await makeUser(`${name}-owner`);
   const org = await createOrganization(owner.id, name);
-  await db.update(schema.organizations).set({ plan: opts.plan ?? 'business' }).where(eq(schema.organizations.id, org.id));
+  await db.update(schema.organizations).set({ plan: opts.plan ?? 'business', statusPagePublic: true }).where(eq(schema.organizations.id, org.id));
   const users: Record<Role, CurrentUser> = { owner } as Record<Role, CurrentUser>;
   for (const role of ['admin', 'member', 'viewer'] as const) {
     users[role] = await makeUser(`${name}-${role}`);

@@ -81,7 +81,8 @@ for (const u of USERS) {
 }
 
 // 2. The organization and its memberships (lesson 1.2).
-await db.insert(schema.organizations).values({ name: 'Demo', slug: 'demo' }).onConflictDoNothing();
+// Lesson 6.1: the demo's status page is published (new orgs start unpublished).
+await db.insert(schema.organizations).values({ name: 'Demo', slug: 'demo', statusPagePublic: true }).onConflictDoNothing();
 const [org] = await db.select().from(schema.organizations).where(eq(schema.organizations.slug, 'demo'));
 for (const u of USERS) {
   await db.insert(schema.memberships).values({ organizationId: org.id, userId: users[u.email], role: u.role }).onConflictDoNothing();
@@ -150,6 +151,14 @@ for (const spec of MONITORS) {
       })),
     );
   }
+}
+
+// 4. Lesson 6.1: the demo org has done most of its onboarding (monitors, checks,
+//    a teammate, a published status page). "Connect an alert channel" is left,
+//    so the Getting started checklist shows on the Monitors page.
+const at = new Date(Date.now() - CHECKS_PER_MONITOR * 5 * 60_000);
+for (const milestone of ['monitor_created', 'first_check', 'teammate_invited', 'status_page_published'] as const) {
+  await db.insert(schema.orgMilestones).values({ organizationId: org.id, milestone, reachedAt: at, userId: ownerId }).onConflictDoNothing();
 }
 
 console.log(
