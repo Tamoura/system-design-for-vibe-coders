@@ -1,10 +1,11 @@
-import { and, eq, max } from 'drizzle-orm';
+import { and, eq, max, sql } from 'drizzle-orm';
 import { db, schema } from '@/db';
 import { withOrg } from '@/db/tenant';
 import { runCheck, type CheckOutcome } from '@/core/check';
 import { effectiveIntervalSec, entitlementsFor } from '@/core/plans';
 import { checkSlots, isDue } from '@/core/schedule';
 import { recordCheckResult } from './checks';
+import { isEnabled } from './flags';
 import { enqueueInTx, type JobData } from './queue';
 
 const { organizations, monitors, checkResults } = schema;
@@ -41,14 +42,31 @@ export async function scheduleChecks(now = new Date()): Promise<{ monitors: numb
   for (const org of orgs) {
     // Lesson 3.2: the plan's minimum interval, from the same snapshot the API enforces.
     const ent = entitlementsFor(org.plan);
+    // Lesson 6.3 (🟡): the release flag, per ORG, evaluated locally from the
+    // cached rules (no network call per org). Off (the safe default) = the 5.1 behaviour.
+    // TODO(flag:new-scheduler): remove the flag and keep the new branch once it is at 100% (see src/core/flags.ts).
+    const firstCheckNow = await isEnabled('new-scheduler', org);
     // Lesson 2.4: a job that visits every org works inside withOrg(org.id), like a request.
     await withOrg(org.id, async (tx) => {
       const running = await tx
-        .select({ id: monitors.id, intervalSeconds: monitors.intervalSeconds })
+        .select({
+          id: monitors.id,
+          intervalSeconds: monitors.intervalSeconds,
+          // Written out in full: inside a select, Drizzle prints an interpolated column without its table name,
+          // and a correlated subquery needs "monitors"."id", not a bare "id".
+          neverChecked: sql<boolean>`not exists (select 1 from check_results cr where cr.organization_id = ${org.id} and cr.monitor_id = "monitors"."id")`,
+        })
         .from(monitors)
         .where(and(eq(monitors.organizationId, org.id), eq(monitors.paused, false)));
       count += running.length;
       for (const m of running) {
+        if (firstCheckNow && m.neverChecked) {
+          // The new rule: a monitor nobody has checked yet is checked now, not at
+          // its first phase slot (up to a whole interval away). Time to the first
+          // check result is the activation step of lesson 6.1/6.2.
+          const id = await enqueueInTx(tx, 'check.run', { orgId: org.id, monitorId: m.id, scheduledAt: now.toISOString() }, { key: `${m.id}@first`, group: org.id });
+          if (id) enqueued++;
+        }
         for (const slot of checkSlots(m.id, effectiveIntervalSec(m.intervalSeconds, ent), from, to)) {
           const id = await enqueueInTx(tx, 'check.run', { orgId: org.id, monitorId: m.id, scheduledAt: slot.toISOString() }, {
             key: `${m.id}@${slot.toISOString()}`, // the monitor + slot dedupe key

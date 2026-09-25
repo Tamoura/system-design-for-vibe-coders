@@ -5,6 +5,7 @@ import { SMS_PER_HOUR, smsText } from '@/core/notifications';
 import type { TemplateName, TemplateProps } from '@/emails';
 import { deliverEmail } from '../email';
 import type { JobContext } from '../queue/queues';
+import { isEnabled } from '../flags';
 import { recordSmsSent } from '../usage';
 import { enqueueDeliveries, type DeliveryPayload } from './pipeline';
 import { getSlackSender, getSmsProvider } from './providers';
@@ -117,6 +118,15 @@ async function sendEmailDelivery(d: Delivery): Promise<Outcome> {
  * Once the provider accepts a message, it is metered (lesson 3.3).
  */
 async function sendSmsDelivery(d: Delivery): Promise<Outcome> {
+  // Lesson 6.3 (🟡): the ops kill switch. On-call flips `disable-sms-sending`
+  // in /internal/flags (for everyone, or for one org) and every worker stops
+  // sending SMS within one flag refresh interval, with no deploy. The delivery
+  // is logged as skipped; the email, Slack and in-app messages of the same
+  // alert are separate deliveries and still go out.
+  if (await isEnabled('disable-sms-sending', { id: d.organizationId })) {
+    await record(d, { status: 'skipped', error: 'SMS sending is switched off by an operator (flag disable-sms-sending)' });
+    return 'skipped';
+  }
   const provider = getSmsProvider();
   if (!provider) {
     await record(d, { status: 'skipped', error: 'no SMS provider configured' });

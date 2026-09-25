@@ -118,6 +118,9 @@ const NOT_UNDER_RLS = [
   'invitations',
   // Lesson 5.2: the key is how an API request finds its org; looked up by hash before any org is known.
   'api_keys',
+  // Lesson 6.3: per-org flag targeting is platform configuration written by Beacon staff, not tenant
+  // data. Every process loads the whole rule set to evaluate flags in memory (local evaluation).
+  'feature_flag_overrides',
 ];
 
 describe('every tenant table is protected', () => {

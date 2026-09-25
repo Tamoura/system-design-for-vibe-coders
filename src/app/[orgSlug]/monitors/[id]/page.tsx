@@ -8,6 +8,8 @@ import { listIncidentUpdates } from '@/lib/incidents';
 import { AutoRefresh } from '@/app/_components/auto-refresh';
 import { FileUploader } from '@/app/_components/file-uploader';
 import { listRuns } from '@/lib/workflows';
+import { isEnabled } from '@/lib/flags';
+import { LatencyChart } from './latency-chart';
 import { acknowledgeIncidentAction, addIncidentUpdateAction, deleteMonitorAction, resolveIncidentAction } from './actions';
 import { WorkflowRuns } from './workflow-runs';
 import { EditMonitorForm } from './edit-form';
@@ -32,6 +34,9 @@ export default async function MonitorPage({ params }: { params: Promise<{ orgSlu
   // Lesson 1.3 (🟡): the same ABAC rule the server enforces decides what to show.
   const editable = canEditMonitor(ctx, monitor);
   const ent = await getEntitlements(ctx); // lesson 3.2: for the interval picker's hints
+  // Lesson 6.3: a beta behind a permission flag, evaluated on the server for THIS org.
+  // TODO(flag:monitor-latency-chart): delete this check when the chart is released to everyone.
+  const showLatencyChart = await isEnabled('monitor-latency-chart', { id: ctx.orgId });
   return (
     <section className="grid">
       <div className="row">
@@ -143,6 +148,12 @@ export default async function MonitorPage({ params }: { params: Promise<{ orgSlu
           </table>
         )}
       </div>
+      {showLatencyChart && (
+        <>
+          <h2 style={{ margin: 0, fontSize: '1.1rem' }}>Response time <span className="badge">beta</span></h2>
+          <div className="card"><LatencyChart checks={history.checks} /></div>
+        </>
+      )}
       <h2 style={{ margin: 0, fontSize: '1.1rem' }}>Latest checks</h2>
       <div className="card">
         {history.checks.length === 0 ? (

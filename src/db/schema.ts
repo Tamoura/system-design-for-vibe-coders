@@ -913,6 +913,46 @@ export const analyticsEvents = pgTable(
   ],
 );
 
+/**
+ * Lesson 6.3 (🟢): the flag rules. What a flag IS (type, owner, expiry, safe
+ * default) is code, in src/core/flags.ts; how it is set right now is data,
+ * here, changed without a deploy. A key with no row uses its safe default.
+ */
+export const featureFlags = pgTable(
+  'feature_flags',
+  {
+    key: text('key').primaryKey(),
+    // The master switch: false turns the flag off for every org, overrides included (the kill switch).
+    enabled: boolean('enabled').notNull().default(false),
+    // 0–100: which share of orgs, by a stable hash of key + org id (src/core/flags.ts rolloutBucket).
+    rolloutPercent: integer('rollout_percent').notNull().default(0),
+    updatedBy: uuid('updated_by').references(() => users.id, { onDelete: 'set null' }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [check('feature_flags_rollout_percent_check', sql`${t.rolloutPercent} between 0 and 100`)],
+);
+
+/**
+ * Lesson 6.3 (🟢): per-org targeting. "On for our own org", "on for these
+ * three beta customers", "off for Acme". Platform configuration written by
+ * Beacon staff, not tenant data: every process loads the whole rule set to
+ * evaluate flags in memory, so this table is deliberately not under RLS
+ * (tests/tenant-scoping.test.ts lists it).
+ */
+export const featureFlagOverrides = pgTable(
+  'feature_flag_overrides',
+  {
+    key: text('key').notNull().references(() => featureFlags.key, { onDelete: 'cascade' }),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    enabled: boolean('enabled').notNull(),
+    updatedBy: uuid('updated_by').references(() => users.id, { onDelete: 'set null' }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [primaryKey({ columns: [t.key, t.organizationId] }), index('feature_flag_overrides_org_idx').on(t.organizationId)],
+);
+
 export type Organization = typeof organizations.$inferSelect;
 export type Membership = typeof memberships.$inferSelect;
 export type Invitation = typeof invitations.$inferSelect;
@@ -932,3 +972,4 @@ export type WebhookEndpoint = typeof webhookEndpoints.$inferSelect;
 export type WebhookMessage = typeof webhookMessages.$inferSelect;
 export type WorkflowRun = typeof workflowRuns.$inferSelect;
 export type AnalyticsEvent = typeof analyticsEvents.$inferSelect;
+export type FeatureFlag = typeof featureFlags.$inferSelect;
