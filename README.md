@@ -44,7 +44,7 @@ remote branch `beacon/module-N-solution`. A copy of the starter is also in the c
 | `module-6-solution` | Product: onboarding and settings, analytics events, feature flags |
 | `module-7-solution` | Operations: admin panel, structured logging, audit log, Docker and deploy |
 | `module-8-solution` | Trust: security headers and secrets hygiene, AI incident summaries |
-| `module-9-solution` | Capstone: architecture diagram and decision records |
+| `module-9-solution` | Capstone: [architecture](docs/architecture.md), [ten decision records](docs/adr/README.md) and an [enterprise readiness review](docs/readiness-review.md) |
 
 Each solution branch builds on the one before it, so `module-5-solution` also contains modules 1–4.
 The solutions cover the 🟢 Beginner and 🟡 Intermediate exercises. The 🔴 Advanced exercises are stretch
@@ -137,6 +137,15 @@ to edit and publish; without `ANTHROPIC_API_KEY` a built-in fake provider writes
 `npm run hooks:install` once per clone runs gitleaks before every commit. See
 [docs/SOLUTIONS.md](docs/SOLUTIONS.md#module-8--trust--the-frontier) and [docs/security/](docs/security/threat-model.md).
 
+Module 9 is the capstone, and it is mostly reading. [docs/architecture.md](docs/architecture.md) draws all of Beacon as
+the lesson's three rings, with the lesson and the technology in every box, the tenant boundary, the event backbone,
+two traced flows ("a Pro customer adds a monitor", "a monitor goes down") and what Beacon builds, buys or self-hosts.
+[docs/adr/](docs/adr/README.md) holds ten one-page decision records, each with a concrete revisit trigger.
+[docs/readiness-review.md](docs/readiness-review.md) traces "an employee leaves" and "export, then delete everything"
+across every component and lists the seams that still leak; the one it fixed (a deleted person's API keys kept
+working) has a test. `tests/architecture-docs.test.ts` fails if a file the docs cite disappears. See
+[docs/SOLUTIONS.md](docs/SOLUTIONS.md#module-9--capstone).
+
 Billing (Module 3) is off until you configure it. To try upgrades without a Stripe account, start the app
 with `BILLING_PROVIDER=fake npm run dev`: "Upgrade" then opens a stand-in Checkout page inside Beacon and
 a signed webhook follows. For real Stripe test mode (test keys, `stripe listen`), see
@@ -202,7 +211,8 @@ drizzle/        SQL migrations (generated; commit them).
 tests/          Vitest tests for src/core, and for src/lib and the API on an in-memory Postgres.
 docs/           EXERCISES.md, SOLUTIONS.md (what each solution branch built and why), openapi.json and
                 configuration.md (generated), operations, deployment, self-hosting and backup guides (module 7),
-                security/ (threat model, secrets, privacy and retention: module 8), later the architecture docs (module 9).
+                security/ (threat model, secrets, privacy and retention: module 8), architecture.md, adr/ and
+                readiness-review.md (module 9).
 ```
 
 To find where a lesson plugs in, search for its TODO:
