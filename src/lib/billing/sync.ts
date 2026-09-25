@@ -80,7 +80,7 @@ export async function syncCustomerFromStripe(customerId: string): Promise<SyncRe
 
   // Lesson 3.2 (🟡): "email the owner", once per downgrade. Since 4.2 it is a
   // notification in the required "billing" category (in-app + email to
-  // everyone who may manage billing), queued here and sent after the response.
+  // everyone who may manage billing), queued here and sent by the worker (5.1).
   if (isDowngrade(result.previousPlan, result.plan)) {
     await notify(planDowngradedEvent(org, { from: result.previousPlan, to: result.plan, frozen: result.frozen, at: new Date() }));
   }

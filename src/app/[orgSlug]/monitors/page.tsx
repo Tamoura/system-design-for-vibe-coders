@@ -81,7 +81,7 @@ export default async function MonitorsPage({
       )}
       {!hits && monitors.length === 0 && (
         // TODO(6.1): a real empty state is the first step of onboarding.
-        <div className="card muted">No monitors yet. Add one, then run <code>npm run checks:run</code>.</div>
+        <div className="card muted">No monitors yet. Add one: the worker (<code>npm run worker</code>) checks it on its schedule.</div>
       )}
       {/* Lesson 4.3 (🟢): tiles update live over SSE instead of polling. */}
       <LiveMonitorList

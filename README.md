@@ -81,19 +81,29 @@ invitations, incident alerts) lands in Mailpit at <http://localhost:8025>. No Do
 `EMAIL_DRIVER=console` and emails are printed in the terminal instead.
 "Sign in with GitHub" appears when `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` are set.
 
-In a second terminal, run the checks. On `main` this is a one-shot script, and lesson 5.1 turns it into
-a real scheduler:
+In a second terminal, start the worker. It checks every monitor on its schedule (each monitor at its own
+second of its interval, lesson 5.1), sends the queued emails, SMS, Slack messages and webhooks, and runs the
+escalation workflows:
 
 ```bash
-npm run checks:run -- --all
+npm run worker
 ```
 
 An incident opens after three failures in a row (lesson 4.2) and notifies the team: a notification behind the
 🔔 and an email in Mailpit. The seed's "Always broken" monitor already has an open incident; click **Mark
-resolved** on its page (that notifies too), run the checks again, and a new incident opens. Start the app with
-`SMS_PROVIDER=fake` to see SMS alerts (set a phone number under 🔔 → Preferences) printed and metered.
-Without `--all` it checks only the monitors that are due (their interval, never shorter than the plan's
-minimum, has passed), which is what cron should run every minute.
+resolved** on its page (that notifies too), wait for its next check, and a new incident opens. Its URL is on
+`localhost`, so its check fails with "Blocked: … loopback address": the SSRF guard (lesson 5.3) refuses
+internal addresses, and `OUTBOUND_ALLOWLIST` in `.env.example` lets `localhost:3000` through for "Beacon
+itself" in development. Start the app with `SMS_PROVIDER=fake` to see SMS alerts (set a phone number under
+🔔 → Preferences) printed and metered. `npm run checks:run -- --all` checks every monitor now instead of
+waiting, and `npm run jobs` shows the queues: what is waiting, what is being retried and why, and the
+dead letters.
+
+Module 5 adds what other software uses to reach Beacon: **Settings → API keys** for the public API
+(`/api/v1`, reference at <http://localhost:3000/docs/api>; the API is part of the Business plan, so put the
+demo org on it with `update organizations set plan = 'business' where slug = 'demo'`), **Settings →
+Webhooks** for signed incident events, and **Settings → Escalation policy**. See
+[docs/SOLUTIONS.md](docs/SOLUTIONS.md#module-5--background-work--integrations).
 
 Billing (Module 3) is off until you configure it. To try upgrades without a Stripe account, start the app
 with `BILLING_PROVIDER=fake npm run dev`: "Upgrade" then opens a stand-in Checkout page inside Beacon and
@@ -107,9 +117,11 @@ a signed webhook follows. For real Stripe test mode (test keys, `stripe listen`)
 | `npm run db:generate` | Create a new migration after you edit `src/db/schema.ts`. |
 | `npm run db:reset` | Drop, migrate and seed a local database. Refuses anything but localhost. |
 | `npm run db:seed:large` | Org `big` with 500 monitors × 1,000 checks, for measuring queries (`-- --monitors=50000 --checks=0` for search). |
-| `npm run files:process` | Finish uploads whose background thumbnail job never ran. |
-| `npm run usage:report` | Send recorded SMS usage to Stripe's meter (lesson 3.3). Safe to re-run. |
-| `npm run messages:send` | Send queued emails and notifications that are due, including retries after a provider outage (lessons 4.1, 4.2). Run it from cron. |
+| `npm run worker` | The background worker (lesson 5.1): the check scheduler, checks, emails, SMS, Slack, webhooks, thumbnails, usage reporting, workflows. Run one or more next to the app. |
+| `npm run jobs` | The queues at a glance: waiting, oldest job, retries with their errors, dead letters. `-- redrive` puts dead letters back; `-- run` runs due jobs once without a worker. |
+| `npm run checks:run` | Enqueue checks for monitors that are due now (`-- --all`: every running monitor). The worker also does this by itself. |
+| `npm run usage:report` | Send recorded SMS usage to Stripe's meter (lesson 3.3). The worker does it every 5 minutes; safe to re-run. |
+| `npm run openapi` | Regenerate `docs/openapi.json` from the API's Zod schemas (lesson 5.2). CI runs `npm run openapi:check`. |
 | `npm run email:preview` | Render every email template (HTML and plain text) to `.email-preview/` (lesson 4.1). |
 | `npm run storage:setup` | With `STORAGE_DRIVER=s3`: create the bucket, block public access, set CORS. |
 | `npm run build` | Production build, the same one CI runs. |
@@ -125,12 +137,16 @@ src/
   lib/storage/  Object storage behind one interface: S3-compatible or local files (lesson 2.2).
   lib/email/    sendEmail(): the queue, SMTP/Resend drivers, bounces and suppression (lesson 4.1).
   lib/notifications/  notify(): recipients, preferences, channels, delivery log (lesson 4.2).
+  lib/queue/    The job queue (pg-boss): queues, enqueue(), handlers, the worker (lesson 5.1).
+  lib/workflows/  A small durable-workflow engine and the escalation policy (lesson 5.4).
   emails/       React Email templates, each with a plain-text part (lesson 4.1).
-  app/          Next.js App Router: auth pages, /[orgSlug]/… org pages, /status/[slug], /api/….
-scripts/        migrate, seed, reset, run-checks, process-files, send-messages, email-preview, storage-setup, claim-org.
+  app/          Next.js App Router: auth pages, /[orgSlug]/… org pages, /status/[slug], /api/… (the dashboard's
+                JSON), /api/v1/… (the public API, lesson 5.2), /docs/api.
+scripts/        migrate, seed, reset, worker, jobs, run-checks, report-usage, openapi, email-preview, storage-setup, claim-org.
 drizzle/        SQL migrations (generated; commit them).
 tests/          Vitest tests for src/core, and for src/lib and the API on an in-memory Postgres.
-docs/           EXERCISES.md, SOLUTIONS.md (what each solution branch built and why), later the architecture docs (module 9).
+docs/           EXERCISES.md, SOLUTIONS.md (what each solution branch built and why), openapi.json (generated),
+                later the architecture docs (module 9).
 ```
 
 To find where a lesson plugs in, search for its TODO:
@@ -146,9 +162,10 @@ grep -rn "TODO(1.2)" src scripts
 | Next.js (App Router) + TypeScript | One language across UI, server and scripts, and the most common SaaS starter stack | 6.1 |
 | PostgreSQL + Drizzle ORM | Postgres is the default SaaS database; Drizzle keeps SQL visible and migrations in the repo | 2.1 |
 | Stripe (hosted Checkout, Customer Portal, Billing meters) | Card data never touches Beacon; a signed webhook keeps a copy of each subscription | 3.1 |
-| Zod | One validation schema shared by forms and, later, the public API | 5.2 |
+| Zod | One validation schema shared by forms and the public API, and the source of its OpenAPI document | 5.2 |
 | Vitest | Fast tests for the core logic | — |
 | React Email + nodemailer (Resend in production) | Templates as components with a plain-text part; SMTP to Mailpit locally | 4.1 |
+| pg-boss (a job queue in Postgres) | Jobs commit in the same transaction as the data; retries, cron, dead letters, per-tenant concurrency; no Redis to run | 5.1 |
 | Docker Compose | Postgres and Mailpit locally with one command | 7.4 |
 
 The course names the Django, Rails, Laravel and Go equivalents for every component. The ideas carry over,

@@ -223,7 +223,7 @@ export async function listIncidentScreenshots({ orgId }: OrgScope, incidentIds: 
   );
 }
 
-/** Files stuck in "processing" (for `npm run files:process`). */
+/** Files in "processing" (for the worker's start-up check, src/lib/queue/worker.ts). */
 export async function listProcessingFileIds({ orgId }: OrgScope): Promise<string[]> {
   const rows = await withOrg(orgId, (tx) =>
     tx
