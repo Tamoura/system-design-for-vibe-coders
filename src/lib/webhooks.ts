@@ -4,7 +4,7 @@ import { db, schema } from '@/db';
 import { withOrg, type TenantTx } from '@/db/tenant';
 import { can } from '@/core/permissions';
 import { toPublicId } from '@/core/ids';
-import { assertPublicUrl, BlockedUrlError, safeFetch } from '@/core/safe-fetch';
+import { assertPublicUrl, BlockedUrlError, readCapped, safeFetch } from '@/core/safe-fetch';
 import { generateWebhookSecret, shouldDisable, snippet, WEBHOOK_EVENT_TYPE_IDS, webhookHeaders, type WebhookEventType } from '@/core/webhooks';
 import { isUuid } from '@/core/validation';
 import type { Incident, Monitor } from '@/db/schema';
@@ -276,7 +276,8 @@ export async function deliverWebhook(job: JobData['webhook.deliver'], ctx: Pick<
       { maxRedirects: 0, ports: WEBHOOK_PORTS }, // a redirect is a failure: never follow one for a webhook
     );
     statusCode = res.status;
-    responseBody = snippet(await res.text().catch(() => ''));
+    // Lesson 8.1: only the first 64 KB of their answer is read, of which the log keeps 500 characters.
+    responseBody = snippet((await readCapped(res).catch(() => ({ text: '' }))).text);
     if (res.status < 200 || res.status >= 300) error = `HTTP ${res.status}`;
   } catch (err) {
     const e = err as Error & { cause?: Error & { code?: string } };

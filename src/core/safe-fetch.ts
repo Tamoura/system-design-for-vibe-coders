@@ -129,3 +129,44 @@ export async function safeFetch(raw: string, init: RequestInit = {}, opts: SafeF
     return res;
   }
 }
+
+/**
+ * Lesson 8.1 (🟡): a response-size limit. A customer's URL can answer with 10 GB
+ * (by accident or on purpose); Beacon reads at most `maxBytes` of it and hangs up.
+ * Returns what was read, as text (for a delivery log's snippet) and whether it was cut.
+ */
+export const MAX_RESPONSE_BYTES = 64 * 1024;
+
+/** Any response body: the web ReadableStream of fetch or of undici (their types differ, their readers do not). */
+export type BodyStream = { getReader(): { read(): Promise<{ done: boolean; value?: unknown }>; cancel(reason?: unknown): Promise<void> } };
+
+export async function readCapped(res: { body: BodyStream | null }, maxBytes = MAX_RESPONSE_BYTES): Promise<{ text: string; bytes: number; truncated: boolean }> {
+  if (!res.body) return { text: '', bytes: 0, truncated: false };
+  const reader = res.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let bytes = 0;
+  let truncated = false;
+  try {
+    for (;;) {
+      const { done, value: chunk } = await reader.read();
+      if (done) break;
+      const value = chunk as Uint8Array;
+      const room = maxBytes - bytes;
+      chunks.push(value.length > room ? value.subarray(0, room) : value);
+      bytes += Math.min(value.length, room);
+      if (value.length >= room) {
+        truncated = value.length > room || !(await reader.read().then((r) => r.done));
+        break;
+      }
+    }
+  } finally {
+    await reader.cancel().catch(() => undefined); // stop the download; the socket is not reused, which is fine
+  }
+  const all = new Uint8Array(bytes);
+  let at = 0;
+  for (const c of chunks) {
+    all.set(c, at);
+    at += c.length;
+  }
+  return { text: new TextDecoder().decode(all), bytes, truncated };
+}

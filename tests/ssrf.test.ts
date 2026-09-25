@@ -2,7 +2,7 @@ import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest
 import http from 'node:http';
 import type { AddressInfo } from 'node:net';
 import { runCheck } from '@/core/check';
-import { assertPublicUrl, BlockedUrlError, safeFetch, setResolverForTests } from '@/core/safe-fetch';
+import { assertPublicUrl, BlockedUrlError, MAX_RESPONSE_BYTES, readCapped, safeFetch, setResolverForTests } from '@/core/safe-fetch';
 import { blockedAddressReason } from '@/core/ssrf';
 
 /*
@@ -15,6 +15,9 @@ const FAKE_DNS: Record<string, string[]> = {
   'intranet.test': ['10.1.2.3'],
   'sneaky.test': ['93.184.215.14', '127.0.0.1'], // one bad address is enough to refuse
   'v6-local.test': ['fd00::1'],
+  // Lesson 8.1 (🟡) done-when cases: what real DNS answers for these.
+  localhost: ['127.0.0.1', '::1'],
+  'db.corp.test': ['10.0.0.5'],
 };
 
 beforeAll(() =>
@@ -96,6 +99,22 @@ describe('safeFetch() and runCheck(): when the request is made', () => {
         res.writeHead(302, { location: 'http://169.254.169.254/latest/meta-data/' });
         return res.end();
       }
+      if (req.url === '/to-loopback') {
+        res.writeHead(302, { location: 'http://127.0.0.1:1/admin' });
+        return res.end();
+      }
+      if (req.url === '/huge') {
+        // 20 MB, written in 1 MB pieces while the client reads.
+        res.writeHead(200, { 'content-type': 'application/octet-stream' });
+        let left = 20;
+        const more = () => {
+          while (left > 0 && res.write(Buffer.alloc(1024 * 1024, 97))) left--;
+          if (left > 0) res.once('drain', () => { left--; more(); });
+          else res.end();
+        };
+        res.on('close', () => (left = 0));
+        return more();
+      }
       if (req.url === '/hop') {
         res.writeHead(302, { location: '/ok' });
         return res.end();
@@ -132,6 +151,29 @@ describe('safeFetch() and runCheck(): when the request is made', () => {
     vi.stubEnv('OUTBOUND_ALLOWLIST', `127.0.0.1:${port}`);
     const res = await safeFetch(`http://127.0.0.1:${port}/hop`, { method: 'POST' }, { maxRedirects: 0 });
     expect(res.status).toBe(302);
+  });
+
+  it('lesson 8.1 (🟡): localhost:5432, a name resolving to 10.0.0.5, [::1] and 2130706433 all fail with a clear reason', async () => {
+    expect(await runCheck('http://localhost:5432/')).toMatchObject({ ok: false, error: expect.stringMatching(/^Blocked: localhost resolves to (127\.0\.0\.1|::1), a loopback address/) });
+    expect(await runCheck('http://db.corp.test/')).toMatchObject({ ok: false, error: 'Blocked: db.corp.test resolves to 10.0.0.5, a private address' });
+    expect(await runCheck('http://[::1]/')).toMatchObject({ ok: false, error: expect.stringMatching(/^Blocked: ::1 is a loopback address/) });
+    expect(await runCheck('http://2130706433/')).toMatchObject({ ok: false, error: expect.stringMatching(/^Blocked: 127\.0\.0\.1 is a loopback address/) });
+  });
+
+  it('lesson 8.1 (🟡): a public URL that redirects to 127.0.0.1 is refused at the redirect', async () => {
+    vi.stubEnv('OUTBOUND_ALLOWLIST', `127.0.0.1:${port}`); // stands in for "a public site": the first hop is our test server
+    const res = await runCheck(`http://127.0.0.1:${port}/to-loopback`);
+    expect(res).toMatchObject({ ok: false, error: expect.stringMatching(/^Blocked: 127\.0\.0\.1 is a loopback address/) });
+  });
+
+  it('lesson 8.1 (🟡): a huge response is not downloaded; at most 64 KB is read', async () => {
+    vi.stubEnv('OUTBOUND_ALLOWLIST', `127.0.0.1:${port}`);
+    const res = await safeFetch(`http://127.0.0.1:${port}/huge`);
+    const read = await readCapped(res);
+    expect(read).toMatchObject({ bytes: MAX_RESPONSE_BYTES, truncated: true });
+    expect(await runCheck(`http://127.0.0.1:${port}/huge`)).toMatchObject({ ok: true, statusCode: 200 });
+    const small = await readCapped(await safeFetch(`http://127.0.0.1:${port}/ok`));
+    expect(small).toEqual({ text: 'ok', bytes: 2, truncated: false });
   });
 
   it('BlockedUrlError is what callers catch', async () => {

@@ -5,7 +5,7 @@
  * It deliberately knows nothing about the database, tenants or jobs, so the
  * scheduler (lesson 5.1) and the tests can both call it directly.
  */
-import { BlockedUrlError, safeFetch } from './safe-fetch';
+import { BlockedUrlError, readCapped, safeFetch, type BodyStream } from './safe-fetch';
 
 export type CheckOutcome = {
   ok: boolean;
@@ -14,7 +14,7 @@ export type CheckOutcome = {
   error: string | null;
 };
 
-type Fetch = (url: string, init: { method: string; signal: AbortSignal; headers: Record<string, string> }) => Promise<{ status: number; arrayBuffer(): Promise<unknown> }>;
+type Fetch = (url: string, init: { method: string; signal: AbortSignal; headers: Record<string, string> }) => Promise<{ status: number; body: BodyStream | null }>;
 
 export type CheckOptions = {
   timeoutMs?: number;
@@ -39,8 +39,9 @@ export async function runCheck(url: string, opts: CheckOptions = {}): Promise<Ch
       signal: AbortSignal.timeout(timeoutMs),
       headers: { 'user-agent': 'BeaconBot/0.1 (+https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter)' },
     });
-    // Drain the body so the connection can be reused; we only need the status.
-    await res.arrayBuffer().catch(() => undefined);
+    // We only need the status. Lesson 8.1 (🟡): read at most 64 KB of the body, then hang up,
+    // so a monitored URL that answers with gigabytes cannot tie up a worker (the timeout covers the rest).
+    await readCapped(res).catch(() => undefined);
     const latencyMs = Math.round(performance.now() - started);
     const ok = res.status >= 200 && res.status < 400;
     return { ok, statusCode: res.status, latencyMs, error: ok ? null : `HTTP ${res.status}` };
