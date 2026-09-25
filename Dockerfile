@@ -29,7 +29,13 @@ RUN npm ci --no-audit --no-fund
 FROM base AS prod-deps
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci --omit=dev --no-audit --no-fund && npm cache clean --force
+# `npm ci --omit=dev` still keeps dev tools that a production package lists as an *optional peer*
+# (better-auth does, for drizzle-kit and vitest), plus everything they depend on. The script walks the
+# lockfile from our own dependencies and deletes the rest: code that isn't in the image can't break
+# or be exploited in production.
+COPY scripts/prune-prod-deps.mjs ./scripts/
+RUN npm ci --omit=dev --no-audit --no-fund && npm cache clean --force \
+ && node scripts/prune-prod-deps.mjs
 
 # 3. The build: Next.js, then the worker and CLIs bundled to plain JavaScript
 #    (tsx is a dev dependency and is not in the final image).
@@ -71,6 +77,9 @@ COPY --from=prod-deps --chown=1000:1000 /app/node_modules ./node_modules
 COPY --from=build --chown=1000:1000 /app/.next ./.next
 COPY --from=build --chown=1000:1000 /app/dist ./dist
 COPY --chown=1000:1000 package.json next.config.ts ./
+# next.config.ts is compiled when `next start` boots, so the files it imports must be here too:
+# the security headers (lesson 8.1). Keep that module free of imports so this stays one file.
+COPY --chown=1000:1000 src/core/security-headers.ts ./src/core/security-headers.ts
 COPY --chown=1000:1000 drizzle ./drizzle
 # Uploaded files with the local storage driver: mount a volume here (or use STORAGE_DRIVER=s3).
 RUN mkdir -p /app/.storage && chown 1000:1000 /app/.storage
