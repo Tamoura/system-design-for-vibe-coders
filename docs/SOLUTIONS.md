@@ -1490,3 +1490,276 @@ the failing receiver is retried with the same `webhook-id`, `npm run jobs` and t
 never paged → `acknowledged_at` in the API → the incident's workflow runs on the monitor page → **Mark
 resolved** delivers `incident.resolved`, signed; the timeline shows the fan-out, the page and the acknowledgement
 → a revoked key gets 401, last-used is recorded → a member gets 403 on the API keys page.
+
+---
+
+## Module 6 — Product & Growth
+
+Modules 1–5 built what customers never see. Module 6 is what they see first and every day: a **marketing site**
+separate from an **app shell** with onboarding and a settings split (6.1), **product analytics** that say whether
+new orgs get value (6.2), and **feature flags** that change the product per organization without a deploy (6.3).
+One number ties the three together: **activation**, "the org's first check result arrived within 24 hours".
+
+```
+ /  /pricing (static, no session read) ─► Sign up ─► createOrganization ─► org_created
+                                                           │
+ /[org]/monitors: empty state + Getting started ◄──────────┘   org_milestones (stored on the org, with times)
+   "Add your first monitor" (dialog, one zod schema in the browser AND on the server)
+        └─► createMonitor ── one withOrg() transaction: monitor + milestone + monitor_created event
+ worker: checks.schedule ── isEnabled('new-scheduler', org) (OpenFeature, rules cached in memory)
+        └─► first check ─► recordCheckResult: first_check milestone + monitor_check_completed  = ACTIVATED (≤ 24 h)
+ Slack/webhook, invitation, status page published ─► milestones + events ─► checklist done, it disappears
+ analytics_events (Postgres, RLS) ─► analytics.forward job, 1 per org per minute ─► PostHog (optional)
+ /internal/analytics: org_created → monitor_created → first check ≤ 24 h, by plan   /internal/flags: rollout, targeting, kill switch
+```
+
+### Try it by hand
+
+```bash
+npm run db:reset
+BEACON_STAFF_EMAILS=demo@beacon.test npm run dev    # terminal 1
+FLAGS_REFRESH_SECONDS=3 npm run worker              # terminal 2
+```
+
+1. Open <http://localhost:3000/> and **/pricing** signed out: static pages, the plans come from `src/core/plans.ts`.
+   DevTools → Application: no cookie. (Set `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` before `npm run build` to load Plausible
+   here, and only here.)
+2. Sign up. You land on an empty Monitors page with one button, **Add your first monitor**, and a **Getting
+   started** checklist at 0/5. Use only the keyboard: Tab (the first stop is "Skip to content"), Enter opens the
+   dialog, Escape closes it. Type `not a url` and press Enter: the error appears inline and DevTools → Network
+   shows no request. Then the same payload with curl (copy the session cookie):
+   ```bash
+   curl -s -X POST localhost:3000/api/orgs/<org>/monitors -b 'better-auth.session_token=…' \
+        -H 'content-type: application/json' -d '{"name":"x","url":"not a url","intervalSeconds":300}'
+   # {"error":"invalid_body","issues":{"url":["Enter a full URL, like https://example.com/health", …]}}
+   ```
+3. `npm run flags -- override new-scheduler <your-org> on`, then add a real monitor: its first check arrives within
+   a minute instead of at its first slot. The checklist ticks "first check": the org is activated.
+4. Connect Slack (**Organization → Alert channels**, any `https://hooks.slack.com/services/…` URL with
+   `SLACK_PROVIDER=fake`), invite someone (**Members**), publish the **Status page**. The checklist disappears, for
+   every member, including one who joins tomorrow.
+5. `psql "$DATABASE_URL" -c "select event, properties, org_plan from analytics_events order by occurred_at"`:
+   object_action names, ids and enums, no email or URL anywhere.
+6. Sign in as `demo@beacon.test` and open **/internal/flags**: put `monitor-latency-chart` at 0% (nobody sees the
+   chart on a monitor page), add an override for `demo` (only demo sees it), press the **kill switch** (nobody
+   again). **/internal/analytics** shows the funnel by plan.
+7. As `member@beacon.test`, `curl -X PATCH localhost:3000/api/orgs/demo/settings -d '{"name":"x"}' …`: 403.
+
+Existing database? Migration 0021 records the milestones your orgs already reached (first monitor, first check,
+Slack or a webhook, an invitation or a second member, a public status page), with their original times, so
+nobody is walked through "add your first monitor" again. Existing status pages stay as they were; only new orgs
+start unpublished.
+
+### Lesson 6.1 — The app shell: marketing site, onboarding, dashboard and settings
+
+**What was built.** Route groups split Beacon into frames with opposite needs: `(marketing)` (`/`, `/pricing`,
+static, `dynamic = 'error'` so a session read fails the build), `(auth)` and `(site)` (sign-in, `/settings/account`,
+invitations), `[orgSlug]` (the app shell) and `status/` (the customer's page, no Beacon chrome). The shell: a sidebar
+(Monitors, Incidents, Status page; Organization: General, Members, Billing, Alert channels, Escalation; Developer: API
+keys, Webhooks), an org switcher that swaps the org segment of the URL and keeps the section, the ⌘K palette and the
+bell in a top bar. Settings split by owner: `/settings/account` (the user), `/[org]/settings/general` (rename, behind
+the new `org.manage` permission, with `PATCH /api/orgs/:org/settings`), members, billing, alert channels, API keys
+and webhooks. A new **Incidents** page and a **Status page** section (publish, logo). Onboarding: an empty state with
+one action that opens a dialog, and a checklist driven by five milestones stored on the org.
+
+**Read in this order**
+
+1. `src/app/layout.tsx` (the map of frames), `src/app/(marketing)/layout.tsx`, `page.tsx`, `pricing/page.tsx`.
+2. `src/app/[orgSlug]/layout.tsx`, then `_shell/nav.ts` (`navFor`, `switchOrgHref`), `org-switcher.tsx`, `sidebar-nav.tsx`.
+3. `src/app/[orgSlug]/monitors/new/new-monitor-form.tsx` (`MonitorForm`: one schema, twice) and `add-monitor-dialog.tsx`.
+4. `src/core/onboarding.ts`, `src/lib/onboarding.ts`, `drizzle/0021_onboarding_milestones.sql` (the backfill), and the
+   `recordMilestoneInTx()` calls in `src/lib/monitors.ts`, `checks.ts`, `invitations.ts`, `webhooks.ts`,
+   `notifications/index.ts`, `organizations.ts`.
+5. `src/app/[orgSlug]/monitors/onboarding-checklist.tsx`, `page.tsx` (the empty state).
+6. `src/app/[orgSlug]/settings/general/`, `src/app/api/orgs/[orgSlug]/settings/route.ts`, `src/core/permissions.ts` (`org.manage`).
+7. `tests/onboarding.test.ts`.
+
+**Exercises covered**
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 authenticated layout: sidebar (Monitors, Incidents, Status pages, Settings), org switcher changing `/[org]/…`, an empty state whose one button opens a form validated by a shared zod schema | switching org changes the URL and a reload keeps you in that org | `switchOrgHref()` (tested); the org is only ever the URL segment; smoke: `/newco-two/incidents` → `/nora-s-workspace/incidents`, reload, same org |
+| | an invalid URL shows an inline error with no request, and curl gets the same message from the server | `MonitorForm` runs `createMonitorInput.safeParse()` on submit and cancels it; the route parses the same schema; test compares the two messages; smoke: 0 POSTs in the browser, then curl → 400 with the identical text |
+| | the whole flow works keyboard-only (Tab, Enter, Escape closes the dialog) | a native `<dialog>` with `showModal()`, focus back on the trigger on close; smoke drives it with Tab/Enter/Escape only |
+| 🟡 settings split: Account `/settings/account`, Organization `/[org]/settings/general` + `/members`, Billing, Developer | a Member gets 403 from the org-rename endpoint itself | `PATCH /api/orgs/:org/settings` and the server action check `org.manage`; tests (member and viewer 403, admin 200, invalid name 400) and smoke (curl as `member@beacon.test`) |
+| 🟡 checklist from milestones stored on the org: first monitor, first alert channel, status page published | the checklist hides itself once done; a second admin who joins later never sees it | state read from `org_milestones`, never from the user; test adds an admin after completion; smoke: checklist and sidebar progress gone after step 5 |
+| | milestone timestamps are stored ("time to activation") | `reached_at` (first time only, `ON CONFLICT DO NOTHING`) and `user_id`; the funnel's median time to activation reads them |
+
+The checklist has five steps, not three: the exercise's three plus "first check result" (activation, 6.2) and "invite
+a teammate", which the task asked for.
+
+**Design decisions to notice**
+
+- **One Next.js app, split by route groups**, not a monorepo: the course repo stays one project. The seams are where
+  next-forge puts its apps: the marketing pages read no session (the build enforces it), the app is `noindex`, the
+  status page has its own frame. Moving `(marketing)` to its own app or a CMS is moving a folder.
+- **New orgs start with the status page unpublished** (the column's default changed; existing orgs kept theirs).
+  Publishing is then a real decision, and a milestone. Test fixtures and the seed publish theirs explicitly.
+- **Milestones are rows, written in the transaction of the thing they describe** (the monitor, the check result, the
+  webhook endpoint), so they can never disagree with the data. The checklist, the sidebar badge and the funnel all
+  read the same rows.
+- **Accessibility basics**: a skip link, visible `:focus-visible` rings, labels on every field, `aria-invalid` plus
+  focus on the first field in error, `aria-current` in the sidebar, errors with `role="alert"`, and **words next to
+  every red/green dot** (the monitor tiles, the checks table, the status page; "never colour alone"). Found on the
+  way: the ⌘K palette stole focus on every page load, so Tab skipped "Skip to content"; fixed.
+- **No shadcn/ui or Tailwind.** The shell needed a dialog (native `<dialog>` gives the focus trap and Escape), a
+  disclosure (`<details>`) and a table; adding a component toolchain for those would have been most of the diff.
+  In a new product, start with shadcn/ui as the lesson says.
+- Times on the Incidents page are formatted by `Intl` in the viewer's time zone (`LocalTime`).
+
+### Lesson 6.2 — Analytics: product, web and the event pipeline
+
+**What was built.** A tracking plan in code (`src/core/tracking-plan.ts`): 12 events, object_action names,
+properties as zod schemas of enums, numbers and booleans only, a "why" and the question each answers. `track()` /
+`trackInTx()` accept only those names and exactly those properties (compile time and runtime), refuse anything that
+looks like personal data, and write `analytics_events` (org, internal user id, plan at the time) in the business
+transaction. Eleven server-side events are wired where the thing happens: `org_created`, `monitor_created`, the first
+`monitor_check_completed` per monitor, `alert_channel_connected`, `teammate_invited`, `invitation_accepted`,
+`status_page_published`, `incident_opened`, `subscription_upgraded` / `_downgraded` (from the Stripe sync) and
+`api_key_created`. One client event, `command_palette_opened`, goes through `POST /api/orgs/:org/analytics` only
+after the user said yes to a consent banner. With `ANALYTICS_DRIVER=posthog` the worker forwards events to PostHog in
+batches. `/internal/analytics` shows the activation funnel by plan. Plausible loads on the marketing site only, when
+`NEXT_PUBLIC_PLAUSIBLE_DOMAIN` is set.
+
+**Read in this order**
+
+1. `src/core/tracking-plan.ts` (the plan, the name rule, `findPii()`).
+2. `src/lib/analytics/index.ts` (`validateEvent`, `trackInTx`, `track`), then the calls: `grep -rn "trackInTx\|track(" src/lib`.
+3. `src/lib/analytics/drivers.ts` (PostHog: `$groupidentify`, `$groups`, `uuid`), `forward.ts`, the `analytics.forward` queue.
+4. `src/core/consent.ts`, `src/app/_components/analytics-consent.tsx`, `src/app/api/orgs/[orgSlug]/analytics/route.ts`.
+5. `src/lib/analytics/funnel.ts`, `src/app/internal/analytics/page.tsx`; `src/app/(marketing)/layout.tsx` (Plausible).
+6. `drizzle/0022_analytics_events.sql`; `tests/analytics.test.ts`.
+
+**Exercises covered**
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 a tracking plan of 8–12 object_action events with properties and a why; cookieless web analytics on the marketing site only | every event maps to a question (activation, retention, upgrade) | `question` and `why` on every entry; tests check names, questions and whys; `/internal/analytics` prints the plan |
+| | no property contains an email, name or monitored URL | schemas allow only enums, numbers and booleans (a test walks every schema); `findPii()` on every event; test runs every flow and scans all rows; smoke scanned the new org's events |
+| | marketing visits are counted with no cookie set | the Plausible script is in `(marketing)/layout.tsx` only; smoke (against a local stand-in for Plausible): 2 page views, no cookie, no storage, and no script in the app |
+| 🟡 PostHog: identify, `group("organization", orgId, { plan })`, `monitor_created` and `subscription_upgraded` server-side after the write/webhook; the activation funnel | the funnel breaks down by organization plan | every event carries its org and `org_plan`; PostHog batches start with `$groupidentify` (type organization, plan) and every event has `$groups`; `activationFunnel()` groups by plan (test with four orgs, smoke) |
+| | blocking PostHog in the browser does not stop `monitor_created` | there is no PostHog in the browser: `monitor_created` is inserted in the monitor's transaction (a failed create records nothing, tested) and forwarded by the worker (an outage retries, tested) |
+| | a typed `track` rejects event names outside the plan at compile time | `EventName` and `EventProperties<E>` derive from the plan; `tests/analytics.test.ts` has three `@ts-expect-error` calls that `npm run typecheck` verifies |
+
+**Design decisions to notice**
+
+- **Postgres first, PostHog second.** Events are business facts, so they commit with the business write (the 5.1
+  lesson again: no dual write). Forwarding is a job per org per minute (deterministic id, one running per org), sends
+  the row id as PostHog's `uuid` so a retry does not double-count, and a PostHog outage only delays it.
+- **`identify` and `group`, server-side.** The distinct id is Beacon's user id from the start, so there is no
+  anonymous browser id to merge: `identify` has nothing to do. The org is sent as a group with its plan on every batch
+  and on every event, which is the lesson's "send the group on every event, not only at identify time". If you add
+  the posthog-js SDK for UI events, call `identify(userId)` at login and `group('organization', orgId, { plan })` in
+  the org layout, after consent.
+- **Consent where it is needed.** Server-side events are about the org's use of the product, with ids only (privacy
+  policy and DPA, lesson 8.1). The browser's optional UI event waits for a yes; the server checks the same cookie, so
+  a client that ignores it gains nothing. "No thanks" is one click, and `/settings/account` changes it later.
+- **Only the first check per monitor** becomes an event: every check would be millions of rows. Uptime history for
+  customers is the 🔴 ClickHouse exercise.
+- **Deleting a user keeps their events and forgets them** (`user_id` is set null), so GDPR erasure does not rewrite
+  history.
+- The funnel reads across orgs as the database owner; it is staff-only and exempt from the `withOrg()` lint for that
+  reason. At scale it runs on a replica or in the warehouse.
+
+### Lesson 6.3 — Feature flags and experiments
+
+**What was built.** `feature_flags` (`key`, `enabled`, `rollout_percent`) and `feature_flag_overrides` (`key`,
+`organization_id`, `enabled`). What each flag *is* lives in code (`src/core/flags.ts`: type, owner, expiry, safe
+default, cleanup ticket); how it is set lives in the tables. Evaluation: master switch → per-org override → stable
+hash of `key:orgId` into 0–99 against the rollout. The app calls OpenFeature
+(`client.getBooleanValue(key, safeDefault, { targetingKey: orgId })`) through `isEnabled()`, with Beacon's own
+provider doing local evaluation from a cached rule set. Three flags, each wired to real code: `new-scheduler`
+(release: the scheduler checks a never-checked monitor at once), `disable-sms-sending` (ops kill switch, checked
+before every SMS) and `monitor-latency-chart` (permission/beta: a response-time chart on the monitor page).
+`/internal/flags` (staff: `BEACON_STAFF_EMAILS`) and `npm run flags` change them.
+
+**Read in this order**
+
+1. `src/core/flags.ts`: `FLAGS`, `rolloutBucket()`, `evaluateFlag()`.
+2. `src/lib/flags/provider.ts` (the OpenFeature provider: refresh, last known rules, safe defaults), `index.ts`, `store.ts`.
+3. The three call sites: `src/lib/scheduler.ts`, `src/lib/notifications/deliver.ts` `sendSmsDelivery()`,
+   `src/app/[orgSlug]/monitors/[id]/page.tsx`.
+4. `src/app/internal/flags/`, `scripts/flags.ts`, `src/lib/staff.ts`.
+5. `drizzle/0023_feature_flags.sql`; `tests/flags.test.ts`.
+
+**Exercises covered**
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 `feature_flags` + `feature_flag_overrides`; `isEnabled(key, orgId)`: overrides, then hash `key:orgId` into 0–99 | the same org always gets the same answer (1,000 calls) | test; plus 10,000 random orgs at 30% land between 28% and 32%, and every bucket is used |
+| | raising 10% → 30% keeps every org already on | test (2,000 orgs); a different flag picks a different slice (test) |
+| | an override for your internal org turns it on regardless of percentage | test at 0%, and an override can also keep one org out of 100%; smoke: override for `demo` shows the chart there only |
+| 🟡 OpenFeature with a self-hosted provider; `new-scheduler` keyed by org with local evaluation in the worker; `disable-sms-sending` flipped from a dashboard | stopping the flag service does not crash workers: last known rules or the safe default | provider tests: the loader fails after a load → same answers, reason `STALE`; never loaded → every flag's safe default; no targeting key → default, never a throw |
+| | flipping the kill switch stops SMS within the refresh interval, no deploy | test: switched on → the SMS delivery is `skipped` with the reason, the fake provider sent nothing, the email went out; switched off → SMS again; the refresh interval is tested with an injected clock |
+| | every flag has an owner and an expiry, and a ticket to remove `new-scheduler` | `FLAGS` entries (tested: owner, description, cleanup; expiry for every non-ops flag); each temporary flag's cleanup names a `TODO(flag:<key>)` that must exist at its call site (tested) |
+
+Not Unleash or Flagsmith: the course repo runs with Postgres alone (no Docker in CI for a flag server), so the
+"self-hosted service" is Beacon's own tables, behind the same OpenFeature API. Swapping in
+`@openfeature/flagsmith-provider` or `@openfeature/flagd-provider` is one `setProvider()` call in
+`src/lib/flags/index.ts`; the call sites and the tests of the pure rules stay.
+
+**Design decisions to notice**
+
+- **The master switch beats overrides.** The exercise checks overrides first; Beacon puts `enabled = false` above
+  them so one click turns a misbehaving feature off everywhere, including for the beta customers (tested). A key with
+  no row uses its safe default, so shipping code before creating the rule is safe.
+- **Flags are not entitlements** (lesson 3.2). `src/core/flags.ts` and `src/lib/flags/` import nothing about plans,
+  and the plans and entitlements modules import nothing about flags (a test reads the imports). A test forces every
+  flag on for a Free org: still 5 monitors, 5-minute checks, no API, and a 30-second monitor is still refused.
+- **Evaluate on the server, send results.** Pages and the worker call `isEnabled()`; the browser never sees a rule
+  or a targeting list. The org is the rollout unit (teammates never see different products).
+- **Local evaluation with a refresh.** Each process holds the rule set (two small queries) and reloads it when older
+  than `FLAGS_REFRESH_SECONDS` (15 s). The staff action reloads its own process at once. The scheduler asks for every
+  org every minute without a query per org.
+- **`new-scheduler` is small but real**: a new monitor's first check within a minute instead of at its first phase
+  slot (up to 15 minutes for a 900 s interval). It shortens time to activation, which is exactly what a release flag
+  is for: turn it on for your own org, then 10%, watch, then everyone, then delete the flag. Found on the way: Drizzle
+  prints an interpolated column without its table inside a `select`, which silently broke the correlated
+  `not exists` subquery; the SQL is written out in full there now.
+- **Staff access is a stopgap**: `BEACON_STAFF_EMAILS` and a verified email, 404 for everyone else (pages and
+  actions). Module 7 builds the admin panel with a staff table, roles and the audit log (`TODO(7.3)` on every flag
+  change).
+
+**Flag cleanup.** `npm run flags` and `/internal/flags` mark a temporary flag past its expiry, and a rule left in the
+database for a flag deleted from the code ("delete it, never reuse the name"). Removing `new-scheduler`, once at
+100% for two weeks: delete its `FLAGS` entry, the `if` in `scheduleChecks()` (keep the new branch), then its row
+from `/internal/flags`. Search `TODO(flag:` for every removal ticket.
+
+### Not done in Module 6 (🔴 exercises and neighbours)
+
+Custom domains for status pages (6.1 🔴): a `custom_domains` table, a TXT/CNAME verification job re-checked daily,
+routing by `Host` in `middleware.ts` before any page logic, and Caddy's `on_demand_tls` whose `ask` endpoint answers
+200 only for verified hostnames (never enable on-demand TLS without it), or Cloudflare for SaaS custom hostnames.
+Customer-facing uptime analytics in ClickHouse with batched inserts and TTL by plan (6.2 🔴). The
+`onboarding-checklist-v2` experiment with a sample-size plan, exposure events and an SRM check (6.3 🔴). Also: the
+posthog-js SDK in the app (the only client event goes through Beacon's endpoint), a rate limit on the client-event
+endpoint, flag change history and approvals (7.3), and a danger zone (transfer ownership, delete the org, 1.2 🔴).
+
+### Verification for this branch
+
+`npm test` (563 tests and 2 more with `DATABASE_URL`, 565 in CI; 65 new in `tests/analytics.test.ts`,
+`tests/onboarding.test.ts` and `tests/flags.test.ts`, plus a cross-tenant case for each new route), `npm run typecheck`
+(including the `@ts-expect-error` calls to `track()`), `npm run openapi:check`, `npm run db:migrate` on a fresh
+database (twice: idempotent) and on a database migrated and seeded on `module-5-solution` (the demo org got its four
+milestones back-filled with their original times, its status page stayed public, the column default became false),
+`npm run build` (`/` and `/pricing` prerendered as static), and a smoke test against `next start` plus
+`npm run worker` (50 checks), with a local stand-in for Plausible and a local monitor target: `/` and `/pricing`
+without a session, no `Set-Cookie`, the three plans from the config → Plausible counted two page views with no
+cookie or storage and is absent from the app → `/demo/monitors` signed out redirects to `/login`, `/account` →
+`/settings/account` (308) → a new user signs up: empty state with one action, checklist 0/5, `org_created` →
+keyboard only: first Tab is "Skip to content", Tab to the button, Enter opens the dialog with focus inside, Escape
+closes it and focus returns → `not a url` + Enter: inline error, 0 POSTs; curl with the same payload: 400, identical
+message → the monitor is added with Enter → `npm run flags -- override new-scheduler <org> on`: the worker checked
+the new monitor 24 s after it was created → first check within 24 h: activated → the verification link from the
+console email driver, Slack connected, a teammate invited, the status page published (404 → 200) → all five
+milestones stored, checklist and sidebar badge gone → six product events with the plan's names, no email, name, URL
+or secret in any property, internal user ids and the org's plan on each → the consent banner: ⌘K before "Allow"
+sends nothing, after it `command_palette_opened` is recorded → every settings section reached with Tab from the
+sidebar, Enter opens it (`aria-current`), each renders for the owner → rename with the keyboard, the slug stays → a
+second org and the switcher: `/newco-two/incidents` → `/<first>/incidents`, reload stays, Escape closes the menu → a
+Member: read-only General page and 403 from `PATCH /api/orgs/demo/settings` → the new user gets 404 on demo's pages,
+rename and analytics endpoints → `/internal/flags` 404 for them; as staff: the three flags with owners and cleanup
+tickets → `monitor-latency-chart` at 0%: no chart for demo or the new org → an override for demo: the chart only
+there → the kill switch: gone for demo too → `/internal/analytics`: the free row counts the new orgs and one
+activation; recent events show names and ids only. The SMS kill switch and the provider's failure modes are covered
+by the tests, not the smoke test.
