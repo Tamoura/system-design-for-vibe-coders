@@ -35,7 +35,7 @@ jobs:
       - name: npm audit (everything, report only)
         run: npm audit || true
       - name: trivy (lockfile and config, report only)
-        uses: aquasecurity/trivy-action@0.33.1
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0, pinned by commit
         with:
           scan-type: fs
           scan-ref: .
@@ -131,7 +131,7 @@ jobs:
       # and the migrations are one image (lesson 7.4), so this scans all three. Fixed-in-a-newer-
       # version CRITICALs fail; accepted risks go in .trivyignore with a reason and an expiry.
       - name: trivy (the image, blocking on CRITICAL)
-        uses: aquasecurity/trivy-action@0.33.1
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0, pinned by commit
         with:
           image-ref: beacon:ci
           trivy-config: trivy.yaml
