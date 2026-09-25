@@ -14,24 +14,26 @@
 #
 #   docker build --build-arg GIT_SHA=$(git rev-parse HEAD) -t beacon:$(git rev-parse --short HEAD) .
 
-ARG NODE_IMAGE=node:22-bookworm-slim
+# The base image, pinned to a tagged version (hadolint DL3006). To change Node
+# or the distribution, edit this one line; every stage below builds FROM base.
+FROM node:22-bookworm-slim AS base
 
 # 1. Every dependency, for building. Cached until package-lock.json changes.
-FROM ${NODE_IMAGE} AS deps
+FROM base AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
 
 # 2. Production dependencies only: what the final image gets. Same base image
 #    as the runtime, so native modules (argon2, sharp) match its libc.
-FROM ${NODE_IMAGE} AS prod-deps
+FROM base AS prod-deps
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev --no-audit --no-fund && npm cache clean --force
 
 # 3. The build: Next.js, then the worker and CLIs bundled to plain JavaScript
 #    (tsx is a dev dependency and is not in the final image).
-FROM ${NODE_IMAGE} AS build
+FROM base AS build
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -52,7 +54,7 @@ RUN --mount=type=secret,id=sentry_auth_token,required=false \
     npm run build && npm run build:scripts && sh scripts/sentry-sourcemaps.sh
 
 # 4. The runtime image.
-FROM ${NODE_IMAGE} AS runtime
+FROM base AS runtime
 WORKDIR /app
 ARG GIT_SHA=unknown
 ENV NODE_ENV=production \
