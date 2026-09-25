@@ -1,17 +1,32 @@
 import Link from 'next/link';
-import { can } from '@/core/permissions';
 import { forPage, requireMembership } from '@/lib/access';
 import { listOrganizationsForUser } from '@/lib/organizations';
 import { countUnread } from '@/lib/notifications';
+import { signOutAction } from '@/app/(auth)/actions';
 import { CommandPalette } from './command-palette';
 import { NotificationBell } from './notification-bell';
 import { LiveStatus, RealtimeProvider } from './realtime';
+import { navFor } from './_shell/nav';
+import { OrgSwitcher } from './_shell/org-switcher';
+import { SidebarNav } from './_shell/sidebar-nav';
+
+export const metadata = { robots: { index: false } }; // lesson 6.1: the app is never indexed
 
 /**
- * Lesson 1.2: everything under /[orgSlug] belongs to one organization. This
- * layout draws the org's navigation; each page still runs its own access
- * check, because a layout is not re-run for every request and server actions
- * never pass through it.
+ * Lesson 6.1 (🟢): the APP SHELL, the frame around every page of an org.
+ *
+ *   ┌ sidebar ─────────┬ top bar: ⌘K search · 🔔 · live ────────────┐
+ *   │ ◉ Beacon         │                                            │
+ *   │ [Acme ▾] switcher│   the page                                  │
+ *   │ Monitors …       │                                            │
+ *   │ Organization …   │                                            │
+ *   │ you · sign out   │                                            │
+ *   └──────────────────┴────────────────────────────────────────────┘
+ *
+ * Lesson 1.2: everything under /[orgSlug] belongs to one organization, taken
+ * from the URL and checked against the membership on every request. This
+ * layout draws the frame; each page still runs its own access check, because
+ * a layout is not re-run for every request and server actions never pass through it.
  */
 export default async function OrgLayout({ children, params }: { children: React.ReactNode; params: Promise<{ orgSlug: string }> }) {
   const { orgSlug } = await params;
@@ -21,35 +36,31 @@ export default async function OrgLayout({ children, params }: { children: React.
   // Lesson 4.3: one live connection (SSE) for every page of this org, shared by the components below.
   return (
     <RealtimeProvider orgSlug={ctx.orgSlug}>
-    <div className="grid" style={{ gap: '1.4rem' }}>
-      <nav className="org-nav row">
-        {/* Lesson 1.2 (🟡): the org switcher lists every org the user belongs to. */}
-        <details className="switcher">
-          <summary><strong>{ctx.orgName}</strong></summary>
-          <div className="card switcher-menu">
-            {orgs.map((o) => (
-              <Link key={o.id} href={`/${o.slug}/monitors`}>
-                {o.name} <span className="muted">· {o.role}</span>
-              </Link>
-            ))}
-            <Link href="/orgs/new">+ New organization</Link>
+      <div className="shell">
+        <aside className="sidebar">
+          <Link href={`/${ctx.orgSlug}/monitors`} className="brand">◉ Beacon</Link>
+          <OrgSwitcher current={{ slug: ctx.orgSlug, name: ctx.orgName, role: ctx.role }} orgs={orgs.map((o) => ({ slug: o.slug, name: o.name, role: o.role }))} />
+          <SidebarNav orgSlug={ctx.orgSlug} groups={navFor(ctx.role)} />
+          <div className="sidebar-user">
+            <Link href="/settings/account" title="Your account settings">{ctx.userEmail}</Link>
+            <Link href={`/${ctx.orgSlug}/notifications/preferences`} className="muted">My alert preferences</Link>
+            {/* Lesson 1.1: a real logout is a POST that deletes the session server-side. */}
+            <form action={signOutAction}>
+              <button className="link-btn">Sign out</button>
+            </form>
           </div>
-        </details>
-        <span className="badge">{ctx.role}</span>
-        <Link href={`/${ctx.orgSlug}/monitors`}>Monitors</Link>
-        <Link href={`/${ctx.orgSlug}/members`}>Members</Link>
-        <Link href={`/status/${ctx.orgSlug}`}>Status page</Link>
-        {can(ctx.role, 'page.publish') && <Link href={`/${ctx.orgSlug}/settings`}>Settings</Link>}
-        {/* Lesson 3.1: only roles that may manage billing see it (the page checks again). */}
-        {can(ctx.role, 'billing.manage') && <Link href={`/${ctx.orgSlug}/billing`}>Billing</Link>}
-        {/* Lesson 2.3 (🟡): Ctrl+K / ⌘K search across monitors, incidents and pages. */}
-        <CommandPalette orgSlug={ctx.orgSlug} />
-        {/* Lesson 4.2 (🟢): the in-app inbox, with the unread count (live since 4.3). */}
-        <NotificationBell orgSlug={ctx.orgSlug} unread={unread} />
-        <LiveStatus />
-      </nav>
-      {children}
-    </div>
+        </aside>
+        <div className="shell-main">
+          <header className="topbar">
+            {/* Lesson 2.3 (🟡): Ctrl+K / ⌘K search across monitors, incidents and pages. */}
+            <CommandPalette orgSlug={ctx.orgSlug} />
+            {/* Lesson 4.2 (🟢): the in-app inbox, with the unread count (live since 4.3). */}
+            <NotificationBell orgSlug={ctx.orgSlug} unread={unread} />
+            <LiveStatus />
+          </header>
+          <main id="main" className="shell-content">{children}</main>
+        </div>
+      </div>
     </RealtimeProvider>
   );
 }

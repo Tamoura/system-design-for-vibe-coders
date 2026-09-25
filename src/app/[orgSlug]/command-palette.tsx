@@ -36,9 +36,14 @@ export function CommandPalette({ orgSlug }: { orgSlug: string }) {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
+  // Focus the input when it opens, and give focus back to the trigger when it
+  // closes. Lesson 6.1 (a11y): only after it was open. Focusing the trigger on
+  // first render stole focus on every page load, so Tab skipped "Skip to content".
+  const wasOpen = useRef(false);
   useEffect(() => {
     if (open) inputRef.current?.focus();
-    else triggerRef.current?.focus({ preventScroll: true });
+    else if (wasOpen.current) triggerRef.current?.focus({ preventScroll: true });
+    wasOpen.current = open;
   }, [open]);
 
   // Debounced search; an empty query returns the navigation pages.

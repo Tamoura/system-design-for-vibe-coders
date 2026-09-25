@@ -5,7 +5,7 @@ import { AccessError, InvalidRequestError } from './errors';
 import { isUuid } from '@/core/validation';
 import type { OrgScope } from './monitors';
 
-const { incidents, incidentUpdates, users } = schema;
+const { incidents, incidentUpdates, monitors, users } = schema;
 
 /**
  * Lesson 2.3 (🟡): post an update on an incident of this org (404 for any
@@ -77,4 +77,25 @@ export async function getIncident({ orgId }: OrgScope, incidentId: string) {
   if (!isUuid(incidentId)) return null;
   const [row] = await withOrg(orgId, (tx) => tx.select().from(incidents).where(and(eq(incidents.organizationId, orgId), eq(incidents.id, incidentId))));
   return row ?? null;
+}
+
+/** Lesson 6.1: the Incidents section of the app shell. Open ones first, then the most recent. */
+export async function listRecentIncidents({ orgId }: OrgScope, limit = 50) {
+  return withOrg(orgId, (tx) =>
+    tx
+      .select({
+        id: incidents.id,
+        monitorId: incidents.monitorId,
+        monitorName: monitors.name,
+        cause: incidents.cause,
+        openedAt: incidents.openedAt,
+        acknowledgedAt: incidents.acknowledgedAt,
+        resolvedAt: incidents.resolvedAt,
+      })
+      .from(incidents)
+      .innerJoin(monitors, and(eq(monitors.organizationId, orgId), eq(monitors.id, incidents.monitorId)))
+      .where(eq(incidents.organizationId, orgId))
+      .orderBy(sql`${incidents.resolvedAt} is null desc`, desc(incidents.openedAt))
+      .limit(limit),
+  );
 }

@@ -3,7 +3,7 @@
 import { useActionState } from 'react';
 import { CHANNEL_LABELS } from '@/core/notifications';
 import type { getOrgNotificationSettings } from '@/lib/notifications';
-import { saveOrgNotificationsAction, type PrefsState } from '../notifications/actions';
+import { saveOrgNotificationsAction, type PrefsState } from '../../notifications/actions';
 
 type Settings = Awaited<ReturnType<typeof getOrgNotificationSettings>>;
 const COLUMNS = ['email', 'sms', 'slack'] as const;

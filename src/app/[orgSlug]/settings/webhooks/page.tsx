@@ -14,7 +14,6 @@ export default async function WebhooksPage({ params }: { params: Promise<{ orgSl
     <section className="grid" style={{ maxWidth: 760 }}>
       <div className="row">
         <h1 style={{ margin: 0 }}>Webhooks</h1>
-        <Link href={`/${ctx.orgSlug}/settings`} className="muted">← Settings</Link>
       </div>
       <p className="muted" style={{ margin: 0 }}>
         Beacon POSTs a signed JSON event to your URL when an incident opens or resolves. Answer 2xx quickly; failed deliveries are

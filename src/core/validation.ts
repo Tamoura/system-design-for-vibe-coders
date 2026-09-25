@@ -56,6 +56,9 @@ export const createOrganizationInput = z.object({
   name: z.string().trim().min(2, 'Use at least 2 characters').max(60),
 });
 
+/** Lesson 6.1 (🟡): "rename the organization": the same rule as creating one, shared by the form and PATCH /api/orgs/:org/settings. */
+export const organizationNameInput = createOrganizationInput;
+
 /** Lesson 1.2 (🟡): "invite a teammate". Whether the inviter may grant `role` is checked separately (canGrantRole). */
 export const inviteInput = z.object({
   email: z.string().trim().toLowerCase().email('Enter a valid email address'),

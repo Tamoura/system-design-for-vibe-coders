@@ -61,3 +61,75 @@ mark { background: #ffe58a; color: #1a1f29; border-radius: 2px; padding: 0 1px; 
 .badge.delivery.throttled, .badge.delivery.skipped { color: #d68910; border-color: #d68910; }
 .live-status { font-size: .8rem; }
 .badge.unread { background: var(--down); color: #fff; border-color: var(--down); }
+
+/* ---- Lesson 6.1: accessibility basics ---------------------------------- */
+/* A visible focus ring on everything reachable by keyboard (never outline: none without a replacement). */
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.skip-link { position: absolute; left: -9999px; top: .5rem; z-index: 100; background: var(--panel); padding: .5rem .8rem; border-radius: 8px; }
+.skip-link:focus { left: .5rem; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.h2, h2 { font-size: 1.15rem; margin: 0; }
+.page-narrow { max-width: 620px; }
+.state-label { font-size: .85rem; font-weight: 600; min-width: 4.5rem; }
+.state-label.up { color: var(--up); } .state-label.down { color: var(--down); } .state-label.unknown { color: var(--muted); }
+.badge.status-down { color: var(--down); border-color: var(--down); }
+input[aria-invalid="true"] { border-color: var(--down); }
+button:disabled { opacity: .6; cursor: default; }
+
+/* ---- Lesson 6.1: the marketing site ------------------------------------ */
+header.top nav .btn { color: #fff; padding: .35rem .8rem; }
+.marketing h1 { font-size: 2.3rem; line-height: 1.2; max-width: 22ch; }
+.lead { font-size: 1.1rem; max-width: 60ch; }
+.btn-lg { font-size: 1.05rem; padding: .75rem 1.3rem; }
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: .8rem; }
+.features p { margin: .4rem 0 0; color: var(--muted); }
+.steps { margin: 0; padding-left: 1.2rem; }
+.pricing { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: .8rem; align-items: start; }
+.price { font-size: 1.6rem; font-weight: 800; }
+.price-card ul { margin: 0; padding-left: 1.1rem; }
+.price-card.featured { border-color: var(--accent); border-width: 2px; }
+.marketing-footer, .status-footer { padding: 1rem; border-top: 1px solid var(--line); }
+
+/* ---- Lesson 6.1: the app shell ----------------------------------------- */
+.shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+.sidebar { background: var(--panel); border-right: 1px solid var(--line); padding: 1rem .8rem; display: flex; flex-direction: column; gap: 1rem; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+.sidebar .brand { font-weight: 800; text-decoration: none; color: var(--ink); }
+.sidebar-nav ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .1rem; }
+.sidebar-nav a { display: block; padding: .35rem .6rem; border-radius: 8px; color: var(--ink); text-decoration: none; }
+.sidebar-nav a:hover { background: var(--bg); }
+.sidebar-nav a[aria-current="page"] { background: var(--bg); color: var(--accent); font-weight: 700; box-shadow: inset 3px 0 0 var(--accent); }
+.nav-group + .nav-group { margin-top: .8rem; }
+.nav-label { font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); padding: 0 .6rem .2rem; }
+.sidebar-progress { font-size: .9rem; }
+.sidebar-user { margin-top: auto; display: grid; gap: .3rem; font-size: .85rem; word-break: break-all; }
+.switcher summary { display: flex; gap: .4rem; align-items: center; list-style: none; padding: .4rem .6rem; border: 1px solid var(--line); border-radius: 8px; }
+.switcher summary::after { content: '▾'; margin-left: auto; color: var(--muted); }
+.switcher-name { font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.switcher-menu ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; }
+.switcher-menu a[aria-current="true"] { font-weight: 700; }
+.shell-main { min-width: 0; display: flex; flex-direction: column; }
+.topbar { display: flex; gap: .8rem; align-items: center; justify-content: flex-end; padding: .6rem 1.4rem; border-bottom: 1px solid var(--line); background: var(--panel); }
+.topbar .palette-trigger { margin-left: 0; margin-right: auto; }
+.shell-content { padding: 1.4rem; max-width: 1040px; width: 100%; }
+@media (max-width: 760px) {
+  .shell { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+  .sidebar-user { margin-top: 0; }
+}
+
+/* ---- Lesson 6.1: onboarding, empty states, dialogs ---------------------- */
+.empty-state { text-align: center; padding: 2rem 1.2rem; display: grid; gap: .6rem; justify-items: center; }
+.empty-state p { margin: 0; max-width: 50ch; }
+.checklist progress { flex: 1; max-width: 200px; }
+.checklist-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; }
+.checklist-steps li { display: flex; gap: .7rem; align-items: center; }
+.checklist-steps li > div { flex: 1; }
+.checklist-steps .check { width: 1.4rem; height: 1.4rem; border-radius: 50%; border: 2px solid var(--line); display: inline-grid; place-items: center; font-size: .8rem; flex: none; }
+.checklist-steps li.done .check { background: var(--up); border-color: var(--up); color: #fff; }
+.checklist-steps li.done strong { text-decoration: line-through; color: var(--muted); }
+.dialog { border: 1px solid var(--line); border-radius: 12px; padding: 1.2rem; width: min(520px, calc(100vw - 2rem)); background: var(--panel); color: var(--ink); }
+.dialog::backdrop { background: rgba(0, 0, 0, .4); }
+.dialog-head { justify-content: space-between; margin-bottom: .8rem; }
+.consent { position: fixed; bottom: 1rem; right: 1rem; max-width: 420px; z-index: 40; display: grid; gap: .6rem; box-shadow: 0 6px 24px rgba(0, 0, 0, .15); }
+fieldset.card { margin: 0; }
+.internal-banner { background: #7a3d00; color: #fff; padding: .4rem 1rem; font-size: .85rem; }

@@ -77,6 +77,15 @@ export async function setStatusPagePublic({ orgId }: { orgId: string }, isPublic
   await db.update(organizations).set({ statusPagePublic: isPublic }).where(eq(organizations.id, orgId));
 }
 
+/**
+ * Lesson 6.1 (🟡): rename the organization. The caller has checked
+ * "org.manage" on the server (a Member gets 403 from the endpoint, not just a
+ * hidden button). The slug, and so every URL, stays the same.
+ */
+export async function renameOrganization({ orgId }: { orgId: string }, name: string) {
+  await db.update(organizations).set({ name }).where(eq(organizations.id, orgId));
+}
+
 export async function getOrganization({ orgId }: { orgId: string }) {
   const [org] = await db.select().from(organizations).where(eq(organizations.id, orgId)).limit(1);
   return org ?? null;

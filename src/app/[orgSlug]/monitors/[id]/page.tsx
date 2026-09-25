@@ -152,7 +152,10 @@ export default async function MonitorPage({ params }: { params: Promise<{ orgSlu
             <tbody>
               {history.checks.map((c) => (
                 <tr key={c.id}>
-                  <td><span className={`dot ${c.ok ? 'up' : 'down'}`} style={{ display: 'inline-block' }} /></td>
+                  <td>
+                    {/* Lesson 6.1 (a11y): never colour alone for status. */}
+                    <span className={`dot ${c.ok ? 'up' : 'down'}`} style={{ display: 'inline-block' }} aria-hidden="true" /> {c.ok ? 'Up' : 'Down'}
+                  </td>
                   <td>{c.checkedAt.toISOString().slice(0, 19).replace('T', ' ')}</td>
                   <td>{c.statusCode ?? c.error}</td>
                   <td>{c.latencyMs === null ? '' : `${c.latencyMs} ms`}</td>

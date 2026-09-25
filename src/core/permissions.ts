@@ -18,6 +18,7 @@ import { ROLES, type Role } from './roles';
  * | monitor.write_any  edit/delete anyone's     |   ✓   |   ✓   |        |        |
  * | incident.write  update incidents            |   ✓   |   ✓   |   ✓    |        |
  * | page.publish    publish the status page     |   ✓   |   ✓   |        |        |
+ * | org.manage      rename the org (lesson 6.1) |   ✓   |   ✓   |        |        |
  * | member.manage   invite, change roles        |   ✓   |   ✓   |        |        |
  * | billing.read    see the plan and usage      |   ✓   |   ✓   |        |        |
  * | notification.manage  org alert policy,     |   ✓   |   ✓   |        |        |
@@ -30,11 +31,11 @@ import { ROLES, type Role } from './roles';
 export const PERMISSIONS = {
   owner: [
     'monitor.read', 'member.read', 'monitor.write', 'monitor.write_any', 'incident.write',
-    'page.publish', 'member.manage', 'billing.read', 'billing.manage', 'notification.manage', 'integration.manage', 'org.delete',
+    'page.publish', 'org.manage', 'member.manage', 'billing.read', 'billing.manage', 'notification.manage', 'integration.manage', 'org.delete',
   ],
   admin: [
     'monitor.read', 'member.read', 'monitor.write', 'monitor.write_any', 'incident.write',
-    'page.publish', 'member.manage', 'billing.read', 'notification.manage', 'integration.manage',
+    'page.publish', 'org.manage', 'member.manage', 'billing.read', 'notification.manage', 'integration.manage',
   ],
   member: ['monitor.read', 'member.read', 'monitor.write', 'incident.write'],
   viewer: ['monitor.read', 'member.read'],

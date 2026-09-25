@@ -19,6 +19,7 @@ export type MonitorTile = {
 };
 
 type Live = { state: 'up' | 'down'; checkedAt: string; latencyMs: number | null };
+const STATE_LABEL = { up: 'Up', down: 'Down', unknown: 'No data' } as const;
 
 function ago(iso: string | null, now: number) {
   if (!iso) return 'never';
@@ -63,7 +64,9 @@ export function LiveMonitorList({ orgSlug, monitors, renderedAt }: { orgSlug: st
         const latency = l ? l.latencyMs : m.lastLatencyMs;
         return (
           <div className="card row" key={m.id} data-testid="monitor-tile" data-monitor-id={m.id} data-state={state}>
-            <span className={`dot ${state}`} title={state} />
+            {/* Lesson 6.1 (a11y): the colour AND a word; red/green alone fails colour-blind users. */}
+            <span className={`dot ${state}`} aria-hidden="true" />
+            <span className={`state-label ${state}`}>{STATE_LABEL[state]}</span>
             <div style={{ flex: 1, minWidth: 200 }}>
               <Link href={`/${orgSlug}/monitors/${m.id}`}><strong>{m.name}</strong></Link>
               <div className="muted">{m.url}</div>

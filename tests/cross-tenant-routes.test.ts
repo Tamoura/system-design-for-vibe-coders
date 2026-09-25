@@ -23,6 +23,7 @@ import * as portalRoute from '@/app/api/orgs/[orgSlug]/billing/portal/route';
 import * as notificationsRoute from '@/app/api/orgs/[orgSlug]/notifications/route';
 import * as eventsRoute from '@/app/api/orgs/[orgSlug]/events/route';
 import * as presenceRoute from '@/app/api/orgs/[orgSlug]/presence/route';
+import * as settingsRoute from '@/app/api/orgs/[orgSlug]/settings/route';
 import { publish } from '@/lib/realtime';
 import { makeOrg, signInAs } from './helpers/fixtures';
 
@@ -117,6 +118,8 @@ const CASES: Record<string, Case> = {
   // Lesson 4.3: the live stream, and presence on Acme's monitor.
   'GET events': { kind: 'stream', call: (orgSlug) => eventsRoute.GET(req('GET'), p({ orgSlug })) },
   'POST presence': { kind: 'item', call: (orgSlug) => presenceRoute.POST(req('POST', { topic: `monitor:${A.monitor}` }), p({ orgSlug })) },
+  // Lesson 6.1: renaming under Globex's slug renames Globex, never Acme.
+  'PATCH settings': { kind: 'list', call: (orgSlug) => settingsRoute.PATCH(req('PATCH', { name: 'Renamed', orgId: acme.id }), p({ orgSlug })) },
   'DELETE presence': {
     kind: 'item',
     call: (orgSlug) => presenceRoute.DELETE(new Request(`http://test/x?topic=monitor:${A.monitor}`, { method: 'DELETE' }), p({ orgSlug })),

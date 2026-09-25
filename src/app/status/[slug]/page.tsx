@@ -16,7 +16,9 @@ const HEADLINE = {
 /**
  * The public status page, one per organization (lesson 1.2). No login needed,
  * but it only ever shows the monitors of the org named in the URL.
- * TODO(6.1): serve it on the customer's own domain.
+ * Serving it on the customer's own domain (status.acme.com: CNAME, TXT
+ * verification, host-based routing, on-demand TLS) is lesson 6.1's 🔴
+ * exercise, not built; docs/SOLUTIONS.md (Module 6) describes the design.
  * Lesson 4.2 (🟡): visitors subscribe to incident updates (double opt-in).
  */
 export default async function StatusPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -37,8 +39,10 @@ export default async function StatusPage({ params }: { params: Promise<{ slug: s
       <div className={`banner ${status}`}>{HEADLINE[status]}</div>
       {monitors.map((m) => (
         <div key={m.id} className="card row">
-          <span className={`dot ${m.state}`} />
+          {/* Lesson 6.1 (a11y): a word next to the dot, never colour alone. */}
+          <span className={`dot ${m.state}`} aria-hidden="true" />
           <strong style={{ flex: 1 }}>{m.name}</strong>
+          <span className={`state-label ${m.state}`}>{m.state === 'up' ? 'Operational' : m.state === 'down' ? 'Down' : 'No data'}</span>
           <span className="muted">{m.uptime24h === null ? '—' : `${m.uptime24h}% uptime (24h)`}</span>
         </div>
       ))}

@@ -22,7 +22,6 @@ export default async function EscalationPage({ params, searchParams }: { params:
     <section className="grid" style={{ maxWidth: 760 }}>
       <div className="row">
         <h1 style={{ margin: 0 }}>Escalation policy</h1>
-        <Link href={`/${ctx.orgSlug}/settings`} className="muted">← Settings</Link>
       </div>
       <p className="muted" style={{ margin: 0 }}>
         When an incident opens, Beacon pages tier 1, waits, then tier 2, and so on, until someone clicks <strong>Acknowledge</strong> or the

@@ -11,6 +11,7 @@ const EXPECTED: Record<Permission, string[]> = {
   'monitor.write_any': ['owner', 'admin'],
   'incident.write': ['owner', 'admin', 'member'],
   'page.publish': ['owner', 'admin'],
+  'org.manage': ['owner', 'admin'], // lesson 6.1: rename the org
   'member.manage': ['owner', 'admin'],
   'billing.read': ['owner', 'admin'], // lesson 3.1: plan and usage
   'billing.manage': ['owner'],

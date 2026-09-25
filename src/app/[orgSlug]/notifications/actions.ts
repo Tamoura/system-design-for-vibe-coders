@@ -41,7 +41,7 @@ export async function savePreferencesAction(orgSlug: string, _prev: PrefsState, 
 }
 
 export async function saveOrgNotificationsAction(orgSlug: string, _prev: PrefsState, formData: FormData): Promise<PrefsState> {
-  const ctx = await forPage(requirePermission(orgSlug, 'notification.manage'), `/${orgSlug}/settings`);
+  const ctx = await forPage(requirePermission(orgSlug, 'notification.manage'), `/${orgSlug}/settings/notifications`);
   const allowed = new Set([...formData.keys()].filter((k) => k.includes(':')));
   const slack = formData.get('slackWebhookUrl');
   const removeSlack = formData.get('removeSlack') === 'on';
@@ -55,7 +55,7 @@ export async function saveOrgNotificationsAction(orgSlug: string, _prev: PrefsSt
     if (err instanceof InvalidRequestError) return { error: err.message };
     throw err;
   }
-  revalidatePath(`/${ctx.orgSlug}/settings`);
+  revalidatePath(`/${ctx.orgSlug}/settings/notifications`);
   return { saved: true };
 }
 

@@ -124,7 +124,7 @@ describe('🟡 the palette’s one call', () => {
   it('with an empty query lists the pages this role may open', async () => {
     signInAs(acme.users.admin);
     const { data } = await (await get(acme.slug, '')).json();
-    expect(data.map((r: { title: string }) => r.title)).toContain('Settings');
+    expect(data.map((r: { title: string }) => r.title)).toContain('Status page');
   });
 
   it('another org’s user gets 404 under Acme’s slug and only Globex data under their own', async () => {
@@ -152,6 +152,6 @@ describe('pure helpers', () => {
     expect(matchPages('mem', 'viewer', 'acme').map((p) => p.title)).toEqual(['Members']);
     expect(matchPages('status pub', 'viewer', 'acme').map((p) => p.href)).toEqual(['/status/acme']);
     expect(matchPages('logo', 'member', 'acme')).toEqual([]);
-    expect(matchPages('logo', 'admin', 'acme').map((p) => p.href)).toEqual(['/acme/settings']);
+    expect(matchPages('logo', 'admin', 'acme').map((p) => p.href)).toEqual(['/acme/status-page']); // lesson 6.1: its own section now
   });
 });

@@ -23,7 +23,6 @@ export default async function ApiKeysPage({ params }: { params: Promise<{ orgSlu
     <section className="grid" style={{ maxWidth: 760 }}>
       <div className="row">
         <h1 style={{ margin: 0 }}>API keys</h1>
-        <Link href={`/${ctx.orgSlug}/settings`} className="muted">← Settings</Link>
       </div>
       <p className="muted" style={{ margin: 0 }}>
         Keys belong to the organization, not to you: they keep working when people leave. Reference:{' '}
