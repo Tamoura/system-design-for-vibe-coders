@@ -1207,7 +1207,7 @@ npm run jobs                          # terminal 3, any time: the queues
    <http://localhost:3000/docs/api> renders the reference (Scalar, from `/api/v1/openapi.json`). Revoke the key
    in Settings and the next `curl` is a 401.
 3. **Settings → Webhooks**: add an endpoint. For a local receiver, allow it first: `OUTBOUND_ALLOWLIST=localhost:3000,127.0.0.1:4555`
-   (restart both processes), then e.g. `npx http-echo-server 4555` or a 10-line Node server. `http://127.0.0.1/`,
+   (restart both processes) and run a 10-line Node receiver on port 4555 that logs what it gets. `http://127.0.0.1/`,
    `http://169.254.169.254/` and `http://[::1]/` are refused. Copy the `whsec_` secret.
 4. **Settings → Escalation policy**: tier 1 = the member, wait 2 minutes; tier 2 = you.
 5. Break a monitor (a URL that answers 500). Three checks later: the incident, a signed `incident.opened` POST to
@@ -1430,7 +1430,7 @@ step, on the monitor page.
 | 🟢 the "incident opened" fan-out as a workflow: load incident, notify channels, record deliveries | the engine's dashboard shows each run with per-step inputs, outputs and timings | the incident row's **Workflows** list (from `workflow_steps`); test checks names, outputs, timings |
 | | killing the worker after step 2 does not re-send notifications | test removes step 3 from the history and resumes: step 2 is replayed, no new deliveries, one email per person |
 | | a failing step retries on its own without re-running earlier steps | test: a step that throws once; after the retry, steps 1 and 2 ran once, step 3 twice (`attempts = 2`) |
-| 🟡 escalation policies as data plus one durable workflow; snapshot; wait for acknowledged or resolved | acknowledging in the dashboard stops the escalation within seconds | the signal is stored and a `workflow.run` job enqueued in the acknowledging transaction; test and smoke (stopped within a second; tier 2 never paged past tier 1's deadline) |
+| 🟡 escalation policies as data plus one durable workflow; snapshot; wait for acknowledged or resolved | acknowledging in the dashboard stops the escalation within seconds | the signal is stored and a `workflow.run` job enqueued in the acknowledging transaction; test and smoke (the run ended right after the click; tier 2 was never paged, even past tier 1's deadline) |
 | | resolving before any ack cancels the remaining tiers | `incident.resolved` signal from both resolve paths; test |
 | | editing the policy mid-incident does not affect the running escalation, but the next | step `load-policy` records the snapshot; test edits between tiers |
 | | SMS sends use an idempotency key derived from run and tier | the page's key is `escalation:<run>:tier-<n>`; the SMS delivery's dedupe key (the provider's idempotency key since this module) extends it; test re-runs the step: one SMS |
@@ -1484,7 +1484,7 @@ RateLimit headers, 401 problem+json without a key, 201 and an identical replay f
 `Retry-After` after the Business limit, org B unaffected → an escalation policy and two endpoints saved from the
 UI; `127.0.0.1`, `169.254.169.254` and `[::1]` endpoints refused → the monitor breaks, the worker opens the
 incident, the receiver verifies `incident.opened` with the official library → tier 1 paged by email, the run
-waiting → **Acknowledge** as the member ends the run within a second; `incident.acknowledged` delivered →
+waiting → **Acknowledge** as the member ends the run within seconds; `incident.acknowledged` delivered →
 the failing receiver is retried with the same `webhook-id`, `npm run jobs` and the delivery log show the 500s →
 **Resend** after recovery and **Replay failed** (yesterday's messages) deliver → past tier 1's deadline tier 2 is
 never paged → `acknowledged_at` in the API → the incident's workflow runs on the monitor page → **Mark
