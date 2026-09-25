@@ -5,6 +5,8 @@ on its own; now you will assemble them into one architecture for Beacon, decide
 which to buy, self-host or build at each stage of the company, and defend those
 decisions the way a senior engineer would in a design review.*
 
+> **Practice:** build the exercises in the [Beacon starter](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter); when you have tried them, compare with [this module's reference solution](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-9-solution) (branch `beacon/module-9-solution`).
+
 ---
 
 # 9.1 — Assemble Beacon: reference architecture, build-vs-buy and a 90-day plan

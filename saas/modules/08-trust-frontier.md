@@ -2,6 +2,8 @@
 
 *Customers hand a SaaS their data, their credentials and their uptime, and bigger customers want proof you deserve it. This module covers security and compliance, the component that decides whether an enterprise can buy from you at all, and then AI features, the newest building block, which brings its own versions of the old problems: tenant isolation, cost metering and untrusted input. Both lessons start at the advanced level because they rely on nearly everything before them.*
 
+> **Practice:** build the exercises in the [Beacon starter](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter); when you have tried them, compare with [this module's reference solution](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-8-solution) (branch `beacon/module-8-solution`).
+
 ---
 
 # 8.1 — Security and compliance: secrets, encryption, SOC 2, GDPR

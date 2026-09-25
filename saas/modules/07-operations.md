@@ -2,6 +2,8 @@
 
 *Shipping the product is half the job. The other half is running it: helping customers whose problems you can't see from their screen, knowing something is broken before they tweet about it, proving who changed what, and deploying on a Tuesday afternoon without holding your breath. This module covers the four components that let a small team run a SaaS without heroics: the admin panel, observability, audit logs, and the deployment pipeline.*
 
+> **Practice:** build the exercises in the [Beacon starter](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter); when you have tried them, compare with [this module's reference solution](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-7-solution) (branch `beacon/module-7-solution`).
+
 ---
 
 # 7.1 — The admin panel: support tools and impersonation

@@ -84,7 +84,7 @@ or take it with you:
 | PDF | `course-en.pdf` · `course-ar.pdf` | Print and offline reading (~350pp) |
 | EPUB | `course-en.epub` · `course-ar.epub` | E-readers and Kindle |
 
-Every edition carries all 68 lessons with the diagrams pre-rendered — no server, no network,
+Every edition carries all 69 lessons with the diagrams pre-rendered — no server, no network,
 no CDN. The HTML pages also have a clickable course map, the glossary appendix, and dark mode.
 PDF and EPUB are published with each release rather than committed; build them locally with
 `npm run dist`.
@@ -110,4 +110,5 @@ or if an EPUB document is not well-formed XHTML.
 
 ## Status
 
-Early draft. Outline complete; lessons being written module by module.
+Complete: all 69 lessons (Part 0, Modules 0–11 and the capstone) are written in English and
+Arabic. New incidents are added to the lessons as they happen.

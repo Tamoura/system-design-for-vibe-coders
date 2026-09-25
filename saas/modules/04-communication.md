@@ -2,6 +2,8 @@
 
 *A SaaS that can't reach its users might as well not exist, and for Beacon, reaching people is the product: an outage alert that lands in spam is worse than no alert at all. This module covers the three ways your app talks to people. Transactional email has to arrive. Notifications have to reach the right person on the right channel without burying them. Real-time updates and collaboration make the dashboard feel alive and let two engineers edit the same postmortem without overwriting each other.*
 
+> **Practice:** build the exercises in the [Beacon starter](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter); when you have tried them, compare with [this module's reference solution](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-4-solution) (branch `beacon/module-4-solution`).
+
 ---
 
 # 4.1 — Transactional email that actually arrives

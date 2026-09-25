@@ -2,6 +2,8 @@
 
 *Every SaaS needs to answer three questions on every request: who are you, which customer do you belong to, and are you allowed to do this? This module builds those answers in order: authentication, the organization-and-membership skeleton that makes a product multi-tenant, authorization, and finally the enterprise layer (SSO, SAML, OIDC, SCIM) that big customers expect before they sign. Get these four right early. Retrofitting them later costs far more than the rest of the course put together.*
 
+> **Practice:** build the exercises in the [Beacon starter](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter); when you have tried them, compare with [this module's reference solution](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-1-solution) (branch `beacon/module-1-solution`).
+
 ---
 
 # 1.1 — Authentication: proving who someone is

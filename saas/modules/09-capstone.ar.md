@@ -4,6 +4,8 @@
 معمارية واحدة لـ Beacon، وتقرر أيّها تشتريه أو تستضيفه بنفسك أو تبنيه في كل مرحلة من
 مراحل الشركة، ثم تدافع عن هذه القرارات كما يفعل المهندس الخبير في مراجعة التصميم.*
 
+> **التطبيق العملي:** ابدأ من [نسخة البداية من Beacon](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter)، وحلّ التمارين قبل النظر إلى [الحل المرجعي لهذه الوحدة](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-9-solution) (الفرع `beacon/module-9-solution`).
+
 ---
 
 # 9.1 — اجمع Beacon: المعمارية المرجعية، وقرار البناء أو الشراء، وخطة 90 يومًا

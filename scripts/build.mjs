@@ -134,6 +134,9 @@ const inlineDiagrams = (html) =>
 /** Links in the markdown are written for GitHub; retarget them for one page. */
 const retargetLinks = (md) => md
   .replace(/\]\((?:\.\.\/)*\.?\/?GLOSSARY(?:\.ar)?\.md\)/g, '](#glossary)')
+  // The incident banks are source files, not published pages: link to them on GitHub.
+  .replace(/\]\((?:\.\.\/)*\.?\/?war-stories\/([^)]+)\)/g,
+    '](https://github.com/Tamoura/system-design-for-vibe-coders/blob/main/war-stories/$1)')
   .replace(/\]\((?:\.\.\/)+([^)]+)\)/g, ']($1)');
 
 /** Split a file on top-level `# ` headings, ignoring anything inside a fence. */
