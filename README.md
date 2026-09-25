@@ -105,6 +105,14 @@ demo org on it with `update organizations set plan = 'business' where slug = 'de
 Webhooks** for signed incident events, and **Settings → Escalation policy**. See
 [docs/SOLUTIONS.md](docs/SOLUTIONS.md#module-5--background-work--integrations).
 
+Module 6 adds the parts customers see first. `/` and `/pricing` are the **marketing site** (static, the pricing
+cards drawn from the plans config); the app has a **sidebar shell** with an org switcher, settings split into
+organization, billing, alerts and developer sections (your own account is at `/settings/account`), and a
+**Getting started** checklist for new organizations. Product events (`monitor_created`, …) are recorded
+server-side in `analytics_events`, and feature flags are evaluated per organization. Put your email in
+`BEACON_STAFF_EMAILS` to open **/internal/flags** and **/internal/analytics** (the activation funnel), or use
+`npm run flags`. See [docs/SOLUTIONS.md](docs/SOLUTIONS.md#module-6--product--growth).
+
 Billing (Module 3) is off until you configure it. To try upgrades without a Stripe account, start the app
 with `BILLING_PROVIDER=fake npm run dev`: "Upgrade" then opens a stand-in Checkout page inside Beacon and
 a signed webhook follows. For real Stripe test mode (test keys, `stripe listen`), see
@@ -125,6 +133,7 @@ a signed webhook follows. For real Stripe test mode (test keys, `stripe listen`)
 | `npm run email:preview` | Render every email template (HTML and plain text) to `.email-preview/` (lesson 4.1). |
 | `npm run storage:setup` | With `STORAGE_DRIVER=s3`: create the bucket, block public access, set CORS. |
 | `npm run build` | Production build, the same one CI runs. |
+| `npm run flags` | Feature flags (lesson 6.3): list them, `-- rollout <flag> 10`, `-- override <flag> <org> on`, `-- off <flag>` (the kill switch). |
 | `npm run org:claim -- <slug> <email>` | Make a user the owner of an org, e.g. the `default` org that migration 0003 creates for monitors from before Module 1. |
 
 ## Where things live
@@ -139,10 +148,13 @@ src/
   lib/notifications/  notify(): recipients, preferences, channels, delivery log (lesson 4.2).
   lib/queue/    The job queue (pg-boss): queues, enqueue(), handlers, the worker (lesson 5.1).
   lib/workflows/  A small durable-workflow engine and the escalation policy (lesson 5.4).
+  lib/analytics/  track(): the tracking plan's events, server-side, forwarded to PostHog; the funnel (lesson 6.2).
+  lib/flags/    isEnabled(): feature flags through OpenFeature, evaluated locally per org (lesson 6.3).
   emails/       React Email templates, each with a plain-text part (lesson 4.1).
-  app/          Next.js App Router: auth pages, /[orgSlug]/… org pages, /status/[slug], /api/… (the dashboard's
-                JSON), /api/v1/… (the public API, lesson 5.2), /docs/api.
-scripts/        migrate, seed, reset, worker, jobs, run-checks, report-usage, openapi, email-preview, storage-setup, claim-org.
+  app/          Next.js App Router: (marketing)/ landing and pricing, (auth)/ and (site)/ sign-in and account
+                pages, /[orgSlug]/… the app shell and org pages, /status/[slug], /internal/… (staff), /api/… (the
+                dashboard's JSON), /api/v1/… (the public API, lesson 5.2), /docs/api.
+scripts/        migrate, seed, reset, worker, jobs, run-checks, report-usage, openapi, email-preview, storage-setup, claim-org, flags.
 drizzle/        SQL migrations (generated; commit them).
 tests/          Vitest tests for src/core, and for src/lib and the API on an in-memory Postgres.
 docs/           EXERCISES.md, SOLUTIONS.md (what each solution branch built and why), openapi.json (generated),
@@ -162,7 +174,8 @@ grep -rn "TODO(1.2)" src scripts
 | Next.js (App Router) + TypeScript | One language across UI, server and scripts, and the most common SaaS starter stack | 6.1 |
 | PostgreSQL + Drizzle ORM | Postgres is the default SaaS database; Drizzle keeps SQL visible and migrations in the repo | 2.1 |
 | Stripe (hosted Checkout, Customer Portal, Billing meters) | Card data never touches Beacon; a signed webhook keeps a copy of each subscription | 3.1 |
-| Zod | One validation schema shared by forms and the public API, and the source of its OpenAPI document | 5.2 |
+| Zod | One validation schema shared by forms (in the browser too) and the server, and the source of the OpenAPI document | 5.2, 6.1 |
+| OpenFeature (with Beacon's own Postgres provider) | Vendor-neutral flag calls; swap in Unleash, Flagsmith or flagd without touching call sites | 6.3 |
 | Vitest | Fast tests for the core logic | — |
 | React Email + nodemailer (Resend in production) | Templates as components with a plain-text part; SMTP to Mailpit locally | 4.1 |
 | pg-boss (a job queue in Postgres) | Jobs commit in the same transaction as the data; retries, cron, dead letters, per-tenant concurrency; no Redis to run | 5.1 |
