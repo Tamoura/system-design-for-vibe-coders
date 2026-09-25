@@ -1,0 +1,43 @@
+# Lesson 7.2 (🟡): a local observability stack for Beacon's OpenTelemetry data.
+#
+#   docker compose -f docker-compose.observability.yml up -d
+#   OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318 npm run dev      # and the same for `npm run worker`
+#
+#   Grafana     http://localhost:3001   (anonymous admin; dashboard "Beacon")
+#   Prometheus  http://localhost:9090   (metrics, and the SLO alert rules in ops/prometheus/alerts.yml)
+#   Tempo       via Grafana → Explore   (traces: request → enqueue → job → check)
+#
+# The app only speaks OTLP to the collector; swapping this stack for SigNoz,
+# Honeycomb or Grafana Cloud is a change to ops/otel-collector.yaml, not to Beacon.
+name: beacon-observability
+
+services:
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.111.0
+    command: ["--config=/etc/otelcol/config.yaml"]
+    volumes: [./ops/otel-collector.yaml:/etc/otelcol/config.yaml:ro]
+    ports:
+      - "4318:4318" # OTLP over HTTP, from the web app and the worker
+      - "8889:8889" # Prometheus scrapes metrics here
+
+  tempo:
+    image: grafana/tempo:2.6.1
+    command: ["-config.file=/etc/tempo.yaml"]
+    volumes: [./ops/tempo.yaml:/etc/tempo.yaml:ro]
+
+  prometheus:
+    image: prom/prometheus:v2.55.0
+    command: ["--config.file=/etc/prometheus/prometheus.yml", "--web.enable-lifecycle"]
+    volumes: [./ops/prometheus:/etc/prometheus:ro]
+    ports: ["9090:9090"]
+
+  grafana:
+    image: grafana/grafana:11.3.0
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+    volumes:
+      - ./ops/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./ops/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports: ["3001:3000"]
+    depends_on: [prometheus, tempo]

@@ -1,0 +1,77 @@
+# Lesson 7.2: alert on SYMPTOMS customers feel, tied to an SLO, with a runbook.
+# The SLO, the error budget and the runbooks are in docs/operations.md.
+#
+# SLO "checks on time": 99.9% of scheduled checks start within 15 seconds of
+# their slot, over 30 days. Error budget: 0.1% (about 43 minutes of every check
+# being late, per month).
+#   SLI (bad fraction) = 1 - rate(check_lag_seconds_bucket{le="15"}) / rate(check_lag_seconds_count)
+#
+# Multi-window burn-rate alerts (Google SRE workbook): a burn rate of 14.4 over
+# 1 hour spends 2% of the month's budget in that hour: page. A slower burn over
+# 6 hours pages too; a steady 1x burn over 3 days opens a ticket. The short
+# window (5m / 30m / 6h) makes the alert stop soon after the problem does, and
+# stops a 30-second blip from paging anyone.
+groups:
+  - name: beacon-slo-check-lag
+    rules:
+      - record: beacon:check_lag_bad_ratio:rate5m
+        expr: 1 - (sum(rate(check_lag_seconds_bucket{le="15"}[5m])) / clamp_min(sum(rate(check_lag_seconds_count[5m])), 1e-9))
+      - record: beacon:check_lag_bad_ratio:rate30m
+        expr: 1 - (sum(rate(check_lag_seconds_bucket{le="15"}[30m])) / clamp_min(sum(rate(check_lag_seconds_count[30m])), 1e-9))
+      - record: beacon:check_lag_bad_ratio:rate1h
+        expr: 1 - (sum(rate(check_lag_seconds_bucket{le="15"}[1h])) / clamp_min(sum(rate(check_lag_seconds_count[1h])), 1e-9))
+      - record: beacon:check_lag_bad_ratio:rate6h
+        expr: 1 - (sum(rate(check_lag_seconds_bucket{le="15"}[6h])) / clamp_min(sum(rate(check_lag_seconds_count[6h])), 1e-9))
+      - record: beacon:check_lag_bad_ratio:rate3d
+        expr: 1 - (sum(rate(check_lag_seconds_bucket{le="15"}[3d])) / clamp_min(sum(rate(check_lag_seconds_count[3d])), 1e-9))
+
+      - alert: CheckLagBudgetFastBurn
+        expr: beacon:check_lag_bad_ratio:rate1h > (14.4 * 0.001) and beacon:check_lag_bad_ratio:rate5m > (14.4 * 0.001)
+        labels: { severity: page }
+        annotations:
+          summary: "Checks are running late: 2% of the monthly error budget burned in the last hour"
+          runbook: "docs/operations.md#runbook-checks-are-late"
+      - alert: CheckLagBudgetSlowBurn
+        expr: beacon:check_lag_bad_ratio:rate6h > (6 * 0.001) and beacon:check_lag_bad_ratio:rate30m > (6 * 0.001)
+        labels: { severity: page }
+        annotations:
+          summary: "Checks are running late: 5% of the monthly error budget burned in 6 hours"
+          runbook: "docs/operations.md#runbook-checks-are-late"
+      - alert: CheckLagBudgetTicket
+        expr: beacon:check_lag_bad_ratio:rate3d > 0.001 and beacon:check_lag_bad_ratio:rate6h > 0.001
+        labels: { severity: ticket }
+        annotations:
+          summary: "Check lag is eating the error budget steadily (3 days)"
+          runbook: "docs/operations.md#runbook-checks-are-late"
+
+  - name: beacon-symptoms
+    rules:
+      # The Thursday bug from the lesson: checks silently stop. Nothing is late, because nothing runs.
+      - alert: NoChecksExecuted
+        expr: sum(rate(checks_executed_total[10m])) == 0
+        for: 10m
+        labels: { severity: page }
+        annotations:
+          summary: "No uptime check has run for 10 minutes (scheduler or every worker down)"
+          runbook: "docs/operations.md#runbook-checks-are-late"
+      # RED: errors of the API, by route template.
+      - alert: ApiErrorRateHigh
+        expr: sum by (route) (rate(http_server_requests_total{status_class="5xx"}[5m])) / clamp_min(sum by (route) (rate(http_server_requests_total[5m])), 1e-9) > 0.05
+        for: 10m
+        labels: { severity: page }
+        annotations:
+          summary: "More than 5% of {{ $labels.route }} requests fail with 5xx"
+          runbook: "docs/operations.md#runbook-api-errors"
+      - alert: JobsDeadLettering
+        expr: sum by (queue) (increase(jobs_total{outcome="failed"}[30m])) > 20
+        labels: { severity: ticket }
+        annotations:
+          summary: "Jobs of {{ $labels.queue }} keep failing (npm run jobs shows the errors)"
+          runbook: "docs/operations.md#runbook-jobs-failing"
+      # Lesson 7.3: the nightly verifier found a broken audit hash chain (tampering, or a bug).
+      - alert: AuditChainBroken
+        expr: increase(jobs_total{queue="audit.verify", outcome="failed"}[1d]) > 0
+        labels: { severity: page }
+        annotations:
+          summary: "An audit log hash chain no longer verifies"
+          runbook: "docs/operations.md#runbook-audit-chain-broken"
