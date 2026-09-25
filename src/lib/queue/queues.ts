@@ -25,6 +25,9 @@ import type { Queue } from 'pg-boss';
  *   audit.retention   daily: delete audit events older than the plan keeps (lesson 7.3)
  *   audit.verify      daily: recompute every audit hash chain; a broken one logs
  *                     `audit.chain_broken` at error level, which pages (lesson 7.2)
+ *   org.export        build one org's data export file (lesson 8.1, GDPR portability)
+ *   org.delete        purge an org after its grace period (lesson 8.1, erasure): delayed
+ *   retention.purge   daily: delete data past its retention (lesson 8.1, src/core/retention.ts)
  *
  * Retries (pg-boss): `retryLimit` retries AFTER the first attempt, so 7 means
  * 8 attempts. With `retryBackoff` the delay before retry n is about
@@ -83,6 +86,11 @@ export const QUEUES = {
   'billing.comps': { policy: 'singleton', retryLimit: 3, retryDelay: 60, expireInSeconds: 600, deleteAfterSeconds: 7 * 24 * 3600 },
   'audit.retention': { policy: 'singleton', retryLimit: 3, retryDelay: 300, expireInSeconds: 1800, deleteAfterSeconds: 30 * 24 * 3600 },
   'audit.verify': { policy: 'singleton', retryLimit: 1, retryDelay: 300, expireInSeconds: 3600, deleteAfterSeconds: 30 * 24 * 3600 },
+  // Module 8. An export or a deletion that fails every attempt lands in the dead letters,
+  // where someone must look: a customer is waiting for their data, or for it to be gone.
+  'org.export': { retryLimit: 3, retryDelay: 60, retryBackoff: true, deadLetter: DEAD_LETTER, expireInSeconds: 900 },
+  'org.delete': { retryLimit: 5, retryDelay: 300, retryBackoff: true, deadLetter: DEAD_LETTER, expireInSeconds: 1800, deleteAfterSeconds: 90 * 24 * 3600 },
+  'retention.purge': { policy: 'singleton', retryLimit: 3, retryDelay: 300, expireInSeconds: 3600, deleteAfterSeconds: 30 * 24 * 3600 },
 } as const satisfies Record<string, Omit<Queue, 'name'>>;
 
 export type QueueName = keyof typeof QUEUES;
@@ -106,6 +114,9 @@ export type JobData = {
   'billing.comps': Record<string, never>;
   'audit.retention': Record<string, never>;
   'audit.verify': Record<string, never>;
+  'org.export': { orgId: string; exportId: string };
+  'org.delete': { orgId: string };
+  'retention.purge': Record<string, never>;
 };
 
 /**
@@ -122,6 +133,7 @@ export const SCHEDULES: { queue: QueueName; cron: string }[] = [
   { queue: 'billing.comps', cron: '7 * * * *' },
   { queue: 'audit.retention', cron: '17 3 * * *' },
   { queue: 'audit.verify', cron: '37 3 * * *' },
+  { queue: 'retention.purge', cron: '47 3 * * *' },
 ];
 
 export function isQueueName(name: string): name is QueueName {

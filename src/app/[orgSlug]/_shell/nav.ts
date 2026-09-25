@@ -36,6 +36,8 @@ export const NAV: NavGroup[] = [
       { section: 'settings/escalation', label: 'Escalation', permission: 'notification.manage' },
       // Lesson 7.3 (🟡): owners and admins. The page itself shows an upgrade prompt on Free.
       { section: 'settings/audit-log', label: 'Audit log', permission: 'audit.read' },
+      // Lesson 8.1: export and deletion (GDPR), owners only.
+      { section: 'settings/data', label: 'Data & privacy', permission: 'org.export' },
     ],
   },
   {

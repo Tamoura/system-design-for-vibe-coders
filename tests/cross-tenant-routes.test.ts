@@ -26,6 +26,7 @@ import * as presenceRoute from '@/app/api/orgs/[orgSlug]/presence/route';
 import * as settingsRoute from '@/app/api/orgs/[orgSlug]/settings/route';
 import * as analyticsRoute from '@/app/api/orgs/[orgSlug]/analytics/route';
 import * as auditLogRoute from '@/app/api/orgs/[orgSlug]/audit-log/route';
+import * as exportRoute from '@/app/api/orgs/[orgSlug]/exports/[exportId]/route';
 import { publish } from '@/lib/realtime';
 import { makeOrg, signInAs } from './helpers/fixtures';
 
@@ -69,6 +70,12 @@ beforeAll(async () => {
     .returning();
   A.notification = n.id;
   A.subscription = 'sub_acme_secret';
+  // Lesson 8.1: a finished export of all of Acme's data.
+  const [exp] = await db
+    .insert(schema.orgExports)
+    .values({ organizationId: acme.id, status: 'ready', storageKey: `orgs/${acme.id}/exports/${crypto.randomUUID()}.json`, expiresAt: new Date(Date.now() + 86_400_000) })
+    .returning();
+  A.export = exp.id;
 });
 
 const req = (method: string, body?: unknown) =>
@@ -137,6 +144,8 @@ const CASES: Record<string, Case> = {
   },
   // Lesson 7.3: Acme's audit log (which names 'acme-secret', its monitor) is not in Globex's, JSON or CSV.
   'GET audit-log': { kind: 'list', call: (orgSlug) => auditLogRoute.GET(new Request('http://test/x?format=csv'), p({ orgSlug })) },
+  // Lesson 8.1: Acme's full export, by its id, from Globex's owner.
+  'GET exports/[exportId]': { kind: 'item', call: (orgSlug) => exportRoute.GET(req('GET'), p({ orgSlug, exportId: A.export })) },
   'DELETE presence': {
     kind: 'item',
     call: (orgSlug) => presenceRoute.DELETE(new Request(`http://test/x?topic=monitor:${A.monitor}`, { method: 'DELETE' }), p({ orgSlug })),

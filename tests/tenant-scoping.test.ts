@@ -159,6 +159,8 @@ const TENANT_TABLES = [
   'orgMilestones', 'analyticsEvents',
   // Module 7
   'auditEvents',
+  // Module 8
+  'orgExports',
 ];
 const SCANNED = ['src', 'scripts/run-checks.ts', 'scripts/report-usage.ts', 'scripts/worker.ts', 'scripts/jobs.ts'];
 const EXEMPT = [
@@ -168,6 +170,8 @@ const EXEMPT = [
   // Lessons 7.1/7.3: the staff side of Beacon reads across orgs as the owner (never from a customer
   // request): the admin panel, the audit verifier and retention job.
   'src/lib/admin/audit.ts', 'src/lib/admin/customers.ts',
+  // Lesson 8.1: the nightly retention job deletes expired rows across every org, as the owner.
+  'src/lib/privacy/retention.ts',
 ];
 
 function sourceFiles(p: string): string[] {
@@ -206,11 +210,13 @@ describe('lint: tenant tables only through withOrg()', () => {
     // rate-limit.ts: one bucket row locked per request (lesson 5.2); rate_limit_buckets is not a tenant table.
     // Module 7: staff-side writes run as the owner in one transaction with their audit event (impersonation
     // sessions and platform events such as flag changes are not tenant rows; beacon_app may not touch them).
-    // Module 8: the platform audit events of key rotation (secrets/maintenance.ts).
+    // Module 8: the platform audit events of key rotation (secrets/maintenance.ts); account deletion
+    // (one transaction over users, several orgs' audit logs and their deletion schedule) and the
+    // final purge of an org after its grace period (privacy/).
     const allowed = [
       'src/lib/organizations.ts', 'src/lib/invitations.ts', 'src/lib/email/index.ts', 'src/lib/rate-limit.ts',
       'src/lib/admin/audit.ts', 'src/lib/admin/support.ts', 'src/lib/admin/staff.ts', 'src/lib/impersonation.ts', 'src/lib/flags/store.ts',
-      'src/lib/secrets/maintenance.ts',
+      'src/lib/secrets/maintenance.ts', 'src/lib/privacy/user-data.ts', 'src/lib/privacy/org-data.ts',
     ];
     const users = files.filter((f) => /\bdb\s*\.\s*transaction\s*\(/.test(readFileSync(f, 'utf8'))).map((f) => f.split(path.sep).join('/'));
     expect(users.filter((f) => !allowed.includes(f))).toEqual([]);

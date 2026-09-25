@@ -1,4 +1,4 @@
-import { and, eq, max, sql } from 'drizzle-orm';
+import { and, eq, isNull, max, sql } from 'drizzle-orm';
 import { db, schema } from '@/db';
 import { withOrg } from '@/db/tenant';
 import { runCheck, type CheckOutcome } from '@/core/check';
@@ -38,7 +38,8 @@ export const WINDOW_AHEAD_MS = 90_000;
 export async function scheduleChecks(now = new Date()): Promise<{ monitors: number; enqueued: number }> {
   const from = new Date(now.getTime() - WINDOW_BEHIND_MS);
   const to = new Date(now.getTime() + WINDOW_AHEAD_MS);
-  const orgs = await db.select({ id: organizations.id, plan: organizations.plan }).from(organizations);
+  // Lesson 8.1: an org scheduled for deletion is not checked any more (its owner asked to leave).
+  const orgs = await db.select({ id: organizations.id, plan: organizations.plan }).from(organizations).where(isNull(organizations.deletionScheduledFor));
   let count = 0;
   let enqueued = 0;
   for (const org of orgs) {

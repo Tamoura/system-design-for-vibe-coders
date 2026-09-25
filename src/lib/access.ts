@@ -69,7 +69,7 @@ export const requireMembership = cache(async (orgSlug: string): Promise<OrgConte
  * customer is `onBehalfOf` ("Beacon support, on behalf of Ana"), so an
  * impersonated action can never look like the customer did it.
  */
-async function auditSourceFor(user: CurrentUser): Promise<AuditSource> {
+export async function auditSourceFor(user: CurrentUser): Promise<AuditSource> {
   // API routes: observeRequest() already read the request. Pages and server actions: Next's headers().
   const ctx = getContext();
   const h = ctx ? null : await requestHeaders();

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SUBPROCESSORS } from '@/core/trust';
+import { ORG_DELETION_GRACE_DAYS, OTHER_RETENTION, RETENTION_RULES } from '@/core/retention';
 
 export const metadata: Metadata = { title: 'Trust and security — Beacon' };
 // Lesson 6.1: static, like the rest of the marketing site (and listed in STATIC_PAGES for its CSP, lesson 8.1).
@@ -55,8 +56,13 @@ export default function TrustPage() {
         <h2 id="privacy" style={{ margin: 0 }}>Your data, your choice</h2>
         <ul style={{ margin: 0 }}>
           <li>Every user can download their personal data and delete their account from <strong>Account settings</strong>.</li>
-          <li>Organization owners can export all of the organization’s data as JSON and delete the organization from <strong>Settings → Data &amp; privacy</strong>. Deletion happens after a 7-day grace period and removes the data from our database and file storage; backups age out within 30 days.</li>
-          <li>Retention: check results are kept 90 days, webhook delivery logs 30 days, notifications 180 days, the audit log by plan (Pro 30 days, Business a year).</li>
+          <li>Organization owners can export all of the organization’s data as JSON and delete the organization from <strong>Settings → Data &amp; privacy</strong>. Deletion happens after a {ORG_DELETION_GRACE_DAYS}-day grace period and removes the data from our database and file storage.</li>
+          {Object.values(RETENTION_RULES).map((r) => (
+            <li key={r.table}>{r.data}: kept {r.days} days.</li>
+          ))}
+          {OTHER_RETENTION.map((r) => (
+            <li key={r.data}>{r.data}: {r.rule}</li>
+          ))}
         </ul>
       </section>
 

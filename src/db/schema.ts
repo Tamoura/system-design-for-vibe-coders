@@ -70,6 +70,11 @@ export const organizations = pgTable(
   // `npm run db:migrate` encrypts what is here into the column above and empties it;
   // nothing reads it any more, and a later migration drops it.
   legacySlackWebhookUrl: text('slack_webhook_url'),
+  // Lesson 8.1 (GDPR, offboarding): an owner asked to delete the org. Until this
+  // moment (7 days later) it can be cancelled; meanwhile checks stop and the status
+  // page is gone. Then the `org.delete` job purges it for real (src/lib/privacy/org-data.ts).
+  deletionScheduledFor: timestamp('deletion_scheduled_for', { withTimezone: true }),
+  deletionRequestedBy: uuid('deletion_requested_by').references((): AnyPgColumn => users.id, { onDelete: 'set null' }),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: updatedAt(),
   },
@@ -1089,6 +1094,37 @@ export const auditEvents = pgTable(
     // Retention deletes the oldest events of each org (and staff pages read by time).
     index('audit_events_occurred_idx').on(t.occurredAt),
   ],
+);
+
+/*
+ * Module 8 — Trust & the Frontier.
+ */
+
+export const orgExportStatus = pgEnum('org_export_status', ['pending', 'ready', 'failed']);
+
+/**
+ * Lesson 8.1 (GDPR, portability): "export all of our data". An owner asks, the
+ * `org.export` job writes one JSON file to object storage, and the owner
+ * downloads it through a short-lived signed URL. Files expire after 7 days
+ * (the retention job deletes them): an export is a copy of everything, the
+ * last thing to leave lying around.
+ */
+export const orgExports = pgTable(
+  'org_exports',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    requestedBy: uuid('requested_by').references(() => users.id, { onDelete: 'set null' }),
+    status: orgExportStatus('status').notNull().default('pending'),
+    storageKey: text('storage_key'),
+    sizeBytes: integer('size_bytes'),
+    error: text('error'),
+    completedAt: timestamp('completed_at', { withTimezone: true }),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [index('org_exports_org_created_idx').on(t.organizationId, t.createdAt)],
 );
 
 export type Organization = typeof organizations.$inferSelect;

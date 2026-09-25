@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { forPage, requireMembership } from '@/lib/access';
-import { listOrganizationsForUser } from '@/lib/organizations';
+import { getOrganization, listOrganizationsForUser } from '@/lib/organizations';
 import { countUnread } from '@/lib/notifications';
 import { getOnboarding } from '@/lib/onboarding';
 import { signOutAction } from '@/app/(auth)/actions';
@@ -38,6 +38,7 @@ export default async function OrgLayout({ children, params }: { children: React.
   const orgs = await listOrganizationsForUser(ctx.userId);
   const unread = await countUnread(ctx); // lesson 4.2: the bell
   const onboarding = await getOnboarding(ctx); // lesson 6.1 (🟡): stored on the org, the same for every member
+  const deletionAt = (await getOrganization(ctx))?.deletionScheduledFor ?? null; // lesson 8.1
   // Lesson 4.3: one live connection (SSE) for every page of this org, shared by the components below.
   return (
     <RealtimeProvider orgSlug={ctx.orgSlug}>
@@ -72,6 +73,13 @@ export default async function OrgLayout({ children, params }: { children: React.
             <NotificationBell orgSlug={ctx.orgSlug} unread={unread} />
             <LiveStatus />
           </header>
+          {/* Lesson 8.1: nobody should be surprised by a deletion an owner asked for. */}
+          {deletionAt && (
+            <div className="banner-warn" role="status" data-testid="deletion-banner">
+              This organization will be deleted on {deletionAt.toISOString().slice(0, 10)}. Checks have stopped.{' '}
+              <Link href={`/${ctx.orgSlug}/settings/data#delete`}>Details</Link>
+            </div>
+          )}
           <main id="main" className="shell-content">{children}</main>
           {/* Lesson 6.2 (🟡): asked once; nothing is sent from the browser before a "yes". */}
           <ConsentBanner />

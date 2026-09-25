@@ -27,12 +27,15 @@ import { ROLES, type Role } from './roles';
  * |                 endpoints (lessons 5.2/5.3) |       |       |        |        |
  * | audit.read      the audit log (lesson 7.3)  |   ✓   |   ✓   |        |        |
  * | billing.manage  upgrade, manage billing     |   ✓   |       |        |        |
- * | org.delete      (1.2's 🔴 exercise)         |   ✓   |       |        |        |
+ * | org.delete      delete the org (lesson 8.1) |   ✓   |       |        |        |
+ * | org.export      export ALL its data (8.1)   |   ✓   |       |        |        |
  */
 export const PERMISSIONS = {
   owner: [
     'monitor.read', 'member.read', 'monitor.write', 'monitor.write_any', 'incident.write',
     'page.publish', 'org.manage', 'member.manage', 'billing.read', 'billing.manage', 'notification.manage', 'integration.manage', 'audit.read', 'org.delete',
+    // Lesson 8.1: a full export holds every member's email and the whole audit log: owners only.
+    'org.export',
   ],
   admin: [
     'monitor.read', 'member.read', 'monitor.write', 'monitor.write_any', 'incident.write',

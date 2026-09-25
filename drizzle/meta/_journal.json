@@ -183,6 +183,13 @@
       "when": 1790303744141,
       "tag": "0025_encrypted_secrets",
       "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1790304041556,
+      "tag": "0026_privacy",
+      "breakpoints": true
     }
   ]
 }

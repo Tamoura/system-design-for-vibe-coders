@@ -7,6 +7,8 @@ import { deliverNotification } from '../notifications/deliver';
 import { runScheduledCheck, scheduleChecks } from '../scheduler';
 import { reportPendingUsage } from '../usage';
 import { deliverWebhook } from '../webhooks';
+import { purgeOrganization, runOrgExport } from '../privacy/org-data';
+import { purgeExpiredData } from '../privacy/retention';
 import { runWorkflow } from '../workflows';
 import type { JobContext, JobData, QueueName } from './queues';
 
@@ -40,6 +42,10 @@ export const HANDLERS: { [Q in QueueName]?: Handler<Q> } = {
     if (result.broken.length) throw new Error(`audit chains broken: ${result.broken.map((b) => b.org).join(', ')}`);
     return result;
   },
+  // Lesson 8.1: GDPR portability and erasure, and retention.
+  'org.export': (data, job) => runOrgExport(data, job),
+  'org.delete': (data) => purgeOrganization(data.orgId),
+  'retention.purge': () => purgeExpiredData(),
 };
 
 export function handlerFor<Q extends QueueName>(queue: Q): Handler<Q> | undefined {

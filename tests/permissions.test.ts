@@ -19,6 +19,7 @@ const EXPECTED: Record<Permission, string[]> = {
   'integration.manage': ['owner', 'admin'], // lessons 5.2/5.3: API keys and webhooks
   'audit.read': ['owner', 'admin'], // lesson 7.3: the audit log
   'org.delete': ['owner'],
+  'org.export': ['owner'], // lesson 8.1: every member's email and the whole audit log
 };
 
 describe('can(role, permission)', () => {

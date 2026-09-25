@@ -93,7 +93,8 @@ export function thumbnailKey(key: string): string {
 }
 
 const UUID = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}';
-const KEY_PATTERN = new RegExp(`^orgs/(${UUID})/(logos|screenshots)/${UUID}(\\.thumb\\.webp)?$`);
+// Lesson 8.1: plus orgs/<org>/exports/<export id>.json, the organization's data export.
+const KEY_PATTERN = new RegExp(`^orgs/(${UUID})/(?:(?:logos|screenshots)/${UUID}(?:\\.thumb\\.webp)?|exports/${UUID}\\.json)$`);
 
 /** Is this a key Beacon could have generated? (Also the local driver's guard against path tricks.) */
 export function isValidKey(key: string): boolean {

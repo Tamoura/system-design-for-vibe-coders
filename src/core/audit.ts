@@ -35,6 +35,7 @@ export const AUDIT_ACTIONS = {
   'member.invitation_revoked': { category: 'members', description: 'Revoked an open invitation' },
   'member.joined': { category: 'members', description: 'Accepted an invitation and joined' },
   'member.role_changed': { category: 'members', description: "Changed a member's role" },
+  'member.account_deleted': { category: 'members', description: 'A member deleted their Beacon account and left (lesson 8.1)' },
   // Monitors (the product). Pausing is audited because it silences alerts.
   'monitor.created': { category: 'monitors', description: 'Created a monitor' },
   'monitor.updated': { category: 'monitors', description: 'Changed a monitor (name, URL or interval)' },
@@ -54,6 +55,11 @@ export const AUDIT_ACTIONS = {
   'status_page.unpublished': { category: 'settings', description: 'Hid the public status page' },
   'alerts.settings_changed': { category: 'settings', description: 'Changed the organization alert policy or Slack channel' },
   'escalation.policy_changed': { category: 'settings', description: 'Changed the escalation policy' },
+  // Lesson 8.1: GDPR, portability and erasure
+  'org.export_requested': { category: 'settings', description: "Asked for an export of all the organization's data" },
+  'org.export_downloaded': { category: 'settings', description: 'Downloaded an export of the organization' },
+  'org.deletion_requested': { category: 'settings', description: 'Asked to delete the organization (after a grace period)' },
+  'org.deletion_cancelled': { category: 'settings', description: 'Cancelled the deletion of the organization' },
   // Billing (lessons 3.1, 3.2)
   'billing.plan_changed': { category: 'billing', description: 'The plan changed (a Stripe subscription update, or Beacon support)' },
   'billing.trial_extended': { category: 'billing', description: 'Beacon support extended the trial' },
@@ -72,6 +78,10 @@ export const AUDIT_ACTIONS = {
   'flag.override_changed': { category: 'platform', description: 'Changed a per-organization flag override (lesson 6.3)' },
   'audit.retention_purged': { category: 'platform', description: 'Deleted audit events past their retention' },
   // Lesson 8.1: encryption at rest. Counts and key ids only, never a key or a secret.
+  'account.data_exported': { category: 'platform', description: 'A user downloaded their personal data (lesson 8.1, GDPR Art. 15/20)' },
+  'account.deleted': { category: 'platform', description: 'A user deleted their account (lesson 8.1, GDPR Art. 17)' },
+  'org.deleted': { category: 'platform', description: "An organization's data was purged after its grace period (lesson 8.1)" },
+  'retention.purged': { category: 'platform', description: 'Deleted data past its retention period (lesson 8.1)' },
   'secrets.encrypted': { category: 'platform', description: 'Encrypted stored secrets that were still in plain text (the Module 8 migration)' },
   'secrets.rewrapped': { category: 'platform', description: 'Re-wrapped the data keys of stored secrets with the current encryption key (key rotation)' },
 } as const satisfies Record<string, ActionSpec>;
