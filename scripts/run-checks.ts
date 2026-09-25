@@ -9,6 +9,7 @@
  * by itself, so you rarely need this. Before Module 5 this script was the
  * whole scheduler, run from cron.
  */
+import './load-env'; // lesson 7.4: .env.local, like Next.js (must be the first import)
 import { sql } from '../src/db';
 import { stopBoss } from '../src/lib/queue';
 import { enqueueChecksNow } from '../src/lib/scheduler';

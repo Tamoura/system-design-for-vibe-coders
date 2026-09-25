@@ -10,6 +10,7 @@
  * dashboard it shows every org's job payloads, so it belongs behind admin
  * authentication (lesson 7.1), never on the public internet.
  */
+import './load-env'; // lesson 7.4: .env.local, like Next.js (must be the first import)
 import { sql } from '../src/db';
 import { stopBoss } from '../src/lib/queue';
 import { runQueuedJobs } from '../src/lib/queue/run';

@@ -1,7 +1,18 @@
+/**
+ * Lesson 7.4: migrations are a RELEASE step. They run once per deploy, before
+ * the new code starts (a `migrate` one-shot container in
+ * docker-compose.prod.yml, the release phase of a PaaS), never on every web
+ * instance's boot. Every migration must keep the code that is still running
+ * working (expand → migrate → contract, docs/deployment.md).
+ */
+import './load-env'; // lesson 7.4: .env.local, like Next.js (must be the first import)
 import { drizzle } from 'drizzle-orm/postgres-js';
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
 import postgres from 'postgres';
 import { installQueues } from '../src/lib/queue/install';
+import { validateEnvOrExit } from '../src/lib/env';
+
+validateEnvOrExit('migrate');
 
 /*
  * Lesson 2.1: a migration that waits for a lock (say, ALTER TABLE behind a

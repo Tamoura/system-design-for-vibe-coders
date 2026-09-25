@@ -9,6 +9,7 @@
  * "big" org and everything in it. Rows are generated inside Postgres with
  * generate_series, which is far faster than sending them from Node.
  */
+import './load-env'; // lesson 7.4: .env.local, like Next.js (must be the first import)
 import postgres from 'postgres';
 
 const arg = (name: string, fallback: number) => {

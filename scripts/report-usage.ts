@@ -10,6 +10,7 @@
  * Lesson 5.1: the worker runs the same function every 5 minutes (the
  * `usage.report` schedule), so cron is no longer needed; this is for by hand.
  */
+import './load-env'; // lesson 7.4: .env.local, like Next.js (must be the first import)
 import { sql } from '../src/db';
 import { getBillingProvider } from '../src/lib/billing/provider';
 import { reportPendingUsage } from '../src/lib/usage';

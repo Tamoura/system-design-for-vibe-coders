@@ -7,6 +7,7 @@
  * (host localhost or 127.0.0.1) unless you pass --force, and it never runs
  * with NODE_ENV=production.
  */
+import './load-env'; // lesson 7.4: .env.local, like Next.js (must be the first import)
 import postgres from 'postgres';
 
 const url = process.env.DATABASE_URL ?? 'postgres://beacon:beacon@localhost:5432/beacon';

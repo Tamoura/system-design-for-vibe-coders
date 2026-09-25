@@ -11,6 +11,7 @@
  * - allows the browser at APP_URL to PUT and GET with presigned URLs (CORS),
  *   which direct uploads need.
  */
+import './load-env'; // lesson 7.4: .env.local, like Next.js (must be the first import)
 import {
   CreateBucketCommand,
   HeadBucketCommand,
