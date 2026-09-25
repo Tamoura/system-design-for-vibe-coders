@@ -126,7 +126,8 @@ jobs:
         run: |
           docker buildx build --load --build-arg GIT_SHA=${{ github.sha }} -t beacon:ci .
           test "$(docker run --rm --entrypoint id beacon:ci -u)" = "1000"
-          docker run --rm --entrypoint sh beacon:ci -c '! ls node_modules/vitest node_modules/typescript node_modules/tsx 2>/dev/null && ! ls -a | grep -q "^.env"'
+          # One check per package: `! ls a b c` passes as soon as any ONE of them is missing.
+          docker run --rm --entrypoint sh beacon:ci -c 'for p in vitest vite typescript tsx drizzle-kit esbuild @esbuild-kit; do if [ -e "node_modules/$p" ]; then echo "dev package in the image: $p"; exit 1; fi; done; ! ls -a | grep -q "^.env"'
       # Lesson 8.1 (🟡): "CI fails on critical CVEs in the worker image". The web app, the worker
       # and the migrations are one image (lesson 7.4), so this scans all three. Fixed-in-a-newer-
       # version CRITICALs fail; accepted risks go in .trivyignore with a reason and an expiry.
