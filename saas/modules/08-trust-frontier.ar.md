@@ -244,7 +244,7 @@ SOC 2 يعني ضوابط، وأدلة على أنك طبقتها، ومدققً
 ## 📚 المراجع
 
 - OWASP Top 10: https://owasp.org/www-project-top-ten/ — أهم 10 مخاطر في تطبيقات الويب
-- OWASP API Security Top 10: https://owasp.org/www-project-api-security/ — أهم 10 مخاطر في أمان واجهات API
+- OWASP API Security Top 10: https://owasp.org/API-Security/ — أهم 10 مخاطر في أمان واجهات API
 - OWASP Cheat Sheet Series (SSRF Prevention, Secrets Management, CSP): https://cheatsheetseries.owasp.org
 - RFC 9116, A File Format to Aid in Security Vulnerability Disclosure (security.txt): https://www.rfc-editor.org/rfc/rfc9116
 - AICPA SOC 2 overview: https://www.aicpa-cima.com — نظرة عامة على SOC 2
