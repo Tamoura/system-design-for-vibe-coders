@@ -1,5 +1,5 @@
 import { describeLink } from '@/lib/notifications/subscribers';
-import { LinkActionForm } from '@/app/unsubscribe/link-form';
+import { LinkActionForm } from '@/app/(site)/unsubscribe/link-form';
 import { confirmSubscriptionAction } from '../actions';
 
 export const dynamic = 'force-dynamic';

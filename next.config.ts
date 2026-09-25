@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
   // Lesson 1.3: enables `forbidden()`, which renders app/forbidden.tsx with a
   // real 403 status when a role lacks a permission.
   experimental: { authInterrupts: true },
+  // Lesson 6.1 (🟡): account settings moved to /settings/account (user-level),
+  // next to the org-level /[org]/settings/…. Old links keep working.
+  async redirects() {
+    return [{ source: '/account', destination: '/settings/account', permanent: true }];
+  },
 };
 
 export default nextConfig;

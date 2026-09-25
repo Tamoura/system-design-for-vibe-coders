@@ -6,12 +6,13 @@ import { linkGithubAction, resendVerificationAction } from './actions';
 export const dynamic = 'force-dynamic';
 
 export default async function AccountPage({ searchParams }: { searchParams: Promise<Record<string, string | undefined>> }) {
-  const user = await requireUser('/account');
+  const user = await requireUser('/settings/account');
   const params = await searchParams;
   const logins = await auth.api.listUserAccounts({ headers: await headers() });
   const hasGithub = logins.some((a) => a.providerId === 'github');
   return (
     <section className="grid" style={{ maxWidth: 560 }}>
+      {/* Lesson 6.1 (🟡): the USER's settings, the same in every org, so not under /[org]/settings. */}
       <h1 style={{ margin: 0 }}>Your account</h1>
       <div className="card grid">
         <div><strong>{user.name}</strong> · {user.email}</div>
@@ -39,6 +40,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
         )}
         {params.error && <div className="error">Could not link GitHub ({params.error}). GitHub must report the same, verified email.</div>}
       </div>
+      <p className="muted">Alert preferences (which incidents reach you by email or SMS) are per organization: open one and choose “My alert preferences”.</p>
     </section>
   );
 }

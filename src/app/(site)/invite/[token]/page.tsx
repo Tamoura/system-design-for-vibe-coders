@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { emailsMatch } from '@/core/invitations';
 import { findInvitationByToken } from '@/lib/invitations';
 import { getCurrentUser } from '@/lib/session';
-import { signOutAction } from '../../(auth)/actions';
+import { signOutAction } from '@/app/(auth)/actions';
 import { AcceptForm } from './accept-form';
 
 export const dynamic = 'force-dynamic';

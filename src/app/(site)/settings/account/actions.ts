@@ -7,9 +7,9 @@ import { requireUser } from '@/lib/session';
 
 /** Lesson 1.1: send the "confirm your email" link again. */
 export async function resendVerificationAction() {
-  const user = await requireUser('/account');
-  await auth.api.sendVerificationEmail({ body: { email: user.email, callbackURL: '/account' }, headers: await headers() });
-  redirect('/account?verification=sent');
+  const user = await requireUser('/settings/account');
+  await auth.api.sendVerificationEmail({ body: { email: user.email, callbackURL: '/settings/account' }, headers: await headers() });
+  redirect('/settings/account?verification=sent');
 }
 
 /**
@@ -18,9 +18,9 @@ export async function resendVerificationAction() {
  * Auth then refuses the link unless GitHub says the same email is verified.
  */
 export async function linkGithubAction() {
-  await requireUser('/account');
+  await requireUser('/settings/account');
   const { url } = await auth.api.linkSocialAccount({
-    body: { provider: 'github', callbackURL: '/account', errorCallbackURL: '/account' },
+    body: { provider: 'github', callbackURL: '/settings/account', errorCallbackURL: '/settings/account' },
     headers: await headers(),
   });
   redirect(url);

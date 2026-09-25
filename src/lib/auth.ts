@@ -72,7 +72,7 @@ export const auth = betterAuth({
       enabled: true,
       // Lesson 1.1: never merge a GitHub identity into an existing account just
       // because the emails match. The user must sign in with their existing
-      // method first and click "Link GitHub" on /account; Better Auth then also
+      // method first and click "Link GitHub" on /settings/account; Better Auth then also
       // requires GitHub to report that email as verified.
       disableImplicitLinking: true,
     },

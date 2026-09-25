@@ -7,6 +7,7 @@ export const RESERVED_SLUGS = new Set([
   'account', 'api', 'dashboard', 'forgot-password', 'invite', 'login', 'logout', 'orgs',
   'reset-password', 'settings', 'signup', 'status', 'admin', 'app', 'www', 'help', 'docs', '_next',
   'fake-billing', // lesson 3.1: the fake Stripe pages (BILLING_PROVIDER=fake)
+  'pricing', 'internal', 'unsubscribe', // lesson 6.1: the marketing site and staff tools share the URL space
 ]);
 
 export function slugify(name: string): string {

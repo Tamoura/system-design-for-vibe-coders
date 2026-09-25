@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 import { confirmSubscription, subscribeToStatusPage } from '@/lib/notifications/subscribers';
-import type { LinkState } from '@/app/unsubscribe/actions';
+import type { LinkState } from '@/app/(site)/unsubscribe/actions';
 
 export type SubscribeState = { message?: string; error?: string };
 
