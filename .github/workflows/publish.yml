@@ -41,6 +41,9 @@ jobs:
       - name: Verify the SaaS course output matches its markdown
         run: npm run saas:check
 
+      - name: Verify the agentic pages carry the site navigation
+        run: node scripts/agentic-nav.mjs --check
+
       - name: Check the SaaS course's GitHub repo links (report only)
         continue-on-error: true
         env:

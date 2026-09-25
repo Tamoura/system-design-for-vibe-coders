@@ -30,4 +30,7 @@ for f in "${FILES[@]}"; do
   cp "$AGENTIC_DOCS/$f" "agentic/$f"
   echo "synced agentic/$f"
 done
+# The copied pages have no site navigation of their own; add it (top bar, module-level
+# contents, mobile drawer). Idempotent, so it is safe to run after every sync.
+node "$(dirname "$0")/agentic-nav.mjs"
 echo "Done. Review 'git diff agentic/', then commit and push to publish the library."
