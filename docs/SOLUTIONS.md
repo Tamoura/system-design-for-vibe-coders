@@ -2306,3 +2306,123 @@ their personal org scheduled for deletion with a delayed job, both audited → t
 provider, the primary at a dead port and the fallback at a local Messages API stand-in: the draft comes from
 `claude-sonnet-5`, both calls metered, the request carried the zod schema as structured output, effort low, no tools,
 the key only in a header → no key, SDK or Anthropic host in `.next/static`.
+
+---
+
+## Module 9 — Capstone
+
+Modules 1–8 built Beacon one component at a time. Module 9 builds nothing new: it puts the components back together
+on paper, writes down why each one is the way it is, and then checks the **seams** between them, which is where a
+SaaS that works component by component still fails an enterprise review.
+
+```
+ docs/architecture.md     the picture: three rings, every box = lesson + technology, the tenant boundary,
+                          the event backbone, two flows traced step by step, build / buy / self-host
+ docs/adr/0001…0010       why: one page per decision, two rejected alternatives, a revisit trigger that is
+                          a number or a contract; README = index, template, the rules that predict the 11th
+ docs/readiness-review.md where it leaks: "an employee leaves" and "export, then delete everything" traced across
+                          every component; the five enterprise questions; 20 findings; one fixed, with a test
+ tests/architecture-docs.test.ts   every file the three documents cite must exist
+```
+
+### Read in this order
+
+1. `docs/architecture.md`: the diagram first, then "The tenant boundary", "The event backbone" and the two flows.
+2. `docs/adr/README.md`, then any ADR whose component you are about to change.
+3. `docs/readiness-review.md`: the findings table, Trace A, then the five questions.
+4. The one code change: `deleteAccount()` in `src/lib/privacy/user-data.ts`, and its test in `tests/privacy.test.ts`
+   ("lesson 9.1 (the readiness review's seam)…").
+
+### Exercises covered
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 Beacon's full architecture as a diagram, every box with its lesson and concrete choice; trace "a Pro customer adds a monitor" | the diagram shows all three rings and the tenant boundary | `docs/architecture.md`: three subgraphs, the tenant boundary as a subgraph around Postgres, and a second diagram of the boundary itself |
+| | every component names a concrete technology choice | each box says the library or service by name, or "built"; the table under the diagram gives the files |
+| | the traced request mentions authentication, authorization, entitlement check, database write, audit log and job scheduling, in the right order | "Data flow 1", steps 2, 3, 7, 8, 10, 11 (plus the proxy, validation, the SSRF guard and the tenant boundary between them), and a sequence diagram |
+| 🟡 five ADRs (authentication, job queue, billing, webhooks, observability) with context, decision, two rejected alternatives, consequences and a revisit signal | five ADRs in `docs/adr/`, each one page or less | ten: the five asked for plus Postgres-only, tenancy, email and notifications, the public API, the AI gateway; 48–56 lines each, and `tests/architecture-docs.test.ts` fails above 75 or without the sections or two alternatives |
+| | each names a concrete revisit trigger | every trigger is a number ("500 notifying commits per second", "100,000 deliveries a day") or a contract ("requires SAML SSO or SCIM") |
+| | a teammate can predict the sixth component | "How to predict the next choice" in every ADR's consequences, and "Predicting the eleventh" in the README: five rules, with SSO/SCIM worked through |
+| 🔴 an enterprise readiness review: two traces, a fix with a test, the five questions | both traces written with every component and every gap | Trace A (17 seams) and Trace B (the export, then 15 stores) in `docs/readiness-review.md` |
+| | at least one gap fixed with a test that proves it | A3: a deleted person's API keys kept working; now revoked in the deletion's transaction and audited. The test fails on the commit before |
+| | the five questions answered | isolation, identity lifecycle, evidence, residency and exit, blast radius (with a table per compromised thing) |
+
+The 🔴 presentation itself is a 15-minute outline at the end of the review; it was not given to anyone.
+
+### How to use these documents in a design review
+
+- **A new feature:** find its box in the diagram. If it adds a box, it needs an ADR; if it adds an arrow into the
+  tenant-scoped core, it needs a cross-tenant test case. If it reacts to an incident, read "The event backbone"
+  first: it is the fourth consumer that ADR 0004's trigger is waiting for.
+- **A new vendor:** the build / buy / self-host table says what Beacon uses today and the ADR says what must be true
+  before switching. "We could use X" is not a trigger; the ADR's number or contract is.
+- **A customer security questionnaire:** answer from the five questions and link the files; copy the findings table
+  honestly, open gaps included.
+- **Before calling a component done:** trace one real customer action through it, the way Trace A does, and look
+  for the column that points at a user or an org and was never decided (`USER_DATA_COVERAGE`, `NOT_EXPORTED` and
+  `NOT_UNDER_RLS` are Beacon's three lists of decided exceptions; a new column or table fails a test until it is on
+  one of them or handled).
+- **When code moves:** `npm test` fails on the document that cites the old path.
+
+### Findings from the readiness review
+
+Twenty, in `docs/readiness-review.md`. The ones that matter most:
+
+- **A1 + A2: an employee who leaves keeps their access.** Beacon has no "remove member" action and no SCIM. The
+  only complete revocation is the person deleting their own account. Support's "sign out everywhere" ends sessions
+  but not the membership. This is the answer that would fail an enterprise deal, and "offboarding as one service
+  function" is the first next step.
+- **A3 (fixed): API keys outlived their creator.** `api_keys.created_by` was `ON DELETE SET NULL` and `verifyApiKey()`
+  never looks at the creator, so a key minted by a deleted person kept its scopes. `deleteAccount()` now revokes
+  every live key the person created, in every org, in its transaction, with an `api_key.revoked` audit event
+  (`cause: creator_account_deleted`); the account page says so first. This is exactly the lesson's check-yourself
+  question 5.
+- **A4–A7: the rest of offboarding.** A key keeps its scopes when its creator is demoted; webhook endpoints the leaver
+  created keep receiving incident data; escalation tiers keep the departed id and a tier of only them pages nobody
+  (silently, and the settings page cannot show it); invitations they sent stay valid for up to 7 days.
+- **B1 + B2: files are the forgotten store.** The org export has every row (discovered from the schema, enforced by a
+  test) but none of the uploaded files; and deleting a monitor or incident deletes its `files` rows but not the
+  objects, so those objects survive even the org purge, whose row-count proof covers Postgres only.
+- **B3: backups resurrect deletions.** A restore brings back orgs and accounts deleted since the backup; nothing replays
+  the deletions.
+- **B4–B8, A11, C1:** PostHog and Stripe keep their copies, `email_outbox` and IP-keyed rate-limit rows outlive the
+  org, the public API accepts writes during the deletion grace period, a manual resolve is not audited, and staff
+  have no MFA or separate hostname.
+- **Architecture, not a seam:** the core names every consumer of an incident (webhooks, notifications, escalation,
+  real-time, analytics) at three call sites instead of emitting one event. Nothing is lost, since every call is a row
+  in the same transaction, but a PagerDuty integration would edit the core ([ADR 0004](adr/0004-job-queue-pg-boss.md)
+  has the trigger).
+
+### Design decisions to notice
+
+- **Documents that are tested.** The docs cite about 300 file paths between them; a test resolves each one and every
+  relative link, and holds the ADRs to their template and one page. The failure mode of architecture docs is
+  quietly going stale, and this is the cheapest guard against it.
+- **ADRs recorded, not invented.** Each ADR says which branch decided it and takes its reasons from this file; the
+  alternatives are the ones the modules actually weighed (Graphile Worker for the queue, JWTs for sessions, the Vercel
+  AI SDK, Svix). Where the review changed a decision (ADR 0007), the ADR says so.
+- **Ten ADRs, not five.** A teammate predicts the eleventh from the pattern, and the pattern only shows across all
+  of them: Postgres first, tenant id first, library before service, side effects as rows in the transaction, triggers
+  as numbers.
+- **One fix, chosen by the rule "small and clearly correct".** Revoking a dead person's keys is one statement inside
+  a transaction that already exists, with no new table, route or UI; it is the lesson's own example. A remove-member
+  flow, SCIM, prefix deletion in storage and a deletion ledger are features, so they are findings with next steps.
+- **The trade-off of the fix is written down.** An integration built on a leaver's key breaks when they delete their
+  account. Keys that should outlive people need a service-account owner (ADR 0007's trigger), not immortal keys.
+- **The event backbone is described as it is.** The lesson draws an outbox and subscribers; Beacon's queue *is* the
+  outbox (pg-boss in the same Postgres), but the consumers are called by name. The architecture document says so
+  instead of drawing the lesson's picture over the code.
+
+### Not done in Module 9
+
+The 90-day plan from the lesson's title (no exercise asks for it); the 15-minute presentation to a peer; comparing
+Beacon with openstatus component by component (the lesson's "if you only study one"); every open finding in the
+readiness review, above all A1/A2 (offboarding and SCIM) and B2 (storage by prefix).
+
+### Verification for this branch
+
+`npm test` (708 tests and 2 more with `DATABASE_URL`, 710 in CI; 16 new: the API-key revocation case in
+`tests/privacy.test.ts`, which fails on `module-8-solution`'s `deleteAccount()`, and `tests/architecture-docs.test.ts`,
+which was also checked to fail on a misspelt path), `npm run typecheck`, `npm run openapi:check`,
+`npm run env:docs:check`, and every Mermaid diagram in the three documents rendered to SVG with mermaid in headless
+Chromium (four diagrams, no parse errors; one sequence-diagram message with a `;` failed the first time and was fixed).
