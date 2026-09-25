@@ -1763,3 +1763,313 @@ tickets → `monitor-latency-chart` at 0%: no chart for demo or the new org → 
 there → the kill switch: gone for demo too → `/internal/analytics`: the free row counts the new orgs and one
 activation; recent events show names and ids only. The SMS kill switch and the provider's failure modes are covered
 by the tests, not the smoke test.
+
+---
+
+## Module 7 — Operating the SaaS
+
+Modules 1–6 built the product. Module 7 is what it takes to **run** it with a small team: a **back office** for staff,
+separate from customers, whose writes go through the service layer with a reason (7.1); **observability** that can
+explain any request or job from the data it already emits (7.2); an **audit log** that is evidence, written with every
+sensitive change (7.3); and **one image, one pipeline**, configuration checked at startup, and a restore that has
+actually been tried (7.4).
+
+```
+ browser ─► src/proxy.ts: x-request-id (reuse or mint) · impersonation cookie + POST/PUT/PATCH/DELETE → 403
+   │
+   ├─ /api/…  apiRoute()/publicApi() ─► observeRequest(): request context (ALS) + SERVER span + RED metrics + access log
+   │            requireMembership() adds orgId/userId to the context, and builds ctx.audit (actor, IP, UA, request id)
+   │            service function ── withOrg() transaction: the change + recordAudit(tx, …) (hash chain per org) ── COMMIT
+   │                              └─ enqueueInTx(): job data carries _meta { requestId, traceparent }
+   │  worker ─► executeJob(): the same requestId in the context, a CONSUMER span child of the enqueue, jobs_total, logs
+   │
+   ├─ /internal (staff_users + staff roles; 404 for everyone else) ─► /api/internal/orgs/:id/:action (staffRoute:
+   │     404 → Origin → 403 → reason) ─► extendTrial / compPlan / resend / sign-out / impersonate ─► service + audit
+   │
+   └─ /[org]/settings/audit-log (owner/admin, plan entitlement, retention window) ─► CSV export
+ logs: JSON on stdout · traces/metrics: OTLP ─► collector ─► Tempo / Prometheus (SLO burn-rate alerts) ─► Grafana
+ one Docker image: next start | dist/scripts/worker.mjs | dist/scripts/migrate.mjs (the release step, before deploy)
+```
+
+### Try it by hand
+
+```bash
+npm run db:reset                                   # also creates three staff accounts (password beacon-demo-password)
+BILLING_PROVIDER=fake BILLING_TRIAL_DAYS=14 npm run dev | npx pino-pretty     # terminal 1
+npm run worker | npx pino-pretty                                               # terminal 2
+```
+
+1. `curl -i localhost:3000/api/health` and `/api/ready`: 200, an `x-request-id` header. Send your own
+   (`-H 'x-request-id: my-req-12345678'`): the response and the log line carry it.
+2. Sign in as `demo@beacon.test` (owner, Free plan). **Organization → Audit log**: an upgrade prompt, and
+   `GET /api/orgs/demo/audit-log` is a 402. Open `/internal`: 404, you are a customer, whatever your role.
+3. **Billing → Upgrade to Business**, pay on the fake Checkout: a 14-day **trial** (`trialing`).
+4. In a private window sign in as `support@beacon.test` and open <http://localhost:3000/internal>. Search `member@beac`:
+   the Demo org. Its page shows plan and usage (5 of 500 monitors, from the same entitlement code the product uses),
+   members with last activity, open invitations and the last 10 incidents. **Extend trial** by 3 days with a reason:
+   the trial end moves in the fake "Stripe" and in Postgres. There is no **Comp plan** form for support, and
+   `fetch('/api/internal/orgs/<id>/comp-plan', {method: 'POST', …})` from the console is a 403. (Sign in as
+   `billing@beacon.test` to comp a plan; as `staff@beacon.test` to manage staff at `/internal/staff`.)
+5. Still as support: **View as a member**, pick Demo User, give a reason. You land on `/demo/monitors` under a red
+   banner ("Viewing as demo@beacon.test · read-only · ends in 30 min"). Try to rename the org or add a monitor: 403.
+   Open **Audit log**: "Beacon support (on behalf of Demo User)". **Exit**: back in `/internal`; `/demo/…` is 404 again.
+6. As the owner: change Mia's role, create an API key, invite someone. **Audit log** lists each with who, from where
+   and before → after; filter by category, actor ("Beacon support") or dates; **Export CSV** downloads that filter.
+   `npm run audit -- verify`: every chain intact. Then `psql … -c "update audit_events set actor_email = 'x' where
+   action = 'member.role_changed'"` as the superuser, and verify again: the edited row is named.
+7. Terminal 2: the invitation's `email.send` job logs the **same requestId** as the browser's POST (DevTools →
+   Network → the POST → response headers → `x-request-id`).
+
+Existing database? Migration 0024 is additive (new tables, nullable columns, indexes). Module 6's
+`BEACON_STAFF_EMAILS` is gone: `npm run staff -- add you@example.com superadmin "why"`.
+
+### Lesson 7.1 — The admin panel: support tools and impersonation
+
+**What was built.** A `staff_users` table (one row per staff member, pointing at a Beacon account with a verified
+email) with four staff roles and their own permission table (`src/core/staff.ts`: support, billing, engineer,
+superadmin, the lesson's table). An admin panel at `/internal`: customer search (org name or slug, part of a member's
+email, Stripe customer id, org id; trigram indexes on `users.email` and `organizations.name`), an org page (plan,
+comp, subscription and trial end, monitors vs. limit, members with verification and last activity, open invitations,
+last 10 incidents, recent audit events, impersonation sessions), a staff page (superadmins grant and remove roles) and
+an audit page. Write actions, each with a required reason and an audit event: **extend trial** (≤ 14 days; Stripe
+first, then the webhook's own sync), **comp plan** (optionally for N months; the hourly `billing.comps` job ends it),
+remove comp, **resend invitation**, resend the verification email, **sign a member out everywhere**, and **read-only
+impersonation** (30 minutes, one org, banner, audited in the customer's log). `npm run staff` bootstraps the first
+superadmin; `npm run org:claim` stays as a reviewed data-fix script, now audited.
+
+**Read in this order**
+
+1. `src/core/staff.ts`: roles, permissions, the reason rule, `IMPERSONATION_TTL_MS`, which paths a read-only session may POST to.
+2. `src/lib/staff.ts` (`getStaffMember()` uses the REAL session, `requireStaff(permission)`), `src/lib/session.ts`
+   (`getSessionUser` vs `getCurrentUser`).
+3. `src/lib/admin/route.ts` (`staffRoute`: 404 → Origin → 403 → reason), `src/app/api/internal/orgs/[orgId]/[action]/route.ts`
+   (the action → permission table).
+4. `src/lib/billing/support.ts` (`extendTrial`, `compPlan`, `removeComp`, `expireComps`), `src/lib/billing/plan.ts`
+   (`recomputePlanInTx`, shared with the Stripe sync), the `extendTrial`/`trialDays` additions to the billing providers.
+5. `src/lib/impersonation.ts`, `src/proxy.ts`, `requirePermission()` in `src/lib/access.ts`, `src/app/_components/impersonation-banner.tsx`.
+6. `src/lib/admin/customers.ts`, `support.ts`, `staff.ts`; the pages under `src/app/internal/`.
+7. `tests/staff.test.ts`, `tests/impersonation.test.ts`.
+
+**Exercises covered**
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 `staff_users` separate from users; an admin area only staff open; search by member email, org name, Stripe id; a read-only org page | a customer account with any role gets 404 on every admin route | `requireStaff()` / `staffRoute()` 404 anyone without a staff row; tests: owner, admin, member, viewer and anonymous on pages and routes; smoke: owner and member → 404 on `/internal` and `/internal/orgs/:id` |
+| | search finds an org from a partial email in under a second on seeded data | trigram indexes (migration 0024); test (with 200 extra users) < 1 s; smoke: `member@beac` finds Demo |
+| | the org page shows usage vs. limit from the same entitlements code | `getCustomerOverview()` calls `getEntitlements()`/`getMonitorUsage()`; test compares them; smoke: "5 of 500" |
+| 🟡 "Extend trial by N days" (support, ≤ 14) and "Comp plan" (billing), through the billing service, with a reason and an audit event | extending updates Postgres AND the subscription's trial end, and the scheduler sees the new limit without a restart | `extendTrial()` calls the provider (`stripe.subscriptions.update(trial_end)` / the fake), then `syncCustomerFromStripe()` with the audit event in its transaction; the plan snapshot is read by the scheduler every minute (no cache). Tests: Δ = 3 days in both, >14 refused; comp plan → the plan-frozen monitor runs again and the next `scheduleChecks()` enqueues it; smoke: Δ = 259,200 s |
+| | a support-role staff member cannot see "Comp plan", and a direct POST returns 403 | form rendered only with `plan.comp`; `staffRoute('plan.comp')`; test and smoke (fetch from the support session: 403) |
+| | every action produces an audit event with staff id, org id, reason, before and after | `billing.trial_extended`, `billing.plan_comped`, `billing.plan_changed`, `support.*`: actor = staff (id, name, email), org, `reason`, `changes`; tests and smoke |
+
+Impersonation is the 🔴 exercise; the parts the lesson calls the safe default are built (read-only, 30 minutes, banner,
+both actors in the log, the customer sees it). Not built: the one-time signed token handed to a separate customer app
+(Beacon is one app, so the cookie is set directly), and the per-org "allow Beacon staff" consent setting.
+
+**Design decisions to notice**
+
+- **Staff are not customers with a flag.** A separate table and a separate permission function: nothing in
+  `src/core/permissions.ts` can open `/internal`, and no customer role means anything there. A staff member's own
+  account has no customer org (the seed creates them without one).
+- **Two front doors, one service layer.** Every staff write calls the function the product uses: the trial through the
+  provider and the webhook's sync, the comp through `recomputePlanInTx()` (which also freezes/unfreezes monitors, records
+  the product event, emails a downgrade), the invitation through the invitation code. No raw `UPDATE`.
+- **Writes are plain routes, not server actions**, so "a direct POST returns 403" is literally testable with curl, and
+  they check `Origin` themselves (a server action does that for you; a route does not).
+- **Impersonation is a second cookie on top of the staff member's own session**, stored hashed, bound to the staff
+  member, one org and 30 minutes. `getCurrentUser()` returns the customer (so every page renders as they see it);
+  `getSessionUser()` stays the staff member (so `/internal` still works). Read-only is enforced twice: `src/proxy.ts`
+  refuses every mutating request while the cookie exists, before any code runs, including server actions and API
+  routes; `requirePermission()` refuses any non-read permission.
+- **Production controls not built here**, and where they go: the staff area on its own hostname behind an
+  identity-aware proxy (Cloudflare Access, Tailscale, Pomerium), staff sign-in through the company IdP with
+  phishing-resistant MFA, and step-up re-authentication before writes. Beacon keeps one app and one login for the course.
+- **Unlock**: Beacon has no account lockout (Better Auth rate-limits sign-in by IP), so there is nothing to unlock. The
+  account actions support needs are "resend the verification email" and "sign out everywhere".
+
+### Lesson 7.2 — Observability: logs, errors, metrics and traces
+
+**What was built.** pino JSON logs everywhere in the API and the worker (every `console.*` in `src/lib` replaced),
+with `requestId`, `orgId`, `userId`, `queue`/`jobId`, `traceId`/`spanId` added to every line by a `mixin` reading an
+AsyncLocalStorage request context, and redaction of passwords, keys, tokens, cookies and `authorization` at any depth.
+`src/proxy.ts` assigns the request id (reusing a sane incoming `x-request-id`) and returns it. `observeRequest()` wraps
+every API route (`apiRoute`, `publicApi`, the webhooks, health): context, a SERVER span, RED metrics, an access line,
+and a 500 with the request id for real bugs. Jobs carry `_meta { requestId, traceparent }` from the enqueueing request
+into the worker (`executeJob()`). Error tracking behind `captureError()` (Sentry when `SENTRY_DSN` is set; browser via
+`src/instrumentation-client.ts`; source maps uploaded by the Docker build). OpenTelemetry tracing and metrics with an
+OTLP or console exporter (`initTelemetry()`), `checks_executed_total` and `check_lag_seconds` per region.
+`/api/health` and `/api/ready`. An SLO with multi-window burn-rate alerts and runbooks (`docs/operations.md`,
+`ops/prometheus/alerts.yml`), a Grafana dashboard and a Compose file for Collector + Prometheus + Tempo + Grafana.
+Beacon monitors itself (the seed's "Beacon itself" monitor is now `/api/health`).
+
+**Read in this order**
+
+1. `src/lib/observability/context.ts`, `logger.ts` (the mixin, the redaction), `http.ts` (`observeRequest`).
+2. `src/proxy.ts`, `src/instrumentation.ts` (start-up and `onRequestError`), `src/lib/api.ts`, `src/lib/public-api.ts`.
+3. `src/lib/queue/index.ts` (`withMeta`, the PRODUCER span), `src/lib/queue/execute.ts`, `worker.ts`, `run.ts`.
+4. `src/lib/observability/telemetry.ts`, `metrics.ts`, `errors.ts`; `src/lib/scheduler.ts` (`recordCheck`).
+5. `src/app/api/health/route.ts`, `src/app/api/ready/route.ts`, `src/lib/health.ts`.
+6. `docs/operations.md`, `ops/`, `docker-compose.observability.yml`; `tests/observability.test.ts`.
+
+**Exercises covered**
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 pino instead of `console.log` in the API and workers; a request id (reusing `x-request-id`) in the response; `requestId` and `orgId` on every line; Sentry with the release | every log line is JSON and includes `requestId`; authenticated requests also `orgId` | the mixin; tests (access line with caller's id, org and user; 401 without org); smoke: 25 access lines all with `requestId`, org requests with `orgId` + `userId`, worker lines with `requestId` |
+| | `authorization`, `password`, `apiKey` never appear in logs | `redact` paths at three levels; test; smoke: no password, session cookie or API key in either log |
+| | a browser error shows readable file names in Sentry, tagged with the release | `instrumentation-client.ts` (release = `NEXT_PUBLIC_APP_RELEASE`); the Docker build uploads source maps with the `sentry_auth_token` secret and deletes them. **Unverified**: no Sentry account in the sandbox |
+| 🟡 OpenTelemetry in the API and workers, to a collector; trace context through the job payload; `checks_executed_total`, `check_lag_seconds` | one trace shows the request, the enqueue and the job | test with an in-memory exporter: request span, `enqueue …` (PRODUCER) and `job …` (CONSUMER, child of the enqueue) share one trace id; smoke: the invitation's `email.send` job logged the POST's request id and a trace id |
+| | a dashboard shows check lag p50/p95/p99 per region; stopping a worker makes lag climb within a minute | `ops/grafana/dashboards/beacon.json`; the histogram's labels are `region` only (test). **Unverified**: the Docker stack was not run in the sandbox |
+
+The exercise names BullMQ; Beacon's queue is pg-boss (Module 5), and the payload field is `_meta`. Monitor creation
+enqueues no job in Beacon, so the tested trace is request → enqueue → job for any request-made job (the smoke test
+used an invitation).
+
+**Design decisions to notice**
+
+- **One context, two consumers.** The same AsyncLocalStorage store feeds the logs (7.2) and the audit source (7.3):
+  `requireMembership()` adds the org and user once. It is a process-wide singleton on `globalThis`, found the hard way:
+  Next.js bundles modules into several server chunks, and a store per copy left the logger (created once, in
+  instrumentation) blind to the route's context.
+- **Pages and server actions** have no wrapper; their errors go through `onRequestError` with the proxy's request id,
+  and jobs they enqueue read the id from the request headers.
+- **IP addresses go to the audit log, not the application log** (they are in the context, the mixin leaves them out).
+- **Cardinality.** Metric labels are a route TEMPLATE (`/api/orgs/:org/monitors/:id`), a status class, a queue, a
+  region. Never an org id; a test checks no org slug reaches a label. Per-tenant questions are answered by logs and traces.
+- **Liveness does not touch the database** (a database blip must not restart every instance); readiness does, with
+  a 2-second deadline per check.
+- The SLO alerts (the 🔴 exercise's burn-rate rules) are written down with runbooks but only checked as YAML: there is
+  no `promtool` in the sandbox.
+
+### Lesson 7.3 — Audit logs and activity feeds
+
+**What was built.** `audit_events` (migration 0024): actor type/id/name/email snapshot, on-behalf-of, action, category,
+target type/id/name, org, IP, user agent, request id, via, reason, `changes` (before/after of the changed fields),
+metadata, time, and `seq`/`prev_hash`/`hash`. `recordAudit(tx, event)` writes it in the caller's transaction, refuses
+an action not in the typed registry (`AUDIT_ACTIONS`, 35 actions) and anything that looks like a secret, and links it
+into the org's hash chain under a per-org advisory lock. Called for: members and roles, invitations (invited, resent,
+revoked, joined), monitors (created, updated, paused, resumed, deleted), API keys, webhook endpoints, org rename,
+status page, alert settings (Slack connected or not, never the URL), escalation policy, plan changes (from Stripe and
+from staff), trials and comps, every staff action, impersonation, staff roles and feature flags (platform events, no
+org). The customer page **Organization → Audit log** (owners and admins, `audit.read`; Pro 30 days, Business 365, Free
+an upgrade prompt), filters, keyset pagination, a before/after detail per row, CSV export of the current filter. A
+nightly retention job and a nightly chain verifier; `npm run audit`.
+
+**Read in this order**
+
+1. `src/core/audit.ts`: the registry, `diffFields`, `findSecrets`, the hash chain (`eventHash`, `verifyChain`), `actorLabel`, `csvField`.
+2. `src/lib/audit.ts`: `recordAudit`, `auditSourceOf`, `listAuditEvents`, `toCustomerView`; `drizzle/0024_staff_and_audit.sql` (RLS, grants).
+3. The calls: `grep -rn "recordAudit(" src scripts`. Start with `src/lib/members.ts` and `src/lib/monitors.ts`.
+4. `src/lib/audit-access.ts`, `src/app/api/orgs/[orgSlug]/audit-log/route.ts`, `src/app/[orgSlug]/settings/audit-log/page.tsx`.
+5. `src/lib/admin/audit.ts` (verifier, retention, staff view), `src/lib/queue/handlers.ts` (`audit.*` jobs).
+6. `tests/audit.test.ts`.
+
+**Exercises covered**
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 `audit_events` + `recordAudit(tx, event)` in the same transaction for member invited, role changed, monitor created/paused/deleted, API key created/revoked | each action creates exactly one event with actor, action, target, org, IP, user agent and timestamp | tests for each (through the API route for the role change, so IP and UA come from the request); repeating a no-op (same role, revoke twice) records nothing; smoke: role change with IP and user agent |
+| | a failure after the change but before commit leaves neither | test: change + event + throw → neither; a refused event (secret detected) rolls its change back |
+| | creating an API key logs only its prefix | `metadata.key_prefix` (12 chars); test and smoke search every event for the key and its secret part |
+| 🟡 the customer page (owners/admins), filters (actor, category, target, dates), row detail with the diff, CSV export; retention by plan (Business 365, Pro 30, Free none) | a member gets 403 on the page and the API | `requirePermission('audit.read')`; tests (member, viewer 403; outsider 404) and smoke (403, 403) |
+| | filters combine and paginate over 100,000 events in under 500 ms | indexes `(org, seq)`, `(org, category, seq)`, `(org, actor_id, seq)`, `(org, target_type, target_id, seq)`; test paginates a combined filter with no gaps or repeats; on a local Postgres 16 with 100,000 events, every filter combination's page ran in 0.1–9 ms (`EXPLAIN ANALYZE` as `beacon_app` under RLS) |
+| | impersonation shows "Beacon support (on behalf of Ana)" | `actorLabel()`; tests; smoke on the customer's page during and after impersonation |
+
+**Design decisions to notice**
+
+- **The request's facts are gathered once.** `requireMembership()` builds `ctx.audit` (actor, IP, user agent, request
+  id); `publicApi()` builds one for a key (the actor is the KEY by its prefix, not its creator); `staffRoute()` one for
+  staff. Service functions take `ctx` as before and pass `auditSourceOf(ctx)` on; a test or script without it falls
+  back to the user id.
+- **Append-only by grant**: `beacon_app` may INSERT and SELECT, not UPDATE, DELETE or TRUNCATE (tested). Retention runs
+  as the owner. Tables that were written outside a tenant transaction (memberships, invitations, org name) now change
+  inside `withOrg()` so the event can join their transaction.
+- **Tamper evidence** (from the 🔴 exercise, because it is cheap): a hash chain per org, verified nightly
+  (`audit.verify`; a failure alerts, 7.2) and by `npm run audit -- verify`. Retention deletes the oldest rows; the
+  verifier trusts the first remaining `prev_hash`. Not built: anchoring the latest hash to write-once storage, the
+  trigger safety net for `psql` changes.
+- **Retention is two numbers.** Customers see their plan's window; rows are deleted once older than that AND 30 days
+  (so an upgrade from Free shows the last month), platform events after two years.
+- **What customers see of staff**: "Beacon support", never the staff member's email, IP or the internal reason; staff
+  see everything at `/internal/audit`. CSV fields are quoted and neutralised against formula injection.
+- **PII**: emails are snapshotted on purpose (evidence); erasure can overwrite the snapshot and keep the id.
+- **Pro gets an audit log now** (30 days): the exercise makes retention a plan entitlement, so the `auditLog` gate
+  follows it (`auditLogRetentionDays > 0`). The pricing page and usage card say so.
+
+### Lesson 7.4 — Deployment, environments and self-hostable SaaS
+
+**What was built.** Configuration checked at startup by one zod schema (`src/lib/env.ts`) in the web app
+(`register()`), the worker and the migrations: a missing `DATABASE_URL` exits with a message naming it; production
+refuses fake billing, an SSRF allow-list or a missing auth secret. `docs/configuration.md` is generated from the schema
+(`npm run env:docs`, checked in CI). Scripts read `.env.local` like Next.js. A multi-stage `Dockerfile` (production
+dependencies only, the worker and CLIs bundled to plain JavaScript with esbuild, no `.env`, uid 1000, a HEALTHCHECK),
+`.dockerignore`, `docker-compose.prod.yml` (Postgres → one-shot `migrate` → web + worker; `seed` and `backup` profiles),
+CI building the image tagged with the SHA plus a deploy workflow (preview per PR, migrations → staging → smoke →
+promote the same digest), `scripts/backup.sh` / `restore.sh` and a restore drill, and docs for deployment (environments,
+expand/contract), self-hosting and backups.
+
+**Read in this order**
+
+1. `src/lib/env.ts`, `src/instrumentation.ts`, `scripts/worker.ts`, `scripts/migrate.ts`, `scripts/load-env.ts`.
+2. `Dockerfile`, `.dockerignore`, `scripts/build-scripts.mjs`, `scripts/sentry-sourcemaps.sh`.
+3. `docker-compose.prod.yml`, `.github/workflows/ci.yml` (`image`), `.github/workflows/deploy.yml`.
+4. `docs/deployment.md`, `docs/backup-and-restore.md`, `scripts/backup.sh`, `scripts/restore.sh`, `docs/self-hosting.md`.
+
+**Exercises covered**
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 a multi-stage Dockerfile; Compose with app, worker, Postgres; configuration from validated environment variables; `.env.example` with every variable | `docker compose up` on a fresh clone gives a working Beacon with seed data | `docker-compose.prod.yml` (+ `--profile demo up seed`). **Unverified**: no Docker daemon in the sandbox; the pieces were run (see Verification) |
+| | removing `DATABASE_URL` makes the app exit at startup with a clear message naming it | `validateEnvOrExit()`; tests; run: `next start` and the bundled worker without it both exit 1 with "DATABASE_URL: required: …" |
+| | the production image has no dev dependencies and no `.env` files | `npm ci --omit=dev` stage, `.dockerignore`; CI checks it on the built image; locally the runtime layout (no `typescript`, `tsx`, `vitest`) served requests |
+| 🟡 CI/CD: test, one image per SHA, preview per PR, migrations → staging → smoke → promote the same image; the `url` → `target` rename by expand/migrate/contract | the digest in production is the one tested in staging | `deploy.yml` resolves the tag to a digest once and deploys that digest to both (the deploy commands are placeholders gated on `DEPLOY_ENABLED`) |
+| | zero 5xx during the three rename deploys; every PR shows a preview URL | the rename is **planned, not performed** (`docs/deployment.md`: three migrations and code states); the preview job sets the environment URL on the PR |
+
+Redis in the exercise's Compose file: Beacon has none (the queue is Postgres, Module 5). Self-hosting, the backup
+script and the restore drill are from the 🔴 exercise, because they are the other half of "deploying safely"; the
+license key is not built.
+
+**Design decisions to notice**
+
+- **One image, three commands.** Web (`next start`), worker and migrations share the image, so they can never run
+  different code. The worker is bundled with esbuild (npm packages stay external) so `tsx` is not in production.
+- **Migrations are a release step**, run once before the new code (`service_completed_successfully` in Compose), never
+  at every instance's boot, and always additive in the deploy that ships them (0024 is).
+- **The restore drill found a real problem**: a restored database without the app role's grants answers every tenant
+  query with "permission denied" (`docs/backup-and-restore.md`); `restore.sh` re-grants.
+- **Preview and staging never get production data**: seeded or synthetic, and `APP_ENV` tags every log, trace and error.
+
+### Not done in Module 7 (🔴 exercises and neighbours)
+
+7.1: the one-time signed token between separate admin and customer apps, the per-org "allow Beacon staff" consent
+(off by default for Business) and its refused-and-audited path, write impersonation, just-in-time access and four-eyes
+approval, staff SSO + MFA and a separate hostname (documented above). 7.2: multi-window burn-rate alerts are written but
+not load-tested (the "10-minute outage pages, 30-second blip does not" check), no independent external probe is set up,
+no per-org debug logging flag, no tail sampling. 7.3: anchoring hashes to object storage with a retention lock, the
+trigger safety net on `monitors`/`memberships`, monthly partitions, SIEM streaming. 7.4: the license key, a Helm chart,
+infrastructure as code for the DR drill, and the `url` → `target` rename itself. Also: server actions still log without
+a wrapper (their errors and their jobs carry the request id, their other log lines do not).
+
+### Verification for this branch
+
+`npm test` (633 tests and 2 more with `DATABASE_URL`, 635 in CI; 70 new: `tests/audit.test.ts`, `tests/staff.test.ts`,
+`tests/impersonation.test.ts`, `tests/observability.test.ts` and the audit log's cross-tenant case), `npm run typecheck`,
+`npm run openapi:check`, `npm run env:docs:check`, `npm run db:migrate` on a fresh database (twice) and on a database
+migrated and seeded on `module-6-solution` (then seeded again: three staff accounts added, nothing else), `npm run build`,
+`hadolint Dockerfile` and `shellcheck` on the shell scripts (clean; the Docker image itself was not built: no daemon),
+the image's runtime stage reproduced by hand (production dependencies only: `next start` served `/api/health` and
+`/api/ready`, the bundled worker, migrations, seed, staff and audit CLIs ran, and both processes exited with the
+`DATABASE_URL` message when it was removed), the restore drill (`docs/backup-and-restore.md`), 100,000 audit events timed
+under RLS, and a smoke test (puppeteer) against `next start` plus `npm run worker`, 42 checks: `/api/health` echoes the
+caller's `x-request-id`, `/api/ready` checks the database and the queue, garbage ids are replaced → a Free org sees the
+audit log upgrade prompt and the API answers 402 → an owner gets 404 on `/internal` and on an org page there → the owner
+upgrades through the fake Checkout into a Business trial → support finds the org from `member@beac`, sees "5 of 500",
+the members and the incidents, has no comp form and gets 403 posting to comp-plan directly, 400 without a reason →
+extends the trial by 3 days (exactly 259,200 s later in Postgres, audited with staff, reason, before and after) →
+starts a read-only session: the banner, an HttpOnly cookie living 1,800 s, POST and PATCH 403, a server-action rename
+changed nothing, reads 200, the customer's audit log says "Beacon support (on behalf of Demo User)" → Exit returns to
+the admin page and the org is 404 again; start and end both audited → the owner changes Mia's role, creates an API key
+and invites someone; the audit log page lists them with the person, before → after, IP and user agent; the key's
+prefix only; the integrations filter, the "Beacon support" actor filter and the CSV export of the filter → a viewer gets
+403 on the page and the API and 404 on `/internal` → every web access line has a `requestId`, org requests the `orgId`
+and `userId`; the invitation's `email.send` job ran with the POST's request id and a trace id, and the same id is on
+the `member.invited` audit event; no password, cookie or key in any log → `npm run audit -- verify`: all chains intact.
