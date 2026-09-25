@@ -43,7 +43,7 @@ line with a type:
 |---|---|---|---|
 | `A` | a name | an IPv4 address | "relay.app lives at 104.21.5.9" |
 | `AAAA` | a name | an IPv6 address | same, newer address format |
-| `CNAME` | a name | another name | "www.relay.app is an alias for relay.app" |
+| `CNAME` | a name | another name | "`www.relay.app` is an alias for `relay.app`" |
 | `MX` | a name | a mail server | "send relay.app's email here" |
 | `TXT` | a name | free text | proofs of ownership, email policy |
 
