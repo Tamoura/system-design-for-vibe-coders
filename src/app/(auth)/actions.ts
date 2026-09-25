@@ -19,7 +19,8 @@ export async function signInAction(_prev: AuthFormState, formData: FormData): Pr
     if (!(err instanceof APIError)) throw err;
     // One message for "no such user" and "wrong password": anything more
     // specific tells attackers which emails have accounts (lesson 1.1).
-    const error = err.statusCode === 429 ? 'Too many attempts. Wait a minute and try again.' : 'Email or password is incorrect.';
+    // Lesson 8.1: a throttled attempt says so, with the same words for every email (src/lib/sign-in-throttle.ts).
+    const error = err.statusCode === 429 ? err.message || 'Too many attempts. Wait a minute and try again.' : 'Email or password is incorrect.';
     return { error, values: { email } };
   }
   redirect(safeRedirect(formData.get('next')));

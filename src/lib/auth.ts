@@ -1,10 +1,13 @@
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { nextCookies } from 'better-auth/next-js';
+import { APIError, createAuthMiddleware } from 'better-auth/api';
 import { db, schema } from '@/db';
 import { hashPassword, verifyPassword } from './password';
 import { sendEmail } from './email';
 import { createPersonalOrganization } from './organizations';
+import { checkSignInAttempt, clearSignInThrottle, throttledMessage } from './sign-in-throttle';
+import { clientIpFrom } from './observability/context';
 
 /** "Sign in with GitHub" is switched on by setting both env vars (see .env.example). */
 export const githubEnabled = Boolean(process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET);
@@ -102,6 +105,19 @@ export const auth = betterAuth({
     // can see them. `Secure` (and the __Secure- name prefix) is added
     // automatically when APP_URL starts with https://.
     defaultCookieAttributes: { httpOnly: true, sameSite: 'lax' },
+  },
+  // Lesson 8.1: sign-in throttling per account and per IP (src/lib/sign-in-throttle.ts), in
+  // Postgres so every instance counts together. `before` refuses; `after` resets on success.
+  hooks: {
+    before: createAuthMiddleware(async (ctx) => {
+      if (ctx.path !== '/sign-in/email') return;
+      const headers = ctx.headers ?? ctx.request?.headers;
+      const decision = await checkSignInAttempt(String(ctx.body?.email ?? ''), headers ? clientIpFrom(headers) : null);
+      if (!decision.allowed) throw new APIError('TOO_MANY_REQUESTS', { message: throttledMessage(decision.retryAfterSec) });
+    }),
+    after: createAuthMiddleware(async (ctx) => {
+      if (ctx.path === '/sign-in/email' && ctx.context.newSession) await clearSignInThrottle(String(ctx.body?.email ?? ''));
+    }),
   },
   // Lets server actions that call auth.api.* set and clear the session cookie.
   plugins: [nextCookies()],
