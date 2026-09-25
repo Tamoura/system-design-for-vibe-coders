@@ -93,8 +93,55 @@ em { color: inherit; }
   .table-wrap { border: none; box-shadow: none; }
 }
 </style>
+<style id="agx-nav">
+/* agx-nav v3: navigation added by scripts/agentic-nav.mjs */
+.agx-bar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;
+  padding:.5rem 1rem;background:color-mix(in srgb,var(--bg,#f7f6f2) 92%,transparent);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line,#e4e0d8);font:600 .82rem/1.2 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.agx-bar a{color:var(--muted,#5b6470);text-decoration:none;padding:.35rem .6rem;border-radius:999px;white-space:nowrap}
+.agx-bar a:hover{color:var(--ink,#1e232c);background:var(--accent-soft,#f4e4e6)}
+.agx-bar a[aria-current=page]{color:#fff;background:var(--accent,#7a1f2b)}
+.agx-bar .agx-home{color:var(--ink,#1e232c);margin-right:.4rem}
+.agx-bar .agx-spacer{flex:1}
+.agx-toc-btn{display:none;font:inherit;color:var(--ink,#1e232c);background:var(--panel,#fff);border:1px solid var(--line,#e4e0d8);
+  border-radius:999px;padding:.35rem .75rem;cursor:pointer}
+nav[aria-label="Table of contents"]{top:var(--agx-bar-h,44px) !important;height:calc(100vh - var(--agx-bar-h,44px)) !important}
+.toc-d3>a{padding:.18rem .5rem .18rem 1.9rem !important;font-size:.84em;border-left:2px solid var(--line,#e4e0d8);border-radius:0 6px 6px 0;margin-left:.5rem}
+nav[aria-label="Table of contents"] a.agx-active{color:var(--ink,#1e232c);background:var(--accent-soft,#f4e4e6);border-left-color:var(--accent,#7a1f2b)}
+main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
+.agx-top{position:fixed;right:1rem;bottom:1rem;z-index:40;display:none;width:2.6rem;height:2.6rem;border-radius:50%;
+  border:1px solid var(--line,#e4e0d8);background:var(--panel,#fff);color:var(--ink,#1e232c);font-size:1.1rem;cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.agx-top.agx-show{display:block}
+.agx-scrim{display:none}
+@media (max-width:900px){
+  .agx-toc-btn{display:inline-block}
+  .agx-bar .agx-pages{order:3;width:100%;overflow-x:auto;display:flex;gap:.2rem;padding-top:.2rem;scrollbar-width:none}
+  nav[aria-label="Table of contents"]{position:fixed !important;left:0;top:0 !important;bottom:0;height:100vh !important;
+    width:min(86vw,340px);z-index:60;background:var(--bg,#f7f6f2);border-right:1px solid var(--line,#e4e0d8) !important;
+    border-bottom:none !important;transform:translateX(-105%);transition:transform .2s ease;overflow-y:auto}
+  body.agx-open nav[aria-label="Table of contents"]{transform:none}
+  body.agx-open .agx-scrim{display:block;position:fixed;inset:0;z-index:55;background:rgba(0,0,0,.35)}
+  .layout{display:block !important}
+  main{max-width:100% !important}
+  body{overflow-wrap:anywhere}
+  h1,h2,h3{white-space:normal !important}
+  pre,table{display:block;max-width:100%;overflow-x:auto}
+  img,svg{max-width:100%;height:auto}
+}
+@media print{.agx-bar,.agx-top,.agx-scrim{display:none !important}}
+</style>
 </head>
 <body>
+<!--AGX:bar-->
+<header class="agx-bar" role="navigation" aria-label="Course">
+  <a class="agx-home" href="../">← Course library</a>
+  <button class="agx-toc-btn" type="button" aria-expanded="false">☰ Contents</button>
+  <span class="agx-spacer"></span>
+  <span class="agx-pages"><a href="index.html">Program</a><a href="learning-path.html" aria-current="page">Curriculum</a><a href="production-playbook.html">Playbook</a><a href="assessment.html">Assessment</a><a href="on-ramp-poster.html">Poster</a></span>
+</header>
+<div class="agx-scrim"></div>
+<!--/AGX:bar-->
 <div class="layout">
 <nav aria-label="Table of contents">
   <div class="nav-title">Contents</div>
@@ -107,13 +154,55 @@ em { color: inherit; }
 <li class="toc-d2"><a href="#4-lab-environment-prerequisites-once-per-learner">4. Lab Environment Prerequisites (once per learner)</a></li>
 <li class="toc-d1"><a href="#part-ii-the-levels">Part II — The Levels</a></li>
 <li class="toc-d2"><a href="#level-0-literate">Level 0 — Literate</a></li>
+<li class="toc-d3"><a href="#module-01-how-llms-actually-work-3h">Module 0.1 — How LLMs Actually Work (≈3h)</a></li>
+<li class="toc-d3"><a href="#module-02-from-chatbot-to-agent-3h">Module 0.2 — From Chatbot to Agent (≈3h)</a></li>
+<li class="toc-d3"><a href="#module-03-the-regulated-context-2h">Module 0.3 — The Regulated Context (≈2h)</a></li>
+<li class="toc-d3"><a href="#the-executive-cut-half-day-for-ceo-board-exco">The Executive Cut (half-day, for CEO / board / ExCo)</a></li>
+<li class="toc-d3"><a href="#l0-gate">L0 Gate</a></li>
 <li class="toc-d2"><a href="#level-1-builder">Level 1 — Builder</a></li>
+<li class="toc-d3"><a href="#module-11-llm-api-mechanics-4h">Module 1.1 — LLM API Mechanics (≈4h)</a></li>
+<li class="toc-d3"><a href="#module-12-prompt-engineering-for-reliability-4h">Module 1.2 — Prompt Engineering for Reliability (≈4h)</a></li>
+<li class="toc-d3"><a href="#module-13-tool-use-function-calling-6h-the-core-skill-of-l1">Module 1.3 — Tool Use / Function Calling (≈6h) — the core skill of L1</a></li>
+<li class="toc-d3"><a href="#module-14-structured-output-3h">Module 1.4 — Structured Output (≈3h)</a></li>
+<li class="toc-d3"><a href="#module-15-retrieval-rag-fundamentals-5h">Module 1.5 — Retrieval (RAG) Fundamentals (≈5h)</a></li>
+<li class="toc-d3"><a href="#module-16-robustness-habits-2h">Module 1.6 — Robustness Habits (≈2h)</a></li>
+<li class="toc-d3"><a href="#l1-gate">L1 Gate</a></li>
 <li class="toc-d2"><a href="#level-2-agent-engineer">Level 2 — Agent Engineer</a></li>
+<li class="toc-d3"><a href="#module-21-agentic-patterns-and-the-judgment-to-choose-4h">Module 2.1 — Agentic Patterns and the Judgment to Choose (≈4h)</a></li>
+<li class="toc-d3"><a href="#module-22-orchestration-with-graphs-6h">Module 2.2 — Orchestration with Graphs (≈6h)</a></li>
+<li class="toc-d3"><a href="#module-23-state-memory-and-context-management-4h">Module 2.3 — State, Memory, and Context Management (≈4h)</a></li>
+<li class="toc-d3"><a href="#module-24-inter-agent-communication-and-mcp-6h">Module 2.4 — Inter-Agent Communication and MCP (≈6h)</a></li>
+<li class="toc-d3"><a href="#module-25-human-in-the-loop-as-architecture-4h">Module 2.5 — Human-in-the-Loop as Architecture (≈4h)</a></li>
+<li class="toc-d3"><a href="#module-26-model-routing-and-cost-architecture-3h">Module 2.6 — Model Routing and Cost Architecture (≈3h)</a></li>
+<li class="toc-d3"><a href="#module-27-anti-patterns-clinic-2h-cohort-session">Module 2.7 — Anti-Patterns Clinic (≈2h, cohort session)</a></li>
+<li class="toc-d3"><a href="#l2-gate-two-artifacts-reviewed-by-the-chief-architect">L2 Gate (two artifacts, reviewed by the chief architect)</a></li>
 <li class="toc-d2"><a href="#level-3-production-engineer">Level 3 — Production Engineer</a></li>
+<li class="toc-d3"><a href="#module-31-evaluation-foundations-6h-the-heart-of-l3">Module 3.1 — Evaluation Foundations (≈6h) — the heart of L3</a></li>
+<li class="toc-d3"><a href="#module-32-adversarial-and-regression-evaluation-4h">Module 3.2 — Adversarial and Regression Evaluation (≈4h)</a></li>
+<li class="toc-d3"><a href="#module-33-cicd-and-progressive-delivery-for-agents-5h">Module 3.3 — CI/CD and Progressive Delivery for Agents (≈5h)</a></li>
+<li class="toc-d3"><a href="#module-34-deployment-scaling-and-resilience-4h">Module 3.4 — Deployment, Scaling, and Resilience (≈4h)</a></li>
+<li class="toc-d3"><a href="#module-35-observability-5h">Module 3.5 — Observability (≈5h)</a></li>
+<li class="toc-d3"><a href="#module-36-incident-response-for-agents-3h">Module 3.6 — Incident Response for Agents (≈3h)</a></li>
+<li class="toc-d3"><a href="#l3-gate">L3 Gate</a></li>
 <li class="toc-d2"><a href="#level-4-regulated-ai-specialist">Level 4 — Regulated-AI Specialist</a></li>
+<li class="toc-d3"><a href="#module-41-the-threat-landscape-5h">Module 4.1 — The Threat Landscape (≈5h)</a></li>
+<li class="toc-d3"><a href="#module-42-identity-least-privilege-and-data-protection-6h">Module 4.2 — Identity, Least Privilege, and Data Protection (≈6h)</a></li>
+<li class="toc-d3"><a href="#module-43-red-teaming-agents-5h">Module 4.3 — Red-Teaming Agents (≈5h)</a></li>
+<li class="toc-d3"><a href="#module-44-governance-frameworks-and-model-risk-5h">Module 4.4 — Governance Frameworks and Model Risk (≈5h)</a></li>
+<li class="toc-d3"><a href="#module-45-the-qdb-regulatory-stack-4h">Module 4.5 — The QDB Regulatory Stack (≈4h)</a></li>
+<li class="toc-d3"><a href="#module-46-audit-evidence-and-the-promotion-process-4h">Module 4.6 — Audit, Evidence, and the Promotion Process (≈4h)</a></li>
+<li class="toc-d3"><a href="#module-47-fairness-bias-decision-level-explainability-5h-required-for-any-custom">Module 4.7 — Fairness, Bias &amp; Decision-Level Explainability (≈5h) — required for any customer- or credit-facing agent</a></li>
+<li class="toc-d3"><a href="#l4-gate">L4 Gate</a></li>
 <li class="toc-d2"><a href="#level-5-hero-program-lead">Level 5 — Hero / Program Lead</a></li>
+<li class="toc-d3"><a href="#module-51-portfolio-strategy-4h">Module 5.1 — Portfolio Strategy (≈4h)</a></li>
+<li class="toc-d3"><a href="#module-52-organizational-design-and-change-4h">Module 5.2 — Organizational Design and Change (≈4h)</a></li>
+<li class="toc-d3"><a href="#module-53-vendor-model-and-ecosystem-strategy-3h">Module 5.3 — Vendor, Model, and Ecosystem Strategy (≈3h)</a></li>
+<li class="toc-d3"><a href="#module-54-the-capstone-the-hero-gate">Module 5.4 — The Capstone (the hero gate)</a></li>
 <li class="toc-d1"><a href="#part-iii-appendices">Part III — Appendices</a></li>
 <li class="toc-d2"><a href="#appendix-a-schedules">Appendix A — Schedules</a></li>
+<li class="toc-d3"><a href="#a1-first-cohort-16-weeks-aggressive">A.1 First cohort, 16 weeks (aggressive)</a></li>
+<li class="toc-d3"><a href="#a2-steady-state-per-new-joiner">A.2 Steady state (per new joiner)</a></li>
+<li class="toc-d3"><a href="#a3-program-calendar-recurring">A.3 Program calendar (recurring)</a></li>
 <li class="toc-d2"><a href="#appendix-b-skills-matrix">Appendix B — Skills Matrix</a></li>
 <li class="toc-d2"><a href="#appendix-c-resource-library">Appendix C — Resource Library</a></li>
 <li class="toc-d2"><a href="#appendix-d-glossary">Appendix D — Glossary</a></li>
@@ -897,5 +986,40 @@ em { color: inherit; }
 
 </main>
 </div>
+<button class="agx-top" type="button" aria-label="Back to top">↑</button>
+<script id="agx-nav">
+(function(){
+  var bar=document.querySelector('.agx-bar'); if(!bar) return;
+  function barH(){document.documentElement.style.setProperty('--agx-bar-h',bar.offsetHeight+'px');}
+  barH(); window.addEventListener('resize',barH);
+  var nav=document.querySelector('nav[aria-label="Table of contents"]');
+  var btn=document.querySelector('.agx-toc-btn'), scrim=document.querySelector('.agx-scrim');
+  function close(){document.body.classList.remove('agx-open'); if(btn) btn.setAttribute('aria-expanded','false');}
+  if(btn&&nav){btn.addEventListener('click',function(){var o=document.body.classList.toggle('agx-open');btn.setAttribute('aria-expanded',o?'true':'false');});
+    nav.addEventListener('click',function(e){if(e.target.closest('a')) close();});
+    if(scrim) scrim.addEventListener('click',close);
+    document.addEventListener('keydown',function(e){if(e.key==='Escape') close();});}
+  var top=document.querySelector('.agx-top');
+  if(top) top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  var links=nav?Array.prototype.slice.call(nav.querySelectorAll('a[href^="#"]')):[];
+  var byId={}; links.forEach(function(a){byId[decodeURIComponent(a.getAttribute('href').slice(1))]=a;});
+  var targets=links.map(function(a){return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));}).filter(Boolean);
+  var current=null, ticking=false;
+  function update(){
+    ticking=false;
+    if(top) top.classList.toggle('agx-show',window.scrollY>900);
+    if(!targets.length) return;
+    var line=(bar.offsetHeight||44)+110, hit=null; // a heading within ~110px of the bar counts as "here"
+    for(var i=0;i<targets.length;i++){ if(targets[i].getBoundingClientRect().top<=line) hit=targets[i]; else break; }
+    var a=hit?byId[hit.id]:null;
+    if(a!==current){ if(current) current.classList.remove('agx-active'); current=a;
+      if(a){ a.classList.add('agx-active');
+        var nr=nav.getBoundingClientRect(), ar=a.getBoundingClientRect();
+        if(ar.top<nr.top+40||ar.bottom>nr.bottom-40) nav.scrollTop+=ar.top-nr.top-nr.height/3; } }
+  }
+  window.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(update);}},{passive:true});
+  update();
+})();
+</script>
 </body>
 </html>

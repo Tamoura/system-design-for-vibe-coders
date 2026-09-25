@@ -102,8 +102,55 @@ footer { color:var(--muted); font-size:.78rem; margin-top:2rem; }
   .card { border:none; box-shadow:none; padding:0; margin-bottom:1.5rem; }
 }
 </style>
+<style id="agx-nav">
+/* agx-nav v3: navigation added by scripts/agentic-nav.mjs */
+.agx-bar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;
+  padding:.5rem 1rem;background:color-mix(in srgb,var(--bg,#f7f6f2) 92%,transparent);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line,#e4e0d8);font:600 .82rem/1.2 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.agx-bar a{color:var(--muted,#5b6470);text-decoration:none;padding:.35rem .6rem;border-radius:999px;white-space:nowrap}
+.agx-bar a:hover{color:var(--ink,#1e232c);background:var(--accent-soft,#f4e4e6)}
+.agx-bar a[aria-current=page]{color:#fff;background:var(--accent,#7a1f2b)}
+.agx-bar .agx-home{color:var(--ink,#1e232c);margin-right:.4rem}
+.agx-bar .agx-spacer{flex:1}
+.agx-toc-btn{display:none;font:inherit;color:var(--ink,#1e232c);background:var(--panel,#fff);border:1px solid var(--line,#e4e0d8);
+  border-radius:999px;padding:.35rem .75rem;cursor:pointer}
+nav[aria-label="Table of contents"]{top:var(--agx-bar-h,44px) !important;height:calc(100vh - var(--agx-bar-h,44px)) !important}
+.toc-d3>a{padding:.18rem .5rem .18rem 1.9rem !important;font-size:.84em;border-left:2px solid var(--line,#e4e0d8);border-radius:0 6px 6px 0;margin-left:.5rem}
+nav[aria-label="Table of contents"] a.agx-active{color:var(--ink,#1e232c);background:var(--accent-soft,#f4e4e6);border-left-color:var(--accent,#7a1f2b)}
+main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
+.agx-top{position:fixed;right:1rem;bottom:1rem;z-index:40;display:none;width:2.6rem;height:2.6rem;border-radius:50%;
+  border:1px solid var(--line,#e4e0d8);background:var(--panel,#fff);color:var(--ink,#1e232c);font-size:1.1rem;cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.agx-top.agx-show{display:block}
+.agx-scrim{display:none}
+@media (max-width:900px){
+  .agx-toc-btn{display:inline-block}
+  .agx-bar .agx-pages{order:3;width:100%;overflow-x:auto;display:flex;gap:.2rem;padding-top:.2rem;scrollbar-width:none}
+  nav[aria-label="Table of contents"]{position:fixed !important;left:0;top:0 !important;bottom:0;height:100vh !important;
+    width:min(86vw,340px);z-index:60;background:var(--bg,#f7f6f2);border-right:1px solid var(--line,#e4e0d8) !important;
+    border-bottom:none !important;transform:translateX(-105%);transition:transform .2s ease;overflow-y:auto}
+  body.agx-open nav[aria-label="Table of contents"]{transform:none}
+  body.agx-open .agx-scrim{display:block;position:fixed;inset:0;z-index:55;background:rgba(0,0,0,.35)}
+  .layout{display:block !important}
+  main{max-width:100% !important}
+  body{overflow-wrap:anywhere}
+  h1,h2,h3{white-space:normal !important}
+  pre,table{display:block;max-width:100%;overflow-x:auto}
+  img,svg{max-width:100%;height:auto}
+}
+@media print{.agx-bar,.agx-top,.agx-scrim{display:none !important}}
+</style>
 </head>
 <body>
+<!--AGX:bar-->
+<header class="agx-bar" role="navigation" aria-label="Course">
+  <a class="agx-home" href="../">← Course library</a>
+  
+  <span class="agx-spacer"></span>
+  <span class="agx-pages"><a href="index.html">Program</a><a href="learning-path.html">Curriculum</a><a href="production-playbook.html">Playbook</a><a href="assessment.html" aria-current="page">Assessment</a><a href="on-ramp-poster.html">Poster</a></span>
+</header>
+
+<!--/AGX:bar-->
 <div class="wrap">
 <header class="top">
   <span class="badge">Assessment · v1.3 · July 2026</span>
@@ -557,6 +604,41 @@ function resetAll(){
 document.getElementById("p-name").value = S.name||"";
 document.getElementById("p-role").value = S.role||"developer";
 renderKnowledge(); renderEvidence(); renderTeam();
+</script>
+<button class="agx-top" type="button" aria-label="Back to top">↑</button>
+<script id="agx-nav">
+(function(){
+  var bar=document.querySelector('.agx-bar'); if(!bar) return;
+  function barH(){document.documentElement.style.setProperty('--agx-bar-h',bar.offsetHeight+'px');}
+  barH(); window.addEventListener('resize',barH);
+  var nav=document.querySelector('nav[aria-label="Table of contents"]');
+  var btn=document.querySelector('.agx-toc-btn'), scrim=document.querySelector('.agx-scrim');
+  function close(){document.body.classList.remove('agx-open'); if(btn) btn.setAttribute('aria-expanded','false');}
+  if(btn&&nav){btn.addEventListener('click',function(){var o=document.body.classList.toggle('agx-open');btn.setAttribute('aria-expanded',o?'true':'false');});
+    nav.addEventListener('click',function(e){if(e.target.closest('a')) close();});
+    if(scrim) scrim.addEventListener('click',close);
+    document.addEventListener('keydown',function(e){if(e.key==='Escape') close();});}
+  var top=document.querySelector('.agx-top');
+  if(top) top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  var links=nav?Array.prototype.slice.call(nav.querySelectorAll('a[href^="#"]')):[];
+  var byId={}; links.forEach(function(a){byId[decodeURIComponent(a.getAttribute('href').slice(1))]=a;});
+  var targets=links.map(function(a){return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));}).filter(Boolean);
+  var current=null, ticking=false;
+  function update(){
+    ticking=false;
+    if(top) top.classList.toggle('agx-show',window.scrollY>900);
+    if(!targets.length) return;
+    var line=(bar.offsetHeight||44)+110, hit=null; // a heading within ~110px of the bar counts as "here"
+    for(var i=0;i<targets.length;i++){ if(targets[i].getBoundingClientRect().top<=line) hit=targets[i]; else break; }
+    var a=hit?byId[hit.id]:null;
+    if(a!==current){ if(current) current.classList.remove('agx-active'); current=a;
+      if(a){ a.classList.add('agx-active');
+        var nr=nav.getBoundingClientRect(), ar=a.getBoundingClientRect();
+        if(ar.top<nr.top+40||ar.bottom>nr.bottom-40) nav.scrollTop+=ar.top-nr.top-nr.height/3; } }
+  }
+  window.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(update);}},{passive:true});
+  update();
+})();
 </script>
 </body>
 </html>
