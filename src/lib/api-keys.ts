@@ -7,6 +7,8 @@ import { API_SCOPE_IDS, canGrantScopes, generateApiKey, hashApiKey, looksLikeApi
 import type { Role } from '@/core/roles';
 import { isUuid } from '@/core/validation';
 import { AccessError } from './errors';
+import type { AuditSource } from '@/core/audit';
+import { auditSourceOf, recordAudit } from './audit';
 
 const { apiKeys, organizations } = schema;
 
@@ -20,7 +22,7 @@ export const createApiKeyInput = z.object({
   scopes: z.array(z.enum(API_SCOPE_IDS)).min(1, 'Pick at least one scope'),
 });
 
-type Manager = { orgId: string; userId: string; role: Role };
+type Manager = { orgId: string; userId: string; role: Role; audit?: AuditSource };
 
 /** The list in Settings: never the key, only what identifies it. */
 export async function listApiKeys({ orgId }: { orgId: string }) {
@@ -58,6 +60,14 @@ export async function createApiKey(ctx: Manager, input: z.infer<typeof createApi
       .values({ organizationId: ctx.orgId, name: input.name, keyHash: hash, keyStart: start, keyLast4: last4, scopes, createdBy: ctx.userId })
       .returning({ id: apiKeys.id });
     await trackInTx(tx, ctx, 'api_key_created', { scope_count: scopes.length }); // lesson 6.2: how many scopes, never the key or its name
+    // Lesson 7.3: the key's PREFIX identifies it in the log; the key itself never goes in.
+    await recordAudit(tx, {
+      orgId: ctx.orgId,
+      action: 'api_key.created',
+      source: auditSourceOf(ctx),
+      target: { type: 'api_key', id: created.id, name: input.name },
+      metadata: { key_prefix: start, key_last4: last4, scopes },
+    });
     return created;
   });
   return { id: row.id, key };
@@ -66,17 +76,33 @@ export async function createApiKey(ctx: Manager, input: z.infer<typeof createApi
 /** Revoke: the very next request with the key gets a 401 (there is no cache to wait for). */
 export async function revokeApiKey(ctx: Manager, keyId: string): Promise<void> {
   if (!isUuid(keyId)) throw new AccessError('not_found');
-  const updated = await withOrg(ctx.orgId, (tx) =>
-    tx
+  const updated = await withOrg(ctx.orgId, async (tx) => {
+    const [before] = await tx
+      .select({ revokedAt: apiKeys.revokedAt })
+      .from(apiKeys)
+      .where(and(eq(apiKeys.organizationId, ctx.orgId), eq(apiKeys.id, keyId)));
+    const rows = await tx
       .update(apiKeys)
       .set({ revokedAt: new Date(), revokedBy: ctx.userId })
       .where(and(eq(apiKeys.organizationId, ctx.orgId), eq(apiKeys.id, keyId)))
-      .returning({ id: apiKeys.id, revokedAt: apiKeys.revokedAt }),
-  );
+      .returning({ id: apiKeys.id, name: apiKeys.name, keyStart: apiKeys.keyStart, revokedAt: apiKeys.revokedAt });
+    // Lesson 7.3: recorded once, when the key actually went from live to revoked.
+    for (const r of rows) {
+      if (before?.revokedAt) continue;
+      await recordAudit(tx, {
+        orgId: ctx.orgId,
+        action: 'api_key.revoked',
+        source: auditSourceOf(ctx),
+        target: { type: 'api_key', id: r.id, name: r.name },
+        metadata: { key_prefix: r.keyStart },
+      });
+    }
+    return rows;
+  });
   if (updated.length === 0) throw new AccessError('not_found');
 }
 
-export type VerifiedKey = { keyId: string; orgId: string; plan: (typeof organizations.$inferSelect)['plan']; scopes: ApiScope[]; createdBy: string | null };
+export type VerifiedKey = { keyId: string; keyStart: string; orgId: string; plan: (typeof organizations.$inferSelect)['plan']; scopes: ApiScope[]; createdBy: string | null };
 
 /**
  * The hot path: is this a live key, and whose? Hash it and look the hash up
@@ -94,7 +120,7 @@ export async function verifyApiKey(presented: string, now = new Date()): Promise
     .where(eq(apiKeys.keyHash, hash));
   if (!row || row.key.revokedAt || !sameHash(row.key.keyHash, hash)) return null;
   await touchLastUsed(row.key.id, now);
-  return { keyId: row.key.id, orgId: row.key.organizationId, plan: row.plan, scopes: row.key.scopes as ApiScope[], createdBy: row.key.createdBy };
+  return { keyId: row.key.id, keyStart: row.key.keyStart, orgId: row.key.organizationId, plan: row.plan, scopes: row.key.scopes as ApiScope[], createdBy: row.key.createdBy };
 }
 
 /**

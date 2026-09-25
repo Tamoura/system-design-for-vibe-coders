@@ -16,6 +16,8 @@ import { toApiIncident, toApiMonitor } from './public-api';
 import { trackInTx } from './analytics';
 import { recordMilestoneInTx } from './onboarding';
 import { appUrl } from './urls';
+import type { AuditSource } from '@/core/audit';
+import { auditSourceOf, recordAudit } from './audit';
 
 const { webhookEndpoints, webhookEvents, webhookMessages, webhookAttempts, organizations, memberships, users } = schema;
 
@@ -42,7 +44,9 @@ export const createEndpointInput = z.object({
 });
 
 type Scope = { orgId: string };
-type Manager = Scope & { userId: string };
+type Manager = Scope & { userId: string; audit?: AuditSource };
+/** A person changing endpoints: the audit log names them (lesson 7.3). */
+type Changer = Scope & { userId?: string; audit?: AuditSource };
 
 /** Lesson 5.3 (🟡): the URL is refused if it points inside our network, before anything is stored. */
 async function assertWebhookUrl(url: string) {
@@ -67,6 +71,14 @@ export async function createEndpoint(ctx: Manager, input: z.infer<typeof createE
     // Lessons 6.1/6.2: a webhook is an alert channel too (the onboarding step, once; the event, every time).
     await recordMilestoneInTx(tx, ctx.orgId, 'alert_channel_connected', ctx.userId);
     await trackInTx(tx, ctx, 'alert_channel_connected', { channel: 'webhook' });
+    // Lesson 7.3: where the org's incident data will be sent. The signing secret is never recorded.
+    await recordAudit(tx, {
+      orgId: ctx.orgId,
+      action: 'webhook.created',
+      source: auditSourceOf(ctx),
+      target: { type: 'webhook_endpoint', id: endpoint.id, name: input.url },
+      metadata: { event_types: [...new Set(input.eventTypes)] },
+    });
     return endpoint;
   });
   return { id: row.id, secret };
@@ -128,24 +140,46 @@ export async function getEndpointLog({ orgId }: Scope, endpointId: string, opts:
   });
 }
 
-export async function setEndpointEnabled(ctx: Scope, endpointId: string, enabled: boolean) {
+export async function setEndpointEnabled(ctx: Changer, endpointId: string, enabled: boolean) {
   if (!isUuid(endpointId)) throw new AccessError('not_found');
-  const updated = await withOrg(ctx.orgId, (tx) =>
-    tx
+  const updated = await withOrg(ctx.orgId, async (tx) => {
+    const [before] = await tx
+      .select({ enabled: webhookEndpoints.enabled })
+      .from(webhookEndpoints)
+      .where(and(eq(webhookEndpoints.organizationId, ctx.orgId), eq(webhookEndpoints.id, endpointId)));
+    const rows = await tx
       .update(webhookEndpoints)
       // Re-enabling starts with a clean slate: the 5-day clock restarts.
       .set(enabled ? { enabled: true, disabledReason: null, failingSince: null } : { enabled: false, disabledReason: 'Disabled by a person.' })
       .where(and(eq(webhookEndpoints.organizationId, ctx.orgId), eq(webhookEndpoints.id, endpointId)))
-      .returning({ id: webhookEndpoints.id }),
-  );
+      .returning({ id: webhookEndpoints.id, url: webhookEndpoints.url });
+    for (const r of rows) {
+      if (before?.enabled === enabled) continue;
+      await recordAudit(tx, {
+        orgId: ctx.orgId,
+        action: enabled ? 'webhook.enabled' : 'webhook.disabled',
+        source: auditSourceOf(ctx),
+        target: { type: 'webhook_endpoint', id: r.id, name: r.url },
+        changes: { enabled: { before: before?.enabled ?? null, after: enabled } },
+      });
+    }
+    return rows;
+  });
   if (!updated.length) throw new AccessError('not_found');
 }
 
-export async function deleteEndpoint(ctx: Scope, endpointId: string) {
+export async function deleteEndpoint(ctx: Changer, endpointId: string) {
   if (!isUuid(endpointId)) throw new AccessError('not_found');
-  const deleted = await withOrg(ctx.orgId, (tx) =>
-    tx.delete(webhookEndpoints).where(and(eq(webhookEndpoints.organizationId, ctx.orgId), eq(webhookEndpoints.id, endpointId))).returning({ id: webhookEndpoints.id }),
-  );
+  const deleted = await withOrg(ctx.orgId, async (tx) => {
+    const rows = await tx
+      .delete(webhookEndpoints)
+      .where(and(eq(webhookEndpoints.organizationId, ctx.orgId), eq(webhookEndpoints.id, endpointId)))
+      .returning({ id: webhookEndpoints.id, url: webhookEndpoints.url });
+    for (const r of rows) {
+      await recordAudit(tx, { orgId: ctx.orgId, action: 'webhook.deleted', source: auditSourceOf(ctx), target: { type: 'webhook_endpoint', id: r.id, name: r.url } });
+    }
+    return rows;
+  });
   if (!deleted.length) throw new AccessError('not_found');
 }
 

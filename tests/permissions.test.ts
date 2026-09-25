@@ -17,6 +17,7 @@ const EXPECTED: Record<Permission, string[]> = {
   'billing.manage': ['owner'],
   'notification.manage': ['owner', 'admin'],
   'integration.manage': ['owner', 'admin'], // lessons 5.2/5.3: API keys and webhooks
+  'audit.read': ['owner', 'admin'], // lesson 7.3: the audit log
   'org.delete': ['owner'],
 };
 

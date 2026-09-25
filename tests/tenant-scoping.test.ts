@@ -121,6 +121,9 @@ const NOT_UNDER_RLS = [
   // Lesson 6.3: per-org flag targeting is platform configuration written by Beacon staff, not tenant
   // data. Every process loads the whole rule set to evaluate flags in memory (local evaluation).
   'feature_flag_overrides',
+  // Lesson 7.1: looked up on every request of a staff member, before any org is known; the app
+  // role has no rights on it at all (migration 0024), only the owner (staff code) reads it.
+  'impersonation_sessions',
 ];
 
 describe('every tenant table is protected', () => {
@@ -154,12 +157,17 @@ const TENANT_TABLES = [
   'workflowRuns', 'workflowSteps', 'workflowSignals', 'escalationPolicies',
   // Module 6
   'orgMilestones', 'analyticsEvents',
+  // Module 7
+  'auditEvents',
 ];
 const SCANNED = ['src', 'scripts/run-checks.ts', 'scripts/report-usage.ts', 'scripts/worker.ts', 'scripts/jobs.ts'];
 const EXEMPT = [
   'src/db/tenant.ts', 'src/db/schema.ts', 'src/db/index.ts',
   // Lesson 6.2: the internal activation funnel reads across every org by design (staff only, /internal).
   'src/lib/analytics/funnel.ts',
+  // Lessons 7.1/7.3: the staff side of Beacon reads across orgs as the owner (never from a customer
+  // request): the admin panel, the audit verifier and retention job.
+  'src/lib/admin/audit.ts', 'src/lib/admin/customers.ts',
 ];
 
 function sourceFiles(p: string): string[] {
@@ -196,7 +204,12 @@ describe('lint: tenant tables only through withOrg()', () => {
   it('db.transaction() is used only where the tables are not tenant tables', () => {
     // email/index.ts: the outbox row and its job (lesson 5.1); email_outbox is not a tenant table.
     // rate-limit.ts: one bucket row locked per request (lesson 5.2); rate_limit_buckets is not a tenant table.
-    const allowed = ['src/lib/organizations.ts', 'src/lib/invitations.ts', 'src/lib/email/index.ts', 'src/lib/rate-limit.ts'];
+    // Module 7: staff-side writes run as the owner in one transaction with their audit event (impersonation
+    // sessions and platform events such as flag changes are not tenant rows; beacon_app may not touch them).
+    const allowed = [
+      'src/lib/organizations.ts', 'src/lib/invitations.ts', 'src/lib/email/index.ts', 'src/lib/rate-limit.ts',
+      'src/lib/admin/audit.ts', 'src/lib/admin/support.ts', 'src/lib/admin/staff.ts', 'src/lib/impersonation.ts', 'src/lib/flags/store.ts',
+    ];
     const users = files.filter((f) => /\bdb\s*\.\s*transaction\s*\(/.test(readFileSync(f, 'utf8'))).map((f) => f.split(path.sep).join('/'));
     expect(users.filter((f) => !allowed.includes(f))).toEqual([]);
   });

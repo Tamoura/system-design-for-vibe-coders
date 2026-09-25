@@ -19,9 +19,12 @@ import { createMonitor } from '@/lib/monitors';
 import { savePreferences } from '@/lib/notifications';
 import { fakeSms } from '@/lib/notifications/providers';
 import { scheduleChecks } from '@/lib/scheduler';
-import { isStaff } from '@/lib/staff';
+import { cliAuditSource } from '@/lib/audit';
 import { makeOrg } from './helpers/fixtures';
 import { clearQueues, jobsIn, runQueuedJobs } from './helpers/queue';
+
+/** Lesson 7.3: flag changes are audited; the tests act as a CLI user. */
+const SOURCE = cliAuditSource('test');
 
 /*
  * Lesson 6.3: feature flags. The pure rules (hashing, targeting, the kill
@@ -208,36 +211,28 @@ describe('flags in Postgres, per org, through the real provider', () => {
   });
 
   it('only flags declared in the code can be set; rollouts are 0–100', async () => {
-    await expect(setFlagRule('power-peg', { enabled: true }, null)).rejects.toBeInstanceOf(FlagInputError);
-    await expect(setFlagRule('monitor-latency-chart', { rolloutPercent: 101 }, null)).rejects.toBeInstanceOf(FlagInputError);
-    await expect(setFlagOverride('monitor-latency-chart', 'no-such-org', true, null)).rejects.toBeInstanceOf(FlagInputError);
+    await expect(setFlagRule('power-peg', { enabled: true }, null, SOURCE)).rejects.toBeInstanceOf(FlagInputError);
+    await expect(setFlagRule('monitor-latency-chart', { rolloutPercent: 101 }, null, SOURCE)).rejects.toBeInstanceOf(FlagInputError);
+    await expect(setFlagOverride('monitor-latency-chart', 'no-such-org', true, null, SOURCE)).rejects.toBeInstanceOf(FlagInputError);
   });
 
   it('at 0% the feature is hidden; targeting one org shows it there and nowhere else; the kill switch turns it off', async () => {
-    await setFlagRule('monitor-latency-chart', { enabled: true, rolloutPercent: 0 }, null);
+    await setFlagRule('monitor-latency-chart', { enabled: true, rolloutPercent: 0 }, null, SOURCE);
     await refreshFlags();
     expect(await isEnabled('monitor-latency-chart', acme)).toBe(false);
     expect(await isEnabled('monitor-latency-chart', globex)).toBe(false);
 
-    await setFlagOverride('monitor-latency-chart', acme.slug, true, acme.users.owner.id);
+    await setFlagOverride('monitor-latency-chart', acme.slug, true, acme.users.owner.id, SOURCE);
     await refreshFlags();
     expect(await isEnabled('monitor-latency-chart', acme)).toBe(true);
     expect(await isEnabled('monitor-latency-chart', globex)).toBe(false);
 
-    await setFlagRule('monitor-latency-chart', { enabled: false }, null); // the kill switch
+    await setFlagRule('monitor-latency-chart', { enabled: false }, null, SOURCE); // the kill switch
     await refreshFlags();
     expect(await isEnabled('monitor-latency-chart', acme)).toBe(false);
 
     const [row] = (await listFlagsForAdmin()).filter((f) => f.key === 'monitor-latency-chart');
     expect(row).toMatchObject({ rule: { enabled: false, rolloutPercent: 0 }, overrides: [{ orgSlug: acme.slug, enabled: true }], expired: false });
-  });
-
-  it('staff are a verified email on BEACON_STAFF_EMAILS, nobody else', () => {
-    const env = { BEACON_STAFF_EMAILS: 'ops@beacon.test, Oncall@Beacon.test' };
-    expect(isStaff({ email: 'oncall@beacon.test', emailVerified: true }, env)).toBe(true);
-    expect(isStaff({ email: 'ops@beacon.test', emailVerified: false }, env)).toBe(false);
-    expect(isStaff({ email: 'owner@acme.test', emailVerified: true }, env)).toBe(false);
-    expect(isStaff(null, env)).toBe(false);
   });
 });
 
@@ -255,7 +250,7 @@ describe('`disable-sms-sending`: the ops kill switch (🟡)', () => {
   afterAll(() => vi.unstubAllEnvs());
 
   it('on-call flips it and the next SMS is not sent (logged as skipped); email still goes out', async () => {
-    await setFlagRule('disable-sms-sending', { enabled: true, rolloutPercent: 100 }, null);
+    await setFlagRule('disable-sms-sending', { enabled: true, rolloutPercent: 100 }, null, SOURCE);
     await refreshFlags(); // the worker would pick it up within FLAGS_REFRESH_SECONDS
     const m = await createMonitor({ orgId: pager.id, userId: pager.users.owner.id }, { name: 'sms-kill', url: 'https://sms-kill.test', intervalSeconds: 60 });
     for (let i = 0; i < 3; i++) await recordCheckResult(pager, m, DOWN, new Date(Date.now() - 60_000 + i * 1000));
@@ -269,7 +264,7 @@ describe('`disable-sms-sending`: the ops kill switch (🟡)', () => {
   });
 
   it('flipped back, SMS flow again', async () => {
-    await setFlagRule('disable-sms-sending', { enabled: false }, null);
+    await setFlagRule('disable-sms-sending', { enabled: false }, null, SOURCE);
     await refreshFlags();
     const m = await createMonitor({ orgId: pager.id, userId: pager.users.owner.id }, { name: 'sms-back', url: 'https://sms-back.test', intervalSeconds: 60 });
     for (let i = 0; i < 3; i++) await recordCheckResult(pager, m, DOWN, new Date(Date.now() - 30_000 + i * 1000));
@@ -286,8 +281,8 @@ describe('`new-scheduler`: the release flag, per org, in the worker (🟡)', () 
     on = await makeOrg('Scheduler New');
     off = await makeOrg('Scheduler Old');
     await useFlagProviderForTests(new BeaconFlagProvider({ load: loadRuleSet, refreshMs: 60_000 }));
-    await setFlagRule('new-scheduler', { enabled: true, rolloutPercent: 0 }, null);
-    await setFlagOverride('new-scheduler', on.slug, true, null);
+    await setFlagRule('new-scheduler', { enabled: true, rolloutPercent: 0 }, null, SOURCE);
+    await setFlagOverride('new-scheduler', on.slug, true, null, SOURCE);
     await refreshFlags();
   });
 
@@ -318,8 +313,8 @@ describe('flags never bypass entitlements (lesson 3.2 vs 6.3)', () => {
   it('a Free org with every flag forced on still gets Free limits, and no API', async () => {
     const free = await makeOrg('Flagged Free', { plan: 'free' });
     for (const key of Object.keys(FLAGS)) {
-      await setFlagRule(key, { enabled: true, rolloutPercent: 100 }, null);
-      await setFlagOverride(key, free.slug, true, null);
+      await setFlagRule(key, { enabled: true, rolloutPercent: 100 }, null, SOURCE);
+      await setFlagOverride(key, free.slug, true, null, SOURCE);
     }
     await refreshFlags();
     expect(await isEnabled('monitor-latency-chart', free)).toBe(true); // the flags really are on
@@ -327,7 +322,7 @@ describe('flags never bypass entitlements (lesson 3.2 vs 6.3)', () => {
     expect(ent).toMatchObject({ plan: 'free', api: false, minIntervalSec: 300, maxMonitors: 5, smsCreditsPerMonth: 0 });
     // The server still refuses what the plan does not include.
     await expect(createMonitor({ orgId: free.id, userId: free.users.owner.id }, { name: 'fast', url: 'https://fast.test', intervalSeconds: 30 })).rejects.toBeInstanceOf(LimitExceededError);
-    for (const key of Object.keys(FLAGS)) await setFlagRule(key, { enabled: false }, null);
+    for (const key of Object.keys(FLAGS)) await setFlagRule(key, { enabled: false }, null, SOURCE);
     await refreshFlags();
   });
 });

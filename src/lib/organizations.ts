@@ -5,6 +5,8 @@ import type { Role } from '@/core/roles';
 import { withOrg } from '@/db/tenant';
 import { track, trackInTx } from './analytics';
 import { recordMilestoneInTx } from './onboarding';
+import type { AuditSource } from '@/core/audit';
+import { auditSourceOf, recordAudit } from './audit';
 
 const { organizations, memberships } = schema;
 
@@ -83,13 +85,24 @@ export async function findPublicStatusPage(slug: string) {
  * Lessons 6.1/6.2: publishing is the last onboarding step and a product event
  * (only when it actually changes from hidden to published).
  */
-export async function setStatusPagePublic({ orgId, userId }: { orgId: string; userId: string }, isPublic: boolean) {
+export async function setStatusPagePublic(ctx: { orgId: string; userId: string; audit?: AuditSource }, isPublic: boolean) {
+  const { orgId, userId } = ctx;
   await withOrg(orgId, async (tx) => {
     const [before] = await tx.select({ statusPagePublic: organizations.statusPagePublic }).from(organizations).where(eq(organizations.id, orgId)).for('update');
     await tx.update(organizations).set({ statusPagePublic: isPublic }).where(eq(organizations.id, orgId));
     if (isPublic && !before.statusPagePublic) {
       await recordMilestoneInTx(tx, orgId, 'status_page_published', userId);
       await trackInTx(tx, { orgId, userId }, 'status_page_published', {});
+    }
+    // Lesson 7.3: what the world can see is a security-relevant setting.
+    if (isPublic !== before.statusPagePublic) {
+      await recordAudit(tx, {
+        orgId,
+        action: isPublic ? 'status_page.published' : 'status_page.unpublished',
+        source: auditSourceOf(ctx),
+        target: { type: 'status_page', id: orgId },
+        changes: { status_page_public: { before: before.statusPagePublic, after: isPublic } },
+      });
     }
   });
 }
@@ -99,8 +112,20 @@ export async function setStatusPagePublic({ orgId, userId }: { orgId: string; us
  * "org.manage" on the server (a Member gets 403 from the endpoint, not just a
  * hidden button). The slug, and so every URL, stays the same.
  */
-export async function renameOrganization({ orgId }: { orgId: string }, name: string) {
-  await db.update(organizations).set({ name }).where(eq(organizations.id, orgId));
+export async function renameOrganization(ctx: { orgId: string; userId?: string; audit?: AuditSource }, name: string) {
+  const { orgId } = ctx;
+  await withOrg(orgId, async (tx) => {
+    const [before] = await tx.select({ name: organizations.name }).from(organizations).where(eq(organizations.id, orgId)).for('update');
+    if (before.name === name) return;
+    await tx.update(organizations).set({ name }).where(eq(organizations.id, orgId));
+    await recordAudit(tx, {
+      orgId,
+      action: 'org.renamed',
+      source: auditSourceOf(ctx),
+      target: { type: 'organization', id: orgId, name },
+      changes: { name: { before: before.name, after: name } },
+    });
+  });
 }
 
 export async function getOrganization({ orgId }: { orgId: string }) {

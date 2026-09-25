@@ -2,6 +2,8 @@ import { and, eq, inArray, sql } from 'drizzle-orm';
 import { db, schema } from '@/db';
 import { withOrg, type TenantTx } from '@/db/tenant';
 import { ESCALATION_STOP_SIGNALS, escalationPolicyInput, type EscalationPolicy, type EscalationTier } from '@/core/escalation';
+import type { AuditSource } from '@/core/audit';
+import { auditSourceOf, recordAudit } from '../audit';
 import { InvalidRequestError } from '../errors';
 import { pageInTx } from '../notifications/pipeline';
 import { defineWorkflow, startWorkflowInTx, type Signal } from './engine';
@@ -114,17 +116,28 @@ export async function getEscalationPolicy({ orgId }: { orgId: string }): Promise
 }
 
 /** Save the policy. Everyone in a tier must be a member of the org. Applies to the NEXT incident. */
-export async function saveEscalationPolicy(ctx: { orgId: string; userId: string }, policy: EscalationPolicy) {
+export async function saveEscalationPolicy(ctx: { orgId: string; userId: string; audit?: AuditSource }, policy: EscalationPolicy) {
   const parsed = escalationPolicyInput.parse(policy);
   const people = [...new Set(parsed.tiers.flatMap((t) => t.userIds))];
   if (people.length) {
     const found = await db.select({ userId: memberships.userId }).from(memberships).where(and(eq(memberships.organizationId, ctx.orgId), inArray(memberships.userId, people)));
     if (found.length !== people.length) throw new InvalidRequestError('not_a_member', 'Everyone on the escalation policy must be a member of this organization.');
   }
-  await withOrg(ctx.orgId, (tx) =>
-    tx
+  await withOrg(ctx.orgId, async (tx) => {
+    const [before] = await tx.select({ tiers: escalationPolicies.tiers }).from(escalationPolicies).where(eq(escalationPolicies.organizationId, ctx.orgId));
+    await tx
       .insert(escalationPolicies)
       .values({ organizationId: ctx.orgId, tiers: parsed.tiers, updatedBy: ctx.userId })
-      .onConflictDoUpdate({ target: escalationPolicies.organizationId, set: { tiers: parsed.tiers, updatedBy: ctx.userId } }),
-  );
+      .onConflictDoUpdate({ target: escalationPolicies.organizationId, set: { tiers: parsed.tiers, updatedBy: ctx.userId } });
+    // Lesson 7.3: who gets paged is security-relevant. Tiers hold user ids and minutes only.
+    if (JSON.stringify(before?.tiers ?? []) !== JSON.stringify(parsed.tiers)) {
+      await recordAudit(tx, {
+        orgId: ctx.orgId,
+        action: 'escalation.policy_changed',
+        source: auditSourceOf(ctx),
+        target: { type: 'escalation_policy', id: ctx.orgId },
+        changes: { tiers: { before: before?.tiers ?? [], after: parsed.tiers } },
+      });
+    }
+  });
 }

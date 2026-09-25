@@ -1,6 +1,7 @@
 import { and, count, desc, eq, inArray, isNull } from 'drizzle-orm';
 import { db, schema } from '@/db';
-import { withOrg } from '@/db/tenant';
+import { withOrg, type TenantTx } from '@/db/tenant';
+import type { AuditChanges, AuditSource } from '@/core/audit';
 import {
   CATEGORIES,
   CATEGORY_IDS,
@@ -17,6 +18,7 @@ import { isUuid } from '@/core/validation';
 import { InvalidRequestError } from '../errors';
 import { trackInTx } from '../analytics';
 import { recordMilestoneInTx } from '../onboarding';
+import { auditSourceOf, recordAudit } from '../audit';
 import { isSlackWebhookUrl } from './providers';
 import { notifyInTx, smsIncluded, type NotifyEvent } from './pipeline';
 
@@ -251,9 +253,10 @@ export async function getOrgNotificationSettings({ orgId }: { orgId: string }) {
 }
 
 export async function saveOrgNotificationSettings(
-  { orgId, userId = null }: { orgId: string; userId?: string | null },
+  ctx: { orgId: string; userId?: string | null; audit?: AuditSource },
   input: { allowed: Set<string>; slackWebhookUrl?: string | null },
 ) {
+  const { orgId, userId = null } = ctx;
   const slackUrl = input.slackWebhookUrl === undefined ? undefined : input.slackWebhookUrl?.trim() || null;
   if (slackUrl && !isSlackWebhookUrl(slackUrl)) {
     throw new InvalidRequestError('invalid_slack_url', 'Paste a Slack incoming-webhook URL: https://hooks.slack.com/services/…');
@@ -267,8 +270,9 @@ export async function saveOrgNotificationSettings(
     })),
   );
   await withOrg(orgId, async (tx) => {
+    const [before] = await tx.select({ url: organizations.slackWebhookUrl }).from(organizations).where(eq(organizations.id, orgId));
+    const offBefore = await disabledPolicies(tx, orgId);
     if (slackUrl !== undefined) {
-      const [before] = await tx.select({ url: organizations.slackWebhookUrl }).from(organizations).where(eq(organizations.id, orgId));
       await tx.update(organizations).set({ slackWebhookUrl: slackUrl }).where(eq(organizations.id, orgId));
       if (slackUrl && !before?.url) {
         // Lessons 6.1/6.2: Slack connected. The onboarding step, and the event (the channel, never the URL).
@@ -282,5 +286,27 @@ export async function saveOrgNotificationSettings(
         .values(row)
         .onConflictDoUpdate({ target: [orgNotificationPolicies.organizationId, orgNotificationPolicies.category, orgNotificationPolicies.channel], set: { enabled: row.enabled } });
     }
+    // Lesson 7.3: muting a channel silences alerts, so it is audited. The Slack
+    // URL is a secret: the log says connected or not, never the URL.
+    const offAfter = await disabledPolicies(tx, orgId);
+    const changes: AuditChanges = {};
+    const slackBefore = Boolean(before?.url);
+    const slackAfter = slackUrl === undefined ? slackBefore : Boolean(slackUrl);
+    if (slackBefore !== slackAfter || (slackUrl && before?.url && slackUrl !== before.url)) {
+      changes.slack = { before: slackBefore ? 'connected' : 'none', after: slackAfter ? (slackBefore ? 'replaced' : 'connected') : 'none' };
+    }
+    if (offBefore.join() !== offAfter.join()) changes.disabled_channels = { before: offBefore, after: offAfter };
+    if (Object.keys(changes).length) {
+      await recordAudit(tx, { orgId, action: 'alerts.settings_changed', source: auditSourceOf(ctx), target: { type: 'alert_policy', id: orgId }, changes });
+    }
   });
+}
+
+/** "category:channel" pairs the org has switched off, sorted. */
+async function disabledPolicies(tx: TenantTx, orgId: string): Promise<string[]> {
+  const off = await tx
+    .select({ category: orgNotificationPolicies.category, channel: orgNotificationPolicies.channel })
+    .from(orgNotificationPolicies)
+    .where(and(eq(orgNotificationPolicies.organizationId, orgId), eq(orgNotificationPolicies.enabled, false)));
+  return off.map((p) => `${p.category}:${p.channel}`).sort();
 }

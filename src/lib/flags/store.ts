@@ -1,6 +1,8 @@
 import { and, asc, eq } from 'drizzle-orm';
 import { db, schema } from '@/db';
 import { FLAGS, isFlagKey, isValidRolloutPercent, type FlagKey, type RuleSet } from '@/core/flags';
+import { diffFields, type AuditSource } from '@/core/audit';
+import { recordAudit } from '../audit';
 
 const { featureFlags, featureFlagOverrides, organizations } = schema;
 
@@ -9,7 +11,10 @@ const { featureFlags, featureFlagOverrides, organizations } = schema;
  * the provider (./provider.ts) loads the whole rule set, and staff change it
  * from /internal/flags or `npm run flags`. These are platform tables, not
  * tenant data, so they are read and written as the database owner.
- * TODO(7.3): write every change to the audit log ("who turned off SMS at 02:00?").
+ *
+ * Lesson 7.3: every change is a platform audit event, in the same
+ * transaction, with who and why: "who turned off SMS at 02:00?" has an answer
+ * in /internal/audit.
  */
 
 /** Everything, for local evaluation: two small queries, whatever the number of orgs. */
@@ -32,31 +37,51 @@ function assertKnown(key: string): asserts key is FlagKey {
  * Change a flag's rule. A key with no row yet gets one: master switch ON and
  * 0% (nobody, except overrides), unless the change says otherwise.
  */
-export async function setFlagRule(key: string, change: { enabled?: boolean; rolloutPercent?: number }, updatedBy: string | null) {
+export async function setFlagRule(key: string, change: { enabled?: boolean; rolloutPercent?: number }, updatedBy: string | null, source: AuditSource) {
   assertKnown(key);
   if (change.rolloutPercent !== undefined && !isValidRolloutPercent(change.rolloutPercent)) throw new FlagInputError('Rollout must be a whole number from 0 to 100.');
   const set = { ...change, updatedBy };
-  await db
-    .insert(featureFlags)
-    .values({ key, enabled: change.enabled ?? true, rolloutPercent: change.rolloutPercent ?? 0, updatedBy })
-    .onConflictDoUpdate({ target: featureFlags.key, set });
+  await db.transaction(async (tx) => {
+    const [before] = await tx.select().from(featureFlags).where(eq(featureFlags.key, key)).for('update');
+    const [after] = await tx
+      .insert(featureFlags)
+      .values({ key, enabled: change.enabled ?? true, rolloutPercent: change.rolloutPercent ?? 0, updatedBy })
+      .onConflictDoUpdate({ target: featureFlags.key, set })
+      .returning();
+    const changes = diffFields(before ?? null, after, ['enabled', 'rolloutPercent'] as const);
+    if (Object.keys(changes).length) await recordAudit(tx, { orgId: null, action: 'flag.changed', source, target: { type: 'feature_flag', id: key, name: key }, changes });
+  });
 }
 
 /** Target one org: on, off, or (null) back to the percentage. */
-export async function setFlagOverride(key: string, orgSlug: string, enabled: boolean | null, updatedBy: string | null) {
+export async function setFlagOverride(key: string, orgSlug: string, enabled: boolean | null, updatedBy: string | null, source: AuditSource) {
   assertKnown(key);
   const [org] = await db.select({ id: organizations.id }).from(organizations).where(eq(organizations.slug, orgSlug));
   if (!org) throw new FlagInputError(`No organization with slug "${orgSlug}".`);
-  if (enabled === null) {
-    await db.delete(featureFlagOverrides).where(and(eq(featureFlagOverrides.key, key), eq(featureFlagOverrides.organizationId, org.id)));
-    return;
-  }
-  // An override needs its flag's row (foreign key): create it switched on at 0%.
-  await db.insert(featureFlags).values({ key, enabled: true, rolloutPercent: 0, updatedBy }).onConflictDoNothing();
-  await db
-    .insert(featureFlagOverrides)
-    .values({ key, organizationId: org.id, enabled, updatedBy })
-    .onConflictDoUpdate({ target: [featureFlagOverrides.key, featureFlagOverrides.organizationId], set: { enabled, updatedBy } });
+  await db.transaction(async (tx) => {
+    const where = and(eq(featureFlagOverrides.key, key), eq(featureFlagOverrides.organizationId, org.id));
+    const [before] = await tx.select({ enabled: featureFlagOverrides.enabled }).from(featureFlagOverrides).where(where);
+    if (enabled === null) {
+      await tx.delete(featureFlagOverrides).where(where);
+    } else {
+      // An override needs its flag's row (foreign key): create it switched on at 0%.
+      await tx.insert(featureFlags).values({ key, enabled: true, rolloutPercent: 0, updatedBy }).onConflictDoNothing();
+      await tx
+        .insert(featureFlagOverrides)
+        .values({ key, organizationId: org.id, enabled, updatedBy })
+        .onConflictDoUpdate({ target: [featureFlagOverrides.key, featureFlagOverrides.organizationId], set: { enabled, updatedBy } });
+    }
+    if ((before?.enabled ?? null) !== enabled) {
+      await recordAudit(tx, {
+        orgId: null,
+        action: 'flag.override_changed',
+        source,
+        target: { type: 'feature_flag', id: key, name: key },
+        changes: { [`override:${orgSlug}`]: { before: before?.enabled ?? null, after: enabled } },
+        metadata: { organization_id: org.id },
+      });
+    }
+  });
 }
 
 export type FlagAdminRow = {

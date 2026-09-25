@@ -20,7 +20,7 @@ export const PATCH = publicApi<Params>('monitors:write', async (req, api, { id }
   const uuid = monitorId(id);
   if (!uuid) return problem('not-found', { instance: new URL(req.url).pathname });
   const input = MonitorUpdate.parse(await req.json());
-  const monitor = await updateMonitor({ orgId: api.orgId, ...api.actor }, uuid, {
+  const monitor = await updateMonitor({ orgId: api.orgId, ...api.actor, audit: api.audit }, uuid, {
     name: input.name,
     url: input.url,
     intervalSeconds: input.interval_seconds,
@@ -33,6 +33,6 @@ export const PATCH = publicApi<Params>('monitors:write', async (req, api, { id }
 export const DELETE = publicApi<Params>('monitors:write', async (req, api, { id }) => {
   const uuid = monitorId(id);
   if (!uuid) return problem('not-found', { instance: new URL(req.url).pathname });
-  await deleteMonitor({ orgId: api.orgId, ...api.actor }, uuid);
+  await deleteMonitor({ orgId: api.orgId, ...api.actor, audit: api.audit }, uuid);
   return new Response(null, { status: 204 });
 });

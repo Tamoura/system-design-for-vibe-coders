@@ -25,17 +25,18 @@ import { ROLES, type Role } from './roles';
  * |                 Slack channel (lesson 4.2)  |       |       |        |        |
  * | integration.manage  API keys and webhook    |   ✓   |   ✓   |        |        |
  * |                 endpoints (lessons 5.2/5.3) |       |       |        |        |
+ * | audit.read      the audit log (lesson 7.3)  |   ✓   |   ✓   |        |        |
  * | billing.manage  upgrade, manage billing     |   ✓   |       |        |        |
  * | org.delete      (1.2's 🔴 exercise)         |   ✓   |       |        |        |
  */
 export const PERMISSIONS = {
   owner: [
     'monitor.read', 'member.read', 'monitor.write', 'monitor.write_any', 'incident.write',
-    'page.publish', 'org.manage', 'member.manage', 'billing.read', 'billing.manage', 'notification.manage', 'integration.manage', 'org.delete',
+    'page.publish', 'org.manage', 'member.manage', 'billing.read', 'billing.manage', 'notification.manage', 'integration.manage', 'audit.read', 'org.delete',
   ],
   admin: [
     'monitor.read', 'member.read', 'monitor.write', 'monitor.write_any', 'incident.write',
-    'page.publish', 'org.manage', 'member.manage', 'billing.read', 'notification.manage', 'integration.manage',
+    'page.publish', 'org.manage', 'member.manage', 'billing.read', 'notification.manage', 'integration.manage', 'audit.read',
   ],
   member: ['monitor.read', 'member.read', 'monitor.write', 'incident.write'],
   viewer: ['monitor.read', 'member.read'],
@@ -46,6 +47,18 @@ export type Permission = (typeof PERMISSIONS)[Role][number];
 /** Function-level check: may this role perform this action at all? */
 export function can(role: Role, permission: Permission): boolean {
   return (PERMISSIONS[role] as readonly string[]).includes(permission);
+}
+
+/**
+ * Lesson 7.1: the permissions that only READ. A read-only impersonation
+ * session (Beacon support viewing a customer's account) may use these and
+ * nothing else: requirePermission() refuses every other one with a 403,
+ * behind the proxy that already refuses every mutating request.
+ */
+export const READ_PERMISSIONS: readonly Permission[] = ['monitor.read', 'member.read', 'billing.read', 'audit.read'];
+
+export function isReadPermission(permission: Permission): boolean {
+  return READ_PERMISSIONS.includes(permission);
 }
 
 /** How powerful a role is: owner 3 … viewer 0. Used only to compare roles. */

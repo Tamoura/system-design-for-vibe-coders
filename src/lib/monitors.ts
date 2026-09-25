@@ -13,6 +13,8 @@ import { signalRunsInTx } from './workflows/engine';
 import { publishInTx } from './realtime';
 import { trackInTx } from './analytics';
 import { recordMilestoneInTx } from './onboarding';
+import { diffFields, type AuditSource } from '@/core/audit';
+import { auditSourceOf, recordAudit } from './audit';
 
 const { monitors, checkResults, incidents } = schema;
 
@@ -169,9 +171,8 @@ export async function getMonitorHistory({ orgId }: OrgScope, monitorId: string) 
  * request body: `input` has been parsed by an allow-list schema that has no
  * organizationId field (lesson 1.3, mass assignment).
  */
-export async function createMonitor(ctx: OrgScope & { userId: string | null }, input: CreateMonitorInput, via: 'app' | 'api' = 'app') {
+export async function createMonitor(ctx: OrgScope & { userId: string | null; audit?: AuditSource }, input: CreateMonitorInput, via: 'app' | 'api' = 'app') {
   await assertMonitorUrl(input.url);
-  // TODO(7.3): record "monitor.created" in the audit log.
   return withOrg(ctx.orgId, async (tx) => {
     // Lesson 3.2: entitlements are enforced here, on the server, at the point
     // of action. The form, the API and (later) the public API all end up in
@@ -187,9 +188,20 @@ export async function createMonitor(ctx: OrgScope & { userId: string | null }, i
     // monitor's own transaction: recorded if and only if the monitor exists.
     const isFirst = await recordMilestoneInTx(tx, ctx.orgId, 'monitor_created', ctx.userId);
     await trackInTx(tx, { orgId: ctx.orgId, userId: ctx.userId }, 'monitor_created', { interval_seconds: row.intervalSeconds, is_first: isFirst, via });
+    // Lesson 7.3: and the audit event. The URL is the customer's own data, shown to their admins only.
+    await recordAudit(tx, {
+      orgId: ctx.orgId,
+      action: 'monitor.created',
+      source: auditSourceOf(ctx),
+      target: { type: 'monitor', id: row.id, name: row.name },
+      changes: diffFields(null, row, MONITOR_AUDITED_FIELDS),
+    });
     return row;
   });
 }
+
+/** The monitor fields whose changes are audited (never the whole row). */
+const MONITOR_AUDITED_FIELDS = ['name', 'url', 'intervalSeconds', 'paused'] as const;
 
 /**
  * Lesson 5.3 (🟡): refuse a monitor URL that points inside our network
@@ -219,10 +231,9 @@ async function getEditableMonitor(ctx: OrgScope & Actor, id: string) {
   return monitor;
 }
 
-export async function updateMonitor(ctx: OrgScope & Actor, id: string, input: UpdateMonitorInput) {
+export async function updateMonitor(ctx: OrgScope & Actor & { audit?: AuditSource }, id: string, input: UpdateMonitorInput) {
   const current = await getEditableMonitor(ctx, id);
   if (input.url !== undefined && input.url !== current.url) await assertMonitorUrl(input.url);
-  // TODO(7.3): record "monitor.updated" in the audit log.
   return withOrg(ctx.orgId, async (tx) => {
     // Lesson 3.2: the limits apply to updates too, not only to creates.
     const ent = await entitlementsInTx(tx, ctx.orgId);
@@ -242,14 +253,33 @@ export async function updateMonitor(ctx: OrgScope & Actor, id: string, input: Up
       .set({ ...fields, ...pause })
       .where(and(eq(monitors.organizationId, ctx.orgId), eq(monitors.id, id)))
       .returning();
+    // Lesson 7.3: one event per kind of change. Pausing gets its own action
+    // because it silences alerts ("who paused the payment API monitor?").
+    const source = auditSourceOf(ctx);
+    const target = { type: 'monitor', id: row.id, name: row.name };
+    const edited = diffFields(current, row, ['name', 'url', 'intervalSeconds'] as const);
+    if (Object.keys(edited).length) await recordAudit(tx, { orgId: ctx.orgId, action: 'monitor.updated', source, target, changes: edited });
+    if (current.paused !== row.paused) {
+      await recordAudit(tx, { orgId: ctx.orgId, action: row.paused ? 'monitor.paused' : 'monitor.resumed', source, target, changes: diffFields(current, row, ['paused', 'pausedReason'] as const) });
+    }
     return row;
   });
 }
 
-export async function deleteMonitor(ctx: OrgScope & Actor, id: string): Promise<void> {
+export async function deleteMonitor(ctx: OrgScope & Actor & { audit?: AuditSource }, id: string): Promise<void> {
   await getEditableMonitor(ctx, id);
-  // TODO(7.3): record "monitor.deleted" in the audit log.
-  await withOrg(ctx.orgId, (tx) => tx.delete(monitors).where(and(eq(monitors.organizationId, ctx.orgId), eq(monitors.id, id))));
+  await withOrg(ctx.orgId, async (tx) => {
+    const deleted = await tx.delete(monitors).where(and(eq(monitors.organizationId, ctx.orgId), eq(monitors.id, id))).returning();
+    for (const m of deleted) {
+      await recordAudit(tx, {
+        orgId: ctx.orgId,
+        action: 'monitor.deleted',
+        source: auditSourceOf(ctx),
+        target: { type: 'monitor', id: m.id, name: m.name },
+        changes: diffFields(m, null, MONITOR_AUDITED_FIELDS),
+      });
+    }
+  });
 }
 
 /**

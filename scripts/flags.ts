@@ -9,9 +9,12 @@
  *   npm run flags -- on disable-sms-sending          master switch on (rollout and overrides apply)
  *
  * Running processes pick a change up within FLAGS_REFRESH_SECONDS (15 s by default).
- * TODO(7.3): record who changed what in the audit log.
+ * Lesson 7.3: every change is a platform audit event, named after the operating-system
+ * user who ran the command (a shell on a production box is still an actor).
  */
+import './load-env'; // lesson 7.4: .env.local, like Next.js (must be the first import)
 import { sql } from '../src/db';
+import { cliAuditSource } from '../src/lib/audit';
 import { FlagInputError, listFlagsForAdmin, setFlagOverride, setFlagRule } from '../src/lib/flags/store';
 
 const [command, key, ...rest] = process.argv.slice(2);
@@ -32,18 +35,18 @@ try {
       await list();
       break;
     case 'rollout':
-      await setFlagRule(key, { rolloutPercent: Number(rest[0]) }, null);
+      await setFlagRule(key, { rolloutPercent: Number(rest[0]) }, null, cliAuditSource('npm run flags'));
       console.log(`✓ ${key}: rollout ${rest[0]}%`);
       break;
     case 'on':
     case 'off':
-      await setFlagRule(key, { enabled: command === 'on' }, null);
+      await setFlagRule(key, { enabled: command === 'on' }, null, cliAuditSource('npm run flags'));
       console.log(`✓ ${key}: master switch ${command}`);
       break;
     case 'override': {
       const [slug, value] = rest;
       if (!slug || !['on', 'off', 'clear'].includes(value)) throw new FlagInputError('usage: npm run flags -- override <flag> <org-slug> on|off|clear');
-      await setFlagOverride(key, slug, value === 'clear' ? null : value === 'on', null);
+      await setFlagOverride(key, slug, value === 'clear' ? null : value === 'on', null, cliAuditSource('npm run flags'));
       console.log(`✓ ${key}: ${slug} ${value}`);
       break;
     }

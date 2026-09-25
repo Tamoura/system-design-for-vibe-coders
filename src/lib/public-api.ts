@@ -13,6 +13,10 @@ import type { Incident, Monitor } from '@/db/schema';
 import { verifyApiKey } from './api-keys';
 import { AccessError, InvalidRequestError, LimitExceededError } from './errors';
 import { consumeRateLimit } from './rate-limit';
+import type { AuditSource } from '@/core/audit';
+import { annotateContext, clientIpFrom, getContext } from './observability/context';
+import { captureError } from './observability/errors';
+import { observeRequest } from './observability/http';
 
 /*
  * Lesson 5.2: everything every /api/v1 request goes through, in this order:
@@ -40,6 +44,8 @@ export type ApiContext = {
    */
   actor: Actor & { userId: string };
   createdBy: string | null;
+  /** Lesson 7.3: who the audit log names for writes through this key: the KEY (by its prefix), not its creator. */
+  audit: AuditSource;
 };
 
 const IP_POLICY = perMinute('ip', 300);
@@ -55,49 +61,60 @@ function clientIp(req: Request): string {
 }
 
 export function publicApi<P = Record<string, never>>(scope: ApiScope, handler: (req: Request, api: ApiContext, params: P) => Promise<Response>) {
-  return async (req: Request, context: { params: Promise<P> }): Promise<Response> => {
-    const instance = new URL(req.url).pathname;
-    let limitHeaders: Record<string, string> = {};
-    try {
-      const byIp = await consumeRateLimit(`ip:${clientIp(req)}`, IP_POLICY);
-      if (!byIp.allowed) return tooMany(IP_POLICY, byIp, instance);
+  // Lesson 7.2: request id, span, RED metrics and the access log, like every API route.
+  return (req: Request, context: { params: Promise<P> }): Promise<Response> => observeRequest(req, () => handle(scope, handler, req, context));
+}
 
-      const token = bearerToken(req.headers.get('authorization'));
-      const key = token ? await verifyApiKey(token) : null;
-      if (!key) {
-        const detail = token ? 'This API key is not valid, or it was revoked.' : 'Send your API key as "Authorization: Bearer bk_live_…".';
-        return problem('unauthenticated', { detail, instance }, { 'WWW-Authenticate': 'Bearer realm="beacon"' });
-      }
+async function handle<P>(scope: ApiScope, handler: (req: Request, api: ApiContext, params: P) => Promise<Response>, req: Request, context: { params: Promise<P> }): Promise<Response> {
+  const instance = new URL(req.url).pathname;
+  let limitHeaders: Record<string, string> = {};
+  try {
+    const byIp = await consumeRateLimit(`ip:${clientIp(req)}`, IP_POLICY);
+    if (!byIp.allowed) return tooMany(IP_POLICY, byIp, instance);
 
-      const ent = entitlementsFor(key.plan);
-      if (!ent.api) {
-        const upgradeTo = cheapestPlanWhere((e) => e.api);
-        return problem('plan-upgrade-required', { detail: `The API is included in the ${upgradeTo ?? 'higher'} plan.`, instance, upgrade_to: upgradeTo });
-      }
-      if (!key.scopes.includes(scope)) {
-        return problem('insufficient-scope', { detail: `This endpoint needs the "${scope}" scope.`, instance, required_scope: scope }, {
-          'WWW-Authenticate': `Bearer error="insufficient_scope", scope="${scope}"`,
-        });
-      }
-
-      // Lesson 5.2: one bucket per ORG (all its keys together), sized by the plan.
-      const policy = perMinute('api', ent.apiRequestsPerMinute);
-      const decision = await consumeRateLimit(`org:${key.orgId}`, policy);
-      limitHeaders = rateLimitHeaders(policy, decision);
-      if (!decision.allowed) return tooMany(policy, decision, instance);
-
-      const api: ApiContext = {
-        orgId: key.orgId,
-        keyId: key.keyId,
-        scopes: key.scopes,
-        createdBy: key.createdBy,
-        actor: { userId: key.createdBy ?? '', role: key.scopes.includes('monitors:write') ? 'admin' : 'viewer' },
-      };
-      return withHeaders(await handler(req, api, await context.params), limitHeaders);
-    } catch (err) {
-      return withHeaders(errorToProblem(err, instance), limitHeaders);
+    const token = bearerToken(req.headers.get('authorization'));
+    const key = token ? await verifyApiKey(token) : null;
+    if (!key) {
+      const detail = token ? 'This API key is not valid, or it was revoked.' : 'Send your API key as "Authorization: Bearer bk_live_…".';
+      return problem('unauthenticated', { detail, instance }, { 'WWW-Authenticate': 'Bearer realm="beacon"' });
     }
-  };
+
+    const ent = entitlementsFor(key.plan);
+    if (!ent.api) {
+      const upgradeTo = cheapestPlanWhere((e) => e.api);
+      return problem('plan-upgrade-required', { detail: `The API is included in the ${upgradeTo ?? 'higher'} plan.`, instance, upgrade_to: upgradeTo });
+    }
+    if (!key.scopes.includes(scope)) {
+      return problem('insufficient-scope', { detail: `This endpoint needs the "${scope}" scope.`, instance, required_scope: scope }, {
+        'WWW-Authenticate': `Bearer error="insufficient_scope", scope="${scope}"`,
+      });
+    }
+
+    // Lesson 5.2: one bucket per ORG (all its keys together), sized by the plan.
+    const policy = perMinute('api', ent.apiRequestsPerMinute);
+    const decision = await consumeRateLimit(`org:${key.orgId}`, policy);
+    limitHeaders = rateLimitHeaders(policy, decision);
+    if (!decision.allowed) return tooMany(policy, decision, instance);
+
+    const api: ApiContext = {
+      orgId: key.orgId,
+      keyId: key.keyId,
+      scopes: key.scopes,
+      createdBy: key.createdBy,
+      actor: { userId: key.createdBy ?? '', role: key.scopes.includes('monitors:write') ? 'admin' : 'viewer' },
+      audit: {
+        actor: { type: 'api_key', id: key.keyId, name: `${key.keyStart}…` },
+        ip: clientIpFrom(req.headers),
+        userAgent: req.headers.get('user-agent'),
+        requestId: getContext()?.requestId,
+        via: 'api',
+      },
+    };
+    annotateContext({ orgId: key.orgId }); // lesson 7.2: every log line of this request names the org
+    return withHeaders(await handler(req, api, await context.params), limitHeaders);
+  } catch (err) {
+    return withHeaders(errorToProblem(err, instance), limitHeaders);
+  }
 }
 
 function tooMany(policy: RateLimitPolicy, d: RateLimitDecision, instance: string) {
@@ -126,8 +143,8 @@ export function errorToProblem(err: unknown, instance: string): Response {
     return problem('validation-failed', { instance, errors: err.issues.map((i) => ({ field: i.path.join('.') || '(body)', message: i.message })) });
   }
   if (err instanceof SyntaxError) return problem('invalid-json', { instance });
-  console.error('[api] unexpected error', err);
-  return problem('internal', { instance });
+  captureError(err, { instance }); // lesson 7.2: logged with the request id, and sent to Sentry when configured
+  return problem('internal', { instance, request_id: getContext()?.requestId });
 }
 
 /*
