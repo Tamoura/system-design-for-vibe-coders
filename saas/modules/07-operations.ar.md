@@ -424,7 +424,7 @@ flowchart LR
 | [grafana/grafana](https://github.com/grafana/grafana) | لوحات متابعة وتنبيهات فوق مصادر بيانات كثيرة | Go, TS | AGPL-3.0 | تجمع حزمة "LGTM" |
 | [grafana/loki](https://github.com/grafana/loki) | تجميع سجلات يفهرس التسميات، لا النص الكامل | Go | AGPL-3.0 | تخزين سجلات رخيص بجانب Grafana؛ اجمعه مع [grafana/tempo](https://github.com/grafana/tempo) للتتبعات |
 
-لتتبع الأخطاء بميزانية محدودة، **GlitchTip** (https://glitchtip.com، ويُطوَّر على GitLab) أداة خفيفة مفتوحة المصدر متوافقة مع Sentry SDK. وللتوفر، [louislam/uptime-kuma](https://github.com/louislam/uptime-kuma) (MIT) و[openstatusHQ/openstatus](https://github.com/openstatusHQ/openstatus) (AGPL-3.0) أداتا مراقبة يمكن استضافتهما ذاتيًا، وكلتاهما نسخة حقيقية من Beacon.
+لتتبع الأخطاء بميزانية محدودة، **GlitchTip** ([glitchtip.com](https://glitchtip.com)، ويُطوَّر على GitLab) أداة خفيفة مفتوحة المصدر متوافقة مع Sentry SDK. وللتوفر، [louislam/uptime-kuma](https://github.com/louislam/uptime-kuma) (MIT) و[openstatusHQ/openstatus](https://github.com/openstatusHQ/openstatus) (AGPL-3.0) أداتا مراقبة يمكن استضافتهما ذاتيًا، وكلتاهما نسخة حقيقية من Beacon.
 
 **إن درست مستودعًا واحدًا فقط:** opentelemetry-js، وتحديدًا دليل البدء الخاص بـ Node وحزم القياس التلقائي. كل أداة أخرى في هذا الجدول إما تستهلك بيانات OTel أو تتجه نحوها، لذلك فإن تعلّم الـ SDK والمجمِّع وتمرير السياق يفيدك أيًّا كانت الخلفية التي ستنتهي إليها.
 
