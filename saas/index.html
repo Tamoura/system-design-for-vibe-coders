@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="saas-source" content="a3656a07a4a18e79">
+<meta name="saas-source" content="811aab8ee7640b88">
 <meta name="description" content="SaaS Building Blocks — the ~25 components every SaaS shares, taught beginner to advanced, with the best open-source repos to learn each one from.">
 <title>SaaS Building Blocks</title>
 <style>
@@ -214,6 +214,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m1">
   <div class="mod-head"><span class="mod-num">1</span><h3>Identity &amp; Access</h3></div>
   <div class="mod-intro"><p><em>Every SaaS needs to answer three questions on every request: who are you, which customer do you belong to, and are you allowed to do this? This module builds those answers in order: authentication, the organization-and-membership skeleton that makes a product multi-tenant, authorization, and finally the enterprise layer (SSO, SAML, OIDC, SCIM) that big customers expect before they sign. Get these four right early. Retrofitting them later costs far more than the rest of the course put together.</em></p>
+<blockquote>
+<p><strong>Practice:</strong> build the exercises in the <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">Beacon starter</a>; when you have tried them, compare with <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-1-solution">this module&#39;s reference solution</a> (branch <code>beacon/module-1-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/1.1"><span class="num">1.1</span><span class="t">Authentication: proving who someone is</span><span class="dot lvl-b" title="🟢 Beginner"></span></a></li>
@@ -225,6 +228,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m2">
   <div class="mod-head"><span class="mod-num">2</span><h3>Data</h3></div>
   <div class="mod-intro"><p><em>Every SaaS is, underneath the UI, a careful machine for storing other people&#39;s data and giving it back only to the right people. This module covers the four data components you will build on every project: the relational database itself, the files that don&#39;t belong in it, search across both, and the tenant boundary that keeps one customer&#39;s data away from another&#39;s. Get these right early and most of the later modules get easier; get them wrong and every later module inherits the mess.</em></p>
+<blockquote>
+<p><strong>Practice:</strong> build the exercises in the <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">Beacon starter</a>; when you have tried them, compare with <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-2-solution">this module&#39;s reference solution</a> (branch <code>beacon/module-2-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/2.1"><span class="num">2.1</span><span class="t">The data layer: Postgres, ORMs, migrations and seeds</span><span class="dot lvl-b" title="🟢 Beginner"></span></a></li>
@@ -236,6 +242,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m3">
   <div class="mod-head"><span class="mod-num">3</span><h3>Money</h3></div>
   <div class="mod-intro"><p><em>This is the module where bugs cost real money: customers who paid and got nothing, or customers who stopped paying and kept everything. We start with subscriptions and the webhook-driven sync that keeps your database honest, turn a pricing page into entitlement checks your code can enforce, and finish with usage-based billing, where every event is a line item on somebody&#39;s invoice. Beacon gets its Free, Pro and Business plans, plus metered SMS.</em></p>
+<blockquote>
+<p><strong>Practice:</strong> build the exercises in the <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">Beacon starter</a>; when you have tried them, compare with <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-3-solution">this module&#39;s reference solution</a> (branch <code>beacon/module-3-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/3.1"><span class="num">3.1</span><span class="t">Subscriptions and payments: checkout, webhooks, the customer portal</span><span class="dot lvl-b" title="🟢 Beginner"></span></a></li>
@@ -246,6 +255,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m4">
   <div class="mod-head"><span class="mod-num">4</span><h3>Communication</h3></div>
   <div class="mod-intro"><p><em>A SaaS that can&#39;t reach its users might as well not exist, and for Beacon, reaching people is the product: an outage alert that lands in spam is worse than no alert at all. This module covers the three ways your app talks to people. Transactional email has to arrive. Notifications have to reach the right person on the right channel without burying them. Real-time updates and collaboration make the dashboard feel alive and let two engineers edit the same postmortem without overwriting each other.</em></p>
+<blockquote>
+<p><strong>Practice:</strong> build the exercises in the <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">Beacon starter</a>; when you have tried them, compare with <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-4-solution">this module&#39;s reference solution</a> (branch <code>beacon/module-4-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/4.1"><span class="num">4.1</span><span class="t">Transactional email that actually arrives</span><span class="dot lvl-b" title="🟢 Beginner"></span></a></li>
@@ -256,6 +268,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m5">
   <div class="mod-head"><span class="mod-num">5</span><h3>Background Work &amp; Integrations</h3></div>
   <div class="mod-intro"><p><em>Most of what a SaaS does happens when nobody is looking at a browser tab. Beacon runs millions of checks a day, talks to other people&#39;s servers, and gets called by other people&#39;s code. This module covers the machinery for work that happens outside the request (queues, schedulers, workflow engines) and the surfaces other software uses to reach you (a public API) or hear from you (webhooks and integrations).</em></p>
+<blockquote>
+<p><strong>Practice:</strong> build the exercises in the <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">Beacon starter</a>; when you have tried them, compare with <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-5-solution">this module&#39;s reference solution</a> (branch <code>beacon/module-5-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="i"><a href="#/5.1"><span class="num">5.1</span><span class="t">Background jobs, queues and scheduled tasks</span><span class="dot lvl-i" title="🟡 Intermediate"></span></a></li>
@@ -267,6 +282,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m6">
   <div class="mod-head"><span class="mod-num">6</span><h3>Product &amp; Growth</h3></div>
   <div class="mod-intro"><p><em>Modules 1–5 built the machinery customers never see. This module covers the parts they do see, and the parts that tell you what they&#39;re doing: the app shell they log into every day, the analytics that show whether they&#39;re getting value, and the feature flags that let you change the product under them without breaking it. None of these is hard to start. All three get messy fast if you don&#39;t plan for them.</em></p>
+<blockquote>
+<p><strong>Practice:</strong> build the exercises in the <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">Beacon starter</a>; when you have tried them, compare with <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-6-solution">this module&#39;s reference solution</a> (branch <code>beacon/module-6-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/6.1"><span class="num">6.1</span><span class="t">The app shell: marketing site, onboarding, dashboard and settings</span><span class="dot lvl-b" title="🟢 Beginner"></span></a></li>
@@ -277,6 +295,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m7">
   <div class="mod-head"><span class="mod-num">7</span><h3>Operating the SaaS</h3></div>
   <div class="mod-intro"><p><em>Shipping the product is half the job. The other half is running it: helping customers whose problems you can&#39;t see from their screen, knowing something is broken before they tweet about it, proving who changed what, and deploying on a Tuesday afternoon without holding your breath. This module covers the four components that let a small team run a SaaS without heroics: the admin panel, observability, audit logs, and the deployment pipeline.</em></p>
+<blockquote>
+<p><strong>Practice:</strong> build the exercises in the <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">Beacon starter</a>; when you have tried them, compare with <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-7-solution">this module&#39;s reference solution</a> (branch <code>beacon/module-7-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="i"><a href="#/7.1"><span class="num">7.1</span><span class="t">The admin panel: support tools and impersonation</span><span class="dot lvl-i" title="🟡 Intermediate"></span></a></li>
@@ -288,6 +309,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m8">
   <div class="mod-head"><span class="mod-num">8</span><h3>Trust &amp; the Frontier</h3></div>
   <div class="mod-intro"><p><em>Customers hand a SaaS their data, their credentials and their uptime, and bigger customers want proof you deserve it. This module covers security and compliance, the component that decides whether an enterprise can buy from you at all, and then AI features, the newest building block, which brings its own versions of the old problems: tenant isolation, cost metering and untrusted input. Both lessons start at the advanced level because they rely on nearly everything before them.</em></p>
+<blockquote>
+<p><strong>Practice:</strong> build the exercises in the <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">Beacon starter</a>; when you have tried them, compare with <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-8-solution">this module&#39;s reference solution</a> (branch <code>beacon/module-8-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="a"><a href="#/8.1"><span class="num">8.1</span><span class="t">Security and compliance: secrets, encryption, SOC 2, GDPR</span><span class="dot lvl-a" title="🔴 Advanced"></span></a></li>
@@ -300,6 +324,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 on its own; now you will assemble them into one architecture for Beacon, decide
 which to buy, self-host or build at each stage of the company, and defend those
 decisions the way a senior engineer would in a design review.</em></p>
+<blockquote>
+<p><strong>Practice:</strong> build the exercises in the <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">Beacon starter</a>; when you have tried them, compare with <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-9-solution">this module&#39;s reference solution</a> (branch <code>beacon/module-9-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="a"><a href="#/9.1"><span class="num">9.1</span><span class="t">Assemble Beacon: reference architecture, build-vs-buy and a 90-day plan</span><span class="dot lvl-a" title="🔴 Advanced"></span></a></li>
@@ -327,6 +354,9 @@ decisions the way a senior engineer would in a design review.</em></p>
 <section class="mod" id="m1">
   <div class="mod-head"><span class="mod-num">1</span><h3>Identity &amp; Access</h3></div>
   <div class="mod-intro"><p><em>Every SaaS needs to answer three questions on every request: who are you, which customer do you belong to, and are you allowed to do this? This module builds those answers in order: authentication, the organization-and-membership skeleton that makes a product multi-tenant, authorization, and finally the enterprise layer (SSO, SAML, OIDC, SCIM) that big customers expect before they sign. Get these four right early. Retrofitting them later costs far more than the rest of the course put together.</em></p>
+<blockquote>
+<p><strong>Practice:</strong> build the exercises in the <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">Beacon starter</a>; when you have tried them, compare with <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-1-solution">this module&#39;s reference solution</a> (branch <code>beacon/module-1-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/1.1"><span class="num">1.1</span><span class="t">Authentication: proving who someone is</span><span class="dot lvl-b" title="🟢 Beginner"></span></a></li>
@@ -338,6 +368,9 @@ decisions the way a senior engineer would in a design review.</em></p>
 <section class="mod" id="m2">
   <div class="mod-head"><span class="mod-num">2</span><h3>Data</h3></div>
   <div class="mod-intro"><p><em>Every SaaS is, underneath the UI, a careful machine for storing other people&#39;s data and giving it back only to the right people. This module covers the four data components you will build on every project: the relational database itself, the files that don&#39;t belong in it, search across both, and the tenant boundary that keeps one customer&#39;s data away from another&#39;s. Get these right early and most of the later modules get easier; get them wrong and every later module inherits the mess.</em></p>
+<blockquote>
+<p><strong>Practice:</strong> build the exercises in the <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">Beacon starter</a>; when you have tried them, compare with <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-2-solution">this module&#39;s reference solution</a> (branch <code>beacon/module-2-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/2.1"><span class="num">2.1</span><span class="t">The data layer: Postgres, ORMs, migrations and seeds</span><span class="dot lvl-b" title="🟢 Beginner"></span></a></li>
@@ -349,6 +382,9 @@ decisions the way a senior engineer would in a design review.</em></p>
 <section class="mod" id="m3">
   <div class="mod-head"><span class="mod-num">3</span><h3>Money</h3></div>
   <div class="mod-intro"><p><em>This is the module where bugs cost real money: customers who paid and got nothing, or customers who stopped paying and kept everything. We start with subscriptions and the webhook-driven sync that keeps your database honest, turn a pricing page into entitlement checks your code can enforce, and finish with usage-based billing, where every event is a line item on somebody&#39;s invoice. Beacon gets its Free, Pro and Business plans, plus metered SMS.</em></p>
+<blockquote>
+<p><strong>Practice:</strong> build the exercises in the <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">Beacon starter</a>; when you have tried them, compare with <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-3-solution">this module&#39;s reference solution</a> (branch <code>beacon/module-3-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/3.1"><span class="num">3.1</span><span class="t">Subscriptions and payments: checkout, webhooks, the customer portal</span><span class="dot lvl-b" title="🟢 Beginner"></span></a></li>
@@ -359,6 +395,9 @@ decisions the way a senior engineer would in a design review.</em></p>
 <section class="mod" id="m4">
   <div class="mod-head"><span class="mod-num">4</span><h3>Communication</h3></div>
   <div class="mod-intro"><p><em>A SaaS that can&#39;t reach its users might as well not exist, and for Beacon, reaching people is the product: an outage alert that lands in spam is worse than no alert at all. This module covers the three ways your app talks to people. Transactional email has to arrive. Notifications have to reach the right person on the right channel without burying them. Real-time updates and collaboration make the dashboard feel alive and let two engineers edit the same postmortem without overwriting each other.</em></p>
+<blockquote>
+<p><strong>Practice:</strong> build the exercises in the <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">Beacon starter</a>; when you have tried them, compare with <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-4-solution">this module&#39;s reference solution</a> (branch <code>beacon/module-4-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/4.1"><span class="num">4.1</span><span class="t">Transactional email that actually arrives</span><span class="dot lvl-b" title="🟢 Beginner"></span></a></li>
@@ -369,6 +408,9 @@ decisions the way a senior engineer would in a design review.</em></p>
 <section class="mod" id="m5">
   <div class="mod-head"><span class="mod-num">5</span><h3>Background Work &amp; Integrations</h3></div>
   <div class="mod-intro"><p><em>Most of what a SaaS does happens when nobody is looking at a browser tab. Beacon runs millions of checks a day, talks to other people&#39;s servers, and gets called by other people&#39;s code. This module covers the machinery for work that happens outside the request (queues, schedulers, workflow engines) and the surfaces other software uses to reach you (a public API) or hear from you (webhooks and integrations).</em></p>
+<blockquote>
+<p><strong>Practice:</strong> build the exercises in the <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">Beacon starter</a>; when you have tried them, compare with <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-5-solution">this module&#39;s reference solution</a> (branch <code>beacon/module-5-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="i"><a href="#/5.1"><span class="num">5.1</span><span class="t">Background jobs, queues and scheduled tasks</span><span class="dot lvl-i" title="🟡 Intermediate"></span></a></li>
@@ -380,6 +422,9 @@ decisions the way a senior engineer would in a design review.</em></p>
 <section class="mod" id="m6">
   <div class="mod-head"><span class="mod-num">6</span><h3>Product &amp; Growth</h3></div>
   <div class="mod-intro"><p><em>Modules 1–5 built the machinery customers never see. This module covers the parts they do see, and the parts that tell you what they&#39;re doing: the app shell they log into every day, the analytics that show whether they&#39;re getting value, and the feature flags that let you change the product under them without breaking it. None of these is hard to start. All three get messy fast if you don&#39;t plan for them.</em></p>
+<blockquote>
+<p><strong>Practice:</strong> build the exercises in the <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">Beacon starter</a>; when you have tried them, compare with <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-6-solution">this module&#39;s reference solution</a> (branch <code>beacon/module-6-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/6.1"><span class="num">6.1</span><span class="t">The app shell: marketing site, onboarding, dashboard and settings</span><span class="dot lvl-b" title="🟢 Beginner"></span></a></li>
@@ -390,6 +435,9 @@ decisions the way a senior engineer would in a design review.</em></p>
 <section class="mod" id="m7">
   <div class="mod-head"><span class="mod-num">7</span><h3>Operating the SaaS</h3></div>
   <div class="mod-intro"><p><em>Shipping the product is half the job. The other half is running it: helping customers whose problems you can&#39;t see from their screen, knowing something is broken before they tweet about it, proving who changed what, and deploying on a Tuesday afternoon without holding your breath. This module covers the four components that let a small team run a SaaS without heroics: the admin panel, observability, audit logs, and the deployment pipeline.</em></p>
+<blockquote>
+<p><strong>Practice:</strong> build the exercises in the <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">Beacon starter</a>; when you have tried them, compare with <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-7-solution">this module&#39;s reference solution</a> (branch <code>beacon/module-7-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="i"><a href="#/7.1"><span class="num">7.1</span><span class="t">The admin panel: support tools and impersonation</span><span class="dot lvl-i" title="🟡 Intermediate"></span></a></li>
@@ -401,6 +449,9 @@ decisions the way a senior engineer would in a design review.</em></p>
 <section class="mod" id="m8">
   <div class="mod-head"><span class="mod-num">8</span><h3>Trust &amp; the Frontier</h3></div>
   <div class="mod-intro"><p><em>Customers hand a SaaS their data, their credentials and their uptime, and bigger customers want proof you deserve it. This module covers security and compliance, the component that decides whether an enterprise can buy from you at all, and then AI features, the newest building block, which brings its own versions of the old problems: tenant isolation, cost metering and untrusted input. Both lessons start at the advanced level because they rely on nearly everything before them.</em></p>
+<blockquote>
+<p><strong>Practice:</strong> build the exercises in the <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">Beacon starter</a>; when you have tried them, compare with <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-8-solution">this module&#39;s reference solution</a> (branch <code>beacon/module-8-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="a"><a href="#/8.1"><span class="num">8.1</span><span class="t">Security and compliance: secrets, encryption, SOC 2, GDPR</span><span class="dot lvl-a" title="🔴 Advanced"></span></a></li>
@@ -413,6 +464,9 @@ decisions the way a senior engineer would in a design review.</em></p>
 on its own; now you will assemble them into one architecture for Beacon, decide
 which to buy, self-host or build at each stage of the company, and defend those
 decisions the way a senior engineer would in a design review.</em></p>
+<blockquote>
+<p><strong>Practice:</strong> build the exercises in the <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">Beacon starter</a>; when you have tried them, compare with <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-9-solution">this module&#39;s reference solution</a> (branch <code>beacon/module-9-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="a"><a href="#/9.1"><span class="num">9.1</span><span class="t">Assemble Beacon: reference architecture, build-vs-buy and a 90-day plan</span><span class="dot lvl-a" title="🔴 Advanced"></span></a></li>

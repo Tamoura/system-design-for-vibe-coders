@@ -2,6 +2,8 @@
 
 *Modules 1–5 built the machinery customers never see. This module covers the parts they do see, and the parts that tell you what they're doing: the app shell they log into every day, the analytics that show whether they're getting value, and the feature flags that let you change the product under them without breaking it. None of these is hard to start. All three get messy fast if you don't plan for them.*
 
+> **Practice:** build the exercises in the [Beacon starter](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter); when you have tried them, compare with [this module's reference solution](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-6-solution) (branch `beacon/module-6-solution`).
+
 ---
 
 # 6.1 — The app shell: marketing site, onboarding, dashboard and settings

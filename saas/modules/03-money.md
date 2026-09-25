@@ -2,6 +2,8 @@
 
 *This is the module where bugs cost real money: customers who paid and got nothing, or customers who stopped paying and kept everything. We start with subscriptions and the webhook-driven sync that keeps your database honest, turn a pricing page into entitlement checks your code can enforce, and finish with usage-based billing, where every event is a line item on somebody's invoice. Beacon gets its Free, Pro and Business plans, plus metered SMS.*
 
+> **Practice:** build the exercises in the [Beacon starter](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter); when you have tried them, compare with [this module's reference solution](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-3-solution) (branch `beacon/module-3-solution`).
+
 ---
 
 # 3.1 — Subscriptions and payments: checkout, webhooks, the customer portal

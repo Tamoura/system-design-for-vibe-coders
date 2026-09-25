@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="saas-source" content="a3656a07a4a18e79">
+<meta name="saas-source" content="811aab8ee7640b88">
 <meta name="description" content="لبنات بناء SaaS: المكوّنات التي تشترك فيها كل تطبيقات SaaS، من المبتدئ إلى المتقدم، مع أفضل المستودعات مفتوحة المصدر لتعلّم كل مكوّن.">
 <title>SaaS Building Blocks — لبنات بناء SaaS</title>
 <style>
@@ -214,6 +214,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m1">
   <div class="mod-head"><span class="mod-num">1</span><h3>الهوية والوصول</h3></div>
   <div class="mod-intro"><p><em>كل SaaS يجب أن يجيب عن ثلاثة أسئلة في كل طلب: من أنت، وإلى أي عميل تنتمي، وهل يُسمح لك بفعل هذا؟ تبني هذه الوحدة هذه الإجابات بالترتيب: المصادقة، ثم الهيكل القائم على المنظمات والعضويات الذي يجعل المنتج متعدد المستأجرين، ثم التفويض، وأخيرًا طبقة المؤسسات (SSO وSAML وOIDC وSCIM) التي يتوقعها العملاء الكبار قبل أن يوقّعوا. أتقن هذه الأربعة مبكرًا، لأن إضافتها لاحقًا تكلّف أكثر بكثير من بقية الدورة كلها مجتمعة.</em></p>
+<blockquote>
+<p><strong>التطبيق العملي:</strong> ابدأ من <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">نسخة البداية من Beacon</a>، وحلّ التمارين قبل النظر إلى <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-1-solution">الحل المرجعي لهذه الوحدة</a> (الفرع <code>beacon/module-1-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/1.1"><span class="num">1.1</span><span class="t">المصادقة: إثبات هوية الشخص</span><span class="dot lvl-b" title="🟢 مبتدئ"></span></a></li>
@@ -225,6 +228,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m2">
   <div class="mod-head"><span class="mod-num">2</span><h3>البيانات</h3></div>
   <div class="mod-intro"><p><em>كل SaaS هو في جوهره، تحت واجهة المستخدم، آلة دقيقة تخزّن بيانات الآخرين ولا تعيدها إلا للأشخاص المخوّلين. تغطي هذه الوحدة أربعة مكوّنات للبيانات ستبنيها في كل مشروع: قاعدة البيانات العلائقية نفسها، والملفات التي لا مكان لها فيها، والبحث في الاثنين، وحدود المستأجر التي تبقي بيانات عميل بعيدة عن عميل آخر. إن أتقنت هذه المكوّنات مبكرًا صارت أغلب الوحدات اللاحقة أسهل، وإن أخطأت فيها ورثت كل وحدة لاحقة تلك الفوضى.</em></p>
+<blockquote>
+<p><strong>التطبيق العملي:</strong> ابدأ من <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">نسخة البداية من Beacon</a>، وحلّ التمارين قبل النظر إلى <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-2-solution">الحل المرجعي لهذه الوحدة</a> (الفرع <code>beacon/module-2-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/2.1"><span class="num">2.1</span><span class="t">طبقة البيانات: Postgres وأدوات ORM والترحيلات وبيانات البذر</span><span class="dot lvl-b" title="🟢 مبتدئ"></span></a></li>
@@ -236,6 +242,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m3">
   <div class="mod-head"><span class="mod-num">3</span><h3>المال</h3></div>
   <div class="mod-intro"><p><em>في هذه الوحدة تكلّف الأخطاءُ مالًا حقيقيًا: عملاء دفعوا ولم يحصلوا على شيء، أو عملاء توقفوا عن الدفع واحتفظوا بكل شيء. نبدأ بالاشتراكات والمزامنة القائمة على الويب هوك التي تُبقي قاعدة بياناتك صادقة، ثم نحوّل صفحة الأسعار إلى فحوص استحقاق يستطيع الكود فرضها، وننتهي بالفوترة حسب الاستخدام، حيث يصبح كل حدث بندًا في فاتورة أحد العملاء. سيحصل Beacon على خططه الثلاث Free وPro وBusiness، إضافةً إلى رسائل SMS المُقاسة.</em></p>
+<blockquote>
+<p><strong>التطبيق العملي:</strong> ابدأ من <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">نسخة البداية من Beacon</a>، وحلّ التمارين قبل النظر إلى <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-3-solution">الحل المرجعي لهذه الوحدة</a> (الفرع <code>beacon/module-3-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/3.1"><span class="num">3.1</span><span class="t">الاشتراكات والمدفوعات: صفحة الدفع، والويب هوك، وبوابة العميل</span><span class="dot lvl-b" title="🟢 مبتدئ"></span></a></li>
@@ -246,6 +255,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m4">
   <div class="mod-head"><span class="mod-num">4</span><h3>التواصل</h3></div>
   <div class="mod-intro"><p><em>إذا لم يستطع تطبيق SaaS الوصول إلى مستخدميه فكأنه غير موجود. وفي Beacon يكون الوصول إلى الناس هو المنتج نفسه: تنبيه انقطاع يصل إلى مجلد الرسائل غير المرغوب فيها أسوأ من عدم وجود تنبيه أصلًا. تغطي هذه الوحدة الطرق الثلاث التي يتحدث بها تطبيقك إلى الناس. البريد الإلكتروني المعاملاتي يجب أن يصل. والإشعارات يجب أن تصل إلى الشخص المناسب على القناة المناسبة دون أن تغرقه. أما التحديثات الفورية والتعاون فتجعل لوحة التحكم حيّة، وتسمح لمهندسَين بتحرير تقرير ما بعد الحادثة نفسه دون أن يمحو أحدهما عمل الآخر.</em></p>
+<blockquote>
+<p><strong>التطبيق العملي:</strong> ابدأ من <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">نسخة البداية من Beacon</a>، وحلّ التمارين قبل النظر إلى <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-4-solution">الحل المرجعي لهذه الوحدة</a> (الفرع <code>beacon/module-4-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/4.1"><span class="num">4.1</span><span class="t">بريد معاملاتي يصل فعلًا</span><span class="dot lvl-b" title="🟢 مبتدئ"></span></a></li>
@@ -256,6 +268,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m5">
   <div class="mod-head"><span class="mod-num">5</span><h3>العمل في الخلفية والتكاملات</h3></div>
   <div class="mod-intro"><p><em>معظم ما يفعله أي SaaS يحدث عندما لا ينظر أحد إلى تبويب المتصفح. يشغّل Beacon ملايين الفحوصات يوميًا، ويتحدث إلى خوادم الآخرين، وتستدعيه أكواد الآخرين. تغطي هذه الوحدة الآليات التي تنفّذ العمل خارج الطلب (الطوابير والمجدولات ومحركات سير العمل)، والواجهات التي تستخدمها البرمجيات الأخرى للوصول إليك (واجهة برمجية عامة) أو لتسمع منك (الويب هوك والتكاملات).</em></p>
+<blockquote>
+<p><strong>التطبيق العملي:</strong> ابدأ من <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">نسخة البداية من Beacon</a>، وحلّ التمارين قبل النظر إلى <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-5-solution">الحل المرجعي لهذه الوحدة</a> (الفرع <code>beacon/module-5-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="i"><a href="#/5.1"><span class="num">5.1</span><span class="t">المهام الخلفية والطوابير والمهام المجدولة</span><span class="dot lvl-i" title="🟡 متوسط"></span></a></li>
@@ -267,6 +282,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m6">
   <div class="mod-head"><span class="mod-num">6</span><h3>المنتج والنمو</h3></div>
   <div class="mod-intro"><p><em>بنت الوحدات 1–5 الآلية التي لا يراها العملاء أبدًا. تغطي هذه الوحدة الأجزاء التي يرونها، والأجزاء التي تخبرك بما يفعلونه: هيكل التطبيق الذي يدخلون إليه كل يوم، والتحليلات التي تبيّن هل يحصلون على قيمة، وأعلام الميزات التي تسمح لك بتغيير المنتج من تحتهم دون أن تكسره. لا شيء من هذه صعب البداية، لكن الثلاثة تصبح فوضوية بسرعة إن لم تخطط لها.</em></p>
+<blockquote>
+<p><strong>التطبيق العملي:</strong> ابدأ من <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">نسخة البداية من Beacon</a>، وحلّ التمارين قبل النظر إلى <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-6-solution">الحل المرجعي لهذه الوحدة</a> (الفرع <code>beacon/module-6-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/6.1"><span class="num">6.1</span><span class="t">هيكل التطبيق: موقع التسويق والتهيئة ولوحة التحكم والإعدادات</span><span class="dot lvl-b" title="🟢 مبتدئ"></span></a></li>
@@ -277,6 +295,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m7">
   <div class="mod-head"><span class="mod-num">7</span><h3>تشغيل الـ SaaS</h3></div>
   <div class="mod-intro"><p><em>إطلاق المنتج نصف العمل فقط. النصف الآخر هو تشغيله: أن تساعد عملاء لا ترى مشكلاتهم من شاشتك، وأن تعرف أن شيئًا ما معطّل قبل أن يكتبوا عنه على وسائل التواصل، وأن تثبت من غيّر ماذا، وأن تنشر التحديثات بعد ظهر يوم ثلاثاء دون أن تحبس أنفاسك. تغطي هذه الوحدة المكوّنات الأربعة التي تسمح لفريق صغير بتشغيل SaaS دون بطولات: لوحة الإدارة، والمراقبة الشاملة، وسجلات التدقيق، ومسار النشر.</em></p>
+<blockquote>
+<p><strong>التطبيق العملي:</strong> ابدأ من <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">نسخة البداية من Beacon</a>، وحلّ التمارين قبل النظر إلى <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-7-solution">الحل المرجعي لهذه الوحدة</a> (الفرع <code>beacon/module-7-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="i"><a href="#/7.1"><span class="num">7.1</span><span class="t">لوحة الإدارة: أدوات الدعم وانتحال الهوية</span><span class="dot lvl-i" title="🟡 متوسط"></span></a></li>
@@ -288,6 +309,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m8">
   <div class="mod-head"><span class="mod-num">8</span><h3>الثقة وحدود التقنية الجديدة</h3></div>
   <div class="mod-intro"><p><em>يسلّم العملاء منتج SaaS بياناتهم وبيانات اعتمادهم واستمرارية عملهم، والعملاء الأكبر يريدون دليلًا على أنك أهل لهذه الثقة. تغطي هذه الوحدة الأمان والامتثال (Compliance)، وهو المكوّن الذي يحدد هل تستطيع مؤسسة كبيرة أن تشتري منك أصلًا، ثم ميزات الذكاء الاصطناعي، وهي أحدث مكوّن في القائمة، وتأتي بنسختها الخاصة من المشكلات القديمة: عزل المستأجرين (Tenant Isolation)، وقياس التكلفة، والمدخلات غير الموثوقة. يبدأ الدرسان في المستوى المتقدم لأنهما يعتمدان على كل ما سبقهما تقريبًا.</em></p>
+<blockquote>
+<p><strong>التطبيق العملي:</strong> ابدأ من <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">نسخة البداية من Beacon</a>، وحلّ التمارين قبل النظر إلى <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-8-solution">الحل المرجعي لهذه الوحدة</a> (الفرع <code>beacon/module-8-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="a"><a href="#/8.1"><span class="num">8.1</span><span class="t">الأمان والامتثال: الأسرار، التشفير، SOC 2، GDPR</span><span class="dot lvl-a" title="🔴 متقدم"></span></a></li>
@@ -299,6 +323,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
   <div class="mod-intro"><p><em>درس واحد يجمع الدورة كلها من جديد. تعرّفت على كل مكوّن منفردًا، والآن ستجمعها في
 معمارية واحدة لـ Beacon، وتقرر أيّها تشتريه أو تستضيفه بنفسك أو تبنيه في كل مرحلة من
 مراحل الشركة، ثم تدافع عن هذه القرارات كما يفعل المهندس الخبير في مراجعة التصميم.</em></p>
+<blockquote>
+<p><strong>التطبيق العملي:</strong> ابدأ من <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">نسخة البداية من Beacon</a>، وحلّ التمارين قبل النظر إلى <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-9-solution">الحل المرجعي لهذه الوحدة</a> (الفرع <code>beacon/module-9-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="a"><a href="#/9.1"><span class="num">9.1</span><span class="t">اجمع Beacon: المعمارية المرجعية، وقرار البناء أو الشراء، وخطة 90 يومًا</span><span class="dot lvl-a" title="🔴 متقدم"></span></a></li>
@@ -326,6 +353,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m1">
   <div class="mod-head"><span class="mod-num">1</span><h3>الهوية والوصول</h3></div>
   <div class="mod-intro"><p><em>كل SaaS يجب أن يجيب عن ثلاثة أسئلة في كل طلب: من أنت، وإلى أي عميل تنتمي، وهل يُسمح لك بفعل هذا؟ تبني هذه الوحدة هذه الإجابات بالترتيب: المصادقة، ثم الهيكل القائم على المنظمات والعضويات الذي يجعل المنتج متعدد المستأجرين، ثم التفويض، وأخيرًا طبقة المؤسسات (SSO وSAML وOIDC وSCIM) التي يتوقعها العملاء الكبار قبل أن يوقّعوا. أتقن هذه الأربعة مبكرًا، لأن إضافتها لاحقًا تكلّف أكثر بكثير من بقية الدورة كلها مجتمعة.</em></p>
+<blockquote>
+<p><strong>التطبيق العملي:</strong> ابدأ من <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">نسخة البداية من Beacon</a>، وحلّ التمارين قبل النظر إلى <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-1-solution">الحل المرجعي لهذه الوحدة</a> (الفرع <code>beacon/module-1-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/1.1"><span class="num">1.1</span><span class="t">المصادقة: إثبات هوية الشخص</span><span class="dot lvl-b" title="🟢 مبتدئ"></span></a></li>
@@ -337,6 +367,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m2">
   <div class="mod-head"><span class="mod-num">2</span><h3>البيانات</h3></div>
   <div class="mod-intro"><p><em>كل SaaS هو في جوهره، تحت واجهة المستخدم، آلة دقيقة تخزّن بيانات الآخرين ولا تعيدها إلا للأشخاص المخوّلين. تغطي هذه الوحدة أربعة مكوّنات للبيانات ستبنيها في كل مشروع: قاعدة البيانات العلائقية نفسها، والملفات التي لا مكان لها فيها، والبحث في الاثنين، وحدود المستأجر التي تبقي بيانات عميل بعيدة عن عميل آخر. إن أتقنت هذه المكوّنات مبكرًا صارت أغلب الوحدات اللاحقة أسهل، وإن أخطأت فيها ورثت كل وحدة لاحقة تلك الفوضى.</em></p>
+<blockquote>
+<p><strong>التطبيق العملي:</strong> ابدأ من <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">نسخة البداية من Beacon</a>، وحلّ التمارين قبل النظر إلى <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-2-solution">الحل المرجعي لهذه الوحدة</a> (الفرع <code>beacon/module-2-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/2.1"><span class="num">2.1</span><span class="t">طبقة البيانات: Postgres وأدوات ORM والترحيلات وبيانات البذر</span><span class="dot lvl-b" title="🟢 مبتدئ"></span></a></li>
@@ -348,6 +381,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m3">
   <div class="mod-head"><span class="mod-num">3</span><h3>المال</h3></div>
   <div class="mod-intro"><p><em>في هذه الوحدة تكلّف الأخطاءُ مالًا حقيقيًا: عملاء دفعوا ولم يحصلوا على شيء، أو عملاء توقفوا عن الدفع واحتفظوا بكل شيء. نبدأ بالاشتراكات والمزامنة القائمة على الويب هوك التي تُبقي قاعدة بياناتك صادقة، ثم نحوّل صفحة الأسعار إلى فحوص استحقاق يستطيع الكود فرضها، وننتهي بالفوترة حسب الاستخدام، حيث يصبح كل حدث بندًا في فاتورة أحد العملاء. سيحصل Beacon على خططه الثلاث Free وPro وBusiness، إضافةً إلى رسائل SMS المُقاسة.</em></p>
+<blockquote>
+<p><strong>التطبيق العملي:</strong> ابدأ من <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">نسخة البداية من Beacon</a>، وحلّ التمارين قبل النظر إلى <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-3-solution">الحل المرجعي لهذه الوحدة</a> (الفرع <code>beacon/module-3-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/3.1"><span class="num">3.1</span><span class="t">الاشتراكات والمدفوعات: صفحة الدفع، والويب هوك، وبوابة العميل</span><span class="dot lvl-b" title="🟢 مبتدئ"></span></a></li>
@@ -358,6 +394,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m4">
   <div class="mod-head"><span class="mod-num">4</span><h3>التواصل</h3></div>
   <div class="mod-intro"><p><em>إذا لم يستطع تطبيق SaaS الوصول إلى مستخدميه فكأنه غير موجود. وفي Beacon يكون الوصول إلى الناس هو المنتج نفسه: تنبيه انقطاع يصل إلى مجلد الرسائل غير المرغوب فيها أسوأ من عدم وجود تنبيه أصلًا. تغطي هذه الوحدة الطرق الثلاث التي يتحدث بها تطبيقك إلى الناس. البريد الإلكتروني المعاملاتي يجب أن يصل. والإشعارات يجب أن تصل إلى الشخص المناسب على القناة المناسبة دون أن تغرقه. أما التحديثات الفورية والتعاون فتجعل لوحة التحكم حيّة، وتسمح لمهندسَين بتحرير تقرير ما بعد الحادثة نفسه دون أن يمحو أحدهما عمل الآخر.</em></p>
+<blockquote>
+<p><strong>التطبيق العملي:</strong> ابدأ من <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">نسخة البداية من Beacon</a>، وحلّ التمارين قبل النظر إلى <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-4-solution">الحل المرجعي لهذه الوحدة</a> (الفرع <code>beacon/module-4-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/4.1"><span class="num">4.1</span><span class="t">بريد معاملاتي يصل فعلًا</span><span class="dot lvl-b" title="🟢 مبتدئ"></span></a></li>
@@ -368,6 +407,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m5">
   <div class="mod-head"><span class="mod-num">5</span><h3>العمل في الخلفية والتكاملات</h3></div>
   <div class="mod-intro"><p><em>معظم ما يفعله أي SaaS يحدث عندما لا ينظر أحد إلى تبويب المتصفح. يشغّل Beacon ملايين الفحوصات يوميًا، ويتحدث إلى خوادم الآخرين، وتستدعيه أكواد الآخرين. تغطي هذه الوحدة الآليات التي تنفّذ العمل خارج الطلب (الطوابير والمجدولات ومحركات سير العمل)، والواجهات التي تستخدمها البرمجيات الأخرى للوصول إليك (واجهة برمجية عامة) أو لتسمع منك (الويب هوك والتكاملات).</em></p>
+<blockquote>
+<p><strong>التطبيق العملي:</strong> ابدأ من <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">نسخة البداية من Beacon</a>، وحلّ التمارين قبل النظر إلى <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-5-solution">الحل المرجعي لهذه الوحدة</a> (الفرع <code>beacon/module-5-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="i"><a href="#/5.1"><span class="num">5.1</span><span class="t">المهام الخلفية والطوابير والمهام المجدولة</span><span class="dot lvl-i" title="🟡 متوسط"></span></a></li>
@@ -379,6 +421,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m6">
   <div class="mod-head"><span class="mod-num">6</span><h3>المنتج والنمو</h3></div>
   <div class="mod-intro"><p><em>بنت الوحدات 1–5 الآلية التي لا يراها العملاء أبدًا. تغطي هذه الوحدة الأجزاء التي يرونها، والأجزاء التي تخبرك بما يفعلونه: هيكل التطبيق الذي يدخلون إليه كل يوم، والتحليلات التي تبيّن هل يحصلون على قيمة، وأعلام الميزات التي تسمح لك بتغيير المنتج من تحتهم دون أن تكسره. لا شيء من هذه صعب البداية، لكن الثلاثة تصبح فوضوية بسرعة إن لم تخطط لها.</em></p>
+<blockquote>
+<p><strong>التطبيق العملي:</strong> ابدأ من <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">نسخة البداية من Beacon</a>، وحلّ التمارين قبل النظر إلى <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-6-solution">الحل المرجعي لهذه الوحدة</a> (الفرع <code>beacon/module-6-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="b"><a href="#/6.1"><span class="num">6.1</span><span class="t">هيكل التطبيق: موقع التسويق والتهيئة ولوحة التحكم والإعدادات</span><span class="dot lvl-b" title="🟢 مبتدئ"></span></a></li>
@@ -389,6 +434,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m7">
   <div class="mod-head"><span class="mod-num">7</span><h3>تشغيل الـ SaaS</h3></div>
   <div class="mod-intro"><p><em>إطلاق المنتج نصف العمل فقط. النصف الآخر هو تشغيله: أن تساعد عملاء لا ترى مشكلاتهم من شاشتك، وأن تعرف أن شيئًا ما معطّل قبل أن يكتبوا عنه على وسائل التواصل، وأن تثبت من غيّر ماذا، وأن تنشر التحديثات بعد ظهر يوم ثلاثاء دون أن تحبس أنفاسك. تغطي هذه الوحدة المكوّنات الأربعة التي تسمح لفريق صغير بتشغيل SaaS دون بطولات: لوحة الإدارة، والمراقبة الشاملة، وسجلات التدقيق، ومسار النشر.</em></p>
+<blockquote>
+<p><strong>التطبيق العملي:</strong> ابدأ من <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">نسخة البداية من Beacon</a>، وحلّ التمارين قبل النظر إلى <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-7-solution">الحل المرجعي لهذه الوحدة</a> (الفرع <code>beacon/module-7-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="i"><a href="#/7.1"><span class="num">7.1</span><span class="t">لوحة الإدارة: أدوات الدعم وانتحال الهوية</span><span class="dot lvl-i" title="🟡 متوسط"></span></a></li>
@@ -400,6 +448,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="mod" id="m8">
   <div class="mod-head"><span class="mod-num">8</span><h3>الثقة وحدود التقنية الجديدة</h3></div>
   <div class="mod-intro"><p><em>يسلّم العملاء منتج SaaS بياناتهم وبيانات اعتمادهم واستمرارية عملهم، والعملاء الأكبر يريدون دليلًا على أنك أهل لهذه الثقة. تغطي هذه الوحدة الأمان والامتثال (Compliance)، وهو المكوّن الذي يحدد هل تستطيع مؤسسة كبيرة أن تشتري منك أصلًا، ثم ميزات الذكاء الاصطناعي، وهي أحدث مكوّن في القائمة، وتأتي بنسختها الخاصة من المشكلات القديمة: عزل المستأجرين (Tenant Isolation)، وقياس التكلفة، والمدخلات غير الموثوقة. يبدأ الدرسان في المستوى المتقدم لأنهما يعتمدان على كل ما سبقهما تقريبًا.</em></p>
+<blockquote>
+<p><strong>التطبيق العملي:</strong> ابدأ من <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">نسخة البداية من Beacon</a>، وحلّ التمارين قبل النظر إلى <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-8-solution">الحل المرجعي لهذه الوحدة</a> (الفرع <code>beacon/module-8-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="a"><a href="#/8.1"><span class="num">8.1</span><span class="t">الأمان والامتثال: الأسرار، التشفير، SOC 2، GDPR</span><span class="dot lvl-a" title="🔴 متقدم"></span></a></li>
@@ -411,6 +462,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
   <div class="mod-intro"><p><em>درس واحد يجمع الدورة كلها من جديد. تعرّفت على كل مكوّن منفردًا، والآن ستجمعها في
 معمارية واحدة لـ Beacon، وتقرر أيّها تشتريه أو تستضيفه بنفسك أو تبنيه في كل مرحلة من
 مراحل الشركة، ثم تدافع عن هذه القرارات كما يفعل المهندس الخبير في مراجعة التصميم.</em></p>
+<blockquote>
+<p><strong>التطبيق العملي:</strong> ابدأ من <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter">نسخة البداية من Beacon</a>، وحلّ التمارين قبل النظر إلى <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-9-solution">الحل المرجعي لهذه الوحدة</a> (الفرع <code>beacon/module-9-solution</code>).</p>
+</blockquote>
 </div>
   <ol class="lessons">
     <li data-level="a"><a href="#/9.1"><span class="num">9.1</span><span class="t">اجمع Beacon: المعمارية المرجعية، وقرار البناء أو الشراء، وخطة 90 يومًا</span><span class="dot lvl-a" title="🔴 متقدم"></span></a></li>

@@ -2,6 +2,8 @@
 
 *Every SaaS is, underneath the UI, a careful machine for storing other people's data and giving it back only to the right people. This module covers the four data components you will build on every project: the relational database itself, the files that don't belong in it, search across both, and the tenant boundary that keeps one customer's data away from another's. Get these right early and most of the later modules get easier; get them wrong and every later module inherits the mess.*
 
+> **Practice:** build the exercises in the [Beacon starter](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter); when you have tried them, compare with [this module's reference solution](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-2-solution) (branch `beacon/module-2-solution`).
+
 ---
 
 # 2.1 — The data layer: Postgres, ORMs, migrations and seeds

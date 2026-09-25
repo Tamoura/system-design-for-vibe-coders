@@ -2,6 +2,8 @@
 
 *Most of what a SaaS does happens when nobody is looking at a browser tab. Beacon runs millions of checks a day, talks to other people's servers, and gets called by other people's code. This module covers the machinery for work that happens outside the request (queues, schedulers, workflow engines) and the surfaces other software uses to reach you (a public API) or hear from you (webhooks and integrations).*
 
+> **Practice:** build the exercises in the [Beacon starter](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/starter); when you have tried them, compare with [this module's reference solution](https://github.com/Tamoura/system-design-for-vibe-coders/tree/beacon/module-5-solution) (branch `beacon/module-5-solution`).
+
 ---
 
 # 5.1 — Background jobs, queues and scheduled tasks
