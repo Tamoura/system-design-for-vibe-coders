@@ -169,6 +169,13 @@
       "when": 1790295862400,
       "tag": "0023_feature_flags",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1790299355778,
+      "tag": "0024_staff_and_audit",
+      "breakpoints": true
     }
   ]
 }

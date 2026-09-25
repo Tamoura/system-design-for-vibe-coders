@@ -1,10 +1,11 @@
 import { sql } from 'drizzle-orm';
-import { boolean, check, customType, doublePrecision, index, integer, jsonb, pgEnum, pgTable, primaryKey, text, timestamp, uniqueIndex, uuid, type AnyPgColumn } from 'drizzle-orm/pg-core';
+import { bigint, boolean, check, customType, doublePrecision, index, integer, jsonb, pgEnum, pgTable, primaryKey, text, timestamp, uniqueIndex, uuid, type AnyPgColumn } from 'drizzle-orm/pg-core';
 import { FILE_KINDS } from '../core/files';
 import { MILESTONES } from '../core/onboarding';
 import { CATEGORY_IDS, CHANNELS } from '../core/notifications';
 import { PLAN_IDS } from '../core/plans';
 import { ROLES } from '../core/roles';
+import { STAFF_ROLES } from '../core/staff';
 import { users } from './auth-schema';
 
 // Lesson 1.1: users, sessions and login methods. Better Auth defines their shape.
@@ -33,7 +34,9 @@ const updatedAt = () =>
     .defaultNow()
     .$onUpdate(() => new Date());
 
-export const organizations = pgTable('organizations', {
+export const organizations = pgTable(
+  'organizations',
+  {
   id: uuid('id').primaryKey().defaultRandom(),
   name: text('name').notNull(),
   // Goes in the URL: /acme/monitors and /status/acme. See src/core/slugs.ts.
@@ -52,13 +55,22 @@ export const organizations = pgTable('organizations', {
   // getEntitlements() reads it, so a monitor create costs no Stripe call and
   // the API, the UI and the check runner all enforce the same limits.
   plan: orgPlan('plan').notNull().default('free'),
+  // Lesson 7.1 (🟡): a plan given free of charge by Beacon staff ("Comp plan",
+  // billing role, with a reason in the audit log). The plan snapshot above is
+  // the better of this and the Stripe subscriptions (src/lib/billing/plan.ts),
+  // until comp_plan_until; null = no end date.
+  compPlan: orgPlan('comp_plan'),
+  compPlanUntil: timestamp('comp_plan_until', { withTimezone: true }),
   // Lesson 4.2 (🟡): the org's Slack channel, as a Slack "incoming webhook" URL
   // (https://hooks.slack.com/services/…). It is a secret: anyone with it can
   // post to the channel. TODO(8.1): encrypt secrets at rest.
   slackWebhookUrl: text('slack_webhook_url'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: updatedAt(),
-});
+  },
+  // Lesson 7.1 (🟢): the admin panel's customer search by (part of) the org name.
+  (t) => [index('organizations_name_trgm_idx').using('gin', t.name.op('gin_trgm_ops'))],
+);
 
 export const memberships = pgTable(
   'memberships',
@@ -322,6 +334,9 @@ export const subscriptions = pgTable(
     currentPeriodStart: timestamp('current_period_start', { withTimezone: true }),
     currentPeriodEnd: timestamp('current_period_end', { withTimezone: true }),
     cancelAtPeriodEnd: boolean('cancel_at_period_end').notNull().default(false),
+    // Lesson 7.1 (🟡): Stripe's trial_end, for a subscription in "trialing". Support's
+    // "Extend trial" moves it in Stripe first; the sync copies it here.
+    trialEnd: timestamp('trial_end', { withTimezone: true }),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
     updatedAt: updatedAt(),
   },
@@ -953,6 +968,119 @@ export const featureFlagOverrides = pgTable(
   (t) => [primaryKey({ columns: [t.key, t.organizationId] }), index('feature_flag_overrides_org_idx').on(t.organizationId)],
 );
 
+/*
+ * Lesson 7.1: Beacon's staff, a separate population with separate roles.
+ * Not a column on `users` and not a role in `memberships`: a bug in the
+ * customer permission code must never grant back-office access. A staff
+ * member signs in with a normal Beacon account (in production: your company's
+ * identity provider, with MFA, on a separate hostname; see docs/SOLUTIONS.md),
+ * and this row is what makes that account staff. `npm run staff` manages it.
+ */
+export const staffRole = pgEnum('staff_role', STAFF_ROLES);
+
+export const staffUsers = pgTable('staff_users', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id')
+    .notNull()
+    .unique()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  role: staffRole('role').notNull(),
+  createdBy: uuid('created_by').references((): AnyPgColumn => staffUsers.id, { onDelete: 'set null' }),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: updatedAt(),
+});
+
+/**
+ * Lesson 7.1: one row per impersonation ("view as a customer"). The cookie
+ * holds a random token; only its SHA-256 hash is stored (like a reset token).
+ * Read-only, bound to ONE organization, and dead after 30 minutes whatever
+ * happens (expires_at), or when the staff member exits (ended_at).
+ * Not under row-level security: it is looked up before any org is known, on
+ * every request of the staff member (tests/tenant-scoping.test.ts lists it).
+ */
+export const impersonationSessions = pgTable(
+  'impersonation_sessions',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    tokenHash: text('token_hash').notNull().unique(),
+    staffUserId: uuid('staff_user_id')
+      .notNull()
+      .references(() => staffUsers.id, { onDelete: 'cascade' }),
+    targetUserId: uuid('target_user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    organizationId: uuid('organization_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    reason: text('reason').notNull(),
+    readOnly: boolean('read_only').notNull().default(true),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    endedAt: timestamp('ended_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('impersonation_sessions_org_idx').on(t.organizationId, t.createdAt)],
+);
+
+/**
+ * Lesson 7.3: the audit log. Append-only evidence of who did what to which
+ * thing, when and from where, written by recordAudit() (src/lib/audit.ts) IN
+ * THE SAME TRANSACTION as the change it describes.
+ *
+ *  - actor_*: a SNAPSHOT (type, id, name, email) taken at event time, because
+ *    the user may be deleted later; on_behalf_of_* is set during staff
+ *    impersonation ("Beacon support, on behalf of Ana").
+ *  - changes: before/after of the changed fields only, never whole rows or secrets.
+ *  - organization_id: the tenant (row-level security, like every tenant
+ *    table); NULL for platform events (a staff role granted, a flag changed),
+ *    which only staff can read.
+ *  - seq, prev_hash, hash: a hash chain per organization (tamper evidence):
+ *    seq orders the chain, hash = sha256(prev_hash + the event).
+ *
+ * Append-only is enforced by the database, not by good intentions: the app
+ * role (beacon_app) may INSERT and SELECT, never UPDATE or DELETE (migration
+ * 0024). Retention deletes run as the owner, in the worker.
+ */
+export const auditEvents = pgTable(
+  'audit_events',
+  {
+    id: uuid('id').primaryKey(),
+    seq: bigint('seq', { mode: 'number' }).generatedAlwaysAsIdentity(),
+    organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }),
+    occurredAt: timestamp('occurred_at', { withTimezone: true }).notNull(),
+    action: text('action').notNull(),
+    category: text('category').notNull(),
+    actorType: text('actor_type').notNull(),
+    actorId: text('actor_id'),
+    actorName: text('actor_name'),
+    actorEmail: text('actor_email'),
+    onBehalfOfId: text('on_behalf_of_id'),
+    onBehalfOfName: text('on_behalf_of_name'),
+    targetType: text('target_type'),
+    targetId: text('target_id'),
+    targetName: text('target_name'),
+    ipAddress: text('ip_address'),
+    userAgent: text('user_agent'),
+    requestId: text('request_id'),
+    via: text('via'),
+    // Staff actions only (lesson 7.1): the required reason or ticket link.
+    reason: text('reason'),
+    changes: jsonb('changes'),
+    metadata: jsonb('metadata'),
+    prevHash: text('prev_hash').notNull(),
+    hash: text('hash').notNull(),
+  },
+  (t) => [
+    // The customer page walks one org's events newest first (seq follows time),
+    // with optional filters on category, actor or target, then keyset pagination on seq.
+    index('audit_events_org_seq_idx').on(t.organizationId, t.seq),
+    index('audit_events_org_category_seq_idx').on(t.organizationId, t.category, t.seq),
+    index('audit_events_org_actor_seq_idx').on(t.organizationId, t.actorId, t.seq),
+    index('audit_events_org_target_seq_idx').on(t.organizationId, t.targetType, t.targetId, t.seq),
+    // Retention deletes the oldest events of each org (and staff pages read by time).
+    index('audit_events_occurred_idx').on(t.occurredAt),
+  ],
+);
+
 export type Organization = typeof organizations.$inferSelect;
 export type Membership = typeof memberships.$inferSelect;
 export type Invitation = typeof invitations.$inferSelect;
@@ -973,3 +1101,6 @@ export type WebhookMessage = typeof webhookMessages.$inferSelect;
 export type WorkflowRun = typeof workflowRuns.$inferSelect;
 export type AnalyticsEvent = typeof analyticsEvents.$inferSelect;
 export type FeatureFlag = typeof featureFlags.$inferSelect;
+export type StaffUser = typeof staffUsers.$inferSelect;
+export type ImpersonationSession = typeof impersonationSessions.$inferSelect;
+export type AuditEvent = typeof auditEvents.$inferSelect;

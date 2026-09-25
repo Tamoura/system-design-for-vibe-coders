@@ -9,7 +9,9 @@ import { boolean, index, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-c
  * GitHub identity), not the customer. The customer is an organization (1.2).
  */
 
-export const users = pgTable('users', {
+export const users = pgTable(
+  'users',
+  {
   // Our own id, not a vendor's (lesson 1.1: lock-in is mostly about user ids).
   id: uuid('id').primaryKey().defaultRandom(),
   name: text('name').notNull(),
@@ -21,7 +23,11 @@ export const users = pgTable('users', {
   phoneNumber: text('phone_number'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
-});
+  },
+  // Lesson 7.1 (🟢): the admin panel finds a customer from part of an email
+  // ("ana@", "@acme") in well under a second: a trigram index serves ILIKE '%…%'.
+  (t) => [index('users_email_trgm_idx').using('gin', t.email.op('gin_trgm_ops'))],
+);
 
 /**
  * Server-side sessions. Logging out deletes the row, so a copied cookie stops
