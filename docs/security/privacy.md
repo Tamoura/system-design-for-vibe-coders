@@ -28,7 +28,10 @@ their status-page subscribers. Beacon is their **processor**. This page is what 
 
 What the person created in an org they leave (monitors, incident notes, files) stays with the org, which is the
 controller; the author columns become `null`. Their sessions, sign-in methods, memberships, notifications,
-preferences and queued emails are deleted.
+preferences and queued emails are deleted. **API keys they created are revoked** in the same transaction, in every
+org, each with an `api_key.revoked` audit event (`cause: creator_account_deleted`): a key acts within the role of the
+person who created it (lesson 5.2), and that person is gone. The key rows stay in the org's list. (Found by the
+Module 9 readiness review, `docs/readiness-review.md`.)
 
 **Kept on purpose:** audit events keep the actor's name and email as they were when the person acted. The audit
 log is evidence (lesson 7.3), its hash chain covers those fields, GDPR Art. 17(3)(e) allows keeping records needed

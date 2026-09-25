@@ -1,4 +1,4 @@
-import { and, eq, ne, or } from 'drizzle-orm';
+import { and, eq, isNull, ne, or } from 'drizzle-orm';
 import { db, schema } from '@/db';
 import { withOrg } from '@/db/tenant';
 import type { AuditSource } from '@/core/audit';
@@ -21,6 +21,9 @@ const {
  *                     to their sessions, logins, memberships, notifications and
  *                     preferences; what they created in an org (monitors, notes)
  *                     stays with the org and forgets them (created_by → null).
+ *                     API keys they created stay listed but are REVOKED: a key
+ *                     acts within the role of the person who made it, and that
+ *                     person is gone (lesson 9.1's readiness review).
  *
  * The org-ownership edge cases, decided up front (accountDeletionPlan):
  *   - the only owner of an org with other members: REFUSED until they make someone
@@ -54,7 +57,7 @@ export const USER_DATA_COVERAGE: Record<string, string> = {
   'incidents.acknowledged_by': 'exported (incidentsAcknowledged); kept by the org, person forgotten',
   'incident_updates.author_id': 'exported (incidentUpdates); kept by the org, author forgotten',
   'files.uploaded_by': 'exported (filesUploaded); kept by the org, uploader forgotten',
-  'api_keys.created_by': 'exported (apiKeysCreated, prefix only); kept by the org',
+  'api_keys.created_by': 'exported (apiKeysCreated, prefix only); kept by the org, REVOKED when the account is deleted',
   'api_keys.revoked_by': 'kept by the org, person forgotten',
   'webhook_endpoints.created_by': 'exported (webhookEndpointsCreated); kept by the org',
   'invitations.invited_by': 'exported (invitationsSent); kept by the org',
@@ -191,13 +194,31 @@ export async function deleteAccount(user: { id: string; email: string }, opts: {
     for (const org of plan.orgsToLeave) {
       await recordAudit(tx, { orgId: org.id, action: 'member.account_deleted', source: opts.source, target: { type: 'user', id: user.id } });
     }
+    // Lesson 9.1 (the readiness review's seam): the API keys this person created stop working with
+    // their account, in every org, in this transaction. A key can never do more than the role of the
+    // person who made it (lesson 5.2); with that person gone, there is no role left to bound it.
+    // The rows stay (the org's key list and audit log still name them); each revocation is audited.
+    const revokedKeys = await tx
+      .update(apiKeys)
+      .set({ revokedAt: opts.now ?? new Date() })
+      .where(and(eq(apiKeys.createdBy, user.id), isNull(apiKeys.revokedAt)))
+      .returning({ id: apiKeys.id, orgId: apiKeys.organizationId, name: apiKeys.name, keyStart: apiKeys.keyStart });
+    for (const key of revokedKeys) {
+      await recordAudit(tx, {
+        orgId: key.orgId,
+        action: 'api_key.revoked',
+        source: opts.source,
+        target: { type: 'api_key', id: key.id, name: key.name },
+        metadata: { key_prefix: key.keyStart, cause: 'creator_account_deleted' },
+      });
+    }
     await tx.delete(emailOutbox).where(eq(emailOutbox.to, user.email.toLowerCase()));
     await recordAudit(tx, {
       orgId: null,
       action: 'account.deleted',
       source: opts.source,
       target: { type: 'user', id: user.id },
-      metadata: { orgs_left: plan.orgsToLeave.length, orgs_scheduled_for_deletion: plan.orgsToDelete.length },
+      metadata: { orgs_left: plan.orgsToLeave.length, orgs_scheduled_for_deletion: plan.orgsToDelete.length, api_keys_revoked: revokedKeys.length },
     });
     // The cascade: sessions (signed out everywhere), logins, memberships, notifications, preferences…
     await tx.delete(users).where(eq(users.id, user.id));

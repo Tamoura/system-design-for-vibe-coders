@@ -56,7 +56,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
       {/* Lesson 8.1 (GDPR Art. 17): erasure, with the org-ownership edge cases spelled out first. */}
       <div className="card grid" id="delete">
         <strong>Delete your account</strong>
-        {deletion.orgsToLeave.length > 0 && <p className="muted" style={{ margin: 0 }}>You will leave: {deletion.orgsToLeave.map((o) => o.name).join(', ')}. What you created there stays with the organization.</p>}
+        {deletion.orgsToLeave.length > 0 && <p className="muted" style={{ margin: 0 }}>You will leave: {deletion.orgsToLeave.map((o) => o.name).join(', ')}. What you created there stays with the organization; API keys you created are revoked.</p>}
         {deletion.orgsToDelete.length > 0 && (
           <p className="muted" style={{ margin: 0 }}>
             You are the only member of {deletion.orgsToDelete.map((o) => o.name).join(', ')}: {deletion.orgsToDelete.length === 1 ? 'it is' : 'they are'} deleted

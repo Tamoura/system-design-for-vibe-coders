@@ -9,7 +9,7 @@ import * as dbModule from '@/db';
 import { db, schema } from '@/db';
 import { withOrg } from '@/db/tenant';
 import { DAY_MS, RETENTION_RULES } from '@/core/retention';
-import { createApiKey } from '@/lib/api-keys';
+import { createApiKey, verifyApiKey } from '@/lib/api-keys';
 import { AccessError, InvalidRequestError } from '@/lib/errors';
 import { createMonitor } from '@/lib/monitors';
 import { findPublicStatusPage } from '@/lib/organizations';
@@ -106,6 +106,32 @@ describe('a user deletes their account', () => {
     expect(kept.createdBy).toBeNull();
     const events = await db.select().from(schema.auditEvents).where(eq(schema.auditEvents.targetId, me.id));
     expect(events.map((e) => [e.action, e.organizationId])).toEqual(expect.arrayContaining([['member.account_deleted', org.id], ['account.deleted', null]]));
+  });
+
+  it('lesson 9.1 (the readiness review’s seam): API keys the person created stop working with their account; the org’s other keys do not', async () => {
+    const org = await makeOrg('KeyLeavers');
+    const other = await makeOrg('KeyLeaversToo');
+    const me = org.users.admin;
+    await db.insert(schema.memberships).values({ organizationId: other.id, userId: me.id, role: 'admin' });
+    const mine = await createApiKey({ orgId: org.id, userId: me.id, role: 'admin' }, { name: 'terraform', scopes: ['monitors:read', 'monitors:write'] });
+    const mineElsewhere = await createApiKey({ orgId: other.id, userId: me.id, role: 'admin' }, { name: 'ci', scopes: ['monitors:read'] });
+    const ownersKey = await createApiKey({ orgId: org.id, userId: org.users.owner.id, role: 'owner' }, { name: 'owner-key', scopes: ['monitors:read'] });
+    expect(await verifyApiKey(mine.key)).not.toBeNull();
+
+    await deleteAccount(me, { confirmEmail: me.email, source: SOURCE });
+
+    // The very next request with either of their keys is a 401 (verifyApiKey → null), in both orgs.
+    expect(await verifyApiKey(mine.key)).toBeNull();
+    expect(await verifyApiKey(mineElsewhere.key)).toBeNull();
+    expect(await verifyApiKey(ownersKey.key)).not.toBeNull();
+    // The rows stay in the org's key list, revoked, and each org's audit log says why.
+    const [row] = await db.select().from(schema.apiKeys).where(eq(schema.apiKeys.id, mine.id));
+    expect(row.revokedAt).not.toBeNull();
+    expect(row.createdBy).toBeNull();
+    for (const [orgId, keyId] of [[org.id, mine.id], [other.id, mineElsewhere.id]]) {
+      const events = await db.select().from(schema.auditEvents).where(and(eq(schema.auditEvents.organizationId, orgId), eq(schema.auditEvents.targetId, keyId)));
+      expect(events.map((e) => [e.action, (e.metadata as Record<string, unknown>).cause])).toContainEqual(['api_key.revoked', 'creator_account_deleted']);
+    }
   });
 
   it('the only owner of an org with other members is refused until someone else is owner', async () => {
