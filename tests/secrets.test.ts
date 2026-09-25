@@ -84,6 +84,7 @@ describe('encryptSecret / decryptSecret', () => {
     expect(() => parseKeyring(`${k1},${k1}`)).toThrow(/duplicate/);
     expect(() => parseKeyring('BAD ID:x')).toThrow(/key id/);
     expect(kmsWith(k2, k1).currentKeyId).toBe('k2');
+    expect(kmsWith(k2, 'dev').keyIds).toEqual(['k2', 'dev']); // leaving the development key behind
   });
 });
 

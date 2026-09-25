@@ -79,7 +79,7 @@ export const envSchema = z
     KMS_DRIVER: flag(['local'], 'Where the key-encryption keys live (lesson 8.1). `local` (default): ENCRYPTION_KEYS. A cloud KMS or OpenBao transit implements the same interface (src/lib/secrets/kms.ts).'),
     ENCRYPTION_KEYS: z
       .string()
-      .regex(/^[a-z0-9_-]{1,32}:[A-Za-z0-9+/]{43}=(,\s*[a-z0-9_-]{1,32}:[A-Za-z0-9+/]{43}=)*$/, 'a keyring "k2:<base64 32 bytes>,k1:<…>" (npm run secrets -- generate-key)')
+      .regex(/^[a-z0-9_-]{1,32}:[A-Za-z0-9+/]{43}=(,\s*([a-z0-9_-]{1,32}:[A-Za-z0-9+/]{43}=|dev))*$/, 'a keyring "k2:<base64 32 bytes>,k1:<…>" (npm run secrets -- generate-key)')
       .optional()
       .describe('Required in production. Keys that encrypt stored secrets (webhook secrets, Slack URLs), newest first: `k2:<base64>,k1:<base64>`. Rotation: docs/security/secrets.md.'),
     AI_PROVIDER: flag(['anthropic', 'fake'], 'The AI gateway’s provider (lesson 8.2). Default: `anthropic` when ANTHROPIC_API_KEY is set, else `fake` (deterministic, no network, no cost).'),

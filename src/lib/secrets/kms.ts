@@ -31,6 +31,7 @@ const DEV_KEY = { id: 'dev', key: createHash('sha256').update('beacon-developmen
  * ENCRYPTION_KEYS="k2:<base64 of 32 bytes>,k1:<base64 of 32 bytes>". The FIRST
  * key encrypts; every listed key decrypts. That is the whole rotation story:
  * add a new key in front, re-wrap (npm run secrets -- rotate), drop the old one.
+ * The entry `dev` stands for the public development key (for leaving it behind).
  */
 export function parseKeyring(value: string): { id: string; key: Buffer }[] {
   const keys = value
@@ -38,6 +39,9 @@ export function parseKeyring(value: string): { id: string; key: Buffer }[] {
     .map((s) => s.trim())
     .filter(Boolean)
     .map((entry) => {
+      // "dev": the development key, so values written before ENCRYPTION_KEYS was set can be re-wrapped
+      // (ENCRYPTION_KEYS="k1:<new>,dev", then npm run secrets -- rotate, then drop "dev").
+      if (entry === 'dev') return DEV_KEY;
       const i = entry.indexOf(':');
       const id = entry.slice(0, i);
       const key = Buffer.from(entry.slice(i + 1), 'base64');

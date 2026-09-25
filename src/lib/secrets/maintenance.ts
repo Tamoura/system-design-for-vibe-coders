@@ -30,13 +30,14 @@ async function allOrgIds(): Promise<string[]> {
 }
 
 export async function encryptLegacySecrets(opts: { kms?: Kms; source?: AuditSource } = {}): Promise<Counts> {
-  const kms = opts.kms ?? getKms();
+  let kms = opts.kms;
+  const kmsNow = () => (kms ??= getKms()); // only when there is something to encrypt (no warning on a fresh database)
   const counts: Counts = { webhookSecrets: 0, slackUrls: 0 };
 
   // Slack URLs live on the organization row itself (the tenant, not a tenant table).
   const orgs = await db.select({ id: organizations.id, url: organizations.legacySlackWebhookUrl }).from(organizations).where(isNotNull(organizations.legacySlackWebhookUrl));
   for (const org of orgs) {
-    const encrypted = await encryptSecret(org.url!, secretContext('organizations.slack_webhook_url', org.id), kms);
+    const encrypted = await encryptSecret(org.url!, secretContext('organizations.slack_webhook_url', org.id), kmsNow());
     const done = await db
       .update(organizations)
       .set({ slackWebhookUrlEncrypted: encrypted, legacySlackWebhookUrl: null })
@@ -53,7 +54,7 @@ export async function encryptLegacySecrets(opts: { kms?: Kms; source?: AuditSour
         .where(and(eq(webhookEndpoints.organizationId, orgId), isNotNull(webhookEndpoints.legacySecret))),
     );
     if (!rows.length) continue;
-    const encrypted = await Promise.all(rows.map(async (r) => ({ ...r, value: await encryptSecret(r.secret!, secretContext('webhook_endpoints.secret', orgId), kms) })));
+    const encrypted = await Promise.all(rows.map(async (r) => ({ ...r, value: await encryptSecret(r.secret!, secretContext('webhook_endpoints.secret', orgId), kmsNow()) })));
     counts.webhookSecrets += await withOrg(orgId, async (tx) => {
       let n = 0;
       for (const r of encrypted) {
@@ -70,7 +71,7 @@ export async function encryptLegacySecrets(opts: { kms?: Kms; source?: AuditSour
 
   if (counts.webhookSecrets + counts.slackUrls > 0) {
     await db.transaction((tx) =>
-      recordAudit(tx, { orgId: null, action: 'secrets.encrypted', source: opts.source ?? SYSTEM_SOURCE, metadata: { webhook_secrets: counts.webhookSecrets, slack_urls: counts.slackUrls, kek: kms.currentKeyId } }),
+      recordAudit(tx, { orgId: null, action: 'secrets.encrypted', source: opts.source ?? SYSTEM_SOURCE, metadata: { webhook_secrets: counts.webhookSecrets, slack_urls: counts.slackUrls, kek: kmsNow().currentKeyId } }),
     );
   }
   return counts;
