@@ -109,9 +109,22 @@ Module 6 adds the parts customers see first. `/` and `/pricing` are the **market
 cards drawn from the plans config); the app has a **sidebar shell** with an org switcher, settings split into
 organization, billing, alerts and developer sections (your own account is at `/settings/account`), and a
 **Getting started** checklist for new organizations. Product events (`monitor_created`, …) are recorded
-server-side in `analytics_events`, and feature flags are evaluated per organization. Put your email in
-`BEACON_STAFF_EMAILS` to open **/internal/flags** and **/internal/analytics** (the activation funnel), or use
-`npm run flags`. See [docs/SOLUTIONS.md](docs/SOLUTIONS.md#module-6--product--growth).
+server-side in `analytics_events`, and feature flags are evaluated per organization (**/internal/flags**,
+**/internal/analytics**, or `npm run flags`). See [docs/SOLUTIONS.md](docs/SOLUTIONS.md#module-6--product--growth).
+
+Module 7 is what running Beacon needs. **Staff** are a separate table with staff roles: sign in as
+`staff@beacon.test` (superadmin), `support@beacon.test` or `billing@beacon.test` (same password) and open
+**/internal**, the admin panel: find a customer by part of an email, see plan and usage, extend a trial, comp a
+plan, resend an invitation, and view an account **read-only for 30 minutes** (a red banner, and an entry in the
+customer's own audit log). Every sensitive change is written to the **audit log** in its own transaction
+(**Organization → Audit log** on Pro and Business, with filters and CSV export). Logs are **JSON lines** with a
+request id and the org on every line (`npm run dev | npx pino-pretty` to read them), `/api/health` and `/api/ready`
+answer probes, and OpenTelemetry traces and metrics go to a collector when `OTEL_EXPORTER_OTLP_ENDPOINT` is set
+(`docker-compose.observability.yml`). The **Dockerfile** builds one image for the web app, the worker and the
+migrations; `docker-compose.prod.yml` runs Beacon in production shape, or self-hosted. `npm run staff` makes your own
+account staff. See [docs/SOLUTIONS.md](docs/SOLUTIONS.md#module-7--operating-the-saas), and
+[deployment](docs/deployment.md), [operations](docs/operations.md), [self-hosting](docs/self-hosting.md),
+[backups](docs/backup-and-restore.md), [configuration](docs/configuration.md).
 
 Billing (Module 3) is off until you configure it. To try upgrades without a Stripe account, start the app
 with `BILLING_PROVIDER=fake npm run dev`: "Upgrade" then opens a stand-in Checkout page inside Beacon and
@@ -134,6 +147,11 @@ a signed webhook follows. For real Stripe test mode (test keys, `stripe listen`)
 | `npm run storage:setup` | With `STORAGE_DRIVER=s3`: create the bucket, block public access, set CORS. |
 | `npm run build` | Production build, the same one CI runs. |
 | `npm run flags` | Feature flags (lesson 6.3): list them, `-- rollout <flag> 10`, `-- override <flag> <org> on`, `-- off <flag>` (the kill switch). |
+| `npm run staff` | Beacon staff (lesson 7.1): list, `-- add <email> <support\|billing\|engineer\|superadmin> "<reason>"`, `-- remove <email> "<reason>"`. |
+| `npm run audit -- verify` | Recompute every audit log hash chain (lesson 7.3); `-- purge` applies the retention now. The worker does both nightly. |
+| `npm run env:docs` | Regenerate `docs/configuration.md` from the configuration schema (lesson 7.4). CI runs `npm run env:docs:check`. |
+| `npm run build:scripts` | Bundle the worker, migrations and CLIs to `dist/scripts/*.mjs` for the production image (lesson 7.4). |
+| `sh scripts/backup.sh` / `sh scripts/restore.sh` | A Postgres backup, and a restore into a scratch database for the drill (lesson 7.4). |
 | `npm run org:claim -- <slug> <email>` | Make a user the owner of an org, e.g. the `default` org that migration 0003 creates for monitors from before Module 1. |
 
 ## Where things live
@@ -150,14 +168,21 @@ src/
   lib/workflows/  A small durable-workflow engine and the escalation policy (lesson 5.4).
   lib/analytics/  track(): the tracking plan's events, server-side, forwarded to PostHog; the funnel (lesson 6.2).
   lib/flags/    isEnabled(): feature flags through OpenFeature, evaluated locally per org (lesson 6.3).
+  lib/observability/  pino logs with the request context, OpenTelemetry traces and metrics, error tracking (lesson 7.2).
+  lib/admin/    The admin panel's service side: customer search, support actions, staff roles, audit verifier (7.1, 7.3).
+  lib/audit.ts  recordAudit(): the audit log, written in the transaction of the change (lesson 7.3).
+  proxy.ts      Request ids, and the read-only rule for staff impersonation (lessons 7.1, 7.2).
   emails/       React Email templates, each with a plain-text part (lesson 4.1).
   app/          Next.js App Router: (marketing)/ landing and pricing, (auth)/ and (site)/ sign-in and account
                 pages, /[orgSlug]/… the app shell and org pages, /status/[slug], /internal/… (staff), /api/… (the
                 dashboard's JSON), /api/v1/… (the public API, lesson 5.2), /docs/api.
-scripts/        migrate, seed, reset, worker, jobs, run-checks, report-usage, openapi, email-preview, storage-setup, claim-org, flags.
+scripts/        migrate, seed, reset, worker, jobs, run-checks, report-usage, openapi, email-preview, storage-setup, claim-org, flags,
+                staff, audit, env-docs, build-scripts, backup.sh, restore.sh.
+ops/            The observability stack's configuration: OTel Collector, Prometheus alert rules (the SLO), Grafana (lesson 7.2).
 drizzle/        SQL migrations (generated; commit them).
 tests/          Vitest tests for src/core, and for src/lib and the API on an in-memory Postgres.
-docs/           EXERCISES.md, SOLUTIONS.md (what each solution branch built and why), openapi.json (generated),
+docs/           EXERCISES.md, SOLUTIONS.md (what each solution branch built and why), openapi.json and
+                configuration.md (generated), operations, deployment, self-hosting and backup guides (module 7),
                 later the architecture docs (module 9).
 ```
 
@@ -179,7 +204,8 @@ grep -rn "TODO(1.2)" src scripts
 | Vitest | Fast tests for the core logic | — |
 | React Email + nodemailer (Resend in production) | Templates as components with a plain-text part; SMTP to Mailpit locally | 4.1 |
 | pg-boss (a job queue in Postgres) | Jobs commit in the same transaction as the data; retries, cron, dead letters, per-tenant concurrency; no Redis to run | 5.1 |
-| Docker Compose | Postgres and Mailpit locally with one command | 7.4 |
+| pino + OpenTelemetry (+ Sentry, optional) | JSON logs with request and tenant context; vendor-neutral traces and metrics; errors tagged with the release | 7.2 |
+| Docker (one multi-stage image) and Compose | The same image in every environment; Postgres and Mailpit locally with one command | 7.4 |
 
 The course names the Django, Rails, Laravel and Go equivalents for every component. The ideas carry over,
 so port Beacon to your own stack if that is what your team uses.
