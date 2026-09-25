@@ -169,3 +169,13 @@ describe('scheduleChecks() and the check.run job', () => {
     expect(check).not.toHaveBeenCalled();
   });
 });
+
+describe('every queue with a handler is worked', () => {
+  // Found by the Module 8 smoke test: a new queue with a handler but no WORKERS entry
+  // gets jobs that nothing ever runs. `npm run jobs` would show them waiting forever.
+  it('the worker subscribes to every queue that has a handler', async () => {
+    const { HANDLERS } = await import('@/lib/queue/handlers');
+    const { WORKERS } = await import('@/lib/queue/worker');
+    expect(Object.keys(HANDLERS).filter((q) => !(q in WORKERS))).toEqual([]);
+  });
+});

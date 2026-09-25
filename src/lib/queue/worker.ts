@@ -41,6 +41,13 @@ export const WORKERS: Partial<Record<QueueName, WorkOptions>> = {
   'billing.comps': { localConcurrency: 1, pollingIntervalSeconds: 30 },
   'audit.retention': { localConcurrency: 1, pollingIntervalSeconds: 30 },
   'audit.verify': { localConcurrency: 1, pollingIntervalSeconds: 30 },
+  // Module 8. An export is heavy (one at a time per worker); a purge per org at a time.
+  'org.export': { localConcurrency: 1, groupConcurrency: 1, pollingIntervalSeconds: 2 },
+  'org.delete': { localConcurrency: 1, pollingIntervalSeconds: 30 },
+  'retention.purge': { localConcurrency: 1, pollingIntervalSeconds: 30 },
+  // Lesson 8.2: model calls are slow and cost money: a few at once, at most 2 per org (the gateway
+  // also rate-limits each org by plan).
+  'ai.summarize': { localConcurrency: 4, groupConcurrency: 2 },
 };
 
 export async function startWorkers() {

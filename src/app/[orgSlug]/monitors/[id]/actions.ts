@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { incidentUpdateInput, updateMonitorInput } from '@/core/validation';
 import { forPage, requirePermission } from '@/lib/access';
@@ -77,6 +78,7 @@ export async function summarizeIncidentAction(orgSlug: string, monitorId: string
     if (err instanceof LimitExceededError || err instanceof InvalidRequestError) redirect(`${back}?ai_error=${encodeURIComponent(err.message)}#incident-${incidentId}`);
     throw err;
   }
+  revalidatePath(back);
   redirect(`${back}#incident-${incidentId}`);
 }
 
@@ -90,5 +92,6 @@ export async function saveSummaryAction(orgSlug: string, monitorId: string, inci
     const publisher = await forPage(requirePermission(orgSlug, 'page.publish'), back);
     await forPage(publishSummary(publisher, incidentId), back);
   }
+  revalidatePath(back); // the redirect only changes the #hash: without this the browser keeps showing the draft
   redirect(`${back}#incident-${incidentId}`);
 }
