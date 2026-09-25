@@ -1150,3 +1150,343 @@ the dashboard reconnects by itself after the restart and shows what changed mean
 unsubscribe removes the subscriber → a forged bounce webhook is refused, a signed hard bounce suppresses
 `member@beacon.test` and the members page warns about it → deleting the member's membership ends their
 live stream within seconds.
+
+---
+
+## Module 5 — Background Work & Integrations
+
+Modules 1–4 answered requests. Module 5 is the work that happens when nobody is looking: a **queue and a
+worker** that check every monitor on schedule and send every message with retries (5.1), a **public API**
+that other software calls with keys (5.2), **webhooks** that Beacon sends to other software, through a guard
+that keeps customer URLs out of our network (5.3), and **durable workflows** for processes that wait, like an
+escalation (5.4).
+
+```
+ pg-boss cron (1/min) ─► checks.schedule ─► check.run jobs, one per monitor slot (stable phase = jitter,
+                                            id = hash(monitor, slot), grouped by org: ≤ 5 at once)
+ worker ─► runCheck() through safeFetch (SSRF guard) ─► recordCheckResult() ── one withOrg() transaction ─┐
+             result (unique per slot) ─► incident ─► incident-notify workflow run   ─► workflow.run job   │
+                                                 ─► webhook event + messages      ─► webhook.deliver jobs │
+                                                 ─► incident-escalation run (if the org has a policy)     │
+                                                                                                 COMMIT ─┘
+ workflow.run ─► load-incident ─► notify-channels (notifications + deliveries + notification.deliver jobs)
+               ─► record-deliveries                     escalation: page tier ─► wait (no worker held)
+                                                        ◄── "Acknowledge" / resolve: a signal wakes it
+ notification.deliver / email.send / webhook.deliver ─► provider or customer URL; throw = retry with
+                                                        backoff and jitter; last attempt = dead letter
+ /api/v1 ─► IP bucket ─► API key (hash) ─► plan `api` ─► scope ─► org bucket ─► handler ─► problem+json
+```
+
+Everything enqueued above is an `INSERT` in the same transaction as the data it is about: that is the
+reason for a Postgres queue.
+
+### Try it by hand
+
+```bash
+docker compose up -d
+npm run db:reset                      # migrations, then pg-boss's schema and Beacon's queues
+psql "$DATABASE_URL" -c "update organizations set plan = 'business' where slug = 'demo'"   # the API is a Business feature
+SMS_PROVIDER=fake npm run dev         # terminal 1
+npm run worker                        # terminal 2: checks run by themselves from now on
+npm run jobs                          # terminal 3, any time: the queues
+```
+
+1. Watch terminal 2: every minute `checks.schedule` enqueues the checks due in the next 90 seconds, and each
+   `check.run` logs its result at its monitor's own second of the interval. Nobody runs a script.
+2. Sign in as `demo@beacon.test`. **Settings → API keys**: create a key with all three scopes. It is shown once.
+   ```bash
+   KEY=bk_live_…
+   curl -s localhost:3000/api/v1/monitors?limit=2 -H "Authorization: Bearer $KEY"          # a page + next_cursor
+   curl -si localhost:3000/api/v1/monitors -H "Authorization: Bearer $KEY" -H 'Idempotency-Key: 1' \
+        -H 'content-type: application/json' -d '{"name":"Local","url":"http://localhost:3000","interval_seconds":30}'
+   # run it again: the same body, `Idempotent-Replayed: true`, still one monitor
+   curl -si localhost:3000/api/v1/monitors -H "Authorization: Bearer $KEY" -H 'content-type: application/json' \
+        -d '{"name":"x","url":"http://169.254.169.254/latest/meta-data/"}'   # 400 problem+json: blocked-url
+   for i in $(seq 130); do curl -s -o /dev/null -w '%{http_code} ' localhost:3000/api/v1/monitors -H "Authorization: Bearer $KEY"; done   # …200 200 429
+   ```
+   <http://localhost:3000/docs/api> renders the reference (Scalar, from `/api/v1/openapi.json`). Revoke the key
+   in Settings and the next `curl` is a 401.
+3. **Settings → Webhooks**: add an endpoint. For a local receiver, allow it first: `OUTBOUND_ALLOWLIST=localhost:3000,127.0.0.1:4555`
+   (restart both processes), then e.g. `npx http-echo-server 4555` or a 10-line Node server. `http://127.0.0.1/`,
+   `http://169.254.169.254/` and `http://[::1]/` are refused. Copy the `whsec_` secret.
+4. **Settings → Escalation policy**: tier 1 = the member, wait 2 minutes; tier 2 = you.
+5. Break a monitor (a URL that answers 500). Three checks later: the incident, a signed `incident.opened` POST to
+   your receiver, an email "Escalation tier 1" to `member@beacon.test` in Mailpit. Make the receiver answer 500:
+   `npm run jobs` shows `webhook.deliver … attempt 2 of 18 failed, next at …`, and the endpoint's delivery log
+   shows every attempt with its status and the start of the response. Fix it and click **Resend**, or
+   **Replay failed** for everything since yesterday.
+6. As the member, open the monitor and click **Acknowledge**: the escalation run ends within seconds
+   (`acknowledged`), tier 2 is never paged, and the incident row's **Workflows** list shows both runs step by
+   step. The incident timeline says who was told, who was paged and who acknowledged.
+7. Stop the worker with Ctrl+C in the middle of an escalation's wait, start it again: the run continues where it
+   was (the deadline is in its history; the wake-up is a delayed job).
+
+### Lesson 5.1 — Background jobs, queues and scheduled tasks
+
+**What was built.** [pg-boss](https://github.com/timgit/pg-boss) in its own `pgboss` schema, installed by
+`npm run db:migrate`. Queues as data (`src/lib/queue/queues.ts`) with retries, exponential backoff with jitter
+and a dead-letter queue. `enqueue()` and `enqueueInTx()` (the job commits with the rows it is about). A worker
+process (`npm run worker`) with per-queue concurrency and a per-org cap. The check scheduler: a cron job every
+minute that enqueues one `check.run` job per monitor slot. Every Module 3/4 background task moved onto the queue:
+the email outbox, notification deliveries, thumbnails and usage reporting; `runAfterResponse()`,
+`npm run messages:send` and `npm run files:process` are gone. `npm run jobs` is the dashboard.
+
+**Why pg-boss (and not Graphile Worker).** Both are Postgres queues with transactional enqueue, the lesson's
+default. pg-boss fits these exercises more directly: **dead-letter queues** with redrive are built in (Graphile
+Worker keeps permanently failed jobs in its table, and you build the DLQ view yourself); **group concurrency**
+gives per-tenant fairness in one option; **deterministic job ids** and singleton policies give dedupe; its
+**cron** takes a lock; and it ships adapters for **Drizzle** (enqueue inside our transaction) and **PGlite**
+(so `npm test` runs the real queue SQL with no database server). Graphile Worker is faster at very high rates
+(LISTEN/NOTIFY, one SQL function per job) and its `add_job()` is a plain SQL call, which is lovely inside a
+transaction; if you already use PostGraphile, pick it. Both beat Redis here: no second system to run, persist
+and monitor, and no outbox to build.
+
+**Read in this order**
+
+1. `src/lib/queue/queues.ts`: every queue, its retry policy, what each job carries (ids, not objects).
+2. `src/lib/queue/index.ts`: `getBoss()`, `enqueue()`, `enqueueInTx()`; `install.ts`: the schema, the queues
+   and what `beacon_app` may do (insert jobs, nothing else).
+3. `src/core/ids.ts` `stableUuid()` and `src/core/schedule.ts` `phaseOffsetSec()` / `checkSlots()`.
+4. `src/lib/scheduler.ts`: `scheduleChecks()`, `runScheduledCheck()`; `src/lib/checks.ts`: the slot-unique result.
+5. `src/lib/email/index.ts` `sendEmail()` / `sendQueuedEmail()`; `src/lib/notifications/deliver.ts`
+   `deliverNotification()`; `pipeline.ts` `enqueueDeliveries()`.
+6. `src/lib/queue/handlers.ts`, `worker.ts` (concurrency, groups, `requeueOrphans()`), `run.ts`; `scripts/worker.ts`,
+   `scripts/jobs.ts`, `src/lib/queue/status.ts`.
+7. `tests/queue.test.ts`, the queue cases in `tests/email.test.ts` and `tests/notifications.test.ts`, and
+   `tests/queue.integration.test.ts` (a real Postgres, when `DATABASE_URL` is set: CI).
+
+**Exercises covered**
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 the checker writes the incident and enqueues a notify job; a separate worker sends; 8 attempts, exponential backoff, dead letter | the checker path makes no email, Slack or SMS call | `recordCheckResult()` only writes rows and jobs; test: three failures, then no mail, no SMS, no Slack post and no notification until the job runs |
+| | a bad email provider causes retries visible in the queue dashboard, and the job succeeds after | tests (email outage → `retry` state with the error and a later `start_after` → recovers, `attempts = 2`); smoke: `npm run jobs` listed the failing webhook as "attempt n of 18 failed, next at …, HTTP 500" |
+| | a job that fails every attempt ends in the DLQ with its error | tests: 8 attempts → the email row `failed`, the job `failed` with its error, a copy in `dead-letter`; `queueStatus()` lists it with the error; redrive puts it back |
+| 🟡 `notification_deliveries` unique per (incident, recipient, channel); enqueue in the same transaction | running the same job twice sends each subscriber one email | the unique `dedupe_key` (Module 4) + "only a pending delivery is sent"; tests run the fan-out and a delivery job twice |
+| | a crash between "incident committed" and "job enqueued" still notifies | there is no between: `enqueueInTx()` is an INSERT in the incident's transaction; test: a transaction that throws after enqueuing leaves no job, and one that commits leaves exactly one |
+| | a test proves the handler is a no-op for an incident that no longer exists | test: monitor deleted after the incident → `{ skipped: 'incident deleted' }`, no notifications, no deliveries |
+
+**Design decisions to notice**
+
+- **The scheduler decides, the workers check.** Every minute one job (pg-boss cron takes the lock) looks 30 s
+  back and 90 s ahead and enqueues each monitor's slots. Overlapping windows cost nothing, because a slot's job
+  id is `hash(monitor, slot)`: enqueuing it twice adds one job. A worker outage skips missed slots instead of
+  running a backlog of stale checks. The per-monitor phase (`hash(id) % interval`) spreads 6,000 one-minute
+  monitors to about 100 per second (tested) instead of 6,000 at `:00`.
+- **Idempotent handlers, in three ways.** Deterministic job ids (the same work is one job), "only a pending row"
+  (email, delivery, webhook message, file), and unique constraints on the effect (check results per slot,
+  deliveries per event/person/channel).
+- **The queue owns retries; the row keeps the log.** Module 4's hand-made lease and `next_attempt_at` are gone
+  (migration 0017). The row records attempts, the last error and the outcome; on the last attempt it is marked
+  `failed`. A handler throws to ask for a retry. It commits its log first: a throw inside a transaction would roll
+  the log back.
+- **Fairness.** Jobs carry a group: the org for checks and deliveries, the endpoint for webhooks, the run for
+  workflows. `groupConcurrency` caps how many of one group run at once across all workers (5 checks per org, 2
+  deliveries per endpoint, 1 job per workflow run). That is a first step; the 🔴 5 % cap and sharded
+  schedulers are not built.
+- **Least privilege for jobs.** `beacon_app` (the role tenant queries run as) may insert jobs and read back their
+  id: it cannot read other orgs' payloads or change jobs (tested). The worker connects as the owner.
+- **Upgrading from Module 4.** Pending rows of Module 4 have no jobs. The worker's start-up check enqueues one
+  per pending email, delivery and processing file, with the same deterministic ids, so it adds nothing when
+  every row already has its job. Tried on a database migrated on `module-4-solution`: 8 queued emails were sent.
+- **Tests run pg-boss on PGlite** (its adapter), and `runQueuedJobs()` is "the worker, once": same claim, same
+  complete/fail, same backoff. One PGlite caveat: a single connection, so the queue client must already have
+  every queue in its cache before a transaction enqueues (test-db starts it after installing the queues).
+
+### Lesson 5.2 — The public API: API keys, versioning and rate limits
+
+**What was built.** `/api/v1/monitors` (list, create, get, update, delete) and `/api/v1/incidents` (list, get),
+separate from the dashboard's `/api/orgs/…` JSON: snake_case, prefixed ids (`mon_…`, `inc_…`), gated by the
+plan's `api` entitlement. API keys managed in **Settings → API keys** by roles with the new
+`integration.manage` permission. Cursor pagination, RFC 9457 problem details for every error,
+`Idempotency-Key` on POST, token-bucket rate limits per IP and per org, the OpenAPI document generated from
+the Zod schemas, served at `/api/v1/openapi.json`, rendered by Scalar at `/docs/api` and committed as
+`docs/openapi.json`.
+
+**Read in this order**
+
+1. `src/core/api-keys.ts`: format, hash, scopes and which permission each needs.
+2. `src/lib/api-keys.ts`: create (returns the key once), list, revoke, `verifyApiKey()`, last-used.
+3. `src/lib/public-api.ts`: `publicApi()` (the order of checks), `problem()`, `idempotent()`, the response shapes.
+4. `src/app/api/v1/…`: the handlers, each a few lines.
+5. `src/core/rate-limit.ts` (the bucket arithmetic) and `src/lib/rate-limit.ts` (the row lock).
+6. `src/core/api-schemas.ts`, `src/core/openapi.ts`, `src/core/problems.ts`, `scripts/openapi.ts`.
+7. `src/lib/monitors.ts` `listMonitorsPage()`, `src/lib/incidents.ts` `listIncidentsPage()`.
+8. `src/app/[orgSlug]/settings/api-keys/`; `tests/public-api.test.ts`.
+
+**Exercises covered**
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 `GET`/`POST /v1/monitors` with org-owned keys, prefixed `bk_live_`, SHA-256 at rest, shown once, revocable | `api_keys` has no plaintext keys | `key_hash`, `key_start` (12 chars), `key_last4` only; test dumps the table; smoke: `sha256(key)` matches, the key's middle is nowhere |
+| | a revoked key gets 401 within one request | no cache: every request looks the hash up; test and smoke |
+| | org A's key never reads org B's monitors (a test) | `tests/public-api.test.ts`: org B's key against every `/api/v1` route (404 or no data), and a check that fails when a new route has no case; smoke: GET/PATCH 404, list without A's monitor |
+| | cursor pagination with a maximum `limit` | `starting_after` / `has_more` / `next_cursor`, keyset on `(created_at, id)` compared inside Postgres; `limit` ≤ 100 (400 above); test walks 7 monitors in pages of 3 and adds one mid-walk without a shift |
+| 🟡 schemas once, OpenAPI generated, Scalar at `/docs/api`, RFC 9457, `Idempotency-Key` | a CI step fails if the spec changes without being committed | `npm run openapi:check` in `.github/workflows/ci.yml`; a unit test compares too |
+| | every 4xx/5xx is `application/problem+json` with `type`, `title`, `status` | `errorToProblem()`; tests for 400, 401, 402, 403, 404, 409, 422, 429 |
+| | the same POST twice with the same key creates one monitor and returns the same body twice | key claimed with an INSERT, response stored as text and replayed byte for byte with `Idempotent-Replayed: true`; 409 while the first runs, 422 for a different body, released after an error; tests and smoke |
+
+Also built, from 5.2's 🔴 exercise because the task asked for it: a token bucket per org **sized by plan**
+(`apiRequestsPerMinute`: Business 120; a plan change is config only), a per-IP bucket before authentication,
+and `RateLimit`/`RateLimit-Policy` (IETF draft) plus `X-RateLimit-*` on every response, `Retry-After` on 429.
+Not built: a separate limit for an expensive endpoint and date-based versions (`Beacon-Version`).
+
+**Design decisions to notice**
+
+- **The key decides the org.** Nothing in the URL or body can name another org; `organizationId` in a POST body
+  is ignored (tested). A key acts as an integration, not a person: `monitors:write` maps to
+  `monitor.write_any`, so only owners and admins can grant it, and a key can never do more than the role that
+  created it (`canGrantScopes`). Monitors it creates record the key's creator as author.
+- **`api_keys` is not under row-level security**, like memberships: the key is how the request finds its org.
+  The lint test's list of exceptions names it; everything else new is under RLS.
+- **Additive changes only.** Lesson 5.4 added `acknowledged_at` to the Incident: a new field in v1, no rename.
+  The generated schema drops `additionalProperties: false` from responses for that reason: clients must accept
+  fields they do not know yet.
+- **Rate limits in Postgres**, one row per bucket locked for the instant of the update, so all app instances
+  share it. At high traffic this moves to Redis (the lesson's default) behind the same function.
+- **Scalar from its CDN**, pinned. Installing it is 47 MB of dependencies for one page. Offline, `/docs/api` falls
+  back to a link to the JSON.
+
+### Lesson 5.3 — Outbound webhooks and third-party integrations (🟢 and 🟡)
+
+**What was built.** Endpoints per org (URL, event types, a `whsec_` secret shown once) in **Settings →
+Webhooks**. `incident.opened`, `incident.acknowledged` and `incident.resolved` become an event row, a message per
+subscribed endpoint and a `webhook.deliver` job each, in the incident's transaction. Deliveries are signed per
+Standard Webhooks, go through the SSRF guard with no redirects and a 10 s timeout, and are retried 18 times over
+about a day and a half. A delivery log per endpoint (every message and attempt, **Resend**, **Replay failed
+since…**, enable, disable, delete). An endpoint that failed every delivery for 5 days is disabled and the owners
+and admins are emailed. The SSRF guard also covers every monitor check (the `TODO(5.3)` in `src/core/check.ts`)
+and monitor URLs when they are saved.
+
+**Read in this order**
+
+1. `src/core/ssrf.ts` (which addresses) and `src/core/safe-fetch.ts` (resolve, check, pin, redirects).
+2. `src/core/check.ts`, `src/lib/monitors.ts` `assertMonitorUrl()`.
+3. `src/core/webhooks.ts`: event types, secret, signature, when to disable.
+4. `src/lib/webhooks.ts`: `recordWebhookEvent()`, `deliverWebhook()`, `resendMessage()`, `replayFailedSince()`.
+5. `src/db/schema.ts` `webhookEndpoints` … `webhookAttempts`; `drizzle/0019_webhooks.sql`.
+6. `src/app/[orgSlug]/settings/webhooks/`; `src/emails/integrations.tsx`.
+7. `tests/ssrf.test.ts`, `tests/webhooks.test.ts`.
+
+**Exercises covered**
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 endpoints with event types and a `whsec_` secret shown once; one signed delivery job per matching endpoint, 10 s timeout, retries | a receiver using the official Standard Webhooks library verifies the signatures | tests and smoke verify with the `standardwebhooks` npm package; our signer and the library's agree byte for byte |
+| | an endpoint returning 500 is retried with growing delays, and the attempts are stored | test: 4 attempts, each delay longer, same `webhook-id`, each attempt in the log with status and body; smoke: the receiver saw the retries |
+| | a slow endpoint does not delay other endpoints | jobs grouped by endpoint (at most 2 slots of 10 each), 10 s timeout per attempt; the test checks the grouping and the config, not a stopwatch |
+| 🟡 the delivery log with resend and replay; a guard that resolves DNS, rejects private/loopback/link-local/CGNAT (v4 and v6), pins the address, refuses redirects for webhooks | `127.0.0.1`, `169.254.169.254`, `[::1]` or a name resolving to `10.x` fail, for webhooks and monitors | tests for both (plus `0x7f000001`, `2130706433`, `::ffff:127.0.0.1`, IPv6 ULA, a redirect to the metadata service); smoke through the UI and the API |
+| | a customer replays yesterday's failed messages from the UI | "Replay failed since" (default: 24 hours ago); test and smoke |
+| | endpoints failing continuously for 5 days are disabled and admins emailed | `failing_since` on the endpoint, cleared by any success; test sets it 5 days back: disabled, `webhook-disabled` email to the owner and the admin only; new events skip it; re-enable is one click |
+
+**Design decisions to notice**
+
+- **The check is the lookup.** The HTTP agent's DNS lookup resolves, checks every address and hands the
+  connection only those, so there is no second resolution for DNS rebinding to exploit. An IP in the URL skips
+  the lookup and is checked before the request. Redirects are followed by hand (monitors, 5 hops, each checked)
+  or not at all (webhooks). IPv4-mapped IPv6 is caught by Node's `BlockList`; NAT64, 6to4 and Teredo prefixes are
+  refused outright. `OUTBOUND_ALLOWLIST` is the development escape hatch (a local receiver, Beacon monitoring
+  itself). Production-grade is an egress proxy (Smokescreen) on top, not instead.
+- **Monitors may point at hosts that do not resolve right now** (that is what monitors are for); webhook
+  endpoints must resolve when they are saved.
+- **The Svix data model:** event (immutable, what happened) → message (per endpoint; its id is `webhook-id`, the
+  same on every retry) → attempts (the log). Fat payloads in the public API's shapes: one contract.
+- **The secret must be readable to sign**, so unlike an API key it cannot be hashed. It is shown once and never
+  sent back to the browser. `TODO(8.1)`: encrypt it at rest, like the Slack URL.
+- **Machines get every change.** Webhook events are recorded even while a monitor is flapping; only people are
+  spared the noise (lesson 4.2).
+- **Slack stays Module 4's incoming webhook**; the OAuth app with an Acknowledge button is 5.3's 🔴 exercise.
+
+### Lesson 5.4 — Workflow engines and durable execution (🟢 and 🟡)
+
+5.4 is an 🔴 lesson; its 🟢 and 🟡 exercises are done, on a small engine built on the 5.1 queue instead of
+Inngest, Trigger.dev or Temporal: the course repo must run with Postgres alone, and the engine is short enough
+to read. The lesson's advice still stands: in production, use an engine (Temporal, Inngest, Trigger.dev,
+Hatchet, DBOS) that already solved versioning, observability and scale.
+
+**What was built.** `src/lib/workflows/engine.ts`: runs, steps (the recorded history) and signals in Postgres.
+Each `workflow.run` job replays the workflow function from the top; a step already in the history returns its
+recorded result, the first missing one runs; `waitForSignal()` records its deadline once, then suspends the run
+(the job ends, a delayed job or a signal wakes it). The incident fan-out from 5.1 became the `incident-notify`
+workflow with three steps. Escalation policies as data (**Settings → Escalation policy**) and one
+`incident-escalation` workflow that interprets them. **Acknowledge** on incidents. Each incident's runs, step by
+step, on the monitor page.
+
+**Read in this order**
+
+1. `src/lib/workflows/engine.ts`, the header comment first.
+2. `src/lib/workflows/incident-notify.ts`, then `src/lib/workflows/escalation.ts` (read the workflow top to
+   bottom: that is the policy); `src/core/escalation.ts`.
+3. `src/lib/monitors.ts` `acknowledgeIncident()` and the `signalRunsInTx()` calls in `resolveIncident()` and
+   `recordCheckResult()`.
+4. `src/lib/notifications/pipeline.ts` `pageInTx()`.
+5. `src/app/[orgSlug]/settings/escalation/`, `src/app/[orgSlug]/monitors/[id]/workflow-runs.tsx`.
+6. `tests/workflows.test.ts`.
+
+**Exercises covered**
+
+| Exercise | Done-when | Where |
+|---|---|---|
+| 🟢 the "incident opened" fan-out as a workflow: load incident, notify channels, record deliveries | the engine's dashboard shows each run with per-step inputs, outputs and timings | the incident row's **Workflows** list (from `workflow_steps`); test checks names, outputs, timings |
+| | killing the worker after step 2 does not re-send notifications | test removes step 3 from the history and resumes: step 2 is replayed, no new deliveries, one email per person |
+| | a failing step retries on its own without re-running earlier steps | test: a step that throws once; after the retry, steps 1 and 2 ran once, step 3 twice (`attempts = 2`) |
+| 🟡 escalation policies as data plus one durable workflow; snapshot; wait for acknowledged or resolved | acknowledging in the dashboard stops the escalation within seconds | the signal is stored and a `workflow.run` job enqueued in the acknowledging transaction; test and smoke (stopped within a second; tier 2 never paged past tier 1's deadline) |
+| | resolving before any ack cancels the remaining tiers | `incident.resolved` signal from both resolve paths; test |
+| | editing the policy mid-incident does not affect the running escalation, but the next | step `load-policy` records the snapshot; test edits between tiers |
+| | SMS sends use an idempotency key derived from run and tier | the page's key is `escalation:<run>:tier-<n>`; the SMS delivery's dedupe key (the provider's idempotency key since this module) extends it; test re-runs the step: one SMS |
+
+Acknowledging from Slack is not built (the Slack app is 5.3 🔴).
+
+**Design decisions to notice**
+
+- **Replay, not snapshots of memory.** The workflow is ordinary code; only `ctx.step()` and `ctx.waitForSignal()`
+  touch the world. The rules that follow: no I/O, clock or randomness outside steps; step names are the history's
+  keys (rename one and runs in flight lose their place: version by adding a new workflow name); steps must be
+  idempotent (a crash between "done" and "recorded" runs one again).
+- **A wait costs nothing.** The run's status is `waiting` with its `wake_at`; the only thing in the queue is a
+  delayed job with a deterministic id. One job per run at a time (group = run), so a timer and a signal arriving
+  together do not replay the same run in parallel. A second of clock tolerance covers the database and the worker
+  disagreeing about "now".
+- **Signals are stored**, so a run that reaches its wait after the acknowledgement still sees it; before every
+  tier the workflow checks without waiting.
+- **Pages ignore preferences, not permissions.** The policy chose the people and channels, so the new
+  `incident.escalated` category is required; recipients must still be members who may see incidents, and SMS
+  still needs a plan that includes it.
+- **The fan-out became a workflow** instead of 5.1's plain `incident.notify` job: same transactional start, same
+  retries, now with a history. Its third step writes "Alert sent: 4 in-app, 3 email" on the incident's timeline
+  (4.2's 🔴 "timeline of deliveries", in one line).
+
+### Not done in Module 5 (🔴 exercises and neighbours)
+
+The sharded scheduler with `next_run_at`, two schedulers taking over each other's shards and a 5 % per-org cap
+(5.1 🔴; a per-org cap of 5 concurrent checks is there); date-based versions with a transformer and a separate
+limit for an expensive endpoint (5.2 🔴; plan-sized rate limits are there); the Slack OAuth app with an
+Acknowledge button, encrypted tokens and uninstall handling (5.3 🔴); the custom-domain saga and workflow
+versioning (5.4 🔴). Also: secret rotation with two signatures, webhook retention as a plan feature, a web
+dashboard for the queue behind admin auth (7.1), queue alerts on the oldest job's age (7.2), an egress proxy,
+OAuth apps for third parties, encryption of webhook secrets (8.1), and Scalar was not rendered in the smoke test
+(no CDN access here; the page and the JSON were).
+
+### Verification for this branch
+
+`npm test` (498 tests and 2 more with `DATABASE_URL`, 500 in CI: no database server needed, pg-boss runs on
+PGlite; `tests/queue.integration.test.ts` runs a real worker and the app's own driver against Postgres when
+`DATABASE_URL` is set), `npm run typecheck`, `npm run openapi:check`, `npm run db:migrate` on a fresh database
+(twice: idempotent) and on a database migrated, seeded and checked on `module-4-solution` with a broken SMTP
+server (8 pending emails; after the migration the worker's start-up check queued and sent all 8),
+`npm run build`, and a smoke test against `next start` plus `npm run worker` (41 checks), with a local SMTP
+server for Mailpit and local receivers allowed through `OUTBOUND_ALLOWLIST`: checks run on schedule with no
+trigger, one job per slot → the seed's `localhost` monitor fails with "Blocked: … loopback address" → an API key
+created in Settings, shown once, hash-only in the database → `curl`: a page of 2 with a cursor and the next page,
+RateLimit headers, 401 problem+json without a key, 201 and an identical replay for the same `Idempotency-Key`
+(one monitor), 400 `blocked-url` for `127.0.0.1` and `169.254.169.254`, 422 per field, the OpenAPI document and
+`/docs/api` → an org-B key gets 404 for org A's monitor (GET and PATCH) and a list without it → 429 with
+`Retry-After` after the Business limit, org B unaffected → an escalation policy and two endpoints saved from the
+UI; `127.0.0.1`, `169.254.169.254` and `[::1]` endpoints refused → the monitor breaks, the worker opens the
+incident, the receiver verifies `incident.opened` with the official library → tier 1 paged by email, the run
+waiting → **Acknowledge** as the member ends the run within a second; `incident.acknowledged` delivered →
+the failing receiver is retried with the same `webhook-id`, `npm run jobs` and the delivery log show the 500s →
+**Resend** after recovery and **Replay failed** (yesterday's messages) deliver → past tier 1's deadline tier 2 is
+never paged → `acknowledged_at` in the API → the incident's workflow runs on the monitor page → **Mark
+resolved** delivers `incident.resolved`, signed; the timeline shows the fan-out, the page and the acknowledgement
+→ a revoked key gets 401, last-used is recorded → a member gets 403 on the API keys page.
