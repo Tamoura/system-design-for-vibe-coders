@@ -1,0 +1,17 @@
+# Lesson 7.4: what never goes into the image. Secrets first: a .env baked into
+# a layer is readable by anyone who can pull the image.
+.env
+.env.*
+!.env.example
+.git
+node_modules
+.next
+dist
+.storage
+.email-preview
+coverage
+*.tsbuildinfo
+Dockerfile
+docker-compose*.yml
+.github
+tests

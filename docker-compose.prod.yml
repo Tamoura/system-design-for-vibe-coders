@@ -1,0 +1,124 @@
+# Lesson 7.4: Beacon in production shape, on one machine. Also the SELF-HOSTING
+# install (docs/self-hosting.md): no Stripe, no email provider and no analytics
+# account needed; every org is on the Free plan unless billing is configured.
+#
+#   cp .env.example .env            # then set at least BETTER_AUTH_SECRET and POSTGRES_PASSWORD
+#   docker compose -f docker-compose.prod.yml build
+#   docker compose -f docker-compose.prod.yml up -d
+#   docker compose -f docker-compose.prod.yml --profile demo up seed    # optional: demo data and staff accounts
+#
+# The order is the lesson's release process: Postgres healthy → `migrate` runs
+# ONCE and exits (the release step) → only then `web` and `worker` start, from
+# the same image. A failed migration stops the deploy before new code runs.
+name: beacon
+
+x-app: &app
+  image: ${BEACON_IMAGE:-beacon:local}
+  build:
+    context: .
+    args:
+      GIT_SHA: ${GIT_SHA:-unknown}
+  restart: unless-stopped
+  environment: &env
+    DATABASE_URL: postgres://beacon:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}@postgres:5432/beacon
+    BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:?set BETTER_AUTH_SECRET in .env (openssl rand -base64 32)}
+    APP_URL: ${APP_URL:-http://localhost:3000}
+    APP_ENV: ${APP_ENV:-production}
+    STORAGE_DRIVER: ${STORAGE_DRIVER:-local}
+    STORAGE_LOCAL_DIR: /app/.storage
+    # Email: set SMTP_URL (or RESEND_API_KEY) for real mail. The default prints emails to the logs.
+    EMAIL_DRIVER: ${EMAIL_DRIVER:-console}
+    SMTP_URL: ${SMTP_URL:-}
+    RESEND_API_KEY: ${RESEND_API_KEY:-}
+    EMAIL_FROM: ${EMAIL_FROM:-Beacon <beacon@localhost>}
+    # Billing is off unless configured: every org is on Free (lesson 7.4 self-hosting).
+    STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
+    STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+    STRIPE_PRICE_PRO: ${STRIPE_PRICE_PRO:-}
+    STRIPE_PRICE_BUSINESS: ${STRIPE_PRICE_BUSINESS:-}
+    # Observability (lesson 7.2): JSON logs on stdout; traces/metrics to a collector if set.
+    LOG_LEVEL: ${LOG_LEVEL:-info}
+    SENTRY_DSN: ${SENTRY_DSN:-}
+    OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
+    CHECK_REGION: ${CHECK_REGION:-local}
+
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: beacon
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: beacon
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U beacon"]
+      interval: 2s
+      retries: 30
+
+  # The release step: migrations (and the job queue's schema), once per deploy, then exit.
+  migrate:
+    <<: *app
+    restart: "no"
+    command: ["node", "dist/scripts/migrate.mjs"]
+    depends_on:
+      postgres: { condition: service_healthy }
+
+  web:
+    <<: *app
+    environment:
+      <<: *env
+      OTEL_SERVICE_NAME: beacon-web
+    ports: ["${PORT:-3000}:3000"]
+    volumes: [storage:/app/.storage]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+    # The image's HEALTHCHECK probes /api/health (liveness); put /api/ready behind your load balancer.
+
+  worker:
+    <<: *app
+    command: ["node", "dist/scripts/worker.mjs"]
+    environment:
+      <<: *env
+      OTEL_SERVICE_NAME: beacon-worker
+    volumes: [storage:/app/.storage]
+    # Stop gracefully: running jobs get time to finish; anything unfinished is retried (lesson 5.1).
+    stop_grace_period: 30s
+    healthcheck:
+      disable: true
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+    # Scale with: docker compose -f docker-compose.prod.yml up -d --scale worker=3
+
+  # Optional demo data: `--profile demo up seed`. Seeding refuses NODE_ENV=production, so this one runs as development.
+  seed:
+    <<: *app
+    profiles: [demo]
+    restart: "no"
+    command: ["node", "dist/scripts/seed.mjs"]
+    environment:
+      <<: *env
+      NODE_ENV: development
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+
+  # Lesson 7.4: a nightly logical backup to ./backups (docs/backup-and-restore.md).
+  # `--profile backup run --rm backup` runs one now; schedule it with cron or your platform's scheduler.
+  backup:
+    image: postgres:16
+    profiles: [backup]
+    restart: "no"
+    environment:
+      DATABASE_URL: postgres://beacon:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}@postgres:5432/beacon
+      BACKUP_DIR: /backups
+      BACKUP_KEEP_DAYS: ${BACKUP_KEEP_DAYS:-14}
+    volumes:
+      - ./backups:/backups
+      - ./scripts/backup.sh:/usr/local/bin/beacon-backup:ro
+    entrypoint: ["sh", "/usr/local/bin/beacon-backup"]
+    depends_on:
+      postgres: { condition: service_healthy }
+
+volumes:
+  pgdata:
+  storage:

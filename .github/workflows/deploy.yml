@@ -1,0 +1,76 @@
+# Lesson 7.4 (🟡): the delivery pipeline, from pull request to production.
+#
+#   pull request   → preview environment per PR (its own URL and database), link on the PR
+#   push to main   → release step (migrations) on staging → deploy staging → smoke tests
+#                  → promote THE SAME IMAGE (by digest) to production → migrations → deploy → health watch
+#
+# Beacon's course repo has no cloud account, so every deploy step is a clearly
+# marked placeholder that runs only when the repository variable
+# DEPLOY_ENABLED is "true". Replace the `run:` lines with your platform's CLI
+# (Fly.io, Render, Railway, Kamal, `kubectl set image`…). The ORDER, the
+# gates and the "promote, never rebuild" rule are the lesson.
+name: Deploy
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false # never cancel a production deploy half-way
+
+env:
+  IMAGE: ghcr.io/${{ github.repository }}/beacon:${{ github.sha }}
+
+jobs:
+  preview:
+    if: github.event_name == 'pull_request' && vars.DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: preview-pr-${{ github.event.number }}
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: deploy
+        name: Deploy a preview with its own seeded database (never production data)
+        run: |
+          # Placeholder: create a throwaway Postgres (or a Neon branch), then run the image with it:
+          #   migrate: docker run $IMAGE node dist/scripts/migrate.mjs
+          #   seed:    docker run -e NODE_ENV=development $IMAGE node dist/scripts/seed.mjs
+          #   web:     your-platform deploy --image $IMAGE --env APP_ENV=preview --env DATABASE_URL=…
+          echo "url=https://pr-${{ github.event.number }}.preview.beacon.example" >> "$GITHUB_OUTPUT"
+
+  staging:
+    if: github.event_name == 'push' && vars.DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment: { name: staging, url: https://staging.beacon.example }
+    outputs:
+      digest: ${{ steps.digest.outputs.digest }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: digest
+        name: Resolve the image built by CI to its digest (the thing we promote)
+        run: |
+          docker pull "$IMAGE"
+          echo "digest=$(docker inspect --format '{{index .RepoDigests 0}}' "$IMAGE")" >> "$GITHUB_OUTPUT"
+      - name: Release step — migrations run BEFORE the new code (expand/contract, docs/deployment.md)
+        run: docker run --rm -e DATABASE_URL="${{ secrets.STAGING_DATABASE_URL }}" "${{ steps.digest.outputs.digest }}" node dist/scripts/migrate.mjs
+      - name: Deploy to staging (placeholder)
+        run: echo "your-platform deploy --app beacon-staging --image ${{ steps.digest.outputs.digest }}"
+      - name: Smoke tests against staging
+        run: |
+          curl -fsS https://staging.beacon.example/api/health
+          curl -fsS https://staging.beacon.example/api/ready
+
+  production:
+    needs: staging
+    runs-on: ubuntu-latest
+    environment: { name: production, url: https://app.beacon.example } # add required reviewers on this environment
+    steps:
+      - name: Release step on production (same image digest as staging)
+        run: docker run --rm -e DATABASE_URL="${{ secrets.PRODUCTION_DATABASE_URL }}" "${{ needs.staging.outputs.digest }}" node dist/scripts/migrate.mjs
+      - name: Rolling deploy (placeholder), then watch readiness and the error rate; roll back to the previous digest on failure
+        run: |
+          echo "your-platform deploy --app beacon --image ${{ needs.staging.outputs.digest }}"
+          curl -fsS --retry 10 --retry-delay 6 https://app.beacon.example/api/ready

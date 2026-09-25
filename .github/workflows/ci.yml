@@ -30,6 +30,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run typecheck
+      # Lesson 7.4: docs/configuration.md is generated from the config schema; it must match the code.
+      - run: npm run env:docs:check
       # Lesson 5.2 (🟡): the committed OpenAPI document must match the code.
       - run: npm run openapi:check
       # With DATABASE_URL set, tests/queue.integration.test.ts also runs the
@@ -38,3 +40,47 @@ jobs:
       - name: Migrations apply to a real Postgres
         run: npm run db:migrate
       - run: npm run build
+
+  # Lesson 7.4: build ONE image per commit, tagged with the git SHA. The deploy
+  # workflow (deploy.yml) promotes this exact image; nothing is rebuilt for production.
+  image:
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lint the Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+      - uses: docker/setup-buildx-action@v3
+      - name: Log in to GitHub Container Registry
+        if: github.event_name == 'push'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build (and push on main)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          build-args: |
+            GIT_SHA=${{ github.sha }}
+            SENTRY_ORG=${{ vars.SENTRY_ORG }}
+            SENTRY_PROJECT=${{ vars.SENTRY_PROJECT }}
+          # Lesson 7.2: with this secret, the build uploads the browser source maps to Sentry
+          # for this release, then deletes them from the image (scripts/sentry-sourcemaps.sh).
+          secrets: |
+            sentry_auth_token=${{ secrets.SENTRY_AUTH_TOKEN }}
+          tags: ghcr.io/${{ github.repository }}/beacon:${{ github.sha }}
+          push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: The image runs as a non-root user and has no dev dependencies or .env files
+        run: |
+          docker buildx build --load --build-arg GIT_SHA=${{ github.sha }} -t beacon:ci .
+          test "$(docker run --rm --entrypoint id beacon:ci -u)" = "1000"
+          docker run --rm --entrypoint sh beacon:ci -c '! ls node_modules/vitest node_modules/typescript node_modules/tsx 2>/dev/null && ! ls -a | grep -q "^.env"'
