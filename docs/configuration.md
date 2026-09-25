@@ -50,3 +50,12 @@ rules at the bottom of the schema: `BETTER_AUTH_SECRET` in production, the `S3_*
 | `OTEL_EXPORTER` | no |  | `console` | Debugging: print spans and metrics to stdout instead. |
 | `OTEL_SERVICE_NAME` | no |  |  | Service name in logs and traces: beacon-web, beacon-worker. |
 | `CHECK_REGION` | no |  |  | The checker’s region label on check metrics (lesson 7.2). Default `local`. |
+| `KMS_DRIVER` | no |  | `local` | Where the key-encryption keys live (lesson 8.1). `local` (default): ENCRYPTION_KEYS. A cloud KMS or OpenBao transit implements the same interface (src/lib/secrets/kms.ts). |
+| `ENCRYPTION_KEYS` | no |  |  | Required in production. Keys that encrypt stored secrets (webhook secrets, Slack URLs), newest first: `k2:<base64>,k1:<base64>`. Rotation: docs/security/secrets.md. |
+| `AI_PROVIDER` | no |  | `anthropic`, `fake` | The AI gateway’s provider (lesson 8.2). Default: `anthropic` when ANTHROPIC_API_KEY is set, else `fake` (deterministic, no network, no cost). |
+| `ANTHROPIC_API_KEY` | no |  |  | Optional: Claude for AI incident summaries (lesson 8.2). Server-side only; never NEXT_PUBLIC_. |
+| `AI_MODEL` | no |  |  | The primary model. Default `claude-opus-5`. |
+| `AI_FALLBACK_MODEL` | no |  |  | The model the gateway falls back to when the primary fails. Default `claude-sonnet-5`; `none` to disable. |
+| `AI_PRIMARY_BASE_URL` | no |  |  | Send only the PRIMARY model’s requests to this base URL (a proxy such as LiteLLM, or a bad endpoint for the fallback drill). ANTHROPIC_BASE_URL moves both. |
+| `AI_TIMEOUT_MS` | no |  |  | Timeout of one model request, in ms (the SDK retries it twice). Default 30000. |
+| `SECURITY_CONTACT` | no |  |  | The `Contact:` of /.well-known/security.txt (lesson 8.1). Default mailto:security@beacon.dev. |
