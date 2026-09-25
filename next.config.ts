@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import { securityHeaders } from './src/core/security-headers';
 
 const nextConfig: NextConfig = {
   // The check runner and scripts share code with the app; keep server-only
@@ -15,6 +16,12 @@ const nextConfig: NextConfig = {
   productionBrowserSourceMaps: process.env.SOURCE_MAPS === '1',
   // Lesson 6.1 (🟡): account settings moved to /settings/account (user-level),
   // next to the org-level /[org]/settings/…. Old links keep working.
+  // Lesson 8.1: src/proxy.ts sets the security headers on every page and API response; the
+  // proxy skips Next's static files, so they get the same headers (minus the CSP) here.
+  async headers() {
+    const headers = Object.entries(securityHeaders()).map(([key, value]) => ({ key, value }));
+    return [{ source: '/_next/static/:path*', headers }, { source: '/favicon.ico', headers }];
+  },
   async redirects() {
     return [{ source: '/account', destination: '/settings/account', permanent: true }];
   },

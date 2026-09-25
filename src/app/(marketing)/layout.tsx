@@ -35,7 +35,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
       </header>
       <main id="main" className="wrap">{children}</main>
       <footer className="wrap muted marketing-footer">
-        © Beacon · <Link href="/pricing">Pricing</Link> · <Link href="/docs/api">API reference</Link> · Uptime monitoring and status pages for teams.
+        © Beacon · <Link href="/pricing">Pricing</Link> · <Link href="/trust">Trust</Link> · <Link href="/docs/api">API reference</Link> · Uptime monitoring and status pages for teams.
       </footer>
     </>
   );
