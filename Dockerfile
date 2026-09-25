@@ -77,6 +77,9 @@ COPY --from=prod-deps --chown=1000:1000 /app/node_modules ./node_modules
 COPY --from=build --chown=1000:1000 /app/.next ./.next
 COPY --from=build --chown=1000:1000 /app/dist ./dist
 COPY --chown=1000:1000 package.json next.config.ts ./
+# next.config.ts is compiled when `next start` boots, so the files it imports must be here too:
+# the security headers (lesson 8.1). Keep that module free of imports so this stays one file.
+COPY --chown=1000:1000 src/core/security-headers.ts ./src/core/security-headers.ts
 COPY --chown=1000:1000 drizzle ./drizzle
 # Uploaded files with the local storage driver: mount a volume here (or use STORAGE_DRIVER=s3).
 RUN mkdir -p /app/.storage && chown 1000:1000 /app/.storage
