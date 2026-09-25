@@ -1,0 +1,15 @@
+#!/bin/sh
+# Lesson 8.1 (🟢): block a commit that contains a secret, before it ever leaves this laptop.
+# Install once per clone: npm run hooks:install   (sets core.hooksPath to .githooks)
+# Scans only what is staged, so it is fast. CI scans the whole history as the backstop.
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "pre-commit: gitleaks is not installed, so this commit was NOT scanned for secrets." >&2
+  echo "  Install it: brew install gitleaks, or https://github.com/gitleaks/gitleaks/releases" >&2
+  echo "  CI scans every push anyway (.github/workflows/ci.yml, job 'secrets')." >&2
+  exit 0
+fi
+# `gitleaks git --staged` is gitleaks 8.19+; older versions call it `protect --staged`.
+if gitleaks git --help >/dev/null 2>&1; then
+  exec gitleaks git --pre-commit --staged --redact --no-banner --config .gitleaks.toml
+fi
+exec gitleaks protect --staged --redact --no-banner --config .gitleaks.toml

@@ -1,0 +1,54 @@
+# Lesson 8.1 (🟢): secret scanning with gitleaks (https://github.com/gitleaks/gitleaks).
+# Runs in the pre-commit hook (.githooks/pre-commit, `npm run hooks:install`) and in CI over the
+# whole history (.github/workflows/ci.yml, job `secrets`).
+#
+# If it finds a real secret: ROTATE it first (revoke the key at the provider, issue a new one),
+# then remove it from the code. Rewriting git history is not a fix: the secret has been cloned.
+title = "Beacon gitleaks config"
+
+# gitleaks' built-in rules: AWS, Stripe, GitHub, Slack, private keys, generic high-entropy secrets…
+[extend]
+useDefault = true
+
+# Beacon's own credential formats, so a pasted real one is caught even where the generic rules are not sure.
+[[rules]]
+id = "beacon-api-key"
+description = "Beacon public API key (lesson 5.2)"
+regex = '''\bbk_live_[A-Za-z0-9_-]{24,}\b'''
+keywords = ["bk_live_"]
+
+[[rules]]
+id = "standard-webhooks-secret"
+description = "Webhook signing secret, Standard Webhooks format (lesson 5.3)"
+regex = '''\bwhsec_[A-Za-z0-9+/]{30,}={0,2}'''
+keywords = ["whsec_"]
+
+[[rules]]
+id = "beacon-encryption-keyring"
+description = "ENCRYPTION_KEYS with a real key (lesson 8.1): key ids and base64 32-byte keys"
+regex = '''ENCRYPTION_KEYS\s*=\s*['"]?[a-z0-9_-]+:[A-Za-z0-9+/]{43}='''
+keywords = ["encryption_keys"]
+
+[[rules]]
+id = "anthropic-api-key"
+description = "Anthropic API key (lesson 8.2)"
+regex = '''\bsk-ant-(api|admin)\d{2}-[A-Za-z0-9_-]{80,}'''
+keywords = ["sk-ant-"]
+
+# What is NOT a secret here. Keep this list short and explain every entry.
+[allowlist]
+description = "Fixtures and documented placeholders"
+paths = [
+  # Test fixtures use obviously fake values (hooks.slack.com/services/T0/B0/x, bk_live_AAAA…).
+  '''^tests/''',
+  '''^evals/''',
+  # Generated and vendored files.
+  '''^package-lock\.json$''',
+  '''^docs/openapi\.json$''',
+]
+regexes = [
+  # The documented demo password of the seed data (README), and .env.example placeholders.
+  '''beacon-demo-password''',
+  '''change-me[-a-z]*''',
+  '''ci-only-not-a-real-secret-[0-9a-f]+''',
+]

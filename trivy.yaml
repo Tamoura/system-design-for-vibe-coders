@@ -1,0 +1,9 @@
+# Lesson 8.1 (🟡): trivy (https://trivy.dev) scans the image and the lockfile for known CVEs
+# and misconfigurations. CI decides what blocks (.github/workflows/ci.yml): CRITICAL in the image.
+scan:
+  scanners: [vuln, misconfig, secret]
+severity: [HIGH, CRITICAL]
+vulnerability:
+  # Only report what a newer version fixes: an unfixed CVE cannot be acted on by upgrading.
+  ignore-unfixed: true
+ignorefile: .trivyignore

@@ -5,6 +5,43 @@ on:
   pull_request:
 
 jobs:
+  # Lesson 8.1 (🟢): no secret ever lands. gitleaks scans the WHOLE history (fetch-depth: 0), so a
+  # key committed in any branch fails CI even if a later commit deleted it: rotate it, then allowlist
+  # the old commit in .gitleaks.toml only after it is revoked. The pre-commit hook does the same locally.
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: gitleaks (full history)
+        run: |
+          docker run --rm -v "$PWD:/repo" -w /repo ghcr.io/gitleaks/gitleaks:v8.28.0 \
+            git /repo --config /repo/.gitleaks.toml --redact --verbose --no-banner
+
+  # Lesson 8.1 (🟡): supply chain. Known-vulnerable dependencies. A HIGH or CRITICAL advisory in a
+  # production dependency fails the build; the full report (dev tools included) is informational.
+  dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: npm audit (production dependencies, blocking at high)
+        run: npm audit --omit=dev --audit-level=high
+      - name: npm audit (everything, report only)
+        run: npm audit || true
+      - name: trivy (lockfile and config, report only)
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          scan-type: fs
+          scan-ref: .
+          trivy-config: trivy.yaml
+          exit-code: '0'
+
   test:
     runs-on: ubuntu-latest
     services:
@@ -30,6 +67,9 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run typecheck
+      # Lesson 8.2 (🟡): the AI summary eval (fixture incidents, injection attempts included). With no
+      # ANTHROPIC_API_KEY it runs on the fake provider: the pipeline, validation and guards, not the model.
+      - run: npm run ai:eval
       # Lesson 7.4: docs/configuration.md is generated from the config schema; it must match the code.
       - run: npm run env:docs:check
       # Lesson 5.2 (🟡): the committed OpenAPI document must match the code.
@@ -84,3 +124,13 @@ jobs:
           docker buildx build --load --build-arg GIT_SHA=${{ github.sha }} -t beacon:ci .
           test "$(docker run --rm --entrypoint id beacon:ci -u)" = "1000"
           docker run --rm --entrypoint sh beacon:ci -c '! ls node_modules/vitest node_modules/typescript node_modules/tsx 2>/dev/null && ! ls -a | grep -q "^.env"'
+      # Lesson 8.1 (🟡): "CI fails on critical CVEs in the worker image". The web app, the worker
+      # and the migrations are one image (lesson 7.4), so this scans all three. Fixed-in-a-newer-
+      # version CRITICALs fail; accepted risks go in .trivyignore with a reason and an expiry.
+      - name: trivy (the image, blocking on CRITICAL)
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          image-ref: beacon:ci
+          trivy-config: trivy.yaml
+          severity: CRITICAL
+          exit-code: '1'
