@@ -5,7 +5,7 @@ import { SYSTEM_SOURCE } from '../audit';
 import { recordPlatformAudit } from '../admin/audit';
 import { getStorage } from '../storage';
 
-const { checkResults, webhookEvents, notifications, notificationDeliveries, emailOutbox, orgExports } = schema;
+const { checkResults, webhookEvents, notifications, notificationDeliveries, emailOutbox, orgExports, llmCache } = schema;
 
 /*
  * Lesson 8.1: "decide how long you keep it, write it down, and enforce it
@@ -51,6 +51,10 @@ export async function purgeExpiredData(now = new Date()): Promise<Record<string,
   deleted.email_outbox = await inBatches(() =>
     db.delete(emailOutbox).where(inArray(emailOutbox.id, db.select({ id: emailOutbox.id }).from(emailOutbox).where(and(ne(emailOutbox.status, 'pending'), lt(emailOutbox.createdAt, mailCutoff))).limit(BATCH))).returning({ id: emailOutbox.id }),
   );
+
+  // Lesson 8.2: the gateway's response cache (the gateway also ignores entries older than this).
+  const cacheCutoff = retentionCutoff(RETENTION_RULES.llmCache.days, now);
+  deleted.llm_cache = (await db.delete(llmCache).where(lt(llmCache.createdAt, cacheCutoff)).returning({ at: llmCache.createdAt })).length;
 
   // Export files: the object first, then the row (a row without its file is harmless; the reverse is a leak).
   const expired = await db.select({ id: orgExports.id, key: orgExports.storageKey }).from(orgExports).where(lt(orgExports.expiresAt, now));

@@ -3,6 +3,7 @@ import { listMonitors } from '@/lib/monitors';
 import { findPublicStatusPage } from '@/lib/organizations';
 import { overallStatus } from '@/core/incidents';
 import { SubscribeForm } from './subscribe-form';
+import { listPublishedSummaries } from '@/lib/ai/incident-summary';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,6 +28,8 @@ export default async function StatusPage({ params }: { params: Promise<{ slug: s
   if (!org) notFound();
   const monitors = (await listMonitors({ orgId: org.id })).filter((m) => !m.paused);
   const status = overallStatus(monitors.map((m) => m.state));
+  // Lesson 8.2: incident updates a PERSON published (an AI draft is never shown here until then).
+  const updates = await listPublishedSummaries(org.id);
   return (
     <section className="grid">
       <div className="row">
@@ -46,6 +49,21 @@ export default async function StatusPage({ params }: { params: Promise<{ slug: s
           <span className="muted">{m.uptime24h === null ? '—' : `${m.uptime24h}% uptime (24h)`}</span>
         </div>
       ))}
+      {updates.length > 0 && (
+        <section className="grid" aria-labelledby="past-incidents" data-testid="incident-updates">
+          <h2 id="past-incidents" style={{ margin: 0, fontSize: '1.1rem' }}>Recent incidents</h2>
+          {updates.map((u) => (
+            <article key={`${u.publishedAt?.toISOString()}-${u.headline}`} className="card grid" style={{ gap: '.3rem' }}>
+              {/* Text, never HTML: React escapes it (lesson 8.1: output encoding + the CSP). */}
+              <strong>{u.headline}</strong>
+              <p style={{ margin: 0 }}>{u.body}</p>
+              <span className="muted">
+                {u.openedAt.toISOString().slice(0, 16).replace('T', ' ')} UTC{u.resolvedAt ? ` – ${u.resolvedAt.toISOString().slice(11, 16)} UTC` : ' · ongoing'}
+              </span>
+            </article>
+          ))}
+        </section>
+      )}
       <div className="card">
         <SubscribeForm slug={slug} />
       </div>

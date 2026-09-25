@@ -28,6 +28,10 @@ type Instruments = {
   jobDuration: Histogram;
   checksExecuted: Counter;
   checkLag: Histogram;
+  llmCalls: Counter;
+  llmTokens: Counter;
+  llmLatency: Histogram;
+  llmCost: Counter;
 };
 
 let cached: { provider: unknown; instruments: Instruments } | null = null;
@@ -45,6 +49,11 @@ function instruments(): Instruments {
     jobDuration: meter.createHistogram('job_duration_seconds', { description: 'How long a job ran', ...seconds([0.01, 0.05, 0.1, 0.5, 1, 2.5, 5, 10, 30, 60]) }),
     checksExecuted: meter.createCounter('checks_executed_total', { description: 'Uptime checks that ran, by region and result' }),
     checkLag: meter.createHistogram('check_lag_seconds', { description: 'Seconds between a check slot and the check actually running', ...seconds([0.5, 1, 2, 5, 10, 15, 30, 60, 120, 300]) }),
+    // Lesson 8.2: the AI gateway. Labels: feature, provider, model, outcome (small closed sets), never an org.
+    llmCalls: meter.createCounter('llm_calls_total', { description: 'Model calls made by the AI gateway, by feature, provider, model and outcome' }),
+    llmTokens: meter.createCounter('llm_tokens_total', { description: 'Tokens used by the AI gateway, by feature, model and direction (input/output)' }),
+    llmLatency: meter.createHistogram('llm_call_duration_seconds', { description: 'Model call duration', ...seconds([0.25, 0.5, 1, 2, 5, 10, 20, 30, 60]) }),
+    llmCost: meter.createCounter('llm_cost_micro_usd_total', { description: 'Estimated model cost in millionths of a dollar, by feature and model' }),
   };
   cached = { provider, instruments: made };
   return made;
@@ -87,4 +96,16 @@ export function routeTemplate(pathname: string): string {
       return part;
     })
     .join('/');
+}
+
+/** Lesson 8.2: one model call (or a cache hit, outcome="cached"). Per-org numbers live in llm_usage, not here. */
+export function recordLlmCall(call: { feature: string; provider: string; model: string; outcome: string; inputTokens: number; outputTokens: number; costMicros: number; seconds: number }) {
+  const i = instruments();
+  const base = { feature: call.feature, model: call.model };
+  i.llmCalls.add(1, { ...base, provider: call.provider, outcome: call.outcome });
+  if (call.outcome === 'cached') return;
+  i.llmTokens.add(call.inputTokens, { ...base, direction: 'input' });
+  i.llmTokens.add(call.outputTokens, { ...base, direction: 'output' });
+  i.llmLatency.record(call.seconds, base);
+  i.llmCost.add(call.costMicros, base);
 }

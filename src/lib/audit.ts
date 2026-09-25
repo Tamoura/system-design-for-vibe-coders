@@ -162,7 +162,7 @@ export type AuditFilters = {
 };
 
 /** The target types Beacon records, for the filter. */
-export const AUDIT_TARGET_TYPES = ['monitor', 'member', 'invitation', 'api_key', 'webhook_endpoint', 'organization', 'status_page', 'alert_policy', 'escalation_policy', 'subscription', 'user', 'export'] as const;
+export const AUDIT_TARGET_TYPES = ['monitor', 'member', 'invitation', 'api_key', 'webhook_endpoint', 'organization', 'status_page', 'alert_policy', 'escalation_policy', 'subscription', 'user', 'export', 'incident'] as const;
 
 /**
  * The page's and the API's query string → filters. Unknown values are

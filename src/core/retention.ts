@@ -23,6 +23,7 @@ export const RETENTION_RULES = {
   notifications: { data: 'In-app notifications and their delivery log', table: 'notifications', days: 180, why: 'Who was told what, for an incident review; nobody reads older ones.' },
   emailOutbox: { data: 'Sent and failed emails (recipient, template, props)', table: 'email_outbox', days: 30, why: 'Enough to answer "did the email go out?"; the content is personal data.' },
   orgExports: { data: 'Organization export files', table: 'org_exports', days: 7, why: 'A full copy of an org is the last thing to leave lying around.' },
+  llmCache: { data: 'Cached AI answers (lesson 8.2)', table: 'llm_cache', days: 7, why: 'A cache, not a record: the draft summary itself stays with its incident.' },
 } as const satisfies Record<string, RetentionRule>;
 
 /** Lesson 8.1: how long an org deletion can be cancelled. */

@@ -9,6 +9,7 @@ import { BlockedUrlError, assertPublicUrl } from '@/core/safe-fetch';
 import { AccessError, InvalidRequestError } from './errors';
 import { enqueueNotify } from './notifications/incidents';
 import { recordIncidentWebhook } from './webhooks';
+import { enqueueIncidentSummaryInTx } from './ai/incident-summary';
 import { signalRunsInTx } from './workflows/engine';
 import { publishInTx } from './realtime';
 import { trackInTx } from './analytics';
@@ -301,6 +302,7 @@ export async function resolveIncident(ctx: OrgScope, incidentId: string): Promis
     await enqueueNotify(tx, { orgId: ctx.orgId, event: 'incident.resolved', incidentId: incident.id });
     await recordIncidentWebhook(tx, ctx.orgId, 'incident.resolved', incident.id); // lesson 5.3
     await signalRunsInTx(tx, ctx.orgId, incident.id, 'incident.resolved'); // lesson 5.4: stops the escalation
+    await enqueueIncidentSummaryInTx(tx, ctx.orgId, incident.id, 'resolved'); // lesson 8.2: only if the org opted in
     return true;
   });
 }

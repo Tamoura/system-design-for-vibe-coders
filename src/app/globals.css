@@ -138,3 +138,4 @@ fieldset.card { margin: 0; }
 /* Lesson 7.1: impossible to miss, on every page, while staff view a customer's account. */
 .impersonation-banner { position: sticky; top: 0; z-index: 60; display: flex; gap: 1rem; align-items: center; justify-content: space-between; background: #b00020; color: #fff; padding: .5rem 1rem; font-size: .9rem; }
 .impersonation-banner .btn.secondary { padding: .25rem .8rem; }
+.ai-summary { margin: .4rem 0; padding: .5rem .7rem; border-left: 3px solid var(--accent); background: var(--panel); }

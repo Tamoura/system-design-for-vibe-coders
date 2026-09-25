@@ -1,4 +1,4 @@
-import { and, eq, ne } from 'drizzle-orm';
+import { and, eq, ne, or } from 'drizzle-orm';
 import { db, schema } from '@/db';
 import { withOrg } from '@/db/tenant';
 import type { AuditSource } from '@/core/audit';
@@ -9,7 +9,7 @@ import { orgDeletionBlockers, scheduleOrgDeletionInTx } from './org-data';
 const {
   users, accounts, sessions, memberships, organizations, staffUsers, notifications, notificationPreferences, notificationDeliveries,
   monitors, incidents, incidentUpdates, files, apiKeys, webhookEndpoints, invitations, orgMilestones, analyticsEvents, auditEvents,
-  escalationPolicies, emailOutbox,
+  escalationPolicies, emailOutbox, incidentSummaries,
 } = schema;
 
 /*
@@ -68,6 +68,8 @@ export const USER_DATA_COVERAGE: Record<string, string> = {
   'feature_flag_overrides.updated_by': 'staff configuration, not customer data',
   'staff_users.user_id': 'staff are not deleted here (npm run staff)',
   'impersonation_sessions.target_user_id': 'staff records; deleted with the user',
+  'incident_summaries.edited_by': 'exported (aiSummariesEditedOrPublished); kept by the org, person forgotten',
+  'incident_summaries.published_by': 'exported (aiSummariesEditedOrPublished); kept by the org, person forgotten',
 };
 
 /** Everything Beacon holds about one user, across every org they are in. */
@@ -108,6 +110,10 @@ export async function exportUserData(userId: string, now = new Date()) {
         webhookEndpointsCreated: await tx.select({ url: webhookEndpoints.url, createdAt: webhookEndpoints.createdAt }).from(webhookEndpoints).where(and(eq(webhookEndpoints.organizationId, org.id), eq(webhookEndpoints.createdBy, userId))),
         invitationsSent: await tx.select({ email: invitations.email, role: invitations.role, sentAt: invitations.sentAt }).from(invitations).where(and(eq(invitations.organizationId, org.id), eq(invitations.invitedBy, userId))),
         escalationPoliciesEdited: await tx.select({ updatedAt: escalationPolicies.updatedAt }).from(escalationPolicies).where(and(eq(escalationPolicies.organizationId, org.id), eq(escalationPolicies.updatedBy, userId))),
+        aiSummariesEditedOrPublished: await tx
+          .select({ incidentId: incidentSummaries.incidentId, headline: incidentSummaries.headline, editedAt: incidentSummaries.editedAt, publishedAt: incidentSummaries.publishedAt })
+          .from(incidentSummaries)
+          .where(and(eq(incidentSummaries.organizationId, org.id), or(eq(incidentSummaries.editedBy, userId), eq(incidentSummaries.publishedBy, userId)))),
         milestones: await tx.select().from(orgMilestones).where(and(eq(orgMilestones.organizationId, org.id), eq(orgMilestones.userId, userId))),
         productEvents: await tx.select({ event: analyticsEvents.event, properties: analyticsEvents.properties, occurredAt: analyticsEvents.occurredAt }).from(analyticsEvents).where(and(eq(analyticsEvents.organizationId, org.id), eq(analyticsEvents.userId, userId))),
         // What they did, from the audit log (their own actions, in this org).

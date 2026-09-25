@@ -24,7 +24,7 @@ import { getContext } from './context';
  */
 
 /** Keys that are never logged, wherever they appear (lesson 7.2: "logging secrets and PII"). */
-export const REDACTED_KEYS = ['password', 'newPassword', 'currentPassword', 'apiKey', 'api_key', 'secret', 'token', 'authorization', 'cookie', 'set-cookie', 'slackWebhookUrl'];
+export const REDACTED_KEYS = ['password', 'newPassword', 'currentPassword', 'apiKey', 'api_key', 'secret', 'token', 'authorization', 'cookie', 'set-cookie', 'slackWebhookUrl', 'prompt', 'encryptionKeys'];
 
 function redactPaths(): string[] {
   const paths: string[] = [];

@@ -11,6 +11,7 @@ import { publishInTx } from './realtime';
 import { recordIncidentWebhook } from './webhooks';
 import { startEscalationInTx } from './workflows/escalation';
 import { signalRunsInTx } from './workflows/engine';
+import { enqueueIncidentSummaryInTx } from './ai/incident-summary';
 
 const { monitors, checkResults, incidents, incidentUpdates } = schema;
 
@@ -107,6 +108,7 @@ export async function recordCheckResult(
       event = { orgId: org.id, event: 'incident.resolved', incidentId: open.id };
       await recordIncidentWebhook(tx, org.id, 'incident.resolved', open.id, now);
       await signalRunsInTx(tx, org.id, open.id, 'incident.resolved'); // lesson 5.4: stops its escalation
+      await enqueueIncidentSummaryInTx(tx, org.id, open.id, 'resolved', now); // lesson 8.2: a draft, if the org opted in
       await publishInTx(tx, org.id, { type: 'incident.changed', monitorId: monitor.id, incidentId: open.id, state: 'resolved' });
       line = `  ✓ ${monitor.name}: incident resolved`;
     }

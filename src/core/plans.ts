@@ -40,6 +40,13 @@ export type Entitlements = {
   api: boolean;
   /** Lesson 5.2: public API requests per minute per org (a token bucket: bursts up to this, refilled over a minute). */
   apiRequestsPerMinute: number;
+  /**
+   * Lesson 8.2: AI incident summaries (an org must also turn them on: off by
+   * default, because incident data then goes to the model provider), and how
+   * many model calls an org may make per hour (the gateway's per-org rate limit).
+   */
+  aiSummaries: boolean;
+  aiCallsPerHour: number;
 };
 
 type Plan = {
@@ -56,19 +63,19 @@ export const PLANS: Record<PlanId, Plan> = {
     name: 'Free',
     priceLabel: '$0',
     pitch: '5 monitors, checked every 5 minutes',
-    entitlements: { maxMonitors: 5, minIntervalSec: 300, smsCreditsPerMonth: 0, sso: false, auditLog: false, auditLogRetentionDays: 0, api: false, apiRequestsPerMinute: 0 },
+    entitlements: { maxMonitors: 5, minIntervalSec: 300, smsCreditsPerMonth: 0, sso: false, auditLog: false, auditLogRetentionDays: 0, api: false, apiRequestsPerMinute: 0, aiSummaries: false, aiCallsPerHour: 0 },
   },
   pro: {
     name: 'Pro',
     priceLabel: '$29/month',
     pitch: '50 monitors, 1-minute checks, 100 SMS alerts a month, 30 days of audit log',
-    entitlements: { maxMonitors: 50, minIntervalSec: 60, smsCreditsPerMonth: 100, sso: false, auditLog: true, auditLogRetentionDays: 30, api: false, apiRequestsPerMinute: 0 },
+    entitlements: { maxMonitors: 50, minIntervalSec: 60, smsCreditsPerMonth: 100, sso: false, auditLog: true, auditLogRetentionDays: 30, api: false, apiRequestsPerMinute: 0, aiSummaries: false, aiCallsPerHour: 0 },
   },
   business: {
     name: 'Business',
     priceLabel: '$99/month',
-    pitch: '500 monitors, 30-second checks, 500 SMS, SSO, a year of audit log and API',
-    entitlements: { maxMonitors: 500, minIntervalSec: 30, smsCreditsPerMonth: 500, sso: true, auditLog: true, auditLogRetentionDays: 365, api: true, apiRequestsPerMinute: 120 },
+    pitch: '500 monitors, 30-second checks, 500 SMS, SSO, a year of audit log, API and AI incident summaries',
+    entitlements: { maxMonitors: 500, minIntervalSec: 30, smsCreditsPerMonth: 500, sso: true, auditLog: true, auditLogRetentionDays: 365, api: true, apiRequestsPerMinute: 120, aiSummaries: true, aiCallsPerHour: 30 },
   },
 };
 

@@ -42,6 +42,9 @@ export const AUDIT_ACTIONS = {
   'monitor.paused': { category: 'monitors', description: 'Paused a monitor: no checks, no alerts' },
   'monitor.resumed': { category: 'monitors', description: 'Resumed a paused monitor' },
   'monitor.deleted': { category: 'monitors', description: 'Deleted a monitor and its history' },
+  // Lesson 8.2: what the AI did, and what a person published.
+  'incident.summary_generated': { category: 'monitors', description: 'The AI wrote a draft summary of an incident (model and provider in the details)' },
+  'incident.summary_published': { category: 'monitors', description: 'Published an incident summary to the public status page' },
   // Integrations (lessons 5.2, 5.3)
   'api_key.created': { category: 'integrations', description: 'Created an API key (only its prefix is recorded)' },
   'api_key.revoked': { category: 'integrations', description: 'Revoked an API key' },
@@ -60,6 +63,8 @@ export const AUDIT_ACTIONS = {
   'org.export_downloaded': { category: 'settings', description: 'Downloaded an export of the organization' },
   'org.deletion_requested': { category: 'settings', description: 'Asked to delete the organization (after a grace period)' },
   'org.deletion_cancelled': { category: 'settings', description: 'Cancelled the deletion of the organization' },
+  'ai.summaries_enabled': { category: 'settings', description: 'Turned on AI incident summaries (incident data is sent to the AI provider)' },
+  'ai.summaries_disabled': { category: 'settings', description: 'Turned off AI incident summaries' },
   // Billing (lessons 3.1, 3.2)
   'billing.plan_changed': { category: 'billing', description: 'The plan changed (a Stripe subscription update, or Beacon support)' },
   'billing.trial_extended': { category: 'billing', description: 'Beacon support extended the trial' },

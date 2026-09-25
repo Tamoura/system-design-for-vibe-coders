@@ -75,6 +75,10 @@ export const organizations = pgTable(
   // page is gone. Then the `org.delete` job purges it for real (src/lib/privacy/org-data.ts).
   deletionScheduledFor: timestamp('deletion_scheduled_for', { withTimezone: true }),
   deletionRequestedBy: uuid('deletion_requested_by').references((): AnyPgColumn => users.id, { onDelete: 'set null' }),
+  // Lesson 8.2: the org's choice to send incident data to the AI provider for summaries.
+  // Off by default (a security questionnaire asks "can we turn AI off?": it starts off),
+  // and it also needs the plan's `aiSummaries` entitlement.
+  aiSummariesEnabled: boolean('ai_summaries_enabled').notNull().default(false),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: updatedAt(),
   },
@@ -1127,6 +1131,95 @@ export const orgExports = pgTable(
   (t) => [index('org_exports_org_created_idx').on(t.organizationId, t.createdAt)],
 );
 
+/*
+ * Lesson 8.2: AI as a SaaS component.
+ */
+export const incidentSummaryStatus = pgEnum('incident_summary_status', ['generating', 'draft', 'published', 'failed']);
+
+/**
+ * Lesson 8.2 (🟢): one AI summary per incident. The model writes a DRAFT;
+ * a person edits it and clicks Publish, and only then does it appear on the
+ * public status page. The model never publishes (prompt injection, lesson 8.2).
+ *   generating  a job is on it      draft      ready for a person to review
+ *   failed      show a retry        published  on the status page (headline + body)
+ */
+export const incidentSummaries = pgTable(
+  'incident_summaries',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    incidentId: uuid('incident_id').notNull().unique().references(() => incidents.id, { onDelete: 'cascade' }),
+    status: incidentSummaryStatus('status').notNull().default('generating'),
+    headline: text('headline'),
+    // The customer-facing update: the text a person edits and publishes.
+    body: text('body'),
+    // The rest of the model's structured output (impact, suspected cause, timeline), for the team.
+    details: jsonb('details'),
+    provider: text('provider'),
+    model: text('model'),
+    // What the draft was generated from (sha256 of the prompt): a new request with the same hash is served from cache.
+    inputHash: text('input_hash'),
+    error: text('error'),
+    generatedAt: timestamp('generated_at', { withTimezone: true }),
+    editedBy: uuid('edited_by').references(() => users.id, { onDelete: 'set null' }),
+    editedAt: timestamp('edited_at', { withTimezone: true }),
+    publishedBy: uuid('published_by').references(() => users.id, { onDelete: 'set null' }),
+    publishedAt: timestamp('published_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [index('incident_summaries_org_published_idx').on(t.organizationId, t.publishedAt)],
+);
+
+/**
+ * Lesson 8.2 (🟡): every model call the gateway makes, with the org, the
+ * feature, the model, the tokens and the cost. The metering record behind
+ * usage billing (each ok call is also a `usage_events` row, meter ai_tokens,
+ * lesson 3.3) and "what does AI cost us per customer?". Append-only for the
+ * app role. Never the prompt or the output: those are customer data.
+ */
+export const llmUsage = pgTable(
+  'llm_usage',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    feature: text('feature').notNull(), // "incident_summary"
+    subjectId: uuid('subject_id'), // the incident
+    provider: text('provider').notNull(),
+    model: text('model').notNull(),
+    // ok | error | invalid_output | cached
+    outcome: text('outcome').notNull(),
+    inputTokens: integer('input_tokens').notNull().default(0),
+    outputTokens: integer('output_tokens').notNull().default(0),
+    // Millionths of a dollar: integer arithmetic, exact for per-million-token prices.
+    costMicros: bigint('cost_micros', { mode: 'number' }).notNull().default(0),
+    latencyMs: integer('latency_ms').notNull(),
+    error: text('error'),
+    requestId: text('request_id'),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('llm_usage_org_created_idx').on(t.organizationId, t.createdAt)],
+);
+
+/**
+ * Lesson 8.2: the gateway's response cache. The same prompt (same incident,
+ * same data, same prompt version) within 7 days is answered from here: one
+ * call instead of two. Tenant data, so per org and under RLS.
+ */
+export const llmCache = pgTable(
+  'llm_cache',
+  {
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    feature: text('feature').notNull(),
+    inputHash: text('input_hash').notNull(),
+    output: jsonb('output').notNull(),
+    provider: text('provider').notNull(),
+    model: text('model').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [primaryKey({ columns: [t.organizationId, t.feature, t.inputHash] }), index('llm_cache_created_idx').on(t.createdAt)],
+);
+
 export type Organization = typeof organizations.$inferSelect;
 export type Membership = typeof memberships.$inferSelect;
 export type Invitation = typeof invitations.$inferSelect;
@@ -1150,3 +1243,5 @@ export type FeatureFlag = typeof featureFlags.$inferSelect;
 export type StaffUser = typeof staffUsers.$inferSelect;
 export type ImpersonationSession = typeof impersonationSessions.$inferSelect;
 export type AuditEvent = typeof auditEvents.$inferSelect;
+export type IncidentSummary = typeof incidentSummaries.$inferSelect;
+export type LlmUsage = typeof llmUsage.$inferSelect;

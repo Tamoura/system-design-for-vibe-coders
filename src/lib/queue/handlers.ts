@@ -9,6 +9,7 @@ import { reportPendingUsage } from '../usage';
 import { deliverWebhook } from '../webhooks';
 import { purgeOrganization, runOrgExport } from '../privacy/org-data';
 import { purgeExpiredData } from '../privacy/retention';
+import { runIncidentSummary } from '../ai/incident-summary';
 import { runWorkflow } from '../workflows';
 import type { JobContext, JobData, QueueName } from './queues';
 
@@ -46,6 +47,8 @@ export const HANDLERS: { [Q in QueueName]?: Handler<Q> } = {
   'org.export': (data, job) => runOrgExport(data, job),
   'org.delete': (data) => purgeOrganization(data.orgId),
   'retention.purge': () => purgeExpiredData(),
+  // Lesson 8.2: the AI incident summary draft.
+  'ai.summarize': (data) => runIncidentSummary(data),
 };
 
 export function handlerFor<Q extends QueueName>(queue: Q): Handler<Q> | undefined {

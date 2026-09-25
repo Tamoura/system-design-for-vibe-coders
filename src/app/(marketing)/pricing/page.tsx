@@ -21,6 +21,7 @@ function features(e: Entitlements): string[] {
     'Public status page',
     ...(e.api ? [`Public API (${e.apiRequestsPerMinute} requests/minute) and webhooks`] : []),
     ...(e.sso ? ['Single sign-on (SSO)'] : []),
+    ...(e.aiSummaries ? ['AI incident summaries, drafted for you to review (opt-in)'] : []),
     ...(e.auditLog ? [`Audit log (${e.auditLogRetentionDays === 365 ? 'a year' : `${e.auditLogRetentionDays} days`} of history, CSV export)`] : []),
   ];
 }

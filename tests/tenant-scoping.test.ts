@@ -160,7 +160,7 @@ const TENANT_TABLES = [
   // Module 7
   'auditEvents',
   // Module 8
-  'orgExports',
+  'orgExports', 'incidentSummaries', 'llmUsage', 'llmCache',
 ];
 const SCANNED = ['src', 'scripts/run-checks.ts', 'scripts/report-usage.ts', 'scripts/worker.ts', 'scripts/jobs.ts'];
 const EXEMPT = [

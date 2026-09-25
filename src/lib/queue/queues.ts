@@ -28,6 +28,8 @@ import type { Queue } from 'pg-boss';
  *   org.export        build one org's data export file (lesson 8.1, GDPR portability)
  *   org.delete        purge an org after its grace period (lesson 8.1, erasure): delayed
  *   retention.purge   daily: delete data past its retention (lesson 8.1, src/core/retention.ts)
+ *   ai.summarize      write one incident's AI summary draft (lesson 8.2). The gateway already
+ *                     retries and falls back between models; the job retries only a crash
  *
  * Retries (pg-boss): `retryLimit` retries AFTER the first attempt, so 7 means
  * 8 attempts. With `retryBackoff` the delay before retry n is about
@@ -91,6 +93,7 @@ export const QUEUES = {
   'org.export': { retryLimit: 3, retryDelay: 60, retryBackoff: true, deadLetter: DEAD_LETTER, expireInSeconds: 900 },
   'org.delete': { retryLimit: 5, retryDelay: 300, retryBackoff: true, deadLetter: DEAD_LETTER, expireInSeconds: 1800, deleteAfterSeconds: 90 * 24 * 3600 },
   'retention.purge': { policy: 'singleton', retryLimit: 3, retryDelay: 300, expireInSeconds: 3600, deleteAfterSeconds: 30 * 24 * 3600 },
+  'ai.summarize': { retryLimit: 2, retryDelay: 30, retryBackoff: true, deadLetter: DEAD_LETTER, expireInSeconds: 300 },
 } as const satisfies Record<string, Omit<Queue, 'name'>>;
 
 export type QueueName = keyof typeof QUEUES;
@@ -117,6 +120,7 @@ export type JobData = {
   'org.export': { orgId: string; exportId: string };
   'org.delete': { orgId: string };
   'retention.purge': Record<string, never>;
+  'ai.summarize': { orgId: string; incidentId: string };
 };
 
 /**

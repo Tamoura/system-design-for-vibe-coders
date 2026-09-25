@@ -9,16 +9,19 @@ import { AutoRefresh } from '@/app/_components/auto-refresh';
 import { FileUploader } from '@/app/_components/file-uploader';
 import { listRuns } from '@/lib/workflows';
 import { isEnabled } from '@/lib/flags';
+import { getAiSettings, listIncidentSummaries } from '@/lib/ai/incident-summary';
 import { LatencyChart } from './latency-chart';
 import { acknowledgeIncidentAction, addIncidentUpdateAction, deleteMonitorAction, resolveIncidentAction } from './actions';
 import { WorkflowRuns } from './workflow-runs';
 import { EditMonitorForm } from './edit-form';
 import { LiveRefresh, Presence } from './live';
+import { AiSummary } from './ai-summary';
 
 export const dynamic = 'force-dynamic';
 
-export default async function MonitorPage({ params }: { params: Promise<{ orgSlug: string; id: string }> }) {
+export default async function MonitorPage({ params, searchParams }: { params: Promise<{ orgSlug: string; id: string }>; searchParams: Promise<Record<string, string | undefined>> }) {
   const { orgSlug, id } = await params;
+  const query = await searchParams;
   const ctx = await forPage(requirePermission(orgSlug, 'monitor.read'), `/${orgSlug}/monitors/${id}`);
   // Lesson 1.3: fetched by id *and* org. Another org's monitor id is a 404 here.
   const monitor = await getMonitor(ctx, id);
@@ -31,6 +34,10 @@ export default async function MonitorPage({ params }: { params: Promise<{ orgSlu
   // Lesson 5.4 (🟢): each incident's workflow runs, step by step (the "engine dashboard").
   const runs = await listRuns(ctx.orgId, history.incidents.map((i) => i.id));
   const canWriteIncidents = can(ctx.role, 'incident.write');
+  // Lesson 8.2: AI summaries (drafts a person publishes), when the plan has them and the org opted in.
+  const ai = await getAiSettings(ctx);
+  const summaries = ai.entitled && ai.enabled ? await listIncidentSummaries(ctx, history.incidents.map((i) => i.id)) : [];
+  const aiCan = { write: canWriteIncidents, publish: can(ctx.role, 'page.publish'), manageOrg: can(ctx.role, 'org.manage'), billing: can(ctx.role, 'billing.manage') };
   // Lesson 1.3 (🟡): the same ABAC rule the server enforces decides what to show.
   const editable = canEditMonitor(ctx, monitor);
   const ent = await getEntitlements(ctx); // lesson 3.2: for the interval picker's hints
@@ -70,7 +77,8 @@ export default async function MonitorPage({ params }: { params: Promise<{ orgSlu
           billingHref={can(ctx.role, 'billing.manage') ? `/${ctx.orgSlug}/billing` : null}
         />
       )}
-      <AutoRefresh active={screenshots.some((f) => f.status === 'processing')} />
+      <AutoRefresh active={screenshots.some((f) => f.status === 'processing') || summaries.some((s) => s.status === 'generating')} />
+      {query.ai_error && <div className="error" role="alert" data-testid="ai-error">{query.ai_error}</div>}
       <h2 style={{ margin: 0, fontSize: '1.1rem' }}>Incidents</h2>
       <div className="card">
         {history.incidents.length === 0 ? (
@@ -95,6 +103,7 @@ export default async function MonitorPage({ params }: { params: Promise<{ orgSlu
                           </li>
                         ))}
                     </ul>
+                    <AiSummary orgSlug={ctx.orgSlug} monitorId={monitor.id} incidentId={i.id} summary={summaries.find((s) => s.incidentId === i.id)} ai={ai} can={aiCan} />
                     {canWriteIncidents && (
                       <form action={addIncidentUpdateAction.bind(null, ctx.orgSlug, monitor.id, i.id)} className="row" style={{ gap: '.4rem' }}>
                         <input name="body" placeholder="Post an update…" required maxLength={5000} style={{ flex: 1 }} />

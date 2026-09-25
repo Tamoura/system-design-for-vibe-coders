@@ -9,7 +9,7 @@ import { SMS_OVERAGE_CENTS, type Entitlements } from './plans';
  */
 
 /** Lesson 3.3: the meters Beacon records. The name is also the Stripe meter's event name. */
-export const METERS = { sms: 'sms_segments' } as const;
+export const METERS = { sms: 'sms_segments', aiTokens: 'ai_tokens' } as const;
 export type Meter = (typeof METERS)[keyof typeof METERS];
 
 /**
@@ -21,6 +21,8 @@ export type Meter = (typeof METERS)[keyof typeof METERS];
 export const usageKeys = {
   /** One SMS, by the provider's message id (Twilio's `SM…` SID). */
   sms: (messageSid: string) => `sms:${messageSid}`,
+  /** Lesson 8.2: one model call, by its llm_usage row (tokens in + out). */
+  aiCall: (usageId: string) => `ai:${usageId}`,
 };
 
 export type Period = { start: Date; end: Date };

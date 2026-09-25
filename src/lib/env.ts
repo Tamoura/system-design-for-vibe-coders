@@ -82,6 +82,12 @@ export const envSchema = z
       .regex(/^[a-z0-9_-]{1,32}:[A-Za-z0-9+/]{43}=(,\s*[a-z0-9_-]{1,32}:[A-Za-z0-9+/]{43}=)*$/, 'a keyring "k2:<base64 32 bytes>,k1:<…>" (npm run secrets -- generate-key)')
       .optional()
       .describe('Required in production. Keys that encrypt stored secrets (webhook secrets, Slack URLs), newest first: `k2:<base64>,k1:<base64>`. Rotation: docs/security/secrets.md.'),
+    AI_PROVIDER: flag(['anthropic', 'fake'], 'The AI gateway’s provider (lesson 8.2). Default: `anthropic` when ANTHROPIC_API_KEY is set, else `fake` (deterministic, no network, no cost).'),
+    ANTHROPIC_API_KEY: z.string().optional().describe('Optional: Claude for AI incident summaries (lesson 8.2). Server-side only; never NEXT_PUBLIC_.'),
+    AI_MODEL: z.string().optional().describe('The primary model. Default `claude-opus-5`.'),
+    AI_FALLBACK_MODEL: z.string().optional().describe('The model the gateway falls back to when the primary fails. Default `claude-sonnet-5`; `none` to disable.'),
+    AI_PRIMARY_BASE_URL: optionalUrl('Send only the PRIMARY model’s requests to this base URL (a proxy such as LiteLLM, or a bad endpoint for the fallback drill). ANTHROPIC_BASE_URL moves both.'),
+    AI_TIMEOUT_MS: z.coerce.number().int().min(1000).optional().describe('Timeout of one model request, in ms (the SDK retries it twice). Default 30000.'),
     SECURITY_CONTACT: z.string().regex(/^(mailto:|https:)/, 'a mailto: or https: URI').optional().describe('The `Contact:` of /.well-known/security.txt (lesson 8.1). Default mailto:security@beacon.dev.'),
   })
   .superRefine((env, ctx) => {
