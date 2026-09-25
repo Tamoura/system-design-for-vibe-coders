@@ -1,5 +1,6 @@
 import { PgBoss, type ConstructorOptions } from 'pg-boss';
 import { QUEUES } from './queues';
+import { logger } from '../observability/logger';
 
 /*
  * Lesson 5.1: set up the queue's tables. `npm run db:migrate` calls this after
@@ -23,7 +24,7 @@ export async function installQueues(connection: Pick<ConstructorOptions, 'connec
   // migrate: true (the default) creates or upgrades pg-boss's schema. No
   // maintenance and no cron in this short-lived instance.
   const boss = new PgBoss({ ...connection, schema: QUEUE_SCHEMA, supervise: false, schedule: false });
-  boss.on('error', (err) => console.error('[queue]', err));
+  boss.on('error', (err) => logger.error({ err }, 'queue.error'));
   await boss.start();
   for (const [name, options] of Object.entries(QUEUES)) {
     if (await boss.getQueue(name)) {

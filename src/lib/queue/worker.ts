@@ -3,7 +3,9 @@ import { db, schema } from '@/db';
 import { listPendingEmailIds } from '../email';
 import { listProcessingFileIds } from '../files';
 import { listPendingDeliveryIds } from '../notifications/deliver';
+import { logger } from '../observability/logger';
 import { enqueue, startWorkerBoss } from './index';
+import { executeJob } from './execute';
 import { handlerFor } from './handlers';
 import { SCHEDULES, type QueueName } from './queues';
 import { asOutput, jobContext } from './run';
@@ -35,9 +37,11 @@ export const WORKERS: Partial<Record<QueueName, WorkOptions>> = {
   'usage.report': { localConcurrency: 1, pollingIntervalSeconds: 5 },
   // Lesson 6.2: one forwarding job per org at a time, so two never send the same rows.
   'analytics.forward': { localConcurrency: 2, groupConcurrency: 1, pollingIntervalSeconds: 5 },
+  // Module 7: housekeeping, once an hour or once a day.
+  'billing.comps': { localConcurrency: 1, pollingIntervalSeconds: 30 },
+  'audit.retention': { localConcurrency: 1, pollingIntervalSeconds: 30 },
+  'audit.verify': { localConcurrency: 1, pollingIntervalSeconds: 30 },
 };
-
-const log = (...args: unknown[]) => console.log(new Date().toISOString().slice(11, 19), ...args);
 
 export async function startWorkers() {
   const boss = await startWorkerBoss();
@@ -46,26 +50,14 @@ export async function startWorkers() {
   for (const [queue, options] of Object.entries(WORKERS) as [QueueName, WorkOptions][]) {
     const handler = handlerFor(queue);
     if (!handler) continue;
-    await boss.work(queue, { pollingIntervalSeconds: 1, ...options, includeMetadata: true }, async ([job]) => {
-      const ctx = jobContext(job);
-      const started = Date.now();
-      try {
-        const output = await handler(job.data as never, ctx);
-        log(`✓ ${queue} ${Date.now() - started} ms`, summary(output));
-        return asOutput(output);
-      } catch (err) {
-        log(`✗ ${queue} attempt ${ctx.attempt}${ctx.lastAttempt ? ' (last: dead-lettered)' : ', will retry'}: ${(err as Error).message}`);
-        throw err; // pg-boss records the error and schedules the retry
-      }
-    });
+    // Lesson 7.2: executeJob() gives each job its request context, span, metrics and log lines.
+    // A throw is a failed attempt: pg-boss records the error and schedules the retry.
+    await boss.work(queue, { pollingIntervalSeconds: 1, ...options, includeMetadata: true }, async ([job]) =>
+      asOutput(await executeJob(queue, job as Parameters<typeof executeJob>[1], jobContext(job), handler as (data: never, ctx: ReturnType<typeof jobContext>) => Promise<unknown>)),
+    );
   }
   await requeueOrphans();
   return boss;
-}
-
-function summary(output: unknown): string {
-  if (typeof output === 'string') return output.trim();
-  return output === undefined ? '' : JSON.stringify(output);
 }
 
 /**
@@ -84,5 +76,5 @@ export async function requeueOrphans() {
     }
     for (const fileId of await listProcessingFileIds({ orgId })) if (await enqueue('file.process', { orgId, fileId }, { key: fileId })) n++;
   }
-  if (n) log(`requeued ${n} job(s) for rows that had none`);
+  if (n) logger.info({ requeued: n }, 'worker.requeued_orphans');
 }

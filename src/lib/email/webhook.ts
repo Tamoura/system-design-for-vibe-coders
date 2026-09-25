@@ -1,5 +1,6 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { suppressEmail } from './index';
+import { logger } from '../observability/logger';
 
 /*
  * Lesson 4.1 (🟡): the provider tells us what happened to our mail. Resend
@@ -58,7 +59,7 @@ export async function handleEmailEvent(event: ProviderEvent): Promise<{ suppress
   if (event.type === 'email.bounced') {
     const bounce = event.data?.bounce;
     if (bounce?.type !== 'Permanent') {
-      console.warn(`[email] soft bounce for ${recipients.join(', ')}: ${bounce?.message ?? bounce?.type ?? 'unknown'}`);
+      logger.warn({ recipients: recipients.length, reason: bounce?.message ?? bounce?.type ?? 'unknown' }, 'email.soft_bounce');
       return { suppressed: [] };
     }
     for (const r of recipients) await suppressEmail(r, 'hard_bounce', [bounce.subType, bounce.message].filter(Boolean).join(': '));

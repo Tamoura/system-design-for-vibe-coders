@@ -7,6 +7,8 @@ import { checkSlots, isDue } from '@/core/schedule';
 import { recordCheckResult } from './checks';
 import { isEnabled } from './flags';
 import { enqueueInTx, type JobData } from './queue';
+import { recordCheck } from './observability/metrics';
+import { SpanKind, withSpan } from './observability/telemetry';
 
 const { organizations, monitors, checkResults } = schema;
 
@@ -98,7 +100,12 @@ export async function runScheduledCheck(job: JobData['check.run'], check: (url: 
   );
   if (!monitor) return 'skipped: monitor deleted';
   if (monitor.paused) return 'skipped: monitor paused';
-  const outcome = await check(monitor.url); // network: outside any transaction
+  // Lesson 7.2 (🟡): check LAG, Beacon's own health signal: how long after its
+  // slot did this check actually start? Workers falling behind, or a scheduler
+  // that skips monitors, shows up here long before any HTTP dashboard moves.
+  const lagSeconds = (Date.now() - new Date(job.scheduledAt).getTime()) / 1000;
+  const outcome = await withSpan('check.http', { kind: SpanKind.CLIENT, attributes: { 'beacon.monitor_id': monitor.id, 'beacon.check_lag_s': lagSeconds } }, () => check(monitor.url)); // network: outside any transaction
+  recordCheck(outcome.ok ? 'up' : 'down', lagSeconds);
   return recordCheckResult(org, monitor, outcome, new Date(), { scheduledAt: new Date(job.scheduledAt) });
 }
 

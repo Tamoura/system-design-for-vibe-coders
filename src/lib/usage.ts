@@ -7,6 +7,7 @@ import { getBillingProvider } from './billing/provider';
 import { entitlementsInTx } from './entitlements';
 import { usageAlertEvent } from './notifications/events';
 import { notifyInTx } from './notifications/pipeline';
+import { logger } from './observability/logger';
 
 const { organizations, subscriptions, usageEvents, usageAlerts } = schema;
 
@@ -195,7 +196,7 @@ async function withRetries(attempts: number, backoffMs: number, fn: () => Promis
       return true;
     } catch (err) {
       if (i === attempts - 1) {
-        console.error('usage report failed, will retry on the next run:', (err as Error).message);
+        logger.warn({ error: (err as Error).message }, 'usage.report_failed'); // retried on the next run
         return false;
       }
       await new Promise((r) => setTimeout(r, backoffMs * 2 ** i)); // 250 ms, 500 ms, …

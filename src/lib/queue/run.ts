@@ -1,5 +1,6 @@
 import type { JobWithMetadata } from 'pg-boss';
 import { getBoss } from './index';
+import { executeJob } from './execute';
 import { handlerFor, HANDLERS } from './handlers';
 import type { JobContext, QueueName } from './queues';
 
@@ -36,7 +37,7 @@ export async function runQueuedJobs(opts: { queues?: QueueName[]; maxRounds?: nu
       for (const job of jobs) {
         ran++;
         try {
-          const output = await handler(job.data, jobContext(job));
+          const output = await executeJob(queue, job, jobContext(job), handler as (data: never, ctx: ReturnType<typeof jobContext>) => Promise<unknown>);
           await boss.complete(queue, job.id, asOutput(output));
           counts.completed++;
         } catch (err) {

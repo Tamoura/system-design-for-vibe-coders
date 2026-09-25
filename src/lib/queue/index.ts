@@ -4,7 +4,10 @@ import { queueConnection } from '@/db';
 import type { TenantTx } from '@/db/tenant';
 import { stableUuid } from '@/core/ids';
 import { QUEUE_SCHEMA } from './install';
-import { QUEUES, type JobData, type QueueName } from './queues';
+import { QUEUES, type JobData, type JobMeta, type QueueName } from './queues';
+import { getContext } from '../observability/context';
+import { logger } from '../observability/logger';
+import { injectTraceContext, SpanKind, withSpan } from '../observability/telemetry';
 
 /*
  * Lesson 5.1: Beacon's job queue.
@@ -28,7 +31,7 @@ const g = globalThis as unknown as { beaconBoss?: Promise<PgBoss> };
 
 function start(options: Partial<ConstructorOptions>): Promise<PgBoss> {
   const boss = new PgBoss({ ...queueConnection, schema: QUEUE_SCHEMA, ...options });
-  boss.on('error', (err) => console.error('[queue]', err));
+  boss.on('error', (err) => logger.error({ err }, 'queue.error'));
   return boss.start();
 }
 
@@ -79,6 +82,41 @@ function sendOptions(queue: QueueName, opts: EnqueueOptions): SendOptions {
   };
 }
 
+/**
+ * Lesson 7.2: what a job carries besides its data, so the work it causes can
+ * be traced back to the request that asked for it. The worker restores both
+ * (./execute.ts): its log lines carry the same requestId, and its span is a
+ * child of this enqueue in the same trace. Nothing is added outside a request
+ * or a trace (a script, a test).
+ */
+async function withMeta<T extends object>(data: T): Promise<T & { _meta?: JobMeta }> {
+  const requestId = getContext()?.requestId ?? (await requestIdOfNextRequest());
+  const meta: JobMeta = { ...(requestId && { requestId }), ...injectTraceContext() };
+  return Object.keys(meta).length ? { ...data, _meta: meta } : data;
+}
+
+/**
+ * Pages and server actions have no request context of their own (only API
+ * routes and jobs do, ./observability/http.ts), but src/proxy.ts put the
+ * request id in their headers. Outside a Next.js request (the worker, a
+ * script, a test) headers() throws, and there is simply no id.
+ */
+async function requestIdOfNextRequest(): Promise<string | undefined> {
+  try {
+    const { headers } = await import('next/headers');
+    return (await headers()).get('x-request-id') ?? undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+async function send<Q extends QueueName>(queue: Q, data: JobData[Q], options: SendOptions): Promise<string | null> {
+  return withSpan(`enqueue ${queue}`, { kind: SpanKind.PRODUCER, attributes: { 'messaging.system': 'pg-boss', 'messaging.destination.name': queue } }, async () => {
+    const boss = await getBoss();
+    return boss.send(queue, await withMeta(data), options);
+  });
+}
+
 function assertQueue(queue: string): asserts queue is QueueName {
   if (!Object.hasOwn(QUEUES, queue)) throw new Error(`Unknown queue "${queue}"`);
 }
@@ -89,8 +127,7 @@ function assertQueue(queue: string): asserts queue is QueueName {
  */
 export async function enqueue<Q extends QueueName>(queue: Q, data: JobData[Q], opts: EnqueueOptions = {}): Promise<string | null> {
   assertQueue(queue);
-  const boss = await getBoss();
-  return boss.send(queue, data, sendOptions(queue, opts));
+  return send(queue, data, sendOptions(queue, opts));
 }
 
 /**
@@ -106,8 +143,7 @@ export async function enqueue<Q extends QueueName>(queue: Q, data: JobData[Q], o
  */
 export async function enqueueInTx<Q extends QueueName>(tx: TenantTx, queue: Q, data: JobData[Q], opts: EnqueueOptions = {}): Promise<string | null> {
   assertQueue(queue);
-  const boss = await getBoss();
-  return boss.send(queue, data, { ...sendOptions(queue, opts), db: fromDrizzle(tx, sql) });
+  return send(queue, data, { ...sendOptions(queue, opts), db: fromDrizzle(tx, sql) });
 }
 
 export { QUEUES, type JobData, type QueueName } from './queues';

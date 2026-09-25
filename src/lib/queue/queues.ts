@@ -21,6 +21,10 @@ import type { Queue } from 'pg-boss';
  *   usage.report      send SMS usage to the billing meter (lesson 3.3), every 5 minutes
  *   analytics.forward send one org's product events to PostHog in a batch (lesson 6.2),
  *                     at most one job per org per minute
+ *   billing.comps     hourly: end complimentary plans past their date (lesson 7.1)
+ *   audit.retention   daily: delete audit events older than the plan keeps (lesson 7.3)
+ *   audit.verify      daily: recompute every audit hash chain; a broken one logs
+ *                     `audit.chain_broken` at error level, which pages (lesson 7.2)
  *
  * Retries (pg-boss): `retryLimit` retries AFTER the first attempt, so 7 means
  * 8 attempts. With `retryBackoff` the delay before retry n is about
@@ -75,6 +79,10 @@ export const QUEUES = {
   'usage.report': { policy: 'singleton', retryLimit: 2, retryDelay: 60, expireInSeconds: 600, deleteAfterSeconds: 24 * 3600 },
   // Lesson 6.2: an analytics outage delays events, it never loses them (the rows stay unforwarded).
   'analytics.forward': { ...PROVIDER_RETRIES, expireInSeconds: 120 },
+  // Module 7: housekeeping. Singletons: one run at a time, a failed run retries a few times.
+  'billing.comps': { policy: 'singleton', retryLimit: 3, retryDelay: 60, expireInSeconds: 600, deleteAfterSeconds: 7 * 24 * 3600 },
+  'audit.retention': { policy: 'singleton', retryLimit: 3, retryDelay: 300, expireInSeconds: 1800, deleteAfterSeconds: 30 * 24 * 3600 },
+  'audit.verify': { policy: 'singleton', retryLimit: 1, retryDelay: 300, expireInSeconds: 3600, deleteAfterSeconds: 30 * 24 * 3600 },
 } as const satisfies Record<string, Omit<Queue, 'name'>>;
 
 export type QueueName = keyof typeof QUEUES;
@@ -95,12 +103,25 @@ export type JobData = {
   'file.process': { orgId: string; fileId: string };
   'usage.report': Record<string, never>;
   'analytics.forward': { orgId: string };
+  'billing.comps': Record<string, never>;
+  'audit.retention': Record<string, never>;
+  'audit.verify': Record<string, never>;
 };
+
+/**
+ * Lesson 7.2: added to a job's data by enqueue() when it is enqueued inside a
+ * request or a trace: the request id (so the worker's log lines carry it) and
+ * the W3C trace context (so the job's span joins the request's trace).
+ */
+export type JobMeta = { requestId?: string; traceparent?: string; tracestate?: string };
 
 /** Recurring jobs (lesson 5.1 "Scheduled tasks"): pg-boss cron, UTC. One job per tick across all workers. */
 export const SCHEDULES: { queue: QueueName; cron: string }[] = [
   { queue: 'checks.schedule', cron: '* * * * *' },
   { queue: 'usage.report', cron: '*/5 * * * *' },
+  { queue: 'billing.comps', cron: '7 * * * *' },
+  { queue: 'audit.retention', cron: '17 3 * * *' },
+  { queue: 'audit.verify', cron: '37 3 * * *' },
 ];
 
 export function isQueueName(name: string): name is QueueName {

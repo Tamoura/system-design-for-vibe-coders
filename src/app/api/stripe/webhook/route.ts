@@ -1,4 +1,5 @@
 import { handleStripeWebhook } from '@/lib/billing/webhook';
+import { observed } from '@/lib/observability/http';
 
 /**
  * POST /api/stripe/webhook — lesson 3.1 (🟡).
@@ -9,9 +10,10 @@ import { handleStripeWebhook } from '@/lib/billing/webhook';
  * src/lib/billing/webhook.ts.
  *
  * Locally: `stripe listen --forward-to localhost:3000/api/stripe/webhook`.
+ * Lesson 7.2: observed() logs it and reports a failed sync (then a 500, so Stripe retries).
  */
-export async function POST(req: Request): Promise<Response> {
+export const POST = observed(async (req: Request): Promise<Response> => {
   const rawBody = await req.text(); // raw body, never req.json()
   const { status, body } = await handleStripeWebhook(rawBody, req.headers.get('stripe-signature'));
   return new Response(body, { status, headers: { 'content-type': 'text/plain' } });
-}
+});

@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { logger } from '../observability/logger';
 
 /*
  * Lesson 4.1 (🟢): one interface in front of every way of sending mail.
@@ -69,7 +70,8 @@ export async function getEmailTransport(): Promise<EmailTransport> {
 const consoleTransport: EmailTransport = {
   name: 'console',
   async send(email) {
-    console.log(`\n[email] to=${email.to} subject="${email.subject}"\n${email.text}\n[/email]\n`);
+    // Development only: the whole email in one JSON line (`… | npx pino-pretty` makes it readable).
+    logger.info({ to: email.to, subject: email.subject, text: email.text }, 'email.console');
     return { messageId: messageIdFor(email.idempotencyKey) };
   },
 };

@@ -4,6 +4,7 @@ import { withOrg, type TenantTx } from '@/db/tenant';
 import { findPii, TRACKING_PLAN, type EventName, type EventProperties } from '@/core/tracking-plan';
 import { enqueueInTx } from '../queue';
 import { getAnalyticsDriver } from './drivers';
+import { logger } from '../observability/logger';
 
 const { organizations, analyticsEvents } = schema;
 
@@ -54,7 +55,7 @@ export async function trackInTx<E extends EventName>(tx: TenantTx, scope: TrackS
     props = validateEvent(event, properties);
   } catch (err) {
     if (process.env.NODE_ENV === 'production') {
-      console.error('[analytics] dropped', (err as Error).message);
+      logger.error({ event, error: (err as Error).message }, 'analytics.event_dropped');
       return;
     }
     throw err;

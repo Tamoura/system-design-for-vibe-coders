@@ -239,7 +239,7 @@ describe('the webhook (🟡)', () => {
   it('a failed sync answers 500 and the retry is processed, not skipped as a duplicate', async () => {
     const event = fakeEvent('customer.subscription.updated', { customer: customerId });
     const spy = vi.spyOn(fake, 'listSubscriptions').mockRejectedValueOnce(new Error('Stripe is down'));
-    await expect(postWebhook(event)).rejects.toThrow('Stripe is down'); // Next.js turns this into a 500
+    expect((await postWebhook(event)).status).toBe(500); // lesson 7.2: observed() reports the error and answers 500, so Stripe retries
     const retry = await postWebhook(event);
     expect(await retry.text()).toBe('ok');
     spy.mockRestore();

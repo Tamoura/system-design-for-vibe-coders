@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { smsSegments } from '@/core/notifications';
+import { logger } from '../observability/logger';
 
 /*
  * Lesson 4.2: "rent the channels, own the decisions". Each external channel
@@ -38,7 +39,7 @@ class FakeSms implements SmsProvider {
     if (this.outage) throw new Error('SMS provider unavailable (simulated outage)');
     const sid = `SMfake${createHash('sha256').update(idempotencyKey).digest('hex').slice(0, 26)}`;
     this.sent.push({ to, body, sid });
-    if (process.env.NODE_ENV !== 'test') console.log(`[sms] to=${to} sid=${sid} ${body}`);
+    logger.info({ sid, body }, 'sms.fake_sent'); // development driver: the text, never the phone number
     return { sid, segments: smsSegments(body), sentAt: new Date() };
   }
 }
@@ -48,7 +49,7 @@ class FakeSlack implements SlackSender {
   readonly posts: { webhookUrl: string; text: string }[] = [];
   async post(webhookUrl: string, { text }: { text: string }) {
     this.posts.push({ webhookUrl, text });
-    if (process.env.NODE_ENV !== 'test') console.log(`[slack] ${text.replace(/\n/g, ' / ')}`);
+    logger.info({ text }, 'slack.fake_posted');
     return { id: `slack_fake_${this.posts.length}` };
   }
 }

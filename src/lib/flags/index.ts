@@ -2,6 +2,7 @@ import { OpenFeature } from '@openfeature/server-sdk';
 import { FLAGS, type FlagKey } from '@/core/flags';
 import { BeaconFlagProvider } from './provider';
 import { loadRuleSet } from './store';
+import { logger } from '../observability/logger';
 
 /*
  * Lesson 6.3: how Beacon asks "is this flag on for this org?", everywhere:
@@ -29,7 +30,7 @@ function setUp(provider: BeaconFlagProvider) {
 }
 
 function flags() {
-  return g.beaconFlags ?? setUp(new BeaconFlagProvider({ load: loadRuleSet, refreshMs: refreshMs(), log: (m) => console.warn(m) }));
+  return g.beaconFlags ?? setUp(new BeaconFlagProvider({ load: loadRuleSet, refreshMs: refreshMs(), log: (m) => logger.warn({ detail: m }, 'flags.provider_warning') }));
 }
 
 /** Is `key` on for this organization? Typed: only flags declared in src/core/flags.ts. */

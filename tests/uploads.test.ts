@@ -160,7 +160,8 @@ describe('🟡 incident screenshots, private to the org', () => {
     expect(result.status).toBe('processing');
     screenshotId = result.fileId;
     // Lesson 2.4: the job payload carries the org. Lesson 5.1: it is a job in the queue, enqueued with the status change.
-    expect((await jobsIn('file.process')).map((j) => j.data)).toContainEqual({ orgId: acme.id, fileId: screenshotId });
+    // Lesson 7.2: and the request's id (`_meta`), so the worker's log lines tie back to this upload.
+    expect((await jobsIn('file.process')).map((j) => j.data)).toContainEqual({ orgId: acme.id, fileId: screenshotId, _meta: { requestId: expect.any(String) } });
 
     await runQueuedJobs({ queues: ['file.process'] }); // the worker
     const row = await fileRow(screenshotId);

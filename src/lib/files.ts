@@ -23,6 +23,7 @@ import type { OrgScope } from './monitors';
 import { findPublicStatusPage } from './organizations';
 import { enqueueInTx } from './queue';
 import { getStorage } from './storage';
+import { logger } from './observability/logger';
 
 const { files, incidents, organizations } = schema;
 
@@ -186,7 +187,7 @@ export async function processUploadedFile(ctx: OrgScope, fileId: string): Promis
     await storage.put(key, thumb, 'image/webp');
     await setFile(ctx, file.id, { status: 'ready', thumbnailKey: key });
   } catch (err) {
-    console.error(`[files] could not process ${file.id}:`, err);
+    logger.warn({ err, fileId: file.id }, 'file.rejected'); // lesson 7.2: a structured line, with the request/job context
     await storage.delete(file.key);
     await setFile(ctx, file.id, { status: 'rejected', rejectionReason: REFUSAL_MESSAGES.content_mismatch });
   }

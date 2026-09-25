@@ -1,4 +1,5 @@
 import { handleEmailEvent, verifyWebhookSignature } from '@/lib/email/webhook';
+import { observed } from '@/lib/observability/http';
 
 /**
  * POST /api/email/webhook — lesson 4.1 (🟡): bounce and complaint events from
@@ -7,7 +8,7 @@ import { handleEmailEvent, verifyWebhookSignature } from '@/lib/email/webhook';
  * 400 for anything unsigned, forged or stale; 200 for everything verified,
  * including events we ignore, so the provider does not retry them.
  */
-export async function POST(req: Request) {
+export const POST = observed(async (req: Request) => {
   const secret = process.env.EMAIL_WEBHOOK_SECRET;
   if (!secret) return Response.json({ error: 'webhook_not_configured' }, { status: 503 });
   const body = await req.text(); // the RAW body: the signature covers these exact bytes
@@ -25,4 +26,4 @@ export async function POST(req: Request) {
   }
   const { suppressed } = await handleEmailEvent(event as Parameters<typeof handleEmailEvent>[0]);
   return Response.json({ received: true, suppressed: suppressed.length });
-}
+});
