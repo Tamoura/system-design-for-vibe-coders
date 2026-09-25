@@ -1,3 +1,4 @@
+import { forwardAnalytics } from '../analytics/forward';
 import { sendQueuedEmail } from '../email';
 import { processUploadedFile } from '../files';
 import { deliverNotification } from '../notifications/deliver';
@@ -28,6 +29,7 @@ export const HANDLERS: { [Q in QueueName]?: Handler<Q> } = {
   'webhook.deliver': (data, job) => deliverWebhook(data, job),
   'file.process': (data) => processUploadedFile({ orgId: data.orgId }, data.fileId),
   'usage.report': () => reportPendingUsage(),
+  'analytics.forward': (data) => forwardAnalytics(data.orgId),
 };
 
 export function handlerFor<Q extends QueueName>(queue: Q): Handler<Q> | undefined {

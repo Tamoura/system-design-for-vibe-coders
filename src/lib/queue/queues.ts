@@ -19,6 +19,8 @@ import type { Queue } from 'pg-boss';
  *                     retried for about a day and a half, then dead-lettered
  *   file.process      a thumbnail (lesson 2.2)
  *   usage.report      send SMS usage to the billing meter (lesson 3.3), every 5 minutes
+ *   analytics.forward send one org's product events to PostHog in a batch (lesson 6.2),
+ *                     at most one job per org per minute
  *
  * Retries (pg-boss): `retryLimit` retries AFTER the first attempt, so 7 means
  * 8 attempts. With `retryBackoff` the delay before retry n is about
@@ -71,6 +73,8 @@ export const QUEUES = {
   'webhook.deliver': { retryLimit: 17, retryDelay: 5, retryBackoff: true, retryDelayMax: 6 * 3600, deadLetter: DEAD_LETTER, expireInSeconds: 60 },
   'file.process': { retryLimit: 3, retryDelay: 10, retryBackoff: true, deadLetter: DEAD_LETTER, expireInSeconds: 300 },
   'usage.report': { policy: 'singleton', retryLimit: 2, retryDelay: 60, expireInSeconds: 600, deleteAfterSeconds: 24 * 3600 },
+  // Lesson 6.2: an analytics outage delays events, it never loses them (the rows stay unforwarded).
+  'analytics.forward': { ...PROVIDER_RETRIES, expireInSeconds: 120 },
 } as const satisfies Record<string, Omit<Queue, 'name'>>;
 
 export type QueueName = keyof typeof QUEUES;
@@ -90,6 +94,7 @@ export type JobData = {
   'webhook.deliver': { orgId: string; messageId: string; manual?: boolean };
   'file.process': { orgId: string; fileId: string };
   'usage.report': Record<string, never>;
+  'analytics.forward': { orgId: string };
 };
 
 /** Recurring jobs (lesson 5.1 "Scheduled tasks"): pg-boss cron, UTC. One job per tick across all workers. */

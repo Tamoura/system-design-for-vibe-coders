@@ -155,6 +155,13 @@
       "when": 1790295860258,
       "tag": "0021_onboarding_milestones",
       "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1790295861350,
+      "tag": "0022_analytics_events",
+      "breakpoints": true
     }
   ]
 }

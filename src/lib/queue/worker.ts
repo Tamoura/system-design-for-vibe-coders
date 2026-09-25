@@ -33,6 +33,8 @@ export const WORKERS: Partial<Record<QueueName, WorkOptions>> = {
   'webhook.deliver': { localConcurrency: 10, groupConcurrency: 2 },
   'file.process': { localConcurrency: 2 },
   'usage.report': { localConcurrency: 1, pollingIntervalSeconds: 5 },
+  // Lesson 6.2: one forwarding job per org at a time, so two never send the same rows.
+  'analytics.forward': { localConcurrency: 2, groupConcurrency: 1, pollingIntervalSeconds: 5 },
 };
 
 const log = (...args: unknown[]) => console.log(new Date().toISOString().slice(11, 19), ...args);

@@ -29,3 +29,8 @@ export async function jobsIn(queue: string) {
 export async function clearQueues() {
   await pg().query(`delete from pgboss.job`);
 }
+
+/** As if their start time had come: every created job of one queue is due now (lesson 6.2: the per-minute analytics batch). */
+export async function jobsAreDue(queue: string) {
+  await pg().query(`update pgboss.job set start_after = now() - interval '1 second' where name = $1 and state = 'created'`, [queue]);
+}

@@ -149,9 +149,15 @@ const TENANT_TABLES = [
   // Module 5
   'apiIdempotencyKeys', 'webhookEndpoints', 'webhookEvents', 'webhookMessages', 'webhookAttempts',
   'workflowRuns', 'workflowSteps', 'workflowSignals', 'escalationPolicies',
+  // Module 6
+  'orgMilestones', 'analyticsEvents',
 ];
 const SCANNED = ['src', 'scripts/run-checks.ts', 'scripts/report-usage.ts', 'scripts/worker.ts', 'scripts/jobs.ts'];
-const EXEMPT = ['src/db/tenant.ts', 'src/db/schema.ts', 'src/db/index.ts'];
+const EXEMPT = [
+  'src/db/tenant.ts', 'src/db/schema.ts', 'src/db/index.ts',
+  // Lesson 6.2: the internal activation funnel reads across every org by design (staff only, /internal).
+  'src/lib/analytics/funnel.ts',
+];
 
 function sourceFiles(p: string): string[] {
   let stat;

@@ -1,6 +1,7 @@
 import { headers } from 'next/headers';
 import { auth, githubEnabled } from '@/lib/auth';
 import { requireUser } from '@/lib/session';
+import { ConsentSetting } from '@/app/_components/analytics-consent';
 import { linkGithubAction, resendVerificationAction } from './actions';
 
 export const dynamic = 'force-dynamic';
@@ -40,6 +41,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
         )}
         {params.error && <div className="error">Could not link GitHub ({params.error}). GitHub must report the same, verified email.</div>}
       </div>
+      <ConsentSetting />
       <p className="muted">Alert preferences (which incidents reach you by email or SMS) are per organization: open one and choose “My alert preferences”.</p>
     </section>
   );

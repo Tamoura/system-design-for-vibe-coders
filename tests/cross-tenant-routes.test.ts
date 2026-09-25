@@ -24,6 +24,7 @@ import * as notificationsRoute from '@/app/api/orgs/[orgSlug]/notifications/rout
 import * as eventsRoute from '@/app/api/orgs/[orgSlug]/events/route';
 import * as presenceRoute from '@/app/api/orgs/[orgSlug]/presence/route';
 import * as settingsRoute from '@/app/api/orgs/[orgSlug]/settings/route';
+import * as analyticsRoute from '@/app/api/orgs/[orgSlug]/analytics/route';
 import { publish } from '@/lib/realtime';
 import { makeOrg, signInAs } from './helpers/fixtures';
 
@@ -120,6 +121,19 @@ const CASES: Record<string, Case> = {
   'POST presence': { kind: 'item', call: (orgSlug) => presenceRoute.POST(req('POST', { topic: `monitor:${A.monitor}` }), p({ orgSlug })) },
   // Lesson 6.1: renaming under Globex's slug renames Globex, never Acme.
   'PATCH settings': { kind: 'list', call: (orgSlug) => settingsRoute.PATCH(req('PATCH', { name: 'Renamed', orgId: acme.id }), p({ orgSlug })) },
+  // Lesson 6.2: a client event is recorded for the org in the URL (with consent), never one named in the body.
+  'POST analytics': {
+    kind: 'list',
+    call: (orgSlug) =>
+      analyticsRoute.POST(
+        new Request('http://test/x', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json', cookie: 'beacon_analytics_consent=granted' },
+          body: JSON.stringify({ event: 'command_palette_opened', properties: { via: 'button' }, orgId: acme.id }),
+        }),
+        p({ orgSlug }),
+      ),
+  },
   'DELETE presence': {
     kind: 'item',
     call: (orgSlug) => presenceRoute.DELETE(new Request(`http://test/x?topic=monitor:${A.monitor}`, { method: 'DELETE' }), p({ orgSlug })),

@@ -876,6 +876,43 @@ export const orgMilestones = pgTable(
   (t) => [primaryKey({ columns: [t.organizationId, t.milestone] })],
 );
 
+/**
+ * Lesson 6.2 (🟡): product analytics events, written by the SERVER after the
+ * thing happened (usually in the same transaction), as the tracking plan in
+ * src/core/tracking-plan.ts says. Postgres is the source of truth here; when a
+ * PostHog key is configured the worker forwards them in batches and stamps
+ * `forwarded_at` (src/lib/analytics).
+ *
+ *  - organization_id on every event: B2B analytics is per ORG (the `group` call).
+ *  - user_id is Beacon's internal id, never the email. Deleting the user keeps
+ *    the event and forgets the person (GDPR erasure, lesson 8.1).
+ *  - org_plan: the plan when it happened, so funnels break down by plan.
+ *  - properties: enums, numbers and booleans only (no PII), checked on write.
+ *
+ * At scale these move to ClickHouse or the analytics vendor (lesson 6.2 🔴);
+ * never run heavy analytics queries on the production primary.
+ */
+export const analyticsEvents = pgTable(
+  'analytics_events',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    organizationId: uuid('organization_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+    userId: uuid('user_id').references(() => users.id, { onDelete: 'set null' }),
+    event: text('event').notNull(),
+    properties: jsonb('properties').notNull().default({}),
+    orgPlan: orgPlan('org_plan').notNull(),
+    occurredAt: timestamp('occurred_at', { withTimezone: true }).notNull().defaultNow(),
+    forwardedAt: timestamp('forwarded_at', { withTimezone: true }),
+  },
+  (t) => [
+    index('analytics_events_org_time_idx').on(t.organizationId, t.occurredAt),
+    // The funnel reads one event type across all orgs over a time range.
+    index('analytics_events_event_time_idx').on(t.event, t.occurredAt),
+    // What the forwarder still has to send (tiny: forwarded rows leave it).
+    index('analytics_events_unforwarded_idx').on(t.organizationId, t.occurredAt).where(sql`${t.forwardedAt} is null`),
+  ],
+);
+
 export type Organization = typeof organizations.$inferSelect;
 export type Membership = typeof memberships.$inferSelect;
 export type Invitation = typeof invitations.$inferSelect;
@@ -894,3 +931,4 @@ export type ApiKey = typeof apiKeys.$inferSelect;
 export type WebhookEndpoint = typeof webhookEndpoints.$inferSelect;
 export type WebhookMessage = typeof webhookMessages.$inferSelect;
 export type WorkflowRun = typeof workflowRuns.$inferSelect;
+export type AnalyticsEvent = typeof analyticsEvents.$inferSelect;
