@@ -126,6 +126,17 @@ account staff. See [docs/SOLUTIONS.md](docs/SOLUTIONS.md#module-7--operating-the
 [deployment](docs/deployment.md), [operations](docs/operations.md), [self-hosting](docs/self-hosting.md),
 [backups](docs/backup-and-restore.md), [configuration](docs/configuration.md).
 
+Module 8 is trust. Every response carries **security headers** and a **Content-Security-Policy** with a fresh nonce
+(`curl -I localhost:3000/status/demo`); `/.well-known/security.txt` and a **/trust** page list how to report a
+vulnerability and every subprocessor. Webhook signing secrets and Slack URLs are **encrypted at rest** (envelope
+encryption, `ENCRYPTION_KEYS`, `npm run secrets` to rotate); sign-in is throttled per account and per IP. Each user can
+**download their data** and **delete their account** (Account settings); owners can **export** or **delete** the whole
+organization (Settings → Data & privacy), and a nightly job enforces the retention table. On Business, **AI incident
+summaries** (Settings → AI summaries, off by default) draft a status-page update when an incident resolves, for a person
+to edit and publish; without `ANTHROPIC_API_KEY` a built-in fake provider writes them. `npm run ai:eval` runs the eval.
+`npm run hooks:install` once per clone runs gitleaks before every commit. See
+[docs/SOLUTIONS.md](docs/SOLUTIONS.md#module-8--trust--the-frontier) and [docs/security/](docs/security/threat-model.md).
+
 Billing (Module 3) is off until you configure it. To try upgrades without a Stripe account, start the app
 with `BILLING_PROVIDER=fake npm run dev`: "Upgrade" then opens a stand-in Checkout page inside Beacon and
 a signed webhook follows. For real Stripe test mode (test keys, `stripe listen`), see
@@ -152,6 +163,9 @@ a signed webhook follows. For real Stripe test mode (test keys, `stripe listen`)
 | `npm run env:docs` | Regenerate `docs/configuration.md` from the configuration schema (lesson 7.4). CI runs `npm run env:docs:check`. |
 | `npm run build:scripts` | Bundle the worker, migrations and CLIs to `dist/scripts/*.mjs` for the production image (lesson 7.4). |
 | `sh scripts/backup.sh` / `sh scripts/restore.sh` | A Postgres backup, and a restore into a scratch database for the drill (lesson 7.4). |
+| `npm run secrets` | Encryption at rest (lesson 8.1): which key wraps each stored secret; `-- rotate` re-wraps them with the newest key in `ENCRYPTION_KEYS`; `-- generate-key`. |
+| `npm run ai:eval` | The AI incident summary eval (lesson 8.2): 15 fixture incidents, five with prompt injections. The fake provider unless `ANTHROPIC_API_KEY` is set. |
+| `npm run hooks:install` | Use `.githooks/` in this clone: gitleaks scans every commit for secrets (lesson 8.1). |
 | `npm run org:claim -- <slug> <email>` | Make a user the owner of an org, e.g. the `default` org that migration 0003 creates for monitors from before Module 1. |
 
 ## Where things live
@@ -171,19 +185,24 @@ src/
   lib/observability/  pino logs with the request context, OpenTelemetry traces and metrics, error tracking (lesson 7.2).
   lib/admin/    The admin panel's service side: customer search, support actions, staff roles, audit verifier (7.1, 7.3).
   lib/audit.ts  recordAudit(): the audit log, written in the transaction of the change (lesson 7.3).
-  proxy.ts      Request ids, and the read-only rule for staff impersonation (lessons 7.1, 7.2).
+  lib/secrets/  Envelope encryption of stored secrets behind a KMS interface; key rotation (lesson 8.1).
+  lib/privacy/  GDPR: a person's export and account deletion, an org's export and deletion jobs, retention (lesson 8.1).
+  lib/ai/       The AI gateway (providers: Claude via the Anthropic SDK, a fake), incident summaries (lesson 8.2).
+  proxy.ts      Request ids, the read-only rule for staff impersonation, security headers and the CSP (7.1, 7.2, 8.1).
   emails/       React Email templates, each with a plain-text part (lesson 4.1).
   app/          Next.js App Router: (marketing)/ landing and pricing, (auth)/ and (site)/ sign-in and account
                 pages, /[orgSlug]/… the app shell and org pages, /status/[slug], /internal/… (staff), /api/… (the
                 dashboard's JSON), /api/v1/… (the public API, lesson 5.2), /docs/api.
 scripts/        migrate, seed, reset, worker, jobs, run-checks, report-usage, openapi, email-preview, storage-setup, claim-org, flags,
-                staff, audit, env-docs, build-scripts, backup.sh, restore.sh.
+                staff, audit, env-docs, build-scripts, secrets, ai-eval, backup.sh, restore.sh.
+evals/          The AI summary eval's fixture incidents (lesson 8.2).
+.githooks/      The pre-commit hook (gitleaks, lesson 8.1). `.gitleaks.toml`, `trivy.yaml`: the scanners' configuration.
 ops/            The observability stack's configuration: OTel Collector, Prometheus alert rules (the SLO), Grafana (lesson 7.2).
 drizzle/        SQL migrations (generated; commit them).
 tests/          Vitest tests for src/core, and for src/lib and the API on an in-memory Postgres.
 docs/           EXERCISES.md, SOLUTIONS.md (what each solution branch built and why), openapi.json and
                 configuration.md (generated), operations, deployment, self-hosting and backup guides (module 7),
-                later the architecture docs (module 9).
+                security/ (threat model, secrets, privacy and retention: module 8), later the architecture docs (module 9).
 ```
 
 To find where a lesson plugs in, search for its TODO:
@@ -205,6 +224,8 @@ grep -rn "TODO(1.2)" src scripts
 | React Email + nodemailer (Resend in production) | Templates as components with a plain-text part; SMTP to Mailpit locally | 4.1 |
 | pg-boss (a job queue in Postgres) | Jobs commit in the same transaction as the data; retries, cron, dead letters, per-tenant concurrency; no Redis to run | 5.1 |
 | pino + OpenTelemetry (+ Sentry, optional) | JSON logs with request and tenant context; vendor-neutral traces and metrics; errors tagged with the release | 7.2 |
+| Claude through the official Anthropic SDK, behind a small in-house gateway | One place for keys, fallbacks, caching, per-org limits and metering; the SDK's structured output with the same zod schemas | 8.2 |
+| gitleaks, trivy, Dependabot | Secrets never land; known-vulnerable dependencies and images fail CI | 8.1 |
 | Docker (one multi-stage image) and Compose | The same image in every environment; Postgres and Mailpit locally with one command | 7.4 |
 
 The course names the Django, Rails, Laravel and Go equivalents for every component. The ideas carry over,
