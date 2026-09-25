@@ -11,6 +11,9 @@ import { migrate } from 'drizzle-orm/postgres-js/migrator';
 import postgres from 'postgres';
 import { installQueues } from '../src/lib/queue/install';
 import { validateEnvOrExit } from '../src/lib/env';
+import { cliAuditSource } from '../src/lib/audit';
+import { sql as appSql } from '../src/db';
+import { encryptLegacySecrets } from '../src/lib/secrets/maintenance';
 
 validateEnvOrExit('migrate');
 
@@ -33,3 +36,12 @@ console.log('✓ migrations applied');
 // app role may do with them. Safe to run again.
 await installQueues({ connectionString: process.env.DATABASE_URL ?? 'postgres://beacon:beacon@localhost:5432/beacon', max: 2 });
 console.log('✓ job queues ready');
+
+// Lesson 8.1: the data half of migration 0025. Plaintext webhook secrets and Slack URLs from
+// before Module 8 are encrypted with the current key and the plaintext columns emptied. SQL
+// cannot do it (the key is not in the database), so it runs here, once per deploy, idempotent.
+const encrypted = await encryptLegacySecrets({ source: cliAuditSource('db:migrate') });
+if (encrypted.webhookSecrets + encrypted.slackUrls > 0) {
+  console.log(`✓ encrypted ${encrypted.webhookSecrets} webhook secret(s) and ${encrypted.slackUrls} Slack URL(s) that were stored in plain text`);
+}
+await appSql.end();

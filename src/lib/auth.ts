@@ -68,6 +68,9 @@ export const auth = betterAuth({
     ? { github: { clientId: process.env.GITHUB_CLIENT_ID!, clientSecret: process.env.GITHUB_CLIENT_SECRET! } }
     : {},
   account: {
+    // Lesson 8.1: the GitHub access and refresh tokens Better Auth stores are third-party
+    // secrets too: encrypted at rest (with BETTER_AUTH_SECRET), not kept in plain text.
+    encryptOAuthTokens: true,
     accountLinking: {
       enabled: true,
       // Lesson 1.1: never merge a GitHub identity into an existing account just

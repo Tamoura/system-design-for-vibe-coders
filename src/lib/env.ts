@@ -75,6 +75,14 @@ export const envSchema = z
     OTEL_EXPORTER: flag(['console'], 'Debugging: print spans and metrics to stdout instead.'),
     OTEL_SERVICE_NAME: z.string().optional().describe('Service name in logs and traces: beacon-web, beacon-worker.'),
     CHECK_REGION: z.string().optional().describe('The checker’s region label on check metrics (lesson 7.2). Default `local`.'),
+
+    KMS_DRIVER: flag(['local'], 'Where the key-encryption keys live (lesson 8.1). `local` (default): ENCRYPTION_KEYS. A cloud KMS or OpenBao transit implements the same interface (src/lib/secrets/kms.ts).'),
+    ENCRYPTION_KEYS: z
+      .string()
+      .regex(/^[a-z0-9_-]{1,32}:[A-Za-z0-9+/]{43}=(,\s*[a-z0-9_-]{1,32}:[A-Za-z0-9+/]{43}=)*$/, 'a keyring "k2:<base64 32 bytes>,k1:<…>" (npm run secrets -- generate-key)')
+      .optional()
+      .describe('Required in production. Keys that encrypt stored secrets (webhook secrets, Slack URLs), newest first: `k2:<base64>,k1:<base64>`. Rotation: docs/security/secrets.md.'),
+    SECURITY_CONTACT: z.string().regex(/^(mailto:|https:)/, 'a mailto: or https: URI').optional().describe('The `Contact:` of /.well-known/security.txt (lesson 8.1). Default mailto:security@beacon.dev.'),
   })
   .superRefine((env, ctx) => {
     const production = env.APP_ENV === 'production' || (env.NODE_ENV === 'production' && env.APP_ENV === undefined);
@@ -82,6 +90,8 @@ export const envSchema = z
       if (!env[key]) ctx.addIssue({ code: 'custom', path: [key], message: `required ${why}` });
     };
     if (production) need('BETTER_AUTH_SECRET', 'in production (signs sessions): openssl rand -base64 32');
+    // Lesson 8.1: without it, stored secrets would be encrypted with the public development key.
+    if (production) need('ENCRYPTION_KEYS', 'in production (encrypts stored secrets): npm run secrets -- generate-key');
     if (env.APP_ENV === 'production' && env.BILLING_PROVIDER === 'fake') ctx.addIssue({ code: 'custom', path: ['BILLING_PROVIDER'], message: '`fake` is for development; remove it in production' });
     if (env.APP_ENV === 'production' && env.OUTBOUND_ALLOWLIST) ctx.addIssue({ code: 'custom', path: ['OUTBOUND_ALLOWLIST'], message: 'must be empty in production (it lets the SSRF guard through)' });
     if (env.STORAGE_DRIVER === 's3') for (const k of ['S3_BUCKET', 'S3_ACCESS_KEY_ID', 'S3_SECRET_ACCESS_KEY'] as const) need(k, 'with STORAGE_DRIVER=s3');

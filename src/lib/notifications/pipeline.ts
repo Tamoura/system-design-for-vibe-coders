@@ -79,7 +79,7 @@ export async function notifyInTx(tx: TenantTx, event: NotifyEvent): Promise<{ no
       name: organizations.name,
       slug: organizations.slug,
       plan: organizations.plan,
-      slackWebhookUrl: organizations.slackWebhookUrl,
+      slackWebhookUrlEncrypted: organizations.slackWebhookUrlEncrypted,
       statusPagePublic: organizations.statusPagePublic,
     })
     .from(organizations)
@@ -166,7 +166,7 @@ export async function notifyInTx(tx: TenantTx, event: NotifyEvent): Promise<{ no
   }
 
   // The org's Slack channel: once per event, not once per person.
-  if (orgWantsSlack(event.category, policy, Boolean(org.slackWebhookUrl))) {
+  if (orgWantsSlack(event.category, policy, Boolean(org.slackWebhookUrlEncrypted))) {
     deliveries.push({ organizationId: event.orgId, channel: 'slack', dedupeKey: `${event.key}:slack`, recipient: 'slack', payload: base });
   }
 

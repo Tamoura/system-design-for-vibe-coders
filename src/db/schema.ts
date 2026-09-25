@@ -63,8 +63,13 @@ export const organizations = pgTable(
   compPlanUntil: timestamp('comp_plan_until', { withTimezone: true }),
   // Lesson 4.2 (🟡): the org's Slack channel, as a Slack "incoming webhook" URL
   // (https://hooks.slack.com/services/…). It is a secret: anyone with it can
-  // post to the channel. TODO(8.1): encrypt secrets at rest.
-  slackWebhookUrl: text('slack_webhook_url'),
+  // post to the channel. Lesson 8.1: stored envelope-encrypted ("enc:v1:…",
+  // src/lib/secrets), so a database dump does not leak it.
+  slackWebhookUrlEncrypted: text('slack_webhook_url_encrypted'),
+  // Lesson 8.1: the Module 4–7 plaintext column (expand/contract, docs/deployment.md).
+  // `npm run db:migrate` encrypts what is here into the column above and empties it;
+  // nothing reads it any more, and a later migration drops it.
+  legacySlackWebhookUrl: text('slack_webhook_url'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: updatedAt(),
   },
@@ -706,7 +711,9 @@ export const rateLimitBuckets = pgTable('rate_limit_buckets', {
 /**
  * An org's receiving URL, the event types it wants, and its signing secret.
  * The secret must be readable to sign, so it cannot be hashed like an API key:
- * it is shown once in the UI and never sent back. TODO(8.1): encrypt at rest.
+ * it is shown once in the UI and never sent back. Lesson 8.1: stored
+ * envelope-encrypted (src/lib/secrets): a raw SELECT shows ciphertext and a
+ * wrapped data key, never the secret.
  */
 export const webhookEndpoints = pgTable(
   'webhook_endpoints',
@@ -716,7 +723,10 @@ export const webhookEndpoints = pgTable(
     url: text('url').notNull(),
     description: text('description'),
     eventTypes: text('event_types').array().notNull(),
-    secret: text('secret').notNull(),
+    secretEncrypted: text('secret_encrypted'),
+    // Lesson 8.1: the Module 5–7 plaintext column, emptied by `npm run db:migrate` (see
+    // legacySlackWebhookUrl above). Nullable now; dropped by a later migration.
+    legacySecret: text('secret'),
     enabled: boolean('enabled').notNull().default(true),
     disabledReason: text('disabled_reason'),
     // Lesson 5.3 (🟡): set on the first failed delivery, cleared by the next

@@ -9,7 +9,7 @@
  */
 import { build } from 'esbuild';
 
-const entryPoints = ['worker', 'migrate', 'seed', 'staff', 'audit', 'jobs', 'flags'].map((name) => `scripts/${name}.ts`);
+const entryPoints = ['worker', 'migrate', 'seed', 'staff', 'audit', 'jobs', 'flags', 'secrets'].map((name) => `scripts/${name}.ts`);
 
 await build({
   entryPoints,

@@ -71,6 +71,9 @@ export const AUDIT_ACTIONS = {
   'flag.changed': { category: 'platform', description: 'Changed a feature flag rule (lesson 6.3)' },
   'flag.override_changed': { category: 'platform', description: 'Changed a per-organization flag override (lesson 6.3)' },
   'audit.retention_purged': { category: 'platform', description: 'Deleted audit events past their retention' },
+  // Lesson 8.1: encryption at rest. Counts and key ids only, never a key or a secret.
+  'secrets.encrypted': { category: 'platform', description: 'Encrypted stored secrets that were still in plain text (the Module 8 migration)' },
+  'secrets.rewrapped': { category: 'platform', description: 'Re-wrapped the data keys of stored secrets with the current encryption key (key rotation)' },
 } as const satisfies Record<string, ActionSpec>;
 
 export type AuditAction = keyof typeof AUDIT_ACTIONS;

@@ -18,6 +18,7 @@ import { recordMilestoneInTx } from './onboarding';
 import { appUrl } from './urls';
 import type { AuditSource } from '@/core/audit';
 import { auditSourceOf, recordAudit } from './audit';
+import { decryptSecret, encryptSecret, secretContext } from './secrets';
 
 const { webhookEndpoints, webhookEvents, webhookMessages, webhookAttempts, organizations, memberships, users } = schema;
 
@@ -63,10 +64,12 @@ async function assertWebhookUrl(url: string) {
 export async function createEndpoint(ctx: Manager, input: z.infer<typeof createEndpointInput>): Promise<{ id: string; secret: string }> {
   await assertWebhookUrl(input.url);
   const secret = generateWebhookSecret();
+  // Lesson 8.1: only the envelope-encrypted form is stored (a KMS call, so before the transaction).
+  const secretEncrypted = await encryptSecret(secret, secretContext('webhook_endpoints.secret', ctx.orgId));
   const row = await withOrg(ctx.orgId, async (tx) => {
     const [endpoint] = await tx
       .insert(webhookEndpoints)
-      .values({ organizationId: ctx.orgId, url: input.url, description: input.description || null, eventTypes: [...new Set(input.eventTypes)], secret, createdBy: ctx.userId })
+      .values({ organizationId: ctx.orgId, url: input.url, description: input.description || null, eventTypes: [...new Set(input.eventTypes)], secretEncrypted, createdBy: ctx.userId })
       .returning({ id: webhookEndpoints.id });
     // Lessons 6.1/6.2: a webhook is an alert channel too (the onboarding step, once; the event, every time).
     await recordMilestoneInTx(tx, ctx.orgId, 'alert_channel_connected', ctx.userId);
@@ -127,7 +130,7 @@ export async function getEndpointLog({ orgId }: Scope, endpointId: string, opts:
           .where(and(eq(webhookAttempts.organizationId, orgId), inArray(webhookAttempts.messageId, messages.map((m) => m.message.id))))
           .orderBy(webhookAttempts.createdAt)
       : [];
-    const { secret: _secret, ...safe } = endpoint; // the secret never leaves the server again
+    const { secretEncrypted: _secret, legacySecret: _legacy, ...safe } = endpoint; // the secret never leaves the server again
     return {
       endpoint: safe,
       messages: messages.map(({ message, eventType }) => ({
@@ -256,6 +259,9 @@ export async function deliverWebhook(job: JobData['webhook.deliver'], ctx: Pick<
     return { status: 'disabled' };
   }
 
+  // Lesson 8.1: decrypted only here, for the moment it takes to sign, and never logged.
+  if (!row.endpoint.secretEncrypted) throw new Error(`Webhook endpoint ${row.endpoint.id} has no encrypted secret (run npm run db:migrate)`);
+  const secret = await decryptSecret(row.endpoint.secretEncrypted, secretContext('webhook_endpoints.secret', orgId));
   // The body is the stored event, byte for byte the same on every retry.
   const body = JSON.stringify(row.event.payload);
   const webhookId = toPublicId('webhookMessage', messageId);
@@ -266,7 +272,7 @@ export async function deliverWebhook(job: JobData['webhook.deliver'], ctx: Pick<
   try {
     const res = await safeFetch(
       row.endpoint.url,
-      { method: 'POST', body, headers: webhookHeaders(row.endpoint.secret, webhookId, body, now), signal: AbortSignal.timeout(DELIVERY_TIMEOUT_MS) },
+      { method: 'POST', body, headers: webhookHeaders(secret, webhookId, body, now), signal: AbortSignal.timeout(DELIVERY_TIMEOUT_MS) },
       { maxRedirects: 0, ports: WEBHOOK_PORTS }, // a redirect is a failure: never follow one for a webhook
     );
     statusCode = res.status;

@@ -9,6 +9,7 @@ import { isEnabled } from '../flags';
 import { recordSmsSent } from '../usage';
 import { enqueueDeliveries, type DeliveryPayload } from './pipeline';
 import { getSlackSender, getSmsProvider } from './providers';
+import { readSlackWebhookUrl } from './slack';
 
 const { organizations, notificationDeliveries, users } = schema;
 type Delivery = typeof notificationDeliveries.$inferSelect & { payload: DeliveryPayload };
@@ -201,13 +202,13 @@ async function holdBackSms(d: Delivery, hourAgo: Date) {
 
 /** Slack: the org's incoming webhook, looked up at send time (it may have changed or been removed). */
 async function sendSlackDelivery(d: Delivery): Promise<Outcome> {
-  const [org] = await db.select({ url: organizations.slackWebhookUrl }).from(organizations).where(eq(organizations.id, d.organizationId));
-  if (!org?.url) {
+  const slackUrl = await readSlackWebhookUrl(d.organizationId); // lesson 8.1: decrypted only to post
+  if (!slackUrl) {
     await record(d, { status: 'skipped', error: 'no Slack webhook configured' });
     return 'skipped';
   }
   const { title, body, url } = d.payload;
-  const { id } = await getSlackSender().post(org.url, { text: `*${title}*\n${body}\n<${url}|Open in Beacon>` });
+  const { id } = await getSlackSender().post(slackUrl, { text: `*${title}*\n${body}\n<${url}|Open in Beacon>` });
   await record(d, { status: 'sent', providerMessageId: id, sentAt: new Date(), error: null });
   return 'sent';
 }

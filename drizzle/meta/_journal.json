@@ -176,6 +176,13 @@
       "when": 1790299355778,
       "tag": "0024_staff_and_audit",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1790303744141,
+      "tag": "0025_encrypted_secrets",
+      "breakpoints": true
     }
   ]
 }

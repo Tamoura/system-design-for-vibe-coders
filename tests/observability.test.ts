@@ -186,7 +186,11 @@ describe('lesson 7.4: configuration is validated at startup', () => {
     expect(() => loadEnv({ ...prod, BETTER_AUTH_SECRET: secret, BILLING_PROVIDER: 'fake' })).toThrow(/BILLING_PROVIDER/);
     expect(() => loadEnv({ ...prod, BETTER_AUTH_SECRET: secret, OUTBOUND_ALLOWLIST: 'localhost:3000' })).toThrow(/OUTBOUND_ALLOWLIST/);
     expect(() => loadEnv({ ...base, STRIPE_SECRET_KEY: 'sk_test_123' })).toThrow(/STRIPE_WEBHOOK_SECRET: required with STRIPE_SECRET_KEY/);
-    expect(loadEnv({ ...prod, BETTER_AUTH_SECRET: secret })).toMatchObject({ APP_ENV: 'production' });
+    // Lesson 8.1: production also needs the keys that encrypt stored secrets.
+    expect(() => loadEnv({ ...prod, BETTER_AUTH_SECRET: secret })).toThrow(/ENCRYPTION_KEYS: required in production/);
+    const keys = `k1:${Buffer.alloc(32, 7).toString('base64')}`;
+    expect(() => loadEnv({ ...prod, BETTER_AUTH_SECRET: secret, ENCRYPTION_KEYS: 'k1:tooshort' })).toThrow(/ENCRYPTION_KEYS: a keyring/);
+    expect(loadEnv({ ...prod, BETTER_AUTH_SECRET: secret, ENCRYPTION_KEYS: keys })).toMatchObject({ APP_ENV: 'production' });
   });
 
   it('validateEnvOrExit prints what is wrong and exits with code 1 (no stack trace)', () => {

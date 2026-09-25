@@ -206,9 +206,11 @@ describe('lint: tenant tables only through withOrg()', () => {
     // rate-limit.ts: one bucket row locked per request (lesson 5.2); rate_limit_buckets is not a tenant table.
     // Module 7: staff-side writes run as the owner in one transaction with their audit event (impersonation
     // sessions and platform events such as flag changes are not tenant rows; beacon_app may not touch them).
+    // Module 8: the platform audit events of key rotation (secrets/maintenance.ts).
     const allowed = [
       'src/lib/organizations.ts', 'src/lib/invitations.ts', 'src/lib/email/index.ts', 'src/lib/rate-limit.ts',
       'src/lib/admin/audit.ts', 'src/lib/admin/support.ts', 'src/lib/admin/staff.ts', 'src/lib/impersonation.ts', 'src/lib/flags/store.ts',
+      'src/lib/secrets/maintenance.ts',
     ];
     const users = files.filter((f) => /\bdb\s*\.\s*transaction\s*\(/.test(readFileSync(f, 'utf8'))).map((f) => f.split(path.sep).join('/'));
     expect(users.filter((f) => !allowed.includes(f))).toEqual([]);

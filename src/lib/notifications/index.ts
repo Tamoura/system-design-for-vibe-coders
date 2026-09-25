@@ -20,10 +20,13 @@ import { trackInTx } from '../analytics';
 import { recordMilestoneInTx } from '../onboarding';
 import { auditSourceOf, recordAudit } from '../audit';
 import { isSlackWebhookUrl } from './providers';
+import { encryptSecret, secretContext } from '../secrets';
+import { readSlackWebhookUrl } from './slack';
 import { notifyInTx, smsIncluded, type NotifyEvent } from './pipeline';
 
 export { notifyInTx, type NotifyEvent } from './pipeline';
 export { deliverNotification, listPendingDeliveryIds } from './deliver';
+export { readSlackWebhookUrl } from './slack';
 
 const { notifications, notificationDeliveries, notificationPreferences, orgNotificationPolicies, organizations, users } = schema;
 
@@ -234,11 +237,11 @@ export async function setPreference(me: Me, category: Category, channel: Persona
 export const ORG_POLICY_CHANNELS = ['email', 'sms', 'slack'] as const satisfies readonly Channel[];
 
 export async function getOrgNotificationSettings({ orgId }: { orgId: string }) {
-  const [org] = await db.select({ slackWebhookUrl: organizations.slackWebhookUrl }).from(organizations).where(eq(organizations.id, orgId));
+  const slackUrl = await readSlackWebhookUrl(orgId);
   const policy = await withOrg(orgId, (tx) => tx.select().from(orgNotificationPolicies).where(eq(orgNotificationPolicies.organizationId, orgId)));
   return {
     // Never send the secret back to the browser: only whether it is set, and its ending.
-    slack: org?.slackWebhookUrl ? { connected: true, hint: `…${org.slackWebhookUrl.slice(-6)}` } : { connected: false, hint: null },
+    slack: slackUrl ? { connected: true, hint: `…${slackUrl.slice(-6)}` } : { connected: false, hint: null },
     rows: CATEGORY_IDS.filter((c) => !CATEGORIES[c].required).map((category) => ({
       category,
       label: CATEGORIES[category].label,
@@ -269,11 +272,15 @@ export async function saveOrgNotificationSettings(
       enabled: input.allowed.has(`${category}:${channel}`),
     })),
   );
+  // Lesson 8.1: encrypt (and decrypt the current one, to tell "replaced" from "same") BEFORE the
+  // transaction: a real KMS is a network call, and network calls stay out of transactions (lesson 2.4).
+  const beforeUrl = await readSlackWebhookUrl(orgId);
+  const slackEncrypted = slackUrl ? await encryptSecret(slackUrl, secretContext('organizations.slack_webhook_url', orgId)) : slackUrl;
   await withOrg(orgId, async (tx) => {
-    const [before] = await tx.select({ url: organizations.slackWebhookUrl }).from(organizations).where(eq(organizations.id, orgId));
+    const before = { url: beforeUrl };
     const offBefore = await disabledPolicies(tx, orgId);
     if (slackUrl !== undefined) {
-      await tx.update(organizations).set({ slackWebhookUrl: slackUrl }).where(eq(organizations.id, orgId));
+      await tx.update(organizations).set({ slackWebhookUrlEncrypted: slackEncrypted }).where(eq(organizations.id, orgId));
       if (slackUrl && !before?.url) {
         // Lessons 6.1/6.2: Slack connected. The onboarding step, and the event (the channel, never the URL).
         await recordMilestoneInTx(tx, orgId, 'alert_channel_connected', userId);
@@ -310,3 +317,4 @@ async function disabledPolicies(tx: TenantTx, orgId: string): Promise<string[]> 
     .where(and(eq(orgNotificationPolicies.organizationId, orgId), eq(orgNotificationPolicies.enabled, false)));
   return off.map((p) => `${p.category}:${p.channel}`).sort();
 }
+
