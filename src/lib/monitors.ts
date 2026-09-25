@@ -11,6 +11,8 @@ import { enqueueNotify } from './notifications/incidents';
 import { recordIncidentWebhook } from './webhooks';
 import { signalRunsInTx } from './workflows/engine';
 import { publishInTx } from './realtime';
+import { trackInTx } from './analytics';
+import { recordMilestoneInTx } from './onboarding';
 
 const { monitors, checkResults, incidents } = schema;
 
@@ -167,7 +169,7 @@ export async function getMonitorHistory({ orgId }: OrgScope, monitorId: string) 
  * request body: `input` has been parsed by an allow-list schema that has no
  * organizationId field (lesson 1.3, mass assignment).
  */
-export async function createMonitor(ctx: OrgScope & { userId: string | null }, input: CreateMonitorInput) {
+export async function createMonitor(ctx: OrgScope & { userId: string | null }, input: CreateMonitorInput, via: 'app' | 'api' = 'app') {
   await assertMonitorUrl(input.url);
   // TODO(7.3): record "monitor.created" in the audit log.
   return withOrg(ctx.orgId, async (tx) => {
@@ -181,6 +183,10 @@ export async function createMonitor(ctx: OrgScope & { userId: string | null }, i
       .insert(monitors)
       .values({ ...input, organizationId: ctx.orgId, createdBy: ctx.userId })
       .returning();
+    // Lessons 6.1/6.2: the onboarding milestone and the product event, in the
+    // monitor's own transaction: recorded if and only if the monitor exists.
+    const isFirst = await recordMilestoneInTx(tx, ctx.orgId, 'monitor_created', ctx.userId);
+    await trackInTx(tx, { orgId: ctx.orgId, userId: ctx.userId }, 'monitor_created', { interval_seconds: row.intervalSeconds, is_first: isFirst, via });
     return row;
   });
 }

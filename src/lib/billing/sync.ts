@@ -1,7 +1,8 @@
 import { eq } from 'drizzle-orm';
 import { db, schema } from '@/db';
 import { withOrg } from '@/db/tenant';
-import { entitlementsFor, isDowngrade, planFromSubscriptions, type PlanId } from '@/core/plans';
+import { entitlementsFor, isDowngrade, planFromSubscriptions, planRank, type PlanId } from '@/core/plans';
+import { trackInTx } from '../analytics';
 import { notify } from '../notifications';
 import { planDowngradedEvent } from '../notifications/events';
 import { reconcileMonitorsWithPlan } from '../entitlements';
@@ -72,7 +73,16 @@ export async function syncCustomerFromStripe(customerId: string): Promise<SyncRe
       .where(eq(organizations.id, org.id))
       .for('update');
     const previousPlan = locked.plan;
-    if (previousPlan !== plan) await tx.update(organizations).set({ plan }).where(eq(organizations.id, org.id));
+    if (previousPlan !== plan) {
+      await tx.update(organizations).set({ plan }).where(eq(organizations.id, org.id));
+      // Lesson 6.2 (🟡): revenue events, server-side, after the webhook's sync
+      // committed the new plan, never from the browser's "Upgrade" click. Once
+      // per change, thanks to the row lock above.
+      await trackInTx(tx, { orgId: org.id }, planRank(plan) > planRank(previousPlan) ? 'subscription_upgraded' : 'subscription_downgraded', {
+        from_plan: previousPlan,
+        to_plan: plan,
+      });
+    }
 
     const changes = await reconcileMonitorsWithPlan(tx, org.id, entitlementsFor(plan));
     return { previousPlan, plan, ...changes };

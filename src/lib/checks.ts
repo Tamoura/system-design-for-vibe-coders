@@ -4,7 +4,9 @@ import { withOrg } from '@/db/tenant';
 import type { CheckOutcome } from '@/core/check';
 import { decideIncident } from '@/core/incidents';
 import { countStateChanges, FLAPPING, isFlapping } from '@/core/notifications';
+import { trackInTx } from './analytics';
 import { enqueueNotify, type NotifyJob } from './notifications/incidents';
+import { recordMilestoneInTx } from './onboarding';
 import { publishInTx } from './realtime';
 import { recordIncidentWebhook } from './webhooks';
 import { startEscalationInTx } from './workflows/escalation';
@@ -39,6 +41,9 @@ type MonitorRow = typeof monitors.$inferSelect;
  *      while flapping: machines want state, people want fewer alerts)
  *   6. lesson 5.4: an opened incident that is notified starts the org's
  *      escalation policy, if it has one; resolving it signals the escalation to stop
+ *   7. lesson 6.1/6.2: the monitor's FIRST result is the "first check"
+ *      onboarding milestone and the `monitor_check_completed` product event
+ *      (activation step 2); an opened incident is `incident_opened`
  *
  * `now` is injectable so the tests can simulate an hour of flapping.
  */
@@ -66,6 +71,11 @@ export async function recordCheckResult(
       .where(and(eq(checkResults.organizationId, org.id), eq(checkResults.monitorId, monitor.id)))
       .orderBy(desc(checkResults.checkedAt))
       .limit(5);
+    if (recent.length === 1) {
+      // Lesson 6.1/6.2: the only result so far is this one: the monitor's first check.
+      const firstForOrg = await recordMilestoneInTx(tx, org.id, 'first_check', null, now);
+      await trackInTx(tx, { orgId: org.id }, 'monitor_check_completed', { status: outcome.ok ? 'up' : 'down', is_first_for_org: firstForOrg }, now);
+    }
     const [open] = await tx
       .select()
       .from(incidents)
@@ -86,6 +96,7 @@ export async function recordCheckResult(
       // Machines get every change; only people are spared the flapping (below).
       await recordIncidentWebhook(tx, org.id, 'incident.opened', incident.id, now);
       await publishInTx(tx, org.id, { type: 'incident.changed', monitorId: monitor.id, incidentId: incident.id, state: 'opened' });
+      await trackInTx(tx, { orgId: org.id }, 'incident_opened', {}, now); // lesson 6.2
       line = `  ✗ ${monitor.name}: incident opened (${cause})`;
     } else if (decision === 'resolve' && open) {
       await tx

@@ -2,6 +2,7 @@ import { and, desc, eq, isNull, lt, or } from 'drizzle-orm';
 import { z } from 'zod';
 import { db, schema } from '@/db';
 import { withOrg } from '@/db/tenant';
+import { trackInTx } from './analytics';
 import { API_SCOPE_IDS, canGrantScopes, generateApiKey, hashApiKey, looksLikeApiKey, sameHash, type ApiScope } from '@/core/api-keys';
 import type { Role } from '@/core/roles';
 import { isUuid } from '@/core/validation';
@@ -50,12 +51,15 @@ export async function listApiKeys({ orgId }: { orgId: string }) {
 export async function createApiKey(ctx: Manager, input: z.infer<typeof createApiKeyInput>): Promise<{ id: string; key: string }> {
   if (!canGrantScopes(ctx.role, input.scopes)) throw new AccessError('forbidden');
   const { key, hash, start, last4 } = generateApiKey();
-  const [row] = await withOrg(ctx.orgId, (tx) =>
-    tx
+  const scopes = [...new Set(input.scopes)];
+  const row = await withOrg(ctx.orgId, async (tx) => {
+    const [created] = await tx
       .insert(apiKeys)
-      .values({ organizationId: ctx.orgId, name: input.name, keyHash: hash, keyStart: start, keyLast4: last4, scopes: [...new Set(input.scopes)], createdBy: ctx.userId })
-      .returning({ id: apiKeys.id }),
-  );
+      .values({ organizationId: ctx.orgId, name: input.name, keyHash: hash, keyStart: start, keyLast4: last4, scopes, createdBy: ctx.userId })
+      .returning({ id: apiKeys.id });
+    await trackInTx(tx, ctx, 'api_key_created', { scope_count: scopes.length }); // lesson 6.2: how many scopes, never the key or its name
+    return created;
+  });
   return { id: row.id, key };
 }
 

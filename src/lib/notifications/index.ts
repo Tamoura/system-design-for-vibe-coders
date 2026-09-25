@@ -15,6 +15,8 @@ import {
 } from '@/core/notifications';
 import { isUuid } from '@/core/validation';
 import { InvalidRequestError } from '../errors';
+import { trackInTx } from '../analytics';
+import { recordMilestoneInTx } from '../onboarding';
 import { isSlackWebhookUrl } from './providers';
 import { notifyInTx, smsIncluded, type NotifyEvent } from './pipeline';
 
@@ -249,15 +251,12 @@ export async function getOrgNotificationSettings({ orgId }: { orgId: string }) {
 }
 
 export async function saveOrgNotificationSettings(
-  { orgId }: { orgId: string },
+  { orgId, userId = null }: { orgId: string; userId?: string | null },
   input: { allowed: Set<string>; slackWebhookUrl?: string | null },
 ) {
-  if (input.slackWebhookUrl !== undefined) {
-    const url = input.slackWebhookUrl?.trim() || null;
-    if (url && !isSlackWebhookUrl(url)) {
-      throw new InvalidRequestError('invalid_slack_url', 'Paste a Slack incoming-webhook URL: https://hooks.slack.com/services/…');
-    }
-    await db.update(organizations).set({ slackWebhookUrl: url }).where(eq(organizations.id, orgId));
+  const slackUrl = input.slackWebhookUrl === undefined ? undefined : input.slackWebhookUrl?.trim() || null;
+  if (slackUrl && !isSlackWebhookUrl(slackUrl)) {
+    throw new InvalidRequestError('invalid_slack_url', 'Paste a Slack incoming-webhook URL: https://hooks.slack.com/services/…');
   }
   const rows = CATEGORY_IDS.filter((c) => !CATEGORIES[c].required).flatMap((category) =>
     ORG_POLICY_CHANNELS.filter((ch) => categoryUsesChannel(category, ch)).map((channel) => ({
@@ -268,6 +267,15 @@ export async function saveOrgNotificationSettings(
     })),
   );
   await withOrg(orgId, async (tx) => {
+    if (slackUrl !== undefined) {
+      const [before] = await tx.select({ url: organizations.slackWebhookUrl }).from(organizations).where(eq(organizations.id, orgId));
+      await tx.update(organizations).set({ slackWebhookUrl: slackUrl }).where(eq(organizations.id, orgId));
+      if (slackUrl && !before?.url) {
+        // Lessons 6.1/6.2: Slack connected. The onboarding step, and the event (the channel, never the URL).
+        await recordMilestoneInTx(tx, orgId, 'alert_channel_connected', userId);
+        await trackInTx(tx, { orgId, userId }, 'alert_channel_connected', { channel: 'slack' });
+      }
+    }
     for (const row of rows) {
       await tx
         .insert(orgNotificationPolicies)

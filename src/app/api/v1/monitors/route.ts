@@ -26,7 +26,7 @@ export const POST = publicApi('monitors:write', async (req, api) => {
   return idempotent(req, api.orgId, raw, async () => {
     const input = MonitorCreate.parse(JSON.parse(raw)); // ZodError → 422, SyntaxError → 400
     // The org comes from the key, the author from the key's creator: never from the body.
-    const monitor = await createMonitor({ orgId: api.orgId, userId: api.createdBy }, { name: input.name, url: input.url, intervalSeconds: input.interval_seconds });
+    const monitor = await createMonitor({ orgId: api.orgId, userId: api.createdBy }, { name: input.name, url: input.url, intervalSeconds: input.interval_seconds }, 'api');
     return Response.json(toApiMonitor(monitor), { status: 201 });
   });
 });

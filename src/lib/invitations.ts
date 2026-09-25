@@ -11,7 +11,10 @@ import {
 } from '@/core/invitations';
 import { canGrantRole } from '@/core/permissions';
 import type { Role } from '@/core/roles';
+import { withOrg } from '@/db/tenant';
 import type { OrgContext } from './access';
+import { trackInTx, track } from './analytics';
+import { recordMilestoneInTx } from './onboarding';
 import { sendEmail } from './email';
 import { appUrl } from './urls';
 
@@ -59,6 +62,11 @@ export async function createInvitation(ctx: OrgContext, input: { email: string; 
       expiresAt: new Date(Date.now() + INVITE_TTL_MS),
     })
     .returning();
+  // Lessons 6.1/6.2: "invite a teammate" is an onboarding step and a product event (the role, never the email).
+  await withOrg(ctx.orgId, async (tx) => {
+    await recordMilestoneInTx(tx, ctx.orgId, 'teammate_invited', ctx.userId);
+    await trackInTx(tx, ctx, 'teammate_invited', { role: invitation.role });
+  });
   await sendInvitationEmail(ctx, invitation.id, invitation.email, invitation.role, token);
   return invitation;
 }
@@ -119,7 +127,7 @@ export async function findInvitationByToken(token: string): Promise<{
  *  3. Create the membership. Already a member? Keep the existing role.
  */
 export async function acceptInvitation(token: string, user: { id: string; email: string }): Promise<{ orgSlug: string }> {
-  return db.transaction(async (tx) => {
+  const accepted = await db.transaction(async (tx) => {
     const [invitation] = await tx.select().from(invitations).where(eq(invitations.tokenHash, hashToken(token))).limit(1);
     if (!invitation || inviteState(invitation) !== 'pending') {
       throw new InvitationError('This invitation is invalid, expired, revoked or already used.');
@@ -142,8 +150,11 @@ export async function acceptInvitation(token: string, user: { id: string; email:
     await tx.update(users).set({ emailVerified: true }).where(eq(users.id, user.id));
 
     const [org] = await tx.select({ slug: organizations.slug }).from(organizations).where(eq(organizations.id, invitation.organizationId));
-    return { orgSlug: org.slug };
+    return { orgSlug: org.slug, orgId: invitation.organizationId, role: invitation.role };
   });
+  // Lesson 6.2: after the commit (this transaction is not a withOrg one).
+  await track({ orgId: accepted.orgId, userId: user.id }, 'invitation_accepted', { role: accepted.role });
+  return { orgSlug: accepted.orgSlug };
 }
 
 async function findOrgInvitation(ctx: { orgId: string }, invitationId: string) {

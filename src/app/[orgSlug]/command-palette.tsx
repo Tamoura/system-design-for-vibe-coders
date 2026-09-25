@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import type { SearchResult } from '@/core/search';
+import { trackClientEvent } from '@/app/_components/analytics-consent';
 
 const TYPE_LABEL = { page: 'Page', monitor: 'Monitor', incident: 'Incident' } as const;
 
@@ -23,18 +24,22 @@ export function CommandPalette({ orgSlug }: { orgSlug: string }) {
   const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const openRef = useRef(open);
+  openRef.current = open;
 
   // Ctrl+K / ⌘K toggles the palette from anywhere on the page.
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
+        // Lesson 6.2: a UI-only event, sent from the browser only with consent.
+        if (!openRef.current) trackClientEvent(orgSlug, 'command_palette_opened', { via: 'keyboard' });
         setOpen((o) => !o);
       }
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, []);
+  }, [orgSlug]);
 
   // Focus the input when it opens, and give focus back to the trigger when it
   // closes. Lesson 6.1 (a11y): only after it was open. Focusing the trigger on
@@ -99,7 +104,10 @@ export function CommandPalette({ orgSlug }: { orgSlug: string }) {
 
   return (
     <>
-      <button ref={triggerRef} type="button" className="btn secondary palette-trigger" onClick={() => setOpen(true)} aria-keyshortcuts="Control+K Meta+K">
+      <button ref={triggerRef} type="button" className="btn secondary palette-trigger" onClick={() => {
+          setOpen(true);
+          trackClientEvent(orgSlug, 'command_palette_opened', { via: 'button' });
+        }} aria-keyshortcuts="Control+K Meta+K">
         Search… <kbd>Ctrl K</kbd>
       </button>
       {open && (

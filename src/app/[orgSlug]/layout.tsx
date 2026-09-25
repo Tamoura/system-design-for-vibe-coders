@@ -2,7 +2,9 @@ import Link from 'next/link';
 import { forPage, requireMembership } from '@/lib/access';
 import { listOrganizationsForUser } from '@/lib/organizations';
 import { countUnread } from '@/lib/notifications';
+import { getOnboarding } from '@/lib/onboarding';
 import { signOutAction } from '@/app/(auth)/actions';
+import { ConsentBanner } from '@/app/_components/analytics-consent';
 import { CommandPalette } from './command-palette';
 import { NotificationBell } from './notification-bell';
 import { LiveStatus, RealtimeProvider } from './realtime';
@@ -20,6 +22,7 @@ export const metadata = { robots: { index: false } }; // lesson 6.1: the app is 
  *   │ [Acme ▾] switcher│   the page                                  │
  *   │ Monitors …       │                                            │
  *   │ Organization …   │                                            │
+ *   │ Getting started  │                                            │
  *   │ you · sign out   │                                            │
  *   └──────────────────┴────────────────────────────────────────────┘
  *
@@ -33,6 +36,7 @@ export default async function OrgLayout({ children, params }: { children: React.
   const ctx = await forPage(requireMembership(orgSlug), `/${orgSlug}/monitors`);
   const orgs = await listOrganizationsForUser(ctx.userId);
   const unread = await countUnread(ctx); // lesson 4.2: the bell
+  const onboarding = await getOnboarding(ctx); // lesson 6.1 (🟡): stored on the org, the same for every member
   // Lesson 4.3: one live connection (SSE) for every page of this org, shared by the components below.
   return (
     <RealtimeProvider orgSlug={ctx.orgSlug}>
@@ -41,6 +45,11 @@ export default async function OrgLayout({ children, params }: { children: React.
           <Link href={`/${ctx.orgSlug}/monitors`} className="brand">◉ Beacon</Link>
           <OrgSwitcher current={{ slug: ctx.orgSlug, name: ctx.orgName, role: ctx.role }} orgs={orgs.map((o) => ({ slug: o.slug, name: o.name, role: o.role }))} />
           <SidebarNav orgSlug={ctx.orgSlug} groups={navFor(ctx.role)} />
+          {!onboarding.complete && (
+            <Link href={`/${ctx.orgSlug}/monitors#getting-started`} className="sidebar-progress" data-testid="sidebar-onboarding">
+              Getting started <span className="badge">{onboarding.done}/{onboarding.total}</span>
+            </Link>
+          )}
           <div className="sidebar-user">
             <Link href="/settings/account" title="Your account settings">{ctx.userEmail}</Link>
             <Link href={`/${ctx.orgSlug}/notifications/preferences`} className="muted">My alert preferences</Link>
@@ -59,6 +68,8 @@ export default async function OrgLayout({ children, params }: { children: React.
             <LiveStatus />
           </header>
           <main id="main" className="shell-content">{children}</main>
+          {/* Lesson 6.2 (🟡): asked once; nothing is sent from the browser before a "yes". */}
+          <ConsentBanner />
         </div>
       </div>
     </RealtimeProvider>

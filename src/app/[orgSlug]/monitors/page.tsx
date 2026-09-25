@@ -5,7 +5,10 @@ import { listMonitors } from '@/lib/monitors';
 import { getMonitorUsage } from '@/lib/entitlements';
 import { PLANS } from '@/core/plans';
 import { searchMonitors } from '@/lib/search';
+import { getOnboarding } from '@/lib/onboarding';
 import { LiveMonitorList } from './live-monitor-list';
+import { AddMonitorDialog } from './add-monitor-dialog';
+import { OnboardingChecklist } from './onboarding-checklist';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,20 +17,28 @@ export default async function MonitorsPage({
   searchParams,
 }: {
   params: Promise<{ orgSlug: string }>;
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; add?: string }>;
 }) {
   const { orgSlug } = await params;
   // Lesson 1.2/1.3: signed in, a member of this org, and allowed to read monitors.
   const ctx = await forPage(requirePermission(orgSlug, 'monitor.read'), `/${orgSlug}/monitors`);
-  const q = ((await searchParams).q ?? '').trim();
+  const query = await searchParams;
+  const q = (query.q ?? '').trim();
   // Lesson 2.3 (🟢): with ?q=…, a fuzzy search of this org's monitors instead of the full list.
   const hits = q ? await searchMonitors(ctx, q) : null;
   const monitors = hits ? [] : await listMonitors(ctx);
   // Lesson 3.2: where the org stands against its plan, for the hints below.
   const usage = await getMonitorUsage(ctx);
   const billingHref = can(ctx.role, 'billing.manage') ? `/${ctx.orgSlug}/billing` : null;
+  const onboarding = await getOnboarding(ctx); // lesson 6.1 (🟡)
+  const empty = !hits && monitors.length === 0;
+  const canAdd = can(ctx.role, 'monitor.write') && !usage.atLimit;
+  const addDialog = (label: string, primary = true) => (
+    <AddMonitorDialog orgSlug={ctx.orgSlug} minIntervalSec={usage.ent.minIntervalSec} billingHref={billingHref} label={label} primary={primary} openInitially={query.add === '1'} />
+  );
   return (
     <section className="grid">
+      <OnboardingChecklist orgSlug={ctx.orgSlug} role={ctx.role} state={onboarding} />
       <div className="row">
         <h1 style={{ margin: 0 }}>Monitors</h1>
         {/* Lesson 1.3: the UI hides what the role cannot do, using the same map the server enforces. */}
@@ -46,7 +57,8 @@ export default async function MonitorsPage({
               )}
             </span>
           ) : (
-            <Link className="btn" href={`/${ctx.orgSlug}/monitors/new`} style={{ marginLeft: 'auto' }}>Add monitor</Link>
+            // Lesson 6.1 (🟢): the form opens in a dialog; /monitors/new still works as a page.
+            !empty && <span style={{ marginLeft: 'auto' }}>{addDialog('Add monitor')}</span>
           ))}
       </div>
       {usage.frozen > 0 && (
@@ -58,11 +70,13 @@ export default async function MonitorsPage({
           {billingHref && <> or <Link href={billingHref}>upgrade</Link></>}.
         </div>
       )}
-      <form className="row" role="search" action={`/${ctx.orgSlug}/monitors`}>
-        <input type="search" name="q" defaultValue={q} placeholder="Search monitors by name or URL (typos welcome)" aria-label="Search monitors" style={{ flex: 1 }} />
-        <button className="btn secondary">Search</button>
-        {q && <Link href={`/${ctx.orgSlug}/monitors`}>Clear</Link>}
-      </form>
+      {!empty && (
+        <form className="row" role="search" action={`/${ctx.orgSlug}/monitors`}>
+          <input type="search" name="q" defaultValue={q} placeholder="Search monitors by name or URL (typos welcome)" aria-label="Search monitors" style={{ flex: 1 }} />
+          <button className="btn secondary">Search</button>
+          {q && <Link href={`/${ctx.orgSlug}/monitors`}>Clear</Link>}
+        </form>
+      )}
       {hits && (
         <div className="grid" data-testid="search-results">
           <div className="muted">
@@ -79,9 +93,14 @@ export default async function MonitorsPage({
           ))}
         </div>
       )}
-      {!hits && monitors.length === 0 && (
-        // TODO(6.1): a real empty state is the first step of onboarding.
-        <div className="card muted">No monitors yet. Add one: the worker (<code>npm run worker</code>) checks it on its schedule.</div>
+      {empty && (
+        // Lesson 6.1 (🟢): the empty dashboard is the first screen of onboarding. It says
+        // what belongs here and offers ONE obvious action.
+        <div className="card empty-state" data-testid="empty-state">
+          <h2 className="h2">Add your first monitor</h2>
+          <p className="muted">Paste the URL of your site or API health check. Beacon checks it on a schedule and tells you the moment it goes down.</p>
+          {canAdd ? addDialog('Add your first monitor') : <p className="muted">Ask an owner, admin or member of this organization to add one.</p>}
+        </div>
       )}
       {/* Lesson 4.3 (🟢): tiles update live over SSE instead of polling. */}
       <LiveMonitorList

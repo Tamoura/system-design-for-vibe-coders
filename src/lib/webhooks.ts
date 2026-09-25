@@ -13,6 +13,8 @@ import { AccessError, InvalidRequestError } from './errors';
 import { enqueueInTx } from './queue';
 import type { JobContext, JobData } from './queue/queues';
 import { toApiIncident, toApiMonitor } from './public-api';
+import { trackInTx } from './analytics';
+import { recordMilestoneInTx } from './onboarding';
 import { appUrl } from './urls';
 
 const { webhookEndpoints, webhookEvents, webhookMessages, webhookAttempts, organizations, memberships, users } = schema;
@@ -57,12 +59,16 @@ async function assertWebhookUrl(url: string) {
 export async function createEndpoint(ctx: Manager, input: z.infer<typeof createEndpointInput>): Promise<{ id: string; secret: string }> {
   await assertWebhookUrl(input.url);
   const secret = generateWebhookSecret();
-  const [row] = await withOrg(ctx.orgId, (tx) =>
-    tx
+  const row = await withOrg(ctx.orgId, async (tx) => {
+    const [endpoint] = await tx
       .insert(webhookEndpoints)
       .values({ organizationId: ctx.orgId, url: input.url, description: input.description || null, eventTypes: [...new Set(input.eventTypes)], secret, createdBy: ctx.userId })
-      .returning({ id: webhookEndpoints.id }),
-  );
+      .returning({ id: webhookEndpoints.id });
+    // Lessons 6.1/6.2: a webhook is an alert channel too (the onboarding step, once; the event, every time).
+    await recordMilestoneInTx(tx, ctx.orgId, 'alert_channel_connected', ctx.userId);
+    await trackInTx(tx, ctx, 'alert_channel_connected', { channel: 'webhook' });
+    return endpoint;
+  });
   return { id: row.id, secret };
 }
 
