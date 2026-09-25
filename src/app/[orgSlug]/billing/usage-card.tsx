@@ -32,7 +32,7 @@ export function UsageCard({ overview }: { overview: BillingOverview }) {
         )}
       </div>
       <div className="muted">
-        Checks at most every {ent.minIntervalSec} seconds · SSO {ent.sso ? '✓' : '✗'} · audit log {ent.auditLog ? '✓' : '✗'} · API {ent.api ? '✓' : '✗'}
+        Checks at most every {ent.minIntervalSec} seconds · SSO {ent.sso ? '✓' : '✗'} · audit log {ent.auditLog ? `✓ (${ent.auditLogRetentionDays} days)` : '✗'} · API {ent.api ? '✓' : '✗'}
       </div>
     </div>
   );

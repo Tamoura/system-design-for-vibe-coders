@@ -25,6 +25,7 @@ import * as eventsRoute from '@/app/api/orgs/[orgSlug]/events/route';
 import * as presenceRoute from '@/app/api/orgs/[orgSlug]/presence/route';
 import * as settingsRoute from '@/app/api/orgs/[orgSlug]/settings/route';
 import * as analyticsRoute from '@/app/api/orgs/[orgSlug]/analytics/route';
+import * as auditLogRoute from '@/app/api/orgs/[orgSlug]/audit-log/route';
 import { publish } from '@/lib/realtime';
 import { makeOrg, signInAs } from './helpers/fixtures';
 
@@ -134,6 +135,8 @@ const CASES: Record<string, Case> = {
         p({ orgSlug }),
       ),
   },
+  // Lesson 7.3: Acme's audit log (which names 'acme-secret', its monitor) is not in Globex's, JSON or CSV.
+  'GET audit-log': { kind: 'list', call: (orgSlug) => auditLogRoute.GET(new Request('http://test/x?format=csv'), p({ orgSlug })) },
   'DELETE presence': {
     kind: 'item',
     call: (orgSlug) => presenceRoute.DELETE(new Request(`http://test/x?topic=monitor:${A.monitor}`, { method: 'DELETE' }), p({ orgSlug })),

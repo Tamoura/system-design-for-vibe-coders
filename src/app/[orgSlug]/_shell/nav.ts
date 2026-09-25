@@ -34,6 +34,8 @@ export const NAV: NavGroup[] = [
       { section: 'billing', label: 'Billing', permission: 'billing.manage' },
       { section: 'settings/notifications', label: 'Alert channels', permission: 'notification.manage' },
       { section: 'settings/escalation', label: 'Escalation', permission: 'notification.manage' },
+      // Lesson 7.3 (🟡): owners and admins. The page itself shows an upgrade prompt on Free.
+      { section: 'settings/audit-log', label: 'Audit log', permission: 'audit.read' },
     ],
   },
   {

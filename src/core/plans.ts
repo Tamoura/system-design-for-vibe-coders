@@ -31,6 +31,12 @@ export type Entitlements = {
   /** Feature gates. Their features arrive in later lessons (1.4, 7.3, 5.2). */
   sso: boolean;
   auditLog: boolean;
+  /**
+   * Lesson 7.3 (🟡): how many days of audit events the org can see and export.
+   * Retention is a plan entitlement: Business a year, Pro 30 days, Free none
+   * (so `auditLog` is true exactly when this is above 0).
+   */
+  auditLogRetentionDays: number;
   api: boolean;
   /** Lesson 5.2: public API requests per minute per org (a token bucket: bursts up to this, refilled over a minute). */
   apiRequestsPerMinute: number;
@@ -50,19 +56,19 @@ export const PLANS: Record<PlanId, Plan> = {
     name: 'Free',
     priceLabel: '$0',
     pitch: '5 monitors, checked every 5 minutes',
-    entitlements: { maxMonitors: 5, minIntervalSec: 300, smsCreditsPerMonth: 0, sso: false, auditLog: false, api: false, apiRequestsPerMinute: 0 },
+    entitlements: { maxMonitors: 5, minIntervalSec: 300, smsCreditsPerMonth: 0, sso: false, auditLog: false, auditLogRetentionDays: 0, api: false, apiRequestsPerMinute: 0 },
   },
   pro: {
     name: 'Pro',
     priceLabel: '$29/month',
-    pitch: '50 monitors, 1-minute checks, 100 SMS alerts a month',
-    entitlements: { maxMonitors: 50, minIntervalSec: 60, smsCreditsPerMonth: 100, sso: false, auditLog: false, api: false, apiRequestsPerMinute: 0 },
+    pitch: '50 monitors, 1-minute checks, 100 SMS alerts a month, 30 days of audit log',
+    entitlements: { maxMonitors: 50, minIntervalSec: 60, smsCreditsPerMonth: 100, sso: false, auditLog: true, auditLogRetentionDays: 30, api: false, apiRequestsPerMinute: 0 },
   },
   business: {
     name: 'Business',
     priceLabel: '$99/month',
-    pitch: '500 monitors, 30-second checks, 500 SMS, SSO, audit log and API',
-    entitlements: { maxMonitors: 500, minIntervalSec: 30, smsCreditsPerMonth: 500, sso: true, auditLog: true, api: true, apiRequestsPerMinute: 120 },
+    pitch: '500 monitors, 30-second checks, 500 SMS, SSO, a year of audit log and API',
+    entitlements: { maxMonitors: 500, minIntervalSec: 30, smsCreditsPerMonth: 500, sso: true, auditLog: true, auditLogRetentionDays: 365, api: true, apiRequestsPerMinute: 120 },
   },
 };
 
