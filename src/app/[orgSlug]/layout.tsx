@@ -5,6 +5,7 @@ import { countUnread } from '@/lib/notifications';
 import { getOnboarding } from '@/lib/onboarding';
 import { signOutAction } from '@/app/(auth)/actions';
 import { ConsentBanner } from '@/app/_components/analytics-consent';
+import { ImpersonationBanner } from '@/app/_components/impersonation-banner';
 import { CommandPalette } from './command-palette';
 import { NotificationBell } from './notification-bell';
 import { LiveStatus, RealtimeProvider } from './realtime';
@@ -40,6 +41,8 @@ export default async function OrgLayout({ children, params }: { children: React.
   // Lesson 4.3: one live connection (SSE) for every page of this org, shared by the components below.
   return (
     <RealtimeProvider orgSlug={ctx.orgSlug}>
+      {/* Lesson 7.1: Beacon staff viewing this account (read-only) see who they are "being", on every page. */}
+      {ctx.impersonation && <ImpersonationBanner info={ctx.impersonation} viewing={ctx.userEmail} />}
       <div className="shell">
         <aside className="sidebar">
           <Link href={`/${ctx.orgSlug}/monitors`} className="brand">◉ Beacon</Link>
@@ -54,9 +57,11 @@ export default async function OrgLayout({ children, params }: { children: React.
             <Link href="/settings/account" title="Your account settings">{ctx.userEmail}</Link>
             <Link href={`/${ctx.orgSlug}/notifications/preferences`} className="muted">My alert preferences</Link>
             {/* Lesson 1.1: a real logout is a POST that deletes the session server-side. */}
-            <form action={signOutAction}>
-              <button className="link-btn">Sign out</button>
-            </form>
+            {!ctx.impersonation && (
+              <form action={signOutAction}>
+                <button className="link-btn">Sign out</button>
+              </form>
+            )}
           </div>
         </aside>
         <div className="shell-main">

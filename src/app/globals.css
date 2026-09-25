@@ -133,3 +133,6 @@ header.top nav .btn { color: #fff; padding: .35rem .8rem; }
 .consent { position: fixed; bottom: 1rem; right: 1rem; max-width: 420px; z-index: 40; display: grid; gap: .6rem; box-shadow: 0 6px 24px rgba(0, 0, 0, .15); }
 fieldset.card { margin: 0; }
 .internal-banner { background: #7a3d00; color: #fff; padding: .4rem 1rem; font-size: .85rem; }
+/* Lesson 7.1: impossible to miss, on every page, while staff view a customer's account. */
+.impersonation-banner { position: sticky; top: 0; z-index: 60; display: flex; gap: 1rem; align-items: center; justify-content: space-between; background: #b00020; color: #fff; padding: .5rem 1rem; font-size: .9rem; }
+.impersonation-banner .btn.secondary { padding: .25rem .8rem; }

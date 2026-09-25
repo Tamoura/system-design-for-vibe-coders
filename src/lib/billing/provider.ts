@@ -33,6 +33,8 @@ export interface BillingProvider {
     orgId: string;
     successUrl: string;
     cancelUrl: string;
+    /** Lesson 7.1: a free trial before the first charge (BILLING_TRIAL_DAYS). 0 or absent: none. */
+    trialDays?: number;
   }): Promise<{ url: string }>;
 
   /** Lesson 3.1 (🟢): the hosted Customer Portal (cards, invoices, cancel). */
@@ -51,6 +53,12 @@ export interface BillingProvider {
    * with the same identifier, so re-running the reporting job is harmless.
    */
   reportUsage(input: { customerId: string; meter: string; value: number; identifier: string; timestamp: Date }): Promise<void>;
+
+  /**
+   * Lesson 7.1 (🟡): Beacon support's "Extend trial". Moves the subscription's
+   * trial end in the provider; the webhook sync (or the caller) then copies it.
+   */
+  extendTrial(subscriptionId: string, trialEnd: Date): Promise<void>;
 }
 
 export type ProviderSubscription = {
@@ -62,6 +70,8 @@ export type ProviderSubscription = {
   currentPeriodStart: Date | null;
   currentPeriodEnd: Date | null;
   cancelAtPeriodEnd: boolean;
+  /** Set while the subscription is in "trialing". */
+  trialEnd: Date | null;
 };
 
 /**

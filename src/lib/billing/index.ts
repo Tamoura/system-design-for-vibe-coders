@@ -70,6 +70,8 @@ export async function startCheckout(ctx: BillingCtx, plan: PaidPlanId): Promise<
     // URL by hand grants nothing.
     successUrl: `${base}?checkout=success&plan=${plan}`,
     cancelUrl: `${base}?checkout=cancelled`,
+    // Lesson 7.1: an optional free trial (the thing support extends). 0 = none.
+    trialDays: Number(process.env.BILLING_TRIAL_DAYS ?? 0) || undefined,
   });
 }
 

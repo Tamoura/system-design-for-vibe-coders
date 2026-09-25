@@ -37,6 +37,7 @@ export class StripeBillingProvider implements BillingProvider {
     orgId: string;
     successUrl: string;
     cancelUrl: string;
+    trialDays?: number;
   }) {
     if (input.priceId.startsWith('price_fake_')) {
       throw new Error('Set STRIPE_PRICE_PRO and STRIPE_PRICE_BUSINESS to your Stripe Price ids (see .env.example).');
@@ -48,7 +49,7 @@ export class StripeBillingProvider implements BillingProvider {
       // webhook, if we ever need it) can tell which workspace paid.
       client_reference_id: input.orgId,
       metadata: { orgId: input.orgId },
-      subscription_data: { metadata: { orgId: input.orgId } },
+      subscription_data: { metadata: { orgId: input.orgId }, ...(input.trialDays ? { trial_period_days: input.trialDays } : {}) },
       line_items: [
         { price: input.priceId, quantity: 1 },
         // Metered prices take no quantity: Stripe sums the meter (lesson 3.3).
@@ -73,6 +74,12 @@ export class StripeBillingProvider implements BillingProvider {
       result.push(toProviderSubscription(sub));
     }
     return result;
+  }
+
+  async extendTrial(subscriptionId: string, trialEnd: Date) {
+    // Lesson 7.1 (🟡): the trial end lives in Stripe; changing only our copy
+    // would bill the customer on the old date. No proration: nothing was charged yet.
+    await this.stripe.subscriptions.update(subscriptionId, { trial_end: Math.floor(trialEnd.getTime() / 1000), proration_behavior: 'none' });
   }
 
   async reportUsage(input: { customerId: string; meter: string; value: number; identifier: string; timestamp: Date }) {
@@ -105,5 +112,6 @@ function toProviderSubscription(sub: Stripe.Subscription): ProviderSubscription 
     currentPeriodStart: planItem ? new Date(planItem.current_period_start * 1000) : null,
     currentPeriodEnd: planItem ? new Date(planItem.current_period_end * 1000) : null,
     cancelAtPeriodEnd: sub.cancel_at_period_end,
+    trialEnd: sub.trial_end ? new Date(sub.trial_end * 1000) : null,
   };
 }

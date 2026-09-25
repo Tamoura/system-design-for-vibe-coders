@@ -1,12 +1,15 @@
 import { eq } from 'drizzle-orm';
 import { db, schema } from '@/db';
-import { withOrg } from '@/db/tenant';
-import { entitlementsFor, isDowngrade, planFromSubscriptions, planRank, type PlanId } from '@/core/plans';
-import { trackInTx } from '../analytics';
+import { withOrg, type TenantTx } from '@/db/tenant';
+import { isDowngrade, type PlanId } from '@/core/plans';
+import type { AuditSource } from '@/core/audit';
 import { notify } from '../notifications';
 import { planDowngradedEvent } from '../notifications/events';
-import { reconcileMonitorsWithPlan } from '../entitlements';
+import { recomputePlanInTx } from './plan';
 import { getBillingProvider } from './provider';
+
+/** Lesson 7.3: plan changes that come from Stripe are recorded as the system's doing. */
+export const STRIPE_SYNC_SOURCE: AuditSource = { actor: { type: 'system', id: 'stripe', name: 'Stripe billing' }, via: 'worker' };
 
 const { organizations, subscriptions } = schema;
 
@@ -27,8 +30,15 @@ export type SyncResult =
  *
  * Then lesson 3.2: recompute the org's plan snapshot from the subscriptions,
  * and fit the org's monitors to it (freeze on downgrade, unfreeze on upgrade).
+ *
+ * Lesson 7.1: Beacon support's "Extend trial" changes Stripe first, then calls
+ * this with its own audit source and an `inTransaction` step (its audit
+ * event), so the copy, the plan and the evidence commit together.
  */
-export async function syncCustomerFromStripe(customerId: string): Promise<SyncResult> {
+export async function syncCustomerFromStripe(
+  customerId: string,
+  opts: { source?: AuditSource; inTransaction?: (tx: TenantTx, orgId: string) => Promise<void> } = {},
+): Promise<SyncResult> {
   const provider = getBillingProvider();
   if (!provider) return { synced: false, reason: 'billing_disabled' };
 
@@ -54,6 +64,7 @@ export async function syncCustomerFromStripe(customerId: string): Promise<SyncRe
         currentPeriodStart: s.currentPeriodStart,
         currentPeriodEnd: s.currentPeriodEnd,
         cancelAtPeriodEnd: s.cancelAtPeriodEnd,
+        trialEnd: s.trialEnd,
       };
       await tx
         .insert(subscriptions)
@@ -61,31 +72,9 @@ export async function syncCustomerFromStripe(customerId: string): Promise<SyncRe
         .onConflictDoUpdate({ target: subscriptions.id, set: values });
     }
 
-    const all = await tx.select().from(subscriptions).where(eq(subscriptions.organizationId, org.id));
-    const plan = planFromSubscriptions(all);
-
-    // Lock the org row, then compare and set the plan snapshot. Two syncs for
-    // the same org (two webhooks at once) queue here, so exactly one of them
-    // sees "Pro → Free", and the owner gets exactly one email per downgrade.
-    const [locked] = await tx
-      .select({ plan: organizations.plan })
-      .from(organizations)
-      .where(eq(organizations.id, org.id))
-      .for('update');
-    const previousPlan = locked.plan;
-    if (previousPlan !== plan) {
-      await tx.update(organizations).set({ plan }).where(eq(organizations.id, org.id));
-      // Lesson 6.2 (🟡): revenue events, server-side, after the webhook's sync
-      // committed the new plan, never from the browser's "Upgrade" click. Once
-      // per change, thanks to the row lock above.
-      await trackInTx(tx, { orgId: org.id }, planRank(plan) > planRank(previousPlan) ? 'subscription_upgraded' : 'subscription_downgraded', {
-        from_plan: previousPlan,
-        to_plan: plan,
-      });
-    }
-
-    const changes = await reconcileMonitorsWithPlan(tx, org.id, entitlementsFor(plan));
-    return { previousPlan, plan, ...changes };
+    const recomputed = await recomputePlanInTx(tx, org.id, opts.source ?? STRIPE_SYNC_SOURCE);
+    await opts.inTransaction?.(tx, org.id);
+    return recomputed;
   });
 
   // Lesson 3.2 (🟡): "email the owner", once per downgrade. Since 4.2 it is a

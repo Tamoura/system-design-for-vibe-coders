@@ -63,6 +63,7 @@ export class FakeBillingProvider implements BillingProvider {
     orgId: string;
     successUrl: string;
     cancelUrl: string;
+    trialDays?: number;
   }) {
     this.count('createCheckoutSession');
     const id = fakeId('cs');
@@ -113,14 +114,17 @@ export class FakeBillingProvider implements BillingProvider {
     const session = this.checkoutSessions.get(sessionId);
     if (!session || session.status !== 'open') throw new Error('No open checkout session with that id');
     session.status = 'complete';
+    // Lesson 7.1: with a trial, Stripe starts the subscription in "trialing" and bills at trial_end.
+    const trialEnd = session.trialDays ? new Date(now.getTime() + session.trialDays * 86_400_000) : null;
     const sub: ProviderSubscription = {
       id: fakeId('sub'),
       customerId: session.customerId,
-      status: 'active',
+      status: trialEnd ? 'trialing' : 'active',
       priceId: session.priceId,
       currentPeriodStart: now,
-      currentPeriodEnd: addMonths(now, 1),
+      currentPeriodEnd: trialEnd ?? addMonths(now, 1),
       cancelAtPeriodEnd: false,
+      trialEnd,
     };
     this.subscriptions.set(sub.id, sub);
     return fakeEvent('checkout.session.completed', {
@@ -130,6 +134,16 @@ export class FakeBillingProvider implements BillingProvider {
       client_reference_id: session.orgId,
       subscription: sub.id,
     });
+  }
+
+  /** Like `stripe.subscriptions.update(id, { trial_end })`: a trialing subscription's trial moves; the period ends with it. */
+  async extendTrial(subscriptionId: string, trialEnd: Date) {
+    this.count('extendTrial');
+    const sub = this.subscriptions.get(subscriptionId);
+    if (!sub) throw new Error('No such subscription: ' + subscriptionId);
+    if (sub.status !== 'trialing') throw new Error('This subscription is not in a trial');
+    sub.trialEnd = trialEnd;
+    sub.currentPeriodEnd = trialEnd;
   }
 
   /** Change a subscription the way the Portal (or Stripe's dunning) would. */
@@ -142,8 +156,8 @@ export class FakeBillingProvider implements BillingProvider {
   }
 
   /** Test helper: a subscription that already exists (e.g. created before a test starts). */
-  seedSubscription(sub: Omit<ProviderSubscription, 'id'> & { id?: string }): ProviderSubscription {
-    const full = { ...sub, id: sub.id ?? fakeId('sub') };
+  seedSubscription(sub: Omit<ProviderSubscription, 'id' | 'trialEnd'> & { id?: string; trialEnd?: Date | null }): ProviderSubscription {
+    const full = { ...sub, trialEnd: sub.trialEnd ?? null, id: sub.id ?? fakeId('sub') };
     this.subscriptions.set(full.id, full);
     return full;
   }
@@ -157,6 +171,7 @@ export type FakeCheckoutSession = {
   orgId: string;
   successUrl: string;
   cancelUrl: string;
+  trialDays?: number;
   status: 'open' | 'complete';
 };
 

@@ -1,4 +1,6 @@
+import { purgeExpiredAuditEvents, verifyAllAuditChains } from '../admin/audit';
 import { forwardAnalytics } from '../analytics/forward';
+import { expireComps } from '../billing/support';
 import { sendQueuedEmail } from '../email';
 import { processUploadedFile } from '../files';
 import { deliverNotification } from '../notifications/deliver';
@@ -30,6 +32,14 @@ export const HANDLERS: { [Q in QueueName]?: Handler<Q> } = {
   'file.process': (data) => processUploadedFile({ orgId: data.orgId }, data.fileId),
   'usage.report': () => reportPendingUsage(),
   'analytics.forward': (data) => forwardAnalytics(data.orgId),
+  'billing.comps': () => expireComps(),
+  'audit.retention': () => purgeExpiredAuditEvents(),
+  'audit.verify': async () => {
+    const result = await verifyAllAuditChains();
+    // Throwing marks the job failed: `jobs_total{queue="audit.verify",outcome="failed"}` alerts (ops/prometheus/alerts.yml).
+    if (result.broken.length) throw new Error(`audit chains broken: ${result.broken.map((b) => b.org).join(', ')}`);
+    return result;
+  },
 };
 
 export function handlerFor<Q extends QueueName>(queue: Q): Handler<Q> | undefined {

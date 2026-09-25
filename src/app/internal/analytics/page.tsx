@@ -13,7 +13,7 @@ const pct = (n: number, of: number) => (of === 0 ? '—' : `${Math.round((n / of
  * plan; this page is what you have with Postgres alone.
  */
 export default async function AnalyticsPage({ searchParams }: { searchParams: Promise<{ days?: string }> }) {
-  await requireStaff();
+  await requireStaff('analytics.read'); // lesson 7.1: a staff permission, not just "is staff"
   const days = Math.min(Math.max(Number((await searchParams).days) || 30, 1), 365);
   const since = new Date(Date.now() - days * 24 * 3600 * 1000);
   const [funnel, recent] = await Promise.all([activationFunnel({ since }), recentEvents(25)]);

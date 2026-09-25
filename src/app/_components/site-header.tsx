@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getCurrentUser } from '@/lib/session';
 import { signOutAction } from '@/app/(auth)/actions';
+import { ImpersonationBanner } from './impersonation-banner';
 
 /**
  * The header of the pages outside an organization: sign-in, sign-up, account
@@ -10,28 +11,34 @@ import { signOutAction } from '@/app/(auth)/actions';
 export async function SiteHeader() {
   const user = await getCurrentUser();
   return (
-    <header className="top">
-      <div className="wrap">
-        <Link href={user ? '/dashboard' : '/'} className="brand">◉ Beacon</Link>
-        <nav aria-label="Account">
-          {user ? (
-            <>
-              <Link href="/dashboard">Dashboard</Link>
-              <Link href="/settings/account" className="muted">{user.email}</Link>
-              {/* Lesson 1.1: a real logout is a POST that deletes the session server-side. */}
-              <form action={signOutAction}>
-                <button className="link-btn">Sign out</button>
-              </form>
-            </>
-          ) : (
-            <>
-              <Link href="/login">Sign in</Link>
-              <Link href="/signup">Sign up</Link>
-            </>
-          )}
-        </nav>
-      </div>
-    </header>
+    <>
+      {/* Lesson 7.1: also outside an org (account settings, /dashboard), while staff view as a customer. */}
+      {user?.impersonation && <ImpersonationBanner info={user.impersonation} viewing={user.email} />}
+      <header className="top">
+        <div className="wrap">
+          <Link href={user ? '/dashboard' : '/'} className="brand">◉ Beacon</Link>
+          <nav aria-label="Account">
+            {user ? (
+              <>
+                <Link href="/dashboard">Dashboard</Link>
+                <Link href="/settings/account" className="muted">{user.email}</Link>
+                {/* Lesson 1.1: a real logout is a POST that deletes the session server-side. */}
+                {!user.impersonation && (
+                  <form action={signOutAction}>
+                    <button className="link-btn">Sign out</button>
+                  </form>
+                )}
+              </>
+            ) : (
+              <>
+                <Link href="/login">Sign in</Link>
+                <Link href="/signup">Sign up</Link>
+              </>
+            )}
+          </nav>
+        </div>
+      </header>
+    </>
   );
 }
 
@@ -40,7 +47,9 @@ export function SiteFrame({ children }: { children: React.ReactNode }) {
   return (
     <>
       <SiteHeader />
-      <main id="main" className="wrap">{children}</main>
+      <main id="main" className="wrap">
+        {children}
+      </main>
     </>
   );
 }

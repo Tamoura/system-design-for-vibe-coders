@@ -5,6 +5,13 @@
  *   demo@beacon.test    owner    password: beacon-demo-password
  *   member@beacon.test  member   password: beacon-demo-password
  *
+ * Lesson 7.1: and three Beacon STAFF accounts (same password, no customer
+ * org of their own), one per staff role worth trying in the admin panel:
+ *
+ *   staff@beacon.test    superadmin   /internal: everything, including staff roles
+ *   support@beacon.test  support      extend trials, resend emails, read-only impersonation
+ *   billing@beacon.test  billing      comp plans, extend trials; no impersonation
+ *
  * Idempotent: every row is looked up by a natural key (email, slug, monitor
  * name) before it is inserted, so running it twice changes nothing, and running
  * it after someone adds a monitor here fills in only what is missing.
@@ -12,10 +19,12 @@
  *
  * Never run it against production: it creates users with a known password.
  */
+import './load-env'; // lesson 7.4: .env.local, like Next.js (must be the first import)
 import { and, count, eq } from 'drizzle-orm';
 import { db, schema, sql } from '../src/db';
 import { hashPassword } from '../src/lib/password';
 import type { Role } from '../src/core/roles';
+import type { StaffRole } from '../src/core/staff';
 
 if (process.env.NODE_ENV === 'production') {
   console.error('Refusing to seed with NODE_ENV=production.');
@@ -27,6 +36,11 @@ const USERS: { email: string; name: string; role: Role }[] = [
   { email: 'demo@beacon.test', name: 'Demo User', role: 'owner' },
   { email: 'member@beacon.test', name: 'Mia Member', role: 'member' },
 ];
+const STAFF: { email: string; name: string; role: StaffRole }[] = [
+  { email: 'staff@beacon.test', name: 'Sam Superadmin', role: 'superadmin' },
+  { email: 'support@beacon.test', name: 'Sue Support', role: 'support' },
+  { email: 'billing@beacon.test', name: 'Bill Billing', role: 'billing' },
+];
 
 // `failEvery`: 1 = always fails, 0 = never, n = every nth check fails.
 // Lesson 3.2: "demo" is on Free, so five monitors at 5-minute intervals is
@@ -35,7 +49,9 @@ const MONITORS = [
   { name: 'Example homepage', url: 'https://example.com', intervalSeconds: 300, failEvery: 0 },
   { name: 'checkout-api', url: 'https://checkout.example.com/health', intervalSeconds: 300, failEvery: 40 },
   { name: 'billing-api', url: 'https://billing.example.com/health', intervalSeconds: 300, failEvery: 0 },
-  { name: 'Beacon itself', url: 'http://localhost:3000', intervalSeconds: 300, failEvery: 0 },
+  // Lesson 7.2: Beacon monitors itself, through its liveness endpoint (dogfooding). It needs a
+  // second, OUTSIDE probe too: if Beacon is down, it cannot tell you (docs/operations.md).
+  { name: 'Beacon itself', url: 'http://localhost:3000/api/health', intervalSeconds: 300, failEvery: 0 },
   { name: 'Always broken (for testing incidents)', url: 'http://localhost:59999/nothing-listens-here', intervalSeconds: 300, failEvery: 1 },
 ];
 
@@ -67,7 +83,7 @@ const PAST_INCIDENTS: Record<string, { hoursAgo: number; cause: string; updates:
 // 1. Users, each with a "credential" login method holding an argon2id hash
 //    (the same rows Better Auth writes on sign-up, lesson 1.1).
 const users: Record<string, string> = {};
-for (const u of USERS) {
+for (const u of [...USERS, ...STAFF]) {
   await db.insert(schema.users).values({ name: u.name, email: u.email, emailVerified: true }).onConflictDoNothing();
   const [user] = await db.select().from(schema.users).where(eq(schema.users.email, u.email));
   const [login] = await db
@@ -78,6 +94,11 @@ for (const u of USERS) {
     await db.insert(schema.accounts).values({ userId: user.id, providerId: 'credential', accountId: user.id, password: await hashPassword(PASSWORD) });
   }
   users[u.email] = user.id;
+}
+
+// 1b. Lesson 7.1: the staff rows. Staff are a separate table, not a customer role.
+for (const s of STAFF) {
+  await db.insert(schema.staffUsers).values({ userId: users[s.email], role: s.role }).onConflictDoNothing();
 }
 
 // 2. The organization and its memberships (lesson 1.2).
@@ -167,4 +188,5 @@ console.log(
     : '• seed data already present, nothing to do',
 );
 console.log(`  Sign in as ${USERS.map((u) => `${u.email} (${u.role})`).join(' or ')}, password ${PASSWORD}`);
+console.log(`  Beacon staff (/internal): ${STAFF.map((s) => `${s.email} (${s.role})`).join(', ')}`);
 await sql.end();

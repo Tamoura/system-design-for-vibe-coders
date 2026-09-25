@@ -20,7 +20,7 @@ const KIND_HELP = {
  * The same operations exist on the command line: `npm run flags`.
  */
 export default async function FlagsPage() {
-  await requireStaff();
+  await requireStaff('flags.manage'); // lesson 7.1: a staff permission, not just "is staff"
   const flags = await listFlagsForAdmin();
   return (
     <section className="grid">
