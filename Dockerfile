@@ -29,7 +29,13 @@ RUN npm ci --no-audit --no-fund
 FROM base AS prod-deps
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci --omit=dev --no-audit --no-fund && npm cache clean --force
+# `npm ci --omit=dev` still keeps dev tools that a production package lists as an *optional peer*
+# (better-auth does, for drizzle-kit and vitest), plus everything they depend on. The script walks the
+# lockfile from our own dependencies and deletes the rest: code that isn't in the image can't break
+# or be exploited in production.
+COPY scripts/prune-prod-deps.mjs ./scripts/
+RUN npm ci --omit=dev --no-audit --no-fund && npm cache clean --force \
+ && node scripts/prune-prod-deps.mjs
 
 # 3. The build: Next.js, then the worker and CLIs bundled to plain JavaScript
 #    (tsx is a dev dependency and is not in the final image).
