@@ -13,7 +13,8 @@
 #   3. Review `git diff agentic/`, then commit and push to publish.
 set -euo pipefail
 AGENTIC_DOCS="${AGENTIC_DOCS:-../AI-agents/qdb-agent-framework/docs}"
-FILES=(index.html on-ramp-poster.html learning-path.html production-playbook.html assessment.html)
+FILES=(index.html on-ramp-poster.html learning-path.html production-playbook.html assessment.html
+       index.ar.html on-ramp-poster.ar.html learning-path.ar.html production-playbook.ar.html assessment.ar.html)
 
 if [ ! -d "$AGENTIC_DOCS" ]; then
   echo "error: AGENTIC_DOCS directory not found: $AGENTIC_DOCS" >&2
