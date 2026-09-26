@@ -483,7 +483,8 @@ flowchart TD
 - ISO/IEC 42001:2023: https://www.iso.org/standard/81230.html
 - معهد المدققين الداخليين (The Institute of Internal Auditors) (نموذج الخطوط الثلاثة): https://www.theiia.org/
 - لجنة حماية البيانات الشخصية في سنغافورة، Model AI Governance Framework: https://www.pdpc.gov.sg/
-- الاحتياطي الفيدرالي الأمريكي SR 11-7، إرشادات إدارة مخاطر النماذج: https://www.federalreserve.gov/supervisionreg/srletters/sr1107.htm
+- الاحتياطي الفيدرالي الأمريكي SR 11-7، إرشادات إدارة مخاطر النماذج: https://www.federalreserve.gov/boarddocs/srletters/2011/sr1107.htm
+- الاحتياطي الفيدرالي وOCC وFDIC، SR 26-2 الإرشادات المنقّحة بشأن إدارة مخاطر النماذج (Revised Guidance on Model Risk Management)، أبريل 2026: https://www.federalreserve.gov/supervisionreg/srletters/SR2602.htm
 
 ---
 

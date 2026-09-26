@@ -92,7 +92,7 @@ At Najm Bank the AI policy stack looks like this:
 
 Finding existing AI is its own project: survey business units, scan procurement records and expense claims for AI subscriptions, ask vendors whether their products include AI features, and check network logs for traffic to public AI services.
 
-**Model risk management.** Banks already have model risk management (MRM) disciplines, and regulators expect them to cover AI models. In the US, the supervisory guidance SR 11-7 (2011) sets expectations for robust model development, independent validation ("effective challenge"), and governance including a model inventory. In the UK, the Prudential Regulation Authority's supervisory statement SS1/23 sets model risk management principles for banks and explicitly contemplates AI and machine-learning models. The QCB's AI guideline for financial institutions carries similar expectations for Qatari banks; check the current text. The governance move is to extend MRM to AI rather than duplicate it: widen the definition of "model" to cover AI systems including GenAI, add AI-specific validation (fairness, robustness, explainability, GenAI evaluation), and add triggers for vendor model changes.
+**Model risk management.** Banks already have model risk management (MRM) disciplines, and regulators expect them to cover AI models. In the US, the supervisory guidance SR 11-7 (2011) sets expectations for robust model development, independent validation ("effective challenge"), and governance including a model inventory. In the UK, the Prudential Regulation Authority's supervisory statement SS1/23 sets model risk management principles for banks and explicitly contemplates AI and machine-learning models. The QCB's AI guideline for financial institutions carries similar expectations for Qatari banks; check the current text. The governance move is to extend MRM to AI rather than duplicate it: widen the definition of "model" to cover AI systems including GenAI, add AI-specific validation (fairness, robustness, explainability, GenAI evaluation), and add triggers for vendor model changes. In April 2026 the Federal Reserve, the OCC and the FDIC replaced SR 11-7 with **SR 26-2**, *Revised Guidance on Model Risk Management*. It is more principles-based, scales validation to each model's materiality instead of fixed cycles, tightens the definition of a model and holds vendor models to the same standard; read its current text for how it treats generative and agentic AI.
 
 **The exception process.** Rules will sometimes not fit. A good exception process makes deviations visible, time-bound and owned instead of silent:
 
@@ -120,7 +120,7 @@ Finding existing AI is its own project: survey business units, scan procurement 
 | **OECD AI Principles** | AI system definition (updated Nov 2023) and an iterative life-cycle description | EU AI Act definition is based on the OECD's |
 | **ISO/IEC 42001** — Clause 5.2 and Annex A | An AI policy approved by top management; Annex A controls for policies, life cycle, data, third parties and more | Annex A is a practical checklist for the policy stack |
 | **EU AI Act** — Arts 9, 17 and 26 | Life-cycle risk management and quality management for high-risk providers; deployer duties including monitoring and log retention of at least six months | Obligations differ for providers and deployers |
-| **SR 11-7** | US supervisory guidance on model risk management: sound development, independent validation, governance and inventory | "Effective challenge" and independent validation apply to AI models in banks |
+| **SR 11-7** | (Replaced in April 2026 by **SR 26-2**.) US supervisory guidance on model risk management: sound development, independent validation, governance and inventory | "Effective challenge" and independent validation apply to AI models in banks |
 
 ## 🏛️ In practice at Najm Bank
 Layla's **AI life-cycle control matrix (extract)**, part of the AI Life-cycle Standard:
@@ -243,7 +243,8 @@ Draft Najm's AI exception procedure in under 400 words: who can request, what th
 - ISO/IEC JTC 1/SC 42 (ISO/IEC 5338, 22989 and the AI standards family): https://www.iso.org/committee/6794475.html
 - ISO/IEC 42001:2023: https://www.iso.org/standard/81230.html
 - EU AI Act, Regulation (EU) 2024/1689: https://eur-lex.europa.eu/eli/reg/2024/1689/oj
-- US Federal Reserve SR 11-7, Guidance on Model Risk Management: https://www.federalreserve.gov/supervisionreg/srletters/sr1107.htm
+- US Federal Reserve SR 11-7, Guidance on Model Risk Management: https://www.federalreserve.gov/boarddocs/srletters/2011/sr1107.htm
+- Federal Reserve, OCC and FDIC, SR 26-2 Revised Guidance on Model Risk Management (April 2026): https://www.federalreserve.gov/supervisionreg/srletters/SR2602.htm
 - Bank of England Prudential Regulation Authority (SS1/23 model risk management principles): https://www.bankofengland.co.uk/prudential-regulation
 - Qatar Central Bank: https://www.qcb.gov.qa/
 

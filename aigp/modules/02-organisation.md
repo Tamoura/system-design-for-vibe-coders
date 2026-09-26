@@ -483,7 +483,8 @@ Review the RACI above and identify two independence or conflict-of-interest risk
 - ISO/IEC 42001:2023: https://www.iso.org/standard/81230.html
 - The Institute of Internal Auditors (Three Lines Model): https://www.theiia.org/
 - Singapore Personal Data Protection Commission, Model AI Governance Framework: https://www.pdpc.gov.sg/
-- US Federal Reserve SR 11-7, Guidance on Model Risk Management: https://www.federalreserve.gov/supervisionreg/srletters/sr1107.htm
+- US Federal Reserve SR 11-7, Guidance on Model Risk Management: https://www.federalreserve.gov/boarddocs/srletters/2011/sr1107.htm
+- Federal Reserve, OCC and FDIC, SR 26-2 Revised Guidance on Model Risk Management (April 2026): https://www.federalreserve.gov/supervisionreg/srletters/SR2602.htm
 
 ---
 
