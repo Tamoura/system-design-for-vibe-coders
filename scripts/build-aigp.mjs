@@ -76,6 +76,7 @@ const T = {
     flatH1: 'AI Governance: Zero to Hero — govern AI <em>before</em> it governs you.',
     backContents: '↑ Contents', appendixCatalog: 'Appendix — The instruments catalogue',
     flatFooter: 'Generated from the markdown in <code>aigp/</code> by <code>npm run aigp:build</code>. An independent course, not affiliated with or endorsed by the IAPP. Prefer one lesson at a time? Open the <a href="index.html">interactive reader</a>.',
+    brand: 'AI Governance <b>Zero to Hero</b>',
     title: 'AI Governance: Zero to Hero', courseTitle: 'AI Governance: Zero to Hero — Complete Course',
     description: 'AI Governance: Zero to Hero — a free, bilingual course aligned to the IAPP AIGP Body of Knowledge v2.1: foundations, law, standards, and governing AI development and deployment, with exam-style questions and a 100-question mock exam.',
     md: {
@@ -119,6 +120,7 @@ const T = {
     flatH1: 'حوكمة الذكاء الاصطناعي من الصفر إلى الاحتراف: احكم الذكاء الاصطناعي <em>قبل</em> أن يحكمك.',
     backContents: '↑ المحتويات', appendixCatalog: 'الملحق — دليل الأدوات التنظيمية',
     flatFooter: 'مولَّدة من ملفات الماركداون في <code>aigp/</code> عبر <code>npm run aigp:build</code>. دورة مستقلة غير تابعة لـ IAPP. تفضّل درسًا واحدًا في كل مرة؟ افتح <a href="index.ar.html">القارئ التفاعلي</a>.',
+    brand: 'حوكمة الذكاء الاصطناعي <b>من الصفر إلى الاحتراف</b>',
     title: 'حوكمة الذكاء الاصطناعي — من الصفر إلى الاحتراف', courseTitle: 'حوكمة الذكاء الاصطناعي من الصفر إلى الاحتراف — الدورة كاملة',
     description: 'حوكمة الذكاء الاصطناعي من الصفر إلى الاحتراف: دورة مجانية ثنائية اللغة متوافقة مع مجال المعرفة لشهادة AIGP (الإصدار 2.1)، مع أسئلة بأسلوب الامتحان وامتحان تجريبي من 100 سؤال.',
     md: {
@@ -412,7 +414,7 @@ function buildLang(lang) {
     const prereq = l.prereq ? ` · <span class="prereq">${t.before}: ${prereqLinks(l)}</span>` : '';
     return `<p class="crumb"><a href="#/map">${t.module} ${esc(l.mod.key)} — ${esc(l.mod.title)}</a></p>
 <h1><span class="num">${esc(l.num)}</span> ${esc(l.title)}</h1>
-<p class="meta"><span class="lvl lvl-${LEVEL_KEYS[l.level]}">${lvlLabel(l.level)}</span>${l.bok ? ` · <span class="bok" dir="ltr">${t.bokWord} ${esc(l.bok)}</span>` : ''}${prereq}</p>
+<p class="meta"><span class="lvl lvl-${LEVEL_KEYS[l.level]}">${lvlLabel(l.level)}</span>${l.bok ? ` · <span class="bok">${t.bokWord} <bdi dir="ltr">${esc(l.bok)}</bdi></span>` : ''}${prereq}</p>
 ${l.html}`;
   }
 
@@ -483,7 +485,7 @@ ${css}${extraCss}
     return `${head(t.title, t.description, AIGP_CSS)}
 <body>
 <header class="top"><div class="bar">
-  <a class="brand" href="#/">AI Governance <b>Zero to Hero</b></a>
+  <a class="brand" href="#/">${t.brand}</a>
   <nav>
     <a href="#/map">${t.nav.map}</a>
     <a href="#/about">${t.nav.about}</a>
@@ -596,7 +598,7 @@ ${lessonInner(l)}
 <p class="back"><a href="#contents">${t.backContents}</a></p>
 </article>`).join('\n')}`).join('\n');
     const body = `<header class="top"><div class="bar">
-  <a class="brand" href="#top">AI Governance <b>Zero to Hero</b></a>
+  <a class="brand" href="#top">${t.brand}</a>
   <nav>
     <a href="#contents">${t.nav.contents}</a>
     <a href="#repos">${t.nav.repos}</a>
