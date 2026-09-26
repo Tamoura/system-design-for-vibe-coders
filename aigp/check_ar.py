@@ -5,7 +5,7 @@ en,ar=open(sys.argv[1]).read(),open(sys.argv[2]).read()
 def nof(s): return re.sub(r'```.*?```','',s,flags=re.S)
 def heads(s): return [(len(h),(re.match(r'(\S+)',t).group(1) if h in('##','###') else re.sub(r'—.*','',t).strip())) for h,t in re.findall(r'^(#{1,3}) (.*)$',nof(s),flags=re.M)]
 def lessons(s): return re.findall(r'^# (\d+\.\d+) — ',s,flags=re.M)
-def lvl(s): return [(m[0],m[1]) for m in re.findall(r'^\*(?:Level|المستوى):\s*(🟢|🟡|🔴)[^*]*\*.*?(?:BoK|مجال المعرفة)[^:]*:\s*([^*]+)\*',s,flags=re.M)]
+def lvl(s): return [(m[0],tuple(re.findall(r'\b(?:I{1,3}|IV)(?:\.[A-D])?\b',m[1]))) for m in re.findall(r'^\*(?:Level|المستوى):\s*(🟢|🟡|🔴)[^*]*\*.*?(?:BoK|مجال المعرفة)[^:]*:\s*([^*]+)\*',s,flags=re.M)]
 def inst(s):
     out=[]
     for sec in re.split(r'\n(?=## )',s):
@@ -22,7 +22,8 @@ he,ha=heads(en),heads(ar)
 if [h[0] for h in he]!=[h[0] for h in ha]: err.append(f'heading levels differ ({len(ha)} vs {len(he)})')
 else:
     for (d,a),(d2,b) in zip(he,ha):
-        if d in (2,3) and a[:1]!=b[:1]: err.append(f'section emoji differs: {a} vs {b}'); break
+        emo=lambda x: x[:1] if not x[:1].isalpha() else ''
+        if d in (2,3) and emo(a)!=emo(b): err.append(f'section emoji differs: {a} vs {b}'); break
 if lvl(en)!=lvl(ar): err.append(f'level/BoK lines differ: {lvl(ar)[:4]} vs {lvl(en)[:4]}')
 if inst(en)!=inst(ar): err.append(f'⚖️ bold names differ: missing {[x for x in inst(en) if x not in inst(ar)][:5]}')
 if quiz(en)!=quiz(ar): err.append(f'quiz answer letters differ ({len(quiz(ar))} vs {len(quiz(en))})')
