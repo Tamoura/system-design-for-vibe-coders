@@ -142,7 +142,7 @@ Always send a **plain-text part** too. It helps deliverability and accessibility
 | [maizzle/framework](https://github.com/maizzle/framework) | Tailwind CSS framework for HTML emails | JavaScript | MIT | Your team thinks in Tailwind |
 | [nodemailer/nodemailer](https://github.com/nodemailer/nodemailer) | The standard Node.js email sender (SMTP and transports) | JavaScript | MIT-0 | You need SMTP (self-hosted customers, Mailpit, fallback provider) |
 | [axllent/mailpit](https://github.com/axllent/mailpit) | Local SMTP catcher with web UI, HTML compatibility and link checks | Go | MIT | Always, in development and CI |
-| [unsend-dev/unsend](https://github.com/unsend-dev/unsend) | useSend: open-source sending platform (API, domains, webhooks) on Amazon SES | TypeScript, Next.js | AGPL-3.0 | You want a Resend-like experience you host yourself, paying SES prices |
+| [usesend/useSend](https://github.com/usesend/useSend) | useSend: open-source sending platform (API, domains, webhooks) on Amazon SES | TypeScript, Next.js | AGPL-3.0 | You want a Resend-like experience you host yourself, paying SES prices |
 | [postalserver/postal](https://github.com/postalserver/postal) | Full-featured mail delivery platform | Ruby | MIT | You really do need to run your own mail servers |
 | [knadh/listmonk](https://github.com/knadh/listmonk) | Self-hosted newsletter and mailing-list manager | Go, Postgres | AGPL-3.0 | Product newsletters, kept apart from transactional mail |
 | [mautic/mautic](https://github.com/mautic/mautic) | Open-source marketing automation | PHP | GPL-3.0 | Campaigns, segments and lead scoring, self-hosted |
@@ -163,7 +163,7 @@ Always send a **plain-text part** too. It helps deliverability and accessibility
 
 **Documenso (`documenso/documenso`).** Open `packages/email`. `mailer.ts` picks a Nodemailer transport (SMTP, Resend, MailChannels) from environment variables, `templates/` has one file per email, and there's a separate preview setup. Documenso's development Docker Compose uses Inbucket as the mail catcher. Search `organisation-email-domain` for how organizations bring their own sending domain.
 
-**Cal.com (`calcom/cal.com`).** `packages/emails` has a README explaining `renderEmail("TeamInviteEmail", props)` and a preview endpoint, and a `docker-compose.yml` that starts MailHog for local catching. Search `billing-email-service` and `auth-email-service` to see how emails are grouped by domain area.
+**Cal.com (`calcom/cal.diy`).** `packages/emails` has a README explaining `renderEmail("TeamInviteEmail", props)` and a preview endpoint, and a `docker-compose.yml` that starts MailHog for local catching. Search `billing-email-service` and `auth-email-service` to see how emails are grouped by domain area.
 
 **What to notice**
 

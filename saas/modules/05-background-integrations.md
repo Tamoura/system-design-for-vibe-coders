@@ -450,7 +450,7 @@ Rate limit in layers: per IP before auth (stops credential stuffing and junk), p
 
 **dubinc/dub** — a link-management SaaS with a public REST API, API keys scoped to workspaces, rate limits and an OpenAPI document. Search for `openapi` to see how the spec is produced from Zod schemas, and `ratelimit` and `apiKey`/`token` to see how keys are hashed and checked per workspace.
 
-**calcom/cal.com** — a large public API with keys per user/team. At the time of writing the API apps live under `apps/api`. Search for `apiKey` and `hashAPIKey`-style helpers, and look at how API versions are handled side by side as the API evolved.
+**calcom/cal.diy** — a large public API with keys per user/team. At the time of writing the API apps live under `apps/api`. Search for `apiKey` and `hashAPIKey`-style helpers, and look at how API versions are handled side by side as the API evolved.
 
 **openstatusHQ/openstatus** — a Beacon-shaped product with a public API for monitors and status pages. Search for `openapi` and `apiKey` to see how a small team exposes a typed, documented API for the same objects Beacon has.
 
@@ -710,7 +710,7 @@ Two more rules: never show the full response body of a failed delivery unless yo
 
 ## 🔍 Study it in the wild
 
-**calcom/cal.com** — webhooks and an app store in one codebase. Search the Prisma schema for `Webhook` and the trigger events enum to see per-user/team subscriptions to event types, then search `sendPayload` or `webhook` in the features packages for the sender. For integrations, at the time of writing `packages/app-store` holds one folder per app; open two (for example a video app and a calendar app) and compare their structure.
+**calcom/cal.diy** — webhooks and an app store in one codebase. Search the Prisma schema for `Webhook` and the trigger events enum to see per-user/team subscriptions to event types, then search `sendPayload` or `webhook` in the features packages for the sender. For integrations, at the time of writing `packages/app-store` holds one folder per app; open two (for example a video app and a calendar app) and compare their structure.
 
 **chatwoot/chatwoot** — Rails app with both outbound webhooks and first-party integrations (Slack among them). Search for `WebhookJob` or `webhook` in `app/jobs` and for `slack` in the integrations code to see the OAuth install and message posting.
 
@@ -979,7 +979,7 @@ The two combine well: store the customer's escalation policy as data (tiers, del
 
 ## 🔍 Study it in the wild
 
-**calcom/cal.com** — a user-facing workflow builder for reminders. Search for `workflow` and `WorkflowStep` in the Prisma schema to see how customer-defined triggers ("before event starts"), offsets and actions (email, SMS) are stored as data, then search for where reminders are scheduled and cancelled when bookings change. Notice how rescheduling a booking must update already-scheduled steps.
+**calcom/cal.diy** — a workflow builder you can now read only in its migrations. Cal.com's reminder workflows were removed from the open-source edition in 2026, but the history is still in `packages/prisma/migrations`: `20220711182928_add_workflows` shows how customer-defined triggers ("before event starts"), offsets and actions (email, SMS) were stored as data, and `20260319000000_drop_workflow_tables` shows their removal. Notice what the tables had to record so that rescheduling a booking could update already-scheduled steps.
 
 **twentyhq/twenty** — a CRM with a newer visual workflow feature. Search for `workflow` in the server package to find the workflow definitions, versions and runs, and how each step type is executed by the job system. Notice the separation between a workflow *version* (the definition) and a *run*.
 

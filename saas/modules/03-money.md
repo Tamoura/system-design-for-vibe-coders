@@ -485,7 +485,7 @@ A new feature can be behind both: flag `incident-ai-summary` on for 10% of accou
 
 **Documenso (`documenso/documenso`).** In the Prisma schema, compare `SubscriptionClaim` with `OrganisationClaim`: the same fields (team count, member count, quotas, flags), one a template and one a per-org copy. Search the jobs folder for `backport-subscription-claims` to see how they push template changes to existing orgs on purpose, which is grandfathering as an explicit operation.
 
-**Cal.com (`calcom/cal.com`).** Search the Prisma schema for `SeatChangeLog` and `MonthlyProration`. Seat-based billing gets real once you have to record every add and remove so the invoice is explainable.
+**Cal.com (`calcom/cal.diy`).** Search the Prisma schema for `SeatChangeLog` and `MonthlyProration`. Seat-based billing gets real once you have to record every add and remove so the invoice is explainable.
 
 **What to notice**
 
@@ -738,7 +738,7 @@ Keep the layers apart: **metering** (count), **billing** (rate and invoice), **p
 
 ## 🔍 Study it in the wild
 
-**Cal.com (`calcom/cal.com`).** This is Beacon's SMS credits, in production. In the Prisma schema, read `CreditBalance`, `CreditPurchaseLog` and `CreditExpenseLog`. Note `smsSegments`, `smsSid`, the `@unique` on `externalRef` (idempotency), the `MONTHLY`/`ADDITIONAL` credit types, and `limitReachedAt`/`warningSentAt` (alerts sent once). Then open `packages/features/credits` (at the time of writing) to see the repository methods that read and write them.
+**Cal.com (`calcom/cal.diy`).** This is Beacon's SMS credits, in production. In the Prisma schema, read `CreditBalance`, `CreditPurchaseLog` and `CreditExpenseLog`. Note `smsSegments`, `smsSid`, the `@unique` on `externalRef` (idempotency), the `MONTHLY`/`ADDITIONAL` credit types, and `limitReachedAt`/`warningSentAt` (alerts sent once). Then open `packages/features/credits` (at the time of writing) to see the repository methods that read and write them.
 
 **Dub (`dubinc/dub`).** Dub's plans limit tracked clicks per month. Search for the usage cron (`api/cron/usage` at the time of writing). It queries usage from Tinybird, updates the workspace's `usage` column, sends limit alerts to owners and Slack, and resets on the billing cycle. Look at how `billingCycleStart` is used to compute each workspace's own period instead of assuming calendar months.
 

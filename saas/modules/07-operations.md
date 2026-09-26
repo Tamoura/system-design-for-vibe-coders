@@ -162,7 +162,7 @@ Also worth knowing: [avo-hq/avo](https://github.com/avo-hq/avo) (Rails admin, LG
 
 **Chatwoot** ([chatwoot/chatwoot](https://github.com/chatwoot/chatwoot)) is both a support tool and a SaaS with a super admin console. Its `super_admin` controllers are built on the Administrate gem, with one "dashboard" class per model in `app/dashboards`. Search for `Impersonation` to find the Vue banner component and the composable that drives it — a clean, small example of the "unmissable banner" rule.
 
-**Cal.com** ([calcom/cal.com](https://github.com/calcom/cal.com)) puts its instance admin pages inside the main Next.js app under the settings area (search the `apps/web` tree for `admin`). Search the Prisma migrations for `impersonat` and you can read the history of the feature as schema changes: a user-level toggle to allow impersonation, a team-level switch to disable it, and later, permissions tied to admin roles.
+**Cal.com** ([calcom/cal.diy](https://github.com/calcom/cal.diy)) puts its instance admin pages inside the main Next.js app under the settings area (search the `apps/web` tree for `admin`). Search the Prisma migrations for `impersonat` and you can read the history of the feature as schema changes: a user-level toggle to allow impersonation, a team-level switch to disable it, and later, permissions tied to admin roles.
 
 **What to notice:**
 
@@ -701,9 +701,9 @@ A per-org chain avoids one global serialization point; with high write volume, c
 | Repo | What it is | Stack | License | Pick it when |
 |---|---|---|---|---|
 | [retracedhq/retraced](https://github.com/retracedhq/retraced) | Standalone audit-log service with an embeddable customer-facing viewer (from BoxyHQ) | TS, Postgres, Elasticsearch/OpenSearch | Apache-2.0 | You want a self-hosted audit service with a ready-made UI |
-| [BemiHQ/bemi](https://github.com/BemiHQ/bemi) | Postgres CDC that captures every change and stitches in app context | Go/TS, Postgres | SSPL-1.0 | You want automatic, complete change capture with user context |
+| [pgstack-io/bemi-io](https://github.com/pgstack-io/bemi-io) | Postgres CDC that captures every change and stitches in app context | Go/TS, Postgres | SSPL-1.0 | You want automatic, complete change capture with user context |
 | [pgaudit/pgaudit](https://github.com/pgaudit/pgaudit) | Postgres extension for session and object audit logging | C | PostgreSQL License | Compliance needs a record of direct DB access |
-| [supabase/supa_audit](https://github.com/supabase/supa_audit) | Small Postgres extension for trigger-based table change auditing | SQL | Apache-2.0 | You want a trigger safety net you can read in one sitting |
+| [pgMemento/pgMemento](https://github.com/pgMemento/pgMemento) | Trigger-based audit trail with schema versioning, in plain PL/pgSQL | SQL | LGPL-3.0 | You want a maintained trigger safety net inside Postgres, not a separate service |
 | [paper-trail-gem/paper_trail](https://github.com/paper-trail-gem/paper_trail) | Track changes to Rails models, with version history | Ruby | MIT | Rails, and you need record history plus "whodunnit" |
 | [collectiveidea/audited](https://github.com/collectiveidea/audited) | Rails ORM extension logging model changes with user and request context | Ruby | MIT | Rails, audit-first rather than versioning-first |
 | [django-commons/django-simple-history](https://github.com/django-commons/django-simple-history) | Stores historical versions of Django models | Python | BSD-3-Clause | You're on Django (formerly under Jazzband) |
@@ -987,7 +987,7 @@ Most SaaS companies should pick the simplest row that meets their constraints an
 | [caprover/caprover](https://github.com/caprover/caprover) | Self-hosted PaaS on Docker Swarm with one-click apps | TS | Apache-2.0 | You want a mature UI-based option with a one-click app catalog |
 | [opentofu/opentofu](https://github.com/opentofu/opentofu) | Open-source infrastructure as code, Terraform-compatible | Go | MPL-2.0 | You want the widest provider ecosystem under an open license |
 | [pulumi/pulumi](https://github.com/pulumi/pulumi) | Infrastructure as code in real programming languages | Go, multi-language | Apache-2.0 | Your team would rather write TypeScript than HCL |
-| [sst/sst](https://github.com/sst/sst) | Framework for deploying full-stack apps and their infra, TS-first | TS, Go | MIT | You're on AWS with Next.js and serverless |
+| [anomalyco/sst](https://github.com/anomalyco/sst) | Framework for deploying full-stack apps and their infra, TS-first | TS, Go | MIT | You're on AWS with Next.js and serverless |
 | [docker/compose](https://github.com/docker/compose) | Define and run multi-container apps from one YAML file | Go | Apache-2.0 | Local dev and your self-hosted distribution |
 | [helm/helm](https://github.com/helm/helm) | Package manager for Kubernetes | Go | Apache-2.0 | Enterprise customers will self-host on Kubernetes |
 

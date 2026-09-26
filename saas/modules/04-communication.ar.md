@@ -142,7 +142,7 @@ export async function sendInvite(job: { to: string; orgName: string; url: string
 | [maizzle/framework](https://github.com/maizzle/framework) | إطار Tailwind CSS لرسائل HTML | JavaScript | MIT | فريقك يفكر بأسلوب Tailwind |
 | [nodemailer/nodemailer](https://github.com/nodemailer/nodemailer) | أداة الإرسال القياسية في Node.js (SMTP ووسائل نقل أخرى) | JavaScript | MIT-0 | تحتاج SMTP (عملاء يستضيفون بأنفسهم، أو Mailpit، أو مزوّد احتياطي) |
 | [axllent/mailpit](https://github.com/axllent/mailpit) | ملتقط SMTP محلي مع واجهة ويب وفحص توافق HTML والروابط | Go | MIT | دائمًا، في التطوير وفي CI |
-| [unsend-dev/unsend](https://github.com/unsend-dev/unsend) | useSend: منصة إرسال مفتوحة المصدر (API ونطاقات وويب هوك) فوق Amazon SES | TypeScript, Next.js | AGPL-3.0 | تريد تجربة تشبه Resend تستضيفها بنفسك وتدفع أسعار SES |
+| [usesend/useSend](https://github.com/usesend/useSend) | useSend: منصة إرسال مفتوحة المصدر (API ونطاقات وويب هوك) فوق Amazon SES | TypeScript, Next.js | AGPL-3.0 | تريد تجربة تشبه Resend تستضيفها بنفسك وتدفع أسعار SES |
 | [postalserver/postal](https://github.com/postalserver/postal) | منصة تسليم بريد كاملة الميزات | Ruby | MIT | تحتاج فعلًا إلى تشغيل خوادم البريد الخاصة بك |
 | [knadh/listmonk](https://github.com/knadh/listmonk) | مدير نشرات إخبارية وقوائم بريدية تستضيفه بنفسك | Go, Postgres | AGPL-3.0 | نشرات المنتج، منفصلة عن البريد المعاملاتي |
 | [mautic/mautic](https://github.com/mautic/mautic) | أتمتة تسويق مفتوحة المصدر | PHP | GPL-3.0 | حملات وتقسيم جمهور وتقييم عملاء محتملين، باستضافة ذاتية |
@@ -163,7 +163,7 @@ export async function sendInvite(job: { to: string; orgName: string; url: string
 
 **Documenso (`documenso/documenso`).** افتح `packages/email`. الملف `mailer.ts` يختار وسيلة نقل Nodemailer (SMTP أو Resend أو MailChannels) من متغيرات البيئة، ومجلد `templates/` فيه ملف لكل رسالة، وهناك إعداد معاينة منفصل. ملف Docker Compose الخاص بالتطوير في Documenso يستخدم Inbucket لالتقاط البريد. وابحث عن `organisation-email-domain` لترى كيف تضيف المؤسسات نطاق الإرسال الخاص بها.
 
-**Cal.com (`calcom/cal.com`).** يحتوي `packages/emails` على ملف README يشرح `renderEmail("TeamInviteEmail", props)` ونقطة معاينة، وعلى ملف `docker-compose.yml` يشغّل MailHog لالتقاط البريد محليًا. ابحث عن `billing-email-service` و`auth-email-service` لترى كيف تُجمَّع الرسائل بحسب مجال العمل.
+**Cal.com (`calcom/cal.diy`).** يحتوي `packages/emails` على ملف README يشرح `renderEmail("TeamInviteEmail", props)` ونقطة معاينة، وعلى ملف `docker-compose.yml` يشغّل MailHog لالتقاط البريد محليًا. ابحث عن `billing-email-service` و`auth-email-service` لترى كيف تُجمَّع الرسائل بحسب مجال العمل.
 
 **ما الذي تلاحظه**
 

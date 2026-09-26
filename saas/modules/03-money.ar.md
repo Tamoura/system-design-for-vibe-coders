@@ -485,7 +485,7 @@ export async function createMonitor(orgId: string, input: MonitorInput) {
 
 **Documenso (`documenso/documenso`).** في مخطط Prisma، قارن `SubscriptionClaim` بـ`OrganisationClaim`: الحقول نفسها (عدد الفرق، وعدد الأعضاء، والحصص، والأعلام)، أحدهما قالب والآخر نسخة لكل مؤسسة. وابحث في مجلد المهام عن `backport-subscription-claims` لترى كيف يدفعون تغييرات القالب إلى المؤسسات الحالية عن قصد، أي إبقاء الأسعار القديمة بوصفه عملية صريحة.
 
-**Cal.com (`calcom/cal.com`).** ابحث في مخطط Prisma عن `SeatChangeLog` و`MonthlyProration`. تصبح الفوترة حسب المقعد جدية عندما يلزمك تسجيل كل إضافة وإزالة لتكون الفاتورة قابلة للتفسير.
+**Cal.com (`calcom/cal.diy`).** ابحث في مخطط Prisma عن `SeatChangeLog` و`MonthlyProration`. تصبح الفوترة حسب المقعد جدية عندما يلزمك تسجيل كل إضافة وإزالة لتكون الفاتورة قابلة للتفسير.
 
 **ما الذي تلاحظه**
 
@@ -738,7 +738,7 @@ await db.usageEvent.upsert({
 
 ## 🔍 ادرسه في مشاريع حقيقية
 
-**Cal.com (`calcom/cal.com`).** هذه أرصدة SMS في Beacon، في بيئة إنتاج. في مخطط Prisma، اقرأ `CreditBalance` و`CreditPurchaseLog` و`CreditExpenseLog`. لاحظ `smsSegments` و`smsSid`، و`@unique` على `externalRef` (عدم التأثر بالتكرار)، ونوعي الرصيد `MONTHLY`/`ADDITIONAL`، و`limitReachedAt`/`warningSentAt` (تنبيهات تُرسل مرة واحدة). ثم افتح `packages/features/credits` (وقت كتابة هذا الدرس) لترى دوال المستودع التي تقرأها وتكتبها.
+**Cal.com (`calcom/cal.diy`).** هذه أرصدة SMS في Beacon، في بيئة إنتاج. في مخطط Prisma، اقرأ `CreditBalance` و`CreditPurchaseLog` و`CreditExpenseLog`. لاحظ `smsSegments` و`smsSid`، و`@unique` على `externalRef` (عدم التأثر بالتكرار)، ونوعي الرصيد `MONTHLY`/`ADDITIONAL`، و`limitReachedAt`/`warningSentAt` (تنبيهات تُرسل مرة واحدة). ثم افتح `packages/features/credits` (وقت كتابة هذا الدرس) لترى دوال المستودع التي تقرأها وتكتبها.
 
 **Dub (`dubinc/dub`).** تحدّ خطط Dub عدد النقرات المتتبَّعة شهريًا. ابحث عن مهمة cron الخاصة بالاستخدام (`api/cron/usage` وقت كتابة هذا الدرس). إنها تستعلم عن الاستخدام من Tinybird، وتحدّث العمود `usage` في مساحة العمل، وترسل تنبيهات الحدود إلى المالكين وإلى Slack، وتصفّر العدّ مع دورة الفوترة. انظر كيف يُستخدم `billingCycleStart` لحساب الفترة الخاصة بكل مساحة عمل بدل افتراض الأشهر التقويمية.
 

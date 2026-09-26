@@ -147,7 +147,7 @@ Other dangerous operations in Postgres: adding a column with a volatile default 
 | Repo | What it is | Stack | License | Pick it when |
 |---|---|---|---|---|
 | [postgres/postgres](https://github.com/postgres/postgres) | The database itself (GitHub mirror) | C | PostgreSQL | You want to read the source or docs of the thing you depend on |
-| [prisma/prisma](https://github.com/prisma/prisma) | Schema-first ORM with migrations and a studio | TypeScript | Apache-2.0 | You want the gentlest on-ramp and a readable schema file |
+| [prisma/orm](https://github.com/prisma/orm) | Schema-first ORM with migrations and a studio | TypeScript | Apache-2.0 | You want the gentlest on-ramp and a readable schema file |
 | [drizzle-team/drizzle-orm](https://github.com/drizzle-team/drizzle-orm) | SQL-like TypeScript ORM plus Drizzle Kit migrations | TypeScript | Apache-2.0 | You know SQL, want types, and deploy to serverless or edge |
 | [kysely-org/kysely](https://github.com/kysely-org/kysely) | Type-safe SQL query builder | TypeScript | MIT | You want SQL control with types and no ORM layer |
 | [sqlc-dev/sqlc](https://github.com/sqlc-dev/sqlc) | Generates type-safe code from SQL queries | Go (also other targets) | MIT | You write Go and prefer SQL files to an ORM |
@@ -166,7 +166,7 @@ Other dangerous operations in Postgres: adding a column with a volatile default 
 
 ## 🔍 Study it in the wild
 
-**Cal.com (`calcom/cal.com`).** A large Next.js monorepo using Prisma. At the time of writing the schema lives under `packages/prisma`; open `schema.prisma` and read the `User`, `Team` and `Membership` models, then browse the `migrations` folder next to it to see years of real schema evolution, including backfills and renamed columns.
+**Cal.com (`calcom/cal.diy`).** A large Next.js monorepo using Prisma. At the time of writing the schema lives under `packages/prisma`; open `schema.prisma` and read the `User`, `Team` and `Membership` models, then browse the `migrations` folder next to it to see years of real schema evolution, including backfills and renamed columns.
 
 **Documenso (`documenso/documenso`).** Also Prisma, in `packages/prisma`, and smaller than Cal.com, so easier to hold in your head. Search the schema for `@default(` and `@@index`, and find the seed script.
 
@@ -417,7 +417,7 @@ flowchart TD
 
 **Residency and bring-your-own-bucket.** EU customers may need files stored in an EU region (lesson 2.4), so the region becomes part of the tenant's config and your signing code picks the right bucket. Some enterprise customers ask to store files in *their own* bucket; the S3 API makes this feasible (a per-tenant endpoint, bucket and credentials, or a cross-account role), but it multiplies your support surface. Offer it only on the plan that pays for it.
 
-**Self-hosting.** If you ship a self-hostable edition (lesson 7.4) or need on-prem storage, you need an S3-compatible server. MinIO was the default choice for years, but in 2025 its community edition moved toward source-only distribution and maintenance mode, so check its current status before adopting it. SeaweedFS and Garage (a lightweight, geo-distributed S3 server from Deuxfleurs) are the commonly cited alternatives.
+**Self-hosting.** If you ship a self-hostable edition (lesson 7.4) or need on-prem storage, you need an S3-compatible server. MinIO was the default choice for years, but in 2025 its community edition moved to source-only distribution and maintenance mode, and the `minio/minio` repository has since been archived. SeaweedFS, RustFS (an Apache-2.0 server built to migrate from and coexist with MinIO) and Garage (a lightweight, geo-distributed S3 server from Deuxfleurs) are the usual alternatives.
 
 ## 🏆 The best repos
 
@@ -431,9 +431,9 @@ flowchart TD
 | [imgproxy/imgproxy](https://github.com/imgproxy/imgproxy) | On-the-fly image resizing server | Go | Apache-2.0 | You want URL-based transforms behind a CDN |
 | [supabase/storage](https://github.com/supabase/storage) | Supabase's storage API: S3 backend, Postgres metadata, policies | TypeScript | Apache-2.0 | You want to read a production storage service's source |
 | [seaweedfs/seaweedfs](https://github.com/seaweedfs/seaweedfs) | Distributed blob store with an S3 gateway | Go | Apache-2.0 | You self-host storage at real scale |
-| [minio/minio](https://github.com/minio/minio) | S3-compatible server; community edition source-only since 2025 | Go | AGPL-3.0 | You already run it; evaluate alternatives for new setups |
+| [rustfs/rustfs](https://github.com/rustfs/rustfs) | S3-compatible object store built to migrate from and coexist with MinIO | Rust | Apache-2.0 | You are replacing MinIO (archived) or want a permissive licence |
 
-Garage is not on GitHub; find it at https://garagehq.deuxfleurs.fr. It is a good fit for small self-hosted or multi-site deployments.
+Garage is developed on Deuxfleurs' own forge (https://garagehq.deuxfleurs.fr), with a read-only GitHub mirror at [deuxfleurs-org/garage](https://github.com/deuxfleurs-org/garage). It is a good fit for small self-hosted or multi-site deployments.
 
 **If you only study one:** `supabase/storage`. It is a real multi-tenant storage service that does exactly what this lesson describes: bytes in an S3 backend, metadata rows in Postgres, access decided by database policies, signed URLs, and resumable uploads. Reading how it maps a request to a bucket, a key and a permission check teaches more than any tutorial.
 
@@ -977,7 +977,7 @@ Decide residency at signup (moving a tenant between regions later is a migration
 
 **Supabase (`supabase/supabase`).** Search the repo's `examples` for `create policy` to find real RLS policies using `auth.uid()`, including team-membership policies that join through a members table.
 
-**Cal.com (`calcom/cal.com`).** Search the Prisma schema for `teamId` and `organizationId` to see a pool model that grew an "organizations" layer on top of teams, and how uniqueness constraints are scoped.
+**Cal.com (`calcom/cal.diy`).** Search the Prisma schema for `teamId` and `organizationId` to see a pool model that grew an "organizations" layer on top of teams, and how uniqueness constraints are scoped.
 
 **What to notice:**
 

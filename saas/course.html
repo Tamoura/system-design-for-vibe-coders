@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="saas-source" content="2afd135bd99845f8">
+<meta name="saas-source" content="27c83e4586495169">
 <meta name="description" content="SaaS Building Blocks — the ~25 components every SaaS shares, taught beginner to advanced, with the best open-source repos to learn each one from.">
 <title>SaaS Building Blocks — Complete Course</title>
 <style>
@@ -901,7 +901,7 @@ decisions the way a senior engineer would in a design review.</em></p>
 </section>
 <section class="sec sec-wild"><h2>🔍 Study it in the wild</h2>
 <p>Take the four products from the table above and spend ten minutes in each, looking only for the generic parts.</p>
-<p><strong>Cal.com</strong> (<code>calcom/cal.com</code>). A large TypeScript monorepo. At the time of writing, the main app lives under <code>apps/web</code> and the database schema under <code>packages/prisma</code>. Open the Prisma schema and search for <code>model Team</code>, <code>model Membership</code> and <code>model Webhook</code>. You will find the generic skeleton sitting next to the core models like <code>Booking</code> and <code>EventType</code>.</p>
+<p><strong>Cal.com</strong> (<code>calcom/cal.diy</code>, its MIT community edition since 2026). A large TypeScript monorepo. At the time of writing, the main app lives under <code>apps/web</code> and the database schema under <code>packages/prisma</code>. Open the Prisma schema and search for <code>model Team</code>, <code>model Membership</code> and <code>model Webhook</code>. You will find the generic skeleton sitting next to the core models like <code>Booking</code> and <code>EventType</code>.</p>
 <p><strong>Dub</strong> (<code>dubinc/dub</code>). Also a Next.js monorepo. Use GitHub code search inside the repo for <code>stripe</code> and for <code>apiKey</code> or <code>token</code>. Notice how much code is about plans and usage limits, because a link shortener&#39;s pricing is driven by how many links and clicks you have.</p>
 <p><strong>Plane</strong> (<code>makeplane/plane</code>). A Django API with Next.js frontends. Search for <code>class Workspace</code> and <code>WorkspaceMember</code> in the Python code. The role field on the membership model is the whole permission system in miniature.</p>
 <p><strong>Sentry</strong> (<code>getsentry/sentry</code>). A huge Django codebase. Do not try to read it. Search for <code>class Organization</code>, <code>AuditLogEntry</code> and <code>OrganizationMember</code>. The core (event ingestion and grouping) is a large part of the repo, but the generic parts are just as mature.</p>
@@ -1236,8 +1236,8 @@ git log --oneline -S &quot;maxMonitors&quot; -- .
 <td>You want to practise the method on the product this course is modelled on</td>
 </tr>
 <tr>
-<td><a href="https://github.com/maybe-finance/maybe">maybe-finance/maybe</a></td>
-<td>Personal finance app built with modern Rails (archived)</td>
+<td><a href="https://github.com/we-promise/sure">we-promise/sure</a></td>
+<td>Personal finance app built with modern Rails: the community fork of the archived Maybe</td>
 <td>Ruby on Rails 8, Postgres</td>
 <td>AGPL-3.0</td>
 <td>You want to see how clean a conventional monolith can be</td>
@@ -1254,7 +1254,7 @@ git log --oneline -S &quot;maxMonitors&quot; -- .
 <section class="sec sec-wild"><h2>🔍 Study it in the wild</h2>
 <p>Let us run the method on two repos.</p>
 <p><strong>Documenso</strong> (<code>documenso/documenso</code>), an open-source DocuSign alternative. Step 2: its compose setup and <code>.env.example</code> reveal Postgres, a mail catcher for local email, and signing-certificate settings, so you already know e-signature certificates are part of the core. Step 3: the root <code>package.json</code> shows a Turborepo monorepo; at the time of writing the apps live under <code>apps/</code> and shared code under <code>packages/</code>. Step 4: search the repo for <code>schema.prisma</code> and read the model names. You will find <code>User</code>, team models, <code>Document</code>, <code>Recipient</code>, <code>Field</code>, webhook and API token models, and a document audit log model. Step 5: pick &quot;send a document for signing&quot; and follow it from the UI to the database write to the email it triggers.</p>
-<p><strong>Maybe</strong> (<code>maybe-finance/maybe</code>), an archived Rails 8 app. Rails makes the method almost mechanical: <code>config/routes.rb</code> lists every URL, <code>db/schema.rb</code> is the full schema in one file, <code>app/models</code> holds the domain, and <code>app/jobs</code> holds background work (Solid Queue). Pick a route, open its controller, follow it to the model. For juniors from JavaScript land, reading a well-kept Rails app is a lesson in how much convention can replace configuration.</p>
+<p><strong>Sure</strong> (<code>we-promise/sure</code>), a Rails 8 app: the community-maintained fork of Maybe, whose original repository is archived. Rails makes the method almost mechanical: <code>config/routes.rb</code> lists every URL, <code>db/schema.rb</code> is the full schema in one file, <code>app/models</code> holds the domain, and <code>app/jobs</code> holds background work (Sidekiq). Pick a route, open its controller, follow it to the model. For juniors from JavaScript land, reading a well-kept Rails app is a lesson in how much convention can replace configuration.</p>
 <p><strong>What to notice:</strong></p>
 <ul>
 <li>How fast the <code>.env.example</code> file told you which external services each product uses.</li>
@@ -1387,11 +1387,11 @@ git log --oneline -S &quot;maxMonitors&quot; -- .
 </tr>
 </thead>
 <tbody><tr>
-<td>calcom/cal.com</td>
-<td>Scheduling</td>
+<td>calcom/cal.diy</td>
+<td>Scheduling (Cal.com&#39;s open-source edition)</td>
 <td>Next.js monorepo, Prisma, Postgres</td>
-<td>AGPL-3.0 (commercial <code>ee</code>)</td>
-<td>Teams and orgs, SAML SSO via SAML Jackson, webhooks, API keys, integrations app store</td>
+<td>MIT</td>
+<td>Teams, webhooks, API keys, credits, integrations app store (SSO, workflows and other enterprise features removed in 2026)</td>
 </tr>
 <tr>
 <td>documenso/documenso</td>
@@ -1523,11 +1523,11 @@ git log --oneline -S &quot;maxMonitors&quot; -- .
 <td>Jobs, plugins, notifications, email</td>
 </tr>
 <tr>
-<td>maybe-finance/maybe</td>
+<td>we-promise/sure</td>
 <td>Personal finance</td>
-<td>Rails 8, Solid Queue</td>
+<td>Rails 8, Sidekiq</td>
 <td>AGPL-3.0</td>
-<td>Clean modern Rails monolith (archived, still excellent reading)</td>
+<td>Clean modern Rails monolith (the maintained fork of the archived Maybe)</td>
 </tr>
 </tbody></table></div>
 <p><strong>Go and other</strong></p>
@@ -1596,11 +1596,11 @@ git log --oneline -S &quot;maxMonitors&quot; -- .
 </tr>
 </thead>
 <tbody><tr>
-<td>calcom/cal.com</td>
+<td>calcom/cal.diy</td>
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>✓</td>
+<td></td>
 <td>✓</td>
 <td></td>
 <td>✓</td>
@@ -1840,11 +1840,11 @@ git log --oneline -S &quot;maxMonitors&quot; -- .
 <td>You want Beacon&#39;s core without the multi-tenant SaaS layer, for contrast</td>
 </tr>
 <tr>
-<td><a href="https://github.com/calcom/cal.com">calcom/cal.com</a></td>
-<td>Scheduling infrastructure</td>
+<td><a href="https://github.com/calcom/cal.diy">calcom/cal.diy</a></td>
+<td>Scheduling (Cal.com&#39;s open-source edition)</td>
 <td>Next.js, Prisma</td>
 <td>MIT</td>
-<td>You want the fullest TypeScript example of teams, orgs, SSO and integrations</td>
+<td>You want a large TypeScript monorepo with teams, webhooks, API keys and an integrations app store</td>
 </tr>
 <tr>
 <td><a href="https://github.com/documenso/documenso">documenso/documenso</a></td>
@@ -1908,7 +1908,7 @@ git log --oneline -S &quot;maxMonitors&quot; -- .
 <p>Let us compare three shelf repos that sit near Beacon.</p>
 <p><strong>openstatus</strong> (<code>openstatusHQ/openstatus</code>). A multi-tenant SaaS: workspaces, plans, a public API, status pages and notifications. Use GitHub code search in the repo for <code>workspace</code> and <code>plan</code> to see how limits connect to monitors. Look at how the checker is separated from the web app, since the thing that must run every 30 seconds has different needs from the dashboard.</p>
 <p><strong>Uptime Kuma</strong> (<code>louislam/uptime-kuma</code>). A single-tenant, self-hosted monitor: one install, one owner. Search for <code>notification-providers</code> or browse the server folder for the notification provider files; each provider (Slack, Telegram, email and many more) is its own small module with the same interface. There are no organizations or billing, which makes the core unusually easy to see.</p>
-<p><strong>Cal.com</strong> (<code>calcom/cal.com</code>). Not a monitoring product, but a model for &quot;the SaaS layer&quot;. Open <code>packages/prisma</code> and read the schema for <code>Team</code>, <code>Membership</code> and the organization-related fields. Cal.com is also a lesson in licences: it was AGPL with a commercial <code>ee</code> folder for years and is now MIT-licensed with no <code>ee</code> folder (at the time of writing) — always read the current LICENSE, not a blog post about it.</p>
+<p><strong>Cal.com</strong> (<code>calcom/cal.diy</code>). Not a monitoring product, but a model for &quot;the SaaS layer&quot;. Open <code>packages/prisma</code> and read the schema for <code>Team</code>, <code>Membership</code> and the organization-related fields. Cal.com is also a lesson in licences: it was AGPL with a commercial <code>ee</code> folder for years; in 2026 the open-source repository became <strong>Cal.diy</strong>, MIT-licensed with the enterprise features (organizations, SSO, workflows, insights) removed, while Cal.com continues as a commercial product. Always read the current LICENSE and README, not a blog post about them.</p>
 <p><strong>What to notice:</strong></p>
 <ul>
 <li>openstatus and Uptime Kuma solve the same core problem. The difference between them is almost entirely the generic SaaS layer: orgs, billing, API keys, multi-tenancy.</li>
@@ -2256,7 +2256,7 @@ export async function validateSession(token: string) {
 </section>
 <section class="sec sec-wild"><h2>🔍 Study it in the wild</h2>
 <p><strong>openstatusHQ/openstatus</strong> is an open-source uptime monitor and status page, so it is literally a real Beacon. It is a TypeScript monorepo. Open <code>apps/web</code>, check its <code>package.json</code> to see which auth library it chose, then use code search for <code>auth</code> and <code>session</code>. What it does well is proportion: authentication is a small, boring corner of the codebase, which is exactly where it belongs in a product whose value is the monitoring.</p>
-<p><strong>calcom/cal.com</strong> shows authentication at scale in a Next.js monorepo: credentials, Google login, SAML SSO, and two-factor authentication. Search for <code>NextAuth</code> or <code>authOptions</code> to find the provider setup, and <code>twoFactor</code> to see how TOTP is layered onto credential login. The Prisma schema in <code>packages/prisma</code> shows how identity fields sit on the <code>User</code> model.</p>
+<p><strong>calcom/cal.diy</strong> shows authentication at scale in a Next.js monorepo: credentials, Google login and two-factor authentication (its SAML SSO was removed with the other enterprise features when the open-source edition became Cal.diy in 2026). Search for <code>NextAuth</code> or <code>authOptions</code> to find the provider setup, and <code>twoFactor</code> to see how TOTP is layered onto credential login. The Prisma schema in <code>packages/prisma</code> shows how identity fields sit on the <code>User</code> model.</p>
 <p><strong>nextjs/saas-starter</strong> is the smallest complete example: email and password with bcrypt, a signed session cookie via <code>jose</code>, and middleware that protects routes. Read all of it in an evening. It shows the trade-off of stateless signed cookies: simple, but no server-side revocation list.</p>
 <p><strong>documenso/documenso</strong> handles authentication for a product where identity is legally meaningful (e-signatures). Search for <code>passkey</code> and <code>two-factor</code> to see WebAuthn and TOTP, and for <code>signin</code> in the web app to find the flows.</p>
 <p><strong>What to notice:</strong></p>
@@ -2520,8 +2520,8 @@ export async function validateSession(token: string) {
 <td>You know you will sell to enterprises and want SSO-ready team models</td>
 </tr>
 <tr>
-<td><a href="https://github.com/calcom/cal.com">calcom/cal.com</a></td>
-<td>Scheduling SaaS with users, teams and organizations containing teams</td>
+<td><a href="https://github.com/calcom/cal.diy">calcom/cal.diy</a></td>
+<td>Scheduling SaaS whose schema models users, teams and organizations containing teams</td>
 <td>TypeScript, Prisma</td>
 <td>MIT</td>
 <td>You want to see a hierarchy (org to team to member) in production</td>
@@ -2564,7 +2564,7 @@ export async function validateSession(token: string) {
 </ul>
 </section>
 <section class="sec sec-wild"><h2>🔍 Study it in the wild</h2>
-<p><strong>calcom/cal.com</strong> shows a mature hierarchy. Open <code>packages/prisma</code> and read the Prisma schema&#39;s <code>Team</code> and <code>Membership</code> models. At the time of writing, organizations are teams with extra organization settings and child teams point at a parent. Notice how memberships carry both a role and an acceptance flag, so a pending invite and an active member share a table. Search for <code>inviteMember</code> to follow the invite flow end to end.</p>
+<p><strong>calcom/cal.diy</strong> shows a mature hierarchy. Open <code>packages/prisma</code> and read the Prisma schema&#39;s <code>Team</code> and <code>Membership</code> models. Organizations are teams with extra organization settings, and child teams point at a parent; the organization features were removed from the open-source edition in 2026, but the schema still shows the model. Notice how memberships carry both a role and an acceptance flag, so a pending invite and an active member share a table. Search for <code>inviteMember</code> to follow the invite flow end to end.</p>
 <p><strong>dubinc/dub</strong> puts the workspace slug at the front of every dashboard URL, which makes support links and multi-tab use painless. At the time of writing its Prisma model for workspaces kept the older name <code>Project</code>, which is a realistic lesson in how product vocabulary changes faster than schemas. Search for <code>ProjectUsers</code> and <code>invite</code> to find memberships and invitations, then look at how API routes resolve the workspace and check membership before doing anything.</p>
 <p><strong>nextjs/saas-starter</strong> keeps everything in one Drizzle schema file. Search for <code>teamMembers</code> and <code>invitations</code>. Read the sign-up action to see how a new user either creates a team or joins one from an invite in a single step.</p>
 <p><strong>documenso/documenso</strong> added teams and later organisations to a product that started with single users owning documents, so it shows the migration path you want to avoid needing. Search the Prisma schema for <code>Organisation</code> and <code>Team</code> (British spelling) and see how documents are scoped.</p>
@@ -2868,8 +2868,8 @@ type status_page
 <td>You want RBAC and ABAC inside a TypeScript app, sharing rules with the frontend</td>
 </tr>
 <tr>
-<td><a href="https://github.com/casbin/casbin">casbin/casbin</a></td>
-<td>Model-driven authorization library (ACL, RBAC, ABAC) with ports to many languages</td>
+<td><a href="https://github.com/apache/casbin">apache/casbin</a></td>
+<td>Apache Casbin: model-driven authorization library (ACL, RBAC, ABAC) with ports to many languages</td>
 <td>Go (plus ports)</td>
 <td>Apache-2.0</td>
 <td>You want one policy model across Go, Node, Python and Java services</td>
@@ -3200,8 +3200,8 @@ export async function patchScimUser(org: Org, scimId: string, body: ScimPatch) {
 </tr>
 </thead>
 <tbody><tr>
-<td><a href="https://github.com/boxyhq/jackson">boxyhq/jackson</a></td>
-<td>SAML Jackson, now continued by Ory as Ory Polis: a SAML-to-OAuth bridge plus SCIM directory sync</td>
+<td><a href="https://github.com/ory/polis">ory/polis</a></td>
+<td>Ory Polis (formerly BoxyHQ&#39;s SAML Jackson): a SAML-to-OAuth bridge plus SCIM directory sync</td>
 <td>TypeScript</td>
 <td>Apache-2.0</td>
 <td>You want to add SAML SSO and SCIM to your own app without learning SAML internals</td>
@@ -3256,7 +3256,7 @@ export async function patchScimUser(org: Org, scimId: string, body: ScimPatch) {
 <td>You implement per-tenant OIDC connections yourself</td>
 </tr>
 </tbody></table></div>
-<p><strong>If you only study one:</strong> <strong>boxyhq/jackson</strong> (Ory Polis). It solves exactly the SP-side problem Beacon has: it turns each tenant&#39;s SAML connection into a plain OAuth 2.0 flow your app already understands, and it adds SCIM directory sync behind a simple API. Reading it teaches you how connections, tenants and products are modelled, and it is what Cal.com adopted for its own SAML support.</p>
+<p><strong>If you only study one:</strong> <strong>ory/polis</strong> (formerly SAML Jackson). It solves exactly the SP-side problem Beacon has: it turns each tenant&#39;s SAML connection into a plain OAuth 2.0 flow your app already understands, and it adds SCIM directory sync behind a simple API. Reading it teaches you how connections, tenants and products are modelled, and it is what Dub, Formbricks and Papermark use for their own SAML support.</p>
 <p><strong>Buy, build, or self-host?</strong></p>
 <ul>
 <li><strong>Buy</strong> WorkOS, Auth0/Okta (Enterprise Connections), Clerk (enterprise SSO) or Stytch when enterprise deals are arriving and you want an admin portal where the customer&#39;s IT team configures SSO and SCIM themselves. This is the most common choice, and it is priced per connection, so it aligns with revenue.</li>
@@ -3265,7 +3265,7 @@ export async function patchScimUser(org: Org, scimId: string, body: ScimPatch) {
 </ul>
 </section>
 <section class="sec sec-wild"><h2>🔍 Study it in the wild</h2>
-<p><strong>calcom/cal.com</strong> uses SAML Jackson for SAML SSO. Search the repo for <code>jackson</code> and <code>saml</code> to find the setup, the tenant naming scheme and the callback handling, and trace how an SSO login becomes a user in the right team or organization. Its domain-based organization features show home realm discovery in practice.</p>
+<p><strong>boxyhq/saas-starter-kit</strong> wires SAML Jackson (now Ory Polis) into a Next.js team model. Read <code>lib/jackson.ts</code> and the <code>lib/jackson/sso</code> folder to find the setup, the tenant naming scheme and the callback handling, and trace how an SSO login becomes a user in the right team. Then open <code>lib/jackson/dsyncEvents.ts</code> to see SCIM directory-sync events turned into team memberships.</p>
 <p><strong>dubinc/dub</strong> adds SAML SSO for its workspaces. Search for <code>saml</code> and <code>jackson</code> in <code>apps/web</code>, and look at how the workspace settings page lets an admin configure a connection and how enforcement interacts with the existing login options.</p>
 <p><strong>Infisical/infisical</strong> supports SAML, OIDC, LDAP and SCIM because its buyers are security teams. Search for <code>scim</code> to read a real SCIM server implementation, including how deprovisioning is handled, and for <code>saml</code> to see per-org connection configuration and SSO enforcement.</p>
 <p><strong>getsentry/sentry</strong> (Django) has long supported SSO for organizations through pluggable auth providers, including SAML2. Search for <code>saml2</code> and <code>AuthProvider</code> to see how one org is linked to one provider and how member identities are tied to it.</p>
@@ -3519,7 +3519,7 @@ export async function patchScimUser(org: Org, scimId: string, body: ScimPatch) {
 <td>You want to read the source or docs of the thing you depend on</td>
 </tr>
 <tr>
-<td><a href="https://github.com/prisma/prisma">prisma/prisma</a></td>
+<td><a href="https://github.com/prisma/orm">prisma/orm</a></td>
 <td>Schema-first ORM with migrations and a studio</td>
 <td>TypeScript</td>
 <td>Apache-2.0</td>
@@ -3584,7 +3584,7 @@ export async function patchScimUser(org: Org, scimId: string, body: ScimPatch) {
 </ul>
 </section>
 <section class="sec sec-wild"><h2>🔍 Study it in the wild</h2>
-<p><strong>Cal.com (<code>calcom/cal.com</code>).</strong> A large Next.js monorepo using Prisma. At the time of writing the schema lives under <code>packages/prisma</code>; open <code>schema.prisma</code> and read the <code>User</code>, <code>Team</code> and <code>Membership</code> models, then browse the <code>migrations</code> folder next to it to see years of real schema evolution, including backfills and renamed columns.</p>
+<p><strong>Cal.com (<code>calcom/cal.diy</code>).</strong> A large Next.js monorepo using Prisma. At the time of writing the schema lives under <code>packages/prisma</code>; open <code>schema.prisma</code> and read the <code>User</code>, <code>Team</code> and <code>Membership</code> models, then browse the <code>migrations</code> folder next to it to see years of real schema evolution, including backfills and renamed columns.</p>
 <p><strong>Documenso (<code>documenso/documenso</code>).</strong> Also Prisma, in <code>packages/prisma</code>, and smaller than Cal.com, so easier to hold in your head. Search the schema for <code>@default(</code> and <code>@@index</code>, and find the seed script.</p>
 <p><strong>OpenStatus (<code>openstatusHQ/openstatus</code>).</strong> Literally a real Beacon. It uses Drizzle; use code search for <code>drizzle</code> and <code>sqliteTable</code> or <code>pgTable</code> to find the table definitions for monitors, incidents and status pages. Compare their monitor table with the ER diagram above.</p>
 <p><strong>Discourse (<code>discourse/discourse</code>).</strong> A Rails app with over a decade of migrations. Open <code>db/migrate</code> and <code>db/post_migrate</code>: Discourse splits migrations that must run before the new code from those that run after it, which is the expand/contract idea encoded in folder names.</p>
@@ -3797,7 +3797,7 @@ export async function signLogoUpload(orgId: string, fileId: string, type: string
 <p><strong>Deletion and GDPR.</strong> When a user deletes an incident, delete its attachments too, via a job rather than inline. When an organization closes its account, your contract and privacy policy say how quickly its data goes; object storage is where data quietly lingers. If bucket versioning is on (good protection against accidental deletes), a &quot;delete&quot; only adds a delete marker; old versions remain until a lifecycle rule removes noncurrent versions. Know your retention window and document it (lesson <a class="xref" href="#l8-1">8.1</a>).</p>
 <p><strong>Cost and egress.</strong> Storage is cheap; data transfer out often isn&#39;t. S3 charges for egress, while Cloudflare R2 charges no egress fees, which is why many SaaS keep user-facing assets on R2. Put a CDN in front either way.</p>
 <p><strong>Residency and bring-your-own-bucket.</strong> EU customers may need files stored in an EU region (lesson <a class="xref" href="#l2-4">2.4</a>), so the region becomes part of the tenant&#39;s config and your signing code picks the right bucket. Some enterprise customers ask to store files in <em>their own</em> bucket; the S3 API makes this feasible (a per-tenant endpoint, bucket and credentials, or a cross-account role), but it multiplies your support surface. Offer it only on the plan that pays for it.</p>
-<p><strong>Self-hosting.</strong> If you ship a self-hostable edition (lesson <a class="xref" href="#l7-4">7.4</a>) or need on-prem storage, you need an S3-compatible server. MinIO was the default choice for years, but in 2025 its community edition moved toward source-only distribution and maintenance mode, so check its current status before adopting it. SeaweedFS and Garage (a lightweight, geo-distributed S3 server from Deuxfleurs) are the commonly cited alternatives.</p>
+<p><strong>Self-hosting.</strong> If you ship a self-hostable edition (lesson <a class="xref" href="#l7-4">7.4</a>) or need on-prem storage, you need an S3-compatible server. MinIO was the default choice for years, but in 2025 its community edition moved to source-only distribution and maintenance mode, and the <code>minio/minio</code> repository has since been archived. SeaweedFS, RustFS (an Apache-2.0 server built to migrate from and coexist with MinIO) and Garage (a lightweight, geo-distributed S3 server from Deuxfleurs) are the usual alternatives.</p>
 </section>
 <section class="sec sec-repos"><h2>🏆 The best repos</h2>
 <div class="table-scroll"><table>
@@ -3867,14 +3867,14 @@ export async function signLogoUpload(orgId: string, fileId: string, type: string
 <td>You self-host storage at real scale</td>
 </tr>
 <tr>
-<td><a href="https://github.com/minio/minio">minio/minio</a></td>
-<td>S3-compatible server; community edition source-only since 2025</td>
-<td>Go</td>
-<td>AGPL-3.0</td>
-<td>You already run it; evaluate alternatives for new setups</td>
+<td><a href="https://github.com/rustfs/rustfs">rustfs/rustfs</a></td>
+<td>S3-compatible object store built to migrate from and coexist with MinIO</td>
+<td>Rust</td>
+<td>Apache-2.0</td>
+<td>You are replacing MinIO (archived) or want a permissive licence</td>
 </tr>
 </tbody></table></div>
-<p>Garage is not on GitHub; find it at <a href="https://garagehq.deuxfleurs.fr">https://garagehq.deuxfleurs.fr</a>. It is a good fit for small self-hosted or multi-site deployments.</p>
+<p>Garage is developed on Deuxfleurs&#39; own forge (<a href="https://garagehq.deuxfleurs.fr">https://garagehq.deuxfleurs.fr</a>), with a read-only GitHub mirror at <a href="https://github.com/deuxfleurs-org/garage">deuxfleurs-org/garage</a>. It is a good fit for small self-hosted or multi-site deployments.</p>
 <p><strong>If you only study one:</strong> <code>supabase/storage</code>. It is a real multi-tenant storage service that does exactly what this lesson describes: bytes in an S3 backend, metadata rows in Postgres, access decided by database policies, signed URLs, and resumable uploads. Reading how it maps a request to a bucket, a key and a permission check teaches more than any tutorial.</p>
 <p><strong>Buy, build, or self-host?</strong></p>
 <ul>
@@ -4450,7 +4450,7 @@ COMMIT;
 <p><strong>PostHog (<code>PostHog/posthog</code>).</strong> A Django pool model: organizations own projects (historically called teams), and nearly every model and ClickHouse table carries <code>team_id</code>. Use code search for <code>team_id</code> and <code>TeamAndOrgViewSetMixin</code> (or similar mixins in the API layer) to see how viewsets scope querysets to the current team. PostHog also runs separate US and EU cloud regions, a real example of regional cells.</p>
 <p><strong>Twenty (<code>twentyhq/twenty</code>).</strong> A bridge model: core metadata lives in shared tables, while each workspace&#39;s CRM data lives in its own Postgres schema. Use code search for <code>workspaceDataSource</code> and <code>schema</code> in the server package to see how a request picks the right schema, and how migrations are applied per workspace.</p>
 <p><strong>Supabase (<code>supabase/supabase</code>).</strong> Search the repo&#39;s <code>examples</code> for <code>create policy</code> to find real RLS policies using <code>auth.uid()</code>, including team-membership policies that join through a members table.</p>
-<p><strong>Cal.com (<code>calcom/cal.com</code>).</strong> Search the Prisma schema for <code>teamId</code> and <code>organizationId</code> to see a pool model that grew an &quot;organizations&quot; layer on top of teams, and how uniqueness constraints are scoped.</p>
+<p><strong>Cal.com (<code>calcom/cal.diy</code>).</strong> Search the Prisma schema for <code>teamId</code> and <code>organizationId</code> to see a pool model that grew an &quot;organizations&quot; layer on top of teams, and how uniqueness constraints are scoped.</p>
 <p><strong>What to notice:</strong></p>
 <ul>
 <li>Where the tenant id enters a request, and the single place it is verified against membership.</li>
@@ -5220,7 +5220,7 @@ export function getEntitlements(org: Org): Entitlements {
 <p><strong>openstatus (<code>openstatusHQ/openstatus</code>).</strong> At the time of writing, <code>packages/db/src/schema/plan/</code> holds <code>config.ts</code> (an <code>allPlans</code> record with limits such as <code>monitors</code>, <code>periodicity</code>, <code>max-regions</code>, <code>status-pages</code>, <code>sms</code>, <code>sms-limit</code>, plus <code>addons</code>) and <code>utils.ts</code> (<code>getLimits</code>, and <code>getLimit</code> falling back to the free plan). Then search <code>apps/server</code> for <code>limits.ts</code>: there are per-resource limit checks for monitors, notifications, status pages and private locations. The monitor one separates <em>configuration</em> limits (allowed intervals, region count) from <em>count</em> limits.</p>
 <p><strong>Dub (<code>dubinc/dub</code>).</strong> Open <code>packages/utils/src/constants/pricing/pricing-plans.tsx</code> (path at the time of writing). It holds a <code>PlanDetails</code> type with a <code>limits</code> object and lists of legacy Stripe Price IDs, so old subscribers still map to the right plan. Then open the Prisma <code>workspace.prisma</code> schema and look at the <code>Project</code> model&#39;s <code>*Limit</code> and <code>*Usage</code> columns. The limits are snapshotted onto the tenant. Search <code>wouldLoseAdvancedFeatures</code> for downgrade handling.</p>
 <p><strong>Documenso (<code>documenso/documenso</code>).</strong> In the Prisma schema, compare <code>SubscriptionClaim</code> with <code>OrganisationClaim</code>: the same fields (team count, member count, quotas, flags), one a template and one a per-org copy. Search the jobs folder for <code>backport-subscription-claims</code> to see how they push template changes to existing orgs on purpose, which is grandfathering as an explicit operation.</p>
-<p><strong>Cal.com (<code>calcom/cal.com</code>).</strong> Search the Prisma schema for <code>SeatChangeLog</code> and <code>MonthlyProration</code>. Seat-based billing gets real once you have to record every add and remove so the invoice is explainable.</p>
+<p><strong>Cal.com (<code>calcom/cal.diy</code>).</strong> Search the Prisma schema for <code>SeatChangeLog</code> and <code>MonthlyProration</code>. Seat-based billing gets real once you have to record every add and remove so the invoice is explainable.</p>
 <p><strong>What to notice</strong></p>
 <ul>
 <li>Where the single source of plan truth lives, and whether limits get copied onto the tenant.</li>
@@ -5585,7 +5585,7 @@ await db.usageEvent.upsert({
 </ul>
 </section>
 <section class="sec sec-wild"><h2>🔍 Study it in the wild</h2>
-<p><strong>Cal.com (<code>calcom/cal.com</code>).</strong> This is Beacon&#39;s SMS credits, in production. In the Prisma schema, read <code>CreditBalance</code>, <code>CreditPurchaseLog</code> and <code>CreditExpenseLog</code>. Note <code>smsSegments</code>, <code>smsSid</code>, the <code>@unique</code> on <code>externalRef</code> (idempotency), the <code>MONTHLY</code>/<code>ADDITIONAL</code> credit types, and <code>limitReachedAt</code>/<code>warningSentAt</code> (alerts sent once). Then open <code>packages/features/credits</code> (at the time of writing) to see the repository methods that read and write them.</p>
+<p><strong>Cal.com (<code>calcom/cal.diy</code>).</strong> This is Beacon&#39;s SMS credits, in production. In the Prisma schema, read <code>CreditBalance</code>, <code>CreditPurchaseLog</code> and <code>CreditExpenseLog</code>. Note <code>smsSegments</code>, <code>smsSid</code>, the <code>@unique</code> on <code>externalRef</code> (idempotency), the <code>MONTHLY</code>/<code>ADDITIONAL</code> credit types, and <code>limitReachedAt</code>/<code>warningSentAt</code> (alerts sent once). Then open <code>packages/features/credits</code> (at the time of writing) to see the repository methods that read and write them.</p>
 <p><strong>Dub (<code>dubinc/dub</code>).</strong> Dub&#39;s plans limit tracked clicks per month. Search for the usage cron (<code>api/cron/usage</code> at the time of writing). It queries usage from Tinybird, updates the workspace&#39;s <code>usage</code> column, sends limit alerts to owners and Slack, and resets on the billing cycle. Look at how <code>billingCycleStart</code> is used to compute each workspace&#39;s own period instead of assuming calendar months.</p>
 <p><strong>Lago (<code>getlago/lago</code>, <code>getlago/lago-api</code>).</strong> Read the billing engine itself. The umbrella repo has the Docker Compose setup and an <code>events-processor</code> directory. In <code>lago-api</code>, search for <code>BillableMetric</code>, <code>Charge</code> and <code>Wallet</code> to find metering definitions, pricing and credits, then follow how an invoice gets computed for a period.</p>
 <p><strong>OpenMeter (<code>openmeterio/openmeter</code>).</strong> Search for <code>kafkaingest</code> and <code>clickhouse</code> to see the ingestion path at high volume, and read <code>cloudevents.spec.json</code> at the repo root to see the event envelope it expects.</p>
@@ -5898,7 +5898,7 @@ export async function sendInvite(job: { to: string; orgName: string; url: string
 <td>Always, in development and CI</td>
 </tr>
 <tr>
-<td><a href="https://github.com/unsend-dev/unsend">unsend-dev/unsend</a></td>
+<td><a href="https://github.com/usesend/useSend">usesend/useSend</a></td>
 <td>useSend: open-source sending platform (API, domains, webhooks) on Amazon SES</td>
 <td>TypeScript, Next.js</td>
 <td>AGPL-3.0</td>
@@ -5938,7 +5938,7 @@ export async function sendInvite(job: { to: string; orgName: string; url: string
 <p><strong>openstatus (<code>openstatusHQ/openstatus</code>).</strong> It&#39;s the real Beacon, so its emails are Beacon&#39;s emails. At the time of writing, <code>packages/emails/emails/</code> holds React Email templates such as <code>monitor-alert.tsx</code>, <code>page-subscription.tsx</code>, <code>status-report.tsx</code>, <code>team-invitation.tsx</code> and <code>plan-downgraded.tsx</code>, with shared components in <code>_components/</code>. Compare how an alert email differs from a subscriber update.</p>
 <p><strong>Dub (<code>dubinc/dub</code>).</strong> Open <code>packages/email</code> and read <code>src/index.ts</code>. <code>sendEmail</code> uses Resend when configured and falls back to Nodemailer SMTP otherwise, which is how an open-source SaaS supports self-hosters. Then search for <code>VARIANT_TO_FROM_MAP</code>: system, notification and marketing mail go out from <em>different addresses and subdomains</em>. That&#39;s stream separation in three lines. Search <code>email-domains</code> for per-workspace custom sending domains.</p>
 <p><strong>Documenso (<code>documenso/documenso</code>).</strong> Open <code>packages/email</code>. <code>mailer.ts</code> picks a Nodemailer transport (SMTP, Resend, MailChannels) from environment variables, <code>templates/</code> has one file per email, and there&#39;s a separate preview setup. Documenso&#39;s development Docker Compose uses Inbucket as the mail catcher. Search <code>organisation-email-domain</code> for how organizations bring their own sending domain.</p>
-<p><strong>Cal.com (<code>calcom/cal.com</code>).</strong> <code>packages/emails</code> has a README explaining <code>renderEmail(&quot;TeamInviteEmail&quot;, props)</code> and a preview endpoint, and a <code>docker-compose.yml</code> that starts MailHog for local catching. Search <code>billing-email-service</code> and <code>auth-email-service</code> to see how emails are grouped by domain area.</p>
+<p><strong>Cal.com (<code>calcom/cal.diy</code>).</strong> <code>packages/emails</code> has a README explaining <code>renderEmail(&quot;TeamInviteEmail&quot;, props)</code> and a preview endpoint, and a <code>docker-compose.yml</code> that starts MailHog for local catching. Search <code>billing-email-service</code> and <code>auth-email-service</code> to see how emails are grouped by domain area.</p>
 <p><strong>What to notice</strong></p>
 <ul>
 <li>Whether sending is abstracted behind one function with swappable transports.</li>
@@ -7313,7 +7313,7 @@ export async function verifyApiKey(presented: string) {
 <section class="sec sec-wild"><h2>🔍 Study it in the wild</h2>
 <p><strong>unkeyed/unkey</strong> — beyond being a library, it is a production SaaS with its own public API. Search for <code>hash</code> and <code>verify</code> to find the key verification path, and <code>ratelimit</code> to see how limits are enforced per key and per identifier. Notice how the key is split into a visible prefix and the secret.</p>
 <p><strong>dubinc/dub</strong> — a link-management SaaS with a public REST API, API keys scoped to workspaces, rate limits and an OpenAPI document. Search for <code>openapi</code> to see how the spec is produced from Zod schemas, and <code>ratelimit</code> and <code>apiKey</code>/<code>token</code> to see how keys are hashed and checked per workspace.</p>
-<p><strong>calcom/cal.com</strong> — a large public API with keys per user/team. At the time of writing the API apps live under <code>apps/api</code>. Search for <code>apiKey</code> and <code>hashAPIKey</code>-style helpers, and look at how API versions are handled side by side as the API evolved.</p>
+<p><strong>calcom/cal.diy</strong> — a large public API with keys per user/team. At the time of writing the API apps live under <code>apps/api</code>. Search for <code>apiKey</code> and <code>hashAPIKey</code>-style helpers, and look at how API versions are handled side by side as the API evolved.</p>
 <p><strong>openstatusHQ/openstatus</strong> — a Beacon-shaped product with a public API for monitors and status pages. Search for <code>openapi</code> and <code>apiKey</code> to see how a small team exposes a typed, documented API for the same objects Beacon has.</p>
 <p><strong>What to notice</strong></p>
 <ul>
@@ -7601,7 +7601,7 @@ export function signStandardWebhook(secret: string, id: string, body: string) {
 </ul>
 </section>
 <section class="sec sec-wild"><h2>🔍 Study it in the wild</h2>
-<p><strong>calcom/cal.com</strong> — webhooks and an app store in one codebase. Search the Prisma schema for <code>Webhook</code> and the trigger events enum to see per-user/team subscriptions to event types, then search <code>sendPayload</code> or <code>webhook</code> in the features packages for the sender. For integrations, at the time of writing <code>packages/app-store</code> holds one folder per app; open two (for example a video app and a calendar app) and compare their structure.</p>
+<p><strong>calcom/cal.diy</strong> — webhooks and an app store in one codebase. Search the Prisma schema for <code>Webhook</code> and the trigger events enum to see per-user/team subscriptions to event types, then search <code>sendPayload</code> or <code>webhook</code> in the features packages for the sender. For integrations, at the time of writing <code>packages/app-store</code> holds one folder per app; open two (for example a video app and a calendar app) and compare their structure.</p>
 <p><strong>chatwoot/chatwoot</strong> — Rails app with both outbound webhooks and first-party integrations (Slack among them). Search for <code>WebhookJob</code> or <code>webhook</code> in <code>app/jobs</code> and for <code>slack</code> in the integrations code to see the OAuth install and message posting.</p>
 <p><strong>twentyhq/twenty</strong> — CRM with webhooks per workspace and a subscription to object events. Search for <code>webhook</code> in the server package to see how record events fan out to endpoints through the job queue.</p>
 <p><strong>openstatusHQ/openstatus</strong> — notification channels for a real Beacon: Slack, Discord, email, and others. Search for <code>notification</code> and <code>slack</code> to see how an incident is turned into provider-specific messages, and how the checker handles customer-supplied URLs.</p>
@@ -7939,7 +7939,7 @@ export function signStandardWebhook(secret: string, id: string, body: string) {
 </ul>
 </section>
 <section class="sec sec-wild"><h2>🔍 Study it in the wild</h2>
-<p><strong>calcom/cal.com</strong> — a user-facing workflow builder for reminders. Search for <code>workflow</code> and <code>WorkflowStep</code> in the Prisma schema to see how customer-defined triggers (&quot;before event starts&quot;), offsets and actions (email, SMS) are stored as data, then search for where reminders are scheduled and cancelled when bookings change. Notice how rescheduling a booking must update already-scheduled steps.</p>
+<p><strong>calcom/cal.diy</strong> — a workflow builder you can now read only in its migrations. Cal.com&#39;s reminder workflows were removed from the open-source edition in 2026, but the history is still in <code>packages/prisma/migrations</code>: <code>20220711182928_add_workflows</code> shows how customer-defined triggers (&quot;before event starts&quot;), offsets and actions (email, SMS) were stored as data, and <code>20260319000000_drop_workflow_tables</code> shows their removal. Notice what the tables had to record so that rescheduling a booking could update already-scheduled steps.</p>
 <p><strong>twentyhq/twenty</strong> — a CRM with a newer visual workflow feature. Search for <code>workflow</code> in the server package to find the workflow definitions, versions and runs, and how each step type is executed by the job system. Notice the separation between a workflow <em>version</em> (the definition) and a <em>run</em>.</p>
 <p><strong>triggerdotdev/trigger.dev</strong> — a durable-execution product that is itself open source. Use code search for <code>wait</code> and <code>checkpoint</code> to see how a run is suspended and resumed, and look at the <code>references</code> or example projects to see what user code looks like.</p>
 <p><strong>n8n-io/n8n</strong> — the canonical user-defined workflow engine. Search for <code>WorkflowExecute</code> to find the code that walks a workflow graph node by node; it shows what &quot;a workflow is data plus an interpreter&quot; means in practice.</p>
@@ -8315,7 +8315,7 @@ https:// {
 <section class="sec sec-wild"><h2>🔍 Study it in the wild</h2>
 <p><strong>dubinc/dub.</strong> A good shell to learn from: workspace switcher, a polished dashboard, and <strong>customer custom domains</strong> for short links. Open the repo and use code search for <code>domains</code> together with <code>vercel</code> to find where Dub adds and verifies domains through Vercel&#39;s API. At the time of writing the product lives in <code>apps/web</code>. Look at how the app decides between marketing, dashboard and link-redirect behaviour based on the incoming hostname.</p>
 <p><strong>openstatusHQ/openstatus.</strong> A real Beacon: an open-source uptime monitor with public status pages. Search for <code>custom domain</code> and <code>status page</code> to see how a page is resolved from a hostname or slug. Compare how the status page is rendered with how the authenticated dashboard is rendered.</p>
-<p><strong>calcom/cal.com.</strong> Cal.com&#39;s onboarding flow and settings split are worth reading. Search for <code>getting-started</code> or <code>onboarding</code> to find the step-by-step first-run flow, and browse the settings pages to see account-level and team/org-level settings kept apart.</p>
+<p><strong>calcom/cal.diy.</strong> Cal.com&#39;s onboarding flow and settings split are worth reading. Search for <code>getting-started</code> or <code>onboarding</code> to find the step-by-step first-run flow, and browse the settings pages to see account-level and team/org-level settings kept apart.</p>
 <p><strong>vercel/next-forge.</strong> Here the shell <em>is</em> the product. Look at the top-level <code>apps/</code> folder: marketing and the product app are separate Next.js apps that share <code>packages/</code>. Notice what counts as &quot;shared&quot; (design system, auth, analytics) and what doesn&#39;t.</p>
 <p><strong>What to notice:</strong></p>
 <ul>
@@ -8885,7 +8885,7 @@ return scheduleWithOldEngine(monitor);
 <p><strong>PostHog/posthog.</strong> PostHog runs its own flags on itself. Use code search for <code>feature_flag</code> and <code>hash</code> to find how the rollout percentage is computed from the flag key and the distinct ID (or group key, for group-based flags). Look for how flags are evaluated per group type to see B2B org-level targeting.</p>
 <p><strong>Unleash/unleash.</strong> Read the activation strategy code (search for <code>strategy</code> and <code>stickiness</code>) and look at how stale flags are identified by flag type and age. The SDKs, in separate repos under the Unleash organisation, show local evaluation: download rules, refresh them in the background, evaluate in memory.</p>
 <p><strong>growthbook/growthbook.</strong> Search for <code>hash</code> in the SDK code to see how users are assigned to experiment variations deterministically, and browse the stats engine (Python) to see sequential testing and Bayesian analysis implemented rather than just described.</p>
-<p><strong>calcom/cal.com.</strong> A product codebase that uses flags, not a flag vendor. Use code search for <code>feature flag</code> or <code>features</code> to find how Cal.com gates features in its own database and checks them per team. It&#39;s a realistic &quot;small in-house flag system&quot; to compare with the dedicated tools.</p>
+<p><strong>calcom/cal.diy.</strong> A product codebase that uses flags, not a flag vendor. Use code search for <code>feature flag</code> or <code>features</code> to find how Cal.com gates features in its own database and checks them per team. It&#39;s a realistic &quot;small in-house flag system&quot; to compare with the dedicated tools.</p>
 <p><strong>What to notice:</strong></p>
 <ul>
 <li>The hash input combines the flag key and a stable ID, so rollouts stay sticky and don&#39;t overlap across flags.</li>
@@ -9257,7 +9257,7 @@ return scheduleWithOldEngine(monitor);
 <section class="sec sec-wild"><h2>🔍 Study it in the wild</h2>
 <p><strong>GitLab</strong> (<a href="https://github.com/gitlabhq/gitlabhq">gitlabhq/gitlabhq</a>) has one of the most complete admin areas in open source: user management, impersonation, instance settings, abuse reports. Find it by browsing <code>app/controllers/admin</code> (at the time of writing it contains <code>impersonations_controller.rb</code> and <code>impersonation_tokens_controller.rb</code>) and search the repo for <code>admin_mode</code> to see how step-up authentication for admins is enforced — including in Sidekiq job middleware, so background jobs inherit the admin-mode state of the request that queued them.</p>
 <p><strong>Chatwoot</strong> (<a href="https://github.com/chatwoot/chatwoot">chatwoot/chatwoot</a>) is both a support tool and a SaaS with a super admin console. Its <code>super_admin</code> controllers are built on the Administrate gem, with one &quot;dashboard&quot; class per model in <code>app/dashboards</code>. Search for <code>Impersonation</code> to find the Vue banner component and the composable that drives it — a clean, small example of the &quot;unmissable banner&quot; rule.</p>
-<p><strong>Cal.com</strong> (<a href="https://github.com/calcom/cal.com">calcom/cal.com</a>) puts its instance admin pages inside the main Next.js app under the settings area (search the <code>apps/web</code> tree for <code>admin</code>). Search the Prisma migrations for <code>impersonat</code> and you can read the history of the feature as schema changes: a user-level toggle to allow impersonation, a team-level switch to disable it, and later, permissions tied to admin roles.</p>
+<p><strong>Cal.com</strong> (<a href="https://github.com/calcom/cal.diy">calcom/cal.diy</a>) puts its instance admin pages inside the main Next.js app under the settings area (search the <code>apps/web</code> tree for <code>admin</code>). Search the Prisma migrations for <code>impersonat</code> and you can read the history of the feature as schema changes: a user-level toggle to allow impersonation, a team-level switch to disable it, and later, permissions tied to admin roles.</p>
 <p><strong>What to notice:</strong></p>
 <ul>
 <li>Admin screens reuse domain services instead of writing SQL — look at what the admin controllers actually call.</li>
@@ -9880,7 +9880,7 @@ log().warn({ monitorId, status }, &quot;check.failed&quot;);
 <td>You want a self-hosted audit service with a ready-made UI</td>
 </tr>
 <tr>
-<td><a href="https://github.com/BemiHQ/bemi">BemiHQ/bemi</a></td>
+<td><a href="https://github.com/pgstack-io/bemi-io">pgstack-io/bemi-io</a></td>
 <td>Postgres CDC that captures every change and stitches in app context</td>
 <td>Go/TS, Postgres</td>
 <td>SSPL-1.0</td>
@@ -9894,11 +9894,11 @@ log().warn({ monitorId, status }, &quot;check.failed&quot;);
 <td>Compliance needs a record of direct DB access</td>
 </tr>
 <tr>
-<td><a href="https://github.com/supabase/supa_audit">supabase/supa_audit</a></td>
-<td>Small Postgres extension for trigger-based table change auditing</td>
+<td><a href="https://github.com/pgMemento/pgMemento">pgMemento/pgMemento</a></td>
+<td>Trigger-based audit trail with schema versioning, in plain PL/pgSQL</td>
 <td>SQL</td>
-<td>Apache-2.0</td>
-<td>You want a trigger safety net you can read in one sitting</td>
+<td>LGPL-3.0</td>
+<td>You want a maintained trigger safety net inside Postgres, not a separate service</td>
 </tr>
 <tr>
 <td><a href="https://github.com/paper-trail-gem/paper_trail">paper-trail-gem/paper_trail</a></td>
@@ -10249,7 +10249,7 @@ export const env = Env.parse(process.env); // throws at startup, not at 3 a.m.
 <td>Your team would rather write TypeScript than HCL</td>
 </tr>
 <tr>
-<td><a href="https://github.com/sst/sst">sst/sst</a></td>
+<td><a href="https://github.com/anomalyco/sst">anomalyco/sst</a></td>
 <td>Framework for deploying full-stack apps and their infra, TS-first</td>
 <td>TS, Go</td>
 <td>MIT</td>
@@ -10910,7 +10910,7 @@ export async function summarizeIncident(orgId: string, incidentId: string) {
 <td>Vector volume or filtered-search performance outgrows Postgres</td>
 </tr>
 <tr>
-<td><a href="https://github.com/modelcontextprotocol/specification">modelcontextprotocol/specification</a></td>
+<td><a href="https://github.com/modelcontextprotocol/modelcontextprotocol">modelcontextprotocol/modelcontextprotocol</a></td>
 <td>The Model Context Protocol spec and schema</td>
 <td>TypeScript schema, Markdown</td>
 <td>MIT, moving to Apache-2.0</td>
@@ -11264,11 +11264,11 @@ not single components.</p>
 <td>You want to see the enterprise ring wired together in a small codebase</td>
 </tr>
 <tr>
-<td><a href="https://github.com/calcom/cal.com">calcom/cal.com</a></td>
-<td>Scheduling infrastructure</td>
+<td><a href="https://github.com/calcom/cal.diy">calcom/cal.diy</a></td>
+<td>Scheduling (Cal.com&#39;s open-source edition)</td>
 <td>Next.js, tRPC, Prisma, Turborepo</td>
 <td>MIT</td>
-<td>You want nearly every component in one mature monorepo</td>
+<td>You want many components in one mature monorepo (enterprise features removed in 2026)</td>
 </tr>
 <tr>
 <td><a href="https://github.com/makeplane/plane">makeplane/plane</a></td>
@@ -11328,7 +11328,7 @@ login, a SCIM deprovisioning event, an audit log entry and a webhook delivery; e
 one crosses at least two components, so this is the best place to see seams.</p>
 <p><strong>Cal.com</strong> — the reference for scale. Its <code>apps/</code> and <code>packages/</code> folders (at the
 time of writing) separate the web app, the public API, features and the app store
-of integrations; and its licence history is worth knowing: it moved from AGPL with a commercial <code>ee</code> folder to plain MIT, so for the open-core pattern itself (<a class="xref" href="#l7-4">7.4</a>) look at PostHog or Infisical instead.</p>
+of integrations; and its licence history is worth knowing: it moved from AGPL with a commercial <code>ee</code> folder to Cal.diy, a plain-MIT community edition with the enterprise features removed, so for the open-core pattern itself (<a class="xref" href="#l7-4">7.4</a>) look at PostHog or Infisical instead.</p>
 <p><strong>What to notice</strong></p>
 <ul>
 <li>Where each codebase draws the line between the core domain and the generic
@@ -11508,14 +11508,14 @@ it should now look less like a list and more like a system you could build.</p>
 <tr data-q="[cli/cli](https://github.com/cli/cli) `gh`, github's official cli: clone, list and read prs and issues from the terminal go cli mit you want to read a repo's pull request history without leaving your terminal"><td><a href="https://github.com/cli/cli">cli/cli</a></td><td><code>gh</code>, GitHub&#39;s official CLI: clone, list and read PRs and issues from the terminal</td><td>Go CLI</td><td>MIT</td><td>You want to read a repo&#39;s pull request history without leaving your terminal</td></tr>
 <tr data-q="[nextjs/saas-starter](https://github.com/nextjs/saas-starter) small, complete saas skeleton next.js, drizzle, stripe mit your first &quot;read a whole saas&quot; practice run"><td><a href="https://github.com/nextjs/saas-starter">nextjs/saas-starter</a></td><td>Small, complete SaaS skeleton</td><td>Next.js, Drizzle, Stripe</td><td>MIT</td><td>Your first &quot;read a whole SaaS&quot; practice run</td></tr>
 <tr data-q="[openstatushq/openstatus](https://github.com/openstatushq/openstatus) open-source status page and uptime monitoring: a real beacon typescript monorepo, go checker agpl-3.0 you want to practise the method on the product this course is modelled on"><td><a href="https://github.com/openstatusHQ/openstatus">openstatusHQ/openstatus</a></td><td>Open-source status page and uptime monitoring: a real Beacon</td><td>TypeScript monorepo, Go checker</td><td>AGPL-3.0</td><td>You want to practise the method on the product this course is modelled on</td></tr>
-<tr data-q="[maybe-finance/maybe](https://github.com/maybe-finance/maybe) personal finance app built with modern rails (archived) ruby on rails 8, postgres agpl-3.0 you want to see how clean a conventional monolith can be"><td><a href="https://github.com/maybe-finance/maybe">maybe-finance/maybe</a></td><td>Personal finance app built with modern Rails (archived)</td><td>Ruby on Rails 8, Postgres</td><td>AGPL-3.0</td><td>You want to see how clean a conventional monolith can be</td></tr>
+<tr data-q="[we-promise/sure](https://github.com/we-promise/sure) personal finance app built with modern rails: the community fork of the archived maybe ruby on rails 8, postgres agpl-3.0 you want to see how clean a conventional monolith can be"><td><a href="https://github.com/we-promise/sure">we-promise/sure</a></td><td>Personal finance app built with modern Rails: the community fork of the archived Maybe</td><td>Ruby on Rails 8, Postgres</td><td>AGPL-3.0</td><td>You want to see how clean a conventional monolith can be</td></tr>
 </tbody></table></div></section>
 <section class="cat" data-level="b">
 <h3><a href="#l0-3">0.3 — The reference shelf: the SaaS codebases and starter kits we study</a></h3>
 <div class="table-scroll"><table><thead><tr><th>Repo</th><th>What it is</th><th>Stack</th><th>License</th><th>Pick it when</th></tr></thead><tbody>
 <tr data-q="[openstatushq/openstatus](https://github.com/openstatushq/openstatus) status pages and uptime monitoring, a real beacon typescript monorepo, go agpl-3.0 you want to see beacon's exact problems solved in production"><td><a href="https://github.com/openstatusHQ/openstatus">openstatusHQ/openstatus</a></td><td>Status pages and uptime monitoring, a real Beacon</td><td>TypeScript monorepo, Go</td><td>AGPL-3.0</td><td>You want to see Beacon&#39;s exact problems solved in production</td></tr>
 <tr data-q="[louislam/uptime-kuma](https://github.com/louislam/uptime-kuma) self-hosted uptime monitor node.js, vue mit you want beacon's core without the multi-tenant saas layer, for contrast"><td><a href="https://github.com/louislam/uptime-kuma">louislam/uptime-kuma</a></td><td>Self-hosted uptime monitor</td><td>Node.js, Vue</td><td>MIT</td><td>You want Beacon&#39;s core without the multi-tenant SaaS layer, for contrast</td></tr>
-<tr data-q="[calcom/cal.com](https://github.com/calcom/cal.com) scheduling infrastructure next.js, prisma mit you want the fullest typescript example of teams, orgs, sso and integrations"><td><a href="https://github.com/calcom/cal.com">calcom/cal.com</a></td><td>Scheduling infrastructure</td><td>Next.js, Prisma</td><td>MIT</td><td>You want the fullest TypeScript example of teams, orgs, SSO and integrations</td></tr>
+<tr data-q="[calcom/cal.diy](https://github.com/calcom/cal.diy) scheduling (cal.com's open-source edition) next.js, prisma mit you want a large typescript monorepo with teams, webhooks, api keys and an integrations app store"><td><a href="https://github.com/calcom/cal.diy">calcom/cal.diy</a></td><td>Scheduling (Cal.com&#39;s open-source edition)</td><td>Next.js, Prisma</td><td>MIT</td><td>You want a large TypeScript monorepo with teams, webhooks, API keys and an integrations app store</td></tr>
 <tr data-q="[documenso/documenso](https://github.com/documenso/documenso) e-signature platform next.js, prisma agpl-3.0 you want a mid-sized, readable typescript saas with audit trails and webhooks"><td><a href="https://github.com/documenso/documenso">documenso/documenso</a></td><td>E-signature platform</td><td>Next.js, Prisma</td><td>AGPL-3.0</td><td>You want a mid-sized, readable TypeScript SaaS with audit trails and webhooks</td></tr>
 <tr data-q="[dubinc/dub](https://github.com/dubinc/dub) link management next.js, prisma agpl-3.0 you want plan limits and usage-driven pricing in real code"><td><a href="https://github.com/dubinc/dub">dubinc/dub</a></td><td>Link management</td><td>Next.js, Prisma</td><td>AGPL-3.0</td><td>You want plan limits and usage-driven pricing in real code</td></tr>
 <tr data-q="[infisical/infisical](https://github.com/infisical/infisical) secrets management node.js, react mit you want enterprise features: rbac, sso, scim and audit logs"><td><a href="https://github.com/Infisical/infisical">Infisical/infisical</a></td><td>Secrets management</td><td>Node.js, React</td><td>MIT</td><td>You want enterprise features: RBAC, SSO, SCIM and audit logs</td></tr>
@@ -11544,7 +11544,7 @@ it should now look less like a list and more like a system you could build.</p>
 <tr data-q="[nextjs/saas-starter](https://github.com/nextjs/saas-starter) minimal official next.js saas template with teams, invitations, roles and an activity log typescript, drizzle, postgres mit you want the smallest readable version of the whole skeleton"><td><a href="https://github.com/nextjs/saas-starter">nextjs/saas-starter</a></td><td>Minimal official Next.js SaaS template with teams, invitations, roles and an activity log</td><td>TypeScript, Drizzle, Postgres</td><td>MIT</td><td>You want the smallest readable version of the whole skeleton</td></tr>
 <tr data-q="[better-auth/better-auth](https://github.com/better-auth/better-auth) auth library whose organization plugin provides orgs, members, roles and invitations typescript mit you want the org model generated for you, in your own database"><td><a href="https://github.com/better-auth/better-auth">better-auth/better-auth</a></td><td>Auth library whose organization plugin provides orgs, members, roles and invitations</td><td>TypeScript</td><td>MIT</td><td>You want the org model generated for you, in your own database</td></tr>
 <tr data-q="[boxyhq/saas-starter-kit](https://github.com/boxyhq/saas-starter-kit) enterprise-flavoured starter: teams, invites, sso, directory sync, audit logs, webhooks typescript, next.js, prisma apache-2.0 you know you will sell to enterprises and want sso-ready team models"><td><a href="https://github.com/boxyhq/saas-starter-kit">boxyhq/saas-starter-kit</a></td><td>Enterprise-flavoured starter: teams, invites, SSO, directory sync, audit logs, webhooks</td><td>TypeScript, Next.js, Prisma</td><td>Apache-2.0</td><td>You know you will sell to enterprises and want SSO-ready team models</td></tr>
-<tr data-q="[calcom/cal.com](https://github.com/calcom/cal.com) scheduling saas with users, teams and organizations containing teams typescript, prisma mit you want to see a hierarchy (org to team to member) in production"><td><a href="https://github.com/calcom/cal.com">calcom/cal.com</a></td><td>Scheduling SaaS with users, teams and organizations containing teams</td><td>TypeScript, Prisma</td><td>MIT</td><td>You want to see a hierarchy (org to team to member) in production</td></tr>
+<tr data-q="[calcom/cal.diy](https://github.com/calcom/cal.diy) scheduling saas whose schema models users, teams and organizations containing teams typescript, prisma mit you want to see a hierarchy (org to team to member) in production"><td><a href="https://github.com/calcom/cal.diy">calcom/cal.diy</a></td><td>Scheduling SaaS whose schema models users, teams and organizations containing teams</td><td>TypeScript, Prisma</td><td>MIT</td><td>You want to see a hierarchy (org to team to member) in production</td></tr>
 <tr data-q="[dubinc/dub](https://github.com/dubinc/dub) link-management saas with slug-based workspaces, invites and plan limits typescript, prisma agpl-3.0 you want a clean workspace-in-the-url design"><td><a href="https://github.com/dubinc/dub">dubinc/dub</a></td><td>Link-management SaaS with slug-based workspaces, invites and plan limits</td><td>TypeScript, Prisma</td><td>AGPL-3.0</td><td>You want a clean workspace-in-the-URL design</td></tr>
 <tr data-q="[documenso/documenso](https://github.com/documenso/documenso) e-signature saas with organisations, teams and member invitations typescript, prisma agpl-3.0 you want to see a team model added to a product that began single-user"><td><a href="https://github.com/documenso/documenso">documenso/documenso</a></td><td>E-signature SaaS with organisations, teams and member invitations</td><td>TypeScript, Prisma</td><td>AGPL-3.0</td><td>You want to see a team model added to a product that began single-user</td></tr>
 <tr data-q="[logto-io/logto](https://github.com/logto-io/logto) auth platform with built-in organizations, org roles and invitations typescript mpl-2.0 you want orgs handled by a self-hosted identity service rather than your app"><td><a href="https://github.com/logto-io/logto">logto-io/logto</a></td><td>Auth platform with built-in organizations, org roles and invitations</td><td>TypeScript</td><td>MPL-2.0</td><td>You want orgs handled by a self-hosted identity service rather than your app</td></tr>
@@ -11554,7 +11554,7 @@ it should now look less like a list and more like a system you could build.</p>
 <h3><a href="#l1-3">1.3 — Authorization: roles, permissions, and &quot;can this user do this?&quot;</a></h3>
 <div class="table-scroll"><table><thead><tr><th>Repo</th><th>What it is</th><th>Stack</th><th>License</th><th>Pick it when</th></tr></thead><tbody>
 <tr data-q="[stalniy/casl](https://github.com/stalniy/casl) isomorphic javascript authorization library with orm query adapters typescript mit you want rbac and abac inside a typescript app, sharing rules with the frontend"><td><a href="https://github.com/stalniy/casl">stalniy/casl</a></td><td>Isomorphic JavaScript authorization library with ORM query adapters</td><td>TypeScript</td><td>MIT</td><td>You want RBAC and ABAC inside a TypeScript app, sharing rules with the frontend</td></tr>
-<tr data-q="[casbin/casbin](https://github.com/casbin/casbin) model-driven authorization library (acl, rbac, abac) with ports to many languages go (plus ports) apache-2.0 you want one policy model across go, node, python and java services"><td><a href="https://github.com/casbin/casbin">casbin/casbin</a></td><td>Model-driven authorization library (ACL, RBAC, ABAC) with ports to many languages</td><td>Go (plus ports)</td><td>Apache-2.0</td><td>You want one policy model across Go, Node, Python and Java services</td></tr>
+<tr data-q="[apache/casbin](https://github.com/apache/casbin) apache casbin: model-driven authorization library (acl, rbac, abac) with ports to many languages go (plus ports) apache-2.0 you want one policy model across go, node, python and java services"><td><a href="https://github.com/apache/casbin">apache/casbin</a></td><td>Apache Casbin: model-driven authorization library (ACL, RBAC, ABAC) with ports to many languages</td><td>Go (plus ports)</td><td>Apache-2.0</td><td>You want one policy model across Go, Node, Python and Java services</td></tr>
 <tr data-q="[cerbos/cerbos](https://github.com/cerbos/cerbos) stateless policy decision point with yaml policies and query planning go apache-2.0 you want policy-as-code decoupled from app code, with list filtering support"><td><a href="https://github.com/cerbos/cerbos">cerbos/cerbos</a></td><td>Stateless policy decision point with YAML policies and query planning</td><td>Go</td><td>Apache-2.0</td><td>You want policy-as-code decoupled from app code, with list filtering support</td></tr>
 <tr data-q="[openfga/openfga](https://github.com/openfga/openfga) zanzibar-inspired rebac server, a cncf project originally from auth0/okta go apache-2.0 you need object-level sharing with a friendly modelling language"><td><a href="https://github.com/openfga/openfga">openfga/openfga</a></td><td>Zanzibar-inspired ReBAC server, a CNCF project originally from Auth0/Okta</td><td>Go</td><td>Apache-2.0</td><td>You need object-level sharing with a friendly modelling language</td></tr>
 <tr data-q="[authzed/spicedb](https://github.com/authzed/spicedb) zanzibar-inspired permissions database with strong consistency features go apache-2.0 you need rebac at scale and care about the new-enemy problem"><td><a href="https://github.com/authzed/spicedb">authzed/spicedb</a></td><td>Zanzibar-inspired permissions database with strong consistency features</td><td>Go</td><td>Apache-2.0</td><td>You need ReBAC at scale and care about the new-enemy problem</td></tr>
@@ -11566,7 +11566,7 @@ it should now look less like a list and more like a system you could build.</p>
 <section class="cat" data-level="a">
 <h3><a href="#l1-4">1.4 — Enterprise identity: SSO, SAML, OIDC and SCIM</a></h3>
 <div class="table-scroll"><table><thead><tr><th>Repo</th><th>What it is</th><th>Stack</th><th>License</th><th>Pick it when</th></tr></thead><tbody>
-<tr data-q="[boxyhq/jackson](https://github.com/boxyhq/jackson) saml jackson, now continued by ory as ory polis: a saml-to-oauth bridge plus scim directory sync typescript apache-2.0 you want to add saml sso and scim to your own app without learning saml internals"><td><a href="https://github.com/boxyhq/jackson">boxyhq/jackson</a></td><td>SAML Jackson, now continued by Ory as Ory Polis: a SAML-to-OAuth bridge plus SCIM directory sync</td><td>TypeScript</td><td>Apache-2.0</td><td>You want to add SAML SSO and SCIM to your own app without learning SAML internals</td></tr>
+<tr data-q="[ory/polis](https://github.com/ory/polis) ory polis (formerly boxyhq's saml jackson): a saml-to-oauth bridge plus scim directory sync typescript apache-2.0 you want to add saml sso and scim to your own app without learning saml internals"><td><a href="https://github.com/ory/polis">ory/polis</a></td><td>Ory Polis (formerly BoxyHQ&#39;s SAML Jackson): a SAML-to-OAuth bridge plus SCIM directory sync</td><td>TypeScript</td><td>Apache-2.0</td><td>You want to add SAML SSO and SCIM to your own app without learning SAML internals</td></tr>
 <tr data-q="[keycloak/keycloak](https://github.com/keycloak/keycloak) full iam server that brokers saml and oidc and federates ldap java apache-2.0 you want a mature, self-hosted identity broker and can run a jvm service"><td><a href="https://github.com/keycloak/keycloak">keycloak/keycloak</a></td><td>Full IAM server that brokers SAML and OIDC and federates LDAP</td><td>Java</td><td>Apache-2.0</td><td>You want a mature, self-hosted identity broker and can run a JVM service</td></tr>
 <tr data-q="[zitadel/zitadel](https://github.com/zitadel/zitadel) multi-tenant identity platform with orgs, saml, oidc and scim features go agpl-3.0 your tenancy model maps to its organizations and you accept agpl"><td><a href="https://github.com/zitadel/zitadel">zitadel/zitadel</a></td><td>Multi-tenant identity platform with orgs, SAML, OIDC and SCIM features</td><td>Go</td><td>AGPL-3.0</td><td>Your tenancy model maps to its organizations and you accept AGPL</td></tr>
 <tr data-q="[goauthentik/authentik](https://github.com/goauthentik/authentik) self-hosted identity provider with flexible flows, saml, oidc, ldap and scim python, go mit (enterprise features separate) you want to run your own idp, or test your sp against one locally"><td><a href="https://github.com/goauthentik/authentik">goauthentik/authentik</a></td><td>Self-hosted identity provider with flexible flows, SAML, OIDC, LDAP and SCIM</td><td>Python, Go</td><td>MIT (enterprise features separate)</td><td>You want to run your own IdP, or test your SP against one locally</td></tr>
@@ -11579,7 +11579,7 @@ it should now look less like a list and more like a system you could build.</p>
 <h3><a href="#l2-1">2.1 — The data layer: Postgres, ORMs, migrations and seeds</a></h3>
 <div class="table-scroll"><table><thead><tr><th>Repo</th><th>What it is</th><th>Stack</th><th>License</th><th>Pick it when</th></tr></thead><tbody>
 <tr data-q="[postgres/postgres](https://github.com/postgres/postgres) the database itself (github mirror) c postgresql you want to read the source or docs of the thing you depend on"><td><a href="https://github.com/postgres/postgres">postgres/postgres</a></td><td>The database itself (GitHub mirror)</td><td>C</td><td>PostgreSQL</td><td>You want to read the source or docs of the thing you depend on</td></tr>
-<tr data-q="[prisma/prisma](https://github.com/prisma/prisma) schema-first orm with migrations and a studio typescript apache-2.0 you want the gentlest on-ramp and a readable schema file"><td><a href="https://github.com/prisma/prisma">prisma/prisma</a></td><td>Schema-first ORM with migrations and a studio</td><td>TypeScript</td><td>Apache-2.0</td><td>You want the gentlest on-ramp and a readable schema file</td></tr>
+<tr data-q="[prisma/orm](https://github.com/prisma/orm) schema-first orm with migrations and a studio typescript apache-2.0 you want the gentlest on-ramp and a readable schema file"><td><a href="https://github.com/prisma/orm">prisma/orm</a></td><td>Schema-first ORM with migrations and a studio</td><td>TypeScript</td><td>Apache-2.0</td><td>You want the gentlest on-ramp and a readable schema file</td></tr>
 <tr data-q="[drizzle-team/drizzle-orm](https://github.com/drizzle-team/drizzle-orm) sql-like typescript orm plus drizzle kit migrations typescript apache-2.0 you know sql, want types, and deploy to serverless or edge"><td><a href="https://github.com/drizzle-team/drizzle-orm">drizzle-team/drizzle-orm</a></td><td>SQL-like TypeScript ORM plus Drizzle Kit migrations</td><td>TypeScript</td><td>Apache-2.0</td><td>You know SQL, want types, and deploy to serverless or edge</td></tr>
 <tr data-q="[kysely-org/kysely](https://github.com/kysely-org/kysely) type-safe sql query builder typescript mit you want sql control with types and no orm layer"><td><a href="https://github.com/kysely-org/kysely">kysely-org/kysely</a></td><td>Type-safe SQL query builder</td><td>TypeScript</td><td>MIT</td><td>You want SQL control with types and no ORM layer</td></tr>
 <tr data-q="[sqlc-dev/sqlc](https://github.com/sqlc-dev/sqlc) generates type-safe code from sql queries go (also other targets) mit you write go and prefer sql files to an orm"><td><a href="https://github.com/sqlc-dev/sqlc">sqlc-dev/sqlc</a></td><td>Generates type-safe code from SQL queries</td><td>Go (also other targets)</td><td>MIT</td><td>You write Go and prefer SQL files to an ORM</td></tr>
@@ -11599,7 +11599,7 @@ it should now look less like a list and more like a system you could build.</p>
 <tr data-q="[imgproxy/imgproxy](https://github.com/imgproxy/imgproxy) on-the-fly image resizing server go apache-2.0 you want url-based transforms behind a cdn"><td><a href="https://github.com/imgproxy/imgproxy">imgproxy/imgproxy</a></td><td>On-the-fly image resizing server</td><td>Go</td><td>Apache-2.0</td><td>You want URL-based transforms behind a CDN</td></tr>
 <tr data-q="[supabase/storage](https://github.com/supabase/storage) supabase's storage api: s3 backend, postgres metadata, policies typescript apache-2.0 you want to read a production storage service's source"><td><a href="https://github.com/supabase/storage">supabase/storage</a></td><td>Supabase&#39;s storage API: S3 backend, Postgres metadata, policies</td><td>TypeScript</td><td>Apache-2.0</td><td>You want to read a production storage service&#39;s source</td></tr>
 <tr data-q="[seaweedfs/seaweedfs](https://github.com/seaweedfs/seaweedfs) distributed blob store with an s3 gateway go apache-2.0 you self-host storage at real scale"><td><a href="https://github.com/seaweedfs/seaweedfs">seaweedfs/seaweedfs</a></td><td>Distributed blob store with an S3 gateway</td><td>Go</td><td>Apache-2.0</td><td>You self-host storage at real scale</td></tr>
-<tr data-q="[minio/minio](https://github.com/minio/minio) s3-compatible server; community edition source-only since 2025 go agpl-3.0 you already run it; evaluate alternatives for new setups"><td><a href="https://github.com/minio/minio">minio/minio</a></td><td>S3-compatible server; community edition source-only since 2025</td><td>Go</td><td>AGPL-3.0</td><td>You already run it; evaluate alternatives for new setups</td></tr>
+<tr data-q="[rustfs/rustfs](https://github.com/rustfs/rustfs) s3-compatible object store built to migrate from and coexist with minio rust apache-2.0 you are replacing minio (archived) or want a permissive licence"><td><a href="https://github.com/rustfs/rustfs">rustfs/rustfs</a></td><td>S3-compatible object store built to migrate from and coexist with MinIO</td><td>Rust</td><td>Apache-2.0</td><td>You are replacing MinIO (archived) or want a permissive licence</td></tr>
 </tbody></table></div></section>
 <section class="cat" data-level="i">
 <h3><a href="#l2-3">2.3 — Search: from `LIKE '%x%'` to a search engine</a></h3>
@@ -11669,7 +11669,7 @@ it should now look less like a list and more like a system you could build.</p>
 <tr data-q="[maizzle/framework](https://github.com/maizzle/framework) tailwind css framework for html emails javascript mit your team thinks in tailwind"><td><a href="https://github.com/maizzle/framework">maizzle/framework</a></td><td>Tailwind CSS framework for HTML emails</td><td>JavaScript</td><td>MIT</td><td>Your team thinks in Tailwind</td></tr>
 <tr data-q="[nodemailer/nodemailer](https://github.com/nodemailer/nodemailer) the standard node.js email sender (smtp and transports) javascript mit-0 you need smtp (self-hosted customers, mailpit, fallback provider)"><td><a href="https://github.com/nodemailer/nodemailer">nodemailer/nodemailer</a></td><td>The standard Node.js email sender (SMTP and transports)</td><td>JavaScript</td><td>MIT-0</td><td>You need SMTP (self-hosted customers, Mailpit, fallback provider)</td></tr>
 <tr data-q="[axllent/mailpit](https://github.com/axllent/mailpit) local smtp catcher with web ui, html compatibility and link checks go mit always, in development and ci"><td><a href="https://github.com/axllent/mailpit">axllent/mailpit</a></td><td>Local SMTP catcher with web UI, HTML compatibility and link checks</td><td>Go</td><td>MIT</td><td>Always, in development and CI</td></tr>
-<tr data-q="[unsend-dev/unsend](https://github.com/unsend-dev/unsend) usesend: open-source sending platform (api, domains, webhooks) on amazon ses typescript, next.js agpl-3.0 you want a resend-like experience you host yourself, paying ses prices"><td><a href="https://github.com/unsend-dev/unsend">unsend-dev/unsend</a></td><td>useSend: open-source sending platform (API, domains, webhooks) on Amazon SES</td><td>TypeScript, Next.js</td><td>AGPL-3.0</td><td>You want a Resend-like experience you host yourself, paying SES prices</td></tr>
+<tr data-q="[usesend/usesend](https://github.com/usesend/usesend) usesend: open-source sending platform (api, domains, webhooks) on amazon ses typescript, next.js agpl-3.0 you want a resend-like experience you host yourself, paying ses prices"><td><a href="https://github.com/usesend/useSend">usesend/useSend</a></td><td>useSend: open-source sending platform (API, domains, webhooks) on Amazon SES</td><td>TypeScript, Next.js</td><td>AGPL-3.0</td><td>You want a Resend-like experience you host yourself, paying SES prices</td></tr>
 <tr data-q="[postalserver/postal](https://github.com/postalserver/postal) full-featured mail delivery platform ruby mit you really do need to run your own mail servers"><td><a href="https://github.com/postalserver/postal">postalserver/postal</a></td><td>Full-featured mail delivery platform</td><td>Ruby</td><td>MIT</td><td>You really do need to run your own mail servers</td></tr>
 <tr data-q="[knadh/listmonk](https://github.com/knadh/listmonk) self-hosted newsletter and mailing-list manager go, postgres agpl-3.0 product newsletters, kept apart from transactional mail"><td><a href="https://github.com/knadh/listmonk">knadh/listmonk</a></td><td>Self-hosted newsletter and mailing-list manager</td><td>Go, Postgres</td><td>AGPL-3.0</td><td>Product newsletters, kept apart from transactional mail</td></tr>
 <tr data-q="[mautic/mautic](https://github.com/mautic/mautic) open-source marketing automation php gpl-3.0 campaigns, segments and lead scoring, self-hosted"><td><a href="https://github.com/mautic/mautic">mautic/mautic</a></td><td>Open-source marketing automation</td><td>PHP</td><td>GPL-3.0</td><td>Campaigns, segments and lead scoring, self-hosted</td></tr>
@@ -11821,9 +11821,9 @@ it should now look less like a list and more like a system you could build.</p>
 <h3><a href="#l7-3">7.3 — Audit logs and activity feeds</a></h3>
 <div class="table-scroll"><table><thead><tr><th>Repo</th><th>What it is</th><th>Stack</th><th>License</th><th>Pick it when</th></tr></thead><tbody>
 <tr data-q="[retracedhq/retraced](https://github.com/retracedhq/retraced) standalone audit-log service with an embeddable customer-facing viewer (from boxyhq) ts, postgres, elasticsearch/opensearch apache-2.0 you want a self-hosted audit service with a ready-made ui"><td><a href="https://github.com/retracedhq/retraced">retracedhq/retraced</a></td><td>Standalone audit-log service with an embeddable customer-facing viewer (from BoxyHQ)</td><td>TS, Postgres, Elasticsearch/OpenSearch</td><td>Apache-2.0</td><td>You want a self-hosted audit service with a ready-made UI</td></tr>
-<tr data-q="[bemihq/bemi](https://github.com/bemihq/bemi) postgres cdc that captures every change and stitches in app context go/ts, postgres sspl-1.0 you want automatic, complete change capture with user context"><td><a href="https://github.com/BemiHQ/bemi">BemiHQ/bemi</a></td><td>Postgres CDC that captures every change and stitches in app context</td><td>Go/TS, Postgres</td><td>SSPL-1.0</td><td>You want automatic, complete change capture with user context</td></tr>
+<tr data-q="[pgstack-io/bemi-io](https://github.com/pgstack-io/bemi-io) postgres cdc that captures every change and stitches in app context go/ts, postgres sspl-1.0 you want automatic, complete change capture with user context"><td><a href="https://github.com/pgstack-io/bemi-io">pgstack-io/bemi-io</a></td><td>Postgres CDC that captures every change and stitches in app context</td><td>Go/TS, Postgres</td><td>SSPL-1.0</td><td>You want automatic, complete change capture with user context</td></tr>
 <tr data-q="[pgaudit/pgaudit](https://github.com/pgaudit/pgaudit) postgres extension for session and object audit logging c postgresql license compliance needs a record of direct db access"><td><a href="https://github.com/pgaudit/pgaudit">pgaudit/pgaudit</a></td><td>Postgres extension for session and object audit logging</td><td>C</td><td>PostgreSQL License</td><td>Compliance needs a record of direct DB access</td></tr>
-<tr data-q="[supabase/supa_audit](https://github.com/supabase/supa_audit) small postgres extension for trigger-based table change auditing sql apache-2.0 you want a trigger safety net you can read in one sitting"><td><a href="https://github.com/supabase/supa_audit">supabase/supa_audit</a></td><td>Small Postgres extension for trigger-based table change auditing</td><td>SQL</td><td>Apache-2.0</td><td>You want a trigger safety net you can read in one sitting</td></tr>
+<tr data-q="[pgmemento/pgmemento](https://github.com/pgmemento/pgmemento) trigger-based audit trail with schema versioning, in plain pl/pgsql sql lgpl-3.0 you want a maintained trigger safety net inside postgres, not a separate service"><td><a href="https://github.com/pgMemento/pgMemento">pgMemento/pgMemento</a></td><td>Trigger-based audit trail with schema versioning, in plain PL/pgSQL</td><td>SQL</td><td>LGPL-3.0</td><td>You want a maintained trigger safety net inside Postgres, not a separate service</td></tr>
 <tr data-q="[paper-trail-gem/paper_trail](https://github.com/paper-trail-gem/paper_trail) track changes to rails models, with version history ruby mit rails, and you need record history plus &quot;whodunnit&quot;"><td><a href="https://github.com/paper-trail-gem/paper_trail">paper-trail-gem/paper_trail</a></td><td>Track changes to Rails models, with version history</td><td>Ruby</td><td>MIT</td><td>Rails, and you need record history plus &quot;whodunnit&quot;</td></tr>
 <tr data-q="[collectiveidea/audited](https://github.com/collectiveidea/audited) rails orm extension logging model changes with user and request context ruby mit rails, audit-first rather than versioning-first"><td><a href="https://github.com/collectiveidea/audited">collectiveidea/audited</a></td><td>Rails ORM extension logging model changes with user and request context</td><td>Ruby</td><td>MIT</td><td>Rails, audit-first rather than versioning-first</td></tr>
 <tr data-q="[django-commons/django-simple-history](https://github.com/django-commons/django-simple-history) stores historical versions of django models python bsd-3-clause you're on django (formerly under jazzband)"><td><a href="https://github.com/django-commons/django-simple-history">django-commons/django-simple-history</a></td><td>Stores historical versions of Django models</td><td>Python</td><td>BSD-3-Clause</td><td>You&#39;re on Django (formerly under Jazzband)</td></tr>
@@ -11839,7 +11839,7 @@ it should now look less like a list and more like a system you could build.</p>
 <tr data-q="[caprover/caprover](https://github.com/caprover/caprover) self-hosted paas on docker swarm with one-click apps ts apache-2.0 you want a mature ui-based option with a one-click app catalog"><td><a href="https://github.com/caprover/caprover">caprover/caprover</a></td><td>Self-hosted PaaS on Docker Swarm with one-click apps</td><td>TS</td><td>Apache-2.0</td><td>You want a mature UI-based option with a one-click app catalog</td></tr>
 <tr data-q="[opentofu/opentofu](https://github.com/opentofu/opentofu) open-source infrastructure as code, terraform-compatible go mpl-2.0 you want the widest provider ecosystem under an open license"><td><a href="https://github.com/opentofu/opentofu">opentofu/opentofu</a></td><td>Open-source infrastructure as code, Terraform-compatible</td><td>Go</td><td>MPL-2.0</td><td>You want the widest provider ecosystem under an open license</td></tr>
 <tr data-q="[pulumi/pulumi](https://github.com/pulumi/pulumi) infrastructure as code in real programming languages go, multi-language apache-2.0 your team would rather write typescript than hcl"><td><a href="https://github.com/pulumi/pulumi">pulumi/pulumi</a></td><td>Infrastructure as code in real programming languages</td><td>Go, multi-language</td><td>Apache-2.0</td><td>Your team would rather write TypeScript than HCL</td></tr>
-<tr data-q="[sst/sst](https://github.com/sst/sst) framework for deploying full-stack apps and their infra, ts-first ts, go mit you're on aws with next.js and serverless"><td><a href="https://github.com/sst/sst">sst/sst</a></td><td>Framework for deploying full-stack apps and their infra, TS-first</td><td>TS, Go</td><td>MIT</td><td>You&#39;re on AWS with Next.js and serverless</td></tr>
+<tr data-q="[anomalyco/sst](https://github.com/anomalyco/sst) framework for deploying full-stack apps and their infra, ts-first ts, go mit you're on aws with next.js and serverless"><td><a href="https://github.com/anomalyco/sst">anomalyco/sst</a></td><td>Framework for deploying full-stack apps and their infra, TS-first</td><td>TS, Go</td><td>MIT</td><td>You&#39;re on AWS with Next.js and serverless</td></tr>
 <tr data-q="[docker/compose](https://github.com/docker/compose) define and run multi-container apps from one yaml file go apache-2.0 local dev and your self-hosted distribution"><td><a href="https://github.com/docker/compose">docker/compose</a></td><td>Define and run multi-container apps from one YAML file</td><td>Go</td><td>Apache-2.0</td><td>Local dev and your self-hosted distribution</td></tr>
 <tr data-q="[helm/helm](https://github.com/helm/helm) package manager for kubernetes go apache-2.0 enterprise customers will self-host on kubernetes"><td><a href="https://github.com/helm/helm">helm/helm</a></td><td>Package manager for Kubernetes</td><td>Go</td><td>Apache-2.0</td><td>Enterprise customers will self-host on Kubernetes</td></tr>
 </tbody></table></div></section>
@@ -11866,7 +11866,7 @@ it should now look less like a list and more like a system you could build.</p>
 <tr data-q="[promptfoo/promptfoo](https://github.com/promptfoo/promptfoo) eval and red-teaming cli for prompts and models typescript mit prompt and model changes tested in ci"><td><a href="https://github.com/promptfoo/promptfoo">promptfoo/promptfoo</a></td><td>Eval and red-teaming CLI for prompts and models</td><td>TypeScript</td><td>MIT</td><td>Prompt and model changes tested in CI</td></tr>
 <tr data-q="[pgvector/pgvector](https://github.com/pgvector/pgvector) vector type and similarity search for postgres c postgresql license rag next to your existing tenant-scoped data"><td><a href="https://github.com/pgvector/pgvector">pgvector/pgvector</a></td><td>Vector type and similarity search for Postgres</td><td>C</td><td>PostgreSQL License</td><td>RAG next to your existing tenant-scoped data</td></tr>
 <tr data-q="[qdrant/qdrant](https://github.com/qdrant/qdrant) dedicated vector database with payload filtering rust apache-2.0 vector volume or filtered-search performance outgrows postgres"><td><a href="https://github.com/qdrant/qdrant">qdrant/qdrant</a></td><td>Dedicated vector database with payload filtering</td><td>Rust</td><td>Apache-2.0</td><td>Vector volume or filtered-search performance outgrows Postgres</td></tr>
-<tr data-q="[modelcontextprotocol/specification](https://github.com/modelcontextprotocol/specification) the model context protocol spec and schema typescript schema, markdown mit, moving to apache-2.0 designing beacon's mcp server correctly"><td><a href="https://github.com/modelcontextprotocol/specification">modelcontextprotocol/specification</a></td><td>The Model Context Protocol spec and schema</td><td>TypeScript schema, Markdown</td><td>MIT, moving to Apache-2.0</td><td>Designing Beacon&#39;s MCP server correctly</td></tr>
+<tr data-q="[modelcontextprotocol/modelcontextprotocol](https://github.com/modelcontextprotocol/modelcontextprotocol) the model context protocol spec and schema typescript schema, markdown mit, moving to apache-2.0 designing beacon's mcp server correctly"><td><a href="https://github.com/modelcontextprotocol/modelcontextprotocol">modelcontextprotocol/modelcontextprotocol</a></td><td>The Model Context Protocol spec and schema</td><td>TypeScript schema, Markdown</td><td>MIT, moving to Apache-2.0</td><td>Designing Beacon&#39;s MCP server correctly</td></tr>
 <tr data-q="[langchain-ai/langchainjs](https://github.com/langchain-ai/langchainjs) framework for chains, agents, retrievers typescript mit you need its large set of loaders and integrations for rag"><td><a href="https://github.com/langchain-ai/langchainjs">langchain-ai/langchainjs</a></td><td>Framework for chains, agents, retrievers</td><td>TypeScript</td><td>MIT</td><td>You need its large set of loaders and integrations for RAG</td></tr>
 </tbody></table></div></section>
 <section class="cat" data-level="a">
@@ -11875,7 +11875,7 @@ it should now look less like a list and more like a system you could build.</p>
 <tr data-q="[openstatushq/openstatus](https://github.com/openstatushq/openstatus) open-source uptime monitoring and status pages typescript, next.js, turso, go checkers agpl-3.0 you want to compare your beacon with a real one, component by component"><td><a href="https://github.com/openstatusHQ/openstatus">openstatusHQ/openstatus</a></td><td>Open-source uptime monitoring and status pages</td><td>TypeScript, Next.js, Turso, Go checkers</td><td>AGPL-3.0</td><td>You want to compare your Beacon with a real one, component by component</td></tr>
 <tr data-q="[louislam/uptime-kuma](https://github.com/louislam/uptime-kuma) self-hosted uptime monitor node.js, vue, sqlite mit you want the single-tenant version of beacon's core, and to see what multi-tenancy adds"><td><a href="https://github.com/louislam/uptime-kuma">louislam/uptime-kuma</a></td><td>Self-hosted uptime monitor</td><td>Node.js, Vue, SQLite</td><td>MIT</td><td>You want the single-tenant version of Beacon&#39;s core, and to see what multi-tenancy adds</td></tr>
 <tr data-q="[boxyhq/saas-starter-kit](https://github.com/boxyhq/saas-starter-kit) enterprise saas starter: teams, sso, scim, audit logs, webhooks next.js, prisma apache-2.0 you want to see the enterprise ring wired together in a small codebase"><td><a href="https://github.com/boxyhq/saas-starter-kit">boxyhq/saas-starter-kit</a></td><td>Enterprise SaaS starter: teams, SSO, SCIM, audit logs, webhooks</td><td>Next.js, Prisma</td><td>Apache-2.0</td><td>You want to see the enterprise ring wired together in a small codebase</td></tr>
-<tr data-q="[calcom/cal.com](https://github.com/calcom/cal.com) scheduling infrastructure next.js, trpc, prisma, turborepo mit you want nearly every component in one mature monorepo"><td><a href="https://github.com/calcom/cal.com">calcom/cal.com</a></td><td>Scheduling infrastructure</td><td>Next.js, tRPC, Prisma, Turborepo</td><td>MIT</td><td>You want nearly every component in one mature monorepo</td></tr>
+<tr data-q="[calcom/cal.diy](https://github.com/calcom/cal.diy) scheduling (cal.com's open-source edition) next.js, trpc, prisma, turborepo mit you want many components in one mature monorepo (enterprise features removed in 2026)"><td><a href="https://github.com/calcom/cal.diy">calcom/cal.diy</a></td><td>Scheduling (Cal.com&#39;s open-source edition)</td><td>Next.js, tRPC, Prisma, Turborepo</td><td>MIT</td><td>You want many components in one mature monorepo (enterprise features removed in 2026)</td></tr>
 <tr data-q="[makeplane/plane](https://github.com/makeplane/plane) project management django, next.js, celery agpl-3.0 you want the whole architecture in a python backend"><td><a href="https://github.com/makeplane/plane">makeplane/plane</a></td><td>Project management</td><td>Django, Next.js, Celery</td><td>AGPL-3.0</td><td>You want the whole architecture in a Python backend</td></tr>
 <tr data-q="[chatwoot/chatwoot](https://github.com/chatwoot/chatwoot) customer support platform rails, vue, sidekiq mit (with `enterprise` folder) you want the whole architecture in rails"><td><a href="https://github.com/chatwoot/chatwoot">chatwoot/chatwoot</a></td><td>Customer support platform</td><td>Rails, Vue, Sidekiq</td><td>MIT (with <code>enterprise</code> folder)</td><td>You want the whole architecture in Rails</td></tr>
 <tr data-q="[vercel/next-forge](https://github.com/vercel/next-forge) production-grade turborepo template next.js, many integrations mit you want a map of which managed service fills each box"><td><a href="https://github.com/vercel/next-forge">vercel/next-forge</a></td><td>Production-grade Turborepo template</td><td>Next.js, many integrations</td><td>MIT</td><td>You want a map of which managed service fills each box</td></tr>

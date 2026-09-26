@@ -176,7 +176,7 @@ not single components.
 | [openstatusHQ/openstatus](https://github.com/openstatusHQ/openstatus) | Open-source uptime monitoring and status pages | TypeScript, Next.js, Turso, Go checkers | AGPL-3.0 | You want to compare your Beacon with a real one, component by component |
 | [louislam/uptime-kuma](https://github.com/louislam/uptime-kuma) | Self-hosted uptime monitor | Node.js, Vue, SQLite | MIT | You want the single-tenant version of Beacon's core, and to see what multi-tenancy adds |
 | [boxyhq/saas-starter-kit](https://github.com/boxyhq/saas-starter-kit) | Enterprise SaaS starter: teams, SSO, SCIM, audit logs, webhooks | Next.js, Prisma | Apache-2.0 | You want to see the enterprise ring wired together in a small codebase |
-| [calcom/cal.com](https://github.com/calcom/cal.com) | Scheduling infrastructure | Next.js, tRPC, Prisma, Turborepo | MIT | You want nearly every component in one mature monorepo |
+| [calcom/cal.diy](https://github.com/calcom/cal.diy) | Scheduling (Cal.com's open-source edition) | Next.js, tRPC, Prisma, Turborepo | MIT | You want many components in one mature monorepo (enterprise features removed in 2026) |
 | [makeplane/plane](https://github.com/makeplane/plane) | Project management | Django, Next.js, Celery | AGPL-3.0 | You want the whole architecture in a Python backend |
 | [chatwoot/chatwoot](https://github.com/chatwoot/chatwoot) | Customer support platform | Rails, Vue, Sidekiq | MIT (with `enterprise` folder) | You want the whole architecture in Rails |
 | [vercel/next-forge](https://github.com/vercel/next-forge) | Production-grade Turborepo template | Next.js, many integrations | MIT | You want a map of which managed service fills each box |
@@ -215,7 +215,7 @@ one crosses at least two components, so this is the best place to see seams.
 
 **Cal.com** — the reference for scale. Its `apps/` and `packages/` folders (at the
 time of writing) separate the web app, the public API, features and the app store
-of integrations; and its licence history is worth knowing: it moved from AGPL with a commercial `ee` folder to plain MIT, so for the open-core pattern itself (7.4) look at PostHog or Infisical instead.
+of integrations; and its licence history is worth knowing: it moved from AGPL with a commercial `ee` folder to Cal.diy, a plain-MIT community edition with the enterprise features removed, so for the open-core pattern itself (7.4) look at PostHog or Infisical instead.
 
 **What to notice**
 

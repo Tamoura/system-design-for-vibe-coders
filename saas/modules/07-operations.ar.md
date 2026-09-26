@@ -162,7 +162,7 @@ sequenceDiagram
 
 **Chatwoot** ([chatwoot/chatwoot](https://github.com/chatwoot/chatwoot)) أداة دعم وSaaS في الوقت نفسه، وفيه لوحة تحكم للمدير الأعلى. متحكمات `super_admin` فيه مبنية على مكتبة Administrate، مع صنف "dashboard" لكل نموذج في `app/dashboards`. ابحث عن `Impersonation` لتجد مكوّن الشريط المكتوب بـ Vue والـ composable الذي يشغّله، وهو مثال صغير ونظيف على قاعدة "شريط التنبيه الذي لا يمكن تجاهله".
 
-**Cal.com** ([calcom/cal.com](https://github.com/calcom/cal.com)) يضع صفحات إدارة النسخة داخل تطبيق Next.js الرئيسي في منطقة الإعدادات (ابحث في شجرة `apps/web` عن `admin`). ابحث في ترحيلات Prisma عن `impersonat` وستقرأ تاريخ الميزة على شكل تغييرات في المخطط: خيار على مستوى المستخدم للسماح بالانتحال، ومفتاح على مستوى الفريق لتعطيله، ولاحقًا صلاحيات مرتبطة بأدوار الإدارة.
+**Cal.com** ([calcom/cal.diy](https://github.com/calcom/cal.diy)) يضع صفحات إدارة النسخة داخل تطبيق Next.js الرئيسي في منطقة الإعدادات (ابحث في شجرة `apps/web` عن `admin`). ابحث في ترحيلات Prisma عن `impersonat` وستقرأ تاريخ الميزة على شكل تغييرات في المخطط: خيار على مستوى المستخدم للسماح بالانتحال، ومفتاح على مستوى الفريق لتعطيله، ولاحقًا صلاحيات مرتبطة بأدوار الإدارة.
 
 **ما الذي تلاحظه:**
 
@@ -701,9 +701,9 @@ flowchart LR
 | المستودع | ما هو | التقنيات | الترخيص | اختره عندما |
 |---|---|---|---|---|
 | [retracedhq/retraced](https://github.com/retracedhq/retraced) | خدمة سجلات تدقيق مستقلة مع عارض قابل للتضمين يراه العملاء (من BoxyHQ) | TS, Postgres, Elasticsearch/OpenSearch | Apache-2.0 | تريد خدمة تدقيق مستضافة ذاتيًا مع واجهة جاهزة |
-| [BemiHQ/bemi](https://github.com/BemiHQ/bemi) | CDC لـ Postgres يلتقط كل تغيير ويدمج سياق التطبيق | Go/TS, Postgres | SSPL-1.0 | تريد التقاطًا تلقائيًا وكاملًا للتغييرات مع سياق المستخدم |
+| [pgstack-io/bemi-io](https://github.com/pgstack-io/bemi-io) | CDC لـ Postgres يلتقط كل تغيير ويدمج سياق التطبيق | Go/TS, Postgres | SSPL-1.0 | تريد التقاطًا تلقائيًا وكاملًا للتغييرات مع سياق المستخدم |
 | [pgaudit/pgaudit](https://github.com/pgaudit/pgaudit) | إضافة لـ Postgres لتسجيل تدقيق الجلسات والكائنات | C | PostgreSQL License | يتطلب الامتثال سجلًا للوصول المباشر إلى قاعدة البيانات |
-| [supabase/supa_audit](https://github.com/supabase/supa_audit) | إضافة صغيرة لـ Postgres لتدقيق تغييرات الجداول عبر المشغّلات | SQL | Apache-2.0 | تريد شبكة أمان من المشغّلات تستطيع قراءتها في جلسة واحدة |
+| [pgMemento/pgMemento](https://github.com/pgMemento/pgMemento) | سجل تدقيق قائم على المشغّلات مع تتبّع إصدارات المخطط، بلغة PL/pgSQL خالصة | SQL | LGPL-3.0 | تريد شبكة أمان من المشغّلات تُصان باستمرار داخل Postgres، لا خدمة منفصلة |
 | [paper-trail-gem/paper_trail](https://github.com/paper-trail-gem/paper_trail) | تتبع التغييرات على نماذج Rails، مع سجل الإصدارات | Ruby | MIT | تعمل على Rails وتحتاج إلى سجل السجلات مع "من فعلها" |
 | [collectiveidea/audited](https://github.com/collectiveidea/audited) | إضافة لـ ORM في Rails تسجّل تغييرات النماذج مع سياق المستخدم والطلب | Ruby | MIT | تعمل على Rails، والأولوية للتدقيق لا للإصدارات |
 | [django-commons/django-simple-history](https://github.com/django-commons/django-simple-history) | يخزّن النسخ التاريخية لنماذج Django | Python | BSD-3-Clause | تعمل على Django (كان سابقًا تحت Jazzband) |
@@ -987,7 +987,7 @@ sequenceDiagram
 | [caprover/caprover](https://github.com/caprover/caprover) | PaaS مستضاف ذاتيًا فوق Docker Swarm مع تطبيقات بنقرة واحدة | TS | Apache-2.0 | تريد خيارًا ناضجًا بواجهة رسومية مع كتالوج تطبيقات بنقرة واحدة |
 | [opentofu/opentofu](https://github.com/opentofu/opentofu) | بنية تحتية ككود مفتوحة المصدر، متوافقة مع Terraform | Go | MPL-2.0 | تريد أوسع منظومة مزوّدين تحت ترخيص مفتوح |
 | [pulumi/pulumi](https://github.com/pulumi/pulumi) | بنية تحتية ككود بلغات برمجة حقيقية | Go, multi-language | Apache-2.0 | يفضّل فريقك كتابة TypeScript على HCL |
-| [sst/sst](https://github.com/sst/sst) | إطار لنشر التطبيقات المتكاملة وبنيتها التحتية، يبدأ من TS | TS, Go | MIT | أنت على AWS مع Next.js وتطبيقات دون خوادم |
+| [anomalyco/sst](https://github.com/anomalyco/sst) | إطار لنشر التطبيقات المتكاملة وبنيتها التحتية، يبدأ من TS | TS, Go | MIT | أنت على AWS مع Next.js وتطبيقات دون خوادم |
 | [docker/compose](https://github.com/docker/compose) | تعريف تطبيقات متعددة الحاويات وتشغيلها من ملف YAML واحد | Go | Apache-2.0 | التطوير المحلي والتوزيعة المستضافة ذاتيًا لديك |
 | [helm/helm](https://github.com/helm/helm) | مدير حزم لـ Kubernetes | Go | Apache-2.0 | سيستضيف عملاء المؤسسات المنتج ذاتيًا على Kubernetes |
 

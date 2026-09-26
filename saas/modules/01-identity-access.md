@@ -172,7 +172,7 @@ Lock-in is mostly about **password hashes and user ids**. Check that the vendor 
 
 **openstatusHQ/openstatus** is an open-source uptime monitor and status page, so it is literally a real Beacon. It is a TypeScript monorepo. Open `apps/web`, check its `package.json` to see which auth library it chose, then use code search for `auth` and `session`. What it does well is proportion: authentication is a small, boring corner of the codebase, which is exactly where it belongs in a product whose value is the monitoring.
 
-**calcom/cal.com** shows authentication at scale in a Next.js monorepo: credentials, Google login, SAML SSO, and two-factor authentication. Search for `NextAuth` or `authOptions` to find the provider setup, and `twoFactor` to see how TOTP is layered onto credential login. The Prisma schema in `packages/prisma` shows how identity fields sit on the `User` model.
+**calcom/cal.diy** shows authentication at scale in a Next.js monorepo: credentials, Google login and two-factor authentication (its SAML SSO was removed with the other enterprise features when the open-source edition became Cal.diy in 2026). Search for `NextAuth` or `authOptions` to find the provider setup, and `twoFactor` to see how TOTP is layered onto credential login. The Prisma schema in `packages/prisma` shows how identity fields sit on the `User` model.
 
 **nextjs/saas-starter** is the smallest complete example: email and password with bcrypt, a signed session cookie via `jose`, and middleware that protects routes. Read all of it in an evening. It shows the trade-off of stateless signed cookies: simple, but no server-side revocation list.
 
@@ -470,7 +470,7 @@ Prefer the URL. Either way, **the org id from the URL or cookie is a claim, not 
 | [nextjs/saas-starter](https://github.com/nextjs/saas-starter) | Minimal official Next.js SaaS template with teams, invitations, roles and an activity log | TypeScript, Drizzle, Postgres | MIT | You want the smallest readable version of the whole skeleton |
 | [better-auth/better-auth](https://github.com/better-auth/better-auth) | Auth library whose organization plugin provides orgs, members, roles and invitations | TypeScript | MIT | You want the org model generated for you, in your own database |
 | [boxyhq/saas-starter-kit](https://github.com/boxyhq/saas-starter-kit) | Enterprise-flavoured starter: teams, invites, SSO, directory sync, audit logs, webhooks | TypeScript, Next.js, Prisma | Apache-2.0 | You know you will sell to enterprises and want SSO-ready team models |
-| [calcom/cal.com](https://github.com/calcom/cal.com) | Scheduling SaaS with users, teams and organizations containing teams | TypeScript, Prisma | MIT | You want to see a hierarchy (org to team to member) in production |
+| [calcom/cal.diy](https://github.com/calcom/cal.diy) | Scheduling SaaS whose schema models users, teams and organizations containing teams | TypeScript, Prisma | MIT | You want to see a hierarchy (org to team to member) in production |
 | [dubinc/dub](https://github.com/dubinc/dub) | Link-management SaaS with slug-based workspaces, invites and plan limits | TypeScript, Prisma | AGPL-3.0 | You want a clean workspace-in-the-URL design |
 | [documenso/documenso](https://github.com/documenso/documenso) | E-signature SaaS with organisations, teams and member invitations | TypeScript, Prisma | AGPL-3.0 | You want to see a team model added to a product that began single-user |
 | [logto-io/logto](https://github.com/logto-io/logto) | Auth platform with built-in organizations, org roles and invitations | TypeScript | MPL-2.0 | You want orgs handled by a self-hosted identity service rather than your app |
@@ -486,7 +486,7 @@ Prefer the URL. Either way, **the org id from the URL or cookie is a claim, not 
 
 ## 🔍 Study it in the wild
 
-**calcom/cal.com** shows a mature hierarchy. Open `packages/prisma` and read the Prisma schema's `Team` and `Membership` models. At the time of writing, organizations are teams with extra organization settings and child teams point at a parent. Notice how memberships carry both a role and an acceptance flag, so a pending invite and an active member share a table. Search for `inviteMember` to follow the invite flow end to end.
+**calcom/cal.diy** shows a mature hierarchy. Open `packages/prisma` and read the Prisma schema's `Team` and `Membership` models. Organizations are teams with extra organization settings, and child teams point at a parent; the organization features were removed from the open-source edition in 2026, but the schema still shows the model. Notice how memberships carry both a role and an acceptance flag, so a pending invite and an active member share a table. Search for `inviteMember` to follow the invite flow end to end.
 
 **dubinc/dub** puts the workspace slug at the front of every dashboard URL, which makes support links and multi-tab use painless. At the time of writing its Prisma model for workspaces kept the older name `Project`, which is a realistic lesson in how product vocabulary changes faster than schemas. Search for `ProjectUsers` and `invite` to find memberships and invitations, then look at how API routes resolve the workspace and check membership before doing anything.
 
@@ -755,7 +755,7 @@ ReBAC brings real costs. Permissions now live in a separate datastore that must 
 | Repo | What it is | Stack | License | Pick it when |
 |---|---|---|---|---|
 | [stalniy/casl](https://github.com/stalniy/casl) | Isomorphic JavaScript authorization library with ORM query adapters | TypeScript | MIT | You want RBAC and ABAC inside a TypeScript app, sharing rules with the frontend |
-| [casbin/casbin](https://github.com/casbin/casbin) | Model-driven authorization library (ACL, RBAC, ABAC) with ports to many languages | Go (plus ports) | Apache-2.0 | You want one policy model across Go, Node, Python and Java services |
+| [apache/casbin](https://github.com/apache/casbin) | Apache Casbin: model-driven authorization library (ACL, RBAC, ABAC) with ports to many languages | Go (plus ports) | Apache-2.0 | You want one policy model across Go, Node, Python and Java services |
 | [cerbos/cerbos](https://github.com/cerbos/cerbos) | Stateless policy decision point with YAML policies and query planning | Go | Apache-2.0 | You want policy-as-code decoupled from app code, with list filtering support |
 | [openfga/openfga](https://github.com/openfga/openfga) | Zanzibar-inspired ReBAC server, a CNCF project originally from Auth0/Okta | Go | Apache-2.0 | You need object-level sharing with a friendly modelling language |
 | [authzed/spicedb](https://github.com/authzed/spicedb) | Zanzibar-inspired permissions database with strong consistency features | Go | Apache-2.0 | You need ReBAC at scale and care about the new-enemy problem |
@@ -1032,7 +1032,7 @@ Notice the sessions are scoped to the org. Ana may also belong to a personal wor
 
 | Repo | What it is | Stack | License | Pick it when |
 |---|---|---|---|---|
-| [boxyhq/jackson](https://github.com/boxyhq/jackson) | SAML Jackson, now continued by Ory as Ory Polis: a SAML-to-OAuth bridge plus SCIM directory sync | TypeScript | Apache-2.0 | You want to add SAML SSO and SCIM to your own app without learning SAML internals |
+| [ory/polis](https://github.com/ory/polis) | Ory Polis (formerly BoxyHQ's SAML Jackson): a SAML-to-OAuth bridge plus SCIM directory sync | TypeScript | Apache-2.0 | You want to add SAML SSO and SCIM to your own app without learning SAML internals |
 | [keycloak/keycloak](https://github.com/keycloak/keycloak) | Full IAM server that brokers SAML and OIDC and federates LDAP | Java | Apache-2.0 | You want a mature, self-hosted identity broker and can run a JVM service |
 | [zitadel/zitadel](https://github.com/zitadel/zitadel) | Multi-tenant identity platform with orgs, SAML, OIDC and SCIM features | Go | AGPL-3.0 | Your tenancy model maps to its organizations and you accept AGPL |
 | [goauthentik/authentik](https://github.com/goauthentik/authentik) | Self-hosted identity provider with flexible flows, SAML, OIDC, LDAP and SCIM | Python, Go | MIT (enterprise features separate) | You want to run your own IdP, or test your SP against one locally |
@@ -1041,7 +1041,7 @@ Notice the sessions are scoped to the org. Ana may also belong to a personal wor
 | [boxyhq/saas-starter-kit](https://github.com/boxyhq/saas-starter-kit) | Next.js starter wiring SAML SSO, directory sync, audit logs and webhooks into teams | TypeScript | Apache-2.0 | You want to see the SP side of SSO and SCIM wired into a real team model |
 | [panva/openid-client](https://github.com/panva/openid-client) | Certified OAuth 2 and OIDC relying-party client for JavaScript runtimes | TypeScript | MIT | You implement per-tenant OIDC connections yourself |
 
-**If you only study one:** **boxyhq/jackson** (Ory Polis). It solves exactly the SP-side problem Beacon has: it turns each tenant's SAML connection into a plain OAuth 2.0 flow your app already understands, and it adds SCIM directory sync behind a simple API. Reading it teaches you how connections, tenants and products are modelled, and it is what Cal.com adopted for its own SAML support.
+**If you only study one:** **ory/polis** (formerly SAML Jackson). It solves exactly the SP-side problem Beacon has: it turns each tenant's SAML connection into a plain OAuth 2.0 flow your app already understands, and it adds SCIM directory sync behind a simple API. Reading it teaches you how connections, tenants and products are modelled, and it is what Dub, Formbricks and Papermark use for their own SAML support.
 
 **Buy, build, or self-host?**
 
@@ -1051,7 +1051,7 @@ Notice the sessions are scoped to the org. Ana may also belong to a personal wor
 
 ## 🔍 Study it in the wild
 
-**calcom/cal.com** uses SAML Jackson for SAML SSO. Search the repo for `jackson` and `saml` to find the setup, the tenant naming scheme and the callback handling, and trace how an SSO login becomes a user in the right team or organization. Its domain-based organization features show home realm discovery in practice.
+**boxyhq/saas-starter-kit** wires SAML Jackson (now Ory Polis) into a Next.js team model. Read `lib/jackson.ts` and the `lib/jackson/sso` folder to find the setup, the tenant naming scheme and the callback handling, and trace how an SSO login becomes a user in the right team. Then open `lib/jackson/dsyncEvents.ts` to see SCIM directory-sync events turned into team memberships.
 
 **dubinc/dub** adds SAML SSO for its workspaces. Search for `saml` and `jackson` in `apps/web`, and look at how the workspace settings page lets an admin configure a connection and how enforcement interacts with the existing login options.
 
