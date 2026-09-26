@@ -159,7 +159,7 @@ Starter kits (boilerplates) are the fastest way to *see* a SaaS skeleton: they a
 
 Take the four products from the table above and spend ten minutes in each, looking only for the generic parts.
 
-**Cal.com** (`calcom/cal.com`). A large TypeScript monorepo. At the time of writing, the main app lives under `apps/web` and the database schema under `packages/prisma`. Open the Prisma schema and search for `model Team`, `model Membership` and `model Webhook`. You will find the generic skeleton sitting next to the core models like `Booking` and `EventType`.
+**Cal.com** (`calcom/cal.diy`, its MIT community edition since 2026). A large TypeScript monorepo. At the time of writing, the main app lives under `apps/web` and the database schema under `packages/prisma`. Open the Prisma schema and search for `model Team`, `model Membership` and `model Webhook`. You will find the generic skeleton sitting next to the core models like `Booking` and `EventType`.
 
 **Dub** (`dubinc/dub`). Also a Next.js monorepo. Use GitHub code search inside the repo for `stripe` and for `apiKey` or `token`. Notice how much code is about plans and usage limits, because a link shortener's pricing is driven by how many links and clicks you have.
 
@@ -403,7 +403,7 @@ Two kinds of repos help here: tools that make navigation fast, and codebases tha
 | [cli/cli](https://github.com/cli/cli) | `gh`, GitHub's official CLI: clone, list and read PRs and issues from the terminal | Go CLI | MIT | You want to read a repo's pull request history without leaving your terminal |
 | [nextjs/saas-starter](https://github.com/nextjs/saas-starter) | Small, complete SaaS skeleton | Next.js, Drizzle, Stripe | MIT | Your first "read a whole SaaS" practice run |
 | [openstatusHQ/openstatus](https://github.com/openstatusHQ/openstatus) | Open-source status page and uptime monitoring: a real Beacon | TypeScript monorepo, Go checker | AGPL-3.0 | You want to practise the method on the product this course is modelled on |
-| [maybe-finance/maybe](https://github.com/maybe-finance/maybe) | Personal finance app built with modern Rails (archived) | Ruby on Rails 8, Postgres | AGPL-3.0 | You want to see how clean a conventional monolith can be |
+| [we-promise/sure](https://github.com/we-promise/sure) | Personal finance app built with modern Rails: the community fork of the archived Maybe | Ruby on Rails 8, Postgres | AGPL-3.0 | You want to see how clean a conventional monolith can be |
 
 **If you only study one:** practise on `openstatusHQ/openstatus`. It is a real production SaaS, it is medium-sized rather than enormous, and because it solves exactly Beacon's problem, every component you find in it will reappear in this course.
 
@@ -419,7 +419,7 @@ Let us run the method on two repos.
 
 **Documenso** (`documenso/documenso`), an open-source DocuSign alternative. Step 2: its compose setup and `.env.example` reveal Postgres, a mail catcher for local email, and signing-certificate settings, so you already know e-signature certificates are part of the core. Step 3: the root `package.json` shows a Turborepo monorepo; at the time of writing the apps live under `apps/` and shared code under `packages/`. Step 4: search the repo for `schema.prisma` and read the model names. You will find `User`, team models, `Document`, `Recipient`, `Field`, webhook and API token models, and a document audit log model. Step 5: pick "send a document for signing" and follow it from the UI to the database write to the email it triggers.
 
-**Maybe** (`maybe-finance/maybe`), an archived Rails 8 app. Rails makes the method almost mechanical: `config/routes.rb` lists every URL, `db/schema.rb` is the full schema in one file, `app/models` holds the domain, and `app/jobs` holds background work (Solid Queue). Pick a route, open its controller, follow it to the model. For juniors from JavaScript land, reading a well-kept Rails app is a lesson in how much convention can replace configuration.
+**Sure** (`we-promise/sure`), a Rails 8 app: the community-maintained fork of Maybe, whose original repository is archived. Rails makes the method almost mechanical: `config/routes.rb` lists every URL, `db/schema.rb` is the full schema in one file, `app/models` holds the domain, and `app/jobs` holds background work (Sidekiq). Pick a route, open its controller, follow it to the model. For juniors from JavaScript land, reading a well-kept Rails app is a lesson in how much convention can replace configuration.
 
 **What to notice:**
 
@@ -561,7 +561,7 @@ Here is the shelf, grouped by language so you can start with code you can read c
 
 | Repo | Product | Stack | License | Study it for |
 |---|---|---|---|---|
-| calcom/cal.com | Scheduling | Next.js monorepo, Prisma, Postgres | AGPL-3.0 (commercial `ee`) | Teams and orgs, SAML SSO via SAML Jackson, webhooks, API keys, integrations app store |
+| calcom/cal.diy | Scheduling (Cal.com's open-source edition) | Next.js monorepo, Prisma, Postgres | MIT | Teams, webhooks, API keys, credits, integrations app store (SSO, workflows and other enterprise features removed in 2026) |
 | documenso/documenso | E-signatures | Next.js monorepo, Prisma, Postgres | AGPL-3.0 | Teams, Stripe, webhooks, API, audit trail of document events, background jobs |
 | dubinc/dub | Link management | Next.js monorepo, Prisma, Tinybird | AGPL-3.0 (commercial `ee`) | Workspaces, Stripe and usage limits, API keys, webhooks, SAML SSO, analytics |
 | formbricks/formbricks | Surveys | Next.js monorepo, Prisma, Postgres | AGPL-3.0 (commercial `ee`) | Orgs and environments, RBAC, integrations |
@@ -587,7 +587,7 @@ Here is the shelf, grouped by language so you can start with code you can read c
 | chatwoot/chatwoot | Customer support | Rails, Vue, Sidekiq | MIT (commercial `enterprise`) | Accounts and roles, webhooks, integrations, notifications |
 | gitlabhq/gitlabhq | DevOps platform | Rails, Vue, Sidekiq | MIT core, proprietary `ee` | The encyclopedia: every component, at enormous scale |
 | discourse/discourse | Forums | Rails, Ember, Sidekiq | GPL-2.0 | Jobs, plugins, notifications, email |
-| maybe-finance/maybe | Personal finance | Rails 8, Solid Queue | AGPL-3.0 | Clean modern Rails monolith (archived, still excellent reading) |
+| we-promise/sure | Personal finance | Rails 8, Sidekiq | AGPL-3.0 | Clean modern Rails monolith (the maintained fork of the archived Maybe) |
 
 **Go and other**
 
@@ -605,7 +605,7 @@ Here is where to look for each component. A ✓ means we are confident the repo 
 
 | Repo | Auth | Orgs | RBAC | SSO | Billing | Jobs | Webhooks | API keys | Audit log | Notifications |
 |---|---|---|---|---|---|---|---|---|---|---|
-| calcom/cal.com | ✓ | ✓ | ✓ | ✓ | ✓ | | ✓ | ✓ | | ✓ |
+| calcom/cal.diy | ✓ | ✓ | ✓ | | ✓ | | ✓ | ✓ | | ✓ |
 | documenso/documenso | ✓ | ✓ | ✓ | | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | dubinc/dub | ✓ | ✓ | ✓ | ✓ | ✓ | | ✓ | ✓ | | |
 | formbricks/formbricks | ✓ | ✓ | ✓ | | | | ✓ | ✓ | | |
@@ -664,7 +664,7 @@ If you only have time for ten repos from the shelf, make it these:
 |---|---|---|---|---|
 | [openstatusHQ/openstatus](https://github.com/openstatusHQ/openstatus) | Status pages and uptime monitoring, a real Beacon | TypeScript monorepo, Go | AGPL-3.0 | You want to see Beacon's exact problems solved in production |
 | [louislam/uptime-kuma](https://github.com/louislam/uptime-kuma) | Self-hosted uptime monitor | Node.js, Vue | MIT | You want Beacon's core without the multi-tenant SaaS layer, for contrast |
-| [calcom/cal.com](https://github.com/calcom/cal.com) | Scheduling infrastructure | Next.js, Prisma | MIT | You want the fullest TypeScript example of teams, orgs, SSO and integrations |
+| [calcom/cal.diy](https://github.com/calcom/cal.diy) | Scheduling (Cal.com's open-source edition) | Next.js, Prisma | MIT | You want a large TypeScript monorepo with teams, webhooks, API keys and an integrations app store |
 | [documenso/documenso](https://github.com/documenso/documenso) | E-signature platform | Next.js, Prisma | AGPL-3.0 | You want a mid-sized, readable TypeScript SaaS with audit trails and webhooks |
 | [dubinc/dub](https://github.com/dubinc/dub) | Link management | Next.js, Prisma | AGPL-3.0 | You want plan limits and usage-driven pricing in real code |
 | [Infisical/infisical](https://github.com/Infisical/infisical) | Secrets management | Node.js, React | MIT | You want enterprise features: RBAC, SSO, SCIM and audit logs |
@@ -689,7 +689,7 @@ Let us compare three shelf repos that sit near Beacon.
 
 **Uptime Kuma** (`louislam/uptime-kuma`). A single-tenant, self-hosted monitor: one install, one owner. Search for `notification-providers` or browse the server folder for the notification provider files; each provider (Slack, Telegram, email and many more) is its own small module with the same interface. There are no organizations or billing, which makes the core unusually easy to see.
 
-**Cal.com** (`calcom/cal.com`). Not a monitoring product, but a model for "the SaaS layer". Open `packages/prisma` and read the schema for `Team`, `Membership` and the organization-related fields. Cal.com is also a lesson in licences: it was AGPL with a commercial `ee` folder for years and is now MIT-licensed with no `ee` folder (at the time of writing) — always read the current LICENSE, not a blog post about it.
+**Cal.com** (`calcom/cal.diy`). Not a monitoring product, but a model for "the SaaS layer". Open `packages/prisma` and read the schema for `Team`, `Membership` and the organization-related fields. Cal.com is also a lesson in licences: it was AGPL with a commercial `ee` folder for years; in 2026 the open-source repository became **Cal.diy**, MIT-licensed with the enterprise features (organizations, SSO, workflows, insights) removed, while Cal.com continues as a commercial product. Always read the current LICENSE and README, not a blog post about them.
 
 **What to notice:**
 

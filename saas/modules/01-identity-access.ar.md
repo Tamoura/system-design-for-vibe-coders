@@ -172,7 +172,7 @@ export async function validateSession(token: string) {
 
 **openstatusHQ/openstatus** مراقِب توفر وصفحة حالة مفتوح المصدر، أي أنه Beacon حقيقي حرفيًا. وهو مستودع أحادي (Monorepo) بلغة TypeScript. افتح `apps/web`، وافحص ملف `package.json` لترى مكتبة المصادقة التي اختارها، ثم ابحث في الكود عن `auth` و`session`. ما يتقنه هو التناسب: المصادقة ركن صغير وممل من الكود، وهذا بالضبط مكانها الصحيح في منتج قيمته في المراقبة.
 
-**calcom/cal.com** يُظهر المصادقة على نطاق واسع في مستودع Next.js أحادي: بيانات الاعتماد، وتسجيل الدخول عبر Google، وSAML SSO، والمصادقة الثنائية. ابحث عن `NextAuth` أو `authOptions` لتجد إعداد المزوّدين، وعن `twoFactor` لترى كيف تُضاف TOTP فوق الدخول ببيانات الاعتماد. ويُظهر مخطط Prisma في `packages/prisma` كيف تقع حقول الهوية على نموذج `User`.
+**calcom/cal.diy** يُظهر المصادقة على نطاق واسع في مستودع Next.js أحادي: بيانات الاعتماد، وتسجيل الدخول عبر Google، والمصادقة الثنائية (أُزيل منه SAML SSO مع بقية ميزات المؤسسات حين صارت النسخة مفتوحة المصدر Cal.diy في 2026). ابحث عن `NextAuth` أو `authOptions` لتجد إعداد المزوّدين، وعن `twoFactor` لترى كيف تُضاف TOTP فوق الدخول ببيانات الاعتماد. ويُظهر مخطط Prisma في `packages/prisma` كيف تقع حقول الهوية على نموذج `User`.
 
 **nextjs/saas-starter** أصغر مثال كامل: بريد وكلمة مرور مع bcrypt، وكوكي جلسة موقّع عبر `jose`، وطبقة وسيطة (Middleware) تحمي المسارات. اقرأه كله في أمسية. يُظهر مقايضة الكوكيز الموقّعة عديمة الحالة: بسيطة، لكن بلا قائمة إلغاء على الخادم.
 
@@ -474,7 +474,7 @@ export async function acceptInvite(rawToken: string, user: { id: string; email: 
 | [nextjs/saas-starter](https://github.com/nextjs/saas-starter) | قالب SaaS رسمي ومبسّط لـ Next.js فيه فرق ودعوات وأدوار وسجل نشاط | TypeScript, Drizzle, Postgres | MIT | تريد أصغر نسخة مقروءة من الهيكل كاملًا |
 | [better-auth/better-auth](https://github.com/better-auth/better-auth) | مكتبة مصادقة توفر إضافة المنظمات فيها المنظمات والأعضاء والأدوار والدعوات | TypeScript | MIT | تريد أن يُولَّد نموذج المنظمات لك، داخل قاعدة بياناتك |
 | [boxyhq/saas-starter-kit](https://github.com/boxyhq/saas-starter-kit) | قالب بداية بطابع مؤسسي: فرق، ودعوات، وSSO، ومزامنة الأدلة، وسجلات تدقيق، وويب هوك | TypeScript, Next.js, Prisma | Apache-2.0 | تعرف أنك ستبيع للمؤسسات وتريد نماذج فرق جاهزة لـ SSO |
-| [calcom/cal.com](https://github.com/calcom/cal.com) | SaaS للجدولة فيه مستخدمون وفرق ومنظمات تحتوي فرقًا | TypeScript, Prisma | MIT | تريد رؤية تسلسل هرمي (منظمة ثم فريق ثم عضو) في بيئة إنتاج |
+| [calcom/cal.diy](https://github.com/calcom/cal.diy) | SaaS للجدولة يمثّل مخططه مستخدمين وفرقًا ومنظمات تحتوي فرقًا | TypeScript, Prisma | MIT | تريد رؤية تسلسل هرمي (منظمة ثم فريق ثم عضو) في بيئة إنتاج |
 | [dubinc/dub](https://github.com/dubinc/dub) | SaaS لإدارة الروابط فيه مساحات عمل بمعرّف نصي ودعوات وحدود للخطط | TypeScript, Prisma | AGPL-3.0 | تريد تصميمًا نظيفًا يضع مساحة العمل في الرابط |
 | [documenso/documenso](https://github.com/documenso/documenso) | SaaS للتوقيع الإلكتروني فيه منظمات وفرق ودعوات أعضاء | TypeScript, Prisma | AGPL-3.0 | تريد رؤية نموذج فرق أُضيف إلى منتج بدأ لمستخدم واحد |
 | [logto-io/logto](https://github.com/logto-io/logto) | منصة مصادقة فيها منظمات وأدوار منظمات ودعوات مدمجة | TypeScript | MPL-2.0 | تريد أن تتولى خدمة هوية مستضافة ذاتيًا المنظمات بدلًا من تطبيقك |
@@ -490,7 +490,7 @@ export async function acceptInvite(rawToken: string, user: { id: string; email: 
 
 ## 🔍 ادرسه في مشاريع حقيقية
 
-**calcom/cal.com** يُظهر تسلسلًا هرميًا ناضجًا. افتح `packages/prisma` واقرأ نموذجي `Team` و`Membership` في مخطط Prisma. في وقت كتابة هذا الدرس، المنظمات فرق مع إعدادات منظمة إضافية، والفرق الفرعية تشير إلى فريق أب. لاحظ كيف تحمل العضويات دورًا وعلامة قبول معًا، فتتشارك الدعوة المعلّقة والعضو النشط جدولًا واحدًا. ابحث عن `inviteMember` لتتبع مسار الدعوة من بدايته إلى نهايته.
+**calcom/cal.diy** يُظهر تسلسلًا هرميًا ناضجًا. افتح `packages/prisma` واقرأ نموذجي `Team` و`Membership` في مخطط Prisma. المنظمات فرق مع إعدادات منظمة إضافية، والفرق الفرعية تشير إلى فريق أب؛ أُزيلت ميزات المنظمات من النسخة مفتوحة المصدر في 2026، لكن المخطط ما زال يُظهر النموذج. لاحظ كيف تحمل العضويات دورًا وعلامة قبول معًا، فتتشارك الدعوة المعلّقة والعضو النشط جدولًا واحدًا. ابحث عن `inviteMember` لتتبع مسار الدعوة من بدايته إلى نهايته.
 
 **dubinc/dub** يضع المعرّف النصي لمساحة العمل في بداية كل رابط في لوحة التحكم، وهذا يجعل روابط الدعم والعمل بعدة تبويبات بلا ألم. في وقت كتابة هذا الدرس، احتفظ نموذج Prisma لمساحات العمل بالاسم القديم `Project`، وهذا درس واقعي في أن مفردات المنتج تتغير أسرع من المخططات. ابحث عن `ProjectUsers` و`invite` لتجد العضويات والدعوات، ثم انظر كيف تحدد مسارات API مساحة العمل وتتحقق من العضوية قبل أن تفعل أي شيء.
 
@@ -759,7 +759,7 @@ type status_page
 | المستودع | ما هو | التقنيات | الترخيص | اختره عندما |
 |---|---|---|---|---|
 | [stalniy/casl](https://github.com/stalniy/casl) | مكتبة تفويض JavaScript تعمل على الخادم والمتصفح مع محوّلات لاستعلامات ORM | TypeScript | MIT | تريد RBAC وABAC داخل تطبيق TypeScript، مع مشاركة القواعد مع الواجهة الأمامية |
-| [casbin/casbin](https://github.com/casbin/casbin) | مكتبة تفويض قائمة على النماذج (ACL، RBAC، ABAC) مع نسخ بلغات كثيرة | Go (plus ports) | Apache-2.0 | تريد نموذج سياسات واحدًا عبر خدمات Go وNode وPython وJava |
+| [apache/casbin](https://github.com/apache/casbin) | Apache Casbin: مكتبة تفويض قائمة على النماذج (ACL، RBAC، ABAC) مع نسخ بلغات كثيرة | Go (plus ports) | Apache-2.0 | تريد نموذج سياسات واحدًا عبر خدمات Go وNode وPython وJava |
 | [cerbos/cerbos](https://github.com/cerbos/cerbos) | نقطة قرار سياسات عديمة الحالة مع سياسات YAML وتخطيط الاستعلامات | Go | Apache-2.0 | تريد السياسات ككود منفصلة عن كود التطبيق، مع دعم تصفية القوائم |
 | [openfga/openfga](https://github.com/openfga/openfga) | خادم ReBAC مستوحى من Zanzibar، ومشروع في CNCF أصله من Auth0/Okta | Go | Apache-2.0 | تحتاج مشاركة على مستوى الكائن مع لغة نمذجة سهلة |
 | [authzed/spicedb](https://github.com/authzed/spicedb) | قاعدة بيانات صلاحيات مستوحاة من Zanzibar مع ميزات اتساق قوية | Go | Apache-2.0 | تحتاج ReBAC على نطاق واسع وتهتم بمشكلة العدو الجديد |
@@ -1036,7 +1036,7 @@ export async function patchScimUser(org: Org, scimId: string, body: ScimPatch) {
 
 | المستودع | ما هو | التقنيات | الترخيص | اختره عندما |
 |---|---|---|---|---|
-| [boxyhq/jackson](https://github.com/boxyhq/jackson) | SAML Jackson، وتواصله Ory الآن باسم Ory Polis: جسر من SAML إلى OAuth مع مزامنة أدلة SCIM | TypeScript | Apache-2.0 | تريد إضافة SAML SSO وSCIM إلى تطبيقك دون تعلّم تفاصيل SAML الداخلية |
+| [ory/polis](https://github.com/ory/polis) | Ory Polis (سابقًا SAML Jackson من BoxyHQ): جسر من SAML إلى OAuth مع مزامنة أدلة SCIM | TypeScript | Apache-2.0 | تريد إضافة SAML SSO وSCIM إلى تطبيقك دون تعلّم تفاصيل SAML الداخلية |
 | [keycloak/keycloak](https://github.com/keycloak/keycloak) | خادم IAM كامل يتوسط بين SAML وOIDC ويتحد مع LDAP | Java | Apache-2.0 | تريد وسيط هوية ناضجًا تستضيفه بنفسك وتستطيع تشغيل خدمة JVM |
 | [zitadel/zitadel](https://github.com/zitadel/zitadel) | منصة هوية متعددة المستأجرين فيها منظمات وSAML وOIDC وميزات SCIM | Go | AGPL-3.0 | نموذج المستأجرين لديك يتوافق مع منظماتها وتقبل AGPL |
 | [goauthentik/authentik](https://github.com/goauthentik/authentik) | مزوّد هوية تستضيفه بنفسك مع مسارات مرنة وSAML وOIDC وLDAP وSCIM | Python, Go | MIT (enterprise features separate) | تريد تشغيل مزوّد هوية خاص بك، أو اختبار مزوّد الخدمة لديك مقابله محليًا |
@@ -1045,7 +1045,7 @@ export async function patchScimUser(org: Org, scimId: string, body: ScimPatch) {
 | [boxyhq/saas-starter-kit](https://github.com/boxyhq/saas-starter-kit) | قالب بداية Next.js يربط SAML SSO ومزامنة الأدلة وسجلات التدقيق والويب هوك بالفرق | TypeScript | Apache-2.0 | تريد رؤية جانب مزوّد الخدمة في SSO وSCIM مربوطًا بنموذج فرق حقيقي |
 | [panva/openid-client](https://github.com/panva/openid-client) | عميل معتمد لطرف معتمد في OAuth 2 وOIDC لبيئات تشغيل JavaScript | TypeScript | MIT | تنفّذ اتصالات OIDC لكل مستأجر بنفسك |
 
-**إن درست مستودعًا واحدًا فقط:** **boxyhq/jackson** (Ory Polis). إنه يحل بالضبط مشكلة جانب مزوّد الخدمة التي لدى Beacon: يحوّل اتصال SAML لكل مستأجر إلى مسار OAuth 2.0 عادي يفهمه تطبيقك أصلًا، ويضيف مزامنة أدلة SCIM خلف واجهة بسيطة. قراءته تعلّمك كيف تُمثَّل الاتصالات والمستأجرون والمنتجات، وهو ما اعتمده Cal.com لدعم SAML لديه.
+**إن درست مستودعًا واحدًا فقط:** **ory/polis** (سابقًا SAML Jackson). إنه يحل بالضبط مشكلة جانب مزوّد الخدمة التي لدى Beacon: يحوّل اتصال SAML لكل مستأجر إلى مسار OAuth 2.0 عادي يفهمه تطبيقك أصلًا، ويضيف مزامنة أدلة SCIM خلف واجهة بسيطة. قراءته تعلّمك كيف تُمثَّل الاتصالات والمستأجرون والمنتجات، وهو ما تستخدمه Dub وFormbricks وPapermark لدعم SAML لديها.
 
 **اشترِ أم ابنِ أم استضف بنفسك؟**
 
@@ -1055,7 +1055,7 @@ export async function patchScimUser(org: Org, scimId: string, body: ScimPatch) {
 
 ## 🔍 ادرسه في مشاريع حقيقية
 
-**calcom/cal.com** يستخدم SAML Jackson لـ SAML SSO. ابحث في المستودع عن `jackson` و`saml` لتجد الإعداد، وطريقة تسمية المستأجرين، ومعالجة طلب العودة، وتتبّع كيف يصبح دخول SSO مستخدمًا في الفريق أو المنظمة الصحيحة. وميزات المنظمات القائمة على النطاق فيه تُظهر اكتشاف النطاق الأصلي عمليًا.
+**boxyhq/saas-starter-kit** يربط SAML Jackson (الآن Ory Polis) بنموذج فرق في Next.js. اقرأ `lib/jackson.ts` ومجلد `lib/jackson/sso` لتجد الإعداد، وطريقة تسمية المستأجرين، ومعالجة طلب العودة، وتتبّع كيف يصبح دخول SSO مستخدمًا في الفريق الصحيح. ثم افتح `lib/jackson/dsyncEvents.ts` لترى كيف تتحول أحداث مزامنة أدلة SCIM إلى عضويات في الفرق.
 
 **dubinc/dub** يضيف SAML SSO لمساحات العمل فيه. ابحث عن `saml` و`jackson` في `apps/web`، وانظر كيف تتيح صفحة إعدادات مساحة العمل للمسؤول ضبط اتصال، وكيف يتفاعل الفرض مع خيارات الدخول الموجودة.
 

@@ -166,7 +166,7 @@ sequenceDiagram
 | [openstatusHQ/openstatus](https://github.com/openstatusHQ/openstatus) | مراقبة جاهزية وصفحات حالة مفتوحة المصدر | TypeScript, Next.js, Turso, Go checkers | AGPL-3.0 | تريد مقارنة Beacon الخاص بك بنسخة حقيقية، مكوّنًا مكوّنًا |
 | [louislam/uptime-kuma](https://github.com/louislam/uptime-kuma) | مراقب جاهزية تستضيفه بنفسك | Node.js, Vue, SQLite | MIT | تريد نسخة المستأجر الواحد من نواة Beacon، وترى ما يضيفه تعدد المستأجرين |
 | [boxyhq/saas-starter-kit](https://github.com/boxyhq/saas-starter-kit) | قالب بداية SaaS للمؤسسات: فرق، وSSO، وSCIM، وسجلات تدقيق، وويب هوك | Next.js, Prisma | Apache-2.0 | تريد أن ترى حلقة المؤسسات مربوطة معًا في قاعدة كود صغيرة |
-| [calcom/cal.com](https://github.com/calcom/cal.com) | بنية تحتية للجدولة | Next.js, tRPC, Prisma, Turborepo | MIT | تريد تقريبًا كل مكوّن في مستودع أحادي (Monorepo) ناضج واحد |
+| [calcom/cal.diy](https://github.com/calcom/cal.diy) | الجدولة (النسخة مفتوحة المصدر من Cal.com) | Next.js, tRPC, Prisma, Turborepo | MIT | تريد مكوّنات كثيرة في مستودع أحادي (Monorepo) ناضج واحد (أُزيلت ميزات المؤسسات في 2026) |
 | [makeplane/plane](https://github.com/makeplane/plane) | إدارة المشاريع | Django, Next.js, Celery | AGPL-3.0 | تريد المعمارية كاملة بواجهة خلفية بلغة Python |
 | [chatwoot/chatwoot](https://github.com/chatwoot/chatwoot) | منصة دعم العملاء | Rails, Vue, Sidekiq | MIT (with `enterprise` folder) | تريد المعمارية كاملة بـ Rails |
 | [vercel/next-forge](https://github.com/vercel/next-forge) | قالب Turborepo جاهز للإنتاج | Next.js, many integrations | MIT | تريد خريطة توضح أيّ خدمة مُدارة تملأ كل صندوق |
@@ -202,8 +202,8 @@ sequenceDiagram
 
 **Cal.com**: المرجع في الحجم الكبير. مجلدا `apps/` و`packages/` فيه (وقت كتابة هذا
 الدرس) يفصلان تطبيق الويب، والواجهة البرمجية العامة، والميزات، ومتجر التطبيقات
-للتكاملات. وتاريخ ترخيصه يستحق المعرفة: انتقل من AGPL مع مجلد `ee` تجاري إلى MIT
-خالص، لذلك انظر إلى PostHog أو Infisical بدلًا منه لدراسة نمط النواة المفتوحة
+للتكاملات. وتاريخ ترخيصه يستحق المعرفة: انتقل من AGPL مع مجلد `ee` تجاري إلى Cal.diy، نسخة مجتمعية
+بترخيص MIT خالص أُزيلت منها ميزات المؤسسات، لذلك انظر إلى PostHog أو Infisical بدلًا منه لدراسة نمط النواة المفتوحة
 (Open-Core) نفسه (7.4).
 
 **ما الذي تلاحظه**

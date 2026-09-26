@@ -377,7 +377,7 @@ flowchart LR
 | [promptfoo/promptfoo](https://github.com/promptfoo/promptfoo) | أداة سطر أوامر للتقييم واختبار الاختراق للموجّهات والنماذج | TypeScript | MIT | تريد اختبار تغييرات الموجّهات والنماذج في CI |
 | [pgvector/pgvector](https://github.com/pgvector/pgvector) | نوع متجه وبحث بالتشابه في Postgres | C | PostgreSQL License | تريد RAG بجانب بياناتك الحالية المقيدة بالمستأجر |
 | [qdrant/qdrant](https://github.com/qdrant/qdrant) | قاعدة بيانات متجهية مخصصة مع تصفية بالحمولة | Rust | Apache-2.0 | يتجاوز حجم المتجهات أو أداء البحث المصفّى قدرة Postgres |
-| [modelcontextprotocol/specification](https://github.com/modelcontextprotocol/specification) | مواصفة بروتوكول سياق النموذج ومخططه | TypeScript schema, Markdown | MIT, moving to Apache-2.0 | تصمم خادم MCP الخاص بـ Beacon بشكل صحيح |
+| [modelcontextprotocol/modelcontextprotocol](https://github.com/modelcontextprotocol/modelcontextprotocol) | مواصفة بروتوكول سياق النموذج ومخططه | TypeScript schema, Markdown | MIT, moving to Apache-2.0 | تصمم خادم MCP الخاص بـ Beacon بشكل صحيح |
 | [langchain-ai/langchainjs](https://github.com/langchain-ai/langchainjs) | إطار عمل للسلاسل والوكلاء والمسترجِعات | TypeScript | MIT | تحتاج إلى مجموعته الكبيرة من المحمّلات والتكاملات لـ RAG |
 
 **إن درست مستودعًا واحدًا فقط:** ادرس **LiteLLM**. أكثر من أي ميزة منفردة، يُظهر ما يعنيه "مكوّن بوابة الذكاء الاصطناعي" عمليًا: تجريد المزودين، ومفاتيح افتراضية لكل فريق، وميزانيات، وبدائل، وتخزين مؤقت، وتسجيل للإنفاق، كلها في مكان واحد. يحتاج Beacon إلى كل واحدة منها، سواء شغّلت LiteLLM أو بنيت نسخة خفيفة بنفسك.

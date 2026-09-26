@@ -186,7 +186,7 @@ The hard parts at scale are these. Verification must be re-checked, because cust
 
 **openstatusHQ/openstatus.** A real Beacon: an open-source uptime monitor with public status pages. Search for `custom domain` and `status page` to see how a page is resolved from a hostname or slug. Compare how the status page is rendered with how the authenticated dashboard is rendered.
 
-**calcom/cal.com.** Cal.com's onboarding flow and settings split are worth reading. Search for `getting-started` or `onboarding` to find the step-by-step first-run flow, and browse the settings pages to see account-level and team/org-level settings kept apart.
+**calcom/cal.diy.** Cal.com's onboarding flow and settings split are worth reading. Search for `getting-started` or `onboarding` to find the step-by-step first-run flow, and browse the settings pages to see account-level and team/org-level settings kept apart.
 
 **vercel/next-forge.** Here the shell *is* the product. Look at the top-level `apps/` folder: marketing and the product app are separate Next.js apps that share `packages/`. Notice what counts as "shared" (design system, auth, analytics) and what doesn't.
 
@@ -657,7 +657,7 @@ Always define a **default value** for when the flag service is unreachable, and 
 
 **growthbook/growthbook.** Search for `hash` in the SDK code to see how users are assigned to experiment variations deterministically, and browse the stats engine (Python) to see sequential testing and Bayesian analysis implemented rather than just described.
 
-**calcom/cal.com.** A product codebase that uses flags, not a flag vendor. Use code search for `feature flag` or `features` to find how Cal.com gates features in its own database and checks them per team. It's a realistic "small in-house flag system" to compare with the dedicated tools.
+**calcom/cal.diy.** A product codebase that uses flags, not a flag vendor. Use code search for `feature flag` or `features` to find how Cal.com gates features in its own database and checks them per team. It's a realistic "small in-house flag system" to compare with the dedicated tools.
 
 **What to notice:**
 

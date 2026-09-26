@@ -159,7 +159,7 @@ flowchart TD
 
 خذ المنتجات الأربعة من الجدول أعلاه، واقضِ عشر دقائق في كل منها، وابحث عن الأجزاء العامة فقط.
 
-**Cal.com** (`calcom/cal.com`). مستودع أحادي كبير بلغة TypeScript. في وقت كتابة هذا الدرس، يقع التطبيق الرئيسي تحت `apps/web` ومخطط قاعدة البيانات تحت `packages/prisma`. افتح مخطط Prisma وابحث عن `model Team` و`model Membership` و`model Webhook`. ستجد الهيكل العام جالسًا بجانب النماذج الجوهرية مثل `Booking` و`EventType`.
+**Cal.com** (`calcom/cal.diy`، نسخته المجتمعية المرخّصة بـ MIT منذ 2026). مستودع أحادي كبير بلغة TypeScript. في وقت كتابة هذا الدرس، يقع التطبيق الرئيسي تحت `apps/web` ومخطط قاعدة البيانات تحت `packages/prisma`. افتح مخطط Prisma وابحث عن `model Team` و`model Membership` و`model Webhook`. ستجد الهيكل العام جالسًا بجانب النماذج الجوهرية مثل `Booking` و`EventType`.
 
 **Dub** (`dubinc/dub`). مستودع أحادي بـ Next.js أيضًا. استخدم بحث الكود في GitHub داخل المستودع عن `stripe` وعن `apiKey` أو `token`. لاحظ كم من الكود يتعلق بالخطط وحدود الاستخدام، لأن تسعير مختصِر الروابط يعتمد على عدد الروابط والنقرات لديك.
 
@@ -403,7 +403,7 @@ git log --oneline -S "maxMonitors" -- .
 | [cli/cli](https://github.com/cli/cli) | `gh`، أداة GitHub الرسمية لسطر الأوامر: نسخ المستودعات، وسرد طلبات السحب والمسائل وقراءتها من الطرفية | Go CLI | MIT | تريد قراءة تاريخ طلبات السحب في المستودع دون مغادرة الطرفية |
 | [nextjs/saas-starter](https://github.com/nextjs/saas-starter) | هيكل SaaS صغير وكامل | Next.js, Drizzle, Stripe | MIT | أول تمرين لك في «قراءة SaaS كامل» |
 | [openstatusHQ/openstatus](https://github.com/openstatusHQ/openstatus) | صفحات حالة ومراقبة توفر مفتوحة المصدر: Beacon حقيقي | TypeScript monorepo, Go checker | AGPL-3.0 | تريد أن تتدرّب على الطريقة مع المنتج الذي بُنيت عليه هذه الدورة |
-| [maybe-finance/maybe](https://github.com/maybe-finance/maybe) | تطبيق للتمويل الشخصي مبني بـ Rails الحديث (مؤرشف) | Ruby on Rails 8, Postgres | AGPL-3.0 | تريد أن ترى كم يمكن أن يكون التطبيق الأحادي (Monolith) التقليدي نظيفًا |
+| [we-promise/sure](https://github.com/we-promise/sure) | تطبيق للتمويل الشخصي مبني بـ Rails الحديث: النسخة المجتمعية المتفرعة من Maybe المؤرشف | Ruby on Rails 8, Postgres | AGPL-3.0 | تريد أن ترى كم يمكن أن يكون التطبيق الأحادي (Monolith) التقليدي نظيفًا |
 
 **إن درست مستودعًا واحدًا فقط:** تدرّب على `openstatusHQ/openstatus`. إنه SaaS حقيقي في الإنتاج، ومتوسط الحجم لا ضخم، ولأنه يحل مشكلة Beacon بالضبط، فكل مكوّن تجده فيه سيظهر مجددًا في هذه الدورة.
 
@@ -419,7 +419,7 @@ git log --oneline -S "maxMonitors" -- .
 
 **Documenso** (`documenso/documenso`)، بديل مفتوح المصدر لـ DocuSign. الخطوة 2: يكشف إعداد compose و`.env.example` فيه عن Postgres، وملتقط بريد للبريد المحلي، وإعدادات شهادات التوقيع، فتعرف مسبقًا أن شهادات التوقيع الإلكتروني جزء من الجوهر. الخطوة 3: يُظهر ملف `package.json` في الجذر مستودعًا أحاديًا بـ Turborepo؛ في وقت كتابة هذا الدرس تقع التطبيقات تحت `apps/` والكود المشترك تحت `packages/`. الخطوة 4: ابحث في المستودع عن `schema.prisma` واقرأ أسماء النماذج. ستجد `User`، ونماذج للفرق، و`Document`، و`Recipient`، و`Field`، ونماذج للويب هوك ورموز الـ API، ونموذجًا لسجل تدقيق المستندات. الخطوة 5: اختر «إرسال مستند للتوقيع» وتتبّعه من الواجهة إلى الكتابة في قاعدة البيانات إلى البريد الذي يطلقه.
 
-**Maybe** (`maybe-finance/maybe`)، تطبيق Rails 8 مؤرشف. يجعل Rails الطريقة شبه آلية: يسرد `config/routes.rb` كل عنوان URL، و`db/schema.rb` هو المخطط كاملًا في ملف واحد، و`app/models` يحوي النطاق، و`app/jobs` يحوي العمل الخلفي (Solid Queue). اختر مسارًا، وافتح المتحكم (Controller) الخاص به، وتتبّعه إلى النموذج. بالنسبة إلى المبتدئين القادمين من عالم JavaScript، قراءة تطبيق Rails معتنى به درس في مقدار ما يمكن أن تحلّه الأعراف (Conventions) محل الإعدادات.
+**Sure** (`we-promise/sure`)، تطبيق Rails 8: النسخة المتفرعة التي يصونها المجتمع من Maybe، الذي أُرشف مستودعه الأصلي. يجعل Rails الطريقة شبه آلية: يسرد `config/routes.rb` كل عنوان URL، و`db/schema.rb` هو المخطط كاملًا في ملف واحد، و`app/models` يحوي النطاق، و`app/jobs` يحوي العمل الخلفي (Sidekiq). اختر مسارًا، وافتح المتحكم (Controller) الخاص به، وتتبّعه إلى النموذج. بالنسبة إلى المبتدئين القادمين من عالم JavaScript، قراءة تطبيق Rails معتنى به درس في مقدار ما يمكن أن تحلّه الأعراف (Conventions) محل الإعدادات.
 
 **ما الذي تلاحظه:**
 
@@ -561,7 +561,7 @@ git log --oneline -S "maxMonitors" -- .
 
 | المستودع | المنتج | التقنيات | الترخيص | ادرسه من أجل |
 |---|---|---|---|---|
-| calcom/cal.com | الجدولة | Next.js monorepo, Prisma, Postgres | AGPL-3.0 (commercial `ee`) | الفرق والمؤسسات، وSAML SSO عبر SAML Jackson، والويب هوك، ومفاتيح API، ومتجر تطبيقات التكاملات |
+| calcom/cal.diy | الجدولة (النسخة مفتوحة المصدر من Cal.com) | Next.js monorepo, Prisma, Postgres | MIT | الفرق، والويب هوك، ومفاتيح API، والأرصدة، ومتجر تطبيقات التكاملات (أُزيلت SSO وسير العمل وغيرها من ميزات المؤسسات في 2026) |
 | documenso/documenso | التوقيع الإلكتروني | Next.js monorepo, Prisma, Postgres | AGPL-3.0 | الفرق، وStripe، والويب هوك، والـ API، وسجل تدقيق لأحداث المستندات، والمهام الخلفية |
 | dubinc/dub | إدارة الروابط | Next.js monorepo, Prisma, Tinybird | AGPL-3.0 (commercial `ee`) | مساحات العمل، وStripe وحدود الاستخدام، ومفاتيح API، والويب هوك، وSAML SSO، والتحليلات |
 | formbricks/formbricks | الاستبيانات | Next.js monorepo, Prisma, Postgres | AGPL-3.0 (commercial `ee`) | المؤسسات والبيئات، وRBAC، والتكاملات |
@@ -587,7 +587,7 @@ git log --oneline -S "maxMonitors" -- .
 | chatwoot/chatwoot | دعم العملاء | Rails, Vue, Sidekiq | MIT (commercial `enterprise`) | الحسابات والأدوار، والويب هوك، والتكاملات، والإشعارات |
 | gitlabhq/gitlabhq | منصة DevOps | Rails, Vue, Sidekiq | MIT core, proprietary `ee` | الموسوعة: كل مكوّن، على نطاق هائل |
 | discourse/discourse | المنتديات | Rails, Ember, Sidekiq | GPL-2.0 | المهام، والإضافات، والإشعارات، والبريد |
-| maybe-finance/maybe | التمويل الشخصي | Rails 8, Solid Queue | AGPL-3.0 | تطبيق Rails أحادي حديث ونظيف (مؤرشف، وما زال ممتازًا للقراءة) |
+| we-promise/sure | التمويل الشخصي | Rails 8, Sidekiq | AGPL-3.0 | تطبيق Rails أحادي حديث ونظيف (النسخة المتفرعة المصونة من Maybe المؤرشف) |
 
 **Go ولغات أخرى**
 
@@ -605,7 +605,7 @@ git log --oneline -S "maxMonitors" -- .
 
 | المستودع | المصادقة | المؤسسات | RBAC | SSO | الفوترة | المهام | الويب هوك | مفاتيح API | سجل التدقيق | الإشعارات |
 |---|---|---|---|---|---|---|---|---|---|---|
-| calcom/cal.com | ✓ | ✓ | ✓ | ✓ | ✓ | | ✓ | ✓ | | ✓ |
+| calcom/cal.diy | ✓ | ✓ | ✓ | | ✓ | | ✓ | ✓ | | ✓ |
 | documenso/documenso | ✓ | ✓ | ✓ | | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | dubinc/dub | ✓ | ✓ | ✓ | ✓ | ✓ | | ✓ | ✓ | | |
 | formbricks/formbricks | ✓ | ✓ | ✓ | | | | ✓ | ✓ | | |
@@ -664,7 +664,7 @@ flowchart LR
 |---|---|---|---|---|
 | [openstatusHQ/openstatus](https://github.com/openstatusHQ/openstatus) | صفحات حالة ومراقبة توفر، Beacon حقيقي | TypeScript monorepo, Go | AGPL-3.0 | تريد أن ترى مشكلات Beacon نفسها محلولة في الإنتاج |
 | [louislam/uptime-kuma](https://github.com/louislam/uptime-kuma) | مراقب توفر للاستضافة الذاتية | Node.js, Vue | MIT | تريد جوهر Beacon دون طبقة SaaS متعددة المستأجرين، للمقارنة |
-| [calcom/cal.com](https://github.com/calcom/cal.com) | بنية تحتية للجدولة | Next.js, Prisma | MIT | تريد أكمل مثال بـ TypeScript على الفرق والمؤسسات وSSO والتكاملات |
+| [calcom/cal.diy](https://github.com/calcom/cal.diy) | الجدولة (النسخة مفتوحة المصدر من Cal.com) | Next.js, Prisma | MIT | تريد مستودعًا أحاديًا كبيرًا بـ TypeScript فيه الفرق والويب هوك ومفاتيح API ومتجر تطبيقات للتكاملات |
 | [documenso/documenso](https://github.com/documenso/documenso) | منصة توقيع إلكتروني | Next.js, Prisma | AGPL-3.0 | تريد SaaS متوسط الحجم ومقروءًا بـ TypeScript فيه سجلات تدقيق وويب هوك |
 | [dubinc/dub](https://github.com/dubinc/dub) | إدارة الروابط | Next.js, Prisma | AGPL-3.0 | تريد حدود الخطط والتسعير حسب الاستخدام في كود حقيقي |
 | [Infisical/infisical](https://github.com/Infisical/infisical) | إدارة الأسرار | Node.js, React | MIT | تريد ميزات المؤسسات: RBAC وSSO وSCIM وسجلات التدقيق |
@@ -689,7 +689,7 @@ flowchart LR
 
 **Uptime Kuma** (`louislam/uptime-kuma`). مراقب للاستضافة الذاتية بمستأجر واحد: تثبيت واحد، ومالك واحد. ابحث عن `notification-providers` أو تصفح مجلد الخادم لتجد ملفات مزوّدي الإشعارات؛ كل مزوّد (Slack، وTelegram، والبريد، وغيرها كثير) وحدة صغيرة مستقلة بالواجهة نفسها. لا توجد مؤسسات ولا فوترة، وهذا يجعل الجوهر سهل الرؤية على غير العادة.
 
-**Cal.com** (`calcom/cal.com`). ليس منتج مراقبة، لكنه نموذج لـ «طبقة SaaS». افتح `packages/prisma` واقرأ المخطط بحثًا عن `Team` و`Membership` والحقول المتعلقة بالمؤسسات. Cal.com أيضًا درس في التراخيص: كان مرخّصًا بـ AGPL مع مجلد `ee` تجاري لسنوات، وهو الآن مرخّص بـ MIT دون مجلد `ee` (في وقت كتابة هذا الدرس) — اقرأ دائمًا ملف LICENSE الحالي، لا مقالة مدوّنة عنه.
+**Cal.com** (`calcom/cal.diy`). ليس منتج مراقبة، لكنه نموذج لـ «طبقة SaaS». افتح `packages/prisma` واقرأ المخطط بحثًا عن `Team` و`Membership` والحقول المتعلقة بالمؤسسات. Cal.com أيضًا درس في التراخيص: كان مرخّصًا بـ AGPL مع مجلد `ee` تجاري لسنوات؛ وفي 2026 صار المستودع مفتوح المصدر **Cal.diy**، مرخّصًا بـ MIT ومُزالة منه ميزات المؤسسات (المنظمات، وSSO، وسير العمل، والإحصاءات)، بينما يستمر Cal.com منتجًا تجاريًا. اقرأ دائمًا ملفَي LICENSE وREADME الحاليين، لا مقالة مدوّنة عنهما.
 
 **ما الذي تلاحظه:**
 

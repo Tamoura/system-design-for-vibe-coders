@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="saas-source" content="2afd135bd99845f8">
+<meta name="saas-source" content="27c83e4586495169">
 <meta name="description" content="لبنات بناء SaaS: المكوّنات التي تشترك فيها كل تطبيقات SaaS، من المبتدئ إلى المتقدم، مع أفضل المستودعات مفتوحة المصدر لتعلّم كل مكوّن.">
 <title>لبنات بناء SaaS — الدورة كاملة</title>
 <style>
@@ -896,7 +896,7 @@ git diff main module-3-solution
 </section>
 <section class="sec sec-wild"><h2>🔍 ادرسه في مشاريع حقيقية</h2>
 <p>خذ المنتجات الأربعة من الجدول أعلاه، واقضِ عشر دقائق في كل منها، وابحث عن الأجزاء العامة فقط.</p>
-<p><strong>Cal.com</strong> (<code>calcom/cal.com</code>). مستودع أحادي كبير بلغة TypeScript. في وقت كتابة هذا الدرس، يقع التطبيق الرئيسي تحت <code>apps/web</code> ومخطط قاعدة البيانات تحت <code>packages/prisma</code>. افتح مخطط Prisma وابحث عن <code>model Team</code> و<code>model Membership</code> و<code>model Webhook</code>. ستجد الهيكل العام جالسًا بجانب النماذج الجوهرية مثل <code>Booking</code> و<code>EventType</code>.</p>
+<p><strong>Cal.com</strong> (<code>calcom/cal.diy</code>، نسخته المجتمعية المرخّصة بـ MIT منذ 2026). مستودع أحادي كبير بلغة TypeScript. في وقت كتابة هذا الدرس، يقع التطبيق الرئيسي تحت <code>apps/web</code> ومخطط قاعدة البيانات تحت <code>packages/prisma</code>. افتح مخطط Prisma وابحث عن <code>model Team</code> و<code>model Membership</code> و<code>model Webhook</code>. ستجد الهيكل العام جالسًا بجانب النماذج الجوهرية مثل <code>Booking</code> و<code>EventType</code>.</p>
 <p><strong>Dub</strong> (<code>dubinc/dub</code>). مستودع أحادي بـ Next.js أيضًا. استخدم بحث الكود في GitHub داخل المستودع عن <code>stripe</code> وعن <code>apiKey</code> أو <code>token</code>. لاحظ كم من الكود يتعلق بالخطط وحدود الاستخدام، لأن تسعير مختصِر الروابط يعتمد على عدد الروابط والنقرات لديك.</p>
 <p><strong>Plane</strong> (<code>makeplane/plane</code>). واجهة API بـ Django مع واجهات أمامية بـ Next.js. ابحث عن <code>class Workspace</code> و<code>WorkspaceMember</code> في كود Python. حقل الدور في نموذج العضوية هو نظام الصلاحيات كله في صورة مصغّرة.</p>
 <p><strong>Sentry</strong> (<code>getsentry/sentry</code>). قاعدة كود ضخمة بـ Django. لا تحاول قراءتها. ابحث عن <code>class Organization</code> و<code>AuditLogEntry</code> و<code>OrganizationMember</code>. الجوهر (استقبال الأحداث وتجميعها) جزء كبير من المستودع، لكن الأجزاء العامة ناضجة بالقدر نفسه.</p>
@@ -1231,8 +1231,8 @@ git log --oneline -S &quot;maxMonitors&quot; -- .
 <td>تريد أن تتدرّب على الطريقة مع المنتج الذي بُنيت عليه هذه الدورة</td>
 </tr>
 <tr>
-<td><a href="https://github.com/maybe-finance/maybe">maybe-finance/maybe</a></td>
-<td>تطبيق للتمويل الشخصي مبني بـ Rails الحديث (مؤرشف)</td>
+<td><a href="https://github.com/we-promise/sure">we-promise/sure</a></td>
+<td>تطبيق للتمويل الشخصي مبني بـ Rails الحديث: النسخة المجتمعية المتفرعة من Maybe المؤرشف</td>
 <td>Ruby on Rails 8, Postgres</td>
 <td>AGPL-3.0</td>
 <td>تريد أن ترى كم يمكن أن يكون التطبيق الأحادي (Monolith) التقليدي نظيفًا</td>
@@ -1249,7 +1249,7 @@ git log --oneline -S &quot;maxMonitors&quot; -- .
 <section class="sec sec-wild"><h2>🔍 ادرسه في مشاريع حقيقية</h2>
 <p>لنطبّق الطريقة على مستودعين.</p>
 <p><strong>Documenso</strong> (<code>documenso/documenso</code>)، بديل مفتوح المصدر لـ DocuSign. الخطوة 2: يكشف إعداد compose و<code>.env.example</code> فيه عن Postgres، وملتقط بريد للبريد المحلي، وإعدادات شهادات التوقيع، فتعرف مسبقًا أن شهادات التوقيع الإلكتروني جزء من الجوهر. الخطوة 3: يُظهر ملف <code>package.json</code> في الجذر مستودعًا أحاديًا بـ Turborepo؛ في وقت كتابة هذا الدرس تقع التطبيقات تحت <code>apps/</code> والكود المشترك تحت <code>packages/</code>. الخطوة 4: ابحث في المستودع عن <code>schema.prisma</code> واقرأ أسماء النماذج. ستجد <code>User</code>، ونماذج للفرق، و<code>Document</code>، و<code>Recipient</code>، و<code>Field</code>، ونماذج للويب هوك ورموز الـ API، ونموذجًا لسجل تدقيق المستندات. الخطوة 5: اختر «إرسال مستند للتوقيع» وتتبّعه من الواجهة إلى الكتابة في قاعدة البيانات إلى البريد الذي يطلقه.</p>
-<p><strong>Maybe</strong> (<code>maybe-finance/maybe</code>)، تطبيق Rails 8 مؤرشف. يجعل Rails الطريقة شبه آلية: يسرد <code>config/routes.rb</code> كل عنوان URL، و<code>db/schema.rb</code> هو المخطط كاملًا في ملف واحد، و<code>app/models</code> يحوي النطاق، و<code>app/jobs</code> يحوي العمل الخلفي (Solid Queue). اختر مسارًا، وافتح المتحكم (Controller) الخاص به، وتتبّعه إلى النموذج. بالنسبة إلى المبتدئين القادمين من عالم JavaScript، قراءة تطبيق Rails معتنى به درس في مقدار ما يمكن أن تحلّه الأعراف (Conventions) محل الإعدادات.</p>
+<p><strong>Sure</strong> (<code>we-promise/sure</code>)، تطبيق Rails 8: النسخة المتفرعة التي يصونها المجتمع من Maybe، الذي أُرشف مستودعه الأصلي. يجعل Rails الطريقة شبه آلية: يسرد <code>config/routes.rb</code> كل عنوان URL، و<code>db/schema.rb</code> هو المخطط كاملًا في ملف واحد، و<code>app/models</code> يحوي النطاق، و<code>app/jobs</code> يحوي العمل الخلفي (Sidekiq). اختر مسارًا، وافتح المتحكم (Controller) الخاص به، وتتبّعه إلى النموذج. بالنسبة إلى المبتدئين القادمين من عالم JavaScript، قراءة تطبيق Rails معتنى به درس في مقدار ما يمكن أن تحلّه الأعراف (Conventions) محل الإعدادات.</p>
 <p><strong>ما الذي تلاحظه:</strong></p>
 <ul>
 <li>كم بسرعة أخبرك ملف <code>.env.example</code> بالخدمات الخارجية التي يستخدمها كل منتج.</li>
@@ -1382,11 +1382,11 @@ git log --oneline -S &quot;maxMonitors&quot; -- .
 </tr>
 </thead>
 <tbody><tr>
-<td>calcom/cal.com</td>
-<td>الجدولة</td>
+<td>calcom/cal.diy</td>
+<td>الجدولة (النسخة مفتوحة المصدر من Cal.com)</td>
 <td>Next.js monorepo, Prisma, Postgres</td>
-<td>AGPL-3.0 (commercial <code>ee</code>)</td>
-<td>الفرق والمؤسسات، وSAML SSO عبر SAML Jackson، والويب هوك، ومفاتيح API، ومتجر تطبيقات التكاملات</td>
+<td>MIT</td>
+<td>الفرق، والويب هوك، ومفاتيح API، والأرصدة، ومتجر تطبيقات التكاملات (أُزيلت SSO وسير العمل وغيرها من ميزات المؤسسات في 2026)</td>
 </tr>
 <tr>
 <td>documenso/documenso</td>
@@ -1518,11 +1518,11 @@ git log --oneline -S &quot;maxMonitors&quot; -- .
 <td>المهام، والإضافات، والإشعارات، والبريد</td>
 </tr>
 <tr>
-<td>maybe-finance/maybe</td>
+<td>we-promise/sure</td>
 <td>التمويل الشخصي</td>
-<td>Rails 8, Solid Queue</td>
+<td>Rails 8, Sidekiq</td>
 <td>AGPL-3.0</td>
-<td>تطبيق Rails أحادي حديث ونظيف (مؤرشف، وما زال ممتازًا للقراءة)</td>
+<td>تطبيق Rails أحادي حديث ونظيف (النسخة المتفرعة المصونة من Maybe المؤرشف)</td>
 </tr>
 </tbody></table></div>
 <p><strong>Go ولغات أخرى</strong></p>
@@ -1591,11 +1591,11 @@ git log --oneline -S &quot;maxMonitors&quot; -- .
 </tr>
 </thead>
 <tbody><tr>
-<td>calcom/cal.com</td>
+<td>calcom/cal.diy</td>
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>✓</td>
+<td></td>
 <td>✓</td>
 <td></td>
 <td>✓</td>
@@ -1835,11 +1835,11 @@ git log --oneline -S &quot;maxMonitors&quot; -- .
 <td>تريد جوهر Beacon دون طبقة SaaS متعددة المستأجرين، للمقارنة</td>
 </tr>
 <tr>
-<td><a href="https://github.com/calcom/cal.com">calcom/cal.com</a></td>
-<td>بنية تحتية للجدولة</td>
+<td><a href="https://github.com/calcom/cal.diy">calcom/cal.diy</a></td>
+<td>الجدولة (النسخة مفتوحة المصدر من Cal.com)</td>
 <td>Next.js, Prisma</td>
 <td>MIT</td>
-<td>تريد أكمل مثال بـ TypeScript على الفرق والمؤسسات وSSO والتكاملات</td>
+<td>تريد مستودعًا أحاديًا كبيرًا بـ TypeScript فيه الفرق والويب هوك ومفاتيح API ومتجر تطبيقات للتكاملات</td>
 </tr>
 <tr>
 <td><a href="https://github.com/documenso/documenso">documenso/documenso</a></td>
@@ -1903,7 +1903,7 @@ git log --oneline -S &quot;maxMonitors&quot; -- .
 <p>لنقارن ثلاثة مستودعات من الرف قريبة من Beacon.</p>
 <p><strong>openstatus</strong> (<code>openstatusHQ/openstatus</code>). SaaS متعدد المستأجرين: مساحات عمل، وخطط، وواجهة API عامة، وصفحات حالة، وإشعارات. استخدم بحث الكود في GitHub داخل المستودع عن <code>workspace</code> و<code>plan</code> لترى كيف ترتبط الحدود بالمراقِبات. انظر كيف فُصل محرك الفحص عن تطبيق الويب، لأن الشيء الذي يجب أن يعمل كل 30 ثانية له احتياجات مختلفة عن لوحة التحكم.</p>
 <p><strong>Uptime Kuma</strong> (<code>louislam/uptime-kuma</code>). مراقب للاستضافة الذاتية بمستأجر واحد: تثبيت واحد، ومالك واحد. ابحث عن <code>notification-providers</code> أو تصفح مجلد الخادم لتجد ملفات مزوّدي الإشعارات؛ كل مزوّد (Slack، وTelegram، والبريد، وغيرها كثير) وحدة صغيرة مستقلة بالواجهة نفسها. لا توجد مؤسسات ولا فوترة، وهذا يجعل الجوهر سهل الرؤية على غير العادة.</p>
-<p><strong>Cal.com</strong> (<code>calcom/cal.com</code>). ليس منتج مراقبة، لكنه نموذج لـ «طبقة SaaS». افتح <code>packages/prisma</code> واقرأ المخطط بحثًا عن <code>Team</code> و<code>Membership</code> والحقول المتعلقة بالمؤسسات. Cal.com أيضًا درس في التراخيص: كان مرخّصًا بـ AGPL مع مجلد <code>ee</code> تجاري لسنوات، وهو الآن مرخّص بـ MIT دون مجلد <code>ee</code> (في وقت كتابة هذا الدرس) — اقرأ دائمًا ملف LICENSE الحالي، لا مقالة مدوّنة عنه.</p>
+<p><strong>Cal.com</strong> (<code>calcom/cal.diy</code>). ليس منتج مراقبة، لكنه نموذج لـ «طبقة SaaS». افتح <code>packages/prisma</code> واقرأ المخطط بحثًا عن <code>Team</code> و<code>Membership</code> والحقول المتعلقة بالمؤسسات. Cal.com أيضًا درس في التراخيص: كان مرخّصًا بـ AGPL مع مجلد <code>ee</code> تجاري لسنوات؛ وفي 2026 صار المستودع مفتوح المصدر <strong>Cal.diy</strong>، مرخّصًا بـ MIT ومُزالة منه ميزات المؤسسات (المنظمات، وSSO، وسير العمل، والإحصاءات)، بينما يستمر Cal.com منتجًا تجاريًا. اقرأ دائمًا ملفَي LICENSE وREADME الحاليين، لا مقالة مدوّنة عنهما.</p>
 <p><strong>ما الذي تلاحظه:</strong></p>
 <ul>
 <li>يحل openstatus وUptime Kuma المشكلة الجوهرية نفسها. والفرق بينهما يكاد يكون كله في طبقة SaaS العامة: المؤسسات، والفوترة، ومفاتيح API، وتعدد المستأجرين.</li>
@@ -2251,7 +2251,7 @@ export async function validateSession(token: string) {
 </section>
 <section class="sec sec-wild"><h2>🔍 ادرسه في مشاريع حقيقية</h2>
 <p><strong>openstatusHQ/openstatus</strong> مراقِب توفر وصفحة حالة مفتوح المصدر، أي أنه Beacon حقيقي حرفيًا. وهو مستودع أحادي (Monorepo) بلغة TypeScript. افتح <code>apps/web</code>، وافحص ملف <code>package.json</code> لترى مكتبة المصادقة التي اختارها، ثم ابحث في الكود عن <code>auth</code> و<code>session</code>. ما يتقنه هو التناسب: المصادقة ركن صغير وممل من الكود، وهذا بالضبط مكانها الصحيح في منتج قيمته في المراقبة.</p>
-<p><strong>calcom/cal.com</strong> يُظهر المصادقة على نطاق واسع في مستودع Next.js أحادي: بيانات الاعتماد، وتسجيل الدخول عبر Google، وSAML SSO، والمصادقة الثنائية. ابحث عن <code>NextAuth</code> أو <code>authOptions</code> لتجد إعداد المزوّدين، وعن <code>twoFactor</code> لترى كيف تُضاف TOTP فوق الدخول ببيانات الاعتماد. ويُظهر مخطط Prisma في <code>packages/prisma</code> كيف تقع حقول الهوية على نموذج <code>User</code>.</p>
+<p><strong>calcom/cal.diy</strong> يُظهر المصادقة على نطاق واسع في مستودع Next.js أحادي: بيانات الاعتماد، وتسجيل الدخول عبر Google، والمصادقة الثنائية (أُزيل منه SAML SSO مع بقية ميزات المؤسسات حين صارت النسخة مفتوحة المصدر Cal.diy في 2026). ابحث عن <code>NextAuth</code> أو <code>authOptions</code> لتجد إعداد المزوّدين، وعن <code>twoFactor</code> لترى كيف تُضاف TOTP فوق الدخول ببيانات الاعتماد. ويُظهر مخطط Prisma في <code>packages/prisma</code> كيف تقع حقول الهوية على نموذج <code>User</code>.</p>
 <p><strong>nextjs/saas-starter</strong> أصغر مثال كامل: بريد وكلمة مرور مع bcrypt، وكوكي جلسة موقّع عبر <code>jose</code>، وطبقة وسيطة (Middleware) تحمي المسارات. اقرأه كله في أمسية. يُظهر مقايضة الكوكيز الموقّعة عديمة الحالة: بسيطة، لكن بلا قائمة إلغاء على الخادم.</p>
 <p><strong>documenso/documenso</strong> يتعامل مع المصادقة في منتج للهوية فيه معنى قانوني (التوقيعات الإلكترونية). ابحث عن <code>passkey</code> و<code>two-factor</code> لترى WebAuthn وTOTP، وعن <code>signin</code> في تطبيق الويب لتجد المسارات.</p>
 <p><strong>ما الذي تلاحظه:</strong></p>
@@ -2515,8 +2515,8 @@ export async function validateSession(token: string) {
 <td>تعرف أنك ستبيع للمؤسسات وتريد نماذج فرق جاهزة لـ SSO</td>
 </tr>
 <tr>
-<td><a href="https://github.com/calcom/cal.com">calcom/cal.com</a></td>
-<td>SaaS للجدولة فيه مستخدمون وفرق ومنظمات تحتوي فرقًا</td>
+<td><a href="https://github.com/calcom/cal.diy">calcom/cal.diy</a></td>
+<td>SaaS للجدولة يمثّل مخططه مستخدمين وفرقًا ومنظمات تحتوي فرقًا</td>
 <td>TypeScript, Prisma</td>
 <td>MIT</td>
 <td>تريد رؤية تسلسل هرمي (منظمة ثم فريق ثم عضو) في بيئة إنتاج</td>
@@ -2559,7 +2559,7 @@ export async function validateSession(token: string) {
 </ul>
 </section>
 <section class="sec sec-wild"><h2>🔍 ادرسه في مشاريع حقيقية</h2>
-<p><strong>calcom/cal.com</strong> يُظهر تسلسلًا هرميًا ناضجًا. افتح <code>packages/prisma</code> واقرأ نموذجي <code>Team</code> و<code>Membership</code> في مخطط Prisma. في وقت كتابة هذا الدرس، المنظمات فرق مع إعدادات منظمة إضافية، والفرق الفرعية تشير إلى فريق أب. لاحظ كيف تحمل العضويات دورًا وعلامة قبول معًا، فتتشارك الدعوة المعلّقة والعضو النشط جدولًا واحدًا. ابحث عن <code>inviteMember</code> لتتبع مسار الدعوة من بدايته إلى نهايته.</p>
+<p><strong>calcom/cal.diy</strong> يُظهر تسلسلًا هرميًا ناضجًا. افتح <code>packages/prisma</code> واقرأ نموذجي <code>Team</code> و<code>Membership</code> في مخطط Prisma. المنظمات فرق مع إعدادات منظمة إضافية، والفرق الفرعية تشير إلى فريق أب؛ أُزيلت ميزات المنظمات من النسخة مفتوحة المصدر في 2026، لكن المخطط ما زال يُظهر النموذج. لاحظ كيف تحمل العضويات دورًا وعلامة قبول معًا، فتتشارك الدعوة المعلّقة والعضو النشط جدولًا واحدًا. ابحث عن <code>inviteMember</code> لتتبع مسار الدعوة من بدايته إلى نهايته.</p>
 <p><strong>dubinc/dub</strong> يضع المعرّف النصي لمساحة العمل في بداية كل رابط في لوحة التحكم، وهذا يجعل روابط الدعم والعمل بعدة تبويبات بلا ألم. في وقت كتابة هذا الدرس، احتفظ نموذج Prisma لمساحات العمل بالاسم القديم <code>Project</code>، وهذا درس واقعي في أن مفردات المنتج تتغير أسرع من المخططات. ابحث عن <code>ProjectUsers</code> و<code>invite</code> لتجد العضويات والدعوات، ثم انظر كيف تحدد مسارات API مساحة العمل وتتحقق من العضوية قبل أن تفعل أي شيء.</p>
 <p><strong>nextjs/saas-starter</strong> يضع كل شيء في ملف مخطط Drizzle واحد. ابحث عن <code>teamMembers</code> و<code>invitations</code>. اقرأ إجراء التسجيل لترى كيف ينشئ المستخدم الجديد فريقًا أو ينضم إلى فريق من دعوة في خطوة واحدة.</p>
 <p><strong>documenso/documenso</strong> أضاف الفرق ثم المنظمات إلى منتج بدأ بمستخدمين أفراد يملكون المستندات، لذلك يُظهر مسار الترحيل الذي تريد ألا تحتاج إليه. ابحث في مخطط Prisma عن <code>Organisation</code> و<code>Team</code> (بالتهجئة البريطانية) وانظر كيف تُحدَّد نطاقات المستندات.</p>
@@ -2863,8 +2863,8 @@ type status_page
 <td>تريد RBAC وABAC داخل تطبيق TypeScript، مع مشاركة القواعد مع الواجهة الأمامية</td>
 </tr>
 <tr>
-<td><a href="https://github.com/casbin/casbin">casbin/casbin</a></td>
-<td>مكتبة تفويض قائمة على النماذج (ACL، RBAC، ABAC) مع نسخ بلغات كثيرة</td>
+<td><a href="https://github.com/apache/casbin">apache/casbin</a></td>
+<td>Apache Casbin: مكتبة تفويض قائمة على النماذج (ACL، RBAC، ABAC) مع نسخ بلغات كثيرة</td>
 <td>Go (plus ports)</td>
 <td>Apache-2.0</td>
 <td>تريد نموذج سياسات واحدًا عبر خدمات Go وNode وPython وJava</td>
@@ -3195,8 +3195,8 @@ export async function patchScimUser(org: Org, scimId: string, body: ScimPatch) {
 </tr>
 </thead>
 <tbody><tr>
-<td><a href="https://github.com/boxyhq/jackson">boxyhq/jackson</a></td>
-<td>SAML Jackson، وتواصله Ory الآن باسم Ory Polis: جسر من SAML إلى OAuth مع مزامنة أدلة SCIM</td>
+<td><a href="https://github.com/ory/polis">ory/polis</a></td>
+<td>Ory Polis (سابقًا SAML Jackson من BoxyHQ): جسر من SAML إلى OAuth مع مزامنة أدلة SCIM</td>
 <td>TypeScript</td>
 <td>Apache-2.0</td>
 <td>تريد إضافة SAML SSO وSCIM إلى تطبيقك دون تعلّم تفاصيل SAML الداخلية</td>
@@ -3251,7 +3251,7 @@ export async function patchScimUser(org: Org, scimId: string, body: ScimPatch) {
 <td>تنفّذ اتصالات OIDC لكل مستأجر بنفسك</td>
 </tr>
 </tbody></table></div>
-<p><strong>إن درست مستودعًا واحدًا فقط:</strong> <strong>boxyhq/jackson</strong> (Ory Polis). إنه يحل بالضبط مشكلة جانب مزوّد الخدمة التي لدى Beacon: يحوّل اتصال SAML لكل مستأجر إلى مسار OAuth 2.0 عادي يفهمه تطبيقك أصلًا، ويضيف مزامنة أدلة SCIM خلف واجهة بسيطة. قراءته تعلّمك كيف تُمثَّل الاتصالات والمستأجرون والمنتجات، وهو ما اعتمده Cal.com لدعم SAML لديه.</p>
+<p><strong>إن درست مستودعًا واحدًا فقط:</strong> <strong>ory/polis</strong> (سابقًا SAML Jackson). إنه يحل بالضبط مشكلة جانب مزوّد الخدمة التي لدى Beacon: يحوّل اتصال SAML لكل مستأجر إلى مسار OAuth 2.0 عادي يفهمه تطبيقك أصلًا، ويضيف مزامنة أدلة SCIM خلف واجهة بسيطة. قراءته تعلّمك كيف تُمثَّل الاتصالات والمستأجرون والمنتجات، وهو ما تستخدمه Dub وFormbricks وPapermark لدعم SAML لديها.</p>
 <p><strong>اشترِ أم ابنِ أم استضف بنفسك؟</strong></p>
 <ul>
 <li><strong>اشترِ</strong> WorkOS أو Auth0/Okta (Enterprise Connections) أو Clerk (SSO للمؤسسات) أو Stytch عندما تبدأ صفقات المؤسسات بالوصول وتريد بوابة إدارة يضبط فيها فريق تقنية المعلومات لدى العميل SSO وSCIM بنفسه. هذا هو الخيار الأكثر شيوعًا، وتسعيره لكل اتصال، لذلك يتماشى مع الإيرادات.</li>
@@ -3260,7 +3260,7 @@ export async function patchScimUser(org: Org, scimId: string, body: ScimPatch) {
 </ul>
 </section>
 <section class="sec sec-wild"><h2>🔍 ادرسه في مشاريع حقيقية</h2>
-<p><strong>calcom/cal.com</strong> يستخدم SAML Jackson لـ SAML SSO. ابحث في المستودع عن <code>jackson</code> و<code>saml</code> لتجد الإعداد، وطريقة تسمية المستأجرين، ومعالجة طلب العودة، وتتبّع كيف يصبح دخول SSO مستخدمًا في الفريق أو المنظمة الصحيحة. وميزات المنظمات القائمة على النطاق فيه تُظهر اكتشاف النطاق الأصلي عمليًا.</p>
+<p><strong>boxyhq/saas-starter-kit</strong> يربط SAML Jackson (الآن Ory Polis) بنموذج فرق في Next.js. اقرأ <code>lib/jackson.ts</code> ومجلد <code>lib/jackson/sso</code> لتجد الإعداد، وطريقة تسمية المستأجرين، ومعالجة طلب العودة، وتتبّع كيف يصبح دخول SSO مستخدمًا في الفريق الصحيح. ثم افتح <code>lib/jackson/dsyncEvents.ts</code> لترى كيف تتحول أحداث مزامنة أدلة SCIM إلى عضويات في الفرق.</p>
 <p><strong>dubinc/dub</strong> يضيف SAML SSO لمساحات العمل فيه. ابحث عن <code>saml</code> و<code>jackson</code> في <code>apps/web</code>، وانظر كيف تتيح صفحة إعدادات مساحة العمل للمسؤول ضبط اتصال، وكيف يتفاعل الفرض مع خيارات الدخول الموجودة.</p>
 <p><strong>Infisical/infisical</strong> يدعم SAML وOIDC وLDAP وSCIM لأن مشتريه فرق أمن. ابحث عن <code>scim</code> لتقرأ تنفيذ خادم SCIM حقيقيًا، بما في ذلك طريقة معالجة إلغاء التزويد، وعن <code>saml</code> لترى ضبط الاتصال لكل منظمة وفرض SSO.</p>
 <p><strong>getsentry/sentry</strong> (Django) يدعم منذ زمن طويل SSO للمنظمات عبر مزوّدي مصادقة قابلين للتركيب، بما فيهم SAML2. ابحث عن <code>saml2</code> و<code>AuthProvider</code> لترى كيف تُربط منظمة واحدة بمزوّد واحد وكيف تُربط هويات الأعضاء به.</p>
@@ -3514,7 +3514,7 @@ export async function patchScimUser(org: Org, scimId: string, body: ScimPatch) {
 <td>تريد قراءة كود أو توثيق الشيء الذي تعتمد عليه</td>
 </tr>
 <tr>
-<td><a href="https://github.com/prisma/prisma">prisma/prisma</a></td>
+<td><a href="https://github.com/prisma/orm">prisma/orm</a></td>
 <td>أداة ORM تبدأ من المخطط، مع ترحيلات وأداة Studio</td>
 <td>TypeScript</td>
 <td>Apache-2.0</td>
@@ -3579,7 +3579,7 @@ export async function patchScimUser(org: Org, scimId: string, body: ScimPatch) {
 </ul>
 </section>
 <section class="sec sec-wild"><h2>🔍 ادرسه في مشاريع حقيقية</h2>
-<p><strong>Cal.com (<code>calcom/cal.com</code>).</strong> مستودع أحادي كبير بـ Next.js يستخدم Prisma. وقت كتابة هذا الدرس يوجد المخطط تحت <code>packages/prisma</code>؛ افتح <code>schema.prisma</code> واقرأ نماذج <code>User</code> و<code>Team</code> و<code>Membership</code>، ثم تصفّح مجلد <code>migrations</code> المجاور لترى سنوات من تطوّر مخطط حقيقي، بما في ذلك عمليات الملء الرجعي والأعمدة المعاد تسميتها.</p>
+<p><strong>Cal.com (<code>calcom/cal.diy</code>).</strong> مستودع أحادي كبير بـ Next.js يستخدم Prisma. وقت كتابة هذا الدرس يوجد المخطط تحت <code>packages/prisma</code>؛ افتح <code>schema.prisma</code> واقرأ نماذج <code>User</code> و<code>Team</code> و<code>Membership</code>، ثم تصفّح مجلد <code>migrations</code> المجاور لترى سنوات من تطوّر مخطط حقيقي، بما في ذلك عمليات الملء الرجعي والأعمدة المعاد تسميتها.</p>
 <p><strong>Documenso (<code>documenso/documenso</code>).</strong> يستخدم Prisma أيضًا في <code>packages/prisma</code>، وهو أصغر من Cal.com، لذلك يسهل استيعابه. ابحث في المخطط عن <code>@default(</code> و<code>@@index</code>، وابحث عن سكربت البذر.</p>
 <p><strong>OpenStatus (<code>openstatusHQ/openstatus</code>).</strong> هو حرفيًا Beacon حقيقي. يستخدم Drizzle؛ استخدم بحث الكود عن <code>drizzle</code> و<code>sqliteTable</code> أو <code>pgTable</code> لتجد تعريفات جداول المراقِبات والحوادث وصفحات الحالة. قارن جدول المراقِبات عندهم بمخطط الكيانات والعلاقات أعلاه.</p>
 <p><strong>Discourse (<code>discourse/discourse</code>).</strong> تطبيق Rails فيه أكثر من عقد من الترحيلات. افتح <code>db/migrate</code> و<code>db/post_migrate</code>: يفصل Discourse الترحيلات التي يجب أن تعمل قبل الكود الجديد عن تلك التي تعمل بعده، وهذه فكرة التوسيع ثم التقليص مكتوبة في أسماء المجلدات.</p>
@@ -3792,7 +3792,7 @@ export async function signLogoUpload(orgId: string, fileId: string, type: string
 <p><strong>الحذف وGDPR.</strong> عندما يحذف مستخدم حادثة، احذف مرفقاتها أيضًا، عبر مهمة خلفية لا داخل الطلب. عندما تغلق منظمة حسابها، يحدد عقدك وسياسة الخصوصية مدى سرعة زوال بياناتها؛ وتخزين الكائنات هو المكان الذي تبقى فيه البيانات بصمت. إن كانت إدارة إصدارات الحاوية مفعّلة (وهي حماية جيدة من الحذف الخاطئ)، فإن &quot;الحذف&quot; يضيف علامة حذف فقط؛ وتبقى الإصدارات القديمة حتى تزيلها قاعدة دورة حياة تحذف الإصدارات غير الحالية. اعرف نافذة الاحتفاظ لديك ووثّقها (الدرس <a class="xref" href="#l8-1">8.1</a>).</p>
 <p><strong>التكلفة وحركة الخروج (Egress).</strong> التخزين رخيص؛ أما نقل البيانات إلى الخارج فغالبًا ليس كذلك. تفرض S3 رسومًا على حركة الخروج، بينما لا تفرض Cloudflare R2 أي رسوم عليها، ولهذا تحتفظ منتجات SaaS كثيرة بالأصول التي يراها المستخدمون على R2. ضع CDN في الأمام في الحالتين.</p>
 <p><strong>إقامة البيانات وحاوية العميل الخاصة.</strong> قد يحتاج عملاء الاتحاد الأوروبي إلى تخزين ملفاتهم في منطقة أوروبية (الدرس <a class="xref" href="#l2-4">2.4</a>)، فتصبح المنطقة جزءًا من إعدادات المستأجر، ويختار كود التوقيع الحاوية الصحيحة. يطلب بعض عملاء المؤسسات تخزين الملفات في حاويتهم <em>الخاصة</em>؛ واجهة S3 تجعل ذلك ممكنًا (نقطة نهاية وحاوية وبيانات اعتماد لكل مستأجر، أو دور عبر الحسابات)، لكنها تضاعف مساحة الدعم لديك. قدّم ذلك فقط في الخطة التي تدفع مقابله.</p>
-<p><strong>الاستضافة الذاتية.</strong> إن كنت تقدّم نسخة قابلة للاستضافة الذاتية (الدرس <a class="xref" href="#l7-4">7.4</a>) أو تحتاج تخزينًا داخل مقر العميل، فأنت تحتاج خادمًا متوافقًا مع S3. كان MinIO الخيار الافتراضي لسنوات، لكن في 2025 اتجهت نسخته المجتمعية نحو التوزيع كمصدر فقط ووضع الصيانة، لذلك تحقق من وضعه الحالي قبل اعتماده. SeaweedFS وGarage (خادم S3 خفيف وموزّع جغرافيًا من Deuxfleurs) هما البديلان الأكثر ذكرًا.</p>
+<p><strong>الاستضافة الذاتية.</strong> إن كنت تقدّم نسخة قابلة للاستضافة الذاتية (الدرس <a class="xref" href="#l7-4">7.4</a>) أو تحتاج تخزينًا داخل مقر العميل، فأنت تحتاج خادمًا متوافقًا مع S3. كان MinIO الخيار الافتراضي لسنوات، لكن في 2025 انتقلت نسخته المجتمعية إلى التوزيع كمصدر فقط ووضع الصيانة، ثم أُرشف مستودع <code>minio/minio</code>. البدائل المعتادة هي SeaweedFS، وRustFS (خادم مرخّص بـ Apache-2.0 صُمّم للانتقال من MinIO والعمل بجانبه)، وGarage (خادم S3 خفيف وموزّع جغرافيًا من Deuxfleurs).</p>
 </section>
 <section class="sec sec-repos"><h2>🏆 أفضل المستودعات</h2>
 <div class="table-scroll"><table>
@@ -3862,14 +3862,14 @@ export async function signLogoUpload(orgId: string, fileId: string, type: string
 <td>تستضيف التخزين بنفسك على نطاق حقيقي</td>
 </tr>
 <tr>
-<td><a href="https://github.com/minio/minio">minio/minio</a></td>
-<td>خادم متوافق مع S3؛ النسخة المجتمعية مصدر فقط منذ 2025</td>
-<td>Go</td>
-<td>AGPL-3.0</td>
-<td>تشغّله أصلًا؛ قيّم البدائل للإعدادات الجديدة</td>
+<td><a href="https://github.com/rustfs/rustfs">rustfs/rustfs</a></td>
+<td>مخزن كائنات متوافق مع S3 صُمّم للانتقال من MinIO والعمل بجانبه</td>
+<td>Rust</td>
+<td>Apache-2.0</td>
+<td>تستبدل MinIO (المؤرشف) أو تريد ترخيصًا متساهلًا</td>
 </tr>
 </tbody></table></div>
-<p>Garage ليس على GitHub؛ تجده على <a href="https://garagehq.deuxfleurs.fr">https://garagehq.deuxfleurs.fr</a>. وهو مناسب لعمليات النشر الصغيرة المستضافة ذاتيًا أو الموزعة على عدة مواقع.</p>
+<p>يُطوَّر Garage على منصة Deuxfleurs الخاصة (<a href="https://garagehq.deuxfleurs.fr)%D8%8C">https://garagehq.deuxfleurs.fr)،</a> وله نسخة مرآة للقراءة فقط على GitHub في <a href="https://github.com/deuxfleurs-org/garage">deuxfleurs-org/garage</a>. وهو مناسب لعمليات النشر الصغيرة المستضافة ذاتيًا أو الموزعة على عدة مواقع.</p>
 <p><strong>إن درست مستودعًا واحدًا فقط:</strong> <code>supabase/storage</code>. إنه خدمة تخزين حقيقية متعددة المستأجرين تفعل بالضبط ما يصفه هذا الدرس: البايتات في خلفية S3، وصفوف البيانات الوصفية في Postgres، والوصول تحدده سياسات قاعدة البيانات، والروابط الموقّعة، والرفع القابل للاستئناف. قراءة الطريقة التي يربط بها الطلب بحاوية ومفتاح وفحص صلاحية تعلّمك أكثر من أي درس تعليمي.</p>
 <p><strong>اشترِ أم ابنِ أم استضف بنفسك؟</strong></p>
 <ul>
@@ -4445,7 +4445,7 @@ COMMIT;
 <p><strong>PostHog (<code>PostHog/posthog</code>).</strong> نموذج مجمّع في Django: المنظمات تملك المشاريع (كانت تسمى تاريخيًا فرقًا)، وكل نموذج وجدول ClickHouse تقريبًا يحمل <code>team_id</code>. استخدم بحث الكود عن <code>team_id</code> و<code>TeamAndOrgViewSetMixin</code> (أو mixins مشابهة في طبقة الواجهة البرمجية) لترى كيف تحصر الـ viewsets مجموعات الاستعلامات بالفريق الحالي. ويشغّل PostHog أيضًا منطقتين سحابيتين منفصلتين في الولايات المتحدة والاتحاد الأوروبي، وهذا مثال حقيقي على الخلايا الإقليمية.</p>
 <p><strong>Twenty (<code>twentyhq/twenty</code>).</strong> نموذج جسر: البيانات الوصفية الأساسية تعيش في جداول مشتركة، بينما تعيش بيانات CRM لكل مساحة عمل في مخطط Postgres خاص بها. استخدم بحث الكود عن <code>workspaceDataSource</code> و<code>schema</code> في حزمة الخادم لترى كيف يختار الطلب المخطط الصحيح، وكيف تُطبَّق الترحيلات لكل مساحة عمل.</p>
 <p><strong>Supabase (<code>supabase/supabase</code>).</strong> ابحث في مجلد <code>examples</code> في المستودع عن <code>create policy</code> لتجد سياسات RLS حقيقية تستخدم <code>auth.uid()</code>، بما في ذلك سياسات عضوية الفرق التي تربط عبر جدول الأعضاء.</p>
-<p><strong>Cal.com (<code>calcom/cal.com</code>).</strong> ابحث في مخطط Prisma عن <code>teamId</code> و<code>organizationId</code> لترى نموذج مجمّع نمت فوق فرقه طبقة &quot;organizations&quot;، وكيف تُحصر قيود التفرّد.</p>
+<p><strong>Cal.com (<code>calcom/cal.diy</code>).</strong> ابحث في مخطط Prisma عن <code>teamId</code> و<code>organizationId</code> لترى نموذج مجمّع نمت فوق فرقه طبقة &quot;organizations&quot;، وكيف تُحصر قيود التفرّد.</p>
 <p><strong>ما الذي تلاحظه:</strong></p>
 <ul>
 <li>أين يدخل معرّف المستأجر إلى الطلب، والمكان الوحيد الذي يُتحقق فيه منه مقابل العضوية.</li>
@@ -5215,7 +5215,7 @@ export function getEntitlements(org: Org): Entitlements {
 <p><strong>openstatus (<code>openstatusHQ/openstatus</code>).</strong> وقت كتابة هذا الدرس، يحتوي <code>packages/db/src/schema/plan/</code> على <code>config.ts</code> (سجل <code>allPlans</code> بحدود مثل <code>monitors</code> و<code>periodicity</code> و<code>max-regions</code> و<code>status-pages</code> و<code>sms</code> و<code>sms-limit</code>، إضافةً إلى <code>addons</code>) و<code>utils.ts</code> (<code>getLimits</code>، و<code>getLimit</code> التي ترجع إلى الخطة المجانية عند الغياب). ثم ابحث في <code>apps/server</code> عن <code>limits.ts</code>: ستجد فحوص حدود لكل مورد، للمراقِبات والإشعارات وصفحات الحالة والمواقع الخاصة. وفحص المراقِبات يفصل حدود <em>الإعداد</em> (الفترات المسموحة، وعدد المناطق) عن حدود <em>العدد</em>.</p>
 <p><strong>Dub (<code>dubinc/dub</code>).</strong> افتح <code>packages/utils/src/constants/pricing/pricing-plans.tsx</code> (المسار وقت كتابة هذا الدرس). يحتوي على نوع <code>PlanDetails</code> مع كائن <code>limits</code> وقوائم بمعرّفات أسعار Stripe القديمة، حتى يبقى المشتركون القدامى مرتبطين بالخطة الصحيحة. ثم افتح مخطط Prisma <code>workspace.prisma</code> وانظر إلى أعمدة <code>*Limit</code> و<code>*Usage</code> في النموذج <code>Project</code>. الحدود مأخوذة كلقطة على المستأجر (Tenant). وابحث عن <code>wouldLoseAdvancedFeatures</code> لترى معالجة التخفيض.</p>
 <p><strong>Documenso (<code>documenso/documenso</code>).</strong> في مخطط Prisma، قارن <code>SubscriptionClaim</code> بـ<code>OrganisationClaim</code>: الحقول نفسها (عدد الفرق، وعدد الأعضاء، والحصص، والأعلام)، أحدهما قالب والآخر نسخة لكل مؤسسة. وابحث في مجلد المهام عن <code>backport-subscription-claims</code> لترى كيف يدفعون تغييرات القالب إلى المؤسسات الحالية عن قصد، أي إبقاء الأسعار القديمة بوصفه عملية صريحة.</p>
-<p><strong>Cal.com (<code>calcom/cal.com</code>).</strong> ابحث في مخطط Prisma عن <code>SeatChangeLog</code> و<code>MonthlyProration</code>. تصبح الفوترة حسب المقعد جدية عندما يلزمك تسجيل كل إضافة وإزالة لتكون الفاتورة قابلة للتفسير.</p>
+<p><strong>Cal.com (<code>calcom/cal.diy</code>).</strong> ابحث في مخطط Prisma عن <code>SeatChangeLog</code> و<code>MonthlyProration</code>. تصبح الفوترة حسب المقعد جدية عندما يلزمك تسجيل كل إضافة وإزالة لتكون الفاتورة قابلة للتفسير.</p>
 <p><strong>ما الذي تلاحظه</strong></p>
 <ul>
 <li>أين يعيش المصدر الوحيد لحقيقة الخطط، وهل تُنسخ الحدود إلى المستأجر.</li>
@@ -5580,7 +5580,7 @@ await db.usageEvent.upsert({
 </ul>
 </section>
 <section class="sec sec-wild"><h2>🔍 ادرسه في مشاريع حقيقية</h2>
-<p><strong>Cal.com (<code>calcom/cal.com</code>).</strong> هذه أرصدة SMS في Beacon، في بيئة إنتاج. في مخطط Prisma، اقرأ <code>CreditBalance</code> و<code>CreditPurchaseLog</code> و<code>CreditExpenseLog</code>. لاحظ <code>smsSegments</code> و<code>smsSid</code>، و<code>@unique</code> على <code>externalRef</code> (عدم التأثر بالتكرار)، ونوعي الرصيد <code>MONTHLY</code>/<code>ADDITIONAL</code>، و<code>limitReachedAt</code>/<code>warningSentAt</code> (تنبيهات تُرسل مرة واحدة). ثم افتح <code>packages/features/credits</code> (وقت كتابة هذا الدرس) لترى دوال المستودع التي تقرأها وتكتبها.</p>
+<p><strong>Cal.com (<code>calcom/cal.diy</code>).</strong> هذه أرصدة SMS في Beacon، في بيئة إنتاج. في مخطط Prisma، اقرأ <code>CreditBalance</code> و<code>CreditPurchaseLog</code> و<code>CreditExpenseLog</code>. لاحظ <code>smsSegments</code> و<code>smsSid</code>، و<code>@unique</code> على <code>externalRef</code> (عدم التأثر بالتكرار)، ونوعي الرصيد <code>MONTHLY</code>/<code>ADDITIONAL</code>، و<code>limitReachedAt</code>/<code>warningSentAt</code> (تنبيهات تُرسل مرة واحدة). ثم افتح <code>packages/features/credits</code> (وقت كتابة هذا الدرس) لترى دوال المستودع التي تقرأها وتكتبها.</p>
 <p><strong>Dub (<code>dubinc/dub</code>).</strong> تحدّ خطط Dub عدد النقرات المتتبَّعة شهريًا. ابحث عن مهمة cron الخاصة بالاستخدام (<code>api/cron/usage</code> وقت كتابة هذا الدرس). إنها تستعلم عن الاستخدام من Tinybird، وتحدّث العمود <code>usage</code> في مساحة العمل، وترسل تنبيهات الحدود إلى المالكين وإلى Slack، وتصفّر العدّ مع دورة الفوترة. انظر كيف يُستخدم <code>billingCycleStart</code> لحساب الفترة الخاصة بكل مساحة عمل بدل افتراض الأشهر التقويمية.</p>
 <p><strong>Lago (<code>getlago/lago</code>، <code>getlago/lago-api</code>).</strong> اقرأ محرك الفوترة نفسه. يحتوي المستودع الجامع على إعداد Docker Compose ومجلد <code>events-processor</code>. وفي <code>lago-api</code>، ابحث عن <code>BillableMetric</code> و<code>Charge</code> و<code>Wallet</code> لتجد تعريفات القياس والتسعير والأرصدة، ثم تتبّع كيف تُحسب الفاتورة لفترة ما.</p>
 <p><strong>OpenMeter (<code>openmeterio/openmeter</code>).</strong> ابحث عن <code>kafkaingest</code> و<code>clickhouse</code> لترى مسار الاستيعاب بأحجام عالية، واقرأ <code>cloudevents.spec.json</code> في جذر المستودع لترى غلاف الحدث الذي يتوقعه.</p>
@@ -5893,7 +5893,7 @@ export async function sendInvite(job: { to: string; orgName: string; url: string
 <td>دائمًا، في التطوير وفي CI</td>
 </tr>
 <tr>
-<td><a href="https://github.com/unsend-dev/unsend">unsend-dev/unsend</a></td>
+<td><a href="https://github.com/usesend/useSend">usesend/useSend</a></td>
 <td>useSend: منصة إرسال مفتوحة المصدر (API ونطاقات وويب هوك) فوق Amazon SES</td>
 <td>TypeScript, Next.js</td>
 <td>AGPL-3.0</td>
@@ -5933,7 +5933,7 @@ export async function sendInvite(job: { to: string; orgName: string; url: string
 <p><strong>openstatus (<code>openstatusHQ/openstatus</code>).</strong> هو Beacon الحقيقي، لذلك فرسائله هي رسائل Beacon. وقت كتابة هذا الدرس، يحتوي <code>packages/emails/emails/</code> على قوالب React Email مثل <code>monitor-alert.tsx</code> و<code>page-subscription.tsx</code> و<code>status-report.tsx</code> و<code>team-invitation.tsx</code> و<code>plan-downgraded.tsx</code>، مع مكوّنات مشتركة في <code>_components/</code>. قارن بين رسالة التنبيه ورسالة تحديث المشترك.</p>
 <p><strong>Dub (<code>dubinc/dub</code>).</strong> افتح <code>packages/email</code> واقرأ <code>src/index.ts</code>. الدالة <code>sendEmail</code> تستخدم Resend عندما يكون مُعدًّا، وتعود إلى Nodemailer عبر SMTP في غير ذلك، وهذه طريقة مشروع SaaS مفتوح المصدر في دعم من يستضيفونه بأنفسهم. ثم ابحث عن <code>VARIANT_TO_FROM_MAP</code>: بريد النظام وبريد الإشعارات والبريد التسويقي تُرسَل من <em>عناوين ونطاقات فرعية مختلفة</em>. هذا فصل التدفقات في ثلاثة أسطر. وابحث عن <code>email-domains</code> لترى نطاقات الإرسال المخصصة لكل مساحة عمل.</p>
 <p><strong>Documenso (<code>documenso/documenso</code>).</strong> افتح <code>packages/email</code>. الملف <code>mailer.ts</code> يختار وسيلة نقل Nodemailer (SMTP أو Resend أو MailChannels) من متغيرات البيئة، ومجلد <code>templates/</code> فيه ملف لكل رسالة، وهناك إعداد معاينة منفصل. ملف Docker Compose الخاص بالتطوير في Documenso يستخدم Inbucket لالتقاط البريد. وابحث عن <code>organisation-email-domain</code> لترى كيف تضيف المؤسسات نطاق الإرسال الخاص بها.</p>
-<p><strong>Cal.com (<code>calcom/cal.com</code>).</strong> يحتوي <code>packages/emails</code> على ملف README يشرح <code>renderEmail(&quot;TeamInviteEmail&quot;, props)</code> ونقطة معاينة، وعلى ملف <code>docker-compose.yml</code> يشغّل MailHog لالتقاط البريد محليًا. ابحث عن <code>billing-email-service</code> و<code>auth-email-service</code> لترى كيف تُجمَّع الرسائل بحسب مجال العمل.</p>
+<p><strong>Cal.com (<code>calcom/cal.diy</code>).</strong> يحتوي <code>packages/emails</code> على ملف README يشرح <code>renderEmail(&quot;TeamInviteEmail&quot;, props)</code> ونقطة معاينة، وعلى ملف <code>docker-compose.yml</code> يشغّل MailHog لالتقاط البريد محليًا. ابحث عن <code>billing-email-service</code> و<code>auth-email-service</code> لترى كيف تُجمَّع الرسائل بحسب مجال العمل.</p>
 <p><strong>ما الذي تلاحظه</strong></p>
 <ul>
 <li>هل الإرسال مغلّف خلف دالة واحدة مع وسائل نقل قابلة للتبديل.</li>
@@ -7308,7 +7308,7 @@ export async function verifyApiKey(presented: string) {
 <section class="sec sec-wild"><h2>🔍 ادرسه في مشاريع حقيقية</h2>
 <p><strong>unkeyed/unkey</strong> — إلى جانب كونه مكتبة، هو SaaS في الإنتاج له API عام خاص به. ابحث عن <code>hash</code> و<code>verify</code> لتجد مسار التحقق من المفاتيح، وعن <code>ratelimit</code> لترى كيف تُفرض الحدود لكل مفتاح ولكل معرّف. لاحظ كيف يُقسم المفتاح إلى بادئة ظاهرة وسر.</p>
 <p><strong>dubinc/dub</strong> — SaaS لإدارة الروابط مع API عام بأسلوب REST، ومفاتيح API محصورة في مساحات العمل، وحدود معدل، ومستند OpenAPI. ابحث عن <code>openapi</code> لترى كيف تُنتج المواصفة من مخططات Zod، وعن <code>ratelimit</code> و<code>apiKey</code>/<code>token</code> لترى كيف تُجزأ المفاتيح وتُفحص لكل مساحة عمل.</p>
-<p><strong>calcom/cal.com</strong> — API عام كبير مع مفاتيح لكل مستخدم أو فريق. وقت كتابة هذا الدرس، تعيش تطبيقات الـ API تحت <code>apps/api</code>. ابحث عن <code>apiKey</code> ودوال مساعدة على غرار <code>hashAPIKey</code>، وانظر كيف تُدار إصدارات الـ API جنبًا إلى جنب مع تطور الـ API.</p>
+<p><strong>calcom/cal.diy</strong> — API عام كبير مع مفاتيح لكل مستخدم أو فريق. وقت كتابة هذا الدرس، تعيش تطبيقات الـ API تحت <code>apps/api</code>. ابحث عن <code>apiKey</code> ودوال مساعدة على غرار <code>hashAPIKey</code>، وانظر كيف تُدار إصدارات الـ API جنبًا إلى جنب مع تطور الـ API.</p>
 <p><strong>openstatusHQ/openstatus</strong> — منتج بشكل Beacon مع API عام للمراقِبات وصفحات الحالة. ابحث عن <code>openapi</code> و<code>apiKey</code> لترى كيف يكشف فريق صغير API مكتوب الأنواع وموثقًا للكائنات نفسها التي لدى Beacon.</p>
 <p><strong>ما الذي تلاحظه</strong></p>
 <ul>
@@ -7596,7 +7596,7 @@ export function signStandardWebhook(secret: string, id: string, body: string) {
 </ul>
 </section>
 <section class="sec sec-wild"><h2>🔍 ادرسه في مشاريع حقيقية</h2>
-<p><strong>calcom/cal.com</strong> — ويب هوك ومتجر تطبيقات في مستودع واحد. ابحث في مخطط Prisma عن <code>Webhook</code> وعن تعداد أحداث التشغيل لترى الاشتراكات في أنواع الأحداث لكل مستخدم أو فريق، ثم ابحث عن <code>sendPayload</code> أو <code>webhook</code> في حزم الميزات لتجد المرسل. وللتكاملات، وقت كتابة هذا الدرس، يحتوي <code>packages/app-store</code> على مجلد لكل تطبيق؛ افتح اثنين (مثلًا تطبيق فيديو وتطبيق تقويم) وقارن بنيتيهما.</p>
+<p><strong>calcom/cal.diy</strong> — ويب هوك ومتجر تطبيقات في مستودع واحد. ابحث في مخطط Prisma عن <code>Webhook</code> وعن تعداد أحداث التشغيل لترى الاشتراكات في أنواع الأحداث لكل مستخدم أو فريق، ثم ابحث عن <code>sendPayload</code> أو <code>webhook</code> في حزم الميزات لتجد المرسل. وللتكاملات، وقت كتابة هذا الدرس، يحتوي <code>packages/app-store</code> على مجلد لكل تطبيق؛ افتح اثنين (مثلًا تطبيق فيديو وتطبيق تقويم) وقارن بنيتيهما.</p>
 <p><strong>chatwoot/chatwoot</strong> — تطبيق Rails فيه ويب هوك صادر وتكاملات من الطرف الأول (منها Slack). ابحث عن <code>WebhookJob</code> أو <code>webhook</code> في <code>app/jobs</code>، وعن <code>slack</code> في كود التكاملات لترى تثبيت OAuth ونشر الرسائل.</p>
 <p><strong>twentyhq/twenty</strong> — CRM فيه ويب هوك لكل مساحة عمل واشتراك في أحداث الكائنات. ابحث عن <code>webhook</code> في حزمة الخادم لترى كيف تتوزع أحداث السجلات على نقاط الاستقبال عبر طابور المهام.</p>
 <p><strong>openstatusHQ/openstatus</strong> — قنوات إشعار لـ Beacon حقيقي: Slack وDiscord والبريد وغيرها. ابحث عن <code>notification</code> و<code>slack</code> لترى كيف تتحول الحادثة إلى رسائل خاصة بكل مزوّد، وكيف يتعامل الفاحص مع الروابط التي يقدمها العملاء.</p>
@@ -7934,7 +7934,7 @@ export function signStandardWebhook(secret: string, id: string, body: string) {
 </ul>
 </section>
 <section class="sec sec-wild"><h2>🔍 ادرسه في مشاريع حقيقية</h2>
-<p><strong>calcom/cal.com</strong> — منشئ سير عمل للتذكيرات يراه المستخدم. ابحث عن <code>workflow</code> و<code>WorkflowStep</code> في مخطط Prisma لترى كيف تُخزَّن المشغّلات التي يعرّفها العميل (&quot;قبل بدء الحدث&quot;) والإزاحات والإجراءات (بريد، SMS) كبيانات، ثم ابحث عن المكان الذي تُجدوَل فيه التذكيرات وتُلغى عندما تتغير الحجوزات. لاحظ كيف يجب أن تؤدي إعادة جدولة حجز إلى تحديث الخطوات المجدولة أصلًا.</p>
+<p><strong>calcom/cal.diy</strong> — منشئ سير عمل لم يعد يُقرأ إلا في ترحيلاته. أُزيلت ميزة سير عمل التذكيرات في Cal.com من النسخة مفتوحة المصدر في 2026، لكن تاريخها ما زال في <code>packages/prisma/migrations</code>: يُظهر <code>20220711182928_add_workflows</code> كيف كانت تُخزَّن المشغّلات التي يعرّفها العميل (&quot;قبل بدء الحدث&quot;) والإزاحات والإجراءات (بريد، SMS) كبيانات، ويُظهر <code>20260319000000_drop_workflow_tables</code> إزالتها. لاحظ ما كان على الجداول أن تسجّله حتى تستطيع إعادة جدولة حجز تحديث الخطوات المجدولة أصلًا.</p>
 <p><strong>twentyhq/twenty</strong> — CRM فيه ميزة سير عمل مرئية أحدث. ابحث عن <code>workflow</code> في حزمة الخادم لتجد تعريفات سير العمل وإصداراته وتشغيلاته، وكيف يُنفّذ نظام المهام كل نوع من الخطوات. لاحظ الفصل بين <em>إصدار</em> سير العمل (التعريف) و<em>التشغيل</em>.</p>
 <p><strong>triggerdotdev/trigger.dev</strong> — منتج تنفيذ متين مفتوح المصدر هو نفسه. استخدم البحث في الكود عن <code>wait</code> و<code>checkpoint</code> لترى كيف يُعلَّق التشغيل ويُستأنف، وانظر إلى <code>references</code> أو المشاريع النموذجية لترى كيف يبدو كود المستخدم.</p>
 <p><strong>n8n-io/n8n</strong> — محرك سير العمل المرجعي الذي يعرّفه المستخدم. ابحث عن <code>WorkflowExecute</code> لتجد الكود الذي يمر على مخطط سير العمل عقدة بعقدة؛ فهو يُظهر ماذا تعني عمليًا عبارة &quot;سير العمل بيانات مع مفسّر&quot;.</p>
@@ -8310,7 +8310,7 @@ https:// {
 <section class="sec sec-wild"><h2>🔍 ادرسه في مشاريع حقيقية</h2>
 <p><strong>dubinc/dub.</strong> هيكل جيد للتعلم منه: مبدّل مساحات العمل، ولوحة تحكم مصقولة، و<strong>نطاقات مخصصة للعملاء</strong> للروابط المختصرة. افتح المستودع واستخدم البحث في الكود عن <code>domains</code> مع <code>vercel</code> لتجد أين يضيف Dub النطاقات ويتحقق منها عبر واجهة Vercel. وقت كتابة هذا الدرس يعيش المنتج في <code>apps/web</code>. لاحظ كيف يقرر التطبيق بين سلوك التسويق ولوحة التحكم وإعادة توجيه الروابط حسب اسم المضيف الوارد.</p>
 <p><strong>openstatusHQ/openstatus.</strong> نسخة حقيقية من Beacon: مراقب توفر مفتوح المصدر مع صفحات حالة عامة. ابحث عن <code>custom domain</code> و<code>status page</code> لترى كيف تُحدَّد الصفحة من اسم المضيف أو المعرّف المختصر. وقارن طريقة تصيير صفحة الحالة بطريقة تصيير لوحة التحكم الخاصة بالمستخدمين المسجلين.</p>
-<p><strong>calcom/cal.com.</strong> مسار التهيئة وتقسيم الإعدادات في Cal.com يستحقان القراءة. ابحث عن <code>getting-started</code> أو <code>onboarding</code> لتجد مسار الاستخدام الأول خطوة بخطوة، وتصفح صفحات الإعدادات لترى كيف تبقى إعدادات الحساب منفصلة عن إعدادات الفريق والمؤسسة.</p>
+<p><strong>calcom/cal.diy.</strong> مسار التهيئة وتقسيم الإعدادات في Cal.com يستحقان القراءة. ابحث عن <code>getting-started</code> أو <code>onboarding</code> لتجد مسار الاستخدام الأول خطوة بخطوة، وتصفح صفحات الإعدادات لترى كيف تبقى إعدادات الحساب منفصلة عن إعدادات الفريق والمؤسسة.</p>
 <p><strong>vercel/next-forge.</strong> هنا الهيكل <em>هو</em> المنتج. انظر إلى مجلد <code>apps/</code> في المستوى الأعلى: التسويق وتطبيق المنتج تطبيقا Next.js منفصلان يتشاركان <code>packages/</code>. لاحظ ما يُعدّ &quot;مشتركًا&quot; (نظام التصميم، المصادقة، التحليلات) وما لا يُعدّ كذلك.</p>
 <p><strong>ما الذي تلاحظه:</strong></p>
 <ul>
@@ -8880,7 +8880,7 @@ return scheduleWithOldEngine(monitor);
 <p><strong>PostHog/posthog.</strong> يشغّل PostHog أعلامه على نفسه. استخدم البحث في الكود عن <code>feature_flag</code> و<code>hash</code> لتجد كيف تُحسب نسبة الطرح من مفتاح العلم والمعرّف المميز (أو مفتاح المجموعة في الأعلام المبنية على المجموعات). وابحث عن طريقة تقييم الأعلام لكل نوع مجموعة لترى الاستهداف على مستوى المؤسسة في B2B.</p>
 <p><strong>Unleash/unleash.</strong> اقرأ كود استراتيجيات التفعيل (ابحث عن <code>strategy</code> و<code>stickiness</code>)، وانظر كيف تُحدَّد الأعلام القديمة حسب نوع العلم وعمره. وحزم SDK، الموجودة في مستودعات منفصلة تحت منظمة Unleash، تعرض التقييم المحلي: تنزيل القواعد، وتحديثها في الخلفية، والتقييم في الذاكرة.</p>
 <p><strong>growthbook/growthbook.</strong> ابحث عن <code>hash</code> في كود SDK لترى كيف يُسند المستخدمون إلى نسخ التجربة بشكل حتمي، وتصفح محرك الإحصاء (Python) لترى الاختبار التسلسلي والتحليل البايزي منفذين فعلًا لا موصوفين فقط.</p>
-<p><strong>calcom/cal.com.</strong> قاعدة كود منتج تستخدم الأعلام، لا مزوّد أعلام. استخدم البحث في الكود عن <code>feature flag</code> أو <code>features</code> لتجد كيف يقيّد Cal.com الميزات في قاعدة بياناته الخاصة ويفحصها لكل فريق. وهو مثال واقعي على &quot;نظام أعلام داخلي صغير&quot; تقارنه بالأدوات المخصصة.</p>
+<p><strong>calcom/cal.diy.</strong> قاعدة كود منتج تستخدم الأعلام، لا مزوّد أعلام. استخدم البحث في الكود عن <code>feature flag</code> أو <code>features</code> لتجد كيف يقيّد Cal.com الميزات في قاعدة بياناته الخاصة ويفحصها لكل فريق. وهو مثال واقعي على &quot;نظام أعلام داخلي صغير&quot; تقارنه بالأدوات المخصصة.</p>
 <p><strong>ما الذي تلاحظه:</strong></p>
 <ul>
 <li>مدخل التجزئة يجمع مفتاح العلم ومعرّفًا ثابتًا، فيبقى الطرح ملتصقًا ولا يتداخل بين الأعلام.</li>
@@ -9252,7 +9252,7 @@ return scheduleWithOldEngine(monitor);
 <section class="sec sec-wild"><h2>🔍 ادرسه في مشاريع حقيقية</h2>
 <p><strong>GitLab</strong> (<a href="https://github.com/gitlabhq/gitlabhq">gitlabhq/gitlabhq</a>) يملك واحدة من أكمل مناطق الإدارة في المشاريع مفتوحة المصدر: إدارة المستخدمين، وانتحال الهوية، وإعدادات النسخة، وبلاغات الإساءة. ستجدها بتصفح <code>app/controllers/admin</code> (وقت كتابة هذا الدرس يحتوي على <code>impersonations_controller.rb</code> و<code>impersonation_tokens_controller.rb</code>)، وابحث في المستودع عن <code>admin_mode</code> لترى كيف تُفرض المصادقة المعزَّزة على المدراء، بما في ذلك في الوسيط البرمجي لمهام Sidekiq، بحيث ترث المهام الخلفية حالة وضع الإدارة من الطلب الذي وضعها في الطابور.</p>
 <p><strong>Chatwoot</strong> (<a href="https://github.com/chatwoot/chatwoot">chatwoot/chatwoot</a>) أداة دعم وSaaS في الوقت نفسه، وفيه لوحة تحكم للمدير الأعلى. متحكمات <code>super_admin</code> فيه مبنية على مكتبة Administrate، مع صنف &quot;dashboard&quot; لكل نموذج في <code>app/dashboards</code>. ابحث عن <code>Impersonation</code> لتجد مكوّن الشريط المكتوب بـ Vue والـ composable الذي يشغّله، وهو مثال صغير ونظيف على قاعدة &quot;شريط التنبيه الذي لا يمكن تجاهله&quot;.</p>
-<p><strong>Cal.com</strong> (<a href="https://github.com/calcom/cal.com">calcom/cal.com</a>) يضع صفحات إدارة النسخة داخل تطبيق Next.js الرئيسي في منطقة الإعدادات (ابحث في شجرة <code>apps/web</code> عن <code>admin</code>). ابحث في ترحيلات Prisma عن <code>impersonat</code> وستقرأ تاريخ الميزة على شكل تغييرات في المخطط: خيار على مستوى المستخدم للسماح بالانتحال، ومفتاح على مستوى الفريق لتعطيله، ولاحقًا صلاحيات مرتبطة بأدوار الإدارة.</p>
+<p><strong>Cal.com</strong> (<a href="https://github.com/calcom/cal.diy">calcom/cal.diy</a>) يضع صفحات إدارة النسخة داخل تطبيق Next.js الرئيسي في منطقة الإعدادات (ابحث في شجرة <code>apps/web</code> عن <code>admin</code>). ابحث في ترحيلات Prisma عن <code>impersonat</code> وستقرأ تاريخ الميزة على شكل تغييرات في المخطط: خيار على مستوى المستخدم للسماح بالانتحال، ومفتاح على مستوى الفريق لتعطيله، ولاحقًا صلاحيات مرتبطة بأدوار الإدارة.</p>
 <p><strong>ما الذي تلاحظه:</strong></p>
 <ul>
 <li>شاشات الإدارة تعيد استخدام خدمات المجال بدل كتابة SQL — انظر إلى ما تستدعيه متحكمات الإدارة فعليًا.</li>
@@ -9875,7 +9875,7 @@ log().warn({ monitorId, status }, &quot;check.failed&quot;);
 <td>تريد خدمة تدقيق مستضافة ذاتيًا مع واجهة جاهزة</td>
 </tr>
 <tr>
-<td><a href="https://github.com/BemiHQ/bemi">BemiHQ/bemi</a></td>
+<td><a href="https://github.com/pgstack-io/bemi-io">pgstack-io/bemi-io</a></td>
 <td>CDC لـ Postgres يلتقط كل تغيير ويدمج سياق التطبيق</td>
 <td>Go/TS, Postgres</td>
 <td>SSPL-1.0</td>
@@ -9889,11 +9889,11 @@ log().warn({ monitorId, status }, &quot;check.failed&quot;);
 <td>يتطلب الامتثال سجلًا للوصول المباشر إلى قاعدة البيانات</td>
 </tr>
 <tr>
-<td><a href="https://github.com/supabase/supa_audit">supabase/supa_audit</a></td>
-<td>إضافة صغيرة لـ Postgres لتدقيق تغييرات الجداول عبر المشغّلات</td>
+<td><a href="https://github.com/pgMemento/pgMemento">pgMemento/pgMemento</a></td>
+<td>سجل تدقيق قائم على المشغّلات مع تتبّع إصدارات المخطط، بلغة PL/pgSQL خالصة</td>
 <td>SQL</td>
-<td>Apache-2.0</td>
-<td>تريد شبكة أمان من المشغّلات تستطيع قراءتها في جلسة واحدة</td>
+<td>LGPL-3.0</td>
+<td>تريد شبكة أمان من المشغّلات تُصان باستمرار داخل Postgres، لا خدمة منفصلة</td>
 </tr>
 <tr>
 <td><a href="https://github.com/paper-trail-gem/paper_trail">paper-trail-gem/paper_trail</a></td>
@@ -10244,7 +10244,7 @@ export const env = Env.parse(process.env); // throws at startup, not at 3 a.m.
 <td>يفضّل فريقك كتابة TypeScript على HCL</td>
 </tr>
 <tr>
-<td><a href="https://github.com/sst/sst">sst/sst</a></td>
+<td><a href="https://github.com/anomalyco/sst">anomalyco/sst</a></td>
 <td>إطار لنشر التطبيقات المتكاملة وبنيتها التحتية، يبدأ من TS</td>
 <td>TS, Go</td>
 <td>MIT</td>
@@ -10905,7 +10905,7 @@ export async function summarizeIncident(orgId: string, incidentId: string) {
 <td>يتجاوز حجم المتجهات أو أداء البحث المصفّى قدرة Postgres</td>
 </tr>
 <tr>
-<td><a href="https://github.com/modelcontextprotocol/specification">modelcontextprotocol/specification</a></td>
+<td><a href="https://github.com/modelcontextprotocol/modelcontextprotocol">modelcontextprotocol/modelcontextprotocol</a></td>
 <td>مواصفة بروتوكول سياق النموذج ومخططه</td>
 <td>TypeScript schema, Markdown</td>
 <td>MIT, moving to Apache-2.0</td>
@@ -11249,11 +11249,11 @@ export async function summarizeIncident(orgId: string, incidentId: string) {
 <td>تريد أن ترى حلقة المؤسسات مربوطة معًا في قاعدة كود صغيرة</td>
 </tr>
 <tr>
-<td><a href="https://github.com/calcom/cal.com">calcom/cal.com</a></td>
-<td>بنية تحتية للجدولة</td>
+<td><a href="https://github.com/calcom/cal.diy">calcom/cal.diy</a></td>
+<td>الجدولة (النسخة مفتوحة المصدر من Cal.com)</td>
 <td>Next.js, tRPC, Prisma, Turborepo</td>
 <td>MIT</td>
-<td>تريد تقريبًا كل مكوّن في مستودع أحادي (Monorepo) ناضج واحد</td>
+<td>تريد مكوّنات كثيرة في مستودع أحادي (Monorepo) ناضج واحد (أُزيلت ميزات المؤسسات في 2026)</td>
 </tr>
 <tr>
 <td><a href="https://github.com/makeplane/plane">makeplane/plane</a></td>
@@ -11310,8 +11310,8 @@ export async function summarizeIncident(orgId: string, incidentId: string) {
 واحد منها يعبر مكوّنين على الأقل، لذلك هذا أفضل مكان لرؤية نقاط الالتقاء.</p>
 <p><strong>Cal.com</strong>: المرجع في الحجم الكبير. مجلدا <code>apps/</code> و<code>packages/</code> فيه (وقت كتابة هذا
 الدرس) يفصلان تطبيق الويب، والواجهة البرمجية العامة، والميزات، ومتجر التطبيقات
-للتكاملات. وتاريخ ترخيصه يستحق المعرفة: انتقل من AGPL مع مجلد <code>ee</code> تجاري إلى MIT
-خالص، لذلك انظر إلى PostHog أو Infisical بدلًا منه لدراسة نمط النواة المفتوحة
+للتكاملات. وتاريخ ترخيصه يستحق المعرفة: انتقل من AGPL مع مجلد <code>ee</code> تجاري إلى Cal.diy، نسخة مجتمعية
+بترخيص MIT خالص أُزيلت منها ميزات المؤسسات، لذلك انظر إلى PostHog أو Infisical بدلًا منه لدراسة نمط النواة المفتوحة
 (Open-Core) نفسه (<a class="xref" href="#l7-4">7.4</a>).</p>
 <p><strong>ما الذي تلاحظه</strong></p>
 <ul>
@@ -11482,14 +11482,14 @@ Graphile Worker) وStripe Checkout مع Portal، لأن انتباه المهن�
 <tr data-q="[cli/cli](https://github.com/cli/cli) `gh`، أداة github الرسمية لسطر الأوامر: نسخ المستودعات، وسرد طلبات السحب والمسائل وقراءتها من الطرفية go cli mit تريد قراءة تاريخ طلبات السحب في المستودع دون مغادرة الطرفية"><td><a href="https://github.com/cli/cli">cli/cli</a></td><td><code>gh</code>، أداة GitHub الرسمية لسطر الأوامر: نسخ المستودعات، وسرد طلبات السحب والمسائل وقراءتها من الطرفية</td><td>Go CLI</td><td>MIT</td><td>تريد قراءة تاريخ طلبات السحب في المستودع دون مغادرة الطرفية</td></tr>
 <tr data-q="[nextjs/saas-starter](https://github.com/nextjs/saas-starter) هيكل saas صغير وكامل next.js, drizzle, stripe mit أول تمرين لك في «قراءة saas كامل»"><td><a href="https://github.com/nextjs/saas-starter">nextjs/saas-starter</a></td><td>هيكل SaaS صغير وكامل</td><td>Next.js, Drizzle, Stripe</td><td>MIT</td><td>أول تمرين لك في «قراءة SaaS كامل»</td></tr>
 <tr data-q="[openstatushq/openstatus](https://github.com/openstatushq/openstatus) صفحات حالة ومراقبة توفر مفتوحة المصدر: beacon حقيقي typescript monorepo, go checker agpl-3.0 تريد أن تتدرّب على الطريقة مع المنتج الذي بُنيت عليه هذه الدورة"><td><a href="https://github.com/openstatusHQ/openstatus">openstatusHQ/openstatus</a></td><td>صفحات حالة ومراقبة توفر مفتوحة المصدر: Beacon حقيقي</td><td>TypeScript monorepo, Go checker</td><td>AGPL-3.0</td><td>تريد أن تتدرّب على الطريقة مع المنتج الذي بُنيت عليه هذه الدورة</td></tr>
-<tr data-q="[maybe-finance/maybe](https://github.com/maybe-finance/maybe) تطبيق للتمويل الشخصي مبني بـ rails الحديث (مؤرشف) ruby on rails 8, postgres agpl-3.0 تريد أن ترى كم يمكن أن يكون التطبيق الأحادي (monolith) التقليدي نظيفًا"><td><a href="https://github.com/maybe-finance/maybe">maybe-finance/maybe</a></td><td>تطبيق للتمويل الشخصي مبني بـ Rails الحديث (مؤرشف)</td><td>Ruby on Rails 8, Postgres</td><td>AGPL-3.0</td><td>تريد أن ترى كم يمكن أن يكون التطبيق الأحادي (Monolith) التقليدي نظيفًا</td></tr>
+<tr data-q="[we-promise/sure](https://github.com/we-promise/sure) تطبيق للتمويل الشخصي مبني بـ rails الحديث: النسخة المجتمعية المتفرعة من maybe المؤرشف ruby on rails 8, postgres agpl-3.0 تريد أن ترى كم يمكن أن يكون التطبيق الأحادي (monolith) التقليدي نظيفًا"><td><a href="https://github.com/we-promise/sure">we-promise/sure</a></td><td>تطبيق للتمويل الشخصي مبني بـ Rails الحديث: النسخة المجتمعية المتفرعة من Maybe المؤرشف</td><td>Ruby on Rails 8, Postgres</td><td>AGPL-3.0</td><td>تريد أن ترى كم يمكن أن يكون التطبيق الأحادي (Monolith) التقليدي نظيفًا</td></tr>
 </tbody></table></div></section>
 <section class="cat" data-level="b">
 <h3><a href="#l0-3">0.3 — الرف المرجعي: قواعد كود SaaS ومجموعات البداية التي ندرسها</a></h3>
 <div class="table-scroll"><table><thead><tr><th>المستودع</th><th>ما هو</th><th>التقنيات</th><th>الترخيص</th><th>اختره عندما</th></tr></thead><tbody>
 <tr data-q="[openstatushq/openstatus](https://github.com/openstatushq/openstatus) صفحات حالة ومراقبة توفر، beacon حقيقي typescript monorepo, go agpl-3.0 تريد أن ترى مشكلات beacon نفسها محلولة في الإنتاج"><td><a href="https://github.com/openstatusHQ/openstatus">openstatusHQ/openstatus</a></td><td>صفحات حالة ومراقبة توفر، Beacon حقيقي</td><td>TypeScript monorepo, Go</td><td>AGPL-3.0</td><td>تريد أن ترى مشكلات Beacon نفسها محلولة في الإنتاج</td></tr>
 <tr data-q="[louislam/uptime-kuma](https://github.com/louislam/uptime-kuma) مراقب توفر للاستضافة الذاتية node.js, vue mit تريد جوهر beacon دون طبقة saas متعددة المستأجرين، للمقارنة"><td><a href="https://github.com/louislam/uptime-kuma">louislam/uptime-kuma</a></td><td>مراقب توفر للاستضافة الذاتية</td><td>Node.js, Vue</td><td>MIT</td><td>تريد جوهر Beacon دون طبقة SaaS متعددة المستأجرين، للمقارنة</td></tr>
-<tr data-q="[calcom/cal.com](https://github.com/calcom/cal.com) بنية تحتية للجدولة next.js, prisma mit تريد أكمل مثال بـ typescript على الفرق والمؤسسات وsso والتكاملات"><td><a href="https://github.com/calcom/cal.com">calcom/cal.com</a></td><td>بنية تحتية للجدولة</td><td>Next.js, Prisma</td><td>MIT</td><td>تريد أكمل مثال بـ TypeScript على الفرق والمؤسسات وSSO والتكاملات</td></tr>
+<tr data-q="[calcom/cal.diy](https://github.com/calcom/cal.diy) الجدولة (النسخة مفتوحة المصدر من cal.com) next.js, prisma mit تريد مستودعًا أحاديًا كبيرًا بـ typescript فيه الفرق والويب هوك ومفاتيح api ومتجر تطبيقات للتكاملات"><td><a href="https://github.com/calcom/cal.diy">calcom/cal.diy</a></td><td>الجدولة (النسخة مفتوحة المصدر من Cal.com)</td><td>Next.js, Prisma</td><td>MIT</td><td>تريد مستودعًا أحاديًا كبيرًا بـ TypeScript فيه الفرق والويب هوك ومفاتيح API ومتجر تطبيقات للتكاملات</td></tr>
 <tr data-q="[documenso/documenso](https://github.com/documenso/documenso) منصة توقيع إلكتروني next.js, prisma agpl-3.0 تريد saas متوسط الحجم ومقروءًا بـ typescript فيه سجلات تدقيق وويب هوك"><td><a href="https://github.com/documenso/documenso">documenso/documenso</a></td><td>منصة توقيع إلكتروني</td><td>Next.js, Prisma</td><td>AGPL-3.0</td><td>تريد SaaS متوسط الحجم ومقروءًا بـ TypeScript فيه سجلات تدقيق وويب هوك</td></tr>
 <tr data-q="[dubinc/dub](https://github.com/dubinc/dub) إدارة الروابط next.js, prisma agpl-3.0 تريد حدود الخطط والتسعير حسب الاستخدام في كود حقيقي"><td><a href="https://github.com/dubinc/dub">dubinc/dub</a></td><td>إدارة الروابط</td><td>Next.js, Prisma</td><td>AGPL-3.0</td><td>تريد حدود الخطط والتسعير حسب الاستخدام في كود حقيقي</td></tr>
 <tr data-q="[infisical/infisical](https://github.com/infisical/infisical) إدارة الأسرار node.js, react mit تريد ميزات المؤسسات: rbac وsso وscim وسجلات التدقيق"><td><a href="https://github.com/Infisical/infisical">Infisical/infisical</a></td><td>إدارة الأسرار</td><td>Node.js, React</td><td>MIT</td><td>تريد ميزات المؤسسات: RBAC وSSO وSCIM وسجلات التدقيق</td></tr>
@@ -11518,7 +11518,7 @@ Graphile Worker) وStripe Checkout مع Portal، لأن انتباه المهن�
 <tr data-q="[nextjs/saas-starter](https://github.com/nextjs/saas-starter) قالب saas رسمي ومبسّط لـ next.js فيه فرق ودعوات وأدوار وسجل نشاط typescript, drizzle, postgres mit تريد أصغر نسخة مقروءة من الهيكل كاملًا"><td><a href="https://github.com/nextjs/saas-starter">nextjs/saas-starter</a></td><td>قالب SaaS رسمي ومبسّط لـ Next.js فيه فرق ودعوات وأدوار وسجل نشاط</td><td>TypeScript, Drizzle, Postgres</td><td>MIT</td><td>تريد أصغر نسخة مقروءة من الهيكل كاملًا</td></tr>
 <tr data-q="[better-auth/better-auth](https://github.com/better-auth/better-auth) مكتبة مصادقة توفر إضافة المنظمات فيها المنظمات والأعضاء والأدوار والدعوات typescript mit تريد أن يُولَّد نموذج المنظمات لك، داخل قاعدة بياناتك"><td><a href="https://github.com/better-auth/better-auth">better-auth/better-auth</a></td><td>مكتبة مصادقة توفر إضافة المنظمات فيها المنظمات والأعضاء والأدوار والدعوات</td><td>TypeScript</td><td>MIT</td><td>تريد أن يُولَّد نموذج المنظمات لك، داخل قاعدة بياناتك</td></tr>
 <tr data-q="[boxyhq/saas-starter-kit](https://github.com/boxyhq/saas-starter-kit) قالب بداية بطابع مؤسسي: فرق، ودعوات، وsso، ومزامنة الأدلة، وسجلات تدقيق، وويب هوك typescript, next.js, prisma apache-2.0 تعرف أنك ستبيع للمؤسسات وتريد نماذج فرق جاهزة لـ sso"><td><a href="https://github.com/boxyhq/saas-starter-kit">boxyhq/saas-starter-kit</a></td><td>قالب بداية بطابع مؤسسي: فرق، ودعوات، وSSO، ومزامنة الأدلة، وسجلات تدقيق، وويب هوك</td><td>TypeScript, Next.js, Prisma</td><td>Apache-2.0</td><td>تعرف أنك ستبيع للمؤسسات وتريد نماذج فرق جاهزة لـ SSO</td></tr>
-<tr data-q="[calcom/cal.com](https://github.com/calcom/cal.com) saas للجدولة فيه مستخدمون وفرق ومنظمات تحتوي فرقًا typescript, prisma mit تريد رؤية تسلسل هرمي (منظمة ثم فريق ثم عضو) في بيئة إنتاج"><td><a href="https://github.com/calcom/cal.com">calcom/cal.com</a></td><td>SaaS للجدولة فيه مستخدمون وفرق ومنظمات تحتوي فرقًا</td><td>TypeScript, Prisma</td><td>MIT</td><td>تريد رؤية تسلسل هرمي (منظمة ثم فريق ثم عضو) في بيئة إنتاج</td></tr>
+<tr data-q="[calcom/cal.diy](https://github.com/calcom/cal.diy) saas للجدولة يمثّل مخططه مستخدمين وفرقًا ومنظمات تحتوي فرقًا typescript, prisma mit تريد رؤية تسلسل هرمي (منظمة ثم فريق ثم عضو) في بيئة إنتاج"><td><a href="https://github.com/calcom/cal.diy">calcom/cal.diy</a></td><td>SaaS للجدولة يمثّل مخططه مستخدمين وفرقًا ومنظمات تحتوي فرقًا</td><td>TypeScript, Prisma</td><td>MIT</td><td>تريد رؤية تسلسل هرمي (منظمة ثم فريق ثم عضو) في بيئة إنتاج</td></tr>
 <tr data-q="[dubinc/dub](https://github.com/dubinc/dub) saas لإدارة الروابط فيه مساحات عمل بمعرّف نصي ودعوات وحدود للخطط typescript, prisma agpl-3.0 تريد تصميمًا نظيفًا يضع مساحة العمل في الرابط"><td><a href="https://github.com/dubinc/dub">dubinc/dub</a></td><td>SaaS لإدارة الروابط فيه مساحات عمل بمعرّف نصي ودعوات وحدود للخطط</td><td>TypeScript, Prisma</td><td>AGPL-3.0</td><td>تريد تصميمًا نظيفًا يضع مساحة العمل في الرابط</td></tr>
 <tr data-q="[documenso/documenso](https://github.com/documenso/documenso) saas للتوقيع الإلكتروني فيه منظمات وفرق ودعوات أعضاء typescript, prisma agpl-3.0 تريد رؤية نموذج فرق أُضيف إلى منتج بدأ لمستخدم واحد"><td><a href="https://github.com/documenso/documenso">documenso/documenso</a></td><td>SaaS للتوقيع الإلكتروني فيه منظمات وفرق ودعوات أعضاء</td><td>TypeScript, Prisma</td><td>AGPL-3.0</td><td>تريد رؤية نموذج فرق أُضيف إلى منتج بدأ لمستخدم واحد</td></tr>
 <tr data-q="[logto-io/logto](https://github.com/logto-io/logto) منصة مصادقة فيها منظمات وأدوار منظمات ودعوات مدمجة typescript mpl-2.0 تريد أن تتولى خدمة هوية مستضافة ذاتيًا المنظمات بدلًا من تطبيقك"><td><a href="https://github.com/logto-io/logto">logto-io/logto</a></td><td>منصة مصادقة فيها منظمات وأدوار منظمات ودعوات مدمجة</td><td>TypeScript</td><td>MPL-2.0</td><td>تريد أن تتولى خدمة هوية مستضافة ذاتيًا المنظمات بدلًا من تطبيقك</td></tr>
@@ -11528,7 +11528,7 @@ Graphile Worker) وStripe Checkout مع Portal، لأن انتباه المهن�
 <h3><a href="#l1-3">1.3 — التفويض: الأدوار والصلاحيات وسؤال &quot;هل يستطيع هذا المستخدم فعل هذا؟&quot;</a></h3>
 <div class="table-scroll"><table><thead><tr><th>المستودع</th><th>ما هو</th><th>التقنيات</th><th>الترخيص</th><th>اختره عندما</th></tr></thead><tbody>
 <tr data-q="[stalniy/casl](https://github.com/stalniy/casl) مكتبة تفويض javascript تعمل على الخادم والمتصفح مع محوّلات لاستعلامات orm typescript mit تريد rbac وabac داخل تطبيق typescript، مع مشاركة القواعد مع الواجهة الأمامية"><td><a href="https://github.com/stalniy/casl">stalniy/casl</a></td><td>مكتبة تفويض JavaScript تعمل على الخادم والمتصفح مع محوّلات لاستعلامات ORM</td><td>TypeScript</td><td>MIT</td><td>تريد RBAC وABAC داخل تطبيق TypeScript، مع مشاركة القواعد مع الواجهة الأمامية</td></tr>
-<tr data-q="[casbin/casbin](https://github.com/casbin/casbin) مكتبة تفويض قائمة على النماذج (acl، rbac، abac) مع نسخ بلغات كثيرة go (plus ports) apache-2.0 تريد نموذج سياسات واحدًا عبر خدمات go وnode وpython وjava"><td><a href="https://github.com/casbin/casbin">casbin/casbin</a></td><td>مكتبة تفويض قائمة على النماذج (ACL، RBAC، ABAC) مع نسخ بلغات كثيرة</td><td>Go (plus ports)</td><td>Apache-2.0</td><td>تريد نموذج سياسات واحدًا عبر خدمات Go وNode وPython وJava</td></tr>
+<tr data-q="[apache/casbin](https://github.com/apache/casbin) apache casbin: مكتبة تفويض قائمة على النماذج (acl، rbac، abac) مع نسخ بلغات كثيرة go (plus ports) apache-2.0 تريد نموذج سياسات واحدًا عبر خدمات go وnode وpython وjava"><td><a href="https://github.com/apache/casbin">apache/casbin</a></td><td>Apache Casbin: مكتبة تفويض قائمة على النماذج (ACL، RBAC، ABAC) مع نسخ بلغات كثيرة</td><td>Go (plus ports)</td><td>Apache-2.0</td><td>تريد نموذج سياسات واحدًا عبر خدمات Go وNode وPython وJava</td></tr>
 <tr data-q="[cerbos/cerbos](https://github.com/cerbos/cerbos) نقطة قرار سياسات عديمة الحالة مع سياسات yaml وتخطيط الاستعلامات go apache-2.0 تريد السياسات ككود منفصلة عن كود التطبيق، مع دعم تصفية القوائم"><td><a href="https://github.com/cerbos/cerbos">cerbos/cerbos</a></td><td>نقطة قرار سياسات عديمة الحالة مع سياسات YAML وتخطيط الاستعلامات</td><td>Go</td><td>Apache-2.0</td><td>تريد السياسات ككود منفصلة عن كود التطبيق، مع دعم تصفية القوائم</td></tr>
 <tr data-q="[openfga/openfga](https://github.com/openfga/openfga) خادم rebac مستوحى من zanzibar، ومشروع في cncf أصله من auth0/okta go apache-2.0 تحتاج مشاركة على مستوى الكائن مع لغة نمذجة سهلة"><td><a href="https://github.com/openfga/openfga">openfga/openfga</a></td><td>خادم ReBAC مستوحى من Zanzibar، ومشروع في CNCF أصله من Auth0/Okta</td><td>Go</td><td>Apache-2.0</td><td>تحتاج مشاركة على مستوى الكائن مع لغة نمذجة سهلة</td></tr>
 <tr data-q="[authzed/spicedb](https://github.com/authzed/spicedb) قاعدة بيانات صلاحيات مستوحاة من zanzibar مع ميزات اتساق قوية go apache-2.0 تحتاج rebac على نطاق واسع وتهتم بمشكلة العدو الجديد"><td><a href="https://github.com/authzed/spicedb">authzed/spicedb</a></td><td>قاعدة بيانات صلاحيات مستوحاة من Zanzibar مع ميزات اتساق قوية</td><td>Go</td><td>Apache-2.0</td><td>تحتاج ReBAC على نطاق واسع وتهتم بمشكلة العدو الجديد</td></tr>
@@ -11540,7 +11540,7 @@ Graphile Worker) وStripe Checkout مع Portal، لأن انتباه المهن�
 <section class="cat" data-level="a">
 <h3><a href="#l1-4">1.4 — هوية المؤسسات: SSO وSAML وOIDC وSCIM</a></h3>
 <div class="table-scroll"><table><thead><tr><th>المستودع</th><th>ما هو</th><th>التقنيات</th><th>الترخيص</th><th>اختره عندما</th></tr></thead><tbody>
-<tr data-q="[boxyhq/jackson](https://github.com/boxyhq/jackson) saml jackson، وتواصله ory الآن باسم ory polis: جسر من saml إلى oauth مع مزامنة أدلة scim typescript apache-2.0 تريد إضافة saml sso وscim إلى تطبيقك دون تعلّم تفاصيل saml الداخلية"><td><a href="https://github.com/boxyhq/jackson">boxyhq/jackson</a></td><td>SAML Jackson، وتواصله Ory الآن باسم Ory Polis: جسر من SAML إلى OAuth مع مزامنة أدلة SCIM</td><td>TypeScript</td><td>Apache-2.0</td><td>تريد إضافة SAML SSO وSCIM إلى تطبيقك دون تعلّم تفاصيل SAML الداخلية</td></tr>
+<tr data-q="[ory/polis](https://github.com/ory/polis) ory polis (سابقًا saml jackson من boxyhq): جسر من saml إلى oauth مع مزامنة أدلة scim typescript apache-2.0 تريد إضافة saml sso وscim إلى تطبيقك دون تعلّم تفاصيل saml الداخلية"><td><a href="https://github.com/ory/polis">ory/polis</a></td><td>Ory Polis (سابقًا SAML Jackson من BoxyHQ): جسر من SAML إلى OAuth مع مزامنة أدلة SCIM</td><td>TypeScript</td><td>Apache-2.0</td><td>تريد إضافة SAML SSO وSCIM إلى تطبيقك دون تعلّم تفاصيل SAML الداخلية</td></tr>
 <tr data-q="[keycloak/keycloak](https://github.com/keycloak/keycloak) خادم iam كامل يتوسط بين saml وoidc ويتحد مع ldap java apache-2.0 تريد وسيط هوية ناضجًا تستضيفه بنفسك وتستطيع تشغيل خدمة jvm"><td><a href="https://github.com/keycloak/keycloak">keycloak/keycloak</a></td><td>خادم IAM كامل يتوسط بين SAML وOIDC ويتحد مع LDAP</td><td>Java</td><td>Apache-2.0</td><td>تريد وسيط هوية ناضجًا تستضيفه بنفسك وتستطيع تشغيل خدمة JVM</td></tr>
 <tr data-q="[zitadel/zitadel](https://github.com/zitadel/zitadel) منصة هوية متعددة المستأجرين فيها منظمات وsaml وoidc وميزات scim go agpl-3.0 نموذج المستأجرين لديك يتوافق مع منظماتها وتقبل agpl"><td><a href="https://github.com/zitadel/zitadel">zitadel/zitadel</a></td><td>منصة هوية متعددة المستأجرين فيها منظمات وSAML وOIDC وميزات SCIM</td><td>Go</td><td>AGPL-3.0</td><td>نموذج المستأجرين لديك يتوافق مع منظماتها وتقبل AGPL</td></tr>
 <tr data-q="[goauthentik/authentik](https://github.com/goauthentik/authentik) مزوّد هوية تستضيفه بنفسك مع مسارات مرنة وsaml وoidc وldap وscim python, go mit (enterprise features separate) تريد تشغيل مزوّد هوية خاص بك، أو اختبار مزوّد الخدمة لديك مقابله محليًا"><td><a href="https://github.com/goauthentik/authentik">goauthentik/authentik</a></td><td>مزوّد هوية تستضيفه بنفسك مع مسارات مرنة وSAML وOIDC وLDAP وSCIM</td><td>Python, Go</td><td>MIT (enterprise features separate)</td><td>تريد تشغيل مزوّد هوية خاص بك، أو اختبار مزوّد الخدمة لديك مقابله محليًا</td></tr>
@@ -11553,7 +11553,7 @@ Graphile Worker) وStripe Checkout مع Portal، لأن انتباه المهن�
 <h3><a href="#l2-1">2.1 — طبقة البيانات: Postgres وأدوات ORM والترحيلات وبيانات البذر</a></h3>
 <div class="table-scroll"><table><thead><tr><th>المستودع</th><th>ما هو</th><th>التقنيات</th><th>الترخيص</th><th>اختره عندما</th></tr></thead><tbody>
 <tr data-q="[postgres/postgres](https://github.com/postgres/postgres) قاعدة البيانات نفسها (نسخة مطابقة على github) c postgresql تريد قراءة كود أو توثيق الشيء الذي تعتمد عليه"><td><a href="https://github.com/postgres/postgres">postgres/postgres</a></td><td>قاعدة البيانات نفسها (نسخة مطابقة على GitHub)</td><td>C</td><td>PostgreSQL</td><td>تريد قراءة كود أو توثيق الشيء الذي تعتمد عليه</td></tr>
-<tr data-q="[prisma/prisma](https://github.com/prisma/prisma) أداة orm تبدأ من المخطط، مع ترحيلات وأداة studio typescript apache-2.0 تريد أسهل مدخل وملف مخطط مقروء"><td><a href="https://github.com/prisma/prisma">prisma/prisma</a></td><td>أداة ORM تبدأ من المخطط، مع ترحيلات وأداة Studio</td><td>TypeScript</td><td>Apache-2.0</td><td>تريد أسهل مدخل وملف مخطط مقروء</td></tr>
+<tr data-q="[prisma/orm](https://github.com/prisma/orm) أداة orm تبدأ من المخطط، مع ترحيلات وأداة studio typescript apache-2.0 تريد أسهل مدخل وملف مخطط مقروء"><td><a href="https://github.com/prisma/orm">prisma/orm</a></td><td>أداة ORM تبدأ من المخطط، مع ترحيلات وأداة Studio</td><td>TypeScript</td><td>Apache-2.0</td><td>تريد أسهل مدخل وملف مخطط مقروء</td></tr>
 <tr data-q="[drizzle-team/drizzle-orm](https://github.com/drizzle-team/drizzle-orm) أداة orm لـ typescript تشبه sql، مع ترحيلات drizzle kit typescript apache-2.0 تعرف sql، وتريد الأنواع، وتنشر على بيئة عديمة الخادم أو على الحافة"><td><a href="https://github.com/drizzle-team/drizzle-orm">drizzle-team/drizzle-orm</a></td><td>أداة ORM لـ TypeScript تشبه SQL، مع ترحيلات Drizzle Kit</td><td>TypeScript</td><td>Apache-2.0</td><td>تعرف SQL، وتريد الأنواع، وتنشر على بيئة عديمة الخادم أو على الحافة</td></tr>
 <tr data-q="[kysely-org/kysely](https://github.com/kysely-org/kysely) باني استعلامات sql آمن الأنواع typescript mit تريد التحكم في sql مع الأنواع ودون طبقة orm"><td><a href="https://github.com/kysely-org/kysely">kysely-org/kysely</a></td><td>باني استعلامات SQL آمن الأنواع</td><td>TypeScript</td><td>MIT</td><td>تريد التحكم في SQL مع الأنواع ودون طبقة ORM</td></tr>
 <tr data-q="[sqlc-dev/sqlc](https://github.com/sqlc-dev/sqlc) يولّد كودًا آمن الأنواع من استعلامات sql go (also other targets) mit تكتب بلغة go وتفضّل ملفات sql على orm"><td><a href="https://github.com/sqlc-dev/sqlc">sqlc-dev/sqlc</a></td><td>يولّد كودًا آمن الأنواع من استعلامات SQL</td><td>Go (also other targets)</td><td>MIT</td><td>تكتب بلغة Go وتفضّل ملفات SQL على ORM</td></tr>
@@ -11573,7 +11573,7 @@ Graphile Worker) وStripe Checkout مع Portal، لأن انتباه المهن�
 <tr data-q="[imgproxy/imgproxy](https://github.com/imgproxy/imgproxy) خادم لتغيير حجم الصور عند الطلب go apache-2.0 تريد تحويلات عبر الرابط خلف cdn"><td><a href="https://github.com/imgproxy/imgproxy">imgproxy/imgproxy</a></td><td>خادم لتغيير حجم الصور عند الطلب</td><td>Go</td><td>Apache-2.0</td><td>تريد تحويلات عبر الرابط خلف CDN</td></tr>
 <tr data-q="[supabase/storage](https://github.com/supabase/storage) واجهة التخزين في supabase: خلفية s3، وبيانات وصفية في postgres، وسياسات typescript apache-2.0 تريد قراءة كود خدمة تخزين تعمل في الإنتاج"><td><a href="https://github.com/supabase/storage">supabase/storage</a></td><td>واجهة التخزين في Supabase: خلفية S3، وبيانات وصفية في Postgres، وسياسات</td><td>TypeScript</td><td>Apache-2.0</td><td>تريد قراءة كود خدمة تخزين تعمل في الإنتاج</td></tr>
 <tr data-q="[seaweedfs/seaweedfs](https://github.com/seaweedfs/seaweedfs) مخزن كتل موزّع مع بوابة s3 go apache-2.0 تستضيف التخزين بنفسك على نطاق حقيقي"><td><a href="https://github.com/seaweedfs/seaweedfs">seaweedfs/seaweedfs</a></td><td>مخزن كتل موزّع مع بوابة S3</td><td>Go</td><td>Apache-2.0</td><td>تستضيف التخزين بنفسك على نطاق حقيقي</td></tr>
-<tr data-q="[minio/minio](https://github.com/minio/minio) خادم متوافق مع s3؛ النسخة المجتمعية مصدر فقط منذ 2025 go agpl-3.0 تشغّله أصلًا؛ قيّم البدائل للإعدادات الجديدة"><td><a href="https://github.com/minio/minio">minio/minio</a></td><td>خادم متوافق مع S3؛ النسخة المجتمعية مصدر فقط منذ 2025</td><td>Go</td><td>AGPL-3.0</td><td>تشغّله أصلًا؛ قيّم البدائل للإعدادات الجديدة</td></tr>
+<tr data-q="[rustfs/rustfs](https://github.com/rustfs/rustfs) مخزن كائنات متوافق مع s3 صُمّم للانتقال من minio والعمل بجانبه rust apache-2.0 تستبدل minio (المؤرشف) أو تريد ترخيصًا متساهلًا"><td><a href="https://github.com/rustfs/rustfs">rustfs/rustfs</a></td><td>مخزن كائنات متوافق مع S3 صُمّم للانتقال من MinIO والعمل بجانبه</td><td>Rust</td><td>Apache-2.0</td><td>تستبدل MinIO (المؤرشف) أو تريد ترخيصًا متساهلًا</td></tr>
 </tbody></table></div></section>
 <section class="cat" data-level="i">
 <h3><a href="#l2-3">2.3 — البحث: من `LIKE '%x%'` إلى محرك بحث</a></h3>
@@ -11643,7 +11643,7 @@ Graphile Worker) وStripe Checkout مع Portal، لأن انتباه المهن�
 <tr data-q="[maizzle/framework](https://github.com/maizzle/framework) إطار tailwind css لرسائل html javascript mit فريقك يفكر بأسلوب tailwind"><td><a href="https://github.com/maizzle/framework">maizzle/framework</a></td><td>إطار Tailwind CSS لرسائل HTML</td><td>JavaScript</td><td>MIT</td><td>فريقك يفكر بأسلوب Tailwind</td></tr>
 <tr data-q="[nodemailer/nodemailer](https://github.com/nodemailer/nodemailer) أداة الإرسال القياسية في node.js (smtp ووسائل نقل أخرى) javascript mit-0 تحتاج smtp (عملاء يستضيفون بأنفسهم، أو mailpit، أو مزوّد احتياطي)"><td><a href="https://github.com/nodemailer/nodemailer">nodemailer/nodemailer</a></td><td>أداة الإرسال القياسية في Node.js (SMTP ووسائل نقل أخرى)</td><td>JavaScript</td><td>MIT-0</td><td>تحتاج SMTP (عملاء يستضيفون بأنفسهم، أو Mailpit، أو مزوّد احتياطي)</td></tr>
 <tr data-q="[axllent/mailpit](https://github.com/axllent/mailpit) ملتقط smtp محلي مع واجهة ويب وفحص توافق html والروابط go mit دائمًا، في التطوير وفي ci"><td><a href="https://github.com/axllent/mailpit">axllent/mailpit</a></td><td>ملتقط SMTP محلي مع واجهة ويب وفحص توافق HTML والروابط</td><td>Go</td><td>MIT</td><td>دائمًا، في التطوير وفي CI</td></tr>
-<tr data-q="[unsend-dev/unsend](https://github.com/unsend-dev/unsend) usesend: منصة إرسال مفتوحة المصدر (api ونطاقات وويب هوك) فوق amazon ses typescript, next.js agpl-3.0 تريد تجربة تشبه resend تستضيفها بنفسك وتدفع أسعار ses"><td><a href="https://github.com/unsend-dev/unsend">unsend-dev/unsend</a></td><td>useSend: منصة إرسال مفتوحة المصدر (API ونطاقات وويب هوك) فوق Amazon SES</td><td>TypeScript, Next.js</td><td>AGPL-3.0</td><td>تريد تجربة تشبه Resend تستضيفها بنفسك وتدفع أسعار SES</td></tr>
+<tr data-q="[usesend/usesend](https://github.com/usesend/usesend) usesend: منصة إرسال مفتوحة المصدر (api ونطاقات وويب هوك) فوق amazon ses typescript, next.js agpl-3.0 تريد تجربة تشبه resend تستضيفها بنفسك وتدفع أسعار ses"><td><a href="https://github.com/usesend/useSend">usesend/useSend</a></td><td>useSend: منصة إرسال مفتوحة المصدر (API ونطاقات وويب هوك) فوق Amazon SES</td><td>TypeScript, Next.js</td><td>AGPL-3.0</td><td>تريد تجربة تشبه Resend تستضيفها بنفسك وتدفع أسعار SES</td></tr>
 <tr data-q="[postalserver/postal](https://github.com/postalserver/postal) منصة تسليم بريد كاملة الميزات ruby mit تحتاج فعلًا إلى تشغيل خوادم البريد الخاصة بك"><td><a href="https://github.com/postalserver/postal">postalserver/postal</a></td><td>منصة تسليم بريد كاملة الميزات</td><td>Ruby</td><td>MIT</td><td>تحتاج فعلًا إلى تشغيل خوادم البريد الخاصة بك</td></tr>
 <tr data-q="[knadh/listmonk](https://github.com/knadh/listmonk) مدير نشرات إخبارية وقوائم بريدية تستضيفه بنفسك go, postgres agpl-3.0 نشرات المنتج، منفصلة عن البريد المعاملاتي"><td><a href="https://github.com/knadh/listmonk">knadh/listmonk</a></td><td>مدير نشرات إخبارية وقوائم بريدية تستضيفه بنفسك</td><td>Go, Postgres</td><td>AGPL-3.0</td><td>نشرات المنتج، منفصلة عن البريد المعاملاتي</td></tr>
 <tr data-q="[mautic/mautic](https://github.com/mautic/mautic) أتمتة تسويق مفتوحة المصدر php gpl-3.0 حملات وتقسيم جمهور وتقييم عملاء محتملين، باستضافة ذاتية"><td><a href="https://github.com/mautic/mautic">mautic/mautic</a></td><td>أتمتة تسويق مفتوحة المصدر</td><td>PHP</td><td>GPL-3.0</td><td>حملات وتقسيم جمهور وتقييم عملاء محتملين، باستضافة ذاتية</td></tr>
@@ -11795,9 +11795,9 @@ Graphile Worker) وStripe Checkout مع Portal، لأن انتباه المهن�
 <h3><a href="#l7-3">7.3 — سجلات التدقيق وموجز النشاط</a></h3>
 <div class="table-scroll"><table><thead><tr><th>المستودع</th><th>ما هو</th><th>التقنيات</th><th>الترخيص</th><th>اختره عندما</th></tr></thead><tbody>
 <tr data-q="[retracedhq/retraced](https://github.com/retracedhq/retraced) خدمة سجلات تدقيق مستقلة مع عارض قابل للتضمين يراه العملاء (من boxyhq) ts, postgres, elasticsearch/opensearch apache-2.0 تريد خدمة تدقيق مستضافة ذاتيًا مع واجهة جاهزة"><td><a href="https://github.com/retracedhq/retraced">retracedhq/retraced</a></td><td>خدمة سجلات تدقيق مستقلة مع عارض قابل للتضمين يراه العملاء (من BoxyHQ)</td><td>TS, Postgres, Elasticsearch/OpenSearch</td><td>Apache-2.0</td><td>تريد خدمة تدقيق مستضافة ذاتيًا مع واجهة جاهزة</td></tr>
-<tr data-q="[bemihq/bemi](https://github.com/bemihq/bemi) cdc لـ postgres يلتقط كل تغيير ويدمج سياق التطبيق go/ts, postgres sspl-1.0 تريد التقاطًا تلقائيًا وكاملًا للتغييرات مع سياق المستخدم"><td><a href="https://github.com/BemiHQ/bemi">BemiHQ/bemi</a></td><td>CDC لـ Postgres يلتقط كل تغيير ويدمج سياق التطبيق</td><td>Go/TS, Postgres</td><td>SSPL-1.0</td><td>تريد التقاطًا تلقائيًا وكاملًا للتغييرات مع سياق المستخدم</td></tr>
+<tr data-q="[pgstack-io/bemi-io](https://github.com/pgstack-io/bemi-io) cdc لـ postgres يلتقط كل تغيير ويدمج سياق التطبيق go/ts, postgres sspl-1.0 تريد التقاطًا تلقائيًا وكاملًا للتغييرات مع سياق المستخدم"><td><a href="https://github.com/pgstack-io/bemi-io">pgstack-io/bemi-io</a></td><td>CDC لـ Postgres يلتقط كل تغيير ويدمج سياق التطبيق</td><td>Go/TS, Postgres</td><td>SSPL-1.0</td><td>تريد التقاطًا تلقائيًا وكاملًا للتغييرات مع سياق المستخدم</td></tr>
 <tr data-q="[pgaudit/pgaudit](https://github.com/pgaudit/pgaudit) إضافة لـ postgres لتسجيل تدقيق الجلسات والكائنات c postgresql license يتطلب الامتثال سجلًا للوصول المباشر إلى قاعدة البيانات"><td><a href="https://github.com/pgaudit/pgaudit">pgaudit/pgaudit</a></td><td>إضافة لـ Postgres لتسجيل تدقيق الجلسات والكائنات</td><td>C</td><td>PostgreSQL License</td><td>يتطلب الامتثال سجلًا للوصول المباشر إلى قاعدة البيانات</td></tr>
-<tr data-q="[supabase/supa_audit](https://github.com/supabase/supa_audit) إضافة صغيرة لـ postgres لتدقيق تغييرات الجداول عبر المشغّلات sql apache-2.0 تريد شبكة أمان من المشغّلات تستطيع قراءتها في جلسة واحدة"><td><a href="https://github.com/supabase/supa_audit">supabase/supa_audit</a></td><td>إضافة صغيرة لـ Postgres لتدقيق تغييرات الجداول عبر المشغّلات</td><td>SQL</td><td>Apache-2.0</td><td>تريد شبكة أمان من المشغّلات تستطيع قراءتها في جلسة واحدة</td></tr>
+<tr data-q="[pgmemento/pgmemento](https://github.com/pgmemento/pgmemento) سجل تدقيق قائم على المشغّلات مع تتبّع إصدارات المخطط، بلغة pl/pgsql خالصة sql lgpl-3.0 تريد شبكة أمان من المشغّلات تُصان باستمرار داخل postgres، لا خدمة منفصلة"><td><a href="https://github.com/pgMemento/pgMemento">pgMemento/pgMemento</a></td><td>سجل تدقيق قائم على المشغّلات مع تتبّع إصدارات المخطط، بلغة PL/pgSQL خالصة</td><td>SQL</td><td>LGPL-3.0</td><td>تريد شبكة أمان من المشغّلات تُصان باستمرار داخل Postgres، لا خدمة منفصلة</td></tr>
 <tr data-q="[paper-trail-gem/paper_trail](https://github.com/paper-trail-gem/paper_trail) تتبع التغييرات على نماذج rails، مع سجل الإصدارات ruby mit تعمل على rails وتحتاج إلى سجل السجلات مع &quot;من فعلها&quot;"><td><a href="https://github.com/paper-trail-gem/paper_trail">paper-trail-gem/paper_trail</a></td><td>تتبع التغييرات على نماذج Rails، مع سجل الإصدارات</td><td>Ruby</td><td>MIT</td><td>تعمل على Rails وتحتاج إلى سجل السجلات مع &quot;من فعلها&quot;</td></tr>
 <tr data-q="[collectiveidea/audited](https://github.com/collectiveidea/audited) إضافة لـ orm في rails تسجّل تغييرات النماذج مع سياق المستخدم والطلب ruby mit تعمل على rails، والأولوية للتدقيق لا للإصدارات"><td><a href="https://github.com/collectiveidea/audited">collectiveidea/audited</a></td><td>إضافة لـ ORM في Rails تسجّل تغييرات النماذج مع سياق المستخدم والطلب</td><td>Ruby</td><td>MIT</td><td>تعمل على Rails، والأولوية للتدقيق لا للإصدارات</td></tr>
 <tr data-q="[django-commons/django-simple-history](https://github.com/django-commons/django-simple-history) يخزّن النسخ التاريخية لنماذج django python bsd-3-clause تعمل على django (كان سابقًا تحت jazzband)"><td><a href="https://github.com/django-commons/django-simple-history">django-commons/django-simple-history</a></td><td>يخزّن النسخ التاريخية لنماذج Django</td><td>Python</td><td>BSD-3-Clause</td><td>تعمل على Django (كان سابقًا تحت Jazzband)</td></tr>
@@ -11813,7 +11813,7 @@ Graphile Worker) وStripe Checkout مع Portal، لأن انتباه المهن�
 <tr data-q="[caprover/caprover](https://github.com/caprover/caprover) paas مستضاف ذاتيًا فوق docker swarm مع تطبيقات بنقرة واحدة ts apache-2.0 تريد خيارًا ناضجًا بواجهة رسومية مع كتالوج تطبيقات بنقرة واحدة"><td><a href="https://github.com/caprover/caprover">caprover/caprover</a></td><td>PaaS مستضاف ذاتيًا فوق Docker Swarm مع تطبيقات بنقرة واحدة</td><td>TS</td><td>Apache-2.0</td><td>تريد خيارًا ناضجًا بواجهة رسومية مع كتالوج تطبيقات بنقرة واحدة</td></tr>
 <tr data-q="[opentofu/opentofu](https://github.com/opentofu/opentofu) بنية تحتية ككود مفتوحة المصدر، متوافقة مع terraform go mpl-2.0 تريد أوسع منظومة مزوّدين تحت ترخيص مفتوح"><td><a href="https://github.com/opentofu/opentofu">opentofu/opentofu</a></td><td>بنية تحتية ككود مفتوحة المصدر، متوافقة مع Terraform</td><td>Go</td><td>MPL-2.0</td><td>تريد أوسع منظومة مزوّدين تحت ترخيص مفتوح</td></tr>
 <tr data-q="[pulumi/pulumi](https://github.com/pulumi/pulumi) بنية تحتية ككود بلغات برمجة حقيقية go, multi-language apache-2.0 يفضّل فريقك كتابة typescript على hcl"><td><a href="https://github.com/pulumi/pulumi">pulumi/pulumi</a></td><td>بنية تحتية ككود بلغات برمجة حقيقية</td><td>Go, multi-language</td><td>Apache-2.0</td><td>يفضّل فريقك كتابة TypeScript على HCL</td></tr>
-<tr data-q="[sst/sst](https://github.com/sst/sst) إطار لنشر التطبيقات المتكاملة وبنيتها التحتية، يبدأ من ts ts, go mit أنت على aws مع next.js وتطبيقات دون خوادم"><td><a href="https://github.com/sst/sst">sst/sst</a></td><td>إطار لنشر التطبيقات المتكاملة وبنيتها التحتية، يبدأ من TS</td><td>TS, Go</td><td>MIT</td><td>أنت على AWS مع Next.js وتطبيقات دون خوادم</td></tr>
+<tr data-q="[anomalyco/sst](https://github.com/anomalyco/sst) إطار لنشر التطبيقات المتكاملة وبنيتها التحتية، يبدأ من ts ts, go mit أنت على aws مع next.js وتطبيقات دون خوادم"><td><a href="https://github.com/anomalyco/sst">anomalyco/sst</a></td><td>إطار لنشر التطبيقات المتكاملة وبنيتها التحتية، يبدأ من TS</td><td>TS, Go</td><td>MIT</td><td>أنت على AWS مع Next.js وتطبيقات دون خوادم</td></tr>
 <tr data-q="[docker/compose](https://github.com/docker/compose) تعريف تطبيقات متعددة الحاويات وتشغيلها من ملف yaml واحد go apache-2.0 التطوير المحلي والتوزيعة المستضافة ذاتيًا لديك"><td><a href="https://github.com/docker/compose">docker/compose</a></td><td>تعريف تطبيقات متعددة الحاويات وتشغيلها من ملف YAML واحد</td><td>Go</td><td>Apache-2.0</td><td>التطوير المحلي والتوزيعة المستضافة ذاتيًا لديك</td></tr>
 <tr data-q="[helm/helm](https://github.com/helm/helm) مدير حزم لـ kubernetes go apache-2.0 سيستضيف عملاء المؤسسات المنتج ذاتيًا على kubernetes"><td><a href="https://github.com/helm/helm">helm/helm</a></td><td>مدير حزم لـ Kubernetes</td><td>Go</td><td>Apache-2.0</td><td>سيستضيف عملاء المؤسسات المنتج ذاتيًا على Kubernetes</td></tr>
 </tbody></table></div></section>
@@ -11840,7 +11840,7 @@ Graphile Worker) وStripe Checkout مع Portal، لأن انتباه المهن�
 <tr data-q="[promptfoo/promptfoo](https://github.com/promptfoo/promptfoo) أداة سطر أوامر للتقييم واختبار الاختراق للموجّهات والنماذج typescript mit تريد اختبار تغييرات الموجّهات والنماذج في ci"><td><a href="https://github.com/promptfoo/promptfoo">promptfoo/promptfoo</a></td><td>أداة سطر أوامر للتقييم واختبار الاختراق للموجّهات والنماذج</td><td>TypeScript</td><td>MIT</td><td>تريد اختبار تغييرات الموجّهات والنماذج في CI</td></tr>
 <tr data-q="[pgvector/pgvector](https://github.com/pgvector/pgvector) نوع متجه وبحث بالتشابه في postgres c postgresql license تريد rag بجانب بياناتك الحالية المقيدة بالمستأجر"><td><a href="https://github.com/pgvector/pgvector">pgvector/pgvector</a></td><td>نوع متجه وبحث بالتشابه في Postgres</td><td>C</td><td>PostgreSQL License</td><td>تريد RAG بجانب بياناتك الحالية المقيدة بالمستأجر</td></tr>
 <tr data-q="[qdrant/qdrant](https://github.com/qdrant/qdrant) قاعدة بيانات متجهية مخصصة مع تصفية بالحمولة rust apache-2.0 يتجاوز حجم المتجهات أو أداء البحث المصفّى قدرة postgres"><td><a href="https://github.com/qdrant/qdrant">qdrant/qdrant</a></td><td>قاعدة بيانات متجهية مخصصة مع تصفية بالحمولة</td><td>Rust</td><td>Apache-2.0</td><td>يتجاوز حجم المتجهات أو أداء البحث المصفّى قدرة Postgres</td></tr>
-<tr data-q="[modelcontextprotocol/specification](https://github.com/modelcontextprotocol/specification) مواصفة بروتوكول سياق النموذج ومخططه typescript schema, markdown mit, moving to apache-2.0 تصمم خادم mcp الخاص بـ beacon بشكل صحيح"><td><a href="https://github.com/modelcontextprotocol/specification">modelcontextprotocol/specification</a></td><td>مواصفة بروتوكول سياق النموذج ومخططه</td><td>TypeScript schema, Markdown</td><td>MIT, moving to Apache-2.0</td><td>تصمم خادم MCP الخاص بـ Beacon بشكل صحيح</td></tr>
+<tr data-q="[modelcontextprotocol/modelcontextprotocol](https://github.com/modelcontextprotocol/modelcontextprotocol) مواصفة بروتوكول سياق النموذج ومخططه typescript schema, markdown mit, moving to apache-2.0 تصمم خادم mcp الخاص بـ beacon بشكل صحيح"><td><a href="https://github.com/modelcontextprotocol/modelcontextprotocol">modelcontextprotocol/modelcontextprotocol</a></td><td>مواصفة بروتوكول سياق النموذج ومخططه</td><td>TypeScript schema, Markdown</td><td>MIT, moving to Apache-2.0</td><td>تصمم خادم MCP الخاص بـ Beacon بشكل صحيح</td></tr>
 <tr data-q="[langchain-ai/langchainjs](https://github.com/langchain-ai/langchainjs) إطار عمل للسلاسل والوكلاء والمسترجِعات typescript mit تحتاج إلى مجموعته الكبيرة من المحمّلات والتكاملات لـ rag"><td><a href="https://github.com/langchain-ai/langchainjs">langchain-ai/langchainjs</a></td><td>إطار عمل للسلاسل والوكلاء والمسترجِعات</td><td>TypeScript</td><td>MIT</td><td>تحتاج إلى مجموعته الكبيرة من المحمّلات والتكاملات لـ RAG</td></tr>
 </tbody></table></div></section>
 <section class="cat" data-level="a">
@@ -11849,7 +11849,7 @@ Graphile Worker) وStripe Checkout مع Portal، لأن انتباه المهن�
 <tr data-q="[openstatushq/openstatus](https://github.com/openstatushq/openstatus) مراقبة جاهزية وصفحات حالة مفتوحة المصدر typescript, next.js, turso, go checkers agpl-3.0 تريد مقارنة beacon الخاص بك بنسخة حقيقية، مكوّنًا مكوّنًا"><td><a href="https://github.com/openstatusHQ/openstatus">openstatusHQ/openstatus</a></td><td>مراقبة جاهزية وصفحات حالة مفتوحة المصدر</td><td>TypeScript, Next.js, Turso, Go checkers</td><td>AGPL-3.0</td><td>تريد مقارنة Beacon الخاص بك بنسخة حقيقية، مكوّنًا مكوّنًا</td></tr>
 <tr data-q="[louislam/uptime-kuma](https://github.com/louislam/uptime-kuma) مراقب جاهزية تستضيفه بنفسك node.js, vue, sqlite mit تريد نسخة المستأجر الواحد من نواة beacon، وترى ما يضيفه تعدد المستأجرين"><td><a href="https://github.com/louislam/uptime-kuma">louislam/uptime-kuma</a></td><td>مراقب جاهزية تستضيفه بنفسك</td><td>Node.js, Vue, SQLite</td><td>MIT</td><td>تريد نسخة المستأجر الواحد من نواة Beacon، وترى ما يضيفه تعدد المستأجرين</td></tr>
 <tr data-q="[boxyhq/saas-starter-kit](https://github.com/boxyhq/saas-starter-kit) قالب بداية saas للمؤسسات: فرق، وsso، وscim، وسجلات تدقيق، وويب هوك next.js, prisma apache-2.0 تريد أن ترى حلقة المؤسسات مربوطة معًا في قاعدة كود صغيرة"><td><a href="https://github.com/boxyhq/saas-starter-kit">boxyhq/saas-starter-kit</a></td><td>قالب بداية SaaS للمؤسسات: فرق، وSSO، وSCIM، وسجلات تدقيق، وويب هوك</td><td>Next.js, Prisma</td><td>Apache-2.0</td><td>تريد أن ترى حلقة المؤسسات مربوطة معًا في قاعدة كود صغيرة</td></tr>
-<tr data-q="[calcom/cal.com](https://github.com/calcom/cal.com) بنية تحتية للجدولة next.js, trpc, prisma, turborepo mit تريد تقريبًا كل مكوّن في مستودع أحادي (monorepo) ناضج واحد"><td><a href="https://github.com/calcom/cal.com">calcom/cal.com</a></td><td>بنية تحتية للجدولة</td><td>Next.js, tRPC, Prisma, Turborepo</td><td>MIT</td><td>تريد تقريبًا كل مكوّن في مستودع أحادي (Monorepo) ناضج واحد</td></tr>
+<tr data-q="[calcom/cal.diy](https://github.com/calcom/cal.diy) الجدولة (النسخة مفتوحة المصدر من cal.com) next.js, trpc, prisma, turborepo mit تريد مكوّنات كثيرة في مستودع أحادي (monorepo) ناضج واحد (أُزيلت ميزات المؤسسات في 2026)"><td><a href="https://github.com/calcom/cal.diy">calcom/cal.diy</a></td><td>الجدولة (النسخة مفتوحة المصدر من Cal.com)</td><td>Next.js, tRPC, Prisma, Turborepo</td><td>MIT</td><td>تريد مكوّنات كثيرة في مستودع أحادي (Monorepo) ناضج واحد (أُزيلت ميزات المؤسسات في 2026)</td></tr>
 <tr data-q="[makeplane/plane](https://github.com/makeplane/plane) إدارة المشاريع django, next.js, celery agpl-3.0 تريد المعمارية كاملة بواجهة خلفية بلغة python"><td><a href="https://github.com/makeplane/plane">makeplane/plane</a></td><td>إدارة المشاريع</td><td>Django, Next.js, Celery</td><td>AGPL-3.0</td><td>تريد المعمارية كاملة بواجهة خلفية بلغة Python</td></tr>
 <tr data-q="[chatwoot/chatwoot](https://github.com/chatwoot/chatwoot) منصة دعم العملاء rails, vue, sidekiq mit (with `enterprise` folder) تريد المعمارية كاملة بـ rails"><td><a href="https://github.com/chatwoot/chatwoot">chatwoot/chatwoot</a></td><td>منصة دعم العملاء</td><td>Rails, Vue, Sidekiq</td><td>MIT (with <code>enterprise</code> folder)</td><td>تريد المعمارية كاملة بـ Rails</td></tr>
 <tr data-q="[vercel/next-forge](https://github.com/vercel/next-forge) قالب turborepo جاهز للإنتاج next.js, many integrations mit تريد خريطة توضح أيّ خدمة مُدارة تملأ كل صندوق"><td><a href="https://github.com/vercel/next-forge">vercel/next-forge</a></td><td>قالب Turborepo جاهز للإنتاج</td><td>Next.js, many integrations</td><td>MIT</td><td>تريد خريطة توضح أيّ خدمة مُدارة تملأ كل صندوق</td></tr>
