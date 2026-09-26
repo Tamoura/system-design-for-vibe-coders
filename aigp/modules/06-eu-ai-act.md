@@ -22,7 +22,7 @@
 
 Layla's first AI Act email comes from the Frankfurt branch manager: "Surely this is a problem for European companies. We are a Gulf bank." Omar half agrees; he thinks only systems physically run from Frankfurt could matter.
 
-Layla walks the AI Governance Committee through the inventory. Dana's team built the credit-scoring model in Doha, but it scores EU residents who apply at the Frankfurt branch. The vendor CV-screening tool Yusuf bought filters applicants in Doha, Dubai *and* Frankfurt. The chatbot answers EU customers. The credit memo copilot, built on a third-party large language model, supports lending that includes some German sole traders. Fraud detection runs on every card transaction. Staff everywhere use public GenAI tools.
+Layla walks the AI Governance Committee through the inventory. Dana's team built the credit model in Doha, but it scores EU residents applying in Frankfurt. The vendor CV-screening tool Yusuf bought filters applicants in Doha, Dubai *and* Frankfurt. The chatbot answers EU customers. The credit memo copilot, built on a third-party large language model, supports lending that includes some German sole traders. Fraud detection runs on every card transaction. Staff everywhere use public GenAI tools.
 
 Is each one an "AI system"? Is Najm in scope? Provider, deployer, or both? Which tier? The answers decide whether Najm faces a disclosure duty or a full high-risk programme, with fines for the worst breaches of up to €35 million or 7% of worldwide turnover. Everything else depends on getting this first step right.
 
@@ -196,8 +196,8 @@ She adds one clause to Najm's AI policy:
 🟡 **Role map.** A US vendor sells the CV tool through an EU reseller, and Najm's HR team plans to add its own scoring rules on top. Identify the provider, importer, distributor and deployer, and say what would make Najm the provider under Art. 25.
 *Done when:* every party has a role with a one-line justification and you have named at least two Art. 25 triggers.
 
-🔴 **Derogation memo.** Write a one-page Art. 6(3) assessment for the copilot as used for sole traders: each of the four conditions, the profiling override, the evidence Najm keeps, a conclusion, and what would change it.
-*Done when:* the memo could be handed to a market-surveillance authority and shows both the reasoning and the registration consequence.
+🔴 **Derogation memo.** Write a one-page Art. 6(3) assessment for the copilot as used for sole traders: the four conditions, the profiling override, the evidence kept, and a conclusion.
+*Done when:* an authority could follow the reasoning and see the registration consequence.
 
 ## ⚠️ Mistakes and exam traps
 
@@ -206,13 +206,13 @@ She adds one clause to Najm's AI policy:
 - **Confusing fraud detection with credit scoring.** Fraud detection is expressly excluded; credit scoring of *natural persons* is high-risk; scoring companies is not caught by that entry.
 - **Treating Art. 6(3) as automatic.** It never covers profiling, and requires documentation and registration.
 - **"The vendor carries everything."** Deployers have duties (6.2) and become providers if they rebrand, substantially modify or repurpose into high-risk.
-- **Mixing up emotion recognition.** At work or in education it is prohibited (except medical or safety reasons); elsewhere it is Annex III high-risk plus an Art. 50 notice.
+- **Mixing up emotion recognition.** Prohibited at work or in education (bar medical or safety reasons); elsewhere, high-risk plus an Art. 50 notice.
 
 ## 🧾 Recap
 
-- The AI Act is a directly applicable regulation applying product-safety methods to AI, with a fundamental-rights layer.
-- An AI system is defined by its capacity to *infer*; human-written rules alone do not qualify.
-- Scope is extraterritorial: EU market placement, EU deployers, and non-EU actors whose output is used in the EU.
+- The AI Act applies product-safety methods to AI, with a fundamental-rights layer.
+- An AI system is defined by its capacity to *infer*.
+- Scope is extraterritorial: EU market placement, EU deployers, and non-EU output used in the EU.
 - Roles drive duties; organisations often hold several, and Art. 25 can turn a deployer into a provider.
 - Tiers: eight Art. 5 prohibitions; high-risk via Annex I products or eight Annex III areas; Art. 50 transparency; minimal. Literacy and GPAI rules cut across.
 - The Art. 6(3) derogation never covers profiling and always needs documentation and registration.
@@ -235,26 +235,26 @@ She adds one clause to Najm's AI policy:
 **2. Which of the following is a prohibited practice under Article 5?**
 
 - A. A customer chatbot that does not state it is an AI
-- B. A system inferring call-centre agents' emotions from their voices to manage performance
-- C. A model evaluating the creditworthiness of individual loan applicants
+- B. A model evaluating the creditworthiness of individual loan applicants
+- C. A system inferring call-centre agents' emotions from their voices to manage performance
 - D. A model detecting fraudulent card transactions
 
 <details><summary>Answer</summary>
 
-**B.** Emotion recognition in the workplace is prohibited except for medical or safety reasons. A breaches Art. 50, not Art. 5. C is high-risk and D is expressly excluded from the credit-scoring entry. (See 🟡 Going deeper: Article 5.)
+**C.** Emotion recognition in the workplace is prohibited except for medical or safety reasons. A breaches Art. 50, not Art. 5. B is high-risk and D is expressly excluded from the credit-scoring entry. (See 🟡 Going deeper: Article 5.)
 
 </details>
 
 **3. A provider wants to rely on the Article 6(3) derogation because its Annex III system performs only a preparatory task. In which situation can it NOT do so?**
 
-- A. The system is sold only to SMEs
-- B. The system performs profiling of natural persons
+- A. The system performs profiling of natural persons
+- B. The system is sold only to SMEs
 - C. The system was developed outside the EU
 - D. The system is used alongside human review
 
 <details><summary>Answer</summary>
 
-**B.** An Annex III system that profiles natural persons is always high-risk. The other factors do not remove the derogation, and human review (D) supports condition (c). (See 🔴 Expert view: the derogation.)
+**A.** An Annex III system that profiles natural persons is always high-risk. The other factors do not remove the derogation, and human review (D) supports condition (c). (See 🔴 Expert view: the derogation.)
 
 </details>
 
@@ -262,12 +262,12 @@ She adds one clause to Najm's AI policy:
 
 - A. Nothing changes; the vendor remains the provider because it built the system
 - B. Najm becomes a distributor with limited verification duties
-- C. Najm is treated as the provider of a high-risk AI system
-- D. The system stops being high-risk because a conformity assessment was already done
+- C. The system stops being high-risk because a conformity assessment was already done
+- D. Najm is treated as the provider of a high-risk AI system
 
 <details><summary>Answer</summary>
 
-**C.** Under Art. 25, putting your name or trademark on a high-risk system already on the market makes you its provider. A is the "vendor carries everything" trap; rebranding is exactly what takes Najm beyond a distributor role (B). (See 🟡 Going deeper: when a deployer becomes a provider.)
+**D.** Under Art. 25, putting your name or trademark on a high-risk system already on the market makes you its provider. A is the "vendor carries everything" trap; rebranding is exactly what takes Najm beyond a distributor role (B). (See 🟡 Going deeper: when a deployer becomes a provider.)
 
 </details>
 
@@ -430,7 +430,7 @@ This is why Yusuf's contract (11.2) must secure instructions, log access, change
 
 ## 🏛️ In practice at Najm Bank
 
-**1. Deployer readiness checklist: CV-screening tool (Frankfurt).** Nothing goes live until every line is "Yes" with evidence.
+**Artefact A — deployer readiness checklist for the CV-screening tool (Frankfurt).** Nothing goes live until every line is "Yes" with evidence.
 
 | # | Duty | Evidence | Owner |
 |---|---|---|---|
@@ -444,7 +444,7 @@ This is why Yusuf's contract (11.2) must secure instructions, log access, change
 | 8 | Candidates told a high-risk AI system is used | Candidate notice | Sara |
 | 9 | DPIA done using vendor's Art. 13 information | DPIA reference | Sara |
 
-**2. FRIA excerpt: retail credit-scoring model.**
+**Artefact B — FRIA excerpt for the retail credit-scoring model.**
 
 > **Process.** The model scores consumer loan applications up to €75,000. Every decline and every grey-zone score is reviewed by an officer before a decision.
 > **Period and frequency.** Continuous from go-live; about 1,200 decisions a month; reviewed annually or on material change.
@@ -745,14 +745,14 @@ Layla brings a **GenAI and transparency decision record** to the AI Governance C
 
 **1. Above what level of cumulative training compute is a GPAI model presumed to have high-impact capabilities, and therefore systemic risk?**
 
-- A. 10^21 FLOPs
+- A. 10^25 FLOPs
 - B. 10^23 FLOPs
-- C. 10^25 FLOPs
+- C. 10^21 FLOPs
 - D. 10^27 FLOPs
 
 <details><summary>Answer</summary>
 
-**C.** The Act presumes high-impact capabilities above 10^25 FLOPs of cumulative training compute. The Commission can also designate models below it and can update the threshold. (See 🟡 Going deeper: systemic risk.)
+**A.** The Act presumes high-impact capabilities above 10^25 FLOPs of cumulative training compute. The Commission can also designate models below it and can update the threshold. (See 🟡 Going deeper: systemic risk.)
 
 </details>
 
@@ -760,12 +760,12 @@ Layla brings a **GenAI and transparency decision record** to the AI Governance C
 
 - A. Publishing a sufficiently detailed summary of training content
 - B. Putting in place a policy to comply with EU copyright law
-- C. Performing model evaluations, including adversarial testing
-- D. Providing information to downstream providers
+- C. Providing information to downstream providers
+- D. Performing model evaluations, including adversarial testing
 
 <details><summary>Answer</summary>
 
-**C.** Evaluations with adversarial testing are an Art. 55 systemic-risk duty. A, B and D are Art. 53 duties for all GPAI model providers (with an open-source exemption for D only). (See 🟢 The essentials: two layers of GPAI obligations.)
+**D.** Evaluations with adversarial testing are an Art. 55 systemic-risk duty. A, B and C are Art. 53 duties for all GPAI model providers (with an open-source exemption for C only). (See 🟢 The essentials: two layers of GPAI obligations.)
 
 </details>
 

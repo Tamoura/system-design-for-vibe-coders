@@ -178,14 +178,14 @@ Layla's first artefact is a one-page **AI Governance Charter**, approved by the 
 
 **3. In the three lines model, where does Najm's Head of AI Governance usually sit?**
 
-- A. First line, because she owns the AI systems
-- B. Second line, setting policy and challenging the business
+- A. Second line, setting policy and challenging the business
+- B. First line, because she owns the AI systems
 - C. Third line, giving independent assurance to the board
 - D. Outside the model, because AI is a technology topic
 
 <details><summary>Answer</summary>
 
-**B.** AI governance is typically a second-line function that sets policy and provides challenge. System owners such as Khalid are first line; internal audit is third line. (See 🟡 Going deeper.)
+**A.** AI governance is typically a second-line function that sets policy and provides challenge. System owners such as Khalid are first line; internal audit is third line. (See 🟡 Going deeper.)
 
 </details>
 
@@ -409,40 +409,40 @@ Layla gives Omar and Sara two study plans and lets them choose. Both map directl
 
 **1. At the time of writing (2026), how many AIGP exam questions are scored?**
 
-- A. 100
+- A. 85
 - B. 90
-- C. 85
+- C. 100
 - D. 75
 
 <details><summary>Answer</summary>
 
-**C.** The exam has 100 questions, of which 85 are scored and 15 are unscored pilot questions. A is the total, not the scored number. (See 🟢 The essentials.)
+**A.** The exam has 100 questions, of which 85 are scored and 15 are unscored pilot questions. C is the total, not the scored number. (See 🟢 The essentials.)
 
 </details>
 
 **2. Which pair of domains carries the most questions in the BoK v2.1 blueprint?**
 
 - A. Domains I and II
-- B. Domains II and III
-- C. Domains III and IV
+- B. Domains III and IV
+- C. Domains II and III
 - D. Domains I and IV
 
 <details><summary>Answer</summary>
 
-**C.** Domains III (governing development) and IV (governing deployment and use) each have a range of 21–25 questions, the highest of the four. Domain II is 19–23 and Domain I is 16–20. (See the domain table.)
+**B.** Domains III (governing development) and IV (governing deployment and use) each have a range of 21–25 questions, the highest of the four. Domain II is 19–23 and Domain I is 16–20. (See the domain table.)
 
 </details>
 
 **3. What is the main significance of the v2.1 shift from "AI model" to "AI system" in Domains III and IV?**
 
 - A. Models no longer need to be tested
-- B. Governance must cover the whole system, including data pipelines, interfaces, human oversight and context of use
+- B. The exam now focuses on hardware
 - C. Only generative AI is now in scope
-- D. The exam now focuses on hardware
+- D. Governance must cover the whole system, including data pipelines, interfaces, human oversight and context of use
 
 <details><summary>Answer</summary>
 
-**B.** A system is the model plus everything around it, which is where harms arise. Models still need testing (A is wrong), and the change is not limited to GenAI or hardware. (See "What changed in v2.1".)
+**D.** A system is the model plus everything around it, which is where harms arise. Models still need testing (A is wrong), and the change is not limited to GenAI or hardware. (See "What changed in v2.1".)
 
 </details>
 
@@ -634,27 +634,27 @@ Layla presents the inventory to the AI Governance Committee with a short decisio
 
 **1. What is the PRIMARY purpose of an AI inventory?**
 
-- A. To show the board how innovative the organisation is
-- B. To give the organisation a complete, owned view of its AI systems so it can prioritise assessment and controls
+- A. To give the organisation a complete, owned view of its AI systems so it can prioritise assessment and controls
+- B. To show the board how innovative the organisation is
 - C. To replace the need for impact assessments
 - D. To satisfy a requirement that every AI system be registered with a regulator
 
 <details><summary>Answer</summary>
 
-**B.** The inventory is the foundation for tiering, assessment, reporting and oversight. It does not replace assessments (C), and it is an internal governance tool, not a general registration duty to a regulator (D). (See 🟢 What an AI inventory is.)
+**A.** The inventory is the foundation for tiering, assessment, reporting and oversight. It does not replace assessments (C), and it is an internal governance tool, not a general registration duty to a regulator (D). (See 🟢 What an AI inventory is.)
 
 </details>
 
 **2. Layla asks department heads "Do you use AI?" and most say no. Which discovery step would MOST improve completeness?**
 
 - A. Accept the answers and record the data science team's models only
-- B. Ask which decisions use a score, ranking, prediction or generated text, and cross-check contracts, existing registers and network logs
+- B. Hire an external firm to certify that no other AI exists
 - C. Ban all software with AI features until owners declare them
-- D. Hire an external firm to certify that no other AI exists
+- D. Ask which decisions use a score, ranking, prediction or generated text, and cross-check contracts, existing registers and network logs
 
 <details><summary>Answer</summary>
 
-**B.** Asking about decisions and outputs, and using several independent sources, finds bought, embedded and shadow AI that owners do not label as AI. C is disproportionate; D outsources judgement without improving the method. (See 🟡 How Layla finds the AI.)
+**D.** Asking about decisions and outputs, and using several independent sources, finds bought, embedded and shadow AI that owners do not label as AI. C is disproportionate; B outsources judgement without improving the method. (See 🟡 How Layla finds the AI.)
 
 </details>
 
@@ -688,12 +688,12 @@ Layla presents the inventory to the AI Governance Committee with a short decisio
 
 - A. Ignore it, since the outputs are reviewed by humans
 - B. Dismiss the staff involved
-- C. Record it in the inventory with an owner, issue an interim acceptable-use rule, and offer an approved tool with proper contract terms
-- D. Block all internet access for relationship managers
+- C. Block all internet access for relationship managers
+- D. Record it in the inventory with an owner, issue an interim acceptable-use rule, and offer an approved tool with proper contract terms
 
 <details><summary>Answer</summary>
 
-**C.** Shadow AI needs visibility, ownership, clear rules and a safe alternative. A ignores confidentiality and data-protection exposure; B and D are disproportionate and tend to drive use underground rather than govern it. (See 🔴 Embedded and shadow AI, and the committee minute.)
+**D.** Shadow AI needs visibility, ownership, clear rules and a safe alternative. A ignores confidentiality and data-protection exposure; B and C are disproportionate and tend to drive use underground rather than govern it. (See 🔴 Embedded and shadow AI, and the committee minute.)
 
 </details>
 

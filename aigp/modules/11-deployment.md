@@ -166,27 +166,27 @@ Layla's team writes a **Deploy Decision Memo** for the committee.
 
 **2. Which question is *most* characteristic of the "alternatives" step of a deploy decision?**
 
-- A. What accuracy does the vendor claim?
-- B. Could a non-AI or simpler approach achieve the goal with less risk?
+- A. Could a non-AI or simpler approach achieve the goal with less risk?
+- B. What accuracy does the vendor claim?
 - C. Which cloud region will host the model?
 - D. How many competitors use similar AI?
 
 <details><summary>Answer</summary>
 
-**B.** Alternatives compare the AI option with doing nothing, non-AI approaches, simpler models and more human involvement. Competitor use (D) is not a justification. (Essentials: alternatives.)
+**A.** Alternatives compare the AI option with doing nothing, non-AI approaches, simpler models and more human involvement. Competitor use (D) is not a justification. (Essentials: alternatives.)
 
 </details>
 
 **3. In *Moffatt v. Air Canada* (2024), what did the tribunal decide about the airline's chatbot?**
 
 - A. The chatbot was a separate legal entity responsible for its own statements
-- B. The airline was responsible for the information its chatbot gave customers
-- C. The chatbot's vendor was solely liable
+- B. The chatbot's vendor was solely liable
+- C. The airline was responsible for the information its chatbot gave customers
 - D. Chatbots cannot give binding information, so no one was liable
 
 <details><summary>Answer</summary>
 
-**B.** The tribunal rejected the idea that the chatbot was responsible for its own words and held the airline responsible for information on its website, including the chatbot. The deployer owns its customer-facing AI. (Why it matters.)
+**C.** The tribunal rejected the idea that the chatbot was responsible for its own words and held the airline responsible for information on its website, including the chatbot. The deployer owns its customer-facing AI. (Why it matters.)
 
 </details>
 
@@ -194,12 +194,12 @@ Layla's team writes a **Deploy Decision Memo** for the committee.
 
 - A. Go immediately; training can follow
 - B. No-go permanently
-- C. Conditional go, with named owners and dates for the readiness gaps, checked before go-live
-- D. Transfer the decision to the vendor
+- C. Transfer the decision to the vendor
+- D. Conditional go, with named owners and dates for the readiness gaps, checked before go-live
 
 <details><summary>Answer</summary>
 
-**C.** Readiness gaps can be handled through a conditional approval with tracked conditions. A ignores readiness; B is disproportionate; D abdicates accountability. (Expert view: a structured go/no-go.)
+**D.** Readiness gaps can be handled through a conditional approval with tracked conditions. A ignores readiness; B is disproportionate; C abdicates accountability. (Expert view: a structured go/no-go.)
 
 </details>
 
@@ -383,14 +383,14 @@ Yusuf and Layla create a **Vendor AI Due Diligence Scorecard**. Here is the resu
 
 **2. Najm's credit memo copilot uses a foundation-model API. Which contract term is most important to protect confidential customer information?**
 
-- A. A clause fixing the price for three years
-- B. A restriction preventing the provider from using Najm's inputs and outputs to train its models, with retention limits
+- A. A restriction preventing the provider from using Najm's inputs and outputs to train its models, with retention limits
+- B. A clause fixing the price for three years
 - C. A marketing clause allowing Najm to name the provider
 - D. A clause requiring the provider to use open-source software
 
 <details><summary>Answer</summary>
 
-**B.** Data-use restrictions and retention limits protect confidential and personal data. The other options do not address that risk. (Going deeper: contract clauses.)
+**A.** Data-use restrictions and retention limits protect confidential and personal data. The other options do not address that risk. (Going deeper: contract clauses.)
 
 </details>
 
@@ -398,12 +398,12 @@ Yusuf and Layla create a **Vendor AI Due Diligence Scorecard**. Here is the resu
 
 - A. Accept, since the vendor is responsible for fairness
 - B. Proceed and rely on the vendor's marketing claims
-- C. Seek the evidence through negotiation or independent testing, and do not proceed if the deployer cannot meet its own obligations
-- D. Deploy and ask candidates to report problems
+- C. Deploy and ask candidates to report problems
+- D. Seek the evidence through negotiation or independent testing, and do not proceed if the deployer cannot meet its own obligations
 
 <details><summary>Answer</summary>
 
-**C.** The deployer has its own obligations and legal exposure (the iTutorGroup case shows the user of screening software answers for it). Without evidence, the risk cannot be assessed. (Why it matters; Mistakes.)
+**D.** The deployer has its own obligations and legal exposure (the iTutorGroup case shows the user of screening software answers for it). Without evidence, the risk cannot be assessed. (Why it matters; Mistakes.)
 
 </details>
 
@@ -422,14 +422,14 @@ Yusuf and Layla create a **Vendor AI Due Diligence Scorecard**. Here is the resu
 
 **5. Najm plans to run an open-weight model on its own servers as part of a high-risk system. Which statement is correct?**
 
-- A. The EU AI Act's open-source exemption removes all obligations
-- B. Najm, as the organisation building and putting the high-risk system into service, bears provider obligations and must manage licence, security and maintenance itself
+- A. Najm, as the organisation building and putting the high-risk system into service, bears provider obligations and must manage licence, security and maintenance itself
+- B. The EU AI Act's open-source exemption removes all obligations
 - C. The model's original developer becomes the deployer
 - D. No licence review is needed for open-weight models
 
 <details><summary>Answer</summary>
 
-**B.** The open-source exemption does not apply to high-risk systems, and using open weights shifts evaluation, security and maintenance to Najm. Licences vary and need review. (Expert view: open-source and open-weight models.)
+**A.** The open-source exemption does not apply to high-risk systems, and using open weights shifts evaluation, security and maintenance to Najm. Licences vary and need review. (Expert view: open-source and open-weight models.)
 
 </details>
 
@@ -597,26 +597,26 @@ A good assessment record states: who did it and with what independence; the vers
 **1. Which organisation must perform a fundamental rights impact assessment under the EU AI Act before using a high-risk system?**
 
 - A. Every deployer of any high-risk system
-- B. A private bank deploying a high-risk system to evaluate the creditworthiness of individuals
-- C. A provider before placing any AI system on the market
+- B. A provider before placing any AI system on the market
+- C. A private bank deploying a high-risk system to evaluate the creditworthiness of individuals
 - D. A retailer using a spam filter
 
 <details><summary>Answer</summary>
 
-**B.** Art. 27 covers public bodies, private entities providing public services, and deployers of credit-scoring and life/health insurance pricing systems. Not all deployers (A); providers do conformity assessment instead (C). (Essentials: the FRIA in brief.)
+**C.** Art. 27 covers public bodies, private entities providing public services, and deployers of credit-scoring and life/health insurance pricing systems. Not all deployers (A); providers do conformity assessment instead (B). (Essentials: the FRIA in brief.)
 
 </details>
 
 **2. Najm already has a thorough DPIA for its credit model. Does this remove the need for a FRIA?**
 
 - A. Yes, the DPIA always replaces the FRIA
-- B. No, the FRIA complements the DPIA and covers fundamental rights beyond data protection, though it can build on the DPIA
+- B. No, and the DPIA must be discarded
 - C. Yes, if the DPO signs both
-- D. No, and the DPIA must be discarded
+- D. No, the FRIA complements the DPIA and covers fundamental rights beyond data protection, though it can build on the DPIA
 
 <details><summary>Answer</summary>
 
-**B.** The Act says the FRIA complements a DPIA that already covers some of the same obligations. Reuse the evidence, but the FRIA's scope is wider. (Essentials; Mistakes.)
+**D.** The Act says the FRIA complements a DPIA that already covers some of the same obligations. Reuse the evidence, but the FRIA's scope is wider. (Essentials; Mistakes.)
 
 </details>
 
@@ -635,27 +635,27 @@ A good assessment record states: who did it and with what independence; the vers
 
 **4. Which statement best describes Canada's Algorithmic Impact Assessment?**
 
-- A. A private-sector certification scheme for AI products
-- B. A questionnaire-based tool under the federal Directive on Automated Decision-Making that assigns impact levels I–IV, which determine proportionate requirements
+- A. A questionnaire-based tool under the federal Directive on Automated Decision-Making that assigns impact levels I–IV, which determine proportionate requirements
+- B. A private-sector certification scheme for AI products
 - C. The Canadian equivalent of the EU AI Act's CE marking
 - D. A voluntary bias audit for employers
 
 <details><summary>Answer</summary>
 
-**B.** It applies to federal institutions and sets requirements proportionate to the impact level. It is not a private-sector certification. (Going deeper: Canada's AIA.)
+**A.** It applies to federal institutions and sets requirements proportionate to the impact level. It is not a private-sector certification. (Going deeper: Canada's AIA.)
 
 </details>
 
 **5. An internal auditor is asked to audit Najm's CV-screening deployment. Which scoping decision matters most for a meaningful audit?**
 
 - A. Whether the audit report uses the vendor's logo
-- B. Defining the criteria, the boundary (model, system and surrounding process), evidence access and the level of assurance
-- C. Limiting the audit to the vendor's marketing materials
+- B. Limiting the audit to the vendor's marketing materials
+- C. Defining the criteria, the boundary (model, system and surrounding process), evidence access and the level of assurance
 - D. Excluding human decision-makers from scope
 
 <details><summary>Answer</summary>
 
-**B.** An audit without clear criteria, boundary, evidence and assurance level cannot support a reliable opinion, and many harms occur in the human process around the model (so D is wrong). (Expert view: how to scope and document.)
+**C.** An audit without clear criteria, boundary, evidence and assurance level cannot support a reliable opinion, and many harms occur in the human process around the model (so D is wrong). (Expert view: how to scope and document.)
 
 </details>
 
@@ -836,13 +836,13 @@ After the findings, Najm moved relationship managers onto the enterprise copilot
 **1. Najm's relationship managers accept 97% of AI-drafted credit memos without substantive edits, and review time has fallen sharply. What is the best governance response?**
 
 - A. Celebrate the efficiency and remove the review step
-- B. Investigate possible automation bias with sample quality reviews, and adjust training, interface and workload so reviewers can genuinely check outputs
+- B. Ask the vendor to certify the memos
 - C. Replace the AI tool immediately
-- D. Ask the vendor to certify the memos
+- D. Investigate possible automation bias with sample quality reviews, and adjust training, interface and workload so reviewers can genuinely check outputs
 
 <details><summary>Answer</summary>
 
-**B.** A very low edit rate with falling review time is a classic automation-bias signal. It must be investigated and oversight made effective. A removes the safeguard; C is premature without evidence. (Essentials: measuring whether oversight works.)
+**D.** A very low edit rate with falling review time is a classic automation-bias signal. It must be investigated and oversight made effective. A removes the safeguard; C is premature without evidence. (Essentials: measuring whether oversight works.)
 
 </details>
 
@@ -861,40 +861,40 @@ After the findings, Najm moved relationship managers onto the enterprise copilot
 
 **3. Which lesson does the 2023 Samsung case most directly teach?**
 
-- A. Generative AI tools are prohibited under the EU AI Act
-- B. Staff using public GenAI tools without governance can leak confidential information; organisations need acceptable-use rules, approved alternatives, controls and training
+- A. Staff using public GenAI tools without governance can leak confidential information; organisations need acceptable-use rules, approved alternatives, controls and training
+- B. Generative AI tools are prohibited under the EU AI Act
 - C. Chatbot outputs are legally binding
 - D. Only IT staff should use AI tools
 
 <details><summary>Answer</summary>
 
-**B.** Engineers pasted confidential material into a public chatbot. The governance response is an enforceable acceptable-use regime, not only a ban. (Why it matters; Going deeper: acceptable use.)
+**A.** Engineers pasted confidential material into a public chatbot. The governance response is an enforceable acceptable-use regime, not only a ban. (Why it matters; Going deeper: acceptable use.)
 
 </details>
 
 **4. A customer declined for a loan by a process relying on an Annex III high-risk AI system asks why. Which EU AI Act provision most directly supports their request?**
 
 - A. Art. 50, transparency for chatbots
-- B. Art. 86, the right to clear and meaningful explanations of the AI system's role and the main elements of the decision
-- C. Art. 4, AI literacy
+- B. Art. 4, AI literacy
+- C. Art. 86, the right to clear and meaningful explanations of the AI system's role and the main elements of the decision
 - D. Art. 43, conformity assessment
 
 <details><summary>Answer</summary>
 
-**B.** Art. 86 gives affected persons a right to an explanation for certain decisions based on Annex III high-risk systems. GDPR rights may apply in parallel. (Essentials: transparency, layer 3.)
+**C.** Art. 86 gives affected persons a right to an explanation for certain decisions based on Annex III high-risk systems. GDPR rights may apply in parallel. (Essentials: transparency, layer 3.)
 
 </details>
 
 **5. Najm, as deployer, suspects a vendor's high-risk CV-screening tool presents a risk to fundamental rights. What must it do under the EU AI Act?**
 
 - A. Continue use until the annual audit
-- B. Inform the provider or distributor and the relevant market surveillance authority, and suspend use
+- B. Notify only the candidates
 - C. Retrain the vendor's model itself
-- D. Notify only the candidates
+- D. Inform the provider or distributor and the relevant market surveillance authority, and suspend use
 
 <details><summary>Answer</summary>
 
-**B.** Art. 26 requires deployers with reason to believe a system presents a risk to inform the provider or distributor and the market surveillance authority, and to suspend use. Retraining the vendor's model (C) could make Najm a provider. (Going deeper: monitoring in production; Expert view: continuing obligations.)
+**D.** Art. 26 requires deployers with reason to believe a system presents a risk to inform the provider or distributor and the market surveillance authority, and to suspend use. Retraining the vendor's model (C) could make Najm a provider. (Going deeper: monitoring in production; Expert view: continuing obligations.)
 
 </details>
 

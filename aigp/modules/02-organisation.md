@@ -213,12 +213,12 @@ Najm's corporate banking division wants to run its own AI governance because "th
 
 - A. The AI vendor
 - B. The data science team that built the model
-- C. The governing body (board)
-- D. No one, because the decision is automated
+- C. No one, because the decision is automated
+- D. The governing body (board)
 
 <details><summary>Answer</summary>
 
-**C.** ISO/IEC 38507 addresses governing bodies and the point is that accountability is not delegated to the machine or the supplier. (See 🔴 Expert view.)
+**D.** ISO/IEC 38507 addresses governing bodies and the point is that accountability is not delegated to the machine or the supplier. (See 🔴 Expert view.)
 
 </details>
 
@@ -441,12 +441,12 @@ Review the RACI above and identify two independence or conflict-of-interest risk
 
 - A. There is no problem; shared accountability is safer
 - B. The Head of AI Governance should be "I"
-- C. Nobody is "C"
-- D. There should be exactly one accountable party per activity, or ownership becomes unclear
+- C. There should be exactly one accountable party per activity, or ownership becomes unclear
+- D. Nobody is "C"
 
 <details><summary>Answer</summary>
 
-**D.** One A per activity is the core RACI rule. Shared accountability diffuses ownership. (See 🟡 Going deeper, RACI.)
+**C.** One A per activity is the core RACI rule. Shared accountability diffuses ownership. (See 🟡 Going deeper, RACI.)
 
 </details>
 
@@ -617,27 +617,27 @@ A regulator asks Najm's Frankfurt branch how it complies with the EU AI Act's AI
 
 **1. Which organisations are subject to the AI-literacy duty in Article 4 of the EU AI Act?**
 
-- A. Only providers of high-risk AI systems
+- A. Providers and deployers of AI systems
 - B. Only public authorities
-- C. Providers and deployers of AI systems
+- C. Only providers of high-risk AI systems
 - D. Only providers of general-purpose AI models with systemic risk
 
 <details><summary>Answer</summary>
 
-**C.** Article 4 applies to providers and deployers of AI systems, not only high-risk or GPAI actors. (See 🟢 The essentials.)
+**A.** Article 4 applies to providers and deployers of AI systems, not only high-risk or GPAI actors. (See 🟢 The essentials.)
 
 </details>
 
 **2. From what date has the EU AI Act's AI-literacy duty applied?**
 
 - A. 1 August 2024
-- B. 2 February 2025
+- B. 2 August 2027
 - C. 2 August 2026
-- D. 2 August 2027
+- D. 2 February 2025
 
 <details><summary>Answer</summary>
 
-**B.** The AI-literacy duty and the prohibited practices apply from 2 February 2025. 1 August 2024 is entry into force; 2 August 2026 is when most remaining rules apply. (See ⚡ In 60 seconds.)
+**D.** The AI-literacy duty and the prohibited practices apply from 2 February 2025. 1 August 2024 is entry into force; 2 August 2026 is when most remaining rules apply. (See ⚡ In 60 seconds.)
 
 </details>
 

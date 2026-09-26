@@ -187,27 +187,27 @@ Committee decision recorded for the copilot: *"Approved for design at Tier 2. Sc
 
 **3. Which factor should carry the MOST weight when assigning Najm's internal risk tier?**
 
-- A. Whether the system uses deep learning or a simpler algorithm
+- A. The severity, scale and reversibility of potential harm to people, and how much human review occurs before outputs take effect
 - B. The system's cost
-- C. The severity, scale and reversibility of potential harm to people, and how much human review occurs before outputs take effect
+- C. Whether the system uses deep learning or a simpler algorithm
 - D. Whether the vendor is ISO/IEC 42001 certified
 
 <details><summary>Answer</summary>
 
-**C.** Tiering is driven by use and impact. Technique (A) is the classic trap. Vendor certification (D) is relevant evidence in due diligence, but it does not set the risk of *your* use. (🟡 Going deeper.)
+**A.** Tiering is driven by use and impact. Technique (C) is the classic trap. Vendor certification (D) is relevant evidence in due diligence, but it does not set the risk of *your* use. (🟡 Going deeper.)
 
 </details>
 
 **4. The fraud team wants an ML model to flag suspicious transfers. A risk analyst notes that a fixed rule set catches 95% of the same cases with full transparency. Under a proportionality analysis, what is the best response?**
 
 - A. Approve the ML model because AI is Najm's strategy
-- B. Record the rule-based alternative and require the sponsor to show the ML model's added benefit justifies its added risk and cost
+- B. Approve the ML model because fraud detection is excluded from Annex III
 - C. Reject all AI for fraud detection
-- D. Approve the ML model because fraud detection is excluded from Annex III
+- D. Record the rule-based alternative and require the sponsor to show the ML model's added benefit justifies its added risk and cost
 
 <details><summary>Answer</summary>
 
-**B.** Proportionality asks whether AI is needed and whether its benefit justifies its risk compared with less risky alternatives. D confuses legal classification with necessity: not being high-risk does not make a system necessary. (🟢 The essentials.)
+**D.** Proportionality asks whether AI is needed and whether its benefit justifies its risk compared with less risky alternatives. B confuses legal classification with necessity: not being high-risk does not make a system necessary. (🟢 The essentials.)
 
 </details>
 
@@ -328,7 +328,7 @@ For Najm's copilot, Layla's team adds a critical design rule: **every financial 
 | **GDPR** — Arts 13–15, 22 & 25 | Meaningful information about the logic; safeguards for solely automated decisions; data protection by design and by default | Privacy by design is a legal duty in the EU |
 | **NIST AI RMF** | Seven trustworthy characteristics; trade-offs among them managed by the organisation | Characteristics can conflict |
 | **NIST AI 600-1** | Generative AI Profile: risks such as confabulation, information security, data privacy; suggested actions | GenAI hallucination = "confabulation" |
-| **US ECOA / Regulation B** | Adverse-action notices with specific principal reasons, including when complex models are used | Reason codes |
+| **ECOA / Regulation B** | Adverse-action notices with specific principal reasons, including when complex models are used | Reason codes |
 | **OWASP Top 10 for LLM Applications** | Industry checklist of LLM application risks, starting with prompt injection | Voluntary security checklist |
 
 ## 🏛️ In practice at Najm Bank
@@ -370,27 +370,27 @@ For Najm's copilot, Layla's team adds a critical design rule: **every financial 
 
 **1. Najm's underwriters must "review" every credit score, but they handle 300 cases a day, see only the score, and are measured on speed. What is the MAIN governance weakness?**
 
-- A. The model should use SHAP instead of LIME
-- B. Human oversight is nominal: reviewers lack time, information and practical authority to challenge the output
+- A. Human oversight is nominal: reviewers lack time, information and practical authority to challenge the output
+- B. The model should use SHAP instead of LIME
 - C. The model is not interpretable by design
 - D. The review should be human-on-the-loop instead
 
 <details><summary>Answer</summary>
 
-**B.** Effective oversight needs competence, information, time and authority, and awareness of automation bias. Changing the oversight label (D) does not fix any of these. (🟢 The essentials.)
+**A.** Effective oversight needs competence, information, time and authority, and awareness of automation bias. Changing the oversight label (D) does not fix any of these. (🟢 The essentials.)
 
 </details>
 
 **2. Which statement about SHAP is MOST accurate?**
 
 - A. It reveals the exact internal reasoning of a neural network
-- B. It assigns each feature a contribution to a specific prediction relative to a baseline, and these contributions can be ranked into reason codes
-- C. It is only usable with linear models
+- B. It is only usable with linear models
+- C. It assigns each feature a contribution to a specific prediction relative to a baseline, and these contributions can be ranked into reason codes
 - D. It guarantees the model is fair
 
 <details><summary>Answer</summary>
 
-**B.** SHAP is a post-hoc, model-agnostic attribution method based on Shapley values. A overstates it: post-hoc explanations approximate the model's behaviour. (🟡 Going deeper.)
+**C.** SHAP is a post-hoc, model-agnostic attribution method based on Shapley values. A overstates it: post-hoc explanations approximate the model's behaviour. (🟡 Going deeper.)
 
 </details>
 
@@ -398,12 +398,12 @@ For Najm's copilot, Layla's team adds a critical design rule: **every financial 
 
 - A. Model extraction
 - B. Membership inference
-- C. Indirect prompt injection
-- D. Data poisoning of the pre-training set
+- C. Data poisoning of the pre-training set
+- D. Indirect prompt injection
 
 <details><summary>Answer</summary>
 
-**C.** Instructions arriving through content the model reads, not through the user's own prompt, are indirect prompt injection. Poisoning (D) corrupts training data, not a document read at run time. (🔴 Expert view.)
+**D.** Instructions arriving through content the model reads, not through the user's own prompt, are indirect prompt injection. Poisoning (C) corrupts training data, not a document read at run time. (🔴 Expert view.)
 
 </details>
 
@@ -584,26 +584,26 @@ The Act allows SMEs, including start-ups, to provide these elements in a simplif
 **1. Najm develops a credit-scoring model in-house and uses it only for its own EU customers. It never sells it. Under the EU AI Act, Najm is:**
 
 - A. Only a deployer, because it does not sell the system
-- B. Both provider (it puts the system into service under its own name) and deployer
-- C. Neither, because internal tools are exempt
+- B. Neither, because internal tools are exempt
+- C. Both provider (it puts the system into service under its own name) and deployer
 - D. An importer
 
 <details><summary>Answer</summary>
 
-**B.** "Putting into service" includes supplying the system for first use for the provider's own purposes. A is the classic trap. (🔴 Expert view.)
+**C.** "Putting into service" includes supplying the system for first use for the provider's own purposes. A is the classic trap. (🔴 Expert view.)
 
 </details>
 
 **2. Which document is specifically required by the EU AI Act for providers of high-risk AI systems before market placement?**
 
 - A. A datasheet for datasets in the Gebru et al. format
-- B. Technical documentation with the content set out in Annex IV
+- B. An ISO/IEC 42001 certificate
 - C. A system card published on the provider's website
-- D. An ISO/IEC 42001 certificate
+- D. Technical documentation with the content set out in Annex IV
 
 <details><summary>Answer</summary>
 
-**B.** Annex IV sets the legal content. Model cards and datasheets (A) are good-practice formats that feed it but are not mandated by name. ISO/IEC 42001 certification (D) is voluntary. (🟡 Going deeper.)
+**D.** Annex IV sets the legal content. Model cards and datasheets (A) are good-practice formats that feed it but are not mandated by name. ISO/IEC 42001 certification (B) is voluntary. (🟡 Going deeper.)
 
 </details>
 
@@ -622,27 +622,27 @@ The Act allows SMEs, including start-ups, to provide these elements in a simplif
 
 **4. What is the MAIN purpose of a decision log in AI governance?**
 
-- A. To store model weights securely
-- B. To record significant decisions, the alternatives, rationale, evidence and approver, so accountability and due care can be demonstrated
+- A. To record significant decisions, the alternatives, rationale, evidence and approver, so accountability and due care can be demonstrated
+- B. To store model weights securely
 - C. To log every prediction for debugging
 - D. To replace the model card
 
 <details><summary>Answer</summary>
 
-**B.** Decision logs capture *why* choices were made. Prediction logging (C) is event record-keeping, which is a different artefact. (🟡 Going deeper.)
+**A.** Decision logs capture *why* choices were made. Prediction logging (C) is event record-keeping, which is a different artefact. (🟡 Going deeper.)
 
 </details>
 
 **5. Najm builds its credit memo copilot on a third-party general-purpose model accessed via API. Which contract term MOST directly protects Najm's governance of the copilot over time?**
 
 - A. A discount for high volumes
-- B. Advance notice of material model changes, with documentation and evaluation information, so Najm can re-test before updates take effect
-- C. A marketing partnership clause
+- B. A marketing partnership clause
+- C. Advance notice of material model changes, with documentation and evaluation information, so Najm can re-test before updates take effect
 - D. The right to use the vendor's logo
 
 <details><summary>Answer</summary>
 
-**B.** API models can change behaviour without warning. Change notice plus documentation lets Najm re-evaluate. The other options have no governance value. (🔴 Expert view; build-vs-buy table.)
+**C.** API models can change behaviour without warning. Change notice plus documentation lets Najm re-evaluate. The other options have no governance value. (🔴 Expert view; build-vs-buy table.)
 
 </details>
 

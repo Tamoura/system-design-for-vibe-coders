@@ -137,40 +137,40 @@ Standing rule adopted by the committee: *"No dataset may be used to train, fine-
 
 **2. A provider of a general-purpose AI model scrapes publicly available EU websites for training. Which statement is MOST accurate?**
 
-- A. Public web content is free of copyright
-- B. The TDM exception in Art. 4 of the DSM Directive applies unless rightsholders have reserved their rights in an appropriate (for online content, machine-readable) manner, and the AI Act requires GPAI providers to have a policy to respect such reservations
+- A. The TDM exception in Art. 4 of the DSM Directive applies unless rightsholders have reserved their rights in an appropriate (for online content, machine-readable) manner, and the AI Act requires GPAI providers to have a policy to respect such reservations
+- B. Public web content is free of copyright
 - C. The AI Act exempts all AI training from copyright
 - D. Only research organisations may train on web data
 
 <details><summary>Answer</summary>
 
-**B.** Art. 4 allows TDM subject to opt-outs, and GPAI providers must have a copyright-compliance policy. D describes Art. 3, which is only one of the two exceptions. (🟡 Going deeper.)
+**A.** Art. 4 allows TDM subject to opt-outs, and GPAI providers must have a copyright-compliance policy. D describes Art. 3, which is only one of the two exceptions. (🟡 Going deeper.)
 
 </details>
 
 **3. A vendor offers Najm "fully anonymous" synthetic applicant data. What should governance require FIRST?**
 
 - A. Nothing; synthetic data is outside the GDPR
-- B. Evidence of the vendor's rights in the source data and a re-identification risk assessment, plus a fidelity and bias review
-- C. A lower price
+- B. A lower price
+- C. Evidence of the vendor's rights in the source data and a re-identification risk assessment, plus a fidelity and bias review
 - D. That Najm publish the data
 
 <details><summary>Answer</summary>
 
-**B.** Synthetic data inherits rights questions and can leak or amplify its source. A is the trap. (🔴 Expert view.)
+**C.** Synthetic data inherits rights questions and can leak or amplify its source. A is the trap. (🔴 Expert view.)
 
 </details>
 
 **4. What does data lineage primarily enable?**
 
 - A. Faster model training
-- B. Tracing which data, through which transformations, produced a given model version, supporting reproducibility, rights proofs and response to data errors or erasure
+- B. Choosing a fairness metric
 - C. Encrypting data at rest
-- D. Choosing a fairness metric
+- D. Tracing which data, through which transformations, produced a given model version, supporting reproducibility, rights proofs and response to data errors or erasure
 
 <details><summary>Answer</summary>
 
-**B.** Lineage links sources, transformations and model versions. That link is what governance relies on for reproducibility, rights and remediation. (🟢 The essentials.)
+**D.** Lineage links sources, transformations and model versions. That link is what governance relies on for reproducibility, rights and remediation. (🟢 The essentials.)
 
 </details>
 
@@ -296,7 +296,7 @@ Describe it carefully: it is **not** a general licence to collect sensitive data
 | **NIST SP 1270** | Identifying and managing bias: systemic, statistical/computational and human-cognitive | Bias is more than a statistical problem |
 | **ISO/IEC TR 24027** | Technical report on bias in AI systems and AI-aided decision-making | Standards-based bias vocabulary |
 | **ISO/IEC 5259 series** | Data quality for analytics and machine learning: quality model, measures, management | Data quality standard family |
-| **US ECOA / Regulation B** | Prohibits credit discrimination on protected bases; limits collecting and using protected characteristics in credit decisions | Group thresholds may be disparate treatment |
+| **ECOA / Regulation B** | Prohibits credit discrimination on protected bases; limits collecting and using protected characteristics in credit decisions | Group thresholds may be disparate treatment |
 | **NYC Local Law 144** | Independent bias audit (selection rates and impact ratios by sex and race/ethnicity categories) for automated employment decision tools used in NYC, with notices | Example of mandated bias testing |
 
 ## 🏛️ In practice at Najm Bank
@@ -349,27 +349,27 @@ Describe it carefully: it is **not** a general licence to collect sensitive data
 
 **2. A provider of a high-risk AI system wants to process ethnicity data to detect bias. Under the EU AI Act, which statement is correct?**
 
-- A. It may do so freely because the AI Act overrides the GDPR
-- B. It may exceptionally do so to the extent strictly necessary for bias detection and correction, subject to strict safeguards, including that other data such as synthetic or anonymised data would not suffice, and deletion afterwards
+- A. It may exceptionally do so to the extent strictly necessary for bias detection and correction, subject to strict safeguards, including that other data such as synthetic or anonymised data would not suffice, and deletion afterwards
+- B. It may do so freely because the AI Act overrides the GDPR
 - C. It is always prohibited
 - D. It may do so for any AI system, high-risk or not
 
 <details><summary>Answer</summary>
 
-**B.** Art. 10(5) is narrow and conditional. A and D overstate it, and C ignores it. (🔴 Expert view.)
+**A.** Art. 10(5) is narrow and conditional. B and D overstate it, and C ignores it. (🔴 Expert view.)
 
 </details>
 
 **3. Dana removes "sex" from the credit model's inputs, but approval rates for women remain much lower. What is the MOST likely explanation?**
 
 - A. The model is perfectly fair and women are riskier
-- B. Other features act as proxies for sex, and historical bias may be in the labels
+- B. SHAP values are wrong
 - C. Removing a feature always increases bias
-- D. SHAP values are wrong
+- D. Other features act as proxies for sex, and historical bias may be in the labels
 
 <details><summary>Answer</summary>
 
-**B.** Proxies and historical labels keep the effect alive after the attribute is removed. A jumps to a conclusion without testing error rates and labels. (🟡 Going deeper.)
+**D.** Proxies and historical labels keep the effect alive after the attribute is removed. A jumps to a conclusion without testing error rates and labels. (🟡 Going deeper.)
 
 </details>
 
@@ -388,14 +388,14 @@ Describe it carefully: it is **not** a general licence to collect sensitive data
 
 **5. For a labelling project to build the copilot's evaluation set, which control MOST improves label quality?**
 
-- A. Using the cheapest crowd platform available
-- B. Written guidance with worked examples and edge cases, qualified annotators, and measuring inter-annotator agreement with adjudication
+- A. Written guidance with worked examples and edge cases, qualified annotators, and measuring inter-annotator agreement with adjudication
+- B. Using the cheapest crowd platform available
 - C. Letting each annotator define "good memo" for themselves
 - D. Labelling only the easy cases
 
 <details><summary>Answer</summary>
 
-**B.** Guidance, competence, agreement measurement and adjudication are the core label-quality controls. Labelling only easy cases (D) biases the evaluation set. (🟢 The essentials.)
+**A.** Guidance, competence, agreement measurement and adjudication are the core label-quality controls. Labelling only easy cases (D) biases the evaluation set. (🟢 The essentials.)
 
 </details>
 
@@ -569,26 +569,26 @@ Good red-teams are **diverse** (security, domain, language, affected-community p
 **1. Najm's credit model reports 94% accuracy on a test set where 6% of applicants defaulted. What is the BEST response?**
 
 - A. Approve it; 94% is excellent
-- B. Ask for precision, recall, AUC and calibration, overall and by group, because a model predicting "no default" for everyone would also score 94%
-- C. Ask the team to raise accuracy to 99%
+- B. Ask the team to raise accuracy to 99%
+- C. Ask for precision, recall, AUC and calibration, overall and by group, because a model predicting "no default" for everyone would also score 94%
 - D. Replace the test set with the training set
 
 <details><summary>Answer</summary>
 
-**B.** With imbalanced classes, accuracy hides failure. D would introduce leakage and inflate results. (🟢 The essentials.)
+**C.** With imbalanced classes, accuracy hides failure. D would introduce leakage and inflate results. (🟢 The essentials.)
 
 </details>
 
 **2. In the worked example, Group A's approval rate is 54% and Group B's is 36%, while true positive rates are about equal. Which statement is correct?**
 
 - A. Both demographic parity and equal opportunity are satisfied
-- B. Demographic parity fails (ratio ≈ 0.67) but equal opportunity is approximately satisfied
+- B. No fairness metric can be computed without SHAP values
 - C. Equal opportunity fails but demographic parity holds
-- D. No fairness metric can be computed without SHAP values
+- D. Demographic parity fails (ratio ≈ 0.67) but equal opportunity is approximately satisfied
 
 <details><summary>Answer</summary>
 
-**B.** 36/54 ≈ 0.67 is below 0.8, and TPRs are about 83% in both groups. The metrics measure different things. (🟡 Going deeper.)
+**D.** 36/54 ≈ 0.67 is below 0.8, and TPRs are about 83% in both groups. The metrics measure different things. (🟡 Going deeper.)
 
 </details>
 
@@ -621,13 +621,13 @@ Good red-teams are **diverse** (security, domain, language, affected-community p
 **5. The copilot team proposes setting the pass thresholds for groundedness *after* seeing the evaluation results "to be realistic". What should the AI governance lead advise?**
 
 - A. Agree, because thresholds should reflect what the model can do
-- B. Refuse: acceptance criteria must be set in advance and agreed with the owner, validator and governance, with any later change documented and approved
-- C. Skip thresholds for GenAI systems
+- B. Skip thresholds for GenAI systems
+- C. Refuse: acceptance criteria must be set in advance and agreed with the owner, validator and governance, with any later change documented and approved
 - D. Let the vendor set the thresholds
 
 <details><summary>Answer</summary>
 
-**B.** Pre-agreed criteria stop goalposts from moving and make sign-off meaningful. The AI Act likewise expects high-risk testing against prior defined metrics. (🔴 Expert view.)
+**C.** Pre-agreed criteria stop goalposts from moving and make sign-off meaningful. The AI Act likewise expects high-risk testing against prior defined metrics. (🔴 Expert view.)
 
 </details>
 

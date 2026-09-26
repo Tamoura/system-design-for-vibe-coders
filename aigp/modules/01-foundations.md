@@ -181,14 +181,14 @@ Applied to the inventory: credit scoring (supervised ML, AI, high impact); Najm 
 
 **2. Najm's credit memo copilot retrieves client documents and passes them to a third-party LLM to draft a memo. What is this technique called?**
 
-- A. Fine-tuning
+- A. Retrieval-augmented generation
 - B. Reinforcement learning
-- C. Retrieval-augmented generation
+- C. Fine-tuning
 - D. Unsupervised clustering
 
 <details><summary>Answer</summary>
 
-**C.** RAG retrieves relevant documents at run time and supplies them to the model as context. Fine-tuning (A) would change the model's weights through further training. (See 🟡 Adapting a model.)
+**A.** RAG retrieves relevant documents at run time and supplies them to the model as context. Fine-tuning (C) would change the model's weights through further training. (See 🟡 Adapting a model.)
 
 </details>
 
@@ -208,13 +208,13 @@ Applied to the inventory: credit scoring (supervised ML, AI, high impact); Najm 
 **4. Najm plans to let its chatbot block cards and change addresses on its own. From a governance perspective, what changes MOST?**
 
 - A. Nothing, because it uses the same language model
-- B. The system becomes an agent that acts, so permissions, action limits, authentication, logging and human stop controls become essential
+- B. It no longer needs to disclose that it is AI
 - C. It must now be classified as a prohibited practice
-- D. It no longer needs to disclose that it is AI
+- D. The system becomes an agent that acts, so permissions, action limits, authentication, logging and human stop controls become essential
 
 <details><summary>Answer</summary>
 
-**B.** Moving from answering to acting raises autonomy and the potential for harm, so controls on actions matter most. The model being the same (A) misses that the system changed; nothing makes it prohibited (C); and transparency duties still apply (D). (See 🟡 Agents.)
+**D.** Moving from answering to acting raises autonomy and the potential for harm, so controls on actions matter most. The model being the same (A) misses that the system changed; nothing makes it prohibited (C); and transparency duties still apply (B). (See 🟡 Agents.)
 
 </details>
 
@@ -396,27 +396,27 @@ Rules: every harm has an owner and an action; a "people" severity of High cannot
 
 **2. Dana removes gender from the credit model's inputs. Khalid says the model is now fair. What is the BEST response?**
 
-- A. Agree, because the model can no longer see gender
-- B. Test outcomes across groups, because other features can act as proxies for gender
+- A. Test outcomes across groups, because other features can act as proxies for gender
+- B. Agree, because the model can no longer see gender
 - C. Add gender back to increase accuracy
 - D. Stop using the model entirely
 
 <details><summary>Answer</summary>
 
-**B.** Proxies such as occupation or transaction patterns can reintroduce gender information, so only outcome testing shows whether the model treats groups fairly. D is disproportionate; C does not address fairness. (See 🟡 Why removing protected attributes is not enough.)
+**A.** Proxies such as occupation or transaction patterns can reintroduce gender information, so only outcome testing shows whether the model treats groups fairly. D is disproportionate; C does not address fairness. (See 🟡 Why removing protected attributes is not enough.)
 
 </details>
 
 **3. A GenAI tool produces images that show "a successful business owner" almost only as young men. What type of harm is this primarily?**
 
 - A. Allocative harm
-- B. Representational harm
+- B. Security harm
 - C. Ecosystem harm
-- D. Security harm
+- D. Representational harm
 
 <details><summary>Answer</summary>
 
-**B.** Reinforcing stereotypes about a group is representational harm, even when no resource is withheld. Allocative harm (A) requires an opportunity or resource to be denied. (See 🟡 Allocative and representational harms.)
+**D.** Reinforcing stereotypes about a group is representational harm, even when no resource is withheld. Allocative harm (A) requires an opportunity or resource to be denied. (See 🟡 Allocative and representational harms.)
 
 </details>
 
@@ -436,13 +436,13 @@ Rules: every harm has an owner and an action; a "people" severity of High cannot
 **5. Najm's harm register rates a fraud-model harm as "High" for customers but "Low" for the bank. Under Layla's rules, what should happen?**
 
 - A. The harm can be accepted by the system owner because the bank's severity is low
-- B. The harm cannot be accepted without Committee approval, because people severity is High
-- C. The harm should be removed from the register
+- B. The harm should be removed from the register
+- C. The harm cannot be accepted without Committee approval, because people severity is High
 - D. The model must be switched off immediately
 
 <details><summary>Answer</summary>
 
-**B.** The register keeps a separate people lens precisely so that serious harm to customers is escalated even when the organisation's exposure looks small. A ignores that lens; C and D are not the rule. (See 🏛️ In practice and 🔴 Two lenses on one risk register.)
+**C.** The register keeps a separate people lens precisely so that serious harm to customers is escalated even when the organisation's exposure looks small. A ignores that lens; B and D are not the rule. (See 🏛️ In practice and 🔴 Two lenses on one risk register.)
 
 </details>
 
@@ -610,14 +610,14 @@ Applied to the credit model pilot, the matrix produced three actions: reason cod
 
 **1. Najm's fraud model became less accurate after a new payment product launched, although no code changed. Which AI trait does this illustrate?**
 
-- A. Opacity
-- B. Drift
+- A. Drift
+- B. Opacity
 - C. Autonomy
 - D. Emergent capability
 
 <details><summary>Answer</summary>
 
-**B.** Drift is performance change as real-world data moves away from the training data. Change management that watches only code misses it. (See 🟢 Nine traits.)
+**A.** Drift is performance change as real-world data moves away from the training data. Change management that watches only code misses it. (See 🟢 Nine traits.)
 
 </details>
 
@@ -625,12 +625,12 @@ Applied to the credit model pilot, the matrix produced three actions: reason cod
 
 - A. Valid and reliable
 - B. Explainable and interpretable
-- C. Profitable and efficient
-- D. Fair, with harmful bias managed
+- C. Fair, with harmful bias managed
+- D. Profitable and efficient
 
 <details><summary>Answer</summary>
 
-**C.** The seven characteristics are valid and reliable; safe; secure and resilient; accountable and transparent; explainable and interpretable; privacy-enhanced; and fair with harmful bias managed. Profitability is a business objective, not a trustworthiness characteristic. (See 🟢 What "trustworthy AI" means.)
+**D.** The seven characteristics are valid and reliable; safe; secure and resilient; accountable and transparent; explainable and interpretable; privacy-enhanced; and fair with harmful bias managed. Profitability is a business objective, not a trustworthiness characteristic. (See 🟢 What "trustworthy AI" means.)
 
 </details>
 
@@ -650,26 +650,26 @@ Applied to the credit model pilot, the matrix produced three actions: reason cod
 **4. Najm's CIO argues that existing IT controls are enough for AI. Which response BEST reflects good practice?**
 
 - A. Replace all existing controls with a new AI-only framework
-- B. Agree, since AI is just software
-- C. Extend existing privacy, security, model-risk and procurement controls, and add AI-specific controls where AI's traits require them
+- B. Extend existing privacy, security, model-risk and procurement controls, and add AI-specific controls where AI's traits require them
+- C. Agree, since AI is just software
 - D. Postpone any AI governance until a comprehensive AI law applies in Qatar
 
 <details><summary>Answer</summary>
 
-**C.** Reuse plus targeted additions is proportionate and efficient. A wastes existing strengths; B ignores traits like drift and automation bias; D ignores laws and supervisory expectations that already apply. (See 🟡 Reuse before you build.)
+**B.** Reuse plus targeted additions is proportionate and efficient. A wastes existing strengths; C ignores traits like drift and automation bias; D ignores laws and supervisory expectations that already apply. (See 🟡 Reuse before you build.)
 
 </details>
 
 **5. Under the EU AI Act, what must human oversight of a high-risk AI system enable the people assigned to it to do?**
 
-- A. Approve every output without delay
-- B. Understand the system's capacities and limits, remain aware of automation bias, interpret outputs correctly, and decide not to use, override or stop the system
+- A. Understand the system's capacities and limits, remain aware of automation bias, interpret outputs correctly, and decide not to use, override or stop the system
+- B. Approve every output without delay
 - C. Retrain the model themselves when it errs
 - D. Guarantee that the system never makes mistakes
 
 <details><summary>Answer</summary>
 
-**B.** The Act's human-oversight requirement is about enabling informed, effective intervention, including awareness of automation bias. Overseers are not expected to retrain models (C) or guarantee perfection (D). (See ⚖️ Art. 14 and 🟡 Automation bias.)
+**A.** The Act's human-oversight requirement is about enabling informed, effective intervention, including awareness of automation bias. Overseers are not expected to retrain models (C) or guarantee perfection (D). (See ⚖️ Art. 14 and 🟡 Automation bias.)
 
 </details>
 

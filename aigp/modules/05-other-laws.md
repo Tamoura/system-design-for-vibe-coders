@@ -174,27 +174,27 @@ The AI Governance Committee adopts an **Adverse Impact Testing Standard** for al
 
 **3. A US lender's model declines an applicant. The compliance team wants to send the standard reasons "insufficient income" and "credit history", although the main drivers were recent account behaviour and debt utilisation. What is the issue?**
 
-- A. None; sample reasons are always acceptable
-- B. Regulation B requires the specific principal reasons actually behind the decision, even for complex models
+- A. Regulation B requires the specific principal reasons actually behind the decision, even for complex models
+- B. None; sample reasons are always acceptable
 - C. Adverse-action notices are optional for AI models
 - D. The lender must disclose the model's source code
 
 <details><summary>Answer</summary>
 
-**B.** Reasons must accurately reflect the real drivers. Complex models don't excuse vague or inaccurate reasons. D goes beyond what the rule requires. (See 🟡 Credit in the US.)
+**A.** Reasons must accurately reflect the real drivers. Complex models don't excuse vague or inaccurate reasons. D goes beyond what the rule requires. (See 🟡 Credit in the US.)
 
 </details>
 
 **4. In *EEOC v. iTutorGroup* (settled 2023), what was the alleged problem?**
 
 - A. A chatbot gave wrong salary information
-- B. Application software automatically rejected older applicants
+- B. A model was trained on copyrighted CVs
 - C. A facial-analysis tool misidentified candidates' race
-- D. A model was trained on copyrighted CVs
+- D. Application software automatically rejected older applicants
 
 <details><summary>Answer</summary>
 
-**B.** The EEOC alleged the software automatically rejected female applicants 55 and older and male applicants 60 and older, which is age discrimination. (See 🧭 Why it matters.)
+**D.** The EEOC alleged the software automatically rejected female applicants 55 and older and male applicants 60 and older, which is age discrimination. (See 🧭 Why it matters.)
 
 </details>
 
@@ -299,7 +299,7 @@ The Open Source Initiative published an Open Source AI Definition (1.0) in 2024,
 ## ⚖️ The instruments
 | Instrument | What it requires or recommends | Exam cue |
 |---|---|---|
-| **EU DSM Directive** — Arts 3–4 | TDM exceptions: research (no opt-out) and general (rights-holder opt-out, machine-readable for online content) | Art. 4 opt-out is the key EU training question |
+| **EU DSM Copyright Directive** — Arts 3–4 | TDM exceptions: research (no opt-out) and general (rights-holder opt-out, machine-readable for online content) | Art. 4 opt-out is the key EU training question |
 | **EU AI Act** — Art. 53 | GPAI providers: copyright-compliance policy respecting opt-outs; public summary of training content | Applies to model providers, not every user |
 | **US Copyright Act** — fair use | Four-factor test for unlicensed uses including training | Case by case; unsettled |
 | **US Copyright Office guidance** | Human authorship required; AI-assisted works protected to the extent of human contribution | Prompts alone generally not enough |
@@ -346,39 +346,39 @@ Layla issues an **AI Intellectual Property Clearance Checklist**, required befor
 **1. Under the EU DSM Directive, a commercial company wants to mine publicly available online articles to train a model. What determines whether the Art. 4 exception is available?**
 
 - A. Whether the company is a research organisation
-- B. Whether it has lawful access and the rights holder has not expressly reserved TDM use by appropriate, machine-readable means
-- C. Whether the articles are older than five years
+- B. Whether the articles are older than five years
+- C. Whether it has lawful access and the rights holder has not expressly reserved TDM use by appropriate, machine-readable means
 - D. Whether the model will be open source
 
 <details><summary>Answer</summary>
 
-**B.** Art. 4 covers any user with lawful access, subject to rights-holder reservations. A describes Art. 3. C and D are irrelevant. (See 🟡 EU: text and data mining.)
+**C.** Art. 4 covers any user with lawful access, subject to rights-holder reservations. A describes Art. 3. B and D are irrelevant. (See 🟡 EU: text and data mining.)
 
 </details>
 
 **2. Najm's marketing team generated a campaign image entirely with an AI tool, with a one-line prompt and no edits. Under the US Copyright Office's approach, what is most likely?**
 
-- A. Najm owns copyright because it paid for the tool
+- A. The image is likely not protected by copyright because it lacks human authorship
 - B. The tool provider owns copyright
-- C. The image is likely not protected by copyright because it lacks human authorship
+- C. Najm owns copyright because it paid for the tool
 - D. The prompt writer is the author of the image
 
 <details><summary>Answer</summary>
 
-**C.** Protection requires human authorship; a prompt alone is generally not enough. Contracts may allocate whatever rights exist between the parties, but can't create copyright. (See 🟡 Authorship of outputs.)
+**A.** Protection requires human authorship; a prompt alone is generally not enough. Contracts may allocate whatever rights exist between the parties, but can't create copyright. (See 🟡 Authorship of outputs.)
 
 </details>
 
 **3. Which obligation does the EU AI Act place on providers of general-purpose AI models regarding copyright?**
 
 - A. Obtain a licence for every training work
-- B. Put in place a copyright-compliance policy, including respecting TDM opt-outs, and publish a sufficiently detailed summary of training content
+- B. Pay a levy to collecting societies
 - C. Register all outputs with the EU IP Office
-- D. Pay a levy to collecting societies
+- D. Put in place a copyright-compliance policy, including respecting TDM opt-outs, and publish a sufficiently detailed summary of training content
 
 <details><summary>Answer</summary>
 
-**B.** Those are the two copyright-related duties. The Act doesn't require licensing every work (A), registration (C) or a levy (D). (See 🟡 The EU AI Act's copyright duties.)
+**D.** Those are the two copyright-related duties. The Act doesn't require licensing every work (A), registration (C) or a levy (B). (See 🟡 The EU AI Act's copyright duties.)
 
 </details>
 
@@ -397,14 +397,14 @@ Layla issues an **AI Intellectual Property Clearance Checklist**, required befor
 
 **5. Omar proposes to use a model released under a community licence with an acceptable-use policy and conditions for very large services. Which statement is correct?**
 
-- A. It is open source, so there are no restrictions
-- B. It may be "open weight" but carries licence restrictions that must be checked against Najm's use
+- A. It may be "open weight" but carries licence restrictions that must be checked against Najm's use
+- B. It is open source, so there are no restrictions
 - C. Model licences are unenforceable
 - D. Only the EU AI Act governs model use
 
 <details><summary>Answer</summary>
 
-**B.** Open-weight licences often include use restrictions and conditions; they may not meet the OSI's Open Source AI Definition. (See 🔴 Model licences.)
+**A.** Open-weight licences often include use restrictions and conditions; they may not meet the OSI's Open Source AI Definition. (See 🔴 Model licences.)
 
 </details>
 
@@ -563,26 +563,26 @@ Layla's team adds an **AI Customer-Facing Controls Standard** and extends the mo
 **1. In *Moffatt v. Air Canada* (2024), what did the tribunal decide?**
 
 - A. The chatbot was a separate legal entity responsible for its own statements
-- B. The airline was liable for negligent misrepresentation by its website chatbot
-- C. The customer should have checked the policy page, so the airline was not liable
+- B. The customer should have checked the policy page, so the airline was not liable
+- C. The airline was liable for negligent misrepresentation by its website chatbot
 - D. Chatbots cannot make binding statements
 
 <details><summary>Answer</summary>
 
-**B.** The tribunal held the airline responsible for all information on its website, including the chatbot. It rejected A and C. (See 🟡 *Moffatt v. Air Canada*.)
+**C.** The tribunal held the airline responsible for all information on its website, including the chatbot. It rejected A and B. (See 🟡 *Moffatt v. Air Canada*.)
 
 </details>
 
 **2. Which statement about EU liability law for AI is correct at the time of writing?**
 
 - A. The AI Liability Directive is in force and the PLD excludes software
-- B. The new Product Liability Directive covers software including AI; the proposed AI Liability Directive was withdrawn
+- B. Only the AI Act creates liability for AI harm
 - C. Both directives were withdrawn
-- D. Only the AI Act creates liability for AI harm
+- D. The new Product Liability Directive covers software including AI; the proposed AI Liability Directive was withdrawn
 
 <details><summary>Answer</summary>
 
-**B.** PLD (EU) 2024/2853 expressly covers software and AI; the AILD proposal was withdrawn in 2025. (See 🟡 Product Liability Directive.)
+**D.** PLD (EU) 2024/2853 expressly covers software and AI; the AILD proposal was withdrawn in 2025. (See 🟡 Product Liability Directive.)
 
 </details>
 
@@ -614,14 +614,14 @@ Layla's team adds an **AI Customer-Facing Controls Standard** and extends the mo
 
 **5. A wrongly calibrated AI credit model causes a customer to be declined a loan, leading to financial loss. Which is correct under the new EU PLD?**
 
-- A. The customer can claim for the pure economic loss under the PLD
-- B. The PLD doesn't cover pure economic loss; other routes (contract, consumer, data protection, national tort law) may apply
+- A. The PLD doesn't cover pure economic loss; other routes (contract, consumer, data protection, national tort law) may apply
+- B. The customer can claim for the pure economic loss under the PLD
 - C. The PLD doesn't apply to any software
 - D. The bank is automatically liable under the AI Liability Directive
 
 <details><summary>Answer</summary>
 
-**B.** The PLD covers death, personal injury, property damage and loss of non-professional data, not pure economic loss. C is wrong since software is covered, and D cites a withdrawn proposal. (See 🟡 Product Liability Directive.)
+**A.** The PLD covers death, personal injury, property damage and loss of non-professional data, not pure economic loss. C is wrong since software is covered, and D cites a withdrawn proposal. (See 🟡 Product Liability Directive.)
 
 </details>
 

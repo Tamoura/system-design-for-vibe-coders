@@ -328,7 +328,7 @@ Each of these raises a data or IP question the bank has not written a rule for. 
 | **EU AI Act** — Art. 53 | GPAI model providers: copyright-compliance policy (incl. TDM opt-outs) and a public summary of training content | Downstream users can use these to assess providers |
 | **GDPR** — Arts 5, 6, 9 | Purpose limitation, minimisation, storage limitation; lawful basis; special-category conditions | Existing data does not come with a new purpose |
 | **EDPB Opinion 28/2024** | Model anonymity, legitimate interest for AI development and deployment, effect of unlawfully processed training data | Anonymity of a model must be demonstrated, not assumed |
-| **DSM Copyright Directive** — (EU) 2019/790, Arts 3–4 | Text-and-data-mining exceptions; rightsholders can opt out of the general exception | "Publicly available" is not a licence |
+| **EU DSM Copyright Directive** — (EU) 2019/790, Arts 3–4 | Text-and-data-mining exceptions; rightsholders can opt out of the general exception | "Publicly available" is not a licence |
 | **EU Trade Secrets Directive** — (EU) 2016/943 | Protection depends on reasonable steps to keep information secret | Prompt controls help preserve trade-secret status |
 | **Qatar PDPPL** — Law No. 13 of 2016 | Qatar's personal data protection law, applying to processing of personal data including for AI | Local law alongside GDPR for Najm; check official text |
 
@@ -386,14 +386,14 @@ The research reports already in the credit copilot's retrieval library may not b
 
 **1. Dana wants to use loan-servicing data collected over ten years to train a new marketing-propensity model. What is the key data governance question?**
 
-- A. Whether the data is stored in the cloud
-- B. Whether the new purpose is compatible with the original purpose and has a lawful basis
+- A. Whether the new purpose is compatible with the original purpose and has a lawful basis
+- B. Whether the data is stored in the cloud
 - C. Whether the data scientists have the right software licences
 - D. Whether the model will be more accurate than the old one
 
 <details><summary>Answer</summary>
 
-**B.** Purpose limitation and lawful basis govern repurposing personal data. Holding the data is not enough. (See 🟢 The essentials, lawful use.)
+**A.** Purpose limitation and lawful basis govern repurposing personal data. Holding the data is not enough. (See 🟢 The essentials, lawful use.)
 
 </details>
 
@@ -413,13 +413,13 @@ The research reports already in the credit copilot's retrieval library may not b
 **3. A marketing team says web images are "publicly available" and so can be used freely to fine-tune an image model. What is the best response?**
 
 - A. Agree, because anything online is in the public domain
-- B. Check copyright, licence terms and any text-and-data-mining opt-outs before use
+- B. Only use images with no watermark
 - C. Use the images but do not tell anyone
-- D. Only use images with no watermark
+- D. Check copyright, licence terms and any text-and-data-mining opt-outs before use
 
 <details><summary>Answer</summary>
 
-**B.** Public availability does not remove copyright; in the EU the general TDM exception can be opted out of by rightsholders. (See 🟡 Going deeper, training data rights.)
+**D.** Public availability does not remove copyright; in the EU the general TDM exception can be opted out of by rightsholders. (See 🟡 Going deeper, training data rights.)
 
 </details>
 

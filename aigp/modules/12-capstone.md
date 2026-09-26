@@ -413,7 +413,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 | **NIST AI RMF** | Voluntary; Govern, Map, Measure, Manage; seven trustworthy characteristics | Not certifiable; Govern is cross-cutting |
 | **ISO/IEC 42001** | Certifiable AI management system, Plan-Do-Check-Act, Annex A controls | The certifiable one |
 | **OECD AI Principles** | 2019, updated 2024; the AI system definition behind the AI Act's | Voluntary, intergovernmental |
-| **Council of Europe Framework Convention** | First international AI treaty, opened for signature September 2024 | Binding on ratifying states |
+| **Council of Europe Framework Convention on AI** | First international AI treaty, opened for signature September 2024 | Binding on ratifying states |
 | **NYC Local Law 144** | Bias audits and notices for automated employment decision tools | US local law, employment only |
 
 ## 🏛️ In practice at Najm Bank

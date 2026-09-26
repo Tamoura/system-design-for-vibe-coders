@@ -172,27 +172,27 @@ Committee decision recorded: *"Chat logs are excluded from credit-model training
 
 **3. A lender's model never receives a "health" field, but uses merchant-level spending that lets it infer chronic illness. What is the best governance response?**
 
-- A. None, because health data was never collected
-- B. Treat the inferences as potentially special category data: remove or justify proxy features and test outcomes for disparities
+- A. Treat the inferences as potentially special category data: remove or justify proxy features and test outcomes for disparities
+- B. None, because health data was never collected
 - C. Ask customers to consent to any use of their transaction data
 - D. Encrypt the model file
 
 <details><summary>Answer</summary>
 
-**B.** Data that indirectly reveals a special category can fall within Art. 9, so the fix is to deal with the proxies and test outcomes. A is the classic trap. C is blanket consent that may not be freely given and doesn't fix the design. D is a security control, not an answer to Art. 9. (See 🟡 Special categories and inferred data.)
+**A.** Data that indirectly reveals a special category can fall within Art. 9, so the fix is to deal with the proxies and test outcomes. B is the classic trap. C is blanket consent that may not be freely given and doesn't fix the design. D is a security control, not an answer to Art. 9. (See 🟡 Special categories and inferred data.)
 
 </details>
 
 **4. Which of the following is the necessity step of a legitimate interests assessment for training a fraud model?**
 
 - A. Showing the fraud-prevention interest is lawful and clearly articulated
-- B. Showing the processing is needed for that interest and that less intrusive means, such as fewer features or synthetic data, would not achieve it
+- B. Obtaining the DPO's signature
 - C. Weighing customers' reasonable expectations against the bank's interest
-- D. Obtaining the DPO's signature
+- D. Showing the processing is needed for that interest and that less intrusive means, such as fewer features or synthetic data, would not achieve it
 
 <details><summary>Answer</summary>
 
-**B.** Necessity asks whether the processing is needed and whether less intrusive alternatives exist. A is the purpose test and C is the balancing test. D is good practice but not a step of the test. (See 🟡 Legitimate interests for training.)
+**D.** Necessity asks whether the processing is needed and whether less intrusive alternatives exist. A is the purpose test and C is the balancing test. B is good practice but not a step of the test. (See 🟡 Legitimate interests for training.)
 
 </details>
 
@@ -383,27 +383,27 @@ The AI Governance Committee approves a redesign of the retail credit decision fl
 
 **2. What did the CJEU decide in *SCHUFA* (C-634/21)?**
 
-- A. Credit bureaus may not calculate scores without explicit consent
-- B. The automated calculation of a credit score is a "decision" under Art. 22 where a lender draws strongly on it to decide on a contract
+- A. The automated calculation of a credit score is a "decision" under Art. 22 where a lender draws strongly on it to decide on a contract
+- B. Credit bureaus may not calculate scores without explicit consent
 - C. Banks must disclose their scoring algorithms' source code
 - D. Profiling is prohibited under the GDPR
 
 <details><summary>Answer</summary>
 
-**B.** The Court held that the score itself can be an Art. 22 decision when it plays a determining role. It didn't impose a consent requirement (A) or source-code disclosure (C), and profiling as such is not prohibited (D). (See 🟡 The SCHUFA judgment.)
+**A.** The Court held that the score itself can be an Art. 22 decision when it plays a determining role. It didn't impose a consent requirement (B) or source-code disclosure (C), and profiling as such is not prohibited (D). (See 🟡 The SCHUFA judgment.)
 
 </details>
 
 **3. Najm's loan officers approve or decline in the reviewed band, and monitoring shows they follow the model's recommendation 99.8% of the time with an average review time of 20 seconds. What should Layla conclude?**
 
 - A. The process is compliant because a human signs off
-- B. The review may not be meaningful, so the decisions risk being treated as solely automated; investigate and strengthen oversight
+- B. The officers should be removed and the process fully automated
 - C. The model is highly accurate, so no action is needed
-- D. The officers should be removed and the process fully automated
+- D. The review may not be meaningful, so the decisions risk being treated as solely automated; investigate and strengthen oversight
 
 <details><summary>Answer</summary>
 
-**B.** Near-total agreement with very short reviews suggests rubber-stamping. Human involvement must be meaningful to take a decision outside Art. 22. A is the trap. C confuses agreement with accuracy. D may be possible under an exception but ignores the oversight problem. (See 🟡 What "solely" means and 🔴 Human oversight.)
+**D.** Near-total agreement with very short reviews suggests rubber-stamping. Human involvement must be meaningful to take a decision outside Art. 22. A is the trap. C confuses agreement with accuracy. B may be possible under an exception but ignores the oversight problem. (See 🟡 What "solely" means and 🔴 Human oversight.)
 
 </details>
 
@@ -422,14 +422,14 @@ The AI Governance Committee approves a redesign of the retail credit decision fl
 
 **5. A former customer asks Najm to erase her data from its AI. The data protection team has documented, with extraction tests, that the credit model is anonymous. No legal retention duty applies. What is the most proportionate response?**
 
-- A. Retrain the model from scratch immediately
+- A. Delete her data from source systems and training sets and add her to the exclusion list for future retraining
 - B. Refuse, because models cannot be changed
-- C. Delete her data from source systems and training sets and add her to the exclusion list for future retraining
+- C. Retrain the model from scratch immediately
 - D. Delete the model
 
 <details><summary>Answer</summary>
 
-**C.** If the model is credibly anonymous, erasure focuses on source data and future training. Retraining (A) or deleting the model (D) are disproportionate on these facts, and B ignores the source data entirely. (See 🔴 Erasure versus trained models.)
+**A.** If the model is credibly anonymous, erasure focuses on source data and future training. Retraining (C) or deleting the model (D) are disproportionate on these facts, and B ignores the source data entirely. (See 🔴 Erasure versus trained models.)
 
 </details>
 
@@ -613,12 +613,12 @@ Layla's team produces the **Integrated AI Impact Assessment (IAIA) template**, f
 
 - A. Only a DPIA is needed, because the GDPR covers everything
 - B. Only a FRIA is needed, because the AI Act replaces the GDPR for AI
-- C. Both are relevant: a DPIA under the GDPR and a FRIA under the AI Act, with the FRIA complementing the DPIA
-- D. Neither is needed if the provider has a CE marking
+- C. Neither is needed if the provider has a CE marking
+- D. Both are relevant: a DPIA under the GDPR and a FRIA under the AI Act, with the FRIA complementing the DPIA
 
 <details><summary>Answer</summary>
 
-**C.** Deployers of credit-scoring systems are in the FRIA group, and the processing clearly needs a DPIA. The AI Act says the FRIA complements the DPIA. Provider conformity (D) doesn't discharge deployer duties. (See 🟡 DPIA, AI impact assessment and FRIA.)
+**D.** Deployers of credit-scoring systems are in the FRIA group, and the processing clearly needs a DPIA. The AI Act says the FRIA complements the DPIA. Provider conformity (C) doesn't discharge deployer duties. (See 🟡 DPIA, AI impact assessment and FRIA.)
 
 </details>
 
@@ -637,14 +637,14 @@ Layla's team produces the **Integrated AI Impact Assessment (IAIA) template**, f
 
 **4. Najm's Dubai hiring team sits in the DIFC and will use AI to screen applicants. Which instrument most specifically addresses processing through autonomous and semi-autonomous systems there?**
 
-- A. UAE Federal Decree-Law No. 45 of 2021
-- B. DIFC Data Protection Law, Regulation 10
+- A. DIFC Data Protection Law, Regulation 10
+- B. UAE Federal Decree-Law No. 45 of 2021
 - C. Qatar PDPPL
 - D. China PIPL
 
 <details><summary>Answer</summary>
 
-**B.** The DIFC has its own data protection law, and Regulation 10 addresses autonomous and semi-autonomous systems. The federal PDPL (A) does not apply in free zones with their own data protection laws. (See 🔴 The GCC.)
+**A.** The DIFC has its own data protection law, and Regulation 10 addresses autonomous and semi-autonomous systems. The federal PDPL (B) does not apply in free zones with their own data protection laws. (See 🔴 The GCC.)
 
 </details>
 

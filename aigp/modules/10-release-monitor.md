@@ -187,26 +187,26 @@ Khalid lost his Sunday launch; v2 went live six weeks later with a clean file.
 **3. A data science team presents excellent test results and asks for release. The fairness threshold was lowered the week before, after the first results came in. What should the governance function do first?**
 
 - A. Approve, because the new threshold is met
-- B. Treat the threshold change as a governance decision: document why it changed, who approved it and whether the original criterion should apply
+- B. Ask the vendor to re-run the tests
 - C. Reject the model permanently
-- D. Ask the vendor to re-run the tests
+- D. Treat the threshold change as a governance decision: document why it changed, who approved it and whether the original criterion should apply
 
 <details><summary>Answer</summary>
 
-**B.** Criteria should be set in advance, and any change must be justified and approved through governance, not quietly adopted after results arrive. A rewards moving the goalposts. C is disproportionate without analysis. (Essentials: the release gate.)
+**D.** Criteria should be set in advance, and any change must be justified and approved through governance, not quietly adopted after results arrive. A rewards moving the goalposts. C is disproportionate without analysis. (Essentials: the release gate.)
 
 </details>
 
 **4. During a shadow deployment the new model scores live applications, but its outputs are only logged and not used. Which statement is most accurate?**
 
-- A. Shadow mode is outside data protection law because no decision is made
-- B. Shadow mode still processes personal data, so it needs a lawful basis and DPIA coverage, but it avoids direct customer impact
+- A. Shadow mode still processes personal data, so it needs a lawful basis and DPIA coverage, but it avoids direct customer impact
+- B. Shadow mode is outside data protection law because no decision is made
 - C. Shadow mode counts as placing on the market
 - D. Shadow mode removes the need for a later pilot or canary
 
 <details><summary>Answer</summary>
 
-**B.** Scoring real applicants' data is processing even if the output is discarded. Shadow mode avoids impact on decisions but does not replace later stages that test workflow and human use. (Expert view: staged rollout.)
+**A.** Scoring real applicants' data is processing even if the output is discarded. Shadow mode avoids impact on decisions but does not replace later stages that test workflow and human use. (Expert view: staged rollout.)
 
 </details>
 
@@ -417,27 +417,27 @@ After the employer-field event, Layla and Omar rebuild the credit model's **moni
 
 **2. A bank deploying a vendor's high-risk AI system identifies a serious incident. Under the EU AI Act, whom must it inform first?**
 
-- A. The affected customers
+- A. The provider of the system
 - B. The European AI Office
-- C. The provider of the system
+- C. The affected customers
 - D. The data protection authority
 
 <details><summary>Answer</summary>
 
-**C.** Deployers must immediately inform the provider first, then the importer or distributor and the relevant market surveillance authorities. The data protection authority is involved only if there is also a personal data breach or other GDPR issue. (Expert view: serious incidents.)
+**A.** Deployers must immediately inform the provider first, then the importer or distributor and the relevant market surveillance authorities. The data protection authority is involved only if there is also a personal data breach or other GDPR issue. (Expert view: serious incidents.)
 
 </details>
 
 **3. What is the maximum time a provider of a high-risk AI system has to report a serious incident that did not involve a death, a widespread infringement or critical-infrastructure disruption?**
 
 - A. 72 hours
-- B. 15 days after becoming aware
+- B. Only at the next annual report
 - C. 30 days
-- D. Only at the next annual report
+- D. 15 days after becoming aware
 
 <details><summary>Answer</summary>
 
-**B.** The general limit under Art. 73 is 15 days, with shorter limits of 10 days (death) and 2 days (widespread infringement or serious and irreversible critical-infrastructure disruption). 72 hours is the GDPR breach clock, the most common distractor. (Expert view: serious incidents.)
+**D.** The general limit under Art. 73 is 15 days, with shorter limits of 10 days (death) and 2 days (widespread infringement or serious and irreversible critical-infrastructure disruption). 72 hours is the GDPR breach clock, the most common distractor. (Expert view: serious incidents.)
 
 </details>
 
@@ -456,14 +456,14 @@ After the employer-field event, Layla and Omar rebuild the credit model's **moni
 
 **5. Which statement about the OECD AI Incidents Monitor is correct?**
 
-- A. It is the channel for reporting serious incidents under the EU AI Act
-- B. It records AI incidents and hazards from public reporting, and governance teams use it to learn and to seed risk registers
+- A. It records AI incidents and hazards from public reporting, and governance teams use it to learn and to seed risk registers
+- B. It is the channel for reporting serious incidents under the EU AI Act
 - C. It certifies AI systems as safe
 - D. It replaces a firm's own incident log
 
 <details><summary>Answer</summary>
 
-**B.** The AIM is a public monitoring and learning resource. EU AI Act reports go to national market surveillance authorities (or to the AI Office for systemic-risk GPAI models). (Expert view: public incident databases.)
+**A.** The AIM is a public monitoring and learning resource. EU AI Act reports go to national market surveillance authorities (or to the AI Office for systemic-risk GPAI models). (Expert view: public incident databases.)
 
 </details>
 
@@ -583,7 +583,7 @@ Note the design choice: a change that "could affect compliance" is treated as si
 | **EU AI Act** — Art. 111 | Pre-existing high-risk systems come into scope if significantly changed in design after the high-risk rules apply (separate deadline for public-authority systems) | A redesign of a legacy model can pull it into the Act |
 | **EU AI Act** — Arts 18, 20 | Keep documentation for 10 years; take corrective action, withdraw, disable or recall non-conforming systems and inform others | Retirement does not end record-keeping |
 | **GDPR** — Arts 5(1)(e), 17 | Storage limitation; right to erasure | Delete training extracts and logs beyond retention; consider whether the model holds personal data |
-| **EDPB** — Opinion 28/2024 | AI models trained on personal data are not automatically anonymous; consequences of unlawfully processed training data | The model file itself may need a disposal decision |
+| **EDPB Opinion 28/2024** | AI models trained on personal data are not automatically anonymous; consequences of unlawfully processed training data | The model file itself may need a disposal decision |
 | **NIST AI RMF** — GOVERN 1.7, MANAGE 2.4, MANAGE 4.1 | Safe decommissioning processes; mechanisms to supersede, disengage or deactivate; post-deployment change management | Decommissioning is part of governance, not IT housekeeping |
 | **ISO/IEC 42001** — Annex A life-cycle controls | Documented processes across the AI system life cycle, including changes, operation and retirement | Change control is part of the certifiable management system |
 
@@ -638,26 +638,26 @@ The AI Governance Committee adopts a **change classification matrix** for all ti
 **1. A provider documented, in its initial conformity assessment, a monthly retraining process with fixed features and automated acceptance tests. A retrain runs within those limits. Under the EU AI Act, this retrain is:**
 
 - A. A substantial modification requiring a new conformity assessment
-- B. Not a substantial modification, because the change was pre-determined and documented at the initial assessment
-- C. Prohibited for high-risk systems
+- B. Prohibited for high-risk systems
+- C. Not a substantial modification, because the change was pre-determined and documented at the initial assessment
 - D. A matter only for the deployer
 
 <details><summary>Answer</summary>
 
-**B.** Changes to a continuously learning system that the provider pre-determined at the initial conformity assessment, and documented in the technical documentation, are not substantial modifications. A would be right for an unplanned change that affects compliance. (Going deeper: substantial modification.)
+**C.** Changes to a continuously learning system that the provider pre-determined at the initial conformity assessment, and documented in the technical documentation, are not substantial modifications. A would be right for an unplanned change that affects compliance. (Going deeper: substantial modification.)
 
 </details>
 
 **2. A bank licenses a general-purpose customer-service chatbot and reconfigures it to tell customers whether they will be approved for a personal loan. What is the most significant governance consequence under the EU AI Act?**
 
 - A. None; the bank remains a deployer of a limited-risk system
-- B. The bank may become the provider of a high-risk system, because it changed the intended purpose to credit assessment
+- B. Only a GDPR DPIA is needed
 - C. The chatbot vendor becomes the deployer
-- D. Only a GDPR DPIA is needed
+- D. The bank may become the provider of a high-risk system, because it changed the intended purpose to credit assessment
 
 <details><summary>Answer</summary>
 
-**B.** Under Art. 25, changing the intended purpose of a system so that it becomes high-risk (creditworthiness assessment is Annex III) makes that party a provider, with all provider obligations. (Going deeper: role shift.)
+**D.** Under Art. 25, changing the intended purpose of a system so that it becomes high-risk (creditworthiness assessment is Annex III) makes that party a provider, with all provider obligations. (Going deeper: role shift.)
 
 </details>
 
@@ -689,14 +689,14 @@ The AI Governance Committee adopts a **change classification matrix** for all ti
 
 **5. Which NIST AI RMF area most directly addresses safely phasing out AI systems?**
 
-- A. MAP 1.1, context is established
-- B. GOVERN 1.7, processes for decommissioning and phasing out AI systems safely
+- A. GOVERN 1.7, processes for decommissioning and phasing out AI systems safely
+- B. MAP 1.1, context is established
 - C. MEASURE 2.11, fairness evaluation
 - D. The Generative AI Profile only
 
 <details><summary>Answer</summary>
 
-**B.** GOVERN 1.7 addresses decommissioning and phasing out safely, supported by MANAGE 2.4 (mechanisms to disengage or deactivate) and MANAGE 4.1 (post-deployment plans including decommissioning). (Expert view: retirement and decommissioning.)
+**A.** GOVERN 1.7 addresses decommissioning and phasing out safely, supported by MANAGE 2.4 (mechanisms to disengage or deactivate) and MANAGE 4.1 (post-deployment plans including decommissioning). (Expert view: retirement and decommissioning.)
 
 </details>
 
