@@ -449,7 +449,7 @@ The AI Governance Committee approves a redesign of the retail credit decision fl
 - A Data Protection Impact Assessment (DPIA, GDPR Art. 35) is mandatory before processing that is likely to result in a high risk to people's rights and freedoms. Most significant AI uses of personal data, such as credit scoring, CV screening and large-scale profiling, will need one.
 - A DPIA must describe the processing, assess necessity and proportionality, assess risks to people, and set out mitigating measures. If high residual risk remains, you must consult the supervisory authority before starting.
 - A DPIA is not the same as an AI impact assessment or the EU AI Act's Fundamental Rights Impact Assessment (FRIA), but they overlap. The AI Act says a FRIA complements an existing DPIA. Build one integrated assessment with separate sections.
-- Privacy-enhancing technologies (PETs), such as pseudonymisation, differential privacy, federated learning, synthetic data and secure computation, are mitigations to record in the DPIA. None is a magic exemption.
+- Privacy-enhancing technologies (PETs) such as differential privacy or federated learning are mitigations to record in the DPIA, not exemptions.
 - Outside the EU: the UK GDPR is close to the EU GDPR but is diverging; US privacy law is a patchwork of state laws; China's PIPL has explicit automated-decision rules; in the GCC, Qatar's PDPPL, Saudi Arabia's PDPL, the UAE's PDPL and the DIFC's Regulation 10 all matter to a Gulf bank. Details change: always check current texts.
 
 ## 🧭 Why it matters
@@ -529,7 +529,7 @@ In a DPIA, a PET is a measure that reduces a named risk. It should come with evi
 | UAE (federal) | **UAE PDPL**: Federal Decree-Law No. 45 of 2021 | Federal law with rights including a right to object to automated processing that has legal or serious effects. Scope exclusions matter: it does not apply in free zones with their own data protection laws, and some sector data, including certain banking and credit data governed by other legislation, may fall outside it. Implementation has been gradual; check the status of executive regulations. |
 | UAE (DIFC) | **DIFC Data Protection Law** — Regulation 10 | The DIFC Data Protection Law No. 5 of 2020 is GDPR-like. Regulation 10 addresses processing through autonomous and semi-autonomous systems, including AI. It sets notice and transparency expectations, design principles such as fairness, security and accountability, and additional requirements for higher-risk uses. Check the current text and the Commissioner's guidance. |
 
-Bahrain, Oman and Kuwait also have data protection regimes; check them if you operate there.
+Bahrain, Oman and Kuwait have their own regimes too.
 
 **Cross-border transfers.** Most regimes restrict sending personal data abroad (the GDPR through adequacy decisions and standard contractual clauses; PIPL, the Saudi PDPL and the PDPPL through their own rules). This bites when training centrally on multi-country data or using a foreign-hosted GenAI service, which is one reason federated learning gets attention.
 
@@ -540,7 +540,7 @@ Bahrain, Oman and Kuwait also have data protection regimes; check them if you op
 |---|---|---|
 | **GDPR** — Art. 35 & 36 | DPIA before likely high-risk processing; set content; prior consultation if high residual risk | Profiling with significant effects always triggers a DPIA |
 | **EU AI Act** — Art. 27 | FRIA by certain deployers of high-risk AI, incl. credit scoring; complements the DPIA | FRIA does not replace the DPIA |
-| **ISO/IEC 42005:2025** | Guidance on AI system impact assessment | Voluntary; broader than privacy |
+| **DIFC Data Protection Law** — Regulation 10 | Rules for processing through autonomous and semi-autonomous systems, incl. AI: notice, design principles, extra requirements for higher-risk uses | GCC's most AI-specific privacy rule; check current text |
 | **UK GDPR** | UK version of GDPR, reformed by the Data (Use and Access) Act 2025, incl. automated decisions | Close to EU, diverging; check commencement |
 | **China PIPL** | Comprehensive law; automated-decision transparency, explanation and refusal rights; impact assessment | Explicit rules on unreasonable differential pricing |
 | **Qatar PDPPL** | Law No. 13 of 2016: principles, rights, special-nature data, controller duties | Najm's home law; QFC has a separate regime |
