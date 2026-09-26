@@ -213,7 +213,7 @@ The AI Governance Committee adopts an **Adverse Impact Testing Standard** for al
 
 ## 📚 References
 - US Equal Employment Opportunity Commission: https://www.eeoc.gov
-- NYC Department of Consumer and Worker Protection (automated employment decision tools): https://www.nyc.gov/site/dca
+- NYC Department of Consumer and Worker Protection (automated employment decision tools): https://www.nyc.gov/site/dca/index.page
 - Consumer Financial Protection Bureau (ECOA, Regulation B): https://www.consumerfinance.gov
 - EU law (equality directives 2000/43/EC, 2000/78/EC, 2004/113/EC, 2006/54/EC; Consumer Credit Directive 2023/2225): https://eur-lex.europa.eu
 - EU AI Act, Regulation (EU) 2024/1689: https://eur-lex.europa.eu/eli/reg/2024/1689/oj
@@ -480,7 +480,7 @@ Applied to AI, two kinds of risk arise:
 **US product liability** remains state tort law, with an open debate over whether software and AI outputs are "products". Some courts have let product-liability theories against AI chatbot providers proceed past early stages. Check current case law.
 
 ### 🔴 Expert view
-**Model risk management in banking.** The US **SR 11-7** (Federal Reserve, 2011, adopted by the OCC as Bulletin 2011-12), *Supervisory Guidance on Model Risk Management*, is the classic reference. It defines a **model** broadly as a quantitative method that processes inputs into estimates, and says model risk comes from fundamental errors and from inappropriate use. Its pillars:
+**Model risk management in banking.** The US **SR 11-7** (Federal Reserve, 2011, adopted by the OCC as Bulletin 2011-12), *Supervisory Guidance on Model Risk Management*, is the classic reference. It defines a **model** broadly as a quantitative method that processes inputs into estimates, and says model risk comes from fundamental errors and from inappropriate use. Its pillars: In April 2026 the Federal Reserve, the OCC and the FDIC replaced SR 11-7 with **SR 26-2**, *Revised Guidance on Model Risk Management*. It is more principles-based, scales validation to each model's materiality instead of fixed cycles, tightens the definition of a model and holds vendor models to the same standard; read its current text for how it treats generative and agentic AI.
 
 | Pillar | What it requires | AI extension |
 |---|---|---|
@@ -516,7 +516,7 @@ flowchart LR
 | **EU Unfair Commercial Practices Directive** — 2005/29/EC | Prohibits misleading, aggressive and unfair practices | Applies to AI-driven marketing and chatbots |
 | **EU Product Liability Directive** — (EU) 2024/2853 | No-fault liability for defective products, now including software and AI; disclosure and presumptions | Software is a product; pure economic loss not covered |
 | **EU AI Liability Directive (withdrawn)** | Proposed 2022 fault-based rules; withdrawn 2025 | Not in force |
-| **SR 11-7** | US model risk management: development, validation with effective challenge, governance and inventory | Applies to vendor and AI models |
+| **SR 11-7** | (Replaced in April 2026 by **SR 26-2**.) US model risk management: development, validation with effective challenge, governance and inventory | Applies to vendor and AI models |
 | **PRA SS1/23** | UK model risk management principles for banks | Covers AI models |
 | **QCB AI guideline** | Qatar Central Bank expectations for AI at regulated financial institutions | Najm's home supervisor; read the current text |
 
@@ -549,7 +549,7 @@ Layla's team adds an **AI Customer-Facing Controls Standard** and extends the mo
 - **"Software isn't a product."** Under the EU PLD 2024/2853, software including AI is a product.
 - **"The AI Liability Directive will apply."** It was withdrawn in 2025. The adopted instrument is the new PLD.
 - **"The PLD covers any loss caused by AI."** It covers death, personal injury, property damage and loss of non-professional data, not pure economic loss.
-- **"Model risk rules are only for traditional statistical models."** SR 11-7's definition is broad; supervisors apply it to machine learning, vendor and GenAI models.
+- **"Model risk rules are only for traditional statistical models."** SR 11-7 defined a model broadly, and its 2026 successor SR 26-2 applies to machine-learning and vendor models; check SR 26-2's text for how generative and agentic AI are treated.
 
 ## 🧾 Recap
 - Consumer protection covers what AI says, what companies say about AI, and how AI treats customers.
@@ -631,7 +631,8 @@ Layla's team adds an **AI Customer-Facing Controls Standard** and extends the mo
 - Product Liability Directive (EU) 2024/2853: https://eur-lex.europa.eu/eli/dir/2024/2853/oj
 - EU AI Act, Regulation (EU) 2024/1689: https://eur-lex.europa.eu/eli/reg/2024/1689/oj
 - Civil Resolution Tribunal of British Columbia (search *Moffatt v. Air Canada*, 2024): https://civilresolutionbc.ca
-- Federal Reserve, SR 11-7 Supervisory Guidance on Model Risk Management: https://www.federalreserve.gov/supervisionreg/srletters/sr1107.htm
+- Federal Reserve, SR 11-7 Supervisory Guidance on Model Risk Management: https://www.federalreserve.gov/boarddocs/srletters/2011/sr1107.htm
+- Federal Reserve, OCC and FDIC, SR 26-2 Revised Guidance on Model Risk Management (April 2026): https://www.federalreserve.gov/supervisionreg/srletters/SR2602.htm
 - Bank of England Prudential Regulation Authority (SS1/23): https://www.bankofengland.co.uk
 - European Banking Authority (Guidelines on loan origination and monitoring): https://www.eba.europa.eu
 - Qatar Central Bank: https://www.qcb.gov.qa
