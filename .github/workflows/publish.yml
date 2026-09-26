@@ -41,6 +41,9 @@ jobs:
       - name: Verify the SaaS course output matches its markdown
         run: npm run saas:check
 
+      - name: Verify the AIGP course output matches its markdown
+        run: npm run aigp:check
+
       - name: Verify the agentic pages carry the site navigation
         run: node scripts/agentic-nav.mjs --check
 
@@ -56,7 +59,7 @@ jobs:
       - name: Assemble the site
         run: |
           # Course library: landing hub at root, each course in its own subpath.
-          mkdir -p _site _site/vibe _site/agentic _site/saas
+          mkdir -p _site _site/vibe _site/agentic _site/saas _site/aigp
           cp landing.html _site/index.html
           # The vibe course (bilingual pages + downloads) → /vibe/
           cp index.html index.en.html index.ar.html _site/vibe/
@@ -67,7 +70,10 @@ jobs:
           # SaaS Building Blocks (single generated page) → /saas/
           cp saas/index.html saas/course.html saas/COURSE.md saas/REPOS.md \
              saas/index.ar.html saas/course.ar.html saas/COURSE.ar.md saas/REPOS.ar.md _site/saas/
-          ls -lh _site _site/vibe _site/agentic _site/saas
+          # AI Governance: Zero to Hero (AIGP-aligned) → /aigp/
+          cp aigp/index.html aigp/course.html aigp/COURSE.md aigp/INSTRUMENTS.md \
+             aigp/index.ar.html aigp/course.ar.html aigp/COURSE.ar.md aigp/INSTRUMENTS.ar.md _site/aigp/
+          ls -lh _site _site/vibe _site/agentic _site/saas _site/aigp
 
       # Every link on the assembled site, internal and external. Report only: a dead third-party
       # page should be fixed in the lesson, not block the deploy. Results are in the run summary.
