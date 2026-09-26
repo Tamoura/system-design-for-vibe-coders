@@ -10,7 +10,9 @@
     "check": "node scripts/build.mjs --check",
     "saas:build": "node scripts/build-saas.mjs",
     "saas:check": "node scripts/build-saas.mjs --check",
-    "saas:repos": "node scripts/check-saas-repos.mjs"
+    "saas:repos": "node scripts/check-saas-repos.mjs",
+    "aigp:build": "node scripts/build-aigp.mjs",
+    "aigp:check": "node scripts/build-aigp.mjs --check"
   },
   "devDependencies": {
     "archiver": "^7.0.1",
