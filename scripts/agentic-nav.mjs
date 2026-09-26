@@ -24,15 +24,20 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIR = path.join(ROOT, 'agentic');
 const CHECK = process.argv.includes('--check');
-const VERSION = 'agx-nav v3';
+const VERSION = 'agx-nav v4';
 
+// [English page, English label, Arabic label]. Each page has an Arabic twin named *.ar.html.
 const PAGES = [
-  ['index.html', 'Program'],
-  ['learning-path.html', 'Curriculum'],
-  ['production-playbook.html', 'Playbook'],
-  ['assessment.html', 'Assessment'],
-  ['on-ramp-poster.html', 'Poster'],
+  ['index.html', 'Program', 'البرنامج'],
+  ['learning-path.html', 'Curriculum', 'المنهج'],
+  ['production-playbook.html', 'Playbook', 'دليل التشغيل'],
+  ['assessment.html', 'Assessment', 'التقييم'],
+  ['on-ramp-poster.html', 'Poster', 'الملصق'],
 ];
+const arOf = (f) => f.replace(/\.html$/, '.ar.html');
+const FILES = PAGES.flatMap(([f]) => [f, arOf(f)]);
+const isAr = (f) => f.endsWith('.ar.html');
+const twin = (f) => (isAr(f) ? f.replace(/\.ar\.html$/, '.html') : arOf(f));
 
 const text = (html) => html.replace(/<a class="anchor"[\s\S]*?<\/a>/g, '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 const strip = (s, a, b) => s.replace(new RegExp(`${a}[\\s\\S]*?${b}\\n?`, 'g'), '');
@@ -45,15 +50,17 @@ const CSS = `
 .agx-bar a{color:var(--muted,#5b6470);text-decoration:none;padding:.35rem .6rem;border-radius:999px;white-space:nowrap}
 .agx-bar a:hover{color:var(--ink,#1e232c);background:var(--accent-soft,#f4e4e6)}
 .agx-bar a[aria-current=page]{color:#fff;background:var(--accent,#7a1f2b)}
-.agx-bar .agx-home{color:var(--ink,#1e232c);margin-right:.4rem}
+.agx-bar .agx-home{color:var(--ink,#1e232c);margin-inline-end:.4rem}
+.agx-bar .agx-lang{border:1px solid var(--line,#e4e0d8)}
+[dir=rtl] .agx-bar{font-family:"Noto Sans Arabic","Segoe UI",Tahoma,sans-serif}
 .agx-bar .agx-spacer{flex:1}
 .agx-toc-btn{display:none;font:inherit;color:var(--ink,#1e232c);background:var(--panel,#fff);border:1px solid var(--line,#e4e0d8);
   border-radius:999px;padding:.35rem .75rem;cursor:pointer}
 nav[aria-label="Table of contents"]{top:var(--agx-bar-h,44px) !important;height:calc(100vh - var(--agx-bar-h,44px)) !important}
-.toc-d3>a{padding:.18rem .5rem .18rem 1.9rem !important;font-size:.84em;border-left:2px solid var(--line,#e4e0d8);border-radius:0 6px 6px 0;margin-left:.5rem}
-nav[aria-label="Table of contents"] a.agx-active{color:var(--ink,#1e232c);background:var(--accent-soft,#f4e4e6);border-left-color:var(--accent,#7a1f2b)}
+.toc-d3>a{padding-block:.18rem !important;padding-inline:1.9rem .5rem !important;font-size:.84em;border-inline-start:2px solid var(--line,#e4e0d8);border-radius:0;margin-inline-start:.5rem}
+nav[aria-label="Table of contents"] a.agx-active{color:var(--ink,#1e232c);background:var(--accent-soft,#f4e4e6);border-inline-start-color:var(--accent,#7a1f2b)}
 main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
-.agx-top{position:fixed;right:1rem;bottom:1rem;z-index:40;display:none;width:2.6rem;height:2.6rem;border-radius:50%;
+.agx-top{position:fixed;inset-inline-end:1rem;bottom:1rem;z-index:40;display:none;width:2.6rem;height:2.6rem;border-radius:50%;
   border:1px solid var(--line,#e4e0d8);background:var(--panel,#fff);color:var(--ink,#1e232c);font-size:1.1rem;cursor:pointer;
   box-shadow:0 2px 8px rgba(0,0,0,.12)}
 .agx-top.agx-show{display:block}
@@ -62,8 +69,9 @@ main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
   .agx-toc-btn{display:inline-block}
   .agx-bar .agx-pages{order:3;width:100%;overflow-x:auto;display:flex;gap:.2rem;padding-top:.2rem;scrollbar-width:none}
   nav[aria-label="Table of contents"]{position:fixed !important;left:0;top:0 !important;bottom:0;height:100vh !important;
-    width:min(86vw,340px);z-index:60;background:var(--bg,#f7f6f2);border-right:1px solid var(--line,#e4e0d8) !important;
+    width:min(86vw,340px);z-index:60;background:var(--bg,#f7f6f2);border-inline-end:1px solid var(--line,#e4e0d8) !important;
     border-bottom:none !important;transform:translateX(-105%);transition:transform .2s ease;overflow-y:auto}
+  [dir=rtl] nav[aria-label="Table of contents"]{left:auto;right:0;transform:translateX(105%)}
   body.agx-open nav[aria-label="Table of contents"]{transform:none}
   body.agx-open .agx-scrim{display:block;position:fixed;inset:0;z-index:55;background:rgba(0,0,0,.35)}
   .layout{display:block !important}
@@ -113,13 +121,21 @@ const JS = `
 
 function topBar(file) {
   const hasToc = PAGES_WITH_TOC.has(file);
-  const links = PAGES.map(([f, label]) => `<a href="${f}"${f === file ? ' aria-current="page"' : ''}>${label}</a>`).join('');
+  const ar = isAr(file);
+  const links = PAGES.map(([f, en, arLabel]) => {
+    const target = ar ? arOf(f) : f;
+    return `<a href="${target}"${target === file ? ' aria-current="page"' : ''}>${ar ? arLabel : en}</a>`;
+  }).join('');
+  const lang = fs.existsSync(path.join(DIR, twin(file)))
+    ? `<a class="agx-lang" href="${twin(file)}" hreflang="${ar ? 'en' : 'ar'}" lang="${ar ? 'en' : 'ar'}">${ar ? 'English' : 'العربية'}</a>`
+    : '';
   return `<!--AGX:bar-->
-<header class="agx-bar" role="navigation" aria-label="Course">
-  <a class="agx-home" href="../">← Course library</a>
-  ${hasToc ? '<button class="agx-toc-btn" type="button" aria-expanded="false">☰ Contents</button>' : ''}
+<header class="agx-bar" role="navigation" aria-label="${ar ? 'الدورة' : 'Course'}">
+  <a class="agx-home" href="../">${ar ? '→ مكتبة الدورات' : '← Course library'}</a>
+  ${hasToc ? `<button class="agx-toc-btn" type="button" aria-expanded="false">☰ ${ar ? 'المحتويات' : 'Contents'}</button>` : ''}
   <span class="agx-spacer"></span>
   <span class="agx-pages">${links}</span>
+  ${lang}
 </header>
 ${hasToc ? '<div class="agx-scrim"></div>' : ''}
 <!--/AGX:bar-->
@@ -155,18 +171,18 @@ function patch(file, html) {
   if (PAGES_WITH_TOC.has(file)) s = addH3s(s);
   s = s.replace('</head>', `<style id="agx-nav">${CSS}</style>\n</head>`);
   s = s.replace(/<body([^>]*)>\n?/, (m) => `${m.trimEnd()}\n${topBar(file)}`);
-  s = s.replace('</body>', `<button class="agx-top" type="button" aria-label="Back to top">↑</button>\n<script id="agx-nav">${JS}</script>\n</body>`);
+  s = s.replace('</body>', `<button class="agx-top" type="button" aria-label="${isAr(file) ? 'العودة إلى الأعلى' : 'Back to top'}">↑</button>\n<script id="agx-nav">${JS}</script>\n</body>`);
   return s;
 }
 
 let stale = 0;
-for (const [file] of PAGES) {
+for (const file of FILES) {
   const p = path.join(DIR, file);
-  if (!fs.existsSync(p)) { console.warn(`! missing agentic/${file}`); continue; }
+  if (!fs.existsSync(p)) { if (!isAr(file)) console.warn(`! missing agentic/${file}`); continue; }
   const html = fs.readFileSync(p, 'utf8');
   if (html.includes('<nav aria-label="Table of contents">')) PAGES_WITH_TOC.add(file);
 }
-for (const [file] of PAGES) {
+for (const file of FILES) {
   const p = path.join(DIR, file);
   if (!fs.existsSync(p)) continue;
   const html = fs.readFileSync(p, 'utf8');
