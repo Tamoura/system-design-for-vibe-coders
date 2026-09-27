@@ -17,7 +17,7 @@
 - إشارة الامتحان (Exam cue) هي أن تطابق كل مبدأ (principle) مع مرحلة دورة حياة (life cycle) الذكاء الاصطناعي (AI) التي يطبَّق فيها. والفخ الأكبر (The biggest trap) هو الظن بأن عبارة "البيانات كانت علنية" أو "النموذج (model) مجرد إحصاءات" تُخرجك من نطاق GDPR.
 
 ## 🧭 لماذا يهم (Why it matters)
-تريد دانة، كبيرة علماء البيانات (lead data scientist) في بنك نجم (Najm Bank)، تحسين نموذج التقييم الائتماني للأفراد (retail credit-scoring model) بجمع عشر سنوات من ملفات القروض (loan files) وسجلات المعاملات (transaction histories) وسجلات روبوت محادثة خدمة العملاء (customer-service chatbot logs) في مجموعة تدريب (training set) واحدة. تقول: "بيانات أكثر، نموذج (model) أفضل"، ويوافقها خالد، مالك إقراض الأفراد (owns retail lending). أما سارة، مسؤولة حماية البيانات (DPO)، فتطرح أربعة أسئلة. هل أُبلغ العملاء بأن رسائلهم في المحادثات ستُستخدم لتدريب (training) نموذج ائتماني (credit model)؟ هل تكشف سجلات المعاملات أي شيء حساس، مثل مدفوعات إلى مسجد أو مستشفى أو نقابة عمالية؟ إلى متى يحتفظ البنك بملفات عمرها عشر سنوات لعملاء غادروه؟ وأي أساس قانوني (lawful basis) يغطي التدريب، بخلاف تشغيل الحساب؟
+تريد دانة، كبيرة علماء البيانات (lead data scientist) في بنك نجم (Najm Bank)، تحسين نموذج التقييم الائتماني للأفراد (retail credit-scoring model) بجمع عشر سنوات من ملفات القروض (loan files) وسجلات المعاملات (transaction histories) وسجلات روبوت محادثة خدمة العملاء (customer-service chatbot logs) في مجموعة تدريب (training set) واحدة. تقول: "بيانات أكثر، نموذج (model) أفضل"، ويوافقها خالد، مالك إقراض الأفراد (owns retail lending). أما سارة، مسؤولة حماية البيانات (Data Protection Officer, DPO)، فتطرح أربعة أسئلة. هل أُبلغ العملاء بأن رسائلهم في المحادثات ستُستخدم لتدريب (training) نموذج ائتماني (credit model)؟ هل تكشف سجلات المعاملات أي شيء حساس، مثل مدفوعات إلى مسجد أو مستشفى أو نقابة عمالية؟ إلى متى يحتفظ البنك بملفات عمرها عشر سنوات لعملاء غادروه؟ وأي أساس قانوني (lawful basis) يغطي التدريب، بخلاف تشغيل الحساب؟
 
 ليست أي من هذه الأسئلة خاصة بالذكاء الاصطناعي (AI)؛ إنها أسئلة عادية في حماية البيانات (ordinary data protection questions) يجعلها الذكاء الاصطناعي أصعب. فالنماذج (models) تريد بيانات أكثر مما تبدو المهمة بحاجة إليه، وتحوّل البيانات غير الضارة إلى استنتاجات حساسة (sensitive inferences)، وما إن تُشكّل البيانات الشخصية (personal data) معاملات النموذج (parameters) حتى يصعب سحبها منه. ولأن فرع نجم في فرانكفورت يخدم عملاء في الاتحاد الأوروبي (EU)، ينطبق GDPR على تلك المعالجة (processing)؛ وينطبق PDPPL القطري في البلد الأم.
 
@@ -186,7 +186,7 @@ flowchart TD
 **4. أي مما يلي هو خطوة الضرورة (necessity) في تقييم المصالح المشروعة (legitimate interests assessment) لتدريب (training) نموذج احتيال (fraud model)؟**
 
 - A. إثبات أن مصلحة منع الاحتيال (fraud-prevention) مشروعة ومصاغة بوضوح
-- B. الحصول على توقيع مسؤول حماية البيانات (DPO)
+- B. الحصول على توقيع مسؤول حماية البيانات (Data Protection Officer, DPO)
 - C. الموازنة (balancing) بين التوقعات المعقولة (reasonable expectations) للعملاء ومصلحة البنك
 - D. إثبات أن المعالجة (processing) لازمة لتلك المصلحة وأن الوسائل الأقل تدخلًا (less intrusive means)، مثل خصائص (features) أقل أو بيانات اصطناعية (synthetic data)، لن تحققها
 
@@ -339,7 +339,7 @@ flowchart TD
 
 | نوع الطلب (Request type) | الخطوة الخاصة بالذكاء الاصطناعي (AI-specific step) | المالك (Owner) | الأدلة المحفوظة (Evidence kept) |
 |---|---|---|---|
-| الوصول (access) | تضمين الدرجة (score) الحالية، ورموز الأسباب (reason codes)، وإصدار النموذج (model version) وتاريخه؛ وشرح المنطق بالقالب المعتمد (approved template) | سارة (مسؤولة حماية البيانات (DPO)) مع دانة | نسخة من الرد (Response copy) |
+| الوصول (access) | تضمين الدرجة (score) الحالية، ورموز الأسباب (reason codes)، وإصدار النموذج (model version) وتاريخه؛ وشرح المنطق بالقالب المعتمد (approved template) | سارة (مسؤولة حماية البيانات (Data Protection Officer, DPO)) مع دانة | نسخة من الرد (Response copy) |
 | التصحيح (rectification) | تصحيح المدخل؛ وإعادة التقييم؛ وإخطار العميل إذا تغيّر القرار | عمليات إقراض الأفراد (Retail Lending ops) | الدرجات قبل التصحيح وبعده (Before/after scores) |
 | المحو (erasure) | الحذف من المصدر؛ وإضافة المعرّف إلى قائمة الاستبعاد من التدريب (training exclusion list)؛ ومراجعة تقييم إخفاء الهوية (anonymity assessment) للنموذج (model)؛ وتطبيق مرشح المخرجات (output filter) في أنظمة الذكاء الاصطناعي التوليدي (GenAI systems) | مكتب البيانات (Data Office) | قيد في قائمة الاستبعاد (Exclusion-list entry) |
 | الاعتراض على التدريب (Objection to training) | الإضافة إلى سجل الانسحاب (opt-out register) الذي يُصفّى قبل كل عملية تدريب (training run) | مكتب البيانات (Data Office) | قيد في السجل (Register entry) |
@@ -477,7 +477,7 @@ flowchart TD
 | المخاطر على الحقوق والحريات (Risks to rights and freedoms) | التمييز (discrimination)، وعدم الدقة (inaccuracy)، والغموض (opacity)، وفقدان السيطرة (loss of control)، والهجمات الأمنية (security attacks)، والآثار المثبِّطة (chilling effects)، والإقصاء من الخدمات (exclusion from services) |
 | تدابير معالجة المخاطر (Measures to address risks) | تقنية (تقنيات تعزيز الخصوصية (privacy-enhancing technologies)، والاختبار، والتحكم في الوصول (access control))، وتنظيمية (المراجعة البشرية (human review)، والتدريب (training))، وفردية (الإشعارات (notices)، ومسارات الطعن (contest routes)) |
 
-يجب التماس مشورة مسؤول حماية البيانات (DPO). وحيثما كان ذلك مناسبًا، ينبغي التماس آراء أصحاب البيانات (data subjects) أو ممثليهم أيضًا. وإذا أظهر تقييم الأثر على حماية البيانات (DPIA) مخاطر عالية (high risk) لا يستطيع المتحكّم (controller) تخفيفها، تشترط المادة 36 (Art. 36) **الاستشارة المسبقة (prior consultation)** للسلطة الرقابية (supervisory authority) قبل بدء المعالجة (processing).
+يجب التماس مشورة مسؤول حماية البيانات (Data Protection Officer, DPO). وحيثما كان ذلك مناسبًا، ينبغي التماس آراء أصحاب البيانات (data subjects) أو ممثليهم أيضًا. وإذا أظهر تقييم الأثر على حماية البيانات (DPIA) مخاطر عالية (high risk) لا يستطيع المتحكّم (controller) تخفيفها، تشترط المادة 36 (Art. 36) **الاستشارة المسبقة (prior consultation)** للسلطة الرقابية (supervisory authority) قبل بدء المعالجة (processing).
 
 **تقييم الأثر على حماية البيانات (DPIA) وثيقة حيّة (living document).** راجعه حين تتغير المعالجة (processing): إصدار جديد للنموذج (new model version)، أو مصدر بيانات جديد (new data source)، أو استخدام جديد، أو فئة سكانية جديدة (new population). وبالنسبة لأنظمة الذكاء الاصطناعي (AI systems) التي يُعاد تدريبها بانتظام، اربط مراجعة التقييم بعملية إدارة التغيير (change-management) في الوحدة (Module) 10.3.
 
@@ -566,7 +566,7 @@ flowchart TD
 
 | الوحدة (Module) | البنود المطلوبة (Required items) | الحالة |
 |---|---|---|
-| الاتحاد الأوروبي (المادة 35 (Art. 35) من GDPR) | الضرورة والتناسب (necessity and proportionality)؛ ومشورة مسؤول حماية البيانات (DPO)؛ والتماس آراء المتأثرين (استبيان للمتقدمين (applicant survey)؛ واستشارة مجلس العمال (works council) في الجوانب المتعلقة بالموظفين) | مكتمل |
+| الاتحاد الأوروبي (المادة 35 (Art. 35) من GDPR) | الضرورة والتناسب (necessity and proportionality)؛ ومشورة مسؤول حماية البيانات (Data Protection Officer, DPO)؛ والتماس آراء المتأثرين (استبيان للمتقدمين (applicant survey)؛ واستشارة مجلس العمال (works council) في الجوانب المتعلقة بالموظفين) | مكتمل |
 | EU AI Act | واجبات المُشغِّل (تعليمات الاستخدام (instructions for use)، والإشراف، والسجلات (logs)، وإعلام العمال (worker information))؛ وتقييم الأثر على الحقوق الأساسية (FRIA) غير مطلوب لهذا الاستخدام | مكتمل |
 | قطر (PDPPL) | الإشعار (notice)، والغرض المشروع (legitimate purpose)، والتحقق من البيانات ذات الطبيعة الخاصة (special-nature data)، والنقل إلى بلد استضافة المورد (vendor) | بانتظار المراجعة القانونية (Legal review) |
 | الإمارات (اللائحة 10 (Regulation 10) لمركز دبي المالي العالمي (DIFC)) | إشعار (notice) المتقدمين (applicants) بالنظام المستقل (autonomous system)؛ والتحقق من أي متطلبات إضافية | بانتظار المراجعة القانونية (Legal review) |

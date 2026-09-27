@@ -18,7 +18,7 @@
 - الفخ الأكبر (Biggest trap): اعتبار البيانات الاصطناعية (synthetic data) أو "المجهّلة" (anonymised) خارج قانون الخصوصية (privacy law) تلقائيًا.
 
 ## 🧭 لماذا يهم (Why it matters)
-يريد فريق دانة إجراء الضبط الدقيق (fine-tune) للمساعد الذكي لمذكرات الائتمان (credit memo copilot) على مذكرات الائتمان التاريخية (historical credit memos) لبنك نجم (Najm Bank) خلال عشر سنوات. ويريدون أيضًا تحسين نموذج ائتمان الأفراد (retail credit model) بثلاثة مصادر (sources) إضافية: مجموعة بيانات مشتراة (purchased dataset) لسجلات سداد فواتير الاتصالات (telecom payment histories)، وإشارات من وسائل التواصل الاجتماعي (social-media signals) مجمّعة آليًا (scraped) من الملفات العامة للمتقدمين (applicants)، ومجموعة بيانات اصطناعية (synthetic data) ولّدها مورّد (vendor) "لسد الفجوات" الخاصة بالمتقدمين الشباب (young applicants). كل فكرة ممكنة تقنيًا. وعمر (رئيس البيانات، CDO) متحمس. أما سارة (مسؤولة حماية البيانات (data protection officer)، DPO) فلديها أسئلة عن كل واحدة منها.
+يريد فريق دانة إجراء الضبط الدقيق (fine-tune) للمساعد الذكي لمذكرات الائتمان (credit memo copilot) على مذكرات الائتمان التاريخية (historical credit memos) لبنك نجم (Najm Bank) خلال عشر سنوات. ويريدون أيضًا تحسين نموذج ائتمان الأفراد (retail credit model) بثلاثة مصادر (sources) إضافية: مجموعة بيانات مشتراة (purchased dataset) لسجلات سداد فواتير الاتصالات (telecom payment histories)، وإشارات من وسائل التواصل الاجتماعي (social-media signals) مجمّعة آليًا (scraped) من الملفات العامة للمتقدمين (applicants)، ومجموعة بيانات اصطناعية (synthetic data) ولّدها مورّد (vendor) "لسد الفجوات" الخاصة بالمتقدمين الشباب (young applicants). كل فكرة ممكنة تقنيًا. وعمر (رئيس البيانات، CDO) متحمس. أما سارة (مسؤولة حماية البيانات (Data Protection Officer, DPO)) فلديها أسئلة عن كل واحدة منها.
 
 تحتوي المذكرات التاريخية (historical memos) على بيانات مالية للعملاء (client financials) قُدّمت في إطار السرية المصرفية (banking confidentiality)، وعلى بيانات شخصية عن الكفلاء (personal data about guarantors) جُمعت لتقييم (evaluation) القروض لا لتدريب الذكاء الاصطناعي (to train AI). وبيانات الاتصالات باعها وسيط (broker) لم يقرأ أحد صيغة الموافقة (consent language) لديه. وتجميع الملفات الاجتماعية آليًا (Scraping social profiles) يثير المسائل التي تناولها المجلس الأوروبي لحماية البيانات (EDPB) في رأيه 28/2024 (Opinion 28/2024) بشأن نماذج (models) الذكاء الاصطناعي (AI)، وقد فرضت عدة سلطات أوروبية لحماية البيانات (EU data protection authorities) غرامات (fines) على Clearview AI لتجميعها صور الوجوه من الويب (for scraping facial images from the web) دون أساس قانوني (lawful basis). والبيانات الاصطناعية (synthetic data) وُلّدت من بيانات حقيقية تعود إلى *شخص ما*. فمن هو؟ الحوكمة (governance) في هذه المرحلة تحدد هل تُبنى نماذج بنك نجم على أرض يملكها، أم على أرض قد يُضطر إلى إعادتها.
 
@@ -88,7 +88,7 @@
 | **ISO/IEC 42001** | ضوابط (controls) نظام إدارة الذكاء الاصطناعي (AI management system) التي تغطي بيانات أنظمة الذكاء الاصطناعي (AI systems): الاقتناء، والجودة (quality)، والمصدر (source)، والإعداد | ضوابط (controls) بيانات قابلة للاعتماد |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-**سجل حقوق بيانات التدريب (Training Data Rights Register)**، تراجعه سارة (مسؤولة حماية البيانات (data protection officer)) والإدارة القانونية (Legal) وعمر (رئيس البيانات):
+**سجل حقوق بيانات التدريب (Training Data Rights Register)**، تراجعه سارة (مسؤولة حماية البيانات (Data Protection Officer, DPO)) والإدارة القانونية (Legal) وعمر (رئيس البيانات):
 
 | مجموعة البيانات (dataset) | نوع المصدر (source type) | الأساس القانوني / الشرط (Lawful basis / condition) | الترخيص / العقد (Licence / contract) | حقوق النشر / السرية (Copyright / confidentiality) | القرار |
 |---|---|---|---|---|---|
@@ -540,9 +540,9 @@
 | 6 | اختبار الإجهاد (سيناريو الركود (recession scenario)) | التدهور (Degradation) ضمن الهامش المسموح (tolerance)؛ موثَّق | موثَّق | ✅ |
 | 7 | رموز الأسباب (reason codes) | اجتياز فحوص الأمانة (faithfulness checks) والاستقرار؛ صياغة اعتمدتها إدارة الامتثال (Compliance) | مُجتاز | ✅ |
 | 8 | المصادقة المستقلة (independent validation) | لا نتائج عالية الخطورة (high-severity) مفتوحة | نتيجتان متوسطتا الخطورة (medium) مع خطة معالجة (remediation plan) | ✅ بشروط (with conditions) |
-| 9 | المخاطر المتبقية في DPIA / FRIA (DPIA / FRIA residual risk) | يقبلها مسؤول حماية البيانات (DPO) ومالك الأعمال (business owner) | مقبولة | ✅ |
+| 9 | المخاطر المتبقية في DPIA / FRIA (DPIA / FRIA residual risk) | يقبلها مسؤول حماية البيانات (Data Protection Officer, DPO) ومالك الأعمال (business owner) | مقبولة | ✅ |
 
-**الاعتماد النهائي (sign-off):** خالد (مالك الأعمال (business owner)) · المصادقة المستقلة على النماذج (خط الدفاع الثاني (second line)) · سارة (مسؤولة حماية البيانات (data protection officer)) · ليلى (حوكمة الذكاء الاصطناعي (AI governance)) ← **لجنة حوكمة الذكاء الاصطناعي (AI Governance Committee): موافقة بشروط (approved with conditions)** (إعادة معايرة (recalibrate) DE؛ تبرير أو تخفيف لفئة دون 25 (under-25) خلال 60 يومًا؛ مراجعة يدوية (manual review) بنسبة 100% للمتقدمين (applicants) دون 25 حتى ذلك الحين).
+**الاعتماد النهائي (sign-off):** خالد (مالك الأعمال (business owner)) · المصادقة المستقلة على النماذج (خط الدفاع الثاني (second line)) · سارة (مسؤولة حماية البيانات (Data Protection Officer, DPO)) · ليلى (حوكمة الذكاء الاصطناعي (AI governance)) ← **لجنة حوكمة الذكاء الاصطناعي (AI Governance Committee): موافقة بشروط (approved with conditions)** (إعادة معايرة (recalibrate) DE؛ تبرير أو تخفيف لفئة دون 25 (under-25) خلال 60 يومًا؛ مراجعة يدوية (manual review) بنسبة 100% للمتقدمين (applicants) دون 25 حتى ذلك الحين).
 
 ## 🛠️ التمارين (Exercises)
 - 🟢 نموذج (model) احتيال يصنّف 1% من المعاملات؛ والاحتيال (fraud) يمثل 0.2% من المعاملات. اشرح بكلمات بسيطة لماذا الدقة (accuracy) مقياس ضعيف هنا، وأي مقياسين ستبلغ عنهما بدلًا منها. *يكتمل عندما (Done when):* تستطيع شرح الضبط والاستدعاء (precision and recall) لخالد في جملتين لكل منهما.

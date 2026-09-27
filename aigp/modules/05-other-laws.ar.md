@@ -116,7 +116,7 @@ flowchart RL
 | الفئات المختبَرة (Groups tested) | الجنس، والفئة العمرية (age band)، ومجموعة الجنسية (nationality group)، والإعاقة (حيث تكون البيانات محفوظة بصورة مشروعة)، والتقاطعات (intersections) حيث تسمح أحجام العينات (sample sizes) |
 | المقاييس (Metrics) | نسبة معدل الاختيار (selection-rate ratio)؛ نسبة معدل الموافقة (approval-rate ratio)؛ معدلات الإيجابيات الكاذبة والسلبيات الكاذبة (false-positive and false-negative rates) حسب الفئة |
 | حد التحمّل (Tolerance) | نسبة أقل من 0.80، أو فجوة في معدل الخطأ (error-rate gap) تتجاوز حدًا متفقًا عليه، تستدعي التحقيق (Investigation) |
-| التعامل مع البيانات (Data handling) | يحتفظ مكتب البيانات (Data Office) بالخصائص المحمية (protected characteristics) في مخزن منفصل (separate store)، ولا تُستخدم إلا للاختبار، مع أساس قانوني (legal basis) يعتمده مسؤول حماية البيانات (DPO) لكل ولاية قضائية (jurisdiction) |
+| التعامل مع البيانات (Data handling) | يحتفظ مكتب البيانات (Data Office) بالخصائص المحمية (protected characteristics) في مخزن منفصل (separate store)، ولا تُستخدم إلا للاختبار، مع أساس قانوني (legal basis) يعتمده مسؤول حماية البيانات (Data Protection Officer, DPO) لكل ولاية قضائية (jurisdiction) |
 | التحقيق (Investigation) | تحليل المحركات (driver analysis)؛ فحص المتغيرات البديلة (proxy check)؛ البحث عن بدائل أقل تمييزًا (less discriminatory alternatives)؛ تبرير موثَّق (documented justification) |
 | واجب المورّد (Vendor duty) | يجب على المورّدين (vendors) تقديم أدلة اختبار التحيّز (bias testing) ودعم اختبارات بنك نجم الخاصة (بند تعاقدي (contract clause)، الوحدة (Module) 11.2) |
 | التكرار (Frequency) | قبل الإطلاق (before release)، وكل ربع سنة، وبعد أي تغيير في النموذج (model) أو الفئة السكانية (population) |
@@ -591,7 +591,7 @@ flowchart RL
 - A. الموافقة؛ فالذكاء الاصطناعي (AI) موضوعي بطبيعته
 - B. الموافقة مع إخلاء مسؤولية (disclaimer) بخط صغير
 - C. الرفض ما لم يُثبَت الادعاء بأدلة، لأن ادعاءات الذكاء الاصطناعي غير المثبتة (Unsubstantiated AI claims) قد تكون خادعة (deceptive)
-- D. إحالته إلى مسؤول حماية البيانات (DPO) فقط
+- D. إحالته إلى مسؤول حماية البيانات (Data Protection Officer, DPO) فقط
 
 <details><summary>الإجابة</summary>
 

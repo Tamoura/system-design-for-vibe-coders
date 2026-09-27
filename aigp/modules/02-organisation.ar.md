@@ -279,7 +279,7 @@ flowchart TD
 | علوم البيانات / الهندسة (Data science / engineering) | بناء النماذج (models) والأنظمة واختبارها وتوثيقها ورصدها | فريق دانة |
 | رئيس البيانات (Chief Data Officer) | استراتيجية البيانات (Data strategy)، وجودة البيانات (data quality)، وتسلسل البيانات (lineage)، وملكية البيانات (data ownership) | عمر |
 | الشؤون القانونية (Legal) | تفسير القوانين (Interprets laws)، والعقود (contracts)، والمسؤولية القانونية (liability)، والملكية الفكرية (IP) | فريق المستشار القانوني العام (General Counsel) |
-| الخصوصية / مسؤول حماية البيانات (DPO) | الامتثال لحماية البيانات (Data protection compliance)، وتقييمات الأثر على حماية البيانات (DPIAs)، وحقوق أصحاب البيانات (data-subject rights)؛ ويجب أن يتمكن مسؤول حماية البيانات (DPO) من العمل باستقلال بموجب GDPR | سارة |
+| الخصوصية / مسؤول حماية البيانات (Data Protection Officer, DPO) | الامتثال لحماية البيانات (Data protection compliance)، وتقييمات الأثر على حماية البيانات (DPIAs)، وحقوق أصحاب البيانات (data-subject rights)؛ ويجب أن يتمكن مسؤول حماية البيانات (Data Protection Officer, DPO) من العمل باستقلال بموجب GDPR | سارة |
 | أمن المعلومات (information security) | أمن النماذج (models) والبيانات (data) وسلسلة توريد الذكاء الاصطناعي (AI supply chain)؛ وإساءة استخدام الذكاء الاصطناعي التوليدي (GenAI misuse) | CISO |
 | الامتثال (compliance) | ربط المتطلبات التنظيمية (EU AI Act، وتوقعات QCB، وقواعد حماية المستهلك (consumer rules))، ومخاطر السلوك (conduct risk) | رئيس الامتثال (Head of Compliance) |
 | المشتريات / مخاطر الأطراف الثالثة (Procurement / third-party risk) | العناية الواجبة (due diligence) بالمورّدين (vendors) والعقود (contracts) لمنتجات الذكاء الاصطناعي (AI) | يوسف |
@@ -348,7 +348,7 @@ flowchart TD
 |---|---|---|
 | **EU AI Act** — المادة 26 (Art. 26) | يجب على مُشغِّلي الذكاء الاصطناعي عالي المخاطر (Deployers of high-risk AI) إسناد الإشراف البشري (human oversight) إلى أشخاص يملكون الكفاءة والتدريب والصلاحية اللازمة (necessary competence, training and authority)، واستخدام الأنظمة وفق التعليمات | الإشراف (oversight) وظيفة لشخص مسمّى، لا خاصية في النظام (system feature) |
 | **EU AI Act** — المادة 17 (Art. 17) | يحتاج مقدّمو الذكاء الاصطناعي عالي المخاطر (Providers of high-risk AI) إلى نظام لإدارة الجودة (quality management system)، يتضمن إطار مساءلة (accountability framework) للإدارة والموظفين | الأدوار والمسؤوليات (roles and responsibilities) اشتراط قانوني (legal requirement) على مقدّمي الأنظمة (providers) |
-| **GDPR** — المواد 37–39 (Arts 37–39) | تعيين مسؤول حماية البيانات (DPO) ومكانته ومهامه، ويجب أن يتمكن من العمل باستقلال وأن يرفع تقاريره إلى أعلى مستوى إداري | مسؤول حماية البيانات (DPO) يقدّم المشورة ويرصد؛ ويبقى المتحكّم (controller) مسؤولًا (accountable) |
+| **GDPR** — المواد 37–39 (Arts 37–39) | تعيين مسؤول حماية البيانات (Data Protection Officer, DPO) ومكانته ومهامه، ويجب أن يتمكن من العمل باستقلال وأن يرفع تقاريره إلى أعلى مستوى إداري | مسؤول حماية البيانات (Data Protection Officer, DPO) يقدّم المشورة ويرصد؛ ويبقى المتحكّم (controller) مسؤولًا (accountable) |
 | **ISO/IEC 42001** — البند 5.3 (Clause 5.3) والملحق A (Annex A) | إسناد الأدوار والمسؤوليات (roles and responsibilities) والصلاحيات (authorities) والإبلاغ بها؛ وضوابط (controls) للتنظيم الداخلي (internal organisation) والإبلاغ عن المخاوف (reporting concerns) | يبحث مدققو الاعتماد (certification auditors) عن أدوار (roles) موثّقة |
 | **NIST AI RMF** — وظيفة Govern | هياكل المساءلة (Accountability structures)، وفرق مدرَّبة وممكَّنة (trained and empowered teams)، وسياسات مخاطر الأطراف الثالثة (third-party risk policies) | Govern أساس Map وMeasure وManage |
 | **IIA Three Lines Model** | الخط الأول (first line) يملك المخاطر، والخط الثاني (second line) يشرف ويتحدى، والخط الثالث (third line) يقدّم تأكيدًا مستقلًا (independent assurance) لهيئة الحوكمة (governing body) | التدقيق الداخلي (internal audit) هو الخط الثالث (third line) المستقل |
@@ -400,7 +400,7 @@ flowchart TD
 - **التدقيق الداخلي يصمم الضوابط (Internal audit designing controls).** يجب أن يبقى الخط الثالث (third line) مستقلًا؛ فإذا جعلت إجابةٌ ما التدقيقَ الداخلي (internal audit) يبني إطار الذكاء الاصطناعي (AI framework) أو يعتمده، فكن متشككًا. يمكنه تقديم المشورة، لكن دوره الأساسي (its core role) هو التأكيد.
 - **المورّد هو المسؤول (The vendor is accountable).** شراء نظام لا ينقل المساءلة (accountability) عن طريقة استخدامك له (تُظهر *Moffatt v. Air Canada* أن المؤسسة تُحاسَب على روبوت المحادثة (chatbot) الخاص بها).
 - **اللجنة كمنتدى للكلام (Committee as a talking shop).** اللجنة (committee) بلا ميثاق (charter) وصلاحيات قرار (decision rights) ومحاضر (minutes) ليست حوكمة (governance). اختر الإجابات التي تضفي الطابع الرسمي على القرارات والتصعيد (escalation).
-- **مسؤول حماية البيانات كصاحب قرار (DPO as decision-maker).** بموجب GDPR يقدّم مسؤول حماية البيانات (DPO) المشورة ويرصد؛ أما المتحكّم (controller) (المؤسسة) فهو المسؤول (accountable) عن الامتثال (compliance).
+- **مسؤول حماية البيانات كصاحب قرار (DPO as decision-maker).** بموجب GDPR يقدّم مسؤول حماية البيانات (Data Protection Officer, DPO) المشورة ويرصد؛ أما المتحكّم (controller) (المؤسسة) فهو المسؤول (accountable) عن الامتثال (compliance).
 
 ## 🧾 الخلاصة (Recap)
 - يحتاج كل نظام ذكاء اصطناعي (AI system) إلى مالك عمل رفيع المستوى (senior business owner) واحد يكون مسؤولًا (accountable)؛ وأدوار الحوكمة (governance roles) تدعم وتتحدى (challenge).
