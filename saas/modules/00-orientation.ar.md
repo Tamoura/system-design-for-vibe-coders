@@ -628,7 +628,7 @@ git log --oneline -S "maxMonitors" -- .
 والآن الجزء الذي ينقذ المسارات المهنية. **الترخيص** (License) هو الإذن القانوني الذي يمنحك إياه المؤلفون. من دون ترخيص، يكون الكود «جميع الحقوق محفوظة (all rights reserved)» حتى لو كان عامًا. التراخيص على رفّنا تنقسم إلى أربع عائلات:
 
 ```mermaid
-flowchart LR
+flowchart RL
     CODE["كود وجدته على GitHub"] --> PERM["متساهلة<br/>MIT · Apache-2.0 · BSD"]
     CODE --> COPY["حقوق متروكة<br/>GPL-2.0 · GPL-3.0"]
     CODE --> NET["حقوق متروكة عبر الشبكة<br/>AGPL-3.0"]

@@ -119,7 +119,7 @@ CREATE INDEX check_result_monitor_time_idx
 **ترحيلات بلا توقف (zero-downtime migrations): التوسيع ثم التقليص (Expand and Contract).** أثناء النشر يعمل الإصدار القديم والجديد من كودك في الوقت نفسه على قاعدة بيانات واحدة. لذلك يجب أن يكون الترحيل متوافقًا مع الاثنين. إعادة تسمية `monitor.url` إلى `monitor.target` بأمان تحتاج عدة عمليات نشر:
 
 ```mermaid
-flowchart LR
+flowchart RL
     A["1. التوسيع<br/>إضافة العمود target"] --> B["2. الكتابة المزدوجة<br/>الكود يكتب في url وtarget"]
     B --> C["3. الملء الرجعي<br/>نسخ الصفوف القديمة على دفعات"]
     C --> D["4. تحويل القراءة<br/>الكود يقرأ target"]
@@ -335,10 +335,10 @@ ORDER BY m.id, c.checked_at DESC;
 
 ```mermaid
 sequenceDiagram
-    participant B as المتصفح
-    participant A as واجهة Beacon البرمجية
-    participant D as Postgres
     participant S as تخزين الكائنات
+    participant D as Postgres
+    participant A as واجهة Beacon البرمجية
+    participant B as المتصفح
     B->>A: POST /uploads مع الاسم والنوع والحجم
     A->>A: التحقق من الجلسة والدور وحدود الخطة
     A->>D: إدراج صف الملف بحالة pending
@@ -593,7 +593,7 @@ flowchart TD
 هذا هو السلّم الذي تصعده أغلب منتجات SaaS:
 
 ```mermaid
-flowchart LR
+flowchart RL
     A["ILIKE<br/>مسح للنصوص الجزئية"] --> B["pg_trgm<br/>تقريبي ومفهرس"]
     B --> C["البحث النصي الكامل في Postgres<br/>tsvector والترتيب"]
     C --> D["محرك بحث<br/>Meilisearch وTypesense وOpenSearch"]
@@ -646,7 +646,7 @@ CREATE INDEX incident_update_search_idx ON incident_update USING gin (search);
 3. **التقاط تغييرات البيانات (CDC).** أداة مثل Debezium تقرأ تدفق النسخ المنطقي (logical replication stream) في Postgres وتصدر كل تغيير في الصفوف إلى طابور (queue)، يستهلكه مُفهرِس (indexer). لا يستطيع أي كود في التطبيق أن ينسى إصدار حدث (event)، لكنك الآن تشغّل بنية تحتية أكثر (infrastructure).
 
 ```mermaid
-flowchart LR
+flowchart RL
     APP["واجهة Beacon البرمجية"] -->|"معاملة واحدة"| PG[("Postgres<br/>monitor + outbox")]
     PG --> W["عامل الفهرسة"]
     W --> SE[("محرك البحث")]
@@ -902,11 +902,11 @@ COMMIT;
 
 ```mermaid
 sequenceDiagram
-    participant U as المستخدم
-    participant M as الوسيط البرمجي
-    participant H as المعالج
-    participant D as Postgres
     participant Q as طابور المهام
+    participant D as Postgres
+    participant H as المعالج
+    participant M as الوسيط البرمجي
+    participant U as المستخدم
     U->>M: طلب مع ملف تعريف ارتباط الجلسة
     M->>M: تحديد المستخدم والمنظمة النشطة والتحقق من العضوية
     M->>H: تشغيل المعالج داخل سياق المستأجر
@@ -934,7 +934,7 @@ sequenceDiagram
 **إقامة البيانات (Data Residency).** بعض العملاء، غالبًا في الاتحاد الأوروبي بموجب GDPR أو في الصناعات المنظَّمة (regulated industries)، يشترطون تخزين بياناتهم ومعالجتها في منطقة محددة (region). وهذا يعني *كل* البيانات: قاعدة البيانات، وتخزين الكائنات (object storage) (الدرس 2.2)، وفهرس البحث (search index) (الدرس 2.3)، والنسخ الاحتياطية (backups)، والسجلات، والمعالجين الفرعيين (subprocessors) مثل مزوّد البريد (email provider). البنية الشائعة (architecture) هي **الخلايا الإقليمية (Regional Cells)**: نسخة كاملة من البنية لكل منطقة، مع مستوى تحكم عالمي (global control plane) صغير لا يخزّن إلا دليل المستأجرين (tenant directory) (أي منظمة تعيش في أي منطقة) ويوجّه (routes) المستخدمين إليها.
 
 ```mermaid
-flowchart LR
+flowchart RL
     U["المستخدم"] --> G["الموجّه العالمي<br/>دليل المستأجرين"]
     G -->|"المنظمة في الاتحاد الأوروبي"| EU["خلية الاتحاد الأوروبي<br/>التطبيق وPostgres والحاوية والبحث"]
     G -->|"المنظمة في الولايات المتحدة"| US["خلية الولايات المتحدة<br/>التطبيق وPostgres والحاوية والبحث"]

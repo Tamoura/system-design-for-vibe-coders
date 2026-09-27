@@ -54,7 +54,7 @@
 والسريع (في الكاش). ومهمتك — من الآن فصاعدًا — إدارةُ الفجوة بينهما.
 
 ```mermaid
-flowchart LR
+flowchart RL
     Q["سؤال<br/>(GET /creator/amina)"] --> C{"موجود في<br/>الكاش؟"}
     C -->|"إصابة — سريع"| F["النسخة السريعة<br/>(قد تكون قديمة)"]
     C -->|"إخفاق — بطيء"| DB["النسخة الحقيقية<br/>(قاعدة البيانات)"]
@@ -83,7 +83,7 @@ flowchart LR
 الطلب (request) الحقيقي يمرّ بعدة كاشات، لكلٍّ قواعدُ مفتاحه (key rules)، وأجلُ بقائه، وفكرته عن الحقيقة:
 
 ```mermaid
-flowchart LR
+flowchart RL
     B["كاش المتصفح"] --> CDN["كاش حافة CDN"]
     CDN --> P["كاش الوسيط العكسي"]
     P --> R["كاش استجابات Redis"]
@@ -382,10 +382,10 @@ Memcache at Facebook»*، كان انتهاء مفتاحٍ شائعٍ واحد �
 
 ```mermaid
 sequenceDiagram
-    participant R1 as الطلب 1
-    participant R2 as الطلبات 2..200
-    participant L as القفل
     participant DB as قاعدة البيانات
+    participant L as القفل
+    participant R2 as الطلبات 2..200
+    participant R1 as الطلب 1
     R1->>L: اطلب قفل المفتاح
     L-->>R1: حصلتَ عليه
     R1->>DB: شغّل الاستعلام المكلف (مرة)

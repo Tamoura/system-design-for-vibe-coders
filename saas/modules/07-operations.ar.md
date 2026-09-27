@@ -50,7 +50,7 @@
 3. **كل إجراء يُسجَّل.** من (معرّف الموظف (staff id))، وماذا (الإجراء)، وعلى من (معرّف المنظمة)، ولماذا (سبب نصي إلزامي أو رابط تذكرة (ticket))، ومتى. يبني الدرس 7.3 سجل التدقيق (audit log)، ولوحة الإدارة هي أول من يكتب فيه وأهمهم.
 
 ```mermaid
-flowchart LR
+flowchart RL
   Staff["مهندس الدعم"] --> Proxy["VPN أو وسيط وصول"]
   Proxy --> IdP["دخول موحد للموظفين + MFA"]
   IdP --> Admin["تطبيق الإدارة admin.beacon.internal"]
@@ -91,10 +91,10 @@ flowchart LR
 
 ```mermaid
 sequenceDiagram
-  participant S as الموظف
-  participant A as تطبيق الإدارة
-  participant C as تطبيق العملاء
-  participant L as سجل التدقيق
+    participant L as سجل التدقيق
+    participant C as تطبيق العملاء
+    participant A as تطبيق الإدارة
+    participant S as الموظف
   S->>A: انتحال هوية المستخدم 981، السبب TICKET-1234
   A->>A: التحقق من دور الموظف وإعداد موافقة المنظمة
   A->>L: impersonation.started بواسطة الموظف 42 للمستخدم 981
@@ -360,7 +360,7 @@ log().warn({ monitorId, status }, "check.failed");
 **OpenTelemetry (OTel)** هو المعيار المحايد تجاه المزوّدين (vendor-neutral standard) لإصدار التتبعات والمقاييس والسجلات. تضيف القياس (Instrumentation) مرة واحدة باستخدام OTel SDK، وترسل البيانات إلى **OTel Collector** (عملية صغيرة (small process) تستقبل بيانات القياس (telemetry) وتجمّعها وتصفّيها وتعيد توجيهها)، ثم توجّه المجمِّع (collector) إلى أي خلفية (backend) تختارها: SigNoz، أو حزمة Grafana، أو HyperDX، أو Honeycomb، أو Datadog. يصبح تغيير المزوّد تغييرًا في الإعدادات (config change) بدل إعادة كتابة (rewrite). وحزم القياس التلقائي (auto-instrumentation packages) تغطي HTTP وPostgres وRedis ومعظم أطر العمل (frameworks) دون تغيير في الكود.
 
 ```mermaid
-flowchart LR
+flowchart RL
   Web["تطبيق Next.js + OTel SDK"] --> Col["OTel Collector"]
   Worker["عمّال الفحص + OTel SDK"] --> Col
   Col --> Traces[("التتبعات: Tempo أو SigNoz")]
@@ -679,7 +679,7 @@ Bemi حل هجين (hybrid) مثير للاهتمام: يلتقط تغييرات
 3. **ثبّت (anchor)** آخر تجزئة دوريًا في مكان لا يستطيع مدير قاعدة البيانات (database admin) إعادة كتابته، مثل كتابتها في تخزين الكائنات (object storage) مع قفل احتفاظ (retention lock) للكتابة مرة واحدة (مثل S3 Object Lock).
 
 ```mermaid
-flowchart LR
+flowchart RL
   E1["الحدث 1<br/>التجزئة h1"] --> E2["الحدث 2<br/>السابقة h1، التجزئة h2"]
   E2 --> E3["الحدث 3<br/>السابقة h2، التجزئة h3"]
   E3 --> E4["الحدث 4<br/>السابقة h3، التجزئة h4"]
@@ -904,7 +904,7 @@ export const env = Env.parse(process.env); // throws at startup, not at 3 a.m.
 **ابنِ مرة واحدة، ثم رقِّ المُخرَج.** غلّف (package) التطبيق كصورة Docker موسومة بمعرّف git SHA. يبنيها نظام CI مرة واحدة، وتشغّل بيئتا التجهيز والإنتاج *الصورة نفسها* بمتغيرات بيئة مختلفة. إعادة البناء للإنتاج تعني أن الإنتاج يشغّل شيئًا لم تختبره أبدًا.
 
 ```mermaid
-flowchart LR
+flowchart RL
   PR["طلب الدمج"] --> CI["CI: الفحص الأسلوبي، وفحص الأنواع، والاختبارات"]
   CI --> Build["بناء صورة موسومة بـ git SHA"]
   Build --> Preview["بيئة معاينة لكل طلب دمج"]
@@ -928,10 +928,10 @@ flowchart LR
 
 ```mermaid
 sequenceDiagram
-  participant M as الترحيلات
-  participant Old as الكود القديم v1
-  participant New as الكود الجديد v2
-  participant DB as Postgres
+    participant DB as Postgres
+    participant New as الكود الجديد v2
+    participant Old as الكود القديم v1
+    participant M as الترحيلات
   M->>DB: إضافة العمود target قابلًا للفراغ
   Old->>DB: يقرأ ويكتب url فقط
   New->>DB: يكتب url وtarget، ويقرأ url

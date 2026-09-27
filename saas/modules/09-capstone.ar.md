@@ -96,12 +96,12 @@ flowchart TD
 
 ```mermaid
 sequenceDiagram
-    participant Core as نواة Beacon
-    participant DB as Postgres وصندوق الصادر
-    participant Q as الطابور
-    participant N as المُبلِّغ
-    participant H as مرسل الويب هوك
     participant A as التدقيق والتحليلات
+    participant H as مرسل الويب هوك
+    participant N as المُبلِّغ
+    participant Q as الطابور
+    participant DB as Postgres وصندوق الصادر
+    participant Core as نواة Beacon
     Core->>DB: إدراج الحادثة وحدث الصادر في معاملة واحدة
     DB-->>Q: المُرحِّل ينشر incident.opened
     Q->>N: إبلاغ الفريق المناوب حسب تفضيلاته

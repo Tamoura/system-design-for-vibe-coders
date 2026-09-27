@@ -187,7 +187,7 @@ flowchart TD
 تحفظ البيانات الوصفية (metadata) والمؤشّر (pointer)؛ وتخزين الكائنات يحفظ البايتات.**
 
 ```mermaid
-flowchart LR
+flowchart RL
     U["مستخدم يرفع ملفًا"] --> API["التطبيق / الواجهة"]
     API -->|"خزّن البايتات"| OS[("تخزين الكائنات<br/>(R2 / S3 / GCS)")]
     API -->|"خزّن المفتاح + البيانات الوصفية"| DB[("قاعدة البيانات<br/>المالك، الاسم، الحجم")]
@@ -487,7 +487,7 @@ flowchart TD
 ومرتّب:
 
 ```mermaid
-flowchart LR
+flowchart RL
     B["1 · النقل الخلفي<br/>ابنِ تجميعاتٍ يومية<br/>من كل التاريخ الخام"] --> V["2 · التحقّق<br/>التجميعات تطابق الخام،<br/>صفًّا صفًّا، في المدى"]
     V --> E["3 · الإنهاء<br/>الآن فقط شغّل الـTTL<br/>على الصفوف الخام"]
     E -.->|"تخطَّ الخطوة 2 فـ"| X["التاريخ يُفقَد<br/>بصمتٍ للأبد"]
@@ -637,7 +637,7 @@ flowchart TD
 الصفوف المطابقة دون قراءة الباقي — كفهرس كتابٍ بدل إعادة قراءته.
 
 ```mermaid
-flowchart LR
+flowchart RL
     Q["استعلام:<br/>جِد رفوعات<br/>المنتِج #42"] --> NOIDX["بلا فهرس:<br/>اقرأ كل 5 ملايين صف،<br/>أبقِ المطابقات<br/>😖 O(n)"]
     Q --> IDX["بفهرسٍ على المنتِج:<br/>اقفز إلى صفوف #42<br/>مباشرةً<br/>🙂 O(log n)"]
 ```
@@ -673,8 +673,8 @@ flowchart LR
 
 ```mermaid
 sequenceDiagram
-    participant App as التطبيق
     participant DB as القاعدة
+    participant App as التطبيق
     Note over App,DB: N+1 (العلة)
     App->>DB: اجلب 50 رفعًا
     DB-->>App: 50 صفًّا
@@ -783,9 +783,9 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant A as الطلب أ (الملف 1)
-    participant DB as السجل
     participant B as الطلب ب (الملف 2)
+    participant DB as السجل
+    participant A as الطلب أ (الملف 1)
     A->>DB: اقرأ السجل (فيه: [x])
     B->>DB: اقرأ السجل (فيه: [x])
     A->>DB: اكتب السجل (الآن: [x, file1])

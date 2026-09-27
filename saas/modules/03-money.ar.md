@@ -52,11 +52,11 @@
 
 ```mermaid
 sequenceDiagram
-    participant U as المستخدم
-    participant B as تطبيق Beacon
-    participant S as Stripe
-    participant W as معالج الويب هوك في Beacon
     participant DB as Postgres
+    participant W as معالج الويب هوك في Beacon
+    participant S as Stripe
+    participant B as تطبيق Beacon
+    participant U as المستخدم
     U->>B: ينقر Upgrade to Pro
     B->>S: ينشئ Checkout Session مع معرّف المؤسسة في metadata
     S-->>B: رابط الجلسة
@@ -353,7 +353,7 @@ stateDiagram-v2
 يمتد المسار من صفحة الأسعار إلى الفرض (enforcement):
 
 ```mermaid
-flowchart LR
+flowchart RL
     P["صفحة الأسعار"] --> C["إعداد الخطط<br/>plans.ts"]
     S["معرّف سعر Stripe"] --> M["خريطة السعر إلى الخطة"]
     M --> C
@@ -623,7 +623,7 @@ export async function createMonitor(orgId: string, input: MonitorInput) {
 كل نظام للفوترة حسب الاستخدام، سواء كان عدّادات Stripe Billing أو Lago أو OpenMeter أو نظامك الخاص، يتكون من المراحل (stages) الخمس نفسها:
 
 ```mermaid
-flowchart LR
+flowchart RL
     A["حدث المنتج<br/>تم تسليم SMS"] --> B["حدث الاستخدام<br/>مفتاح عدم التكرار"]
     B --> C["العدّاد<br/>تصفية وتجميع"]
     C --> D["التجميع<br/>لكل عميل ولكل فترة"]

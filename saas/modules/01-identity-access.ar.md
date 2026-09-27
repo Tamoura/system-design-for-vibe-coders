@@ -59,9 +59,9 @@
 
 ```mermaid
 sequenceDiagram
-    participant B as المتصفح
-    participant A as تطبيق Beacon
     participant D as Postgres
+    participant A as تطبيق Beacon
+    participant B as المتصفح
     B->>A: POST /login بالبريد وكلمة المرور
     A->>D: جلب المستخدم حسب البريد
     D-->>A: صف المستخدم مع تجزئة argon2id
@@ -676,7 +676,7 @@ export async function requirePermission(orgSlug: string, userId: string, p: Perm
 **أين تفرض الفحص.** الواجهة تخفي الأزرار لتجربة أفضل، لكنها لا تفرض شيئًا: أي شخص يستطيع استدعاء الواجهة البرمجية (API) عبر `curl`. الخادم هو المكان الوحيد الذي يُحتسب فيه الفحص.
 
 ```mermaid
-flowchart LR
+flowchart RL
     R["طلب مع جلسة أو مفتاح API"] --> AN["المصادقة: من هذا"]
     AN --> TN["تحديد المنظمة والعضوية"]
     TN --> PC["فحص الصلاحية: هل يستطيع الدور تنفيذ الإجراء"]
@@ -941,9 +941,9 @@ type status_page
 
 ```mermaid
 sequenceDiagram
-    participant U as متصفح الموظف
-    participant B as Beacon مزوّد الخدمة
     participant I as مزوّد هوية العميل Okta
+    participant B as Beacon مزوّد الخدمة
+    participant U as متصفح الموظف
     U->>B: إدخال البريد ana@bigco.com في صفحة الدخول
     B->>B: البحث عن اتصال SSO للنطاق bigco.com
     B-->>U: إعادة توجيه إلى مزوّد الهوية مع AuthnRequest موقّع وRelayState

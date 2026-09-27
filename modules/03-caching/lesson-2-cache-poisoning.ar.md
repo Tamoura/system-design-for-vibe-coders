@@ -82,7 +82,7 @@ map $upstream_http_content_type $flight_cache_control {
 ### 3. دافِع عند الطبقة التي تتحكم فيها، لا التي ترجو أن تحسِن التصرف
 
 ```mermaid
-flowchart LR
+flowchart RL
     A["CDN<br/>إعداده، قواعده"] --> B["الوسيط العكسي<br/>إعدادك، ملكك التام"]
     B --> C["وسيط الإطار<br/>كودك، دواخلهم"]
     C --> D["كود التطبيق<br/>ملكك"]

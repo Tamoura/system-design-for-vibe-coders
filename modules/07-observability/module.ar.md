@@ -451,9 +451,9 @@ flowchart TD
 ```mermaid
 sequenceDiagram
     autonumber
-    participant S1 as العامل أ
-    participant S2 as العامل ب (إطلاق مزدوج)
     participant R as Redis (مفتاح الحجز)
+    participant S2 as العامل ب (إطلاق مزدوج)
+    participant S1 as العامل أ
     S1->>R: SET job:push:2026-07-20 NX EX 3600
     R-->>S1: OK (أنت تملكها)
     S2->>R: SET job:push:2026-07-20 NX EX 3600

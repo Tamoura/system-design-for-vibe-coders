@@ -121,7 +121,7 @@ export async function createMonitor(orgId: string, raw: unknown) {
 5. يحتاج Beacon إلى **شهادة (certificate) TLS** لـ `status.acme.com` تصدر تلقائيًا من Let's Encrypt أو ZeroSSL، لأنك لا تستطيع أن تطلب من كل عميل رفع شهادات.
 
 ```mermaid
-flowchart LR
+flowchart RL
   V["الزائر"] --> D["DNS: status.acme.com CNAME cname.beacon.dev"]
   D --> E["وسيط الحافة (Caddy on-demand TLS)"]
   E -->|"أول مصافحة TLS"| A["نقطة ask: هل هذا النطاق موثّق؟"]
@@ -363,7 +363,7 @@ flowchart LR
 **التتبع في المتصفح (client-side tracking) مقابل التتبع على الخادم (server-side tracking).** التتبع في المتصفح يعني أن حزمة SDK في المتصفح ترسل الأحداث. هي ترى النقرات (clicks) ومشاهدات الصفحات، لكن مانعات الإعلانات (ad blockers) وإضافات الخصوصية (privacy extensions) تحجب جزءًا حقيقيًا منها، ويستطيع المستخدمون تزويرها (forge). والتتبع على الخادم يعني أن الخادم يرسل الأحداث بعد أن يحدث الشيء فعلًا في قاعدة البيانات. هو موثوق وكامل، لكنه لا يرى تفاعلات الواجهة (UI interactions) البحتة. القاعدة: **أحداث الأعمال تُتتبع على الخادم** (`monitor_created` يُطلق بعد تثبيت الإدراج (insert commits)، و`subscription_upgraded` يُطلق من معالج ويب هوك (webhook handler) Stripe في 3.1)، و**سلوك الواجهة (UI behaviour) يُتتبع في المتصفح** (فتح لوحة الأوامر (command palette)، إغلاق قائمة المهام (checklist)). وكثير من الفرق تمرّر SDK المتصفح عبر نطاقها الخاص (own domain) حتى تكون المانعات أقل صرامة. كن صادقًا مع نفسك في سبب فعل ذلك، وراجع النقطة التالية.
 
 ```mermaid
-flowchart LR
+flowchart RL
   B["SDK المتصفح (أحداث الواجهة)"] --> C["المُجمِّع أو CDP"]
   S["الخادم (أحداث الأعمال)"] --> C
   W["ويب هوك Stripe"] --> S
@@ -588,10 +588,10 @@ return scheduleWithOldEngine(monitor);
 
 ```mermaid
 sequenceDiagram
-  participant UI as لوحة الأعلام
-  participant FS as خدمة الأعلام
-  participant W as SDK عامل Beacon
-  participant B as المتصفح
+    participant B as المتصفح
+    participant W as SDK عامل Beacon
+    participant FS as خدمة الأعلام
+    participant UI as لوحة الأعلام
   UI->>FS: اضبط new-scheduler على 5 بالمئة من المؤسسات
   FS-->>W: دفع أو استطلاع مجموعة القواعد المحدثة
   W->>W: تجزئة مفتاح العلم مع orgId إلى دلو من 0 إلى 99

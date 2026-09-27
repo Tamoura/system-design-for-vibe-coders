@@ -42,7 +42,7 @@
 - **طابور الرسائل الميتة (Dead-letter Queue أو DLQ)** — المكان الذي تذهب إليه المهمة بعد آخر محاولة فاشلة، حتى يفحصها إنسان ويعيد تشغيلها بدل أن تختفي.
 
 ```mermaid
-flowchart LR
+flowchart RL
   API["تطبيق الويب / API"] -->|"إضافة إلى الطابور"| B[("الوسيط: Redis أو Postgres")]
   SCH["المجدول"] -->|"إضافة إلى الطابور"| B
   B -->|"سحب"| W1["العامل 1"]
@@ -394,11 +394,11 @@ export async function verifyApiKey(presented: string) {
 
 ```mermaid
 sequenceDiagram
-  participant C as سكربت العميل
-  participant G as حافة Beacon API
-  participant K as متحقق المفاتيح
-  participant R as محدد المعدل في Redis
-  participant A as معالج API
+    participant A as معالج API
+    participant R as محدد المعدل في Redis
+    participant K as متحقق المفاتيح
+    participant G as حافة Beacon API
+    participant C as سكربت العميل
   C->>G: GET /v1/monitors مع Bearer bk_live_...
   G->>K: تحقق من التجزئة وحمّل المؤسسة والصلاحيات والخطة
   K-->>G: org_42 وقراءة المراقِبات وخطة Business
@@ -601,11 +601,11 @@ Stripe هو النموذج من جهة الاستقبال: يوقّع كل وي�
 
 ```mermaid
 sequenceDiagram
-  participant App as تطبيق Beacon
-  participant DB as Postgres
-  participant Q as طابور التسليم
-  participant W as عامل الويب هوك
-  participant C as نقطة استقبال العميل
+    participant C as نقطة استقبال العميل
+    participant W as عامل الويب هوك
+    participant Q as طابور التسليم
+    participant DB as Postgres
+    participant App as تطبيق Beacon
   App->>DB: أدخل الحدث incident.opened في معاملة الحادثة نفسها
   App->>Q: أضف تسليمًا واحدًا لكل نقطة مشتركة
   Q->>W: مهمة تسليم لنقطة الاستقبال ep_1

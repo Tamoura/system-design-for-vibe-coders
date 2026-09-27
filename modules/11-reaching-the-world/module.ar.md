@@ -35,9 +35,9 @@
 ```mermaid
 sequenceDiagram
     autonumber
-    participant U as متصفح شخص غريب
-    participant R as وسيط DNS (يخزّن)
     participant A as مزوّد DNS (المرجعي)
+    participant R as وسيط DNS (يخزّن)
+    participant U as متصفح شخص غريب
     U->>R: أين يقع relay.app؟
     R->>A: (فقط عند غياب النسخة المخزّنة)
     A-->>R: 104.21.5.9، خزّنه مدة TTL
@@ -228,7 +228,7 @@ Relay على وشك أن يتكلم لغتين، إحداهما من اليمي�
 اثنتان منها ترتبطان مباشرةً بدرسي الوحدة 11 الآخرين. **المعياري + hreflang** هما وجه البحث للدرس 11.2: إن عاش المحتوى نفسه على `/en/x` و`/ar/x`، فـ*يجب* أن تخبر الزواحف أنهما ترجمتان لا نسختان مكررتان. و**مؤشرات الويب الأساسية** — عتبات جوجل المقيسة (measured thresholds) للتحميل (loading) والتفاعل (interactivity) والاستقرار البصري (visual stability) — تجعل أداء الواجهة (frontend performance) في الدرس 10.5 عاملَ ترتيب (ranking factor) حرفيًا، لا مجرد تحسين.
 
 ```mermaid
-flowchart LR
+flowchart RL
     C["🕷️ الزاحف"] --> S["فهرس خريطة الموقع<br/>← نحو 21 قطعة (ديناميكية)"]
     S --> P["صفحاتك"]
     P --> M["معياري + hreflang<br/>+ OG + JSON-LD"]
@@ -419,7 +419,7 @@ flowchart TD
 | **تحليلات الحافة (edge analytics)** | حقيقة الطلب: الحركة، نسبة الكاش (cache ratio)، البوتات | طبقة حقيقة الحافة في رصدك (observability) (7.5) |
 
 ```mermaid
-flowchart LR
+flowchart RL
     U["🌍 المستخدم"] --> E["☁️ منصة الحافة<br/>DNS · قواعد الكاش · WAF · Turnstile · Workers · التحليلات"]
     E -->|"مدخل محصور في الشبكة"| O["الأصل (ملكك)<br/>nginx + التطبيق"]
     E -.->|"R2"| S[("التخزين الكائني")]

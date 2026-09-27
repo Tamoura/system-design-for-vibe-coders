@@ -23,9 +23,9 @@
 ```mermaid
 sequenceDiagram
     autonumber
-    participant You as هاتفك أو حاسوبك
-    participant DNS as دليل العناوين (DNS)
     participant S as الخادم (Server)
+    participant DNS as دليل العناوين (DNS)
+    participant You as هاتفك أو حاسوبك
     You->>DNS: أين يقع relay.app؟
     DNS-->>You: على العنوان 104.21.x.x
     You->>S: أرسل لي الصفحة
@@ -44,7 +44,7 @@ sequenceDiagram
 إضافتان مهمتان إلى الصورة:
 
 ```mermaid
-flowchart LR
+flowchart RL
     Y["أنت<br/>(في أي مكان)"] --> C["مساعد قريب<br/>(CDN — يحتفظ بنسخ قريبة منك)"]
     C -->|"لديه نسخة؟ يرد فورًا"| Y
     C -->|"لا نسخة؟ يجلبها"| S["الخادم الأصلي<br/>(ربما في قارة أخرى)"]
@@ -192,7 +192,7 @@ gitGraph
 فكرة أخيرة تكمل الصورة — **البيئات (Environments)**: المشروع نفسه يعيش في ثلاثة أماكن في وقت واحد:
 
 ```mermaid
-flowchart LR
+flowchart RL
     L["💻 محلية (Local)<br/>جهازك — حيث تُكتب النسخ"] --> S["🎭 تجهيز (Staging)<br/>نسخة تجريبية خاصة — حيث تُختبر"]
     S --> P["🌍 إنتاج (Production)<br/>النسخة الحقيقية للمستخدمين —<br/>لا يصلها إلا ما تم التحقق منه"]
 ```
@@ -331,7 +331,7 @@ flowchart TD
 أنت الآن تعرف كل القطع. اليوم تتصل ببعضها في الخط (pipeline) الذي ستستخدمه دائمًا:
 
 ```mermaid
-flowchart LR
+flowchart RL
     R["📄 المستودع<br/>نسخك (F.3)"] -->|"نشر"| H["🏢 استضافة مُدارة<br/>خادم جاهز بالإيجار (F.2)"]
     H --> U["🌍 رابط حقيقي<br/>تصل إليه رحلة الخطوات الأربع (F.1)"]
     U --> V["✅ التحقق<br/>بنفسك، من جهاز<br/>غير جهاز المنفذ"]

@@ -58,7 +58,7 @@
 **أرسل من طابور.** الإرسال المباشر داخل معالج الطلب (request handler) يعني أن المزوّد البطيء يجعل نقطة التسجيل (signup endpoint) بطيئة، وأن تعطّل المزوّد (provider outage) يُفشل عمليات التسجيل. ضع مهمة بريد في الطابور (Queue)، ودع عاملًا (Worker) يرسلها مع إعادة المحاولة (5.1).
 
 ```mermaid
-flowchart LR
+flowchart RL
     A["حدث في التطبيق<br/>إنشاء دعوة"] --> Q["طابور المهام"]
     Q --> W["عامل البريد"]
     W --> T["عرض القالب<br/>React Email أو MJML"]
@@ -303,7 +303,7 @@ export async function sendInvite(job: { to: string; orgName: string; url: string
 افصل **ما حدث** (الحدث) عن **من يُبلَّغ وكيف** (الإشعارات):
 
 ```mermaid
-flowchart LR
+flowchart RL
     E["حدث في النطاق<br/>incident.opened"] --> WF["سير العمل<br/>أي قالب وأي خطوات"]
     WF --> RC["تحديد المستلمين<br/>المناوب، أعضاء المؤسسة، المشتركون"]
     RC --> PR["تطبيق التفضيلات<br/>المستخدم، المؤسسة، الفئة"]
@@ -411,10 +411,10 @@ export async function notify(evt: { category: "incident.opened"; orgId: string; 
 
 ```mermaid
 sequenceDiagram
-    participant I as الحادثة
-    participant N as المُبلِّغ
-    participant A as المناوب الأساسي
     participant B as المناوب الاحتياطي
+    participant A as المناوب الأساسي
+    participant N as المُبلِّغ
+    participant I as الحادثة
     I->>N: incident.opened
     N->>A: إشعار فوري وSlack
     Note over N: انتظار 5 دقائق للإقرار
@@ -625,7 +625,7 @@ sequenceDiagram
 **التوزيع عبر الخوادم.** يعمل تطبيقك على عدة نسخ (instances). وعامل الفحص (check worker) الذي يكتشف الانقطاع ليس هو العملية التي تمسك اتصال Alice. لذلك تحتاج إلى **النشر والاشتراك** (Pub/Sub): الناشرون (publishers) يرسلون إلى قناة، وكل خادم مشترك في تلك القناة يمرّر الرسائل إلى اتصالاته المحلية. وRedis pub/sub هو الخيار الافتراضي.
 
 ```mermaid
-flowchart LR
+flowchart RL
     CW["عامل الفحص"] -- "نشر org:acme" --> R[("Redis pub/sub")]
     API["خادم API<br/>تحديث حادثة"] -- "نشر org:acme" --> R
     R --> S1["عقدة فورية 1"]
@@ -700,10 +700,10 @@ export async function GET(req: Request, { params }: { params: { orgId: string } 
 
 ```mermaid
 sequenceDiagram
-    participant A as محرر Alice
-    participant H as خادم Hocuspocus
-    participant B as محرر Bob
     participant DB as Postgres
+    participant B as محرر Bob
+    participant H as خادم Hocuspocus
+    participant A as محرر Alice
     A->>H: اتصال برمز للحادثة 42
     H->>H: يفحص onAuthenticate عضوية المؤسسة
     H->>DB: تحميل مستند Yjs المخزّن

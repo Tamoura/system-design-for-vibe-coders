@@ -183,7 +183,7 @@ JavaScript جديد مباشرةً إلى التطبيقات المثبَّتة 
 وفي التالية، والتي بعدها؟**»
 
 ```mermaid
-flowchart LR
+flowchart RL
     B["فرع الميزة<br/>(فيه الإصلاح)"] -->|أثير رقم 1| CH["القناة<br/>الحزمة الحالية"]
     M["main<br/>(لا إصلاح بعد)"] -->|أثير رقم 2، روتيني| CH
     CH --> U["كل مستخدم يشغّل<br/>ما هو حالي"]
@@ -690,9 +690,9 @@ flowchart TD
 
 ```mermaid
 sequenceDiagram
-    participant C as العميل
-    participant S as التخزين
     participant API as الخادم الخلفي
+    participant S as التخزين
+    participant C as العميل
     C->>S: 1. ارفع الملف (ينجح)
     C->>API: 2. أكّد (خطأ 502 هنا!)
     Note over C,API: خُزِّن الملف، والسجل لا يعلم = يتيم

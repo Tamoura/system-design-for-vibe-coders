@@ -17,7 +17,7 @@ location /api  { proxy_pass http://api_backend; }   # الفخ
 `location /api` في nginx **مطابقةُ بادئة (prefix match)**. لا تعني «قسم /api من الموقع»، بل *«أي مسار (path) يبدأ بالحروف `/api`»* — ومن ذلك `/api-next/anything`:
 
 ```mermaid
-flowchart LR
+flowchart RL
     R1["GET /api/users"] --> L{"location /api<br/><small>مطابقة بادئة</small>"}
     R2["GET /api-next/auto-play-pick"] --> L
     L -->|"تطابق"| EXPRESS["الواجهة القديمة Express"]
@@ -40,13 +40,13 @@ flowchart LR
 ```mermaid
 sequenceDiagram
     autonumber
-    participant B as المتصفح
-    participant DNS as محلّل DNS
-    participant CDN as حافة CDN<br/>(كلاودفلير)
-    participant NG as nginx<br/>(خادمك)
-    participant APP as التطبيق / الواجهة
-    participant R as Redis
     participant DB as MongoDB
+    participant R as Redis
+    participant APP as التطبيق / الواجهة
+    participant NG as nginx<br/>(خادمك)
+    participant CDN as حافة CDN<br/>(كلاودفلير)
+    participant DNS as محلّل DNS
+    participant B as المتصفح
     B->>DNS: أين relay.app؟
     DNS-->>B: 104.x.x.x (عنوان الـCDN لا عنوانك)
     B->>CDN: GET /item/42 (مصافحة TLS أولًا)
