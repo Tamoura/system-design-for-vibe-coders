@@ -55,10 +55,10 @@
 
 ```mermaid
 flowchart RL
-    Q["سؤال<br/>(GET /creator/amina)"] --> C{"موجود في<br/>الكاش؟"}
-    C -->|"إصابة — سريع"| F["النسخة السريعة<br/>(قد تكون قديمة)"]
-    C -->|"إخفاق — بطيء"| DB["النسخة الحقيقية<br/>(قاعدة البيانات)"]
-    DB --> S["يُخزَّن في الكاش<br/>بأجل بقاء (TTL)"] --> F
+    Q["سؤال<br/>(GET /creator/amina)<br/>(A question<br/>(GET /creator/amina))"] --> C{"موجود في<br/>الكاش؟<br/>(In the<br/>cache?)"}
+    C -->|"إصابة — سريع (hit — fast)"| F["النسخة السريعة<br/>(قد تكون قديمة)<br/>(Fast copy<br/>(maybe stale))"]
+    C -->|"إخفاق — بطيء (miss — slow)"| DB["النسخة الحقيقية<br/>(قاعدة البيانات)<br/>(True copy<br/>(the database))"]
+    DB --> S["يُخزَّن في الكاش<br/>بأجل بقاء (TTL)<br/>(Store in cache<br/>with a TTL)"] --> F
 ```
 
 كل ما يعطب في الكاش (cache) يعيش في هذا المخطط. ثلاثة أسئلة، وكلُّ واحدٍ فخّ (trap):
@@ -84,10 +84,10 @@ flowchart RL
 
 ```mermaid
 flowchart RL
-    B["كاش المتصفح"] --> CDN["كاش حافة CDN"]
-    CDN --> P["كاش الوسيط العكسي"]
-    P --> R["كاش استجابات Redis"]
-    R --> DB["قاعدة البيانات"]
+    B["كاش المتصفح<br/>(Browser cache)"] --> CDN["كاش حافة CDN<br/>(CDN edge cache)"]
+    CDN --> P["كاش الوسيط العكسي<br/>(Reverse-proxy cache)"]
+    P --> R["كاش استجابات Redis<br/>(Redis response cache)"]
+    R --> DB["قاعدة البيانات<br/>(Database)"]
 ```
 
 حين يرى مستخدمٌ (user) شيئًا قديمًا (something stale)، قد تكون *أيٌّ* من تلك الطبقات (layers) هي التي تمسك النسخة
@@ -210,15 +210,15 @@ flowchart RL
 
 ```mermaid
 flowchart TD
-    subgraph Broken["بانيان للمفتاح — سينجرفان حتمًا"]
-        R1["مسار القراءة"] --> K1["'reciter:v2:' + slug"]
-        W1["مسار الكتابة"] --> K2["slug"]
-        K1 -.->|"يملأ"| Store1[("Redis")]
-        K2 -.->|"يحذف مفتاحًا<br/>مختلفًا"| Store1
+    subgraph Broken["بانيان للمفتاح — سينجرفان حتمًا (Two key builders — they WILL drift)"]
+        R1["مسار القراءة<br/>(Read path)"] --> K1["'reciter:v2:' + slug"]
+        W1["مسار الكتابة<br/>(Write path)"] --> K2["slug"]
+        K1 -.->|"يملأ (populates)"| Store1[("Redis")]
+        K2 -.->|"يحذف مفتاحًا<br/>مختلفًا (deletes a<br/>different key)"| Store1
     end
-    subgraph Fixed["بانٍ واحد — لا يمكن أن ينجرف"]
-        R2["مسار القراءة"] --> KF["cacheKey(slug)"]
-        W2["مسار الكتابة"] --> KF
+    subgraph Fixed["بانٍ واحد — لا يمكن أن ينجرف (One key builder — cannot drift)"]
+        R2["مسار القراءة<br/>(Read path)"] --> KF["cacheKey(slug)"]
+        W2["مسار الكتابة<br/>(Write path)"] --> KF
         KF --> Store2[("Redis")]
     end
 ```
@@ -360,11 +360,11 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A["Redis، بلا maxmemory،<br/>noeviction (الافتراضي)"] --> B["تمتلئ الذاكرة"]
-    B --> C["تبدأ الكتابات بالفشل<br/>(لا إخلاء لإفساح مكان)"]
-    C --> D["الإخفاقات لا تُخزَّن ←<br/>كل طلبٍ يُعيد الحساب"]
-    D --> E["100% من الحركة تضرب قاعدة البيانات"]
-    E --> F["تتشبّع القاعدة ←<br/>سقوط الموقع"]
+    A["Redis، بلا maxmemory،<br/>noeviction (الافتراضي)<br/>(Redis, no maxmemory,<br/>noeviction (default))"] --> B["تمتلئ الذاكرة<br/>(Memory fills)"]
+    B --> C["تبدأ الكتابات بالفشل<br/>(لا إخلاء لإفساح مكان)<br/>(Writes start FAILING<br/>(can't evict to make room))"]
+    C --> D["الإخفاقات لا تُخزَّن ←<br/>كل طلبٍ يُعيد الحساب<br/>(Misses can't be cached →<br/>every request recomputes)"]
+    D --> E["100% من الحركة تضرب قاعدة البيانات<br/>(100% of traffic hits the DB)"]
+    E --> F["تتشبّع القاعدة ←<br/>سقوط الموقع<br/>(Database saturates →<br/>site down)"]
 ```
 
 الإصلاح (fix) سطرُ إعدادٍ (config) واحد: اضبط `maxmemory`، واضبط سياسة إخلاءٍ (eviction policy) مثل `allkeys-lru`
@@ -382,17 +382,17 @@ Memcache at Facebook»*، كان انتهاء مفتاحٍ (key expiring) شائ
 
 ```mermaid
 sequenceDiagram
-    participant DB as قاعدة البيانات
-    participant L as القفل
-    participant R2 as الطلبات 2..200
-    participant R1 as الطلب 1
-    R1->>L: اطلب قفل المفتاح
-    L-->>R1: حصلتَ عليه
-    R1->>DB: شغّل الاستعلام المكلف (مرة)
-    R2->>L: اطلب قفل المفتاح
-    L-->>R2: مشغول — انتظر الكاش
-    R1->>R1: خزّن النتيجة في الكاش
-    R2->>R2: اقرأ القيمة الجديدة من الكاش
+    participant DB as قاعدة البيانات (Database)
+    participant L as القفل (Lock)
+    participant R2 as الطلبات 2..200 (Requests 2..200)
+    participant R1 as الطلب 1 (Request 1)
+    R1->>L: اطلب قفل المفتاح (acquire lock for key)
+    L-->>R1: حصلتَ عليه (got it)
+    R1->>DB: شغّل الاستعلام المكلف (مرة) (run expensive query (once))
+    R2->>L: اطلب قفل المفتاح (acquire lock for key)
+    L-->>R2: مشغول — انتظر الكاش (busy — wait for cache)
+    R1->>R1: خزّن النتيجة في الكاش (store result in cache)
+    R2->>R2: اقرأ القيمة الجديدة من الكاش (read fresh value from cache)
 ```
 
 المبدأ (The Principle): **انتهاء الكاش (cache expiry) قفزةُ حملٍ (load spike) مصوَّبة إلى أضعف لحظاتك** (نظامٌ بارد (cold) نُشر للتوّ).

@@ -80,15 +80,15 @@
 
 ```mermaid
 flowchart TD
-    A[الراعي يقدّم نموذج الاستقبال] --> B{هل الذكاء الاصطناعي ضروري ومتناسب}
-    B -- لا --> C[التوصية ببديل أبسط]
-    B -- نعم --> D{ممارسة محظورة}
-    D -- نعم --> E[الرفض والتسجيل]
-    D -- لا --> F[التصنيف: AI Act وGDPR والقطاع والقانون المحلي]
-    F --> G[تحديد مستوى مبدئي]
-    G --> H[تقييم أثر مبكر]
-    H --> I{تأكيد المستوى}
-    I --> J[حزمة الحوكمة لهذا المستوى]
+    A["الراعي يقدّم نموذج الاستقبال<br/>(Sponsor submits intake)"] --> B{"هل الذكاء الاصطناعي ضروري ومتناسب<br/>(Is AI needed and proportionate)"}
+    B -- "لا (No)" --> C["التوصية ببديل أبسط<br/>(Recommend simpler alternative)"]
+    B -- "نعم (Yes)" --> D{"ممارسة محظورة<br/>(Prohibited practice)"}
+    D -- "نعم (Yes)" --> E["الرفض والتسجيل<br/>(Reject and record)"]
+    D -- "لا (No)" --> F["التصنيف: AI Act وGDPR والقطاع والقانون المحلي<br/>(Classify: AI Act, GDPR, sector, local law)"]
+    F --> G["تحديد مستوى مبدئي<br/>(Assign provisional tier)"]
+    G --> H["تقييم أثر مبكر<br/>(Early impact assessment)"]
+    H --> I{"تأكيد المستوى<br/>(Tier confirmed)"}
+    I --> J["حزمة الحوكمة لهذا المستوى<br/>(Governance package for that tier)"]
 ```
 
 ### 🔴 نظرة الخبير (Expert view)
@@ -454,7 +454,7 @@ flowchart TD
 - اعرف الوثائق الأساسية (core artefacts): **بطاقات النموذج (model cards)** (الغرض (purpose) من النموذج (model)، وأداؤه، وحدوده)، و**أوراق بيانات مجموعات البيانات (datasheets for datasets)** (من أين أتت البيانات وكيف بُنيت)، و**بطاقات النظام (system cards)** (النظام كاملًا، بما فيه الضمانات (safeguards))، و**التوثيق التقني وفق AI Act (AI Act technical documentation)** (الملحق IV (Annex IV)، لمقدّمي الأنظمة عالية المخاطر (high-risk providers))، و**سجلات القرارات (decision logs)** (من قرر ماذا، ومتى، ولماذا).
 - خيار المصدر (**البناء (build)، أو الشراء (buy)، أو الضبط الدقيق (fine-tuning)، أو استخدام API** (build, buy, fine-tune, or use an API)) يحدد مدى تحكمك في النظام، ومدى شفافيته لك، ودورك القانوني.
 - بموجب EU AI Act، يتحمل **مقدّم النظام (provider)** معظم التزامات الأنظمة عالية المخاطر (high-risk). وتصبح مقدّمًا للنظام إذا طوّرت نظامًا ووضعته في الخدمة باسمك، حتى لو بُني على نموذج (model) شخص آخر. ويمكن للمُشغِّل (deployer) أن *يصبح* مقدّمًا للنظام بإعادة تسميته تجاريًا (rebranding)، أو تعديله تعديلًا جوهريًا (substantially modifying it)، أو تغيير غرضه (repurposing).
-- إشارة الامتحان (Exam cue): أسئلة "من هو مقدّم النظام؟ (Who is the provider?)" تدور حول *من يطرح النظام في السوق (places the system on the market) أو يضعه في الخدمة (puts it into service) باسمه*، وحول ما إذا كان المُشغِّل (deployer) قد غيّره.
+- إشارة الامتحان (Exam cue): أسئلة "من هو مقدّم النظام؟ ⁦(Who is the provider?)⁩" تدور حول *من يطرح النظام في السوق (places the system on the market) أو يضعه في الخدمة (puts it into service) باسمه*، وحول ما إذا كان المُشغِّل (deployer) قد غيّره.
 - الفخ الأكبر (Biggest trap): افتراض أن الشراء (buy) أو استخدام API (use an API) ينقل المساءلة (accountability) إلى المورّد (vendor). قد تنتقل الواجبات القانونية؛ لكن المساءلة أمام عملائك والجهات التنظيمية (regulators) لا تنتقل.
 
 ## 🧭 لماذا يهم (Why it matters)
@@ -466,7 +466,7 @@ flowchart TD
 
 ### 🟢 الأساسيات (The essentials)
 
-**لماذا نوثّق؟ (Why document?)** يخدم التوثيق (documentation) أربعة جماهير: *البُناة* (قابلية إعادة الإنتاج (reproducibility) والتسليم (handover))، و*المستخدمين والمشرفين* (فهم الحدود، إذ يشترط AI Act على مقدّمي الأنظمة (providers) إعطاء المُشغِّلين تعليمات الاستخدام (instructions for use))، و*جهات التأكيد (assurance)* (المدققين المستقلين للنماذج (validators)، والتدقيق الداخلي (internal audit)، وجهات الاعتماد (certification bodies))، و*الجهات التنظيمية (regulators) والمحاكم* (إثبات الامتثال (compliance) والعناية الواجبة (due diligence)). ويشترط ISO/IEC 42001 وجود معلومات موثقة (documented information) بوصفها جزءًا من نظام إدارة الذكاء الاصطناعي (AI management system). ويضع NIST AI RMF التوثيق والشفافية (transparency) في كل وظائفه.
+**لماذا نوثّق؟ ⁦(Why document?)⁩** يخدم التوثيق (documentation) أربعة جماهير: *البُناة* (قابلية إعادة الإنتاج (reproducibility) والتسليم (handover))، و*المستخدمين والمشرفين* (فهم الحدود، إذ يشترط AI Act على مقدّمي الأنظمة (providers) إعطاء المُشغِّلين تعليمات الاستخدام (instructions for use))، و*جهات التأكيد (assurance)* (المدققين المستقلين للنماذج (validators)، والتدقيق الداخلي (internal audit)، وجهات الاعتماد (certification bodies))، و*الجهات التنظيمية (regulators) والمحاكم* (إثبات الامتثال (compliance) والعناية الواجبة (due diligence)). ويشترط ISO/IEC 42001 وجود معلومات موثقة (documented information) بوصفها جزءًا من نظام إدارة الذكاء الاصطناعي (AI management system). ويضع NIST AI RMF التوثيق والشفافية (transparency) في كل وظائفه.
 
 **الوثائق الأساسية (core artefacts):**
 
@@ -514,7 +514,7 @@ flowchart TD
 
 ### 🔴 نظرة الخبير (Expert view)
 
-**من هو مقدّم النظام؟ (Who is the provider?) تتبّع المنطق (Walk the logic).** بموجب AI Act، *مقدّم النظام (provider)* هو كل من يطوّر نظام ذكاء اصطناعي (AI system) أو نموذج GPAI (أو يكلّف بتطويره) ويطرحه في السوق أو يضعه في الخدمة (places it on the market or puts it into service) **باسمه أو علامته التجارية (under its own name or trademark)**، سواء بمقابل أو مجانًا. و"الوضع في الخدمة (putting into service)" يشمل توريده للاستخدام الأول (first use) لأغراضك الخاصة. لذلك:
+**من هو مقدّم النظام؟ ⁦(Who is the provider?)⁩ تتبّع المنطق (Walk the logic).** بموجب AI Act، *مقدّم النظام (provider)* هو كل من يطوّر نظام ذكاء اصطناعي (AI system) أو نموذج GPAI (أو يكلّف بتطويره) ويطرحه في السوق أو يضعه في الخدمة (places it on the market or puts it into service) **باسمه أو علامته التجارية (under its own name or trademark)**، سواء بمقابل أو مجانًا. و"الوضع في الخدمة (putting into service)" يشمل توريده للاستخدام الأول (first use) لأغراضك الخاصة. لذلك:
 - **نموذج الائتمان الداخلي (in-house credit model) لبنك نجم:** بنك نجم هو مقدّم النظام (يضع النموذج في الخدمة (puts the model into service) لاستخدامه الخاص باسمه) وهو أيضًا المُشغِّل (deployer). ويتحمل حزمة مقدّم النظام (provider package) كاملة: إدارة المخاطر (risk management)، وحوكمة البيانات (data governance)، وتوثيق (documentation) الملحق IV (Annex IV)، والتسجيل (logging)، والتعليمات (instructions)، وتصميم الإشراف البشري (human-oversight design)، والدقة/المتانة/الأمن السيبراني (accuracy/robustness/cybersecurity)، ونظام إدارة الجودة (quality management system)، وتقييم المطابقة (conformity assessment)، والتسجيل في قاعدة البيانات (registration)، والرصد بعد الطرح في السوق (post-market monitoring). وبصفته مُشغِّلًا، يتحمل أيضًا تقييم الأثر على الحقوق الأساسية (FRIA).
 - **أداة السير الذاتية (CV tool) من المورّد (vendor):** المورّد هو مقدّم النظام (provider). وبنك نجم مُشغِّل له واجباته الخاصة: الاستخدام وفق التعليمات (instructions)، وتعيين إشراف بشري (human oversight) كفء، وضمان أن بيانات الإدخال (input data) ذات صلة، والمراقبة (monitoring) والإبلاغ، والاحتفاظ (retention) بالسجلات الخاضعة لسيطرته، وإبلاغ ممثلي العمال والعمال المتأثرين حيث يلزم، واستيفاء GDPR. **لكن** بموجب قواعد سلسلة القيمة (value-chain rules) في القانون (المادة 25 (Art. 25))، يُعامَل المُشغِّل (deployer) كمقدّم لنظام عالي المخاطر (high-risk system) إذا وضع اسمه أو علامته التجارية (its trademark) عليه، أو أجرى *تعديلًا جوهريًا (substantial modification)*، أو غيّر الغرض المقصود (intended purpose) لنظام بحيث يصبح عالي المخاطر (high-risk). فإذا أعاد فريق الموارد البشرية (HR) في بنك نجم تدريب نموذج (model) المورّد على بيانات التوظيف (hiring data) لدى بنك نجم وأعاد تسميته "Najm TalentMatch"، فإن بنك نجم معرّض لأن يصبح مقدّم النظام.
 - **المساعد الذكي (copilot) على نموذج (model) عبر API:** مورّد النموذج (model vendor) هو مقدّم نموذج GPAI (GPAI model provider)، وعليه واجبات GPAI (التوثيق التقني (technical documentation)، والمعلومات لمقدّمي الأنظمة اللاحقة (downstream providers)، وسياسة لحقوق النشر (copyright policy)، وملخص علني لمحتوى التدريب (public training-content summary)). أما بنك نجم، الذي يبني المساعد الذكي ويسمّيه، فهو مقدّم *نظام الذكاء الاصطناعي (provider of the AI system)*. وكون ذلك النظام عالي المخاطر (high-risk system) أم لا يعتمد على استخدامه (8.1).
@@ -531,7 +531,7 @@ flowchart TD
 |---|---|---|
 | **EU AI Act** — المادة 11 والملحق IV (Art. 11 & Annex IV) | توثيق تقني (technical documentation) للأنظمة عالية المخاطر (high-risk systems)، يُعدّ قبل الطرح في السوق (market placement) ويُحدَّث باستمرار؛ وشكل مبسّط للمنشآت الصغيرة والمتوسطة (SMEs) | الملحق IV (Annex IV) يسرد المحتوى |
 | **EU AI Act** — المادتان 12 و18 (Arts 12 & 18) | تسجيل تلقائي (automatic logging) لإمكانية التتبع (traceability)؛ والاحتفاظ (retention) بالتوثيق (documentation) للسلطات (عشر سنوات) | السجلات والاحتفاظ (retention) |
-| **EU AI Act** — المادة 25 (Art. 25) | مسؤوليات سلسلة القيمة (Value-chain responsibilities): يصبح المُشغِّلون (deployers) مقدّمين للنظام (providers) بإعادة التسمية التجارية (rebranding)، أو التعديل الجوهري (substantial modification)، أو تغيير الغرض المقصود (intended purpose) إلى غرض عالي المخاطر (high-risk) | "من هو مقدّم النظام؟ (Who is the provider?)" |
+| **EU AI Act** — المادة 25 (Art. 25) | مسؤوليات سلسلة القيمة (Value-chain responsibilities): يصبح المُشغِّلون (deployers) مقدّمين للنظام (providers) بإعادة التسمية التجارية (rebranding)، أو التعديل الجوهري (substantial modification)، أو تغيير الغرض المقصود (intended purpose) إلى غرض عالي المخاطر (high-risk) | "من هو مقدّم النظام؟ ⁦(Who is the provider?)⁩" |
 | **EU AI Act** — المادة 53 (Art. 53) | مقدّمو نماذج GPAI (GPAI model providers): التوثيق التقني (technical documentation)، والمعلومات لمقدّمي الأنظمة اللاحقة (downstream providers)، وسياسة حقوق النشر (copyright policy)، وملخص محتوى التدريب (training-content summary) | واجبات مورّد النموذج (model vendor) عبر API |
 | **GDPR** — المواد 5(2) و28 و30 | المساءلة (إثبات الامتثال (compliance))؛ وعقود المعالِجين (processor contracts)؛ وسجلات المعالجة (records of processing) | المتحكّم مقابل المعالِج (Controller vs processor) |
 | **ISO/IEC 42001** | معلومات موثقة (documented information) وضوابط (controls) عبر دورة حياة الذكاء الاصطناعي (AI life cycle)، بما فيها جوانب الأطراف الثالثة والموردين (third-party and supplier) | التوثيق (documentation) دليل قابل للتدقيق (auditable evidence) |

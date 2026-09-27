@@ -35,14 +35,14 @@
 ```mermaid
 sequenceDiagram
     autonumber
-    participant A as مزوّد DNS (المرجعي)
-    participant R as وسيط DNS (يخزّن)
-    participant U as متصفح شخص غريب
-    U->>R: أين يقع relay.app؟
-    R->>A: (فقط عند غياب النسخة المخزّنة)
-    A-->>R: 104.21.5.9، خزّنه مدة TTL
+    participant A as مزوّد DNS (المرجعي) (Your DNS provider (authoritative))
+    participant R as وسيط DNS (يخزّن) (DNS resolver (caches))
+    participant U as متصفح شخص غريب (A stranger's browser)
+    U->>R: أين يقع relay.app؟ (Where is relay.app?)
+    R->>A: (فقط عند غياب النسخة المخزّنة) ((only on a cache miss))
+    A-->>R: 104.21.5.9، خزّنه مدة TTL (104.21.5.9, cache for TTL seconds)
     R-->>U: 104.21.5.9
-    Note over R,U: طوال مدة الحياة يحصل الجميع على الجواب المخزّن —<br/>بما فيه القديم مباشرةً بعد تغييرك له.
+    Note over R,U: طوال مدة الحياة يحصل الجميع على الجواب المخزّن —<br/>بما فيه القديم مباشرةً بعد تغييرك له. (For the whole TTL, everyone gets the cached answer —<br/>including the old one right after you change it.)
 ```
 
 ### 2. طبقة النقل الآمنة (TLS) تثبت أنه أنت فعلًا — وتنتهي صلاحيتها (it expires)
@@ -135,10 +135,10 @@ Relay يعمل محليًا. أعطه الآن اسمًا يستطيع العا�
 
 ```mermaid
 flowchart TD
-    EN["en.json<br/>(المفاتيح)"] --> G{"حارس الانحراف:<br/>مجموعة المفاتيح نفسها؟"}
-    AR["ar.json<br/>(المفاتيح)"] --> G
-    G -->|"تطابق"| P["✅ البناء ينجح"]
-    G -->|"مفتاح ناقص/زائد"| F["❌ البناء يفشل<br/>ويسمّي المفتاح المخالف"]
+    EN["en.json<br/>(المفاتيح)<br/>(en.json<br/>(keys))"] --> G{"حارس الانحراف:<br/>مجموعة المفاتيح نفسها؟<br/>(drift-guard test:<br/>same key set?)"}
+    AR["ar.json<br/>(المفاتيح)<br/>(ar.json<br/>(keys))"] --> G
+    G -->|"تطابق (match)"| P["✅ البناء ينجح<br/>(✅ build passes)"]
+    G -->|"مفتاح ناقص/زائد (missing/extra key)"| F["❌ البناء يفشل<br/>ويسمّي المفتاح المخالف<br/>(❌ build fails<br/>names the offending key)"]
 ```
 
 ### 3. «من اليمين لليسار (RTL)» وضعُ تخطيط لا رقعة (a layout mode, not a patch)
@@ -229,11 +229,11 @@ Relay على وشك أن يتكلم لغتين، إحداهما من اليمي�
 
 ```mermaid
 flowchart RL
-    C["🕷️ الزاحف"] --> S["فهرس خريطة الموقع<br/>← نحو 21 قطعة (ديناميكية)"]
-    S --> P["صفحاتك"]
-    P --> M["معياري + hreflang<br/>+ OG + JSON-LD"]
-    M --> I[("فهرس البحث /<br/>محرك الإجابة")]
-    B["🏗️ بناؤك"] -.->|"يجب ألا يعتمد على"| API["API حي لقائمة الروابط"]
+    C["🕷️ الزاحف<br/>(🕷️ Crawler)"] --> S["فهرس خريطة الموقع<br/>← نحو 21 قطعة (ديناميكية)<br/>(sitemap index<br/>→ ~21 chunks (dynamic))"]
+    S --> P["صفحاتك<br/>(your pages)"]
+    P --> M["معياري + hreflang<br/>+ OG + JSON-LD<br/>(canonical + hreflang<br/>+ OG + JSON-LD)"]
+    M --> I[("فهرس البحث /<br/>محرك الإجابة<br/>(search index /<br/>answer engine)")]
+    B["🏗️ بناؤك<br/>(🏗️ your build)"] -.->|"يجب ألا يعتمد على (must NOT depend on)"| API["API حي لقائمة الروابط<br/>(live API for the URL list)"]
 ```
 
 ### 2. تحسين محركات الإجابة (Answer-Engine Optimization): الباب الأمامي يصير محرك إجابة (the front door is becoming an answer engine)
@@ -332,11 +332,11 @@ flowchart RL
 
 ```mermaid
 flowchart TD
-    A["قدّر لكل مستخدم/شهر:<br/>غيغابايت مخزّن · غيغابايت مقدَّم (صادر) · حوسبة · صفوف قاعدة البيانات"] --> B["× المستخدمون الحاليون (1×)"]
-    A --> C["× 10 لكل منهم (10×)"]
+    A["قدّر لكل مستخدم/شهر:<br/>غيغابايت مخزّن · غيغابايت مقدَّم (صادر) · حوسبة · صفوف قاعدة البيانات<br/>(Estimate per user/month:<br/>GB stored · GB served (egress) · compute · DB rows)"] --> B["× المستخدمون الحاليون (1×)<br/>(× current users (1×))"]
+    A --> C["× 10 لكل منهم (10×)<br/>(× 10 users each (10×))"]
     A --> D["× 100 (100×)"]
-    B & C & D --> E{"أي بند<br/>ينمو الأسرع؟"}
-    E --> F["ذاك قرارك<br/>المعماري التالي"]
+    B & C & D --> E{"أي بند<br/>ينمو الأسرع؟<br/>(Which line grows<br/>fastest?)"}
+    E --> F["ذاك قرارك<br/>المعماري التالي<br/>(That's your next<br/>architecture decision)"]
 ```
 
 المقصود ليس تنبؤًا دقيقًا (precise forecast) — بل إيجاد **أي بند (line item) يتوسع أسوأ توسع (scales worst)** قبل أن يتوسع أصلًا. فإن هيمن الصادر (egress) عند 10×، اتخذت قرار الشبكة (CDN)/الأصل (origin) الآن رخيصًا، بدل حالة فوترة طارئة (billing emergency). وهذا تخطيط سعة (capacity planning) (الدرس 10.5) بمحور دولار (with a dollar axis).
@@ -420,10 +420,10 @@ flowchart TD
 
 ```mermaid
 flowchart RL
-    U["🌍 المستخدم"] --> E["☁️ منصة الحافة<br/>DNS · قواعد الكاش · WAF · Turnstile · Workers · التحليلات"]
-    E -->|"مدخل محصور في الشبكة"| O["الأصل (ملكك)<br/>nginx + التطبيق"]
-    E -.->|"R2"| S[("التخزين الكائني")]
-    C["📄 إعداد الحافة<br/>مُخضَع للإصدارات في المستودع"] -->|"يصف"| E
+    U["🌍 المستخدم<br/>(🌍 User)"] --> E["☁️ منصة الحافة<br/>DNS · قواعد الكاش · WAF · Turnstile · Workers · التحليلات<br/>(☁️ Edge platform<br/>DNS · cache rules · WAF · Turnstile · Workers · analytics)"]
+    E -->|"مدخل محصور في الشبكة (CDN-only ingress)"| O["الأصل (ملكك)<br/>nginx + التطبيق<br/>(Origin (yours)<br/>nginx + app)"]
+    E -.->|"R2"| S[("التخزين الكائني<br/>(Object storage)")]
+    C["📄 إعداد الحافة<br/>مُخضَع للإصدارات في المستودع<br/>(📄 Edge config<br/>versioned in the repo)"] -->|"يصف (describes)"| E
 ```
 
 ### 2. «احترام ترويسات الأصل (origin headers)» إعدادٌ حقيقي ذو أثر (a real, consequential setting)

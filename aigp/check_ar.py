@@ -5,7 +5,7 @@ en,ar=open(sys.argv[1]).read(),open(sys.argv[2]).read()
 def nof(s): return re.sub(r'```.*?```','',s,flags=re.S)
 def heads(s): return [(len(h),(re.match(r'(\S+)',t).group(1) if h in('##','###') else re.sub(r'—.*','',t).strip())) for h,t in re.findall(r'^(#{1,3}) (.*)$',nof(s),flags=re.M)]
 def lessons(s): return re.findall(r'^# (\d+\.\d+) — ',s,flags=re.M)
-def lvl(s): return [(m[0],tuple(re.findall(r'\b(?:I{1,3}|IV)(?:\.[A-D])?\b',m[1]))) for m in re.findall(r'^\*(?:Level|المستوى):\s*(🟢|🟡|🔴)[^*]*\*.*?(?:BoK|مجال المعرفة)[^:]*:\s*([^*]+)\*',s,flags=re.M)]
+def lvl(s): return [(m[0],tuple(re.findall(r'\b(?:I{1,3}|IV)(?:\.[A-D])?\b',m[1]))) for m in re.findall(r'^\*(?:Level|المستوى)(?: \([^)]*\))?:\s*(🟢|🟡|🔴)[^*]*\*.*?(?:BoK|مجال المعرفة)[^:]*:\s*([^*]+)\*',s,flags=re.M)]
 def inst(s):
     out=[]
     for sec in re.split(r'\n(?=## )',s):

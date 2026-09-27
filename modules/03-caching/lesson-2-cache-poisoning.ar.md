@@ -83,9 +83,9 @@ map $upstream_http_content_type $flight_cache_control {
 
 ```mermaid
 flowchart RL
-    A["CDN<br/>إعداده، قواعده"] --> B["الوسيط العكسي<br/>إعدادك، ملكك التام"]
-    B --> C["وسيط الإطار<br/>كودك، دواخلهم"]
-    C --> D["كود التطبيق<br/>ملكك"]
+    A["CDN<br/>إعداده، قواعده<br/>(CDN<br/>their config,<br/>their rules)"] --> B["الوسيط العكسي<br/>إعدادك، ملكك التام<br/>(Reverse proxy<br/>your config,<br/>fully yours)"]
+    B --> C["وسيط الإطار<br/>كودك، دواخلهم<br/>(Framework middleware<br/>your code,<br/>their internals)"]
+    C --> D["كود التطبيق<br/>ملكك<br/>(App code<br/>yours)"]
 ```
 
 عاش الإصلاح الأول (first fix) في وسيط الإطار (framework middleware)، أي *كودك يعمل داخل دورة حياتهم (lifecycle)*. وعاش الإصلاح الدائم (durable fix) في الوسيط العكسي (reverse proxy)، أي *إعداد صريح (plain config) لا يعتمد على دواخل أحد (anyone's internals)*. فحين يكون الدفاع (defense) مهمًّا، ضعه في أبسط وأثبت طبقة (most stable layer) تستطيع التعبير عنه. الطبقة المملّة الثابتة (the boring, stable layer) ليست عيبًا، بل ميزة.

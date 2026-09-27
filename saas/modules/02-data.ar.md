@@ -43,11 +43,11 @@
 
 ```mermaid
 erDiagram
-    ORGANIZATION ||--o{ MEMBERSHIP : "تملك"
-    USER ||--o{ MEMBERSHIP : "يملك"
-    ORGANIZATION ||--o{ MONITOR : "تمتلك"
-    MONITOR ||--o{ CHECK_RESULT : "يسجّل"
-    MONITOR ||--o{ INCIDENT : "يفتح"
+    ORGANIZATION ||--o{ MEMBERSHIP : "تملك (has)"
+    USER ||--o{ MEMBERSHIP : "يملك (has)"
+    ORGANIZATION ||--o{ MONITOR : "تمتلك (owns)"
+    MONITOR ||--o{ CHECK_RESULT : "يسجّل (records)"
+    MONITOR ||--o{ INCIDENT : "يفتح (opens)"
     ORGANIZATION {
         string id
         string name
@@ -120,10 +120,10 @@ CREATE INDEX check_result_monitor_time_idx
 
 ```mermaid
 flowchart RL
-    A["1. التوسيع<br/>إضافة العمود target"] --> B["2. الكتابة المزدوجة<br/>الكود يكتب في url وtarget"]
-    B --> C["3. الملء الرجعي<br/>نسخ الصفوف القديمة على دفعات"]
-    C --> D["4. تحويل القراءة<br/>الكود يقرأ target"]
-    D --> E["5. التقليص<br/>حذف العمود url"]
+    A["1. التوسيع<br/>إضافة العمود target<br/>(1. Expand<br/>add column target)"] --> B["2. الكتابة المزدوجة<br/>الكود يكتب في url وtarget<br/>(2. Dual-write<br/>code writes url and target)"]
+    B --> C["3. الملء الرجعي<br/>نسخ الصفوف القديمة على دفعات<br/>(3. Backfill<br/>copy old rows in batches)"]
+    C --> D["4. تحويل القراءة<br/>الكود يقرأ target<br/>(4. Switch reads<br/>code reads target)"]
+    D --> E["5. التقليص<br/>حذف العمود url<br/>(5. Contract<br/>drop column url)"]
 ```
 
 عمليات خطرة أخرى في Postgres: إضافة عمود (column) بقيمة افتراضية متقلبة (volatile default) مثل `clock_timestamp()` (تعيد كتابة الجدول (table) كله)، وإنشاء فهرس (index) دون `CONCURRENTLY` (يمنع الكتابة (blocks writes) على الجدول)، وإضافة قيد (constraint) `NOT NULL` على جدول كبير في خطوة واحدة، وتغيير نوع عمود. هناك أدوات تساعد: جوهرة (gem) `strong_migrations` في Rails ترفض الترحيلات غير الآمنة (unsafe migrations)، وAtlas يستطيع فحص الترحيلات (lint) بحثًا (search) عن التغييرات المدمّرة (destructive changes). واضبط أيضًا `lock_timeout` في الترحيلات (migrations)، كي يفشل الترحيل (migration) الذي ينتظر قفلًا (lock) بسرعة بدلًا من أن يصطف كل استعلام (query) آخر خلفه.
@@ -335,20 +335,20 @@ ORDER BY m.id, c.checked_at DESC;
 
 ```mermaid
 sequenceDiagram
-    participant S as تخزين الكائنات
+    participant S as تخزين الكائنات (Object storage)
     participant D as Postgres
-    participant A as واجهة Beacon البرمجية
-    participant B as المتصفح
-    B->>A: POST /uploads مع الاسم والنوع والحجم
-    A->>A: التحقق من الجلسة والدور وحدود الخطة
-    A->>D: إدراج صف الملف بحالة pending
-    A->>S: توقيع رابط PUT لمفتاح المنظمة بصلاحية 5 دقائق
-    A-->>B: الرابط الموقّع ومعرّف الملف
-    B->>S: PUT لبايتات الملف مباشرة
+    participant A as واجهة Beacon البرمجية (Beacon API)
+    participant B as المتصفح (Browser)
+    B->>A: POST /uploads مع الاسم والنوع والحجم (POST /uploads with name, type, size)
+    A->>A: التحقق من الجلسة والدور وحدود الخطة (Check session, role and plan limits)
+    A->>D: إدراج صف الملف بحالة pending (Insert file row with status pending)
+    A->>S: توقيع رابط PUT لمفتاح المنظمة بصلاحية 5 دقائق (Sign PUT URL for org key, 5 min expiry)
+    A-->>B: الرابط الموقّع ومعرّف الملف (Presigned URL and file id)
+    B->>S: PUT لبايتات الملف مباشرة (PUT file bytes directly)
     S-->>B: 200 OK
     B->>A: POST /uploads/id/complete
-    A->>S: HEAD للكائن للتحقق من الحجم والنوع
-    A->>D: تعليم صف الملف بأنه جاهز
+    A->>S: HEAD للكائن للتحقق من الحجم والنوع (HEAD object to verify size and type)
+    A->>D: تعليم صف الملف بأنه جاهز (Mark file row as ready)
 ```
 
 التنزيل (download) يعكس هذا المسار: يطلب المتصفح ملفًا من واجهتك البرمجية (your API)، فتتحقق الواجهة من أن المستخدم يستطيع رؤيته، وتعيد رابط GET موقّعًا (signed GET URL) صالحًا لبضع دقائق. مع AWS SDK لـ JavaScript v3 يكفي بضعة أسطر:
@@ -399,14 +399,14 @@ export async function signLogoUpload(orgId: string, fileId: string, type: string
 
 ```mermaid
 flowchart TD
-    B["الحاوية beacon-private"] --> O1["orgs/org_1/"]
+    B["الحاوية beacon-private<br/>(Bucket beacon-private)"] --> O1["orgs/org_1/"]
     B --> O2["orgs/org_2/"]
     O1 --> L1["logos/"]
     O1 --> A1["attachments/"]
-    O1 --> E1["exports/ تنتهي بعد 7 أيام"]
+    O1 --> E1["exports/ تنتهي بعد 7 أيام<br/>(exports/ expires after 7 days)"]
     O2 --> L2["logos/"]
     O2 --> A2["attachments/"]
-    B --> Q["quarantine/ بانتظار الفحص"]
+    B --> Q["quarantine/ بانتظار الفحص<br/>(quarantine/ pending scan)"]
 ```
 
 **قواعد دورة الحياة (Lifecycle Rules).** يستطيع مزوّدو التخزين (storage providers) إنهاء الكائنات (objects) أو نقلها تلقائيًا حسب البادئة (prefix) والعمر. يجب على Beacon أن يحذف `exports/` بعد سبعة أيام، وأن ينقل المرفقات (attachments) القديمة إلى طبقة الوصول غير المتكرر (infrequent-access tier)، وأن **يلغي عمليات الرفع المجزّأ غير المكتملة (incomplete multipart uploads)** بعد يوم (وإلا بقيت الأجزاء المهجورة (abandoned parts) هناك تكلّفك دون أن تراها). وافحص بشكل دوري (reconcile) أيضًا: ابحث عن صفوف (rows) `pending` أقدم من يوم واحذف الصف (row) وأي كائن (object) مرتبط به.
@@ -437,7 +437,7 @@ flowchart TD
 
 **إن درست مستودعًا واحدًا فقط (If you study one repo):** `supabase/storage`. إنه خدمة تخزين (storage service) حقيقية متعددة المستأجرين (multi-tenant) تفعل بالضبط ما يصفه هذا الدرس: البايتات في خلفية S3 (S3 backend)، وصفوف (rows) البيانات الوصفية (metadata) في Postgres، والوصول تحدده سياسات (policies) قاعدة البيانات (database)، والروابط الموقّعة (signed URLs)، والرفع القابل للاستئناف (resumable upload). قراءة الطريقة التي يربط بها الطلب (request) بحاوية (bucket) ومفتاح (key) وفحص صلاحية (permission check) تعلّمك أكثر من أي درس تعليمي.
 
-**اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?)؟**
+**اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟**
 
 - **اشترِ (Buy):** S3 أو Cloudflare R2 أو Google Cloud Storage للبايتات، دائمًا، ما لم يكن لديك سبب لغير ذلك. وUploadThing أو Transloadit أو Cloudinary إن كنت تفضّل ألا تمتلك مسار الرفع (upload path) ومعالجة الصور (image processing).
 - **استضف بنفسك (Self-host):** SeaweedFS أو Garage لنسخة من المنتج قابلة للاستضافة الذاتية (self-hostable)، أو لعملاء معزولين عن الشبكة (air-gapped)، أو لبيئة تطوير محلية (local development environment) تحاكي الإنتاج (production)؛ وtusd إن احتجت الرفع القابل للاستئناف (resumable upload) على بنيتك التحتية (infrastructure).
@@ -594,10 +594,10 @@ flowchart TD
 
 ```mermaid
 flowchart RL
-    A["ILIKE<br/>مسح للنصوص الجزئية"] --> B["pg_trgm<br/>تقريبي ومفهرس"]
-    B --> C["البحث النصي الكامل في Postgres<br/>tsvector والترتيب"]
-    C --> D["محرك بحث<br/>Meilisearch وTypesense وOpenSearch"]
-    D --> E["هجين<br/>كلمات مع متجهات"]
+    A["ILIKE<br/>مسح للنصوص الجزئية<br/>(ILIKE<br/>substring scan)"] --> B["pg_trgm<br/>تقريبي ومفهرس<br/>(pg_trgm<br/>fuzzy and indexed)"]
+    B --> C["البحث النصي الكامل في Postgres<br/>tsvector والترتيب<br/>(Postgres full-text<br/>tsvector and ranking)"]
+    C --> D["محرك بحث<br/>Meilisearch وTypesense وOpenSearch<br/>(Search engine<br/>Meilisearch, Typesense, OpenSearch)"]
+    D --> E["هجين<br/>كلمات مع متجهات<br/>(Hybrid<br/>keywords plus vectors)"]
 ```
 
 **الدرجة 1 (Rung 1): `ILIKE`.** مطابقة لنص جزئي دون تمييز حالة الأحرف (case-insensitive substring match). لا يستطيع أي فهرس B-tree (B-tree index) عادي مساعدة نمط يبدأ بحرف بدل (Wildcard)، لذلك يحدث مسح. هذا مقبول للجداول الصغيرة (tables) إذا صُفّيت حسب `organization_id` أولًا (يضيّق Postgres النطاق إلى 50 مراقِبًا (monitor) لمنظمة (org) واحدة، ثم يمسحها). احتفظ دائمًا بمرشّح المستأجر (tenant filter) هذا.
@@ -647,12 +647,12 @@ CREATE INDEX incident_update_search_idx ON incident_update USING gin (search);
 
 ```mermaid
 flowchart RL
-    APP["واجهة Beacon البرمجية"] -->|"معاملة واحدة"| PG[("Postgres<br/>monitor + outbox")]
-    PG --> W["عامل الفهرسة"]
-    W --> SE[("محرك البحث")]
-    W -.->|"إعادة المحاولة عند الفشل"| W
-    J["مهمة إعادة الفهرسة الليلية"] --> SE
-    UI["لوحة أوامر cmd-K"] -->|"مفتاح محدد بالمستأجر"| SE
+    APP["واجهة Beacon البرمجية<br/>(Beacon API)"] -->|"معاملة واحدة (one transaction)"| PG[("Postgres<br/>monitor + outbox")]
+    PG --> W["عامل الفهرسة<br/>(Indexer worker)"]
+    W --> SE[("محرك البحث<br/>(Search engine)")]
+    W -.->|"إعادة المحاولة عند الفشل (retry on failure)"| W
+    J["مهمة إعادة الفهرسة الليلية<br/>(Nightly reindex job)"] --> SE
+    UI["لوحة أوامر cmd-K<br/>(cmd-K palette)"] -->|"مفتاح محدد بالمستأجر (tenant-scoped key)"| SE
 ```
 
 أيًّا كان اختيارك، أضف مهمة **إعادة فهرسة كاملة (full reindex)** تعيد بناء الفهرس (index) من Postgres (ويُفضَّل في فهرس جديد، ثم تبديل اسم مستعار (alias)). ستحتاجها بعد كل تغيير في التعيينات (mapping) وبعد كل خطأ سبّب انحرافًا. يبقى Postgres مصدر الحقيقة (source of truth)؛ والفهرس قابل للرمي (disposable).
@@ -688,7 +688,7 @@ flowchart RL
 
 **إن درست مستودعًا واحدًا فقط (If you study one repo):** Meilisearch. اقرأ توثيقه عن رموز المستأجرين (tenant tokens) والسمات القابلة للتصفية (filterable attributes) والتسامح مع الأخطاء الإملائية (typo tolerance)، ثم شغّله محليًا وافهرس مراقِبات (monitors) Beacon في فترة بعد الظهر. سيريك كيف يبدو البحث (search) "الجيد" داخل التطبيق، وهو المعيار الذي تقيس Postgres عليه.
 
-**اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?)؟**
+**اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟**
 
 - **اشترِ (Buy):** Algolia أو Elastic Cloud أو Meilisearch Cloud أو Typesense Cloud عندما يكون البحث (search) محوريًا في المنتج ولا أحد يريد امتلاك عنقود (cluster). خطّط (plans) للميزانية بعناية؛ فالتسعير (pricing) يتصاعد مع عدد السجلات (logs) والاستعلامات (queries).
 - **استضف بنفسك (Self-host):** Meilisearch أو Typesense لأغلب منتجات SaaS، وOpenSearch عندما تكون البيانات كبيرة أو تحتاج التجميعات (aggregations)؛ وParadeDB إن أردته داخل Postgres.
@@ -850,16 +850,16 @@ flowchart RL
 
 ```mermaid
 flowchart TD
-    subgraph POOL["المجمّع Pool"]
-        P1[("قاعدة بيانات واحدة<br/>الصفوف موسومة بـ org_id")]
+    subgraph POOL["المجمّع Pool (Pool)"]
+        P1[("قاعدة بيانات واحدة<br/>الصفوف موسومة بـ org_id<br/>(One database<br/>rows tagged org_id)")]
     end
-    subgraph BRIDGE["الجسر Bridge"]
-        B1[("قاعدة بيانات واحدة")] --> BS1["المخطط org_a"]
-        B1 --> BS2["المخطط org_b"]
+    subgraph BRIDGE["الجسر Bridge (Bridge)"]
+        B1[("قاعدة بيانات واحدة<br/>(One database)")] --> BS1["المخطط org_a<br/>(schema org_a)"]
+        B1 --> BS2["المخطط org_b<br/>(schema org_b)"]
     end
-    subgraph SILO["الصومعة Silo"]
-        S1[("قاعدة بيانات لـ org_a")]
-        S2[("قاعدة بيانات لـ org_b")]
+    subgraph SILO["الصومعة Silo (Silo)"]
+        S1[("قاعدة بيانات لـ org_a<br/>(DB for org_a)")]
+        S2[("قاعدة بيانات لـ org_b<br/>(DB for org_b)")]
     end
 ```
 
@@ -902,18 +902,18 @@ COMMIT;
 
 ```mermaid
 sequenceDiagram
-    participant Q as طابور المهام
+    participant Q as طابور المهام (Job queue)
     participant D as Postgres
-    participant H as المعالج
-    participant M as الوسيط البرمجي
-    participant U as المستخدم
-    U->>M: طلب مع ملف تعريف ارتباط الجلسة
-    M->>M: تحديد المستخدم والمنظمة النشطة والتحقق من العضوية
-    M->>H: تشغيل المعالج داخل سياق المستأجر
-    H->>D: BEGIN ثم set_config app.current_org
-    D-->>H: صفوف مصفّاة بسياسة RLS
-    H->>Q: وضع مهمة في الطابور مع org_id في الحمولة
-    Q->>D: العامل يضبط سياق المستأجر قبل الاستعلام
+    participant H as المعالج (Handler)
+    participant M as الوسيط البرمجي (Middleware)
+    participant U as المستخدم (User)
+    U->>M: طلب مع ملف تعريف ارتباط الجلسة (Request with session cookie)
+    M->>M: تحديد المستخدم والمنظمة النشطة والتحقق من العضوية (Resolve user and active org, verify membership)
+    M->>H: تشغيل المعالج داخل سياق المستأجر (Run handler inside tenant context)
+    H->>D: BEGIN ثم set_config app.current_org (BEGIN then set_config app.current_org)
+    D-->>H: صفوف مصفّاة بسياسة RLS (Rows filtered by RLS policy)
+    H->>Q: وضع مهمة في الطابور مع org_id في الحمولة (Enqueue job with org_id in payload)
+    Q->>D: العامل يضبط سياق المستأجر قبل الاستعلام (Worker sets tenant context before querying)
 ```
 
 تستخدم Node الأداة `AsyncLocalStorage`، وPython `contextvars`، وRails `ActiveSupport::CurrentAttributes`، وGo قيمة في `context.Context`. الأماكن التي يضيع فيها السياق: المهام الخلفية (يجب أن تحمل الحمولة (payload) `org_id` ويجب أن يعيد العامل (worker) إنشاء السياق)، والمهام المجدولة (cron tasks) التي تمر على كل المستأجرين (tenants)، والويب هوك (Webhook) القادم من Stripe (اربط عميل Stripe (Stripe customer) بالمنظمة (org))، والكاش (يجب أن يتضمن كل مفتاح كاش (cache key) المستأجر (tenant): `org:123:monitors`)، والسجلات (ضع `org_id` على كل سطر سجل (log line)، وهذا يسهّل الدعم كثيرًا أيضًا). سواء جاءت المنظمة من نطاق فرعي (subdomain) أو مسار (`/org/acme/...`) أو ترويسة (header)، **تحقق دائمًا من العضوية (membership)** على الخادم (server)؛ ولا تثق أبدًا بمعرّف المنظمة (org id) في الرابط (URL) وحده.
@@ -935,11 +935,11 @@ sequenceDiagram
 
 ```mermaid
 flowchart RL
-    U["المستخدم"] --> G["الموجّه العالمي<br/>دليل المستأجرين"]
-    G -->|"المنظمة في الاتحاد الأوروبي"| EU["خلية الاتحاد الأوروبي<br/>التطبيق وPostgres والحاوية والبحث"]
-    G -->|"المنظمة في الولايات المتحدة"| US["خلية الولايات المتحدة<br/>التطبيق وPostgres والحاوية والبحث"]
-    EU --> EUB[("نسخ احتياطية أوروبية")]
-    US --> USB[("نسخ احتياطية أمريكية")]
+    U["المستخدم<br/>(User)"] --> G["الموجّه العالمي<br/>دليل المستأجرين<br/>(Global router<br/>tenant directory)"]
+    G -->|"المنظمة في الاتحاد الأوروبي (org in EU)"| EU["خلية الاتحاد الأوروبي<br/>التطبيق وPostgres والحاوية والبحث<br/>(EU cell<br/>app, Postgres, bucket, search)"]
+    G -->|"المنظمة في الولايات المتحدة (org in US)"| US["خلية الولايات المتحدة<br/>التطبيق وPostgres والحاوية والبحث<br/>(US cell<br/>app, Postgres, bucket, search)"]
+    EU --> EUB[("نسخ احتياطية أوروبية<br/>(EU backups)")]
+    US --> USB[("نسخ احتياطية أمريكية<br/>(US backups)")]
 ```
 
 قرّر مكان الإقامة عند التسجيل (signup) (نقل مستأجر (tenant) بين المناطق (regions) لاحقًا مشروع ترحيل (migration project) كامل)، وأبقِ البيانات الشخصية (personal data) خارج الدليل العالمي (global directory)، وتأكد من أن أدوات المراقبة التشغيلية (observability) والدعم لا تنسخ بيانات الاتحاد الأوروبي (EU) بصمت إلى الولايات المتحدة (US).
@@ -963,7 +963,7 @@ flowchart RL
 
 **إن درست مستودعًا واحدًا فقط (If you study one repo):** توثيق (documentation) Supabase وأمثلتها عن أمان مستوى الصف (row-level security)، تقرؤها إلى جانب فصل RLS في توثيق Postgres. كتابة سياسات (policies) لجداول (tables) `monitor` و`incident` و`membership` في Beacon، ثم محاولة كسرها، ستعلّمك عن عزل المستأجرين (tenant isolation) أكثر من أي مخطط (any diagram).
 
-**اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?)؟**
+**اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟**
 
 - **اشترِ (Buy):** Postgres مُدار (managed) مع RLS (Supabase وNeon وRDS)، وCitus مُدار (Azure Cosmos DB for PostgreSQL) للتجزئة (sharding)، وTurso لقواعد SQLite لكل مستأجر (tenant). لإقامة البيانات (data residency)، اختر مزوّدين (providers) لديهم المناطق (regions) التي تحتاجها ووقّع اتفاقيات معالجة البيانات (DPA) معهم.
 - **استضف بنفسك (Self-host):** Citus أو مجموعة من نسخ Postgres عندما يشترط عقد أن تعمل على بنيتك التحتية (infrastructure) أو يتطلب عمليات نشر (deploys) مخصصة؛ وخصّص ميزانية لتوزيع الترحيلات (migration fan-out) والمراقبة.

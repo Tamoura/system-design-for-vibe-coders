@@ -23,13 +23,13 @@
 ```mermaid
 sequenceDiagram
     autonumber
-    participant S as الخادم (Server)
-    participant DNS as دليل العناوين (DNS)
-    participant You as هاتفك أو حاسوبك
-    You->>DNS: أين يقع relay.app؟
-    DNS-->>You: على العنوان 104.21.x.x
-    You->>S: أرسل لي الصفحة
-    S-->>You: الصفحة (نص وصور وأزرار)
+    participant S as الخادم (Server) (A computer that never sleeps (server))
+    participant DNS as دليل العناوين (DNS) (The phone book (DNS))
+    participant You as هاتفك أو حاسوبك (Your phone/laptop)
+    You->>DNS: أين يقع relay.app؟ (#quot#59;Where does relay.app live?#quot#59;)
+    DNS-->>You: على العنوان 104.21.x.x (#quot#59;At address 104.21.x.x#quot#59;)
+    You->>S: أرسل لي الصفحة (#quot#59;Please send me the page#quot#59;)
+    S-->>You: الصفحة (نص وصور وأزرار) (The page (text, images, buttons))
 ```
 
 بالتفصيل:
@@ -45,9 +45,9 @@ sequenceDiagram
 
 ```mermaid
 flowchart RL
-    Y["أنت<br/>(في أي مكان)"] --> C["مساعد قريب<br/>(CDN — يحتفظ بنسخ قريبة منك)"]
-    C -->|"لديه نسخة؟ يرد فورًا"| Y
-    C -->|"لا نسخة؟ يجلبها"| S["الخادم الأصلي<br/>(ربما في قارة أخرى)"]
+    Y["أنت<br/>(في أي مكان)<br/>(You<br/>(anywhere on Earth))"] --> C["مساعد قريب<br/>(CDN — يحتفظ بنسخ قريبة منك)<br/>(A nearby helper<br/>(CDN — keeps copies close by))"]
+    C -->|"لديه نسخة؟ يرد فورًا (has a copy?)"| Y
+    C -->|"لا نسخة؟ يجلبها (no copy — fetch it)"| S["الخادم الأصلي<br/>(ربما في قارة أخرى)<br/>(The real server<br/>(maybe another continent))"]
     S --> C
 ```
 
@@ -103,8 +103,8 @@ flowchart RL
 
 ```mermaid
 flowchart TD
-    CODE["📄 الكود (Code) — الوصفة<br/>تعليمات دقيقة مكتوبة"] -->|"تشغّلها آلة"| PROC["⚙️ برنامج يعمل — طبخ جارٍ<br/>موجود فقط عندما تكون الآلة مشغّلة"]
-    PROC -->|"يقرأ ويكتب"| DB[("📓 قاعدة البيانات (Database) — الدفتر<br/>ما يجب ألا يُنسى:<br/>المستخدمون والمحتوى والطلبات")]
+    CODE["📄 الكود (Code) — الوصفة<br/>تعليمات دقيقة مكتوبة<br/>(📄 CODE — the recipe<br/>precise instructions, written down)"] -->|"تشغّلها آلة (a machine runs it)"| PROC["⚙️ برنامج يعمل — طبخ جارٍ<br/>موجود فقط عندما تكون الآلة مشغّلة<br/>(⚙️ A RUNNING PROGRAM — cooking in progress<br/>exists only while the machine is on)"]
+    PROC -->|"يقرأ ويكتب (reads & writes)"| DB[("📓 قاعدة البيانات (Database) — الدفتر<br/>ما يجب ألا يُنسى:<br/>المستخدمون والمحتوى والطلبات<br/>(📓 DATABASE — the notebook<br/>what must never be forgotten:<br/>users, posts, orders)")]
 ```
 
 - **الكود (Code) وصفة.** تعليمات (instructions) مكتوبة بدقة تكفي لآلة سريعة وحرفية جدًا. هو نص في ملفات (files)، ولا يفعل شيئًا بمفرده — الوصفة (recipe) ليست وجبة.
@@ -177,14 +177,14 @@ flowchart TD
 
 ```mermaid
 gitGraph
-    commit id: "v1: أول صفحة"
-    commit id: "v2: معلومات التواصل"
+    commit id: "v1: أول صفحة (v1: first page)"
+    commit id: "v2: معلومات التواصل (v2: add contact info)"
     branch experiment
-    commit id: "تجربة تصميم جديد"
+    commit id: "تجربة تصميم جديد (try new design)"
     checkout main
-    commit id: "v3: تصحيح خطأ إملائي" tag: "LIVE"
+    commit id: "v3: تصحيح خطأ إملائي (v3: fix typo)" tag: "LIVE"
     merge experiment
-    commit id: "v4: التصميم الجديد" tag: "النشر القادم"
+    commit id: "v4: التصميم الجديد (v4: new design)" tag: "النشر القادم (next deploy)"
 ```
 
 *قراءة المخطط (diagram): كل نقطة هي نسخة محفوظة (إيداع (commit)). الخط المسمى `experiment` هو فرع (Branch): نسخة جانبية (side-copy) آمنة للتجارب، لا تؤثر على الخط الرئيسي حتى تُدمج (Merge) فيه. الوسم (tag) يوضح النسخة (version) المنشورة حاليًا.*
@@ -193,8 +193,8 @@ gitGraph
 
 ```mermaid
 flowchart RL
-    L["💻 محلية (Local)<br/>جهازك — حيث تُكتب النسخ"] --> S["🎭 تجهيز (Staging)<br/>نسخة تجريبية خاصة — حيث تُختبر"]
-    S --> P["🌍 إنتاج (Production)<br/>النسخة الحقيقية للمستخدمين —<br/>لا يصلها إلا ما تم التحقق منه"]
+    L["💻 محلية (Local)<br/>جهازك — حيث تُكتب النسخ<br/>(💻 LOCAL<br/>your machine —<br/>where drafts are made)"] --> S["🎭 تجهيز (Staging)<br/>نسخة تجريبية خاصة — حيث تُختبر<br/>(🎭 STAGING<br/>a private rehearsal copy —<br/>where drafts are tried)"]
+    S --> P["🌍 إنتاج (Production)<br/>النسخة الحقيقية للمستخدمين —<br/>لا يصلها إلا ما تم التحقق منه<br/>(🌍 PRODUCTION<br/>the real one users touch —<br/>only verified drafts arrive here)"]
 ```
 
 كارثة Knight وقعت بالضبط على السهم الأخير (the last arrow): نسخ (copies) شبه مكتمل إلى الإنتاج (production)، لم يتحقق منه أحد.
@@ -248,17 +248,17 @@ flowchart RL
 
 ```mermaid
 flowchart TD
-    subgraph world["عالمك (لا يراه الوكيل)"]
-        BIZ["نواياك وأولوياتك"]
-        HIST["قرارات من محادثات سابقة"]
-        PROD["ما يحدث في الإنتاج الآن"]
+    subgraph world["عالمك (لا يراه الوكيل) (Your world (the agent can't see this))"]
+        BIZ["نواياك وأولوياتك<br/>(Your intentions & priorities)"]
+        HIST["قرارات من محادثات سابقة<br/>(Decisions made in past chats)"]
+        PROD["ما يحدث في الإنتاج الآن<br/>(What's happening in production right now)"]
     end
-    subgraph window["نافذة الوكيل (كل ما يملكه)"]
-        PROMPT["رسالتك الحالية"]
-        FILES["الملفات التي يقرؤها في الجلسة"]
-        MEM["CLAUDE.md — الذاكرة التي كتبتها أنت"]
+    subgraph window["نافذة الوكيل (كل ما يملكه) (The agent's window (all it actually has))"]
+        PROMPT["رسالتك الحالية<br/>(Your current message)"]
+        FILES["الملفات التي يقرؤها في الجلسة<br/>(Files it reads this session)"]
+        MEM["CLAUDE.md — الذاكرة التي كتبتها أنت<br/>(CLAUDE.md — the memory YOU wrote)"]
     end
-    world -.->|"يصل فقط إذا كتبته"| window
+    world -.->|"يصل فقط إذا كتبته (only if you write it down)"| window
 ```
 
 في كل جلسة (session) جديدة، يبدأ وكيلك (your agent) من الصفر: لا يعرف إلا ما في نافذته (its window). لذلك فإن أهم وثيقة يكتبها مؤسس (founder) لا يبرمج هي ملف (file) **CLAUDE.md** — ملف الذاكرة الدائم (standing memory file): ما هو المنتج (product)؟ ما الممنوع؟ كيف تريد استلام الأدلة (evidence)؟ حادثة (incident) الحذف كانت في جوهرها فشل سياق (context failure): قاعدة "نحن في تجميد كود (code freeze) — لا تلمس الإنتاج (production)" كانت في رأس شخص وفي محادثة (chat) قديمة، لا في قاعدة دائمة (always-loaded rule) يراها الوكيل (agent) في كل جلسة.
@@ -332,9 +332,9 @@ flowchart TD
 
 ```mermaid
 flowchart RL
-    R["📄 المستودع<br/>نسخك (F.3)"] -->|"نشر"| H["🏢 استضافة مُدارة<br/>خادم جاهز بالإيجار (F.2)"]
-    H --> U["🌍 رابط حقيقي<br/>تصل إليه رحلة الخطوات الأربع (F.1)"]
-    U --> V["✅ التحقق<br/>بنفسك، من جهاز<br/>غير جهاز المنفذ"]
+    R["📄 المستودع<br/>نسخك (F.3)<br/>(📄 Repo<br/>your drafts<br/>(F.3))"] -->|"نشر (deploy)"| H["🏢 استضافة مُدارة<br/>خادم جاهز بالإيجار (F.2)<br/>(🏢 A managed host<br/>rented always-on kitchen<br/>(F.2))"]
+    H --> U["🌍 رابط حقيقي<br/>تصل إليه رحلة الخطوات الأربع (F.1)<br/>(🌍 A real URL<br/>reachable by the<br/>four-step trip (F.1))"]
+    U --> V["✅ التحقق<br/>بنفسك، من جهاز<br/>غير جهاز المنفذ<br/>(✅ VERIFIED<br/>by YOU, from a device<br/>that isn't the builder's)"]
 ```
 
 **الاستضافة المُدارة (Managed Hosting)** — مثل Vercel أو Netlify أو Cloudflare Pages — هي خدمة (service) تقول لك: أعطنا المستودع (repo)، ونحن نتولى النشر (deploy)، وهذا رابطك (your URL). الوحدات اللاحقة تشرح ما يحدث خلف الكواليس؛ أما اليوم فهي نقطة البداية المناسبة — وكثير من المنتجات (products) الحقيقية يعمل عليها فعلًا.

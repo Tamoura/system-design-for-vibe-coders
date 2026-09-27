@@ -30,12 +30,12 @@
 
 ```mermaid
 flowchart RL
-    A["اختر نسخة<br/>(commit في git)"] --> B["ابنها<br/>(compile للأصول)"]
-    B --> C["اشحن البناء<br/>إلى الخادم"]
-    C --> D["شغّل النسخة الجديدة"]
-    D --> E["وجّه الحركة إليها"]
-    E --> F["أوقف النسخة القديمة"]
-    F --> G["تحقق من الخارج"]
+    A["اختر نسخة<br/>(commit في git)<br/>(Pick a version<br/>(a git commit))"] --> B["ابنها<br/>(compile للأصول)<br/>(Build it<br/>(compile assets))"]
+    B --> C["اشحن البناء<br/>إلى الخادم<br/>(Ship the build<br/>to the server)"]
+    C --> D["شغّل النسخة الجديدة<br/>(Start the new version)"]
+    D --> E["وجّه الحركة إليها<br/>(Route traffic to it)"]
+    E --> F["أوقف النسخة القديمة<br/>(Stop the old version)"]
+    F --> G["تحقق من الخارج<br/>(Verify from outside)"]
 ```
 
 اللحظات الخطرة هي المفاصل (seams): بين *التشغيل* و*التوجيه (routing)*، وبين *التوجيه* و*الإيقاف*. عاش خطأ 502 في القصة في أحد هذه المفاصل بالضبط. لا يمكنك إخفاء المفاصل، لكن يمكنك أن تقرر *مَن يخدم الحركة (traffic)* في كل لحظة منها — وإعادة التشغيل في المكان (in-place restart) تقرر «لا أحد، لعشر ثوانٍ».
@@ -132,12 +132,12 @@ flowchart RL
 
 ```mermaid
 flowchart TD
-    P["الوسيط العكسي<br/>(مفتاح الحركة)"]
-    P -->|"كل المستخدمين هنا"| B["🔵 أزرق — حيّ<br/>منفذ 3000<br/>.next-blue"]
-    P -. "خامل، قيد النشر" .-> G["🟢 أخضر — جديد<br/>منفذ 3001<br/>.next-green"]
-    G --> H{"فحص الصحة<br/>ينجح؟"}
-    H -->|نعم| FLIP["اقلب الوسيط ← أخضر<br/>ثم صرّف الأزرق"]
-    H -->|لا| ABORT["أجهض، لم يرَ المستخدمون الأخضر"]
+    P["الوسيط العكسي<br/>(مفتاح الحركة)<br/>(Reverse proxy<br/>(the traffic switch))"]
+    P -->|"كل المستخدمين هنا (all users go here)"| B["🔵 أزرق — حيّ<br/>منفذ 3000<br/>.next-blue<br/>(🔵 BLUE — live<br/>port 3000<br/>.next-blue)"]
+    P -. "خامل، قيد النشر (idle, being deployed)" .-> G["🟢 أخضر — جديد<br/>منفذ 3001<br/>.next-green<br/>(🟢 GREEN — new<br/>port 3001<br/>.next-green)"]
+    G --> H{"فحص الصحة<br/>ينجح؟<br/>(health check<br/>passes?)"}
+    H -->|"نعم (yes)"| FLIP["اقلب الوسيط ← أخضر<br/>ثم صرّف الأزرق<br/>(flip proxy → green<br/>then drain blue)"]
+    H -->|"لا (no)"| ABORT["أجهض، لم يرَ المستخدمون الأخضر<br/>(abort, users never saw green)"]
 ```
 
 السحر في المفتاح: لا يكون أي مستخدم (user) أبدًا في منتصف خدمةٍ من لونٍ (color) يُفكَّك. هكذا تحذف نافذة إعادة التشغيل (restart window) من 4.1. لكن هذا لا يصح إلا إن كان اللونان (colors) *فعلًا* اثنين.
@@ -236,9 +236,9 @@ flowchart TD
 
 ```mermaid
 flowchart RL
-    U["أنت / مستخدم"] --> CDN["CDN<br/>يخزّن HTML ~5 دقائق"]
-    CDN --> PROXY["الوسيط العكسي<br/>عمّال عالقون،<br/>اتصالات keepalive"]
-    PROXY --> APP["التطبيق (أزرق/أخضر)<br/>الشيء الذي نشرته"]
+    U["أنت / مستخدم<br/>(You / a user)"] --> CDN["CDN<br/>يخزّن HTML ~5 دقائق<br/>(CDN<br/>caches HTML ~5 min)"]
+    CDN --> PROXY["الوسيط العكسي<br/>عمّال عالقون،<br/>اتصالات keepalive<br/>(Reverse proxy<br/>stale workers,<br/>keepalive conns)"]
+    PROXY --> APP["التطبيق (أزرق/أخضر)<br/>الشيء الذي نشرته<br/>(App (blue/green)<br/>the thing you deployed)"]
 ```
 
 حين نشرت، غيّرت الصندوق الأقصى يمينًا (rightmost box). كل ما على يساره قد يظل يخدم واقعًا سابقًا: الوسيط (proxy) عبر عامل عالق (stale worker)، والـCDN عبر صفحة مخزّنة (cached page). **التحقق (verification) الذي يتوقف عند أي صندوق قبل عيني المستخدم (user) يتحقق من طبقة (layer)، لا من النشر (deploy).**
@@ -332,9 +332,9 @@ flowchart RL
 
 ```mermaid
 flowchart TD
-    D["النشر<br/>كودٌ جديد يصير حيًّا"] --> DN["يغيّر السلوك للجميع<br/>بطيء نسبيًّا، يلزمه تراجع للإلغاء"]
-    F["علَم الميزة<br/>تشغيل/إطفاء كود قائم"] --> FN["فوري، بلا نشر،<br/>لكل مستخدم ممكن، إلغاء فوري"]
-    R["بوّابة الإصدار<br/>نشر محتوى/بيانات قائمة"] --> RN["يجعل بيانات مخفية مرئية<br/>قرار محتوى، لا كود"]
+    D["النشر<br/>كودٌ جديد يصير حيًّا<br/>(Deploy<br/>new CODE goes live)"] --> DN["يغيّر السلوك للجميع<br/>بطيء نسبيًّا، يلزمه تراجع للإلغاء<br/>(changes behavior for everyone<br/>slow-ish, needs rollback to undo)"]
+    F["علَم الميزة<br/>تشغيل/إطفاء كود قائم<br/>(Feature flag<br/>toggle existing code ON/OFF)"] --> FN["فوري، بلا نشر،<br/>لكل مستخدم ممكن، إلغاء فوري<br/>(instant, no deploy,<br/>per-user possible, instant undo)"]
+    R["بوّابة الإصدار<br/>نشر محتوى/بيانات قائمة<br/>(Release gate<br/>publish existing CONTENT/data)"] --> RN["يجعل بيانات مخفية مرئية<br/>قرار محتوى، لا كود<br/>(makes hidden data visible<br/>content decision, not code)"]
 ```
 
 | الآلية | تغيّر | للإلغاء | السرعة |
@@ -435,13 +435,13 @@ flowchart TD
 
 ```mermaid
 flowchart RL
-    S["المصدر<br/>(ما تراجعه)"] --> B["خطوة البناء<br/>تُدرِج متغيّرات البيئة،<br/>تستعمل الكاشات"]
-    B --> A["الأثر<br/>(ما يشغّله المستخدمون)"]
-    ENV[".env.local<br/>(متجاهَل من git، خفيّ)"] -.->|"مُدرَج عند البناء"| B
-    CACHE["كاش البناء<br/>(وحدات قديمة)"] -.->|"مُعاد استعماله"| B
-    A --> CHECK{"متحقَّق منه؟"}
-    CHECK -->|"فحصنا S فقط"| MISS["عطل localhost يُشحَن"]
-    CHECK -->|"نفحص A بـgrep"| CATCH["يفشل البناء بصخب"]
+    S["المصدر<br/>(ما تراجعه)<br/>(Source<br/>(what you review))"] --> B["خطوة البناء<br/>تُدرِج متغيّرات البيئة،<br/>تستعمل الكاشات<br/>(Build step<br/>inlines env vars,<br/>uses caches)"]
+    B --> A["الأثر<br/>(ما يشغّله المستخدمون)<br/>(Artifact<br/>(what users run))"]
+    ENV[".env.local<br/>(متجاهَل من git، خفيّ)<br/>(.env.local<br/>(gitignored, invisible))"] -.->|"مُدرَج عند البناء (inlined at build time)"| B
+    CACHE["كاش البناء<br/>(وحدات قديمة)<br/>(build cache<br/>(stale modules))"] -.->|"مُعاد استعماله (reused)"| B
+    A --> CHECK{"متحقَّق منه؟<br/>(verified?)"}
+    CHECK -->|"فحصنا S فقط (we only checked S)"| MISS["عطل localhost يُشحَن<br/>(the localhost bug ships)"]
+    CHECK -->|"نفحص A بـgrep (we grep A)"| CATCH["يفشل البناء بصخب<br/>(build fails loudly)"]
 ```
 
 ### 2. الإدراج عند البناء (build-time inlining) يجعل الملفات المحلية كودًا (code) مشحونًا

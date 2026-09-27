@@ -24,14 +24,14 @@
 
 ```mermaid
 graph TD
-    subgraph edge["nginx — ثلاثة إعدادات... وحقيقة واحدة؟"]
-        MAIN["إعداد www<br/><small>proxy_pass ← upstream ✓</small>"]
-        UP["إعداد upload.<br/><small>proxy_pass ← :5000 ✗</small>"]
-        DIR["إعداد direct.<br/><small>proxy_pass ← :5000 ✗</small>"]
+    subgraph edge["nginx — ثلاثة إعدادات... وحقيقة واحدة؟ (nginx — three configs, one truth?)"]
+        MAIN["إعداد www<br/><small>proxy_pass ← upstream ✓</small><br/>(www config<br/><small>proxy_pass → upstream ✓</small>)"]
+        UP["إعداد upload.<br/><small>proxy_pass ← :5000 ✗</small><br/>(upload. config<br/><small>proxy_pass → :5000 ✗</small>)"]
+        DIR["إعداد direct.<br/><small>proxy_pass ← :5000 ✗</small><br/>(direct. config<br/><small>proxy_pass → :5000 ✗</small>)"]
     end
-    MAIN --> U["upstream مشترك<br/><small>يتبع التحويل</small>"]
-    U --> GREEN["الواجهة الخضراء :5010<br/><small>حيّة</small>"]
-    UP -.-> DEAD["الواجهة الزرقاء :5000<br/><small>أُوقفت بعد التحويل</small>"]
+    MAIN --> U["upstream مشترك<br/><small>يتبع التحويل</small><br/>(shared upstream<br/><small>follows the flip</small>)"]
+    U --> GREEN["الواجهة الخضراء :5010<br/><small>حيّة</small><br/>(API green :5010<br/><small>ALIVE</small>)"]
+    UP -.-> DEAD["الواجهة الزرقاء :5000<br/><small>أُوقفت بعد التحويل</small><br/>(API blue :5000<br/><small>stopped after flip</small>)"]
     DIR -.-> DEAD
     style DEAD stroke-dasharray: 5 5
 ```
@@ -52,25 +52,25 @@ graph TD
 
 ```mermaid
 graph TD
-    subgraph clients["العملاء"]
-        B["المتصفح<br/><small>صفحات SSR</small>"]
-        M["تطبيقات الموبايل<br/><small>iOS · أندرويد</small>"]
-        TV["تطبيقات التلفاز"]
+    subgraph clients["العملاء (Clients)"]
+        B["المتصفح<br/><small>صفحات SSR</small><br/>(Browser<br/><small>Next.js SSR pages</small>)"]
+        M["تطبيقات الموبايل<br/><small>iOS · أندرويد</small><br/>(Mobile apps<br/><small>iOS · Android</small>)"]
+        TV["تطبيقات التلفاز<br/>(TV apps)"]
     end
-    subgraph edge["الحافة — حواسيب غيرك"]
-        CDN["CDN / جدار حماية<br/><small>كلاودفلير: TLS وكاش وقواعد روبوتات</small>"]
+    subgraph edge["الحافة — حواسيب غيرك (Edge — someone else's computers)"]
+        CDN["CDN / جدار حماية<br/><small>كلاودفلير: TLS وكاش وقواعد روبوتات</small><br/>(CDN / WAF<br/><small>Cloudflare: TLS, cache, bot rules</small>)"]
     end
-    subgraph origin["الأصل — خادم واحد"]
-        NG["الوسيط العكسي<br/><small>nginx: التوجيه</small>"]
-        WEB["تطبيق الويب<br/><small>Next.js</small>"]
-        API["الواجهة البرمجية<br/><small>Express: منطق العمل</small>"]
-        RED[("Redis<br/><small>كاش + حضور + حدود</small>")]
-        DB[("MongoDB<br/><small>مصدر الحقيقة</small>")]
+    subgraph origin["الأصل — خادم واحد (Origin — one VPS)"]
+        NG["الوسيط العكسي<br/><small>nginx: التوجيه</small><br/>(Reverse proxy<br/><small>nginx: routing, TLS to origin</small>)"]
+        WEB["تطبيق الويب<br/><small>Next.js</small><br/>(Web app<br/><small>Next.js: SSR + assets</small>)"]
+        API["الواجهة البرمجية<br/><small>Express: منطق العمل</small><br/>(API<br/><small>Express: business logic</small>)"]
+        RED[("Redis<br/><small>كاش + حضور + حدود</small><br/>(Redis<br/><small>cache + presence + limits</small>)")]
+        DB[("MongoDB<br/><small>مصدر الحقيقة</small><br/>(MongoDB<br/><small>source of truth</small>)")]
     end
-    subgraph ext["خدمات خارجية"]
-        R2[("تخزين الكائنات<br/><small>R2: ملفات الوسائط</small>")]
-        SMTP["البريد<br/><small>مزوّد SMTP</small>"]
-        PUSH["الإشعارات<br/><small>APNs / FCM</small>"]
+    subgraph ext["خدمات خارجية (External services)"]
+        R2[("تخزين الكائنات<br/><small>R2: ملفات الوسائط</small><br/>(Object storage<br/><small>R2: media files</small>)")]
+        SMTP["البريد<br/><small>مزوّد SMTP</small><br/>(Email<br/><small>SMTP provider</small>)"]
+        PUSH["الإشعارات<br/><small>APNs / FCM</small><br/>(Push<br/><small>APNs / FCM</small>)"]
     end
     B --> CDN
     M --> CDN

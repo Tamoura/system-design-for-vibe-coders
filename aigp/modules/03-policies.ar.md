@@ -42,13 +42,13 @@
 
 ```mermaid
 flowchart RL
-    P[التخطيط والتصميم] --> D[البيانات]
-    D --> B[البناء]
-    B --> V[التحقق والمصادقة]
-    V --> Dep[النشر]
-    Dep --> O[التشغيل والرصد]
-    O -->|تغيير أو انجراف| P
-    O --> R[الإيقاف والتقاعد]
+    P["التخطيط والتصميم<br/>(Plan and design)"] --> D["البيانات<br/>(Data)"]
+    D --> B["البناء<br/>(Build)"]
+    B --> V["التحقق والمصادقة<br/>(Verify and validate)"]
+    V --> Dep["النشر<br/>(Deploy)"]
+    Dep --> O["التشغيل والرصد<br/>(Operate and monitor)"]
+    O -->|"تغيير أو انجراف (change or drift)"| P
+    O --> R["الإيقاف والتقاعد<br/>(Retire)"]
 ```
 
 للحلقة العائدة من الرصد (monitoring) إلى التصميم (design) أهميتها: فأنظمة الذكاء الاصطناعي (AI systems) تتغيّر بعد الإطلاق (launch)، عبر إعادة التدريب (retraining)، أو تحديثات نماذج الموردين (vendor model updates)، أو التحولات في البيانات (data) التي تتعامل معها.
@@ -505,11 +505,11 @@ flowchart RL
 
 ```mermaid
 flowchart RL
-    I[التحديد والتصنيف] --> DD[العناية الواجبة]
-    DD --> C[الضوابط التعاقدية]
-    C --> M[الرصد المستمر]
-    M -->|تغيير أو مشكلة| DD
-    M --> X[الخروج أو التجديد]
+    I["التحديد والتصنيف<br/>(Identify and tier)"] --> DD["العناية الواجبة<br/>(Due diligence)"]
+    DD --> C["الضوابط التعاقدية<br/>(Contract controls)"]
+    C --> M["الرصد المستمر<br/>(Ongoing monitoring)"]
+    M -->|"تغيير أو مشكلة (change or issue)"| DD
+    M --> X["الخروج أو التجديد<br/>(Exit or renew)"]
 ```
 
 ### 🟡 التعمق أكثر (Going deeper)

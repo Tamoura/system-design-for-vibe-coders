@@ -18,10 +18,10 @@ location /api  { proxy_pass http://api_backend; }   # الفخ
 
 ```mermaid
 flowchart RL
-    R1["GET /api/users"] --> L{"location /api<br/><small>مطابقة بادئة</small>"}
+    R1["GET /api/users"] --> L{"location /api<br/><small>مطابقة بادئة</small><br/>(location /api<br/><small>prefix match</small>)"}
     R2["GET /api-next/auto-play-pick"] --> L
-    L -->|"تطابق"| EXPRESS["الواجهة القديمة Express"]
-    L -.->|"لا يصل أبدًا"| NEXT["معالجات Next.js"]
+    L -->|"تطابق (matches)"| EXPRESS["الواجهة القديمة Express<br/>(Legacy Express API)"]
+    L -.->|"لا يصل أبدًا (never reached)"| NEXT["معالجات Next.js<br/>(Next.js route handlers)"]
     style NEXT stroke-dasharray: 5 5
 ```
 
@@ -42,30 +42,30 @@ sequenceDiagram
     autonumber
     participant DB as MongoDB
     participant R as Redis
-    participant APP as التطبيق / الواجهة
-    participant NG as nginx<br/>(خادمك)
-    participant CDN as حافة CDN<br/>(كلاودفلير)
-    participant DNS as محلّل DNS
-    participant B as المتصفح
-    B->>DNS: أين relay.app؟
-    DNS-->>B: 104.x.x.x (عنوان الـCDN لا عنوانك)
-    B->>CDN: GET /item/42 (مصافحة TLS أولًا)
-    alt إصابة في كاش الحافة
-        CDN-->>B: استجابة مخزّنة — خادمك لا يسمع بها أصلًا
-    else إخفاق
-        CDN->>NG: GET /item/42 (+ ترويسات CF: العنوان الحقيقي والبلد)
-        NG->>APP: proxy_pass ← كتلة location المطابقة
-        APP->>R: GET مفتاح الكاش item:42
-        alt إصابة في Redis
-            R-->>APP: JSON مخزّن
-        else إخفاق
+    participant APP as التطبيق / الواجهة (App / API)
+    participant NG as nginx<br/>(خادمك) (nginx<br/>(your VPS))
+    participant CDN as حافة CDN<br/>(كلاودفلير) (CDN edge<br/>(Cloudflare))
+    participant DNS as محلّل DNS (DNS resolver)
+    participant B as المتصفح (Browser)
+    B->>DNS: أين relay.app؟ (where is relay.app?)
+    DNS-->>B: 104.x.x.x (عنوان الـCDN لا عنوانك) (104.x.x.x (the CDN, not you))
+    B->>CDN: GET /item/42 (مصافحة TLS أولًا) (GET /item/42 (TLS handshake first))
+    alt إصابة في كاش الحافة (edge cache HIT)
+        CDN-->>B: استجابة مخزّنة — خادمك لا يسمع بها أصلًا (cached response — your server never hears about it)
+    else إخفاق (MISS)
+        CDN->>NG: GET /item/42 (+ ترويسات CF: العنوان الحقيقي والبلد) (GET /item/42 (+ CF headers: real IP, country))
+        NG->>APP: proxy_pass ← كتلة location المطابقة (proxy_pass → matched location block)
+        APP->>R: GET مفتاح الكاش item:42 (GET cache key item:42)
+        alt إصابة في Redis (Redis HIT)
+            R-->>APP: JSON مخزّن (cached JSON)
+        else إخفاق (MISS)
             APP->>DB: findOne(...)
-            DB-->>APP: الوثيقة
+            DB-->>APP: الوثيقة (document)
             APP->>R: SETEX item:42
         end
         APP-->>NG: 200 + Cache-Control
-        NG-->>CDN: الاستجابة (قد تُعاد كتابة الترويسات هنا)
-        CDN-->>B: الاستجابة (وتُخزَّن في الحافة إن سُمح)
+        NG-->>CDN: الاستجابة (قد تُعاد كتابة الترويسات هنا) (response (headers may be rewritten here))
+        CDN-->>B: الاستجابة (وتُخزَّن في الحافة إن سُمح) (response (cached at edge if allowed))
     end
 ```
 
@@ -94,15 +94,15 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
-    S["العَرَض: طلب يفشل أو يعود خاطئًا"] --> Q1{"جرّب curl على الأصل مباشرة<br/>(متجاوزًا الـCDN) — أصحيح؟"}
-    Q1 -->|"نعم"| EDGE["المشكلة عند الحافة:<br/>كاش CDN، قواعد الجدار، DNS<br/><small>حوادث 3.2 و4.3 والجدار الذي حجب أدواتنا</small>"]
-    Q1 -->|"لا"| Q2{"اضرب عملية التطبيق مباشرة<br/>(منفذ localhost) — أصحيح؟"}
-    Q2 -->|"نعم"| PROXY["المشكلة في الوسيط:<br/>مطابقة location، عمال عالقون، upstream خاطئ<br/><small>حوادث: فخ /api، العامل العالق، الإعدادات الشقيقة</small>"]
-    Q2 -->|"لا"| Q3{"هل تُظهر سجلات التطبيق الطلبَ<br/>بالوسائط المتوقعة؟"}
-    Q3 -->|"لا"| ROUTE["لم يبلغ معالجك أصلًا:<br/>وسيطات، مصادقة، تحليل الجسم"]
-    Q3 -->|"نعم"| DATA{"استعلم المخزن مباشرة —<br/>هل البيانات صحيحة؟"}
-    DATA -->|"نعم"| CODE["منطقك أنت. أخيرًا:<br/>خلل كود حقيقي."]
-    DATA -->|"لا"| STORE["كاش قديم أو بيانات فاسدة:<br/>الإبطال، الهجرات<br/><small>حادثتا 3.3 و2.2</small>"]
+    S["العَرَض: طلب يفشل أو يعود خاطئًا<br/>(Symptom: request fails or is wrong)"] --> Q1{"جرّب curl على الأصل مباشرة<br/>(متجاوزًا الـCDN) — أصحيح؟<br/>(curl the ORIGIN directly<br/>(bypass CDN) — correct?)"}
+    Q1 -->|"نعم (yes)"| EDGE["المشكلة عند الحافة:<br/>كاش CDN، قواعد الجدار، DNS<br/><small>حوادث 3.2 و4.3 والجدار الذي حجب أدواتنا</small><br/>(Problem is edge-side:<br/>CDN cache, WAF/bot rules, DNS<br/><small>incidents 3.2, 4.3, and the WAF that blocked our own tooling</small>)"]
+    Q1 -->|"لا (no)"| Q2{"اضرب عملية التطبيق مباشرة<br/>(منفذ localhost) — أصحيح؟<br/>(hit the APP PROCESS directly<br/>(localhost port) — correct?)"}
+    Q2 -->|"نعم (yes)"| PROXY["المشكلة في الوسيط:<br/>مطابقة location، عمال عالقون، upstream خاطئ<br/><small>حوادث: فخ /api، العامل العالق، الإعدادات الشقيقة</small><br/>(Problem is the proxy:<br/>location matching, stale workers, wrong upstream<br/><small>incidents: /api prefix trap, stale worker, sibling configs</small>)"]
+    Q2 -->|"لا (no)"| Q3{"هل تُظهر سجلات التطبيق الطلبَ<br/>بالوسائط المتوقعة؟<br/>(app logs show the request<br/>with expected params?)"}
+    Q3 -->|"لا (no)"| ROUTE["لم يبلغ معالجك أصلًا:<br/>وسيطات، مصادقة، تحليل الجسم<br/>(Never reached your handler:<br/>middleware, auth, body parsing)"]
+    Q3 -->|"نعم (yes)"| DATA{"استعلم المخزن مباشرة —<br/>هل البيانات صحيحة؟<br/>(query the store directly —<br/>is the DATA right?)"}
+    DATA -->|"نعم (yes)"| CODE["منطقك أنت. أخيرًا:<br/>خلل كود حقيقي.<br/>(Your logic. Finally,<br/>an actual code bug.)"]
+    DATA -->|"لا (no)"| STORE["كاش قديم أو بيانات فاسدة:<br/>الإبطال، الهجرات<br/><small>حادثتا 3.3 و2.2</small><br/>(Stale cache or bad data:<br/>invalidation, migrations<br/><small>incidents 3.3, 2.2</small>)"]
 ```
 
 احفظ الشكل لا الصناديق (boxes): **نصّف بالطبقات (bisect by layer)، واختبر الطبقة (layer) التي تحت قبل أن تتهم الطبقة التي كتبتها.** بنك الحوادث (incident bank) مليء بأيام ضاعت في الترتيب المعاكس.

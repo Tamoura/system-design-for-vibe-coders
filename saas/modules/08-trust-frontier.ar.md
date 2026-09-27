@@ -61,12 +61,12 @@
 
 ```mermaid
 flowchart RL
-  P["رمز Slack بنص واضح"] --> E["التشفير بـ DEK (AES-256-GCM)"]
-  DEK["مفتاح البيانات DEK، لكل مستأجر"] --> E
-  E --> C[("نص مشفر في Postgres")]
-  KMS["KMS يحفظ KEK ولا يخرج منه"] -->|"يشفّر ويفك التشفير"| W["DEK مغلّف محفوظ بجانب البيانات"]
-  DEK -.->|"مغلّف بـ KEK"| W
-  App["تطبيق Beacon"] -->|"فك تغليف DEK عند الحاجة وتخزينه مؤقتًا لفترة قصيرة"| KMS
+  P["رمز Slack بنص واضح<br/>(Plaintext Slack token)"] --> E["التشفير بـ DEK (AES-256-GCM)<br/>(Encrypt with DEK (AES-256-GCM))"]
+  DEK["مفتاح البيانات DEK، لكل مستأجر<br/>(Data key DEK, per tenant)"] --> E
+  E --> C[("نص مشفر في Postgres<br/>(Ciphertext in Postgres)")]
+  KMS["KMS يحفظ KEK ولا يخرج منه<br/>(KMS holds the KEK, never leaves)"] -->|"يشفّر ويفك التشفير (encrypts and decrypts)"| W["DEK مغلّف محفوظ بجانب البيانات<br/>(Wrapped DEK stored next to data)"]
+  DEK -.->|"مغلّف بـ KEK (wrapped by KEK)"| W
+  App["تطبيق Beacon<br/>(Beacon app)"] -->|"فك تغليف DEK عند الحاجة وتخزينه مؤقتًا لفترة قصيرة (unwrap DEK on demand, cache briefly)"| KMS
 ```
 
 **مفتاح تشفير البيانات (DEK)** يشفّر البيانات. و**مفتاح تشفير المفاتيح (KEK)** المحفوظ في **KMS** (خدمة إدارة المفاتيح (key management): AWS KMS أو Google Cloud KMS أو Azure Key Vault أو محرك (engine) transit في OpenBao) يشفّر DEK. تحفظ DEK *المغلّف (wrapped)* بجانب البيانات، وتطلب من KMS فك تغليفه (unwrap) عند الحاجة. لا يغادر KEK خدمة KMS أبدًا. تغيير KEK يعني إعادة تغليف (re-wrapping) مفاتيح (keys) DEK الصغيرة، لا إعادة تشفير (re-encrypting) تيرابايتات من البيانات. أعطِ **كل مستأجر DEK خاصًا به**. عندها يؤدي حذف (deletion) هذا المفتاح ("التمزيق التشفيري"، Crypto-shredding) إلى جعل بيانات ذلك المستأجر (tenant) المشفرة غير قابلة للقراءة، وهذا يساعد في ضمانات الحذف (deletion guarantees). قد يطلب عملاء المؤسسات (enterprise customers) لاحقًا **BYOK** (أحضر مفتاحك الخاص (bring your own key))، حيث يكون KEK في KMS *الخاص بهم* ويستطيعون إلغاءه.
@@ -127,7 +127,7 @@ Preferred-Languages: en
 
 **إن درست مستودعًا واحدًا فقط (If you only study one):** ادرس **OWASP Cheat Sheet Series**. ليست أداة (tool)، لكن أوراق SSRF Prevention وSecrets Management وContent Security Policy وAuthorization تحوّل هذا الدرس (this lesson) إلى قوائم تحقق ملموسة (concrete checklists) راجعها خبراء (peer-reviewed)، تستطيع تطبيقها على Beacon اليوم.
 
-**اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?)؟**
+**اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟**
 
 - **اشترِ (Buy)** أتمتة الامتثال (Vanta، Drata) عندما تصبح صفقات المؤسسات (enterprise deals) معتمدة على SOC 2. علاقاتهم مع المدققين (auditor relationships) وتكاملاتهم (integrations) تستحق الثمن. استخدم KMS الخاص بسحابتك (your cloud) بدل تشغيل واحد بنفسك. واشترِ اختبارات الاختراق (pen tests) من شركات خارجية (outside firms)، لأن الاختبار الذي تجريه بنفسك لا يُحسب.
 - **استضف بنفسك (Self-host)** Infisical أو OpenBao عندما يجب أن تبقى الأسرار (secrets) داخل شبكتك (your network) أو عندما تبيع منتجًا قابلًا للاستضافة الذاتية (self-hostable product). استخدم SOPS عندما يريد فريق صغير إعدادات مشفرة (encrypted config) في git دون أي خادم. وجرّب Comp أو Probo إذا أردت تتبع الامتثال (compliance tracking) دون اشتراك (subscription).
@@ -328,15 +328,15 @@ export async function summarizeIncident(orgId: string, incidentId: string) {
 
 ```mermaid
 flowchart RL
-  Q["سؤال المستخدم مع orgId من الجلسة"] --> GW["واجهة Beacon API"]
-  GW --> EMB["تضمين السؤال"]
-  EMB --> VS[("pgvector: WHERE org_id = مؤسسة الجلسة")]
-  VS --> CTX["أفضل k أجزاء من هذه المؤسسة فقط"]
-  CTX --> LLM["بوابة الذكاء الاصطناعي إلى النموذج"]
-  GW -->|"الأدوات تعمل بصلاحيات المستخدم"| TOOLS["استدعاءات الأدوات: getIncident، listMonitors"]
+  Q["سؤال المستخدم مع orgId من الجلسة<br/>(User question plus session orgId)"] --> GW["واجهة Beacon API<br/>(Beacon API)"]
+  GW --> EMB["تضمين السؤال<br/>(Embed question)"]
+  EMB --> VS[("pgvector: WHERE org_id = مؤسسة الجلسة<br/>(pgvector: WHERE org_id = session org)")]
+  VS --> CTX["أفضل k أجزاء من هذه المؤسسة فقط<br/>(Top-k chunks from THIS org only)"]
+  CTX --> LLM["بوابة الذكاء الاصطناعي إلى النموذج<br/>(AI gateway to model)"]
+  GW -->|"الأدوات تعمل بصلاحيات المستخدم (tools run with user permissions)"| TOOLS["استدعاءات الأدوات: getIncident، listMonitors<br/>(Tool calls: getIncident, listMonitors)"]
   TOOLS --> LLM
-  LLM --> S["إجابة مبثوثة مع الاستشهادات"]
-  LLM --> M["قياس الرموز لكل مؤسسة"]
+  LLM --> S["إجابة مبثوثة مع الاستشهادات<br/>(Streamed answer with citations)"]
+  LLM --> M["قياس الرموز لكل مؤسسة<br/>(Meter tokens per org)"]
 ```
 
 خطر **التسرب بين المستأجرين (cross-tenant leakage)** هو العنوان الرئيسي هنا. البحث المتجهي (vector search) دون تصفية (filtering) يعيد أقرب الأجزاء (nearest chunks) *على مستوى النظام كله*، وقد تكون لعميل (customer) آخر. هذه فئة الخطأ نفسها التي يمثلها غياب `WHERE org_id` (2.4)، لكنها أصعب في الاكتشاف لأن النتائج "تبدو ذات صلة". الدفاعات:
@@ -382,7 +382,7 @@ flowchart RL
 
 **إن درست مستودعًا واحدًا فقط (If you only study one):** ادرس **LiteLLM**. أكثر من أي ميزة (feature) منفردة، يُظهر ما يعنيه "مكوّن بوابة الذكاء الاصطناعي (the AI gateway component)" عمليًا: تجريد المزودين (provider abstraction)، ومفاتيح افتراضية (virtual keys) لكل فريق، وميزانيات (budgets)، وبدائل (fallbacks)، وتخزين مؤقت (caching)، وتسجيل للإنفاق (spend logging)، كلها في مكان واحد. يحتاج Beacon إلى كل واحدة منها، سواء شغّلت LiteLLM أو بنيت نسخة خفيفة بنفسك.
 
-**اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?)؟**
+**اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟**
 
 - **اشترِ (Buy)** النماذج (Anthropic أو OpenAI أو Google، أو عبر منصات سحابية (cloud platforms) مثل AWS Bedrock وGoogle Vertex AI لاحتياجات مكان إقامة البيانات (data residency))، واشترِ في البداية المراقبة المستضافة (Langfuse Cloud، Helicone، LangSmith). البوابات المُدارة (Cloudflare AI Gateway، Vercel AI Gateway، OpenRouter) بداية سريعة.
 - **استضف بنفسك (Self-host)** LiteLLM وLangfuse عندما يجب أن تبقى الموجّهات (prompts) التي تحتوي على بيانات العملاء (customer data) داخل بنيتك التحتية، أو عندما تحتاج إلى ميزانيات (budgets) لكل مستأجر (per-tenant) تتحكم بها. استضف النماذج مفتوحة الأوزان (open-weight models) بنفسك فقط عندما يفرض الامتثال (compliance) أو اقتصاديات الوحدة (unit economics) ذلك. تشغيل وحدات GPU (GPU operations) وظيفة قائمة بذاتها.

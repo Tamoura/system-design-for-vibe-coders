@@ -179,9 +179,9 @@ if (CHECK) {
 
 /* ------------------------------------------------------------------- parse */
 
-const MODULE_RE = /^# (?:Module|الوحدة) (\d+) — (.+)$/m;
+const MODULE_RE = /^# (?:Module|الوحدة)(?: \([^)]*\))? (\d+)(?: \([^)]*\))? — (.+)$/m;
 const LESSON_RE = /^# (\d+\.\d+) — (.+)$/;
-const LEVEL_RE = /^\*(?:Level|المستوى):\s*(🟢|🟡|🔴)\s*(Beginner|Intermediate|Advanced|مبتدئ|متوسط|متقدم)\*(.*)$/;
+const LEVEL_RE = /^\*(?:Level|المستوى)(?: \([^)]*\))?:\s*(🟢|🟡|🔴)\s*(Beginner|Intermediate|Advanced|مبتدئ|متوسط|متقدم)(?: \([^)]*\))?\*(.*)$/;
 const LEVEL_NORM = { 'مبتدئ': 'Beginner', 'متوسط': 'Intermediate', 'متقدم': 'Advanced' };
 
 function parseModule(file) {
@@ -205,7 +205,7 @@ function parseModule(file) {
         const lv = line.trim().match(LEVEL_RE);
         if (lv) {
           cur.level = LEVEL_NORM[lv[2]] || lv[2];
-          const pre = lv[3].match(/(?:Prerequisites?|المتطلبات):\s*([^*]+)\*/);
+          const pre = lv[3].match(/(?:Prerequisites?|المتطلبات)(?: \([^)]*\))?:\s*([^*]+)\*/);
           cur.prereq = pre ? pre[1].trim() : '';
           const bok = lv[3].match(/(?:BoK|مجال المعرفة)[^:]*:\s*([^*]+)\*/);
           cur.bok = bok ? bok[1].trim() : '';
@@ -414,7 +414,7 @@ function buildLang(lang) {
     const prereq = l.prereq ? ` · <span class="prereq">${t.before}: ${prereqLinks(l)}</span>` : '';
     return `<p class="crumb"><a href="#/map">${t.module} ${esc(l.mod.key)} — ${esc(l.mod.title)}</a></p>
 <h1><span class="num">${esc(l.num)}</span> ${esc(l.title)}</h1>
-<p class="meta"><span class="lvl lvl-${LEVEL_KEYS[l.level]}">${lvlLabel(l.level)}</span>${l.bok ? ` · <span class="bok">${t.bokWord} <bdi dir="ltr">${esc(l.bok)}</bdi></span>` : ''}${prereq}</p>
+<p class="meta"><span class="lvl lvl-${LEVEL_KEYS[l.level]}">${lvlLabel(l.level)}</span>${l.bok ? ` · <span class="bok">${t.bokWord} <bdi dir="${/[\u0600-\u06FF]/.test(l.bok) ? 'rtl' : 'ltr'}">${esc(l.bok)}</bdi></span>` : ''}${prereq}</p>
 ${l.html}`;
   }
 

@@ -59,15 +59,15 @@
 
 ```mermaid
 flowchart RL
-    A["حدث في التطبيق<br/>إنشاء دعوة"] --> Q["طابور المهام"]
-    Q --> W["عامل البريد"]
-    W --> T["عرض القالب<br/>React Email أو MJML"]
-    T --> S{"محظور؟"}
-    S -- "لا" --> P["مزوّد البريد<br/>SES، Postmark، Resend"]
-    S -- "نعم" --> X["تخطَّ وسجّل"]
-    P --> R["صندوق بريد المستلم"]
-    P --> H["ويب هوك المزوّد<br/>تم التسليم، ارتداد، شكوى"]
-    H --> L["قائمة الحظر<br/>وسجل البريد"]
+    A["حدث في التطبيق<br/>إنشاء دعوة<br/>(App event<br/>invite created)"] --> Q["طابور المهام<br/>(Job queue)"]
+    Q --> W["عامل البريد<br/>(Email worker)"]
+    W --> T["عرض القالب<br/>React Email أو MJML<br/>(Render template<br/>React Email or MJML)"]
+    T --> S{"محظور؟<br/>(Suppressed?)"}
+    S -- "لا (no)" --> P["مزوّد البريد<br/>SES، Postmark، Resend<br/>(Email provider<br/>SES, Postmark, Resend)"]
+    S -- "نعم (yes)" --> X["تخطَّ وسجّل<br/>(Skip and log)"]
+    P --> R["صندوق بريد المستلم<br/>(Recipient mailbox)"]
+    P --> H["ويب هوك المزوّد<br/>تم التسليم، ارتداد، شكوى<br/>(Provider webhook<br/>delivered, bounced, complained)"]
+    H --> L["قائمة الحظر<br/>وسجل البريد<br/>(Suppression list<br/>and email log)"]
     L --> S
 ```
 
@@ -304,18 +304,18 @@ export async function sendInvite(job: { to: string; orgName: string; url: string
 
 ```mermaid
 flowchart RL
-    E["حدث في النطاق<br/>incident.opened"] --> WF["سير العمل<br/>أي قالب وأي خطوات"]
-    WF --> RC["تحديد المستلمين<br/>المناوب، أعضاء المؤسسة، المشتركون"]
-    RC --> PR["تطبيق التفضيلات<br/>المستخدم، المؤسسة، الفئة"]
-    PR --> TH["منع التكرار، وتحديد المعدل، والتجميع"]
-    TH --> RT["موجّه القنوات"]
-    RT --> IN["صندوق الوارد داخل التطبيق"]
-    RT --> EM["البريد الإلكتروني"]
-    RT --> PU["الإشعارات الفورية<br/>APNs، FCM، Web Push"]
+    E["حدث في النطاق<br/>incident.opened<br/>(Domain event<br/>incident.opened)"] --> WF["سير العمل<br/>أي قالب وأي خطوات<br/>(Workflow<br/>which template, which steps)"]
+    WF --> RC["تحديد المستلمين<br/>المناوب، أعضاء المؤسسة، المشتركون<br/>(Resolve recipients<br/>on-call, org members, subscribers)"]
+    RC --> PR["تطبيق التفضيلات<br/>المستخدم، المؤسسة، الفئة<br/>(Apply preferences<br/>user, org, category)"]
+    PR --> TH["منع التكرار، وتحديد المعدل، والتجميع<br/>(Dedupe, throttle, digest)"]
+    TH --> RT["موجّه القنوات<br/>(Channel router)"]
+    RT --> IN["صندوق الوارد داخل التطبيق<br/>(In-app inbox)"]
+    RT --> EM["البريد الإلكتروني<br/>(Email)"]
+    RT --> PU["الإشعارات الفورية<br/>APNs، FCM، Web Push<br/>(Push<br/>APNs, FCM, Web Push)"]
     RT --> SM["SMS"]
-    RT --> SL["Slack أو Teams"]
-    RT --> WH["ويب هوك صادر"]
-    IN --> LOG["سجل التسليم"]
+    RT --> SL["Slack أو Teams<br/>(Slack or Teams)"]
+    RT --> WH["ويب هوك صادر<br/>(Outbound webhook)"]
+    IN --> LOG["سجل التسليم<br/>(Delivery log)"]
     EM --> LOG
     SM --> LOG
 ```
@@ -335,9 +335,9 @@ flowchart RL
 
 ```mermaid
 erDiagram
-    USER ||--o{ NOTIFICATION : "يستقبل"
-    USER ||--o{ NOTIFICATION_PREFERENCE : "يضبط"
-    NOTIFICATION ||--o{ DELIVERY : "يُرسَل عبر"
+    USER ||--o{ NOTIFICATION : "يستقبل (receives)"
+    USER ||--o{ NOTIFICATION_PREFERENCE : "يضبط (sets)"
+    NOTIFICATION ||--o{ DELIVERY : "يُرسَل عبر (sent via)"
     NOTIFICATION {
         uuid id
         uuid userId
@@ -411,19 +411,19 @@ export async function notify(evt: { category: "incident.opened"; orgId: string; 
 
 ```mermaid
 sequenceDiagram
-    participant B as المناوب الاحتياطي
-    participant A as المناوب الأساسي
-    participant N as المُبلِّغ
-    participant I as الحادثة
+    participant B as المناوب الاحتياطي (Secondary on-call)
+    participant A as المناوب الأساسي (Primary on-call)
+    participant N as المُبلِّغ (Notifier)
+    participant I as الحادثة (Incident)
     I->>N: incident.opened
-    N->>A: إشعار فوري وSlack
-    Note over N: انتظار 5 دقائق للإقرار
+    N->>A: إشعار فوري وSlack (Push and Slack)
+    Note over N: انتظار 5 دقائق للإقرار (wait 5 minutes for ack)
     N->>A: SMS
-    Note over N: انتظار 10 دقائق للإقرار
-    N->>B: SMS ومكالمة هاتفية
-    B->>I: إقرار
+    Note over N: انتظار 10 دقائق للإقرار (wait 10 minutes for ack)
+    N->>B: SMS ومكالمة هاتفية (SMS and phone call)
+    B->>I: إقرار (Acknowledge)
     I->>N: incident.acknowledged
-    N->>A: إلغاء الخطوات المعلّقة
+    N->>A: إلغاء الخطوات المعلّقة (Cancel pending steps)
 ```
 
 كل خطوة مهمة مؤجلة (delayed job) تبدأ بفحص: "هل تم الإقرار (acknowledgement)؟". ويجب أن *يلغي* الإقرار الخطوات المعلّقة (pending steps)، وهذا عمل مناسب لمحرك سير عمل متين (Durable Workflow Engine) (5.4)، أو على الأقل لمهام مؤجلة (delayed jobs) بمعرّفات ثابتة (stable IDs) يمكنك حذفها.
@@ -626,16 +626,16 @@ sequenceDiagram
 
 ```mermaid
 flowchart RL
-    CW["عامل الفحص"] -- "نشر org:acme" --> R[("Redis pub/sub")]
-    API["خادم API<br/>تحديث حادثة"] -- "نشر org:acme" --> R
-    R --> S1["عقدة فورية 1"]
-    R --> S2["عقدة فورية 2"]
-    R --> S3["عقدة فورية 3"]
-    S1 --> C1["لوحة Alice"]
-    S1 --> C2["تلفاز المكتب"]
-    S2 --> C3["لوحة Bob"]
-    S3 --> C4["زوار صفحة الحالة"]
-    LB["موازن الحمل"] --> S1
+    CW["عامل الفحص<br/>(Check worker)"] -- "نشر org:acme (publish org:acme)" --> R[("Redis pub/sub")]
+    API["خادم API<br/>تحديث حادثة<br/>(API server<br/>incident update)"] -- "نشر org:acme (publish org:acme)" --> R
+    R --> S1["عقدة فورية 1<br/>(Realtime node 1)"]
+    R --> S2["عقدة فورية 2<br/>(Realtime node 2)"]
+    R --> S3["عقدة فورية 3<br/>(Realtime node 3)"]
+    S1 --> C1["لوحة Alice<br/>(Alice dashboard)"]
+    S1 --> C2["تلفاز المكتب<br/>(Office TV)"]
+    S2 --> C3["لوحة Bob<br/>(Bob dashboard)"]
+    S3 --> C4["زوار صفحة الحالة<br/>(Status page viewers)"]
+    LB["موازن الحمل<br/>(Load balancer)"] --> S1
     LB --> S2
     LB --> S3
 ```
@@ -701,20 +701,20 @@ export async function GET(req: Request, { params }: { params: { orgId: string } 
 ```mermaid
 sequenceDiagram
     participant DB as Postgres
-    participant B as محرر Bob
-    participant H as خادم Hocuspocus
-    participant A as محرر Alice
-    A->>H: اتصال برمز للحادثة 42
-    H->>H: يفحص onAuthenticate عضوية المؤسسة
-    H->>DB: تحميل مستند Yjs المخزّن
-    H-->>A: مزامنة حالة المستند
-    B->>H: اتصال ومزامنة
-    A->>H: تحديث بإدراج نص
-    B->>H: تحديث بحذف نص في الوقت نفسه
-    H-->>B: تمرير تحديث Alice
-    H-->>A: تمرير تحديث Bob
-    Note over A,B: يندمج الاثنان إلى النص نفسه
-    H->>DB: حفظ مؤجل للحالة المدموجة
+    participant B as محرر Bob (Bob editor)
+    participant H as خادم Hocuspocus (Hocuspocus server)
+    participant A as محرر Alice (Alice editor)
+    A->>H: اتصال برمز للحادثة 42 (Connect with token for incident 42)
+    H->>H: يفحص onAuthenticate عضوية المؤسسة (onAuthenticate checks org membership)
+    H->>DB: تحميل مستند Yjs المخزّن (Load stored Yjs document)
+    H-->>A: مزامنة حالة المستند (Sync document state)
+    B->>H: اتصال ومزامنة (Connect and sync)
+    A->>H: تحديث بإدراج نص (Update insert text)
+    B->>H: تحديث بحذف نص في الوقت نفسه (Update delete text concurrently)
+    H-->>B: تمرير تحديث Alice (Forward Alice update)
+    H-->>A: تمرير تحديث Bob (Forward Bob update)
+    Note over A,B: يندمج الاثنان إلى النص نفسه (Both merge to the same text)
+    H->>DB: حفظ مؤجل للحالة المدموجة (Debounced store of merged state)
 ```
 
 ليس كل شيء تعاوني (collaborative) يحتاج إلى CRDT. وصفت Figma نظامها متعدد المستخدمين (multiplayer) بأنه نظام يكون فيه الخادم هو المرجع (server-authoritative)، مع "الكاتب الأخير يفوز (last-writer-wins)" لكل خاصية، وهو *مستوحى* من CRDTs لكنه أبسط لأن هناك خادمًا مركزيًا (central server). وتعامل مزامنة (sync) tldraw (`packages/sync-core` في `tldraw/tldraw`) الغرفةَ (room) على الخادم (server) أيضًا بوصفها المصدر المرجعي (source of truth). إذا كان لديك خادم دائمًا، فهذا التصميم أبسط في الغالب.

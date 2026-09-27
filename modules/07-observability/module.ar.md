@@ -44,11 +44,11 @@
 
 ```mermaid
 flowchart TD
-    Q["السؤال الذي يهمك<br/>'هل يعود الناس<br/>ويحصلون على قيمة؟'"] --> D{"كيف عرّفته"}
-    D -->|"الحدث المريح<br/>(عدّ الدخول)"| L["يقيس: دفاتر النظام.<br/>المستخدمون اليوميون المخلصون = 0.<br/>التسجيلات لمرة = عائدون."]
-    D -->|"واقع المستخدم<br/>(الأيام النشطة المتمايزة)"| R["يقيس: الاستعمال المتكرر الحقيقي.<br/>الرقم الذي يمكنك التصرف بناءً عليه."]
-    L --> LIE["📉 لوحة تكذب"]
-    R --> TRUTH["📈 لوحة تثق بها"]
+    Q["السؤال الذي يهمك<br/>'هل يعود الناس<br/>ويحصلون على قيمة؟'<br/>(The question you care about<br/>'Are people coming back<br/>and getting value?')"] --> D{"كيف عرّفته<br/>(How you defined it)"}
+    D -->|"الحدث المريح<br/>(عدّ الدخول) (Convenient event<br/>(login count))"| L["يقيس: دفاتر النظام.<br/>المستخدمون اليوميون المخلصون = 0.<br/>التسجيلات لمرة = عائدون.<br/>(Measures: the SYSTEM's<br/>bookkeeping.<br/>Loyal daily users = 0.<br/>One-time signups = returns.)"]
+    D -->|"واقع المستخدم<br/>(الأيام النشطة المتمايزة) (User's reality<br/>(distinct active days))"| R["يقيس: الاستعمال المتكرر الحقيقي.<br/>الرقم الذي يمكنك التصرف بناءً عليه.<br/>(Measures: actual repeated use.<br/>The number you can act on.)"]
+    L --> LIE["📉 لوحة تكذب<br/>(📉 A dashboard that lies)"]
+    R --> TRUTH["📈 لوحة تثق بها<br/>(📈 A dashboard you can trust)"]
 ```
 
 ### 2. الأنظمة تُطلق أحداثًا مريحة (Systems emit convenient events)؛ والمستخدمون يعيشون واقعًا مختلفًا (a different reality)
@@ -190,15 +190,15 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    subgraph tracker["متتبع أخطائك"]
-        N1["'نجاح' مسجّل كـError ×1200"]
-        N2["احتياط عولج مسبقًا ×800"]
-        R["🔴 العطل الحقيقي ×3<br/>(يفقد مستخدمين، غير مرئي)"]
+    subgraph tracker["متتبع أخطائك (Your error tracker)"]
+        N1["'نجاح' مسجّل كـError ×1200<br/>('Success' logged as Error ×1,200)"]
+        N2["احتياط عولج مسبقًا ×800<br/>(Already-handled fallback ×800)"]
+        R["🔴 العطل الحقيقي ×3<br/>(يفقد مستخدمين، غير مرئي)<br/>(🔴 The real crash ×3<br/>(loses users, invisible))"]
     end
-    N1 --> FLOOR["ترتفع أرضية الضوضاء"]
+    N1 --> FLOOR["ترتفع أرضية الضوضاء<br/>(The noise floor rises)"]
     N2 --> FLOOR
-    FLOOR --> DEAF["الإشارة الحقيقية تحت الأرضية<br/>— لا أحد يسمعها"]
-    R -.مدفون.-> DEAF
+    FLOOR --> DEAF["الإشارة الحقيقية تحت الأرضية<br/>— لا أحد يسمعها<br/>(Real signal is below the floor<br/>— nobody hears it)"]
+    R -.->|"مدفون (buried)"| DEAF
 ```
 
 كل رسالة غير قابلة للتصرف (non-actionable message) تحتملها ترفع الأرضية (floor). والإشارة التي لا تميّزها عن الضوضاء (noise)
@@ -311,14 +311,14 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    U["مستخدم يبحث"] --> R{"نتائج؟"}
-    R -->|"بعضها"| OK["وجدوه.<br/>إشارة ضعيفة — تجاوز."]
-    R -->|"صفر"| Z["🔎 استعلام بلا نتائج — سجّله"]
-    Z --> A{"لماذا صفر؟"}
-    A -->|"استعلام صحيح كان يجب أن يطابق"| BUG["علةٌ لم تبلّغ عنها<br/>(تطبيع، تحمّل الأخطاء المطبعية)"]
-    A -->|"الشيء غير موجود فعلًا"| ROAD["بند خارطة طريق<br/>(ما يريد المستخدمون إضافته)"]
-    BUG --> FIX["أصلح البحث"]
-    ROAD --> BUILD["رتّب أولوية المحتوى/الميزات"]
+    U["مستخدم يبحث<br/>(User searches)"] --> R{"نتائج؟<br/>(Results?)"}
+    R -->|"بعضها (Some)"| OK["وجدوه.<br/>إشارة ضعيفة — تجاوز.<br/>(They found it.<br/>Low signal — move on.)"]
+    R -->|"صفر (Zero)"| Z["🔎 استعلام بلا نتائج — سجّله<br/>(🔎 Zero-result query — log it)"]
+    Z --> A{"لماذا صفر؟<br/>(Why zero?)"}
+    A -->|"استعلام صحيح كان يجب أن يطابق (Valid query, should have matched)"| BUG["علةٌ لم تبلّغ عنها<br/>(تطبيع، تحمّل الأخطاء المطبعية)<br/>(A BUG you never filed<br/>(normalization, typo tolerance))"]
+    A -->|"الشيء غير موجود فعلًا (Thing genuinely doesn't exist)"| ROAD["بند خارطة طريق<br/>(ما يريد المستخدمون إضافته)<br/>(A ROADMAP item<br/>(what users want you to add))"]
+    BUG --> FIX["أصلح البحث<br/>(Fix search)"]
+    ROAD --> BUILD["رتّب أولوية المحتوى/الميزات<br/>(Prioritise content/features)"]
 ```
 
 ### 2. معدل النتائج الصفرية (Zero-result rate) مقياس صحة من الدرجة الأولى (a first-class health metric)
@@ -451,15 +451,15 @@ flowchart TD
 ```mermaid
 sequenceDiagram
     autonumber
-    participant R as Redis (مفتاح الحجز)
-    participant S2 as العامل ب (إطلاق مزدوج)
-    participant S1 as العامل أ
+    participant R as Redis (مفتاح الحجز) (Redis (claim key))
+    participant S2 as العامل ب (إطلاق مزدوج) (Worker B (double-fire))
+    participant S1 as العامل أ (Worker A)
     S1->>R: SET job:push:2026-07-20 NX EX 3600
-    R-->>S1: OK (أنت تملكها)
+    R-->>S1: OK (أنت تملكها) (OK (you own it))
     S2->>R: SET job:push:2026-07-20 NX EX 3600
-    R-->>S2: nil (محجوزة سلفًا — انسحب)
-    S1->>S1: أرسل الدفعة مرة واحدة
-    Note over S2: لا يفعل شيئًا — لا تكرار
+    R-->>S2: nil (محجوزة سلفًا — انسحب) (nil (already claimed — stand down))
+    S1->>S1: أرسل الدفعة مرة واحدة (send batch once)
+    Note over S2: لا يفعل شيئًا — لا تكرار (does nothing — no duplicate)
 ```
 
 ### 2. سجل تدقيق (audit trail) — كي يكون لـ«هل عملت؟» جواب
@@ -578,12 +578,12 @@ Google Analytics 34,000. وقال جدول أحداث الطرف الأول (fir
 
 ```mermaid
 flowchart TD
-    V["زيارة لـRelay"] --> E["الطبقة 1 — الحافة<br/>Cloudflare Web Analytics"]
-    V --> G["الطبقة 2 — السلوكية<br/>Google Analytics 4"]
-    V --> F["الطبقة 3 — الطرف الأول<br/>أحداث في قاعدة بياناتك"]
-    E --> EQ["س: كم حركة، من أين،<br/>كم كُوشح، كم روبوتًا؟<br/>لا JS، لا لافتة موافقة."]
-    G --> GQ["س: ماذا يفعل المستخدمون —<br/>قمعات، تسرّب، أفواج؟<br/>JS + موافقة؛ مُعيَّن عند الحجم."]
-    F --> FQ["س: أي شيء مربوط ببيانات نطاقنا.<br/>الطبقة الوحيدة التي تستعلمها<br/>مقابل جداولك."]
+    V["زيارة لـRelay<br/>(A visit to Relay)"] --> E["الطبقة 1 — الحافة<br/>Cloudflare Web Analytics<br/>(Tier 1 — Edge<br/>Cloudflare Web Analytics)"]
+    V --> G["الطبقة 2 — السلوكية<br/>Google Analytics 4<br/>(Tier 2 — Behavioral<br/>Google Analytics 4)"]
+    V --> F["الطبقة 3 — الطرف الأول<br/>أحداث في قاعدة بياناتك<br/>(Tier 3 — First-party<br/>events in YOUR database)"]
+    E --> EQ["س: كم حركة، من أين،<br/>كم كُوشح، كم روبوتًا؟<br/>لا JS، لا لافتة موافقة.<br/>(Q: how much traffic, from where,<br/>how much cached, how many bots?<br/>No JS, no consent banner.)"]
+    G --> GQ["س: ماذا يفعل المستخدمون —<br/>قمعات، تسرّب، أفواج؟<br/>JS + موافقة؛ مُعيَّن عند الحجم.<br/>(Q: what do users DO —<br/>funnels, drop-off, cohorts?<br/>JS + consent#59; sampled at scale.)"]
+    F --> FQ["س: أي شيء مربوط ببيانات نطاقنا.<br/>الطبقة الوحيدة التي تستعلمها<br/>مقابل جداولك.<br/>(Q: anything joined to OUR domain data.<br/>The only tier you can query<br/>against your own tables.)"]
 ```
 
 | الطبقة (tier) | الأداة (اليوم) (Tool, today) | تجيب | البقع العمياء (blind spots) |
@@ -710,16 +710,16 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    subgraph app["نظامك"]
-        A["Relay: خادم + ويب + موبايل"]
+    subgraph app["نظامك (Your system)"]
+        A["Relay: خادم + ويب + موبايل<br/>(Relay: server + web + mobile)"]
     end
-    A -->|"الاستثناءات"| S["1 · تتبع الأخطاء (Sentry)<br/>ما انكسر، ولمن، وأي إصدار"]
-    A -->|"المقاييس"| M["3 · المقاييس واللوحات (Grafana)<br/>زمن الاستجابة · الحركة · الأخطاء · التشبّع"]
-    EXT["2 · فحص تشغيل/اصطناعي<br/>(يعمل على سحابة غيرك)"] -->|"أهو شغّال من الخارج؟"| A
-    S --> AL["4 · التنبيه<br/>وجّه لهاتف؛ أعراض لا أسباب"]
+    A -->|"الاستثناءات (exceptions)"| S["1 · تتبع الأخطاء (Sentry)<br/>ما انكسر، ولمن، وأي إصدار<br/>(1 · Error tracking (Sentry)<br/>WHAT broke, for whom, which release)"]
+    A -->|"المقاييس (metrics)"| M["3 · المقاييس واللوحات (Grafana)<br/>زمن الاستجابة · الحركة · الأخطاء · التشبّع<br/>(3 · Metrics & dashboards (Grafana)<br/>latency · traffic · errors · saturation)"]
+    EXT["2 · فحص تشغيل/اصطناعي<br/>(يعمل على سحابة غيرك)<br/>(2 · Uptime / synthetic check<br/>(runs on someone else's cloud))"] -->|"أهو شغّال من الخارج؟ (is it up from OUTSIDE?)"| A
+    S --> AL["4 · التنبيه<br/>وجّه لهاتف؛ أعراض لا أسباب<br/>(4 · Alerting<br/>route to a phone#59; symptoms, not causes)"]
     M --> AL
     EXT --> AL
-    AL --> PH["📱 إنسان"]
+    AL --> PH["📱 إنسان<br/>(📱 A human)"]
     style EXT fill:#1b3a4b,color:#fff
 ```
 

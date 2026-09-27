@@ -52,19 +52,19 @@
 
 ```mermaid
 flowchart TD
-    U["العملاء وفرقهم"] --> EDGE["CDN وTLS والنطاقات المخصصة 6.1"]
-    SUB["زوار صفحة الحالة"] --> EDGE
-    DEV["المطورون الذين يستخدمون الواجهة البرمجية"] --> GW["بوابة API والمفاتيح وتحديد المعدل 5.2"]
-    EDGE --> APP["تطبيق الويب وهيكل التطبيق 6.1"]
-    GW --> CORE["نواة Beacon: المراقِبات والحوادث وصفحات الحالة"]
-    APP --> AUTH["المصادقة والمؤسسات والأدوار وSSO من 1.1 إلى 1.4"]
+    U["العملاء وفرقهم<br/>(Customers and their teams)"] --> EDGE["CDN وTLS والنطاقات المخصصة 6.1<br/>(CDN, TLS and custom domains 6.1)"]
+    SUB["زوار صفحة الحالة<br/>(Status-page visitors)"] --> EDGE
+    DEV["المطورون الذين يستخدمون الواجهة البرمجية<br/>(Developers using the API)"] --> GW["بوابة API والمفاتيح وتحديد المعدل 5.2<br/>(API gateway, keys, rate limits 5.2)"]
+    EDGE --> APP["تطبيق الويب وهيكل التطبيق 6.1<br/>(Web app and app shell 6.1)"]
+    GW --> CORE["نواة Beacon: المراقِبات والحوادث وصفحات الحالة<br/>(Beacon core: monitors, incidents, status pages)"]
+    APP --> AUTH["المصادقة والمؤسسات والأدوار وSSO من 1.1 إلى 1.4<br/>(Auth, orgs, roles, SSO 1.1 to 1.4)"]
     APP --> CORE
-    CORE --> DB[("Postgres مقيّدة بالمستأجر 2.1 و2.4")]
-    CORE --> Q["الطوابير والمجدول وسير العمل 5.1 و5.4"]
-    Q --> W["عمّال الفحص والمُبلِّغون 4.1 و4.2"]
-    W --> OUT["الويب هوك وSlack 5.3"]
-    CORE --> BILL["الفوترة والاستحقاقات والقياس من 3.1 إلى 3.3"]
-    CORE --> OPS["سجل التدقيق والمراقبة ولوحة الإدارة من 7.1 إلى 7.3"]
+    CORE --> DB[("Postgres مقيّدة بالمستأجر 2.1 و2.4<br/>(Postgres, tenant-scoped 2.1 and 2.4)")]
+    CORE --> Q["الطوابير والمجدول وسير العمل 5.1 و5.4<br/>(Queues, scheduler, workflows 5.1 and 5.4)"]
+    Q --> W["عمّال الفحص والمُبلِّغون 4.1 و4.2<br/>(Check workers and notifiers 4.1 and 4.2)"]
+    W --> OUT["الويب هوك وSlack 5.3<br/>(Webhooks and Slack 5.3)"]
+    CORE --> BILL["الفوترة والاستحقاقات والقياس من 3.1 إلى 3.3<br/>(Billing, entitlements, metering 3.1 to 3.3)"]
+    CORE --> OPS["سجل التدقيق والمراقبة ولوحة الإدارة من 7.1 إلى 7.3<br/>(Audit log, observability, admin 7.1 to 7.3)"]
 ```
 
 اقرأه على أنه ثلاث حلقات متحدة المركز (concentric):
@@ -96,17 +96,17 @@ flowchart TD
 
 ```mermaid
 sequenceDiagram
-    participant A as التدقيق والتحليلات
-    participant H as مرسل الويب هوك
-    participant N as المُبلِّغ
-    participant Q as الطابور
-    participant DB as Postgres وصندوق الصادر
-    participant Core as نواة Beacon
-    Core->>DB: إدراج الحادثة وحدث الصادر في معاملة واحدة
-    DB-->>Q: المُرحِّل ينشر incident.opened
-    Q->>N: إبلاغ الفريق المناوب حسب تفضيلاته
-    Q->>H: تسليم ويب هوك موقّع إلى نقاط نهاية العميل
-    Q->>A: إضافة مدخل تدقيق وتتبّع الحدث
+    participant A as التدقيق والتحليلات (Audit and analytics)
+    participant H as مرسل الويب هوك (Webhook sender)
+    participant N as المُبلِّغ (Notifier)
+    participant Q as الطابور (Queue)
+    participant DB as Postgres وصندوق الصادر (Postgres and outbox)
+    participant Core as نواة Beacon (Beacon core)
+    Core->>DB: إدراج الحادثة وحدث الصادر في معاملة واحدة (insert incident and outbox event in one transaction)
+    DB-->>Q: المُرحِّل ينشر incident.opened (relay publishes incident.opened)
+    Q->>N: إبلاغ الفريق المناوب حسب تفضيلاته (notify on-call team by preference)
+    Q->>H: تسليم ويب هوك موقّع إلى نقاط نهاية العميل (deliver signed webhook to customer endpoints)
+    Q->>A: إضافة مدخل تدقيق وتتبّع الحدث (append audit entry and track event)
 ```
 
 إضافة ردّ فعل (reaction) جديد، مثل تكامل (integration) مع PagerDuty أو ملخص بالذكاء الاصطناعي (AI summary) أو عدّاد (usage meter)
@@ -176,7 +176,7 @@ sequenceDiagram
 مراقِبات (monitors)، وعمّال فحص (checkers)، وحوادث (incidents)، وصفحات حالة (status pages)، وإشعارات (notifications)، ومساحات عمل (workspaces)، وخطط (plans). ضع تصميمك
 الختامي بجانبه واشرح كل فرق: أين اخترت شيئًا مختلفًا ولماذا، وأين كان اختياره أفضل.
 
-**اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?)؟**
+**اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟**
 
 - **اشترِ (Buy)** كل مكوّن (component) لا يميّز منتجك (your differentiator) ما دمت صغيرًا، لأن أندر مواردك هو انتباه
   المهندسين (engineering attention)، والخدمات المُدارة (managed services) تعيده إليك مقابل المال.
@@ -331,7 +331,7 @@ Markdown. يجب أن يذكر كل صندوق (every box) الدرس الذي �
 Graphile Worker) وStripe Checkout مع Portal، لأن انتباه المهندسين (engineering attention) هو أندر الموارد
 ويجب أن يذهب إلى النطاق الأساسي (core domain). سير العمل المتين (durable workflows) وخدمة القياس (metering service) ينتميان إلى مراحل
 لاحقة، ويجب أن يذكر سجل القرار (ADR) الإشارة (signal) التي تستدعي الانتقال. راجع جدول البناء (build) أو
-الشراء (buy) في قسم 🟡 التعمق أكثر (Going deeper) وفقرة "اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?)؟".
+الشراء (buy) في قسم 🟡 التعمق أكثر (Going deeper) وفقرة "اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟".
 
 </details>
 

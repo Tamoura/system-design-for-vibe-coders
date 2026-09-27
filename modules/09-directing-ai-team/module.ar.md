@@ -41,12 +41,12 @@
 
 ```mermaid
 flowchart RL
-    S["المواصفة<br/>ماذا ولماذا،<br/>معايير القبول"] --> P["الخطة<br/>الملفات، المفاصل المَمسوسة،<br/>الثوابت المعرّضة للخطر"]
-    P --> T["المهام<br/>مرتّبة، صغيرة،<br/>قابلة للفحص كلٌّ وحده"]
-    T --> I["التنفيذ<br/>مهمة واحدة"]
-    I --> V["التحقق<br/>مقابل معايير القبول"]
-    S -.يوافق الإنسان.-> P
-    P -.يوافق الإنسان.-> T
+    S["المواصفة<br/>ماذا ولماذا،<br/>معايير القبول<br/>(Spec<br/>what & why,<br/>acceptance criteria)"] --> P["الخطة<br/>الملفات، المفاصل المَمسوسة،<br/>الثوابت المعرّضة للخطر<br/>(Plan<br/>files, seams touched,<br/>invariants at risk)"]
+    P --> T["المهام<br/>مرتّبة، صغيرة،<br/>قابلة للفحص كلٌّ وحده<br/>(Tasks<br/>ordered, small,<br/>independently checkable)"]
+    T --> I["التنفيذ<br/>مهمة واحدة<br/>(Implement<br/>one task)"]
+    I --> V["التحقق<br/>مقابل معايير القبول<br/>(Verify<br/>against acceptance)"]
+    S -.->|"يوافق الإنسان (human approves)"| P
+    P -.->|"يوافق الإنسان (human approves)"| T
 ```
 
 كل سهم عليه «يوافق الإنسان» نقطة تفتيش (checkpoint) تملكها أنت. تغيير المواصفة (spec) رخيص، وتغيير الكود (code) ليس كذلك. تُجري هندستك (architecture) في المواصفة، حيث تكلّف دقائق، لا في طلب الدمج (pull request)، حيث تكلّف إعادة كتابة (rewrite).
@@ -130,10 +130,10 @@ flowchart RL
 
 ```mermaid
 flowchart TD
-    G["CLAUDE.md العام<br/>(أنت، كل المشاريع)<br/>أسلوب عملك، دائمًا"] --> P
-    P["CLAUDE.md للمشروع<br/>(هذا المستودع، كل جلسة)<br/>القواعد الثابتة، التقنية، الثوابت"] --> Task
-    Task["المواصفة<br/>(هذه المهمة فقط)<br/>ما يُبنى الآن"] --> Agent["سياق عمل الوكيل"]
-    M["ملفات الذاكرة<br/>(المزالق المكتسبة بشقّ الأنفس)<br/>تُحمَّل عند الحاجة"] --> Agent
+    G["CLAUDE.md العام<br/>(أنت، كل المشاريع)<br/>أسلوب عملك، دائمًا<br/>(Global CLAUDE.md<br/>(you, all projects)<br/>your working style, always-on)"] --> P
+    P["CLAUDE.md للمشروع<br/>(هذا المستودع، كل جلسة)<br/>القواعد الثابتة، التقنية، الثوابت<br/>(Project CLAUDE.md<br/>(this repo, every session)<br/>stable rules, stack, invariants)"] --> Task
+    Task["المواصفة<br/>(هذه المهمة فقط)<br/>ما يُبنى الآن<br/>(The spec<br/>(this task only)<br/>what to build now)"] --> Agent["سياق عمل الوكيل<br/>(Agent's working context)"]
+    M["ملفات الذاكرة<br/>(المزالق المكتسبة بشقّ الأنفس)<br/>تُحمَّل عند الحاجة<br/>(Memory files<br/>(hard-won gotchas)<br/>loaded when relevant)"] --> Agent
 ```
 
 | الحقيقة (Fact) | أين تعيش (Where it lives) | لماذا (Why) |
@@ -223,10 +223,10 @@ flowchart TD
 
 ```mermaid
 flowchart RL
-    F1["أشِر إليه مرة<br/>(مراجعة عادية)"] --> F2["أشِر إلى الشيء نفسه مرتين<br/>(نمط، لا حالة فردية)"]
-    F2 --> A["أتمِته<br/>قاعدة فحص / اختبار حارس انجراف / خُطّاف"]
-    A --> S["توقّف عن مراجعته<br/>الآلة تلتقطه الآن"]
-    S -.انتباهٌ محرَّر.-> N["راجِع للمسائل الجديدة"]
+    F1["أشِر إليه مرة<br/>(مراجعة عادية)<br/>(Flag it once<br/>(normal review))"] --> F2["أشِر إلى الشيء نفسه مرتين<br/>(نمط، لا حالة فردية)<br/>(Flag the SAME thing twice<br/>(a pattern, not a one-off))"]
+    F2 --> A["أتمِته<br/>قاعدة فحص / اختبار حارس انجراف / خُطّاف<br/>(Automate it<br/>lint rule / drift-guard test / hook)"]
+    A --> S["توقّف عن مراجعته<br/>الآلة تلتقطه الآن<br/>(Stop reviewing for it<br/>the machine catches it now)"]
+    S -.->|"انتباهٌ محرَّر (attention freed)"| N["راجِع للمسائل الجديدة<br/>(Review for NEW issues)"]
 ```
 
 الغاية من الخطوة الثالثة ليست توفير الكتابة فقط، بل أن الحاجز (guardrail) يلتقط الخطأ (catches the mistake) في طلب الدمج (PR) رقم 41 *و*400، في جلساتٍ (sessions) لن تراها، مقابل وكلاء (agents) لم يقرؤوا تعليقاتك القديمة. التعليق (comment) البشري يحمي طلب دمجٍ (pull request) واحدًا، والحاجز يحمي كل طلبٍ قادم، مجانًا، للأبد.
@@ -321,11 +321,11 @@ flowchart RL
 
 ```mermaid
 flowchart TD
-    A["الكود مكتوب"] --> B["الاختبارات تنجح"]
-    B --> C["دُمج إلى main"]
-    C --> D["نُشر إلى الإنتاج"]
-    D --> E["انتشر بعد كل كاش"]
-    E --> F["يعمل على الطبقة التي يلمسها المستخدم"]
+    A["الكود مكتوب<br/>(Code written)"] --> B["الاختبارات تنجح<br/>(Tests pass)"]
+    B --> C["دُمج إلى main<br/>(Merged to main)"]
+    C --> D["نُشر إلى الإنتاج<br/>(Deployed to prod)"]
+    D --> E["انتشر بعد كل كاش<br/>(Propagated past every cache)"]
+    E --> F["يعمل على الطبقة التي يلمسها المستخدم<br/>(Works on the surface the user touches)"]
     style F fill:#0a5,color:#fff
 ```
 
@@ -414,11 +414,11 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    C["تصحيح في المحادثة<br/>(يموت بنهاية الجلسة)"] -->|"قلته مرتين؟"| U["انقله لأعلى"]
-    U --> M["CLAUDE.md<br/>(يُقرأ كل جلسة)"]
-    U --> H["خُطّاف<br/>(يُفرَض آليًا)"]
-    U --> S["مهارة / أمر<br/>(سير عملٍ متكرر)"]
-    M -.->|"قاعدة قد يتخطاها<br/>الوكيل"| H
+    C["تصحيح في المحادثة<br/>(يموت بنهاية الجلسة)<br/>(Correction in chat<br/>(dies at session end))"] -->|"قلته مرتين؟ (said it twice?)"| U["انقله لأعلى<br/>(Move it up)"]
+    U --> M["CLAUDE.md<br/>(يُقرأ كل جلسة)<br/>(CLAUDE.md<br/>(read every session))"]
+    U --> H["خُطّاف<br/>(يُفرَض آليًا)<br/>(Hook<br/>(enforced mechanically))"]
+    U --> S["مهارة / أمر<br/>(سير عملٍ متكرر)<br/>(Skill / command<br/>(a repeatable workflow))"]
+    M -.->|"قاعدة قد يتخطاها<br/>الوكيل (a rule the agent<br/>could still skip)"| H
 ```
 
 ### 1. تسلسل CLAUDE.md وملفات الذاكرة (CLAUDE.md hierarchy and memory files)
@@ -511,23 +511,23 @@ flowchart TD
 
 ## 📐 المبدأ (The Principle)
 
-### 1. وكيلٌ واحد، أم فريق؟ (One agent, or a team?)
+### 1. وكيلٌ واحد، أم فريق؟ ⁦(One agent, or a team?)⁩
 
 لا تحتاج شركة. وكيلٌ (agent) واحد قدير بـCLAUDE.md جيّد يتولى أغلب العمل. تخصّص حين تختلف *النطاقات (scopes)* فعلًا — حين يريد «راجع هذا أمنيًا» و«ابنِ هذه الميزة (feature)» عقليتين (mindsets) مختلفتين، وأدواتٍ (tools) مختلفة، وتعريفَي إنجازٍ مختلفين. مراجعُ أمنٍ (security reviewer) يكتب الميزة أيضًا سيصحّح واجبه بنفسه.
 
 ```mermaid
 flowchart TD
-    H["الإنسان (المدير)<br/>يضع الاتجاه، يوافق عند نقاط التفتيش"] --> O["المنسّق<br/>يوجّه العمل، يفرض البوابات"]
-    O --> B["وكيل الخلفية"]
-    O --> F["وكيل الواجهة"]
-    O --> Q["وكيل ضمان الجودة"]
-    O --> R["وكيل المراجعة"]
-    B --> G1{"بوابة جودة<br/>اختبارات + مراجعة"}
+    H["الإنسان (المدير)<br/>يضع الاتجاه، يوافق عند نقاط التفتيش<br/>(Human (CEO)<br/>sets direction, approves at checkpoints)"] --> O["المنسّق<br/>يوجّه العمل، يفرض البوابات<br/>(Orchestrator<br/>routes work, enforces gates)"]
+    O --> B["وكيل الخلفية<br/>(Backend agent)"]
+    O --> F["وكيل الواجهة<br/>(Frontend agent)"]
+    O --> Q["وكيل ضمان الجودة<br/>(QA agent)"]
+    O --> R["وكيل المراجعة<br/>(Reviewer agent)"]
+    B --> G1{"بوابة جودة<br/>اختبارات + مراجعة<br/>(Quality gate<br/>tests + review)"}
     F --> G1
-    G1 -->|نجح| H
-    G1 -->|فشل| O
-    B -.غموض.-> H
-    F -.غموض.-> H
+    G1 -->|"نجح (pass)"| H
+    G1 -->|"فشل (fail)"| O
+    B -.->|"غموض (ambiguity)"| H
+    F -.->|"غموض (ambiguity)"| H
 ```
 
 لاحظ الخطوط المنقّطة: الغموض (ambiguity) يسافر دائمًا *لأعلى* إلى الإنسان، لا جانبًا (never sideways) بين الوكلاء (agents) كتخمين.
@@ -619,12 +619,12 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A["مراجعة لكل طلب دمج<br/>تلتقط عيوب التغيير<br/>قبل الدمج"]
-    B["مراجعة عدائية متعددة التمريرات<br/>بُعدٌ لكل تمريرة،<br/>كل نتيجة مُتحقَّق منها"]
-    C["تدقيق دوري للنظام كله<br/>انجراف، كودٌ ميت، توثيقٌ متناقض،<br/>خطرٌ نظامي لا يُظهره فرق"]
-    A -->|"لكل تغيير"| B
-    B -->|"للتغييرات عالية الخطر"| Done["دمج"]
-    C -->|"على جدول،<br/>المستودع كله"| Report["تقرير تدقيقٍ حيّ"]
+    A["مراجعة لكل طلب دمج<br/>تلتقط عيوب التغيير<br/>قبل الدمج<br/>(Per-PR review<br/>catches defects in a change<br/>BEFORE merge)"]
+    B["مراجعة عدائية متعددة التمريرات<br/>بُعدٌ لكل تمريرة،<br/>كل نتيجة مُتحقَّق منها<br/>(Adversarial multi-pass review<br/>one dimension per pass,<br/>every finding verified)"]
+    C["تدقيق دوري للنظام كله<br/>انجراف، كودٌ ميت، توثيقٌ متناقض،<br/>خطرٌ نظامي لا يُظهره فرق<br/>(Periodic whole-system audit<br/>drift, dead code, contradicted docs,<br/>systemic risk that no diff shows)"]
+    A -->|"لكل تغيير (per change)"| B
+    B -->|"للتغييرات عالية الخطر (high-risk changes)"| Done["دمج<br/>(merge)"]
+    C -->|"على جدول،<br/>المستودع كله (on a schedule,<br/>whole repo)"| Report["تقرير تدقيقٍ حيّ<br/>(living audit report)"]
 ```
 
 ### 1. مراجعة لكل طلب دمج (Per-PR review): التقط العيوب (defects) قبل الدمج
@@ -713,44 +713,44 @@ flowchart TD
 
 تبدو الحوكمة (Governance) كلمةً تخص البنوك ومجالس الإدارات. انزع عنها البدلات الرسمية تجدها خمسة أسئلة عن أي شيء تشحنه — وعلى مستواك (your scale) كمبرمجٍ يبني بالوكلاء (vibe-coder)، ينبغي أن تستطيع الإجابة عنها كلها بنظرة واحدة:
 
-### 1. من يملكه؟ (Who owns it?)
+### 1. من يملكه؟ ⁦(Who owns it?)⁩
 
 إنسان محدد بالاسم. ليس «الفريق»، ولا «الوكيل (agent)»، ولا «يدير نفسه بنفسه». عندما يخترع روبوت الدردشة (chatbot) سياسةً (a policy) في الثانية فجرًا، يكون هاتف شخصٍ واحد هو الإجابة عن سؤال «مشكلة مَن هذه؟». الملكية (ownership) هي الفرق بين منتجٍ (product) حقيقي ومنتجٍ يتيم (orphan).
 
-### 2. ما الذي يستطيع لمسه؟ (What can it touch?)
+### 2. ما الذي يستطيع لمسه؟ ⁦(What can it touch?)⁩
 
 يتصاعد الخطر (risk) على سُلّم (ladder): **بياناتك أنت ← بيانات الآخرين ← المال (your own data → other people's data → money).** كل درجة (rung) أعلى تتطلب حذرًا أكبر. لهذا يحصل الوكيل (agent) على الحد الأدنى من الصلاحيات (Least Privilege) — وهي الغريزة نفسها التي رأيتها في الأسرار (secrets) (5.7) وفي حاجز الاعتماديات الجديدة (new-dependency bar) (8.4): المكوّن (component) الذي لا يستطيع الوصول إلى مفاتيح الدفع (payment keys) لا يستطيع تسريبها (leak) مهما تعرّض للخداع.
 
-### 3. ما الذي يحتاج إلى موافقة بشرية؟ (What needs a human yes?)
+### 3. ما الذي يحتاج إلى موافقة بشرية؟ ⁦(What needs a human yes?)⁩
 
 بعض الأفعال لا رجعة فيها (irreversible) أو موجَّهة إلى الخارج (outward-facing): خصم بطاقة (charging a card)، وإرسال بريد (email) إلى كل المستخدمين (users)، ونشر محتوى (publishing content)، وحذف حسابات (deleting accounts). اكتب قائمتها، واجعل الوكيل (agent) عاجزًا عن تنفيذها من دونك. وقد قابلت هذه الفكرة سابقًا بثوب آخر: بوابة النشر المخفي افتراضيًا (default-hidden release gate) (4.4) هي حوكمة (governance) متنكّرة — لا شيء يصبح عامًا لأن عمليةً (process) انتهت، بل لأن إنسانًا قرّر.
 
-### 4. هل ترى ما فعله؟ (Can you see what it did?)
+### 4. هل ترى ما فعله؟ ⁦(Can you see what it did?)⁩
 
 مسار التدقيق (Audit Trail): من فعل — أو ما الذي فعل — أيَّ إجراء (which action) ومتى. المهام الخلفية (background jobs) التي أصلحتها في 7.4 حصلت كل واحدة منها على سجل تدقيق (audit row) — وهذه هي القاعدة نفسها على مستوى المنتج (product) كله. وتذكّر الحالة الشهيرة للوكيل (agent) الذي حذف قاعدة بيانات إنتاجية (production database) ثم وصف ما فعله وصفًا مضللًا: لا تجعل الوكيل أبدًا الشاهد الوحيد (only witness) على أفعاله.
 
-### 5. هل تستطيع إيقافه؟ (Can you turn it off?)
+### 5. هل تستطيع إيقافه؟ ⁦(Can you turn it off?)⁩
 
 مفتاح إيقاف (Kill Switch) استعملته فعلًا: وضع الصيانة (maintenance mode)، أو راية الميزة (feature flag)، أو التراجع (rollback) (4.4). مفتاح إيقاف لم تسحبه يومًا هو أمل (a hope) وليس وسيلة تحكم (control) — وهو الدرس نفسه من النسخة الاحتياطية (backup) التي لم تُستعَد قط (2.3).
 
 ```mermaid
 flowchart TD
-    A["ما الذي تشحنه؟"] --> B{"يلمس بياناتك أنت فقط؟"}
-    B -- نعم --> G["النظرة تكفي — أجب عن الأسئلة الخمسة وتابع"]
-    B -- لا --> C{"بيانات شخصية لآخرين؟ مال؟ مخرجات علنية؟"}
-    C -- نعم --> D["اكتبها — صفحة GOVERNANCE.md واحدة تُبقيها صادقة"]
-    D --> E{"داخل شركة، أو في صناعة منظَّمة؟"}
-    E -- نعم --> F["توجد هنا حوكمة حقيقية — ابحث عن مالكها قبل الإطلاق لا بعده"]
-    E -- لا --> D2["صفحتك الواحدة هي الحوكمة — راجعها كلما تغيّر المنتج"]
+    A["ما الذي تشحنه؟<br/>(What are you shipping?)"] --> B{"يلمس بياناتك أنت فقط؟<br/>(Touches only your own data?)"}
+    B -- "نعم (yes)" --> G["النظرة تكفي — أجب عن الأسئلة الخمسة وتابع<br/>(The glance is enough — answer the five questions and move on)"]
+    B -- "لا (no)" --> C{"بيانات شخصية لآخرين؟ مال؟ مخرجات علنية؟<br/>(Other people's personal data? Money? Public output?)"}
+    C -- "نعم (yes)" --> D["اكتبها — صفحة GOVERNANCE.md واحدة تُبقيها صادقة<br/>(Write it down — a one-page GOVERNANCE.md, kept honest)"]
+    D --> E{"داخل شركة، أو في صناعة منظَّمة؟<br/>(Inside a company, or a regulated industry?)"}
+    E -- "نعم (yes)" --> F["توجد هنا حوكمة حقيقية — ابحث عن مالكها قبل الإطلاق لا بعده<br/>(Real governance exists here — find its owner BEFORE you ship, not after)"]
+    E -- "لا (no)" --> D2["صفحتك الواحدة هي الحوكمة — راجعها كلما تغيّر المنتج<br/>(Your one-pager IS the governance — revisit it when the product changes)"]
 ```
 
 | السؤال (The question) | الأثر المكتوب (artifact) | بنيتَ آلياته في (You built the mechanics in) |
 |---|---|---|
-| من يملكه؟ (Who owns it?) | اسم في المستند (doc) | — |
-| ما الذي يستطيع لمسه؟ (What can it touch?) | جرد البيانات (data inventory) + الحد الأدنى من الصلاحيات (least privilege) | 2.4، 5.7، 8.4 |
+| من يملكه؟ ⁦(Who owns it?)⁩ | اسم في المستند (doc) | — |
+| ما الذي يستطيع لمسه؟ ⁦(What can it touch?)⁩ | جرد البيانات (data inventory) + الحد الأدنى من الصلاحيات (least privilege) | 2.4، 5.7، 8.4 |
 | ما الذي يحتاج إلى موافقة بشرية (human yes)؟ | قائمة الموافقات (approval list)، مفروضة آليًا | 4.4، 9.6 |
-| هل ترى ما فعله؟ (Can you see what it did?) | مسار التدقيق (audit trail) | 7.4 |
-| هل تستطيع إيقافه؟ (Can you turn it off?) | مفتاح الإيقاف (kill switch) والتراجع (rollback)، مُجرَّبان (drilled) | 4.4 |
+| هل ترى ما فعله؟ ⁦(Can you see what it did?)⁩ | مسار التدقيق (audit trail) | 7.4 |
+| هل تستطيع إيقافه؟ ⁦(Can you turn it off?)⁩ | مفتاح الإيقاف (kill switch) والتراجع (rollback)، مُجرَّبان (drilled) | 4.4 |
 
 إحدى ندوبنا تُظهر لماذا (Why) يهم *المستند* لا الكود (code) وحده: حذف الحساب (account deletion) الذي أزال سجلًا (record) واحدًا بينما احتفظت نحو 13 مجموعةً مرتبطة (linked collections) ببيانات شخصية (personal data) وعدت سياسة الخصوصية (privacy policy) بمحوها (2.4). سياسة الخصوصية مستند حوكمة (governance document) — وقد انحرف (drifted) الكود بهدوء عن الوعد. لم يلحظ أحد، لأن المقارنة بينهما لم تكن مهمة أحد (was nobody's job). أي مصدرين للحقيقة (sources of truth) سينحرفان عن بعضهما (6.4)، والوعود (promises) والكود ليسا استثناء.
 

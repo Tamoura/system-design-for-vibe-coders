@@ -20,15 +20,15 @@
 
 ```mermaid
 flowchart RL
-    subgraph inside["الأداة 1 — داخل التطبيق"]
-        E["متتبع الأخطاء (Sentry)<br/>الأعطال تبلّغ عن نفسها:<br/>ما انكسر، ولمن، وفي أي إصدار"]
+    subgraph inside["الأداة 1 — داخل التطبيق (Instrument 1 — inside the app)"]
+        E["متتبع الأخطاء (Sentry)<br/>الأعطال تبلّغ عن نفسها:<br/>ما انكسر، ولمن، وفي أي إصدار<br/>(Error tracker (Sentry)<br/>crashes report THEMSELVES:<br/>what broke, for whom, in which release)"]
     end
-    subgraph outside["الأداة 2 — خارج كل ما تملك"]
-        U["فحص التشغيل (UptimeRobot)<br/>يفتح رابطك الحقيقي كل دقيقة<br/>من قارة أخرى"]
+    subgraph outside["الأداة 2 — خارج كل ما تملك (Instrument 2 — outside everything you own)"]
+        U["فحص التشغيل (UptimeRobot)<br/>يفتح رابطك الحقيقي كل دقيقة<br/>من قارة أخرى<br/>(Uptime check (UptimeRobot / Better Stack)<br/>opens your REAL URL every minute<br/>from another continent)"]
     end
-    APP["تطبيقك"] -->|"الاستثناءات"| E
-    U -->|"أهو شغّال، من حيث يقف المستخدمون؟"| APP
-    E --> PHONE["📱 هاتفك"]
+    APP["تطبيقك<br/>(Your app)"] -->|"الاستثناءات (exceptions)"| E
+    U -->|"أهو شغّال، من حيث يقف المستخدمون؟ (is it up, from where users stand?)"| APP
+    E --> PHONE["📱 هاتفك<br/>(📱 Your phone)"]
     U --> PHONE
 ```
 

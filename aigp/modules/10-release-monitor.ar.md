@@ -58,13 +58,13 @@
 
 ```mermaid
 flowchart RL
-  A[إدارة المخاطر ونظام إدارة الجودة قائمان] --> B[التوثيق الفني وفق الملحق IV]
-  B --> C[تقييم المطابقة]
-  C --> D[إعلان المطابقة الأوروبي]
-  D --> E[علامة CE]
-  E --> F[التسجيل في قاعدة بيانات الاتحاد الأوروبي]
-  F --> G[الطرح في السوق أو التشغيل]
-  G --> H[الرصد بعد الطرح من اليوم الأول]
+  A["إدارة المخاطر ونظام إدارة الجودة قائمان<br/>(Risk management and QMS in place)"] --> B["التوثيق الفني وفق الملحق IV<br/>(Technical documentation per Annex IV)"]
+  B --> C["تقييم المطابقة<br/>(Conformity assessment)"]
+  C --> D["إعلان المطابقة الأوروبي<br/>(EU declaration of conformity)"]
+  D --> E["علامة CE<br/>(CE marking)"]
+  E --> F["التسجيل في قاعدة بيانات الاتحاد الأوروبي<br/>(Registration in EU database)"]
+  F --> G["الطرح في السوق أو التشغيل<br/>(Place on market or put into service)"]
+  G --> H["الرصد بعد الطرح من اليوم الأول<br/>(Post-market monitoring from day one)"]
 ```
 
 - **نظام إدارة الجودة (quality management system) (المادة 17 (Art. 17))** و**نظام إدارة المخاطر (risk management system) (المادة 9 (Art. 9)).** سياسات وإجراءات ومسؤوليات وعملية للمخاطر (risk process) عبر دورة الحياة (life cycle) كاملة.
@@ -337,14 +337,14 @@ flowchart RL
 
 ```mermaid
 flowchart TD
-  A[تنبيه أو شكوى أو بلاغ من موظف] --> B[الفرز وتحديد الخطورة]
-  B --> C{S1 أو S2؟}
-  C -- لا --> D[إصلاح وتسجيل ومراجعة الاتجاه]
-  C -- نعم --> E[احتواء: تعليق أو بديل أو تقييد]
-  E --> F[فحص الساعات القانونية: AI Act وGDPR والقطاع والمحلي]
-  F --> G[إبلاغ مقدّم النظام والسلطات والأشخاص حسب المطلوب]
-  G --> H[السبب الجذري والمعالجة]
-  H --> I[مراجعة ما بعد الحادث وتحديث الضوابط]
+  A["تنبيه أو شكوى أو بلاغ من موظف<br/>(Alert, complaint or staff report)"] --> B["الفرز وتحديد الخطورة<br/>(Triage and assign severity)"]
+  B --> C{"S1 أو S2؟<br/>(S1 or S2?)"}
+  C -- "لا (No)" --> D["إصلاح وتسجيل ومراجعة الاتجاه<br/>(Fix, log, trend review)"]
+  C -- "نعم (Yes)" --> E["احتواء: تعليق أو بديل أو تقييد<br/>(Contain: suspend, fall back or restrict)"]
+  E --> F["فحص الساعات القانونية: AI Act وGDPR والقطاع والمحلي<br/>(Check legal clocks: AI Act, GDPR, sector, local)"]
+  F --> G["إبلاغ مقدّم النظام والسلطات والأشخاص حسب المطلوب<br/>(Notify provider, authorities and people as required)"]
+  G --> H["السبب الجذري والمعالجة<br/>(Root cause and remediation)"]
+  H --> I["مراجعة ما بعد الحادث وتحديث الضوابط<br/>(Post-incident review and control updates)"]
 ```
 
 **قواعد بيانات الحوادث العامة (public incident databases).** يتتبّع **مرصد OECD لحوادث الذكاء الاصطناعي (OECD AI Incidents Monitor, AIM)** حوادث الذكاء الاصطناعي (AI incidents) ومخاطره المبلَّغ عنها في الأخبار حول العالم؛ وتجمع **قاعدة بيانات حوادث الذكاء الاصطناعي** (AI Incident Database) المستقلة المساهمات العامة. ولا تُعد أيٌّ منهما قناة تنظيمية (regulatory channel). استخدمهما للتعلّم من إخفاقات الآخرين، ولتغذية سجلات المخاطر (risk registers) وسيناريوهات اختبار الفريق الأحمر (red-team testing)، ولإحاطة مجالس الإدارة (boards).
@@ -545,13 +545,13 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-  A[تغيير مقترح] --> B{يغيّر الغرض المقصود أو المجتمع أو فئة المخاطر؟}
-  B -- نعم --> S[جوهري: استقبال جديد ومطابقة جديدة واللجنة]
-  B -- لا --> C{محدد مسبقًا في ملف المطابقة وضمن الحواجز؟}
-  C -- نعم --> M[مخطط: اختبارات آلية وتسجيل ورصد]
-  C -- لا --> D{قد يؤثر في الامتثال أو العدالة أو الأداء؟}
-  D -- نعم --> G[مهم: إعادة المصادقة والاعتماد]
-  D -- لا --> N[طفيف: تسجيل ومراجعة الأقران]
+  A["تغيير مقترح<br/>(Proposed change)"] --> B{"يغيّر الغرض المقصود أو المجتمع أو فئة المخاطر؟<br/>(Changes intended purpose, population or risk tier?)"}
+  B -- "نعم (Yes)" --> S["جوهري: استقبال جديد ومطابقة جديدة واللجنة<br/>(Substantial: new intake, new conformity, committee)"]
+  B -- "لا (No)" --> C{"محدد مسبقًا في ملف المطابقة وضمن الحواجز؟<br/>(Pre-determined in conformity file and within guardrails?)"}
+  C -- "نعم (Yes)" --> M["مخطط: اختبارات آلية وتسجيل ورصد<br/>(Planned: automated tests, log, monitor)"]
+  C -- "لا (No)" --> D{"قد يؤثر في الامتثال أو العدالة أو الأداء؟<br/>(Could affect compliance, fairness or performance?)"}
+  D -- "نعم (Yes)" --> G["مهم: إعادة المصادقة والاعتماد<br/>(Significant: re-validate and approve)"]
+  D -- "لا (No)" --> N["طفيف: تسجيل ومراجعة الأقران<br/>(Minor: log and peer review)"]
 ```
 
 لاحظ خيار التصميم: التغيير الذي "قد يؤثر في الامتثال (compliance)" يُعامل على أنه مهم *إلى أن يثبت خلاف ذلك*. أما ما إذا كان يُعد قانونًا تعديلًا جوهريًا (substantial modification) فهو تقدير موثّق يُتخذ مع الإدارة القانونية (legal) والامتثال، لا تخمين من المهندس المناوب (engineer on duty).

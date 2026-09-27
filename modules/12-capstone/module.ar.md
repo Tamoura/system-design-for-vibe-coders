@@ -24,20 +24,20 @@
 
 ```mermaid
 flowchart TD
-    P["يصلك تنبيه"] --> Q0{"هل يتكرر من الخادم الأصلي مباشرة<br/>(بتجاوز الـCDN)؟"}
-    Q0 -->|"لا — عبر الـCDN فقط"| EDGE["طبقة الحافة/الكاش<br/>(CDN، الوسيط، Redis)"]
-    Q0 -->|"نعم — الأصل خطأ أيضًا"| Q1{"هل الكود العامل<br/>هو الكود الذي تظنه<br/>منشورًا؟"}
-    Q1 -->|"لا"| DEPLOY["طبقة النشر/الأثر<br/>(عامل قديم، كاش بناء،<br/>فرع خطأ، إعداد محشوّ)"]
-    Q1 -->|"نعم"| Q2{"هل يعتمد على<br/>مَن المستخدم أو<br/>أين هو؟"}
-    Q2 -->|"نعم"| IDENT["طبقة الهوية/الإساءة<br/>(المصادقة، تحديد المعدل،<br/>لكل عميل)"]
-    Q2 -->|"لا"| Q3{"هل تبعيّةٌ لا تملكها<br/>(واجهة خارجية، مزوّد)<br/>بطيئة أو تفشل؟"}
-    Q3 -->|"نعم"| THIRD["طبقة التبعية الخارجية<br/>(الإعادات، قاطع الدارة،<br/>البديل، الفاتورة)"]
-    Q3 -->|"لا"| Q4{"هل قفز الحِمل أو حجم<br/>البيانات للتو فوق ما<br/>يستطيع النظام خدمته؟"}
-    Q4 -->|"نعم"| CAP["طبقة السعة/الإشباع<br/>(عمق الطابور، تأخّر<br/>التكرار، الكلفة)"]
-    Q4 -->|"لا"| Q5{"هل الإشارةُ نفسها مشبوهة —<br/>المراقبة صامتة، أو<br/>«إنجاز» وكيلٍ هو الدليل<br/>الوحيد؟"}
-    Q5 -->|"المراقبة معتمة"| BLIND["طبقة المراقبة<br/>(الراصد شارك المصير،<br/>أو له نقطة عمياء)"]
-    Q5 -->|"وكيلٌ قال ذلك"| AGENT["طبقة توجيه الوكيل<br/>(اطلب الدليل،<br/>لا ملخّصًا ذاتيًا)"]
-    Q5 -->|"لا"| DATA["طبقة البيانات/التخزين<br/>(المخطط، الترحيل،<br/>مهمة خلفية، القرص)"]
+    P["يصلك تنبيه<br/>(You get paged)"] --> Q0{"هل يتكرر من الخادم الأصلي مباشرة<br/>(بتجاوز الـCDN)؟<br/>(Does it reproduce<br/>from the origin directly<br/>(bypass the CDN)?)"}
+    Q0 -->|"لا — عبر الـCDN فقط (No — only through the CDN)"| EDGE["طبقة الحافة/الكاش<br/>(CDN، الوسيط، Redis)<br/>(Edge / cache layer<br/>(CDN, proxy, Redis))"]
+    Q0 -->|"نعم — الأصل خطأ أيضًا (Yes — origin is wrong too)"| Q1{"هل الكود العامل<br/>هو الكود الذي تظنه<br/>منشورًا؟<br/>(Is the running code<br/>the code you think<br/>is deployed?)"}
+    Q1 -->|"لا (No)"| DEPLOY["طبقة النشر/الأثر<br/>(عامل قديم، كاش بناء،<br/>فرع خطأ، إعداد محشوّ)<br/>(Deploy / artifact layer<br/>(stale worker, build cache,<br/>wrong branch, baked-in config))"]
+    Q1 -->|"نعم (Yes)"| Q2{"هل يعتمد على<br/>مَن المستخدم أو<br/>أين هو؟<br/>(Does it depend on<br/>WHO or WHERE the<br/>user is?)"}
+    Q2 -->|"نعم (Yes)"| IDENT["طبقة الهوية/الإساءة<br/>(المصادقة، تحديد المعدل،<br/>لكل عميل)<br/>(Identity / abuse layer<br/>(auth, rate limit, per-client))"]
+    Q2 -->|"لا (No)"| Q3{"هل تبعيّةٌ لا تملكها<br/>(واجهة خارجية، مزوّد)<br/>بطيئة أو تفشل؟<br/>(Is a dependency you<br/>DON'T own (third-party<br/>API, provider) slow<br/>or failing?)"}
+    Q3 -->|"نعم (Yes)"| THIRD["طبقة التبعية الخارجية<br/>(الإعادات، قاطع الدارة،<br/>البديل، الفاتورة)<br/>(Third-party dependency layer<br/>(retries, circuit breaker,<br/>fallback, the bill))"]
+    Q3 -->|"لا (No)"| Q4{"هل قفز الحِمل أو حجم<br/>البيانات للتو فوق ما<br/>يستطيع النظام خدمته؟<br/>(Did load or data volume<br/>just climb past what<br/>the system can serve?)"}
+    Q4 -->|"نعم (Yes)"| CAP["طبقة السعة/الإشباع<br/>(عمق الطابور، تأخّر<br/>التكرار، الكلفة)<br/>(Capacity / saturation layer<br/>(queue depth, replication<br/>lag, cost))"]
+    Q4 -->|"لا (No)"| Q5{"هل الإشارةُ نفسها مشبوهة —<br/>المراقبة صامتة، أو<br/>«إنجاز» وكيلٍ هو الدليل<br/>الوحيد؟<br/>(Is the SIGNAL itself suspect —<br/>monitoring quiet, or an<br/>agent's 'done' the only<br/>evidence?)"}
+    Q5 -->|"المراقبة معتمة (Monitoring is dark)"| BLIND["طبقة المراقبة<br/>(الراصد شارك المصير،<br/>أو له نقطة عمياء)<br/>(Observability layer<br/>(the watcher shared fate,<br/>or has a blind spot))"]
+    Q5 -->|"وكيلٌ قال ذلك (An agent said so)"| AGENT["طبقة توجيه الوكيل<br/>(اطلب الدليل،<br/>لا ملخّصًا ذاتيًا)<br/>(Agent-direction layer<br/>(demand evidence,<br/>not a self-summary))"]
+    Q5 -->|"لا (No)"| DATA["طبقة البيانات/التخزين<br/>(المخطط، الترحيل،<br/>مهمة خلفية، القرص)<br/>(Data / storage layer<br/>(schema, migration,<br/>background job, disk))"]
 ```
 
 أبقِ هذه الشجرة (tree) إلى جوارك. كل محاكاة (simulation) تسمّي الفرع (branch) الذي تعيش فيه.
@@ -465,26 +465,26 @@ Proxy) مفتاحُه نوعُ محتوى الاستجابة (response Content-T
 
 ```mermaid
 mindmap
-  root(("يصلك<br/>تنبيه"))
-    الحافة / الكاش
-      صفحات JSON خام · 3.2
-      الحضور بلغ الصفر · 3.4
-    النشر / الأثر
-      رموز 502 متذبذبة · 4.3
-      إصلاح ألغى نفسه · 6.2
-      رفض المتجر · 4.5
-    الهوية / الإساءة
-      429 لمستخدمين شرعيين · 5.2
-    البيانات / التخزين
-      نسخة تضاعفت · 2.3
-      ملف محذوف يعود · 2.2
-      قراءة ملف شخصي قديمة · 10.3
-    التبعية الخارجية / السعة
-      عاصفة إعادات · 6.7 + 10.2
-    المراقبة
-      أخضر طوال العطل · 7.6
-    توجيه الوكيل
-      الوكيل قال تمّ · 9.4
+  root(("يصلك<br/>تنبيه<br/>(You get<br/>paged)"))
+     / الكاش (Edge / cache)
+       JSON خام · 3.2 (Raw JSON pages · 3.2)
+       بلغ الصفر · 3.4 (Presence hit zero · 3.4)
+     / الأثر (Deploy / artifact)
+       502 متذبذبة · 4.3 (Flapping 502s · 4.3)
+       ألغى نفسه · 6.2 (Fix un-shipped · 6.2)
+       المتجر · 4.5 (Store rejection · 4.5)
+     / الإساءة (Identity / abuse)
+       لمستخدمين شرعيين · 5.2 (Legit 429s · 5.2)
+     / التخزين (Data / storage)
+       تضاعفت · 2.3 (Backup tripled · 2.3)
+       محذوف يعود · 2.2 (Deleted file returns · 2.2)
+       ملف شخصي قديمة · 10.3 (Stale profile read · 10.3)
+     الخارجية / السعة (Third-party / capacity)
+       إعادات · 6.7 + 10.2 (Retry storm · 6.7 + 10.2)
+     (Observability)
+       طوال العطل · 7.6 (Green through an outage · 7.6)
+     الوكيل (Agent-direction)
+       قال تمّ · 9.4 (The agent said done · 9.4)
 ```
 
 **حدُّ النجاح (The passing bar)** ليس «حفظتَ اثني عشر سببًا». فالإنتاج (production) الحقيقي يسلّمك حادثةً (incident) ثالثةَ

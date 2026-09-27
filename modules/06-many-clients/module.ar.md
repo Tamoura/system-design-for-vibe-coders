@@ -45,11 +45,11 @@
 
 ```mermaid
 flowchart TD
-    subgraph WEB["عميل الويب — أنت تتحكم بالساعة"]
-      W1["ادفع الإصلاح"] --> W2["انشر"] --> W3["كل زائر<br/>يحصل عليه في دقائق"]
+    subgraph WEB["عميل الويب — أنت تتحكم بالساعة (Web client — you control the clock)"]
+      W1["ادفع الإصلاح<br/>(Push fix)"] --> W2["انشر<br/>(Deploy)"] --> W3["كل زائر<br/>يحصل عليه في دقائق<br/>(Every visitor<br/>has it in minutes)"]
     end
-    subgraph APP["عميل التطبيق — المستخدم يتحكم بالساعة"]
-      A1["ادفع الإصلاح"] --> A2["مراجعة المتجر<br/>ساعات إلى أيام"] --> A3["على المستخدم<br/>أن يختار التحديث"] --> A4["الإصدارات القديمة<br/>تبقى شهورًا"]
+    subgraph APP["عميل التطبيق — المستخدم يتحكم بالساعة (App client — the user controls the clock)"]
+      A1["ادفع الإصلاح<br/>(Push fix)"] --> A2["مراجعة المتجر<br/>ساعات إلى أيام<br/>(Store review<br/>hours to days)"] --> A3["على المستخدم<br/>أن يختار التحديث<br/>(User must choose<br/>to update)"] --> A4["الإصدارات القديمة<br/>تبقى شهورًا<br/>(Old versions live on<br/>for months)"]
     end
 ```
 
@@ -184,9 +184,9 @@ JavaScript جديد مباشرةً إلى التطبيقات المثبَّتة 
 
 ```mermaid
 flowchart RL
-    B["فرع الميزة<br/>(فيه الإصلاح)"] -->|أثير رقم 1| CH["القناة<br/>الحزمة الحالية"]
-    M["main<br/>(لا إصلاح بعد)"] -->|أثير رقم 2، روتيني| CH
-    CH --> U["كل مستخدم يشغّل<br/>ما هو حالي"]
+    B["فرع الميزة<br/>(فيه الإصلاح)<br/>(Feature branch<br/>(has the fix))"] -->|"أثير رقم 1 (OTA #1)"| CH["القناة<br/>الحزمة الحالية<br/>(Channel<br/>current bundle)"]
+    M["main<br/>(لا إصلاح بعد)<br/>(main<br/>(no fix yet))"] -->|"أثير رقم 2، روتيني (OTA #2, routine)"| CH
+    CH --> U["كل مستخدم يشغّل<br/>ما هو حالي<br/>(Every user runs<br/>whatever is current)"]
     style B fill:#fde
     style M fill:#eef
 ```
@@ -307,14 +307,14 @@ flowchart RL
 
 ```mermaid
 flowchart TD
-    subgraph BAD["✗ قرّاء كثيرون، تباينٌ مضمون"]
-      C1["التنقّل: فحص وقت البناء"] -.->|"مضاء (مُجمَّد)"| DRIFT["الرابط موجود،<br/>المسار 404"]
-      C2["الموجِّه: فحص وقت التشغيل"] -.->|"مطفأ (حي)"| DRIFT
+    subgraph BAD["✗ قرّاء كثيرون، تباينٌ مضمون (✗ Many readers, guaranteed drift)"]
+      C1["التنقّل: فحص وقت البناء<br/>(Nav: compile-time check)"] -.->|"مضاء (مُجمَّد) (on (frozen))"| DRIFT["الرابط موجود،<br/>المسار 404<br/>(Link exists,<br/>route 404s)"]
+      C2["الموجِّه: فحص وقت التشغيل<br/>(Router: runtime check)"] -.->|"مطفأ (حي) (off (live))"| DRIFT
     end
-    subgraph GOOD["✓ محلِّلٌ واحد، حقيقةٌ واحدة"]
-      R["resolveFlags()<br/>خريطة وقت التشغيل"] --> N["التنقّل"]
-      R --> RT["الموجِّه"]
-      R --> P["الشريط الترويجي"]
+    subgraph GOOD["✓ محلِّلٌ واحد، حقيقةٌ واحدة (✓ One resolver, one truth)"]
+      R["resolveFlags()<br/>خريطة وقت التشغيل<br/>(resolveFlags()<br/>runtime map)"] --> N["التنقّل<br/>(Nav)"]
+      R --> RT["الموجِّه<br/>(Router)"]
+      R --> P["الشريط الترويجي<br/>(Promo stripe)"]
     end
 ```
 
@@ -439,11 +439,11 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    START["قائمتان يجب<br/>أن تتوافقا"] --> Q{"أيمكن توليد<br/>إحداهما من<br/>الأخرى؟"}
-    Q -->|نعم| DERIVE["اشتقّها.<br/>مصدرٌ واحد، صفر تباين."]
-    Q -->|لا| GUARD["اختبار حارس تباين:<br/>أفشِل البناء حين<br/>يختلفان."]
-    DERIVE --> SAFE["لا يستطيع التباين"]
-    GUARD --> SAFE2["يتباين بصخب،<br/>وقت البناء،<br/>لا في الإنتاج"]
+    START["قائمتان يجب<br/>أن تتوافقا<br/>(Two lists that<br/>must agree)"] --> Q{"أيمكن توليد<br/>إحداهما من<br/>الأخرى؟<br/>(Can one be<br/>generated from<br/>the other?)"}
+    Q -->|"نعم (Yes)"| DERIVE["اشتقّها.<br/>مصدرٌ واحد، صفر تباين.<br/>(Derive it.<br/>One source, zero drift.)"]
+    Q -->|"لا (No)"| GUARD["اختبار حارس تباين:<br/>أفشِل البناء حين<br/>يختلفان.<br/>(Drift-guard test:<br/>fail the build when<br/>they disagree.)"]
+    DERIVE --> SAFE["لا يستطيع التباين<br/>(Can't drift)"]
+    GUARD --> SAFE2["يتباين بصخب،<br/>وقت البناء،<br/>لا في الإنتاج<br/>(Drifts loudly,<br/>at build time,<br/>not in production)"]
 ```
 
 أفضل إصلاحٍ (fix) أن **تشتقّ (derive)** إحدى القائمتين من الأخرى — تُوَلِّد قائمة المسارات المعروفة (known-routes list) من الموجِّه (router)
@@ -557,15 +557,15 @@ Google»** — لا مكسورًا، بل غائبًا. يظهر فقط إن و�
 
 ```mermaid
 flowchart TD
-    G["Google / Apple<br/>(مزوّد واحد)"] --> W["معرّف عميل الويب<br/>← جمهور التوكن = الويب"]
-    G --> I["معرّف عميل iOS<br/>← جمهور التوكن = معرّف الحزمة"]
-    G --> A["معرّف عميل Android<br/>← جمهور التوكن = android"]
-    W --> BE["خادمك الخلفي"]
+    G["Google / Apple<br/>(مزوّد واحد)<br/>(Google / Apple<br/>(one provider))"] --> W["معرّف عميل الويب<br/>← جمهور التوكن = الويب<br/>(Web client ID<br/>→ token aud = web)"]
+    G --> I["معرّف عميل iOS<br/>← جمهور التوكن = معرّف الحزمة<br/>(iOS client ID<br/>→ token aud = bundle ID)"]
+    G --> A["معرّف عميل Android<br/>← جمهور التوكن = android<br/>(Android client ID<br/>→ token aud = android)"]
+    W --> BE["خادمك الخلفي<br/>(Your backend)"]
     I --> BE
     A --> BE
-    BE --> CHECK{"أيقبل كل<br/>الأجمرة الصحيحة؟"}
-    CHECK -->|"الويب فقط"| FAIL["الدخول الأصلي يفشل<br/>كـ'كلمة مرور خاطئة'"]
-    CHECK -->|"ويب + iOS + android"| OK["كل العملاء يدخلون"]
+    BE --> CHECK{"أيقبل كل<br/>الأجمرة الصحيحة؟<br/>(Accept ALL<br/>valid audiences?)"}
+    CHECK -->|"الويب فقط (only web)"| FAIL["الدخول الأصلي يفشل<br/>كـ'كلمة مرور خاطئة'<br/>(Native logins fail as<br/>'invalid password')"]
+    CHECK -->|"ويب + iOS + android (web + iOS + android)"| OK["كل العملاء يدخلون<br/>(All clients sign in)"]
 ```
 
 على الخادم (backend) أن يتحقق من كل توكنٍ (token) وارد مقابل **مجموعة** الأجمرة (audiences) التي أصدرها — لا واحدًا. أبقِ
@@ -690,14 +690,14 @@ flowchart TD
 
 ```mermaid
 sequenceDiagram
-    participant API as الخادم الخلفي
-    participant S as التخزين
-    participant C as العميل
-    C->>S: 1. ارفع الملف (ينجح)
-    C->>API: 2. أكّد (خطأ 502 هنا!)
-    Note over C,API: خُزِّن الملف، والسجل لا يعلم = يتيم
-    C->>API: 3. أعِد التأكيد (بمفتاح اللاأثر نفسه)
-    API-->>C: النتيجة نفسها، بلا تكرار — تمّ التوفيق
+    participant API as الخادم الخلفي (Backend)
+    participant S as التخزين (Storage)
+    participant C as العميل (Client)
+    C->>S: 1. ارفع الملف (ينجح) (1. PUT file (succeeds))
+    C->>API: 2. أكّد (خطأ 502 هنا!) (2. Confirm (502 here!))
+    Note over C,API: خُزِّن الملف، والسجل لا يعلم = يتيم (File stored, record unaware = orphan)
+    C->>API: 3. أعِد التأكيد (بمفتاح اللاأثر نفسه) (3. Retry confirm (same idempotency key))
+    API-->>C: النتيجة نفسها، بلا تكرار — تمّ التوفيق (Same result, no duplicate — reconciled)
 ```
 
 العلاج ليس «صغّر الفجوة». بل **اللاأثر عند التكرار (idempotency)**: يرسل العميل (client) **مفتاح لاأثرٍ (Idempotency Key)**
@@ -811,14 +811,14 @@ Stripe. **كل واجهةٍ خارجية (external API) وصلةٌ (seam) لا �
 
 ```mermaid
 flowchart TD
-    CALL["نداء خارجي إلى مزوّد"] --> T{"مهلةٌ زمنية<br/>مضبوطة؟"}
-    T -->|لا| HANG["التطبيق يعلّق للأبد،<br/>منتظرًا بأدب"]
-    T -->|نعم| R{"خطأٌ قابل<br/>للتكرار؟"}
-    R -->|"لا (400، 402)"| STOP["لا تكرّر —<br/>أظهِره"]
-    R -->|"نعم (مهلة، 503)"| BACK["كرّر بتراجع<br/>+ ارتعاش، محدودًا"]
-    BACK --> CB{"قاطع الدارة:<br/>المزوّد ميت؟"}
-    CB -->|مفتوح| DEGRADE["كفّ عن الاستدعاء.<br/>تدهور بصدق."]
-    CB -->|مغلق| CALL
+    CALL["نداء خارجي إلى مزوّد<br/>(Outbound call to a provider)"] --> T{"مهلةٌ زمنية<br/>مضبوطة؟<br/>(Timeout set?)"}
+    T -->|"لا (No)"| HANG["التطبيق يعلّق للأبد،<br/>منتظرًا بأدب<br/>(App hangs forever,<br/>politely waiting)"]
+    T -->|"نعم (Yes)"| R{"خطأٌ قابل<br/>للتكرار؟<br/>(Retryable error?)"}
+    R -->|"لا (400، 402) (No (400, 402))"| STOP["لا تكرّر —<br/>أظهِره<br/>(Don't retry —<br/>surface it)"]
+    R -->|"نعم (مهلة، 503) (Yes (timeout, 503))"| BACK["كرّر بتراجع<br/>+ ارتعاش، محدودًا<br/>(Retry with backoff<br/>+ jitter, capped)"]
+    BACK --> CB{"قاطع الدارة:<br/>المزوّد ميت؟<br/>(Circuit breaker:<br/>provider dead?)"}
+    CB -->|"مفتوح (Open)"| DEGRADE["كفّ عن الاستدعاء.<br/>تدهور بصدق.<br/>(Stop calling.<br/>Degrade honestly.)"]
+    CB -->|"مغلق (Closed)"| CALL
 ```
 
 | العادة | ما تمنعه |

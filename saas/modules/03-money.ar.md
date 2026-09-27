@@ -53,22 +53,22 @@
 ```mermaid
 sequenceDiagram
     participant DB as Postgres
-    participant W as معالج الويب هوك في Beacon
+    participant W as معالج الويب هوك في Beacon (Beacon webhook handler)
     participant S as Stripe
-    participant B as تطبيق Beacon
-    participant U as المستخدم
-    U->>B: ينقر Upgrade to Pro
-    B->>S: ينشئ Checkout Session مع معرّف المؤسسة في metadata
-    S-->>B: رابط الجلسة
-    B-->>U: إعادة توجيه إلى Stripe Checkout
-    U->>S: يُدخل البطاقة ويدفع
-    S-->>U: إعادة توجيه إلى صفحة النجاح
+    participant B as تطبيق Beacon (Beacon app)
+    participant U as المستخدم (User)
+    U->>B: ينقر Upgrade to Pro (Click Upgrade to Pro)
+    B->>S: ينشئ Checkout Session مع معرّف المؤسسة في metadata (Create Checkout Session with org id in metadata)
+    S-->>B: رابط الجلسة (Session URL)
+    B-->>U: إعادة توجيه إلى Stripe Checkout (Redirect to Stripe Checkout)
+    U->>S: يُدخل البطاقة ويدفع (Enter card and pay)
+    S-->>U: إعادة توجيه إلى صفحة النجاح (Redirect to success page)
     S->>W: POST checkout.session.completed
-    W->>W: يتحقق من التوقيع
-    W->>S: يجلب أحدث حالة للاشتراك
-    W->>DB: يُدرج أو يحدّث الاشتراك والخطة
+    W->>W: يتحقق من التوقيع (Verify signature)
+    W->>S: يجلب أحدث حالة للاشتراك (Fetch latest subscription)
+    W->>DB: يُدرج أو يحدّث الاشتراك والخطة (Upsert subscription and plan)
     W-->>S: 200 OK
-    S->>W: POST customer.subscription.updated لاحقًا
+    S->>W: POST customer.subscription.updated لاحقًا (POST customer.subscription.updated later)
 ```
 
 للمعالج (handler) ثلاث مهام، بهذا الترتيب:
@@ -115,17 +115,17 @@ export async function POST(req: Request) {
 
 ```mermaid
 stateDiagram-v2
-    [*] --> incomplete : الدفعة الأولى تحتاج إجراء
-    [*] --> trialing : بدأت الفترة التجريبية
-    [*] --> active : دُفع فورًا
-    incomplete --> active : نجح الدفع
-    incomplete --> incomplete_expired : مرّت 23 ساعة
-    trialing --> active : انتهت التجربة وخُصم من البطاقة
-    active --> past_due : فشل دفع التجديد
-    past_due --> active : نجحت إعادة المحاولة
-    past_due --> canceled : استُنفدت المحاولات
-    past_due --> unpaid : استُنفدت المحاولات وبقي مفتوحًا
-    active --> canceled : ألغى العميل في نهاية الفترة
+    [*] --> incomplete : الدفعة الأولى تحتاج إجراء (first payment needs action)
+    [*] --> trialing : بدأت الفترة التجريبية (trial started)
+    [*] --> active : دُفع فورًا (paid immediately)
+    incomplete --> active : نجح الدفع (payment succeeds)
+    incomplete --> incomplete_expired : مرّت 23 ساعة (23 hours pass)
+    trialing --> active : انتهت التجربة وخُصم من البطاقة (trial ends and card charged)
+    active --> past_due : فشل دفع التجديد (renewal payment fails)
+    past_due --> active : نجحت إعادة المحاولة (retry succeeds)
+    past_due --> canceled : استُنفدت المحاولات (retries exhausted)
+    past_due --> unpaid : استُنفدت المحاولات وبقي مفتوحًا (retries exhausted, kept open)
+    active --> canceled : ألغى العميل في نهاية الفترة (customer cancels at period end)
     canceled --> [*]
 ```
 
@@ -189,7 +189,7 @@ stateDiagram-v2
 
 **إن درست مستودعًا واحدًا فقط (If you study one repo):** اقرأ `nextjs/saas-starter`. إنه صغير بما يكفي لتفهمه كاملًا. فيه مسار دفع (checkout route) واحد، ومسار ويب هوك (webhook route) واحد، ودالة واحدة تنقل اشتراك (subscription) Stripe إلى صف (row) الفريق. عندما يتضح لك، سترى الهيكل (structure) نفسه داخل كل قاعدة كود (codebase) أكبر في هذا الدرس.
 
-**اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?)؟**
+**اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟**
 
 - **اشترِ (الخيار الافتراضي (default)):** Stripe Billing مع Checkout وبوابة العميل (customer portal). وإن كنت تفضّل ألا تتعامل مع ضريبة المبيعات العالمية (global sales tax)، فاستخدم تاجرًا مسجّلًا (Merchant of Record): Paddle أو Lemon Squeezy أو Polar. في سنة Beacon الأولى، اختر واحدًا منها وامضِ.
 - **استضف بنفسك (Self-host):** Kill Bill أو Lago (3.3) عندما يكون منطق الفوترة (billing logic) جوهريًا في عملك، أو لديك عقود غير معتادة، أو تريد أن تبقى مستقلًا عن أي معالج دفع (payment processor) بعينه. ستظل بحاجة إلى معالج دفع (processor) لنقل المال (money).
@@ -354,14 +354,14 @@ stateDiagram-v2
 
 ```mermaid
 flowchart RL
-    P["صفحة الأسعار"] --> C["إعداد الخطط<br/>plans.ts"]
-    S["معرّف سعر Stripe"] --> M["خريطة السعر إلى الخطة"]
+    P["صفحة الأسعار<br/>(Pricing page)"] --> C["إعداد الخطط<br/>plans.ts<br/>(Plan config<br/>plans.ts)"]
+    S["معرّف سعر Stripe<br/>(Stripe price id)"] --> M["خريطة السعر إلى الخطة<br/>(Price to plan map)"]
     M --> C
-    O["استثناءات المؤسسة<br/>صفقات المؤسسات"] --> E["getEntitlements org"]
+    O["استثناءات المؤسسة<br/>صفقات المؤسسات<br/>(Org overrides<br/>enterprise deals)"] --> E["getEntitlements org"]
     C --> E
-    E --> G1["الـAPI وإجراءات الخادم<br/>تفرض"]
-    E --> G2["الواجهة<br/>تُخفي وتعطّل وتعرض الترقية"]
-    E --> G3["العمّال<br/>المجدول ومُرسِل SMS"]
+    E --> G1["الـAPI وإجراءات الخادم<br/>تفرض<br/>(API and server actions<br/>enforce)"]
+    E --> G2["الواجهة<br/>تُخفي وتعطّل وتعرض الترقية<br/>(UI<br/>hide, disable, upsell)"]
+    E --> G3["العمّال<br/>المجدول ومُرسِل SMS<br/>(Workers<br/>scheduler, SMS sender)"]
 ```
 
 الإصدار الأول (v1) ملف إعداد (config file) مُنمّط (typed) ودالة واحدة:
@@ -471,7 +471,7 @@ export async function createMonitor(orgId: string, input: MonitorInput) {
 
 **إن درست مستودعًا واحدًا فقط (If you study one repo):** اقرأ `openstatusHQ/openstatus`. إنه أقرب شيء موجود إلى Beacon: إعداد خطط (plan config) فيه `monitors` و`periodicity` و`sms` و`sms-limit`، وإضافات (add-ons)، وفحوص حدود (limit checks) على الخادم (server) ترمي الخطأ "Upgrade for more periodicity options". يمكنك أن تربط كل سطر تقريبًا بهذا الدرس.
 
-**اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?)؟**
+**اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟**
 
 - **اشترِ:** Stigg أو Schematic عندما تُشارَك الاستحقاقات (entitlements) بين خدمات كثيرة وتكثر الصفقات المخصصة (custom deals) عبر فريق المبيعات (sales). ومنصات الفوترة المُدارة (Stripe بميزات الاستحقاقات فيها، وChargebee، وPaddle) تغطي الحالات الأبسط.
 - **استضف بنفسك (Self-host):** Autumn أو Lago عندما تريد طبقة الاستحقاقات (entitlements layer) في بنيتك التحتية (infrastructure) ولا تمانع تشغيل خدمة إضافية (extra service).
@@ -624,13 +624,13 @@ export async function createMonitor(orgId: string, input: MonitorInput) {
 
 ```mermaid
 flowchart RL
-    A["حدث المنتج<br/>تم تسليم SMS"] --> B["حدث الاستخدام<br/>مفتاح عدم التكرار"]
-    B --> C["العدّاد<br/>تصفية وتجميع"]
-    C --> D["التجميع<br/>لكل عميل ولكل فترة"]
-    D --> E["التسعير<br/>تطبيق شرائح الأسعار"]
-    E --> F["بند في الفاتورة"]
-    D --> G["لوحة الاستخدام<br/>والتنبيهات"]
-    F --> H["الدفع عبر Stripe"]
+    A["حدث المنتج<br/>تم تسليم SMS<br/>(Product event<br/>SMS delivered)"] --> B["حدث الاستخدام<br/>مفتاح عدم التكرار<br/>(Usage event<br/>idempotency key)"]
+    B --> C["العدّاد<br/>تصفية وتجميع<br/>(Meter<br/>filter and group)"]
+    C --> D["التجميع<br/>لكل عميل ولكل فترة<br/>(Aggregate<br/>per customer per period)"]
+    D --> E["التسعير<br/>تطبيق شرائح الأسعار<br/>(Rate<br/>apply price tiers)"]
+    E --> F["بند في الفاتورة<br/>(Invoice line item)"]
+    D --> G["لوحة الاستخدام<br/>والتنبيهات<br/>(Usage dashboard<br/>and alerts)"]
+    F --> H["الدفع عبر Stripe<br/>(Payment via Stripe)"]
 ```
 
 | المصطلح (Term) | المعنى (Meaning) | مثال SMS في Beacon (Beacon SMS example) |
@@ -730,7 +730,7 @@ await db.usageEvent.upsert({
 
 **إن درست مستودعًا واحدًا فقط (If you study one repo):** اقرأ `getlago/lago`. توثيقه ونموذج بياناته (data model) يشرحان كل مفهوم في هذا الدرس: المقاييس القابلة للفوترة (billable metrics) مع أنواع التجميع (aggregation types)، والرسوم (fees) مع نماذج التسعير (pricing models)، والمحافظ (wallets) والأرصدة (credits)، وفترات السماح (grace periods)، والفواتير (invoices). وكود `api` (في `getlago/lago-api`) يُظهر كيف تتلاءم القطع معًا في نظام إنتاجي (production system).
 
-**اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?)؟**
+**اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟**
 
 - **اشترِ (الخيار الافتراضي (default)):** عدّادات Stripe Billing (Stripe Billing meters) عندما يكون Stripe معالج الدفع (payment processor) لديك أصلًا والتسعير (pricing) لكل وحدة (per unit) أو متدرّج (graduated). وMetronome وOrb وAmberflo منصات مُدارة (managed platforms) للفوترة حسب الاستخدام (usage-based billing) للاحتياجات الأثقل. واختر تاجرًا مسجّلًا (Merchant of Record) يدعم الاستخدام (Polar، Paddle) إن أردت أن تُعالَج الضرائب (tax) أيضًا.
 - **استضف بنفسك (Self-host):** Lago أو OpenMeter أو Flexprice أو Kill Bill عندما يكون التسعير (pricing) معقدًا، أو الحجم عاليًا، أو تحتاج إلى إقامة البيانات في بلد محدد (Data Residency)، أو تكون الفوترة (billing) استراتيجية بما يكفي لتتجنب الارتهان لمزوّد (vendor lock-in).

@@ -40,15 +40,15 @@
 
 ```mermaid
 flowchart TD
-    U["العملاء وفرقهم"] --> CORE["النطاق الجوهري<br/>ما يجعل هذا المنتج فريدًا"]
-    CORE --- ID["الهوية والوصول<br/>المصادقة · المؤسسات · الأدوار · SSO"]
-    CORE --- DATA["البيانات<br/>قاعدة البيانات · الملفات · البحث · تعدد المستأجرين"]
-    CORE --- MONEY["المال<br/>الاشتراكات · الخطط · الفوترة حسب الاستخدام"]
-    CORE --- COMMS["التواصل<br/>البريد · الإشعارات · الوقت الحقيقي"]
-    CORE --- BG["العمل الخلفي والتكاملات<br/>المهام · API · الويب هوك · سير العمل"]
-    CORE --- GROW["المنتج والنمو<br/>هيكل التطبيق · التحليلات · أعلام الميزات"]
-    CORE --- OPS["العمليات<br/>الإدارة · المراقبة · التدقيق · النشر"]
-    CORE --- TRUST["الثقة<br/>الأمان · الامتثال · ميزات الذكاء الاصطناعي"]
+    U["العملاء وفرقهم<br/>(Customers and their teams)"] --> CORE["النطاق الجوهري<br/>ما يجعل هذا المنتج فريدًا<br/>(Core domain<br/>what makes this product unique)"]
+    CORE --- ID["الهوية والوصول<br/>المصادقة · المؤسسات · الأدوار · SSO<br/>(Identity and access<br/>auth · orgs · roles · SSO)"]
+    CORE --- DATA["البيانات<br/>قاعدة البيانات · الملفات · البحث · تعدد المستأجرين<br/>(Data<br/>database · files · search · tenancy)"]
+    CORE --- MONEY["المال<br/>الاشتراكات · الخطط · الفوترة حسب الاستخدام<br/>(Money<br/>subscriptions · plans · usage billing)"]
+    CORE --- COMMS["التواصل<br/>البريد · الإشعارات · الوقت الحقيقي<br/>(Communication<br/>email · notifications · realtime)"]
+    CORE --- BG["العمل الخلفي والتكاملات<br/>المهام · API · الويب هوك · سير العمل<br/>(Background work and integrations<br/>jobs · API · webhooks · workflows)"]
+    CORE --- GROW["المنتج والنمو<br/>هيكل التطبيق · التحليلات · أعلام الميزات<br/>(Product and growth<br/>app shell · analytics · feature flags)"]
+    CORE --- OPS["العمليات<br/>الإدارة · المراقبة · التدقيق · النشر<br/>(Operations<br/>admin · observability · audit · deploy)"]
+    CORE --- TRUST["الثقة<br/>الأمان · الامتثال · ميزات الذكاء الاصطناعي<br/>(Trust<br/>security · compliance · AI features)"]
 ```
 
 إليك كل مكوّن (component)، والدرس الذي يشرحه، وما يعنيه في Beacon. استخدم هذا الجدول (table) خريطةً لك في الدورة كلها.
@@ -110,14 +110,14 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    Q1{"هل هو جزء من نطاقك الجوهري؟"} -->|"نعم"| BUILD["ابنه بنفسك"]
-    Q1 -->|"لا"| Q2{"هل توجد خدمة مُدارة جيدة بسعر مقبول؟"}
-    Q2 -->|"نعم"| Q3{"هل يمنعها مكان تخزين البيانات أو الامتثال أو عملاء الاستضافة الذاتية؟"}
-    Q3 -->|"لا"| BUY["اشترِ الخدمة المُدارة"]
-    Q3 -->|"نعم"| SELF["استضف خيارًا مفتوح المصدر بنفسك"]
-    Q2 -->|"لا"| Q4{"هل يوجد مشروع مفتوح المصدر ناضج؟"}
-    Q4 -->|"نعم"| SELF
-    Q4 -->|"لا"| BUILD
+    Q1{"هل هو جزء من نطاقك الجوهري؟<br/>(Is it part of your core domain?)"} -->|"نعم (Yes)"| BUILD["ابنه بنفسك<br/>(Build it yourself)"]
+    Q1 -->|"لا (No)"| Q2{"هل توجد خدمة مُدارة جيدة بسعر مقبول؟<br/>(Is there a solid managed service at an acceptable price?)"}
+    Q2 -->|"نعم (Yes)"| Q3{"هل يمنعها مكان تخزين البيانات أو الامتثال أو عملاء الاستضافة الذاتية؟<br/>(Do data residency, compliance or self-hosted customers forbid it?)"}
+    Q3 -->|"لا (No)"| BUY["اشترِ الخدمة المُدارة<br/>(Buy the managed service)"]
+    Q3 -->|"نعم (Yes)"| SELF["استضف خيارًا مفتوح المصدر بنفسك<br/>(Self-host an open-source option)"]
+    Q2 -->|"لا (No)"| Q4{"هل يوجد مشروع مفتوح المصدر ناضج؟<br/>(Is there a mature open-source project?)"}
+    Q4 -->|"نعم (Yes)"| SELF
+    Q4 -->|"لا (No)"| BUILD
 ```
 
 الأسئلة التي تقف خلف الأسهم:
@@ -304,14 +304,14 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    Q["ابدأ بسؤال واحد<br/>مثلًا: كيف تعمل الدعوات؟"] --> R["1. README وCONTRIBUTING<br/>ما هو وكيف نُظّم"]
-    R --> I["2. docker-compose و.env.example<br/>البنية التحتية التي يحتاجها"]
-    I --> P["3. ملفات الحزم<br/>اللبنات التي اختارها"]
-    P --> S["4. مخطط قاعدة البيانات<br/>حجر رشيد"]
-    S --> F["5. تتبّع طلبًا واحدًا من البداية إلى النهاية"]
-    F --> G["6. git log وblame وطلبات السحب<br/>لماذا هو على هذا الشكل"]
-    G --> RUN["7. شغّله على جهازك وجرّبه"]
-    RUN -->|"سؤال جديد"| Q
+    Q["ابدأ بسؤال واحد<br/>مثلًا: كيف تعمل الدعوات؟<br/>(Start with one question<br/>e.g. how do invites work?)"] --> R["1. README وCONTRIBUTING<br/>ما هو وكيف نُظّم<br/>(1. README and CONTRIBUTING<br/>what it is and how it is laid out)"]
+    R --> I["2. docker-compose و.env.example<br/>البنية التحتية التي يحتاجها<br/>(2. docker-compose and .env.example<br/>the infrastructure it needs)"]
+    I --> P["3. ملفات الحزم<br/>اللبنات التي اختارها<br/>(3. Package manifests<br/>the building blocks it chose)"]
+    P --> S["4. مخطط قاعدة البيانات<br/>حجر رشيد<br/>(4. Database schema<br/>the Rosetta stone)"]
+    S --> F["5. تتبّع طلبًا واحدًا من البداية إلى النهاية<br/>(5. Follow one request end to end)"]
+    F --> G["6. git log وblame وطلبات السحب<br/>لماذا هو على هذا الشكل<br/>(6. git log, blame and PRs<br/>why it is this way)"]
+    G --> RUN["7. شغّله على جهازك وجرّبه<br/>(7. Run it locally and poke it)"]
+    RUN -->|"سؤال جديد (New question)"| Q
 ```
 
 **1. README وCONTRIBUTING.** يقول ملف README ما يفعله المنتج. ويقول `CONTRIBUTING.md` (وأحيانًا مجلد (folder) `docs/` أو مستند للبنية (architecture document)) كيف نُظّم المستودع (repo) وكيف تشغّله. دقيقتان هنا توفّران ساعة لاحقًا.
@@ -629,14 +629,14 @@ git log --oneline -S "maxMonitors" -- .
 
 ```mermaid
 flowchart RL
-    CODE["كود وجدته على GitHub"] --> PERM["متساهلة<br/>MIT · Apache-2.0 · BSD"]
-    CODE --> COPY["حقوق متروكة<br/>GPL-2.0 · GPL-3.0"]
-    CODE --> NET["حقوق متروكة عبر الشبكة<br/>AGPL-3.0"]
-    CODE --> SA["مصدر متاح<br/>FSL · BSL · ELv2 · fair-code"]
-    PERM --> P1["أعد الاستخدام بحرية، واحتفظ بالإشعار"]
-    COPY --> C1["إن وزّعت تطبيقك، شارك مصدره"]
-    NET --> N1["إن قدّمته عبر الشبكة، شارك مصدره"]
-    SA --> S1["اقرأه واستخدمه لنفسك، لكن دون خدمة منافسة"]
+    CODE["كود وجدته على GitHub<br/>(Code you found on GitHub)"] --> PERM["متساهلة<br/>MIT · Apache-2.0 · BSD<br/>(Permissive<br/>MIT · Apache-2.0 · BSD)"]
+    CODE --> COPY["حقوق متروكة<br/>GPL-2.0 · GPL-3.0<br/>(Copyleft<br/>GPL-2.0 · GPL-3.0)"]
+    CODE --> NET["حقوق متروكة عبر الشبكة<br/>AGPL-3.0<br/>(Network copyleft<br/>AGPL-3.0)"]
+    CODE --> SA["مصدر متاح<br/>FSL · BSL · ELv2 · fair-code<br/>(Source-available<br/>FSL · BSL · ELv2 · fair-code)"]
+    PERM --> P1["أعد الاستخدام بحرية، واحتفظ بالإشعار<br/>(Reuse freely, keep the notice)"]
+    COPY --> C1["إن وزّعت تطبيقك، شارك مصدره<br/>(Distribute your app, share its source)"]
+    NET --> N1["إن قدّمته عبر الشبكة، شارك مصدره<br/>(Serve it over a network, share its source)"]
+    SA --> S1["اقرأه واستخدمه لنفسك، لكن دون خدمة منافسة<br/>(Read and self-use, but no competing service)"]
 ```
 
 | العائلة | أمثلة | ما يُسمح لك بفعله | ما يطلبه منك |

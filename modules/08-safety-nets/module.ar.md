@@ -50,17 +50,17 @@
 
 ```mermaid
 flowchart RL
-    subgraph beh["سلوكي (رجاء)"]
-        B1["«تذكّر أن تفحص<br/>أساس الفرع»"]
-        B2["«لا تستعمل git add .»"]
-        B3["«راجع قبل الدفع»"]
+    subgraph beh["سلوكي (رجاء) (Behavioral (hope))"]
+        B1["«تذكّر أن تفحص<br/>أساس الفرع»<br/>('Remember to check<br/>the branch base')"]
+        B2["«لا تستعمل git add .»<br/>('Don't use git add .')"]
+        B3["«راجع قبل الدفع»<br/>('Review before you push')"]
     end
-    subgraph mech["آلي (مفروض)"]
-        M1["خطّاف ما قبل الإيداع:<br/>امنع > 30 ملفًا"]
-        M2["خطّاف ما قبل الإيداع:<br/>امنع > 5000 حذف"]
-        M3["مراجعة الملفات المجهّزة<br/>يفرضها الخطّاف"]
+    subgraph mech["آلي (مفروض) (Mechanical (enforced))"]
+        M1["خطّاف ما قبل الإيداع:<br/>امنع > 30 ملفًا<br/>(pre-commit hook:<br/>block > 30 files)"]
+        M2["خطّاف ما قبل الإيداع:<br/>امنع > 5000 حذف<br/>(pre-commit hook:<br/>block > 5000 deletions)"]
+        M3["مراجعة الملفات المجهّزة<br/>يفرضها الخطّاف<br/>(staged-file review<br/>required by the hook)"]
     end
-    beh -.->|"حوّل كل قاعدة"| mech
+    beh -.->|"حوّل كل قاعدة (convert every rule)"| mech
 ```
 
 الخطّاف (Hook) سكربت (script) صغير يشغّله git تلقائيًا في لحظة محددة — مثلًا قبيل قبوله إيداعًا (a commit)
@@ -207,17 +207,17 @@ flowchart RL
 
 ```mermaid
 flowchart TD
-    subgraph fake["قاعدة بيانات محاكاة (تحصيل حاصل)"]
-        F1["الاختبار يقول:<br/>«القاعدة تعيد المستخدم 42»"] --> F2["الكود يسأل القاعدة"]
-        F2 --> F3["المحاكاة تعيد المستخدم 42"]
-        F3 --> F4["تأكيد: استُعيد المستخدم 42 ✓"]
-        F4 --> F5["أُثبت: المحاكاة تعمل.<br/>الاستعلام؟ المخطط؟ القيود؟<br/>لم تُلمس أبدًا."]
+    subgraph fake["قاعدة بيانات محاكاة (تحصيل حاصل) (Mocked DB (tautology))"]
+        F1["الاختبار يقول:<br/>«القاعدة تعيد المستخدم 42»<br/>(Test says:<br/>'DB returns user 42')"] --> F2["الكود يسأل القاعدة<br/>(Code asks DB)"]
+        F2 --> F3["المحاكاة تعيد المستخدم 42<br/>(Mock returns user 42)"]
+        F3 --> F4["تأكيد: استُعيد المستخدم 42 ✓<br/>(Assert: got user 42 ✓)"]
+        F4 --> F5["أُثبت: المحاكاة تعمل.<br/>الاستعلام؟ المخطط؟ القيود؟<br/>لم تُلمس أبدًا.<br/>(Proved: the mock works.<br/>Query? Schema? Constraints?<br/>Never touched.)"]
     end
-    subgraph real["قاعدة بيانات حقيقية في الذاكرة (حقيقة)"]
-        R1["الاختبار يُدخل المستخدم 42<br/>في محرك حقيقي"] --> R2["الكود يشغّل<br/>الاستعلام الفعلي"]
-        R2 --> R3["المحرك يفرض المخطط<br/>والفهارس وقيود التفرّد"]
-        R3 --> R4["تأكيد: استُعيد المستخدم 42 ✓"]
-        R4 --> R5["أُثبت: الاستعلام يعمل<br/>على قاعدة بيانات حقيقية."]
+    subgraph real["قاعدة بيانات حقيقية في الذاكرة (حقيقة) (Real in-memory DB (truth))"]
+        R1["الاختبار يُدخل المستخدم 42<br/>في محرك حقيقي<br/>(Test inserts user 42<br/>into a real engine)"] --> R2["الكود يشغّل<br/>الاستعلام الفعلي<br/>(Code runs the<br/>ACTUAL query)"]
+        R2 --> R3["المحرك يفرض المخطط<br/>والفهارس وقيود التفرّد<br/>(Engine enforces schema,<br/>indexes, unique rules)"]
+        R3 --> R4["تأكيد: استُعيد المستخدم 42 ✓<br/>(Assert: got user 42 ✓)"]
+        R4 --> R5["أُثبت: الاستعلام يعمل<br/>على قاعدة بيانات حقيقية.<br/>(Proved: the query works<br/>against a real database.)"]
     end
 ```
 
@@ -377,7 +377,7 @@ stateDiagram-v2
     Cry --> Del: حُذف بصدق
     Cry --> Breach: فشل حقيقي ينزلق عبر الأحمر المتجاهَل
     Del --> Trust: استُبدل بفحص صائب
-    Breach --> [*]: حادثة
+    Breach --> [*]: حادثة (incident)
 ```
 
 انظر إلى المخطط (diagram): الفحص (check) **المحذوف** بصدق حالةٌ *أفضل* من الكاذب (liar). فحذفه يوقف على الأقل
@@ -514,14 +514,14 @@ stateDiagram-v2
 
 ```mermaid
 flowchart TD
-    YOU["تطبيقك"] --> A["الحزمة أ<br/>(اخترتها)"]
-    YOU --> B["الحزمة ب<br/>(اخترتها)"]
-    A --> A1["اعتماد أ"]
-    A --> A2["اعتماد أ"]
-    A2 --> A3["اعتماد الاعتماد<br/>(لم تسمع به قط)"]
-    B --> B1["اعتماد ب"]
+    YOU["تطبيقك<br/>(Your app)"] --> A["الحزمة أ<br/>(اخترتها)<br/>(package A<br/>(you chose it))"]
+    YOU --> B["الحزمة ب<br/>(اخترتها)<br/>(package B<br/>(you chose it))"]
+    A --> A1["اعتماد أ<br/>(dep of A)"]
+    A --> A2["اعتماد أ<br/>(dep of A)"]
+    A2 --> A3["اعتماد الاعتماد<br/>(لم تسمع به قط)<br/>(dep of dep<br/>(you've never heard of it))"]
+    B --> B1["اعتماد ب<br/>(dep of B)"]
     B1 --> A3
-    A3 --> LP["left-pad<br/>11 سطرًا<br/>يتحكم فيها غريب واحد"]
+    A3 --> LP["left-pad<br/>11 سطرًا<br/>يتحكم فيها غريب واحد<br/>(left-pad<br/>11 lines<br/>one stranger controls)"]
     style LP fill:#c0392b,color:#fff
     style A3 fill:#e67e22,color:#fff
 ```
@@ -574,11 +574,11 @@ flowchart TD
 
 ```mermaid
 flowchart RL
-    NEED["الوكيل يصطدم بقدرة مفقودة"] --> ASK{"حزمة جديدة؟"}
-    ASK -->|"يثبّتها فحسب"| BAD["❌ كود غير مفحوص<br/>في شجرتك إلى الأبد"]
-    ASK -->|"يتوقف ويسأل"| CHECK["سطر: لماذا نحتاجها؟<br/>التحميلات الأسبوعية؟ آخر إصدار؟<br/>أنملكها سلفًا؟"]
-    CHECK --> YES["موافقتك الصريحة"]
-    YES --> GOOD["✅ قرار لا حادث"]
+    NEED["الوكيل يصطدم بقدرة مفقودة<br/>(Agent hits a missing capability)"] --> ASK{"حزمة جديدة؟<br/>(New package?)"}
+    ASK -->|"يثبّتها فحسب (just installs it)"| BAD["❌ كود غير مفحوص<br/>في شجرتك إلى الأبد<br/>(❌ Unvetted code<br/>in your tree forever)"]
+    ASK -->|"يتوقف ويسأل (stops and asks)"| CHECK["سطر: لماذا نحتاجها؟<br/>التحميلات الأسبوعية؟ آخر إصدار؟<br/>أنملكها سلفًا؟<br/>(One line: why do we need it?<br/>Weekly downloads? Last release?<br/>Do we already have it?)"]
+    CHECK --> YES["موافقتك الصريحة<br/>(Your explicit yes)"]
+    YES --> GOOD["✅ قرار لا حادث<br/>(✅ A decision, not an accident)"]
 ```
 
 فحص السلامة (sanity check) ستون ثانية فعلًا: أهي واسعة الاستعمال (التحميلات (downloads))؟ أمصونة (آخر إصدار (release) هذا

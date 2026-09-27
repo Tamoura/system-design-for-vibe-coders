@@ -48,13 +48,13 @@
 
 ```mermaid
 flowchart TD
-    R["طلب وارد"] --> LB["موازن الحِمل<br/>يختار أي نسخة"]
-    LB --> I1["النسخة A"]
-    LB --> I2["النسخة B"]
-    I1 -.->|"جلسة في الذاكرة؟"| X1["❌ مسجَّل الدخول على A،<br/>خارج على B"]
-    I1 -.->|"عدّاد في الذاكرة؟"| X2["❌ الحدّ يتضاعف<br/>لكل نسخة"]
-    I1 -.->|"رفع على القرص المحلي؟"| X3["❌ الملف موجود على A،<br/>404 على B"]
-    I1 --> DB[("✅ قاعدة/كاش/تخزين كائنات<br/>مشترك")]
+    R["طلب وارد<br/>(Incoming request)"] --> LB["موازن الحِمل<br/>يختار أي نسخة<br/>(Load balancer<br/>picks any instance)"]
+    LB --> I1["النسخة A<br/>(Instance A)"]
+    LB --> I2["النسخة B<br/>(Instance B)"]
+    I1 -.->|"جلسة في الذاكرة؟ (session in memory?)"| X1["❌ مسجَّل الدخول على A،<br/>خارج على B<br/>(❌ user logged in on A,<br/>logged out on B)"]
+    I1 -.->|"عدّاد في الذاكرة؟ (counter in memory?)"| X2["❌ الحدّ يتضاعف<br/>لكل نسخة<br/>(❌ limit multiplies<br/>per instance)"]
+    I1 -.->|"رفع على القرص المحلي؟ (upload on local disk?)"| X3["❌ الملف موجود على A،<br/>404 على B<br/>(❌ file exists on A,<br/>404 on B)"]
+    I1 --> DB[("✅ قاعدة/كاش/تخزين كائنات<br/>مشترك<br/>(✅ Shared DB / cache /<br/>object storage)")]
     I2 --> DB
 ```
 
@@ -170,13 +170,13 @@ flowchart TD
 
 ```mermaid
 flowchart RL
-    U["المستخدم يرفع فيديو"] --> API["API: يحفظ السجل،<br/>يُدرج 'عالج #42'"]
-    API -->|"200 OK فوري"| U
-    API --> Q[["الطابور"]]
-    Q --> W1["عامل 1"]
-    Q --> W2["عامل 2"]
-    W1 --> DONE["ترميز، مصغّرة،<br/>وسم جاهز، إشعار"]
-    W1 -.->|"فشل مرتين"| DLQ[["طابور الرسائل الميتة"]]
+    U["المستخدم يرفع فيديو<br/>(User uploads video)"] --> API["API: يحفظ السجل،<br/>يُدرج 'عالج #42'<br/>(API: save record,<br/>enqueue 'process #42')"]
+    API -->|"200 OK فوري (instant 200 OK)"| U
+    API --> Q[["الطابور<br/>(Queue)"]]
+    Q --> W1["عامل 1<br/>(Worker 1)"]
+    Q --> W2["عامل 2<br/>(Worker 2)"]
+    W1 --> DONE["ترميز، مصغّرة،<br/>وسم جاهز، إشعار<br/>(transcode, thumbnail,<br/>mark ready, notify)"]
+    W1 -.->|"فشل مرتين (failed twice)"| DLQ[["طابور الرسائل الميتة<br/>(Dead-letter queue)"]]
 ```
 
 **الطابور (Queue)** قائمة مهام دائمة. و**العمّال (Workers)** عمليات (processes) منفصلة تسحب المهام (jobs) منه وتنفّذها. يتوسّع (scale) الـAPI والعمّال *باستقلال* — فيضان (flood) الرفع (uploads) يطيل الطابور بدل أن يُذيب الـAPI، وتضيف عمّالًا لتصريفه (drain) أسرع.
@@ -201,18 +201,18 @@ flowchart RL
 
 ```mermaid
 stateDiagram-v2
-    state "في الطابور" as Q
-    state "قيد التنفيذ" as P
-    state "منجَز" as D
-    state "رسالة ميتة" as DL
+    state "في الطابور (Queued)" as Q
+    state "قيد التنفيذ (Processing)" as P
+    state "منجَز (Done)" as D
+    state "رسالة ميتة (Dead Letter)" as DL
     [*] --> Q
-    Q --> P: يطالب بها عامل (إيجار)
-    P --> D: نجاح، إقرار
-    P --> Q: فشل، إعادة (محاولة < N)
-    P --> DL: فشل N مرات
-    P --> Q: العامل تعطّل، انتهى الإيجار
+    Q --> P: يطالب بها عامل (إيجار) (worker claims (lease))
+    P --> D: نجاح، إقرار (success, ack)
+    P --> Q: فشل، إعادة (محاولة < N) (failed, retry (attempt < N))
+    P --> DL: فشل N مرات (failed N times)
+    P --> Q: العامل تعطّل، انتهى الإيجار (worker died, lease expired)
     D --> [*]
-    DL --> [*]: إنسان يحقق
+    DL --> [*]: إنسان يحقق (human investigates)
 ```
 
 ### 4. الأشياء الثلاثة التي تظل كل مهمة تحتاجها (The three things every job still needs)
@@ -294,10 +294,10 @@ stateDiagram-v2
 
 ```mermaid
 flowchart TD
-    R1["1 · الفهارس<br/>اجعل الاستعلام يقرأ أقل<br/>(رخيص، مكاسب ضخمة)"] --> R2["2 · الكاش<br/>لا تسأل قاعدة البيانات أصلًا<br/>(الوحدة 3)"]
-    R2 --> R3["3 · نسخ القراءة<br/>انسخ القراءات على آلات أكثر"]
-    R3 --> R4["4 · آلة أكبر<br/>توسّع رأسي (مملّ، فعّال)"]
-    R4 --> R5["5 · التجزئة<br/>اقسم البيانات على آلات<br/>(آخر ملاذ)"]
+    R1["1 · الفهارس<br/>اجعل الاستعلام يقرأ أقل<br/>(رخيص، مكاسب ضخمة)<br/>(1 · Indexes<br/>make the query read less<br/>(cheap, huge wins))"] --> R2["2 · الكاش<br/>لا تسأل قاعدة البيانات أصلًا<br/>(الوحدة 3)<br/>(2 · Caching<br/>don't ask the DB at all<br/>(Module 3))"]
+    R2 --> R3["3 · نسخ القراءة<br/>انسخ القراءات على آلات أكثر<br/>(3 · Read replicas<br/>copy reads onto more machines)"]
+    R3 --> R4["4 · آلة أكبر<br/>توسّع رأسي (مملّ، فعّال)<br/>(4 · Bigger machine<br/>vertical scaling (boring, effective))"]
+    R4 --> R5["5 · التجزئة<br/>اقسم البيانات على آلات<br/>(آخر ملاذ)<br/>(5 · Sharding<br/>split the data across machines<br/>(last resort))"]
     style R1 fill:#1a3d1a,color:#fff
     style R5 fill:#5a1a1a,color:#fff
 ```
@@ -320,14 +320,14 @@ flowchart TD
 
 ```mermaid
 sequenceDiagram
-    participant Rep as النسخة (قراءة)
-    participant P as الأساسية (كتابة)
-    participant U as المستخدم
-    U->>P: انشر تعليق «مرحبًا!»
-    P-->>U: حُفظ ✓
-    U->>Rep: أعد تحميل تعليقاتي
-    Rep-->>U: (تأخر) ...تعليقك لم يصل بعد
-    Note over Rep: بعد 200 مللي ثانية يصل
+    participant Rep as النسخة (قراءة) (Replica (reads))
+    participant P as الأساسية (كتابة) (Primary (writes))
+    participant U as المستخدم (User)
+    U->>P: انشر تعليق «مرحبًا!» (Post comment #quot#59;Hello!#quot#59;)
+    P-->>U: حُفظ ✓ (Saved ✓)
+    U->>Rep: أعد تحميل تعليقاتي (Reload my comments)
+    Rep-->>U: (تأخر) ...تعليقك لم يصل بعد ((lag) ...your comment isn't here yet)
+    Note over Rep: بعد 200 مللي ثانية يصل (200ms later it arrives)
 ```
 
 ينشر المستخدم (user) تعليقًا، ويحصل على «حُفظ»، ويعيد التحميل — فلا يجده، لأن الإعادة أصابت نسخة (replica) لم تلحق بعد. هذه علة (bug) **اقرأ-كتابتك-الخاصة (read-your-own-writes)** الكلاسيكية. عالجها بصدق: وجّه القراءات التي يجب أن تعكس كتابة المستخدم *للتوّ* إلى الأساسية (أو انتظر انتشار الكتابة)؛ وأرسل القراءات المتسامحة مع التأخر (lag-tolerant) (التحليلات (analytics)، محتوى الآخرين) إلى النسخ (replicas) فقط. لا تتظاهر أن التأخر (lag) صفر.
@@ -421,8 +421,8 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
-    P["الاستطلاع (Polling)<br/>العميل يسأل كل N ثانية<br/>'هل من جديد؟'"] --> S["SSE (أحداث يرسلها الخادم)<br/>دفق واحد طويل العمر،<br/>من الخادم إلى العميل فقط"]
-    S --> W["WebSockets<br/>أنبوب باتجاهين،<br/>كلا الاتجاهين، زمن استجابة منخفض"]
+    P["الاستطلاع (Polling)<br/>العميل يسأل كل N ثانية<br/>'هل من جديد؟'<br/>(Polling<br/>client asks every N seconds<br/>'anything new?')"] --> S["SSE (أحداث يرسلها الخادم)<br/>دفق واحد طويل العمر،<br/>من الخادم إلى العميل فقط<br/>(SSE (Server-Sent Events)<br/>one long-lived stream,<br/>server → client only)"]
+    S --> W["WebSockets<br/>أنبوب باتجاهين،<br/>كلا الاتجاهين، زمن استجابة منخفض<br/>(WebSockets<br/>a two-way pipe,<br/>both directions, low latency)"]
 ```
 
 | | **الاستطلاع (polling)** | **SSE** | **WebSockets** |
@@ -531,11 +531,11 @@ flowchart TD
 
 ```mermaid
 flowchart RL
-    A["CDN/الحافة<br/>~20 مللي"] --> B["موازن الحِمل<br/>~5 مللي"]
-    B --> C["منطق التطبيق<br/>~50 مللي"]
-    C --> D["قاعدة البيانات<br/>~30 مللي"]
-    D --> E["العرض/الشبكة<br/>~100 مللي"]
-    E --> T["إجمالي الميزانية:<br/>~200 مللي"]
+    A["CDN/الحافة<br/>~20 مللي<br/>(CDN/edge<br/>~20ms)"] --> B["موازن الحِمل<br/>~5 مللي<br/>(Load balancer<br/>~5ms)"]
+    B --> C["منطق التطبيق<br/>~50 مللي<br/>(App logic<br/>~50ms)"]
+    C --> D["قاعدة البيانات<br/>~30 مللي<br/>(Database<br/>~30ms)"]
+    D --> E["العرض/الشبكة<br/>~100 مللي<br/>(Render/network<br/>~100ms)"]
+    E --> T["إجمالي الميزانية:<br/>~200 مللي<br/>(Total budget:<br/>~200ms)"]
 ```
 
 المَوزَنة (budgeting) تفرض السؤال المفيد وقت التصميم (design time): *«هذه النقطة (endpoint) لها 200 مللي — أين تذهب؟»* وحين يبطؤ شيء، لا تخمّن؛ بل تقيس كل قفزة (hop) وتجد أيها تجاوز حصته (allowance). غالبًا واحدة — فهرس مفقود (missing index)، استعلام (query) N+1 (الدرس 2.5)، نداء غير مخزَّن (un-cached call)، أو API طرف ثالث (third-party) ثرثار (chatty) (الدرس 6.7).

@@ -163,4 +163,4 @@
 11. تعديلُ ملفٍ شخصي يُظهر القيمة القديمة لثانية — قراءة الكتابات (read-your-writes) تحت تأخّر التكرار (replication lag). (10.3)
 12. وكيلك الذكي (your AI agent) يبلّغ بـ«تمّ» بملخّصٍ واثقٍ خاطئ — أيَّ دليلٍ (evidence) تطلب؟ (9.4 / 9.8)
 
-عتبة النجاح (Passing bar): تحديد الطبقة الصحيحة (correct layer)، وسببٌ جذري (root cause) وجيه، وإصلاحٌ (fix) يصمد أمام سؤال المتابعة (the follow-up question): «وكيف عرفت أنه نجح؟» (and how do you know it worked?)
+عتبة النجاح (Passing bar): تحديد الطبقة الصحيحة (correct layer)، وسببٌ جذري (root cause) وجيه، وإصلاحٌ (fix) يصمد أمام سؤال المتابعة (the follow-up question): «وكيف عرفت أنه نجح؟» ⁦(and how do you know it worked?)⁩

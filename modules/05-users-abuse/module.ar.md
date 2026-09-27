@@ -46,13 +46,13 @@ Reputation)** — درجة الثقة التي تقرر أتصل رسائله إ
 
 ```mermaid
 flowchart TD
-    A["طلب مجهول<br/>يصيب نقطة نهاية مجانية"] --> B{"هل حُلّ<br/>CAPTCHA؟"}
-    B -->|لا| X["محظور — يكلّف المهاجم<br/>إنسانًا أو رسمَ حلّال"]
-    B -->|نعم| C{"ضمن الحد<br/>لكل IP؟"}
-    C -->|لا| X2["مُقيَّد — يحتاج المهاجم<br/>عناوين كثيرة = تكلفة أعلى"]
-    C -->|نعم| D{"ضمن ميزانية<br/>الأثر الجانبي؟"}
-    D -->|لا| X3["الأثر الجانبي مكبوت<br/>(لا بريد) — والفعل ما زال ينجح"]
-    D -->|نعم| E["مسموح"]
+    A["طلب مجهول<br/>يصيب نقطة نهاية مجانية<br/>(Anonymous request<br/>hits a free endpoint)"] --> B{"هل حُلّ<br/>CAPTCHA؟<br/>(CAPTCHA<br/>solved?)"}
+    B -->|"لا (no)"| X["محظور — يكلّف المهاجم<br/>إنسانًا أو رسمَ حلّال<br/>(Blocked — costs the attacker<br/>a human or a solver fee)"]
+    B -->|"نعم (yes)"| C{"ضمن الحد<br/>لكل IP؟<br/>(Under the<br/>per-IP limit?)"}
+    C -->|"لا (no)"| X2["مُقيَّد — يحتاج المهاجم<br/>عناوين كثيرة = تكلفة أعلى<br/>(Throttled — attacker needs<br/>many IPs = more cost)"]
+    C -->|"نعم (yes)"| D{"ضمن ميزانية<br/>الأثر الجانبي؟<br/>(Under the global<br/>side-effect budget?)"}
+    D -->|"لا (no)"| X3["الأثر الجانبي مكبوت<br/>(لا بريد) — والفعل ما زال ينجح<br/>(Side effect suppressed<br/>(no email sent) — action still 200s)"]
+    D -->|"نعم (yes)"| E["مسموح<br/>(Allowed)"]
 ```
 
 كل بوابة (gate) ترفع تكلفة مختلفة: فحصًا بشريًا (human-check)، وتكلفة تنوّع العناوين (IP-diversity)، وسقفًا صلبًا (hard ceiling) على
@@ -208,11 +208,11 @@ flowchart TD
 
 ```mermaid
 flowchart RL
-    U1["المستخدم أ<br/>العنوان الحقيقي 1.1.1.1"] --> CDN["حافة CDN<br/>العنوان 104.16.0.5"]
-    U2["المستخدم ب<br/>العنوان الحقيقي 2.2.2.2"] --> CDN
-    U3["المستخدم ج<br/>العنوان الحقيقي 3.3.3.3"] --> CDN
-    CDN -->|"عنوان المقبس = 104.16.0.5<br/>لهم جميعًا"| O["الخادم الأصلي"]
-    CDN -.->|"CF-Connecting-IP: العنوان الحقيقي<br/>في ترويسة"| O
+    U1["المستخدم أ<br/>العنوان الحقيقي 1.1.1.1<br/>(User A<br/>real IP 1.1.1.1)"] --> CDN["حافة CDN<br/>العنوان 104.16.0.5<br/>(CDN edge<br/>IP 104.16.0.5)"]
+    U2["المستخدم ب<br/>العنوان الحقيقي 2.2.2.2<br/>(User B<br/>real IP 2.2.2.2)"] --> CDN
+    U3["المستخدم ج<br/>العنوان الحقيقي 3.3.3.3<br/>(User C<br/>real IP 3.3.3.3)"] --> CDN
+    CDN -->|"عنوان المقبس = 104.16.0.5<br/>لهم جميعًا (socket IP = 104.16.0.5<br/>for ALL of them)"| O["الخادم الأصلي<br/>(Origin server)"]
+    CDN -.->|"CF-Connecting-IP: العنوان الحقيقي<br/>في ترويسة (CF-Connecting-IP: real IP<br/>in a header)"| O
 ```
 
 عنوان العميل الحقيقي (real client IP) ما زال موجودًا — يضعه الـCDN في ترويسة طلب (`CF-Connecting-IP`،
@@ -380,13 +380,13 @@ Token)** طويل العمر (long-lived) يسكّ رموز وصول (access tok
 ```mermaid
 sequenceDiagram
     autonumber
-    participant S as الخادم
-    participant U as المستخدم
-    U->>S: تحديث بالرمز R1
-    S-->>U: وصول جديد + تدوير ← R2 (R1 ميت الآن)
-    Note over U,S: لاحقًا، يعيد لصٌّ تشغيل R1 المسروق
-    U->>S: تحديث بالرمز R1 (مُدوَّر سلفًا)
-    S-->>U: كُشفت إعادة الاستخدام ← احرق السلسلة، افرض دخولًا جديدًا
+    participant S as الخادم (Server)
+    participant U as المستخدم (User)
+    U->>S: تحديث بالرمز R1 (refresh with token R1)
+    S-->>U: وصول جديد + تدوير ← R2 (R1 ميت الآن) (new access + rotate → R2 (R1 now dead))
+    Note over U,S: لاحقًا، يعيد لصٌّ تشغيل R1 المسروق (later, a thief replays the stolen R1)
+    U->>S: تحديث بالرمز R1 (مُدوَّر سلفًا) (refresh with token R1 (already rotated))
+    S-->>U: كُشفت إعادة الاستخدام ← احرق السلسلة، افرض دخولًا جديدًا (REUSE DETECTED → burn the whole chain, force re-login)
 ```
 
 أنت لا تمنع السرقة — بل تجعلها *قابلة للكشف ومحدودة (detectable and bounded)*. الرمز (token) المسروق يشتري للمهاجم (attacker)
@@ -518,13 +518,13 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
-    C["أي شيء يستطيع العميل التأثير فيه"] --> U["روابط تجلبها<br/>← SSRF"]
-    C --> H["ترويسات تقرؤها<br/>← هوية مزوّرة"]
-    C --> M["مقاييس تعدّها/تصنّفها<br/>← قرارات مسمومة"]
-    C --> F["أسماء ملفات، إعادة توجيه،<br/>معرّفات تتبعها ← عبور"]
-    U --> G["مرّرها عبر دالة جلب<br/>واحدة محميّة من SSRF"]
-    H --> G2["لا تثق بها إلا بعد<br/>أن تجعل التزوير مستحيلًا"]
-    M --> G3["عامل مدخلات التصنيف<br/>كعدائية: حُدَّ، تحقّق، صادِق"]
+    C["أي شيء يستطيع العميل التأثير فيه<br/>(Anything the client can influence)"] --> U["روابط تجلبها<br/>← SSRF<br/>(URLs you fetch<br/>→ SSRF)"]
+    C --> H["ترويسات تقرؤها<br/>← هوية مزوّرة<br/>(Headers you read<br/>→ forged identity)"]
+    C --> M["مقاييس تعدّها/تصنّفها<br/>← قرارات مسمومة<br/>(Metrics you count/rank<br/>→ poisoned decisions)"]
+    C --> F["أسماء ملفات، إعادة توجيه،<br/>معرّفات تتبعها ← عبور<br/>(Filenames, redirects,<br/>IDs you follow → traversal)"]
+    U --> G["مرّرها عبر دالة جلب<br/>واحدة محميّة من SSRF<br/>(Route through ONE<br/>SSRF-guarded fetch)"]
+    H --> G2["لا تثق بها إلا بعد<br/>أن تجعل التزوير مستحيلًا<br/>(Trust only after<br/>you've made forgery impossible)"]
+    M --> G3["عامل مدخلات التصنيف<br/>كعدائية: حُدَّ، تحقّق، صادِق<br/>(Treat ranking inputs<br/>as adversarial: cap, validate, auth)"]
 ```
 
 لكل معالِج (handler)، اطرح السؤال الثابت: **«اسرد كل موضع يثق فيه هذا المعالِج بشيء يتحكم فيه
@@ -676,10 +676,10 @@ IP، وحدود طول (length caps) ومخطط (schema)، وحدود عدديّ
 
 ```mermaid
 flowchart RL
-    A["رسائل تفعيل<br/>إلى غرباء (إساءة)"] --> R["سمعة<br/>المُرسِل"]
-    B["نسبة ارتداد عالية<br/>(قائمة سيئة)"] --> R
-    C["بلاغات سخام"] --> R
-    R -->|"تهبط الدرجة"| D["كل البريد ← مهملات<br/>بما فيه إعادات تعيين كلمة المرور"]
+    A["رسائل تفعيل<br/>إلى غرباء (إساءة)<br/>(Verification emails<br/>to strangers (abuse))"] --> R["سمعة<br/>المُرسِل<br/>(Sender<br/>reputation)"]
+    B["نسبة ارتداد عالية<br/>(قائمة سيئة)<br/>(High bounce rate<br/>(bad list))"] --> R
+    C["بلاغات سخام<br/>(Spam complaints)"] --> R
+    R -->|"تهبط الدرجة (score drops)"| D["كل البريد ← مهملات<br/>بما فيه إعادات تعيين كلمة المرور<br/>(ALL mail → junk<br/>incl. password resets)"]
 ```
 
 حماية السمعة (reputation) هي لماذا العناوين المملوكة وسجلات المصادقة (SPF وDKIM وDMARC) وحدود (limits)
@@ -815,11 +815,11 @@ OWASP العشرة (Top 10)**، وهي إجماع الصناعة على أخطر
 
 ```mermaid
 flowchart RL
-    PR["طلب دمج"] --> C["تمريرة الصحة<br/>«هل يؤدي الغرض؟»"]
-    PR --> S["تمريرة الأمان<br/>«ماذا يستطيع المهاجم؟»"]
-    C --> M["دمج"]
+    PR["طلب دمج<br/>(A pull request)"] --> C["تمريرة الصحة<br/>«هل يؤدي الغرض؟»<br/>(Correctness pass<br/>'does it do the thing?')"]
+    PR --> S["تمريرة الأمان<br/>«ماذا يستطيع المهاجم؟»<br/>(Security pass<br/>'what can an attacker do?')"]
+    C --> M["دمج<br/>(Merge)"]
     S --> M
-    S -.->|"تجد SSRF، المفتاح<br/>الافتراضي، النقطة المفتوحة"| M
+    S -.->|"تجد SSRF، المفتاح<br/>الافتراضي، النقطة المفتوحة (finds the SSRF, the<br/>default secret, the open endpoint)"| M
 ```
 
 ### 3. نظافة سلسلة التوريد (Supply-chain hygiene): تطبيقك غالبًا كودٌ (code) لم تكتبه
@@ -930,10 +930,10 @@ flowchart RL
 
 ```mermaid
 flowchart TD
-    S["سرّ"] --> L1["1. لا في المستودع أبدًا<br/>سجل git للأبد —<br/>إيداعٌ واحد تسريب"]
-    S --> L2["2. لا في حِزم العميل أبدًا<br/>كل ما يُشحَن إلى<br/>متصفح/تطبيق عامّ"]
-    S --> L3["3. مفصولة لكل بيئة<br/>مفاتيح dev/staging/prod تختلف<br/>— تسريب dev ليس اختراق prod"]
-    S --> L4["4. قابلة للتدوير في دقائق<br/>ستسرّب واحدًا —<br/>الخطة تدوير لا أمل"]
+    S["سرّ<br/>(A secret)"] --> L1["1. لا في المستودع أبدًا<br/>سجل git للأبد —<br/>إيداعٌ واحد تسريب<br/>(1. Never in the repo<br/>git history is forever —<br/>one commit is a leak)"]
+    S --> L2["2. لا في حِزم العميل أبدًا<br/>كل ما يُشحَن إلى<br/>متصفح/تطبيق عامّ<br/>(2. Never in client bundles<br/>everything shipped to a<br/>browser/app is public)"]
+    S --> L3["3. مفصولة لكل بيئة<br/>مفاتيح dev/staging/prod تختلف<br/>— تسريب dev ليس اختراق prod<br/>(3. Separated per environment<br/>dev/staging/prod keys differ<br/>— a dev leak isn't a prod breach)"]
+    S --> L4["4. قابلة للتدوير في دقائق<br/>ستسرّب واحدًا —<br/>الخطة تدوير لا أمل<br/>(4. Rotatable in minutes<br/>you WILL leak one —<br/>the plan is rotation, not hope)"]
 ```
 
 **القانون (Law) 1 — لا في المستودع (repo) أبدًا.** سجل (history) git دائم. إيداع (commit) سرٍّ (secret) و«إزالته» في الإيداع

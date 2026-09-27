@@ -80,17 +80,17 @@
 
 ```mermaid
 flowchart TD
-    A[استخدام جديد للبيانات الشخصية في الذكاء الاصطناعي] --> B{هل توجد بيانات شخصية؟}
-    B -- لا، مجهولة بعد التحقق --> Z[وثّق تعليل إخفاء الهوية]
-    B -- نعم --> C{هل الغرض متوافق مع الجمع؟}
-    C -- لا --> D[يلزم أساس جديد أو موافقة]
-    C -- نعم --> E{هل اختير الأساس القانوني؟}
-    E --> F[اختبار المصالح المشروعة ذو الخطوات الثلاث]
-    F --> G{فئات خاصة أو استنتاجات؟}
-    G -- نعم --> H[شرط المادة 9 أو إعادة التصميم]
-    G -- لا --> I[قلّل البيانات وأمّنها وحدد الاحتفاظ]
+    A["استخدام جديد للبيانات الشخصية في الذكاء الاصطناعي<br/>(New AI use of personal data)"] --> B{"هل توجد بيانات شخصية؟<br/>(Personal data involved?)"}
+    B -- "لا، مجهولة بعد التحقق (No, verified anonymous)" --> Z["وثّق تعليل إخفاء الهوية<br/>(Document anonymity reasoning)"]
+    B -- "نعم (Yes)" --> C{"هل الغرض متوافق مع الجمع؟<br/>(Purpose compatible with collection?)"}
+    C -- "لا (No)" --> D["يلزم أساس جديد أو موافقة<br/>(New basis or consent needed)"]
+    C -- "نعم (Yes)" --> E{"هل اختير الأساس القانوني؟<br/>(Lawful basis chosen?)"}
+    E --> F["اختبار المصالح المشروعة ذو الخطوات الثلاث<br/>(Legitimate interests three-step test)"]
+    F --> G{"فئات خاصة أو استنتاجات؟<br/>(Special categories or inferences?)"}
+    G -- "نعم (Yes)" --> H["شرط المادة 9 أو إعادة التصميم<br/>(Art. 9 condition or redesign)"]
+    G -- "لا (No)" --> I["قلّل البيانات وأمّنها وحدد الاحتفاظ<br/>(Minimise, secure, set retention)"]
     H --> I
-    I --> J[سجّل في سجل أنشطة المعالجة وافحص الحاجة إلى تقييم الأثر]
+    I --> J["سجّل في سجل أنشطة المعالجة وافحص الحاجة إلى تقييم الأثر<br/>(Record in ROPA and DPIA screening)"]
 ```
 
 ## ⚖️ الأدوات التنظيمية (The instruments)
@@ -277,16 +277,16 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A[مخرج ذكاء اصطناعي بشأن شخص] --> B{هل هو قرار أو مدخل حاسم فيه؟}
-    B -- لا --> Z[لا تنطبق المادة 22 وتبقى الحقوق الأخرى سارية]
-    B -- نعم --> C{آلي بالكامل بلا مراجعة بشرية ذات معنى؟}
-    C -- لا --> Z
-    C -- نعم --> D{أثر قانوني أو كبير مماثل؟}
-    D -- لا --> Z
-    D -- نعم --> E{ضرورة عقد أو قانون أو موافقة صريحة؟}
-    E -- لا --> F[محظور: أعد التصميم بمراجعة بشرية ذات معنى]
-    E -- نعم --> G[ضمانات: تدخل بشري وإبداء الرأي والطعن]
-    G --> H[الشفافية: المنطق والأهمية والعواقب]
+    A["مخرج ذكاء اصطناعي بشأن شخص<br/>(AI output about a person)"] --> B{"هل هو قرار أو مدخل حاسم فيه؟<br/>(Is it a decision or determining input to one?)"}
+    B -- "لا (No)" --> Z["لا تنطبق المادة 22 وتبقى الحقوق الأخرى سارية<br/>(Art. 22 not engaged#59; other rights still apply)"]
+    B -- "نعم (Yes)" --> C{"آلي بالكامل بلا مراجعة بشرية ذات معنى؟<br/>(Solely automated, no meaningful human review?)"}
+    C -- "لا (No)" --> Z
+    C -- "نعم (Yes)" --> D{"أثر قانوني أو كبير مماثل؟<br/>(Legal or similarly significant effect?)"}
+    D -- "لا (No)" --> Z
+    D -- "نعم (Yes)" --> E{"ضرورة عقد أو قانون أو موافقة صريحة؟<br/>(Contract necessity, law, or explicit consent?)"}
+    E -- "لا (No)" --> F["محظور: أعد التصميم بمراجعة بشرية ذات معنى<br/>(Prohibited: redesign with meaningful human review)"]
+    E -- "نعم (Yes)" --> G["ضمانات: تدخل بشري وإبداء الرأي والطعن<br/>(Safeguards: human intervention, express view, contest)"]
+    G --> H["الشفافية: المنطق والأهمية والعواقب<br/>(Transparency: logic, significance, consequences)"]
 ```
 
 **الشفافية (transparency) و"المعلومات ذات المعنى عن المنطق المتّبع (meaningful information about the logic involved)".** حيث تُتخذ قرارات آلية بالكامل (solely automated decisions) بموجب المادة 22 (Art. 22)، تشترط المواد 13(2)(f) و14(2)(g) و15(1)(h) أن يقدّم المتحكّم (controller) معلومات ذات معنى عن المنطق المتّبع (logic involved)، وعن أهمية القرار وعواقبه المتوقعة على الشخص. فما الذي يُعد ذا معنى؟

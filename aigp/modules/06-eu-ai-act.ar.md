@@ -103,16 +103,16 @@
 
 ```mermaid
 flowchart TD
-  A[جهة ونظام ذكاء اصطناعي] --> B{بناه أو كلّف ببنائه ويقدّمه أو يستخدمه باسمه؟}
-  B -- نعم --> P[مقدّم النظام]
-  B -- لا --> C{يستخدمه تحت سلطته؟}
-  C -- نعم --> D[مُشغِّل]
-  C -- لا --> E{مقره في الاتحاد الأوروبي وأول من أدخل علامة غير أوروبية؟}
-  E -- نعم --> I[مستورد]
-  E -- لا --> F[موزّع أو خارج النطاق]
-  D --> G{أعاد الوسم أو عدّل جوهريًا أو غيّر الغرض إلى عالي المخاطر؟}
-  G -- نعم --> P2[يُعامَل مقدّمًا لنظام عالي المخاطر]
-  G -- لا --> D2[يبقى مُشغِّلًا]
+  A["جهة ونظام ذكاء اصطناعي<br/>(Organisation and an AI system)"] --> B{"بناه أو كلّف ببنائه ويقدّمه أو يستخدمه باسمه؟<br/>(Built or commissioned it and offers or uses it under own name?)"}
+  B -- "نعم (Yes)" --> P["مقدّم النظام<br/>(Provider)"]
+  B -- "لا (No)" --> C{"يستخدمه تحت سلطته؟<br/>(Uses it under own authority?)"}
+  C -- "نعم (Yes)" --> D["مُشغِّل<br/>(Deployer)"]
+  C -- "لا (No)" --> E{"مقره في الاتحاد الأوروبي وأول من أدخل علامة غير أوروبية؟<br/>(EU based and first to bring a non-EU brand to the EU?)"}
+  E -- "نعم (Yes)" --> I["مستورد<br/>(Importer)"]
+  E -- "لا (No)" --> F["موزّع أو خارج النطاق<br/>(Distributor or out of scope)"]
+  D --> G{"أعاد الوسم أو عدّل جوهريًا أو غيّر الغرض إلى عالي المخاطر؟<br/>(Rebrands, substantially modifies or repurposes into high-risk?)"}
+  G -- "نعم (Yes)" --> P2["يُعامَل مقدّمًا لنظام عالي المخاطر<br/>(Treated as high-risk provider)"]
+  G -- "لا (No)" --> D2["يبقى مُشغِّلًا<br/>(Stays deployer)"]
 ```
 
 **المادة 5: الممارسات المحظورة (prohibited practices)** (مطبَّقة منذ 2 فبراير 2025؛ ونُشرت إرشادات المفوضية (Commission guidelines) في الشهر نفسه). يُحظر طرح (placing) أنظمة ذكاء اصطناعي (AI systems) في السوق أو وضعها في الخدمة أو استخدامها إذا كانت:
@@ -335,14 +335,14 @@ flowchart TD
 
 ```mermaid
 flowchart RL
-  A[البناء وفق المواد 9 إلى 15] --> B[نظام إدارة الجودة]
-  B --> C[الوثائق الفنية]
-  C --> D[تقييم المطابقة]
-  D --> E[الإعلان وعلامة CE]
-  E --> F[التسجيل في قاعدة بيانات الاتحاد الأوروبي]
-  F --> G[الطرح في السوق أو الوضع في الخدمة]
-  G --> H[الرصد بعد الطرح في السوق]
-  H --> I[الإبلاغ عن الحوادث الجسيمة]
+  A["البناء وفق المواد 9 إلى 15<br/>(Build to Arts 9 to 15)"] --> B["نظام إدارة الجودة<br/>(Quality management system)"]
+  B --> C["الوثائق الفنية<br/>(Technical documentation)"]
+  C --> D["تقييم المطابقة<br/>(Conformity assessment)"]
+  D --> E["الإعلان وعلامة CE<br/>(Declaration and CE marking)"]
+  E --> F["التسجيل في قاعدة بيانات الاتحاد الأوروبي<br/>(Register in EU database)"]
+  F --> G["الطرح في السوق أو الوضع في الخدمة<br/>(Place on market or put into service)"]
+  G --> H["الرصد بعد الطرح في السوق<br/>(Post-market monitoring)"]
+  H --> I["الإبلاغ عن الحوادث الجسيمة<br/>(Serious incident reporting)"]
   H --> A
 ```
 

@@ -51,16 +51,16 @@
 
 ```mermaid
 flowchart RL
-  Staff["مهندس الدعم"] --> Proxy["VPN أو وسيط وصول"]
-  Proxy --> IdP["دخول موحد للموظفين + MFA"]
-  IdP --> Admin["تطبيق الإدارة admin.beacon.internal"]
-  Admin --> Svc["طبقة الخدمات: الفوترة والمنظمات والمراقِبات"]
-  Customer["العميل"] --> App["تطبيق العملاء app.beacon.io"]
+  Staff["مهندس الدعم<br/>(Support engineer)"] --> Proxy["VPN أو وسيط وصول<br/>(VPN or access proxy)"]
+  Proxy --> IdP["دخول موحد للموظفين + MFA<br/>(Staff SSO + MFA)"]
+  IdP --> Admin["تطبيق الإدارة admin.beacon.internal<br/>(Admin app admin.beacon.internal)"]
+  Admin --> Svc["طبقة الخدمات: الفوترة والمنظمات والمراقِبات<br/>(Service layer: billing, orgs, monitors)"]
+  Customer["العميل<br/>(Customer)"] --> App["تطبيق العملاء app.beacon.io<br/>(Customer app app.beacon.io)"]
   App --> Svc
   Svc --> DB[("Postgres")]
   Svc --> Stripe["Stripe"]
-  Admin --> Audit[("سجل التدقيق")]
-  Admin --> Helpdesk["مكتب المساعدة: Chatwoot أو Intercom"]
+  Admin --> Audit[("سجل التدقيق<br/>(Audit log)")]
+  Admin --> Helpdesk["مكتب المساعدة: Chatwoot أو Intercom<br/>(Helpdesk: Chatwoot or Intercom)"]
 ```
 
 لاحظ الشكل: تطبيق الإدارة (admin app) وتطبيق العملاء (customer app) **بابان أماميان (two front doors) إلى طبقة خدمات (service layer) واحدة**. لا يحصل تطبيق الإدارة (the admin app) على طريق مختصر (shortcut) خاص به إلى قاعدة البيانات (database).
@@ -91,19 +91,19 @@ flowchart RL
 
 ```mermaid
 sequenceDiagram
-    participant L as سجل التدقيق
-    participant C as تطبيق العملاء
-    participant A as تطبيق الإدارة
-    participant S as الموظف
-  S->>A: انتحال هوية المستخدم 981، السبب TICKET-1234
-  A->>A: التحقق من دور الموظف وإعداد موافقة المنظمة
-  A->>L: impersonation.started بواسطة الموظف 42 للمستخدم 981
-  A->>C: إعادة توجيه مع رمز موقَّع لمرة واحدة
-  C->>C: إنشاء جلسة، readOnly true، تنتهي بعد 30 دقيقة
-  C-->>S: لوحة التحكم مع شريط الانتحال
-  S->>C: POST حذف مراقِب
-  C-->>S: 403 انتحال للقراءة فقط
-  S->>C: خروج
+    participant L as سجل التدقيق (Audit log)
+    participant C as تطبيق العملاء (Customer app)
+    participant A as تطبيق الإدارة (Admin app)
+    participant S as الموظف (Staff)
+  S->>A: انتحال هوية المستخدم 981، السبب TICKET-1234 (Impersonate user 981, reason TICKET-1234)
+  A->>A: التحقق من دور الموظف وإعداد موافقة المنظمة (Check staff role and org consent setting)
+  A->>L: impersonation.started بواسطة الموظف 42 للمستخدم 981 (impersonation.started by staff 42 for user 981)
+  A->>C: إعادة توجيه مع رمز موقَّع لمرة واحدة (Redirect with one-time signed token)
+  C->>C: إنشاء جلسة، readOnly true، تنتهي بعد 30 دقيقة (Create session, readOnly true, expires in 30 min)
+  C-->>S: لوحة التحكم مع شريط الانتحال (Dashboard with impersonation banner)
+  S->>C: POST حذف مراقِب (POST delete monitor)
+  C-->>S: 403 انتحال للقراءة فقط (403 read-only impersonation)
+  S->>C: خروج (Exit)
   C->>L: impersonation.ended
 ```
 
@@ -361,18 +361,18 @@ log().warn({ monitorId, status }, "check.failed");
 
 ```mermaid
 flowchart RL
-  Web["تطبيق Next.js + OTel SDK"] --> Col["OTel Collector"]
-  Worker["عمّال الفحص + OTel SDK"] --> Col
-  Col --> Traces[("التتبعات: Tempo أو SigNoz")]
-  Col --> Metrics[("المقاييس: Prometheus")]
-  Col --> Logs[("السجلات: Loki أو ClickHouse")]
-  Web --> Sentry["الأخطاء: Sentry"]
+  Web["تطبيق Next.js + OTel SDK<br/>(Next.js app + OTel SDK)"] --> Col["OTel Collector"]
+  Worker["عمّال الفحص + OTel SDK<br/>(Check workers + OTel SDK)"] --> Col
+  Col --> Traces[("التتبعات: Tempo أو SigNoz<br/>(Traces: Tempo or SigNoz)")]
+  Col --> Metrics[("المقاييس: Prometheus<br/>(Metrics: Prometheus)")]
+  Col --> Logs[("السجلات: Loki أو ClickHouse<br/>(Logs: Loki or ClickHouse)")]
+  Web --> Sentry["الأخطاء: Sentry<br/>(Errors: Sentry)"]
   Worker --> Sentry
-  Traces --> Grafana["لوحات المتابعة + التنبيهات"]
+  Traces --> Grafana["لوحات المتابعة + التنبيهات<br/>(Dashboards + alerts)"]
   Metrics --> Grafana
   Logs --> Grafana
-  Probe["مجس توفر خارجي"] --> Web
-  Grafana --> Pager["منبّه المناوبة"]
+  Probe["مجس توفر خارجي<br/>(External uptime probe)"] --> Web
+  Grafana --> Pager["منبّه المناوبة<br/>(On-call pager)"]
 ```
 
 **تمرير سياق التتبع (Trace Context Propagation).** التتبع (trace) لا يعمل إلا إذا مرّرت كل خطوة معرّف التتبع (trace id) إلى الخطوة التالية. عبر HTTP يستخدم OTel ترويسة (header) W3C `traceparent` تلقائيًا. لكن عبر الطابور (queue) لا يحدث ذلك من تلقاء نفسه: عندما يضع الـ API مهمة BullMQ (BullMQ job) في الطابور، ضع سياق التتبع (trace context) داخل بيانات المهمة (job data) واستعده في العامل (worker)، وإلا سينتهي التتبع عند الطابور، وهو بالضبط المكان الذي يبدأ فيه العمل المهم في Beacon.
@@ -601,8 +601,8 @@ RED تعني المعدل والأخطاء والمدة (rate, errors, duration)
 
 ```mermaid
 erDiagram
-  ORGANIZATION ||--o{ AUDIT_EVENT : "تملك"
-  AUDIT_EVENT ||--o{ AUDIT_TARGET : "يؤثر في"
+  ORGANIZATION ||--o{ AUDIT_EVENT : "تملك (owns)"
+  AUDIT_EVENT ||--o{ AUDIT_TARGET : "يؤثر في (affects)"
   AUDIT_EVENT {
     uuid id
     uuid org_id
@@ -680,11 +680,11 @@ Bemi حل هجين (hybrid) مثير للاهتمام: يلتقط تغييرات
 
 ```mermaid
 flowchart RL
-  E1["الحدث 1<br/>التجزئة h1"] --> E2["الحدث 2<br/>السابقة h1، التجزئة h2"]
-  E2 --> E3["الحدث 3<br/>السابقة h2، التجزئة h3"]
-  E3 --> E4["الحدث 4<br/>السابقة h3، التجزئة h4"]
-  E4 --> Anchor["تثبيت h4 كل ساعة<br/>في تخزين للكتابة مرة واحدة"]
-  Verifier["مهمة التحقق"] -.->|"تعيد حساب السلسلة"| E1
+  E1["الحدث 1<br/>التجزئة h1<br/>(Event 1<br/>hash h1)"] --> E2["الحدث 2<br/>السابقة h1، التجزئة h2<br/>(Event 2<br/>prev h1, hash h2)"]
+  E2 --> E3["الحدث 3<br/>السابقة h2، التجزئة h3<br/>(Event 3<br/>prev h2, hash h3)"]
+  E3 --> E4["الحدث 4<br/>السابقة h3، التجزئة h4<br/>(Event 4<br/>prev h3, hash h4)"]
+  E4 --> Anchor["تثبيت h4 كل ساعة<br/>في تخزين للكتابة مرة واحدة<br/>(Hourly anchor h4<br/>to write-once storage)"]
+  Verifier["مهمة التحقق<br/>(Verifier job)"] -.->|"تعيد حساب السلسلة (recomputes chain)"| E1
   Verifier -.-> Anchor
 ```
 
@@ -905,15 +905,15 @@ export const env = Env.parse(process.env); // throws at startup, not at 3 a.m.
 
 ```mermaid
 flowchart RL
-  PR["طلب الدمج"] --> CI["CI: الفحص الأسلوبي، وفحص الأنواع، والاختبارات"]
-  CI --> Build["بناء صورة موسومة بـ git SHA"]
-  Build --> Preview["بيئة معاينة لكل طلب دمج"]
-  Build --> Registry[("سجل الحاويات")]
-  Registry --> Migrate["تشغيل ترحيلات التوسيع"]
-  Migrate --> Staging["النشر إلى التجهيز + اختبارات الدخان"]
-  Staging --> Prod["نشر متدرج إلى الإنتاج"]
-  Prod --> Health["فحوص الصحة + مراقبة معدل الأخطاء"]
-  Health -->|"قفزة في الأخطاء"| Rollback["التراجع إلى الصورة السابقة"]
+  PR["طلب الدمج<br/>(Pull request)"] --> CI["CI: الفحص الأسلوبي، وفحص الأنواع، والاختبارات<br/>(CI: lint, typecheck, tests)"]
+  CI --> Build["بناء صورة موسومة بـ git SHA<br/>(Build image tagged with git SHA)"]
+  Build --> Preview["بيئة معاينة لكل طلب دمج<br/>(Preview env per PR)"]
+  Build --> Registry[("سجل الحاويات<br/>(Container registry)")]
+  Registry --> Migrate["تشغيل ترحيلات التوسيع<br/>(Run expand migrations)"]
+  Migrate --> Staging["النشر إلى التجهيز + اختبارات الدخان<br/>(Deploy to staging + smoke tests)"]
+  Staging --> Prod["نشر متدرج إلى الإنتاج<br/>(Rolling deploy to production)"]
+  Prod --> Health["فحوص الصحة + مراقبة معدل الأخطاء<br/>(Health checks + error rate watch)"]
+  Health -->|"قفزة في الأخطاء (errors spike)"| Rollback["التراجع إلى الصورة السابقة<br/>(Roll back to previous image)"]
 ```
 
 ### 🟡 التعمق أكثر (Going deeper)
@@ -929,15 +929,15 @@ flowchart RL
 ```mermaid
 sequenceDiagram
     participant DB as Postgres
-    participant New as الكود الجديد v2
-    participant Old as الكود القديم v1
-    participant M as الترحيلات
-  M->>DB: إضافة العمود target قابلًا للفراغ
-  Old->>DB: يقرأ ويكتب url فقط
-  New->>DB: يكتب url وtarget، ويقرأ url
-  M->>DB: ملء target من url على دفعات
-  Note over Old,New: نشر v3 الذي يقرأ target
-  M->>DB: إصدار لاحق يحذف العمود url
+    participant New as الكود الجديد v2 (New code v2)
+    participant Old as الكود القديم v1 (Old code v1)
+    participant M as الترحيلات (Migrations)
+  M->>DB: إضافة العمود target قابلًا للفراغ (Add column target, nullable)
+  Old->>DB: يقرأ ويكتب url فقط (Reads and writes url only)
+  New->>DB: يكتب url وtarget، ويقرأ url (Writes url and target, reads url)
+  M->>DB: ملء target من url على دفعات (Batched backfill of target from url)
+  Note over Old,New: نشر v3 الذي يقرأ target (Deploy v3 reading target)
+  M->>DB: إصدار لاحق يحذف العمود url (Later release drops column url)
 ```
 
 قاعدة عامة: الترحيلات (migrations) تعمل *قبل* نشر (deploy) الكود الجديد (new code)، ويجب ألا تكسر أبدًا الكود العامل حاليًا (currently running code). إعادة التسمية (renames) وتغيير الأنواع (type changes) تتطلب دائمًا عدة خطوات. تستطيع الأدوات (tools) المساعدة في فحص العمليات الخطرة (Atlas فيه فحص (check) للترحيلات (migration linting)، و`strong_migrations` يفعل ذلك في Rails).

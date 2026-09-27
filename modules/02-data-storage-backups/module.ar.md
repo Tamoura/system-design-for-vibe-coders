@@ -67,10 +67,10 @@
 
 ```mermaid
 flowchart TD
-    Q["ماذا تخزّن؟"] --> A{"سجلات مترابطة<br/>بقواعد مفروضة؟<br/>(مستخدمون، طلبات، أموال)"}
-    A -->|نعم| SQL["قاعدة علائقية (SQL):<br/>Postgres, MySQL —<br/>الخيار المملّ الافتراضي"]
-    A -->|"وثائق مستقلة<br/>غالبًا"| DOC["قاعدة وثائقية:<br/>MongoDB — شكل مرن"]
-    A -->|"مفتاح ← قيمة<br/>قابل للتخلص/سريع"| KV["مفتاح-قيمة:<br/>Redis — كاش، جلسات"]
+    Q["ماذا تخزّن؟<br/>(What are you storing?)"] --> A{"سجلات مترابطة<br/>بقواعد مفروضة؟<br/>(مستخدمون، طلبات، أموال)<br/>(Related records with<br/>enforced rules?<br/>(users, orders, money))"}
+    A -->|"نعم (yes)"| SQL["قاعدة علائقية (SQL):<br/>Postgres, MySQL —<br/>الخيار المملّ الافتراضي<br/>(Relational DB (SQL):<br/>Postgres, MySQL —<br/>the boring default)"]
+    A -->|"وثائق مستقلة<br/>غالبًا (mostly self-contained<br/>documents)"| DOC["قاعدة وثائقية:<br/>MongoDB — شكل مرن<br/>(Document DB:<br/>MongoDB — flexible shape)"]
+    A -->|"مفتاح ← قيمة<br/>قابل للتخلص/سريع (pure key → value,<br/>disposable/fast)"| KV["مفتاح-قيمة:<br/>Redis — كاش، جلسات<br/>(Key-value:<br/>Redis — cache, sessions)"]
 ```
 
 يتعمّق الدرس (lesson) 2.5 في متى يناسب كلٌّ منها. أما الآن فالقاعدة: **اختر الخيار المملّ (the boring default)
@@ -188,10 +188,10 @@ flowchart TD
 
 ```mermaid
 flowchart RL
-    U["مستخدم يرفع ملفًا"] --> API["التطبيق / الواجهة"]
-    API -->|"خزّن البايتات"| OS[("تخزين الكائنات<br/>(R2 / S3 / GCS)")]
-    API -->|"خزّن المفتاح + البيانات الوصفية"| DB[("قاعدة البيانات<br/>المالك، الاسم، الحجم")]
-    OS --> CDN["CDN"] --> V["المشاهدون"]
+    U["مستخدم يرفع ملفًا<br/>(User uploads a file)"] --> API["التطبيق / الواجهة<br/>(App / API)"]
+    API -->|"خزّن البايتات (store bytes)"| OS[("تخزين الكائنات<br/>(R2 / S3 / GCS)<br/>(Object storage<br/>(R2 / S3 / GCS))")]
+    API -->|"خزّن المفتاح + البيانات الوصفية (store key + metadata)"| DB[("قاعدة البيانات<br/>المالك، الاسم، الحجم<br/>(Database<br/>owner, filename, size)")]
+    OS --> CDN["CDN"] --> V["المشاهدون<br/>(Viewers)"]
 ```
 
 ### 2. أثناء الترحيل (migration)، يملك نظامان الحقيقة (truth) نفسها
@@ -210,10 +210,10 @@ flowchart RL
 
 ```mermaid
 stateDiagram-v2
-    [*] --> OldOnly: القديم هو المالك الوحيد
-    OldOnly --> DualWrite: اكتب للاثنين، اقرأ من القديم
-    DualWrite --> DualRead: اكتمل النقل، اقرأ من الجديد، تحقّق مقابل القديم
-    DualRead --> NewOnly: القديم يعجز عن الفعل
+    [*] --> OldOnly: القديم هو المالك الوحيد (old system is sole owner)
+    OldOnly --> DualWrite: اكتب للاثنين، اقرأ من القديم (write to both, read old)
+    DualWrite --> DualRead: اكتمل النقل، اقرأ من الجديد، تحقّق مقابل القديم (backfill done, read new, verify against old)
+    DualRead --> NewOnly: القديم يعجز عن الفعل (OLD SYSTEM CAN NO LONGER ACT)
     NewOnly --> [*]
     note right of DualRead
         الفخ عاش هنا:
@@ -340,8 +340,8 @@ webpack**: ملفاتٍ (files) مؤقتةٍ قابلةٍ للتخلص (disposab
 
 ```mermaid
 flowchart TD
-    ALL["كل شيء على الخادم"] --> STATE["الحالة — لا تُعوّض<br/>• قواعد البيانات (مستخدمون، محتوى، طلبات)<br/>• رفوعات المستخدمين / تخزين الكائنات<br/>• الإعدادات والأسرار<br/>← انسخ هذا"]
-    ALL --> ART["القطع الأثرية — قابلة للتوليد<br/>• الكود المصدري (في git)<br/>• ناتج البناء / الكاش<br/>• الاعتماديات المنصّبة<br/>← لا تنسخ هذا"]
+    ALL["كل شيء على الخادم<br/>(Everything on the server)"] --> STATE["الحالة — لا تُعوّض<br/>• قواعد البيانات (مستخدمون، محتوى، طلبات)<br/>• رفوعات المستخدمين / تخزين الكائنات<br/>• الإعدادات والأسرار<br/>← انسخ هذا<br/>(STATE — irreplaceable<br/>• databases (users, content, orders)<br/>• user uploads / object storage<br/>• config & secrets<br/>→ BACK THIS UP)"]
+    ALL --> ART["القطع الأثرية — قابلة للتوليد<br/>• الكود المصدري (في git)<br/>• ناتج البناء / الكاش<br/>• الاعتماديات المنصّبة<br/>← لا تنسخ هذا<br/>(ARTIFACTS — reproducible<br/>• source code (it's in git)<br/>• build output / caches<br/>• installed dependencies<br/>→ DO NOT BACK THIS UP)"]
 ```
 
 - **الحالة (State)** ما لا تستطيع توليده: قاعدة البيانات (database)، رفوعات (uploads) المستخدمين (users)،
@@ -488,9 +488,9 @@ flowchart TD
 
 ```mermaid
 flowchart RL
-    B["1 · النقل الخلفي<br/>ابنِ تجميعاتٍ يومية<br/>من كل التاريخ الخام"] --> V["2 · التحقّق<br/>التجميعات تطابق الخام،<br/>صفًّا صفًّا، في المدى"]
-    V --> E["3 · الإنهاء<br/>الآن فقط شغّل الـTTL<br/>على الصفوف الخام"]
-    E -.->|"تخطَّ الخطوة 2 فـ"| X["التاريخ يُفقَد<br/>بصمتٍ للأبد"]
+    B["1 · النقل الخلفي<br/>ابنِ تجميعاتٍ يومية<br/>من كل التاريخ الخام<br/>(1 · BACKFILL<br/>build daily rollups<br/>from all raw history)"] --> V["2 · التحقّق<br/>التجميعات تطابق الخام،<br/>صفًّا صفًّا، في المدى<br/>(2 · VERIFY<br/>rollups match raw,<br/>row by row, in range)"]
+    V --> E["3 · الإنهاء<br/>الآن فقط شغّل الـTTL<br/>على الصفوف الخام<br/>(3 · EXPIRE<br/>only NOW enable the TTL<br/>on raw rows)"]
+    E -.->|"تخطَّ الخطوة 2 فـ (skip step 2 and)"| X["التاريخ يُفقَد<br/>بصمتٍ للأبد<br/>(history silently<br/>lost forever)"]
 ```
 
 > **لا تشغّل TTL حتى تكون كل قراءةٍ خارج النافذة (window) مدعومةً بتجميعٍ (aggregate) نُقل خلفيًا (backfilled) *وتُحقّق
@@ -509,13 +509,13 @@ flowchart RL
 
 ```mermaid
 flowchart TD
-    U["احذف المستخدم #42"] --> A["سجل المستخدم"]
-    U --> B["الجلسات"]
-    U --> C["سجل الاستماع"]
-    U --> D["رموز الأجهزة / الدفع"]
-    U --> E["الرسائل"]
-    U --> F["صفوف التحليلات"]
-    U --> G["…نحو 13 مجموعة"]
+    U["احذف المستخدم #42<br/>(Delete user #42)"] --> A["سجل المستخدم<br/>(user record)"]
+    U --> B["الجلسات<br/>(sessions)"]
+    U --> C["سجل الاستماع<br/>(listening history)"]
+    U --> D["رموز الأجهزة / الدفع<br/>(device / push tokens)"]
+    U --> E["الرسائل<br/>(messages)"]
+    U --> F["صفوف التحليلات<br/>(analytics rows)"]
+    U --> G["…نحو 13 مجموعة<br/>(…~13 collections total)"]
     style A fill:#2a2a2a,color:#fff
 ```
 
@@ -638,8 +638,8 @@ flowchart TD
 
 ```mermaid
 flowchart RL
-    Q["استعلام:<br/>جِد رفوعات<br/>المنتِج #42"] --> NOIDX["بلا فهرس:<br/>اقرأ كل 5 ملايين صف،<br/>أبقِ المطابقات<br/>😖 O(n)"]
-    Q --> IDX["بفهرسٍ على المنتِج:<br/>اقفز إلى صفوف #42<br/>مباشرةً<br/>🙂 O(log n)"]
+    Q["استعلام:<br/>جِد رفوعات<br/>المنتِج #42<br/>(Query:<br/>find uploads<br/>by creator #42)"] --> NOIDX["بلا فهرس:<br/>اقرأ كل 5 ملايين صف،<br/>أبقِ المطابقات<br/>😖 O(n)<br/>(No index:<br/>read ALL 5M rows,<br/>keep the matches<br/>😖 O(n))"]
+    Q --> IDX["بفهرسٍ على المنتِج:<br/>اقفز إلى صفوف #42<br/>مباشرةً<br/>🙂 O(log n)<br/>(With index on creator:<br/>jump to #42's rows<br/>directly<br/>🙂 O(log n))"]
 ```
 
 للفهارس (indexes) ثمن: تأخذ مساحةً، وكل كتابةٍ عليها تحديثها أيضًا. لذا تفهرس الحقول (fields) التي
@@ -673,16 +673,16 @@ flowchart RL
 
 ```mermaid
 sequenceDiagram
-    participant DB as القاعدة
-    participant App as التطبيق
-    Note over App,DB: N+1 (العلة)
-    App->>DB: اجلب 50 رفعًا
-    DB-->>App: 50 صفًّا
-    loop 50 مرة
-        App->>DB: اجلب منتِج هذا الرفع
-        DB-->>App: منتِج واحد
+    participant DB as القاعدة (DB)
+    participant App as التطبيق (App)
+    Note over App,DB: N+1 (العلة) (N+1 (the bug))
+    App->>DB: اجلب 50 رفعًا (get 50 uploads)
+    DB-->>App: 50 صفًّا (50 rows)
+    loop 50 مرة (50 times)
+        App->>DB: اجلب منتِج هذا الرفع (get creator for this upload)
+        DB-->>App: منتِج واحد (1 creator)
     end
-    Note over App,DB: الإصلاح: اجلب الـ50 منتِجًا في استعلامٍ واحد (IN / join)
+    Note over App,DB: الإصلاح: اجلب الـ50 منتِجًا في استعلامٍ واحد (IN / join) (Fixed: get all 50 creators in ONE query (IN / join))
 ```
 
 الإصلاح جلبُ الصفوف (rows) المرتبطة في استعلامٍ (query) واحد (`JOIN` أو `WHERE id IN (…)`).
@@ -783,14 +783,14 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant B as الطلب ب (الملف 2)
-    participant DB as السجل
-    participant A as الطلب أ (الملف 1)
-    A->>DB: اقرأ السجل (فيه: [x])
-    B->>DB: اقرأ السجل (فيه: [x])
-    A->>DB: اكتب السجل (الآن: [x, file1])
-    B->>DB: اكتب السجل (الآن: [x, file2])
-    Note over DB: file1 اختفى.<br/>ب قرأ قبل أن يكتب أ،<br/>ثم كتب فوق عمل أ.
+    participant B as الطلب ب (الملف 2) (Request B (file 2))
+    participant DB as السجل (The record)
+    participant A as الطلب أ (الملف 1) (Request A (file 1))
+    A->>DB: اقرأ السجل (فيه: [x]) (read record (has: [x]))
+    B->>DB: اقرأ السجل (فيه: [x]) (read record (has: [x]))
+    A->>DB: اكتب السجل (الآن: [x, file1]) (write record (now: [x, file1]))
+    B->>DB: اكتب السجل (الآن: [x, file2]) (write record (now: [x, file2]))
+    Note over DB: file1 اختفى.<br/>ب قرأ قبل أن يكتب أ،<br/>ثم كتب فوق عمل أ. (file1 is GONE.<br/>B read before A wrote,<br/>then overwrote A's work.)
 ```
 
 قرأ الطلبان قائمة البداية نفسها. وأضاف كلٌّ ملفه إلى *نسخته*. ومن كتب أخيرًا فاز،
@@ -819,11 +819,11 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
-    RMW["قراءة-تعديل-كتابة<br/>على بياناتٍ مشتركة"] --> Q{"كيف تجعل الكتابات<br/>المتزامنة آمنة؟"}
-    Q --> ATOM["1 · عملية ذرّية<br/>دع القاعدة تقرأ+تعدّل+تكتب<br/>في خطوةٍ واحدةٍ لا تتجزأ<br/>(INCR, $push, UPDATE … SET x=x+1)"]
-    Q --> TXN["2 · معاملة<br/>لُفّ عدة كتاباتٍ في<br/>غلافِ الكلّ-أو-لا-شيء"]
-    Q --> UNIQ["3 · قيد فريد<br/>ترفض القاعدة التكرار<br/>خطَّ الدفاع الأخير"]
-    Q --> IDEM["4 · مفتاح عدم تكرار الأثر<br/>إعادةٌ/نقرةٌ مزدوجةٌ بالمفتاح<br/>نفسه لا تتصرّف مرتين"]
+    RMW["قراءة-تعديل-كتابة<br/>على بياناتٍ مشتركة<br/>(Read-modify-write<br/>on shared data)"] --> Q{"كيف تجعل الكتابات<br/>المتزامنة آمنة؟<br/>(How do you make<br/>concurrent writes safe?)"}
+    Q --> ATOM["1 · عملية ذرّية<br/>دع القاعدة تقرأ+تعدّل+تكتب<br/>في خطوةٍ واحدةٍ لا تتجزأ<br/>(INCR, $push, UPDATE … SET x=x+1)<br/>(1 · Atomic operation<br/>let the DB do read+modify+write<br/>in one indivisible step<br/>(INCR, $push, UPDATE … SET x=x+1))"]
+    Q --> TXN["2 · معاملة<br/>لُفّ عدة كتاباتٍ في<br/>غلافِ الكلّ-أو-لا-شيء<br/>(2 · Transaction<br/>wrap multiple writes in an<br/>all-or-nothing envelope)"]
+    Q --> UNIQ["3 · قيد فريد<br/>ترفض القاعدة التكرار<br/>خطَّ الدفاع الأخير<br/>(3 · Unique constraint<br/>the DB refuses a duplicate<br/>as the last line of defense)"]
+    Q --> IDEM["4 · مفتاح عدم تكرار الأثر<br/>إعادةٌ/نقرةٌ مزدوجةٌ بالمفتاح<br/>نفسه لا تتصرّف مرتين<br/>(4 · Idempotency key<br/>a retry/double-click with the<br/>same key can't act twice)"]
 ```
 
 - **العملية الذرّية (Atomic Operation)** — أفضل إصلاحٍ حين يناسب. بدل

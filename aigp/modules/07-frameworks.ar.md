@@ -115,9 +115,9 @@
 
 ```mermaid
 flowchart RL
-  G[GOVERN: الثقافة والسياسة والمساءلة] --> M1[MAP: السياق والآثار]
-  M1 --> M2[MEASURE: الاختبار والتتبع]
-  M2 --> M3[MANAGE: ترتيب الأولويات والمعالجة]
+  G["GOVERN: الثقافة والسياسة والمساءلة<br/>(GOVERN: culture, policy, accountability)"] --> M1["MAP: السياق والآثار<br/>(MAP: context and impacts)"]
+  M1 --> M2["MEASURE: الاختبار والتتبع<br/>(MEASURE: test and track)"]
+  M2 --> M3["MANAGE: ترتيب الأولويات والمعالجة<br/>(MANAGE: prioritise and treat)"]
   M3 --> M1
   G --> M2
   G --> M3
@@ -343,9 +343,9 @@ flowchart RL
 
 ```mermaid
 flowchart RL
-  P[خطّط: السياق والقيادة والمخاطر والأهداف] --> D[نفّذ: الدعم والتشغيل]
-  D --> C[افحص: المراقبة والتدقيق والمراجعة]
-  C --> A[صحّح: التصحيح والتحسين]
+  P["خطّط: السياق والقيادة والمخاطر والأهداف<br/>(Plan: context, leadership, risk, objectives)"] --> D["نفّذ: الدعم والتشغيل<br/>(Do: support and operation)"]
+  D --> C["افحص: المراقبة والتدقيق والمراجعة<br/>(Check: monitor, audit, review)"]
+  C --> A["صحّح: التصحيح والتحسين<br/>(Act: correct and improve)"]
   A --> P
 ```
 
@@ -564,7 +564,7 @@ flowchart RL
 
 **ثلاث طبقات من الأدوات (Three layers of instruments).**
 
-| الطبقة (Layer) | ما هي (What it is) | أمثلة (Examples) | ملزمة؟ (Binding?) |
+| الطبقة (Layer) | ما هي (What it is) | أمثلة (Examples) | ملزمة؟ ⁦(Binding?)⁩ |
 |---|---|---|---|
 | القانون الدولي المرن (international soft law) | مبادئ وتوصيات تتفق عليها الدول (Principles and recommendations agreed by states) | مبادئ OECD للذكاء الاصطناعي (OECD AI Principles)، وتوصية UNESCO (UNESCO Recommendation)، ومدونة هيروشيما لمجموعة السبع (G7 Hiroshima code) | لا، لكنها مؤثرة سياسيًا (politically influential) |
 | معاهدة دولية (international treaty) | التزامات قانونية على الدول التي تصادق عليها (Legal obligations for states that ratify) | الاتفاقية الإطارية لمجلس أوروبا (Council of Europe Framework Convention) | نعم، للأطراف، عبر القانون الوطني |
@@ -658,7 +658,7 @@ flowchart RL
 
 تعدّ ليلى **خريطة للولايات القضائية (jurisdiction map)** للجنة حوكمة الذكاء الاصطناعي (AI Governance Committee)، تبيّن الأدوات (instruments) التي تنطبق في كل مكان، ومدى إلزامها، وما تضيفه إلى مجموعة الضوابط المشتركة (common control set).
 
-| الولاية القضائية (jurisdiction) | الأدوات الرئيسية لبنك نجم (Key instruments for Najm) | ملزمة؟ (Binding?) | ما تضيفه بعد الضوابط المشتركة (What it adds beyond the common controls) | المالك (Owner) |
+| الولاية القضائية (jurisdiction) | الأدوات الرئيسية لبنك نجم (Key instruments for Najm) | ملزمة؟ ⁦(Binding?)⁩ | ما تضيفه بعد الضوابط المشتركة (What it adds beyond the common controls) | المالك (Owner) |
 |---|---|---|---|---|
 | الاتحاد الأوروبي (فرانكفورت) | EU AI Act؛ وGDPR؛ والجهة الرقابية المالية (financial supervisor) | نعم | إشعار تقييم الأثر على الحقوق الأساسية (FRIA notification)، وسلسلة علامة CE (CE-marking chain)، وإفصاحات المادة 50 (Art. 50 disclosures) | ليلى، سارة |
 | قطر (المقر الرئيسي (headquarters)) | إرشادات QCB للذكاء الاصطناعي (QCB AI guideline)؛ وPDPPL؛ والاستراتيجية الوطنية للذكاء الاصطناعي (National Artificial Intelligence Strategy) | الإرشادات وPDPPL: نعم، بالنسبة لبنك نجم | توقعات الجهة التنظيمية (regulator)؛ وإشعارات PDPPL | ليلى، سارة |

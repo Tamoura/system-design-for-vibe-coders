@@ -86,14 +86,14 @@
 
 ```mermaid
 flowchart RL
-    A[مخرجات النموذج حسب الفئة] --> B{نسبة الاختيار دون حد التحمّل؟}
-    B -- لا --> C[سجّل النتيجة وواصل الرصد]
-    B -- نعم --> D[حدّد المحركات والمتغيرات البديلة]
-    D --> E{مرتبطة بالوظيفة أو تنبؤية ائتمانيًا وضرورية؟}
-    E -- لا --> F[أزل الخاصية أو أعد التصميم]
-    E -- نعم --> G{يوجد بديل أقل تمييزًا؟}
-    G -- نعم --> F
-    G -- لا --> H[وثّق التبرير واحصل على موافقة اللجنة]
+    A["مخرجات النموذج حسب الفئة<br/>(Model output by group)"] --> B{"نسبة الاختيار دون حد التحمّل؟<br/>(Selection ratio below tolerance?)"}
+    B -- "لا (No)" --> C["سجّل النتيجة وواصل الرصد<br/>(Log result, keep monitoring)"]
+    B -- "نعم (Yes)" --> D["حدّد المحركات والمتغيرات البديلة<br/>(Find drivers and proxies)"]
+    D --> E{"مرتبطة بالوظيفة أو تنبؤية ائتمانيًا وضرورية؟<br/>(Job-related or credit-predictive and necessary?)"}
+    E -- "لا (No)" --> F["أزل الخاصية أو أعد التصميم<br/>(Remove feature or redesign)"]
+    E -- "نعم (Yes)" --> G{"يوجد بديل أقل تمييزًا؟<br/>(Less discriminatory alternative available?)"}
+    G -- "نعم (Yes)" --> F
+    G -- "لا (No)" --> H["وثّق التبرير واحصل على موافقة اللجنة<br/>(Document justification, committee approval)"]
 ```
 
 ## ⚖️ الأدوات التنظيمية (The instruments)
@@ -502,11 +502,11 @@ flowchart RL
 
 ```mermaid
 flowchart RL
-    S[روبوت محادثة بنك نجم] --> C[قانون المستهلك: بيانات دقيقة]
-    S --> A[قانون الذكاء الاصطناعي الأوروبي: الإفصاح عن التفاعل مع ذكاء اصطناعي]
-    S --> P[حماية البيانات: معالجة مشروعة]
-    S --> Q[إرشاد QCB للذكاء الاصطناعي: الحوكمة والعدالة]
-    S --> M[مخاطر النماذج: السجل والتحقق]
+    S["روبوت محادثة بنك نجم<br/>(Najm chatbot)"] --> C["قانون المستهلك: بيانات دقيقة<br/>(Consumer law: accurate statements)"]
+    S --> A["قانون الذكاء الاصطناعي الأوروبي: الإفصاح عن التفاعل مع ذكاء اصطناعي<br/>(EU AI Act: disclose AI interaction)"]
+    S --> P["حماية البيانات: معالجة مشروعة<br/>(Data protection: lawful processing)"]
+    S --> Q["إرشاد QCB للذكاء الاصطناعي: الحوكمة والعدالة<br/>(QCB AI guideline: governance, fairness)"]
+    S --> M["مخاطر النماذج: السجل والتحقق<br/>(Model risk: inventory and validation)"]
 ```
 
 ## ⚖️ الأدوات التنظيمية (The instruments)

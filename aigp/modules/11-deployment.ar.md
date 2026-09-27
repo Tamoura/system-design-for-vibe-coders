@@ -76,16 +76,16 @@
 
 ```mermaid
 flowchart TD
-  A[نشر مقترح] --> B{ممارسة محظورة؟}
-  B -- نعم --> X[عدم المضي]
-  B -- لا --> C[السياق وأصحاب المصلحة والفوائد والمخاطر والبدائل]
-  C --> D{بديل أقل مخاطر يحقق الهدف؟}
-  D -- نعم --> Y[انشر البديل]
-  D -- لا --> E{المخاطر ضمن الشهية مع الضوابط؟}
-  E -- لا --> X
-  E -- نعم --> F{فجوات في الجاهزية؟}
-  F -- نعم --> G[مضي مشروط بمسؤولين ومواعيد]
-  F -- لا --> H[مضي مع رصد وموعد مراجعة]
+  A["نشر مقترح<br/>(Proposed deployment)"] --> B{"ممارسة محظورة؟<br/>(Prohibited practice?)"}
+  B -- "نعم (Yes)" --> X["عدم المضي<br/>(No-go)"]
+  B -- "لا (No)" --> C["السياق وأصحاب المصلحة والفوائد والمخاطر والبدائل<br/>(Context, stakeholders, benefits, risks, alternatives)"]
+  C --> D{"بديل أقل مخاطر يحقق الهدف؟<br/>(Less risky alternative meets the goal?)"}
+  D -- "نعم (Yes)" --> Y["انشر البديل<br/>(Deploy the alternative)"]
+  D -- "لا (No)" --> E{"المخاطر ضمن الشهية مع الضوابط؟<br/>(Risks within appetite with controls?)"}
+  E -- "لا (No)" --> X
+  E -- "نعم (Yes)" --> F{"فجوات في الجاهزية؟<br/>(Readiness gaps?)"}
+  F -- "نعم (Yes)" --> G["مضي مشروط بمسؤولين ومواعيد<br/>(Conditional go with owners and dates)"]
+  F -- "لا (No)" --> H["مضي مع رصد وموعد مراجعة<br/>(Go with monitoring and review date)"]
 ```
 
 **للمخاطر المتبقية (residual risk) مالك.** بعد الضوابط (controls) تبقى بعض المخاطر. ويقبلها رسميًا مسؤول تنفيذي (executive) محدد بالاسم وخاضع للمساءلة (accountable)، وهو عادة مالك النشاط (business owner)، ضمن شهية المخاطر (risk appetite) التي يحددها مجلس الإدارة (2.1). وظيفة الحوكمة (governance function) تنصح وتعترض، لكنها لا تملك مخاطر النشاط (business risk). وفي بنك نجم يقبل خالد المخاطر المتبقية لأنظمة الإقراض (lending systems)، ويمكن للجنة حوكمة الذكاء الاصطناعي (AI Governance Committee) أن ترفض أي نشر (any deployment) يقع خارج الشهية (appetite).
@@ -478,7 +478,7 @@ flowchart TD
 
 **مقارنة الأدوات الرئيسية (The main instruments compared).**
 
-| الأداة | من يجريها (Who does it) | متى | التركيز (Focus) | هل هي ملزمة؟ (Binding?) |
+| الأداة | من يجريها (Who does it) | متى | التركيز (Focus) | هل هي ملزمة؟ ⁦(Binding?)⁩ |
 |---|---|---|---|---|
 | **تقييم أثر الذكاء الاصطناعي (AI impact assessment)** | المؤسسة (المطوّر أو المُشغِّل (deployer)) | قبل النشر (before deploying) وعند حدوث تغيير كبير | الآثار على الأفراد والمجموعات والمجتمع، عبر جميع أنواع المخاطر | يعتمد على السياسة والقانون؛ يشترط ISO/IEC 42001 تقييم أثر نظام الذكاء الاصطناعي (AI system impact assessment) ضمن نظام الإدارة (management system)؛ ويقدّم ISO/IEC 42005 إرشادات |
 | **تقييم الأثر على حماية البيانات (DPIA)** (المادة 35 من GDPR) | المتحكّم (controller)، بمشورة مسؤول حماية البيانات (Data Protection Officer, DPO) | قبل معالجة يُرجَّح أن تؤدي إلى مخاطر عالية | المخاطر على الحقوق والحريات (rights and freedoms) الناتجة عن معالجة البيانات الشخصية (personal data processing) | إلزامي عند تحقق المحفّز (trigger) |
@@ -527,13 +527,13 @@ flowchart TD
 
 ```mermaid
 flowchart RL
-  A[حدّد الغرض والمحفّزات] --> B[ضع الحدود: النموذج والنظام والعملية]
-  B --> C[حدّد المتأثرين والحقوق]
-  C --> D[اجمع الأدلة واستشر]
-  D --> E[حلّل المخاطر والضوابط القائمة]
-  E --> F[قرّر التخفيف والمخاطر المتبقية]
-  F --> G[الاعتماد والإخطار عند اللزوم]
-  G --> H[المراجعة عند التغيير أو وفق جدول]
+  A["حدّد الغرض والمحفّزات<br/>(Define purpose and triggers)"] --> B["ضع الحدود: النموذج والنظام والعملية<br/>(Set boundary: model, system, process)"]
+  B --> C["حدّد المتأثرين والحقوق<br/>(Identify affected people and rights)"]
+  C --> D["اجمع الأدلة واستشر<br/>(Gather evidence and consult)"]
+  D --> E["حلّل المخاطر والضوابط القائمة<br/>(Analyse risks and existing controls)"]
+  E --> F["قرّر التخفيف والمخاطر المتبقية<br/>(Decide mitigations and residual risk)"]
+  F --> G["الاعتماد والإخطار عند اللزوم<br/>(Sign-off, notify if required)"]
+  G --> H["المراجعة عند التغيير أو وفق جدول<br/>(Review on change or schedule)"]
 ```
 
 يذكر سجل التقييم (assessment record) الجيد: من أجراه وبأي قدر من الاستقلالية (independence)؛ وإصدار النظام (the version of the system) الذي قُيِّم؛ والحدود (بما فيها العمليات البشرية (human processes) المحيطة بالنموذج (model))؛ والأشخاص والحقوق التي رُوعيت؛ والأدلة (evidence) المستخدمة؛ وأصحاب المصلحة (stakeholders) الذين استُشيروا؛ والمخاطر مصنّفة حسب الاحتمال والشدة (likelihood and severity)؛ وتدابير التخفيف (mitigations) مع مسؤوليها ومواعيدها؛ والمخاطر المتبقية (residual risk) ومن قبلها؛ وأي إخطارات أُرسلت؛ وموعد المراجعة. قيّم **النظام ضمن عمليته (system in its process)**، لا النموذج وحده: فكثير من الأضرار ينشأ من طريقة استخدام البشر للمخرجات (outputs).

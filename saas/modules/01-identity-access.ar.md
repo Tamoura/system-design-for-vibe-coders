@@ -60,18 +60,18 @@
 ```mermaid
 sequenceDiagram
     participant D as Postgres
-    participant A as تطبيق Beacon
-    participant B as المتصفح
-    B->>A: POST /login بالبريد وكلمة المرور
-    A->>D: جلب المستخدم حسب البريد
-    D-->>A: صف المستخدم مع تجزئة argon2id
-    A->>A: التحقق من كلمة المرور مقابل التجزئة
-    A->>D: إدراج جلسة مع SHA-256 لرمز عشوائي
+    participant A as تطبيق Beacon (Beacon app)
+    participant B as المتصفح (Browser)
+    B->>A: POST /login بالبريد وكلمة المرور (POST /login with email and password)
+    A->>D: جلب المستخدم حسب البريد (Load user by email)
+    D-->>A: صف المستخدم مع تجزئة argon2id (User row with argon2id hash)
+    A->>A: التحقق من كلمة المرور مقابل التجزئة (Verify password against hash)
+    A->>D: إدراج جلسة مع SHA-256 لرمز عشوائي (Insert session with SHA-256 of random token)
     A-->>B: Set-Cookie __Host-session HttpOnly Secure SameSite=Lax
-    B->>A: GET /monitors مع الكوكي
-    A->>D: البحث عن الجلسة بتجزئة الرمز
-    D-->>A: الجلسة مع user_id وموعد الانتهاء
-    A-->>B: 200 قائمة المراقِبات
+    B->>A: GET /monitors مع الكوكي (GET /monitors with cookie)
+    A->>D: البحث عن الجلسة بتجزئة الرمز (Look up session by token hash)
+    D-->>A: الجلسة مع user_id وموعد الانتهاء (Session with user_id and expiry)
+    A-->>B: 200 قائمة المراقِبات (200 monitor list)
 ```
 
 قاعدة البيانات (database) تخزّن *تجزئة (hash)* رمز الجلسة (session token)، لذلك لا يمكن استخدام نسخة مسرّبة من جدول (table) `sessions` لتسجيل الدخول (login). هذا رخيص، ومعظم الدروس التعليمية (tutorials) تتجاهله.
@@ -331,13 +331,13 @@ SHA-256 مصمم ليكون سريعًا، لذلك يستطيع المهاجم 
 
 ```mermaid
 erDiagram
-    USER ||--o{ MEMBERSHIP : "يملك"
-    ORGANIZATION ||--o{ MEMBERSHIP : "يملك"
-    ORGANIZATION ||--o{ INVITATION : "تُصدر"
-    USER ||--o{ INVITATION : "دعا"
-    ORGANIZATION ||--o{ MONITOR : "تملك"
-    ORGANIZATION ||--o{ STATUS_PAGE : "تملك"
-    MONITOR ||--o{ CHECK_RESULT : "يسجّل"
+    USER ||--o{ MEMBERSHIP : "يملك (has)"
+    ORGANIZATION ||--o{ MEMBERSHIP : "يملك (has)"
+    ORGANIZATION ||--o{ INVITATION : "تُصدر (issues)"
+    USER ||--o{ INVITATION : "دعا (invited by)"
+    ORGANIZATION ||--o{ MONITOR : "تملك (owns)"
+    ORGANIZATION ||--o{ STATUS_PAGE : "تملك (owns)"
+    MONITOR ||--o{ CHECK_RESULT : "يسجّل (records)"
     USER {
         uuid id PK
         string email UK
@@ -397,11 +397,11 @@ stateDiagram-v2
     state "مقبولة" as Accepted
     state "ملغاة" as Revoked
     state "منتهية" as Expired
-    [*] --> Pending: المسؤول يدعو بريدًا
-    Pending --> Accepted: المدعو يقبل ببريد مطابق
-    Pending --> Revoked: المسؤول يلغي
-    Pending --> Expired: مرور expires_at
-    Pending --> Pending: إعادة الإرسال برمز جديد
+    [*] --> Pending: المسؤول يدعو بريدًا (admin invites email)
+    Pending --> Accepted: المدعو يقبل ببريد مطابق (invitee accepts with matching email)
+    Pending --> Revoked: المسؤول يلغي (admin cancels)
+    Pending --> Expired: مرور expires_at (expires_at passes)
+    Pending --> Pending: إعادة الإرسال برمز جديد (resend with new token)
     Accepted --> [*]
     Revoked --> [*]
     Expired --> [*]
@@ -677,13 +677,13 @@ export async function requirePermission(orgSlug: string, userId: string, p: Perm
 
 ```mermaid
 flowchart RL
-    R["طلب مع جلسة أو مفتاح API"] --> AN["المصادقة: من هذا"]
-    AN --> TN["تحديد المنظمة والعضوية"]
-    TN --> PC["فحص الصلاحية: هل يستطيع الدور تنفيذ الإجراء"]
-    PC --> Q["استعلام محصور بـ org_id"]
-    Q --> OC["فحص الكائن: هل هذا الصف في المنظمة"]
-    OC --> RES["رد بالحقول المسموح بها فقط"]
-    UI["الواجهة تخفي الأزرار"] -.->|"للراحة فقط"| R
+    R["طلب مع جلسة أو مفتاح API<br/>(Request with session or API key)"] --> AN["المصادقة: من هذا<br/>(Authenticate: who is this)"]
+    AN --> TN["تحديد المنظمة والعضوية<br/>(Resolve org and membership)"]
+    TN --> PC["فحص الصلاحية: هل يستطيع الدور تنفيذ الإجراء<br/>(Permission check: can role do action)"]
+    PC --> Q["استعلام محصور بـ org_id<br/>(Query scoped by org_id)"]
+    Q --> OC["فحص الكائن: هل هذا الصف في المنظمة<br/>(Object check: is this row in the org)"]
+    OC --> RES["رد بالحقول المسموح بها فقط<br/>(Response with allowed fields only)"]
+    UI["الواجهة تخفي الأزرار<br/>(UI hides buttons)"] -.->|"للراحة فقط (convenience only)"| R
 ```
 
 يظهر في هذا المسار (pipeline) فحصان منفصلان، والمبتدئون عادةً (juniors) يكتبون واحدًا فقط:
@@ -941,20 +941,20 @@ type status_page
 
 ```mermaid
 sequenceDiagram
-    participant I as مزوّد هوية العميل Okta
-    participant B as Beacon مزوّد الخدمة
-    participant U as متصفح الموظف
-    U->>B: إدخال البريد ana@bigco.com في صفحة الدخول
-    B->>B: البحث عن اتصال SSO للنطاق bigco.com
-    B-->>U: إعادة توجيه إلى مزوّد الهوية مع AuthnRequest موقّع وRelayState
-    U->>I: اتباع إعادة التوجيه
-    I->>U: عرض صفحة دخول مزوّد الهوية مع MFA الشركة
-    U->>I: المصادقة
-    I-->>U: نموذج HTML يرسل SAMLResponse تلقائيًا
-    U->>B: POST SAMLResponse إلى رابط ACS
-    B->>B: التحقق من التوقيع والمُصدِر والجمهور والنافذة الزمنية وInResponseTo
-    B->>B: إيجاد أو إنشاء المستخدم والعضوية في منظمة BigCo
-    B-->>U: ضبط كوكي الجلسة وإعادة التوجيه إلى لوحة التحكم
+    participant I as مزوّد هوية العميل Okta (Customer IdP Okta)
+    participant B as Beacon مزوّد الخدمة (Beacon SP)
+    participant U as متصفح الموظف (Employee browser)
+    U->>B: إدخال البريد ana@bigco.com في صفحة الدخول (Enter email ana@bigco.com on login page)
+    B->>B: البحث عن اتصال SSO للنطاق bigco.com (Look up SSO connection for bigco.com)
+    B-->>U: إعادة توجيه إلى مزوّد الهوية مع AuthnRequest موقّع وRelayState (Redirect to IdP with signed AuthnRequest and RelayState)
+    U->>I: اتباع إعادة التوجيه (Follow redirect)
+    I->>U: عرض صفحة دخول مزوّد الهوية مع MFA الشركة (Show IdP login with company MFA)
+    U->>I: المصادقة (Authenticate)
+    I-->>U: نموذج HTML يرسل SAMLResponse تلقائيًا (HTML form auto-posting SAMLResponse)
+    U->>B: POST SAMLResponse إلى رابط ACS (POST SAMLResponse to ACS URL)
+    B->>B: التحقق من التوقيع والمُصدِر والجمهور والنافذة الزمنية وInResponseTo (Verify signature, issuer, audience, time window, InResponseTo)
+    B->>B: إيجاد أو إنشاء المستخدم والعضوية في منظمة BigCo (Find or create user and membership in BigCo org)
+    B-->>U: ضبط كوكي الجلسة وإعادة التوجيه إلى لوحة التحكم (Set session cookie and redirect to dashboard)
 ```
 
 الخطوة الموسومة "التحقق (verification)" هي مكان الخطر. للتحقق من SAML (SAML validation) تاريخ طويل من الثغرات، لأن توقيعات XML (XML signatures) يمكن أن تغطي جزءًا من المستند (document) بينما يقرأ الكود جزءًا آخر (التفاف توقيع XML (XML Signature Wrapping)، XML Signature Wrapping). مكتبات (libraries) واسعة الاستخدام مثل ruby-saml أصدرت إصلاحات حرجة (critical fixes) لتجاوز التوقيع (signature-bypass) حتى في 2024 و2025. **لا تحلّل SAML ولا تتحقق منه بنفسك أبدًا.** استخدم مكتبة (library) أو خدمة مُصانة (maintained)، وأبقِها محدّثة (patched)، وافحص كل واحد مما يلي:

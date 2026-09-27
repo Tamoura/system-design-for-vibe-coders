@@ -46,19 +46,19 @@
 
 ```mermaid
 flowchart TD
-  A[الاستقبال والوصف] --> B[التصنيف وتحديد الفئة]
-  B --> C[قرار اللجنة]
-  C --> D[العناية الواجبة بالمورّد]
-  C --> E[DPIA وFRIA]
-  D --> F[متطلبات التصميم]
+  A["الاستقبال والوصف<br/>(Intake and description)"] --> B["التصنيف وتحديد الفئة<br/>(Classify and tier)"]
+  B --> C["قرار اللجنة<br/>(Committee decision)"]
+  C --> D["العناية الواجبة بالمورّد<br/>(Vendor due diligence)"]
+  C --> E["DPIA وFRIA<br/>(DPIA and FRIA)"]
+  D --> F["متطلبات التصميم<br/>(Design requirements)"]
   E --> F
-  F --> G[TEVV واختبار الفريق الأحمر]
-  G --> H{هل استوفيت معايير الإطلاق}
-  H -- لا --> F
-  H -- نعم --> I[إطلاق مضبوط]
-  I --> J[الرصد ومؤشرات الأداء]
-  J --> K[دليل التعامل مع الحوادث]
-  J --> L[المراجعة الدورية]
+  F --> G["TEVV واختبار الفريق الأحمر<br/>(TEVV and red-teaming)"]
+  G --> H{"هل استوفيت معايير الإطلاق<br/>(Release criteria met)"}
+  H -- "لا (No)" --> F
+  H -- "نعم (Yes)" --> I["إطلاق مضبوط<br/>(Controlled release)"]
+  I --> J["الرصد ومؤشرات الأداء<br/>(Monitoring and KPIs)"]
+  J --> K["دليل التعامل مع الحوادث<br/>(Incident playbook)"]
+  J --> L["المراجعة الدورية<br/>(Periodic review)"]
 ```
 
 **الخطوتان 1–2: التصنيف (classification).** تطرح ليلى أربعة أسئلة، وهي الأسئلة الأربعة نفسها التي ينبغي أن تطرحها على أي سيناريو في الامتحان (exam):

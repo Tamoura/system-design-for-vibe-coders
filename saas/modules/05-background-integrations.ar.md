@@ -43,14 +43,14 @@
 
 ```mermaid
 flowchart RL
-  API["تطبيق الويب / API"] -->|"إضافة إلى الطابور"| B[("الوسيط: Redis أو Postgres")]
-  SCH["المجدول"] -->|"إضافة إلى الطابور"| B
-  B -->|"سحب"| W1["العامل 1"]
-  B -->|"سحب"| W2["العامل 2"]
-  W1 -->|"نجاح: تأكيد"| B
-  W2 -->|"فشل: إعادة محاولة بتأخير متزايد"| B
-  B -->|"استُنفدت المحاولات"| DLQ[("طابور الرسائل الميتة")]
-  W1 --> EXT["مزوّدو البريد وSlack وSMS"]
+  API["تطبيق الويب / API<br/>(Web app / API)"] -->|"إضافة إلى الطابور (enqueue)"| B[("الوسيط: Redis أو Postgres<br/>(Broker: Redis or Postgres)")]
+  SCH["المجدول<br/>(Scheduler)"] -->|"إضافة إلى الطابور (enqueue)"| B
+  B -->|"سحب (fetch)"| W1["العامل 1<br/>(Worker 1)"]
+  B -->|"سحب (fetch)"| W2["العامل 2<br/>(Worker 2)"]
+  W1 -->|"نجاح: تأكيد (success: ack)"| B
+  W2 -->|"فشل: إعادة محاولة بتأخير متزايد (failure: retry with backoff)"| B
+  B -->|"استُنفدت المحاولات (attempts exhausted)"| DLQ[("طابور الرسائل الميتة<br/>(Dead-letter queue)")]
+  W1 --> EXT["مزوّدو البريد وSlack وSMS<br/>(Email, Slack, SMS providers)"]
 ```
 
 تصبح مهمة (job) طلب الويب (web request) الوحيدة: "اكتب صف الحادثة (incident row)، أضف `notify-incident` إلى الطابور (queue)، أعد 200". والعامل (worker) ينفّذ الجزء البطيء، وإذا كان Slack متعطلًا تُعاد المحاولة (retried) بعد دقيقة دون أن يلاحظ أحد.
@@ -394,22 +394,22 @@ export async function verifyApiKey(presented: string) {
 
 ```mermaid
 sequenceDiagram
-    participant A as معالج API
-    participant R as محدد المعدل في Redis
-    participant K as متحقق المفاتيح
-    participant G as حافة Beacon API
-    participant C as سكربت العميل
-  C->>G: GET /v1/monitors مع Bearer bk_live_...
-  G->>K: تحقق من التجزئة وحمّل المؤسسة والصلاحيات والخطة
-  K-->>G: org_42 وقراءة المراقِبات وخطة Business
-  G->>R: خذ رمزًا واحدًا من دلو org_42
-  alt بقيت رموز
-    R-->>G: مسموح وبقي 57
-    G->>A: مرّر الطلب مع سياق المؤسسة
-    A-->>C: 200 مع ترويسات RateLimit
-  else الدلو فارغ
-    R-->>G: مرفوض وأعد المحاولة بعد 3 ثوانٍ
-    G-->>C: 429 مع Retry-After 3
+    participant A as معالج API (API handler)
+    participant R as محدد المعدل في Redis (Redis rate limiter)
+    participant K as متحقق المفاتيح (Key verifier)
+    participant G as حافة Beacon API (Beacon API edge)
+    participant C as سكربت العميل (Client script)
+  C->>G: GET /v1/monitors مع Bearer bk_live_... (GET /v1/monitors with Bearer bk_live_...)
+  G->>K: تحقق من التجزئة وحمّل المؤسسة والصلاحيات والخطة (verify hash, load org, scopes, plan)
+  K-->>G: org_42 وقراءة المراقِبات وخطة Business (org_42, monitors read, Business)
+  G->>R: خذ رمزًا واحدًا من دلو org_42 (take 1 token from bucket org_42)
+  alt بقيت رموز (tokens left)
+    R-->>G: مسموح وبقي 57 (allowed, 57 remaining)
+    G->>A: مرّر الطلب مع سياق المؤسسة (forward request with org context)
+    A-->>C: 200 مع ترويسات RateLimit (200 with RateLimit headers)
+  else الدلو فارغ (bucket empty)
+    R-->>G: مرفوض وأعد المحاولة بعد 3 ثوانٍ (denied, retry in 3s)
+    G-->>C: 429 مع Retry-After 3 (429 with Retry-After 3)
   end
 ```
 
@@ -601,23 +601,23 @@ Stripe هو النموذج من جهة الاستقبال (receiving side): يو
 
 ```mermaid
 sequenceDiagram
-    participant C as نقطة استقبال العميل
-    participant W as عامل الويب هوك
-    participant Q as طابور التسليم
+    participant C as نقطة استقبال العميل (Customer endpoint)
+    participant W as عامل الويب هوك (Webhook worker)
+    participant Q as طابور التسليم (Delivery queue)
     participant DB as Postgres
-    participant App as تطبيق Beacon
-  App->>DB: أدخل الحدث incident.opened في معاملة الحادثة نفسها
-  App->>Q: أضف تسليمًا واحدًا لكل نقطة مشتركة
-  Q->>W: مهمة تسليم لنقطة الاستقبال ep_1
-  W->>W: وقّع المعرّف والطابع الزمني والجسم بسر النقطة
-  W->>C: POST بجسم JSON مع ترويسات webhook-id والطابع الزمني والتوقيع
-  alt رد 2xx خلال 10 ثوانٍ
+    participant App as تطبيق Beacon (Beacon app)
+  App->>DB: أدخل الحدث incident.opened في معاملة الحادثة نفسها (insert event incident.opened in same tx as incident)
+  App->>Q: أضف تسليمًا واحدًا لكل نقطة مشتركة (enqueue one delivery per subscribed endpoint)
+  Q->>W: مهمة تسليم لنقطة الاستقبال ep_1 (delivery job for endpoint ep_1)
+  W->>W: وقّع المعرّف والطابع الزمني والجسم بسر النقطة (sign id, timestamp and body with endpoint secret)
+  W->>C: POST بجسم JSON مع ترويسات webhook-id والطابع الزمني والتوقيع (POST JSON with webhook-id, timestamp, signature headers)
+  alt رد 2xx خلال 10 ثوانٍ (2xx within 10s)
     C-->>W: 200 OK
-    W->>DB: سجّل نجاح المحاولة
-  else خطأ أو انتهاء المهلة
-    C-->>W: 500 أو لا رد
-    W->>DB: سجّل فشل المحاولة
-    W->>Q: أعد الجدولة بتأخير متزايد
+    W->>DB: سجّل نجاح المحاولة (record attempt success)
+  else خطأ أو انتهاء المهلة (error or timeout)
+    C-->>W: 500 أو لا رد (500 or no answer)
+    W->>DB: سجّل فشل المحاولة (record attempt failure)
+    W->>Q: أعد الجدولة بتأخير متزايد (reschedule with backoff)
   end
 ```
 
@@ -899,16 +899,16 @@ export const escalate = inngest.createFunction(
 
 ```mermaid
 flowchart TD
-  S["يبدأ تشغيل سير العمل أو يُستأنف"] --> R["شغّل الكود من البداية"]
-  R --> Q{"هل الخطوة التالية موجودة في السجل؟"}
-  Q -->|"نعم"| H["أعد النتيجة المسجلة دون أثر جانبي"]
+  S["يبدأ تشغيل سير العمل أو يُستأنف<br/>(Workflow run starts or resumes)"] --> R["شغّل الكود من البداية<br/>(Run code from the top)"]
+  R --> Q{"هل الخطوة التالية موجودة في السجل؟<br/>(Next step already in history?)"}
+  Q -->|"نعم (yes)"| H["أعد النتيجة المسجلة دون أثر جانبي<br/>(Return recorded result, no side effect)"]
   H --> R
-  Q -->|"لا"| X["نفّذ الخطوة فعليًا"]
-  X --> P["احفظ النتيجة في سجل الأحداث"]
-  P --> W{"هل الخطوة انتظار أو نوم؟"}
-  W -->|"لا"| R
-  W -->|"نعم"| Z["علّق التشغيل وحرّر العامل"]
-  Z -->|"انطلق المؤقت أو وصل الحدث"| S
+  Q -->|"لا (no)"| X["نفّذ الخطوة فعليًا<br/>(Execute step for real)"]
+  X --> P["احفظ النتيجة في سجل الأحداث<br/>(Persist result to event history)"]
+  P --> W{"هل الخطوة انتظار أو نوم؟<br/>(Step is a wait or sleep?)"}
+  W -->|"لا (no)"| R
+  W -->|"نعم (yes)"| Z["علّق التشغيل وحرّر العامل<br/>(Suspend run, free the worker)"]
+  Z -->|"انطلق المؤقت أو وصل الحدث (timer fires or event arrives)"| S
 ```
 
 **الحتمية (determinism) — القواعد.** إعادة التشغيل (replay) لا تنجح إلا إذا اتخذ كود سير العمل (workflow code) *القرارات نفسها* في كل مرة يعمل فيها على السجل نفسه. لذلك، في جسم سير العمل (workflow body) (خارج الخطوات (steps)/الأنشطة (activities)):

@@ -122,14 +122,14 @@ export async function createMonitor(orgId: string, raw: unknown) {
 
 ```mermaid
 flowchart RL
-  V["الزائر"] --> D["DNS: status.acme.com CNAME cname.beacon.dev"]
-  D --> E["وسيط الحافة (Caddy on-demand TLS)"]
-  E -->|"أول مصافحة TLS"| A["نقطة ask: هل هذا النطاق موثّق؟"]
+  V["الزائر<br/>(Visitor)"] --> D["DNS: status.acme.com CNAME cname.beacon.dev"]
+  D --> E["وسيط الحافة (Caddy on-demand TLS)<br/>(Edge proxy (Caddy on-demand TLS))"]
+  E -->|"أول مصافحة TLS (first TLS handshake)"| A["نقطة ask: هل هذا النطاق موثّق؟<br/>(Ask endpoint: is this domain verified?)"]
   A --> DB[("Postgres custom_domains")]
-  E -->|"إصدار الشهادة إن سُمح"| LE["Let's Encrypt / ZeroSSL"]
-  E --> S["تطبيق صفحة الحالة (SSR ومخزّن مؤقتًا)"]
+  E -->|"إصدار الشهادة إن سُمح (issue cert if allowed)"| LE["Let's Encrypt / ZeroSSL"]
+  E --> S["تطبيق صفحة الحالة (SSR ومخزّن مؤقتًا)<br/>(Status page app (SSR, cached))"]
   S --> DB
-  M["موقع التسويق beacon.dev (ثابت)"] --- X["لوحة التحكم app.beacon.dev"]
+  M["موقع التسويق beacon.dev (ثابت)<br/>(beacon.dev marketing (static))"] --- X["لوحة التحكم app.beacon.dev<br/>(app.beacon.dev dashboard)"]
   X --> DB
 ```
 
@@ -364,14 +364,14 @@ flowchart RL
 
 ```mermaid
 flowchart RL
-  B["SDK المتصفح (أحداث الواجهة)"] --> C["المُجمِّع أو CDP"]
-  S["الخادم (أحداث الأعمال)"] --> C
-  W["ويب هوك Stripe"] --> S
-  C --> P["تحليلات المنتج (PostHog)"]
-  C --> WH[("مستودع البيانات أو ClickHouse")]
-  DB[("قاعدة بيانات التطبيق Postgres")] -->|"مزامنة ELT"| WH
-  WH --> BI["لوحات BI"]
-  WH -->|"ETL عكسي"| CRM["أدوات CRM والبريد"]
+  B["SDK المتصفح (أحداث الواجهة)<br/>(Browser SDK (UI events))"] --> C["المُجمِّع أو CDP<br/>(Collector or CDP)"]
+  S["الخادم (أحداث الأعمال)<br/>(Backend (business events))"] --> C
+  W["ويب هوك Stripe<br/>(Stripe webhooks)"] --> S
+  C --> P["تحليلات المنتج (PostHog)<br/>(Product analytics (PostHog))"]
+  C --> WH[("مستودع البيانات أو ClickHouse<br/>(Warehouse or ClickHouse)")]
+  DB[("قاعدة بيانات التطبيق Postgres<br/>(Postgres app DB)")] -->|"مزامنة ELT (ELT sync)"| WH
+  WH --> BI["لوحات BI<br/>(BI dashboards)"]
+  WH -->|"ETL عكسي (reverse ETL)"| CRM["أدوات CRM والبريد<br/>(CRM and email tools)"]
 ```
 
 **الخصوصية والموافقة (privacy and consent).** في الاتحاد الأوروبي والمملكة المتحدة، تشترط قواعد (rules) ePrivacy الحصول على موافقة (consent) قبل تخزين أو قراءة بيانات غير ضرورية على جهاز المستخدم (ملفات الارتباط (cookies)، ومعرّفات `localStorage`)، ويحكم GDPR البيانات الشخصية (personal data) نفسها (8.1). عمليًا:
@@ -588,16 +588,16 @@ return scheduleWithOldEngine(monitor);
 
 ```mermaid
 sequenceDiagram
-    participant B as المتصفح
-    participant W as SDK عامل Beacon
-    participant FS as خدمة الأعلام
-    participant UI as لوحة الأعلام
-  UI->>FS: اضبط new-scheduler على 5 بالمئة من المؤسسات
-  FS-->>W: دفع أو استطلاع مجموعة القواعد المحدثة
-  W->>W: تجزئة مفتاح العلم مع orgId إلى دلو من 0 إلى 99
-  W->>W: الدلو أقل من 5 يعني المحرك الجديد
-  B->>FS: اطلب الأعلام المقيّمة لهذه الجلسة
-  FS-->>B: new-scheduler قيمته false
+    participant B as المتصفح (Browser)
+    participant W as SDK عامل Beacon (Beacon worker SDK)
+    participant FS as خدمة الأعلام (Flag service)
+    participant UI as لوحة الأعلام (Flag dashboard)
+  UI->>FS: اضبط new-scheduler على 5 بالمئة من المؤسسات (Set new-scheduler to 5 percent of orgs)
+  FS-->>W: دفع أو استطلاع مجموعة القواعد المحدثة (Push or poll updated rule set)
+  W->>W: تجزئة مفتاح العلم مع orgId إلى دلو من 0 إلى 99 (hash of flag key and orgId, bucket 0 to 99)
+  W->>W: الدلو أقل من 5 يعني المحرك الجديد (bucket under 5 means new engine)
+  B->>FS: اطلب الأعلام المقيّمة لهذه الجلسة (Get evaluated flags for this session)
+  FS-->>B: new-scheduler قيمته false (new-scheduler is false)
 ```
 
 عرّف دائمًا **قيمة افتراضية (default value)** لحالة عدم الوصول إلى خدمة الأعلام (flag service)، واجعلها القيمة الآمنة (عادة "مطفأ"، أي مسار الكود (code) القديم).

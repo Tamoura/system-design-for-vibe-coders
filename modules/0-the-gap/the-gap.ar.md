@@ -20,18 +20,18 @@
 
 ```mermaid
 flowchart RL
-    subgraph comp["المكوّنات — ما يكتبه الوكيل"]
-        A["صفحة الدخول ✓ تعمل"]
-        B["ميزة الرفع ✓ تعمل"]
-        C["سكربت النشر ✓ يعمل"]
-        D["كاش البناء ✓ يعمل"]
+    subgraph comp["المكوّنات — ما يكتبه الوكيل (COMPONENTS — what your agent writes)"]
+        A["صفحة الدخول ✓ تعمل<br/>(Login page ✓ works)"]
+        B["ميزة الرفع ✓ تعمل<br/>(Upload feature ✓ works)"]
+        C["سكربت النشر ✓ يعمل<br/>(Deploy script ✓ works)"]
+        D["كاش البناء ✓ يعمل<br/>(Build cache ✓ works)"]
     end
-    subgraph seam["المَفصِل — ما لم يكتبه أحد"]
-        S{{"النشر × كاش البناء ×<br/>نسخة الـCDN × جهاز المستخدم"}}
+    subgraph seam["المَفصِل — ما لم يكتبه أحد (THE SEAM — what nobody wrote)"]
+        S{{"النشر × كاش البناء ×<br/>نسخة الـCDN × جهاز المستخدم<br/>(deploy × build-cache ×<br/>CDN copy × user's device)"}}
     end
     A & B & C & D --> S
-    S -->|"هل كلها صحيحة معًا؟"| OK["النظام يعمل"]
-    S -->|"تصطدم حقيقتان"| BOOM["💥 حادثة"]
+    S -->|"هل كلها صحيحة معًا؟ (all true at once?)"| OK["النظام يعمل<br/>(System works)"]
+    S -->|"تصطدم حقيقتان (two truths collide)"| BOOM["💥 حادثة<br/>(💥 Incident)"]
 ```
 
 **المكوّن (component)** قطعة واحدة: صفحة (page)، أو ميزة (feature)، أو سكربت (script). يمكن اختباره وعرضه والقول إنه يعمل (works) — بصدق. أما **النظام (system)** فهو المكوّنات (components) + المفاصل (seams) بينها: كاش البناء (build cache) بين الكود (code) والنشر (deploy)، وشبكة CDN بين النشر والمستخدمين (users)، والافتراضات (assumptions) بين الميزة وقاعدة البيانات (database).
@@ -98,31 +98,31 @@ flowchart RL
 
 ```mermaid
 mindmap
-  root((منتجك))
-    البيانات
-      الدفتر ونسخه
-      الوحدتان 2 و10.3
-    الكاش
-      نسخ سريعة تكذب
-      الوحدة 3
-    النشر
-      نقل النسخ بأمان
-      الوحدة 4
-    المصادقة والإساءة
-      من أنت، ومن يُغرقك
-      الوحدة 5
-    العملاء
-      اختلاف الويب والموبايل والتلفاز
-      الوحدة 6
-    المراقبة
-      أن ترى العطل
-      الوحدة 7
-    أمان سرعة الوكلاء
-      حواجز وتوجيه
-      الوحدتان 8 و9
-    التوسّع والعالم
-      الحمل والحواف والتكلفة
-      الوحدتان 10 و11
+  root(("منتجك<br/>(Your product)"))
+     (Data)
+       ونسخه (the notebook & its copies)
+       2 و10.3 (Modules 2 & 10.3)
+     (Cache)
+       سريعة تكذب (fast copies that lie)
+       3 (Module 3)
+     (Deploy)
+       النسخ بأمان (moving versions safely)
+       4 (Module 4)
+     والإساءة (Auth & Abuse)
+       أنت، ومن يُغرقك (who you are, who's flooding)
+       5 (Module 5)
+     (Clients)
+       الويب والموبايل والتلفاز (web, mobile, TV drift)
+       6 (Module 6)
+     (Observability)
+       ترى العطل (seeing it break)
+       7 (Module 7)
+     سرعة الوكلاء (AI-speed safety)
+       وتوجيه (guardrails & direction)
+       8 و9 (Modules 8 & 9)
+    ّع والعالم (Scale & world)
+       والحواف والتكلفة (load, edges, cost)
+       10 و11 (Modules 10 & 11)
 ```
 
 ثلاث قواعد لاستخدام الخريطة (map):
@@ -184,21 +184,21 @@ mindmap
 
 ```mermaid
 quadrantChart
-    title ابنِ أم اشترِ؟
-    x-axis "سلعة يبيعها كثيرون" --> "مميّز، هو منتجك"
-    y-axis "سهل التشغيل" --> "صعب التشغيل"
-    quadrant-1 "ابنِ — أنفق نقطة"
-    quadrant-2 "اشترِ — لا تبنِ هنا"
-    quadrant-3 "أيّهما — الأصغر يكفي"
-    quadrant-4 "اشترِ وادمج بعناية"
-    "المصادقة والدخول": [0.15, 0.85]
-    "المدفوعات": [0.1, 0.9]
-    "توصيل البريد": [0.15, 0.7]
-    "بنية البحث": [0.35, 0.75]
-    "المراقبة": [0.2, 0.6]
-    "الكتالوج وقواعده": [0.85, 0.55]
-    "تجربتك الأساسية": [0.9, 0.35]
-    "صفحة تسويقية": [0.25, 0.15]
+    title ابنِ أم اشترِ؟ (Should you build it or buy it?)
+    x-axis "سلعة يبيعها كثيرون (Commodity — many sell it)" --> "مميّز، هو منتجك (Differentiating — it IS your product)"
+    y-axis "سهل التشغيل (Easy to run well)" --> "صعب التشغيل (Brutal to run well)"
+    quadrant-1 "ابنِ — أنفق نقطة (BUILD — spend a token)"
+    quadrant-2 "اشترِ — لا تبنِ هنا (BUY — never build here)"
+    quadrant-3 "أيّهما — الأصغر يكفي (Either — smallest option)"
+    quadrant-4 "اشترِ وادمج بعناية (BUY, integrate carefully)"
+    "المصادقة والدخول (Auth and login)": [0.15, 0.85]
+    "المدفوعات (Payments)": [0.1, 0.9]
+    "توصيل البريد (Email delivery)": [0.15, 0.7]
+    "بنية البحث (Search infra)": [0.35, 0.75]
+    "المراقبة (Monitoring)": [0.2, 0.6]
+    "الكتالوج وقواعده (Your catalog and its rules)": [0.85, 0.55]
+    "تجربتك الأساسية (Your core experience)": [0.9, 0.35]
+    "صفحة تسويقية (A marketing page)": [0.25, 0.15]
 ```
 
 انظر إلى الركن الأعلى الأيسر (top-left corner) واحفظ سكانه: **المصادقة (auth)، والمدفوعات (payments)، وتوصيل البريد (email delivery).** هذه سلع (commodity) (عشرات المزوّدين (providers) الممتازين) وصعبة معًا (أمان (security)، وتوصيل، وامتثال (compliance)، وحالات خاصة (edge cases) عمرها عقود). بناء أي منها بنفسك = إنفاق نقطة ابتكار (innovation token) لتكون أسوأ من الخطة المجانية (free tier) لشركة (company) متخصصة فيها فقط.
