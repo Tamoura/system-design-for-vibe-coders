@@ -188,9 +188,9 @@ if (CHECK) {
 
 /* ------------------------------------------------------------------- parse */
 
-const MODULE_RE = /^# (?:Module|الوحدة) (\d+) — (.+)$/m;
+const MODULE_RE = /^# (?:Module|الوحدة)(?: \([^)]*\))? (\d+)(?: \([^)]*\))? — (.+)$/m;
 const LESSON_RE = /^# (\d+\.\d+) — (.+)$/;
-const LEVEL_RE = /^\*(?:Level|المستوى):\s*(🟢|🟡|🔴)\s*(Beginner|Intermediate|Advanced|مبتدئ|متوسط|متقدم)\*(.*)$/;
+const LEVEL_RE = /^\*(?:Level|المستوى)(?: \([^)]*\))?:\s*(🟢|🟡|🔴)\s*(Beginner|Intermediate|Advanced|مبتدئ|متوسط|متقدم)(?: \([^)]*\))?\*(.*)$/;
 const LEVEL_NORM = { 'مبتدئ': 'Beginner', 'متوسط': 'Intermediate', 'متقدم': 'Advanced' };
 
 function parseModule(file) {
@@ -214,7 +214,7 @@ function parseModule(file) {
         const lv = line.trim().match(LEVEL_RE);
         if (lv) {
           cur.level = LEVEL_NORM[lv[2]] || lv[2];
-          const pre = lv[3].match(/(?:Prerequisites?|المتطلبات):\s*([^*]+)\*/);
+          const pre = lv[3].match(/(?:Prerequisites?|المتطلبات)(?: \([^)]*\))?:\s*([^*]+)\*/);
           cur.prereq = pre ? pre[1].trim() : '';
           continue;
         }
