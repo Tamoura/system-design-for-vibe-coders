@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="saas-source" content="caf1b3cf42e6c729">
+<meta name="saas-source" content="b59fdfbb8540f53c">
 <meta name="description" content="لبنات بناء SaaS: المكوّنات التي تشترك فيها كل تطبيقات SaaS، من المبتدئ إلى المتقدم، مع أفضل المستودعات مفتوحة المصدر لتعلّم كل مكوّن.">
 <title>لبنات بناء SaaS — الدورة كاملة</title>
 <style>
@@ -3871,7 +3871,7 @@ export async function signLogoUpload(orgId: string, fileId: string, type: string
 </tbody></table></div>
 <p>يُطوَّر Garage على منصة (platform) Deuxfleurs الخاصة (<a href="https://garagehq.deuxfleurs.fr">garagehq.deuxfleurs.fr</a>)، وله نسخة مرآة للقراءة فقط (read-only mirror) على GitHub في <a href="https://github.com/deuxfleurs-org/garage">deuxfleurs-org/garage</a>. وهو مناسب لعمليات النشر الصغيرة (deployments) المستضافة ذاتيًا (self-hosted) أو الموزعة على عدة مواقع.</p>
 <p><strong>إن درست مستودعًا واحدًا فقط (If you study one repo):</strong> <code>supabase/storage</code>. إنه خدمة تخزين (storage service) حقيقية متعددة المستأجرين (multi-tenant) تفعل بالضبط ما يصفه هذا الدرس: البايتات في خلفية S3 (S3 backend)، وصفوف (rows) البيانات الوصفية (metadata) في Postgres، والوصول تحدده سياسات (policies) قاعدة البيانات (database)، والروابط الموقّعة (signed URLs)، والرفع القابل للاستئناف (resumable upload). قراءة الطريقة التي يربط بها الطلب (request) بحاوية (bucket) ومفتاح (key) وفحص صلاحية (permission check) تعلّمك أكثر من أي درس تعليمي.</p>
-<p><strong>اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?‎)؟</strong></p>
+<p><strong>اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟</strong></p>
 <ul>
 <li><strong>اشترِ (Buy):</strong> S3 أو Cloudflare R2 أو Google Cloud Storage للبايتات، دائمًا، ما لم يكن لديك سبب لغير ذلك. وUploadThing أو Transloadit أو Cloudinary إن كنت تفضّل ألا تمتلك مسار الرفع (upload path) ومعالجة الصور (image processing).</li>
 <li><strong>استضف بنفسك (Self-host):</strong> SeaweedFS أو Garage لنسخة من المنتج قابلة للاستضافة الذاتية (self-hostable)، أو لعملاء معزولين عن الشبكة (air-gapped)، أو لبيئة تطوير محلية (local development environment) تحاكي الإنتاج (production)؛ وtusd إن احتجت الرفع القابل للاستئناف (resumable upload) على بنيتك التحتية (infrastructure).</li>
@@ -4155,7 +4155,7 @@ CREATE INDEX incident_update_search_idx ON incident_update USING gin (search);
 </tr>
 </tbody></table></div>
 <p><strong>إن درست مستودعًا واحدًا فقط (If you study one repo):</strong> Meilisearch. اقرأ توثيقه عن رموز المستأجرين (tenant tokens) والسمات القابلة للتصفية (filterable attributes) والتسامح مع الأخطاء الإملائية (typo tolerance)، ثم شغّله محليًا وافهرس مراقِبات (monitors) Beacon في فترة بعد الظهر. سيريك كيف يبدو البحث (search) &quot;الجيد&quot; داخل التطبيق، وهو المعيار الذي تقيس Postgres عليه.</p>
-<p><strong>اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?‎)؟</strong></p>
+<p><strong>اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟</strong></p>
 <ul>
 <li><strong>اشترِ (Buy):</strong> Algolia أو Elastic Cloud أو Meilisearch Cloud أو Typesense Cloud عندما يكون البحث (search) محوريًا في المنتج ولا أحد يريد امتلاك عنقود (cluster). خطّط (plans) للميزانية بعناية؛ فالتسعير (pricing) يتصاعد مع عدد السجلات (logs) والاستعلامات (queries).</li>
 <li><strong>استضف بنفسك (Self-host):</strong> Meilisearch أو Typesense لأغلب منتجات SaaS، وOpenSearch عندما تكون البيانات كبيرة أو تحتاج التجميعات (aggregations)؛ وParadeDB إن أردته داخل Postgres.</li>
@@ -4434,7 +4434,7 @@ COMMIT;
 </tr>
 </tbody></table></div>
 <p><strong>إن درست مستودعًا واحدًا فقط (If you study one repo):</strong> توثيق (documentation) Supabase وأمثلتها عن أمان مستوى الصف (row-level security)، تقرؤها إلى جانب فصل RLS في توثيق Postgres. كتابة سياسات (policies) لجداول (tables) <code>monitor</code> و<code>incident</code> و<code>membership</code> في Beacon، ثم محاولة كسرها، ستعلّمك عن عزل المستأجرين (tenant isolation) أكثر من أي مخطط (any diagram).</p>
-<p><strong>اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?‎)؟</strong></p>
+<p><strong>اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟</strong></p>
 <ul>
 <li><strong>اشترِ (Buy):</strong> Postgres مُدار (managed) مع RLS (Supabase وNeon وRDS)، وCitus مُدار (Azure Cosmos DB for PostgreSQL) للتجزئة (sharding)، وTurso لقواعد SQLite لكل مستأجر (tenant). لإقامة البيانات (data residency)، اختر مزوّدين (providers) لديهم المناطق (regions) التي تحتاجها ووقّع اتفاقيات معالجة البيانات (DPA) معهم.</li>
 <li><strong>استضف بنفسك (Self-host):</strong> Citus أو مجموعة من نسخ Postgres عندما يشترط عقد أن تعمل على بنيتك التحتية (infrastructure) أو يتطلب عمليات نشر (deploys) مخصصة؛ وخصّص ميزانية لتوزيع الترحيلات (migration fan-out) والمراقبة.</li>
@@ -4854,7 +4854,7 @@ export async function POST(req: Request) {
 </tr>
 </tbody></table></div>
 <p><strong>إن درست مستودعًا واحدًا فقط (If you study one repo):</strong> اقرأ <code>nextjs/saas-starter</code>. إنه صغير بما يكفي لتفهمه كاملًا. فيه مسار دفع (checkout route) واحد، ومسار ويب هوك (webhook route) واحد، ودالة واحدة تنقل اشتراك (subscription) Stripe إلى صف (row) الفريق. عندما يتضح لك، سترى الهيكل (structure) نفسه داخل كل قاعدة كود (codebase) أكبر في هذا الدرس.</p>
-<p><strong>اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?‎)؟</strong></p>
+<p><strong>اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟</strong></p>
 <ul>
 <li><strong>اشترِ (الخيار الافتراضي (default)):</strong> Stripe Billing مع Checkout وبوابة العميل (customer portal). وإن كنت تفضّل ألا تتعامل مع ضريبة المبيعات العالمية (global sales tax)، فاستخدم تاجرًا مسجّلًا (Merchant of Record): Paddle أو Lemon Squeezy أو Polar. في سنة Beacon الأولى، اختر واحدًا منها وامضِ.</li>
 <li><strong>استضف بنفسك (Self-host):</strong> Kill Bill أو Lago (<a class="xref" href="#l3-3">3.3</a>) عندما يكون منطق الفوترة (billing logic) جوهريًا في عملك، أو لديك عقود غير معتادة، أو تريد أن تبقى مستقلًا عن أي معالج دفع (payment processor) بعينه. ستظل بحاجة إلى معالج دفع (processor) لنقل المال (money).</li>
@@ -5204,7 +5204,7 @@ export function getEntitlements(org: Org): Entitlements {
 </tr>
 </tbody></table></div>
 <p><strong>إن درست مستودعًا واحدًا فقط (If you study one repo):</strong> اقرأ <code>openstatusHQ/openstatus</code>. إنه أقرب شيء موجود إلى Beacon: إعداد خطط (plan config) فيه <code>monitors</code> و<code>periodicity</code> و<code>sms</code> و<code>sms-limit</code>، وإضافات (add-ons)، وفحوص حدود (limit checks) على الخادم (server) ترمي الخطأ &quot;Upgrade for more periodicity options&quot;. يمكنك أن تربط كل سطر تقريبًا بهذا الدرس.</p>
-<p><strong>اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?‎)؟</strong></p>
+<p><strong>اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟</strong></p>
 <ul>
 <li><strong>اشترِ:</strong> Stigg أو Schematic عندما تُشارَك الاستحقاقات (entitlements) بين خدمات كثيرة وتكثر الصفقات المخصصة (custom deals) عبر فريق المبيعات (sales). ومنصات الفوترة المُدارة (Stripe بميزات الاستحقاقات فيها، وChargebee، وPaddle) تغطي الحالات الأبسط.</li>
 <li><strong>استضف بنفسك (Self-host):</strong> Autumn أو Lago عندما تريد طبقة الاستحقاقات (entitlements layer) في بنيتك التحتية (infrastructure) ولا تمانع تشغيل خدمة إضافية (extra service).</li>
@@ -5572,7 +5572,7 @@ await db.usageEvent.upsert({
 </tr>
 </tbody></table></div>
 <p><strong>إن درست مستودعًا واحدًا فقط (If you study one repo):</strong> اقرأ <code>getlago/lago</code>. توثيقه ونموذج بياناته (data model) يشرحان كل مفهوم في هذا الدرس: المقاييس القابلة للفوترة (billable metrics) مع أنواع التجميع (aggregation types)، والرسوم (fees) مع نماذج التسعير (pricing models)، والمحافظ (wallets) والأرصدة (credits)، وفترات السماح (grace periods)، والفواتير (invoices). وكود <code>api</code> (في <code>getlago/lago-api</code>) يُظهر كيف تتلاءم القطع معًا في نظام إنتاجي (production system).</p>
-<p><strong>اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?‎)؟</strong></p>
+<p><strong>اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟</strong></p>
 <ul>
 <li><strong>اشترِ (الخيار الافتراضي (default)):</strong> عدّادات Stripe Billing (Stripe Billing meters) عندما يكون Stripe معالج الدفع (payment processor) لديك أصلًا والتسعير (pricing) لكل وحدة (per unit) أو متدرّج (graduated). وMetronome وOrb وAmberflo منصات مُدارة (managed platforms) للفوترة حسب الاستخدام (usage-based billing) للاحتياجات الأثقل. واختر تاجرًا مسجّلًا (Merchant of Record) يدعم الاستخدام (Polar، Paddle) إن أردت أن تُعالَج الضرائب (tax) أيضًا.</li>
 <li><strong>استضف بنفسك (Self-host):</strong> Lago أو OpenMeter أو Flexprice أو Kill Bill عندما يكون التسعير (pricing) معقدًا، أو الحجم عاليًا، أو تحتاج إلى إقامة البيانات في بلد محدد (Data Residency)، أو تكون الفوترة (billing) استراتيجية بما يكفي لتتجنب الارتهان لمزوّد (vendor lock-in).</li>
@@ -10617,7 +10617,7 @@ Preferred-Languages: en
 </tr>
 </tbody></table></div>
 <p><strong>إن درست مستودعًا واحدًا فقط (If you only study one):</strong> ادرس <strong>OWASP Cheat Sheet Series</strong>. ليست أداة (tool)، لكن أوراق SSRF Prevention وSecrets Management وContent Security Policy وAuthorization تحوّل هذا الدرس (this lesson) إلى قوائم تحقق ملموسة (concrete checklists) راجعها خبراء (peer-reviewed)، تستطيع تطبيقها على Beacon اليوم.</p>
-<p><strong>اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?‎)؟</strong></p>
+<p><strong>اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟</strong></p>
 <ul>
 <li><strong>اشترِ (Buy)</strong> أتمتة الامتثال (Vanta، Drata) عندما تصبح صفقات المؤسسات (enterprise deals) معتمدة على SOC 2. علاقاتهم مع المدققين (auditor relationships) وتكاملاتهم (integrations) تستحق الثمن. استخدم KMS الخاص بسحابتك (your cloud) بدل تشغيل واحد بنفسك. واشترِ اختبارات الاختراق (pen tests) من شركات خارجية (outside firms)، لأن الاختبار الذي تجريه بنفسك لا يُحسب.</li>
 <li><strong>استضف بنفسك (Self-host)</strong> Infisical أو OpenBao عندما يجب أن تبقى الأسرار (secrets) داخل شبكتك (your network) أو عندما تبيع منتجًا قابلًا للاستضافة الذاتية (self-hostable product). استخدم SOPS عندما يريد فريق صغير إعدادات مشفرة (encrypted config) في git دون أي خادم. وجرّب Comp أو Probo إذا أردت تتبع الامتثال (compliance tracking) دون اشتراك (subscription).</li>
@@ -10920,7 +10920,7 @@ export async function summarizeIncident(orgId: string, incidentId: string) {
 </tr>
 </tbody></table></div>
 <p><strong>إن درست مستودعًا واحدًا فقط (If you only study one):</strong> ادرس <strong>LiteLLM</strong>. أكثر من أي ميزة (feature) منفردة، يُظهر ما يعنيه &quot;مكوّن بوابة الذكاء الاصطناعي (the AI gateway component)&quot; عمليًا: تجريد المزودين (provider abstraction)، ومفاتيح افتراضية (virtual keys) لكل فريق، وميزانيات (budgets)، وبدائل (fallbacks)، وتخزين مؤقت (caching)، وتسجيل للإنفاق (spend logging)، كلها في مكان واحد. يحتاج Beacon إلى كل واحدة منها، سواء شغّلت LiteLLM أو بنيت نسخة خفيفة بنفسك.</p>
-<p><strong>اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?‎)؟</strong></p>
+<p><strong>اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟</strong></p>
 <ul>
 <li><strong>اشترِ (Buy)</strong> النماذج (Anthropic أو OpenAI أو Google، أو عبر منصات سحابية (cloud platforms) مثل AWS Bedrock وGoogle Vertex AI لاحتياجات مكان إقامة البيانات (data residency))، واشترِ في البداية المراقبة المستضافة (Langfuse Cloud، Helicone، LangSmith). البوابات المُدارة (Cloudflare AI Gateway، Vercel AI Gateway، OpenRouter) بداية سريعة.</li>
 <li><strong>استضف بنفسك (Self-host)</strong> LiteLLM وLangfuse عندما يجب أن تبقى الموجّهات (prompts) التي تحتوي على بيانات العملاء (customer data) داخل بنيتك التحتية، أو عندما تحتاج إلى ميزانيات (budgets) لكل مستأجر (per-tenant) تتحكم بها. استضف النماذج مفتوحة الأوزان (open-weight models) بنفسك فقط عندما يفرض الامتثال (compliance) أو اقتصاديات الوحدة (unit economics) ذلك. تشغيل وحدات GPU (GPU operations) وظيفة قائمة بذاتها.</li>
@@ -11287,7 +11287,7 @@ export async function summarizeIncident(orgId: string, incidentId: string) {
 <p><strong>إن درست مستودعًا واحدًا فقط (If you only study one):</strong> ادرس <strong>openstatus</strong>. إنه Beacon حقيقي مفتوح المصدر (open-source):
 مراقِبات (monitors)، وعمّال فحص (checkers)، وحوادث (incidents)، وصفحات حالة (status pages)، وإشعارات (notifications)، ومساحات عمل (workspaces)، وخطط (plans). ضع تصميمك
 الختامي بجانبه واشرح كل فرق: أين اخترت شيئًا مختلفًا ولماذا، وأين كان اختياره أفضل.</p>
-<p><strong>اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?‎)؟</strong></p>
+<p><strong>اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟</strong></p>
 <ul>
 <li><strong>اشترِ (Buy)</strong> كل مكوّن (component) لا يميّز منتجك (your differentiator) ما دمت صغيرًا، لأن أندر مواردك هو انتباه
 المهندسين (engineering attention)، والخدمات المُدارة (managed services) تعيده إليك مقابل المال.</li>
@@ -11427,7 +11427,7 @@ Markdown. يجب أن يذكر كل صندوق (every box) الدرس الذي �
 Graphile Worker) وStripe Checkout مع Portal، لأن انتباه المهندسين (engineering attention) هو أندر الموارد
 ويجب أن يذهب إلى النطاق الأساسي (core domain). سير العمل المتين (durable workflows) وخدمة القياس (metering service) ينتميان إلى مراحل
 لاحقة، ويجب أن يذكر سجل القرار (ADR) الإشارة (signal) التي تستدعي الانتقال. راجع جدول البناء (build) أو
-الشراء (buy) في قسم 🟡 التعمق أكثر (Going deeper) وفقرة &quot;اشترِ أم ابنِ أم استضف بنفسك (Buy, build, or self-host?‎)؟&quot;.</p>
+الشراء (buy) في قسم 🟡 التعمق أكثر (Going deeper) وفقرة &quot;اشترِ أم ابنِ أم استضف بنفسك ⁦(Buy, build, or self-host?)⁩؟&quot;.</p>
 </details>
 
 <p><strong>5. يلغي مزوّد الهوية (identity provider) لدى أحد العملاء (customers) تزويد موظف (employee) عبر SCIM. يحذف Beacon المستخدم (user) وجلساته (their sessions)، لكن في اليوم التالي ما زال مفتاح API (API key) الخاص بذلك الشخص يعيد مراقِبات (monitors) العميل (customer). ما الخطأ الذي حدث؟</strong></p>
