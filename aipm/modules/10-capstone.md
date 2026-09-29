@@ -1,3 +1,470 @@
+# Module 10 — Hero: capstone and practice exam
+
+*You have met every part of AI product management one lesson at a time. This module puts them back together. In the capstone you take Najm Assist, the customer assistant in Najm Bank's mobile app, from a vague idea to a product running at scale, and you produce one artefact from every earlier module along the way: the opportunity brief, the use-case scorecard, the data readiness check, the automation map, the spec with evals, the launch checklist, the metrics tree, the cost-per-task model and the roadmap. Then we turn to you: how to show this work in interviews and a portfolio, and how to keep growing as an AI product manager after the course ends. The module closes with a 60-question practice exam across all eight stages.*
+
+> **Stages:** Discover through Lead — the whole lifecycle, end to end, on one product and then in one exam.
+
+---
+
+# 10.1 — Capstone: take Najm Assist from idea to scale
+*Level: 🔴 Advanced* · *Prerequisites: Modules 0–9* · *Stage: Discover, Define, Design, Build, Evaluate, Launch, Grow, Lead*
+
+## ⚡ In 60 seconds
+- The capstone walks one product, **Najm Assist**, through all eight stages: Discover, Define, Design, Build, Evaluate, Launch, Grow and Lead. Each stage produces one artefact you already learned to make.
+- Each artefact answers a **decision question** ("worth solving?", "how much autonomy?", "good enough to ship?", "does it pay?"). If it changes no decision, cut it.
+- Artefacts connect: a discovery job becomes an eval task; a spec quality bar becomes a launch gate and then a monitoring alert. Broken links are where AI products fail.
+- Najm Assist grows in **automation steps** — answer, guide, act with confirmation (freeze a card), then higher-stakes tasks (disputes). Each step reopens Define, Design and Evaluate.
+- Decision cue: before each stage, write down "what would make us stop?". A plan without a kill criterion is a pitch.
+- Biggest trap: treating the capstone as a document exercise. The skill is the judgement between artefacts.
+
+## 🧭 Why it matters
+It is January. Rania shows the team one slide: most contact-centre calls last year were about a handful of topics — card blocks, disputed transactions, transfer limits, fees and "where is my money". The CEO wants an app assistant. Khalid asks what it will cost and save. Layla asks what happens when it gives an EU customer a wrong answer about fees. Sara asks where transcripts will be stored. Tariq asks about latency; Hessa, about what customers want.
+
+Faisal wants a demo by Thursday. Rania: "The demo is easy. The hard part is the decisions between the demo and a product customers trust with their money. Let's make them in order, and write each one down."
+
+Skipped decisions have public costs. In *Moffatt v. Air Canada* (2024), a tribunal held the airline responsible for what its chatbot told a customer about bereavement fares. DPD's delivery chatbot swore and criticised the company after an update in January 2024. Klarna announced in February 2024 that its assistant handled a large share of customer chats, and in 2025 said it would bring more human service back. Each is a failure *between* artefacts: a spec without a grounding rule, an update without a regression gate, a cost metric without a quality counterweight. The capstone is where you practise closing those gaps.
+
+## 📐 How it works
+
+### 🟢 The essentials
+
+**A capstone** here is one end-to-end pass through the lifecycle on one product, producing a linked set of artefacts: a **product dossier**. Rania hands it to a new PM on day one; Layla reads it at governance gates; Khalid reads it before approving budget.
+
+The summary page in 🏛️ below lists the nine artefacts, one or two per stage, each tied to the lesson that taught it. Three rules make the dossier work:
+
+1. **Every artefact states its decision and its evidence** ("card freeze first: frequent, reversible, low-risk").
+2. **Every artefact names the next one's input.** The brief's top jobs become golden-set slices; the spec's quality bars become launch gates.
+3. **Every stage has a stop rule.** If it fires, you go back a stage or kill the idea. That is the process working.
+
+All numbers below are illustrative.
+
+**Discover.** Hessa and Faisal listen to call recordings (with Sara's approval), read app reviews and shadow five contact-centre agents. They frame the work as **Jobs to be Done** (Clayton Christensen): "when I see a transaction I don't recognise, I want to stop further damage and get my money back." Their **Opportunity Solution Tree** (Teresa Torres) has one outcome (customers resolve common needs in the app without waiting), four opportunities (unknown transactions, lost cards, confusing fees, transfer limits) and candidate solutions under each. Only some need AI: a clearer fee page fixes part of the fee confusion better than any chatbot.
+
+**Define.** The scorecard rates each candidate on value, feasibility and risk. Answering fee and policy questions from the bank's documents scores high on value and feasibility, medium on risk (wrong fee answers are costly, as Air Canada learned). Freezing a card is high value, low risk, because it is reversible. Disputing a transaction is high value but higher risk: it starts a regulated process with deadlines. Personalised investment advice is **killed** (high risk, unclear value, a licensing question), and the reason is recorded so it is not reopened every quarter.
+
+The data readiness check asks whether the bank has what each use case needs: a current, owned fee and terms corpus (partly — three versions of the fee schedule exist, so Omar's team names one owner); historical conversations for evaluation (yes, after redaction); and card APIs (yes, already used by the app). Sara's data rights note records the lawful basis under Qatar's PDPPL (Law No. 13 of 2016) and GDPR for EU customers, plus retention. Detail belongs to *AI Governance: Zero to Hero*; the PM makes sure the note exists before build.
+
+### 🟡 Going deeper
+
+**Design.** Hessa builds the **automation map** using the levels of automation (Sheridan and Verplank, 1978) in the course's four product levels: suggest, draft, decide, act.
+
+| Task | Level at launch | Why | Condition to move up |
+|---|---|---|---|
+| Answer fee and policy questions | Suggest, with sources | Customer decides what to do | Stays here |
+| Change a transfer limit | Draft: prefill, customer submits | Customer controls money movement | Low prefill error rate for a quarter |
+| Freeze a card | Act, with confirmation | Frequent, urgent, reversible in one tap | Already at target |
+| Open a dispute | Draft: customer confirms, agent reviews | Regulated process, deadlines, money at stake | Eval and audit evidence; Layla's re-approval |
+
+The trust patterns come from Google's **People + AI Guidebook** and Microsoft's **Guidelines for Human-AI Interaction** (Amershi et al., 2019): say it is an AI and what it can do; show sources; confirm before any action; keep "talk to a person" visible; and when unsure, hand over with the conversation attached. The EU AI Act's transparency duty for chatbots points the same way; Layla confirms the details.
+
+**Build.** The spec turns decisions into testable requirements:
+
+- *Grounding rule:* fee and policy answers come only from the approved corpus via retrieval (RAG); if nothing relevant is found, the assistant says so and offers a person. No fee, rate or limit may appear unless it is in a retrieved source.
+- *Quality bars as evals:* for example, 95% of golden-set fee questions correct with the right source, zero ungrounded numbers in the red-team set, 100% of actions confirmed (illustrative; Dana and Faisal set real bars from the baseline).
+- *Tools as product surface:* at launch the assistant gets `get_card_status` and `freeze_card` and nothing else. Tool descriptions are written like UI copy, because the model reads them to decide what to do. How tools are connected (for example via the **Model Context Protocol**, introduced by Anthropic in November 2024) is Tariq's call.
+- *Latency and cost budgets:* a target time to first response and a cost ceiling per conversation.
+
+Before this, Faisal ran a **Wizard of Oz** test (a human behind the chat window) to learn how customers phrase their needs, then a thin retrieval prototype on the real corpus.
+
+**Evaluate.** Dana's eval plan has three layers, matching Module 6:
+
+1. **Offline**: a golden set of redacted real conversations, sliced by job, language (English and Arabic) and difficulty. Error analysis reads failures by hand before anyone tunes a prompt.
+2. **Judged and adversarial**: an **LLM-as-judge** grades grounding and tone at scale, calibrated against human raters because judges have known biases (Zheng et al., 2023). A red-team tries prompt injection, limit overrides, the "$1 car" manipulation seen at a Chevrolet dealer in December 2023, and questions baiting the assistant to state fees it cannot find.
+3. **Online**: a staged rollout (staff, then 1%, 10%, 50% of users) with an **A/B test** against the existing help centre. Following Kohavi, Tang and Xu, the team agrees the **overall evaluation criterion** in advance and adds **guardrail metrics** (complaints, handoff rate, wrong-answer reports) that can stop the rollout on their own.
+
+```mermaid
+flowchart LR
+  D["Discover: jobs and OST"] --> F["Define: scorecard and data check"]
+  F --> G["Design: automation map"]
+  G --> B["Build: spec and evals"]
+  B --> E["Evaluate: golden set, red-team, A/B"]
+  E -->|"bars met"| L["Launch: readiness gate"]
+  E -->|"bars missed"| B
+  L --> R["Grow: metrics, cost, drift"]
+  R -->|"new task or level"| F
+  R --> K["Lead: strategy and roadmap"]
+  K -->|"next bet"| D
+```
+
+**Launch.** The readiness checklist has four blocks: *quality* (every spec bar met on the exact model and prompt version shipping), *guardrails* (filters live, confirmations tested, a kill switch that disables tools within minutes), *governance* (Layla's approval, Sara's DPIA outcome, disclosure text approved) and *support* (agents trained on handoffs, an incident owner on call). Positioning is modest: "fast help for everyday banking". Adoption inside the bank depends on the contact centre: if agents see a threat, handoffs suffer, so Rania involves their head from Discover onwards.
+
+### 🔴 Expert view
+
+**Grow.** Faisal's metrics tree starts from one **North Star metric**: *customer needs resolved in the app without a repeat contact within seven days*. Containment (chats that never reach a human) is easy to inflate by hiding "talk to a person"; resolution without repeat contact is not. Beneath it sit the **HEART** categories (Rodden, Hutchinson and Fu, 2010) — happiness, engagement, adoption, retention, task success — and trust metrics: handoff rate, wrong-answer reports and complaints.
+
+The **cost-per-task model**: cost per resolved conversation = (model and retrieval cost per conversation + tool and platform cost + handoff rate × cost of a human contact + monitoring overhead) ÷ resolution rate. With illustrative numbers — a few cents of model cost, a human contact costing many times that, a 25% handoff rate — handoffs, not the model, dominate. So the best growth lever is better resolution on the top jobs, not a cheaper model.
+
+The monitoring plan reuses the spec. The eval suite runs nightly on sampled, redacted live conversations; alerts fire when grounding falls below the launch bar, handoffs rise on a job, or new question types appear that the golden set does not cover (drift, for example after a new fee schedule). Every model or prompt change runs the full suite first — the regression gate the DPD case lacked.
+
+**Lead.** Rania's strategy one-pager says defensibility comes not from the model, which competitors can buy, but from core-system integration, a current corpus, labelled conversations that sharpen evals, and trust. The roadmap is a set of **bets** with evidence gates, not feature dates: "dispute drafting, if the Q2 eval clears the bar and Layla re-approves". A model-agnostic eval suite makes switching providers an eval run, not a rewrite. The operating model names owners: Faisal (product and metrics), Dana (evaluation), Tariq (platform, latency, cost), the contact centre (handoffs) and Layla's office (any move up the automation map). Responsible AI runs through every artefact rather than sitting in a final chapter.
+
+**The judgement calls between artefacts.** Three moments show the difference between a hero PM and a document writer:
+
+- *The eval misses the bar by a little.* Fee grounding is 92% against a 95% bar; Faisal wants to "fix it later". Error analysis first: if misses cluster in one fee type, remove that type from scope ("let me connect you") and launch the rest. Narrowing scope is a product decision; quietly lowering the bar is not.
+- *The A/B test wins on cost, loses on trust.* The guardrail wins; investigate before expanding.
+- *The business wants the next automation level early.* Khalid wants fully automated disputes. Rania answers that it will happen when the evidence and re-approval exist, and shows what that takes.
+
+## 🧰 The toolkit
+| Tool or framework | What it is and does | When to reach for it |
+|---|---|---|
+| **Product dossier** | Linked artefacts for one product, each stating decision, evidence and stop rule | Idea to scale; onboarding a PM; governance gates |
+| **Use-case scorecard** | Scores candidates on value, feasibility and risk, with explicit kill criteria | Define: choosing the first use cases and recording kills |
+| **Automation map** (after Sheridan and Verplank) | Assigns each task a level (suggest, draft, decide, act) and a condition for moving up | Design: deciding autonomy per task, not per product |
+| **Golden set** | Sliced real tasks with reference answers | Turning the spec into tests and regression gates |
+| **Launch readiness checklist** | Quality, guardrail, governance and support conditions, all true to ship | The go or no-go meeting |
+| **Cost-per-task model** | Cost to serve one resolved task, including human handoffs | Estimates in Define, actuals in Grow |
+
+## 🏛️ In practice at Najm Bank
+Faisal's **Najm Assist product dossier — summary page** (v1.0, reviewed by Rania). Each row links to the full artefact.
+
+| # | Stage | Artefact | Decision recorded | Stop rule |
+|---|---|---|---|---|
+| 1 | Discover | Opportunity brief + OST (2.1) | Focus on four jobs: unknown transactions, lost cards, fees, transfer limits | If top jobs need human judgement in most cases, do not build an assistant |
+| 2 | Define | Use-case scorecard (2.2, 2.3) | Launch with fee/policy answers and card freeze; dispute later; investment advice killed | Any candidate scoring high risk with no mitigation is parked |
+| 3 | Define | Data Readiness Assessment + privacy and data rights section (3.1, 3.3) | Single owner for fee schedule; redacted transcripts for eval; lawful basis recorded | No launch until one current fee source exists |
+| 4 | Design | Automation Level Decision Record, Trust Design Spec, Action Catalogue (4.1–4.3) | Suggest (answers), act with confirmation (freeze), draft (disputes) | Customers misunderstand the confirmation in testing → redesign |
+| 5 | Build | AI product spec + behaviour sheet (5.1–5.3) | Grounding rule; tool list limited to two; latency and cost budgets | Quality bars not agreed by Dana and Faisal → no build sign-off |
+| 6 | Evaluate | Evaluation and Red-Team Plan, rollout and experiment brief (6.1–6.3) | Golden set by job and language; judge calibrated; red-team passed; A/B design with OEC and guardrails | Any bar missed → narrow scope or fix; never lower silently |
+| 7 | Launch | Launch Readiness Checklist + adoption plan (7.1–7.3) | Staged rollout; agents trained; kill switch tested | Any unchecked item → no launch |
+| 8 | Grow | Metrics tree, unit economics sheet, monitoring plan and runbook (8.1–8.3) | North Star = resolved without repeat contact in 7 days | Guardrail breach → pause rollout; drift alert → review |
+| 9 | Lead | Strategy one-pager, bets roadmap, operating model (9.1–9.4) | Defensibility from integration, corpus and trust; disputes as next bet | Bet evidence not met by its gate → drop or re-scope |
+
+Rania's comment: *"Auditors will ask about rows 3 and 7, Khalid about row 8. Row 1 is the one we'll forget — revisit it every six months."*
+
+## 🛠️ Exercises
+- 🟢 Write out three rows of the dossier in full (for example the scorecard with five candidates, the automation map with six tasks, the launch checklist). *Done when:* each states its decision, evidence and stop rule, and names the input it passes on.
+- 🟡 Write the dossier summary for **Smart Alerts** or **Staff GenAI**, one row per stage. *Done when:* all nine rows are filled and at least three differ in substance from Najm Assist, each with a one-sentence reason (classic ML, or internal tool).
+- 🔴 Run the full capstone on a product from your own organisation or a public product. Present it in 10 minutes to a colleague playing Khalid, Layla and Tariq in turn. *Done when:* each artefact fits on one page, the links are explicit, you have written answers to their three hardest questions and at least one artefact changed because of them.
+
+## ⚠️ Mistakes and traps
+- **Starting at Build.** A demo answers "can we?", not "should we?". Start with jobs and the scorecard.
+- **Artefacts that do not talk to each other.** An eval set missing the top jobs, or monitoring that ignores the launch bars, leaves gaps where failures live.
+- **One automation level for the whole product.** "Najm Assist is an agent" hides the fact that answering, freezing and disputing carry very different risk. Set the level per task.
+- **Measuring containment instead of resolution.** Containment rewards hiding the human option. Use a North Star that counts problems actually solved, with trust metrics as guardrails.
+- **No stop rules.** Without a written condition for stopping, sunk cost carries weak products into launch. Write the stop rule before the stage starts.
+
+## 🧾 Recap
+- The capstone takes one product through all eight stages and produces a linked **product dossier**, one artefact per stage.
+- Each artefact answers a decision question, cites evidence, names a stop rule and feeds the next.
+- Spec quality bars become launch gates and then monitoring alerts; that chain makes an AI product safe to change.
+- Grow on a North Star that counts real resolution and a cost-per-task model that includes humans.
+- The hero skill is judgement between artefacts: narrow scope rather than lower a bar, let guardrails beat headline wins, and move autonomy only on evidence.
+
+## ✍️ Check yourself
+
+**1. Najm Assist's grounding score on fee questions is 92% against a 95% launch bar. Error analysis shows most misses are about one type of international transfer fee. What should Faisal do?**
+
+- A. Launch as planned and fix the issue in the next release
+- B. Lower the bar to 90% because the rest of the results are strong
+- C. Remove that fee type from the assistant's scope, route those questions to a person, and launch the rest if all other bars are met
+- D. Cancel the launch and restart discovery
+
+<details><summary>Answer</summary>
+
+**C.** Narrowing scope keeps the quality bar intact. Launching anyway (A) or lowering the bar (B) breaks the link between spec and launch gate; D overreacts to a narrow, understood failure. (🔴 Expert view: the judgement calls between artefacts.)
+
+</details>
+
+**2. Which North Star metric best fits Najm Assist?**
+
+- A. Share of chats that never reach a human agent
+- B. Number of messages sent to the assistant per month
+- C. Customer needs resolved in the app without a repeat contact within seven days
+- D. Average model cost per conversation
+
+<details><summary>Answer</summary>
+
+**C.** It measures real value and cannot be raised by hiding the human option. Containment (A) can rise while service gets worse. B and D are inputs, not outcomes. (🔴 Expert view: Grow.)
+
+</details>
+
+**3. Why does the automation map set card freeze at "act with confirmation" at launch, but dispute opening at "draft"?**
+
+- A. Card freeze uses a cheaper model
+- B. Card freeze is frequent, urgent and easily reversible; disputes start a regulated process with money and deadlines at stake
+- C. Disputes cannot be done through an API
+- D. Customers prefer to write disputes themselves
+
+<details><summary>Answer</summary>
+
+**B.** Automation level is set per task by risk and reversibility. A freeze is undone in one tap; a mishandled dispute can cost the customer money. (🟡 Going deeper: Design.)
+
+</details>
+
+**4. In the A/B test, the treatment group shows 18% fewer calls to the contact centre but a rise in complaints mentioning the assistant, a pre-agreed guardrail metric. What is the right next step?**
+
+- A. Expand to 100% because the cost saving is large
+- B. Pause the expansion and investigate the complaints before deciding
+- C. Remove complaints from the guardrail list
+- D. Switch to a cheaper model to increase the saving
+
+<details><summary>Answer</summary>
+
+**B.** Guardrail metrics can stop a rollout on their own, however good the headline (Kohavi, Tang and Xu). A and C defeat their purpose. (🟡 Going deeper: Evaluate; 🔴 Expert view.)
+
+</details>
+
+**5. Faisal's cost-per-task model shows the model calls cost a few cents per conversation, while each handoff to a human costs many times more. What does this imply for growth priorities?**
+
+- A. Switching to a cheaper model is the main lever
+- B. Improving resolution on the most common jobs, which reduces handoffs, is likely the biggest lever
+- C. Removing the "talk to a person" option will cut cost safely
+- D. Cost does not matter once the product has launched
+
+<details><summary>Answer</summary>
+
+**B.** When handoffs dominate cost, better resolution on top jobs saves most. A cheaper model (A) trims the small part; C harms trust. (🔴 Expert view: Grow.)
+
+</details>
+
+## 📚 References
+- Teresa Torres, *Continuous Discovery Habits* (2021) — https://www.producttalk.org
+- Marty Cagan, *Inspired* (2nd ed., 2017) — https://www.svpg.com
+- Google PAIR, People + AI Guidebook — https://pair.withgoogle.com/guidebook
+- Amershi et al., "Guidelines for Human-AI Interaction", CHI 2019 — https://www.microsoft.com/en-us/research/publication/guidelines-for-human-ai-interaction/
+- Kohavi, Tang and Xu, *Trustworthy Online Controlled Experiments* (2020) — https://experimentguide.com
+- Zheng et al., "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena" (2023) — https://arxiv.org/abs/2306.05685
+- Rodden, Hutchinson and Fu, "Measuring the User Experience on a Large Scale: User-Centered Metrics for Web Applications", CHI 2010 — https://research.google/pubs/
+- Model Context Protocol — https://modelcontextprotocol.io
+- EU AI Act, Regulation (EU) 2024/1689 — https://eur-lex.europa.eu/eli/reg/2024/1689/oj
+
+---
+
+# 10.2 — The AI PM career: interviews, portfolio and growth
+*Level: 🔴 Advanced* · *Prerequisites: 10.1* · *Stage: Lead*
+
+## ⚡ In 60 seconds
+- AI product management is product management first. Interviewers still test product sense, execution, metrics and leadership; the AI part tests whether you can reason about **probabilistic behaviour, data, evaluation, cost and trust** when you make those calls.
+- There is no single "AI PM" job. Roles range from adding AI features to an existing product, to building AI-native products, to running internal AI platforms. Know which one you are applying for.
+- The strongest interview answers follow a visible structure: user and job → is AI right? → level of automation → data → quality bar and evals → failure modes and guardrails → metrics and cost → rollout. It is the course in one paragraph.
+- A portfolio beats a list of claims. Two or three case studies that show a **decision, the evidence, the trade-off and the result** — including one where you killed or narrowed something — say more than any certificate.
+- Growth comes from shipping, measuring and writing down what you learned, not from following every model release. Build a learning habit you can keep for years.
+- Biggest trap: talking about models instead of users and outcomes. "I'd use the latest model with RAG" is not a product answer.
+
+## 🧭 Why it matters
+Six months after Najm Assist launched, Faisal applies for a senior AI PM role on the Credit Memo Copilot. "I know the material," he tells Rania, "but in a 30-minute design question I start with the model and get lost." Rania runs a mock interview: "Design an assistant that helps relationship managers prepare for client meetings." Faisal opens with retrieval pipelines and prompt templates. Rania stops him after two minutes. "You haven't told me who the RM is, what they do today or how we'd know it works."
+
+Candidates who have read a lot about AI often answer like engineers who have read about product. Hiring managers want the reverse: product people who reason clearly about what AI changes. Meanwhile Rania is hiring AI PMs herself and must decide what good looks like from the other side of the table.
+
+This lesson is about both sides: how to show what you can do, and how to keep getting better once you have the job.
+
+## 📐 How it works
+
+### 🟢 The essentials
+
+**What kinds of AI PM roles exist.** Titles vary by company, so read the job description rather than the title. At the time of writing (2026), most roles fall into four shapes:
+
+| Role shape | What you own | What they will probe |
+|---|---|---|
+| AI feature PM | AI features inside an existing product (e.g. smart replies in a banking app) | Integration into workflows, adoption, quality vs cost, not breaking what works |
+| AI-native product PM | A product whose core value is the AI (e.g. Najm Assist, Credit Memo Copilot) | Evaluation, trust design, unit economics, iteration speed |
+| AI platform PM | Internal platform other teams build on: model access, eval tooling, guardrails, tool gateways | Developer experience, reuse, governance built in, cost allocation |
+| Data/ML PM | Predictive models and the data behind them (e.g. SME Instant Finance, Smart Alerts) | Metrics like precision and recall, data pipelines, model risk, regulation |
+
+**What interviews test.** Formats differ by company, but most AI PM loops mix these:
+
+1. **Product sense**: "design an AI feature for X". Do you find the user and job before the solution?
+2. **AI fluency**: "retrieval or fine-tuning?", "why does the model make things up?". Module 1 literacy, not engineering depth.
+3. **Evaluation and metrics**: "how would you know it's good?", "what's your North Star?" (Modules 6 and 8).
+4. **Execution**: "the eval is below the bar and launch is next week".
+5. **Strategy**: "a competitor ships the same feature on the same model; what's our moat?" (Module 9).
+6. **Behavioural**: past situations, told with **STAR** (situation, task, action, result).
+7. **Case or take-home**, sometimes a small prototype with a write-up.
+
+**The answer structure.** For any "design an AI product" question, walk this path out loud:
+
+```mermaid
+flowchart TD
+  A["Who is the user, what is the job?"] --> B["Is AI the right tool?"]
+  B -->|"no"| X["Simpler fix: say so"]
+  B -->|"yes"| C["Level of automation per task"]
+  C --> D["Data: have it, may we use it?"]
+  D --> E["Quality bar and how we evaluate"]
+  E --> F["Failure modes and guardrails"]
+  F --> G["Metrics and cost per task"]
+  G --> H["Rollout and what would make us stop"]
+```
+
+You will not have time to go deep on every step. Say the structure in one sentence at the start ("I'll start with the user, check AI is the right tool, then cover automation, data, quality, risks, metrics and rollout"), then spend most time where the problem is hardest. For a banking assistant that is usually trust and failure modes; for an internal tool it is often adoption.
+
+### 🟡 Going deeper
+
+**Answering AI fluency questions.** Interviewers test whether you can make good product decisions with engineers, not whether you can build a model. Good answers have three parts: the concept in plain words, the trade-off it creates and the product decision it drives. For example:
+
+> *"Why do LLMs hallucinate, and what would you do about it?"* — "The model generates likely text; it has no built-in check that the text is true. So for anything factual I'd ground answers in our own sources with retrieval, show those sources, and make 'I don't know' an allowed answer in the spec. Then I'd measure ungrounded claims in the eval set and set a bar before launch. For high-stakes facts like fees I'd also block any number that isn't in a retrieved source."
+
+Weak answers stop after the first sentence, or jump to a vendor name. Avoid quoting today's prices, context window sizes or benchmark scores as facts; they change monthly, and the interviewer wants the method.
+
+**Evaluation questions** separate candidates most. A strong answer names the offline layer (a golden set sliced by the jobs that matter, error analysis), the scalable layer (LLM-as-judge calibrated against humans, red-teaming) and the online layer (staged rollout, A/B test with an agreed criterion and guardrail metrics). Naming one judge bias (position, verbosity or self-preference) and how you would check it shows you have done the work.
+
+**Execution questions** reward the judgement calls from 10.1: narrow scope instead of lowering a bar; let a guardrail metric stop a rollout; move up the automation ladder only on evidence. Say what you would do, what you would tell the business owner and what would change your mind.
+
+**Behavioural questions** often ask about something that went wrong, a disagreement with engineering or data science, or a time you said no. Prepare stories with an AI angle: an eval result that changed a plan, a feature you killed. Be precise about your role: "we" hides what you did; "I" can overclaim what the team did.
+
+**The portfolio.** A portfolio is two or three short case studies, each on one or two pages, plus optional supporting material (a prototype, an eval set, a published write-up). A good case study follows the dossier logic from 10.1:
+
+| Section | What to write | Trap to avoid |
+|---|---|---|
+| Context | User, job, why it mattered, your role | Vague "we built an AI platform" |
+| Decision | The key product decision (scope, automation level, build vs buy, kill) | Listing features instead of decisions |
+| Evidence | Discovery, eval results, experiment outcomes | Invented or unreported numbers |
+| Trade-off | What you gave up and why | Pretending there was no downside |
+| Result | What happened, including what didn't work | Only success stories |
+| Lesson | What you would do differently | Generic "communication is key" |
+
+**Confidentiality comes first.** Never publish an employer's data, internal metrics, customer information or unreleased plans. Rewrite case studies at a level of detail your employer would accept, use relative numbers ("roughly halved handoffs on the top job") only if you are allowed to share them, or use a public or personal project instead. The capstone from 10.1 applied to a public product, clearly labelled as your own analysis, is a fine portfolio piece for someone without shipped AI work yet.
+
+**Building proof without an AI title.** Volunteer to own evaluation on an AI feature your team is building; run a Wizard of Oz test and write it up; build a small prototype with a golden set of 30 real tasks and publish what the eval taught you; take the data readiness or governance-gate work nobody wants. Each gives you a story with a decision and evidence.
+
+### 🔴 Expert view
+
+**Growing from PM to leader.** The job changes as you grow. Early on you own a feature and its metrics. As a senior PM you own a product and its strategy. As a lead or head (Rania's role) you own a portfolio: which bets get funded, how teams are shaped, how the organisation decides what "good enough" means. The AI-specific skills scale with you:
+
+| Level | Core AI PM skill | Evidence you can show |
+|---|---|---|
+| PM | Write a spec with evals as requirements; run error analysis with data science | An eval plan and a launch you owned |
+| Senior PM | Set quality bars and automation levels; own unit economics; handle a model change | A product dossier and a cost-per-task model that drove a decision |
+| Lead / Group PM | Set a roadmap of bets; build shared eval and guardrail practice across teams | A roadmap with evidence gates; a kill you led |
+| Head of AI Products | Operating model, talent, governance partnership, portfolio strategy | How the organisation ships AI safely and repeatedly |
+
+**Hiring as the interviewer.** Rania's panel scores the same structure from the other side (see 🏛️), plus one more question: can the candidate change their mind on evidence? She avoids trivia about model names, which rewards following the news rather than judgement. Every candidate gets the same core questions, and panellists score independently before discussing.
+
+**Staying current without chasing hype.** Models, tools and prices change monthly; the underlying method changes slowly. A sustainable habit:
+
+- *Weekly:* read one or two primary sources (release notes, a paper, a regulator's update) and ask "does this change any decision in my dossier?". Usually it does not.
+- *Monthly:* run your own eval suite against one new model or technique. Your golden set beats public benchmarks for your product.
+- *Quarterly:* write a short note on what your product's data taught you. Writing turns experience into judgement others can use.
+- *Yearly:* re-read the foundations (Cagan, Torres, Kohavi). They get more useful the more you ship.
+
+**Ethics as a career asset.** The PM who can say "not yet" with evidence, as Rania did on dispute automation, earns the trust of risk, legal and executives. In Gulf banking, that trust gets bigger products approved. Governance is covered in *AI Governance: Zero to Hero*; your part is writing stop rules and honouring them.
+
+## 🧰 The toolkit
+| Tool or framework | What it is and does | When to reach for it |
+|---|---|---|
+| **AI product answer structure** | User and job → is AI right → automation → data → quality and evals → failure modes → metrics and cost → rollout | Any "design an AI product" interview question, and real kick-off meetings |
+| **CIRCLES method** (Lewis Lin, *Decode and Conquer*) | A general product-design interview structure, from understanding the situation and customer to trade-offs and summary | Product-sense questions; combine with the AI steps above |
+| **STAR** | Situation, task, action, result: a structure for behavioural answers | Behavioural questions about past work |
+| **Portfolio case study** | One or two pages: context, decision, evidence, trade-off, result, lesson | Job applications, promotion cases, internal visibility |
+| **Interview scorecard** | Fixed criteria scored independently by each panel member | When you are the one hiring AI PMs |
+| **Learning cadence** | Weekly, monthly, quarterly and yearly habits tied to your own product decisions | Staying current without chasing every release |
+
+## 🏛️ In practice at Najm Bank
+Rania's **AI PM interview scorecard** (used for the senior Credit Memo Copilot role), with Faisal's self-assessment after his mock interview:
+
+| Criterion | What "strong" looks like | Faisal (mock) | Action |
+|---|---|---|---|
+| User and job first | Names the RM, their meeting-prep job and today's pain before any solution | Weak — opened with architecture | Practise opening with 2 minutes on user and job |
+| Is AI right? | Checks simpler options (templates, better search) and says when they win | Not covered | Add one sentence to every answer |
+| Automation level | Sets a level per task with reasons (draft briefing: yes; send to client: no) | Good | — |
+| Data and rights | Names sources, gaps, consent and confidentiality of client data | Partial — missed client confidentiality | Review 3.3 |
+| Quality bar and evals | Golden set of real meeting briefs, grounding bar, RM review sample, judge calibration | Strong — used Najm Assist experience | Lead with this story |
+| Failure modes | Wrong figures; stale data; RM overreliance | Partial | Add automation bias |
+| Metrics and cost | North Star on RM time saved with quality held; cost per briefing | Weak on cost | Build a quick cost-per-task sketch |
+| Behavioural evidence | STAR story with a decision, evidence and honest role | Good — the 92% vs 95% fee-scope story | Tighten to 90 seconds |
+
+And Faisal's **one-page portfolio case study**, rewritten with Rania to meet the bank's confidentiality rules:
+
+> **Najm Assist: launching a grounded banking assistant (my role: product manager).** *Context:* customers waited on the phone for simple needs; I owned the assistant's first release. *Decision:* launch with fee answers and card freeze only, and remove one fee type from scope when it missed the grounding bar, instead of delaying launch or lowering the bar. *Evidence:* golden set by job and language; error analysis showed misses clustered in one fee type. *Trade-off:* customers asking that question still wait for a person. *Result:* launched on schedule with all bars met; the excluded fee type was added in the next release after the corpus was fixed. *Lesson:* agree the quality bars before build, so the launch decision is a check, not a debate.
+
+## 🛠️ Exercises
+- 🟢 Answer this out loud in 15 minutes, recording yourself: "Design an AI feature that helps small-business customers understand their cash flow." Use the eight-step answer structure. *Done when:* you can play back the recording and point to each of the eight steps, and your first two minutes contain no mention of models or technology.
+- 🟡 Write one portfolio case study (one page) from your own work or from your 10.1 capstone, using the six sections in the table. Then ask someone to read it and tell you, in one sentence, what decision you made. *Done when:* their sentence matches your decision, every number is either real and shareable or removed, and the case study includes a trade-off.
+- 🔴 Design an interview loop for hiring an AI PM at your organisation (or Najm Bank): four interviews, the questions for each, a scorecard with at least six criteria and what "strong" and "weak" look like for each. Run one interview with a colleague. *Done when:* each criterion links to a skill from a course module, two panel members could score the same answer independently, and you have revised at least one question after the trial run.
+
+## ⚠️ Mistakes and traps
+- **Leading with the model.** Starting with architecture or a vendor name signals engineering interest, not product judgement. Start with the user and the job.
+- **Never asking whether AI is needed.** Interviewers often plant problems where a simpler fix wins. Saying so, briefly, scores well.
+- **Quoting today's numbers as facts.** Prices, context windows and benchmark scores change. Explain the method and label any number as illustrative.
+- **Portfolios that leak or overclaim.** Publishing internal data or presenting team work as yours can cost you more than a missing case study. Check confidentiality and state your role precisely.
+- **Only success stories.** A kill or a narrowed scope, explained well, shows judgement better than a launch that "went great".
+
+## 🧾 Recap
+- AI PM is product management plus clear reasoning about probabilistic behaviour, data, evaluation, cost and trust.
+- Know which role shape you are applying for: AI feature, AI-native product, platform or data/ML.
+- Use a visible answer structure: user and job, is AI right, automation, data, quality and evals, failure modes, metrics and cost, rollout.
+- Build a portfolio of two or three honest case studies that show decisions, evidence and trade-offs, within confidentiality limits.
+- Grow by shipping and writing down what you learn; keep a cadence that ties new models and techniques to your own evals.
+
+## ✍️ Check yourself
+
+**1. In an interview, Faisal is asked to "design an AI assistant for relationship managers preparing for client meetings". What is the best way to begin?**
+
+- A. Describe the retrieval pipeline and which model to use
+- B. Clarify who the RM is, what they do to prepare today and where the pain is, then check whether AI is the right tool
+- C. Quote the context window size of the latest models
+- D. Propose a pricing model for the assistant
+
+<details><summary>Answer</summary>
+
+**B.** Strong answers start with the user and the job, then question whether AI fits. Leading with architecture (A) is the classic trap Rania stopped in the mock interview. Quoting today's numbers (C) is fragile and off the point. (🟢 The essentials: the answer structure.)
+
+</details>
+
+**2. Asked "how would you know our banking assistant is good?", which answer best shows AI PM skill?**
+
+- A. "We'd check customer ratings after launch."
+- B. "We'd use the best model on the public leaderboards."
+- C. "A golden set of real tasks sliced by job and language, with error analysis; an LLM judge calibrated against humans plus red-teaming; then a staged rollout with an agreed criterion and guardrail metrics."
+- D. "Engineering would run unit tests."
+
+<details><summary>Answer</summary>
+
+**C.** It covers the offline, scalable and online layers of evaluation. Ratings alone (A) come late and miss silent errors. Public benchmarks (B) do not measure your product's tasks. (🟡 Going deeper: evaluation questions.)
+
+</details>
+
+**3. Faisal wants to publish a portfolio case study about Najm Assist. Which approach is right?**
+
+- A. Include the internal dashboard screenshots to prove the results
+- B. Describe the decision, evidence, trade-off and result at a level of detail the bank accepts, state his own role precisely, and remove numbers he is not allowed to share
+- C. Say "I built Najm Assist" to keep it short
+- D. Include only the parts that went well
+
+<details><summary>Answer</summary>
+
+**B.** Confidentiality comes first, and precise attribution builds credibility. Screenshots of internal dashboards (A) risk leaking data; "I built it" (C) overclaims a team's work; success-only stories (D) hide the judgement interviewers want to see. (🟡 Going deeper: the portfolio.)
+
+</details>
+
+**4. A job advert asks for a PM to own "model access, eval tooling and guardrails used by all product teams". Which role shape is this?**
+
+- A. AI feature PM
+- B. AI-native product PM
+- C. AI platform PM
+- D. Data/ML PM
+
+<details><summary>Answer</summary>
+
+**C.** An internal platform that other teams build on is a platform role, probed on developer experience, reuse and built-in governance. An AI-native product PM (B) owns a customer-facing product whose core value is AI. (🟢 The essentials: role shapes.)
+
+</details>
+
+**5. A new, cheaper model is released. What should an AI PM following a sustainable learning cadence do?**
+
+- A. Switch production to it immediately to save cost
+- B. Ignore it until competitors adopt it
+- C. Run the product's own eval suite against it and decide based on quality, cost and risk for the product's tasks
+- D. Rely on its public benchmark scores
+
+<details><summary>Answer</summary>
+
+**C.** Your own golden set is the best guide to whether a model works for your tasks. Switching blindly (A) skips the regression gate; public benchmarks (D) do not measure your product. (🔴 Expert view: staying current.)
+
+</details>
+
+## 📚 References
+- Marty Cagan, *Inspired* (2nd ed., 2017) and *Empowered* (2020) — https://www.svpg.com
+- Gayle Laakmann McDowell and Jackie Bavaro, *Cracking the PM Interview* (2013)
+- Lewis C. Lin, *Decode and Conquer* (CIRCLES method)
+- Teresa Torres, *Continuous Discovery Habits* (2021) — https://www.producttalk.org
+- Kohavi, Tang and Xu, *Trustworthy Online Controlled Experiments* (2020) — https://experimentguide.com
+- Chip Huyen, *AI Engineering* (O'Reilly, 2025) — https://www.oreilly.com
+- Google PAIR, People + AI Guidebook — https://pair.withgoogle.com/guidebook
+- Zheng et al., "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena" (2023) — https://arxiv.org/abs/2306.05685
+
+
+---
+
 # 10.3 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–9* · *Stage: Discover, Define, Design, Build, Evaluate, Launch, Grow, Lead*
 
