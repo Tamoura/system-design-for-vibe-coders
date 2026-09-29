@@ -44,6 +44,9 @@ jobs:
       - name: Verify the AIGP course output matches its markdown
         run: npm run aigp:check
 
+      - name: Verify the AI PM course output matches its markdown
+        run: npm run aipm:check
+
       - name: Verify the agentic pages carry the site navigation
         run: node scripts/agentic-nav.mjs --check
 
@@ -59,7 +62,7 @@ jobs:
       - name: Assemble the site
         run: |
           # Course library: landing hub at root, each course in its own subpath.
-          mkdir -p _site _site/vibe _site/agentic _site/saas _site/aigp
+          mkdir -p _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm
           cp landing.html _site/index.html
           # The vibe course (bilingual pages + downloads) → /vibe/
           cp index.html index.en.html index.ar.html _site/vibe/
@@ -73,7 +76,10 @@ jobs:
           # AI Governance: Zero to Hero (AIGP-aligned) → /aigp/
           cp aigp/index.html aigp/course.html aigp/COURSE.md aigp/INSTRUMENTS.md \
              aigp/index.ar.html aigp/course.ar.html aigp/COURSE.ar.md aigp/INSTRUMENTS.ar.md _site/aigp/
-          ls -lh _site _site/vibe _site/agentic _site/saas _site/aigp
+          # AI Product Management: Zero to Hero → /aipm/
+          cp aipm/index.html aipm/course.html aipm/COURSE.md aipm/TOOLKIT.md \
+             aipm/index.ar.html aipm/course.ar.html aipm/COURSE.ar.md aipm/TOOLKIT.ar.md _site/aipm/
+          ls -lh _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm
 
       # Every link on the assembled site, internal and external. Report only: a dead third-party
       # page should be fixed in the lesson, not block the deploy. Results are in the run summary.
