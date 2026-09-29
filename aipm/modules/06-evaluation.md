@@ -257,19 +257,17 @@ All cases are labelled by credit officers (Arabic speakers for the Arabic slice)
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1, 4.2* · *Stage: Evaluate*
 
 ## ⚡ In 60 seconds
-- Every eval needs a **judge**: something that decides whether an output passed. There are three kinds: **code** (cheap, exact, narrow), **a model** acting as judge (scalable, flexible, biased) and **humans** (the reference standard, slow and costly). Good evaluation uses all three, each where it fits.
-- **LLM-as-judge** means using a language model to grade outputs against a rubric. It lets you grade thousands of outputs, but only after you have shown that it agrees with your human experts.
-- Known judge biases include **position** (favouring the first or second answer), **verbosity** (favouring longer answers) and **self-preference** (favouring outputs from its own model family). Design around them.
+- Every eval needs a **judge** that decides whether an output passed: **code** (cheap, exact, narrow), **a model** (scalable, flexible, biased) or **humans** (the reference standard, slow and costly). Use each where it fits.
+- **LLM-as-judge** means a language model grades outputs against a rubric. It scales to thousands of outputs, but only after you show it agrees with your experts.
+- Known judge biases: **position** (favouring the first or second answer), **verbosity** (favouring longer answers) and **self-preference** (favouring its own model family).
 - **Human review** needs a written **rubric**, trained reviewers and a measure of **inter-rater agreement**. If two experts cannot agree, the criterion is not yet defined.
-- **Red-teaming** is deliberate attack: trying to make the product fail in harmful, embarrassing or costly ways before real users and attackers do.
-- Biggest trap: a judge that nobody calibrated. A judge that gives everything 4.6 out of 5 is not measuring anything.
+- **Red-teaming** is deliberate attack: making the product fail in harmful or costly ways before real users and attackers do.
+- Biggest trap: an uncalibrated judge. One that gives everything 4.6 out of 5 measures nothing.
 
 ## 🧭 Why it matters
-Dana's golden set for the Credit Memo Copilot has 230 cases, and code checks cover the figures and sections. The "risk narrative" criterion still needs judgement: is the memo's account of the client's risks sound and not misleading? Two credit officers can review about 30 memos a day between their real jobs. Every prompt change needs a full re-run. Faisal has a fix: he asks a large model to "rate each memo from 1 to 5 for quality". The average comes back at 4.6. He runs a deliberately broken prompt, and the average comes back at 4.4. The judge cannot tell good from bad, and the team nearly shipped on its word.
+Dana's golden set for the Credit Memo Copilot has 230 cases, and code checks cover figures and sections. The "risk narrative" still needs judgement: is the account of the client's risks sound and not misleading? Two credit officers can review about 30 memos a day, and every prompt change needs a full re-run. Faisal's fix: ask a large model to "rate each memo from 1 to 5 for quality". The average is 4.6. A deliberately broken prompt scores 4.4. The judge cannot tell good from bad, and the team nearly shipped on its word.
 
-Meanwhile, Najm Assist is about to grow from answering questions to taking actions like freezing a card. Public cases show what happens when a customer-facing assistant meets people who try to break it. In December 2023, users of a Chevrolet dealer's website chatbot got it to "agree" to sell a car for one dollar through prompt manipulation. In January 2024, after an update, DPD's delivery chatbot swore at a customer and wrote criticism of the company when asked to. Neither failure needed advanced skills, only a curious user with some patience. Layla (Head of AI Governance) will not approve Najm Assist's agent features until the team shows it has tried to break them first.
-
-This lesson covers how to judge outputs at scale without fooling yourself, and how to find the failures your golden set did not think of.
+Meanwhile, Najm Assist is about to start taking actions like freezing a card. Public cases show what happens when a customer-facing assistant meets people who try to break it. In December 2023, users of a Chevrolet dealer's website chatbot got it to "agree" to sell a car for one dollar through prompt manipulation. In January 2024, after an update, DPD's delivery chatbot swore at a customer and criticised the company when asked to. Neither needed advanced skills. Layla (Head of AI Governance) will not approve Najm Assist's agent features until the team has tried to break them first.
 
 ## 📐 How it works
 
@@ -279,39 +277,39 @@ This lesson covers how to judge outputs at scale without fooling yourself, and h
 
 | Judge | Good at | Weak at | Cost per output |
 |---|---|---|---|
-| **Code** | Exact, mechanical checks: numbers match, fields present, banned words absent | Anything needing meaning or judgement | Near zero |
-| **Model (LLM-as-judge)** | Criteria described in words: relevance, tone, whether a claim is supported by a passage | Subtle domain judgement; can be biased or fooled | Low, but not zero (it is another model call) |
+| **Code** | Mechanical checks: numbers match, fields present | Anything needing meaning | Near zero |
+| **Model (LLM-as-judge)** | Criteria in words: relevance, tone, whether a claim is supported | Subtle domain judgement; can be biased or fooled | Low (another model call) |
 | **Human expert** | Domain judgement; new failure types; the final say | Speed, cost, consistency, fatigue | High |
 
-The rule of thumb: use code for everything code can check; use a model judge for high-volume criteria that you have calibrated against humans; and use humans to define the standard, calibrate the judge, review samples and handle the highest-stakes cases.
+Rule of thumb: code for everything code can check; a calibrated model judge for high-volume criteria; humans to set the standard, calibrate the judge, review samples and handle the highest stakes.
 
-**LLM-as-judge.** A judge model receives the input, the output and a **rubric** (the written criteria for each score), and returns a verdict. There are three common formats:
-- **Pointwise**: grade one output. For example, "Is every risk statement in this memo supported by the attached documents? Answer PASS or FAIL, then give the unsupported statement if any."
-- **Pairwise**: compare two outputs ("Which memo better identifies the client's key risks, A or B?"). This is useful for comparing prompt or model versions.
-- **Reference-guided**: grade an output against a reference answer from the golden set.
+**LLM-as-judge.** A judge model receives the input, the output and a **rubric** (written criteria for each score) and returns a verdict. Three formats:
+- **Pointwise**: grade one output ("Is every risk statement supported by the attached documents? PASS or FAIL, then quote any unsupported statement.")
+- **Pairwise**: pick the better of two outputs; useful for comparing versions.
+- **Reference-guided**: grade against a golden-set reference answer.
 
-The approach was studied closely by Zheng and colleagues in "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena" (2023). They reported that strong model judges agreed with human preferences about as often as humans agreed with each other on their test sets. They also documented the judge's weaknesses:
+Zheng and colleagues studied the approach in "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena" (2023). They reported that strong model judges agreed with human preferences about as often as humans agreed with each other on their test sets. They also documented weaknesses:
 - **Position bias**: preferring an answer because of where it appears (first or second).
 - **Verbosity bias**: preferring longer answers even when they are not better.
 - **Self-enhancement (self-preference) bias**: preferring answers written by the same model or model family.
 - **Limited reasoning**: struggling to grade maths and logic questions it could not solve reliably itself.
 
-The study shows that model judging can work. It does not show that *your* judge works on *your* task. That is something you must measure.
+The study shows model judging *can* work, not that *your* judge works on *your* task. That you must measure.
 
 **Making a judge trustworthy.**
-1. **Write a narrow rubric.** One criterion per judge call. Prefer binary PASS or FAIL, or a short scale with a written description ("anchor") for every level, over "rate quality from 1 to 10".
-2. **Ask for the evidence before the verdict.** "Quote the sentence that is unsupported, then decide." This makes the judge's decision checkable.
-3. **Counter the known biases.** For pairwise judging, run each pair twice with the order swapped and only count consistent verdicts. Tell the judge that length is not a quality. Where you can, use a judge from a different model family than the system being judged.
-4. **Calibrate against humans.** Have experts label a **calibration set** (for example 100 outputs), run the judge on the same outputs and compare. Deploy the judge only when agreement is good enough for the decision it will support.
-5. **Pin and re-check.** Fix the judge's model version and prompt. When either changes, re-run the calibration.
+1. **Narrow rubric.** One criterion per call; binary PASS/FAIL or a short scale with a written "anchor" for each level, not "rate 1 to 10".
+2. **Evidence before verdict.** "Quote the unsupported sentence, then decide." This makes decisions checkable.
+3. **Counter the biases.** Run pairs in both orders and count only consistent verdicts; tell the judge length is not quality; prefer a judge from a different model family.
+4. **Calibrate against humans.** Experts label a **calibration set** (say 100 outputs); compare the judge's labels. Deploy only when agreement is good enough for the decision it supports.
+5. **Pin and re-check.** Fix the judge's model version and prompt; re-calibrate when either changes.
 
-**Human review.** Humans set the standard, so their process must be solid.
-- **Rubric**: each criterion, each score level, and examples of each. "Misleading" must mean the same thing to every reviewer.
-- **Reviewers**: domain experts for domain criteria. For the copilot that means credit officers; for Najm Assist's tone, Hessa's (product designer) research panel of customers.
-- **Blind review**: reviewers should not know which version produced an output, so they cannot favour the new one.
-- **Inter-rater agreement**: have two or more reviewers score the same subset and measure how often they agree. If agreement is low, fix the rubric before trusting any scores.
+**Human review.** Humans set the standard, so their process must be solid:
+- **Rubric** with levels and examples, so "misleading" means the same to every reviewer.
+- **Domain experts**: credit officers for the copilot; for Najm Assist's tone, the customer panel run by Hessa (product designer).
+- **Blind review**, so reviewers cannot favour the new version.
+- **Inter-rater agreement** on a shared subset. If it is low, fix the rubric before trusting any scores.
 
-**Red-teaming.** A **red team** is a group whose job is to make the system fail. For AI products this includes:
+**Red-teaming.** A **red team** tries to make the system fail. For AI products that includes:
 - **Jailbreaks**: prompts that get the model to ignore its rules.
 - **Prompt injection**: instructions hidden in content the system reads, such as a document, an email or a web page (introduced in *AI Governance: Zero to Hero*).
 - **Harmful or unauthorised commitments**: promising refunds, prices or approvals the business never offered (the Chevrolet case; *Moffatt v. Air Canada*, where an airline was held liable for what its chatbot told a customer).
@@ -319,17 +317,17 @@ The study shows that model judging can work. It does not show that *your* judge 
 - **Brand and tone failures**: swearing, mocking, political statements (the DPD case).
 - **Unsafe actions** for agents: freezing the wrong card, or taking an action without confirmation.
 
-The output of red-teaming is not a report that sits in a folder. Every successful attack becomes a **fix** and a new **adversarial test case** in the golden set, so the attack is re-tested on every release.
+The output is not a report in a folder. Every successful attack becomes a **fix** and an **adversarial test case**, re-tested on every release.
 
 ### 🟡 Going deeper
 
-**Measuring agreement.** The simplest measure is **percent agreement**: how often two raters (or a judge and a human) give the same label. It is misleading when one label dominates. If 95% of memos pass, two raters who both say "pass" to everything agree 95% of the time while measuring nothing. **Cohen's kappa** (Jacob Cohen, 1960) corrects for agreement expected by chance, for two raters. It runs from below 0 (worse than chance) to 1 (perfect). A widely used, and admittedly arbitrary, reading from Landis and Koch (1977) calls 0.61–0.80 "substantial" and above 0.80 "almost perfect". For more than two raters, or missing ratings, teams use **Krippendorff's alpha**.
+**Measuring agreement.** **Percent agreement** (how often two raters give the same label) misleads when one label dominates: if 95% of memos pass, two raters who always say "pass" agree 95% of the time while measuring nothing. **Cohen's kappa** (Jacob Cohen, 1960) corrects for agreement expected by chance, for two raters. It runs from below 0 (worse than chance) to 1 (perfect). A widely used, and admittedly arbitrary, reading from Landis and Koch (1977) calls 0.61–0.80 "substantial" and above 0.80 "almost perfect". For more than two raters, or missing ratings, teams use **Krippendorff's alpha**.
 
-For a PM, the most useful way to check a pass/fail judge is to treat it like a classifier and draw its confusion matrix against human labels (6.1):
-- **Judge recall on failures**: of the outputs humans failed, how many did the judge fail? If this is low, bad outputs slip through.
-- **Judge precision on failures**: of the outputs the judge failed, how many did humans fail? If this is low, the team wastes time on false alarms.
+For a PM, the most useful check of a pass/fail judge is to treat it as a classifier against human labels (6.1):
+- **Judge recall on failures**: of outputs humans failed, how many did the judge fail? Low means bad outputs slip through.
+- **Judge precision on failures**: of outputs the judge failed, how many did humans fail? Low means wasted time on false alarms.
 
-This framing makes the choice concrete. For a critical criterion like "misleading risk statement", you want the judge's recall on failures to be very high, even at the cost of some false alarms that a human then reviews.
+For a critical criterion, you want very high recall on failures, even at the cost of false alarms a human then reviews.
 
 ```mermaid
 flowchart TD
@@ -346,39 +344,35 @@ flowchart TD
     I -->|"No"| E
 ```
 
-**Judging agents.** When Najm Assist starts taking actions, there are two things to judge:
-- **Final state**: after "freeze my debit card", is the right card frozen and the others untouched? Check this with code against the test system. It is the most reliable check.
-- **Trajectory**: the sequence of steps and tool calls. Did it confirm with the customer before acting? Did it call the right tool with the right card ID? Did it avoid calling tools it did not need?
+**Judging agents.** When Najm Assist takes actions, judge two things:
+- **Final state**: after "freeze my debit card", is the right card frozen and the others untouched? Code checks this against the test system.
+- **Trajectory**: the steps and tool calls. Did it confirm before acting? Right tool, right card ID, no unneeded calls?
 
-A correct final state reached by an unsafe path, such as freezing a card without asking, is still a failure. The *Production AI Agents* companion course covers agent evaluation in engineering depth.
+A correct final state reached by an unsafe path is still a failure. The *Production AI Agents* course covers agent evaluation in engineering depth.
 
-**Sampling for human review.** Humans cannot review everything, so decide deliberately what they see:
-- A **random sample** of all outputs, to estimate true quality and check the judge.
-- **All outputs the judge failed**, or failed with low confidence.
-- **All high-stakes cases**: for the copilot, exposures above the committee threshold.
-- **Disagreements** between judges, or between a judge and a code check.
+**Sampling for human review.** Decide deliberately what humans see: a **random sample** (to estimate true quality and check the judge), **everything the judge failed**, **all high-stakes cases** (exposures above the committee threshold) and **disagreements** between checks.
 
-**Running a red-team exercise.** A useful structure for a PM to organise:
-1. **Scope and threat model**: what the system can do, who might attack it (curious customers, fraudsters, pranksters, insiders) and what harms matter most.
-2. **Attack categories and targets**: for example "make Assist promise a fee refund", "make Assist reveal another customer's balance", "make Assist act without confirmation".
-3. **A diverse team**: engineers, designers, customer-service agents, Arabic and English speakers, and people from outside the project. People who built the system are poor at imagining how it breaks.
-4. **Time-boxed sessions** with every attempt logged: prompt, output, success or failure, severity.
-5. **Triage and fix**: rank successful attacks by severity and likelihood, fix the critical ones, and accept or mitigate the rest with a named owner.
-6. **Regression**: add the attacks to an adversarial test set and re-run it on every release.
+**Running a red-team exercise.**
+1. **Scope and threat model**: what the system can do, who might attack it (curious customers, fraudsters, pranksters, insiders), which harms matter most.
+2. **Attack goals**: "make Assist promise a fee refund", "reveal another customer's balance", "act without confirmation".
+3. **A diverse team**: engineers, customer-service agents, Arabic and English speakers, outsiders. Builders are poor at imagining how their system breaks.
+4. **Time-boxed sessions**, logging every attempt: prompt, output, success, severity.
+5. **Triage and fix**: fix critical findings; accept or mitigate the rest with a named owner.
+6. **Regression**: add attacks to the adversarial test set.
 
-**Automated red-teaming.** Models can generate attacks at scale. Perez and colleagues (2022) showed that one language model could be used to find failures in another. Open-source tools exist for this at the time of writing (2026), for example Microsoft's PyRIT and promptfoo. Automated attacks add volume and variety. They do not replace people, who find the creative, context-specific attacks that matter to your business.
+**Automated red-teaming.** Perez and colleagues (2022) showed one language model could be used to find failures in another. Open-source tools exist at the time of writing (2026), such as Microsoft's PyRIT and promptfoo. They add volume and variety, but people still find the creative, context-specific attacks.
 
 ### 🔴 Expert view
 
-**Who judges the judge?** A calibrated judge can drift. The judge's vendor may update the model; the system's outputs may change in ways the judge was never calibrated on; the team may tune the product until it satisfies the judge rather than the user. Guard against this with three habits: pin the judge version, re-calibrate on a schedule and on every change, and keep a fixed share of human review on every run. The human sample is your early warning when the judge and reality diverge.
+**Who judges the judge?** Calibrated judges drift: the vendor updates the model, the system's outputs change, or the team tunes the product to please the judge rather than the user. Pin the judge version, re-calibrate on a schedule and on every change, and keep human review on every run as the early warning.
 
-**Do not let the system grade its own homework.** If the same model, with a similar prompt, writes the memo and judges it, shared blind spots pass unseen, and self-preference inflates scores. Use a different model family, a different prompt that looks for failures rather than confirming quality, or code checks for the parts that matter most.
+**Do not let the system grade its own homework.** If the same model with a similar prompt writes and judges the memo, shared blind spots pass unseen and self-preference inflates scores. Use a different model family, a prompt that hunts for failures, or code checks.
 
-**Human reviewers are biased too.** Reviewers who know the AI produced an output may trust it too much (**automation bias**) or too little. Fatigue lowers quality late in a session. Experts disagree for legitimate reasons, such as a conservative credit officer and a growth-minded one. Treat persistent disagreement as information: it often means the product needs a policy decision, not a better rubric. Khalid, not the reviewers, should decide how cautious a memo's risk language must be.
+**Human reviewers are biased too.** Reviewers may over-trust AI output (**automation bias**) or under-trust it, and fatigue lowers quality. Experts also disagree legitimately, such as a conservative and a growth-minded credit officer. Persistent disagreement often means a policy decision is needed: Khalid, not the reviewers, decides how cautious risk language must be.
 
-**Budget the evaluation effort.** A practical allocation for a product like the copilot: code checks on 100% of outputs, a calibrated judge on 100% of outputs for two or three criteria, human review of a few per cent plus every flagged and high-stakes case, and red-teaming before each major release. The exact split is a judgement about risk, and Layla's governance tier (from *AI Governance: Zero to Hero*) sets the minimum.
+**Budget the evaluation effort.** For the copilot: code checks and a calibrated judge on 100% of outputs, human review of a few per cent plus every flagged and high-stakes case, red-teaming before each major release. Layla's governance tier (see *AI Governance: Zero to Hero*) sets the minimum.
 
-**Red-teaming is also a governance deliverable.** For higher-risk systems, red-team results are evidence that risk was managed before release. The NIST Generative AI Profile (NIST AI 600-1) includes red-teaming among its suggested actions, and security teams use the OWASP Top 10 for LLM Applications as a checklist of attack types. The PM's job is to make sure the red team's scope matches the product's real risks, and that its findings change the product.
+**Red-teaming is a governance deliverable.** Red-team results are evidence that risk was managed before release. NIST AI 600-1 (the Generative AI Profile) includes red-teaming among its suggested actions, and security teams use the OWASP Top 10 for LLM Applications as a checklist. The PM makes sure the scope matches the product's real risks and the findings change the product.
 
 ## 🧰 The toolkit
 | Tool or framework | What it is and does | When to reach for it |
@@ -522,17 +516,17 @@ Before the agent features of Najm Assist go to pilot, Faisal, Hessa and Dana pro
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1, 6.2* · *Stage: Evaluate, Launch*
 
 ## ⚡ In 60 seconds
-- Offline evals tell you whether outputs are good. **Online evaluation** tells you whether real users, in real workflows, get the value you promised, without new harm.
-- Release in **stages**: shadow mode (runs, but nobody sees the output), internal pilot, a small **canary** percentage, a controlled experiment, then full rollout. Each stage has a gate you define in advance.
-- An **A/B test** (randomised controlled experiment) is the most reliable way to know that a change *caused* an effect. Define one **overall evaluation criterion (OEC)** and a set of **guardrail metrics** that must not get worse.
-- Many enterprise AI products have too few users for a classic A/B test. Use staggered rollouts, within-person comparisons or **champion-challenger** designs, and be honest about what they can prove.
+- Offline evals tell you whether outputs are good. **Online evaluation** tells you whether real users in real workflows get the promised value, without new harm.
+- Release in **stages**: shadow mode (runs, nobody sees the output), internal pilot, a small **canary** percentage, a controlled experiment, then full rollout, each with a gate set in advance.
+- An **A/B test** (randomised controlled experiment) is the most reliable way to know a change *caused* an effect. Define one **overall evaluation criterion (OEC)** and **guardrail metrics** that must not get worse.
+- Enterprise AI often has too few users for a classic A/B test. Use staggered rollouts, within-person comparisons or **champion-challenger**, and be honest about what they prove.
 - Decision cue: write the decision rule (ship, hold or roll back) *before* you look at the results.
 - Biggest trap: measuring only what AI makes cheaper (cost, speed, deflection) and not what it might make worse (quality, repeat contacts, trust).
 
 ## 🧭 Why it matters
-The Credit Memo Copilot has passed its eval plan. Faisal proposes switching it on for all 140 relationship managers (RMs) on the first of next month. Rania asks him what he will know on the first of the month after that. "That people are using it," he says. "And how will you know it is helping," she asks, "rather than producing memos that are faster to write and slower to approve?" The golden set cannot answer that question. It measures memos, not the credit process: RMs' trust, the credit committee's send-backs, or whether RMs stop reading the figures closely.
+The Credit Memo Copilot has passed its eval plan. Faisal proposes switching it on for all 140 relationship managers (RMs) next month. Rania asks what he will know a month later. "That people are using it," he says. "And how will you know it is helping," she asks, "rather than producing memos that are faster to write and slower to approve?" The golden set measures memos, not the credit process: RMs' trust, committee send-backs, or whether RMs stop checking figures.
 
-A public case shows why this matters. In February 2024, Klarna announced that its AI assistant was handling a large share of its customer service chats (the company said about two-thirds) and presented it as doing work equivalent to hundreds of human agents. In 2025, the company said it would put more emphasis on human customer service again, and its leadership spoke publicly about the importance of quality. Whatever the full internal story, the public lesson for a PM is clear: the metrics you choose when you launch decide what you will notice. Volume and cost are easy to measure. Quality and customer outcomes have to be designed into the evaluation from the start.
+A public case shows why this matters. In February 2024, Klarna announced that its AI assistant was handling a large share of its customer service chats (the company said about two-thirds), presented as work equivalent to hundreds of agents. In 2025, the company said it would put more emphasis on human service again, and its leadership spoke publicly about quality. Whatever the full internal story, the lesson for a PM is clear: the metrics you choose at launch decide what you will notice. Volume and cost are easy to measure; quality and customer outcomes must be designed in.
 
 Rania's rule: **every AI launch has a rollout plan with gates, a primary metric, guardrails, and a kill switch that someone has tested.**
 
@@ -540,55 +534,44 @@ Rania's rule: **every AI launch has a rollout plan with gates, a primary metric,
 
 ### 🟢 The essentials
 
-**Offline versus online.** Offline evaluation (6.1, 6.2) runs your system on fixed test cases. Online evaluation measures the system with real users and real data. Online evaluation catches what offline cannot:
-- **Real inputs** are messier than your golden set.
-- **Behaviour changes**: people trust, ignore, over-rely on or work around the AI.
-- **Outcomes**: time saved, errors downstream, customer satisfaction, cost.
-- **Scale effects**: latency at peak hours, cost per request, rare failures that only show up after many thousands of uses.
+**Offline versus online.** Offline evaluation (6.1, 6.2) uses fixed test cases. Online evaluation uses real users and data, and catches what offline cannot: messier **real inputs**; **behaviour changes** (people trust, ignore, over-rely on or work around the AI); **outcomes** (time saved, downstream errors, satisfaction, cost); and **scale effects** (peak latency, rare failures that appear only after thousands of uses).
 
-**Staged rollout.** Rather than switching on for everyone, release in steps. Each step exposes more people to a system you trust a little more.
+**Staged rollout.** Release in steps, each exposing more people to a system you trust a little more.
 
 | Stage | What happens | What it tells you | Example gate to move on |
 |---|---|---|---|
-| **Shadow mode** | The AI runs on real inputs, but its output is logged, not shown | Real-input quality, latency, cost; no user impact | Offline thresholds hold on two weeks of real inputs |
-| **Internal pilot** ("dogfooding") | A small group of friendly users uses it for real work, with close support | Usability, trust, workflow fit, early failure types | No critical failures; pilot users would keep it |
-| **Canary** | A small percentage of the target users (say 5%) | Operational health at modest scale | Error, latency and complaint rates within limits |
-| **Experiment** | Randomised treatment and control groups | Whether the product *causes* the intended outcome | OEC improves; no guardrail breached |
-| **Full rollout** (often with a **holdout**) | Everyone, except a small group kept without the feature | Long-term effect; a baseline for comparison | Ongoing monitoring (Module 8) |
+| **Shadow mode** | AI runs on real inputs; output logged, not shown | Real-input quality, latency, cost | Offline thresholds hold on two weeks of real inputs |
+| **Internal pilot** ("dogfooding") | Friendly users do real work with close support | Usability, trust, workflow fit | No critical failures; users would keep it |
+| **Canary** | A small share of target users (say 5%) | Operational health at modest scale | Errors, latency, complaints within limits |
+| **Experiment** | Randomised treatment and control | Whether the product *causes* the outcome | OEC improves; no guardrail breached |
+| **Full rollout** (often with a **holdout**) | Everyone except a small group without it | Long-term effect | Ongoing monitoring (Module 8) |
 
-Two engineering tools make this possible, and the PM should insist on both: **feature flags**, which switch a feature on or off for chosen users without a new release, and a **kill switch**, which turns the AI off quickly and falls back to the old process. A kill switch that has never been tested is a hope, not a control.
+Insist on **feature flags** (switch a feature on or off for chosen users without a release) and a **kill switch** (turn the AI off fast and fall back to the old process). An untested kill switch is a hope, not a control.
 
-**A/B tests.** In an **A/B test**, you randomly assign units (users, accounts or sessions) to control (A, the current experience) or treatment (B, with the AI feature). Because assignment is random, the groups are alike on average in everything except the feature. So a difference in outcomes can be attributed to the feature. This is the logic of the randomised controlled trial, applied to products. Ron Kohavi, Diane Tang and Ya Xu's *Trustworthy Online Controlled Experiments* (2020) is the standard practical reference. Its core vocabulary:
-- **Overall evaluation criterion (OEC)**: the single metric, or small weighted combination, that defines success, chosen to reflect long-term value rather than short-term clicks.
-- **Guardrail metrics**: metrics that must not get worse, even if the OEC improves. They protect the business and users: complaints, error rates, latency, fairness across segments.
-- **Statistical significance**: whether the observed difference is larger than you would expect from random variation alone. The usual convention is a p-value below 0.05, meaning a result this large would be rare if the feature had no effect.
+**A/B tests.** In an **A/B test**, you randomly assign units (users, accounts or sessions) to control (A, current experience) or treatment (B, with the AI feature). Random assignment makes the groups alike on average except for the feature, so a difference in outcomes can be attributed to it. Kohavi, Tang and Xu's *Trustworthy Online Controlled Experiments* (2020) is the standard practical reference. Core vocabulary:
+- **Overall evaluation criterion (OEC)**: the single metric (or small weighted combination) that defines success, reflecting long-term value rather than short-term clicks.
+- **Guardrail metrics**: metrics that must not get worse even if the OEC improves: complaints, errors, latency, fairness across segments.
+- **Statistical significance**: whether the difference exceeds what random variation would produce. The usual convention is p < 0.05.
 - **Power and sample size**: how many units you need to reliably detect the smallest effect worth acting on.
 
-For the Credit Memo Copilot, the OEC could be "working hours from file opening to committee-ready memo". Guardrails would be the committee send-back rate, figure errors found at committee, and RM satisfaction.
+For the copilot, the OEC could be "working hours from file opening to committee-ready memo", with guardrails on committee send-backs, figure errors found at committee and RM satisfaction.
 
-**Choosing online signals for AI features.** Useful signals are either explicit or implicit:
-- **Explicit**: thumbs up or down, ratings, written feedback. These are easy to collect, but few people give them and those who do are not typical.
-- **Implicit**: acceptance rate (the draft was used), **edit distance** (how much the user changed the draft), regeneration (the user asked again), abandonment, escalation to a human, repeat contact on the same issue.
-
-Implicit signals are more plentiful, but need interpretation. A high acceptance rate may mean the draft was good, or that tired users stopped checking. Pair behaviour signals with a sample of human quality review (6.2), so you know which.
+**Online signals for AI features.** **Explicit** signals (thumbs, ratings, comments) are easy to collect, but few people give them and they are not typical. **Implicit** signals are plentiful: acceptance rate, **edit distance** (how much the user changed the draft), regeneration, abandonment, escalation, repeat contact. They need interpretation: high acceptance may mean good drafts or tired users who stopped checking. Pair them with sampled human review (6.2).
 
 ### 🟡 Going deeper
 
-**How big must the experiment be?** A practical rule of thumb for comparing averages, quoted in Kohavi and colleagues' book, gives the number of units needed *per group* for about 80% power at the usual 5% significance level: **n ≈ 16 × σ² ÷ δ²**, where σ is the standard deviation of the metric and δ is the smallest difference you care about. An illustrative calculation: if memo preparation takes about 4 hours with a standard deviation of 1.5 hours, and you want to detect a 30-minute saving, n ≈ 16 × 2.25 ÷ 0.25 = 144 memos per group. Two lessons follow. Small effects need large samples, because halving δ quadruples n. And the most useful thing a PM can do is to agree the **minimum effect worth detecting** with the business owner before the test starts.
+**How big must the experiment be?** A rule of thumb quoted in Kohavi and colleagues' book gives the units needed *per group* for about 80% power at the usual 5% significance level: **n ≈ 16 × σ² ÷ δ²**, where σ is the metric's standard deviation and δ the smallest difference you care about. Illustrative: memos take about 4 hours with a standard deviation of 1.5 hours; to detect a 30-minute saving, n ≈ 16 × 2.25 ÷ 0.25 = 144 memos per group. Halving δ quadruples n, so the PM's key job is agreeing the **minimum effect worth detecting** with the business owner up front.
 
-**Choosing the unit of randomisation.** Randomise at the level where the feature is experienced, and where groups do not affect each other.
-- For the copilot, randomise by **RM**, not by memo. An RM who uses the copilot on half their memos will change how they write the other half.
-- RMs in the same team share templates and tips, so even RM-level randomisation can leak. When this effect (called **interference**) is strong, randomise by **team or branch** and accept that you need more of them.
-- For Najm Assist, randomise by **customer**, so the same person does not see different behaviour from one day to the next.
+**The unit of randomisation.** Randomise where the feature is experienced and where groups do not affect each other. For the copilot, randomise by **RM**, not by memo: an RM using it on half their memos changes how they write the other half. RMs in a team share templates and tips, so when this **interference** is strong, randomise by **team**. For Najm Assist, randomise by **customer**, so nobody sees behaviour change from day to day.
 
-**When you cannot run a classic A/B test.** Enterprise AI often has too few users. With 140 RMs, a two-group test can only detect large effects. Honest alternatives:
-- **Staggered rollout** (sometimes called a stepped-wedge design): switch teams on in a random order over several weeks, and compare teams that have the feature with teams that do not yet, week by week.
-- **Within-person comparison**: each RM writes some memos with the copilot and some without, assigned at random. This needs far fewer people, but carry-over effects make it weaker for some products.
-- **Before-and-after with a comparison group**: compare the change in the pilot teams with the change in similar teams over the same period (a difference-in-differences approach). This is weaker than randomisation, but much better than before-and-after alone.
+**When you cannot run a classic A/B test.** With 140 RMs, a two-group test detects only large effects. Honest alternatives:
+- **Staggered rollout** (a stepped-wedge design): switch teams on in random order over several weeks and compare switched-on with not-yet-switched-on teams, week by week.
+- **Within-person comparison**: each RM writes some memos with the copilot and some without, at random. Fewer people needed, but carry-over effects weaken it.
+- **Comparison group** (difference-in-differences): compare the change in pilot teams with the change in similar teams over the same period. Weaker than randomisation, much better than before-and-after alone.
 
-**Champion-challenger for predictive models.** Credit risk teams have long tested new models by running them against the current model, the **champion**, often first in shadow mode and then on a small controlled share of decisions. For SME Instant Finance, this is the natural design. There are two complications specific to credit:
-- **Outcomes arrive late.** Defaults show up months after approval, so early gates rely on **leading indicators** such as approval rates, early arrears and agreement with underwriters. The final verdict comes later.
-- **Randomising credit decisions has consequences for real people.** Varying who gets credit touches fairness, lending law and governance approvals. Layla's team must approve the design before any experiment on credit decisions, and many banks keep challengers in shadow mode or confined to human-reviewed cases. See *AI Governance: Zero to Hero* for the EU AI Act and GDPR Art. 22 considerations.
+**Champion-challenger for predictive models.** Credit risk teams have long tested a new model (challenger) against the current one (**champion**), first in shadow mode, then on a small controlled share of decisions. For SME Instant Finance this is the natural design, with two complications:
+- **Outcomes arrive late.** Defaults show up months later, so early gates use **leading indicators**: approval rates, early arrears, agreement with underwriters.
+- **Randomising credit decisions affects real people.** It touches fairness, lending law and governance. Layla's team must approve any such design, and many banks keep challengers in shadow mode or on human-reviewed cases (see *AI Governance: Zero to Hero* on the EU AI Act and GDPR Art. 22).
 
 ```mermaid
 flowchart LR
@@ -609,25 +592,21 @@ flowchart LR
 
 ### 🔴 Expert view
 
-**Trust the experiment only after checking it.** Kohavi and colleagues describe the traps that make experiment results wrong while looking clean:
-- **Sample ratio mismatch (SRM)**: you planned a 50/50 split but got 53/47. This usually means something in assignment or logging is broken, for example the AI feature crashing for some users so they drop out of the data. An SRM makes the results untrustworthy until you find the cause.
-- **Novelty and primacy effects**: users try a new feature because it is new (novelty) or resist it because it is unfamiliar (primacy). AI features often show a strong early novelty effect. Run long enough, include whole weeks and business cycles, and look at the trend over time, not only the total.
-- **Peeking**: checking results every day and stopping as soon as they look significant greatly increases false positives. Fix the duration in advance, or use methods designed for continuous monitoring.
-- **Too many metrics**: with enough metrics, some will look significant by chance. Decide on the OEC and guardrails in advance; treat everything else as exploratory.
+**Trust the experiment only after checking it.** Kohavi and colleagues describe traps that make results wrong while looking clean:
+- **Sample ratio mismatch (SRM)**: you planned 50/50 but got 53/47. Usually assignment or logging is broken, for example the feature crashing so some users drop out of the data. Do not trust the results until you find the cause.
+- **Novelty and primacy effects**: users try a feature because it is new, or resist it because it is unfamiliar. Run whole weeks and business cycles, and look at the trend, not only the total.
+- **Peeking**: stopping as soon as results look significant inflates false positives. Fix the duration in advance.
+- **Too many metrics**: some will look significant by chance. Fix the OEC and guardrails in advance; treat the rest as exploratory.
 
-**Pre-register the decision.** Before the experiment starts, write down: the OEC, the guardrails and their limits, the minimum effect worth detecting, the duration, and the rule. For example: "Ship if the OEC improves by at least 10% and no guardrail worsens by more than its limit; roll back if any critical guardrail is breached at any point." This protects the team from the strongest bias in product work, which is wanting the launch to succeed.
+**Pre-register the decision.** Before starting, write down the OEC, guardrails and limits, minimum effect, duration and rule. For example: "Ship if the OEC improves by at least 10% and no guardrail worsens beyond its limit; roll back if any critical guardrail is breached." This protects the team from its strongest bias: wanting the launch to succeed.
 
-**Guardrails for AI features.** Standard guardrails (latency, errors, crashes) are not enough. Add:
-- **Quality guardrails** from sampled human review and judges (6.2), measured on live traffic.
-- **Downstream guardrails**: committee send-backs for memos; repeat contacts, complaints and escalations for Najm Assist. This is where the Klarna lesson lives: "resolved by AI" means little if the customer contacts you again tomorrow.
-- **Segment guardrails**: the feature must not help one group and hurt another, for example Arabic-speaking customers or small SMEs.
-- **Cost guardrails**: cost per task, because heavy users of an AI feature can change your unit economics (Module 8).
+**Guardrails for AI features.** Latency and error guardrails are not enough. Add **quality** guardrails (sampled human review and judges on live traffic, 6.2); **downstream** guardrails (committee send-backs; repeat contacts, complaints and escalations for Najm Assist, which is where the Klarna lesson lives: "resolved by AI" means little if the customer calls again tomorrow); **segment** guardrails (not helping one group while hurting another, such as Arabic-speaking customers); and **cost** guardrails (cost per task, Module 8).
 
-**Models change under you.** If the copilot uses a model through a vendor's API, the vendor may release new versions or retire old ones. Treat a model change like any other release: re-run the offline evals, then go through shadow and canary again before full traffic. Contract for advance notice of model changes (see *AI Governance: Zero to Hero*, lesson 8.3).
+**Models change under you.** API vendors release new model versions and retire old ones. Treat a model change as a release: re-run offline evals, then shadow and canary before full traffic. Contract for advance notice (see *AI Governance: Zero to Hero*, lesson 8.3).
 
-**Long-term holdouts.** Keeping a small share of users without the feature for months measures cumulative effects that a four-week test cannot see: skills fading as RMs rely on the copilot, or trust slowly building. It costs some value to those users, so agree the size and duration with the business owner.
+**Long-term holdouts.** A small group kept without the feature for months reveals effects a four-week test cannot, such as RM skills fading or trust building slowly. It costs those users some value, so agree size and duration with the business owner.
 
-**The ethics of experimenting.** Internal productivity experiments are routine. Customer-facing experiments in a bank need care: customers must not be treated unfairly because of random assignment, disclosures must be correct in both variants, and any experiment that affects credit or fees needs governance approval. The rule of thumb: never test a variant you would not be willing to ship.
+**The ethics of experimenting.** Customer-facing experiments in a bank need care: no unfair treatment from random assignment, correct disclosures in both variants, and governance approval for anything touching credit or fees. Never test a variant you would not be willing to ship.
 
 ## 🧰 The toolkit
 | Tool or framework | What it is and does | When to reach for it |
