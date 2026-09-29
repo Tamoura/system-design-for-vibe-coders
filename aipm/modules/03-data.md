@@ -156,7 +156,7 @@ Rania's note: *"Two reds, both fixed by changing scope, not reasons to stop. Fai
 
 <details><summary>Answer</summary>
 
-**B.** Volume is not readiness. The questions are relevance, labels, representativeness and availability at decision time. A skips the check that exposed the 9,000 relevant deals and the leaked fields. C may help later but is premature before you know the gaps. (🧭 Why it matters; 🟢 The essentials.)
+**B.** Volume is not readiness: ask about relevance, labels, representativeness and availability at decision time. C is premature before you know the gaps. (🧭 Why it matters; 🟢 The essentials.)
 
 </details>
 
@@ -226,7 +226,7 @@ Rania's note: *"Two reds, both fixed by changing scope, not reasons to stop. Fai
 ## ⚡ In 60 seconds
 - A **learning product** gets better because people use it. That only happens if the product is designed to capture **feedback signals**, turn them into **labels** or test cases, and feed them back into prompts, retrieval, models or rules on a schedule someone owns.
 - Signals are **explicit** (thumbs, ratings, corrections, a reason picked from a list) or **implicit** (what users accept, edit, ignore or undo). Implicit signals are plentiful but ambiguous. Explicit ones are clearer but rare.
-- A **data flywheel** (more use gives more data, which gives a better product, which gives more use) is real for some products and a slide-deck myth for many. Test it: does the new data make the product *noticeably* better, and would a competitor struggle to get the same data?
+- A **data flywheel** (more use, more data, better product, more use) is real for some products and a slide-deck myth for many. Test it before you claim it.
 - Watch for **degenerate feedback loops**: the product shapes the data it later learns from. A fraud model that only learns from the alerts it raised, or a credit model that only sees outcomes for applicants it approved, can quietly reinforce its own blind spots.
 - Decision cue: for every feedback signal, write down what it means, when it arrives, who acts on it, and whether you are allowed to reuse it.
 - Biggest trap: a thumbs-up button whose data nobody reads.
@@ -350,7 +350,7 @@ Faisal and Dana's **Feedback Loop Spec** for Credit Memo Copilot and Smart Alert
 Loop metrics reviewed monthly by Rania: share of memos with a captured signal, median days from signal to fix, failure patterns closed per release, and change in golden-set score per release.
 
 ## 🛠️ Exercises
-- 🟢 Take one AI feature you use daily (a writing assistant, a recommendation feed, a spam filter). List two explicit, two implicit and one outcome signal it could use. *Done when:* each signal has a one-line "what it probably means" and "what it might wrongly be taken to mean".
+- 🟢 For one AI feature you use daily, list two explicit, two implicit and one outcome signal it could use. *Done when:* each signal has a one-line "what it probably means" and "what it might wrongly be taken to mean".
 - 🟡 Write a feedback loop spec for Najm Assist's question-answering feature, using the five parts (signal, capture, interpretation, action, verification). *Done when:* you have at least four signals in the table format above, including one holdout or audit signal, and every signal has a named owner.
 - 🔴 Khalid wants the SME Instant Finance business case to claim a data flywheel as a competitive advantage. Apply the four-question flywheel test and write a half-page verdict. *Done when:* you answer each question with evidence you would need to collect, name the degenerate loop risk for this product and its remedy, and give a clear recommendation on whether the claim belongs in the business case.
 
@@ -380,7 +380,7 @@ Loop metrics reviewed monthly by Rania: share of memos with a captured signal, m
 
 <details><summary>Answer</summary>
 
-**B.** When the product decides which cases get labelled, it learns only about what it already sees. The remedy is a random holdout sample of unflagged transactions plus independent labels such as chargebacks. D is a training-data problem from lesson 3.1, not a loop problem. (🟡 Going deeper, "Degenerate feedback loops".)
+**B.** When the product decides which cases get labelled, it learns only what it already sees. The remedy is a holdout sample of unflagged transactions plus independent labels. D is a lesson 3.1 problem, not a loop problem. (🟡 Going deeper, "Degenerate feedback loops".)
 
 </details>
 
@@ -432,7 +432,7 @@ Loop metrics reviewed monthly by Rania: share of memos with a captured signal, m
 
 <details><summary>Answer</summary>
 
-**B.** "Update and adapt cautiously": regulated products should change in evaluated, versioned releases with notification and rollback, and unfiltered feedback can be manipulated. Cost (A) may matter, but it is not the main issue, and D is an invented rule. (🔴 Expert view, "Update cautiously".)
+**B.** "Update and adapt cautiously": change in evaluated, versioned releases with notification and rollback; unfiltered feedback can be manipulated. D is an invented rule. (🔴 Expert view, "Update cautiously".)
 
 </details>
 
@@ -453,8 +453,8 @@ Loop metrics reviewed monthly by Rania: share of memos with a captured signal, m
 - Four principles do most of the work: **purpose limitation** (use data only for the purposes you declared, or compatible ones), **data minimisation** (collect and send only what the feature needs), **storage limitation** (keep it no longer than needed) and **transparency** (tell people in plain words).
 - AI adds three new questions: **may we reuse this data to improve or train the product?**, **what does our model vendor do with the data we send?**, and **can we honour rights like erasure once data has shaped a model?**
 - **Consent** is only one legal basis, and often not the right one for a bank.
-- Decision cue: fill in a one-page data-flow table for every AI feature before build, and review it with the DPO. If a row has no purpose, drop the data.
-- Biggest trap: "we'll use the chat logs to train the model later" without checking that this purpose was declared, permitted and technically reversible.
+- Decision cue: fill in a data-flow table for every AI feature before build and review it with the DPO. No purpose, no data.
+- Biggest trap: "we'll train on the chat logs later", without checking that this is declared, permitted and reversible.
 
 ## 🧭 Why it matters
 Najm Assist, the customer assistant in the mobile app, has been live for two months. Its conversations contain account numbers, balances, salary details and the occasional passport photo uploaded "to prove who I am". Faisal has two proposals on his desk. The vendor wants the full transcripts to fine-tune a model that "understands Najm's customers". Marketing wants to tag conversations by topic, so a customer who asked about school fees gets a personal-loan offer the next day.
@@ -479,7 +479,7 @@ Faisal cannot answer any of them. That is a product failure, not a legal one: ea
 
 The PM is the only person who sees the whole feature. Everyone else sees a slice.
 
-**The principles that matter most to a PM.** The EU's General Data Protection Regulation (GDPR) sets out principles in Article 5. Qatar's Personal Data Privacy Protection Law (PDPPL, Law No. 13 of 2016) and the UAE's Personal Data Protection Law (Federal Decree-Law No. 45 of 2021) have broadly similar ideas, with local differences that Sara checks. In product terms:
+**The principles that matter most to a PM.** The EU's General Data Protection Regulation (GDPR) sets out principles in Article 5. Qatar's PDPPL (Law No. 13 of 2016) and the UAE's PDPL (Federal Decree-Law No. 45 of 2021) share broadly similar ideas, with local differences Sara checks:
 
 | Principle | What it means for an AI feature | Najm Assist example |
 |---|---|---|
@@ -490,13 +490,13 @@ The PM is the only person who sees the whole feature. Everyone else sees a slice
 
 **Legal basis: consent is not the default.** GDPR allows six legal bases for processing personal data: consent, contract, legal obligation, vital interests, public task and legitimate interests. For a bank, answering a customer's question about their own account usually rests on the **contract** or on **legitimate interests**, not on consent. Consent is fragile: it must be freely given, specific, informed and unambiguous, as easy to withdraw as to give, and it is rarely "freely given" when it is a condition of the service. Sara chooses the basis. The PM describes the purposes precisely enough for her to choose, and where consent *is* the basis, builds a separate, unticked choice, not a sentence buried in the terms.
 
-**Personal data is everywhere in AI products.** It is not only in the database. For an LLM feature, personal data can appear in the **prompt** (what the user typed plus what the product added from their records), the **retrieved documents**, the **model's output**, the **logs**, the **feedback data** and the **evaluation sets**. Each can leak, be kept too long or be reused without permission.
+**Personal data is everywhere in AI products.** For an LLM feature it appears in the **prompt** (what the user typed plus what the product added), the **retrieved documents**, the **model's output**, the **logs**, the **feedback data** and the **evaluation sets**. Each can leak, be kept too long or be reused without permission.
 
 ### 🟡 Going deeper
 
 **The three AI-specific questions.**
 
-*1. May we reuse this data to improve or train the product?* This is purpose limitation applied to lesson 3.2. Using transcripts to **find and fix errors** in the service the customer used is usually easier to justify than using them to **train a model** that will serve other customers, and very different from using them for **marketing**. GDPR allows further processing only for compatible purposes, judged by factors such as the link between purposes, the customer's reasonable expectations, the nature of the data and the safeguards. A useful test is the **surprise test**: would a reasonable customer be surprised or upset to learn about this use? If yes, you probably need a new basis, a clear notice, or a different design. Decide and declare reuse purposes **before launch**; adding them later is harder and sometimes impossible.
+*1. May we reuse this data to improve or train the product?* Using transcripts to **fix errors** in the service the customer used is usually easier to justify than to **train a model** serving others, and very different from **marketing**. GDPR allows further processing only for compatible purposes, judged by factors such as the link between purposes, the customer's reasonable expectations, the nature of the data and the safeguards. A useful test is the **surprise test**: would a reasonable customer be surprised or upset to learn about this use? If yes, you probably need a new basis, a clear notice, or a different design. Decide and declare reuse purposes **before launch**; adding them later is harder and sometimes impossible.
 
 *2. What does our model vendor do with our data?* When Najm Assist sends a prompt to a third-party model, the vendor becomes a **processor** (it processes data on Najm's behalf) and possibly more. At the time of writing (2026), many enterprise API offerings state that customer data is not used for training by default, but terms vary by vendor, tier and date. Yusuf and Sara check the actual contract; the PM should know the answers:
 
@@ -536,7 +536,7 @@ flowchart TD
 - **Redact before you send.** Strip card, ID and account numbers from prompts and logs when the model does not need them.
 - **Retrieve, don't copy.** Let the assistant look up the customer's data at answer time under that customer's permissions, rather than copying it into prompts, logs and training sets.
 - **Separate the stores.** Keep operational logs, de-identified quality samples and evaluation sets apart, each with its own retention rule.
-- **Design the "forget me" path.** Test the erasure process across every store before launch, not after the first request.
+- **Design the "forget me" path.** Test erasure across every store before launch.
 
 **The DPIA is your friend if you start it early.** A **Data Protection Impact Assessment** (GDPR Article 35) is required when processing is likely to result in a high risk to people, which is common for new technology that evaluates people or processes their data at scale. Treat it as a design review, not a form: start it when the data-flow table exists, so findings change the design while change is cheap. Sara runs it; the PM supplies the facts and owns the design changes. The NIST Privacy Framework offers a similar, non-legal risk structure.
 
@@ -583,14 +583,14 @@ Design decisions recorded:
 - **Planning reuse after launch.** Undeclared training or marketing uses may be blocked later. Declare them before launch.
 - **Trusting a general impression of vendor terms.** Check the actual contract for training use, retention, location and deletion.
 - **Baking personal data into model weights.** Keep personal data in stores you can delete; fine-tune on de-identified or synthetic data.
-- **Mapping only the database.** Prompts, outputs, logs, feedback and eval sets all hold personal data. Cover them in retention and deletion.
+- **Mapping only the database.** Prompts, outputs, logs, feedback and eval sets hold personal data too.
 
 ## 🧾 Recap
 - The DPO interprets the law; the PM owns the product decisions that privacy depends on: collection, purpose, retention, sharing, notice and control.
 - Purpose limitation, minimisation, storage limitation and transparency do most of the work; the surprise test is a fast first filter.
 - AI raises three new questions: reuse for improvement or training, vendor data handling, and honouring rights once data has shaped a model.
 - Design for rights: redact, retrieve rather than copy, separate stores, test deletion, and start the DPIA early.
-- Privacy choices are trust choices, and trust decides how much customers will share with an AI product.
+- Privacy choices are trust choices: they decide how much customers share.
 
 ## ✍️ Check yourself
 
@@ -603,7 +603,7 @@ Design decisions recorded:
 
 <details><summary>Answer</summary>
 
-**B.** Reuse for training is a new purpose that needs a basis, contract terms that allow it, and a design that respects data rights. C is tempting, but a buried acceptance of terms is not specific, informed consent for training. (🧭 Why it matters; 🟡 "The three AI-specific questions".)
+**B.** Training is a new purpose needing a basis, contract terms that allow it, and a design that respects data rights. C is tempting, but accepting buried terms is not specific, informed consent. (🧭 Why it matters; 🟡 "The three AI-specific questions".)
 
 </details>
 
@@ -616,7 +616,7 @@ Design decisions recorded:
 
 <details><summary>Answer</summary>
 
-**B.** A reasonable customer would be surprised, and the purpose is different from the one the data was collected for. It also damages trust in the assistant. The other principles may still matter, but they are not the core problem. (🟡 "May we reuse this data"; 🔴 "Trust is a product metric".)
+**B.** A reasonable customer would be surprised, and the purpose differs from the one the data was collected for. It also damages trust in the assistant. (🟡 "May we reuse this data"; 🔴 "Trust is a product metric".)
 
 </details>
 
@@ -629,7 +629,7 @@ Design decisions recorded:
 
 <details><summary>Answer</summary>
 
-**C.** Honouring access and erasure rights is an architecture decision. Models can memorise training data, and unlearning is not routine. B is false: fine-tuning on personal data is not automatically illegal, but it makes rights and purposes harder to manage. (🟡 "Can we honour data rights".)
+**C.** Honouring access and erasure is an architecture decision; models can memorise training data and unlearning is not routine. B is false: fine-tuning on personal data is not automatically illegal, just harder to manage. (🟡 "Can we honour data rights".)
 
 </details>
 
@@ -642,7 +642,7 @@ Design decisions recorded:
 
 <details><summary>Answer</summary>
 
-**C.** GDPR lists six bases, and contract or legitimate interests often fit service delivery better than fragile consent. The DPO decides the basis, and the PM supplies the purposes. A and D are false, and B reverses the roles. (🟢 "Legal basis: consent is not the default".)
+**C.** Contract or legitimate interests often fit service delivery better than fragile consent. The DPO decides; the PM supplies the purposes. B reverses the roles. (🟢 "Legal basis: consent is not the default".)
 
 </details>
 
@@ -655,7 +655,7 @@ Design decisions recorded:
 
 <details><summary>Answer</summary>
 
-**C.** Each of these holds personal data and needs purpose, retention and deletion rules. D confuses vendor training with Najm's own processing, which continues regardless. (🟢 "Personal data is everywhere in AI products".)
+**C.** Each holds personal data and needs retention and deletion rules. D confuses vendor training with Najm's own processing. (🟢 "Personal data is everywhere in AI products".)
 
 </details>
 
