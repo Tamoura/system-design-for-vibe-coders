@@ -78,16 +78,16 @@
 يُسمّى هذا أحيانًا **التطوير الموجَّه بالتقييمات (eval-driven development)**: اكتب التقييمات قبل ضبط الموجّهات (tuning the prompts)، كما يكتب التطوير الموجَّه بالاختبارات (test-driven development) الاختبارات قبل الشيفرة (code). ومن دونه يبدو كل تعديل على الموجّه «أفضل (looks better)» على الأمثلة الثلاثة التي جرّبها أحدهم.
 
 ```mermaid
-flowchart LR
-    A["المشكلة والمستخدمون"] --> B["أمثلة السلوك"]
-    A --> C["قائمة ممنوع أبدًا"]
-    B --> D["المجموعة المرجعية"]
+flowchart RL
+    A["المشكلة والمستخدمون<br/>(Problem and users)"] --> B["أمثلة السلوك<br/>(Behaviour examples)"]
+    A --> C["قائمة ممنوع أبدًا<br/>(Must-never list)"]
+    B --> D["المجموعة المرجعية<br/>(Golden set)"]
     C --> D
-    D --> E["تقييمات بمعايير جودة"]
-    E --> F{"هل تحققت المعايير"}
-    F -- "لا" --> G["غيّر الموجّه أو السياق أو النموذج أو النطاق"]
+    D --> E["تقييمات بمعايير جودة<br/>(Evals with quality bars)"]
+    E --> F{"هل تحققت المعايير<br/>(Bars met)"}
+    F -- "لا (No)" --> G["غيّر الموجّه أو السياق أو النموذج أو النطاق<br/>(Change prompt, context, model or scope)"]
     G --> E
-    F -- "نعم" --> H["بوابة الإصدار والتجربة المحدودة"]
+    F -- "نعم (Yes)" --> H["بوابة الإصدار والتجربة المحدودة<br/>(Release gate and pilot)"]
 ```
 
 **شكل مواصفات الذكاء الاصطناعي (The shape of an AI spec).** للقالب العملي (practical template) عشرة أقسام قصيرة: (1) المشكلة والمستخدمون والمهمة (problem, users and job) (الوحدة 2)؛ (2) النطاق (scope)، بما في ذلك ما يجب أن يرفضه النظام (must decline)؛ (3) مستوى الأتمتة (automation level) ودور الإنسان (human's role) (4.1)؛ (4) أمثلة السلوك (behaviour examples)، من 15 إلى 30 صفًا في البداية؛ (5) قائمة «ممنوع أبدًا» (must-never list)؛ (6) معايير الجودة حسب الشريحة والخطورة (quality bars by segment and severity)؛ (7) خطة التقييم (eval plan)؛ (8) ميزانيات زمن الاستجابة والتكلفة لكل مهمة والحجم (budgets for latency, cost per task and volume)؛ (9) تجربة الإخفاق والبديل الاحتياطي (failure and fallback experience) (4.2)؛ (10) البيانات والاعتماديات وشروط الحوكمة (data, dependencies and governance conditions) (الوحدة 3 وفرز ليلى (Layla's triage)).
@@ -276,14 +276,14 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    A["السؤال ومعيار الإيقاف"] --> B["أرخص نموذج أولي يجيب عنه"]
-    B --> C["التشغيل على مدخلات واقعية"]
-    C --> D["تحليل الأخطاء مع الفريق"]
-    D --> E{"هل تبرر الأدلة الدرجة التالية"}
-    E -- "نعم" --> F["الدرجة التالية بسؤال جديد"]
-    E -- "تغيير" --> G["عدّل النطاق أو النهج"]
+    A["السؤال ومعيار الإيقاف<br/>(Question and kill criterion)"] --> B["أرخص نموذج أولي يجيب عنه<br/>(Cheapest prototype that answers it)"]
+    B --> C["التشغيل على مدخلات واقعية<br/>(Run on realistic inputs)"]
+    C --> D["تحليل الأخطاء مع الفريق<br/>(Error analysis with the team)"]
+    D --> E{"هل تبرر الأدلة الدرجة التالية<br/>(Evidence justifies next rung)"}
+    E -- "نعم (Yes)" --> F["الدرجة التالية بسؤال جديد<br/>(Next rung with a new question)"]
+    E -- "تغيير (Change)" --> G["عدّل النطاق أو النهج<br/>(Adjust scope or approach)"]
     G --> B
-    E -- "لا" --> H["توقف وسجّل السبب"]
+    E -- "لا (No)" --> H["توقف وسجّل السبب<br/>(Stop and record why)"]
     F --> A
 ```
 
@@ -526,16 +526,16 @@ flowchart TD
 المبدأ هو **الحد الأدنى من الصلاحيات (least privilege)**: امنح المساعد أصغر مجموعة من الأدوات (smallest set of tools)، بأضيق الأذونات (narrowest permissions)، التي تحتاجها المهمة. أداة «تجميد البطاقة (freeze card)» معقولة لنجم أسيست (Najm Assist)؛ أما أداة عامة «تحديث أي حقل في الحساب (update any account field)» فليست كذلك.
 
 ```mermaid
-flowchart LR
-    U["رسالة العميل"] --> O["منسّق التطبيق"]
-    P["موجّه النظام الإصدار 12"] --> O
-    K["مستندات المنتجات المعتمدة"] --> O
-    D["بيانات العميل ضمن النطاق"] --> O
-    O --> M["النموذج"]
-    M --> Q{"هل طُلبت أداة"}
-    Q -- "لا" --> R["إجابة مع استشهادات"]
-    Q -- "أداة قراءة" --> T["تشغيل الأداة بأذونات التطبيق"]
-    Q -- "أداة كتابة" --> C["العميل يؤكد في التطبيق"]
+flowchart RL
+    U["رسالة العميل<br/>(Customer message)"] --> O["منسّق التطبيق<br/>(App orchestrator)"]
+    P["موجّه النظام الإصدار 12<br/>(System prompt v12)"] --> O
+    K["مستندات المنتجات المعتمدة<br/>(Approved product docs)"] --> O
+    D["بيانات العميل ضمن النطاق<br/>(Customer data in scope)"] --> O
+    O --> M["النموذج<br/>(Model)"]
+    M --> Q{"هل طُلبت أداة<br/>(Tool requested)"}
+    Q -- "لا (No)" --> R["إجابة مع استشهادات<br/>(Answer with citations)"]
+    Q -- "أداة قراءة (Read tool)" --> T["تشغيل الأداة بأذونات التطبيق<br/>(Run tool with app permissions)"]
+    Q -- "أداة كتابة (Write tool)" --> C["العميل يؤكد في التطبيق<br/>(Customer confirms in app)"]
     C --> T
     T --> M
 ```

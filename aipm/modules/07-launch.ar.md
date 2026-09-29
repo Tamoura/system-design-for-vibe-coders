@@ -76,17 +76,17 @@
 
 ```mermaid
 flowchart TD
-    A["تغيير جاهز: منتج أو موجّه أو نموذج أو أداة جديدة"] --> B{"التقييمات تجتاز معايير المواصفات"}
-    B -- لا --> Z["أصلِح وأعِد الاختبار"]
-    B -- نعم --> C{"الضوابط الوقائية مُختبَرة بما فيها إصلاحات الفريق الأحمر"}
-    C -- لا --> Z
-    C -- نعم --> D{"اعتمادات الحوكمة لهذه الفئة موثّقة"}
-    D -- لا --> Y["تواصَل مع مكتب ليلى مع الأدلة"]
-    D -- نعم --> E{"العمليات والدعم جاهزان: تنبيهات ومفتاح إيقاف ودليل حوادث ونصوص"}
-    E -- لا --> Z
-    E -- نعم --> F["مراجعة الانطلاق أو عدمه مع مالكين مسمّين"]
-    F --> G["إطلاق مرحلي مع عتبات للتراجع"]
-    G --> H["مراجعة ما بعد الإطلاق في موعد متفق عليه"]
+    A["تغيير جاهز: منتج أو موجّه أو نموذج أو أداة جديدة<br/>(Change ready: new product, prompt, model or tool)"] --> B{"التقييمات تجتاز معايير المواصفات<br/>(Evals pass the spec bars)"}
+    B -- "لا (No)" --> Z["أصلِح وأعِد الاختبار<br/>(Fix and re-test)"]
+    B -- "نعم (Yes)" --> C{"الضوابط الوقائية مُختبَرة بما فيها إصلاحات الفريق الأحمر<br/>(Guardrails tested, including red-team fixes)"}
+    C -- "لا (No)" --> Z
+    C -- "نعم (Yes)" --> D{"اعتمادات الحوكمة لهذه الفئة موثّقة<br/>(Governance sign-offs for this tier on file)"}
+    D -- "لا (No)" --> Y["تواصَل مع مكتب ليلى مع الأدلة<br/>(Engage Layla's office with evidence)"]
+    D -- "نعم (Yes)" --> E{"العمليات والدعم جاهزان: تنبيهات ومفتاح إيقاف ودليل حوادث ونصوص<br/>(Ops and support ready: alerts, kill switch, runbook, scripts)"}
+    E -- "لا (No)" --> Z
+    E -- "نعم (Yes)" --> F["مراجعة الانطلاق أو عدمه مع مالكين مسمّين<br/>(Go/no-go review with named owners)"]
+    F --> G["إطلاق مرحلي مع عتبات للتراجع<br/>(Staged rollout with rollback thresholds)"]
+    G --> H["مراجعة ما بعد الإطلاق في موعد متفق عليه<br/>(Post-launch review at an agreed date)"]
 ```
 
 ### 🔴 نظرة الخبير (Expert view)
@@ -306,15 +306,15 @@ flowchart TD
 المخطط أدناه يبيّن كيف ينقل بنك نجم رسالةً من المسودة إلى السوق (from draft to market).
 
 ```mermaid
-flowchart LR
-    A["مسودة التموضع"] --> B["سجل الادعاءات"]
-    B --> C{"كل ادعاء مدعوم بالتقييمات الحالية"}
-    C -- لا --> D["أعِد صياغة الادعاء أو احذفه"]
+flowchart RL
+    A["مسودة التموضع<br/>(Positioning draft)"] --> B["سجل الادعاءات<br/>(Claims register)"]
+    B --> C{"كل ادعاء مدعوم بالتقييمات الحالية<br/>(Each claim backed by current evals)"}
+    C -- "لا (No)" --> D["أعِد صياغة الادعاء أو احذفه<br/>(Reword or drop claim)"]
     D --> B
-    C -- نعم --> E["مراجعة قانونية ومراجعة الحوكمة"]
-    E --> F["حزمة التمكين لموظفي الخطوط الأمامية"]
-    F --> G["إطلاق مرحلي: شريحة ثم نطاق أوسع"]
-    G --> H["ملاحظات من الموظفين والعملاء"]
+    C -- "نعم (Yes)" --> E["مراجعة قانونية ومراجعة الحوكمة<br/>(Legal and governance review)"]
+    E --> F["حزمة التمكين لموظفي الخطوط الأمامية<br/>(Enablement kit for front-line staff)"]
+    F --> G["إطلاق مرحلي: شريحة ثم نطاق أوسع<br/>(Staged launch: segment, then wider)"]
+    G --> H["ملاحظات من الموظفين والعملاء<br/>(Feedback from staff and customers)"]
     H --> A
 ```
 
@@ -512,11 +512,11 @@ flowchart LR
 **قمع التبنّي (The adoption funnel).** صمّم القياس قبل الإطلاق (design the measurement before launch)، من الوصول إلى القيمة (from access to value):
 
 ```mermaid
-flowchart LR
-    A["الوصول: مديرو العلاقات الذين لديهم الأداة"] --> B["التفعيل: أول مذكرة مصاغة"]
-    B --> C["العادة: مستخدمة في معظم المذكرات لمدة 4 أسابيع"]
-    C --> D["الاستخدام الجيد: مراجعة الأقسام الموسومة"]
-    D --> E["القيمة: وصول أسرع إلى اللجنة دون تراجع في الجودة"]
+flowchart RL
+    A["الوصول: مديرو العلاقات الذين لديهم الأداة<br/>(Access: RMs with the tool)"] --> B["التفعيل: أول مذكرة مصاغة<br/>(Activation: first memo drafted)"]
+    B --> C["العادة: مستخدمة في معظم المذكرات لمدة 4 أسابيع<br/>(Habit: used on most memos for 4 weeks)"]
+    C --> D["الاستخدام الجيد: مراجعة الأقسام الموسومة<br/>(Quality use: flagged sections reviewed)"]
+    D --> E["القيمة: وصول أسرع إلى اللجنة دون تراجع في الجودة<br/>(Value: faster to committee, no quality drop)"]
 ```
 
 لكل مرحلة مقياسها (metric) وعلاجاتها (fixes). الانخفاض قبل التفعيل (activation) يشير إلى الوعي أو التدريب أو الموضع (awareness, training or placement)؛ وقبل العادة (habit)، إلى الفائدة (usefulness) (تجارب أولى سيئة، أو لا وقت موفَّر فعلًا)؛ وعند الاستخدام الجيد (quality use)، إلى الإفراط في الاعتماد (over-reliance). المرحلة الأخيرة وحدها هي القيمة (value)، وتُقاس مقابل خط أساس (baseline) مثل الوقت حتى اللجنة (time to committee) ومعدّل المذكرات التي يعيدها فريق مخاطر الائتمان (memos sent back by credit risk)، مقارنةً بفرق لم تستخدم الأداة بعد. يتعمّق القسم 8.1 أكثر.

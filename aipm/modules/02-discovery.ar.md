@@ -66,16 +66,16 @@
 
 ```mermaid
 flowchart TD
-    O["النتيجة: مذكرات تُعتمد من المرة الأولى خلال 5 أيام"] --> P1["فرصة: العثور على أحدث المستندات يستغرق وقتًا طويلًا"]
-    O --> P2["فرصة: إعادة كتابة البيانات المالية تسبب أخطاء"]
-    O --> P3["فرصة: اللجنة تعيد المذكرات بسبب مخاطر ناقصة"]
-    P1 --> S1["حل: عرض موحد لمستندات العميل"]
-    P2 --> S2["حل: استخراج بالذكاء الاصطناعي إلى قالب التحليل المالي"]
-    P2 --> S3["حل: طلب ملفات إكسل من المدققين"]
-    P3 --> S4["حل: قائمة تحقق بالذكاء الاصطناعي لبنود المخاطر الناقصة"]
-    P3 --> S5["حل: قالب مذكرة أفضل"]
-    S2 --> T1["اختبار: استخراج 20 قائمة سابقة ومقارنتها بأرقام المحللين"]
-    S4 --> T2["اختبار: تشغيل قائمة التحقق على 30 مذكرة معادة"]
+    O["النتيجة: مذكرات تُعتمد من المرة الأولى خلال 5 أيام<br/>(Outcome: memos approved first time within 5 days)"] --> P1["فرصة: العثور على أحدث المستندات يستغرق وقتًا طويلًا<br/>(Opportunity: finding the latest documents takes too long)"]
+    O --> P2["فرصة: إعادة كتابة البيانات المالية تسبب أخطاء<br/>(Opportunity: retyping financials causes errors)"]
+    O --> P3["فرصة: اللجنة تعيد المذكرات بسبب مخاطر ناقصة<br/>(Opportunity: committee sends memos back for missing risks)"]
+    P1 --> S1["حل: عرض موحد لمستندات العميل<br/>(Solution: one client document view)"]
+    P2 --> S2["حل: استخراج بالذكاء الاصطناعي إلى قالب التحليل المالي<br/>(Solution: AI extraction into spreading template)"]
+    P2 --> S3["حل: طلب ملفات إكسل من المدققين<br/>(Solution: request Excel from auditors)"]
+    P3 --> S4["حل: قائمة تحقق بالذكاء الاصطناعي لبنود المخاطر الناقصة<br/>(Solution: AI checklist of missing risk items)"]
+    P3 --> S5["حل: قالب مذكرة أفضل<br/>(Solution: better memo template)"]
+    S2 --> T1["اختبار: استخراج 20 قائمة سابقة ومقارنتها بأرقام المحللين<br/>(Test: extract 20 past statements, compare to analyst figures)"]
+    S4 --> T2["اختبار: تشغيل قائمة التحقق على 30 مذكرة معادة<br/>(Test: run checklist on 30 returned memos)"]
 ```
 
 اثنان من الحلول الخمسة في شجرة فيصل ليسا ذكاءً اصطناعيًا على الإطلاق (not AI at all). وهذا صحّي (healthy). فالشجرة المليئة بأفكار الذكاء الاصطناعي (AI ideas) تعني عادةً أن الفريق بدأ من التقنية (started from the technology).
@@ -302,14 +302,14 @@ flowchart TD
 | قيمة منخفضة، جدوى تقنية منخفضة (Low value, low feasibility) | أسقطها (Drop) | دوّن السبب (Record why)، وامضِ قدمًا (move on) |
 
 ```mermaid
-flowchart LR
-    A["قائمة طويلة من الاكتشاف"] --> B{"تجتاز بوابات الإقصاء"}
-    B -- "لا" --> C["أوقف أو أعد إلى الاكتشاف"]
-    B -- "نعم" --> D["قيّم القيمة والجدوى والمخاطر"]
-    D --> E["اختبار جدوى سريع على بيانات حقيقية"]
-    E --> F["أعد التقييم بالأدلة"]
-    F --> G["عرض المحفظة والتحقق من الأوزان"]
-    G --> H["قرار بمالك مسمّى"]
+flowchart RL
+    A["قائمة طويلة من الاكتشاف<br/>(Long list from discovery)"] --> B{"تجتاز بوابات الإقصاء<br/>(Passes knock-out gates)"}
+    B -- "لا (No)" --> C["أوقف أو أعد إلى الاكتشاف<br/>(Stop or return to discovery)"]
+    B -- "نعم (Yes)" --> D["قيّم القيمة والجدوى والمخاطر<br/>(Score value, feasibility, risk)"]
+    D --> E["اختبار جدوى سريع على بيانات حقيقية<br/>(Feasibility spike on real data)"]
+    E --> F["أعد التقييم بالأدلة<br/>(Re-score with evidence)"]
+    F --> G["عرض المحفظة والتحقق من الأوزان<br/>(Portfolio view and weights check)"]
+    G --> H["قرار بمالك مسمّى<br/>(Decision with named owner)"]
 ```
 
 ### 🔴 نظرة الخبير (Expert view)
@@ -497,15 +497,15 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    A["فكرة ذكاء اصطناعي مقترحة"] --> B{"هل يمكن كتابة المنطق كقواعد"}
-    B -- "نعم" --> R["استخدم القواعد وأعد النظر إذا فشلت"]
-    B -- "لا" --> C{"هل توجد بيانات لتشغيله وتقييمه"}
-    C -- "لا" --> D["أوقف أو أصلح البيانات أولًا"]
-    C -- "نعم" --> E{"هل يمكن اكتشاف الأخطاء قبل وقوع الضرر"}
-    E -- "لا" --> F["ضيّق النطاق أو أضف مراجعة بشرية"]
-    E -- "نعم" --> G{"القيمة لكل استخدام أعلى من التكلفة لكل استخدام"}
-    G -- "لا" --> H["أوقف أو أعد التصميم لخفض التكلفة"]
-    G -- "نعم" --> I["انتقل إلى بطاقة التقييم مع معايير الإيقاف"]
+    A["فكرة ذكاء اصطناعي مقترحة<br/>(Proposed AI idea)"] --> B{"هل يمكن كتابة المنطق كقواعد<br/>(Can the logic be written as rules)"}
+    B -- "نعم (Yes)" --> R["استخدم القواعد وأعد النظر إذا فشلت<br/>(Use rules#59; revisit if rules fail)"]
+    B -- "لا (No)" --> C{"هل توجد بيانات لتشغيله وتقييمه<br/>(Is there data to run and evaluate it)"}
+    C -- "لا (No)" --> D["أوقف أو أصلح البيانات أولًا<br/>(Stop or fix data first)"]
+    C -- "نعم (Yes)" --> E{"هل يمكن اكتشاف الأخطاء قبل وقوع الضرر<br/>(Can errors be caught before harm)"}
+    E -- "لا (No)" --> F["ضيّق النطاق أو أضف مراجعة بشرية<br/>(Narrow scope or add human review)"]
+    E -- "نعم (Yes)" --> G{"القيمة لكل استخدام أعلى من التكلفة لكل استخدام<br/>(Value per use above cost per use)"}
+    G -- "لا (No)" --> H["أوقف أو أعد التصميم لخفض التكلفة<br/>(Stop or redesign for cost)"]
+    G -- "نعم (Yes)" --> I["انتقل إلى بطاقة التقييم مع معايير الإيقاف<br/>(Proceed to scorecard with kill criteria)"]
     F --> E
 ```
 

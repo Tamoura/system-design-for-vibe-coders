@@ -81,18 +81,18 @@
 
 ```mermaid
 flowchart TD
-    NS["نجم الشمال: مذكرات مقدمة خلال 5 أيام دون إعادة عمل"]
-    NS --> A["التبني: مديرو العلاقات المؤهلون يصوغون في المساعد"]
-    NS --> Q["الجودة: معدل اجتياز معيار التقييم على مسودات العينة"]
-    NS --> T["الثقة: المسودات المقبولة الصحيحة"]
-    NS --> S["السرعة: الزمن حتى المسودة الأولى"]
-    A --> A1["مديرو العلاقات النشطون أسبوعيا"]
-    A --> A2["نسبة المذكرات التي بدأت في المساعد"]
-    Q --> Q1["الادعاءات غير المدعومة لكل مسودة"]
-    Q --> Q2["الأرقام المطابقة للمصدر"]
-    T --> T1["معدل التقاط الأخطاء المزروعة"]
-    T --> T2["مسافة التحرير على المسودات الجيدة"]
-    G["المقاييس الوقائية: أخطاء في المذكرات المعتمدة، حوادث البيانات، التكلفة لكل مذكرة"] -.-> NS
+    NS["نجم الشمال: مذكرات مقدمة خلال 5 أيام دون إعادة عمل<br/>(North Star: memos submitted within 5 days, no rework)"]
+    NS --> A["التبني: مديرو العلاقات المؤهلون يصوغون في المساعد<br/>(Adoption: eligible RMs drafting in copilot)"]
+    NS --> Q["الجودة: معدل اجتياز معيار التقييم على مسودات العينة<br/>(Quality: rubric pass rate on sampled drafts)"]
+    NS --> T["الثقة: المسودات المقبولة الصحيحة<br/>(Trust: accepted drafts that are correct)"]
+    NS --> S["السرعة: الزمن حتى المسودة الأولى<br/>(Speed: time to first draft)"]
+    A --> A1["مديرو العلاقات النشطون أسبوعيا<br/>(Weekly active RMs)"]
+    A --> A2["نسبة المذكرات التي بدأت في المساعد<br/>(Share of memos started in copilot)"]
+    Q --> Q1["الادعاءات غير المدعومة لكل مسودة<br/>(Unsupported claims per draft)"]
+    Q --> Q2["الأرقام المطابقة للمصدر<br/>(Figures matching source)"]
+    T --> T1["معدل التقاط الأخطاء المزروعة<br/>(Seeded-error catch rate)"]
+    T --> T2["مسافة التحرير على المسودات الجيدة<br/>(Edit distance on good drafts)"]
+    G["المقاييس الوقائية: أخطاء في المذكرات المعتمدة، حوادث البيانات، التكلفة لكل مذكرة<br/>(Guardrails: errors in approved memos, data incidents, cost per memo)"] -.-> NS
 ```
 
 **قانون Goodhart (Goodhart's law)** (المسمّى باسم الاقتصادي Charles Goodhart) يُصاغ عادة هكذا: «عندما يصبح المقياس هدفًا، يكفّ عن أن يكون مقياسًا جيدًا (when a measure becomes a target, it ceases to be a good measure)». منتجات الذكاء الاصطناعي معرّضة له بشكل خاص لأن النماذج والناس كليهما يحسّنون الأداء نحو الهدف (both optimise). كافئ فريق نجم أسيست (Najm Assist) على الاحتواء (containment) وسيجعلون زر التسليم (handoff button) أصعب في الإيجاد. وكافئ فريق المساعد (copilot team) على معدل القبول (acceptance rate) وسيتعلم المنتج إنتاج مسودات باهتة (bland drafts) لا يكلّف أحد نفسه تغييرها. الدفاع (Defence): اقرن كل هدف (target) بمقياس وقائي (guardrail) على الجانب الآخر، وراجع التعريفات فصليًا (review definitions quarterly).
@@ -312,15 +312,15 @@ flowchart TD
 ### 🔴 نظرة الخبير (Expert view)
 
 ```mermaid
-flowchart LR
-    M["رموز النموذج"] --> C["التكلفة لكل مهمة"]
-    R["الاسترجاع والأدوات"] --> C
-    E["التقييمات والمراقبة"] --> C
-    H["المراجعة البشرية والتسليم"] --> C
-    F["حصة المنصة الثابتة"] --> C
-    C --> D["القسمة على معدل النجاح"]
-    D --> O["التكلفة لكل نتيجة ناجحة"]
-    V["القيمة لكل نتيجة"] --> P["الهامش لكل نتيجة"]
+flowchart RL
+    M["رموز النموذج<br/>(Model tokens)"] --> C["التكلفة لكل مهمة<br/>(Cost per task)"]
+    R["الاسترجاع والأدوات<br/>(Retrieval and tools)"] --> C
+    E["التقييمات والمراقبة<br/>(Evals and monitoring)"] --> C
+    H["المراجعة البشرية والتسليم<br/>(Human review and handoff)"] --> C
+    F["حصة المنصة الثابتة<br/>(Fixed platform share)"] --> C
+    C --> D["القسمة على معدل النجاح<br/>(Divide by success rate)"]
+    D --> O["التكلفة لكل نتيجة ناجحة<br/>(Cost per successful outcome)"]
+    V["القيمة لكل نتيجة<br/>(Value per outcome)"] --> P["الهامش لكل نتيجة<br/>(Margin per outcome)"]
     O --> P
 ```
 
@@ -516,13 +516,13 @@ flowchart LR
 **حلقة التحسين (The iteration loop)** تحوّل المراقبة إلى تحسين (turns monitoring into improvement). العادة الجوهرية بسيطة: كل إخفاق في الإنتاج (production failure) يصبح حالة اختبار (test case)، فلا يعود الإخفاق نفسه دون أن يُلاحَظ (come back unnoticed).
 
 ```mermaid
-flowchart LR
-    M["راقب كل الطبقات"] --> C["اجمع الإخفاقات والتغذية الراجعة"]
-    C --> A["تحليل الأخطاء: جمّع ورتّب"]
-    A --> G["أضف الحالات إلى المجموعة المرجعية"]
-    G --> F["أصلح: البيانات أو الاسترجاع أو الموجه أو النموذج أو تجربة المستخدم"]
-    F --> R["اختبار تراجع دون اتصال على المجموعة المرجعية"]
-    R --> S["إطلاق مرحلي مع مقاييس وقائية"]
+flowchart RL
+    M["راقب كل الطبقات<br/>(Monitor all layers)"] --> C["اجمع الإخفاقات والتغذية الراجعة<br/>(Collect failures and feedback)"]
+    C --> A["تحليل الأخطاء: جمّع ورتّب<br/>(Error analysis: cluster and rank)"]
+    A --> G["أضف الحالات إلى المجموعة المرجعية<br/>(Add cases to golden set)"]
+    G --> F["أصلح: البيانات أو الاسترجاع أو الموجه أو النموذج أو تجربة المستخدم<br/>(Fix: data, retrieval, prompt, model or UX)"]
+    F --> R["اختبار تراجع دون اتصال على المجموعة المرجعية<br/>(Offline regression on golden set)"]
+    R --> S["إطلاق مرحلي مع مقاييس وقائية<br/>(Staged rollout with guardrails)"]
     S --> M
 ```
 

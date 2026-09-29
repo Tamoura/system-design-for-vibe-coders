@@ -86,16 +86,16 @@
 | **Lead** | أين يجب أن نستثمر بعد ذلك (invest next)، وكيف يجب أن يعمل الفريق؟ | الاستراتيجية (Strategy)، وخارطة الطريق (roadmap)، ونموذج التشغيل (operating model) |
 
 ```mermaid
-flowchart LR
-    D["الاكتشاف"] --> DF["التعريف"]
-    DF --> DS["التصميم"]
-    DS --> B["البناء"]
-    B --> E["التقييم"]
-    E -- "ليس جيدًا بما يكفي" --> B
-    E --> L["الإطلاق"]
-    L --> G["النمو"]
-    G -- "اكتُشفت مشكلات جديدة" --> D
-    LD["القيادة: الاستراتيجية والفريق والمحفظة"] -.-> D
+flowchart RL
+    D["الاكتشاف<br/>(Discover)"] --> DF["التعريف<br/>(Define)"]
+    DF --> DS["التصميم<br/>(Design)"]
+    DS --> B["البناء<br/>(Build)"]
+    B --> E["التقييم<br/>(Evaluate)"]
+    E -- "ليس جيدًا بما يكفي (not good enough)" --> B
+    E --> L["الإطلاق<br/>(Launch)"]
+    L --> G["النمو<br/>(Grow)"]
+    G -- "اكتُشفت مشكلات جديدة (new problems found)" --> D
+    LD["القيادة: الاستراتيجية والفريق والمحفظة<br/>(Lead: strategy, team, portfolio)"] -.-> D
     LD -.-> G
 ```
 
@@ -314,14 +314,14 @@ flowchart LR
 **حلقة منتج الذكاء الاصطناعي (The AI product loop).** لأن السلوك يعتمد على البيانات والاستخدام (data and use)، فإن منتج الذكاء الاصطناعي حلقة (loop) لا خط معالجة أحادي الاتجاه (one-way pipeline):
 
 ```mermaid
-flowchart LR
-    A["البيانات والسياق"] --> B["النموذج"]
-    B --> C["مخرجات تُعرض للمستخدم"]
-    C --> D{"المستخدم يتحقق ويقرر"}
-    D -- "يقبل" --> E["إجراء أو نتيجة"]
-    D -- "يصحّح أو يرفض" --> F["تُلتقط التغذية الراجعة"]
+flowchart RL
+    A["البيانات والسياق<br/>(Data and context)"] --> B["النموذج<br/>(Model)"]
+    B --> C["مخرجات تُعرض للمستخدم<br/>(Output shown to user)"]
+    C --> D{"المستخدم يتحقق ويقرر<br/>(User checks and decides)"}
+    D -- "يقبل (accepts)" --> E["إجراء أو نتيجة<br/>(Action or outcome)"]
+    D -- "يصحّح أو يرفض (corrects or rejects)" --> F["تُلتقط التغذية الراجعة<br/>(Feedback captured)"]
     E --> F
-    F --> G["التقييم وتحليل الأخطاء"]
+    F --> G["التقييم وتحليل الأخطاء<br/>(Evaluation and error analysis)"]
     G --> A
     G --> B
 ```
@@ -530,18 +530,18 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    R["رانيا: رئيسة منتجات الذكاء الاصطناعي"] --> F["فيصل ومديرو المنتجات"]
-    F --> CMC["مساعد مذكرات الائتمان"]
-    F --> NA["نجم أسيست"]
-    F --> SIF["التمويل الفوري للشركات الصغيرة"]
-    F --> SA["التنبيهات الذكية"]
-    F --> SG["مساعد الموظفين التوليدي"]
-    H["حصة: التصميم"] --- F
-    T["طارق: الهندسة"] --- F
-    D["دانة: علم البيانات"] --- F
-    K["خالد: مالك العمل"] --> F
-    L["ليلى وسارة: الحوكمة والخصوصية"] -.-> F
-    Y["يوسف وعمر: المورّدون والبيانات"] -.-> F
+    R["رانيا: رئيسة منتجات الذكاء الاصطناعي<br/>(Rania: Head of AI Products)"] --> F["فيصل ومديرو المنتجات<br/>(Faisal and PMs)"]
+    F --> CMC["مساعد مذكرات الائتمان<br/>(Credit Memo Copilot)"]
+    F --> NA["نجم أسيست<br/>(Najm Assist)"]
+    F --> SIF["التمويل الفوري للشركات الصغيرة<br/>(SME Instant Finance)"]
+    F --> SA["التنبيهات الذكية<br/>(Smart Alerts)"]
+    F --> SG["مساعد الموظفين التوليدي<br/>(Staff GenAI)"]
+    H["حصة: التصميم<br/>(Hessa: design)"] --- F
+    T["طارق: الهندسة<br/>(Tariq: engineering)"] --- F
+    D["دانة: علم البيانات<br/>(Dana: data science)"] --- F
+    K["خالد: مالك العمل<br/>(Khalid: business owner)"] --> F
+    L["ليلى وسارة: الحوكمة والخصوصية<br/>(Layla and Sara: governance and privacy)"] -.-> F
+    Y["يوسف وعمر: المورّدون والبيانات<br/>(Yusuf and Omar: vendors and data)"] -.-> F
 ```
 
 الخطوط المنقّطة (Dotted lines) تشير إلى أشخاص تحتاج إلى مدخلاتهم أو موافقتهم (input or approval) في نقاط محددة؛ وتركهم حتى النهاية طريقة كلاسيكية للتأخر (classic way to be late).

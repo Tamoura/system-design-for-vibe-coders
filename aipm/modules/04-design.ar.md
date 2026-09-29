@@ -65,14 +65,14 @@
 
 ```mermaid
 flowchart TD
-    A["طلب تمويل جديد لشركة صغيرة"] --> B{"داخل نطاق الأتمتة؟"}
-    B -- "لا" --> H["محلل الائتمان يقرر"]
-    B -- "نعم" --> C{"درجة النموذج"}
-    C -- "موافقة بثقة عالية" --> D["موافقة آلية وإبلاغ مدير العلاقة"]
-    C -- "نطاق غير مؤكد" --> H
-    C -- "رفض مرجّح" --> H
-    D --> E["مراجعة عينة أسبوعية من مخاطر الائتمان"]
-    H --> F["قرار مع تسجيل الأسباب"]
+    A["طلب تمويل جديد لشركة صغيرة<br/>(New SME finance request)"] --> B{"داخل نطاق الأتمتة؟<br/>(Inside automation scope?)"}
+    B -- "لا (No)" --> H["محلل الائتمان يقرر<br/>(Underwriter decides)"]
+    B -- "نعم (Yes)" --> C{"درجة النموذج<br/>(Model score)"}
+    C -- "موافقة بثقة عالية (High confidence approve)" --> D["موافقة آلية وإبلاغ مدير العلاقة<br/>(Auto-approve and notify RM)"]
+    C -- "نطاق غير مؤكد (Uncertain band)" --> H
+    C -- "رفض مرجّح (Likely decline)" --> H
+    D --> E["مراجعة عينة أسبوعية من مخاطر الائتمان<br/>(Weekly sample review by credit risk)"]
+    H --> F["قرار مع تسجيل الأسباب<br/>(Decision with reasons recorded)"]
 ```
 
 **يجب أن يكون الإنسان في الحلقة حقيقيًا (The human in the loop has to be real).** لا يفيد وضع شخص بين النموذج والنتيجة إلا إذا كان ذلك الشخص قادرًا على اكتشاف الأخطاء (catch errors). والأبحاث حول **تحيّز الأتمتة (automation bias)** (ميل الناس إلى الإفراط في الاعتماد على النصيحة المؤتمتة، over-rely on automated advice، فتفوتهم أخطاؤها أو يتبعونها رغم أدلة أخرى) واسعة؛ ومراجعة باراسورامان ومانزي (Parasuraman and Manzey) لعام 2010 نقطة انطلاق جيدة. وهي تُظهر أن المراجعين المشغولين والواثقين (busy, trusting reviewers) تفوتهم بالضبط الأخطاء التي وُجدوا لاكتشافها. ولكي يكون المراجع ذا معنى (meaningful)، يجب أن يمنحه التصميم:
@@ -324,14 +324,14 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A["العميل يسأل نجم أسيست سؤالًا"] --> B{"هل وُجدت الإجابة في المصادر المعتمدة؟"}
-    B -- "نعم" --> C["الإجابة مع المصدر والتاريخ"]
-    B -- "لا" --> D["يقول إنه لا يستطيع الإجابة ويعرض خيارات"]
-    C --> E{"هل العميل راضٍ؟"}
-    E -- "نعم" --> F["إنهاء وتسجيل التغذية الراجعة"]
-    E -- "لا" --> G["عرض إعادة الصياغة أو موظف بشري"]
+    A["العميل يسأل نجم أسيست سؤالًا<br/>(Customer asks Najm Assist a question)"] --> B{"هل وُجدت الإجابة في المصادر المعتمدة؟<br/>(Answer found in approved sources?)"}
+    B -- "نعم (Yes)" --> C["الإجابة مع المصدر والتاريخ<br/>(Answer with source and date)"]
+    B -- "لا (No)" --> D["يقول إنه لا يستطيع الإجابة ويعرض خيارات<br/>(Say it cannot answer and offer options)"]
+    C --> E{"هل العميل راضٍ؟<br/>(Customer satisfied?)"}
+    E -- "نعم (Yes)" --> F["إنهاء وتسجيل التغذية الراجعة<br/>(End, log feedback)"]
+    E -- "لا (No)" --> G["عرض إعادة الصياغة أو موظف بشري<br/>(Offer rephrase or human agent)"]
     D --> G
-    G --> H["التسليم مع سجل المحادثة"]
+    G --> H["التسليم مع سجل المحادثة<br/>(Hand over with conversation history)"]
 ```
 
 **الفشل اللبق ميزة (Graceful failure is a feature).** كثيرًا ما تكون أكثر جملة جديرة بالثقة يمكن أن يقولها منتج ذكاء اصطناعي هي "لا أعرف، لكن إليك من يعرف (I don't know, but here is who does)." يجب أن *يكتشف (detect)* المنتج أنه يفتقر إلى أساس (lacks grounds) (مهمة هندسية، engineering task؛ الوحدة 5.3، Module 5.3) وأن *يعرض مسارًا (offer a path)* (مهمة تصميمية، design task). حدّد كليهما في المواصفات (spec both).
@@ -545,17 +545,17 @@ flowchart TD
 
 ```mermaid
 sequenceDiagram
-    participant C as العميل
-    participant A as نجم أسيست
-    participant T as نظام البطاقات
-    C->>A: أوقف بطاقتي، أظن أنني فقدتها
-    A->>C: تجميد مؤقت أم إبلاغ عن فقدان؟
-    C->>A: تجميد في الوقت الحالي
-    A->>C: معاينة - تجميد البطاقة 4821 مع سرد الآثار
-    C->>A: التأكيد بالقياسات الحيوية
-    A->>T: تجميد البطاقة 4821
-    T-->>A: تم
-    A->>C: جُمّدت البطاقة. يظهر زر إلغاء التجميد
+    participant T as نظام البطاقات (Card system)
+    participant A as نجم أسيست (Najm Assist)
+    participant C as العميل (Customer)
+    C->>A: أوقف بطاقتي، أظن أنني فقدتها (Stop my card, I think I lost it)
+    A->>C: تجميد مؤقت أم إبلاغ عن فقدان؟ (Freeze temporarily or report lost?)
+    C->>A: تجميد في الوقت الحالي (Freeze for now)
+    A->>C: معاينة - تجميد البطاقة 4821 مع سرد الآثار (Preview - freeze card 4821, effects listed)
+    C->>A: التأكيد بالقياسات الحيوية (Confirm with biometric)
+    A->>T: تجميد البطاقة 4821 (Freeze card 4821)
+    T-->>A: تم (Done)
+    A->>C: جُمّدت البطاقة. يظهر زر إلغاء التجميد (Card frozen. Unfreeze button shown)
 ```
 
 **أكّد ما يهم، لا كل شيء (Confirm what matters, not everything).** إذا طلبت كل خطوة تأكيدًا، يتوقف المستخدمون عن القراءة وينقرون "نعم (yes)" بحكم العادة (by habit)، وهو تحيّز الأتمتة (automation bias) نفسه الوارد في 4.1 لكن من جانب المستخدم. طابق الاحتكاك مع العاقبة (match friction to consequence): لا تأكيد لقراءة المعلومات (reading information)؛ وتأكيد واحد للإجراءات القابلة للتراجع (reversible actions)؛ وتأكيد مع مصادقة معزَّزة (step-up authentication) للإجراءات التي تحرّك الأموال (move money) أو لا يمكن التراجع عنها؛ وبعض الإجراءات تبقى ببساطة خارج نطاق الوكيل (out of scope for the agent).

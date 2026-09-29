@@ -73,17 +73,17 @@
 3. **عبر الإنترنت (Online)**: إطلاق مرحلي (staged rollout) (الموظفون، ثم 1% و10% و50% من المستخدمين) مع **اختبار A/B (A/B test)** مقابل مركز المساعدة الحالي (existing help centre). واتباعًا لكوهافي وتانغ وشو (Kohavi, Tang and Xu)، يتفق الفريق مسبقًا (in advance) على **معيار التقييم الشامل (overall evaluation criterion)** ويضيف **مقاييس وقائية (guardrail metrics)** (الشكاوى (complaints)، ومعدل التحويل إلى إنسان (handoff rate)، وبلاغات الإجابات الخاطئة (wrong-answer reports)) قادرة على إيقاف الإطلاق بمفردها (stop the rollout on their own).
 
 ```mermaid
-flowchart LR
-  D["الاكتشاف: المهام وشجرة الفرص"] --> F["التعريف: بطاقة التقييم وفحص البيانات"]
-  F --> G["التصميم: خريطة الأتمتة"]
-  G --> B["البناء: المواصفات والتقييمات"]
-  B --> E["التقييم: المجموعة المرجعية والفريق الأحمر والاختبار المقارن"]
-  E -->|"تحققت المعايير"| L["الإطلاق: بوابة الجاهزية"]
-  E -->|"لم تتحقق المعايير"| B
-  L --> R["النمو: المقاييس والتكلفة والانجراف"]
-  R -->|"مهمة أو مستوى جديد"| F
-  R --> K["القيادة: الاستراتيجية وخارطة الطريق"]
-  K -->|"الرهان التالي"| D
+flowchart RL
+  D["الاكتشاف: المهام وشجرة الفرص<br/>(Discover: jobs and OST)"] --> F["التعريف: بطاقة التقييم وفحص البيانات<br/>(Define: scorecard and data check)"]
+  F --> G["التصميم: خريطة الأتمتة<br/>(Design: automation map)"]
+  G --> B["البناء: المواصفات والتقييمات<br/>(Build: spec and evals)"]
+  B --> E["التقييم: المجموعة المرجعية والفريق الأحمر والاختبار المقارن<br/>(Evaluate: golden set, red-team, A/B)"]
+  E -->|"تحققت المعايير (bars met)"| L["الإطلاق: بوابة الجاهزية<br/>(Launch: readiness gate)"]
+  E -->|"لم تتحقق المعايير (bars missed)"| B
+  L --> R["النمو: المقاييس والتكلفة والانجراف<br/>(Grow: metrics, cost, drift)"]
+  R -->|"مهمة أو مستوى جديد (new task or level)"| F
+  R --> K["القيادة: الاستراتيجية وخارطة الطريق<br/>(Lead: strategy and roadmap)"]
+  K -->|"الرهان التالي (next bet)"| D
 ```
 
 **الإطلاق (Launch).** لقائمة التحقق من الجاهزية (readiness checklist) أربع كتل (four blocks): *الجودة (quality)* (تحقُّق كل معيار في المواصفات على النسخة نفسها من النموذج والموجّه التي ستُطلق (exact model and prompt version shipping))، و*الضوابط الوقائية (guardrails)* (المرشحات مفعّلة (filters live)، والتأكيدات مختبَرة (confirmations tested)، ومفتاح إيقاف (kill switch) يعطّل الأدوات خلال دقائق (within minutes))، و*الحوكمة (governance)* (موافقة ليلى، ونتيجة تقييم الأثر على حماية البيانات (DPIA outcome) من سارة، واعتماد نص الإفصاح (disclosure text approved))، و*الدعم (support)* (موظفون مدرَّبون على التحويلات (agents trained on handoffs)، ومالك للحوادث مناوب (incident owner on call)). والتموضع (Positioning) متواضع (modest): «مساعدة سريعة للخدمات المصرفية اليومية (fast help for everyday banking)». ويعتمد التبنّي داخل البنك (Adoption inside the bank) على مركز الاتصال (contact centre): فإذا رأى الموظفون فيه تهديدًا (see a threat)، تتضرر التحويلات (handoffs suffer)، ولذلك تُشرك رانيا رئيسهم (involves their head) منذ مرحلة Discover فصاعدًا.
@@ -275,14 +275,14 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-  A["من المستخدم، وما المهمة؟"] --> B["هل الذكاء الاصطناعي هو الأداة الصحيحة؟"]
-  B -->|"لا"| X["حل أبسط: قلها صراحة"]
-  B -->|"نعم"| C["مستوى الأتمتة لكل مهمة"]
-  C --> D["البيانات: هل نملكها، وهل يحق لنا استخدامها؟"]
-  D --> E["معيار الجودة وكيف نقيّم"]
-  E --> F["أنماط الفشل والضوابط الوقائية"]
-  F --> G["المقاييس والتكلفة لكل مهمة"]
-  G --> H["الإطلاق وما الذي سيجعلنا نتوقف"]
+  A["من المستخدم، وما المهمة؟<br/>(Who is the user, what is the job?)"] --> B["هل الذكاء الاصطناعي هو الأداة الصحيحة؟<br/>(Is AI the right tool?)"]
+  B -->|"لا (no)"| X["حل أبسط: قلها صراحة<br/>(Simpler fix: say so)"]
+  B -->|"نعم (yes)"| C["مستوى الأتمتة لكل مهمة<br/>(Level of automation per task)"]
+  C --> D["البيانات: هل نملكها، وهل يحق لنا استخدامها؟<br/>(Data: have it, may we use it?)"]
+  D --> E["معيار الجودة وكيف نقيّم<br/>(Quality bar and how we evaluate)"]
+  E --> F["أنماط الفشل والضوابط الوقائية<br/>(Failure modes and guardrails)"]
+  F --> G["المقاييس والتكلفة لكل مهمة<br/>(Metrics and cost per task)"]
+  G --> H["الإطلاق وما الذي سيجعلنا نتوقف<br/>(Rollout and what would make us stop)"]
 ```
 
 لن يتسع لك الوقت للتعمق في كل خطوة (go deep on every step). قل البنية في جملة واحدة في البداية («سأبدأ بالمستخدم، وأتحقق من أن الذكاء الاصطناعي هو الأداة الصحيحة، ثم أغطي الأتمتة والبيانات والجودة والمخاطر والمقاييس والإطلاق (I'll start with the user, check AI is the right tool, then cover automation, data, quality, risks, metrics and rollout)»)، ثم اقضِ معظم الوقت حيث تكون المشكلة أصعب (where the problem is hardest). في مساعد مصرفي (banking assistant) يكون ذلك عادةً الثقة وأنماط الفشل (trust and failure modes)؛ وفي أداة داخلية (internal tool) يكون غالبًا التبنّي (adoption).
