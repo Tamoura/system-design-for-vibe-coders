@@ -447,7 +447,7 @@ flowchart RL
 
 ## 📚 المراجع (References)
 - Dunford, A. (2019). *Obviously Awesome: How to Nail Product Positioning So Customers Get It, Buy It, Love It* — https://www.aprildunford.com
-- Cagan, M. (2017). *Inspired: How to Create Tech Products Customers Love* (2nd ed.) — https://www.svpg.com
+- Cagan, M. (2017). *Inspired: How to Create Tech Products Customers Love* ⁦(2nd ed.)⁩ — https://www.svpg.com
 - Amershi, S. et al. (2019). "Guidelines for Human-AI Interaction." CHI 2019 — https://www.microsoft.com/en-us/research/project/guidelines-for-human-ai-interaction/
 - Google PAIR، *People + AI Guidebook*، فصل النماذج الذهنية والتوقعات (chapter on mental models and expectations) — https://pair.withgoogle.com/guidebook
 - Intercom، وكيل الذكاء الاصطناعي Fin (Fin AI agent) — https://www.intercom.com/fin
@@ -666,7 +666,7 @@ flowchart RL
 
 ## 📚 المراجع (References)
 - Davis, F. D. (1989). "Perceived Usefulness, Perceived Ease of Use, and User Acceptance of Information Technology." *MIS Quarterly*, 13(3).
-- Rogers, E. M. *Diffusion of Innovations* (نُشر أول مرة (first published) 1962؛ الطبعة الخامسة (5th ed.) 2003). Free Press.
+- Rogers, E. M. *Diffusion of Innovations* (نُشر أول مرة (first published) 1962؛ الطبعة الخامسة ⁦(5th ed.)⁩ 2003). Free Press.
 - Hiatt, J. (2006). *ADKAR: A Model for Change in Business, Government and Our Community*. Prosci — https://www.prosci.com
 - Kotter, J. P. (1996). *Leading Change*. Harvard Business School Press — https://www.kotterinc.com
 - Parasuraman, R. and Riley, V. (1997). "Humans and Automation: Use, Misuse, Disuse, Abuse." *Human Factors*, 39(2).

@@ -592,7 +592,7 @@ sequenceDiagram
 | **Scope statement** — بيان النطاق | وصف قصير داخل المنتج (short in-product description) لما يفعله المساعد وما لا يفعله، مع أمثلة | إطلاق أي منتج محادثي (conversational product) |
 | **Agent trace** — أثر تتبّع الوكيل | سجل بكل خطوة، واستدعاء أداة، ومُدخل، ونتيجة (every step, tool call, input and result)، مرتبط بالمحادثة | التحقيق في الشكاوى، والتقييم، والتدقيق (investigating complaints, evaluation and audit) |
 | **OWASP Top 10 for LLM Applications** (OWASP) — أهم عشرة مخاطر لتطبيقات النماذج اللغوية الكبيرة | قائمة مجتمعية (community list) بالمخاطر الأمنية الرئيسية لتطبيقات النماذج اللغوية الكبيرة (LLM applications)، بما فيها حقن الموجّهات (prompt injection) والصلاحيات المفرطة (excessive agency) | مراجعة مخاطر (risk review) أي وكيل يقرأ محتوى خارجيًا (external content) أو يستدعي أدوات |
-| **Model Context Protocol** (Anthropic, 2024) — بروتوكول سياق النموذج | معيار مفتوح (open standard) لربط النماذج بالأدوات ومصادر البيانات | المحادثات مع فريق الهندسة حول كيفية وصول الوكيل إلى الأنظمة (how the agent reaches systems) |
+| **Model Context Protocol (MCP)** (Anthropic, 2024) — بروتوكول سياق النموذج | معيار مفتوح (open standard) لربط النماذج بالأدوات ومصادر البيانات | المحادثات مع فريق الهندسة حول كيفية وصول الوكيل إلى الأنظمة (how the agent reaches systems) |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
 يُعدّ فيصل وحصة **كتالوج إجراءات نجم أسيست الإصدار 2 (Najm Assist v2 Action Catalogue)**، ويراجعه طارق وليلى ورئيس مركز الاتصال (head of the contact centre).

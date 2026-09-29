@@ -540,7 +540,7 @@ This is the core of Eric Ries's **Lean Startup** (2011) loop, **build–measure�
 | **Simplest-alternative check** | Compare every AI idea with rules, search, templates, UX, simple models and process changes | Before any AI idea enters the scorecard |
 | **Is-AI-needed decision tree** | Rules? Data? Can errors be caught? Value above cost? | To triage incoming ideas quickly and consistently |
 | **Kill criteria** | Metric, threshold and date, agreed before work starts, that trigger a stop or pivot | For every spike, pilot and funding approval |
-| **Build–measure–learn** (Eric Ries, *The Lean Startup*, 2011) | Build the smallest test of the riskiest assumption, measure, then persevere, pivot or stop | To structure early AI experiments |
+| **Build-measure-learn** (Eric Ries, *The Lean Startup*, 2011) | Build the smallest test of the riskiest assumption, measure, then persevere, pivot or stop | To structure early AI experiments |
 | **Wizard of Oz** | A human secretly produces the AI output to test real use before building | When the main doubt is whether people will use or trust the output |
 | **Pre-mortem** (Gary Klein) | The team imagines failure in advance and lists the causes | At kick-off of any sizeable AI initiative |
 | **Decision record** | Short record of a continue, pivot or stop decision, the evidence and the reopening condition | Every time an idea is stopped or changed |

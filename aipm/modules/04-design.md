@@ -592,7 +592,7 @@ For the technical controls, see *Production AI Agents*; for the governance view,
 | **Scope statement** | Short in-product description of what the assistant does and does not do, with examples | Launch of any conversational product |
 | **Agent trace** | A log of every step, tool call, input and result, linked to the conversation | Investigating complaints, evaluation and audit |
 | **OWASP Top 10 for LLM Applications** (OWASP) | Community list of the main security risks for LLM applications, including prompt injection and excessive agency | Risk review of any agent that reads external content or calls tools |
-| **Model Context Protocol** (Anthropic, 2024) | Open standard for connecting models to tools and data sources | Conversations with engineering about how the agent reaches systems |
+| **Model Context Protocol (MCP)** (Anthropic, 2024) | Open standard for connecting models to tools and data sources | Conversations with engineering about how the agent reaches systems |
 
 ## 🏛️ In practice at Najm Bank
 Faisal and Hessa produce the **Najm Assist v2 Action Catalogue**, reviewed by Tariq, Layla and the head of the contact centre.

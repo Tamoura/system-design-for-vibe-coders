@@ -119,7 +119,7 @@ Two stages matter far more for AI. **Evaluate** stands alone because "it runs wi
 | **Four big risks** (Marty Cagan, *Inspired*) | Value, usability, feasibility and business viability: the four ways a product fails | At the start of any AI idea, to see which risk is biggest and test it first |
 | **Jobs to be Done** (Clayton Christensen; Anthony Ulwick's Outcome-Driven Innovation) | Frames demand as the progress a person is trying to make in a situation | When a request arrives as a technology ("add a chatbot") and you need the underlying job |
 | **Double Diamond** (UK Design Council, 2005) | Diverge then converge twice: on the problem, then on the solution | To stop the team jumping to a solution before the problem is clear |
-| **Lean Startup build-measure-learn** (Eric Ries, 2011) | Small experiments, measured, to learn fast before scaling | When feasibility or value is uncertain, which with AI is usually |
+| **Build-measure-learn** (Eric Ries, 2011) | Small experiments, measured, to learn fast before scaling | When feasibility or value is uncertain, which with AI is usually |
 | **Product lifecycle stages** (this course) | Discover, Define, Design, Build, Evaluate, Launch, Grow, Lead, with a core question and artefact per stage | To locate where a product is and what decision is due next |
 
 ## 🏛️ In practice at Najm Bank
