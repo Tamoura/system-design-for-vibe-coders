@@ -1425,7 +1425,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**B.** Good programme metrics show outcomes and trends the board can act on: how fast serious risk is removed, how much of the estate is covered by key controls (for example phishing-resistant MFA, threat models for critical apps, SBOMs), and how quickly incidents are detected and contained, a mix of leading and lagging indicators. Raw counts mislead: vulnerabilities found rises when you look harder, so nobody can say whether a change is good or bad. D is tempting because the numbers are large and easy to collect, but "attacks blocked" mostly measures internet background noise, not whether Najm is getting safer. A and C measure activity and inputs, not results. *(Govern · 11.3)*
+**B.** Good programme metrics show outcomes and trends the board can act on: how fast serious risk is removed (reported next to what is still open and overdue), how much of the estate is covered by key controls (for example phishing-resistant MFA, threat models for critical apps, SBOMs), and how quickly incidents are detected and contained. Together they mix leading and lagging indicators. Raw counts mislead: vulnerabilities found rises when you look harder, so nobody can say whether a change is good or bad. D is tempting because the numbers are large and easy to collect, but "attacks blocked" mostly measures internet background noise, not whether Najm is getting safer. A and C measure activity and inputs, not results. *(Govern · 11.3)*
 
 </details>
 
