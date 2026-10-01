@@ -715,6 +715,15 @@ if (failed.length) {
 }
 const fill = (html) => html.replace(/<!--DIAGRAM:(\d+)-->/g, (_, i) => svgs[+i]);
 
+// Arabic pages: isolate every parenthesised English gloss so the bidi algorithm keeps its words,
+// digits and hyphens in order inside right-to-left text — «(60-question exam)» would otherwise
+// show as «(question exam-60)», and «(Non-repudiation)» broken across lines as «(-Non».
+// Runs before diagrams are filled in, and never inside script, style, code, pre or title.
+const GLOSS = /⁦?\((?=[^\s()؀-ۿ<>])[^()؀-ۿ<>\n]*\)⁩?/g;
+const isolateGlosses = (html) => html.replace(
+  /<(script|style|pre|code|title|textarea)\b[\s\S]*?<\/\1>|<[^>]*>|[^<]+/gi,
+  (m, protectedTag) => (protectedTag || m[0] === '<' ? m : m.replace(GLOSS, '<bdi>$&</bdi>')));
+
 for (const b of built) {
   const o = OUT(b.lang);
   for (const l of b.ALL_LESSONS) {
@@ -722,8 +731,9 @@ for (const b of built) {
       if (!b.ALL_LESSONS.length || !new RegExp(`^## ${emoji}`, 'm').test(l.body)) console.warn(`! [${b.lang}] ${l.num} has no ${name} section`);
     }
   }
-  fs.writeFileSync(o.html, b.page(fill));
-  fs.writeFileSync(o.course, b.flatPage(fill));
+  const bidi = (html) => fill(b.lang === 'ar' ? isolateGlosses(html) : html);
+  fs.writeFileSync(o.html, bidi(b.page((h) => h)));
+  fs.writeFileSync(o.course, bidi(b.flatPage((h) => h)));
   fs.writeFileSync(o.courseMd, b.courseMarkdown());
   fs.writeFileSync(o.repos, b.reposMarkdown());
   console.log(`✓ [${b.lang}] ${b.MODULES.length} modules, ${b.ALL_LESSONS.length} lessons, ${b.REPO_INDEX.size} tools → ${Object.values(o).map((f) => path.relative(ROOT, f)).join(', ')}`);
