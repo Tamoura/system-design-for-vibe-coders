@@ -1,0 +1,135 @@
+{
+ "area": "m4",
+ "questions": [
+  {
+   "id": "m4-1",
+   "level": 1,
+   "lesson": "4.1",
+   "q": {
+    "en": "Khalid argues that Najm already processes customers' card transactions under their account contract, so the same lawful basis covers training a new fraud-detection model on five years of that data. What should Sara tell him?",
+    "ar": "يرى خالد أن بنك نجم (Najm Bank) يعالج (processes) أصلًا معاملات بطاقات العملاء (card transactions) بموجب عقد الحساب (account contract)، ولذلك يغطي الأساس القانوني (lawful basis) نفسه تدريب (training) نموذج جديد لاكتشاف الاحتيال (fraud-detection model) على خمس سنوات من هذه البيانات (data). بماذا ينبغي أن تجيبه سارة؟"
+   },
+   "o": {
+    "en": [
+     "The account contract covers it, since the data comes from the same customer relationship",
+     "Training is a separate purpose; it needs its own basis, such as legitimate interests",
+     "Only fresh consent from every cardholder can make training on their transactions lawful",
+     "No basis is needed for training once all identifiers are pseudonymised before the run"
+    ],
+    "ar": [
+     "عقد الحساب (account contract) يغطيه، لأن البيانات (data) تأتي من علاقة العميل (customer relationship) نفسها",
+     "التدريب (training) غرض منفصل (separate purpose)؛ فيحتاج إلى أساس خاص به (its own basis)، مثل المصالح المشروعة (legitimate interests)",
+     "لا يجعل التدريب (training) على معاملاتهم (transactions) مشروعًا (lawful) إلا موافقة جديدة (fresh consent) من كل حامل بطاقة (cardholder)",
+     "لا يلزم أي أساس قانوني (lawful basis) للتدريب (training) متى رُمّزت المعرّفات (identifiers) كلها ترميزًا مستعارًا (pseudonymised) قبل التشغيل (run)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Running the account and training a model are separate purposes, and each needs its own Art. 6 basis; contract covers only what is objectively necessary to deliver the service, so legitimate interests, with a documented three-step test, is the usual candidate. Fresh consent is tempting but fragile in a bank-customer relationship, and it is not the only route.",
+    "ar": "تشغيل الحساب (running the account) وتدريب النموذج (training a model) غرضان منفصلان (separate purposes)، ولكل منهما أساسه القانوني (lawful basis) بموجب المادة 6 (Art. 6)؛ ولا يغطي العقد (contract) إلا ما هو ضروري موضوعيًا (objectively necessary) لتقديم الخدمة (deliver the service)، لذلك تكون المصالح المشروعة (legitimate interests)، مع اختبار موثّق ذي خطوات ثلاث (documented three-step test)، هي المرشح المعتاد (usual candidate). أما الموافقة الجديدة (fresh consent) فمغرية، لكنها هشّة (fragile) في علاقة البنك بعميله (bank-customer relationship)، وليست المسار الوحيد (only route)."
+   }
+  },
+  {
+   "id": "m4-2",
+   "level": 2,
+   "lesson": "4.2",
+   "q": {
+    "en": "A Frankfurt customer moving to a rival bank invokes her right to data portability and asks Najm to send her internal credit score and risk label to the rival in a machine-readable file. How should Sara's team respond?",
+    "ar": "عميلة في فرانكفورت (Frankfurt customer) تنتقل إلى بنك منافس (rival bank)، تستند إلى حقها في قابلية نقل البيانات (right to data portability)، وتطلب من بنك نجم (Najm Bank) أن يرسل درجتها الائتمانية الداخلية (internal credit score) وتصنيف المخاطر (risk label) الخاص بها إلى البنك المنافس في ملف قابل للقراءة آليًا (machine-readable file). كيف ينبغي أن يردّ فريق سارة (Sara's team)؟"
+   },
+   "o": {
+    "en": [
+     "Port the score and label, because portability covers all personal data Najm holds on her",
+     "Refuse to disclose the score in any form, because Najm's model is a protected trade secret",
+     "Port nothing, because portability does not extend to data held in an AI scoring system",
+     "Port only what she provided, because score and label are inferences covered by access"
+    ],
+    "ar": [
+     "تنقل الدرجة (score) والتصنيف (label)، لأن قابلية النقل (portability) تشمل كل البيانات الشخصية (personal data) التي يحتفظ بها نجم عنها",
+     "ترفض الإفصاح (disclosure) عن الدرجة (score) بأي شكل، لأن نموذج (model) نجم سر تجاري محمي (protected trade secret)",
+     "لا تنقل شيئًا (port nothing)، لأن قابلية النقل (portability) لا تمتد إلى البيانات المحفوظة (data held) في نظام تقييم بالذكاء الاصطناعي (AI scoring system)",
+     "تنقل ما قدّمته فقط (only what she provided)، لأن الدرجة والتصنيف (score and label) استنتاجات (inferences) يشملها حق الوصول (covered by access)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Portability covers only data the person provided, where processing rests on consent or contract, while scores and other inferences fall under the right of access. Porting everything is the tempting over-reading, and refusing the score outright is wrong too, since trade secrets limit disclosure but cannot justify refusing all information.",
+    "ar": "لا تشمل قابلية النقل (portability) إلا البيانات التي قدّمها الشخص (data the person provided)، حين تستند المعالجة (processing) إلى الموافقة (consent) أو العقد (contract)، أما الدرجات والاستنتاجات الأخرى (scores and other inferences) فتدخل ضمن حق الوصول (right of access). ونقل كل شيء هو القراءة الموسّعة المغرية (tempting over-reading)، ورفض الإفصاح عن الدرجة (score) كليًا خطأ أيضًا، لأن الأسرار التجارية (trade secrets) تحدّ من الإفصاح (disclosure) لكنها لا تبرر رفض تقديم أي معلومات (refusing all information)."
+   }
+  },
+  {
+   "id": "m4-3",
+   "level": 2,
+   "lesson": "4.3",
+   "q": {
+    "en": "Najm plans one fraud model trained on transaction data from Qatar, the UAE and Germany, and Dana proposes federated learning so that raw data stays in each country. How should the DPIA treat this design choice?",
+    "ar": "يعتزم بنك نجم (Najm Bank) تدريب نموذج احتيال واحد (one fraud model) على بيانات معاملات (transaction data) من قطر والإمارات وألمانيا، وتقترح دانة التعلم الموحّد (federated learning) كي تبقى البيانات الخام (raw data) في كل بلد. كيف ينبغي أن يتعامل تقييم الأثر على حماية البيانات (DPIA) مع خيار التصميم (design choice) هذا؟"
+   },
+   "o": {
+    "en": [
+     "Record it as a measure for named risks, since model updates can still leak",
+     "Drop the transfer and privacy risks, since no raw data ever leaves any country",
+     "Treat the training data as anonymous, since only model updates are shared",
+     "Leave it to the AI impact assessment, as the DPIA covers data, not model design"
+    ],
+    "ar": [
+     "تسجيله تدبيرًا (measure) لمواجهة مخاطر مسمّاة (named risks)، لأن تحديثات النموذج (model updates) يمكن أن تُسرّب مع ذلك (can still leak)",
+     "حذف مخاطر النقل والخصوصية (drop the transfer and privacy risks)، لأن البيانات الخام (raw data) لا تغادر أي بلد أبدًا (never leaves any country)",
+     "معاملة بيانات التدريب (training data) على أنها مجهولة الهوية (anonymous)، لأن ما يُتبادل هو تحديثات النموذج (model updates) فقط",
+     "تركه لتقييم أثر الذكاء الاصطناعي (AI impact assessment)، لأن تقييم الأثر على حماية البيانات (DPIA) يغطي البيانات (covers data) لا تصميم النموذج (model design)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "In a DPIA a PET is a measure that reduces a named risk and must come with evidence that it works and its limits; federated learning's model updates can still leak and need secure aggregation. Dropping the risks is the tempting move, but it treats a mitigation as an exemption.",
+    "ar": "في تقييم الأثر على حماية البيانات (DPIA)، تقنية تعزيز الخصوصية (PET) تدبير (measure) يقلل خطرًا مسمّى (named risk)، ويجب أن تُرفق بدليل على أنها تعمل (evidence that it works) وبحدودها (its limits)؛ فتحديثات النموذج (model updates) في التعلم الموحّد (federated learning) يمكن أن تُسرّب مع ذلك (can still leak)، وتحتاج إلى تجميع آمن (secure aggregation). أما حذف المخاطر (dropping the risks) فهو الخطوة المغرية، لكنه يعامل تدبير التخفيف (mitigation) كأنه إعفاء (exemption)."
+   }
+  },
+  {
+   "id": "m4-4",
+   "level": 3,
+   "lesson": "4.2",
+   "q": {
+    "en": "Najm's vendor CV-screening tool ranks applicants and hides the bottom 60% from recruiters, who interview only from the top 40%. Yusuf says Art. 22 cannot apply because recruiters make every hiring decision. What is the soundest diagnosis?",
+    "ar": "ترتّب أداة فرز السير الذاتية (CV-screening tool) التي اشتراها بنك نجم (Najm Bank) من مورد (vendor) المتقدمين (applicants)، وتُخفي أدنى 60% منهم عن مسؤولي التوظيف (recruiters)، الذين لا يجرون المقابلات (interview) إلا مع أعلى 40% (top 40%). ويقول يوسف إن المادة 22 (Art. 22) لا يمكن أن تنطبق لأن مسؤولي التوظيف يتخذون كل قرارات التوظيف (hiring decisions). ما التشخيص الأسلم (soundest diagnosis)؟"
+   },
+   "o": {
+    "en": [
+     "Art. 22 cannot apply, because a recruiter makes the final decision on every hire",
+     "Art. 22 cannot apply, because ranking applicants is profiling, not itself a decision",
+     "Art. 22 applies to the hidden 60%, because no human ever reviews their rejection",
+     "Art. 22 is the vendor's concern, since it supplies the model and Najm only deploys it"
+    ],
+    "ar": [
+     "لا يمكن أن تنطبق المادة 22 (Art. 22)، لأن مسؤول التوظيف (recruiter) يتخذ القرار النهائي (final decision) في كل تعيين (hire)",
+     "لا يمكن أن تنطبق المادة 22 (Art. 22)، لأن ترتيب المتقدمين (ranking applicants) تنميط (profiling) وليس قرارًا (decision) بحد ذاته",
+     "تنطبق المادة 22 (Art. 22) على الـ60% المخفيين (hidden 60%)، لأن رفضهم (their rejection) لا يراجعه أي إنسان أبدًا (no human ever reviews)",
+     "المادة 22 (Art. 22) شأن المورد (vendor)، لأنه يوفّر النموذج (model) وبنك نجم مجرد مُشغِّل (deployer)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Applicants the tool hides are effectively rejected without any human looking at them, which is the e-recruiting example of a solely automated decision with a similarly significant effect; Najm, as controller, needs an Art. 22(2) exception with safeguards, or meaningful review. Recruiters deciding on the top 40% does nothing for the people they never see.",
+    "ar": "المتقدمون (applicants) الذين تخفيهم الأداة يُرفضون فعليًا (effectively rejected) دون أن ينظر فيهم أي إنسان (any human)، وهذا هو مثال قرار التوظيف الإلكتروني (e-recruiting decision) الآلي بالكامل (solely automated) ذي الأثر الكبير المماثل (similarly significant effect)؛ ويحتاج بنك نجم، بصفته المتحكّم (controller)، إلى استثناء (exception) بموجب المادة 22(2) (Art. 22(2)) مع ضمانات (safeguards)، أو إلى مراجعة بشرية ذات معنى (meaningful review). أما أن يقرر مسؤولو التوظيف (recruiters) بشأن أعلى 40% (top 40%) فلا يفيد من لا يرونهم أصلًا."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m4-e1",
+   "lesson": "4.1",
+   "text": {
+    "en": "I have drafted a legitimate interests assessment for training a model on customer data, reaching a conclusion on each of the purpose, necessity and balancing tests and naming at least two safeguards",
+    "ar": "صغتُ تقييمًا للمصالح المشروعة (legitimate interests assessment) لتدريب نموذج (training a model) على بيانات العملاء (customer data)، وانتهيتُ إلى استنتاج (conclusion) في كل من اختبار الغرض (purpose test) واختبار الضرورة (necessity test) واختبار الموازنة (balancing test)، وسمّيتُ ضمانين (safeguards) على الأقل"
+   }
+  },
+  {
+   "id": "m4-e2",
+   "lesson": "4.3",
+   "text": {
+    "en": "I have screened an organisation's AI systems for DPIA need, giving each a \"required\", \"likely\" or \"not required\" verdict with the criteria it meets",
+    "ar": "فحصتُ أنظمة الذكاء الاصطناعي (AI systems) في مؤسسة ما لتحديد حاجتها إلى تقييم الأثر على حماية البيانات (DPIA)، وأعطيتُ كلًّا منها حكمًا (verdict): \"مطلوب\" (required) أو \"مرجّح\" (likely) أو \"غير مطلوب\" (not required)، مع المعايير (criteria) التي يستوفيها"
+   }
+  }
+ ]
+}

@@ -1,0 +1,135 @@
+{
+  "area": "m12",
+  "questions": [
+    {
+      "id": "m12-1",
+      "level": 1,
+      "lesson": "12.2",
+      "q": {
+        "en": "Layla tells Najm's AIGP candidates that the wrong options in a well-built exam question are designed, not random. What does a typical distractor look like?",
+        "ar": "تقول ليلى لمرشّحي AIGP (AIGP candidates) في بنك نجم (Najm Bank) إن الخيارات الخاطئة (wrong options) في سؤال الامتحان المُحكَم (well-built exam question) مصمَّمة (designed) لا عشوائية (random). كيف يبدو الخيار المضلِّل النموذجي (typical distractor)؟"
+      },
+      "o": {
+        "en": [
+          "A plainly false statement, put there so careful readers can delete it in seconds",
+          "A true statement that is not the answer, such as a real duty of a different role",
+          "A statement with an absolute such as \"always\", which makes it false in every case",
+          "A near-copy of the key with one word changed, so that only memorisers can spot it"
+        ],
+        "ar": [
+          "عبارة خاطئة بوضوح (plainly false statement)، وُضعت كي يحذفها القارئ المتأني (careful reader) في ثوانٍ (in seconds)",
+          "عبارة صحيحة (true statement) لكنها ليست الإجابة (not the answer)، كواجب حقيقي (real duty) يخص دورًا آخر (different role)",
+          "عبارة فيها لفظ مطلق (absolute) مثل \"دائمًا (always)\"، ما يجعلها خاطئة في كل الحالات (in every case)",
+          "نسخة شبه مطابقة للمفتاح (near-copy of the key) مع تغيير كلمة واحدة (one word changed)، لا يكشفها إلا الحُفّاظ (memorisers)"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Distractors are usually true but not the answer: a real duty of the wrong role, a sensible step at the wrong stage, a correct rule from the wrong law, or a good idea that is not the best. Absolutes are usually wrong but not always, since \"prohibited practices are banned\" is absolute and true.",
+        "ar": "الخيارات المضلِّلة (distractors) عادةً صحيحة لكنها ليست الإجابة (true but not the answer): واجب حقيقي يخص الدور الخطأ (wrong role)، أو خطوة معقولة في المرحلة الخطأ (wrong stage)، أو قاعدة صحيحة من القانون الخطأ (wrong law)، أو فكرة جيدة ليست الأفضل (not the best). والمطلقات (absolutes) خاطئة عادةً لا دائمًا، فعبارة \"الممارسات المحظورة ممنوعة (prohibited practices are banned)\" مطلقة (absolute) وصحيحة (true)."
+      }
+    },
+    {
+      "id": "m12-2",
+      "level": 2,
+      "lesson": "12.1",
+      "q": {
+        "en": "In testing, an RM in Doha asks the credit memo copilot for a memo on one of her own customers. The draft cites a bank statement from another customer's file that she is not entitled to see, even though the interface would never show her that file. Where should Dana's team put the fix?",
+        "ar": "أثناء الاختبار (in testing)، تطلب مديرة علاقة (RM) في الدوحة من المساعد الذكي لمذكرات الائتمان (credit memo copilot) مذكرةً (memo) عن أحد عملائها. فتستشهد المسودة (draft) بكشف حساب مصرفي (bank statement) من ملف عميل آخر (another customer's file) لا يحق لها الاطلاع عليه (not entitled to see)، مع أن الواجهة (interface) لن تعرض لها ذلك الملف أبدًا. أين ينبغي أن يضع فريق دانة (Dana's team) الإصلاح (fix)؟"
+      },
+      "o": {
+        "en": [
+          "In the retriever: fetch only documents this RM may see, for this customer",
+          "In the interface: hide any citation that points outside the RM's portfolio",
+          "In the prompt: instruct the model never to cite other customers' documents",
+          "In the output: redact names and account numbers before the memo is shown"
+        ],
+        "ar": [
+          "في المسترجِع (retriever): اجلب فقط المستندات التي يحق لمديرة العلاقة (RM) هذه رؤيتها، لهذا العميل (this customer)",
+          "في الواجهة (interface): أخفِ أي إحالة (citation) تشير إلى ما هو خارج محفظة (portfolio) مديرة العلاقة (RM)",
+          "في التعليمات (prompt): وجّه النموذج (model) ألا يستشهد أبدًا بمستندات العملاء الآخرين (other customers' documents)",
+          "في المخرجات (output): احجب الأسماء وأرقام الحسابات (account numbers) قبل أن تُعرض المذكرة (memo)"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Access control has to be enforced at retrieval time, not only in the interface, because once the wrong document reaches the model it can leak in any wording. Hiding citations or instructing the model are tempting shortcuts, but neither is an access control: the document has already been fetched.",
+        "ar": "يجب فرض ضبط الوصول (access control) عند الاسترجاع (at retrieval time)، لا في الواجهة (interface) فقط، لأن المستند الخطأ (wrong document) متى وصل إلى النموذج (model) أمكن أن يتسرب (leak) بأي صياغة (any wording). وإخفاء الإحالات (hiding citations) أو توجيه النموذج (instructing the model) اختصاران مغريان (tempting shortcuts)، لكن لا يُعدّ أيٌّ منهما ضبطًا للوصول (access control): فالمستند قد جُلب بالفعل (already fetched)."
+      }
+    },
+    {
+      "id": "m12-3",
+      "level": 2,
+      "lesson": "12.3",
+      "q": {
+        "en": "Yusuf sits the 12.3 mock exam in one timed sitting and scores 74. Marking his sheet, he notices that eleven of his correct answers were guesses. What should he do next?",
+        "ar": "يخوض يوسف الامتحان التجريبي (mock exam) في الدرس 12.3 في جلسة واحدة محدّدة الوقت (one timed sitting)، ويحصل على 74. وأثناء تصحيح ورقته (marking his sheet)، يلاحظ أن إحدى عشرة من إجاباته الصحيحة (correct answers) كانت تخمينًا (guesses). ماذا ينبغي أن يفعل بعد ذلك (next)؟"
+      },
+      "o": {
+        "en": [
+          "Book the real exam now, since 74 is above the 70% IAPP requires for a pass",
+          "Review only his 26 wrong answers, since the correct ones are already banked",
+          "Tag his wrong answers by competency and trap, and re-study his guesses too",
+          "Re-sit the same mock tomorrow, and repeat it until he scores 85 or higher"
+        ],
+        "ar": [
+          "يحجز موعد الامتحان الحقيقي (real exam) الآن، لأن 74 تتجاوز نسبة 70% التي تشترطها IAPP للنجاح (pass)",
+          "يراجع إجاباته الخاطئة (wrong answers) الست والعشرين فقط، لأن الصحيحة منها مضمونة (already banked)",
+          "يصنّف إجاباته الخاطئة (wrong answers) حسب الكفاءة (competency) والفخ (trap)، ويعيد دراسة تخميناته (guesses) أيضًا",
+          "يعيد الامتحان التجريبي (mock exam) نفسه غدًا (tomorrow)، ويكرّره (repeats it) حتى يحصل على 85 أو أكثر"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "A score of 70-84 is \"close to ready\" by the course's rule of thumb, so he should tag wrong answers by competency and trap, revisit those lessons and re-read the explanation for every guess, because a lucky guess is a gap not yet found. Booking now mistakes the course's 70% guide for IAPP's pass mark: the real exam uses a scaled score of 100-500 with 300 to pass.",
+        "ar": "الدرجة بين 70 و84 تعني \"قريب من الجاهزية (close to ready)\" وفق القاعدة الإرشادية للدورة (course's rule of thumb)، لذا يصنّف إجاباته الخاطئة (wrong answers) حسب الكفاءة (competency) والفخ (trap)، ويراجع الدروس المعنية (relevant lessons)، ويعيد قراءة التفسير (explanation) لكل سؤال خمّنه، لأن التخمين المحظوظ (lucky guess) ثغرة لم تُكتشف بعد. أما الحجز الآن فيخلط بين دليل الدورة البالغ 70% (course's 70% guide) وحدّ النجاح لدى IAPP (IAPP's pass mark): فالامتحان الحقيقي (real exam) يستخدم درجة مُقيَّسة (scaled score) من 100 إلى 500، والنجاح (pass) عند 300."
+      }
+    },
+    {
+      "id": "m12-4",
+      "level": 3,
+      "lesson": "12.1",
+      "q": {
+        "en": "To go live faster in Frankfurt, Dana proposes releasing an SME-only version of the credit memo copilot first. Her argument: companies are legal persons, so this version falls outside Annex III and needs none of the high-risk work. Many SME files include sole traders and personal guarantors. What should Layla conclude?",
+        "ar": "لتسريع الإطلاق (go live faster) في فرانكفورت، تقترح دانة إطلاق نسخة خاصة بالمنشآت الصغيرة والمتوسطة (SME-only version) من المساعد الذكي لمذكرات الائتمان (credit memo copilot) أولًا. وحجّتها (her argument): الشركات أشخاص اعتباريون (legal persons)، لذا تقع هذه النسخة خارج الملحق III (Annex III) ولا تحتاج إلى أيٍّ من أعمال الأنظمة عالية المخاطر (high-risk work). وكثير من ملفات المنشآت الصغيرة والمتوسطة (SME files) يشمل تجارًا أفرادًا (sole traders) وكفلاء شخصيين (personal guarantors). ما الذي ينبغي أن تخلص إليه (conclude) ليلى؟"
+      },
+      "o": {
+        "en": [
+          "Agree: credit scoring of companies sits outside the Annex III creditworthiness entry",
+          "Agree, provided the SME version documents an Art. 6(3) preparatory-task assessment",
+          "Disagree: every lending model is high-risk under Annex III, whoever the borrower is",
+          "Disagree: it profiles natural persons too, so treat it as high-risk and record why"
+        ],
+        "ar": [
+          "توافق (agree): فتقييم الجدارة الائتمانية للشركات (credit scoring of companies) خارج بند الجدارة الائتمانية (creditworthiness entry) في الملحق III (Annex III)",
+          "توافق (agree)، بشرط أن توثّق نسخة المنشآت الصغيرة والمتوسطة (SME version) تقييمًا بموجب المادة 6(3) (Art. 6(3)) بوصفها مهمة تحضيرية (preparatory task)",
+          "لا توافق (disagree): فكل نموذج إقراض (lending model) عالي المخاطر (high-risk) بموجب الملحق III (Annex III)، أيًّا كان المقترض (borrower)",
+          "لا توافق (disagree): فهو ينمّط (profiles) أشخاصًا طبيعيين (natural persons) أيضًا، فيُعامَل عالي المخاطر (high-risk) ويُوثَّق السبب (record why)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "The copilot cannot tell sole traders and guarantors, who are natural persons, from corporate borrowers, and summarising their finances is profiling, so Layla should take the more protective reading, one high-risk system, and document why. The Art. 6(3) route is tempting but closed, because an Annex III system that profiles natural persons is always high-risk.",
+        "ar": "لا يستطيع المساعد (copilot) التمييز بين التجار الأفراد (sole traders) والكفلاء (guarantors)، وهم أشخاص طبيعيون (natural persons)، وبين المقترضين من الشركات (corporate borrowers)، وتلخيص أوضاعهم المالية (their finances) تنميط (profiling)؛ لذا تختار ليلى القراءة الأكثر حماية (more protective reading)، أي نظامًا واحدًا عالي المخاطر (one high-risk system)، وتوثّق السبب (document why). ومسار المادة 6(3) (Art. 6(3) route) مغرٍ لكنه مغلق، لأن نظام الملحق III (Annex III system) الذي ينمّط أشخاصًا طبيعيين عالي المخاطر دائمًا (always high-risk)."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m12-e1",
+      "lesson": "12.1",
+      "text": {
+        "en": "I have drafted a DPIA and FRIA table of at least eight risks and a vendor contract schedule of at least ten clauses, in which every high residual risk traces to an owner who accepted it and every clause traces to a risk",
+        "ar": "صغتُ جدولًا لتقييمَي DPIA وFRIA (DPIA and FRIA table) يضم ثماني مخاطر (risks) على الأقل، وملحقًا لعقد المورّد (vendor contract schedule) من عشرة بنود (clauses) على الأقل، بحيث تُتتبَّع كل مخاطرة متبقية عالية (high residual risk) إلى مسؤول (owner) قَبِلها، وكل بند تعاقدي (contract clause) إلى مخاطرة (risk)"
+      }
+    },
+    {
+      "id": "m12-e2",
+      "lesson": "12.3",
+      "text": {
+        "en": "I have sat the full 100-question mock exam in one timed sitting of 2 hours 45 minutes, scored it, and reviewed every wrong answer and every lucky guess",
+        "ar": "خضتُ الامتحان التجريبي الكامل (full mock exam) من 100 سؤال في جلسة واحدة محدّدة الوقت (one timed sitting) مدتها ساعتان و45 دقيقة، وصحّحته (scored it)، وراجعتُ كل إجابة خاطئة (wrong answer) وكل تخمين محظوظ (lucky guess)"
+      }
+    }
+  ]
+}

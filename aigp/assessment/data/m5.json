@@ -1,0 +1,135 @@
+{
+ "area": "m5",
+ "questions": [
+  {
+   "id": "m5-1",
+   "level": 1,
+   "lesson": "5.1",
+   "q": {
+    "en": "To cut discrimination risk, Yusuf asks the vendor that supplies Najm's CV-screening tool to delete sex, age and nationality from every dataset the tool touches, including the data Najm uses for testing. Why does this not settle the legal risk?",
+    "ar": "للحدّ من مخاطر التمييز (discrimination risk)، يطلب يوسف من المورّد (vendor) الذي يقدّم أداة فرز السير الذاتية (CV-screening tool) لبنك نجم (Najm Bank) أن يحذف الجنس والعمر والجنسية (sex, age and nationality) من كل مجموعة بيانات (dataset) تتعامل معها الأداة، بما فيها البيانات التي يستخدمها البنك للاختبار (testing). لماذا لا يحسم ذلك المخاطر القانونية (legal risk)؟"
+   },
+   "o": {
+    "en": [
+     "Only direct discrimination is unlawful, so any remaining risk is reputational",
+     "The deletion is sound, but the tool must still pass the four-fifths legal test",
+     "Proxies such as career gaps can still discriminate, and Najm can't measure it",
+     "Any bias left after the deletion becomes the vendor's liability, not Najm's"
+    ],
+    "ar": [
+     "التمييز المباشر (direct discrimination) وحده غير مشروع، فما يتبقى هو مخاطر السمعة (reputational risk) فقط",
+     "الحذف (deletion) سليم، لكن الأداة يجب أن تجتاز مع ذلك اختبار الأربعة أخماس القانوني (four-fifths legal test)",
+     "يمكن للمتغيرات البديلة (proxies) كالفجوات المهنية (career gaps) أن تظل تميّز (still discriminate)، ولا يستطيع بنك نجم قياس ذلك (measure it)",
+     "أي تحيّز (bias) يتبقى بعد الحذف (deletion) يصبح مسؤولية المورّد (vendor's liability) لا مسؤولية بنك نجم"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Proxies such as career gaps or postcode can still produce indirect discrimination, and deleting the attributes from testing data stops Najm measuring the disparity, which is why mature programmes keep them in a separate store used only for testing. Indirect discrimination is unlawful unless justified, so the risk is legal, not merely reputational.",
+    "ar": "يمكن للمتغيرات البديلة (proxies) مثل الفجوات المهنية (career gaps) أو الرمز البريدي (postcode) أن تُنتج تمييزًا غير مباشر (indirect discrimination)، وحذفُ الخصائص المحمية (protected attributes) من بيانات الاختبار (testing data) يمنع البنك من قياس التفاوت (disparity)، ولذلك تحتفظ البرامج الناضجة (mature programmes) بها في مخزن منفصل (separate store) لا يُستخدم إلا للاختبار (testing). والتمييز غير المباشر (indirect discrimination) غير مشروع ما لم يُبرَّر (justified)، فالمخاطر قانونية (legal) لا مجرد مخاطر سمعة (reputational risk)."
+   }
+  },
+  {
+   "id": "m5-2",
+   "level": 2,
+   "lesson": "5.2",
+   "q": {
+    "en": "A Najm designer generates a dozen images with an AI tool, picks four, arranges them around text she wrote herself and repaints parts of each by hand for a printed brochure. Under the US Copyright Office's approach, what can Najm most likely protect?",
+    "ar": "تولّد مصمّمة (designer) في بنك نجم (Najm Bank) اثنتي عشرة صورة بأداة ذكاء اصطناعي (AI tool)، ثم تختار أربعًا منها، وترتّبها حول نص كتبته بنفسها (text she wrote herself)، وتعيد رسم أجزاء من كل صورة يدويًا (by hand) لكتيّب مطبوع (printed brochure). وفقًا لنهج مكتب حق المؤلف الأمريكي (US Copyright Office's approach)، ما الذي يُرجَّح أن يستطيع بنك نجم حمايته (protect)؟"
+   },
+   "o": {
+    "en": [
+     "Her text, selection, arrangement and hand edits, because they are human work",
+     "All four images in full, because staff wrote detailed prompts to produce them",
+     "Nothing in the brochure, because any AI involvement removes copyright entirely",
+     "Everything, because the AI tool's terms of service assign the output to Najm"
+    ],
+    "ar": [
+     "نصّها واختيارها وترتيبها وتعديلاتها اليدوية (text, selection, arrangement and hand edits)، لأنها عمل بشري (human work)",
+     "الصور الأربع كاملةً (in full)، لأن الموظفين كتبوا أوامر نصية مفصّلة (detailed prompts) لإنتاجها",
+     "لا شيء في الكتيّب (brochure)، لأن أي تدخّل للذكاء الاصطناعي (AI involvement) يُسقط حق المؤلف (copyright) كليًا",
+     "كل شيء، لأن شروط الخدمة (terms of service) الخاصة بأداة الذكاء الاصطناعي (AI tool) تُسند المخرجات (output) إلى بنك نجم"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "The Office protects only human authorship, so the human text, selection, arrangement and modifications can be protected while unedited AI-generated material cannot, as in the Zarya of the Dawn decision. Prompts alone are generally not enough, and a contract can allocate rights between the parties but cannot create copyright that does not exist.",
+    "ar": "لا يحمي المكتب (Office) إلا التأليف البشري (human authorship)، لذا يمكن حماية النص البشري والاختيار والترتيب والتعديلات (selection, arrangement and modifications)، بينما لا تُحمى المادة المولّدة بالذكاء الاصطناعي (AI-generated material) غير المحرَّرة، كما في قرار Zarya of the Dawn. والأوامر النصية (prompts) وحدها لا تكفي عمومًا، ويمكن للعقد (contract) أن يوزّع الحقوق بين الطرفين (between the parties) لكنه لا يستطيع إنشاء حق مؤلف (copyright) غير موجود."
+   }
+  },
+  {
+   "id": "m5-3",
+   "level": 2,
+   "lesson": "5.3",
+   "q": {
+    "en": "Najm's chatbot tells a customer that repaying a personal loan early carries no charge. The approved product terms, on another page of Najm's website, set a charge. The customer repays, is charged and complains. Under Najm's post-Moffatt controls, what should happen?",
+    "ar": "يخبر روبوت المحادثة (chatbot) في بنك نجم (Najm Bank) عميلًا بأن السداد المبكر (early repayment) لقرض شخصي (personal loan) لا تترتب عليه أي رسوم (charge). أما شروط المنتج المعتمدة (approved product terms)، المنشورة في صفحة أخرى من موقع البنك (website)، فتفرض رسومًا. يسدّد العميل القرض، فتُفرض عليه الرسوم، فيتقدّم بشكوى (complaint). بموجب ضوابط بنك نجم بعد قضية Moffatt (post-Moffatt controls)، ما الذي ينبغي أن يحدث؟"
+   },
+   "o": {
+    "en": [
+     "Apply the charge, since the correct terms are published on Najm's own website",
+     "Apply the charge, since the chat window warns that the assistant can make errors",
+     "Pass the complaint to the chatbot vendor, since the error came from its model",
+     "Honour the statement and log an incident, since the chatbot speaks for Najm"
+    ],
+    "ar": [
+     "فرض الرسوم، لأن الشروط الصحيحة (correct terms) منشورة على موقع بنك نجم نفسه (own website)",
+     "فرض الرسوم، لأن نافذة المحادثة (chat window) تنبّه إلى أن المساعد (assistant) قد يخطئ (make errors)",
+     "إحالة الشكوى (complaint) إلى مورّد روبوت المحادثة (chatbot vendor)، لأن الخطأ صدر عن نموذجه (its model)",
+     "الوفاء بالبيان (honour the statement) وتسجيل حادث (log an incident)، لأن روبوت المحادثة (chatbot) يتحدث باسم بنك نجم (speaks for Najm)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "A chatbot on Najm's channel speaks for Najm, and in Moffatt correct terms elsewhere on the same website did not help, because the customer could not be expected to double-check. Najm's standard honours a misstatement that harms the customer where reasonable, logs an incident and fixes the cause, and a general disclaimer rarely cures a specific misleading statement.",
+    "ar": "روبوت المحادثة (chatbot) على قناة بنك نجم (Najm's channel) يتحدث باسم البنك، وفي قضية Moffatt لم تُفِد الشروط الصحيحة (correct terms) المنشورة في مكان آخر من الموقع نفسه، إذ لم يكن من المتوقع أن يتحقق العميل مرتين (double-check). ويفي معيار بنك نجم (Najm's standard) بالبيان الخاطئ الذي يضر بالعميل حيثما كان ذلك معقولًا (where reasonable)، ويسجّل حادثًا (incident) ويعالج السبب (cause)، ونادرًا ما يعالج إخلاء المسؤولية العام (general disclaimer) بيانًا محددًا مضلِّلًا (specific misleading statement)."
+   }
+  },
+  {
+   "id": "m5-4",
+   "level": 3,
+   "lesson": "5.3",
+   "q": {
+    "en": "Najm's fraud model blocks cards automatically, and customers have no route to get a block reviewed. Its owner argues that, because no AI-specific law covers fraud models, the model carries little legal exposure. Which assessment is soundest?",
+    "ar": "يحظر نموذج مكافحة الاحتيال (fraud model) في بنك نجم (Najm Bank) البطاقات تلقائيًا (automatically)، وليس أمام العملاء أي مسار لمراجعة الحظر (get a block reviewed). ويحتجّ مالك النموذج (model owner) بأنه ما دام لا يوجد قانون خاص بالذكاء الاصطناعي (AI-specific law) يغطي نماذج الاحتيال (fraud models)، فإن التعرّض القانوني (legal exposure) للنموذج ضئيل. أي تقييم (assessment) هو الأسلم؟"
+   },
+   "o": {
+    "en": [
+     "Its main exposure is the new PLD, since wrongly blocked cards cost customers money",
+     "Its main exposure is unfairness under consumer law, plus model risk and QCB guidance",
+     "Its exposure depends only on whether the EU AI Act classes fraud models as high-risk",
+     "Its main exposure is the AI Liability Directive, which eases customers' claims over AI harm"
+    ],
+    "ar": [
+     "تعرّضه الرئيسي (main exposure) هو توجيه PLD الجديد (new PLD)، لأن حظر البطاقات خطأً (wrongly blocked cards) يكلّف العملاء مالًا",
+     "تعرّضه الرئيسي (main exposure) هو عدم العدالة بموجب قانون حماية المستهلك (unfairness under consumer law)، إضافةً إلى إدارة مخاطر النماذج (model risk) وإرشادات QCB (QCB guidance)",
+     "يتوقف تعرّضه (exposure) فقط على ما إذا كان قانون الذكاء الاصطناعي الأوروبي (EU AI Act) يصنّف نماذج الاحتيال (fraud models) عالية المخاطر (high-risk)",
+     "تعرّضه الرئيسي (main exposure) هو توجيه المسؤولية عن الذكاء الاصطناعي (AI Liability Directive)، الذي ييسّر دعاوى العملاء (customers' claims) عن أضرار الذكاء الاصطناعي (AI harm)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Consumer protection covers how AI treats customers, and unfair automated blocking without recourse is a textbook example; the model must also be inventoried and validated under model risk management and the QCB AI guideline. The PLD does not cover pure economic loss, and the AI Liability Directive was withdrawn in 2025.",
+    "ar": "تغطي حماية المستهلك (consumer protection) طريقة معاملة الذكاء الاصطناعي (AI) للعملاء، والحظر الآلي غير العادل دون سبيل للانتصاف (unfair automated blocking without recourse) مثال نموذجي على ذلك، كما يجب تسجيل النموذج في السجل (inventoried) والتحقق منه (validated) بموجب إدارة مخاطر النماذج (model risk management) وإرشاد QCB للذكاء الاصطناعي (QCB AI guideline). ولا يغطي PLD الخسارة الاقتصادية البحتة (pure economic loss)، وقد سُحب توجيه المسؤولية عن الذكاء الاصطناعي (AI Liability Directive) في 2025."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m5-e1",
+   "lesson": "5.1",
+   "text": {
+    "en": "I have computed selection-rate ratios for at least two groups from real or practice screening figures, said which fall below the four-fifths rule of thumb, and named a plausible proxy that could drive each gap",
+    "ar": "حسبتُ نسب معدل الاختيار (selection-rate ratios) لفئتين على الأقل (at least two groups) من أرقام فرز (screening figures) حقيقية أو تدريبية، وبيّنتُ أيها يقع دون قاعدة الأربعة أخماس التقريبية (four-fifths rule of thumb)، وسمّيتُ متغيرًا بديلًا (proxy) معقولًا قد يقف وراء كل فجوة (gap)"
+   }
+  },
+  {
+   "id": "m5-e2",
+   "lesson": "5.2",
+   "text": {
+    "en": "I have compared the licences of two open-weight models against a real intended use, in a table of use restrictions, attribution duties and user-number or field-of-use conditions, with a go/no-go recommendation",
+    "ar": "قارنتُ ترخيصَي (licences) نموذجين مفتوحي الأوزان (open-weight models) باستخدام مقصود فعلي (real intended use)، في جدول بقيود الاستخدام (use restrictions) وواجبات الإسناد (attribution duties) وشروط عدد المستخدمين أو مجال الاستخدام (user-number or field-of-use conditions)، مع توصية بالمضي أو عدمه (go/no-go recommendation)"
+   }
+  }
+ ]
+}

@@ -1,0 +1,135 @@
+{
+ "area": "m6",
+ "questions": [
+  {
+   "id": "m6-1",
+   "level": 1,
+   "lesson": "6.1",
+   "q": {
+    "en": "Beacon's \"Add monitor\" form checks its input with a zod schema in the browser, so a bad URL shows an inline error before any request is sent. Which statement about where this validation should run is right?",
+    "ar": "يتحقق نموذج \"إضافة مراقبة\" (Add monitor form) في Beacon من مدخلاته (input) بمخطط zod (zod schema) في المتصفح (browser)، فيظهر خطأ مضمَّن (inline error) عند إدخال رابط خاطئ (bad URL) قبل إرسال أي طلب (request). أي عبارة (statement) صحيحة بشأن المكان الذي يجب أن يعمل فيه (where it should run) هذا التحقق (validation)؟"
+   },
+   "o": {
+    "en": [
+     "Running it in the browser is enough if the submit button stays disabled until it passes",
+     "The server should run the same schema, since anyone can skip the form and post with curl",
+     "The server should keep a looser schema of its own, so API clients aren't blocked by form rules",
+     "The server only needs permission and plan-limit checks, since the form already checked input"
+    ],
+    "ar": [
+     "تشغيله في المتصفح (browser) يكفي ما دام زر الإرسال (submit button) معطَّلًا (disabled) حتى ينجح التحقق (validation)",
+     "يجب أن يشغّل الخادم (server) المخطط نفسه (same schema)، لأن أي شخص يستطيع تجاوز النموذج (form) والإرسال عبر curl",
+     "يجب أن يحتفظ الخادم (server) بمخطط أكثر تساهلًا (looser schema) خاص به، كي لا تحجب قواعد النموذج (form rules) عملاءَ الواجهة البرمجية (API clients)",
+     "يحتاج الخادم (server) فقط إلى فحص الصلاحية (permission check) وحدّ الخطة (plan limit)، لأن النموذج (form) تحقق من المدخلات (input) مسبقًا"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "The browser copy only gives instant feedback; the server copy is the one you trust, because anyone can skip the frontend with curl, and it runs before the permission and plan-limit checks. A disabled submit button is UI, not a security boundary.",
+    "ar": "نسخة المتصفح (browser copy) تعطي ملاحظات فورية (instant feedback) فقط، أما نسخة الخادم (server copy) فهي التي تثق بها (the one you trust)، لأن أي شخص يستطيع تجاوز واجهتك الأمامية (frontend) عبر curl، وهي تعمل قبل فحص الصلاحية (permission check) وحدّ الخطة (plan limit). وزر الإرسال المعطَّل (disabled submit button) جزء من الواجهة (UI)، وليس حدًّا أمنيًا (security boundary)."
+   }
+  },
+  {
+   "id": "m6-2",
+   "level": 2,
+   "lesson": "6.2",
+   "q": {
+    "en": "Beacon sends identify and track calls to PostHog, and its activation funnel counts users. The founders now ask what share of new organizations activate in their first week, broken down by plan. What should the team change?",
+    "ar": "يرسل Beacon استدعاءات identify وtrack (identify and track calls) إلى PostHog، ويحسب قُمعُ التفعيل (activation funnel) لديه المستخدمين (users). ويسأل المؤسسون (founders) الآن عن نسبة المؤسسات الجديدة (new organizations) التي تصل إلى التفعيل (activation) في أسبوعها الأول، مقسّمةً حسب الخطة (broken down by plan). ما الذي يجب أن يغيّره الفريق (team)؟"
+   },
+   "o": {
+    "en": [
+     "Send group calls with the org ID and plan, and analyse the funnel by org",
+     "Add each user's email and company name to event properties, and match orgs later",
+     "Turn on autocapture so that every click in the app is recorded against each user",
+     "Treat each user's email domain as their organization, and group the funnel by it"
+    ],
+    "ar": [
+     "أرسل استدعاءات group (group calls) بمعرّف المؤسسة (org ID) والخطة (plan)، وحلّل القُمع (funnel) حسب المؤسسة (organization)",
+     "أضف البريد الإلكتروني لكل مستخدم (user's email) واسم شركته (company name) إلى خصائص الأحداث (event properties)، وطابق المؤسسات (orgs) لاحقًا",
+     "فعّل الالتقاط التلقائي (autocapture) كي تُسجَّل كل نقرة (click) في التطبيق (app) باسم كل مستخدم (user)",
+     "اعتبر نطاق البريد الإلكتروني (email domain) لكل مستخدم مؤسستَه (organization)، وجمّع القُمع (funnel) حسبه"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "In B2B an organization pays you, not a user, and group(groupId, traits) is the call that ties each user's events to an org and its plan so the funnel can be read per account. Putting emails in event properties sends PII to another vendor and makes GDPR deletion harder, and a company name still can't place a user who belongs to several orgs.",
+    "ar": "في B2B تدفع لك المؤسسة (organization) لا المستخدم (user)، واستدعاء group(groupId, traits) هو الذي يربط أحداث (events) كل مستخدم بمؤسسة وخطتها (plan)، فيُقرأ القُمع (funnel) لكل حساب (per account). أما وضع البريد الإلكتروني (emails) في خصائص الأحداث (event properties) فيرسل بيانات شخصية (PII) إلى مزوّد آخر (another vendor) ويصعّب الحذف وفق GDPR (GDPR deletion)، واسم الشركة (company name) لا يحدد مع ذلك المؤسسة الصحيحة (right org) لمستخدم ينتمي إلى عدة مؤسسات (several orgs)."
+   }
+  },
+  {
+   "id": "m6-3",
+   "level": 2,
+   "lesson": "6.3",
+   "q": {
+    "en": "Beacon's check workers ask the flag service over the network whether new-scheduler is on for each org, on every check. During a ten-minute flag-service outage the lookups throw, and checks stop running for every customer. What should the workers do instead?",
+    "ar": "تسأل عمّالُ الفحص (check workers) في Beacon خدمةَ الأعلام (flag service) عبر الشبكة (network) مع كل فحص (check) هل العلم new-scheduler مفعّل لهذه المؤسسة (org). وأثناء انقطاع (outage) في خدمة الأعلام مدته عشر دقائق (ten minutes)، ترمي عمليات البحث (lookups) استثناءات (throw)، فتتوقف الفحوص (checks) عن العمل لكل العملاء (customers). ما الذي يجب أن يفعله العمّال (workers) بدلًا من ذلك؟"
+   },
+   "o": {
+    "en": [
+     "Read the flag from an environment variable, so no flag service is involved",
+     "Retry each lookup until the flag service answers, and then run the check",
+     "Evaluate locally from a cached rule set, with the old scheduler as default",
+     "Keep remote lookups, but fall back to the new scheduler so the rollout goes on"
+    ],
+    "ar": [
+     "اقرأ العلم (flag) من متغير بيئة (environment variable)، فلا تدخل خدمة الأعلام (flag service) في الأمر",
+     "أعد محاولة (retry) كل عملية بحث (lookup) حتى تجيب خدمة الأعلام (flag service)، ثم شغّل الفحص (check)",
+     "قيّم محليًا (evaluate locally) من مجموعة قواعد مخزّنة مؤقتًا (cached rule set)، والمُجدوِل القديم (old scheduler) هو القيمة الافتراضية (default)",
+     "أبقِ البحث عن بُعد (remote lookups)، لكن ارجع إلى المُجدوِل الجديد (new scheduler) كي يستمر الطرح (rollout)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "With local evaluation, server SDKs download the whole rule set, keep it fresh and evaluate in memory, so workers keep using the last known rules, and when nothing is available the default should be the safe one: off, the old code path. An environment variable avoids the outage but needs a redeploy to change and can't target one org or a percentage.",
+    "ar": "مع التقييم المحلي (local evaluation) تنزّل حزم SDK على الخادم (server SDKs) مجموعة القواعد كاملة (whole rule set) وتبقيها محدّثة وتقيّم في الذاكرة (in memory)، فيستمر العمّال (workers) في استخدام آخر قواعد معروفة (last known rules)، وحين لا يتوفر شيء (nothing available) تكون القيمة الافتراضية (default value) هي الآمنة: مطفأ (off)، أي مسار الكود القديم (old code path). أما متغير البيئة (environment variable) فيتجنب الانقطاع (outage)، لكنه يحتاج إلى إعادة نشر (redeploy) ليتغير، ولا يستطيع استهداف مؤسسة واحدة (one org) أو نسبة مئوية (percentage)."
+   }
+  },
+  {
+   "id": "m6-4",
+   "level": 3,
+   "lesson": "6.3",
+   "q": {
+    "en": "Beacon gets about 200 new orgs a week and activates about 30% of them. Product starts an A/B test of onboarding-checklist-v2, split by org, with \"activated within 24h\" as the metric, but works out no sample size. On day five the variant leads with p = 0.04, and the PM wants to stop and ship it. What is the best call?",
+    "ar": "يستقبل Beacon نحو 200 مؤسسة جديدة (new orgs) أسبوعيًا، ويصل نحو 30% منها إلى التفعيل (activation). ويبدأ فريق المنتج (product team) اختبار A/B (A/B test) للنسخة onboarding-checklist-v2، مقسّمًا حسب المؤسسة (split by org)، ومقياسه (metric) \"مفعّلة خلال 24 ساعة\" (activated within 24h)، دون حساب حجم العينة (sample size). وفي اليوم الخامس تتقدم النسخة الجديدة (variant) بقيمة p = 0.04، فيريد مدير المنتج (PM) إيقاف الاختبار وإطلاقها. ما القرار الأفضل (best call)؟"
+   },
+   "o": {
+    "en": [
+     "Stop the test now and ship the variant, since p is below 0.05 and the lift is significant",
+     "Keep it running, and add retention and upgrades as metrics to confirm the lift",
+     "Re-split it by user instead of by org, so the test reaches significance sooner",
+     "Distrust the early p-value, ship behind a release flag, and watch the numbers"
+    ],
+    "ar": [
+     "أوقف الاختبار (test) الآن وأطلق النسخة الجديدة (variant)، لأن p أقل من 0.05 والتحسن (lift) ذو دلالة (significant)",
+     "أبقِ الاختبار يعمل، وأضف الاحتفاظ (retention) والترقيات (upgrades) مقاييسَ (metrics) لتأكيد التحسن (lift)",
+     "أعد تقسيمه حسب المستخدم (by user) بدل المؤسسة (by org)، كي يبلغ الاختبار الدلالة (significance) أسرع",
+     "لا تثق بقيمة p المبكرة (early p-value)، وأطلق التغيير خلف علم إطلاق (release flag)، وراقب الأرقام"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Stopping a fixed-horizon test at the first p < 0.05 is the peeking problem and mostly finds noise, and detecting a 2-point lift on a 30% activation rate needs thousands of orgs per arm, which 200 a week won't reach, so ship behind a release flag and watch the numbers. Stopping now is tempting because p looks significant, but that number came from peeking.",
+    "ar": "إيقاف اختبار ثابت الأفق (fixed-horizon test) عند أول p < 0.05 هو مشكلة التلصص (peeking problem)، ويجد الضوضاء (noise) في الغالب، واكتشاف تحسن بنقطتين (two-point lift) على معدل تفعيل (activation rate) نسبته 30% يحتاج إلى آلاف المؤسسات (orgs) في كل ذراع (arm)، وهو ما لن تبلغه 200 مؤسسة أسبوعيًا (200 a week)، لذا أطلق التغيير خلف علم إطلاق (release flag) وراقب الأرقام (watch the numbers). والإيقاف الآن مغرٍ (tempting) لأن p تبدو ذات دلالة (significant)، لكن هذا الرقم جاء من التلصص (peeking)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m6-e1",
+   "lesson": "6.1",
+   "text": {
+    "en": "I have driven Beacon's onboarding checklist from milestones stored on the org, with their timestamps, and seen a second admin who joined after onboarding was done never see it",
+    "ar": "بنيتُ قائمة مهام التهيئة (onboarding checklist) في Beacon على مراحل (milestones) محفوظة على المؤسسة (organization) مع أوقاتها (timestamps)، ورأيتُ مسؤولًا ثانيًا (second admin) انضم بعد اكتمال التهيئة (onboarding) لا يراها أبدًا"
+   }
+  },
+  {
+   "id": "m6-e2",
+   "lesson": "6.2",
+   "text": {
+    "en": "I have sent monitor_created from the server after the insert commits, and seen it still recorded with the PostHog domain blocked in the browser, in a funnel I can break down by organization plan",
+    "ar": "أرسلتُ الحدث monitor_created من الخادم (server) بعد تثبيت الإدراج (insert commits)، ورأيتُه يُسجَّل رغم حجب نطاق PostHog (PostHog domain) في المتصفح (browser)، ضمن قُمع (funnel) أستطيع تقسيمه حسب خطة المؤسسة (organization plan)"
+   }
+  }
+ ]
+}

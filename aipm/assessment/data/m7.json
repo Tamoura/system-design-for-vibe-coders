@@ -1,0 +1,135 @@
+{
+ "area": "m7",
+ "questions": [
+  {
+   "id": "m7-1",
+   "level": 1,
+   "lesson": "7.1",
+   "q": {
+    "en": "Najm Assist is not approved to discuss loan eligibility. Faisal says the risk is covered because the system prompt tells the assistant never to discuss it. Why does Rania say this is not yet a guardrail?",
+    "ar": "نجم أسيست (Najm Assist) غير مُعتمد لمناقشة أهلية القروض (loan eligibility). يقول فيصل إن هذا الخطر مُغطّى (the risk is covered) لأن موجّه النظام (system prompt) يأمر المساعد (assistant) بألا يناقشها أبدًا. لماذا تقول رانيا إن هذا ليس بعدُ ضابطًا وقائيًا (guardrail)؟"
+   },
+   "o": {
+    "en": [
+     "It becomes a guardrail once the golden-set evals show the assistant refusing loan questions",
+     "The rule is too vague, and naming every loan product in both languages would close the gap",
+     "The control that counts is a first-message disclaimer saying it gives no loan advice",
+     "An instruction rests on the model’s own judgement; a control outside the model is needed"
+    ],
+    "ar": [
+     "يصبح ضابطًا وقائيًا (guardrail) بمجرد أن تُظهر تقييمات المجموعة المرجعية (golden-set evals) أن المساعد يرفض أسئلة القروض (refusing loan questions)",
+     "القاعدة مبهمة جدًا (too vague)، وتسمية كل منتجات القروض (every loan product) باللغتين ستسدّ الثغرة (close the gap)",
+     "الضابط الذي يُعتدّ به هو إخلاء مسؤولية (disclaimer) في الرسالة الأولى (first message) يقول إنه لا يقدّم نصائح القروض (no loan advice)",
+     "التعليمات (instruction) تستند إلى تقدير النموذج نفسه (model’s own judgement)؛ ويلزم ضابط من خارج النموذج (control outside the model)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "A guardrail is a control outside the model’s own judgement, such as an output topic classifier that blocks loan-eligibility answers, and no single layer is enough. Passing evals is tempting, but evals cover only the cases tested, so the instruction still needs an independent check behind it.",
+    "ar": "الضابط الوقائي (guardrail) ضابطٌ من خارج تقدير النموذج نفسه (outside the model’s own judgement)، مثل مصنِّف موضوعات المخرجات (output topic classifier) الذي يحجب إجابات أهلية القروض (loan-eligibility answers)، ولا تكفي أي طبقة وحدها (no single layer is enough). أما اجتياز التقييمات (passing evals) فمغرٍ، لكن التقييمات لا تغطي إلا الحالات المُختبَرة (cases tested)، لذا تظل التعليمات (instruction) بحاجة إلى فحص مستقل (independent check) يسندها."
+   }
+  },
+  {
+   "id": "m7-2",
+   "level": 2,
+   "lesson": "7.2",
+   "q": {
+    "en": "Najm plans a second instant-decision product: eligible personal-loan top-up requests get a decision in minutes instead of days, and a credit officer reviews every decline. Khalid asks Faisal what launch pricing to propose. Which choice sends the right signal?",
+    "ar": "يخطط بنك نجم (Najm Bank) لمنتج ثانٍ للقرارات الفورية (instant-decision product): تحصل طلبات زيادة القروض الشخصية المؤهلة (eligible personal-loan top-up requests) على قرار خلال دقائق بدلًا من أيام (decision in minutes instead of days)، ويراجع مسؤول ائتمان (credit officer) كل حالة رفض (every decline). يسأل خالد فيصلًا عن تسعير الإطلاق (launch pricing) الذي ينبغي اقتراحه. أي خيار يرسل الإشارة الصحيحة (right signal)؟"
+   },
+   "o": {
+    "en": [
+     "Charge per approved request, since outcome-based pricing signals confidence that it works",
+     "Keep the usual top-up fee schedule, so that speed itself is the benefit customers get",
+     "Add a small “AI express” fee to the usual fee, since each customer saves several days",
+     "Offer it only in a premium account tier, as extra value for customers who want more"
+    ],
+    "ar": [
+     "فرض رسوم على كل طلب يُوافَق عليه (per approved request)، لأن التسعير حسب النتيجة (outcome-based pricing) يشير إلى الثقة بأنه ينجح (confidence that it works)",
+     "الإبقاء على جدول الرسوم المعتاد لزيادة القرض (usual top-up fee schedule)، فتكون السرعة نفسها (speed itself) هي الفائدة التي يحصل عليها العملاء (benefit customers get)",
+     "إضافة رسوم صغيرة باسم «الذكاء الاصطناعي السريع (AI express)» إلى الرسوم المعتادة (usual fee)، لأن كل عميل يوفّر عدة أيام (saves several days)",
+     "تقديمه فقط ضمن فئة حساب مميزة (premium account tier)، بوصفه قيمة إضافية (extra value) للعملاء الذين يريدون المزيد (customers who want more)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "For a bank the key pricing decision is often what not to change: keeping the existing fee schedule makes speed the benefit, while an AI fee tells customers they are paying for the bank’s automation. Per-outcome pricing is tempting as a sign of confidence, but for credit-related AI it can look as if the bank profits from automated decisions.",
+    "ar": "بالنسبة إلى بنك، غالبًا ما يكون قرار التسعير المهم (key pricing decision) هو ما لا يجب تغييره (what not to change): فالإبقاء على جدول الرسوم القائم (existing fee schedule) يجعل السرعة هي الفائدة (speed the benefit)، بينما تخبر رسوم الذكاء الاصطناعي (AI fee) العملاءَ أنهم يدفعون ثمن أتمتة البنك (the bank’s automation). أما التسعير حسب النتيجة (per-outcome pricing) فمغرٍ بوصفه إشارة ثقة (sign of confidence)، لكنه في الذكاء الاصطناعي المرتبط بالائتمان (credit-related AI) قد يبدو كأن البنك يربح من القرارات المؤتمتة (profits from automated decisions)."
+   }
+  },
+  {
+   "id": "m7-3",
+   "level": 2,
+   "lesson": "7.3",
+   "q": {
+    "en": "Rania is naming one champion per corporate RM team for the Credit Memo Copilot’s next 90 days. For one team, four people are put forward. Who best fits the role?",
+    "ar": "تسمّي رانيا سفيرًا واحدًا لكل فريق (one champion per team) من فرق مديري علاقات الشركات (corporate RM teams) لمساعد مذكرات الائتمان (Credit Memo Copilot) خلال الأيام التسعين المقبلة (next 90 days). في أحد الفرق، طُرحت أسماء أربعة أشخاص (four people are put forward). من الأنسب لهذا الدور (best fits the role)؟"
+   },
+   "o": {
+    "en": [
+     "A respected senior RM who doubted the copilot until she checked it on her own memos",
+     "A junior RM who drafts every memo with the copilot and is keen on any new technology",
+     "The team head, since a push from the top is what will get the rest of the team using it",
+     "An analyst from the digital team, since she knows the copilot’s features better than anyone"
+    ],
+    "ar": [
+     "إحدى كبار مديري العلاقات المحترَمين (a respected senior RM)، شكّكت في المساعد (doubted the copilot) حتى تحقّقت منه على مذكراتها (her own memos)",
+     "أحد صغار مديري العلاقات (a junior RM)، يصوغ كل مذكرة بالمساعد (drafts every memo with the copilot)، ومتحمّس لأي تقنية جديدة (keen on any new technology)",
+     "رئيس الفريق (team head)، لأن الدفع من القمة (push from the top) هو ما سيجعل بقية الفريق (rest of the team) يستخدمونه",
+     "محلّلة من الفريق الرقمي (digital team)، لأنها تعرف ميزات المساعد (copilot’s features) أكثر من أي أحد (better than anyone)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Champions are respected users chosen for credibility with their peers, and a converted sceptic who checked the copilot on her own work moves the early majority more than any announcement. The keen heavy user is tempting, but enthusiasm for technology is not credibility, and the early majority waits until people like them have made it work.",
+    "ar": "السفراء (champions) مستخدمون محترَمون (respected users) يُختارون لمصداقيتهم لدى أقرانهم (credibility with their peers)، والمتشكّكة التي اقتنعت (converted sceptic) بعد أن تحقّقت من المساعد في عملها تحرّك الأغلبية المبكرة (early majority) أكثر من أي إعلان (announcement). أما المستخدم الكثيف المتحمّس (keen heavy user) فمغرٍ، لكن الحماس للتقنية (enthusiasm for technology) ليس مصداقية (credibility)، والأغلبية المبكرة تنتظر حتى ينجح أناس مثلهم في استخدامه (people like them have made it work)."
+   }
+  },
+  {
+   "id": "m7-4",
+   "level": 3,
+   "lesson": "7.1",
+   "q": {
+    "en": "Two weeks before Najm Assist’s go/no-go review, one failure mode remains: answers about charges on international transfers are wrong too often, and the only control that has worked is an agent checking each such answer before it is sent. Answers on cards, accounts and other fees meet the spec bars. What should Rania recommend?",
+    "ar": "قبل أسبوعين من مراجعة الانطلاق أو عدمه (go/no-go review) لنجم أسيست (Najm Assist)، يبقى نمط فشل واحد (one failure mode): فالإجابات عن رسوم التحويلات الدولية (charges on international transfers) خاطئة أكثر من اللازم (wrong too often)، والضابط الوحيد الذي نجح (only control that has worked) هو أن يتحقق موظف (agent) من كل إجابة من هذا النوع قبل إرسالها (before it is sent). أما الإجابات عن البطاقات والحسابات وبقية الرسوم (cards, accounts and other fees) فتستوفي معايير المواصفات (spec bars). بماذا ينبغي أن توصي رانيا؟"
+   },
+   "o": {
+    "en": [
+     "Go on time with a disclaimer that transfer-charge figures may be wrong and are not binding",
+     "Go on time, and rely on the stop thresholds to pause the rollout if complaints start to rise",
+     "Narrow the scope: hand transfer-charge questions to agents and launch the rest on time",
+     "Delay the whole launch until a newer model is able to get the transfer-charge answers right"
+    ],
+    "ar": [
+     "الانطلاق في الموعد (go on time) مع إخلاء مسؤولية (disclaimer) بأن أرقام رسوم التحويل (transfer-charge figures) قد تكون خاطئة وغير ملزمة (not binding)",
+     "الانطلاق في الموعد (go on time)، والاعتماد على عتبات الإيقاف (stop thresholds) لإيقاف الإطلاق مؤقتًا (pause the rollout) إن بدأت الشكاوى (complaints) تزداد",
+     "تضييق النطاق (narrow the scope): إحالة أسئلة رسوم التحويل (transfer-charge questions) إلى الموظفين (agents)، وإطلاق البقية في موعدها (on time)",
+     "تأجيل الإطلاق كله (delay the whole launch) حتى يتمكن نموذج أحدث (newer model) من الإجابة الصحيحة عن رسوم التحويل (transfer-charge answers)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "If the only way to stop a failure mode is a human checking every answer, that part is not ready to automate, and narrowing scope is often the fastest route to a safe launch. A disclaimer is tempting, but after Moffatt v. Air Canada “the bot was wrong” is a weak defence, and stop thresholds do not make a known failure ready to launch.",
+    "ar": "إذا كانت الطريقة الوحيدة لإيقاف نمط فشل (failure mode) هي أن يتحقق إنسان من كل إجابة (a human checking every answer)، فهذا الجزء ليس جاهزًا للأتمتة (not ready to automate)، وتضييق النطاق (narrowing scope) هو غالبًا أسرع طريق إلى إطلاق آمن (fastest route to a safe launch). أما إخلاء المسؤولية (disclaimer) فمغرٍ، لكن بعد قضية Moffatt v. Air Canada صار «الروبوت كان مخطئًا (the bot was wrong)» دفاعًا ضعيفًا (weak defence)، وعتبات الإيقاف (stop thresholds) لا تجعل فشلًا معروفًا (known failure) جاهزًا للإطلاق."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m7-e1",
+   "lesson": "7.2",
+   "text": {
+    "en": "I have written a claims register for an AI product with at least five claims, each linked to a specific eval or rollout metric, and rejected at least one draft claim with a reason.",
+    "ar": "كتبتُ سجل ادعاءات (claims register) لمنتج ذكاء اصطناعي (AI product) يضم خمسة ادعاءات على الأقل (at least five claims)، كلٌّ منها مربوط بتقييم أو مقياس إطلاق محدد (specific eval or rollout metric)، ورفضتُ مسودة ادعاء (draft claim) واحدة على الأقل مع ذكر السبب (with a reason)."
+   }
+  },
+  {
+   "id": "m7-e2",
+   "lesson": "7.3",
+   "text": {
+    "en": "I have designed an adoption funnel for an internal AI tool with five stages from access to value, one metric per stage and a counter-metric that would reveal harm or over-reliance.",
+    "ar": "صمّمتُ قمع تبنٍّ (adoption funnel) لأداة ذكاء اصطناعي داخلية (internal AI tool) من خمس مراحل (five stages) تمتد من الوصول إلى القيمة (from access to value)، بمقياس واحد لكل مرحلة (one metric per stage) ومقياس مقابل (counter-metric) يكشف الضرر أو الإفراط في الاعتماد (harm or over-reliance)."
+   }
+  }
+ ]
+}

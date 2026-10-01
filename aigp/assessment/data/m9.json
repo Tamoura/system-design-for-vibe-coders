@@ -1,0 +1,135 @@
+{
+ "area": "m9",
+ "questions": [
+  {
+   "id": "m9-1",
+   "level": 1,
+   "lesson": "9.1",
+   "q": {
+    "en": "For the credit memo copilot fine-tune, suppose Sara is satisfied that Najm has a GDPR lawful basis for the guarantor personal data in its historical credit memos. Omar says the rights question is now settled. What has he missed?",
+    "ar": "في مشروع الضبط الدقيق (fine-tuning) للمساعد الذكي لمذكرات الائتمان (credit memo copilot)، افترض أن سارة مقتنعة بأن لدى بنك نجم (Najm Bank) أساسًا قانونيًا (lawful basis) بموجب GDPR للبيانات الشخصية للكفلاء (guarantor personal data) في مذكرات الائتمان التاريخية (historical credit memos). فيقول عمر إن مسألة الحقوق (rights question) قد حُسمت الآن. ما الذي فاته؟"
+   },
+   "o": {
+    "en": [
+     "Nothing, since a lawful basis clears any use of Najm's own first-party records",
+     "Consent from each guarantor, since AI training can only ever rest on consent",
+     "The contract, copyright and confidentiality locks, each needing its own key",
+     "A synthetic copy of the memos, since synthetic data sits outside privacy law"
+    ],
+    "ar": [
+     "لا شيء، لأن الأساس القانوني (lawful basis) يجيز أي استخدام لسجلات الطرف الأول (first-party records) الخاصة ببنك نجم (Najm Bank)",
+     "موافقة (consent) كل كفيل (guarantor)، لأن تدريب الذكاء الاصطناعي (AI training) لا يمكن أن يستند إلا إلى الموافقة",
+     "أقفال العقد وحقوق النشر والسرية (contract, copyright and confidentiality locks)، ولكلٍّ منها مفتاحه الخاص (its own key)",
+     "نسخة اصطناعية (synthetic copy) من المذكرات، لأن البيانات الاصطناعية (synthetic data) تقع خارج قانون الخصوصية (privacy law)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Rights to use data are four separate locks (privacy, contract or licence, copyright and confidentiality), and the client financials in the memos stay confidential whether or not they are personal data. Stopping at the lawful basis is the \"we have a lawful basis, so we're done\" trap, and consent is a poor fit for most training anyway.",
+    "ar": "حقوق استخدام البيانات (rights to use data) أربعة أقفال منفصلة (four separate locks): الخصوصية (privacy)، والعقد أو الترخيص (contract or licence)، وحقوق النشر (copyright)، والسرية (confidentiality)، وتبقى البيانات المالية للعملاء (client financials) في المذكرات سرية سواء أكانت بيانات شخصية (personal data) أم لا. والتوقف عند الأساس القانوني (lawful basis) هو فخ \"لدينا أساس قانوني، إذن انتهينا (we have a lawful basis, so we're done)\"، والموافقة (consent) لا تناسب معظم عمليات التدريب (training) أصلًا."
+   }
+  },
+  {
+   "id": "m9-2",
+   "level": 2,
+   "lesson": "9.2",
+   "q": {
+    "en": "Before Najm's retail credit model is retrained, a data-minimisation project proposes purging the sex and nationality fields, held for KYC, from the analytics copy of the training data \"so the model can never discriminate\". What should Layla advise?",
+    "ar": "قبل إعادة تدريب (retraining) نموذج ائتمان الأفراد (retail credit model) في بنك نجم (Najm Bank)، يقترح مشروع لتقليل البيانات (data-minimisation project) حذف حقلَي الجنس والجنسية (sex and nationality fields)، المحفوظين لأغراض اعرف عميلك (KYC)، من النسخة التحليلية (analytics copy) لبيانات التدريب (training data) \"كي لا يستطيع النموذج التمييز أبدًا (so the model can never discriminate)\". بماذا ينبغي أن تنصح ليلى؟"
+   },
+   "o": {
+    "en": [
+     "Drop both as model inputs but keep them, with access controls, for fairness tests",
+     "Purge both, because a model that never sees them has no way to discriminate by them",
+     "Retain both only under AI Act Art. 10(5), because both count as special-category data",
+     "Feed both to the model as inputs, so that it can learn to correct for any group gaps"
+    ],
+    "ar": [
+     "استبعادهما من مدخلات النموذج (model inputs) والاحتفاظ بهما بضوابط وصول (access controls) لاختبارات العدالة (fairness tests)",
+     "حذفهما (purge)، لأن نموذجًا (model) لا يراهما أبدًا لا سبيل له إلى التمييز (discriminate) على أساسهما",
+     "الاحتفاظ بهما (retain both) فقط بموجب المادة 10(5) من قانون الذكاء الاصطناعي (AI Act Art. 10(5))، لأنهما يُعدّان من بيانات الفئات الخاصة (special-category data)",
+     "إدخالهما في النموذج (model) بوصفهما مدخلات (inputs)، كي يتعلّم تصحيح أي فجوات بين المجموعات (group gaps)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Removing protected attributes does not stop proxies such as employer and postcode from carrying their effect, and it leaves Najm unable to measure discrimination. Sex and nationality are not GDPR Art. 9 special categories, so they can be used for aggregate fairness testing under an ordinary lawful basis with safeguards, without Art. 10(5).",
+    "ar": "إزالة السمات المحمية (protected attributes) لا تمنع المتغيرات البديلة (proxies) مثل جهة العمل (employer) والرمز البريدي (postcode) من نقل أثرها، وتترك بنك نجم (Najm Bank) عاجزًا عن قياس التمييز (measuring discrimination). والجنس والجنسية (sex and nationality) ليسا من الفئات الخاصة (special categories) في المادة 9 من GDPR، لذا يمكن استخدامهما لاختبار العدالة الإجمالي (aggregate fairness testing) بأساس قانوني عادي (ordinary lawful basis) مع ضمانات (safeguards)، دون الحاجة إلى المادة 10(5) من قانون الذكاء الاصطناعي (AI Act Art. 10(5))."
+   }
+  },
+  {
+   "id": "m9-3",
+   "level": 2,
+   "lesson": "9.3",
+   "q": {
+    "en": "Najm will use its credit model's predicted probability of default (PD) directly to price loans and set provisions in Qatar, the UAE and Germany. Validation shows a strong out-of-time AUC. Which further acceptance criterion does this use of the PDs make essential?",
+    "ar": "سيستخدم بنك نجم (Najm Bank) احتمال التعثّر المتنبأ به (predicted probability of default, PD) من نموذج الائتمان (credit model) مباشرةً لتسعير القروض (price loans) وتحديد المخصصات (set provisions) في قطر والإمارات وألمانيا. وتُظهر المصادقة (validation) قيمة AUC قوية على بيانات خارج الفترة الزمنية (out-of-time AUC). ما معيار القبول (acceptance criterion) الإضافي الذي يجعله هذا الاستخدام لاحتمالات التعثّر (PDs) ضروريًا؟"
+   },
+   "o": {
+    "en": [
+     "Nothing more, since a strong AUC shows the PDs can be used as they stand",
+     "Overall accuracy, since it gives the share of all predictions that are right",
+     "Recall, since it shows how many of the real defaulters the model catches",
+     "Calibration by country, so predicted PDs match observed default rates"
+    ],
+    "ar": [
+     "لا شيء آخر، لأن قيمة AUC القوية (strong AUC) تُظهر أن احتمالات التعثّر (PDs) صالحة للاستخدام كما هي (can be used as they stand)",
+     "الدقة الإجمالية (overall accuracy)، لأنها تعطي نسبة التنبؤات الصحيحة من بين كل التنبؤات (share of all predictions that are right)",
+     "الاستدعاء (recall)، لأنه يُظهر كم من المتعثّرين الفعليين (real defaulters) يلتقطه النموذج (model)",
+     "المعايرة حسب البلد (calibration by country)، لتطابق الاحتمالات المتنبأ بها (predicted PDs) معدلات التعثّر الملاحظة (observed default rates)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "AUC measures ranking quality regardless of cut-off, not whether a 10% PD really means about 10% default; pricing and provisioning rely on the number itself, so calibration must be checked in each country, as Najm's sign-off sheet did. Accuracy misleads when defaults are rare, and recall says nothing about whether the probabilities are right.",
+    "ar": "تقيس AUC جودة الترتيب (ranking quality) بصرف النظر عن نقطة القطع (cut-off)، لا ما إذا كان احتمال تعثّر (PD) قدره 10% يعني فعلًا تعثّر نحو 10%؛ والتسعير والمخصصات (pricing and provisioning) يعتمدان على الرقم نفسه (the number itself)، لذا يجب التحقق من المعايرة (calibration) في كل بلد، كما فعلت ورقة الاعتماد (sign-off sheet) في بنك نجم (Najm Bank). والدقة (accuracy) مضلِّلة حين يكون التعثّر نادرًا، والاستدعاء (recall) لا يقول شيئًا عن صحة الاحتمالات (probabilities)."
+   }
+  },
+  {
+   "id": "m9-4",
+   "level": 3,
+   "lesson": "9.3",
+   "q": {
+    "en": "On a Najm credit model's test set, creditworthy applicants in groups A and B are approved at about the same rate, but group B's approval rate is 0.70 of group A's, and a smaller share of group B is truly creditworthy. A Committee member wants a model that passes every fairness metric before launch. What is the soundest response?",
+    "ar": "على مجموعة الاختبار (test set) لنموذج ائتمان (credit model) في بنك نجم (Najm Bank)، يُوافَق على المتقدمين الجديرين ائتمانيًا (creditworthy applicants) في المجموعتين A وB (groups A and B) بالمعدل نفسه تقريبًا، لكن معدل الموافقة (approval rate) في المجموعة B يبلغ 0.70 من معدل المجموعة A، ونسبة الجديرين ائتمانيًا فعلًا (truly creditworthy) في المجموعة B أصغر. ويريد أحد أعضاء اللجنة (Committee member) نموذجًا يجتاز كل مقاييس العدالة (fairness metrics) قبل الإطلاق (launch). ما الاستجابة الأسلم (soundest response)؟"
+   },
+   "o": {
+    "en": [
+     "Approve more group B applicants until their ratio reaches 0.8, the legal safe harbour",
+     "Have the accountable owner pick a metric by harm and law and document the trade-off",
+     "Let the data scientists report whichever fairness metric the model already passes",
+     "Hold the launch until a retrained model meets demographic parity and predictive parity"
+    ],
+    "ar": [
+     "الموافقة على مزيد من متقدمي المجموعة B (group B applicants) حتى تبلغ نسبتهم (their ratio) 0.8، وهي الملاذ الآمن القانوني (legal safe harbour)",
+     "تكليف المالك المسؤول (accountable owner) باختيار مقياس بحسب الضرر والقانون (harm and law) وتوثيق المفاضلة (trade-off)",
+     "ترك علماء البيانات (data scientists) يُبلغون عن أي مقياس عدالة (fairness metric) يجتازه النموذج (model) أصلًا",
+     "تأجيل الإطلاق (launch) حتى يحقق نموذج مُعاد تدريبه (retrained model) التكافؤ الديموغرافي (demographic parity) والتكافؤ التنبؤي (predictive parity)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "When base rates differ, selection rates, error rates and precision generally cannot all be equalised except by a perfect predictor, so the accountable owner must choose by harm and law and document the trade-off rather than leave it to data scientists. Forcing approvals up would lend to more group B applicants who cannot repay, and the four-fifths rule is a rule of thumb, not a safe harbour.",
+    "ar": "حين تختلف المعدلات الأساسية (base rates)، لا يمكن عمومًا مساواة معدلات الاختيار (selection rates) ومعدلات الخطأ (error rates) والضبط (precision) معًا إلا مع متنبئ مثالي (perfect predictor)، لذا يجب أن يختار المالك المسؤول (accountable owner) بحسب الضرر والقانون (harm and law) وأن يوثّق المفاضلة (trade-off) بدل تركها لعلماء البيانات (data scientists). ورفع الموافقات قسرًا (forcing approvals up) يعني إقراض مزيد من متقدمي المجموعة B العاجزين عن السداد، و\"قاعدة الأربعة أخماس\" (four-fifths rule) قاعدة تقريبية (rule of thumb)، لا ملاذ آمن (safe harbour)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m9-e1",
+   "lesson": "9.1",
+   "text": {
+    "en": "I have run a GDPR Art. 6(4) compatibility assessment for reusing customer data to train a model, addressing all five factors and reaching a reasoned conclusion with safeguards",
+    "ar": "أجريتُ تقييم توافق (compatibility assessment) وفق المادة 6(4) من GDPR لإعادة استخدام بيانات العملاء (customer data) في تدريب نموذج (model)، فتناولتُ العوامل الخمسة كلها (all five factors) ووصلتُ إلى استنتاج مُعلَّل (reasoned conclusion) مع ضمانات (safeguards)"
+   }
+  },
+  {
+   "id": "m9-e2",
+   "lesson": "9.2",
+   "text": {
+    "en": "I have advised on a proposal to infer applicants' ethnicity for bias testing, applying each AI Act Art. 10(5) condition and reaching a recommendation with safeguards",
+    "ar": "قدّمتُ المشورة بشأن مقترح (proposal) لاستنتاج عرق المتقدمين (infer applicants' ethnicity) لاختبار التحيّز (bias testing)، فطبّقتُ كل شرط من شروط المادة 10(5) من قانون الذكاء الاصطناعي (AI Act Art. 10(5)) ووصلتُ إلى توصية مع ضمانات (recommendation with safeguards)"
+   }
+  }
+ ]
+}

@@ -1,67 +1,135 @@
 {
   "area": "foundations",
   "questions": [
-    {"id": "foundations-1", "level": 1, "lesson": "F.1",
-     "q": {"en": "In October 2021 Facebook, Instagram and WhatsApp vanished for six hours, yet their servers were running, powered and full of data. Which step of the four-step trip failed?",
-           "ar": "في أكتوبر 2021 اختفت فيسبوك وإنستغرام وواتساب ست ساعات، مع أن خوادمها (servers) كانت تعمل وموصولةً بالكهرباء ومليئةً بالبيانات (data). أيُّ خطوةٍ من رحلة الخطوات الأربع (four-step trip) هي التي فشلت؟"},
-     "o": {"en": ["The servers crashed under the load and stopped answering requests",
-                  "The phone book step: the internet lost the directions to their computers",
-                  "Attackers broke in and deleted the pages the servers would send",
-                  "The CDN kept serving old copies instead of fetching fresh pages"],
-           "ar": ["انهارت الخوادم (servers) تحت الحمل (load) وتوقفت عن الرد على الطلبات (requests)",
-                  "خطوة دليل الهاتف (phone book): فقدت الإنترنت الاتجاهات (directions) إلى حواسيبهم",
-                  "اقتحم مهاجمون (attackers) الأنظمة وحذفوا الصفحات التي ترسلها الخوادم",
-                  "ظلت شبكة توصيل المحتوى (CDN) تقدّم نسخًا قديمة بدل جلب صفحاتٍ جديدة"]},
-     "a": 1,
-     "why": {"en": "Nothing was hacked and no server died: the routes that point to Facebook's DNS were withdrawn, so the phone book could not be reached. The internet is computers plus directions; lose the directions and you vanish while the machines hum along.",
-             "ar": "لم يُخترق شيء ولم يمت أي خادم (server): سُحبت المسارات (routes) التي تشير إلى نظام أسماء النطاقات (DNS) الخاص بفيسبوك، فتعذّر الوصول إلى دليل الهاتف (phone book). الإنترنت حواسيب + اتجاهات (directions)؛ اخسر الاتجاهات تختفِ والآلات تعمل."}},
-    {"id": "foundations-2", "level": 2, "lesson": "F.2",
-     "q": {"en": "Your agent built your app and says ‘It’s running at localhost:3000 — it works!’ You close your laptop lid and go to sleep. Where does your app live now?",
-           "ar": "بنى وكيلك (agent) تطبيقك وقال: «إنه يعمل على localhost:3000 — يعمل!». أغلقت غطاء حاسوبك المحمول (laptop) ونمت. أين يعيش تطبيقك الآن؟"},
-     "o": {"en": ["In the cloud, because running it locally also published it online",
-                  "In the repo, which keeps serving the app to visitors while you sleep",
-                  "In the database, which holds the app and keeps it available for users",
-                  "Nowhere — the recipe still exists, but nothing is cooking it now"],
-           "ar": ["في السحابة (cloud)، لأن تشغيله محليًا (locally) نشره على الإنترنت أيضًا",
-                  "في المستودع (repo)، الذي يواصل تقديم التطبيق للزوار وأنت نائم",
-                  "في قاعدة البيانات (database)، التي تحفظ التطبيق وتبقيه متاحًا للمستخدمين",
-                  "لا مكان — الوصفة (recipe) ما زالت موجودة، لكن لا شيء يطبخها الآن"]},
-     "a": 3,
-     "why": {"en": "Code is a recipe and a running program is cooking: close the lid and the cooking stops. ‘The code exists’ and ‘the app is up’ are different facts — the app needs an always-on server; a repo only stores drafts.",
-             "ar": "الكود (code) وصفة (recipe) والبرنامج العامل (running program) طبخ: أغلق الغطاء يتوقف الطبخ. «الكود موجود» و«التطبيق شغّال (the app is up)» حقيقتان مختلفتان — يحتاج التطبيق خادمًا (server) لا ينطفئ؛ والمستودع (repo) يخزّن المسودات فقط."}},
-    {"id": "foundations-3", "level": 2, "lesson": "F.4",
-     "q": {"en": "Last week you told your agent in chat ‘never touch the data folder.’ Today, in a fresh session, it deleted that folder while ‘cleaning up.’ What is the fix this course teaches?",
-           "ar": "الأسبوع الماضي قلت لوكيلك (agent) في المحادثة (chat): «لا تلمس مجلد البيانات (data folder) أبدًا». اليوم، في جلسةٍ (session) جديدة، حذف ذلك المجلد وهو «ينظّف». ما الإصلاح الذي تعلّمه هذه الدورة؟"},
-     "o": {"en": ["Put the rule in CLAUDE.md and set permissions so deletions need your yes",
-                  "Repeat the warning more firmly at the start of every new chat session",
-                  "Switch to a stronger model that remembers what you said in past chats",
-                  "Ask the agent to apologize and promise in writing not to do it again"],
-           "ar": ["ضع القاعدة في CLAUDE.md واضبط الأذونات (permissions) ليتطلب الحذف موافقتك",
-                  "كرّر التحذير بحزمٍ أكبر في بداية كل جلسة محادثةٍ (chat session) جديدة",
-                  "انتقل إلى نموذجٍ (model) أقوى يتذكر ما قلته في المحادثات السابقة",
-                  "اطلب من الوكيل (agent) أن يعتذر ويَعِد كتابةً ألا يكرر ذلك أبدًا"]},
-     "a": 0,
-     "why": {"en": "The agent has amnesia every session and sees only its window; a rule that lives in a chat scroll is gone. Write it into CLAUDE.md and make dangerous actions require your explicit yes — repeating it in chat is the mistake that keeps recurring.",
-             "ar": "الوكيل (agent) فاقدٌ للذاكرة (amnesia) في كل جلسة (session) ولا يرى إلا نافذته (window)؛ والقاعدة التي تعيش في سجل المحادثة (chat) تضيع. اكتبها في CLAUDE.md واجعل الأفعال الخطرة (dangerous actions) تتطلب موافقتك الصريحة — أما تكرارها في المحادثة فهو الخطأ الذي يعود دائمًا."}},
-    {"id": "foundations-4", "level": 3, "lesson": "F.5",
-     "q": {"en": "You asked for one word to change. Your agent says ‘v2 is deployed’ and sends a screenshot showing the new word. On your own phone the page still shows the old word. What is the right reading?",
-           "ar": "طلبت تغيير كلمةٍ واحدة. قال وكيلك (agent): «نُشرت (deployed) النسخة v2» وأرسل لقطة شاشة (screenshot) تُظهر الكلمة الجديدة. على هاتفك أنت ما زالت الصفحة تُظهر الكلمة القديمة. ما القراءة الصحيحة؟"},
-     "o": {"en": ["The deploy has failed, so roll back to v1 right away before more users see it",
-                  "The screenshot proves it is live; your phone’s browser is simply showing a bug",
-                  "‘Done’ is still a claim: a middleman may hold an old copy, so check again fresh",
-                  "Have the agent redeploy v2 over and over until your phone finally shows it"],
-           "ar": ["فشل النشر (deploy)، فارجع (roll back) إلى v1 فورًا قبل أن يراه مستخدمون أكثر",
-                  "لقطة الشاشة (screenshot) تثبت أنه حيّ (live)؛ متصفح (browser) هاتفك فيه خللٌ فحسب",
-                  "«تمّ (done)» ادعاء (claim): قد يحفظ وسيطٌ نسخةً قديمة، فافحص من جهازٍ آخر",
-                  "اجعل الوكيل (agent) يعيد نشر (redeploy) v2 مرةً بعد مرة حتى يُظهرها هاتفك"]},
-     "a": 2,
-     "why": {"en": "Evidence comes from where users stand and must survive a fresh look; helpful middlemen like a CDN keep old copies for a while. The builder’s screenshot is the reporting layer — exactly what the AWS dashboard story says can be wrong — and nothing yet shows the deploy failed.",
-             "ar": "الدليل (evidence) يأتي من حيث يقف المستخدمون ويجب أن يصمد أمام نظرةٍ جديدة (fresh look)؛ والوسطاء المتعاونون مثل شبكة توصيل المحتوى (CDN) يحتفظون بنسخ قديمة مدةً. لقطة شاشة البانيّ هي طبقة التقرير (reporting layer) — بالضبط ما تقول قصة لوحة AWS إنه قد يخطئ — ولا شيء بعدُ يُظهر أن النشر (deploy) فشل."}}
+    {
+      "id": "foundations-1",
+      "level": 1,
+      "lesson": "F.1",
+      "q": {
+        "en": "In October 2021 Facebook, Instagram and WhatsApp vanished for six hours, yet their servers were running, powered and full of data. Which step of the four-step trip failed?",
+        "ar": "في أكتوبر 2021 اختفت فيسبوك وإنستغرام وواتساب ست ساعات، مع أن خوادمها (servers) كانت تعمل وموصولةً بالكهرباء ومليئةً بالبيانات (data). أيُّ خطوةٍ من رحلة الخطوات الأربع (four-step trip) هي التي فشلت؟"
+      },
+      "o": {
+        "en": [
+          "The servers crashed under the load and stopped answering requests",
+          "The phone book step: the internet lost the way to their computers",
+          "Attackers broke in and deleted the pages the servers would send out",
+          "The CDN kept on serving old copies instead of fetching fresh pages"
+        ],
+        "ar": [
+          "انهارت الخوادم (servers) تحت الحمل (load) وتوقفت عن الرد على الطلبات (requests)",
+          "خطوة دليل الهاتف (phone book): فقدت الإنترنت الطريق (the way) إلى حواسيبهم",
+          "اقتحم مهاجمون (attackers) الأنظمة وحذفوا الصفحات التي ترسلها الخوادم",
+          "ظلت شبكة توصيل المحتوى (CDN) تقدّم نسخًا قديمة بدل جلب صفحاتٍ جديدة"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Nothing was hacked and no server died: the routes that point to Facebook's DNS were withdrawn, so the phone book could not be reached. The internet is computers plus directions; lose the directions and you vanish while the machines hum along.",
+        "ar": "لم يُخترق شيء ولم يمت أي خادم (server): سُحبت المسارات (routes) التي تشير إلى نظام أسماء النطاقات (DNS) الخاص بفيسبوك، فتعذّر الوصول إلى دليل الهاتف (phone book). الإنترنت حواسيب + اتجاهات (directions)؛ اخسر الاتجاهات تختفِ والآلات تعمل."
+      }
+    },
+    {
+      "id": "foundations-2",
+      "level": 2,
+      "lesson": "F.2",
+      "q": {
+        "en": "Your agent built your app and says ‘It’s running at localhost:3000 — it works!’ You close your laptop lid and go to sleep. Where does your app live now?",
+        "ar": "بنى وكيلك (agent) تطبيقك وقال: «إنه يعمل على localhost:3000 — يعمل!». أغلقت غطاء حاسوبك المحمول (laptop) ونمت. أين يعيش تطبيقك الآن؟"
+      },
+      "o": {
+        "en": [
+          "In the cloud, because running it locally also published it online",
+          "In the repo, which keeps serving the app to visitors while you sleep",
+          "In the database, which holds the app and keeps it available for users",
+          "Nowhere — the recipe still exists, but nothing is cooking it now"
+        ],
+        "ar": [
+          "في السحابة (cloud)، لأن تشغيله محليًا (locally) نشره على الإنترنت أيضًا",
+          "في المستودع (repo)، الذي يواصل تقديم التطبيق للزوار وأنت نائم",
+          "في قاعدة البيانات (database)، التي تحفظ التطبيق وتبقيه متاحًا للمستخدمين",
+          "لا مكان — الوصفة (recipe) ما زالت موجودة، لكن لا شيء يطبخها الآن"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Code is a recipe and a running program is cooking: close the lid and the cooking stops. ‘The code exists’ and ‘the app is up’ are different facts — the app needs an always-on server; a repo only stores drafts.",
+        "ar": "الكود (code) وصفة (recipe) والبرنامج العامل (running program) طبخ: أغلق الغطاء يتوقف الطبخ. «الكود موجود» و«التطبيق شغّال (the app is up)» حقيقتان مختلفتان — يحتاج التطبيق خادمًا (server) لا ينطفئ؛ والمستودع (repo) يخزّن المسودات فقط."
+      }
+    },
+    {
+      "id": "foundations-3",
+      "level": 2,
+      "lesson": "F.4",
+      "q": {
+        "en": "Last week you told your agent in chat ‘never touch the data folder.’ Today, in a fresh session, it deleted that folder while ‘cleaning up.’ What is the fix this course teaches?",
+        "ar": "الأسبوع الماضي قلت لوكيلك (agent) في المحادثة (chat): «لا تلمس مجلد البيانات (data folder) أبدًا». اليوم، في جلسةٍ (session) جديدة، حذف ذلك المجلد وهو «ينظّف». ما الإصلاح الذي تعلّمه هذه الدورة؟"
+      },
+      "o": {
+        "en": [
+          "Put the rule in CLAUDE.md and set permissions so deletions need your yes",
+          "Repeat the warning more firmly at the start of every new chat session",
+          "Switch to a stronger model that remembers what you said in past chats",
+          "Ask the agent to apologize and promise in writing not to do it again"
+        ],
+        "ar": [
+          "ضع القاعدة في CLAUDE.md واضبط الأذونات (permissions) ليتطلب الحذف موافقتك",
+          "كرّر التحذير بحزمٍ أكبر في بداية كل جلسة محادثةٍ (chat session) جديدة",
+          "انتقل إلى نموذجٍ (model) أقوى يتذكر ما قلته في المحادثات السابقة",
+          "اطلب من الوكيل (agent) أن يعتذر ويَعِد كتابةً ألا يكرر ذلك أبدًا"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "The agent has amnesia every session and sees only its window; a rule that lives in a chat scroll is gone. Write it into CLAUDE.md and make dangerous actions require your explicit yes — repeating it in chat is the mistake that keeps recurring.",
+        "ar": "الوكيل (agent) فاقدٌ للذاكرة (amnesia) في كل جلسة (session) ولا يرى إلا نافذته (window)؛ والقاعدة التي تعيش في سجل المحادثة (chat) تضيع. اكتبها في CLAUDE.md واجعل الأفعال الخطرة (dangerous actions) تتطلب موافقتك الصريحة — أما تكرارها في المحادثة فهو الخطأ الذي يعود دائمًا."
+      }
+    },
+    {
+      "id": "foundations-4",
+      "level": 3,
+      "lesson": "F.5",
+      "q": {
+        "en": "You asked for one word to change. Your agent says ‘v2 is deployed’ and sends a screenshot showing the new word. On your own phone the page still shows the old word. What is the right reading?",
+        "ar": "طلبت تغيير كلمةٍ واحدة. قال وكيلك (agent): «نُشرت (deployed) النسخة v2» وأرسل لقطة شاشة (screenshot) تُظهر الكلمة الجديدة. على هاتفك أنت ما زالت الصفحة تُظهر الكلمة القديمة. ما القراءة الصحيحة؟"
+      },
+      "o": {
+        "en": [
+          "The deploy has failed, so roll back to v1 right away before more users see it",
+          "The screenshot proves it is live; your phone’s browser is simply showing a bug",
+          "‘Done’ is still a claim: a middleman may hold an old copy, so check again fresh",
+          "Have the agent redeploy v2 over and over until your phone finally shows it"
+        ],
+        "ar": [
+          "فشل النشر (deploy)، فارجع (roll back) إلى v1 فورًا قبل أن يراه مستخدمون أكثر",
+          "لقطة الشاشة (screenshot) تثبت أنه حيّ (live)؛ متصفح (browser) هاتفك فيه خللٌ فحسب",
+          "«تمّ (done)» ادعاء (claim): قد يحفظ وسيطٌ نسخةً قديمة، فافحص من جهازٍ آخر",
+          "اجعل الوكيل (agent) يعيد نشر (redeploy) v2 مرةً بعد مرة حتى يُظهرها هاتفك"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Evidence comes from where users stand and must survive a fresh look; helpful middlemen like a CDN keep old copies for a while. The builder’s screenshot is the reporting layer — exactly what the AWS dashboard story says can be wrong — and nothing yet shows the deploy failed.",
+        "ar": "الدليل (evidence) يأتي من حيث يقف المستخدمون ويجب أن يصمد أمام نظرةٍ جديدة (fresh look)؛ والوسطاء المتعاونون مثل شبكة توصيل المحتوى (CDN) يحتفظون بنسخ قديمة مدةً. لقطة شاشة البانيّ هي طبقة التقرير (reporting layer) — بالضبط ما تقول قصة لوحة AWS إنه قد يخطئ — ولا شيء بعدُ يُظهر أن النشر (deploy) فشل."
+      }
+    }
   ],
   "evidence": [
-    {"id": "foundations-e1", "lesson": "F.5", "text": {"en": "I have opened my deployed page on my own phone and on a friend’s phone on another network, and seen the current version — not the agent’s screenshot.",
-                                                        "ar": "فتحت صفحتي المنشورة (deployed) على هاتفي وعلى هاتف صديقٍ في شبكةٍ (network) أخرى، ورأيت النسخة الحالية (current version) — لا لقطة شاشة (screenshot) الوكيل."}},
-    {"id": "foundations-e2", "lesson": "F.4", "text": {"en": "I have tested the brakes: I asked my agent to delete project data and watched it ask for my explicit yes instead of acting.",
-                                                        "ar": "اختبرت المكابح (tested the brakes): طلبت من وكيلي (agent) حذف بيانات المشروع ورأيته يطلب موافقتي الصريحة (explicit yes) بدل أن يتصرف."}}
+    {
+      "id": "foundations-e1",
+      "lesson": "F.5",
+      "text": {
+        "en": "I have opened my deployed page on my own phone and on a friend’s phone on another network, and seen the current version — not the agent’s screenshot.",
+        "ar": "فتحت صفحتي المنشورة (deployed) على هاتفي وعلى هاتف صديقٍ في شبكةٍ (network) أخرى، ورأيت النسخة الحالية (current version) — لا لقطة شاشة (screenshot) الوكيل."
+      }
+    },
+    {
+      "id": "foundations-e2",
+      "lesson": "F.4",
+      "text": {
+        "en": "I have tested the brakes: I asked my agent to delete project data and watched it ask for my explicit yes instead of acting.",
+        "ar": "اختبرت المكابح (tested the brakes): طلبت من وكيلي (agent) حذف بيانات المشروع ورأيته يطلب موافقتي الصريحة (explicit yes) بدل أن يتصرف."
+      }
+    }
   ]
 }

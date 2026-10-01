@@ -1,0 +1,135 @@
+{
+ "area": "m11",
+ "questions": [
+  {
+   "id": "m11-1",
+   "level": 1,
+   "lesson": "11.1",
+   "q": {
+    "en": "A large language model that Najm approved for summarising internal policy documents is now proposed for drafting the letters that tell customers their loan application was declined. Khalid says the model is already approved, so no new review is needed. What should Layla tell him?",
+    "ar": "نموذج لغوي كبير (large language model) اعتمده بنك نجم (Najm Bank) لتلخيص وثائق السياسات الداخلية (internal policy documents) مقترَحٌ الآن لصياغة خطابات رفض الائتمان (credit decline letters) التي تُبلغ العملاء (customers) برفض طلبات قروضهم (loan applications). ويقول خالد إن النموذج (model) معتمد أصلًا (already approved)، فلا حاجة إلى مراجعة جديدة (new review). بماذا ينبغي أن تجيبه ليلى؟"
+   },
+   "o": {
+    "en": [
+     "Reuse the approval, since the model, vendor and contract are unchanged",
+     "Make a new deploy decision, since the use, people and harms differ",
+     "Rely on the vendor's statement that it suits customer-facing letters",
+     "Approve it, since its internal summaries have proved accurate in use"
+    ],
+    "ar": [
+     "إعادة استخدام الاعتماد (approval)، لأن النموذج (model) والمورّد (vendor) والعقد (contract) لم تتغير",
+     "اتخاذ قرار نشر جديد (new deploy decision)، لأن الاستخدام (use) والأشخاص (people) والأضرار (harms) مختلفة",
+     "الاعتماد على تأكيد المورّد (vendor's statement) أن النموذج يناسب الخطابات الموجّهة إلى العملاء (customer-facing letters)",
+     "الموافقة عليه، لأن ملخصاته الداخلية (internal summaries) أثبتت دقتها (accuracy) في الاستخدام الفعلي (in use)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "The deploy decision is about this system, in this context, for these people: drafting customers' decline letters changes the context of use, who is affected and what can go wrong, so it needs its own analysis. An earlier approval, a vendor's word or a good record in another use does not prove the new use is right.",
+    "ar": "قرار النشر (deploy decision) يتعلق بهذا النظام، في هذا السياق (context)، لهؤلاء الناس: فصياغة خطابات رفض الائتمان (credit decline letters) للعملاء تغيّر سياق الاستخدام (context of use) ومن يتأثر به (who is affected) وما قد يقع من خطأ (what can go wrong)، فتحتاج إلى تحليل خاص بها (its own analysis). أما الاعتماد السابق (earlier approval)، أو كلام المورّد (vendor's word)، أو حسن الأداء في استخدام آخر (good record in another use)، فلا يُثبت أن الاستخدام الجديد (new use) صحيح."
+   }
+  },
+  {
+   "id": "m11-2",
+   "level": 2,
+   "lesson": "11.2",
+   "q": {
+    "en": "Najm's chatbot platform vendor quietly switches the bot to a newer underlying model. Within days the bot is misquoting card fees, and Najm learns of it from customer complaints. Which contract clause, had Najm secured it, would most directly have let Najm catch the problem before any customer was affected?",
+    "ar": "ينقل مورّد منصة روبوت المحادثة (chatbot platform vendor) لدى بنك نجم (Najm Bank) الروبوت (bot) بصمت (quietly) إلى نموذج أساسي أحدث (newer underlying model). وخلال أيام يبدأ الروبوت بذكر رسوم البطاقات (card fees) خطأً (misquoting)، ويعلم بنك نجم بذلك من شكاوى العملاء (customer complaints). أيّ بند تعاقدي (contract clause)، لو حصل عليه بنك نجم، كان سيتيح له على نحو مباشر (most directly) اكتشاف المشكلة (catch the problem) قبل أن يتأثر أي عميل (any customer was affected)؟"
+   },
+   "o": {
+    "en": [
+     "Notice within 48 hours of any serious malfunction or security incident",
+     "An annual independent audit report on the vendor's AI management system",
+     "Service levels on uptime and response times, backed by service credits",
+     "Advance notice of model and version changes, with a right to re-test"
+    ],
+    "ar": [
+     "إخطار خلال 48 ساعة (notice within 48 hours) بأي عطل جسيم (serious malfunction) أو حادث أمني (security incident)",
+     "تقرير تدقيق مستقل سنوي (annual independent audit report) عن نظام إدارة الذكاء الاصطناعي (AI management system) لدى المورّد (vendor)",
+     "مستويات خدمة (service levels) لوقت التشغيل وزمن الاستجابة (uptime and response times)، مدعومة بأرصدة خدمة (service credits)",
+     "إخطار مسبق (advance notice) بتغييرات النموذج والإصدار (model and version changes)، مع الحق في إعادة الاختبار (right to re-test)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "A change-notification clause gives advance notice of retraining or version changes, version pinning where possible and a right to re-test or terminate, so Najm can check behaviour before its customers do. Incident notification is the tempting choice, but it only applies once something has already gone wrong.",
+    "ar": "بند الإخطار بالتغييرات (change notification) يمنح إخطارًا مسبقًا (advance notice) بإعادة التدريب (retraining) أو تغيير الإصدارات (version changes)، وتثبيت الإصدار (version pinning) حيث أمكن، والحق في إعادة الاختبار أو الإنهاء (re-test or terminate)، فيتحقق بنك نجم (Najm Bank) من السلوك (behaviour) قبل أن يلاحظه عملاؤه. والإخطار بالحوادث (incident notification) هو الخيار المغري (tempting choice)، لكنه لا ينطبق إلا بعد أن يقع الخطأ فعلًا."
+   }
+  },
+  {
+   "id": "m11-3",
+   "level": 2,
+   "lesson": "11.3",
+   "q": {
+    "en": "Najm completed a FRIA for retail credit score v2 before first use and notified the results. A year later, Khalid wants to extend the score to self-employed applicants, a group the FRIA did not consider, and says the FRIA duty ended at first use. What should Layla advise?",
+    "ar": "أجرى بنك نجم (Najm Bank) تقييم الأثر على الحقوق الأساسية (FRIA) للتصنيف الائتماني للأفراد (retail credit score) v2 قبل الاستخدام الأول (first use) وأخطر بنتائجه (notified the results). وبعد عام يريد خالد توسيع استخدام الدرجة (score) لتشمل المتقدمين العاملين لحسابهم الخاص (self-employed applicants)، وهي مجموعة (group) لم يتناولها التقييم، ويقول إن واجب إجراء التقييم (FRIA duty) انتهى عند الاستخدام الأول. بماذا ينبغي أن تنصح ليلى؟"
+   },
+   "o": {
+    "en": [
+     "Update the FRIA, since the persons the system affects have changed",
+     "Do nothing, since Art. 27 asks for a FRIA only once, before first use",
+     "Redo the conformity assessment instead, as it replaces the FRIA here",
+     "Leave the new group to the FRIA's next scheduled annual reassessment"
+    ],
+    "ar": [
+     "تحديث التقييم (update the FRIA)، لأن الأشخاص المتأثرين (affected persons) بالنظام قد تغيّروا",
+     "لا شيء، لأن المادة 27 (Art. 27) لا تطلب التقييم (FRIA) إلا مرة واحدة، قبل الاستخدام الأول (first use)",
+     "إعادة تقييم المطابقة (conformity assessment) بدلًا منه، لأنه يحلّ محل التقييم (FRIA) هنا",
+     "ترك المجموعة الجديدة (new group) لإعادة التقييم السنوية (annual reassessment) المقررة التالية"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "A FRIA applies to first use but must be updated if any of its elements changes, and Najm's own review triggers include a new product or population. Treating it as a one-off ignores that duty, and conformity assessment is a separate provider duty that cannot stand in for the deployer's FRIA.",
+    "ar": "ينطبق تقييم الأثر على الحقوق الأساسية (FRIA) على الاستخدام الأول (first use)، لكن يجب تحديثه إذا تغيّر أي من عناصره (its elements)، ومحفّزات المراجعة (review triggers) لدى بنك نجم (Najm Bank) نفسه تشمل منتجًا أو فئة سكانية جديدة (new product or population). ومعاملته كإجراء لمرة واحدة (one-off) تتجاهل هذا الواجب، وتقييم المطابقة (conformity assessment) واجب مستقل على مقدّم النظام (provider duty) لا يحلّ محل تقييم المُشغِّل (deployer's FRIA)."
+   }
+  },
+  {
+   "id": "m11-4",
+   "level": 3,
+   "lesson": "11.4",
+   "q": {
+    "en": "Najm's CV-screening oversight dashboard shows an unremarkable override rate overall, but nearly all overrides come from one branch's recruiters, and most of them reject older candidates whom the tool had shortlisted. What is the soundest reading and next step?",
+    "ar": "تُظهر لوحة الإشراف (oversight dashboard) لأداة فرز السير الذاتية (CV-screening tool) في بنك نجم (Najm Bank) معدل تجاوز (override rate) عاديًا في مجمله، لكن شبه كل التجاوزات (nearly all overrides) تأتي من مسؤولي التوظيف (recruiters) في فرع واحد، وأغلبها يرفض مرشحين أكبر سنًا (older candidates) كانت الأداة قد أدرجتهم في القائمة المختصرة (shortlisted). ما القراءة الأسلم (soundest reading) والخطوة التالية (next step)؟"
+   },
+   "o": {
+    "en": [
+     "Signs of automation bias; retrain all recruiters to challenge the tool",
+     "Signs the tool is unfit there; suspend it in that branch and replace it",
+     "Signs of human bias; review those overrides and the reasons given",
+     "Signs of good judgement; recruiters are adding what the tool misses"
+    ],
+    "ar": [
+     "مؤشرات على تحيّز الأتمتة (automation bias)؛ إعادة تدريب (retrain) كل مسؤولي التوظيف (recruiters) على تحدّي الأداة (tool)",
+     "مؤشرات على أن الأداة غير ملائمة (unfit) هناك؛ إيقافها (suspend) في ذلك الفرع واستبدالها (replace)",
+     "مؤشرات على تحيّز بشري (human bias)؛ مراجعة تلك التجاوزات (overrides) والأسباب المقدَّمة لها (reasons given)",
+     "مؤشرات على حكم سليم (good judgement)؛ مسؤولو التوظيف (recruiters) يضيفون ما تفوّته الأداة (tool)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Overrides concentrated in certain staff and against one group of applicants point to inconsistent practice and possible human bias, so the next step is to examine the outcomes and reasons of the overridden cases. Reading them as good judgement assumes what that review should test, and automation bias shows as too few overrides, not targeted ones.",
+    "ar": "التجاوزات (overrides) المتركزة لدى موظفين معيّنين وضد مجموعة واحدة من المتقدمين (applicants) تشير إلى ممارسة غير متسقة (inconsistent practice) وتحيّز بشري محتمل (possible human bias)، لذا فالخطوة التالية فحص نتائج الحالات التي جرى تجاوزها (outcomes of overridden cases) وأسبابها. وقراءتها على أنها حكم سليم (good judgement) تفترض ما ينبغي لتلك المراجعة (review) أن تختبره، وتحيّز الأتمتة (automation bias) يظهر في قلة التجاوزات (too few overrides) لا في تجاوزات موجّهة (targeted overrides)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m11-e1",
+   "lesson": "11.1",
+   "text": {
+    "en": "I have written the alternatives section for a real or practice AI deployment, comparing it with doing nothing, a non-AI process and a simpler option, with the benefits, risks and rough cost of each",
+    "ar": "كتبتُ قسم «البدائل (alternatives)» لنشر ذكاء اصطناعي (AI deployment) حقيقي أو مُعدّ للتمرين (real or practice)، مقارنًا إياه بعدم فعل شيء (doing nothing)، وبعملية لا تعتمد على الذكاء الاصطناعي (non-AI process)، وبخيار أبسط (simpler option)، مع فوائد كل خيار ومخاطره (benefits and risks) وتكلفته التقريبية (rough cost)"
+   }
+  },
+  {
+   "id": "m11-e2",
+   "lesson": "11.4",
+   "text": {
+    "en": "I have designed an oversight dashboard for a real or practice AI system with five metrics, each with a threshold and the action it triggers, and can explain how each one detects automation bias or human bias",
+    "ar": "صمّمتُ لوحة إشراف (oversight dashboard) لنظام ذكاء اصطناعي (AI system) حقيقي أو مُعدّ للتمرين (real or practice) بخمسة مقاييس (metrics)، لكلٍّ منها عتبة (threshold) والإجراء الذي تستدعيه (action it triggers)، وأستطيع أن أشرح كيف يكشف كل مقياس تحيّز الأتمتة (automation bias) أو التحيّز البشري (human bias)"
+   }
+  }
+ ]
+}

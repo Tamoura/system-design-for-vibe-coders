@@ -16,7 +16,9 @@
     "aipm:build": "node scripts/build-aipm.mjs",
     "aipm:check": "node scripts/build-aipm.mjs --check",
     "assess:build": "node scripts/build-assessment.mjs",
-    "assess:check": "node scripts/build-assessment.mjs --check"
+    "assess:check": "node scripts/build-assessment.mjs --check",
+    "secai:build": "node scripts/build-secai.mjs",
+    "secai:check": "node scripts/build-secai.mjs --check"
   },
   "devDependencies": {
     "archiver": "^7.0.1",

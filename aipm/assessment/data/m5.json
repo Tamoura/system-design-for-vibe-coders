@@ -1,0 +1,135 @@
+{
+ "area": "m5",
+ "questions": [
+  {
+   "id": "m5-1",
+   "level": 1,
+   "lesson": "5.2",
+   "q": {
+    "en": "A product team at an insurer wants an AI assistant that drafts claim letters. Nobody yet knows whether claims handlers would use it, or whether a model can work from their messy claim files. How should the team choose its first prototype?",
+    "ar": "يريد فريق منتج (product team) في شركة تأمين (insurer) مساعدًا بالذكاء الاصطناعي (AI assistant) يصوغ خطابات المطالبات (drafts claim letters). ولا أحد يعرف بعد هل سيستخدمه موظفو المطالبات (claims handlers)، ولا هل يستطيع نموذج (model) أن يعمل من ملفات المطالبات الفوضوية (messy claim files). كيف ينبغي للفريق أن يختار نموذجه الأولي الأول (first prototype)؟"
+   },
+   "o": {
+    "en": [
+     "Build a thin slice, so that one prototype tests both risks end to end",
+     "Start in shadow mode, which gives real evidence with no risk to customers",
+     "Pick the riskiest open question and the cheapest rung that answers it",
+     "Build the rung nearest production, so that less of the work is thrown away"
+    ],
+    "ar": [
+     "بناء شريحة رفيعة (thin slice)، ليختبر نموذج أولي واحد (one prototype) الخطرين معًا (both risks) من طرف إلى طرف (end to end)",
+     "البدء بوضع الظل (shadow mode)، لأنه يعطي أدلة حقيقية (real evidence) دون أي خطر على العملاء (no risk to customers)",
+     "اختيار أخطر سؤال مفتوح (riskiest open question)، وأرخص درجة (cheapest rung) تجيب عنه",
+     "بناء الدرجة الأقرب إلى الإنتاج (nearest production)، كي يُهدَر أقل قدر من العمل (less work thrown away)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "A prototype exists to retire one specific risk cheaply, so each rung starts from the question it must answer, such as a Wizard of Oz test for value or a prompt prototype on real files for feasibility. A thin slice is the tempting all-in-one choice, but it builds the expensive rung first and can deliver a working feature nobody wants.",
+    "ar": "يوجد النموذج الأولي (prototype) ليزيل خطرًا محددًا (retire one specific risk) بتكلفة قليلة (cheaply)، لذا تبدأ كل درجة (rung) من السؤال الذي يجب أن تجيب عنه، مثل اختبار ساحر أوز (Wizard of Oz test) للقيمة (value)، أو نموذج أولي بالموجّه (prompt prototype) على ملفات حقيقية (real files) للجدوى التقنية (feasibility). أما الشريحة الرفيعة (thin slice) فهي الخيار الشامل المغري (tempting all-in-one choice)، لكنها تبني الدرجة المكلفة أولًا (expensive rung first)، وقد تسلّم ميزة عاملة لا يريدها أحد (working feature nobody wants)."
+   }
+  },
+  {
+   "id": "m5-2",
+   "level": 2,
+   "lesson": "5.2",
+   "q": {
+    "en": "Staff GenAI’s prompt prototype had a kill-or-rethink criterion: more than 4 of 60 masked employee questions answered with a policy clause that is not in the handbook, after two rounds of prompt changes. After round two the count is 7. The sponsor loved the demo and wants the thin slice to start next week. What should the product manager do?",
+    "ar": "كان للنموذج الأولي بالموجّه (prompt prototype) الخاص بمساعد الموظفين التوليدي (Staff GenAI) معيارُ إيقاف أو إعادة تفكير (kill-or-rethink criterion): أن يُجاب عن أكثر من 4 من أصل 60 سؤالًا مُقنَّعًا للموظفين (masked employee questions) ببندِ سياسةٍ (policy clause) غير موجود في الدليل (handbook)، بعد جولتين من تغييرات الموجّه (two rounds of prompt changes). وبعد الجولة الثانية (round two) بلغ العدد 7. وقد أُعجب الراعي (sponsor) بالعرض التوضيحي (demo)، ويريد بدء الشريحة الرفيعة (thin slice) الأسبوع المقبل. ماذا ينبغي أن يفعل مدير المنتج (product manager)؟"
+   },
+   "o": {
+    "en": [
+     "Start the thin slice now, and keep tuning the prompt in parallel",
+     "Loosen the criterion to 8 of 60, since most of the answers were good",
+     "Add a prompt rule against unlisted clauses, then start next week",
+     "Hold the thin slice; change approach or scope, rerun, then decide"
+    ],
+    "ar": [
+     "بدء الشريحة الرفيعة (thin slice) الآن، ومواصلة ضبط الموجّه (tuning the prompt) بالتوازي (in parallel)",
+     "تخفيف المعيار (loosen the criterion) إلى 8 من أصل 60، لأن معظم الإجابات كانت جيدة (most answers were good)",
+     "إضافة قاعدة في الموجّه (prompt rule) تمنع البنود غير المدرجة (unlisted clauses)، ثم البدء في الأسبوع المقبل (next week)",
+     "تعليق الشريحة الرفيعة (thin slice)، وتغيير النهج أو النطاق (approach or scope)، ثم إعادة التشغيل فالقرار (rerun, then decide)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "The kill criterion was written before the rung so that evidence, not enthusiasm, decides whether to spend more: 7 of 60 means change the approach or scope and rerun, or stop and record why. Building in parallel is tempting, but it spends thin-slice effort on an approach the agreed evidence has already failed.",
+    "ar": "كُتب معيار الإيقاف (kill criterion) قبل الدرجة (rung) كي تقرر الأدلة لا الحماسة (evidence, not enthusiasm) ما إذا كان الإنفاق الإضافي مبررًا (whether to spend more): و7 من 60 تعني تغيير النهج أو النطاق (approach or scope) وإعادة التشغيل (rerun)، أو التوقف وتسجيل السبب (stop and record why). أما البناء بالتوازي (building in parallel) فمغرٍ، لكنه ينفق جهد الشريحة الرفيعة (thin-slice effort) على نهج أسقطته الأدلة المتفق عليها (agreed evidence) بالفعل."
+   }
+  },
+  {
+   "id": "m5-3",
+   "level": 2,
+   "lesson": "5.3",
+   "q": {
+    "en": "A customer asks Najm Assist for the card replacement fee. It quotes last year’s fee, taken from an old marketing page that sits in the retrieval index beside the current fee schedule. What is the best product fix?",
+    "ar": "يسأل أحد العملاء نجم أسيست (Najm Assist) عن رسوم استبدال البطاقة (card replacement fee)، فيذكر رسوم العام الماضي (last year’s fee) نقلًا عن صفحة تسويقية قديمة (old marketing page) موجودة في فهرس الاسترجاع (retrieval index) بجانب جدول الرسوم الحالي (current fee schedule). ما أفضل إصلاح على مستوى المنتج (product fix)؟"
+   },
+   "o": {
+    "en": [
+     "Use only approved sheets and the fee schedule, with an update owner",
+     "Add a system prompt rule to always prefer the newest fee that it finds",
+     "Retrieve every page that mentions the fee, so the model can compare them",
+     "Switch to a larger model that is better at spotting outdated content"
+    ],
+    "ar": [
+     "الاقتصار على النشرات المعتمدة وجدول الرسوم (approved sheets and fee schedule)، مع مالك للتحديث (update owner)",
+     "إضافة قاعدة في موجّه النظام (system prompt rule) تقضي بأن يفضّل دائمًا أحدث رسوم يجدها (prefer the newest fee)",
+     "استرجاع كل صفحة تذكر هذه الرسوم (every page that mentions the fee)، كي يقارن النموذج بينها جميعًا (compare them)",
+     "الانتقال إلى نموذج أكبر (larger model) أقدر بنفسه على اكتشاف المحتوى القديم (spotting outdated content)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Context engineering decides authority and freshness: only the approved product sheets and fee schedule should count, and a named owner keeps them current within a set service level. A prompt rule is tempting, but the stale page stays in the context, and wording shapes behaviour without enforcing it.",
+    "ar": "تحدد هندسة السياق (context engineering) الموثوقية والحداثة (authority and freshness): فلا يُعتد إلا بنشرات المنتجات المعتمدة وجدول الرسوم (approved product sheets and fee schedule)، ويُبقيها مالك مسمّى (named owner) محدَّثة ضمن مستوى خدمة محدد (set service level). أما قاعدة الموجّه (prompt rule) فمغرية، لكن الصفحة القديمة (stale page) تبقى في السياق (context)، والصياغة توجّه السلوك (wording shapes behaviour) دون أن تفرضه (without enforcing it)."
+   }
+  },
+  {
+   "id": "m5-4",
+   "level": 3,
+   "lesson": "5.1",
+   "q": {
+    "en": "On the copilot’s first eval run, 5 of the 120 golden-set memos have a major error, inside the pilot floor of at most 1 memo in 20. But 4 of those 5 are among the 40 Arabic memos, and Arabic-speaking RMs are in the pilot. What should Faisal do?",
+    "ar": "في أول تشغيل للتقييم (first eval run) لمساعد مذكرات الائتمان (Credit Memo Copilot)، تحتوي 5 من أصل 120 من مذكرات المجموعة المرجعية (golden-set memos) على خطأ جسيم (major error)، وهذا ضمن الحد الأدنى للتجربة (pilot floor) البالغ مذكرة واحدة من كل 20 على الأكثر (at most 1 memo in 20). لكن 4 من هذه الخمس تقع بين المذكرات العربية الأربعين (40 Arabic memos)، ومديرو العلاقة الناطقون بالعربية (Arabic-speaking RMs) مشمولون في التجربة (in the pilot). ماذا ينبغي أن يفعل فيصل؟"
+   },
+   "o": {
+    "en": [
+     "Pilot in both languages, since the overall rate is inside the floor",
+     "Fix Arabic or pilot in English only, since Arabic alone misses the floor",
+     "Drop the Arabic memos from the golden set, since they distort the average",
+     "Pilot as planned, since RMs check and sign every memo before credit review"
+    ],
+    "ar": [
+     "بدء التجربة (pilot) باللغتين (both languages)، لأن المعدل الإجمالي (overall rate) يقع ضمن الحد الأدنى (floor)",
+     "إصلاح أداء العربية (fix Arabic) أو حصر التجربة في الإنجليزية (pilot in English only)، لأن العربية وحدها لا تبلغ الحد الأدنى (Arabic alone misses the floor)",
+     "حذف المذكرات العربية من المجموعة المرجعية (golden set)، لأنها تشوّه المتوسط العام (distort the average)",
+     "بدء التجربة كما هو مخطط (pilot as planned)، لأن مديري العلاقة (RMs) يراجعون كل مذكرة ويوقّعونها (check and sign) قبل مراجعة الائتمان (credit review)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Bars are split by segment because an average hides the cases that matter: 4 in 40 is 1 Arabic memo in 10, twice the floor’s rate, so Arabic must be fixed or taken out of pilot scope. Piloting on the overall figure is the tempting shortcut, but it gives Arabic-speaking RMs twice the major-error rate the floor allows.",
+    "ar": "تُقسَّم المعايير حسب الشريحة (split by segment) لأن المتوسط (average) يخفي الحالات المهمة: 4 من 40 تعني مذكرة عربية واحدة من كل 10 (1 in 10)، أي ضعف معدل الحد الأدنى (twice the floor’s rate)، فيجب إصلاح العربية أو إخراجها من نطاق التجربة (pilot scope). أما بدء التجربة بناءً على الرقم الإجمالي (overall figure) فهو الطريق المختصر المغري (tempting shortcut)، لكنه يعرّض مديري العلاقة الناطقين بالعربية (Arabic-speaking RMs) لضعف معدل الأخطاء الجسيمة (major-error rate) الذي يسمح به الحد الأدنى (floor)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m5-e1",
+   "lesson": "5.1",
+   "text": {
+    "en": "I have written a spec for an AI feature with behaviour examples, a must-never list and quality bars by segment and severity, pairing each bar with a counter-measure and listing the re-evaluation triggers.",
+    "ar": "كتبت مواصفات (spec) لميزة ذكاء اصطناعي (AI feature) تتضمن أمثلة السلوك (behaviour examples)، وقائمة «ممنوع أبدًا» (must-never list)، ومعايير الجودة حسب الشريحة والخطورة (quality bars by segment and severity)، وقرنت كل معيار بمقياس مضاد (counter-measure)، وأدرجت محفّزات إعادة التقييم (re-evaluation triggers)."
+   }
+  },
+  {
+   "id": "m5-e2",
+   "lesson": "5.2",
+   "text": {
+    "en": "I have run a prototype on a realistic, masked sample of real inputs, with its question and kill criterion written in advance, and shown its worst outputs alongside a \"what it takes to ship\" list.",
+    "ar": "شغّلت نموذجًا أوليًا (prototype) على عينة واقعية مُقنَّعة من مدخلات حقيقية (realistic, masked sample of real inputs)، بعد أن كتبت سؤاله ومعيار إيقافه (question and kill criterion) مسبقًا (in advance)، وعرضت أسوأ مخرجاته (worst outputs) بجانب قائمة «ما يلزم للإطلاق» (\"what it takes to ship\" list)."
+   }
+  }
+ ]
+}

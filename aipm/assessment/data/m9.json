@@ -1,0 +1,135 @@
+{
+  "area": "m9",
+  "questions": [
+    {
+      "id": "m9-1",
+      "level": 1,
+      "lesson": "9.2",
+      "q": {
+        "en": "Khalid asks why Rania's AI roadmap includes learning milestones, such as a spike result by a set date, when his other technology roadmaps simply list features with delivery dates. What is the main reason?",
+        "ar": "يسأل خالد لماذا تتضمن خارطة طريق الذكاء الاصطناعي (AI roadmap) لدى رانيا محطات تعلّم (learning milestones)، مثل نتيجة اختبار جدوى سريع (spike result) بحلول موعد محدد (by a set date)، بينما تكتفي خرائط الطريق التقنية الأخرى (other technology roadmaps) لديه بسرد الميزات مع مواعيد تسليمها (features with delivery dates). ما السبب الرئيسي (main reason)؟"
+      },
+      "o": {
+        "en": [
+          "Feasibility stays open longer: an acceptable error rate is often unproven until a prototype is scored on real cases",
+          "Usability stays open longer: staff usually need to learn good prompt writing before an AI product can help them much",
+          "Viability stays open longer: model prices often shift too fast to estimate any run cost per task ahead of the launch",
+          "Value stays open longer: customers often cannot say in interviews whether they would really want a new AI feature"
+        ],
+        "ar": [
+          "تبقى مخاطر الجدوى التقنية (feasibility risk) مفتوحة أطول: فبلوغ معدل خطأ مقبول (acceptable error rate) يظل غالبًا غير مُثبت حتى يُقيَّم نموذج أولي (prototype) على حالات حقيقية (real cases)",
+          "تبقى مخاطر سهولة الاستخدام (usability risk) مفتوحة أطول: فالموظفون (staff) يحتاجون عادةً إلى تعلّم كتابة موجّهات جيدة (good prompt writing) قبل أن يفيدهم منتج الذكاء الاصطناعي (AI product) كثيرًا",
+          "تبقى مخاطر الجدوى التجارية (viability risk) مفتوحة أطول: فأسعار النماذج (model prices) تتغير غالبًا بسرعة تمنع تقدير أي تكلفة تشغيل لكل مهمة (run cost per task) قبل الإطلاق (launch)",
+          "تبقى مخاطر القيمة (value risk) مفتوحة أطول: فالعملاء غالبًا لا يستطيعون القول في المقابلات (interviews) هل يريدون فعلًا ميزة ذكاء اصطناعي جديدة (new AI feature)"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "In AI products feasibility risk stays open far longer than in ordinary software: you often cannot know whether the product reaches an acceptable error rate until a prototype is evaluated on real cases, so the roadmap commits to dates for learning. Prices do drift several times a year, but run cost can still be estimated per task; drift is a reason to plan for model change, not to drop estimates.",
+        "ar": "في منتجات الذكاء الاصطناعي (AI products) تبقى مخاطر الجدوى التقنية (feasibility risk) مفتوحة أطول بكثير مما في البرمجيات العادية (ordinary software): فكثيرًا ما لا تعرف هل يبلغ المنتج معدل خطأ مقبولًا (acceptable error rate) حتى تقيّم نموذجًا أوليًا (prototype) على حالات حقيقية (real cases)، ولذلك تلتزم خارطة الطريق (roadmap) بمواعيد للتعلّم (dates for learning). صحيح أن الأسعار تنجرف (prices drift) عدة مرات في السنة، لكن تكلفة التشغيل (run cost) تظل قابلة للتقدير لكل مهمة (per task)؛ فالانجراف سبب للتخطيط لتغيّر النماذج (plan for model change)، لا للتخلي عن التقديرات (drop estimates)."
+      }
+    },
+    {
+      "id": "m9-2",
+      "level": 2,
+      "lesson": "9.1",
+      "q": {
+        "en": "Faisal's draft for the board calls Credit Memo Copilot a differentiator because it runs on the newest model with a prompt tuned over six months. Rania asks for evidence that it is building a lasting power, not just a benefit. Which evidence would best support the claim?",
+        "ar": "تصف مسودة فيصل لمجلس الإدارة (draft for the board) مساعدَ مذكرات الائتمان (Credit Memo Copilot) بأنه عنصر تمايز (differentiator)، لأنه يعمل على أحدث نموذج (newest model) بموجّه مضبوط على مدى ستة أشهر (prompt tuned over six months). تطلب رانيا دليلًا (evidence) على أنه يبني قوة دائمة (lasting power)، لا مجرد منفعة (benefit). أيّ دليل يدعم هذا الادعاء على أفضل وجه (best support the claim)؟"
+      },
+      "o": {
+        "en": [
+          "Its drafts score higher than a rival bank's copilot on a public benchmark this quarter",
+          "Its prompt has grown longer and more detailed with each release since the SME pilot",
+          "Its share of RM memos keeps rising as templates, past memos and habits build up in it",
+          "It launched before any other bank in Qatar offered RMs a copilot for credit memos"
+        ],
+        "ar": [
+          "تحصل مسوداته (drafts) على درجات أعلى من مساعد بنك منافس (rival bank's copilot) في معيار مرجعي عام (public benchmark) هذا الفصل (this quarter)",
+          "ازداد موجّهه (prompt) طولًا وتفصيلًا مع كل إصدار (each release) منذ المشروع التجريبي للشركات الصغيرة (SME pilot)",
+          "ترتفع باستمرار (keeps rising) حصته من مذكرات مديري العلاقات (share of RM memos)، مع تراكم القوالب والمذكرات السابقة والعادات فيه (templates, past memos and habits build up in it)",
+          "أُطلق (launched) قبل أن يقدّم أي بنك آخر في قطر (any other bank in Qatar) لمديري العلاقات (RMs) مساعدًا لمذكرات الائتمان (copilot for credit memos)"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Power needs a benefit and a barrier: a rising share of memos drafted in the tool, as it holds templates, past memos and RM habits, shows switching costs forming, the power the strategy expects of it. A benchmark lead is the tempting answer, but it is only a benefit: a rival renting the same model can close it next quarter.",
+        "ar": "تحتاج القوة (power) إلى منفعة (benefit) وحاجز (barrier) معًا: فالحصة المتزايدة من المذكرات المصاغة في الأداة (share of memos drafted in the tool)، مع احتفاظها بالقوالب والمذكرات السابقة وعادات مديري العلاقات (templates, past memos and RM habits)، تُظهر تكاليف تحويل (switching costs) آخذة في التشكّل، وهي القوة التي تنتظرها الاستراتيجية منه (the power the strategy expects of it). أما التفوق في معيار مرجعي (benchmark lead) فهو الإجابة المغرية (tempting answer)، لكنه منفعة فقط (only a benefit): إذ يستطيع منافس يستأجر النموذج نفسه (rival renting the same model) أن يسدّ الفجوة في الفصل القادم (next quarter)."
+      }
+    },
+    {
+      "id": "m9-3",
+      "level": 2,
+      "lesson": "9.3",
+      "q": {
+        "en": "The Smart Alerts team's first golden set and rubric are two months late. Fraud analysts were asked to label cases and review outputs in their spare time, and their own caseloads are always full. What is the best fix?",
+        "ar": "تأخرت أول مجموعة مرجعية (golden set) وأول معيار تقدير (rubric) لفريق التنبيهات الذكية (Smart Alerts team) شهرين. فقد طُلب من محللي الاحتيال (fraud analysts) وسم الحالات (label cases) ومراجعة المخرجات (review outputs) في وقت فراغهم (spare time)، بينما أعباء عملهم الخاصة (own caseloads) ممتلئة دائمًا. ما أفضل حل (best fix)؟"
+      },
+      "o": {
+        "en": [
+          "Have Dana's data scientists write the rubric, since evaluation design is their own job",
+          "Ask the governance partner to write the rubric, since governance reviews product quality",
+          "Have a large model draft and grade the cases, so that no analyst time is needed at all",
+          "Second named analysts for time agreed in writing, since rubrics need their judgement"
+        ],
+        "ar": [
+          "تكليف علماء البيانات لدى دانة (Dana's data scientists) بكتابة معيار التقدير (rubric)، لأن تصميم التقييم (evaluation design) من صميم عملهم",
+          "الطلب من شريك الحوكمة (governance partner) أن يكتب معيار التقدير (rubric)، لأن الحوكمة تراجع جودة المنتج (product quality)",
+          "جعل نموذج كبير (large model) يصوغ الحالات ويقيّمها (draft and grade the cases)، فلا يلزم أي وقت من المحللين (analyst time)",
+          "إعارة محللين مسمّين (second named analysts) لوقت متفق عليه كتابةً (time agreed in writing)، لأن معايير التقدير (rubrics) تحتاج إلى حكمهم (their judgement)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "The quality of an AI product is capped by the judgement behind its evals, so domain experts belong on the team with time agreed in writing and counted towards their objectives, as Najm does with its seconded RMs. Handing the rubric to data scientists is tempting, but the golden set would then be written by people who have never worked a fraud alert.",
+        "ar": "جودة منتج الذكاء الاصطناعي (AI product) محدودة بسقف جودة الحكم (quality of the judgement) الذي تقوم عليه تقييماته (evals)، لذا ينتمي خبراء المجال (domain experts) إلى الفريق بوقت متفق عليه كتابةً (agreed in writing) ومحتسب ضمن أهدافهم (objectives)، كما يفعل نجم مع مديري العلاقات المُعارين (seconded RMs). أما تسليم معيار التقدير (rubric) لعلماء البيانات (data scientists) فمغرٍ، لكن المجموعة المرجعية (golden set) سيكتبها حينئذٍ أشخاص لم يعالجوا قط تنبيه احتيال (fraud alert)."
+      }
+    },
+    {
+      "id": "m9-4",
+      "level": 3,
+      "lesson": "9.4",
+      "q": {
+        "en": "As SME Instant Finance moves to wider launch, Dana's slice evaluation shows that businesses under two years old are declined far more often than older ones with similar repayment records. A threshold change narrows the gap but lowers overall approval accuracy slightly. Dana offers to pick the setting herself and fold it into the next model update so the launch does not slip. What should Faisal do?",
+        "ar": "مع انتقال التمويل الفوري للشركات الصغيرة (SME Instant Finance) إلى إطلاق أوسع (wider launch)، يُظهر تقييم الشرائح (slice evaluation) الذي أجرته دانة أن المنشآت التي يقل عمرها عن سنتين (businesses under two years old) تُرفض (declined) أكثر بكثير من المنشآت الأقدم ذات سجلات السداد المماثلة (similar repayment records). يضيّق تعديل العتبة (threshold change) الفجوة (narrows the gap)، لكنه يخفض دقة الموافقات الإجمالية (overall approval accuracy) قليلًا. تعرض دانة أن تختار الإعداد بنفسها (pick the setting herself) وتُدرجه في تحديث النموذج القادم (fold it into the next model update) حتى لا يتأخر الإطلاق (launch does not slip). ماذا ينبغي أن يفعل فيصل؟"
+      },
+      "o": {
+        "en": [
+          "Let Dana choose, since picking a fairness measure is a technical call for the data scientist",
+          "Take both settings and evidence to the accountable owners, since it is a genuine trade-off",
+          "Keep the current setting, since overall accuracy is the figure the board will look at first",
+          "Apply the change, since a fair model must satisfy every common fairness measure at once"
+        ],
+        "ar": [
+          "ترك الاختيار لدانة، لأن انتقاء مقياس الإنصاف (fairness measure) قرار تقني (technical call) يخص عالمة البيانات (data scientist)",
+          "عرض الإعدادين وأدلتهما (both settings and evidence) على المالكين المساءَلين (accountable owners)، لأنها مفاضلة حقيقية (genuine trade-off)",
+          "الإبقاء على الإعداد الحالي (current setting)، لأن الدقة الإجمالية (overall accuracy) هي الرقم الذي سينظر إليه مجلس الإدارة (board) أولًا",
+          "تطبيق التعديل (apply the change)، لأن النموذج المنصف (fair model) يجب أن يستوفي كل مقاييس الإنصاف الشائعة (common fairness measures) معًا"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "This is a genuine trade-off, so the options go to the accountable owners with the evidence and risk visible, and the fairness measure chosen is a documented judgement; a trade-off hidden in a model setting becomes a decision nobody knowingly made. Leaving it to Dana is tempting because her team owns the fairness report, but producing the evidence is not the same as owning the decision.",
+        "ar": "هذه مفاضلة حقيقية (genuine trade-off)، لذا تُعرض الخيارات على المالكين المساءَلين (accountable owners) مع إظهار الأدلة والمخاطر (evidence and risk visible)، واختيار مقياس الإنصاف (fairness measure) حكم موثّق (documented judgement)؛ فالمفاضلة المخفية في إعداد النموذج (hidden in a model setting) تصبح قرارًا لم يتخذه أحد عن وعي (nobody knowingly made). وترك الأمر لدانة مغرٍ لأن فريقها يملك تقرير الإنصاف (fairness report)، لكن إنتاج الأدلة (producing the evidence) ليس هو امتلاك القرار (owning the decision)."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m9-e1",
+      "lesson": "9.2",
+      "text": {
+        "en": "I have written a bet card for a real roadmap item with all six fields filled, including a measurable kill criterion agreed before work started and a dated next learning milestone.",
+        "ar": "كتبت بطاقة رهان (bet card) لبند حقيقي في خارطة الطريق (roadmap item) بحقولها الستة كاملة (all six fields)، ومنها معيار إيقاف قابل للقياس (measurable kill criterion) اتُّفق عليه قبل بدء العمل (before work started)، ومحطة تعلّم تالية مؤرّخة (dated next learning milestone)."
+      }
+    },
+    {
+      "id": "m9-e2",
+      "lesson": "9.4",
+      "text": {
+        "en": "I have written the responsible-AI section of a PRD in which every requirement has a source, a product design, evidence needed before launch and one owner.",
+        "ar": "كتبت قسم الذكاء الاصطناعي المسؤول في وثيقة متطلبات المنتج (responsible-AI section of a PRD)، وفيه لكل متطلب (requirement) مصدر (source) وتصميم للمنتج (product design) وأدلة مطلوبة قبل الإطلاق (evidence needed before launch) ومالك واحد (one owner)."
+      }
+    }
+  ]
+}

@@ -6,27 +6,27 @@
       "level": 1,
       "lesson": "8.1",
       "q": {
-        "en": "Your agent's commit deleted 600+ files: it branched from a stale base and ran `git add .`. Review caught it this time. What does the course say actually prevents a repeat?",
-        "ar": "حذف إيداعٌ (commit) أجراه وكيلك (agent) أكثر من 600 ملف: تفرّع من أساس قديم (stale base) ثم نفّذ `git add .` — وقد كشفته المراجعة (review) هذه المرة. ما الذي يمنع التكرار فعلًا بحسب المقرر؟"
+        "en": "Your agent branched from a stale base, ran `git add .` and committed, deleting 600+ files. Review caught it this time. Which response actually prevents a repeat?",
+        "ar": "تفرّع وكيلك (agent) من أساس قديم (stale base)، ونفّذ `git add .` ثم أودَع (committed)، فحذف أكثر من 600 ملف (files). وقد كشفته المراجعة (review) هذه المرة. أيّ استجابة تمنع التكرار فعلًا (actually prevents a repeat)؟"
       },
       "o": {
         "en": [
-          "A line in the prompt telling the agent to double-check before it commits",
+          "A line in the prompt telling the agent to double-check every commit it makes",
           "A pre-commit hook that blocks commits over ~30 files, with a logged override",
-          "Reading every staged diff line by line yourself before any commit lands",
-          "Switching the agent to a slower, more careful model so it rushes fewer commits"
+          "A habit of reading every staged diff line by line yourself before each commit",
+          "A slower, more careful model for the agent, so it rushes fewer of its commits"
         ],
         "ar": [
-          "سطر في الأمر (prompt) يطلب من الوكيل أن يتحقق مرتين قبل أن يودِع أي تغيير",
-          "خطّاف ما قبل الإيداع (pre-commit hook) يمنع ما فوق 30 ملفًا، مع تجاوز مُسجَّل",
-          "أن تقرأ بنفسك كل فرق مُجهَّز (staged diff) سطرًا سطرًا قبل أي إيداع",
-          "تحويل الوكيل إلى نموذج (model) أبطأ كي يقلّ تسرّعه في الإيداعات (commits)"
+          "سطر في الأمر (prompt) يطلب من الوكيل (agent) أن يتحقق مرتين (double-check) من كل إيداع (commit) يجريه",
+          "خطّاف ما قبل الإيداع (pre-commit hook) يمنع الإيداعات فوق نحو 30 ملفًا، مع تجاوز مُسجَّل (logged override)",
+          "عادة أن تقرأ بنفسك كل فرق مُجهَّز (staged diff) سطرًا سطرًا (line by line) قبل كل إيداع (commit)",
+          "نموذج (model) أبطأ وأكثر حذرًا (more careful) للوكيل، كي تقلّ إيداعاته المتسرّعة (rushed commits)"
         ]
       },
       "a": 1,
       "why": {
-        "en": "\"Be careful\" is a wish, not a control: at agent speed only mechanical rules survive, and a hook runs whether anyone remembers it or not. A line in the prompt is English in a chat, which the agent can skip.",
-        "ar": "عبارة «كن حذرًا» أمنية (wish) لا ضابط (control): بسرعة الوكيل لا تصمد إلا القواعد الآلية (mechanical rules)، والخطّاف (hook) يعمل سواء تذكّره أحد أم لا. أما سطر في الأمر (prompt) فنصٌّ في محادثة قد يتخطّاه الوكيل."
+        "en": "\"Be careful\" is a wish, not a control: at agent speed only mechanical rules survive, and a hook runs whether anyone remembers it or not. A line in the prompt is English in a chat, which the agent can skip, and a reading habit is just \"be careful\" again.",
+        "ar": "عبارة «كن حذرًا (be careful)» أمنية (wish) لا ضابط (control): بسرعة الوكيل (agent speed) لا تصمد إلا القواعد الآلية (mechanical rules)، والخطّاف (hook) يعمل سواء تذكّره أحد أم لا. أما سطر في الأمر (prompt) فنصٌّ إنجليزي في محادثة (English in a chat) قد يتخطّاه الوكيل، وعادة القراءة ليست إلا «كن حذرًا» من جديد."
       }
     },
     {
@@ -35,7 +35,7 @@
       "lesson": "8.2",
       "q": {
         "en": "Relay has ~1,990 green tests, and most server tests mock the database. Last week a bad migration broke production while every test passed. Your agent suggests adding 300 more tests. What should you do instead?",
-        "ar": "لدى Relay نحو 1990 اختبارًا ناجحًا (green tests)، ومعظم اختبارات الخادم (server tests) تحاكي قاعدة البيانات (mock the database). وفي الأسبوع الماضي كسر ترحيلٌ (migration) سيئ بيئة الإنتاج (production) بينما نجحت كل الاختبارات. يقترح وكيلك (agent) إضافة 300 اختبار آخر. ماذا تفعل بدلًا من ذلك؟"
+        "ar": "لدى Relay نحو 1990 اختبارًا ناجحًا (green tests)، ومعظم اختبارات الخادم (server tests) تحاكي قاعدة البيانات (mock the database). وفي الأسبوع الماضي كسر ترحيلٌ سيئ (bad migration) بيئة الإنتاج (production) بينما نجحت كل الاختبارات (every test passed). يقترح وكيلك (agent) إضافة 300 اختبار آخر. ماذا تفعل بدلًا من ذلك (instead)؟"
       },
       "o": {
         "en": [
@@ -45,16 +45,16 @@
           "Run the riskiest data-layer suites against a real in-memory database"
         ],
         "ar": [
-          "ارفع هدف التغطية (coverage target) إلى 95% واطلب من الوكيل (agent) سدّ الفجوات",
-          "أضف محاكاة (mocks) للترحيل تتحقق من أن استعلاماته تُنفَّذ بالترتيب الصحيح",
-          "شغّل الحزمة (suite) كاملة ليلًا أيضًا كي تظهر الإخفاقات (failures) أبكر",
-          "شغّل أخطر حزم طبقة البيانات (data layer) على قاعدة بيانات حقيقية في الذاكرة"
+          "ارفع هدف التغطية (coverage target) إلى 95% واطلب من الوكيل (agent) سدّ الفجوات (fill in the gaps)",
+          "أضف محاكاة (mocks) للترحيل (migration) تتحقق من أن استعلاماته (queries) تُنفَّذ بالترتيب الصحيح (right order)",
+          "شغّل الحزمة كاملة (full suite) ليلًا أيضًا (nightly)، كي تظهر الإخفاقات (failures) أبكر",
+          "شغّل أخطر حزم طبقة البيانات (data-layer suites) على قاعدة بيانات حقيقية في الذاكرة (real in-memory database)"
         ]
       },
       "a": 3,
       "why": {
         "en": "A test that mocks the layer it's about proves only that the mock works; data bugs like a bad migration need a real engine. More mocked tests, or mocks that check call order, add vanity coverage and brittleness, not truth.",
-        "ar": "الاختبار الذي يحاكي (mocks) الطبقة التي يختبرها لا يثبت إلا أن المحاكاة تعمل؛ وأخطاء البيانات كالترحيل (migration) السيئ تحتاج محرّكًا حقيقيًا (real engine). وإضافة اختبارات محاكاة أكثر، أو محاكاة تفحص ترتيب الاستدعاءات، تضيف تغطية زينة (vanity coverage) وهشاشة (brittleness) لا حقيقة."
+        "ar": "الاختبار الذي يحاكي (mocks) الطبقة التي يختبرها لا يثبت إلا أن المحاكاة (mock) تعمل؛ وأخطاء البيانات (data bugs) كالترحيل السيئ (bad migration) تحتاج محرّكًا حقيقيًا (real engine). وإضافة اختبارات محاكاة أكثر، أو محاكاة تفحص ترتيب الاستدعاءات (call order)، تضيف تغطية زائفة (vanity coverage) وهشاشة (brittleness) لا حقيقة."
       }
     },
     {
@@ -63,26 +63,26 @@
       "lesson": "8.3",
       "q": {
         "en": "Relay's CI preflight fails on every push because its lockfile check assumes the wrong package manager. The team pushes through the red. Your agent offers to mark it `continue-on-error`. What's the right move?",
-        "ar": "يفشل الفحص التمهيدي (preflight) في التكامل المستمر (CI) لدى Relay مع كل دفع (push)، لأن فحص ملف القفل (lockfile) فيه يفترض مدير حزم (package manager) خاطئًا. والفريق يدفع متجاهلًا الأحمر. يعرض وكيلك (agent) وسمه بـ `continue-on-error`. ما الخطوة الصحيحة؟"
+        "ar": "يفشل الفحص المسبق (preflight) في التكامل المستمر (CI) لدى Relay مع كل دفع (push)، لأن فحص ملف القفل (lockfile check) فيه يفترض مدير حِزَم (package manager) خاطئًا. والفريق يدفع عبر الأحمر (pushes through the red). يعرض وكيلك (agent) وسمه بـ `continue-on-error`. ما الخطوة الصحيحة (the right move)؟"
       },
       "o": {
         "en": [
-          "Fix the check or delete it today, then watch it both fail and pass",
+          "Fix the check today and watch it fail and pass, or delete it today",
           "Accept the agent's offer so the check still runs but no longer blocks",
           "Leave it as is, since everyone already knows it's a false alarm",
           "Add a second check whose job is to flag when the first one is wrong"
         ],
         "ar": [
-          "أصلِح الفحص أو احذفه اليوم، ثم شاهده يفشل (fail) وينجح (pass)",
-          "اقبل عرض الوكيل (agent) كي يبقى الفحص يعمل لكنه لا يمنع (block) شيئًا",
-          "اتركه كما هو، فالجميع يعرف أصلًا أنه إنذار كاذب (false alarm)",
-          "أضف فحصًا ثانيًا مهمته أن ينبّه حين يكون الفحص الأول مخطئًا"
+          "أصلِح الفحص (fix the check) اليوم وشاهده يفشل وينجح (fail and pass)، أو احذفه اليوم (delete it today)",
+          "اقبل عرض الوكيل (agent) كي يبقى الفحص يعمل (still runs) لكنه لا يعود يمنع (blocks) شيئًا",
+          "اتركه كما هو (leave it)، فالجميع يعرف أصلًا أنه إنذار كاذب (false alarm)",
+          "أضف فحصًا ثانيًا (second check) مهمته أن ينبّه (flag) حين يكون الفحص الأول مخطئًا"
         ]
       },
       "a": 0,
       "why": {
-        "en": "A check everyone ignores trains the \"push through the red\" reflex that lets the one real failure through, so the only options are fix it or delete it. `continue-on-error` turns it into a check that can never fail: decoration, not a gate.",
-        "ar": "الفحص الذي يتجاهله الجميع يدرّبهم على عادة «ادفع رغم الأحمر» التي تُمرّر الإخفاق الحقيقي الوحيد، فلا خيار إلا إصلاحه أو حذفه. ووسمه بـ `continue-on-error` يجعله فحصًا لا يستطيع أن يفشل: زينة لا بوّابة (gate)."
+        "en": "A check everyone ignores trains the \"push through the red\" reflex that lets the one real failure through, so the only moves are to fix it (and see it fail and pass) or delete it, today. `continue-on-error` turns it into a check that can never fail: decoration, not a gate.",
+        "ar": "الفحص (check) الذي يتجاهله الجميع يدرّبهم على ردّ الفعل «ادفع عبر الأحمر (push through the red)» الذي يُمرّر الفشل الحقيقي الوحيد (the one real failure)، فلا خطوة إلا إصلاحه — مع رؤيته يفشل وينجح (fail and pass) — أو حذفه، اليوم. ووسمه بـ `continue-on-error` يجعله فحصًا لا يستطيع أن يفشل (can never fail): زينة (decoration) لا بوّابة (gate)."
       }
     },
     {
@@ -91,26 +91,26 @@
       "lesson": "8.4",
       "q": {
         "en": "Your agent fixes a missing-function error by installing a package you've never heard of. The build is green and the lockfile now records it. How should you judge this?",
-        "ar": "يصلح وكيلك (agent) خطأ دالّة مفقودة (missing function) بتثبيت حزمة (package) لم تسمع بها من قبل. البناء (build) ناجح، وملف القفل (lockfile) صار يسجّلها. كيف تحكم على ذلك؟"
+        "ar": "يصلح وكيلك (agent) خطأ دالّة مفقودة (missing-function error) بتثبيت حزمة (package) لم تسمع بها من قبل. البناء أخضر (build is green)، وملف القفل (lockfile) صار يسجّلها. كيف تحكم على ذلك (judge this)؟"
       },
       "o": {
         "en": [
           "Fine: the lockfile pins its exact version, so the supply chain is covered",
           "Fine, as long as the audit gate reports no known CVEs for the package",
           "Stop: get a one-line why, check downloads, last release and exact name",
-          "Delete the lockfile so later installs always pull the newest patched version"
+          "Stop: delete the lockfile so later installs pull the newest patched version"
         ],
         "ar": [
-          "لا بأس: ملف القفل (lockfile) يثبّت نسختها بالضبط، فسلسلة التوريد (supply chain) مؤمَّنة",
-          "لا بأس، ما دامت بوّابة التدقيق (audit gate) لا تُبلغ عن ثغرات معروفة (CVEs) فيها",
-          "توقّف: اطلب سببًا من سطر، وافحص التنزيلات وآخر إصدار ودقة الاسم",
-          "احذف ملف القفل (lockfile) كي تجلب التثبيتات اللاحقة دائمًا أحدث نسخة مُرقَّعة"
+          "لا بأس: ملف القفل (lockfile) يثبّت نسختها الدقيقة (exact version)، فسلسلة التوريد (supply chain) مغطّاة",
+          "لا بأس، ما دامت بوّابة التدقيق (audit gate) لا تُبلغ عن ثغرات معروفة (known CVEs) في الحزمة (package)",
+          "توقّف: اطلب سببًا من سطر (one-line why)، وافحص التحميلات (downloads) وآخر إصدار (last release) ودقة الاسم (exact name)",
+          "توقّف: احذف ملف القفل (lockfile) كي تجلب التثبيتات اللاحقة (later installs) أحدث نسخة مُرقَّعة (newest patched version)"
         ]
       },
       "a": 2,
       "why": {
-        "en": "Agents install whatever makes the error go away; every new package needs a one-line justification, a 60-second sanity check (popular, maintained, not a typosquat, not a duplicate) and your explicit yes. A lockfile and an audit gate guard against drift and known CVEs, not against a typosquat or an abandoned package nobody chose.",
-        "ar": "الوكلاء (agents) يثبّتون أي شيء يُخفي الخطأ؛ وكل حزمة جديدة تحتاج تبريرًا من سطر، وفحص سلامة (sanity check) من ستين ثانية (منتشرة، مُصانة، ليست تصيّدًا إملائيًا (typosquat)، وليست مكرّرة) وموافقتك الصريحة. أما ملف القفل وبوّابة التدقيق فيحميان من الانجراف (drift) ومن الثغرات المعروفة، لا من حزمة تصيّد أو حزمة مهجورة لم يخترها أحد."
+        "en": "Agents install whatever makes the error go away; every new package needs a one-line justification, a 60-second sanity check (popular, maintained, not a typosquat, not a duplicate) and your explicit yes. A lockfile and an audit gate guard against drift and known CVEs, not against a typosquat or an abandoned package nobody chose, and deleting the lockfile throws away your strongest control.",
+        "ar": "الوكلاء (agents) يثبّتون كل ما يُسكِت الخطأ (error)؛ وكل حزمة جديدة (new package) تحتاج تبريرًا من سطر (one-line justification)، وفحص سلامة (sanity check) من 60 ثانية — منتشرة، مُصانة (maintained)، ليست تصيّدًا إملائيًا (typosquat)، وليست مكرّرة — وموافقتك الصريحة. أما ملف القفل (lockfile) وبوّابة التدقيق (audit gate) فيحميان من الانحراف (drift) ومن الثغرات المعروفة (known CVEs)، لا من حزمة تصيّد أو حزمة مهجورة (abandoned package) لم يخترها أحد، وحذف ملف القفل يرمي أقوى ضوابطك (strongest control)."
       }
     }
   ],
@@ -120,7 +120,7 @@
       "lesson": "8.1",
       "text": {
         "en": "I have watched my pre-commit hook block a 600-file deletion I staged on purpose, and then seen a normal small commit pass through it",
-        "ar": "لقد شاهدت خطّاف ما قبل الإيداع (pre-commit hook) لديّ يمنع حذف 600 ملف جهّزته (staged) عمدًا، ثم رأيت إيداعًا (commit) صغيرًا عاديًا يمرّ عبره"
+        "ar": "لقد شاهدت خطّاف ما قبل الإيداع (pre-commit hook) لديّ يمنع حذف 600 ملف (600-file deletion) جهّزته عمدًا (staged on purpose)، ثم رأيت إيداعًا صغيرًا عاديًا (normal small commit) يمرّ عبره"
       }
     },
     {
@@ -128,7 +128,7 @@
       "lesson": "8.3",
       "text": {
         "en": "I have planted the exact problem a CI check targets and watched it go red, then fixed it and watched the same check go green",
-        "ar": "لقد زرعت المشكلة نفسها التي يستهدفها فحصٌ في التكامل المستمر (CI check) وشاهدته يتحوّل إلى الأحمر، ثم أصلحتها وشاهدت الفحص نفسه يتحوّل إلى الأخضر"
+        "ar": "لقد زرعت (planted) المشكلة نفسها التي يستهدفها فحص تكامل مستمر (CI check) وشاهدته يتحوّل إلى الأحمر (go red)، ثم أصلحتها وشاهدت الفحص نفسه يتحوّل إلى الأخضر (go green)"
       }
     }
   ]

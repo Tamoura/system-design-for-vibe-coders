@@ -1,0 +1,135 @@
+{
+ "area": "m6",
+ "questions": [
+  {
+   "id": "m6-1",
+   "level": 1,
+   "lesson": "6.1",
+   "q": {
+    "en": "Najm's Frankfurt branch sorts loan applications with two tools: a rule the credit team wrote, \"refer any application with more than three missed payments\", and a model trained once on past defaults and then frozen. Which of them is an \"AI system\" under Art. 3(1)?",
+    "ar": "يفرز فرع بنك نجم (Najm Bank) في فرانكفورت طلبات القروض (loan applications) بأداتين: قاعدة (rule) كتبها فريق الائتمان (credit team) نصّها «أحِل (refer) أي طلب فيه أكثر من ثلاث دفعات فائتة (missed payments)»، ونموذج (model) دُرِّب مرة واحدة على حالات التعثر السابقة (past defaults) ثم جُمِّد (frozen). أيّهما «نظام ذكاء اصطناعي (AI system)» بموجب المادة 3(1) (Art. 3(1))؟"
+   },
+   "o": {
+    "en": [
+     "Both, since each one produces outputs that influence the loan decision",
+     "Neither, since a frozen model cannot adapt after it has been deployed",
+     "Only the frozen model, since it infers outputs from what it learned",
+     "Neither, as long as an officer reviews every output before deciding"
+    ],
+    "ar": [
+     "كلتاهما، لأن كلًّا منهما ينتج مخرجات (outputs) تؤثر في قرار منح القرض (loan decision)",
+     "لا أيّ منهما، لأن النموذج المجمَّد (frozen model) لا يستطيع التكيّف (adapt) بعد نشره (deployment)",
+     "النموذج المجمَّد (frozen model) وحده، لأنه يستنتج (infers) مخرجاته (outputs) مما تعلّمه",
+     "لا أيّ منهما، ما دام موظفٌ (officer) يراجع كل مخرج (output) قبل اتخاذ القرار (deciding)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Inference is the key test: the model derives its outputs from patterns learned from past loans, while a rule written solely by people infers nothing. Adaptiveness is optional (\"may\"), so freezing the model does not take it out of the definition.",
+    "ar": "الاستنتاج (inference) هو الاختبار الرئيسي (key test): فالنموذج (model) يستخلص مخرجاته (outputs) من أنماط تعلّمها (learned patterns) من القروض السابقة (past loans)، أما القاعدة (rule) التي يكتبها البشر وحدهم (written solely by people) فلا تستنتج شيئًا. والقدرة على التكيّف (adaptiveness) اختيارية (optional) بدلالة «قد» (may)، لذلك لا يُخرج التجميد (freezing) النموذجَ من التعريف (definition)."
+   }
+  },
+  {
+   "id": "m6-2",
+   "level": 2,
+   "lesson": "6.2",
+   "q": {
+    "en": "Dana's monthly selection-rate review shows that the vendor's CE-marked CV-screening tool has ranked women applying in Frankfurt systematically lower for six weeks. As deployer, what should Najm do?",
+    "ar": "تُظهر المراجعة الشهرية لمعدلات الاختيار (monthly selection-rate review) التي تجريها دانة أن أداة فرز السير الذاتية (CV-screening tool) الحاملة لعلامة CE (CE-marked) والمشتراة من مورّد (vendor) ظلت ترتّب (ranked) المتقدمات (women applicants) في فرانكفورت أدنى بصورة منهجية (systematically lower) طوال ستة أسابيع. ماذا ينبغي أن يفعل بنك نجم (Najm Bank) بصفته مُشغِّلًا (deployer)؟"
+   },
+   "o": {
+    "en": [
+     "Suspend use and inform the vendor first, then the relevant authority",
+     "Retune the tool's thresholds in-house to even out the rates, then carry on",
+     "Keep it running with HR re-checking every ranking until the vendor fixes it",
+     "Report straight to the authority under Art. 73, as its 15-day limit binds Najm"
+    ],
+    "ar": [
+     "تعليق الاستخدام (suspend use) وإبلاغ المورّد (vendor) أولًا، ثم السلطة المختصة (relevant authority)",
+     "إعادة ضبط عتبات (thresholds) الأداة داخليًا (in-house) لموازنة المعدلات (even out the rates)، ثم مواصلة الاستخدام",
+     "مواصلة تشغيلها (keep it running) مع إعادة فحص (re-checking) الموارد البشرية (HR) لكل ترتيب (ranking) حتى يصلحها المورّد (vendor)",
+     "الإبلاغ مباشرةً إلى السلطة (report straight to the authority) بموجب المادة 73 (Art. 73)، لأن مهلة الخمسة عشر يومًا (15-day limit) تُلزم بنك نجم (Najm Bank)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Under Art. 26 a deployer that finds a risk suspends use and informs the provider and the authority; for a serious incident it tells the provider first, which then reports within the Art. 73 deadlines. Retuning the tool in-house is the tempting fix, but changing it beyond the vendor's documented parameters can make Najm its provider under Art. 25, and extra human checks do not replace suspension.",
+    "ar": "بموجب المادة 26 (Art. 26)، يعلّق المُشغِّل (deployer) الذي يكتشف خطرًا (risk) الاستخدامَ (suspends use) ويُبلغ مقدّم النظام (provider) والسلطة (authority)؛ وفي حالة الحادث الجسيم (serious incident) يُبلغ مقدّم النظام أولًا، وهو الذي يُبلغ ضمن مهل المادة 73 (Art. 73 deadlines). أما إعادة ضبط الأداة داخليًا (retuning in-house) فهي الحل المغري (tempting fix)، لكن تغييرها بما يتجاوز المعايير الموثّقة للمورّد (vendor's documented parameters) قد يجعل بنك نجم مقدّمَ النظام (provider) بموجب المادة 25 (Art. 25)، كما أن الفحوص البشرية الإضافية (extra human checks) لا تُغني عن تعليق الاستخدام (suspension)."
+   }
+  },
+  {
+   "id": "m6-3",
+   "level": 2,
+   "lesson": "6.3",
+   "q": {
+    "en": "Omar's team fine-tunes the licensed large language model behind a new complaints assistant for EU customers, using about 1% of the compute its developer used to train it. Which GPAI model provider duties does Najm take on?",
+    "ar": "يُجري فريق عمر ضبطًا دقيقًا (fine-tuning) للنموذج اللغوي الكبير (large language model) المرخّص (licensed) الذي يقوم عليه مساعد جديد للشكاوى (complaints assistant) موجّه إلى عملاء الاتحاد الأوروبي (EU customers)، مستخدمًا نحو 1% من الحوسبة (compute) التي استخدمها مطوّره (developer) لتدريبه. ما واجبات مقدّم نموذج GPAI (GPAI model provider duties) التي يتحملها بنك نجم (Najm Bank)؟"
+   },
+   "o": {
+    "en": [
+     "All the Art. 53 duties, since any fine-tuning makes Najm a model provider",
+     "The copyright policy and training summary only, as for open-source models",
+     "The Art. 55 systemic-risk duties, if the base model is above 10^25 FLOPs",
+     "None, as Najm is a downstream provider of its system, not the model"
+    ],
+    "ar": [
+     "جميع واجبات المادة 53 (Art. 53 duties)، لأن أي ضبط دقيق (fine-tuning) يجعل بنك نجم مقدّمًا للنموذج (model provider)",
+     "سياسة حق المؤلف (copyright policy) وملخص التدريب (training summary) فقط، كما في النماذج مفتوحة المصدر (open-source models)",
+     "واجبات المخاطر النظامية (systemic-risk duties) بموجب المادة 55 (Art. 55)، إذا تجاوز النموذج الأساسي (base model) عتبة 10^25 FLOPs",
+     "لا شيء، لأن بنك نجم مقدّمٌ لاحقٌ (downstream provider) لنظامه (its system)، لا للنموذج (the model)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Building a system on someone else's model makes Najm a downstream system provider, and the Commission's GPAI guidelines treat a modifier as a new model provider only for significant modifications, indicatively more than one third of the original model's training compute. Treating any fine-tune as making Najm the model provider is the tempting over-reading; 1% is far below that line.",
+    "ar": "بناء نظام (system) على نموذج (model) يملكه غيرك يجعل بنك نجم مقدّمًا لاحقًا للنظام (downstream system provider)، ولا تعامل إرشادات GPAI (GPAI guidelines) الصادرة عن المفوضية (Commission) من يعدّل النموذج بوصفه مقدّمًا جديدًا للنموذج (new model provider) إلا في التعديلات الجوهرية (significant modifications)، ومعيارها الاسترشادي (indicative criterion) تجاوز ثلث حوسبة التدريب (training compute) للنموذج الأصلي (original model). واعتبار أي ضبط دقيق (fine-tune) كافيًا لجعل بنك نجم مقدّمًا للنموذج هو القراءة الموسّعة المغرية (tempting over-reading)؛ فنسبة 1% أدنى من ذلك الحد بكثير."
+   }
+  },
+  {
+   "id": "m6-4",
+   "level": 3,
+   "lesson": "6.1",
+   "q": {
+    "en": "Khalid wants a voice assistant for the Frankfurt branch that talks with retail loan applicants, gathers their income and spending details, and gives the officer a recommended approve-or-decline score. He argues that, as \"just a chatbot\", it falls only under Art. 50. What is the soundest classification?",
+    "ar": "يريد خالد مساعدًا صوتيًا (voice assistant) لفرع فرانكفورت يتحاور مع المتقدمين بطلبات قروض الأفراد (retail loan applicants)، ويجمع تفاصيل دخلهم وإنفاقهم (income and spending details)، ويقدّم للموظف (officer) درجة موصى بها (recommended score) للموافقة أو الرفض (approve or decline). ويرى أنه، بوصفه «مجرد روبوت محادثة (just a chatbot)»، لا يخضع إلا للمادة 50 (Art. 50). ما التصنيف الأسلم (soundest classification)؟"
+   },
+   "o": {
+    "en": [
+     "Transparency tier only, since its one regulated feature is talking to people",
+     "High-risk as credit scoring of individuals, with Art. 50 disclosure as well",
+     "High-risk only, since the higher tier absorbs the Art. 50 disclosure duty",
+     "Not high-risk, since a score for the officer is an Art. 6(3) preparatory task"
+    ],
+    "ar": [
+     "مستوى الشفافية (transparency tier) فقط، لأن ميزته الوحيدة الخاضعة للتنظيم (regulated feature) هي التحاور مع الناس (talking to people)",
+     "عالي المخاطر (high-risk) بوصفه تصنيفًا ائتمانيًا (credit scoring) للأفراد، مع إفصاح المادة 50 (Art. 50 disclosure) أيضًا",
+     "عالي المخاطر (high-risk) فقط، لأن المستوى الأعلى (higher tier) يستوعب واجب الإفصاح (disclosure duty) بموجب المادة 50 (Art. 50)",
+     "غير عالي المخاطر (not high-risk)، لأن تقديم درجة للموظف (officer) مهمة تحضيرية (preparatory task) بموجب المادة 6(3) (Art. 6(3))"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Recommending a rating from a person's income and spending is credit scoring that profiles natural persons, so it is high-risk under Annex III point 5 and the Art. 6(3) derogation is unavailable; tiers stack, so it must also tell applicants they are talking to an AI. Calling the score a preparatory task is the tempting escape, but the derogation never covers profiling.",
+    "ar": "تقديم درجة موصى بها (recommending a rating) استنادًا إلى دخل الشخص وإنفاقه تصنيف ائتماني (credit scoring) يُجري تنميطًا (profiling) للأشخاص الطبيعيين (natural persons)، فهو عالي المخاطر (high-risk) بموجب البند 5 من الملحق III (Annex III point 5)، ولا يتاح له استثناء المادة 6(3) (Art. 6(3) derogation)؛ والمستويات تتراكم (tiers stack)، فيجب أيضًا إبلاغ المتقدمين (applicants) بأنهم يتحاورون مع ذكاء اصطناعي (AI). أما وصف الدرجة بأنها مهمة تحضيرية (preparatory task) فهو المخرج المغري (tempting escape)، لكن الاستثناء (derogation) لا يشمل التنميط (profiling) أبدًا."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m6-e1",
+   "lesson": "6.2",
+   "text": {
+    "en": "I have drafted Art. 13 instructions for use for a high-risk credit model, covering purpose, accuracy metrics, limits, weaker-performing groups, input specifications, oversight steps and logs, so that a loan officer would know when not to rely on the score",
+    "ar": "صغتُ تعليمات الاستخدام (instructions for use) وفق المادة 13 (Art. 13) لنموذج ائتماني عالي المخاطر (high-risk credit model)، تغطي الغرض (purpose)، ومقاييس الدقة (accuracy metrics)، والحدود (limits)، والفئات الأضعف أداءً (weaker-performing groups)، ومواصفات المدخلات (input specifications)، وخطوات الإشراف (oversight steps)، والسجلات (logs)، بحيث يعرف موظف القروض (loan officer) متى لا ينبغي له الاعتماد على الدرجة (score)"
+   }
+  },
+  {
+   "id": "m6-e2",
+   "lesson": "6.3",
+   "text": {
+    "en": "I have audited every customer- or public-facing AI output in an organisation against Art. 50, giving each a duty, its holder (provider or deployer) and a draft disclosure line, or a reasoned \"no duty\"",
+    "ar": "دقّقتُ (audited) كل مخرجات الذكاء الاصطناعي (AI outputs) الموجّهة إلى العملاء أو الجمهور (customer- or public-facing) في مؤسسة ما وفق المادة 50 (Art. 50)، وحدّدتُ لكلٍّ منها واجبًا (duty) وحامله (holder)، أي مقدّم النظام (provider) أو المُشغِّل (deployer)، وصيغةً مقترحة للإفصاح (draft disclosure line)، أو حكمًا معلّلًا بأنه «لا واجب» (no duty)"
+   }
+  }
+ ]
+}

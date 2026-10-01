@@ -1,0 +1,113 @@
+[
+ {
+  "id": "m0",
+  "key": "0",
+  "lessons": [
+   "0.1",
+   "0.2",
+   "0.3"
+  ],
+  "en": "Orientation: Every SaaS Is the Same App",
+  "ar": "التوجيه (Orientation): كل SaaS هو التطبيق نفسه"
+ },
+ {
+  "id": "m1",
+  "key": "1",
+  "lessons": [
+   "1.1",
+   "1.2",
+   "1.3",
+   "1.4"
+  ],
+  "en": "Identity & Access",
+  "ar": "الهوية والوصول (Identity & Access)"
+ },
+ {
+  "id": "m2",
+  "key": "2",
+  "lessons": [
+   "2.1",
+   "2.2",
+   "2.3",
+   "2.4"
+  ],
+  "en": "Data",
+  "ar": "البيانات"
+ },
+ {
+  "id": "m3",
+  "key": "3",
+  "lessons": [
+   "3.1",
+   "3.2",
+   "3.3"
+  ],
+  "en": "Money",
+  "ar": "المال (money)"
+ },
+ {
+  "id": "m4",
+  "key": "4",
+  "lessons": [
+   "4.1",
+   "4.2",
+   "4.3"
+  ],
+  "en": "Communication",
+  "ar": "التواصل (Communication)"
+ },
+ {
+  "id": "m5",
+  "key": "5",
+  "lessons": [
+   "5.1",
+   "5.2",
+   "5.3",
+   "5.4"
+  ],
+  "en": "Background Work & Integrations",
+  "ar": "العمل في الخلفية والتكاملات (Background Work & Integrations)"
+ },
+ {
+  "id": "m6",
+  "key": "6",
+  "lessons": [
+   "6.1",
+   "6.2",
+   "6.3"
+  ],
+  "en": "Product & Growth",
+  "ar": "المنتج والنمو (Product & Growth)"
+ },
+ {
+  "id": "m7",
+  "key": "7",
+  "lessons": [
+   "7.1",
+   "7.2",
+   "7.3",
+   "7.4"
+  ],
+  "en": "Operating the SaaS",
+  "ar": "تشغيل الـ SaaS (Operating the SaaS)"
+ },
+ {
+  "id": "m8",
+  "key": "8",
+  "lessons": [
+   "8.1",
+   "8.2"
+  ],
+  "en": "Trust & the Frontier",
+  "ar": "الثقة وحدود التقنية الجديدة (Trust & the Frontier)"
+ },
+ {
+  "id": "m9",
+  "key": "9",
+  "lessons": [
+   "9.1"
+  ],
+  "en": "Capstone",
+  "ar": "المشروع الختامي (Capstone)"
+ }
+]

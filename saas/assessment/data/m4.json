@@ -1,0 +1,135 @@
+{
+ "area": "m4",
+ "questions": [
+  {
+   "id": "m4-1",
+   "level": 1,
+   "lesson": "4.1",
+   "q": {
+    "en": "Beacon sends incident alerts with Nodemailer through its web host's SMTP server, from alerts@beacon.app, and nobody has set up DNS records for mail. The alerts reach the developer's inbox in testing, but in production Gmail puts them in spam. Which change addresses the cause?",
+    "ar": "يرسل Beacon تنبيهات الحوادث (incident alerts) بمكتبة Nodemailer عبر خادم SMTP (SMTP server) لدى مستضيف الويب (web host)، من العنوان alerts@beacon.app، ولم يُعِدّ أحد سجلات DNS (DNS records) للبريد (mail). تصل التنبيهات إلى صندوق بريد المطوّر (developer's inbox) أثناء الاختبار (testing)، لكن Gmail يضعها في مجلد الرسائل غير المرغوب فيها (spam folder) في الإنتاج (production). أي تغيير يعالج السبب (addresses the cause)؟"
+   },
+   "o": {
+    "en": [
+     "Move sending into a queued job so that failed alerts are retried later",
+     "Use a provider, and publish SPF, DKIM and DMARC aligned with From:",
+     "Rebuild the alert templates in React Email so they render well in Gmail",
+     "Ask every customer to add alerts@beacon.app to their address book"
+    ],
+    "ar": [
+     "انقل الإرسال إلى مهمة في طابور (queued job) كي يُعاد إرسال التنبيهات الفاشلة (failed alerts) لاحقًا",
+     "استخدم مزوّد إرسال (provider)، وانشر سجلات (records) SPF وDKIM وDMARC متوافقة (aligned) مع نطاق From: (From: domain)",
+     "أعد بناء قوالب التنبيهات (alert templates) بـ React Email كي تُعرض جيدًا (render well) في Gmail",
+     "اطلب من كل عميل (customer) أن يضيف alerts@beacon.app إلى دفتر عناوينه (address book)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Delivery is decided by the receiving mailbox provider on domain authentication and reputation, and since 2024 Gmail and Yahoo reject unauthenticated mail, so the fix is a provider plus aligned SPF, DKIM and DMARC. A queue keeps provider outages away from user requests, but a retried alert from an unauthenticated domain still lands in spam.",
+    "ar": "يقرر تسليمَ البريد (email delivery) مزوّدُ صندوق البريد المستقبِل (receiving mailbox provider) بناءً على مصادقة النطاق (domain authentication) والسمعة (reputation)، ومنذ 2024 ترفض Gmail وYahoo البريد غير المُصادَق (unauthenticated mail)، لذا فالحل مزوّد إرسال (provider) مع سجلات SPF وDKIM وDMARC متوافقة (aligned). أما الطابور (queue) فيُبعد أعطال المزوّد (provider outages) عن طلبات المستخدمين (user requests)، لكن التنبيه المُعاد إرساله (retried alert) من نطاق غير مُصادَق (unauthenticated domain) يصل مع ذلك إلى الرسائل غير المرغوب فيها (spam)."
+   }
+  },
+  {
+   "id": "m4-2",
+   "level": 2,
+   "lesson": "4.2",
+   "q": {
+    "en": "Beacon's worker crashes just after notify() has handled an incident.opened event. The queue retries the job, notify() runs again, and the on-call engineer gets the same \"incident opened\" SMS twice. Which mechanism should have stopped the second message?",
+    "ar": "يتعطل العامل (worker) في Beacon مباشرة بعد أن تعالج notify() حدثًا (event) من نوع incident.opened. فيعيد الطابور (queue) تشغيل المهمة (job)، وتعمل notify() مرة ثانية، ويتلقى المهندس المناوب (on-call engineer) رسالة SMS نفسها التي تقول \"فُتحت حادثة\" (incident opened) مرتين. أي آلية (mechanism) كان يجب أن تمنع الرسالة الثانية (second message)؟"
+   },
+   "o": {
+    "en": [
+     "A throttle of at most 5 SMS per user per hour, with email fallback",
+     "A hysteresis rule of 3 consecutive failed checks before opening",
+     "A 30-minute digest window that merges the alerts into one message",
+     "A unique dedupe key for each incident, state and recipient"
+    ],
+    "ar": [
+     "تحديد معدل (throttle) بحد أقصى 5 رسائل SMS لكل مستخدم (per user) في الساعة، مع بديل بالبريد (email fallback)",
+     "قاعدة تخلّف (hysteresis rule) تشترط 3 فحوص فاشلة متتالية (consecutive failed checks) قبل فتح الحادثة (incident)",
+     "نافذة ملخّص (digest window) مدتها 30 دقيقة تدمج التنبيهات (alerts) في رسالة واحدة (one message)",
+     "مفتاح منع تكرار (dedupe key) فريد لكل حادثة (incident) وحالة (state) ومستلم (recipient)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Dedupe asks \"have I already sent this exact thing?\": a unique dedupeKey per incident, state and recipient makes the retried notify() find the existing notification and skip it. A throttle only asks whether too much was sent recently, so a duplicate under the five-an-hour cap still goes out.",
+    "ar": "منع التكرار (dedupe) يجيب عن سؤال \"هل أرسلتُ هذا الشيء نفسه من قبل؟\" ⁦(have I already sent this exact thing?)⁩: فمفتاح dedupeKey فريد (unique dedupeKey) لكل حادثة (incident) وحالة (state) ومستلم (recipient) يجعل notify() المُعاد تشغيلها (retried) تجد الإشعار الموجود (existing notification) فتتخطاه. أما تحديد المعدل (throttle) فيسأل فقط هل أُرسل الكثير مؤخرًا (too much recently)، فالرسالة المكررة (duplicate) تحت سقف الخمس في الساعة (five-an-hour cap) تُرسَل مع ذلك."
+   }
+  },
+  {
+   "id": "m4-3",
+   "level": 2,
+   "lesson": "4.3",
+   "q": {
+    "en": "At Beacon, two engineers save the same monitor's settings from stale browser tabs, and two others type into the same postmortem at the same time. In both cases the later save silently overwrites the earlier one. Which pair of strategies fits?",
+    "ar": "في Beacon، يحفظ مهندسان إعدادات المراقبة (monitor settings) نفسها من علامات تبويب قديمة (stale browser tabs)، ويكتب مهندسان آخران في تقرير ما بعد الحادثة (postmortem) نفسه في الوقت ذاته (at the same time). وفي الحالتين يكتب الحفظ اللاحق (later save) فوق السابق بصمت (silently overwrites). أي زوج من الاستراتيجيات (pair of strategies) يناسب الحالتين؟"
+   },
+   "o": {
+    "en": [
+     "Optimistic locking for the settings, and a Yjs CRDT for the postmortem",
+     "Optimistic locking for both, so every stale save is rejected with a 409",
+     "Last write wins for both, ordering the saves by precise server timestamps",
+     "Optimistic locking for the settings, and a home-built CRDT for the postmortem"
+    ],
+    "ar": [
+     "القفل المتفائل (optimistic locking) للإعدادات (settings)، وCRDT من Yjs (Yjs CRDT) لتقرير ما بعد الحادثة (postmortem)",
+     "القفل المتفائل (optimistic locking) للاثنين، فيُرفض كل حفظ قديم (stale save) برمز 409 (409 response)",
+     "الكتابة الأخيرة تفوز (last write wins) للاثنين، مع ترتيب الحفظ بطوابع زمنية دقيقة (precise timestamps) من الخادم (server)",
+     "القفل المتفائل (optimistic locking) للإعدادات (settings)، وCRDT مبني داخليًا (home-built CRDT) لتقرير ما بعد الحادثة (postmortem)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "A form like monitor settings needs only a version column and a 409 on stale writes, but live shared text needs a CRDT such as Yjs (with Hocuspocus) so concurrent edits merge with none lost. Optimistic locking on the postmortem would keep rejecting one co-author, and a home-built CRDT is the trap the lesson warns against, because its edge cases take years to get right.",
+    "ar": "النموذج (form) مثل إعدادات المراقبة (monitor settings) يكفيه عمود إصدار (version column) ورمز 409 عند الكتابات القديمة (stale writes)، أما النص المشترك الحي (live shared text) فيحتاج إلى CRDT مثل Yjs (مع Hocuspocus) كي تندمج التعديلات المتزامنة (concurrent edits) دون ضياع أي منها. أما القفل المتفائل (optimistic locking) على تقرير ما بعد الحادثة (postmortem) فسيظل يرفض أحد الكاتبين المشاركين (co-authors)، وأما CRDT المبني داخليًا (home-built CRDT) فهو الفخ (trap) الذي يحذّر منه الدرس (lesson)، لأن حالاته الحدّية (edge cases) تحتاج سنوات حتى تصبح صحيحة."
+   }
+  },
+  {
+   "id": "m4-4",
+   "level": 3,
+   "lesson": "4.3",
+   "q": {
+    "en": "Beacon's dashboard streams over SSE from Redis pub/sub, authorized per org, and EventSource reconnects on its own. After each deploy, a few office-TV dashboards keep showing a monitor as green although it went down during the deploy. Later changes arrive normally, and a page reload fixes it. What is the most likely cause?",
+    "ar": "تبث لوحة التحكم (dashboard) في Beacon عبر SSE من نظام النشر والاشتراك (pub/sub) في Redis، مع تفويض (authorization) لكل منظمة (org)، ويعيد EventSource الاتصال (reconnects) تلقائيًا. بعد كل نشر (deploy)، تظل بضع لوحات على شاشات التلفاز في المكاتب (office TVs) تعرض مراقبةً (monitor) باللون الأخضر رغم أنها تعطلت (went down) أثناء النشر. أما التغييرات اللاحقة (later changes) فتصل عاديًا، وإعادة تحميل الصفحة (page reload) تصلح المشكلة. ما السبب الأرجح (most likely cause)؟"
+   },
+   "o": {
+    "en": [
+     "Without sticky sessions, the reconnected streams land on the wrong node",
+     "Browsers allow only six SSE connections, so some streams never reopen",
+     "Pub/sub is fire-and-forget, so events sent during the reconnect were lost",
+     "SSE cannot fan out across several nodes, so the dashboard needs WebSockets"
+    ],
+    "ar": [
+     "بدون الجلسات الملتصقة (sticky sessions)، تصل التدفقات المعاد اتصالها (reconnected streams) إلى العقدة الخطأ (wrong node)",
+     "المتصفحات (browsers) لا تسمح إلا بستة اتصالات SSE (SSE connections)، فبعض التدفقات (streams) لا يُعاد فتحها أبدًا",
+     "النشر والاشتراك (pub/sub) يرسل ولا يتابع (fire-and-forget)، فضاعت الأحداث (events) المرسلة أثناء إعادة الاتصال (reconnect)",
+     "SSE لا يستطيع التوزيع (fan out) عبر عدة عقد (nodes)، فلوحة التحكم (dashboard) تحتاج إلى WebSockets"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Pub/sub keeps no history, so a dashboard that was reconnecting missed whatever was published meanwhile; refetch the full monitor list on reconnect, or replay with Last-Event-ID. Pure SSE connections don't need sticky sessions, because every node subscribed to the Redis channel forwards events to its own connections.",
+    "ar": "نظام النشر والاشتراك (pub/sub) لا يحتفظ بسجل (history)، فاللوحة (dashboard) التي كانت تعيد الاتصال (reconnecting) فاتها كل ما نُشر خلال ذلك؛ أعد جلب قائمة المراقبات كاملة (full monitor list) عند إعادة الاتصال (reconnect)، أو أعد التشغيل (replay) عبر Last-Event-ID. أما اتصالات SSE الخالصة (pure SSE connections) فلا تحتاج إلى الجلسات الملتصقة (sticky sessions)، لأن كل عقدة (node) مشتركة في قناة Redis (Redis channel) تمرر الأحداث (events) إلى اتصالاتها هي (its own connections)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m4-e1",
+   "lesson": "4.1",
+   "text": {
+    "en": "I have published SPF, DKIM and DMARC for Beacon's sending domain, seen a checker show them passing and aligned, and seen a simulated hard bounce add a suppression row that stops further sends",
+    "ar": "نشرتُ سجلات (records) SPF وDKIM وDMARC لنطاق الإرسال (sending domain) في Beacon، ورأيتُ أداة فحص (checker) تُظهرها ناجحة ومتوافقة (passing and aligned)، ورأيتُ محاكاةَ ارتداد دائم (simulated hard bounce) تضيف صفًا (row) إلى قائمة الحظر (suppression list) يوقف أي إرسال لاحق (further sends)"
+   }
+  },
+  {
+   "id": "m4-e2",
+   "lesson": "4.2",
+   "text": {
+    "en": "I have run a simulated flapping monitor for an hour and seen at most a handful of notifications per channel, and seen a sixth SMS within an hour replaced by an email saying how many alerts were held back",
+    "ar": "شغّلتُ محاكاةً لمراقبة متذبذبة (simulated flapping monitor) لمدة ساعة، ورأيتُ أن الإشعارات (notifications) لا تتجاوز عددًا قليلًا لكل قناة (per channel)، ورأيتُ رسالة SMS سادسة (sixth SMS) خلال ساعة واحدة تُستبدل ببريد إلكتروني (email) يذكر عدد التنبيهات المحجوبة (alerts held back)"
+   }
+  }
+ ]
+}

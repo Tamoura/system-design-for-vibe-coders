@@ -1,0 +1,135 @@
+{
+ "area": "m6",
+ "questions": [
+  {
+   "id": "m6-1",
+   "level": 1,
+   "lesson": "6.1",
+   "q": {
+    "en": "Faisal’s first eval plan for the Credit Memo Copilot says: \"Credit officers score each memo’s overall quality from 1 to 5; we go to pilot at an average of 4.0.\" Dana says the plan cannot yet tell the team what to fix or when to stop a release. What is the core change?",
+    "ar": "تقول أول خطة تقييم (eval plan) كتبها فيصل لـ مساعد مذكرات الائتمان (Credit Memo Copilot): \"يمنح موظفو الائتمان (credit officers) كل مذكرة درجةً للجودة الإجمالية (overall quality) من 1 إلى 5، وننتقل إلى التجربة التشغيلية (pilot) عند متوسط (average) قدره 4.0\". وتقول دانة إن الخطة لا تستطيع بعدُ (cannot yet) أن تخبر الفريق بما يجب إصلاحه (what to fix) أو بموعد إيقاف إصدار (stop a release). ما التغيير الجوهري (core change) المطلوب؟"
+   },
+   "o": {
+    "en": [
+     "Raise the pilot bar to an average of 4.5 so that only the strongest memos pass",
+     "Split quality into criteria like faithfulness, each with its own threshold",
+     "Have an LLM judge give the 1-to-5 score so that every single memo can be rated",
+     "Score many more memos so that the 4.0 average has a smaller margin of error"
+    ],
+    "ar": [
+     "رفع عتبة التجربة التشغيلية (pilot bar) إلى متوسط (average) قدره 4.5 حتى لا تنجح إلا أقوى المذكرات (strongest memos)",
+     "تقسيم الجودة إلى معايير (criteria) مثل الأمانة للمصادر (faithfulness)، لكلٍّ منها عتبته (its own threshold)",
+     "جعل حَكَم من نموذج لغوي (LLM judge) يمنح الدرجة من 1 إلى 5 (the 1-to-5 score) حتى يمكن تقييم كل مذكرة (every single memo)",
+     "تقييم عدد أكبر بكثير من المذكرات (many more memos) حتى يصبح لمتوسط 4.0 هامش خطأ (margin of error) أصغر"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "A generative product has no single right answer, so quality is split into criteria such as faithfulness, completeness and abstention, each with its own check and threshold, with the critical ones marked. Scoring more memos is tempting, but a more precise blended average still cannot show what is failing.",
+    "ar": "المنتج التوليدي (generative product) ليست له إجابة صحيحة واحدة (single right answer)، لذا تُقسَّم الجودة إلى معايير (criteria) مثل الأمانة للمصادر والاكتمال والامتناع (faithfulness, completeness and abstention)، لكلٍّ منها فحصه وعتبته (its own check and threshold)، مع تمييز المعايير الحرجة (critical ones). أما تقييم مذكرات أكثر (scoring more memos) فمغرٍ، لكن المتوسط المدمج (blended average) يظل، مهما زادت دقته، عاجزًا عن إظهار ما الذي يخفق (what is failing)."
+   }
+  },
+  {
+   "id": "m6-2",
+   "level": 2,
+   "lesson": "6.2",
+   "q": {
+    "en": "Before Najm Assist’s pilot, two candidate LLM judges for \"answer grounded in the approved knowledge base\" are run on an expert-labelled calibration set in which the experts failed 20 answers. Judge P fails 38 answers, including 19 of those 20. Judge Q fails 15, including 14 of the 20. Every FAIL goes to a human reviewer. Which judge should the team use?",
+    "ar": "قبل التجربة التشغيلية (pilot) لـ نجم أسيست (Najm Assist)، يُشغَّل حَكَمان مرشَّحان من النماذج اللغوية (candidate LLM judges) لمعيار \"الإجابة مستندة إلى قاعدة المعرفة المعتمدة (grounded in the approved knowledge base)\" على مجموعة معايرة (calibration set) وسمها الخبراء (expert-labelled)، وقد أفشل فيها الخبراء 20 إجابة (failed 20 answers). يُفشل الحَكَم P (Judge P) ما مجموعه 38 إجابة، منها 19 من تلك العشرين (19 of those 20). ويُفشل الحَكَم Q (Judge Q) ما مجموعه 15 إجابة، منها 14 من العشرين (14 of the 20). وكل حكم بالإخفاق (every FAIL) يذهب إلى مراجع بشري (human reviewer). أي الحَكَمين (which judge) ينبغي أن يستخدمه الفريق؟"
+   },
+   "o": {
+    "en": [
+     "Judge Q, because nearly every answer it fails is a genuine failure",
+     "Judge Q, because it agrees with the experts on more answers overall",
+     "Neither, until one of them matches the experts on every single case",
+     "Judge P, because it lets almost no ungrounded answer slip through"
+    ],
+    "ar": [
+     "الحَكَم Q (Judge Q)، لأن كل إجابة يُفشلها تقريبًا (nearly every answer it fails) هي إخفاق حقيقي (genuine failure)",
+     "الحَكَم Q (Judge Q)، لأنه يتفق مع الخبراء (agrees with the experts) في عدد أكبر من الإجابات إجمالًا",
+     "لا أحد منهما (neither)، حتى يطابق أحدهما الخبراء (matches the experts) في كل حالة على الإطلاق (every single case)",
+     "الحَكَم P (Judge P)، لأنه لا يكاد يدع إجابة غير مستندة (ungrounded answer) تفلت (slip through)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Judge P’s recall on failures is 95% (19 of 20) against Q’s 70% (14 of 20); when a human checks every FAIL, false alarms cost only review time, while missed failures reach customers. Q’s higher precision and overall agreement are tempting, but it would let 6 of the 20 ungrounded answers through.",
+    "ar": "يبلغ استدعاء الحَكَم P للإخفاقات (recall on failures) نسبة 95% (19 من 20) مقابل 70% للحَكَم Q (14 من 20)؛ وحين يراجع إنسانٌ كل حكم بالإخفاق (every FAIL)، لا تكلّف الإنذارات الكاذبة (false alarms) سوى وقت المراجعة (review time)، أما الإخفاقات الفائتة (missed failures) فتصل إلى العملاء. ودقة الحَكَم Q الأعلى (higher precision) واتفاقه الإجمالي الأكبر (overall agreement) مغريان، لكنها ستدع 6 من الإجابات العشرين غير المستندة (ungrounded answers) تمرّ."
+   }
+  },
+  {
+   "id": "m6-3",
+   "level": 2,
+   "lesson": "6.3",
+   "q": {
+    "en": "Najm Assist’s new dispute flow is in an A/B test pre-registered to run for four weeks. After week one, the OEC (disputes filed correctly at the first attempt) is up 15% at p < 0.05, and no guardrail has moved. Faisal wants to stop now and ship. What should Rania tell him?",
+    "ar": "يخضع مسار الاعتراض الجديد (new dispute flow) في نجم أسيست (Najm Assist) لاختبار A/B (A/B test) سُجِّل مسبقًا (pre-registered) ليستمر أربعة أسابيع. بعد الأسبوع الأول (after week one)، ارتفع معيار التقييم الإجمالي (OEC)، وهو الاعتراضات المقدَّمة بشكل صحيح من المحاولة الأولى (disputes filed correctly at the first attempt)، بنسبة 15% مع دلالة إحصائية (p < 0.05)، ولم يتحرك أي مقياس وقائي (guardrail). يريد فيصل الإيقاف الآن والإطلاق (stop now and ship). بماذا ينبغي أن تجيبه رانيا؟"
+   },
+   "o": {
+    "en": [
+     "Keep to the four weeks, as peeking and novelty effects inflate early results",
+     "Ship now, as p < 0.05 shows the effect is real and extra weeks only add cost",
+     "Ship now, but keep a holdout group to confirm the effect over the coming months",
+     "Extend the test until the guardrails also show gains, as the OEC already does"
+    ],
+    "ar": [
+     "الالتزام بالأسابيع الأربعة (four weeks)، فالتلصص المبكر (peeking) وأثر الجِدّة (novelty effects) يضخّمان النتائج المبكرة (early results)",
+     "الإطلاق الآن، فالدلالة الإحصائية (p < 0.05) تثبت أن الأثر حقيقي (effect is real)، والأسابيع الإضافية مجرد تكلفة (extra cost)",
+     "الإطلاق الآن، مع إبقاء مجموعة محجوبة (holdout group) لتأكيد الأثر (confirm the effect) خلال الأشهر المقبلة",
+     "تمديد الاختبار حتى تُظهر المقاييس الوقائية (guardrails) تحسنًا (gains) هي الأخرى، كما يُظهره المعيار الإجمالي (OEC)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Stopping as soon as results look significant (peeking) inflates false positives, and one week cannot show whether a novelty effect is fading, so the pre-registered duration stands. A holdout is useful after a sound decision, but it does not repair a decision taken on an early peek.",
+    "ar": "الإيقاف بمجرد أن تبدو النتائج دالة إحصائيًا (look significant)، أي التلصص المبكر (peeking)، يضخّم الإيجابيات الكاذبة (false positives)، وأسبوع واحد لا يكفي لإظهار ما إذا كان أثر الجِدّة (novelty effect) يتلاشى، لذا تبقى المدة المسجَّلة مسبقًا (pre-registered duration) قائمة. أما المجموعة المحجوبة (holdout) فمفيدة بعد قرار سليم (sound decision)، لكنها لا تُصلح قرارًا اتُّخذ بناءً على نظرة مبكرة (early peek)."
+   }
+  },
+  {
+   "id": "m6-4",
+   "level": 3,
+   "lesson": "6.1",
+   "q": {
+    "en": "After six weeks of prompt tuning, the Credit Memo Copilot’s score on golden set v3 has climbed from 86% to 96%. On the 50-case held-out set it is flat at 87%, as it was before tuning, and in the internal pilot RMs’ time per memo has not changed. What is the most likely diagnosis?",
+    "ar": "بعد ستة أسابيع من ضبط الموجّه (prompt tuning)، ارتفعت درجة مساعد مذكرات الائتمان (Credit Memo Copilot) على الإصدار الثالث من المجموعة المرجعية (golden set v3) من 86% إلى 96%. أما على المجموعة المحجوبة (held-out set) ذات الخمسين حالة (50-case) فبقيت ثابتة عند 87% (flat at 87%) كما كانت قبل الضبط، وفي التجربة التشغيلية الداخلية (internal pilot) لم يتغير وقت مديري العلاقات (RMs) لكل مذكرة (time per memo). ما التشخيص الأرجح (most likely diagnosis)؟"
+   },
+   "o": {
+    "en": [
+     "The held-out set is too small to trust; decide the release on the 96% score",
+     "The RMs have not learned the tool yet; train them and their hours will fall",
+     "The prompt was tuned to v3’s cases; trust the held-out set and refresh v3",
+     "The model has hit its ceiling; switch to the top public-benchmark model now"
+    ],
+    "ar": [
+     "المجموعة المحجوبة (held-out set) أصغر من أن يُوثق بها (too small to trust)؛ فليُتخذ قرار الإطلاق (release decision) على أساس درجة 96% (the 96% score)",
+     "مديرو العلاقات (RMs) لم يتعلموا استخدام الأداة (the tool) بعد؛ فلنُدرّبهم (train them) وستنخفض ساعاتهم (hours will fall)",
+     "ضُبط الموجّه على حالات الإصدار الثالث (v3’s cases)؛ فلنثق بالمجموعة المحجوبة (held-out set) ونُحدّثه (refresh v3)",
+     "بلغ النموذج سقفه (hit its ceiling)؛ فلننتقل الآن (switch now) إلى النموذج الأول في معيار عام (top public-benchmark model)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "A golden-set score that rises while the held-out score stays flat is Goodhart’s law at work: the prompt has been tuned to the exact cases it is scored on, which is why release decisions use the held-out set and the golden set is refreshed from production. Dismissing the held-out set as small is tempting, but nobody tuned against it, and the unchanged pilot outcome points the same way.",
+    "ar": "درجة المجموعة المرجعية (golden-set score) التي ترتفع بينما تبقى درجة المجموعة المحجوبة (held-out score) ثابتة هي قانون Goodhart (Goodhart’s law) في العمل: فقد ضُبط الموجّه (prompt) على الحالات نفسها التي يُقاس بها (exact cases it is scored on)، ولهذا تُبنى قرارات الإطلاق (release decisions) على المجموعة المحجوبة، وتُحدَّث المجموعة المرجعية من الإنتاج (refreshed from production). أما استبعاد المجموعة المحجوبة لصغرها (dismissing it as small) فمغرٍ، لكن أحدًا لم يضبط الموجّه عليها (nobody tuned against it)، ونتيجة التجربة التشغيلية التي لم تتغير (unchanged pilot outcome) تشير إلى الاتجاه نفسه."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m6-e1",
+   "lesson": "6.2",
+   "text": {
+    "en": "I have rewritten a vague 1-to-5 rating prompt as a single-criterion PASS/FAIL judge that asks for evidence before the verdict and says what to do when documents are missing.",
+    "ar": "أعدت كتابة موجّه تقييم مبهم من 1 إلى 5 (vague 1-to-5 rating prompt) في صورة حَكَم نجاح/إخفاق لمعيار واحد (single-criterion PASS/FAIL judge) يطلب الدليل قبل الحكم (evidence before the verdict)، ويحدد ما يُفعل عند غياب المستندات (when documents are missing)."
+   }
+  },
+  {
+   "id": "m6-e2",
+   "lesson": "6.3",
+   "text": {
+    "en": "I have written a staged rollout plan for an AI feature with stage gates, an OEC, guardrails including a downstream and a segment metric, a pre-registered decision rule and a kill switch with a named owner.",
+    "ar": "كتبت خطة إطلاق مرحلي (staged rollout plan) لميزة ذكاء اصطناعي (AI feature)، فيها بوابات للمراحل (stage gates)، ومعيار تقييم إجمالي (OEC)، ومقاييس وقائية (guardrails) منها مقياس للنتائج اللاحقة (downstream metric) وآخر لشريحة من العملاء (segment metric)، وقاعدة قرار مسجَّلة مسبقًا (pre-registered decision rule)، ومفتاح إيقاف له مالك مسمّى (kill switch with a named owner)."
+   }
+  }
+ ]
+}

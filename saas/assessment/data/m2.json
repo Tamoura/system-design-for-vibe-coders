@@ -1,0 +1,135 @@
+{
+ "area": "m2",
+ "questions": [
+  {
+   "id": "m2-1",
+   "level": 1,
+   "lesson": "2.1",
+   "q": {
+    "en": "Beacon's managed Postgres dashboard shows \"Daily backups: on\", so the team believes it can recover from any mistake. What must be true before Beacon can honestly say \"we have backups\"?",
+    "ar": "تعرض لوحة التحكم (dashboard) في Postgres المُدار (managed Postgres) لدى Beacon عبارة \"Daily backups: on\"، فيظن الفريق (team) أنه قادر على التعافي (recover) من أي خطأ. ما الذي يجب أن يتحقق قبل أن يقول Beacon بصدق \"لدينا نسخ احتياطية (we have backups)\"؟"
+   },
+   "o": {
+    "en": [
+     "A read replica in another zone streams every change from the primary",
+     "A nightly pg_dump is also copied to a bucket in a second region",
+     "PITR is on, and a restore drill has been rehearsed and timed",
+     "Every table uses soft delete, so any removed row can be undone"
+    ],
+    "ar": [
+     "نسخة متماثلة للقراءة (read replica) في منطقة أخرى (another zone) تبث كل تغيير (every change) من القاعدة الأساسية (primary)",
+     "نسخة pg_dump ليلية (nightly pg_dump) تُنسخ أيضًا إلى حاوية (bucket) في منطقة ثانية (second region)",
+     "الاستعادة إلى نقطة زمنية (PITR) مفعّلة، وجرى التدرّب على تمرين استعادة (restore drill) وقِيس زمنه (timed)",
+     "كل جدول (table) يستخدم الحذف الناعم (soft delete)، فيمكن التراجع (undo) عن حذف أي صف (row)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "PITR (a base backup plus archived WAL) restores the database to the moment before a bad DELETE, and a timed restore drill proves it works and gives your real recovery time. A nightly pg_dump, even copied to a second region, is a start, not a strategy, and a read replica follows the primary by streaming its WAL, so the same bad DELETE reaches it within moments.",
+    "ar": "الاستعادة إلى نقطة زمنية (PITR)، أي نسخة أساسية (base backup) مع أرشيف WAL (archived WAL)، تعيد قاعدة البيانات (database) إلى اللحظة التي سبقت أمر DELETE الخاطئ (bad DELETE)، وتمرين الاستعادة المقيس زمنه (timed restore drill) يثبت أنها تعمل ويعطيك زمن التعافي الحقيقي (real recovery time). أما نسخة pg_dump الليلية (nightly pg_dump)، ولو نُسخت إلى منطقة ثانية (second region)، فبداية وليست استراتيجية (strategy)، والنسخة المتماثلة للقراءة (read replica) تتبع القاعدة الأساسية (primary) ببث سجل WAL (streaming its WAL)، فيصلها أمر DELETE الخاطئ نفسه خلال لحظات (within moments)."
+   }
+  },
+  {
+   "id": "m2-2",
+   "level": 2,
+   "lesson": "2.2",
+   "q": {
+    "en": "Beacon's weekly digest email links each incident screenshot with a presigned GET URL valid for 7 days. A customer finds that a contractor removed from their org two days ago opened screenshots from a forwarded digest. What should change?",
+    "ar": "تحتوي رسالة الملخص الأسبوعي (weekly digest email) في Beacon على رابط لكل لقطة شاشة لحادثة (incident screenshot)، وهو رابط GET موقّع مسبقًا (presigned GET URL) صالح لسبعة أيام. يكتشف عميل (customer) أن متعاقدًا (contractor) أُزيل من منظمته (org) قبل يومين فتح لقطات الشاشة (screenshots) من ملخص أُعيد توجيهه إليه (forwarded digest). ما الذي يجب أن يتغير؟"
+   },
+   "o": {
+    "en": [
+     "Link to an endpoint that checks membership, then signs a 5-minute URL",
+     "Keep the presigned links in the email, but cut their lifetime to 24 hours",
+     "Store each org's screenshots under its own orgs/{orgId}/ key prefix",
+     "Make the bucket public and give every screenshot a long random key"
+    ],
+    "ar": [
+     "اربط إلى نقطة نهاية (endpoint) تتحقق من العضوية (membership)، ثم توقّع رابطًا (URL) صالحًا 5 دقائق",
+     "أبقِ الروابط الموقّعة (presigned links) في البريد (email)، لكن قلّص عمرها (lifetime) إلى 24 ساعة",
+     "خزّن لقطات الشاشة (screenshots) لكل منظمة (org) تحت بادئة مفاتيح (key prefix) خاصة بها هي orgs/{orgId}/",
+     "اجعل الحاوية عامة (public bucket)، وأعطِ كل لقطة شاشة (screenshot) مفتاحًا عشوائيًا طويلًا (long random key)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Presigned URLs get pasted and forwarded, so keep them to minutes and sign a fresh one per view, behind an endpoint that checks the viewer is still a member. A 24-hour link still opens for anyone it is forwarded to, with no membership check, until it expires.",
+    "ar": "الروابط الموقّعة مسبقًا (presigned URLs) تُلصق ويُعاد توجيهها (forwarded)، لذلك اجعل عمرها (lifetime) دقائق ووقّع رابطًا جديدًا لكل عرض (per view)، خلف نقطة نهاية (endpoint) تتحقق من أن المشاهد (viewer) ما زال عضوًا (member). أما الرابط الصالح 24 ساعة (24-hour link) فيفتح لكل من يُعاد توجيهه إليه (forwarded to)، دون أي تحقق من العضوية (membership check)، حتى تنتهي صلاحيته (expires)."
+   }
+  },
+  {
+   "id": "m2-3",
+   "level": 2,
+   "lesson": "2.3",
+   "q": {
+    "en": "An agency on Beacon has 1,800 monitors with names like api-eu-west-checkout-prod. Search runs name ILIKE '%…%' filtered by org, and typing \"chekout\" returns nothing. The PM proposes adding Elasticsearch. What is the right next step?",
+    "ar": "لدى وكالة (agency) تستخدم Beacon نحو 1,800 مراقِب (monitors) بأسماء مثل api-eu-west-checkout-prod. يشغّل البحث (search) الشرط name ILIKE '%…%' مع تصفية حسب المنظمة (org filter)، وكتابة \"chekout\" لا تُرجع شيئًا. يقترح مدير المنتج (PM) إضافة Elasticsearch. ما الخطوة التالية الصحيحة (right next step)؟"
+   },
+   "o": {
+    "en": [
+     "Add a B-tree index on monitor.name so the ILIKE query stops scanning",
+     "Add a tsvector column with a GIN index and query websearch_to_tsquery",
+     "Run Elasticsearch and index each monitor from the save request handler",
+     "Use pg_trgm with a GIN trigram index and rank by similarity score"
+    ],
+    "ar": [
+     "أضف فهرس B-tree (B-tree index) على monitor.name كي يتوقف استعلام ILIKE (ILIKE query) عن المسح (scanning)",
+     "أضف عمود tsvector (tsvector column) مع فهرس GIN (GIN index)، واستعلم عبر websearch_to_tsquery",
+     "شغّل Elasticsearch، وفهرس (index) كل مراقِب (monitor) من معالج طلب الحفظ (save request handler)",
+     "استخدم pg_trgm مع فهرس ثلاثيات GIN (GIN trigram index)، ورتّب النتائج حسب درجة التشابه (similarity score)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Names and typos are pg_trgm's job: a GIN trigram index makes ILIKE index-assisted and the % similarity operator finds near-misses like \"chekout\", with no new infrastructure. Elasticsearch means running a cluster and a sync pipeline before pg_trgm has run out, and Postgres full-text search is meant for prose, with no typo tolerance.",
+    "ar": "الأسماء والأخطاء الإملائية (typos) من اختصاص pg_trgm: فهرس الثلاثيات GIN (GIN trigram index) يجعل ILIKE مدعومًا بالفهرس (index-assisted)، وعامل التشابه (similarity operator) % يجد الأخطاء القريبة (near-misses) مثل \"chekout\"، دون بنية تحتية جديدة (new infrastructure). أما Elasticsearch فيعني تشغيل عنقود (cluster) ومسار مزامنة (sync pipeline) قبل أن يستنفد pg_trgm قدرته (has run out)، والبحث النصي الكامل (full-text search) في Postgres مخصص للنصوص الطويلة (prose) ولا يتسامح مع الأخطاء الإملائية (typo tolerance)."
+   }
+  },
+  {
+   "id": "m2-4",
+   "level": 3,
+   "lesson": "2.4",
+   "q": {
+    "en": "After a release that caches Beacon's dashboard monitor list in Redis for 60 seconds, users in one org sometimes see another org's monitors. Every query goes through forOrg(orgId), RLS is forced, the app connects as a non-owner role, and set_config is transaction-local. What is the most likely cause?",
+    "ar": "بعد إصدار (release) يخزّن قائمة المراقِبات (monitor list) في لوحة التحكم (dashboard) لدى Beacon داخل كاش Redis (Redis cache) لمدة 60 ثانية، يرى مستخدمو منظمة (org) أحيانًا مراقِبات منظمة أخرى. كل استعلام (query) يمر عبر forOrg(orgId)، وأمان مستوى الصف (RLS) مفروض (forced)، والتطبيق يتصل بدور ليس مالكًا للجداول (non-owner role)، وset_config محلي للمعاملة (transaction-local). ما السبب الأرجح (most likely cause)؟"
+   },
+   "o": {
+    "en": [
+     "The pooler carries app.current_org over from one request into the next",
+     "The cache key has no org in it, so one org's list is served to all",
+     "The RLS policy lacks WITH CHECK, so reads across orgs are not filtered",
+     "A handler loads the monitors by id alone instead of through the org"
+    ],
+    "ar": [
+     "مجمّع الاتصالات (pooler) ينقل app.current_org من طلب (request) إلى الطلب التالي",
+     "مفتاح الكاش (cache key) لا يتضمن المنظمة (org)، فتُقدَّم قائمة منظمة واحدة للجميع",
+     "سياسة RLS (RLS policy) تفتقد WITH CHECK، فلا تُصفّى القراءات (reads) بين المنظمات",
+     "معالج (handler) يحمّل المراقِبات (monitors) بمعرّفها (id) وحده، لا عبر المنظمة (through the org)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "The database layer is fully scoped, but tenant context must also reach caches: a key like monitors:list is shared by every org, so whichever org fills it first is served to all for 60 seconds; key it as org:123:monitors. A pooler leak needs a session-level SET, which transaction-local set_config rules out.",
+    "ar": "طبقة قاعدة البيانات (database layer) محصورة بالمستأجر (scoped) بالكامل، لكن سياق المستأجر (tenant context) يجب أن يصل إلى الكاش (cache) أيضًا: مفتاح مثل monitors:list مشترك بين كل المنظمات (orgs)، فالمنظمة التي تملؤه أولًا تُقدَّم قائمتها للجميع 60 ثانية؛ اجعل المفتاح مثل org:123:monitors. أما تسرّب مجمّع الاتصالات (pooler leak) فيحتاج أمر SET على مستوى الجلسة (session-level SET)، وset_config المحلي للمعاملة (transaction-local) يستبعده."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m2-e1",
+   "lesson": "2.1",
+   "text": {
+    "en": "I have deleted Beacon's monitors on purpose, restored the database with point-in-time recovery to the minute before, and written the measured recovery time into a restore runbook",
+    "ar": "حذفتُ مراقِبات (monitors) Beacon عمدًا، ثم استعدتُ قاعدة البيانات (database) بالاستعادة إلى نقطة زمنية (point-in-time recovery) إلى الدقيقة السابقة، وكتبتُ زمن التعافي المقيس (measured recovery time) في دليل استعادة (restore runbook)"
+   }
+  },
+  {
+   "id": "m2-e2",
+   "lesson": "2.4",
+   "text": {
+    "en": "I have enabled RLS on Beacon's tenant tables and seen a test query with its WHERE organization_id removed still return only the current org's rows",
+    "ar": "فعّلتُ أمان مستوى الصف (RLS) على جداول المستأجرين (tenant tables) في Beacon، ورأيتُ استعلام اختبار (test query) حُذف منه WHERE organization_id يُرجع مع ذلك صفوف (rows) المنظمة الحالية (current org) فقط"
+   }
+  }
+ ]
+}

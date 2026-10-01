@@ -1,0 +1,135 @@
+{
+ "area": "m10",
+ "questions": [
+  {
+   "id": "m10-1",
+   "level": 1,
+   "lesson": "10.2",
+   "q": {
+    "en": "A software firm is the provider of a high-risk credit-scoring system that three EU banks now use. It completed the conformity assessment and signed the declaration of conformity last year. What does the EU AI Act expect of the firm's monitoring from here on?",
+    "ar": "شركة برمجيات (software firm) هي مقدّم النظام (provider) لنظام عالي المخاطر (high-risk system) لتقييم الجدارة الائتمانية (credit scoring) تستخدمه الآن ثلاثة بنوك أوروبية (three EU banks). وقد أتمّت تقييم المطابقة (conformity assessment) ووقّعت إعلان المطابقة (declaration of conformity) في العام الماضي. ما الذي يتوقعه قانون الذكاء الاصطناعي الأوروبي (EU AI Act) من الشركة في مجال الرصد (monitoring) من الآن فصاعدًا؟"
+   },
+   "o": {
+    "en": [
+     "None of its own: conformity was assessed at release, and the signed declaration covers it",
+     "A post-market monitoring system for the system's lifetime, using the banks' data as well",
+     "None of its own: the banks see the live decisions, so the monitoring duty now sits with them",
+     "Monitoring that starts only once a serious incident has been reported to the authorities"
+    ],
+    "ar": [
+     "لا شيء من جهتها (none of its own): فقد قُيّمت المطابقة (conformity) عند الإطلاق (release)، والإعلان الموقَّع (signed declaration) يغطي النظام",
+     "نظام للرصد بعد الطرح في السوق (post-market monitoring system) طوال عمر النظام (system's lifetime)، يستعين ببيانات البنوك (banks' data) أيضًا",
+     "لا شيء من جهتها (none of its own): فالبنوك ترى القرارات الفعلية (live decisions)، لذا انتقل واجب الرصد (monitoring duty) إليها",
+     "رصد (monitoring) لا يبدأ إلا بعد الإبلاغ عن حادث جسيم (serious incident) إلى السلطات المختصة (authorities)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Under Art. 72, post-market monitoring is a provider duty that runs for the system's whole lifetime and draws on data from deployers, because conformity is a snapshot that monitoring has to keep true. Handing it to the banks is tempting, but a deployer's duty under Art. 26 is to monitor the system's operation and inform the provider, which does not lift the provider's own duty.",
+    "ar": "بموجب المادة 72 (Art. 72)، الرصد بعد الطرح في السوق (post-market monitoring) واجب على مقدّم النظام (provider duty) يمتد طوال عمر النظام (whole lifetime) ويستعين ببيانات المُشغِّلين (data from deployers)، لأن المطابقة (conformity) لقطة ثابتة (snapshot) يجب أن يحافظ الرصد (monitoring) على صحتها. ونقل الواجب إلى البنوك مغرٍ (tempting)، لكن واجب المُشغِّل (deployer's duty) بموجب المادة 26 (Art. 26) هو رصد تشغيل النظام (monitor the system's operation) وإبلاغ مقدّم النظام (inform the provider)، وهذا لا يرفع عن مقدّم النظام واجبه الخاص (own duty)."
+   }
+  },
+  {
+   "id": "m10-2",
+   "level": 2,
+   "lesson": "10.1",
+   "q": {
+    "en": "Khalid wants to pilot credit-scoring v2 at the Frankfurt branch for two weeks, with credit officers double-checking every score it produces, and to complete the conformity assessment and EU registration once the pilot results are in. What should Layla advise?",
+    "ar": "يريد خالد إجراء تجربة (pilot) للإصدار 2 من نموذج تقييم الجدارة الائتمانية (credit-scoring v2) في فرع فرانكفورت (Frankfurt branch) لمدة أسبوعين، على أن يراجع موظفو الائتمان (credit officers) كل درجة (score) يصدرها مراجعةً مزدوجة (double-checking)، وأن يُستكمل تقييم المطابقة (conformity assessment) والتسجيل في قاعدة بيانات الاتحاد الأوروبي (EU registration) بعد ظهور نتائج التجربة (pilot results). بماذا ينبغي أن تنصح (advise) ليلى؟"
+   },
+   "o": {
+    "en": [
+     "Go ahead: with officers double-checking every score, the model only advises them",
+     "Go ahead: the pilot counts as Art. 60 real-world testing, so conformity can follow later",
+     "Wait: real decisions on EU applicants put it into service, so conformity comes first",
+     "Wait: credit scoring is high-risk, so a notified body must approve v2 first"
+    ],
+    "ar": [
+     "امضِ قُدُمًا (go ahead): فمع المراجعة المزدوجة (double-checking) لكل درجة (score) من الموظفين، يقتصر دور النموذج (model) على المشورة (only advises)",
+     "امضِ قُدُمًا (go ahead): فالتجربة (pilot) تُعد اختبارًا في ظروف واقعية (real-world testing) بموجب المادة 60 (Art. 60)، فيمكن أن تتبعها المطابقة (conformity) لاحقًا",
+     "انتظر (wait): فالقرارات الحقيقية (real decisions) بشأن المتقدمين في الاتحاد الأوروبي (EU applicants) تعني تشغيل النظام (putting into service)، فالمطابقة (conformity) تأتي أولًا",
+     "انتظر (wait): فتقييم الجدارة الائتمانية (credit scoring) عالي المخاطر (high-risk)، لذا يجب أن تعتمد جهة مُخطَرة (notified body) الإصدار 2 (v2) أولًا"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "A pilot that makes real decisions about people in the EU puts the system into service, so the conformity assessment (internal control, with no notified body needed for credit scoring), declaration, CE marking and registration must be complete before it starts, however much human review is added. Art. 60 is the tempting escape, but real-world testing has its own conditions, such as a registered testing plan and informed consent, and is not a way to skip conformity.",
+    "ar": "التجربة (pilot) التي تتخذ قرارات حقيقية (real decisions) بشأن أشخاص في الاتحاد الأوروبي (EU) تعني تشغيل النظام (putting into service)، لذا يجب أن يكتمل تقييم المطابقة (conformity assessment)، وهو رقابة داخلية (internal control) لا تحتاج إلى جهة مُخطَرة (notified body) في تقييم الجدارة الائتمانية (credit scoring)، والإعلان (declaration) وعلامة CE (CE marking) والتسجيل (registration) قبل بدئها، مهما أُضيف من مراجعة بشرية (human review). والمادة 60 (Art. 60) مخرج مغرٍ (tempting escape)، لكن الاختبار في ظروف واقعية (real-world testing) له شروطه الخاصة (own conditions)، مثل خطة اختبار مسجّلة (registered testing plan) والموافقة المستنيرة (informed consent)، وليس وسيلة لتجاوز المطابقة (skip conformity)."
+   }
+  },
+  {
+   "id": "m10-3",
+   "level": 2,
+   "lesson": "10.3",
+   "q": {
+    "en": "To support a personal-loan campaign, Khalid asks Dana to lower credit-scoring v2's approval cut-off from a score of 650 to 630. The model file, features and code stay exactly as they are. Under Najm's change classification matrix, how should this change be handled?",
+    "ar": "لدعم حملة القروض الشخصية (personal-loan campaign)، يطلب خالد من دانة خفض حد الموافقة (approval cut-off) في الإصدار 2 من نموذج تقييم الجدارة الائتمانية (credit-scoring v2) من الدرجة 650 إلى 630. ويبقى ملف النموذج (model file) وخصائصه (features) وشفرته (code) كما هي تمامًا. وفق مصفوفة تصنيف التغيير (change classification matrix) لدى بنك نجم (Najm Bank)، كيف ينبغي التعامل مع هذا التغيير (change)؟"
+   },
+   "o": {
+    "en": [
+     "As minor: the model itself is untouched, so peer review and a change-log entry suffice",
+     "As planned: cut-off tuning is covered by the retraining plan in the conformity file",
+     "As substantial: every change after release needs a new conformity assessment",
+     "As significant: it changes who is approved, so it is re-validated and approved first"
+    ],
+    "ar": [
+     "بوصفه طفيفًا (minor): فالنموذج نفسه (model itself) لم يُمس، لذا تكفي مراجعة الأقران (peer review) وقيد في سجل التغيير (change log)",
+     "بوصفه مخططًا (planned): فضبط حد الموافقة (cut-off tuning) تغطيه خطة إعادة التدريب (retraining plan) في ملف المطابقة (conformity file)",
+     "بوصفه جوهريًا (substantial): فكل تغيير بعد الإطلاق (change after release) يحتاج إلى تقييم مطابقة جديد (new conformity assessment)",
+     "بوصفه مهمًا (significant): فهو يغيّر من تتم الموافقة عليهم (who is approved)، لذا تُعاد المصادقة عليه (re-validated) ويُعتمد (approved) أولًا"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Najm's matrix classes a threshold change as significant because it directly changes who is approved and can shift fairness, so it needs full re-validation, a DPIA review, updated documentation and a staged rollout, approved by the Model Validation Unit, Khalid and Layla. Calling it minor because no code changed is the tempting shortcut, while calling it substantial mistakes any change for an unplanned one that affects compliance or the intended purpose.",
+    "ar": "تصنّف مصفوفة بنك نجم (Najm's matrix) تغيير العتبة (threshold change) بأنه مهم (significant) لأنه يغيّر مباشرة من تتم الموافقة عليهم (who is approved) وقد يمسّ العدالة (fairness)، لذا يحتاج إلى مصادقة كاملة من جديد (full re-validation)، ومراجعة تقييم الأثر على حماية البيانات (DPIA review)، وتوثيق محدَّث (updated documentation)، وإطلاق مرحلي (staged rollout)، بموافقة وحدة المصادقة على النماذج (Model Validation Unit) وخالد وليلى. أما وصفه بالطفيف (minor) لأن الشفرة (code) لم تتغير فهو الاختصار المغري (tempting shortcut)، ووصفه بالجوهري (substantial) يخلط بين أي تغيير والتغيير غير المخطط (unplanned change) الذي يؤثر في الامتثال (compliance) أو الغرض المقصود (intended purpose)."
+   }
+  },
+  {
+   "id": "m10-4",
+   "level": 3,
+   "lesson": "10.2",
+   "q": {
+    "en": "For seven weeks, a recoded pension-income field made Najm's credit model decline almost every retired applicant at the Frankfurt branch. No data was lost or disclosed, and Sara confirms there was no personal data breach. Khalid proposes reporting nothing until next month's root-cause review is finished. What should Layla do?",
+    "ar": "طوال سبعة أسابيع، تسبّب حقل دخل التقاعد (pension-income field) بعد إعادة ترميزه (recoded) في أن يرفض نموذج الائتمان (credit model) لدى بنك نجم (Najm Bank) جميع المتقدمين المتقاعدين (retired applicants) تقريبًا في فرع فرانكفورت (Frankfurt branch). لم تُفقد أي بيانات ولم تُكشف (lost or disclosed)، وتؤكد سارة أنه لم يقع خرق للبيانات الشخصية (personal data breach). ويقترح خالد عدم الإبلاغ (reporting) عن أي شيء حتى تكتمل مراجعة السبب الجذري (root-cause review) في الشهر المقبل. ماذا ينبغي أن تفعل ليلى؟"
+   },
+   "o": {
+    "en": [
+     "Ask counsel now whether it is a serious incident and, if so, report within 15 days",
+     "Close the reporting question: with no personal data breach, no legal clock is running",
+     "Notify the data protection authority within 72 hours, as applicants' data was processed",
+     "Wait for the root-cause review, then report it if it proves to be a serious incident"
+    ],
+    "ar": [
+     "أن تسأل المستشار القانوني (counsel) الآن هل هو حادث جسيم (serious incident)، وإن كان كذلك تبلّغ عنه (report) خلال 15 يومًا",
+     "أن تغلق مسألة الإبلاغ (reporting question): فلا خرق للبيانات الشخصية (personal data breach)، ولذا لا تسري أي مهلة قانونية (legal clock)",
+     "أن تُخطر سلطة حماية البيانات (data protection authority) خلال 72 ساعة (72 hours)، لأن بيانات المتقدمين (applicants' data) عولجت",
+     "أن تنتظر مراجعة السبب الجذري (root-cause review)، ثم تبلّغ عنه (report) إن ثبت أنه حادث جسيم (serious incident)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "A model failure is not automatically a data breach, but the AI Act test is separate: systematic discrimination in credit decisions can infringe fundamental-rights obligations, so counsel must judge quickly and, if it qualifies, Najm reports within 15 days of becoming aware, with an initial report if the facts are incomplete. Treating \"no breach\" as \"no clock\" is the tempting error, and waiting for next month's review would miss the deadline.",
+    "ar": "إخفاق النموذج (model failure) ليس خرقًا للبيانات (data breach) تلقائيًا، لكن اختبار قانون الذكاء الاصطناعي (AI Act test) منفصل: فالتمييز المنهجي (systematic discrimination) في قرارات الائتمان (credit decisions) قد ينتهك التزامات الحقوق الأساسية (fundamental-rights obligations)، لذا يجب أن يحكم المستشار القانوني (counsel) سريعًا، وإن انطبق الوصف أبلغ بنك نجم (Najm Bank) خلال 15 يومًا من علمه بالحادث (becoming aware)، بتقرير أولي (initial report) إن كانت الوقائع ناقصة (facts are incomplete). ومعاملة \"لا خرق\" على أنها \"لا مهلة\" (no breach, no clock) هي الخطأ المغري (tempting error)، وانتظار مراجعة الشهر المقبل (next month's review) يفوّت المهلة النهائية (deadline)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m10-e1",
+   "lesson": "10.1",
+   "text": {
+    "en": "I have drafted go/no-go criteria for a real AI system before testing, with a measurable criterion in each of the six areas, from performance and fairness to legal and people readiness",
+    "ar": "صغتُ معايير الانطلاق/عدم الانطلاق (go/no-go criteria) لنظام ذكاء اصطناعي حقيقي (real AI system) قبل الاختبار (before testing)، بمعيار قابل للقياس (measurable criterion) في كل مجال من المجالات الستة (six areas)، من الأداء والعدالة (performance and fairness) إلى الجاهزية القانونية والبشرية (legal and people readiness)"
+   }
+  },
+  {
+   "id": "m10-e2",
+   "lesson": "10.3",
+   "text": {
+    "en": "I have drafted a decommissioning plan for a real AI system in which all seven elements, from decision and transition to disposal and the inventory update, have an owner and a date",
+    "ar": "صغتُ خطة إيقاف (decommissioning plan) لنظام ذكاء اصطناعي حقيقي (real AI system) يكون فيها لكلٍّ من عناصرها السبعة (seven elements)، من القرار والانتقال (decision and transition) إلى التخلص (disposal) وتحديث سجل الأنظمة (inventory update)، مالكٌ (owner) وتاريخ (date)"
+   }
+  }
+ ]
+}

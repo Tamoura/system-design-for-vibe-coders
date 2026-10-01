@@ -1,0 +1,135 @@
+{
+  "area": "m7",
+  "questions": [
+    {
+      "id": "m7-1",
+      "level": 1,
+      "lesson": "7.1",
+      "q": {
+        "en": "Beacon's ops lead wants to connect AdminJS straight to the production database, so staff can search customers, view usage and comp a plan by editing its plan field. What is the right v1 setup?",
+        "ar": "يريد مسؤول العمليات (ops lead) في Beacon ربط AdminJS مباشرة بقاعدة بيانات الإنتاج (production database)، كي يبحث الموظفون (staff) عن العملاء (customers)، ويعرضوا الاستخدام (usage)، ويمنحوا خطة مجانًا (comp a plan) بتعديل حقل الخطة (plan field). ما الإعداد الصحيح للنسخة الأولى (v1 setup)؟"
+      },
+      "o": {
+        "en": [
+          "Let AdminJS edit every table, but only for the two staff who hold the superadmin role",
+          "Give staff a read-only SQL console, and make each plan change by hand in a psql session",
+          "Read with generated screens, and comp plans via an action calling the billing service",
+          "Let AdminJS edit the plan field, and add a nightly job that syncs the change to Stripe"
+        ],
+        "ar": [
+          "اسمح لـAdminJS بتعديل كل جدول (every table)، لكن فقط للموظفَين (two staff) اللذين يحملان دور المدير الأعلى (superadmin role)",
+          "أعطِ الموظفين (staff) واجهة SQL للقراءة فقط (read-only SQL console)، ونفّذ كل تغيير في الخطة (plan change) يدويًا في جلسة psql (psql session)",
+          "اقرأ البيانات عبر شاشات مولَّدة (generated screens)، وامنح الخطط مجانًا (comp plans) عبر إجراء (action) يستدعي خدمة الفوترة (billing service)",
+          "اسمح لـAdminJS بتعديل حقل الخطة (plan field)، وأضف مهمة ليلية (nightly job) تزامن التغيير (change) مع Stripe"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "The admin app must be a second front door into the same service layer, but generated CRUD talks straight to the database: editing the plan field skips Stripe, cache invalidation and emails, and leaves no reason or audit event. Limiting the form to superadmins narrows who can do it, not what it skips.",
+        "ar": "يجب أن يكون تطبيق الإدارة (admin app) بابًا أماميًا ثانيًا (second front door) إلى طبقة الخدمات (service layer) نفسها، لكن أدوات CRUD المولَّدة (generated CRUD) تتحدث مباشرة مع قاعدة البيانات (database): فتعديل حقل الخطة (plan field) يتجاوز Stripe وإبطال الكاش (cache invalidation) ورسائل البريد (emails)، ولا يترك سببًا (reason) ولا حدث تدقيق (audit event). أما حصر النموذج (form) في المدراء الأعلى (superadmins) فيضيّق من يستطيع فعل ذلك (who can do it)، لا ما يتجاوزه (what it skips)."
+      }
+    },
+    {
+      "id": "m7-2",
+      "level": 2,
+      "lesson": "7.2",
+      "q": {
+        "en": "Beacon's on-call engineer was paged on four nights last week for check-worker CPU above 80%. Each time check lag was normal, no customer was affected and nobody needed to act. What should the team change?",
+        "ar": "تلقّى مهندس المناوبة (on-call engineer) في Beacon تنبيهًا عاجلًا (page) في أربع ليالٍ من الأسبوع الماضي، لأن استهلاك المعالج (CPU) في عمّال الفحص (check workers) تجاوز 80%. وفي كل مرة كان تأخر الفحص (check lag) طبيعيًا، ولم يتضرر أي عميل (customer)، ولم يحتج أحد إلى التصرف (act). ما الذي يجب أن يغيّره الفريق (team)؟"
+      },
+      "o": {
+        "en": [
+          "Page on fast burn of the check-lag SLO, with a runbook, and demote the CPU alert",
+          "Raise the CPU threshold to 95%, so the alert wakes someone up less often at night",
+          "Add memory and disk alerts as well, so each cause pages before customers notice",
+          "Keep the CPU page, and write a runbook that explains how to read its CPU graph"
+        ],
+        "ar": [
+          "أرسل تنبيهًا عاجلًا (page) عند الاستنزاف السريع (fast burn) لـSLO تأخر الفحص (check-lag SLO)، مع دليل تشغيل (runbook)، وخفّض مستوى تنبيه المعالج (CPU alert)",
+          "ارفع عتبة المعالج (CPU threshold) إلى 95%، حتى يوقظ التنبيه (alert) أحدًا ليلًا (wakes someone up at night) بوتيرة أقل (less often)",
+          "أضف تنبيهات للذاكرة والقرص (memory and disk alerts) أيضًا، حتى يطلق كل سبب (each cause) تنبيهًا عاجلًا (page) قبل أن يلاحظ العملاء (customers)",
+          "أبقِ التنبيه العاجل للمعالج (CPU page)، واكتب دليل تشغيل (runbook) يشرح كيف تُقرأ رسمة المعالج البيانية (CPU graph)"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Page a human only when customers are hurt now: alert on symptoms such as SLO burn and check lag, link a runbook, and delete or downgrade alerts nobody acts on. A higher CPU threshold still pages on a cause rather than a symptom, which keeps training people to ignore the pager.",
+        "ar": "لا ترسل تنبيهًا عاجلًا (page) لإنسان إلا عندما يتضرر العملاء (customers) الآن: نبّه على الأعراض (symptoms) مثل استنزاف SLO (SLO burn) وتأخر الفحص (check lag)، واربط التنبيه بدليل تشغيل (runbook)، واحذف أو خفّض التنبيهات (alerts) التي لا يتصرف أحد حيالها. أما رفع عتبة المعالج (CPU threshold) فيبقي التنبيه على سبب (cause) لا على عَرَض (symptom)، وهذا يواصل تعويد الناس على تجاهل جهاز التنبيه (pager)."
+      }
+    },
+    {
+      "id": "m7-3",
+      "level": 2,
+      "lesson": "7.3",
+      "q": {
+        "en": "During an incident, a Beacon engineer changes Acme's notification channel settings with a psql UPDATE. Beacon writes audit events by calling recordAudit() in its service functions, so Acme's audit log shows nothing. What is the practical fix?",
+        "ar": "أثناء حادثة (incident)، يغيّر مهندس (engineer) في Beacon إعدادات قناة الإشعارات (notification channel settings) الخاصة بـAcme بأمر UPDATE عبر psql. ويكتب Beacon أحداث التدقيق (audit events) باستدعاء recordAudit() في دوال الخدمات (service functions)، لذلك لا يُظهر سجل التدقيق (audit log) لدى Acme أي شيء. ما الإصلاح العملي (practical fix)؟"
+      },
+      "o": {
+        "en": [
+          "Replace recordAudit() with Postgres triggers on every table, so no change is missed",
+          "Rely on pgaudit's server log, and show each customer the entries for their own org",
+          "Ban psql in a written policy, and keep app-level events as the only audit record",
+          "Keep app-level events, and add a trigger safety net on the most sensitive tables"
+        ],
+        "ar": [
+          "استبدل recordAudit() بمشغّلات Postgres (Postgres triggers) على كل جدول (every table)، حتى لا يفوت أي تغيير (change)",
+          "اعتمد على سجل الخادم (server log) في pgaudit، واعرض لكل عميل (customer) الإدخالات (entries) الخاصة بمنظمته (own org)",
+          "امنع psql بسياسة مكتوبة (written policy)، وأبقِ الأحداث على مستوى التطبيق (app-level events) سجل التدقيق (audit record) الوحيد",
+          "أبقِ الأحداث على مستوى التطبيق (app-level events)، وأضف شبكة أمان من المشغّلات (trigger safety net) على الجداول الأكثر حساسية (most sensitive tables)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "App-level events carry the actor, IP and intent the customer-facing log needs, and a trigger or CDC safety net on sensitive tables still leaves a trace when a manual fix or a forgotten code path bypasses them. Triggers alone are row-level and don't know the user or IP unless you pass them in, and pgaudit complements the application audit log rather than replacing it.",
+        "ar": "الأحداث على مستوى التطبيق (app-level events) تحمل الفاعل (actor) وعنوان IP والنية (intent) التي يحتاجها السجل الذي يراه العميل (customer-facing log)، وشبكة الأمان (safety net) من المشغّلات (triggers) أو CDC على الجداول الحساسة (sensitive tables) تظل تترك أثرًا (still leaves a trace) عندما يتجاوز تلك الأحداث إصلاحٌ يدوي (manual fix) أو مسار منسي في الكود (forgotten code path). أما المشغّلات وحدها فتعمل على مستوى الصف (row-level) ولا تعرف المستخدم (user) أو عنوان IP إلا إذا مرّرتهما إليها، وpgaudit يكمّل سجل التدقيق في التطبيق (application audit log) ولا يحل محله."
+      }
+    },
+    {
+      "id": "m7-4",
+      "level": 3,
+      "lesson": "7.4",
+      "q": {
+        "en": "Beacon's managed Postgres has emailed \"backup succeeded\" every night for a year, and nobody has ever restored one. A bank's contract asks for an RPO of 15 minutes and an RTO of 4 hours, with evidence. What should the team do before signing?",
+        "ar": "يرسل Postgres المُدار (managed Postgres) في Beacon كل ليلة منذ عام بريدًا (email) يقول \"نجح النسخ الاحتياطي (backup succeeded)\"، ولم يستعد أحد أي نسخة قط. ويطلب عقد (contract) أحد البنوك هدف نقطة استعادة (RPO) قدره 15 دقيقة، وهدف زمن استعادة (RTO) قدره 4 ساعات، مع دليل (evidence). ماذا يجب أن يفعل الفريق (team) قبل التوقيع؟"
+      },
+      "o": {
+        "en": [
+          "Switch to hourly snapshots, and attach a year of backup-success emails as evidence",
+          "Turn on point-in-time recovery, then time a restore into a scratch environment",
+          "Write a recovery runbook from the provider's docs, and estimate the RTO from it",
+          "Copy each nightly dump to a second bucket in the same account and the same region"
+        ],
+        "ar": [
+          "انتقل إلى لقطات كل ساعة (hourly snapshots)، وأرفق رسائل نجاح النسخ الاحتياطي (backup-success emails) لعام كامل كدليل (evidence)",
+          "فعّل الاستعادة إلى نقطة زمنية (point-in-time recovery)، ثم قِس زمن استعادة فعلية (time a restore) في بيئة مؤقتة (scratch environment)",
+          "اكتب دليل تعافٍ (recovery runbook) من توثيق المزوّد (provider's docs)، وقدّر منه زمن الاستعادة (RTO)",
+          "انسخ كل تفريغ ليلي (nightly dump) إلى حاوية تخزين ثانية (second bucket) في الحساب نفسه (same account) والمنطقة نفسها (same region)"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Only a timed restore drill proves you can recover and gives a measured RPO and RTO, and point-in-time recovery brings the RPO down to minutes or less. Hourly snapshots can still lose up to an hour, and success emails prove nothing because backups fail silently.",
+        "ar": "وحده تدريب استعادة مُقاس بالوقت (timed restore drill) يثبت أنك تستطيع التعافي (recover)، ويعطيك قيمتين مُقاستين (measured) لـRPO وRTO، والاستعادة إلى نقطة زمنية (point-in-time recovery) تخفض RPO إلى دقائق أو أقل. أما لقطات كل ساعة (hourly snapshots) فقد تظل تفقد ما يصل إلى ساعة كاملة، ورسائل النجاح (success emails) لا تثبت شيئًا لأن النسخ الاحتياطية (backups) تفشل بصمت (fail silently)."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m7-e1",
+      "lesson": "7.2",
+      "text": {
+        "en": "I have propagated trace context through Beacon's BullMQ jobs so one trace shows the API request, the enqueue and the first check in the worker, and watched check lag climb on a dashboard within a minute of stopping one worker",
+        "ar": "مرّرتُ سياق التتبع (trace context) عبر مهام BullMQ (BullMQ jobs) في Beacon حتى يُظهر تتبع واحد (one trace) طلب الـAPI (API request) والإضافة إلى الطابور (enqueue) وأول فحص (first check) في العامل (worker)، وشاهدتُ تأخر الفحص (check lag) يرتفع على لوحة متابعة (dashboard) خلال دقيقة من إيقاف عامل واحد (one worker)"
+      }
+    },
+    {
+      "id": "m7-e2",
+      "lesson": "7.4",
+      "text": {
+        "en": "I have restored Beacon's latest backup into a scratch environment, pointed the app at it, and written down the measured RPO and RTO and at least one thing that went wrong, with its fix",
+        "ar": "استعدتُ أحدث نسخة احتياطية (latest backup) من Beacon في بيئة مؤقتة (scratch environment)، ووجّهتُ التطبيق (app) إليها، ودوّنتُ قيمتي RPO وRTO المُقاستين (measured RPO and RTO) وشيئًا واحدًا على الأقل لم يسر كما يجب (went wrong)، مع إصلاحه (its fix)"
+      }
+    }
+  ]
+}

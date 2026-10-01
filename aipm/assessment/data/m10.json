@@ -1,0 +1,135 @@
+{
+ "area": "m10",
+ "questions": [
+  {
+   "id": "m10-1",
+   "level": 1,
+   "lesson": "10.1",
+   "q": {
+    "en": "Rania wants every AI product at Najm Bank to keep a product dossier like Najm Assist's, not just a folder of documents. Which rule makes a set of artefacts work as a dossier?",
+    "ar": "تريد رانيا أن يحتفظ كل منتج ذكاء اصطناعي (AI product) في بنك نجم (Najm Bank) بملف منتج (product dossier) مثل ملف نجم أسيست (Najm Assist)، لا بمجرد مجلد وثائق (folder of documents). ما القاعدة (rule) التي تجعل مجموعة من الوثائق (set of artefacts) تعمل بوصفها ملفًا مترابطًا (work as a dossier)؟"
+   },
+   "o": {
+    "en": [
+     "Each artefact is signed off by Layla's office before the next stage can begin",
+     "Each artefact is complete enough to be read on its own, without the others",
+     "Each artefact follows one shared template, so the whole dossier reads the same",
+     "Each artefact states its decision, evidence and stop rule, and feeds the next"
+    ],
+    "ar": [
+     "يعتمد مكتب ليلى (Layla's office) كل وثيقة (artefact) قبل أن تبدأ المرحلة التالية (next stage)",
+     "تكون كل وثيقة (artefact) مكتملة بما يكفي لتُقرأ وحدها (read on its own)، دون الوثائق الأخرى (without the others)",
+     "تتبع كل وثيقة (artefact) قالبًا مشتركًا واحدًا (one shared template)، فيُقرأ الملف كله بالطريقة نفسها (whole dossier reads the same)",
+     "تذكر كل وثيقة (artefact) قرارها وأدلتها وقاعدة إيقافها (decision, evidence and stop rule)، وتغذّي التالية (feeds the next)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "A dossier works because each artefact records its decision, the evidence behind it and its stop rule, and names the input it hands on: top jobs become golden-set slices and quality bars become launch gates. Sign-off by Layla's office is tempting, but Layla reads the dossier at governance gates, and approval alone does not link one artefact to the next.",
+    "ar": "يعمل الملف (dossier) لأن كل وثيقة (artefact) تسجّل قرارها (decision) والأدلة التي يستند إليها (evidence behind it) وقاعدة إيقافها (stop rule)، وتسمّي المُدخَل الذي تسلّمه (input it hands on): فأهم المهام (top jobs) تصبح شرائح في المجموعة المرجعية (golden-set slices)، ومعايير الجودة (quality bars) تصبح بوابات إطلاق (launch gates). أما اعتماد مكتب ليلى (Layla's office) فمغرٍ، لكن ليلى تقرأ الملف عند بوابات الحوكمة (governance gates)، والاعتماد وحده (approval alone) لا يربط وثيقة بالتي تليها (link one artefact to the next)."
+   }
+  },
+  {
+   "id": "m10-2",
+   "level": 2,
+   "lesson": "10.2",
+   "q": {
+    "en": "In a mock interview, Rania asks Faisal to design an AI assistant that tells customers which documents they need to open an account. The list is short and fixed, is published on one page and has not changed for two years. Faisal has already named the user and the job. What should a strong answer do next?",
+    "ar": "في مقابلة تجريبية (mock interview)، تطلب رانيا من فيصل أن يصمّم مساعد ذكاء اصطناعي (AI assistant) يخبر العملاء بالمستندات المطلوبة لفتح حساب (documents they need to open an account). القائمة قصيرة وثابتة (short and fixed)، ومنشورة في صفحة واحدة (published on one page)، ولم تتغيّر منذ عامين (not changed for two years). وقد سمّى فيصل بالفعل المستخدم والمهمة (the user and the job). ماذا ينبغي أن تفعل الإجابة القوية (strong answer) بعد ذلك؟"
+   },
+   "o": {
+    "en": [
+     "Set an automation level for each task that the assistant would take on",
+     "Check whether a simpler fix, like a clearer page or better search, wins",
+     "Explain how retrieval would ground every answer in the published document list",
+     "Propose a golden set of account-opening questions to test its answers"
+    ],
+    "ar": [
+     "تحديد مستوى الأتمتة (automation level) لكل مهمة (each task) سيتولاها المساعد (assistant)",
+     "التحقق مما إذا كان حل أبسط (simpler fix) يتفوّق (wins)، كصفحة أوضح (clearer page) أو بحث أفضل (better search)",
+     "شرح كيف سيُسند الاسترجاع (retrieval would ground) كل إجابة إلى قائمة المستندات المنشورة (published document list)",
+     "اقتراح مجموعة مرجعية (golden set) من أسئلة فتح الحساب (account-opening questions) لاختبار إجاباته (test its answers)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "The answer structure asks whether AI is the right tool straight after the user and job, and a short, fixed, published list is where a clearer page or better search can win; saying so briefly scores well. Setting the automation level is tempting because it is the next step, but it assumes an AI product the problem may not need.",
+    "ar": "تسأل بنية الإجابة (answer structure) هل الذكاء الاصطناعي هو الأداة الصحيحة (right tool) مباشرةً بعد المستخدم والمهمة (user and job)، والقائمة القصيرة الثابتة المنشورة (short, fixed, published list) موضع قد تتفوّق فيه صفحة أوضح (clearer page) أو بحث أفضل (better search)؛ وقول ذلك باختصار يحصل على تقييم جيد (scores well). أما تحديد مستوى الأتمتة (automation level) فمغرٍ لأنه الخطوة التالية (next step)، لكنه يفترض منتج ذكاء اصطناعي (AI product) قد لا تحتاج إليه المشكلة (problem may not need)."
+   }
+  },
+  {
+   "id": "m10-3",
+   "level": 2,
+   "lesson": "10.3",
+   "q": {
+    "en": "A new AI PM on Rania's team sits the practice exam in 90 minutes without notes and scores 50 of 60. While marking, she sees that four of her correct answers were guesses between two options; on three of them she had picked the most thorough-sounding plan for a question asking what to do first. What should she do next?",
+    "ar": "تؤدي مديرة منتج ذكاء اصطناعي جديدة (new AI PM) في فريق رانيا (Rania's team) الامتحان التدريبي (practice exam) في 90 دقيقة دون ملاحظات (without notes)، وتحصل على 50 من 60. وأثناء التصحيح (while marking) ترى أن أربعًا من إجاباتها الصحيحة (correct answers) كانت تخمينًا بين خيارين (guesses between two options)؛ وفي ثلاث منها اختارت الخطة التي تبدو الأشمل (most thorough-sounding plan) في سؤال عمّا تفعله أولًا (what to do first). ماذا ينبغي أن تفعل بعد ذلك (next)؟"
+   },
+   "o": {
+    "en": [
+     "Treat the course as done, since 50 clears the course's rule of thumb of 48",
+     "Re-sit the whole exam the next day to check that her score of 50 holds up",
+     "Log the four guesses as wrong too, each with its trap and a section to re-read",
+     "Log only the ten wrong answers, since the four guesses were still marked correct"
+    ],
+    "ar": [
+     "تعدّ الدورة منتهية (treat the course as done)، لأن 50 تتجاوز القاعدة التقريبية للدورة (course's rule of thumb) البالغة 48",
+     "تعيد الامتحان كاملًا (re-sit the whole exam) في اليوم التالي للتحقق من ثبات نتيجتها البالغة 50 (score of 50 holds up)",
+     "تسجّل التخمينات الأربعة (four guesses) خاطئة أيضًا (as wrong too)، مع فخ كلٍّ منها (its trap) وقسم تعيد قراءته (section to re-read)",
+     "تسجّل الإجابات العشر الخاطئة فقط (only the ten wrong answers)، لأن التخمينات الأربعة ما زالت محسوبة صحيحة (still marked correct)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Rania cares about the error log, not the score: a lucky guess is a gap not yet found, so each guess is logged as wrong alongside the ten misses, with its trap (here, the most complete-sounding option) and a section to re-read. Treating the course as done because 50 clears 48 is tempting, but that number is a guide, not a certification standard, and it counts the four guesses as knowledge.",
+    "ar": "ما يهم رانيا هو سجل الأخطاء (error log) لا النتيجة (score): فالتخمين المحظوظ (lucky guess) فجوة لم تُكتشف بعد (gap not yet found)، ولذا يُسجَّل كل تخمين خاطئًا (each guess is logged as wrong) إلى جانب الأخطاء العشرة (alongside the ten misses)، مع فخه (its trap) — وهو هنا اختيار الخيار الذي يبدو الأكمل (most complete-sounding option) — وقسم لإعادة قراءته (section to re-read). أما عدّ الدورة منتهية (treating the course as done) لأن 50 تتجاوز 48 فمغرٍ، لكن هذا الرقم دليل إرشادي (guide) لا معيار شهادة (certification standard)، وهو يحتسب التخمينات الأربعة معرفةً (counts the guesses as knowledge)."
+   }
+  },
+  {
+   "id": "m10-4",
+   "level": 3,
+   "lesson": "10.1",
+   "q": {
+    "en": "An online retailer's support assistant met every launch bar, and its nightly eval suite still passes. Spot checks show its LLM judge agrees with human raters. Yet three months after launch, complaints and repeat contacts are climbing on “where is my refund?”, the job its discovery research ranked first. Its golden set was drawn from the help centre's FAQ page. What is the most likely diagnosis and fix?",
+    "ar": "استوفى مساعد الدعم (support assistant) لدى متجر إلكتروني (online retailer) كل معايير الإطلاق (launch bars)، وما زالت مجموعة التقييمات الليلية (nightly eval suite) لديه تنجح. وتُظهر الفحوص العشوائية (spot checks) أن الحَكَم من النماذج اللغوية الكبيرة (LLM judge) يتفق مع المقيّمين البشر (human raters). ومع ذلك، بعد ثلاثة أشهر من الإطلاق (after launch)، تتزايد الشكاوى (complaints) وحالات التواصل المتكرر (repeat contacts) بشأن «أين استرداد أموالي؟ ⁦(where is my refund?)⁩»، وهي المهمة التي وضعها بحث الاكتشاف (discovery research) في المرتبة الأولى (ranked first). وقد أُخذت مجموعته المرجعية (golden set) من صفحة الأسئلة الشائعة (FAQ page) في مركز المساعدة (help centre). ما التشخيص الأرجح (most likely diagnosis) والإصلاح (fix)؟"
+   },
+   "o": {
+    "en": [
+     "The golden set is not sliced by discovery's top jobs; rebuild its slices from them",
+     "The launch bar was set too low; raise it so the nightly suite fails on these errors",
+     "The judge has drifted on refund answers; recalibrate it against new human ratings",
+     "Monitoring runs too rarely to catch it; move the eval suite from nightly to hourly"
+    ],
+    "ar": [
+     "المجموعة المرجعية (golden set) غير مقسّمة حسب أهم مهام الاكتشاف (discovery's top jobs)؛ أعد بناء شرائحها منها (rebuild its slices from them)",
+     "معيار الإطلاق (launch bar) وُضع منخفضًا جدًا (set too low)؛ ارفعه حتى تفشل المجموعة الليلية (nightly suite) عند هذه الأخطاء (on these errors)",
+     "الحَكَم (judge) انجرف في إجابات الاسترداد (refund answers)؛ أعد معايرته (recalibrate it) مقابل تقييمات بشرية جديدة (new human ratings)",
+     "المراقبة (monitoring) تعمل على فترات متباعدة (too rarely)؛ انقل مجموعة التقييمات (eval suite) من التشغيل الليلي إلى كل ساعة (nightly to hourly)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "A suite that keeps passing while complaints climb on discovery's top job points to a broken link between artefacts: the golden set came from the FAQ page rather than the jobs discovery found, so it does not test what customers need most; rebuild its slices from those jobs. Raising the bar is tempting, but a stricter bar on cases that miss the refund job still cannot catch its failures.",
+    "ar": "مجموعة تقييمات (eval suite) تواصل النجاح بينما تتزايد الشكاوى (complaints) على أهم مهمة في الاكتشاف (discovery's top job) تشير إلى رابط مكسور بين الوثائق (broken link between artefacts): فالمجموعة المرجعية (golden set) أُخذت من صفحة الأسئلة الشائعة (FAQ page) لا من المهام التي وجدها الاكتشاف (jobs discovery found)، فهي لا تختبر ما يحتاج إليه العملاء أكثر من غيره (what customers need most)؛ أعد بناء شرائحها (rebuild its slices) من تلك المهام. أما رفع المعيار (raising the bar) فمغرٍ، لكن معيارًا أشد (stricter bar) على حالات لا تغطي مهمة الاسترداد (refund job) لا يستطيع التقاط إخفاقاتها (catch its failures)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m10-e1",
+   "lesson": "10.1",
+   "text": {
+    "en": "I have written out three rows of a product dossier in full, each stating its decision, evidence and stop rule and naming the input it passes on.",
+    "ar": "كتبت ثلاثة صفوف من ملف منتج (three rows of a product dossier) بالكامل (in full)، يذكر كل منها قراره وأدلته وقاعدة إيقافه (decision, evidence and stop rule)، ويسمّي المُدخَل الذي يمرّره (input it passes on)."
+   }
+  },
+  {
+   "id": "m10-e2",
+   "lesson": "10.3",
+   "text": {
+    "en": "I have sat the 60-question practice exam in 90 minutes without notes and logged every wrong or guessed answer in an error log, with the trap I fell for and the section to re-read.",
+    "ar": "أدّيت الامتحان التدريبي ذا الستين سؤالًا (60-question practice exam) في 90 دقيقة دون ملاحظات (without notes)، وسجّلت كل إجابة خاطئة أو مخمَّنة (wrong or guessed answer) في سجل أخطاء (error log) مع الفخ الذي وقعت فيه (trap I fell for) والقسم الذي سأعيد قراءته (section to re-read)."
+   }
+  }
+ ]
+}

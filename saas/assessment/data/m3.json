@@ -1,0 +1,135 @@
+{
+ "area": "m3",
+ "questions": [
+  {
+   "id": "m3-1",
+   "level": 1,
+   "lesson": "3.1",
+   "q": {
+    "en": "Beacon's Checkout success page sets the org's plan to Pro. Support reports a customer who paid but closed the tab before the redirect and is still on Free, and a Free user who typed the success URL by hand and got Pro. What fixes both?",
+    "ar": "صفحة النجاح (success page) التي يعود إليها العميل بعد الدفع عبر Checkout في Beacon تضبط خطة المؤسسة (org's plan) على Pro. يبلّغ فريق الدعم (support) عن عميل (customer) دفع ثم أغلق التبويب (tab) قبل إعادة التوجيه (redirect) فبقي على Free، وعن مستخدم على Free كتب رابط النجاح (success URL) يدويًا فحصل على Pro. ما الذي يصلح الحالتين معًا؟"
+   },
+   "o": {
+    "en": [
+     "Check the Checkout session ID in the success URL before upgrading the org's plan",
+     "Upgrade the org when the owner clicks Upgrade, and revert it if payment fails",
+     "Upgrade from the verified webhook; the success page only says \"confirming…\"",
+     "Keep the success-page upgrade, and add a nightly job that repairs any mismatches"
+    ],
+    "ar": [
+     "تحقّق من معرّف جلسة الدفع (Checkout session ID) في رابط النجاح (success URL) قبل ترقية خطة المؤسسة (upgrading the org's plan)",
+     "رقِّ المؤسسة (upgrade the org) عندما ينقر المالك (owner) زر الترقية (Upgrade)، وتراجع عن ذلك إن فشل الدفع (payment fails)",
+     "رقِّ المؤسسة من الويب هوك بعد التحقق منه (verified webhook)، ولتكتفِ صفحة النجاح (success page) بعبارة \"جارٍ التأكيد ⁦(confirming…)⁩\"",
+     "أبقِ الترقية (upgrade) في صفحة النجاح (success page)، وأضف مهمة ليلية (nightly job) تصلح أي حالات عدم تطابق (mismatches)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "The redirect can be skipped (a closed tab) or forged (a typed URL), so access must come from the signed checkout.session.completed webhook, which arrives either way, and the redirect is only for messaging. Checking the session ID stops the forged visit but still leaves the customer who closed the tab on Free.",
+    "ar": "إعادة التوجيه (redirect) قد تُتخطّى (skipped) بإغلاق التبويب (tab)، أو تُزوَّر (forged) بكتابة الرابط (URL) يدويًا، لذلك يجب أن تأتي الصلاحيات (access) من الويب هوك الموقّع (signed webhook) checkout.session.completed الذي يصل في الحالتين، أما إعادة التوجيه فللرسائل (messaging) فقط. والتحقق من معرّف الجلسة (session ID) يمنع الزيارة المزوّرة (forged visit)، لكنه يترك العميل (customer) الذي أغلق التبويب على Free."
+   }
+  },
+  {
+   "id": "m3-2",
+   "level": 2,
+   "lesson": "3.2",
+   "q": {
+    "en": "Sales signs Acme to Beacon Business with 2,000 monitors and 15-second checks until the contract renews next year. How should Beacon give Acme these limits?",
+    "ar": "يوقّع فريق المبيعات (sales) عقدًا مع Acme على خطة Business في Beacon (Beacon Business) يمنحها 2,000 مراقِب (monitors) وفحوصًا كل 15 ثانية (15-second checks) حتى تجديد العقد (contract renewal) في العام المقبل. كيف يجب أن يمنح Beacon هذه الحدود (limits) لـAcme؟"
+   },
+   "o": {
+    "en": [
+     "Keep Acme on Business plus overrides with a reason, an owner and an expiry",
+     "Create an acme_enterprise plan in plans.ts and map Acme's new Stripe Price to it",
+     "Change the Business plan's limits in plans.ts to 2,000 monitors and 15 seconds",
+     "Turn on a feature flag for Acme's account that unlocks the higher plan limits"
+    ],
+    "ar": [
+     "أبقِ Acme على خطة Business (Business plan) مع استثناءات (overrides) لها سبب (reason) ومالك (owner) وتاريخ انتهاء (expiry date)",
+     "أنشئ خطة مخصصة (custom plan) باسم acme_enterprise في plans.ts، واربط بها سعر Stripe الجديد (new Stripe Price) الخاص بـAcme",
+     "عدّل حدود خطة Business (Business plan limits) في plans.ts إلى 2,000 مراقِب (monitors) وفحص كل 15 ثانية (15-second checks)",
+     "فعّل علم ميزة (feature flag) لحساب Acme (Acme's account) يفتح حدود الخطة الأعلى (higher plan limits)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "A custom contract is the Business plan plus per-org overrides that carry an owner, a reason and an expiry, edited in the admin panel and written to the audit log, with a reminder job on the expiry. Editing the Business plan in plans.ts would hand Acme's deal to every Business customer, and a plan per customer is exactly what the lesson warns against.",
+    "ar": "العقد المخصص (custom contract) هو خطة Business (Business plan) مع استثناءات لكل مؤسسة (per-org overrides) تحمل مالكًا (owner) وسببًا (reason) وتاريخ انتهاء (expiry date)، وتُعدَّل من لوحة الإدارة (admin panel) وتُسجَّل في سجل التدقيق (audit log)، مع مهمة تذكير (reminder job) عند انتهائها. أما تعديل خطة Business في plans.ts فيمنح صفقة Acme (Acme's deal) لكل عملاء Business، وإنشاء خطة لكل عميل (plan per customer) هو بالضبط ما يحذّر منه الدرس."
+   }
+  },
+  {
+   "id": "m3-3",
+   "level": 2,
+   "lesson": "3.3",
+   "q": {
+    "en": "Beacon will bill Business orgs per check execution. After a worker restart the scheduler can enqueue the same scheduled check twice, and a check that times out is retried. Which idempotency key should each usage event carry?",
+    "ar": "سيفوتر Beacon مؤسسات Business (Business orgs) على كل تنفيذ فحص (check execution). وبعد إعادة تشغيل العامل (worker restart) قد يضع المجدول (scheduler) الفحص المجدول نفسه (same scheduled check) في الطابور (enqueue) مرتين، والفحص الذي تنتهي مهلته (times out) تُعاد محاولته (retried). أي مفتاح عدم تأثر بالتكرار (idempotency key) يجب أن يحمله كل حدث استخدام (usage event)؟"
+   },
+   "o": {
+    "en": [
+     "check:{monitorId}:{startedAt}, taken from the moment the check began to run",
+     "A UUID generated when the job is enqueued and kept in the job's payload",
+     "check:{monitorId}, enforced by a unique constraint on the usage events",
+     "check:{monitorId}:{scheduledAt}, enforced by a unique constraint"
+    ],
+    "ar": [
+     "check:{monitorId}:{startedAt}، مأخوذًا من لحظة بدء تشغيل الفحص (check start time)",
+     "معرّف UUID يُولَّد عند وضع المهمة في الطابور (enqueue)، ويُحفظ في حمولة المهمة (job payload)",
+     "check:{monitorId}، ويفرضه قيد تفرّد (unique constraint) على أحداث الاستخدام (usage events)",
+     "check:{monitorId}:{scheduledAt}، ويفرضه قيد تفرّد (unique constraint)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "The key must be derived from the business fact, and one scheduled run of one monitor is that fact, so a double enqueue and a retry both collapse onto the same row. A UUID made at enqueue survives retries, but the double enqueue creates two jobs with two UUIDs and bills the check twice.",
+    "ar": "يجب أن يُشتق المفتاح (key) من الحقيقة التجارية (business fact)، والتشغيل المجدول الواحد لمراقِب واحد (one scheduled run of one monitor) هو تلك الحقيقة، فيقع الإدراج المزدوج في الطابور (double enqueue) وإعادة المحاولة (retry) كلاهما على الصف نفسه (same row). أما معرّف UUID المولَّد عند الإدراج في الطابور (enqueue) فيصمد أمام إعادة المحاولة، لكن الإدراج المزدوج ينشئ مهمتين (two jobs) بمعرّفين مختلفين، فيُفوتَر الفحص (check) مرتين."
+   }
+  },
+  {
+   "id": "m3-4",
+   "level": 3,
+   "lesson": "3.2",
+   "q": {
+    "en": "Acme's card fails, retries run out and its Stripe subscription becomes canceled. Beacon's subscriptions row now says canceled and the API rejects any new monitor, yet all 43 of Acme's monitors keep running and none has pausedReason set. Last month a test downgrade made with Beacon's Downgrade button froze the excess correctly. What is the most likely flaw?",
+    "ar": "تفشل بطاقة (card) Acme، وتُستنفد المحاولات (retries run out)، ويصبح اشتراكها في Stripe (Stripe subscription) بحالة canceled. صف الاشتراك (subscriptions row) في Beacon يقول الآن canceled، والـAPI يرفض إنشاء أي مراقِب جديد (new monitor)، ومع ذلك ما زالت مراقِبات Acme الثلاثة والأربعون (43 monitors) كلها تعمل، ولا يحمل أيٌّ منها قيمة في عمود pausedReason (pausedReason column). وفي الشهر الماضي، جمّد اختبارُ تخفيضٍ (test downgrade) نُفّذ بزر التخفيض (Downgrade button) في Beacon الفائضَ (the excess) تجميدًا صحيحًا. ما الخلل الأرجح (most likely flaw)؟"
+   },
+   "o": {
+    "en": [
+     "getEntitlements still counts canceled as a paid status during a grace period",
+     "The freeze logic runs from the Downgrade button, not from the webhook path",
+     "The webhook handler dropped the cancellation event as a duplicate delivery",
+     "The scheduler caches Acme's old plan instead of reading the org's snapshot"
+    ],
+    "ar": [
+     "ما زالت getEntitlements تعدّ canceled حالة مدفوعة (paid status) خلال فترة سماح (grace period)",
+     "منطق التجميد (freeze logic) يعمل من زر التخفيض (Downgrade button)، لا من مسار الويب هوك (webhook path)",
+     "أسقط معالج الويب هوك (webhook handler) حدث الإلغاء (cancellation event) على أنه تسليم مكرر (duplicate delivery)",
+     "المجدول (scheduler) يخزّن خطة Acme القديمة (old plan) في الكاش (cache) بدل قراءة لقطة المؤسسة (org snapshot)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "The canceled row and the rejected monitor show the cancellation was synced and enforced, and the button test shows the freeze logic works, so it must be wired only to the button; involuntary downgrades must run the same freeze from the webhook path. A stale scheduler cache could make checks run too often, but it cannot explain why no monitor has pausedReason set, because the freeze, not the scheduler, sets it.",
+    "ar": "صف الاشتراك (subscriptions row) بحالة canceled ورفضُ المراقِب الجديد (new monitor) يُثبتان أن الإلغاء (cancellation) تمت مزامنته (synced) وفرضه (enforced)، واختبار الزر (button test) يُثبت أن منطق التجميد (freeze logic) يعمل، فلا بد أنه مربوط بالزر (button) وحده؛ والتخفيض غير الطوعي (involuntary downgrade) يجب أن يشغّل التجميد نفسه من مسار الويب هوك (webhook path). أما كاش المجدول القديم (stale scheduler cache) فقد يجعل الفحوص (checks) تعمل أكثر من المسموح، لكنه لا يفسّر لماذا لا يحمل أي مراقِب (monitor) قيمة في pausedReason، لأن التجميد (freeze)، لا المجدول (scheduler)، هو الذي يضبطها."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m3-e1",
+   "lesson": "3.1",
+   "text": {
+    "en": "I have resent the same Stripe event to my webhook handler and seen nothing change the second time, and seen a tampered body rejected with 400",
+    "ar": "أعدتُ إرسال حدث Stripe نفسه (same Stripe event) إلى معالج الويب هوك (webhook handler) لديّ، ورأيتُ أن لا شيء تغيّر في المرة الثانية، ورأيتُ طلبًا بجسم معدَّل (tampered body) يُرفض بـ400"
+   }
+  },
+  {
+   "id": "m3-e2",
+   "lesson": "3.3",
+   "text": {
+    "en": "I have run Beacon's SMS job twice for the same message and seen exactly one usage row, keyed by the Twilio message SID",
+    "ar": "شغّلتُ مهمة SMS (SMS job) في Beacon مرتين للرسالة نفسها (same message)، ورأيتُ صف استخدام واحدًا بالضبط (exactly one usage row)، مفتاحه (key) معرّف الرسالة (message SID) من Twilio"
+   }
+  }
+ ]
+}
