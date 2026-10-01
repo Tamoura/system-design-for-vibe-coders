@@ -1,0 +1,135 @@
+{
+ "area": "m1",
+ "questions": [
+  {
+   "id": "m1-1",
+   "level": 1,
+   "lesson": "1.2",
+   "q": {
+    "en": "Tariq must run a one-off data correction in the production database this afternoon. Which access arrangement best applies least privilege?",
+    "ar": "يجب أن يُجري طارق تصحيحًا للبيانات لمرةٍ واحدة (one-off data correction) في قاعدة بيانات الإنتاج (production database) بعد ظهر اليوم (this afternoon). أي ترتيبٍ للوصول (access arrangement) يطبّق مبدأ أقل الصلاحيات (least privilege) على أفضل وجه؟"
+   },
+   "o": {
+    "en": [
+     "A standing production role for Tariq, kept ready for the next correction",
+     "Broad production access now, trimmed at the next quarterly access review",
+     "Approved, logged access for this task that expires the same afternoon",
+     "The team's shared admin account, with its password rotated afterwards"
+    ],
+    "ar": [
+     "دورٌ دائم في بيئة الإنتاج (standing production role) مخصّصٌ لطارق، يبقى جاهزًا للتصحيح التالي (ready for the next correction)",
+     "وصولٌ واسع إلى الإنتاج الآن (broad production access now)، يُقلَّص في مراجعة الوصول الفصلية التالية (next quarterly access review)",
+     "وصولٌ بموافقةٍ ومسجَّل (approved, logged access) لهذه المهمة، ينتهي بعد ظهر اليوم نفسه (expires the same afternoon)",
+     "حساب المسؤول المشترك (shared admin account) الخاص بالفريق، مع تغيير كلمة مروره لاحقًا (password rotated afterwards)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Least privilege applies in time as well as scope: just-in-time access is approved, logged and expires when the job is done. A standing role is the tempting shortcut, but access needed for an afternoon should not outlive it, and \"broad for now, tighten later\" rarely gets tightened.",
+    "ar": "ينطبق مبدأ أقل الصلاحيات (least privilege) في الزمن (in time) كما في النطاق (scope): فالوصول في الوقت المناسب (just-in-time access) يكون بموافقةٍ ومسجَّلًا (approved and logged) وينتهي حين تُنجَز المهمة (when the job is done). والدور الدائم (standing role) هو الاختصار المغري (tempting shortcut)، لكن الوصول المطلوب لفترة ما بعد الظهر (access needed for an afternoon) لا ينبغي أن يدوم بعدها (should not outlive it)، وعبارة «واسعٌ الآن، ونضيّق لاحقًا» (\"broad for now, tighten later\") نادرًا ما يتبعها تضييقٌ فعلي (rarely gets tightened)."
+   }
+  },
+  {
+   "id": "m1-2",
+   "level": 2,
+   "lesson": "1.1",
+   "q": {
+    "en": "Ali reviews the first data flow diagram for Credit Memo Copilot. It shows the credit analyst, the Copilot service, the hosted model and the loan-file store, with one trust boundary: bank to model vendor. The loan files include statements uploaded by SME customers. What is the most important correction?",
+    "ar": "يراجع علي أول مخططٍ لتدفق البيانات (data flow diagram) لمساعد مذكرات الائتمان (Credit Memo Copilot). يُظهر المخطط محلل الائتمان (credit analyst)، وخدمة المساعد (Copilot service)، والنموذج المستضاف (hosted model)، ومخزن ملفات القروض (loan-file store)، مع حدّ ثقةٍ واحد (one trust boundary): من البنك إلى مزوّد النموذج (bank to model vendor). وتتضمن ملفات القروض (loan files) كشوفًا (statements) رفعها عملاء من الشركات الصغيرة (SME customers). ما أهم تصحيح (most important correction)؟"
+   },
+   "o": {
+    "en": [
+     "Keep it as is: the loan files sit inside the bank network and need no boundary",
+     "Draw each retrieved document as untrusted text, and the model as its own trust zone",
+     "Add a boundary only at the analyst's chat box, the one place where instructions enter",
+     "Swap the diagram for a list of AI threats, such as hallucination and data leakage"
+    ],
+    "ar": [
+     "أبقِه كما هو (keep it as is): ملفات القروض (loan files) داخل شبكة البنك (bank network)، فلا تحتاج إلى حدّ ثقة (no boundary)",
+     "ارسم كل مستندٍ مسترجَع (retrieved document) نصًّا غير موثوق (untrusted text)، والنموذجَ منطقة ثقةٍ مستقلة (its own trust zone)",
+     "أضف حدًّا (boundary) عند مربع المحادثة لدى المحلل (analyst's chat box) فقط، فهو الموضع الوحيد (the one place) الذي تدخل منه التعليمات (instructions enter)",
+     "ضع مكان المخطط (diagram) قائمةً بتهديدات الذكاء الاصطناعي (AI threats)، مثل الهلوسة (hallucination) وتسرّب البيانات (data leakage)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "For AI features the diagram must show every source of text the model reads, with the model as its own trust zone: customer-uploaded documents can carry hidden instructions (indirect prompt injection). Treating the store as safe because it is \"internal\" is an assumption, not a control, and the analyst is not the only one whose text shapes the model.",
+    "ar": "في ميزات الذكاء الاصطناعي (AI features) يجب أن يُظهر المخطط (diagram) كل مصدرٍ للنص (every source of text) يقرؤه النموذج، وأن يُرسَم النموذج منطقة ثقةٍ مستقلة (its own trust zone): فالمستندات التي يرفعها العملاء (customer-uploaded documents) قد تحمل تعليماتٍ مخفية (hidden instructions)، وهذا هو حقن الموجّهات غير المباشر (indirect prompt injection). ومعاملة المخزن (store) على أنه آمن لأنه «داخلي» (\"internal\") افتراضٌ (assumption) لا ضابط (control)، والمحلل (analyst) ليس الوحيد الذي يؤثّر نصُّه في النموذج (whose text shapes the model)."
+   }
+  },
+  {
+   "id": "m1-3",
+   "level": 2,
+   "lesson": "1.3",
+   "q": {
+    "en": "Four new findings reach Ali's queue. Under Najm's Vulnerability Prioritisation Standard v1, which one is P1?",
+    "ar": "تصل أربع ملاحظاتٍ جديدة (new findings) إلى طابور علي (Ali's queue). وفق معيار ترتيب أولويات الثغرات في بنك نجم، الإصدار 1 (Najm Vulnerability Prioritisation Standard v1)، أيها يقع في الأولوية P1 (which one is P1)؟"
+   },
+   "o": {
+    "en": [
+     "CVSS 9.8 in a library used by an internal tier 3 batch job with no network listener",
+     "A KEV-listed CVE on an internal tier 3 reporting server with no internet access",
+     "CVSS 8.1 on the internet-facing Najm Mobile API; not in KEV, with an EPSS of 0.02",
+     "An SME Portal bug with no CVE; logs show a company downloaded another's invoices"
+    ],
+    "ar": [
+     "درجة CVSS بقيمة 9.8 في مكتبةٍ (library) تستخدمها مهمةٌ دفعية داخلية (internal batch job) من الفئة 3 (tier 3) بلا مستمِعٍ شبكي (network listener)",
+     "معرّف CVE مدرجٌ في كتالوج KEV (KEV-listed CVE) على خادم تقارير داخلي (internal reporting server) من الفئة 3 (tier 3) بلا وصولٍ إلى الإنترنت (no internet access)",
+     "درجة CVSS بقيمة 8.1 على واجهة برمجة تطبيق نجم للهاتف (Najm Mobile API) المكشوفة على الإنترنت (internet-facing)؛ غير مدرجةٍ في KEV (not in KEV)، واحتمال EPSS لها 0.02",
+     "خطأٌ في بوابة الشركات الصغيرة (SME Portal) بلا معرّف CVE (no CVE)؛ وتُظهر السجلات (logs) أن شركةً نزّلت فواتير شركةٍ أخرى (another company's invoices)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "P1 covers evidence that customer data has already reached another customer, whether or not the flaw has a CVE or a high score. The KEV-listed CVE is the tempting pick, but known exploitation on an asset that is neither internet-facing nor tier 1 is P2, and the exposed CVSS 8.1 without exploitation evidence is also P2.",
+    "ar": "تشمل الأولوية P1 وجود دليلٍ (evidence) على أن بيانات عميلٍ قد وصلت بالفعل إلى عميلٍ آخر (customer data has already reached another customer)، سواءٌ أكان للعيب (flaw) معرّف CVE أو درجةٌ مرتفعة (high score) أم لا. ومعرّف CVE المدرج في KEV (KEV-listed CVE) هو الخيار المغري (tempting pick)، لكن الاستغلال المعروف (known exploitation) على أصلٍ (asset) ليس مكشوفًا على الإنترنت (internet-facing) ولا من الفئة 1 (tier 1) يقع في P2، وكذلك درجة CVSS بقيمة 8.1 على أصلٍ مكشوف (exposed) بلا أدلة استغلال (exploitation evidence)."
+   }
+  },
+  {
+   "id": "m1-4",
+   "level": 3,
+   "lesson": "1.2",
+   "q": {
+    "en": "Rania wants Najm Assist to pay a customer's saved payees. Tariq's team proposes four designs for the payment tool. Which one should Noura approve?",
+    "ar": "تريد رانيا أن يدفع نجم أسيست (Najm Assist) للمستفيدين المحفوظين (saved payees) لدى العميل. ويقترح فريق طارق أربعة تصاميم (four designs) لأداة الدفع (payment tool). أيها ينبغي أن تعتمده نورة (should Noura approve)؟"
+   },
+   "o": {
+    "en": [
+     "A short-lived token delegated by the customer, a payee check against the session and an in-app confirmation",
+     "Assist's own payments-scoped account, a system prompt forbidding unrequested payments and daily SOC log reviews",
+     "A short-lived token delegated by the customer, and the model reads back the payee and amount in chat, awaiting a yes",
+     "Assist's own payments-only account, with the tool checking the payee belongs to the customer ID in the tool call"
+    ],
+    "ar": [
+     "رمزٌ مميز قصير العمر مفوَّض من العميل (short-lived token delegated by the customer)، وفحصٌ للمستفيد مقابل الجلسة (payee check against the session)، وتأكيدٌ داخل التطبيق (in-app confirmation)",
+     "حساب أسيست الخاص ذو نطاق المدفوعات (Assist's own payments-scoped account)، وموجّه نظام (system prompt) يمنع المدفوعات غير المطلوبة (unrequested payments)، ومراجعةٌ يومية للسجلات (daily log reviews) في مركز العمليات الأمنية (SOC)",
+     "رمزٌ مميز قصير العمر مفوَّض من العميل (short-lived token delegated by the customer)، ويعيد النموذج قراءة المستفيد والمبلغ (the model reads back the payee and amount) في المحادثة (in chat)، منتظرًا «نعم» (awaiting a yes)",
+     "حساب أسيست الخاص بالمدفوعات فقط (Assist's own payments-only account)، وتتحقق الأداة (the tool checks) من أن المستفيد (payee) يعود إلى معرّف العميل (customer ID) الوارد في استدعاء الأداة (tool call)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Najm's rule says a fully attacker-controlled model must do no more than the signed-in customer could, and consequential actions need the customer's explicit confirmation: delegated authority, identity from the session and an in-app confirmation built from server data deliver that. The chat read-back is tempting, but it passes through a model that can be steered; the other two give Assist its own authority, guarded by a prompt or by a customer ID the model wrote.",
+    "ar": "تنص قاعدة بنك نجم (Najm's rule) على أن النموذج الذي يتحكم فيه المهاجم تحكمًا كاملًا (fully attacker-controlled model) يجب ألا يفعل أكثر (must do no more) مما يستطيعه العميل المسجِّل دخوله (signed-in customer)، وعلى أن الإجراءات ذات الأثر (consequential actions) تحتاج إلى تأكيدٍ صريح من العميل (explicit confirmation): وهذا ما تحققه الصلاحية المفوَّضة (delegated authority)، والهوية من الجلسة (identity from the session)، والتأكيد داخل التطبيق المبني من بيانات الخادم (in-app confirmation built from server data). والقراءة في المحادثة (chat read-back) مغرية، لكنها تمر عبر نموذجٍ يمكن توجيهه (can be steered)؛ والتصميمان الآخران (the other two) يمنحان أسيست صلاحيته الخاصة (its own authority)، يحرسها موجّه (prompt) أو معرّف عميلٍ كتبه النموذج (customer ID the model wrote)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m1-e1",
+   "lesson": "1.1",
+   "text": {
+    "en": "I have drawn a data flow diagram of a system I built, with all five element types and every trust boundary marked, and listed for each arrow that crosses a boundary what the receiving side checks (or \"nothing yet\")",
+    "ar": "رسمتُ مخططًا لتدفق البيانات (data flow diagram) لنظامٍ بنيته بنفسي، يضم أنواع العناصر الخمسة (all five element types) ويحدّد كل حدّ ثقة (every trust boundary)، وأدرجتُ لكل سهمٍ يعبر حدًّا (arrow that crosses a boundary) ما تفحصه الجهة المستقبِلة (what the receiving side checks)، أو «لا شيء بعد» (\"nothing yet\")"
+   }
+  },
+  {
+   "id": "m1-e2",
+   "lesson": "1.3",
+   "text": {
+    "en": "I have re-ranked the top 15 findings of a dependency audit using KEV, EPSS and whether the vulnerable code is reachable, recording the old rank, new rank and a one-line reason for each",
+    "ar": "أعدتُ ترتيب (re-ranked) أعلى 15 ملاحظة (top 15 findings) من تدقيقٍ للاعتماديات (dependency audit) باستخدام KEV وEPSS ومدى قابلية الشيفرة المعرَّضة للوصول (whether the vulnerable code is reachable)، مسجّلًا الترتيب القديم (old rank) والترتيب الجديد (new rank) وسببًا من سطرٍ واحد (one-line reason) لكلٍّ منها"
+   }
+  }
+ ]
+}

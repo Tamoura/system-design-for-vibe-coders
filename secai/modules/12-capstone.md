@@ -22,7 +22,7 @@ Rania (Head of AI Products) confirms that next quarter Najm Assist gets its firs
 
 Ali offers a vendor's 120-line control checklist. Noura asks which threat line 47 answers; Ali does not know. "A checklist tells me what someone else worried about. I need our threats, our controls, tests that prove them, and a drill."
 
-Public cases show the gaps. In February 2023, users got Bing Chat to reveal its hidden instructions through prompt injection. In December 2023, a Chevrolet dealer's chatbot was manipulated into "agreeing" to sell a car for one dollar. In *Moffatt v. Air Canada* (2024), a tribunal held the airline responsible for what its chatbot said. Greshake and colleagues (2023) showed that instructions hidden in content an assistant reads can steer it. Each was a design decision nobody had traced to a threat.
+Public cases show the gaps. In February 2023, users got Bing Chat to reveal its hidden instructions through prompt injection. In December 2023, a Chevrolet dealer's chatbot was manipulated into "agreeing" to sell a car for one dollar. In *Moffatt v. Air Canada* (2024), a tribunal held the airline responsible for what its chatbot said. Greshake and colleagues (2023) showed that instructions hidden in content an assistant reads can steer it. In each case the weakness sat in a design choice that a threat traced to a control and a test would have challenged.
 
 ## 📐 How it works
 
@@ -59,6 +59,7 @@ flowchart LR
         ORC["Assist orchestrator"]
         OUT["Output handler"]
         TG["Tool gateway: identity, policy, confirmation"]
+        KB["Approved fee corpus"]
         LOG["Security logs"]
     end
     subgraph PROV["Model provider"]
@@ -69,6 +70,7 @@ flowchart LR
         TXN["Transactions: text written by others"]
     end
     APP --> GW --> ORC
+    ORC -->|"retrieve"| KB
     ORC -->|"prompt"| LLM
     LLM -->|"reply: untrusted"| ORC
     ORC -->|"proposed tool call"| TG
@@ -100,9 +102,9 @@ def freeze_card(args, session):
 
 In the vulnerable version, an injection that changes `customer_id` becomes broken object-level authorisation (API1 in the OWASP API Security Top 10, 4.1), with the model as a **confused deputy**: a component with authority tricked into using it for someone else. In the fixed version, a hijacked model can at worst propose freezing the customer's own card, confirmed on a screen the model did not write.
 
-**Break the lethal trifecta.** Simon Willison (2025) named the **lethal trifecta**: a system with access to private data, exposure to untrusted content and a way to communicate externally can be steered into sending that data to an attacker. Assist has the first two by design, so the third is removed: the orchestrator cannot reach the internet, the output handler renders plain text with links only to allowlisted bank domains and no remote images, and no tool sends messages outside the bank. For every proposed tool, ask whether it adds the missing leg.
+**Break the lethal trifecta.** Simon Willison (2025) named the **lethal trifecta**: a system with access to private data, exposure to untrusted content and a way to communicate externally can be steered into sending that data to an attacker. Assist has the first two by design, so the third is removed: the orchestrator's only outbound route is the approved model endpoint, the output handler renders plain text with links only to allowlisted bank domains and no remote images, and no tool sends messages outside the bank. For every proposed tool, ask whether it adds the missing leg.
 
-**Tests that can fail, with honest bars.** Each control becomes a check: cross-customer ID tests on every build (100% denied); a trajectory check that no write runs without a confirmed pending action (zero exceptions); outputs seeded with HTML, markdown images and off-domain links (nothing renders); and Mariam's injected transfer references. The bank cannot promise injected text will never mislead the model, so that rate is tracked, not required to be zero. It can promise, and test, that misleading the model never moves money or changes account state on its own.
+**Tests that can fail, with honest bars.** Each control becomes a check: cross-customer ID tests on every build (100% denied); a trajectory check (a test over the agent's whole sequence of tool calls) that no write runs without a confirmed pending action (zero exceptions); outputs seeded with HTML, markdown images and off-domain links (nothing renders); and Mariam's injected transfer references. The bank cannot promise injected text will never mislead the model, so that rate is tracked, not required to be zero. It can promise, and test, that misleading the model never moves money or changes account state on its own.
 
 **Detect what the controls see.** Each deterministic control also emits a signal: `PermissionDenied` spikes, declined confirmations, output-handler blocks. Logs carry conversation, pseudonymous customer, tool, decision, and model and prompt versions, never raw card numbers (5.3).
 
@@ -121,18 +123,18 @@ In the vulnerable version, an injection that changes `customer_id` becomes broke
 What good looks like follows 10.2; NIST SP 800-61 Rev. 3 (2025) frames the same work around the CSF 2.0 functions.
 - **Contain narrowly.** Turn off the transaction-history and dispute tools by flag; keep fee answers running. Ask fraud to act on the sending account. Preserve logs. Do not edit the system prompt in production: it is not a control, and it changes the evidence.
 - **Scope from logs.** Find every conversation where that reference entered the context, testing the logging design from 10.1.
-- **Decide on notification with the DPO.** For EU customers' personal data, GDPR Art. 33 expects notice to the supervisory authority within 72 hours where feasible; Qatar's PDPPL (Law No. 13 of 2016), QCB expectations and, where they apply, EU rules such as DORA are assessed in parallel. Sara and Legal decide; security supplies facts (11.2).
+- **Decide on notification with the DPO.** For EU customers' personal data, GDPR Art. 33 requires notice to the supervisory authority without undue delay and, where feasible, within 72 hours of becoming aware of a breach, unless it is unlikely to result in a risk to people; Qatar's PDPPL (Law No. 13 of 2016), QCB expectations and, where they apply, EU rules such as DORA are assessed in parallel. Sara and Legal decide; security supplies facts (11.2).
 - **Fix and recover.** Mark transaction text clearly as data in the prompt; check phone numbers in output against the bank's published numbers, as links already are. Bring the tools back behind a canary.
 - **Learn.** Add the attack to the regression set and a phone-number detection; update the threat model.
 
 The main finding is typical: output handling covered links but not phone numbers, because controls often cover only the channel someone thought of. Flipping the switch took minutes; deciding to flip it took longer.
 
-**Residual risk is a signed decision.** Hamad's acceptance reads: "Injected content may cause Assist to show misleading text. It cannot change account state without customer confirmation, cannot reach external networks, and is monitored. Review in six months or on any new tool."
+**Residual risk is a signed decision.** Hamad's acceptance reads: "Injected content may cause Assist to show misleading text. It cannot change account state without customer confirmation, cannot reach external networks beyond the approved model provider, and is monitored. Review in six months or on any new tool."
 
 **Judgement calls between artefacts.**
 - *A soft failure.* In 3% of indirect-injection attempts, Assist proposes an unrequested dispute; confirmation stops all of them. Ship, with a regression test, a detection and a target to cut the rate. If one attempt ever runs an action unconfirmed, launch stops.
 - *"Unfreeze" next.* It helps an account-takeover attacker more than the customer; it stays behind step-up authentication.
-- *A new model version.* Treat it as a release: re-run the red-team regression and golden sets first (6.1, 9.4).
+- *A new model version.* Treat it as a release: re-run the adversarial test set and the functional regression tests first (6.1, 9.4).
 
 ## 🧰 The toolkit
 | Control, standard or tool | What it is and does | When to reach for it |
@@ -166,9 +168,9 @@ The main finding is typical: output handling covered links but not phone numbers
 |---|---|---|---|---|---|
 | Acts on another customer's card | LLM01, LLM06; API1 | Session-bound identity | Cross-customer tests in CI | `PermissionDenied` spike | Tariq |
 | Unrequested dispute | LLM01, LLM06 | Code-written confirmation | Trajectory check | Declined confirmations | Tariq |
-| Phishing link or fake number in output | LLM05 | Allowlist for links and numbers | Seeded-output tests | Handler blocks | Noura |
+| Phishing link or fake number in output | LLM01, LLM05 | Allowlist for links; phone numbers added after the drill | Seeded-output tests | Handler blocks | Noura |
 | System prompt revealed | LLM07 | No secrets or authorisation logic in it | Red-team extraction | None: accepted as low | Noura |
-| Tariff corpus altered | LLM04 | Two approvals; versioned index | Integrity check per build | Unapproved-change alert | Dana |
+| Fee corpus altered | LLM04, LLM08 | Two approvals; versioned index | Integrity check per build | Unapproved-change alert | Dana |
 | Cost exhaustion | LLM10; API4 | Per-customer budgets | Load test | Cost and rate alarms | Jassim |
 
 ## 🛠️ Exercises
@@ -292,7 +294,7 @@ Certificates still matter. Job adverts in Gulf banks and government bodies often
 
 ### 🟢 The essentials
 
-**The role map.** Titles vary by organisation, so read the job description, not the title. Two public taxonomies help. The **NICE Framework** (NIST SP 800-181 Rev. 1) describes cybersecurity work roles and the tasks, knowledge and skills behind them. ENISA's **European Cybersecurity Skills Framework** (ECSF) describes role profiles for the European workforce. At the time of writing (2026), the roles closest to this course look like this:
+**The role map.** Titles vary by organisation, so read the job description, not the title. Two public taxonomies help. The **NICE Framework** (NIST SP 800-181 Rev. 1) describes cybersecurity work roles and the tasks, knowledge and skills behind them; NIST updates its role list online between revisions, so use the current version. ENISA's **European Cybersecurity Skills Framework** (ECSF) describes role profiles for the European workforce. At the time of writing (2026), the roles closest to this course look like this:
 
 | Role | Day to day | Course modules |
 |---|---|---|
@@ -321,7 +323,7 @@ Leadership sits above these: a team lead, a head of function (Noura), a CISO (Ha
 
 Others matter too. Major cloud providers certify security skills on their own platforms. CREST certifies individual testers and accredits testing companies; some buyers look for it. Some bodies have announced AI-focused credentials, but at the time of writing (2026) no single AI-security certification is an industry standard, so evidence of real work counts most.
 
-For most established credentials, senior ones require verified work experience as well as an exam, and keeping any requires continuing professional education (CPE) and annual fees. Budget for both.
+Senior management and audit credentials, such as CISSP, CISM and CISA, require verified work experience as well as an exam, and many credentials must be kept current with continuing professional education (CPE) and recurring maintenance or renewal fees. Rules differ by body, so budget for both.
 
 ### 🟡 Going deeper
 
@@ -354,7 +356,8 @@ Each case study follows one shape: context, threat, decision, evidence, trade-of
 def get_invoice(invoice_id):
     return db.invoices.find_one({"id": invoice_id})
 
-# Strong answer: broken object-level authorisation (IDOR). Scope by tenant.
+# Strong answer: no authentication and no object-level check (IDOR/BOLA).
+# Require login, then scope the query to the caller's company.
 @app.get("/invoices/<invoice_id>")
 @login_required
 def get_invoice(invoice_id):
@@ -365,7 +368,7 @@ def get_invoice(invoice_id):
 
 Then say how you would test it (a cross-tenant test in CI) and detect abuse (many 404s on sequential IDs from one user). Fix, test, detect: the same chain as 12.1. For a threat-model question, state your structure first, then go deep where the risk is: assets and attackers → data flow and trust boundaries → threats (STRIDE, plus the LLM Top 10 for AI features) → controls ranked by risk → tests → detections → residual risk and owner.
 
-**Ethics and law.** Testing a system without written authorisation can be a crime under computer-misuse laws, such as the UK Computer Misuse Act 1990, the US Computer Fraud and Abuse Act and Qatar's Cybercrime Prevention Law (Law No. 14 of 2014), whatever your intent. If you stumble on a weakness while using a service, stop, do not probe further, and report it through the organisation's disclosure channel; many publish one in a `security.txt` file (RFC 9116), and 10.3 covers the process. Major certification bodies, including ISC2 and ISACA, require members to follow a code of ethics. Your reputation is your most important security credential.
+**Ethics and law.** Testing a system without written authorisation can be a crime under computer-misuse laws, such as the UK Computer Misuse Act 1990, the US Computer Fraud and Abuse Act and Qatar's Cybercrime Prevention Law (Law No. 14 of 2014), whatever your intent. If you stumble on a weakness while using a service, stop, do not probe further, and report it through the organisation's disclosure channel; many publish one in a `security.txt` file (RFC 9116); where there is none, a national CERT can pass the report on. 10.3 covers the process. Major certification bodies, including ISC2 and ISACA, require members to follow a code of ethics. Your reputation is your most important security credential.
 
 ### 🔴 Expert view
 
@@ -443,7 +446,7 @@ Ali's **12-month development plan**, agreed with Noura:
 - **Leaking in the portfolio.** Employer vulnerabilities, internal diagrams or customer data in a public write-up can cost you far more than a gap.
 - **Skipping fundamentals for AI.** AI security rests on access control, output handling and secure design. Learn those first.
 - **Trusting forum facts about exams.** Eligibility, formats and prices change. Read the certifying body's current pages.
-- **Ignoring upkeep.** CPE hours and annual fees add up across several credentials. Keep the ones your role needs.
+- **Ignoring upkeep.** CPE hours and maintenance fees add up across several credentials. Keep the ones your role needs.
 
 ## 🧾 Recap
 - Security is a family of roles; choose a target before choosing courses or certificates.
@@ -534,7 +537,6 @@ Ali's **12-month development plan**, agreed with Noura:
 - RFC 9116 (2022), "A File Format to Aid in Security Vulnerability Disclosure" — https://www.rfc-editor.org/rfc/rfc9116
 - Sigma, generic detection rule format (SigmaHQ) — https://github.com/SigmaHQ/sigma
 - CISA Known Exploited Vulnerabilities Catalog — https://www.cisa.gov/known-exploited-vulnerabilities-catalog
-
 
 ---
 
@@ -659,7 +661,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 </details>
 
-**3. A logistics company's incident report shows this chain: a phishing email captured an employee's password, the attacker logged into the VPN with it, moved to a file server, and sent data out over several days. Which single control would most likely have broken the chain earliest?**
+**3. A logistics company's incident report shows this chain: a phishing email captured an employee's password, the attacker logged into the VPN with it, moved to a file server, and sent data out over several days. Which single control would most reliably have broken the chain at an early link?**
 
 - A. Phishing-resistant MFA on the VPN, so a stolen password alone could not open a session
 - B. Data loss prevention on outbound traffic, so the large transfers out would be flagged
@@ -826,7 +828,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**B.** In retrieval-augmented generation (RAG), access control happens at retrieval time: each chunk carries the permissions of its source document, and the search returns only what the signed-in user may see. If a document never enters the prompt, the model cannot leak it. D, like Dana's idea, is tempting because it looks like a rule, but it asks the model to enforce access control; a rephrased or injected question gets around it, and the data is already in the context. This is the territory of LLM08 Vector and Embedding Weaknesses and LLM02 Sensitive Information Disclosure. C protects against a different threat. *(Design · 9.3)*
+**B.** In retrieval-augmented generation (RAG), access control happens at retrieval time: each chunk carries the permissions of its source document, and the search returns only what the signed-in user may see. If a document never enters the prompt, the model cannot leak it. D, like Dana's idea, is tempting because it looks like a rule, but it asks the model to enforce access control; a rephrased or injected question gets around it, and the data is already in the context. This is the territory of LLM08 Vector and Embedding Weaknesses and LLM02 Sensitive Information Disclosure. A sorts documents by type, not by who may read them, so every manager still reaches every borrower; C protects against a different threat. *(Design · 9.3)*
 
 </details>
 
@@ -841,7 +843,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**C.** Parameterised queries (prepared statements) send the SQL structure and the user's values separately, so the database never interprets input as code, whatever characters it contains. B is tempting because it extends Ali's idea, but blocklist escaping is fragile: it depends on the database, the character encoding and the context, such as numbers, identifiers and `LIKE` patterns, and it is regularly bypassed. A and D are at best extra layers that attackers route around. *(Build · 2.1)*
+**C.** Parameterised queries (prepared statements) send the SQL structure and the user's values separately, so the database never interprets input as code, whatever characters it contains. B is tempting because it extends Ali's idea, but escaping and blocklisting by hand are fragile: they fail against encodings and contexts such as unquoted numbers, they break legitimate values such as O'Brien, and they are regularly bypassed. A and D are at best extra layers that attackers route around. *(Build · 2.1)*
 
 </details>
 
@@ -893,7 +895,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**C.** A secret inside an app that millions of people download is not a secret; anyone can extract it. Mobile apps are public clients and should use the authorization code flow with PKCE (RFC 7636), which ties the code to the app instance that started the flow, so an intercepted code is useless. The OAuth 2.0 Security Best Current Practice (RFC 9700) says public clients must use PKCE and clients should not use the implicit grant. A is tempting because the implicit flow was once recommended for such clients, but it exposes tokens in redirects. B only slows extraction, and D hands the app the password that OAuth exists to protect. *(Build · 3.2)*
+**C.** A secret inside an app that millions of people download is not a secret; anyone can extract it. Mobile apps are public clients, which cannot keep a client secret, and should use the authorization code flow through the system browser with PKCE (RFC 7636), which ties the code to the app instance that started the flow, so an intercepted code is useless. The OAuth 2.0 Security Best Current Practice (RFC 9700) says public clients must use PKCE and clients should not use the implicit grant. A is tempting because the implicit flow was once recommended for such clients, but it exposes tokens in redirects. B only slows extraction, and D hands the app the password that OAuth exists to protect. *(Build · 3.2)*
 
 </details>
 
@@ -902,11 +904,11 @@ Noura runs this exam with every new member of the Application & AI Security team
 - A. Make the API decide eligibility from its own data and ignore any approval sent by the app
 - B. Add root and jailbreak detection, so the check cannot be tampered with on modified phones
 - C. Obfuscate the app's code so that attackers cannot find and change the eligibility check
-- D. Sign the request with a key stored in the app so the server knows the flag is genuine
+- D. Sign the request with a key built into the app so the server knows the flag is genuine
 
 <details><summary>Answer</summary>
 
-**A.** Anything on the device, whether code, flags or keys, is under the control of whoever holds the device. Security decisions must be made and enforced on the server, using data the server trusts. B and C are tempting, and they are useful for raising an attacker's cost (OWASP MASVS covers such resilience controls), but they can be bypassed with enough effort, so they cannot be what stands between a customer and a higher limit. D fails for the same reason: a key inside the app can be extracted. *(Build · 4.3)*
+**A.** Anything on the device, whether code, flags or keys, is under the control of whoever holds the device. Security decisions must be made and enforced on the server, using data the server trusts. B and C are tempting, and they are useful for raising an attacker's cost (OWASP MASVS covers such resilience controls), but they can be bypassed with enough effort, so they cannot be what stands between a customer and a higher limit. D fails for the same reason: a key built into the app can be extracted, and even a valid signature would prove only that the app sent the flag, not that the customer is eligible. *(Build · 4.3)*
 
 </details>
 
@@ -919,7 +921,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**B.** General-purpose hashes like SHA-256 are designed to be fast, so an attacker who steals the hashes can test enormous numbers of guesses per second on GPUs; a salt stops precomputed tables but not that. Password hashing functions such as Argon2id (the first choice in the OWASP Password Storage Cheat Sheet), scrypt or bcrypt are deliberately slow, and Argon2id and scrypt are also memory-hard. A is tempting because a pepper helps if only the database leaks, but the hash is still fast. C makes passwords recoverable, which they never should be, and D uses a broken hash with a weak cost. *(Build · 5.1)*
+**B.** General-purpose hashes like SHA-256 are designed to be fast, so an attacker who steals the hashes can test enormous numbers of guesses per second on GPUs; a salt stops precomputed tables but not that. Password hashing functions such as Argon2id (the first choice in the OWASP Password Storage Cheat Sheet), scrypt or bcrypt are deliberately slow, and Argon2id and scrypt are also memory-hard. A is tempting because a pepper helps if only the database leaks, but the hash is still fast. C makes passwords recoverable, which they never should be, and D is still built on a fast hash, MD5, where 1,000 rounds add far too little cost and no memory-hardness. *(Build · 5.1)*
 
 </details>
 
@@ -928,11 +930,11 @@ Noura runs this exam with every new member of the Application & AI Security team
 - A. Accept it, since the agent was trained on a great deal of real code and the tests pass
 - B. Ask the agent whether the package is safe, and accept the change if it says yes
 - C. Pin the package to its latest version in the lockfile, then merge the pull request
-- D. Check that it exists, is the intended project and is maintained, before it is added
+- D. Confirm it is the real, established project the code intends before it is merged
 
 <details><summary>Answer</summary>
 
-**D.** AI coding tools sometimes invent package names, and research from 2024–2025 showed that attackers can register such hallucinated names with malicious code, a risk called "slopsquatting". Reviewers confirm the package exists on the registry, is the project the code expects, has a credible maintainer and history, and passes the team's dependency policy, ideally through an internal mirror or allowlist. A is tempting because passing tests feel like proof, but a malicious package can work as advertised while doing harm at install or run time. C locks in whatever was published. *(Build · 6.3)*
+**D.** AI coding tools sometimes invent package names, and research (Spracklen et al., 2024) found that many invented names recur, so an attacker can register one with malicious code and wait, a practice known since 2025 as "slopsquatting". Passing tests show only that a package with that name exists now. The reviewer confirms it is the real, established project the code expects, with a credible maintainer and history, and that it came through the team's registry proxy and new-dependency gate. A is tempting because passing tests feel like proof, but a malicious package can work as advertised while doing harm at install or run time. B asks the tool that made the choice to vouch for it, and C locks in whatever was published. *(Build · 6.3)*
 
 </details>
 
@@ -960,7 +962,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**A.** This is cross-site request forgery (CSRF): the browser attaches the user's cookies to a request that another site triggers. HttpOnly only stops JavaScript reading the cookie, which helps against theft by XSS. The defences are anti-CSRF tokens tied to the session, SameSite cookies (Lax or Strict), and re-authentication for sensitive changes such as payout accounts. D is tempting, but CORS controls which origins may read responses from scripts; a plain cross-site form submission is still sent. B improves transport security, not CSRF. *(Test · 2.2)*
+**A.** This is cross-site request forgery (CSRF): the browser attaches the user's cookies to a request that another site triggers. HttpOnly only stops JavaScript reading the cookie, which helps against theft by XSS. The defences are anti-CSRF tokens tied to the session, SameSite cookies (Lax or Strict), and re-authentication for sensitive changes such as payout accounts. D is tempting, but CORS controls which origins may read responses from scripts; a plain cross-site form submission is still sent. C misreads CSP, which controls what your own pages may load and run, not which sites may send requests to you, and B improves transport security, not CSRF. *(Test · 2.2)*
 
 </details>
 
@@ -1012,7 +1014,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**A.** This is a business-logic flaw: each request is valid on its own, but the real rule, a daily total, is never enforced. The server must check cumulative state atomically, so that parallel requests cannot all pass the check before any is recorded (a race condition). Automated scanners do not know your business rules, so abuse cases belong in design and in manual tests. C is tempting, but the rule is about money per day, not request rate; slower requests would still exceed it. D is the trap the lesson warns about. *(Test · 4.2)*
+**A.** This is a business-logic flaw: each request is valid on its own, but the real rule, a daily total, is never enforced. The server must check cumulative state atomically, so that parallel requests cannot all pass the check before any is recorded (a race condition). Scanners rarely find such flaws, because nothing in the requests looks malformed, so abuse cases belong in requirements and in tests that encode the rule. C is tempting, but the rule is about money per day, not request rate; slower requests would still exceed it. B only changes the arithmetic: more transfers still add up past the limit, and genuine customers lose the ability to make one large payment. D relies on exactly the kind of tool that cannot see this flaw. *(Test · 4.2)*
 
 </details>
 
@@ -1038,7 +1040,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**C.** The instruction arrived through data the system retrieved, not from the user: indirect prompt injection, as described by Greshake et al. (2023). There is no complete technical fix at the time of writing, so the defence is architectural: mark and isolate untrusted content, strip hidden text where you can, keep the model's output advisory so the credit decision stays with people and the bank's rating process, and log for detection. D is tempting because "bad data" is involved, but poisoning corrupts training data; here the model is unchanged, and the attack happens at inference time through the context. *(Test · 8.2)*
+**C.** The instruction arrived through data the system retrieved, not from the user: indirect prompt injection, as described by Greshake et al. (2023). There is no complete technical fix at the time of writing, so the defence is architectural: mark and isolate untrusted content, strip hidden text where you can, keep the model's output advisory so the credit decision stays with people and the bank's rating process, and log for detection. D is tempting because "bad data" is involved, but the model's weights are unchanged, so retraining fixes nothing: the planted text acts at inference time, through the context the copilot reads. *(Test · 8.2)*
 
 </details>
 
@@ -1079,7 +1081,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**B.** With workload identity federation, the CI system's signed OIDC token is exchanged for a cloud role, so each job receives credentials that expire quickly and are scoped to that pipeline and branch. There is no standing secret to leak. A is tempting because rotation is good practice, but a stolen key is still valid for up to 90 days, and rotation adds toil. C and D do not change what a leaked value can do. *(Deploy · 5.2)*
+**B.** With workload identity federation, the CI system's signed OIDC token is exchanged for temporary credentials for a cloud role that trusts only this repository and branch, so each job receives credentials that expire quickly and no other pipeline can obtain them. There is no standing secret to leak. A is tempting because rotation is good practice, but a stolen key is still valid for up to 90 days, and rotation adds toil. C and D do not change what a leaked value can do. *(Deploy · 5.2)*
 
 </details>
 
@@ -1144,7 +1146,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**C.** Unlimited queries with precise scores let an attacker probe the model: tweak a transaction, watch the score move, and learn how to stay under the threshold (evasion), or train a copy (model extraction). Both are documented in MITRE ATLAS and NIST AI 100-2. Returning only what partners need, such as approve, review or decline, with per-partner rate limits and monitoring for probing patterns, raises the attacker's cost sharply. D is tempting because it makes stolen copies stale, but it does nothing to stop evasion. A is wrong: classic machine-learning models are attacked too. *(Deploy · 8.3)*
+**C.** Unlimited queries with precise scores let an attacker probe the model: tweak a transaction, watch the score move, and learn how to stay under the threshold (evasion), or train a copy (model extraction). Both are documented in MITRE ATLAS and NIST AI 100-2. Returning only what partners need, such as approve, review or decline, with per-partner rate limits and monitoring for probing patterns, raises the attacker's cost sharply. D is tempting because it makes stolen copies stale, but every partner, or anyone who compromises one, still has an unlimited, precise oracle to probe again after each retrain. A is wrong: classic machine-learning models are attacked too. *(Deploy · 8.3)*
 
 </details>
 
@@ -1159,7 +1161,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**D.** Many breaches use known, patchable weaknesses, and you can only patch what you know you run. The basics are an inventory of systems and their components, and remediation deadlines set by severity and exposure, with tracking until closed. A is tempting because zero-days sound like the bigger danger, but in this case the flaw and its fix were public; the gap was finding and patching it in time. C is a point-in-time check once a year, and B moves the problem rather than solving it. *(Operate · 0.2)*
+**D.** Many breaches use known, patchable weaknesses, and you can only patch what you know you run. The basics are an inventory of systems and their components, and remediation deadlines set by evidence of exploitation, exposure and severity, with tracking until closed. A is tempting because zero-days sound like the bigger danger, but in this case the flaw and its fix were public; the gap was finding and patching it in time. C is a point-in-time check once a year, and B moves the problem rather than solving it. *(Operate · 0.2)*
 
 </details>
 
@@ -1172,7 +1174,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**A.** The CVSS base score describes how severe a vulnerability is in general; it does not know your environment. Risk adds context: how exposed the system is, what the asset is worth, and whether the flaw is being exploited, for which EPSS and the CISA KEV catalogue help. A publicly reachable flaw that exposes customer statements is far more urgent here than an isolated test box. B is tempting because many policies do sort by CVSS, but FIRST, which maintains CVSS, stresses that the base score measures severity, not risk. D ignores impact and exposure entirely. *(Operate · 1.3)*
+**A.** The CVSS base score describes how severe a vulnerability is in general; it does not know your environment. Risk adds context: how exposed the system is, what the asset is worth, and whether the flaw is being exploited, for which EPSS and the CISA KEV catalogue help. A publicly reachable flaw that exposes customer statements is far more urgent here than an isolated test box. B is tempting because many policies do sort by CVSS, but FIRST, which maintains CVSS, stresses that the base score measures severity, not risk. D ignores impact and exposure, and waits for a score that may never come: EPSS covers published CVEs, and a flaw in Najm's own API usually has none. *(Operate · 1.3)*
 
 </details>
 
@@ -1185,14 +1187,14 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**C.** This is improper inventory management (API9 in the OWASP API Security Top 10, 2023): forgotten versions, hosts and test endpoints keep old flaws alive. The lasting fix is to know every exposed API, through the gateway, documentation and discovery, and to decommission old versions. A is tempting and is the right immediate patch, but it treats the symptom; the next forgotten endpoint will have the same problem. B slows the attack without stopping it, and D is obscurity. *(Operate · 4.1)*
+**C.** This is improper inventory management (API9 in the OWASP API Security Top 10, 2023): forgotten versions, hosts and test endpoints keep old flaws alive. The lasting fix is to know every exposed API, through the gateway, documentation and discovery, and to decommission old versions. A is tempting because it closes this gap today (so would blocking `/v1/` at the gateway), but it treats the symptom; the next forgotten endpoint will have the same problem. B slows the attack without stopping it, and D is obscurity. *(Operate · 4.1)*
 
 </details>
 
 **43. After a web application firewall (WAF) is deployed in front of the SME Portal, Ali proposes closing the backlog tickets to convert old queries to parameterised ones, because "the WAF now blocks SQL injection". What should Noura say?**
 
 - A. Agree, since a modern WAF blocks all SQL injection patterns and is kept updated by the vendor
-- B. Disagree: a WAF is a layer that can be bypassed, so fix the code and keep the WAF meanwhile
+- B. Disagree: a WAF is a layer that can be bypassed, so fix the code and keep the WAF too
 - C. Agree, but only for queries on internal pages that cannot be reached from the internet
 - D. Disagree, and remove the WAF entirely because it gives people a false sense of security
 
@@ -1237,7 +1239,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**B.** Detection engineering treats rules like code: each rule targets a specific attacker behaviour, here credential stuffing or password spraying mapped to MITRE ATT&CK, is tested against known good and bad data, has a runbook, and is tuned on its precision. Failures spread across many accounts from shared infrastructure, followed by successes, is a high-signal pattern. D is tempting because it cuts volume, but a high per-account threshold misses password spraying, which tries only a few passwords per account. A burns people out, and C throws away a real signal. *(Operate · 10.1)*
+**B.** Detection engineering treats rules like code: each rule targets an attacker behaviour mapped to MITRE ATT&CK, here credential stuffing (T1110.004), is tested on lab replays and past weeks of data, has an owner and a playbook, and is tuned on the share of its alerts that were real. Many accounts tried from one network or device fingerprint, with a very low success rate, is a high-signal pattern. D is tempting because it cuts volume, but stuffing tries each account only once or twice, so a per-account threshold of 100 never fires, and "leave it there" skips measuring and tuning. A feeds the alert fatigue instead of curing it, and C throws away a real signal. *(Operate · 10.1)*
 
 </details>
 
@@ -1252,7 +1254,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**C.** This is credential stuffing: passwords leaked from other sites, tried at scale through distributed infrastructure. Respond first by securing the accounts with successful logins (revoke sessions, require step-up verification, contact customers), then add layered defences: bot detection, limits across accounts and devices, breached-password checks and stronger authentication such as passkeys. A is tempting because rate limiting is a standard tool, but the attack is designed to stay under per-IP limits. B is easily routed around, and D hurts every customer to slow the attacker briefly. *(Respond · 4.2)*
+**C.** This is credential stuffing: passwords leaked from other sites, tried at scale through distributed infrastructure. Respond first by securing the accounts with successful logins (revoke sessions, require step-up verification, contact customers), then add layered defences: bot detection, limits across accounts and devices, breached-password checks and stronger authentication such as passkeys. A is tempting because rate limiting is a standard tool, but the attack is designed to stay under per-IP limits. B is easily routed around with residential proxies and also locks out customers travelling abroad, and D hurts every customer to slow the attacker briefly. *(Respond · 4.2)*
 
 </details>
 
@@ -1345,11 +1347,11 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**C.** Data minimisation means collecting and keeping only what a purpose needs. Redact or tokenise card and account numbers at the point of logging, set retention that matches the purpose, and restrict access to those who need it; this protects customers and shrinks what a breach could expose, in line with GDPR's principles and Article 32, and with PCI DSS for card data. A is tempting because encryption is a real control, but anyone who can read the logs still sees everything, and keeping it forever breaks minimisation and storage limitation. D is transparency, not protection, and B throws away security evidence. *(Govern · 5.3)*
+**C.** Data minimisation means collecting and keeping only what a purpose needs. Log allowlisted fields rather than whole transcripts; where debug content is truly needed, redact or tokenise card and account numbers at the point of logging, set retention that matches the purpose, and restrict access to those who need it; this protects customers and shrinks what a breach could expose, in line with GDPR's principles and Article 32, and with PCI DSS for card data. A is tempting because encryption is a real control, but anyone who can read the logs still sees everything, and keeping it forever breaks minimisation and storage limitation. D is transparency, not protection, and B throws away security evidence. *(Govern · 5.3)*
 
 </details>
 
-**55. A vendor tells Rania that its prompt-injection "firewall" blocks nearly every attack on its own benchmark, so Najm Assist could make transfers on a customer's request without asking for confirmation. Layla asks for the security view. What is it?**
+**55. A vendor tells Rania that its prompt-injection "firewall" blocks nearly every attack on its own benchmark, so Najm Assist could open card disputes on a customer's request without asking for confirmation. Layla asks for the security view. What is it?**
 
 - A. Accept it, provided Mariam's team first confirms the detection rate on Najm's own test set
 - B. Use the filter as one layer, but keep confirmation and limits: no fix is complete
@@ -1358,7 +1360,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**B.** At the time of writing, no complete technical fix for prompt injection exists: filters are probabilistic, and attackers adapt their wording to whatever is deployed. A filter can cut noise, but consequential actions like transfers need architectural controls: least privilege, limits, and customer confirmation outside the model's control. A is tempting because testing on your own data beats trusting a vendor benchmark, but even a good measured rate means some attacks get through, and each miss moves real money. D shifts some cost but not the harm to customers or the bank's accountability. *(Govern · 8.2)*
+**B.** At the time of writing, no complete technical fix for prompt injection exists: filters are probabilistic, and attackers adapt their wording to whatever is deployed. A filter is a useful detection layer, but consequential actions like opening disputes need architectural controls: ownership checked in code, daily limits, and a confirmation the app renders from the real arguments, which the model cannot write. A is tempting because testing on your own data beats trusting a vendor benchmark, but attempts are cheap and adaptive attackers beat fixed test sets, so even a good measured rate lets some through, and each miss is a potential fraud incident. D shifts some cost but not the harm to customers or the bank's accountability. *(Govern · 8.2)*
 
 </details>
 
@@ -1371,7 +1373,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**D.** MCP, introduced by Anthropic in November 2024, lets agents load tools whose descriptions the model reads and follows, so a malicious or compromised server can steer the agent (tool poisoning) or misuse the agent's access as a confused deputy. Treat MCP servers as supply chain: review and allowlist them, pin versions so they cannot change silently, sandbox the agent with least-privilege credentials, and require human approval for sensitive actions. A is tempting, but popularity is not review, and a popular server can change in its next update. C checks the output after the harm, and B gives up the productivity the bank wants instead of managing the risk. *(Govern · 9.2)*
+**D.** MCP, introduced by Anthropic in November 2024, lets agents load tools whose descriptions the model reads and follows, so a malicious or compromised server can steer the agent (tool poisoning) or change its tools after review, and a local server runs with the developer's own files and credentials. Treat MCP servers as supply chain: review and allowlist them, pin versions so they cannot change silently, sandbox the agent with least-privilege credentials, and require human approval for sensitive actions. A is tempting, but popularity is not review, and a popular server can change in its next update. C checks the output after the harm, and B gives up the productivity the bank wants instead of managing the risk. *(Govern · 9.2)*
 
 </details>
 
@@ -1401,7 +1403,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 </details>
 
-**59. Najm Bank's EU subsidiary depends on a cloud provider for core systems. Layla asks which EU regulation, applying to financial entities from January 2025, sets rules for ICT risk management, major incident reporting, resilience testing and ICT third-party risk. Which is it?**
+**59. Najm Bank's Frankfurt branch depends on a cloud provider for core systems. Layla asks which EU regulation, applying to financial entities from January 2025, sets rules for ICT risk management, major incident reporting, resilience testing and ICT third-party risk. Which is it?**
 
 - A. The EU AI Act, through its rules on high-risk AI systems used by banks
 - B. GDPR, through Article 32 on the security of processing personal data
@@ -1423,7 +1425,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**B.** Good programme metrics show outcomes and trends the board can act on: how fast serious risk is removed, how much of the estate is covered by key controls (for example phishing-resistant MFA, threat models for critical apps, SBOMs), and how quickly incidents are detected and contained. Raw counts mislead: vulnerabilities found goes up when you look harder, which is good news. D is tempting because the numbers are large and easy to collect, but "attacks blocked" mostly measures internet background noise, not whether Najm is getting safer. A and C measure activity and inputs, not results. *(Govern · 11.3)*
+**B.** Good programme metrics show outcomes and trends the board can act on: how fast serious risk is removed (reported next to what is still open and overdue), how much of the estate is covered by key controls (for example phishing-resistant MFA, threat models for critical apps, SBOMs), and how quickly incidents are detected and contained. Together they mix leading and lagging indicators. Raw counts mislead: vulnerabilities found rises when you look harder, so nobody can say whether a change is good or bad. D is tempting because the numbers are large and easy to collect, but "attacks blocked" mostly measures internet background noise, not whether Najm is getting safer. A and C measure activity and inputs, not results. *(Govern · 11.3)*
 
 </details>
 
@@ -1436,7 +1438,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 ## 📚 References
 - OWASP Top 10 — https://owasp.org/www-project-top-ten/
-- OWASP API Security Top 10 (2023) — https://owasp.org/www-project-api-security/
+- OWASP API Security Top 10 (2023) — https://owasp.org/API-Security/
 - OWASP Top 10 for LLM Applications (2025), OWASP GenAI Security Project — https://genai.owasp.org
 - OWASP Application Security Verification Standard (ASVS) — https://owasp.org/www-project-application-security-verification-standard/
 - OWASP SAMM — https://owasp.org/www-project-samm/

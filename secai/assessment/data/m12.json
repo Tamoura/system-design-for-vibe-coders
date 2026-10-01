@@ -1,0 +1,135 @@
+{
+ "area": "m12",
+ "questions": [
+  {
+   "id": "m12-1",
+   "level": 1,
+   "lesson": "12.1",
+   "q": {
+    "en": "Mariam's red team shows that Najm Assist can be made to reveal its system prompt, which holds no secrets or authorisation logic. The team rates the risk low and plans no further control. Under the security case file's rules, what must happen to this threat?",
+    "ar": "يُثبت الفريق الأحمر (red team) بقيادة مريم أن نجم أسيست (Najm Assist) يمكن دفعه إلى كشف موجّه النظام (reveal its system prompt)، وهو موجّه لا يحوي أسرارًا (no secrets) ولا منطق تفويض (authorisation logic). ويقدّر الفريق المخاطر بأنها منخفضة (rates the risk low)، ولا يخطط لأي ضابط إضافي (no further control). ما الذي يجب أن يحدث لهذا التهديد (threat) وفق قواعد ملف الحالة الأمنية (security case file's rules)؟"
+   },
+   "o": {
+    "en": [
+     "Drop it from the case file, since low-rated threats need no recorded decision",
+     "Add a line to the system prompt telling Assist never to reveal its instructions",
+     "Record a written risk acceptance that has a named owner and an expiry date",
+     "Hold the launch until no red-team attempt can extract the system prompt"
+    ],
+    "ar": [
+     "حذفه من ملف الحالة (drop it from the case file)، لأن التهديدات منخفضة التصنيف (low-rated threats) لا تحتاج إلى قرار مسجَّل (recorded decision)",
+     "إضافة سطر إلى موجّه النظام (system prompt) يأمر أسيست (Assist) بألّا يكشف تعليماته أبدًا (never to reveal its instructions)",
+     "تسجيل قبولٍ مكتوب للمخاطر (written risk acceptance) له مالكٌ مسمّى (named owner) وتاريخ انتهاء (expiry date)",
+     "تعليق الإطلاق (hold the launch) حتى تفشل كل محاولات الفريق الأحمر (red-team attempts) في استخراج موجّه النظام (extract the system prompt)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Every threat in the case file ends in a decision: a control with an owner, or a written risk acceptance with an expiry date, so a low rating still needs a signed, dated record. Dropping it is the tempting shortcut, but then nobody owns the risk and nobody re-reviews it when a new tool or model version changes the threats.",
+    "ar": "ينتهي كل تهديد (every threat) في ملف الحالة (case file) بقرار (decision): ضابطٌ له مالك (a control with an owner)، أو قبولٌ مكتوب للمخاطر (written risk acceptance) بتاريخ انتهاء (expiry date)، لذا يحتاج التصنيف المنخفض (low rating) أيضًا إلى سجلٍّ موقَّع ومؤرَّخ (signed, dated record). وحذفه هو الاختصار المغري (tempting shortcut)، لكنه يترك المخاطر بلا مالك (nobody owns the risk)، فلا يعيد أحدٌ مراجعتها (re-reviews it) حين تغيّر أداةٌ جديدة أو إصدارُ نموذج جديد (new tool or model version) التهديداتِ."
+   }
+  },
+  {
+   "id": "m12-2",
+   "level": 2,
+   "lesson": "12.2",
+   "q": {
+    "en": "Dana, Najm Bank's lead data scientist, wants to move into AI security and is preparing her first portfolio piece for interviews like Noura's. Which piece best follows the lesson's guidance?",
+    "ar": "تريد دانة (Dana)، كبيرة علماء البيانات (lead data scientist) في بنك نجم (Najm Bank)، الانتقال إلى أمن الذكاء الاصطناعي (AI security)، وهي تُعدّ أول قطعة في ملف أعمالها (first portfolio piece) لمقابلات مثل مقابلات نورة (interviews like Noura's). أيّ القطع (which piece) تتبع إرشادات الدرس (lesson's guidance) على أفضل وجه؟"
+   },
+   "o": {
+    "en": [
+     "A threat model of an open-source assistant, every threat ending in a control and test",
+     "Write-ups of prompt injections she ran on a retailer's public chatbot, with its replies",
+     "A write-up of an injection flaw she found in the Credit Memo Copilot, with names removed",
+     "A page listing her five certifications, each with its date and verification link"
+    ],
+    "ar": [
+     "نموذج تهديدات (threat model) لمساعد مفتوح المصدر (open-source assistant)، ينتهي فيه كل تهديد بضابط واختبار (a control and test)",
+     "تقارير عن عمليات حقن موجّهات (prompt injections) أجرتها على روبوت محادثة عام لمتجر (retailer's public chatbot)، مع ردوده (its replies)",
+     "تقرير عن ثغرة حقن (injection flaw) وجدتها في مساعد مذكرات الائتمان (Credit Memo Copilot)، بعد حذف الأسماء (names removed)",
+     "صفحة تسرد شهاداتها الخمس (five certifications)، مع تاريخ كلٍّ منها (its date) ورابط التحقق منها (verification link)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "A threat model of an open-source application, with its controls and tests, is a portfolio item the lesson recommends: it is legal and shows judgement a panel can read. The Credit Memo Copilot write-up is the tempting one, but an employer's vulnerabilities stay out of a portfolio, fixed or not, unless the employer approves in writing; the chatbot tests had no authorisation, and certificates are a signal, not proof.",
+    "ar": "نموذج التهديدات (threat model) لتطبيق مفتوح المصدر (open-source application)، بضوابطه واختباراته (controls and tests)، من عناصر ملف الأعمال (portfolio items) التي يوصي بها الدرس: فهو قانوني (legal)، ويُظهر حُكمًا (judgement) تستطيع لجنة المقابلة (panel) قراءته. وتقرير مساعد مذكرات الائتمان (Credit Memo Copilot) هو الخيار المغري (tempting one)، لكن ثغرات جهة العمل (employer's vulnerabilities) تبقى خارج ملف الأعمال، أُصلحت أم لا (fixed or not)، ما لم توافق جهة العمل كتابيًا (approves in writing)؛ أما اختبارات روبوت المحادثة (chatbot tests) فجرت دون تفويض (no authorisation)، والشهادات إشارةٌ لا دليل (a signal, not proof)."
+   }
+  },
+  {
+   "id": "m12-3",
+   "level": 2,
+   "lesson": "12.3",
+   "q": {
+    "en": "A new member of Noura's team sits the 60-question practice exam and scores 50: ten answers are wrong, and six of the right ones were guesses. How should the error log be built?",
+    "ar": "يجلس عضو جديد في فريق نورة (new member of Noura's team) للامتحان التدريبي ذي الستين سؤالًا (60-question practice exam)، فيحصل على 50 (scores 50): عشر إجابات خاطئة (ten answers are wrong)، وست من الإجابات الصحيحة (six of the right ones) كانت تخمينًا (guesses). كيف ينبغي أن يُبنى سجل الأخطاء (error log)؟"
+   },
+   "o": {
+    "en": [
+     "Log only the ten wrong answers, since a right guess still counts toward the score",
+     "Skip the log, since 50 is above the course's rule of thumb of 48 correct answers",
+     "Sit the exam again at once, and log only the answers that are wrong both times",
+     "Log all 16, with each row naming the trap fallen for and the section to re-read"
+    ],
+    "ar": [
+     "تسجيل الإجابات العشر الخاطئة فقط (only the ten wrong answers)، لأن التخمين الصائب (right guess) يُحتسب في الدرجة (counts toward the score)",
+     "الاستغناء عن السجل (skip the log)، لأن 50 تتجاوز قاعدة الدورة التقريبية (course's rule of thumb) البالغة 48 إجابة صحيحة (48 correct answers)",
+     "إعادة الامتحان فورًا (sit the exam again at once)، وتسجيل الإجابات الخاطئة في المرّتين فقط (wrong both times)",
+     "تسجيل الإجابات الست عشرة كلها (all 16)، على أن يسمّي كل صف (each row) الفخَّ الذي وقع فيه (trap fallen for) والقسمَ الذي سيعيد قراءته (section to re-read)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Any answer the learner was not sure about is marked wrong in the error log even if it was right, and every row names a trap and a section to re-read; Noura cares about that log more than the score. Logging only the ten wrong answers is tempting because the guesses still count toward 50, but a lucky guess is not knowledge, and those six gaps would stay hidden.",
+    "ar": "تُعدّ أي إجابة لم يكن المتعلّم متأكدًا منها (not sure about) خاطئةً في سجل الأخطاء (error log) حتى لو صحّت (even if it was right)، ويسمّي كل صف (every row) فخًّا وقسمًا لإعادة القراءة (a trap and a section to re-read)؛ ونورة تهتم بهذا السجل أكثر من الدرجة (more than the score). وتسجيل الإجابات العشر الخاطئة فقط (only the ten wrong answers) مغرٍ لأن التخمينات تُحتسب ضمن الخمسين (count toward 50)، لكن التخمين المحظوظ (lucky guess) ليس معرفة (not knowledge)، فتبقى تلك الثغرات الست مخفية (six gaps stay hidden)."
+   }
+  },
+  {
+   "id": "m12-4",
+   "level": 3,
+   "lesson": "12.1",
+   "q": {
+    "en": "Two days before Najm Assist's launch, Tariq's trajectory check over the red-team set finds one injection attempt in 4,000 where a timeout-and-retry path froze the customer's own card with no confirmed pending action. Rania points out that the rate is tiny and that a freeze can be undone in the app. What should Noura recommend?",
+    "ar": "قبل إطلاق نجم أسيست (Najm Assist) بيومين، يكشف فحص المسار (trajectory check) الذي يجريه طارق على مجموعة الفريق الأحمر (red-team set) محاولةَ حقنٍ واحدة من كل 4,000 (one injection attempt in 4,000)، جمّد فيها مسارُ المهلة وإعادة المحاولة (timeout-and-retry path) بطاقةَ العميل نفسه (customer's own card) دون إجراء معلّق مؤكَّد (confirmed pending action). وتشير رانيا إلى أن المعدل ضئيل (rate is tiny)، وأن التجميد يمكن التراجع عنه في التطبيق (undone in the app). بماذا ينبغي أن توصي نورة (what should Noura recommend)؟"
+   },
+   "o": {
+    "en": [
+     "Ship on schedule, since the freeze touched only the customer's own card and is reversible",
+     "Hold the launch until the retry path is fixed and the trajectory check has no exceptions",
+     "Accept it as a soft failure, with a detection on unconfirmed writes and a target to cut it",
+     "Add a system-prompt rule against acting on retries, then ship on the planned date"
+    ],
+    "ar": [
+     "الإطلاق في الموعد (ship on schedule)، لأن التجميد لم يمسّ إلا بطاقة العميل نفسه (customer's own card)، ويمكن التراجع عنه (reversible)",
+     "تعليق الإطلاق (hold the launch) حتى يُصلَح مسار إعادة المحاولة (retry path is fixed)، ولا يُظهر فحص المسار (trajectory check) أي استثناء (no exceptions)",
+     "قبوله إخفاقًا لينًا (soft failure)، مع رصدٍ للكتابات غير المؤكَّدة (detection on unconfirmed writes) وهدفٍ لخفض معدله (target to cut it)",
+     "إضافة قاعدة إلى موجّه النظام (system-prompt rule) تمنع التنفيذ عند إعادة المحاولة (acting on retries)، ثم الإطلاق في الموعد المخطط (planned date)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "The trajectory check's bar is zero exceptions: a write without a confirmed pending action means the deterministic control itself failed, and if one attempt ever runs an action unconfirmed, launch stops. Reversibility and the tiny rate are the tempting arguments, but they describe this one outcome, not the broken control; a soft failure is one that confirmation still stops.",
+    "ar": "معيار فحص المسار (trajectory check) هو صفر استثناءات (zero exceptions): فالكتابة دون إجراء معلّق مؤكَّد (write without a confirmed pending action) تعني أن الضابط الحتمي نفسه (deterministic control itself) قد أخفق، وإذا نفّذت محاولة واحدة إجراءً دون تأكيد (runs an action unconfirmed) يتوقف الإطلاق (launch stops). وإمكانية التراجع وضآلة المعدل (reversibility and the tiny rate) هما الحجّتان المغريتان (tempting arguments)، لكنهما تصفان هذه النتيجة وحدها (this one outcome) لا الضابطَ المعطَّل (broken control)؛ فالإخفاق اللين (soft failure) هو ما يظل التأكيد يوقفه (confirmation still stops)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m12-e1",
+   "lesson": "12.1",
+   "text": {
+    "en": "I have run the lethal-trifecta check on a proposed agent tool, named the leg it adds, and added its rows to a traceability matrix, each row with a control, a test that can fail, a detection and an owner",
+    "ar": "أجريتُ فحص الثالوث القاتل (lethal-trifecta check) على أداة وكيل مقترحة (proposed agent tool)، وسمّيتُ الضلع الذي تضيفه (the leg it adds)، وأضفتُ صفوفها إلى مصفوفة التتبّع (traceability matrix)، ولكل صف فيها ضابط (control)، واختبار يمكن أن يفشل (test that can fail)، ورصد (detection)، ومالك (owner)"
+   }
+  },
+  {
+   "id": "m12-e2",
+   "lesson": "12.2",
+   "text": {
+    "en": "I have produced a portfolio piece, a threat model or three OWASP Juice Shop write-ups run on my own machine, in which every finding ends with a fix and a test",
+    "ar": "أنتجتُ قطعةً لملف أعمالي (portfolio piece)، هي نموذج تهديدات (threat model) أو ثلاثة تقارير عن تحديات OWASP Juice Shop (three Juice Shop write-ups) نفّذتها على جهازي (on my own machine)، وينتهي فيها كل اكتشاف (every finding) بإصلاح واختبار (a fix and a test)"
+   }
+  }
+ ]
+}

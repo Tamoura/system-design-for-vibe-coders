@@ -1,0 +1,135 @@
+{
+ "area": "m7",
+ "questions": [
+  {
+   "id": "m7-1",
+   "level": 1,
+   "lesson": "7.1",
+   "q": {
+    "en": "In a design review, a developer says SME Portal's cloud account is safe because no virtual machine or database accepts inbound traffic from the internet. Ali replies that in the cloud, identity is the perimeter. What does he mean?",
+    "ar": "في مراجعة تصميم (design review)، يقول مطوّرٌ (developer) إن الحساب السحابي لبوابة الشركات الصغيرة (SME Portal's cloud account) آمنٌ (safe)، لأنه لا توجد آلةٌ افتراضية أو قاعدة بيانات (virtual machine or database) تقبل حركة مرورٍ واردة من الإنترنت (inbound traffic from the internet). فيردّ علي بأن الهوية هي المحيط (identity is the perimeter) في السحابة. ماذا يقصد؟"
+   },
+   "o": {
+    "en": [
+     "Network rules are the provider's job, so identities are the only layer that Najm Bank must secure",
+     "Providers close every inbound port by default, so attackers can only try guessing staff passwords",
+     "Each API call is checked against IAM policy, so a leaked key for a broad role needs no open port",
+     "Staff sign-ins are the perimeter, so roles used by code can stay broad as long as staff use MFA"
+    ],
+    "ar": [
+     "قواعد الشبكة (Network rules) من عمل المزوّد (the provider's job)، فالهويات (identities) هي الطبقة الوحيدة التي على بنك نجم (Najm Bank) تأمينها",
+     "يُغلق المزوّدون (Providers) كل المنافذ الواردة افتراضيًا (every inbound port by default)، فلا يملك المهاجمون إلا محاولة تخمين كلمات مرور الموظفين (try guessing staff passwords)",
+     "يُفحص كل استدعاءٍ لواجهة برمجة (API call) مقابل سياسة إدارة الهوية والوصول (IAM policy)، فالمفتاح المسرّب لدورٍ واسع الصلاحيات (a leaked key for a broad role) لا يحتاج إلى منفذٍ مفتوح (open port)",
+     "تسجيلات دخول الموظفين (Staff sign-ins) هي المحيط (the perimeter)، فيمكن أن تبقى الأدوار التي تستخدمها الشيفرة (roles used by code) واسعةً (stay broad) ما دام الموظفون يستخدمون المصادقة متعددة العوامل (as long as staff use MFA)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Every API request, from the console, a command-line tool, a pipeline or code, is checked against IAM policy, so an attacker with valid credentials for a powerful role does not need to break anything. Network rules are not the provider's job: on IaaS they stay with Najm Bank, alongside identities and data, and roles used by code need least privilege too.",
+    "ar": "يُفحص كل طلبٍ لواجهة برمجة (Every API request)، سواء جاء من وحدة التحكم (the console) أو أداة سطر أوامر (a command-line tool) أو خط إنتاج (a pipeline) أو شيفرة (code)، مقابل سياسة إدارة الهوية والوصول (IAM policy)، ولذا لا يحتاج مهاجمٌ يملك بيانات اعتمادٍ صالحة لدورٍ قوي (valid credentials for a powerful role) إلى كسر أي شيء. وقواعد الشبكة (Network rules) ليست من عمل المزوّد (the provider's job): ففي البنية التحتية كخدمة (IaaS) تبقى على بنك نجم (Najm Bank)، إلى جانب الهويات والبيانات (identities and data)، والأدوار التي تستخدمها الشيفرة (roles used by code) تحتاج هي أيضًا إلى أقل الصلاحيات (least privilege)."
+   }
+  },
+  {
+   "id": "m7-2",
+   "level": 2,
+   "lesson": "7.2",
+   "q": {
+    "en": "Reviewing the Dockerfile for Najm Assist's tool service, Ali sees one instruction copy a .env file holding the core-banking API key into the image and the next instruction delete it. The developer says the finished image no longer contains the key. What should Ali ask for?",
+    "ar": "أثناء مراجعة ملف Dockerfile لخدمة الأدوات في نجم أسيست (Najm Assist's tool service)، يرى علي تعليمةً (instruction) تنسخ إلى الصورة (image) ملفَّ بيئةٍ ⁦(.env file)⁩ يحوي مفتاح واجهة برمجة النظام المصرفي الأساسي (core-banking API key)، ثم تعليمةً تالية تحذفه (the next instruction delete it). ويقول المطوّر (developer) إن الصورة النهائية (finished image) لم تعد تحتوي المفتاح. ماذا ينبغي أن يطلب علي؟"
+   },
+   "o": {
+    "en": [
+     "Rebuild so that no layer ever holds the key, and inject it at runtime from the secrets manager",
+     "Nothing more, since a file deleted in a later layer is gone from the image that others pull and run",
+     "Run the container as a non-root user so that no process inside it can read the deleted key file",
+     "Move the key into an ENV line in the Dockerfile so that no secret file is copied into the image"
+    ],
+    "ar": [
+     "إعادة البناء (Rebuild) بحيث لا تحمل أي طبقة (no layer) المفتاح أبدًا، وحقنه وقت التشغيل (inject it at runtime) من مدير الأسرار (secrets manager)",
+     "لا شيء آخر، فالملف المحذوف في طبقةٍ لاحقة (a file deleted in a later layer) يختفي من الصورة (image) التي يسحبها الآخرون ويشغّلونها (pull and run)",
+     "تشغيل الحاوية بمستخدمٍ غير جذري (non-root user) كي لا تستطيع أي عمليةٍ داخلها (process inside it) قراءة ملف المفتاح المحذوف (deleted key file)",
+     "نقل المفتاح إلى سطر ENV في ملف Dockerfile (ENV line in the Dockerfile) كي لا يُنسخ أي ملفٍّ سري (secret file) إلى الصورة (image)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Image layers are permanent, so a secret copied in one layer and deleted in the next is still in the image for anyone who can pull it; secrets arrive at runtime from the secrets manager, never in the image. Running as non-root changes nothing about what the layers contain, and an ENV line bakes the secret into a layer too.",
+    "ar": "طبقات الصورة دائمة (Image layers are permanent)، فالسرّ المنسوخ في طبقة والمحذوف في التالية (copied in one layer and deleted in the next) يبقى في الصورة (image) لكل من يستطيع سحبها (pull it)؛ والأسرار (secrets) تصل وقت التشغيل (at runtime) من مدير الأسرار (secrets manager)، لا داخل الصورة أبدًا. أما التشغيل بمستخدمٍ غير جذري (non-root) فلا يغيّر شيئًا مما تحويه الطبقات (layers)، وسطر ENV (ENV line) يُثبّت السرّ في طبقةٍ هو الآخر (bakes the secret into a layer)."
+   }
+  },
+  {
+   "id": "m7-3",
+   "level": 2,
+   "lesson": "7.3",
+   "q": {
+    "en": "Najm Mobile's API used an NGINX rate limit per client IP address. Since Tariq's team put the API behind a CDN, many unrelated customers get HTTP 429 errors at ordinary traffic levels. What is the most likely cause and fix?",
+    "ar": "كانت واجهة برمجة تطبيق نجم للهاتف (Najm Mobile's API) تطبّق حدّ معدّلٍ في NGINX (NGINX rate limit) لكل عنوان IP للعميل (per client IP address). ومنذ أن وضع فريق طارق الواجهة خلف شبكة توصيل محتوى (behind a CDN)، صار عملاء كثيرون لا صلة بينهم (many unrelated customers) يتلقّون أخطاء HTTP 429 (HTTP 429 errors) عند مستويات حركة مرورٍ عادية (ordinary traffic levels). ما السبب الأرجح (most likely cause)، وما الإصلاح؟"
+   },
+   "o": {
+    "en": [
+     "A DDoS flood has begun, so switch the WAF to its highest paranoia level in blocking mode straight away",
+     "The CDN is caching the 429 responses, so switch off caching for the whole API until all of them clear",
+     "Normal volume has outgrown the limit, so raise it tenfold for every client and keep it per IP",
+     "NGINX sees only the CDN's address, so take the client's from its header, trusting only CDN ranges"
+    ],
+    "ar": [
+     "بدأ إغراقٌ لحجب الخدمة الموزّع (DDoS flood)، فانقل جدار حماية تطبيقات الويب (WAF) فورًا إلى أعلى مستوى ارتياب (highest paranoia level) في وضع الحجب (blocking mode)",
+     "تخزّن شبكة توصيل المحتوى استجابات 429 مؤقتًا (The CDN is caching the 429 responses)، فعطّل التخزين المؤقت (switch off caching) للواجهة كلها (the whole API) حتى تزول",
+     "تجاوز الحجم العادي الحدّ (Normal volume has outgrown the limit)، فارفعه عشرة أضعاف (raise it tenfold) لكل عميل وأبقِه لكل عنوان IP (keep it per IP)",
+     "لا يرى NGINX إلا عنوان شبكة توصيل المحتوى (the CDN's address)، فخذ عنوان العميل من ترويستها (from its header)، مع الثقة بنطاقاتها فقط (trusting only CDN ranges)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Behind a CDN, the address NGINX sees is the CDN's, so every customer counts against one shared limit and the rule throttles the CDN itself; restore the client address from the CDN's header, trusting it only from the CDN's published ranges, and limit per customer or API key where you can. Raising the limit hides the symptom while everyone still shares that one limit.",
+    "ar": "خلف شبكة توصيل محتوى (Behind a CDN)، يكون العنوان الذي يراه NGINX (the address NGINX sees) هو عنوان الشبكة نفسها (the CDN's address)، فيُحتسب كل العملاء (every customer counts) على حدٍّ مشترك واحد (one shared limit) وتخنق القاعدةُ الشبكةَ نفسها (throttles the CDN itself)؛ فاستعِد عنوان العميل من ترويسة الشبكة (restore the client address from the CDN's header)، مع الثقة بها من نطاقاتها المنشورة فقط (only from the CDN's published ranges)، وضع الحدود لكل عميلٍ أو مفتاح واجهة برمجة (per customer or API key) حيث تستطيع (where you can). أما رفع الحدّ (Raising the limit) فيُخفي العَرَض (hides the symptom) بينما يبقى الجميع على ذلك الحدّ الواحد."
+   }
+  },
+  {
+   "id": "m7-4",
+   "level": 3,
+   "lesson": "7.2",
+   "q": {
+    "en": "For three months the CSPM tool has flagged the same security group open to 0.0.0.0/0 on the managed database's port. Each time, an engineer closes it in the console, and it reopens after the next Terraform deployment. What is the best diagnosis and fix?",
+    "ar": "منذ ثلاثة أشهر (For three months) تُبلغ أداة إدارة الوضع الأمني للسحابة (CSPM tool) عن مجموعة الأمان نفسها (the same security group) مفتوحةً لـ 0.0.0.0/0 على منفذ قاعدة البيانات المُدارة (the managed database's port). وفي كل مرة يغلقها مهندسٌ (engineer) في وحدة التحكم (console)، ثم تعود مفتوحةً بعد النشر التالي عبر Terraform (the next Terraform deployment). ما أفضل تشخيصٍ وإصلاح (best diagnosis and fix)؟"
+   },
+   "o": {
+    "en": [
+     "The CSPM baseline is wrong for managed databases, so record the finding as an accepted false positive",
+     "The Terraform code still opens the rule, so fix it there, add an IaC scan gate and detect drift",
+     "Someone keeps reopening it by hand, so remove console access from all the platform engineers",
+     "Manual fixes are too slow, so let the CSPM tool close the rule automatically every night instead"
+    ],
+    "ar": [
+     "خط أساس أداة إدارة الوضع الأمني (CSPM baseline) خاطئٌ بالنسبة لقواعد البيانات المُدارة (managed databases)، فسجّل النتيجة إيجابيةً كاذبةً مقبولة (accepted false positive)",
+     "شيفرة Terraform (Terraform code) ما زالت تفتح القاعدة (still opens the rule)، فأصلِحها هناك (fix it there)، وأضف بوابة فحصٍ للبنية التحتية بوصفها شيفرة (IaC scan gate)، واكتشف الانحراف (detect drift)",
+     "شخصٌ ما يعيد فتحها يدويًا (by hand)، فاسحب صلاحية الوصول إلى وحدة التحكم (console access) من كل مهندسي المنصة (platform engineers)",
+     "الإصلاحات اليدوية (Manual fixes) بطيئة جدًا، فدع أداة إدارة الوضع الأمني (CSPM tool) تغلق القاعدة تلقائيًا كل ليلة بدلًا من ذلك (automatically every night instead)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "The pipeline re-applies the code, so the console fix is drift that the next apply reverts; fix the rule in Terraform, add an IaC scan gate so it cannot come back, and detect drift on a schedule. A nightly auto-close fights the pipeline and leaves the database exposed between each deployment and the next clean-up.",
+    "ar": "يعيد خط الإنتاج (pipeline) تطبيق الشيفرة (re-applies the code)، فالإصلاح في وحدة التحكم (console fix) انحرافٌ (drift) يلغيه التطبيق التالي (the next apply)؛ فأصلِح القاعدة في Terraform، وأضف بوابة فحصٍ للبنية التحتية بوصفها شيفرة (IaC scan gate) كي لا تعود، واكتشف الانحراف بشكلٍ مجدول (detect drift on a schedule). أما الإغلاق التلقائي الليلي (nightly auto-close) فيصارع خط الإنتاج (fights the pipeline)، ويترك قاعدة البيانات مكشوفةً (exposed) بين كل نشرٍ والتنظيف الذي يليه (the next clean-up)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m7-e1",
+   "lesson": "7.1",
+   "text": {
+    "en": "I have rewritten a wildcard storage policy in a sandbox cloud account I own to least privilege, and shown that the write succeeds while read and delete are denied",
+    "ar": "أعدتُ كتابة سياسة تخزينٍ شاملة (wildcard storage policy) في حسابٍ سحابي تجريبي أملكه (sandbox cloud account I own) وفق أقل الصلاحيات (least privilege)، وأثبتُّ أن الكتابة تنجح (the write succeeds) بينما تُرفض القراءة والحذف (read and delete are denied)"
+   }
+  },
+  {
+   "id": "m7-e2",
+   "lesson": "7.3",
+   "text": {
+    "en": "I have drawn the zones and flows of an application I work on as a flow matrix that lists every outbound internet destination and at least one flow I would remove",
+    "ar": "رسمتُ المناطق والتدفقات (zones and flows) لتطبيقٍ أعمل عليه في مصفوفة تدفقات (flow matrix) تُدرج كل وجهةٍ صادرة على الإنترنت (outbound internet destination) وتدفقًا واحدًا على الأقل كنت سأزيله (at least one flow I would remove)"
+   }
+  }
+ ]
+}

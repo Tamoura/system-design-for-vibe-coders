@@ -1,6 +1,6 @@
 # Module 7 — Cloud and infrastructure
 
-*Najm Bank's applications no longer run on servers in its own data centre. They run on a cloud platform: containers on a managed Kubernetes service, an object store, a managed database and CI/CD pipelines. The code can be clean and the bank can still be breached through one public bucket, one over-privileged role or one flat network. This module covers the layer underneath the application. It starts with who is responsible for what in the cloud, why identity and access management (IAM) is the real perimeter, and why misconfiguration causes most cloud incidents. It then shows how to build and run containers and Kubernetes safely, and how to catch mistakes in infrastructure as code before they are deployed. It ends with network segmentation, the edge (CDN, WAF and API gateway) and DDoS protection, which limit what an attacker can reach and keep the service up under a flood. You will follow Ali as he finds a public invoice bucket, Tariq's team as it hardens the cluster that runs Najm Assist's tools, Mariam as her red team walks across a flat internal network, and Jassim as he plans for a salary-day flood.*
+*Najm Bank's applications no longer run on servers in its own data centre. They run on a cloud platform: containers on a managed Kubernetes service, an object store, a managed database and CI/CD pipelines. The code can be clean and the bank can still be breached through one public bucket, one over-privileged role or one flat network. This module covers the layer underneath the application. It starts with who is responsible for what in the cloud, why identity and access management (IAM) is the real perimeter, and why customer-side misconfiguration and leaked credentials, not attacks on the provider, cause most cloud incidents. It then shows how to build and run containers and Kubernetes safely, and how to catch mistakes in infrastructure as code before they are deployed. It ends with network segmentation, the edge (CDN, WAF and API gateway) and DDoS protection, which limit what an attacker can reach and keep the service up under a flood. You will follow Ali as he finds a public invoice bucket, Tariq's team as it hardens the cluster that runs Najm Assist's tools, Mariam as her red team walks across a flat internal network, and Jassim as he plans for a salary-day flood.*
 
 > **Phases:** Design, Build, Deploy, Operate — making the platform under every Najm Bank application secure by default, enforced in code, and observable when someone tries to get past it.
 
@@ -12,7 +12,7 @@
 ## ⚡ In 60 seconds
 - The **shared responsibility model**: the provider secures the cloud itself (buildings, hardware, virtualisation, managed-service internals). You secure what you put in it and how you configure it. The split moves with the type of service.
 - In the cloud, **identity is the perimeter**. Every API call is checked against IAM policy, so an over-privileged role or a leaked key is worth more to an attacker than an open port.
-- Most cloud breaches start with **misconfiguration** (public storage, wildcard permissions, long-lived keys, logging off), not a clever attack on the provider.
+- Most cloud breaches start with customer-side mistakes, above all **misconfiguration** and weak or leaked credentials (public storage, wildcard permissions, long-lived keys, logging off), not a clever attack on the provider.
 - The rule that matters most: workloads and pipelines get **short-lived credentials through federation**, scoped to exactly what they need. Humans get no standing admin rights.
 - Decision cue: "which identity does this run as, what can it do, and what stops it being made public?"
 - Biggest trap: fixing things by hand in the console. Guardrails belong in code and organisation-wide policies, or they drift back.
@@ -22,7 +22,7 @@ In Ali's first week, the cloud posture scanner lists a "public bucket, high" in 
 
 Noura does not ask "who did this?". She asks: "Why could one person do this in one click, with real customer data, and why did it take three weeks to notice?" Each answer is a control. Production data is not copied to test accounts unless masked (5.3). Public access is blocked at the organisation level, so no single account can switch it off. Posture alerts go to a queue with an owner and a deadline.
 
-The public record shows the stakes. In the 2019 Capital One breach, as publicly reported, an attacker used a server-side request forgery (SSRF) weakness, reported to be in a misconfigured web application firewall, to make a server query the cloud's instance metadata service. It returned temporary credentials for the server's role, whose broad storage permissions let the attacker copy data about a very large number of credit-card applicants. The provider's infrastructure did exactly what it was told. Three customer-side settings lined up: an SSRF-prone component, a metadata service that answered simple requests, and an over-broad role. This lesson is about making sure they never line up at Najm Bank.
+The public record shows the stakes. In the 2019 Capital One breach, as publicly reported, an attacker used a server-side request forgery (SSRF) weakness, reported to be in a misconfigured web application firewall, to make a server query the cloud's instance metadata service. It returned temporary credentials for the server's role, whose broad storage permissions let the attacker copy data about a very large number of credit-card applicants. The provider's infrastructure did exactly what it was told. Three conditions lined up: an SSRF-prone component, a metadata service that answered simple GET requests (AWS introduced the token-based IMDSv2 later in 2019), and an over-broad role. This lesson is about making sure they never line up at Najm Bank.
 
 ## 📐 How it works
 
@@ -33,7 +33,7 @@ The public record shows the stakes. In the 2019 Capital One breach, as publicly 
 | You use… | The provider secures | Najm Bank still secures |
 |---|---|---|
 | **IaaS** (virtual machines, networks) | Facilities, hardware, virtualisation layer | Operating-system patches, application, network rules, identities, data |
-| **Managed Kubernetes** | The above, plus the control plane | Workloads, images, cluster permissions, network policies, identities, data |
+| **Managed Kubernetes** | The above, plus the control plane | Workloads, images, worker-node upgrades (often shared), cluster permissions, network policies, identities, data |
 | **PaaS** (managed database, object store, serverless) | The above, plus the service software and its patching | Configuration (public or private, encryption, backups), access policies, data |
 | **SaaS** (email, CRM, a hosted LLM API) | Almost everything technical | Accounts, MFA, sharing settings, what data you send to it |
 
@@ -68,7 +68,7 @@ Fixed: write-only, one bucket, one prefix, TLS only.
     "Condition": { "Bool": { "aws:SecureTransport": "true" } } }] }
 ```
 
-**The usual misconfigurations.** The OWASP Top 10 has *Security Misconfiguration* as its own category, and in the cloud it dominates:
+**The usual misconfigurations.** The OWASP Top 10 has *Security Misconfiguration* as its own category, and in the cloud it is one of the commonest ways in:
 - **Public storage**: buckets readable by anyone, often "temporarily".
 - **Over-broad identities**: wildcard actions or resources; admin roles on applications.
 - **Long-lived access keys** in code, CI variables and laptops (5.2).
@@ -91,7 +91,7 @@ The trap is the **trust policy**, which says *which* tokens may assume the role.
 }
 ```
 
-**The metadata service and SSRF.** Cloud virtual machines can ask a local **instance metadata service** about themselves. On the major providers it sits on the link-local address 169.254.169.254, and on AWS it can return temporary credentials for the machine's role. That is dangerous if the application has an SSRF flaw (2.3), because the attacker can make the server ask on their behalf. Defend in layers:
+**The metadata service and SSRF.** Cloud virtual machines can ask a local **instance metadata service** about themselves. On the major providers it sits on the link-local address 169.254.169.254, and it can return temporary credentials for the machine's role or attached service identity. That is dangerous if the application has an SSRF flaw (2.3), because the attacker can make the server ask on their behalf. Defend in layers:
 - **IMDSv2** on AWS requires a session token, obtained with a separate PUT request and sent back in a header, which blocks most simple SSRF that can only trigger GET requests. Set it to *required* and set the response hop limit so containers cannot reach it unless they need to. AWS has been moving new launches towards IMDSv2-only defaults; check the current defaults. Azure and Google Cloud require a special request header (`Metadata: true`, `Metadata-Flavor: Google`) for a similar effect.
 - **Fix the SSRF** with a destination allowlist (2.3).
 - **Block egress** to the metadata address from workloads that do not need it (7.2, 7.3).
@@ -116,7 +116,7 @@ Each dotted line is an independent control that breaks the chain: defence in dep
 
 **Posture management.** A **cloud security posture management (CSPM)** tool continuously compares your cloud configuration with a baseline, usually the **CIS Benchmarks** (consensus hardening guides from the Center for Internet Security) plus your own rules. Open-source scanners such as Prowler and ScoutSuite do this, as do providers' built-in tools. CSPM finds drift but does not fix it, and its many findings need prioritising (🔴 below).
 
-**Audit logs are evidence.** Turn on the provider's API audit log (AWS CloudTrail, Azure Activity Log, Google Cloud Audit Logs) in every account, including data-access events for sensitive stores. Send it to a separate, locked-down log account where the people it records cannot delete it. Jassim's team builds detections on it in 10.1.
+**Audit logs are evidence.** Turn on the provider's API audit log (AWS CloudTrail, Azure Activity Log, Google Cloud Audit Logs) in every account, and add data-access logging for sensitive stores (on Azure, through each resource's diagnostic logs). Send it to a separate, locked-down log account where the people it records cannot delete it. Jassim's team builds detections on it in 10.1.
 
 ### 🔴 Expert view
 
@@ -176,7 +176,7 @@ Each production role also gets a **role review card**: the workload that assumes
 ## 🧾 Recap
 - The provider secures the cloud; you secure your identities, data and configuration in it.
 - IAM is the perimeter: scope every policy to actions, resources and conditions, and prefer short-lived federated credentials to static keys.
-- Most cloud incidents are misconfigurations. Organisation-level guardrails prevent them, and CSPM finds what slips through.
+- Most cloud incidents are customer-side misconfigurations or credential mistakes. Organisation-level guardrails prevent many of them, and CSPM finds what slips through.
 - SSRF, the metadata service and an over-privileged role form a known chain; each layered control breaks it.
 - Separate accounts limit blast radius; locked audit logs are your evidence.
 
@@ -237,13 +237,13 @@ Each production role also gets a **role review card**: the workload that assumes
 **5. Why does Najm Bank block public storage with an organisation-level guardrail instead of trusting each team to configure buckets correctly?**
 
 - A. Organisation guardrails are cheaper than buckets
-- B. Because nobody working in one account can override a preventive control set above it, so one mistake cannot expose data
-- C. Because CSPM tools cannot detect public buckets
-- D. Because the shared responsibility model makes the provider responsible for bucket settings
+- B. Because CSPM tools cannot detect public buckets
+- C. Because the shared responsibility model makes the provider responsible for bucket settings
+- D. Because nobody working in one account can override a preventive control set above it, so one mistake cannot expose data
 
 <details><summary>Answer</summary>
 
-**B.** A preventive control turns "please configure it correctly" into "it cannot be done". C is false: CSPM detects public buckets, but only afterwards. (🟡 Going deeper.)
+**D.** A preventive control turns "please configure it correctly" into "it cannot be done". B is false: CSPM detects public buckets, but only afterwards. C misreads shared responsibility: bucket settings are the customer's. (🟡 Going deeper.)
 
 </details>
 
@@ -273,7 +273,7 @@ Each production role also gets a **role review card**: the workload that assumes
 ## 🧭 Why it matters
 Tariq's team is moving Najm Assist's **tool service**, the code that actually freezes cards and opens disputes when the assistant asks, onto the bank's managed Kubernetes cluster. Ali reviews the Helm chart, much of it generated by an AI coding agent. The container runs as root. `privileged: true` is set "because the health check failed without it". The pod mounts the default service-account token, and that account can read every Secret in the namespace. The core-banking API key sits in plain text in a ConfigMap. There are no network policies, so the pod can reach the Credit Memo Copilot's vector store and the node's metadata service. Each line was a small convenience. Together, one code-execution bug in the tool service, or a prompt-injected agent that finds one, would give an attacker card operations and a route to the rest of the cluster.
 
-Exposed and weakly configured container platforms are a well-documented target. Researchers and government agencies have repeatedly reported Kubernetes dashboards, API servers and container daemons left open to the internet and abused, usually for cryptocurrency mining and sometimes as a foothold into the wider cloud account. The NSA and CISA published joint Kubernetes hardening guidance in 2021, since updated, because the defaults are not safe for production. This lesson turns that kind of guidance into a baseline the platform enforces automatically.
+Exposed and weakly configured container platforms are a well-documented target. Researchers and government agencies have repeatedly reported Kubernetes dashboards, API servers and container daemons left open to the internet and abused, usually for cryptocurrency mining and sometimes as a foothold into the wider cloud account. The NSA and CISA published joint Kubernetes hardening guidance in 2021 (since updated), a sign that defaults alone are not enough for production. This lesson turns that kind of guidance into a baseline the platform enforces automatically.
 
 ## 📐 How it works
 
@@ -286,23 +286,30 @@ Exposed and weakly configured container platforms are a well-documented target. 
 Vulnerable:
 
 ```dockerfile
-FROM python:latest                      # moving tag, large base
-COPY . /app                             # copies .env, .git and test data too
-ENV CORE_BANKING_API_KEY=live_xxx       # secret baked into a layer
+# Moving tag, large base image
+FROM python:latest
+# Copies .env, .git and test data too
+COPY . /app
+# Secret baked into a layer
+ENV CORE_BANKING_API_KEY=live_xxx
 RUN pip install -r /app/requirements.txt
-CMD ["python", "/app/main.py"]          # runs as root by default
+# No USER line, so it runs as root
+CMD ["python", "/app/main.py"]
 ```
 
-Fixed:
+Fixed (Dockerfile comments must sit on their own lines; a `#` after an instruction is read as an argument):
 
 ```dockerfile
-FROM python:3.12-slim@sha256:<pinned-digest>   # small base, pinned by digest
+# Small base image, pinned by digest
+FROM python:3.12-slim@sha256:<pinned-digest>
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir --require-hashes -r requirements.txt
-COPY src/ ./src/                        # only what runs; plus a .dockerignore
+# Only the code that runs; a .dockerignore keeps .env and .git out
+COPY src/ ./src/
 RUN useradd --uid 10001 --no-create-home app
-USER 10001                              # non-root
+# Non-root user
+USER 10001
 CMD ["python", "-m", "src.main"]
 # Secrets arrive at runtime from the secrets manager, never in the image (5.2)
 ```
@@ -314,7 +321,7 @@ Go further with **multi-stage builds** (compile in one stage, copy only the resu
 - **Namespace**: a logical grouping for names, policies and quotas.
 - **Service account**: the identity a pod uses to call the Kubernetes API and, through federation, cloud APIs (7.1).
 - **RBAC** (role-based access control): a **Role** grants verbs (get, list, create, delete…) on resources; a **RoleBinding** gives it to a user, group or service account. ClusterRoles and ClusterRoleBindings work cluster-wide.
-- **Secret**: an object for sensitive values. By default its data is only **base64-encoded**, not encrypted, so anyone who can read the object can read the value.
+- **Secret**: an object for sensitive values. In upstream Kubernetes its data is only **base64-encoded** by default, not encrypted in the cluster's datastore. Some managed services now add encryption at rest, but anyone who can read the object through the API still sees the value.
 
 **The secure-by-default four.** Kubernetes ships permissive. Production needs:
 - **Pod Security Standards**: three built-in profiles. **Privileged** has no restrictions; **Baseline** blocks known privilege escalations such as privileged containers; **Restricted** also requires non-root, no privilege escalation, all Linux capabilities dropped and a seccomp profile. The built-in **Pod Security Admission** controller enforces them per namespace through a label.
@@ -369,11 +376,11 @@ The Restricted profile does not require `readOnlyRootFilesystem`, but it is a ch
 
 **RBAC traps.** Some permissions are more powerful than they look:
 - `get` or `list` on **secrets** reveals every credential in scope.
-- `create` on **pods** in a namespace lets someone run a pod as any service account in that namespace, and so act with its permissions and read the Secrets it can mount.
+- `create` on **pods** (or on Deployments, Jobs and other objects that create pods) in a namespace lets someone run a pod as any service account in that namespace and act with its permissions, and mount any Secret or ConfigMap in that namespace.
 - `escalate`, `bind` and `impersonate` let a subject grant itself more access.
 - `*` on anything.
 
-Review bindings too: a role bound to `system:authenticated` (every authenticated identity) is a cluster-wide grant.
+Review bindings too: a binding to `system:authenticated` grants the role to every identity the cluster can authenticate. On some managed services that group has included any account with the cloud provider, not just your staff, so check what it means on yours.
 
 **Policy as code at admission.** For Najm Bank's own rules (signed images from the bank's registry only, no `latest` tags, resource limits required), use an **admission control policy engine** such as Kyverno or OPA Gatekeeper. The API server consults it before admitting any object, so a non-compliant manifest is rejected whoever, or whatever, wrote it.
 
@@ -495,13 +502,13 @@ Tariq and Ali agree the **Najm Kubernetes Workload Baseline v1**, enforced autom
 **1. The Helm chart for Najm Assist's tool service sets `privileged: true` because "the health check failed without it". What should Ali ask for?**
 
 - A. Keep privileged mode, with a comment explaining why
-- B. Find the real cause, grant only the narrow fix it needs, and enforce the Restricted profile on the namespace
-- C. Move the pod to a namespace where privileged mode is allowed
-- D. Accept it, because the provider manages the cluster
+- B. Move the pod to a namespace where privileged mode is allowed
+- C. Accept it, because the provider manages the cluster
+- D. Find the real cause, grant only the narrow fix it needs, and enforce the Restricted profile on the namespace
 
 <details><summary>Answer</summary>
 
-**B.** Privileged mode removes most isolation between container and node, and the real cause usually has a much narrower fix. C moves the problem; D misreads shared responsibility, since workload settings are the customer's. (🟡 Going deeper.)
+**D.** Privileged mode removes most isolation between container and node, and the real cause usually has a much narrower fix. B moves the problem; C misreads shared responsibility, since workload settings are the customer's. (🟡 Going deeper.)
 
 </details>
 
@@ -522,12 +529,12 @@ Tariq and Ali agree the **Najm Kubernetes Workload Baseline v1**, enforced autom
 
 - A. It is not sensitive, because it cannot read Secrets
 - B. Creating pods can only cause performance problems
-- C. Whoever controls the pipeline can create a pod that runs as any service account in that namespace, inheriting its permissions and the Secrets it can mount
+- C. Whoever controls the pipeline can create a pod that runs as any service account in that namespace and mounts any Secret there, gaining those permissions and values
 - D. Pod creation matters only in `kube-system`
 
 <details><summary>Answer</summary>
 
-**C.** Creating pods effectively grants the permissions of every service account in the namespace. A looks only at the direct grant. (🟡 Going deeper.)
+**C.** Creating pods effectively grants the permissions of every service account in the namespace and the contents of every Secret that can be mounted there, even without any direct permission on Secrets. A looks only at the direct grant. (🟡 Going deeper.)
 
 </details>
 
@@ -576,7 +583,7 @@ Tariq and Ali agree the **Najm Kubernetes Workload Baseline v1**, enforced autom
 
 ## ⚡ In 60 seconds
 - **Segmentation** divides the network into zones with explicitly allowed flows, so one compromise cannot reach everything. Deny by default, inbound *and* outbound.
-- **Egress control** (limiting where workloads connect *out* to) is the most neglected control. It blocks SSRF to metadata services, data theft, and agents sending data where they should not.
+- **Egress control** (limiting where workloads connect *out* to) is one of the most neglected controls. It blocks SSRF to metadata services, data theft, and agents sending data where they should not.
 - The **edge** (CDN, DDoS protection, WAF and API gateway) absorbs floods, filters obvious attacks and enforces rate limits before traffic reaches your code.
 - A **web application firewall (WAF)** buys time and filters noise; it is not a fix.
 - **DDoS** attacks are volumetric, protocol or application-layer. Defend with upstream capacity, caching, per-client rate limits, cheap or protected expensive operations, and a rehearsed runbook.
@@ -593,7 +600,7 @@ Meanwhile, Jassim is preparing for salary day, Najm Mobile's busiest hour and th
 
 **Zones and flows.** A **network zone** groups systems with similar trust and exposure. **Segmentation** puts controls between zones and allows only the flows the business needs. The cloud building blocks are:
 - **Virtual network** (VPC on AWS and Google Cloud, VNet on Azure): your private address space, split into **public subnets** (reachable from the internet; only the edge belongs here) and **private subnets** (no direct internet route).
-- **Security groups** (network security groups on Azure): stateful allow rules attached to resources. Where you can, refer to other groups rather than IP ranges.
+- **Security groups** (network security groups on Azure, VPC firewall rules on Google Cloud): stateful rules attached to resources or subnets. Where you can, refer to other groups, tags or service identities rather than IP ranges.
 - **Private endpoints**: reach managed services (object store, database, model endpoints) over the private network, then switch their public endpoint off.
 - **Kubernetes network policies** for pod-to-pod flows inside a cluster (7.2).
 
@@ -664,7 +671,7 @@ server {
 }
 ```
 
-Where you can, limit per customer, device or API key, not only per IP address: many customers share mobile-carrier addresses, and attackers rotate theirs. For Najm Assist, add **token budgets** per user and session, a maximum input size, and a cap on tool calls per conversation.
+Behind a CDN, `$binary_remote_addr` is the CDN's address, so this would throttle the CDN itself: restore the client address from the CDN's header, trusting that header only from the CDN's published ranges. Where you can, limit per customer, device or API key, not only per IP address: many customers share mobile-carrier addresses, and attackers rotate theirs. For Najm Assist, add **token budgets** per user and session, a maximum input size, and a cap on tool calls per conversation.
 
 **Egress for agents, in practice.** Kubernetes network policies match IP addresses, namespaces and labels, not domain names. To allow specific external domains (the LLM provider, a card-network API), route outbound traffic through an **egress proxy** that checks the destination name, logs every connection and refuses the rest; some network plugins also support domain-based policies. This policy lets Najm Assist's card-tools pod reach only the core-banking gateway and DNS:
 
@@ -686,7 +693,7 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels: { kubernetes.io/metadata.name: kube-system }
-    ports: [{ protocol: UDP, port: 53 }]
+    ports: [{ protocol: UDP, port: 53 }, { protocol: TCP, port: 53 }]
 ```
 
 Everything else is denied: the internet, the metadata address and the Credit Memo Copilot's vector store.
@@ -733,7 +740,7 @@ CISA's Zero Trust Maturity Model (version 2.0, 2023) is a useful yardstick. Segm
 | **DDoS protection service** | Upstream detection and absorption of floods by the cloud provider or CDN | Every internet-facing service customers depend on |
 | **API gateway** | Central authentication, quotas, rate limits and schema validation | Najm Mobile's public API and partner APIs |
 | **Rate limiting** | Caps on requests, tokens or actions per client over time | Login, search, export and LLM endpoints; per customer, not only per IP address |
-| **Zero trust network access** (ZTNA) | Identity- and device-checked access to specific applications instead of a VPN | Staff and admin access; mutual TLS between services |
+| **Zero trust network access** (ZTNA) | Identity- and device-checked access to specific applications instead of a VPN | Staff access to internal applications; admin access to management interfaces |
 
 ## 🏛️ In practice at Najm Bank
 After Mariam's report, Noura and Tariq publish the **Najm Network Zone and Flow Matrix v1**. Any flow not in the matrix is denied (✗). Adding a flow needs a ticket stating the data classification, and an AppSec review.
@@ -837,13 +844,13 @@ Standing rules: the metadata address is denied from all pods except named node a
 **5. Najm Mobile's API sits behind a CDN, DDoS protection and a WAF. Why must the origin accept traffic only from the edge?**
 
 - A. Because the CDN is cheaper than the origin
-- B. Otherwise attackers who find the origin's address can bypass the DDoS protection and the WAF
-- C. Because TLS cannot work without a CDN
-- D. Because rate limits only work on the origin
+- B. Because TLS cannot work without a CDN
+- C. Because rate limits only work on the origin
+- D. Otherwise attackers who find the origin's address can bypass the DDoS protection and the WAF
 
 <details><summary>Answer</summary>
 
-**B.** Edge controls only help if traffic must pass through them. C and D are false. (🟡 Going deeper.)
+**D.** Edge controls only help if traffic must pass through them. B and C are false. (🟡 Going deeper.)
 
 </details>
 
@@ -856,5 +863,6 @@ Standing rules: the metadata address is denied from all pods except named node a
 - OWASP Juice Shop — https://owasp.org/www-project-juice-shop/
 - NVD, CVE-2023-44487 (HTTP/2 Rapid Reset) — https://nvd.nist.gov/vuln/detail/CVE-2023-44487
 - CISA, Known Exploited Vulnerabilities Catalog — https://www.cisa.gov/known-exploited-vulnerabilities-catalog
-- MITRE ATT&CK, Network Denial of Service — https://attack.mitre.org/techniques/T1498/
+- MITRE ATT&CK, Network Denial of Service (T1498) — https://attack.mitre.org/techniques/T1498/
+- MITRE ATT&CK, Endpoint Denial of Service (T1499), including application-layer floods — https://attack.mitre.org/techniques/T1499/
 - Simon Willison, "The lethal trifecta for AI agents" (2025) — https://simonwillison.net/

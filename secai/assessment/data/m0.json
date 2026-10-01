@@ -1,0 +1,135 @@
+{
+ "area": "m0",
+ "questions": [
+  {
+   "id": "m0-1",
+   "level": 1,
+   "lesson": "0.3",
+   "q": {
+    "en": "Rania asks Mariam's red team to test Najm Assist's defences against prompt injection in the staging environment next week. What must be in place before any testing starts?",
+    "ar": "تطلب رانيا من الفريق الأحمر (red team) بقيادة مريم أن يختبر دفاعات نجم أسيست (Najm Assist's defences) ضد حقن الموجّهات (prompt injection) في بيئة الاختبار المرحلية (staging environment) الأسبوع المقبل (next week). ما الذي يجب أن يكون جاهزًا (in place) قبل أن يبدأ أي اختبار (before any testing starts)؟"
+   },
+   "o": {
+    "en": [
+     "Nothing extra, since the red team works for the bank and staging is not production",
+     "Rania's verbal approval, since she heads AI Products and is the one asking for the test",
+     "A signed authorisation stating the scope, dates, what is off limits and whom to call",
+     "A test plan based on the OWASP Web Security Testing Guide, shared with Tariq's team"
+    ],
+    "ar": [
+     "لا شيء إضافي (nothing extra)، لأن الفريق الأحمر (red team) يعمل لدى البنك، وبيئة الاختبار المرحلية (staging) ليست بيئة الإنتاج (production)",
+     "موافقة شفهية (verbal approval) من رانيا، لأنها رئيسة منتجات الذكاء الاصطناعي (Head of AI Products) وهي من طلبت الاختبار (asking for the test)",
+     "تفويض موقّع (signed authorisation) يحدد النطاق (scope) والتواريخ (dates) وما هو محظور (what is off limits) ومن يُتصل به (whom to call)",
+     "خطة اختبار (test plan) مبنية على دليل OWASP لاختبار أمن الويب (OWASP Web Security Testing Guide)، تُشارَك مع فريق طارق (Tariq's team)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Testing without permission is an attack whatever the intent, so red-team work needs signed rules of engagement covering scope, dates, what is off limits and whom to call if something breaks. Working for the bank or testing in staging is not authorisation, and a verbal OK leaves the scope and limits undefined.",
+    "ar": "الاختبار دون إذن (testing without permission) هجوم (an attack) أيًّا كانت النية (whatever the intent)، لذا يحتاج عمل الفريق الأحمر (red-team work) إلى قواعد اشتباك موقّعة (signed rules of engagement) تغطي النطاق (scope) والتواريخ (dates) وما هو محظور (what is off limits) ومن يُتصل به إذا تعطّل شيء (whom to call if something breaks). أما العمل لدى البنك (working for the bank) أو الاختبار في البيئة المرحلية (testing in staging) فليس تفويضًا (not authorisation)، والموافقة الشفهية (a verbal OK) تترك النطاق والحدود غير محددة (the scope and limits undefined)."
+   }
+  },
+  {
+   "id": "m0-2",
+   "level": 2,
+   "lesson": "0.1",
+   "q": {
+    "en": "A review finds that the SME Portal's old /v1 upload endpoint still accepts any file type. Tariq says the fix can wait until next quarter, and the meeting moves on without recording anything. What has the bank actually done, and what should follow?",
+    "ar": "تكشف مراجعةٌ (a review) أن نقطة النهاية القديمة للرفع (old upload endpoint) /v1 في بوابة الشركات الصغيرة (SME Portal) لا تزال تقبل أي نوع من الملفات (accepts any file type). يقول طارق إن الإصلاح (the fix) يمكن أن ينتظر حتى الربع المقبل (next quarter)، وينتقل الاجتماع إلى بند آخر (the meeting moves on) دون توثيق أي شيء (without recording anything). ما الذي فعله البنك فعلًا (actually done)، وما الذي ينبغي أن يليه (what should follow)؟"
+   },
+   "o": {
+    "en": [
+     "Accepted the risk silently; log it in the risk register with an owner and a review date",
+     "Reduced the risk, since a fix is now planned; confirm next quarter that the fix has shipped",
+     "Transferred the risk to Tariq's team; leave them to track it in their engineering backlog",
+     "Made no risk decision yet; record one only if next quarter's planned fix is later dropped"
+    ],
+    "ar": [
+     "قَبِل المخاطر بصمت (accepted the risk silently)؛ سجّلها في سجل المخاطر (log it in the risk register) مع مالك (an owner) وموعد مراجعة (a review date)",
+     "قلّل المخاطر (reduced the risk)، لأن الإصلاح أصبح مُخطَّطًا (a fix is now planned)؛ تأكّد في الربع المقبل (confirm next quarter) من أن الإصلاح أُطلق (the fix has shipped)",
+     "نقل المخاطر (transferred the risk) إلى فريق طارق (Tariq's team)؛ اتركه يتابعها (leave them to track it) في قائمة أعماله الهندسية (their engineering backlog)",
+     "لم يتخذ قرارًا بشأن المخاطر بعد (made no risk decision yet)؛ سجّل قرارًا (record one) فقط إذا أُلغي لاحقًا (is later dropped) الإصلاح المخطط للربع المقبل (next quarter's planned fix)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "An unfixed issue with no recorded decision is an accepted risk that nobody signed; a deferred fix belongs in the risk register, with an owner, a review date and sign-off by someone with authority. A planned fix is not a control: until it ships, nothing has reduced the risk.",
+    "ar": "المشكلة غير المُصلَحة (an unfixed issue) التي لا يوجد قرار موثّق بشأنها (no recorded decision) هي مخاطر مقبولة لم يوقّع عليها أحد (an accepted risk that nobody signed)؛ والإصلاح المؤجَّل (a deferred fix) مكانه سجل المخاطر (the risk register)، مع مالك (an owner) وموعد مراجعة (a review date) وتوقيع شخص يملك الصلاحية (sign-off by someone with authority). أما الإصلاح المخطط (a planned fix) فليس ضابطًا (not a control): فحتى يُطلَق (until it ships)، لم يقلّل شيءٌ المخاطر (nothing has reduced the risk)."
+   }
+  },
+  {
+   "id": "m0-3",
+   "level": 2,
+   "lesson": "0.2",
+   "q": {
+    "en": "Najm Assist's new card-freeze tool acts on whatever card number the model passes to it. Rania points out that the system prompt already tells Assist to act only on the customer's own cards. Which change still limits the harm when an injected instruction gets through?",
+    "ar": "تعمل أداة تجميد البطاقات (card-freeze tool) الجديدة في نجم أسيست (Najm Assist) على أي رقم بطاقة (whatever card number) يمرّره إليها النموذج (the model). وتشير رانيا إلى أن موجّه النظام (system prompt) يطلب من أسيست بالفعل (already tells Assist) ألا يعمل إلا على بطاقات العميل نفسه (act only on the customer's own cards). أي تغيير يظل يحدّ من الضرر (still limits the harm) عندما تمرّ تعليمات محقونة (an injected instruction gets through)؟"
+   },
+   "o": {
+    "en": [
+     "Repeat the own-cards rule more firmly in the system prompt, so the model cannot miss it",
+     "Make the tool act only on the signed-in customer's cards, enforced by the server",
+     "Block customer messages containing phrases such as 'ignore previous instructions'",
+     "Pass random tokens instead of card numbers, so an attacker cannot guess valid cards"
+    ],
+    "ar": [
+     "تكرار قاعدة بطاقات العميل نفسه (own-cards rule) بصرامة أكبر في موجّه النظام (system prompt)، كي لا يغفلها النموذج (the model cannot miss it)",
+     "قصر الأداة (the tool) على بطاقات العميل المسجّل دخوله (signed-in customer's cards)، مع فرض ذلك على الخادم (enforced by the server)",
+     "حظر رسائل العملاء (customer messages) التي تحتوي على عبارات مثل «تجاهل التعليمات السابقة (ignore previous instructions)»",
+     "تمرير رموز عشوائية (random tokens) بدلًا من أرقام البطاقات (card numbers)، كي لا يستطيع المهاجم تخمين بطاقات صالحة (guess valid cards)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Scoping the tool to the signed-in customer's cards removes the excessive agency, so even a successful injection cannot freeze someone else's card. A system-prompt rule can be overridden, because the model cannot reliably tell instructions from data, and random identifiers hide the hole without checking ownership.",
+    "ar": "إن قصر الأداة على بطاقات العميل المسجّل دخوله (scoping the tool to the signed-in customer's cards) يزيل الصلاحيات المفرطة (excessive agency)، فلا يستطيع حتى الحقن الناجح (a successful injection) تجميد بطاقة شخص آخر (someone else's card). أما قاعدة موجّه النظام (system-prompt rule) فيمكن تجاوزها (can be overridden)، لأن النموذج لا يستطيع التمييز بشكل موثوق بين التعليمات والبيانات (cannot reliably tell instructions from data)، والمعرّفات العشوائية (random identifiers) تخفي الثغرة (hide the hole) دون التحقق من الملكية (without checking ownership)."
+   }
+  },
+  {
+   "id": "m0-4",
+   "level": 3,
+   "lesson": "0.2",
+   "q": {
+    "en": "An incident review on the SME Portal finds this chain: a leaked password worked on an SME user account without MFA; the portal's cloud role could read every storage bucket; and invoices were bulk-downloaded for three weeks until an outside tip. Ali proposes enforcing MFA for all SME users and closing the review, since breaking one link stops a chain. What is the best judgement?",
+    "ar": "تكشف مراجعة حادثة (an incident review) في بوابة الشركات الصغيرة (SME Portal) السلسلةَ التالية (this chain): نجحت كلمة مرور مسرَّبة (a leaked password) على حساب مستخدم لشركة صغيرة (an SME user account) لا يستخدم المصادقة متعددة العوامل (without MFA)؛ وكان الدور السحابي للبوابة (the portal's cloud role) يستطيع قراءة كل حاوية تخزين (every storage bucket)؛ ونُزّلت الفواتير بالجملة (invoices were bulk-downloaded) طوال ثلاثة أسابيع حتى وصل بلاغ خارجي (an outside tip). يقترح علي فرض المصادقة متعددة العوامل (enforcing MFA) على جميع مستخدمي الشركات الصغيرة (all SME users) وإغلاق المراجعة (closing the review)، لأن كسر حلقة واحدة (breaking one link) يوقف السلسلة. ما الحكم الأفضل (the best judgement)؟"
+   },
+   "o": {
+    "en": [
+     "Agree, because MFA breaks the first link and a defender needs to break only one link",
+     "Find the single root cause first, since fixing several layers spreads effort too thin",
+     "Put a web application firewall in front of the portal to stop the next way in as well",
+     "Fix each failed layer: MFA, a role narrowed to the invoice bucket, a download alert"
+    ],
+    "ar": [
+     "الموافقة، لأن المصادقة متعددة العوامل (MFA) تكسر الحلقة الأولى (the first link)، ويكفي المدافع (a defender) أن يكسر حلقة واحدة (only one link)",
+     "البحث أولًا عن السبب الجذري الوحيد (the single root cause)، لأن إصلاح عدة طبقات (fixing several layers) يشتّت الجهد أكثر من اللازم (spreads effort too thin)",
+     "وضع جدار حماية لتطبيقات الويب (web application firewall) أمام البوابة (in front of the portal) لإيقاف طريق الدخول التالي أيضًا (the next way in)",
+     "إصلاح كل طبقة أخفقت (fix each failed layer): المصادقة متعددة العوامل (MFA)، ودور مقيّد بحاوية الفواتير (a role narrowed to the invoice bucket)، وتنبيه على التنزيل (a download alert)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Breaches have several causes: closing only the entry point leaves the over-privileged role and the monitoring gap waiting for the next way in, so assume breach and fix every layer that failed. Breaking one link is enough only if you have also chosen in advance where you would notice, and here nobody noticed for three weeks.",
+    "ar": "للاختراقات أسباب عدة (breaches have several causes): فإغلاق نقطة الدخول وحدها (closing only the entry point) يترك الدور ذا الصلاحيات المفرطة (the over-privileged role) وفجوة المراقبة (the monitoring gap) بانتظار طريق الدخول التالي (the next way in)، لذا افترض الاختراق (assume breach) وأصلح كل طبقة أخفقت (fix every layer that failed). ولا يكفي كسر حلقة واحدة (breaking one link) إلا إذا اخترت مسبقًا أين ستلاحظ (chosen in advance where you would notice)، وهنا لم يلاحظ أحد طوال ثلاثة أسابيع (nobody noticed for three weeks)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m0-e1",
+   "lesson": "0.1",
+   "text": {
+    "en": "I have written an asset register of at least six rows for an application I build or maintain, including a secret and an action, with an owner and an impact rating on every row and Noura's three questions answered underneath.",
+    "ar": "كتبت سجل أصول (asset register) من ستة صفوف على الأقل (at least six rows) لتطبيق أبنيه أو أتولى صيانته (an application I build or maintain)، يتضمن سرًّا (a secret) وإجراءً (an action)، ولكل صف مالك (an owner) وتقييم للأثر (an impact rating)، وأجبت تحته عن أسئلة نورة الثلاثة (Noura's three questions)."
+   }
+  },
+  {
+   "id": "m0-e2",
+   "lesson": "0.3",
+   "text": {
+    "en": "I have run OWASP Juice Shop or another deliberately vulnerable app on my own machine and written one page of rules of engagement for myself that names two kinds of system I will never test.",
+    "ar": "شغّلت OWASP Juice Shop أو تطبيقًا آخر معرّضًا للثغرات عن عمد (another deliberately vulnerable app) على جهازي (on my own machine)، وكتبت لنفسي (for myself) صفحة واحدة من قواعد الاشتباك (one page of rules of engagement) تسمّي نوعين من الأنظمة لن أختبرهما أبدًا (two kinds of system I will never test)."
+   }
+  }
+ ]
+}

@@ -70,7 +70,7 @@ Most systems face the first three every day. Automated scanning means everything
 **Risk is a decision.** There are four standard responses:
 - **Reduce** (mitigate): add controls, for example multi-factor authentication.
 - **Avoid**: do not do the risky thing, for example Najm Assist will not send money to new payees.
-- **Transfer** (share): move part of the impact elsewhere, for example through cyber insurance or a contract. You cannot transfer accountability to customers or the regulator.
+- **Transfer** (share): move part of the impact elsewhere, for example through cyber insurance or a contract. Accountability stays with the bank: customers and the regulator will still hold Najm responsible.
 - **Accept**: live with it knowingly, signed by someone with authority, with a review date.
 
 ```mermaid
@@ -113,7 +113,7 @@ prompt = ASSIST_RULES + "\n\nCustomer message:\n" + customer_message
 
 Whatever a customer, document or web page says arrives in the same channel as the bank's instructions; "ignore previous instructions" is the classic illustration. This is **prompt injection**, the first entry (LLM01) in the **OWASP Top 10 for LLM Applications** (2025 version). At the time of writing (2026) there is no complete technical fix, so defences rely on architecture: limit what the model can reach and do, treat its output as untrusted, and require human confirmation for consequential actions (Modules 8 and 9).
 
-**Three meanings of "AI security".** *Security of AI* (protecting AI systems from attack) is the main focus of this course. *AI for security* (defenders using AI, for example to triage alerts) appears in Module 10. *Security from AI* covers attackers using AI, such as more convincing phishing, and AI coding agents producing insecure code faster than people review it (lesson 6.3).
+**Three meanings of "AI security".** *Security of AI* (protecting AI systems from attack) is the main focus of this course. *AI for security* (defenders using AI, for example to summarise alerts) appears briefly in Module 10. *Security from AI* covers attackers using AI, such as more convincing phishing, and AI coding agents producing insecure code faster than people review it (lesson 6.3).
 
 ### 🔴 Expert view
 
@@ -121,7 +121,7 @@ Whatever a customer, document or web page says arrives in the same channel as th
 
 **Perfect security does not exist; deliberate risk does.** Every control costs money, time or ease of use: a bank requiring a branch visit for every transfer would be secure and empty. The goal is risk the bank has chosen. Hamad (the CISO) and the board set its **risk appetite**; Noura's team turns that into decisions about specific systems.
 
-**Rate impact by asset and action, not by system.** Najm Assist is not one risk. Answering fee questions is low impact; freezing a card is medium; moving money is high. US federal guidance (FIPS 199) rates impact as low, moderate or high separately for confidentiality, integrity and availability. Rate each asset and action that way, and let the highest rating drive the controls around it.
+**Rate impact by asset and action, not by system.** Najm Assist is not one risk. Answering a general question, such as branch hours, is low impact; an answer about fees, which the bank may be held to, is medium; freezing a card or opening a dispute is high. US federal guidance (FIPS 199) rates impact as low, moderate or high separately for confidentiality, integrity and availability. Rate each asset and action that way, and let the highest rating drive the controls around it.
 
 **AI makes integrity and availability as important as confidentiality.** Classic breach thinking centres on data leaving. With AI, an attacker may want to change what the model says or does (integrity: a forged commitment, a fraud model that misses certain transactions) or exhaust it (availability and cost: the OWASP LLM list calls this "unbounded consumption"). Noura insists that every AI feature's asset register has at least one integrity row and one availability row.
 
@@ -146,7 +146,7 @@ Noura and Ali produce the **Najm Assist asset register v0.1**, the first artefac
 | 1 | Customer account and transaction data shown in chat | Confidentiality | Fraud groups, curious users, insiders | High: customer harm, breach notification | Tariq (systems); Sara (privacy) |
 | 2 | Card freeze and dispute actions | Integrity | Fraud groups, pranksters | High: customer locked out, fraud missed | Tariq |
 | 3 | Answers about fees, rates and rules | Integrity | Manipulative users | Medium: wrong commitments, complaints | Rania |
-| 4 | System prompt and tool list | Integrity | Attackers mapping the system | Medium | Rania, Tariq |
+| 4 | System prompt and tool list | Integrity (it should hold no secrets) | Anyone who could change it unreviewed; attackers mapping Assist | Medium | Rania, Tariq |
 | 5 | Credentials Assist uses to call internal APIs | Confidentiality | Any attacker who gets a foothold | High: calls made in Assist's name | Tariq |
 | 6 | Conversation logs | Confidentiality | Insiders, attackers | High: personal data exposure | Sara |
 | 7 | Service availability and model spend | Availability | Bots, abusive users | Medium: outage, runaway cost | Tariq |
@@ -338,7 +338,7 @@ The fix is one condition; its absence is a one-link chain to every customer's da
 
 **Maps of attacker behaviour.** Three public frameworks give defenders a shared language.
 - The **Cyber Kill Chain** (Hutchins, Cloppert and Amin, Lockheed Martin, 2011) describes seven phases: reconnaissance, weaponisation, delivery, exploitation, installation, command and control, and actions on objectives. Its key idea: the defender needs to break only one phase. It was built around malware intrusions, so it fits web application abuse and insider misuse less neatly.
-- **MITRE ATT&CK** is a public knowledge base of adversary **tactics** (the attacker's goal at a step, such as Initial Access or Privilege Escalation) and **techniques** (how they achieve it, such as phishing or using valid accounts), built from real-world observations. At the time of writing its Enterprise matrix has 14 tactics, from Reconnaissance to Impact. Defenders use it to describe incidents and to map which techniques their detections cover (lesson 10.1).
+- **MITRE ATT&CK** is a public knowledge base of adversary **tactics** (the attacker's goal at a step, such as Initial Access or Privilege Escalation) and **techniques** (how they achieve it, such as phishing or using valid accounts), built from real-world observations. At the time of writing (2026) its Enterprise matrix has 15 tactics, from Reconnaissance to Impact, after version 19 split Defense Evasion into Stealth and Defense Impairment; check the current version. Defenders use it to describe incidents and to map which techniques their detections cover (lesson 10.1).
 - **MITRE ATLAS** applies the same idea to attacks on machine-learning systems, with case studies (lesson 8.1).
 
 **The AI chain.** Greshake and colleagues (2023) demonstrated **indirect prompt injection** against LLM-integrated applications: the attacker never talks to the assistant, but plants instructions in content it will read. The pattern for the Credit Memo Copilot, at the level a defender needs:
@@ -359,11 +359,11 @@ Simon Willison (2025) named the dangerous combination the **lethal trifecta**: a
 | Equifax, 2017 | Known Apache Struts flaw (CVE-2017-5638), unpatched | Monitoring blind spot from an expired certificate | Patch tracking against an accurate software inventory |
 | Capital One, 2019 | SSRF through a misconfigured web application firewall | Metadata credentials for an over-privileged role | A role limited to what the application needed; metadata protections such as AWS's IMDSv2, introduced later that year |
 | SolarWinds Orion, disclosed December 2020 | Compromised build system inserted code into signed updates | Customers gave the software wide network reach | Hardened, verifiable builds (lesson 6.2) |
-| xz Utils, 2024 | A contributor gained maintainer trust over years and hid a backdoor in release files (CVE-2024-3094) | Deep in the dependencies of many Linux systems | Caught before wide release by an engineer investigating an odd slowdown |
+| xz Utils, 2024 | A contributor gained maintainer trust over years and hid a backdoor in test files and release tarballs (CVE-2024-3094) | Deep in the dependencies of many Linux systems | The link that did break it: an engineer who investigated an odd slowdown, before wide release |
 
 **The defender's real advantage.** A common saying holds that defenders must be right every time and attackers only once. For a whole chain, the reverse is closer to the truth: the attacker must succeed at every link unnoticed, while the defender needs to stop or spot just one. That works only if you choose detection points in advance: new admin accounts, unusual data volumes leaving, credentials used from unexpected places, a model calling tools in an odd pattern. Design as if the first link will fail, a stance called **assume breach**.
 
-**Exploitation evidence beats severity scores.** Attackers often exploit high-profile vulnerabilities soon after disclosure. Prioritise patches by evidence of exploitation, such as the **CISA KEV catalogue** (Known Exploited Vulnerabilities) and EPSS scores, not severity alone (lesson 10.3).
+**Exploitation evidence beats severity scores.** Attackers often exploit high-profile vulnerabilities soon after disclosure. Prioritise patches by evidence of exploitation, such as the **CISA KEV catalogue** (Known Exploited Vulnerabilities) and **EPSS** (the Exploit Prediction Scoring System, which estimates how likely a vulnerability is to be exploited soon), not severity alone (lesson 10.3).
 
 ## 🧰 The toolkit
 | Control, standard or tool | What it is and does | When to reach for it |
@@ -446,7 +446,7 @@ Noura's rule: every walkthrough ends with two lines. **Cheapest link to break:**
 
 <details><summary>Answer</summary>
 
-**B.** This is an IDOR (in API terms, broken object level authorization). Only a server-side ownership check fixes it; A and C make the hole harder to find but leave it open. (🟢 The essentials.)
+**B.** This is an IDOR (in API terms, broken object level authorization). Only a server-side ownership check fixes it; A and C make the hole harder to find but leave it open, and a WAF rule (D) is easy to get around while the missing check remains. (🟢 The essentials.)
 
 </details>
 
@@ -463,7 +463,7 @@ Noura's rule: every walkthrough ends with two lines. **Cheapest link to break:**
 
 </details>
 
-**5. The Credit Memo Copilot reads client documents, can see internal credit files, and displays answers that may load links and images from any web address. Which change MOST reliably breaks the indirect prompt injection chain?**
+**5. The Credit Memo Copilot reads client documents, can see internal credit files, and displays answers that may load links and images from any web address. Which change MOST reliably stops instructions hidden in a client document from leaking credit-file data out?**
 
 - A. Add "never follow instructions in documents" to the system prompt
 - B. Stop the copilot's output from loading external links and images, removing its way to send data out
@@ -541,7 +541,7 @@ Ali is deliberately imperfect: he scans before scoping, trusts model output, rat
 
 | System | What it is | What it teaches | Main lessons |
 |---|---|---|---|
-| **Najm Mobile** and its **public API** | The retail banking app (iOS and Android) and its API: accounts, transfers, cards | Authentication, API authorisation, bots, device trust | 3.1–3.3, 4.1–4.3 |
+| **Najm Mobile** and its **public API** | The retail banking app (iOS and Android) and its API: accounts, transfers, cards | Authentication, API authorisation, bots, device trust | 3.1, 3.2, 4.1–4.3 |
 | **Najm Assist** | The LLM assistant in the app, growing into an agent with tools: freeze a card, dispute a transaction, look up fees | Prompt injection, output handling, excessive agency | 8.2, 9.1, 9.2, 9.4, 12.1 |
 | **Credit Memo Copilot** | An internal GenAI tool drafting credit memos with retrieval (RAG) over internal documents | Data boundaries, indirect prompt injection | 8.2, 9.3 |
 | **SME Portal** | A web app for small businesses: invoice uploads, multi-user companies with roles | Injection, uploads, multi-tenancy, access control | 2.1–2.3, 3.3 |
@@ -585,15 +585,15 @@ Every arrow from people outside the bank into a system is attack surface. Lesson
 | **Respond** | Can we contain an incident and recover? | Incident runbook |
 | **Govern** | Who decides, what rules apply, and is it working? | Policy, metrics |
 
-**The anatomy of a lesson.** Every lesson has the same ten sections in the same order. **⚡ In 60 seconds** holds the core ideas, the decision cue and the biggest trap; reread it when revising. **🧭 Why it matters** gives a scenario or public case. **📐 How it works** has three layers (🟢 essentials, 🟡 going deeper, 🔴 expert view). **🧰 The toolkit** names controls and standards. **🏛️ In practice at Najm Bank** is the reusable artefact. **🛠️ Exercises** end in a "*Done when:*" line. Mistakes, recap, five questions with explained answers and references close it. Beginners can read 🟢 first; practitioners can focus on 🟡 and 🔴.
+**The anatomy of a lesson.** Every lesson has the same ten sections in the same order (the practice exam, 12.3, swaps the five questions for sixty). **⚡ In 60 seconds** holds the core ideas, the decision cue and the biggest trap; reread it when revising. **🧭 Why it matters** gives a scenario or public case. **📐 How it works** has three layers (🟢 essentials, 🟡 going deeper, 🔴 expert view). **🧰 The toolkit** names controls and standards. **🏛️ In practice at Najm Bank** is the reusable artefact. **🛠️ Exercises** end in a "*Done when:*" line. Mistakes, recap, five questions with explained answers and references close it. Beginners can read 🟢 first; practitioners can focus on 🟡 and 🔴.
 
 **The companion courses.** This course deliberately does not re-teach them.
 
-| Companion course | Go there for… | Where this course points to it |
+| Companion course | Go there for… | Most useful alongside |
 |---|---|---|
 | *System Design for Vibe Coders* | How web apps, APIs, databases and queues fit together (its Module 1 is enough background) | Before Module 2; Module 7 |
 | *SaaS Building Blocks* | Standard product parts: sign-in, billing, multi-tenancy | Modules 3 and 4 |
-| *Production AI Agents* | Engineering agents with tools and memory in production | Lesson 9.2 |
+| *Production AI Agents* | Engineering agents with tools and memory in production | Lessons 6.3 and 9.2 |
 | *AI Governance: Zero to Hero* | Risk tiering, the EU AI Act, privacy law | Lesson 11.2; any decision that touches law |
 | *AI Product Management: Zero to Hero* | Which AI features to build, quality bars, evaluation | Lesson 9.4; Rania's product decisions |
 
@@ -614,7 +614,7 @@ The rule of thumb: "How could this be attacked, how do we stop it, and how would
 **Rules of engagement.** Testing without permission is an attack, whatever your intentions, and most countries, including those in the GCC and the EU, outlaw unauthorised access to computer systems. Hands-on exercises run only on:
 - your own code, on your own machine or accounts;
 - a local lab, such as **OWASP Juice Shop** or another deliberately vulnerable app, on your own machine;
-- for AI exercises, an LLM app you build, against a local model or an API account you control with a spending limit;
+- for AI exercises, an LLM app you build, against a local model or an API account you control with a spending limit, within the provider's usage policy;
 - anything else only with written authorisation stating the scope, dates, what is off limits and whom to call if something breaks.
 
 Never practise on your employer's production systems, a public website you use, or another organisation's chatbot, "just to see". Mariam's question applies to you: what is in scope, and who signed?
@@ -657,7 +657,7 @@ The second page is a **RACI for a critical vulnerability reported in Najm Mobile
 | Decide whether to switch the endpoint off meanwhile | R | I | C | C | C | A |
 | Brief executives; decide on regulator contact | C | I | C | I | C | R/A |
 
-Ali: "So I rate it, Tariq fixes it, Jassim checks whether anyone used it, and Sara decides about notification." Noura: "Yes. Your job is to make the finding impossible to misunderstand."
+Ali: "So I rate it, Tariq fixes it, Jassim checks whether anyone used it, Sara works out whether we must notify anyone, and Hamad decides on the regulator." Noura: "Yes. Your job is to make the finding impossible to misunderstand."
 
 ## 🛠️ Exercises
 - 🟢 For each of the six Najm systems, write one sentence naming the cast member you would contact first about a security problem in it, and why. *Done when:* you have six sentences naming at least four different people.
@@ -741,7 +741,7 @@ Ali: "So I rate it, Tariq fixes it, Jassim checks whether anyone used it, and Sa
 
 <details><summary>Answer</summary>
 
-**C.** "What exactly does the law require?" belongs to the DPO and the governance companion course. Waiting (B) can miss legal deadlines, and *SaaS Building Blocks* (D) does not cover regulation. (🟡 The companion courses; 🏛️ RACI.)
+**C.** "What exactly does the law require?" belongs to the DPO and the governance companion course. Waiting (B) can miss legal deadlines, and *SaaS Building Blocks* (D) treats compliance as part of building a product, not the breach-notification detail an incident needs. (🟡 The companion courses; 🏛️ RACI.)
 
 </details>
 

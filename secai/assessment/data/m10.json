@@ -1,0 +1,135 @@
+{
+ "area": "m10",
+ "questions": [
+  {
+   "id": "m10-1",
+   "level": 1,
+   "lesson": "10.1",
+   "q": {
+    "en": "At 02:10 an attacker gains access to a Najm Mobile API server; at 02:14 they wipe its local log files. Which logging practice is the reason Jassim's team can still see what happened in those four minutes?",
+    "ar": "في الساعة 02:10 يتمكّن مهاجم (attacker) من الوصول إلى خادم واجهة برمجية (API server) لتطبيق نجم للهاتف (Najm Mobile)، وفي الساعة 02:14 يمسح ملفات السجلات المحلية (local log files) عليه. أيُّ ممارسات التسجيل (logging practices) هي السبب في أن فريق جاسم (Jassim's team) ما زال قادرًا على رؤية ما حدث (see what happened) في تلك الدقائق الأربع (four minutes)؟"
+   },
+   "o": {
+    "en": [
+     "Every event carries a UTC ISO 8601 timestamp from NTP-synchronised clocks",
+     "Every event carries a request ID linking the edge, the API and the database",
+     "Events go off-host within 60 seconds to a log account app teams cannot change",
+     "Audit logs are kept for 12 months, with the latest three immediately available"
+    ],
+    "ar": [
+     "يحمل كل حدث (event) طابعًا زمنيًا (timestamp) بتوقيت UTC وبصيغة ISO 8601 من ساعات متزامنة عبر NTP (NTP-synchronised clocks)",
+     "يحمل كل حدث (event) معرّف طلب (request ID) يربط الحافة (edge) وواجهة البرمجة (API) وقاعدة البيانات (database)",
+     "تُنقل الأحداث (events) خارج الخادم (off-host) خلال 60 ثانية إلى حساب سجلات (log account) لا تستطيع فرق التطبيقات (app teams) تغييره",
+     "تُحفظ سجلات التدقيق (audit logs) 12 شهرًا، وتبقى الأشهر الثلاثة الأخيرة متاحة فورًا (immediately available)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Within seconds, events reach a separate account the application team cannot change, so the record of those minutes was already off the server before the wipe; an attacker on a server can delete its local logs. Retention is the tempting answer, but a 12-month rule protects nothing if the only copy sat on the compromised server.",
+    "ar": "تصل الأحداث (events) خلال ثوانٍ إلى حساب منفصل (separate account) لا يستطيع فريق التطبيق (application team) تغييره، فكان سجلّ تلك الدقائق (record of those minutes) قد غادر الخادم قبل المسح (wipe)؛ إذ يستطيع المهاجم على الخادم (attacker on a server) حذف سجلاته المحلية (local logs). ومدة الاحتفاظ (retention) هي الإجابة المغرية (tempting answer)، لكن قاعدة الاثني عشر شهرًا (12-month rule) لا تحمي شيئًا إذا كانت النسخة الوحيدة (only copy) على الخادم المخترَق (compromised server)."
+   }
+  },
+  {
+   "id": "m10-2",
+   "level": 2,
+   "lesson": "10.1",
+   "q": {
+    "en": "A new Najm Mobile detection, “over 20 failed sign-ins on one account in an hour”, raised 260 alerts in the last 30 days. Five were real, and analysts now close it without reading it. Under Najm Bank's Detection Catalogue rules, what should happen to it?",
+    "ar": "أطلق رصدٌ جديد (new detection) في تطبيق نجم للهاتف (Najm Mobile)، هو «أكثر من 20 محاولة دخول فاشلة على حساب واحد خلال ساعة» (over 20 failed sign-ins on one account in an hour)، 260 تنبيهًا (alerts) خلال الأيام الثلاثين الماضية (last 30 days). كانت خمسة منها حقيقية (real)، وصار المحللون (analysts) يغلقونه دون قراءته (without reading it). ماذا يجب أن يحدث له وفق قواعد كتالوج الرصد (Detection Catalogue rules) في بنك نجم (Najm Bank)؟"
+   },
+   "o": {
+    "en": [
+     "Tune it and test it on past weeks of logs, or retire it if it stays noisy",
+     "Raise its severity to critical so analysts stop closing it without reading",
+     "Keep it unchanged, since one missed account takeover costs more than noise",
+     "Move it to a SOC dashboard that analysts review at the start of each shift"
+    ],
+    "ar": [
+     "اضبطه (tune it) واختبره على سجلات الأسابيع الماضية (past weeks of logs)، أو أوقفه (retire it) إن بقي مزعجًا (noisy)",
+     "ارفع خطورته (severity) إلى حرجة (critical) كي يكفّ المحللون (analysts) عن إغلاقه دون قراءة (without reading)",
+     "أبقِه كما هو (unchanged)، فاستيلاءٌ واحد فائت على حساب (missed account takeover) أغلى من الضجيج (noise)",
+     "انقله إلى لوحة متابعة (dashboard) في مركز العمليات الأمنية (SOC) يراجعها المحللون (analysts) في بداية كل مناوبة (shift)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "The catalogue says a rule that is real less than 10% of the time over 30 days (here about 2%) is tuned or retired, and a tuned rule is tested against past weeks to measure its false positives. Raising the severity is the tempting fix, but the noise stays the same, so it only teaches analysts to ignore critical alerts too.",
+    "ar": "ينصّ الكتالوج (catalogue) على أن القاعدة (rule) التي تكون حقيقية (real) في أقل من 10% من المرات (less than 10% of the time) خلال 30 يومًا، وهنا نحو 2%، تُضبط أو تُوقف (tuned or retired)، وتُختبر القاعدة المضبوطة (tuned rule) على الأسابيع الماضية (past weeks) لقياس إيجابياتها الكاذبة (false positives). ورفع الخطورة (raising the severity) هو الحل المغري (tempting fix)، لكن الضجيج (noise) يبقى كما هو، فلا يعلّم المحللين (analysts) إلا تجاهل التنبيهات الحرجة (critical alerts) أيضًا."
+   }
+  },
+  {
+   "id": "m10-3",
+   "level": 2,
+   "lesson": "10.3",
+   "q": {
+    "en": "A penetration test confirms that changing the account number in a Najm Mobile statement-download request returns another customer's statement; the logs show no sign anyone has abused it. Tariq's dashboard ranks it P3: no EPSS score, no KEV entry, CVSS-BTE 6.5. Under Najm Bank's Vulnerability Management Standard, what is the right priority?",
+    "ar": "يؤكّد اختبار اختراق (penetration test) أن تغيير رقم الحساب (account number) في طلب تنزيل كشف الحساب (statement-download request) في تطبيق نجم للهاتف (Najm Mobile) يُعيد كشف حساب عميل آخر (another customer's statement)، ولا تُظهر السجلات (logs) أي أثر لاستغلاله (abuse). وتصنّفه لوحة متابعة طارق (Tariq's dashboard) في الأولوية P3: لا درجة EPSS (EPSS score)، ولا إدخال في KEV (KEV entry)، ودرجة CVSS-BTE تساوي 6.5. ما الأولوية الصحيحة (right priority) وفق معيار إدارة الثغرات (Vulnerability Management Standard) في بنك نجم (Najm Bank)؟"
+   },
+   "o": {
+    "en": [
+     "P3 as ranked: with no EPSS or KEV data, CVSS-BTE alone sets its place",
+     "None yet: rank it once a CVE ID and an EPSS score have been published",
+     "P0: the flaw is on an internet-facing system that holds customer data",
+     "P1: the flaw is confirmed cross-customer access in Najm's own code"
+    ],
+    "ar": [
+     "P3 كما صُنّف (as ranked): فمع غياب بيانات EPSS وKEV (EPSS or KEV data) تحدّد درجة CVSS-BTE وحدها موقعه",
+     "لا أولوية بعد (none yet): يُرتَّب بعد نشر معرّف CVE (CVE ID) ودرجة EPSS (EPSS score) له",
+     "P0: فالثغرة (flaw) في نظام مكشوف للإنترنت (internet-facing system) يحفظ بيانات العملاء (customer data)",
+     "P1: فالثغرة (flaw) وصولٌ مؤكَّد عبر العملاء (confirmed cross-customer access) في شيفرة نجم نفسها (Najm's own code)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Najm's standard puts confirmed cross-customer access in the bank's own code at P1 (mitigate in 7 days, fix in 14) whatever its CVSS; own-code flaws have no CVE, so missing EPSS and KEV data says nothing about risk. P0 is the tempting choice, but it needs KEV listing or evidence of exploitation, and the logs show none.",
+    "ar": "يضع معيار بنك نجم (Najm's standard) الوصولَ المؤكَّد عبر العملاء (confirmed cross-customer access) في شيفرة البنك نفسه (bank's own code) في الأولوية P1، أي التخفيف (mitigate) خلال 7 أيام والإصلاح (fix) خلال 14 يومًا، مهما كانت درجة CVSS؛ فثغرات الشيفرة الخاصة (own-code flaws) لا تحمل معرّف CVE (CVE ID)، ولذلك لا يدلّ غياب بيانات EPSS وKEV (EPSS and KEV data) على شيء بشأن المخاطر (risk). والأولوية P0 هي الخيار المغري (tempting choice)، لكنها تتطلب إدراجًا في KEV (KEV listing) أو دليلًا على الاستغلال (evidence of exploitation)، والسجلات (logs) لا تُظهر شيئًا من ذلك."
+   }
+  },
+  {
+   "id": "m10-4",
+   "level": 3,
+   "lesson": "10.2",
+   "q": {
+    "en": "After the Thursday-night incident, Ali deletes the poisoned fees article from the content system, resets the content account, enforces MFA and switches the fees collection back on. Next morning NA-04 fires again. There are no new edits, yet the logs show Najm Assist's answers retrieving kb-fees-2026-03, the article he deleted. What is the most likely gap?",
+    "ar": "بعد حادثة ليلة الخميس (Thursday-night incident)، يحذف علي مقالة الرسوم المسمَّمة (poisoned fees article) من نظام المحتوى (content system)، ويعيد تعيين حساب المحتوى (resets the content account)، ويفرض المصادقة متعددة العوامل (MFA)، ثم يعيد تشغيل مجموعة الرسوم (fees collection). وفي صباح اليوم التالي يُطلق الرصد NA-04 (NA-04 fires) تنبيهًا من جديد. لا توجد تعديلات جديدة (no new edits)، ومع ذلك تُظهر السجلات (logs) أن إجابات نجم أسيست (Najm Assist) تسترجع (retrieve) المقالة kb-fees-2026-03 التي حذفها. ما الخلل الأرجح (most likely gap)؟"
+   },
+   "o": {
+    "en": [
+     "The model learned the hidden instructions and now has to be retrained",
+     "The article's chunks and embeddings are still in the vector index",
+     "The attacker still controls the content account and re-edited the article",
+     "The output filter was left switched off after the containment step"
+    ],
+    "ar": [
+     "تعلّم النموذج (model) التعليمات المخفية (hidden instructions)، ويجب الآن إعادة تدريبه (retrained)",
+     "ما زالت مقاطع المقالة وتضميناتها (chunks and embeddings) موجودة في فهرس المتجهات (vector index)",
+     "ما زال المهاجم (attacker) يسيطر على حساب المحتوى (content account) وأعاد تعديل المقالة (re-edited the article)",
+     "بقي مرشّح المخرجات (output filter) معطّلًا بعد خطوة الاحتواء (containment step)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Eradicating an AI incident means removing every copy of the poisoned content, including its chunks and embeddings in the vector index, caches and generated summaries; retrievals of the deleted article's ID prove a copy survived there. Retraining is the tempting answer, but the text reaches the model through retrieval, so it must be removed from everywhere retrieval can find it.",
+    "ar": "يعني الاستئصال (eradication) في حادثة ذكاء اصطناعي (AI incident) إزالة كل نسخة من المحتوى المسمَّم (poisoned content)، بما في ذلك مقاطعه وتضميناته (chunks and embeddings) في فهرس المتجهات (vector index) وذاكرات التخزين المؤقت (caches) والملخصات المولَّدة (generated summaries)؛ واسترجاع معرّف المقالة المحذوفة (deleted article's ID) دليل على بقاء نسخة هناك. وإعادة التدريب (retraining) هي الإجابة المغرية (tempting answer)، لكن النص يصل إلى النموذج (model) عبر الاسترجاع (retrieval)، فيجب حذفه من كل مكان يصل إليه الاسترجاع."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m10-e1",
+   "lesson": "10.2",
+   "text": {
+    "en": "I have run a 60-minute tabletop exercise with timed injects and come away with a timestamped decision log and at least three gaps, each with an owner and a date",
+    "ar": "أدرتُ تمرينًا نظريًا (tabletop exercise) مدته 60 دقيقة مع مستجدّات موقوتة (timed injects)، وخرجتُ منه بسجلّ قرارات بطوابع زمنية (timestamped decision log) وثلاث فجوات (gaps) على الأقل، لكلٍّ منها مالك (owner) وتاريخ (date)"
+   }
+  },
+  {
+   "id": "m10-e2",
+   "lesson": "10.3",
+   "text": {
+    "en": "I have ranked a scanner's findings for a project I own using KEV status and EPSS as well as CVSS, grouped duplicates into single fixes, and can explain why the top three outrank the highest CVSS base score",
+    "ar": "رتّبتُ نتائج ماسح (scanner findings) لمشروع أملكه (project I own) باستخدام حالة KEV (KEV status) ودرجة EPSS (EPSS score) إلى جانب CVSS، وجمعتُ التكرارات (duplicates) في إصلاحات مفردة (single fixes)، وأستطيع أن أشرح لماذا تتقدّم الثلاث الأولى (top three) على أعلى درجة أساسية لـCVSS (highest CVSS base score)"
+   }
+  }
+ ]
+}

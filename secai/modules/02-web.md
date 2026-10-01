@@ -89,7 +89,7 @@ return render_template_string("<p>Welcome, {{ name }}</p>", name=display_name)
 # Renders "Welcome, {{7*7}}" as text, auto-escaped
 ```
 
-The `{{7*7}}` probe is the classic harmless test: if the page shows `49`, input is being evaluated. In engines like Jinja2 that can lead to code execution on the server, so SSTI is rated as severe as command injection.
+The `{{7*7}}` probe is the classic harmless test: if the page shows `49`, input is being evaluated. In engines like Jinja2 that can lead to code execution on the server, so treat SSTI as seriously as command injection.
 
 | Interpreter | Vulnerable pattern | Safe pattern |
 |---|---|---|
@@ -124,7 +124,7 @@ The f-string is safe only because every possible value comes from the code; revi
 
 ### 🔴 Expert view
 
-**Interpreters hide where you do not expect them.** Log4Shell (CVE-2021-44228, December 2021) was a logging library that evaluated lookup expressions inside logged text, so any logged header or username could make the server fetch and run remote code. The Struts flaw behind the Equifax breach evaluated an expression language (OGNL) from a request header. You inherit these bugs, so dependency inventory and patching speed are injection controls too (6.2, 10.3). Closer to home, a CSV export cell beginning with `=`, `+`, `-` or `@` may run as a formula when a finance manager opens the file (**CSV or formula injection**); neutralise such cells following OWASP's current guidance.
+**Interpreters hide where you do not expect them.** Log4Shell (CVE-2021-44228, December 2021) was a logging library that evaluated lookup expressions inside logged text, so any logged header or username could make the server fetch and run remote code. The Struts flaw behind the Equifax breach evaluated an expression language (OGNL) from a request header. You inherit these bugs, so dependency inventory and patching speed are injection controls too (6.2, 10.3). Closer to home, a CSV export cell beginning with `=`, `+`, `-`, `@`, a tab or a carriage return may run as a formula when a finance manager opens the file (**CSV or formula injection**); neutralise such cells following OWASP's current guidance.
 
 **Prompt injection has the same root cause and no equivalent fix.** An LLM receives instructions and untrusted text in one stream of tokens, exactly the mixing this lesson warns against, and there is no parameterised query for prompts. That is why Modules 8 and 9 defend with architecture rather than filters. The reverse direction is plain injection: model-written SQL, commands or templates are untrusted input (LLM05 Improper Output Handling, OWASP Top 10 for LLM Applications, 2025 version). Najm Assist's "look up fees" tool runs a fixed, parameterised query with a fee code; it never executes model-written SQL. Any future text-to-SQL feature would run on a read-only replica, against restricted views, with row limits.
 
@@ -170,7 +170,7 @@ Hands-on work runs only on your own machine, against your own code or deliberate
 
 - 🟢 Build a tiny local app (for example Python and SQLite) with invoices for two companies and a search written the vulnerable way. Show that `' OR '1'='1` returns both companies' rows, then fix it with a parameterised query and add a unit test. *Done when:* the input returns every row before the fix and none after, and the test fails on the old code and passes on the new.
 - 🟡 Run Semgrep (or your team's SAST tool) with injection rules on a repository you own, and triage each finding as a true or false positive with a one-line reason. *Done when:* every true positive is fixed or ticketed, and the rule runs in CI and fails the build on new findings.
-- 🔴 Build, locally, the SME Portal's "custom email notification" feature with logic-less, allow-listed placeholders and HTML-escaped values. Then complete one injection challenge in a local Juice Shop or WebGoat and write a defender's note: root cause, fix, the test that would have caught it, and the log signal the attempt leaves. *Done when:* `{{7*7}}` and `<b>{company_name}</b>` in a template render as plain text, unknown placeholders are rejected, and the note fits on one page.
+- 🔴 Build, locally, the SME Portal's "custom email notification" feature with logic-less, allow-listed placeholders and HTML-escaped values. Then complete one injection challenge in a local Juice Shop or WebGoat and write a defender's note: root cause, fix, the test that would have caught it, and the log signal the attempt leaves. *Done when:* `{{7*7}}` and `<b>` typed into a template render as literal text, a company name containing `<script>` appears escaped, an unknown placeholder such as `{password_hash}` is rejected, and the note fits on one page.
 
 ## ⚠️ Mistakes and traps
 - **Escaping or blocklisting by hand.** It fails against encodings and breaks names like O'Brien. Use parameters and argument lists.
@@ -373,7 +373,7 @@ Set-Cookie: __Host-session=…; Secure; HttpOnly; SameSite=Lax; Path=/
 ```
 
 - `Secure`: HTTPS only. `HttpOnly`: hidden from JavaScript, so XSS cannot copy the cookie, though injected script can still act as the user inside the page.
-- `SameSite=Lax` withholds the cookie from cross-site POSTs and embedded requests but sends it when a user follows a link to your site. `Strict` withholds it from all cross-site requests (good for admin consoles). `None` sends it everywhere and requires `Secure`.
+- `SameSite=Lax` withholds the cookie from cross-site POSTs and embedded requests but sends it when a user follows a link to your site. `Strict` withholds it from all cross-site requests (good for admin consoles). `None` allows cross-site sending (where the browser's third-party cookie rules permit) and requires `Secure`.
 - The `__Host-` prefix forces `Secure`, `Path=/` and no `Domain`, so sibling subdomains cannot overwrite the cookie.
 
 Set `SameSite` explicitly: Chrome treats a missing value as `Lax`, but browsers differ. And `SameSite` is about **sites** (scheme plus registrable domain), not origins: a compromised `marketing.najm.example` is the same site as `portal.najm.example`, one reason tokens and origin checks still matter.
@@ -435,7 +435,7 @@ Run everything on your own machine or on deliberately vulnerable training apps s
 
 - 🟢 Check the response headers of a web app you own (or a local Juice Shop) with your browser's developer tools or `curl -I`, and compare them with the Najm Bank baseline. *Done when:* you have a table marking each baseline item present, missing or weaker, with the value you would set and where (edge or application).
 - 🟡 Build a small local page that shows a "note" from a query parameter using `innerHTML`, and show that `<img src=x onerror=alert(1)>` runs. Fix it with `textContent`; then put the bug back and add a strict, per-response-nonce CSP instead. *Done when:* the alert fires in the vulnerable version but not after the code fix or with the bug plus CSP, and the CSP violation appears in the browser console.
-- 🔴 In a cookie-authenticated app you own, add three CSRF layers to one state-changing endpoint: `SameSite=Lax`, a synchronizer token, and middleware that rejects `Sec-Fetch-Site: cross-site`. Serve an "attacker" page that auto-submits a form to it from a different local host name (the app on `localhost`, the attacker page on `127.0.0.1`). *Done when:* tests show the cross-site submission rejected, a same-origin request with the token accepted and one without it rejected, and a short note explains what each layer stops alone and why changing only the port would not make a request cross-site.
+- 🔴 In a cookie-authenticated app you own, add three CSRF layers to one state-changing endpoint: `SameSite=Lax`, a synchronizer token, and middleware that rejects `Sec-Fetch-Site: cross-site`. Serve an "attacker" page that auto-submits a form to it from a different local host (the app on `localhost`, the attacker page on `127.0.0.1`, which browsers treat as a different site). *Done when:* tests show the cross-site submission rejected, a same-origin request with the token accepted and one without it rejected, and a short note explains what each layer stops alone and why changing only the port would not make a request cross-site.
 
 ## ⚠️ Mistakes and traps
 - **Blocking `<script>` and calling XSS fixed.** Event handlers, `javascript:` URLs and SVG files all run script. Encode for the context.
@@ -483,13 +483,13 @@ Run everything on your own machine or on deliberately vulnerable training apps s
 **3. An insurer's API team says CSRF is handled because "CORS only allows our own frontend origin". The API uses cookie sessions. What is the problem?**
 
 - A. There is none; CORS blocks requests from other origins
-- B. CORS controls who may read responses; a cross-site form POST is still sent with cookies, so the API still needs tokens, `SameSite` cookies and origin checks
+- B. CORS controls who may read responses; a cross-site form POST is still sent, cookies included unless `SameSite` withholds them, so the API still needs tokens, `SameSite` cookies and origin checks
 - C. CORS should be set to `*` to be safe
 - D. The API should switch to GET requests
 
 <details><summary>Answer</summary>
 
-**B.** Browsers send simple cross-site requests, with cookies, whatever the CORS policy says; CORS only decides whether the calling page may read the response. C makes things worse; D breaks the rule that state changes never use GET. (🟡 Going deeper.)
+**B.** Browsers send simple cross-site requests, such as form POSTs, whatever the CORS policy says, with cookies attached unless `SameSite` withholds them; CORS only decides whether the calling page may read the response. C makes things worse; D breaks the rule that state changes never use GET. (🟡 Going deeper.)
 
 </details>
 
@@ -550,7 +550,7 @@ Run everything on your own machine or on deliberately vulnerable training apps s
 ## 🧭 Why it matters
 The SME Portal team wants two features next sprint. **Import invoice from link** fetches a file from a URL the customer pastes; **webhooks** notify a customer-chosen URL when an invoice is approved. Tariq's developers built both with an AI coding agent, and each comes down to one line: `requests.get(url)`. Noura asks Ali to threat-model the import feature with STRIDE before launch (1.1). His first question, "Where can this server reach that the customer cannot?", turns out to be the whole lesson.
 
-The best-known public example is the 2019 Capital One breach. As publicly reported, an attacker made a misconfigured web application firewall send requests to the cloud instance metadata service, which returned temporary credentials for an over-privileged role; those were used to copy data from storage buckets. SSRF (CWE-918) became its own OWASP Top 10 category in 2021 (A10 in that edition) and is API7 in the OWASP API Security Top 10 (2023).
+The best-known public example is the 2019 Capital One breach. As publicly reported, an attacker made a misconfigured web application firewall send requests to the cloud instance metadata service, which returned temporary credentials for an over-privileged role; those were used to copy data from storage buckets. SSRF (CWE-918) became its own OWASP Top 10 category in 2021 (A10 in that edition; the 2025 edition folds it into Broken Access Control, so check the current list) and is API7 in the OWASP API Security Top 10 (2023).
 
 Uploads, paths and deserialisation sit right beside it: customers upload invoices, staff download them, and Dana's team has started loading pre-trained models from public hubs.
 
@@ -582,12 +582,13 @@ ALLOWED = {"api.partner-accounting.example", "files.partner-drive.example"}
 
 def fetch_invoice(url: str) -> bytes:
     u = urlparse(url)
-    if u.scheme != "https" or u.hostname not in ALLOWED:
+    if u.scheme != "https" or u.hostname not in ALLOWED or u.port not in (None, 443):
         raise Rejected("destination not allowed")
     addrs = {ai[4][0] for ai in socket.getaddrinfo(u.hostname, 443)}
     if not all(ipaddress.ip_address(a).is_global for a in addrs):
         raise Rejected("internal address")
-    # egress_get: HTTP client routed through the egress proxy, which re-checks
+    # egress_get: client routed through the egress proxy, which re-resolves and
+    # re-checks at connect time, so a DNS answer that changes later is still caught
     return egress_get(url, allow_redirects=False, timeout=5, max_bytes=10_000_000)
 ```
 
@@ -627,7 +628,7 @@ if not target.is_relative_to(base):            # Python 3.9+
 
 The ID-based fix also enforces access control (3.3): users reach only their own company's invoices, whatever they type.
 
-**Deserialisation: when loading data runs code.** **Serialisation** turns an object into bytes; **deserialisation** rebuilds it. JSON can only produce numbers, strings, lists and maps. Native formats (Python `pickle`, Java serialisation, PHP `unserialize`, .NET `BinaryFormatter`, object-building YAML loaders) can say *which classes to build*, and building them can trigger code. Attackers chain existing classes with dangerous loading behaviour (**gadget chains**), so loading attacker bytes can mean running attacker code (CWE-502). Python's own documentation warns: only unpickle data you trust.
+**Deserialisation: when loading data runs code.** **Serialisation** turns an object into bytes; **deserialisation** rebuilds it. JSON can only produce plain data: numbers, strings, booleans, null, lists and maps. Native formats (Python `pickle`, Java serialisation, PHP `unserialize`, .NET `BinaryFormatter`, object-building YAML loaders) can say *which classes to build*, and building them can trigger code. Attackers chain existing classes with dangerous loading behaviour (**gadget chains**), so loading attacker bytes can mean running attacker code (CWE-502). Python's own documentation warns: only unpickle data you trust.
 
 ```python
 # Vulnerable: user preferences kept in a cookie as a pickle
@@ -636,14 +637,14 @@ prefs = pickle.loads(base64.b64decode(request.cookies["prefs"]))
 # Fixed: a data-only format, validated against a schema (e.g. Pydantic)
 prefs = PrefsSchema.model_validate_json(request.cookies["prefs"])
 
-# YAML: replace yaml.load(...) with an unsafe loader by yaml.safe_load(data)
+# YAML: use yaml.safe_load(data), never yaml.load with an object-building Loader
 ```
 
 ### 🟡 Going deeper
 
 **Why string checks fail for SSRF.** Know the bypass *classes*: alternative IP notations (decimal, octal, hexadecimal, IPv6, IPv4-mapped IPv6); domain names that resolve to internal addresses; **DNS rebinding** (a public address when you check, an internal one when you connect); open redirects on allowed hosts; URL parser disagreements between validator and client; and schemes such as `file://`. So parse with the same library that fetches; resolve, check *every* address and connect to the one you checked (or let the proxy enforce it); disable redirects or re-validate each hop; allow only `https`; and enforce it all again at the network layer. Plan for **blind SSRF** too: a request can trigger internal actions even if the response is never shown.
 
-**Harden the metadata service and the role.** On AWS, **IMDSv2** requires a session token obtained with a `PUT` request and sent in a header, and a hop limit keeps containers from reaching it through the host. A simple SSRF that can only send plain `GET` requests cannot get credentials, so require it everywhere. Google Cloud and Azure metadata endpoints also require headers (`Metadata-Flavor: Google`, `Metadata: true`). On Kubernetes, block pods from the node metadata address with network policies (7.2). Keep every role small, so stolen credentials are worth little.
+**Harden the metadata service and the role.** On AWS, **IMDSv2** requires a session token obtained with a `PUT` request and sent in a header, and a response hop limit of 1 stops containers that sit an extra network hop away from getting a token. A simple SSRF that can only send plain `GET` requests cannot get credentials, so require it everywhere. Google Cloud and Azure metadata endpoints also require headers (`Metadata-Flavor: Google`, `Metadata: true`). On Kubernetes, block pods from the node metadata address with network policies (7.2). Keep every role small, so stolen credentials are worth little.
 
 **Webhooks are SSRF by design.** The customer picks the URL, so no allow-list is possible. Send from an isolated worker through an egress proxy that blocks private, loopback and link-local addresses, with HTTPS only, signed payloads, short timeouts, and the response never shown to the customer.
 
@@ -666,9 +667,9 @@ Run these stages in short-lived, sandboxed workers with no network access and no
 
 ### 🔴 Expert view
 
-**Model files are deserialisation.** Many ML formats are built on `pickle`, including older PyTorch checkpoints and `joblib` files, so loading a model from a public hub can run code on Dana's workstation or the training cluster. Recent PyTorch releases default `torch.load` to a restricted weights-only mode (check your version), and **safetensors** stores tensors only, with no code. Najm Bank's rule: models come from an internal, vetted registry, safetensors is the default, and pickle-based files load only in an isolated sandbox after scanning and review. OWASP covers this under LLM03 Supply Chain (Top 10 for LLM Applications, 2025 version); see also 6.2 and 8.3.
+**Model files are deserialisation.** Many ML formats are built on `pickle`, including PyTorch's standard `torch.save` checkpoints (a zip archive holding a pickle) and `joblib` files, so loading a model from a public hub can run code on Dana's workstation or the training cluster. Recent PyTorch releases default `torch.load` to a restricted weights-only mode (check your version), and **safetensors** stores tensors only, with no code. Najm Bank's rule: models come from an internal, vetted registry, safetensors is the default, and pickle-based files load only in an isolated sandbox after scanning and review. The OWASP Top 10 for LLM Applications (2025 version) covers risky third-party models under LLM03 Supply Chain, and LLM04 Data and Model Poisoning names malicious pickling explicitly; see also 6.2 and 8.3.
 
-**AI agents with fetch tools are SSRF engines.** If Najm Assist gains a "fetch this page" tool, or a coding agent uses an MCP server that fetches URLs, prompt injection (8.2) can steer it to internal addresses. The tool's fetcher sits behind the same egress proxy and allow-list as any server-side fetch, and the agent runtime gets no metadata access or spare credentials (9.2). An unrestricted fetch tool also supplies one leg of what Simon Willison (2025) calls the "lethal trifecta": private data, untrusted content and a way to send data out.
+**AI agents with fetch tools are SSRF engines.** If Najm Assist gains a "fetch this page" tool, or a coding agent uses an MCP server that fetches URLs, prompt injection (8.2) can steer it to internal addresses. The tool's fetcher sits behind the same egress proxy and allow-list as any server-side fetch, and the agent runtime gets no metadata access or spare credentials (9.2). An unrestricted fetch tool also supplies two legs at once of what Simon Willison (2025) calls the "lethal trifecta" (private data, untrusted content and a way to send data out): every page it fetches is untrusted content, and every URL it requests can carry data out.
 
 **Architecture beats validation.** Validation code will one day have a bug, so isolate dangerous capabilities: a **fetcher service**, the only component making outbound requests for customers, in its own segment behind the egress proxy; a **file-processing service** with no network access, running non-root in a sandboxed container with access to two buckets only; and a **file domain** separate from the portal's. Even if Ali's IP check is bypassed, the fetcher has no route to the metadata service and nothing to steal: defence in depth (1.2) made concrete.
 
@@ -704,7 +705,7 @@ Ali's threat model produces the **Server-Side Feature Review: SME Portal import 
 Run these only on your own machine, against your own code or a local lab.
 
 - 🟢 Search a codebase you own for this lesson's risky patterns: user input reaching `requests.get` or `fetch`; `os.path.join` or `open` with request data; `pickle.loads`, `yaml.load` or `torch.load`; upload handlers that keep the user's file name. *Done when:* you have a table of hits with file, line, whether the input is attacker-controllable, and the fix pattern.
-- 🟡 Build the safe fetcher locally, with a stand-in "internal" service on `127.0.0.1` and an "allowed" service on a host name you allow-list (via your hosts file). Write tests showing it refuses a non-allow-listed host, `http://`, `127.0.0.1` and its decimal form `2130706433`, an allow-listed name that resolves to `127.0.0.1`, and a redirect to the internal service. *Done when:* every hostile case is refused with a logged reason, the allowed fetch works, and you can say which check stopped each case.
+- 🟡 Build the safe fetcher locally, with a stand-in "internal" service on `127.0.0.1` and an "allowed" HTTPS service (a local test certificate is fine) on a host name you allow-list and map in your hosts file to a second loopback address such as `127.0.0.2`; in the lab only, exempt that one address from the internal-address check through test configuration. Write tests showing it refuses a non-allow-listed host, `http://`, `127.0.0.1` and its decimal form `2130706433`, a second allow-listed name mapped to `127.0.0.1`, and a redirect to the internal service. *Done when:* every hostile case is refused with a logged reason, the allowed fetch works, and you can say which check stopped each case.
 - 🔴 Design the SME Portal upload pipeline (diagram, stage controls, component permissions, detection rules), do a STRIDE pass on it (1.1), and implement the validation stage locally. *Done when:* every risk in the 🟢 upload table maps to a control with an owner, your STRIDE table has a threat per category, and local tests reject a renamed HTML file, an SVG and an archive entry named `../evil.txt`.
 
 ## ⚠️ Mistakes and traps
@@ -796,7 +797,7 @@ Run these only on your own machine, against your own code or a local lab.
 - OWASP Cheat Sheet Series, Deserialization — https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html
 - OWASP Cheat Sheet Series, XML External Entity Prevention — https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html
 - OWASP, Path Traversal — https://owasp.org/www-community/attacks/Path_Traversal
-- OWASP API Security Top 10 (2023) — https://owasp.org/www-project-api-security/
+- OWASP API Security Top 10 (2023) — https://owasp.org/API-Security/
 - MITRE CWE-918, server-side request forgery — https://cwe.mitre.org/data/definitions/918.html
 - MITRE CWE-434, unrestricted upload of file with dangerous type — https://cwe.mitre.org/data/definitions/434.html
 - MITRE CWE-22, path traversal — https://cwe.mitre.org/data/definitions/22.html

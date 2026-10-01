@@ -1,0 +1,135 @@
+{
+ "area": "m4",
+ "questions": [
+  {
+   "id": "m4-1",
+   "level": 1,
+   "lesson": "4.1",
+   "q": {
+    "en": "Najm's platform team says the new API gateway will \"handle API security\", so the services behind it can drop their own checks. Which check must stay in the services, because the gateway cannot make it?",
+    "ar": "يقول فريق المنصة (platform team) في بنك نجم (Najm Bank) إن بوابة واجهات البرمجة الجديدة (new API gateway) ستتولى «أمن الواجهات» (handle API security)، فتستطيع الخدمات التي خلفها (services behind it) التخلّي عن فحوصها الخاصة (drop their own checks). فأيّ فحصٍ يجب أن يبقى في الخدمات (must stay in the services)، لأن البوابة لا تستطيع إجراءه (the gateway cannot make it)؟"
+   },
+   "o": {
+    "en": [
+     "Validating each token's signature, issuer, audience and expiry",
+     "Limiting how many requests each token may send per minute",
+     "Confirming that the requested account belongs to the caller",
+     "Checking that each request body matches the endpoint's schema"
+    ],
+    "ar": [
+     "التحقق من توقيع كل رمزٍ مميز (token) ومُصدِره وجمهوره وتاريخ انتهائه (signature, issuer, audience and expiry)",
+     "تحديد عدد الطلبات (requests) التي يجوز لكل رمزٍ مميز (token) إرسالها في الدقيقة (per minute)",
+     "التأكد من أن الحساب المطلوب (requested account) يعود إلى المتصل نفسه (belongs to the caller)",
+     "فحص مطابقة جسم كل طلب (request body) لمخطط نقطة النهاية (endpoint's schema)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Only the service knows which customer owns each account, so object ownership (BOLA) must be checked there; the gateway handles who and how much. Schema checks are tempting, but the gateway can enforce a published schema, while ownership needs the service's data.",
+    "ar": "لا تعرف إلا الخدمةُ (Only the service) أيَّ عميلٍ يملك كلَّ حساب (which customer owns each account)، ولذلك يجب فحص ملكية الكائن (object ownership)، أي BOLA، هناك؛ أما البوابة (gateway) فتتولى «مَن وكم» (who and how much). وفحص المخطط (Schema checks) خيارٌ مغرٍ، لكن البوابة تستطيع فرض المخطط المنشور (enforce a published schema)، بينما تحتاج الملكية إلى بيانات الخدمة (needs the service's data)."
+   }
+  },
+  {
+   "id": "m4-2",
+   "level": 2,
+   "lesson": "4.2",
+   "q": {
+    "en": "In a local lab copy of a Najm transfer flow (initiate, verify OTP, confirm), Ali finds that calling confirm straight after initiate, skipping OTP verification, executes the transfer. The app always calls the steps in order. What is the best fix?",
+    "ar": "في نسخةٍ مختبرية محلية (local lab copy) من تدفق تحويلٍ في بنك نجم (Najm transfer flow)، أي البدء ثم التحقق من كلمة المرور لمرةٍ واحدة ثم التأكيد (initiate, verify OTP, confirm)، يجد علي أن استدعاء خطوة التأكيد مباشرةً بعد البدء (calling confirm straight after initiate)، مع تخطّي التحقق من كلمة المرور لمرةٍ واحدة (skipping OTP verification)، ينفّذ التحويل (executes the transfer). والتطبيق يستدعي الخطوات دائمًا بالترتيب (always calls the steps in order). فما أفضل إصلاح (best fix)؟"
+   },
+   "o": {
+    "en": [
+     "Keep transfer state on the server; confirm only if verified, unexpired, same customer and device",
+     "Change the app so that it cannot call confirm until the OTP screen has reported a successful check",
+     "Move the confirm step to a new, undocumented path so that scripts outside the app cannot find it",
+     "Add a per-customer rate limit on confirm so that skipping the OTP step cannot be done at scale"
+    ],
+    "ar": [
+     "حفظ حالة التحويل على الخادم (state on the server)، والتأكيد فقط إن تمّ التحقق ولم تنتهِ الصلاحية (verified, unexpired) للعميل والجهاز نفسيهما (same customer and device)",
+     "تعديل التطبيق (Change the app) بحيث لا يستطيع استدعاء التأكيد (call confirm) حتى تُبلغ شاشة كلمة المرور لمرةٍ واحدة (OTP screen) بنجاح الفحص (has reported a successful check)",
+     "نقل خطوة التأكيد (confirm step) إلى مسارٍ جديد غير موثّق (new, undocumented path) حتى لا تعثر عليها النصوص البرمجية من خارج التطبيق (scripts outside the app cannot find it)",
+     "إضافة حدٍّ للمعدّل لكل عميل (per-customer rate limit) على التأكيد (confirm)، حتى لا يمكن تخطّي خطوة كلمة المرور لمرةٍ واحدة (skipping the OTP step) على نطاقٍ واسع (at scale)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "This is a step-skipping logic flaw: a server-side state machine allows only legal transitions, whatever order a client calls in. Fixing the app is tempting, but a script can call the API without the app, so only the server can enforce the order.",
+    "ar": "هذه ثغرة منطق أعمال من نوع تخطّي الخطوات (step-skipping logic flaw): فآلة الحالات من جهة الخادم (server-side state machine) لا تسمح إلا بالانتقالات المشروعة (legal transitions)، أيًّا كان ترتيب استدعاءات العميل (whatever order a client calls in). وإصلاح التطبيق مغرٍ (Fixing the app is tempting)، لكن النص البرمجي يستطيع استدعاء الواجهة من دون التطبيق (call the API without the app)، فلا يفرض الترتيب إلا الخادم (only the server can enforce the order)."
+   }
+  },
+  {
+   "id": "m4-3",
+   "level": 2,
+   "lesson": "4.3",
+   "q": {
+    "en": "The Najm Mobile team adds a root-detection library. The app now sends \"rooted: false\" with each transfer, and the payments API allows high-value transfers only when that field is false. What should Ali recommend?",
+    "ar": "يضيف فريق تطبيق نجم للهاتف (Najm Mobile team) مكتبةً لكشف صلاحيات الجذر (root-detection library). وصار التطبيق يرسل الحقل \"rooted: false\" مع كل تحويل (with each transfer)، ولا تسمح واجهة المدفوعات (payments API) بالتحويلات عالية القيمة (high-value transfers) إلا حين تكون قيمة هذا الحقل false. فبماذا ينبغي أن يوصي علي (What should Ali recommend)؟"
+   },
+   "o": {
+    "en": [
+     "Sign the field with a key built into the app, so the server knows the real app produced it",
+     "Obfuscate the root-detection code, so attackers cannot easily find it and patch it out of the app",
+     "Pin the API certificate, so that nobody can change the field on its way to the server",
+     "Treat the field as a claim and use server-verified, nonce-bound attestation as a risk signal"
+    ],
+    "ar": [
+     "توقيع الحقل بمفتاحٍ مضمَّن في التطبيق (key built into the app)، ليعرف الخادم أن التطبيق الحقيقي هو من أنتجه (the real app produced it)",
+     "تعمية شيفرة كشف صلاحيات الجذر (Obfuscate the root-detection code)، حتى لا يجدها المهاجمون ويزيلوها من التطبيق بسهولة (easily find it and patch it out)",
+     "تثبيت شهادة الواجهة (Pin the API certificate)، حتى لا يستطيع أحدٌ تغيير الحقل في طريقه إلى الخادم (on its way to the server)",
+     "اعتبار الحقل ادعاءً (a claim)، واستخدام إثباتٍ بقيمةٍ عابرة يتحقق منه الخادم (server-verified, nonce-bound attestation) إشارةً للمخاطر (risk signal)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Values the app sends are claims, not facts: a modified app or a script can forge them, while an attestation verdict bound to a server nonce and verified on the server is a strong signal for step-up, not a guarantee. Signing with a key in the app is tempting, but anything shipped in the app is public, so an attacker can sign too.",
+    "ar": "القيم التي يرسلها التطبيق (Values the app sends) ادعاءاتٌ لا حقائق (claims, not facts): يستطيع تطبيقٌ معدَّل أو نصٌّ برمجي تزويرها (a modified app or a script can forge them)، أما حكم الإثبات المرتبط بقيمةٍ عابرة من الخادم (attestation verdict bound to a server nonce)، الذي يُتحقَّق منه على الخادم (verified on the server)، فإشارةٌ قوية للمصادقة المعزَّزة (strong signal for step-up)، لا ضمانٌ (not a guarantee). والتوقيع بمفتاحٍ في التطبيق مغرٍ (Signing with a key in the app is tempting)، لكن كل ما يُشحن في التطبيق علني (anything shipped in the app is public)، فيستطيع المهاجم التوقيع أيضًا (an attacker can sign too)."
+   }
+  },
+  {
+   "id": "m4-4",
+   "level": 3,
+   "lesson": "4.2",
+   "q": {
+    "en": "A new Najm sign-up bonus, listed in the sensitive business flow register, went live last week with only a per-IP limit. At 02:10 an alert fires: payouts have passed the monthly budget, and most new claimants share a handful of devices. Ali is on call. What should he do first?",
+    "ar": "انطلقت الأسبوع الماضي مكافأة تسجيلٍ جديدة في بنك نجم (new Najm sign-up bonus)، وهي مُدرَجة في سجلّ تدفقات الأعمال الحساسة (sensitive business flow register)، ولا يحميها إلا حدٌّ لكل عنوان بروتوكول إنترنت (only a per-IP limit). وفي الساعة 02:10 يُطلَق تنبيه (an alert fires): فقد تجاوزت المدفوعات الميزانية الشهرية (payouts have passed the monthly budget)، ومعظم المطالبين الجدد بالمكافأة يتشاركون حفنةً من الأجهزة (share a handful of devices). وعلي في المناوبة (on call). فما الذي ينبغي أن يفعله أولًا (What should he do first)؟"
+   },
+   "o": {
+    "en": [
+     "Start a device-clustering rule in shadow mode and measure its false positives before acting",
+     "Use the flow's kill switch to pause or cap payouts now, then investigate the cause",
+     "Block the IP addresses the new accounts came from, and leave the promotion running as it is",
+     "Prepare an emergency release adding a CAPTCHA to sign-up, ready to ship in the morning"
+    ],
+    "ar": [
+     "تشغيل قاعدةٍ لتجميع الأجهزة (device-clustering rule) في وضع الظل (shadow mode)، وقياس إيجابياتها الكاذبة (false positives) قبل التصرف (before acting)",
+     "استخدام مفتاح الإيقاف الخاص بالتدفق (the flow's kill switch) لإيقاف الصرف أو تقييده الآن (pause or cap payouts now)، ثم التحقيق في السبب (investigate the cause)",
+     "حظر عناوين الإنترنت التي جاءت منها الحسابات الجديدة (Block the IP addresses)، مع ترك العرض الترويجي يعمل كما هو (leave the promotion running)",
+     "إعداد إصدارٍ طارئ (emergency release) يضيف اختبار CAPTCHA إلى التسجيل (sign-up)، جاهزًا للشحن صباحًا (ready to ship in the morning)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "With losses under way, the first move is the kill switch: the flow's feature flag pauses or caps payouts in a minute without a release, and the investigation follows. Shadow mode is tempting, but it is for measuring a new rule before enforcing it, not for stopping a live drain.",
+    "ar": "حين تكون الخسائر جارية (With losses under way)، فالخطوة الأولى هي مفتاح الإيقاف (kill switch): فعلامة الميزة الخاصة بالتدفق (the flow's feature flag) توقف الصرف أو تقيّده خلال دقيقة (pauses or caps payouts in a minute) من دون إصدارٍ جديد (without a release)، ثم يأتي التحقيق (the investigation follows). أما وضع الظل (shadow mode) فمغرٍ، لكنه لقياس قاعدةٍ جديدة قبل إنفاذها (measuring a new rule before enforcing it)، لا لإيقاف استنزافٍ جارٍ (not for stopping a live drain)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m4-e1",
+   "lesson": "4.1",
+   "text": {
+    "en": "I have reproduced an object-level authorisation flaw in a small API of my own, fixed it on the server, and added an automated two-user test that fails on the vulnerable version and passes on the fixed one",
+    "ar": "أعدتُ إنتاج ثغرة تفويضٍ على مستوى الكائن (object-level authorisation flaw) في واجهة برمجةٍ صغيرة خاصة بي (small API of my own)، وأصلحتها على الخادم (fixed it on the server)، وأضفتُ اختبار مستخدمَين آليًا (an automated two-user test) يفشل على النسخة الضعيفة (fails on the vulnerable version) وينجح على النسخة المُصلَحة (passes on the fixed one)"
+   }
+  },
+  {
+   "id": "m4-e2",
+   "lesson": "4.3",
+   "text": {
+    "en": "I have unpacked a release build of an app I own, searched its strings, and given every secret-looking string a decision: rotate and move to the server, keep as public-by-design and restricted, or remove",
+    "ar": "فككتُ حزمة نسخة إصدارٍ (release build) من تطبيقٍ أملكه (an app I own)، وبحثتُ في سلاسله النصية (searched its strings)، وأعطيتُ كل سلسلةٍ تشبه السرّ (every secret-looking string) قرارًا (a decision): التدوير والنقل إلى الخادم (rotate and move to the server)، أو الإبقاء عليها بوصفها علنيةً بالتصميم ومقيَّدة (keep as public-by-design and restricted)، أو الإزالة (remove)"
+   }
+  }
+ ]
+}
