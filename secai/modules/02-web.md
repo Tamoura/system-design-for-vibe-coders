@@ -683,7 +683,7 @@ Run these stages in short-lived, sandboxed workers with no network access and no
 | **Content disarm and reconstruction** (CDR) | Rebuilds documents and images from their safe parts, dropping active content | High-risk files opened by staff: invoices, statements, CVs |
 | **Canonical path checks** | Resolve the real path, then confirm it stays inside the base folder | File access with a user-influenced name; archive extraction |
 | **JSON Schema validation** | A data-only input format with strict type and shape checks | Replacing native deserialisation; any structured input |
-| **safetensors** (Hugging Face) | Model weight format that stores tensors only, with no executable code | Storing, sharing and loading ML models |
+| **Safetensors** (Hugging Face) | Model weight format that stores tensors only, with no executable code | Storing, sharing and loading ML models |
 
 ## 🏛️ In practice at Najm Bank
 Ali's threat model produces the **Server-Side Feature Review: SME Portal import from link, webhooks and uploads**. Noura makes it the standard gate for every such feature.

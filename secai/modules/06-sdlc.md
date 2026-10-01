@@ -676,7 +676,7 @@ Three Najm gates deserve a closer look:
 | **Secure-coding rules file** | Project instructions giving the assistant your security rules | Every repository using AI assistants; reviewed like code |
 | **Agent sandbox** | Disposable container with no host credentials and an egress allowlist | Any agent that runs commands or installs packages |
 | **Least-privilege tools** | Agent tokens and tools scoped to the task: own branch, no merge, no secrets | Configuring any coding agent or CI bot |
-| **Lethal trifecta** (Simon Willison, 2025) | Private data plus untrusted content plus external communication means exfiltration is possible | Reviewing any agent setup: remove at least one leg |
+| **Lethal trifecta check** (Simon Willison, 2025) | Private data plus untrusted content plus external communication means exfiltration is possible | Reviewing any agent setup: remove at least one leg |
 | **New-dependency gate** | CI check blocking unreviewed new packages, backed by a proxy that refuses non-existent ones | Stopping slopsquatting |
 | **Protected security tests** | Security tests owned through CODEOWNERS, so changes need a champion | Stopping tests being edited until they pass |
 | **Semgrep** | Custom rules for AI tells: disabled TLS checks, wildcard CORS, new suppressions | Every pull request, human or AI |

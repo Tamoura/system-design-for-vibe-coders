@@ -143,7 +143,7 @@ The main finding is typical: output handling covered links but not phone numbers
 | **OWASP Top 10 for LLM Applications** (2025) | Checklist of LLM-specific risks | Mapping AI threats; scoping the red team |
 | **MITRE ATLAS** | Knowledge base of adversary techniques against AI systems | Describing AI attack paths to the SOC |
 | **Least-privilege tools** | Tools that bind identity from the session, check ownership and confirm writes | Every agent tool, before it ships |
-| **Lethal trifecta** (Simon Willison, 2025) | Private data plus untrusted content plus external communication means exfiltration risk | Reviewing any new agent tool or data source |
+| **Lethal trifecta check** (Simon Willison, 2025) | Private data plus untrusted content plus external communication means exfiltration risk | Reviewing any new agent tool or data source |
 | **Tabletop exercise** (NIST SP 800-84) | Discussion-based incident drill with timed injects | Before launch, then yearly and after major change |
 
 ## 🏛️ In practice at Najm Bank
