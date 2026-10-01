@@ -35,26 +35,26 @@
    "lesson": "9.2",
    "q": {
     "en": "Rania wants a transfer_to_beneficiary tool in Najm Assist's first release, limited to saved beneficiaries and using the same app-rendered confirmation card as freeze_card. Tariq notes that the tool would take the customer from the session and check ownership in code. What should Noura decide?",
-    "ar": "تريد رانيا إضافة أداة transfer_to_beneficiary إلى الإصدار الأول (first release) من نجم أسيست (Najm Assist)، مقصورةً على المستفيدين المحفوظين (limited to saved beneficiaries)، ومستخدمةً بطاقة التأكيد نفسها التي يعرضها التطبيق (app-rendered confirmation card) لأداة freeze_card. ويشير طارق إلى أن الأداة ستأخذ العميل من الجلسة (customer from the session) وتتحقق من الملكية في الشيفرة (check ownership in code). ماذا ينبغي أن تقرر نورة (What should Noura decide)؟"
+    "ar": "تريد رانيا إضافة أداة transfer_to_beneficiary إلى الإصدار الأول (first release) من نجم أسيست (Najm Assist)، مقصورةً على المستفيدين المحفوظين (saved beneficiaries)، ومستخدمةً بطاقة التأكيد نفسها التي يعرضها التطبيق (app-rendered confirmation card) لأداة freeze_card. ويشير طارق إلى أن الأداة ستأخذ العميل من الجلسة (customer from the session) وتتحقق من الملكية في الشيفرة (check ownership in code). ماذا ينبغي أن تقرر نورة؟"
    },
    "o": {
     "en": [
-     "Approve it, since a confirmation rendered by the app from validated parameters suffices for any action",
-     "Approve it, provided a guardrail classifier screens each transfer request for injected instructions",
-     "Approve it under a dedicated service account that can reach only the core banking transfer endpoints",
-     "Keep it out of v1: money movement needs step-up authentication and limits, and a track record first"
+     "Approve it for v1, since an app-rendered confirmation from validated parameters suffices for any action",
+     "Approve it for v1, provided step-up authentication and per-day transfer limits are added to it",
+     "Reject it permanently, as with call_core_api, since no agent should ever be allowed to move money",
+     "Keep it out of v1, and revisit once the agent's controls have a track record and a red-team pass"
     ],
     "ar": [
-     "توافق عليها (approve it)، لأن التأكيد الذي يعرضه التطبيق من المعاملات المُتحقَّق منها (confirmation rendered by the app from validated parameters) يكفي لأي إجراء (any action)",
-     "توافق عليها (approve it)، بشرط أن يفحص مصنّف ضوابط وقائية (guardrail classifier) كل طلب تحويل (transfer request) بحثًا عن تعليمات محقونة (injected instructions)",
-     "توافق عليها (approve it) تحت حساب خدمة مخصّص (dedicated service account) لا يصل إلا إلى نقاط نهاية التحويل (transfer endpoints) في النظام المصرفي الأساسي (core banking)",
-     "تُبقيها خارج الإصدار الأول (v1): تحويل الأموال (money movement) يتطلب المصادقة التصعيدية (step-up authentication) وحدودًا (limits)، وسجلًّا مُثبتًا أولًا (track record first)"
+     "توافق عليها للإصدار الأول (approve it for v1)، لأن التأكيد الذي يعرضه التطبيق (app-rendered confirmation) من المعاملات المُتحقَّق منها (validated parameters) يكفي لأي إجراء (any action)",
+     "توافق عليها للإصدار الأول (approve it for v1)، بشرط أن تُضاف إليها المصادقة التصعيدية (step-up authentication) وحدود يومية للتحويل (per-day transfer limits)",
+     "ترفضها رفضًا دائمًا (reject it permanently) كما رُفضت call_core_api، لأنه لا ينبغي أبدًا السماح لأي وكيل (agent) بتحويل الأموال (move money)",
+     "تُبقيها خارج الإصدار الأول (keep it out of v1)، وتعيد النظر فيها (revisit) حين يصبح لضوابط الوكيل سجلّ مُثبت (track record) وتجتاز اختبار الفريق الأحمر (red-team pass)"
     ]
    },
    "a": 3,
    "why": {
-    "en": "Najm tiers actions by consequence: irreversible or money-moving actions need step-up authentication and limits, and the tool register keeps transfers away from the agent until six incident-free months and a red-team pass. An app-rendered confirmation is right for reversible changes such as a card freeze, but for money movement step-up authentication is what stops a hijacked conversation from completing the transfer.",
-    "ar": "يصنّف بنك نجم (Najm Bank) الإجراءات حسب عواقبها (tiers actions by consequence): فالإجراءات غير القابلة للعكس أو الناقلة للأموال (irreversible or money-moving actions) تتطلب المصادقة التصعيدية (step-up authentication) وحدودًا (limits)، ويُبقي سجل الأدوات (tool register) التحويلات بعيدًا عن الوكيل (agent) حتى مرور ستة أشهر بلا حوادث (six incident-free months) واجتياز اختبار الفريق الأحمر (red-team pass). والتأكيد الذي يعرضه التطبيق (app-rendered confirmation) مناسب للتغييرات القابلة للعكس (reversible changes) مثل تجميد البطاقة (card freeze)، أما في تحويل الأموال (money movement) فالمصادقة التصعيدية هي ما يمنع محادثة مُختطَفة (hijacked conversation) من إتمام التحويل."
+    "en": "Najm's top tier, money-moving actions, needs step-up authentication and limits and still stays out of the agent's first release until the controls have a track record, so the tool register rejects transfers for v1 and revisits them after six incident-free months and a red-team pass. Approving with step-up and limits is the tempting answer, but those are the minimum for later, not a licence for v1; permanent rejection is kept for call_core_api.",
+    "ar": "تقع الإجراءات الناقلة للأموال (money-moving actions) في أعلى فئات بنك نجم (Najm's top tier): فهي تتطلب المصادقة التصعيدية (step-up authentication) وحدودًا (limits)، وتبقى مع ذلك خارج الإصدار الأول للوكيل (agent's first release) حتى يصبح للضوابط سجلّ مُثبت (track record)، لذا يرفض سجل الأدوات (tool register) التحويلات في الإصدار الأول ويعيد النظر فيها بعد ستة أشهر بلا حوادث (six incident-free months) واجتياز اختبار الفريق الأحمر (red-team pass). والموافقة مع المصادقة التصعيدية والحدود هي الإجابة المغرية (tempting answer)، لكنها الحد الأدنى لاحقًا (minimum for later) لا إذنٌ للإصدار الأول (licence for v1)؛ أما الرفض الدائم (permanent rejection) فمحجوز لأداة call_core_api."
    }
   },
   {
@@ -62,8 +62,8 @@
    "level": 2,
    "lesson": "9.3",
    "q": {
-    "en": "Last week a corporate client was moved to special assets, and the source system now restricts its credit file to that team. Yet relationship managers on the client's old portfolio still get passages from the file through the Credit Memo Copilot. What is the most likely cause and fix?",
-    "ar": "نُقل عميل من الشركات (corporate client) الأسبوع الماضي إلى الأصول الخاصة (special assets)، وأصبح نظام المصدر (source system) يقصر ملفه الائتماني (credit file) على ذلك الفريق. ومع ذلك ما زال مديرو العلاقات (relationship managers) في محفظة العميل السابقة (old portfolio) يتلقّون مقاطع (passages) من الملف عبر مساعد مذكرات الائتمان (Credit Memo Copilot). ما السبب الأرجح (most likely cause) وما العلاج (fix)؟"
+    "en": "At a regional bank, a corporate client was moved to special assets last week, and the source system now restricts its credit file to that team. Yet relationship managers on the client's old portfolio still get passages from the file through the bank's credit copilot. What is the most likely cause and fix?",
+    "ar": "في مصرف إقليمي (regional bank)، نُقل عميل من الشركات (corporate client) الأسبوع الماضي إلى الأصول الخاصة (special assets)، وأصبح نظام المصدر (source system) يقصر ملفه الائتماني (credit file) على ذلك الفريق. ومع ذلك ما زال مديرو العلاقات (relationship managers) في محفظة العميل السابقة (old portfolio) يتلقّون مقاطع (passages) من الملف عبر مساعد الائتمان (credit copilot) لدى المصرف. ما السبب الأرجح (most likely cause) وما العلاج (fix)؟"
    },
    "o": {
     "en": [
@@ -81,8 +81,8 @@
    },
    "a": 0,
    "why": {
-    "en": "ACLs captured only at ingestion go stale when permissions change, so the pre-filter still lets the old portfolio's RMs retrieve the file; Najm re-syncs ACLs on change events and on a short schedule, and checks the source of truth at query time for sensitive classes. A system-prompt rule is the tempting shortcut, but the model cannot be trusted to withhold what retrieval gives it.",
-    "ar": "تتقادم قوائم التحكم في الوصول (ACLs) المنسوخة عند الاستيعاب فقط (captured only at ingestion) حين تتغير الصلاحيات (permissions change)، فيظل المرشّح المسبق (pre-filter) يسمح لمديري علاقات المحفظة السابقة (old portfolio's RMs) باسترجاع الملف؛ لذا يعيد بنك نجم (Najm Bank) مزامنة القوائم (re-syncs ACLs) عند أحداث التغيير (change events) ووفق جدول قصير (short schedule)، ويتحقق من مصدر الحقيقة (source of truth) وقت الاستعلام (at query time) للفئات الحساسة (sensitive classes). أما قاعدة موجّه النظام (system-prompt rule) فهي الاختصار المغري، لكن لا يمكن الوثوق بأن يحجب النموذج (model) ما يسلّمه إليه الاسترجاع (retrieval)."
+    "en": "ACLs captured only at ingestion go stale when permissions change, so the pre-filter still lets the old portfolio's RMs retrieve the file; the fix is to re-sync ACLs on change events and on a short schedule, and to check the source of truth at query time for sensitive classes. A system-prompt rule is the tempting shortcut, but the model cannot be trusted to withhold what retrieval gives it.",
+    "ar": "تتقادم قوائم التحكم في الوصول (ACLs) المنسوخة عند الاستيعاب فقط (captured only at ingestion) حين تتغير الصلاحيات (permissions change)، فيظل المرشّح المسبق (pre-filter) يسمح لمديري علاقات المحفظة السابقة (old portfolio's RMs) باسترجاع الملف؛ والعلاج إعادة مزامنة القوائم (re-sync ACLs) عند أحداث التغيير (change events) ووفق جدول قصير (short schedule)، والتحقق من مصدر الحقيقة (source of truth) وقت الاستعلام (at query time) للفئات الحساسة (sensitive classes). أما قاعدة موجّه النظام (system-prompt rule) فهي الاختصار المغري، لكن لا يمكن الوثوق بأن يحجب النموذج (model) ما يسلّمه إليه الاسترجاع (retrieval)."
    }
   },
   {
@@ -119,7 +119,7 @@
    "id": "m9-e1",
    "lesson": "9.2",
    "text": {
-    "en": "I have built a lab agent whose freeze_card tool takes the customer from the session and checks ownership in code, and shown that a mocked request to freeze another customer's card is refused, leaves the mock API unchanged and is logged",
+    "en": "I have built a lab agent whose freeze_card tool takes the customer from the session and checks ownership in code, and shown that a mocked request to freeze another customer's card is refused, leaves the mock API unchanged and is recorded in an audit log",
     "ar": "بنيتُ وكيلًا تجريبيًا (lab agent) تأخذ أداته freeze_card العميلَ من الجلسة (customer from the session) وتتحقق من الملكية في الشيفرة (checks ownership in code)، وأثبتُّ أن طلبًا مُحاكى (mocked request) لتجميد بطاقة عميل آخر (freeze another customer's card) يُرفض (refused)، ولا يغيّر حالة الواجهة البرمجية المحاكاة (mock API)، ويُسجَّل في سجل التدقيق (audit log)"
    }
   },
