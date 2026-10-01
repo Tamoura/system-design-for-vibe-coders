@@ -18,7 +18,7 @@
 - مؤشر القرار (Decision cue): لكل إجراء (for each action)، اسأل «ما مدى اليقين الذي نحتاجه، ومنذ متى؟» ⁦("how sure must we be, and how recently?")⁩، واطلب **المصادقة التصعيدية (step-up authentication)** للإجراءات الخطرة (risky ones).
 
 ## 🧭 لماذا يهم (Why it matters)
-في الساعة 02:10 من يوم ثلاثاء، يرى مركز العمليات الأمنية (SOC) التابع لجاسم إخفاقات تسجيل الدخول (login failures) على تطبيق نجم للهاتف (Najm Mobile) ترتفع ارتفاعًا حادًّا (climb steeply): آلافٌ من عناوين البريد الإلكتروني الحقيقية للعملاء (real customer email addresses)، جُرِّب كلٌّ منها مرةً أو مرتين، من آلاف عناوين IP (IP addresses). وقبل ذلك بأسبوع، كان تاجر تجزئةٍ في الخارج لا صلة له بالبنك (unrelated retailer abroad) قد أفصح عن اختراق (disclosed a breach). هذا هو **حشو بيانات الاعتماد (credential stuffing)**: إعادة تشغيل أزواج البريد الإلكتروني وكلمة المرور (replaying email and password pairs) المسرّبة من موقعٍ ضد موقعٍ آخر، رهانًا على أن الناس يعيدون استخدام كلمات المرور (people reuse passwords). وتنجح بضع مئاتٍ من عمليات تسجيل الدخول (a few hundred logins succeed).
+في الساعة 02:10 من يوم ثلاثاء، يرى مركز العمليات الأمنية (SOC) التابع لجاسم إخفاقات تسجيل الدخول (login failures) على تطبيق نجم للهاتف (Najm Mobile) ترتفع ارتفاعًا حادًّا (climb steeply): آلافٌ من عناوين البريد الإلكتروني الحقيقية للعملاء (real customer email addresses)، جُرِّب كلٌّ منها مرةً أو مرتين (each tried once or twice)، من آلاف عناوين IP (IP addresses). وقبل ذلك بأسبوع، كان تاجر تجزئةٍ في الخارج لا صلة له بالبنك (unrelated retailer abroad) قد أفصح عن اختراق (disclosed a breach). هذا هو **حشو بيانات الاعتماد (credential stuffing)**: إعادة تشغيل أزواج البريد الإلكتروني وكلمة المرور (replaying email and password pairs) المسرّبة من موقعٍ ضد موقعٍ آخر (leaked from one site against another)، رهانًا على أن الناس يعيدون استخدام كلمات المرور (people reuse passwords). وتنجح بضع مئاتٍ من عمليات تسجيل الدخول (a few hundred logins succeed).
 
 في تلك الحسابات، يوقف رمز SMS المطلوب على الأجهزة الجديدة (SMS code required on new devices) معظم المهاجمين. لكن بحلول منتصف الصباح (by mid-morning)، يُبلغ فريق مكافحة الاحتيال (fraud team) عن مكالماتٍ إلى مركز الاتصال (contact centre) تطلب نقل أرقام العملاء إلى بطاقات SIM جديدة (new SIM cards)، وعن صفحة تصيّدٍ احتيالي (phishing page) تطلب «الرمز الذي أرسلناه إليك للتو» ("the code we just sent you").
 
@@ -184,11 +184,11 @@ flowchart TD
 - A. عاملٌ ثانٍ مطلوب على الأجهزة الجديدة (second factor required on new devices)
 - B. قفل الحساب بعد خمس محاولاتٍ فاشلة (locking an account after five failed attempts)
 - C. تنبيهٌ (alert) على نسبة تسجيلات الدخول الفاشلة إلى الناجحة على مستوى الموقع (site-wide ratio of failed to successful logins)
-- D. فحص كلمات المرور مقابل قوائم كلمات المرور المسرّبة (breached-password lists)
+- D. فحص كلمات المرور (checking passwords) مقابل قوائم كلمات المرور المسرّبة (breached-password lists)
 
 <details><summary>الإجابة</summary>
 
-**B.** يجرّب الحشو (stuffing) كل حسابٍ مرةً أو مرتين، فنادرًا ما يُفعَّل القفل بعد خمسة إخفاقات (five-failure lockout)، كما يمكن إساءة استخدام القفل الصارم (hard lockout) ضد العملاء. أمّا A وC وD فتعالج جميعها إعادة الاستخدام على نطاقٍ واسع (reuse at scale). انظر: 🟡 التعمق أكثر (Going deeper).
+**B.** يجرّب الحشو (stuffing) كل حسابٍ مرةً أو مرتين، فنادرًا ما يُفعَّل القفل بعد خمسة إخفاقات (five-failure lockout)، كما يمكن إساءة استخدام القفل الصارم (hard lockout) ضد العملاء (abused against customers). أمّا A وC وD فتعالج جميعها إعادة الاستخدام على نطاقٍ واسع (reuse at scale). انظر: 🟡 التعمق أكثر (Going deeper).
 
 </details>
 
@@ -197,7 +197,7 @@ flowchart TD
 - A. التحول إلى SHA-512 مع الإبقاء على الملح المشترك (shared salt)
 - B. تشفير عمود كلمات المرور (password column) باستخدام AES كي يمكن فكّ تشفيره عند الحاجة (decrypted if needed)
 - C. الانتقال إلى Argon2id (أو bcrypt أو scrypt) بملحٍ فريد لكل كلمة مرور (unique salt per password)، مع إعادة تجزئة كلمة مرور كل مستخدم عند تسجيل دخوله الناجح التالي (at their next successful login)
-- D. إجبار كل مستخدم على تغيير كلمة مروره كل 90 يومًا (every 90 days)
+- D. إجبار كل مستخدم على تغيير كلمة مروره (force every user to change their password) كل 90 يومًا (every 90 days)
 
 <details><summary>الإجابة</summary>
 
@@ -236,7 +236,7 @@ flowchart TD
 - A. السماح بذلك (allow it)، لأن العميل مسجِّلٌ دخوله أصلًا (already signed in)
 - B. السماح بذلك مع مصادقةٍ تصعيدية بعاملٍ قويٍّ قائم (step-up using an existing strong factor)، وإشعارٍ إلى الرقم القديم (notification to the old number)، وتعليقٍ (hold) قبل أن يتمكن الرقم الجديد من تفويض المستفيدين أو تغييرات الحدود (authorise payees or limit changes)
 - C. إزالة تغيير الهاتف من التطبيق (remove phone changes from the app) واشتراط زيارة الفرع على الجميع (require a branch visit for everyone)
-- D. السماح بذلك، مع رمز SMS يُرسَل إلى الرقم الجديد (SMS code sent to the new number)
+- D. السماح بذلك (allow it)، مع رمز SMS يُرسَل إلى الرقم الجديد (SMS code sent to the new number)
 
 <details><summary>الإجابة</summary>
 
@@ -455,10 +455,10 @@ def verify_access_token(token: str) -> dict:
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
 - **استخدام OAuth لتسجيل الدخول (Using OAuth as login).** يقول رمز الوصول (access token) إن تطبيقًا يجوز له استدعاء واجهة برمجة، لا من يجلس أمام لوحة المفاتيح (who is at the keyboard). استخدم OIDC وتحقّق من صحة رمز الهوية (validate the ID token).
-- **إرسال رموز الهوية إلى واجهات البرمجة (Sending ID tokens to APIs).** لا تقبل واجهات البرمجة إلا رموز الوصول الصادرة لجمهورها الخاص (access tokens issued for their own audience).
+- **إرسال رموز الهوية إلى واجهات البرمجة (Sending ID tokens to APIs).** لا تقبل واجهات البرمجة (APIs accept only) إلا رموز الوصول الصادرة لجمهورها الخاص (access tokens issued for their own audience).
 - **فكّ الترميز بدلًا من التحقق، أو ترك الرمز يختار خوارزميته (Decoding instead of verifying, or letting the token choose its algorithm).** تحقّق بقائمةٍ ثابتة من الخوارزميات (fixed algorithm list) وبالمُصدِر والجمهور (issuer and audience).
 - **مطابقة المستخدمين الاتحاديين بالبريد الإلكتروني (Matching federated users by email).** استخدم `iss` + `sub`، ولا تربط الحسابات إلا بإثباتٍ من الطرفين (proof from both sides).
-- **رموزٌ طويلة العمر في تخزين المتصفح (Long-lived tokens in browser storage).** أبقِ رموز الوصول قصيرة العمر، ودوِّر رموز التحديث (rotate refresh tokens)، وضع تطبيقات المتصفح عالية القيمة خلف واجهةٍ خلفية للواجهة الأمامية (behind a BFF).
+- **رموزٌ طويلة العمر في تخزين المتصفح (Long-lived tokens in browser storage).** أبقِ رموز الوصول قصيرة العمر (keep access tokens short)، ودوِّر رموز التحديث (rotate refresh tokens)، وضع تطبيقات المتصفح عالية القيمة (high-value browser apps) خلف واجهةٍ خلفية للواجهة الأمامية (behind a BFF).
 - **لصق رموزٍ حقيقية في أدوات تصحيح JWT عبر الإنترنت (Pasting real tokens into online JWT debuggers).** الرمز المميز بيانات اعتمادٍ حيّة (live credential). فكّ ترميز رموز الاختبار محليًّا (decode test tokens locally).
 
 ## 🧾 الخلاصة (Recap)
@@ -466,7 +466,7 @@ def verify_access_token(token: str) -> dict:
 - استخدم تدفق الرمز مع PKCE (code flow with PKCE) وعناوين URI تامة المطابقة لإعادة التوجيه (exact redirect URIs)؛ وتخلَّ عن المنح الضمنية ومنح كلمة المرور (retire implicit and password grants) (RFC 9700).
 - يستطيع أي شخصٍ يحمل رمز JWT موقَّعًا أن يقرأه (anyone holding a signed JWT can read it). تحقّق منه بخوارزميةٍ مثبَّتة (pinned algorithm) وبمفاتيح مُصدِرك (your issuer's keys)، ثم افحص `iss` و`aud` و`exp`.
 - يحتاج كل رمزٍ مميز إلى جمهورٍ واحد (one audience)، ونطاقٍ ضيق (narrow scope)، وعمرٍ قصير (short life)، وخطةٍ للسرقة (theft plan).
-- حين يعمل وكيلٌ (agent) نيابةً عن عميل، استبدل رمز العميل برمزٍ ضيق وقصير العمر (narrow, short-lived one)، كي تُجري واجهة البرمجة التفويض على أساس العميل (the API authorises the customer).
+- حين يعمل وكيلٌ (agent) نيابةً عن عميل (acts for a customer)، استبدل رمز العميل (exchange the customer's token) برمزٍ ضيق وقصير العمر (narrow, short-lived one)، كي تُجري واجهة البرمجة التفويض على أساس العميل (the API authorises the customer).
 
 ## ✍️ اختبر نفسك (Check yourself)
 
@@ -509,7 +509,7 @@ def verify_access_token(token: str) -> dict:
 
 </details>
 
-**4. باتت بوابة الشركات الصغيرة (SME Portal) تقبل تسجيلات الدخول من مزوّدي الهوية الخاصين بالعملاء (customers' own identity providers). كيف ينبغي أن تقرر إلى أي حسابٍ في البوابة ينتمي المستخدم الاتحادي (federated user)؟**
+**4. باتت بوابة الشركات الصغيرة (SME Portal) تقبل تسجيلات الدخول من مزوّدي الهوية الخاصين بالعملاء (customers' own identity providers). كيف ينبغي أن تقرر إلى أي حسابٍ في البوابة (which portal account) ينتمي المستخدم الاتحادي (federated user)؟**
 
 - A. عبر مطالبة `email`، لأنها مقروءةٌ للبشر (human-readable)
 - B. عبر الاسم المعروض للمستخدم (user's display name)
@@ -531,7 +531,7 @@ def verify_access_token(token: str) -> dict:
 
 <details><summary>الإجابة</summary>
 
-**D.** يحمل الرمز المُستبدَل (exchanged token) هوية العميل (customer's identity)، وجمهورًا واحدًا، ونطاقًا واحدًا، وعمرًا قصيرًا، فتستطيع واجهة البرمجة رفض أي بطاقةٍ لا تخص العميل. أمّا A فهو النائب المرتبك (confused deputy)؛ وB وC يمنحان أسيست قوةً وعمرًا (power and lifetime) يتجاوزان الحاجة بكثير. انظر: 🔴 نظرة الخبير (Expert view).
+**D.** يحمل الرمز المُستبدَل (exchanged token) هوية العميل (customer's identity)، وجمهورًا واحدًا، ونطاقًا واحدًا، وعمرًا قصيرًا (one audience, one scope and a short life)، فتستطيع واجهة البرمجة رفض أي بطاقةٍ لا تخص العميل (refuse any card that is not the customer's). أمّا A فهو النائب المرتبك (confused deputy)؛ وB وC يمنحان أسيست قوةً وعمرًا (power and lifetime) يتجاوزان الحاجة بكثير. انظر: 🔴 نظرة الخبير (Expert view).
 
 </details>
 
@@ -757,8 +757,8 @@ flowchart TD
 
 ## 🛠️ التمارين (Exercises)
 - 🟢 اكتب مصفوفة تحكمٍ في الوصول (access-control matrix) لتطبيقٍ تملكه، أو أضِف دور «مورّد» ("Supplier") إلى مصفوفة بوابة الشركات الصغيرة يستطيع عرض فواتيره والتعليق عليها فقط (view and comment on its own invoices only). *يكتمل عندما (Done when):* تكون كل خليةٍ سماحًا أو رفضًا أو شرطًا مسمّى (allow, deny or a named condition)، ويكون شرطٌ واحد على الأقل قاعدةَ عمل (business rule) مثل المُنشئ والمُدقِّق (maker-checker).
-- 🟡 شغّل OWASP Juice Shop محليًّا، وأنشئ حسابين، واعثر على موضعٍ يستطيع فيه مستخدمٌ رؤية بيانات مستخدمٍ آخر أو تغييرها (see or change another's data)، وتحدّيات سلة التسوق (shopping-basket challenges) بدايةٌ جيدة. ثم اكتب الفحص من جهة الخادم (server-side check) الذي كان سيمنع ذلك. *يكتمل عندما (Done when):* تستطيع تصنيف الثغرة على أنها على مستوى الوظيفة أو الكائن أو الخاصية (function, object or property level)، ويحصر إصلاحك عملية البحث في مستخدم الجلسة (scopes the lookup to the session user) ويرفض افتراضيًّا (denies by default).
-- 🔴 في قاعدة بيانات PostgreSQL محلية، أنشئ جدول `invoices` يحوي `company_id`، وفعّل أمن مستوى الصف وافرضه (enable and force row-level security) بسياسةٍ قائمة على إعدادٍ لكل معاملة (policy on a per-transaction setting)، واتصل بدورٍ غير مالك (non-owner role). *يكتمل عندما (Done when):* يُعيد استعلامٌ بلا عبارة `WHERE` صفوفَ الشركة الحالية فقط، ولا يُعيد استعلامٌ بلا إعداد مستأجر (no tenant setting) أي صفوفٍ لشركةٍ أخرى، ويُرفض إدراجٌ لشركةٍ أخرى (an insert for another company is rejected).
+- 🟡 شغّل OWASP Juice Shop محليًّا (run locally)، وأنشئ حسابين (create two accounts)، واعثر على موضعٍ يستطيع فيه مستخدمٌ رؤية بيانات مستخدمٍ آخر أو تغييرها (see or change another's data)، وتحدّيات سلة التسوق (shopping-basket challenges) بدايةٌ جيدة. ثم اكتب الفحص من جهة الخادم (server-side check) الذي كان سيمنع ذلك (would have prevented it). *يكتمل عندما (Done when):* تستطيع تصنيف الثغرة على أنها على مستوى الوظيفة أو الكائن أو الخاصية (function, object or property level)، ويحصر إصلاحك عملية البحث في مستخدم الجلسة (scopes the lookup to the session user) ويرفض افتراضيًّا (denies by default).
+- 🔴 في قاعدة بيانات PostgreSQL محلية، أنشئ جدول `invoices` يحوي `company_id`، وفعّل أمن مستوى الصف وافرضه (enable and force row-level security) بسياسةٍ قائمة على إعدادٍ لكل معاملة (policy on a per-transaction setting)، واتصل بدورٍ غير مالك (non-owner role). *يكتمل عندما (Done when):* يُعيد استعلامٌ بلا عبارة `WHERE` صفوفَ الشركة الحالية فقط (only the current company's rows)، ولا يُعيد استعلامٌ بلا إعداد مستأجر (no tenant setting) أي صفوفٍ لشركةٍ أخرى (no other company's rows)، ويُرفض إدراجٌ لشركةٍ أخرى (an insert for another company is rejected).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
 - **التفويض في الواجهة (Authorisation in the interface).** الأزرار المخفية ليست ضوابط (hidden buttons are not controls). طبّق كل قاعدةٍ على الخادم (enforce every rule on the server).
@@ -786,7 +786,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**B.** هذا هو BOLA، ويُسمّى أيضًا IDOR: لم يسأل الخادم قط ما إذا كان الكائن يخص المتصل (belonged to the caller). أمّا A فيجعل التخمين أصعب، لكن المعرّفات تظل تتسرّب (IDs still leak)؛ وC وD لا يغيّران ما يسمح به الخادم (what the server allows). انظر: 🟢 الأساسيات (The essentials).
+**B.** هذا هو BOLA، ويُسمّى أيضًا IDOR: لم يسأل الخادم قط ما إذا كان الكائن يخص المتصل (belonged to the caller). أمّا A فيجعل التخمين أصعب (makes guessing harder)، لكن المعرّفات تظل تتسرّب (IDs still leak)؛ وC وD لا يغيّران ما يسمح به الخادم (what the server allows). انظر: 🟢 الأساسيات (The essentials).
 
 </details>
 
@@ -816,7 +816,7 @@ flowchart TD
 
 </details>
 
-**4. يفعّل فريق طارق أمن مستوى الصف (row-level security) في PostgreSQL على `invoices`، لكن استعلامًا بلا مرشّحٍ للشركة (without a company filter) لا يزال يُعيد صفوف جميع الشركات. ويتصل التطبيق بالدور الذي يملك الجدول (the role that owns the table). ما السبب الأرجح (most likely cause)؟**
+**4. يفعّل فريق طارق أمن مستوى الصف (row-level security) في PostgreSQL على `invoices`، لكن استعلامًا بلا مرشّحٍ للشركة (without a company filter) لا يزال يُعيد صفوف جميع الشركات (still returns every company's rows). ويتصل التطبيق بالدور الذي يملك الجدول (the role that owns the table). ما السبب الأرجح (most likely cause)؟**
 
 - A. أمن مستوى الصف لا يعمل إلا على العروض (only works on views)
 - B. مالكو الجداول يتجاوزون أمن مستوى الصف (table owners bypass row-level security) ما لم يُعيَّن `FORCE ROW LEVEL SECURITY`، لذا ينبغي أيضًا أن يتصل التطبيق بدورٍ منفصل غير مالك (separate non-owner role)
