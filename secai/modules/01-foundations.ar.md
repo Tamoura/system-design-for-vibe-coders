@@ -79,27 +79,27 @@ STRIDE أداةُ تذكير (a prompt)، لا نظريةٌ كاملة للهج�
 **مخطط أداة تجميد البطاقة (The diagram for the freeze-card tool).** كل صندوقٍ منطقةُ ثقة (trust zone). وكل سهمٍ يعبر حافة منطقةٍ (zone's edge) يخضع لمراجعة STRIDE (STRIDE pass).
 
 ```mermaid
-flowchart LR
-    subgraph U["غير موثوق: جهاز العميل والإنترنت"]
-        C["العميل"]
-        APP["تطبيق نجم للهاتف"]
+flowchart RL
+    subgraph U["غير موثوق: جهاز العميل والإنترنت (Untrusted: customer device and internet)"]
+        C["العميل<br/>(Customer)"]
+        APP["تطبيق نجم للهاتف<br/>(Najm Mobile app)"]
     end
-    subgraph B["شبكة البنك"]
-        GW["بوابة واجهات البرمجة"]
-        ORC["منسّق أسيست"]
-        TOOLS["خدمة أدوات البطاقات"]
-        CORE["قاعدة بيانات النظام المصرفي الأساسي"]
-        LOG["سجل التدقيق"]
+    subgraph B["شبكة البنك (Bank network)"]
+        GW["بوابة واجهات البرمجة<br/>(API gateway)"]
+        ORC["منسّق أسيست<br/>(Assist orchestrator)"]
+        TOOLS["خدمة أدوات البطاقات<br/>(Card tools service)"]
+        CORE["قاعدة بيانات النظام المصرفي الأساسي<br/>(Core banking database)"]
+        LOG["سجل التدقيق<br/>(Audit log)"]
     end
-    subgraph V["مزوّد النموذج اللغوي"]
-        LLM["النموذج اللغوي المستضاف"]
+    subgraph V["مزوّد النموذج اللغوي (LLM provider)"]
+        LLM["النموذج اللغوي المستضاف<br/>(Hosted language model)"]
     end
-    C -->|"يكتب رسالة"| APP
-    APP -->|"اتصال مشفّر مع رمز الجلسة"| GW
-    GW -->|"الرسالة ومعرّف العميل"| ORC
-    ORC -->|"الموجّه والسياق"| LLM
-    LLM -->|"الرد واستدعاء الأداة"| ORC
-    ORC -->|"طلب تجميد البطاقة"| TOOLS
+    C -->|"يكتب رسالة (types message)"| APP
+    APP -->|"اتصال مشفّر مع رمز الجلسة (HTTPS with session token)"| GW
+    GW -->|"الرسالة ومعرّف العميل (message and customer ID)"| ORC
+    ORC -->|"الموجّه والسياق (prompt and context)"| LLM
+    LLM -->|"الرد واستدعاء الأداة (reply and tool call)"| ORC
+    ORC -->|"طلب تجميد البطاقة (freeze card request)"| TOOLS
     TOOLS --> CORE
     TOOLS --> LOG
 ```
@@ -366,14 +366,14 @@ def can_view_invoice(user, invoice) -> bool:
 **الدفاع المتعدد الطبقات لإجراءٍ واحد (Defence in depth for one action).** تحمي هذه الطبقات (layers) إجراء «جمّد بطاقتي» ("freeze my card") في نجم أسيست. وكلٌّ منها ضابطٌ منفصل (separate control) يستطيع وحده إيقاف تجميدٍ خاطئ (wrong freeze):
 
 ```mermaid
-flowchart LR
-    A["رسالة العميل"] --> B["الحافة: تشفير النقل وجدار حماية التطبيقات وحدود المعدل"]
-    B --> C["المصادقة: جلسة وجهاز صالحان"]
-    C --> D["سياسة الأدوات: التجميد فقط، ولا إلغاء تجميد أو دفع أبدًا"]
-    D --> E["التفويض: البطاقة تعود إلى هذا العميل"]
-    E --> F["تأكيد يُعرض في التطبيق"]
-    F --> G["خدمة البطاقات بحقوق قاعدة بيانات بأقل الصلاحيات"]
-    G --> H["سجل التدقيق وتنبيه مركز العمليات الأمنية عند حجم غير معتاد"]
+flowchart RL
+    A["رسالة العميل<br/>(Customer message)"] --> B["الحافة: تشفير النقل وجدار حماية التطبيقات وحدود المعدل<br/>(Edge: TLS, WAF, rate limits)"]
+    B --> C["المصادقة: جلسة وجهاز صالحان<br/>(Authentication: valid session and device)"]
+    C --> D["سياسة الأدوات: التجميد فقط، ولا إلغاء تجميد أو دفع أبدًا<br/>(Tool policy: freeze only, never unfreeze or pay)"]
+    D --> E["التفويض: البطاقة تعود إلى هذا العميل<br/>(Authorisation: card belongs to this customer)"]
+    E --> F["تأكيد يُعرض في التطبيق<br/>(Confirmation shown in the app)"]
+    F --> G["خدمة البطاقات بحقوق قاعدة بيانات بأقل الصلاحيات<br/>(Card service with least-privilege database rights)"]
+    G --> H["سجل التدقيق وتنبيه مركز العمليات الأمنية عند حجم غير معتاد<br/>(Audit log and SOC alert on unusual volume)"]
 ```
 
 نموذج «الجبن السويسري» ("Swiss cheese") للحوادث، الذي وضعه جيمس ريزن (James Reason)، هو الصورة المعيارية (standard picture): لكل طبقةٍ ثقوب (holes)، ولا يمر الضرر إلا حين تصطف الثقوب (the holes line up). والاستقلالية (independence) تمنعها من الاصطفاف. فإذا أخذ فحص التفويض (authorisation check) وشاشة التأكيد (confirmation screen) وسجل التدقيق (audit log) جميعها معرّف البطاقة (card ID) من مخرجات النموذج (model's output) دون مقارنته بالجلسة (session)، فإن استدعاء أداةٍ واحدًا متلاعبًا به (one manipulated tool call) يمر عبر الثلاثة.
@@ -636,15 +636,15 @@ def priority(f) -> str:
 
 ```mermaid
 flowchart TD
-    A["ملاحظة جديدة"] --> B{"مستغلة معروفًا: كتالوج الثغرات المستغلة أو أدلة مركز العمليات الأمنية"}
-    B -->|"نعم"| C{"أصل مكشوف على الإنترنت أو من الفئة الأولى"}
-    C -->|"نعم"| P1["الأولوية 1: التخفيف خلال 72 ساعة"]
-    C -->|"لا"| P2["الأولوية 2: التخفيف خلال 14 يومًا"]
-    B -->|"لا"| D{"خطيرة، ومكشوفة أو من الفئة الأولى أو باحتمال استغلال مرتفع"}
-    D -->|"نعم"| P2
-    D -->|"لا"| E{"خطورة متوسطة أو الفئة الأولى"}
-    E -->|"نعم"| P3["الأولوية 3: الإصلاح خلال 60 يومًا"]
-    E -->|"لا"| P4["الأولوية 4: الإصدار المخطط التالي"]
+    A["ملاحظة جديدة<br/>(New finding)"] --> B{"مستغلة معروفًا: كتالوج الثغرات المستغلة أو أدلة مركز العمليات الأمنية<br/>(Known exploited: KEV or SOC evidence)"}
+    B -->|"نعم (Yes)"| C{"أصل مكشوف على الإنترنت أو من الفئة الأولى<br/>(Internet-facing or tier 1 asset)"}
+    C -->|"نعم (Yes)"| P1["الأولوية 1: التخفيف خلال 72 ساعة<br/>(P1: mitigate within 72 hours)"]
+    C -->|"لا (No)"| P2["الأولوية 2: التخفيف خلال 14 يومًا<br/>(P2: mitigate within 14 days)"]
+    B -->|"لا (No)"| D{"خطيرة، ومكشوفة أو من الفئة الأولى أو باحتمال استغلال مرتفع<br/>(Severe, and exposed, tier 1 or high EPSS)"}
+    D -->|"نعم (Yes)"| P2
+    D -->|"لا (No)"| E{"خطورة متوسطة أو الفئة الأولى<br/>(Medium severity or tier 1)"}
+    E -->|"نعم (Yes)"| P3["الأولوية 3: الإصلاح خلال 60 يومًا<br/>(P3: fix within 60 days)"]
+    E -->|"لا (No)"| P4["الأولوية 4: الإصدار المخطط التالي<br/>(P4: next planned release)"]
 ```
 
 يحاكي هذا **SSVC**، أي تصنيف الثغرات الخاص بأصحاب المصلحة (Stakeholder-Specific Vulnerability Categorization)، الصادر عن مركز تنسيق CERT (CERT Coordination Center) في جامعة كارنيغي ميلون (Carnegie Mellon) والذي كيّفته CISA: فبدلًا من رقم، يستخدم شجرة قرار (decision tree) تقوم على حالة الاستغلال (exploitation status)، والأثر التقني (technical impact)، وقابلية الأتمتة (automatability)، والأثر على المهمة والرفاه (mission and well-being impact)، وتنتهي بإحدى النتائج: المتابعة (Track)، أو المتابعة المشدّدة (Track*)، أو الانتباه (Attend)، أو التصرّف (Act).

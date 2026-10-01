@@ -95,16 +95,16 @@ action = AssistAction.model_validate_json(model_output)   # raises on anything e
 يحوّل التعداد (An enum turns) عبارة «قد يطلب النموذج أيّ شيء» ("the model could ask for anything") إلى قائمةٍ مغلقة تفهمها شيفرتك (into a closed list your code understands). والتحقق يُثبت أن *الشكل* صحيح (Validation proves the *shape* is right)، لا أن الإجراء *مسموح* (not that the action is *allowed*): فذلك الفحص يجري على الخادم (that check happens on the server)، بهوية العميل المسجَّل دخوله (as the signed-in customer) (9.2).
 
 ```mermaid
-flowchart LR
-    U["رسالة المستخدم"] --> IG["الضوابط الوقائية للمدخلات: إشارة الحقن والحجب وتحديد المعدّل"]
-    D["المستندات المسترجعة ونتائج الأدوات"] --> M["النموذج"]
+flowchart RL
+    U["رسالة المستخدم<br/>(User message)"] --> IG["الضوابط الوقائية للمدخلات: إشارة الحقن والحجب وتحديد المعدّل<br/>(Input guardrails: injection flag, masking, rate limit)"]
+    D["المستندات المسترجعة ونتائج الأدوات<br/>(Retrieved docs and tool results)"] --> M["النموذج<br/>(Model)"]
     IG --> M
-    M --> S["التحقق من المخطط"]
-    S --> OG["الضوابط الوقائية للمخرجات: فحص البيانات وفحص السياسات والاستناد إلى المصادر"]
-    OG --> K{"أيّ مَصبّ"}
-    K --> R["واجهة المحادثة: التعقيم وسياسة أمان المحتوى"]
-    K --> T["استدعاء الأداة: التفويض من جهة الخادم"]
-    OG -->|"فشل الفحص"| F["بديلٌ آمن وسجلّ أمني"]
+    M --> S["التحقق من المخطط<br/>(Schema validation)"]
+    S --> OG["الضوابط الوقائية للمخرجات: فحص البيانات وفحص السياسات والاستناد إلى المصادر<br/>(Output guardrails: data scan, policy check, grounding)"]
+    OG --> K{"أيّ مَصبّ<br/>(Which sink)"}
+    K --> R["واجهة المحادثة: التعقيم وسياسة أمان المحتوى<br/>(Chat view: sanitise and CSP)"]
+    K --> T["استدعاء الأداة: التفويض من جهة الخادم<br/>(Tool call: server-side authorisation)"]
+    OG -->|"فشل الفحص (Check fails)"| F["بديلٌ آمن وسجلّ أمني<br/>(Safe fallback and security log)"]
 ```
 
 تلتقط كل طبقة (Each layer catches) بعض ما تفوّته الطبقات الأخرى (some of what the others miss). وحين يفشل فحصٌ ما (When a check fails)، اعرض **بديلًا آمنًا (safe fallback)** محايدًا (neutral)، وسجّل الحدث (log the event) لمركز العمليات الأمنية (for the security operations centre, SOC)، ولا تعرض أبدًا المخرجات التي فشلت (never show the failed output) «لمرةٍ واحدة فقط» ("just this once").
@@ -280,16 +280,16 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    A["طلب المستخدم"] --> B["النموذج يقترح الخطوة التالية"]
-    B -->|"استدعاء أداة"| C["التحقق من المخطط"]
-    C --> D["التفويض بهوية المستخدم النهائي في الشيفرة"]
-    D -->|"مرفوض"| H["الرفض والتسجيل"]
-    D -->|"عالي المخاطر"| E["العميل يؤكد التفاصيل التي يعرضها التطبيق"]
-    D -->|"منخفض المخاطر"| F["التنفيذ برمز مميز محصور النطاق"]
+    A["طلب المستخدم<br/>(User request)"] --> B["النموذج يقترح الخطوة التالية<br/>(Model proposes next step)"]
+    B -->|"استدعاء أداة (Tool call)"| C["التحقق من المخطط<br/>(Validate schema)"]
+    C --> D["التفويض بهوية المستخدم النهائي في الشيفرة<br/>(Authorise as end user in code)"]
+    D -->|"مرفوض (Denied)"| H["الرفض والتسجيل<br/>(Refuse and log)"]
+    D -->|"عالي المخاطر (High-risk)"| E["العميل يؤكد التفاصيل التي يعرضها التطبيق<br/>(Customer confirms details rendered by app)"]
+    D -->|"منخفض المخاطر (Low-risk)"| F["التنفيذ برمز مميز محصور النطاق<br/>(Execute with scoped token)"]
     E --> F
-    F --> G["إعادة النتيجة بوصفها بيانات غير موثوقة"]
+    F --> G["إعادة النتيجة بوصفها بيانات غير موثوقة<br/>(Result returned as untrusted data)"]
     G --> B
-    B -->|"الإجابة النهائية"| I["معالجة المخرجات كما في الدرس 9.1"]
+    B -->|"الإجابة النهائية (Final answer)"| I["معالجة المخرجات كما في الدرس 9.1<br/>(Output handling as in 9.1)"]
 ```
 
 ويترتّب على ذلك أمران (Two facts follow). أولًا، *نتائج* الأدوات مدخلاتٌ جديدة (Tool *results* are new input)، ولذا يمكن لصفحة ويب أو بريدٍ إلكتروني أو ملاحظة اعتراض (so a web page, email or dispute note) تعيدها أداةٌ (returned by a tool) أن تحمل حقنًا (can carry an injection) (8.2). وثانيًا، اختيار النموذج للأداة ووسائطها (the model's choice of tool and arguments) *مخرجات* (is *output*)، ولذا يخضع لمعالجة الدرس 9.1 (so it gets the 9.1 treatment): التحقق ثم التفويض (validate, then authorise).
@@ -526,15 +526,15 @@ def freeze_card(session, card_last4: str) -> dict:
 **خط المعالجة وحدود الثقة فيه (The pipeline and its trust boundaries).**
 
 ```mermaid
-flowchart LR
-    S["أنظمة المصدر مع صلاحياتها"] --> I["الاستيعاب: الاستخراج والتنظيف ووسم المالك وقائمة الوصول"]
-    I --> C["التقطيع والتضمين"]
-    C --> V["فهرس المتجهات مع بيانات وصفية لقوائم الوصول"]
-    Q["السؤال مع هوية الجلسة"] --> R["المسترجع يطبّق الاستحقاقات"]
+flowchart RL
+    S["أنظمة المصدر مع صلاحياتها<br/>(Source systems with permissions)"] --> I["الاستيعاب: الاستخراج والتنظيف ووسم المالك وقائمة الوصول<br/>(Ingest: extract, clean, tag owner and ACL)"]
+    I --> C["التقطيع والتضمين<br/>(Chunk and embed)"]
+    C --> V["فهرس المتجهات مع بيانات وصفية لقوائم الوصول<br/>(Vector index with ACL metadata)"]
+    Q["السؤال مع هوية الجلسة<br/>(Question plus session identity)"] --> R["المسترجع يطبّق الاستحقاقات<br/>(Retriever applies entitlements)"]
     V --> R
-    R --> P["الموجّه: التعليمات مع مقاطع غير موثوقة موسومة"]
-    P --> M["النموذج يصوغ مسودة الإجابة مع الاستشهادات"]
-    M --> O["معالجة المخرجات والمراجعة البشرية"]
+    R --> P["الموجّه: التعليمات مع مقاطع غير موثوقة موسومة<br/>(Prompt: instructions plus marked untrusted passages)"]
+    P --> M["النموذج يصوغ مسودة الإجابة مع الاستشهادات<br/>(Model drafts answer with citations)"]
+    M --> O["معالجة المخرجات والمراجعة البشرية<br/>(Output handling and human review)"]
 ```
 
 تسوء الأمور في أربعة مواضع (Four things go wrong):
@@ -789,14 +789,14 @@ hits = index.query(
 **العملية (The process).**
 
 ```mermaid
-flowchart LR
-    A["نموذج التهديدات والنطاق"] --> B["خطة اختبار مربوطة بقائمة أواسب وقاعدة أطلس"]
-    B --> C["اختبار يدوي ومؤتمت"]
-    C --> D["الفرز: الخطورة ومعدل النجاح"]
-    D --> E["الإصلاح في البنية المعمارية أولًا"]
-    E --> F["الإضافة إلى مجموعة الاختبارات العدائية في التكامل المستمر"]
-    F --> G["إعادة الاختبار قبل الإصدار"]
-    G --> H["التكرار مع كل تغيير في النموذج أو الموجّه أو الأداة أو البيانات"]
+flowchart RL
+    A["نموذج التهديدات والنطاق<br/>(Threat model and scope)"] --> B["خطة اختبار مربوطة بقائمة أواسب وقاعدة أطلس<br/>(Test plan mapped to OWASP and ATLAS)"]
+    B --> C["اختبار يدوي ومؤتمت<br/>(Manual and automated testing)"]
+    C --> D["الفرز: الخطورة ومعدل النجاح<br/>(Triage: severity and success rate)"]
+    D --> E["الإصلاح في البنية المعمارية أولًا<br/>(Fix in architecture first)"]
+    E --> F["الإضافة إلى مجموعة الاختبارات العدائية في التكامل المستمر<br/>(Add to adversarial test set in CI)"]
+    F --> G["إعادة الاختبار قبل الإصدار<br/>(Retest before release)"]
+    G --> H["التكرار مع كل تغيير في النموذج أو الموجّه أو الأداة أو البيانات<br/>(Repeat on every model, prompt, tool or data change)"]
     H --> B
 ```
 

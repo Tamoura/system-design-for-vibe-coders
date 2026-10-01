@@ -88,17 +88,17 @@
 الصف الأخير هو **النائب المرتبك (confused deputy)** التقليدي: برنامجٌ يملك صلاحيةً مشروعة (a program with legitimate authority) يُخدع فيستخدمها لصالح شخصٍ آخر (tricked into using it on someone else's behalf). والوكيل ذو صلاحيات الأدوات الواسعة (An agent with broad tool permissions) هو المثال النموذجي (the textbook case).
 
 ```mermaid
-flowchart LR
-    C["العميل في تطبيق نجم للهاتف"] --> API["واجهة برمجة نجم أسيست والمنسّق"]
-    M["نص المعاملة الذي يكتبه التاجر"] --> API
-    KB["مستندات الرسوم والسياسات"] --> API
-    API --> LLM["النموذج اللغوي الكبير لدى المورّد"]
+flowchart RL
+    C["العميل في تطبيق نجم للهاتف<br/>(Customer in Najm Mobile)"] --> API["واجهة برمجة نجم أسيست والمنسّق<br/>(Assist API and orchestrator)"]
+    M["نص المعاملة الذي يكتبه التاجر<br/>(Merchant-written transaction text)"] --> API
+    KB["مستندات الرسوم والسياسات<br/>(Fee and policy documents)"] --> API
+    API --> LLM["النموذج اللغوي الكبير لدى المورّد<br/>(Vendor LLM)"]
     LLM --> API
-    API --> T1["أداة: تجميد البطاقة"]
-    API --> T2["أداة: فتح نزاع"]
-    API --> R["الرد المعروض في التطبيق"]
-    API --> L["السجلات ونصوص المحادثات"]
-    V["مورّد النموذج وسلسلة التوريد"] -.-> LLM
+    API --> T1["أداة: تجميد البطاقة<br/>(Tool: freeze card)"]
+    API --> T2["أداة: فتح نزاع<br/>(Tool: open dispute)"]
+    API --> R["الرد المعروض في التطبيق<br/>(Reply rendered in app)"]
+    API --> L["السجلات ونصوص المحادثات<br/>(Logs and transcripts)"]
+    V["مورّد النموذج وسلسلة التوريد<br/>(Model vendor and supply chain)"] -.-> LLM
 ```
 
 نص العميل (The customer's text)، ونص التاجر (the merchant's text)، ونموذج المورّد (the vendor's model) كلها تعبر حدود الثقة (all cross trust boundaries)؛ أما مستندات الرسوم (the fee documents) فداخلية لكن كثيرين يستطيعون تعديلها (internal but widely editable)، ولذا تحتاج إلى ضبط التغيير (so they need change control).
@@ -337,17 +337,17 @@ messages = [
 **الثالوث القاتل (The lethal trifecta)** (Willison, 2025؛ انظر 8.1) هو سبب أهمية القنوات (is why channels matter): فحين تجتمع **البيانات الخاصة (private data)** و**المحتوى غير الموثوق (untrusted content)** و**التواصل الخارجي (external communication)** في نظامٍ واحد (in one system)، يستطيع أيّ شخصٍ يمكنه وضع نصٍّ أمامه سرقة البيانات (anyone who can place text in front of it can steal the data). ولا يوجد مرشّحٌ يجعل هذا آمنًا بموثوقية (No filter makes this reliably safe)، فأزِل ركنًا (so remove a leg). و«قاعدة الاثنين للوكلاء» من Meta (Meta's "Agents Rule of Two") (2025) مشابهة (is similar): ففي الجلسة الواحدة (within a session)، ينبغي ألّا يحمل الوكيل أكثر من اثنين (an agent should hold no more than two) من: المُدخلات غير الموثوقة (untrusted input)، والبيانات أو الأنظمة الحساسة (sensitive data or systems)، والقدرة على تغيير الحالة أو التواصل خارجيًا (the ability to change state or communicate externally)، ما لم يوافق إنسان (unless a human approves).
 
 ```mermaid
-flowchart LR
-    A["المهاجم يزرع نصًّا في مستند"] --> B["فهرسة المستند للاسترجاع"]
-    U["المستخدم يطرح سؤالًا عاديًا"] --> C["المنسّق يبني السياق"]
+flowchart RL
+    A["المهاجم يزرع نصًّا في مستند<br/>(Attacker plants text in a document)"] --> B["فهرسة المستند للاسترجاع<br/>(Document indexed for retrieval)"]
+    U["المستخدم يطرح سؤالًا عاديًا<br/>(User asks a normal question)"] --> C["المنسّق يبني السياق<br/>(Orchestrator builds context)"]
     B --> C
-    C --> D["النموذج يعامل النص المزروع بوصفه تعليمات"]
-    D --> E{"ما الذي يستطيع النموذج بلوغه"}
-    E -->|"أداة ذات عواقب"| F["الشيفرة تفحص الصلاحية والتطبيق يطلب من المستخدم التأكيد"]
-    E -->|"رابط أو صورة صادرة"| G["العارض يسمح بالنطاقات المعتمدة فقط"]
-    E -->|"نص فقط"| H["إجابة متلاعب بها تُعرض مع مصادرها"]
-    F --> I["محجوب، أو يؤكده إنسان"]
-    G --> J["حجب تهريب البيانات"]
+    C --> D["النموذج يعامل النص المزروع بوصفه تعليمات<br/>(Model treats planted text as instructions)"]
+    D --> E{"ما الذي يستطيع النموذج بلوغه<br/>(What can the model reach)"}
+    E -->|"أداة ذات عواقب (Consequential tool)"| F["الشيفرة تفحص الصلاحية والتطبيق يطلب من المستخدم التأكيد<br/>(Code checks authority and app asks user to confirm)"]
+    E -->|"رابط أو صورة صادرة (Outbound link or image)"| G["العارض يسمح بالنطاقات المعتمدة فقط<br/>(Renderer allows approved domains only)"]
+    E -->|"نص فقط (Text only)"| H["إجابة متلاعب بها تُعرض مع مصادرها<br/>(Manipulated answer shown with its sources)"]
+    F --> I["محجوب، أو يؤكده إنسان<br/>(Blocked, or confirmed by a human)"]
+    G --> J["حجب تهريب البيانات<br/>(Exfiltration blocked)"]
 ```
 
 **الدفاع على طبقات (Defence in layers).**
@@ -567,21 +567,21 @@ def on_tool_call(session, call):
 **أين يصيب كل هجومٍ دورة حياة التعلّم الآلي (Where each attack hits the machine-learning life cycle).**
 
 ```mermaid
-flowchart LR
-    A["مصادر البيانات"] --> B["وضع التسميات"]
-    B --> C["التدريب أو الضبط الدقيق"]
-    P["نماذج ومجموعات بيانات من أطراف ثالثة"] --> C
-    C --> D["سجل النماذج"]
-    D --> E["النموذج المنشور"]
-    E --> F["واجهة برمجة التنبؤ أو المنتج"]
-    F --> G["التغذية الراجعة والتسميات الجديدة"]
+flowchart RL
+    A["مصادر البيانات<br/>(Data sources)"] --> B["وضع التسميات<br/>(Labelling)"]
+    B --> C["التدريب أو الضبط الدقيق<br/>(Training or fine-tuning)"]
+    P["نماذج ومجموعات بيانات من أطراف ثالثة<br/>(Third-party models and datasets)"] --> C
+    C --> D["سجل النماذج<br/>(Model registry)"]
+    D --> E["النموذج المنشور<br/>(Deployed model)"]
+    E --> F["واجهة برمجة التنبؤ أو المنتج<br/>(Prediction API or product)"]
+    F --> G["التغذية الراجعة والتسميات الجديدة<br/>(Feedback and new labels)"]
     G --> B
-    X1["التسميم"] -.-> A
+    X1["التسميم<br/>(Poisoning)"] -.-> A
     X1 -.-> B
-    X2["ملفات نماذج خبيثة أو مزروع فيها باب خلفي"] -.-> P
-    X3["التهرّب"] -.-> F
-    X4["الاستخراج والاستنتاج"] -.-> F
-    X5["سرقة ملفات النماذج"] -.-> D
+    X2["ملفات نماذج خبيثة أو مزروع فيها باب خلفي<br/>(Backdoored or malicious model files)"] -.-> P
+    X3["التهرّب<br/>(Evasion)"] -.-> F
+    X4["الاستخراج والاستنتاج<br/>(Extraction and inference)"] -.-> F
+    X5["سرقة ملفات النماذج<br/>(Theft of model files)"] -.-> D
 ```
 
 **التسميم (Poisoning).** يعني **تسميم البيانات (Data poisoning)** التلاعب ببيانات التدريب أو الضبط الدقيق (manipulating training or fine-tuning data) كي يتعلّم النموذج ما يريده المهاجم (so the model learns what the attacker wants). فـ**تسميم الإتاحة (Availability poisoning)** يُضعف النموذج إجمالًا (degrades the model overall). و**التسميم الموجَّه (Targeted poisoning)** يجعله يخطئ في مُدخلاتٍ محددة (makes it wrong on specific inputs)، مثل نمط عصابة احتيالٍ بعينها (such as one fraud ring's pattern). و**التلاعب بالتسميات (Label manipulation)** يُبقي البيانات حقيقية لكنه يجعل تسمياتها خاطئة (keeps the data genuine but makes its labels wrong)، كما في قصة التنبيهات الذكية (as in the Smart Alerts story). و**الباب الخلفي (backdoor)** يعلّم النموذج **مُشغِّلًا (trigger)** مخفيًا، أي نمط مُدخلٍ ينتج المخرجات التي اختارها المهاجم (an input pattern that produces the attacker's chosen output) بينما يتصرّف النموذج طبيعيًا في غير ذلك (while the model behaves normally otherwise). وقد أظهرت ورقة «BadNets» (Gu وزملاؤه، 2017) أبوابًا خلفية في مصنِّفات الصور (backdoors in image classifiers)، وأظهرت ورقة «Sleeper Agents» (Hubinger وزملاؤه، 2024) نماذج لغوية مزروعًا فيها باب خلفي (backdoored language models) استمرّ سلوكها المخفي رغم تدريب السلامة المعتاد (whose hidden behaviour persisted through standard safety training). وفي أنظمة النماذج اللغوية الكبيرة (For LLM systems)، يطال التسميم أيضًا **مخازن الاسترجاع (retrieval stores)** (LLM08)، و**بيانات الضبط الدقيق (fine-tuning data)**، و**النماذج الآتية من مصادر غير موثوقة (models from untrusted sources)** (LLM03، LLM04). وأظهر Carlini وزملاؤه (2023) أن تسميم مجموعات التدريب بحجم الويب عمليٌّ (poisoning web-scale training sets is practical)، مثلًا عبر نطاقاتٍ منتهية الصلاحية ما زالت مجموعات البيانات تشير إليها (via expired domains that datasets still point to).

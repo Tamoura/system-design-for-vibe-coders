@@ -97,17 +97,17 @@ app.post("/login", async (req, res, next) => {
 
 ```mermaid
 flowchart TD
-    A["طلب تسجيل الدخول"] --> B{"فحوص الروبوتات والمعدل والمخاطر"}
-    B -->|"مريب"| C["إبطاء أو تحدٍّ أو حظر"]
-    B -->|"طبيعي"| D{"مفتاح مرور، أو كلمة مرور مع عامل ثانٍ"}
-    D -->|"يفشل"| E["رسالة خطأ عامة وعدّ الإخفاق"]
-    D -->|"ينجح"| F{"جهاز جديد أو مخاطر عالية"}
-    F -->|"نعم"| G["مصادقة تصعيدية بعامل مقاوم للتصيد"]
-    F -->|"لا"| H["تدوير معرّف الجلسة"]
+    A["طلب تسجيل الدخول<br/>(Login request)"] --> B{"فحوص الروبوتات والمعدل والمخاطر<br/>(Bot, rate and risk checks)"}
+    B -->|"مريب (Suspicious)"| C["إبطاء أو تحدٍّ أو حظر<br/>(Slow down, challenge or block)"]
+    B -->|"طبيعي (Normal)"| D{"مفتاح مرور، أو كلمة مرور مع عامل ثانٍ<br/>(Passkey, or password plus second factor)"}
+    D -->|"يفشل (Fails)"| E["رسالة خطأ عامة وعدّ الإخفاق<br/>(Generic error, count failure)"]
+    D -->|"ينجح (Passes)"| F{"جهاز جديد أو مخاطر عالية<br/>(New device or high risk)"}
+    F -->|"نعم (Yes)"| G["مصادقة تصعيدية بعامل مقاوم للتصيد<br/>(Step-up with phishing-resistant factor)"]
+    F -->|"لا (No)"| H["تدوير معرّف الجلسة<br/>(Rotate session ID)"]
     G --> H
-    H --> I["ملف تعريف ارتباط آمن، ومهلتا الخمول والحد المطلق"]
-    I --> J{"إجراء حساس لاحقًا"}
-    J -->|"نعم"| K["مصادقة تصعيدية جديدة لذلك الإجراء"]
+    H --> I["ملف تعريف ارتباط آمن، ومهلتا الخمول والحد المطلق<br/>(Secure cookie, idle and absolute timeouts)"]
+    I --> J{"إجراء حساس لاحقًا<br/>(Sensitive action later)"}
+    J -->|"نعم (Yes)"| K["مصادقة تصعيدية جديدة لذلك الإجراء<br/>(Fresh step-up for that action)"]
 ```
 
 ### 🔴 نظرة الخبير (Expert view)
@@ -311,21 +311,21 @@ code_challenge = base64.urlsafe_b64encode(
 
 ```mermaid
 sequenceDiagram
-    participant B as المتصفح
-    participant P as الواجهة الخلفية للبوابة
-    participant L as خادم تسجيل الدخول في نجم
-    participant I as واجهة برمجة الفواتير
-    P->>B: إعادة توجيه إلى تسجيل الدخول مع قيمة الحالة وتحدي الرمز
-    B->>L: طلب التفويض
-    B->>L: العميل يسجل الدخول بمفتاح مرور ويوافق
-    L->>B: إعادة توجيه إلى عنوان الاستدعاء مع الرمز وقيمة الحالة
-    B->>P: الاستدعاء مع الرمز وقيمة الحالة
-    P->>P: التحقق من تطابق قيمة الحالة
-    P->>L: الرمز ومحقق الرمز ومصادقة التطبيق العميل
-    L->>P: رموز الوصول والتحديث والهوية
-    P->>B: ملف تعريف ارتباط للجلسة فقط، محجوب عن النصوص البرمجية
-    P->>I: استدعاء واجهة البرمجة برمز الوصول
-    I->>I: التحقق من التوقيع والمصدر والجمهور وانتهاء الصلاحية والنطاق
+    participant I as واجهة برمجة الفواتير (Invoice API)
+    participant L as خادم تسجيل الدخول في نجم (Najm login server)
+    participant P as الواجهة الخلفية للبوابة (Portal backend)
+    participant B as المتصفح (Browser)
+    P->>B: إعادة توجيه إلى تسجيل الدخول مع قيمة الحالة وتحدي الرمز (Redirect to login with state and code_challenge)
+    B->>L: طلب التفويض (Authorization request)
+    B->>L: العميل يسجل الدخول بمفتاح مرور ويوافق (Customer signs in with passkey and consents)
+    L->>B: إعادة توجيه إلى عنوان الاستدعاء مع الرمز وقيمة الحالة (Redirect to callback with code and state)
+    B->>P: الاستدعاء مع الرمز وقيمة الحالة (Callback with code and state)
+    P->>P: التحقق من تطابق قيمة الحالة (Check state matches)
+    P->>L: الرمز ومحقق الرمز ومصادقة التطبيق العميل (Code, code_verifier and client authentication)
+    L->>P: رموز الوصول والتحديث والهوية (Access, refresh and ID tokens)
+    P->>B: ملف تعريف ارتباط للجلسة فقط، محجوب عن النصوص البرمجية (HttpOnly session cookie only)
+    P->>I: استدعاء واجهة البرمجة برمز الوصول (API call with access token)
+    I->>I: التحقق من التوقيع والمصدر والجمهور وانتهاء الصلاحية والنطاق (Verify signature, issuer, audience, expiry, scope)
 ```
 
 **OpenID Connect.** يقول OAuth «يجوز لهذا التطبيق استدعاء تلك الواجهة» ("this app may call that API")، لا من هو المستخدم (not who the user is)؛ ومعاملة رمز الوصول (access token) على أنه دليلٌ على تسجيل الدخول (proof of login) خطأٌ كلاسيكي (classic mistake). ويضيف **OIDC** (OpenID Connect Core 1.0) **رمز الهوية (ID token)**، وهو رمز JWT يحمل `iss` (المُصدِر (issuer))، و`sub` (معرّفٌ ثابت للمستخدم (stable user identifier) *لدى ذلك المُصدِر (at that issuer)*)، و`aud` (التطبيق العميل (the client))، و`exp` و`iat` (وقت انتهاء الصلاحية ووقت الإصدار (expiry and issue time))، و`nonce` (يُعاد كما هو (echoed back) لمنع إعادة التشغيل (block replay))، و`auth_time` و`acr` و`amr` (متى وكيف صادق المستخدم (when and how the user authenticated)، لأغراض المصادقة التصعيدية (for step-up)). يتحقق التطبيق العميل من التوقيع (signature) و`iss` و`aud` وانتهاء الصلاحية (expiry) و`nonce`، ثم يحدد المستخدم عبر **`iss` + `sub`**، لا عبر البريد الإلكتروني أبدًا (never by email).
@@ -684,18 +684,18 @@ CREATE POLICY company_isolation ON invoices
 
 ```mermaid
 flowchart TD
-    A["طلب مع جلسة أو رمز مميز"] --> B{"موثَّق"}
-    B -->|"لا"| X["401 وتسجيل"]
-    B -->|"نعم"| C["المستأجر والمستخدم من الجلسة"]
-    C --> D{"فحص الوظيفة: هل يجوز للدور استدعاء هذا"}
-    D -->|"لا"| Y["403 وتسجيل"]
-    D -->|"نعم"| E["تحميل الكائن محصورًا في المستأجر"]
-    E --> F{"موجود"}
-    F -->|"لا"| Z["404"]
-    F -->|"نعم"| G{"السياسة: المالك والحالة والمنشئ والمدقق"}
-    G -->|"لا"| Y
-    G -->|"نعم"| H["إعادة عرض مرشَّح حسب الدور"]
-    E -.-> R["أمن مستوى الصف في قاعدة البيانات"]
+    A["طلب مع جلسة أو رمز مميز<br/>(Request with session or token)"] --> B{"موثَّق<br/>(Authenticated)"}
+    B -->|"لا (No)"| X["401 وتسجيل<br/>(401 and log)"]
+    B -->|"نعم (Yes)"| C["المستأجر والمستخدم من الجلسة<br/>(Tenant and user from session)"]
+    C --> D{"فحص الوظيفة: هل يجوز للدور استدعاء هذا<br/>(Function check: role may call this)"}
+    D -->|"لا (No)"| Y["403 وتسجيل<br/>(403 and log)"]
+    D -->|"نعم (Yes)"| E["تحميل الكائن محصورًا في المستأجر<br/>(Load object scoped to tenant)"]
+    E --> F{"موجود<br/>(Found)"}
+    F -->|"لا (No)"| Z["404"]
+    F -->|"نعم (Yes)"| G{"السياسة: المالك والحالة والمنشئ والمدقق<br/>(Policy: owner, status, maker-checker)"}
+    G -->|"لا (No)"| Y
+    G -->|"نعم (Yes)"| H["إعادة عرض مرشَّح حسب الدور<br/>(Return role-filtered view)"]
+    E -.-> R["أمن مستوى الصف في قاعدة البيانات<br/>(Database row-level security)"]
 ```
 
 **اختبار التفويض (Testing authorisation).** الماسحات (scanners) ضعيفةٌ في اكتشاف ثغرات التفويض (authorisation flaws)، لأنها لا تعرف أن الفاتورة 10234 تخص شخصًا آخر. ابنِ الاختبارات من مصفوفة التحكم في الوصول (access-control matrix): لكل نقطة نهايةٍ ودور (for every endpoint and role)، اختبر **كائنك أنت (your own object)**، و**كائن مستخدمٍ آخر في الشركة نفسها (another user's object in the same company)**، و**كائنًا في شركةٍ أخرى (an object in another company)**. واحتفظ في كل بيئة اختبار (every test environment) **بحسابين لكل دور في مستأجرَين اثنين (two accounts per role in two tenants)**، وشغّل مجموعة الاختبارات في التكامل المستمر (run the suite in CI) بحيث تُفشل نقطةُ نهايةٍ جديدة بلا صفٍّ في المصفوفة (a new endpoint without a matrix row) عمليةَ البناء (fails the build). وفي الاختبار اليدوي (manual testing)، أعِد تشغيل كل طلبٍ بجلسة مستخدمٍ آخر (replay each request with another user's session).

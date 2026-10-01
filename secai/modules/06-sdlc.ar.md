@@ -33,13 +33,13 @@
 **الأنشطة الأمنية حسب المرحلة (Security activities by phase).** تحصل كل مرحلة (Every phase) على مهمةٍ صغيرة ومحددة (a small, specific job)، وكل ما يفلت إلى الإنتاج (whatever escapes to production) يعود ليغذّي الخطة التالية (feeds back into the next plan):
 
 ```mermaid
-flowchart LR
-    P["التخطيط: فئة المخاطر والمتطلبات الأمنية"] --> D["التصميم: نموذج التهديدات للفئة 1"]
-    D --> B["البناء: المراجعة والتحليل الساكن وتحليل المكونات وفحص الأسرار"]
-    B --> T["الاختبار: الاختبارات الأمنية والاختبار الديناميكي"]
-    T --> R["النشر: فحوص الإعدادات والمخرجات الموقّعة"]
-    R --> O["التشغيل: المراقبة وإدارة الثغرات"]
-    O -->|"الثغرات المُفلِتة تصبح قواعد واختبارات"| P
+flowchart RL
+    P["التخطيط: فئة المخاطر والمتطلبات الأمنية<br/>(Plan: risk tier and security requirements)"] --> D["التصميم: نموذج التهديدات للفئة 1<br/>(Design: threat model for tier 1)"]
+    D --> B["البناء: المراجعة والتحليل الساكن وتحليل المكونات وفحص الأسرار<br/>(Build: review, SAST, SCA, secret scan)"]
+    B --> T["الاختبار: الاختبارات الأمنية والاختبار الديناميكي<br/>(Test: security tests and DAST)"]
+    T --> R["النشر: فحوص الإعدادات والمخرجات الموقّعة<br/>(Deploy: config checks and signed artefacts)"]
+    R --> O["التشغيل: المراقبة وإدارة الثغرات<br/>(Operate: monitor and manage vulnerabilities)"]
+    O -->|"الثغرات المُفلِتة تصبح قواعد واختبارات (escapes become rules and tests)"| P
 ```
 
 **متطلباتٌ أمنية يمكنك اختبارها (Security requirements you can test).** لا يمكن بناء عبارة «يجب أن يكون النظام آمنًا» ("The system must be secure") ولا اختبارها (cannot be built or tested). اكتب المتطلبات الأمنية (security requirements) كما تكتب المتطلبات الوظيفية (like functional ones): محددةً (specific)، ولها مالك (owned)، وقابلةً للتحقق (checkable). ويساعدك في ذلك مصدران (Two sources help):
@@ -297,18 +297,18 @@ cur.execute(
 **ما الذي في السلسلة (What is in the chain).** خدمةٌ نموذجية في نجم (A typical Najm service) هي بضعة آلاف من الأسطر من شيفرتها الخاصة (a few thousand lines of its own code) فوق مئات الحزم مفتوحة المصدر (on top of hundreds of open-source packages): **اعتمادياتٌ مباشرة (direct dependencies)** اختارها مطوروك (your developers chose)، و**اعتمادياتٌ متعدّية (transitive dependencies)** سحبتها تلك الحزم (those packages pulled in)، تُجلب من **مستودعات الحزم (registries)** العامة، أي npm وPyPI وMaven Central، أو من مرآةٍ داخلية (an internal mirror). ويبنيها **خط تسليم CI/CD (CI/CD pipeline)**، أي التكامل والتسليم المستمرّان (continuous integration and delivery)، في **صورة حاوية (container image)** فوق **صورةٍ أساسية (base image)** يملكها طرفٌ آخر (someone else's)، ويدفعها إلى **مستودع المُخرَجات (artefact registry)**، الذي يسحبها منه عنقود Kubernetes (from which the Kubernetes cluster pulls it). وكل سهمٍ (Every arrow) هو موضعٌ يمكن فيه استبدال شيءٍ أو تسميمه (a place where something can be swapped or poisoned).
 
 ```mermaid
-flowchart LR
-    S["مستودع الشيفرة المصدرية"] --> B["البناء في التكامل المستمر"]
-    D["الحزم العامة والداخلية"] --> B
-    I["الصور الأساسية وإجراءات التكامل المستمر"] --> B
-    B --> A["صورة موقّعة مع قائمة المكونات وبيان المنشأ"]
-    A --> R["مستودع المخرجات"]
-    R --> K["فحص القبول في العنقود"]
-    K --> P["الإنتاج"]
-    X1["تهديد: إيداع غير مُراجَع"] -.-> S
-    X2["تهديد: انتحال الاسم أو ارتباك الاعتماديات"] -.-> D
-    X3["تهديد: خطوة بناء مسمومة"] -.-> B
-    X4["تهديد: صورة مستبدلة"] -.-> R
+flowchart RL
+    S["مستودع الشيفرة المصدرية<br/>(Source repository)"] --> B["البناء في التكامل المستمر<br/>(CI build)"]
+    D["الحزم العامة والداخلية<br/>(Public and internal packages)"] --> B
+    I["الصور الأساسية وإجراءات التكامل المستمر<br/>(Base images and CI actions)"] --> B
+    B --> A["صورة موقّعة مع قائمة المكونات وبيان المنشأ<br/>(Signed image with SBOM and provenance)"]
+    A --> R["مستودع المخرجات<br/>(Artefact registry)"]
+    R --> K["فحص القبول في العنقود<br/>(Cluster admission check)"]
+    K --> P["الإنتاج<br/>(Production)"]
+    X1["تهديد: إيداع غير مُراجَع<br/>(Threat: unreviewed commit)"] -.-> S
+    X2["تهديد: انتحال الاسم أو ارتباك الاعتماديات<br/>(Threat: typosquat or confusion)"] -.-> D
+    X3["تهديد: خطوة بناء مسمومة<br/>(Threat: poisoned build step)"] -.-> B
+    X4["تهديد: صورة مستبدلة<br/>(Threat: swapped image)"] -.-> R
 ```
 
 **ثلاثة أنواعٍ من المخاطر (Three kinds of risk).**
@@ -640,15 +640,15 @@ def export_invoice(invoice_id):
 **الضوابط الوقائية على الطريق إلى `main` (Guardrails on the path to main).**
 
 ```mermaid
-flowchart LR
-    A["الوكيل في بيئة معزولة"] --> H["قبل الإيداع: فحص الأسرار وتدقيق الشيفرة"]
-    H --> PR["طلب سحب موسوم بأنه بمساعدة الذكاء الاصطناعي"]
-    PR --> G["بوابات التكامل المستمر: التحليل الساكن وتحليل المكونات وفحص الاعتماديات الجديدة وفحص البنية التحتية"]
-    G --> T["الاختبارات الأمنية المحمية"]
-    T --> RV["مراجعة بشرية: الاختبارات أولًا ثم التفويض والبيانات"]
-    RV --> M["دمج على يد إنسان"]
-    G -->|"فشل"| A
-    T -->|"فشل"| A
+flowchart RL
+    A["الوكيل في بيئة معزولة<br/>(Agent in sandbox)"] --> H["قبل الإيداع: فحص الأسرار وتدقيق الشيفرة<br/>(Pre-commit: secrets and lint)"]
+    H --> PR["طلب سحب موسوم بأنه بمساعدة الذكاء الاصطناعي<br/>(Pull request labelled AI-assisted)"]
+    PR --> G["بوابات التكامل المستمر: التحليل الساكن وتحليل المكونات وفحص الاعتماديات الجديدة وفحص البنية التحتية<br/>(CI gates: SAST, SCA, new-dependency check, IaC scan)"]
+    G --> T["الاختبارات الأمنية المحمية<br/>(Protected security tests)"]
+    T --> RV["مراجعة بشرية: الاختبارات أولًا ثم التفويض والبيانات<br/>(Human review: tests first, then authz and data)"]
+    RV --> M["دمج على يد إنسان<br/>(Merge by a human)"]
+    G -->|"فشل (fail)"| A
+    T -->|"فشل (fail)"| A
 ```
 
 تستحق ثلاث بواباتٍ في نجم نظرةً أقرب (Three Najm gates deserve a closer look):

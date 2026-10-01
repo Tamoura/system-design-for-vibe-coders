@@ -29,12 +29,12 @@
 **الشيفرة والبيانات في قناةٍ واحدة (Code and data in one channel).** **المفسِّر (interpreter)** هو أي مكوّن (component) يقرأ سلسلةً نصية (string) ثم *يفعل* بها شيئًا (*does* something): فمحرّك SQL ‏(SQL engine) ينفّذ الاستعلامات (runs queries)، والصدفة (shell) تنفّذ الأوامر (runs commands)، ومحرّك القوالب (template engine) يقيّم التعبيرات (evaluates expressions). ويحدث الحقن حين يبني برنامجك تلك السلسلة بخلط تعليماته الخاصة بمدخلات شخصٍ آخر (mixing its own instructions with someone else's input). لا يستطيع المفسِّر أن يميّز الجزء الذي كتبتَه (tell which part you wrote)، فيتمكن المستخدم الذي يكتب صياغة المفسِّر (interpreter syntax) من كتابة التعليمات (gets to write instructions).
 
 ```mermaid
-flowchart LR
-    U["مدخلات المستخدم"] --> C{"كيف تُدمج؟"}
-    C -->|"ربط السلاسل النصية"| S["سلسلة واحدة: شيفرة وبيانات مختلطة"]
-    S --> X["المفسِّر ينفّذ المدخلات بوصفها شيفرة"]
-    C -->|"معاملات أو قائمة وسائط"| P["الأمر والقيم يُرسلان منفصلين"]
-    P --> V["المفسِّر يعامل المدخلات بوصفها قيمة"]
+flowchart RL
+    U["مدخلات المستخدم<br/>(User input)"] --> C{"كيف تُدمج؟<br/>(How is it combined?)"}
+    C -->|"ربط السلاسل النصية (String concatenation)"| S["سلسلة واحدة: شيفرة وبيانات مختلطة<br/>(One string: code and data mixed)"]
+    S --> X["المفسِّر ينفّذ المدخلات بوصفها شيفرة<br/>(Interpreter runs input as code)"]
+    C -->|"معاملات أو قائمة وسائط (Parameters or argument list)"| P["الأمر والقيم يُرسلان منفصلين<br/>(Command and values sent apart)"]
+    P --> V["المفسِّر يعامل المدخلات بوصفها قيمة<br/>(Interpreter treats input as a value)"]
 ```
 
 **حقن SQL ‏(SQL injection).** إليك ميزة البحث التي كتبها علي (Ali's search):
@@ -332,15 +332,15 @@ const clean = DOMPurify.sanitize(invoice.notes, {
 
 ```mermaid
 sequenceDiagram
-    participant V as متصفح الضحية
-    participant E as موقع المهاجم
-    participant P as بوابة الشركات الصغيرة
-    V->>P: يسجّل الدخول ويتلقى ملف تعريف ارتباط للجلسة
-    V->>E: يزور لاحقًا صفحة خبيثة
-    E-->>V: تحتوي الصفحة على نموذج مخفي يُرسَل تلقائيًا
-    V->>P: طلب إرسال لإضافة مستفيد، والمتصفح يرفق ملف تعريف الارتباط
-    P->>P: يتحقق من رمز مكافحة التزوير ومن ترويسة المصدر
-    P-->>V: رفض 403، فلا رمز والمصدر من موقع آخر
+    participant P as بوابة الشركات الصغيرة (SME Portal)
+    participant E as موقع المهاجم (Attacker website)
+    participant V as متصفح الضحية (Victim browser)
+    V->>P: يسجّل الدخول ويتلقى ملف تعريف ارتباط للجلسة (Logs in and receives a session cookie)
+    V->>E: يزور لاحقًا صفحة خبيثة (Later visits a malicious page)
+    E-->>V: تحتوي الصفحة على نموذج مخفي يُرسَل تلقائيًا (Page holds a hidden auto-submitting form)
+    V->>P: طلب إرسال لإضافة مستفيد، والمتصفح يرفق ملف تعريف الارتباط (POST add beneficiary, cookie attached by the browser)
+    P->>P: يتحقق من رمز مكافحة التزوير ومن ترويسة المصدر (Checks CSRF token and Origin header)
+    P-->>V: رفض 403، فلا رمز والمصدر من موقع آخر (403 rejected, no token and cross-site origin)
 ```
 
 **إصلاح CSRF ‏(Fixing CSRF).** ضع هذه الضوابط في طبقات (Layer these controls):
@@ -561,14 +561,14 @@ Set-Cookie: __Host-session=…; Secure; HttpOnly; SameSite=Lax; Path=/
 **SSRF: خادمك وكيلًا للمهاجم (your server as the attacker's proxy).** يقع خادمك داخل حدود ثقة (trust boundaries) لا يستطيع الإنترنت عبورها. فهو يستطيع الوصول إلى لوحات الإدارة الداخلية (internal admin panels)، وواجهة برمجة Kubernetes ‏(Kubernetes API)، وعلى السحابات الكبرى (major clouds)، إلى **خدمة البيانات الوصفية (metadata service)** على العنوان الخاص (special address) `169.254.169.254`، التي تمنح بيانات اعتماد مؤقتة لدور الجهاز (temporary credentials for the machine's role). والميزة التي تجلب عناوين URL يقدّمها المستخدم (user-supplied URLs) تتيح له توجيه خادمك نحو أيٍّ منها (aim your server at any of these).
 
 ```mermaid
-flowchart LR
-    A["المهاجم يلصق رابطًا"] --> F["أداة الجلب في بوابة الشركات الصغيرة"]
-    F -->|"بلا ضوابط"| M["خدمة البيانات الوصفية السحابية"]
-    M --> K["بيانات اعتماد مؤقتة للدور"]
-    K --> S["مخزن كائنات يحوي الفواتير"]
-    F -->|"مع الضوابط"| V["قائمة سماح وفحص العنوان المحلول"]
-    V --> P["وكيل الخروج"]
-    P --> H["مضيف شريك معتمد فقط"]
+flowchart RL
+    A["المهاجم يلصق رابطًا<br/>(Attacker pastes URL)"] --> F["أداة الجلب في بوابة الشركات الصغيرة<br/>(SME Portal fetcher)"]
+    F -->|"بلا ضوابط (No controls)"| M["خدمة البيانات الوصفية السحابية<br/>(Cloud metadata service)"]
+    M --> K["بيانات اعتماد مؤقتة للدور<br/>(Temporary role credentials)"]
+    K --> S["مخزن كائنات يحوي الفواتير<br/>(Object store with invoices)"]
+    F -->|"مع الضوابط (With controls)"| V["قائمة سماح وفحص العنوان المحلول<br/>(Allow-list and resolved IP check)"]
+    V --> P["وكيل الخروج<br/>(Egress proxy)"]
+    P --> H["مضيف شريك معتمد فقط<br/>(Approved partner host only)"]
 ```
 
 ```python

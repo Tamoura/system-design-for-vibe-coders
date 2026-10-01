@@ -99,15 +99,15 @@
 - **ارصد (Detect)** استخدام بيانات اعتماد الدور من خارج شبكتك (role credentials used from outside your network)؛ إذ تستطيع خدمات رصد التهديدات لدى المزوّدين (providers' threat-detection services) الإبلاغ عن ذلك (flag this).
 
 ```mermaid
-flowchart LR
-    A["طلب المهاجم"] --> B["تطبيق فيه ثغرة تزوير طلبات من جهة الخادم"]
-    B --> C["خدمة البيانات الوصفية للمثيل"]
-    C --> D["بيانات اعتماد مؤقتة للدور"]
-    D --> E["مخزن كائنات فيه بيانات العملاء"]
-    F["إصلاح الثغرة: قائمة سماح للوجهات"] -.-> B
-    G["إلزام الإصدار الثاني من خدمة البيانات الوصفية، وحد القفزات 1"] -.-> C
-    H["دور بأقل الصلاحيات"] -.-> D
-    I["سجلات التدقيق وتنبيهات الشذوذ"] -.-> E
+flowchart RL
+    A["طلب المهاجم<br/>(Attacker request)"] --> B["تطبيق فيه ثغرة تزوير طلبات من جهة الخادم<br/>(App with SSRF flaw)"]
+    B --> C["خدمة البيانات الوصفية للمثيل<br/>(Instance metadata service)"]
+    C --> D["بيانات اعتماد مؤقتة للدور<br/>(Temporary role credentials)"]
+    D --> E["مخزن كائنات فيه بيانات العملاء<br/>(Object store with customer data)"]
+    F["إصلاح الثغرة: قائمة سماح للوجهات<br/>(Fix SSRF: destination allowlist)"] -.-> B
+    G["إلزام الإصدار الثاني من خدمة البيانات الوصفية، وحد القفزات 1<br/>(IMDSv2 required, hop limit 1)"] -.-> C
+    H["دور بأقل الصلاحيات<br/>(Least-privilege role)"] -.-> D
+    I["سجلات التدقيق وتنبيهات الشذوذ<br/>(Audit logs and anomaly alerts)"] -.-> E
 ```
 
 كل خطٍّ منقّط (Each dotted line) ضابطٌ مستقل (an independent control) يكسر السلسلة (breaks the chain): إنه الدفاع المتعدد الطبقات (defence in depth) (1.2) مطبَّقًا على مسار هجومٍ حقيقي (on a real attack path).
@@ -425,16 +425,16 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "invoices" {
 - **الانحراف (Drift).** يغيّر أحدهم موردًا يدويًا (Someone changes a resource by hand). اكتشف الانحراف بشكلٍ مجدول (Detect drift on a schedule)، أي بخطةٍ ينبغي ألّا تُظهر أي تغييرات (a plan that should show no changes)، وأصلِحه في الشيفرة (and fix it in code).
 
 ```mermaid
-flowchart LR
-    A["إيداع من مطور أو وكيل ذكاء اصطناعي"] --> B["فحص البنية التحتية بوصفها شيفرة وملف بناء الحاوية"]
-    B --> C["بناء الصورة"]
-    C --> D["فحص الصورة وقائمة مكونات البرمجيات"]
-    D --> E["توقيع الصورة"]
-    E --> F["سجل صور البنك"]
-    F --> G["فحص سياسة القبول"]
-    G --> H["وحدة تشغيل عاملة"]
-    H --> I["الرصد وقت التشغيل"]
-    G -->|"غير موقعة أو غير ممتثلة"| J["مرفوضة"]
+flowchart RL
+    A["إيداع من مطور أو وكيل ذكاء اصطناعي<br/>(Commit by developer or AI agent)"] --> B["فحص البنية التحتية بوصفها شيفرة وملف بناء الحاوية<br/>(IaC and Dockerfile scan)"]
+    B --> C["بناء الصورة<br/>(Build image)"]
+    C --> D["فحص الصورة وقائمة مكونات البرمجيات<br/>(Image scan and SBOM)"]
+    D --> E["توقيع الصورة<br/>(Sign image)"]
+    E --> F["سجل صور البنك<br/>(Bank registry)"]
+    F --> G["فحص سياسة القبول<br/>(Admission policy check)"]
+    G --> H["وحدة تشغيل عاملة<br/>(Running pod)"]
+    H --> I["الرصد وقت التشغيل<br/>(Runtime detection)"]
+    G -->|"غير موقعة أو غير ممتثلة (Unsigned or non-compliant)"| J["مرفوضة<br/>(Rejected)"]
 ```
 
 ### 🔴 نظرة الخبير (Expert view)
@@ -699,16 +699,16 @@ spec:
 وكل ما عدا ذلك مرفوض (Everything else is denied): الإنترنت (the internet)، وعنوان البيانات الوصفية (the metadata address)، ومخزن المتجهات لمساعد مذكرات الائتمان (and the Credit Memo Copilot's vector store).
 
 ```mermaid
-flowchart LR
-    U["العملاء والمهاجمون"] --> C["شبكة توصيل المحتوى والحماية من حجب الخدمة الموزع"]
-    C --> W["جدار حماية تطبيقات الويب"]
-    W --> G["بوابة واجهات البرمجة: المصادقة والحصص والمخطط"]
-    G --> A["طبقة التطبيقات: شبكة فرعية خاصة"]
-    A --> D["طبقة البيانات: نقاط نهاية خاصة"]
-    A --> AI["طبقة الذكاء الاصطناعي: نجم أسيست وأدواته"]
-    AI --> E["وكيل خروج بقائمة سماح"]
-    E --> X["واجهات برمجة خارجية معتمدة فقط"]
-    M["الموظفون والمسؤولون عبر الوصول الشبكي بانعدام الثقة"] --> A
+flowchart RL
+    U["العملاء والمهاجمون<br/>(Customers and attackers)"] --> C["شبكة توصيل المحتوى والحماية من حجب الخدمة الموزع<br/>(CDN and DDoS protection)"]
+    C --> W["جدار حماية تطبيقات الويب<br/>(WAF)"]
+    W --> G["بوابة واجهات البرمجة: المصادقة والحصص والمخطط<br/>(API gateway: auth, quotas, schema)"]
+    G --> A["طبقة التطبيقات: شبكة فرعية خاصة<br/>(App tier: private subnet)"]
+    A --> D["طبقة البيانات: نقاط نهاية خاصة<br/>(Data tier: private endpoints)"]
+    A --> AI["طبقة الذكاء الاصطناعي: نجم أسيست وأدواته<br/>(AI tier: Najm Assist and tools)"]
+    AI --> E["وكيل خروج بقائمة سماح<br/>(Egress proxy with allowlist)"]
+    E --> X["واجهات برمجة خارجية معتمدة فقط<br/>(Approved external APIs only)"]
+    M["الموظفون والمسؤولون عبر الوصول الشبكي بانعدام الثقة<br/>(Staff and admins via ZTNA)"] --> A
 ```
 
 **احمِ الخادم الأصلي (Protect the origin).** لا تساعد شبكة توصيل المحتوى وجدار حماية تطبيقات الويب (A CDN and WAF only help) إلا إذا لم يستطع المهاجمون الالتفاف حولهما (if attackers cannot go around them). اجعل **الخادم الأصلي (origin)**، أي موازن الأحمال أو البوابة خلف الحافة (the load balancer or gateway behind the edge)، يقبل حركة المرور من الحافة فقط (accept traffic only from the edge): قيّده بنطاقات العناوين المنشورة لشبكة توصيل المحتوى (restrict it to the CDN's published address ranges)، أو، وهو الأفضل، اشترط اتصالًا مصادَقًا عليه (or, better, require an authenticated connection) مثل TLS المتبادل (such as mutual TLS). ولا تسرّب عناوين الخادم الأصلي (Do not leak origin addresses) عبر سجلات DNS قديمة أو صفحات الأخطاء (through old DNS records or error pages).

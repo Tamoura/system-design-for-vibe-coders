@@ -74,12 +74,12 @@
 - **القبول (Accept)**: تعايش معها عن وعي (live with it knowingly)، بتوقيع شخص يملك الصلاحية (signed by someone with authority)، مع موعد للمراجعة (with a review date).
 
 ```mermaid
-flowchart LR
-    TA["الجهة الفاعلة في التهديد"] -->|"تستغل"| V["الثغرة"]
-    V -->|"في نظام يحتفظ بـ"| A["الأصل"]
-    A -->|"ضرر"| I["الأثر على العملاء والبنك"]
-    C["الضوابط"] -.->|"تزيل أو تقلّل"| V
-    C -.->|"ترصد وتحدّ"| I
+flowchart RL
+    TA["الجهة الفاعلة في التهديد<br/>(Threat actor)"] -->|"تستغل (exploits)"| V["الثغرة<br/>(Vulnerability)"]
+    V -->|"في نظام يحتفظ بـ (in a system holding)"| A["الأصل<br/>(Asset)"]
+    A -->|"ضرر (harm)"| I["الأثر على العملاء والبنك<br/>(Impact on customers and bank)"]
+    C["الضوابط<br/>(Controls)"] -.->|"تزيل أو تقلّل (remove or reduce)"| V
+    C -.->|"ترصد وتحدّ (detect and limit)"| I
 ```
 
 ### 🟡 التعمق أكثر (Going deeper)
@@ -287,16 +287,16 @@ prompt = ASSIST_RULES + "\n\nCustomer message:\n" + customer_message
 | **تنفيذ الأهداف (Actions on objectives)** | يسرق البيانات (steals data)، أو ينقل الأموال (moves money)، أو يشفّر طلبًا للفدية (encrypts for ransom)، أو يعطّل (disrupts) | ينزّل فواتير الشركات الأخرى بالجملة (bulk-downloads other companies' invoices) | حدود على البيانات الخارجة (limits on data leaving)؛ ورصد الشذوذ (anomaly detection)؛ ونسخ احتياطية مُختبَرة (tested backups) |
 
 ```mermaid
-flowchart LR
-    A["الاستطلاع"] --> B["الوصول الأولي"]
-    B --> C["موطئ القدم"]
-    C --> D["تصعيد الصلاحيات"]
-    D --> E["الحركة الجانبية"]
-    E --> F["سرقة البيانات أو إحداث الأثر"]
-    B -.-> G["اكسرها: المصادقة متعددة العوامل والترقيع والشيفرة الآمنة"]
-    D -.-> H["اكسرها: أقل الصلاحيات"]
-    E -.-> I["اكسرها: تجزئة الشبكة"]
-    F -.-> J["ارصدها: المراقبة والتنبيهات"]
+flowchart RL
+    A["الاستطلاع<br/>(Reconnaissance)"] --> B["الوصول الأولي<br/>(Initial access)"]
+    B --> C["موطئ القدم<br/>(Foothold)"]
+    C --> D["تصعيد الصلاحيات<br/>(Privilege escalation)"]
+    D --> E["الحركة الجانبية<br/>(Lateral movement)"]
+    E --> F["سرقة البيانات أو إحداث الأثر<br/>(Steal data or cause impact)"]
+    B -.-> G["اكسرها: المصادقة متعددة العوامل والترقيع والشيفرة الآمنة<br/>(Break it: MFA, patching, secure code)"]
+    D -.-> H["اكسرها: أقل الصلاحيات<br/>(Break it: least privilege)"]
+    E -.-> I["اكسرها: تجزئة الشبكة<br/>(Break it: segmentation)"]
+    F -.-> J["ارصدها: المراقبة والتنبيهات<br/>(See it: monitoring and alerts)"]
 ```
 
 **هجمات التطبيقات غالبًا ما تكون سلاسلها قصيرة (Application attacks often have short chains).** يمكن لعيب في التطبيق (an application flaw) أن ينقل المهاجم من الوصول الأولي (initial access) مباشرةً إلى البيانات (straight to the data). والمثال الأكثر شيوعًا (the commonest example) هو **خلل التحكم في الوصول (broken access control)**: يعيد الخادم أي سجل يُطلب منه (whatever record is asked for) دون التحقق من أنه يعود إلى الشخص الذي يطلبه (belongs to the person asking). وعندما يُعرَّف السجل بمعرّف (an ID) في الطلب، يُسمّى العيب **المرجع المباشر غير الآمن إلى الكائن (insecure direct object reference, IDOR)**؛ وفي واجهات برمجة التطبيقات (APIs)، يسمّيه OWASP **خلل التفويض على مستوى الكائن (broken object level authorization, BOLA)**.
@@ -549,17 +549,17 @@ app.get('/api/accounts/:id', requireLogin, async (req, res) => {
 | **المنصة السحابية (Cloud platform)** و**وكلاء البرمجة بالذكاء الاصطناعي (AI coding agents)** | حاويات برمجية على Kubernetes مُدار (containers on managed Kubernetes)، ومخزن كائنات (an object store)، وقاعدة بيانات مُدارة (a managed database)، وخطوط CI/CD (CI/CD pipelines)؛ ووكلاء يكتبون الشيفرة (agents that write code) | الصلاحيات السحابية (cloud permissions)، والأسرار (secrets)، وسلسلة التوريد (supply chain)، والشيفرة المولّدة بالذكاء الاصطناعي (AI-generated code) | 5.2، 6.2، 6.3، الوحدة 7 |
 
 ```mermaid
-flowchart LR
-    RC["عملاء الأفراد"] --> NM["تطبيق نجم للهاتف"]
-    NM --> API["الواجهة البرمجية العامة"]
-    NM --> NA["نجم أسيست"]
-    NA -->|"الأدوات"| API
-    SC["عملاء الشركات الصغيرة"] --> SP["بوابة الشركات الصغيرة"]
-    RM["مديرو العلاقات"] --> CMC["مساعد مذكرات الائتمان"]
-    CMC -->|"الاسترجاع"| DOC["المستندات الداخلية"]
-    TX["معاملات البطاقات"] --> SA["التنبيهات الذكية"]
-    DEV["المطورون ووكلاء البرمجة بالذكاء الاصطناعي"] --> CI["خطوط التكامل والنشر المستمرين"]
-    CI --> CP["المنصة السحابية"]
+flowchart RL
+    RC["عملاء الأفراد<br/>(Retail customers)"] --> NM["تطبيق نجم للهاتف<br/>(Najm Mobile app)"]
+    NM --> API["الواجهة البرمجية العامة<br/>(Public API)"]
+    NM --> NA["نجم أسيست<br/>(Najm Assist)"]
+    NA -->|"الأدوات (tools)"| API
+    SC["عملاء الشركات الصغيرة<br/>(SME customers)"] --> SP["بوابة الشركات الصغيرة<br/>(SME Portal)"]
+    RM["مديرو العلاقات<br/>(Relationship managers)"] --> CMC["مساعد مذكرات الائتمان<br/>(Credit Memo Copilot)"]
+    CMC -->|"الاسترجاع (retrieval)"| DOC["المستندات الداخلية<br/>(Internal documents)"]
+    TX["معاملات البطاقات<br/>(Card transactions)"] --> SA["التنبيهات الذكية<br/>(Smart Alerts)"]
+    DEV["المطورون ووكلاء البرمجة بالذكاء الاصطناعي<br/>(Developers and AI coding agents)"] --> CI["خطوط التكامل والنشر المستمرين<br/>(CI/CD pipelines)"]
+    CI --> CP["المنصة السحابية<br/>(Cloud platform)"]
     API --> CP
     SP --> CP
     CMC --> CP

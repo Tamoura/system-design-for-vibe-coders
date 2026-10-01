@@ -114,14 +114,14 @@ res.json(toPublicProfile(c2));                    // explicit response shape
 الفحوص التي ينبغي أن يجتازها الطلب، بالترتيب (The checks a request should pass, in order):
 
 ```mermaid
-flowchart LR
-    A["المتصل: تطبيق أو شريك أو نص برمجي أو وكيل"] --> B["البوابة: رمز صالح ومخطط وحد للمعدل"]
-    B --> C{"هل يجوز لهذا المتصل استخدام هذه الوظيفة"}
-    C -->|"لا"| D["403 وتسجيل"]
-    C -->|"نعم"| E{"هل هذا الكائن له"}
-    E -->|"لا"| F["404 وتسجيل"]
-    E -->|"نعم"| G["حقول من قائمة السماح دخولًا وخروجًا"]
-    G --> H["الاستجابة"]
+flowchart RL
+    A["المتصل: تطبيق أو شريك أو نص برمجي أو وكيل<br/>(Caller: app, partner, script or agent)"] --> B["البوابة: رمز صالح ومخطط وحد للمعدل<br/>(Gateway: valid token, schema, rate limit)"]
+    B --> C{"هل يجوز لهذا المتصل استخدام هذه الوظيفة<br/>(May this caller use this function)"}
+    C -->|"لا (No)"| D["403 وتسجيل<br/>(403 and log)"]
+    C -->|"نعم (Yes)"| E{"هل هذا الكائن له<br/>(Is this object theirs)"}
+    E -->|"لا (No)"| F["404 وتسجيل<br/>(404 and log)"]
+    E -->|"نعم (Yes)"| G["حقول من قائمة السماح دخولًا وخروجًا<br/>(Allowlisted fields in and out)"]
+    G --> H["الاستجابة<br/>(Response)"]
 ```
 
 ### 🔴 نظرة الخبير (Expert view)
@@ -370,14 +370,14 @@ CREATE UNIQUE INDEX transfers_idem ON transfers (customer_id, idempotency_key);
 **الضوابط المتعددة الطبقات (Layered controls).** لا توجد طبقةٌ واحدة توقف إساءة الاستخدام (No single layer stops abuse). فالطلب الموجّه إلى تدفقٍ حساس في بنك نجم (A request to a sensitive Najm flow) يمرّ بعدة طبقات (passes several):
 
 ```mermaid
-flowchart LR
-    A["الطلب"] --> B["الحافة: حجب الخدمة الموزع وسمعة العناوين"]
-    B --> C["البوابة: حدود لكل رمز وجهاز"]
-    C --> D["الخدمة: قواعد الأعمال وحدود السرعة"]
-    D --> E["درجة المخاطر من التنبيهات الذكية"]
-    E -->|"منخفضة"| F["المتابعة"]
-    E -->|"متوسطة"| G["مصادقة معززة: توقيع الجهاز أو معاودة الاتصال"]
-    E -->|"مرتفعة"| H["الاحتجاز وتنبيه مركز العمليات الأمنية"]
+flowchart RL
+    A["الطلب<br/>(Request)"] --> B["الحافة: حجب الخدمة الموزع وسمعة العناوين<br/>(Edge: DDoS and IP reputation)"]
+    B --> C["البوابة: حدود لكل رمز وجهاز<br/>(Gateway: limits per token and device)"]
+    C --> D["الخدمة: قواعد الأعمال وحدود السرعة<br/>(Service: business rules and velocity limits)"]
+    D --> E["درجة المخاطر من التنبيهات الذكية<br/>(Risk score from Smart Alerts)"]
+    E -->|"منخفضة (Low)"| F["المتابعة<br/>(Proceed)"]
+    E -->|"متوسطة (Medium)"| G["مصادقة معززة: توقيع الجهاز أو معاودة الاتصال<br/>(Step-up: device signature or call-back)"]
+    E -->|"مرتفعة (High)"| H["الاحتجاز وتنبيه مركز العمليات الأمنية<br/>(Hold and alert SOC)"]
 ```
 
 **الروبوتات واختبارات CAPTCHA ‏(Bots and CAPTCHAs).** تقيّم خدمات إدارة الروبوتات (Bot-management services) الطلباتِ بناءً على سمعة عنوان IP ‏(IP reputation)، وخصائص الجهاز (device characteristics)، والسلوك (behaviour)؛ وفي تطبيقات الهاتف يكون **إثبات المنصة (platform attestation)** (4.3) إشارةً أقوى (a stronger signal). أما اختبارات **CAPTCHA** فتضيف احتكاكًا للجميع (add friction for everyone)، وتستبعد بعض المستخدمين ذوي الإعاقة (exclude some disabled users)، وتحلّها مزارعُ بشرية مدفوعة الأجر (paid human farms) أو برمجيات (software): فهي مطبّ سرعةٍ واحد قابل للضبط (one adjustable speed bump)، وليست الضابط أبدًا (never the control).
@@ -629,17 +629,17 @@ await api.post("/v2/device/verify", { challenge, signature });
 
 ```mermaid
 flowchart TD
-    A["تسجيل دخول قوي مع التفويض المفتوح ومفتاح الإثبات"] --> B["التطبيق ينشئ زوج مفاتيح في العتاد الآمن"]
-    B --> C["التطبيق يرسل المفتاح العام والإثبات مقابل قيمة عابرة من الخادم"]
-    C --> D{"الخادم يتحقق من الإثبات والقيمة العابرة"}
-    D -->|"فشل"| E["مخاطر أعلى: ميزات أقل ومصادقة معززة"]
-    D -->|"نجاح"| F["ربط المفتاح العام بالعميل والجهاز"]
-    F --> G["لاحقًا: تحويل عالي القيمة"]
-    G --> H["تحدي الخادم يتضمن المستفيد والمبلغ"]
-    H --> I["القياس الحيوي يفتح المفتاح؛ والتطبيق يوقّع"]
-    I --> J{"التوقيع صالح والحدود سليمة"}
-    J -->|"نعم"| K["تنفيذ التحويل"]
-    J -->|"لا"| L["الرفض وتنبيه مركز العمليات الأمنية"]
+    A["تسجيل دخول قوي مع التفويض المفتوح ومفتاح الإثبات<br/>(Strong login with OAuth and PKCE)"] --> B["التطبيق ينشئ زوج مفاتيح في العتاد الآمن<br/>(App creates key pair in secure hardware)"]
+    B --> C["التطبيق يرسل المفتاح العام والإثبات مقابل قيمة عابرة من الخادم<br/>(App sends public key and attestation for a server nonce)"]
+    C --> D{"الخادم يتحقق من الإثبات والقيمة العابرة<br/>(Server verifies attestation and nonce)"}
+    D -->|"فشل (Fails)"| E["مخاطر أعلى: ميزات أقل ومصادقة معززة<br/>(Higher risk: fewer features, step-up)"]
+    D -->|"نجاح (Passes)"| F["ربط المفتاح العام بالعميل والجهاز<br/>(Bind public key to customer and device)"]
+    F --> G["لاحقًا: تحويل عالي القيمة<br/>(Later: high-value transfer)"]
+    G --> H["تحدي الخادم يتضمن المستفيد والمبلغ<br/>(Server challenge includes payee and amount)"]
+    H --> I["القياس الحيوي يفتح المفتاح؛ والتطبيق يوقّع<br/>(Biometric unlocks key#59; app signs)"]
+    I --> J{"التوقيع صالح والحدود سليمة<br/>(Signature valid and limits OK)"}
+    J -->|"نعم (Yes)"| K["تنفيذ التحويل<br/>(Execute transfer)"]
+    J -->|"لا (No)"| L["الرفض وتنبيه مركز العمليات الأمنية<br/>(Reject and alert SOC)"]
 ```
 
 ### 🔴 نظرة الخبير (Expert view)

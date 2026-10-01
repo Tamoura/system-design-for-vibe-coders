@@ -69,19 +69,19 @@ log.warning("authn_login_fail", extra={
 ### 🟡 التعمق أكثر (Going deeper)
 
 ```mermaid
-flowchart LR
-    A["التطبيقات وواجهات البرمجة ونجم أسيست"] --> B["ناقل السجلات"]
-    K["سجلات التدقيق السحابية"] --> B
-    B --> C["المخزن المركزي: إلحاق فقط"]
-    C --> D["منصة إدارة الأحداث الأمنية: توحيد وربط"]
-    D --> E["قواعد رصد من مستودع الشيفرة"]
-    E --> F["تنبيه مع سياق"]
-    F --> G["فرز مركز العمليات الأمنية"]
-    G -->|"حقيقي"| H["الاستجابة للحوادث"]
-    G -->|"إيجابية كاذبة"| I["ضبط القاعدة"]
+flowchart RL
+    A["التطبيقات وواجهات البرمجة ونجم أسيست<br/>(Apps, APIs, Najm Assist)"] --> B["ناقل السجلات<br/>(Log shipper)"]
+    K["سجلات التدقيق السحابية<br/>(Cloud audit logs)"] --> B
+    B --> C["المخزن المركزي: إلحاق فقط<br/>(Central store: append-only)"]
+    C --> D["منصة إدارة الأحداث الأمنية: توحيد وربط<br/>(SIEM: normalise and correlate)"]
+    D --> E["قواعد رصد من مستودع الشيفرة<br/>(Detection rules from git)"]
+    E --> F["تنبيه مع سياق<br/>(Alert with context)"]
+    F --> G["فرز مركز العمليات الأمنية<br/>(SOC triage)"]
+    G -->|"حقيقي (Real)"| H["الاستجابة للحوادث<br/>(Incident response)"]
+    G -->|"إيجابية كاذبة (False positive)"| I["ضبط القاعدة<br/>(Tune the rule)"]
     I --> E
-    C --> J["فحص سلامة المصادر"]
-    J -->|"مصدر صامت"| F
+    C --> J["فحص سلامة المصادر<br/>(Source health check)"]
+    J -->|"مصدر صامت (Source silent)"| F
 ```
 
 **احمِ خط النقل (Protect the pipeline).**
@@ -121,7 +121,7 @@ level: high
 
 وتعتمد قواعد أخرى على العدّ عبر الزمن (Other rules count over time). فقاعدة نجم لحشو بيانات الاعتماد (Najm's credential-stuffing rule) (ATT&CK T1110.004) تجمّع تسجيلات الدخول حسب الشبكة أو بصمة الجهاز (groups sign-ins by network or device fingerprint)، لا حسب عنوان IP منفرد (not single IP address)، لأن أدوات الحشو تبدّل العناوين (because stuffing tools rotate addresses). وهي تنطلق حين تُجرَّب مئات الحسابات في عشر دقائق (when hundreds of accounts are tried in ten minutes) بمعدّل نجاحٍ منخفضٍ جدًا (with a very low success rate)؛ فاضبط مثل هذه العتبات على بياناتك أنت (tune such thresholds on your own data).
 
-**السلوك يتفوّق على المؤشرات (Behaviour beats indicators).** يرتّب **هرم الألم (Pyramid of Pain)** الذي وضعه ديفيد بيانكو (David Bianco's) عام 2013 ما يرصده المدافعون (ranks what defenders detect) بحسب كلفة تغييره على المهاجم (by how much it costs the attacker to change). فتقع قيم التجزئة (hashes) وعناوين IP في القاعدة (sit at the bottom)، وتغييرها تافه (trivial to change)؛ وتقع **الأساليب والتقنيات والإجراءات (TTPs, tactics, techniques and procedures)** في القمة (sit at the top). وقواعد الرصد التي تدوم (The detections that last) هي التي تصف السلوك (describe behaviour).
+**السلوك يتفوّق على المؤشرات (Behaviour beats indicators).** يرتّب **هرم الألم (Pyramid of Pain)** الذي وضعه ديفيد بيانكو (David Bianco) عام 2013 ما يرصده المدافعون (ranks what defenders detect) بحسب كلفة تغييره على المهاجم (by how much it costs the attacker to change). فتقع قيم التجزئة (hashes) وعناوين IP في القاعدة (sit at the bottom)، وتغييرها تافه (trivial to change)؛ وتقع **الأساليب والتقنيات والإجراءات (TTPs, tactics, techniques and procedures)** في القمة (sit at the top). وقواعد الرصد التي تدوم (The detections that last) هي التي تصف السلوك (describe behaviour).
 
 **جودة التنبيهات (Alert quality).** تتبّع لكل قاعدة (Per rule, track) عدد التنبيهات أسبوعيًا (alerts per week)، ونسبة ما كان حقيقيًا منها (the share that were real)، ووقت الفرز (time to triage)، و**متوسط وقت الرصد (mean time to detect, MTTD)**. فالقاعدة التي تنطلق 300 مرة أسبوعيًا (A rule that fires 300 times a week) وتصدق مرةً واحدة (and is real once) تعوّد المحللين على تجاهلها (trains analysts to ignore it): وهذا هو **إرهاق التنبيهات (alert fatigue)**.
 
@@ -167,8 +167,8 @@ level: high
 | **Sigma** (SigmaHQ) — صيغة قواعد رصد | صيغة YAML مفتوحة ومحايدة تجاه المورّدين لقواعد الرصد (Open, vendor-neutral YAML format for detection rules)، تُحوَّل إلى استعلاماتٍ لمنصات SIEM (converted into SIEM queries) | قواعد رصدٍ بوصفها شيفرة (Detections as code) يمكن مراجعتها واختبارها ونقلها بين منصات SIEM (that can be reviewed, tested and moved between SIEMs) |
 | **MITRE ATT&CK** — قاعدة معرفة | قاعدة معرفةٍ بأساليب الخصوم وتقنياتهم (Knowledge base of adversary tactics and techniques) مستمدّةٌ من الملاحظة الواقعية (from real-world observation) | فرضيات الرصد (Detection hypotheses)، ووسم القواعد (tagging rules)، وإيجاد فجوات الرؤية (finding visibility gaps) |
 | **MITRE ATLAS** — قاعدة معرفة للذكاء الاصطناعي | قاعدة معرفةٍ بأساليب الخصوم وتقنياتهم ضد أنظمة الذكاء الاصطناعي (Knowledge base of adversary tactics and techniques against AI systems) | ربط قواعد رصد الذكاء الاصطناعي (Mapping AI detections) لنجم أسيست ومساعد مذكرات الائتمان والتنبيهات الذكية (for Najm Assist, the copilot and Smart Alerts) |
-| **Honeytokens** — رموز الطُّعم | بيانات اعتمادٍ أو سجلاتٌ أو مستنداتٌ مزيّفة تُطلق تنبيهًا عند استخدامها (Fake credentials, records or documents that alert when used) | رصدٌ رخيص قليل الضجيج للمتسلّلين والمطّلعين من الداخل (Cheap, low-noise detection of intruders and insiders) |
-| **OpenTelemetry** — معيار القياس عن بُعد | معيارٌ مفتوح للتتبّعات والمقاييس والسجلات (Open standard for traces, metrics and logs)، مع اصطلاحاتٍ للذكاء الاصطناعي التوليدي (with generative-AI conventions) | قياسٌ عن بُعد متّسق عبر الخدمات وتطبيقات النماذج اللغوية الكبيرة (Consistent telemetry across services and LLM apps) |
+| **Honeytokens** — رموز الطُّعم | بيانات اعتمادٍ أو سجلاتٌ أو مستنداتٌ مزيّفة (Fake credentials, records or documents) تُطلق تنبيهًا عند استخدامها (that alert when used) | رصدٌ رخيص قليل الضجيج للمتسلّلين والمطّلعين من الداخل (Cheap, low-noise detection of intruders and insiders) |
+| **OpenTelemetry** — معيار القياس عن بُعد | معيارٌ مفتوح للتتبّعات والمقاييس والسجلات (Open standard for traces, metrics and logs)، مع اصطلاحاتٍ للذكاء الاصطناعي التوليدي (with generative-AI conventions) | قياسٌ عن بُعد متّسق (Consistent telemetry) عبر الخدمات وتطبيقات النماذج اللغوية الكبيرة (across services and LLM apps) |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
 تنشر نورة وجاسم (Noura and Jassim publish) **معيار التسجيل الأمني لبنك نجم، الإصدار 1 (Najm Bank Security Logging Standard v1)**، الذي وقّعه حمد، كبير مسؤولي أمن المعلومات (signed by Hamad, the CISO)، وأول **كتالوج لقواعد الرصد (Detection Catalogue)**. والأرقام خياراتٌ توضيحية من نجم (The numbers are Najm's illustrative choices).
@@ -188,10 +188,10 @@ level: high
 | المعرّف (ID) | ما ترصده (Detects) | الربط (Mapping) | الخطورة (Severity) | دليل الاستجابة (Playbook) | الاختبار (Test) |
 |---|---|---|---|---|---|
 | NM-01 | حشو بيانات الاعتماد على تطبيق نجم للهاتف (Credential stuffing on Najm Mobile) | ATT&CK T1110.004 | عالية (High) | PB-02 الاستيلاء على الحساب (Account takeover) | إعادة تشغيلٍ مختبرية على 300 حساب اختبار (Lab replay over 300 test accounts) |
-| SP-01 | أكثر من 20 رفضًا لفحص الملكية في جلسةٍ واحدة على بوابة الشركات الصغيرة (Over 20 ownership denials in one SME Portal session) | OWASP API1 BOLA | متوسطة (Medium) | PB-04 استكشاف الوصول (Access probing) | إعادة تشغيلٍ مُبرمَجة في بيئة التجهيز (Scripted replay in staging) |
+| SP-01 | أكثر من 20 رفضًا لفحص الملكية (Over 20 ownership denials) في جلسةٍ واحدة على بوابة الشركات الصغيرة (in one SME Portal session) | OWASP API1 BOLA | متوسطة (Medium) | PB-04 استكشاف الوصول (Access probing) | إعادة تشغيلٍ مُبرمَجة في بيئة التجهيز (Scripted replay in staging) |
 | NA-01 | كناري موجّه النظام في مخرجات أسيست (System-prompt canary in Assist output) | LLM07 | عالية (High) | PB-07 حادثة أسيست (Assist incident) | موجّه كناري في التكامل المستمر (Canary prompt in CI) |
 | NA-02 | رفض استدعاء أداةٍ في أسيست: المورد غير مملوك (Assist tool call denied: resource not owned) | LLM06، LLM01 | عالية (High) | PB-07 حادثة أسيست (Assist incident) | حالات الفريق الأحمر من 9.4 (Red-team cases from 9.4) |
-| NA-04 | أكثر من 5 نطاقاتٍ غير معتمدة في مخرجات أسيست خلال 10 دقائق (Over 5 unapproved domains in Assist output in 10 minutes) | LLM01 | عالية (High) | PB-07 حادثة أسيست (Assist incident) | مستند اختبارٍ غير ضار في فهرس بيئة التجهيز (Benign test document in staging index) |
+| NA-04 | أكثر من 5 نطاقاتٍ غير معتمدة (Over 5 unapproved domains) في مخرجات أسيست خلال 10 دقائق (in Assist output in 10 minutes) | LLM01 | عالية (High) | PB-07 حادثة أسيست (Assist incident) | مستند اختبارٍ غير ضار في فهرس بيئة التجهيز (Benign test document in staging index) |
 | CL-01 | استخدام مفتاحٍ سحابي طُعم (Honeytoken cloud key used) | ATT&CK T1078 Valid Accounts | حرجة (Critical) | PB-09 اختراق بيانات الاعتماد السحابية (Cloud credential compromise) | استخدامٌ مضبوط فصليًا (Quarterly controlled use) |
 
 **قواعد الكتالوج (Catalogue rules).** لا تدخل أي قاعدة رصدٍ الخدمةَ (No detection goes live) دون مالكٍ واختبارٍ آلي ودليل استجابة (without an owner, an automated test and a playbook). والقاعدة التي تصدق أقل من 10% من الوقت على مدى 30 يومًا (A rule real less than 10% of the time over 30 days) تُضبط أو تُوقَف (is tuned or retired). وتسأل كل مراجعة حادثة (Every incident review) (10.2) عن قاعدة الرصد التي كان ينبغي أن تنطلق أبكر (which detection should have fired earlier).
@@ -220,10 +220,10 @@ level: high
 
 **1. يقترح علي إرسال كل محادثةٍ في نجم أسيست كاملةً إلى منصة SIEM (Ali proposes sending every Najm Assist conversation, in full, to the SIEM) «كي لا يفوتنا شيء» ("so nothing is missed"). أيّ ردٍّ يتّبع هذا الدرس على أفضل وجه (Which response best follows this lesson)؟**
 
-- A. الموافقة، لأن النص الكامل هو أفضل دليل (Agree, because full text is the best evidence)
-- B. رفض تسجيل المحادثات كليًا، حمايةً للخصوصية (Refuse to log conversations at all, to protect privacy)
+- A. الموافقة (Agree)، لأن النص الكامل هو أفضل دليل (because full text is the best evidence)
+- B. رفض تسجيل المحادثات كليًا (Refuse to log conversations at all)، حمايةً للخصوصية (to protect privacy)
 - C. إرسال البيانات الوصفية المُهيكَلة (Send structured metadata)، أي النموذج وإصدار الموجّه والمستندات المسترجَعة واستدعاءات الأدوات والقرارات (model, prompt version, retrieved documents, tool calls, decisions)، إلى منصة SIEM (to the SIEM)، والاحتفاظ بالنص الكامل محجوبًا في مخزنٍ مقيَّد (keep masked full text in a restricted store) مع وصول كسر زجاجٍ مسجَّل (with logged break-glass access)
-- D. تسجيل النص الكامل، ولكن في حاوية التصحيح لدى فريق التطبيق فقط (Log full text, but only in the app team's debug bucket)
+- D. تسجيل النص الكامل (Log full text)، ولكن في حاوية التصحيح لدى فريق التطبيق فقط (but only in the app team's debug bucket)
 
 <details><summary>الإجابة</summary>
 
@@ -272,10 +272,10 @@ level: high
 
 **5. ينفّذ فريق مريم تقنيةً متفقًا عليها ضد بيئة التجهيز (Mariam's team runs an agreed technique against staging)، بينما يتحقق فريق جاسم من الخطوات التي سُجّلت ورُصدت وفُرزت (while Jassim's team checks which steps were logged, detected and triaged). ما هذا، وما ناتجه الرئيسي (What is this, and what is its main output)؟**
 
-- A. اختبار اختراق؛ وناتجه درجة CVSS (A penetration test; its output is a CVSS score)
-- B. عمل الفريق البنفسجي؛ وناتجه قائمةٌ بفجوات التسجيل والرصد الواجب إصلاحها (Purple teaming; its output is a list of logging and detection gaps to fix)
-- C. تمرين محاكاةٍ نظرية؛ وناتجه خطة اتصالات (A tabletop exercise; its output is a communications plan)
-- D. برنامج مكافآت ثغرات؛ وناتجه دفعةٌ مالية (A bug bounty; its output is a payout)
+- A. اختبار اختراق (A penetration test)؛ وناتجه درجة CVSS (its output is a CVSS score)
+- B. عمل الفريق البنفسجي (Purple teaming)؛ وناتجه قائمةٌ بفجوات التسجيل والرصد الواجب إصلاحها (its output is a list of logging and detection gaps to fix)
+- C. تمرين محاكاةٍ نظرية (A tabletop exercise)؛ وناتجه خطة اتصالات (its output is a communications plan)
+- D. برنامج مكافآت ثغرات (A bug bounty)؛ وناتجه دفعةٌ مالية (its output is a payout)
 
 <details><summary>الإجابة</summary>
 
@@ -334,14 +334,14 @@ level: high
 | التعلّم (Learn) | جعل تكرارها أقل احتمالًا وأقل ضررًا في المرة القادمة (Make it less likely and less harmful next time) | مراجعة ما بعد الحادثة (Post-incident review)، وإجراءاتٌ متتبَّعة (tracked actions)، وقواعد رصدٍ واختباراتٌ جديدة (new detections and tests) |
 
 ```mermaid
-flowchart LR
-    P["الاستعداد"] --> D["الرصد والتحليل"]
-    D --> C["الاحتواء"]
-    C --> E["الاستئصال والتعافي"]
-    E --> L["التعلم"]
-    L -->|"أدلة التشغيل وقواعد الرصد والاختبارات"| P
-    C -->|"نتائج جديدة توسع النطاق"| D
-    E -->|"عودة المهاجم"| D
+flowchart RL
+    P["الاستعداد<br/>(Prepare)"] --> D["الرصد والتحليل<br/>(Detect and analyse)"]
+    D --> C["الاحتواء<br/>(Contain)"]
+    C --> E["الاستئصال والتعافي<br/>(Eradicate and recover)"]
+    E --> L["التعلم<br/>(Learn)"]
+    L -->|"أدلة التشغيل وقواعد الرصد والاختبارات (Runbooks, detections, tests)"| P
+    C -->|"نتائج جديدة توسع النطاق (New findings widen scope)"| D
+    E -->|"عودة المهاجم (Attacker returns)"| D
 ```
 
 **الخطورة (Severity).** اتفقوا على المستويات مسبقًا (Agree levels in advance)، ومستويات نجم في قسم 🏛️ (Najm's are in the 🏛️ section)، كي لا يتجادل فيها أحدٌ في الساعة 22:00 (so nobody debates them at 22:00). أعلِن بمستوى عالٍ ثم خفّضه لاحقًا (Declare high and downgrade later): فالبداية البطيئة تكلّف أكثر من مكالمةٍ ضائعة (a slow start costs more than a wasted call).
@@ -404,7 +404,7 @@ def retrieve(query, session):
 - **قانون حماية خصوصية البيانات الشخصية في قطر (Qatar PDPPL)**، القانون رقم 13 لسنة 2016 (Law No. 13 of 2016)، يتضمن واجبات إخطارٍ بالخروقات (includes breach notification duties)؛ فاتّبع الإرشادات الحالية للسلطة المختصة (follow the competent authority's current guidance).
 - **قانون DORA الأوروبي (EU DORA)**، الساري منذ يناير 2025 (applying from January 2025)، يُلزم الكيانات المالية (requires financial entities) بتصنيف الحوادث المتعلقة بتقنية المعلومات والاتصالات (to classify ICT-related incidents) والإبلاغ عن الكبرى منها في تقارير مرحلية (and report major ones in staged reports)، وفق جداول زمنية تحدّدها معاييره التقنية (on timelines set in its technical standards).
 - **مصرف قطر المركزي (QCB)** والجهات الرقابية الأخرى على نجم (and Najm's other supervisors) يتوقعون الإبلاغ عن الحوادث السيبرانية الجسيمة (expect significant cyber incidents to be reported) وفق تعليماتهم الحالية (under their current instructions).
-- **PCI DSS** v4.0.1 يشترط أن تغطي خطة الاستجابة للحوادث (requires the IR plan to cover) إخطار علامات الدفع التجارية والجهات المحصّلة (notifying the payment brands and acquirers) حين يُحتمل أن تكون بيانات البطاقات معنيّة (when card data may be involved).
+- **PCI DSS** v4.0.1 يشترط أن تغطي خطة الاستجابة للحوادث (requires the IR plan to cover) إخطار العلامات التجارية لشبكات الدفع والجهات المُحصِّلة (notifying the payment brands and acquirers) حين يُحتمل أن تكون بيانات البطاقات معنيّة (when card data may be involved).
 
 ### 🔴 نظرة الخبير (Expert view)
 
@@ -503,7 +503,7 @@ def retrieve(query, session):
 
 - A. الإخطار فقط بعد اكتمال التحقيق، مهما طال (Notify only once the investigation is complete, however long it takes)
 - B. إخطار السلطة الرقابية دون تأخيرٍ لا مبرّر له (Notify the supervisory authority without undue delay)، وخلال 72 ساعة من العلم حيثما أمكن (and, where feasible, within 72 hours of becoming aware)؛ ويجوز تقديم المعلومات على مراحل (information may be provided in phases)
-- C. لا شيء، لأن المقر الرئيسي لنجم ليس في الاتحاد الأوروبي (Nothing, because Najm is not headquartered in the EU)
+- C. لا شيء (Nothing)، لأن المقر الرئيسي لنجم ليس في الاتحاد الأوروبي (because Najm is not headquartered in the EU)
 - D. الإخطار فقط إذا كُشفت أرقام البطاقات (Notify only if card numbers were exposed)
 
 <details><summary>الإجابة</summary>
@@ -530,7 +530,7 @@ def retrieve(query, session):
 - A. لا مشكلة؛ فينبغي أن يقوم قائد الحادثة بأهم تحليل (None; the IC should do the most important analysis)
 - B. لم يعد أحدٌ يدير الاستجابة الآن (Nobody is now running the response)، فتتعطّل الأولويات والقرارات والتحديثات (so priorities, decisions and updates stall)؛ والتحليل من شأن القائد التقني (analysis belongs with the technical lead)
 - C. التقاطات الحزم غير مفيدة في الحوادث (Packet captures are not useful in incidents)
-- D. لا يجوز إلا لكبير مسؤولي أمن المعلومات قراءة التقاطات الحزم (Only the CISO may read packet captures)
+- D. لا يجوز إلا لكبير مسؤولي أمن المعلومات (Only the CISO) قراءة التقاطات الحزم (may read packet captures)
 
 <details><summary>الإجابة</summary>
 
@@ -538,7 +538,7 @@ def retrieve(query, session):
 
 </details>
 
-**5. أيّ نتيجةٍ من نتائج مراجعة ما بعد الحادثة هي الأكثر فائدة (Which post-incident review finding is most useful)؟**
+**5. أيّ نتيجةٍ من نتائج مراجعة ما بعد الحادثة (Which post-incident review finding) هي الأكثر فائدة (is most useful)؟**
 
 - A. «كان على علي أن يكون أكثر حرصًا مع حساب المحتوى.» ⁦("Ali should have been more careful with the content account.")⁩
 - B. «كان مهاجمٌ متطوّر هو المسؤول؛ ولا حاجة إلى أي إجراء.» ⁦("A sophisticated attacker was responsible; no action needed.")⁩
@@ -588,15 +588,15 @@ def retrieve(query, session):
 **الدورة (The cycle).**
 
 ```mermaid
-flowchart LR
-    I["الجرد وقوائم مكونات البرمجيات"] --> F["الإيجاد: الماسحات والاختبارات والبلاغات"]
-    F --> T["الفرز: حقيقية ومنشورة وقابلة للبلوغ"]
-    T --> P["ترتيب الأولويات: الاستغلال المعروف واحتمال الاستغلال والتعرض والخطورة"]
-    P --> R["الإصلاح أو التخفيف"]
-    P --> X["القبول بمالك وتاريخ انتهاء"]
-    R --> V["التحقق والإغلاق"]
-    X -->|"بلوغ تاريخ الانتهاء"| P
-    V --> M["المقاييس والدروس"]
+flowchart RL
+    I["الجرد وقوائم مكونات البرمجيات<br/>(Inventory and SBOMs)"] --> F["الإيجاد: الماسحات والاختبارات والبلاغات<br/>(Find: scanners, tests, reports)"]
+    F --> T["الفرز: حقيقية ومنشورة وقابلة للبلوغ<br/>(Triage: real, deployed, reachable)"]
+    T --> P["ترتيب الأولويات: الاستغلال المعروف واحتمال الاستغلال والتعرض والخطورة<br/>(Prioritise: KEV, EPSS, exposure, CVSS)"]
+    P --> R["الإصلاح أو التخفيف<br/>(Fix or mitigate)"]
+    P --> X["القبول بمالك وتاريخ انتهاء<br/>(Accept with owner and expiry)"]
+    R --> V["التحقق والإغلاق<br/>(Verify and close)"]
+    X -->|"بلوغ تاريخ الانتهاء (Expiry reached)"| P
+    V --> M["المقاييس والدروس<br/>(Metrics and lessons)"]
     M --> I
 ```
 
@@ -708,7 +708,7 @@ Canonical: https://najmbank.example/.well-known/security.txt
 | **EPSS** (FIRST) — نظام تقييم التنبؤ بالاستغلال | تقديرٌ يومي لاحتمال استغلال ثغرة CVE خلال الثلاثين يومًا التالية (Daily estimate of the probability that a CVE is exploited in the next 30 days) | ترتيب قائمةٍ كبيرة من ثغرات CVE المتراكمة بحسب الاحتمال (Ranking a large CVE backlog by likelihood) |
 | **CISA KEV catalogue** — كتالوج الثغرات المعروف استغلالها | قائمةٌ بثغرات CVE التي توجد أدلةٌ على استغلالها فعليًا (List of CVEs with evidence of exploitation in the wild) | قائمة «أصلِح أولًا» (Fix-first list)؛ وأولويةٌ قصوى على الأنظمة المكشوفة للإنترنت (top priority on internet-facing systems) |
 | **SSVC** (CERT/CC, CISA) — تصنيف الثغرات الخاص بأصحاب المصلحة | شجرة قرارٍ تحوّل الاستغلال وقابلية الأتمتة والأثر إلى إجراء (Decision tree that turns exploitation, automatability and impact into an action) | قرارات ترتيب أولوياتٍ قابلة للتفسير (Explainable prioritisation decisions) |
-| **VEX** — تبادل قابلية استغلال الثغرات | بيانٌ مقروءٌ آليًا بما إذا كان منتجٌ ما متأثرًا بثغرة (Machine-readable statement of whether a product is affected by a vulnerability) | إغلاق النتائج المستندة إلى قوائم مكونات البرمجيات بأدلة المورّد (Closing SBOM-driven findings with supplier evidence) |
+| **VEX** — تبادل قابلية استغلال الثغرات | بيانٌ مقروءٌ آليًا (Machine-readable statement) بما إذا كان منتجٌ ما متأثرًا بثغرة (of whether a product is affected by a vulnerability) | إغلاق النتائج المستندة إلى قوائم مكونات البرمجيات بأدلة المورّد (Closing SBOM-driven findings with supplier evidence) |
 | **security.txt** (RFC 9116) — ملف جهة الاتصال الأمنية | ملفٌ قياسي يخبر الباحثين كيف يُبلغون عن الثغرات (Standard file telling researchers how to report vulnerabilities) | كل نطاقٍ عام تملكه (Every public domain you own) |
 | **ISO/IEC 29147 and ISO/IEC 30111** — معيارا الإفصاح والمعالجة | معايير للإفصاح عن الثغرات والمعالجة الداخلية (Standards for vulnerability disclosure and internal handling) | تصميم سياسة إفصاحٍ وعملية معالجة أو تدقيقهما (Designing or auditing a VDP and handling process) |
 | **Bug bounty programme** — برنامج مكافآت الثغرات | مكافآتٌ للنتائج الصحيحة الواقعة ضمن النطاق (Rewards for valid, in-scope findings)، عادةً عبر منصة (usually via a platform) | بعد أن تعمل سياسة الإفصاح والإصلاح (After the VDP and fixing work)؛ وابدأ خاصًا (start private) |
@@ -815,7 +815,7 @@ Canonical: https://najmbank.example/.well-known/security.txt
 **5. يجعل أحد الباحثين نجم أسيست يكتب قصيدةً وقحة عن البنك (One researcher makes Najm Assist write a rude poem about the bank). ويُظهر آخر (Another shows) أن نصًا في نموذج اعتراض (that text in a dispute form) يمكن أن يجعله يستدعي أداةً على بطاقة عميلٍ آخر (can make it call a tool on another customer's card). كيف ينبغي أن تعاملهما سياسة الإفصاح (How should the VDP treat them)؟**
 
 - A. كلاهما ثغرتان أمنيتان حرجتان (Both as critical security vulnerabilities)
-- B. كلاهما خارج النطاق، لأن سلوك الذكاء الاصطناعي ليس من الأمن (Both as out of scope, because AI behaviour is not security)
+- B. كلاهما خارج النطاق (Both as out of scope)، لأن سلوك الذكاء الاصطناعي ليس من الأمن (because AI behaviour is not security)
 - C. الثاني ثغرةٌ أمنية بأثرٍ يمتد بين العملاء (The second as a security vulnerability with cross-customer impact)؛ والأول بلاغ جودةٍ غير أمني لقناة سلامة الذكاء الاصطناعي (the first as a non-security quality report for the AI safety channel)
 - D. الأول حرج، لأنه يضرّ بالعلامة التجارية (The first as critical, because it harms the brand)
 

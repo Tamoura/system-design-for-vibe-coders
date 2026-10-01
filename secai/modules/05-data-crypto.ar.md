@@ -94,15 +94,15 @@ save(invoice_id, nonce + AESGCM(data_key).encrypt(nonce, iban.encode(), aad))
 
 ```mermaid
 flowchart TD
-    A["بوابة الشركات الصغيرة يجب أن تخزّن رقم آيبان"] --> B["طلب مفتاح بيانات من خدمة إدارة المفاتيح"]
-    B --> C["خدمة إدارة المفاتيح تعيد مفتاح البيانات صريحًا ومغلَّفًا"]
-    C --> D["تشفير الحقل بمفتاح البيانات بالتشفير الموثَّق"]
-    D --> E["تخزين النص المشفّر والقيمة الآنية والمفتاح المغلَّف"]
-    D --> F["محو مفتاح البيانات الصريح من الذاكرة"]
-    E --> G["للقراءة: إرسال المفتاح المغلَّف إلى خدمة إدارة المفاتيح"]
-    G --> H{"هل تسمح سياسة المفتاح لهذه الخدمة؟"}
-    H -->|"نعم، مع التسجيل"| I["خدمة إدارة المفاتيح تعيد المفتاح والخدمة تفك التشفير"]
-    H -->|"لا، مع التسجيل"| J["رفض وتنبيه"]
+    A["بوابة الشركات الصغيرة يجب أن تخزّن رقم آيبان<br/>(SME Portal must store an IBAN)"] --> B["طلب مفتاح بيانات من خدمة إدارة المفاتيح<br/>(Ask KMS for a data key)"]
+    B --> C["خدمة إدارة المفاتيح تعيد مفتاح البيانات صريحًا ومغلَّفًا<br/>(KMS returns plaintext DEK and wrapped DEK)"]
+    C --> D["تشفير الحقل بمفتاح البيانات بالتشفير الموثَّق<br/>(Encrypt field with DEK using AES-GCM)"]
+    D --> E["تخزين النص المشفّر والقيمة الآنية والمفتاح المغلَّف<br/>(Store ciphertext, nonce and wrapped DEK)"]
+    D --> F["محو مفتاح البيانات الصريح من الذاكرة<br/>(Erase plaintext DEK from memory)"]
+    E --> G["للقراءة: إرسال المفتاح المغلَّف إلى خدمة إدارة المفاتيح<br/>(To read: send wrapped DEK to KMS)"]
+    G --> H{"هل تسمح سياسة المفتاح لهذه الخدمة؟<br/>(Key policy allows this service?)"}
+    H -->|"نعم، مع التسجيل (Yes, logged)"| I["خدمة إدارة المفاتيح تعيد المفتاح والخدمة تفك التشفير<br/>(KMS returns DEK, service decrypts)"]
+    H -->|"لا، مع التسجيل (No, logged)"| J["رفض وتنبيه<br/>(Denied and alerted)"]
 ```
 
 ما الذي يشتريه هذا التصميم (What this buys): التفريغ المسروق (a stolen dump) عديم الفائدة دون الوصول إلى خدمة إدارة المفاتيح (without KMS access)؛ وكل عملية فك تشفير (every decryption) تخضع لفحص السياسة وتُسجَّل (policy-checked and logged)؛ وتدوير مفتاح KEK (rotating the KEK) يعيد تغليف مفاتيح صغيرة (re-wraps small keys) بدل إعادة تشفير البيانات (instead of re-encrypting data)؛ وإتلاف مفتاحٍ (destroying a key) يجعل بياناته غير قابلةٍ للقراءة (makes its data unreadable)، وهو ما يُسمّى **الإتلاف التشفيري (crypto-shredding)** (انظر 5.3).
@@ -350,13 +350,13 @@ repos:
 **قصير العمر يتفوّق على طويل العمر: هوية عبء العمل (Short-lived beats long-lived: workload identity).** مع **اتحاد هوية عبء العمل (workload identity federation)**، يُثبت عبء العمل من هو (proves who it is) برمزٍ قصير العمر توقّعه منصته (a short-lived token signed by its platform)، وتستبدله السحابة ببيانات اعتمادٍ مؤقتة ومحصورة النطاق (temporary, scoped credentials). ويمكن ربط حسابات خدمة Kubernetes (Kubernetes service accounts) اتحاديًّا بأدوار IAM السحابية (federated to cloud IAM roles). وتستطيع أنظمة CI مثل GitHub Actions وGitLab CI إصدار رمز OIDC (an OIDC token)، أي OpenID Connect (انظر 3.2)، لكل مهمة (per job)، فلا يبقى أي مفتاحٍ سحابي في إعدادات خط الإنتاج (no cloud key sits in pipeline settings). ولا يثق الدور السحابي (The cloud role) إلا بالرموز ذات موضوعٍ محدد (a specific subject)، مثل موضوع GitHub بالصيغة `repo:najm-bank/sme-portal:ref:refs/heads/main`، فلا يستطيع خط إنتاجٍ على فرعٍ آخر (a pipeline on another branch) تولّي هذا الدور (assume it).
 
 ```mermaid
-flowchart LR
-    U["تطبيق نجم للهاتف"] -->|"رمز جلسة العميل فقط"| P["خدمة نجم أسيست"]
-    P -->|"رمز عبء عمل موقَّع"| I["خدمة الهوية السحابية"]
-    I -->|"بيانات اعتماد قصيرة العمر ومحصورة النطاق"| P
-    P -->|"قراءة مفتاح خدمة الرسوم"| V["مدير الأسرار"]
-    V -->|"كل قراءة مسجَّلة"| L["نظام إدارة المعلومات والأحداث الأمنية"]
-    P -->|"الاستدعاء بالمفتاح من جهة الخادم"| F["خدمة الرسوم"]
+flowchart RL
+    U["تطبيق نجم للهاتف<br/>(Najm Mobile app)"] -->|"رمز جلسة العميل فقط (customer session token only)"| P["خدمة نجم أسيست<br/>(Najm Assist service)"]
+    P -->|"رمز عبء عمل موقَّع (signed workload token)"| I["خدمة الهوية السحابية<br/>(Cloud identity service)"]
+    I -->|"بيانات اعتماد قصيرة العمر ومحصورة النطاق (short-lived scoped credentials)"| P
+    P -->|"قراءة مفتاح خدمة الرسوم (read fee-service key)"| V["مدير الأسرار<br/>(Secrets manager)"]
+    V -->|"كل قراءة مسجَّلة (every read logged)"| L["نظام إدارة المعلومات والأحداث الأمنية<br/>(SIEM)"]
+    P -->|"الاستدعاء بالمفتاح من جهة الخادم (call with key, server side)"| F["خدمة الرسوم<br/>(Fee service)"]
 ```
 
 **الأسرار الديناميكية (Dynamic secrets).** بعض مديري الأسرار (secrets managers)، مثل HashiCorp Vault وفرعه المفتوح المصدر (open-source fork) OpenBao، يُنشئون مستخدم قاعدة بياناتٍ لكل عبء عمل (a database user per workload) عند الطلب (on request)، بعقد إيجار (lease) مدته دقائق أو ساعات، ويحذفونه عند انتهاء العقد (when the lease ends). فتنتهي صلاحية بيانات الاعتماد المسرّبة من تلقاء نفسها (A leaked credential expires by itself)، ويُطابَق كل بيانات اعتمادٍ مع عبء عملٍ واحد في سجل التدقيق (each credential maps to one workload in the audit log).
@@ -603,14 +603,14 @@ log.info("assist_request", extra={
 **أين تذهب البيانات الشخصية في ميزةٍ تعتمد على نموذجٍ لغوي كبير (Where personal data goes in an LLM feature).** يمكن لجولةٍ حوارية واحدة (One turn) من نجم أسيست (Najm Assist) أن تُنشئ نسخًا في الموجّه (the prompt)، أي الرسالة إضافةً إلى بيانات الحساب التي يضيفها التطبيق (the message plus account data the app adds)، وفي السياق المسترجَع (retrieved context) (انظر 9.3)، ولدى مزوّد النموذج (the model provider)، من حيث المعالجة (processing)، وربما الاحتفاظ لمراقبة إساءة الاستخدام (possibly retention for abuse monitoring)، وربما التدريب (possibly training)، بحسب العقد والإعدادات (depending on contract and settings)، وفي مخزن نصوص المحادثات (the transcript store)، وأدوات التتبّع التي تلتقط الموجّهات الكاملة (tracing tools that capture full prompts)، ومجموعات التقييم والضبط الدقيق (evaluation and fine-tuning sets)، والفهارس المتجهية (vector indexes). ولهذه الأسباب تُدرج قائمة OWASP Top 10 for LLM Applications (2025) بندَي *الإفصاح عن المعلومات الحساسة (Sensitive Information Disclosure)* (LLM02) و*نقاط ضعف المتجهات والتضمينات (Vector and Embedding Weaknesses)* (LLM08). وقد أظهرت الأبحاث (Research)، مثل عمل Morris وزملائه (Morris and colleagues) عام 2023، أن النص يمكن إعادة بنائه إلى حدٍّ كبير من تضميناته (largely reconstructed from its embeddings) في ظل بعض الظروف (under some conditions)، فتعامل مع تضمينات البيانات الشخصية على أنها بياناتٌ شخصية (treat embeddings of personal data as personal data).
 
 ```mermaid
-flowchart LR
-    U["رسالة العميل"] --> G["بوابة نجم أسيست"]
-    G -->|"المعرّفات مستبدلة بعناصر نائبة"| M["مزوّد النموذج"]
-    G -->|"حقول قائمة السماح فقط"| L["السجلات: 30 يومًا"]
-    G -->|"نص محادثة مشفّر"| T["مخزن نصوص المحادثات: 90 يومًا"]
-    T -->|"نسخ محجوبة أو اصطناعية فقط"| E["مجموعات التقييم"]
-    G -->|"استرجاع محصور في هذا العميل"| R["الفهرس المتجهي"]
-    D["طلب محو"] --> T
+flowchart RL
+    U["رسالة العميل<br/>(Customer message)"] --> G["بوابة نجم أسيست<br/>(Najm Assist gateway)"]
+    G -->|"المعرّفات مستبدلة بعناصر نائبة (identifiers replaced by placeholders)"| M["مزوّد النموذج<br/>(Model provider)"]
+    G -->|"حقول قائمة السماح فقط (allowlisted fields only)"| L["السجلات: 30 يومًا<br/>(Logs: 30 days)"]
+    G -->|"نص محادثة مشفّر (encrypted transcript)"| T["مخزن نصوص المحادثات: 90 يومًا<br/>(Transcript store: 90 days)"]
+    T -->|"نسخ محجوبة أو اصطناعية فقط (masked or synthetic copies only)"| E["مجموعات التقييم<br/>(Evaluation sets)"]
+    G -->|"استرجاع محصور في هذا العميل (retrieval scoped to this customer)"| R["الفهرس المتجهي<br/>(Vector index)"]
+    D["طلب محو<br/>(Erasure request)"] --> T
     D --> R
     D --> E
 ```
