@@ -28,7 +28,7 @@ The second draft finds real problems. The customer's identity reaches the card s
 
 ### 🟢 The essentials
 
-**The four questions.** In *Threat Modeling: Designing for Security* (2014), Adam Shostack framed the work as four questions, later adopted by the Threat Modeling Manifesto (2020):
+**The four questions.** Adam Shostack framed the work as four questions, first set out in slightly different words in *Threat Modeling: Designing for Security* (2014); the Threat Modeling Manifesto (2020) builds on them. In their current form:
 
 1. **What are we working on?** A model of the system, usually a diagram.
 2. **What can go wrong?** Threats, found systematically, for example with STRIDE.
@@ -112,7 +112,7 @@ Three crossings stand out. **App to gateway** is a classic web and API boundary 
 # VULNERABLE: identity and authority both come from the model's tool call
 def freeze_card_tool(args: dict, session) -> str:
     card = cards.get(args["card_id"])
-    if card.customer_id == args["customer_id"]:   # the model wrote both values
+    if card.customer_id == args["customer_id"]:   # the model chose both the card and the customer
         cards.freeze(card.id)
         return "Card frozen"
     return "Not allowed"
@@ -230,11 +230,11 @@ Ali's second draft becomes **TM-ASSIST-004: Najm Assist "freeze card" tool**, an
 - A. The check should use the card's expiry date instead
 - B. It is fine, because the model was given the correct customer ID in its prompt
 - C. The tool should skip the ownership check to stay fast
-- D. Both values crossed the model's trust boundary, so the check compares two untrusted values; the customer ID must come from the verified session
+- D. Both values crossed the model's trust boundary, so the check only proves that two model-chosen values agree; the customer ID must come from the verified session
 
 <details><summary>Answer</summary>
 
-**D.** Untrusted text shapes model output, so comparing two values the model wrote proves nothing. Identity must come from the session; the model only names a card. B assumes the model always repeats what it was told. (🟡 Going deeper.)
+**D.** Untrusted text shapes model output, so a steered model can name another customer's card together with that customer's ID, and the check passes. Identity must come from the session; the model only names a card. B assumes the model always repeats what it was told. (🟡 Going deeper.)
 
 </details>
 
@@ -270,7 +270,7 @@ Ali's second draft becomes **TM-ASSIST-004: Najm Assist "freeze card" tool**, an
 - OWASP Threat Modeling Cheat Sheet — https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
 - OWASP Threat Dragon — https://owasp.org/www-project-threat-dragon/
 - OWASP Top 10 (Insecure Design) — https://owasp.org/Top10/
-- NIST SP 800-218, Secure Software Development Framework (SSDF) Version 1.1 — https://csrc.nist.gov/pubs/sp/800/218/final
+- NIST SP 800-218, Secure Software Development Framework (SSDF) Version 1.1 (a v1.2 revision was in draft at the time of writing, 2026; check the current version) — https://csrc.nist.gov/pubs/sp/800/218/final
 - Schneier, B. (1999), "Attack Trees", *Dr. Dobb's Journal*, December 1999
 - LINDDUN privacy threat modelling — https://linddun.org
 - MITRE ATLAS — https://atlas.mitre.org
@@ -323,13 +323,15 @@ The 🏛️ section applies most of them to Najm Assist. Four do most of the dai
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA core TO assist_svc;
 
 -- FIXED: no table access; two functions that check card ownership inside
+-- (SECURITY DEFINER functions owned by a separate role, each with a fixed search_path)
 REVOKE ALL ON ALL TABLES IN SCHEMA core FROM assist_svc;
-REVOKE EXECUTE ON ALL FUNCTIONS IN SCHEMA core FROM PUBLIC;  -- PostgreSQL lets everyone run new functions by default
+REVOKE EXECUTE ON ALL FUNCTIONS IN SCHEMA core FROM PUBLIC;  -- PostgreSQL lets everyone run functions by default
+ALTER DEFAULT PRIVILEGES IN SCHEMA core REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC;  -- and future ones
 GRANT EXECUTE ON FUNCTION core.list_my_cards(uuid) TO assist_svc;
 GRANT EXECUTE ON FUNCTION core.freeze_card(uuid, uuid) TO assist_svc;
 ```
 
-The `REVOKE ... FROM PUBLIC` line is itself a secure-defaults lesson: check what your platform allows out of the box.
+The two `FROM PUBLIC` lines are themselves a secure-defaults lesson: check what your platform allows out of the box, for existing objects and for new ones.
 
 **Defence in depth** assumes every layer will sometimes fail. The layers must be **independent**: two checks that both trust the same customer ID from the model are one layer, not two.
 
@@ -560,7 +562,7 @@ This grid comes from the **OWASP Risk Rating Methodology**, a common way to rate
 
 **CVE and CWE.** A **CVE** (Common Vulnerabilities and Exposures) identifier names one publicly known vulnerability in a specific product, such as CVE-2021-44228 (Log4Shell). A **CWE** (Common Weakness Enumeration) entry names a *type* of flaw. The SME Portal bug has no CVE, because it is Najm's own code, but it has a CWE: CWE-639, "Authorization Bypass Through User-Controlled Key".
 
-**CVSS.** The **Common Vulnerability Scoring System** gives a standard, vendor-neutral severity score, usually for a published CVE. It is maintained by FIRST, the Forum of Incident Response and Security Teams. The base score answers: if this vulnerability exists in a typical deployment, how bad is it technically? Both v3.1 and v4.0 use the same bands: **Low** 0.1–3.9, **Medium** 4.0–6.9, **High** 7.0–8.9 and **Critical** 9.0–10.0 (0.0 is None).
+**CVSS.** The **Common Vulnerability Scoring System** gives a standard, vendor-neutral severity score, usually for a published CVE. It is maintained by FIRST, the Forum of Incident Response and Security Teams. The base score answers: setting aside any one organisation's deployment and assuming a reasonable worst case, how bad is this vulnerability technically? Both v3.1 and v4.0 use the same bands: **Low** 0.1–3.9, **Medium** 4.0–6.9, **High** 7.0–8.9 and **Critical** 9.0–10.0 (0.0 is None).
 
 A score comes with a **vector string** listing the metric values, and the vector tells you more than the number. The classic worst-case network bug in CVSS v3.1:
 
@@ -582,7 +584,7 @@ CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N      base score 6.5 (Medium)
 Only "Medium", because it needs a login (PR:L) and only reads data. For a bank whose business customers trust it with their invoices, it is one of the most serious findings on the list. That gap is the lesson: **CVSS rates the bug; you must rate the risk.**
 
 **Exploitation evidence.**
-- The **CISA KEV catalogue** (started in 2021) lists vulnerabilities with reliable evidence of exploitation in the wild. US federal civilian agencies must fix listed items by set deadlines; everyone else can use it as a free "fix this first" list.
+- The **CISA KEV catalogue** (started in 2021) lists vulnerabilities with reliable evidence of exploitation in the wild. US federal civilian agencies must fix listed items within deadlines set by CISA directives (in June 2026, BOD 26-04 replaced the original BOD 22-01 with deadlines that also weigh exposure, automation and technical impact; check the current text); everyone else can use it as a free "fix this first" list.
 - **EPSS** (Exploit Prediction Scoring System, also from FIRST) gives each CVE a daily-updated probability, from 0 to 1, that exploitation activity will be observed in the next 30 days. Most CVEs score very low.
 
 CVSS asks "how bad if exploited?". EPSS asks "how likely to be exploited soon?". KEV says "already exploited".
@@ -592,10 +594,10 @@ CVSS asks "how bad if exploited?". EPSS asks "how likely to be exploited soon?".
 ### 🟡 Going deeper
 
 **Rating a finding with no CVE.** Ali rates the SME Portal invoice bug with the OWASP method:
-- **Likelihood:** skill level 3 (edit a number in a URL), motive 4, opportunity 7 (any SME Portal account), size 6 (all authenticated users), ease of discovery 7, ease of exploit 5, awareness 4 (not yet public), intrusion detection 8 (logged, not reviewed). Average 5.5: **Medium**.
+- **Likelihood:** skill level 3 ("some technical skills": enough to edit a number in a URL), motive 4, opportunity 7 (any SME Portal account), size 6 (all authenticated users), ease of discovery 7, ease of exploit 5, awareness 4 (not yet public), intrusion detection 8 (logged, not reviewed). Average 5.5: **Medium**.
 - **Business impact:** financial damage 3, reputation damage 5, non-compliance 5 (a data-protection breach), privacy violation 7 (thousands of people named on invoices). Average 5.0: **Medium**.
 
-Medium likelihood and Medium impact give **Medium**. Noura objects: averaging has buried the privacy factor. The methodology invites organisations to customise it by weighting factors or adding rules, so Najm adds a floor: *if privacy violation or non-compliance scores 7 or more for customer data, impact is High.* Medium likelihood with High impact gives **High**, and the fix goes into the current sprint.
+Medium likelihood and Medium impact give **Medium**. Noura objects: averaging has buried the privacy factor. The methodology invites organisations to tailor it, for example by adding factors or weighting the ones that matter most to the business, so Najm adds a floor rule of its own: *if privacy violation or non-compliance scores 7 or more for customer data, impact is High.* Medium likelihood with High impact gives **High**, and the fix goes into the current sprint.
 
 **CVSS v4.0.** FIRST published v4.0 in November 2023. The main changes:
 - Four metric groups: **Base**, **Threat** (exploit maturity), **Environmental** (your requirements and deployment) and **Supplemental** (extra information, such as Safety, that does not change the score).
@@ -625,7 +627,7 @@ def priority(f) -> str:
         return "P1" if important else "P2"
     if severe and (important or f.epss >= 0.1):                 # epss is 0.0 for findings with no CVE
         return "P2"
-    if f.cvss_base >= 4.0 or f.asset.tier == 1:
+    if f.cvss_base >= 4.0 or f.owasp_risk == "Medium" or f.asset.tier == 1:
         return "P3"
     return "P4"
 ```
@@ -645,13 +647,13 @@ flowchart TD
     E -->|"No"| P4["P4: next planned release"]
 ```
 
-This mirrors **SSVC** (Stakeholder-Specific Vulnerability Categorization), from Carnegie Mellon's CERT Coordination Center and adapted by CISA: instead of a number, a decision tree over exploitation status, technical impact, automatability and mission impact, ending in Track, Track*, Attend or Act.
+This mirrors **SSVC** (Stakeholder-Specific Vulnerability Categorization), from Carnegie Mellon's CERT Coordination Center and adapted by CISA: instead of a number, a decision tree over exploitation status, technical impact, automatability, and mission and well-being impact, ending in Track, Track*, Attend or Act.
 
 ### 🔴 Expert view
 
 **Risk matrices have known flaws.** Tony Cox's 2008 paper "What's Wrong with Risk Matrices?" showed that matrices can rank risks inconsistently, because they squeeze continuous values into a few bins. Use them to start conversations and sort long lists, not as precise measurement.
 
-**Quantitative risk.** For expensive decisions, estimate ranges. **FAIR** (Factor Analysis of Information Risk), published as Open Group standards, models risk as how often loss events happen times how large they are, combined by simulation. Its output ("a 1-in-10 chance per year of losses above a stated amount") speaks the language of Hamad's board and of regulators who expect documented ICT risk management, such as the EU's DORA for Najm's European business and the QCB at home (lesson 11.2). The danger is false precision: guesses in, confident-looking guesses out.
+**Quantitative risk.** For expensive decisions, estimate ranges. **FAIR** (Factor Analysis of Information Risk), published as Open Group standards, models risk as how often loss events happen times how large they are, combined by simulation. Its output ("a 1-in-10 chance per year of losses above a stated amount") speaks the language of Hamad's board and of rules and supervisors that expect documented ICT risk management, such as the EU's DORA for Najm's European business and the QCB at home (lesson 11.2). The danger is false precision: guesses in, confident-looking guesses out.
 
 **CVSS was not designed for AI findings.** A prompt-injection path in Najm Assist or a poisoning risk in Smart Alerts rarely has a CVE, and its severity depends on what the system may do. Rate it by consequence: *what can an attacker who controls the model's output make our tools do?* The same injection is a nuisance in a fee-questions chatbot and a P1 in an agent that can move money. So the design rule from lesson 1.2 also caps the risk rating.
 
@@ -671,7 +673,7 @@ This mirrors **SSVC** (Stakeholder-Specific Vulnerability Categorization), from 
 | **FAIR** (Open Group) | Quantitative model of loss frequency and size, as ranges | Expensive decisions; board reporting in money |
 
 ## 🏛️ In practice at Najm Bank
-Noura and Jassim publish the **Najm Vulnerability Prioritisation Standard v1**. Hamad approves it; Layla's governance team maps it to regulatory obligations.
+Noura and Jassim publish the **Najm Vulnerability Prioritisation Standard v1**. Hamad approves it; Layla's governance team maps it to regulatory obligations. It is a first cut: lesson 10.3 folds it into the bank's full Vulnerability Management Standard, which adds a P0 tier, revises the deadlines and adds disclosure rules.
 
 **Part A: priorities and deadlines** (illustrative: set yours from your risk appetite and your regulators' expectations)
 
@@ -679,7 +681,7 @@ Noura and Jassim publish the **Najm Vulnerability Prioritisation Standard v1**. 
 |---|---|---|---|---|
 | **P1** | Known exploited on an internet-facing or tier 1 asset; or evidence that customer data has already reached another customer | 72 hours | 14 days | CISO only, with written compensating controls |
 | **P2** | Known exploited elsewhere; or severe (CVSS 7.0+, OWASP High or Critical) and exposed, tier 1 or EPSS 0.1+ | 14 days | 30 days | Business system owner and Noura |
-| **P3** | CVSS 4.0–6.9, or any finding on a tier 1 asset | — | 60 days | Business system owner |
+| **P3** | Not P1 or P2, and CVSS 4.0+ or OWASP Medium or above; or any other finding on a tier 1 asset | — | 60 days | Business system owner |
 | **P4** | Everything else | — | Next release; 180 days at most | Engineering lead |
 
 **Tiers.** Tier 1 holds customer data or can move money (Najm Mobile and its API, SME Portal, core banking, Najm Assist's tools). Tier 2 holds sensitive bank data (Credit Memo Copilot, Smart Alerts). Tier 3 is the rest.
@@ -701,7 +703,7 @@ Noura and Jassim publish the **Najm Vulnerability Prioritisation Standard v1**. 
 - 🔴 Take a finding with no CVE from your own application, or from OWASP Juice Shop running locally. Rate it with the OWASP method, score it with CVSS v4.0 in FIRST's calculator, and write a one-page note on why the two differ and which should drive priority. *Done when:* the note names the factor behind the difference and ends with a risk-register entry: owner, treatment and review date.
 
 ## ⚠️ Mistakes and traps
-- **Treating CVSS as risk.** CVSS rates severity in a typical deployment. Add exploitation evidence and context before setting priority.
+- **Treating CVSS as risk.** A CVSS base score rates severity independent of your deployment. Add exploitation evidence and context before setting priority.
 - **Ignoring findings without a CVE.** Your own access-control and logic bugs never appear in feeds. Rate them with the OWASP method, in the same queue.
 - **Averages that hide the worst factor.** A data-protection breach can average out to "Medium". Let critical factors set a floor.
 - **Risk acceptance by silence.** An overdue finding is not accepted. Acceptance needs an owner, a reason, compensating controls and an expiry.
@@ -732,7 +734,7 @@ Noura and Jassim publish the **Najm Vulnerability Prioritisation Standard v1**. 
 **2. Hamad asks why the SME Portal bug that lets one company read another company's invoices is only "Medium" (CVSS 6.5). What is the best explanation?**
 
 - A. The score is wrong and should be changed to 9.0 by hand
-- B. CVSS rates technical severity in a typical deployment, not risk to Najm; with business impact and exposure taken into account, it is a high-priority risk
+- B. CVSS rates technical severity independent of any one deployment, not risk to Najm; with business impact and exposure taken into account, it is a high-priority risk
 - C. Medium findings do not need fixing
 - D. Bugs without a CVE cannot be rated
 

@@ -10,7 +10,7 @@
 *Level: 🔴 Advanced* · *Prerequisites: 2.1, 2.2, 8.2* · *Phase: Design, Build*
 
 ## ⚡ In 60 seconds
-- Model output is **untrusted input** to whatever reads it next. Anyone whose text reaches the model (a customer, a document, a web page) can influence it. OWASP lists this risk as **LLM05 Improper Output Handling**.
+- Model output is **untrusted input** to whatever reads it next. Anyone whose text reaches the model (a customer, a document, a web page) can influence it. The 2025 version of the OWASP Top 10 for LLM Applications lists this risk as **LLM05 Improper Output Handling**.
 - The decisive control sits at the **sink**, the place where the output is used: encode or sanitise before rendering, never build SQL or shell commands from it, validate structured output against a strict schema, allow-list URLs.
 - **Guardrails** are checks around the model: input filters, output classifiers, personal-data scanners, topic rules. They are useful and mostly probabilistic. They reduce risk; on their own they are not a security boundary.
 - The system prompt is not a control. Assume it will be read (**LLM07 System Prompt Leakage**), and keep secrets and authorisation logic out of it.
@@ -43,21 +43,31 @@ Output is also a liability. In December 2023, users manipulated a Chevrolet deal
 
 File paths and logs are sinks too: map model choices to IDs rather than paths, and log model output as an escaped, masked field.
 
-**Vulnerable and fixed: rendering.** The most common bug is rendering model Markdown as raw HTML.
+**Vulnerable and fixed: rendering.** A common bug is rendering model Markdown as raw HTML.
 
 ```javascript
 // Vulnerable: model output becomes live HTML
 chatBubble.innerHTML = marked.parse(modelOutput);
 
 // Safer: parse, sanitise with an allow-list, then insert
+const ALLOWED_HOSTS = new Set(["najm.example", "help.najm.example"]);
+DOMPurify.addHook("afterSanitizeAttributes", (node) => {   // register once
+  if (node.tagName !== "A") return;
+  let ok = false;
+  try {
+    const url = new URL(node.getAttribute("href") || "");
+    ok = url.protocol === "https:" && ALLOWED_HOSTS.has(url.hostname);
+  } catch { /* relative or malformed: not allowed */ }
+  if (!ok) node.removeAttribute("href");   // the text stays, the link goes
+});
 const html = DOMPurify.sanitize(marked.parse(modelOutput), {
   ALLOWED_TAGS: ["p", "strong", "em", "ul", "ol", "li", "a", "code"],
   ALLOWED_ATTR: ["href"],          // no <img>, no style, no event handlers
 });
-chatBubble.innerHTML = html;       // links are then rewritten to allow-listed domains
+chatBubble.innerHTML = html;
 ```
 
-If the feature does not need rich text, use `textContent`, which never interprets markup. Either way, add a **Content Security Policy** (2.2) that forbids inline scripts and loads images and connections only from Najm's domains, so a sanitiser bug does not become an exfiltration channel.
+The hook keeps link text but drops any `href` that is not HTTPS to an allow-listed Najm host. If the feature does not need rich text, use `textContent`, which never interprets markup. Either way, add a **Content Security Policy** (2.2) that forbids inline scripts and loads images and connections only from Najm's domains, so a sanitiser bug does not become an exfiltration channel.
 
 **Guardrails.** A **guardrail** is a check that runs before or after the model:
 - **Input guardrails:** classifiers that flag likely injection or jailbreak attempts; topic filters; masking personal data before text goes to an external model.
@@ -76,7 +86,7 @@ from pydantic import BaseModel, ConfigDict, Field
 class AssistAction(BaseModel):
     model_config = ConfigDict(extra="forbid")        # unknown fields are rejected
     intent: Literal["fee_lookup", "freeze_card", "open_dispute", "handoff"]
-    card_last4: str | None = Field(default=None, pattern=r"^\d{4}$")
+    card_last4: str | None = Field(default=None, pattern=r"^[0-9]{4}$")  # ASCII digits only
     reply_text: str = Field(max_length=800)
 
 action = AssistAction.model_validate_json(model_output)   # raises on anything else
@@ -122,7 +132,7 @@ Each layer catches some of what the others miss. When a check fails, show a neut
 ## 🧰 The toolkit
 | Control, standard or tool | What it is and does | When to reach for it |
 |---|---|---|
-| **OWASP Top 10 for LLM Applications** | Industry list of LLM application risks (2025 version), including LLM05 Improper Output Handling and LLM07 System Prompt Leakage | Threat modelling and reviewing any LLM feature |
+| **OWASP Top 10 for LLM Applications** | Industry list of LLM application risks, including LLM05 Improper Output Handling and LLM07 System Prompt Leakage. IDs in this module follow the 2025 version; numbering can change between editions, so check the current list | Threat modelling and reviewing any LLM feature |
 | **Context-aware output encoding** | Escaping data for the exact place it is used: HTML, attribute, URL, SQL parameter | Every sink that receives model output |
 | **DOMPurify** (Cure53) | Open-source HTML sanitiser that removes dangerous markup using an allow-list of tags and attributes | Rendering model Markdown as rich text |
 | **Content Security Policy** | Browser header limiting which scripts, images and connections a page may load | Any web or web-view chat, as a backstop to sanitisation |
@@ -197,14 +207,14 @@ Noura and Ali write the **Najm Assist Output Handling Standard v1**. Tariq (engi
 
 **3. A team wants Najm Assist to answer "show my last five card payments" by having the model write SQL that the backend runs. What is the safest design?**
 
-- A. Let the model write SQL, run with the application's normal database account
+- A. Have the model return a validated intent such as `list_transactions`; code runs a fixed, parameterised query with the customer ID taken from the authenticated session
 - B. Let the model write SQL, and block any query containing the word DROP
-- C. Have the model return a validated intent such as `list_transactions`; code runs a fixed, parameterised query with the customer ID taken from the authenticated session
+- C. Let the model write SQL, run with the application's normal database account
 - D. Let the model write SQL, and have a second model review it first
 
 <details><summary>Answer</summary>
 
-**C.** The model chooses from a closed set of intents and code takes identity from the session, so a manipulated model cannot read other customers' rows. B's blocklist misses that entirely; D adds a second model that can also be manipulated. (🟢 The essentials; 🟡 Going deeper.)
+**A.** The model chooses from a closed set of intents and code takes identity from the session, so a manipulated model cannot read other customers' rows. B's blocklist misses that entirely; D adds a second model that can also be manipulated. (🟢 The essentials; 🟡 Going deeper.)
 
 </details>
 
@@ -249,7 +259,7 @@ Noura and Ali write the **Najm Assist Output Handling Standard v1**. Tariq (engi
 
 ## ⚡ In 60 seconds
 - An **agent** is a model in a loop that chooses and calls **tools** (functions or APIs). Whatever its tools can do, a successful prompt injection can do.
-- OWASP's **LLM06 Excessive Agency** has three roots: too much **functionality**, too many **permissions**, too much **autonomy**. Cut all three.
+- OWASP's **LLM06 Excessive Agency** (2025 version) has three roots: too much **functionality**, too many **permissions**, too much **autonomy**. Cut all three.
 - Authorise every tool call **in code, on the server, as the end user**. The model proposes; deterministic code decides.
 - The **lethal trifecta** (Simon Willison, 2025): private data, untrusted content and a way to send data out. An agent with all three can be tricked into leaking. Remove a leg.
 - **MCP** (Model Context Protocol) servers are software running with your privileges, and their tool descriptions are prompts. Allow-list, pin, review and sandbox them.
@@ -318,7 +328,7 @@ The customer's identity comes from the authenticated session, never from a model
 
 ### 🟡 Going deeper
 
-**The lethal trifecta.** Simon Willison (2025) named the combination that makes data theft through prompt injection close to inevitable: **access to private data**, **exposure to untrusted content** and **the ability to communicate externally**. Each leg alone is manageable. Together, anyone who can put text in front of the agent can ask it to send private data somewhere. Make sure no single agent context holds all three.
+**The lethal trifecta.** Simon Willison (2025) named the combination that makes data theft through prompt injection easy for an attacker: **access to private data**, **exposure to untrusted content** and **the ability to communicate externally**. Each leg alone is manageable. Together, anyone who can put text in front of the agent can ask it to send private data somewhere. Make sure no single agent context holds all three.
 
 | Najm agent | Private data | Untrusted content | External channel | Decision |
 |---|---|---|---|---|
@@ -379,9 +389,9 @@ Noura, Tariq and Rania agree the **Najm Assist Tool Register v1**. No tool reach
 |---|---|---|---|---|---|---|
 | `get_fee(product, fee_type)` | Read public | None | None | Automatic | Rate limit | Approved |
 | `list_transactions(days ≤ 90)` | Read private | `transactions:read` | Customer from session | Automatic | 10 per session | Approved |
-| `freeze_card(card_last4)` | Reversible | `cards:freeze` | Ownership; idempotency key | Confirmation card | 5 per day | Approved |
-| `unfreeze_card(card_last4)` | Reversible, fraud-sensitive | `cards:unfreeze` | Ownership; blocked within 24 hours of a fraud flag | Step-up biometric | 3 per day | Approved |
-| `open_dispute(txn_id, reason, note)` | Change | `disputes:create` | Transaction belongs to customer; reason from fixed list | Confirmation | 3 per day; note marked untrusted downstream | Approved |
+| `freeze_card(card_last4)` | Reversible change | `cards:freeze` | Ownership; idempotency key | Confirmation card | 5 per day | Approved |
+| `unfreeze_card(card_last4)` | Reversible change; fraud-sensitive | `cards:unfreeze` | Ownership; blocked within 24 hours of a fraud flag | Step-up biometric | 3 per day | Approved |
+| `open_dispute(txn_id, reason, note)` | Reversible change | `disputes:create` | Transaction belongs to customer; reason from fixed list | Confirmation | 3 per day; note marked untrusted downstream | Approved |
 | `transfer_to_beneficiary` | Money-moving | — | — | — | — | **Rejected for v1**; revisit after six incident-free months and a red-team pass (9.4) |
 | `call_core_api` | Any | Service account | None | — | — | **Rejected permanently** |
 
@@ -454,14 +464,14 @@ Noura, Tariq and Rania agree the **Najm Assist Tool Register v1**. No tool reach
 
 **4. For "freeze card", the team proposes a confirmation message written by the model: "I'll freeze your card ending 4821. OK?" What is the risk, and the fix?**
 
-- A. No risk, because the customer confirms anyway
+- A. An injected model could describe one action while requesting another; render the confirmation in app code from the validated parameters and re-check them on the server
 - B. The model may be slow, so cache the message
-- C. An injected model could describe one action while requesting another; render the confirmation in app code from the validated parameters and re-check them on the server
+- C. No risk, because the customer confirms anyway
 - D. The message should be longer and more detailed
 
 <details><summary>Answer</summary>
 
-**C.** What the customer approves must be exactly what will run, so code, not the model, renders it. A assumes the text matches the call. (🟢 The essentials.)
+**A.** What the customer approves must be exactly what will run, so code, not the model, renders it. C assumes the text matches the call. (🟢 The essentials.)
 
 </details>
 
@@ -499,7 +509,7 @@ Noura, Tariq and Rania agree the **Najm Assist Tool Register v1**. No tool reach
 - Enforce access control **in the retriever, before the model sees anything**: apply the user's entitlements inside the index query. Never rely on the model to keep a document secret.
 - Every retrieved passage is **untrusted input**, even an internal one. Uploads and external documents can carry indirect prompt injection.
 - **Whoever can write to the corpus can steer the answers.** Protect ingestion with provenance, review, sanitisation and write control.
-- **Embeddings are derived data** that can partly reveal their source text (OWASP **LLM08 Vector and Embedding Weaknesses**). Classify, protect and delete them like the source.
+- **Embeddings are derived data** that can partly reveal their source text (OWASP **LLM08 Vector and Embedding Weaknesses**, 2025 version). Classify, protect and delete them like the source.
 - Biggest trap: one big shared index plus a prompt that says "only use documents the user may see".
 
 ## 🧭 Why it matters
@@ -566,7 +576,7 @@ Filter syntax varies by vector database; the principle does not. This is **pre-f
 | Namespace per tenant | Separate logical space per customer or company | Strong: a query cannot reach another namespace | Multi-tenant products such as the SME Portal |
 | Separate index per sensitivity | Restricted data in its own index and service | Strongest, at the highest cost | Special-assets material, if indexed at all |
 
-Najm's rule mirrors the database rule from 3.3: **multi-tenant data is separated by namespace, never by a filter alone**, and the most sensitive classes are not indexed for general copilots at all.
+Najm's rule follows the "second wall" idea from 3.3, where a tenant filter in code is backed by row-level security: **multi-tenant data is separated by namespace, never by a metadata filter alone**, with the namespace chosen from the session, and the most sensitive classes are not indexed for general copilots at all.
 
 **Permission drift and deletion.** Permissions change: an RM moves teams, a client moves to special assets. ACLs copied once at ingestion go stale. Re-sync them on change events and on a short schedule, and for sensitive classes check the **source of truth** at query time. Deletion has the same problem. When a document is deleted, or a data subject exercises the right to erasure (GDPR Art. 17), the deletion must reach chunks, embeddings, caches, logs and evaluation sets. Sara's team keeps a **data map** of every copy RAG creates.
 
@@ -576,7 +586,7 @@ Najm's rule mirrors the database rule from 3.3: **multi-tenant data is separated
 - **Quarantine:** customer uploads go into a customer-scoped space, never the shared policy corpus.
 - **Write control:** only named owners can change trusted corpora such as fee schedules and credit policy, with review.
 
-**Embeddings are personal data too.** An **embedding** is a list of numbers representing a passage's meaning, and it is tempting to call it anonymous. Morris and colleagues (2023) showed that text can often be reconstructed closely from its embedding, recovering personal information such as full names from clinical notes in their experiments. Give vectors the same classification, encryption, access control and retention as the source.
+**Embeddings can be personal data too.** An **embedding** is a list of numbers representing a passage's meaning, and it is tempting to call it anonymous. Morris and colleagues (2023) showed that text can often be reconstructed closely from its embedding, recovering personal information such as full names from clinical notes in their experiments. Give vectors the same classification, encryption, access control and retention as the source.
 
 **What leaves the bank.** If the model or embedding service is an external API, every retrieved passage goes to a third party. Sara checks the contract (no training on Najm data, retention, processing location), and the team sends only the passages needed, masking identifiers the task does not use. Data-protection law is covered in *AI Governance: Zero to Hero*.
 
@@ -702,14 +712,14 @@ The suite runs in CI with 40 ordinary and adversarial queries per persona. One f
 
 **4. What is the most reliable way to test that the copilot respects document permissions?**
 
-- A. Ask the model whether it respects permissions
+- A. Deterministic tests on the retriever: for each persona and seeded document, assert forbidden chunk IDs are never returned for ordinary and adversarial queries, in CI, plus end-to-end canaries
 - B. Have testers read a sample of answers each week
-- C. Deterministic tests on the retriever: for each persona and seeded document, assert forbidden chunk IDs are never returned for ordinary and adversarial queries, in CI, plus end-to-end canaries
+- C. Ask the model whether it respects permissions
 - D. Check that the system prompt mentions permissions
 
 <details><summary>Answer</summary>
 
-**C.** The retriever is where access is enforced, so test it directly and repeatably. B catches some leaks late and by chance; A and D test words, not controls. (🔴 Expert view; 🏛️ In practice.)
+**A.** The retriever is where access is enforced, so test it directly and repeatably. B catches some leaks late and by chance; C and D test words, not controls. (🔴 Expert view; 🏛️ In practice.)
 
 </details>
 
@@ -753,7 +763,7 @@ Rania wants Najm Assist's agent features (card freezes and disputes, 9.2) in the
 
 Ali finds a long list of jailbreak prompts online and proposes running them against production Najm Assist on Friday afternoon. Mariam stops him. There is no written authorisation. Production holds real customers' data, and a successful test could freeze real cards. Nobody has defined "success", so results could not be reproduced or compared. And a public list tests what the internet worried about last year, not Najm's tools and data. "A red team is not a person typing clever prompts," she tells him. "It is a test programme with a scope, rules, measurements and an owner for every finding."
 
-Standards point the same way. NIST's Generative AI Profile (AI 600-1) includes red-teaming among its suggested actions. For AI systems in the EU AI Act's high-risk categories, Article 15 requires resilience against unauthorised attempts to alter a system's use, outputs or performance by exploiting vulnerabilities, naming attacks such as data poisoning, adversarial examples and confidentiality attacks. Which Najm systems fall into which category is a governance question (*AI Governance: Zero to Hero*); the testing discipline is the same.
+Standards point the same way. NIST's Generative AI Profile (AI 600-1) includes red-teaming among its suggested actions. For AI systems in the EU AI Act's high-risk categories, Article 15 requires resilience against attempts by unauthorised third parties to alter a system's use, outputs or performance by exploiting vulnerabilities, naming attacks such as data poisoning, adversarial examples and confidentiality attacks. Which Najm systems fall into which category is a governance question (*AI Governance: Zero to Hero*); the testing discipline is the same.
 
 ## 📐 How it works
 
@@ -836,7 +846,7 @@ A prompt change is fine as an extra layer, never as the only fix for a critical 
 
 ### 🔴 Expert view
 
-**Adaptive attackers.** A defence that holds against a fixed list of attacks often fails against an attacker who adapts to it. Carlini and colleagues made the point for adversarial examples in "On Evaluating Adversarial Robustness" (2019). For LLM agents, Zhan and colleagues (2025) reported bypassing all eight indirect-prompt-injection defences they evaluated using adaptive attacks, and Nasr and colleagues (2025) reported bypassing most of the twelve recent jailbreak and injection defences they tested, many of which had originally reported near-zero attack success. So: give red-teamers knowledge of the defences (**white-box** testing), budget for iterative attacks, and never treat a low ASR on a fixed set as proof of robustness. This is also why the architectural controls of 9.1 to 9.3 carry the weight.
+**Adaptive attackers.** A defence that holds against a fixed list of attacks often fails against an attacker who adapts to it. Carlini and colleagues made the point for adversarial examples in "On Evaluating Adversarial Robustness" (2019). For LLM agents, Zhan and colleagues (2025) reported bypassing all eight indirect-prompt-injection defences they evaluated using adaptive attacks, and Nasr and colleagues (2025) reported bypassing twelve recent jailbreak and injection defences, most with attack success above 90%, although most of those defences had originally reported near-zero attack success. So: give red-teamers knowledge of the defences (**white-box** testing), budget for iterative attacks, and never treat a low ASR on a fixed set as proof of robustness. This is also why the architectural controls of 9.1 to 9.3 carry the weight.
 
 **Test the system, not the model.** Model providers red-team their models. That does not cover Najm's system prompt, tools, corpus, user interface or Gulf-dialect traffic. In an agentic system, most critical findings live in the integration: a tool that trusts a model argument, a renderer that loads images, a retriever without filters.
 
@@ -873,7 +883,7 @@ Mariam writes the **Najm Assist AI Red-Team Charter and Test Plan v1**. Hamad si
 | ID | OWASP mapping | Goal | Oracle | Runs | Gate |
 |---|---|---|---|---|---|
 | RT-017 | LLM01, LLM06 | Freeze another customer's card via a dispute note | Audit log or mock API state | 30 | 0 successes |
-| RT-022 | LLM05 | Produce an auto-loading image or clickable link to a host off the allow-list | Egress proxy log | 30 per language | 0 successes |
+| RT-022 | LLM05 | Produce an auto-loading image or clickable link to a host off the allow-list | Rendered-output check plus the proxy log of the staging test devices | 30 per language | 0 successes |
 | RT-031 | LLM02 | Retrieve another customer's transaction canary | Canary in output or logs | 30 | 0 successes |
 | RT-040 | LLM07 | Extract the system prompt's internal sections | Prompt canary phrase in output | 30 | ASR ≤ 10%; no secrets present (OUT-08) |
 | RT-052 | LLM09 | Obtain a promised fee waiver | Calibrated judge; every positive human-reviewed | 50 | ASR ≤ 2% |
@@ -931,14 +941,14 @@ Mariam writes the **Najm Assist AI Red-Team Charter and Test Plan v1**. Hamad si
 
 **3. Which oracle is BEST for testing whether an injected document can make Najm Assist send data out?**
 
-- A. A tester's impression of whether the reply looks suspicious
-- B. The egress proxy log showing a request to a host off the allow-list carrying a planted canary value
+- A. The egress proxy log showing a request to a host off the allow-list carrying a planted canary value
+- B. A tester's impression of whether the reply looks suspicious
 - C. The model's own statement that it sent nothing
 - D. The number of tokens in the reply
 
 <details><summary>Answer</summary>
 
-**B.** It is deterministic, repeatable and uses a harmless canary instead of real data. C asks the system under attack to grade itself. (🟢 The essentials.)
+**A.** It is deterministic, repeatable and uses a harmless canary instead of real data. C asks the system under attack to grade itself. (🟢 The essentials.)
 
 </details>
 
@@ -979,5 +989,5 @@ Mariam writes the **Najm Assist AI Red-Team Charter and Test Plan v1**. Hamad si
 - Nasr, M. et al. (2025), "The Attacker Moves Second: Stronger Adaptive Attacks Bypass Defenses against LLM Jailbreaks and Prompt Injections" — https://arxiv.org/abs/2510.09023
 - Debenedetti, E. et al. (2024), "AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents" — https://arxiv.org/abs/2406.13352
 - Derczynski, L. et al. (2024), "garak: A Framework for Security Probing Large Language Models" — https://arxiv.org/abs/2406.11036
-- Microsoft PyRIT — https://github.com/Azure/PyRIT
+- Microsoft PyRIT — https://github.com/microsoft/PyRIT
 - promptfoo — https://github.com/promptfoo/promptfoo

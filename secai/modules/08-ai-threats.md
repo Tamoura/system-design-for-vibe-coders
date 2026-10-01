@@ -53,7 +53,7 @@ The working rule: **design as if any text the model reads might be written by an
 | LLM01 Prompt Injection | Text the model reads changes what it does | Instructions in a merchant name steer Assist |
 | LLM02 Sensitive Information Disclosure | Personal data, secrets or confidential information revealed | Assist mentions another customer's transaction |
 | LLM03 Supply Chain | Compromised or unvetted models, datasets, libraries or plugins | A model from a public hub runs code when loaded |
-| LLM04 Data and Model Poisoning | Training, fine-tuning or embedding data manipulated | Fraudsters shape the labels Smart Alerts learns from |
+| LLM04 Data and Model Poisoning | Training, fine-tuning or embedding data manipulated | Planted chats skew a fine-tune of Assist |
 | LLM05 Improper Output Handling | Output passed to browsers, shells or APIs without validation | Assist's reply runs as script in a web view (2.2) |
 | LLM06 Excessive Agency | More permission or autonomy than the task needs | The card tool works on any card |
 | LLM07 System Prompt Leakage | Secrets or security logic in the prompt exposed | An API key in the copilot's prompt |
@@ -65,7 +65,7 @@ It is a **builder's checklist**, not a threat model, and its **numbering changes
 
 ### 🟡 Going deeper
 
-**MITRE ATLAS.** ATLAS (Adversarial Threat Landscape for Artificial-Intelligence Systems) is MITRE's public knowledge base of attacks on AI, built like **MITRE ATT&CK**, which Jassim's security operations centre (SOC) already uses. **Tactics** are the adversary's goals (Reconnaissance, Initial Access, Exfiltration, Impact and so on). **Techniques** are how they reach them, with IDs like `AML.Txxxx`; at the time of writing they include LLM Prompt Injection (AML.T0051, with Direct and Indirect sub-techniques), LLM Jailbreak (AML.T0054), Evade AI Model (AML.T0015) and RAG Poisoning (AML.T0070). **Mitigations** map to techniques, and **case studies** document real attacks and red-team exercises, from the 2016 poisoning of Microsoft's Tay chatbot to indirect prompt injection against enterprise assistants.
+**MITRE ATLAS.** ATLAS (Adversarial Threat Landscape for Artificial-Intelligence Systems) is MITRE's public knowledge base of attacks on AI, built like **MITRE ATT&CK**, which Jassim's security operations centre (SOC) already uses. **Tactics** are the adversary's goals (Reconnaissance, Initial Access, Exfiltration, Impact and so on). **Techniques** are how they reach them, with IDs like `AML.Txxxx`; at the time of writing they include LLM Prompt Injection (AML.T0051, with sub-techniques including Direct and Indirect), LLM Jailbreak (AML.T0054), Evade AI Model (AML.T0015) and RAG Poisoning (AML.T0070). **Mitigations** map to techniques, and **case studies** document real attacks and red-team exercises, from the 2016 poisoning of Microsoft's Tay chatbot to indirect prompt injection against enterprise assistants.
 
 Two tactics exist only in ATLAS: **AI Model Access** (reaching the model through a product, an API, the physical world or a copy) and one for adapting attacks to AI, such as training a look-alike proxy model ("AI Attack Adaptation" at the time of writing, formerly "ML Attack Staging"). ATLAS updates often, so record the version you mapped against. Use it to make threat-register entries specific, to tag red-team findings (9.4), and to extend SOC detection coverage to AI (10.1).
 
@@ -124,7 +124,7 @@ def freeze_card(session, card_id):
     card = cards_repo.get(card_id)
     if card is None or card.customer_id != session.customer_id:
         raise PermissionDenied("card not owned by session customer")
-    cards_api.freeze(card.id, on_behalf_of=session.customer_id)  # user-scoped token
+    cards_api.freeze(card.id, token=session.user_token)  # user-scoped token
 ```
 
 **Classic flaws still dominate.** In March 2023, OpenAI reported that a bug in an open-source library had briefly let some ChatGPT users see other users' conversation titles. Exposed chat logs, leaked keys and missing access checks are classic findings in new places, so a threat model that covers only the model is incomplete.
@@ -482,20 +482,20 @@ Under PI-3 and PI-4, Najm Assist's tools are tiered:
 
 <details><summary>Answer</summary>
 
-**B.** Controls in code limit what a hijacked model can do. A and C are still requests to the model, and D is another filter adaptive attackers can beat. (🟡 Going deeper.)
+**B.** Controls in code limit what a hijacked model can do. A is still a request to the model, C still relies on the model choosing to behave, and D is another filter adaptive attackers can beat. (🟡 Going deeper.)
 
 </details>
 
-**3. Which proposed feature contains the lethal trifecta?**
+**3. Najm Assist already reads each customer's transactions, including merchant-written descriptions, and replies in plain text inside the app. Which proposed addition would complete the lethal trifecta?**
 
-- A. An assistant that reads incoming customer emails, can look up account data, and can reply to any address
-- B. A fee calculator over public tables with no tools
-- C. A summariser that shows summaries only to the uploader, with no tools or external links
-- D. A policy-drafting tool that has no customer data
+- A. A tool that fetches any web address mentioned in the conversation
+- B. A tool that looks up the public fee tables
+- C. A daily limit on the number of disputes a customer can open
+- D. A classifier that scores merchant text for injection patterns
 
 <details><summary>Answer</summary>
 
-**A.** It has all three legs; replies only to the verified sender, after human review, would remove one. C has no outbound channel. (🟡 Going deeper.)
+**A.** Assist already has private data and untrusted content (merchant text). A fetch tool is an outbound channel, because the address it requests can itself carry data. B adds no new leg, C limits a tool without adding a channel, and D is a detection layer. (🟡 Going deeper.)
 
 </details>
 
@@ -547,7 +547,7 @@ Under PI-3 and PI-4, Najm Assist's tools are tiered:
 
 ## ⚡ In 60 seconds
 - Four families of attack target the model and its data. **Poisoning** corrupts what a model learns, **evasion** crafts inputs it gets wrong, **extraction** copies it, and **inference** (privacy) attacks learn about its training data.
-- In NIST AI 100-2's terms, poisoning and evasion attack **integrity** (poisoning can also attack **availability**), while extraction and inference attack **confidentiality** and **privacy**.
+- In NIST AI 100-2's terms, poisoning and evasion attack **integrity** (poisoning can also attack **availability**), while extraction and inference are **privacy** attacks; extraction also breaks the **confidentiality** of the model itself.
 - Realistic risks: untrusted supply-chain models, feedback loops that let adversaries write labels, fraudsters probing fraud models, and fine-tunes that memorise personal data.
 - Defences live mainly in the pipeline: provenance, controlled labels, safe formats, model intake, interfaces that reveal little, and privacy measures at training time.
 - Decision cue: for each model, ask who can influence its training data, who can query it and what they see back, and what personal data went in.
@@ -633,7 +633,7 @@ if sha256_of("model.safetensors") != expected:
 weights = load_file("model.safetensors")   # tensors only, no code execution
 ```
 
-Since version 2.6, PyTorch's `torch.load` defaults to a weights-only mode; do not switch it off for files you did not produce. Safe formats can still hold **backdoored** weights, so intake also needs provenance, licence review, an AI-BOM entry (8.1, 6.2) and isolated behavioural testing.
+Since version 2.6, PyTorch's `torch.load` defaults to a weights-only mode; a bypass of that mode was reported in earlier versions, so keep PyTorch patched and do not switch the mode off for files you did not produce. Safe formats can still hold **backdoored** weights, so intake also needs provenance, licence review, an AI-BOM entry (8.1, 6.2) and isolated behavioural testing.
 
 **Defences by family.**
 

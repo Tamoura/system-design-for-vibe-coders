@@ -20,7 +20,7 @@
 ## 🧭 Why it matters
 Six weeks into Najm Assist's pilot, Jassim (SOC and incident response lead) asks Ali for its logs. Ali finds them in the app team's debug bucket. They hold full conversation text, including card numbers customers typed, but not which tool was called, for whom, or whether it was allowed. Clocks disagree, and everything is deleted after seven days. If Najm Assist froze the wrong card, nobody could prove what happened, and the bucket is now the project's most sensitive data store.
 
-"Security Logging and Monitoring Failures" is a category in the OWASP Top 10 (A09 in the 2021 edition) because breaches are so often found late, and by outsiders. In the Equifax breach of 2017, US government reviews published in 2018 reported that a device for inspecting encrypted traffic had an expired certificate, so it was not inspecting that traffic; once the certificate was renewed, staff noticed the suspicious activity. A monitoring control that silently stops working is worse than none, because everyone believes they are covered.
+"Security Logging and Monitoring Failures" is a category in the OWASP Top 10 (A09 in the 2021 edition; the 2025 update renames it "Security Logging and Alerting Failures", so check the current list) because breaches are so often found late, and by outsiders. In the Equifax breach of 2017, US government reviews published in 2018 reported that a device for inspecting encrypted traffic had an expired certificate, so it was not inspecting that traffic; once the certificate was renewed, staff noticed the suspicious activity. A monitoring control that silently stops working is worse than none, because everyone believes they are covered.
 
 Noura (Head of Application & AI Security) sums it up: "If it isn't logged, it didn't happen. If nobody looks, it still didn't happen. If it's logged with a card number, we've created a second incident."
 
@@ -89,7 +89,7 @@ flowchart LR
 - **Synchronise time.** Use NTP and UTC everywhere; a timeline from clocks four minutes apart gives wrong answers.
 - **Watch for silence.** Each source has an expected volume; a drop to zero raises an alert. That is the Equifax lesson.
 - **The pipeline is attack surface.** Log4Shell (CVE-2021-44228, December 2021) was a flaw in a logging library: logging an attacker-controlled string could make the server fetch and run remote code. Patch logging components like any dependency (6.2), and escape output in log viewers to avoid stored XSS (2.2).
-- **Retention is a requirement.** PCI DSS v4.0 requires audit logs for in-scope systems to be kept at least 12 months, the latest three immediately available. Sara (DPO) and compliance set the rest.
+- **Retention is a requirement.** PCI DSS v4.0.1 requires audit logs for in-scope systems to be kept at least 12 months, the latest three immediately available. Sara (DPO) and compliance set the rest.
 
 **Detection engineering as a life cycle.**
 1. **Hypothesis**: "Someone testing stolen passwords tries many accounts from few networks, with few successes." Ideas come from threat intelligence, red-team findings (9.4), incidents and ATT&CK.
@@ -119,7 +119,7 @@ falsepositives:
 level: high
 ```
 
-Other rules count over time. Najm's credential-stuffing rule (ATT&CK T1110.004) groups sign-ins by network or device fingerprint, not single IP address, because stuffing tools rotate addresses. It fires when hundreds of accounts are tried in ten minutes with a success rate of a few per cent; tune such thresholds on your own data.
+Other rules count over time. Najm's credential-stuffing rule (ATT&CK T1110.004) groups sign-ins by network or device fingerprint, not single IP address, because stuffing tools rotate addresses. It fires when hundreds of accounts are tried in ten minutes with a very low success rate; tune such thresholds on your own data.
 
 **Behaviour beats indicators.** David Bianco's **Pyramid of Pain** (2013) ranks what defenders detect by how much it costs the attacker to change. Hashes and IP addresses sit at the bottom, trivial to change; **TTPs** (tactics, techniques and procedures) sit at the top. The detections that last describe behaviour.
 
@@ -284,10 +284,10 @@ Noura and Jassim publish the **Najm Bank Security Logging Standard v1** (signed 
 </details>
 
 ## 📚 References
-- OWASP Top 10:2021, A09 Security Logging and Monitoring Failures — https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/
+- OWASP Top 10 (2021 edition, A09 Security Logging and Monitoring Failures; check the current edition) — https://owasp.org/Top10/
 - OWASP Logging Cheat Sheet — https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
 - OWASP Logging Vocabulary Cheat Sheet — https://cheatsheetseries.owasp.org/cheatsheets/Logging_Vocabulary_Cheat_Sheet.html
-- NIST SP 800-92, Guide to Computer Security Log Management (check for a newer revision) — https://csrc.nist.gov/pubs/sp/800/92/final
+- NIST SP 800-92, Guide to Computer Security Log Management (2006; a Rev. 1 draft was published in 2023, so check for a final revision) — https://csrc.nist.gov/pubs/sp/800/92/final
 - MITRE ATT&CK — https://attack.mitre.org/
 - MITRE ATLAS — https://atlas.mitre.org/
 - CWE-117, Improper Output Neutralization for Logs — https://cwe.mitre.org/data/definitions/117.html
@@ -295,7 +295,7 @@ Noura and Jassim publish the **Najm Bank Security Logging Standard v1** (signed 
 - Sigma (SigmaHQ) — https://github.com/SigmaHQ/sigma
 - OpenTelemetry semantic conventions — https://opentelemetry.io/docs/specs/semconv/
 - OWASP Top 10 for LLM Applications 2025 — https://genai.owasp.org/
-- PCI Security Standards Council (PCI DSS v4.0) — https://www.pcisecuritystandards.org/
+- PCI Security Standards Council (PCI DSS v4.0.1) — https://www.pcisecuritystandards.org/
 
 ---
 
@@ -311,7 +311,7 @@ Noura and Jassim publish the **Najm Bank Security Logging Standard v1** (signed 
 - AI incidents need extra preparation: switches for tools and retrieval sources, preserved prompts and context, and a way to list every customer who saw a bad output.
 
 ## 🧭 Why it matters
-Thursday, 21:40. Detection NA-04 from 10.1 (unapproved domains in Najm Assist output) fires 37 times in 20 minutes. Customers asking about card fees are told to "re-verify" their card at an address the bank does not own. The output filter blocks most links, not all. Jassim is paged.
+Thursday, 21:40. Detection NA-04 from 10.1 (unapproved domains in Najm Assist output) fires 37 times in 20 minutes. Customers asking about card fees are told to "re-verify" their card at an address the bank does not own. The output filter strips most of these links, but a few, written in a form it does not recognise as a link, get through. Jassim is paged.
 
 At 19:55 a fees article in the knowledge base was edited from a content-management account, and now hides instructions aimed at the assistant: indirect prompt injection (8.2). Everyone asks at once: how many customers saw the link, and did any enter card details? Was the content account compromised, and what else did it touch? Can we stop this without switching off Najm Assist for everyone? Must we tell QCB, EU authorities and customers, and by when? Who decides?
 
@@ -321,7 +321,7 @@ Some answers take minutes, because the logging standard records which documents 
 
 ### 🟢 The essentials
 
-**Event, incident, breach.** An **event** is anything observable, such as an alert. An **incident** is an event or series that actually or potentially harms confidentiality, integrity or availability, or breaks security policy. A **personal data breach** (GDPR Art. 4(12)) is a breach of security leading to the accidental or unlawful destruction, loss, alteration, unauthorised disclosure of, or access to, personal data: a legal category with notification duties, decided by the DPO.
+**Event, incident, breach.** An **event** is anything observable, such as an alert. An **incident** is an event or series that actually or potentially harms confidentiality, integrity or availability, or breaks security policy. A **personal data breach** (GDPR Art. 4(12)) is a breach of security leading to the accidental or unlawful destruction, loss, alteration, unauthorised disclosure of, or access to, personal data: a legal category with notification duties. The bank, as controller, carries those duties; at Najm, Sara (the DPO) makes the call with legal.
 
 **The life cycle.** NIST SP 800-61 Rev. 2 (2012) described four phases; the SANS Institute's widely taught six steps cover the same ground. NIST SP 800-61 Rev. 3 (2025) re-frames IR around the six CSF 2.0 functions (Govern, Identify, Protect, Detect, Respond, Recover), making it part of overall risk management. This course uses five plain verbs:
 
@@ -377,13 +377,17 @@ Containment works only if the switch exists. Najm's tools could at first be stop
 ```python
 # Every tool and retrieval collection has an operational switch
 def run_tool(name, args, session):
+    if name not in TOOLS:                       # tool names come from the model: allow-list them
+        return ToolResult.unavailable("Unknown action.")
     if flags.off("assist.tools.all") or flags.off(f"assist.tool.{name}"):
         audit.log("tool_blocked_by_switch", tool=name, session_id=session.id)
         return ToolResult.unavailable("This action is paused. Please use the app menu or call us.")
-    return TOOLS[name](args, session)
+    return TOOLS[name](args, session)           # ownership and confirmation checks still apply inside
 
 def retrieve(query, session):
     live = [c for c in COLLECTIONS if not flags.off(f"assist.kb.{c}")]
+    if not live:                                # an empty filter must never mean "search everything"
+        return []
     return index.search(query, collections=live, user=session.user)
 ```
 
@@ -400,7 +404,7 @@ Flags are read at request time, the on-call IC can flip them in seconds, and eve
 - **Qatar PDPPL** (Law No. 13 of 2016) includes breach notification duties; follow the competent authority's current guidance.
 - **EU DORA** (applying from January 2025) requires financial entities to classify ICT-related incidents and report major ones in staged reports, on timelines set in its technical standards.
 - **QCB** and Najm's other supervisors expect significant cyber incidents to be reported under their current instructions.
-- **PCI DSS** v4.0 requires the IR plan to cover notifying the payment brands and acquirers when card data may be involved.
+- **PCI DSS** v4.0.1 requires the IR plan to cover notifying the payment brands and acquirers when card data may be involved.
 
 ### 🔴 Expert view
 
@@ -410,7 +414,7 @@ Flags are read at request time, the on-call IC can flip them in seconds, and eve
 - **Blast radius equals permissions.** What the injected instructions could achieve was bounded by what Najm Assist's tools allowed without confirmation (9.2). Least privilege is an incident-response control chosen long before the incident.
 - **Finding affected people needs output logs.** "Who saw the link?" means joining sessions that retrieved `kb-fees-2026-03` after 19:55 with their responses.
 - **Rollback.** Version prompts, model choices, knowledge-base snapshots and training data, so recovery is a configuration change or a retrain from a known-good snapshot (Smart Alerts, 8.3), not an emergency rebuild.
-- **Not every AI incident is an attack.** A model update that quotes wrong fees also harms customers. Route AI harm through the same process, with Layla's AI governance team. Providers of high-risk AI systems also have serious-incident reporting duties under the EU AI Act (Art. 73); see *AI Governance: Zero to Hero*.
+- **Not every AI incident is an attack.** A model update that quotes wrong fees also harms customers. Route AI harm through the same process, with Layla's AI governance team. Providers of high-risk AI systems also have serious-incident reporting duties under the EU AI Act (Art. 73) once the high-risk rules apply; their dates were pushed back at the time of writing, so check the current text and see *AI Governance: Zero to Hero*.
 
 **Third-party incidents.** Many incidents start at a supplier: the MOVEit Transfer SQL injection, exploited at scale in 2023, reached many organisations through software they or their suppliers ran. Keep a "supplier told us" runbook: what data and access each supplier holds, contacts, and how to cut its access fast. DORA stresses ICT third-party risk, and your model and vector database providers are suppliers too.
 
@@ -482,7 +486,7 @@ After Thursday night, Jassim rewrites the runbook; Hamad approves it; it is rehe
 
 ## ✍️ Check yourself
 
-**1. At 22:10 Jassim confirms that a poisoned article in the fees collection is making Najm Assist show an external link. What is the best first containment step?**
+**1. At 21:55 Jassim confirms that a poisoned article in the fees collection is making Najm Assist show an external link. What is the best first containment step?**
 
 - A. Shut down the whole mobile app until the root cause is known
 - B. Switch off retrieval from the fees collection, then preserve the article, its edit history and the logs before deleting anything
@@ -618,9 +622,11 @@ backlog.sort(key=lambda v: v.cvss_base, reverse=True)
 ```python
 # Better: exploitation and exposure first, then likelihood, then severity in context
 def priority(v, asset):
-    if v.in_kev and (asset.internet_facing or asset.holds_customer_data):
+    exploited = v.in_kev or v.seen_exploited    # KEV, or evidence from Najm's own SOC
+    epss = v.epss or 0.0                        # findings in your own code have no CVE, so no EPSS
+    if exploited and (asset.internet_facing or asset.holds_customer_data):
         return "P0"
-    if v.in_kev or (v.epss >= 0.10 and asset.internet_facing):
+    if exploited or v.cross_customer_access or (epss >= 0.10 and asset.internet_facing):
         return "P1"
     if v.cvss_bte >= 9.0 or (v.cvss_bte >= 7.0 and asset.holds_customer_data):
         return "P2"
@@ -629,7 +635,7 @@ def priority(v, asset):
     return "P4"
 ```
 
-Thresholds are illustrative; Najm's deadlines are in the 🏛️ section. Flaws in your own code (the SME Portal IDOR) have no EPSS or KEV entry, so rate them with CVSS-BTE and judgement (1.3).
+Thresholds are illustrative; Najm's deadlines are in the 🏛️ section. Flaws in your own code (the SME Portal IDOR) have no EPSS or KEV entry, so score them with CVSS-BTE plus judgement, cross-checked with the OWASP Risk Rating Methodology (1.3); confirmed cross-customer access goes straight to P1.
 
 ### 🟡 Going deeper
 
@@ -637,7 +643,7 @@ Thresholds are illustrative; Najm's deadlines are in the 🏛️ section. Flaws 
 - **Deduplicate.** The same CVE in 400 container images is one fix: update the base image.
 - **Reachability.** Many SCA tools report whether your code calls the vulnerable function. Use it to sort, not to ignore; the analysis can be wrong.
 - **VEX** (Vulnerability Exploitability eXchange) is a machine-readable statement that a product is not affected, affected, fixed or under investigation, with a justification such as "vulnerable code not in execute path". Suppliers publish it alongside SBOMs (CycloneDX and OASIS CSAF support it), so you close findings with evidence, not argument.
-- **SSVC** (Stakeholder-Specific Vulnerability Categorization), from Carnegie Mellon's CERT/CC and adapted by CISA, replaces a score with a decision tree over exploitation status, automatability, technical impact and mission impact. The outcome is an action (Track, Track*, Attend or Act), which fits a process better than a number.
+- **SSVC** (Stakeholder-Specific Vulnerability Categorization), from Carnegie Mellon's CERT/CC and adapted by CISA, replaces a score with a decision tree over exploitation status, automatability, technical impact, and mission and well-being impact. The outcome is an action (Track, Track*, Attend or Act), which fits a process better than a number.
 
 **Deadlines and exceptions.** A remediation deadline (often called an SLA) is the maximum time to fix a finding of each priority. It is credible only with an **exception process**: a named risk owner signs a time-limited acceptance with compensating controls, recorded in the risk register. Report KEV exposure (KEV-listed flaws open on internet-facing systems; target zero) and scan coverage of the inventory alongside deadline compliance.
 
@@ -689,7 +695,7 @@ Canonical: https://najmbank.example/.well-known/security.txt
 
 Prompt injection has no complete technical fix at the time of writing (8.2), so some AI findings cannot be "patched". Track them as risks with compensating controls (narrower tools, confirmations, output handling; 9.1, 9.2), add the attack to the AI red-team regression suite (9.4), and re-test on every model or prompt change. "Won't fix" throws that knowledge away.
 
-**AI components are assets too.** Inventory models, datasets, prompts and tool connectors (CycloneDX can describe ML components). Track ML framework vulnerabilities like any dependency, and treat model files as code: some formats, such as Python pickle, can execute code when loaded (8.3), so prefer formats such as safetensors. A model change can reopen a closed finding, so re-run the security evaluation.
+**AI components are assets too.** Inventory models, datasets, prompts and tool connectors (CycloneDX can describe ML components). Track ML framework vulnerabilities like any dependency, and treat model files as code: some formats, such as Python pickle, can execute code when loaded (2.3), so prefer formats such as safetensors. A model change can reopen a closed finding, so re-run the security evaluation.
 
 **When Najm is the reporter.** For flaws in vendors' products, use the vendor's security contact or `security.txt`; if it does not respond, a coordinator such as CERT/CC or a national CERT can help.
 
@@ -708,7 +714,7 @@ Prompt injection has no complete technical fix at the time of writing (8.2), so 
 | **Bug bounty programme** | Rewards for valid, in-scope findings, usually via a platform | After the VDP and fixing work; start private |
 
 ## 🏛️ In practice at Najm Bank
-Noura writes the **Najm Bank Vulnerability Management Standard v1** and the bank's first VDP; Hamad signs both, and legal words the safe harbour. Deadlines are illustrative.
+Noura writes the **Najm Bank Vulnerability Management Standard v1**, which replaces the prioritisation standard from 1.3, and the bank's first VDP; Hamad signs both, and legal words the safe harbour. Deadlines are illustrative.
 
 **Part A: priorities and deadlines**
 

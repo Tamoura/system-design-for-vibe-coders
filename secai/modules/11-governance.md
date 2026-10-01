@@ -57,7 +57,7 @@ Like the CSF, the SSDF describes outcomes rather than tools. NIST SP 800-218A (2
 | Business function | Security practices |
 |---|---|
 | Governance | Strategy and Metrics · Policy and Compliance · Education and Guidance |
-| Design | Threat Assessment · Security Requirements · Security Architecture |
+| Design | Threat Assessment · Security Requirements · Secure Architecture |
 | Implementation | Secure Build · Secure Deployment · Defect Management |
 | Verification | Architecture Assessment · Requirements-driven Testing · Security Testing |
 | Operations | Incident Management · Environment Management · Operational Management |
@@ -121,11 +121,11 @@ flowchart TD
 
 **Prescriptive and descriptive models.** SAMM is **prescriptive**: it tells you what the next level looks like. **BSIMM** (Building Security In Maturity Model) is **descriptive**: it records activities observed in many real software security programmes. Use it to compare yourself with peers, not as a to-do list.
 
-**Bringing AI into scope.** None of these frameworks needs replacing for AI, but their scope must widen. Models, prompts and datasets belong in the asset inventory (ID.AM); model providers and model hubs in supply-chain risk (GV.SC and ISO's supplier controls); prompt injection and data poisoning in the risk assessment (ID.RA). **ISO/IEC 42001:2023** specifies an AI management system with the same structure as ISO/IEC 27001, so the two can share internal audit and management review. NIST has also published draft work on a CSF profile for AI; check its status. *AI Governance: Zero to Hero* covers AI governance as a whole.
+**Bringing AI into scope.** None of these frameworks needs replacing for AI, but their scope must widen. Models, prompts and datasets belong in the asset inventory (ID.AM); model providers and model hubs in supply-chain risk (GV.SC and ISO's supplier controls); prompt injection and data poisoning in the risk assessment (ID.RA). **ISO/IEC 42001:2023** specifies an AI management system with the same structure as ISO/IEC 27001, so the two can share internal audit and management review. NIST has also published a preliminary draft Cyber AI Profile of the CSF (NIST IR 8596, December 2025); check its status. *AI Governance: Zero to Hero* covers AI governance as a whole.
 
 **Goodhart's law applies to scores.** When a SAMM score or a "percentage of controls compliant" becomes a target, teams learn to satisfy the assessor rather than reduce risk. Pair every score with a test outcome: red-team findings, the escape rate (11.3) or incident root causes.
 
-**Keep the crosswalk alive.** At the time of writing (2026) the editions named here are current, but NIST has been working on an update to the SSDF, and certificates to the 2013 edition of ISO/IEC 27001 had to move to the 2022 edition by October 2025. Give one person the job of checking editions every year.
+**Keep the crosswalk alive.** At the time of writing (2026) the editions named here are current, but NIST published a draft SSDF version 1.2 (SP 800-218 Rev. 1) for comment in December 2025, and certificates to the 2013 edition of ISO/IEC 27001 had to move to the 2022 edition by October 2025. Give one person the job of checking editions every year.
 
 ## 🧰 The toolkit
 | Control, standard or tool | What it is and does | When to reach for it |
@@ -146,7 +146,7 @@ Noura's team publishes **Najm Unified Control Set v1: AppSec and AI extract**. E
 | NAJM-AS-01 | Every Tier 1 application and AI feature has a threat model, reviewed at design and on major change | Noura | ID.RA | 5.8, 8.27 | PW.1, PW.2 | Threat Assessment | Threat-model register linked to design records |
 | NAJM-AS-02 | Every merge to main on a Tier 1 app is peer-reviewed and passes SAST, SCA and secret scanning | Tariq | PR.PS-06 | 8.25, 8.28, 8.29, 8.32 | PO.4, PW.7, PW.8 | Secure Build; Security Testing | Automated: merges without checks in 90 days = 0 |
 | NAJM-AS-03 | Every release has a signed build and an SBOM; dependencies come only from approved registries | Tariq | GV.SC, ID.AM | 5.21, 8.25 | PS.2, PS.3, PW.4 | Secure Build | Artefact registry; signature verification log |
-| NAJM-AS-04 | Critical vulnerabilities on internet-facing systems are fixed within 7 days, CISA KEV entries first | Jassim | ID.RA | 8.8 | RV.1, RV.2 | Defect Management | Vulnerability platform SLA report |
+| NAJM-AS-04 | Known exploited vulnerabilities (CISA KEV or seen exploited) on internet-facing or customer-data systems are fixed within 7 days, as the Vulnerability Management Standard (10.3) sets | Jassim | ID.RA | 8.8 | RV.1, RV.2 | Defect Management | Vulnerability platform deadline report |
 | NAJM-AS-05 | AI features pass an AI red-team gate and a tool-permission review before release | Mariam | ID.RA, PR.AA | 8.29, 5.15 | PW.8; 800-218A | Security Testing | Signed red-team report in the release record |
 | NAJM-AS-06 | Developers complete role-based secure coding training each year, including the rules for AI coding agents | Noura | PR.AT | 6.3 | PO.2 | Education and Guidance | Completion by team |
 
@@ -230,7 +230,7 @@ Noura's team publishes **Najm Unified Control Set v1: AppSec and AI extract**. E
 
 - A. NIST SSDF (SP 800-218), with SP 800-218A for generative AI model development
 - B. ISO/IEC 27001 Clause 9 on performance evaluation
-- C. The CSF Implementation Tiers
+- C. The CSF Tiers
 - D. BSIMM, used as a mandatory checklist
 
 <details><summary>Answer</summary>
@@ -285,12 +285,12 @@ Regulators judge security failures against what an organisation could and should
 |---|---|---|---|
 | **GDPR**, Regulation (EU) 2016/679 | Processing in the context of the Frankfurt branch, and some processing about people in the EU | Art. 25 by design and by default; Art. 32 security; Art. 35 DPIA | Art. 33: authority, where feasible within 72 hours of awareness, unless unlikely to result in risk. Art. 34: individuals, if high risk |
 | **Qatar PDPPL**, Law No. 13 of 2016 | Personal data processed in Qatar | Precautions against loss, damage, alteration, disclosure and unlawful access | Breaches that may cause serious damage: competent authority and people affected; timings per current guidance |
-| **QCB and NCSA requirements** | Licensed by the Qatar Central Bank; national standards from the National Cyber Security Agency | QCB circulars on technology and cyber risk, and its AI guideline; national information assurance standards | As the current texts require |
+| **QCB and NCSA requirements** | Licensed by the Qatar Central Bank; national standards from the National Cyber Security Agency | QCB circulars on technology and cyber risk, and its 2024 AI guideline; national information assurance standards | As the current texts require |
 | **EU AI Act**, Regulation (EU) 2024/1689 | AI used in the EU; high-risk uses include creditworthiness of natural persons (Annex III) | Art. 15 accuracy, robustness, cybersecurity; Art. 12 logging; Art. 50 chatbot transparency | Providers report serious incidents (Art. 73) |
 | **DORA**, Regulation (EU) 2022/2554 | EU financial entities, including credit institutions, since 17 January 2025 | ICT risk management, resilience testing, third-party risk | Major ICT incidents: initial, intermediate and final reports |
 | **PCI DSS** v4.0.1 | Card data is stored, processed or transmitted | Twelve requirements; Requirement 6 covers secure software | Per card-brand and acquirer agreements |
 
-Whether a regime applies is a legal question. Najm's compliance team decides scope, including how DORA reaches the Frankfurt branch. Two more EU laws sit nearby. **NIS2** (Directive (EU) 2022/2555) covers banking, but DORA applies to financial entities as the sector-specific law where they overlap, so NIS2 reaches Najm mostly through suppliers. The **Cyber Resilience Act** (Regulation (EU) 2024/2847) binds manufacturers of products with digital elements, with vulnerability reporting from September 2026 and most other duties from December 2027; Najm meets it mainly as a buyer.
+Whether a regime applies is a legal question. Najm's compliance team decides scope, including how DORA reaches the Frankfurt branch; the UAE subsidiary's own data protection and central bank rules are mapped the same way. Two more EU laws sit nearby. **NIS2** (Directive (EU) 2022/2555) covers banking, but DORA applies to financial entities as the sector-specific law where they overlap, so NIS2 reaches Najm mostly through suppliers. The **Cyber Resilience Act** (Regulation (EU) 2024/2847) binds manufacturers of products with digital elements, with vulnerability reporting from September 2026 and most other duties from December 2027; Najm meets it mainly as a buyer.
 
 **From obligation to control.** Read a security clause as a list of requirements, then find or build the controls. GDPR Art. 32(1) lists, "as appropriate": pseudonymisation and encryption (5.1, 5.3); ongoing confidentiality, integrity, availability and resilience, such as tenant isolation (3.3) and segmentation (7.3); timely restoration after an incident, through tested restores (10.2); and regular testing of effectiveness, through SAST, DAST, penetration tests and AI red-teaming (6.1, 9.4). Each obligation becomes a row in a **regulatory obligations register**, linked to the unified control IDs from 11.1.
 
@@ -322,14 +322,16 @@ Each clock has its own start event, and the awareness time is recorded when it h
 from datetime import datetime, timedelta
 
 # Illustrative: Compliance confirms every deadline against current texts.
-def due_times(aware_at: datetime, eu_personal_data: bool,
+# Times are timezone-aware (UTC) and recorded when they happen.
+def due_times(incident_aware_at: datetime,
+              breach_aware_at: datetime | None = None,
               major_at: datetime | None = None) -> dict:
     due = {}
-    if eu_personal_data:
-        due["GDPR Art. 33"] = aware_at + timedelta(hours=72)
-    if major_at:
+    if breach_aware_at:  # aware that EU personal data was compromised
+        due["GDPR Art. 33"] = breach_aware_at + timedelta(hours=72)
+    if major_at:  # incident classified as major under DORA
         due["DORA initial"] = min(major_at + timedelta(hours=4),
-                                  aware_at + timedelta(hours=24))
+                                  incident_aware_at + timedelta(hours=24))
     return due
 ```
 
@@ -345,9 +347,9 @@ def due_times(aware_at: datetime, eu_personal_data: bool,
 | Confidentiality attacks | Rate limits; extraction and membership-inference tests (8.3) |
 | Model flaws | Evaluation and AI red-teaming before release (9.4) |
 
-These duties fall mainly on the **provider**, who develops a high-risk system and places it on the market or puts it into service under its own name, as Najm would if it built its own credit-scoring model for EU applicants. Fraud detection is excluded from the Annex III creditworthiness category, so Smart Alerts is not high-risk on that ground; Najm Assist mainly carries the Art. 50 duty to tell people they are talking to an AI. The high-risk rules were due to apply to Annex III systems from 2 August 2026, and the Commission's November 2025 Digital Omnibus proposal sought to delay them; check the current status on EUR-Lex.
+These duties fall mainly on the **provider**, who develops a high-risk system and places it on the market or puts it into service under its own name, as Najm would if it built its own credit-scoring model for EU applicants. Fraud detection is excluded from the Annex III creditworthiness category, so Smart Alerts is not high-risk on that ground; Najm Assist mainly carries the Art. 50 duty to tell people they are talking to an AI, which applies from 2 August 2026. The high-risk rules were originally due to apply to Annex III systems on that date too; the Digital Omnibus on AI, in force since July 2026, moved them to 2 December 2027 (August 2028 for AI in products covered by Annex I). Check the current text on EUR-Lex.
 
-**DORA reaches AI vendors too.** The LLM API behind Najm Assist is an **ICT third-party service provider** in DORA's terms: it needs a register entry, Art. 30 contract terms (data locations, security, incident help, audit rights, exit) and a tested exit strategy. Run the vendor's security review and its DORA file as one process.
+**DORA reaches AI vendors too.** The LLM API behind Najm Assist is an **ICT third-party service provider** in DORA's terms: it needs a register entry and Art. 30 contract terms (service description, data locations, security, incident help, termination). If it supports a critical or important function, as an agent that acts on accounts may, add audit rights, exit plans and a tested exit strategy. Run the vendor's security review and its DORA file as one process.
 
 ### 🔴 Expert view
 
@@ -387,7 +389,7 @@ Sara, Hamad and Noura publish two artefacts, reviewed every six months with comp
 
 | Trigger | Regime | Recipient | Deadline: verify current text | Decides | Engineering supplies |
 |---|---|---|---|---|---|
-| Personal data breach, EU data subjects | GDPR Art. 33 | Lead supervisory authority | Where feasible 72 hours from awareness | Sara | Records and data types, encryption status, timeline |
+| Personal data breach, EU data subjects | GDPR Art. 33 | Competent supervisory authority, as Sara determines | Where feasible 72 hours from awareness | Sara | Records and data types, encryption status, timeline |
 | Likely high risk to individuals | GDPR Art. 34 | People affected | Without undue delay | Sara | Contacts for affected records only |
 | Breach that may cause serious damage, Qatar data | Qatar PDPPL | Competent authority; people affected | Per current law and guidance | Sara | As above |
 | Major ICT-related incident, Frankfurt branch | DORA | EU competent authority | 4 hours from classification, at most 24 from awareness; then 72 hours; then a month | Hamad | Services, clients, duration, root cause |
@@ -427,7 +429,7 @@ Rule: Jassim, as incident commander, records the awareness time in the ticket, a
 
 <details><summary>Answer</summary>
 
-**C.** Encryption with uncompromised keys is the Art. 34(3) example, but Art. 33(5) still requires documenting the breach. B skips that duty; A misreads the clocks; D has no basis. (🟡 Logs decide the size of a breach.)
+**C.** Encryption with uncompromised keys is the Art. 34(3) example, but Art. 33(5) still requires documenting the breach. B skips that duty; A misreads the clocks; D has no basis. (🟡 Breach clocks; Logs decide the size of a breach.)
 
 </details>
 
@@ -462,7 +464,7 @@ Rule: Jassim, as incident commander, records the awareness time in the ticket, a
 - A. Out of scope, because only the AI Act regulates AI
 - B. Only the provider has duties, under the AI Act's general-purpose AI rules
 - C. Najm only needs the provider's ISO/IEC 27001 certificate
-- D. As an ICT third-party service provider, needing a register entry, contract terms and a tested exit strategy
+- D. As an ICT third-party service provider, needing a register entry, contract terms and, if it supports a critical or important function, a tested exit strategy
 
 <details><summary>Answer</summary>
 
@@ -644,7 +646,7 @@ Noura drafts **Najm AppSec and AI Security Programme: 2027 plan on a page**, and
 |---|---|---|---|---|
 | Tier 1 apps and AI features with a current threat model | 45% | 90% | Noura | Board KRI |
 | Tier 1 repos with enforced pipeline checks | 60% | 100% | Tariq | Teams |
-| Critical findings fixed within 7 days | 70% | 95% | Product team leads | Board KRI |
+| P0 and P1 findings fixed by their deadline (10.3) | 70% | 95% | Product team leads | Board KRI |
 | CISA KEV vulnerabilities past SLA on internet-facing systems | 4 | 0 | Jassim | Board KRI |
 | AI features released through the AI red-team gate | 50% | 100% | Mariam | Board KRI |
 | Product teams with an active champion | 15 of 40 | 36 of 40 | Noura | Board KRI |
@@ -655,7 +657,7 @@ Noura drafts **Najm AppSec and AI Security Programme: 2027 plan on a page**, and
 | Option | What it buys | Residual risk the board accepts |
 |---|---|---|
 | A. Regulatory minimum | Current team; DORA testing programme; PCI DSS assessment | Agent tool misuse and AI-generated code risks largely unaddressed; KRIs stay amber |
-| B. Recommended | A, plus a champions programme with 10% protected time, an AI paved road (model gateway and tool-permission framework), two AI red-team engineers, and two overlapping scanners retired | KRIs green by end-2027, except the escape rate |
+| B. Recommended | A, plus a champions programme with 10% protected time, an AI paved road (model gateway and tool-permission framework), two AI red-team engineers, and two overlapping scanners retired | Board KRIs green by end-2027; the escape rate still above its target |
 | C. Accelerated | B, plus a bug bounty for Najm Mobile and Najm Assist and a yearly external AI red-team | Faster progress; higher running cost; depends on hiring |
 
 Each line of option B cites its risk-register entry: agent tool misuse, vulnerable dependencies in AI-generated code, or slow remediation.

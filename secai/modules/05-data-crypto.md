@@ -66,7 +66,7 @@ ph = PasswordHasher()
 stored = ph.hash(password)
 ph.verify(stored, attempt)              # raises an exception on mismatch
 if ph.check_needs_rehash(stored):       # cost settings were raised since this hash was made
-    stored = ph.hash(attempt)
+    save_hash(user_id, ph.hash(attempt))
 ```
 
 At the time of writing (2026), the OWASP Password Storage Cheat Sheet suggests minimums such as Argon2id with 19 MiB of memory, two iterations and parallelism of one, or a bcrypt work factor of 10. Check the current sheet, then tune so one hash takes a fraction of a second on your servers.
@@ -115,10 +115,11 @@ What this buys: a stolen dump is useless without KMS access; every decryption is
 | Field-level encryption with KMS keys | Database administrators, dumps, most injection reads of that field | A compromised service allowed to decrypt |
 | **Tokenisation** (a random token replaces the value; a vault keeps the mapping) | Every system that only sees tokens; shrinks card-data scope | Compromise of the vault |
 
-**Integrity between systems.** When the e-invoicing partner calls Najm's webhook, an **HMAC** over the body proves it is genuine. Compare in constant time (`==` can leak through timing how much matched) and sign a timestamp to stop replays.
+**Integrity between systems.** When the e-invoicing partner calls Najm's webhook, an **HMAC** over the body proves it is genuine. Compute it over the exact bytes received, not a re-serialised copy; compare in constant time (`==` can leak through timing how much matched); and sign a timestamp and reject stale ones to limit replays.
 
 ```python
-expected = hmac.new(webhook_secret, f"{ts}.{raw_body}".encode(), hashlib.sha256).hexdigest()
+msg = ts.encode() + b"." + raw_body                    # raw_body: the exact bytes received
+expected = hmac.new(webhook_secret, msg, hashlib.sha256).hexdigest()
 if abs(time.time() - int(ts)) > 300 or not hmac.compare_digest(expected, received_sig):
     raise Unauthorized()
 ```
@@ -176,7 +177,7 @@ Ali turns his review into the bank's **Cryptography Standard for Builders (v1, e
 5. If this algorithm had to change, how many files would change?
 
 ## 🛠️ Exercises
-- 🟢 Map each item to a tool from the "five tools" table, with a one-line reason: an SME user's password, the payout IBAN, a statement's checksum, a partner webhook, a password-reset token, a card number, a session ID, a lookup by national ID, a backup archive, an API access token. *Done when:* all ten are mapped and every item needing a key says where that key lives.
+- 🟢 Map each item to a tool from this lesson (one of the five tools, tokenisation or a CSPRNG), with a one-line reason: an SME user's password, the payout IBAN, a statement's checksum, a partner webhook, a password-reset token, a card number, a session ID, a lookup by national ID, a backup archive, an API access token. *Done when:* all ten are mapped and every item needing a key says where that key lives.
 - 🟡 In your own project or a local lab app, replace a fast or unsalted password hash with Argon2id, upgrading old hashes at login. *Done when:* a test shows an old hash verifies once and is replaced by an Argon2id hash, and a wrong password fails before and after.
 - 🔴 Prototype envelope encryption for one field in your own code, with your cloud KMS in a personal sandbox account or a local stand-in: per-record keys, record ID as associated data, a key-version prefix. *Done when:* a ciphertext copied from record A to record B fails to decrypt, master-key rotation needs no data re-encryption, and a short note says who can decrypt and where that is logged.
 
@@ -214,12 +215,12 @@ Ali turns his review into the bank's **Cryptography Standard for Builders (v1, e
 
 - A. A disk stolen from the provider's data centre
 - B. A SQL injection in a reporting endpoint, or an administrator querying the table, returning readable national IDs
-- C. Someone sniffing traffic between app and database
+- C. An attacker who has taken over the one service that is allowed to decrypt national IDs
 - D. A decommissioned drive being resold
 
 <details><summary>Answer</summary>
 
-**B.** Storage encryption is transparent to anyone reading through the database. A and D are what storage encryption already covers; C is TLS's job. (🟡 Going deeper.)
+**B.** Storage encryption is transparent to anyone reading through the database; field-level encryption leaves them only ciphertext. A and D are what storage encryption already covers; C defeats both layers, because a service allowed to decrypt can read the data. (🟡 Going deeper.)
 
 </details>
 
@@ -239,13 +240,13 @@ Ali turns his review into the bank's **Cryptography Standard for Builders (v1, e
 **4. Which statement about envelope encryption is TRUE?**
 
 - A. The app keeps the master key in its configuration to decrypt quickly
-- B. Data keys are wrapped by a master key that stays in the KMS, so each decryption is an access-checked, logged call, and rotating the master key needs no bulk re-encryption
+- B. It is a TLS feature for securing connections
 - C. It removes the need for database access control
-- D. It is a TLS feature for securing connections
+- D. Data keys are wrapped by a master key that stays in the KMS, so each decryption is an access-checked, logged call, and rotating the master key needs no bulk re-encryption
 
 <details><summary>Answer</summary>
 
-**B.** A defeats the purpose; C confuses layers; D is unrelated. (🟡 Going deeper.)
+**D.** A defeats the purpose; C confuses layers; B is unrelated. (🟡 Going deeper.)
 
 </details>
 
@@ -281,7 +282,7 @@ Ali turns his review into the bank's **Cryptography Standard for Builders (v1, e
 ## ⚡ In 60 seconds
 - A **secret** is any value that grants access on its own: passwords, API keys, tokens, private keys, connection strings. Whoever holds it *is* you, as far as the system can tell.
 - Secrets leak through ordinary channels: git history, `.env` files, container images, CI logs, mobile and browser bundles, error pages, tickets and chat, and now the prompts and context of AI tools.
-- The pattern: secrets live in a **secret manager**, are fetched at runtime by a workload identity, are scoped to least privilege and are short-lived. The best secret is one you never store.
+- The pattern: secrets live in a **secrets manager**, are fetched at runtime by a workload identity, are scoped to least privilege and are short-lived. The best secret is one you never store.
 - Scan at three points: before commit, at push, and across everything already published (history, images, logs).
 - Decision cue: when a secret leaks, **revoke and rotate first**, then investigate. Deleting the commit does not un-leak it.
 - Biggest trap: putting a secret where an untrusted party can read it (a mobile app, a browser bundle, an LLM system prompt) and calling it hidden.
@@ -319,7 +320,7 @@ A month earlier, in an authorised test of a Najm Assist prototype build, Mariam'
 
 MITRE ATT&CK catalogues the attacker behaviour as *Unsecured Credentials* (T1552): attackers look in exactly these places, so defenders should look first.
 
-**The basic pattern.** Code holds a *reference* to a secret, never its value. At runtime the workload proves its identity to a **secret manager** (a service that stores secrets encrypted, controls and logs every read, and supports rotation) and fetches what it needs.
+**The basic pattern.** Code holds a *reference* to a secret, never its value. At runtime the workload proves its identity to a **secrets manager** (a service that stores secrets encrypted, controls and logs every read, and supports rotation) and fetches what it needs.
 
 ```python
 # Vulnerable: in source, shared by every environment, never rotated, readable by anyone with repo access
@@ -344,7 +345,7 @@ repos:
 
 ### 🟡 Going deeper
 
-**The secret life cycle.** Create with a CSPRNG (5.1); store only in the secret manager; distribute by identity, never by copy-paste; scope to one service and one environment; rotate automatically; revoke immediately on suspicion; audit reads and alert on anomalies. Give every secret a named owner, or nobody will rotate it.
+**The secret life cycle.** Create with a CSPRNG (5.1); store only in the secrets manager; distribute by identity, never by copy-paste; scope to one service and one environment; rotate automatically; revoke immediately on suspicion; audit reads and alert on anomalies. Give every secret a named owner, or nobody will rotate it.
 
 **Short-lived beats long-lived: workload identity.** With **workload identity federation**, a workload proves who it is with a short-lived token signed by its platform, and the cloud exchanges it for temporary, scoped credentials. Kubernetes service accounts can be federated to cloud IAM roles. CI systems such as GitHub Actions and GitLab CI can issue an OIDC token (OpenID Connect, see 3.2) per job, so no cloud key sits in pipeline settings. The cloud role trusts only tokens with a specific subject, for example a GitHub subject of the form `repo:najm-bank/sme-portal:ref:refs/heads/main`, so a pipeline on another branch cannot assume it.
 
@@ -353,16 +354,16 @@ flowchart LR
     U["Najm Mobile app"] -->|"customer session token only"| P["Najm Assist service"]
     P -->|"signed workload token"| I["Cloud identity service"]
     I -->|"short-lived scoped credentials"| P
-    P -->|"read fee-service key"| V["Secret manager"]
+    P -->|"read fee-service key"| V["Secrets manager"]
     V -->|"every read logged"| L["SIEM"]
     P -->|"call with key, server side"| F["Fee service"]
 ```
 
-**Dynamic secrets.** Some secret managers (HashiCorp Vault and its open-source fork OpenBao, for example) create a database user per workload on request, with a lease of minutes or hours, and delete it when the lease ends. A leaked credential expires by itself, and each credential maps to one workload in the audit log.
+**Dynamic secrets.** Some secrets managers (HashiCorp Vault and its open-source fork OpenBao, for example) create a database user per workload on request, with a lease of minutes or hours, and delete it when the lease ends. A leaked credential expires by itself, and each credential maps to one workload in the audit log.
 
-**Kubernetes Secrets are not a vault.** By default, values are base64-encoded (an encoding, not encryption) and stored unencrypted in the cluster datastore (etcd) unless encryption at rest is configured, and anyone allowed to create pods in a namespace can read its secrets. Enable encryption at rest with a KMS provider, tighten RBAC, and prefer syncing from an external secret manager (see 7.2).
+**Kubernetes Secrets are not a vault.** In upstream Kubernetes, by default, values are base64-encoded (an encoding, not encryption) and stored unencrypted in the cluster datastore (etcd) unless encryption at rest is configured, and anyone allowed to create pods in a namespace can read its secrets. Some managed services now add provider-level encryption; check what yours does, because it does not change who can read them. Enable encryption at rest with a KMS provider, tighten RBAC, and prefer syncing from an external secrets manager (see 7.2).
 
-**Environment variables are a trade-off.** They beat source code, but child processes inherit them, and crash reporters and debug pages dump them. Prefer files mounted from the secret manager, or fetching at runtime, and never log the environment.
+**Environment variables are a trade-off.** They beat source code, but child processes inherit them, and crash reporters and debug pages dump them. Prefer files mounted from the secrets manager, or fetching at runtime, and never log the environment.
 
 **Containers.** Build arguments and `ENV` lines are recorded in image history. Use build-time secret mounts:
 
@@ -379,7 +380,7 @@ RUN --mount=type=secret,id=npmrc,target=/root/.npmrc npm ci
 
 1. **Revoke or rotate** now. Assume compromise the moment it reached anywhere you do not control; automated scanners watch public repositories continuously.
 2. **Scope the blast radius:** what could it do, where, and since when?
-3. **Check usage logs** (provider, secret manager, API gateway) for the exposure window.
+3. **Check usage logs** (provider, secrets manager, API gateway) for the exposure window.
 4. **Clean up** code, history (for example with `git filter-repo`), logs, tickets and chat. This is hygiene, not remediation, so it comes after rotation.
 5. **Fix the cause** and **record** it through the incident process (10.2).
 
@@ -398,7 +399,7 @@ RUN --mount=type=secret,id=npmrc,target=/root/.npmrc npm ci
 ## 🧰 The toolkit
 | Control, standard or tool | What it is and does | When to reach for it |
 |---|---|---|
-| **Secret manager** (HashiCorp Vault, OpenBao, cloud secret managers) | Stores secrets encrypted, controls and logs reads, supports rotation | Every secret a workload needs at runtime |
+| **Secrets manager** (HashiCorp Vault, OpenBao, cloud secrets managers) | Stores secrets encrypted, controls and logs reads, supports rotation | Every secret a workload needs at runtime |
 | **Workload identity federation** | Exchanges a platform-signed workload or CI token for short-lived, scoped cloud credentials | Replacing long-lived cloud keys in pods and pipelines |
 | **Dynamic secrets** | Credentials created on demand with a lease, revoked automatically | Database and cloud access for services |
 | **Secret scanning** (gitleaks, TruffleHog, detect-secrets) | Finds secrets in commits, history, images and logs | Pre-commit, CI, scheduled scans |
@@ -413,10 +414,10 @@ Noura and Jassim publish the **Secrets Management Standard (v1, excerpt)** with 
 | Secret class | Where it lives | How workloads get it | Lifetime and rotation | Owner |
 |---|---|---|---|---|
 | Cloud access for services and CI | Nowhere: workload identity and OIDC federation | Short-lived credentials; CI roles bound to repository and branch | Minutes to an hour; no long-lived keys | Platform team |
-| Database credentials | Secret manager, dynamic engine | Leased per workload | Hours; auto-revoked | Service owner |
-| Third-party and LLM provider keys | Secret manager | Fetched at runtime by the backend only | 90 days and on any suspicion; spending caps | Service owner |
+| Database credentials | Secrets manager, dynamic engine | Leased per workload | Hours; auto-revoked | Service owner |
+| Third-party and LLM provider keys | Secrets manager | Fetched at runtime by the backend only | 90 days and on any suspicion; spending caps | Service owner |
 | Signing and encryption keys | KMS or HSM, non-exportable | Used through the KMS interface | Per key policy (5.1) | Security engineering |
-| Break-glass credentials | Secret manager, sealed | Two-person approval; alert on use | Rotated after every use | CISO office |
+| Break-glass credentials | Secrets manager, sealed | Two-person approval; alert on use | Rotated after every use | CISO office |
 
 Forbidden everywhere: secrets in source code, images, mobile or web bundles, tickets, chat, LLM prompts, or any agent-readable file on a developer machine.
 
@@ -443,7 +444,7 @@ Forbidden everywhere: secrets in source code, images, mobile or web bundles, tic
 
 ## 🧾 Recap
 - A secret grants access by itself; it leaks through code, history, images, CI, logs, clients, chat and AI tools.
-- Code holds references; a secret manager holds values; workloads fetch them by identity at runtime.
+- Code holds references; a secrets manager holds values; workloads fetch them by identity at runtime.
 - Prefer short-lived, scoped credentials: workload identity, OIDC federation, dynamic secrets.
 - Scan before commit, at push, and across history, images and logs.
 - On a leak: revoke first, scope, check usage, clean up, fix the cause.
@@ -466,13 +467,13 @@ Forbidden everywhere: secrets in source code, images, mobile or web bundles, tic
 **2. In an authorised test, Mariam extracts the LLM provider key from a Najm Assist prototype app, where it was "obfuscated". What is the right fix?**
 
 - A. Stronger obfuscation
-- B. Move the provider call to Najm's backend, which holds the key, authenticates the customer and applies rate limits and spending caps; rotate the extracted key
+- B. Ask customers not to inspect the app
 - C. Store the key in the device's secure storage after first launch
-- D. Ask customers not to inspect the app
+- D. Move the provider call to Najm's backend, which holds the key, authenticates the customer and applies rate limits and spending caps; rotate the extracted key
 
 <details><summary>Answer</summary>
 
-**B.** Secrets shipped to a client are public. A and C only slow extraction, because the app must still be able to read the key. (🟢 The essentials.)
+**D.** Secrets shipped to a client are public. A and C only slow extraction, because the app must still be able to read the key; B is not a control. (🟢 The essentials.)
 
 </details>
 
@@ -489,16 +490,16 @@ Forbidden everywhere: secrets in source code, images, mobile or web bundles, tic
 
 </details>
 
-**4. Which statement about Kubernetes Secrets is TRUE by default?**
+**4. Which statement about Kubernetes Secrets is TRUE by default in upstream Kubernetes?**
 
-- A. Values are strongly encrypted with a per-cluster key
-- B. Values are base64-encoded, stored unencrypted in etcd unless encryption at rest is configured, and readable by anyone who can create pods in the namespace
+- A. Values are base64-encoded, stored unencrypted in etcd unless encryption at rest is configured, and readable by anyone who can create pods in the namespace
+- B. Values are strongly encrypted with a per-cluster key
 - C. Only cluster administrators can ever read them
 - D. They rotate automatically every 24 hours
 
 <details><summary>Answer</summary>
 
-**B.** Hence encryption at rest, tight RBAC and an external manager. A confuses encoding with encryption; C and D are false. (🟡 Going deeper.)
+**A.** Hence encryption at rest, tight RBAC and an external manager. B confuses encoding with encryption; C and D are false. (🟡 Going deeper.)
 
 </details>
 
@@ -599,7 +600,7 @@ log.info("assist_request", extra={
 
 ### 🟡 Going deeper
 
-**Where personal data goes in an LLM feature.** One Najm Assist turn can create copies in the prompt (the message plus account data the app adds), retrieved context (see 9.3), the model provider (processing, possibly retention for abuse monitoring, possibly training, depending on contract and settings), the transcript store, tracing tools that capture full prompts, evaluation and fine-tuning sets, and vector indexes. The OWASP Top 10 for LLM Applications (2025) lists *Sensitive Information Disclosure* (LLM02) and *Vector and Embedding Weaknesses* (LLM08) for these reasons. Research has shown that text can be partly reconstructed from its embeddings, so treat embeddings of personal data as personal data.
+**Where personal data goes in an LLM feature.** One Najm Assist turn can create copies in the prompt (the message plus account data the app adds), retrieved context (see 9.3), the model provider (processing, possibly retention for abuse monitoring, possibly training, depending on contract and settings), the transcript store, tracing tools that capture full prompts, evaluation and fine-tuning sets, and vector indexes. The OWASP Top 10 for LLM Applications (2025) lists *Sensitive Information Disclosure* (LLM02) and *Vector and Embedding Weaknesses* (LLM08) for these reasons. Research (for example Morris and colleagues, 2023) has shown that text can be largely reconstructed from its embeddings under some conditions, so treat embeddings of personal data as personal data.
 
 ```mermaid
 flowchart LR
@@ -703,13 +704,13 @@ After the erasure request, Sara and Noura publish the **Najm Assist personal-dat
 **2. The SME Portal team is chasing an intermittent upload failure. A developer proposes logging full request headers and bodies "for one week only". What is the best approach?**
 
 - A. Agree, since it is only one week
-- B. Log allowlisted fields (company reference, file size and type, error code, trace ID) and reproduce with test data; if content capture is truly needed, make it redacted, access-restricted, approved and self-expiring
+- B. Turn off logging for the endpoint to protect privacy
 - C. Log everything, but limit the log tool to the SME Portal team
-- D. Turn off logging for the endpoint to protect privacy
+- D. Log allowlisted fields (company reference, file size and type, error code, trace ID) and reproduce with test data; if content capture is truly needed, make it redacted, access-restricted, approved and self-expiring
 
 <details><summary>Answer</summary>
 
-**B.** It gets the debugging signal without copying credentials and personal data into logs. A and C are how debug logging outlives the bug; D removes data needed for detection. (🟢 The essentials.)
+**D.** It gets the debugging signal without copying credentials and personal data into logs. A and C are how debug logging outlives the bug; B removes data needed for detection. (🟢 The essentials.)
 
 </details>
 
@@ -741,14 +742,14 @@ After the erasure request, Sara and Noura publish the **Najm Assist personal-dat
 
 **5. Rania wants Najm Assist to help customers dispute card transactions. Which design best applies data minimisation?**
 
-- A. Send the model the customer's full profile and twelve months of transactions for context
-- B. Send only the disputed transaction's fields, with card numbers and IBANs replaced by placeholders, and let the server-side tool layer use real values when it files the dispute
+- A. Send only the disputed transaction's fields, with card numbers and IBANs replaced by placeholders, and let the server-side tool layer use real values when it files the dispute
+- B. Send the model the customer's full profile and twelve months of transactions for context
 - C. Send everything, but tell the model in the system prompt not to reveal it
 - D. Ask the customer to paste their card number into the chat for accuracy
 
 <details><summary>Answer</summary>
 
-**B.** It limits what reaches the provider, logs and transcripts. A over-collects; C relies on the model obeying, which prompt injection defeats; D pulls Restricted data into every copy. (🟡 Going deeper.)
+**A.** It limits what reaches the provider, logs and transcripts. B over-collects; C relies on the model obeying, which prompt injection defeats; D pulls Restricted data into every copy. (🟡 Going deeper.)
 
 </details>
 
@@ -763,4 +764,5 @@ After the erasure request, Sara and Noura publish the **Najm Assist personal-dat
 - MITRE CWE-532, Insertion of Sensitive Information into Log File — https://cwe.mitre.org/data/definitions/532.html
 - Sweeney, L. (2002), "k-Anonymity: A Model for Protecting Privacy", *International Journal of Uncertainty, Fuzziness and Knowledge-Based Systems* 10(5)
 - Dwork, C., McSherry, F., Nissim, K. and Smith, A. (2006), "Calibrating Noise to Sensitivity in Private Data Analysis", Theory of Cryptography Conference
+- Morris, J. X., Kuleshov, V., Shmatikov, V. and Rush, A. M. (2023), "Text Embeddings Reveal (Almost) As Much As Text", EMNLP 2023 — https://arxiv.org/abs/2310.06816
 - Qatar Law No. 13 of 2016 on Personal Data Privacy Protection (PDPPL) — consult the official text and current regulator guidance

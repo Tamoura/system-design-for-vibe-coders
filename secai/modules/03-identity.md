@@ -91,9 +91,9 @@ app.post("/login", async (req, res, next) => {
 
 **Contact details and devices are the real keys.** Changing the phone number or registering a new device controls every later code and alert. A **SIM swap** (persuading a mobile operator to move a number to the attacker's SIM) turns SMS codes against the customer. Treat these changes as high-risk: step-up with an existing strong factor, notify the *old* channel, and hold payee and limit changes for a cooling-off period.
 
-**Step-up and assurance levels.** NIST's **authenticator assurance levels** are **AAL1** (one factor), **AAL2** (two different factors) and **AAL3** (at the time of writing, a hardware-backed, phishing-resistant authenticator whose key cannot be exported). **Step-up** asks for a fresh, stronger authentication right before a sensitive action. For EU payments, PSD2's strong customer authentication also requires **dynamic linking** to the amount and payee; check current rules with compliance.
+**Step-up and assurance levels.** NIST's **authenticator assurance levels** are **AAL1** (at least one factor), **AAL2** (two different factors) and **AAL3** (at the time of writing, a hardware-backed, phishing-resistant authenticator whose key cannot be exported). **Step-up** asks for a fresh, stronger authentication right before a sensitive action. For EU payments, PSD2's strong customer authentication also requires **dynamic linking** to the amount and payee; check current rules with compliance.
 
-**Phishing that defeats codes.** **Adversary-in-the-middle (AitM)** phishing kits relay everything the victim types, including the one-time code, to the real site in real time, and keep the session cookie that comes back. SMS codes, app codes and simple push approvals all fall to this. Passkeys do not, because the browser signs only for the real domain. **MFA fatigue**, prompt after prompt until a tired user taps Approve, featured in several publicly reported intrusions in 2022. Mitigate it with **number matching** (the user types a number shown on the login screen), limits on prompts, and location and app details in the prompt.
+**Phishing that defeats codes.** **Adversary-in-the-middle (AitM)** phishing kits relay everything the victim types, including the one-time code, to the real site in real time, and keep the session cookie that comes back. SMS codes, app codes and simple push approvals all fall to this. Passkeys do not, because the browser signs only for the real domain. **MFA fatigue**, prompt after prompt until a tired user taps Approve, featured in several publicly reported intrusions in 2022. Mitigate it with **number matching** (the user types into the app a number shown on the login screen), limits on prompts, and location and app details in the prompt.
 
 ```mermaid
 flowchart TD
@@ -114,7 +114,7 @@ flowchart TD
 
 **Recovery is the real perimeter.** Once login uses passkeys, attackers move to the SMS reset, the help desk and "I lost my phone"; help-desk social engineering has featured in publicly reported intrusions. Give recovery login-level assurance: more than one registered passkey or device, identity re-verification (in-app or in a branch) instead of "date of birth", delays and notifications, and a contact-centre script that never resets a factor on a phone call alone.
 
-**Synced or device-bound passkeys.** **Synced passkeys** follow the user to a new phone through their platform account or password manager: convenient, but partly as secure as that account. **Device-bound** keys, such as hardware security keys, cannot be copied and fit AAL3. NIST published guidance in 2024 accepting syncable authenticators at AAL2, since folded into Revision 4. A sensible split: synced passkeys for customers, device-bound keys for privileged staff.
+**Synced or device-bound passkeys.** **Synced passkeys** follow the user to a new phone through their platform account or password manager: convenient, but only as secure as that account and its recovery. **Device-bound** keys, such as hardware security keys, cannot be copied and fit AAL3. NIST published guidance in 2024 accepting syncable authenticators at AAL2, since folded into Revision 4. A sensible split: synced passkeys for customers, device-bound keys for privileged staff.
 
 **Use a maintained WebAuthn library.** Verification checks a single-use challenge, the origin and **RP ID** (relying party identifier, usually your domain), the user-presence and user-verification flags, the signature, and the signature counter (synced passkeys often report zero, so treat it as a signal). Each step is easy to get subtly wrong by hand. Najm Mobile's native equivalent, a key in the phone's secure hardware unlocked by biometrics, is **device binding** (4.3).
 
@@ -201,7 +201,7 @@ After the stuffing wave, Noura and Ali write the **Najm Authentication Standard 
 
 <details><summary>Answer</summary>
 
-**C.** Password hashing functions are slow and salted per password, and rehash-on-login migrates users without a mass reset. A is still a fast hash; B is reversible by anyone with the key; D is no longer recommended by NIST. (🟢 The essentials.)
+**C.** Password hashing functions are slow and salted per password, and rehash-on-login migrates users without a mass reset (to protect dormant accounts too, teams often also wrap each old hash in Argon2id at once). A is still a fast hash; B is reversible by anyone with the key; D is no longer recommended by NIST. (🟢 The essentials.)
 
 </details>
 
@@ -264,7 +264,7 @@ After the stuffing wave, Noura and Ali write the **Najm Authentication Standard 
 - **OAuth 2.0** is for **delegated authorisation**: an app calls an API on a user's behalf, with limited rights, without seeing their password. It does not say who the user is.
 - **OpenID Connect (OIDC)** adds identity with an **ID token**. ID tokens are for the app; **access tokens** are for the API. Never accept one in place of the other.
 - Default for almost every client: the **authorization code flow with PKCE**, exact redirect-URI matching, no implicit or password grants (RFC 9700, 2025).
-- A **JWT** is signed, not secret: anyone can read it. Verify it with an algorithm *you* choose, check issuer, audience and expiry, and keep lifetimes short.
+- A **JWT** is usually signed, not encrypted: anyone holding it can read it. Verify it with an algorithm *you* choose, check issuer, audience and expiry, and keep lifetimes short.
 - Decision cue: for every token, ask "who issued it, for which audience, with what scope, for how long, and what if it is stolen?"
 - Biggest trap: decoding a token instead of verifying it, or accepting a valid token issued for a different API.
 
@@ -293,7 +293,7 @@ Tokens are **bearer credentials**: like cash, whoever holds one can spend it. No
 |---|---|---|
 | Authorization code with PKCE | Web, mobile and single-page apps | **Use**: the default whenever there is a user |
 | Client credentials | Service-to-service calls | **Use**, with narrow scope and one audience |
-| Device authorization (RFC 8628) | TVs and command-line tools | **Use** where there is no browser |
+| Device authorization (RFC 8628) | TVs and command-line tools | **Use** only where there is no browser; users can be tricked into approving someone else's code |
 | Refresh token | Keeping a user signed in | **Use**, with rotation or sender-constraint |
 | Implicit | Old single-page apps | **Do not use**: tokens travel in the URL (RFC 9700) |
 | Resource owner password | Old first-party apps | **Do not use**: the app handles the password (RFC 9700) |
@@ -330,7 +330,7 @@ sequenceDiagram
 
 **OpenID Connect.** OAuth says "this app may call that API", not who the user is; treating an access token as proof of login is a classic mistake. **OIDC** (OpenID Connect Core 1.0) adds the **ID token**, a JWT carrying `iss` (issuer), `sub` (a stable user identifier *at that issuer*), `aud` (the client), `exp` and `iat` (expiry and issue time), `nonce` (echoed back to block replay), and `auth_time`, `acr` and `amr` (when and how the user authenticated, for step-up). The client verifies the signature, `iss`, `aud`, expiry and `nonce`, then identifies the user by **`iss` + `sub`**, never by email.
 
-**JWT in brief.** A **JSON Web Token** (RFC 7519) is three base64url-encoded parts joined by dots: `header.payload.signature`. The header names the algorithm and often a key ID (`kid`); the payload holds **claims**:
+**JWT in brief.** A signed **JSON Web Token** (RFC 7519; encrypted JWTs also exist but are less common) is three base64url-encoded parts joined by dots: `header.payload.signature`. The header names the algorithm and often a key ID (`kid`); the payload holds **claims**:
 
 ```json
 {
@@ -391,9 +391,9 @@ def verify_access_token(token: str) -> dict:
     )
 ```
 
-A **JWKS** (JSON Web Key Set) is the issuer's published list of public keys. A valid token proves who is calling; the API still checks scope and object-level authorisation (3.3).
+A **JWKS** (JSON Web Key Set) is the issuer's published list of public keys. Some libraries, PyJWT among them, now refuse the worst combinations, such as `none` with a real key or an RSA public key used as an HMAC secret; do not rely on that. A valid token proves who is calling; the API still checks scope and object-level authorisation (3.3).
 
-**Where tokens live.** In browsers, tokens in `localStorage` can be read by any script on the page, including an XSS payload (2.2). For high-value apps, use a **backend for frontend (BFF)**: a server-side component is the OAuth client, keeps the tokens and gives the browser only an `HttpOnly` cookie. Mobile apps follow RFC 8252: the system browser (an embedded web view lets the app see the password), PKCE, claimed HTTPS redirects, and refresh tokens in the Keychain or Keystore (4.3). Servers keep client credentials in a secrets manager (5.2).
+**Where tokens live.** In browsers, tokens in `localStorage` can be read by any script on the page, including an XSS payload (2.2). For high-value apps, use a **backend for frontend (BFF)**: a server-side component is the OAuth client, keeps the tokens and gives the browser only an `HttpOnly` cookie. Mobile apps follow RFC 8252 (the system browser, since an embedded web view lets the app see the password; PKCE; claimed HTTPS redirects) and keep refresh tokens in the Keychain or Keystore (4.3). Servers keep client credentials in a secrets manager (5.2).
 
 **Lifetimes and revocation.** A JWT access token lives until `exp`, so keep it to minutes. Use **refresh token rotation**: each use returns a new refresh token, and if an old one reappears, revoke the whole family, because a copy was stolen. APIs needing instant revocation can ask the AS whether a token is still active (**token introspection**, RFC 7662).
 
@@ -401,7 +401,7 @@ A **JWKS** (JSON Web Key Set) is the issuer's published list of public keys. A v
 
 **Sender-constrained tokens.** A **sender-constrained** token is bound to a key the client holds, so a stolen copy is useless alone. **mTLS-bound tokens** (RFC 8705) tie it to the client's TLS certificate; **DPoP** (RFC 9449) has the client sign a proof on every request, a natural fit for Najm Mobile's device key.
 
-**FAPI 2.0 for open banking.** For third-party access to customer accounts, where regulation requires or allows it, banks commonly use the OpenID Foundation's **FAPI 2.0** security profile. At the time of writing it requires, among other things, PKCE, **pushed authorization requests** (PAR, RFC 9126: parameters travel server to server) and sender-constrained tokens. Check the current profile and your regulator's rules.
+**FAPI 2.0 for open banking.** For third-party access to customer accounts, where regulation requires or allows it, banks commonly use the OpenID Foundation's FAPI security profiles, with **FAPI 2.0** the current version for new deployments (some ecosystems still run FAPI 1.0). At the time of writing FAPI 2.0 requires, among other things, PKCE, **pushed authorization requests** (PAR, RFC 9126: parameters travel server to server) and sender-constrained tokens. Check the current profile and your regulator's rules.
 
 **Delegation for agents: token exchange.** The safe design for Najm Assist is **token exchange** (RFC 8693). When the customer asks to freeze a card, Assist's backend presents the customer's token to the AS and receives a new one with **one audience** (the cards API), **one scope** (`cards:freeze`) and **a few minutes'** life. It is still about the **customer** (`sub`), with an `act` (actor) claim naming Assist, and is issued only if the customer's sign-in is fresh enough. The cards API authorises against the customer, so no prompt can make it freeze another customer's card. Unfreezing is not an Assist tool; it stays in the app behind step-up (3.1). At the time of writing, the Model Context Protocol (MCP) specification's authorization section builds on OAuth and tells servers to accept only tokens issued for them, never passing a client's token through: the audience rule again (9.2).
 
@@ -464,7 +464,7 @@ Noura and Tariq publish the **Najm Identity and Token Standard v1**. Every new c
 ## 🧾 Recap
 - OAuth 2.0 delegates access; OIDC adds identity. Access tokens are for APIs; ID tokens are for the client.
 - Use the code flow with PKCE and exact redirect URIs; retire implicit and password grants (RFC 9700).
-- Anyone can read a JWT. Verify it with a pinned algorithm and your issuer's keys, then check `iss`, `aud` and `exp`.
+- Anyone holding a signed JWT can read it. Verify it with a pinned algorithm and your issuer's keys, then check `iss`, `aud` and `exp`.
 - Every token needs one audience, a narrow scope, a short life and a theft plan.
 - When an agent acts for a customer, exchange the customer's token for a narrow, short-lived one, so the API authorises the customer.
 
@@ -614,7 +614,7 @@ Random UUIDs make guessing harder, but IDs leak through URLs, emails, logs and s
 await db.user.update({ where: { id: req.user.id }, data: req.body });
 
 // Fixed: an explicit allowlist of editable fields (zod schema; unknown keys rejected)
-const UpdateProfile = z.object({ displayName: z.string().max(80), phone: z.string() }).strict();
+const UpdateProfile = z.object({ displayName: z.string().max(80), language: z.enum(["ar", "en"]) }).strict();
 const data = UpdateProfile.parse(req.body);
 await db.user.update({ where: { id: req.user.id }, data });
 ```
@@ -714,7 +714,7 @@ flowchart TD
 | Control, standard or tool | What it is and does | When to reach for it |
 |---|---|---|
 | **Access-control matrix** | Roles × actions with named conditions; the single source for policy and tests | Before building any endpoint; at every review |
-| **OWASP API Security Top 10** (OWASP, 2023 edition) | The ten most common API risks, led by BOLA, with function- and property-level authorisation close behind | Threat modelling and reviewing APIs |
+| **OWASP API Security Top 10** (OWASP, 2023 edition) | The ten most common API risks, led by BOLA, with property- and function-level authorisation (API3, API5) also on the list | Threat modelling and reviewing APIs |
 | **OWASP ASVS** (OWASP) | Testable requirements, including access control and API sections | Writing requirements and test plans |
 | **Policy engine** (OPA, Cedar, OpenFGA) | Authorisation decisions moved out of application code into a policy language or relationship graph | When many services share complex rules |
 | **Row-level security** (PostgreSQL) | Database-enforced row filters per tenant or user | Pooled multi-tenant tables, as a second wall |
@@ -812,7 +812,7 @@ After Mariam's test, Ali and Tariq write the **SME Portal Access-Control Matrix 
 
 <details><summary>Answer</summary>
 
-**C.** This is mass assignment, a property-level flaw, and the server must decide which fields are writable. A is client-side and bypassed with any HTTP tool; D detects the problem weeks too late. (🟢 The essentials.)
+**C.** This is mass assignment, a property-level flaw, and the server must decide which fields are writable. A is client-side and bypassed with any HTTP tool; B breaks legitimate role management instead of controlling who may write the field; D detects the problem weeks too late. (🟢 The essentials.)
 
 </details>
 
@@ -825,7 +825,7 @@ After Mariam's test, Ali and Tariq write the **SME Portal Access-Control Matrix 
 
 <details><summary>Answer</summary>
 
-**B.** Owners, superusers and `BYPASSRLS` roles skip the policies by default. Forcing RLS and connecting as an ordinary role makes the wall real. A, C and D are false. (🟡 Going deeper.)
+**B.** Superusers and `BYPASSRLS` roles always skip the policies, and table owners skip them unless RLS is forced. Forcing RLS and connecting as an ordinary role makes the wall real. A, C and D are false. (🟡 Going deeper.)
 
 </details>
 

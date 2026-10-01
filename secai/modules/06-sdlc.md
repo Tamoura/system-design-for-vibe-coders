@@ -28,7 +28,7 @@ Public cases show the same pattern: a missing process, not missing knowledge. Th
 
 ### 🟢 The essentials
 
-**The idea.** A secure SDLC is not a separate project; it adds a few security activities to the steps your teams already follow. Microsoft's Security Development Lifecycle (SDL) popularised the idea in the mid-2000s. Today the main public reference is NIST SP 800-218, the **Secure Software Development Framework (SSDF)**, version 1.1 at the time of writing (2026; check for revisions). Its practices fall into four groups: Prepare the Organization, Protect the Software, Produce Well-Secured Software and Respond to Vulnerabilities. It says *what* to achieve, not which tool to buy. **OWASP SAMM** (Software Assurance Maturity Model) measures how mature each practice is. Lesson 11.1 covers both as programme frameworks.
+**The idea.** A secure SDLC is not a separate project; it adds a few security activities to the steps your teams already follow. Microsoft's Security Development Lifecycle (SDL) popularised the idea in the mid-2000s. Today the main public reference is NIST SP 800-218, the **Secure Software Development Framework (SSDF)**, version 1.1 at the time of writing (2026), with a draft version 1.2 published for comment in December 2025; check for the current version. Its practices fall into four groups: Prepare the Organization, Protect the Software, Produce Well-Secured Software and Respond to Vulnerabilities. It says *what* to achieve, not which tool to buy. **OWASP SAMM** (Software Assurance Maturity Model) measures how mature each practice is. Lesson 11.1 covers both as programme frameworks.
 
 **Security activities by phase.** Every phase gets a small, specific job, and whatever escapes to production feeds back into the next plan:
 
@@ -58,7 +58,7 @@ flowchart LR
 | **Secret scanning** | Code, commits and history | Keys, passwords and tokens committed by mistake (5.2) | Secrets stored outside the repository |
 | **Security tests you write** | Your own unit and integration tests | Authorisation, tenant isolation, business rules | Anything nobody thought to test |
 
-Look at the last row. Scanners are poor at broken access control, the top category in the OWASP Top 10 (2021), because they do not know that invoice 77 belongs to company 12. Only a test that encodes your rules can check that.
+Look at the last row. Scanners are poor at broken access control, the top category in the OWASP Top 10 (2021, and again in the 2025 update), because they do not know that invoice 77 belongs to company 12. Only a test that encodes your rules can check that.
 
 ```python
 # A security integration test that encodes the rule
@@ -130,7 +130,7 @@ cur.execute(
 
 **Measure escapes, not scans.** "Scans run" says nothing. Track the **escape rate** (the share of serious findings first found by pen test, bug bounty or incident rather than by an earlier gate), **time to remediate** by severity, **coverage** (repositories with each gate switched on) and **suppression health**. A category that keeps escaping tells you which gate to strengthen.
 
-**Evidence for regulators and customers.** Banks must show, not just say, that software is built securely. CISA's secure software development attestation form for US federal suppliers is based on the SSDF; PCI DSS v4.0 Requirement 6 ("Develop and Maintain Secure Systems and Software") covers Najm's card systems; and DORA's ICT risk rules reach into how EU financial entities develop systems (11.2). A pipeline that records its gates and decisions produces this evidence as a by-product. To scale, Najm trains a **security champion** in each squad to do tier-1 reviews and tune rules (11.3).
+**Evidence for regulators and customers.** Banks must show, not just say, that software is built securely. CISA's secure software development attestation form for US federal suppliers is based on the SSDF; PCI DSS v4.0.1 Requirement 6 ("Develop and Maintain Secure Systems and Software") covers Najm's card systems; and DORA's ICT risk rules reach into how EU financial entities develop systems (11.2). A pipeline that records its gates and decisions produces this evidence as a by-product. To scale, Najm trains a **security champion** in each squad to do tier-1 reviews and tune rules (11.3).
 
 ## 🧰 The toolkit
 | Control, standard or tool | What it is and does | When to reach for it |
@@ -350,7 +350,7 @@ For npm, the equivalent is a **scope** (`@najm/auth-client`) mapped to the inter
 
 ### 🟡 Going deeper
 
-**SLSA.** **SLSA** (Supply-chain Levels for Software Artifacts, pronounced "salsa") is an OpenSSF framework of build-integrity levels. In SLSA v1.0 (2023), the **Build track** runs from L0 (no guarantees) to L3:
+**SLSA.** **SLSA** (Supply-chain Levels for Software Artifacts, pronounced "salsa") is an OpenSSF framework of build-integrity levels. Since SLSA v1.0 (2023), the **Build track** runs from L0 (no guarantees) to L3:
 
 | Level | Requirement in short | Protects against |
 |---|---|---|
@@ -358,7 +358,7 @@ For npm, the equivalent is a **scope** (`@najm/auth-client`) mapped to the inter
 | Build L2 | A hosted build platform generates and signs the provenance | Tampering after the build; laptop releases |
 | Build L3 | A hardened platform: builds are isolated, and signing material is out of reach of build steps | A compromised build step forging provenance or poisoning other builds |
 
-Later SLSA versions add further tracks, such as one for source control; check slsa.dev for the current specification.
+SLSA v1.2 (November 2025) adds a **Source track** for version control and code review; check slsa.dev for the current specification.
 
 **Provenance** is a signed statement, usually in the **in-toto** attestation format: this artefact, identified by its digest (a cryptographic hash), was built by this builder from this repository and commit. A deploy-time policy can then require "built by Najm's CI from `main`". An image built on a laptop, or from an unreviewed branch, fails.
 
@@ -377,7 +377,7 @@ cosign verify \
 
 In Kubernetes, an **admission controller** (a policy hook that approves or rejects workloads, such as Sigstore's policy-controller or Kyverno) enforces the same check, so an unsigned or wrongly signed image never starts. Reference images by **digest** (`@sha256:…`), not by movable tags such as `:latest`, so what you verified is exactly what runs.
 
-**Hardening the pipeline.** The pipeline holds the keys to production, so treat it as production; the **OWASP Top 10 CI/CD Security Risks** project lists the common weaknesses. In March 2025, the popular GitHub Action `tj-actions/changed-files` was compromised: its version tags were repointed to malicious code that exposed CI secrets in build logs (CVE-2025-30066), so every pipeline referencing it by tag ran that code.
+**Hardening the pipeline.** The pipeline holds the keys to production, so treat it as production; the **OWASP Top 10 CI/CD Security Risks** project lists the common weaknesses. In March 2025, the popular GitHub Action `tj-actions/changed-files` was compromised: its version tags were repointed to malicious code that exposed CI secrets in build logs (CVE-2025-30066), so pipelines referencing it by tag ran that code until the tags were fixed.
 
 ```yaml
 # Risky
@@ -452,7 +452,7 @@ Run hands-on work only on your own repositories and in a local lab on your own m
 
 - 🟢 Generate an SBOM for one of your own projects with Syft or cdxgen, in CycloneDX or SPDX format. *Done when:* you can say how many direct and transitive components it contains, name any package present in two versions, and find one component by its package URL.
 - 🟡 Harden one CI workflow in a repository you own: pin third-party actions to full commit SHAs, set least-privilege `permissions`, install from the lock file, and use OIDC instead of long-lived cloud secrets where your platform allows. *Done when:* the workflow still passes, and the pull request explains each change and the threat it addresses.
-- 🔴 In a local lab (a local registry plus a kind or minikube cluster), sign an image you built with cosign, then install an admission policy that only admits images signed by your identity. *Done when:* the signed image runs, an unsigned image and one referenced by `:latest` are both rejected, and you have noted which threat each rejection stops.
+- 🔴 In a local lab (a local registry plus a kind or minikube cluster), sign an image you built with cosign using a key pair you generate (keyless signing would publish your identity in the public Rekor log), then install an admission policy that only admits images signed by that key. *Done when:* the signed image runs, an unsigned image and one referenced by `:latest` are both rejected, and you have noted which threat each rejection stops.
 
 ## ⚠️ Mistakes and traps
 - **"We only use a few libraries."** Direct dependencies are the tip; transitive ones usually far outnumber them. Count them with an SBOM.
@@ -577,7 +577,7 @@ Research agrees. In "Asleep at the Keyboard?" (Pearce et al., 2022), about 40% o
 
 ### 🟢 The essentials
 
-**The mental model.** Treat an AI coding assistant as a very fast, well-read new colleague who has never seen your threat model, never says "I'm not sure", and learned from a lot of insecure public code. Its output is untrusted input: the "never trust model output" principle (9.1), and LLM05 Improper Output Handling in the OWASP Top 10 for LLM Applications. Two consequences follow:
+**The mental model.** Treat an AI coding assistant as a very fast, well-read new colleague who has never seen your threat model, rarely says "I'm not sure", and learned from a lot of insecure public code. Its output is untrusted input: the "never trust model output" principle (9.1), and LLM05 Improper Output Handling in the OWASP Top 10 for LLM Applications. Two consequences follow:
 - **Accountability does not move.** The engineer who accepts the change is its author for review, incident and audit purposes.
 - **The gates do not relax.** Everything in 6.1 and 6.2 still applies, and some gates matter more than before.
 
@@ -617,7 +617,7 @@ def export_invoice(invoice_id):
     return render_pdf(row)
 ```
 
-**Slopsquatting.** Language models sometimes recommend packages that do not exist. Research on this "package hallucination" (Spracklen et al., 2024) found it common, with many invented names recurring across similar prompts. So an attacker can register a commonly hallucinated name with malicious code and wait for developers or agents to install it, a practice that became known as **slopsquatting** in 2025. The defences are the 6.2 controls, applied strictly: installs only through the registry proxy, a gate on every new dependency, and a human check that the package is the real, established project.
+**Slopsquatting.** Language models sometimes recommend packages that do not exist. Research on this "package hallucination" (Spracklen et al., 2024) found it common, with many invented names recurring when the same prompt was repeated. So an attacker can register a commonly hallucinated name with malicious code and wait for developers or agents to install it, a practice that became known as **slopsquatting** in 2025. The defences are the 6.2 controls, applied strictly: installs only through the registry proxy, a gate on every new dependency, and a human check that the package is the real, established project.
 
 **Give the assistant your rules.** Most coding tools read a project instruction file (`AGENTS.md` is one common convention). Najm's holds short, specific security rules (🏛️ Part C). Rules reduce mistakes but do not replace the gates, because models do not follow instructions reliably.
 
@@ -652,7 +652,7 @@ flowchart LR
 ```
 
 Three Najm gates deserve a closer look:
-- **New-dependency gate.** CI compares the lock file with `main`; any new package fails the build until a human confirms it. The registry proxy already refuses names that do not exist upstream.
+- **New-dependency gate.** CI compares the lock file with `main`; any new package fails the build until a human confirms it is the real, established project. The registry proxy serves only curated packages (6.2), so a name an attacker registered last week does not install unreviewed.
 - **Protected security tests.** Files under `tests/security/` are owned by security champions through CODEOWNERS, with code-owner review required, so nobody, human or agent, can quietly rewrite a failing authorisation test.
 - **Weakening patterns.** Najm's Semgrep rules flag `verify=False`, wildcard CORS, `debug=True`, new suppression comments and IAM wildcards in every pull request.
 
@@ -668,7 +668,7 @@ Three Najm gates deserve a closer look:
 
 **Data leaving the building.** A coding tool sends code, and sometimes data, to a model provider. In 2023, Samsung staff were reported to have pasted confidential source code into a public chatbot, after which the company restricted such tools. Najm allows only approved tools on enterprise terms (no training on Najm data, agreed retention and location) and forbids customer data in prompts and fixtures; Layla's AI governance team owns the policy (see *AI Governance: Zero to Hero*).
 
-**Standards.** The NIST SSDF applies to code whoever or whatever wrote it; NIST SP 800-218A (2024) adds practices for developers of generative AI models and systems. In the OWASP Top 10 for LLM Applications (2025), coding agents touch LLM01 Prompt Injection, LLM03 Supply Chain (hallucinated packages), LLM05 Improper Output Handling (generated code trusted blindly) and LLM06 Excessive Agency. The *Production AI Agents* course goes deeper on agent engineering.
+**Standards.** The NIST SSDF applies to code whoever or whatever wrote it; NIST SP 800-218A (2024) adds practices for developers of generative AI models and systems. In the OWASP Top 10 for LLM Applications (2025), coding agents touch LLM01 Prompt Injection, LLM03 Supply Chain (the packages and tools they pull in), LLM05 Improper Output Handling (generated code trusted blindly), LLM06 Excessive Agency and LLM09 Misinformation, whose entry names unsafe code and hallucinated packages. The *Production AI Agents* course goes deeper on agent engineering.
 
 ## 🧰 The toolkit
 | Control, standard or tool | What it is and does | When to reach for it |
@@ -677,7 +677,7 @@ Three Najm gates deserve a closer look:
 | **Agent sandbox** | Disposable container with no host credentials and an egress allowlist | Any agent that runs commands or installs packages |
 | **Least-privilege tools** | Agent tokens and tools scoped to the task: own branch, no merge, no secrets | Configuring any coding agent or CI bot |
 | **Lethal trifecta check** (Simon Willison, 2025) | Private data plus untrusted content plus external communication means exfiltration is possible | Reviewing any agent setup: remove at least one leg |
-| **New-dependency gate** | CI check blocking unreviewed new packages, backed by a proxy that refuses non-existent ones | Stopping slopsquatting |
+| **New-dependency gate** | CI check blocking unreviewed new packages, backed by a curated registry proxy | Stopping slopsquatting |
 | **Protected security tests** | Security tests owned through CODEOWNERS, so changes need a champion | Stopping tests being edited until they pass |
 | **Semgrep** | Custom rules for AI tells: disabled TLS checks, wildcard CORS, new suppressions | Every pull request, human or AI |
 
@@ -745,26 +745,26 @@ Run hands-on work only in your own projects and repositories, or in a local lab.
 **1. An agent-written pull request edits a security test so that a "viewer" user now expects HTTP 200 instead of 403, "to align tests with new behaviour". What should the reviewer do?**
 
 - A. Approve, because tests should match the code's behaviour
-- B. Treat it as a red flag: restore the test, fix the code, and require a champion's approval for any security-test change
-- C. Delete the test, since it is now failing
-- D. Ask the agent to confirm that the change is safe
+- B. Delete the test, since it is now failing
+- C. Ask the agent to confirm that the change is safe
+- D. Treat it as a red flag: restore the test, fix the code, and require a champion's approval for any security-test change
 
 <details><summary>Answer</summary>
 
-**B.** The test encodes an authorisation rule; changing it to pass hides a regression. A and C remove the protection; D asks the tool that made the change to judge it. (🟡 Going deeper.)
+**D.** The test encodes an authorisation rule; changing it to pass hides a regression. A and B remove the protection; C asks the tool that made the change to judge it. (🟡 Going deeper.)
 
 </details>
 
 **2. A build fails because an assistant added a package that Najm's registry proxy cannot find. The developer proposes adding the public index so the build passes. What is the best response?**
 
 - A. Agree; the proxy is only a cache
-- B. Treat the name as possibly hallucinated: find the real package that was intended, keep installs going through the proxy, and record the new dependency
-- C. Publish an internal package with that name
+- B. Publish an internal package with that name
+- C. Treat the name as possibly hallucinated: find the real package that was intended, keep installs going through the proxy, and record the new dependency
 - D. Pin the package to its latest version and continue
 
 <details><summary>Answer</summary>
 
-**B.** A name that does not resolve may be a hallucination that an attacker could register (slopsquatting). A also reopens dependency confusion; C and D accept an unverified package. (🟢 The essentials.)
+**C.** A name that does not resolve may be a hallucination that an attacker could register (slopsquatting). A also reopens dependency confusion; B leaves the code depending on a package nobody has identified; D accepts an unverified package. (🟢 The essentials.)
 
 </details>
 
@@ -783,14 +783,14 @@ Run hands-on work only in your own projects and repositories, or in a local lab.
 
 **4. Every Najm repository has a security rules file for AI assistants. Why keep SAST, secret scanning and protected security tests on AI-written pull requests?**
 
-- A. Because rules files are only read by humans
-- B. Because models do not follow instructions reliably: rules reduce mistakes, and deterministic gates catch the rest
+- A. Because models do not follow instructions reliably: rules reduce mistakes, and deterministic gates catch the rest
+- B. Because rules files are only read by humans
 - C. Because regulations ban rules files
 - D. They are not needed once a rules file exists
 
 <details><summary>Answer</summary>
 
-**B.** Rules files improve the first draft; the gates enforce the standard. D is the trap the lesson warns about. (🟢 The essentials.)
+**A.** Rules files improve the first draft; the gates enforce the standard. D is the trap the lesson warns about. (🟢 The essentials.)
 
 </details>
 

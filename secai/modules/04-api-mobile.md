@@ -22,7 +22,7 @@ Najm is adding card controls to Najm Mobile: spending limits, blocking online pa
 
 Her report has two more findings. `GET /v2/customers/me` returns fields the app never displays, including an internal `riskScore` and `kycStatus`. And the 2019 `/v1/` API, unused by the current app, still answers on the public gateway without the newer checks. Ali (new security engineer) asks whether these are "real", since no customer could reach them through the app. Noura (Head of Application & AI Security) answers: "The app is one client. Attackers write their own."
 
-Public cases show the cost. In 2022 the Australian telecoms company Optus suffered a large exposure of customer records. Public reporting at the time described an internet-facing API that returned customer data without requiring authentication; the details were contested and later examined by regulators. Whatever the exact facts, the pattern combines three items on this lesson's list: an unwatched endpoint, a missing access check and iterable identifiers.
+Public cases show the cost. In 2022 the Australian telecoms company Optus suffered a large exposure of customer records. Public reporting at the time described an internet-facing API that returned customer data without requiring authentication; the details were contested and later examined by regulators. Whatever the exact facts, the pattern combines three themes of this lesson: an unwatched endpoint, a missing access check and iterable identifiers.
 
 ## 📐 How it works
 
@@ -91,8 +91,9 @@ const UpdateProfile = z.object({
   preferredName: z.string().max(60).optional(),
   language: z.enum(["ar", "en"]).optional(),
 }).strict();                                      // unknown fields are rejected
-const input = UpdateProfile.parse(req.body);
-const c2 = await db.customers.update({ where: { id: me }, data: input });
+const input = UpdateProfile.safeParse(req.body);
+if (!input.success) return res.status(400).json({ error: "invalid_body" });
+const c2 = await db.customers.update({ where: { id: me }, data: input.data });
 res.json(toPublicProfile(c2));                    // explicit response shape
 ```
 
@@ -129,11 +130,11 @@ flowchart LR
 
 **Centralise the decision.** When hundreds of handlers each write their own ownership query, one will forget. Express authorisation once: a data-access layer that always scopes queries to the caller, or a **policy engine** such as Open Policy Agent (OPA) or Cedar that evaluates rules outside handler code. New endpoints then inherit the rule by default.
 
-**Random IDs are a seatbelt, not a brake.** UUIDs (long random identifiers) make guessing harder and are worth using. But IDs leak through URLs, logs, screenshots and other API responses. Only the server check fixes BOLA.
+**Random IDs are a seatbelt, not a brake.** Random UUIDs (version 4: long random identifiers; time-based versions are partly predictable) make guessing harder and are worth using. But IDs leak through URLs, logs, screenshots and other API responses. Only the server check fixes BOLA.
 
 **Test authorisation like a feature.** Scanners rarely know which objects belong to whom. Use the **two-user test**: create customers A and B and a staff user, replay every request with another user's token, and expect a denial, in CI on every build. In production, a burst of denials on distinct IDs from one token is a strong signal for the SOC (10.1).
 
-**GraphQL.** **GraphQL** serves client-chosen fields through one endpoint. Authorisation must run in every **resolver** (the function that fetches each field), deep queries need cost limits, and rate limits must count operations, since one request can carry many. Disabling **introspection** (the schema's self-description) reduces reconnaissance but is not a control.
+**GraphQL.** **GraphQL** serves client-chosen fields through one endpoint. Authorisation must run in every **resolver** (the function that fetches each field), deep queries need cost limits, and rate limits must count operations, since one request can carry many. Disabling **introspection** (the schema's self-description) reduces reconnaissance but is no substitute for authorisation.
 
 **Agents are API clients too.** Najm Assist will call the same API. If it uses a service account that can read every account, any prompt injection that steers it becomes BOLA by proxy. This is a **confused deputy**: a trusted component tricked into using its authority for someone else. The agent should act with the *customer's* delegated, narrowly scoped token, for example via OAuth 2.0 Token Exchange (RFC 8693), so the normal object checks still apply. Module 9 builds on this.
 
@@ -342,8 +343,8 @@ UPDATE accounts SET balance = balance - 400 WHERE id = :id;
 -- FIXED: the check and the change are one atomic statement
 UPDATE accounts
    SET balance = balance - :amount
- WHERE id = :id AND balance >= :amount;
--- 0 rows updated means insufficient funds: reject the transfer
+ WHERE id = :id AND :amount > 0 AND balance >= :amount;
+-- 0 rows updated means an invalid amount or insufficient funds: reject the transfer
 ```
 
 Row locks (`SELECT ... FOR UPDATE` inside a transaction) and database constraints (a balance that cannot go below zero, a voucher redeemable once) also work. The rule: let the database enforce the invariant, because it sees every request; each application instance sees only its own.
@@ -355,7 +356,7 @@ Row locks (`SELECT ... FOR UPDATE` inside a transaction) and database constraint
 CREATE UNIQUE INDEX transfers_idem ON transfers (customer_id, idempotency_key);
 ```
 
-This also blunts replays. Many payment APIs already use an `Idempotency-Key` header; at the time of writing (2026) a standard version is being worked on at the IETF.
+A repeat that reuses a key with a different request body should be rejected, not executed. This also blunts replays. Many payment APIs already use an `Idempotency-Key` header; an IETF draft to standardise it has been in progress for several years, so check its current status.
 
 **Server-side state machines.** For multi-step flows (initiate, verify OTP, confirm), keep each transaction's state on the server and allow only legal transitions: confirm checks "verified, not expired, same customer, same device" instead of trusting the client's order of calls.
 
@@ -475,13 +476,13 @@ Hands-on work runs only against code you wrote, a local lab, or deliberately vul
 **3. Najm's login endpoint allows 10 failures per minute per IP address. Attackers spread a credential-stuffing run across tens of thousands of residential addresses. What change helps most?**
 
 - A. Lower the limit to 5 failures per minute per IP address
-- B. Add limits keyed on the targeted username and on overall failure rates, with step-up and breached-password checks
-- C. Return different errors for "unknown user" and "wrong password" so customers understand
-- D. Block all foreign IP addresses
+- B. Return different errors for "unknown user" and "wrong password" so customers understand
+- C. Block all foreign IP addresses
+- D. Add limits keyed on the targeted username and on overall failure rates, with step-up and breached-password checks
 
 <details><summary>Answer</summary>
 
-**B.** Keyed on the target, spreading the attack across addresses does not help. A still keys on a cheap resource; C creates an enumeration oracle; D blocks Najm's customers in the UAE and the EU. (🔴 Expert view.)
+**D.** Keyed on the target, spreading the attack across addresses does not help. A still keys on a cheap resource; B creates an enumeration oracle; C blocks Najm's customers in the UAE and the EU, and customers travelling abroad. (🔴 Expert view.)
 
 </details>
 
@@ -500,14 +501,14 @@ Hands-on work runs only against code you wrote, a local lab, or deliberately vul
 
 **5. A few Najm Assist accounts paste huge documents into the chat all day, and the model bill jumps. Which OWASP item applies, and which controls fit?**
 
-- A. LLM01 Prompt Injection; write a stronger system prompt
-- B. LLM10 Unbounded Consumption; cap input size, output tokens and tool calls per turn, set per-customer daily token budgets, and alert on spend
+- A. LLM10 Unbounded Consumption; cap input size, output tokens and tool calls per turn, set per-customer daily token budgets, and alert on spend
+- B. LLM01 Prompt Injection; write a stronger system prompt
 - C. API9 Improper Inventory Management; document the endpoint
 - D. LLM09 Misinformation; add a disclaimer
 
 <details><summary>Answer</summary>
 
-**B.** Uncontrolled consumption of a paid resource is LLM10. A addresses a different risk, and a prompt cannot enforce a budget. (🟡 Going deeper.)
+**A.** Uncontrolled consumption of a paid resource is LLM10. B addresses a different risk, and a prompt cannot enforce a budget. (🟡 Going deeper.)
 
 </details>
 
@@ -556,7 +557,7 @@ Noura's rule for the mobile team: "Assume the attacker has the app, a decompiler
 | Client-side checks: limits, validation, flags | User experience only | Can be patched, hooked or bypassed via the API |
 | Values the app sends, such as "rooted: false" | Claims, not facts | A modified app or a script can forge them |
 | OS sandbox on an updated, unmodified phone | Mostly | Breaks on rooted or jailbroken devices |
-| Keys in secure hardware | Cannot be extracted | Malware may still make the app *use* them |
+| Keys in secure hardware | Designed not to be extractable | Malware may still make the app *use* them |
 | Attestation verdict verified by your server | Strong signal | Not universal, can be wrong, must be fresh |
 | TLS to your API | Against network attackers | Not against the device's owner |
 
@@ -581,7 +582,7 @@ await fetch("https://api.najm.example/v2/assist/messages", {
 
 A key that has shipped is compromised: rotate it (5.2). Keys that must live in the app, such as some maps keys, should be restricted by the provider to your app and treated as public.
 
-**Store user tokens in secure storage.** Plain key-value storage (Android SharedPreferences, iOS UserDefaults, React Native's AsyncStorage) is not encrypted and may end up in backups. Use the platform's secure store, here through Expo's SecureStore:
+**Store user tokens in secure storage.** Plain key-value storage (Android SharedPreferences, iOS UserDefaults, React Native's AsyncStorage) is not encrypted by the app, is readable on a rooted or jailbroken device and may end up in backups. Use the platform's secure store, here through Expo's SecureStore:
 
 ```ts
 // VULNERABLE: plain, unencrypted storage
@@ -610,7 +611,7 @@ Keep sensitive data out of logs, crash reports and analytics, and keep tokens sh
 
 **WebViews.** A web view that loads remote content with a JavaScript bridge into native code lets any script on that page call your native functions. Load only your own origins and disable file access and unneeded bridges.
 
-**Data leaks on the device.** Common findings: tokens or account numbers in logs; sensitive screens in screenshots or app-switcher previews (both platforms let apps hide them); the clipboard; backups; balances in lock-screen notifications; and third-party SDKs collecting more than you realise (5.3).
+**Data leaks on the device.** Common findings: tokens or account numbers in logs; sensitive screens in screenshots or app-switcher previews (Android apps can block both; iOS apps can hide the preview and detect screenshots and recording); the clipboard; backups; balances in lock-screen notifications; and third-party SDKs collecting more than you realise (5.3).
 
 **Biometrics, done properly.** A weak pattern shows a fingerprint or face prompt and, if the OS says "success", opens the accounts. On a compromised device that yes/no can be hooked, and the server learns nothing. The strong pattern binds biometrics to cryptography:
 
@@ -643,7 +644,7 @@ flowchart TD
 
 ### 🔴 Expert view
 
-**Attestation: what it proves.** Apple's **App Attest** (part of the DeviceCheck framework) and Google's **Play Integrity API** (which replaced the older SafetyNet Attestation API) let your server ask the platform vendor to vouch that a request comes from your genuine app on a device that passes the vendor's integrity checks. The server issues a fresh **nonce** (a one-time random value), the app obtains a signed verdict bound to it, and the **server** verifies it and decides. Limits: verdicts can be unavailable (older devices, or Android phones without Google Play services), determined attackers work to defeat them, and there are quotas and privacy questions. Treat the result as a risk signal next to the Smart Alerts score: fewer features or step-up for failing devices, not silent trust or a blunt block.
+**Attestation: what it proves.** Apple's **App Attest** (part of the DeviceCheck framework) and Google's **Play Integrity API** (which replaced the older SafetyNet Attestation API) let the platform vendor vouch, in a signed statement your server can verify, that a request comes from your genuine app on a device that passes the vendor's integrity checks. The server issues a fresh **nonce** (a one-time random value), the app obtains a signed verdict bound to it, and the **server** verifies it and decides. Limits: verdicts can be unavailable (older devices, or Android phones without Google Play services), determined attackers work to defeat them, and there are quotas and privacy questions. Treat the result as a risk signal next to the Smart Alerts score: fewer features or step-up for failing devices, not silent trust or a blunt block.
 
 **Resilience controls raise cost, nothing more.** Obfuscation, root and jailbreak detection, anti-debugging, tamper checks and commercial **RASP** (runtime application self-protection) products slow a reverse engineer down. MASVS keeps them in a separate resilience category on top of the core controls. If removing them would expose a vulnerability, the vulnerability is the problem.
 
