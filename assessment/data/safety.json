@@ -1,0 +1,135 @@
+{
+  "area": "safety",
+  "questions": [
+    {
+      "id": "safety-1",
+      "level": 1,
+      "lesson": "8.1",
+      "q": {
+        "en": "Your agent's commit deleted 600+ files: it branched from a stale base and ran `git add .`. Review caught it this time. What does the course say actually prevents a repeat?",
+        "ar": "حذف إيداعٌ (commit) أجراه وكيلك (agent) أكثر من 600 ملف: تفرّع من أساس قديم (stale base) ثم نفّذ `git add .` — وقد كشفته المراجعة (review) هذه المرة. ما الذي يمنع التكرار فعلًا بحسب المقرر؟"
+      },
+      "o": {
+        "en": [
+          "A line in the prompt telling the agent to double-check before it commits",
+          "A pre-commit hook that blocks commits over ~30 files, with a logged override",
+          "Reading every staged diff line by line yourself before any commit lands",
+          "Switching the agent to a slower, more careful model so it rushes fewer commits"
+        ],
+        "ar": [
+          "سطر في الأمر (prompt) يطلب من الوكيل أن يتحقق مرتين قبل أن يودِع أي تغيير",
+          "خطّاف ما قبل الإيداع (pre-commit hook) يمنع ما فوق 30 ملفًا، مع تجاوز مُسجَّل",
+          "أن تقرأ بنفسك كل فرق مُجهَّز (staged diff) سطرًا سطرًا قبل أي إيداع",
+          "تحويل الوكيل إلى نموذج (model) أبطأ كي يقلّ تسرّعه في الإيداعات (commits)"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "\"Be careful\" is a wish, not a control: at agent speed only mechanical rules survive, and a hook runs whether anyone remembers it or not. A line in the prompt is English in a chat, which the agent can skip.",
+        "ar": "عبارة «كن حذرًا» أمنية (wish) لا ضابط (control): بسرعة الوكيل لا تصمد إلا القواعد الآلية (mechanical rules)، والخطّاف (hook) يعمل سواء تذكّره أحد أم لا. أما سطر في الأمر (prompt) فنصٌّ في محادثة قد يتخطّاه الوكيل."
+      }
+    },
+    {
+      "id": "safety-2",
+      "level": 2,
+      "lesson": "8.2",
+      "q": {
+        "en": "Relay has ~1,990 green tests, and most server tests mock the database. Last week a bad migration broke production while every test passed. Your agent suggests adding 300 more tests. What should you do instead?",
+        "ar": "لدى Relay نحو 1990 اختبارًا ناجحًا (green tests)، ومعظم اختبارات الخادم (server tests) تحاكي قاعدة البيانات (mock the database). وفي الأسبوع الماضي كسر ترحيلٌ (migration) سيئ بيئة الإنتاج (production) بينما نجحت كل الاختبارات. يقترح وكيلك (agent) إضافة 300 اختبار آخر. ماذا تفعل بدلًا من ذلك؟"
+      },
+      "o": {
+        "en": [
+          "Raise the coverage target to 95% and have the agent fill in the gaps",
+          "Add mocks for the migration that check its queries run in the right order",
+          "Run the full suite nightly as well, so failures surface sooner",
+          "Run the riskiest data-layer suites against a real in-memory database"
+        ],
+        "ar": [
+          "ارفع هدف التغطية (coverage target) إلى 95% واطلب من الوكيل (agent) سدّ الفجوات",
+          "أضف محاكاة (mocks) للترحيل تتحقق من أن استعلاماته تُنفَّذ بالترتيب الصحيح",
+          "شغّل الحزمة (suite) كاملة ليلًا أيضًا كي تظهر الإخفاقات (failures) أبكر",
+          "شغّل أخطر حزم طبقة البيانات (data layer) على قاعدة بيانات حقيقية في الذاكرة"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "A test that mocks the layer it's about proves only that the mock works; data bugs like a bad migration need a real engine. More mocked tests, or mocks that check call order, add vanity coverage and brittleness, not truth.",
+        "ar": "الاختبار الذي يحاكي (mocks) الطبقة التي يختبرها لا يثبت إلا أن المحاكاة تعمل؛ وأخطاء البيانات كالترحيل (migration) السيئ تحتاج محرّكًا حقيقيًا (real engine). وإضافة اختبارات محاكاة أكثر، أو محاكاة تفحص ترتيب الاستدعاءات، تضيف تغطية زينة (vanity coverage) وهشاشة (brittleness) لا حقيقة."
+      }
+    },
+    {
+      "id": "safety-3",
+      "level": 2,
+      "lesson": "8.3",
+      "q": {
+        "en": "Relay's CI preflight fails on every push because its lockfile check assumes the wrong package manager. The team pushes through the red. Your agent offers to mark it `continue-on-error`. What's the right move?",
+        "ar": "يفشل الفحص التمهيدي (preflight) في التكامل المستمر (CI) لدى Relay مع كل دفع (push)، لأن فحص ملف القفل (lockfile) فيه يفترض مدير حزم (package manager) خاطئًا. والفريق يدفع متجاهلًا الأحمر. يعرض وكيلك (agent) وسمه بـ `continue-on-error`. ما الخطوة الصحيحة؟"
+      },
+      "o": {
+        "en": [
+          "Fix the check or delete it today, then watch it both fail and pass",
+          "Accept the agent's offer so the check still runs but no longer blocks",
+          "Leave it as is, since everyone already knows it's a false alarm",
+          "Add a second check whose job is to flag when the first one is wrong"
+        ],
+        "ar": [
+          "أصلِح الفحص أو احذفه اليوم، ثم شاهده يفشل (fail) وينجح (pass)",
+          "اقبل عرض الوكيل (agent) كي يبقى الفحص يعمل لكنه لا يمنع (block) شيئًا",
+          "اتركه كما هو، فالجميع يعرف أصلًا أنه إنذار كاذب (false alarm)",
+          "أضف فحصًا ثانيًا مهمته أن ينبّه حين يكون الفحص الأول مخطئًا"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "A check everyone ignores trains the \"push through the red\" reflex that lets the one real failure through, so the only options are fix it or delete it. `continue-on-error` turns it into a check that can never fail: decoration, not a gate.",
+        "ar": "الفحص الذي يتجاهله الجميع يدرّبهم على عادة «ادفع رغم الأحمر» التي تُمرّر الإخفاق الحقيقي الوحيد، فلا خيار إلا إصلاحه أو حذفه. ووسمه بـ `continue-on-error` يجعله فحصًا لا يستطيع أن يفشل: زينة لا بوّابة (gate)."
+      }
+    },
+    {
+      "id": "safety-4",
+      "level": 3,
+      "lesson": "8.4",
+      "q": {
+        "en": "Your agent fixes a missing-function error by installing a package you've never heard of. The build is green and the lockfile now records it. How should you judge this?",
+        "ar": "يصلح وكيلك (agent) خطأ دالّة مفقودة (missing function) بتثبيت حزمة (package) لم تسمع بها من قبل. البناء (build) ناجح، وملف القفل (lockfile) صار يسجّلها. كيف تحكم على ذلك؟"
+      },
+      "o": {
+        "en": [
+          "Fine: the lockfile pins its exact version, so the supply chain is covered",
+          "Fine, as long as the audit gate reports no known CVEs for the package",
+          "Stop: get a one-line why, check downloads, last release and exact name",
+          "Delete the lockfile so later installs always pull the newest patched version"
+        ],
+        "ar": [
+          "لا بأس: ملف القفل (lockfile) يثبّت نسختها بالضبط، فسلسلة التوريد (supply chain) مؤمَّنة",
+          "لا بأس، ما دامت بوّابة التدقيق (audit gate) لا تُبلغ عن ثغرات معروفة (CVEs) فيها",
+          "توقّف: اطلب سببًا من سطر، وافحص التنزيلات وآخر إصدار ودقة الاسم",
+          "احذف ملف القفل (lockfile) كي تجلب التثبيتات اللاحقة دائمًا أحدث نسخة مُرقَّعة"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Agents install whatever makes the error go away; every new package needs a one-line justification, a 60-second sanity check (popular, maintained, not a typosquat, not a duplicate) and your explicit yes. A lockfile and an audit gate guard against drift and known CVEs, not against a typosquat or an abandoned package nobody chose.",
+        "ar": "الوكلاء (agents) يثبّتون أي شيء يُخفي الخطأ؛ وكل حزمة جديدة تحتاج تبريرًا من سطر، وفحص سلامة (sanity check) من ستين ثانية (منتشرة، مُصانة، ليست تصيّدًا إملائيًا (typosquat)، وليست مكرّرة) وموافقتك الصريحة. أما ملف القفل وبوّابة التدقيق فيحميان من الانجراف (drift) ومن الثغرات المعروفة، لا من حزمة تصيّد أو حزمة مهجورة لم يخترها أحد."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "safety-e1",
+      "lesson": "8.1",
+      "text": {
+        "en": "I have watched my pre-commit hook block a 600-file deletion I staged on purpose, and then seen a normal small commit pass through it",
+        "ar": "لقد شاهدت خطّاف ما قبل الإيداع (pre-commit hook) لديّ يمنع حذف 600 ملف جهّزته (staged) عمدًا، ثم رأيت إيداعًا (commit) صغيرًا عاديًا يمرّ عبره"
+      }
+    },
+    {
+      "id": "safety-e2",
+      "lesson": "8.3",
+      "text": {
+        "en": "I have planted the exact problem a CI check targets and watched it go red, then fixed it and watched the same check go green",
+        "ar": "لقد زرعت المشكلة نفسها التي يستهدفها فحصٌ في التكامل المستمر (CI check) وشاهدته يتحوّل إلى الأحمر، ثم أصلحتها وشاهدت الفحص نفسه يتحوّل إلى الأخضر"
+      }
+    }
+  ]
+}

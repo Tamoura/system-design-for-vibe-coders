@@ -1,0 +1,135 @@
+{
+  "area": "observability",
+  "questions": [
+    {
+      "id": "observability-1",
+      "level": 1,
+      "lesson": "7.6",
+      "q": {
+        "en": "Your agent sets up Relay's uptime check as a cron job on the same server as the app, \"to keep things simple.\" What is wrong with this?",
+        "ar": "يُعِدّ وكيلك (agent) فحص التوفّر (uptime check) لتطبيق Relay مهمةً مجدولة (cron job) على الخادم (server) نفسه الذي يشغّل التطبيق، بحجّة التبسيط. ما الخطأ في هذا؟"
+      },
+      "o": {
+        "en": [
+          "A cron job is flaky; it should be a long-running process on that server instead",
+          "It should ping an internal health endpoint instead of the real public URL",
+          "When that server dies, the check dies with it, so nothing tells you it's down",
+          "Checking every minute from the app's own host will overload the app itself"
+        ],
+        "ar": [
+          "المهمة المجدولة (cron job) غير موثوقة؛ الأفضل تحويلها إلى عملية دائمة التشغيل (long-running process) على ذلك الخادم",
+          "يجب أن يستدعي نقطة فحص صحة داخلية (internal health endpoint) بدل الرابط العام الحقيقي (public URL)",
+          "حين يتوقف ذلك الخادم (server) يتوقف الفحص معه، فلا شيء يخبرك بأن الموقع معطّل",
+          "الفحص كل دقيقة من مضيف (host) التطبيق نفسه سيُثقل التطبيق ويبطئه"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Monitoring must never share fate with what it monitors: a check on your own server goes dark exactly when you need it (Roblox, the S3 status page). Turning it into a long-running process on that same server changes nothing about the shared fate.",
+        "ar": "المراقبة (monitoring) يجب ألّا تشارك مصير (share fate) ما تراقبه: فحصٌ على خادمك ينطفئ تمامًا حين تحتاجه (كما في Roblox وصفحة حالة S3). وتحويله إلى عملية دائمة التشغيل (long-running process) على الخادم نفسه لا يغيّر شيئًا في هذا المصير المشترك."
+      }
+    },
+    {
+      "id": "observability-2",
+      "level": 2,
+      "lesson": "7.2",
+      "q": {
+        "en": "The biggest issue in Relay's error tracker has 1,200 events. You open it: it's a \"feed cache refreshed OK\" message logged at Error. What should you do?",
+        "ar": "أكبر مشكلة (issue) في متتبّع الأخطاء (error tracker) لدى Relay فيها 1200 حدث (event). تفتحها فتجدها رسالة «تم تحديث ذاكرة الخلاصة المؤقتة بنجاح» (feed cache refreshed OK) مسجّلة بمستوى خطأ (Error). ماذا تفعل؟"
+      },
+      "o": {
+        "en": [
+          "Downgrade it to Info, since Error should mean a human needs to look",
+          "Raise the alert threshold so only groups over 2,000 events notify you",
+          "Keep it at Error, because logging more as errors means missing less",
+          "Mute tracker notifications and skim the dashboard once a week instead"
+        ],
+        "ar": [
+          "اخفض مستواها إلى معلومات (Info)، فمستوى الخطأ (Error) يعني أن على إنسان أن ينظر",
+          "ارفع عتبة التنبيه (alert threshold) كي لا تُنبَّه إلا للمجموعات التي تتجاوز 2000 حدث",
+          "أبقِها بمستوى الخطأ (Error)، فكلما سجّلت أخطاء أكثر قلّ ما يفوتك",
+          "أسكت إشعارات المتتبّع (notifications) وتصفّح اللوحة (dashboard) مرة في الأسبوع بدلًا منها"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Severity is a promise about actionability: a healthy state logged at Error raises the noise floor and buries real crashes. Raising the threshold hides the noise and the real errors along with it.",
+        "ar": "مستوى الخطورة (severity) وعدٌ بقابلية التصرف (actionability): حالة سليمة مسجّلة كخطأ (Error) ترفع أرضية الضوضاء (noise floor) وتدفن الأعطال الحقيقية. أما رفع العتبة (threshold) فيُخفي الضوضاء ويُخفي معها الأخطاء الحقيقية."
+      }
+    },
+    {
+      "id": "observability-3",
+      "level": 2,
+      "lesson": "7.4",
+      "q": {
+        "en": "Users report getting Relay's weekly digest email twice. The scheduler sometimes fires twice when two servers overlap during a deploy. Which fix stops the duplicate run?",
+        "ar": "يبلّغ المستخدمون (users) أن رسالة الملخّص الأسبوعي (weekly digest) من Relay تصلهم مرتين. فالمُجدوِل (scheduler) ينطلق أحيانًا مرتين حين يتداخل خادمان (servers) أثناء النشر (deploy). أيّ إصلاح يمنع التشغيل المكرّر؟"
+      },
+      "o": {
+        "en": [
+          "Add automatic retries so any run that fails partway is sent again",
+          "Before sending, read the sent-list and skip anyone already on it",
+          "Move the job to a faster server so each run ends before the next starts",
+          "Have each run atomically claim a lock on job name + slot (SET NX EX)"
+        ],
+        "ar": [
+          "أضف إعادة محاولة تلقائية (retry) كي يُعاد إرسال أي تشغيل (run) يفشل في منتصفه",
+          "قبل الإرسال، اقرأ قائمة من أُرسل إليهم وتخطَّ كل من فيها",
+          "انقل المهمة (job) إلى خادم (server) أسرع كي ينتهي كل تشغيل قبل بدء التالي",
+          "اجعل كل تشغيل يحجز قفلًا ذريًّا (atomic lock) على المهمة والفترة (SET NX EX)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "An atomic claim (SET NX EX) lets exactly one worker win the slot while the other stands down. Reading a sent-list and then sending is a non-atomic check: two overlapping runs can both read it before either writes, the same race as the newsletter sender.",
+        "ar": "الحجز الذرّي (atomic claim) عبر SET NX EX يعني أن عاملًا (worker) واحدًا فقط يفوز بالفترة (slot) وينسحب الآخر. أما قراءة القائمة ثم الإرسال فتحقّقٌ غير ذرّي (non-atomic): قد يقرأ تشغيلان متداخلان القائمة قبل أن يكتب أيٌّ منهما، وهو سباق (race) مُرسِل النشرة البريدية (newsletter) بعينه."
+      }
+    },
+    {
+      "id": "observability-4",
+      "level": 3,
+      "lesson": "7.1",
+      "q": {
+        "en": "You change Relay's \"returning users\" from login count to users with 2+ distinct active days. The number drops 35%. Your cofounder wants the old metric back for the investor update. What's the right call?",
+        "ar": "غيّرت تعريف «المستخدمين العائدين (returning users)» في Relay من عدد مرات الدخول (login count) إلى من لهم يومان نشطان متمايزان (distinct active days) أو أكثر، فانخفض الرقم 35%. ويريد شريكك المؤسس (cofounder) استعادة المقياس (metric) القديم من أجل تقرير المستثمرين (investor update). ما القرار الصحيح؟"
+      },
+      "o": {
+        "en": [
+          "Show both numbers side by side and let each reader pick the one they trust",
+          "Keep the new definition, print it next to the number, and note the change",
+          "Revert for now, since a 35% drop means the new query is probably broken",
+          "Add logins and active days together so the total lands near the old one"
+        ],
+        "ar": [
+          "اعرض الرقمين جنبًا إلى جنب ودع كل قارئ يختار ما يثق به",
+          "أبقِ التعريف (definition) الجديد واطبعه بجوار الرقم ودوّن التغيير",
+          "تراجع مؤقتًا، فانخفاض 35% يعني غالبًا أن الاستعلام (query) الجديد معطوب",
+          "اجمع مرات الدخول (logins) والأيام النشطة معًا كي يقترب المجموع من القديم"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "The old number counted the system's convenient event, not real use, so the drop is the lie leaving, not a regression. Printing the definition and dating the change stops anyone reading it as a real decline; reverting brings back the flattering, false number.",
+        "ar": "الرقم القديم كان يعدّ حدث النظام المريح (convenient event) لا الاستعمال الحقيقي، فالانخفاض خروجُ الكذبة لا تراجعٌ (regression). وطباعة التعريف (definition) وتأريخ التغيير يمنعان أحدًا من قراءته تراجعًا حقيقيًا؛ أما التراجع عنه فيُعيد الرقم المتملّق الكاذب."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "observability-e1",
+      "lesson": "7.6",
+      "text": {
+        "en": "I have broken staging on purpose and watched the alert from an uptime check running on infrastructure I don't own reach my phone, then seen the recovery notice",
+        "ar": "لقد عطّلت بيئة التجهيز (staging) عمدًا ورأيت تنبيه (alert) فحص التوفّر (uptime check) — العامل على بنية تحتية (infrastructure) لا أملكها — يصل إلى هاتفي، ثم رأيت إشعار التعافي (recovery notice)"
+      }
+    },
+    {
+      "id": "observability-e2",
+      "lesson": "7.3",
+      "text": {
+        "en": "I have logged zero-result searches, ranked the top empty queries, and fixed one that returned nothing before and returns real content now",
+        "ar": "لقد سجّلت عمليات البحث بلا نتائج (zero-result searches) ورتّبت أكثر الاستعلامات الفارغة (empty queries) تكرارًا، وأصلحت استعلامًا كان لا يعيد شيئًا وصار يعيد محتوى حقيقيًا"
+      }
+    }
+  ]
+}
