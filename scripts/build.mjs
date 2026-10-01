@@ -411,6 +411,9 @@ function appPage(C, langs) {
     ? '<span class="en-only">Map</span><span class="ar-only" lang="ar">الخريطة</span>'
     : esc(T[primary].map);
   const langBtn = bilingual ? '\n  <button class="lang-btn" id="langBtn" type="button">عربي</button>' : '';
+  const assessLink = bilingual
+    ? '<a class="en-only" href="assessment.html">Self-assessment</a><a class="ar-only" lang="ar" href="assessment.ar.html">التقييم الذاتي</a>'
+    : primary === 'ar' ? '<a href="assessment.ar.html">التقييم الذاتي</a>' : '<a href="assessment.html">Self-assessment</a>';
 
   const mapHead = bilingual
     ? `<h2 class="en-only">Course map</h2><h2 class="ar-only" lang="ar" dir="rtl">خريطة الدورة</h2>
@@ -426,7 +429,7 @@ function appPage(C, langs) {
   const body = `<header class="masthead"><div class="wrap">
   <a class="brand" href="#top">SD4VC</a>
   <div class="chips">${chips}</div>
-  <nav><a href="#map">${mapLabel}</a>${langBtn}</nav>
+  <nav><a href="#map">${mapLabel}</a>${assessLink}${langBtn}</nav>
 </div></header>
 <section class="hero" id="top"><div class="wrap">
 ${heroFor(C, langs)}
