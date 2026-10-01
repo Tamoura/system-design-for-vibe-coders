@@ -50,6 +50,9 @@ jobs:
       - name: Verify the system design self-assessment matches its items
         run: npm run assess:check
 
+      - name: Verify the security course output matches its markdown
+        run: npm run secai:check
+
       - name: Verify the agentic pages carry the site navigation
         run: node scripts/agentic-nav.mjs --check
 
@@ -65,7 +68,7 @@ jobs:
       - name: Assemble the site
         run: |
           # Course library: landing hub at root, each course in its own subpath.
-          mkdir -p _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm
+          mkdir -p _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai
           cp landing.html _site/index.html
           # The vibe course (bilingual pages + downloads) → /vibe/
           cp index.html index.en.html index.ar.html assessment.html assessment.ar.html _site/vibe/
@@ -82,7 +85,10 @@ jobs:
           # AI Product Management: Zero to Hero → /aipm/
           cp aipm/index.html aipm/course.html aipm/COURSE.md aipm/TOOLKIT.md \
              aipm/index.ar.html aipm/course.ar.html aipm/COURSE.ar.md aipm/TOOLKIT.ar.md _site/aipm/
-          ls -lh _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm
+          # Secure AI & Application Security: Zero to Hero → /secai/
+          cp secai/index.html secai/course.html secai/COURSE.md secai/TOOLKIT.md \
+             secai/index.ar.html secai/course.ar.html secai/COURSE.ar.md secai/TOOLKIT.ar.md _site/secai/
+          ls -lh _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai
 
       # Every link on the assembled site, internal and external. Report only: a dead third-party
       # page should be fixed in the lesson, not block the deploy. Results are in the run summary.
