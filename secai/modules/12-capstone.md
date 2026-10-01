@@ -1,3 +1,543 @@
+# Module 12 — Hero: capstone and practice exam
+
+*You have learned application and AI security one weakness, one control and one process at a time. This module puts them back together. In the capstone you secure Najm Assist, the assistant in Najm Bank's mobile app that is becoming an agent able to look up fees, freeze cards and open disputes. You take it from the first threat model to a full incident drill, reuse an artefact from every earlier module, and link them into one security case file that Hamad, the CISO, can sign. Then we turn to you: the roles that make up the security profession, how to choose certifications from bodies such as ISC2, ISACA, GIAC, OffSec and CompTIA without being ruled by them, and how to build a portfolio of evidence legally and ethically. The module closes with a 60-question practice exam across all eight phases.*
+
+> **Phases:** Plan through Govern — the whole security life cycle, end to end, on one system and then in one exam.
+
+---
+
+# 12.1 — Capstone: secure Najm Assist from threat model to incident drill
+*Level: 🔴 Advanced* · *Prerequisites: Modules 0–11* · *Phase: Plan, Design, Build, Test, Deploy, Operate, Respond, Govern*
+
+## ⚡ In 60 seconds
+- The capstone takes **Najm Assist** through all eight phases as it becomes an agent that looks up fees, freezes cards and opens disputes, reusing an artefact from every earlier module.
+- The output is a **security case file**: linked artefacts arguing, with evidence, that Assist is secure enough, and saying what happens when it is not.
+- The spine is **traceability**: every threat has a control, every control has a test that can fail, and every important control has a detection and a runbook.
+- Prompt injection has no complete fix at the time of writing (2026), so the case rests on architecture: identity bound by code, least-privilege tools, confirmation for writes, strict output handling and no open path out.
+- Decision cue: for each new tool, ask "if an attacker controlled the model's output, what is the worst this tool could do?"
+- Biggest trap: a case file never exercised. The incident drill tests the whole chain.
+
+## 🧭 Why it matters
+Rania (Head of AI Products) confirms that next quarter Najm Assist gets its first tools: fee lookup, freezing a lost card, and opening a dispute on an unrecognised transaction. Hamad (CISO) tells Noura: "Show me on one page why this is safe enough, who owns each risk, and what we do on the day it goes wrong. Then prove the last part."
+
+Ali offers a vendor's 120-line control checklist. Noura asks which threat line 47 answers; Ali does not know. "A checklist tells me what someone else worried about. I need our threats, our controls, tests that prove them, and a drill."
+
+Public cases show the gaps. In February 2023, users got Bing Chat to reveal its hidden instructions through prompt injection. In December 2023, a Chevrolet dealer's chatbot was manipulated into "agreeing" to sell a car for one dollar. In *Moffatt v. Air Canada* (2024), a tribunal held the airline responsible for what its chatbot said. Greshake and colleagues (2023) showed that instructions hidden in content an assistant reads can steer it. Each was a design decision nobody had traced to a threat.
+
+## 📐 How it works
+
+### 🟢 The essentials
+
+**The security case file.** A **security case** is a structured argument, backed by evidence, that a system is acceptably secure for a stated use, with the remaining risk named and owned. The idea comes from safety and assurance cases in engineering. Najm's version is a folder of linked artefacts under a one-page summary (🏛️ below). Three rules make it work:
+1. **Every threat ends in a decision**: a control with an owner, or a written risk acceptance with an expiry date.
+2. **Every control has a test that can fail.** "We told the model not to" is not a control, because no test can prove it holds.
+3. **Every control that matters in production has a detection and a runbook.**
+
+**Scope first.** At launch Assist answers fee questions from an approved corpus (retrieval), shows recent transactions (a read tool), freezes a card (a write, reversible in the app) and opens a dispute (a write that starts a regulated process). The transaction list includes text written by other people, such as the free-text reference on an incoming transfer. Unfreezing a card is deliberately **not** a tool: an account-takeover attacker wants the card unfrozen, so that stays in the app behind step-up authentication (3.1). Saying what the agent cannot do is part of the design.
+
+**The eight phases.** Each reuses earlier work. All numbers in this lesson are illustrative.
+1. **Plan.** Assets, attackers (including anyone who can put text where Assist reads it) and risk appetite (0.1, 0.2, 1.3).
+2. **Design.** A data-flow diagram with trust boundaries and **STRIDE** (1.1); AI risks mapped to the **OWASP Top 10 for LLM Applications** (2025 version) and **MITRE ATLAS** (8.1); tool design (1.2, 9.2).
+3. **Build.** Authorisation in code, input validation, secrets, redaction, output handling, and review of AI-written code (3.3, 4.1, 5.2, 5.3, 9.1, 6.3).
+4. **Test.** SAST, SCA and DAST gates (6.1); authorisation tests on every tool; an authorised red team (8.2, 9.4).
+5. **Deploy.** Signing and an SBOM, least-privilege identity, hardened workloads, restricted egress and a flag per tool (6.2, 7.1–7.3).
+6. **Operate.** Detection rules on Assist's logs (10.1).
+7. **Respond.** Runbook, drill and disclosure route (10.2, 10.3).
+8. **Govern.** Framework mapping, regulatory duties and metrics (11.1–11.3). Hamad signs the residual risk; Layla (Head of AI Governance) signs the AI risk assessment.
+
+### 🟡 Going deeper
+
+**The data flow.** Every arrow that crosses a boundary is a place to ask the six STRIDE questions: spoofing, tampering, repudiation, information disclosure, denial of service and elevation of privilege.
+
+```mermaid
+flowchart LR
+    subgraph DEV["Customer device: untrusted"]
+        APP["Najm Mobile app"]
+    end
+    subgraph BANK["Bank cloud: Assist zone"]
+        GW["API gateway"]
+        ORC["Assist orchestrator"]
+        OUT["Output handler"]
+        TG["Tool gateway: identity, policy, confirmation"]
+        LOG["Security logs"]
+    end
+    subgraph PROV["Model provider"]
+        LLM["Hosted LLM"]
+    end
+    subgraph CORE["Core banking"]
+        CARDS["Card and dispute services"]
+        TXN["Transactions: text written by others"]
+    end
+    APP --> GW --> ORC
+    ORC -->|"prompt"| LLM
+    LLM -->|"reply: untrusted"| ORC
+    ORC -->|"proposed tool call"| TG
+    TG --> CARDS
+    TG --> TXN
+    ORC --> OUT --> GW
+    TG --> LOG
+```
+
+Three facts drive the design. The model sits outside the bank's boundary, so Sara (the DPO) approves what may be sent to it. The model reads **untrusted content** from two directions: the customer's message and transaction text written by others. And its output reaches both the screen and the tool gateway, so it is untrusted input on both paths.
+
+**Identity is bound by code, not by the model.** Ali's first draft got this wrong:
+
+```python
+# Vulnerable: the model decides whose card to freeze
+def freeze_card(args):
+    return cards.freeze(customer_id=args["customer_id"], card_id=args["card_id"])
+
+# Fixed: identity comes from the session; the model can only propose
+def freeze_card(args, session):
+    card = cards.get(args["card_id"])
+    if card is None or card.owner_id != session.customer_id:
+        raise PermissionDenied("card not owned by caller")  # logged for detection
+    return pending_actions.create(
+        session=session, action="freeze_card", card_id=card.id,
+        summary=f"Freeze card ending {card.last4}?",  # written by code, not the model
+    )  # runs only after the customer taps Confirm in the app
+```
+
+In the vulnerable version, an injection that changes `customer_id` becomes broken object-level authorisation (API1 in the OWASP API Security Top 10, 4.1), with the model as a **confused deputy**: a component with authority tricked into using it for someone else. In the fixed version, a hijacked model can at worst propose freezing the customer's own card, confirmed on a screen the model did not write.
+
+**Break the lethal trifecta.** Simon Willison (2025) named the **lethal trifecta**: a system with access to private data, exposure to untrusted content and a way to communicate externally can be steered into sending that data to an attacker. Assist has the first two by design, so the third is removed: the orchestrator cannot reach the internet, the output handler renders plain text with links only to allowlisted bank domains and no remote images, and no tool sends messages outside the bank. For every proposed tool, ask whether it adds the missing leg.
+
+**Tests that can fail, with honest bars.** Each control becomes a check: cross-customer ID tests on every build (100% denied); a trajectory check that no write runs without a confirmed pending action (zero exceptions); outputs seeded with HTML, markdown images and off-domain links (nothing renders); and Mariam's injected transfer references. The bank cannot promise injected text will never mislead the model, so that rate is tracked, not required to be zero. It can promise, and test, that misleading the model never moves money or changes account state on its own.
+
+**Detect what the controls see.** Each deterministic control also emits a signal: `PermissionDenied` spikes, declined confirmations, output-handler blocks. Logs carry conversation, pseudonymous customer, tool, decision, and model and prompt versions, never raw card numbers (5.3).
+
+### 🔴 Expert view
+
+**The incident drill.** A **tabletop exercise** (described in NIST SP 800-84) is a discussion-based drill: the team works through a scenario delivered in timed **injects** (new information) and says what it would do, without touching production. Jassim adds one live action: flipping the dispute tool's kill switch in staging, timed. He builds the scenario from a red-team finding Hamad accepted as residual risk, so the drill probes where the case file admits weakness.
+
+| Time | Inject | Question for the room |
+|---|---|---|
+| T+0 | Declined dispute confirmations spike; all share one incoming-transfer reference addressed to the assistant | Incident? Who leads? |
+| T+20 min | Confirmation blocked every dispute; no money moved | Contain what, exactly? |
+| T+40 min | A customer posts that Assist gave a "security line" number that is not the bank's | What do we tell customers? |
+| T+2 h | Sara asks who saw it and what data was in context | Can the logs answer? Do notification clocks apply? |
+| T+3 h | Rania asks to keep Assist fully on at peak time | Who decides, on what evidence? |
+
+What good looks like follows 10.2; NIST SP 800-61 Rev. 3 (2025) frames the same work around the CSF 2.0 functions.
+- **Contain narrowly.** Turn off the transaction-history and dispute tools by flag; keep fee answers running. Ask fraud to act on the sending account. Preserve logs. Do not edit the system prompt in production: it is not a control, and it changes the evidence.
+- **Scope from logs.** Find every conversation where that reference entered the context, testing the logging design from 10.1.
+- **Decide on notification with the DPO.** For EU customers' personal data, GDPR Art. 33 expects notice to the supervisory authority within 72 hours where feasible; Qatar's PDPPL (Law No. 13 of 2016), QCB expectations and, where they apply, EU rules such as DORA are assessed in parallel. Sara and Legal decide; security supplies facts (11.2).
+- **Fix and recover.** Mark transaction text clearly as data in the prompt; check phone numbers in output against the bank's published numbers, as links already are. Bring the tools back behind a canary.
+- **Learn.** Add the attack to the regression set and a phone-number detection; update the threat model.
+
+The main finding is typical: output handling covered links but not phone numbers, because controls often cover only the channel someone thought of. Flipping the switch took minutes; deciding to flip it took longer.
+
+**Residual risk is a signed decision.** Hamad's acceptance reads: "Injected content may cause Assist to show misleading text. It cannot change account state without customer confirmation, cannot reach external networks, and is monitored. Review in six months or on any new tool."
+
+**Judgement calls between artefacts.**
+- *A soft failure.* In 3% of indirect-injection attempts, Assist proposes an unrequested dispute; confirmation stops all of them. Ship, with a regression test, a detection and a target to cut the rate. If one attempt ever runs an action unconfirmed, launch stops.
+- *"Unfreeze" next.* It helps an account-takeover attacker more than the customer; it stays behind step-up authentication.
+- *A new model version.* Treat it as a release: re-run the red-team regression and golden sets first (6.1, 9.4).
+
+## 🧰 The toolkit
+| Control, standard or tool | What it is and does | When to reach for it |
+|---|---|---|
+| **Security case file** | Linked artefacts arguing, with evidence, that a system is secure enough; residual risk signed | High-stakes launches; audits; onboarding |
+| **Traceability matrix** | One row per threat: control, test, detection, owner | Finding controls without threats and threats without tests |
+| **STRIDE** (Microsoft) | Six threat categories asked of each element and boundary | Design, and whenever a tool or data flow is added |
+| **OWASP Top 10 for LLM Applications** (2025) | Checklist of LLM-specific risks | Mapping AI threats; scoping the red team |
+| **MITRE ATLAS** | Knowledge base of adversary techniques against AI systems | Describing AI attack paths to the SOC |
+| **Least-privilege tools** | Tools that bind identity from the session, check ownership and confirm writes | Every agent tool, before it ships |
+| **Lethal trifecta** (Simon Willison, 2025) | Private data plus untrusted content plus external communication means exfiltration risk | Reviewing any new agent tool or data source |
+| **Tabletop exercise** (NIST SP 800-84) | Discussion-based incident drill with timed injects | Before launch, then yearly and after major change |
+
+## 🏛️ In practice at Najm Bank
+**Najm Assist security case file: summary page** (v1.0; owner Noura; approved by Hamad and Layla).
+
+| Phase | Artefact (lesson) | Decision recorded | Gate |
+|---|---|---|---|
+| Plan | Assets, attackers, appetite (0.1, 1.3) | Money movement and cross-customer data are critical | Signed by Hamad |
+| Design | Data-flow diagram, STRIDE, LLM Top 10, ATLAS (1.1, 8.1, 9.2) | No unfreeze; no external channel | Every boundary crossing has threats |
+| Build | Authorisation, secrets, redaction, output rules (3.3, 5.2, 5.3, 9.1) | Identity from session; plain-text output | No open high findings |
+| Test | Pipeline gates; red-team results (6.1, 9.4) | Soft failures accepted with detections | No unconfirmed action in any test |
+| Deploy | SBOM, IAM, egress, flags (6.2, 7.1–7.3) | Kill switch per tool | Switch tested in staging |
+| Operate | Detections, log schema (10.1) | Five detections live | Each tested by simulation |
+| Respond | Runbook, drill report (10.2, 10.3) | Narrow containment by flag | Findings owned and dated |
+| Govern | Mapping, obligations, risk acceptance (11.1–11.3) | Residual risk signed for six months | Re-review on any new tool |
+
+**Traceability matrix (excerpt).**
+
+| Threat | Mapping | Control | Test | Detection | Owner |
+|---|---|---|---|---|---|
+| Acts on another customer's card | LLM01, LLM06; API1 | Session-bound identity | Cross-customer tests in CI | `PermissionDenied` spike | Tariq |
+| Unrequested dispute | LLM01, LLM06 | Code-written confirmation | Trajectory check | Declined confirmations | Tariq |
+| Phishing link or fake number in output | LLM05 | Allowlist for links and numbers | Seeded-output tests | Handler blocks | Noura |
+| System prompt revealed | LLM07 | No secrets or authorisation logic in it | Red-team extraction | None: accepted as low | Noura |
+| Tariff corpus altered | LLM04 | Two approvals; versioned index | Integrity check per build | Unapproved-change alert | Dana |
+| Cost exhaustion | LLM10; API4 | Per-customer budgets | Load test | Cost and rate alarms | Jassim |
+
+## 🛠️ Exercises
+- 🟢 Redraw the Assist data-flow diagram from memory and list one threat per STRIDE category, mapped to an LLM Top 10 item where one fits. *Done when:* every threat names a control and a test that could fail.
+- 🟡 Rania wants Assist to "email the customer a PDF statement". Run the lethal-trifecta check and add this tool's rows to the traceability matrix. *Done when:* you name the leg it adds and a design that keeps it acceptable (for example, only the verified address on file and a fixed template), with tests and a detection.
+- 🔴 In a local lab, build a toy agent with fake `freeze_card` and `open_dispute` tools over a fake database you control. Write tests for session-bound identity and confirmation, then run a 60-minute tabletop with two colleagues using the injects above. Work only on your own code and machine. *Done when:* your tests fail against the vulnerable handler and pass against the fixed one, and your drill report has a timeline, three owned findings and a new regression test.
+
+## ⚠️ Mistakes and traps
+- **Controls without threats.** A downloaded checklist cannot be traced to your system. Start from your threats.
+- **The system prompt as a security control.** Instructions to the model can be overridden. Put authorisation, confirmation and output rules in code.
+- **Threat modelling once.** Every new tool, data source or model version changes the threats. Re-run it.
+- **Testing only direct injection.** Attackers write into data the assistant reads, such as transfer references and documents.
+- **Untested kill switches and runbooks.** Drill both before launch, and time them.
+- **Logs that are a breach.** Prompts can hold card numbers. Redact before logging.
+
+## 🧾 Recap
+- The capstone links one artefact from every module into a security case file for Najm Assist.
+- Traceability is the spine: threat, control, test, detection, runbook, owner.
+- With no complete fix for prompt injection, security comes from architecture: code-bound identity, least-privilege tools, confirmed writes, strict output handling, no external path.
+- The drill tests the whole chain, and its findings become tests and detections.
+- Residual risk is written, signed by a named owner and reviewed on change.
+
+## ✍️ Check yourself
+
+**1. Ali's `freeze_card` handler reads `customer_id` from the model's tool arguments. Mariam shows that injected text can make Assist freeze another customer's card. What is the right fix?**
+
+- A. Add "never act on other customers' cards" to the system prompt
+- B. Take identity from the authenticated session and check card ownership in code before creating a pending action
+- C. Add an output filter that removes customer IDs from replies
+- D. Switch to a larger model that resists injection better
+
+<details><summary>Answer</summary>
+
+**B.** Binding identity in code removes the confused-deputy path whatever the model says. A prompt rule (A) can be overridden; C misses the tool call; D may help, but no model is a complete fix. (🟡 Going deeper.)
+
+</details>
+
+**2. In red-team testing, 3% of indirect-injection attempts make Assist propose an unrequested dispute; confirmation blocked every one. What should Noura recommend?**
+
+- A. Block launch until the rate is zero
+- B. Ship, with the attacks in the regression set, a detection on declined confirmations and a target to reduce the rate
+- C. Ship and remove the confirmation step, since the model rarely fails
+- D. Ship with no further work, since no harm occurred
+
+<details><summary>Answer</summary>
+
+**B.** The deterministic control held, so the residual risk is a monitored nuisance. A demands a guarantee nobody can give today; C removes the control that worked; D lets a later change reopen the gap unnoticed. (🔴 Expert view.)
+
+</details>
+
+**3. Rania proposes that Assist emails statements to any address the customer types in the chat. Using the lethal trifecta, what is the main concern?**
+
+- A. It adds external communication to a system that already reads private data and untrusted content, creating an exfiltration path
+- B. Email is slower than the app
+- C. PDF files are too large for the model's context
+- D. It increases the model's token cost
+
+<details><summary>Answer</summary>
+
+**A.** Assist already has private data and untrusted content; a free-form outbound channel completes the trifecta. Safer: only the verified address on file, with a fixed template. B, C and D are not the security risk. (🟡 Going deeper.)
+
+</details>
+
+**4. During the drill, injected transfer references are making Assist show customers a fake phone number. No money has moved. What is the best first containment step?**
+
+- A. Shut down Najm Mobile entirely
+- B. Edit the system prompt in production to tell the model to ignore transfer references
+- C. Turn off the transaction-history and dispute tools by flag, keep fee answers running, ask fraud to act on the sending account, and preserve logs
+- D. Delete the affected conversations so customers cannot see them again
+
+<details><summary>Answer</summary>
+
+**C.** Narrow containment stops the harmful path, keeps the service and protects evidence. A is disproportionate; B is not a control and alters evidence; D destroys the logs Sara needs. (🔴 Expert view.)
+
+</details>
+
+**5. Which is the strongest evidence for Hamad that the "confirmation before any write" control works?**
+
+- A. A trajectory test in the pipeline and red-team set that fails if any write runs without a confirmed pending action, plus a detection on declined confirmations
+- B. A statement from the model vendor that the model follows tool-use instructions
+- C. A line in the system prompt requiring confirmation
+- D. A successful demo to the steering committee
+
+<details><summary>Answer</summary>
+
+**A.** The case file's rules: every control has a test that can fail, and important ones have a detection. B and C are intentions, not verified behaviour; a demo (D) shows one happy path. (🟢 The essentials.)
+
+</details>
+
+## 📚 References
+- OWASP GenAI Security Project, Top 10 for LLM Applications (2025) — https://genai.owasp.org
+- OWASP API Security Top 10 (2023) — https://owasp.org/API-Security/
+- MITRE ATLAS — https://atlas.mitre.org
+- Greshake, K. et al. (2023), "Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection" — https://arxiv.org/abs/2302.12173
+- Willison, S. (2025), "The lethal trifecta for AI agents" — https://simonwillison.net
+- NIST SP 800-61 Rev. 3 (2025), Incident Response Recommendations and Considerations for Cybersecurity Risk Management — https://csrc.nist.gov/pubs/sp/800/61/r3/final
+- NIST SP 800-84 (2006), Guide to Test, Training, and Exercise Programs for IT Plans and Capabilities — https://csrc.nist.gov/pubs/sp/800/84/final
+- GDPR, Regulation (EU) 2016/679 — https://eur-lex.europa.eu/eli/reg/2016/679/oj
+
+---
+
+# 12.2 — The security career: roles, certifications and portfolio
+*Level: 🔴 Advanced* · *Prerequisites: 12.1* · *Phase: Govern*
+
+## ⚡ In 60 seconds
+- "Security" is many jobs: application, AI and cloud security, detection and response, offensive testing, and governance, risk and compliance (GRC). Pick a target role before you pick a course or a certificate.
+- Certifications are a signal, not proof. Well-known bodies include **ISC2**, **ISACA**, **GIAC**, **OffSec** and **CompTIA**, each with a different focus. Details change, so check the body's own website.
+- A **portfolio of evidence** beats a list of acronyms: threat models, lab write-ups, detection rules, open-source fixes and talks, all on systems you own or are authorised to test.
+- Testing without written permission can break computer-misuse laws and end a career, whatever the intent.
+- Decision cue: choose your next certification by the role you want and what employers in your market ask for, not by popularity on forums.
+- Biggest trap: collecting certificates while producing nothing anyone can read.
+
+## 🧭 Why it matters
+A year after joining, Ali asks Noura: "Should I do OSCP or CISSP next? Everyone online says something different." Noura asks what job he wants in three years. He does not know. Half his feed is about AI red-teaming, the other half about cloud.
+
+Noura has the mirror problem. She is hiring an AI security engineer for Najm Assist's next phase, and forty CVs arrive. Most list five or more certifications; few show anything she can read. One candidate with a single entry-level certification attached a threat model of an open-source chat assistant, two lab write-ups with fixes and a merged pull request to an open-source scanner. Noura invites that candidate first.
+
+Certificates still matter. Job adverts in Gulf banks and government bodies often list named certifications as required or preferred, especially for management and audit roles, so they help you pass the first filter. But the interview, and then the job, test whether you can do the work.
+
+## 📐 How it works
+
+### 🟢 The essentials
+
+**The role map.** Titles vary by organisation, so read the job description, not the title. Two public taxonomies help. The **NICE Framework** (NIST SP 800-181 Rev. 1) describes cybersecurity work roles and the tasks, knowledge and skills behind them. ENISA's **European Cybersecurity Skills Framework** (ECSF) describes role profiles for the European workforce. At the time of writing (2026), the roles closest to this course look like this:
+
+| Role | Day to day | Course modules |
+|---|---|---|
+| Application or product security engineer | Design reviews, threat models, code review, scanner tuning, coaching developers | 1–6 |
+| AI security engineer or AI red-teamer | Threat modelling LLM apps and agents, guardrail and tool design, authorised AI red-teaming | 8–9, on top of 1–6 |
+| Cloud or platform security engineer | IAM, Kubernetes, infrastructure-as-code policy, network controls | 7 |
+| SOC analyst or detection engineer | Triage alerts; write and test detections using attacker techniques (MITRE ATT&CK) | 10.1 |
+| Incident responder | Lead and investigate incidents; run drills | 10.2 |
+| Penetration tester or red-teamer | Authorised testing of apps, networks, people and AI systems; report writing | 2–4, 9.4 |
+| GRC, risk or security audit | Policies, control testing, frameworks, regulation, third-party risk | 11 |
+| Security architect | Designing controls across many systems | 1, 7, 9 |
+
+Leadership sits above these: a team lead, a head of function (Noura), a CISO (Hamad). A common entry door is the **security champion**: a developer in a product team who takes on security responsibility part-time (11.3).
+
+**Where people come from.** Developers often move into AppSec and AI security, operations staff into cloud and the SOC, auditors into GRC, data scientists into AI security. Your previous job is an asset: a developer knows why a scanner full of false positives gets ignored.
+
+**Certification bodies, in brief.** This course is not affiliated with any of them and does not prepare you for their exams. The table is general orientation. Check each body's website for current content, eligibility, format, price and maintenance rules, because all of them change.
+
+| Body | Known for | Examples of its credentials | Typical fit |
+|---|---|---|---|
+| **ISC2** | Broad security management and architecture | CC (entry level), SSCP, CISSP, CCSP (cloud), CSSLP (secure software) | Architecture or management track; CSSLP for AppSec |
+| **ISACA** | Audit, governance, risk and security management | CISA (audit), CISM (security management), CRISC (risk) | GRC, audit and security management; often requested in banks |
+| **GIAC** | Technical certifications, many aligned with SANS Institute training | GSEC, GCIH (incident handling), GPEN, GWAPT (web application testing) | Hands-on defenders, responders and testers |
+| **OffSec** | Offensive security, known for practical hands-on exams | OSCP, plus more advanced web and exploitation credentials | Penetration testers and red-teamers |
+| **CompTIA** | Vendor-neutral foundations | Security+, CySA+ (analyst), PenTest+ | Entry and early-career roles |
+
+Others matter too. Major cloud providers certify security skills on their own platforms. CREST certifies individual testers and accredits testing companies; some buyers look for it. Some bodies have announced AI-focused credentials, but at the time of writing (2026) no single AI-security certification is an industry standard, so evidence of real work counts most.
+
+For most established credentials, senior ones require verified work experience as well as an exam, and keeping any requires continuing professional education (CPE) and annual fees. Budget for both.
+
+### 🟡 Going deeper
+
+**Choosing a certification deliberately.** Score each candidate credential from 1 to 3 on five questions:
+1. **Role fit.** Does it match the role you want in two to three years? A management credential does little for a junior tester, and the reverse.
+2. **Market demand.** Do employers in your market name it? Read ten current job adverts and count.
+3. **Practical or knowledge-based?** Practical exams show you can do a task; knowledge exams show breadth.
+4. **Full cost.** Training, exam, retakes, annual fees and CPE hours.
+5. **Sponsorship.** Many banks fund certifications tied to a development plan.
+
+For Ali, an AppSec engineer heading for AI security, a practical web-testing or AppSec-focused credential fits now. A broad management credential fits later, when he leads people and budgets.
+
+**The portfolio.** A security portfolio is a small set of artefacts others can read, each showing judgement as well as skill. Good items, all legal:
+- **A threat model** of an open-source application or your own project: data-flow diagram, STRIDE and LLM Top 10 threats, controls and tests (1.1, 12.1).
+- **Lab write-ups** on deliberately vulnerable training apps such as **OWASP Juice Shop**, or the free labs in **PortSwigger Web Security Academy**. Each ends with the fix and the test that proves it, not just the break.
+- **Detection content**: a few tested rules, for example in the open Sigma format, with the sample logs you used (10.1).
+- **Open-source contributions**: a scanner rule, a documentation fix to an OWASP project, a patch for a bug reported through the project's own process.
+- **Writing and talks**: a post explaining one control well, or a talk at a local OWASP chapter.
+- **Capture-the-flag (CTF) write-ups**, published only when the event's rules allow it.
+
+Each case study follows one shape: context, threat, decision, evidence, trade-off, lesson. "I chose session-bound identity over a prompt rule because no test can prove a prompt rule holds" shows more than "I secured an AI agent".
+
+**What never goes in a portfolio.** An employer's vulnerabilities (fixed or not), internal architecture, customer data, internal screenshots, or anything from a system you were not authorised to test. Bug-bounty findings go in only when the programme allows disclosure. If unsure, ask your employer in writing, or rebuild the pattern in your own lab.
+
+**Interviews.** Security interview loops commonly mix fundamentals ("what does TLS protect, and what not?"), code review, a 30–45 minute threat-modelling exercise, a scenario ("this alert fires at 2 a.m."), behavioural questions answered with **STAR** (situation, task, action, result), and lab tasks for testing roles. A typical code-review question:
+
+```python
+# Interview snippet: what is wrong?
+@app.get("/invoices/<invoice_id>")
+def get_invoice(invoice_id):
+    return db.invoices.find_one({"id": invoice_id})
+
+# Strong answer: broken object-level authorisation (IDOR). Scope by tenant.
+@app.get("/invoices/<invoice_id>")
+@login_required
+def get_invoice(invoice_id):
+    inv = db.invoices.find_one({"id": invoice_id,
+                                "company_id": current_user.company_id})
+    return inv or abort(404)  # 404 avoids confirming the invoice exists
+```
+
+Then say how you would test it (a cross-tenant test in CI) and detect abuse (many 404s on sequential IDs from one user). Fix, test, detect: the same chain as 12.1. For a threat-model question, state your structure first, then go deep where the risk is: assets and attackers → data flow and trust boundaries → threats (STRIDE, plus the LLM Top 10 for AI features) → controls ranked by risk → tests → detections → residual risk and owner.
+
+**Ethics and law.** Testing a system without written authorisation can be a crime under computer-misuse laws, such as the UK Computer Misuse Act 1990, the US Computer Fraud and Abuse Act and Qatar's Cybercrime Prevention Law (Law No. 14 of 2014), whatever your intent. If you stumble on a weakness while using a service, stop, do not probe further, and report it through the organisation's disclosure channel; many publish one in a `security.txt` file (RFC 9116), and 10.3 covers the process. Major certification bodies, including ISC2 and ISACA, require members to follow a code of ethics. Your reputation is your most important security credential.
+
+### 🔴 Expert view
+
+**How the job grows.**
+
+| Level | Scope | Evidence that shows it |
+|---|---|---|
+| Engineer | Finds and fixes issues; reviews for a few teams | Threat models, fixed findings, tests added |
+| Senior engineer | Owns a domain such as AI security; sets reusable patterns | A shared guardrail service; a case file like 12.1 |
+| Staff, principal or team lead | Shapes architecture or a team across many systems | Standards adopted bank-wide; people grown |
+| Head of function | Programme, budget, metrics, hiring | A programme that measurably reduced risk (11.3) |
+| CISO | Enterprise risk; board and regulator relationships | Decisions the board understood and backed |
+
+At each step the work shifts from finding problems to making them less likely across many teams.
+
+**T-shaped, not AI-only.** AI security is a deep specialism built on AppSec fundamentals, not a replacement for them. Most of 12.1's controls were access control, output handling, secrets, logging and least privilege; the AI-specific part was knowing where the model breaks those assumptions. Engineers who skip the fundamentals struggle to tell a new AI risk from a familiar web bug in new clothes.
+
+**Staying current without the noise.**
+- *Weekly:* scan the CISA Known Exploited Vulnerabilities (KEV) catalogue and your vendors' advisories: "does this affect anything we run?"
+- *Monthly:* read one primary source (a paper, an OWASP or MITRE ATLAS update, a NIST draft) and try one technique in your lab.
+- *Quarterly:* write up one thing you learned, within confidentiality limits.
+- *Yearly:* revisit your target role, decision scores and portfolio.
+
+ISC2 publishes an annual workforce study; read the current edition rather than repeating old skills-gap figures.
+
+**Hiring from the other side.** Noura does not filter on acronyms alone, which rejects strong self-taught engineers and favours good test-takers. Every candidate gets the same work sample and questions, and panel members score independently before discussing. Where policy requires a named certification, she checks it as a condition, not a score. She also looks for a trait no certificate shows: does the candidate change their view when the evidence changes?
+
+**Sustainability.** SOC and incident roles include on-call duty. Good teams rotate it, run blameless reviews and protect learning time; ask about these in interviews.
+
+## 🧰 The toolkit
+| Control, standard or tool | What it is and does | When to reach for it |
+|---|---|---|
+| **NICE Framework** (NIST SP 800-181 Rev. 1) | Taxonomy of cybersecurity work roles with their tasks, knowledge and skills | Mapping your target role; writing job descriptions |
+| **European Cybersecurity Skills Framework** (ENISA) | Role profiles for the cybersecurity workforce | Comparing roles across employers; designing a team |
+| **Certification decision matrix** | Scores credentials on role fit, demand, practicality, cost and sponsorship | Before committing time and money to a certification |
+| **Security portfolio case study** | One or two pages: context, threat, decision, evidence, trade-off, lesson | Applications, promotion cases, internal visibility |
+| **OWASP Juice Shop** | Deliberately vulnerable web application for legal practice | Building skills and write-ups without touching real systems |
+| **PortSwigger Web Security Academy** | Free online labs on web vulnerabilities | Structured practice on web and API weaknesses |
+| **security.txt** (RFC 9116) | Standard file where organisations publish how to report vulnerabilities | When you find a weakness in someone else's system by accident |
+
+## 🏛️ In practice at Najm Bank
+Noura's **AI security engineer interview scorecard**, used for every candidate:
+
+| Criterion | What "strong" looks like | Assessed by |
+|---|---|---|
+| Fundamentals | Explains access control, injection and output encoding plainly, with fixes | Technical interview |
+| Code review | Finds the authorisation bug, fixes it, adds a test and a detection | 20-minute snippet |
+| AI threat modelling | Draws trust boundaries for an agent, finds indirect injection and excessive agency, puts controls in code not prompts | 40-minute exercise |
+| Incident judgement | Contains narrowly, preserves evidence, involves the DPO | Scenario question |
+| Evidence of work | Portfolio items explained in depth, within confidentiality | Portfolio discussion |
+| Ethics | Describes authorised testing and disclosure correctly | Behavioural question |
+| Learning | Changes view on new evidence; keeps a steady learning habit | Whole loop |
+
+Certifications are recorded, and any a role requires by policy are verified, but they are not a scored criterion.
+
+Ali's **12-month development plan**, agreed with Noura:
+
+| Item | Plan |
+|---|---|
+| Target role in three years | Senior AI security engineer |
+| Gaps | Cloud depth; offensive web skills; writing for executives |
+| Certification | One practical web-testing or AppSec credential this year, scored with the decision matrix |
+| Portfolio | Public threat model of an open-source assistant; three Juice Shop write-ups with fixes; one rule for Jassim's detection library |
+| Stretch work | Owns the traceability matrix for Assist's next tool; observes Mariam's next authorised red-team |
+| Mentoring | Monthly with Noura; quarterly portfolio review |
+
+## 🛠️ Exercises
+- 🟢 Choose a target role from the role map and collect five current job adverts for it in your market. *Done when:* you have a table of the skills and certifications they ask for, each checked against the body's current official page, and a paragraph stating your target role and top three gaps.
+- 🟡 Produce one portfolio piece: a threat model of an open-source application or your own project, or write-ups of three OWASP Juice Shop challenges run on your own machine. *Done when:* each finding ends with a fix and a test, nothing refers to a system you do not own or are not authorised to test, and a peer can state your key decision after ten minutes of reading.
+- 🔴 Run a mock interview loop with a peer: a code-review snippet, a 40-minute threat model of "an assistant that reads a user's email and drafts replies", and a scenario question. Swap roles; both of you score with the scorecard above. *Done when:* both scorers rated independently before comparing, you have named your weakest criterion, and you have a dated plan to improve it.
+
+## ⚠️ Mistakes and traps
+- **Collecting certificates instead of evidence.** Pair every credential with something you built, tested or wrote.
+- **"I was only checking."** Probing a system without written permission can be illegal whatever the intent. Practise in your own lab, on training apps or in authorised programmes.
+- **Leaking in the portfolio.** Employer vulnerabilities, internal diagrams or customer data in a public write-up can cost you far more than a gap.
+- **Skipping fundamentals for AI.** AI security rests on access control, output handling and secure design. Learn those first.
+- **Trusting forum facts about exams.** Eligibility, formats and prices change. Read the certifying body's current pages.
+- **Ignoring upkeep.** CPE hours and annual fees add up across several credentials. Keep the ones your role needs.
+
+## 🧾 Recap
+- Security is a family of roles; choose a target before choosing courses or certificates.
+- ISC2, ISACA, GIAC, OffSec, CompTIA and others offer credentials with different focuses. Check current details at the source and choose with a decision matrix.
+- A legal, well-written portfolio shows judgement that certificates cannot.
+- Interviews test fundamentals, code review, threat modelling, scenarios and behaviour; fix, test and detect answers most.
+- Authorisation and ethics are non-negotiable, and fundamentals come before specialisms.
+
+## ✍️ Check yourself
+
+**1. Ali, an AppSec engineer, wants to move into AI security within two years. Which plan is best?**
+
+- A. Collect as many AI certificates as possible, since AI is a new field
+- B. Keep strengthening AppSec fundamentals, build AI-security evidence such as a public threat model of an LLM app, and choose a certification with the decision matrix
+- C. Practise prompt injection on the public chatbots of companies he does not work for
+- D. Wait until an industry-standard AI-security certification appears
+
+<details><summary>Answer</summary>
+
+**B.** AI security builds on fundamentals, and evidence plus a deliberately chosen credential is the strongest combination. A collects signals without proof; C is unauthorised testing; D waits for something that does not yet exist. (🔴 Expert view.)
+
+</details>
+
+**2. Noura receives one CV listing six certifications and no other evidence, and another with one entry-level certification plus a threat model and two lab write-ups. What is the fairest way to compare them?**
+
+- A. Hire the candidate with more certifications
+- B. Reject the first candidate, because certifications are worthless
+- C. Give both the same work-sample tasks and score them independently against the scorecard
+- D. Ask each which certification exam was hardest
+
+<details><summary>Answer</summary>
+
+**C.** A consistent work sample, scored independently, tests what the job needs. A filters on acronyms; B overreacts, since certifications are a useful signal and sometimes required; D says nothing about the role. (🔴 Expert view.)
+
+</details>
+
+**3. While shopping online, Ali notices that changing a number in the order page's URL shows another customer's order. What should he do?**
+
+- A. Try a few more numbers to confirm the issue before reporting it
+- B. Stop, access no more data, and report it through the shop's disclosure channel, for example the contact in its `security.txt` file
+- C. Post on social media to warn other customers
+- D. Write it up for his portfolio
+
+<details><summary>Answer</summary>
+
+**B.** He has no authorisation, so further probing (A) could break computer-misuse laws. Responsible disclosure protects customers and him. C exposes customers before a fix; D publishes a finding without permission. (🟡 Going deeper: ethics and law.)
+
+</details>
+
+**4. A privacy analyst in Sara's team wants to move into security governance and audit for the bank's AI systems. Which certification body's credentials most closely fit that direction?**
+
+- A. OffSec
+- B. ISACA
+- C. GIAC's penetration-testing credentials
+- D. A cloud provider's security certification
+
+<details><summary>Answer</summary>
+
+**B.** ISACA is known for audit, governance, risk and security management credentials such as CISA, CISM and CRISC. OffSec (A) and GIAC's testing credentials (C) focus on offensive work; D is platform-specific. (🟢 The essentials.)
+
+</details>
+
+**5. Ali wants to publish a blog post about an authorisation bug he found and fixed in the SME Portal last month. What is the right approach?**
+
+- A. Publish it, since the bug is fixed
+- B. Publish it with internal names removed, keeping the screenshots
+- C. Do not publish internal findings without written approval; to write about the pattern, rebuild it in his own lab and write about that
+- D. Publish it only on a personal site so it is not linked to the bank
+
+<details><summary>Answer</summary>
+
+**C.** Employer vulnerabilities stay confidential even after a fix unless the employer approves. Screenshots (B) leak internal detail; a personal site (D) changes nothing. A lab rebuild keeps the learning without the risk. (🟡 Going deeper.)
+
+</details>
+
+## 📚 References
+- NIST SP 800-181 Rev. 1 (2020), Workforce Framework for Cybersecurity (NICE Framework) — https://csrc.nist.gov/pubs/sp/800/181/r1/final
+- NIST, NICE (National Initiative for Cybersecurity Education) — https://www.nist.gov/itl/applied-cybersecurity/nice
+- ENISA, European Cybersecurity Skills Framework (ECSF) — https://www.enisa.europa.eu
+- ISC2 (certifications, Code of Ethics, Cybersecurity Workforce Study) — https://www.isc2.org
+- ISACA (certifications, Code of Professional Ethics) — https://www.isaca.org
+- GIAC Certifications — https://www.giac.org
+- OffSec — https://www.offsec.com
+- CompTIA — https://www.comptia.org
+- CREST — https://www.crest-approved.org
+- OWASP Juice Shop — https://owasp.org/www-project-juice-shop/
+- PortSwigger Web Security Academy — https://portswigger.net/web-security
+- RFC 9116 (2022), "A File Format to Aid in Security Vulnerability Disclosure" — https://www.rfc-editor.org/rfc/rfc9116
+- Sigma, generic detection rule format (SigmaHQ) — https://github.com/SigmaHQ/sigma
+- CISA Known Exploited Vulnerabilities Catalog — https://www.cisa.gov/known-exploited-vulnerabilities-catalog
+
+
+---
+
 # 12.3 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–11* · *Phase: Plan, Design, Build, Test, Deploy, Operate, Respond, Govern*
 
