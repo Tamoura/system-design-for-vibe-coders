@@ -1,0 +1,135 @@
+{
+ "area": "m8",
+ "questions": [
+  {
+   "id": "m8-1",
+   "level": 1,
+   "lesson": "8.1",
+   "q": {
+    "en": "Tariq wants to handle prompt injection in Najm Assist the way Najm handled SQL injection: find the LLM equivalent of parameterised queries and apply it everywhere. What should Noura tell him?",
+    "ar": "يريد طارق أن يتعامل مع حقن الموجّهات (prompt injection) في نجم أسيست (Najm Assist) كما تعامل بنك نجم (Najm Bank) مع حقن SQL (SQL injection): أي أن يجد ما يقابل الاستعلامات المُعلَمة (the equivalent of parameterised queries) في النماذج اللغوية الكبيرة (LLM) ويطبّقه في كل مكان (apply it everywhere). بماذا يجب أن تجيبه نورة (What should Noura tell him)؟"
+   },
+   "o": {
+    "en": [
+     "The system prompt is that equivalent: it ranks Najm's rules above any text the model reads",
+     "An injection filter is that equivalent: it strips instructions out before text reaches the model",
+     "Nothing is that equivalent yet: the model reads instructions and data as one stream of text",
+     "A newer model is that equivalent: it is trained to ignore instructions inside retrieved data"
+    ],
+    "ar": [
+     "موجّه النظام (The system prompt) هو ذلك المقابل (that equivalent): فهو يقدّم قواعد نجم (Najm's rules) على أي نصٍّ يقرؤه النموذج (any text the model reads)",
+     "مرشّح الحقن (An injection filter) هو ذلك المقابل (that equivalent): فهو يزيل التعليمات (strips instructions out) قبل أن يصل النص إلى النموذج (before text reaches the model)",
+     "لا شيء يمثّل ذلك المقابل حتى الآن (Nothing is that equivalent yet): فالنموذج يقرأ التعليمات والبيانات (the model reads instructions and data) في تيارٍ نصيٍّ واحد (as one stream of text)",
+     "النموذج الأحدث (A newer model) هو ذلك المقابل (that equivalent): فهو مدرَّبٌ على تجاهل التعليمات (trained to ignore instructions) داخل البيانات المسترجَعة (inside retrieved data)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "SQL injection was fixed by separating code from data, but an LLM reads instructions and data in one channel and has no such separation at the time of writing, so anything it reads can steer it. The system prompt is the tempting answer, but its rules are requests to a component that can be persuaded, not controls.",
+    "ar": "عولج حقن SQL (SQL injection) بفصل الشيفرة عن البيانات (separating code from data)، أما النموذج اللغوي الكبير (LLM) فيقرأ التعليمات والبيانات (instructions and data) في قناةٍ واحدة (in one channel)، ولا يملك فصلًا مماثلًا (no such separation) حتى وقت كتابة هذا النص (at the time of writing)، فكل ما يقرؤه يمكن أن يوجّهه (anything it reads can steer it). أما موجّه النظام (The system prompt) فهو الإجابة المغرية (the tempting answer)، لكن قواعده طلباتٌ لا ضوابط (requests, not controls) موجّهةٌ إلى مكوّنٍ يمكن إقناعه (a component that can be persuaded)."
+   }
+  },
+  {
+   "id": "m8-2",
+   "level": 2,
+   "lesson": "8.2",
+   "q": {
+    "en": "In a test build, Najm Assist's 'unfreeze card' tool checks in code that the card belongs to the session customer. Before it runs, the app shows a confirmation message written by the model, with a Confirm button. Mariam's team shows that a hijacked model can name one of the customer's cards in the message while the tool call unfreezes another. What is the right fix?",
+    "ar": "في نسخةٍ تجريبية (a test build) من نجم أسيست (Najm Assist)، تتحقّق أداة «إلغاء تجميد البطاقة» ('unfreeze card' tool) في الشيفرة (in code) من أن البطاقة تخصّ عميل الجلسة (belongs to the session customer). وقبل تشغيلها، يعرض التطبيق رسالة تأكيدٍ يكتبها النموذج (a confirmation message written by the model) مع زرّ «تأكيد» (a Confirm button). ويُثبت فريق مريم (Mariam's team) أن النموذج المختطَف (a hijacked model) يستطيع أن يذكر في الرسالة إحدى بطاقات العميل (one of the customer's cards) بينما يُلغي استدعاءُ الأداة (the tool call) تجميدَ بطاقةٍ أخرى (unfreezes another). ما الإصلاح الصحيح (What is the right fix)؟"
+   },
+   "o": {
+    "en": [
+     "Build the confirmation from the real tool arguments with a fixed template, and add biometric step-up",
+     "Add a system-prompt rule that the confirmation text must always match the arguments of the tool call",
+     "Run an injection classifier on the model's confirmation text before the app shows it to the customer",
+     "Drop the confirmation, since the ownership check in code already limits the tool to the customer's cards"
+    ],
+    "ar": [
+     "بناء التأكيد من وسائط الأداة الحقيقية (the real tool arguments) بقالبٍ ثابت (a fixed template)، وإضافة مصادقةٍ معزّزة بالقياسات الحيوية (biometric step-up)",
+     "إضافة قاعدةٍ إلى موجّه النظام (a system-prompt rule) تقضي بأن يطابق نصُّ التأكيد دائمًا (the confirmation text must always match) وسائطَ استدعاء الأداة (the arguments of the tool call)",
+     "تشغيل مصنّفٍ لرصد الحقن (an injection classifier) على نص التأكيد الذي يكتبه النموذج (the model's confirmation text) قبل أن يعرضه التطبيق على العميل (before the app shows it)",
+     "إلغاء التأكيد (Drop the confirmation)، لأن فحص الملكية في الشيفرة (the ownership check in code) يقصر الأداة أصلًا على بطاقات العميل (limits the tool to the customer's cards)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "A confirmation counts only if the model cannot write it, so the app must render it from the real tool arguments with a fixed template, and unfreezing a card is risk-increasing, so it also needs biometric step-up. The system-prompt rule is tempting, but it is a request to the very model the attacker is steering, and the ownership check passes here because both cards are the customer's.",
+    "ar": "لا يُعتدّ بالتأكيد (A confirmation counts) إلا إذا عجز النموذج عن كتابته (only if the model cannot write it)، لذا يجب أن يعرضه التطبيق (the app must render it) من وسائط الأداة الحقيقية (the real tool arguments) بقالبٍ ثابت (a fixed template)؛ وإلغاء تجميد البطاقة (unfreezing a card) إجراءٌ يرفع المخاطر (risk-increasing)، فيحتاج أيضًا إلى مصادقةٍ معزّزة بالقياسات الحيوية (biometric step-up). أما قاعدة موجّه النظام (The system-prompt rule) فمغرية (tempting)، لكنها طلبٌ إلى النموذج نفسه الذي يوجّهه المهاجم (a request to the very model the attacker is steering)، وفحص الملكية (the ownership check) ينجح هنا لأن البطاقتين كلتيهما للعميل (both cards are the customer's)."
+   }
+  },
+  {
+   "id": "m8-3",
+   "level": 2,
+   "lesson": "8.3",
+   "q": {
+    "en": "Dana fine-tunes the model behind Najm Assist on de-identified, deduplicated chat transcripts. The memorisation canary test passes, and fee answers are more accurate than before. She proposes releasing it next week. What must happen first?",
+    "ar": "تُجري دانة ضبطًا دقيقًا (fine-tunes) للنموذج الذي يقف خلف نجم أسيست (the model behind Najm Assist) على نصوص محادثاتٍ منزوعة الهوية ومُزالة التكرار (de-identified, deduplicated chat transcripts). وينجح اختبار الكناري للحفظ (The memorisation canary test passes)، وتصبح إجابات الرسوم (fee answers) أدقّ من قبل (more accurate than before). وتقترح إطلاقه الأسبوع المقبل (releasing it next week). ما الذي يجب أن يحدث أولًا (What must happen first)؟"
+   },
+   "o": {
+    "en": [
+     "Nothing more: benign, de-identified data cannot weaken the base model's safety training",
+     "Retrain with differential privacy, since a passed canary test cannot prove there is no leak",
+     "Widen the accuracy evaluation to more fee questions, since accuracy is what tuning changes",
+     "Re-run the full safety and prompt-injection test suite, since tuning can weaken refusals"
+    ],
+    "ar": [
+     "لا شيء إضافي (Nothing more): فالبيانات الحميدة منزوعة الهوية (benign, de-identified data) لا يمكن أن تُضعف تدريب السلامة (safety training) في النموذج الأساسي (the base model)",
+     "إعادة التدريب بالخصوصية التفاضلية (Retrain with differential privacy)، لأن نجاح اختبار الكناري (a passed canary test) لا يُثبت انعدام التسريب (cannot prove there is no leak)",
+     "توسيع تقييم الدقة (Widen the accuracy evaluation) ليشمل مزيدًا من أسئلة الرسوم (more fee questions)، لأن الدقة هي ما يغيّره الضبط (accuracy is what tuning changes)",
+     "إعادة تشغيل (Re-run) مجموعة اختبارات السلامة وحقن الموجّهات كاملةً (the full safety and prompt-injection test suite)، لأن الضبط (tuning) قد يُضعف الرفض (can weaken refusals)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Qi and colleagues (2023) showed that fine-tuning can degrade a model's safety alignment, to a lesser degree even on benign data, so Najm re-runs the full safety and injection suite after every fine-tune, not only accuracy tests. Assuming benign data is harmless is the tempting shortcut, but that is exactly what the research contradicts.",
+    "ar": "أظهر Qi وزملاؤه (Qi and colleagues) عام 2023 أن الضبط الدقيق (fine-tuning) يمكن أن يُضعف مواءمة السلامة في النموذج (degrade a model's safety alignment)، حتى بالبيانات الحميدة (even on benign data) وإن بدرجةٍ أقل (to a lesser degree)، لذا يعيد بنك نجم (Najm Bank) تشغيل مجموعة اختبارات السلامة والحقن كاملةً (the full safety and injection suite) بعد كل ضبطٍ دقيق (after every fine-tune)، لا اختبارات الدقة وحدها (not only accuracy tests). أما افتراض أن البيانات الحميدة غير ضارة (Assuming benign data is harmless) فهو الاختصار المغري (the tempting shortcut)، لكنه بالضبط ما تنقضه الأبحاث (exactly what the research contradicts)."
+   }
+  },
+  {
+   "id": "m8-4",
+   "level": 3,
+   "lesson": "8.3",
+   "q": {
+    "en": "Jassim's SOC watches Smart Alerts for signs of probing, such as near-threshold clusters and decline-then-modify sequences. Najm's payment API already answers held payments with a generic \"held for review\" message. This month the near-threshold rule fires on a new card product: fraud suddenly sits just below the alert score. Yet holds and declines stayed at their usual level, and no decline-then-modify sequence fired on any product beforehand. What should Dana and Jassim investigate first?",
+    "ar": "يراقب مركز العمليات الأمنية لدى جاسم (Jassim's SOC) التنبيهاتِ الذكية (Smart Alerts) بحثًا عن علامات السبر (signs of probing)، مثل تجمّعات قرب العتبة (near-threshold clusters) وتسلسلات الرفض ثم التعديل (decline-then-modify sequences). وتردّ واجهة الدفع في بنك نجم (Najm's payment API) أصلًا على المدفوعات المحتجزة (held payments) برسالةٍ عامة هي «قيد المراجعة» (a generic \"held for review\" message). وهذا الشهر تنطلق قاعدة القرب من العتبة (the near-threshold rule fires) على منتج بطاقاتٍ جديد (a new card product): فالاحتيال يقع فجأةً تحت درجة التنبيه مباشرةً (just below the alert score). ومع ذلك بقيت حالات الاحتجاز والرفض (holds and declines) عند مستواها المعتاد (at their usual level)، ولم تنطلق قبله أي قاعدةٍ لتسلسل الرفض ثم التعديل (no decline-then-modify sequence fired) على أي منتج (on any product). ما الذي يجب أن تحقّق فيه دانة وجاسم أولًا (What should Dana and Jassim investigate first)؟"
+   },
+   "o": {
+    "en": [
+     "Evasion by probing that the rules missed: lower the alert threshold for that new product",
+     "A copy of the model used offline: check who has accessed the model registry and files",
+     "Label poisoning by the ring: review the confirmation labels used in the latest retrain",
+     "Ordinary drift on a new product: retrain Smart Alerts on the latest confirmed fraud cases"
+    ],
+    "ar": [
+     "تهرّبٌ بالسبر (Evasion by probing) فاتَ القواعد (that the rules missed): خفِّض عتبة التنبيه (lower the alert threshold) لذلك المنتج الجديد (for that new product)",
+     "نسخةٌ من النموذج تُستخدم دون اتصال (A copy of the model used offline): افحص من وصل إلى سجلّ النماذج (the model registry) وملفاته (and files)",
+     "تسميم التسميات (Label poisoning) على يد العصابة (by the ring): راجع تسميات التأكيد (the confirmation labels) المستخدمة في أحدث إعادة تدريب (the latest retrain)",
+     "انحرافٌ عادي (Ordinary drift) في منتجٍ جديد (on a new product): أعِد تدريب التنبيهات الذكية (retrain Smart Alerts) على أحدث حالات الاحتيال المؤكَّدة (the latest confirmed fraud cases)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Fraud sitting just under the score means the ring knows the model's boundary; with decision-only replies and no probing, it most likely learned it from a copy, and stealing model files is the most direct form of extraction, so the registry's access logs come first. Lowering the threshold is tempting, but it treats this as ordinary probing, and a copy is a private lab where the ring can simply re-tune its payments.",
+    "ar": "وقوع الاحتيال تحت الدرجة مباشرةً (Fraud sitting just under the score) يعني أن العصابة تعرف حدّ قرار النموذج (the model's boundary)؛ ومع ردودٍ لا تكشف إلا القرار (decision-only replies) ودون سبر (no probing)، فالأرجح أنها تعلّمته من نسخة (learned it from a copy)، وسرقة ملفات النموذج (stealing model files) أكثر صور الاستخراج مباشرةً (the most direct form of extraction)، لذا تأتي سجلّات الوصول (access logs) إلى سجلّ النماذج (the registry) أولًا. أما خفض العتبة (Lowering the threshold) فمغرٍ (tempting)، لكنه يعامل الأمر كسبرٍ عادي (ordinary probing)، والنسخة مختبرٌ خاص (a private lab) تستطيع فيه العصابة ببساطة إعادة ضبط مدفوعاتها (re-tune its payments)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m8-e1",
+   "lesson": "8.1",
+   "text": {
+    "en": "I have drawn a data-flow diagram for an LLM feature I own or a small local lab app, answered the five questions, given every arrow that crosses a trust boundary a named threat with an OWASP ID and an ATLAS technique, and stated whether the lethal trifecta is present",
+    "ar": "رسمتُ مخطط تدفّق البيانات (a data-flow diagram) لميزة نموذجٍ لغوي كبير أملكها (an LLM feature I own) أو لتطبيق مختبرٍ محلي صغير (a small local lab app)، وأجبتُ عن الأسئلة الخمسة (the five questions)، وأعطيتُ كل سهمٍ يعبر حدّ ثقة (every arrow that crosses a trust boundary) تهديدًا مسمّى (a named threat) مع معرّف OWASP (an OWASP ID) وتقنيةٍ من ATLAS (an ATLAS technique)، وذكرتُ ما إذا كان الثالوث القاتل (the lethal trifecta) حاضرًا فيه (is present)"
+   }
+  },
+  {
+   "id": "m8-e2",
+   "lesson": "8.2",
+   "text": {
+    "en": "I have planted a benign canary instruction in one of my own documents, run twenty summaries before and twenty after adding spotlighting, recorded both rates, and explained why the second is unlikely to be zero and which control I would add next",
+    "ar": "زرعتُ تعليمة «كناري» غير ضارة (a benign canary instruction) في أحد مستنداتي (one of my own documents)، وشغّلتُ عشرين تلخيصًا (twenty summaries) قبل إضافة تقنية الإبراز (spotlighting) وعشرين بعدها (twenty after)، وسجّلتُ المعدّلين كليهما (both rates)، وشرحتُ لماذا يُستبعد أن يكون الثاني صفرًا (why the second is unlikely to be zero) وأيّ ضابطٍ سأضيفه بعد ذلك (which control I would add next)"
+   }
+  }
+ ]
+}

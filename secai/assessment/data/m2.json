@@ -1,0 +1,135 @@
+{
+ "area": "m2",
+ "questions": [
+  {
+   "id": "m2-1",
+   "level": 1,
+   "lesson": "2.1",
+   "q": {
+    "en": "New developers ask Noura why SQL injection, OS command injection and server-side template injection fall under one secure-coding standard, SC-02. What root cause do the three share?",
+    "ar": "يسأل مطوّرون جدد (new developers) نورة عن سبب وقوع حقن SQL (SQL injection) وحقن أوامر نظام التشغيل (OS command injection) وحقن القوالب من جهة الخادم (server-side template injection) تحت معيار برمجةٍ آمنة واحد (one secure-coding standard)، هو SC-02. ما السبب الجذري المشترك بين الثلاثة (What root cause do the three share)؟"
+   },
+   "o": {
+    "en": [
+     "Input fields accept special characters that a strict validation rule should have rejected",
+     "Untrusted input is built into the text an interpreter runs, so it can change what runs",
+     "Error messages tell attackers enough about the backend to craft input that will work",
+     "Services run with more rights than they need, so a crafted input can do serious harm"
+    ],
+    "ar": [
+     "تقبل حقول الإدخال (input fields) أحرفًا خاصة (special characters) كان ينبغي أن ترفضها قاعدةٌ صارمة للتحقق من المدخلات (a strict validation rule)",
+     "تُدمَج المدخلات غير الموثوقة (untrusted input) في النص الذي ينفّذه المفسِّر (the text an interpreter runs)، فتستطيع تغيير ما يُنفَّذ (it can change what runs)",
+     "تكشف رسائل الخطأ (error messages) للمهاجمين ما يكفي عن الواجهة الخلفية (the backend) لصياغة مدخلاتٍ تنجح (craft input that will work)",
+     "تعمل الخدمات بصلاحياتٍ تفوق حاجتها (more rights than they need)، فتستطيع المدخلات المصمَّمة (a crafted input) إحداث ضررٍ جسيم (serious harm)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "All three let input reach an interpreter as part of a command, so one rule fixes them: keep code and data apart, with parameters, argument lists and template variables. Strict validation is the tempting answer, but it is only a second layer: real values such as O'Brien contain \"dangerous\" characters, and filters can be bypassed with encodings.",
+    "ar": "تسمح الثلاثة كلها بوصول المدخلات إلى مفسِّر (reach an interpreter) بوصفها جزءًا من أمر (part of a command)، فتصلحها قاعدةٌ واحدة (one rule): افصل الشيفرة عن البيانات (keep code and data apart)، بالمعاملات (parameters) وقوائم الوسائط (argument lists) ومتغيرات القوالب (template variables). أما التحقق الصارم (strict validation) فهو الإجابة المغرية (the tempting answer)، لكنه طبقةٌ ثانية فقط (only a second layer): فالقيم الحقيقية مثل O'Brien تحتوي على أحرفٍ توصف بأنها خطِرة (dangerous characters)، ويمكن تجاوز المرشِّحات بالترميزات (bypassed with encodings)."
+   }
+  },
+  {
+   "id": "m2-2",
+   "level": 2,
+   "lesson": "2.2",
+   "q": {
+    "en": "The SME Portal's templates auto-escape every value. Each company profile shows the firm's website as a clickable link built from the value the company saved. In an authorised test, Mariam saves a website value starting with javascript:, and her harmless proof runs when an approver clicks the link. What is the right fix?",
+    "ar": "تهرّب قوالب بوابة الشركات الصغيرة (SME Portal templates) كل قيمةٍ تلقائيًا (auto-escape every value). ويعرض ملف كل شركة (each company profile) موقعها الإلكتروني رابطًا قابلًا للنقر (a clickable link) مبنيًّا من القيمة التي حفظتها الشركة (the value the company saved). وفي اختبارٍ مصرَّح به (an authorised test)، تحفظ مريم قيمةً للموقع تبدأ بـ javascript:، فيعمل دليلها غير المؤذي (her harmless proof) حين ينقر المعتمِد (an approver) على الرابط. ما الإصلاح الصحيح (What is the right fix)؟"
+   },
+   "o": {
+    "en": [
+     "HTML-encode the website value before it is placed inside the link's href attribute",
+     "Reject any saved website value that contains the text <script>, in any letter case",
+     "Set the session cookie to HttpOnly, so script run from the link cannot read it",
+     "Allow only the https: scheme for saved website links, checked before rendering"
+    ],
+    "ar": [
+     "ترميز قيمة الموقع بترميز HTML (HTML-encode the website value) قبل وضعها داخل السمة href للرابط (the link's href attribute)",
+     "رفض أي قيمةٍ محفوظة للموقع (saved website value) تحتوي على النص <script> (the text <script>)، أيًّا كانت حالة الأحرف (in any letter case)",
+     "ضبط ملف تعريف ارتباط الجلسة (session cookie) على HttpOnly، كي لا يقرأه (cannot read it) النص البرمجي المنفَّذ من الرابط (script run from the link)",
+     "قصر روابط المواقع المحفوظة (saved website links) على المخطط https: (the https: scheme)، مع التحقق قبل العرض (before rendering)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "A URL is its own context: rule XSS-2 allow-lists user-supplied URLs to https: before rendering, so a javascript: link is rejected. HTML-encoding is the tempting answer, but the templates already do it and the proof still ran, because encoding leaves the javascript: scheme intact.",
+    "ar": "عنوان URL سياقٌ قائمٌ بذاته (a URL is its own context): فالقاعدة XSS-2 (rule XSS-2) تقصر عناوين URL التي يقدّمها المستخدم (user-supplied URLs) على https: قبل العرض (before rendering)، فيُرفَض رابط javascript: ‏(a javascript: link is rejected). أما الترميز بـ HTML (HTML-encoding) فهو الإجابة المغرية (the tempting answer)، لكن القوالب تجريه أصلًا (the templates already do it) ومع ذلك عمل الدليل (the proof still ran)، لأن الترميز يترك المخطط javascript: كما هو (leaves the javascript: scheme intact)."
+   }
+  },
+  {
+   "id": "m2-3",
+   "level": 2,
+   "lesson": "2.3",
+   "q": {
+    "en": "Tariq's team adds webhooks to the SME Portal: when an invoice is approved, the portal POSTs a notice to a URL each customer chooses. Customers may name any host, so a partner allow-list is impossible. Which design best stops the feature being aimed at Najm's internal network?",
+    "ar": "يضيف فريق طارق خطافات الويب (webhooks) إلى بوابة الشركات الصغيرة (SME Portal): فحين تُعتمد فاتورة (an invoice is approved)، ترسل البوابة إشعارًا بطلب POST (POSTs a notice) إلى عنوان URL يختاره كل عميل (each customer chooses). ويحق للعملاء تسمية أي مضيف (any host)، فتستحيل قائمة سماحٍ للشركاء (a partner allow-list is impossible). أيّ تصميمٍ يمنع على أفضل وجه (which design best stops) توجيه الميزة نحو الشبكة الداخلية لبنك نجم (Najm's internal network)؟"
+   },
+   "o": {
+    "en": [
+     "Send from an isolated worker via an egress proxy blocking private, loopback and link-local ranges",
+     "Accept only URLs on the customer's verified company domain, checked once when the hook is saved",
+     "Reject URLs whose text contains localhost, 127.0.0.1 or 169.254, then send from the API servers",
+     "Require HTTPS endpoints with valid certificates, and sign every payload so customers can verify it"
+    ],
+    "ar": [
+     "الإرسال من عاملٍ معزول (an isolated worker) عبر وكيل خروج (egress proxy) يحظر النطاقات الخاصة (private ranges) ونطاقات الاسترجاع (loopback) والنطاقات المحلية للرابط (link-local ranges)",
+     "قبول عناوين URL على نطاق الشركة الموثَّق للعميل (the customer's verified company domain) فقط، مع فحصها مرةً واحدة (checked once) عند حفظ الخطاف (when the hook is saved)",
+     "رفض عناوين URL التي يحتوي نصها (whose text contains) على localhost أو 127.0.0.1 أو 169.254، ثم الإرسال (then send) من خوادم الواجهة البرمجية (the API servers)",
+     "اشتراط نقاط نهاية HTTPS (HTTPS endpoints) بشهاداتٍ صالحة (valid certificates)، وتوقيع كل حمولة (sign every payload) كي يتحقق منها العملاء (customers can verify it)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Webhooks are SSRF by design, so the destination must be enforced at the network layer: an isolated worker behind an egress proxy that blocks private, loopback and link-local addresses, with replies never shown to the customer. A verified company domain is tempting, but a name checked once can later resolve to an internal address; HTTPS and signed payloads are needed too, yet neither limits where the server sends.",
+    "ar": "خطافات الويب (webhooks) هي SSRF بطبيعة تصميمها (SSRF by design)، لذا يجب فرض الوجهة في طبقة الشبكة (at the network layer): عاملٌ معزول (an isolated worker) خلف وكيل خروج (egress proxy) يحظر العناوين الخاصة وعناوين الاسترجاع والعناوين المحلية للرابط (private, loopback and link-local addresses)، ولا تُعرض الردود على العميل أبدًا (replies never shown to the customer). أما نطاق الشركة الموثَّق (a verified company domain) فخيارٌ مغرٍ (tempting)، لكن الاسم الذي فُحص مرةً واحدة (a name checked once) قد يُحَلّ لاحقًا إلى عنوانٍ داخلي (resolve to an internal address)؛ وHTTPS والحمولات الموقَّعة (signed payloads) مطلوبةٌ أيضًا، لكن أيًّا منها لا يقيّد وجهة إرسال الخادم (limits where the server sends)."
+   }
+  },
+  {
+   "id": "m2-4",
+   "level": 3,
+   "lesson": "2.2",
+   "q": {
+    "en": "In an authorised test, Mariam shows that a page planted on a compromised marketing.najm.example can make a logged-in user's browser submit the SME Portal form that changes an invoice's payment terms. The session cookie is SameSite=Strict, and CORS allows only the portal's own origin. What explains this, and what closes it?",
+    "ar": "في اختبارٍ مصرَّح به (an authorised test)، تُظهر مريم أن صفحةً مزروعة (a planted page) على النطاق marketing.najm.example بعد اختراقه (compromised) تستطيع جعل متصفح مستخدمٍ مسجِّلٍ دخوله (a logged-in user's browser) يرسل نموذج بوابة الشركات الصغيرة (SME Portal form) الذي يغيّر شروط الدفع لفاتورة (an invoice's payment terms). وملف تعريف ارتباط الجلسة (session cookie) مضبوطٌ على SameSite=Strict، ولا تسمح سياسة CORS (CORS policy) إلا بمصدر البوابة نفسها (the portal's own origin). ما الذي يفسّر ذلك، وما الذي يغلقه (what explains this, and what closes it)؟"
+   },
+   "o": {
+    "en": [
+     "Strict was not applied; add the __Host- prefix so that subdomains cannot send the cookie",
+     "CORS should have stopped it; apply the CORS policy to form posts as well as to API calls",
+     "SameSite compares sites, not origins; require a CSRF token and an exact Origin match",
+     "The cookie lacked HttpOnly, so the planted page read it; set HttpOnly on the session cookie"
+    ],
+    "ar": [
+     "لم تُطبَّق القيمة Strict (Strict was not applied)؛ فأضف البادئة __Host- (the __Host- prefix) كي لا تستطيع النطاقات الفرعية إرسال ملف تعريف الارتباط (subdomains cannot send the cookie)",
+     "كان على CORS أن يوقفه (CORS should have stopped it)؛ فطبّق سياسة CORS (CORS policy) على إرسال النماذج (form posts) كما على استدعاءات الواجهة البرمجية (API calls)",
+     "تقارن SameSite المواقع لا المصادر (compares sites, not origins)؛ فاشترط رمزًا مضادًا لتزوير الطلبات (a CSRF token) ومطابقةً تامة لترويسة Origin (an exact Origin match)",
+     "افتقر ملف تعريف الارتباط إلى HttpOnly (the cookie lacked HttpOnly)، فقرأته الصفحة المزروعة (the planted page read it)؛ فاضبط HttpOnly على ملف تعريف ارتباط الجلسة (session cookie)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "SameSite works per site (scheme plus registrable domain), so marketing.najm.example is the same site as portal.najm.example and the Strict cookie is still sent; a CSRF token that the other origin cannot read, plus an exact Origin check, closes the gap, as rule CSRF-1 requires. The __Host- prefix is tempting, but it only stops sibling subdomains overwriting the cookie, not the browser sending it.",
+    "ar": "تعمل SameSite على مستوى الموقع (per site)، أي المخطط مع النطاق القابل للتسجيل (scheme plus registrable domain)، فيكون marketing.najm.example الموقعَ نفسه (the same site) الذي ينتمي إليه portal.najm.example، ويُرسَل ملف تعريف الارتباط ذو القيمة Strict رغم ذلك (still sent)؛ ويغلق الثغرةَ رمزٌ مضاد لتزوير الطلبات (a CSRF token) لا يستطيع المصدر الآخر قراءته (the other origin cannot read)، مع فحصٍ تام لترويسة Origin (an exact Origin check)، كما تشترط القاعدة CSRF-1 (rule CSRF-1). أما البادئة __Host- (the __Host- prefix) فخيارٌ مغرٍ (tempting)، لكنها لا تمنع إلا كتابة النطاقات الفرعية الشقيقة فوق ملف تعريف الارتباط (sibling subdomains overwriting the cookie)، لا إرسالَ المتصفح له (not the browser sending it)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m2-e1",
+   "lesson": "2.1",
+   "text": {
+    "en": "I have built a small local app whose string-built invoice search returns every company's rows for a hostile input, fixed it with a parameterised query, and added a unit test that fails on the old code and passes on the new",
+    "ar": "بنيتُ تطبيقًا محليًا صغيرًا (a small local app) يعيد فيه بحثُ الفواتير المبنيُّ بلصق السلاسل النصية (string-built invoice search) صفوفَ كل الشركات (every company's rows) عند إدخالٍ عدائي (a hostile input)، وأصلحتُه باستعلامٍ ذي معاملات (a parameterised query)، وأضفتُ اختبار وحدة (a unit test) يفشل على الشيفرة القديمة وينجح على الجديدة (fails on the old code and passes on the new)"
+   }
+  },
+  {
+   "id": "m2-e2",
+   "lesson": "2.3",
+   "text": {
+    "en": "I have implemented an upload validation stage locally, with tests that reject a renamed HTML file, an SVG and an archive entry named ../evil.txt, and mapped every upload risk to a control with an owner",
+    "ar": "نفّذتُ مرحلة التحقق من الرفوعات محليًا (an upload validation stage locally)، مع اختباراتٍ ترفض (tests that reject) ملف HTML معادًا تسميته (a renamed HTML file) وملف SVG (an SVG) ومُدخلَ أرشيف (an archive entry) باسم ../evil.txt، وربطتُ كل خطرٍ من مخاطر الرفع بضابطٍ له مالك (every upload risk to a control with an owner)"
+   }
+  }
+ ]
+}

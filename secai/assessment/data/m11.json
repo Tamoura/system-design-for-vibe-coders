@@ -1,0 +1,135 @@
+{
+ "area": "m11",
+ "questions": [
+  {
+   "id": "m11-1",
+   "level": 1,
+   "lesson": "11.1",
+   "q": {
+    "en": "A framework that Najm Bank's Unified Control Set maps to publishes a new edition. Following the crosswalk approach, what should Noura's team update?",
+    "ar": "يُصدر أحد الأطر (frameworks) التي تُطابَق معها مجموعة الضوابط الموحّدة في بنك نجم (Najm Bank's Unified Control Set) إصدارًا جديدًا (new edition). وفق نهج جدول المطابقة (crosswalk approach)، ما الذي ينبغي أن يحدّثه فريق نورة (Noura's team)؟"
+   },
+   "o": {
+    "en": [
+     "Each control's wording, rewritten to follow the new edition's structure",
+     "The framework labels on each control, checked against the official text",
+     "The framework column, filled in from a vendor's ready-made mapping to it",
+     "Nothing yet: the labels can wait until an auditor asks about the new edition"
+    ],
+    "ar": [
+     "صياغة كل ضابط (each control's wording)، بعد إعادة كتابتها وفق بنية الإصدار الجديد (new edition's structure)",
+     "تسميات الإطار (framework labels) على كل ضابط (each control)، بعد مراجعتها في النص الرسمي (official text)",
+     "عمود الإطار (framework column)، بعد ملئه من مطابقة جاهزة (ready-made mapping) أعدّها أحد الموردين (vendor)",
+     "لا شيء بعد (nothing yet): فالتسميات (labels) تنتظر حتى يسأل مدقّق (auditor) عن الإصدار الجديد (new edition)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "In a crosswalk the internal control is the unit of work and framework identifiers are labels on it, so a new edition means updating the labels after checking the official text. Importing a vendor's mapping is the tempting shortcut, but mappings copied from vendors or blogs must be checked against the official texts.",
+    "ar": "في جدول المطابقة (crosswalk) يكون الضابط الداخلي (internal control) وحدةَ العمل (unit of work)، وتكون معرّفات الأطر (framework identifiers) تسمياتٍ عليه (labels)، فالإصدار الجديد (new edition) يعني تحديث التسميات بعد مراجعة النص الرسمي (official text). واستيراد مطابقة أحد الموردين (vendor's mapping) هو الاختصار المغري (tempting shortcut)، لكن المطابقات المنقولة من الموردين أو المدونات (mappings copied from vendors or blogs) يجب التحقق منها في النصوص الرسمية (official texts)."
+   }
+  },
+  {
+   "id": "m11-2",
+   "level": 2,
+   "lesson": "11.2",
+   "q": {
+    "en": "On Sunday at 09:00 Jassim's SOC flags unusual queries on a customer database at Najm Bank's Frankfurt branch. At 13:00 the team confirms that an attacker copied a table of EU customers' names and account numbers. Ali suggests starting the GDPR clock only when the forensic report arrives next week, so that the first notice is complete. What should the incident ticket record as the start of the GDPR Art. 33 clock?",
+    "ar": "يوم الأحد في الساعة 09:00 يرصد مركز العمليات الأمنية بقيادة جاسم (Jassim's SOC) استعلامات غير معتادة (unusual queries) على قاعدة بيانات للعملاء (customer database) في فرع بنك نجم في فرانكفورت (Najm Bank's Frankfurt branch). وفي الساعة 13:00 يؤكّد الفريق (the team confirms) أن مهاجمًا (attacker) نسخ جدولًا (copied a table) بأسماء عملاء في الاتحاد الأوروبي وأرقام حساباتهم (EU customers' names and account numbers). ويقترح علي ألّا تبدأ ساعة GDPR (GDPR clock) إلا عند وصول تقرير التحليل الجنائي (forensic report) في الأسبوع المقبل، كي يكون الإخطار الأول كاملًا (first notice is complete). ما الذي يجب أن تسجّله تذكرة الحادثة (incident ticket) بدايةً لساعة المادة 33 من GDPR (GDPR Art. 33 clock)؟"
+   },
+   "o": {
+    "en": [
+     "The day the forensic report arrives, so the first notice is complete",
+     "09:00 Sunday, when the SOC's first alert fired on the unusual queries",
+     "The time Sara is formally briefed, since the DPO decides on notifying",
+     "13:00 Sunday, recorded now, with details sent in phases if needed"
+    ],
+    "ar": [
+     "يوم وصول تقرير التحليل الجنائي (forensic report)، كي يكون الإخطار الأول كاملًا (first notice is complete)",
+     "الساعة 09:00 يوم الأحد، حين أُطلق أول تنبيه (first alert) من مركز العمليات الأمنية (SOC) على الاستعلامات غير المعتادة (unusual queries)",
+     "وقت إبلاغ سارة رسميًا (Sara is formally briefed)، لأن مسؤولة حماية البيانات (DPO) هي من تقرّر الإخطار (decides on notifying)",
+     "الساعة 13:00 يوم الأحد، مسجَّلةً الآن (recorded now)، مع إرسال التفاصيل على مراحل (in phases) عند الحاجة (if needed)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "The 72 hours run from awareness, a reasonable degree of certainty that personal data were compromised, which the 13:00 confirmation gives; Art. 33(4) allows information in phases, so waiting for the report only lets the clock run unseen. The 09:00 alert is tempting, but unusual queries alone did not yet show a breach, and a short investigation is allowed.",
+    "ar": "تبدأ مهلة 72 ساعة (72 hours) من العلم (awareness)، أي درجة معقولة من اليقين (reasonable degree of certainty) بأن بيانات شخصية (personal data) قد اختُرقت، وهذا ما وفّره تأكيد الساعة 13:00 (13:00 confirmation)؛ وتسمح المادة 33(4) (Art. 33(4)) بتقديم المعلومات على مراحل (information in phases)، فانتظار التقرير (waiting for the report) لا يفعل سوى أن يترك الساعة تجري دون أن يراها أحد (lets the clock run unseen). وتنبيه الساعة 09:00 (09:00 alert) هو الخيار المغري (tempting answer)، لكن الاستعلامات غير المعتادة وحدها (unusual queries alone) لم تُثبت بعد وقوع اختراق (breach)، والتحقيق القصير (short investigation) مسموح به."
+   }
+  },
+  {
+   "id": "m11-3",
+   "level": 2,
+   "lesson": "11.3",
+   "q": {
+    "en": "Najm Bank launches security champions in 15 product teams with keen volunteers, but nobody agrees their time with the team leads. By month four most have stopped triaging their teams' scanner findings, because sprint deadlines always win. What is the most effective fix?",
+    "ar": "يُطلق بنك نجم (Najm Bank) برنامج سفراء الأمن (security champions) في 15 فريق منتج (product teams) بمتطوعين متحمّسين (keen volunteers)، لكن أحدًا لا يتّفق على وقتهم مع قادة الفرق (team leads). وبحلول الشهر الرابع (month four) توقّف معظمهم عن فرز نتائج الماسحات (triaging scanner findings) الخاصة بفرقهم، لأن مواعيد الدورات النهائية (sprint deadlines) تفوز دائمًا. ما الإصلاح الأكثر فاعلية (most effective fix)؟"
+   },
+   "o": {
+    "en": [
+     "Agree about 10% protected time with team leads, written into the role card",
+     "Make each champion accountable for the team's risk, so the role carries weight",
+     "Return triage to the central AppSec team and ask the board for more headcount",
+     "Have managers appoint one engineer per team as champion instead of volunteers"
+    ],
+    "ar": [
+     "الاتفاق مع قادة الفرق (team leads) على نحو 10% من الوقت المحمي (protected time)، مدوَّنًا في بطاقة الدور (role card)",
+     "جعل كل سفير أمن (champion) مساءلًا عن مخاطر فريقه (accountable for the team's risk)، كي يكتسب الدور وزنًا (carries weight)",
+     "إعادة الفرز (triage) إلى فريق أمن التطبيقات المركزي (central AppSec team) وطلب موظفين إضافيين (more headcount) من مجلس الإدارة (board)",
+     "أن يعيّن المديرون (managers appoint) مهندسًا واحدًا لكل فريق سفيرًا للأمن (champion) بدلًا من المتطوعين (volunteers)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Champions need protected time agreed with managers in advance, because unfunded time disappears at the first deadline, which is what happened here. Making champions accountable is tempting, but accountability for the team's risk stays with the team lead; the champion multiplies the team's skill and does not own its risk.",
+    "ar": "يحتاج سفراء الأمن (security champions) إلى وقت محمي (protected time) يُتّفق عليه مسبقًا مع المديرين (managers)، لأن الوقت غير الممول (unfunded time) يختفي عند أول موعد نهائي (first deadline)، وهذا ما حدث هنا. وجعل السفراء مساءلين (accountable) هو الخيار المغري (tempting answer)، لكن المساءلة عن مخاطر الفريق (team's risk) تبقى مع قائد الفريق (team lead)؛ فالسفير يضاعف مهارة الفريق (multiplies the team's skill) ولا يملك مخاطره (does not own its risk)."
+   }
+  },
+  {
+   "id": "m11-4",
+   "level": 3,
+   "lesson": "11.3",
+   "q": {
+    "en": "At a payments company, the AppSec dashboard has shown 100% pipeline coverage for two quarters: every Tier 1 repository runs SAST, SCA and secret scanning. Yet the escape rate is stuck at 30%, and a penetration test has just found an API key merged into a Tier 1 repository last month. The pipeline log shows the secret scanner flagged it, and the merge went ahead anyway. What is the most likely diagnosis?",
+    "ar": "في شركة مدفوعات (payments company)، تُظهر لوحة متابعة أمن التطبيقات (AppSec dashboard) منذ ربعين (two quarters) تغطيةً كاملة لخطوط التكامل والنشر (100% pipeline coverage): فكل مستودع من الفئة 1 (Tier 1 repository) يشغّل SAST وSCA وفحص الأسرار (secret scanning). ومع ذلك يبقى معدل الإفلات (escape rate) عالقًا عند 30%، وقد وجد اختبار اختراق (penetration test) للتو مفتاح API (API key) دُمج في مستودع من الفئة 1 الشهر الماضي. ويُظهر سجل خط التكامل (pipeline log) أن ماسح الأسرار (secret scanner) نبّه إليه (flagged it)، ومع ذلك مضى الدمج (merge went ahead). ما التشخيص الأرجح (most likely diagnosis)؟"
+   },
+   "o": {
+    "en": [
+     "Detection is too weak, so a second scanner should be added to Tier 1 repos",
+     "The escape rate is a lagging indicator and needs two more quarters to move",
+     "The checks only warn, so coverage must count only checks that block merges",
+     "Developers need more secure coding training before the escape rate can fall"
+    ],
+    "ar": [
+     "الرصد ضعيف جدًا (detection is too weak)، فيجب إضافة ماسح ثانٍ (second scanner) إلى مستودعات الفئة 1 (Tier 1 repos)",
+     "معدل الإفلات (escape rate) مؤشر متأخر (lagging indicator)، ويحتاج إلى ربعين آخرين (two more quarters) كي يتحرك",
+     "الفحوص تحذّر فقط (checks only warn)، فيجب أن تَعُدّ التغطية (coverage) الفحوصَ التي تمنع الدمج (block merges) وحدها",
+     "يحتاج المطورون (developers) إلى مزيد من التدريب على البرمجة الآمنة (secure coding training) قبل أن ينخفض معدل الإفلات (escape rate)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "The scanner flagged the key yet the merge went ahead, so the checks are 'warn only' and the coverage figure counts configured checks rather than enforcement, which is what pipeline coverage should measure. Calling the escape rate a lagging indicator is tempting, but more time would not stop flagged secrets reaching the main branch.",
+    "ar": "نبّه الماسح (scanner flagged) إلى المفتاح ومع ذلك مضى الدمج (merge went ahead)، فالفحوص «تحذيرية فقط (warn only)»، ورقم التغطية (coverage figure) يعدّ الفحوص المُعدّة (configured checks) لا الفرض الفعلي (enforcement)، وهو ما يجب أن تقيسه تغطية خطوط التكامل (pipeline coverage). ووصف معدل الإفلات بأنه مؤشر متأخر (lagging indicator) هو الخيار المغري (tempting answer)، لكن مزيدًا من الوقت (more time) لن يمنع الأسرار المنبَّه إليها (flagged secrets) من الوصول إلى الفرع الرئيسي (main branch)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m11-e1",
+   "lesson": "11.1",
+   "text": {
+    "en": "I have rewritten three of my team's controls as scoped, owned and testable statements, mapped each to CSF 2.0, ISO/IEC 27001 Annex A, SSDF and SAMM with identifiers I checked in the official texts, and automated the evidence for one of them in my repository's CI",
+    "ar": "أعدتُ كتابة ثلاثة من ضوابط فريقي (my team's controls) عباراتٍ محددة النطاق ولها مالك وقابلة للاختبار (scoped, owned and testable statements)، وطابقتُ كلًّا منها (mapped each) مع CSF 2.0 وISO/IEC 27001 Annex A وSSDF وSAMM بمعرّفات تحقّقتُ منها في النصوص الرسمية (identifiers I checked in the official texts)، وأتمتُّ الدليل (automated the evidence) لأحدها في التكامل المستمر لمستودعي (my repository's CI)"
+   }
+  },
+  {
+   "id": "m11-e2",
+   "lesson": "11.2",
+   "text": {
+    "en": "I have run a paper tabletop of a personal-data exposure incident that defines the awareness time with its evidence and gives every notification clock a due time, and written the log queries that would show which records were downloaded",
+    "ar": "أدرتُ تمرينًا نظريًا على الورق (paper tabletop) لحادثة كشف بيانات شخصية (personal-data exposure incident) يحدّد وقت العلم (awareness time) مع دليله (with its evidence) ويمنح كل ساعة إخطار (notification clock) موعد استحقاق (due time)، وكتبتُ استعلامات السجلات (log queries) التي تُظهر أيّ السجلات نُزّلت (which records were downloaded)"
+   }
+  }
+ ]
+}

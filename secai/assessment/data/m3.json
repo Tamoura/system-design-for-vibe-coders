@@ -62,8 +62,8 @@
    "level": 2,
    "lesson": "3.3",
    "q": {
-    "en": "Ali adds a cached 'monthly summary' to the SME Portal dashboard, stored in the cache under the summary's name alone. In an authorised staging test, Mariam signs in at Company B and sees Company A's totals. Row-level security is already enabled on the invoices table. What is the right fix?",
-    "ar": "يضيف علي «ملخصًا شهريًّا» (\"monthly summary\") إلى لوحة المتابعة (dashboard) في بوابة الشركات الصغيرة (SME Portal)، ويخزّنه في ذاكرة التخزين المؤقت (cache) تحت اسم الملخص وحده (summary's name alone). وفي اختبارٍ مصرَّحٍ به (authorised test) على بيئة ما قبل الإنتاج (staging)، تسجّل مريم الدخول في الشركة B (Company B) فترى إجماليات الشركة A (Company A's totals). وأمن مستوى الصف (row-level security) مفعَّلٌ أصلًا على جدول الفواتير (invoices table). ما الإصلاح الصحيح (right fix)؟"
+    "en": "Ali adds a 'monthly summary' to the SME Portal dashboard and caches it under the key 'monthly-summary'. In an authorised staging test, Mariam signs in at Company B and sees Company A's totals. Row-level security is already enabled on the invoices table. What is the right fix?",
+    "ar": "يضيف علي «ملخصًا شهريًّا» (\"monthly summary\") إلى لوحة المتابعة (dashboard) في بوابة الشركات الصغيرة (SME Portal)، ويخزّنه في ذاكرة التخزين المؤقت (caches it) تحت المفتاح (key) 'monthly-summary'. وفي اختبارٍ مصرَّحٍ به (authorised test) على بيئة ما قبل الإنتاج (staging)، تسجّل مريم الدخول في الشركة B (Company B) فترى إجماليات الشركة A (Company A's totals). وأمن مستوى الصف (row-level security) مفعَّلٌ أصلًا على جدول الفواتير (invoices table). ما الإصلاح الصحيح (right fix)؟"
    },
    "o": {
     "en": [
@@ -81,8 +81,8 @@
    },
    "a": 3,
    "why": {
-    "en": "In a pooled multi-tenant design every data path, cache keys included, must be scoped to the tenant taken from the session. Row-level security filters queries on the table, but a cached result is served without querying it, so forcing RLS cannot stop this leak.",
-    "ar": "في التصميم المجمَّع متعدد المستأجرين (pooled multi-tenant design)، يجب حصر كل مسار بيانات (every data path)، بما فيه مفاتيح التخزين المؤقت (cache keys)، في المستأجر المأخوذ من الجلسة (tenant taken from the session). يُرشِّح أمن مستوى الصف (row-level security) الاستعلامات على الجدول (queries on the table)، لكن النتيجة المخزَّنة مؤقتًا (cached result) تُقدَّم دون الاستعلام عنه (without querying it)، فلا يستطيع فرضه (forcing RLS) إيقاف هذا التسريب (leak)."
+    "en": "The cache key carries no tenant, so whichever company loads the summary first serves it to every company; in a pooled multi-tenant design every data path, cache keys included, must be scoped to the tenant taken from the session. Forcing row-level security cannot stop this leak, because a cached result is served without querying the table.",
+    "ar": "لا يحمل مفتاح التخزين المؤقت (cache key) أيَّ مستأجر (no tenant)، فأيّ شركةٍ تُحمِّل الملخص أولًا (loads the summary first) تُقدِّمه لكل الشركات؛ وفي التصميم المجمَّع متعدد المستأجرين (pooled multi-tenant design) يجب حصر كل مسار بيانات (every data path)، بما فيه مفاتيح التخزين المؤقت (cache keys)، في المستأجر المأخوذ من الجلسة (tenant taken from the session). ولا يستطيع فرض أمن مستوى الصف (forcing row-level security) إيقاف هذا التسريب (leak)، لأن النتيجة المخزَّنة مؤقتًا (cached result) تُقدَّم دون الاستعلام عن الجدول (without querying the table)."
    }
   },
   {
@@ -96,13 +96,13 @@
    "o": {
     "en": [
      "Have agents send an SMS code to the number on file before doing any sign-in reset",
-     "Stop phone-only factor resets; re-verify identity in app or branch, with delays",
+     "Stop phone-only factor resets and re-verify identity in app or branch, with delays",
      "Add harder knowledge questions to the agents' call script, such as previous addresses",
      "Require hardware security keys for all customers, so that passkeys can never be lost"
     ],
     "ar": [
      "إرسال الوكلاء (agents) رمزَ SMS (SMS code) إلى الرقم المسجَّل (number on file) قبل أي إعادة تعيينٍ لتسجيل الدخول (sign-in reset)",
-     "وقف إعادة تعيين العوامل هاتفيًّا (phone-only factor resets)، والتحقق من الهوية مجددًا (re-verify identity) في التطبيق أو الفرع، مع تأخيرات (delays)",
+     "وقف إعادة تعيين العوامل هاتفيًّا فقط (phone-only factor resets)، والتحقق من الهوية مجددًا (re-verify identity) في التطبيق أو الفرع (in app or branch)، مع تأخيرات (delays)",
      "إضافة أسئلة معرفية أصعب (harder knowledge questions) إلى نص المكالمة لدى الوكلاء (agents' call script)، مثل العناوين السابقة للعميل (previous addresses)",
      "اشتراط مفاتيح أمان عتادية (hardware security keys) لجميع العملاء، كي لا تُفقَد مفاتيح المرور (passkeys) أبدًا (can never be lost)"
     ]

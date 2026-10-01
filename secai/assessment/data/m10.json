@@ -25,7 +25,7 @@
    },
    "a": 2,
    "why": {
-    "en": "Events reach a separate account the application team cannot change within seconds, so the record of those minutes was already off the server before the wipe; an attacker on a server can delete its local logs. Retention is the tempting answer, but a 12-month rule protects nothing if the only copy sat on the compromised server.",
+    "en": "Within seconds, events reach a separate account the application team cannot change, so the record of those minutes was already off the server before the wipe; an attacker on a server can delete its local logs. Retention is the tempting answer, but a 12-month rule protects nothing if the only copy sat on the compromised server.",
     "ar": "تصل الأحداث (events) خلال ثوانٍ إلى حساب منفصل (separate account) لا يستطيع فريق التطبيق (application team) تغييره، فكان سجلّ تلك الدقائق (record of those minutes) قد غادر الخادم قبل المسح (wipe)؛ إذ يستطيع المهاجم على الخادم (attacker on a server) حذف سجلاته المحلية (local logs). ومدة الاحتفاظ (retention) هي الإجابة المغرية (tempting answer)، لكن قاعدة الاثني عشر شهرًا (12-month rule) لا تحمي شيئًا إذا كانت النسخة الوحيدة (only copy) على الخادم المخترَق (compromised server)."
    }
   },
@@ -35,7 +35,7 @@
    "lesson": "10.1",
    "q": {
     "en": "A new Najm Mobile detection, “over 20 failed sign-ins on one account in an hour”, raised 260 alerts in the last 30 days. Five were real, and analysts now close it without reading it. Under Najm Bank's Detection Catalogue rules, what should happen to it?",
-    "ar": "أطلق رصدٌ جديد (new detection) في تطبيق نجم للهاتف (Najm Mobile)، هو «أكثر من 20 محاولة دخول فاشلة على حساب واحد خلال ساعة» (over 20 failed sign-ins on one account in an hour)، 260 تنبيهًا (alerts) خلال الأيام الثلاثين الماضية (last 30 days). كان خمسة منها فقط حقيقية (real)، وصار المحللون (analysts) يغلقونه دون قراءته (without reading it). ماذا يجب أن يحدث له وفق قواعد كتالوج الرصد (Detection Catalogue rules) في بنك نجم (Najm Bank)؟"
+    "ar": "أطلق رصدٌ جديد (new detection) في تطبيق نجم للهاتف (Najm Mobile)، هو «أكثر من 20 محاولة دخول فاشلة على حساب واحد خلال ساعة» (over 20 failed sign-ins on one account in an hour)، 260 تنبيهًا (alerts) خلال الأيام الثلاثين الماضية (last 30 days). كانت خمسة منها حقيقية (real)، وصار المحللون (analysts) يغلقونه دون قراءته (without reading it). ماذا يجب أن يحدث له وفق قواعد كتالوج الرصد (Detection Catalogue rules) في بنك نجم (Najm Bank)؟"
    },
    "o": {
     "en": [
@@ -54,7 +54,7 @@
    "a": 0,
    "why": {
     "en": "The catalogue says a rule that is real less than 10% of the time over 30 days (here about 2%) is tuned or retired, and a tuned rule is tested against past weeks to measure its false positives. Raising the severity is the tempting fix, but the noise stays the same, so it only teaches analysts to ignore critical alerts too.",
-    "ar": "ينصّ الكتالوج (catalogue) على أن القاعدة (rule) التي تكون حقيقية (real) في أقل من 10% من المرات خلال 30 يومًا، وهنا نحو 2%، تُضبط أو تُوقف (tuned or retired)، وتُختبر القاعدة المضبوطة (tuned rule) على الأسابيع الماضية (past weeks) لقياس إيجابياتها الكاذبة (false positives). ورفع الخطورة (raising the severity) هو الحل المغري (tempting fix)، لكن الضجيج (noise) يبقى كما هو، فلا يعلّم المحللين (analysts) إلا تجاهل التنبيهات الحرجة (critical alerts) أيضًا."
+    "ar": "ينصّ الكتالوج (catalogue) على أن القاعدة (rule) التي تكون حقيقية (real) في أقل من 10% من المرات (less than 10% of the time) خلال 30 يومًا، وهنا نحو 2%، تُضبط أو تُوقف (tuned or retired)، وتُختبر القاعدة المضبوطة (tuned rule) على الأسابيع الماضية (past weeks) لقياس إيجابياتها الكاذبة (false positives). ورفع الخطورة (raising the severity) هو الحل المغري (tempting fix)، لكن الضجيج (noise) يبقى كما هو، فلا يعلّم المحللين (analysts) إلا تجاهل التنبيهات الحرجة (critical alerts) أيضًا."
    }
   },
   {
@@ -62,21 +62,21 @@
    "level": 2,
    "lesson": "10.3",
    "q": {
-    "en": "A penetration test confirms that changing a company ID in an SME Portal request shows another business's invoice list; the logs show no sign anyone has abused it. Tariq's dashboard ranks it P3: no EPSS score, no KEV entry, CVSS-BTE 6.5. Under Najm Bank's Vulnerability Management Standard, what is the right priority?",
-    "ar": "يؤكّد اختبار اختراق (penetration test) أن تغيير معرّف الشركة (company ID) في طلب إلى بوابة الشركات الصغيرة (SME Portal) يكشف قائمة فواتير (invoice list) شركة أخرى، ولا تُظهر السجلات (logs) أي أثر لاستغلاله (abuse). ويصنّفه لوح متابعة طارق (Tariq's dashboard) في الأولوية P3: لا درجة EPSS (EPSS score)، ولا إدخال في KEV (KEV entry)، ودرجة CVSS-BTE تساوي 6.5. ما الأولوية الصحيحة (right priority) وفق معيار إدارة الثغرات (Vulnerability Management Standard) في بنك نجم (Najm Bank)؟"
+    "en": "A penetration test confirms that changing the account number in a Najm Mobile statement-download request returns another customer's statement; the logs show no sign anyone has abused it. Tariq's dashboard ranks it P3: no EPSS score, no KEV entry, CVSS-BTE 6.5. Under Najm Bank's Vulnerability Management Standard, what is the right priority?",
+    "ar": "يؤكّد اختبار اختراق (penetration test) أن تغيير رقم الحساب (account number) في طلب تنزيل كشف الحساب (statement-download request) في تطبيق نجم للهاتف (Najm Mobile) يُعيد كشف حساب عميل آخر (another customer's statement)، ولا تُظهر السجلات (logs) أي أثر لاستغلاله (abuse). وتصنّفه لوحة متابعة طارق (Tariq's dashboard) في الأولوية P3: لا درجة EPSS (EPSS score)، ولا إدخال في KEV (KEV entry)، ودرجة CVSS-BTE تساوي 6.5. ما الأولوية الصحيحة (right priority) وفق معيار إدارة الثغرات (Vulnerability Management Standard) في بنك نجم (Najm Bank)؟"
    },
    "o": {
     "en": [
      "P3 as ranked: with no EPSS or KEV data, CVSS-BTE alone sets its place",
      "None yet: rank it once a CVE ID and an EPSS score have been published",
      "P0: the flaw is on an internet-facing system that holds customer data",
-     "P1: confirmed cross-customer access in the bank's own code is P1"
+     "P1: the flaw is confirmed cross-customer access in Najm's own code"
     ],
     "ar": [
      "P3 كما صُنّف (as ranked): فمع غياب بيانات EPSS وKEV (EPSS or KEV data) تحدّد درجة CVSS-BTE وحدها موقعه",
      "لا أولوية بعد (none yet): يُرتَّب بعد نشر معرّف CVE (CVE ID) ودرجة EPSS (EPSS score) له",
      "P0: فالثغرة (flaw) في نظام مكشوف للإنترنت (internet-facing system) يحفظ بيانات العملاء (customer data)",
-     "P1: فالوصول المؤكَّد عبر العملاء (confirmed cross-customer access) في شيفرة البنك نفسه (bank's own code) أولويته P1"
+     "P1: فالثغرة (flaw) وصولٌ مؤكَّد عبر العملاء (confirmed cross-customer access) في شيفرة نجم نفسها (Najm's own code)"
     ]
    },
    "a": 3,

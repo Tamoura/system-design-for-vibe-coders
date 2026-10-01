@@ -17,16 +17,16 @@
      "It gives every change a threat model and a security review, whatever the change touches"
     ],
     "ar": [
-     "تستبدل باختبار الاختراق المتأخر (late pen test) أدواتِ الفحص SAST وDAST وSCA (scanners) التي تعمل في خط التسليم (pipeline)",
+     "تعتمد على أدوات الفحص SAST وDAST وSCA (scanners) العاملة في خط التسليم (pipeline) بدلًا من اختبار الاختراق المتأخر (instead of the late pen test)",
      "تنقل اختبار الاختراق الكامل (full pen test) إلى مرحلة التصميم (design phase)، فتُكتشف الثغرات (flaws) قبل كتابة الشيفرة (before coding)",
-     "تضيف مهامَّ أمنية صغيرة (small security tasks) إلى كل مرحلة (every phase)، وتحوّل كل ثغرةٍ فالتة (escape) إلى اختبارٍ أو قاعدة (test or rule)",
+     "تضيف مهامَّ أمنية صغيرة (small security tasks) إلى كل مرحلة (every phase)، وتحوّل كل ثغرةٍ مُفلِتة (escape) إلى اختبارٍ أو قاعدة (test or rule)",
      "تمنح كل تغييرٍ (every change) نموذج تهديدات (threat model) ومراجعةً أمنية (security review)، أيًّا كان ما يمسّه التغيير (whatever the change touches)"
     ]
    },
    "a": 2,
    "why": {
     "en": "A secure SDLC threads small, risk-scaled activities through planning, design, build, test, deployment and operation, and turns every escape into a rule or test. Swapping the pen test for scanners is the tempting shortcut, but scanners miss most authorisation and business-logic flaws, and Najm still pen-tests major tier-1 releases.",
-    "ar": "تنسج دورة حياة التطوير الآمن (secure SDLC) أنشطةً صغيرة متناسبة مع المخاطر (risk-scaled activities) عبر التخطيط والتصميم والبناء (planning, design, build) والاختبار والنشر والتشغيل (test, deployment and operation)، وتحوّل كل ثغرةٍ فالتة (every escape) إلى قاعدةٍ أو اختبار (rule or test). أما استبدال اختبار الاختراق بأدوات الفحص (swapping the pen test for scanners) فهو الاختصار المغري (the tempting shortcut)، لكن أدوات الفحص تفوتها معظم ثغرات التفويض ومنطق الأعمال (most authorisation and business-logic flaws)، وما زال بنك نجم (Najm Bank) يُجري اختبار اختراقٍ للإصدارات الكبرى من الفئة 1 (major tier-1 releases)."
+    "ar": "تنسج دورة حياة التطوير الآمن (secure SDLC) أنشطةً صغيرة متناسبة مع المخاطر (risk-scaled activities) عبر التخطيط والتصميم والبناء (planning, design, build) والاختبار والنشر والتشغيل (test, deployment and operation)، وتحوّل كل ثغرةٍ مُفلِتة (every escape) إلى قاعدةٍ أو اختبار (rule or test). أما استبدال اختبار الاختراق بأدوات الفحص (swapping the pen test for scanners) فهو الاختصار المغري (the tempting shortcut)، لكن أدوات الفحص تفوتها معظم ثغرات التفويض ومنطق الأعمال (most authorisation and business-logic flaws)، وما زال بنك نجم (Najm Bank) يُجري اختبار اختراقٍ للإصدارات الكبرى من الفئة 1 (major tier-1 releases)."
    }
   },
   {
@@ -74,7 +74,7 @@
     ],
     "ar": [
      "الموافقة، إذا كان روبوت المراجعة (the review bot) يعمل بنموذجٍ مختلف (a different model) عن الوكيل الذي كتب الشيفرة (the agent that wrote the code)",
-     "الموافقة، إذا كان ملف القواعد (the rules file) يأمر روبوت المراجعة بتطبيق قائمة تحقق المراجِع في نجم (Najm's reviewer checklist)",
+     "الموافقة (Accept)، إذا كان ملف القواعد (the rules file) يأمر روبوت المراجعة (the review bot) بتطبيق قائمة تحقق المراجِع في نجم (Najm's reviewer checklist)",
      "رفض المراجعة بالذكاء الاصطناعي كليًّا (Reject AI review entirely)، لأن التعليقات في الشيفرة (comments in the code) يمكن أن توجّه النموذج المراجِع (steer a reviewing model)",
      "استخدام الروبوت إشارةً إضافية (an extra signal)؛ فتغييرات الفئة 1 (tier-1 changes) ما زالت تذهب إلى سفير أمن (still go to a security champion)"
     ]
@@ -109,8 +109,8 @@
    },
    "a": 1,
    "why": {
-    "en": "Najm's routine updates wait three days, but fixes for CISA KEV entries skip the wait and get an extra review, because active exploitation outweighs the small risk of a bad release. Keeping the hold and adding detection rules is tempting, but detection supplements a KEV patch; it does not replace it.",
-    "ar": "تنتظر التحديثات الروتينية في نجم (Najm's routine updates) ثلاثة أيام، أما إصلاحات الإدخالات المدرجة في CISA KEV (fixes for CISA KEV entries) فتتخطّى الانتظار (skip the wait) وتخضع لمراجعةٍ إضافية (an extra review)، لأن الاستغلال الفعلي (active exploitation) يفوق الخطر الصغير لإصدارٍ سيئ (the small risk of a bad release). أما الإبقاء على الاحتجاز مع إضافة قواعد رصد (keeping the hold and adding detection rules) فخيارٌ مغرٍ (tempting)، لكن الرصد يُكمّل ترقيع KEV (detection supplements a KEV patch) ولا يحلّ محله (does not replace it)."
+    "en": "Najm's rule is explicit: routine updates wait three days, but fixes for CISA KEV entries skip the wait and get an extra review instead. Keeping the hold and adding detection rules is tempting, but Najm's runbook adds detection rules alongside the fix, not as a reason to delay fixing a flaw that is already being exploited.",
+    "ar": "قاعدة نجم صريحة (Najm's rule is explicit): تنتظر التحديثات الروتينية (routine updates) ثلاثة أيام، أما إصلاحات الإدخالات المدرجة في CISA KEV (fixes for CISA KEV entries) فتتخطّى الانتظار (skip the wait) وتخضع بدلًا منه لمراجعةٍ إضافية (get an extra review instead). أما الإبقاء على الاحتجاز مع إضافة قواعد رصد (keeping the hold and adding detection rules) فخيارٌ مغرٍ (tempting)، لكن دليل التشغيل في نجم (Najm's runbook) يضيف قواعد الرصد إلى جانب الإصلاح (alongside the fix)، لا ذريعةً لتأخير إصلاح ثغرةٍ تُستغَل بالفعل (a flaw that is already being exploited)."
    }
   }
  ],
