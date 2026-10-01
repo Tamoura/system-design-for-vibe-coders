@@ -69,20 +69,20 @@
     "en": [
      "Log only allowlisted fields, like customer reference and intent, with the filter as a backstop",
      "Accept the plan, because a pattern filter reliably catches the Restricted fields that matter most",
-     "Keep logging whole requests, but limit access to the log tool to members of the Najm Assist team",
+     "Move the whole-request logging to debug level, so it only runs while debugging is switched on",
      "Move the logs to encrypted storage, so that the whole requests stay fully protected while at rest"
     ],
     "ar": [
      "تسجيل الحقول المدرجة في قائمة السماح فقط (only allowlisted fields)، كمرجع العميل والقصد (customer reference and intent)، مع إبقاء المرشّح احتياطًا (the filter as a backstop)",
      "قبول الخطة (Accept the plan)، لأن مرشّح الأنماط (a pattern filter) يلتقط بصورةٍ موثوقة (reliably catches) الحقول المقيَّدة (Restricted fields) الأكثر أهمية (that matter most)",
-     "الاستمرار في تسجيل الطلبات كاملةً (Keep logging whole requests)، مع حصر الوصول إلى أداة السجلات (limit access to the log tool) في أعضاء فريق نجم أسيست (Najm Assist team)",
+     "نقل تسجيل الطلبات الكاملة (whole-request logging) إلى مستوى التصحيح (debug level)، حتى لا يعمل إلا حين يكون التصحيح مُفعَّلًا (only runs while debugging is switched on)",
      "نقل السجلات إلى تخزينٍ مشفّر (encrypted storage)، حتى تبقى الطلبات الكاملة (the whole requests) محميةً بالكامل أثناء التخزين (fully protected while at rest)"
     ]
    },
    "a": 0,
    "why": {
-    "en": "Logging by allowlist is the main control: whole requests carry Authorization headers and chat text, and a redaction filter is only a safety net, because patterns miss names, addresses, free text and numbers in Arabic-Indic digits. Accepting the filter is tempting, but it treats the safety net as the control.",
-    "ar": "التسجيل وفق قائمة سماح (Logging by allowlist) هو الضابط الرئيسي (the main control): فالطلبات الكاملة (whole requests) تحمل ترويسات `Authorization` ونص المحادثة (chat text)، ومرشّح التنقيح (a redaction filter) ليس إلا شبكة أمان (only a safety net)، لأن الأنماط تفوّت (patterns miss) الأسماء والعناوين والنص الحر (names, addresses, free text) والأرقامَ المكتوبة بالأرقام العربية المشرقية (Arabic-Indic digits). وقبول المرشّح مغرٍ (tempting)، لكنه يجعل شبكة الأمان هي الضابط (treats the safety net as the control)."
+    "en": "Logging by allowlist is the main control: whole requests carry Authorization headers and chat text, and a redaction filter is only a safety net, because patterns miss names, addresses, free text and numbers in Arabic-Indic digits. Accepting the filter is tempting, but it treats the safety net as the control, and debug-level capture of whole requests outlives the bug.",
+    "ar": "التسجيل وفق قائمة سماح (Logging by allowlist) هو الضابط الرئيسي (the main control): فالطلبات الكاملة (whole requests) تحمل ترويسات `Authorization` ونص المحادثة (chat text)، ومرشّح التنقيح (a redaction filter) ليس إلا شبكة أمان (only a safety net)، لأن الأنماط تفوّت (patterns miss) الأسماء والعناوين والنص الحر (names, addresses, free text) والأرقامَ المكتوبة بالأرقام العربية المشرقية (Arabic-Indic digits). وقبول المرشّح مغرٍ (tempting)، لكنه يجعل شبكة الأمان هي الضابط (treats the safety net as the control)، والتقاط الطلبات الكاملة على مستوى التصحيح (debug-level capture of whole requests) يعيش أطول من الخلل نفسه (outlives the bug)."
    }
   },
   {
@@ -96,21 +96,21 @@
    "o": {
     "en": [
      "It is anonymous, because every direct identifier has been removed from the file",
-     "It becomes anonymous once the file is encrypted with AES-GCM before it is sent",
+     "It becomes anonymous once birth date is coarsened to an age band before sending",
      "It is still personal data, so share aggregate figures with minimum group sizes",
      "It is anonymous once each customer ID is replaced with a keyed HMAC pseudonym"
     ],
     "ar": [
      "هي بياناتٌ مجهولة الهوية (anonymous)، لأن كل معرّفٍ مباشر (every direct identifier) أُزيل من الملف (removed from the file)",
-     "تصبح مجهولة الهوية (becomes anonymous) بعد تشفير الملف بـ AES-GCM (encrypted with AES-GCM) قبل إرساله (before it is sent)",
-     "ما زالت بياناتٍ شخصية (still personal data)، فتُشارَك أرقامٌ مجمَّعة بحدٍّ أدنى لحجم المجموعات (aggregates with minimum group sizes)",
+     "تصبح مجهولة الهوية (becomes anonymous) بعد تحويل تاريخ الميلاد إلى فئةٍ عمرية (birth date is coarsened to an age band) قبل الإرسال (before sending)",
+     "ما زالت بياناتٍ شخصية (still personal data)، فتُشارَك أرقامٌ مجمَّعة بحدٍّ أدنى لحجم المجموعات (aggregate figures with minimum group sizes)",
      "تصبح مجهولة الهوية (becomes anonymous) بعد استبدال كل معرّف عميل (each customer ID) باسمٍ مستعار بمفتاح عبر HMAC (a keyed HMAC pseudonym)"
     ]
    },
    "a": 2,
    "why": {
-    "en": "Birth date, nationality, employer and city are quasi-identifiers that can single people out, especially in small populations, so the data is still personal data; the practical step is aggregate reporting with minimum group sizes. Removing direct identifiers is tempting, but it does not make a dataset anonymous.",
-    "ar": "تاريخ الميلاد والجنسية وجهة العمل والمدينة (Birth date, nationality, employer and city) أشباه معرّفات (quasi-identifiers) تكفي لتمييز الأشخاص (single people out)، ولا سيما في المجتمعات الصغيرة (especially in small populations)، فتبقى البيانات شخصية (still personal data)؛ والخطوة العملية (the practical step) هي التقارير المجمَّعة بحدٍّ أدنى لحجم المجموعات (aggregate reporting with minimum group sizes). وإزالة المعرّفات المباشرة مغرية (Removing direct identifiers is tempting)، لكنها لا تجعل مجموعة البيانات مجهولة الهوية (does not make a dataset anonymous)."
+    "en": "Birth date, nationality, employer and city are quasi-identifiers that can single people out, especially in small populations, so the data is still personal data; the practical step is aggregate reporting with minimum group sizes. Removing direct identifiers is tempting, but it does not make a dataset anonymous, and coarsening birth date alone still leaves nationality, employer and city.",
+    "ar": "تاريخ الميلاد والجنسية وجهة العمل والمدينة (Birth date, nationality, employer and city) أشباه معرّفات (quasi-identifiers) تكفي لتمييز الأشخاص (single people out)، ولا سيما في المجتمعات الصغيرة (especially in small populations)، فتبقى البيانات شخصية (still personal data)؛ والخطوة العملية (the practical step) هي التقارير المجمَّعة بحدٍّ أدنى لحجم المجموعات (aggregate reporting with minimum group sizes). وإزالة المعرّفات المباشرة مغرية (Removing direct identifiers is tempting)، لكنها لا تجعل مجموعة البيانات مجهولة الهوية (does not make a dataset anonymous)، وتحويل تاريخ الميلاد وحده إلى فئة (coarsening birth date alone) يُبقي الجنسية وجهة العمل والمدينة (still leaves nationality, employer and city)."
    }
   }
  ],
