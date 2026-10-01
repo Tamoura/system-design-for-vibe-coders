@@ -11,15 +11,15 @@
    },
    "o": {
     "en": [
-     "Drop it from the case file, since threats rated low need no recorded decision",
+     "Drop it from the case file, since low-rated threats need no recorded decision",
      "Add a line to the system prompt telling Assist never to reveal its instructions",
-     "Record a written risk acceptance with a named owner and an expiry date",
+     "Record a written risk acceptance that has a named owner and an expiry date",
      "Hold the launch until no red-team attempt can extract the system prompt"
     ],
     "ar": [
-     "حذفه من ملف الحالة (drop it from the case file)، لأن التهديدات المصنّفة منخفضة (threats rated low) لا تحتاج إلى قرار مسجَّل (recorded decision)",
+     "حذفه من ملف الحالة (drop it from the case file)، لأن التهديدات منخفضة التصنيف (low-rated threats) لا تحتاج إلى قرار مسجَّل (recorded decision)",
      "إضافة سطر إلى موجّه النظام (system prompt) يأمر أسيست (Assist) بألّا يكشف تعليماته أبدًا (never to reveal its instructions)",
-     "تسجيل قبولٍ مكتوب للمخاطر (written risk acceptance) بمالكٍ مسمّى (named owner) وتاريخ انتهاء (expiry date)",
+     "تسجيل قبولٍ مكتوب للمخاطر (written risk acceptance) له مالكٌ مسمّى (named owner) وتاريخ انتهاء (expiry date)",
      "تعليق الإطلاق (hold the launch) حتى تفشل كل محاولات الفريق الأحمر (red-team attempts) في استخراج موجّه النظام (extract the system prompt)"
     ]
    },
@@ -42,13 +42,13 @@
      "A threat model of an open-source assistant, every threat ending in a control and test",
      "Write-ups of prompt injections she ran on a retailer's public chatbot, with its replies",
      "A write-up of an injection flaw she found in the Credit Memo Copilot, with names removed",
-     "A page listing the five certifications she holds, each with its date and verification link"
+     "A page listing her five certifications, each with its date and verification link"
     ],
     "ar": [
      "نموذج تهديدات (threat model) لمساعد مفتوح المصدر (open-source assistant)، ينتهي فيه كل تهديد بضابط واختبار (a control and test)",
      "تقارير عن عمليات حقن موجّهات (prompt injections) أجرتها على روبوت محادثة عام لمتجر (retailer's public chatbot)، مع ردوده (its replies)",
      "تقرير عن ثغرة حقن (injection flaw) وجدتها في مساعد مذكرات الائتمان (Credit Memo Copilot)، بعد حذف الأسماء (names removed)",
-     "صفحة تسرد الشهادات الخمس (five certifications) التي تحملها، مع تاريخ كلٍّ منها ورابط التحقق منها (verification link)"
+     "صفحة تسرد شهاداتها الخمس (five certifications)، مع تاريخ كلٍّ منها (its date) ورابط التحقق منها (verification link)"
     ]
    },
    "a": 0,
@@ -63,20 +63,20 @@
    "lesson": "12.3",
    "q": {
     "en": "A new member of Noura's team sits the 60-question practice exam and scores 50: ten answers are wrong, and six of the right ones were guesses. How should the error log be built?",
-    "ar": "يجلس عضو جديد في فريق نورة (new member of Noura's team) للامتحان التدريبي ذي الستين سؤالًا (60-question practice exam)، فيحصل على 50: عشر إجابات خاطئة (ten answers are wrong)، وست من الإجابات الصحيحة كانت تخمينًا (guesses). كيف ينبغي أن يُبنى سجل الأخطاء (error log)؟"
+    "ar": "يجلس عضو جديد في فريق نورة (new member of Noura's team) للامتحان التدريبي ذي الستين سؤالًا (60-question practice exam)، فيحصل على 50 (scores 50): عشر إجابات خاطئة (ten answers are wrong)، وست من الإجابات الصحيحة (six of the right ones) كانت تخمينًا (guesses). كيف ينبغي أن يُبنى سجل الأخطاء (error log)؟"
    },
    "o": {
     "en": [
      "Log only the ten wrong answers, since a right guess still counts toward the score",
      "Skip the log, since 50 is above the course's rule of thumb of 48 correct answers",
      "Sit the exam again at once, and log only the answers that are wrong both times",
-     "Log all 16, each row naming the trap fallen for and the section to re-read"
+     "Log all 16, with each row naming the trap fallen for and the section to re-read"
     ],
     "ar": [
      "تسجيل الإجابات العشر الخاطئة فقط (only the ten wrong answers)، لأن التخمين الصائب (right guess) يُحتسب في الدرجة (counts toward the score)",
-     "الاستغناء عن السجل (skip the log)، لأن 50 تتجاوز قاعدة الدورة التقريبية (course's rule of thumb) البالغة 48 إجابة صحيحة",
+     "الاستغناء عن السجل (skip the log)، لأن 50 تتجاوز قاعدة الدورة التقريبية (course's rule of thumb) البالغة 48 إجابة صحيحة (48 correct answers)",
      "إعادة الامتحان فورًا (sit the exam again at once)، وتسجيل الإجابات الخاطئة في المرّتين فقط (wrong both times)",
-     "تسجيل الإجابات الست عشرة كلها (all 16)، ويسمّي كل صف الفخّ الذي وقع فيه (trap fallen for) والقسم الذي سيعيد قراءته (section to re-read)"
+     "تسجيل الإجابات الست عشرة كلها (all 16)، على أن يسمّي كل صف (each row) الفخَّ الذي وقع فيه (trap fallen for) والقسمَ الذي سيعيد قراءته (section to re-read)"
     ]
    },
    "a": 3,
@@ -90,27 +90,27 @@
    "level": 3,
    "lesson": "12.1",
    "q": {
-    "en": "In Najm Assist's last red-team run before launch, 2% of injection attempts made it propose disputes the customer had not asked for, and confirmation stopped every one. The trajectory check also shows one attempt in 4,000 where a retry path opened a dispute with no confirmed pending action. Rania notes that this is far rarer than the 2% the team is ready to accept as a soft failure. What should Noura recommend?",
-    "ar": "في آخر جولة للفريق الأحمر (last red-team run) على نجم أسيست (Najm Assist) قبل الإطلاق، دفعت 2% من محاولات الحقن (injection attempts) المساعدَ إلى اقتراح نزاعات (propose disputes) لم يطلبها العميل، فأوقفها التأكيد (confirmation) جميعًا. ويُظهر فحص المسار (trajectory check) أيضًا محاولةً واحدة من كل 4,000 فتح فيها مسارُ إعادة المحاولة (retry path) نزاعًا دون إجراء معلّق مؤكَّد (confirmed pending action). وتلاحظ رانيا أن هذا أندر بكثير من نسبة 2% التي يستعد الفريق لقبولها إخفاقًا لينًا (soft failure). بماذا ينبغي أن توصي نورة (what should Noura recommend)؟"
+    "en": "Two days before Najm Assist's launch, Tariq's trajectory check over the red-team set finds one injection attempt in 4,000 where a timeout-and-retry path froze the customer's own card with no confirmed pending action. Rania points out that the rate is tiny and that a freeze can be undone in the app. What should Noura recommend?",
+    "ar": "قبل إطلاق نجم أسيست (Najm Assist) بيومين، يكشف فحص المسار (trajectory check) الذي يجريه طارق على مجموعة الفريق الأحمر (red-team set) محاولةَ حقنٍ واحدة من كل 4,000 (one injection attempt in 4,000)، جمّد فيها مسارُ المهلة وإعادة المحاولة (timeout-and-retry path) بطاقةَ العميل نفسه (customer's own card) دون إجراء معلّق مؤكَّد (confirmed pending action). وتشير رانيا إلى أن المعدل ضئيل (rate is tiny)، وأن التجميد يمكن التراجع عنه في التطبيق (undone in the app). بماذا ينبغي أن توصي نورة (what should Noura recommend)؟"
    },
    "o": {
     "en": [
-     "Ship: one in 4,000 is far rarer than the 2% soft-failure rate the team accepts",
-     "Hold launch until the retry path is closed and the trajectory check passes clean",
-     "Accept it as a soft failure, with a detection on declined confirmations and a target",
-     "Add a system-prompt rule against opening disputes on retries, then launch on schedule"
+     "Ship on schedule, since the freeze touched only the customer's own card and is reversible",
+     "Hold the launch until the retry path is fixed and the trajectory check has no exceptions",
+     "Accept it as a soft failure, with a detection on unconfirmed writes and a target to cut it",
+     "Add a system-prompt rule against acting on retries, then ship on the planned date"
     ],
     "ar": [
-     "الإطلاق (ship): محاولة واحدة من 4,000 أندر بكثير من معدل الإخفاق اللين (soft-failure rate) البالغ 2% الذي يقبله الفريق",
-     "تعليق الإطلاق (hold launch) حتى يُغلق مسار إعادة المحاولة (retry path is closed) ويجتاز فحص المسار دون أي استثناء (trajectory check passes clean)",
-     "قبولها إخفاقًا لينًا (soft failure)، مع رصدٍ للتأكيدات المرفوضة (detection on declined confirmations) وهدفٍ لخفض المعدل (target)",
-     "إضافة قاعدة إلى موجّه النظام (system-prompt rule) تمنع فتح النزاعات عند إعادة المحاولة (on retries)، ثم الإطلاق في موعده (on schedule)"
+     "الإطلاق في الموعد (ship on schedule)، لأن التجميد لم يمسّ إلا بطاقة العميل نفسه (customer's own card)، ويمكن التراجع عنه (reversible)",
+     "تعليق الإطلاق (hold the launch) حتى يُصلَح مسار إعادة المحاولة (retry path is fixed)، ولا يُظهر فحص المسار (trajectory check) أي استثناء (no exceptions)",
+     "قبوله إخفاقًا لينًا (soft failure)، مع رصدٍ للكتابات غير المؤكَّدة (detection on unconfirmed writes) وهدفٍ لخفض معدله (target to cut it)",
+     "إضافة قاعدة إلى موجّه النظام (system-prompt rule) تمنع التنفيذ عند إعادة المحاولة (acting on retries)، ثم الإطلاق في الموعد المخطط (planned date)"
     ]
    },
    "a": 1,
    "why": {
-    "en": "A proposed dispute that confirmation blocks is a soft failure, but a write without a confirmed pending action means the deterministic control itself failed, where the bar is zero exceptions: if one attempt ever runs an action unconfirmed, launch stops. Comparing the two rates is the tempting mistake, because one measures how often the model is misled and the other whether misleading it can change account state.",
-    "ar": "النزاع المقترح الذي يوقفه التأكيد (proposed dispute that confirmation blocks) إخفاقٌ لين (soft failure)، أما الكتابة دون إجراء معلّق مؤكَّد (write without a confirmed pending action) فتعني أن الضابط الحتمي نفسه (deterministic control itself) قد أخفق، والمعيار فيه صفر استثناءات (zero exceptions): إذا نفّذت محاولة واحدة إجراءً دون تأكيد (runs an action unconfirmed)، يتوقف الإطلاق (launch stops). ومقارنة المعدلين هي الخطأ المغري (tempting mistake)، لأن أحدهما يقيس كم مرة يُضلَّل النموذج (how often the model is misled)، والآخر يقيس هل يستطيع تضليله تغيير حالة الحساب (change account state)."
+    "en": "The trajectory check's bar is zero exceptions: a write without a confirmed pending action means the deterministic control itself failed, and if one attempt ever runs an action unconfirmed, launch stops. Reversibility and the tiny rate are the tempting arguments, but they describe this one outcome, not the broken control; a soft failure is one that confirmation still stops.",
+    "ar": "معيار فحص المسار (trajectory check) هو صفر استثناءات (zero exceptions): فالكتابة دون إجراء معلّق مؤكَّد (write without a confirmed pending action) تعني أن الضابط الحتمي نفسه (deterministic control itself) قد أخفق، وإذا نفّذت محاولة واحدة إجراءً دون تأكيد (runs an action unconfirmed) يتوقف الإطلاق (launch stops). وإمكانية التراجع وضآلة المعدل (reversibility and the tiny rate) هما الحجّتان المغريتان (tempting arguments)، لكنهما تصفان هذه النتيجة وحدها (this one outcome) لا الضابطَ المعطَّل (broken control)؛ فالإخفاق اللين (soft failure) هو ما يظل التأكيد يوقفه (confirmation still stops)."
    }
   }
  ],
@@ -119,8 +119,8 @@
    "id": "m12-e1",
    "lesson": "12.1",
    "text": {
-    "en": "I have run the lethal-trifecta check on a proposed agent tool and added its rows to a traceability matrix, each threat with a control, a test that can fail, a detection and an owner",
-    "ar": "أجريتُ فحص الثالوث القاتل (lethal-trifecta check) على أداة وكيل مقترحة (proposed agent tool)، وأضفتُ صفوفها إلى مصفوفة التتبّع (traceability matrix)، ولكل تهديد فيها ضابط (control)، واختبار يمكن أن يفشل (test that can fail)، ورصد (detection)، ومالك (owner)"
+    "en": "I have run the lethal-trifecta check on a proposed agent tool, named the leg it adds, and added its rows to a traceability matrix, each row with a control, a test that can fail, a detection and an owner",
+    "ar": "أجريتُ فحص الثالوث القاتل (lethal-trifecta check) على أداة وكيل مقترحة (proposed agent tool)، وسمّيتُ الضلع الذي تضيفه (the leg it adds)، وأضفتُ صفوفها إلى مصفوفة التتبّع (traceability matrix)، ولكل صف فيها ضابط (control)، واختبار يمكن أن يفشل (test that can fail)، ورصد (detection)، ومالك (owner)"
    }
   },
   {
