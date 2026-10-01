@@ -491,6 +491,7 @@ ${css}${extraCss}
     <a href="#/about">${t.nav.about}</a>
     <a href="#/repos">${t.nav.repos}</a>
     <a href="course${sfx(lang, '.html')}" title="${t.nav.oneTitle}">${t.nav.one}</a>
+    <a href="assessment${sfx(lang, '.html')}">${lang === 'ar' ? 'التقييم الذاتي' : 'Self-assessment'}</a>
     ${langLink(`index${sfx(t.other, '.html')}`)}
     <button id="themeBtn" type="button" aria-label="Toggle dark mode">◐</button>
   </nav>
