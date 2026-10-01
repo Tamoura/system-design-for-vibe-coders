@@ -1,0 +1,135 @@
+{
+  "area": "scaling",
+  "questions": [
+    {
+      "id": "scaling-1",
+      "level": 1,
+      "lesson": "10.1",
+      "q": {
+        "en": "Traffic is growing and your agent proposes running a second copy of Relay's API behind a load balancer. What is the one hard requirement before scaling out actually works?",
+        "ar": "الحركة (traffic) تنمو، ويقترح وكيلك (agent) تشغيل نسخة ثانية من واجهة Relay البرمجية (API) خلف موازن حِمل (load balancer). ما الشرط الصعب الوحيد قبل أن ينجح التوسّع الأفقي (scaling out) فعلًا؟"
+      },
+      "o": {
+        "en": [
+          "Turn on sticky sessions so each user always lands on the same instance",
+          "Switch to an L4 load balancer, since it routes faster than an L7 one",
+          "Make instances interchangeable: no session, counter or upload in one process",
+          "Give each instance its own in-memory cache so that its reads stay local and fast"
+        ],
+        "ar": [
+          "فعّل الجلسات اللاصقة (sticky sessions) كي يصل كل مستخدم دائمًا إلى النسخة (instance) نفسها",
+          "انتقل إلى موازن حِمل من الطبقة الرابعة (L4)، لأنه يوجّه أسرع من موازن الطبقة السابعة (L7)",
+          "اجعل النسخ (instances) قابلة للتبديل (interchangeable): لا جلسة (session) ولا عدّاد (counter) ولا ملف مرفوع (upload) يعيش في عملية (process) واحدة",
+          "امنح كل نسخة كاشًا خاصًا في الذاكرة (in-memory cache) كي تبقى قراءاتها محلية وسريعة"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Scaling out needs every request to land on any instance and get the right answer, so all state must live in shared storage. Sticky sessions only hide process state and break on deploys and failover.",
+        "ar": "التوسّع الأفقي (scaling out) يتطلب أن يصل أي طلب (request) إلى أي نسخة (instance) فينال الجواب الصحيح، فكل الحالة (state) يجب أن تعيش في تخزين مشترك (shared storage). أما الجلسات اللاصقة (sticky sessions) فتخفي حالة العملية (process state) فقط وتنكسر عند النشر (deploy) وتجاوز الفشل (failover)."
+      }
+    },
+    {
+      "id": "scaling-2",
+      "level": 2,
+      "lesson": "10.2",
+      "q": {
+        "en": "Your agent moved welcome emails onto a durable queue and says: \"The queue guarantees exactly-once delivery, so we don't need any dedup.\" In a test, a worker crashes after sending an email but before acknowledging the job. What happens, and what should you require?",
+        "ar": "نقل وكيلك (agent) رسائل الترحيب إلى طابور متين (durable queue) وقال: «الطابور يضمن التسليم مرة واحدة بالضبط (exactly-once delivery)، فلا حاجة إلى منع التكرار (dedup)». في اختبار، تعطّل عامل (worker) بعد إرسال الرسالة وقبل إقرار المهمة (acknowledging the job). ماذا يحدث، وماذا يجب أن تشترط؟"
+      },
+      "o": {
+        "en": [
+          "It is redelivered; the consumer must record \"sent\" atomically and skip if done",
+          "Nothing; a durable queue never delivers a job twice once a worker has claimed it",
+          "The job is lost; add a cron that resends every email from the last hour",
+          "The job goes to the dead-letter queue; replay it by hand each morning"
+        ],
+        "ar": [
+          "تُعاد المهمة (redelivered)؛ فيجب على المستهلك (consumer) تسجيل «أُرسلت» ذرّيًا (atomically) وتخطّيها إن أُنجزت",
+          "لا شيء؛ فالطابور المتين (durable queue) لا يسلّم مهمة مرتين بعد أن يحجزها عامل (worker)",
+          "تضيع المهمة؛ فأضف مهمة مجدولة (cron) تعيد إرسال كل رسائل الساعة الأخيرة",
+          "تذهب المهمة إلى طابور الرسائل الميتة (dead-letter queue)؛ فأعد تشغيلها يدويًا كل صباح"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Queues deliver at least once: the queue can't tell \"crashed before\" from \"crashed after but before saying so\", so it redelivers. Exactly-once delivery is a lie; idempotent consumers give you exactly-once effects.",
+        "ar": "الطوابير (queues) تسلّم مرة واحدة على الأقل (at-least-once): لا يميّز الطابور بين «تعطّل قبل التنفيذ» و«تعطّل بعده وقبل الإقرار»، فيعيد التسليم. والتسليم مرة واحدة بالضبط (exactly-once delivery) كذبة؛ المستهلكون المتساوو الأثر (idempotent consumers) هم من يمنحونك أثرًا يقع مرة واحدة بالضبط (exactly-once effects)."
+      }
+    },
+    {
+      "id": "scaling-3",
+      "level": 2,
+      "lesson": "10.3",
+      "q": {
+        "en": "Relay's analytics page has become slow, and your agent proposes sharding the database across three machines. Following the course's escalation ladder, what do you check first?",
+        "ar": "صارت صفحة التحليلات (analytics) في Relay بطيئة، ويقترح وكيلك (agent) تجزئة قاعدة البيانات (sharding) على ثلاث آلات. باتباع سُلّم التصعيد (escalation ladder) في الدورة، ما الذي تتحقق منه أولًا؟"
+      },
+      "o": {
+        "en": [
+          "Whether a read replica could double as your backup and save the backup bill",
+          "Whether sharding by user ID or by date gives the more even spread of rows",
+          "Whether moving to Cassandra, like Discord did, would avoid sharding entirely",
+          "Whether an index or a cache fixes the slow queries before adding machines"
+        ],
+        "ar": [
+          "هل يمكن لنسخة قراءة متماثلة (read replica) أن تعمل نسخةً احتياطية (backup) أيضًا فتوفّر كلفتها",
+          "هل التجزئة (sharding) حسب معرّف المستخدم (user ID) أم حسب التاريخ تعطي توزيعًا أعدل للصفوف",
+          "هل الانتقال إلى Cassandra، كما فعلت Discord، يغنيك عن التجزئة (sharding) كليًا",
+          "هل يُصلح فهرس (index) أو كاش (cache) الاستعلامات البطيئة قبل إضافة أي آلة"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "The ladder runs indexes, caching, read replicas, a bigger machine, and only then sharding; most products never leave rungs 1 to 4. A replica is never a backup, because it copies a bad DELETE instantly.",
+        "ar": "السُّلّم (ladder) بالترتيب: الفهارس (indexes)، ثم التخزين المؤقت (caching)، ثم نسخ القراءة المتماثلة (read replicas)، ثم آلة أكبر، وبعدها فقط التجزئة (sharding)؛ ومعظم المنتجات لا تغادر الدرجات 1 إلى 4. والنسخة المتماثلة (replica) ليست نسخة احتياطية (backup) أبدًا، لأنها تنسخ حذفًا (DELETE) خاطئًا فورًا."
+      }
+    },
+    {
+      "id": "scaling-4",
+      "level": 3,
+      "lesson": "10.5",
+      "q": {
+        "en": "With no code change, Relay feels sluggish at busy hours. Your latency dashboard shows a flat 90ms average. The only new habit is that admins now open a reporting dashboard that scans the largest table. What is the best judgement?",
+        "ar": "دون أي تغيير في الكود، يبدو Relay بطيئًا في ساعات الذروة. لوحة زمن الاستجابة (latency dashboard) تُظهر متوسطًا (average) ثابتًا عند 90ms. والعادة الجديدة الوحيدة أن المشرفين (admins) صاروا يفتحون لوحة تقارير تمسح أكبر جدول. ما الحكم الأصوب؟"
+      },
+      "o": {
+        "en": [
+          "The average is normal, so the complaints most likely come from users' slow networks",
+          "Check other endpoints' p99: the scan may evict hot data and slow everyone else",
+          "Traffic is growing, so add app instances behind the load balancer to spread the load",
+          "Speed up the admin dashboard's own load time, since it is the page that got slower"
+        ],
+        "ar": [
+          "المتوسط (average) طبيعي، فالشكاوى غالبًا سببها بطء شبكات المستخدمين",
+          "افحص المئين 99 (p99) لنقاط النهاية (endpoints) الأخرى: قد يطرد المسح البيانات الساخنة (hot data) ويبطئ الجميع",
+          "الحركة (traffic) تنمو، فأضف نسخًا (instances) من التطبيق خلف موازن الحِمل (load balancer) لتوزيع الحِمل",
+          "سرّع زمن تحميل لوحة المشرفين نفسها، فهي الصفحة التي صارت أبطأ"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Averages hide the worst requests; an unbounded scan can push the hot working set out of memory so the damage shows up in other requests' p99. The dashboard's own load time may barely move, and more app instances don't fix a database being flushed.",
+        "ar": "المتوسطات (averages) تخفي أسوأ الطلبات؛ والمسح غير المحدود (unbounded scan) قد يطرد مجموعة العمل الساخنة (working set) من الذاكرة فيظهر الضرر في المئين 99 (p99) لطلبات أخرى. وقد لا يتغير زمن تحميل اللوحة نفسها تقريبًا، وإضافة نسخ (instances) من التطبيق لا تعالج قاعدة بيانات تُفرَّغ ذاكرتها."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "scaling-e1",
+      "lesson": "10.1",
+      "text": {
+        "en": "I have killed one of two app instances under live traffic and watched the health check drain it with zero failed requests",
+        "ar": "قتلتُ إحدى نسختين (instances) من التطبيق تحت حركة (traffic) حيّة، وشاهدت الفحص الصحي (health check) يصرّفها (drain) بصفر طلبات (requests) فاشلة"
+      }
+    },
+    {
+      "id": "scaling-e2",
+      "lesson": "10.2",
+      "text": {
+        "en": "I have delivered the same queue job twice on purpose and confirmed its effect happened only once — one email, one transcode",
+        "ar": "سلّمتُ مهمة الطابور (queue job) نفسها مرتين عمدًا، وتأكدت أن أثرها وقع مرة واحدة فقط — رسالة واحدة، وتحويل ترميز (transcode) واحد"
+      }
+    }
+  ]
+}

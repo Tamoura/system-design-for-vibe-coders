@@ -47,6 +47,9 @@ jobs:
       - name: Verify the AI PM course output matches its markdown
         run: npm run aipm:check
 
+      - name: Verify the system design self-assessment matches its items
+        run: npm run assess:check
+
       - name: Verify the agentic pages carry the site navigation
         run: node scripts/agentic-nav.mjs --check
 
@@ -65,7 +68,7 @@ jobs:
           mkdir -p _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm
           cp landing.html _site/index.html
           # The vibe course (bilingual pages + downloads) → /vibe/
-          cp index.html index.en.html index.ar.html _site/vibe/
+          cp index.html index.en.html index.ar.html assessment.html assessment.ar.html _site/vibe/
           cp dist/course-en.pdf dist/course-ar.pdf _site/vibe/
           cp dist/course-en.epub dist/course-ar.epub _site/vibe/
           # The agentic course (curriculum, playbook, poster, assessment) → /agentic/

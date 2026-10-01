@@ -1,0 +1,135 @@
+{
+  "area": "paged",
+  "questions": [
+    {
+      "id": "paged-1",
+      "level": 1,
+      "lesson": "12",
+      "q": {
+        "en": "You get paged: users in several countries see a broken page. You fetch the same URL from the origin directly, bypassing the CDN, and the response is correct every time. What does that tell you?",
+        "ar": "يصلك تنبيه (You get paged): مستخدمون في عدة دول يرون صفحة معطوبة. تجلب الرابط (URL) نفسه من الخادم الأصلي (origin) مباشرةً بتجاوز شبكة توصيل المحتوى (CDN)، فتأتي الاستجابة صحيحة في كل مرة. ماذا يخبرك ذلك؟"
+      },
+      "o": {
+        "en": [
+          "The fault is in the edge or cache layer, so look at the CDN or proxy next",
+          "The bug is in the deployed code, so roll back the latest release first",
+          "The users' browsers are at fault, so ask them to clear their local cache",
+          "The origin is healthy, so the incident is resolved and the page can be closed"
+        ],
+        "ar": [
+          "الخلل في طبقة الحافة أو الكاش (edge / cache layer)، فانظر بعدها في الـCDN أو الوسيط (proxy)",
+          "الخطأ في الكود المنشور (deployed code)، فتراجع (roll back) عن آخر إصدار أولًا",
+          "متصفحات المستخدمين هي السبب، فاطلب منهم مسح الكاش المحلي (local cache)",
+          "الخادم الأصلي (origin) سليم، فالحادث (incident) محلول ويمكن إغلاق التنبيه"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Bisecting by layer starts by cutting the request path at the CDN: if the origin is clean, the fault sits in front of it. Rolling back code ignores the evidence that the running code returns the right answer.",
+        "ar": "التنصيف حسب الطبقة (bisecting by layer) يبدأ بقطع مسار الطلب (request path) عند الـCDN: إن كان الخادم الأصلي (origin) سليمًا فالخلل أمامه. والتراجع (roll back) عن الكود يتجاهل الدليل على أن الكود العامل يعيد الجواب الصحيح."
+      }
+    },
+    {
+      "id": "paged-2",
+      "level": 2,
+      "lesson": "4.3",
+      "q": {
+        "en": "You get paged right after a blue-green deploy: about one in five requests through the edge returns 502, and it flaps for minutes. A curl to the origin returns 200 every time, and the app logs are clean. What do you check first?",
+        "ar": "يصلك تنبيه (You get paged) بعد نشر أزرق-أخضر (blue-green deploy) مباشرة: نحو طلب من كل خمسة عبر الحافة (edge) يعيد 502، ويتذبذب ذلك (flaps) لدقائق. أمر curl إلى الخادم الأصلي (origin) يعيد 200 في كل مرة، وسجلّات التطبيق (app logs) نظيفة. ما الذي تفحصه أولًا؟"
+      },
+      "o": {
+        "en": [
+          "Whether the new code throws errors that somehow never reach the app logs",
+          "Whether the TLS certificate expired somewhere in the deploy window",
+          "Whether a proxy worker survived the reload and routes to the old color",
+          "Whether the database ran out of connections under the deploy's extra load"
+        ],
+        "ar": [
+          "هل يرمي الكود الجديد أخطاء لا تصل بطريقة ما إلى سجلّات التطبيق (app logs)",
+          "هل انتهت صلاحية شهادة TLS (TLS certificate) في مكان ما ضمن نافذة النشر",
+          "هل عاش عامل (worker) في الوسيط (proxy) بعد إعادة التحميل (reload) وما زال يوجّه إلى اللون القديم",
+          "هل نفدت اتصالات قاعدة البيانات (database connections) تحت الحِمل الإضافي للنشر"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "The origin is healthy and the failures flap, so the fault is in the layer between edge and origin: a graceful reload doesn't drain keepalive connections, so a stale worker keeps routing to the dead color. An expired certificate would fail every request, not one in five.",
+        "ar": "الخادم الأصلي (origin) سليم والأعطال تتذبذب، فالخلل في الطبقة بين الحافة (edge) والأصل: إعادة التحميل اللطيفة (graceful reload) لا تصرّف اتصالات الإبقاء حيًا (keepalive connections)، فيظل عامل (worker) قديم يوجّه إلى اللون الميت. والشهادة المنتهية كانت ستُفشل كل الطلبات، لا واحدًا من خمسة."
+      }
+    },
+    {
+      "id": "paged-3",
+      "level": 2,
+      "lesson": "5.2",
+      "q": {
+        "en": "You get paged the morning after a post went viral: ordinary users in different cities get 429 \"Too Many Requests\" on their very first click. The rate limiter's logs show a handful of IPs, each with an enormous request count. What is the likely cause?",
+        "ar": "يصلك تنبيه (You get paged) صباح اليوم التالي لانتشار منشور: مستخدمون عاديون في مدن مختلفة يتلقون 429 «طلبات كثيرة جدًا» (Too Many Requests) من أول نقرة. سجلّات محدِّد المعدّل (rate limiter) تُظهر حفنة من عناوين IP، لكلٍّ منها عدد طلبات هائل. ما السبب المرجّح؟"
+      },
+      "o": {
+        "en": [
+          "A botnet is attacking from those few IPs, so block them at the firewall",
+          "The limiter keys on the socket IP — a CDN edge IP shared by many users",
+          "The limit is too strict for a viral day, so raise it from 100 to 1,000",
+          "A deploy wiped the Redis counters, so every user's budget is now confused"
+        ],
+        "ar": [
+          "شبكة روبوتات (botnet) تهاجم من تلك العناوين القليلة، فاحجبها في جدار الحماية (firewall)",
+          "المحدِّد يعتمد على عنوان IP للمقبس (socket IP)، وهو عنوان حافة (edge) للـCDN يتشاركه مستخدمون كثيرون",
+          "الحدّ صارم جدًا ليوم انتشار، فارفعه من 100 إلى 1,000",
+          "نشرٌ (deploy) مسح عدّادات Redis، فاختلطت ميزانية كل مستخدم"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Behind a CDN every request arrives from a few edge IPs, so keying on the socket IP puts the whole world into a few buckets; key on the CDN's client-IP header (with CDN-only ingress) instead. Blocking those IPs would block the CDN itself.",
+        "ar": "خلف الـCDN يصل كل طلب من عناوين حافة (edge) قليلة، فالاعتماد على عنوان المقبس (socket IP) يضع العالم كله في دلاء (buckets) قليلة؛ فاعتمد بدلًا منه على ترويسة عنوان العميل (client-IP header) من الـCDN (مع جعل الـCDN المدخل الوحيد (CDN-only ingress)). وحجب تلك العناوين سيحجب الـCDN نفسه."
+      }
+    },
+    {
+      "id": "paged-4",
+      "level": 3,
+      "lesson": "6.7",
+      "q": {
+        "en": "You get paged: your email provider had a 90-second incident and fully recovered an hour ago, but your app was down for twenty minutes, queue depth is still climbing, worker CPU is pinned at 100%, and the provider invoice shows a 40× spike in API calls. What is the most likely root cause and fix?",
+        "ar": "يصلك تنبيه (You get paged): مزوّد البريد لديك مرّ بحادث (incident) مدته 90 ثانية وتعافى تمامًا قبل ساعة، لكن تطبيقك تعطّل عشرين دقيقة، وعمق الطابور (queue depth) ما زال يرتفع، ومعالج العمّال (worker CPU) عالق عند 100%، وفاتورة المزوّد تُظهر قفزة 40× في استدعاءات الواجهة (API calls). ما السبب الجذري (root cause) المرجّح والإصلاح؟"
+      },
+      "o": {
+        "en": [
+          "The provider is still degraded; wait until its status page shows full recovery",
+          "There are too few workers; add more of them so the backlog drains faster",
+          "The queue lost jobs; replay everything from the provider's logs by hand",
+          "Unbounded instant retries made a storm; add backoff, jitter and a breaker"
+        ],
+        "ar": [
+          "المزوّد ما زال متدهورًا؛ انتظر حتى تُظهر صفحة حالته (status page) التعافي الكامل",
+          "العمّال (workers) قليلون؛ أضف المزيد منهم كي يُصرَّف التراكم (backlog) أسرع",
+          "الطابور (queue) أضاع مهامّ؛ أعد تشغيل كل شيء من سجلّات المزوّد يدويًا",
+          "إعادات المحاولة (retries) الفورية غير المحدودة صنعت عاصفة؛ أضف تراجعًا (backoff) وتذبذبًا (jitter) وقاطع دارة (circuit breaker)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Immediate, unlimited retries turned one blip into a thundering herd that outlived the provider's recovery and billed every retry; the fix is backoff with jitter, a circuit breaker, a dead-letter lane and watched queue depth. Adding workers just fires more retries at the provider.",
+        "ar": "إعادات المحاولة (retries) الفورية غير المحدودة حوّلت عثرة واحدة إلى قطيع هادر (thundering herd) عاش بعد تعافي المزوّد وفُوتِرت كل إعادة منها؛ والإصلاح تراجع مع تذبذب (backoff with jitter)، وقاطع دارة (circuit breaker)، ومسار رسائل ميتة (dead-letter lane)، ومراقبة عمق الطابور (queue depth). وإضافة العمّال (workers) تطلق مزيدًا من الإعادات على المزوّد فقط."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "paged-e1",
+      "lesson": "7.6",
+      "text": {
+        "en": "I have staged an outage of my app's infrastructure and watched an external uptime check, running outside it, page me",
+        "ar": "افتعلتُ عطلًا (staged outage) في البنية التحتية (infrastructure) لتطبيقي، وشاهدت فحص توفّر خارجيًا (external uptime check) يعمل خارجها ينبّهني (page me)"
+      }
+    },
+    {
+      "id": "paged-e2",
+      "lesson": "9.4",
+      "text": {
+        "en": "I have taken a fix my agent called \"done\" and watched its new test fail on the pre-fix code before it passed on the fix",
+        "ar": "أخذتُ إصلاحًا (fix) قال عنه وكيلي (agent) «أُنجز»، وشاهدت اختباره الجديد يفشل على الكود السابق للإصلاح قبل أن ينجح على الإصلاح"
+      }
+    }
+  ]
+}

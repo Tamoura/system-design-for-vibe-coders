@@ -1,0 +1,135 @@
+{
+  "area": "directing",
+  "questions": [
+    {
+      "id": "directing-1",
+      "level": 1,
+      "lesson": "9.1",
+      "q": {
+        "en": "You tell your agent: \"Make Relay production ready.\" Why does the course call this the worst prompt in your vocabulary?",
+        "ar": "تقول لوكيلك (agent): «اجعل Relay جاهزًا للإنتاج (production ready)». لماذا يعدّ المقرر هذا أسوأ أمر (prompt) في قاموسك؟"
+      },
+      "o": {
+        "en": [
+          "It's too short; agents need at least a full paragraph of detail to do well",
+          "Agents can only write prototypes, so it asks for something they can't do",
+          "It makes the agent skip the tests it would otherwise write for each task",
+          "It hands over deciding what the system is: the seams, invariants and taste"
+        ],
+        "ar": [
+          "لأنه قصير جدًا؛ الوكلاء (agents) يحتاجون فقرة كاملة من التفاصيل على الأقل كي يُحسنوا",
+          "لأن الوكلاء لا يكتبون إلا نماذج أولية (prototypes)، فهو يطلب ما لا يقدرون عليه",
+          "لأنه يجعل الوكيل يتخطى الاختبارات (tests) التي كان سيكتبها لكل مهمة",
+          "لأنه يسلّم قرار ماهية النظام: المفاصل (seams) والثوابت (invariants) والذوق (taste)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Agents are excellent at components; the seams between them, the invariants that span them and the taste that picks between options are irreducibly yours. The problem isn't prompt length: no amount of detail transfers that job.",
+        "ar": "الوكلاء ممتازون في المكوّنات (components)؛ أما المفاصل (seams) بينها والثوابت (invariants) التي تمتد عبرها والذوق (taste) الذي يختار بين البدائل فمسؤوليتك التي لا تُفوَّض. والمشكلة ليست طول الأمر (prompt): فلا قدر من التفاصيل ينقل هذه الوظيفة."
+      }
+    },
+    {
+      "id": "directing-2",
+      "level": 2,
+      "lesson": "9.4",
+      "q": {
+        "en": "Your agent reports: \"Deployed! I loaded the public URL and the new header is live.\" Your CDN caches HTML for about five minutes. What evidence should you ask for before calling it done?",
+        "ar": "يبلّغك وكيلك (agent): «تم النشر (deployed)! فتحت الرابط العام (public URL) والترويسة (header) الجديدة ظاهرة». وشبكة توصيل المحتوى (CDN) لديك تخزّن HTML نحو خمس دقائق. أيّ دليل (evidence) تطلبه قبل أن تعدّ المهمة منجزة؟"
+      },
+      "o": {
+        "en": [
+          "A screenshot of the new header running on the agent's localhost server",
+          "The agent's own step-by-step summary of the commands it ran",
+          "The asset hash at the origin, past the CDN, matching the new build",
+          "The merged pull request, with every CI check showing green"
+        ],
+        "ar": [
+          "لقطة شاشة (screenshot) للترويسة الجديدة تعمل على localhost لدى الوكيل",
+          "ملخص الوكيل (agent) نفسه، خطوة بخطوة، للأوامر (commands) التي نفّذها",
+          "بصمة الأثر (asset hash) عند الأصل (origin) بعد CDN، مطابقةً للبناء الجديد",
+          "طلب الدمج (pull request) المدموج، وكل فحوص التكامل المستمر (CI) خضراء"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Evidence must come from the layer the user touches, past every cache: the public URL may be serving the old site from the CDN. A merged, green PR is only rung three of the ladder, because \"merged\" is not \"works\".",
+        "ar": "يجب أن يأتي الدليل (evidence) من الطبقة (layer) التي يلمسها المستخدم، متجاوزًا كل ذاكرة تخزين مؤقت (cache): فقد يقدّم الرابط العام الموقع القديم من CDN. وطلب الدمج الأخضر ليس إلا الدرجة الثالثة من السلّم، لأن «مدموج (merged)» ليس «يعمل (works)»."
+      }
+    },
+    {
+      "id": "directing-3",
+      "level": 2,
+      "lesson": "9.2",
+      "q": {
+        "en": "Half of Relay's test suites mock the database and half don't. You find two instruction files: one says \"never mock the DB,\" the other says \"mock the models so CI runs fast.\" What's the fix?",
+        "ar": "نصف حزم الاختبار (test suites) في Relay تحاكي قاعدة البيانات (mock the database) ونصفها لا. وتجد ملفّي تعليمات (instruction files): أحدهما يقول «لا تحاكِ قاعدة البيانات أبدًا»، والآخر يقول «حاكِ النماذج (models) كي يعمل التكامل المستمر (CI) بسرعة». ما الإصلاح؟"
+      },
+      "o": {
+        "en": [
+          "Add a third file explaining when each of the two rules should apply",
+          "Keep one rule and delete the other, so each question has one answer",
+          "Leave both; the agent will pick whichever rule suits the task at hand",
+          "Paste both rules into every prompt so the agent always sees them together"
+        ],
+        "ar": [
+          "أضف ملفًا ثالثًا يشرح متى تنطبق كل قاعدة من القاعدتين",
+          "أبقِ قاعدة واحدة واحذف الأخرى، كي يكون لكل سؤال جواب واحد",
+          "اترك الاثنتين؛ سيختار الوكيل (agent) القاعدة التي تناسب المهمة",
+          "الصق القاعدتين في كل أمر (prompt) كي يراهما الوكيل معًا دائمًا"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "A contradictory doc fails quiet: the agent confidently follows whichever file it read and you never see the fork. Docs for agents need exactly one answer per question with the loser deleted; a third file just adds another source to drift.",
+        "ar": "المستند المتناقض (contradictory doc) يفشل بصمت: يتبع الوكيل بثقة أيّ ملف قرأه ولا ترى أنت التفرّع. ومستندات الوكلاء تحتاج جوابًا واحدًا بالضبط لكل سؤال مع حذف الخاسر؛ أما الملف الثالث فيضيف مصدرًا آخر للانجراف (drift)."
+      }
+    },
+    {
+      "id": "directing-4",
+      "level": 3,
+      "lesson": "9.6",
+      "q": {
+        "en": "Told to \"make the feed better,\" your builder agent asked your reviewer agent which approach to take; together they switched Relay's feed to most-liked-first. Each did its narrow job well. What failed?",
+        "ar": "طُلب من وكيل البناء (builder agent) «حسّن الخلاصة (feed)»، فسأل وكيلَ المراجعة (reviewer agent) أيّ نهج يتّبع، فحوّلا معًا خلاصة Relay إلى ترتيب الأكثر إعجابًا أولًا. وأدّى كلٌّ منهما مهمته الضيقة جيدًا. ما الذي أخفق؟"
+      },
+      "o": {
+        "en": [
+          "Escalation: a product call was settled between agents, not sent up to you",
+          "The reviewer's scope: it should have written the new ranking code by itself",
+          "The builder's tools: it needed production access to test with real users",
+          "The model choice: a stronger model would have picked the better ranking"
+        ],
+        "ar": [
+          "التصعيد (escalation): حُسم قرار منتج (product decision) بين الوكيلين ولم يُرفع إليك",
+          "نطاق المراجع (scope): كان عليه أن يكتب كود الترتيب (ranking) الجديد بنفسه",
+          "أدوات البنّاء (tools): كان يحتاج وصولًا إلى الإنتاج (production) ليختبر على مستخدمين حقيقيين",
+          "اختيار النموذج (model): نموذج أقوى كان سيختار الترتيب الأفضل"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "\"Make the feed better\" is ambiguous and the ranking is a product decision; the escalation contract says ambiguity goes up to the human, never sideways between agents. A stronger model still isn't you: it can't know what Relay's feed is for.",
+        "ar": "عبارة «حسّن الخلاصة» غامضة، والترتيب قرار منتج (product decision)؛ وعقد التصعيد (escalation contract) يقول إن الغموض (ambiguity) يصعد إلى الإنسان ولا ينتقل جانبيًا (sideways) بين الوكلاء. والنموذج الأقوى ليس أنت: فهو لا يعرف ما الغاية من خلاصة Relay."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "directing-e1",
+      "lesson": "9.8",
+      "text": {
+        "en": "I have asked my agent to perform an action from my \"human yes\" list and watched it refuse and escalate to me instead of doing it",
+        "ar": "لقد طلبت من وكيلي (agent) تنفيذ إجراء من قائمة «الموافقة البشرية (human yes)» وشاهدته يرفض ويصعّد (escalate) إليّ بدل أن ينفّذه"
+      }
+    },
+    {
+      "id": "directing-e2",
+      "lesson": "9.7",
+      "text": {
+        "en": "I have run a whole-repo audit against a written checklist and tracked its findings in a document with a severity, owner and status for each",
+        "ar": "لقد أجريت تدقيقًا للمستودع كله (whole-repo audit) وفق قائمة تحقق (checklist) مكتوبة، وتتبّعت نتائجه (findings) في مستند يحدّد لكل نتيجة الخطورة (severity) والمالك (owner) والحالة (status)"
+      }
+    }
+  ]
+}

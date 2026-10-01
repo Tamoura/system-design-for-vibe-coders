@@ -14,7 +14,9 @@
     "aigp:build": "node scripts/build-aigp.mjs",
     "aigp:check": "node scripts/build-aigp.mjs --check",
     "aipm:build": "node scripts/build-aipm.mjs",
-    "aipm:check": "node scripts/build-aipm.mjs --check"
+    "aipm:check": "node scripts/build-aipm.mjs --check",
+    "assess:build": "node scripts/build-assessment.mjs",
+    "assess:check": "node scripts/build-assessment.mjs --check"
   },
   "devDependencies": {
     "archiver": "^7.0.1",

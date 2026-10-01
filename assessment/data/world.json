@@ -1,0 +1,135 @@
+{
+  "area": "world",
+  "questions": [
+    {
+      "id": "world-1",
+      "level": 1,
+      "lesson": "11.1",
+      "q": {
+        "en": "An hour ago you changed relay.app's A record to point at a new server. Some users reach the new server, others still reach the old one, and nothing shows an error. What explains it?",
+        "ar": "قبل ساعة غيّرت سجلّ A (A record) لـrelay.app ليشير إلى خادم جديد. بعض المستخدمين يصلون إلى الخادم الجديد، وآخرون ما زالوا يصلون إلى القديم، ولا يظهر أي خطأ. ما التفسير؟"
+      },
+      "o": {
+        "en": [
+          "The new server's TLS certificate hasn't been issued in every region yet",
+          "Resolvers keep serving the cached old record until its TTL runs out",
+          "The CDN is balancing between both servers until you purge its cache",
+          "The apex can't take a CNAME, so half of all lookups are silently failing"
+        ],
+        "ar": [
+          "شهادة TLS (TLS certificate) للخادم الجديد لم تُصدر بعد في كل المناطق",
+          "المحلِّلات (resolvers) تواصل تقديم السجلّ القديم المخزَّن مؤقتًا حتى تنتهي مدة بقائه (TTL)",
+          "شبكة توصيل المحتوى (CDN) توازن بين الخادمين حتى تُفرغ كاشها (purge)",
+          "الجذر (apex) لا يقبل CNAME، فنصف عمليات البحث تفشل بصمت"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "DNS caches each record for its TTL, so a change \"propagates\" slowly and serves stale answers with no error. The fix is to lower the TTL to about 60 seconds a day before a planned change.",
+        "ar": "نظام أسماء النطاقات (DNS) يخزّن كل سجلّ مؤقتًا طوال مدة بقائه (TTL)، فينتشر التغيير ببطء ويقدّم إجابات قديمة دون أي خطأ. والعلاج خفض الـTTL إلى نحو 60 ثانية قبل التغيير المخطط بيوم."
+      }
+    },
+    {
+      "id": "world-2",
+      "level": 2,
+      "lesson": "11.2",
+      "q": {
+        "en": "Arabic users report that searching for a perfectly valid word returns zero results, though the article exists. Your agent says the index must be incomplete and proposes a full re-index. What does the course point you to instead?",
+        "ar": "يبلّغ مستخدمون عرب أن البحث عن كلمة صحيحة تمامًا يعيد صفر نتائج، مع أن المقال موجود. يقول وكيلك (agent) إن الفهرس (index) ناقص ويقترح إعادة فهرسة كاملة (full re-index). إلامَ توجّهك الدورة بدلًا من ذلك؟"
+      },
+      "o": {
+        "en": [
+          "Re-index everything nightly so newly published articles are always findable",
+          "Switch the page to RTL with logical properties so Arabic text renders correctly",
+          "Add the missing Arabic keys to ar.json, plus a drift-guard test that checks them",
+          "Normalize letter forms and diacritics to one canonical form on index and query"
+        ],
+        "ar": [
+          "أعد فهرسة كل شيء ليلًا كي تكون المقالات الجديدة قابلة للعثور عليها دائمًا",
+          "حوّل الصفحة إلى اتجاه من اليمين إلى اليسار (RTL) بخصائص منطقية (logical properties) كي يُعرض النص العربي صحيحًا",
+          "أضف المفاتيح العربية الناقصة إلى ar.json، مع اختبار حارس الانجراف (drift-guard test) يتحقق منها",
+          "وحّد أشكال الحروف والتشكيل (diacritics) إلى صيغة قياسية واحدة (canonical form) عند الفهرسة وعند الاستعلام"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "The same Arabic word can be typed with or without diacritics and with different alef forms (أ / إ / ا), so the index and the query must be normalized the same way. Re-indexing un-normalized text just rebuilds the same mismatch.",
+        "ar": "الكلمة العربية نفسها قد تُكتب بالتشكيل (diacritics) أو بدونه وبأشكال ألف مختلفة (أ / إ / ا)، فيجب تطبيع (normalize) الفهرس (index) والاستعلام (query) بالطريقة نفسها. وإعادة فهرسة نص غير مطبَّع تعيد بناء عدم التطابق نفسه."
+      }
+    },
+    {
+      "id": "world-3",
+      "level": 2,
+      "lesson": "11.3",
+      "q": {
+        "en": "Relay's deploys now hang whenever the API is slow, because the build calls the API to fetch every URL for the sitemap. What fix does the course teach?",
+        "ar": "صارت عمليات نشر (deploys) Relay تتجمّد كلما كانت الواجهة البرمجية (API) بطيئة، لأن البناء (build) يستدعي الـAPI لجلب كل الروابط من أجل خريطة الموقع (sitemap). ما الإصلاح الذي تعلّمه الدورة؟"
+      },
+      "o": {
+        "en": [
+          "Serve chunked sitemaps at request time, so the build depends on no live data",
+          "Give the build's API call a longer timeout and retries so it eventually finishes",
+          "Generate one complete sitemap file at build time and cache it on the CDN",
+          "Skip the sitemap during builds and regenerate it by hand once a week"
+        ],
+        "ar": [
+          "قدّم خرائط موقع مجزّأة (chunked sitemaps) وقت الطلب (request time)، كي لا يعتمد البناء (build) على أي بيانات حيّة",
+          "امنح استدعاء الـAPI في البناء (build) مهلة (timeout) أطول وإعادات محاولة (retries) كي ينتهي في النهاية",
+          "ولّد ملف خريطة موقع (sitemap) واحدًا كاملًا وقت البناء (build time) وخزّنه في شبكة توصيل المحتوى (CDN)",
+          "تخطَّ خريطة الموقع أثناء البناء وأعد توليدها يدويًا مرة في الأسبوع"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "A build must succeed from source alone; once it calls a live API, a runtime outage becomes a deploy outage. Longer timeouts keep the coupling, and one giant file breaks the 50,000-URL / 50MB caps.",
+        "ar": "يجب أن ينجح البناء (build) من الكود المصدري (source) وحده؛ فما إن يستدعي واجهة حيّة (live API) حتى يصير عطل وقت التشغيل (runtime outage) عطلًا في النشر (deploy). والمهلة (timeout) الأطول تُبقي الاقتران (coupling)، والملف الضخم الواحد يتجاوز حدّي 50,000 رابط و50MB."
+      }
+    },
+    {
+      "id": "world-4",
+      "level": 3,
+      "lesson": "11.5",
+      "q": {
+        "en": "You set up cache rules and the WAF in your edge platform's dashboard. Your local cache-poisoning and rate-limit tests are green, and your agent reports: \"The edge is configured and safe.\" What is the best call?",
+        "ar": "ضبطتَ قواعد الكاش (cache rules) وجدار حماية تطبيقات الويب (WAF) من لوحة منصة الحافة (edge platform). اختبارات تسميم الكاش (cache poisoning) وتحديد المعدّل (rate limit) المحلية خضراء، ويقول وكيلك (agent): «الحافة مضبوطة وآمنة». ما القرار الأصوب؟"
+      },
+      "o": {
+        "en": [
+          "Trust the local tests, since the edge only forwards what your origin returns",
+          "Rely on the platform's defaults, since a managed edge is tested by its vendor",
+          "Re-run those tests through the real edge and export its config into the repo",
+          "Set bot management to maximum so suspicious traffic is always blocked first"
+        ],
+        "ar": [
+          "ثق بالاختبارات المحلية، فالحافة (edge) تمرّر فقط ما يعيده خادمك الأصلي (origin)",
+          "اعتمد على الإعدادات الافتراضية (defaults) للمنصة، فالحافة المُدارة يختبرها مزوّدها",
+          "أعد تشغيل تلك الاختبارات عبر الحافة (edge) الحقيقية وصدّر إعداداتها (config) إلى المستودع (repo)",
+          "اضبط إدارة الروبوتات (bot management) على الحد الأقصى كي تُحجب الحركة المشبوهة أولًا دائمًا"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Local tests bypass the edge, so they go false-green on poisoning or rate-limit-behind-CDN bugs, and dashboard config has no diff or rollback until you version it. Defaults are decisions made for you, such as a CDN ignoring Vary.",
+        "ar": "الاختبارات المحلية تتجاوز الحافة (edge)، فتعطي أخضر كاذبًا (false-green) أمام أخطاء التسميم (poisoning) أو تحديد المعدّل خلف الـCDN، وإعدادات اللوحة بلا فروق (diff) ولا تراجع (rollback) حتى تضعها تحت الإصدار (version). والإعدادات الافتراضية (defaults) قرارات اتُّخذت عنك، كتجاهل الـCDN لترويسة Vary."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "world-e1",
+      "lesson": "11.1",
+      "text": {
+        "en": "I have hit my origin server's raw IP directly and watched it refuse, while the app still worked through the real domain",
+        "ar": "طلبتُ عنوان IP الخام (raw IP) لخادمي الأصلي (origin) مباشرةً وشاهدته يرفض، بينما ظل التطبيق يعمل عبر النطاق (domain) الحقيقي"
+      }
+    },
+    {
+      "id": "world-e2",
+      "lesson": "11.4",
+      "text": {
+        "en": "I have written a cost model with 1×, 10× and 100× columns and can name the line item that scales worst",
+        "ar": "كتبتُ نموذج كلفة (cost model) بأعمدة 1× و10× و100×، وأستطيع تسمية بند الكلفة (line item) الذي يتضخّم أسوأ من غيره"
+      }
+    }
+  ]
+}
