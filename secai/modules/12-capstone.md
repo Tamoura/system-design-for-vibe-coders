@@ -22,7 +22,7 @@ Rania (Head of AI Products) confirms that next quarter Najm Assist gets its firs
 
 Ali offers a vendor's 120-line control checklist. Noura asks which threat line 47 answers; Ali does not know. "A checklist tells me what someone else worried about. I need our threats, our controls, tests that prove them, and a drill."
 
-Public cases show the gaps. In February 2023, users got Bing Chat to reveal its hidden instructions through prompt injection. In December 2023, a Chevrolet dealer's chatbot was manipulated into "agreeing" to sell a car for one dollar. In *Moffatt v. Air Canada* (2024), a tribunal held the airline responsible for what its chatbot said. Greshake and colleagues (2023) showed that instructions hidden in content an assistant reads can steer it. Each was a design decision nobody had traced to a threat.
+Public cases show the gaps. In February 2023, users got Bing Chat to reveal its hidden instructions through prompt injection. In December 2023, a Chevrolet dealer's chatbot was manipulated into "agreeing" to sell a car for one dollar. In *Moffatt v. Air Canada* (2024), a tribunal held the airline responsible for what its chatbot said. Greshake and colleagues (2023) showed that instructions hidden in content an assistant reads can steer it. In each case the weakness sat in a design choice that a threat traced to a control and a test would have challenged.
 
 ## 📐 How it works
 
@@ -59,6 +59,7 @@ flowchart LR
         ORC["Assist orchestrator"]
         OUT["Output handler"]
         TG["Tool gateway: identity, policy, confirmation"]
+        KB["Approved fee corpus"]
         LOG["Security logs"]
     end
     subgraph PROV["Model provider"]
@@ -69,6 +70,7 @@ flowchart LR
         TXN["Transactions: text written by others"]
     end
     APP --> GW --> ORC
+    ORC -->|"retrieve"| KB
     ORC -->|"prompt"| LLM
     LLM -->|"reply: untrusted"| ORC
     ORC -->|"proposed tool call"| TG
@@ -100,9 +102,9 @@ def freeze_card(args, session):
 
 In the vulnerable version, an injection that changes `customer_id` becomes broken object-level authorisation (API1 in the OWASP API Security Top 10, 4.1), with the model as a **confused deputy**: a component with authority tricked into using it for someone else. In the fixed version, a hijacked model can at worst propose freezing the customer's own card, confirmed on a screen the model did not write.
 
-**Break the lethal trifecta.** Simon Willison (2025) named the **lethal trifecta**: a system with access to private data, exposure to untrusted content and a way to communicate externally can be steered into sending that data to an attacker. Assist has the first two by design, so the third is removed: the orchestrator cannot reach the internet, the output handler renders plain text with links only to allowlisted bank domains and no remote images, and no tool sends messages outside the bank. For every proposed tool, ask whether it adds the missing leg.
+**Break the lethal trifecta.** Simon Willison (2025) named the **lethal trifecta**: a system with access to private data, exposure to untrusted content and a way to communicate externally can be steered into sending that data to an attacker. Assist has the first two by design, so the third is removed: the orchestrator's only outbound route is the approved model endpoint, the output handler renders plain text with links only to allowlisted bank domains and no remote images, and no tool sends messages outside the bank. For every proposed tool, ask whether it adds the missing leg.
 
-**Tests that can fail, with honest bars.** Each control becomes a check: cross-customer ID tests on every build (100% denied); a trajectory check that no write runs without a confirmed pending action (zero exceptions); outputs seeded with HTML, markdown images and off-domain links (nothing renders); and Mariam's injected transfer references. The bank cannot promise injected text will never mislead the model, so that rate is tracked, not required to be zero. It can promise, and test, that misleading the model never moves money or changes account state on its own.
+**Tests that can fail, with honest bars.** Each control becomes a check: cross-customer ID tests on every build (100% denied); a trajectory check (a test over the agent's whole sequence of tool calls) that no write runs without a confirmed pending action (zero exceptions); outputs seeded with HTML, markdown images and off-domain links (nothing renders); and Mariam's injected transfer references. The bank cannot promise injected text will never mislead the model, so that rate is tracked, not required to be zero. It can promise, and test, that misleading the model never moves money or changes account state on its own.
 
 **Detect what the controls see.** Each deterministic control also emits a signal: `PermissionDenied` spikes, declined confirmations, output-handler blocks. Logs carry conversation, pseudonymous customer, tool, decision, and model and prompt versions, never raw card numbers (5.3).
 
@@ -121,18 +123,18 @@ In the vulnerable version, an injection that changes `customer_id` becomes broke
 What good looks like follows 10.2; NIST SP 800-61 Rev. 3 (2025) frames the same work around the CSF 2.0 functions.
 - **Contain narrowly.** Turn off the transaction-history and dispute tools by flag; keep fee answers running. Ask fraud to act on the sending account. Preserve logs. Do not edit the system prompt in production: it is not a control, and it changes the evidence.
 - **Scope from logs.** Find every conversation where that reference entered the context, testing the logging design from 10.1.
-- **Decide on notification with the DPO.** For EU customers' personal data, GDPR Art. 33 expects notice to the supervisory authority within 72 hours where feasible; Qatar's PDPPL (Law No. 13 of 2016), QCB expectations and, where they apply, EU rules such as DORA are assessed in parallel. Sara and Legal decide; security supplies facts (11.2).
+- **Decide on notification with the DPO.** For EU customers' personal data, GDPR Art. 33 requires notice to the supervisory authority without undue delay and, where feasible, within 72 hours of becoming aware of a breach, unless it is unlikely to result in a risk to people; Qatar's PDPPL (Law No. 13 of 2016), QCB expectations and, where they apply, EU rules such as DORA are assessed in parallel. Sara and Legal decide; security supplies facts (11.2).
 - **Fix and recover.** Mark transaction text clearly as data in the prompt; check phone numbers in output against the bank's published numbers, as links already are. Bring the tools back behind a canary.
 - **Learn.** Add the attack to the regression set and a phone-number detection; update the threat model.
 
 The main finding is typical: output handling covered links but not phone numbers, because controls often cover only the channel someone thought of. Flipping the switch took minutes; deciding to flip it took longer.
 
-**Residual risk is a signed decision.** Hamad's acceptance reads: "Injected content may cause Assist to show misleading text. It cannot change account state without customer confirmation, cannot reach external networks, and is monitored. Review in six months or on any new tool."
+**Residual risk is a signed decision.** Hamad's acceptance reads: "Injected content may cause Assist to show misleading text. It cannot change account state without customer confirmation, cannot reach external networks beyond the approved model provider, and is monitored. Review in six months or on any new tool."
 
 **Judgement calls between artefacts.**
 - *A soft failure.* In 3% of indirect-injection attempts, Assist proposes an unrequested dispute; confirmation stops all of them. Ship, with a regression test, a detection and a target to cut the rate. If one attempt ever runs an action unconfirmed, launch stops.
 - *"Unfreeze" next.* It helps an account-takeover attacker more than the customer; it stays behind step-up authentication.
-- *A new model version.* Treat it as a release: re-run the red-team regression and golden sets first (6.1, 9.4).
+- *A new model version.* Treat it as a release: re-run the adversarial test set and the functional regression tests first (6.1, 9.4).
 
 ## 🧰 The toolkit
 | Control, standard or tool | What it is and does | When to reach for it |
@@ -166,9 +168,9 @@ The main finding is typical: output handling covered links but not phone numbers
 |---|---|---|---|---|---|
 | Acts on another customer's card | LLM01, LLM06; API1 | Session-bound identity | Cross-customer tests in CI | `PermissionDenied` spike | Tariq |
 | Unrequested dispute | LLM01, LLM06 | Code-written confirmation | Trajectory check | Declined confirmations | Tariq |
-| Phishing link or fake number in output | LLM05 | Allowlist for links and numbers | Seeded-output tests | Handler blocks | Noura |
+| Phishing link or fake number in output | LLM01, LLM05 | Allowlist for links; phone numbers added after the drill | Seeded-output tests | Handler blocks | Noura |
 | System prompt revealed | LLM07 | No secrets or authorisation logic in it | Red-team extraction | None: accepted as low | Noura |
-| Tariff corpus altered | LLM04 | Two approvals; versioned index | Integrity check per build | Unapproved-change alert | Dana |
+| Fee corpus altered | LLM04, LLM08 | Two approvals; versioned index | Integrity check per build | Unapproved-change alert | Dana |
 | Cost exhaustion | LLM10; API4 | Per-customer budgets | Load test | Cost and rate alarms | Jassim |
 
 ## 🛠️ Exercises
@@ -292,7 +294,7 @@ Certificates still matter. Job adverts in Gulf banks and government bodies often
 
 ### 🟢 The essentials
 
-**The role map.** Titles vary by organisation, so read the job description, not the title. Two public taxonomies help. The **NICE Framework** (NIST SP 800-181 Rev. 1) describes cybersecurity work roles and the tasks, knowledge and skills behind them. ENISA's **European Cybersecurity Skills Framework** (ECSF) describes role profiles for the European workforce. At the time of writing (2026), the roles closest to this course look like this:
+**The role map.** Titles vary by organisation, so read the job description, not the title. Two public taxonomies help. The **NICE Framework** (NIST SP 800-181 Rev. 1) describes cybersecurity work roles and the tasks, knowledge and skills behind them; NIST updates its role list online between revisions, so use the current version. ENISA's **European Cybersecurity Skills Framework** (ECSF) describes role profiles for the European workforce. At the time of writing (2026), the roles closest to this course look like this:
 
 | Role | Day to day | Course modules |
 |---|---|---|
@@ -321,7 +323,7 @@ Leadership sits above these: a team lead, a head of function (Noura), a CISO (Ha
 
 Others matter too. Major cloud providers certify security skills on their own platforms. CREST certifies individual testers and accredits testing companies; some buyers look for it. Some bodies have announced AI-focused credentials, but at the time of writing (2026) no single AI-security certification is an industry standard, so evidence of real work counts most.
 
-For most established credentials, senior ones require verified work experience as well as an exam, and keeping any requires continuing professional education (CPE) and annual fees. Budget for both.
+Senior management and audit credentials, such as CISSP, CISM and CISA, require verified work experience as well as an exam, and many credentials must be kept current with continuing professional education (CPE) and recurring maintenance or renewal fees. Rules differ by body, so budget for both.
 
 ### 🟡 Going deeper
 
@@ -354,7 +356,8 @@ Each case study follows one shape: context, threat, decision, evidence, trade-of
 def get_invoice(invoice_id):
     return db.invoices.find_one({"id": invoice_id})
 
-# Strong answer: broken object-level authorisation (IDOR). Scope by tenant.
+# Strong answer: no authentication and no object-level check (IDOR/BOLA).
+# Require login, then scope the query to the caller's company.
 @app.get("/invoices/<invoice_id>")
 @login_required
 def get_invoice(invoice_id):
@@ -365,7 +368,7 @@ def get_invoice(invoice_id):
 
 Then say how you would test it (a cross-tenant test in CI) and detect abuse (many 404s on sequential IDs from one user). Fix, test, detect: the same chain as 12.1. For a threat-model question, state your structure first, then go deep where the risk is: assets and attackers → data flow and trust boundaries → threats (STRIDE, plus the LLM Top 10 for AI features) → controls ranked by risk → tests → detections → residual risk and owner.
 
-**Ethics and law.** Testing a system without written authorisation can be a crime under computer-misuse laws, such as the UK Computer Misuse Act 1990, the US Computer Fraud and Abuse Act and Qatar's Cybercrime Prevention Law (Law No. 14 of 2014), whatever your intent. If you stumble on a weakness while using a service, stop, do not probe further, and report it through the organisation's disclosure channel; many publish one in a `security.txt` file (RFC 9116), and 10.3 covers the process. Major certification bodies, including ISC2 and ISACA, require members to follow a code of ethics. Your reputation is your most important security credential.
+**Ethics and law.** Testing a system without written authorisation can be a crime under computer-misuse laws, such as the UK Computer Misuse Act 1990, the US Computer Fraud and Abuse Act and Qatar's Cybercrime Prevention Law (Law No. 14 of 2014), whatever your intent. If you stumble on a weakness while using a service, stop, do not probe further, and report it through the organisation's disclosure channel; many publish one in a `security.txt` file (RFC 9116); where there is none, a national CERT can pass the report on. 10.3 covers the process. Major certification bodies, including ISC2 and ISACA, require members to follow a code of ethics. Your reputation is your most important security credential.
 
 ### 🔴 Expert view
 
@@ -443,7 +446,7 @@ Ali's **12-month development plan**, agreed with Noura:
 - **Leaking in the portfolio.** Employer vulnerabilities, internal diagrams or customer data in a public write-up can cost you far more than a gap.
 - **Skipping fundamentals for AI.** AI security rests on access control, output handling and secure design. Learn those first.
 - **Trusting forum facts about exams.** Eligibility, formats and prices change. Read the certifying body's current pages.
-- **Ignoring upkeep.** CPE hours and annual fees add up across several credentials. Keep the ones your role needs.
+- **Ignoring upkeep.** CPE hours and maintenance fees add up across several credentials. Keep the ones your role needs.
 
 ## 🧾 Recap
 - Security is a family of roles; choose a target before choosing courses or certificates.
@@ -534,7 +537,6 @@ Ali's **12-month development plan**, agreed with Noura:
 - RFC 9116 (2022), "A File Format to Aid in Security Vulnerability Disclosure" — https://www.rfc-editor.org/rfc/rfc9116
 - Sigma, generic detection rule format (SigmaHQ) — https://github.com/SigmaHQ/sigma
 - CISA Known Exploited Vulnerabilities Catalog — https://www.cisa.gov/known-exploited-vulnerabilities-catalog
-
 
 ---
 
@@ -659,7 +661,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 </details>
 
-**3. A logistics company's incident report shows this chain: a phishing email captured an employee's password, the attacker logged into the VPN with it, moved to a file server, and sent data out over several days. Which single control would most likely have broken the chain earliest?**
+**3. A logistics company's incident report shows this chain: a phishing email captured an employee's password, the attacker logged into the VPN with it, moved to a file server, and sent data out over several days. Which single control would most reliably have broken the chain at an early link?**
 
 - A. Phishing-resistant MFA on the VPN, so a stolen password alone could not open a session
 - B. Data loss prevention on outbound traffic, so the large transfers out would be flagged
@@ -826,7 +828,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**B.** In retrieval-augmented generation (RAG), access control happens at retrieval time: each chunk carries the permissions of its source document, and the search returns only what the signed-in user may see. If a document never enters the prompt, the model cannot leak it. D, like Dana's idea, is tempting because it looks like a rule, but it asks the model to enforce access control; a rephrased or injected question gets around it, and the data is already in the context. This is the territory of LLM08 Vector and Embedding Weaknesses and LLM02 Sensitive Information Disclosure. C protects against a different threat. *(Design · 9.3)*
+**B.** In retrieval-augmented generation (RAG), access control happens at retrieval time: each chunk carries the permissions of its source document, and the search returns only what the signed-in user may see. If a document never enters the prompt, the model cannot leak it. D, like Dana's idea, is tempting because it looks like a rule, but it asks the model to enforce access control; a rephrased or injected question gets around it, and the data is already in the context. This is the territory of LLM08 Vector and Embedding Weaknesses and LLM02 Sensitive Information Disclosure. A sorts documents by type, not by who may read them, so every manager still reaches every borrower; C protects against a different threat. *(Design · 9.3)*
 
 </details>
 

@@ -1,0 +1,146 @@
+[
+ {
+  "id": "m0",
+  "key": "0",
+  "lessons": [
+   "0.1",
+   "0.2",
+   "0.3"
+  ],
+  "en": "Orientation",
+  "ar": "التوجيه (Orientation)"
+ },
+ {
+  "id": "m1",
+  "key": "1",
+  "lessons": [
+   "1.1",
+   "1.2",
+   "1.3"
+  ],
+  "en": "Thinking like a defender",
+  "ar": "التفكير بعقلية المدافع (Thinking like a defender)"
+ },
+ {
+  "id": "m2",
+  "key": "2",
+  "lessons": [
+   "2.1",
+   "2.2",
+   "2.3"
+  ],
+  "en": "Web application security",
+  "ar": "أمن تطبيقات الويب (Web application security)"
+ },
+ {
+  "id": "m3",
+  "key": "3",
+  "lessons": [
+   "3.1",
+   "3.2",
+   "3.3"
+  ],
+  "en": "Identity and access",
+  "ar": "الهوية والوصول (Identity and access)"
+ },
+ {
+  "id": "m4",
+  "key": "4",
+  "lessons": [
+   "4.1",
+   "4.2",
+   "4.3"
+  ],
+  "en": "APIs, mobile and abuse",
+  "ar": "واجهات برمجة التطبيقات والهاتف المحمول وإساءة الاستخدام (APIs, mobile and abuse)"
+ },
+ {
+  "id": "m5",
+  "key": "5",
+  "lessons": [
+   "5.1",
+   "5.2",
+   "5.3"
+  ],
+  "en": "Data, cryptography and secrets",
+  "ar": "البيانات والتشفير والأسرار (Data, cryptography and secrets)"
+ },
+ {
+  "id": "m6",
+  "key": "6",
+  "lessons": [
+   "6.1",
+   "6.2",
+   "6.3"
+  ],
+  "en": "Secure development and supply chain",
+  "ar": "التطوير الآمن وسلسلة التوريد (Secure development and supply chain)"
+ },
+ {
+  "id": "m7",
+  "key": "7",
+  "lessons": [
+   "7.1",
+   "7.2",
+   "7.3"
+  ],
+  "en": "Cloud and infrastructure",
+  "ar": "السحابة والبنية التحتية (Cloud and infrastructure)"
+ },
+ {
+  "id": "m8",
+  "key": "8",
+  "lessons": [
+   "8.1",
+   "8.2",
+   "8.3"
+  ],
+  "en": "How AI systems get attacked",
+  "ar": "كيف تُهاجَم أنظمة الذكاء الاصطناعي (How AI systems get attacked)"
+ },
+ {
+  "id": "m9",
+  "key": "9",
+  "lessons": [
+   "9.1",
+   "9.2",
+   "9.3",
+   "9.4"
+  ],
+  "en": "Securing LLM apps and agents",
+  "ar": "تأمين تطبيقات النماذج اللغوية الكبيرة والوكلاء (Securing LLM apps and agents)"
+ },
+ {
+  "id": "m10",
+  "key": "10",
+  "lessons": [
+   "10.1",
+   "10.2",
+   "10.3"
+  ],
+  "en": "Detection and response",
+  "ar": "الرصد والاستجابة (Detection and response)"
+ },
+ {
+  "id": "m11",
+  "key": "11",
+  "lessons": [
+   "11.1",
+   "11.2",
+   "11.3"
+  ],
+  "en": "Governance and leadership",
+  "ar": "الحوكمة والقيادة (Governance and leadership)"
+ },
+ {
+  "id": "m12",
+  "key": "12",
+  "lessons": [
+   "12.1",
+   "12.2",
+   "12.3"
+  ],
+  "en": "Hero: capstone and practice exam",
+  "ar": "البطل: المشروع الختامي والامتحان التدريبي (Hero: capstone and practice exam)"
+ }
+]
