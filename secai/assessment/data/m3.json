@@ -1,0 +1,135 @@
+{
+ "area": "m3",
+ "questions": [
+  {
+   "id": "m3-1",
+   "level": 1,
+   "lesson": "3.2",
+   "q": {
+    "en": "A Najm developer proposes that the payments API accept the ID token that Najm Mobile receives at sign-in, because it is signed by Najm and identifies the customer. What is the right response?",
+    "ar": "يقترح مطوّرٌ (developer) في بنك نجم (Najm Bank) أن تقبل واجهة برمجة المدفوعات (payments API) رمزَ الهوية (ID token) الذي يتلقاه تطبيق نجم للهاتف (Najm Mobile) عند تسجيل الدخول (sign-in)، لأنه موقَّعٌ من نجم (signed by Najm) ويحدد هوية العميل (identifies the customer). ما الردّ الصحيح (right response)؟"
+   },
+   "o": {
+    "en": [
+     "Accept it, because Najm's valid signature already proves who the customer is",
+     "Accept it, provided the API also checks the token's expiry and its nonce",
+     "Refuse it: APIs accept only access tokens issued for their own audience",
+     "Refuse it unless the token's payload is encrypted before it is sent on"
+    ],
+    "ar": [
+     "اقبله، لأن توقيع نجم الصالح (valid signature) يُثبت أصلًا هوية العميل (who the customer is)",
+     "اقبله، بشرط أن تفحص واجهة البرمجة (API) أيضًا انتهاء صلاحيته (expiry) وقيمة nonce فيه",
+     "ارفضه: فالواجهات (APIs) لا تقبل إلا رموز الوصول (access tokens) الصادرة لجمهورها (own audience)",
+     "ارفضه ما لم تُشفَّر حمولة الرمز (token's payload) قبل إرساله إلى واجهة البرمجة (before it is sent on)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "ID tokens tell the client app who signed in; APIs accept only access tokens issued for their own audience, scoped and short-lived. A valid Najm signature proves who issued a token, not which API it was meant for, and checking expiry or nonce does not change that.",
+    "ar": "تُخبر رموزُ الهوية (ID tokens) التطبيقَ العميل (client app) بمن سجّل الدخول (who signed in)؛ أمّا واجهات البرمجة (APIs) فلا تقبل إلا رموز الوصول (access tokens) الصادرة لجمهورها الخاص (own audience)، محدودةَ النطاق (scoped) وقصيرةَ العمر (short-lived). وتوقيع نجم الصالح (valid Najm signature) يُثبت من أصدر الرمز (who issued it)، لا الواجهةَ التي وُجِّه إليها (which API it was meant for)، وفحصُ انتهاء الصلاحية (expiry) أو nonce لا يغيّر ذلك."
+   }
+  },
+  {
+   "id": "m3-2",
+   "level": 2,
+   "lesson": "3.2",
+   "q": {
+    "en": "Najm's login server rotates refresh tokens. At 03:00 it receives a customer's refresh token that was already used, and replaced, two hours earlier. Its signature is valid and it has not expired. What should the login server do?",
+    "ar": "يدوّر خادم تسجيل الدخول (login server) في نجم رموزَ التحديث (rotates refresh tokens). وفي الساعة 03:00 يتلقى رمزَ تحديثٍ لأحد العملاء (customer's refresh token) سبق استخدامه واستبداله (already used, and replaced) قبل ساعتين. توقيعه صالح (signature is valid) ولم تنتهِ صلاحيته (not expired). ماذا ينبغي أن يفعل خادم تسجيل الدخول (login server)؟"
+   },
+   "o": {
+    "en": [
+     "Revoke the whole token family, since a copy of the token was stolen",
+     "Accept it, since its signature is valid and it has not yet expired",
+     "Refuse this request but keep the newer refresh token in the family valid",
+     "Issue new tokens and flag the event for the next monthly access review"
+    ],
+    "ar": [
+     "إبطال عائلة الرموز كلها (whole token family)، لأن نسخةً من الرمز قد سُرقت (a copy was stolen)",
+     "قبوله، لأن توقيعه صالح (signature is valid) ولم تنتهِ صلاحيته بعد (not yet expired)",
+     "رفض هذا الطلب (this request) مع إبقاء رمز التحديث الأحدث (newer refresh token) في العائلة صالحًا",
+     "إصدار رموزٍ جديدة (new tokens) وتعليم الحدث (flag the event) لمراجعة الوصول الشهرية التالية (monthly access review)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "With rotation, every use returns a new refresh token, so an old one reappearing means a copy was stolen and the whole family must be revoked. Refusing only this request leaves the newer token alive, and the thief may be the one holding it.",
+    "ar": "مع التدوير (rotation)، يعيد كل استخدامٍ رمزَ تحديثٍ جديدًا (new refresh token)، فإذا ظهر رمزٌ قديم مجددًا (old one reappears) فهذا يعني أن نسخةً منه قد سُرقت (a copy was stolen)، ويجب إبطال العائلة كلها (revoke the whole family). أمّا رفض هذا الطلب وحده (refusing only this request) فيُبقي الرمز الأحدث صالحًا (newer token alive)، وقد يكون السارق (thief) هو من يحمله."
+   }
+  },
+  {
+   "id": "m3-3",
+   "level": 2,
+   "lesson": "3.3",
+   "q": {
+    "en": "Ali adds a cached 'monthly summary' to the SME Portal dashboard, stored in the cache under the summary's name alone. In an authorised staging test, Mariam signs in at Company B and sees Company A's totals. Row-level security is already enabled on the invoices table. What is the right fix?",
+    "ar": "يضيف علي «ملخصًا شهريًّا» (\"monthly summary\") إلى لوحة المتابعة (dashboard) في بوابة الشركات الصغيرة (SME Portal)، ويخزّنه في ذاكرة التخزين المؤقت (cache) تحت اسم الملخص وحده (summary's name alone). وفي اختبارٍ مصرَّحٍ به (authorised test) على بيئة ما قبل الإنتاج (staging)، تسجّل مريم الدخول في الشركة B (Company B) فترى إجماليات الشركة A (Company A's totals). وأمن مستوى الصف (row-level security) مفعَّلٌ أصلًا على جدول الفواتير (invoices table). ما الإصلاح الصحيح (right fix)؟"
+   },
+   "o": {
+    "en": [
+     "Turn caching off for good, since a shared cache can never be tenant-safe",
+     "Force row-level security on the invoices table so the leak cannot recur",
+     "Hide the summary from Uploaders and Viewers, who do not need to see it",
+     "Include the tenant from the session in the cache key for the summary"
+    ],
+    "ar": [
+     "إيقاف التخزين المؤقت (caching) نهائيًّا، لأن ذاكرة التخزين المؤقت المشتركة (shared cache) لا تكون آمنةً بين المستأجرين (tenant-safe) أبدًا",
+     "فرض أمن مستوى الصف (force row-level security) على جدول الفواتير (invoices table) كي لا يتكرر التسريب (leak)",
+     "إخفاء الملخص عن رافعي الملفات (Uploaders) والمُطّلِعين (Viewers)، فهم لا يحتاجون إلى رؤيته (do not need to see it)",
+     "إدراج المستأجر المأخوذ من الجلسة (tenant from the session) في مفتاح التخزين المؤقت (cache key) الخاص بالملخص"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "In a pooled multi-tenant design every data path, cache keys included, must be scoped to the tenant taken from the session. Row-level security filters queries on the table, but a cached result is served without querying it, so forcing RLS cannot stop this leak.",
+    "ar": "في التصميم المجمَّع متعدد المستأجرين (pooled multi-tenant design)، يجب حصر كل مسار بيانات (every data path)، بما فيه مفاتيح التخزين المؤقت (cache keys)، في المستأجر المأخوذ من الجلسة (tenant taken from the session). يُرشِّح أمن مستوى الصف (row-level security) الاستعلامات على الجدول (queries on the table)، لكن النتيجة المخزَّنة مؤقتًا (cached result) تُقدَّم دون الاستعلام عنه (without querying it)، فلا يستطيع فرضه (forcing RLS) إيقاف هذا التسريب (leak)."
+   }
+  },
+  {
+   "id": "m3-4",
+   "level": 3,
+   "lesson": "3.1",
+   "q": {
+    "en": "Six months after Najm makes passkeys the default for web customers, phishing losses fall. But the fraud team links a new wave of account takeovers to 'I lost my phone' calls, in which contact-centre agents reset a customer's sign-in after checking date of birth and recent transactions. What should Noura's team recommend?",
+    "ar": "بعد ستة أشهر من جعل نجم مفاتيحَ المرور (passkeys) الخيارَ الافتراضي لعملاء الويب (default for web customers)، تنخفض خسائر التصيّد الاحتيالي (phishing losses). لكن فريق مكافحة الاحتيال (fraud team) يربط موجةً جديدة من الاستيلاء على الحسابات (account takeovers) بمكالمات «فقدتُ هاتفي» (\"I lost my phone\")، التي يعيد فيها وكلاء مركز الاتصال (contact-centre agents) تعيين تسجيل دخول العميل (reset a customer's sign-in) بعد التحقق من تاريخ الميلاد (date of birth) والمعاملات الأخيرة (recent transactions). بماذا ينبغي أن يوصي فريق نورة (Noura's team)؟"
+   },
+   "o": {
+    "en": [
+     "Have agents send an SMS code to the number on file before doing any sign-in reset",
+     "Stop phone-only factor resets; re-verify identity in app or branch, with delays",
+     "Add harder knowledge questions to the agents' call script, such as previous addresses",
+     "Require hardware security keys for all customers, so that passkeys can never be lost"
+    ],
+    "ar": [
+     "إرسال الوكلاء (agents) رمزَ SMS (SMS code) إلى الرقم المسجَّل (number on file) قبل أي إعادة تعيينٍ لتسجيل الدخول (sign-in reset)",
+     "وقف إعادة تعيين العوامل هاتفيًّا (phone-only factor resets)، والتحقق من الهوية مجددًا (re-verify identity) في التطبيق أو الفرع، مع تأخيرات (delays)",
+     "إضافة أسئلة معرفية أصعب (harder knowledge questions) إلى نص المكالمة لدى الوكلاء (agents' call script)، مثل العناوين السابقة للعميل (previous addresses)",
+     "اشتراط مفاتيح أمان عتادية (hardware security keys) لجميع العملاء، كي لا تُفقَد مفاتيح المرور (passkeys) أبدًا (can never be lost)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Once sign-in resists phishing, recovery becomes the real perimeter and needs login-level assurance: no factor reset on a phone call alone, identity re-verification in the app or a branch, and delays and notifications. An SMS code to the number on file proves only control of a number that a SIM swap can hand to the attacker.",
+    "ar": "ما إن يصبح تسجيل الدخول مقاومًا للتصيّد الاحتيالي (resists phishing) حتى تصبح الاستعادة هي المحيط الحقيقي (recovery becomes the real perimeter)، فتحتاج إلى ضمانٍ بمستوى تسجيل الدخول (login-level assurance): لا يُعاد تعيين أي عامل (factor) بناءً على مكالمةٍ هاتفية وحدها (phone call alone)، ويُعاد التحقق من الهوية (identity re-verification) في التطبيق أو في فرع (in the app or a branch)، مع تأخيراتٍ وإشعارات (delays and notifications). أمّا رمز SMS إلى الرقم المسجَّل (number on file) فلا يُثبت إلا السيطرة على رقمٍ (control of a number) يستطيع تبديل شريحة SIM (SIM swap) أن يسلّمه إلى المهاجم (attacker)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m3-e1",
+   "lesson": "3.1",
+   "text": {
+    "en": "I have stored passwords with Argon2id (or bcrypt) in a local app of my own, proved with a test that raised parameters trigger a rehash at next login, and seen a publicly breached password refused",
+    "ar": "خزّنتُ كلمات المرور (passwords) باستخدام Argon2id (أو bcrypt) في تطبيقٍ محليٍّ من صنعي (local app of my own)، وأثبتُّ باختبارٍ (test) أن رفع المعاملات (raised parameters) يؤدي إلى إعادة التجزئة عند تسجيل الدخول التالي (rehash at next login)، وتحقّقتُ من رفض كلمة مرورٍ مسرّبة علنًا (publicly breached password refused)"
+   }
+  },
+  {
+   "id": "m3-e2",
+   "lesson": "3.3",
+   "text": {
+    "en": "I have written an access-control matrix for an app I own in which every cell is allow, deny or a named condition, including at least one business rule such as maker-checker",
+    "ar": "كتبتُ مصفوفة تحكمٍ في الوصول (access-control matrix) لتطبيقٍ أملكه (app I own)، تكون فيها كل خليةٍ (every cell) سماحًا أو رفضًا أو شرطًا مسمّى (allow, deny or a named condition)، ويكون شرطٌ واحد على الأقل فيها قاعدةَ عمل (business rule) مثل المُنشئ والمُدقِّق (maker-checker)"
+   }
+  }
+ ]
+}

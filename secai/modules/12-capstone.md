@@ -843,7 +843,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**C.** Parameterised queries (prepared statements) send the SQL structure and the user's values separately, so the database never interprets input as code, whatever characters it contains. B is tempting because it extends Ali's idea, but blocklist escaping is fragile: it depends on the database, the character encoding and the context, such as numbers, identifiers and `LIKE` patterns, and it is regularly bypassed. A and D are at best extra layers that attackers route around. *(Build · 2.1)*
+**C.** Parameterised queries (prepared statements) send the SQL structure and the user's values separately, so the database never interprets input as code, whatever characters it contains. B is tempting because it extends Ali's idea, but escaping and blocklisting by hand are fragile: they fail against encodings and contexts such as unquoted numbers, they break legitimate values such as O'Brien, and they are regularly bypassed. A and D are at best extra layers that attackers route around. *(Build · 2.1)*
 
 </details>
 
@@ -895,7 +895,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**C.** A secret inside an app that millions of people download is not a secret; anyone can extract it. Mobile apps are public clients and should use the authorization code flow with PKCE (RFC 7636), which ties the code to the app instance that started the flow, so an intercepted code is useless. The OAuth 2.0 Security Best Current Practice (RFC 9700) says public clients must use PKCE and clients should not use the implicit grant. A is tempting because the implicit flow was once recommended for such clients, but it exposes tokens in redirects. B only slows extraction, and D hands the app the password that OAuth exists to protect. *(Build · 3.2)*
+**C.** A secret inside an app that millions of people download is not a secret; anyone can extract it. Mobile apps are public clients, which cannot keep a client secret, and should use the authorization code flow through the system browser with PKCE (RFC 7636), which ties the code to the app instance that started the flow, so an intercepted code is useless. The OAuth 2.0 Security Best Current Practice (RFC 9700) says public clients must use PKCE and clients should not use the implicit grant. A is tempting because the implicit flow was once recommended for such clients, but it exposes tokens in redirects. B only slows extraction, and D hands the app the password that OAuth exists to protect. *(Build · 3.2)*
 
 </details>
 
@@ -904,11 +904,11 @@ Noura runs this exam with every new member of the Application & AI Security team
 - A. Make the API decide eligibility from its own data and ignore any approval sent by the app
 - B. Add root and jailbreak detection, so the check cannot be tampered with on modified phones
 - C. Obfuscate the app's code so that attackers cannot find and change the eligibility check
-- D. Sign the request with a key stored in the app so the server knows the flag is genuine
+- D. Sign the request with a key built into the app so the server knows the flag is genuine
 
 <details><summary>Answer</summary>
 
-**A.** Anything on the device, whether code, flags or keys, is under the control of whoever holds the device. Security decisions must be made and enforced on the server, using data the server trusts. B and C are tempting, and they are useful for raising an attacker's cost (OWASP MASVS covers such resilience controls), but they can be bypassed with enough effort, so they cannot be what stands between a customer and a higher limit. D fails for the same reason: a key inside the app can be extracted. *(Build · 4.3)*
+**A.** Anything on the device, whether code, flags or keys, is under the control of whoever holds the device. Security decisions must be made and enforced on the server, using data the server trusts. B and C are tempting, and they are useful for raising an attacker's cost (OWASP MASVS covers such resilience controls), but they can be bypassed with enough effort, so they cannot be what stands between a customer and a higher limit. D fails for the same reason: a key built into the app can be extracted, and even a valid signature would prove only that the app sent the flag, not that the customer is eligible. *(Build · 4.3)*
 
 </details>
 
@@ -921,7 +921,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**B.** General-purpose hashes like SHA-256 are designed to be fast, so an attacker who steals the hashes can test enormous numbers of guesses per second on GPUs; a salt stops precomputed tables but not that. Password hashing functions such as Argon2id (the first choice in the OWASP Password Storage Cheat Sheet), scrypt or bcrypt are deliberately slow, and Argon2id and scrypt are also memory-hard. A is tempting because a pepper helps if only the database leaks, but the hash is still fast. C makes passwords recoverable, which they never should be, and D uses a broken hash with a weak cost. *(Build · 5.1)*
+**B.** General-purpose hashes like SHA-256 are designed to be fast, so an attacker who steals the hashes can test enormous numbers of guesses per second on GPUs; a salt stops precomputed tables but not that. Password hashing functions such as Argon2id (the first choice in the OWASP Password Storage Cheat Sheet), scrypt or bcrypt are deliberately slow, and Argon2id and scrypt are also memory-hard. A is tempting because a pepper helps if only the database leaks, but the hash is still fast. C makes passwords recoverable, which they never should be, and D is still built on a fast hash, MD5, where 1,000 rounds add far too little cost and no memory-hardness. *(Build · 5.1)*
 
 </details>
 
@@ -930,11 +930,11 @@ Noura runs this exam with every new member of the Application & AI Security team
 - A. Accept it, since the agent was trained on a great deal of real code and the tests pass
 - B. Ask the agent whether the package is safe, and accept the change if it says yes
 - C. Pin the package to its latest version in the lockfile, then merge the pull request
-- D. Check that it exists, is the intended project and is maintained, before it is added
+- D. Confirm it is the real, established project the code intends before it is merged
 
 <details><summary>Answer</summary>
 
-**D.** AI coding tools sometimes invent package names, and research from 2024–2025 showed that attackers can register such hallucinated names with malicious code, a risk called "slopsquatting". Reviewers confirm the package exists on the registry, is the project the code expects, has a credible maintainer and history, and passes the team's dependency policy, ideally through an internal mirror or allowlist. A is tempting because passing tests feel like proof, but a malicious package can work as advertised while doing harm at install or run time. C locks in whatever was published. *(Build · 6.3)*
+**D.** AI coding tools sometimes invent package names, and research (Spracklen et al., 2024) found that many invented names recur, so an attacker can register one with malicious code and wait, a practice known since 2025 as "slopsquatting". Passing tests show only that a package with that name exists now. The reviewer confirms it is the real, established project the code expects, with a credible maintainer and history, and that it came through the team's registry proxy and new-dependency gate. A is tempting because passing tests feel like proof, but a malicious package can work as advertised while doing harm at install or run time. B asks the tool that made the choice to vouch for it, and C locks in whatever was published. *(Build · 6.3)*
 
 </details>
 
@@ -962,7 +962,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**A.** This is cross-site request forgery (CSRF): the browser attaches the user's cookies to a request that another site triggers. HttpOnly only stops JavaScript reading the cookie, which helps against theft by XSS. The defences are anti-CSRF tokens tied to the session, SameSite cookies (Lax or Strict), and re-authentication for sensitive changes such as payout accounts. D is tempting, but CORS controls which origins may read responses from scripts; a plain cross-site form submission is still sent. B improves transport security, not CSRF. *(Test · 2.2)*
+**A.** This is cross-site request forgery (CSRF): the browser attaches the user's cookies to a request that another site triggers. HttpOnly only stops JavaScript reading the cookie, which helps against theft by XSS. The defences are anti-CSRF tokens tied to the session, SameSite cookies (Lax or Strict), and re-authentication for sensitive changes such as payout accounts. D is tempting, but CORS controls which origins may read responses from scripts; a plain cross-site form submission is still sent. C misreads CSP, which controls what your own pages may load and run, not which sites may send requests to you, and B improves transport security, not CSRF. *(Test · 2.2)*
 
 </details>
 
@@ -1014,7 +1014,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**A.** This is a business-logic flaw: each request is valid on its own, but the real rule, a daily total, is never enforced. The server must check cumulative state atomically, so that parallel requests cannot all pass the check before any is recorded (a race condition). Automated scanners do not know your business rules, so abuse cases belong in design and in manual tests. C is tempting, but the rule is about money per day, not request rate; slower requests would still exceed it. D is the trap the lesson warns about. *(Test · 4.2)*
+**A.** This is a business-logic flaw: each request is valid on its own, but the real rule, a daily total, is never enforced. The server must check cumulative state atomically, so that parallel requests cannot all pass the check before any is recorded (a race condition). Scanners rarely find such flaws, because nothing in the requests looks malformed, so abuse cases belong in requirements and in tests that encode the rule. C is tempting, but the rule is about money per day, not request rate; slower requests would still exceed it. B only changes the arithmetic: more transfers still add up past the limit, and genuine customers lose the ability to make one large payment. D relies on exactly the kind of tool that cannot see this flaw. *(Test · 4.2)*
 
 </details>
 
@@ -1040,7 +1040,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**C.** The instruction arrived through data the system retrieved, not from the user: indirect prompt injection, as described by Greshake et al. (2023). There is no complete technical fix at the time of writing, so the defence is architectural: mark and isolate untrusted content, strip hidden text where you can, keep the model's output advisory so the credit decision stays with people and the bank's rating process, and log for detection. D is tempting because "bad data" is involved, but poisoning corrupts training data; here the model is unchanged, and the attack happens at inference time through the context. *(Test · 8.2)*
+**C.** The instruction arrived through data the system retrieved, not from the user: indirect prompt injection, as described by Greshake et al. (2023). There is no complete technical fix at the time of writing, so the defence is architectural: mark and isolate untrusted content, strip hidden text where you can, keep the model's output advisory so the credit decision stays with people and the bank's rating process, and log for detection. D is tempting because "bad data" is involved, but the model's weights are unchanged, so retraining fixes nothing: the planted text acts at inference time, through the context the copilot reads. *(Test · 8.2)*
 
 </details>
 
@@ -1081,7 +1081,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**B.** With workload identity federation, the CI system's signed OIDC token is exchanged for a cloud role, so each job receives credentials that expire quickly and are scoped to that pipeline and branch. There is no standing secret to leak. A is tempting because rotation is good practice, but a stolen key is still valid for up to 90 days, and rotation adds toil. C and D do not change what a leaked value can do. *(Deploy · 5.2)*
+**B.** With workload identity federation, the CI system's signed OIDC token is exchanged for temporary credentials for a cloud role that trusts only this repository and branch, so each job receives credentials that expire quickly and no other pipeline can obtain them. There is no standing secret to leak. A is tempting because rotation is good practice, but a stolen key is still valid for up to 90 days, and rotation adds toil. C and D do not change what a leaked value can do. *(Deploy · 5.2)*
 
 </details>
 
@@ -1146,7 +1146,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**C.** Unlimited queries with precise scores let an attacker probe the model: tweak a transaction, watch the score move, and learn how to stay under the threshold (evasion), or train a copy (model extraction). Both are documented in MITRE ATLAS and NIST AI 100-2. Returning only what partners need, such as approve, review or decline, with per-partner rate limits and monitoring for probing patterns, raises the attacker's cost sharply. D is tempting because it makes stolen copies stale, but it does nothing to stop evasion. A is wrong: classic machine-learning models are attacked too. *(Deploy · 8.3)*
+**C.** Unlimited queries with precise scores let an attacker probe the model: tweak a transaction, watch the score move, and learn how to stay under the threshold (evasion), or train a copy (model extraction). Both are documented in MITRE ATLAS and NIST AI 100-2. Returning only what partners need, such as approve, review or decline, with per-partner rate limits and monitoring for probing patterns, raises the attacker's cost sharply. D is tempting because it makes stolen copies stale, but every partner, or anyone who compromises one, still has an unlimited, precise oracle to probe again after each retrain. A is wrong: classic machine-learning models are attacked too. *(Deploy · 8.3)*
 
 </details>
 
@@ -1161,7 +1161,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**D.** Many breaches use known, patchable weaknesses, and you can only patch what you know you run. The basics are an inventory of systems and their components, and remediation deadlines set by severity and exposure, with tracking until closed. A is tempting because zero-days sound like the bigger danger, but in this case the flaw and its fix were public; the gap was finding and patching it in time. C is a point-in-time check once a year, and B moves the problem rather than solving it. *(Operate · 0.2)*
+**D.** Many breaches use known, patchable weaknesses, and you can only patch what you know you run. The basics are an inventory of systems and their components, and remediation deadlines set by evidence of exploitation, exposure and severity, with tracking until closed. A is tempting because zero-days sound like the bigger danger, but in this case the flaw and its fix were public; the gap was finding and patching it in time. C is a point-in-time check once a year, and B moves the problem rather than solving it. *(Operate · 0.2)*
 
 </details>
 
@@ -1174,7 +1174,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**A.** The CVSS base score describes how severe a vulnerability is in general; it does not know your environment. Risk adds context: how exposed the system is, what the asset is worth, and whether the flaw is being exploited, for which EPSS and the CISA KEV catalogue help. A publicly reachable flaw that exposes customer statements is far more urgent here than an isolated test box. B is tempting because many policies do sort by CVSS, but FIRST, which maintains CVSS, stresses that the base score measures severity, not risk. D ignores impact and exposure entirely. *(Operate · 1.3)*
+**A.** The CVSS base score describes how severe a vulnerability is in general; it does not know your environment. Risk adds context: how exposed the system is, what the asset is worth, and whether the flaw is being exploited, for which EPSS and the CISA KEV catalogue help. A publicly reachable flaw that exposes customer statements is far more urgent here than an isolated test box. B is tempting because many policies do sort by CVSS, but FIRST, which maintains CVSS, stresses that the base score measures severity, not risk. D ignores impact and exposure, and waits for a score that may never come: EPSS covers published CVEs, and a flaw in Najm's own API usually has none. *(Operate · 1.3)*
 
 </details>
 
@@ -1187,14 +1187,14 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**C.** This is improper inventory management (API9 in the OWASP API Security Top 10, 2023): forgotten versions, hosts and test endpoints keep old flaws alive. The lasting fix is to know every exposed API, through the gateway, documentation and discovery, and to decommission old versions. A is tempting and is the right immediate patch, but it treats the symptom; the next forgotten endpoint will have the same problem. B slows the attack without stopping it, and D is obscurity. *(Operate · 4.1)*
+**C.** This is improper inventory management (API9 in the OWASP API Security Top 10, 2023): forgotten versions, hosts and test endpoints keep old flaws alive. The lasting fix is to know every exposed API, through the gateway, documentation and discovery, and to decommission old versions. A is tempting because it closes this gap today (so would blocking `/v1/` at the gateway), but it treats the symptom; the next forgotten endpoint will have the same problem. B slows the attack without stopping it, and D is obscurity. *(Operate · 4.1)*
 
 </details>
 
 **43. After a web application firewall (WAF) is deployed in front of the SME Portal, Ali proposes closing the backlog tickets to convert old queries to parameterised ones, because "the WAF now blocks SQL injection". What should Noura say?**
 
 - A. Agree, since a modern WAF blocks all SQL injection patterns and is kept updated by the vendor
-- B. Disagree: a WAF is a layer that can be bypassed, so fix the code and keep the WAF meanwhile
+- B. Disagree: a WAF is a layer that can be bypassed, so fix the code and keep the WAF too
 - C. Agree, but only for queries on internal pages that cannot be reached from the internet
 - D. Disagree, and remove the WAF entirely because it gives people a false sense of security
 
@@ -1239,7 +1239,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**B.** Detection engineering treats rules like code: each rule targets a specific attacker behaviour, here credential stuffing or password spraying mapped to MITRE ATT&CK, is tested against known good and bad data, has a runbook, and is tuned on its precision. Failures spread across many accounts from shared infrastructure, followed by successes, is a high-signal pattern. D is tempting because it cuts volume, but a high per-account threshold misses password spraying, which tries only a few passwords per account. A burns people out, and C throws away a real signal. *(Operate · 10.1)*
+**B.** Detection engineering treats rules like code: each rule targets an attacker behaviour mapped to MITRE ATT&CK, here credential stuffing (T1110.004), is tested on lab replays and past weeks of data, has an owner and a playbook, and is tuned on the share of its alerts that were real. Many accounts tried from one network or device fingerprint, with a very low success rate, is a high-signal pattern. D is tempting because it cuts volume, but stuffing tries each account only once or twice, so a per-account threshold of 100 never fires, and "leave it there" skips measuring and tuning. A feeds the alert fatigue instead of curing it, and C throws away a real signal. *(Operate · 10.1)*
 
 </details>
 
@@ -1254,7 +1254,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**C.** This is credential stuffing: passwords leaked from other sites, tried at scale through distributed infrastructure. Respond first by securing the accounts with successful logins (revoke sessions, require step-up verification, contact customers), then add layered defences: bot detection, limits across accounts and devices, breached-password checks and stronger authentication such as passkeys. A is tempting because rate limiting is a standard tool, but the attack is designed to stay under per-IP limits. B is easily routed around, and D hurts every customer to slow the attacker briefly. *(Respond · 4.2)*
+**C.** This is credential stuffing: passwords leaked from other sites, tried at scale through distributed infrastructure. Respond first by securing the accounts with successful logins (revoke sessions, require step-up verification, contact customers), then add layered defences: bot detection, limits across accounts and devices, breached-password checks and stronger authentication such as passkeys. A is tempting because rate limiting is a standard tool, but the attack is designed to stay under per-IP limits. B is easily routed around with residential proxies and also locks out customers travelling abroad, and D hurts every customer to slow the attacker briefly. *(Respond · 4.2)*
 
 </details>
 
@@ -1347,11 +1347,11 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**C.** Data minimisation means collecting and keeping only what a purpose needs. Redact or tokenise card and account numbers at the point of logging, set retention that matches the purpose, and restrict access to those who need it; this protects customers and shrinks what a breach could expose, in line with GDPR's principles and Article 32, and with PCI DSS for card data. A is tempting because encryption is a real control, but anyone who can read the logs still sees everything, and keeping it forever breaks minimisation and storage limitation. D is transparency, not protection, and B throws away security evidence. *(Govern · 5.3)*
+**C.** Data minimisation means collecting and keeping only what a purpose needs. Log allowlisted fields rather than whole transcripts; where debug content is truly needed, redact or tokenise card and account numbers at the point of logging, set retention that matches the purpose, and restrict access to those who need it; this protects customers and shrinks what a breach could expose, in line with GDPR's principles and Article 32, and with PCI DSS for card data. A is tempting because encryption is a real control, but anyone who can read the logs still sees everything, and keeping it forever breaks minimisation and storage limitation. D is transparency, not protection, and B throws away security evidence. *(Govern · 5.3)*
 
 </details>
 
-**55. A vendor tells Rania that its prompt-injection "firewall" blocks nearly every attack on its own benchmark, so Najm Assist could make transfers on a customer's request without asking for confirmation. Layla asks for the security view. What is it?**
+**55. A vendor tells Rania that its prompt-injection "firewall" blocks nearly every attack on its own benchmark, so Najm Assist could open card disputes on a customer's request without asking for confirmation. Layla asks for the security view. What is it?**
 
 - A. Accept it, provided Mariam's team first confirms the detection rate on Najm's own test set
 - B. Use the filter as one layer, but keep confirmation and limits: no fix is complete
@@ -1360,7 +1360,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**B.** At the time of writing, no complete technical fix for prompt injection exists: filters are probabilistic, and attackers adapt their wording to whatever is deployed. A filter can cut noise, but consequential actions like transfers need architectural controls: least privilege, limits, and customer confirmation outside the model's control. A is tempting because testing on your own data beats trusting a vendor benchmark, but even a good measured rate means some attacks get through, and each miss moves real money. D shifts some cost but not the harm to customers or the bank's accountability. *(Govern · 8.2)*
+**B.** At the time of writing, no complete technical fix for prompt injection exists: filters are probabilistic, and attackers adapt their wording to whatever is deployed. A filter is a useful detection layer, but consequential actions like opening disputes need architectural controls: ownership checked in code, daily limits, and a confirmation the app renders from the real arguments, which the model cannot write. A is tempting because testing on your own data beats trusting a vendor benchmark, but attempts are cheap and adaptive attackers beat fixed test sets, so even a good measured rate lets some through, and each miss is a potential fraud incident. D shifts some cost but not the harm to customers or the bank's accountability. *(Govern · 8.2)*
 
 </details>
 
@@ -1373,7 +1373,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**D.** MCP, introduced by Anthropic in November 2024, lets agents load tools whose descriptions the model reads and follows, so a malicious or compromised server can steer the agent (tool poisoning) or misuse the agent's access as a confused deputy. Treat MCP servers as supply chain: review and allowlist them, pin versions so they cannot change silently, sandbox the agent with least-privilege credentials, and require human approval for sensitive actions. A is tempting, but popularity is not review, and a popular server can change in its next update. C checks the output after the harm, and B gives up the productivity the bank wants instead of managing the risk. *(Govern · 9.2)*
+**D.** MCP, introduced by Anthropic in November 2024, lets agents load tools whose descriptions the model reads and follows, so a malicious or compromised server can steer the agent (tool poisoning) or change its tools after review, and a local server runs with the developer's own files and credentials. Treat MCP servers as supply chain: review and allowlist them, pin versions so they cannot change silently, sandbox the agent with least-privilege credentials, and require human approval for sensitive actions. A is tempting, but popularity is not review, and a popular server can change in its next update. C checks the output after the harm, and B gives up the productivity the bank wants instead of managing the risk. *(Govern · 9.2)*
 
 </details>
 
@@ -1403,7 +1403,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 </details>
 
-**59. Najm Bank's EU subsidiary depends on a cloud provider for core systems. Layla asks which EU regulation, applying to financial entities from January 2025, sets rules for ICT risk management, major incident reporting, resilience testing and ICT third-party risk. Which is it?**
+**59. Najm Bank's Frankfurt branch depends on a cloud provider for core systems. Layla asks which EU regulation, applying to financial entities from January 2025, sets rules for ICT risk management, major incident reporting, resilience testing and ICT third-party risk. Which is it?**
 
 - A. The EU AI Act, through its rules on high-risk AI systems used by banks
 - B. GDPR, through Article 32 on the security of processing personal data
@@ -1425,7 +1425,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**B.** Good programme metrics show outcomes and trends the board can act on: how fast serious risk is removed, how much of the estate is covered by key controls (for example phishing-resistant MFA, threat models for critical apps, SBOMs), and how quickly incidents are detected and contained. Raw counts mislead: vulnerabilities found goes up when you look harder, which is good news. D is tempting because the numbers are large and easy to collect, but "attacks blocked" mostly measures internet background noise, not whether Najm is getting safer. A and C measure activity and inputs, not results. *(Govern · 11.3)*
+**B.** Good programme metrics show outcomes and trends the board can act on: how fast serious risk is removed, how much of the estate is covered by key controls (for example phishing-resistant MFA, threat models for critical apps, SBOMs), and how quickly incidents are detected and contained, a mix of leading and lagging indicators. Raw counts mislead: vulnerabilities found rises when you look harder, so nobody can say whether a change is good or bad. D is tempting because the numbers are large and easy to collect, but "attacks blocked" mostly measures internet background noise, not whether Najm is getting safer. A and C measure activity and inputs, not results. *(Govern · 11.3)*
 
 </details>
 

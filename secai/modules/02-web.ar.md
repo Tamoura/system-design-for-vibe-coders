@@ -100,7 +100,7 @@ return render_template_string("<p>Welcome, {{ name }}</p>", name=display_name)
 
 ### 🟡 التعمق أكثر (Going deeper)
 
-**ما لا يمكنك تمريره معاملًا (What you cannot parameterise).** تعمل العناصر النائبة (Placeholders) مع القيم (values)، لا مع **المعرّفات (identifiers)**، أي أسماء الجداول والأعمدة (table and column names)، ولا مع الكلمات المفتاحية (keywords) مثل `DESC`. مرِّر اختيار المستخدم عبر قائمة سماح (Map the user's choice through an allow-list):
+**ما لا يمكنك تمريره معاملًا (What you cannot parameterise).** تعمل العناصر النائبة (Placeholders) مع القيم (values)، لا مع **المعرّفات (identifiers)**، أي أسماء الجداول والأعمدة (table and column names)، ولا مع الكلمات المفتاحية (keywords) مثل `DESC`. اربط اختيار المستخدم بقيمةٍ من قائمة سماح (Map the user's choice through an allow-list):
 
 ```python
 SORTS = {"date": "issued_at", "amount": "amount_qar", "status": "status"}
@@ -116,7 +116,7 @@ cursor.execute(sql, (cid,))
 
 **الحقن من الدرجة الثانية (Second-order injection).** يُدرَج اسم شركةٍ يحتوي على علامة اقتباس (a quote) بأمانٍ باستخدام المعاملات (inserted safely with parameters). وبعد أشهر، يربط تقريرٌ ليلي (nightly report) أسماء الشركات داخل استعلامٍ فينكسر (breaks)، أو يُخترَق (is subverted). استخدم المعاملات في كل استعلام (Parameterise every query)، بما في ذلك الاستعلامات التي تُغذّى من «قاعدة بياناتنا نحن» ("our own database").
 
-**حقن عوامل NoSQL ‏(NoSQL operator injection).** يفشل تسجيل الدخول (login) الذي يمرّر جسم الطلب (request body) مباشرةً إلى `users.find({"email": body.email, "password": body.password})` إذا وصل `password` بوصفه كائن JSON ‏(JSON object) هو `{"$ne": null}`، أي «لا يساوي null» ("not equal to null")، وهو ما يطابق أي كلمة مرور (matches any password). تحقّق من أن كل حقلٍ سلسلةٌ نصية بالشكل المتوقع (a string of the expected shape)، وارفض المفاتيح التي تبدأ بـ `$`، وهذا هو CWE-943. والأفضل من ذلك أن تبحث عن المستخدم (look the user up) وتتحقق من تجزئة كلمة المرور (verify the password hash) في الشيفرة، كما في الدرس 3.1.
+**حقن عوامل NoSQL ‏(NoSQL operator injection).** تسجيل الدخول (login) الذي يمرّر جسم الطلب (request body) مباشرةً إلى `users.find({"email": body.email, "password": body.password})` يُخفق أمنيًا (fails) إذا وصل `password` بوصفه كائن JSON ‏(JSON object) هو `{"$ne": null}`، أي «لا يساوي null» ("not equal to null")، وهو ما يطابق أي كلمة مرور (matches any password). تحقّق من أن كل حقلٍ سلسلةٌ نصية بالشكل المتوقع (a string of the expected shape)، وارفض المفاتيح التي تبدأ بـ `$`، وهذا هو CWE-943. والأفضل من ذلك أن تبحث عن المستخدم (look the user up) وتتحقق من تجزئة كلمة المرور (verify the password hash) في الشيفرة، كما في الدرس 3.1.
 
 **التحقق هو الطبقة الثانية (Validation is the second layer).** التحقق بقائمة السماح (Allow-list validation)، كأن يتكون مرجع الفاتورة (invoice reference) من 6 إلى 20 حرفًا ورقمًا وشَرطة (letters, digits and dashes)، و**جدار حماية تطبيقات الويب (web application firewall, WAF)**، وهو مرشِّحٌ أمام التطبيق يحظر أنماط الهجوم المعروفة (a filter in front of the app that blocks known attack patterns)، كلاهما من الدفاع المتعدد الطبقات (defence in depth)، كما في الدرس 1.2، وليسا بديلًا عن المعاملات (not substitutes for parameters). فالقيم المشروعة (Legitimate values) تحتوي على أحرفٍ «خطِرة» ("dangerous" characters)، مثل O'Brien و"Al-Noor & Sons"، ويمكن تجاوز المرشِّحات بالترميزات (filters can be bypassed with encodings).
 
@@ -245,7 +245,7 @@ cursor.execute(sql, (cid,))
 
 - A. تنفيذ SQL الذي يكتبه النموذج على قاعدة بيانات الإنتاج (production database)، لأن موجّه النظام (system prompt) يطلب من النموذج ألّا يكتب إلا عبارات SELECT ‏(SELECT statements)
 - B. منح المساعد أداةً ضيقة (narrow tool) تنفّذ استعلام إنفاقٍ ثابتًا ذا معاملات (fixed, parameterised spending query) للعميل المسجِّل دخوله (logged-in customer)، على ألّا يقدّم النموذج سوى معاملاتٍ متحقَّقٍ منها (validated parameters) مثل الفئة والشهر (category and month)
-- C. تصفية SQL الذي يكتبه النموذج بحثًا عن الكلمتين DROP وDELETE
+- C. تصفية SQL الذي يكتبه النموذج (Filter the model's SQL) بحثًا عن الكلمتين DROP وDELETE (for the words DROP and DELETE)
 - D. مطالبة النموذج بمراجعة SQL الخاص به مرةً أخرى (double-check its SQL) قبل تنفيذه
 
 <details><summary>الإجابة</summary>
@@ -300,7 +300,7 @@ cursor.execute(sql, (cid,))
 |---|---|---|
 | **المخزَّنة (Stored)** | محفوظٌ على الخادم ويُقدَّم لمستخدمين آخرين (Saved on the server and served to other users) | ملاحظة فاتورة خبيثة (malicious invoice note) تُعرض على المعتمِد (approver) |
 | **المنعكسة (Reflected)** | يُرسل في الطلب ويُعاد مباشرةً (Sent in the request and echoed straight back) | صفحة بحث تطبع «لا نتائج لـ …» ("No results for …") مع الاستعلام الخام (raw query) |
-| **المعتمدة على DOM ‏(DOM-based)** | تكتبه في الصفحة (Written into the page) شيفرة JavaScript الخاصة بك (your own JavaScript) | شيفرةٌ تقرأ `location.hash` وتُسنده إلى `innerHTML` |
+| **المعتمدة على DOM ‏(DOM-based)** | تكتبه في الصفحة (Written into the page) شيفرة JavaScript الخاصة بك (your own JavaScript) | شيفرةٌ تقرأ (Code that reads) `location.hash` وتُسنده (assigns it) إلى `innerHTML` |
 
 **إصلاح XSS: رمِّز حسب السياق (Fixing XSS: encode for the context).** تحلّل المتصفحات (Browsers parse) شيفرة HTML والسمات (attributes) وعناوين URL وJavaScript وCSS بطرقٍ مختلفة، ولذلك تعتمد المعالجة الآمنة (safe treatment) على الموضع الذي تستقر فيه البيانات (where data lands). تُرمّز أطر العمل الحديثة (Modern frameworks) ومحركات القوالب ذات التهريب التلقائي (auto-escaping template engines) النصَّ نيابةً عنك؛ وتعيش الأخطاء في منافذ الهروب (the bugs live in the escape hatches).
 
@@ -345,7 +345,7 @@ sequenceDiagram
 
 **إصلاح CSRF ‏(Fixing CSRF).** ضع هذه الضوابط في طبقات (Layer these controls):
 1. **الرموز المضادة لتزوير الطلبات (Anti-CSRF tokens)**، أي نمط الرمز المتزامن (the synchronizer token pattern): رمزٌ عشوائي لكل جلسة (random per-session token) مطلوبٌ في كل نموذج أو ترويسة طلب (each form or request header). ولا تستطيع المواقع الأخرى قراءة صفحاتك (cannot read your pages)، فلا تستطيع معرفته (cannot learn it).
-2. **ملفات تعريف الارتباط ذات السمة `SameSite`** (cookies): يحجب المتصفح ملف تعريف ارتباط الجلسة (withholds the session cookie) عن الطلبات التي تبدأها مواقع أخرى (requests started by other sites).
+2. **ملفات تعريف الارتباط ذات السمة `SameSite` ‏(SameSite cookies)**: يحجب المتصفح ملف تعريف ارتباط الجلسة (withholds the session cookie) عن الطلبات التي تبدأها مواقع أخرى (requests started by other sites).
 3. **فحوص المصدر (Origin checks)**: ارفض الطلبات التي تغيّر الحالة (state-changing requests) إذا أظهرت ترويسة `Origin` أو `Sec-Fetch-Site` فيها موقعًا آخر (another site).
 4. **لا تغييرات في الحالة عبر GET ‏(No state changes on GET)**، و**المصادقة المعزَّزة (step-up authentication)**، أي رمزٌ لمرةٍ واحدة أو قياسٌ حيوي (a one-time code or biometric)، لإجراءاتٍ مثل إضافة مستفيد (adding a beneficiary).
 
@@ -404,7 +404,7 @@ Set-Cookie: __Host-session=…; Secure; HttpOnly; SameSite=Lax; Path=/
 | **Anti-CSRF tokens** — الرموز المضادة لتزوير الطلبات | رمزٌ عشوائي لكل جلسة (Random per-session token) مطلوبٌ في كل طلبٍ يغيّر الحالة (state-changing request) | أي تطبيقٍ يصادق بملفات تعريف الارتباط (cookie-authenticated app) وفيه نماذج أو واجهات برمجة تغيّر الحالة (forms or state-changing APIs) |
 | **SameSite cookies** — ملفات تعريف الارتباط بالسمة SameSite | سمة ملف تعريف ارتباط (Cookie attribute) تحجب ملفات تعريف الارتباط عن الطلبات عبر المواقع (cross-site requests) | كل ملف تعريف ارتباطٍ للجلسة (session cookie)، مضبوطًا صراحةً (set explicitly) على `Lax` أو `Strict` |
 | **HSTS** — أمان النقل الصارم عبر HTTP ‏(HTTP Strict Transport Security) | ترويسة تجعل المتصفحات لا تستخدم إلا HTTPS لنطاقك (only HTTPS for your domain) | كل نطاق إنتاج (Every production domain) |
-| **ZAP** — Zed Attack Proxy | ماسح DAST مفتوح المصدر ووكيل اعتراض (Open-source DAST scanner and intercepting proxy) | فحص تطبيقاتك في بيئة التجهيز (your own staging apps) بحثًا عن XSS المنعكسة والترويسات المفقودة (reflected XSS and missing headers) |
+| **ZAP** — وكيل الهجوم Zed ‏(Zed Attack Proxy) | ماسح DAST مفتوح المصدر ووكيل اعتراض (Open-source DAST scanner and intercepting proxy) | فحص تطبيقاتك في بيئة التجهيز (your own staging apps) بحثًا عن XSS المنعكسة والترويسات المفقودة (reflected XSS and missing headers) |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
 تنشر نورة **خط الأساس لأمن المتصفح في بنك نجم، الإصدار 1 (Najm Bank Browser Security Baseline v1)** لبوابة الشركات الصغيرة، والموقع الإلكتروني العام (public website)، ووحدات تحكم المسؤولين الداخلية (internal admin consoles)، وكل عرض ويب (web view) في تطبيق نجم للهاتف (Najm Mobile). ويضبط فريق المنصة (platform team) بقيادة طارق الترويسات المشتركة (shared headers) عند بوابة الحافة (edge gateway)؛ ويضبط كل تطبيقٍ القيمة العشوائية الخاصة به لسياسة CSP ‏(its own CSP nonce).
@@ -438,8 +438,8 @@ Set-Cookie: __Host-session=…; Secure; HttpOnly; SameSite=Lax; Path=/
 - 🔴 في تطبيقٍ تملكه يصادق بملفات تعريف الارتباط (cookie-authenticated app)، أضف ثلاث طبقاتٍ لمكافحة CSRF ‏(three CSRF layers) إلى نقطة نهايةٍ واحدة تغيّر الحالة (state-changing endpoint): `SameSite=Lax`، ورمزًا متزامنًا (synchronizer token)، وبرمجيات وسيطة (middleware) ترفض `Sec-Fetch-Site: cross-site`. وقدّم صفحة «مهاجم» ("attacker" page) ترسل إليها نموذجًا تلقائيًا (auto-submits a form) من مضيفٍ محلي مختلف (different local host): التطبيق على `localhost`، وصفحة المهاجم على `127.0.0.1`، الذي تعامله المتصفحات موقعًا مختلفًا (a different site). *يكتمل عندما (Done when):* تُظهر الاختبارات رفض الإرسال عبر المواقع (cross-site submission rejected)، وقبول طلبٍ من المصدر نفسه يحمل الرمز (same-origin request with the token accepted) ورفض طلبٍ آخر لا يحمله، وتشرح مذكرةٌ قصيرة (short note) ما توقفه كل طبقةٍ وحدها (what each layer stops alone)، ولماذا لا يجعل تغيير المنفذ وحده (changing only the port) الطلبَ عابرًا للمواقع (cross-site).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
-- **حظر `<script>` والقول إن XSS أُصلحت (calling XSS fixed).** فمعالجات الأحداث (Event handlers)، وعناوين `javascript:`، وملفات SVG كلها تشغّل نصوصًا برمجية (all run script). رمِّز حسب السياق (Encode for the context).
-- **الظن (Thinking) بأن `HttpOnly` يوقف XSS.** إنه يوقف سرقة ملف تعريف الارتباط (cookie theft)، لا مهاجمًا يتصرف بصفة المستخدم (an attacker acting as the user). أصلح XSS ‏(Fix the XSS).
+- **حظر `<script>` والقول إن XSS أُصلحت (Blocking the script tag and calling XSS fixed).** فمعالجات الأحداث (Event handlers)، وعناوين `javascript:`، وملفات SVG كلها تشغّل نصوصًا برمجية (all run script). رمِّز حسب السياق (Encode for the context).
+- **الظن بأن `HttpOnly` يوقف XSS ‏(Thinking HttpOnly stops XSS).** إنه يوقف سرقة ملف تعريف الارتباط (cookie theft)، لا مهاجمًا يتصرف بصفة المستخدم (an attacker acting as the user). أصلح XSS ‏(Fix the XSS).
 - **استخدام CORS حمايةً من CSRF ‏(Using CORS as CSRF protection).** يتحكم CORS فيمن يجوز له قراءة الاستجابات (who may read responses)، لا فيمن يجوز له إرسال الطلبات (who may send requests). استخدم الرموز (tokens) و`SameSite` وفحوص المصدر (origin checks).
 - **سياسة CSP تتضمن `'unsafe-inline'` أو قائمة نطاقاتٍ طويلة (long domain allow-list).** تبدو مطمئنة (looks reassuring) ولا توقف إلا القليل (stops little). استخدم القيم العشوائية أو التجزئات (nonces or hashes) مع `'strict-dynamic'`.
 - **إعادة استخدام القيمة العشوائية لسياسة CSP، أو تخزين الصفحات التي تحتويها مؤقتًا (Reusing a CSP nonce, or caching pages that contain one).** أنشئ قيمةً عشوائية جديدة لكل استجابة (fresh nonce for every response).
@@ -448,7 +448,7 @@ Set-Cookie: __Host-session=…; Secure; HttpOnly; SameSite=Lax; Path=/
 ## 🧾 الخلاصة (Recap)
 - تشغّل XSS نصًّا برمجيًا للمهاجم داخل مصدرك (attacker script inside your origin)؛ وتجعل CSRF متصفحَ الضحية يرسل طلباتٍ يثق بها خادمك (requests your server trusts) لأن ملفات تعريف الارتباط ترافقها (because cookies come with them).
 - الدفاع ضد XSS ‏(XSS defence): الترميز المراعي للسياق افتراضيًا (context-aware encoding by default)، والتعقيم بقائمة سماح (allow-list sanitising) فقط حيث يلزم HTML غني (rich HTML is required)، وحظر مواضع إدراج HTML الخام (banned raw-HTML sinks).
-- الدفاع ضد CSRF ‏(CSRF defence): الرموز (tokens)، وملفات تعريف الارتباط ذات السمة `SameSite`، وفحوص `Origin` وبيانات الجلب الوصفية (Fetch Metadata checks)، ولا تغييرات في الحالة عبر GET ‏(no state changes on GET)، والمصادقة المعزَّزة (step-up) للإجراءات عالية الخطورة (high-risk actions).
+- الدفاع ضد CSRF ‏(CSRF defence): الرموز (tokens)، وملفات تعريف الارتباط ذات السمة `SameSite` ‏(SameSite cookies)، وفحوص `Origin` وبيانات الجلب الوصفية (Fetch Metadata checks)، ولا تغييرات في الحالة عبر GET ‏(no state changes on GET)، والمصادقة المعزَّزة (step-up) للإجراءات عالية الخطورة (high-risk actions).
 - تشكّل سياسة CSP صارمة مبنية على القيم العشوائية (strict nonce-based CSP)، وHSTS، و`nosniff`، و`frame-ancestors`، وملفات تعريف الارتباط المحصَّنة (hardened cookies) شبكةَ الأمان الأساسية (baseline safety net).
 - النصوص البرمجية للأطراف الثالثة (Third-party scripts) ومخرجات النماذج اللغوية الكبيرة (LLM output) مصادر لـ XSS أيضًا؛ فقيّدها وعقّمها وراقبها (limit, sanitise and monitor them).
 
@@ -498,7 +498,7 @@ Set-Cookie: __Host-session=…; Secure; HttpOnly; SameSite=Lax; Path=/
 - A. `script-src 'self' 'unsafe-inline' https://cdn.example.com`
 - B. `default-src *`
 - C. `script-src 'nonce-<fresh per response>' 'strict-dynamic'; object-src 'none'; base-uri 'none'`
-- D. مثل C، لكنها تُرسل بوصفها `Content-Security-Policy-Report-Only`
+- D. مثل C ‏(The same as C)، لكنها تُرسل (sent as) بوصفها `Content-Security-Policy-Report-Only`
 
 <details><summary>الإجابة</summary>
 
@@ -642,7 +642,7 @@ prefs = PrefsSchema.model_validate_json(request.cookies["prefs"])
 
 ### 🟡 التعمق أكثر (Going deeper)
 
-**لماذا تفشل فحوص السلاسل النصية مع SSRF ‏(Why string checks fail for SSRF).** اعرف *فئات* التجاوز (Know the bypass *classes*): صيغ IP البديلة (alternative IP notations)، أي العشرية والثمانية والست عشرية وIPv6 وIPv6 المعيَّن لـ IPv4 ‏(decimal, octal, hexadecimal, IPv6, IPv4-mapped IPv6)؛ وأسماء النطاقات التي تُحَلّ إلى عناوين داخلية (domain names that resolve to internal addresses)؛ و**إعادة ربط DNS ‏(DNS rebinding)**، أي عنوانٌ عام حين تتحقق وعنوانٌ داخلي حين تتصل (a public address when you check, an internal one when you connect)؛ وإعادات التوجيه المفتوحة (open redirects) على المضيفين المسموحين (allowed hosts)؛ واختلافات محلِّلات URL ‏(URL parser disagreements) بين أداة التحقق والعميل (between validator and client)؛ ومخططاتٍ مثل `file://`. لذلك حلّل عنوان URL صياغيًا بالمكتبة نفسها التي تجلبه (parse with the same library that fetches)؛ وحُلَّ اسم المضيف إلى عناوينه (resolve)، وتحقّق من *كل* عنوان (check *every* address)، واتصل بالعنوان الذي تحققت منه (connect to the one you checked)، أو دع الوكيل يفرض ذلك (let the proxy enforce it)؛ وعطّل إعادات التوجيه أو أعِد التحقق عند كل قفزة (disable redirects or re-validate each hop)؛ واسمح بـ `https` فقط؛ وافرض كل ذلك مرةً أخرى في طبقة الشبكة (at the network layer). وخطّط أيضًا لـ **SSRF الأعمى (blind SSRF)**: فقد يطلق الطلب إجراءاتٍ داخلية (trigger internal actions) حتى لو لم تُعرض الاستجابة أبدًا (the response is never shown).
+**لماذا تفشل فحوص السلاسل النصية مع SSRF ‏(Why string checks fail for SSRF).** اعرف *فئات* التجاوز (Know the bypass *classes*): صيغ IP البديلة (alternative IP notations)، أي العشرية والثمانية والست عشرية وIPv6 وعناوين IPv6 المتضمِّنة لعناوين IPv4 ‏(decimal, octal, hexadecimal, IPv6, IPv4-mapped IPv6)؛ وأسماء النطاقات التي تُحَلّ إلى عناوين داخلية (domain names that resolve to internal addresses)؛ و**إعادة ربط DNS ‏(DNS rebinding)**، أي عنوانٌ عام حين تتحقق وعنوانٌ داخلي حين تتصل (a public address when you check, an internal one when you connect)؛ وإعادات التوجيه المفتوحة (open redirects) على المضيفين المسموحين (allowed hosts)؛ واختلافات محلِّلات URL ‏(URL parser disagreements) بين أداة التحقق والعميل (between validator and client)؛ ومخططاتٍ مثل `file://`. لذلك حلّل عنوان URL صياغيًا بالمكتبة نفسها التي تجلبه (parse with the same library that fetches)؛ وحُلَّ اسم المضيف إلى عناوينه (resolve)، وتحقّق من *كل* عنوان (check *every* address)، واتصل بالعنوان الذي تحققت منه (connect to the one you checked)، أو دع الوكيل يفرض ذلك (let the proxy enforce it)؛ وعطّل إعادات التوجيه أو أعِد التحقق عند كل قفزة (disable redirects or re-validate each hop)؛ واسمح بـ `https` فقط؛ وافرض كل ذلك مرةً أخرى في طبقة الشبكة (at the network layer). وخطّط أيضًا لـ **SSRF الأعمى (blind SSRF)**: فقد يطلق الطلب إجراءاتٍ داخلية (trigger internal actions) حتى لو لم تُعرض الاستجابة أبدًا (the response is never shown).
 
 **حصّن خدمة البيانات الوصفية والدور (Harden the metadata service and the role).** على AWS، تتطلب **IMDSv2** رمز جلسة (session token) يُحصل عليه بطلب `PUT` ويُرسل في ترويسة (sent in a header)، وحدُّ قفزات الاستجابة (response hop limit) البالغ 1 يمنع الحاويات (containers) التي تقع على بُعد قفزةٍ شبكية إضافية (an extra network hop away) من الحصول على رمز. ولا يستطيع SSRF البسيط (simple SSRF) الذي لا يرسل إلا طلبات `GET` عادية (plain) الحصولَ على بيانات الاعتماد، فاشترطها في كل مكان (require it everywhere). كما تتطلب نقاط نهاية البيانات الوصفية (metadata endpoints) في Google Cloud وAzure ترويساتٍ (headers): `Metadata-Flavor: Google` و`Metadata: true`. وعلى Kubernetes، امنع وحدات التشغيل (pods) من الوصول إلى عنوان البيانات الوصفية للعقدة (node metadata address) باستخدام سياسات الشبكة (network policies)، كما في الدرس 7.2. وأبقِ كل دورٍ صغيرًا (Keep every role small)، فتكون بيانات الاعتماد المسروقة قليلة القيمة (worth little).
 
@@ -710,11 +710,11 @@ prefs = PrefsSchema.model_validate_json(request.cookies["prefs"])
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
 - **فحص سلسلة عنوان URL بحثًا عن "localhost" أو "169.254" ‏(Checking the URL string for "localhost" or "169.254").** تهزمه الصيغ البديلة (Alternate notations) وDNS وإعادات التوجيه (redirects). تحقّق من العناوين المحلولة (resolved addresses) وافرض ذلك في طبقة الشبكة (at the network layer).
-- **الثقة (Trusting) بالامتداد (extension) أو بترويسة `Content-Type`.** يختار من يرفع الملف كليهما (The uploader chooses both). تحقّق من المحتوى (Check the content).
+- **الثقة بالامتداد أو بترويسة `Content-Type` ‏(Trusting the extension or the Content-Type header).** يختار من يرفع الملف كليهما (The uploader chooses both). تحقّق من المحتوى (Check the content).
 - **تقديم الرفوعات مضمَّنةً من النطاق الرئيسي (Serving uploads inline from the main domain).** يصبح ملف HTML أو SVG واحد XSS مخزَّنة (stored XSS). استخدم نطاقًا منفصلًا (separate domain) و`attachment`.
-- **حذف (Stripping) `../` من المسارات.** تصبح `....//` بعد تمريرةٍ واحدة (after one pass) `../`. استخدم المعرّفات (IDs)، أو حوّل إلى الصيغة القانونية وتحقّق من الاحتواء (canonicalise and check containment).
+- **حذف `../` من المسارات (Stripping ../ from paths).** تصبح `....//` بعد تمريرةٍ واحدة (after one pass) `../`. استخدم المعرّفات (IDs)، أو حوّل إلى الصيغة القانونية وتحقّق من الاحتواء (canonicalise and check containment).
 - **«إنه موقَّع، إذن pickle لا بأس به» ("It's signed, so pickle is fine").** يساعد التوقيع (Signing helps) إلى أن يتسرب مفتاح (until a key leaks). استخدم الصيغ التي تقتصر على البيانات (data-only formats).
-- **تنزيل نموذج (Downloading a model) واستدعاء `load()`.** قد تحمل ملفات النماذج شيفرة (Model files can carry code). استخدم safetensors وسجلًّا مُدقَّقًا (vetted registry).
+- **تنزيل نموذجٍ واستدعاء `load()` ‏(Downloading a model and calling load()).** قد تحمل ملفات النماذج شيفرة (Model files can carry code). استخدم safetensors وسجلًّا مُدقَّقًا (vetted registry).
 
 ## 🧾 الخلاصة (Recap)
 - يتيح SSRF والرفوعات واجتياز المسار وإلغاء التسلسل (SSRF, uploads, path traversal and deserialisation) جميعها للمدخلات توجيه إجراءٍ قوي من جهة الخادم (steer a powerful server-side action)؛ فتحقّق من الشيء لا من السلسلة النصية (validate the thing, not the string).

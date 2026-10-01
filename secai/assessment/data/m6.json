@@ -1,0 +1,135 @@
+{
+ "area": "m6",
+ "questions": [
+  {
+   "id": "m6-1",
+   "level": 1,
+   "lesson": "6.1",
+   "q": {
+    "en": "Compared with relying on a penetration test shortly before launch, what does a secure development life cycle change?",
+    "ar": "مقارنةً بالاعتماد على اختبار اختراقٍ (penetration test) قُبيل الإطلاق (shortly before launch)، ما الذي تغيّره دورة حياة التطوير الآمن (secure development life cycle)؟"
+   },
+   "o": {
+    "en": [
+     "It replaces the late pen test with SAST, DAST and SCA scanners run in the pipeline",
+     "It moves the full pen test into the design phase, so flaws are found before coding",
+     "It adds small security tasks to every phase and turns each escape into a test or rule",
+     "It gives every change a threat model and a security review, whatever the change touches"
+    ],
+    "ar": [
+     "تستبدل باختبار الاختراق المتأخر (late pen test) أدواتِ الفحص SAST وDAST وSCA (scanners) التي تعمل في خط التسليم (pipeline)",
+     "تنقل اختبار الاختراق الكامل (full pen test) إلى مرحلة التصميم (design phase)، فتُكتشف الثغرات (flaws) قبل كتابة الشيفرة (before coding)",
+     "تضيف مهامَّ أمنية صغيرة (small security tasks) إلى كل مرحلة (every phase)، وتحوّل كل ثغرةٍ فالتة (escape) إلى اختبارٍ أو قاعدة (test or rule)",
+     "تمنح كل تغييرٍ (every change) نموذج تهديدات (threat model) ومراجعةً أمنية (security review)، أيًّا كان ما يمسّه التغيير (whatever the change touches)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "A secure SDLC threads small, risk-scaled activities through planning, design, build, test, deployment and operation, and turns every escape into a rule or test. Swapping the pen test for scanners is the tempting shortcut, but scanners miss most authorisation and business-logic flaws, and Najm still pen-tests major tier-1 releases.",
+    "ar": "تنسج دورة حياة التطوير الآمن (secure SDLC) أنشطةً صغيرة متناسبة مع المخاطر (risk-scaled activities) عبر التخطيط والتصميم والبناء (planning, design, build) والاختبار والنشر والتشغيل (test, deployment and operation)، وتحوّل كل ثغرةٍ فالتة (every escape) إلى قاعدةٍ أو اختبار (rule or test). أما استبدال اختبار الاختراق بأدوات الفحص (swapping the pen test for scanners) فهو الاختصار المغري (the tempting shortcut)، لكن أدوات الفحص تفوتها معظم ثغرات التفويض ومنطق الأعمال (most authorisation and business-logic flaws)، وما زال بنك نجم (Najm Bank) يُجري اختبار اختراقٍ للإصدارات الكبرى من الفئة 1 (major tier-1 releases)."
+   }
+  },
+  {
+   "id": "m6-2",
+   "level": 2,
+   "lesson": "6.2",
+   "q": {
+    "en": "Najm's admission policy admits any image with a valid Sigstore signature. A contractor builds a Mobile API image on a laptop, signs it with their own identity, and it starts in production. Which change would have stopped it?",
+    "ar": "تقبل سياسة القبول (admission policy) في بنك نجم (Najm Bank) أي صورةٍ تحمل توقيع Sigstore صالحًا (a valid Sigstore signature). ويبني متعاقدٌ (a contractor) صورةً لواجهة برمجة تطبيق نجم للهاتف (Najm Mobile API) على حاسوبٍ محمول (on a laptop)، ويوقّعها بهويته الخاصة (with their own identity)، فتبدأ العمل في الإنتاج (starts in production). أيّ تغييرٍ كان سيوقفها (Which change would have stopped it)؟"
+   },
+   "o": {
+    "en": [
+     "Admit only images signed by the release workflow on main, with provenance from Najm's CI",
+     "Deploy by the :latest tag, so the cluster always runs the newest reviewed build of the service",
+     "Attach a CycloneDX SBOM to every image, so that its contents can be inspected before deploy",
+     "Rotate Najm's signing keys every month, so that any leaked signing material soon stops working"
+    ],
+    "ar": [
+     "قبول ما وقّعه سير عمل الإصدار على main فقط (only images signed by the release workflow on main)، مع بيان منشأ (provenance) من CI نجم (Najm's CI)",
+     "النشر بالإشارة إلى الوسم latest (by the :latest tag)، كي يشغّل العنقود (the cluster) دائمًا أحدث بناءٍ مُراجَع للخدمة (the newest reviewed build)",
+     "إرفاق قائمة SBOM بصيغة CycloneDX (a CycloneDX SBOM) بكل صورة (to every image)، كي تُفحص محتوياتها (its contents can be inspected) قبل النشر (before deploy)",
+     "تدوير مفاتيح التوقيع في نجم (Rotate Najm's signing keys) كل شهر، كي تتوقف أي مواد توقيعٍ مسرّبة (leaked signing material) عن العمل سريعًا (soon stops working)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "A valid signature only proves who signed, so the policy must check the expected identity (the release workflow on main) and require provenance from Najm's CI, which a laptop build cannot have. An SBOM is the tempting answer, but it lists what is inside the image, not who built it or from which source.",
+    "ar": "لا يُثبت التوقيع الصالح (A valid signature) إلا هوية من وقّع (who signed)، لذا يجب أن تتحقق السياسة من الهوية المتوقَّعة (the expected identity)، أي سير عمل الإصدار على main (the release workflow on main)، وأن تشترط بيان منشأٍ من خط CI في نجم (provenance from Najm's CI)، وهو ما لا يمكن أن يملكه بناءٌ على حاسوبٍ محمول (a laptop build). أما قائمة SBOM فهي الإجابة المغرية (the tempting answer)، لكنها تسرد ما بداخل الصورة (what is inside the image)، لا من بناها (who built it) ولا من أي مصدر (from which source)."
+   }
+  },
+  {
+   "id": "m6-3",
+   "level": 2,
+   "lesson": "6.3",
+   "q": {
+    "en": "Agent-written pull requests are piling up. Tariq proposes making an AI review bot the approving reviewer, including for tier-1 changes to SME Portal payments. What should Noura advise?",
+    "ar": "تتراكم طلبات السحب التي يكتبها الوكلاء (Agent-written pull requests). فيقترح طارق جعل روبوت مراجعةٍ بالذكاء الاصطناعي (an AI review bot) هو المراجِعَ الذي يوافق (the approving reviewer)، بما في ذلك تغييرات الفئة 1 (tier-1 changes) على مدفوعات بوابة الشركات الصغيرة (SME Portal payments). بماذا يجب أن تنصح نورة (What should Noura advise)؟"
+   },
+   "o": {
+    "en": [
+     "Accept, if the review bot runs a different model from the agent that wrote the code",
+     "Accept, if the rules file tells the review bot to apply Najm's reviewer checklist",
+     "Reject AI review entirely, since comments in the code can steer a reviewing model",
+     "Use the bot as an extra signal; tier-1 changes still go to a security champion"
+    ],
+    "ar": [
+     "الموافقة، إذا كان روبوت المراجعة (the review bot) يعمل بنموذجٍ مختلف (a different model) عن الوكيل الذي كتب الشيفرة (the agent that wrote the code)",
+     "الموافقة، إذا كان ملف القواعد (the rules file) يأمر روبوت المراجعة بتطبيق قائمة تحقق المراجِع في نجم (Najm's reviewer checklist)",
+     "رفض المراجعة بالذكاء الاصطناعي كليًّا (Reject AI review entirely)، لأن التعليقات في الشيفرة (comments in the code) يمكن أن توجّه النموذج المراجِع (steer a reviewing model)",
+     "استخدام الروبوت إشارةً إضافية (an extra signal)؛ فتغييرات الفئة 1 (tier-1 changes) ما زالت تذهب إلى سفير أمن (still go to a security champion)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "AI review can raise coverage, but a reviewing model can be steered by comments such as \"this function has been security-reviewed\" and may share the writer's blind spots, so it never approves tier-1 changes; those go to a security champion. A different model is the tempting fix, but it can still be steered by planted comments, and rejecting AI review outright throws away a useful extra signal.",
+    "ar": "يمكن للمراجعة بالذكاء الاصطناعي (AI review) أن ترفع التغطية (raise coverage)، لكن النموذج المراجِع (a reviewing model) يمكن توجيهه بتعليقاتٍ مثل «خضعت هذه الدالة لمراجعةٍ أمنية» (\"this function has been security-reviewed\")، وقد يشارك الكاتبَ نقاطَ عماه (the writer's blind spots)، لذا لا يوافق أبدًا على تغييرات الفئة 1 (tier-1 changes)؛ فهذه تذهب إلى سفير أمن (a security champion). أما النموذج المختلف (A different model) فهو الإصلاح المغري (the tempting fix)، لكنه يظل قابلًا للتوجيه بتعليقاتٍ مزروعة (planted comments)، ورفض المراجعة بالذكاء الاصطناعي كليًّا (rejecting AI review outright) يهدر إشارةً إضافية مفيدة (a useful extra signal)."
+   }
+  },
+  {
+   "id": "m6-4",
+   "level": 3,
+   "lesson": "6.2",
+   "q": {
+    "en": "Najm's SBOM inventory shows a widely used library in three internet-facing tier-1 images. A fixed version came out this morning, and the flaw is already in CISA KEV. The update bot holds new releases for three days, and a squad lead wants to wait because malicious versions are often caught within days. What is the right call?",
+    "ar": "يُظهر جرد SBOM في بنك نجم (Najm's SBOM inventory) مكتبةً واسعة الاستخدام (a widely used library) في ثلاث صورٍ من الفئة 1 مكشوفةٍ على الإنترنت (internet-facing tier-1 images). وقد صدر إصدارٌ مُصلَح (A fixed version) هذا الصباح، والثغرة مدرجةٌ بالفعل في CISA KEV (already in CISA KEV). ويحتجز روبوت التحديث (The update bot) الإصدارات الجديدة ثلاثة أيام (holds new releases for three days)، ويريد قائد فريقٍ (a squad lead) الانتظار لأن الإصدارات الخبيثة كثيرًا ما تُكتشف خلال أيام (malicious versions are often caught within days). ما القرار الصحيح (What is the right call)؟"
+   },
+   "o": {
+    "en": [
+     "Keep the three-day hold, since brand-new releases are the likeliest to be malicious",
+     "Skip the hold for this KEV fix, give the update an extra review, and roll it out",
+     "Install the fix straight from the public registry today, bypassing Najm's proxy",
+     "Keep the hold, and add detection rules for exploitation until the three days end"
+    ],
+    "ar": [
+     "الإبقاء على الاحتجاز ثلاثة أيام (Keep the three-day hold)، لأن الإصدارات الجديدة تمامًا (brand-new releases) هي الأرجح أن تكون خبيثة (the likeliest to be malicious)",
+     "تخطّي الاحتجاز لهذا الإصلاح المدرج في KEV (Skip the hold for this KEV fix)، وإخضاع التحديث لمراجعةٍ إضافية (an extra review)، ثم نشره (roll it out)",
+     "تثبيت الإصلاح مباشرةً من المستودع العام (straight from the public registry) اليوم، متجاوزًا وكيل نجم (bypassing Najm's proxy)",
+     "الإبقاء على الاحتجاز (Keep the hold)، وإضافة قواعد رصدٍ للاستغلال (detection rules for exploitation) حتى تنتهي الأيام الثلاثة (until the three days end)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Najm's routine updates wait three days, but fixes for CISA KEV entries skip the wait and get an extra review, because active exploitation outweighs the small risk of a bad release. Keeping the hold and adding detection rules is tempting, but detection supplements a KEV patch; it does not replace it.",
+    "ar": "تنتظر التحديثات الروتينية في نجم (Najm's routine updates) ثلاثة أيام، أما إصلاحات الإدخالات المدرجة في CISA KEV (fixes for CISA KEV entries) فتتخطّى الانتظار (skip the wait) وتخضع لمراجعةٍ إضافية (an extra review)، لأن الاستغلال الفعلي (active exploitation) يفوق الخطر الصغير لإصدارٍ سيئ (the small risk of a bad release). أما الإبقاء على الاحتجاز مع إضافة قواعد رصد (keeping the hold and adding detection rules) فخيارٌ مغرٍ (tempting)، لكن الرصد يُكمّل ترقيع KEV (detection supplements a KEV patch) ولا يحلّ محله (does not replace it)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m6-e1",
+   "lesson": "6.1",
+   "text": {
+    "en": "I have run Semgrep and an SCA tool on my own repository, triaged the first 15 findings as true positive, false positive or accepted risk with a one-line reason each, fixed one true positive and written a custom Semgrep rule for a pattern I found",
+    "ar": "شغّلتُ Semgrep وأداة SCA (an SCA tool) على مستودعي الخاص (my own repository)، وفرزتُ أول 15 نتيجة (triaged the first 15 findings) إلى إيجابيةٍ صحيحة (true positive) أو إيجابيةٍ كاذبة (false positive) أو مخاطر مقبولة (accepted risk) مع سببٍ في سطرٍ واحد لكلٍّ منها (a one-line reason each)، وأصلحتُ إيجابيةً صحيحة واحدة (fixed one true positive)، وكتبتُ قاعدة Semgrep مخصّصة (a custom Semgrep rule) لنمطٍ وجدته (for a pattern I found)"
+   }
+  },
+  {
+   "id": "m6-e2",
+   "lesson": "6.3",
+   "text": {
+    "en": "I have run a coding agent in a dev container on a repository I own, with no real secrets, an egress allowlist and command approval on, planted a harmless canary instruction, and recorded whether the agent followed it and which leg of the lethal trifecta my setup removes",
+    "ar": "شغّلتُ وكيل برمجة (a coding agent) في حاوية تطوير (a dev container) على مستودعٍ أملكه (a repository I own)، دون أسرارٍ حقيقية (no real secrets)، مع قائمة سماحٍ للاتصالات الصادرة (an egress allowlist) وتفعيل الموافقة على الأوامر (command approval on)، وزرعتُ تعليمة «كناري» غير ضارة (a harmless canary instruction)، وسجّلتُ ما إذا كان الوكيل قد اتّبعها (whether the agent followed it)، وأيّ ضلعٍ من الثالوث القاتل (which leg of the lethal trifecta) يزيله إعدادي (my setup removes)"
+   }
+  }
+ ]
+}

@@ -2,7 +2,7 @@
 
 *قبل الحقن (injection) والرموز المميزة (tokens) وهجمات الموجّهات (prompt attacks)، تحتاج إلى صورة واضحة عن طبيعة العمل (the job). تشرح هذه الوحدة ما هو أمن التطبيقات والذكاء الاصطناعي (application and AI security): حماية ما يُؤتمن عليه النظام (the things a system is trusted with)، أي أصوله (its assets)، من الأشخاص الذين قد يسيئون استخدامها (misuse them)، عبر إدارة المخاطر (managing risk) لا عبر ملاحقة الكمال (chasing perfection). وتبيّن كيف تقع الاختراقات الحقيقية (real breaches): في صورة سلاسل (chains) من إخفاقات صغيرة وعادية في الغالب (small and often ordinary failures)، ولماذا تضيف أنظمة الذكاء الاصطناعي (AI systems) نوعًا جديدًا من الضعف (a new kind of weakness): مدخلات يمكن أن تعمل كتعليمات (inputs that can act as instructions). ثم تقدّم بنك نجم (Najm Bank)، البنك الخليجي الخيالي (fictional Gulf bank) الذي تنضم إلى فريق أمن التطبيقات والذكاء الاصطناعي (Application & AI Security team) فيه طوال الدورة، بأنظمته الستة (six systems) والأشخاص الذين يبنونها ويهاجمونها ويدافعون عنها ويحكمونها (build, attack, defend and govern them). وتنتهي بكيفية تنظيم الدورة (how the course is organised)، وكيف تتدرّب بأمان وبشكل قانوني (practise safely and legally)، ومتى تنتقل إلى دورة مرافقة (companion course).*
 
-> **المراحل (Phases):** المراحل الثماني كلها، في لمحة أولى (previewed) — Plan · Design · Build · Test · Deploy · Operate · Respond · Govern — وهي خريطة دورة حياة الأمن (map of the security life cycle) قبل أن نسير فيها مرحلةً مرحلة (phase by phase).
+> **المراحل (Phases):** المراحل الثماني كلها (All eight)، في لمحة أولى (previewed) — Plan · Design · Build · Test · Deploy · Operate · Respond · Govern — وهي خريطة دورة حياة الأمن (map of the security life cycle) قبل أن نسير فيها مرحلةً مرحلة (phase by phase).
 
 ---
 
@@ -84,7 +84,7 @@ flowchart LR
 
 ### 🟡 التعمق أكثر (Going deeper)
 
-**أين يقع أمن التطبيقات (Where application security sits).** يمتد الأمن (Security) عبر الشبكات (network)، والأجهزة الطرفية (endpoint)، والهوية (identity)، والسحابة (cloud)، والأمن المادي (physical security)، والحوكمة (governance). و**أمن التطبيقات (Application security, AppSec)** هو الجزء المعني بالبرمجيات (concerned with software): كيف تُصمَّم وتُكتب (designed, written)، وتُجمَّع من الاعتماديات (assembled from dependencies)، وتُعَدّ (configured)، وتُنشر (deployed)، وتُشغَّل (operated). ومجتمعه الأم (home community) هو **OWASP** (Open Worldwide Application Security Project). وأشهر قوائم التوعية لديه (best-known awareness list)، **OWASP Top 10**، معروفة أكثر في إصدار 2021 (2021 edition)؛ وقد نشر OWASP منذ ذلك الحين تحديثًا لعام 2025 (2025 update)، لذا أشِر إلى الفئات بأسمائها (refer to categories by name)، مثل "Broken Access Control"، وتحقّق من القائمة الحالية (check the current list).
+**أين يقع أمن التطبيقات (Where application security sits).** يمتد الأمن (Security) عبر الشبكات (network)، والأجهزة الطرفية (endpoint)، والهوية (identity)، والسحابة (cloud)، والأمن المادي (physical security)، والحوكمة (governance). و**أمن التطبيقات (Application security, AppSec)** هو الجزء المعني بالبرمجيات (concerned with software): كيف تُصمَّم وتُكتب (designed, written)، وتُجمَّع من الاعتماديات (assembled from dependencies)، وتُعَدّ (configured)، وتُنشر (deployed)، وتُشغَّل (operated). ومجتمعه الأم (home community) هو **OWASP** (Open Worldwide Application Security Project). وأشهر قوائم التوعية لديه (best-known awareness list)، **OWASP Top 10**، معروفة أكثر في إصدار 2021 (2021 edition)؛ وقد نشر OWASP منذ ذلك الحين تحديثًا لعام 2025 (2025 update)، لذا أشِر إلى الفئات بأسمائها (refer to categories by name)، مثل «خلل التحكم في الوصول (Broken Access Control)»، وتحقّق من القائمة الحالية (check the current list).
 
 **سطح الهجوم (The attack surface).** **سطح الهجوم (attack surface)** هو كل مكان يستطيع فيه المهاجم إرسال مدخلات (send input) إلى النظام أو الوصول إلى بياناته (reach its data): صفحات الويب والنماذج (web pages and forms)، ونقاط نهاية واجهات برمجة التطبيقات (API endpoints)، ورفع الملفات (file uploads)، وتطبيق الهاتف المحمول (mobile app)، ووحدات تحكم الإدارة (admin consoles)، والتكاملات مع أطراف ثالثة (third-party integrations)، وخط البناء (build pipeline)، والموظفون الذين يمكن خداعهم (staff who can be tricked). كل ميزة جديدة (every new feature) تضيف إلى السطح. وإزالة السطح (removing surface)، كنقطة نهاية غير مستخدمة (an unused endpoint) أو منفذ إدارة مفتوح على الإنترنت (an admin port open to the internet)، هي غالبًا أرخص ضابط على الإطلاق (the cheapest control there is).
 
@@ -147,7 +147,7 @@ prompt = ASSIST_RULES + "\n\nCustomer message:\n" + customer_message
 | 2 | إجراءات تجميد البطاقة والاعتراض (card freeze and dispute actions) | السلامة (Integrity) | مجموعات الاحتيال (fraud groups)، والعابثون (pranksters) | مرتفع (High): عميل محروم من الوصول (customer locked out)، واحتيال لم يُكتشف (fraud missed) | طارق |
 | 3 | الإجابات عن الرسوم والأسعار والقواعد (answers about fees, rates and rules) | السلامة (Integrity) | المستخدمون المتلاعبون (manipulative users) | متوسط (Medium): التزامات خاطئة (wrong commitments)، وشكاوى (complaints) | رانيا |
 | 4 | موجّه النظام وقائمة الأدوات (system prompt and tool list) | السلامة (Integrity)، ويجب ألا يحتوي على أي أسرار (it should hold no secrets) | أي شخص يستطيع تغييره دون مراجعة (anyone who could change it unreviewed)؛ ومهاجمون يرسمون خريطة لأسيست (attackers mapping Assist) | متوسط (Medium) | رانيا، طارق |
-| 5 | بيانات الاعتماد التي يستخدمها أسيست لاستدعاء واجهات برمجة التطبيقات الداخلية (credentials Assist uses to call internal APIs) | السرية (Confidentiality) | أي مهاجم يحصل على موطئ قدم (any attacker who gets a foothold) | مرتفع (High): استدعاءات تُجرى باسم أسيست (calls made in Assist's name) | طارق |
+| 5 | بيانات الاعتماد (credentials) التي يستخدمها أسيست (Assist) لاستدعاء واجهات برمجة التطبيقات الداخلية (call internal APIs) | السرية (Confidentiality) | أي مهاجم يحصل على موطئ قدم (any attacker who gets a foothold) | مرتفع (High): استدعاءات تُجرى باسم أسيست (calls made in Assist's name) | طارق |
 | 6 | سجلات المحادثات (conversation logs) | السرية (Confidentiality) | المطّلعون من الداخل والمهاجمون (insiders, attackers) | مرتفع (High): كشف بيانات شخصية (personal data exposure) | سارة |
 | 7 | توافر الخدمة والإنفاق على النموذج (service availability and model spend) | التوافر (Availability) | الروبوتات الآلية (bots)، والمستخدمون المسيئون (abusive users) | متوسط (Medium): انقطاع الخدمة (outage)، وتكلفة جامحة (runaway cost) | طارق |
 
@@ -157,7 +157,7 @@ prompt = ASSIST_RULES + "\n\nCustomer message:\n" + customer_message
 - **إذا أخفق، فماذا سيحدث، وهل سنعلم؟ ⁦(If it failed, what would happen, and would we know?)⁩** ليس بعد (Not yet) بالنسبة إلى الصفين 2 و3: فلا يوجد تنبيه (no alert exists) لأعداد غير اعتيادية من عمليات تجميد البطاقات (unusual numbers of card freezes) ولا للإجابات التي تَعِد باسترداد الرسوم (answers that promise fee refunds). ويسجّل علي كليهما كإجراءات (actions) لفريق العمليات الأمنية (security operations team) بقيادة جاسم (الوحدة 10).
 
 ## 🛠️ التمارين (Exercises)
-- 🟢 اختر تطبيقًا تستخدمه يوميًا (an app you use every day)، مصرفيًا أو للمراسلة أو لتوصيل الطعام (banking, messaging, food delivery). اكتب خمسة أصول (five assets) يحميها لك، وضع على كلٍّ منها الحرف C أو I أو A بحسب الخاصية الأهم (the property that matters most). *يكتمل عندما (Done when):* يكون لديك خمسة أصول، أحدها على الأقل موسوم بالحرف I وآخر بالحرف A.
+- 🟢 اختر تطبيقًا تستخدمه يوميًا (an app you use every day)، مصرفيًا أو للمراسلة أو لتوصيل الطعام (banking, messaging, food delivery). اكتب خمسة أصول (five assets) يحميها لك (it protects for you)، وضع على كلٍّ منها الحرف C أو I أو A (mark each C, I or A) بحسب الخاصية الأهم (the property that matters most). *يكتمل عندما (Done when):* يكون لديك خمسة أصول (five assets)، أحدها على الأقل موسوم بالحرف I وآخر بالحرف A (at least one is marked I and one A).
 - 🟡 لتطبيق بنيته أو تتولى صيانته (an application you built or maintain)، اكتب سجل أصول (asset register) مثل سجل نورة يتضمن ستة صفوف على الأقل (at least six rows)، منها سرّ واحد (one secret) وإجراء واحد (one action). *يكتمل عندما (Done when):* يكون لكل صف مالك (an owner) وتقييم للأثر (an impact rating)، وتكون قد أجبت عن أسئلة نورة الثلاثة (Noura's three questions) تحته.
 - 🔴 خذ ميزة في مشروعك (a feature in your own project) تستدعي نموذجًا لغويًا (calls a language model)، أو يمكن أن تستدعيه. اكتب الأصول وسطح الهجوم (the assets and attack surface) اللذين يضيفهما النموذج. واكتب عبارتَي مخاطر (two risk statements) بالصيغة: «يمكن لـ[جهة فاعلة في التهديد] أن [تنفّذ إجراءً] بسبب [ثغرة]، مما يسبب [أثرًا] (a [threat actor] could [action] because [vulnerability], causing [impact])». اعمل على شيفرتك فقط (work only on your own code). *يكتمل عندما (Done when):* تتعلق عبارة مخاطر واحدة على الأقل بالسلامة أو التوافر (integrity or availability)، وتسمّي كلٌّ منهما ضابطًا (names a control).
 
@@ -228,7 +228,7 @@ prompt = ASSIST_RULES + "\n\nCustomer message:\n" + customer_message
 
 </details>
 
-**5. تقترح رانيا السماح لنجم أسيست (Najm Assist) بإرسال الأموال إلى مستفيدين جدد (new payees). وبعد المراجعة، تتفق هي وحمد على ألا يمتلك أسيست هذه القدرة إطلاقًا في الوقت الحالي (not have that capability at all for now). أي استجابة للمخاطر (risk response) هذه؟**
+**5. تقترح رانيا السماح لنجم أسيست (Najm Assist) بإرسال الأموال إلى مستفيدين جدد (new payees). وبعد المراجعة (After review)، تتفق هي وحمد (she and Hamad agree) على ألا يمتلك أسيست هذه القدرة إطلاقًا في الوقت الحالي (not have that capability at all for now). أي استجابة للمخاطر (risk response) هذه؟**
 
 - A. التجنّب (Avoid)
 - B. التقليل (Reduce)
@@ -261,13 +261,13 @@ prompt = ASSIST_RULES + "\n\nCustomer message:\n" + customer_message
 - تبدأ معظم السلاسل بـ**المشتبه بهم المعتادين (the usual suspects)**: بيانات الاعتماد المسروقة أو الضعيفة (stolen or weak credentials)، والتصيّد الاحتيالي (phishing)، والثغرات المعروفة المتروكة دون ترقيع (known vulnerabilities left unpatched)، وسوء الإعداد (misconfiguration)، وخلل التحكم في الوصول (broken access control) في التطبيقات وواجهات برمجة التطبيقات (apps and APIs)، والأسرار المسرَّبة (leaked secrets)، والموردون المخترَقون (compromised suppliers).
 - تضيف أنظمة الذكاء الاصطناعي (AI systems) حلقات جديدة (new links): **حقن الموجّهات غير المباشر (indirect prompt injection)**، أي تعليمات مخبّأة في محتوى يقرؤه النموذج (instructions hidden in content the model reads)، و**الصلاحيات المفرطة (excessive agency)**، أي نموذج يملك أدوات وصلاحيات أكثر مما يحتاج (more tools and permissions than it needs).
 - تصف أطر عمل عامة (public frameworks) هذه السلسلة: **سلسلة القتل السيبرانية (Cyber Kill Chain)** (Lockheed Martin، 2011) و**MITRE ATT&CK** للهجمات على المؤسسات (attacks on organisations)، و**MITRE ATLAS** للهجمات على أنظمة الذكاء الاصطناعي (attacks on AI systems).
-- إشارة القرار (Decision cue): لأي نظام، اسأل: «أي حلقة هي الأرخص علينا كسرها، وعند أي حلقة سنلاحظ (Which link is cheapest for us to break, and at which link would we notice)؟»
+- إشارة القرار (Decision cue): لأي نظام (for any system)، اسأل: «أي حلقة هي الأرخص علينا كسرها (Which link is cheapest for us to break)، وعند أي حلقة سنلاحظ (at which link would we notice)؟»
 - الفخ الأكبر (Biggest trap): الإنفاق على التهديدات الغريبة (exotic threats) بينما تظل الأساسيات (the basics)، أي الترقيع (patching) والمصادقة متعددة العوامل (multi-factor authentication) وفحوص الوصول (access checks) وأقل الصلاحيات (least privilege)، غير منجزة (undone).
 
 ## 🧭 لماذا يهم (Why it matters)
 أول اقتراح يقدّمه علي (Ali's first proposal) هو بند في الميزانية (budget line) لـ«رصد ثغرات اليوم الصفري المتقدم المدعوم بالذكاء الاصطناعي (advanced AI-powered zero-day detection)». و**ثغرة اليوم الصفري (zero-day)** هي ثغرة لا يعلم بها المورّد (unknown to the vendor)، فلا يوجد لها ترقيع (no patch exists) بعد. فتطلب منه نورة أولًا أن يقرأ ثلاث حالات عامة (three public cases) وأن يرسم كيف عمل كل هجوم (map how each attack worked).
 
-الأولى هي Capital One عام 2019. وبحسب ما نُشر علنًا (as publicly reported)، استخدم مهاجم جدار حماية لتطبيقات الويب سيئ الإعداد (misconfigured web application firewall) في البيئة السحابية للبنك (the bank's cloud environment) ليجعل الخادم يجلب عناوين داخلية (fetch internal addresses) نيابةً عن المهاجم (on the attacker's behalf)، وهو هجوم يُسمّى **تزوير الطلبات من جهة الخادم (server-side request forgery, SSRF)**. وكان أحد هذه العناوين **خدمة البيانات الوصفية (metadata service)** السحابية، التي تسلّم بيانات اعتماد مؤقتة (temporary credentials) للبرمجيات العاملة على الخادم. وكانت تلك البيانات تعود إلى دور (role) يستطيع قراءة كثير من حاويات التخزين (storage buckets)، فنسخ المهاجم بيانات العملاء (customer data). وتفيد التقارير بأن البنك علم بالأمر من بلاغ خارجي (an outside tip). والثانية هي Equifax عام 2017 (الدرس 0.1): ثغرة معروفة (known vulnerability) لها ترقيع منشور (published patch)، إضافةً إلى شهادة منتهية الصلاحية (expired certificate) على جهاز لفحص حركة البيانات (traffic-inspection device)، بحسب تحقيق للكونغرس الأمريكي (US congressional investigation)، أخفت نشاط المهاجمين لأسابيع (hid the attackers' activity for weeks). والثالثة هي SolarWinds، التي كُشف عنها في ديسمبر 2020: اخترق المهاجمون نظام البناء (compromised the build system)، فثبّت العملاء تحديثات موقّعة (signed updates) لبرنامجها Orion تحتوي على شيفرة خبيثة (malicious code).
+الأولى هي Capital One عام 2019. وبحسب ما نُشر علنًا (as publicly reported)، استخدم مهاجم جدار حماية لتطبيقات الويب سيئ الإعداد (misconfigured web application firewall) في البيئة السحابية للبنك (the bank's cloud environment) ليجعل الخادم يجلب عناوين داخلية (fetch internal addresses) نيابةً عن المهاجم (on the attacker's behalf)، وهو هجوم يُسمّى **تزوير الطلبات من جهة الخادم (server-side request forgery, SSRF)**. وكان أحد هذه العناوين **خدمة البيانات الوصفية (metadata service)** في السحابة (cloud)، التي تسلّم بيانات اعتماد مؤقتة (temporary credentials) للبرمجيات العاملة على الخادم. وكانت تلك البيانات تعود إلى دور (role) يستطيع قراءة كثير من حاويات التخزين (storage buckets)، فنسخ المهاجم بيانات العملاء (customer data). وتفيد التقارير بأن البنك علم بالأمر من بلاغ خارجي (an outside tip). والثانية هي Equifax عام 2017 (الدرس 0.1): ثغرة معروفة (known vulnerability) لها ترقيع منشور (published patch)، إضافةً إلى شهادة منتهية الصلاحية (expired certificate) على جهاز لفحص حركة البيانات (traffic-inspection device)، بحسب تحقيق للكونغرس الأمريكي (US congressional investigation)، أخفت نشاط المهاجمين لأسابيع (hid the attackers' activity for weeks). والثالثة هي SolarWinds، التي كُشف عنها في ديسمبر 2020: اخترق المهاجمون نظام البناء (compromised the build system)، فثبّت العملاء تحديثات موقّعة (signed updates) لبرنامجها Orion تحتوي على شيفرة خبيثة (malicious code).
 
 يعود علي برؤية مختلفة. لم تبدأ أيٌّ من الحالات الثلاث بثغرة يوم صفري (zero-day). بل كانت كلٌّ منها سلسلة من نقاط الضعف العادية (a chain of ordinary weaknesses)، وكان كسر أي حلقة منها (breaking any one link) سيوقف الهجوم أو يقصّره (stopped or shortened the attack). وتُدرج التقارير السنوية للقطاع (annual industry reports)، مثل تقرير Verizon للتحقيقات في اختراقات البيانات (Data Breach Investigations Report)، مرارًا بيانات الاعتماد المسروقة (stolen credentials) والتصيّد الاحتيالي (phishing) واستغلال الثغرات المعروفة (exploitation of known vulnerabilities) ضمن أكثر طرق الدخول شيوعًا (the most common ways in)؛ راجع أحدث إصدار (the latest edition) للاطلاع على الأرقام الحالية (current figures).
 
@@ -326,7 +326,7 @@ app.get('/api/accounts/:id', requireLogin, async (req, res) => {
 | التصيّد الاحتيالي والهندسة الاجتماعية (Phishing and social engineering) | الناس مشغولون ومتعاونون ويثقون بسهولة (busy, helpful and trusting) | مصادقة متعددة العوامل مقاومة للتصيّد (phishing-resistant MFA)، وسهولة الإبلاغ (easy reporting)، والتحقق بمعاودة الاتصال للمدفوعات (call-back checks for payments) | 3.1، 11.3 |
 | الثغرات المعروفة غير المرقَّعة (Known, unpatched vulnerabilities) | الإصلاحات موجودة لكنها لا تُطبَّق (fixes exist but are not applied) | جرد البرمجيات (software inventory)، ومواعيد نهائية للترقيع (patch deadlines)، والعيوب المستغَلة أولًا (exploited flaws first) | 6.2، 10.3 |
 | سوء الإعداد (Misconfiguration) | الإعدادات الافتراضية مفتوحة (defaults are open)، ووحدات التحكم السحابية (cloud consoles) تجعل الكشف سهلًا (make exposure easy) | الإعدادات الافتراضية الآمنة (secure defaults)، وفحص الإعدادات (configuration scanning) | 7.1، 7.2 |
-| خلل التحكم في الوصول في التطبيقات وواجهات برمجة التطبيقات (Broken access control in apps and APIs) | يثق الخادم بأن العميل (the client) لن يطلب إلا بياناته (ask only for its own data) | التفويض من جهة الخادم في كل طلب (server-side authorisation on every request) | 3.3، 4.1 |
+| خلل التحكم في الوصول في التطبيقات وواجهات برمجة التطبيقات (Broken access control in apps and APIs) | يثق الخادم (the server trusts) بأن تطبيق العميل (the client) لن يطلب إلا بياناته (ask only for its own data) | التفويض من جهة الخادم في كل طلب (server-side authorisation on every request) | 3.3، 4.1 |
 | الحقن والمعالجة غير الآمنة للمدخلات (Injection and unsafe input handling) | تُعامَل المدخلات على أنها شيفرة (input is treated as code) | الاستعلامات ذات المعاملات (parameterised queries)، وترميز المخرجات (output encoding) | 2.1، 2.2 |
 | الأسرار المسرَّبة (Leaked secrets) | ينتهي المطاف بالمفاتيح في الشيفرة أو المحادثات أو السجلات (keys end up in code, chats or logs) | مدير الأسرار (a secrets manager)، وفحص الأسرار (secret scanning)، والتدوير (rotation) | 5.2 |
 | الموردون والاعتماديات المخترَقة (Compromised suppliers and dependencies) | أنت تشغّل شيفرة لم تكتبها (you run code you did not write) | جرد المكوّنات (component inventory, SBOM)، والإصدارات المثبّتة (pinned versions)، وعمليات البناء الموقّعة (signed builds) | 6.2 |
@@ -338,7 +338,7 @@ app.get('/api/accounts/:id', requireLogin, async (req, res) => {
 
 **خرائط سلوك المهاجمين (Maps of attacker behaviour).** تمنح ثلاثة أطر عمل عامة (three public frameworks) المدافعين لغةً مشتركة (a shared language).
 - تصف **سلسلة القتل السيبرانية (Cyber Kill Chain)**، من وضع Hutchins وCloppert وAmin في Lockheed Martin عام 2011، سبع مراحل (seven phases): الاستطلاع (reconnaissance)، والتسليح (weaponisation)، والتسليم (delivery)، والاستغلال (exploitation)، والتثبيت (installation)، والقيادة والسيطرة (command and control)، وتنفيذ الأهداف (actions on objectives). وفكرتها الأساسية (its key idea): يحتاج المدافع إلى كسر مرحلة واحدة فقط (the defender needs to break only one phase). وقد بُنيت حول عمليات التسلل بالبرمجيات الخبيثة (malware intrusions)، لذا فهي تلائم إساءة استخدام تطبيقات الويب (web application abuse) وسوء الاستخدام من الداخل (insider misuse) بدرجة أقل (less neatly).
-- **MITRE ATT&CK** قاعدة معرفية عامة (a public knowledge base) بـ**تكتيكات (tactics)** الخصوم، أي هدف المهاجم في خطوة ما (the attacker's goal at a step)، مثل Initial Access أو Privilege Escalation، و**تقنياتهم (techniques)**، أي كيف يحققونه (how they achieve it)، مثل التصيّد الاحتيالي (phishing) أو استخدام حسابات صالحة (using valid accounts)، وهي مبنية على ملاحظات من العالم الحقيقي (real-world observations). وحتى وقت كتابة هذه السطور (at the time of writing)، أي 2026، تضم مصفوفة Enterprise (Enterprise matrix) فيها 15 تكتيكًا (15 tactics)، من Reconnaissance إلى Impact، بعد أن قسّم الإصدار 19 (version 19) تكتيك Defense Evasion إلى Stealth وDefense Impairment؛ تحقّق من الإصدار الحالي (check the current version). ويستخدمها المدافعون لوصف الحوادث (to describe incidents) ولرسم التقنيات التي تغطيها قدراتهم على الرصد (to map which techniques their detections cover) (الدرس 10.1).
+- **MITRE ATT&CK** قاعدة معرفية عامة (a public knowledge base) بما يستخدمه الخصوم (adversary) من **تكتيكات (tactics)**، أي هدف المهاجم في خطوة ما (the attacker's goal at a step)، مثل Initial Access أو Privilege Escalation، و**تقنيات (techniques)**، أي كيف يحققونه (how they achieve it)، مثل التصيّد الاحتيالي (phishing) أو استخدام حسابات صالحة (using valid accounts)، وهي مبنية على ملاحظات من العالم الحقيقي (real-world observations). وحتى وقت كتابة هذه السطور (at the time of writing)، أي 2026، تضم مصفوفة Enterprise (Enterprise matrix) فيها 15 تكتيكًا (15 tactics)، من Reconnaissance إلى Impact، بعد أن قسّم الإصدار 19 (version 19) تكتيك Defense Evasion إلى Stealth وDefense Impairment؛ تحقّق من الإصدار الحالي (check the current version). ويستخدمها المدافعون لوصف الحوادث (to describe incidents) ولرسم التقنيات التي تغطيها قدراتهم على الرصد (to map which techniques their detections cover) (الدرس 10.1).
 - يطبّق **MITRE ATLAS** الفكرة نفسها على الهجمات على أنظمة تعلّم الآلة (attacks on machine-learning systems)، مع دراسات حالة (case studies) (الدرس 8.1).
 
 **سلسلة الذكاء الاصطناعي (The AI chain).** أثبت Greshake وزملاؤه عام 2023 إمكانية **حقن الموجّهات غير المباشر (indirect prompt injection)** ضد التطبيقات المتكاملة مع النماذج اللغوية الكبيرة (LLM-integrated applications): فالمهاجم لا يتحدث أبدًا إلى المساعد (never talks to the assistant)، بل يزرع تعليمات (plants instructions) في محتوى سيقرؤه (content it will read). وهذا هو النمط (the pattern) في مساعد مذكرات الائتمان (Credit Memo Copilot)، بالمستوى الذي يحتاجه المدافع (at the level a defender needs):
@@ -358,7 +358,7 @@ app.get('/api/accounts/:id', requireLogin, async (req, res) => {
 |---|---|---|---|
 | Equifax، 2017 | عيب معروف في Apache Struts (known Apache Struts flaw)، هو CVE-2017-5638، غير مرقَّع (unpatched) | نقطة عمياء في المراقبة (monitoring blind spot) بسبب شهادة منتهية الصلاحية (an expired certificate) | تتبّع الترقيعات (patch tracking) مقابل جرد برمجيات دقيق (an accurate software inventory) |
 | Capital One، 2019 | تزوير الطلبات من جهة الخادم (SSRF) عبر جدار حماية لتطبيقات الويب سيئ الإعداد (a misconfigured web application firewall) | بيانات اعتماد البيانات الوصفية (metadata credentials) لدور ذي صلاحيات مفرطة (an over-privileged role) | دور مقيّد بما يحتاجه التطبيق (a role limited to what the application needed)؛ وحمايات البيانات الوصفية (metadata protections) مثل IMDSv2 من AWS، التي قُدّمت في وقت لاحق من ذلك العام (introduced later that year) |
-| SolarWinds Orion، كُشف عنه في ديسمبر 2020 | نظام بناء مخترَق (compromised build system) أدخل شيفرة في تحديثات موقّعة (inserted code into signed updates) | منح العملاءُ البرنامجَ وصولًا واسعًا إلى الشبكة (wide network reach) | عمليات بناء مُحصّنة وقابلة للتحقق (hardened, verifiable builds) (الدرس 6.2) |
+| SolarWinds Orion، كُشف عنه في ديسمبر 2020 (disclosed December 2020) | نظام بناء مخترَق (compromised build system) أدخل شيفرة في تحديثات موقّعة (inserted code into signed updates) | منح العملاءُ البرنامجَ وصولًا واسعًا إلى الشبكة (wide network reach) | عمليات بناء مُحصّنة وقابلة للتحقق (hardened, verifiable builds) (الدرس 6.2) |
 | xz Utils، 2024 | اكتسب أحد المساهمين (a contributor) ثقة المشرفين على المشروع (maintainer trust) على مدى سنوات، وأخفى بابًا خلفيًا (a backdoor) في ملفات الاختبار (test files) وأرشيفات الإصدار (release tarballs)، وهو CVE-2024-3094 | متغلغل في أعماق الاعتماديات (deep in the dependencies) لكثير من أنظمة Linux | الحلقة التي كسرته فعلًا (the link that did break it): مهندس تحقّق في بطء غريب (an engineer who investigated an odd slowdown)، قبل الإصدار الواسع (before wide release) |
 
 **الميزة الحقيقية للمدافع (The defender's real advantage).** يقول قول شائع (a common saying) إن على المدافعين أن يصيبوا في كل مرة (be right every time) وعلى المهاجمين أن يصيبوا مرة واحدة فقط (only once). أما بالنسبة إلى سلسلة كاملة (a whole chain)، فالعكس أقرب إلى الحقيقة (the reverse is closer to the truth): يجب على المهاجم أن ينجح في كل حلقة دون أن يُلاحَظ (succeed at every link unnoticed)، بينما يكفي المدافع أن يوقف حلقة واحدة أو يرصدها (stop or spot just one). ولا ينجح ذلك إلا إذا اخترت نقاط الرصد مسبقًا (choose detection points in advance): حسابات إدارة جديدة (new admin accounts)، وأحجام غير اعتيادية من البيانات الخارجة (unusual data volumes leaving)، وبيانات اعتماد تُستخدم من أماكن غير متوقعة (credentials used from unexpected places)، ونموذج يستدعي الأدوات بنمط غريب (a model calling tools in an odd pattern). صمّم كما لو أن الحلقة الأولى ستخفق (as if the first link will fail)، وهو موقف يُسمّى **افتراض الاختراق (assume breach)**.
@@ -380,7 +380,7 @@ app.get('/api/accounts/:id', requireLogin, async (req, res) => {
 
 | المرحلة (Stage) | خطوة معقولة للمهاجم (Plausible attacker step) | الضابط الذي يكسرها (Control that breaks it) | إشارة الرصد (Detection signal) | المالك (Owner) | الحالة (Status) |
 |---|---|---|---|---|---|
-| الاستطلاع (Reconnaissance) | يجد نقطة نهاية قديمة للرفع (an old upload endpoint) هي `/v1` لا تزال متاحة (still online) | أوقِف `/v1` نهائيًا (retire)؛ واحتفظ بجرد لواجهات برمجة التطبيقات (keep an API inventory) | حركة مرور إلى مسارات متقاعدة (traffic to retired paths) | طارق | مفتوح (Open) |
+| الاستطلاع (Reconnaissance) | يجد نقطة نهاية قديمة للرفع (an old upload endpoint) هي `/v1` لا تزال متاحة (still online) | أوقِف `/v1` نهائيًا (retire)؛ واحتفظ بجرد لواجهات برمجة التطبيقات (keep an API inventory) | حركة مرور إلى مسارات أُوقفت نهائيًا (traffic to retired paths) | طارق | مفتوح (Open) |
 | الوصول الأولي (Initial access) | يجرّب كلمات مرور مسرَّبة (leaked passwords) على عمليات تسجيل دخول مستخدمي الشركات الصغيرة (SME user logins) | المصادقة متعددة العوامل لجميع مستخدمي الشركات الصغيرة (MFA for all SME users)؛ وحدود معدّل تسجيل الدخول (login rate limits) | محاولات دخول فاشلة موزّعة على حسابات كثيرة (failed logins spread across many accounts) | طارق | المصادقة متعددة العوامل لمسؤولي الشركات فقط (MFA for company admins only) |
 | الوصول الأولي (Initial access) | يرفع ملفًا سينفّذه الخادم (uploads a file the server will execute) | قائمة سماح بالأنواع (type allow-list)؛ والتخزين في مخزن الكائنات (storage in the object store)؛ وفحص البرمجيات الخبيثة (malware scan) | أنواع ملفات غير متوقعة (unexpected file types)؛ ونتائج إيجابية في الفحص (scan hits) | طارق | أُصلح في الإصدار 2 فقط (Fixed in v2 only) |
 | تصعيد الصلاحيات (Privilege escalation) | يجعل مستخدمُ شركةٍ نفسَه مسؤولًا عن الشركة (a company user makes themselves company admin) | فحص الدور من جهة الخادم (server-side role check) في واجهة تغيير الأدوار البرمجية (role-change API) | تغييرات الأدوار خارج شاشة الإدارة (role changes outside the admin screen) | طارق | قيد الاختبار (To test) (الدرس 3.3) |
@@ -391,7 +391,7 @@ app.get('/api/accounts/:id', requireLogin, async (req, res) => {
 قاعدة نورة (Noura's rule): ينتهي كل استعراض (every walkthrough) بسطرين. **أرخص حلقة يمكن كسرها (Cheapest link to break):** المصادقة متعددة العوامل لجميع مستخدمي الشركات الصغيرة (MFA for all SME users)، ودور سحابي أضيق (a narrower cloud role). **أول مكان سنلاحظ فيه اليوم (First place we would notice today):** لا مكان (nowhere)، لذا يضيف جاسم تنبيهًا (an alert) على حجم التنزيل لكل مستخدم (download volume per user).
 
 ## 🛠️ التمارين (Exercises)
-- 🟢 باستخدام التقارير العامة (public reporting) عن اختراق Capital One عام 2019 (أو حالة أخرى في هذا الدرس)، اربط كل خطوة بمرحلة من مراحل السلسلة (map each step to a stage of the chain). *يكتمل عندما (Done when):* تكون كل مرحلة قد مُلئت أو وُسمت بعبارة «لم يُبلَغ عنه (not reported)»، وتسمّي كل مرحلة مملوءة ضابطًا واحدًا (one control) كان سيكسرها.
+- 🟢 باستخدام التقارير العامة (public reporting) عن اختراق Capital One عام 2019 (Capital One 2019 breach)، أو عن حالة أخرى في هذا الدرس (another case in this lesson)، اربط كل خطوة بمرحلة من مراحل السلسلة (map each step to a stage of the chain). *يكتمل عندما (Done when):* تكون كل مرحلة قد مُلئت (filled in) أو وُسمت بعبارة «لم يُبلَغ عنه (not reported)»، وتسمّي كل مرحلة مملوءة (each filled stage) ضابطًا واحدًا (one control) كان سيكسرها (would have broken it).
 - 🟡 لتطبيق تملكه (an application you own)، مرّ على جدول المشتبه بهم المعتادين (the usual-suspects table) وضع على كل طريق دخول (entry route) وسم موجود أو غائب أو غير معروف (present, absent or unknown)، مع أدلتك (with your evidence). *يكتمل عندما (Done when):* يكون لكل «غير معروف (unknown)» خطوة تالية مسمّاة لمعرفته (a named next step to find out)، ويكون لواحد على الأقل من «موجود (present)» إصلاح في قائمة أعمالك (a fix in your backlog).
 - 🔴 لتطبيق OWASP Juice Shop، وهو تطبيق تدريبي معرّض للثغرات عن عمد (a deliberately vulnerable training app)، يعمل على جهازك (running on your own machine)، أو لتطبيقك الخاص، اكتب استعراضًا لسلسلة الهجوم (attack-chain walkthrough) مثل استعراض نجم يضم خمس مراحل على الأقل (at least five stages)، لكلٍّ منها ضابط (a control) وإشارة رصد (a detection signal). *يكتمل عندما (Done when):* تكون قد وسمت أرخص حلقة يمكن كسرها (the cheapest link to break) وأبكر نقطة ستلاحظ عندها (the earliest point at which you would notice).
 
@@ -411,9 +411,9 @@ app.get('/api/accounts/:id', requireLogin, async (req, res) => {
 
 ## ✍️ اختبر نفسك (Check yourself)
 
-**1. يريد علي إنفاق معظم ميزانية العام (most of the year's budget) على رصد هجمات اليوم الصفري (detecting zero-day attacks). استنادًا إلى التقارير العامة عن الاختراقات (public breach reporting)، ماذا ينبغي أن تقول له نورة؟**
+**1. يريد علي إنفاق معظم ميزانية العام (most of the year's budget) على رصد هجمات اليوم الصفري (detecting zero-day attacks). استنادًا إلى التقارير العامة عن الاختراقات (public breach reporting)، ماذا ينبغي أن تقول له نورة (what should Noura tell him)؟**
 
-- A. أن توافقه، لأن معظم الاختراقات تستخدم ثغرات اليوم الصفري (most breaches use zero-days)
+- A. أن توافقه (Agree)، لأن معظم الاختراقات تستخدم ثغرات اليوم الصفري (most breaches use zero-days)
 - B. أن معظم الاختراقات تبدأ من طرق عادية (ordinary routes)، كبيانات الاعتماد المسروقة والتصيّد الاحتيالي والعيوب غير المرقَّعة وسوء الإعداد (stolen credentials, phishing, unpatched flaws, misconfiguration)، لذا أصلح هذه أولًا (fix those first)
 - C. أن ينفقها على جدار حماية لتطبيقات الويب (web application firewall)، فهو يوقف جميع الهجمات (stops all attacks)
 - D. ألا ينفق شيئًا حتى يقع اختراق (until a breach happens)
@@ -424,7 +424,7 @@ app.get('/api/accounts/:id', requireLogin, async (req, res) => {
 
 </details>
 
-**2. في حالة Capital One كما نُشرت علنًا (as publicly reported)، مكّن تزوير الطلبات من جهة الخادم (SSRF) المهاجمَ من الحصول على بيانات اعتماد من خدمة البيانات الوصفية (metadata service). أي ضابط كان سيحدّ من الضرر بعد تلك النقطة أكثر من غيره (MOST have limited the damage)؟**
+**2. في حالة Capital One كما نُشرت علنًا (as publicly reported)، مكّن تزوير الطلبات من جهة الخادم (SSRF) المهاجمَ من الحصول على بيانات اعتماد من خدمة البيانات الوصفية (metadata service). أي ضابط (Which control) كان سيحدّ من الضرر بعد تلك النقطة (after that point) أكثر من غيره (MOST have limited the damage)؟**
 
 - A. سياسة كلمات مرور أطول للعملاء (a longer password policy for customers)
 - B. إخفاء أسماء حاويات التخزين (hiding the bucket names)
@@ -450,7 +450,7 @@ app.get('/api/accounts/:id', requireLogin, async (req, res) => {
 
 </details>
 
-**4. ما الذي يقدّمه MITRE ATT&CK للمدافع ولا تقدّمه قائمة واحدة من الثغرات (a single list of vulnerabilities)؟**
+**4. ما الذي يقدّمه MITRE ATT&CK للمدافع (give a defender) ولا تقدّمه قائمة واحدة من الثغرات (a single list of vulnerabilities)؟**
 
 - A. ترقيعات لكل ثغرة معروفة (patches for every known vulnerability)
 - B. إطارًا قانونيًا للإبلاغ عن الحوادث (a legal framework for incident reporting)
@@ -524,15 +524,15 @@ app.get('/api/accounts/:id', requireLogin, async (req, res) => {
 
 | الشخص (Person) | الدور (Role) | السؤال الذي يطرحه دائمًا (The question they always ask) |
 |---|---|---|
-| **نورة (Noura)** | رئيسة أمن التطبيقات والذكاء الاصطناعي (Head of Application & AI Security)؛ مرشدتك (your mentor) | «ما الذي نحميه، ومِمّن، وهل سنعلم إن أخفق (What are we protecting, from whom, and would we know if it failed)؟» |
+| **نورة (Noura)** | رئيسة أمن التطبيقات والذكاء الاصطناعي (Head of Application & AI Security)؛ مرشدتك (your mentor) | «ما الذي نحميه (What are we protecting)، ومِمّن (from whom)، وهل سنعلم إن أخفق (would we know if it failed)؟» |
 | **علي (Ali)** | مهندس أمن (security engineer)، جديد في الفريق (new to the team)؛ زميلك (your peer) | «هل يمكنني أن أُجري عليه فحصًا فحسب (Can I just run a scan on it)؟» |
 | **مريم (Mariam)** | قائدة الفريق الأحمر (red-team lead)، بما في ذلك اختبار الذكاء الاصطناعي بأسلوب الفريق الأحمر (AI red-teaming) | «ما الذي يقع ضمن النطاق، ومن وقّع التفويض (What is in scope, and who signed the authorisation)؟» |
-| **جاسم (Jassim)** | قائد العمليات الأمنية (security operations, SOC) والاستجابة للحوادث (incident response lead) | «لو حدث هذا في الثانية فجرًا، فهل سنراه، ومن سنتصل به (would we see it, and who would we call)؟» |
-| **طارق (Tariq)** | قائد الهندسة (engineering lead) | «هل يمكن أتمتة هذا في خط البناء والنشر دون إبطاء الفريق (Can this be automated in the pipeline without slowing the team)؟» |
-| **دانة (Dana)** | كبيرة علماء البيانات (lead data scientist) | «من أين جاءت بيانات التدريب، وهل لا يزال النموذج يتصرف كما ينبغي (Where did the training data come from, and does the model still behave)؟» |
+| **جاسم (Jassim)** | قائد العمليات الأمنية (security operations, SOC) والاستجابة للحوادث (incident response lead) | «لو حدث هذا في الثانية فجرًا ⁦(If this happened at 2 a.m.)⁩، فهل سنراه (would we see it)، ومن سنتصل به (who would we call)؟» |
+| **طارق (Tariq)** | قائد الهندسة (engineering lead) | «هل يمكن أتمتة هذا (Can this be automated) في خط البناء والنشر (in the pipeline) دون إبطاء الفريق (without slowing the team)؟» |
+| **دانة (Dana)** | كبيرة علماء البيانات (lead data scientist) | «من أين جاءت بيانات التدريب (Where did the training data come from)، وهل لا يزال النموذج يتصرف كما ينبغي (does the model still behave)؟» |
 | **رانيا (Rania)** | رئيسة منتجات الذكاء الاصطناعي (Head of AI Products) | «ما الذي نحتاجه لإطلاق هذا بأمان، وبحلول متى (What do we need to launch this safely, and by when)؟» |
 | **ليلى (Layla)** | رئيسة حوكمة الذكاء الاصطناعي (Head of AI Governance) | «ما مستوى المخاطر، وأين الأدلة (What is the risk tier, and where is the evidence)؟» |
-| **سارة (Sara)** | مسؤولة حماية البيانات (Data Protection Officer, DPO) | «بيانات من الشخصية معنيّة، وهل يجب أن نُخطر أحدًا (Whose personal data is involved, and must we notify anyone)؟» |
+| **سارة (Sara)** | مسؤولة حماية البيانات (Data Protection Officer, DPO) | «بيانات من الشخصية معنيّة (Whose personal data is involved)، وهل يجب أن نُخطر أحدًا (must we notify anyone)؟» |
 | **حمد (Hamad)** | كبير مسؤولي أمن المعلومات (Chief Information Security Officer, CISO) | «ما مدى تعرّضنا للخطر، وماذا تحتاجون مني (What is our exposure, and what do you need from me)؟» |
 
 صُمّمت شخصية علي ناقصةً عن عمد (Ali is deliberately imperfect): فهو يفحص قبل تحديد النطاق (scans before scoping)، ويثق بمخرجات النموذج (trusts model output)، ويصنّف كل نتيجة على أنها «حرجة (critical)» (rates every finding)، وينسى أن على أحدٍ ما أن يُصلح ما يجده (someone has to fix what he finds). وعندما يتصرف، اسأل ماذا كانت نورة ستفعل بدلًا من ذلك (what Noura would do instead). ويقف الفريق الأحمر بقيادة مريم (Mariam's red team) ومركز العمليات الأمنية بقيادة جاسم (Jassim's SOC) إلى جانب فريق نورة تحت إشراف حمد (under Hamad). أما ليلى وسارة فتقعان خارج الأمن عن قصد (outside security on purpose): فالحوكمة والخصوصية (governance and privacy) تطرحان أسئلة مختلفة (ask different questions) ويجب أن تكونا قادرتين على الرفض (must be able to say no).
@@ -543,7 +543,7 @@ app.get('/api/accounts/:id', requireLogin, async (req, res) => {
 |---|---|---|---|
 | **تطبيق نجم للهاتف (Najm Mobile)** و**واجهته البرمجية العامة (public API)** | تطبيق الخدمات المصرفية للأفراد (the retail banking app)، على iOS وAndroid، وواجهته البرمجية (its API): الحسابات والتحويلات والبطاقات (accounts, transfers, cards) | المصادقة (authentication)، وتفويض واجهات برمجة التطبيقات (API authorisation)، والروبوتات الآلية (bots)، والثقة بالأجهزة (device trust) | 3.1، 3.2، 4.1–4.3 |
 | **نجم أسيست (Najm Assist)** | المساعد القائم على النموذج اللغوي الكبير (the LLM assistant) داخل التطبيق، الذي يتطور إلى وكيل يملك أدوات (growing into an agent with tools): تجميد بطاقة (freeze a card)، والاعتراض على معاملة (dispute a transaction)، والاستعلام عن الرسوم (look up fees) | حقن الموجّهات (prompt injection)، ومعالجة المخرجات (output handling)، والصلاحيات المفرطة (excessive agency) | 8.2، 9.1، 9.2، 9.4، 12.1 |
-| **مساعد مذكرات الائتمان (Credit Memo Copilot)** | أداة ذكاء اصطناعي توليدي داخلية (an internal GenAI tool) تصوغ مذكرات الائتمان (drafting credit memos) مع استرجاع (RAG) من المستندات الداخلية (retrieval over internal documents) | حدود البيانات (data boundaries)، وحقن الموجّهات غير المباشر (indirect prompt injection) | 8.2، 9.3 |
+| **مساعد مذكرات الائتمان (Credit Memo Copilot)** | أداة ذكاء اصطناعي توليدي داخلية (an internal GenAI tool) تصوغ مذكرات الائتمان (drafting credit memos) مع الاسترجاع (retrieval)، أي التوليد المعزّز بالاسترجاع (RAG)، من المستندات الداخلية (over internal documents) | حدود البيانات (data boundaries)، وحقن الموجّهات غير المباشر (indirect prompt injection) | 8.2، 9.3 |
 | **بوابة الشركات الصغيرة (SME Portal)** | تطبيق ويب للشركات الصغيرة (a web app for small businesses): رفع الفواتير (invoice uploads)، وشركات متعددة المستخدمين ذات أدوار (multi-user companies with roles) | الحقن (injection)، والرفع (uploads)، وتعدد المستأجرين (multi-tenancy)، والتحكم في الوصول (access control) | 2.1–2.3، 3.3 |
 | **التنبيهات الذكية (Smart Alerts)** | نموذج تعلّم آلي لكشف الاحتيال (the fraud-detection machine-learning model) | التهرّب (evasion)، والتسميم (poisoning)، واستخراج النموذج (model extraction) | 8.3 |
 | **المنصة السحابية (Cloud platform)** و**وكلاء البرمجة بالذكاء الاصطناعي (AI coding agents)** | حاويات برمجية على Kubernetes مُدار (containers on managed Kubernetes)، ومخزن كائنات (an object store)، وقاعدة بيانات مُدارة (a managed database)، وخطوط CI/CD (CI/CD pipelines)؛ ووكلاء يكتبون الشيفرة (agents that write code) | الصلاحيات السحابية (cloud permissions)، والأسرار (secrets)، وسلسلة التوريد (supply chain)، والشيفرة المولّدة بالذكاء الاصطناعي (AI-generated code) | 5.2، 6.2، 6.3، الوحدة 7 |
@@ -605,11 +605,11 @@ flowchart LR
 
 | أنت… (You are…) | المسار المقترح (Suggested path) |
 |---|---|
-| مطوّر، بما في ذلك من يعمل مع وكلاء البرمجة بالذكاء الاصطناعي (A developer, including with AI coding agents) | الوحدات 0–6، ثم 9؛ وكل تمرين 🟡 على شيفرتك (every 🟡 exercise on your own code) |
+| مطوّر (A developer)، بما في ذلك من يعمل مع وكلاء البرمجة بالذكاء الاصطناعي (including with AI coding agents) | الوحدات 0–6، ثم 9؛ وكل تمرين 🟡 على شيفرتك (every 🟡 exercise on your own code) |
 | معماري (An architect) | الوحدات 0 و1 و3 و7 و8، و9.2 و9.3؛ ونموذج تهديدات (a threat model) لكل نظام تملكه (for each system you own) |
-| مدير منتج أو مدير هندسة (A product or engineering manager) | 0، 1.3، 6.1، 8.1، 9.2، 10.2 و11؛ ومُخرَجات 🏛️ بوصفها قوالب تطلبها (the 🏛️ artefacts as templates to ask for) |
-| محلل أمني ينتقل إلى أمن التطبيقات أو أمن الذكاء الاصطناعي (A security analyst moving into AppSec or AI security) | الامتحان التدريبي 12.3 أولًا (the 12.3 practice exam first)؛ ثم التعمق في 2–4 و8–9 (then deep on 2–4 and 8–9) |
-| مالك نظام في بنك أو جهة حكومية أو مؤسسة (A bank, government or enterprise system owner) | 0، 1، 5.3، 7.1، 10.2 و11 |
+| مدير منتج أو مدير هندسة (A product or engineering manager) | 0، 1.3، 6.1، 8.1، 9.2، 10.2 و11؛ ومُخرَجات 🏛️ (the 🏛️ artefacts) بوصفها قوالب تطلبها (as templates to ask for) |
+| محلل أمني (A security analyst) ينتقل إلى أمن التطبيقات (moving into AppSec) أو أمن الذكاء الاصطناعي (AI security) | الامتحان التدريبي 12.3 أولًا (the 12.3 practice exam first)؛ ثم التعمق في 2–4 و8–9 (then deep on 2–4 and 8–9) |
+| مالك نظام (system owner) في بنك أو جهة حكومية أو مؤسسة (A bank, government or enterprise) | 0، 1، 5.3، 7.1، 10.2 و11 |
 
 **قواعد الاشتباك (Rules of engagement).** الاختبار دون إذن (testing without permission) هجوم (is an attack)، أيًّا كانت نواياك (whatever your intentions)، ومعظم الدول، بما فيها دول مجلس التعاون الخليجي والاتحاد الأوروبي (including those in the GCC and the EU)، تجرّم الوصول غير المصرّح به إلى أنظمة الحاسوب (outlaw unauthorised access to computer systems). ولا تُنفَّذ التمارين العملية (hands-on exercises) إلا على:
 - شيفرتك (your own code)، على جهازك أو حساباتك (on your own machine or accounts)؛
@@ -646,7 +646,7 @@ flowchart LR
 | التنبيهات الذكية (Smart Alerts)، داخلي (internal) | قرارات الاحتيال بشأن معاملات البطاقات (fraud decisions on card transactions) | دانة | تهرّب المحتالين (evasion by fraudsters)؛ وتسميم تصنيفات التدريب (poisoned training labels) |
 | المنصة السحابية وخطوط البناء والنشر (Cloud platform and pipelines)، داخلي (internal) | بيانات الاعتماد السحابية (cloud credentials)؛ وخط البناء والنشر نفسه (the pipeline itself) | فريق المنصة لدى طارق (Tariq's platform team) | الأدوار ذات الصلاحيات المفرطة (over-privileged roles)؛ والأسرار في الشيفرة (secrets in code)؛ وتغييرات الوكلاء غير المراجَعة (unreviewed agent changes) |
 
-والصفحة الثانية هي **مصفوفة RACI لثغرة حرجة مُبلَّغ عنها في الواجهة البرمجية العامة لتطبيق نجم للهاتف (RACI for a critical vulnerability reported in Najm Mobile's public API)**:
+والصفحة الثانية هي **مصفوفة RACI لثغرة حرجة مُبلَّغ عنها (RACI for a critical vulnerability reported) في الواجهة البرمجية العامة لتطبيق نجم للهاتف (in Najm Mobile's public API)**:
 
 | المهمة (Task) | نورة | علي | جاسم | طارق | سارة | حمد |
 |---|---|---|---|---|---|---|
@@ -654,7 +654,7 @@ flowchart LR
 | فحص السجلات بحثًا عن علامات الاستغلال (check logs for signs of exploitation) | C | C | R/A | C | I | I |
 | الإصلاح والإصدار (Fix and release) | C | C | I | R/A | I | I |
 | تقييم الأثر على البيانات الشخصية وواجب الإخطار (assess personal-data impact and notification duty) | C | I | C | I | R/A | I |
-| تقرير ما إذا كان يجب إيقاف نقطة النهاية في الأثناء (decide whether to switch the endpoint off meanwhile) | R | I | C | C | C | A |
+| تقرير ما إذا كان يجب (decide whether) إيقاف نقطة النهاية (switch the endpoint off) في الأثناء (meanwhile) | R | I | C | C | C | A |
 | إحاطة المسؤولين التنفيذيين (brief executives)؛ وتقرير التواصل مع الجهة الرقابية (decide on regulator contact) | C | I | C | I | C | R/A |
 
 علي: «إذن أنا أقيّمها (I rate it)، وطارق يُصلحها (Tariq fixes it)، وجاسم يتحقق مما إذا كان أحد قد استغلها (checks whether anyone used it)، وسارة تحدد ما إذا كان يجب أن نُخطر أحدًا (works out whether we must notify anyone)، وحمد يقرر بشأن الجهة الرقابية (decides on the regulator)». نورة: «نعم. مهمتك أن تجعل النتيجة غير قابلة لسوء الفهم (make the finding impossible to misunderstand)».
@@ -669,7 +669,7 @@ flowchart LR
 - **التدرّب على أنظمة لا تملكها (Practising on systems you do not own).** «مجرد التحقق (just checking)» من موقع عام (a public site)، أو من نظام الإنتاج لدى جهة عملك (your employer's production system)، أو من روبوت محادثة لشركة أخرى (another company's chatbot) قد يكون جريمة (can be a crime). استخدم مختبرًا محليًا (a local lab) أو احصل على تفويض مكتوب (written authorisation).
 - **القراءة دون إنتاج (Reading without producing).** المُخرَجات (the artefacts) هي جوهر الأمر (the point). ابنِ واحدًا على الأقل لكل وحدة (at least one per module) لنظام تعرفه.
 - **التعمق في دورة مرافقة مبكرًا جدًا (Going deep into a companion course too early).** لا تحتاج إلى قانون الذكاء الاصطناعي الأوروبي (the EU AI Act) لتكتشف خلل التحكم في الوصول (to spot broken access control). اذهب إليها عندما يحتاجها قرار ما (when a decision needs it).
-- **التعرّف إلى مركز العمليات الأمنية ومسؤولة حماية البيانات أثناء الحادثة (Meeting the SOC and the DPO during an incident).** يحتاج جاسم وسارة إلى معرفة أنظمتك قبل أن يسوء شيء (before something goes wrong). عرّف بنفسك في الأسبوع الأول (introduce yourself in week one).
+- **التعرّف إلى مركز العمليات الأمنية ومسؤولة حماية البيانات أثناء الحادثة (Meeting the SOC and the DPO during an incident).** يحتاج جاسم وسارة إلى معرفة أنظمتك (need to know your systems) قبل أن يسوء شيء (before something goes wrong). عرّف بنفسك في الأسبوع الأول (introduce yourself in week one).
 
 ## 🧾 الخلاصة (Recap)
 - بنك نجم (Najm Bank) خيالي (fictional). وأنت تجلس في فريق أمن التطبيقات والذكاء الاصطناعي (Application & AI Security team) فيه، مع نورة مرشدةً (as mentor) وعلي زميلًا (as peer).
@@ -693,7 +693,7 @@ flowchart LR
 
 </details>
 
-**2. في الثانية فجرًا، يلاحظ علي سجلات (log entries) توحي بأن أحدًا ينزّل فواتير من شركات كثيرة في بوابة الشركات الصغيرة (SME Portal). بمن ينبغي أن يتصل أولًا (call first)؟**
+**2. في الثانية فجرًا ⁦(At 2 a.m.)⁩، يلاحظ علي سجلات (log entries) توحي بأن أحدًا ينزّل فواتير (downloading invoices) من شركات كثيرة في بوابة الشركات الصغيرة (from many SME Portal companies). بمن ينبغي أن يتصل أولًا (call first)؟**
 
 - A. جاسم، قائد مركز العمليات الأمنية والاستجابة للحوادث (the SOC and incident response lead)
 - B. رانيا، رئيسة منتجات الذكاء الاصطناعي (the Head of AI Products)
@@ -719,7 +719,7 @@ flowchart LR
 
 </details>
 
-**4. يريد علي التدرّب على تقنيات الحقن (injection techniques) من الوحدة 2 في عطلة نهاية الأسبوع. أي خطة تلتزم بقواعد الاشتباك (rules of engagement) في الدورة؟**
+**4. يريد علي التدرّب على تقنيات الحقن (injection techniques) من الوحدة 2 (from Module 2) في عطلة نهاية الأسبوع (this weekend). أي خطة (Which plan) تلتزم بقواعد الاشتباك في الدورة (follows the course's rules of engagement)؟**
 
 - A. تجربتها على الموقع العام للبنك (the bank's public website)، لأنه يعمل هناك (since he works there)
 - B. تشغيل OWASP Juice Shop على حاسوبه المحمول (his own laptop) والتدرّب عليه
@@ -737,7 +737,7 @@ flowchart LR
 - A. استنتج ذلك من الدروس الأمنية وحدها (from the security lessons alone)
 - B. انتظر حتى تُغلق الحادثة (until the incident is closed)
 - C. أشرِك سارة، مسؤولة حماية البيانات (the DPO)، واستخدم الدرس 11.2 ودورة *AI Governance: Zero to Hero* للتفاصيل القانونية (for the legal detail)
-- D. ابحث عنه في دورة *SaaS Building Blocks*
+- D. ابحث عنه (Look it up) في دورة *SaaS Building Blocks*
 
 <details><summary>الإجابة</summary>
 

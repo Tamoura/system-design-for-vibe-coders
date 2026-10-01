@@ -28,7 +28,7 @@
 
 ### 🟢 الأساسيات (The essentials)
 
-**لماذا تختلف واجهات البرمجة (Why APIs are different).** تمزج صفحة الويب (A web page) البياناتِ بالعرض (data and presentation)، ويضغط الشخص على ما تعرضه (a person clicks what it shows). أما واجهة البرمجة فتعيد بياناتٍ خامًا (raw data)، عادةً بصيغة JSON، من **نقاط نهاية (endpoints)** مثل `/v2/accounts/{accountId}` إلى أي برنامجٍ يستدعيها (any program that calls it): تطبيق نجم للهاتف، والواجهة الأمامية لبوابة الشركات الصغيرة (SME Portal's front end)، والشركاء (partners)، والنصوص البرمجية (scripts)، والآن وكلاء الذكاء الاصطناعي (AI agents) مثل نجم أسيست (Najm Assist). لا توجد واجهة مستخدم تختبئ خلفها (no interface to hide behind)؛ والبنية قابلة للتنبؤ (the structure is predictable)، فإذا كانت `/v2/accounts/1001` موجودة، فسيجرّب المهاجم `1002`؛ وتجيب الواجهة النصَّ البرمجي بالرحابة نفسها التي تجيب بها الإنسان (answers a script as happily as a person)، آلاف المرات في الدقيقة (thousands of times a minute).
+**لماذا تختلف واجهات البرمجة (Why APIs are different).** تمزج صفحة الويب (A web page) البياناتِ بالعرض (data and presentation)، ويضغط الشخص على ما تعرضه (a person clicks what it shows). أما واجهة البرمجة فتعيد بياناتٍ خامًا (raw data)، عادةً بصيغة JSON، من **نقاط نهاية (endpoints)** مثل `/v2/accounts/{accountId}` إلى أي برنامجٍ يستدعيها (any program that calls it): تطبيق نجم للهاتف، والواجهة الأمامية لبوابة الشركات الصغيرة (SME Portal's front end)، والشركاء (partners)، والنصوص البرمجية (scripts)، والآن وكلاء الذكاء الاصطناعي (AI agents) مثل نجم أسيست (Najm Assist). لا توجد واجهة مستخدم تختبئ خلفها (no interface to hide behind)؛ والبنية قابلة للتنبؤ (the structure is predictable)، فإذا كانت `/v2/accounts/1001` موجودة، فسيجرّب المهاجم (an attacker will try) `1002`؛ وتجيب الواجهة النصَّ البرمجي بالرحابة نفسها التي تجيب بها الإنسان (answers a script as happily as a person)، آلاف المرات في الدقيقة (thousands of times a minute).
 
 **القائمة (The list).** كانت آخر مراجعةٍ لقائمة OWASP API Security Top 10 عام 2023 ‏(last revised in 2023) وقت كتابة هذا النص (at the time of writing)، أي عام 2026؛ فتحقّق من موقع OWASP بحثًا عن أي إصدارٍ لاحق (any later edition).
 
@@ -36,7 +36,7 @@
 |---|---|---|---|
 | API1 | خلل التفويض على مستوى الكائن (Broken Object Level Authorization, BOLA) | لا فحص لكون المتصل مخوّلًا بالوصول إلى *هذا* الكائن (No check that the caller may access *this* object) | الرمز المميز للعميل A ‏(A's token) يغيّر حدّ بطاقة B ‏(B's card limit) |
 | API2 | خلل المصادقة (Broken Authentication) | ضعفٌ في معالجة تسجيل الدخول أو الرموز المميزة أو المفاتيح (Weak login, token or key handling) | لا حدّ للمحاولات (No attempt limit) على نقطة نهاية كلمة المرور لمرةٍ واحدة (OTP endpoint) |
-| API3 | خلل التفويض على مستوى خصائص الكائن (Broken Object Property Level Authorization, BOPLA) | يستطيع المتصل قراءة *حقولٍ* أو كتابتها لا ينبغي له الوصول إليها (Caller can read or write *fields* they should not) | إعادة `riskScore`؛ وإمكان الكتابة في `kycStatus` ‏(writable) |
+| API3 | خلل التفويض على مستوى خصائص الكائن (Broken Object Property Level Authorization, BOPLA) | يستطيع المتصل قراءة *حقولٍ* أو كتابتها لا ينبغي له الوصول إليها (Caller can read or write *fields* they should not) | إعادة `riskScore` ‏(returned)؛ وإمكان الكتابة في `kycStatus` ‏(writable) |
 | API4 | الاستهلاك غير المقيَّد للموارد (Unrestricted Resource Consumption) | لا حدود لحجم الطلبات أو عددها أو كلفتها (No limits on size, number or cost of requests) | كشوف حساب عشر سنوات (Ten years of statements) في استدعاءٍ واحد (in one call) |
 | API5 | خلل التفويض على مستوى الوظيفة (Broken Function Level Authorization, BFLA) | يستطيع المتصل استخدام *وظيفةٍ* مخصّصة لدورٍ آخر (Caller can use a *function* meant for another role) | رمزٌ مميز لعميل (Customer token) يستدعي نقطة نهاية `/admin/` |
 | API6 | الوصول غير المقيَّد إلى تدفقات الأعمال الحساسة (Unrestricted Access to Sensitive Business Flows) | تدفقٌ مشروع تسيء الأتمتة استخدامه (A legitimate flow abused by automation) | تسجيلاتٌ آلية بنصوص برمجية (Scripted sign-ups) لحصد مكافآت الإحالة (farming referral bonuses) |
@@ -107,7 +107,7 @@ res.json(toPublicProfile(c2));                    // explicit response shape
 
 **API9 سوء إدارة الجرد (Improper Inventory Management).** لا يمكنك حماية ما لا تعرف بوجوده (You cannot protect what you do not know about). فـ **واجهات الظل (Shadow APIs)** لم تُوثَّق قطّ (were never documented)؛ و**واجهات الزومبي (zombie APIs)** إصداراتٌ قديمة لم يوقفها أحد (old versions nobody switched off)؛ وبيئات ما قبل الإنتاج التي تحتفظ ببيانات الإنتاج (staging environments holding production data) تُحسب أيضًا (count too). وكل فرقٍ بين ما تخدمه البوابة (what the gateway serves)، كما تُظهره سجلاتها (from its logs)، ومستندات OpenAPI ‏(OpenAPI documents) هو ملاحظةٌ أمنية (a finding).
 
-**API7 وAPI10: الثقة في الاتجاهين (trust in both directions).** يظهر SSRF ‏(API7) كلما جلبت واجهةٌ عنوان URL قدّمه المتصل (fetches a caller-supplied URL): خطافات الويب (webhooks)، و«الاستيراد من رابط» ("import from link")، وصور الملفات الشخصية (profile pictures)، والدفاعات في الدرس 2.3 ‏(defences in 2.3). أما الاستهلاك غير الآمن (Unsafe consumption)، أي API10، فهو الصورة المعكوسة (the mirror image): الثقة بإجابة طرفٍ ثالث (trusting a third party's answer)، مثل تغذية أسعار الصرف (an exchange-rate feed)، أكثر مما تثق بمدخلات المستخدم (more than you would trust user input). تحقّق من تلك الاستجابات وفق مخطط (Validate those responses against a schema)، واضبط مهلاتٍ زمنية (set timeouts)، ولا تتبع عمليات إعادة التوجيه بلا تمحيص (do not follow redirects blindly).
+**API7 وAPI10: الثقة في الاتجاهين (trust in both directions).** يظهر SSRF ‏(API7) كلما جلبت واجهةٌ عنوان URL قدّمه المتصل (fetches a caller-supplied URL): خطافات الويب (webhooks)، و«الاستيراد من رابط» ("import from link")، وصور الملفات الشخصية (profile pictures)؛ وترد الدفاعات في الدرس 2.3 ‏(defences in 2.3). أما الاستهلاك غير الآمن (Unsafe consumption)، أي API10، فهو الصورة المعكوسة (the mirror image): الثقة بإجابة طرفٍ ثالث (trusting a third party's answer)، مثل تغذية أسعار الصرف (an exchange-rate feed)، أكثر مما تثق بمدخلات المستخدم (more than you would trust user input). تحقّق من تلك الاستجابات وفق مخطط (Validate those responses against a schema)، واضبط مهلاتٍ زمنية (set timeouts)، ولا تتبع عمليات إعادة التوجيه بلا تمحيص (do not follow redirects blindly).
 
 أما **API4 وAPI6** فلهما درسٌ خاص بهما (get their own lesson) (4.2). وكان لـ **الحقن (Injection)** و**التسجيل (logging)** بندان في إصدار 2019 ‏(entries in the 2019 edition) لا في إصدار 2023؛ لكنهما لا يزالان مهمّين (they still matter)، وتغطيهما الوحدتان 2 و10 ‏(Modules 2 and 10).
 
@@ -130,7 +130,7 @@ flowchart LR
 
 **مركزة القرار (Centralise the decision).** حين يكتب مئات المعالجات (hundreds of handlers) كلٌّ منها استعلام الملكية الخاص به (its own ownership query)، فسينسى أحدها (one will forget). عبّر عن التفويض مرةً واحدة (Express authorisation once): طبقة وصولٍ إلى البيانات تحصر الاستعلامات دائمًا في المتصل (a data-access layer that always scopes queries to the caller)، أو **محرّك سياسات (policy engine)** مثل Open Policy Agent ‏(OPA) أو Cedar يقيّم القواعد خارج شيفرة المعالجات (evaluates rules outside handler code). وعندئذٍ ترث نقاط النهاية الجديدة القاعدةَ افتراضيًا (New endpoints then inherit the rule by default).
 
-**المعرّفات العشوائية حزام أمان لا مكابح (Random IDs are a seatbelt, not a brake).** تجعل معرّفات UUID العشوائية (Random UUIDs) من الإصدار 4 ‏(version 4)، وهي معرّفاتٌ عشوائية طويلة (long random identifiers)، علمًا بأن الإصدارات القائمة على الوقت قابلةٌ للتنبؤ جزئيًا (time-based versions are partly predictable)، التخمينَ أصعب (make guessing harder)، وهي جديرةٌ بالاستخدام (worth using). لكن المعرّفات تتسرّب عبر عناوين URL والسجلات ولقطات الشاشة واستجابات الواجهات الأخرى (leak through URLs, logs, screenshots and other API responses). ولا يُصلح BOLA إلا فحصُ الخادم (Only the server check fixes BOLA).
+**المعرّفات العشوائية حزام أمان لا مكابح (Random IDs are a seatbelt, not a brake).** تجعل معرّفات UUID العشوائية (Random UUIDs) التخمينَ أصعب (make guessing harder)، وهي جديرةٌ بالاستخدام (worth using). والمقصود الإصدار 4 ‏(version 4)، أي معرّفاتٌ عشوائية طويلة (long random identifiers)؛ أما الإصدارات القائمة على الوقت فقابلةٌ للتنبؤ جزئيًا (time-based versions are partly predictable). لكن المعرّفات تتسرّب عبر عناوين URL والسجلات ولقطات الشاشة واستجابات الواجهات الأخرى (leak through URLs, logs, screenshots and other API responses). ولا يُصلح BOLA إلا فحصُ الخادم (Only the server check fixes BOLA).
 
 **اختبر التفويض كما تختبر الميزات (Test authorisation like a feature).** نادرًا ما تعرف الماسحات (Scanners) أيّ الكائنات يعود إلى مَن (which objects belong to whom). فاستخدم **اختبار المستخدمَين (two-user test)**: أنشئ العميلين A وB ومستخدمًا من الموظفين (a staff user)، وأعِد إرسال كل طلبٍ برمز مستخدمٍ آخر (replay every request with another user's token)، وتوقّع الرفض (expect a denial)، ضمن التكامل المستمر (in CI) في كل بناء (on every build). وفي الإنتاج (In production)، تُعدّ موجةٌ من حالات الرفض على معرّفاتٍ مختلفة من رمزٍ واحد (a burst of denials on distinct IDs from one token) إشارةً قوية (a strong signal) لمركز العمليات الأمنية (SOC) (10.1).
 
@@ -150,7 +150,7 @@ flowchart LR
 | **OWASP crAPI** — من OWASP | واجهة برمجة ضعيفة عمدًا (A deliberately vulnerable API) للتدرّب الآمن محليًا (for safe, local practice) | التدريب والتمارين (Training and exercises)، لا ضد أنظمةٍ حقيقية أبدًا (never against real systems) |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-يعتمد فريق نورة **بطاقة مراجعة نقاط النهاية في بنك نجم (Najm API endpoint review card)**: تحتاج كل نقطة نهاية عامة جديدة أو معدَّلة (every new or changed public endpoint) إلى بطاقة، يراجعها فريق أمن التطبيقات والذكاء الاصطناعي (Application & AI Security) قبل إطلاقها (before it goes live). وملاحظة مريم هي أول مثالٍ تطبيقي (the first worked example):
+يعتمد فريق نورة **بطاقة مراجعة نقاط نهاية API في بنك نجم (Najm API endpoint review card)**: تحتاج كل نقطة نهاية عامة جديدة أو معدَّلة (every new or changed public endpoint) إلى بطاقة، يراجعها فريق أمن التطبيقات والذكاء الاصطناعي (Application & AI Security) قبل إطلاقها (before it goes live). وملاحظة مريم هي أول مثالٍ تطبيقي (the first worked example):
 
 ```
 Endpoint:        PATCH /v2/cards/{cardId}/limits
@@ -175,8 +175,8 @@ Two-user test:   tests/authz/cards_limits.spec.ts (passing)
 | API5 BFLA | هل يعلن المسار الأدوارَ المسموح لها، مع الرفض افتراضيًا (declare allowed roles, denying by default)؟ | سياسة المسار (Route policy)؛ واختبارٌ سلبي (negative test) |
 | API6 تدفقات الأعمال (Business flows) | هل هذا تدفق أعمالٍ حساس (sensitive business flow)؟ | قيدٌ في سجل التدفقات (Flow register entry) (4.2) |
 | API7 SSRF | هل تجلب عنوان URL قدّمه المتصل (caller-supplied URL)؟ | قائمة السماح وضوابط الخروج (Allowlist and egress controls) (2.3) |
-| API8 سوء الإعداد (Misconfiguration) | هل الأخطاء عامة (errors generic)، وCORS مقيَّد (restricted)، والطرق غير المستخدمة معطّلة (unused methods off)؟ | فحص الإعدادات (Configuration scan) |
-| API9 الجرد (Inventory) | هل هي موثّقة ولها مالكٌ وإصدار (documented, owned and versioned)، والإصدارات القديمة متقاعدة (old versions retired)؟ | قيدٌ في الجرد (Inventory entry) |
+| API8 سوء الإعداد (Misconfiguration) | هل رسائل الأخطاء عامةٌ غير مفصَّلة (errors generic)، وCORS مقيَّد (restricted)، والطرق غير المستخدمة معطّلة (unused methods off)؟ | فحص الإعدادات (Configuration scan) |
+| API9 الجرد (Inventory) | هل هي موثّقة ولها مالكٌ وإصدار (documented, owned and versioned)، وهل أُوقفت الإصدارات القديمة (old versions retired)؟ | قيدٌ في الجرد (Inventory entry) |
 | API10 الأطراف الثالثة (Third parties) | هل يُتحقَّق من استجابات الأطراف الثالثة، مع مهلاتٍ زمنية (validated, with timeouts)؟ | المخطط والمهلات (Schema and timeouts) |
 
 تعود البطاقة التي تقول «قاعدة الكائن: لا شيء» ("Object rule: none") إلى الفريق (goes back to the team)، أيًّا كان الموعد النهائي (whatever the deadline). ويضيف مركز العمليات الأمنية بقيادة جاسم (Jassim's SOC) قاعدة رصد (detection rule): إطلاق تنبيهٍ حين يُرفض رمزٌ واحد على أكثر من 20 معرّف كائنٍ مختلفًا خلال خمس دقائق (when one token is denied on more than 20 distinct object IDs within five minutes)، وهي قيمة توضيحية تُضبط على حركة المرور الحقيقية (illustrative; tuned on real traffic).
@@ -186,7 +186,7 @@ Two-user test:   tests/authz/cards_limits.spec.ts (passing)
 
 - 🟢 اختر خمس نقاط نهاية (five endpoints) من واجهة برمجةٍ تملكها (an API you own)، أو من نسختك المحلية من crAPI أو Juice Shop، ودوّن أيّ المخاطر العشرة (which of the ten risks) قد ينطبق على كلٍّ منها. *يكتمل عندما (Done when):* يكون لكل نقطة نهاية خطران مربوطان بها على الأقل (at least two mapped risks) وسؤال مراجعةٍ ملموس واحد (one concrete review question)، وتُعلَّم كل نقطة نهاية تأخذ معرّف كائن (every endpoint taking an object ID is marked).
 - 🟡 في نسختك المحلية من crAPI أو Juice Shop، أنشئ حسابين (two accounts) واعثر على ثغرة تفويضٍ واحدة على مستوى الكائن (one object-level authorisation flaw) بإعادة إرسال طلبٍ برمز الحساب الآخر (replaying a request with the other account's token). ثم أعِد إنتاج الثغرة في واجهة برمجةٍ صغيرة خاصة بك (a small API of your own)، وأصلحها على الخادم (fix it on the server)، وأضف اختبار مستخدمَين آليًا (an automated two-user test). *يكتمل عندما (Done when):* يفشل الاختبار على نسختك الضعيفة (fails on your vulnerable version) وينجح على النسخة المُصلَحة (passes on the fixed one).
-- 🔴 ابنِ جردًا (Build an inventory) لخدمةٍ تملكها: قارن المسارات المخدومة في آخر 30 يومًا (routes served in the last 30 days)، كما تُظهرها السجلات (from logs)، بمستند OpenAPI ‏(OpenAPI document)، وصنّف كل فرق (classify each difference) إلى ظلّ (shadow) أو زومبي (zombie) أو موثَّقٍ لكنه غير مستخدم (documented-but-unused). *يكتمل عندما (Done when):* يكون لكل نقطة نهاية مخدومة مالكٌ وإصدارٌ وقرار (an owner, a version and a decision)، أي التوثيق أو التقاعد أو الحظر (document, retire or block)، ويفشل التكامل المستمر (CI fails) إذا ظهر مسارٌ جديد من دون قيدٍ في المخطط (without a schema entry).
+- 🔴 ابنِ جردًا (Build an inventory) لخدمةٍ تملكها: قارن المسارات المخدومة في آخر 30 يومًا (routes served in the last 30 days)، كما تُظهرها السجلات (from logs)، بمستند OpenAPI ‏(OpenAPI document)، وصنّف كل فرق (classify each difference) إلى ظلّ (shadow) أو زومبي (zombie) أو موثَّقٍ لكنه غير مستخدم (documented-but-unused). *يكتمل عندما (Done when):* يكون لكل نقطة نهاية مخدومة مالكٌ وإصدارٌ وقرار (an owner, a version and a decision)، أي التوثيق أو الإيقاف أو الحظر (document, retire or block)، ويفشل التكامل المستمر (CI fails) إذا ظهر مسارٌ جديد من دون قيدٍ في المخطط (without a schema entry).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
 - **الإخفاء بدل الفحص (Hiding instead of checking).** عبارة «التطبيق لا يعرضه» ("The app doesn't show it") ليست ضابطًا (not a control). افرض القاعدة على الخادم، في كل طلب (Enforce on the server, on every request).
@@ -207,7 +207,7 @@ Two-user test:   tests/authz/cards_limits.spec.ts (passing)
 **1. خلال اختبارٍ مصرَّح به (During an authorised test)، تسجّل مريم الدخول بوصفها عميلة الاختبار A ‏(test customer A) وترسل `PATCH /v2/cards/{cardId}/limits` مع معرّف بطاقة عميل الاختبار B ‏(test customer B's card ID). فتغيّر الواجهة حدّ B. أيّ خطرٍ هذا، وما الإصلاح (Which risk is this, and what is the fix)؟**
 
 - A. API2 خلل المصادقة (Broken Authentication)؛ أجبِر A على تسجيل الدخول مجددًا (make A log in again) قبل أي تغيير
-- B. API1 BOLA؛ افحص على الخادم، في كل طلب، أن البطاقة تعود إلى العميل المصادَق عليه (the card belongs to the authenticated customer)
+- B. API1 BOLA؛ افحص على الخادم (on the server)، في كل طلب (on every request)، أن البطاقة تعود إلى العميل المصادَق عليه (the card belongs to the authenticated customer)
 - C. API8 سوء الإعداد الأمني (Security Misconfiguration)؛ أخفِ معرّفات البطاقات عن شاشات التطبيق (hide card IDs from the app's screens)
 - D. API4 الاستهلاك غير المقيَّد للموارد (Unrestricted Resource Consumption)؛ طبّق حدًّا للمعدّل على نقطة النهاية (rate-limit the endpoint)
 
@@ -219,10 +219,10 @@ Two-user test:   tests/authz/cards_limits.spec.ts (passing)
 
 **2. تعيد `GET /v2/customers/me` الحقل الداخلي (internal) `riskScore`، وتقبل `PATCH /v2/customers/me` حقل `kycStatus`. ما أفضل إصلاح (What is the best fix)؟**
 
-- A. الطلب من فريق تطبيقات الهاتف (mobile team) ألّا يعرض `riskScore`
+- A. الطلب من فريق تطبيقات الهاتف (Ask the mobile team) ألّا يعرض (not to display) `riskScore`
 - B. تشفير جسم الاستجابة (Encrypt the response body)
 - C. تعريف مخططات طلبٍ واستجابةٍ مدرجة في قائمة سماح (allowlisted request and response schemas): رفض الحقول غير المعروفة في المدخلات (reject unknown fields on input) وعدم إعادة سوى الحقول العامة (return only public fields)
-- D. نقل نقطة النهاية إلى `/v3/`
+- D. نقل نقطة النهاية (Move the endpoint) إلى `/v3/`
 
 <details><summary>الإجابة</summary>
 
@@ -233,8 +233,8 @@ Two-user test:   tests/authz/cards_limits.spec.ts (passing)
 **3. لإغلاق ملاحظات BOLA ‏(To close BOLA findings)، يقترح مطوّرٌ استبدال أرقام الحسابات المتسلسلة في عناوين URL ‏(sequential account numbers in URLs) بمعرّفات UUID. ماذا ينبغي أن تقول نورة (What should Noura say)؟**
 
 - A. جيد: المعرّفات العشوائية تجعل BOLA مستحيلًا (random IDs make BOLA impossible)
-- B. يستحق التنفيذ بوصفه دفاعًا متعدد الطبقات (defence in depth)، لكن المعرّفات تتسرّب عبر السجلات والروابط والاستجابات الأخرى (leak through logs, links and other responses)، لذا يظل فحص الملكية من جهة الخادم مطلوبًا (the server-side ownership check is still required)
-- C. لا جدوى منه: معرّفات UUID لا تضيف أي أمانٍ على الإطلاق (add no security at all)
+- B. يستحق التنفيذ (Worth doing) بوصفه دفاعًا متعدد الطبقات (defence in depth)، لكن المعرّفات تتسرّب عبر السجلات والروابط والاستجابات الأخرى (leak through logs, links and other responses)، لذا يظل فحص الملكية من جهة الخادم مطلوبًا (the server-side ownership check is still required)
+- C. لا جدوى منه (Pointless): معرّفات UUID لا تضيف أي أمانٍ على الإطلاق (add no security at all)
 - D. استخدام UUID والتخلي عن فحص الملكية (drop the ownership check) لتحسين الأداء (to improve performance)
 
 <details><summary>الإجابة</summary>
@@ -243,11 +243,11 @@ Two-user test:   tests/authz/cards_limits.spec.ts (passing)
 
 </details>
 
-**4. لم يعد التطبيق الحالي يستخدم واجهة `/v1/` التي أصدرها بنك نجم عام 2019 ‏(Najm's 2019 API)، لكنها لا تزال تجيب على البوابة العامة (still answers on the public gateway)، من دون فحوص الوصول الأحدث (without the newer access checks). أيّ خطرٍ هذا، وما الاستجابة الصحيحة (what is the right response)؟**
+**4. لم يعد التطبيق الحالي (the current app) يستخدم واجهة `/v1/` التي أصدرها بنك نجم عام 2019 ‏(Najm's 2019 API)، لكنها لا تزال تجيب على البوابة العامة (still answers on the public gateway)، من دون فحوص الوصول الأحدث (without the newer access checks). أيّ خطرٍ هذا، وما الاستجابة الصحيحة (what is the right response)؟**
 
-- A. API9 سوء إدارة الجرد (Improper Inventory Management): سجّلها بمالكٍ وتاريخ تقاعد (record it with an owner and a retirement date)، واحظرها في البوابة (block it at the gateway)، وقارن بانتظام المسارات المخدومة بالموثّقة (regularly compare served routes with documented ones)
+- A. API9 سوء إدارة الجرد (Improper Inventory Management): سجّلها بمالكٍ وتاريخ إيقاف (record it with an owner and a retirement date)، واحظرها في البوابة (block it at the gateway)، وقارن بانتظام المسارات المخدومة بالموثّقة (regularly compare served routes with documented ones)
 - B. API10 الاستهلاك غير الآمن لواجهات البرمجة (Unsafe Consumption of APIs): تحقّق من استجاباتها (validate its responses)
-- C. ليست خطرًا، لأنه لا يوجد عميلٌ حالي يستدعيها (no current client calls it)
+- C. ليست خطرًا (Not a risk)، لأنه لا يوجد عميلٌ حالي يستدعيها (no current client calls it)
 - D. API7 SSRF: أضف قائمة سماحٍ لعناوين URL ‏(URL allowlist)
 
 <details><summary>الإجابة</summary>
@@ -261,7 +261,7 @@ Two-user test:   tests/authz/cards_limits.spec.ts (passing)
 - A. الكلفة (Cost)؛ خزّن الاستجابات مؤقتًا بدلًا من ذلك (cache responses instead)
 - B. زمن الاستجابة (Latency)؛ دع الوكيل يستعلم قاعدة البيانات مباشرةً (let the agent query the database directly)
 - C. نائبٌ مرتبك (A confused deputy): قد يقرأ وكيلٌ متلاعَبٌ به (a manipulated agent) بياناتِ عملاء آخرين (other customers' data)؛ وينبغي أن يستخدم الوكيل رمز العميل المفوَّض ضيّق النطاق (the customer's delegated, narrowly scoped token) لكي تنطبق فحوص الكائنات في الواجهة (the API's object checks apply)
-- D. لا خطر، لأن الوكيل داخلي ومن ثمّ موثوق (internal and therefore trusted)
+- D. لا خطر (None)، لأن الوكيل داخلي ومن ثمّ موثوق (internal and therefore trusted)
 
 <details><summary>الإجابة</summary>
 
@@ -401,7 +401,7 @@ flowchart LR
 ## 🧰 الأدوات (The toolkit)
 | الضابط أو المعيار أو الأداة (Control, standard or tool) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |
 |---|---|---|
-| **Rate limiting** — تحديد المعدّل، بدلو الرموز (token bucket) أو النافذة المنزلقة (sliding window) | يضع سقفًا للإجراءات لكل مفتاحٍ في كل نافذةٍ زمنية (Caps actions per key per time window)، ويجيب بالرمز 429 مع `Retry-After` | كل نقطة نهاية عامة (Every public endpoint)؛ مربوطًا بالعميل والجهاز والهدف (keyed on customer, device and target)، لا بعنوان IP وحده (not only IP) |
+| **Rate limiting** — تحديد المعدّل، بدلو الرموز (token bucket) أو النافذة المنزلقة (sliding window) | يضع سقفًا للإجراءات لكل مفتاحٍ في كل نافذةٍ زمنية (Caps actions per key per time window)، ويجيب بالرمز 429 ‏(answers 429) مع `Retry-After` | كل نقطة نهاية عامة (Every public endpoint)؛ مربوطًا بالعميل والجهاز والهدف (keyed on customer, device and target)، لا بعنوان IP وحده (not only IP) |
 | **Idempotency keys** — مفاتيح منع التكرار | مفتاحٌ يولّده العميل لكل إجراء (A client-generated key per action)؛ ويعيد الخادم النتيجة المخزّنة عند التكرار (the server returns the stored result on repeats) | المدفوعات والتحويلات (Payments, transfers) وأي إجراء إنشاءٍ قد تكرّره إعادة المحاولة (any create action a retry could duplicate) |
 | **Atomic conditional updates** — التحديثات الشرطية الذرّية | الفحص والتغيير في عبارةٍ واحدة أو معاملةٍ مقفلة (Check and change in one statement or locked transaction)؛ وتفرض القيودُ الثوابتَ (constraints enforce invariants) | الأرصدة والقسائم والحدود (Balances, vouchers, limits): أي شيءٍ قد يُنفَق مرتين بسبب حالة تسابق (anything a race could double-spend) |
 | **Step-up authentication** — المصادقة المعزَّزة | طلب إثباتٍ أقوى (Asking for a stronger proof)، مثل توقيعٍ مرتبطٍ بالجهاز أو مفتاح مرور (a device-bound signature or passkey)، حين ترتفع المخاطر (when risk rises) | المستفيدون الجدد (New payees)، وزيادات الحدود (limit increases)، والمبالغ أو الأجهزة غير المعتادة (unusual amounts or devices) |
@@ -427,7 +427,7 @@ flowchart LR
 ## 🛠️ التمارين (Exercises)
 لا يُجرى العمل التطبيقي (Hands-on work) إلا على شيفرةٍ كتبتها بنفسك (code you wrote)، أو مختبرٍ محلي (a local lab)، أو تطبيقات تدريبٍ ضعيفة عمدًا (deliberately vulnerable training apps) مثل OWASP Juice Shop على جهازك الخاص (on your own machine). ولا تُخضع أبدًا نظامًا لا تملكه لاختبار حِملٍ أو سبر (Never load-test or probe a system you do not own).
 
-- 🟢 في تطبيقٍ تملكه، أو في Juice Shop، اذكر ثلاثة تدفقات أعمالٍ حساسة (three sensitive business flows)، لكلٍّ منها حالة إساءة استخدامٍ واحدة (one abuse case) مثل «بصفتي مهاجمًا، أريد…» ("As an attacker, I want…")، وحدّ حدث الأعمال (the business-event limit) الذي يمنعها من التوسّع (would stop it scaling). *يكتمل عندما (Done when):* يكون لكل تدفقٍ حالة إساءة استخدام (an abuse case)، وحدٌّ مربوط بشيءٍ غير عنوان IP ‏(a limit keyed on something other than IP address)، واستجابةٌ مسمّاة عند بلوغ الحدّ (a named response at the limit).
+- 🟢 في تطبيقٍ تملكه، أو في Juice Shop، اذكر ثلاثة تدفقات أعمالٍ حساسة (three sensitive business flows)، لكلٍّ منها حالة إساءة استخدامٍ واحدة (one abuse case) مثل «بصفتي مهاجمًا، أريد…» ⁦("As an attacker, I want…")⁩، وحدّ حدث الأعمال (the business-event limit) الذي يمنعها من التوسّع (would stop it scaling). *يكتمل عندما (Done when):* يكون لكل تدفقٍ حالة إساءة استخدام (an abuse case)، وحدٌّ مربوط بشيءٍ غير عنوان IP ‏(a limit keyed on something other than IP address)، واستجابةٌ مسمّاة عند بلوغ الحدّ (a named response at the limit).
 - 🟡 اكتب واجهة برمجةٍ محلية صغيرة (a small local API) فيها نقطة نهاية للتحويل (a transfer endpoint) تستخدم نمط «افحص ثم نفّذ» الضعيف (the vulnerable check-then-act pattern). ومن نصٍّ برمجي محلي (From a local script)، أرسل 20 تحويلًا متزامنًا (20 concurrent transfers) ولاحظ السحب على المكشوف (observe the overdraft). ثم طبّق تحديثًا شرطيًا ذريًا (an atomic conditional update) ومفتاح منع تكرار (an idempotency key). *يكتمل عندما (Done when):* يُحدث الاختبار المتزامن سحبًا على المكشوف في النسخة الضعيفة (the concurrent test overdraws the vulnerable version) ولا يُحدثه أبدًا في النسخة المُصلَحة عبر عشرة تشغيلات (never overdraws the fixed version across ten runs).
 - 🔴 اكتب نموذج تهديدات إساءة الاستخدام (the abuse threat model) لبرنامج إحالة (a referral programme)، في بنك نجم أو في منتجك الخاص: أهداف المهاجم وتكاليفه (attacker goals and costs)، وأرخص مسار هجوم (the cheapest attack path)، والضوابط المتعددة الطبقات (layered controls)، ومقاييس النجاح (success metrics)، ومفتاح الإيقاف (the kill switch). *يكتمل عندما (Done when):* تستطيع تحديد الكلفة التقديرية للمهاجم لكل مكافأةٍ ناجحة (the attacker's estimated cost per successful bonus) قبل ضوابطك وبعدها، ويقبل مالكُ منتجٍ أو مالكُ ملف الاحتيال (a product or fraud owner) الاحتكاكَ الإضافي (accepts the added friction).
 
@@ -447,12 +447,12 @@ flowchart LR
 
 ## ✍️ اختبر نفسك (Check yourself)
 
-**1. تعرض ميزة «الدفع برقم الهاتف» ("Pay by mobile number") الاسمَ الكامل للمستلم (the recipient's full name) إذا كان الرقم يعود إلى عميلٍ في بنك نجم. أيّ مزيجٍ يقلّل خطر تعداد العملاء (customer enumeration) على أفضل وجه؟**
+**1. تعرض ميزة «الدفع برقم الهاتف» ("Pay by mobile number") الاسمَ الكامل للمستلم (the recipient's full name) إذا كان الرقم يعود إلى عميلٍ في بنك نجم. أيّ مزيجٍ يقلّل على أفضل وجه (Which combination best reduces) خطرَ تعداد العملاء (the risk of customer enumeration)؟**
 
 - A. اختبار CAPTCHA على شاشة البحث (on the lookup screen)
 - B. حظر عناوين IP التي تُجري أكثر من 100 عملية بحثٍ في الساعة (more than 100 lookups per hour)
 - C. حصر البحث في العملاء المسجّلين دخولهم على أجهزةٍ مربوطة (logged-in customers on bound devices)، واسمٌ مُقنَّع (a masked name)، وحدودٌ لكل عميلٍ على مجموع الأرقام والأرقام المختلفة (per-customer limits on total and distinct numbers)، وتنبيهاتٌ لمركز العمليات الأمنية على الحسابات التي تُكثر البحث وتُقلّ الدفع (SOC alerts on accounts with many lookups and few payments)
-- D. نقل البحث إلى نقطة نهاية جديدة غير موثّقة (a new, undocumented endpoint)
+- D. نقل البحث (Moving the lookup) إلى نقطة نهاية جديدة غير موثّقة (a new, undocumented endpoint)
 
 <details><summary>الإجابة</summary>
 
@@ -473,7 +473,7 @@ flowchart LR
 
 </details>
 
-**3. تسمح نقطة نهاية تسجيل الدخول في بنك نجم بـ 10 إخفاقاتٍ في الدقيقة لكل عنوان IP ‏(10 failures per minute per IP address). ويوزّع المهاجمون عملية حشو بيانات اعتماد (a credential-stuffing run) على عشرات الآلاف من العناوين السكنية (tens of thousands of residential addresses). أيّ تغييرٍ يساعد أكثر من غيره (What change helps most)؟**
+**3. تسمح نقطة نهاية تسجيل الدخول في بنك نجم (Najm's login endpoint) بـ 10 إخفاقاتٍ في الدقيقة لكل عنوان IP ‏(10 failures per minute per IP address). ويوزّع المهاجمون عملية حشو بيانات اعتماد (a credential-stuffing run) على عشرات الآلاف من العناوين السكنية (tens of thousands of residential addresses). أيّ تغييرٍ يساعد أكثر من غيره (What change helps most)؟**
 
 - A. خفض الحدّ إلى 5 إخفاقاتٍ في الدقيقة لكل عنوان IP ‏(Lower the limit)
 - B. إعادة أخطاءٍ مختلفة لحالتي «مستخدم غير معروف» و«كلمة مرور خاطئة» ("unknown user" and "wrong password") كي يفهم العملاء (so customers understand)
@@ -625,7 +625,7 @@ const signature = await deviceKey.sign(challenge);   // key usable only after a 
 await api.post("/v2/device/verify", { challenge, signature });
 ```
 
-**ربط الجهاز وتوقيع المعاملات (Device binding and transaction signing).** عند التسجيل (At enrolment)، وبعد تسجيل دخولٍ قوي (after a strong login)، يولّد التطبيق زوج مفاتيح في العتاد الآمن (generates a key pair in secure hardware)، ويسجّل الخادم المفتاح العام مقابل العميل والجهاز (records the public key against the customer and device). ولتحويلٍ عالي القيمة (For a high-value transfer)، يرسل الخادم تحدّيًا يتضمن تفاصيل التحويل (a challenge containing the transfer details)؛ فيوافق العميل بالقياسات الحيوية (approves with biometrics)؛ ويوقّع التطبيق (the app signs)؛ ويتحقق الخادم (the server verifies). وهذا يستبدل برموز الرسائل النصية (SMS codes)، المعرّضة لتبديل شريحة SIM والاعتراض (exposed to SIM swap and interception) (3.1)، إثباتًا لا يستطيع إنتاجه إلا الجهاز المسجَّل (proof only the enrolled device could produce).
+**ربط الجهاز وتوقيع المعاملات (Device binding and transaction signing).** عند التسجيل (At enrolment)، وبعد تسجيل دخولٍ قوي (after a strong login)، يولّد التطبيق زوج مفاتيح في العتاد الآمن (generates a key pair in secure hardware)، ويسجّل الخادم المفتاح العام مقابل العميل والجهاز (records the public key against the customer and device). ولتحويلٍ عالي القيمة (For a high-value transfer)، يرسل الخادم تحدّيًا يتضمن تفاصيل التحويل (a challenge containing the transfer details)؛ فيوافق العميل بالقياسات الحيوية (approves with biometrics)؛ ويوقّع التطبيق (the app signs)؛ ويتحقق الخادم (the server verifies). وبهذا يحلّ محلَّ رموز الرسائل النصية (This replaces SMS codes)، المعرّضة لتبديل شريحة SIM والاعتراض (exposed to SIM swap and interception) (3.1)، إثباتٌ لا يستطيع إنتاجه إلا الجهاز المسجَّل (proof only the enrolled device could produce).
 
 ```mermaid
 flowchart TD
@@ -644,7 +644,7 @@ flowchart TD
 
 ### 🔴 نظرة الخبير (Expert view)
 
-**الإثبات: ماذا يثبت (Attestation: what it proves).** تتيح **App Attest** من Apple، وهي جزءٌ من إطار DeviceCheck ‏(part of the DeviceCheck framework)، و**Play Integrity API** من Google، التي حلّت محلّ واجهة SafetyNet Attestation API الأقدم (which replaced the older SafetyNet Attestation API)، لمورّد المنصة أن يشهد (let the platform vendor vouch)، في بيانٍ موقَّع يستطيع خادمك التحقق منه (in a signed statement your server can verify)، بأن الطلب يأتي من تطبيقك الأصلي (your genuine app) على جهازٍ يجتاز فحوص السلامة لدى المورّد (a device that passes the vendor's integrity checks). يُصدر الخادم **قيمةً عابرة (nonce)** جديدة، أي قيمةً عشوائية لمرةٍ واحدة (a one-time random value)، ويحصل التطبيق على حكمٍ موقَّع مرتبطٍ بها (a signed verdict bound to it)، ثم يتحقق **الخادم (server)** منه ويقرر (verifies it and decides). أما الحدود (Limits): فقد لا تتوفر الأحكام (verdicts can be unavailable)، كما في الأجهزة الأقدم أو هواتف Android التي لا تحتوي على خدمات Google Play ‏(without Google Play services)، ويعمل المهاجمون المصمِّمون على هزيمتها (determined attackers work to defeat them)، وهناك حصصٌ ومسائل خصوصية (quotas and privacy questions). فعامل النتيجة إشارةَ مخاطر (a risk signal) إلى جانب درجة التنبيهات الذكية (next to the Smart Alerts score): ميزاتٌ أقل أو مصادقةٌ معزَّزة للأجهزة التي تفشل (fewer features or step-up for failing devices)، لا ثقةٌ صامتة ولا حظرٌ فظّ (not silent trust or a blunt block).
+**الإثبات: ماذا يثبت (Attestation: what it proves).** تتيح **App Attest** من Apple، وهي جزءٌ من إطار DeviceCheck ‏(part of the DeviceCheck framework)، و**Play Integrity API** من Google، التي حلّت محلّ واجهة SafetyNet Attestation API الأقدم (which replaced the older SafetyNet Attestation API)، لمورّد المنصة أن يشهد (let the platform vendor vouch)، في بيانٍ موقَّع يستطيع خادمك التحقق منه (in a signed statement your server can verify)، بأن الطلب يأتي من تطبيقك الأصلي (your genuine app) على جهازٍ يجتاز فحوص السلامة لدى المورّد (a device that passes the vendor's integrity checks). يُصدر الخادم **قيمةً عابرة (nonce)** جديدة، أي قيمةً عشوائية لمرةٍ واحدة (a one-time random value)، ويحصل التطبيق على حكمٍ موقَّع مرتبطٍ بها (a signed verdict bound to it)، ثم يتحقق **الخادم (server)** منه ويقرر (verifies it and decides). أما الحدود (Limits): فقد لا تتوفر الأحكام (verdicts can be unavailable)، كما في الأجهزة الأقدم أو هواتف Android التي لا تحتوي على خدمات Google Play ‏(without Google Play services)، ويسعى المهاجمون العازمون إلى هزيمتها (determined attackers work to defeat them)، وهناك حصصٌ ومسائل خصوصية (quotas and privacy questions). فعامل النتيجة إشارةَ مخاطر (a risk signal) إلى جانب درجة التنبيهات الذكية (next to the Smart Alerts score): ميزاتٌ أقل أو مصادقةٌ معزَّزة للأجهزة التي تفشل (fewer features or step-up for failing devices)، لا ثقةٌ صامتة ولا حظرٌ فظّ (not silent trust or a blunt block).
 
 **ضوابط الصمود ترفع الكلفة، لا أكثر (Resilience controls raise cost, nothing more).** التعمية (Obfuscation)، وكشف صلاحيات الجذر وكسر الحماية (root and jailbreak detection)، ومكافحة التصحيح (anti-debugging)، وفحوص العبث (tamper checks)، ومنتجات **RASP** التجارية، أي الحماية الذاتية للتطبيق أثناء التشغيل (runtime application self-protection)، كلها تُبطئ المهندس العكسي (slow a reverse engineer down). ويُبقيها MASVS في فئة صمودٍ منفصلة (a separate resilience category) فوق الضوابط الأساسية (on top of the core controls). وإذا كانت إزالتها ستكشف ثغرة (If removing them would expose a vulnerability)، فالثغرة هي المشكلة (the vulnerability is the problem).
 
@@ -716,7 +716,7 @@ flowchart TD
 
 ## ✍️ اختبر نفسك (Check yourself)
 
-**1. يجد علي أن تطبيق نجم للهاتف يفحص حدّ التحويل اليومي في التطبيق (checks the daily transfer limit in the app) ولا يستدعي الواجهة أبدًا حين يكون المبلغ مرتفعًا جدًا (never calls the API when the amount is too high). ويرسل نصٌّ برمجي إلى بيئة ما قبل الإنتاج (A script against staging) تحويلًا أكبر، فينجح. ما الإصلاح الصحيح (What is the right fix)؟**
+**1. يجد علي أن تطبيق نجم للهاتف يفحص حدّ التحويل اليومي في التطبيق (checks the daily transfer limit in the app) ولا يستدعي الواجهة أبدًا حين يكون المبلغ مرتفعًا جدًا (never calls the API when the amount is too high). ويرسل نصٌّ برمجي إلى بيئة ما قبل الإنتاج (A script against staging) تحويلًا أكبر (a larger transfer)، فينجح (it succeeds). ما الإصلاح الصحيح (What is the right fix)؟**
 
 - A. تعمية التطبيق (Obfuscate the app) ليصعب العثور على الفحص (so the check is harder to find)
 - B. إضافة كشف صلاحيات الجذر (Add root detection) حتى لا تعمل التطبيقات المعدَّلة (so modified apps cannot run)
@@ -731,7 +731,7 @@ flowchart TD
 
 **2. يضع مطوّرٌ مفتاح مزوّد النموذج اللغوي الكبير (the LLM provider key) في متغير بيئة (environment variable) من نوع `EXPO_PUBLIC_` «حتى لا يكون في الشيفرة» ("so it isn't in the code"). ماذا ينبغي أن يحدث (What should happen)؟**
 
-- A. لا شيء؛ فمتغيرات البيئة سرّية (environment variables are secret)
+- A. لا شيء (Nothing)؛ فمتغيرات البيئة سرّية (environment variables are secret)
 - B. تشفير المفتاح داخل التطبيق (Encrypt the key inside the app)، مع تخزين مفتاح فكّ التشفير في التطبيق أيضًا (with the decryption key also stored in the app)
 - C. معاملة المفتاح بوصفه مكشوفًا إن كان قد شُحن (Treat the key as exposed if it shipped): دوّره (rotate it)، ومرّر الاستدعاءات عبر واجهة بنك نجم (route calls through Najm's API)، التي تحتفظ بالمفتاح وتطبّق حدودًا لكل عميل (holds the key and applies per-customer limits)
 - D. تقسيم المفتاح إلى عدة سلاسل نصية في الشيفرة (Split the key into several strings in the code)
@@ -770,7 +770,7 @@ flowchart TD
 
 **5. حين يسجّل عميلٌ هاتفًا جديدًا (When a customer enrols a new phone)، يقول حكم Play Integrity الذي تحقق منه الخادم (the server-verified Play Integrity verdict) إن الجهاز يفشل في فحوص السلامة (fails integrity checks). ماذا ينبغي أن يفعل خادم بنك نجم (What should Najm's server do)؟**
 
-- A. تجاهله، لأن الإثبات غير موثوق (attestation is unreliable)
+- A. تجاهله (Ignore it)، لأن الإثبات غير موثوق (attestation is unreliable)
 - B. ترك التطبيق يقرر بنفسه (Let the app decide for itself)
 - C. معاملته إشارةَ مخاطر (Treat it as a risk signal): السماح بالميزات منخفضة المخاطر (allow low-risk features)، واشتراط المصادقة المعزَّزة أو فحوصٍ إضافية للإجراءات عالية المخاطر (require step-up or extra checks for high-risk actions)، وتسجيله مع إشارات الاحتيال الأخرى (log it with the other fraud signals)
 - D. حظر العميل نهائيًا (Block the customer permanently)

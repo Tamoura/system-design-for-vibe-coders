@@ -30,7 +30,7 @@
 
 **العوامل (Factors).** أدلة المصادقة (authentication evidence) إمّا شيءٌ **تعرفه (know)**، ككلمة مرور (password) أو رمز PIN، أو شيءٌ **تملكه (have)**، كهاتف (phone) أو مفتاح أمان (security key) أو مفتاحٍ في العتاد الآمن للجهاز (a key in a device's secure hardware)، أو شيءٌ **هو أنت (are)**، كبصمة الإصبع (fingerprint) أو الوجه (face). تحتاج **المصادقة متعددة العوامل (MFA)** إلى نوعين *مختلفين (different)* على الأقل؛ فكلمتا مرور ليستا مصادقةً متعددة العوامل (two passwords are not MFA). وعلى الهواتف، لا تفعل بصمة الإصبع عادةً أكثر من فتح مفتاحٍ على الجهاز (unlocks a key on the device)، فيرى البنك توقيعًا (signature) ولا يرى البيانات الحيوية (biometric) أبدًا.
 
-**قواعد كلمات المرور الحديثة (Modern password rules).** وثيقة NIST SP 800-63B، وهي جزءٌ من إرشادات الهوية الرقمية الأمريكية (US Digital Identity Guidelines) في مراجعتها الرابعة (Revision 4) التي اكتملت عام 2025، هي المرجع الأكثر استشهادًا (most cited reference). وتطلب، وقت الكتابة (at the time of writing) عام 2026: الطول لا التعقيد (length over complexity)، أي 15 حرفًا على الأقل حين تكون كلمة المرور العامل الوحيد (only factor)، و8 حين تكون جزءًا من المصادقة متعددة العوامل (part of MFA)، مع السماح بـ 64 حرفًا على الأقل؛ ولا قواعد تركيب (no composition rules)، فهي تنتج كلماتٍ مثل `Password1!`؛ ولا تغييرات دورية قسرية (forced periodic changes) دون دليلٍ على الاختراق (evidence of compromise)؛ وقائمة حظر (blocklist) لكلمات المرور الشائعة والمسرّبة (common and breached passwords)؛ ولا تلميحات (hints) ولا أسئلة أمان (security questions)؛ والسماح باللصق (paste allowed) كي تعمل برامج إدارة كلمات المرور (password managers). تحقّق من النص الحالي (check the current text) قبل كتابة السياسة (writing policy).
+**قواعد كلمات المرور الحديثة (Modern password rules).** وثيقة NIST SP 800-63B، وهي جزءٌ من إرشادات الهوية الرقمية الأمريكية (US Digital Identity Guidelines) في مراجعتها الرابعة (Revision 4) التي اكتملت عام 2025، هي المرجع الأكثر استشهادًا (most cited reference). وتطلب، وقت الكتابة (at the time of writing) عام 2026: الطول لا التعقيد (length over complexity)، أي 15 حرفًا على الأقل حين تكون كلمة المرور العامل الوحيد (only factor)، و8 حين تكون جزءًا من المصادقة متعددة العوامل (part of MFA)، مع السماح بطولٍ أقصى لا يقل عن 64 حرفًا (at least 64 allowed)؛ ولا قواعد تركيب (no composition rules)، فهي تنتج كلماتٍ مثل `Password1!`؛ ولا تغييرات دورية قسرية (forced periodic changes) دون دليلٍ على الاختراق (evidence of compromise)؛ وقائمة حظر (blocklist) لكلمات المرور الشائعة والمسرّبة (common and breached passwords)؛ ولا تلميحات (hints) ولا أسئلة أمان (security questions)؛ والسماح باللصق (paste allowed) كي تعمل برامج إدارة كلمات المرور (password managers). تحقّق من النص الحالي (check the current text) قبل كتابة السياسة (writing policy).
 
 **تخزين كلمات المرور (Storing passwords).** لا تستخدم أبدًا النص الصريح (plain text) أو التشفير القابل للعكس (reversible encryption) أو دالة تجزئةٍ سريعة (fast hash) مثل MD5 أو SHA-1 أو SHA-256، إذ تسمح لجدولٍ مسروق (stolen table) بأن يواجه عددًا هائلًا من التخمينات في الثانية (enormous number of guesses per second) على بطاقات رسومياتٍ عادية (ordinary graphics cards). استخدم **Argon2id** (RFC 9106) أو **scrypt** أو **bcrypt** (أو PBKDF2 حيث تكون الخوارزميات المعتمدة وفق FIPS (FIPS-validated algorithms) إلزامية). فهي تضيف **ملحًا (salt)** فريدًا (unique) إلى كل كلمة مرور، وهي بطيئةٌ عمدًا (deliberately slow)؛ كما أن Argon2id وscrypt **مُكلفتان للذاكرة (memory-hard)** (5.1).
 
@@ -85,9 +85,9 @@ app.post("/login", async (req, res, next) => {
 
 **الدفاع ضد حشو بيانات الاعتماد (Defending against credential stuffing).** يتغلّب الحشو (stuffing) على القفل لكل حساب (per-account lockout)، إذ لا تتجاوز المحاولات اثنتين لكل حساب، وعلى قواعد القوة (strength rules)، إذ إن كلمات المرور صحيحة. رتّب الدفاعات في طبقات (layer the defences): **المصادقة متعددة العوامل (MFA)**، ويُفضَّل أن تكون مقاومةً للتصيّد الاحتيالي (phishing-resistant)؛ و**فحص كلمات المرور المسرّبة (breached-password checks)** عند التسجيل (sign-up) والتغيير (change) وتسجيل الدخول (login)، وتستخدم خدمة Pwned Passwords **إخفاء الهوية من النوع k (k-anonymity)**: لا ترسل سوى الأحرف الخمسة الأولى من تجزئة SHA-1 لكلمة المرور (first five characters of the password's SHA-1 hash) وتطابق القائمة المُعادة محليًّا (match the returned list locally)؛ و**المراقبة على مستوى الموقع كله (site-wide monitoring)** لنِسَب الإخفاق (failure ratios) وعمليات تسجيل الدخول من أجهزةٍ جديدة (new-device sign-ins) (10.1)؛ و**حدود المعدّل (rate limits)** المرتبطة بعنوان IP والجهاز والحساب (keyed on IP, device and account)، مع **تأخيراتٍ متصاعدة (progressive delays)** بدلًا من القفل الصارم (hard lockout)، الذي يتيح للمهاجمين إقفال حسابات العملاء في وجوههم (lets attackers lock customers out) (4.2).
 
-**تعداد الحسابات (Account enumeration).** يجب ألّا يكشف تسجيل الدخول (login) والتسجيل (sign-up) وإعادة التعيين (reset) ما إذا كان الحساب موجودًا (whether an account exists). أعِد الرسالة نفسها (same message) ورمز الحالة نفسه (status code) وتوقيتًا متقاربًا تقريبًا (roughly the same timing)؛ ومن الأساليب (one technique) تجزئة قيمةٍ وهمية (hash a dummy value) حين يكون الحساب غير موجود. وفي إعادة التعيين، قل دائمًا «إذا كان الحساب موجودًا، فقد أرسلنا رابطًا» ("If an account exists, we have sent a link").
+**تعداد الحسابات (Account enumeration).** يجب ألّا يكشف تسجيل الدخول (login) والتسجيل (sign-up) وإعادة التعيين (reset) ما إذا كان الحساب موجودًا (whether an account exists). أعِد الرسالة نفسها (same message) ورمز الحالة نفسه (same status code) وتوقيتًا متقاربًا (roughly the same timing)؛ ومن الأساليب (one technique) تجزئة قيمةٍ وهمية (hash a dummy value) حين يكون الحساب غير موجود. وفي إعادة التعيين، قل دائمًا «إذا كان الحساب موجودًا، فقد أرسلنا رابطًا» ("If an account exists, we have sent a link").
 
-**إعادة تعيين كلمة المرور (Password reset).** إعادة التعيين تسجيلُ دخولٍ يتخطى كلمة المرور (a login that skips the password). استخدم رمزًا عشوائيًّا (random token) لا يقل عن 128 بتًا، يُستخدم مرةً واحدة (single-use)، وقصير العمر (short-lived)، ولا يُخزَّن إلا تجزئةً (stored only as a hash). ابنِ الرابط من عنوان URL أساسي مُعَدّ مسبقًا (configured base URL)، لا من ترويسة الطلب `Host` (request header) أبدًا. واصِل اشتراط المصادقة متعددة العوامل (still require MFA)، ولا تُدخِل المستخدم تلقائيًّا (do not log the user in automatically)، وأبطِل الجلسات القائمة (revoke existing sessions)، وأشعِر العميل (notify the customer).
+**إعادة تعيين كلمة المرور (Password reset).** إعادة التعيين تسجيلُ دخولٍ يتخطى كلمة المرور (a login that skips the password). استخدم رمزًا عشوائيًّا (random token) لا يقل عن 128 بتًا، يُستخدم مرةً واحدة (single-use)، وقصير العمر (short-lived)، ولا يُخزَّن إلا تجزئةً (stored only as a hash). ابنِ الرابط من عنوان URL أساسي مُعَدّ مسبقًا (configured base URL)، لا من ترويسة `Host` في الطلب (request's Host header) أبدًا. واصِل اشتراط المصادقة متعددة العوامل (still require MFA)، ولا تُدخِل المستخدم تلقائيًّا (do not log the user in automatically)، وأبطِل الجلسات القائمة (revoke existing sessions)، وأشعِر العميل (notify the customer).
 
 **بيانات الاتصال والأجهزة هي المفاتيح الحقيقية (Contact details and devices are the real keys).** تغيير رقم الهاتف (changing the phone number) أو تسجيل جهازٍ جديد (registering a new device) يتحكم في كل رمزٍ وتنبيهٍ لاحق (every later code and alert). و**تبديل شريحة SIM (SIM swap)**، أي إقناع مشغّل الهاتف المحمول (mobile operator) بنقل رقمٍ إلى شريحة المهاجم (attacker's SIM)، يقلب رموز SMS ضد العميل (turns SMS codes against the customer). عامِل هذه التغييرات على أنها عالية الخطورة (high-risk): مصادقةٌ تصعيدية (step-up) بعاملٍ قويٍّ قائم (existing strong factor)، وإشعار القناة *القديمة* (notify the *old* channel)، وتعليق تغييرات المستفيدين والحدود (hold payee and limit changes) لفترة تهدئة (cooling-off period).
 
@@ -183,7 +183,7 @@ flowchart TD
 
 - A. عاملٌ ثانٍ مطلوب على الأجهزة الجديدة (second factor required on new devices)
 - B. قفل الحساب بعد خمس محاولاتٍ فاشلة (locking an account after five failed attempts)
-- C. تنبيهٌ على نسبة تسجيلات الدخول الفاشلة إلى الناجحة على مستوى الموقع (site-wide ratio of failed to successful logins)
+- C. تنبيهٌ (alert) على نسبة تسجيلات الدخول الفاشلة إلى الناجحة على مستوى الموقع (site-wide ratio of failed to successful logins)
 - D. فحص كلمات المرور مقابل قوائم كلمات المرور المسرّبة (breached-password lists)
 
 <details><summary>الإجابة</summary>
@@ -218,12 +218,12 @@ flowchart TD
 
 </details>
 
-**4. في أثناء اختبارٍ مصرَّحٍ به (authorised test)، تلاحظ مريم أن قيمة ملف تعريف ارتباط الجلسة (session cookie value) هي نفسها قبل تسجيل الدخول وبعده (same before and after login). ما المخاطر، وما الإصلاح؟**
+**4. في أثناء اختبارٍ مصرَّحٍ به (authorised test)، تلاحظ مريم أن قيمة ملف تعريف ارتباط الجلسة (session cookie value) هي نفسها قبل تسجيل الدخول وبعده (same before and after login). ما الخطر (risk)، وما الإصلاح (fix)؟**
 
 - A. تثبيت الجلسة (session fixation)؛ أصدِر معرّف جلسةٍ جديدًا (new session ID) عند تسجيل الدخول وعند كل تغييرٍ في الصلاحيات (every privilege change)
 - B. البرمجة النصية عبر المواقع (cross-site scripting, XSS)؛ أضِف سياسة أمان المحتوى (Content Security Policy)
 - C. حشو بيانات الاعتماد (credential stuffing)؛ أضِف اختبار CAPTCHA
-- D. لا مخاطر، ما دام ملف تعريف الارتباط `HttpOnly`
+- D. لا خطر (no risk)، ما دام ملف تعريف الارتباط (cookie) `HttpOnly`
 
 <details><summary>الإجابة</summary>
 
@@ -231,11 +231,11 @@ flowchart TD
 
 </details>
 
-**5. يريد فريق طارق أن يغيّر العملاء رقم هاتفهم المسجَّل (registered phone number) في تطبيق نجم للهاتف (Najm Mobile) بنقرةٍ واحدة (one tap)، لتقليل مكالمات مركز الاتصال (contact-centre calls). بماذا ينبغي أن يوصي فريق نورة؟**
+**5. يريد فريق طارق أن يغيّر العملاء رقم هاتفهم المسجَّل (registered phone number) في تطبيق نجم للهاتف (Najm Mobile) بنقرةٍ واحدة (one tap)، لتقليل مكالمات مركز الاتصال (contact-centre calls). بماذا ينبغي أن يوصي فريق نورة؟ ⁦(What should Noura's team recommend?)⁩**
 
-- A. السماح بذلك، لأن العميل مسجِّلٌ دخوله أصلًا (already signed in)
+- A. السماح بذلك (allow it)، لأن العميل مسجِّلٌ دخوله أصلًا (already signed in)
 - B. السماح بذلك مع مصادقةٍ تصعيدية بعاملٍ قويٍّ قائم (step-up using an existing strong factor)، وإشعارٍ إلى الرقم القديم (notification to the old number)، وتعليقٍ (hold) قبل أن يتمكن الرقم الجديد من تفويض المستفيدين أو تغييرات الحدود (authorise payees or limit changes)
-- C. إزالة تغيير الهاتف من التطبيق واشتراط زيارة الفرع على الجميع (require a branch visit for everyone)
+- C. إزالة تغيير الهاتف من التطبيق (remove phone changes from the app) واشتراط زيارة الفرع على الجميع (require a branch visit for everyone)
 - D. السماح بذلك، مع رمز SMS يُرسَل إلى الرقم الجديد (SMS code sent to the new number)
 
 <details><summary>الإجابة</summary>
@@ -271,7 +271,7 @@ flowchart TD
 ## 🧭 لماذا يهم (Why it matters)
 تصل إلى نورة ثلاثة طلباتٍ (three requests) في أسبوعٍ واحد.
 
-يريد عملاء الشركات (corporate customers) تسجيل الدخول إلى بوابة الشركات الصغيرة (SME Portal) بحسابات شركاتهم (company accounts)، لذا يجب أن **تتّحد (federate)** البوابة مع مزوّدي الهوية لديهم (identity providers). ويطابق النموذج الأولي (prototype) الذي أعدّه علي المستخدمين بحسابات البوابة (portal accounts) عبر مطالبة `email` في الرمز المميز (token's claim). فتوقفه نورة: عناوين البريد الإلكتروني تتغير (emails change)، وبعض المزوّدين لا يتحققون منها (do not verify them)، ومن يتحكم في مستأجرٍ (tenant) لدى مزوّدٍ متعدد المستأجرين (multi-tenant provider) قد يستطيع تعيين أحدها (may be able to set one). وقد أبلغ باحثون علنًا (researchers publicly reported) عن هذه الفئة من الثغرات (class of flaw) عام 2023.
+يريد عملاء الشركات (corporate customers) تسجيل الدخول إلى بوابة الشركات الصغيرة (SME Portal) بحسابات شركاتهم (company accounts)، لذا يجب أن **تتّحد (federate)** البوابة مع مزوّدي الهوية لديهم (identity providers). ويطابق النموذج الأولي (prototype) الذي أعدّه علي المستخدمين بحسابات البوابة (portal accounts) عبر مطالبة `email` في الرمز المميز (token's email claim). فتوقفه نورة: عناوين البريد الإلكتروني تتغير (emails change)، وبعض المزوّدين لا يتحققون منها (do not verify them)، ومن يتحكم في مستأجرٍ (tenant) لدى مزوّدٍ متعدد المستأجرين (multi-tenant provider) قد يستطيع تعيين أحدها (may be able to set one). وقد أبلغ باحثون علنًا (researchers publicly reported) عن هذه الفئة من الثغرات (class of flaw) عام 2023.
 
 ويريد فريق نجم أسيست (Najm Assist) أن يجمّد المساعد البطاقات (freeze cards) برمز خدمةٍ واحد (one service token) يحمل صلاحيات بطاقاتٍ كاملة (full card permissions) لكل عميل، على أن يختار النموذج أيّ بطاقة (the model choosing which card). هذه مشكلة **نائبٍ مرتبك (confused deputy)** تنتظر الوقوع (in waiting): مكوّنٌ ذو صلاحيات (privileged component) يُخدَع فيستخدم سلطته (using its authority) لصالح شخصٍ آخر.
 
@@ -343,7 +343,7 @@ sequenceDiagram
 }
 ```
 
-base64url ترميزٌ (encoding) لا تشفير (not encryption). رمز JWT الموقَّع يُثبت *من أصدره وأن أحدًا لم يغيّره (who issued it and that nobody changed it)*، لكن أي شخصٍ يحمله يستطيع قراءته، لذا أبقِ الأسرار (secrets) والبيانات الشخصية غير الضرورية (unnecessary personal data) خارجه.
+base64url ترميزٌ (encoding) لا تشفير (not encryption). رمز JWT الموقَّع يُثبت *من أصدره وأن أحدًا لم يغيّره (who issued it and that nobody changed it)*، لكن أي شخصٍ يحمله يستطيع قراءته (anyone holding it can read it)، لذا أبقِ الأسرار (secrets) والبيانات الشخصية غير الضرورية (unnecessary personal data) خارجه.
 
 ### 🟡 التعمق أكثر (Going deeper)
 
@@ -414,20 +414,20 @@ def verify_access_token(token: str) -> dict:
 | **PKCE** — وفق RFC 7636 | يربط رمز التفويض (authorization code) بسرٍّ لا يعرفه إلا التطبيق العميل الطالب (requesting client) | كل تدفقٍ لرمز التفويض (every authorization code flow) |
 | **OpenID Connect** — من مؤسسة OpenID (OpenID Foundation) | طبقة هويةٍ فوق OAuth (identity layer on OAuth): رموز الهوية (ID tokens)، والاكتشاف (discovery)، ونقطة UserInfo | تسجيل الدخول والدخول الموحّد (sign-in and single sign-on)، بما في ذلك اتحاد هويات العملاء (customer federation) |
 | **JWT Best Current Practices** — أفضل الممارسات الحالية لرموز JWT، وفق RFC 8725 | الاستخدام الآمن لرموز JWT (safe JWT use): قوائم سماحٍ للخوارزميات (algorithm allowlists)، وفحوص الجمهور والمُصدِر (audience and issuer checks) | أي شيفرةٍ تُصدر رموز JWT أو تتحقق منها (any code that issues or verifies JWTs) |
-| **Backend for frontend** — الواجهة الخلفية للواجهة الأمامية (BFF) | مكوّنٌ من جهة الخادم يحتفظ بالرموز المميزة (server-side component holds tokens)؛ ويحصل المتصفح على ملف تعريف ارتباط `HttpOnly` | تطبيقات المتصفح عالية القيمة (high-value browser apps) مثل بوابة الشركات الصغيرة (SME Portal) |
+| **Backend for frontend** — الواجهة الخلفية للواجهة الأمامية (BFF) | مكوّنٌ من جهة الخادم يحتفظ بالرموز المميزة (server-side component holds tokens)؛ ويحصل المتصفح على ملف تعريف ارتباط `HttpOnly` (the browser gets an HttpOnly cookie) | تطبيقات المتصفح عالية القيمة (high-value browser apps) مثل بوابة الشركات الصغيرة (SME Portal) |
 | **Sender-constrained tokens** — الرموز المقيَّدة بالمُرسِل (DPoP، mTLS) | رموزٌ مربوطةٌ بمفتاح التطبيق العميل (bound to a client key)، فلا يمكن إعادة تشغيل نسخةٍ مسروقة (a stolen copy cannot be replayed) | الخدمات المصرفية عبر الهاتف المحمول (mobile banking)، والخدمات المصرفية المفتوحة (open banking)، وواجهات البرمجة الأخرى عالية الخطورة (other high-risk APIs) |
 | **Token exchange** — تبادل الرموز المميزة، وفق RFC 8693 | يستبدل رمزًا برمزٍ أضيق لجمهورٍ واحد (narrower one for one audience)، مع تسجيل الفاعل (recording the actor) | الوكلاء (agents) والخدمات التي تعمل نيابةً عن مستخدم (services acting for a user) |
 | **FAPI 2.0** — من مؤسسة OpenID (OpenID Foundation) | ملفٌ عالي الأمان لـ OAuth وOIDC (high-security OAuth and OIDC profile) للخدمات المصرفية المفتوحة (open banking) | وصول الأطراف الثالثة إلى حسابات العملاء (third-party access to customer accounts) |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-تنشر نورة وطارق **معيار نجم للهوية والرموز المميزة، الإصدار 1 (Najm Identity and Token Standard v1)**. ويُراجَع كل تطبيقٍ عميل وكل واجهة برمجةٍ جديدين (every new client and API) وفقًا له.
+تنشر نورة وطارق **معيار نجم للهوية والرموز المميزة، الإصدار 1 (Najm Identity and Token Standard v1)**. ويُراجَع كل تطبيقٍ عميل وكل واجهة برمجةٍ جديدين (every new client and API) وفقًا له (reviewed against it).
 
 **الجزء أ: التدفقات المعتمدة حسب نوع التطبيق العميل (Part A: approved flows by client type)**
 
 | التطبيق العميل (Client) | التدفق (Flow) | التعامل مع الرموز المميزة (Token handling) |
 |---|---|---|
 | تطبيق نجم للهاتف (Najm Mobile)، وهو تطبيقٌ أصلي (native app) | تدفق الرمز مع PKCE عبر متصفح النظام (code flow with PKCE via the system browser) | رمز التحديث في Keychain أو Keystore، يُدوَّر (rotated)، ومربوطٌ عبر DPoP بمفتاح الجهاز (DPoP-bound to the device key) |
-| بوابة الشركات الصغيرة (SME Portal)، ويب مع BFF (web, BFF) | تدفق الرمز مع PKCE إضافةً إلى `private_key_jwt` | تبقى الرموز المميزة على الخادم (tokens stay on the server)؛ ويحمل المتصفح ملف تعريف ارتباط `__Host-` |
+| بوابة الشركات الصغيرة (SME Portal)، ويب مع BFF (web, BFF) | تدفق الرمز مع PKCE (code flow with PKCE) إضافةً إلى `private_key_jwt` | تبقى الرموز المميزة على الخادم (tokens stay on the server)؛ ويحمل المتصفح ملف تعريف ارتباط `__Host-` (browser holds a __Host- cookie) |
 | اتحاد هويات بوابة الشركات الصغيرة (SME Portal federation) | OIDC؛ قائمة سماحٍ للمُصدِرين لكل شركة (issuer allowlist per company) | المستخدمون مفهرَسون (users keyed by) بـ `iss` + `sub` |
 | الخدمات الداخلية (Internal services) | بيانات اعتماد العميل مع هوية عبء العمل (client credentials with workload identity) (7.1) | جمهورٌ واحد لكل رمز (one audience per token) |
 | أدوات نجم أسيست (Najm Assist tools) | تبادل الرموز المميزة انطلاقًا من رمز العميل (token exchange from the customer's token) | جمهورٌ واحد، ونطاقٌ واحد، و5 دقائق (one audience, one scope, 5 minutes)، ومطالبة `act` |
@@ -438,7 +438,7 @@ def verify_access_token(token: str) -> dict:
 
 | الرمز المميز (Token) | العمر (Lifetime) | القواعد (Rules) |
 |---|---|---|
-| رمز الوصول (Access token) | من 5 إلى 10 دقائق (5–10 minutes) | `aud` واحد (one)؛ و`scope` ضيق (narrow)؛ ومعرّفاتٌ فقط (identifiers only)، لا أسماء ولا أرصدة ولا أرقام بطاقات أبدًا (never names, balances or card numbers) |
+| رمز الوصول (Access token) | من 5 إلى 10 دقائق (5–10 minutes) | `aud` واحد (one aud)؛ و`scope` ضيق (narrow scope)؛ ومعرّفاتٌ فقط (identifiers only)، لا أسماء ولا أرصدة ولا أرقام بطاقات أبدًا (never names, balances or card numbers) |
 | رمز التحديث (Refresh token) | الهاتف المحمول: 30 يومًا كحدٍّ مطلق (Mobile: 30 days absolute). الويب مع BFF: 12 ساعة (Web BFF: 12 hours) | يُدوَّر (rotated)؛ وإعادة استخدامه تُبطل العائلة (reuse revokes the family)؛ ويُبطَل عند تسجيل الخروج وإعادة التعيين وتغيير بيانات الاتصال (revoked on logout, reset and contact changes) |
 | رمز الهوية (ID token) | مرةً واحدة، عند تسجيل الدخول (once, at sign-in) | لا تقبله أي واجهة برمجة أبدًا (never accepted by any API) |
 
@@ -450,7 +450,7 @@ def verify_access_token(token: str) -> dict:
 
 ## 🛠️ التمارين (Exercises)
 - 🟢 خذ رمزًا مميزًا من تطبيقٍ محلي أو مختبرٍ تشغّله (local app or lab you run)، لا رمزًا من بيئة الإنتاج أبدًا (never a production token)، ولا تلصقه أبدًا في أداة فك ترميزٍ عبر الإنترنت (never pasted into an online decoder)، وفكّ ترميزه محليًّا (decode it locally)، وأدرج كل مطالبة (list every claim). *يكتمل عندما (Done when):* تُوسَم كل مطالبةٍ بـ «مطلوبة» ("needed") أو «تُزال» ("remove")، ويُتأكَّد من وجود `exp` و`aud` و`iss`، ويُشار إلى أي شيءٍ مقروء لا ينبغي أن يكون موجودًا (anything readable that should not be there).
-- 🟡 اكتب دالةً للتحقق من الرموز المميزة (token-verification function) لواجهة برمجةٍ اختبارية محلية (local test API) بمفاتيح تولّدها بنفسك، إضافةً إلى اختباراتٍ ترسل رموزًا تحمل `alg: none`، أو الخوارزمية أو الجمهور أو المُصدِر الخطأ (wrong algorithm, audience or issuer)، أو `exp` منتهيًا (expired)، أو لا تحمل `exp`، أو تحمل `kid` غير معروف (unknown). *يكتمل عندما (Done when):* تُرفض الرموز السيئة السبعة كلها (all seven bad tokens) للسبب الصحيح (for the right reason)، ويُقبَل رمزٌ صالح واحد.
+- 🟡 اكتب دالةً للتحقق من الرموز المميزة (token-verification function) لواجهة برمجةٍ اختبارية محلية (local test API) بمفاتيح تولّدها بنفسك (keys you generate)، إضافةً إلى اختباراتٍ (tests) ترسل رموزًا تحمل `alg: none`، أو الخوارزمية أو الجمهور أو المُصدِر الخطأ (wrong algorithm, audience or issuer)، أو `exp` منتهيًا (expired exp)، أو لا تحمل `exp` (no exp)، أو تحمل `kid` غير معروف (unknown kid). *يكتمل عندما (Done when):* تُرفض الرموز السيئة السبعة كلها (all seven bad tokens) للسبب الصحيح (for the right reason)، ويُقبَل رمزٌ صالح واحد.
 - 🔴 اكتب تصميمًا في صفحةٍ واحدة (one-page design) يبيّن كيف يحصل نجم أسيست (Najm Assist) على الإذن بتجميد بطاقة العميل: تبادل الرموز المميزة (token exchange)، والجمهور (audience)، والنطاق (scope)، والعمر (lifetime)، وفحوص واجهة برمجة البطاقات (cards API's checks)، والتسجيل (logging)، ولماذا ليس إلغاء التجميد أداةً من أدوات أسيست (why unfreezing is not an Assist tool). *يكتمل عندما (Done when):* يُظهر التصميم أن واجهة برمجة البطاقات ترفض بطاقةً لا تخص `sub` الرمز (does not belong to the token's sub)، حتى حين يطلبها النموذج (even when the model asks)، ويسمّي من يستطيع إبطال وصول الوكيل (who can revoke the agent's access).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
@@ -464,13 +464,13 @@ def verify_access_token(token: str) -> dict:
 ## 🧾 الخلاصة (Recap)
 - يفوّض OAuth 2.0 الوصول (delegates access)؛ ويضيف OIDC الهوية (adds identity). رموز الوصول لواجهات البرمجة (access tokens are for APIs)؛ ورموز الهوية للتطبيق العميل (ID tokens are for the client).
 - استخدم تدفق الرمز مع PKCE (code flow with PKCE) وعناوين URI تامة المطابقة لإعادة التوجيه (exact redirect URIs)؛ وتخلَّ عن المنح الضمنية ومنح كلمة المرور (retire implicit and password grants) (RFC 9700).
-- يستطيع أي شخصٍ يحمل رمز JWT موقَّعًا أن يقرأه. تحقّق منه بخوارزميةٍ مثبَّتة (pinned algorithm) وبمفاتيح مُصدِرك (your issuer's keys)، ثم افحص `iss` و`aud` و`exp`.
+- يستطيع أي شخصٍ يحمل رمز JWT موقَّعًا أن يقرأه (anyone holding a signed JWT can read it). تحقّق منه بخوارزميةٍ مثبَّتة (pinned algorithm) وبمفاتيح مُصدِرك (your issuer's keys)، ثم افحص `iss` و`aud` و`exp`.
 - يحتاج كل رمزٍ مميز إلى جمهورٍ واحد (one audience)، ونطاقٍ ضيق (narrow scope)، وعمرٍ قصير (short life)، وخطةٍ للسرقة (theft plan).
 - حين يعمل وكيلٌ (agent) نيابةً عن عميل، استبدل رمز العميل برمزٍ ضيق وقصير العمر (narrow, short-lived one)، كي تُجري واجهة البرمجة التفويض على أساس العميل (the API authorises the customer).
 
 ## ✍️ اختبر نفسك (Check yourself)
 
-**1. تقبل واجهة برمجة البطاقات (cards API) رمزًا بتوقيع نجم صالح (valid Najm signature) ومُصدِرٍ صحيح (correct issuer)، لكن الرمز صدر لواجهة برمجة نقاط الولاء (loyalty-points API) في نجم. ما الذي ينقص؟**
+**1. تقبل واجهة برمجة البطاقات (cards API) رمزًا بتوقيع نجم صالح (valid Najm signature) ومُصدِرٍ صحيح (correct issuer)، لكن الرمز صدر لواجهة برمجة نقاط الولاء (loyalty-points API) في نجم. ما الذي ينقص؟ ⁦(What is missing?)⁩**
 
 - A. فحص مطالبة الجمهور `aud` (audience claim)
 - B. خوارزمية توقيعٍ أقوى (stronger signing algorithm)
@@ -496,9 +496,9 @@ def verify_access_token(token: str) -> dict:
 
 </details>
 
-**3. في مراجعة شيفرة (code review)، يجد علي `jwt.decode(token, key, algorithms=[jwt.get_unverified_header(token)["alg"]])`. لماذا هو خطير؟**
+**3. في مراجعة شيفرة (code review)، يجد علي `jwt.decode(token, key, algorithms=[jwt.get_unverified_header(token)["alg"]])`. لماذا هو خطير؟ ⁦(Why is it dangerous?)⁩**
 
-- A. إنه بطيء، لأنه يحلّل الترويسة مرتين (parses the header twice)
+- A. إنه بطيء (slow)، لأنه يحلّل الترويسة مرتين (parses the header twice)
 - B. يختار الرمز خوارزمية التحقق الخاصة به (the token chooses its own verification algorithm)، مما يفتح الباب أمام هجمات `alg: none` والخلط بين الخوارزميات (algorithm-confusion attacks)
 - C. لا يفحص عمر الرمز (token's lifetime)
 - D. الترويسات مشفّرة (headers are encrypted) ولا يمكن قراءتها قبل التحقق (before verification)
@@ -525,7 +525,7 @@ def verify_access_token(token: str) -> dict:
 **5. يجب أن يجمّد نجم أسيست (Najm Assist) البطاقات نيابةً عن العملاء. أيّ تصميمٍ يحدّ من الضرر على أفضل وجه (best limits the damage) إذا جرى التلاعب بالنموذج (model is manipulated)؟**
 
 - A. رمز حساب خدمة (service account token) بصلاحيات بطاقاتٍ كاملة (full card permissions)، مع ترك اختيار البطاقة للنموذج (model choosing the card)
-- B. رمز التحديث طويل العمر الخاص بالعميل نفسه (customer's own long-lived refresh token)، يخزّنه أسيست
+- B. رمز التحديث طويل العمر الخاص بالعميل نفسه (customer's own long-lived refresh token)، يخزّنه أسيست (stored by Assist)
 - C. مفتاح واجهة برمجةٍ مشترك (shared API key) لجميع إجراءات أسيست، يُدوَّر شهريًّا (rotated monthly)
 - D. تبادل الرموز المميزة (token exchange) للحصول على رمزٍ مدته خمس دقائق لواجهة برمجة البطاقات (five-minute token for the cards API)، نطاقه التجميد (scoped to freezing)، ويخص العميل ويسمّي أسيست فاعلًا (naming Assist as actor)، مع فحص واجهة برمجة البطاقات أن البطاقة تخص ذلك العميل (card belongs to that customer)
 
@@ -561,11 +561,11 @@ def verify_access_token(token: str) -> dict:
 - أكبر فخ (Biggest trap): التفويض في واجهة المستخدم (authorisation in the user interface). إخفاء زرٍّ ليس تحكمًا في الوصول (hiding a button is not access control).
 
 ## 🧭 لماذا يهم (Why it matters)
-قبل إصدارٍ جديد لبوابة الشركات الصغيرة (new SME Portal release)، يُجري الفريق الأحمر (red team) التابع لمريم اختبارًا مصرَّحًا به (authorised test) على بيئة ما قبل الإنتاج (staging) بشركتين اختباريتين (two test companies). بعد أن تسجّل الدخول بصفة رافع ملفات (Uploader) في الشركة A (Company A)، تفتح `/api/invoices/10233/pdf`، وتغيّر الرقم إلى `10234`، فتنزّل فاتورة الشركة B (Company B's invoice)، بما فيها أسماء الموردين (supplier names) والمبالغ (amounts) والتفاصيل المصرفية (bank details). وفي عصر اليوم نفسه، تكتشف مشكلتين أخريين: زر «اعتماد الدفعة» ("Approve payment") مخفيٌّ عن رافعي الملفات (hidden for Uploaders)، لكن `POST /api/payments/approve` يقبل طلباتهم؛ و`PATCH /api/users/me` يقبل `"role": "owner"` ويحفظه.
+قبل إصدارٍ جديد لبوابة الشركات الصغيرة (new SME Portal release)، يُجري الفريق الأحمر (red team) التابع لمريم اختبارًا مصرَّحًا به (authorised test) على بيئة ما قبل الإنتاج (staging) بشركتين اختباريتين (two test companies). بعد أن تسجّل الدخول بصفة رافع ملفات (Uploader) في الشركة A (Company A)، تفتح `/api/invoices/10233/pdf`، وتغيّر الرقم إلى `10234`، فتنزّل فاتورة الشركة B (Company B's invoice)، بما فيها أسماء الموردين (supplier names) والمبالغ (amounts) والتفاصيل المصرفية (bank details). وفي عصر اليوم نفسه (the same afternoon)، تكتشف مشكلتين أخريين (two more problems): زر «اعتماد الدفعة» ("Approve payment") مخفيٌّ عن رافعي الملفات (hidden for Uploaders)، لكن `POST /api/payments/approve` يقبل طلباتهم (accepts their requests)؛ و`PATCH /api/users/me` يقبل `"role": "owner"` ويحفظه (saves it).
 
 «لكن كان عليهم جميعًا تسجيل الدخول» ("But they all had to be logged in")، يقول علي، الذي راجع الشيفرة. وهذا بيت القصيد (that is the point): نجحت المصادقة (authentication worked) في كل مرة. والمشكلات الثلاث كلها إخفاقاتٌ في التفويض (authorisation failures)، لا تراها الاختبارات الوظيفية (invisible to functional tests) التي لا ينقر فيها المستخدمون إلا على ما تعرضه الواجهة (only click what the interface shows).
 
-وصفت التقارير العامة (public reporting) عن اختراق Optus عام 2022 في أستراليا (2022 Optus breach in Australia) سجلاتٍ للعملاء (customer records) كُشفت عبر واجهة برمجةٍ مكشوفة على الإنترنت (internet-facing API) لم تكن، بحسب التقارير (reportedly)، تشترط المصادقة (did not require authentication). تتفاوت التفاصيل بين التقارير، فتعامل معها على أنها مثالٌ توضيحي (illustration): كل نقطة نهاية تُعيد بيانات (every endpoint that returns data) يجب أن تفحص من يسأل (who is asking) وهل يجوز له رؤية ذلك السجل (may see that record) (4.1). قاعدة نورة: **لا تُطلَق أي نقطة نهاية (no endpoint ships) دون صفٍّ في مصفوفة التحكم في الوصول (row in the access-control matrix) واختبارٍ يُثبت أن مستخدمًا آخر، ومستأجرًا آخر، يُرفَض (another user, and another tenant, is refused).**
+وصفت التقارير العامة (public reporting) عن اختراق Optus عام 2022 في أستراليا (2022 Optus breach in Australia) سجلاتٍ للعملاء (customer records) كُشفت عبر واجهة برمجةٍ مكشوفة على الإنترنت (internet-facing API) لم تكن، بحسب التقارير (reportedly)، تشترط المصادقة (did not require authentication). تتفاوت التفاصيل بين التقارير (details vary between reports)، فتعامل معها على أنها مثالٌ توضيحي (illustration): كل نقطة نهاية تُعيد بيانات (every endpoint that returns data) يجب أن تفحص من يسأل (who is asking) وهل يجوز له رؤية ذلك السجل (may see that record) (4.1). قاعدة نورة: **لا تُطلَق أي نقطة نهاية (no endpoint ships) دون صفٍّ في مصفوفة التحكم في الوصول (row in the access-control matrix) واختبارٍ يُثبت أن مستخدمًا آخر، ومستأجرًا آخر، يُرفَض (another user, and another tenant, is refused).**
 
 ## 📐 كيف يعمل (How it works)
 
@@ -722,7 +722,7 @@ flowchart TD
 | **OWASP Juice Shop** — تطبيقٌ تدريبي | تطبيقٌ تدريبي معرَّض للثغرات عمدًا (deliberately vulnerable training app) بتحدياتٍ في التحكم في الوصول (access-control challenges) | التدرّب بأمان (practising safely) على اكتشاف ثغرات IDOR وثغرات مستوى الوظيفة وإصلاحها (finding and fixing IDOR and function-level flaws) |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-بعد اختبار مريم، يكتب علي وطارق **مصفوفة التحكم في الوصول لبوابة الشركات الصغيرة، الإصدار 1 (SME Portal Access-Control Matrix v1)**. تعتمدها نورة، وتُولَّد منها مجموعة اختبارات التكامل المستمر (CI test suite).
+بعد اختبار مريم، يكتب علي وطارق **مصفوفة التحكم في الوصول لبوابة الشركات الصغيرة، الإصدار 1 (SME Portal Access-Control Matrix v1)**. تعتمدها نورة، وتُولَّد منها (generated from it) مجموعة اختبارات التكامل المستمر (CI test suite).
 
 **الجزء أ: المصفوفة (Part A: the matrix)**، حيث Y تعني مسموحًا وفق الشروط المدرجة (allowed under the listed conditions)، وN تعني مرفوضًا (denied)، وكل ما لم يُدرَج مرفوض (anything not listed is denied)
 
@@ -762,8 +762,8 @@ flowchart TD
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
 - **التفويض في الواجهة (Authorisation in the interface).** الأزرار المخفية ليست ضوابط (hidden buttons are not controls). طبّق كل قاعدةٍ على الخادم (enforce every rule on the server).
-- **الثقة بالمعرّفات القادمة من الطلب (Trusting IDs from the request).** الشركة والمستخدم يأتيان من الجلسة؛ ومعرّفات الكائنات (object IDs) ليست إلا مفاتيح بحثٍ يجب فحصها (only lookups to be checked).
-- **الاعتماد على معرّفاتٍ يتعذّر تخمينها (Relying on unguessable IDs).** تساعد معرّفات UUID، لكنها تتسرّب. افحص الملكية على أي حال (check ownership anyway).
+- **الثقة بالمعرّفات القادمة من الطلب (Trusting IDs from the request).** الشركة والمستخدم يأتيان من الجلسة (company and user come from the session)؛ ومعرّفات الكائنات (object IDs) ليست إلا مفاتيح بحثٍ يجب فحصها (only lookups to be checked).
+- **الاعتماد على معرّفاتٍ يتعذّر تخمينها (Relying on unguessable IDs).** تساعد معرّفات UUID (UUIDs help)، لكنها تتسرّب (they leak). افحص الملكية على أي حال (check ownership anyway).
 - **نسخ أجسام الطلبات إلى السجلات (Copying request bodies into records).** اعتمد قائمة سماحٍ للحقول القابلة للتعديل لكل دور (allowlist editable fields per role)، وأعِد عروضًا خاصة بكل دور (role-specific views).
 - **قواعد مبعثرة في وحدات التحكم (Rules scattered across controllers).** استخدم سياسةً مركزية واحدة ترفض افتراضيًّا (one central, deny-by-default policy) واختباراتٍ مولَّدة من المصفوفة (tests generated from the matrix).
 - **نسيان المسارات الجانبية (Forgetting the side paths).** التصديرات وذاكرات التخزين المؤقت والبحث والمهام وروابط الملفات وأدوات الذكاء الاصطناعي (exports, caches, search, jobs, file links and AI tools) تحتاج إلى فحوص المستأجر والكائن نفسها (the same tenant and object checks).
@@ -777,7 +777,7 @@ flowchart TD
 
 ## ✍️ اختبر نفسك (Check yourself)
 
-**1. في أثناء اختبارٍ مصرَّحٍ به (authorised test)، تغيّر مريم `/api/invoices/10233/pdf` إلى `/api/invoices/10234/pdf` وتنزّل فاتورة شركةٍ أخرى. أيّ إصلاحٍ يعالج السبب الجذري (root cause)؟**
+**1. في أثناء اختبارٍ مصرَّحٍ به (authorised test)، تغيّر مريم `/api/invoices/10233/pdf` إلى `/api/invoices/10234/pdf` وتنزّل فاتورة شركةٍ أخرى (downloads another company's invoice). أيّ إصلاحٍ يعالج السبب الجذري (root cause)؟**
 
 - A. استبدال أرقام الفواتير المتسلسلة (sequential invoice numbers) بمعرّفات UUID عشوائية (random UUIDs)
 - B. تحميل الفاتورة مرشَّحةً حسب الشركة المأخوذة من جلسة المستخدم (filtered by the company from the user's session)، والرفض افتراضيًّا (deny by default)، وفحص السياسة المركزية (central policy) قبل إعادتها
@@ -790,7 +790,7 @@ flowchart TD
 
 </details>
 
-**2. زر اعتماد الدفعة (approve-payment button) مخفيٌّ عن المُطّلِعين (Viewers)، لكن المُطّلِع الذي يرسل الطلب مباشرةً (sends the request directly) يتلقى استجابة 200. ما نوع هذه الثغرة؟**
+**2. زر اعتماد الدفعة (approve-payment button) مخفيٌّ عن المُطّلِعين (Viewers)، لكن المُطّلِع الذي يرسل الطلب مباشرةً (sends the request directly) يتلقى استجابة 200. ما نوع هذه الثغرة؟ ⁦(What kind of flaw is this?)⁩**
 
 - A. كسر التفويض على مستوى الوظيفة (broken function level authorization): لا يفحص الخادم ما إذا كان يجوز للدور استدعاء العملية (whether the role may call the operation)
 - B. تزوير الطلبات عبر المواقع (cross-site request forgery)
@@ -806,8 +806,8 @@ flowchart TD
 **3. يحفظ `PATCH /api/users/me` القيمة `{"displayName": "Ali", "role": "owner"}`، فيصبح علي مالكًا (Owner). ما الإصلاح الأفضل (BEST fix)؟**
 
 - A. جعل حقل الدور للقراءة فقط في واجهة المستخدم (read-only in the user interface)
-- B. إزالة عمود `role` من قاعدة البيانات
-- C. التحقق من الطلبات مقابل قائمة سماحٍ صريحة بالحقول التي يجوز لكل دور تعديلها (explicit allowlist of fields each role may edit)، ورفض أي شيءٍ آخر
+- B. إزالة عمود `role` من قاعدة البيانات (remove the role column from the database)
+- C. التحقق من الطلبات مقابل قائمة سماحٍ صريحة بالحقول التي يجوز لكل دور تعديلها (explicit allowlist of fields each role may edit)، ورفض أي شيءٍ آخر (reject anything else)
 - D. تسجيل التغيير ومراجعته شهريًّا (log the change and review it monthly)
 
 <details><summary>الإجابة</summary>
@@ -819,8 +819,8 @@ flowchart TD
 **4. يفعّل فريق طارق أمن مستوى الصف (row-level security) في PostgreSQL على `invoices`، لكن استعلامًا بلا مرشّحٍ للشركة (without a company filter) لا يزال يُعيد صفوف جميع الشركات. ويتصل التطبيق بالدور الذي يملك الجدول (the role that owns the table). ما السبب الأرجح (most likely cause)؟**
 
 - A. أمن مستوى الصف لا يعمل إلا على العروض (only works on views)
-- B. مالكو الجداول يتجاوزون أمن مستوى الصف ما لم يُعيَّن `FORCE ROW LEVEL SECURITY`، لذا ينبغي أيضًا أن يتصل التطبيق بدورٍ منفصل غير مالك (separate non-owner role)
-- C. يجب أن تُكتب السياسة في شيفرة التطبيق بدلًا من ذلك (in application code instead)
+- B. مالكو الجداول يتجاوزون أمن مستوى الصف (table owners bypass row-level security) ما لم يُعيَّن `FORCE ROW LEVEL SECURITY`، لذا ينبغي أيضًا أن يتصل التطبيق بدورٍ منفصل غير مالك (separate non-owner role)
+- C. يجب أن تُكتب السياسة (policy has to be written) في شيفرة التطبيق بدلًا من ذلك (in application code instead)
 - D. أمن مستوى الصف لا يدعم أعمدة UUID (UUID columns)
 
 <details><summary>الإجابة</summary>
@@ -829,10 +829,10 @@ flowchart TD
 
 </details>
 
-**5. لدى نجم أسيست (Najm Assist) أداة `get_transactions(account_id)`، ويوفّر النموذج `account_id` من المحادثة (from the conversation). ما الذي يجب أن تفعله الأداة؟**
+**5. لدى نجم أسيست (Najm Assist) أداة `get_transactions(account_id)`، ويوفّر النموذج `account_id` من المحادثة (from the conversation). ما الذي يجب أن تفعله الأداة؟ ⁦(What must the tool do?)⁩**
 
-- A. الوثوق بالنموذج، لأن موجّه النظام (system prompt) يطلب منه ألّا يستخدم إلا حسابات العميل
-- B. التحقق من أن الحساب يخص العميل المحدَّد بالجلسة أو الرمز المميز (customer identified by the session or token) قبل إعادة أي شيء
+- A. الوثوق بالنموذج (trust the model)، لأن موجّه النظام (system prompt) يطلب منه ألّا يستخدم إلا حسابات العميل (use only the customer's accounts)
+- B. التحقق من أن الحساب يخص العميل المحدَّد بالجلسة أو الرمز المميز (customer identified by the session or token) قبل إعادة أي شيء (before returning anything)
 - C. إعادة البيانات مع إخفاء رقم الحساب (mask the account number)
 - D. مطالبة النموذج بتأكيد معرّف الحساب مرتين (confirm the account ID twice)
 

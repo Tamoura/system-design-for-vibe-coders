@@ -1,0 +1,135 @@
+{
+ "area": "m9",
+ "questions": [
+  {
+   "id": "m9-1",
+   "level": 1,
+   "lesson": "9.1",
+   "q": {
+    "en": "Ali's team strips HTML tags and script-like text from every customer message before it reaches Najm Assist, so he proposes rendering the model's replies as raw HTML in the chat view. What is wrong with his reasoning?",
+    "ar": "يزيل فريق علي وسوم HTML (HTML tags) والنصوص الشبيهة بالسكربتات (script-like text) من كل رسالة عميل (customer message) قبل وصولها إلى نجم أسيست (Najm Assist)، لذا يقترح عرض ردود النموذج (model's replies) بصيغة HTML خام (raw HTML) في واجهة المحادثة (chat view). ما الخلل في استدلاله (reasoning)؟"
+   },
+   "o": {
+    "en": [
+     "Nothing: the customer's message is the only text that can put markup into the model's replies",
+     "Retrieved documents and tool results also shape the reply, so the renderer must be safe in code",
+     "The input filter should be a guardrail classifier instead, since pattern rules miss rephrased attacks",
+     "The input filter also needs a system-prompt rule telling the model never to output HTML in replies"
+    ],
+    "ar": [
+     "لا خلل: رسالة العميل (customer's message) هي النص الوحيد القادر على إدخال الوسوم (markup) في ردود النموذج (model's replies)",
+     "المستندات المسترجعة (retrieved documents) ونتائج الأدوات (tool results) تشكّل الرد أيضًا، لذا يجب أن تكون أداة العرض (renderer) آمنة في الشيفرة (safe in code)",
+     "ينبغي استبدال مرشّح المدخلات (input filter) بمصنّف ضوابط وقائية (guardrail classifier)، لأن قواعد الأنماط (pattern rules) تفوّت الهجمات المُعاد صياغتها (rephrased attacks)",
+     "يحتاج مرشّح المدخلات (input filter) أيضًا إلى قاعدة في موجّه النظام (system-prompt rule) تمنع النموذج من إخراج HTML في ردوده (never to output HTML)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Model output is untrusted input to whatever reads it next: retrieved documents and tool results shape it too, and the model can produce exactly what was filtered out of the input, so the sink needs plain text or an allow-list sanitiser plus a Content Security Policy. A system-prompt rule is the tempting extra, but it is a request an attacker's text can override, not a control.",
+    "ar": "مخرجات النموذج (model output) مدخلات غير موثوقة (untrusted input) لكل ما يقرؤها بعد ذلك: فالمستندات المسترجعة (retrieved documents) ونتائج الأدوات (tool results) تشكّلها أيضًا، ويستطيع النموذج إنتاج ما رُشّح من المدخلات بعينه (exactly what was filtered out of the input)، لذا يحتاج موضع الإدراج (sink) إلى نص عادي (plain text) أو معقّم بقائمة سماح (allow-list sanitiser) مع سياسة أمان المحتوى (Content Security Policy). أما قاعدة موجّه النظام (system-prompt rule) فهي الإضافة المغرية، لكنها طلب (request) يستطيع نص المهاجم (attacker's text) تجاوزه، لا ضابط (control)."
+   }
+  },
+  {
+   "id": "m9-2",
+   "level": 3,
+   "lesson": "9.2",
+   "q": {
+    "en": "Rania wants a transfer_to_beneficiary tool in Najm Assist's first release, limited to saved beneficiaries and using the same app-rendered confirmation card as freeze_card. Tariq notes that the tool would take the customer from the session and check ownership in code. What should Noura decide?",
+    "ar": "تريد رانيا إضافة أداة transfer_to_beneficiary إلى الإصدار الأول (first release) من نجم أسيست (Najm Assist)، مقصورةً على المستفيدين المحفوظين (limited to saved beneficiaries)، ومستخدمةً بطاقة التأكيد نفسها التي يعرضها التطبيق (app-rendered confirmation card) لأداة freeze_card. ويشير طارق إلى أن الأداة ستأخذ العميل من الجلسة (customer from the session) وتتحقق من الملكية في الشيفرة (check ownership in code). ماذا ينبغي أن تقرر نورة (What should Noura decide)؟"
+   },
+   "o": {
+    "en": [
+     "Approve it, since a confirmation rendered by the app from validated parameters suffices for any action",
+     "Approve it, provided a guardrail classifier screens each transfer request for injected instructions",
+     "Approve it under a dedicated service account that can reach only the core banking transfer endpoints",
+     "Keep it out of v1: money movement needs step-up authentication and limits, and a track record first"
+    ],
+    "ar": [
+     "توافق عليها (approve it)، لأن التأكيد الذي يعرضه التطبيق من المعاملات المُتحقَّق منها (confirmation rendered by the app from validated parameters) يكفي لأي إجراء (any action)",
+     "توافق عليها (approve it)، بشرط أن يفحص مصنّف ضوابط وقائية (guardrail classifier) كل طلب تحويل (transfer request) بحثًا عن تعليمات محقونة (injected instructions)",
+     "توافق عليها (approve it) تحت حساب خدمة مخصّص (dedicated service account) لا يصل إلا إلى نقاط نهاية التحويل (transfer endpoints) في النظام المصرفي الأساسي (core banking)",
+     "تُبقيها خارج الإصدار الأول (v1): تحويل الأموال (money movement) يتطلب المصادقة التصعيدية (step-up authentication) وحدودًا (limits)، وسجلًّا مُثبتًا أولًا (track record first)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Najm tiers actions by consequence: irreversible or money-moving actions need step-up authentication and limits, and the tool register keeps transfers away from the agent until six incident-free months and a red-team pass. An app-rendered confirmation is right for reversible changes such as a card freeze, but for money movement step-up authentication is what stops a hijacked conversation from completing the transfer.",
+    "ar": "يصنّف بنك نجم (Najm Bank) الإجراءات حسب عواقبها (tiers actions by consequence): فالإجراءات غير القابلة للعكس أو الناقلة للأموال (irreversible or money-moving actions) تتطلب المصادقة التصعيدية (step-up authentication) وحدودًا (limits)، ويُبقي سجل الأدوات (tool register) التحويلات بعيدًا عن الوكيل (agent) حتى مرور ستة أشهر بلا حوادث (six incident-free months) واجتياز اختبار الفريق الأحمر (red-team pass). والتأكيد الذي يعرضه التطبيق (app-rendered confirmation) مناسب للتغييرات القابلة للعكس (reversible changes) مثل تجميد البطاقة (card freeze)، أما في تحويل الأموال (money movement) فالمصادقة التصعيدية هي ما يمنع محادثة مُختطَفة (hijacked conversation) من إتمام التحويل."
+   }
+  },
+  {
+   "id": "m9-3",
+   "level": 2,
+   "lesson": "9.3",
+   "q": {
+    "en": "Last week a corporate client was moved to special assets, and the source system now restricts its credit file to that team. Yet relationship managers on the client's old portfolio still get passages from the file through the Credit Memo Copilot. What is the most likely cause and fix?",
+    "ar": "نُقل عميل من الشركات (corporate client) الأسبوع الماضي إلى الأصول الخاصة (special assets)، وأصبح نظام المصدر (source system) يقصر ملفه الائتماني (credit file) على ذلك الفريق. ومع ذلك ما زال مديرو العلاقات (relationship managers) في محفظة العميل السابقة (old portfolio) يتلقّون مقاطع (passages) من الملف عبر مساعد مذكرات الائتمان (Credit Memo Copilot). ما السبب الأرجح (most likely cause) وما العلاج (fix)؟"
+   },
+   "o": {
+    "en": [
+     "The ACLs copied once at ingestion went stale; re-sync them on change events and on a schedule",
+     "The model memorised the file from earlier chats; instruct it to forget clients now in special assets",
+     "The retriever returns too many passages; lower top_k so weakly relevant files stop getting through",
+     "The system prompt predates the move; add a rule telling the model to withhold special-assets clients"
+    ],
+    "ar": [
+     "قوائم التحكم في الوصول (ACLs) المنسوخة مرة واحدة عند الاستيعاب (copied once at ingestion) تقادمت (went stale)؛ أعد مزامنتها (re-sync) عند أحداث التغيير (change events) ووفق جدول زمني (on a schedule)",
+     "حفظ النموذج (model) الملفَّ من محادثات سابقة (earlier chats)؛ اطلب منه أن ينسى (instruct it to forget) العملاء المنقولين إلى الأصول الخاصة (special assets)",
+     "يُرجع المسترجِع (retriever) مقاطع أكثر من اللازم (too many passages)؛ اخفض قيمة top_k كي لا تمرّ الملفات ضعيفة الصلة (weakly relevant files)",
+     "موجّه النظام (system prompt) أقدم من النقل (predates the move)؛ أضف قاعدة (add a rule) تطلب من النموذج حجب عملاء الأصول الخاصة (withhold special-assets clients)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "ACLs captured only at ingestion go stale when permissions change, so the pre-filter still lets the old portfolio's RMs retrieve the file; Najm re-syncs ACLs on change events and on a short schedule, and checks the source of truth at query time for sensitive classes. A system-prompt rule is the tempting shortcut, but the model cannot be trusted to withhold what retrieval gives it.",
+    "ar": "تتقادم قوائم التحكم في الوصول (ACLs) المنسوخة عند الاستيعاب فقط (captured only at ingestion) حين تتغير الصلاحيات (permissions change)، فيظل المرشّح المسبق (pre-filter) يسمح لمديري علاقات المحفظة السابقة (old portfolio's RMs) باسترجاع الملف؛ لذا يعيد بنك نجم (Najm Bank) مزامنة القوائم (re-syncs ACLs) عند أحداث التغيير (change events) ووفق جدول قصير (short schedule)، ويتحقق من مصدر الحقيقة (source of truth) وقت الاستعلام (at query time) للفئات الحساسة (sensitive classes). أما قاعدة موجّه النظام (system-prompt rule) فهي الاختصار المغري، لكن لا يمكن الوثوق بأن يحجب النموذج (model) ما يسلّمه إليه الاسترجاع (retrieval)."
+   }
+  },
+  {
+   "id": "m9-4",
+   "level": 2,
+   "lesson": "9.4",
+   "q": {
+    "en": "Najm Assist met its red-team exit criteria. Two months later the provider ships a new model version, and Tariq wants to switch to it together with a reworded system prompt; tools and corpus are unchanged. What should happen before the switch goes live?",
+    "ar": "استوفى نجم أسيست (Najm Assist) معايير الخروج (exit criteria) لاختبار الفريق الأحمر (red team). وبعد شهرين يطرح المزوّد (provider) إصدارًا جديدًا من النموذج (new model version)، ويريد طارق الانتقال إليه مع إعادة صياغة موجّه النظام (reworded system prompt)، بينما تبقى الأدوات (tools) ومجموعة المستندات (corpus) دون تغيير. ما الذي ينبغي أن يحدث قبل تفعيل الانتقال (switch goes live)؟"
+   },
+   "o": {
+    "en": [
+     "Nothing extra: the tools and controls are unchanged, so the earlier red-team results still hold",
+     "Rely on the provider's own red-teaming, which already covers the new model version's behaviour",
+     "Re-run the adversarial set with its ASR gates, plus a short manual session, on the pinned version",
+     "Run a large public jailbreak list against the new version, and switch over if none of it gets through"
+    ],
+    "ar": [
+     "لا شيء إضافي (nothing extra): الأدوات والضوابط (tools and controls) لم تتغير، لذا تبقى نتائج الفريق الأحمر السابقة (earlier red-team results) سارية (still hold)",
+     "الاعتماد على اختبارات الفريق الأحمر لدى المزوّد (provider's own red-teaming)، فهي تغطي بالفعل (already covers) سلوك إصدار النموذج الجديد (new model version's behaviour)",
+     "إعادة تشغيل مجموعة الاختبارات العدائية (adversarial set) مع بوابات معدل نجاح الهجوم (ASR gates)، وجلسة يدوية قصيرة (short manual session)، على الإصدار المثبّت (pinned version)",
+     "تشغيل قائمة عامة كبيرة لكسر القيود (large public jailbreak list) على الإصدار الجديد (new version)، والانتقال إليه (switch over) إن لم ينفذ شيء منها (if none of it gets through)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Any change to the model version, prompts, tools, MCP servers or indexed corpus triggers a re-run of the adversarial set with its ASR release gates, plus a short manual session, because the earlier results no longer describe the changed system. The provider's red-teaming is the tempting shortcut, but it tests the model, not Najm's prompt, tools, data or Gulf-dialect traffic.",
+    "ar": "أي تغيير في إصدار النموذج (model version) أو الموجّهات (prompts) أو الأدوات (tools) أو خوادم MCP (MCP servers) أو مجموعة المستندات المفهرسة (indexed corpus) يستدعي إعادة تشغيل مجموعة الاختبارات العدائية (adversarial set) مع بوابات الإصدار القائمة على معدل نجاح الهجوم (ASR release gates)، إضافةً إلى جلسة يدوية قصيرة (short manual session)، لأن النتائج السابقة لم تعد تصف النظام بعد تغييره (changed system). واختبارات المزوّد (provider's red-teaming) هي الاختصار المغري، لكنها تختبر النموذج (model)، لا موجّه نجم وأدواته وبياناته (Najm's prompt, tools, data) ولا حركة اللهجة الخليجية (Gulf-dialect traffic)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m9-e1",
+   "lesson": "9.2",
+   "text": {
+    "en": "I have built a lab agent whose freeze_card tool takes the customer from the session and checks ownership in code, and shown that a mocked request to freeze another customer's card is refused, leaves the mock API unchanged and is logged",
+    "ar": "بنيتُ وكيلًا تجريبيًا (lab agent) تأخذ أداته freeze_card العميلَ من الجلسة (customer from the session) وتتحقق من الملكية في الشيفرة (checks ownership in code)، وأثبتُّ أن طلبًا مُحاكى (mocked request) لتجميد بطاقة عميل آخر (freeze another customer's card) يُرفض (refused)، ولا يغيّر حالة الواجهة البرمجية المحاكاة (mock API)، ويُسجَّل في سجل التدقيق (audit log)"
+   }
+  },
+  {
+   "id": "m9-e2",
+   "lesson": "9.3",
+   "text": {
+    "en": "I have implemented pre-filtering from a session object in a local vector store and written persona-by-document tests showing that no forbidden chunk is returned across at least 30 queries per persona, including queries that name forbidden documents",
+    "ar": "طبّقتُ الترشيح المسبق (pre-filtering) انطلاقًا من كائن الجلسة (session object) في مخزن متجهات محلي (local vector store)، وكتبتُ اختبارات الشخصيات مقابل المستندات (persona-by-document tests) تُثبت أنه لا يُرجَع أي مقطع محظور (no forbidden chunk) عبر 30 استعلامًا على الأقل لكل شخصية (at least 30 queries per persona)، بما فيها استعلامات تسمّي المستندات المحظورة (queries that name forbidden documents)"
+   }
+  }
+ ]
+}
