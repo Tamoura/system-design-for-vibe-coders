@@ -1,0 +1,135 @@
+{
+ "area": "m4",
+ "questions": [
+  {
+   "id": "m4-1",
+   "level": 1,
+   "lesson": "4.1",
+   "q": {
+    "en": "Faisal’s draft spec says: \"Najm Assist automation level: Act, since the model scored 93% on our test set.\" The assistant suggests help articles, drafts dispute forms and freezes cards. What should the spec do instead?",
+    "ar": "تقول مسودة المواصفات (draft spec) التي كتبها فيصل: \"مستوى الأتمتة (automation level) لنجم أسيست (Najm Assist): التنفيذ (Act)، لأن النموذج حقق 93% على مجموعة الاختبار (test set)\". والمساعد يقترح مقالات المساعدة (suggests help articles)، ويصوغ نماذج الاعتراض (drafts dispute forms)، ويجمّد البطاقات (freezes cards). ماذا ينبغي أن تفعل المواصفات بدلًا من ذلك؟"
+   },
+   "o": {
+    "en": [
+     "Require a test score above 95% before the assistant may act at all",
+     "Set one level for the whole assistant, but start it at Suggest",
+     "Keep Act, and add a notice that answers and actions may be wrong",
+     "Set a level per task from its error cost, reversibility and rules"
+    ],
+    "ar": [
+     "اشتراط درجة اختبار (test score) تتجاوز 95% (above 95%) قبل السماح للمساعد بالتنفيذ أصلًا (may act at all)",
+     "تحديد مستوى واحد للمساعد كله (one level for the whole assistant)، مع البدء بمستوى الاقتراح (Suggest) أولًا",
+     "الإبقاء على التنفيذ (Act)، مع إضافة تنبيه (notice) بأن الإجابات والإجراءات (answers and actions) قد تكون خاطئة (may be wrong)",
+     "تحديد مستوى لكل مهمة (per task) حسب تكلفة خطئها وقابلية تراجعها وقواعدها (error cost, reversibility and rules)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "The level is a product decision made per task from cost of error, reversibility, volume, measured quality and accountability, and Najm Assist suggests, drafts and acts at different levels. Raising the test-score bar is tempting, but it still treats the level as a property of the model.",
+    "ar": "مستوى الأتمتة قرار منتج (product decision) يُتخذ لكل مهمة (per task) وفق تكلفة الخطأ وقابلية التراجع والحجم (cost of error, reversibility, volume) والجودة المقيسة والمساءلة (measured quality and accountability)، ونجم أسيست (Najm Assist) يقترح ويصوغ وينفّذ (suggests, drafts and acts) بمستويات مختلفة. أما رفع عتبة درجة الاختبار (test-score bar) فمغرٍ، لكنه ما زال يعامل المستوى كأنه خاصية في النموذج (property of the model)."
+   }
+  },
+  {
+   "id": "m4-2",
+   "level": 2,
+   "lesson": "4.1",
+   "q": {
+    "en": "Najm’s dispute team asks Faisal for \"more automation\". Hessa finds that analysts spend most of each case collecting transaction records and merchant replies, while the decision itself takes a few minutes. What should Faisal propose first?",
+    "ar": "يطلب فريق الاعتراضات (dispute team) في بنك نجم (Najm Bank) من فيصل \"مزيدًا من الأتمتة (more automation)\". وتجد حصة أن المحللين (analysts) يقضون معظم وقت كل حالة في جمع سجلات المعاملات (transaction records) وردود التجار (merchant replies)، بينما لا يستغرق القرار نفسه (the decision itself) سوى دقائق قليلة. ماذا ينبغي أن يقترح فيصل أولًا؟"
+   },
+   "o": {
+    "en": [
+     "Automate gathering and summarising the evidence; analysts still decide",
+     "Let the model decide disputes under a set amount, as decisions are quick",
+     "Auto-reject disputes the model scores as weak, to shrink the daily queue",
+     "Keep disputes manual until the model’s decisions are proven perfect"
+    ],
+    "ar": [
+     "أتمتة جمع الأدلة وتلخيصها (gathering and summarising evidence)، ويبقى القرار للمحللين (analysts decide)",
+     "ترك النموذج يقرر (let the model decide) في الاعتراضات التي تقل عن مبلغ محدد (under a set amount)، لأن القرارات سريعة (decisions are quick)",
+     "الرفض الآلي (auto-reject) للاعتراضات التي يمنحها النموذج درجة ضعيفة (scores as weak)، لتقليص الطابور اليومي (daily queue)",
+     "إبقاء الاعتراضات يدوية (manual) إلى أن يثبت أن قرارات النموذج مثالية (proven perfect)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "The four-function model asks which function holds the pain: here it is information gathering, which is lower risk to automate and may deliver most of the value. Letting the model decide small disputes is tempting, but it automates the riskier function and leaves the real bottleneck in place.",
+    "ar": "يسأل نموذج الوظائف الأربع (four-function model) عن الوظيفة التي يكمن فيها الألم (which function holds the pain): وهي هنا جمع المعلومات (information gathering)، وأتمتتها أقل خطورة (lower risk) وقد تحقق معظم القيمة (most of the value). أما ترك النموذج يقرر في الاعتراضات الصغيرة (small disputes) فمغرٍ، لكنه يؤتمت الوظيفة الأخطر (riskier function) ويترك عنق الزجاجة الحقيقي (real bottleneck) في مكانه."
+   }
+  },
+  {
+   "id": "m4-3",
+   "level": 2,
+   "lesson": "4.3",
+   "q": {
+    "en": "For Najm Assist v2, Tariq offers to connect the assistant to the bank’s full payments API, transfers included, \"so we never have to reconnect it\". The v2 action catalogue covers card freezes, disputes and limit changes; transfers are out of scope. What should Faisal answer?",
+    "ar": "في الإصدار 2 من نجم أسيست (Najm Assist v2)، يعرض طارق ربط المساعد بواجهة المدفوعات الكاملة (full payments API) في البنك، بما فيها التحويلات (transfers included)، \"حتى لا نضطر إلى إعادة ربطه أبدًا (so we never have to reconnect it)\". ويغطي كتالوج إجراءات الإصدار 2 (v2 action catalogue) تجميد البطاقات (card freezes) والاعتراضات (disputes) وتغيير الحدود (limit changes)، أما التحويلات فخارج النطاق (out of scope). بماذا ينبغي أن يجيب فيصل؟"
+   },
+   "o": {
+    "en": [
+     "Connect it all, with a prompt rule that forbids any transfer until v3",
+     "Connect it all, but require step-up authentication for every transfer",
+     "Connect only the tools v2’s actions need; add others as each is earned",
+     "Connect only read-only tools for v2, so the assistant can never do harm"
+    ],
+    "ar": [
+     "ربط كل شيء (connect it all)، مع قاعدة في الموجّه (prompt rule) تمنع أي تحويل حتى الإصدار 3 (until v3)",
+     "ربط كل شيء (connect it all)، لكن مع اشتراط مصادقة معزَّزة (step-up authentication) لكل تحويل (every transfer)",
+     "ربط أدوات إجراءات الإصدار 2 فقط (only the tools v2’s actions need)، وإضافة غيرها حين يُكتسب كلٌّ منها (as each is earned)",
+     "ربط أدوات القراءة فقط (read-only tools) للإصدار 2 (for v2)، حتى لا يتسبب المساعد (the assistant) في أي ضرر أبدًا (can never do harm)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Least privilege gives the agent only the tools its tasks need, and each new action earns its own promotion with evidence; an unused transfer tool only adds harm if the agent is manipulated or injected, while read-only tools could not perform v2’s own actions. A prompt rule is the tempting fix, but prompt instructions can be bypassed, so they are not a safety control.",
+    "ar": "مبدأ أقل الصلاحيات (least privilege) يمنح الوكيل (agent) فقط الأدوات التي تحتاجها مهامه (tools its tasks need)، وكل إجراء جديد يكتسب ترقيته بأدلته الخاصة (earns its own promotion with evidence)؛ وأداة تحويل غير مستخدمة (unused transfer tool) لا تضيف إلا ضررًا إذا تعرّض الوكيل للتلاعب أو لحقن الموجّهات (manipulation or prompt injection)، بينما لا تستطيع أدوات القراءة فقط (read-only tools) تنفيذ إجراءات الإصدار 2 نفسها (v2’s own actions). أما قاعدة الموجّه (prompt rule) فهي الحل المغري، لكن تعليمات الموجّه يمكن تجاوزها (can be bypassed)، فهي ليست ضابط أمان (safety control)."
+   }
+  },
+  {
+   "id": "m4-4",
+   "level": 3,
+   "lesson": "4.2",
+   "q": {
+    "en": "In an early pilot of the Credit Memo Copilot, RMs rate it 4.7 out of 5 for trust. Logs show they open source links on fewer than 5% of figures, and credit review has found two memos quoting a covenant from a different facility. What should Faisal conclude?",
+    "ar": "في تجربة مبكرة (early pilot) لمساعد مذكرات الائتمان (Credit Memo Copilot)، يمنحه مديرو العلاقة (RMs) تقييم ثقة (trust rating) قدره 4.7 من 5. وتُظهر السجلات (logs) أنهم يفتحون روابط المصادر (source links) لأقل من 5% من الأرقام، وقد وجدت مراجعة الائتمان (credit review) مذكرتين تقتبسان تعهدًا (covenant) من تسهيل آخر (different facility). ماذا ينبغي أن يستنتج فيصل؟"
+   },
+   "o": {
+    "en": [
+     "Trust is high and earned; two slips in a pilot are normal for any tool",
+     "Reliance outruns capability; stop unchecked quotes from being exported",
+     "The RMs are at fault; retrain them to remember they own the final memo",
+     "Retrieval is at fault; pause the pilot until the model stops these errors"
+    ],
+    "ar": [
+     "الثقة مرتفعة ومستحقة (high and earned)؛ وخطآن في تجربة تشغيلية (pilot) أمر طبيعي في أي أداة (normal for any tool)",
+     "الاعتماد يفوق القدرة (reliance outruns capability)؛ فلنمنع تصدير الاقتباسات غير المؤكَّدة (unchecked quotes)",
+     "الخطأ خطأ مديري العلاقة (RMs)؛ فلنُعِد تدريبهم ليتذكروا أنهم يملكون المذكرة النهائية (own the final memo)",
+     "الخطأ في الاسترجاع (retrieval)؛ فلنوقف التجربة (pause the pilot) حتى يكفّ النموذج عن هذه الأخطاء (stops these errors)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "High ratings with almost no checking and errors getting through are overtrust; the lesson measures trust by behaviour and uses friction and containment, such as blocking export until quotes are confirmed. Pausing until the model improves misreads a design problem: a better model alone does not calibrate reliance.",
+    "ar": "التقييمات المرتفعة مع شبه انعدام للتحقق (almost no checking) وأخطاء تمرّ (errors getting through) تعني إفراطًا في الثقة (overtrust)؛ والدرس يقيس الثقة بالسلوك (measures trust by behaviour) ويستخدم الاحتكاك والاحتواء (friction and containment)، مثل منع التصدير حتى تُؤكَّد الاقتباسات (blocking export until quotes are confirmed). أما إيقاف التجربة حتى يتحسن النموذج فيُسيء قراءة مشكلة تصميمية (design problem): فالنموذج الأفضل وحده (a better model alone) لا يعاير الاعتماد (calibrate reliance)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m4-e1",
+   "lesson": "4.2",
+   "text": {
+    "en": "I have written an error and recovery matrix for an AI feature, filling in notice, recover, learn and contain for each error type, including a path to a human.",
+    "ar": "كتبت مصفوفة أخطاء وتعافٍ (error and recovery matrix) لميزة ذكاء اصطناعي (AI feature)، وملأت فيها الملاحظة والتعافي والتعلم والاحتواء (notice, recover, learn and contain) لكل نوع خطأ (each error type)، بما في ذلك مسار إلى إنسان (path to a human)."
+   }
+  },
+  {
+   "id": "m4-e2",
+   "lesson": "4.3",
+   "text": {
+    "en": "I have written an action catalogue for an AI assistant or agent, giving each action its level, confirmation, reversibility, limits enforced outside the model, audit and failure behaviour.",
+    "ar": "كتبت كتالوج إجراءات (action catalogue) لمساعد أو وكيل ذكاء اصطناعي (AI assistant or agent)، يحدد لكل إجراء مستواه (level)، ونمط التأكيد (confirmation)، وقابلية التراجع (reversibility)، وحدودًا تُفرض خارج النموذج (limits enforced outside the model)، والتدقيق (audit)، والسلوك عند الفشل (failure behaviour)."
+   }
+  }
+ ]
+}

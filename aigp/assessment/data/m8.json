@@ -1,0 +1,135 @@
+{
+ "area": "m8",
+ "questions": [
+  {
+   "id": "m8-1",
+   "level": 1,
+   "lesson": "8.1",
+   "q": {
+    "en": "Triage has classified Khalid's retail credit-scoring model as high-risk under Annex III of the EU AI Act. A project manager wants to close the classification step there and start the build. What does the intake process still require?",
+    "ar": "صنّفت عمليةُ الفرز (triage) نموذجَ خالد لتقييم الائتمان للأفراد (retail credit-scoring model) بأنه عالي المخاطر (high-risk) بموجب الملحق III (Annex III) من قانون الذكاء الاصطناعي الأوروبي (EU AI Act). ويريد مدير مشروع (project manager) إغلاق مرحلة التصنيف (classification step) عند هذا الحد وبدء البناء (start the build). ما الذي لا تزال عملية الاستقبال (intake process) تتطلبه؟"
+   },
+   "o": {
+    "en": [
+     "Nothing more, since the high-risk tier is the strictest outcome and covers the other regimes",
+     "An Art. 6(3) assessment, since a documented preparatory-task role could still lower the tier",
+     "GDPR, PDPPL, UAE PDPL and sector-rule classification, since the regimes run in parallel",
+     "A DPIA alone, since GDPR is the only other regime that reaches the bank's EU loan applicants"
+    ],
+    "ar": [
+     "لا شيء آخر، لأن مستوى المخاطر العالية (high-risk tier) هو النتيجة الأشد (strictest outcome) ويغطي الأنظمة القانونية الأخرى (other regimes)",
+     "تقييمًا وفق المادة 6(3) (Art. 6(3) assessment)، لأن توثيق دوره بوصفه مهمة تحضيرية (documented preparatory-task role) قد يخفّض المستوى (lower the tier) رغم ذلك",
+     "تصنيفًا وفق GDPR وPDPPL وPDPL الإماراتي والقواعد القطاعية (GDPR, PDPPL, UAE PDPL and sector-rule classification)، لأن الأنظمة القانونية (regimes) تسري بالتوازي (run in parallel)",
+     "تقييمَ الأثر على حماية البيانات (DPIA) وحده، لأن GDPR هو النظام القانوني الآخر الوحيد (only other regime) الذي يشمل متقدمي البنك الأوروبيين بطلبات القروض (EU loan applicants)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Classification runs in parallel because one system can fall under several regimes, so the credit model still needs its GDPR analysis (Art. 22 after SCHUFA, a DPIA), a PDPPL and UAE PDPL review, and sector rules such as QCB's AI guideline. Stopping at the AI Act tier is the tempting shortcut but settles no privacy or sector duty, and the Art. 6(3) filter cannot lower the tier because credit scoring profiles people.",
+    "ar": "يجري التصنيف (classification) بالتوازي (in parallel) لأن النظام الواحد قد يقع ضمن عدة أنظمة قانونية (several regimes)، لذلك ما زال نموذج الائتمان (credit model) يحتاج إلى تحليل وفق GDPR (GDPR analysis) يشمل المادة 22 (Art. 22) بعد حكم SCHUFA وتقييم الأثر على حماية البيانات (DPIA)، وإلى مراجعة PDPPL وPDPL الإماراتي (UAE PDPL review)، وإلى القواعد القطاعية (sector rules) مثل إرشادات QCB للذكاء الاصطناعي (QCB's AI guideline). أما التوقف عند مستوى AI Act (AI Act tier) فهو الاختصار المغري (tempting shortcut)، لكنه لا يحسم أي واجب للخصوصية أو واجب قطاعي (privacy or sector duty)، ولا يستطيع مرشّح المادة 6(3) (Art. 6(3) filter) خفض المستوى (lower the tier) لأن تقييم الائتمان (credit scoring) ينمّط الأشخاص (profiles people)."
+   }
+  },
+  {
+   "id": "m8-2",
+   "level": 2,
+   "lesson": "8.2",
+   "q": {
+    "en": "Najm's fraud team wants its retrained model to block suspicious card payments in real time, at about 40,000 decisions a day. Which oversight design fits best?",
+    "ar": "يريد فريق مكافحة الاحتيال (fraud team) في بنك نجم (Najm Bank) أن يحظر نموذجه المعاد تدريبه (retrained model) مدفوعات البطاقات المشبوهة (suspicious card payments) في الوقت الفعلي (real time)، بمعدل نحو 40,000 قرار يوميًا (decisions a day). ما تصميم الإشراف (oversight design) الأنسب؟"
+   },
+   "o": {
+    "en": [
+     "Human-in-the-loop: an analyst approves every single block before it takes effect",
+     "Human-on-the-loop: analysts monitor live and can stop it, and customers get fast recourse",
+     "Human-over-the-loop only: the committee reviews block rates and limits every quarter",
+     "No designed oversight: fraud detection is excluded from the Annex III credit-scoring entry"
+    ],
+    "ar": [
+     "الإنسان في الحلقة (human-in-the-loop): يوافق محلل (analyst) على كل عملية حظر (block) قبل أن تسري (takes effect)",
+     "الإنسان على الحلقة (human-on-the-loop): يراقب المحللون (analysts) مباشرةً ويستطيعون إيقافه (stop it)، ويحصل العملاء على سبيل اعتراض سريع (fast recourse)",
+     "الإنسان فوق الحلقة (human-over-the-loop) وحده: تراجع اللجنة (committee) معدلات الحظر وحدوده (block rates and limits) كل ربع سنة (quarter)",
+     "لا إشراف مصمَّمًا (no designed oversight): فكشف الاحتيال (fraud detection) مستثنى من بند تقييم الائتمان (credit-scoring entry) في الملحق III (Annex III)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "At high volume individual review is impossible, so the lesson pairs human-on-the-loop with real-time monitoring, the power to intervene or stop, and fast customer recourse. Human-in-the-loop sounds safest, but approving every block at this volume becomes rubber-stamp review, which is only nominal oversight.",
+    "ar": "عند الأحجام الكبيرة (high volume) تستحيل المراجعة الفردية (individual review)، لذلك يقرن الدرس الإنسانَ على الحلقة (human-on-the-loop) بالمراقبة في الوقت الفعلي (real-time monitoring)، والقدرة على التدخل أو الإيقاف (intervene or stop)، وسبيل اعتراض سريع للعميل (fast customer recourse). يبدو الإنسان في الحلقة (human-in-the-loop) الخيارَ الأكثر أمانًا، لكن الموافقة على كل عملية حظر (block) بهذا الحجم تتحول إلى مراجعة صورية (rubber-stamp review)، أي إلى إشراف شكلي (nominal oversight) فحسب."
+   }
+  },
+  {
+   "id": "m8-3",
+   "level": 2,
+   "lesson": "8.3",
+   "q": {
+    "en": "The vendor of Najm's CV-screening tool, which is the tool's AI Act provider, asks to reuse Najm's applicant data to improve its product for all its clients. Sara must advise before Yusuf signs the renewal. What is the right analysis?",
+    "ar": "يطلب مورّدُ أداة فرز السير الذاتية (CV-screening tool vendor) لدى بنك نجم (Najm Bank)، وهو مقدّم الأداة وفق AI Act (the tool's AI Act provider)، إعادةَ استخدام بيانات المتقدمين (applicant data) لدى البنك لتحسين منتجه (improve its product) لجميع عملائه (all its clients). ويجب أن تقدّم سارة مشورتها (advise) قبل أن يوقّع يوسف التجديد (renewal). ما التحليل الصحيح (right analysis)؟"
+   },
+   "o": {
+    "en": [
+     "A separate GDPR question: the reuse may make the vendor a controller, so Najm must authorise it",
+     "Already settled: as the AI Act provider, the vendor is the GDPR controller of all the data it holds",
+     "A contract detail only: the vendor stays Najm's processor whatever it does with the data it receives",
+     "An AI Act question: letting the vendor train on Najm's data could make Najm the tool's provider under Art. 25"
+    ],
+    "ar": [
+     "مسألة منفصلة في GDPR (separate GDPR question): قد تجعل إعادة الاستخدام (reuse) المورّدَ متحكّمًا (controller)، فيجب أن يأذن بها بنك نجم (Najm must authorise it)",
+     "مسألة محسومة (already settled): بما أن المورّد (vendor) هو مقدّم النظام وفق AI Act (AI Act provider)، فهو المتحكّم وفق GDPR (GDPR controller) في كل البيانات التي يحوزها (all the data it holds)",
+     "تفصيل تعاقدي فقط (contract detail only): يبقى المورّد (vendor) معالِجًا (processor) لبنك نجم أيًّا كان ما يفعله بالبيانات التي يتلقاها (data it receives)",
+     "مسألة تخص AI Act (AI Act question): السماح للمورّد (vendor) بالتدريب على بيانات بنك نجم (Najm's data) قد يجعل البنك مقدّمَ الأداة (tool's provider) بموجب المادة 25 (Art. 25)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Provider/deployer and controller/processor are separate analyses: the vendor can be the AI Act provider and Najm's processor, but reusing Najm's data for its own product may make it a controller for that processing, which Najm must authorise and disclose. Treating the vendor as Najm's processor whatever it does is the tempting shortcut, and Art. 25 does not apply because Najm neither rebrands, substantially modifies nor repurposes the tool.",
+    "ar": "مقدّم النظام/المُشغِّل (provider/deployer) والمتحكّم/المعالِج (controller/processor) تحليلان منفصلان (separate analyses): فقد يكون المورّد (vendor) مقدّمَ النظام وفق AI Act (AI Act provider) ومعالِجًا (processor) لحساب بنك نجم، لكن إعادة استخدامه بيانات بنك نجم (Najm's data) لمنتجه الخاص (its own product) قد تجعله متحكّمًا (controller) في تلك المعالجة (processing)، وهو ما يجب أن يأذن به بنك نجم ويفصح عنه (authorise and disclose). أما معاملة المورّد معالِجًا لبنك نجم أيًّا كان ما يفعله فهي الاختصار المغري (tempting shortcut)، ولا تنطبق المادة 25 (Art. 25) لأن بنك نجم لا يضع اسمه على الأداة (rebrand) ولا يعدّلها تعديلًا جوهريًا (substantially modify) ولا يغيّر غرضها (repurpose)."
+   }
+  },
+  {
+   "id": "m8-4",
+   "level": 3,
+   "lesson": "8.1",
+   "q": {
+    "en": "Najm's underwriters now see three outputs for each small personal loan: an income-verification model, a document-forgery checker and a GenAI summary of the file. Each tool was triaged on its own at Tier 2 as decision support with human review, yet underwriters approve or decline almost entirely on the three outputs together. What should Layla conclude?",
+    "ar": "يرى موظفو الاكتتاب (underwriters) في بنك نجم (Najm Bank) الآن ثلاثة مخرجات (outputs) لكل قرض شخصي صغير (small personal loan): نموذجًا للتحقق من الدخل (income-verification model)، وأداة لكشف تزوير المستندات (document-forgery checker)، وملخصًا للملف بالذكاء الاصطناعي التوليدي (GenAI summary). وقد فُرزت (triaged) كل أداة وحدها في المستوى 2 (Tier 2) بوصفها دعمًا للقرار مع مراجعة بشرية (decision support with human review)، لكن موظفي الاكتتاب يوافقون أو يرفضون (approve or decline) بناءً على المخرجات الثلاثة مجتمعةً (three outputs together) بالكامل تقريبًا (almost entirely). ما الذي ينبغي أن تستنتجه (conclude) ليلى؟"
+   },
+   "o": {
+    "en": [
+     "Each tool was triaged on its own, so their combined use needs no further review",
+     "Only the GenAI summary needs re-triage, since generative models carry the highest risk",
+     "The flow can stay at Tier 2, since an underwriter still makes every final decision",
+     "The tools need re-triage as one use case, since together they drive the decision"
+    ],
+    "ar": [
+     "فُرزت (triaged) كل أداة وحدها، لذلك لا يحتاج استخدامها المجمَّع (combined use) إلى أي مراجعة إضافية (further review)",
+     "ملخص الذكاء الاصطناعي التوليدي (GenAI summary) وحده يحتاج إلى إعادة الفرز (re-triage)، لأن النماذج التوليدية (generative models) تحمل أعلى المخاطر (highest risk)",
+     "يمكن أن يبقى المسار (flow) في المستوى 2 (Tier 2)، لأن موظف الاكتتاب (underwriter) ما زال يتخذ كل قرار نهائي (final decision)",
+     "تحتاج الأدوات (tools) إلى إعادة الفرز (re-triage) بوصفها حالة استخدام واحدة (one use case)، لأنها مجتمعةً تحدد القرار (together drive the decision)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "This is the aggregation pitfall: several Tier 2 tools feeding one decision may add up to Tier 1 impact, especially when underwriters decide almost entirely on their outputs, so the three tools must go back through triage as one use case. Relying on the underwriter's final say is tempting, but nominal oversight does not lower the tier.",
+    "ar": "هذا مزلق التجميع (aggregation pitfall): فعدة أدوات من المستوى 2 (Tier 2) تغذّي قرارًا واحدًا (one decision) قد يصل مجموع أثرها إلى المستوى 1 (Tier 1)، لا سيما حين يقرر موظفو الاكتتاب (underwriters) بناءً على مخرجاتها (outputs) بالكامل تقريبًا، لذلك يجب أن تعود الأدوات الثلاث (three tools) إلى الفرز (triage) بوصفها حالة استخدام واحدة (one use case). والاعتماد على القرار النهائي لموظف الاكتتاب (underwriter's final say) مغرٍ، لكن الإشراف الشكلي (nominal oversight) لا يخفّض المستوى (lower the tier)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m8-e1",
+   "lesson": "8.2",
+   "text": {
+    "en": "I have threat-modelled a GenAI system against five risks from the OWASP Top 10 for LLM Applications, each with a realistic attack, a design control and a test that proves the control works",
+    "ar": "أجريتُ نمذجة التهديدات (threat-modelling) لنظام ذكاء اصطناعي توليدي (GenAI system) مقابل خمسة مخاطر (five risks) من OWASP Top 10 for LLM Applications، لكلٍّ منها هجوم واقعي (realistic attack) وضابط تصميم (design control) واختبار يثبت أن الضابط يعمل (test that proves the control works)"
+   }
+  },
+  {
+   "id": "m8-e2",
+   "lesson": "8.3",
+   "text": {
+    "en": "I have written decision-log entries for choices a model team made implicitly, such as the cut-off, excluded features or training window, each with alternatives, rationale, approver and evidence",
+    "ar": "كتبتُ مدخلات في سجل القرارات (decision-log entries) لخيارات اتخذها فريق نموذج (model team) ضمنيًا (implicitly)، مثل حد القطع (cut-off) أو الخصائص المستبعدة (excluded features) أو نافذة التدريب (training window)، لكلٍّ منها البدائل (alternatives) والمبرر (rationale) والجهة الموافِقة (approver) والأدلة (evidence)"
+   }
+  }
+ ]
+}

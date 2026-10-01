@@ -172,7 +172,7 @@ function makeT(C, lang, L) {
     other: { href: 'assessment.html', label: 'English' },
     brand: `${C.brand} · التقييم الذاتي (Self-assessment)`, back: 'الدورة →', home: 'المكتبة',
     h1: 'أين تقف الآن؟',
-    lede: `تقييم ذاتي (self-assessment) لدورة <a href="${rd}">${C.name.ar}</a>: ‏${nq} سؤالًا موزعة على ${U.ars} الدورة البالغ عددها ${na}، مع قائمة تحقق (checklist) بما فعلته فعلًا. تحصل على مستوى (level)، وخريطة لنقاط قوتك وضعفك، والدروس المحددة التي تدرسها بعد ذلك.`,
+    lede: `تقييم ذاتي (self-assessment) لدورة <a href="${rd}">${C.name.ar.replace(/\(([^()]+)\)$/, '<bdi>($1)</bdi>')}</a>: ‏${nq} سؤالًا موزعة على ${U.ars} الدورة البالغ عددها ${na}، مع قائمة تحقق (checklist) بما فعلته فعلًا. تحصل على مستوى (level)، وخريطة لنقاط قوتك وضعفك، والدروس المحددة التي تدرسها بعد ذلك.`,
     tabs: { start: 'البداية', knowledge: 'اختبار المعرفة (Knowledge check)', evidence: 'الأدلة (Evidence)', results: 'النتائج (Results)', group: 'عرض المجموعة (Group view)' },
     startH: 'كيف يعمل',
     startSteps: [
@@ -255,7 +255,8 @@ html[lang="ar"] h1,html[lang="ar"] h2,html[lang="ar"] h3{font-family:inherit;let
 html[lang="ar"] .tabs{font-family:inherit}
 .tabs button{font:inherit;font-weight:600;font-size:.9rem;padding:.45rem .95rem;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
 .tabs button.on{background:var(--ember);border-color:var(--ember);color:#fff}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1.2rem 1.3rem;margin:0 0 1rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1.2rem 1.3rem;margin:0 0 1rem;overflow-wrap:anywhere}
+.q label>span{min-width:0}
 .card h2{margin:.1rem 0 .4rem;font-size:1.3rem}
 .sub{color:var(--muted);margin:.2rem 0 1rem}
 .hide{display:none}
@@ -364,6 +365,7 @@ const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch
 save();
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const gl = (s) => D.lang === "ar" ? esc(s).replace(/(\u2066?)[(]([A-Za-z0-9][^()\u0600-\u06FF]*)[)](\u2069?)/g, "<bdi>$1($2)$3</bdi>") : esc(s);
 const link = (n) => '<a href="' + D.reader + (D.cfg.mode === 'l' ? '#l' + n.replace('.', '-') : '#/' + n) + '">' + T.lessonW + ' ' + n + '</a>';
 function rng(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
 function order(i){ const r = rng(S.seed + i*7919), o = [0,1,2,3]; for (let k=3;k>0;k--){ const j = Math.floor(r()*(k+1)); [o[k],o[j]]=[o[j],o[k]]; } return o; }
@@ -378,13 +380,13 @@ function order(i){ const r = rng(S.seed + i*7919), o = [0,1,2,3]; for (let k=3;k
 function renderK(){
   let h = "", i = 0;
   for (const a of D.areas) {
-    h += '<h3 class="area-h"><span class="k">' + esc(a.key) + '</span>' + esc(a.name) + '</h3>';
+    h += '<h3 class="area-h"><span class="k">' + esc(a.key) + '</span>' + gl(a.name) + '</h3>';
     for (const q of D.qs.filter((x) => x.area === a.id)) {
       const qi = D.qs.indexOf(q); i++;
-      h += '<div class="q" id="q-' + q.id + '"><span class="lv">' + i + ' · ' + esc(T.lvl[q.level]) + '</span><p class="stem">' + esc(q.q) + '</p>';
+      h += '<div class="q" id="q-' + q.id + '"><span class="lv">' + i + ' · ' + esc(T.lvl[q.level]) + '</span><p class="stem">' + gl(q.q) + '</p>';
       for (const oi of order(qi)) {
         const on = S.answers[q.id] === oi;
-        h += '<label class="' + (on ? 'sel' : '') + '"><input type="radio" name="' + q.id + '" value="' + oi + '"' + (on ? ' checked' : '') + '><span>' + esc(q.o[oi]) + '</span></label>';
+        h += '<label class="' + (on ? 'sel' : '') + '"><input type="radio" name="' + q.id + '" value="' + oi + '"' + (on ? ' checked' : '') + '><span>' + gl(q.o[oi]) + '</span></label>';
       }
       h += '</div>';
     }
@@ -403,9 +405,9 @@ function prog(){ $("#kprog").textContent = ANSWERED(Object.keys(S.answers).filte
 function renderE(){
   let h = "";
   for (const a of D.areas) {
-    h += '<h3 class="area-h"><span class="k">' + esc(a.key) + '</span>' + esc(a.name) + '</h3>';
+    h += '<h3 class="area-h"><span class="k">' + esc(a.key) + '</span>' + gl(a.name) + '</h3>';
     for (const e of D.ev.filter((x) => x.area === a.id))
-      h += '<label><input type="checkbox" data-e="' + e.id + '"' + (S.evidence[e.id] ? ' checked' : '') + '><span>' + esc(e.text) + ' <span class="ln">(' + link(e.lesson) + ')</span></span></label>';
+      h += '<label><input type="checkbox" data-e="' + e.id + '"' + (S.evidence[e.id] ? ' checked' : '') + '><span>' + gl(e.text) + ' <span class="ln">(' + link(e.lesson) + ')</span></span></label>';
   }
   $("#elist").innerHTML = h;
   $("#elist").querySelectorAll("input").forEach((el) => el.addEventListener("change", () => { S.evidence[el.dataset.e] = el.checked; save(); }));
@@ -429,24 +431,24 @@ function renderR(){
   if (!any) { $("#rout").innerHTML = '<div class="card"><p class="sub">' + esc(T.rEmpty) + '</p></div>'; return; }
   const R = compute(), L = T.levels[R.level];
   let h = '<div class="card"><h2>' + esc(T.rH) + (S.name ? ' — ' + esc(S.name) : '') + '</h2>';
-  h += '<div class="level"><b>' + esc(L[0]) + '</b>' + esc(L[1]) + '</div>';
+  h += '<div class="level"><b>' + gl(L[0]) + '</b>' + gl(L[1]) + '</div>';
   h += '<div class="kpis"><div><b>' + Math.round(100*R.right/R.total) + '%</b><span>' + esc(T.score) + ' (' + R.right + '/' + R.total + ')</span></div>'
      + '<div><b>' + R.aware + '/' + N + '</b><span>' + esc(T.areasAware) + '</span></div>'
      + '<div><b>' + R.pract + '/' + N + '</b><span>' + esc(T.areasPract) + '</span></div></div>';
   h += '<div class="tbl"><table><thead><tr><th>' + esc(T.colArea) + '</th><th>' + esc(T.colK) + '</th><th>' + esc(T.colE) + '</th><th>' + esc(T.colS) + '</th></tr></thead><tbody>';
   for (const a of D.areas) { const x = R.areas[a.id];
-    h += '<tr><td><span class="k" style="font-family:var(--mono);color:var(--ember);font-size:.75rem">' + esc(a.key) + '</span> ' + esc(a.name) + '</td><td><span class="bar"><i style="width:' + (100*x.k/x.kt) + '%"></i></span>' + x.k + '/' + x.kt + '</td><td>' + x.e + '/' + x.et + '</td><td><span class="st st' + x.status + '">' + esc(T.status[x.status]) + '</span></td></tr>'; }
+    h += '<tr><td><span class="k" style="font-family:var(--mono);color:var(--ember);font-size:.75rem">' + esc(a.key) + '</span> ' + gl(a.name) + '</td><td><span class="bar"><i style="width:' + (100*x.k/x.kt) + '%"></i></span>' + x.k + '/' + x.kt + '</td><td>' + x.e + '/' + x.et + '</td><td><span class="st st' + x.status + '">' + esc(T.status[x.status]) + '</span></td></tr>'; }
   h += '</tbody></table></div></div>';
   /* study next: missed questions' lessons, weakest areas first */
   const missed = D.qs.filter((q) => S.answers[q.id] !== q.a);
   const byArea = D.areas.map((a) => ({ a, x: R.areas[a.id], ls: [...new Set(missed.filter((q) => q.area === a.id).map((q) => q.lesson))] })).filter((z) => z.ls.length)
     .sort((p, q) => (p.x.status - q.x.status) || (p.x.k - q.x.k));
   h += '<div class="card"><h2>' + esc(T.nextH) + '</h2><p class="sub">' + esc(T.nextSub) + '</p>';
-  h += byArea.length ? '<ul class="next">' + byArea.map((z) => '<li><b>' + esc(z.a.name) + '</b> — ' + z.ls.map(link).join(' · ') + '</li>').join('') + '</ul>' : '<p>' + esc(T.nextNone) + '</p>';
+  h += byArea.length ? '<ul class="next">' + byArea.map((z) => '<li><b>' + gl(z.a.name) + '</b> — ' + z.ls.map(link).join(' · ') + '</li>').join('') + '</ul>' : '<p>' + esc(T.nextNone) + '</p>';
   h += '</div><div class="card"><h2>' + esc(T.reviewH) + '</h2>';
   D.qs.forEach((q, i) => { const ua = S.answers[q.id], ok = ua === q.a;
-    h += '<details class="rev"><summary><span class="' + (ok ? 'ok' : 'no') + '">' + (ok ? '✓' : '✗') + '</span> ' + (i+1) + '. ' + esc(q.q) + '</summary>'
-      + '<p>' + esc(T.yours) + ': ' + (ua === undefined ? '<i>' + esc(T.noAns) + '</i>' : esc(q.o[ua])) + '<br>' + esc(T.right) + ': <b>' + esc(q.o[q.a]) + '</b></p><p>' + esc(q.why) + ' (' + link(q.lesson) + ')</p></details>'; });
+    h += '<details class="rev"><summary><span class="' + (ok ? 'ok' : 'no') + '">' + (ok ? '✓' : '✗') + '</span> ' + (i+1) + '. ' + gl(q.q) + '</summary>'
+      + '<p>' + esc(T.yours) + ': ' + (ua === undefined ? '<i>' + esc(T.noAns) + '</i>' : gl(q.o[ua])) + '<br>' + esc(T.right) + ': <b>' + gl(q.o[q.a]) + '</b></p><p>' + gl(q.why) + ' (' + link(q.lesson) + ')</p></details>'; });
   h += '</div><div class="card noprint"><h2>' + esc(T.saveH) + '</h2><p class="sub">' + esc(T.saveSub) + '</p>'
      + '<button type="button" class="ghost" id="exp">' + esc(T.exportB) + '</button><button type="button" class="ghost" onclick="print()">' + esc(T.printB) + '</button><button type="button" class="ghost" id="rst">' + esc(T.resetB) + '</button></div>';
   $("#rout").innerHTML = h;

@@ -1,0 +1,135 @@
+{
+ "area": "m2",
+ "questions": [
+  {
+   "id": "m2-1",
+   "level": 1,
+   "lesson": "2.1",
+   "q": {
+    "en": "Before any work starts on Najm Assist, Faisal plans interviews with contact-centre agents about the fee questions customers ask. Which opening question will give him the most reliable evidence?",
+    "ar": "قبل بدء أي عمل على نجم أسيست (Najm Assist)، يخطط فيصل لإجراء مقابلات (interviews) مع موظفي مركز الاتصال (contact-centre agents) حول أسئلة الرسوم (fee questions) التي يطرحها العملاء. أي سؤال افتتاحي (opening question) سيمنحه الأدلة الأكثر موثوقية (most reliable evidence)؟"
+   },
+   "o": {
+    "en": [
+     "Would an assistant that suggests answers make your work easier?",
+     "Walk me through the last fee question a customer asked you.",
+     "Which AI features would save you the most time in a day?",
+     "How often do you think customers would use an app assistant?"
+    ],
+    "ar": [
+     "هل سيجعل مساعدٌ يقترح الإجابات (assistant that suggests answers) عملك أسهل (make your work easier)؟",
+     "اشرح لي خطوة بخطوة (walk me through) آخر سؤال عن الرسوم (last fee question) طرحه عليك عميل.",
+     "أي ميزات للذكاء الاصطناعي (AI features) ستوفّر لك أكبر قدر من الوقت (save you the most time) في اليوم؟",
+     "كم مرة تظن أن العملاء (customers) سيستخدمون مساعدًا في التطبيق (app assistant)؟"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "A story-based question about a specific recent episode gives reliable evidence, because people recall what they actually did far better than they predict their own behaviour. Asking whether an assistant would help is tempting, but people cannot judge imagined AI features.",
+    "ar": "السؤال القائم على القصة (story-based question) عن حدث محدد وحديث (specific recent episode) يعطي أدلة موثوقة (reliable evidence)، لأن الناس يتذكرون ما فعلوه فعلًا (what they actually did) أفضل بكثير مما يتنبؤون بسلوكهم (predict their own behaviour). أما سؤالهم هل سيساعد مساعدٌ ما (whether an assistant would help) فمغرٍ (tempting)، لكن الناس لا يستطيعون الحكم (cannot judge) على ميزات ذكاء اصطناعي متخيَّلة (imagined AI features)."
+   }
+  },
+  {
+   "id": "m2-2",
+   "level": 2,
+   "lesson": "2.2",
+   "q": {
+    "en": "A vendor tells Tariq that its model answers 97% of banking questions correctly on its own benchmark. The contact centre wants Najm Assist’s feasibility scored 5 so that a build can start. What should Faisal do first?",
+    "ar": "يخبر مورّدٌ (vendor) طارقَ بأن نموذجه (model) يجيب إجابة صحيحة عن 97% من الأسئلة المصرفية (banking questions) على معياره المرجعي الخاص (its own benchmark). ويريد مركز الاتصال (contact centre) أن تُمنح الجدوى التقنية (feasibility) لنجم أسيست (Najm Assist) الدرجة 5 كي يبدأ البناء (build can start). ماذا ينبغي أن يفعل فيصل أولًا؟"
+   },
+   "o": {
+    "en": [
+     "Score feasibility 5, since the benchmark covers far more questions than Najm has",
+     "Score feasibility 3, a fair midpoint between the vendor’s claim and the team’s doubts",
+     "Start the build now and confirm the quality bar later, in the customer pilot",
+     "Run a short spike on Najm’s real questions against a bar agreed in advance"
+    ],
+    "ar": [
+     "يمنح الجدوى التقنية (feasibility) الدرجة 5، لأن المعيار المرجعي (benchmark) يغطي أسئلة أكثر بكثير (far more questions) مما لدى نجم",
+     "يمنح الجدوى التقنية (feasibility) الدرجة 3، بوصفها حلًّا وسطًا عادلًا (fair midpoint) بين ادعاء المورّد (vendor’s claim) وشكوك الفريق (team’s doubts)",
+     "يبدأ البناء الآن (start the build) ويتأكد من معيار الجودة (quality bar) لاحقًا في التجربة التشغيلية مع العملاء (customer pilot)",
+     "ينفّذ اختبار جدوى سريعًا وقصيرًا (short spike) على أسئلة نجم الحقيقية (real questions) مقابل معيار متفق عليه مسبقًا (bar agreed in advance)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "AI feasibility is an empirical question: a one-to-two-week spike on a sample of real data, against a quality bar agreed in advance, turns the score from a guess into a measurement and finds data problems early. Taking the vendor’s figure is tempting, but it was not measured on Najm’s own questions and content, so the score would still be a guess.",
+    "ar": "الجدوى التقنية للذكاء الاصطناعي (AI feasibility) مسألة تجريبية (empirical question): فاختبار جدوى سريع (feasibility spike) مدته أسبوع إلى أسبوعين (one to two weeks) على عينة من البيانات الحقيقية (sample of real data)، مقابل معيار جودة متفق عليه مسبقًا (quality bar agreed in advance)، يحوّل الدرجة من تخمين (guess) إلى قياس (measurement) ويكتشف مشكلات البيانات مبكرًا (data problems early). والأخذ برقم المورّد (vendor’s figure) مغرٍ (tempting)، لكنه لم يُقَس (not measured) على أسئلة نجم ومحتواه (Najm’s own questions and content)، فتبقى الدرجة تخمينًا (still a guess)."
+   }
+  },
+  {
+   "id": "m2-3",
+   "level": 2,
+   "lesson": "2.3",
+   "q": {
+    "en": "Before the Najm Assist pilot, Faisal, Dana and the business owner signed a kill criterion: if fewer than 90% of fee answers are correct on the top 50 questions by 30 June, stop and test a clearer fee search page instead. On 30 June the score is 86%, up from 80% a month earlier, and the sponsor asks for one more month. What should Faisal do?",
+    "ar": "قبل التجربة التشغيلية (pilot) لنجم أسيست (Najm Assist)، وقّع فيصل ودانة ومالك الأعمال (business owner) معيار إيقاف (kill criterion): إذا كانت أقل من 90% من إجابات الرسوم (fee answers) صحيحة على أهم 50 سؤالًا (top 50 questions) بحلول 30 يونيو (by 30 June)، نتوقف (stop) ونختبر بدلًا من ذلك صفحة بحث أوضح عن الرسوم (clearer fee search page). في 30 يونيو تبلغ النتيجة (score) 86%، بعد أن كانت 80% قبل شهر (a month earlier)، ويطلب الراعي (sponsor) شهرًا إضافيًا (one more month). ماذا ينبغي أن يفعل فيصل؟"
+   },
+   "o": {
+    "en": [
+     "Stop as agreed, test the search page and log a reopening condition",
+     "Extend by a month, since the score is rising and close to the bar",
+     "Lower the bar to 85%, since the pilot has clearly shown promise",
+     "Keep the pilot running and set a new date once the score levels off"
+    ],
+    "ar": [
+     "يتوقف كما اتُّفق (stop as agreed)، ويختبر صفحة البحث (search page)، ويدوّن شرطًا لإعادة الفتح (reopening condition)",
+     "يمدّد شهرًا (extend by a month)، لأن النتيجة ترتفع (score is rising) وقريبة من المعيار (close to the bar)",
+     "يخفض المعيار (lower the bar) إلى 85%، لأن التجربة التشغيلية (pilot) أظهرت وعدًا واضحًا (clearly shown promise)",
+     "يُبقي التجربة التشغيلية مستمرة (keep the pilot running) ويحدد موعدًا جديدًا (new date) حين تستقر النتيجة (score levels off)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Kill criteria are agreed in advance because, once work starts, everyone has reasons to see promise in weak results; the threshold was missed on the date, so Faisal stops as signed and records the condition that would reopen the idea. Extending because the trend looks good is exactly the bending the criterion was written to prevent.",
+    "ar": "يُتفق على معايير الإيقاف (kill criteria) مسبقًا (in advance) لأنه بمجرد بدء العمل (once work starts) يصبح لدى الجميع أسباب لرؤية الوعد في النتائج الضعيفة (see promise in weak results)؛ وقد فاتت العتبة (threshold was missed) في الموعد المحدد (on the date)، فيتوقف فيصل كما وُقّع (stops as signed) ويدوّن الشرط الذي سيعيد فتح الفكرة (condition that would reopen the idea). أما التمديد لأن الاتجاه يبدو جيدًا (trend looks good) فهو بالضبط الليّ (bending) الذي كُتب المعيار لمنعه (written to prevent)."
+   }
+  },
+  {
+   "id": "m2-4",
+   "level": 3,
+   "lesson": "2.1",
+   "q": {
+    "en": "Three months after the Credit Memo Copilot’s extraction feature went live, RMs spread financials in about 20 minutes instead of 1.5 hours, and spot checks find the figures accurate. Yet the days from request to committee have barely moved. What should Faisal conclude?",
+    "ar": "بعد ثلاثة أشهر من إطلاق ميزة الاستخراج (extraction feature) في مساعد مذكرات الائتمان (Credit Memo Copilot)، صار مديرو العلاقات (RMs) يحلّلون البيانات المالية (spread financials) في نحو 20 دقيقة بدلًا من ساعة ونصف (instead of 1.5 hours)، وتجد الفحوص العشوائية (spot checks) أن الأرقام دقيقة (figures accurate). ومع ذلك بالكاد تغيّر (barely moved) عدد الأيام من الطلب إلى اللجنة (days from request to committee). ما الذي ينبغي أن يستنتجه فيصل؟"
+   },
+   "o": {
+    "en": [
+     "Writing the narrative is the next big step, so automate it next",
+     "Days to committee is the wrong measure; report the RM hours saved instead",
+     "The bottleneck moved to checking or waiting; re-map the current workflow",
+     "RMs still distrust the figures, so add a confidence score to each field"
+    ],
+    "ar": [
+     "كتابة السرد (writing the narrative) هي الخطوة الكبيرة التالية (next big step)، فلتُؤتمت (automate it) بعدها",
+     "الأيام حتى اللجنة (days to committee) مقياس خاطئ (wrong measure)؛ فليُبلَّغ بدلًا منه (report instead) عن ساعات مديري العلاقات الموفَّرة (RM hours saved)",
+     "انتقل عنق الزجاجة (bottleneck) إلى التحقق أو الانتظار (checking or waiting)؛ فلتُرسم من جديد خريطة سير العمل الحالي (re-map the current workflow)",
+     "لا يزال مديرو العلاقات لا يثقون بالأرقام (distrust the figures)، فلتُضف درجة ثقة (confidence score) إلى كل حقل (each field)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Adding AI to one step moves work around: once extraction is fast, the elapsed time sits in steps such as analyst checking, hand-offs or the committee calendar, and only a fresh step-by-step map of the workflow as it now runs will show which. Automating the narrative next is tempting, but it cuts RM hours, not the waiting that decides days to committee.",
+    "ar": "إضافة الذكاء الاصطناعي (adding AI) إلى خطوة واحدة (one step) تنقل العمل من مكان إلى آخر (moves work around): فبمجرد أن يصبح الاستخراج (extraction) سريعًا، يتركّز الوقت المنقضي (elapsed time) في خطوات مثل تحقق المحلل (analyst checking) أو التسليمات (hand-offs) أو جدول مواعيد اللجنة (committee calendar)، ولا يكشف أيّها إلا رسمُ خريطة جديدة خطوة بخطوة (fresh step-by-step map) لسير العمل كما يجري الآن (workflow as it now runs). وأتمتة السرد تاليًا (automating the narrative next) مغرية (tempting)، لكنها تقلّص ساعات مدير العلاقة (RM hours) لا الانتظار (waiting) الذي يحدد الأيام حتى اللجنة (days to committee)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m2-e1",
+   "lesson": "2.2",
+   "text": {
+    "en": "I have run knock-out gates on competing AI use cases, then scored the survivors on value, feasibility and risk against written level descriptions, with the evidence and confidence behind each score.",
+    "ar": "أجريت بوابات الإقصاء (knock-out gates) على حالات استخدام ذكاء اصطناعي متنافسة (competing AI use cases)، ثم قيّمت الناجية منها (scored the survivors) من حيث القيمة والجدوى التقنية والمخاطر (value, feasibility and risk) مقابل أوصاف مستويات مكتوبة (written level descriptions)، مع الدليل والثقة (evidence and confidence) وراء كل درجة (each score)."
+   }
+  },
+  {
+   "id": "m2-e2",
+   "lesson": "2.3",
+   "text": {
+    "en": "I have written kill criteria for an AI spike or pilot before it started, each with a metric, a threshold and a date, and what we would do instead if it was missed.",
+    "ar": "كتبت معايير إيقاف (kill criteria) لاختبار سريع أو تجربة تشغيلية للذكاء الاصطناعي (AI spike or pilot) قبل أن يبدأ، لكل منها مقياس (metric) وعتبة (threshold) وتاريخ (date)، وما سنفعله بدلًا من ذلك (what we would do instead) إذا لم يتحقق (if it was missed)."
+   }
+  }
+ ]
+}

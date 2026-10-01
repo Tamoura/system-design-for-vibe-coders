@@ -1,0 +1,135 @@
+{
+ "area": "m0",
+ "questions": [
+  {
+   "id": "m0-1",
+   "level": 1,
+   "lesson": "0.1",
+   "q": {
+    "en": "Omar tells the board that Najm already has AI governance, because its model risk management team validates and monitors every credit model. What is the main gap in his claim?",
+    "ar": "يقول عمر لمجلس الإدارة (board) إن بنك نجم (Najm Bank) لديه بالفعل حوكمة الذكاء الاصطناعي (AI governance)، لأن فريق إدارة مخاطر النماذج (model risk management team) يتحقق من كل نموذج ائتماني ويرصده (validates and monitors every credit model). ما الثغرة الرئيسية (main gap) في ادعائه؟"
+   },
+   "o": {
+    "en": [
+     "Nothing is missing: validating and monitoring each model is what AI governance means",
+     "It is too technical: AI governance is mainly about publishing the bank’s ethical values",
+     "It is narrower: it rarely reaches GenAI chatbots, bought tools or staff use of AI",
+     "It sits in the third line, so it cannot set AI policy or challenge the business"
+    ],
+    "ar": [
+     "لا ينقصه شيء: فالتحقق من كل نموذج ورصده (validating and monitoring each model) هو معنى حوكمة الذكاء الاصطناعي (AI governance)",
+     "إنها تقنية أكثر من اللازم (too technical): فحوكمة الذكاء الاصطناعي (AI governance) تعني أساسًا نشر القيم الأخلاقية للبنك (bank’s ethical values)",
+     "هي أضيق (narrower): نادرًا ما تشمل روبوتات المحادثة التوليدية (GenAI chatbots) أو الأدوات المشتراة (bought tools) أو استخدام الموظفين للذكاء الاصطناعي (staff use of AI)",
+     "إنها تقع في الخط الثالث (third line)، لذا لا تستطيع وضع سياسة الذكاء الاصطناعي (AI policy) ولا تحدّي وحدات الأعمال (challenge the business)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Model risk management is a strong starting point but narrower than AI governance: it rarely covers GenAI chatbots, bought tools or employee use, all of which Najm has. Validating models is one process inside governance, not the whole frame of direction, structure, process and evidence.",
+    "ar": "إدارة مخاطر النماذج (model risk management) نقطة انطلاق قوية (strong starting point)، لكنها أضيق من حوكمة الذكاء الاصطناعي (AI governance): فنادرًا ما تغطي روبوتات المحادثة التوليدية (GenAI chatbots) أو الأدوات المشتراة (bought tools) أو استخدام الموظفين (employee use)، وكلها موجودة في بنك نجم (Najm Bank). والتحقق من النماذج (validating models) عملية واحدة داخل الحوكمة (governance)، لا الإطار الكامل (whole frame) المؤلف من التوجيه (direction) والهيكل (structure) والعملية (process) والأدلة (evidence)."
+   }
+  },
+  {
+   "id": "m0-2",
+   "level": 2,
+   "lesson": "0.1",
+   "q": {
+    "en": "To save time, Layla’s second-line team offers to run the monthly performance and fairness monitoring of the retail credit-scoring model and sign off the results, so Khalid’s team can focus on lending. What should Layla do?",
+    "ar": "لتوفير الوقت، يعرض فريق ليلى في الخط الثاني (second-line team) أن يتولى بنفسه الرصد الشهري للأداء والعدالة (monthly performance and fairness monitoring) في نموذج تقييم الجدارة الائتمانية للأفراد (retail credit-scoring model)، وأن يعتمد النتائج (sign off the results)، حتى يتفرغ فريق خالد للإقراض (lending). ماذا ينبغي أن تفعل ليلى؟"
+   },
+   "o": {
+    "en": [
+     "Keep it in the first line, with Khalid as owner; her team sets the standard and challenges",
+     "Accept, since the Head of AI Governance is accountable for the outcomes of every AI system",
+     "Accept, provided Internal Audit co-signs each month’s results before they reach the committee",
+     "Hand the monitoring to Internal Audit, since checking a live model is a form of assurance"
+    ],
+    "ar": [
+     "تُبقي الرصد (monitoring) في الخط الأول (first line) مع خالد مالكًا (owner)؛ ويضع فريقها المعيار (standard) ويقدّم التحدي (challenge)",
+     "تقبل، لأن رئيس حوكمة الذكاء الاصطناعي (Head of AI Governance) مُساءَل (accountable) عن نتائج كل نظام ذكاء اصطناعي (AI system)",
+     "تقبل، بشرط أن يشارك التدقيق الداخلي (Internal Audit) في توقيع النتائج الشهرية (co-signs each month’s results) قبل وصولها إلى اللجنة (committee)",
+     "تُسند الرصد (monitoring) إلى التدقيق الداخلي (Internal Audit)، لأن فحص نموذج قيد التشغيل (live model) نوع من الضمان (assurance)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "The first line owns and runs the model and its risks; the second line sets policy and challenges, which it cannot do independently if it runs the monitoring itself. The charter makes the named Business Owner, not the Head of AI Governance, accountable for each system’s use and outcomes.",
+    "ar": "الخط الأول (first line) يملك النموذج ويشغّله ويتحمّل مخاطره (owns and runs the model and its risks)، أما الخط الثاني (second line) فيضع السياسة (policy) ويقدّم التحدي (challenge)، ولا يستطيع ذلك باستقلالية (independently) إذا تولى الرصد (monitoring) بنفسه. والميثاق (charter) يجعل مالك الأعمال المحدد بالاسم (named Business Owner)، لا رئيس حوكمة الذكاء الاصطناعي (Head of AI Governance)، مُساءَلًا (accountable) عن استخدام كل نظام ونتائجه (use and outcomes)."
+   }
+  },
+  {
+   "id": "m0-3",
+   "level": 2,
+   "lesson": "0.2",
+   "q": {
+    "en": "In a practice question about who should approve a new high-risk AI use case and in what order, Sara picks the option that correctly states a GDPR rule on automated decisions. The key is a different option. What does this most likely show?",
+    "ar": "في سؤال تدريبي (practice question) عمّن ينبغي أن يعتمد حالة استخدام جديدة للذكاء الاصطناعي عالية المخاطر (approve a new high-risk AI use case) وبأي ترتيب (in what order)، تختار سارة الخيار الذي يذكر بصورة صحيحة قاعدةً في GDPR بشأن القرارات الآلية (automated decisions). لكن المفتاح (key) خيار آخر. ما الذي يُظهره ذلك على الأرجح (most likely)؟"
+   },
+   "o": {
+    "en": [
+     "Her option was right action, wrong time: legal review comes after the approval step",
+     "The exam no longer tests the GDPR, so any option that cites it is a distractor",
+     "The key is usually the option that cites the most specific legal article",
+     "Her option was true but irrelevant: the stem asked about process, not law"
+    ],
+    "ar": [
+     "كان خيارها الإجراء الصحيح في الوقت الخاطئ (right action, wrong time): فالمراجعة القانونية (legal review) تأتي بعد خطوة الاعتماد (approval step)",
+     "لم يعد الامتحان (exam) يختبر GDPR، لذا فكل خيار يستشهد به مشتِّت (distractor)",
+     "المفتاح (key) عادةً هو الخيار الذي يستشهد بأدق مادة قانونية (most specific legal article)",
+     "كان خيارها صحيحًا لكنه غير ذي صلة (true but irrelevant): فالجذع (stem) سأل عن العملية (process) لا عن القانون (law)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Several options can be true, but only one answers the question asked; when a stem is about process (who approves, in what order), the legal nuance is the distractor. The GDPR is still the core of competency II.A, so it has not dropped out of the exam.",
+    "ar": "قد تكون عدة خيارات صحيحة، لكن خيارًا واحدًا فقط يجيب عن السؤال المطروح (question asked)؛ وعندما يدور الجذع (stem) حول العملية (process)، أي من يعتمد وبأي ترتيب، تكون الدقة القانونية (legal nuance) هي المشتِّت (distractor). ولا يزال GDPR جوهر الكفاءة II.A (competency II.A)، فلم يخرج من الامتحان (exam)."
+   }
+  },
+  {
+   "id": "m0-4",
+   "level": 3,
+   "lesson": "0.3",
+   "q": {
+    "en": "Najm’s inventory v0.2 lists every model Dana’s team built and every tool department heads reported in the survey. An auditor then finds that an HR suite Najm has used for years gained a candidate-matching feature at its last renewal and now ranks Frankfurt applicants. It is not in the inventory. What best explains the gap and closes it?",
+    "ar": "يضم سجل أنظمة الذكاء الاصطناعي (AI inventory) في بنك نجم (Najm Bank)، في نسخته v0.2، كل نموذج (model) بناه فريق دانة، وكل أداة أبلغ عنها رؤساء الأقسام (department heads) في الاستبيان (survey). ثم يكتشف مدقق (auditor) أن حزمة موارد بشرية (HR suite) يستخدمها البنك منذ سنوات اكتسبت ميزة مطابقة المرشحين (candidate-matching feature) عند آخر تجديد (renewal)، وأصبحت ترتّب المتقدمين في فرانكفورت (ranks Frankfurt applicants). وهي غير مدرجة في السجل (inventory). ما أفضل تفسير لهذه الثغرة (gap) وطريقة لسدّها (closes it)؟"
+   },
+   "o": {
+    "en": [
+     "HR under-reported; resend the “Do you use AI?” survey and ask heads to answer it carefully",
+     "Embedded AI came in with a renewal; review contracts and require an inventory ID for AI buys",
+     "The vendor built the feature, so it belongs in the vendor’s register, not in Najm’s inventory",
+     "Renewals are the weak point; switch the feature off and ban updates that add any AI features"
+    ],
+    "ar": [
+     "قصّر قسم الموارد البشرية (HR) في الإبلاغ (under-reported)؛ أعِد إرسال استبيان «هل تستخدمون الذكاء الاصطناعي؟ ⁦(Do you use AI?)⁩» واطلب من رؤساء الأقسام (department heads) الإجابة عنه بعناية",
+     "ذكاء اصطناعي مدمج (embedded AI) دخل مع التجديد (renewal)؛ راجِع العقود (contracts) واشترط معرّف السجل (inventory ID) لشراء الذكاء الاصطناعي (AI buys)",
+     "المورّد (vendor) هو من بنى الميزة (feature)، لذا مكانها سجل المورّد (vendor’s register) لا سجل أنظمة الذكاء الاصطناعي (AI inventory) في بنك نجم (Najm Bank)",
+     "التجديدات (renewals) هي نقطة الضعف (weak point)؛ أوقف الميزة (switch the feature off) واحظر التحديثات (updates) التي تضيف أي ميزات ذكاء اصطناعي (AI features)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Embedded AI sits inside products bought for other reasons, so asking “do you use AI?” misses it; following contracts and renewals finds it, and requiring an inventory ID before procurement buys software with AI features stops it recurring. Buying from a vendor never removes Najm’s own accountability as deployer, so the vendor’s records are no substitute.",
+    "ar": "يكمن الذكاء الاصطناعي المدمج (embedded AI) داخل منتجات اشتُريت لأسباب أخرى، لذا يفوته سؤال «هل تستخدمون الذكاء الاصطناعي؟ ⁦(do you use AI?)⁩»؛ أما تتبّع العقود والتجديدات (contracts and renewals) فيكشفه، واشتراط معرّف السجل (inventory ID) قبل أن تشتري المشتريات (procurement) برمجيات ذات ميزات ذكاء اصطناعي (software with AI features) يمنع تكراره. والشراء من مورّد (vendor) لا يُسقط أبدًا مساءلة بنك نجم (Najm’s accountability) بصفته مُشغِّلًا (deployer)، فسجلات المورّد (vendor’s records) ليست بديلًا."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m0-e1",
+   "lesson": "0.1",
+   "text": {
+    "en": "I have mapped the three lines for one real AI system, naming who owns and runs it, who sets policy and challenges, and who gives independent assurance, with no line doing another line’s job.",
+    "ar": "رسمت الخطوط الثلاثة (three lines) لنظام ذكاء اصطناعي (AI system) حقيقي واحد، وسمّيت من يملكه ويشغّله (owns and runs it)، ومن يضع السياسة (policy) ويقدّم التحدي (challenge)، ومن يقدّم الضمان المستقل (independent assurance)، دون أن يقوم أي خط بعمل خط آخر (another line’s job)."
+   }
+  },
+  {
+   "id": "m0-e2",
+   "lesson": "0.3",
+   "text": {
+    "en": "I have added a row to an AI inventory for a real system, with a named owner, a purpose that names the decision it supports, and a one-line reason for its preliminary risk rating.",
+    "ar": "أضفت صفًا (row) إلى سجل أنظمة الذكاء الاصطناعي (AI inventory) لنظام حقيقي، فيه مالك محدد بالاسم (named owner)، وغرض (purpose) يسمّي القرار الذي يدعمه (decision it supports)، وسبب من سطر واحد (one-line reason) لتصنيف المخاطر الأولي (preliminary risk rating)."
+   }
+  }
+ ]
+}

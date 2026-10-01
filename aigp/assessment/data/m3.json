@@ -1,0 +1,135 @@
+{
+ "area": "m3",
+ "questions": [
+  {
+   "id": "m3-1",
+   "level": 1,
+   "lesson": "3.1",
+   "q": {
+    "en": "Khalid proposes that Najm's AI Policy rely on one thorough committee review just before each AI system goes live, so that teams face a single approval. What is the main weakness of this approach?",
+    "ar": "يقترح خالد أن تعتمد سياسة الذكاء الاصطناعي (AI Policy) في بنك نجم (Najm Bank) على مراجعة شاملة واحدة من اللجنة (committee review) قُبيل تشغيل (go-live) كل نظام ذكاء اصطناعي (AI system)، كي تواجه الفرق موافقةً واحدة فقط (single approval). ما نقطة الضعف الرئيسية (main weakness) في هذا النهج (approach)؟"
+   },
+   "o": {
+    "en": [
+     "A launch review cannot cover bought systems, which arrive already built",
+     "Risks introduced at design or data stages, and drift after launch, escape it",
+     "The committee lacks the technical skill to judge a model at the point of launch",
+     "It wastes effort, since low-risk systems need no review at any stage at all"
+    ],
+    "ar": [
+     "لا تستطيع مراجعة الإطلاق (launch review) أن تشمل الأنظمة المشتراة (bought systems)، لأنها تصل مبنيّةً سلفًا (already built)",
+     "المخاطر التي تنشأ في مرحلتي التصميم أو البيانات (design or data stages)، والانجراف (drift) بعد الإطلاق (launch)، تفلت منها",
+     "تفتقر اللجنة (committee) إلى المهارة التقنية (technical skill) اللازمة للحكم على النموذج (model) لحظة الإطلاق (launch)",
+     "تهدر الجهد (effort)، لأن الأنظمة منخفضة المخاطر (low-risk systems) لا تحتاج إلى أي مراجعة (review) في أي مرحلة (stage)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Risks enter at the design and data stages and appear after go-live as drift or vendor model changes, so one launch gate misses them and controls belong at every stage. Low-risk systems still need lighter controls, such as registration and a named owner, not none.",
+    "ar": "تنشأ المخاطر في مرحلتي التصميم والبيانات (design and data stages)، وتظهر بعد التشغيل (go-live) في صورة انجراف (drift) أو تغييرات في نماذج الموردين (vendor model changes)، فتفوتها بوابة إطلاق واحدة (single launch gate)، ولذا تنتمي الضوابط (controls) إلى كل مرحلة (stage). أما الأنظمة منخفضة المخاطر (low-risk systems) فتحتاج إلى ضوابط أخف، كالتسجيل في السجل (registration) وتسمية مالك (named owner)، لا إلى انعدام الضوابط."
+   }
+  },
+  {
+   "id": "m3-2",
+   "level": 2,
+   "lesson": "3.2",
+   "q": {
+    "en": "Omar's team has loaded industry research reports from a paid subscription service into the credit copilot's retrieval library. Omar says there is no rights question, because the model is never trained on the reports and only retrieves them. Under Najm's Data Governance Policy, what should happen?",
+    "ar": "حمّل فريق عمر تقارير بحثية قطاعية (industry research reports) من خدمة اشتراك مدفوعة (paid subscription service) إلى مكتبة الاسترجاع (retrieval library) الخاصة بمساعد الائتمان (credit copilot). ويقول عمر إنه لا توجد مسألة حقوق (rights question)، لأن النموذج (model) لا يُدرَّب (trained) على التقارير أبدًا بل يسترجعها (retrieves) فقط. ما الذي ينبغي أن يحدث بموجب سياسة حوكمة البيانات (Data Governance Policy) في نجم؟"
+   },
+   "o": {
+    "en": [
+     "Keep them, as retrieval is not training and Najm pays for the subscription",
+     "Keep them, provided every copilot answer cites the report it draws on",
+     "Remove them only if the publisher objects to how they are being used",
+     "Have Legal confirm the licence permits this AI use before relying on them"
+    ],
+    "ar": [
+     "تُبقى التقارير، لأن الاسترجاع (retrieval) ليس تدريبًا (training)، ولأن نجم يدفع قيمة الاشتراك (subscription) أصلًا",
+     "تُبقى التقارير، بشرط أن تستشهد (cites) كل إجابة من المساعد (copilot) بالتقرير الذي استندت إليه (draws on)",
+     "لا تُزال التقارير إلا إذا اعترض الناشر (publisher) على طريقة استخدامها (how they are used)",
+     "يُطلب من الشؤون القانونية (Legal) تأكيدُ أن الترخيص (licence) يجيز هذا الاستخدام للذكاء الاصطناعي (AI use) قبل الاعتماد على التقارير"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Najm's policy covers data used to ground an AI system, not only to train it, and third-party content may be used for AI only after Legal confirms the licence permits the intended use. Paying for a subscription does not mean its licence allows copying the content into an AI index.",
+    "ar": "تشمل سياسة نجم البيانات (data) المستخدمة لتأسيس (ground) نظام ذكاء اصطناعي (AI system)، لا لتدريبه (train) فقط، ولا يجوز استخدام محتوى الطرف الثالث (third-party content) للذكاء الاصطناعي إلا بعد أن تؤكد الشؤون القانونية (Legal) أن الترخيص (licence) يسمح بالاستخدام المقصود (intended use). ودفعُ قيمة الاشتراك (subscription) لا يعني أن ترخيصه يجيز نسخ المحتوى إلى فهرس ذكاء اصطناعي (AI index)."
+   }
+  },
+  {
+   "id": "m3-3",
+   "level": 2,
+   "lesson": "3.3",
+   "q": {
+    "en": "At the renewal of Najm's CRM contract, the vendor mentions a new 'AI insights' feature that would score which customers are likely to leave. Yusuf's procurement team points out that the CRM platform itself was approved years ago. What should happen next?",
+    "ar": "عند تجديد (renewal) عقد منصة إدارة علاقات العملاء (CRM) في بنك نجم، يذكر المورد (vendor) ميزة جديدة باسم \"رؤى الذكاء الاصطناعي (AI insights)\" تمنح درجات (scores) للعملاء المرجّح أن يغادروا (likely to leave). ويشير فريق المشتريات (procurement team) الذي يقوده يوسف إلى أن منصة CRM نفسها اعتُمدت (approved) قبل سنوات. ما الذي ينبغي أن يحدث بعد ذلك؟"
+   },
+   "o": {
+    "en": [
+     "Register it in the AI inventory and tier it before it is switched on",
+     "Rely on the original CRM approval, since the vendor was vetted back then",
+     "Accept the vendor's assurance, since the vendor answers for its own AI",
+     "Switch it on now and cover it at the vendor's next annual reassessment"
+    ],
+    "ar": [
+     "تسجيلها في سجل أنظمة الذكاء الاصطناعي (AI inventory) وتصنيفها في فئة (tier it) قبل تفعيلها (switched on)",
+     "الاعتماد على الموافقة الأصلية (original approval) على CRM، لأن المورد (vendor) خضع للفحص (vetted) حينها",
+     "قبول تطمينات المورد (vendor's assurance)، لأن المورد هو المسؤول (accountable) عن ذكائه الاصطناعي (its own AI)",
+     "تفعيلها الآن وتغطيتها في إعادة التقييم السنوية (annual reassessment) التالية للمورد (vendor)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Embedded AI must be caught at purchase and renewal: the feature is registered in the AI inventory and tiered like an internal use case before use. The old approval covered the CRM without AI, so it says nothing about a new model scoring customers.",
+    "ar": "يجب التقاط الذكاء الاصطناعي المدمج (embedded AI) عند الشراء والتجديد (purchase and renewal): تُسجَّل الميزة في سجل أنظمة الذكاء الاصطناعي (AI inventory) وتُصنَّف في فئة (tiered) مثل أي حالة استخدام داخلية (internal use case) قبل الاستخدام. أما الموافقة القديمة (old approval) فشملت منصة CRM من دون ذكاء اصطناعي (AI)، فلا تقول شيئًا عن نموذج جديد (new model) يمنح العملاء درجات (scores)."
+   }
+  },
+  {
+   "id": "m3-4",
+   "level": 3,
+   "lesson": "3.1",
+   "q": {
+    "en": "To cut storage costs, HR asks for an exception so that the automatically generated logs of the CV-screening tool used for hiring in Frankfurt, which sit under Najm's control, are kept for 30 days rather than six months. HR offers weekly summary reports as a compensating control and a 90-day expiry. What should Layla advise?",
+    "ar": "لخفض تكاليف التخزين (storage costs)، تطلب الموارد البشرية (HR) استثناءً (exception) يسمح بالاحتفاظ بالسجلات المولَّدة آليًا (automatically generated logs) لأداة فرز السير الذاتية (CV-screening tool) المستخدمة في التوظيف (hiring) في فرانكفورت، وهي سجلات خاضعة لسيطرة نجم (under Najm's control)، مدة 30 يومًا بدلًا من ستة أشهر. وتعرض الموارد البشرية تقارير ملخّصة أسبوعية (weekly summary reports) بوصفها ضابطًا تعويضيًا (compensating control)، مع تاريخ انتهاء (expiry) بعد 90 يومًا. بماذا ينبغي أن تنصح ليلى؟"
+   },
+   "o": {
+    "en": [
+     "Approve it at committee level, as a high-tier exception with an expiry",
+     "Approve it at governance-lead level, as log retention is a low-risk rule",
+     "Refuse it, as a legal duty on deployers cannot be excepted internally",
+     "Refer it to the vendor, since keeping these logs is the provider's duty"
+    ],
+    "ar": [
+     "الموافقة عليه على مستوى اللجنة (committee level) بوصفه استثناءً للفئة العليا (high-tier exception) له تاريخ انتهاء (expiry)",
+     "الموافقة عليه على مستوى قائد الحوكمة (governance lead)، لأن الاحتفاظ بالسجلات (log retention) قاعدة منخفضة المخاطر (low-risk rule)",
+     "رفضه، لأن الواجب القانوني (legal duty) على المُشغِّلين (deployers) لا يمكن استثناؤه داخليًا (excepted internally)",
+     "إحالته إلى المورد (vendor)، لأن الاحتفاظ بهذه السجلات (keeping these logs) واجب على مقدّم النظام (provider's duty)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Keeping automatically generated logs under the deployer's control for at least six months is an EU AI Act Art. 26 duty for deployers of high-risk systems such as this hiring tool, and legally mandated requirements cannot be excepted internally. Committee approval with compensating controls and an expiry, as in EX-004, works only for Najm's own rules.",
+    "ar": "الاحتفاظ بالسجلات المولَّدة آليًا (automatically generated logs) الخاضعة لسيطرة المُشغِّل (under the deployer's control) ستة أشهر على الأقل واجبٌ بموجب المادة 26 (Art. 26) من EU AI Act على مُشغِّلي الأنظمة عالية المخاطر (deployers of high-risk systems) مثل أداة التوظيف (hiring tool) هذه، والمتطلبات المفروضة قانونًا (legally mandated requirements) لا يمكن استثناؤها داخليًا (excepted internally). أما موافقة اللجنة (committee approval) مع ضوابط تعويضية (compensating controls) وتاريخ انتهاء (expiry)، كما في EX-004، فلا تصلح إلا لقواعد نجم الداخلية (Najm's own rules)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m3-e1",
+   "lesson": "3.2",
+   "text": {
+    "en": "I have drafted a data card for a real AI training dataset covering its origin, collection purpose, preparation, representativeness, known gaps, bias examination and retention",
+    "ar": "صغتُ بطاقة بيانات (data card) لمجموعة بيانات تدريب حقيقية (real training dataset) لنظام ذكاء اصطناعي (AI system)، تغطي منشأها (origin)، وغرض جمعها (collection purpose)، وإعدادها (preparation)، وتمثيلها (representativeness)، والفجوات المعروفة (known gaps)، وفحص التحيّز (bias examination)، والاحتفاظ بها (retention)"
+   }
+  },
+  {
+   "id": "m3-e2",
+   "lesson": "3.3",
+   "text": {
+    "en": "I have written contract clauses for an AI vendor or foundation-model provider covering data use, retention and location, change notification, incident notification, audit rights, regulatory cooperation, IP and exit",
+    "ar": "كتبتُ بنودًا تعاقدية (contract clauses) لمورد ذكاء اصطناعي (AI vendor) أو مزوّد نموذج أساسي (foundation-model provider) تغطي استخدام البيانات (data use)، والاحتفاظ والموقع (retention and location)، والإخطار بالتغيير (change notification)، والإخطار بالحوادث (incident notification)، وحقوق التدقيق (audit rights)، والتعاون التنظيمي (regulatory cooperation)، والملكية الفكرية (IP)، والخروج (exit)"
+   }
+  }
+ ]
+}

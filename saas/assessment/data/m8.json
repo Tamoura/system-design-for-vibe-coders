@@ -1,0 +1,135 @@
+{
+ "area": "m8",
+ "questions": [
+  {
+   "id": "m8-1",
+   "level": 1,
+   "lesson": "8.1",
+   "q": {
+    "en": "Beacon's managed Postgres has disk encryption at rest switched on, and its integrations table stores customers' Slack OAuth tokens in plain columns. A contractor gets a read-only SQL login to build reports. What does the disk encryption do for those tokens?",
+    "ar": "قاعدة بيانات Postgres المُدارة (managed Postgres) في Beacon مفعَّل فيها تشفير القرص أثناء التخزين (disk encryption at rest)، ويخزّن جدول التكاملات (integrations table) فيها رموز OAuth الخاصة بـ Slack (Slack OAuth tokens) للعملاء (customers) في أعمدة عادية (plain columns). ويحصل متعاقد (contractor) على حساب دخول SQL للقراءة فقط (read-only SQL login) لإعداد التقارير (reports). ما الذي يفعله تشفير القرص (disk encryption) لهذه الرموز (tokens)؟"
+   },
+   "o": {
+    "en": [
+     "It keeps them safe, since every row is encrypted at rest and the login is read-only",
+     "It covers them as long as TLS is enforced between the contractor's client and the DB",
+     "It only guards against stolen disks; the app must encrypt the tokens with KMS keys",
+     "It covers backups only, so the tokens should be hashed the way API keys are hashed"
+    ],
+    "ar": [
+     "يحميها، لأن كل صف (row) مشفّر أثناء التخزين (at rest) وحساب الدخول (login) للقراءة فقط (read-only)",
+     "يحميها ما دام TLS مفروضًا (enforced) بين عميل المتعاقد (contractor's client) وقاعدة البيانات (database)",
+     "يحمي فقط من سرقة الأقراص (stolen disks)، ويجب أن يشفّر التطبيق (app) الرموز (tokens) بمفاتيح KMS (KMS keys)",
+     "يحمي النسخ الاحتياطية (backups) فقط، لذا يجب تجزئة الرموز (hash the tokens) كما تُجزّأ مفاتيح API (API keys)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Disk encryption protects against stolen disks, not against anyone with a database login, so tokens Beacon must read back need application-level envelope encryption with KMS-managed keys. Hashing suits API keys, which are only verified, but Beacon has to send Slack tokens back to Slack.",
+    "ar": "تشفير القرص (disk encryption) يحمي من سرقة الأقراص (stolen disks)، لا من أي شخص يملك حساب دخول إلى قاعدة البيانات (database login)، لذا تحتاج الرموز التي يجب على Beacon قراءتها مرة أخرى (read back) إلى تشفير مغلّف على مستوى التطبيق (application-level envelope encryption) بمفاتيح تديرها KMS (KMS-managed keys). أما التجزئة (hashing) فتناسب مفاتيح API (API keys) التي يكفي التحقق منها (verify)، لكن Beacon يجب أن يرسل رموز Slack (Slack tokens) إلى Slack نفسه."
+   }
+  },
+  {
+   "id": "m8-2",
+   "level": 2,
+   "lesson": "8.1",
+   "q": {
+    "en": "On Monday morning Beacon finds that a misconfigured storage bucket exposed the subscriber list of Acme's status page, with names and emails, for two days. Acme is an EU customer, and Beacon processes this data for it under a DPA. What does GDPR expect of Beacon?",
+    "ar": "صباح يوم الاثنين يكتشف Beacon أن حاوية تخزين (storage bucket) مضبوطة بشكل خاطئ (misconfigured) كشفت قائمة المشتركين (subscriber list) في صفحة الحالة (status page) الخاصة بـ Acme، بأسمائهم وعناوين بريدهم الإلكتروني (emails)، طوال يومين. وAcme عميل (customer) في الاتحاد الأوروبي (EU)، ويعالج Beacon هذه البيانات لحسابه بموجب اتفاقية معالجة بيانات (DPA). ما الذي يتوقعه GDPR من Beacon؟"
+   },
+   "o": {
+    "en": [
+     "Tell Acme without undue delay, since Acme has 72 hours to notify its supervisory authority",
+     "Notify the supervisory authority directly within 72 hours, since the breach happened at Beacon",
+     "Tell Acme within 72 hours, since that is the deadline GDPR gives a processor to report a breach",
+     "Purge the exposed list from every store first, then decide whether anyone has to be told about it"
+    ],
+    "ar": [
+     "أبلغ Acme دون تأخير غير مبرر (without undue delay)، لأن أمام Acme مهلة 72 ساعة لإبلاغ سلطتها الرقابية (its supervisory authority)",
+     "أبلغ السلطة الرقابية (supervisory authority) مباشرةً خلال 72 ساعة، لأن الاختراق (breach) وقع لدى Beacon",
+     "أبلغ Acme خلال 72 ساعة، لأنها المهلة (deadline) التي يمنحها GDPR للمعالج (processor) كي يبلّغ عن الاختراق (breach)",
+     "احذف القائمة المكشوفة (exposed list) من كل مخزن (every store) أولًا، ثم قرّر هل يجب إبلاغ أحد (anyone) بالأمر"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "As controller, Acme must notify its supervisory authority within 72 hours of becoming aware of the breach (Art. 33), and Beacon, as processor, must tell Acme without undue delay, which is why its incident process needs a clock. Notifying the authority directly is tempting, but that duty sits with the controller, and 72 hours is the controller's deadline, not the processor's.",
+    "ar": "بصفتها متحكمًا (controller)، يجب على Acme إبلاغ السلطة الرقابية (supervisory authority) خلال 72 ساعة من علمها بالاختراق (breach)، وفق المادة 33 (Art. 33)، أما Beacon بصفته معالجًا (processor) فيجب أن يبلغ Acme دون تأخير غير مبرر (without undue delay)، ولهذا تحتاج عملية الاستجابة للحوادث (incident process) لديه إلى ساعة توقيت (clock). وإبلاغ السلطة مباشرةً مغرٍ، لكنه واجب المتحكم (controller's duty)، ومهلة 72 ساعة هي مهلة المتحكم (controller's deadline) لا المعالج (processor)."
+   }
+  },
+  {
+   "id": "m8-3",
+   "level": 2,
+   "lesson": "8.2",
+   "q": {
+    "en": "Beacon wants to move its incident summaries to a cheaper model. The engineer tried it on three recent incidents: every output passed the zod schema, and Langfuse shows HTTP 200s at a lower cost. What should gate the switch?",
+    "ar": "يريد Beacon نقل ملخصات الحوادث (incident summaries) إلى نموذج أرخص (cheaper model). جرّبه المهندس (engineer) على ثلاث حوادث حديثة (recent incidents): اجتازت كل المخرجات (outputs) مخطط zod (zod schema)، ويُظهر Langfuse استجابات HTTP 200 (HTTP 200s) بتكلفة أقل (lower cost). ما الذي يجب أن يكون شرطًا لهذا التبديل (gate the switch)؟"
+   },
+   "o": {
+    "en": [
+     "Nothing more, since a valid schema and clean traces show that the new model works",
+     "An eval set of anonymised incidents in CI, failing on \"resolved\" for open ones",
+     "A week of production tracing, rolling back if the error rate or latency gets worse",
+     "A stricter zod schema, with length limits and a required field for every section"
+    ],
+    "ar": [
+     "لا شيء آخر، لأن المخطط الصالح (valid schema) والتتبعات السليمة (clean traces) تُظهر أن النموذج الجديد (new model) يعمل",
+     "مجموعة تقييم (eval set) من حوادث مجهولة الهوية (anonymised incidents) في CI، تفشل إذا وُصفت حادثة مفتوحة (open incident) بأنها \"حُلّت\" (resolved)",
+     "أسبوع من التتبع في الإنتاج (production tracing)، مع التراجع (rollback) إذا ساء معدل الأخطاء (error rate) أو زمن الاستجابة (latency)",
+     "مخطط zod أكثر صرامة (stricter zod schema)، بحدود للطول (length limits) وحقل إلزامي (required field) لكل قسم (section)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "LLM features also fail by being wrong while returning HTTP 200, and a schema checks shape, not truth, so an eval set built from real anonymised incidents and run by promptfoo in CI turns a model switch into a measured change. Tracing shows what happened, not whether the summaries are still right.",
+    "ar": "تفشل ميزات نماذج اللغة (LLM features) أيضًا بأن تكون خاطئة وهي تعيد HTTP 200، والمخطط (schema) يفحص الشكل (shape) لا الصحة (truth)، لذا فمجموعة تقييم (eval set) من حوادث حقيقية مجهولة الهوية (anonymised incidents) يشغّلها promptfoo في CI تجعل تبديل النموذج (switching models) تغييرًا مقيسًا (a measured change). أما التتبع (tracing) فيُظهر ما حدث، لا هل ما زالت الملخصات (summaries) صحيحة."
+   }
+  },
+  {
+   "id": "m8-4",
+   "level": 3,
+   "lesson": "8.2",
+   "q": {
+    "en": "Beacon plans an AI responder for Business orgs. It reads new error bodies and incident comments, can search the org's private postmortems, and has a sendWebhook(url, body) tool that posts to any URL the model picks. Security review must decide on it. What is the best call?",
+    "ar": "يخطط Beacon لوكيل استجابة بالذكاء الاصطناعي (AI responder) لمؤسسات خطة Business (Business orgs). يقرأ الوكيل (agent) نصوص الأخطاء (error bodies) الجديدة وتعليقات الحوادث (incident comments)، ويستطيع البحث في تقارير ما بعد الحادثة (postmortems) الخاصة بالمؤسسة (org)، ولديه أداة (tool) اسمها sendWebhook(url, body) ترسل إلى أي رابط (URL) يختاره النموذج (model). ويجب أن تتخذ المراجعة الأمنية (security review) قرارًا بشأنه. ما القرار الأفضل (best call)؟"
+   },
+   "o": {
+    "en": [
+     "Approve it, since its tools already run with the calling user's permissions in the org",
+     "Approve it with a system prompt that marks error bodies and comments as data, not commands",
+     "Approve it once a promptfoo eval with a dozen injection attempts passes in CI",
+     "Approve it without the sendWebhook tool, so it can't post data to URLs the model picks"
+    ],
+    "ar": [
+     "وافق عليه، لأن أدواته (tools) تعمل أصلًا بصلاحيات المستخدم المستدعي (calling user's permissions) داخل المؤسسة (org)",
+     "وافق عليه مع موجّه نظام (system prompt) يصف نصوص الأخطاء (error bodies) والتعليقات (comments) بأنها بيانات (data) لا أوامر (commands)",
+     "وافق عليه بعد أن ينجح في CI تقييم (eval) بـ promptfoo فيه اثنتا عشرة محاولة حقن (injection attempts)",
+     "وافق عليه دون أداة sendWebhook، كي لا يستطيع إرسال البيانات (post data) إلى روابط (URLs) يختارها النموذج (model)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Private data, untrusted content and the ability to communicate externally together form the lethal trifecta, and because prompt injection has no complete fix, you remove at least one leg: here, the free-form webhook tool, which is also an SSRF risk. A system prompt or a passing eval can't reliably stop injection, and user-scoped tools still let an injected comment send that org's own postmortems out.",
+    "ar": "البيانات الخاصة (private data) والمحتوى غير الموثوق (untrusted content) والقدرة على التواصل مع الخارج (communicate externally) تشكّل معًا الثالوث القاتل (lethal trifecta)، ولأن حقن الموجّهات (prompt injection) ليس له إصلاح كامل (complete fix)، فأنت تزيل واحدًا على الأقل من الثلاثة: وهو هنا أداة الـ webhook المفتوحة (free-form webhook tool)، وهي أيضًا خطر SSRF (SSRF risk). أما موجّه النظام (system prompt) أو التقييم الناجح (passing eval) فلا يوقفان الحقن (injection) بشكل موثوق (reliably)، والأدوات المقيدة بالمستخدم (user-scoped tools) تسمح مع ذلك لتعليق محقون (injected comment) بإرسال تقارير ما بعد الحادثة (postmortems) الخاصة بالمؤسسة نفسها إلى الخارج."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m8-e1",
+   "lesson": "8.1",
+   "text": {
+    "en": "I have run gitleaks over Beacon's full git history with every finding rotated, and seen a test commit holding a fake AWS key blocked both locally and in CI",
+    "ar": "شغّلتُ gitleaks على تاريخ git الكامل (full git history) لـ Beacon وغيّرتُ (rotated) كل سر ظهر في النتائج (findings)، ورأيتُ إيداعًا تجريبيًا (test commit) يحمل مفتاح AWS مزيفًا (fake AWS key) يُحجب محليًا (locally) وفي CI"
+   }
+  },
+  {
+   "id": "m8-e2",
+   "lesson": "8.2",
+   "text": {
+    "en": "I have run a promptfoo eval of anonymised incidents in CI and seen it fail when a summary called an open incident resolved or followed an instruction injected in an error body",
+    "ar": "شغّلتُ في CI تقييمًا (eval) بـ promptfoo على حوادث مجهولة الهوية (anonymised incidents)، ورأيتُه يفشل حين وصف الملخص (summary) حادثة مفتوحة (open incident) بأنها حُلّت (resolved)، أو اتّبع تعليمات محقونة (injected instruction) في نص خطأ (error body)"
+   }
+  }
+ ]
+}

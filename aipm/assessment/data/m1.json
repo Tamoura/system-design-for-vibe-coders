@@ -1,0 +1,135 @@
+{
+ "area": "m1",
+ "questions": [
+  {
+   "id": "m1-1",
+   "level": 1,
+   "lesson": "1.1",
+   "q": {
+    "en": "Before choosing between rules, classic ML, an LLM, a workflow or an agent for a new product idea, what should the team pin down first?",
+    "ar": "قبل الاختيار بين القواعد (rules) وتعلّم الآلة الكلاسيكي (classic ML) والنموذج اللغوي الكبير (LLM) ومسار العمل (workflow) والوكيل (agent) لفكرة منتج جديدة (new product idea)، ما الذي ينبغي أن يحدده الفريق أولًا؟"
+   },
+   "o": {
+    "en": [
+     "The most advanced technique on offer, so the product never needs rebuilding",
+     "Whether an LLM can produce the output, since one model handles many tasks",
+     "The output the user needs, and what it costs when that output is wrong",
+     "How much historical data exists, since that sets how much AI can be used"
+    ],
+    "ar": [
+     "أكثر التقنيات تقدمًا بين المتاح (most advanced technique on offer)، حتى لا يحتاج المنتج (product) إلى إعادة بناء (rebuilding) أبدًا",
+     "هل يستطيع نموذج لغوي كبير (LLM) إنتاج المُخرَج (output)، ما دام نموذج واحد يؤدي مهامّ كثيرة (many tasks)",
+     "المُخرَج الذي يحتاجه المستخدم (output the user needs)، وما يكلّفه أن يكون خاطئًا (cost of an error)",
+     "حجم البيانات التاريخية (historical data) المتوفرة، لأنه يحدد مقدار الذكاء الاصطناعي (AI) الممكن استخدامه"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "The lesson's habit is to name the output the user needs and the cost of an error, then pick the family that fits; Rania's rule is that you are not ready to choose the technology until you can fill in the cost of an error. Asking whether an LLM can produce the output is the tempting shortcut, but an LLM can produce an answer to almost anything, which says nothing about whether it is consistent, fast or cheap enough for the job.",
+    "ar": "عادة الدرس (the lesson's habit) هي أن تسمّي المُخرَج الذي يحتاجه المستخدم (output the user needs) وتكلفة الخطأ (cost of an error)، ثم تختار العائلة المناسبة (family that fits)؛ وقاعدة رانيا (Rania's rule) أنك لست مستعدًا لاختيار التقنية (choose the technology) قبل أن تملأ خانة «تكلفة الخطأ» (fill in the cost of an error). أما السؤال عمّا إذا كان نموذج لغوي كبير (LLM) يستطيع إنتاج المُخرَج (output) فهو الاختصار المغري (tempting shortcut)، لأن النموذج اللغوي الكبير يستطيع أن يجيب عن أي شيء تقريبًا (answer to almost anything)، وهذا لا يقول شيئًا عن كونه متسقًا أو سريعًا أو رخيصًا بما يكفي للمهمة (consistent, fast or cheap enough for the job)."
+   }
+  },
+  {
+   "id": "m1-2",
+   "level": 2,
+   "lesson": "1.2",
+   "q": {
+    "en": "After several missed card frauds, Najm's fraud team wants to lower the Smart Alerts score threshold so that more transactions are flagged. What should Faisal expect, and weigh, before agreeing?",
+    "ar": "بعد عدة حالات احتيال بطاقات فائتة (missed card frauds)، يريد فريق الاحتيال (fraud team) في بنك نجم (Najm Bank) خفض عتبة الدرجة (score threshold) في التنبيهات الذكية (Smart Alerts) حتى تُرصد معاملات أكثر (more transactions are flagged). ماذا ينبغي أن يتوقع فيصل، وما الذي يوازنه، قبل الموافقة؟"
+   },
+   "o": {
+    "en": [
+     "Recall rises and precision falls, so weigh fraud caught against false alerts",
+     "Recall and precision both rise, because flagging more catches more fraud overall",
+     "Accuracy stays near 99%, so the change carries little risk for Najm's customers",
+     "Precision rises and recall falls, so customers will see fewer false alerts"
+    ],
+    "ar": [
+     "يرتفع الاستدعاء (recall) وتنخفض الدقة (precision)، فوازِن بين الاحتيال المرصود والتنبيهات الكاذبة (false alerts)",
+     "يرتفع الاستدعاء (recall) والدقة (precision) معًا، لأن رصد معاملات أكثر يلتقط احتيالًا أكثر (catches more fraud) في المجمل",
+     "تبقى الدقة الإجمالية (accuracy) قرب 99%، فالتغيير يحمل مخاطرة ضئيلة (little risk) على عملاء بنك نجم (Najm's customers)",
+     "ترتفع الدقة (precision) وينخفض الاستدعاء (recall)، فيرى العملاء تنبيهات كاذبة (false alerts) أقل"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Lowering the threshold trades precision for recall: more fraud is caught, but a larger share of alerts are false, and false alerts teach customers to ignore them (alert fatigue). Expecting both to rise is the tempting mistake; the two trade off through the threshold, so the team must decide which error hurts more.",
+    "ar": "خفض العتبة (lowering the threshold) يبادل الدقة (precision) بالاستدعاء (recall): يُرصد احتيال أكثر، لكن نسبة أكبر من التنبيهات تكون كاذبة (false alerts)، والتنبيهات الكاذبة تعلّم العملاء تجاهلها، وهذا هو إرهاق التنبيهات (alert fatigue). أما توقّع ارتفاعهما معًا فهو الخطأ المغري (tempting mistake)؛ فهما يتبادلان المكاسب عبر العتبة (trade off through the threshold)، ولذلك على الفريق أن يقرر أي خطأ يؤلم أكثر (which error hurts more)."
+   }
+  },
+  {
+   "id": "m1-3",
+   "level": 2,
+   "lesson": "1.3",
+   "q": {
+    "en": "Najm Assist phase 1 answers fee questions using RAG over the published terms. Reviewing wrong answers on the golden set, Dana finds that in most of them the passage holding the answer was never retrieved. What should the team do first?",
+    "ar": "يجيب نجم أسيست (Najm Assist) في المرحلة 1 (phase 1) عن أسئلة الرسوم (fee questions) باستخدام التوليد المعزّز بالاسترجاع (RAG) على الشروط المنشورة (published terms). وبمراجعة الإجابات الخاطئة على المجموعة المرجعية (golden set)، تجد دانة أن المقطع الذي يحمل الإجابة (passage holding the answer) لم يُسترجع قط (never retrieved) في معظمها. ما الذي ينبغي أن يفعله الفريق أولًا؟"
+   },
+   "o": {
+    "en": [
+     "Fine-tune the model on the fee schedules so it stops depending on search",
+     "Send all of the published terms with every question so nothing is missed",
+     "Move to a stronger model, since the current one cannot find the answers",
+     "Measure retrieval on its own and fix the chunking, search and reranking"
+    ],
+    "ar": [
+     "إجراء ضبط دقيق (fine-tune) للنموذج على جداول الرسوم (fee schedules) حتى يكفّ عن الاعتماد على البحث (search)",
+     "إرسال كل الشروط المنشورة (published terms) مع كل سؤال (every question) حتى لا يفوته شيء (nothing is missed)",
+     "الانتقال إلى نموذج أقوى (stronger model)، لأن النموذج الحالي (current model) لا يستطيع إيجاد الإجابات",
+     "قياس الاسترجاع (retrieval) وحده وإصلاح التقطيع (chunking) والبحث (search) وإعادة الترتيب (reranking)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Most RAG failures are search failures: if the right passage never reaches the model, it cannot use it, so retrieval must be measured and fixed as its own step. Fine-tuning on the fees is tempting, but it puts changing facts into the weights, where they go stale and cannot be cited.",
+    "ar": "معظم إخفاقات التوليد المعزّز بالاسترجاع (RAG failures) إخفاقات بحث (search failures): إذا لم يصل المقطع الصحيح (right passage) إلى النموذج فلن يستطيع استخدامه، ولذلك يجب قياس الاسترجاع (retrieval) وإصلاحه خطوةً قائمة بذاتها. أما الضبط الدقيق (fine-tuning) على الرسوم فمغرٍ، لكنه يضع الحقائق المتغيرة (changing facts) في الأوزان (weights)، حيث تتقادم (go stale) ولا يمكن الاستشهاد بها (cannot be cited)."
+   }
+  },
+  {
+   "id": "m1-4",
+   "level": 3,
+   "lesson": "1.2",
+   "q": {
+    "en": "In the Credit Memo Copilot pilot, a draft gives the borrower's DSCR as 1.52x and cites a page of the uploaded statements. That page shows 1.25x. Which diagnosis and design response fit best?",
+    "ar": "في تجربة مساعد مذكرات الائتمان (Credit Memo Copilot pilot)، تذكر مسودة (draft) أن نسبة تغطية خدمة الدين (DSCR) لدى المقترض 1.52x، وتستشهد بصفحة من القوائم المالية المرفوعة (uploaded statements). لكن تلك الصفحة تُظهر 1.25x. أي تشخيص (diagnosis) واستجابة تصميمية (design response) هما الأنسب؟"
+   },
+   "o": {
+    "en": [
+     "Fabrication; require every claim to cite a page and flag any claim without one",
+     "Unfaithfulness to the source; have code extract and calculate the figures",
+     "Outdated knowledge; retrieve the latest statements at request time instead",
+     "Non-determinism; lower the temperature so that every draft gives one figure"
+    ],
+    "ar": [
+     "اختلاق (fabrication)؛ اشتراط أن يستشهد كل ادعاء (claim) بصفحة، ورصد أي ادعاء بلا مصدر (flag any claim without one)",
+     "عدم أمانة للمصدر (unfaithfulness to the source)؛ جعل الشيفرة (code) تستخرج الأرقام وتحسبها (extract and calculate)",
+     "معرفة قديمة (outdated knowledge)؛ استرجاع أحدث القوائم المالية (latest statements) وقت الطلب (at request time) بدلًا من ذلك",
+     "عدم حتمية (non-determinism)؛ خفض درجة الحرارة (temperature) حتى تذكر كل مسودة (every draft) رقمًا واحدًا"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "The model had the right document and misstated it, which is unfaithfulness to the source; the limits register's response is to extract and calculate figures by code, not generate them, and let the model write the narrative around them. Requiring citations is tempting, but this claim already cites a page, so it does not stop a wrong figure.",
+    "ar": "كان لدى النموذج المستند الصحيح (right document) لكنه عرضه خطأً، وهذا عدم أمانة للمصدر (unfaithfulness to the source)؛ واستجابة سجل الحدود (limits register) هي استخراج الأرقام وحسابها بالشيفرة (extracted and calculated by code) لا توليدها، على أن يكتب النموذج السرد حولها (narrative around them). أما اشتراط الاستشهادات (citations) فمغرٍ، لكن هذا الادعاء (claim) يستشهد بصفحة أصلًا، فلا يمنع ذلك رقمًا خاطئًا (wrong figure)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m1-e1",
+   "lesson": "1.1",
+   "text": {
+    "en": "I have rewritten an LLM-only AI idea as a hybrid design, stating which component decides, which communicates, and one reason for each (speed, cost, consistency or language)",
+    "ar": "أعدتُ كتابة فكرة ذكاء اصطناعي قائمة على نموذج لغوي كبير وحده (LLM-only AI idea) في صورة تصميم هجين (hybrid design)، وحدّدتُ أي مكوّن يقرر (decides) وأيّها يتواصل (communicates)، مع سبب واحد لكلٍّ منهما (one reason for each): السرعة (speed) أو التكلفة (cost) أو الاتساق (consistency) أو اللغة (language)"
+   }
+  },
+  {
+   "id": "m1-e2",
+   "lesson": "1.3",
+   "text": {
+    "en": "I have written a build-path decision record for an AI feature that states the quality bar, the gap found with prompting alone, the chosen path, at least one rejected option with reasons and a condition that would change the decision",
+    "ar": "كتبتُ سجل قرار مسار البناء (build-path decision record) لميزة ذكاء اصطناعي (AI feature) يذكر معيار الجودة (quality bar)، والفجوة المكتشفة بالتوجيه وحده (gap found with prompting alone)، والمسار المختار (chosen path)، وخيارًا مرفوضًا (rejected option) واحدًا على الأقل مع الأسباب، وشرطًا من شأنه تغيير القرار (condition that would change the decision)"
+   }
+  }
+ ]
+}

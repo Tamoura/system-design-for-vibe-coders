@@ -1,0 +1,135 @@
+{
+ "area": "m9",
+ "questions": [
+  {
+   "id": "m9-1",
+   "level": 1,
+   "lesson": "9.1",
+   "q": {
+    "en": "Beacon's two founders are planning v1 with about three months of engineering time. Which plan follows the course's default for what to build and what to buy?",
+    "ar": "يخطط مؤسسا Beacon الاثنان (two founders) للنسخة الأولى (v1)، ولديهما نحو ثلاثة أشهر من وقت الهندسة (engineering time). أيّ خطة (plan) تتبع الخيار الافتراضي (default) في الدورة (course) لما يُبنى (build) وما يُشترى (buy)؟"
+   },
+   "o": {
+    "en": [
+     "Build auth and billing in-house first, since they handle security and money",
+     "Self-host open-source tools for every component, so nothing can lock them in",
+     "Buy the generic components and build the monitor checks, incidents and glue",
+     "Buy a white-label status-page product and build auth, billing and the admin"
+    ],
+    "ar": [
+     "بناء المصادقة (auth) والفوترة (billing) داخليًا (in-house) أولًا، لأنهما تتعاملان مع الأمن (security) والمال (money)",
+     "الاستضافة الذاتية (self-hosting) لأدوات مفتوحة المصدر (open-source tools) في كل مكوّن (every component)، كي لا يقيّدهما أي مزوّد (lock-in)",
+     "شراء المكوّنات العامة (generic components)، وبناء فحوص المراقِبات (monitor checks) والحوادث (incidents) والربط بينها (glue)",
+     "شراء منتج صفحات حالة بعلامة بيضاء (white-label status-page product)، وبناء المصادقة (auth) والفوترة (billing) ولوحة الإدارة (admin)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "While a team is small, engineering attention is its scarcest resource, so the default is to buy every component that is not the differentiator and build the core domain and the glue. Building auth and billing first is the classic mistake that ships the monitor checker in week twelve.",
+    "ar": "ما دام الفريق (team) صغيرًا فإن انتباه المهندسين (engineering attention) أندر موارده (scarcest resource)، لذا فالخيار الافتراضي (default) أن تشتري (buy) كل مكوّن لا يميّز المنتج (not the differentiator)، وتبني (build) النطاق الأساسي (core domain) والربط بين المكوّنات (glue). أما بناء المصادقة والفوترة (auth and billing) أولًا فهو الخطأ المعتاد الذي يؤخّر إطلاق عامل فحص المراقِبات (monitor checker) إلى الأسبوع الثاني عشر (week twelve)."
+   }
+  },
+  {
+   "id": "m9-2",
+   "level": 2,
+   "lesson": "9.1",
+   "q": {
+    "en": "An engineer adds a Redis cache in front of Beacon's recent-incidents widget, keyed incidents:recent. The API route checks that the caller belongs to the org before it reads the cache, and the PR's tests pass. What should the review ask for?",
+    "ar": "يضيف مهندس (engineer) كاش Redis (Redis cache) أمام عنصر الحوادث الأخيرة (recent-incidents widget) في Beacon، بمفتاح (key) هو incidents:recent. ويتحقق مسار الواجهة البرمجية (API route) من أن المستدعي (caller) ينتمي إلى المؤسسة (org) قبل أن يقرأ من الكاش (cache)، وتنجح اختبارات طلب الدمج (PR's tests). ما الذي يجب أن تطلبه المراجعة (review)؟"
+   },
+   "o": {
+    "en": [
+     "Nothing more, since the route already checks the caller's org membership",
+     "A shorter TTL, so that any wrong entry expires within a few seconds",
+     "Dropping the cache, since only Postgres can enforce RLS on these rows",
+     "The org id in the cache key, since every internal store must carry it"
+    ],
+    "ar": [
+     "لا شيء آخر (nothing more)، لأن المسار (route) يتحقق أصلًا من عضوية المستدعي في المؤسسة (caller's org membership)",
+     "مدة صلاحية أقصر (shorter TTL)، كي تنتهي صلاحية أي مدخل خاطئ (wrong entry) خلال ثوانٍ قليلة (within a few seconds)",
+     "إزالة الكاش (dropping the cache)، لأن Postgres وحدها تستطيع فرض سياسات RLS (enforce RLS) على هذه الصفوف (rows)",
+     "معرّف المؤسسة (org id) في مفتاح الكاش (cache key)، لأن كل مخزن داخلي (internal store) يجب أن يحمله"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "The tenant id must travel into every row, job payload, log line and cache key; with incidents:recent, whichever org fills the cache first is served to every other org, and the membership check only proves the caller belongs to their own org. A shorter TTL just makes the cross-tenant leak briefer.",
+    "ar": "يجب أن ينتقل معرّف المستأجر (tenant id) إلى كل صف (row) وحمولة مهمة (job payload) وسطر سجل (log line) ومفتاح كاش (cache key)؛ ومع المفتاح incidents:recent تُعرض حوادث أول مؤسسة (org) تملأ الكاش (cache) على كل المؤسسات الأخرى، أما التحقق من العضوية (membership check) فيثبت فقط أن المستدعي (caller) ينتمي إلى مؤسسته. ومدة الصلاحية الأقصر (shorter TTL) تجعل التسريب بين المستأجرين (cross-tenant leak) أقصر فقط."
+   }
+  },
+  {
+   "id": "m9-3",
+   "level": 2,
+   "lesson": "9.1",
+   "q": {
+    "en": "Beacon's incident handler opens a transaction, inserts the incident, then calls the notifier, the Slack API, the analytics client and the usage meter before committing. During a Slack outage, new incidents fail to save. Which change fits the course's architecture?",
+    "ar": "يفتح معالج الحوادث (incident handler) في Beacon معاملة (transaction)، ويُدرج الحادثة (incident)، ثم يستدعي المُبلِّغ (notifier) وواجهة Slack البرمجية (Slack API) وعميل التحليلات (analytics client) وعدّاد الاستخدام (usage meter) قبل الإيداع (committing). وأثناء انقطاع Slack (Slack outage) يفشل حفظ الحوادث الجديدة (new incidents). أيّ تغيير يتّسق مع معمارية الدورة (course's architecture)؟"
+   },
+   "o": {
+    "en": [
+     "Write incident.opened to an outbox in the same transaction and let consumers react",
+     "Wrap the Slack call in a try/catch so a failure is logged and the commit still goes ahead",
+     "Commit first, then make the same four calls one after another from the same handler",
+     "Raise the Slack client's timeout so slow calls can finish before the transaction ends"
+    ],
+    "ar": [
+     "كتابة incident.opened في صندوق الصادر (outbox) ضمن المعاملة نفسها (same transaction)، وترك المستهلكين يتفاعلون (consumers react)",
+     "إحاطة استدعاء Slack (Slack call) بـ try/catch كي يُسجَّل الفشل (failure is logged) ويمضي الإيداع (commit) رغم ذلك",
+     "الإيداع (commit) أولًا، ثم إجراء الاستدعاءات الأربعة نفسها (same four calls) واحدًا بعد الآخر من المعالج نفسه (same handler)",
+     "رفع مهلة عميل Slack (Slack client's timeout) كي تكتمل الاستدعاءات البطيئة (slow calls) قبل انتهاء المعاملة (transaction)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Every state change should emit one event, written to the outbox in the incident's own transaction, and a relay publishes it to consumers that each do their own job, so the core no longer knows about Slack or analytics. A try/catch keeps incidents saving, but the core still calls every component directly and quietly loses the Slack notice.",
+    "ar": "كل تغيير في الحالة (state change) يجب أن يطلق حدثًا واحدًا (one event) يُكتب في صندوق الصادر (outbox) ضمن معاملة الحادثة نفسها (incident's own transaction)، ثم ينشره مُرحِّل (relay) إلى مستهلكين (consumers) يؤدي كل منهم عمله، فلا تعود النواة (core) تعرف شيئًا عن Slack أو التحليلات (analytics). أما try/catch فيُبقي حفظ الحوادث ممكنًا، لكن النواة تظل تستدعي كل مكوّن مباشرة (calls every component directly) وتُضيّع إشعار Slack (Slack notice) بصمت."
+   }
+  },
+  {
+   "id": "m9-4",
+   "level": 3,
+   "lesson": "9.1",
+   "q": {
+    "en": "An enterprise prospect's security team asks Beacon to prove that \"export all our data, then delete our account\" works. Beacon's deletion job removes every Postgres row carrying the org's id, and a test shows none remain. What is the best call before the review?",
+    "ar": "يطلب فريق الأمن (security team) لدى عميل مؤسسي محتمل (enterprise prospect) من Beacon أن يثبت أن طلب \"صدّروا كل بياناتنا، ثم احذفوا حسابنا\" (export all our data, then delete our account) يعمل. ومهمة الحذف (deletion job) في Beacon تزيل كل صف في Postgres (Postgres row) يحمل معرّف المؤسسة (org's id)، ويُظهر اختبار (test) أنه لم يبقَ أي صف. ما القرار الأفضل (best call) قبل المراجعة (review)؟"
+   },
+   "o": {
+    "en": [
+     "Present it as done: every tenant row carries the org id and a test shows none remain",
+     "Trace export and deletion across uploads, search, jobs and logs, and fix the gaps",
+     "Present the architecture diagram and the ADRs, since the review is about design",
+     "Also delete the org in Stripe, since that is the only other system holding its data"
+    ],
+    "ar": [
+     "عرضه على أنه منجز (present it as done): كل صف للمستأجر (tenant row) يحمل معرّف المؤسسة (org id)، واختبار (test) يُظهر أنه لم يبقَ صف (none remain)",
+     "تتبّع التصدير والحذف (export and deletion) عبر الملفات المرفوعة (uploads) والبحث (search) والمهام (jobs) والسجلات (logs)، وسدّ الثغرات (gaps)",
+     "عرض مخطط المعمارية (architecture diagram) وسجلات القرارات المعمارية (ADRs)، لأن المراجعة (review) تدور حول التصميم (design)",
+     "حذف المؤسسة (org) من Stripe أيضًا، لأنه النظام الآخر الوحيد (only other system) الذي يحمل بياناتها (holding its data)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Enterprise readiness is mostly seam work: the review asks \"can you prove it?\", and the usual failure is an export that forgets uploaded files or a deletion that misses stores outside Postgres, so you trace the action through every component and close each gap with a test. The Postgres test is real evidence, but it covers one component of many.",
+    "ar": "الجاهزية للمؤسسات (enterprise readiness) هي في معظمها عمل على نقاط الالتقاء (seam work): تسأل المراجعة (review) \"هل تستطيع إثبات ذلك؟\" ⁦(can you prove it?)⁩، والفشل المعتاد تصدير (export) ينسى الملفات المرفوعة (uploaded files) أو حذف (deletion) يفوّت مخازن (stores) خارج Postgres، لذا تتبّع الإجراء (action) عبر كل مكوّن (every component) وسُدّ كل ثغرة (gap) باختبار (test). واختبار Postgres دليل حقيقي (real evidence)، لكنه يغطي مكوّنًا واحدًا من مكوّنات كثيرة."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m9-e1",
+   "lesson": "9.1",
+   "text": {
+    "en": "I have written five ADRs for Beacon (authentication, job queue, billing, webhooks and observability), each with two rejected alternatives and a concrete revisit trigger",
+    "ar": "كتبتُ خمسة سجلات قرارات معمارية (ADRs) لـ Beacon، للمصادقة (authentication) وطابور المهام (job queue) والفوترة (billing) والويب هوك (webhooks) والمراقبة (observability)، في كل منها بديلان مرفوضان (two rejected alternatives) وشرط ملموس لإعادة النظر (concrete revisit trigger)"
+   }
+  },
+  {
+   "id": "m9-e2",
+   "lesson": "9.1",
+   "text": {
+    "en": "I have traced \"a customer's admin removes an employee through their identity provider\" across SCIM, sessions, API keys, audit log and billing seats, and fixed at least one gap with a test that proves it",
+    "ar": "تتبّعتُ إجراء \"مسؤول لدى العميل يحذف موظفًا عبر مزوّد الهوية\" (a customer's admin removes an employee through their identity provider) عبر SCIM والجلسات (sessions) ومفاتيح API (API keys) وسجل التدقيق (audit log) ومقاعد الفوترة (billing seats)، وأصلحتُ ثغرة واحدة (one gap) على الأقل باختبار (test) يثبت الإصلاح"
+   }
+  }
+ ]
+}

@@ -1,0 +1,135 @@
+{
+ "area": "m7",
+ "questions": [
+  {
+   "id": "m7-1",
+   "level": 1,
+   "lesson": "7.1",
+   "q": {
+    "en": "At a board meeting, a director asks Layla when Najm will be \"certified to the NIST AI RMF\", so the certificate can be quoted in client questionnaires. Which reply is accurate?",
+    "ar": "في اجتماع لمجلس الإدارة (board meeting)، يسأل أحد أعضائه (director) ليلى متى سيحصل بنك نجم (Najm Bank) على \"اعتماد وفق NIST AI RMF (certified to the NIST AI RMF)\"، كي تُذكر الشهادة (certificate) في استبيانات العملاء (client questionnaires). أي ردّ هو الدقيق (accurate)؟"
+   },
+   "o": {
+    "en": [
+     "An accredited certification body can certify Najm against all 19 categories",
+     "No AI RMF certificate exists; Najm should seek ISO/IEC 42006 certification instead",
+     "No AI RMF certificate exists; the certifiable AI standard is ISO/IEC 42001",
+     "Najm can self-certify by completing every Playbook action for each subcategory"
+    ],
+    "ar": [
+     "يمكن لجهة اعتماد معتمَدة (accredited certification body) أن تعتمد بنك نجم (certify Najm) وفق الفئات التسع عشرة كلها (all 19 categories)",
+     "لا توجد شهادة اعتماد (certificate) لإطار AI RMF، فينبغي لبنك نجم أن يسعى إلى الاعتماد (certification) وفق ISO/IEC 42006 بدلًا منه (instead)",
+     "لا توجد شهادة اعتماد (certificate) لإطار AI RMF، والمعيار القابل للاعتماد (certifiable standard) للذكاء الاصطناعي (AI) هو ISO/IEC 42001",
+     "يستطيع بنك نجم أن يعتمد نفسه ذاتيًا (self-certify) بتنفيذ كل إجراءات الدليل الإرشادي (Playbook actions) لكل فئة فرعية (subcategory)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "The NIST AI RMF is voluntary, flexible, outcome-focused guidance with no certification scheme, and ISO/IEC 42001 is the certifiable AI management system standard. ISO/IEC 42006 sets requirements for the bodies that certify 42001, not for organisations like Najm, and an audit against the 19 categories wrongly treats the RMF as certifiable.",
+    "ar": "إطار NIST AI RMF إرشاد (guidance) طوعي (voluntary) ومرن (flexible) يركّز على النتائج (outcome-focused)، وليس له نظام اعتماد (certification scheme)، أما ISO/IEC 42001 فهو معيار نظام إدارة الذكاء الاصطناعي (AI management system standard) القابل للاعتماد (certifiable). ويضع ISO/IEC 42006 متطلبات (requirements) للجهات التي تمنح اعتماد 42001 (bodies certifying 42001)، لا لمؤسسات (organisations) مثل بنك نجم، والتدقيق (audit) وفق الفئات التسع عشرة (19 categories) يعامل الإطار (RMF) خطأً كأنه قابل للاعتماد (certifiable)."
+   }
+  },
+  {
+   "id": "m7-2",
+   "level": 2,
+   "lesson": "7.1",
+   "q": {
+    "en": "Monthly error sampling shows that the credit memo copilot's confabulation rate is above the tolerance the Committee set. Dana then blocks any figure in a memo that is not linked to a source document, and Omar prepares a rollback to manual memos. Which NIST AI RMF function do these two responses belong to?",
+    "ar": "تُظهر العينات الشهرية للأخطاء (monthly error sampling) أن معدل التلفيق (confabulation rate) في المساعد الذكي لمذكرات الائتمان (credit memo copilot) لدى بنك نجم (Najm Bank) يتجاوز حد تحمّل المخاطر (risk tolerance) الذي حددته اللجنة (Committee). فتحجب دانة أي رقم في المذكرة (memo) غير مرتبط بوثيقة مصدر (source document)، ويُعدّ عمر خطة للرجوع إلى المذكرات اليدوية (rollback to manual memos). إلى أي وظيفة (function) في NIST AI RMF تنتمي هاتان الاستجابتان (responses)؟"
+   },
+   "o": {
+    "en": [
+     "Manage, because they treat a risk that Map and Measure already found",
+     "Measure, because a tracked confabulation metric is what triggered them",
+     "Govern, because they enforce the risk tolerance the Committee approved",
+     "Map, because they redraw the copilot's context and the limits on its use"
+    ],
+    "ar": [
+     "Manage، لأنهما تعالجان (treat) خطرًا (risk) سبق أن كشفته وظيفتا Map وMeasure",
+     "Measure، لأن مقياسًا متتبَّعًا للتلفيق (tracked confabulation metric) هو ما أطلقهما (triggered them)",
+     "Govern، لأنهما تفرضان حد تحمّل المخاطر (risk tolerance) الذي اعتمدته اللجنة (Committee)",
+     "Map، لأنهما تعيدان رسم سياق المساعد الذكي (copilot's context) وحدود استخدامه (limits on its use)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Prioritising and treating risks identified through Map and Measure is Manage: blocking unlinked figures is MANAGE 1 and the rollback playbook is MANAGE 4. The monthly sampling that detected the problem is Measure (MEASURE 3), but acting on what it found is not.",
+    "ar": "ترتيب أولويات المخاطر (prioritising risks) التي حدّدتها Map وMeasure ومعالجتها (treating them) هو وظيفة Manage: فحجب الأرقام غير المرتبطة (unlinked figures) يقع في MANAGE 1، ودليل الرجوع (rollback playbook) يقع في MANAGE 4. أما العينات الشهرية (monthly sampling) التي كشفت المشكلة فهي من Measure (MEASURE 3)، لكن التصرف بناءً على نتائجها (acting on what it found) ليس كذلك."
+   }
+  },
+  {
+   "id": "m7-3",
+   "level": 2,
+   "lesson": "7.2",
+   "q": {
+    "en": "In Najm's ISO/IEC 42001 gap assessment, Omar's team has a sound AI risk assessment for the credit model, covering legal, reputational and operational risks to Najm, with treatments recorded in the Statement of Applicability. What does 42001 still expect for this system?",
+    "ar": "في تقييم الفجوات (gap assessment) الخاص بمعيار ISO/IEC 42001 لدى بنك نجم (Najm Bank)، أعدّ فريق عمر تقييمًا سليمًا لمخاطر الذكاء الاصطناعي (AI risk assessment) لنموذج الائتمان (credit model)، يغطي المخاطر القانونية ومخاطر السمعة والمخاطر التشغيلية (legal, reputational and operational risks) على البنك، مع تسجيل المعالجات (treatments) في بيان قابلية التطبيق (Statement of Applicability). ما الذي لا يزال 42001 يتوقعه (expects) لهذا النظام؟"
+   },
+   "o": {
+    "en": [
+     "Nothing more, as legal and reputational risks already cover any harm to people",
+     "A certificate showing that Najm's risk method conforms to ISO/IEC 23894",
+     "Board approval of the model's residual risk, as ISO/IEC 38507 requires",
+     "An AI system impact assessment of consequences for individuals and groups"
+    ],
+    "ar": [
+     "لا شيء آخر، لأن المخاطر القانونية ومخاطر السمعة (legal and reputational risks) تغطي أصلًا (already cover) أي ضرر يلحق بالناس (harm to people)",
+     "شهادة (certificate) تُثبت أن منهجية المخاطر (risk method) لدى البنك مطابقة (conforms) لمعيار ISO/IEC 23894",
+     "موافقة مجلس الإدارة (board approval) على المخاطر المتبقية (residual risk) للنموذج، كما يشترط ISO/IEC 38507",
+     "تقييم أثر نظام الذكاء الاصطناعي (AI system impact assessment) لعواقبه على الأفراد والمجموعات (individuals and groups)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "42001 separates AI risk assessment (risks to the organisation's objectives) and risk treatment from AI system impact assessment, which covers consequences for individuals, groups and society (clause 6.1.4 and A.5), with ISO/IEC 42005 as guidance. Risks to Najm are not the same as impacts on borrowers, and 23894 is guidance that cannot be certified against.",
+    "ar": "يفصل 42001 بين تقييم مخاطر الذكاء الاصطناعي (AI risk assessment)، أي المخاطر على أهداف المؤسسة (organisation's objectives)، ومعالجتها (risk treatment) من جهة، وتقييم أثر نظام الذكاء الاصطناعي (AI system impact assessment) من جهة أخرى، وهو يتناول العواقب على الأفراد والمجموعات والمجتمع (individuals, groups and society) في البند (clause) 6.1.4 والمجال A.5 من الملحق A (Annex A)، ويقدّم ISO/IEC 42005 إرشاداته (guidance). فالمخاطر على البنك (risks to Najm) ليست هي الآثار على المقترضين (impacts on borrowers)، و23894 معيار إرشادي (guidance standard) لا يمكن الاعتماد (certification) وفقه."
+   }
+  },
+  {
+   "id": "m7-4",
+   "level": 3,
+   "lesson": "7.3",
+   "q": {
+    "en": "Layla's crosswalk maps Najm's human-oversight control for the credit model to AI Act Arts 14 and 26, NIST MAP 3 and MANAGE 2, and ISO/IEC 42001 A.9. The internal audit finds A.9 well evidenced, and an analyst proposes marking every mapped reference, and the QCB expectation, as met. What is the soundest response?",
+    "ar": "يقابل جدول المقابلة (crosswalk) الذي أعدّته ليلى ضابطَ الإشراف البشري (human-oversight control) لنموذج الائتمان (credit model) في بنك نجم (Najm Bank) مع المادتين 14 و26 من AI Act، وMAP 3 وMANAGE 2 في NIST، وA.9 في ISO/IEC 42001. ويجد التدقيق الداخلي (internal audit) أن أدلة A.9 قوية (well evidenced)، ويقترح أحد المحللين (analyst) اعتبار كل المراجع المقابَلة (mapped references)، ومعها توقع QCB (QCB expectation)، مستوفاةً (met). ما الاستجابة الأسلم (soundest response)؟"
+   },
+   "o": {
+    "en": [
+     "Accept it: the crosswalk exists so one control's evidence meets every mapped row",
+     "Check each instrument's own requirements and evidence, the binding ones first",
+     "Accept it for the AI Act, since a 42001 control gives presumption of conformity",
+     "Drop the crosswalk and build a separate oversight control for each jurisdiction"
+    ],
+    "ar": [
+     "قبول الاقتراح: وُجد جدول المقابلة (crosswalk) كي تستوفي أدلة ضابط واحد (one control's evidence) كل صف مقابَل (mapped row)",
+     "التحقق من متطلبات كل أداة (instrument) وأدلتها (evidence) الخاصة بها، بدءًا بالأدوات الملزمة (binding ones)",
+     "قبول الاقتراح فيما يخص AI Act، لأن ضابطًا قائمًا على 42001 (42001 control) يمنح افتراض المطابقة (presumption of conformity)",
+     "التخلي عن جدول المقابلة (crosswalk) وبناء ضابط إشراف (oversight control) مستقل لكل ولاية قضائية (jurisdiction)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "A crosswalk is a planning aid, not a legal equivalence: evidence for A.9 does not by itself prove compliance with Art. 14 or Art. 26, and a QCB expectation can add a delta that NIST and ISO do not contain, so start from the strictest binding requirement. Presumption of conformity comes only from harmonised standards cited in the Official Journal, not from 42001.",
+    "ar": "جدول المقابلة (crosswalk) أداة تخطيط (planning aid) لا تكافؤ قانوني (legal equivalence): فأدلة A.9 لا تثبت بحد ذاتها الامتثال (compliance) للمادة 14 أو المادة 26، وقد يضيف توقع QCB (QCB expectation) فرقًا (delta) لا يرد في NIST أو ISO، لذا ابدأ من أشد متطلب ملزم (strictest binding requirement). ولا يأتي افتراض المطابقة (presumption of conformity) إلا من المعايير المنسَّقة (harmonised standards) المُشار إليها في الجريدة الرسمية (Official Journal)، لا من 42001."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m7-e1",
+   "lesson": "7.2",
+   "text": {
+    "en": "I have drafted a Statement of Applicability outline for a real or practice AI system across the nine ISO/IEC 42001 Annex A areas, with an applies-or-excluded decision and a one-line justification for each area",
+    "ar": "أعددتُ مسودة مخطط لبيان قابلية التطبيق (Statement of Applicability) لنظام ذكاء اصطناعي (AI system) حقيقي أو تدريبي، تغطي مجالات الملحق A (Annex A areas) التسعة في ISO/IEC 42001، مع قرار \"ينطبق أو مستبعد (applies or excluded)\" وتبرير في سطر واحد (one-line justification) لكل مجال"
+   }
+  },
+  {
+   "id": "m7-e2",
+   "lesson": "7.3",
+   "text": {
+    "en": "I have written one human-oversight control and mapped it to at least five references across the EU AI Act, NIST AI RMF, ISO/IEC 42001 and a regulator's AI guidance, listing the evidence each needs and the gaps",
+    "ar": "كتبتُ ضابطًا واحدًا للإشراف البشري (human-oversight control) وقابلتُه (mapped it) مع خمسة مراجع (references) على الأقل في EU AI Act وNIST AI RMF وISO/IEC 42001 وإرشادات جهة تنظيمية للذكاء الاصطناعي (regulator's AI guidance)، مع سرد الأدلة (evidence) التي يحتاجها كل منها والفجوات (gaps)"
+   }
+  }
+ ]
+}

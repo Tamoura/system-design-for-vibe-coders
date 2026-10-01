@@ -1,0 +1,135 @@
+{
+ "area": "m8",
+ "questions": [
+  {
+   "id": "m8-1",
+   "level": 1,
+   "lesson": "8.3",
+   "q": {
+    "en": "Najm Assist's on-call dashboard tracks uptime, p95 latency and error rate, and all three have stayed green since launch. Why is that not enough to know the product is healthy?",
+    "ar": "تتتبع لوحة المناوبة (on-call dashboard) الخاصة بـ نجم أسيست (Najm Assist) وقت التشغيل (uptime) وزمن الاستجابة p95 (p95 latency) ومعدل الأخطاء (error rate)، وقد ظلت الثلاثة خضراء (stayed green) منذ الإطلاق (launch). لماذا لا يكفي ذلك لمعرفة أن المنتج سليم (the product is healthy)؟"
+   },
+   "o": {
+    "en": [
+     "Health signals need tighter thresholds, such as alerting on smaller latency rises",
+     "They track the service, not the answers, so silent drift in quality goes unseen",
+     "Cost per task matters more after launch, so it should replace the health signals",
+     "Containment shows whether chats succeed, so adding it would complete the picture"
+    ],
+    "ar": [
+     "تحتاج إشارات الصحة (health signals) إلى عتبات أضيق (tighter thresholds)، كالتنبيه عند ارتفاعات أصغر في زمن الاستجابة (latency)",
+     "إنها تتتبع الخدمة لا الإجابات (the service, not the answers)، فيبقى الانجراف الصامت في الجودة (silent drift in quality) غير مرئي (goes unseen)",
+     "التكلفة لكل مهمة (cost per task) أهم بعد الإطلاق (after launch)، فينبغي أن تحل محل إشارات الصحة (health signals)",
+     "يُظهر الاحتواء (containment) هل تنجح المحادثات (chats succeed)، فإضافته تكمل الصورة (complete the picture)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Uptime, latency and errors describe the service, not whether answers are right, and drift is usually silent: in the March fee incident they all looked healthy while the assistant quoted an outdated fee, so the plan must also watch inputs, quality, user behaviour and outcomes. Adding containment is tempting, but it rose during that incident because it counts wrongly answered chats as success.",
+    "ar": "وقت التشغيل (uptime) وزمن الاستجابة (latency) والأخطاء (errors) تصف الخدمة (the service) لا صحة الإجابات (whether answers are right)، والانجراف (drift) صامت عادةً (usually silent): ففي حادثة الرسوم في مارس (March fee incident) بدت كلها سليمة بينما كان المساعد يذكر رسومًا قديمة (outdated fee)؛ لذا يجب أن تراقب الخطة أيضًا المدخلات (inputs) والجودة (quality) وسلوك المستخدمين (user behaviour) والنتائج (outcomes). أما إضافة الاحتواء (containment) فمغرية، لكنه ارتفع أثناء تلك الحادثة لأنه يعدّ المحادثات التي أُجيب فيها خطأً (wrongly answered chats) نجاحًا (success)."
+   }
+  },
+  {
+   "id": "m8-2",
+   "level": 2,
+   "lesson": "8.2",
+   "q": {
+    "en": "Najm Assist handles 1.5 million conversations a month. Tariq proposes trimming the retrieved context, which cuts model cost from $0.02 to $0.01 per conversation. In a staged test the handoff rate rises from 27% to 30%, at $4 per handoff, and resolution falls from 63% to 60%; other costs are unchanged. What should Faisal decide under the rule agreed with Khalid?",
+    "ar": "يعالج نجم أسيست (Najm Assist) 1.5 مليون محادثة شهريًا (conversations a month). يقترح طارق تقليص السياق المُسترجَع (trimming the retrieved context)، مما يخفض تكلفة النموذج (model cost) من 0.02 دولار إلى 0.01 دولار لكل محادثة (per conversation). وفي اختبار مرحلي (staged test) يرتفع معدل التسليم (handoff rate) من 27% إلى 30%، بتكلفة 4 دولارات لكل تسليم (per handoff)، وينخفض الحل (resolution) من 63% إلى 60%، وتبقى التكاليف الأخرى (other costs) كما هي. ماذا ينبغي أن يقرر فيصل وفق القاعدة المتفق عليها مع خالد (rule agreed with Khalid)؟"
+   },
+   "o": {
+    "en": [
+     "Approve it, since the monthly model bill falls by about $15,000",
+     "Approve it, since the model bill is the cost line the product team controls",
+     "Reject it, since trimming context should never be traded for lower cost",
+     "Reject it, since cost per resolved conversation rises to about $2.02"
+    ],
+    "ar": [
+     "الموافقة (approve it)، لأن فاتورة النموذج الشهرية (monthly model bill) تنخفض بنحو 15,000 دولار",
+     "الموافقة (approve it)، لأن فاتورة النموذج (model bill) هي بند التكلفة (cost line) الذي يتحكم فيه فريق المنتج (product team)",
+     "الرفض (reject it)، لأن تقليص السياق (trimming context) لا ينبغي أبدًا أن يُقايَض بتكلفة أقل (traded for lower cost)",
+     "الرفض (reject it)، لأن التكلفة لكل محادثة محلولة (cost per resolved conversation) ترتفع إلى نحو 2.02 دولار"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Before the change a conversation costs $0.02 + 27% × $4 = $1.10, about $1.75 per resolution at 63%; after it, $0.01 + 30% × $4 = $1.21, about $2.02 at 60%, and the agreed rule rejects any change that lowers the model bill but raises cost per resolved conversation. The $15,000 saving is real, but the extra handoffs add about $180,000 a month.",
+    "ar": "قبل التغيير (before the change) تكلّف المحادثة 0.02 + 27% × 4 = 1.10 دولار، أي نحو 1.75 دولار لكل محادثة محلولة (per resolution) عند 63%؛ وبعده 0.01 + 30% × 4 = 1.21 دولار، أي نحو 2.02 دولار عند 60%. والقاعدة المتفق عليها (agreed rule) ترفض أي تغيير يخفض فاتورة النموذج (model bill) ويرفع التكلفة لكل محادثة محلولة (cost per resolved conversation). الوفر البالغ 15,000 دولار حقيقي (real saving)، لكن التسليمات الإضافية (extra handoffs) تضيف نحو 180,000 دولار شهريًا (a month)."
+   }
+  },
+  {
+   "id": "m8-3",
+   "level": 2,
+   "lesson": "8.3",
+   "q": {
+    "en": "Three weeks after the model vendor ships an update behind the same model name, Najm Assist's Arabic answers become noticeably terser and the thumbs-down rate on Arabic chats doubles. The mix of topics and languages is unchanged, no policy page has changed, and latency and errors are normal. Which kind of drift is this, and which control would catch it before customers do?",
+    "ar": "بعد ثلاثة أسابيع من طرح مورّد النموذج (model vendor) تحديثًا تحت اسم النموذج نفسه (same model name)، صارت إجابات نجم أسيست (Najm Assist) بالعربية أقصر بوضوح (noticeably terser)، وتضاعف معدل عدم الإعجاب (thumbs-down rate) في المحادثات العربية (Arabic chats). مزيج المواضيع واللغات (mix of topics and languages) لم يتغير، ولم تتغير أي صفحة سياسات (policy page)، وزمن الاستجابة (latency) والأخطاء (errors) طبيعية. ما نوع الانجراف (kind of drift) هذا، وأي ضابط (control) كان سيكشفه قبل أن يكشفه العملاء (before customers do)؟"
+   },
+   "o": {
+    "en": [
+     "Dependency drift; pin the model version and test every change as a release",
+     "Data drift; compare the Arabic inputs against the launch baseline every week",
+     "Knowledge drift; tie policy publishing to re-indexing and a targeted re-test",
+     "Concept drift; retrain on recent labelled chats with a shorter retraining cycle"
+    ],
+    "ar": [
+     "انجراف التبعيات (dependency drift)؛ ثبّت إصدار النموذج (pin the model version) واختبر كل تغيير بوصفه إصدارًا (release)",
+     "انجراف البيانات (data drift)؛ قارن المدخلات العربية (Arabic inputs) بخط أساس الإطلاق (launch baseline) كل أسبوع",
+     "انجراف المعرفة (knowledge drift)؛ اربط نشر السياسات (policy publishing) بإعادة الفهرسة (re-indexing) وإعادة اختبار موجّهة (targeted re-test)",
+     "انجراف المفهوم (concept drift)؛ أعد التدريب (retrain) على محادثات موسومة حديثًا (recently labelled chats) بدورة تدريب أقصر (shorter retraining cycle)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Neither the inputs nor the sources changed; a component the bank does not control did, which is dependency drift, so pin the model version and treat any vendor change as a release with a full golden-set run and a staged rollout. Data drift is tempting because only Arabic is hit, but the input mix is unchanged: what changed is how the model responds to the same inputs.",
+    "ar": "لم تتغير المدخلات (inputs) ولا المصادر (sources)؛ الذي تغيّر مكوّن لا يتحكم فيه البنك (component the bank does not control)، وهذا انجراف التبعيات (dependency drift). لذا ثبّت إصدار النموذج (pin the model version)، وعامل أي تغيير من المورّد (vendor change) بوصفه إصدارًا (release) بتشغيل المجموعة المرجعية كاملة (full golden-set run) وإطلاق مرحلي (staged rollout). انجراف البيانات (data drift) مغرٍ لأن العربية وحدها تأثرت، لكن مزيج المدخلات (input mix) لم يتغير: ما تغيّر هو استجابة النموذج (how the model responds) للمدخلات نفسها (same inputs)."
+   }
+  },
+  {
+   "id": "m8-4",
+   "level": 3,
+   "lesson": "8.1",
+   "q": {
+    "en": "In Credit Memo Copilot's weekly sample, Dana's panel grades most drafts as passing the rubric, yet RMs rewrite more than half the sections in about 40% of those passing drafts. RM hours per memo have barely moved. Faisal proposes switching to a larger, more expensive drafting model. What is the best diagnosis and next step?",
+    "ar": "في العيّنة الأسبوعية (weekly sample) لـ مساعد مذكرات الائتمان (Credit Memo Copilot)، تقيّم لجنة دانة (Dana's panel) معظم المسودات (drafts) بأنها تجتاز معيار التقييم (pass the rubric)، ومع ذلك يعيد مديرو العلاقات (RMs) كتابة أكثر من نصف الأقسام (more than half the sections) في نحو 40% من تلك المسودات الناجحة (passing drafts). ولم تتحرك ساعات مدير العلاقات لكل مذكرة (RM hours per memo) إلا قليلًا. يقترح فيصل الانتقال إلى نموذج صياغة أكبر وأغلى (larger, more expensive drafting model). ما أفضل تشخيص (diagnosis) وخطوة تالية (next step)؟"
+   },
+   "o": {
+    "en": [
+     "Over-reliance; run seeded-error audits so RMs learn to catch more mistakes",
+     "Weak drafts; move to the larger model, since heavy rewrites show a quality gap",
+     "Under-reliance; research with RMs why they redo drafts that are already good",
+     "Style preference; drop edit distance, since edits like these are not errors"
+    ],
+    "ar": [
+     "إفراط في الاعتماد (over-reliance)؛ أجرِ تدقيقات الأخطاء المزروعة (seeded-error audits) ليتعلم مديرو العلاقات (RMs) التقاط أخطاء أكثر",
+     "مسودات ضعيفة (weak drafts)؛ انتقل إلى النموذج الأكبر (larger model)، فإعادة الكتابة الكثيفة (heavy rewrites) تدل على فجوة جودة (quality gap)",
+     "قلة اعتماد (under-reliance)؛ ابحث مع مديري العلاقات (RMs) لماذا يعيدون عمل مسودات جيدة أصلًا (already good)",
+     "تفضيل أسلوبي (style preference)؛ احذف مسافة التحرير (edit distance)، فتعديلات كهذه ليست أخطاء (not errors)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Good drafts that are heavily rewritten sit in the under-reliance cell of the reliance matrix, which throws away the time the copilot should save; the lesson's response is UX research into why RMs redo good work. A larger model is the tempting fix, but the panel already grades the drafts as good, so more model capability adds cost without touching the cause.",
+    "ar": "المسودات الجيدة التي يُعاد كتابتها بكثافة (heavily rewritten) تقع في خانة قلة الاعتماد (under-reliance cell) من مصفوفة الاعتماد (reliance matrix)، وهي تهدر الوقت الذي يُفترض أن يوفّره المساعد (copilot)؛ واستجابة الدرس هي بحث تجربة المستخدم (UX research) في سبب إعادة مديري العلاقات (RMs) لعمل جيد. النموذج الأكبر (larger model) هو الحل المغري (tempting fix)، لكن اللجنة تقيّم المسودات بأنها جيدة أصلًا، فزيادة قدرة النموذج (more model capability) تضيف تكلفة (cost) دون معالجة السبب (the cause)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m8-e1",
+   "lesson": "8.1",
+   "text": {
+    "en": "I have designed a metrics tree for an AI product with a North Star, input metrics, guardrails that each have an owner, and a lagging outcome with how long its labels take to arrive.",
+    "ar": "صممت شجرة مقاييس (metrics tree) لمنتج ذكاء اصطناعي (AI product) فيها مقياس نجم الشمال (North Star)، ومقاييس مُدخلة (input metrics)، ومقاييس وقائية (guardrails) لكلٍّ منها مالك (owner)، ونتيجة لاحقة (lagging outcome) مع المدة التي تستغرقها تسمياتها (labels) للوصول."
+   }
+  },
+  {
+   "id": "m8-e2",
+   "lesson": "8.2",
+   "text": {
+    "en": "I have built a cost-per-task model for an AI product with prices as inputs and handoffs counted, compared options on cost per successful outcome, and written what it means for the decision.",
+    "ar": "بنيت نموذج تكلفة المهمة (cost-per-task model) لمنتج ذكاء اصطناعي (AI product)، أسعاره مُدخلات قابلة للتحديث (prices as inputs) ويحتسب التسليمات (handoffs)، وقارنت الخيارات على أساس التكلفة لكل نتيجة ناجحة (cost per successful outcome)، وكتبت ما يعنيه ذلك للقرار (what it means for the decision)."
+   }
+  }
+ ]
+}

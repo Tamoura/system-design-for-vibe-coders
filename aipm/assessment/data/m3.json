@@ -1,0 +1,135 @@
+{
+ "area": "m3",
+ "questions": [
+  {
+   "id": "m3-1",
+   "level": 1,
+   "lesson": "3.1",
+   "q": {
+    "en": "Najm is planning three AI products: a predictive credit model, a memo assistant that retrieves documents, and a fine-tuned drafting model. Which kind of data does every one of them need?",
+    "ar": "يخطط بنك نجم (Najm Bank) لثلاثة منتجات ذكاء اصطناعي (AI products): نموذج ائتمان تنبؤي (predictive credit model)، ومساعد مذكرات يسترجع المستندات (memo assistant that retrieves documents)، ونموذج صياغة مضبوط ضبطًا دقيقًا (fine-tuned drafting model). ما نوع البيانات (kind of data) الذي يحتاجه كلٌّ منها دون استثناء (every one of them)؟"
+   },
+   "o": {
+    "en": [
+     "Historical examples with trustworthy labels, like repaid or not",
+     "A clean, current knowledge corpus that the model reads at answer time",
+     "Real cases with agreed good answers, used to check output quality",
+     "A large volume of historical records covering several years of activity"
+    ],
+    "ar": [
+     "أمثلة تاريخية (historical examples) ذات وسوم موثوقة (trustworthy labels)، مثل «سُدّد أم لا (repaid or not)»",
+     "مجموعة معرفية نظيفة وحديثة (clean, current knowledge corpus) يقرؤها النموذج وقت الإجابة (at answer time)",
+     "حالات حقيقية بإجابات جيدة متّفق عليها (real cases with agreed good answers)، تُستخدم للتحقق من جودة المخرجات (check output quality)",
+     "حجم كبير من السجلات التاريخية (large volume of historical records) يغطّي عدة سنوات من النشاط (several years of activity)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Evaluation data, real cases with agreed good answers, is the one data asset every AI product needs, and the lesson says to build it first as a golden set. Labelled history is tempting, but only the predictive model needs it, and a large volume of records says nothing about readiness for any of them.",
+    "ar": "بيانات التقييم (evaluation data)، أي حالات حقيقية بإجابات جيدة متّفق عليها (real cases with agreed good answers)، هي أصل البيانات الوحيد (the one data asset) الذي يحتاجه كل منتج ذكاء اصطناعي (every AI product)، ويوصي الدرس ببنائها أولًا (build it first) في صورة مجموعة مرجعية (golden set). أما التاريخ الموسوم (labelled history) فمغرٍ (tempting)، لكن النموذج التنبؤي (predictive model) وحده يحتاجه، والحجم الكبير من السجلات (large volume of records) لا يقول شيئًا عن الجاهزية (says nothing about readiness) لأيٍّ منها."
+   }
+  },
+  {
+   "id": "m3-2",
+   "level": 2,
+   "lesson": "3.2",
+   "q": {
+    "en": "Six months after Credit Memo Copilot launched, the share of draft sections that RMs submit without any edit has risen from 60% to 92%. Khalid wants to present this as proof that the Copilot keeps getting better. What should Faisal do first?",
+    "ar": "بعد ستة أشهر من إطلاق مساعد مذكرات الائتمان (Credit Memo Copilot)، ارتفعت نسبة أقسام المسودّات (draft sections) التي يقدّمها مديرو العلاقات (RMs) دون أي تعديل (without any edit) من 60% إلى 92%. ويريد خالد أن يعرض ذلك (present this) دليلًا (proof) على أن المساعد يتحسّن باستمرار (keeps getting better). ماذا ينبغي أن يفعل فيصل أولًا؟"
+   },
+   "o": {
+    "en": [
+     "Present it as a quality gain, since acceptance reflects real behaviour, not opinion",
+     "Add the accepted sections to training data as confirmed good examples",
+     "Add a thumbs-up button, since explicit ratings are clearer than silent acceptance",
+     "Have a reviewer audit a random sample of accepted sections for correctness"
+    ],
+    "ar": [
+     "يعرضه مكسبًا في الجودة (quality gain)، لأن القبول يعكس سلوكًا فعليًا (real behaviour) لا رأيًا (opinion)",
+     "يضيف الأقسام المقبولة (accepted sections) إلى بيانات التدريب (training data) أمثلةً جيدة مؤكّدة (confirmed good examples)",
+     "يضيف زر إعجاب (thumbs-up button)، لأن التقييمات الصريحة (explicit ratings) أوضح من القبول الصامت (silent acceptance)",
+     "يكلّف مراجِعًا (reviewer) بتدقيق عينة عشوائية (random sample) من الأقسام المقبولة (accepted sections) للتحقق من صحتها (correctness)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Users adapt to the product: RMs may have learned to accept sections without reading them, so a sampled audit of accepted outputs checks that 'accepted' still means 'correct'. Presenting the rise as a quality gain is the tempting shortcut, but implicit signals are ambiguous and stop meaning quality once users adapt.",
+    "ar": "المستخدمون يتكيّفون مع المنتج (users adapt to the product): ربما تعلّم مديرو العلاقات (RMs) قبول الأقسام دون قراءتها (without reading them)، ولذلك يتحقق تدقيق عينة من المخرجات المقبولة (audit of accepted outputs) من أن «مقبول (accepted)» ما زال يعني «صحيح (correct)». أما عرض الارتفاع مكسبًا في الجودة (quality gain) فهو الاختصار المغري (tempting shortcut)، لأن الإشارات الضمنية (implicit signals) ملتبسة (ambiguous) وتكفّ عن الدلالة على الجودة (stop meaning quality) حين يتكيّف المستخدمون مع المنتج."
+   }
+  },
+  {
+   "id": "m3-3",
+   "level": 2,
+   "lesson": "3.3",
+   "q": {
+    "en": "Credit Memo Copilot records how much of each draft every RM keeps, under a notice that this data is used to improve the service. The head of the RM team now wants to use the same data to rank RMs' performance by how much they edit. What should Faisal do?",
+    "ar": "يسجّل مساعد مذكرات الائتمان (Credit Memo Copilot) مقدار ما يحتفظ به كل مدير علاقة (RM) من كل مسودّة (draft)، بموجب إشعار (notice) يقول إن هذه البيانات تُستخدم لتحسين الخدمة (improve the service). ويريد رئيس فريق مديري العلاقات (head of the RM team) الآن استخدام البيانات نفسها لترتيب أداء مديري العلاقات (rank RMs' performance) بحسب حجم تعديلاتهم (how much they edit). ماذا ينبغي أن يفعل فيصل؟"
+   },
+   "o": {
+    "en": [
+     "Treat ranking as a new purpose and check it with Sara before any use",
+     "Share the data with the RM head, since it is already collected in-house",
+     "Add a consent tick-box for RMs in the Copilot, then start ranking",
+     "Rely on the current notice, since edit data is staff data, not customer data"
+    ],
+    "ar": [
+     "يعامل الترتيب غرضًا جديدًا (new purpose) ويعرضه على سارة (check it with Sara) قبل أي استخدام (before any use)",
+     "يشارك البيانات مع رئيس الفريق (RM head)، لأنها مجموعة سلفًا داخل البنك (already collected in-house)",
+     "يضيف خانة موافقة (consent tick-box) لمديري العلاقات (RMs) في المساعد (Copilot)، ثم يبدأ الترتيب (start ranking)",
+     "يعتمد على الإشعار الحالي (current notice)، لأن بيانات التعديل (edit data) بيانات موظفين (staff data) لا بيانات عملاء (customer data)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "The data was collected and declared for improving the service, so ranking RMs is a new purpose that needs Sara's compatibility check, and a reasonable RM would likely be surprised by it; an edit can also just mean 'my style'. 'It is already collected in-house' is the tempting answer, but purpose limitation applies to data you already hold.",
+    "ar": "جُمعت البيانات وأُعلن غرضها لتحسين الخدمة (improving the service)، فترتيب مديري العلاقات (ranking RMs) غرض جديد (new purpose) يحتاج فحص التوافق (compatibility check) مع سارة، ومن المرجّح أن يتفاجأ به مدير العلاقة المعقول (reasonable RM)، فضلًا عن أن التعديل قد يعني مجرد «أسلوبي (my style)». أما «البيانات مجموعة سلفًا داخل البنك (already collected in-house)» فهي الإجابة المغرية (tempting answer)، لكن تحديد الغرض (purpose limitation) ينطبق على البيانات التي تحتفظ بها أصلًا (data you already hold)."
+   }
+  },
+  {
+   "id": "m3-4",
+   "level": 3,
+   "lesson": "3.1",
+   "q": {
+    "en": "An analyst on Khalid's team proposes training SME Instant Finance on 'did the analyst approve?' rather than 'was the invoice repaid?', because approval is recorded for every past application, including declined ones. What should Faisal decide?",
+    "ar": "يقترح محلل (analyst) في فريق خالد تدريب نموذج التمويل الفوري للشركات الصغيرة (SME Instant Finance) على وسم «هل وافق المحلل؟» ⁦(did the analyst approve?)⁩ بدلًا من «هل سُدّدت الفاتورة؟» ⁦(was the invoice repaid?)⁩، لأن الموافقة مسجّلة (approval is recorded) لكل طلب سابق (every past application)، بما في ذلك الطلبات المرفوضة (declined ones). ماذا ينبغي أن يقرر فيصل؟"
+   },
+   "o": {
+    "en": [
+     "Accept it, since approval labels cover declined applicants and so remove selection bias",
+     "Train on repayment, and route applicant types rarely approved before to a human",
+     "Accept it, but drop the sector and tenure fields so old habits cannot be learned",
+     "Pause training until reject inference recovers declined applicants' outcomes"
+    ],
+    "ar": [
+     "يقبله، لأن وسوم الموافقة (approval labels) تشمل المتقدمين المرفوضين (declined applicants) فتزيل انحياز الاختيار (selection bias)",
+     "يدرّب على السداد (train on repayment)، ويوجّه أنواع المتقدمين النادر قبولها سابقًا (rarely approved before) إلى إنسان (to a human)",
+     "يقبله، لكن يحذف حقلي القطاع ومدة العلاقة (sector and tenure fields) حتى لا تُتعلَّم العادات القديمة (old habits)",
+     "يوقف التدريب (pause training) حتى يستعيد استدلال المرفوضين (reject inference) نتائج المتقدمين المرفوضين (declined applicants' outcomes)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Decision labels copy past analysts' habits, including strictness toward some sectors or new businesses for reasons unrelated to repayment, so the lesson prefers outcome labels and routing rarely approved applicant types to a human. Full coverage makes the approval label tempting, but the model would learn who used to be approved, not who repays.",
+    "ar": "وسوم القرار (decision labels) تنسخ عادات المحللين السابقين (past analysts' habits)، بما فيها التشدد مع بعض القطاعات أو الشركات الجديدة (strictness toward some sectors or new businesses) لأسباب لا علاقة لها بالسداد (unrelated to repayment)، ولذلك يفضّل الدرس وسوم النتيجة (outcome labels) وتوجيه (routing) أنواع المتقدمين النادر قبولها (rarely approved applicant types) إلى إنسان (to a human). التغطية الكاملة (full coverage) تجعل وسم الموافقة (approval label) مغريًا، لكن النموذج سيتعلّم من اعتدنا الموافقة عليه (who used to be approved)، لا من يسدّد فعلًا (who repays)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m3-e1",
+   "lesson": "3.1",
+   "text": {
+    "en": "I have run the six data readiness questions for a real AI product, scoring each green, amber or red with one line of evidence, and named at least one representativeness gap and one labelling gap",
+    "ar": "طرحتُ أسئلة جاهزية البيانات الستة (six data readiness questions) على منتج ذكاء اصطناعي حقيقي (real AI product)، وقيّمتُ كلًّا منها بالأخضر أو الكهرماني أو الأحمر (green, amber or red) مع سطر دليل واحد (one line of evidence)، وسمّيتُ فجوة تمثيل (representativeness gap) واحدة على الأقل وفجوة وسم (labelling gap) واحدة"
+   }
+  },
+  {
+   "id": "m3-e2",
+   "lesson": "3.3",
+   "text": {
+    "en": "I have filled in a data-flow table for an AI feature, listing every place personal data appears, including prompts, logs, feedback and eval sets, with a purpose, retention period and deletion path for each, and reviewed it with the DPO",
+    "ar": "ملأتُ جدول تدفّق البيانات (data-flow table) لميزة ذكاء اصطناعي (AI feature)، يذكر كل موضع تظهر فيه البيانات الشخصية (personal data)، بما فيه الموجّهات (prompts) والسجلات (logs) والتغذية الراجعة (feedback) ومجموعات التقييم (eval sets)، مع الغرض (purpose) وفترة الاحتفاظ (retention period) ومسار الحذف (deletion path) لكلٍّ منها، وراجعتُه مع مسؤول حماية البيانات (DPO)"
+   }
+  }
+ ]
+}

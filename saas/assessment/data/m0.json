@@ -1,0 +1,135 @@
+{
+ "area": "m0",
+ "questions": [
+  {
+   "id": "m0-1",
+   "level": 1,
+   "lesson": "0.1",
+   "q": {
+    "en": "Beacon’s founder says: “The check engine will take four weeks, so we can start selling in five.” What is the main flaw in this estimate?",
+    "ar": "يقول مؤسس Beacon (Beacon’s founder): «سيستغرق محرك الفحص (check engine) أربعة أسابيع، إذن نبدأ البيع (selling) بعد خمسة.» ما الخلل الأساسي (main flaw) في هذا التقدير (estimate)؟"
+   },
+   "o": {
+    "en": [
+     "It underestimates the core, which is usually the biggest share of a SaaS",
+     "It is too cautious, since a starter kit removes almost all the generic work",
+     "It forgets generic parts like invites and billing, which often take longer",
+     "It ignores managed services, which cut each generic part to a day or two"
+    ],
+    "ar": [
+     "يقلّل من حجم الجوهر (core)، وهو عادةً الحصة الأكبر (biggest share) في أي SaaS",
+     "إنه حذِرٌ أكثر من اللازم (too cautious)، فمجموعة البداية (starter kit) تكاد تزيل كل العمل العام (generic work)",
+     "ينسى الأجزاء العامة (generic parts) كالدعوات (invites) والفوترة (billing)، وهي غالبًا تستغرق وقتًا أطول",
+     "يتجاهل الخدمات المُدارة (managed services) التي تختصر كل جزء عام (generic part) إلى يوم أو يومين (a day or two)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Every generic part a sellable v1 needs (invites, billing, password resets) has edge cases such as failed payments or jobs that run twice, so together they often take longer than the core. A starter kit is a head start you must still read, not a way to skip that work.",
+    "ar": "لكل جزء عام (generic part) تحتاجه نسخة أولى قابلة للبيع (sellable v1) — الدعوات (invites) والفوترة (billing) وإعادة تعيين كلمة المرور (password resets) — حالاتٌ حدّية (edge cases) مثل الدفع الفاشل (failed payment) أو مهمة (job) تعمل مرتين، فتستغرق مجتمعةً غالبًا وقتًا أطول من الجوهر (core). ومجموعة البداية (starter kit) بدايةٌ متقدمة (head start) عليك أن تقرأها، لا طريقٌ لتجاوز ذلك العمل."
+   }
+  },
+  {
+   "id": "m0-2",
+   "level": 2,
+   "lesson": "0.1",
+   "q": {
+    "en": "To ship faster, a Beacon engineer proposes wrapping a commercial uptime-checking API as the check engine, and spending the saved weeks building Beacon’s own billing system. What does the build, buy or self-host flowchart say?",
+    "ar": "لكي يُطلق المنتج أسرع (ship faster)، يقترح مهندس (engineer) في Beacon أن يغلّف (wrap) واجهة API تجارية لفحص التوفر (commercial uptime-checking API) لتكون محرك الفحص (check engine)، وأن يصرف الأسابيع الموفَّرة (saved weeks) في بناء نظام فوترة (billing system) خاص بـ Beacon. ماذا يقول مخطط البناء أو الشراء أو الاستضافة الذاتية (build, buy or self-host flowchart)؟"
+   },
+   "o": {
+    "en": [
+     "Swap them: build the check engine, since it is core, and buy billing",
+     "Agree: the check engine is the hard part, and billing is easy to build",
+     "Buy both: managed services are faster, and speed matters most for a v1",
+     "Self-host both from open source, so no third party sees Beacon’s data"
+    ],
+    "ar": [
+     "اعكس الخطة: ابنِ محرك الفحص (check engine) لأنه جوهري (core)، واشترِ الفوترة (billing)",
+     "وافِق: محرك الفحص (check engine) هو الجزء الصعب، والفوترة (billing) سهلة البناء (easy to build)",
+     "اشترِ الاثنين: الخدمات المُدارة (managed services) أسرع، والسرعة أهم ما في النسخة الأولى (v1)",
+     "استضف الاثنين ذاتيًا (self-host) من المصدر المفتوح (open source)، فلا ترى جهةٌ خارجية (third party) بيانات Beacon"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "The flowchart’s first question is “is it core?”: the check engine is Beacon’s differentiator, so buying it means competitors can buy the same thing, while billing is generic and proven services like Stripe exist. “Buy both” is the v1 default only for generic parts, so it fails that first question.",
+    "ar": "السؤال الأول في المخطط (flowchart) هو «هل هو جوهري (core)؟»: محرك الفحص (check engine) هو ما يميّز Beacon (differentiator)، وشراؤه يعني أن منافسيه (competitors) يستطيعون شراء الشيء نفسه، أما الفوترة (billing) فعامة (generic) وتوجد لها خدمات مجرّبة (proven services) مثل Stripe. و«اشترِ الاثنين» هو الخيار الافتراضي للنسخة الأولى (v1 default) في الأجزاء العامة (generic parts) فقط، فيسقط عند السؤال الأول."
+   }
+  },
+  {
+   "id": "m0-3",
+   "level": 2,
+   "lesson": "0.2",
+   "q": {
+    "en": "You cloned a large open-source SaaS to learn how it stops a workspace that has hit its plan limit. While using the product, you saw the blocked user get the message “You have reached your project limit”. What is your best first move in the code?",
+    "ar": "نسخت (cloned) SaaS كبيرًا مفتوح المصدر (open-source) لتتعلم كيف يوقف مساحة عمل (workspace) بلغت حدّ خطتها (plan limit). أثناء استخدام المنتج رأيت المستخدم المحجوب (blocked user) يتلقى رسالة «You have reached your project limit». ما أفضل خطوة أولى (first move) في الكود (code)؟"
+   },
+   "o": {
+    "en": [
+     "Open the main entry file and follow its imports until a limit check shows up",
+     "Run docker compose up first, then click around until the limit error appears",
+     "Open the file named limits.ts and treat the rules it defines as the answer",
+     "Search the repo for that exact message, then trace the code that raises it"
+    ],
+    "ar": [
+     "افتح ملف الدخول الرئيسي (entry file) وتتبّع استيراداته (imports) حتى يظهر فحص الحد (limit check)",
+     "شغّل docker compose up أولًا، ثم تنقّل في التطبيق (app) حتى يظهر خطأ الحد (limit error)",
+     "افتح الملف المسمّى limits.ts واعتبر القواعد (rules) التي يعرّفها هي الجواب (the answer)",
+     "ابحث في المستودع (repo) عن تلك الرسالة بنصها (exact message)، ثم تتبّع الكود (trace the code) الذي يطلقها"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Strings users see are unique, so searching for the exact message jumps you straight to the code that raises it, and from there you follow the real path. A file named limits.ts may be dead code while the real check lives inline in a route, so trusting its name is the trap.",
+    "ar": "النصوص التي يراها المستخدمون (strings users see) فريدة، فالبحث عن الرسالة بنصها (exact message) ينقلك مباشرةً إلى الكود الذي يطلقها (the code that raises it)، ومنه تتبّع المسار الحقيقي (real path). أما ملف اسمه limits.ts فقد يكون كودًا ميتًا (dead code) بينما يقع الفحص الحقيقي (real check) مضمّنًا (inline) داخل مسار (route)، والثقة باسمه هي الفخ (trap)."
+   }
+  },
+  {
+   "id": "m0-4",
+   "level": 3,
+   "lesson": "0.3",
+   "q": {
+    "en": "Beacon’s closed-source backend includes a GPL-3.0 library that the team modified, and it runs only on Beacon’s servers. Sales now wants an on-premises edition that customers install themselves. What does the GPL mean for that plan?",
+    "ar": "يتضمن الخادم الخلفي (backend) المغلق المصدر (closed-source) لـ Beacon مكتبةً (library) بترخيص GPL-3.0 عدّلها الفريق (team)، وهو يعمل على خوادم Beacon (Beacon’s servers) فقط. يريد فريق المبيعات (sales) الآن نسخة للاستضافة في مقر العميل (on-premises edition) يثبّتها العملاء (customers) بأنفسهم. ماذا يعني GPL لهذه الخطة؟"
+   },
+   "o": {
+    "en": [
+     "Nothing changes as long as Beacon keeps the copyright and licence notice",
+     "Shipping it is distribution, so the edition’s source must be released",
+     "Beacon must publish only its own changes to the library, not the rest",
+     "Nothing changes, because customers will run it only on their own servers"
+    ],
+    "ar": [
+     "لا شيء يتغير (nothing changes) ما دام Beacon يحتفظ بإشعار حقوق النشر والترخيص (copyright and licence notice)",
+     "شحنها (shipping) توزيعٌ (distribution)، فيجب نشر مصدر تلك النسخة (the edition’s source)",
+     "على Beacon أن ينشر تعديلاته الخاصة (its own changes) على المكتبة (library) فقط، لا البقية (the rest)",
+     "لا شيء يتغير (nothing changes)، لأن العملاء (customers) سيشغّلونها على خوادمهم الخاصة (their own servers) فقط"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "The GPL asks for source only when you distribute software containing it. Running it on Beacon’s own servers was not distribution, but shipping an edition for customers to install is, and the duty covers that software’s source, not just the patch to the library.",
+    "ar": "لا يطلب GPL المصدر (source) إلا عندما توزّع (distribute) برمجياتٍ تحتويه. تشغيله على خوادم Beacon نفسه لم يكن توزيعًا (distribution)، أما شحن نسخة (edition) يثبّتها العملاء (customers) فهو توزيع، والالتزام (duty) يشمل مصدر تلك البرمجيات (that software’s source)، لا تعديل المكتبة (library patch) وحده."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m0-e1",
+   "lesson": "0.2",
+   "text": {
+    "en": "I have traced one request in openstatus (“a user creates a new monitor”) from the UI form to the database insert, as an ordered list of files with GitHub permalinks, and found whether and where the plan limit is enforced.",
+    "ar": "تتبّعت طلبًا واحدًا (one request) في openstatus («مستخدم ينشئ مراقِبًا (monitor) جديدًا») من نموذج الواجهة (UI form) حتى الإدراج في قاعدة البيانات (database insert)، في قائمة مرتبة بالملفات (ordered list of files) مع روابط GitHub دائمة (permalinks)، وعرفت هل يُفرض حدّ الخطة (plan limit) وأين."
+   }
+  },
+  {
+   "id": "m0-e2",
+   "lesson": "0.3",
+   "text": {
+    "en": "I have done a licence review of three pieces of code Beacon wanted to reuse: the LICENSE at the exact commit for each, a yes, no or “only with conditions” verdict, and its obligation in one sentence.",
+    "ar": "أجريت مراجعة تراخيص (licence review) لثلاث قطع من الكود (pieces of code) أراد Beacon إعادة استخدامها: ملف LICENSE في الإيداع المحدد (exact commit) لكل منها، وحكمًا (verdict) بـ «نعم» أو «لا» أو «بشروط فقط»، والتزامه (obligation) في جملة واحدة."
+   }
+  }
+ ]
+}

@@ -1,0 +1,135 @@
+{
+ "area": "m1",
+ "questions": [
+  {
+   "id": "m1-1",
+   "level": 1,
+   "lesson": "1.1",
+   "q": {
+    "en": "Beacon adds \"Sign in with GitHub\". What should it store and match on to recognise the same person at their next GitHub sign-in?",
+    "ar": "يضيف Beacon ميزة \"تسجيل الدخول عبر GitHub (Sign in with GitHub)\". ما الذي يجب أن يخزّنه ويطابق عليه (match on) ليتعرّف على الشخص نفسه (the same person) عند تسجيل دخوله التالي (next sign-in) عبر GitHub؟"
+   },
+   "o": {
+    "en": [
+     "The email address GitHub returns, lowercased and trimmed",
+     "The email address, but only once GitHub marks it as verified",
+     "The GitHub username shown on the person's profile page",
+     "The provider name paired with GitHub's stable subject id"
+    ],
+    "ar": [
+     "عنوان البريد الإلكتروني (email address) الذي يُرجعه GitHub، بعد تحويله إلى أحرف صغيرة (lowercased) وحذف المسافات الزائدة (trimmed)",
+     "عنوان البريد الإلكتروني (email address)، ولكن فقط بعد أن يَسِمه GitHub بأنه موثَّق (verified)",
+     "اسم المستخدم (username) في GitHub الظاهر في صفحة الملف الشخصي (profile page) للشخص",
+     "اسم المزوّد (provider name) مقرونًا بالمعرّف الثابت للمستخدم (stable subject id) لدى GitHub"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Provider email claims can be mutable or unverified (the 2023 nOAuth research showed account takeovers from trusting them), so identities are keyed on (provider, provider_user_id) and the email is only a hint. A verified email only decides whether to offer linking to an existing account, not who the person is.",
+    "ar": "قد يرسل المزوّدون (providers) ادعاءات بريد (email claims) قابلة للتغيير (mutable) أو غير موثَّقة (unverified)، وقد أظهر بحث nOAuth عام 2023 حالات استيلاء على الحسابات (account takeovers) بسبب الوثوق بها؛ لذلك تُربط الهويات (identities) بالزوج (provider, provider_user_id)، والبريد (email) مجرد تلميح (hint). أما البريد الموثَّق (verified email) فيحدد فقط هل نعرض ربط الحساب (account linking) بحساب موجود، لا من هو الشخص."
+   }
+  },
+  {
+   "id": "m1-2",
+   "level": 2,
+   "lesson": "1.2",
+   "q": {
+    "en": "Beacon's \"Delete organization\" button runs every cascade inside the web request. For a large tenant it times out halfway, and the next morning the customer writes that an intern clicked it by mistake. What should the deletion flow become?",
+    "ar": "زر \"حذف المنظمة (Delete organization)\" في Beacon ينفّذ كل عمليات الحذف المتتالي (cascades) داخل طلب الويب (web request) نفسه. مع مستأجر (tenant) كبير ينتهي وقت الطلب (times out) في منتصف العملية، وفي الصباح التالي يكتب العميل (customer) أن متدرّبًا (intern) نقر الزر خطأً. كيف يجب أن يصبح مسار الحذف (deletion flow)؟"
+   },
+   "o": {
+    "en": [
+     "Soft-delete it for a 30-day grace period, then purge it in a background job",
+     "Raise the request timeout and wrap every cascade in a single transaction",
+     "Keep the synchronous delete but make the admin type the org's name to confirm",
+     "Move the same hard delete into a background job that starts right away"
+    ],
+    "ar": [
+     "احذف المنظمة حذفًا ناعمًا (soft delete) مع فترة سماح (grace period) مدتها 30 يومًا، ثم امحُها نهائيًا (purge) في مهمة خلفية (background job)",
+     "ارفع مهلة الطلب (request timeout)، وضع كل عمليات الحذف المتتالي (cascades) في معاملة واحدة (single transaction)",
+     "أبقِ الحذف المتزامن (synchronous delete)، لكن اطلب من المسؤول (admin) كتابة اسم المنظمة (org name) للتأكيد",
+     "انقل الحذف النهائي (hard delete) نفسه إلى مهمة خلفية (background job) تبدأ فورًا"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Deleting an org must be reversible and must not run inside a request: soft-delete it so it is inaccessible but restorable during the grace period, cancel the subscription and stop checks at once, then hard-delete with a background job. Moving the hard delete into a job fixes the timeout but leaves nothing to restore after the intern's mistake.",
+    "ar": "حذف المنظمة (organization) يجب أن يكون قابلًا للتراجع (reversible)، وألا يعمل داخل الطلب (request): احذفها حذفًا ناعمًا (soft delete) فتصبح غير متاحة لكن قابلة للاستعادة (restorable) طوال فترة السماح (grace period)، وألغِ الاشتراك (subscription) وأوقف الفحوص (checks) فورًا، ثم احذف نهائيًا (hard-delete) عبر مهمة خلفية (background job). أما نقل الحذف النهائي (hard delete) إلى مهمة خلفية فيحل مشكلة المهلة (timeout)، لكنه لا يترك شيئًا يُستعاد بعد خطأ المتدرّب (intern)."
+   }
+  },
+  {
+   "id": "m1-3",
+   "level": 2,
+   "lesson": "1.3",
+   "q": {
+    "en": "Two requests reach Beacon's DELETE /api/monitors/:id. In one, a viewer in Acme's org targets an Acme monitor. In the other, an admin of BigCo's org sends the id of that same Acme monitor. What should each caller receive?",
+    "ar": "يصل طلبان (two requests) إلى نقطة النهاية (endpoint) DELETE /api/monitors/:id في Beacon. في الأول، يستهدف مشاهد (viewer) في منظمة Acme مراقِبًا (monitor) تابعًا لـ Acme. وفي الثاني، يرسل مسؤول (admin) في منظمة BigCo معرّف (id) المراقِب نفسه. ماذا يجب أن يتلقى كل مستدعٍ (caller)؟"
+   },
+   "o": {
+    "en": [
+     "403 to both: neither caller is allowed to delete that particular monitor",
+     "404 to both: neither caller should learn whether the monitor exists",
+     "403 to the viewer: wrong role; 404 to the BigCo admin: wrong tenant",
+     "404 to the viewer: wrong role; 403 to the BigCo admin: wrong tenant"
+    ],
+    "ar": [
+     "403 للاثنين: لا يملك أي منهما صلاحية الحذف (delete permission) على هذا المراقِب (monitor) تحديدًا",
+     "404 للاثنين: يجب ألا يعرف أي من المستدعيَين (callers) هل المراقِب (monitor) موجود",
+     "403 للمشاهد (viewer): دور خاطئ (wrong role)؛ و404 لمسؤول BigCo (BigCo admin): مستأجر خاطئ (wrong tenant)",
+     "404 للمشاهد (viewer): دور خاطئ (wrong role)؛ و403 لمسؤول BigCo (BigCo admin): مستأجر خاطئ (wrong tenant)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "The viewer is inside Acme but lacks the delete permission, so the function-level check answers 403; for the BigCo admin the org-scoped query finds nothing, so the answer is 404, which does not confirm the id exists. Answering 403 to both tells BigCo that the monitor is real.",
+    "ar": "المشاهد (viewer) داخل Acme لكنه لا يملك صلاحية الحذف (delete permission)، فيجيب فحص مستوى الوظيفة (function-level check) بـ 403؛ أما مسؤول BigCo (BigCo admin) فلا يجد له الاستعلام المحصور بالمنظمة (org-scoped query) شيئًا، فيكون الرد 404 الذي لا يؤكد وجود المعرّف (id). والرد بـ 403 على الاثنين يخبر BigCo أن المراقِب (monitor) موجود فعلًا."
+   }
+  },
+  {
+   "id": "m1-4",
+   "level": 3,
+   "lesson": "1.4",
+   "q": {
+    "en": "Acme's IdP sends Beacon a SCIM PATCH setting active to false for ana@acme.com. Ana also has a personal Beacon workspace and belongs to a client's org that uses password login. What should Beacon do?",
+    "ar": "يرسل مزوّد هوية Acme (Acme's IdP) إلى Beacon طلب SCIM PATCH (SCIM PATCH request) يضبط active على false للمستخدمة ana@acme.com. ولدى Ana أيضًا مساحة عمل شخصية (personal workspace) في Beacon، وهي عضو (member) في منظمة أحد العملاء (a client's org) تستخدم الدخول بكلمة مرور (password login). ماذا يجب أن يفعل Beacon؟"
+   },
+   "o": {
+    "en": [
+     "Delete Ana's Beacon user so that no session or key of hers survives anywhere",
+     "Deactivate her Acme membership and revoke her Acme sessions and API keys",
+     "Deactivate her Acme membership and let her open sessions expire naturally",
+     "Log the event and block her at her next SSO login through Acme's IdP"
+    ],
+    "ar": [
+     "احذف مستخدم Ana (Ana's user) في Beacon حتى لا تبقى لها أي جلسة (session) أو مفتاح (key) في أي مكان",
+     "عطّل عضويتها (membership) في Acme، وألغِ جلساتها (sessions) ومفاتيح API (API keys) الخاصة بها في Acme",
+     "عطّل عضويتها (membership) في Acme، واترك جلساتها المفتوحة (open sessions) تنتهي من تلقاء نفسها",
+     "سجّل الحدث (event)، وامنعها عند دخولها التالي عبر SSO (next SSO login) من خلال مزوّد هوية Acme (Acme's IdP)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Acme's IdP has authority over Acme only, so Beacon deactivates the Acme membership and, in the same transaction, revokes Ana's sessions and API keys scoped to Acme's org. Leaving the sessions to expire keeps her open tab and API key working, and deleting her user oversteps into workspaces Acme does not control.",
+    "ar": "سلطة مزوّد هوية Acme (Acme's IdP) على Acme وحدها، لذلك يعطّل Beacon العضوية (membership) في Acme، ويلغي (revokes) داخل المعاملة (transaction) نفسها جلسات Ana ومفاتيح API (API keys) المحصورة بمنظمة Acme (scoped to Acme's org). أما ترك الجلسات (sessions) حتى تنتهي فيُبقي تبويبها المفتوح (open tab) ومفتاح API (API key) الخاص بها يعملان، وحذف مستخدمها (her user) يتعدّى على مساحات عمل (workspaces) لا تتحكم فيها Acme."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m1-e1",
+   "lesson": "1.2",
+   "text": {
+    "en": "I have moved Beacon's monitors from user_id to org_id ownership and seen a non-member get 404 on another org's monitors page",
+    "ar": "نقلتُ ملكية (ownership) المراقِبات (monitors) في Beacon من user_id إلى org_id، ورأيتُ غير العضو (non-member) يتلقى 404 عند فتح صفحة المراقِبات (monitors page) لمنظمة أخرى (another org)"
+   }
+  },
+  {
+   "id": "m1-e2",
+   "lesson": "1.3",
+   "text": {
+    "en": "I have run an automated test that calls every endpoint as every role and checks the expected status codes",
+    "ar": "شغّلتُ اختبارًا آليًا (automated test) يستدعي كل نقطة نهاية (endpoint) بكل دور (role)، ويتحقق من رموز الحالة (status codes) المتوقعة"
+   }
+  }
+ ]
+}

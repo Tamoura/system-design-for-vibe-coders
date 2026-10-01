@@ -1,0 +1,135 @@
+{
+ "area": "m0",
+ "questions": [
+  {
+   "id": "m0-1",
+   "level": 1,
+   "lesson": "0.1",
+   "q": {
+    "en": "In the Credit Memo Copilot pilot, relationship managers say the idea is great and the screens are easy to use, yet they rewrite every draft because they do not trust its figures, so no time is saved. Which of Cagan’s four risks has the pilot exposed?",
+    "ar": "في الإطلاق التجريبي (pilot) لمساعد مذكرات الائتمان (Credit Memo Copilot)، يقول مديرو العلاقات (relationship managers) إن الفكرة رائعة (the idea is great) وإن الشاشات سهلة الاستخدام (easy to use)، لكنهم يعيدون كتابة كل مسودة (rewrite every draft) لأنهم لا يثقون بأرقامها (do not trust its figures)، فلا يُوفَّر أي وقت (no time is saved). أي مخاطرة من مخاطر كيغان الأربع (Cagan’s four risks) كشفها الإطلاق التجريبي؟"
+   },
+   "o": {
+    "en": [
+     "Usability risk",
+     "Feasibility risk",
+     "Value risk",
+     "Business viability risk"
+    ],
+    "ar": [
+     "مخاطرة سهولة الاستخدام (Usability risk)",
+     "مخاطرة الجدوى التقنية (Feasibility risk)",
+     "مخاطرة القيمة (Value risk)",
+     "مخاطرة الجدوى التجارية (Business viability risk)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Value risk asks whether people will choose to use the product, and AI adds exactly this twist: users may like the idea but not trust the output enough to use it, because value depends on quality. Usability is the tempting pick, but they can already work out how to use it; what is missing is trust in the output.",
+    "ar": "تسأل مخاطرة القيمة (value risk) هل سيختار الناس استخدام المنتج (choose to use it)، ويضيف الذكاء الاصطناعي (AI) إليها هذا تحديدًا: قد يحب المستخدمون الفكرة (like the idea) لكنهم لا يثقون بالمخرجات (trust the output) بما يكفي لاستخدامها، لأن القيمة تعتمد على الجودة (value depends on quality). أما سهولة الاستخدام (usability) فخيار مغرٍ (tempting pick)، لكنهم يعرفون أصلًا كيف يستخدمونه (work out how to use it)؛ والناقص هو الثقة بالمخرجات (trust in the output)."
+   }
+  },
+  {
+   "id": "m0-2",
+   "level": 2,
+   "lesson": "0.2",
+   "q": {
+    "en": "A month into the Najm Assist pilot, Najm raises its international transfer fee. Customers start getting the old fee from the assistant, although the model, prompt and vendor have not changed. What is the most likely cause, and the product fix?",
+    "ar": "بعد شهر من الإطلاق التجريبي (pilot) لنجم أسيست (Najm Assist)، يرفع نجم رسوم التحويل الدولي (international transfer fee). فيبدأ العملاء بتلقي الرسوم القديمة (old fee) من المساعد (assistant)، مع أن النموذج والموجّه والمورّد (model, prompt and vendor) لم تتغير. ما السبب الأرجح (most likely cause)، وما الإصلاح على مستوى المنتج (product fix)؟"
+   },
+   "o": {
+    "en": [
+     "Stale context data: give each source an owner and an update process",
+     "Outdated training data: switch to a newer model trained on recent data",
+     "Temperature set too high: lower it so that answers become consistent",
+     "Too little feedback data: add answer ratings so the model learns the fee"
+    ],
+    "ar": [
+     "بيانات سياق قديمة (stale context data): عيّن لكل مصدر مالكًا (owner) وعملية تحديث (update process)",
+     "بيانات تدريب قديمة (outdated training data): انتقل إلى نموذج أحدث (newer model) مدرَّب على بيانات حديثة (recent data)",
+     "درجة حرارة مرتفعة جدًا (temperature set too high): اخفضها لتصبح الإجابات متسقة (answers become consistent)",
+     "بيانات تغذية راجعة قليلة (too little feedback data): أضف تقييمات للإجابات (answer ratings) ليتعلم النموذج الرسوم (model learns the fee)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "The fee schedule the assistant retrieves when it runs is context data; if it is out of date the answer is wrong however good the model is, so every source needs an owner and an update process. A newer model would not help, because Najm’s fees reach the assistant through retrieved content, not through training.",
+    "ar": "جدول الرسوم (fee schedule) الذي يسترجعه المساعد لحظة تشغيله (when it runs) هو بيانات سياق (context data)؛ وإذا كان قديمًا (out of date) فستكون الإجابة خاطئة مهما كان النموذج جيدًا (however good the model is)، لذا يحتاج كل مصدر إلى مالك (owner) وعملية تحديث (update process). ولن يساعد نموذج أحدث (newer model)، لأن رسوم نجم تصل إلى المساعد عبر المحتوى المسترجَع (retrieved content)، لا عبر التدريب (training)."
+   }
+  },
+  {
+   "id": "m0-3",
+   "level": 2,
+   "lesson": "0.3",
+   "q": {
+    "en": "Faisal plans to build Najm Assist’s golden set from 200 anonymised past chats from the contact centre, and Dana is keen to start this week. Before work starts, who must clear these chats for evaluation, and why?",
+    "ar": "يخطط فيصل لبناء المجموعة المرجعية (golden set) لنجم أسيست (Najm Assist) من 200 محادثة سابقة مُجهَّلة الهوية (anonymised past chats) من مركز الاتصال (contact centre)، ودانة متحمّسة للبدء هذا الأسبوع (keen to start this week). قبل بدء العمل (before work starts)، من يجب أن يُجيز هذه المحادثات للتقييم (clear these chats for evaluation)، ولماذا؟"
+   },
+   "o": {
+    "en": [
+     "Dana, as she is accountable for running the evaluation",
+     "Omar, as he owns the data platforms the chats are stored on",
+     "Layla, as she confirms the product’s risk tier and controls",
+     "Sara, as she is accountable for confirming data use"
+    ],
+    "ar": [
+     "دانة، لأنها المُساءَلة (accountable) عن إجراء التقييم (running the evaluation)",
+     "عمر، لأنه يملك منصات البيانات (owns the data platforms) التي تُخزَّن عليها المحادثات (the chats are stored on)",
+     "ليلى، لأنها تؤكد فئة المخاطر (risk tier) والضوابط (controls) الخاصة بالمنتج (product)",
+     "سارة، لأنها المُساءَلة (accountable) عن تأكيد استخدام البيانات (confirming data use)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Even anonymised, these are customer chats, and the AI difference check has Sara confirm whether chat logs may be used for evaluation; in the RACI she is Responsible and Accountable for confirming data use. Omar owns data platforms and quality and Dana runs the evaluation, but neither decides whether the chats may lawfully be used.",
+    "ar": "حتى مع تجهيل الهوية (even anonymised)، فهذه محادثات عملاء (customer chats)، وفحص فروق الذكاء الاصطناعي (AI difference check) يجعل سارة هي من تؤكد ما إذا كان يمكن استخدام سجلات المحادثات للتقييم (chat logs may be used for evaluation)؛ وفي مصفوفة RACI (RACI matrix) هي المنفّذة والمساءَلة (Responsible and Accountable) عن تأكيد استخدام البيانات (confirming data use). يملك عمر منصات البيانات وجودتها (data platforms and quality)، وتُجري دانة التقييم (runs the evaluation)، لكن أيًّا منهما لا يقرر (neither decides) هل يجوز استخدام المحادثات استخدامًا مشروعًا (lawfully used)."
+   }
+  },
+  {
+   "id": "m0-4",
+   "level": 3,
+   "lesson": "0.2",
+   "q": {
+    "en": "Dana tests two versions of Najm Assist on the golden set. Version A answers 96% of questions correctly, but most of its errors are confidently wrong fee amounts. Version B answers 93% correctly; most of its misses are handovers to a human on questions it could have answered. Khalid prefers A for its higher score. What should Faisal recommend?",
+    "ar": "تختبر دانة نسختين (two versions) من نجم أسيست (Najm Assist) على المجموعة المرجعية (golden set). تجيب النسخة الأولى (Version A) إجابة صحيحة (answers correctly) عن 96% من الأسئلة، لكن معظم أخطائها مبالغ رسوم خاطئة تُذكر بثقة (confidently wrong fee amounts). وتجيب النسخة الثانية (Version B) إجابة صحيحة عن 93%، ومعظم إخفاقاتها تسليم إلى إنسان (handovers to a human) في أسئلة كان بإمكانها الإجابة عنها (could have answered). يفضّل خالد النسخة الأولى لأن درجتها أعلى (higher score). بماذا ينبغي أن يوصي فيصل؟"
+   },
+   "o": {
+    "en": [
+     "Version A: the higher overall rate is what the agreed quality bar measures",
+     "Version B: fee-amount errors are the most severe and need a stricter bar",
+     "Version A, with a notice asking customers to double-check every fee figure",
+     "Neither: raise the overall target to 98% and keep tuning until one passes"
+    ],
+    "ar": [
+     "النسخة الأولى (Version A): فالمعدل الإجمالي الأعلى (higher overall rate) هو ما يقيسه معيار الجودة الذي اتُّفق عليه (agreed quality bar)",
+     "النسخة الثانية (Version B): فأخطاء مبالغ الرسوم (fee-amount errors) هي الأخطر (most severe) وتحتاج معيارًا أشد صرامة (stricter bar)",
+     "النسخة الأولى (Version A)، مع تنبيه (notice) يطلب من العملاء التحقق مرتين (double-check) من كل رقم رسوم (fee figure)",
+     "ولا واحدة منهما (neither): ارفع الهدف الإجمالي (overall target) إلى 98% وواصل الضبط (keep tuning) حتى تنجح إحداهما"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Errors are not equal: weight them by severity and set stricter bars where they can cause financial loss; a wrong fee amount is Najm Assist’s worst error, while handing over when unsure is its designed fallback. Picking A for the higher raw score counts a confident wrong fee and a cautious handover as the same “one error”.",
+    "ar": "الأخطاء ليست متساوية (errors are not equal): رجّحها حسب الشدة (weight them by severity) وضع معايير أكثر صرامة (stricter bars) حيث يمكن أن تسبب خسارة مالية (financial loss)؛ ومبلغ الرسوم الخاطئ (wrong fee amount) هو أسوأ أخطاء نجم أسيست (Najm Assist)، أما التسليم إلى إنسان عند عدم التأكد (handing over when unsure) فهو البديل المصمَّم (designed fallback). واختيار النسخة الأولى (Version A) لدرجتها الخام الأعلى (higher raw score) يعدّ رقم رسوم خاطئًا واثقًا وتسليمًا حذرًا (cautious handover) «خطأً واحدًا (one error)» بالقدر نفسه."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m0-e1",
+   "lesson": "0.1",
+   "text": {
+    "en": "I have reframed a technology-first request into problem, who, outcome, quality bar, cost and first step, with a measurable outcome that names no technology.",
+    "ar": "أعدت صياغة طلب يبدأ من التقنية (technology-first request) إلى مشكلة (problem)، ومَن (who)، ونتيجة (outcome)، ومعيار جودة (quality bar)، وتكلفة (cost)، وخطوة أولى (first step)، بنتيجة قابلة للقياس (measurable outcome) لا تذكر أي تقنية (names no technology)."
+   }
+  },
+  {
+   "id": "m0-e2",
+   "lesson": "0.2",
+   "text": {
+    "en": "I have completed an AI difference check for one AI product, naming a specific failure type, a data source with its owner, a cost driver and a trust risk, each turned into a requirement I could test.",
+    "ar": "أكملت فحص فروق الذكاء الاصطناعي (AI difference check) لمنتج ذكاء اصطناعي واحد (one AI product)، وسمّيت فيه نوع فشل محددًا (specific failure type)، ومصدر بيانات بمالكه (data source with its owner)، ومحرّك تكلفة (cost driver)، ومخاطرة ثقة (trust risk)، وحوّلت كلًّا منها إلى متطلب يمكنني اختباره (requirement I could test)."
+   }
+  }
+ ]
+}
