@@ -1438,7 +1438,7 @@ def get_invoice(invoice_id):
 
 ## 📚 المراجع (References)
 - OWASP Top 10 — https://owasp.org/www-project-top-ten/
-- قائمة OWASP API Security Top 10 لأمن واجهات برمجة التطبيقات، إصدار 2023 — https://owasp.org/www-project-api-security/
+- قائمة OWASP API Security Top 10 لأمن واجهات برمجة التطبيقات، إصدار 2023 — https://owasp.org/API-Security/
 - قائمة OWASP Top 10 for LLM Applications لتطبيقات النماذج اللغوية الكبيرة، إصدار 2025، من مشروع OWASP GenAI Security Project — https://genai.owasp.org
 - معيار التحقق من أمن التطبيقات من OWASP (OWASP Application Security Verification Standard, ASVS) — https://owasp.org/www-project-application-security-verification-standard/
 - نموذج نضج ضمان البرمجيات OWASP SAMM — https://owasp.org/www-project-samm/

@@ -797,7 +797,7 @@ Run these only on your own machine, against your own code or a local lab.
 - OWASP Cheat Sheet Series, Deserialization — https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html
 - OWASP Cheat Sheet Series, XML External Entity Prevention — https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html
 - OWASP, Path Traversal — https://owasp.org/www-community/attacks/Path_Traversal
-- OWASP API Security Top 10 (2023) — https://owasp.org/www-project-api-security/
+- OWASP API Security Top 10 (2023) — https://owasp.org/API-Security/
 - MITRE CWE-918, server-side request forgery — https://cwe.mitre.org/data/definitions/918.html
 - MITRE CWE-434, unrestricted upload of file with dangerous type — https://cwe.mitre.org/data/definitions/434.html
 - MITRE CWE-22, path traversal — https://cwe.mitre.org/data/definitions/22.html

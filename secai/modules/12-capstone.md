@@ -1438,7 +1438,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 ## 📚 References
 - OWASP Top 10 — https://owasp.org/www-project-top-ten/
-- OWASP API Security Top 10 (2023) — https://owasp.org/www-project-api-security/
+- OWASP API Security Top 10 (2023) — https://owasp.org/API-Security/
 - OWASP Top 10 for LLM Applications (2025), OWASP GenAI Security Project — https://genai.owasp.org
 - OWASP Application Security Verification Standard (ASVS) — https://owasp.org/www-project-application-security-verification-standard/
 - OWASP SAMM — https://owasp.org/www-project-samm/

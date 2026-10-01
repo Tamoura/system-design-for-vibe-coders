@@ -797,7 +797,7 @@ prefs = PrefsSchema.model_validate_json(request.cookies["prefs"])
 - سلسلة OWASP Cheat Sheet Series، ورقة إلغاء التسلسل (Deserialization) — https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html
 - سلسلة OWASP Cheat Sheet Series، ورقة الوقاية من الكيانات الخارجية في XML ‏(XML External Entity Prevention) — https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html
 - OWASP، صفحة اجتياز المسار (Path Traversal) — https://owasp.org/www-community/attacks/Path_Traversal
-- قائمة OWASP API Security Top 10 لعام 2023 — https://owasp.org/www-project-api-security/
+- قائمة OWASP API Security Top 10 لعام 2023 — https://owasp.org/API-Security/
 - MITRE CWE-918، تزوير الطلبات من جهة الخادم (server-side request forgery) — https://cwe.mitre.org/data/definitions/918.html
 - MITRE CWE-434، الرفع غير المقيَّد لملفٍ من نوعٍ خطِر (unrestricted upload of file with dangerous type) — https://cwe.mitre.org/data/definitions/434.html
 - MITRE CWE-22، اجتياز المسار (path traversal) — https://cwe.mitre.org/data/definitions/22.html
