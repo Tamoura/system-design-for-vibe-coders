@@ -277,3 +277,225 @@ flowchart LR
 
 ---
 
+# 6.2 — FinOps: فهم تكلفة السحابة وتوزيعها وخفضها (FinOps: understanding, allocating and cutting cloud cost)
+*المستوى (Level): 🔴 متقدم (Advanced)* · *المتطلبات (Prerequisites): 1.2، 3.1، 6.1* · *المرحلة (Phase): Operate, Monitor*
+
+## ⚡ الدرس في دقيقة (In 60 seconds)
+- **FinOps** هي ممارسة جعل الهندسة والمالية وقطاع الأعمال (engineering, finance and the business) يتقاسمون المسؤولية عن الإنفاق السحابي (share responsibility for cloud spending)، بحيث تصبح التكلفة إشارةً هندسية مثل زمن الاستجابة (an engineering signal like latency)، لا مفاجأةً في نهاية الشهر (not a month-end surprise).
+- يعمل إطار مؤسسة FinOps (The FinOps Foundation framework) في حلقةٍ من ثلاث مراحل (a loop of three phases): **الإعلام (Inform)** (رؤية التكلفة وتوزيعها، see and allocate cost)، و**التحسين (Optimise)** (تقليل الهدر والحصول على أسعار أفضل، reduce waste and get better rates)، و**التشغيل (Operate)** (جعلها روتينية ولها مالك، make it routine and owned).
+- لا يمكنك خفض ما لا تستطيع نسبته (You cannot cut what you cannot attribute). ابدأ بـ**الوسم والتوزيع (tagging and allocation)**: لكل موردٍ مالكٌ وخدمةٌ وبيئة (an owner, a service and an environment).
+- اخفض الاستخدام قبل شراء الخصومات (Cut usage before you buy discounts): احذف الموارد الخاملة (delete idle resources)، وعدّل الأحجام لتناسب الحاجة (rightsize)، ووسّع تلقائيًّا (autoscale)، وجدوِل البيئات غير الإنتاجية (schedule non-production)، ثم التزم بـ**السعة المحجوزة أو خطط التوفير (reserved capacity or savings plans)** للقاعدة الثابتة (for the steady base)، واستخدم سعة **السوق الفورية (spot)** فقط للعمل الذي يحتمل المقاطعة (work that can be interrupted).
+- مؤشر القرار (Decision cue): احكم على التكلفة لكل وحدةٍ من القيمة التجارية (cost per unit of business value) (التكلفة لكل ألف استدعاء للواجهة، cost per thousand API calls؛ لكل عملية دفع، per payment؛ لكل عميلٍ نشط، per active customer)، لا على إجمالي الفاتورة وحده (not the total bill alone).
+- أكبر فخ (Biggest trap): خفض التكاليف الذي يزيل المرونة بهدوء (cost-cutting that quietly removes resilience)، مثل التخلّي عن منطقة التوافر الثانية (dropping the second zone) أو عن نسخ النسخ الاحتياطية (the backup copies) التي بُنيت في 6.1 لتوفير المال.
+
+## 🧭 لماذا يهم (Why it matters)
+بعد ستة أشهر من انتقال الخدمات الأولى إلى السحابة، تُحضر منى، محلّلة FinOps في الإدارة المالية (the FinOps analyst in Finance)، رسمًا بيانيًّا (a chart) إلى سالم. لقد نمت فاتورة السحابة الشهرية لنجم (Najm's monthly cloud bill) أسرع بكثير من عدد عملاء الهاتف النشطين (the number of active mobile customers). وأسئلتها منصفة (Her questions are fair): «على ماذا ندفع؟ من يملكه؟ هل هذا النمو نموٌّ جيد؟» ⁦("What are we paying for? Who owns it? Is the growth good growth?")⁩ لا يستطيع سالم الإجابة من وحدة التحكم (from the console). فحصّةٌ كبيرة من الإنفاق غير موسومة (A large share of the spend is untagged). وهناك بندٌ اسمه «نقل البيانات» ("data transfer") لم يضع له أحدٌ ميزانية (nobody budgeted for). وثلاث عقد بوحدات معالجة رسوميات (Three GPU nodes) أُنشئت لتجربةٍ في نجم أسيست (a Najm Assist experiment) تعمل كل ساعةٍ من كل يوم منذ هاكاثون (since a hackathon). وعناقيد التطوير (The development clusters) تعمل بكامل حجمها (at full size) طوال عطلة نهاية الأسبوع.
+
+لا تستطيع الإدارة المالية إصلاح هذا وحدها (Finance cannot fix this alone). ففي السحابة، كل مهندسٍ يدمج تغييرًا في OpenTofu (merges an OpenTofu change) أو يرفع سقف مُوسِّعٍ تلقائي أفقي (raises an HPA ceiling) يتّخذ قرار إنفاق (is making a spending decision)، وغالبًا دون أن يرى السعر (without seeing the price). لقد انتهى نموذج مركز البيانات القديم (The old data-centre model)، حيث كانت المشتريات (procurement) توافق على العتاد قبل أشهر (approved hardware months ahead). وFinOps تعيد إشارة التكلفة (puts the cost signal back) إلى حيث تُتّخذ القرارات (where decisions are made): في طلب الدمج (the pull request)، ولوحة المتابعة (the dashboard)، وقائمة المهام المتراكمة لدى الفريق نفسه (the team's own backlog). يمنحك هذا الدرس لغة منى (Mona's language)، وآليات التوزيع (the mechanics of allocation)، وترتيبًا لخفض التكلفة دون الإضرار بالموثوقية (an order for cutting cost without harming reliability). ولمعالجةٍ أخفّ موجّهة إلى الفرق الصغيرة (a lighter treatment aimed at small teams)، انظر [*تصميم الأنظمة لمبرمجي الحدس (System Design for Vibe Coders)*، الدرس 11.4 — هندسة التكلفة (Cost engineering)](../vibe/index.ar.html#l11-4).
+
+## 📐 كيف يعمل (How it works)
+
+### 🟢 الأساسيات (The essentials)
+
+**إطار مؤسسة FinOps (The FinOps Foundation framework).** تنشر مؤسسة FinOps (The FinOps Foundation)، وهي جزءٌ من مؤسسة Linux (part of the Linux Foundation)، إطار FinOps (the FinOps Framework). وفي وقت كتابة هذا النص (At the time of writing) (2026)، يصف الإطار مبادئ (principles)، وشخصيات (personas) (الهندسة، engineering؛ المالية، finance؛ القيادة، leadership؛ المشتريات، procurement؛ المنتج، product)، وقدرات (capabilities)، ودورةً من ثلاث مراحل (a cycle of three phases). ومن المبادئ أن الفرق بحاجةٍ إلى التعاون (teams need to collaborate)، وأن القيمة التجارية تقود القرارات التقنية (business value drives technology decisions)، وأن الجميع يتحمّل ملكية استخدامه للسحابة (everyone takes ownership of their cloud usage)، وأن بيانات التكلفة ينبغي أن تكون متاحةً وفي وقتها (accessible and timely)، وأن FinOps يُمكّنها فريقٌ مركزي (enabled by a central team)، وأن على الفرق الاستفادة من نموذج التكلفة المتغيّرة في السحابة (the cloud's variable cost model). تحقّق من موقع finops.org للصياغة الحالية (for the current wording).
+
+```mermaid
+flowchart LR
+    I["الإعلام: الرؤية والتوزيع"] --> O["التحسين: الاستخدام والأسعار"]
+    O --> P["التشغيل: الملكية والميزانيات والروتين"]
+    P --> I
+```
+
+**كيف يعمل تسعير السحابة، من حيث المفاهيم (How cloud pricing works, in concepts).** لا تذكر سعرًا من الذاكرة أبدًا (Never quote a price from memory)؛ فالأسعار تختلف بحسب المنطقة وتتغيّر (differ by region and change). أمّا الشكل فثابت (The shape is stable):
+- **الحوسبة (Compute)** تُحتسب بالزمن (billed by time) (بالثانية أو الساعة، بحسب الخدمة، per second or hour, depending on service) وبالحجم (and size). والمثيل الكبير الخامل (A large instance idling) يكلّف ما يكلّفه المثيل المشغول (costs the same as a busy one).
+- **التخزين (Storage)** يُحتسب بالكمية المخزّنة شهريًّا (by amount stored per month)، مع فئات (with tiers): التخزين الكثير الوصول (frequently accessed storage) يكلّف أكثر لكل غيغابايت من فئات الأرشفة (archive tiers)، التي تفرض رسومًا أعلى على القراءة منها (charge more to read back).
+- **الطلبات والعمليات (Requests and operations)**: كثيرٌ من الخدمات المُدارة (managed services) تفرض رسومًا لكل استدعاء واجهة برمجة (per API call)، أو لكل مليون طلب (per million requests)، أو لكل قراءة وكتابة (per read and write).
+- **نقل البيانات (الخروج) (Data transfer (egress))**: نقل البيانات *إلى خارج* المزوّد نحو الإنترنت (moving data *out* of a provider to the internet) يكلّف مالًا في العادة، وكذلك حركة المرور بين المناطق (traffic between regions)، ولدى بعض المزوّدين، بين مناطق التوافر (between zones). وكثيرًا ما تفرض بوابات NAT المُدارة (Managed NAT gateways) رسومًا لكل غيغابايت تتمّ معالجته (per gigabyte processed). تحقّق من صفحات التسعير الحالية لدى مزوّدك (your provider's current pricing pages)، لأن الخروج (egress) كثيرًا ما يفاجئ الفرق.
+- **علاوات الخدمات المُدارة (Managed service premiums)**: قاعدة البيانات المُدارة (a managed database) تكلّف أكثر من الآلة الافتراضية التي تحتها (the virtual machine underneath)، وتشتري لك التحديثات الأمنية والنسخ الاحتياطية والتحويل عند العطل (patching, backups and failover). وهذه عادةً مقايضةٌ جيدة (a good trade)؛ فقط اعرف أنك تجريها.
+
+**التوزيع: الوسوم والتسميات (Allocation: tags and labels).** يتيح لك كل مزوّد إرفاق بياناتٍ وصفية على شكل مفتاح وقيمة (key-value metadata) بالموارد: *الوسوم (tags)* في AWS وAzure، و*التسميات (labels)* في Google Cloud. وتحدّد سياسة توزيع التكلفة (A cost allocation policy) مجموعةً صغيرة إلزامية (a small, mandatory set):
+
+| المفتاح (Key) | قيمة مثال (Example value) | لماذا (Why) |
+|---|---|---|
+| `owner` | `team-payments` | شخصٌ تسأله (Someone to ask)، وشخصٌ يرى الفاتورة (someone who sees the bill) |
+| `service` | `payments-api` | التكلفة لكل خدمة ولكل وحدة (Cost per service and per unit) |
+| `environment` | `prod`، `staging`، `dev` | هدر البيئات غير الإنتاجية (Non-production waste) هو عادةً الهدف الأول (the first target) |
+| `cost-centre` | رمز مالي (finance code) | الاسترداد المالي أو العرض المالي لقطاع الأعمال (Chargeback or showback to the business) |
+| `data-classification` | `confidential` | مشترك مع الأمن (Shared with security)؛ ليس مفتاح تكلفة لكنه يُفرض بالطريقة نفسها (not a cost key but enforced the same way) |
+
+يجب عادةً تفعيل الوسوم لتقارير الفوترة (Tags must usually be activated for billing reports) (مثلًا، وسوم توزيع التكلفة في AWS، AWS cost allocation tags)، وهي في الغالب لا تسري إلا من لحظة ضبطها (apply only from when they are set) (والملء الرجعي، حيث يُتاح، محدود، backfill, where offered, is limited)، لذا ابدأ مبكرًا (start early). افرضها في البنية التحتية بوصفها شيفرة (infrastructure as code) (3.1) وبالسياسة بوصفها شيفرة (policy as code) (3.3): الخطة التي تُنشئ موردًا غير موسوم (a plan that creates an untagged resource) تفشل في الفحص (fails the check).
+
+**العرض المالي والاسترداد المالي (Showback and chargeback).** *العرض المالي (Showback)* يُري كل فريقٍ ما أنفقه (shows each team what it spent)؛ أمّا *الاسترداد المالي (chargeback)* فينقل التكلفة فعلًا إلى ميزانية الفريق (actually moves the cost to the team's budget). ابدأ بالعرض المالي (Start with showback): فالهدف الأول هو الوعي (awareness)، لا المحاسبة (not accounting).
+
+### 🟡 التعمق أكثر (Going deeper)
+
+**التكاليف المشتركة وKubernetes (Shared costs and Kubernetes).** تعمل الوسوم جيدًا لقاعدة بياناتٍ يملكها فريقٌ واحد (a database owned by one team). لكنها تفشل في عنقود Kubernetes مشترك (a shared Kubernetes cluster) تعمل فيه عشرون خدمة على العقد نفسها (on the same nodes). وزّع العناقيد المشتركة (Allocate shared clusters) بحسب ما *يحجزه* كل عبء عمل (what each workload *reserves*) (طلبات المعالج والذاكرة الخاصة به، its CPU and memory requests) أو ما *يستخدمه* (or *uses*)، أيّهما أعلى (whichever is higher)، لكل نطاق أسماء (per namespace). وأدواتٌ مثل **OpenCost** (مشروع من CNCF، a CNCF project) تقرأ بيانات موارد العنقود (the cluster's resource data) وأسعار المزوّد (the provider's prices) لتُنتج التكلفة لكل نطاق أسماء وتسمية وعبء عمل (cost per namespace, label and workload). قرّر علنًا كيف يُقسَم ما يتبقّى (Decide openly how to split what is left over): السعة الخاملة (idle capacity)، ومستوى التحكم (the control plane)، ومنظومة قابلية المراقبة (the observability stack)، والشبكات المشتركة (shared networking). والقاعدة الشائعة (A common rule) هي توزيعها بالتناسب مع التكلفة المباشرة لكل فريق (in proportion to each team's direct cost)، وإظهار السعة الخاملة بندًا مستقلًّا (show idle capacity as its own line) كي يملك فريق المنصة كفاءة التعبئة (so the platform team owns packing efficiency).
+
+الطلبات مهمة هنا (Requests matter here). فالفريق الذي يطلب 4 معالجات لكل حجيرة (requests 4 CPUs per pod) ويستخدم 0.3 يدفع، في توزيعٍ عادل (in a fair allocation)، ثمن 4. وهذا هو الحافز الصحيح (the right incentive): فالطلب المُفرط (over-requesting) يحجب تلك السعة عن الجميع (blocks that capacity from everyone else).
+
+**مواصفة FOCUS (The FOCUS specification).** لتصدير الفوترة لدى كل مزوّد (Each provider's billing export) أعمدته وأسماؤه الخاصة. و**المواصفة المفتوحة لتكلفة FinOps واستخدامها (FinOps Open Cost and Usage Specification, FOCUS)**، من مؤسسة FinOps، تعرّف صيغةً مشتركة لبيانات الفوترة (a common format for billing data)، ويقدّم المزوّدون الكبار (the major providers) تصديراتٍ بصيغة FOCUS (FOCUS-formatted exports) في وقت كتابة هذا النص (2026؛ تحقّق من الإصدار الذي يدعمه كلٌّ منهم، check which version each supports). وإذا شغّلت نجم أعباء عملٍ في أكثر من سحابة (in more than one cloud)، فإن FOCUS يجعل مجموعة بيانات تكلفة واحدة ممكنة (one cost dataset possible).
+
+**حسّن الاستخدام أولًا، ثم الأسعار (Optimise usage first, then rates).** تحسين الاستخدام (Usage optimisation) يعني أن تدفع مقابل أقل (paying for less)؛ وتحسين الأسعار (rate optimisation) يعني أن تدفع أقل مقابل الشيء نفسه (paying less for the same thing). ابدأ بالاستخدام (Do usage first)، لأن الالتزام بخصمٍ على سعةٍ كان ينبغي أن تحذفها (committing to a discount for capacity you should have deleted) يثبّت الهدر (locks in the waste).
+
+| الترتيب (Order) | الرافعة (Lever) | الإجراء النموذجي (Typical action) | الخطر الذي يجب مراقبته (Risk to watch) |
+|---|---|---|---|
+| 1 | **إزالة الخامل (Remove idle)** | احذف الأقراص غير المرتبطة (unattached volumes)، واللقطات القديمة خارج مدة الاحتفاظ (old snapshots outside retention)، وموازنات الأحمال الخاملة (idle load balancers)، وعقد وحدات معالجة الرسوميات المنسية (forgotten GPU nodes) | تأكّد من المالك (Confirm the owner)؛ واحتفظ بما تتطلبه سياسة الاحتفاظ (what retention policy requires) |
+| 2 | **الجدولة (Schedule)** | قلّص عناقيد التطوير والاختبار (Scale dev and test clusters down) ليلًا وفي عطلات نهاية الأسبوع | الفرق في مناطق زمنية أخرى (Teams in other time zones)؛ المهام الدُّفعية (batch jobs) |
+| 3 | **تعديل الحجم (Rightsize)** | خفّض أحجام المثيلات وطلبات الحجيرات (Lower instance sizes and pod requests) لتطابق الاستخدام المرصود (observed use) | اترك هامشًا (Leave headroom)؛ راقب زمن استجابة الذيل والذاكرة (tail latency and memory) |
+| 4 | **التوسّع التلقائي (Autoscale)** | مُوسِّع تلقائي أفقي (HPA) وتوسّع تلقائي للعقد (node autoscaling) كي تتبع السعة الطلب (capacity follows demand) (6.1) | حدودٌ دنيا للمرونة (Floors for resilience)؛ سرعة التوسيع (scale-up speed) |
+| 5 | **دورة حياة التخزين (Storage lifecycle)** | انقل السجلات والكائنات القديمة إلى فئاتٍ أرخص (cheaper tiers)؛ وأنهِ صلاحيتها وفق السياسة (expire them per policy) | تكلفة الاسترجاع وتأخيره من فئات الأرشفة (Retrieval cost and delay from archive tiers) |
+| 6 | **البنية (Architecture)** | قلّل حركة المرور بين مناطق التوافر والخروج (Cut cross-zone and egress traffic)، وخزّن مؤقتًا في شبكة توصيل المحتوى (cache at the CDN)، واستخدم نقاط النهاية الخاصة (use private endpoints) | أبدًا على حساب تكرار مناطق التوافر (Never at the cost of zone redundancy) |
+| 7 | **الالتزامات (Commitments)** | المثيلات المحجوزة (Reserved instances)، وخطط التوفير (savings plans)، وخصومات الاستخدام الملتزم به (committed use discounts) للقاعدة الثابتة (for the steady base) | الإفراط في الالتزام (Over-commitment) إذا انخفض الاستخدام |
+| 8 | **سعة السوق الفورية (Spot capacity)** | مثيلاتٌ قابلة للمقاطعة (Interruptible instances) للمهام الدُّفعية (batch)، ومشغّلات CI (CI runners)، والذروات عديمة الحالة (stateless burst) | المقاطعات بإشعارٍ قصير (Interruptions at short notice) |
+
+**الالتزامات والسوق الفورية، بوصفها مفاهيم (Commitments and spot, as concepts).** يقدّم المزوّدون الثلاثة جميعًا خصوماتٍ مقابل الالتزام بمستوى استخدام (committing to a level of use) لسنةٍ أو ثلاث سنوات: المثيلات المحجوزة وخطط التوفير في AWS (AWS Reserved Instances and Savings Plans)، والحجوزات وخطة توفير الحوسبة في Azure (Azure Reservations and Azure savings plan for compute)، وخصومات الاستخدام الملتزم به في Google Cloud (Google Cloud committed use discounts). التزم بالحدّ الأدنى الذي أنت واثقٌ من استخدامه (Commit to the floor you are confident you will use)، لا بالذروة (not the peak). وسعة **السوق الفورية (Spot)** (AWS Spot Instances، Azure Spot Virtual Machines، Google Cloud Spot VMs) هي سعةٌ فائضة تُباع بخصم (spare capacity sold at a discount) يستطيع المزوّد استعادتها بإشعارٍ قصير (can reclaim with short notice)؛ تحقّق من مدة الإشعار الحالية لدى كل مزوّد (each provider's current notice period). استخدمها للعمل الذي يحتمل المقاطعة (work that tolerates interruption): مشغّلات CI (CI runners)، والمهام الدُّفعية (batch jobs)، والنسخ المتماثلة عديمة الحالة فوق الحدّ الأدنى (stateless replicas above the floor). ولا تضع عليها أبدًا النسخة الوحيدة من قاعدة بيانات المدفوعات (the only copy of the Payments database).
+
+### 🔴 نظرة الخبير (Expert view)
+
+**اقتصاديات الوحدة (Unit economics).** ارتفاع إجمالي الفاتورة (The total bill going up) ليس خبرًا سيئًا إذا كان قطاع الأعمال ينمو أسرع (if the business is growing faster). والرقم المهم (The number that matters) هو **تكلفة الوحدة (unit cost)**: التكلفة مقسومةً على محرّكٍ تجاري (cost divided by a business driver).
+
+```text
+Cost per 1,000 Mobile API requests = (allocated Mobile API cost for the month)
+                                     / (requests served in the month / 1,000)
+Cost per successful payment        = (allocated Payments service cost)
+                                     / (payments completed)
+Cost per Najm Assist conversation  = (gateway + model API + GPU cost)
+                                     / (conversations)
+```
+
+تتضمّن التكلفة الموزَّعة (The allocated cost) حصّة الخدمة من التكاليف المشتركة (the service's share of shared costs). ارسم تكلفة الوحدة شهريًّا (Plot unit cost monthly). فإذا ارتفعت بينما ترتفع حركة المرور (while traffic rises)، فلديك عدم كفاءة في التوسّع (a scaling inefficiency)؛ وإذا ارتفعت بينما حركة المرور ثابتة (while traffic is flat)، فابحث عن هدرٍ أو تغيّرٍ في التسعير (waste or a pricing change). كما تجعل تكاليف الوحدة المقايضات الهندسية ملموسة (make engineering trade-offs concrete): فتغيير تخزينٍ مؤقت (a caching change) يخفض التكلفة لكل ألف طلب بمقدار الخُمس (by a fifth) يسهل شرحه لمنى وللقيادة (to Mona and to leadership). وتستخدم فرق المنتج الفكرة نفسها عند التسعير (Product teams use the same idea when pricing)؛ انظر [*إدارة منتجات الذكاء الاصطناعي (AI Product Management)*، الدرس 8.2 — اقتصاديات الوحدة: تكلفة الخدمة ونماذج التسعير والهوامش (Unit economics: cost to serve, pricing models and margins)](../aipm/index.ar.html#/8.2).
+
+**التكلفة في طلب الدمج (Cost in the pull request).** أرخص لحظةٍ لتجنّب الهدر (The cheapest moment to avoid waste) هي قبل أن يُنشأ (before it is created). وأدواتٌ مثل **Infracost** تقدّر التغيّر الشهري في التكلفة (the monthly cost change) لخطة OpenTofu أو Terraform (of an OpenTofu or Terraform plan) وتنشره تعليقًا على طلب الدمج (a pull-request comment). اجمعها مع سياسة (Combine it with a policy): التغييرات التي تتجاوز عتبةً (changes above a threshold) تحتاج إلى مراجعٍ ثانٍ من الفريق المالك (a second reviewer from the owning team)، لا إلى طابور موافقات مالية (not a finance approval queue). يحتفظ المهندسون بسرعتهم (Engineers keep their speed)؛ وتصبح القرارات الكبيرة مرئية (large decisions become visible).
+
+**الميزانيات وكشف الشذوذ (Budgets and anomaly detection).** يحصل كل حسابٍ أو اشتراك (Every account or subscription) على ميزانيةٍ مع تنبيهاتٍ إلى مالكه (a budget with alerts to its owner)، وتنبّه ميزات كشف شذوذ التكلفة لدى المزوّدين (the providers' cost anomaly detection features) على الارتفاعات المفاجئة (sudden spikes) (مثلًا، مهمةٌ خارجة عن السيطرة، a runaway job؛ أو تصدير سجلاتٍ سيئ الإعداد، a misconfigured log export). عامِل شذوذ التكلفة كتنبيهٍ تشغيلي (Treat a cost anomaly like an operational alert): وجّهه إلى الفريق المالك (route it to the owning team)، مع دليل تشغيل (with a runbook). ولو كان ذلك قائمًا لاكتُشفت عقد وحدات معالجة الرسوميات المنسية من الهاكاثون (The forgotten hackathon GPU nodes) خلال أيام، لا أشهر.
+
+**لا تقايض على المرونة (Do not trade away resilience).** أخطر تخفيضات التكلفة (The most dangerous cost cuts) تبدو معقولة في جدول بيانات (look reasonable in a spreadsheet): منطقة توافر واحدة بدلًا من ثلاث (one zone instead of three)، ونسخةٌ جاهزة أصغر (a smaller standby)، ومدة احتفاظ أقصر بالنسخ الاحتياطية (shorter backup retention)، ولا نسخ عبر المناطق (no cross-region copy). وكلٌّ من هذه يغيّر RTO وRPO المتّفق عليهما في 6.1. والقاعدة في نجم (Rule at Najm): أي تغييرٍ في التكلفة يمسّ التكرار الاحتياطي أو النسخ الاحتياطية أو التعافي (redundancy, backups or recovery) يجب أن يوافق عليه مالك الخدمة وهندسة موثوقية المواقع (the service owner and SRE)، وأن تُحدَّث خطة اختبار التعافي من الكوارث (the DR test plan updated). فالتكلفة والموثوقية قرارٌ واحد لا قراران (Cost and reliability are one decision, not two).
+
+## 🧰 الأدوات (The toolkit)
+| الأداة أو الممارسة أو الخدمة (Tool, practice or service) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
+|---|---|---|
+| **FinOps Framework** (FinOps Foundation) — إطار FinOps | المبادئ (Principles)، والشخصيات (personas)، والقدرات (capabilities)، ودورة الإعلام والتحسين والتشغيل (the Inform, Optimise, Operate cycle) | إنشاء ممارسةٍ للتكلفة (Setting up a cost practice) والاتفاق على الأدوار مع المالية (agreeing roles with finance) |
+| **Cost allocation tags** — وسوم توزيع التكلفة | بياناتٌ وصفية إلزامية (Mandatory metadata) (المالك، الخدمة، البيئة؛ owner, service, environment) تستطيع الفوترة التجميع بحسبها (that billing can group by) | اليوم الأول لأي حساب سحابي (Day one of any cloud account)؛ تُفرض بالسياسة بوصفها شيفرة (enforced by policy as code) |
+| **FOCUS** (FinOps Foundation) | صيغةٌ مشتركة محايدة تجاه المزوّدين لبيانات الفوترة (A common, provider-neutral format for billing data) | دمج بيانات التكلفة من أكثر من سحابة أو أداة (Combining cost data from more than one cloud or tool) |
+| **OpenCost** (CNCF) | توزيع تكلفة مفتوح المصدر لـKubernetes (Open-source cost allocation for Kubernetes) بحسب نطاق الأسماء والتسمية وعبء العمل (by namespace, label and workload) | العرض المالي للعناقيد المشتركة (Showback for shared clusters) |
+| **Infracost** | يقدّر تغيّر التكلفة لخطة بنية تحتية بوصفها شيفرة (Estimates the cost change of an IaC plan) ويعلّق على طلب الدمج (comments on the pull request) | اكتشاف التغييرات المكلفة قبل دمجها (Catching expensive changes before they merge) |
+| **Provider cost tools** (AWS Cost Explorer، Azure Cost Management، Google Cloud Billing reports) — أدوات التكلفة لدى المزوّدين | تحليل الفوترة الأصلي (Native billing analysis)، والميزانيات (budgets)، وتنبيهات الشذوذ (anomaly alerts) | الرؤية اليومية (Daily visibility)؛ ميزانيات لكل حسابٍ ومالك (budgets per account and owner) |
+| **Commitment discounts** (خطط التوفير، savings plans؛ الحجوزات، reservations؛ خصومات الاستخدام الملتزم به، committed use discounts) — خصومات الالتزام | أسعارٌ أقل مقابل استخدامٍ ملتزم به (Lower rates in return for committed use) لسنةٍ أو ثلاث سنوات | بعد تحسين الاستخدام (After usage optimisation)، للخط الأساسي الثابت (for the steady baseline) |
+| **Spot capacity** — سعة السوق الفورية | سعةٌ فائضة مخفَّضة (Discounted spare capacity) يمكن استعادتها بإشعارٍ قصير (can be reclaimed at short notice) | مشغّلات CI (CI runners)، والمهام الدُّفعية (batch)، والذروات عديمة الحالة فوق الحدّ الأدنى (stateless burst above the floor) |
+
+## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
+تتّفق منى وسالم على **تقرير شهري لتكلفة السحابة (monthly cloud cost report)**، يُولَّد من تصدير FOCUS (the FOCUS export) وOpenCost، ويُراجَع في اجتماعٍ مدته 30 دقيقة مع كل قائد فريق (with each team lead).
+
+| القسم (Section) | المحتوى للشهر (Content for the month) |
+|---|---|
+| العنوان الرئيسي (Headline) | إجمالي الإنفاق مقابل الميزانية ومقابل الشهر الماضي (Total spend vs budget and vs last month)؛ حصّة الإنفاق الموزَّعة على مالك (share of spend allocated to an owner) (الهدف: كلّه تقريبًا، target: nearly all) |
+| تكاليف الوحدة (Unit costs) | التكلفة لكل 1,000 طلب لواجهة الهاتف (Cost per 1,000 Mobile API requests)؛ التكلفة لكل عملية دفع ناجحة (cost per successful payment)؛ التكلفة لكل محادثة في نجم أسيست (cost per Najm Assist conversation)؛ الاتجاه على مدى ستة أشهر (trend over six months) |
+| بحسب الفريق والخدمة (By team and service) | جدول العرض المالي (Showback table): التكلفة المباشرة (direct cost)، وحصّة التكاليف المشتركة (share of shared costs)، والتغيّر (change)، وتفسير المالك في سطرٍ واحد (the owner's one-line explanation) |
+| الهدر المكتشَف (Waste found) | الموارد الخاملة (Idle resources)، وأعباء العمل المُفرطة الحجم (oversized workloads) (الطلبات مقابل الاستخدام، requests vs use)، والإنفاق غير الموسوم (untagged spend)، مع المالكين وتواريخ الاستحقاق (with owners and due dates) |
+| الالتزامات (Commitments) | تغطية خطط التوفير أو الحجوزات واستخدامها (Coverage and utilisation of savings plans or reservations)؛ التجديدات القادمة (renewals coming up) |
+| حالات الشذوذ (Anomalies) | الارتفاعات المكتشَفة (Spikes detected)، والسبب (cause)، والإصلاح (fix) |
+| فحص المرونة (Resilience check) | أي تخفيضٍ مقترح يمسّ مناطق التوافر أو النسخ الاحتياطية أو التعافي من الكوارث (Any proposed cut that affects zones, backups or DR)، مع حالة موافقة هندسة موثوقية المواقع (with SRE sign-off status) |
+| القرارات (Decisions) | ما الذي نغيّره الشهر المقبل (What we change next month)، ومن يملكه (who owns it) |
+
+إجراءات التقرير الأول (The first report's actions): فُرضت سياسة الوسوم في خط تسليم OpenTofu (tag policy enforced in the OpenTofu pipeline) (الخطط غير الموسومة تفشل، untagged plans fail)، وحُذفت عقد وحدات معالجة الرسوميات الثلاث من الهاكاثون (the three hackathon GPU nodes deleted) بعد التأكد مع فريق نجم أسيست (after confirming with the Najm Assist team)، وقُلّصت عناقيد التطوير خارج ساعات العمل (development clusters scaled down outside working hours)، وتُتبّع بند «نقل البيانات» الكبير (the large "data transfer" line) إلى حجيرات واجهة الهاتف (Mobile API pods) التي تستدعي تخزين الكائنات (calling object storage) عبر بوابة NAT (through a NAT gateway) بدلًا من نقطة نهاية خاصة (instead of a private endpoint). واقترح يوسف أيضًا تقليص قاعدة بيانات المدفوعات إلى منطقة توافر واحدة (reducing the Payments database to single-zone) «لتوفير الكثير» ("to save a lot")؛ فأشارت مها إلى خطة اختبار التعافي من الكوارث من 6.1 (the DR test plan from 6.1)، وأُسقطت الفكرة (the idea was dropped).
+
+## 🛠️ التمارين (Exercises)
+- 🟢 **صمّم سياسة وسوم (Design a tagging policy).** اكتب سياسة وسوم (a tagging policy) لشركةٍ خيالية لديها ثلاثة فرق وثلاث بيئات (three teams and three environments): المفاتيح الإلزامية (the mandatory keys)، والقيم المسموح بها (allowed values)، ومن يملك الفرض (who owns enforcement)، وماذا يحدث للموارد غير الموسومة (what happens to untagged resources). أضِف قاعدة سياسة بوصفها شيفرة (a policy-as-code rule) (مثلًا، فحص Conftest أو OPA على خطة OpenTofu بصيغة JSON، a Conftest or OPA check against an OpenTofu plan in JSON) تفشل حين يغيب `owner` أو `environment`. *يكتمل عندما (Done when):* تفشل القاعدة على خطةٍ فيها موردٌ غير موسوم (a plan with an untagged resource) وتنجح حين تُضاف الوسوم (passes when tags are added).
+- 🟡 **وزّع عنقودًا مشتركًا (Allocate a shared cluster).** ثبّت OpenCost وPrometheus الذي يحتاجه على عنقود kind محلي (a local kind cluster) (بتسعيرٍ افتراضي أو مخصّص، default or custom pricing) وانشر أعباء عمل في ثلاثة نطاقات أسماء (three namespaces) بطلباتٍ مختلفة عمدًا (deliberately different requests). قارن الطلبات بالاستخدام الفعلي (Compare requests with actual use) لكل نطاق أسماء. *يكتمل عندما (Done when):* يكون لديك جدول للتكلفة بحسب نطاق الأسماء (a table of cost by namespace)، وحدّدت عبء العمل الأكثر إفراطًا في الطلب (the most over-requested workload)، واقترحت طلباتٍ جديدة (proposed new requests) مع تبريرٍ قصير للهامش الذي أبقيته (a short justification for the headroom you kept).
+- 🔴 **ابنِ نموذجًا لتكلفة الوحدة (Build a unit-cost model).** باستخدام حسابٍ في الفئة المجانية (a free-tier account) مع ضبط تنبيه ميزانية أولًا (with a budget alert set first)، أو جدول بيانات بأرقام عيّنة مختلقة لكنها موسومة بوضوح (a spreadsheet with made-up but labelled sample numbers)، ابنِ نموذجًا شهريًّا لواجهة برمجة صغيرة (a monthly model for a small API): الحوسبة الموزَّعة (allocated compute)، وقاعدة البيانات (database)، والتخزين (storage)، والنقل (transfer)، والطلبات المخدومة (requests served). احسب التكلفة لكل 1,000 طلب (cost per 1,000 requests) لثلاثة سيناريوهات: الحالي (current)، وبعد تعديل الحجم (rightsized)، وبعد تعديل الحجم مع التزامٍ على الخط الأساسي (rightsized plus a commitment on the baseline). *يكتمل عندما (Done when):* يُظهر النموذج تكلفة الوحدة لكل سيناريو (unit cost for each scenario)، ويذكر كل افتراض (states every assumption)، ويحدّد التغيير الذي ستجريه أولًا ولماذا (which change you would make first and why).
+
+## ⚠️ أخطاء وفخاخ (Mistakes and traps)
+- **شراء الالتزامات قبل التنظيف (Buying commitments before cleaning up).** الخصومات على الهدر (Discounts on waste) تثبّت الهدر لسنوات (lock the waste in for years). أزِل الخامل وجدوِل وعدّل الحجم أولًا (Remove idle, schedule and rightsize first).
+- **الوسم لاحقًا (Tagging later).** التاريخ غير الموسوم (Untagged history) لا يمكن توزيعه جيدًا. افرض الوسوم في البنية التحتية بوصفها شيفرة (Enforce tags in IaC) منذ المورد الأول (from the first resource).
+- **FinOps للمالية فقط (Finance-only FinOps).** جدول بيانات شهري من المالية (A monthly spreadsheet from finance) لا يغيّر شيئًا إذا لم يره المهندسون أبدًا (if engineers never see it). ضع التكلفة في طلبات الدمج ولوحات المتابعة ومراجعات الفرق (Put cost in pull requests, dashboards and team reviews).
+- **تجاهل نقل البيانات (Ignoring data transfer).** الخروج (Egress)، وحركة المرور بين مناطق التوافر (cross-zone traffic)، ومعالجة NAT (NAT processing) قد تصبح بندًا كبيرًا (a large line). تحقّق من صفحات التسعير (Check pricing pages) وصمّم مسارات حركة المرور واضعًا إياها في الحسبان (design traffic paths with them in mind).
+- **خفض المرونة لتوفير المال (Cutting resilience to save money).** منطقة توافر واحدة (One zone)، ونسخٌ جاهزة أصغر (smaller standbys)، ومدة احتفاظ أقصر (shorter retention) تغيّر RTO وRPO لديك. وجّه هذه التغييرات عبر مالك الخدمة وهندسة موثوقية المواقع (through the service owner and SRE).
+- **الحكم على الإجمالي لا على الوحدة (Judging the total, not the unit).** قد تكون الفاتورة المتنامية صحية (A growing bill can be healthy). تتبّع التكلفة لكل وحدةٍ تجارية (Track cost per business unit) لتميّز النمو من الهدر (to tell growth from waste).
+
+## 🧾 الخلاصة (Recap)
+- تجعل FinOps الهندسة والمالية وقطاع الأعمال يملكون تكلفة السحابة معًا (jointly own cloud cost)، عبر دورة الإعلام والتحسين والتشغيل (the Inform, Optimise and Operate cycle).
+- التوزيع أولًا (Allocation comes first): وسومٌ إلزامية تُفرض في البنية التحتية بوصفها شيفرة (mandatory tags enforced in IaC)، وتوزيعٌ قائم على الطلبات للعناقيد المشتركة في Kubernetes (request-based allocation for shared Kubernetes clusters)، والعرض المالي قبل الاسترداد المالي (showback before chargeback).
+- حسّن الاستخدام (Optimise usage) (الخامل، idle؛ الجداول، schedules؛ تعديل الحجم، rightsizing؛ التوسّع التلقائي، autoscaling؛ دورة الحياة، lifecycle؛ البنية، architecture) قبل الأسعار (before rates) (الالتزامات، commitments؛ السوق الفورية، spot).
+- تكلفة الوحدة (Unit cost)، مثل التكلفة لكل عملية دفع أو لكل ألف طلب (cost per payment or per thousand requests)، هي المقياس الذي يربط الإنفاق بالقيمة (connects spend to value).
+- التكلفة والمرونة قرارٌ واحد (Cost and resilience are one decision): لا يجوز لأي خفضٍ في التكلفة أن يُضعف بصمت (silently weaken) RTO وRPO المتّفق عليهما مع قطاع الأعمال.
+
+## ✍️ اختبر نفسك (Check yourself)
+
+**1. تجد منى أن حصّةً كبيرة من الإنفاق السحابي لنجم (Najm's cloud spend) لا يمكن نسبتها إلى أي فريق (cannot be attributed to any team). ماذا ينبغي أن يفعل سالم أولًا؟**
+
+- A. شراء خطة توفيرٍ لثلاث سنوات (a three-year savings plan) لخفض الإجمالي بسرعة
+- B. أن يطلب من المالية تقسيم التكلفة غير المنسوبة (the unattributed cost) بالتساوي على كل الفرق
+- C. فرض الوسوم إلزاميًّا (Mandate tags)، وتطبيقها في خط تسليم OpenTofu (the OpenTofu pipeline)، وملاحقة المالكين (chase owners)
+- D. نقل كل أعباء العمل إلى مثيلات السوق الفورية (spot instances) قبل توزيع أي شيء
+
+<details><summary>الإجابة</summary>
+
+**C.** لا يمكنك التحسين أو محاسبة أحد (optimise or hold anyone accountable) دون توزيع، والفرض في البنية التحتية بوصفها شيفرة (enforcement in IaC) يمنع تكرار المشكلة (stops the problem recurring). وA يلتزم بالمال قبل أن تعرف ما هو الهدر (commits money before you know what is waste)؛ وB يخفي المشكلة (hides the problem)؛ وD يعرّض الموثوقية للخطر (risks reliability) ولا يفسّر الإنفاق. (🟢 الأساسيات (The essentials).)
+
+</details>
+
+**2. يطلب فريقٌ 4 معالجات لكل حجيرة (requests 4 CPUs per pod) لكنه يستخدم نحو 0.3 في المتوسط. في عنقودٍ مشترك (In a shared cluster)، كيف ينبغي توزيع تكلفته، ولماذا؟**
+
+- A. بحسب الأعلى بين الطلبات والاستخدام (By the higher of requests and use): يدفع ثمن الأربعة المحجوزة (the 4 reserved)
+- B. بحسب الاستخدام الفعلي فقط (By actual use only)، لأن بقية الطلب ظلّت غير مستخدمة
+- C. لا تُوزَّع إطلاقًا، لأن العناقيد المشتركة لا يمكن تقسيمها بين الفرق
+- D. بالتساوي بين كل الفرق التي تشغّل أعباء عمل على العنقود
+
+<details><summary>الإجابة</summary>
+
+**A.** الطلبات تحجز سعةً لا يستطيع أحدٌ آخر الجدولة عليها (Requests reserve capacity that no one else can schedule onto)، لذا فإن احتساب ثمنها يعطي الحافز الصحيح (the right incentive). وB يكافئ الإفراط في الطلب (rewards over-requesting)؛ وC خاطئ، لأن أدواتٍ مثل OpenCost توزّع بحسب نطاق الأسماء (allocate by namespace)؛ وD يُزيل المساءلة (removes accountability). (🟡 التعمق أكثر (Going deeper).)
+
+</details>
+
+**3. أيّ ترتيبٍ لخطوات التحسين (order of optimisation steps) هو الأكثر منطقية؟**
+
+- A. شراء الالتزامات أولًا (Buy commitments first)، ثم تعديل الحجم، ثم حذف الموارد الخاملة
+- B. نقل كل شيء إلى مثيلات السوق الفورية أولًا (Move everything to spot instances first)، ثم إضافة الالتزامات بعد ذلك
+- C. تعديل الحجم فقط (Rightsize only)، لأن الالتزامات لا تستحق أبدًا التقيّد بها (never worth the lock-in)
+- D. إزالة الخامل (Remove idle)، والجدولة (schedule)، وتعديل الحجم (rightsize)، ثم الالتزام للقاعدة الثابتة (commit for the steady base)
+
+<details><summary>الإجابة</summary>
+
+**D.** تحسين الاستخدام أولًا (Usage optimisation first) يعني أن الالتزام لا يغطي إلا السعة التي ستستخدمها فعلًا. وA يثبّت الهدر (locks in waste)؛ وB يعرّض أعباء العمل التي لا تحتمل المقاطعة للخطر (puts interruption-intolerant workloads at risk)؛ وC يترك وفوراتٍ حقيقية على خطٍّ أساسي ثابت دون استغلال (leaves real savings on a steady baseline unused). (🟡 التعمق أكثر (Going deeper).)
+
+</details>
+
+**4. يقترح يوسف تشغيل قاعدة بيانات المدفوعات في منطقة توافر واحدة (in a single zone) لخفض تكلفتها. ما أفضل ردّ؟**
+
+- A. الموافقة عليه، لأن خفض التكلفة هو الأولوية هذا الربع (the priority this quarter)
+- B. معاملته على أنه تغييرٌ في المرونة (a resilience change) يقرّره مالك الخدمة وهندسة موثوقية المواقع (the service owner and SRE)
+- C. الموافقة عليه بهدوء (Approve it quietly) وإبقاء فريق المخاطر خارج القرار (leave risk out of the decision)
+- D. الموافقة عليه ما دام Infracost يُظهر توفيرًا شهريًّا واضحًا (a clear monthly saving)
+
+<details><summary>الإجابة</summary>
+
+**B.** إزالة تكرار مناطق التوافر (Removing zone redundancy) تغيّر RTO وRPO اللذين وقّع عليهما قطاع الأعمال، لذا يقرّر مالك الخدمة وهندسة موثوقية المواقع، وعلى الأرجح سيرفضان (will very likely refuse). وA وD لا ينظران إلا إلى المال (look only at money)؛ وC يقوّض الحوكمة (undermines governance). (🔴 نظرة الخبير (Expert view).)
+
+</details>
+
+**5. ارتفع إجمالي فاتورة السحابة لنجم (Najm's total cloud bill) هذا الربع بينما نما العملاء أسرع. وانخفضت التكلفة لكل عملية دفع ناجحة (Cost per successful payment). كيف ينبغي لمنى أن تقرأ هذا؟**
+
+- A. على أنه مشكلة (As a problem)، لأن إجمالي الفاتورة ارتفع هذا الربع
+- B. على أنه دليلٌ على أنه لا حاجة إلى أي عمل تحسين في أي مكان (no optimisation work is needed anywhere)
+- C. على أنه نموٌّ صحي (As healthy growth)، مع الاستمرار في فحص قائمة الهدر (the waste list)
+- D. على أنه خطأ فوترة محتمل (a likely billing error) يُرفع إلى المزوّد
+
+<details><summary>الإجابة</summary>
+
+**C.** انخفاض تكلفة الوحدة مع ارتفاع الحجم (Falling unit cost with rising volume) يعني أن الخدمة تتوسّع بكفاءة (scales efficiently). وA يحكم بالإجمالي وحده (judges by the total alone)؛ وB يبالغ (overreaches)، لأن خدماتٍ أخرى وموارد خاملة قد تظل تهدر المال؛ وD لا أساس له (has no basis). (🔴 نظرة الخبير (Expert view).)
+
+</details>
+
+## 📚 المراجع (References)
+- مؤسسة FinOps: إطار FinOps (FinOps Foundation: FinOps Framework) — https://www.finops.org/framework/
+- المواصفة المفتوحة لتكلفة FinOps واستخدامها (FinOps Open Cost and Usage Specification, FOCUS) — https://focus.finops.org/
+- توثيق OpenCost (OpenCost documentation) — https://www.opencost.io/docs/
+- توثيق Infracost (Infracost documentation) — https://www.infracost.io/docs/
+- الإدارة المالية السحابية في AWS وتوثيق إدارة التكلفة (AWS Cloud Financial Management and cost management documentation) — https://docs.aws.amazon.com/cost-management/
+- توثيق Microsoft Cost Management (Microsoft Cost Management documentation) — https://learn.microsoft.com/azure/cost-management-billing/
+- توثيق Google Cloud Billing (Google Cloud Billing documentation) — https://cloud.google.com/billing/docs
+- Kubernetes: إدارة الموارد للحجيرات والحاويات (Resource management for pods and containers) — https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+- رؤيةٌ أخفّ للفرق الصغيرة (Lighter view for small teams): [*تصميم الأنظمة لمبرمجي الحدس (System Design for Vibe Coders)*، الدرس 11.4 — هندسة التكلفة (Cost engineering)](../vibe/index.ar.html#l11-4)
+
+---
+
