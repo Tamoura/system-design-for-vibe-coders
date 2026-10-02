@@ -178,7 +178,7 @@ flowchart LR
 ## 🛠️ التمارين (Exercises)
 - 🟢 **شاهد مُوسِّعًا تلقائيًّا وهو يعمل (Watch an autoscaler work).** على عنقودٍ محلي من kind أو k3d (a local kind or k3d cluster) مع خادم المقاييس (the metrics server)، انشر حاوية ويب صغيرة (a small web container) لها طلبات معالج (CPU requests) ومُوسِّعًا تلقائيًّا أفقيًّا (HPA) (الحدّ الأدنى 2، min 2؛ الحدّ الأقصى 8، max 8؛ الهدف 50% من المعالج، target 50% CPU). وولّد حملًا من حجيرةٍ أخرى (Generate load from another pod) وراقب `kubectl get hpa -w`. *يكتمل عندما (Done when):* تكون لديك لقطة شاشة أو سجل (a screenshot or log) يُظهر النسخ المتماثلة ترتفع تحت الحمل (replicas rising under load) وتنخفض بعد نافذة الاستقرار (falling after the stabilisation window)، وجملةٌ واحدة تشرح لماذا كان التقليص أبطأ من التوسيع (why scale-down was slower than scale-up).
 - 🟡 **توزّع عبر مناطق التوافر واصمد أمام التفريغ (Spread across zones and survive a drain).** أنشئ عنقود kind فيه أربع عقد عاملة (four worker nodes) ووسِمها (label them) بقيم `topology.kubernetes.io/zone` هي `a` و`b` و`c` (تحصل منطقةٌ واحدة على عقدتين، one zone gets two nodes). انشر ست نسخ متماثلة (six replicas) مع قيد توزيع الطوبولوجيا (a topology spread constraint) وميزانية تعطيل (PDB) قيمتها `minAvailable: 4`. فرّغ كل عقدةٍ في منطقة توافر واحدة (Drain every node in one zone) باستخدام `kubectl drain`. وتوقّع أن تبقى الحجيرات المُخلاة (the evicted pods) في حالة `Pending`: فالمنطقة المفرَّغة ما زالت تُحتسب في قيد التوزيع (the drained zone still counts for the spread constraint). *يكتمل عندما (Done when):* تكون الحجيرات قد توزّعت حجيرتين في كل منطقة (two per zone)، واحترم التفريغ ميزانية التعطيل (the drain respected the PDB)، وظلّت الخدمة تجيب طوال الوقت (kept answering throughout)، وتستطيع تفسير الحجيرات العالقة في `Pending`.
-- 🔴 **اكتب اختبار استعادة ونفّذه (Write and run a restore test).** شغّل PostgreSQL في Docker مع أرشفة سجل الكتابة المسبقة (WAL archiving) أو نسخٍ احتياطية منتظمة بـ`pg_dump` (regular `pg_dump` backups). أدخِل صفوفًا مختومة بالوقت (Insert timestamped rows)، ثم احذف جدولًا «عن طريق الخطأ» ("accidentally" drop a table)، ثم استعِد إلى حاويةٍ ثانية (restore into a second container). اكتب خطة اختبار تعافٍ من الكوارث من صفحةٍ واحدة (a one-page DR test plan) بالصيغة أعلاه (in the format above)، مع RTO وRPO تختارهما. *يكتمل عندما (Done when):* تكون قد قست زمن الاستعادة الفعلي وفقدان البيانات (the actual restore time and data loss)، وقارنتهما بأهدافك (compared them with your targets)، وأدرجت تغييرين على الأقل من شأنهما سدّ أي ثغرة (close any gap).
+- 🔴 **اكتب اختبار استعادة ونفّذه (Write and run a restore test).** شغّل PostgreSQL في Docker مع أرشفة سجل الكتابة المسبقة (WAL archiving) أو نسخٍ احتياطية منتظمة باستخدام `pg_dump` (regular pg_dump backups). أدخِل صفوفًا مختومة بالوقت (Insert timestamped rows)، ثم احذف جدولًا «عن طريق الخطأ» ("accidentally" drop a table)، ثم استعِد إلى حاويةٍ ثانية (restore into a second container). اكتب خطة اختبار تعافٍ من الكوارث من صفحةٍ واحدة (a one-page DR test plan) بالصيغة أعلاه (in the format above)، مع RTO وRPO تختارهما. *يكتمل عندما (Done when):* تكون قد قست زمن الاستعادة الفعلي وفقدان البيانات (the actual restore time and data loss)، وقارنتهما بأهدافك (compared them with your targets)، وأدرجت تغييرين على الأقل من شأنهما سدّ أي ثغرة (close any gap).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
 - **تسمية التكرار نسخًا احتياطيًّا (Calling replication a backup).** النسخ المتماثلة تنسخ عمليات الحذف والفساد فورًا (copy deletions and corruption instantly). احتفظ أيضًا بنسخٍ احتياطية لنقطة زمنية وغير قابلة للتغيير (point-in-time and immutable backups) في حسابٍ منفصل (in a separate account).
@@ -499,3 +499,276 @@ Cost per Najm Assist conversation  = (gateway + model API + GPU cost)
 
 ---
 
+# 6.3 — تشغيل أعباء عمل الذكاء الاصطناعي: وحدات معالجة الرسوميات وتقديم النماذج وبوابات النماذج اللغوية وتكلفتها (Running AI workloads: GPUs, model serving, LLM gateways and their cost)
+*المستوى (Level): 🔴 متقدم (Advanced)* · *المتطلبات (Prerequisites): 2.3، 5.1، 6.2* · *المرحلة (Phase): Deploy, Operate*
+
+## ⚡ الدرس في دقيقة (In 60 seconds)
+- تحتاج أعباء عمل الذكاء الاصطناعي (AI workloads) إلى **وحدات معالجة رسوميات (GPUs)** نادرة ومكلفة (scarce, expensive)، وتحمّل ملفات نماذج كبيرة قبل التقديم (load large model files before serving)، وتتوسّع تكلفتها مع **الرموز (tokens)**، لا مع الطلبات (not requests).
+- استدعِ **واجهة برمجة نماذج مُدارة (managed model API)** (ادفع لكل رمز، pay per token؛ دون وحدات معالجة رسوميات تشغّلها، no GPUs to run) أو **استضِف ذاتيًّا (self-host)** نموذجًا مفتوح الأوزان (an open-weight model) بمحرّك تقديم (a serving engine) مثل **vLLM**. ومعظم المؤسسات، ومنها نجم، تستخدم الاثنين (use both).
+- ضع **بوابة نماذج لغوية (LLM gateway)** أمام كل نموذج: مكانٌ واحد (one place) للمصادقة (authentication)، والتوجيه (routing)، وحدود المعدّل والميزانيات (rate limits and budgets)، والبدائل الاحتياطية (fallbacks)، والتخزين المؤقت (caching)، والتسجيل (logging)، وتتبّع التكلفة لكل فريق (cost tracking per team).
+- قِس ما يشعر به المستخدمون (Measure what users feel): **الوقت حتى أول رمز (time to first token)**، والوقت لكل رمز مُخرَج (time per output token)، والرموز في الثانية (tokens per second)، ومعدل الأخطاء (error rate)، إضافةً إلى استخدام وحدة معالجة الرسوميات وذاكرتها (GPU utilisation and memory).
+- مؤشر القرار (Decision cue): استضِف ذاتيًّا حين يكون الحجم ثابتًا (when volume is steady) أو تتطلّب ذلك إقامة البيانات والتحكم (residency and control demand it)، وفقط إذا استطعت إبقاء وحدات معالجة الرسوميات مشغولة (keep the GPUs busy). فوحدات معالجة الرسوميات الخاملة (Idle GPUs) هي أغلى خطأ في هذه الوحدة (this module's most expensive mistake).
+- أكبر فخ (Biggest trap): كل فريقٍ يستدعي واجهات برمجة النماذج مباشرةً بمفتاحه الخاص (calling model APIs directly with its own key)، فلا أحد يعرف التكلفة (the cost) ولا تدفّقات البيانات (the data flows) ولا الخطة حين يتعطّل مزوّد (the plan when a provider fails).
+
+## 🧭 لماذا يهم (Why it matters)
+بدأ نجم أسيست (Najm Assist) تجربةً أولية (a pilot) استدعت فيها ثلاثة فرق واجهة برمجة نماذج مستضافة (a hosted model API) مباشرةً، كلٌّ بمفتاحه الخاص (each with its own key). ثم، في شهرٍ واحد، تعرّض مزوّدٌ لانقطاعٍ جزئي (a partial outage) فتعطّل المساعد معه (the assistant failed with it)، لأنه لم يكن هناك بديلٌ احتياطي (no fallback)؛ وأظهر تقرير التكلفة الذي أعدّته منى في 6.2 (Mona's cost report from 6.2) إنفاقًا على النماذج يرتفع أسبوعيًّا (model spend rising weekly) دون طريقةٍ لمعرفة أي فريقٍ يقف وراءه (which team drove it)؛ وسألت نورة أيّ بيانات العملاء ذهبت إلى أيّ مزوّد (which customer data went to which provider) وأين سُجّلت (where it was logged). ولم يستطع أحدٌ الإجابة إجابةً كاملة (completely).
+
+في الأثناء، أراد فريق علم البيانات (the data science team) أن يستضيف ذاتيًّا نموذجًا صغيرًا مفتوح الأوزان (a small open-weight model) لمهمة تصنيف (a classification task) يجب أن تبقى بياناتها في المنطقة التي اختارتها نجم (in Najm's chosen region). فشغّله يوسف في حاوية على عقدة بوحدة معالجة رسوميات (in a container on a GPU node) بالإعدادات الافتراضية (with default settings)، وأفاد بأنه «بطيء، ووحدة معالجة الرسوميات عند 15%» ("slow and the GPU sits at 15%"). ويجب على سالم الآن أن يقرّر ما الذي يمرّ عبر واجهات البرمجة المُدارة (managed APIs)، وما الذي يُستضاف ذاتيًّا (self-hosted)، وكيف يُتحكَّم في الاثنين (how both are controlled)، وكم تكلّف كل محادثة (what each conversation costs). ولتشغيل الوكلاء المبنيّين على هذه النماذج (operating agents built on these models)، انظر [*تشغيل وكلاء الذكاء الاصطناعي في الإنتاج (Running AI Agents in Production)*، المستوى 3 — مهندس الإنتاج (Production Engineer)](../agentic/learning-path.ar.html#level-3-production-engineer).
+
+## 📐 كيف يعمل (How it works)
+
+### 🟢 الأساسيات (The essentials)
+
+**لماذا وحدات معالجة الرسوميات (Why GPUs).** تشغيل نموذج (Running a model) (*الاستدلال، inference*) هو في معظمه عمليات ضرب مصفوفات كبيرة (large matrix multiplications) على *أوزانه (weights)*، أي مليارات الأرقام التي تعلّمها في التدريب (the billions of numbers learned in training)، وهي عملياتٌ تنفّذها وحدات معالجة الرسوميات بالتوازي (in parallel) أسرع بكثير من المعالجات المركزية (far faster than CPUs). والحدّ المعتاد (The usual limit) هو **ذاكرة وحدة معالجة الرسوميات (GPU memory)**: يجب أن تتّسع للأوزان (the weights must fit)، إضافةً إلى ذاكرة عمل لكل محادثة تُخدم (working memory for every conversation served).
+
+قاعدةٌ تقريبية للأوزان (A rough rule for the weights): الذاكرة ≈ عدد المعاملات × البايتات لكل معامل (memory ≈ number of parameters × bytes per parameter). فالنموذج ذو 8 مليارات معامل (A model with 8 billion parameters) المخزّن بدقة 16 بت (stored in 16-bit precision) (2 بايت لكلٍّ منها) يحتاج إلى نحو 16 GB للأوزان وحدها؛ وبدقة 8 بت (in 8-bit)، نحو 8 GB؛ وبدقة 4 بت (in 4-bit)، نحو 4 GB. أضِف مساحةً لـ**ذاكرة KV المؤقتة (KV cache)** (أدناه) ولمحرّك التقديم (the serving engine). وهذا الحساب السريع (This quick arithmetic) يخبرك ما إذا كان نموذجٌ يتّسع في وحدة معالجة رسوميات معيّنة (whether a model fits a given GPU).
+
+**واجهة برمجة مُدارة أم استضافة ذاتية؟ ⁦(Managed API or self-hosted?)⁩**
+
+| السؤال (Question) | واجهة برمجة نماذج مُدارة (Managed model API) | نموذج مفتوح الأوزان مستضاف ذاتيًّا (Self-hosted open-weight model) |
+|---|---|---|
+| من يشغّل وحدات معالجة الرسوميات (Who runs the GPUs) | المزوّد (The provider) | أنت (You) |
+| كيف تدفع (How you pay) | لكل رمز مُدخَل ومُخرَج (Per input and output token) | مقابل وقت وحدة معالجة الرسوميات، مشغولةً أو خاملة (For GPU time, busy or idle) |
+| اختيار النموذج (Model choice) | نماذج المزوّد، وغالبًا الأكثر قدرة (The provider's models, often the most capable) | النماذج مفتوحة الأوزان المرخّص لك باستخدامها (Open-weight models you are licensed to use) |
+| مسار البيانات (Data path) | تذهب البيانات إلى المزوّد (Data goes to the provider) وفق شروطه وخيارات مناطقه (under its terms and region options) | تبقى البيانات في بيئتك (Data stays in your environment) |
+| الجهد (Effort) | منخفض (Low): مفتاح واجهة برمجة وعميل (an API key and a client) | مرتفع (High): المشغّلات (drivers)، ومحرّك التقديم (serving engine)، والتوسّع (scaling)، والترقيات (upgrades) |
+| الأفضل لـ (Best for) | الحجم المتغيّر أو المنخفض (Variable or low volume)؛ القدرات الرائدة (frontier capability)؛ البدء السريع (fast start) | الحجم المرتفع الثابت (Steady high volume)؛ احتياجات الإقامة أو التحكم (residency or control needs)؛ النماذج الصغيرة المتخصّصة (small specialised models) |
+
+لا أحد منهما خالٍ من المخاطر (Neither is free of risk). فواجهات البرمجة المُدارة تثير أسئلةً عن الأطراف الثالثة ونقل البيانات (third-party and data-transfer questions) (يعامل قانون DORA الأوروبي مزوّدي تقنية المعلومات والاتصالات بوصفهم مخاطر أطراف ثالثة، EU DORA treats ICT providers as third-party risk؛ وللجهات التنظيمية الخليجية توقّعاتٌ للإسناد الخارجي، GCC regulators have outsourcing expectations). أمّا الاستضافة الذاتية (Self-hosting) فتجلب تكلفة وحدات معالجة الرسوميات (GPU cost)، وندرتها (scarcity)، وخدمةً حرجة أخرى يجب تشغيلها (another critical service to run).
+
+**الرموز هي وحدة التكلفة (Tokens are the unit of cost).** تقرأ النماذج وتكتب *رموزًا (tokens)*، أي أجزاءً من الكلمات (pieces of words)، وتفرض واجهات البرمجة المُدارة رسومًا لكل رمز (charge per token)، عادةً بأسعارٍ مختلفة للإدخال والإخراج (different rates for input and output). لذا تعتمد التكلفة على طول الموجّه (prompt length) (التعليمات، instructions؛ والسجل، history؛ والمستندات المسترجعة، retrieved documents) وطول الإجابة (answer length): فالميزة التي تحشو عشرين مستندًا في كل موجّه (stuffs twenty documents into every prompt) تكلّف أكثر بكثير من ميزةٍ تسترجع ثلاثة. تحقّق من صفحات التسعير الحالية (Check current pricing pages)؛ ولا تُدرج الأسعار في الشيفرة بشكلٍ ثابت أبدًا (never hard-code prices).
+
+**بوابة نماذج لغوية (An LLM gateway).** البوابة (A gateway) خدمةٌ بين تطبيقاتك وكل نموذج (between your applications and every model)، مُدارًا كان أو مستضافًا ذاتيًّا. تستدعي التطبيقات نقطة نهاية داخلية واحدة (one internal endpoint)؛ وتتولّى البوابة الباقي (the gateway does the rest).
+
+```mermaid
+flowchart LR
+    A["نجم أسيست والتطبيقات الأخرى"] --> G["بوابة النماذج اللغوية: المصادقة والميزانيات والحجب"]
+    G --> M1["واجهة برمجة نماذج مُدارة: أساسية"]
+    G -->|"بديل احتياطي"| M2["واجهة برمجة نماذج مُدارة: مزوّد ثانٍ"]
+    G --> S["نموذج مستضاف ذاتيًّا على وحدات معالجة الرسوميات"]
+    G --> T["القياس عن بُعد: الرموز والتكلفة وزمن الاستجابة لكل فريق"]
+```
+
+### 🟡 التعمق أكثر (Going deeper)
+
+**ما الذي ينبغي أن تفعله البوابة (What a gateway should do).**
+
+| الوظيفة (Function) | لماذا تهم (Why it matters) |
+|---|---|
+| **المصادقة (Authentication)** | تستخدم التطبيقات هوية عبء العمل (workload identity) (1.3)؛ ومفاتيح المزوّدين لا تعيش إلا في البوابة (provider keys live only in the gateway) |
+| **التوجيه (Routing)** | أرسل كل حالة استخدام إلى النموذج المعتمَد (Send each use case to the approved model)؛ ووجّه بحسب تصنيف البيانات (route by data classification) (البيانات السرّية إلى النموذج المستضاف ذاتيًّا داخل المنطقة فقط، confidential data only to the in-region self-hosted model، مثلًا) |
+| **حدود المعدّل والميزانيات (Rate limits and budgets)** | لكل فريقٍ ولكل ميزة (Per team and per feature)، بالرموز والمال (in tokens and money)، كي لا تستطيع حلقةٌ خارجة عن السيطرة (one runaway loop) إنفاق ميزانية الشهر |
+| **البدائل الاحتياطية وإعادة المحاولة (Fallbacks and retries)** | أعِد المحاولة مع تراجعٍ تدريجي (Retry with backoff)، ثم انتقل إلى نموذجٍ بديل معتمَد سبق اختبار جودته (an approved model already tested for quality) |
+| **التخزين المؤقت (Caching)** | التخزين المؤقت للتطابق التام (Exact-match caching) يوفّر التكلفة؛ أمّا التخزين المؤقت الدلالي (semantic caching) (إعادة استخدام إجاباتٍ لموجّهاتٍ *مشابهة*، reusing answers to *similar* prompts) فيجب ألّا يعطي أبدًا عميلًا إجابةَ عميلٍ آخر (must never give one customer another's answer) |
+| **الحجب والسياسة (Redaction and policy)** | أخفِ البيانات الشخصية التي لا تحتاجها حالة الاستخدام (Mask personal data that a use case does not need)؛ وافرض فحوص الإدخال والإخراج المتّفق عليها مع الأمن (input and output checks agreed with security) |
+| **القياس عن بُعد (Telemetry)** | الرموز الداخلة والخارجة (Tokens in and out)، والتكلفة (cost)، وزمن الاستجابة (latency)، والنموذج (model)، والفريق (team)، والميزة (feature) في كل استدعاء، تُصدَّر باستخدام OpenTelemetry (5.1) |
+
+توجد بواباتٌ مفتوحة المصدر (Open-source gateways) (مثل LiteLLM وEnvoy AI Gateway في وقت كتابة هذا النص، at the time of writing)، وبوابات لدى المزوّدين وأخرى تجارية (provider and commercial ones)؛ وتشغّل نجم بوابةً على منصتها (runs one on its platform) كي تعيش قواعد التوجيه في مستودع GitOps (routing rules live in the GitOps repo). والبوابة بنيةٌ تحتية حرجة (critical infrastructure): شغّلها على مناطق توافر متعدّدة (multi-zone) مع هدف مستوى خدمة (with an SLO)، كما في 6.1. أمّا الضوابط الأمنية لمدخلات النماذج ومخرجاتها (Security controls for model inputs and outputs) فتتعمّق فيها [*أمن الذكاء الاصطناعي وأمن التطبيقات (Secure AI & Application Security)*، الدرس 9.1 — الحواجز الوقائية ومعالجة المخرجات: لا تثق أبدًا بمخرجات النموذج (Guardrails and output handling: never trust model output)](../secai/index.ar.html#/9.1).
+
+**وحدات معالجة الرسوميات في Kubernetes (GPUs in Kubernetes).** تحتاج العقد المزوّدة بوحدات معالجة رسوميات (Nodes with GPUs) إلى مشغّل المورّد (the vendor's driver) و*إضافة جهاز (device plugin)*، تعلن عن وحدات معالجة الرسوميات لـKubernetes بوصفها موردًا (advertises GPUs to Kubernetes as a resource) (لدى NVIDIA، `nvidia.com/gpu`). وتطلب الحجيرات وحداتٍ كاملة في حدودها (Pods request whole GPUs in their limits). أبقِ عقد وحدات معالجة الرسوميات في مجمّع عقد منفصل (a separate node pool) مع **وصمة (taint)**، كي لا يستقر هناك إلا أعباء العمل التي تتحمّلها (workloads that tolerate it) (وتحتاج إلى وحدة معالجة رسوميات):
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assist-classifier
+  namespace: assist
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: assist-classifier }
+  template:
+    metadata:
+      labels: { app: assist-classifier }
+    spec:
+      nodeSelector:
+        pool: gpu
+      tolerations:
+        - key: "gpu"
+          operator: "Exists"
+          effect: "NoSchedule"
+      containers:
+        - name: server
+          image: registry.najm.example/assist/vllm-server@sha256:<digest>   # pinned by digest
+          args: ["--model", "/models/classifier", "--max-model-len", "8192"]
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+          readinessProbe:            # model loading takes time; do not send traffic early
+            httpGet: { path: /health, port: 8000 }
+            periodSeconds: 10
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+```
+
+يمكن لأعباء العمل الصغيرة (Small workloads) أن تتشارك وحدة معالجة رسوميات بالتقسيم الزمني (time-slicing)، أو، على بعض وحدات NVIDIA لمراكز البيانات (some NVIDIA data-centre GPUs)، بتقنية وحدة معالجة الرسوميات متعدّدة المثيلات (Multi-Instance GPU, MIG)، التي تقسم الوحدة إلى شرائح معزولة (isolated slices). وتقدّم واجهة برمجة التخصيص الديناميكي للموارد (Dynamic Resource Allocation API) في Kubernetes طلبات أجهزة أكثر مرونة (more flexible device requests)؛ تحقّق من حالتها في إصدارك (check its status in your version).
+
+**محرّكات التقديم (Serving engines).** تشغيل نموذج بنصٍّ برمجي بسيط (with a plain script) يخدم طلبًا واحدًا في كل مرة (one request at a time) ويترك وحدة معالجة الرسوميات خاملةً في معظم الوقت (mostly idle)، وهو ما رآه يوسف. ومحرّكات التقديم تعالج ذلك:
+- **vLLM** محرّكٌ مفتوح المصدر (an open-source engine) معروف بـ*الانتباه المُقسَّم إلى صفحات (PagedAttention)*، الذي يدير ذاكرة KV المؤقتة في صفحات (manages KV-cache memory in pages)، و*التجميع المستمر (continuous batching)*، الذي يضيف الطلبات الجديدة إلى الدفعة الجارية (adds new requests to the running batch) كلما انتهت أخرى. ويكشف واجهة برمجة HTTP متوافقة مع OpenAI (an OpenAI-compatible HTTP API).
+- **NVIDIA Triton Inference Server** يقدّم نماذج من أطر عمل متعدّدة (models from several frameworks) مع التجميع الديناميكي (dynamic batching)؛ تحقّق من التسمية الحالية لدى NVIDIA (NVIDIA's current naming) له.
+- **KServe** طبقة تقديم نماذج أصلية في Kubernetes (a Kubernetes-native model-serving layer) تدير عمليات نشر النماذج (model deployments) والتوسّع التلقائي (autoscaling) والإطلاقات التدريجية (rollouts)، ويمكنها تشغيل محرّكاتٍ مثل vLLM تحتها (underneath).
+
+**المفاهيم وراء السرعة (The concepts behind the speed).**
+- **التجميع (Batching):** خدمة محادثاتٍ كثيرة في آنٍ واحد (serving many conversations at once) ترفع الإنتاجية كثيرًا (raises throughput a lot)، على حساب بعض زمن الاستجابة لكل طلب (at some cost to each request's latency)؛ والتجميع المستمر (continuous batching) يُبقي الانتظار قصيرًا.
+- **ذاكرة KV المؤقتة (KV cache):** أثناء التوليد (While generating)، يحتفظ النموذج بنتائج وسيطة (intermediate results) (المفاتيح والقيم، keys and values) لكل رمزٍ سابق (for every earlier token) كي لا يعيد حسابها. وتكبر الذاكرة المؤقتة مع طول السياق (with context length) ومع عدد المحادثات المتزامنة (the number of concurrent conversations)، وكثيرًا ما تكون هي ما يحدّ من عدد المستخدمين الذين تستطيع وحدة معالجة رسوميات واحدة خدمتهم (how many users one GPU can serve). وفي vLLM، يحدّد `--max-model-len` سقف السياق لكل طلب (caps the context per request)، ويحدّد `--gpu-memory-utilization` سقف حصّة المحرّك من ذاكرة وحدة معالجة الرسوميات (caps the engine's share of GPU memory).
+- **التكميم (Quantisation):** تخزين الأوزان بـ8 أو 4 بت بدلًا من 16 (storing weights in 8 or 4 bits instead of 16) يقلّل الذاكرة (cuts memory) ويرفع السرعة غالبًا (often raises speed)، مع بعض فقدان الجودة (some quality loss) الذي يجب أن تقيسه على مجموعة التقييم الخاصة بك (on your own evaluation set).
+
+### 🔴 نظرة الخبير (Expert view)
+
+**المقاييس المهمة (Metrics that matter).** مقاييس RED الكلاسيكية (Classic RED metrics) (5.1) لا تكفي. تتبّع، لكل نموذجٍ ومسار (per model and route):
+
+| المقياس (Metric) | ما الذي يخبرك به (What it tells you) |
+|---|---|
+| **الوقت حتى أول رمز (Time to first token, TTFT)** | كم ينتظر المستخدم قبل أن يبدأ النص (How long the user waits before text starts)؛ ويهيمن عليه الانتظار في الطابور ومعالجة الموجّه (dominated by queueing and processing the prompt) |
+| **الوقت لكل رمز مُخرَج (Time per output token)** (زمن الاستجابة بين الرموز، inter-token latency) | مدى سلاسة تدفّق النص (How smoothly text streams) |
+| **الرموز في الثانية (Tokens per second)** لكل وحدة معالجة رسوميات (per GPU) | الإنتاجية (Throughput)؛ رقم كفاءة التكلفة (the cost-efficiency number) |
+| **عمق الطابور والطلبات الجارية (Queue depth and running requests)** | التشبّع (Saturation)؛ أفضل إشارة توسّع تلقائي للنماذج المستضافة ذاتيًّا (the best autoscaling signal for self-hosted models) |
+| **استخدام ذاكرة KV المؤقتة (KV-cache usage)** | مدى قربك من رفض الطلبات أو استباقها (rejecting or pre-empting requests) |
+| **استخدام وحدة معالجة الرسوميات وذاكرتها (GPU utilisation and memory)** (مثلًا من مُصدِّر DCGM لدى NVIDIA، NVIDIA's DCGM exporter) | ما إذا كنت تدفع مقابل عتادٍ خامل (paying for idle hardware) |
+| **الرموز والتكلفة لكل فريقٍ وميزة (Tokens and cost per team and feature)** | من البوابة (From the gateway)؛ يغذّي تقرير FinOps في 6.2 (feeds the FinOps report in 6.2) |
+
+لدى OpenTelemetry اصطلاحاتٌ دلالية لاستدعاءات الذكاء الاصطناعي التوليدي (semantic conventions for generative AI calls) (النموذج، model؛ وأعداد الرموز، token counts؛ وغير ذلك)؛ وكانت لا تزال تتطوّر (still evolving) في وقت كتابة هذا النص، لذا ثبّت الإصدار الذي تستخدمه (pin the version you use).
+
+وقد يكون هدف مستوى الخدمة (An SLO) لنجم أسيست: 99% من المحادثات تحصل على أول رمز (a first token) خلال عددٍ مستهدف من الثواني (a target number of seconds)، مقيسًا عند البوابة (measured at the gateway) على مدى 28 يومًا، مع تحديد الهدف من القياس (set from measurement)، لا من معيار أداء لدى المورّد (not a vendor benchmark).
+
+**توسيع النماذج المستضافة ذاتيًّا (Scaling self-hosted models).** المعالج إشارةٌ خاطئة (CPU is the wrong signal)؛ وسّع بحسب عمق الطابور أو الطلبات الجارية (scale on queue depth or running requests) (مثلًا باستخدام KEDA يقرأ مقياسًا من Prometheus، with KEDA reading a Prometheus metric). والبدء البارد بطيء (Cold starts are slow): قد تحتاج نسخةٌ متماثلة جديدة إلى عقدة وحدة معالجة رسوميات جديدة (a new GPU node)، وإلى الصورة (the image)، وإلى ملف نموذج من غيغابايتات كثيرة (a model file of many gigabytes). احتفظ بحدٍّ أدنى دافئ من النسخ المتماثلة (a warm floor of replicas) في ساعات العمل، واسحب الصور مسبقًا (pre-pull images)، وأبقِ ملفات النماذج على تخزينٍ سريع قريب (fast nearby storage)، وتحكّم في حركة المرور بفحوص الجاهزية (gate traffic with readiness probes). ولا توسّع إلى الصفر (Scale to zero) إلا حيث تكون الاستجابة الأولى الطويلة مقبولة (a long first response is acceptable).
+
+**نقطة التعادل للاستضافة الذاتية (The self-hosting break-even).** قارن، للجودة نفسها على مجموعة التقييم الخاصة بك (for the same quality on your evaluation set):
+
+```text
+Managed cost per month  = Σ (input tokens × input rate + output tokens × output rate)
+Self-hosted per month   = GPU node hours × node rate (busy or idle)
+                        + engineering and on-call time
+                        + storage, network, observability
+Self-hosted cost per 1M tokens = self-hosted per month / (tokens served / 1,000,000)
+```
+
+تنخفض تكلفة الاستضافة الذاتية لكل رمز (The self-hosted cost per token) كلما ارتفع الاستخدام (as utilisation rises)؛ وعند الاستخدام المنخفض (at low utilisation) تكون عادةً أسوأ من واجهة البرمجة المُدارة. أعِد الحساب حين تتغيّر الأسعار (Redo the sum when prices change). وقد يصعب الحصول على سعة وحدات معالجة الرسوميات عند الطلب (GPU capacity can be hard to obtain on demand)، لذا احجز سعةً لنموذجٍ مستضاف ذاتيًّا حرج (reserve capacity for a critical self-hosted model) أو احتفظ ببديلٍ احتياطي مُدار (keep a managed fallback).
+
+**سلامة الإطلاق للنماذج (Release safety for models).** تغيير إصدار النموذج (Changing the model version)، أو التكميم (quantisation)، أو موجّه النظام (system prompt) يغيّر الإجابات، لذا فهو إطلاق (a release). أطلقه بنمط الكناري عند البوابة (Canary it at the gateway) (4.2): أرسل حصّةً صغيرة من حركة المرور (a small share of traffic)، وقارن نتائج التقييم (evaluation results)، والملاحظات (feedback)، وزمن الاستجابة (latency)، والتكلفة (cost)، ثم رقِّ أو تراجع (promote or roll back). ثبّت إصدارات النماذج حيث يسمح المزوّدون (Pin model versions where providers allow)؛ فالاسم المستعار الذي ينتقل بصمت إلى نموذجٍ أحدث (an alias that silently moves to a newer model) هو نشرٌ لم تتمّ مراجعته (an unreviewed deploy).
+
+## 🧰 الأدوات (The toolkit)
+| الأداة أو الممارسة أو الخدمة (Tool, practice or service) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
+|---|---|---|
+| **LLM gateway** — بوابة النماذج اللغوية | نقطة دخولٍ واحدة مضبوطة إلى كل النماذج (One controlled entry point to all models): المصادقة (auth)، والتوجيه (routing)، والميزانيات (budgets)، والبدائل الاحتياطية (fallbacks)، والتخزين المؤقت (caching)، والقياس عن بُعد (telemetry) | قبل أن يبدأ الفريق الثاني باستدعاء النماذج (Before the second team starts calling models)؛ ودائمًا في بنك (always in a bank) |
+| **vLLM** | محرّك تقديم نماذج لغوية مفتوح المصدر (Open-source LLM serving engine) مع PagedAttention، والتجميع المستمر (continuous batching)، وواجهة برمجة متوافقة مع OpenAI (an OpenAI-compatible API) | الاستضافة الذاتية للنماذج اللغوية مفتوحة الأوزان بكفاءة (Self-hosting open-weight LLMs efficiently) |
+| **NVIDIA Triton Inference Server** | خادم استدلال متعدّد أطر العمل (Multi-framework inference server) مع التجميع الديناميكي (dynamic batching) | تقديم أنواعٍ كثيرة من النماذج (Serving many model types)، بما فيها نماذج غير لغوية (non-LLM models)، على وحدات NVIDIA |
+| **KServe** | طبقة تقديم نماذج أصلية في Kubernetes (Kubernetes-native model-serving layer) مع التوسّع التلقائي والإطلاقات التدريجية (autoscaling and rollouts) | توحيد عمليات نشر النماذج على المنصة (Standardising model deployments on the platform) |
+| **NVIDIA device plugin** and **DCGM exporter** — إضافة جهاز NVIDIA ومُصدِّر DCGM | كشف وحدات معالجة الرسوميات لـKubernetes بوصفها موردًا (Expose GPUs to Kubernetes as a resource)؛ وتصدير مقاييس وحدات معالجة الرسوميات إلى Prometheus (export GPU metrics to Prometheus) | أي عنقودٍ فيه عقد بوحدات NVIDIA (Any cluster with NVIDIA GPU nodes) |
+| **KEDA** (CNCF) | توسّعٌ تلقائي مدفوع بالأحداث (Event-driven autoscaling) من الطوابير والتدفّقات والمقاييس (from queues, streams and metrics) | توسيع خوادم النماذج بحسب عمق الطابور بدلًا من المعالج (Scaling model servers on queue depth instead of CPU) |
+| **OpenTelemetry** GenAI conventions — اصطلاحات الذكاء الاصطناعي التوليدي | سماتٌ قياسية لاستدعاءات النماذج وأعداد الرموز وزمن الاستجابة (Standard attributes for model calls, token counts and latency) | بيانات تكلفة وزمن استجابة متّسقة (Consistent cost and latency data) عبر النماذج والفرق (across models and teams) |
+
+## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
+يكتب فريق سالم **قرار التقديم وسياسة البوابة لنجم أسيست (Najm Assist serving decision and gateway policy)**، ويراجعه مع نورة ومها ومنى، ويُخزَّن في مستودع GitOps (the GitOps repo) بجوار إعدادات البوابة (beside the gateway configuration).
+
+| القسم (Section) | القرار (Decision) |
+|---|---|
+| حالات الاستخدام والمسارات (Use cases and routes) | المحادثة مع العملاء (Customer chat): واجهة برمجة مُدارة في منطقة معتمَدة (managed API in an approved region)، مع نموذجٍ معتمَد ثانٍ بديلًا احتياطيًّا (second approved model as fallback). التصنيف السرّي (Confidential classification): نموذج مستضاف ذاتيًّا في المنطقة الأساسية لنجم فقط (self-hosted model in Najm's primary region only). التلخيص الداخلي (Internal summarisation): فئة مُدارة أرخص (cheaper managed tier) |
+| قواعد البيانات (Data rules) | التصنيف يحدّد المسار (Classification decides the route)؛ والبيانات الشخصية غير اللازمة تُخفى عند البوابة (unneeded personal data masked at the gateway)؛ ومدة الاحتفاظ بالسجلات متّفق عليها مع الأمن والخصوصية (log retention agreed with security and privacy) |
+| الوصول (Access) | هوية عبء العمل إلى البوابة (Workload identity to the gateway)؛ ومفاتيح المزوّدين في مدير أسرارها فقط (provider keys only in its secrets manager)، مع تدويرها (rotated)؛ والاستدعاءات المباشرة للمزوّدين محظورة بسياسة الخروج (direct provider calls blocked by egress policy) |
+| الميزانيات (Budgets) | ميزانية رموزٍ ومال لكل فريقٍ وميزة (Token and money budget per team and feature)، مع مالك (with an owner)؛ تنبيهٌ عند حصّةٍ محدّدة (alert at a set share)، وإيقافٌ صارم للميزات غير الحرجة (hard stop for non-critical features) |
+| الموثوقية (Reliability) | بوابة على مناطق توافر متعدّدة (Gateway multi-zone) مع هدف مستوى خدمة للتوافر والوقت حتى أول رمز (an SLO on availability and time to first token)؛ واختبار البديل الاحتياطي شهريًّا (fallback tested monthly)؛ ونموذج مستضاف ذاتيًّا بحدٍّ أدنى دافئ من النسخ المتماثلة (a warm floor of replicas) خلال ساعات العمل |
+| السعة (Capacity) | مجمّع عقد وحدات معالجة الرسوميات موصوم (GPU node pool tainted) ويتوسّع تلقائيًّا بحسب عمق الطابور (autoscaled on queue depth)؛ ومراجعة استخدام وحدات معالجة الرسوميات والرموز في الثانية أسبوعيًّا (reviewed weekly)؛ وإعادة حساب نقطة التعادل كل ربع (break-even re-calculated each quarter) بالأسعار الحالية |
+| ضبط التغيير (Change control) | تغييرات النموذج أو التكميم أو الموجّه (Model, quantisation or prompt changes) تمرّ عبر التقييم (evaluation) وإطلاق كناري عند البوابة (a canary at the gateway)؛ وإصدارات النماذج مثبّتة (model versions pinned) |
+| التقارير (Reporting) | التكلفة لكل محادثة ولكل فريق (Cost per conversation and per team) في تقرير منى الشهري من 6.2 (Mona's monthly report from 6.2) |
+
+يعمل مصنّف يوسف (Yousef's classifier) الآن على vLLM مع التجميع المستمر (continuous batching) ونموذجٍ مكمَّم بـ8 بت (an 8-bit quantised model) اجتاز مجموعة التقييم (passed the evaluation set)، واستوعب مسار البديل الاحتياطي (the fallback route) انقطاع المزوّد التالي (the next provider outage) مع ارتفاعٍ قصير في زمن الاستجابة (a brief rise in latency).
+
+## 🛠️ التمارين (Exercises)
+- 🟢 **حدّد حجم نموذج (Size a model).** اختر ثلاثة نماذج مفتوحة الأوزان بأحجامٍ مختلفة (three open-weight models of different sizes). احسب ذاكرة الأوزان (weight memory) بدقة 16 و8 و4 بت (at 16-, 8- and 4-bit)، وقرّر أيّها يتّسع في حجم ذاكرة وحدة معالجة رسوميات تسمّيه (a GPU memory size you name)، تاركًا الربع لذاكرة KV المؤقتة والمحرّك (leaving a quarter for the KV cache and engine). *يكتمل عندما (Done when):* يكون لديك جدولٌ بتسعة تقديرات للذاكرة (nine memory estimates) مع إظهار الحساب (with the arithmetic shown)، وقرار ملاءمة من سطرٍ واحد لكل نموذج (a one-line fit decision for each model).
+- 🟡 **شغّل بوابةً محليًّا (Run a gateway locally).** شغّل نموذجًا مفتوحًا صغيرًا محليًّا (a small open model locally) (المعالج المركزي يكفي، CPU is fine) خلف واجهة برمجة متوافقة مع OpenAI (an OpenAI-compatible API)، وضع أمامه بوابة نماذج لغوية مفتوحة المصدر (an open-source LLM gateway) في Docker مع مسارين (two routes)، وحدّ معدّلٍ لكل مفتاح (a per-key rate limit)، وبديلٍ احتياطي إلى نموذجٍ محلي ثانٍ (a fallback to a second local model). *يكتمل عندما (Done when):* تستطيع إظهار طلبٍ خدمه المسار الأساسي (served by the primary route)، وطلبٍ رفضه حدّ المعدّل (rejected by the rate limit)، وطلبٍ ينتقل إلى البديل حين توقف النموذج الأساسي (falls back when you stop the primary model)، مع سجلات البوابة أو مقاييسها التي تُظهر الرموز لكل طلب (tokens per request).
+- 🔴 **اكتب نقطة تعادل وقرار تقديم (Write a break-even and serving decision).** لمساعدٍ خيالي (a fictional assistant) يتعامل مع عددٍ محدّد من المحادثات يوميًّا (a stated number of conversations per day) بمتوسطات محدّدة لرموز الإدخال والإخراج (stated average input and output tokens)، استخدم الأسعار العامة الحالية (current public prices) من واجهة برمجة مُدارة واحدة ونوع مثيل وحدة معالجة رسوميات واحد (one GPU instance type) (سجّل التاريخ والمصدر، record the date and source) لحساب التكلفة الشهرية بالطريقتين (monthly cost both ways) عند استخدام وحدة معالجة الرسوميات بنسبة 20% و50% و80% (at 20%, 50% and 80% GPU utilisation). أضِف وقت الهندسة افتراضًا مُعلَنًا (Add engineering time as a stated assumption). *يكتمل عندما (Done when):* يكون لديك قرارٌ من صفحةٍ واحدة (a one-page decision) بصيغة جدول نجم (in the format of the Najm table)، مع نسبة الاستخدام التي تتعادل عندها الاستضافة الذاتية (the utilisation at which self-hosting breaks even) والأسباب غير المتعلقة بالتكلفة (the non-cost reasons) (البيانات، data؛ التحكم، control؛ الموثوقية، reliability) التي قد تغيّر اختيارك.
+
+## ⚠️ أخطاء وفخاخ (Mistakes and traps)
+- **استدعاءاتٌ مباشرة بمفاتيح متناثرة (Direct calls with scattered keys).** أن يحمل كل فريقٍ مفتاح مزوّدٍ خاصًّا به (Every team holding its own provider key) يعني لا رؤية للتكلفة (no cost view)، ولا بديل احتياطي (no fallback)، وتدفّقات بيانات مجهولة (unknown data flows). وجّه كل شيء عبر بوابةٍ واحدة (Route everything through one gateway) واحظر الخروج المباشر (block direct egress).
+- **وحدات معالجة الرسوميات الخاملة (Idle GPUs).** عقدة وحدة معالجة رسوميات تشغّل نموذجًا لا يستدعيه أحد (a model nobody calls) تكلّف ما تكلّفه عقدةٌ مشغولة. وسّع بحسب عمق الطابور (Scale on queue depth)، وجدوِل البيئات غير الإنتاجية (schedule non-production)، وراجع الاستخدام أسبوعيًّا (review utilisation weekly).
+- **التقديم دون محرّك تقديم (Serving without a serving engine).** النص البرمجي البسيط (A plain script) يعالج طلبًا واحدًا في كل مرة. استخدم محرّكًا بتجميعٍ مستمر (an engine with continuous batching) وقِس الرموز في الثانية (measure tokens per second).
+- **التكميم أو تبديل النماذج دون تقييم (Quantising or switching models without evaluation).** الأصغر والأرخص قد يكون أسوأ (Smaller and cheaper can be worse). شغّل مجموعة التقييم وإطلاق كناري (your evaluation set and a canary) قبل الترقية (before promoting).
+- **التخزين المؤقت الدلالي غير الآمن (Unsafe semantic caching).** إعادة استخدام إجاباتٍ لموجّهاتٍ «مشابهة» ("similar" prompts) قد تُسرّب بيانات عميلٍ إلى آخر (leak one customer's data to another). لا تخزّن مؤقتًا إلا الإجابات غير الشخصية (non-personal answers)، أو اجعل نطاق الذاكرة المؤقتة لكل مستخدم (scope caches per user).
+
+## 🧾 الخلاصة (Recap)
+- أعباء عمل الذكاء الاصطناعي مقيّدة بذاكرة وحدة معالجة الرسوميات (bound by GPU memory) ومسعّرة بالرموز (priced by tokens)؛ حدّد أحجام النماذج بحسابٍ بسيط (size models with simple arithmetic) وتتبّع التكلفة لكل محادثة (track cost per conversation).
+- تمنح بوابة النماذج اللغوية (An LLM gateway) مكانًا واحدًا للمصادقة (auth)، والتوجيه بحسب فئة البيانات (routing by data class)، والميزانيات (budgets)، والبدائل الاحتياطية (fallbacks)، والتخزين المؤقت (caching)، والحجب (redaction)، والقياس عن بُعد (telemetry)؛ شغّلها بوصفها بنيةً تحتية حرجة (critical infrastructure).
+- قدّم النماذج المستضافة ذاتيًّا بمحرّكٍ مثل vLLM أو Triton أو KServe، باستخدام التجميع (batching)، وحدود ذاكرة KV المؤقتة (KV-cache limits)، والتكميم المُقيَّم (evaluated quantisation)، ووسّع بحسب عمق الطابور (scale on queue depth).
+- عامِل كل تغييرٍ في النموذج أو الموجّه أو التكميم بوصفه إطلاقًا (Treat every model, prompt or quantisation change as a release): قيّم (evaluate)، وأطلق بنمط الكناري (canary)، وثبّت الإصدارات (pin versions)، وتراجع عند الحاجة (roll back if needed).
+
+## ✍️ اختبر نفسك (Check yourself)
+
+**1. يشغّل يوسف نموذجًا مستضافًا ذاتيًّا بنصٍّ برمجي بسيط بلغة Python (a simple Python script) على عقدة وحدة معالجة رسوميات. زمن الاستجابة مرتفع (Latency is high) واستخدام وحدة معالجة الرسوميات نحو 15%. ما الإصلاح الأرجح (the most likely fix)؟**
+
+- A. نقل النص البرمجي نفسه إلى وحدة معالجة رسوميات أكبر بذاكرةٍ أكثر (a larger GPU with more memory)
+- B. إضافة مُوسِّع تلقائي أفقي (HPA) يوسّع الحجيرات بحسب استخدامها للمعالج (on their CPU utilisation)
+- C. الانتقال فورًا إلى واجهة برمجة مُدارة (Switch to a managed API immediately) والتخلّي عن وحدة معالجة الرسوميات
+- D. تقديمه بمحرّكٍ للتجميع المستمر (a continuous-batching engine) مثل vLLM
+
+<details><summary>الإجابة</summary>
+
+**D.** النص البرمجي الذي يعالج طلبًا واحدًا في كل مرة (A one-request-at-a-time script) يترك وحدة معالجة الرسوميات خاملة؛ والتجميع (batching) يخدم طلباتٍ كثيرة معًا. وA يشتري مزيدًا من العتاد الخامل (buys more idle hardware)؛ وB يوسّع بحسب الإشارة الخاطئة (scales on the wrong signal)؛ وC لا يفسّر الهدر (does not explain the waste). (🟡 التعمق أكثر (Going deeper).)
+
+</details>
+
+**2. ما مقدار ذاكرة وحدة معالجة الرسوميات (GPU memory) التي تحتاجها تقريبًا أوزان نموذجٍ ذي 8 مليارات معامل (an 8-billion-parameter model) بدقة 4 بت (at 4-bit precision)؟**
+
+- A. نحو 32 GB، لأن كل معامل يحتاج إلى أربعة بايتات (four bytes)
+- B. نحو 4 GB، إضافةً إلى مساحةٍ لذاكرة KV المؤقتة (plus room for the KV cache)
+- C. نحو 8 GB، دون حاجةٍ إلى مساحةٍ إضافية للتقديم (no extra room needed for serving)
+- D. لا يمكن تقديرها دون سؤال المورّد (without asking the vendor)
+
+<details><summary>الإجابة</summary>
+
+**B.** 8 مليارات معامل × نصف بايت ≈ 4 GB، والتقديم يحتاج أيضًا إلى ذاكرةٍ لذاكرة KV المؤقتة وللمحرّك (KV-cache and engine memory). وA هو الحجم بدقة 32 بت (the 32-bit size)؛ وC هو الحجم بدقة 8 بت ويتجاهل ذاكرة KV المؤقتة؛ وD خاطئ لأن الحساب بسيط (the arithmetic is simple). (🟢 الأساسيات (The essentials).)
+
+</details>
+
+**3. يتعرّض مزوّد نماذج لانقطاعٍ جزئي (a partial outage) فيتعطّل نجم أسيست كليًّا. أيّ تغييرٍ يمنع هذا مباشرةً في المرة القادمة؟**
+
+- A. أن تطلب من المزوّد اتفاقية مستوى خدمة أقوى (a stronger SLA) في العقد التالي
+- B. إضافة نسخٍ متماثلة أكثر من واجهة المحادثة الأمامية (the chat front end) في كل منطقة توافر
+- C. مسار في البوابة (A gateway route) مع إعادة المحاولة (retries) ونموذج بديل احتياطي مُختبَر (a tested fallback model)
+- D. تخزين كل إجابة مؤقتًا إلى الأبد (Caching every answer forever) كي يُستدعى المزوّد نادرًا
+
+<details><summary>الإجابة</summary>
+
+**C.** البديل الاحتياطي في البوابة (A gateway fallback) يُبقي الميزة عاملةً حين يتعطّل مزوّدٌ واحد. وA لا يغيّر شيئًا أثناء الانقطاع (changes nothing during an outage)؛ وB يوسّع الطبقة الخاطئة (scales the wrong layer)؛ وD يقدّم إجاباتٍ قديمة (serves stale answers) ويخاطر بالتسرّب (risks leakage). (🟡 التعمق أكثر (Going deeper).)
+
+</details>
+
+**4. متى تكون الاستضافة الذاتية لنموذجٍ مفتوح الأوزان (self-hosting an open-weight model) منطقيةً أكثر في العادة؟**
+
+- A. حين يُبقي الحجم الثابت وحدات معالجة الرسوميات مشغولة (When steady volume keeps GPUs busy)، أو تتطلّب الإقامة ذلك (or residency requires it)
+- B. دائمًا، لأن ساعات وحدات معالجة الرسوميات أرخص من الدفع مقابل الرموز (cheaper than paying for tokens)
+- C. لأداةٍ داخلية منخفضة الحركة (a low-traffic internal tool) لا تُستخدم إلا بضع مرات يوميًّا
+- D. فقط حين لا تقدّم أي واجهة برمجة مُدارة نموذجًا بجودةٍ مماثلة (a model of similar quality)
+
+<details><summary>الإجابة</summary>
+
+**A.** تؤتي الاستضافة الذاتية ثمارها (Self-hosting pays off) مع الاستخدام المرتفع (high utilisation) أو المتطلبات غير المتعلقة بالتكلفة (non-cost requirements). وB يتجاهل تكلفة الخمول ووقت الهندسة (ignores idle cost and engineering time)؛ وC يترك وحدات معالجة الرسوميات خاملة؛ وD يتجاهل الإقامة والتحكم والاستخدام (residency, control and utilisation). (🔴 نظرة الخبير (Expert view).)
+
+</details>
+
+**5. أيّ مقياس هو أفضل إشارة توسّع تلقائي (the best autoscaling signal) لخادم نماذج لغوية مستضاف ذاتيًّا (a self-hosted LLM server)؟**
+
+- A. استخدام المعالج في العقد (Node CPU utilisation) بمتوسطه عبر مجمّع وحدات معالجة الرسوميات
+- B. عدد الحجيرات التي تقدّم النموذج حاليًّا (The number of pods currently serving the model)
+- C. استخدام القرص على العقد التي تحمل ملفات النماذج (Disk usage on the nodes that hold model files)
+- D. عمق الطابور أو الطلبات الجارية عند المحرّك (Queue depth or running requests at the engine)
+
+<details><summary>الإجابة</summary>
+
+**D.** يُظهر عمق الطابور (Queue depth) الطلب المنتظر لوحدة معالجة الرسوميات (demand waiting for the GPU). وA لا يقول الكثير عن حمل وحدة معالجة الرسوميات (says little about GPU load)؛ وB هو الشيء الذي يُوسَّع، لا إشارة (the thing being scaled, not a signal)؛ وC لا علاقة له بحمل الطلبات (unrelated to request load). (🔴 نظرة الخبير (Expert view).)
+
+</details>
+
+## 📚 المراجع (References)
+- Kubernetes: جدولة وحدات معالجة الرسوميات (Schedule GPUs) — https://kubernetes.io/docs/tasks/manage-gpus/scheduling-gpus/
+- Kubernetes: الوصمات والتحمّلات (Taints and tolerations) — https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+- توثيق vLLM (vLLM documentation) — https://docs.vllm.ai/
+- توثيق NVIDIA Triton Inference Server (NVIDIA Triton Inference Server documentation) — https://docs.nvidia.com/deeplearning/triton-inference-server/
+- توثيق KServe (KServe documentation) — https://kserve.github.io/website/
+- إضافة جهاز NVIDIA لـKubernetes (NVIDIA device plugin for Kubernetes) — https://github.com/NVIDIA/k8s-device-plugin
+- توثيق KEDA (KEDA documentation) — https://keda.sh/docs/
+- الاصطلاحات الدلالية في OpenTelemetry للذكاء الاصطناعي التوليدي (OpenTelemetry semantic conventions for generative AI) — https://opentelemetry.io/docs/specs/semconv/gen-ai/
+- مؤسسة FinOps (FinOps Foundation) (بما في ذلك عمل FinOps للذكاء الاصطناعي، including FinOps for AI work) — https://www.finops.org/
+- أمن تطبيقات النماذج اللغوية الكبيرة (Security for LLM applications): [*أمن الذكاء الاصطناعي وأمن التطبيقات (Secure AI & Application Security)*، الدرس 8.1 — سطح الهجوم في الذكاء الاصطناعي: قائمة OWASP لأعلى 10 مخاطر لتطبيقات النماذج اللغوية الكبيرة وMITRE ATLAS (The AI attack surface: OWASP Top 10 for LLM Applications and MITRE ATLAS)](../secai/index.ar.html#/8.1)
+- تشغيل الوكلاء في الإنتاج (Operating agents in production): [*تشغيل وكلاء الذكاء الاصطناعي في الإنتاج (Running AI Agents in Production)*، المستوى 3 — مهندس الإنتاج (Production Engineer)](../agentic/learning-path.ar.html#level-3-production-engineer)
