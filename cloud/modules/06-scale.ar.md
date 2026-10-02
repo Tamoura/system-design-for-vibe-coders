@@ -134,7 +134,7 @@ flowchart LR
 
 **افصل أنماط العطل (Separate the failure modes).** الكوارث المختلفة تحتاج إلى دفاعاتٍ مختلفة (Different disasters need different defences):
 
-| العطل (Failure) | هل يساعد تعدّد مناطق التوافر؟ (Multi-AZ helps?) | هل تساعد النسخة المتماثلة عبر المناطق؟ (Cross-region replica helps?) | هل تساعد النسخة الاحتياطية لنقطة زمنية؟ (Point-in-time backup helps?) |
+| العطل (Failure) | هل يساعد تعدّد مناطق التوافر؟ ⁦(Multi-AZ helps?)⁩ | هل تساعد النسخة المتماثلة عبر المناطق؟ ⁦(Cross-region replica helps?)⁩ | هل تساعد النسخة الاحتياطية لنقطة زمنية؟ ⁦(Point-in-time backup helps?)⁩ |
 |---|---|---|---|
 | منطقة توافر واحدة تفقد الكهرباء (One zone loses power) | نعم (Yes) | نعم (Yes) | ببطء (Slowly) |
 | المنطقة كلها متدهورة (Whole region degraded) | لا (No) | نعم (Yes) | نعم، ببطء (Yes, slowly) |

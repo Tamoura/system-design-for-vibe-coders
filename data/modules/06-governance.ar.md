@@ -160,7 +160,7 @@ ORDER BY depth, node;
 | إعادة تسمية عمود أو حذفه (Rename or drop a column) | من `acct_status` إلى `status` | كاسر (Breaking) | إصدار جديد من العقد (new contract version)؛ ويُحتفظ بالقديم 60 يومًا |
 | تغيير الحُبَيبية (Change the grain) | صف واحد لكل حساب بدلًا من كل عميل (One row per account instead of per customer) | كاسر (Breaking) | مجموعة بيانات جديدة (New dataset) |
 
-بدت الحالة `D` غير مؤذية (looked harmless): لم يُعَد تسمية أي عمود، ولم يتغيّر أي نوع. لقد كانت تغييرًا كاسرًا **دلاليًا (semantic)**، ولا شيء سوى عقدٍ يسرد القيم المسموح بها (a contract listing allowed values)، مُنفَّذٍ باختبار `accepted_values` في طبقة التهيئة (staging)، يحوّلها إلى بناء فاشل (failed build) بدلًا من حزمة مجلس إدارة خاطئة (wrong board pack). وتتيح لك **إصدارات النماذج (model versions)** في dbt نشر `v2` بجانب `v1` مع تاريخ إيقاف (deprecation date).
+بدت الحالة `D` غير مؤذية (looked harmless): لم تُعَد تسمية أي عمود، ولم يتغيّر أي نوع. لقد كانت تغييرًا كاسرًا **دلاليًا (semantic)**، ولا شيء سوى عقدٍ يسرد القيم المسموح بها (a contract listing allowed values)، مُنفَّذٍ باختبار `accepted_values` في طبقة التهيئة (staging)، يحوّلها إلى بناء فاشل (failed build) بدلًا من حزمة مجلس إدارة خاطئة (wrong board pack). وتتيح لك **إصدارات النماذج (model versions)** في dbt نشر `v2` بجانب `v1` مع تاريخ إيقاف (deprecation date).
 
 ### 🔴 نظرة الخبير (Expert view)
 
@@ -188,7 +188,7 @@ ORDER BY depth, node;
 | **BCBS 239** (Basel Committee, 2013) — مبادئ لجنة بازل | مبادئ لتجميع بيانات المخاطر والإبلاغ عنها في البنوك (risk data aggregation and risk reporting in banks) | لترتيب أولويات عناصر البيانات الحرجة (prioritising critical data elements) وشرح الحوكمة للمشرفين المصرفيين (bank supervisors) |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-بعد الحادثة، تكتب لينا وهدى **سجلّ ملكية البيانات وسياسة التغيير في نجم، الإصدار 1 (Najm Data Ownership Register and Change Policy v1)** لمجموعات بيانات الفئة الأولى (tier-1 datasets). وهو يعيش ملفات YAML في مستودع dbt (dbt repository) ويُنشر في الفهرس (published to the catalogue).
+بعد الحادثة، تكتب لينا وهدى **سجلّ ملكية البيانات وسياسة التغيير في نجم، الإصدار 1 (Najm Data Ownership Register and Change Policy v1)** لمجموعات بيانات الفئة الأولى (tier-1 datasets). وهو يعيش في هيئة ملفات YAML ‏(lives as YAML) في مستودع dbt (dbt repository) ويُنشر في الفهرس (published to the catalogue).
 
 **الجزء أ: سجلّ الملكية (الفئة الأولى، المُدخلات الأولى) (Part A: ownership register (tier 1, first entries))**
 
@@ -230,9 +230,9 @@ ORDER BY depth, node;
 
 ## ✍️ اختبر نفسك (Check yourself)
 
-**1. يضيف فريق الأنظمة المصرفية الأساسية (core banking team) قيمة جديدة `D` ‏(خامل (dormant)) إلى `acct_status`. لم يُعَد تسمية أي عمود ولم يتغيّر أي نوع. كيف ينبغي أن تصنّف سياسة التغيير (change policy) في نجم هذا التغيير؟**
+**1. يضيف فريق الأنظمة المصرفية الأساسية (core banking team) قيمة جديدة `D` ‏(خامل (dormant)) إلى `acct_status`. لم تُعَد تسمية أي عمود ولم يتغيّر أي نوع. كيف ينبغي أن تصنّف سياسة التغيير (change policy) في نجم هذا التغيير؟**
 
-- A. غير كاسر (non-breaking)، لأنه لم يُعَد تسمية أي عمود ولم يتغيّر أي نوع بيانات (data type)
+- A. غير كاسر (non-breaking)، لأنه لم تُعَد تسمية أي عمود ولم يتغيّر أي نوع بيانات (data type)
 - B. تغيير كاسر دلالي (semantic breaking change) يحتاج إلى إشعار للمستهلكين في النسب (notice to consumers in lineage)
 - C. تغيير في الحُبَيبية (grain change)، لذا يجب أن يُشحن بوصفه مجموعة بيانات جديدة (new dataset)
 - D. ليس مسألة حوكمة (not a governance matter)، لأن تطبيق المنتِج وحده (only the producer's application) يكتب في العمود
@@ -476,7 +476,7 @@ flowchart LR
 |---|---|---|---|---|
 | داخلي (Internal) | مسموح (Allowed) | مسموح (Allowed) | بموافقة المالك (With owner approval) | مسموح (Allowed) |
 | سرّي (Confidential) | مسجّلة الغرض، تنتهي بعد 30 يومًا (Purpose-registered, 30-day expiry) | مجاميع؛ وتُحجب المجموعات الأقل من 10 (Aggregates; groups below 10 suppressed) | موافقة مسؤول حماية البيانات (DPO approval) | بيانات اصطناعية أو ذات أسماء مستعارة فقط (Synthetic or pseudonymised only) |
-| مقيّد (Restricted) | أبدًا بصورة واضحة؛ تجزئة مُفتاحية فقط (Never in clear; keyed hash only) | أبدًا على مستوى الصف (Never at row level) | أبدًا دون موافقة مسؤول حماية البيانات ومالك البيانات (Never without DPO and data owner approval) | أبدًا؛ بيانات اصطناعية فقط (Never; synthetic only) |
+| مقيّد (Restricted) | لا يُسمح بها أبدًا بنص واضح؛ تجزئة مُفتاحية فقط (Never in clear; keyed hash only) | لا يُسمح بها أبدًا على مستوى الصف (Never at row level) | لا يُسمح به أبدًا دون موافقة مسؤول حماية البيانات ومالك البيانات (Never without DPO and data owner approval) | لا يُسمح بها أبدًا؛ بيانات اصطناعية فقط (Never; synthetic only) |
 
 **الجزء ج: القواعد (Part C: rules).** تُنشأ المخططات التجريبية (sandbox schemas) بنص برمجي (script) يسجّل المالك والغرض وتاريخ انتهاء الصلاحية (owner, purpose and expiry)؛ وتُسقط مهمة ليلية (nightly job) المنتهي منها. والأعمدة الجديدة غير المصنّفة (unclassified new columns) تُفشل التكامل المستمر (fail CI). وجداول المستودع البحيري (lakehouse tables) التي تحمل بيانات شخصية تُنهي صلاحية لقطاتها أسبوعيًا (expire snapshots weekly). ولا يُدوَّر سرّ التجزئة المُفتاحية (keyed-hash secret rotates) إلا مع خطة إعادة ترميز بالمفتاح (re-keying plan)، لأن التدوير يغيّر كل اسم مستعار (rotation changes every pseudonym).
 
@@ -484,7 +484,7 @@ flowchart LR
 استخدم بيانات اصطناعية فقط (synthetic data only) ‏(مولَّدة مثلًا بمكتبة Faker في Python ‏(Python Faker library)). لا تستخدم أبدًا بيانات شخصية حقيقية (real personal data) في هذه التمارين.
 
 - 🟢 ولّد بمكتبة Faker جدول عملاء اصطناعيًا (synthetic customer table) من 20 عمودًا. صنّف كل عمود بمستوى ووسوم وفئة احتفاظ (a level, tags and a retention class)، وحدّد لغرض "تحليل دوافع الشكاوى" ("analyse complaint drivers") أيّ الأعمدة مطلوبة. *يكتمل عندما (Done when):* يكون كل عمود مصنّفًا ولا يحتاج غرضك إلى أكثر من ثلثها (no more than a third of them).
-- 🟡 في PostgreSQL أو DuckDB، حمّل جدولك الاصطناعي وابنِ عرضًا للمحلّل (analyst view) فيه مفتاح عميل بتجزئة مُفتاحية (keyed-hash customer key)، وفئة عمرية (age band)، وهاتف مُخفى (masked phone). ثم بيّن ضعف التجزئة البسيطة (weakness of plain hashing): جزّئ بـ MD5 ‏(MD5-hash) رقم هوية وهميًا من ست خانات (fake six-digit ID) واسترجعه بتجزئة كل المرشحين المليون (all one million candidates). *يكتمل عندما (Done when):* تعمل عمليات الربط على التجزئة المُفتاحية (joins on the keyed hash) عبر جدولين، ويسترجع نصّك البرمجي الهوية المجزّأة بـ MD5 لكن لا يسترجع المُفتاحية.
+- 🟡 في PostgreSQL أو DuckDB، حمّل جدولك الاصطناعي وابنِ عرضًا للمحلّل (analyst view) فيه مفتاح عميل بتجزئة مُفتاحية (keyed-hash customer key)، وفئة عمرية (age band)، وهاتف مُخفى (masked phone). ثم بيّن ضعف التجزئة البسيطة (weakness of plain hashing): جزّئ بـ MD5 ‏(MD5-hash) رقم هوية وهميًا من ست خانات (fake six-digit ID) واسترجعه بتجزئة كل المرشحين المليون (all one million candidates). *يكتمل عندما (Done when):* تعمل عمليات الربط على التجزئة المُفتاحية (joins on the keyed hash) عبر جدولين، ويسترجع نصّك البرمجي الهوية المجزّأة بـ MD5 لكنه لا يسترجع الهوية المجزّأة بالتجزئة المُفتاحية (but not the keyed one).
 - 🔴 ابنِ مهمة احتفاظ ومحو (retention and erasure job) لجدول PostgreSQL مقسَّم حسب الشهر (partitioned by month): أسقط الأقسام الأقدم من مدة الاحتفاظ (drop partitions older than the retention period)، ونفّذ إجراء محو (erasure procedure) لعميل واحد يحوّله إلى اسم مستعار في ثلاثة جداول ويكتب سجلّ أدلة (evidence record) ‏(من، ومتى، وأيّ الجداول، والصفوف المتأثرة (who, when, which tables, rows affected)). *يكتمل عندما (Done when):* يعطي تشغيل المهمة مرتين النتيجة نفسها (the same result)، ويُظهر جدول الأدلة (evidence table) كل تشغيل، ولا يُرجع فحص إخفاء الهوية من الدرجة k ‏(k-anonymity check) ‏(`GROUP BY` على أشباه المعرِّفات (quasi-identifiers) `HAVING COUNT(*) < 5`) على مجموعة بياناتك المنشورة (released dataset) أي صفوف.
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
@@ -820,7 +820,7 @@ GRANT SELECT ON core.customers TO auditor;
 
 </details>
 
-**3. تريد نجم أن يرى المحلّلون الأعمدة السرّية (confidential columns) فقط لعملاء بلدهم، مع إخفاء يقوده وسوم التصنيف (classification tags) من الدرس 6.2. أيّ نموذج وصول (access model) هو الأنسب؟**
+**3. تريد نجم أن يرى المحلّلون الأعمدة السرّية (confidential columns) فقط لعملاء بلدهم، مع إخفاء تقوده وسوم التصنيف (classification tags) من الدرس 6.2. أيّ نموذج وصول (access model) هو الأنسب؟**
 
 - A. دور واحد لكل جدول لكل بلد (one role per table per country)، يمنحه كل مالك بيانات
 - B. حساب محلّل مشترك واحد (single shared analyst account) مع عرض مُخفى (masked view) للجميع
