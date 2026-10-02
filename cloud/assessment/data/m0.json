@@ -1,0 +1,135 @@
+{
+ "area": "m0",
+ "questions": [
+  {
+   "id": "m0-1",
+   "level": 1,
+   "lesson": "0.1",
+   "q": {
+    "en": "Hamad, the CISO, suggests that Najm's app teams should deploy less often so that the bank's systems stay stable. What did the DORA research find about speed and stability?",
+    "ar": "يقترح حمد، كبير مسؤولي أمن المعلومات (CISO)، أن تنشر فرق التطبيقات (app teams) في بنك نجم (Najm Bank) بوتيرة أقل (deploy less often) كي تبقى أنظمة البنك مستقرة (stable). ماذا وجدت أبحاث DORA (DORA research) عن السرعة (speed) والاستقرار (stability)؟"
+   },
+   "o": {
+    "en": [
+     "They trade off: each extra weekly deploy adds a measurable risk of failure",
+     "Stability depends mainly on team size, not on how often a team deploys",
+     "They improve together: top teams deploy more often and also fail less",
+     "Speed matters for startups; regulated banks should favour rare releases"
+    ],
+    "ar": [
+     "هما مقايضة (trade-off): كل نشر أسبوعي إضافي (extra weekly deploy) يضيف خطر فشل قابلًا للقياس (measurable risk of failure)",
+     "يعتمد الاستقرار (stability) أساسًا على حجم الفريق (team size)، لا على عدد مرات النشر (how often a team deploys)",
+     "يتحسّنان معًا (improve together): أفضل الفرق (top teams) تنشر أكثر وتفشل أقل (fail less) أيضًا",
+     "السرعة (speed) تهمّ الشركات الناشئة (startups)؛ أما البنوك الخاضعة للتنظيم (regulated banks) فينبغي أن تفضّل الإطلاقات النادرة (rare releases)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "DORA found that the best-performing teams are both faster and more stable, because small, frequent, automated changes are easier to test, understand and undo. The trade-off view is the intuitive belief the research contradicts.",
+    "ar": "وجدت أبحاث DORA (DORA research) أن الفرق الأفضل أداءً (best-performing teams) أسرع وأكثر استقرارًا معًا، لأن التغييرات الصغيرة المتكررة المؤتمتة (small, frequent, automated changes) أسهل في الاختبار والفهم والتراجع عنها (undo). أما فكرة المقايضة (trade-off) فهي الحدس الشائع الذي تنقضه هذه الأبحاث."
+   }
+  },
+  {
+   "id": "m0-2",
+   "level": 2,
+   "lesson": "0.2",
+   "q": {
+    "en": "On a Thursday evening, an engineer wants to change the payments service's database connection setting by typing it straight into production. \"It's only configuration, not a deploy,\" he says. What should the team do?",
+    "ar": "في مساء يوم خميس، يريد مهندس تغيير إعداد الاتصال بقاعدة البيانات (database connection setting) في خدمة المدفوعات (payments service) بكتابته مباشرة في بيئة الإنتاج (production). ويقول: «إنه مجرد إعداد (configuration)، لا نشر (deploy)». ماذا ينبغي أن يفعل الفريق؟"
+   },
+   "o": {
+    "en": [
+     "Put it through the same path as code: reviewed, versioned, staged, undoable",
+     "Allow it, since a config change skips the build stage and needs no pipeline",
+     "Allow it if a second engineer watches the screen while the value is typed in",
+     "Hold it for next month's release window and bundle it with other changes"
+    ],
+    "ar": [
+     "تمريره عبر المسار نفسه الذي تسلكه الشيفرة (same path as code): مراجَعًا (reviewed)، بإصدار مُرقّم (versioned)، على مراحل (staged)، وقابلًا للتراجع (undoable)",
+     "السماح به، لأن تغيير الإعداد (config change) يتجاوز مرحلة البناء (build stage) ولا يحتاج إلى خط تسليم (pipeline)",
+     "السماح به إذا راقب مهندس ثانٍ (second engineer) الشاشة أثناء كتابة القيمة يدويًا (typed in)",
+     "تأجيله إلى نافذة الإطلاق (release window) في الشهر القادم وتجميعه مع تغييرات أخرى (bundle with other changes)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Configuration, infrastructure and flag changes reach production too, and several famous outages came from exactly these, so every production change should be reviewed, versioned, automated, staged and reversible. A second pair of eyes still leaves a manual, unrepeatable step with no fast undo.",
+    "ar": "تغييرات الإعداد (configuration) والبنية التحتية (infrastructure) والأعلام (flag changes) تصل إلى الإنتاج (production) أيضًا، وقد نشأت عدة انقطاعات شهيرة (famous outages) منها تحديدًا، لذا يجب أن يكون كل تغيير في الإنتاج مراجَعًا (reviewed) ومُرقّم الإصدار (versioned) ومؤتمتًا (automated) وعلى مراحل (staged) وقابلًا للتراجع (reversible). أما المراقبة من مهندس ثانٍ (second pair of eyes) فتُبقي خطوة يدوية غير قابلة للتكرار (manual, unrepeatable step) بلا تراجع سريع (fast undo)."
+   }
+  },
+  {
+   "id": "m0-3",
+   "level": 2,
+   "lesson": "0.3",
+   "q": {
+    "en": "In her first week on Salem's team, a new graduate asks for production access so that she can \"help Maha with on-call\". What does Najm's onboarding checklist give her instead?",
+    "ar": "في أسبوعها الأول في فريق سالم، تطلب خرّيجة جديدة (new graduate) صلاحية الوصول إلى الإنتاج (production access) كي «تساعد مها في المناوبة (on-call)». ماذا تمنحها قائمة التهيئة (onboarding checklist) في بنك نجم (Najm Bank) بدلًا من ذلك؟"
+   },
+   "o": {
+    "en": [
+     "Temporary administrator rights in production, removed after her first incident",
+     "Her own pager on Maha's rota, with production access approved by Tariq",
+     "Production read access now, and write access as soon as her lab check passes",
+     "Named roles for staging only, and a week shadowing on-call with no pager"
+    ],
+    "ar": [
+     "صلاحيات مسؤول مؤقتة (temporary administrator rights) في الإنتاج (production)، تُسحب بعد أول حادثة (incident) لها",
+     "جهاز نداء خاص بها (her own pager) في جدول مناوبة مها (Maha's rota)، مع وصول إلى الإنتاج (production access) يوافق عليه طارق",
+     "وصول للقراءة في الإنتاج (production read access) الآن، ووصول للكتابة (write access) فور نجاح فحص المختبر (lab check)",
+     "أدوار مسمّاة لبيئة التجهيز فقط (named roles for staging only)، وأسبوع من مرافقة المناوبة (shadowing on-call) دون جهاز نداء (pager)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "The checklist grants named roles for staging only, with no production access in the first month, and one week shadowing Maha's rota without a pager of her own. Temporary admin rights repeat the \"DevOps access\" mistake of giving broad power instead of specific, approved roles.",
+    "ar": "تمنح القائمة أدوارًا مسمّاة لبيئة التجهيز فقط (named roles for staging only)، دون وصول إلى الإنتاج (no production access) في الشهر الأول، وأسبوعًا من مرافقة جدول مناوبة مها (shadowing Maha's rota) دون جهاز نداء خاص (pager). أما صلاحيات المسؤول المؤقتة (temporary admin rights) فتكرّر خطأ «وصول DevOps» (DevOps access) بمنح صلاحيات واسعة بدل أدوار محددة معتمدة (specific, approved roles)."
+   }
+  },
+  {
+   "id": "m0-4",
+   "level": 3,
+   "lesson": "0.2",
+   "q": {
+    "en": "An online retailer ships one release a week: about 150 changes, approved by a change board and sent to all users at once on Sunday night. The last one broke checkout, and it took six hours to find which change caused it. Which improvement best addresses the cause?",
+    "ar": "يطلق متجر إلكتروني (online retailer) إصدارًا واحدًا أسبوعيًا (one release a week): نحو 150 تغييرًا، يعتمدها مجلس التغيير (change board) وتُرسل إلى جميع المستخدمين دفعة واحدة (all users at once) ليلة الأحد. عطّل الإصدار الأخير صفحة الدفع (checkout)، واستغرق تحديد التغيير المسبّب ست ساعات. أي تحسين يعالج السبب على أفضل وجه؟"
+   },
+   "o": {
+    "en": [
+     "Add a second change-board review so each of the 150 changes is checked closely",
+     "Ship smaller batches more often, each released to a small share of users first",
+     "Move to monthly releases so there is more time to test each large batch by hand",
+     "Add a manual QA sign-off so a person tests checkout just before every release"
+    ],
+    "ar": [
+     "إضافة مراجعة ثانية من مجلس التغيير (second change-board review) كي يُفحص كل تغيير من الـ150 عن قرب",
+     "إطلاق دفعات أصغر (smaller batches) بوتيرة أعلى، يُطلق كلٌّ منها أولًا لنسبة صغيرة من المستخدمين (small share of users)",
+     "الانتقال إلى إطلاقات شهرية (monthly releases) لإتاحة وقت أطول لاختبار كل دفعة كبيرة يدويًا (test by hand)",
+     "إضافة توقيع يدوي من ضمان الجودة (manual QA sign-off) ليختبر شخص صفحة الدفع (checkout) قبل كل إطلاق"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "The damage came from a large batch (hard to diagnose) reaching every user at once (large blast radius); small, frequent changes released gradually shrink both. More board reviews or manual sign-offs add waiting and still leave 150 changes going to everyone together.",
+    "ar": "نشأ الضرر من دفعة كبيرة (large batch) يصعب تشخيصها وصلت إلى جميع المستخدمين دفعة واحدة (large blast radius)؛ والتغييرات الصغيرة المتكررة (small, frequent changes) التي تُطلق تدريجيًا (released gradually) تقلّص الأمرين معًا. أما زيادة مراجعات المجلس (board reviews) أو التواقيع اليدوية (manual sign-offs) فتضيف انتظارًا (waiting) وتُبقي 150 تغييرًا تصل إلى الجميع معًا."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m0-e1",
+   "lesson": "0.2",
+   "text": {
+    "en": "I have drawn a path-to-production map for a project of my own, with an automated catch and an undo for every stage, and marked each place where the answer is still \"a person remembers\"",
+    "ar": "رسمت خريطة مسار الوصول إلى الإنتاج (path-to-production map) لمشروع خاص بي، فيها اكتشاف مؤتمت (automated catch) وطريقة تراجع (undo) لكل مرحلة (stage)، وميّزت كل موضع لا تزال إجابته «شخص يتذكّر» (a person remembers)"
+   }
+  },
+  {
+   "id": "m0-e2",
+   "lesson": "0.3",
+   "text": {
+    "en": "I have a lab journal in Git holding my lab tools' version check, and I have created a local kind cluster whose node reached Ready, then deleted it",
+    "ar": "لديّ دفتر مختبر (lab journal) في Git يحفظ فحص إصدارات أدوات المختبر (lab tools' version check)، وأنشأت عنقودًا محليًا (local cluster) باستخدام kind بلغت عقدته (node) الحالة Ready، ثم حذفته"
+   }
+  }
+ ]
+}

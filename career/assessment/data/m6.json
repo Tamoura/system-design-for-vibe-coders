@@ -1,0 +1,135 @@
+{
+  "area": "m6",
+  "questions": [
+    {
+      "id": "m6-1",
+      "level": 1,
+      "lesson": "6.2",
+      "q": {
+        "en": "Why should a new graduate aim to get a small, safe first pull request merged in their first week or two?",
+        "ar": "لماذا ينبغي أن يسعى الخرّيج الجديد (new graduate) إلى دمج طلب دمج أول صغير وآمن (small, safe first pull request) خلال أسبوعه الأول أو الثاني؟"
+      },
+      "o": {
+        "en": [
+          "It shows your manager how much output you can deliver in week one",
+          "It proves your setup works and teaches the team's review and release path",
+          "It counts towards the merged-PR target that lets you pass probation early",
+          "It lets you skip code review, since small changes can go straight into main"
+        ],
+        "ar": [
+          "يُظهر لمديرك حجم الإنتاج (output) الذي تستطيع تسليمه في الأسبوع الأول (week one)",
+          "يثبت أن بيئة العمل (setup) تعمل، ويعلّمك مسار المراجعة والإصدار (review and release path) لدى الفريق",
+          "يُحتسب ضمن هدف عدد طلبات الدمج المدموجة (merged-PR target) الذي يتيح اجتياز فترة التجربة (probation) مبكرًا",
+          "يعفيك من مراجعة الشيفرة (code review)، لأن التغييرات الصغيرة تذهب مباشرة إلى الفرع الرئيسي (main)"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "A small first PR proves your environment works and walks you through the whole path a change takes: branch, commit, CI checks, review, merge, deploy. It is not about showing volume; big early output is exactly the trap that got Omar's 1,200-line rewrite closed.",
+        "ar": "يثبت طلب الدمج الأول الصغير (small first PR) أن بيئتك تعمل، ويأخذك عبر المسار الكامل للتغيير (whole path a change takes): الفرع (branch)، والإيداع (commit)، وفحوص التكامل المستمر (CI checks)، والمراجعة (review)، والدمج (merge)، والنشر (deploy). وليس الهدف إظهار حجم العمل (volume)؛ فالإنتاج الكبير المبكر هو الفخ نفسه الذي أدى إلى إغلاق إعادة كتابة عمر ذات 1,200 سطر (1,200-line rewrite)."
+      }
+    },
+    {
+      "id": "m6-2",
+      "level": 2,
+      "lesson": "6.1",
+      "q": {
+        "en": "Huda has two written offers for similar junior roles in Doha. Offer X has the higher base salary, but no allowances, no bonus and employee-only health insurance. Offer Y has a lower base, plus cash housing and transport allowances, a pro-rated annual bonus and family cover after probation. How should she compare the money?",
+        "ar": "لدى هدى عرضان وظيفيان مكتوبان (written offers) لدورين مبتدئين (junior roles) متشابهين في الدوحة. العرض X فيه راتب أساسي (base salary) أعلى، لكن بلا بدلات (allowances) ولا مكافأة (bonus)، مع تأمين صحي للموظف وحده (employee-only health insurance). والعرض Y فيه راتب أساسي أقل، مع بدلَي سكن ومواصلات نقديين (cash housing and transport allowances)، ومكافأة سنوية تناسبية (pro-rated annual bonus)، وتغطية للعائلة بعد فترة التجربة (family cover after probation). كيف ينبغي أن تقارن الجانب المالي؟"
+      },
+      "o": {
+        "en": [
+          "Choose X, because the base salary is the only part guaranteed to be paid",
+          "Ask X to match Y's allowances, saying Y has offered far more than it really has",
+          "Use the median on Levels.fyi as a yardstick and pick the offer that is nearer",
+          "Sum each package over a year, check it against her floor, then weigh learning"
+        ],
+        "ar": [
+          "تختار X، لأن الراتب الأساسي (base salary) هو الجزء الوحيد المضمون الدفع (guaranteed)",
+          "تطلب من X مجاراة بدلات Y (match allowances)، مدّعيةً أن Y عرض أكثر مما عرضه فعلًا",
+          "تعتمد الوسيط (median) في Levels.fyi مقياسًا (yardstick)، وتختار العرض الأقرب إليه",
+          "تجمع كل حزمة على مدى سنة (sum each package over a year)، وتقارنها بحدّها الأدنى (floor)، ثم تزن التعلّم (learning)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "GCC packages are split into parts, so only total compensation over a year, checked against her floor, compares like with like; learning then decides between offers above the floor. Picking X on base alone is the classic mistake of comparing base salaries only.",
+        "ar": "تنقسم الحزم في دول الخليج (GCC packages) إلى أجزاء، لذا لا يقارن الشيءَ بمثله إلا إجمالي المكافآت (total compensation) على مدى سنة، مقيسًا بحدّها الأدنى (floor)؛ ثم يحسم التعلّم (learning) بين العروض التي تتجاوز الحدّ الأدنى. أما اختيار X بناءً على الراتب الأساسي (base salary) وحده فهو الخطأ الشائع: مقارنة الرواتب الأساسية فقط (comparing base salaries only)."
+      }
+    },
+    {
+      "id": "m6-3",
+      "level": 2,
+      "lesson": "6.3",
+      "q": {
+        "en": "In her second year, Huda must rename columns in a shared customer table that two other squads' dashboards read from. Which plan shows mid-level ownership?",
+        "ar": "في سنتها الثانية، يتعيّن على هدى إعادة تسمية أعمدة (rename columns) في جدول عملاء مشترك (shared customer table) تقرأ منه لوحات المتابعة (dashboards) لدى فريقين آخرين (squads). أيّ خطة تُظهر الملكية بمستوى المهندس المتوسط (mid-level ownership)؟"
+      },
+      "o": {
+        "en": [
+          "Write a design note, warn both squads early with a rollback plan, then watch",
+          "Test it thoroughly, keep the PR small, then tell her own team once it is live",
+          "Get her manager's approval and leave it to him to tell the two affected squads",
+          "Wait until the other squads ask for the change, so that nobody is surprised"
+        ],
+        "ar": [
+          "تكتب مذكرة تصميم (design note)، وتُنذر الفريقين مبكرًا مع خطة تراجع (rollback plan)، ثم تراقب بعد الإصدار",
+          "تختبر التغيير جيدًا (test thoroughly)، وتُبقي طلب الدمج (PR) صغيرًا، ثم تُبلغ فريقها هي بعد إطلاقه (live)",
+          "تحصل على موافقة مديرها (manager's approval)، وتترك له إبلاغ الفريقين المتأثرين (affected squads)",
+          "تنتظر حتى يطلب الفريقان الآخران التغيير (ask for the change)، كي لا يُفاجأ أحد (surprised)"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "A change that affects other teams needs a design note, advance notice in their channels with a rollback plan and a named contact, and watching after release. Good tests and a small PR are necessary but do not stop the other squads being surprised, which is exactly what Yousef missed.",
+        "ar": "التغيير الذي يؤثر في فرق أخرى (affects other teams) يحتاج إلى مذكرة تصميم (design note)، وإشعار مسبق في قنواتها (advance notice) مع خطة تراجع (rollback plan) وجهة اتصال مسمّاة (named contact)، ثم المراقبة بعد الإصدار (after release). أما الاختبارات الجيدة (good tests) وطلب الدمج الصغير (small PR) فضروريان، لكنهما لا يمنعان مفاجأة الفريقين الآخرين، وهذا بالضبط ما فات يوسف."
+      }
+    },
+    {
+      "id": "m6-4",
+      "level": 3,
+      "lesson": "6.2",
+      "q": {
+        "en": "On day 45, Mohammed tells Khalid he feels behind. Khalid admits he is \"not sure what Mohammed has been working on\". Mohammed has merged one large PR after five review rounds, often stays stuck for a day before asking someone privately, and never agreed goals for his first 90 days. What is the most useful diagnosis and next step?",
+        "ar": "في اليوم الخامس والأربعين، يخبر محمد خالدًا بأنه يشعر بالتأخر. ويعترف خالد بأنه «غير متأكد مما كان محمد يعمل عليه» (not sure what Mohammed has been working on). دمج محمد طلب دمج كبيرًا واحدًا (one large PR) بعد خمس جولات مراجعة (review rounds)، وكثيرًا ما يبقى عالقًا (stuck) يومًا كاملًا قبل أن يسأل أحدًا على انفراد (privately)، ولم يتفق قط على أهداف لأيامه التسعين الأولى (first 90 days). ما التشخيص (diagnosis) والخطوة التالية (next step) الأكثر فائدة؟"
+      },
+      "o": {
+        "en": [
+          "Technical depth: he should take an evening course in the team's framework",
+          "Effort: he should work late every evening until he feels he has caught up",
+          "Visibility: agree a 30-60-90 plan, keep a daily work log and ask sooner",
+          "Ambition: he should ask Khalid for a larger feature so that he stands out"
+        ],
+        "ar": [
+          "العمق التقني (technical depth): يلتحق بدورة مسائية (evening course) في إطار العمل (framework) الذي يستخدمه الفريق",
+          "الجهد (effort): يعمل حتى وقت متأخر كل مساء (work late) إلى أن يشعر بأنه لحق بالركب",
+          "الظهور (visibility): يتفق على خطة الأيام التسعين الأولى (30-60-90 plan)، ويحتفظ بسجل عمل يومي (daily work log)، ويسأل أبكر",
+          "الطموح (ambition): يطلب من خالد ميزة أكبر (larger feature) كي يلفت الأنظار"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Without agreed goals, silent struggle and large PRs, Mohammed and Khalid are judging his first 90 days by different standards and Khalid cannot see his work; a 30-60-90 plan, a work log, smaller PRs and asking after a set time limit fix that. Asking for a larger feature repeats the big-bang mistake before trust has been built.",
+        "ar": "بغياب الأهداف المتفق عليها (agreed goals)، ومع الصراع الصامت (silent struggle) وطلبات الدمج الكبيرة (large PRs)، يحكم محمد وخالد على أيامه التسعين الأولى بمعايير مختلفة (different standards)، ولا يرى خالد عمله؛ ويعالج ذلك خطةُ الأيام التسعين الأولى (30-60-90 plan)، وسجل العمل (work log)، وطلبات دمج أصغر، والسؤال بعد مهلة محددة (set time limit). أما طلب ميزة أكبر (larger feature) فيكرر خطأ التغيير الضخم دفعة واحدة (big-bang) قبل بناء الثقة (trust)."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m6-e1",
+      "lesson": "6.1",
+      "text": {
+        "en": "I have researched the pay range for one target role in one city from at least three dated sources and calculated my personal floor from a monthly budget",
+        "ar": "بحثتُ في نطاق الرواتب (pay range) لدور مستهدف واحد (target role) في مدينة واحدة من ثلاثة مصادر مؤرَّخة على الأقل (three dated sources)، وحسبتُ حدّي الأدنى الشخصي (personal floor) من ميزانية شهرية (monthly budget)"
+      }
+    },
+    {
+      "id": "m6-e2",
+      "lesson": "6.3",
+      "text": {
+        "en": "I have asked two people for specific feedback on a recent piece of work, written each answer in SBI form and chosen one behaviour to change, with a date to check back",
+        "ar": "طلبتُ من شخصين ملاحظات محددة (specific feedback) على عمل حديث، ودوّنتُ كل إجابة بصيغة نموذج الموقف والسلوك والأثر (SBI form)، واخترتُ سلوكًا واحدًا لتغييره (one behaviour to change) مع موعد للمتابعة (date to check back)"
+      }
+    }
+  ]
+}

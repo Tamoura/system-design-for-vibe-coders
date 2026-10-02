@@ -1,0 +1,135 @@
+{
+  "area": "m3",
+  "questions": [
+    {
+      "id": "m3-1",
+      "level": 1,
+      "lesson": "3.2",
+      "q": {
+        "en": "In pull-based GitOps with Argo CD or Flux, what is the last step the CI pipeline takes after it builds and tests a new Mobile API image?",
+        "ar": "في نهج GitOps القائم على السحب (pull-based GitOps) مع Argo CD أو Flux، ما الخطوة الأخيرة التي يتّخذها خط التسليم (CI pipeline) بعد أن يبني صورة (image) جديدة لـ واجهة برمجة تطبيق نجم للهاتف (Najm Mobile API) ويختبرها؟"
+      },
+      "o": {
+        "en": [
+          "It runs `kubectl apply` on each cluster with a stored admin credential",
+          "It runs `helm upgrade` on dev and lets Argo CD copy the release onward",
+          "It writes the new digest to Git; the in-cluster controller pulls it",
+          "It moves the `latest` tag so every cluster picks up the image on restart"
+        ],
+        "ar": [
+          "يشغّل `kubectl apply` على كل عنقود (cluster) ببيانات اعتماد مسؤول مخزّنة (stored admin credential)",
+          "يشغّل `helm upgrade` على بيئة التطوير (dev) ويترك Argo CD ينسخ الإطلاق (release) إلى ما بعدها",
+          "يكتب الملخّص الجديد (new digest) في Git؛ ثم يسحبه المتحكّم داخل العنقود (in-cluster controller)",
+          "ينقل الوسم `latest` (tag) كي يلتقط كل عنقود (cluster) الصورة (image) عند إعادة التشغيل (restart)"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "In pull-based GitOps, CI only updates Git; the controller inside the cluster pulls the desired state and reconciles it, so no powerful cluster credentials live outside. Running `kubectl apply` from CI is the classic push model that GitOps replaces.",
+        "ar": "في GitOps القائم على السحب (pull-based GitOps) لا يفعل خط التسليم (CI) سوى تحديث Git؛ والمتحكّم داخل العنقود (controller inside the cluster) هو الذي يسحب الحالة المرغوبة (desired state) ويطابقها (reconciles)، فلا تبقى بيانات اعتماد قوية للعنقود (powerful cluster credentials) خارجه. أما تشغيل `kubectl apply` من خط التسليم (CI) فهو نموذج الدفع التقليدي (classic push model) الذي يحلّ GitOps محلّه."
+      }
+    },
+    {
+      "id": "m3-2",
+      "level": 2,
+      "lesson": "3.1",
+      "q": {
+        "en": "Yousef passes the Payments database admin password into OpenTofu through a variable marked `sensitive`. The plan now shows `(sensitive value)`, so he proposes giving the whole dev team read access to the production state bucket for debugging. What should Maha tell him?",
+        "ar": "يمرّر يوسف كلمة مرور المسؤول (admin password) لقاعدة بيانات المدفوعات (Payments database) إلى OpenTofu عبر متغيّر (variable) مُعلَّم بـ `sensitive`. صارت الخطة (plan) تُظهر `(sensitive value)`، فيقترح منح فريق التطوير كله صلاحية القراءة (read access) على حاوية الحالة الإنتاجية (production state bucket) لأغراض التصحيح (debugging). ماذا ينبغي أن تقول له مها؟"
+      },
+      "o": {
+        "en": [
+          "The password is still in state in plain text; generate it into a secrets manager",
+          "That is fine, because `sensitive` also encrypts the value before the state is written",
+          "That is fine once the state file moves into Git, where every read is in history",
+          "Turn on state locking first, since a lock stops other people from reading the value"
+        ],
+        "ar": [
+          "ما زالت كلمة المرور في الحالة (state) نصًا صريحًا (plain text)؛ ولِّدها بمدير أسرار (secrets manager)",
+          "لا بأس، لأن العلامة `sensitive` تشفّر القيمة (encrypts the value) أيضًا قبل كتابة ملف الحالة (state)",
+          "لا بأس متى نُقل ملف الحالة (state file) إلى مستودع Git، حيث تُحفظ كل قراءة في السجل التاريخي (history)",
+          "فعّل قفل الحالة (state locking) أولًا، لأن القفل (lock) يمنع الأشخاص الآخرين من قراءة هذه القيمة"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "The `sensitive` flag only hides the value from screen output; the password still lands in state in plain text, so state access must stay narrow and the database should generate its password into a secrets manager. Believing `sensitive` encrypts state is the tempting mistake.",
+        "ar": "العلامة `sensitive` تخفي القيمة من مُخرجات الشاشة (screen output) فقط؛ وكلمة المرور تنتهي في الحالة (state) بنص صريح (plain text)، لذا يجب أن يبقى الوصول إلى الحالة ضيّقًا (narrow access)، وأن تولّد قاعدة البيانات كلمة مرورها داخل مدير أسرار (secrets manager). والاعتقاد بأن `sensitive` يشفّر الحالة (encrypts state) هو الخطأ المغري."
+      }
+    },
+    {
+      "id": "m3-3",
+      "level": 2,
+      "lesson": "3.3",
+      "q": {
+        "en": "The nightly drift job opens a ticket: the Payments database's connection limit differs from the code. The cloud audit log shows Maha raised it during last week's incident, and the team agrees the new value is right. What should happen next?",
+        "ar": "تفتح مهمة الانحراف الليلية (nightly drift job) تذكرة (ticket): حدّ الاتصالات (connection limit) لقاعدة بيانات المدفوعات (Payments database) يختلف عمّا في الشيفرة (code). ويُظهر سجل التدقيق السحابي (cloud audit log) أن مها رفعته أثناء حادثة (incident) الأسبوع الماضي، ويتّفق الفريق على أن القيمة الجديدة صحيحة. ماذا ينبغي أن يحدث بعد ذلك؟"
+      },
+      "o": {
+        "en": [
+          "Run `apply` tonight so the database goes back to the value in the code",
+          "Add `ignore_changes` for the limit so the nightly job stops flagging it",
+          "Mark the ticket as known drift and keep the value until the next review",
+          "Adopt it: change the code by pull request so code and reality match"
+        ],
+        "ar": [
+          "شغّل `apply` الليلة كي تعود قاعدة البيانات إلى القيمة المكتوبة في الشيفرة (code)",
+          "أضف `ignore_changes` لهذا الحدّ (limit) كي تكفّ المهمة الليلية (nightly job) عن الإبلاغ عنه",
+          "علّم التذكرة (ticket) بأنها انحراف معروف (known drift) وأبقِ القيمة حتى المراجعة التالية (next review)",
+          "تبنَّه (adopt): غيّر الشيفرة بطلب سحب (pull request) كي تتطابق الشيفرة والواقع (code and reality)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "When the change in reality was right, the answer is to adopt it by updating the code through a pull request, then close the ticket. A blind `apply` would revert the deliberate incident fix, and `ignore_changes` is only for attributes that legitimately change outside IaC, such as autoscaled replicas.",
+        "ar": "حين يكون التغيير في الواقع صحيحًا، فالجواب هو تبنّيه (adopt) بتحديث الشيفرة عبر طلب سحب (pull request) ثم إغلاق التذكرة (ticket). أما `apply` الأعمى (blind apply) فسيُلغي إصلاح الحادثة المتعمَّد (deliberate incident fix)، و`ignore_changes` مخصّص فقط للسمات التي تتغيّر مشروعًا خارج البنية التحتية بوصفها شيفرة (outside IaC)، مثل عدد النسخ الذي يديره التوسّع التلقائي (autoscaled replicas)."
+      }
+    },
+    {
+      "id": "m3-4",
+      "level": 3,
+      "lesson": "3.2",
+      "q": {
+        "en": "A team keeps `dev`, `staging` and `prod` branches in its GitOps repo and promotes by merging staging into prod. One production promotion of a new image also carried a half-tested config change that someone had merged into staging, and no reviewer noticed it. What is the best structural fix?",
+        "ar": "يحتفظ فريق بفروع (branches) `dev` و`staging` و`prod` في مستودع GitOps (GitOps repo) الخاص به، ويرقّي (promotes) بدمج staging في prod. وحملت إحدى ترقيات الإنتاج (production promotion) لصورة (image) جديدة معها أيضًا تغيير إعدادات نصف مختبَر (half-tested config change) كان أحدهم قد دمجه في staging، ولم يلاحظه أي مراجع (reviewer). ما أفضل إصلاح بنيوي (structural fix)؟"
+      },
+      "o": {
+        "en": [
+          "Have a change advisory board approve every merge into the prod branch",
+          "Use one branch, a folder per environment, and a digest promotion PR",
+          "Cherry-pick only the image commit from staging into prod on every promotion",
+          "Let CI run `kubectl apply` on prod directly and skip the branch merge"
+        ],
+        "ar": [
+          "اجعل مجلسًا استشاريًا للتغيير (change advisory board) يوافق على كل عملية دمج (merge) في فرع prod",
+          "فرع واحد (one branch)، ومجلد لكل بيئة (folder per environment)، وطلب سحب للملخّص (digest PR)",
+          "انتقِ (cherry-pick) إيداع الصورة (image commit) وحده من staging إلى prod في كل ترقية (promotion)",
+          "دع خط التسليم (CI) يشغّل `kubectl apply` على prod مباشرةً ويتجاوز دمج الفروع (branch merge) كليًا"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Branch-per-environment merges carry unrelated changes along and hide environment differences in history; one branch with an overlay folder per environment makes a promotion a pull request that changes only the digest. Cherry-picking treats the symptom while the branches keep drifting apart.",
+        "ar": "الدمج بين فرع لكل بيئة (branch per environment) يحمل معه تغييرات لا علاقة لها، ويُخفي الفروق بين البيئات في السجل التاريخي (history)؛ أما فرع واحد مع مجلد طبقة (overlay folder) لكل بيئة فيجعل الترقية (promotion) طلب سحب (pull request) لا يغيّر سوى الملخّص (digest). والانتقاء (cherry-picking) يعالج العَرَض بينما تواصل الفروع (branches) تباعدها."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m3-e1",
+      "lesson": "3.1",
+      "text": {
+        "en": "I have turned a configuration into a module with validated inputs, seen an invalid value fail at `plan` with my own message, and refactored with a `moved` block so the plan showed a move with zero destroys",
+        "ar": "حوّلتُ إعدادًا (configuration) إلى وحدة برمجية (module) بمدخلات مُتحقَّق منها (validated inputs)، ورأيتُ قيمة غير صالحة (invalid value) تفشل عند `plan` برسالتي الخاصة (my own message)، وأعدتُ الهيكلة (refactored) بكتلة `moved` (moved block) فأظهرت الخطة (plan) نقلًا (move) بلا أي حذف (zero destroys)"
+      }
+    },
+    {
+      "id": "m3-e2",
+      "lesson": "3.2",
+      "text": {
+        "en": "I have promoted the same image digest from dev to prod through two pull requests with Argo CD, watched self-heal revert a manual `kubectl scale`, and rolled back a bad promotion with a single `git revert`",
+        "ar": "رقّيتُ (promoted) ملخّص الصورة نفسه (same image digest) من بيئة التطوير (dev) إلى الإنتاج (prod) عبر طلبَي سحب (two pull requests) مع Argo CD، وشاهدتُ الإصلاح الذاتي (self-heal) يُلغي أمر `kubectl scale` يدويًا (manual)، وتراجعتُ (rolled back) عن ترقية سيئة (bad promotion) بأمر `git revert` واحد"
+      }
+    }
+  ]
+}

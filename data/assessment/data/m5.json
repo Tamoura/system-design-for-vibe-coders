@@ -1,0 +1,135 @@
+{
+  "area": "m5",
+  "questions": [
+    {
+      "id": "m5-1",
+      "level": 1,
+      "lesson": "5.1",
+      "q": {
+        "en": "In a training set for a model that predicts the future, what does point-in-time correctness require of every feature?",
+        "ar": "في مجموعة التدريب (training set) لنموذج يتنبأ بالمستقبل، ماذا تتطلب الصحة الزمنية عند نقطة التنبؤ (point-in-time correctness) من كل خاصية (feature)؟"
+      },
+      "o": {
+        "en": [
+          "That it is recomputed from the freshest tables whenever the model is retrained",
+          "That it is calculated with the same random seed and settings in every run",
+          "That it uses only data that existed at the moment of the prediction",
+          "That it comes from a warehouse table refreshed at least once a day"
+        ],
+        "ar": [
+          "أن يُعاد حسابها من أحدث الجداول (freshest tables) في كل مرة يُعاد فيها تدريب النموذج (retrained)",
+          "أن تُحسب بالبذرة العشوائية (random seed) والإعدادات (settings) نفسها في كل تشغيل (run)",
+          "أن تستخدم فقط البيانات (data) التي كانت موجودة (existed) لحظة إجراء التنبؤ (moment of the prediction)",
+          "أن تأتي من جدول في مستودع البيانات (warehouse) يُحدَّث (refreshed) مرة يوميًا على الأقل"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Every feature must use only data that existed when the prediction would have been made; otherwise data leakage makes the model look brilliant offline and fail in production. Recomputing from the freshest tables is exactly how today's state leaks into last year's rows.",
+        "ar": "يجب أن تستخدم كل خاصية (feature) البيانات الموجودة لحظة التنبؤ (prediction time) فقط، وإلا جعل تسرّب البيانات (data leakage) النموذج يبدو ممتازًا دون اتصال (offline) ثم يفشل في الإنتاج (production). أما إعادة الحساب من أحدث الجداول (freshest tables) فهي بالضبط ما يُسرّب الحالة الراهنة (today's state) إلى صفوف العام الماضي."
+      }
+    },
+    {
+      "id": "m5-2",
+      "level": 2,
+      "lesson": "5.2",
+      "q": {
+        "en": "Dana picks the Smart Alerts threshold that minimises the total cost of missed fraud and reviews. At that threshold the model raises about 4,000 alerts a day, but fraud operations can review only 2,500. What should she do?",
+        "ar": "تختار دانة عتبة (threshold) نموذج التنبيهات الذكية (Smart Alerts) التي تُقلّل التكلفة الإجمالية (total cost) للاحتيال الفائت (missed fraud) والمراجعات (reviews). عند هذه العتبة يُطلق النموذج نحو 4,000 تنبيه (alert) يوميًا، لكن فريق عمليات الاحتيال (fraud operations) لا يستطيع مراجعة أكثر من 2,500. ماذا ينبغي أن تفعل؟"
+      },
+      "o": {
+        "en": [
+          "Cost out hiring, a higher threshold or a second-stage rule, and let the business choose",
+          "Keep the cheapest threshold anyway, since the cost model already counts every alert reviewed",
+          "Go back to the default threshold of 0.5, the neutral starting point for any probability score",
+          "Pick the threshold that maximises F1 instead, since it balances precision and recall evenly"
+        ],
+        "ar": [
+          "تعرض تكلفة التوظيف (hiring) والعتبة الأعلى (higher threshold) وقاعدة المرحلة الثانية (second-stage rule)، وتترك القرار لأصحاب العمل (the business)",
+          "تُبقي العتبة الأقل تكلفة (cheapest threshold) رغم ذلك، لأن نموذج التكلفة (cost model) يحسب بالفعل كل تنبيه يُراجَع",
+          "تعود إلى العتبة الافتراضية (default threshold) 0.5، نقطة البداية المحايدة لأي درجة احتمالية (probability score)",
+          "تختار العتبة التي تُعظّم مقياس F1 (F1 score) بدلًا من ذلك، لأنه يوازن بين الدقة (precision) والاستدعاء (recall) بالتساوي"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "The threshold is a business decision based on costs and capacity: when the cheapest threshold exceeds review capacity, the choice is between hiring, a higher threshold or a second-stage rule, and her job is to show each option's cost. Keeping the cheapest threshold ignores capacity, so about 1,500 alerts a day would go unreviewed.",
+        "ar": "العتبة (threshold) قرار عمل (business decision) مبني على التكاليف (costs) والقدرة الاستيعابية (capacity): فإذا تجاوزت العتبة الأقل تكلفة قدرةَ المراجعة، كان الخيار بين التوظيف (hiring) أو عتبة أعلى (higher threshold) أو قاعدة مرحلة ثانية (second-stage rule)، ومهمتها عرض تكلفة كل خيار. أما الإبقاء على العتبة الأقل تكلفة (cheapest threshold) فيتجاهل القدرة، فيبقى نحو 1,500 تنبيه (alert) يوميًا بلا مراجعة."
+      }
+    },
+    {
+      "id": "m5-3",
+      "level": 2,
+      "lesson": "5.3",
+      "q": {
+        "en": "Lina indexes a credit policy in fixed 500-character chunks. A table of loan-to-value limits by property type is cut across two chunks, and one chunk reads only \"maximum ratio is 70%\" with no section name. Answers mix up the limits. What change addresses the cause?",
+        "ar": "تُفهرس (indexes) لينا سياسة ائتمان (credit policy) في مقاطع ثابتة (fixed chunks) من 500 حرف. فينقسم جدول حدود نسبة القرض إلى القيمة (loan-to-value limits) حسب نوع العقار (property type) على مقطعين (two chunks)، ولا يحوي أحد المقاطع إلا عبارة «الحد الأقصى للنسبة هو 70%» بلا اسم القسم (section name). فتخلط الإجابات (answers) بين الحدود. أي تغيير يعالج السبب (cause)؟"
+      },
+      "o": {
+        "en": [
+          "Increase the overlap between fixed-size chunks so each table row appears twice",
+          "Make the fixed chunks smaller so each one matches a question more precisely",
+          "Retrieve 20 chunks instead of 5 so both halves of the table reach the LLM",
+          "Split by section and clause, keep tables whole, prefix the heading path"
+        ],
+        "ar": [
+          "زيادة التداخل (overlap) بين المقاطع ثابتة الحجم (fixed-size chunks) لكي يظهر كل صف من الجدول مرتين",
+          "تصغير المقاطع الثابتة (fixed chunks) لكي يطابق كل منها السؤال بدقة أكبر (more precisely)",
+          "استرجاع (retrieve) 20 مقطعًا بدل 5 لكي يصل نصفا الجدول كلاهما إلى النموذج اللغوي الكبير (LLM)",
+          "التقطيع حسب القسم والبند (section and clause)، مع إبقاء الجداول كاملة (tables whole) وإضافة مسار العناوين (heading path) في البداية"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Structure-aware chunking keeps clauses and tables intact, and the heading path gives a bare \"maximum ratio is 70%\" its meaning. More overlap is tempting, but fixed-size pieces still cut tables and clauses at arbitrary points.",
+        "ar": "التقطيع المراعي للبنية (structure-aware chunking) يحفظ البنود (clauses) والجداول سليمة، ومسار العناوين (heading path) يمنح عبارة مجرّدة مثل «الحد الأقصى للنسبة هو 70%» معناها. زيادة التداخل (overlap) مغرية، لكن المقاطع ثابتة الحجم (fixed-size pieces) تظل تقطع الجداول والبنود في مواضع اعتباطية."
+      }
+    },
+    {
+      "id": "m5-4",
+      "level": 3,
+      "lesson": "5.2",
+      "q": {
+        "en": "Three weeks into a quarter, every Smart Alerts input passes its data-quality checks, every feature's PSI is below 0.1 and the daily alert count is stable. Yet the share of alerts analysts confirm within 48 hours keeps falling, and the random review sample of low-score transactions shows missed fraud rising. What is the best reading and response?",
+        "ar": "بعد ثلاثة أسابيع من بداية ربع السنة، تجتاز كل مدخلات التنبيهات الذكية (Smart Alerts) فحوص جودة البيانات (data-quality checks)، ومؤشر استقرار المجتمع (Population Stability Index, PSI) لكل خاصية (feature) أقل من 0.1، وعدد التنبيهات اليومي (daily alert count) مستقر. ومع ذلك تواصل نسبةُ التنبيهات التي يؤكدها المحللون خلال 48 ساعة الانخفاضَ، وتُظهر العينة العشوائية للمراجعة (random review sample) من المعاملات منخفضة الدرجة (low-score transactions) ارتفاعًا في الاحتيال الفائت (missed fraud). ما أفضل قراءة واستجابة؟"
+      },
+      "o": {
+        "en": [
+          "An upstream data break; stop scoring, fall back to rules until the feed is repaired",
+          "Concept drift; study recent misses, retrain via the pipeline, shadow it, then seek sign-off",
+          "No real problem yet; with every feature PSI below 0.1, the inputs and the model are healthy",
+          "Concept drift; retrain automatically tonight on last month's data and promote the new version"
+        ],
+        "ar": [
+          "انقطاع في البيانات من المصدر (upstream data break)؛ يُوقَف التقييم (scoring) ويُعاد إلى القواعد (rules) حتى يُصلَح مصدر البيانات (feed)",
+          "انجراف المفهوم (concept drift)؛ تُحلَّل حالات الاحتيال الفائتة، ثم يُعاد التدريب عبر خط البيانات (pipeline) مع وضع الظل (shadow mode) ثم يُطلب الاعتماد (sign-off)",
+          "لا مشكلة حقيقية بعد؛ فما دام مؤشر الاستقرار (PSI) لكل خاصية (feature) أقل من 0.1 فالمدخلات (inputs) والنموذج (model) سليمان",
+          "انجراف المفهوم (concept drift)؛ يُعاد التدريب تلقائيًا (retrain automatically) الليلة على بيانات الشهر الماضي وتُرقّى النسخة الجديدة (promote)"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Clean, stable inputs with worsening outcomes mean the relationship between inputs and fraud has changed, as with a new scam pattern: concept drift, not an upstream break. Retraining is right, but only through the registered pipeline after diagnosis, with a shadow period and model-validation sign-off; automatic retrain-and-promote skips both.",
+        "ar": "مدخلات سليمة ومستقرة مع نتائج تزداد سوءًا تعني أن العلاقة بين المدخلات والاحتيال تغيّرت، كما في نمط احتيال جديد (new scam pattern): إنه انجراف المفهوم (concept drift) لا انقطاع من المصدر (upstream break). إعادة التدريب (retraining) صحيحة، لكن عبر خط البيانات المسجّل (registered pipeline) فقط بعد التشخيص، مع فترة ظل (shadow period) واعتماد من فريق التحقق من النماذج (model validation)؛ أما إعادة التدريب والترقية تلقائيًا (automatic retrain-and-promote) فتتجاوز الأمرين معًا."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m5-e1",
+      "lesson": "5.1",
+      "text": {
+        "en": "I have built a point-in-time-correct training set with a time-based split and logged runs in MLflow, so that two runs from the same commit and data gave identical metrics.",
+        "ar": "بنيتُ مجموعة تدريب (training set) صحيحة زمنيًا عند نقطة التنبؤ (point-in-time correct) مع تقسيم زمني (time-based split)، وسجّلتُ التشغيلات (runs) في MLflow بحيث أعطى تشغيلان من الإيداع (commit) والبيانات نفسها مقاييس (metrics) متطابقة."
+      }
+    },
+    {
+      "id": "m5-e2",
+      "lesson": "5.3",
+      "text": {
+        "en": "I have measured recall@5 and MRR on a golden set for vector-only, keyword-only and hybrid search, and confirmed that restricted chunks never reached a user without access.",
+        "ar": "قِستُ الاستدعاء عند 5 (recall@5) ومتوسط الرتبة العكسية (MRR) على مجموعة ذهبية (golden set) للبحث المتّجهي وحده (vector-only) والبحث بالكلمات المفتاحية وحده (keyword-only) والبحث الهجين (hybrid search)، وتحققتُ من أن المقاطع المقيّدة (restricted chunks) لم تصل قط إلى مستخدم لا يملك صلاحية الوصول (access)."
+      }
+    }
+  ]
+}

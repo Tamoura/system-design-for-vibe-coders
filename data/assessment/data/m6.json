@@ -1,0 +1,135 @@
+{
+  "area": "m6",
+  "questions": [
+    {
+      "id": "m6-1",
+      "level": 1,
+      "lesson": "6.2",
+      "q": {
+        "en": "Of the protections Najm can apply to personal data in a copy made for analysis, which one gives the strongest privacy?",
+        "ar": "من بين وسائل الحماية (protections) التي يستطيع بنك نجم (Najm Bank) تطبيقها على البيانات الشخصية (personal data) في نسخة مُعدّة للتحليل (copy made for analysis)، أيّها يمنح أقوى حماية للخصوصية (strongest privacy)؟"
+      },
+      "o": {
+        "en": [
+          "Replacing every identifier with a keyed HMAC-SHA-256 pseudonym value",
+          "Leaving out the columns the purpose does not need at load time",
+          "Masking phone numbers and IDs so that only partial values show",
+          "Generalising birth dates to age bands and addresses to cities"
+        ],
+        "ar": [
+          "استبدال كل مُعرِّف (identifier) باسم مستعار بتجزئة مفتاحية (keyed HMAC-SHA-256 pseudonym)",
+          "استبعاد الأعمدة التي لا يحتاجها الغرض (purpose) عند التحميل (load time)",
+          "إخفاء (masking) أرقام الهواتف والهويات (IDs) بحيث لا تظهر إلا قيم جزئية (partial values)",
+          "تعميم (generalising) تواريخ الميلاد إلى فئات عمرية (age bands) والعناوين إلى مدن (cities)"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "The safest personal data is the data you never copied: a column dropped at load time is no data at all. Keyed-hash pseudonyms are tempting, but they remain personal data under GDPR Article 4(5), because whoever holds the key can re-link them.",
+        "ar": "أكثر البيانات الشخصية (personal data) أمانًا هي البيانات التي لم تنسخها أصلًا (never copied)؛ فالعمود المُستبعَد عند التحميل (dropped at load time) لا يترك أي بيانات. أما الأسماء المستعارة بالتجزئة المفتاحية (keyed-hash pseudonyms) فمغرية، لكنها تبقى بيانات شخصية بموجب المادة 4(5) من اللائحة العامة لحماية البيانات (GDPR Article 4(5))، لأن حامل المفتاح (key holder) يستطيع إعادة ربطها (re-link)."
+      }
+    },
+    {
+      "id": "m6-2",
+      "level": 2,
+      "lesson": "6.1",
+      "q": {
+        "en": "A year into Najm's governance programme, the governance office's quarterly report lists 35 approved policies, 24 committee meetings and 9,000 tables in the catalogue. Faisal asks whether governance is actually working. What should the report measure instead?",
+        "ar": "بعد عام من برنامج الحوكمة (governance programme) في بنك نجم (Najm Bank)، يعرض التقرير الفصلي (quarterly report) لمكتب الحوكمة (governance office) 35 سياسة معتمدة (approved policies) و24 اجتماع لجنة (committee meetings) و9,000 جدول في الفهرس (catalogue). يسأل فيصل هل تعمل الحوكمة فعلًا. ماذا ينبغي أن يقيس التقرير بدلًا من ذلك؟"
+      },
+      "o": {
+        "en": [
+          "The number of new tables catalogued each quarter, to show that adoption grows",
+          "Attendance at governance committees, to show that data owners are engaged",
+          "How many staff completed governance training in the last twelve months",
+          "Tier-1 coverage of owners and contracts, and time to answer impact questions"
+        ],
+        "ar": [
+          "عدد الجداول الجديدة المُفهرَسة (tables catalogued) كل فصل، لإثبات نمو الاعتماد (adoption)",
+          "نسبة الحضور في لجان الحوكمة (governance committees)، لإثبات انخراط مالكي البيانات (data owners)",
+          "عدد الموظفين الذين أتمّوا تدريب الحوكمة (governance training) في الأشهر الاثني عشر الماضية",
+          "تغطية المستوى الأول (tier-1 coverage) بالمالكين والعقود (owners and contracts)، وزمن الإجابة عن أسئلة الأثر (impact questions)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Governance is measured by coverage and speed, not activity: the share of tier-1 models with owner, description, contract and tests, and how long an impact question takes to answer. Counting catalogued tables is tempting, but ten thousand undocumented tables help nobody.",
+        "ar": "تُقاس الحوكمة (governance) بالتغطية والسرعة (coverage and speed) لا بالنشاط (activity): نسبة نماذج المستوى الأول (tier-1 models) التي لها مالك ووصف وعقد واختبارات (owner, description, contract and tests)، والزمن اللازم للإجابة عن سؤال أثر (impact question). أما عدّ الجداول المُفهرَسة (catalogued tables) فمغرٍ، لكن عشرة آلاف جدول بلا توثيق (undocumented tables) لا تفيد أحدًا."
+      }
+    },
+    {
+      "id": "m6-3",
+      "level": 2,
+      "lesson": "6.3",
+      "q": {
+        "en": "Lina adds a view over marts.loan_book, which has a row-level security policy by country, and grants SELECT on the view to marts_reader. The view is owned by the pipeline account that builds the mart, and no one holds a superuser login. Analysts querying the view now see every country's loans. What is the cause and the fix?",
+        "ar": "تُضيف لينا عرضًا (view) فوق الجدول marts.loan_book الذي تحميه سياسة أمان على مستوى الصفوف (row-level security policy) حسب الدولة، وتمنح صلاحية SELECT على العرض للدور marts_reader. يملك العرضَ حسابُ خط البيانات (pipeline account) الذي يبني المستودع التحليلي (mart)، ولا أحد يستخدم حساب مستخدم خارق (superuser). صار المحلّلون الذين يستعلمون العرض يرون قروض كل الدول. ما السبب وما العلاج؟"
+      },
+      "o": {
+        "en": [
+          "The view checks the policy against its owner; set security_invoker = true on it",
+          "Policies never apply through views; recreate the country policy on the view itself",
+          "The policy covers SELECT only; widen it to FOR ALL so that it also covers views",
+          "The analysts' role bypasses RLS; remove BYPASSRLS from marts_reader to fix it"
+        ],
+        "ar": [
+          "يتحقق العرض (view) من السياسة مقابل مالكه (owner)؛ اضبط عليه security_invoker = true",
+          "لا تسري السياسات (policies) عبر العروض (views)؛ أعد إنشاء سياسة الدولة على العرض نفسه",
+          "السياسة تغطي SELECT فقط؛ وسّعها إلى FOR ALL كي تشمل العروض (views) أيضًا",
+          "دور المحلّلين يتجاوز الأمان على مستوى الصفوف (RLS)؛ أزل BYPASSRLS من marts_reader"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "A PostgreSQL view runs with its owner's rights by default, so the base table's policy is checked against the owner, not the analyst; security_invoker = true (PostgreSQL 15 and later) or a filter inside the view fixes it. Recreating the policy on the view fails because row-level security policies attach to tables, and the scenario already rules out a role that bypasses RLS.",
+        "ar": "يعمل العرض (view) في PostgreSQL افتراضيًا بصلاحيات مالكه (owner's rights)، فتُفحص سياسة الجدول الأساسي (base table) مقابل المالك لا مقابل المحلّل؛ ويعالج ذلك الإعداد security_invoker = true (PostgreSQL 15 فما بعد) أو ترشيح داخل العرض (filter inside the view). أما إعادة إنشاء السياسة على العرض فلا تنجح لأن سياسات الأمان على مستوى الصفوف (row-level security policies) تُربط بالجداول (tables)، والسيناريو يستبعد أصلًا وجود دور يتجاوز RLS."
+      }
+    },
+    {
+      "id": "m6-4",
+      "level": 3,
+      "lesson": "6.2",
+      "q": {
+        "en": "A university asks Najm for complaint data for research. Kareem prepares an extract with names and national IDs removed, customer IDs replaced by keyed hashes whose key stays in Najm's secrets manager, and exact birth date, nationality, branch and complaint notes kept. He proposes labelling it \"anonymous\". What is the soundest judgement?",
+        "ar": "تطلب جامعة من بنك نجم (Najm Bank) بيانات الشكاوى لأغراض البحث. يُعدّ كريم مستخرجًا (extract) حُذفت منه الأسماء وأرقام الهوية الوطنية (national IDs)، واستُبدلت فيه مُعرِّفات العملاء (customer IDs) بتجزئات مفتاحية (keyed hashes) يبقى مفتاحها في مدير الأسرار (secrets manager) لدى البنك، وبقي فيه تاريخ الميلاد الدقيق والجنسية والفرع وملاحظات الشكاوى (complaint notes). يقترح أن يصفه بأنه \"مجهول الهوية\" (anonymous). ما الحكم الأسلم؟"
+      },
+      "o": {
+        "en": [
+          "Label it anonymous, since the university can never obtain the hashing key",
+          "Encrypt the file before it is sent, since encryption makes the extract anonymous",
+          "Treat it as personal data: generalise, check k-anonymity, clean notes, ask Sara",
+          "Also drop the keyed-hash column, since with no identifiers left it is anonymous"
+        ],
+        "ar": [
+          "يصفه بأنه مجهول الهوية (anonymous)، لأن الجامعة لن تحصل أبدًا على مفتاح التجزئة (hashing key)",
+          "يُشفّر الملف (encrypt) قبل إرساله، لأن التشفير (encryption) يجعل المستخرج مجهول الهوية",
+          "يعامله كبيانات شخصية (personal data): يُعمّم (generalise)، ويفحص إخفاء الهوية k (k-anonymity)، وينظّف الملاحظات، ويستشير سارة",
+          "يحذف عمود التجزئة المفتاحية (keyed-hash column) أيضًا، فبلا مُعرِّفات (identifiers) يصبح مجهول الهوية"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Keyed hashes are pseudonymous, not anonymous, and exact birth date, nationality and branch are quasi-identifiers that can single people out, while free-text notes can hide names and IDs; at Najm any \"anonymous\" dataset needs Sara's sign-off. Dropping the hash column is tempting, but the quasi-identifiers and notes still allow re-identification.",
+        "ar": "التجزئات المفتاحية (keyed hashes) أسماء مستعارة (pseudonymous) لا إخفاء للهوية (anonymous)، وتاريخ الميلاد الدقيق والجنسية والفرع مُعرِّفات شبه مباشرة (quasi-identifiers) قد تكشف أفرادًا بعينهم، والملاحظات النصية الحرة (free-text notes) قد تخفي أسماء وأرقام هوية؛ وفي بنك نجم تحتاج أي مجموعة بيانات \"مجهولة الهوية\" (anonymous dataset) إلى موافقة سارة (Sara's sign-off). أما حذف عمود التجزئة فمغرٍ، لكن المُعرِّفات شبه المباشرة والملاحظات تظل تسمح بإعادة التعرّف (re-identification)."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m6-e1",
+      "lesson": "6.2",
+      "text": {
+        "en": "I have built an analyst view on synthetic data with a keyed-hash customer key, an age band and a masked phone, and shown that an unsalted MD5-hashed ID can be recovered by brute force while the keyed hash cannot.",
+        "ar": "لقد بنيتُ عرضًا للمحلّلين (analyst view) على بيانات اصطناعية (synthetic data) فيه مفتاح عميل بتجزئة مفتاحية (keyed-hash customer key) وفئة عمرية (age band) وهاتف مُخفى (masked phone)، وأثبتُّ أن مُعرِّفًا مُجزّأً بـ MD5 بلا ملح (unsalted MD5-hashed ID) يمكن استرجاعه بالقوة الغاشمة (brute force) بينما لا يمكن ذلك مع التجزئة المفتاحية (keyed hash)."
+      }
+    },
+    {
+      "id": "m6-e2",
+      "lesson": "6.3",
+      "text": {
+        "en": "I have set up named users, group roles and row-level security by country in a test PostgreSQL, and shown with real queries that each analyst sees only their own country's rows and is denied the base and raw tables.",
+        "ar": "لقد أعددتُ مستخدمين بأسماء (named users) وأدوارًا جماعية (group roles) وأمانًا على مستوى الصفوف (row-level security) حسب الدولة في PostgreSQL تجريبي، وأثبتُّ باستعلامات حقيقية (real queries) أن كل محلّل لا يرى إلا صفوف دولته وأنه يُمنع من الجداول الأساسية والخام (base and raw tables)."
+      }
+    }
+  ]
+}

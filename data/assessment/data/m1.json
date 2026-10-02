@@ -1,0 +1,135 @@
+{
+  "area": "m1",
+  "questions": [
+    {
+      "id": "m1-1",
+      "level": 1,
+      "lesson": "1.3",
+      "q": {
+        "en": "Month-end queries were slowing the branches, so Salem added a read replica of Najm Bank's core banking PostgreSQL database. Why is the replica still not the lasting home for year-long spend analysis?",
+        "ar": "كانت استعلامات نهاية الشهر (month-end queries) تُبطئ الفروع، فأضاف سالم نسخة متماثلة للقراءة (read replica) من قاعدة بيانات PostgreSQL للأنظمة المصرفية الأساسية (core banking) في بنك نجم (Najm Bank). لماذا لا تزال النسخة المتماثلة (replica) ليست الموطن الدائم (lasting home) لتحليل الإنفاق على مدى عام (year-long spend analysis)؟"
+      },
+      "o": {
+        "en": [
+          "It lags the primary by a day, so yearly totals would always miss recent data",
+          "It is still a row store with the OLTP schema, so long analytical scans stay slow",
+          "It accepts only writes, so analysts would still have to query the primary itself",
+          "It drops rows older than 90 days, so a full year of history is never available"
+        ],
+        "ar": [
+          "لأنها تتأخّر عن القاعدة الرئيسية (primary) يومًا كاملًا، فتفوت المجاميعَ السنوية (yearly totals) البياناتُ الحديثة (recent data) دائمًا",
+          "لأنها ما تزال مخزنًا صفّيًا (row store) بمخطّط المعالجة التشغيلية (OLTP schema)، فتبقى عمليات المسح التحليلية الطويلة (long analytical scans) بطيئة",
+          "لأنها لا تقبل إلا الكتابات (writes)، فيظلّ على المحلّلين (analysts) أن يستعلموا القاعدة الرئيسية (primary) نفسها",
+          "لأنها تحذف الصفوف الأقدم من 90 يومًا (older than 90 days)، فلا يتوفّر سجلّ تاريخي (history) لعام كامل أبدًا"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "A read replica protects branch staff, but it is still a row store with the OLTP schema, fit for operational reports, not year-long scans; the lasting answer is an analytical store. It takes read-only queries, so the idea that it only accepts writes is backwards.",
+        "ar": "تحمي النسخة المتماثلة للقراءة (read replica) موظفي الفروع، لكنها ما تزال مخزنًا صفّيًا (row store) بمخطّط المعالجة التشغيلية (OLTP schema)، تصلح للتقارير التشغيلية (operational reports) لا لمسح عام كامل (year-long scans)؛ والحلّ الدائم مخزن تحليلي (analytical store). وهي تستقبل استعلامات القراءة فقط (read-only queries)، فالقول إنها لا تقبل إلا الكتابات معكوس تمامًا."
+      }
+    },
+    {
+      "id": "m1-2",
+      "level": 2,
+      "lesson": "1.1",
+      "q": {
+        "en": "Kareem's September debit total for Najm Bank's Doha customers comes out below the general ledger. Huda's query filters a timestamptz column with `txn_ts BETWEEN '2026-09-01' AND '2026-09-30'`. Which change makes the time window correct?",
+        "ar": "يأتي مجموع الخصومات (debit total) لشهر سبتمبر لعملاء بنك نجم (Najm Bank) في الدوحة الذي يطلبه كريم أقلّ من دفتر الأستاذ العام (general ledger). يرشّح استعلام هدى عمودًا من نوع timestamptz بالشرط `txn_ts BETWEEN '2026-09-01' AND '2026-09-30'`. أيّ تغيير يجعل النافذة الزمنية (time window) صحيحة؟"
+      },
+      "o": {
+        "en": [
+          "Change the upper bound to `'2026-09-30 23:59'` so the last day is included",
+          "Count with `COUNT(DISTINCT txn_id)` so no transaction is counted twice",
+          "Move the date filter from `WHERE` into `HAVING`, so it runs after grouping",
+          "Use `>= '2026-09-01 00:00+03'` and `< '2026-10-01 00:00+03'` as the range"
+        ],
+        "ar": [
+          "تغيير الحدّ الأعلى (upper bound) إلى `'2026-09-30 23:59'` ليُشمل اليوم الأخير (last day)",
+          "العدّ بـ `COUNT(DISTINCT txn_id)` حتى لا تُحسب أي معاملة (transaction) مرتين",
+          "نقل مرشّح التاريخ (date filter) من `WHERE` إلى `HAVING` ليُطبَّق بعد التجميع (grouping)",
+          "استخدام `>= '2026-09-01 00:00+03'` و`< '2026-10-01 00:00+03'` نطاقًا (range) للفترة"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "A half-open range with a named zone (Doha, UTC+3) covers the whole month with no gap; `BETWEEN` on timestamps drops everything after midnight on the 30th. Moving the bound to 23:59 still loses the last minute and still ignores the time zone.",
+        "ar": "النطاق نصف المفتوح (half-open range) مع منطقة زمنية مسمّاة (named zone) هي الدوحة (UTC+3) يغطي الشهر كله بلا فجوة، أمّا `BETWEEN` على الطوابع الزمنية (timestamps) فيُسقط كل ما بعد منتصف ليل يوم 30. ونقل الحدّ إلى 23:59 يظلّ يُضيّع الدقيقة الأخيرة ويتجاهل المنطقة الزمنية (time zone)."
+      }
+    },
+    {
+      "id": "m1-3",
+      "level": 2,
+      "lesson": "1.2",
+      "q": {
+        "en": "Dana builds a regional dashboard from a table holding each branch's monthly loan default rate as a percentage. Summing these percentages gives regional rates above 100% in some months. How should the model hold this measure?",
+        "ar": "تبني دانة لوحة معلومات (dashboard) إقليمية من جدول يحفظ معدّل التعثّر الشهري للقروض (monthly loan default rate) لكل فرع نسبةً مئوية (percentage). جمعُ هذه النسب يعطي معدّلات إقليمية تتجاوز 100% في بعض الأشهر. كيف ينبغي أن يحفظ نموذج البيانات (data model) هذا المقياس (measure)؟"
+      },
+      "o": {
+        "en": [
+          "Store defaulted loans and total loans per branch, and divide after aggregating",
+          "Average the branch percentages, since an average makes a ratio safe to roll up",
+          "Mark the rate semi-additive, so it is summed across regions but never months",
+          "Keep the percentages and make the branch dimension Type 2 so months reproduce"
+        ],
+        "ar": [
+          "حفظ القروض المتعثّرة (defaulted loans) وإجمالي القروض لكل فرع، والقسمة بعد التجميع (after aggregating)",
+          "أخذ متوسط (average) نسب الفروع، لأن المتوسط يجعل النسبة (ratio) آمنة للتجميع إلى المستوى الأعلى (roll up)",
+          "وسم المعدّل بأنه شبه قابل للجمع (semi-additive)، فيُجمع عبر الأقاليم ولا يُجمع عبر الأشهر أبدًا",
+          "إبقاء النسب كما هي وجعل بُعد الفرع (branch dimension) من النوع 2 (Type 2) لتبقى نتائج الأشهر قابلة لإعادة الإنتاج (reproducible)"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "A ratio is non-additive: store its numerator and denominator and divide after aggregating. A plain average of branch percentages is still wrong, because it gives a small branch the same weight as a large one.",
+        "ar": "النسبة (ratio) مقياس غير قابل للجمع (non-additive): احفظ البسط (numerator) والمقام (denominator) واقسم بعد التجميع. والمتوسط البسيط (plain average) لنسب الفروع خاطئ أيضًا، لأنه يعطي الفرع الصغير وزن الفرع الكبير نفسه."
+      }
+    },
+    {
+      "id": "m1-4",
+      "level": 3,
+      "lesson": "1.2",
+      "q": {
+        "en": "In June a regulator asks Najm Bank what its systems showed as a customer's risk grade on 31 March. In April a correction was keyed in, backdated to February, so the Type 2 `dim_customer` now shows the corrected grade as valid on 31 March. What does answering the question need?",
+        "ar": "في يونيو يسأل جهة رقابية (regulator) بنكَ نجم (Najm Bank) عمّا كانت أنظمته تُظهره درجةً لمخاطر (risk grade) أحد العملاء في 31 مارس. في أبريل أُدخل تصحيح (correction) بأثر رجعي (backdated) إلى فبراير، فصار جدول `dim_customer` من البُعد المتغيّر ببطء من النوع 2 (SCD Type 2) يُظهر الدرجة المصحّحة سارية (valid) في 31 مارس. ما الذي تتطلّبه الإجابة عن السؤال؟"
+      },
+      "o": {
+        "en": [
+          "Nothing more: the Type 2 validity dates already show what was believed then",
+          "Switching risk grade to Type 1, so the dimension holds one agreed value",
+          "A record-time timeline, e.g. the append-only raw layer's load timestamps",
+          "A Type 3 column that keeps the previous risk grade next to the current one"
+        ],
+        "ar": [
+          "لا شيء إضافي: تواريخ الصلاحية (validity dates) في النوع 2 (Type 2) تُظهر أصلًا ما كان معتقَدًا حينها",
+          "تحويل درجة المخاطر (risk grade) إلى النوع 1 (Type 1)، ليحفظ البُعد (dimension) قيمة واحدة متّفقًا عليها",
+          "خطّ زمني لوقت التسجيل (record time)، كطوابع وقت التحميل (load timestamps) في الطبقة الخام (raw layer)",
+          "عمود من النوع 3 (Type 3) يحفظ درجة المخاطر السابقة (previous value) بجانب الحالية"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Type 2 tracks valid time, when something was true in the business, so the backdated correction rewrote what 31 March looks like; recalling what the systems believed needs a second, recorded-time timeline (a bitemporal design), which Najm keeps through its append-only raw layer with load timestamps. Relying on Type 2 alone is the tempting mistake.",
+        "ar": "يتتبّع النوع 2 (Type 2) الوقت الفعلي (valid time)، أي متى كان الشيء صحيحًا في العمل، لذا غيّر التصحيح الرجعي (backdated correction) صورة 31 مارس؛ واسترجاع ما اعتقدته الأنظمة يتطلّب خطًّا زمنيًا ثانيًا لوقت التسجيل (recorded time)، وهو التصميم ثنائي الزمن (bitemporal)، ويحفظه بنك نجم عبر طبقته الخام الإلحاقية فقط (append-only raw layer) مع طوابع وقت التحميل (load timestamps). والاكتفاء بالنوع 2 وحده هو الخطأ المغري."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m1-e1",
+      "lesson": "1.2",
+      "text": {
+        "en": "I have built a Type 2 customer dimension from several daily extracts and shown that a past day's exposure by branch is unchanged after loading later days.",
+        "ar": "بنيتُ بُعد عملاء من النوع 2 (Type 2 customer dimension) من عدة مستخرجات يومية (daily extracts)، وأثبتُّ أن التعرّض حسب الفرع (exposure by branch) ليوم سابق لم يتغيّر بعد تحميل الأيام اللاحقة (later days)."
+      }
+    },
+    {
+      "id": "m1-e2",
+      "lesson": "1.3",
+      "text": {
+        "en": "I have exported the same synthetic table as CSV and as Parquet, timed one aggregate query on each, and explained the difference by columnar storage and compression.",
+        "ar": "صدّرتُ الجدول الاصطناعي (synthetic table) نفسه بصيغتي CSV وParquet، وقستُ زمن استعلام تجميعي (aggregate query) واحد على كلٍّ منهما، وفسّرتُ الفرق بالتخزين العمودي (columnar storage) والضغط (compression)."
+      }
+    }
+  ]
+}

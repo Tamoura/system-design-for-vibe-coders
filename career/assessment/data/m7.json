@@ -1,0 +1,135 @@
+{
+  "area": "m7",
+  "questions": [
+    {
+      "id": "m7-1",
+      "level": 1,
+      "lesson": "7.1",
+      "q": {
+        "en": "After a few weeks of keeping an application tracker, what do its source and referral columns tell you that general job-search advice cannot?",
+        "ar": "بعد بضعة أسابيع من الاحتفاظ بسجلّ تتبّع الطلبات (application tracker)، ما الذي يخبرك به عمودا المصدر (source) والإحالة (referral) ولا تستطيع النصائح العامة للبحث عن عمل (general job-search advice) أن تخبرك به؟"
+      },
+      "o": {
+        "en": [
+          "The reply rate that counts as normal for graduates in your market",
+          "Which of your channels actually produce replies for you",
+          "Which employers are most likely to make you an offer this season",
+          "How many more applications you must send before an offer arrives"
+        ],
+        "ar": [
+          "معدّل الردود (reply rate) الذي يُعدّ طبيعيًا (normal) للخرّيجين في سوقك (market)",
+          "أيّ قنواتك (channels) تُنتج لك ردودًا (replies) فعلًا",
+          "أيّ أصحاب العمل (employers) أرجح أن يقدّموا لك عرضًا وظيفيًا (offer) هذا الموسم",
+          "كم طلبًا إضافيًا (applications) عليك إرساله قبل أن يصلك عرض وظيفي (offer)"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "After a few weeks, the source and referral columns show which channels produce replies for you, which beats any general advice. Hunting for a \"normal\" reply rate is the tempting mistake: rates vary by market, role and season, so compare yourself with your own previous weeks.",
+        "ar": "بعد بضعة أسابيع، يُظهر عمودا المصدر (source) والإحالة (referral) أيّ القنوات (channels) تُنتج لك ردودًا (replies)، وهذا يتفوّق على أي نصيحة عامة (general advice). أمّا البحث عن معدّل ردود «طبيعي» (normal reply rate) فهو الخطأ المغري: فالمعدّلات تختلف باختلاف السوق والدور والموسم (market, role and season)، لذا قارن نفسك بأسابيعك السابقة (your own previous weeks)."
+      }
+    },
+    {
+      "id": "m7-2",
+      "level": 2,
+      "lesson": "7.1",
+      "q": {
+        "en": "At her week-8 checkpoint, Huda's tracker shows replies, recruiter screens and several technical rounds (a live SQL exercise and two take-homes), but none has led to a final round. What should she change first?",
+        "ar": "عند نقطة المراجعة في الأسبوع الثامن (week-8 checkpoint)، يُظهر سجلّ التتبّع (tracker) لدى هدى ردودًا (replies) ومقابلات فرز أولية مع مسؤولي التوظيف (recruiter screens) وعدة جولات تقنية (technical rounds) — تمرين SQL مباشر (live SQL exercise) ومهمتان منزليتان (take-homes) — لكن أيًّا منها لم يُفضِ إلى جولة نهائية (final round). ما الذي ينبغي أن تغيّره أولًا؟"
+      },
+      "o": {
+        "en": [
+          "Rewrite her two-minute introduction and her answers on availability",
+          "Narrow her target list and tailor her CV more closely to each posting",
+          "Add results and lessons to her STAR stories and mock with a senior",
+          "Practise those exact formats with peers and revisit her gap list"
+        ],
+        "ar": [
+          "تعيد كتابة تقديمها لنفسها في دقيقتين (two-minute introduction) وإجاباتها عن موعد التفرّغ (availability)",
+          "تضيّق قائمة أهدافها (target list) وتكيّف سيرتها الذاتية (CV) أكثر مع كل إعلان وظيفي (posting)",
+          "تضيف النتائج والدروس (results and lessons) إلى قصص STAR (STAR stories) وتتدرّب مع شخص خبير (mock with a senior)",
+          "تتدرّب على هذه الصيغ بعينها (exact formats) مع زملائها وتعود إلى قائمة فجواتها (gap list)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "In the funnel table, technical rounds that do not reach finals point to a real skill gap or an unfamiliar format, so she practises the exact format and returns to the gap list. Rewriting her introduction would fit screens that stall before technical rounds, a stage she is already passing.",
+        "ar": "في جدول مسار التوظيف (funnel table)، تشير الجولات التقنية (technical rounds) التي لا تصل إلى الجولات النهائية (finals) إلى فجوة مهارية حقيقية (real skill gap) أو صيغة غير مألوفة (unfamiliar format)، لذا تتدرّب على الصيغة بعينها (exact format) وتعود إلى قائمة الفجوات (gap list). أمّا إعادة كتابة التقديم (introduction) فتناسب مقابلات الفرز (screens) التي تتعثّر قبل الجولات التقنية، وهي مرحلة تتجاوزها هدى أصلًا."
+      }
+    },
+    {
+      "id": "m7-3",
+      "level": 2,
+      "lesson": "7.1",
+      "q": {
+        "en": "Mohammed has a strong portfolio, but many of the postings he wants ask for a degree in the field, which he does not have. How should his 12-week plan adapt to this constraint?",
+        "ar": "لدى محمد معرض أعمال (portfolio) قوي، لكن كثيرًا من الإعلانات الوظيفية (postings) التي يريدها تشترط شهادة جامعية في المجال (degree in the field)، وهو لا يملكها. كيف ينبغي أن تتكيّف خطته ذات الأسابيع الاثني عشر (12-week plan) مع هذا القيد (constraint)؟"
+      },
+      "o": {
+        "en": [
+          "Target skills-based employers, use referrals, check eligibility first",
+          "Pause the search and enrol in a degree so his applications qualify later",
+          "Apply to every posting anyway, since a strong portfolio beats any rule",
+          "Add several certifications to his CV to stand in for the missing degree"
+        ],
+        "ar": [
+          "يستهدف أصحاب العمل ذوي المعايير القائمة على المهارات (skills-based criteria)، ويعتمد على الإحالات (referrals)، ويتحقق من شروط الأهلية (eligibility rules) أولًا",
+          "يوقف البحث (search) ويلتحق بدراسة جامعية (degree) كي تصبح طلباته (applications) مؤهّلة لاحقًا",
+          "يتقدّم إلى كل إعلان وظيفي (posting) على أي حال، فمعرض الأعمال القوي (strong portfolio) يتغلّب على أي شرط",
+          "يضيف عدة شهادات مهنية (certifications) إلى سيرته الذاتية (CV) لتعوّض الشهادة الجامعية (degree) الناقصة"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "The lesson adapts Mohammed's plan by targeting employers that state skills-based criteria, leaning on referrals and reading each programme's eligibility rules first. Applying everywhere regardless wastes applications on postings whose rules screen him out, and pausing to study is the preparing-forever trap.",
+        "ar": "يكيّف الدرس خطة محمد باستهداف أصحاب العمل الذين يعلنون معايير قائمة على المهارات (skills-based criteria)، والاعتماد على الإحالات (referrals)، وقراءة شروط الأهلية (eligibility rules) لكل برنامج أولًا. أمّا التقدّم إلى كل إعلان بلا تمييز فيهدر الطلبات (applications) على إعلانات تستبعده شروطها، والتوقف للدراسة هو فخّ الاستعداد الدائم (preparing forever)."
+      }
+    },
+    {
+      "id": "m7-4",
+      "level": 3,
+      "lesson": "7.1",
+      "q": {
+        "en": "Reem has a take-home due tomorrow for a role she wants. Her AI coding agent produced a solution whose tests pass, but she cannot explain two of its modules. The employer asks candidates to disclose AI use. What is the best call?",
+        "ar": "على ريم تسليم مهمة منزلية (take-home) غدًا لدور (role) تريده. أنتج وكيل البرمجة بالذكاء الاصطناعي (AI coding agent) حلًّا تنجح اختباراته (tests pass)، لكنها لا تستطيع شرح وحدتين (modules) منه. ويطلب صاحب العمل (employer) من المرشّحين الإفصاح عن استخدام الذكاء الاصطناعي (disclose AI use). ما القرار الأفضل؟"
+      },
+      "o": {
+        "en": [
+          "Submit it as it is, since passing tests are what reviewers check",
+          "Submit it with a note that AI wrote it, which meets the disclosure rule",
+          "Disclose AI use and submit only code she has verified and can explain",
+          "Have the agent comment the two modules in detail, then submit it all"
+        ],
+        "ar": [
+          "تسلّمه كما هو، فالاختبارات الناجحة (passing tests) هي ما يتحقق منه المراجعون (reviewers)",
+          "تسلّمه مع ملاحظة بأن الذكاء الاصطناعي (AI) كتبه، فهذا يفي بشرط الإفصاح (disclosure rule)",
+          "تفصح عن استخدام الذكاء الاصطناعي (disclose AI use) ولا تسلّم إلا شيفرة تحقّقت منها (verified) وتستطيع شرحها (explain)",
+          "تطلب من الوكيل (agent) شرح الوحدتين (modules) بتعليقات مفصّلة (comments)، ثم تسلّمه كله"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "The lesson's integrity rule is to disclose AI assistance where asked and be able to explain and verify every line you submit, because AI-written work you cannot explain collapses when you must explain and extend it. A disclosure note alone is the tempting half-answer: it is honest, but she still cannot defend the code in the follow-up.",
+        "ar": "قاعدة النزاهة (integrity) في الدرس هي الإفصاح عن المساعدة بالذكاء الاصطناعي (disclose AI assistance) حيث يُطلب ذلك، والقدرة على شرح كل سطر تسلّمه والتحقق منه (explain and verify every line)، لأن العمل المكتوب بالذكاء الاصطناعي الذي لا تستطيع شرحه ينهار حين يُطلب منك شرحه وتوسيعه (explain and extend). أمّا ملاحظة الإفصاح وحدها فهي نصف الإجابة المغري: صادقة، لكنها لا تمكّنها من الدفاع عن الشيفرة (defend the code) في النقاش اللاحق (follow-up)."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m7-e1",
+      "lesson": "7.1",
+      "text": {
+        "en": "I have written a one-page 12-week plan with a checkable deliverable every week, a real hours budget, three \"if yes / if no\" checkpoints, and a tracker with its first five rows",
+        "ar": "كتبتُ خطة من صفحة واحدة لاثني عشر أسبوعًا (one-page 12-week plan) فيها مُخرَج قابل للتحقق (checkable deliverable) كل أسبوع، وميزانية ساعات حقيقية (real hours budget)، وثلاث نقاط مراجعة (checkpoints) بصيغة «إن نعم / إن لا» (if yes / if no)، وسجلّ تتبّع (tracker) بأول خمسة صفوف فيه"
+      }
+    },
+    {
+      "id": "m7-e2",
+      "lesson": "7.1",
+      "text": {
+        "en": "I have run my plan for four weeks and written a dated week-4 checkpoint note naming exactly one change and the funnel evidence behind it",
+        "ar": "نفّذتُ خطتي أربعة أسابيع، وكتبتُ مذكّرة مؤرّخة لنقطة المراجعة في الأسبوع الرابع (dated week-4 checkpoint note) تحدّد تغييرًا واحدًا بالضبط (exactly one change) وأدلّة مسار التوظيف (funnel evidence) التي تسنده"
+      }
+    }
+  ]
+}

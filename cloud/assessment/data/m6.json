@@ -1,0 +1,135 @@
+{
+  "area": "m6",
+  "questions": [
+    {
+      "id": "m6-1",
+      "level": 1,
+      "lesson": "6.3",
+      "q": {
+        "en": "Two Najm Assist features call the same managed model API about the same number of times a day, yet one costs several times more than the other. What best explains the gap?",
+        "ar": "تستدعي ميزتان من نجم أسيست (Najm Assist) واجهة برمجة النموذج المُدارة (managed model API) نفسها بعدد مرات يومي متقارب، ومع ذلك تكلّف إحداهما أضعاف الأخرى. ما التفسير الأرجح لهذا الفرق؟"
+      },
+      "o": {
+        "en": [
+          "It sends more requests per second, and providers bill for each request sent",
+          "Cost follows tokens in and out, so longer prompts and answers cost more",
+          "It runs at peak hours, when the provider's GPUs are at their busiest",
+          "Managed APIs bill for GPU time, so slower answers cost more each time"
+        ],
+        "ar": [
+          "لأنها ترسل طلبات أكثر في الثانية (requests per second)، والمزوّدون يحاسبون على كل طلب مُرسَل (per request)",
+          "لأن التكلفة تتبع الرموز الداخلة والخارجة (tokens in and out)، فالمُوجِّهات (prompts) والإجابات الأطول تكلّف أكثر",
+          "لأنها تعمل في ساعات الذروة (peak hours)، حين تكون وحدات معالجة الرسوميات (GPUs) لدى المزوّد في أشدّ انشغالها",
+          "لأن الواجهات المُدارة (managed APIs) تحاسب على وقت وحدة معالجة الرسوميات (GPU time)، فالإجابات الأبطأ تكلّف أكثر في كل مرة"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Managed model APIs charge per input and output token, so a feature that stuffs many retrieved documents or long history into every prompt costs far more for the same number of calls. Billing per request is the tempting assumption, but the call count is the same here and tokens are the unit of cost.",
+        "ar": "تحاسب واجهات النماذج المُدارة (managed model APIs) على كل رمز إدخال وإخراج (input and output token)، فالميزة التي تحشو كل مُوجِّه (prompt) بوثائق مسترجَعة كثيرة (retrieved documents) أو سجلّ محادثة طويل (history) تكلّف أكثر بكثير للعدد نفسه من الاستدعاءات. أما المحاسبة لكل طلب (per request) فهي الافتراض المغري، لكن عدد الاستدعاءات هنا متساوٍ، والرموز (tokens) هي وحدة التكلفة (unit of cost)."
+      }
+    },
+    {
+      "id": "m6-2",
+      "level": 2,
+      "lesson": "6.1",
+      "q": {
+        "en": "On salary day the Najm Mobile API's HPA scales from 6 pods to its maximum of 30, and then errors climb because the PostgreSQL database runs out of connections. What should the platform team change?",
+        "ar": "في يوم صرف الرواتب يوسّع المُوسِّع الأفقي للحجيرات (Horizontal Pod Autoscaler, HPA) واجهة برمجة تطبيق نجم للهاتف (Najm Mobile API) من 6 حجيرات (pods) إلى حدّها الأقصى 30، ثم ترتفع الأخطاء (errors) لأن قاعدة بيانات PostgreSQL تنفد اتصالاتها (runs out of connections). ما الذي ينبغي أن يغيّره فريق المنصة (platform team)؟"
+      },
+      "o": {
+        "en": [
+          "Raise maxReplicas to 60 so that many more pods can absorb the spike",
+          "Lower minReplicas to 2 so that idle pods hold fewer connections",
+          "Scale the HPA on memory instead of CPU so that it reacts sooner",
+          "Add a connection pooler and cap pods at what the database takes"
+        ],
+        "ar": [
+          "رفع الحدّ الأقصى للنسخ (maxReplicas) إلى 60 كي تمتصّ حجيرات (pods) أكثر بكثير ذروة الحمل (spike)",
+          "خفض الحدّ الأدنى للنسخ (minReplicas) إلى 2 كي تحتفظ الحجيرات الخاملة (idle pods) باتصالات أقل",
+          "جعل المُوسِّع (HPA) يتوسّع على الذاكرة (memory) بدل المعالج (CPU) كي يستجيب أسرع",
+          "إضافة مُجمِّع اتصالات (connection pooler)، وتحديد سقف الحجيرات (pod ceiling) بما تحتمله قاعدة البيانات (database)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Scaling moves the bottleneck: every pod opens connections, so a pooler such as PgBouncer and a maxReplicas set from what the database can take protect it. Raising the ceiling is the tempting shortcut, but more pods open even more connections and turn the spike into a database outage.",
+        "ar": "التوسّع ينقل عنق الزجاجة (scaling moves the bottleneck): كل حجيرة (pod) تفتح اتصالات، لذا يحمي قاعدةَ البيانات مُجمِّعُ اتصالات (connection pooler) مثل PgBouncer وحدٌّ أقصى للنسخ (maxReplicas) يُحدَّد بما تحتمله. أما رفع السقف (ceiling) فهو الاختصار المغري، لكن مزيدًا من الحجيرات يفتح مزيدًا من الاتصالات ويحوّل الذروة (spike) إلى انقطاع في قاعدة البيانات (database outage)."
+      }
+    },
+    {
+      "id": "m6-3",
+      "level": 2,
+      "lesson": "6.2",
+      "q": {
+        "en": "After idle resources were deleted and workloads rightsized, the Mobile API's compute never falls below about 40 vCPUs, even at night, and peaks near 120 vCPUs on busy days. Salem wants a one-year savings plan. What should it cover?",
+        "ar": "بعد حذف الموارد الخاملة (idle resources) وضبط حجم أحمال العمل (rightsizing)، لم تعد قدرة الحوسبة (compute) لواجهة Mobile API تنزل عن نحو 40 وحدة معالجة افتراضية (vCPUs) حتى ليلًا، وتبلغ ذروتها (peak) قرابة 120 في الأيام المزدحمة. يريد سالم خطة توفير لمدة سنة (one-year savings plan). ما الذي ينبغي أن تغطيه؟"
+      },
+      "o": {
+        "en": [
+          "About 40 vCPUs, the steady floor, with on-demand and spot above it",
+          "About 120 vCPUs, the peak, so that every busy hour gets the discount",
+          "About 80 vCPUs, the average, so quiet hours offset the busy peaks",
+          "Nothing yet; move all of the API's capacity onto spot instances"
+        ],
+        "ar": [
+          "نحو 40 وحدة (vCPUs)، أي الحدّ الأدنى الثابت (steady floor)، مع سعة عند الطلب (on-demand) وسعة فائضة مخفّضة (spot) فوقه",
+          "نحو 120 وحدة (vCPUs)، أي الذروة (peak)، كي تحصل كل ساعة مزدحمة على الخصم (discount)",
+          "نحو 80 وحدة (vCPUs)، أي المتوسط (average)، كي تعوّض الساعات الهادئة (quiet hours) ساعات الذروة",
+          "لا شيء الآن؛ نقل كل سعة الواجهة (capacity) إلى مثيلات السعة الفائضة (spot instances)"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Commit to the floor you are confident you will use, not the peak, and cover the burst above it with on-demand or interruptible spot capacity. Committing to the peak or the average is tempting for the bigger discount, but it pays for capacity that sits unused for much of the year.",
+        "ar": "التزم بالحدّ الأدنى (floor) الذي تثق باستخدامه لا بالذروة (peak)، وغطِّ الزيادة فوقه بسعة عند الطلب (on-demand) أو بسعة فائضة قابلة للمقاطعة (spot capacity). أما الالتزام بالذروة أو بالمتوسط (average) فمغرٍ لأجل خصم أكبر، لكنه يدفع ثمن سعة (capacity) تبقى غير مستخدمة معظم السنة."
+      }
+    },
+    {
+      "id": "m6-4",
+      "level": 3,
+      "lesson": "6.3",
+      "q": {
+        "en": "To meet its budget, the data science team proposes switching Najm's self-hosted confidential classification model from its 8-bit version to a 4-bit one next week. A load test shows twice the tokens per second on the same GPUs. What should Salem decide?",
+        "ar": "لكي يلتزم فريق علم البيانات (data science team) بميزانيته (budget)، يقترح أن يُحوَّل نموذج التصنيف السرّي المستضاف ذاتيًا (self-hosted confidential classification model) في بنك نجم (Najm Bank) من نسخته ذات 8 بتات (8-bit) إلى نسخة ذات 4 بتات (4-bit) الأسبوع المقبل. ويُظهر اختبار حمل (load test) ضعف عدد الرموز في الثانية (tokens per second) على وحدات معالجة الرسوميات (GPUs) نفسها. ماذا ينبغي أن يقرّر سالم؟"
+      },
+      "o": {
+        "en": [
+          "Approve the full switch, since the load test already shows it is faster",
+          "Reject it, since quantised models are unsafe for confidential data",
+          "Run the evaluation set, then canary it at the gateway before promoting",
+          "Approve it and point the route at an alias so new versions roll in"
+        ],
+        "ar": [
+          "الموافقة على التحويل الكامل (full switch)، لأن اختبار الحمل (load test) يُظهر بالفعل أنه أسرع",
+          "رفضه، لأن النماذج المُكمَّمة (quantised models) غير آمنة للبيانات السرّية (confidential data)",
+          "تشغيل مجموعة التقييم (evaluation set)، ثم إطلاقه إطلاقًا كناريًا (canary) عند البوابة (gateway) قبل الترقية (promoting)",
+          "الموافقة عليه وتوجيه المسار (route) إلى اسم مستعار (alias) كي تصل النسخ الجديدة (new versions) تلقائيًا"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "A quantisation change alters answers, so it is a release: measure quality on your own evaluation set, then canary a small share at the gateway and compare results, latency and cost before promoting or rolling back. A faster load test is the tempting evidence, but it says nothing about whether the classifications are still right.",
+        "ar": "تغيير التكميم (quantisation) يغيّر الإجابات، فهو إطلاق (release): قِس الجودة على مجموعة التقييم الخاصة بك (evaluation set)، ثم أطلق حصة صغيرة إطلاقًا كناريًا (canary) عند البوابة (gateway) وقارن النتائج وزمن الاستجابة (latency) والتكلفة قبل الترقية (promote) أو التراجع (roll back). أما اختبار الحمل الأسرع (load test) فهو الدليل المغري، لكنه لا يقول شيئًا عن بقاء التصنيفات (classifications) صحيحة."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m6-e1",
+      "lesson": "6.1",
+      "text": {
+        "en": "I have restored a database backup into a second instance after deliberately dropping a table, measured the actual restore time and data loss against an RTO and RPO I chose, and listed at least two changes that would close the gap",
+        "ar": "استعدتُ نسخة احتياطية لقاعدة بيانات (database backup) إلى مثيل ثانٍ (second instance) بعد حذف جدول عمدًا (dropping a table)، وقستُ زمن الاستعادة الفعلي (actual restore time) والبيانات المفقودة (data loss) مقارنةً بهدفَي RTO وRPO اخترتُهما، وذكرتُ تغييرين على الأقل يسدّان الفجوة (close the gap)"
+      }
+    },
+    {
+      "id": "m6-e2",
+      "lesson": "6.2",
+      "text": {
+        "en": "I have written a policy-as-code rule that fails an OpenTofu plan containing a resource without owner or environment tags, and shown that it passes once the tags are added",
+        "ar": "كتبتُ قاعدة سياسة بوصفها شيفرة (policy as code) تُفشِل خطة OpenTofu (OpenTofu plan) تحتوي موردًا بلا وسمَي المالك والبيئة (owner or environment tags)، وأثبتُّ أنها تنجح بعد إضافة الوسوم (tags)"
+      }
+    }
+  ]
+}

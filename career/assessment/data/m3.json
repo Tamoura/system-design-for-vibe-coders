@@ -1,0 +1,135 @@
+{
+  "area": "m3",
+  "questions": [
+    {
+      "id": "m3-1",
+      "level": 1,
+      "lesson": "3.1",
+      "q": {
+        "en": "Omar is about to start his capstone for a software engineering role. Before he writes any code, what should he write down to make sure the project is more than a tutorial?",
+        "ar": "يوشك عمر أن يبدأ مشروع التخرّج (capstone) لدور هندسة البرمجيات (software engineering role). قبل أن يكتب أي شيفرة (before he writes any code)، ماذا ينبغي أن يدوّن ليضمن أن مشروعه أكثر من مجرد درس تعليمي (tutorial)؟"
+      },
+      "o": {
+        "en": [
+          "The framework and cloud stack the project is going to use",
+          "The one hard question the project must answer well",
+          "The full list of features he plans to add over the year",
+          "How many commits he will push each week to look active"
+        ],
+        "ar": [
+          "إطار العمل (framework) والحزمة السحابية (cloud stack) اللذين سيستخدمهما المشروع",
+          "السؤال الصعب الوحيد (one hard question) الذي يجب أن يجيب عنه المشروع جيدًا",
+          "القائمة الكاملة للميزات (full list of features) التي ينوي إضافتها خلال العام",
+          "عدد الإيداعات (commits) التي سيدفعها (push) كل أسبوع ليبدو نشطًا (look active)"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "A capstone is anchored on one hard question, such as two people booking the last slot at once; without one it is still a tutorial. Picking the stack first is a named trap: write the spec, then choose the simplest stack that meets it.",
+        "ar": "يُبنى مشروع التخرّج (capstone) حول سؤال صعب واحد (one hard question)، مثل شخصين يحجزان آخر موعد (last slot) في اللحظة نفسها؛ ومن دونه يبقى درسًا تعليميًا (tutorial). أما اختيار الحزمة التقنية أولًا (picking the stack first) ففخ معروف: اكتب المواصفات (spec)، ثم اختر أبسط حزمة (simplest stack) تفي بها."
+      }
+    },
+    {
+      "id": "m3-2",
+      "level": 2,
+      "lesson": "3.2",
+      "q": {
+        "en": "Yousef runs the five-minute test on his capstone. A classmate who has never seen it can say what it does from the README, but after ten minutes still cannot start it: the app stops, asking for environment variables the README never names. What is the best fix?",
+        "ar": "يُجري يوسف اختبار الدقائق الخمس (five-minute test) على مشروع تخرّجه (capstone). يستطيع زميل لم يره من قبل أن يقول ما يفعله من ملف README، لكنه بعد عشر دقائق ما زال عاجزًا عن تشغيله: يتوقف التطبيق طالبًا متغيرات بيئة (environment variables) لا يذكرها ملف README. ما أفضل إصلاح؟"
+      },
+      "o": {
+        "en": [
+          "Commit his own .env file so the app has every value it needs",
+          "Add a longer section listing every library and its version",
+          "Send the classmate his keys privately and count it as a pass",
+          "Add .env.example and test the steps on a clean machine"
+        ],
+        "ar": [
+          "أن يودِع (commit) ملف .env الخاص به حتى يجد التطبيق كل القيم التي يحتاجها",
+          "أن يضيف قسمًا أطول يسرد كل مكتبة (library) وإصدارها (version)",
+          "أن يرسل مفاتيحه (keys) إلى زميله سرًّا ويعدّ الاختبار ناجحًا (pass)",
+          "أن يضيف ملف .env.example ويختبر خطوات التشغيل (run steps) على جهاز نظيف (clean machine)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "The \"Run it locally\" section must work on a clean machine, with an .env.example holding placeholder values. Committing the real .env is the one mistake that is not cosmetic: a leaked key has to be revoked, not just deleted.",
+        "ar": "يجب أن يعمل قسم «التشغيل محليًا (Run it locally)» على جهاز نظيف (clean machine)، مع ملف .env.example يحوي قيمًا مؤقتة (placeholder values). أما إيداع ملف .env الحقيقي فهو الخطأ الوحيد غير الشكلي (not cosmetic): فالمفتاح المسرَّب (leaked key) يجب إبطاله (revoked)، لا حذفه فقط."
+      }
+    },
+    {
+      "id": "m3-3",
+      "level": 2,
+      "lesson": "3.3",
+      "q": {
+        "en": "Mohammed's capstone is deployed, tested and used by gym members, and he already has two merged open-source pull requests. Interviewers note he has never turned a vague request from a client into delivered software. With eight weeks, which route adds that signal?",
+        "ar": "مشروع تخرّج محمد (capstone) منشور (deployed) ومُختبَر (tested) ويستخدمه أعضاء نادٍ رياضي (gym members)، ولديه بالفعل طلبا دمج (pull requests) مدموجان في مشاريع مفتوحة المصدر (open-source). يلاحظ المحاورون (interviewers) أنه لم يحوّل قط طلبًا غامضًا من عميل (vague request from a client) إلى برنامج مُسلَّم (delivered software). لديه ثمانية أسابيع، فأي مسار (route) يضيف هذه الإشارة (signal)؟"
+      },
+      "o": {
+        "en": [
+          "A volunteer charity project with written scope and handover",
+          "More open-source pull requests to libraries he already uses",
+          "A Kaggle competition to show he can model under a clear metric",
+          "Several weekend hackathons, collecting a certificate from each"
+        ],
+        "ar": [
+          "مشروع تطوعي (volunteer project) لجمعية خيرية (charity)، بنطاق مكتوب (written scope) وتسليم (handover)",
+          "مزيد من طلبات الدمج (pull requests) في مكتبات (libraries) يستخدمها أصلًا",
+          "مسابقة على Kaggle ليُظهر قدرته على النمذجة (modelling) وفق مقياس واضح (clear metric)",
+          "عدة هاكاثونات (hackathons) في عطلات نهاية الأسبوع، يجمع من كل منها شهادة (certificate)"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Choose the route that adds the signal your portfolio lacks: freelance or volunteer work proves working with a real client, from scoping to handover. More open-source pull requests repeat a signal he already has.",
+        "ar": "اختر المسار (route) الذي يضيف الإشارة (signal) الناقصة من معرض أعمالك (portfolio): فالعمل الحر أو التطوعي (freelance or volunteer work) يثبت العمل مع عميل حقيقي (real client)، من تحديد النطاق (scoping) إلى التسليم (handover). أما مزيد من طلبات الدمج (pull requests) فيكرّر إشارة لديه أصلًا."
+      }
+    },
+    {
+      "id": "m3-4",
+      "level": 3,
+      "lesson": "3.1",
+      "q": {
+        "en": "Reem's capstone is a question-answering assistant over her university's published regulations. Her README says answers \"got much better\" after a prompt change. Dana asks how she knows it is better and not just different. Which evidence answers that best?",
+        "ar": "مشروع تخرّج ريم (capstone) مساعدٌ للإجابة عن الأسئلة (question-answering assistant) فوق لوائح جامعتها المنشورة (published regulations). يقول ملفها README إن الإجابات «تحسّنت كثيرًا ⁦(got much better)⁩» بعد تغيير في الموجّه (prompt change). تسألها دانة كيف تعرف أنه أفضل لا مجرد مختلف (better and not just different). أي دليل (evidence) يجيب عن ذلك على أفضل وجه؟"
+      },
+      "o": {
+        "en": [
+          "Five sample answers where the new prompt clearly reads better",
+          "A switch to a larger model, so that quality is no longer in doubt",
+          "Scores on a fixed golden set of real questions, before and after",
+          "A line-by-line walkthrough of the reasoning behind the new prompt"
+        ],
+        "ar": [
+          "خمس إجابات نموذجية (sample answers) يبدو فيها الموجّه الجديد (new prompt) أفضل بوضوح",
+          "الانتقال إلى نموذج أكبر (larger model) حتى لا تبقى الجودة (quality) موضع شك",
+          "نتائج على مجموعة ذهبية ثابتة (fixed golden set) من أسئلة حقيقية، قبل التغيير وبعده",
+          "شرح سطرًا بسطر (line-by-line) للمنطق الذي يقوم عليه الموجّه الجديد (new prompt)"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "The AI capstone's production bar is a golden set of at least 50 real questions scored on every change, because \"it seems better\" is not evidence. Hand-picked sample answers are exactly that kind of impression.",
+        "ar": "معيار الإنتاج (production bar) لمشروع تخرّج الذكاء الاصطناعي (AI capstone) هو مجموعة ذهبية (golden set) من 50 سؤالًا حقيقيًا على الأقل تُقيَّم مع كل تغيير (scored on every change)، لأن عبارة «يبدو أفضل ⁦(it seems better)⁩» ليست دليلًا (evidence). والإجابات النموذجية المنتقاة يدويًا (hand-picked sample answers) هي بالضبط هذا النوع من الانطباع."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m3-e1",
+      "lesson": "3.1",
+      "text": {
+        "en": "I have shipped the thinnest slice of my capstone so it works on someone else's machine (live link or one command), with CI green and a real user who has tried it",
+        "ar": "أطلقتُ الشريحة الأرفع (thinnest slice) من مشروع تخرّجي (capstone) بحيث تعمل على جهاز شخص آخر (someone else's machine) عبر رابط مباشر (live link) أو أمر واحد (one command)، مع تكامل مستمر ناجح (CI green) ومستخدم حقيقي (real user) جرّبها"
+      }
+    },
+    {
+      "id": "m3-e2",
+      "lesson": "3.3",
+      "text": {
+        "en": "I have opened a small, focused open-source pull request linked to its issue, after reading the project's contribution and AI policies, and recorded it in my brag document",
+        "ar": "فتحتُ طلب دمج (pull request) صغيرًا ومركّزًا في مشروع مفتوح المصدر (open-source)، مرتبطًا بمسألته (issue)، بعد قراءة سياسات المساهمة والذكاء الاصطناعي (contribution and AI policies) في المشروع، وسجّلته في مستند إنجازاتي (brag document)"
+      }
+    }
+  ]
+}

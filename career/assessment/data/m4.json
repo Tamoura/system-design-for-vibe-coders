@@ -1,0 +1,135 @@
+{
+  "area": "m4",
+  "questions": [
+    {
+      "id": "m4-1",
+      "level": 1,
+      "lesson": "4.1",
+      "q": {
+        "en": "Before sending a new CV layout, you select all the text in your PDF and paste it into a plain text file. What does this check tell you?",
+        "ar": "قبل إرسال تخطيط جديد لسيرتك الذاتية (CV layout)، تحدّد كل النص في ملف PDF وتلصقه في ملف نصي عادي (plain text file). ماذا يخبرك هذا الفحص (check)؟"
+      },
+      "o": {
+        "en": [
+          "Whether the CV scores high enough to pass the employer's ATS filter",
+          "Whether the CV fits on one page at a readable 10–12 pt font size",
+          "Whether a parser is likely to read the text fully and in order",
+          "Whether the job ad's keywords appear often enough in the CV's text"
+        ],
+        "ar": [
+          "هل تحصل السيرة الذاتية (CV) على درجة كافية لتجاوز مرشّح نظام تتبّع المتقدّمين (ATS filter) لدى صاحب العمل",
+          "هل تتّسع السيرة الذاتية (CV) لصفحة واحدة (one page) بحجم خط مقروء (readable font) بين 10 و12 نقطة",
+          "هل يُرجَّح أن يقرأ المحلّل الآلي (parser) نصّك كاملًا (completely) وبالترتيب الصحيح (in order)",
+          "هل تتكرّر الكلمات المفتاحية (keywords) لإعلان الوظيفة (job ad) بما يكفي في نص السيرة الذاتية (CV)"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "If pasted text comes out scrambled or with words missing, a parser will struggle too, so the test checks parsing, not a score. ATS 'scores' are not something the lesson asks you to target, and the paste test does not measure one.",
+        "ar": "إذا خرج النص الملصوق (pasted text) مشوّشًا أو ناقص الكلمات، فسيتعثّر المحلّل الآلي (parser) أيضًا؛ فالفحص يختبر التحليل (parsing) لا الدرجة (score). ولا يطلب الدرس استهداف «درجة ATS» (ATS score) أصلًا، ولا يقيسها اختبار اللصق (paste test)."
+      }
+    },
+    {
+      "id": "m4-2",
+      "level": 2,
+      "lesson": "4.2",
+      "q": {
+        "en": "Yousef met a meetup organiser who works at a Doha cloud consultancy, acted on her advice to add Terraform to his project, and sent her the repo link; she liked it. Her firm has just posted a junior cloud role. How should he ask her for a referral?",
+        "ar": "التقى يوسف بمنظِّمة لقاء تقني (meetup organiser) تعمل في شركة استشارات سحابية (cloud consultancy) في الدوحة، وعمل بنصيحتها فأضاف Terraform إلى مشروعه، ثم أرسل لها رابط المستودع (repo link) فأعجبها. نشرت شركتها للتوّ وظيفة سحابية للمبتدئين (junior cloud role). كيف ينبغي أن يطلب منها الإحالة (referral)؟"
+      },
+      "o": {
+        "en": [
+          "Send the job link, his CV and a two-line summary she can forward, and say no is fine",
+          "Ask her to tell the hiring manager he is ready to skip the technical interview rounds",
+          "Send his CV only and ask her to find him whichever role at the firm suits him best",
+          "Ask her to say they have worked together, since a closer link makes a referral count"
+        ],
+        "ar": [
+          "يرسل رابط الوظيفة (job link) وسيرته الذاتية (CV) وملخّصًا من سطرين (two-line summary) يمكنها تمريره، ويؤكّد أن الرفض لا بأس به",
+          "يطلب منها أن تخبر مدير التوظيف (hiring manager) بأنه جاهز لتخطّي جولات المقابلة التقنية (technical interview rounds)",
+          "يرسل سيرته الذاتية (CV) وحدها ويطلب منها أن تجد له أيّ دور (role) في الشركة يناسبه أكثر",
+          "يطلب منها أن تقول إنهما عملا معًا، لأن الصلة الأقرب (closer link) تجعل الإحالة (referral) أكثر تأثيرًا"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "A good referral request makes it easy: the job link, the CV, a short summary to forward, and a graceful exit. A referral gets an application read but does not skip interviews, and exaggerating a connection is exactly what the lesson warns against.",
+        "ar": "طلب الإحالة الجيد (referral request) يسهّل الأمر: رابط الوظيفة (job link)، والسيرة الذاتية (CV)، وملخّص قصير للتمرير (summary to forward)، ومخرج لبق (graceful exit). والإحالة (referral) تجعل أحدًا يقرأ الطلب (application) لكنها لا تُسقط المقابلات (interviews)، والمبالغة في الصلة (exaggerating a connection) هي ما يحذّر منه الدرس تحديدًا."
+      }
+    },
+    {
+      "id": "m4-3",
+      "level": 2,
+      "lesson": "4.3",
+      "q": {
+        "en": "After five weeks, Huda's application log shows 18 targeted applications, 6 recruiter screens and no invitation to a next round. Reading this as a pipeline, what should she change first?",
+        "ar": "بعد خمسة أسابيع، يُظهر سجلّ الطلبات (application log) لدى هدى 18 طلبًا موجّهًا (targeted applications) و6 مقابلات فرز مع مسؤول التوظيف (recruiter screens) ولا دعوة إلى أي جولة تالية (next round). إذا قرأت ذلك بوصفه مسار توظيف (pipeline)، فما الذي ينبغي أن تغيّره أولًا؟"
+      },
+      "o": {
+        "en": [
+          "Rewrite her CV and widen her targeting, since that is where most searches fail",
+          "Send far more applications each week, so more screens turn into next rounds",
+          "Focus on technical preparation, since the final rounds decide who gets offers",
+          "Practise how she talks about her work, since screens are not leading onward"
+        ],
+        "ar": [
+          "تعيد كتابة سيرتها الذاتية (CV) وتوسّع استهدافها (targeting)، لأن معظم عمليات البحث (searches) تتعثّر هناك",
+          "ترسل طلبات (applications) أكثر بكثير كل أسبوع، حتى تتحوّل مقابلات فرز (screens) أكثر إلى جولات تالية (next rounds)",
+          "تركّز على التحضير التقني (technical preparation)، لأن الجولات النهائية (final rounds) هي التي تحدّد من يحصل على العروض (offers)",
+          "تتدرّب على طريقة حديثها عن عملها (how she talks about her work)، لأن مقابلات الفرز (screens) لا تقود إلى ما بعدها"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Screens without a next round point to stories and fit, so she should practise how she talks about her work. Fixing the CV and targeting is the remedy when applications produce no screens, and hers already do.",
+        "ar": "مقابلات الفرز (screens) التي لا تقود إلى جولة تالية (next round) تشير إلى القصص والملاءمة (stories and fit)، فعليها أن تتدرّب على الحديث عن عملها. أما إصلاح السيرة الذاتية والاستهداف (CV and targeting) فهو العلاج حين لا تُنتج الطلبات (applications) أي مقابلات فرز، وطلباتها تُنتجها فعلًا."
+      }
+    },
+    {
+      "id": "m4-4",
+      "level": 3,
+      "lesson": "4.1",
+      "q": {
+        "en": "Omar is tailoring his base CV for a graduate data-engineering ad that asks for 'PostgreSQL', 'CI/CD' and 'Apache Airflow'. His reconciliation API uses Postgres and a GitHub Actions pipeline, but he has never used Airflow. Which tailoring pass is right?",
+        "ar": "يكيّف عمر سيرته الذاتية الأساسية (base CV) لإعلان وظيفة هندسة بيانات للخرّيجين (graduate data-engineering ad) يطلب «PostgreSQL» و«CI/CD» و«Apache Airflow». تستخدم واجهة المطابقة البرمجية (reconciliation API) لديه Postgres وخط GitHub Actions (GitHub Actions pipeline)، لكنه لم يستخدم Airflow قط. أيّ جولة تكييف (tailoring pass) هي الصحيحة؟"
+      },
+      "o": {
+        "en": [
+          "Add all three terms to his skills line, since he can learn Airflow before interviews",
+          "Use the ad's words PostgreSQL and CI/CD in real bullets, and leave Airflow out",
+          "Keep 'Postgres' as written, since the ATS will treat both names as the same term",
+          "List Airflow in small white text so searches find it but human readers do not"
+        ],
+        "ar": [
+          "يضيف المصطلحات الثلاثة إلى سطر المهارات (skills line)، لأنه يستطيع تعلّم Airflow قبل المقابلات (interviews)",
+          "يستخدم كلمات الإعلان (the ad's words) PostgreSQL وCI/CD في نقاط حقيقية (real bullets)، ويترك Airflow",
+          "يُبقي «Postgres» كما كتبها، لأن نظام تتبّع المتقدّمين (ATS) سيعامل الاسمين مصطلحًا واحدًا",
+          "يُدرج Airflow بخط صغير أبيض (small white text) لتجده عمليات البحث (searches) ولا يراه القرّاء من البشر"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Honest mirroring means using the ad's exact wording where it truthfully describes you, and listing only skills you could be questioned on. Adding Airflow because he could learn it later puts a claim on the CV he cannot discuss today.",
+        "ar": "المحاكاة الصادقة (honest mirroring) تعني استخدام صياغة الإعلان بالضبط (the ad's exact wording) حيث تصفك بصدق، وإدراج المهارات (skills) التي يمكن أن تُسأل عنها فقط. وإضافة Airflow لأنه قد يتعلّمه لاحقًا تضع في السيرة الذاتية (CV) ادّعاءً لا يستطيع مناقشته اليوم."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m4-e1",
+      "lesson": "4.1",
+      "text": {
+        "en": "I have run the plain-text paste test and a recruiter's first-pass checklist on my CV, and fixed it until the pasted text reads in order with nothing missing and every check passes.",
+        "ar": "أجريت اختبار اللصق في نص عادي (plain-text paste test) وقائمة الفحص الأولى لمسؤول التوظيف (recruiter's first-pass checklist) على سيرتي الذاتية (CV)، وأصلحتها حتى صار النص الملصوق (pasted text) مرتّبًا بلا نقص ونجح كل فحص (check)."
+      }
+    },
+    {
+      "id": "m4-e2",
+      "lesson": "4.2",
+      "text": {
+        "en": "I have held an informational conversation, acted on one piece of advice from it, and sent a follow-up with a working link to what I did, all logged in my network tracker.",
+        "ar": "أجريت محادثة استكشافية (informational conversation)، وعملت بنصيحة واحدة منها (one piece of advice)، وأرسلت رسالة متابعة (follow-up) برابط يعمل (working link) إلى ما أنجزته، وسجّلت ذلك كله في متتبّع العلاقات (network tracker)."
+      }
+    }
+  ]
+}

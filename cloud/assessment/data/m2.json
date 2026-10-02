@@ -1,0 +1,135 @@
+{
+  "area": "m2",
+  "questions": [
+    {
+      "id": "m2-1",
+      "level": 1,
+      "lesson": "2.3",
+      "q": {
+        "en": "A Mobile API pod's readiness probe starts failing while its liveness probe keeps passing. What does Kubernetes do with that pod?",
+        "ar": "يبدأ مسبار الجاهزية (readiness probe) في إحدى حجيرات (pods) واجهة برمجة تطبيق نجم للهاتف (Najm Mobile API) بالفشل، بينما يستمر مسبار الحيوية (liveness probe) في النجاح. ماذا يفعل Kubernetes بتلك الحجيرة (pod)؟"
+      },
+      "o": {
+        "en": [
+          "It restarts the container until the readiness probe passes again",
+          "It takes the pod out of Service endpoints but leaves it running",
+          "It deletes the pod so that its ReplicaSet creates a fresh replacement",
+          "It moves the pod to another node with more spare CPU and memory"
+        ],
+        "ar": [
+          "يعيد تشغيل الحاوية (restarts the container) حتى ينجح مسبار الجاهزية (readiness probe) من جديد",
+          "يزيل الحجيرة من نقاط نهاية الخدمة (Service endpoints) لكنه يتركها قيد التشغيل (running)",
+          "يحذف الحجيرة (pod) كي تُنشئ مجموعة النسخ (ReplicaSet) بديلًا جديدًا (replacement)",
+          "ينقل الحجيرة (pod) إلى عقدة (node) أخرى لديها فائض أكبر من المعالج والذاكرة (CPU and memory)"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Readiness decides only whether a pod gets traffic, so a failing readiness probe takes it out of the Service's endpoints without restarting it. Restarting the container is what a failing liveness probe does, not readiness.",
+        "ar": "الجاهزية (readiness) تحدد فقط ما إذا كانت الحجيرة (pod) تتلقى حركة المرور (traffic)، لذا فإن فشل مسبار الجاهزية (readiness probe) يُخرجها من نقاط نهاية الخدمة (Service endpoints) دون إعادة تشغيلها. أما إعادة تشغيل الحاوية (restarting the container) فهي ما يفعله فشل مسبار الحيوية (liveness probe)، لا مسبار الجاهزية."
+      }
+    },
+    {
+      "id": "m2-2",
+      "level": 2,
+      "lesson": "2.1",
+      "q": {
+        "en": "The Mobile API image has passed its tests in staging. Tariq proposes a separate 'production build' job that rebuilds the same commit with production settings baked in. What should the pipeline do instead?",
+        "ar": "اجتازت صورة (image) واجهة برمجة تطبيق نجم للهاتف (Najm Mobile API) اختباراتها في بيئة ما قبل الإنتاج (staging). يقترح طارق مهمة منفصلة باسم «بناء الإنتاج» (production build) تعيد بناء الإيداع نفسه (same commit) مع تضمين إعدادات الإنتاج (production settings) داخل الصورة. ماذا ينبغي أن يفعل خط التسليم (pipeline) بدلًا من ذلك؟"
+      },
+      "o": {
+        "en": [
+          "Rebuild from the same commit, since the same source gives the same image",
+          "Push the staging image again under a new `prod` tag and deploy that tag",
+          "Rebuild with production settings, then rescan the new image with Trivy",
+          "Deploy the digest staging tested; supply production settings at runtime"
+        ],
+        "ar": [
+          "إعادة البناء (rebuild) من الإيداع نفسه (same commit)، لأن المصدر نفسه (same source) يعطي الصورة نفسها (same image)",
+          "دفع صورة ما قبل الإنتاج (staging image) مجددًا تحت وسم جديد (tag) هو `prod` ثم نشر ذلك الوسم (deploy that tag)",
+          "إعادة البناء بإعدادات الإنتاج (production settings)، ثم إعادة فحص الصورة الجديدة (rescan the new image) باستخدام Trivy",
+          "نشر الملخّص (digest) الذي اختُبر في staging، وتوفير إعدادات الإنتاج (production settings) وقت التشغيل (runtime)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Build once, then promote and deploy that exact digest, with per-environment settings supplied at runtime; a 'production build' is a different artefact from the one that was tested. Rebuilding the same commit is tempting but timestamps and file ordering can still change the digest of a rebuild.",
+        "ar": "ابنِ مرة واحدة (build once)، ثم رقِّ (promote) الملخّص (digest) نفسه وانشره، مع توفير إعدادات كل بيئة (per-environment settings) وقت التشغيل (runtime)؛ فـ«بناء الإنتاج» (production build) أثر برمجي (artefact) مختلف عن الذي اختُبر. إعادة بناء الإيداع نفسه (same commit) مغرية، لكن الطوابع الزمنية (timestamps) وترتيب الملفات (file ordering) قد يغيّران ملخّص (digest) الصورة المُعاد بناؤها (rebuild)."
+      }
+    },
+    {
+      "id": "m2-3",
+      "level": 2,
+      "lesson": "2.2",
+      "q": {
+        "en": "After a release, Yousef sees a Payments pod in `CrashLoopBackOff`. Working from Najm's on-call triage card, what should he look at first?",
+        "ar": "بعد إطلاق (release)، يرى يوسف حجيرة (pod) في خدمة المدفوعات (Payments service) بحالة `CrashLoopBackOff`. بالاعتماد على بطاقة الفرز للمناوبة (on-call triage card) في بنك نجم (Najm Bank)، ما الذي ينبغي أن يفحصه أولًا؟"
+      },
+      "o": {
+        "en": [
+          "The crashed container's last logs, with `kubectl logs --previous`",
+          "Whether the Service selector still matches the labels on the pods",
+          "Whether the node pool has enough spare CPU and memory for the pod",
+          "Whether the node has permission to pull the image from the registry"
+        ],
+        "ar": [
+          "آخر سجلات الحاوية المنهارة (crashed container's logs)، باستخدام `kubectl logs --previous`",
+          "ما إذا كان محدِّد الخدمة (Service selector) لا يزال يطابق تسميات الحجيرات (pod labels)",
+          "ما إذا كان في مجموعة العقد (node pool) فائض كافٍ من المعالج والذاكرة (CPU and memory) للحجيرة",
+          "ما إذا كانت العقدة (node) تملك صلاحية سحب الصورة (pull the image) من السجل (registry)"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "`CrashLoopBackOff` means the container starts and exits repeatedly, so the previous container's logs show the last error (often missing config or secrets). Registry permission belongs to `ImagePullBackOff` and capacity to `Pending`, where the container never starts at all.",
+        "ar": "تعني حالة `CrashLoopBackOff` أن الحاوية (container) تبدأ ثم تخرج مرارًا، لذا تُظهر سجلات الحاوية السابقة (previous container's logs) آخر خطأ (last error)، وكثيرًا ما يكون إعدادات (config) أو أسرارًا (secrets) لم تُركَّب. أما صلاحية السجل (registry permission) فتخص حالة `ImagePullBackOff`، والسعة (capacity) تخص حالة `Pending`، وفيهما لا تبدأ الحاوية أصلًا."
+      }
+    },
+    {
+      "id": "m2-4",
+      "level": 3,
+      "lesson": "2.3",
+      "q": {
+        "en": "A new Najm Assist version needs about 90 seconds to load before it can answer. Its pods are restarted over and over, the logs show only 'still loading', and the liveness probe (every 10 s, failure threshold 3) checks only the process. There is no startup probe. What is the best fix?",
+        "ar": "يحتاج إصدار جديد من نجم أسيست (Najm Assist) إلى نحو 90 ثانية للتحميل (load) قبل أن يستطيع الرد. تُعاد تشغيل حجيراته (pods) مرة بعد مرة، ولا تُظهر السجلات (logs) إلا «ما زال يُحمِّل» (still loading)، ومسبار الحيوية (liveness probe) (كل 10 ثوانٍ، بعتبة فشل (failure threshold) قدرها 3) يفحص العملية (process) وحدها. ولا يوجد مسبار بدء (startup probe). ما أفضل إصلاح؟"
+      },
+      "o": {
+        "en": [
+          "Raise the memory limit so the loading phase is not cut short",
+          "Point liveness at the readiness endpoint so it waits for the database",
+          "Add a startup probe sized to the worst-case start time plus margin",
+          "Raise the HPA minimum so other replicas cover the restarting pods"
+        ],
+        "ar": [
+          "رفع حدّ الذاكرة (memory limit) كي لا تنقطع مرحلة التحميل (loading phase)",
+          "توجيه مسبار الحيوية (liveness) إلى نقطة الجاهزية (readiness endpoint) كي ينتظر قاعدة البيانات (database)",
+          "إضافة مسبار بدء (startup probe) بحجم أسوأ زمن بدء (worst-case start time) مع هامش (margin)",
+          "رفع الحد الأدنى للموسِّع الأفقي (HPA minimum) كي تغطي النسخ الأخرى (replicas) الحجيراتِ التي يُعاد تشغيلها"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Liveness gives up after about 30 seconds, so it kills the app before it finishes starting; a startup probe holds liveness off until start-up succeeds. A memory limit would show as `OOMKilled`, not 'still loading', and adding replicas does not stop each new pod being killed the same way.",
+        "ar": "يستسلم مسبار الحيوية (liveness probe) بعد نحو 30 ثانية، فيقتل التطبيق قبل أن يكتمل بدؤه؛ أما مسبار البدء (startup probe) فيؤجّل الحيوية (liveness) حتى ينجح البدء. ولو كان السبب حدّ الذاكرة (memory limit) لظهرت حالة `OOMKilled` لا «ما زال يُحمِّل»، وزيادة النسخ (replicas) لا تمنع قتل كل حجيرة جديدة (new pod) بالطريقة نفسها."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m2-e1",
+      "lesson": "2.1",
+      "text": {
+        "en": "I have rewritten a naive Dockerfile with a pinned slim base, a .dockerignore, dependency files copied before source, a non-root USER and an exec-form CMD, and shown that changing one source line rebuilds only the last layers",
+        "ar": "أعدتُ كتابة ملف Dockerfile ساذج (naive Dockerfile) بصورة أساس نحيفة مثبّتة (pinned slim base)، وملف .dockerignore، ونسخ ملفات الاعتماديات (dependency files) قبل الشيفرة المصدرية (source)، ومستخدم غير جذري (non-root USER)، وأمر CMD بصيغة التنفيذ (exec-form CMD)، وأثبتُّ أن تغيير سطر واحد من المصدر لا يعيد بناء إلا الطبقات الأخيرة (last layers)"
+      }
+    },
+    {
+      "id": "m2-e2",
+      "lesson": "2.3",
+      "text": {
+        "en": "I have deployed an app with liveness, readiness and startup probes, shown a pod leave the Service endpoints without restarting when only readiness fails, and recorded the restart storm when liveness depends on another service",
+        "ar": "نشرتُ تطبيقًا بمسابير الحيوية والجاهزية والبدء (liveness, readiness and startup probes)، وأظهرتُ حجيرة (pod) تغادر نقاط نهاية الخدمة (Service endpoints) دون إعادة تشغيل حين تفشل الجاهزية (readiness) وحدها، وسجّلتُ عاصفة إعادة التشغيل (restart storm) حين يعتمد مسبار الحيوية (liveness) على خدمة أخرى"
+      }
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "area": "m0",
+  "questions": [
+    {
+      "id": "m0-1",
+      "level": 1,
+      "lesson": "0.1",
+      "q": {
+        "en": "A product manager asks Kareem to build \"a churn dashboard\" for the retail team by Friday. According to the lesson, what should Kareem establish before writing any query?",
+        "ar": "يطلب مدير منتج (product manager) من كريم بناء «لوحة معلومات لتسرّب العملاء» (churn dashboard) لفريق التجزئة (retail team) بحلول يوم الجمعة. وفقًا للدرس، ما الذي ينبغي أن يحدّده كريم قبل كتابة أي استعلام (query)؟"
+      },
+      "o": {
+        "en": [
+          "Which BI tool the product team prefers, and how often it should refresh",
+          "Which data scientist could build a churn model to power the new chart",
+          "Which decision it will change, and what \"churn\" exactly means here",
+          "Which existing tables hold churn data, so he can reuse their query"
+        ],
+        "ar": [
+          "أداة ذكاء الأعمال (BI tool) التي يفضّلها فريق المنتج، وعدد مرات تحديثها (refresh)",
+          "عالم البيانات (data scientist) القادر على بناء نموذج تسرّب (churn model) يغذّي الرسم الجديد",
+          "القرار (decision) الذي ستغيّره اللوحة، والمعنى الدقيق لمصطلح «التسرّب» (churn) هنا",
+          "الجداول القائمة (existing tables) التي تحوي بيانات التسرّب (churn data)، ليعيد استخدام استعلامها"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Every request starts from the decision it supports and the exact definitions it needs; \"a dashboard\" is a solution, not a request. Reusing an existing query is tempting, but it copies a definition that nobody has agreed or owns.",
+        "ar": "يبدأ كل طلب (request) من القرار الذي يدعمه (decision it supports) ومن التعريفات الدقيقة (exact definitions) التي يحتاجها؛ فعبارة «لوحة معلومات» (dashboard) حلٌّ (solution) وليست طلبًا. إعادة استخدام استعلام قائم (existing query) مغرية، لكنها تنسخ تعريفًا (definition) لم يتفق عليه أحد ولا يملكه أحد (nobody owns)."
+      }
+    },
+    {
+      "id": "m0-2",
+      "level": 2,
+      "lesson": "0.2",
+      "q": {
+        "en": "Najm's daily Freeze card mart is built once at 07:00 for the previous Doha day and never rebuilt. Customers whose phones were offline send yesterday's taps later that morning, so yesterday's count stays too low. What should Lina change?",
+        "ar": "يُبنى سوق البيانات اليومي (daily mart) الخاص بميزة تجميد البطاقة (Freeze card) في بنك نجم (Najm Bank) مرة واحدة عند الساعة 07:00 لليوم السابق بتوقيت الدوحة (Doha day)، ولا يُعاد بناؤه أبدًا. والعملاء الذين كانت هواتفهم غير متصلة (offline) يرسلون نقرات الأمس (taps) في وقت لاحق من الصباح، فيبقى عدد الأمس أقل من الحقيقي. ما الذي ينبغي أن تغيّره لينا؟"
+      },
+      "o": {
+        "en": [
+          "Rebuild the last few days on every run, placing taps by event time",
+          "Move the daily build to 23:00 so more taps arrive before it runs",
+          "Count each tap on the day it arrived, so no tap is left uncounted",
+          "Switch the whole flow to streaming so each tap counts on arrival"
+        ],
+        "ar": [
+          "إعادة بناء الأيام القليلة الأخيرة في كل تشغيل (run)، مع نسبة النقرات إلى وقت الحدث (event time)",
+          "نقل البناء اليومي (daily build) إلى الساعة 23:00 كي تصل نقرات أكثر قبل تشغيله",
+          "عدّ كل نقرة (tap) في يوم وصولها (arrival day)، كي لا تبقى أي نقرة خارج العدّ",
+          "تحويل التدفق كله إلى المعالجة المتدفقة (streaming) كي تُعدّ كل نقرة لحظة وصولها"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Reprocessing a short window of recent days and using the event's own timestamp (event time) lets late taps land on the day they happened. Counting by arrival day (processing time) stops taps being lost but puts them on the wrong day.",
+        "ar": "إعادة معالجة نافذة قصيرة من الأيام الأخيرة (short window of recent days) واستخدام الطابع الزمني للحدث نفسه (event time) يضعان النقرات المتأخرة (late taps) في اليوم الذي وقعت فيه. أما العدّ بيوم الوصول (processing time) فيمنع فقدان النقرات، لكنه يضعها في اليوم الخطأ."
+      }
+    },
+    {
+      "id": "m0-3",
+      "level": 2,
+      "lesson": "0.3",
+      "q": {
+        "en": "Huda wants an intraday branch report, so she plans to query the core banking production database directly every 15 minutes instead of waiting for the nightly load into the raw.core_* tables. Under the onboarding pack, whose agreement does she need first?",
+        "ar": "تريد هدى تقريرًا للفروع خلال اليوم (intraday branch report)، فتخطّط للاستعلام مباشرةً من قاعدة بيانات الخدمات المصرفية الأساسية الإنتاجية (core banking production database) كل 15 دقيقة، بدلًا من انتظار التحميل الليلي (nightly load) إلى جداول raw.core_*. وفق حزمة التهيئة (onboarding pack)، موافقةُ مَن تحتاج إليها أولًا (whose agreement)؟"
+      },
+      "o": {
+        "en": [
+          "Salem, as frequent jobs would raise the platform's cloud bill",
+          "Lina, as analytics engineers own every metric a new report uses",
+          "Sara, as the core banking tables hold customers' personal data",
+          "Tariq, as his team owns the source and its production load"
+        ],
+        "ar": [
+          "سالم، لأن المهام المتكرّرة (frequent jobs) سترفع فاتورة السحابة (cloud bill) للمنصّة",
+          "لينا، لأن مهندسي التحليلات (analytics engineers) يملكون كل مقياس (metric) يستخدمه أي تقرير جديد",
+          "سارة، لأن جداول الخدمات المصرفية الأساسية (core banking) تحوي بيانات العملاء الشخصية (personal data)",
+          "طارق، لأن فريقه يملك المصدر (source) وعبء الإنتاج (production load) عليه"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Part A of the onboarding pack names Tariq as the person to ask before changing anything on the core banking database, and his standing question is whether a change will slow down production. Salem's cost concern is real but secondary to the risk of loading the system that runs the bank.",
+        "ar": "يسمّي الجزء A من حزمة التهيئة (Part A of the onboarding pack) طارق بوصفه الشخص الذي يُسأل قبل تغيير أي شيء في قاعدة بيانات الخدمات المصرفية الأساسية (core banking database)، وسؤاله الدائم هو: هل سيُبطئ التغيير بيئة الإنتاج (slow down production)؟ قلق سالم من التكلفة (cost) حقيقي، لكنه ثانوي أمام خطر إثقال النظام (loading the system) الذي يدير البنك."
+      }
+    },
+    {
+      "id": "m0-4",
+      "level": 3,
+      "lesson": "0.1",
+      "q": {
+        "en": "Dana's Smart Alerts prototype performed very well in her notebook on a carefully cleaned extract. From its first day in production, fed by the live pipeline with identical model code, its alerts are clearly worse. What is the most likely diagnosis?",
+        "ar": "حقّق النموذج الأولي (prototype) لنظام التنبيهات الذكية (Smart Alerts) الذي بنته دانة أداءً ممتازًا في دفتر الملاحظات (notebook) على مستخلص منظَّف بعناية (carefully cleaned extract). ومنذ يومه الأول في الإنتاج (production)، حين صار خط البيانات الحي (live pipeline) يغذّيه بشيفرة النموذج نفسها (identical model code)، صارت تنبيهاته أسوأ بوضوح. ما التشخيص (diagnosis) الأرجح؟"
+      },
+      "o": {
+        "en": [
+          "Fraud patterns shifted on launch day, so the model needs retraining on newer data",
+          "Production inputs differ from the cleaned extract: a hand-off that nobody owned",
+          "Serving is too slow, so scores arrive after the authorisations have completed",
+          "The original evaluation was a lucky sample, so the model never really worked"
+        ],
+        "ar": [
+          "تغيّرت أنماط الاحتيال (fraud patterns) يوم الإطلاق، فيحتاج النموذج إلى إعادة تدريب (retraining) على بيانات أحدث",
+          "مدخلات الإنتاج (production inputs) تختلف عن المستخلص المنظَّف: تسليم (hand-off) لم يملكه أحد",
+          "التقديم (serving) بطيء جدًا، فتصل الدرجات (scores) بعد اكتمال التفويضات (authorisations)",
+          "كان التقييم الأصلي (original evaluation) عيّنة محظوظة (lucky sample)، فالنموذج لم ينجح فعلًا قط"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "The lesson describes exactly this break: a model trained on a cleaned extract is fed slightly different data by the production pipeline, at the data scientist to ML engineer hand-off. Drift is tempting, but worse results from day one with unchanged code point to mismatched inputs, not a changed world.",
+        "ar": "يصف الدرس هذا الانكسار تحديدًا: نموذج دُرِّب على مستخلص منظَّف (cleaned extract) ثم غذّاه خط الإنتاج (production pipeline) ببيانات مختلفة قليلًا، عند التسليم من عالم البيانات إلى مهندس تعلّم الآلة (data scientist to ML engineer hand-off). الانجراف (drift) مغرٍ، لكن تراجع النتائج منذ اليوم الأول مع شيفرة لم تتغيّر يشير إلى عدم تطابق المدخلات (mismatched inputs) لا إلى تغيّر العالم."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m0-e1",
+      "lesson": "0.2",
+      "text": {
+        "en": "I have built a raw, staging and mart mini-pipeline in DuckDB that rebuilds from raw with one script, with a reconciliation query that explains every row lost between layers.",
+        "ar": "بنيتُ خط بيانات مصغّرًا (mini-pipeline) في DuckDB بطبقات خام (raw) وتجهيز (staging) وأسواق بيانات (marts)، يُعاد بناؤه من الطبقة الخام بسكربت واحد (one script)، مع استعلام مطابقة (reconciliation query) يفسّر كل صف مفقود بين الطبقات (layers)."
+      }
+    },
+    {
+      "id": "m0-e2",
+      "lesson": "0.3",
+      "text": {
+        "en": "I have committed the synthetic-data script to a git repository with a README, and a fresh clone runs it and prints the same three rows as my first run.",
+        "ar": "أودعتُ (committed) سكربت البيانات الاصطناعية (synthetic-data script) في مستودع git (git repository) مع ملف README، ونسخةٌ جديدة منه (fresh clone) تشغّله وتطبع الصفوف الثلاثة نفسها التي طبعها أول تشغيل (first run)."
+      }
+    }
+  ]
+}
