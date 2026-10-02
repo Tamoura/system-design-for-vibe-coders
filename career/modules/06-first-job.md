@@ -43,7 +43,7 @@ Aisha, Najm's talent acquisition lead, has seen this many times. Graduates who c
 
 **Written, then decided.** A verbal offer shows the employer is serious; a written one shows what they commit to. Say thank you and ask: "Could you send the offer in writing, with the full package and contract terms, so I can review it properly?" This is a normal request.
 
-**Conditions.** Many offers are **conditional** on references, background checks, degree attestation, medical checks or a work permit; banks often run more checks than startups. Until conditions clear, do not resign or turn down other offers.
+**Conditions.** Many offers are **conditional** on references, background checks, degree attestation, medical checks or a work permit. Until conditions clear, do not resign or turn down other offers.
 
 **Researching the range.** You cannot judge an offer without knowing what similar roles pay. At the time of writing (2026), good sources are:
 - **Recruiters**, including the employer's own: "What is the range for this role?"
@@ -108,7 +108,7 @@ The practical rule: for budgeting, value early-stage equity at zero and compare 
 - **Bonds and clawbacks.** Sponsored study, certifications and relocation may need repaying if you leave early. Fair when clear; know the amount and period.
 - **Confidentiality and acceptable-use policies**, including AI-tool rules (lesson 6.2).
 
-For anything unusual, check the labour ministry's guidance in the country of work, ask HR to explain, and take independent advice if the stakes are high. Labour, visa and sponsorship rules vary and change; check current rules, not a friend's experience. For nationals, offers shaped by nationalisation programmes (Qatarization, Emiratisation, Saudization) may include a development track, sponsored study or a service agreement; compare them on learning, mentorship, real work and commitments like any offer.
+For anything unusual, check the labour ministry's guidance in the country of work, ask HR to explain, and take independent advice if the stakes are high. Labour, visa and sponsorship rules vary and change; check current rules, not a friend's experience. For nationals, offers shaped by nationalisation programmes (Qatarization, Emiratisation, Saudization) may include a development track, sponsored study or a service agreement; compare them like any other offer.
 
 **Choosing with integrity.** Once you accept in writing, the employer stops interviewing, tells other candidates no, and starts arranging your laptop, access and visa. Withdraw after acceptance only for serious reasons, early and honestly, by phone then email. As soon as you accept, kindly tell every other employer still in process; the recruiter you decline today may hire you in three years.
 
@@ -126,7 +126,7 @@ For anything unusual, check the labour ministry's guidance in the country of wor
 | **Negotiation email template** | Thanks, interest, specific ask with a reason, an alternative, a timeline | Any written negotiation |
 
 ## 🏛️ In practice at Najm Bank
-Aisha shares the **offer comparison sheet** Najm's graduate team gives every candidate who asks for help deciding, even when the other offer is from a competitor. Omar fills it in. Amounts are left as placeholders here: Omar uses his real figures, and you should use yours.
+Aisha shares the **offer comparison sheet** Najm's graduate team gives every candidate who asks for help deciding. Omar fills it in. Amounts are placeholders; use your real figures.
 
 **Part A: the facts**
 
@@ -158,7 +158,7 @@ Aisha shares the **offer comparison sheet** Najm's graduate team gives every can
 > I am choosing Najm because the mentorship and code review will build the deployment and production skills I lack (lesson 1.3), and the cash is above my floor. The startup's equity has unknown value and I valued it at zero. I will thank Sadeem Pay by phone today, confirm by email, and ask if I may stay in touch.
 
 ## 🛠️ Exercises
-- 🟢 Take a real or sample offer letter (your career centre may have anonymised examples) and list every component and term from the anatomy table in 🟢 The essentials. Mark each as "stated", "unclear" or "missing". *Done when:* you have a one-page list and a written set of at least five questions you would send to the employer.
+- 🟢 Take a real or sample offer letter and list every component and term from the anatomy table in 🟢 The essentials. Mark each as "stated", "unclear" or "missing". *Done when:* you have a one-page list and a written set of at least five questions you would send to the employer.
 - 🟡 Research the range for one target role in one city using at least three different sources, and calculate your personal floor from a monthly budget. *Done when:* a peer can see your sources, their dates, the range you concluded and your floor calculation, and can follow how you got from one to the other.
 - 🔴 Write a negotiation email for a scenario in which the base salary is fixed by a graduate band but you have one genuine interest (for example a later start date, a certification budget or a relocation cost). Then role-play it with a peer acting as the recruiter, who must say no to your first ask. *Done when:* your email contains thanks, interest, a specific ask with a reason, an alternative and a deadline; and the role-play ended with a clear outcome both of you could write down.
 
@@ -188,7 +188,7 @@ Aisha shares the **offer comparison sheet** Najm's graduate team gives every can
 
 <details><summary>Answer</summary>
 
-**B.** He cannot compare a verbal number with a written package, and a polite request for time is normal. A commits him to terms he has not seen; C makes a claim he cannot yet support with a written offer; D risks losing an offer he may want without even asking for time. (🟢 The essentials; 🟡 Going deeper.)
+**B.** He cannot compare a verbal number with a written package, and a polite request for time is normal. A commits him to unseen terms; C makes a claim he cannot support; D may lose the offer without even asking for time. (🟢 The essentials; 🟡 Going deeper.)
 
 </details>
 
@@ -227,20 +227,20 @@ Aisha shares the **offer comparison sheet** Najm's graduate team gives every can
 
 <details><summary>Answer</summary>
 
-**C.** A carve-out covering existing and personal projects that use no company time, equipment or information protects his portfolio and is a common, reasonable request. A is an assumption he cannot rely on; B and D are unnecessary losses. (🔴 Expert view.)
+**C.** A carve-out for existing and personal projects protects his portfolio and is a common, reasonable request. A is an assumption he cannot rely on; B and D are unnecessary losses. (🔴 Expert view.)
 
 </details>
 
 **5. Huda accepts the regional telecom's offer in writing. Two weeks later Najm's data track makes her an offer. Which response best reflects this lesson?**
 
-- A. Accept Najm's offer too, then pick whichever start date suits her best
-- B. Accept Najm and simply not turn up at the telecom on her first day
-- C. Treat her written acceptance as carrying no obligations until she starts
-- D. Honour the acceptance unless the reason is serious; if so, tell the telecom early, by phone then email
+- A. Accept Najm's offer as well, then pick whichever start date suits her best later
+- B. Accept Najm and simply not turn up at the telecom on her first day of work
+- C. Treat her written acceptance as carrying no obligations until she actually starts
+- D. Keep her word unless the reason is serious; if so, tell the telecom early by phone
 
 <details><summary>Answer</summary>
 
-**D.** After acceptance, the other employer stops recruiting and starts preparing for you, so withdrawing is only for serious reasons, done early and honestly. She should also have told Najm, as soon as she accepted, that she was no longer in process. A and B damage trust and reputation; C is false. (🔴 Expert view.)
+**D.** Once she accepts, the telecom stops recruiting and prepares for her, so she withdraws only for serious reasons, early and honestly. She should also have told Najm then that she was out of the process. A and B damage trust; C is false. (🔴 Expert view.)
 
 </details>
 
@@ -609,7 +609,7 @@ After the review, Yousef and Salem build his **growth plan** against Najm's engi
 | Scope | Owns a problem end to end | Owns tasks well | Fixed 14 build failures; automated runner clean-up | Own the "build cache" problem for Q3 |
 | Technical quality | Designs for change; few review rounds | Strong | Pipeline PRs merged in 1–2 rounds | Keep; write tests for pipeline scripts |
 | Operations | Watches releases; improves monitoring | Good | Added disk-space alert that caught 2 issues | Add a pipeline-health dashboard |
-| Communication | Proactive; flags risk early | **Gap** | Friday pipeline change without notice | Change-notice rule (below); design note for the cache work |
+| Communication | Proactive; flags risk early | **Gap** | Thursday-afternoon pipeline change without notice | Change-notice rule (below); design note for the cache work |
 | Team | Reviews others; helps newer people | Starting | 6 reviews this quarter | Buddy for one graduate in the next cohort |
 
 **Part B: the change-notice rule Yousef proposes to the team** (his fix to the system, from the blameless review)
@@ -691,7 +691,7 @@ After the review, Yousef and Salem build his **growth plan** against Najm's engi
 - A. "Learn data engineering properly at some point this year"
 - B. "Watch every video in a data engineering course by the end of June"
 - C. "Pass three cloud data certifications before the June review cycle"
-- D. "Move the weekly churn report from a notebook to a tested, monitored pipeline by June"
+- D. "Move the weekly churn report into a tested, monitored pipeline by June"
 
 <details><summary>Answer</summary>
 

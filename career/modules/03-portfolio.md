@@ -7,7 +7,7 @@
 ---
 
 # 3.1 — Projects that prove you can do the job: one capstone spec per role
-*Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.3, 2.1–2.4* · *Step: Build, Prove*
+*Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.3, 2.1, 2.2, 2.3, 2.4* · *Step: Build, Prove*
 
 ## ⚡ In 60 seconds
 - A **proof project** answers one reviewer question: "Can this person do the work of the role, at junior level, without being carried?" A tutorial clone cannot, however polished.
@@ -170,10 +170,10 @@ Khalid's verdict: "Now I have six things to ask you, and you know the answers."
 
 **1. Omar has 23 repositories: course assignments, LeetCode solutions and tutorial apps. He has four weeks before applications open. What should he do first?**
 
-- A. Add more LeetCode solutions to show consistent activity
-- B. Choose one capstone for his target role, write a one-page spec with a hard question, and ship a thin working slice
-- C. Delete all old repositories so his profile looks clean
-- D. Translate his tutorial apps into a newer framework
+- A. Add a LeetCode solution every day so his profile shows steady activity
+- B. Pick one capstone for his role, spec it around a hard question and ship a thin slice
+- C. Delete every old repository so that only his best course projects remain
+- D. Port his three best tutorial apps to a newer framework and pin them
 
 <details><summary>Answer</summary>
 
@@ -183,14 +183,14 @@ Khalid's verdict: "Now I have six things to ask you, and you know the answers."
 
 **2. Which project sits highest on the proof ladder?**
 
-- A. A polished streaming-site clone that follows a popular video course
-- B. A tutorial to-do app with dark mode added
-- C. An original image classifier trained in a notebook, never run outside it
-- D. A booking tool that twenty gym members used for two months, with a written note on a double-booking bug that was found and fixed
+- A. A polished streaming-site clone with a custom design, built by following a popular video course
+- B. A tutorial to-do app extended with dark mode and offline storage the tutorial did not cover
+- C. An original, accurate image classifier, trained and evaluated in a notebook never run outside it
+- D. A booking tool twenty gym members used for two months, with a note on a bug found and fixed
 
 <details><summary>Answer</summary>
 
-**D.** It is deployed, used by real people and operated over time, which is rung 6. C is an original project but never ran for anyone; A and B are tutorial work however polished. (🟢 The essentials.)
+**D.** It is deployed, used by real people and operated over time, which is rung 6. C is an original project (rung 3) but never ran for anyone; B is rung 2 and A rung 1, however polished. (🟢 The essentials.)
 
 </details>
 
@@ -209,23 +209,23 @@ Khalid's verdict: "Now I have six things to ask you, and you know the answers."
 
 **4. Reem built most of her capstone with an AI coding agent. What is the best way to present it?**
 
-- A. Say nothing about the agent, since reviewers may judge her
-- B. Add a short "How this was built" section that says which parts were agent-assisted and how she verified them, and make sure she can explain every file
-- C. Remove the agent-written parts and rebuild them by hand before applying
-- D. List the agent as a co-author and let it answer reviewers' questions
+- A. Say nothing about the agent, since reviewers may assume she does not understand the code
+- B. Add a "How this was built" section on what the agent did and how she checked it, and know every file
+- C. Remove every agent-written part and rebuild it by hand, so the project is her unaided work
+- D. List the agent as a co-author in the README and say nothing more about how the code was checked
 
 <details><summary>Answer</summary>
 
-**B.** Honest disclosure plus evidence of verification is what reviewers want. A is a misrepresentation that unravels in the first technical question. C wastes time; verifying the code matters more than who typed it. D avoids the responsibility the reviewer is testing for. (🔴 Expert view.)
+**B.** Honest disclosure plus evidence of verification is what reviewers want. A is a misrepresentation that unravels in the first technical question. C wastes time; verifying the code matters more than who typed it. D discloses the tool but shows none of the verification the reviewer is testing for. (🔴 Expert view.)
 
 </details>
 
 **5. Yousef wants to show cloud and platform skills. Which capstone fits best?**
 
-- A. Running a small app with infrastructure as code, a CI/CD pipeline to staging and production, monitoring with an SLO, a practised rollback and a cost note
-- B. A list of cloud certifications with no project
-- C. A blog post summarising cloud provider services
-- D. A front-end portfolio site hosted on a free platform
+- A. A small app he runs with infrastructure as code, staged deploys, an SLO, a practised rollback and a cost note
+- B. Three associate-level cloud certifications on his profile, with no project that uses what they cover
+- C. A detailed blog series comparing the compute, storage and network services of the main cloud providers
+- D. A polished front-end portfolio site on a free hosting platform, with a custom domain and HTTPS
 
 <details><summary>Answer</summary>
 
@@ -427,10 +427,10 @@ Reem's capstone scored 3 of 14 before her rewrite. She rotated the leaked key fi
 
 **1. Reem finds an API key in an early commit of her public repository. What should she do first?**
 
-- A. Delete the file in a new commit
-- B. Make the repository private
+- A. Delete the `.env` file in a new commit and add `.env` to `.gitignore`
+- B. Make the repository private at once so that no new visitors can see the key
 - C. Revoke or rotate the key at the provider, then check usage and clean up
-- D. Rewrite the git history so the key disappears
+- D. Rewrite the git history with a cleaning tool so the key disappears from every commit
 
 <details><summary>Answer</summary>
 
@@ -440,10 +440,10 @@ Reem's capstone scored 3 of 14 before her rewrite. She rotated the leaked key fi
 
 **2. Which README opening best serves a reviewer skimming between meetings?**
 
-- A. A one-line description of the problem and user, a sentence on real use, then links to a live demo, a short video and the CI status
-- B. A full list of the frameworks and libraries used
-- C. A long personal story of why the author learned to code
-- D. Only the commands to install and run the project
+- A. The problem and user in one line, a sentence on real use, then demo, video and CI links
+- B. A complete list of the frameworks, libraries and cloud services used, with their versions
+- C. A personal story of why the author learned to code and what the project means to them
+- D. Only the install and run commands, so a reviewer can start the project as fast as possible
 
 <details><summary>Answer</summary>
 
@@ -453,36 +453,36 @@ Reem's capstone scored 3 of 14 before her rewrite. She rotated the leaked key fi
 
 **3. Huda's notebooks only run if cells are executed in a particular order and load data from her laptop. Which fix matters most for a reviewer like Dana?**
 
-- A. Add more charts
-- B. Convert the notebooks to slides
-- C. Rename the notebooks
-- D. Make "Restart and run all" succeed, pin dependencies and explain how to get the data
+- A. Add more charts and a summary table so the conclusions are easier to see
+- B. Convert the notebooks into a slide deck that walks Dana through the results
+- C. Rename and number the notebooks so the intended running order is obvious
+- D. Make "Restart and run all" work, pin dependencies and explain how to get the data
 
 <details><summary>Answer</summary>
 
-**D.** A reviewer must be able to reproduce the work; that is the minimum for trust in a data project. A, B and C change presentation, not whether the work runs. (🟡 Going deeper.)
+**D.** A reviewer must be able to reproduce the work; that is the minimum for trust in a data project. A and B change presentation, not whether the work runs; C labels the problem without fixing it, since the cells still depend on order and the data still lives on her laptop. (🟡 Going deeper.)
 
 </details>
 
 **4. Omar wants to show why he used a unique database constraint to prevent double bookings. What is the best place to record it?**
 
-- A. A long comment above every database query
-- B. A short architecture decision record giving the context, the decision and its consequences, linked from the README
-- C. A commit message that says "constraint"
-- D. Nowhere; he will explain it if asked
+- A. A long comment above every booking query, explaining the constraint each time
+- B. A short ADR with the context, decision and consequences, linked from the README
+- C. A commit message on the migration that adds it, saying "add unique constraint"
+- D. Nowhere in the repository; he will explain the reasoning in the interview if asked
 
 <details><summary>Answer</summary>
 
-**B.** An ADR is brief, findable and becomes a rehearsed interview answer. A scatters it; C is too thin to explain anything; D wastes a chance to show judgement before the interview. (🟡 Going deeper.)
+**B.** An ADR is brief, findable and becomes a rehearsed interview answer. A scatters it; C records what, not why; D wastes a chance to show judgement before the interview. (🟡 Going deeper.)
 
 </details>
 
 **5. Mohammed built a reporting tool during a freelance job. The client owns the code. How should he use it in his portfolio?**
 
-- A. Publish the code, since he wrote it
-- B. Leave it out entirely
-- C. Without written permission, describe the problem, his part and the outcome without confidential details, or rebuild a generic version on public data and say so
-- D. Publish it under a different project name
+- A. Publish the code on his GitHub, since he wrote every line of it himself
+- B. Leave it out of his portfolio and CV entirely, because he cannot show the code
+- C. Unless the client agrees in writing, describe his part and the outcome, or rebuild a generic version
+- D. Publish it under a different project name, with the client's name and branding removed
 
 <details><summary>Answer</summary>
 
@@ -653,10 +653,10 @@ Khalid's rule for the session: "One route each, done properly. We will check the
 
 **1. Huda's capstone shows strong modelling, but she has only ever worked alone. Which route adds the signal she lacks most directly?**
 
-- A. Entering three more Kaggle competitions
+- A. Entering three more Kaggle competitions to push her ranking higher
 - B. Contributing a reviewed fix to an open-source library she uses
-- C. Collecting online course certificates
-- D. Adding more charts to her notebooks
+- C. Collecting online certificates in teamwork, agile and project management
+- D. Adding more charts and a polished summary to her existing notebooks
 
 <details><summary>Answer</summary>
 
@@ -666,10 +666,10 @@ Khalid's rule for the session: "One route each, done properly. We will check the
 
 **2. Mohammed sees a Sadeem Pay junior role asking for "one to two years of experience". He matches most other requirements and has a booking system used by real members. What should he do?**
 
-- A. Skip it until he has two years in a developer job
-- B. Apply, but leave his previous career off his CV
-- C. Claim two years of freelance development he did not do
-- D. Apply, presenting his gym operations work and his booking system as outcomes with evidence
+- A. Skip it, and apply again once he has two full years in a paid developer job
+- B. Apply, but leave his gym career off the CV so it reads as a purely technical profile
+- C. Apply, and describe the booking system as two years of freelance development
+- D. Apply, writing his gym operations work and booking system as outcomes with evidence
 
 <details><summary>Answer</summary>
 
@@ -679,23 +679,23 @@ Khalid's rule for the session: "One route each, done properly. We will check the
 
 **3. Yousef agrees to rebuild a charity's donation website for free. Which step matters most before he starts?**
 
-- A. Choosing the newest framework
-- B. Building it on his personal cloud account with no handover plan
-- C. Writing down the scope, dates, ownership and handover, and planning to use a payment provider's hosted checkout rather than handling card details
-- D. Collecting as much donor data as possible for future features
+- A. Choosing the newest framework so the charity gets a modern site that lasts for years
+- B. Building it quickly on his personal cloud account and handing over the login later
+- C. Writing down scope, dates, ownership and handover, and using a hosted checkout for cards
+- D. Designing the database to collect as much donor data as possible for future features
 
 <details><summary>Answer</summary>
 
-**C.** A written scope protects both sides, and a hosted checkout keeps card data away from his code. B leaves the charity stranded; D breaks data-minimisation principles; A is irrelevant to the client's needs. (🟡 Going deeper.)
+**C.** A written scope protects both sides, and a hosted checkout keeps card data away from his code. B ties the charity to his personal account, with no real handover; D breaks data-minimisation principles; A is irrelevant to the client's needs. (🟡 Going deeper.)
 
 </details>
 
 **4. Reem plans to use an AI agent to open twenty small pull requests to popular open-source projects in one week. What is the best advice?**
 
-- A. Read each project's contribution and AI policies, and make a few focused, tested contributions she can explain line by line
-- B. Go ahead, since volume shows energy
-- C. Only contribute to projects without a contribution policy
-- D. Open the pull requests without tests to save maintainers' time
+- A. Read each project's contribution and AI policies; make a few focused, tested changes she can explain
+- B. Go ahead, since a high volume of pull requests shows energy and commitment to reviewers
+- C. Contribute only to projects that have no contribution policy, so there are no rules to break
+- D. Open the pull requests without tests at first, to keep each change small for maintainers
 
 <details><summary>Answer</summary>
 
@@ -705,10 +705,10 @@ Khalid's rule for the session: "One route each, done properly. We will check the
 
 **5. Omar's team won second place at a weekend hackathon. The demo worked once on Sunday evening. How does he get the most value from it?**
 
-- A. List "hackathon finalist" on his CV and move on
-- B. Finish the core feature, deploy it, add tests and a README, and write up his specific part
-- C. Pin the repository as it is
-- D. Take the code and present it as his solo project
+- A. List "hackathon runner-up" on his CV and move on to the next event while it is fresh
+- B. Finish the core feature, deploy it, add tests and a README, and write up his part
+- C. Pin the repository exactly as it was at the deadline, so reviewers see the real event work
+- D. Fork the code and present it as a solo project, since he wrote most of the core logic
 
 <details><summary>Answer</summary>
 

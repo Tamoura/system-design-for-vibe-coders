@@ -98,7 +98,7 @@ flowchart LR
 Three widely used options, described neutrally:
 - **dbt Semantic Layer with MetricFlow.** You declare **semantic models** (a dbt model plus its entities, dimensions and measures) and **metrics** in YAML next to your dbt project. MetricFlow generates the SQL, including the joins. Metric types include simple, ratio, cumulative, derived and conversion metrics.
 - **Cube.** An open-source semantic layer with its own data model files, an API layer and caching, often used to serve metrics to applications as well as BI tools.
-- **LookML.** Looker's modelling language. Definitions live in Looker and serve Looker's own exploration and dashboards.
+- **LookML.** Looker's modelling language. Definitions live in Looker and serve Looker's own exploration and dashboards, and, through Google's connectors, some other tools.
 
 Here is the start of Najm's semantic model for card transactions in dbt's YAML. The syntax follows the dbt documentation at the time of writing (2026); the spec has been evolving, so check the current docs before you copy it.
 
@@ -162,7 +162,7 @@ Dashboards show the status next to each number, so a reader knows whether it is 
 
 **Reconciliation.** A certified financial metric must tie back to the system of record. Finance's "card spend" should reconcile with the card processor's settlement totals within a known tolerance, and the difference should be explained (timing, reversals, currency conversion). Build that check as a scheduled data test (3.2) and show the reconciliation status on the metric card. A number that has never been reconciled is not certified, however neat its YAML.
 
-**Metrics for machines.** An LLM assistant answering data questions is far more reliable querying a semantic layer than writing raw SQL against hundreds of tables, because the joins, filters and exclusions are already decided. Treat the semantic layer as the contract between people, dashboards and AI.
+**Metrics for machines.** An LLM assistant answering data questions is generally more reliable querying a semantic layer than writing raw SQL against hundreds of tables, because the joins, filters and exclusions are already decided. Treat the semantic layer as the contract between people, dashboards and AI.
 
 ## 🧰 The toolkit
 | Tool, pattern or standard | What it is and does | When to reach for it |
@@ -222,10 +222,10 @@ Use DuckDB or PostgreSQL with a synthetic table of 1,000 customers and 50,000 ev
 
 **1. Retail reports 412,000 active customers and finance reports 365,000. Both queries run without errors on the same warehouse. What is the best first step?**
 
-- A. Write down each team's definition side by side, agree one definition with a named owner, and compute it in one place
-- B. Use the higher number, because it includes more activity
-- C. Average the two numbers for the board slide
-- D. Rebuild the warehouse, because the data must be corrupted
+- A. Agree one written definition with a named owner, then compute it in one place
+- B. Use the higher number, since it captures more kinds of activity
+- C. Average the two figures so that neither team's number is favoured
+- D. Rebuild the warehouse, because two numbers mean the data is corrupted
 
 <details><summary>Answer</summary>
 
@@ -235,10 +235,10 @@ Use DuckDB or PostgreSQL with a synthetic table of 1,000 customers and 50,000 ev
 
 **2. Huda sums 30 daily active-customer counts to report the monthly figure. What is wrong?**
 
-- A. Nothing, as long as staff accounts are excluded
-- B. She should have averaged the daily counts instead
-- C. Distinct counts are non-additive, so customers active on several days are counted several times; recompute the distinct count over the month
-- D. She should have used the median of the daily counts
+- A. Nothing is wrong, as long as staff and test accounts were excluded each day
+- B. She should have averaged the daily counts rather than summing them
+- C. Distinct counts are non-additive; recompute the distinct count over the month
+- D. She should have taken the median of the daily counts to remove outliers
 
 <details><summary>Answer</summary>
 
@@ -248,10 +248,10 @@ Use DuckDB or PostgreSQL with a synthetic table of 1,000 customers and 50,000 ev
 
 **3. Branch X has 80 of 100 customers using digital banking; branch Y has 4,000 of 10,000. What is the combined digital adoption rate?**
 
-- A. 60%, the average of the two rates
-- B. It cannot be computed without more data
-- C. 80%, the best branch's rate
-- D. About 40.4%, total digital customers divided by total customers
+- A. 60%, the simple average of the two branch rates
+- B. It cannot be computed without customer-level data
+- C. 80%, the rate of the best-performing branch
+- D. About 40.4%: total digital over total customers
 
 <details><summary>Answer</summary>
 
@@ -261,23 +261,23 @@ Use DuckDB or PostgreSQL with a synthetic table of 1,000 customers and 50,000 ev
 
 **4. Which statement best describes a semantic layer?**
 
-- A. A dashboard tool's colour theme
-- B. Code that defines measures, dimensions, joins and metrics once, so every consuming tool gets the same answer to the same question
-- C. The raw layer of the warehouse where source data lands
-- D. A backup of the warehouse kept in another region
+- A. A colour theme and layout template shared by a BI tool's dashboards
+- B. Shared code defining measures, dimensions, joins and metrics for every tool
+- C. The raw layer of the warehouse, where source data lands before cleaning
+- D. A copy of the warehouse kept in another region for disaster recovery
 
 <details><summary>Answer</summary>
 
-**B.** It sits between the warehouse and its consumers and generates the SQL from shared definitions. C is the raw layer from Module 3; A and D are unrelated. (🟡 Going deeper.)
+**B.** It sits between the warehouse and its consumers and generates the SQL from shared definitions. C is the raw layer; A and D are unrelated. (🟡 Going deeper.)
 
 </details>
 
 **5. Najm rewards branches on "active customers", where a login counts as activity. Logins rise sharply but transactions do not. What should Lina recommend?**
 
-- A. Remove logins from all definitions immediately, without telling anyone
-- B. Stop measuring active customers
-- C. Keep the target and add a guardrail and a stricter quality metric, such as customers with two or more qualifying transactions, and change the definition only through a versioned, announced change
-- D. Increase the target so branches must try harder
+- A. Remove logins from the definition quietly, so the gaming stops by next week
+- B. Stop measuring active customers, since any rewarded metric will be gamed
+- C. Add a guardrail and a stricter quality metric, and version any definition change
+- D. Raise the target so that branches must also drive transactions to reach it
 
 <details><summary>Answer</summary>
 
@@ -302,7 +302,7 @@ Use DuckDB or PostgreSQL with a synthetic table of 1,000 customers and 50,000 ev
 ## ⚡ In 60 seconds
 - A dashboard exists to support a **decision** or an **action**. Start from "who decides what, how often, using which numbers?" and design backwards. If you cannot name the decision, you are building a display, not a dashboard.
 - Three kinds serve different needs: **strategic** (a few certified metrics, monthly or weekly, for leaders), **operational** (near real time, for people who act today) and **analytical** (exploration, for analysts).
-- Pick the chart by the comparison you want the reader to make. Position on a common scale (bar and line charts) is read most accurately; angles and areas (pies, bubbles) least.
+- Pick the chart by the comparison you want the reader to make. Position on a common scale (bar and line charts) is read most accurately; angles and areas (pies, bubbles) less so.
 - **Storytelling** is the paragraph that goes with the chart: what changed, why we think it changed, how sure we are, and what we recommend.
 - Decision cue: every chart must answer a question you can write in its title. If it does not, remove it.
 - Biggest trap: the 40-chart dashboard nobody opens. More charts mean less attention per chart, slower loading and more places for definitions to drift.
@@ -336,7 +336,7 @@ This lesson is about building for that conversation. A dashboard that leads to d
 
 Mixing them is the usual cause of the 40-chart dashboard: an executive view that grew analytical tabs.
 
-**Choose the chart by the comparison.** In a well-known 1984 study, William Cleveland and Robert McGill ranked how accurately people read quantities from different visual encodings. Position along a common scale came first; length next; angle, area and colour intensity were read less accurately. In practice:
+**Choose the chart by the comparison.** In a well-known 1984 study, William Cleveland and Robert McGill ranked how accurately people read quantities from different visual encodings. Position along a common scale came first; length, direction and angle came after it; area, volume and colour shading came last. In their experiments, people judged pie-chart angles less accurately than bar positions. In practice:
 
 | You want the reader to compare | Use | Avoid |
 |---|---|---|
@@ -370,7 +370,7 @@ flowchart TD
 **Performance is part of trust.** A dashboard that takes 40 seconds to load does not get opened. Build dashboards on **pre-aggregated marts** at the grain the charts need (for example, `mart_retail_weekly` at week × segment × region), not on raw transaction tables. Partition and cluster them (3.3), cache where the BI tool allows, and set a load-time budget (for example, under five seconds for the first view).
 
 **Engineering the dashboard.** Treat dashboards as products with a life cycle:
-- **Version control**: Metabase, Superset and most commercial BI tools can export dashboard definitions; keep exports or "dashboards as code" in git where the tool supports it.
+- **Version control**: Superset can export and import dashboards as YAML files; Metabase offers serialisation in its paid editions and an API in all editions; most commercial BI tools have similar features. Keep exports or "dashboards as code" in git where the tool supports it.
 - **Certification**: mark dashboards built only on certified metrics, and show it in the title bar.
 - **Access**: dashboards inherit the data's sensitivity. Branch managers see their own branch; row-level security belongs in the warehouse or semantic layer, not in a dashboard filter a user can remove (6.3).
 - **Usage and retirement**: review usage every quarter. Archive dashboards nobody has opened in 90 days, after telling their owners. Kareem's 40 charts become one strategic dashboard and one analytical workbook.
@@ -456,10 +456,10 @@ Run Metabase or Apache Superset locally in Docker against DuckDB or PostgreSQL w
 
 **1. The retail director's 40-chart dashboard was opened 11 times last month. What should Kareem do first?**
 
-- A. Add more charts so it covers every possible question
-- B. Email the dashboard link to everyone weekly
-- C. Switch to a different BI tool
-- D. Ask what decisions she makes, how often and with which questions, write a dashboard spec, and rebuild around it
+- A. Add more charts so that it covers every question anyone might ask
+- B. Email the dashboard link to the whole retail team every Monday
+- C. Move it to a faster, more modern BI tool so that people enjoy opening it
+- D. Ask what she decides and how often, write a spec, and rebuild around it
 
 <details><summary>Answer</summary>
 
@@ -470,9 +470,9 @@ Run Metabase or Apache Superset locally in Docker against DuckDB or PostgreSQL w
 **2. Which chart best lets readers compare card spend across 12 regions in one week?**
 
 - A. A sorted horizontal bar chart starting at zero
-- B. A pie chart with 12 slices
-- C. A 3D column chart
-- D. A donut chart with a legend
+- B. A pie chart with 12 slices, labelled with percentages
+- C. A 3D column chart with a different colour per region
+- D. A donut chart with a colour legend for the regions
 
 <details><summary>Answer</summary>
 
@@ -482,23 +482,23 @@ Run Metabase or Apache Superset locally in Docker against DuckDB or PostgreSQL w
 
 **3. A bar chart of monthly digital adoption has a y-axis running from 95% to 100%. What is the problem?**
 
-- A. None; it makes small changes easier to see
-- B. Bar length encodes value, so a truncated axis exaggerates differences; start bars at zero or use a line chart with a clearly labelled axis
-- C. The axis should run from 0% to 200%
-- D. Percentages should never be charted
+- A. None; a narrow axis makes small changes easier to see, which helps the reader
+- B. Bar length encodes value, so the truncated axis exaggerates differences
+- C. The axis should run from 0% to 200% to leave room for labels
+- D. Percentages should be shown in a table, never charted
 
 <details><summary>Answer</summary>
 
-**B.** A move from 96% to 98% would look like a doubling. A line chart may use a non-zero baseline because it encodes change by slope. (🟢 The essentials.)
+**B.** A move from 96% to 98% would look like a doubling. Start bars at zero, or use a line chart with a clearly labelled axis: a line chart may use a non-zero baseline because it encodes change by slope. (🟢 The essentials.)
 
 </details>
 
 **4. SME card spend fell 6% this week. Over the last year, weekly changes outside Ramadan and Eid ranged from −4% to +5%. What should the Monday note do?**
 
-- A. Ignore it, because all weekly numbers move
-- B. Report it without context to avoid bias
-- C. Flag it as outside the normal range, give the measured breakdown, state the explanation and how confident you are, and recommend an action
-- D. Wait for three more weeks of data before mentioning it
+- A. Ignore it, because every weekly number moves and stories about noise erode trust
+- B. Report the number alone, without context, so the reader is not biased
+- C. Flag it as unusual, with the breakdown, likely cause, confidence and an action
+- D. Wait for three more weeks of data before mentioning it, to be sure it is a trend
 
 <details><summary>Answer</summary>
 
@@ -508,14 +508,14 @@ Run Metabase or Apache Superset locally in Docker against DuckDB or PostgreSQL w
 
 **5. Regional heads should see only their own region on Retail Weekly. Where should this be enforced?**
 
-- A. In a dashboard filter set to each head's region
-- B. By asking regional heads not to change the filter
-- C. With row-level security in the warehouse or semantic layer, tied to the viewer's identity
-- D. By building a separate copy of the dashboard for each region with copied queries
+- A. In a dashboard filter preset to each regional head's own region
+- B. By asking regional heads, in writing, not to change the region filter
+- C. With row-level security in the warehouse, tied to the viewer's identity
+- D. In a separate copy of the dashboard per region, each with its own copied queries
 
 <details><summary>Answer</summary>
 
-**C.** A filter can be removed by the user, so it is not access control. D also duplicates logic and invites definitions to drift. (🟡 Going deeper; 🧰 The toolkit.)
+**C.** A filter can be removed by the user, so it is not access control; the semantic layer is also an acceptable place. D also duplicates logic and invites definitions to drift. (🟡 Going deeper; ⚠️ Mistakes and traps.)
 
 </details>
 
@@ -542,9 +542,9 @@ Run Metabase or Apache Superset locally in Docker against DuckDB or PostgreSQL w
 - For the product side of experimentation, see [*AI Product Management*, lesson 6.3 — Online evaluation: experiments, A/B tests and staged rollouts](../aipm/index.html#/6.3).
 
 ## 🧭 Why it matters
-The Najm Mobile team tests a redesigned card-activation screen. On day three, the product manager posts the experiment tool's result: activation 9% higher (relative), "statistically significant, p = 0.03". The team wants to ship.
+The Najm Mobile team tests a redesigned card-activation screen. On day three, the product manager posts the experiment tool's result: activation 22% higher in relative terms, "statistically significant, p = 0.03". The team wants to ship.
 
-Dana, Najm's lead data scientist, asks four questions. What sample size did the plan require? (About 30,000 users per group; they have 4,000.) How many metrics are on the screen? (Fourteen.) Was the split 50/50 as designed? (No: 52.4% in treatment.) And had anyone looked before day three? (Yes, every day.) Each answer points to a known trap. The test is stopped, the assignment bug is fixed (users who reinstalled the app were being reassigned to treatment) and the test is rerun with a fixed plan. The rerun finds a real but smaller effect of about one percentage point.
+Dana, Najm's lead data scientist, asks four questions. What sample size did the plan require? (About 15,000 users per group; they have about 2,000 per group.) How many metrics are on the screen? (Fourteen.) Was the split 50/50 as designed? (No: 52.4% in treatment.) And had anyone looked before day three? (Yes, every day.) Each answer points to a known trap. The test is stopped, the assignment bug is fixed (users who reinstalled the app were being reassigned to treatment) and the test is rerun with a fixed plan. The rerun finds a real but smaller effect of about one percentage point.
 
 Experiments are where clever people fool themselves most easily: the tool always produces a number, and it always looks precise. At a bank, experiments also touch fees, credit offers and customer communications, so they need governance too. For the engineering of assignment and feature flags, see [*SaaS Building Blocks*, lesson 6.3 — Feature flags and experiments](../saas/index.html#/6.3).
 
@@ -585,8 +585,8 @@ users     = [15000, 15000]
 
 z, p = proportions_ztest(activated, users)
 low, high = confint_proportions_2indep(1800, 15000, 1650, 15000)
-print(f"lift = {1800/15000 - 1650/15000:.3%}, p = {p:.4f}, 95% CI = [{low:.3%}, {high:.3%}]")
-# lift = 1.000%, p = 0.0066, 95% CI = [0.278%, 1.722%]
+print(f"difference = {1800/15000 - 1650/15000:.3%}, p = {p:.4f}, 95% CI = [{low:.3%}, {high:.3%}]")
+# difference = 1.000%, p = 0.0066, 95% CI = [0.278%, 1.722%]
 ```
 
 **Sample size and power.** **Power** is the probability that the test detects an effect of a given size when it really exists; 80% is a common convention. The **minimum detectable effect** (MDE) is the smallest effect you care to detect. Smaller effects need many more users: the required sample grows with the square of 1 ÷ MDE, so halving the MDE roughly quadruples the sample. Compute it before you start.
@@ -701,36 +701,36 @@ Use Python with statsmodels and scipy, and simulated data only.
 
 **1. On day three of a planned four-week test, the activation lift shows p = 0.03. The team has checked every day. What should Dana advise?**
 
-- A. Keep the test running to its planned sample size and end date, because stopping at the first significant look inflates the false-positive rate
-- B. Ship now; p is below 0.05
-- C. Restart the test with a smaller sample so it ends sooner
-- D. Lower alpha to 0.01 and stop if p drops below it tomorrow
+- A. Keep it running to the planned sample size and end date
+- B. Ship now, because p is below 0.05 and the result is significant
+- C. Restart the test with a smaller sample so that it ends sooner
+- D. Lower alpha to 0.01 and stop the test if p drops below it tomorrow
 
 <details><summary>Answer</summary>
 
-**A.** Repeated looks with a fixed-horizon test make a false "win" much more likely. D is still unplanned peeking; only a pre-planned sequential design adjusts thresholds correctly. (🟡 Going deeper, Trap 1.)
+**A.** Stopping at the first significant look inflates the false-positive rate: repeated looks with a fixed-horizon test make a false "win" much more likely. D is still unplanned peeking; only a pre-planned sequential design adjusts thresholds correctly. (🟡 Going deeper, Trap 1.)
 
 </details>
 
 **2. A test designed as 50/50 has 50,600 users in control and 49,400 in treatment. A chi-square test gives p ≈ 0.00015. What does this mean?**
 
-- A. Treatment is performing worse
-- B. A difference of 1,200 users is always negligible
-- C. The test needs a larger MDE
-- D. There is a sample ratio mismatch: assignment or logging is probably broken, so the result cannot be trusted until the cause is found
+- A. Treatment is performing worse, because it has fewer users
+- B. Nothing important: 1,200 users out of 100,000 is negligible
+- C. The test needs a larger minimum detectable effect to be reliable
+- D. Sample ratio mismatch: assignment or logging is probably broken
 
 <details><summary>Answer</summary>
 
-**D.** Such an imbalance is very unlikely by chance with a correct 50/50 split. Find the bug (here, reinstalls being reassigned) first. (🟡 Going deeper, Trap 3.)
+**D.** Such an imbalance is very unlikely by chance with a correct 50/50 split, so no result can be trusted yet. Find the bug (here, reinstalls being reassigned) first. (🟡 Going deeper, Trap 3.)
 
 </details>
 
 **3. Which statement about a p-value of 0.03 is correct?**
 
-- A. There is a 97% probability that the treatment is better
-- B. If the change had no effect, a difference at least this large would occur about 3% of the time by chance
-- C. The effect is large enough to matter for the business
-- D. There is a 3% probability the result is due to a bug
+- A. There is a 97% probability that the treatment is better than control
+- B. Under no effect, a gap this large or larger arises about 3% of the time
+- C. The effect is large enough to matter for the business and should ship
+- D. There is a 3% probability that the result was caused by a bug
 
 <details><summary>Answer</summary>
 
@@ -740,27 +740,27 @@ Use Python with statsmodels and scipy, and simulated data only.
 
 **4. An observational analysis shows that a new loan journey has a lower overall approval rate than the old one, but a higher rate in every customer segment. What is the most likely explanation?**
 
-- A. The data must contain an error, because this is impossible
-- B. Regression to the mean
-- C. Simpson's paradox: the new journey attracted a larger share of applicants from a segment with a low approval rate, so the mix changed the aggregate
-- D. A novelty effect
+- A. The data must contain an error, because such a reversal is impossible
+- B. Regression to the mean: weak segments recover on their own
+- C. Simpson's paradox: the new journey drew more low-approval applicants
+- D. A novelty effect: applicants chose the new journey because it was new
 
 <details><summary>Answer</summary>
 
-**C.** Aggregating groups with different sizes and base rates can reverse a comparison, as in the 1973 Berkeley admissions data. It is entirely possible (not A). Break down by the mix variable before drawing conclusions. (🔴 Expert view.)
+**C.** The new journey attracted a larger share of applicants from a segment with a low approval rate, so the mix changed the aggregate. Aggregating groups with different sizes and base rates can reverse a comparison, as in the 1973 Berkeley admissions data. It is entirely possible (not A). Break down by the mix variable before drawing conclusions. (🔴 Expert view.)
 
 </details>
 
 **5. The cards team wants to test two different annual fees on random new customers to see which earns more. What should happen first?**
 
-- A. Run it immediately; A/B tests are always the best evidence
-- B. Run it only on staff accounts
-- C. Run it without telling customers, so their behaviour is not affected
-- D. Get approval from compliance (and model risk if models are involved) because price experiments raise fairness and regulatory questions, and record it in the experiment plan
+- A. Run it immediately, because randomised tests are the strongest evidence
+- B. Run it on staff accounts only, to avoid affecting real customers
+- C. Run it without telling customers, so that their behaviour is unaffected
+- D. Get compliance approval first and record it in the experiment plan
 
 <details><summary>Answer</summary>
 
-**D.** Experiments on price, credit or eligibility need governance at a bank. A ignores customer harm and rules; B would not answer the question; C raises transparency and consumer-protection concerns. (🔴 Expert view.)
+**D.** Experiments on price, credit or eligibility raise fairness and regulatory questions, so they need compliance approval (and model-risk approval where models are involved). A ignores customer harm and rules; B would not answer the question; C raises transparency and consumer-protection concerns. (🔴 Expert view.)
 
 </details>
 
@@ -769,6 +769,6 @@ Use Python with statsmodels and scipy, and simulated data only.
 - Alex Deng, Ya Xu, Ron Kohavi and Toby Walker, "Improving the Sensitivity of Online Controlled Experiments by Utilizing Pre-Experiment Data" (WSDM 2013)
 - P. J. Bickel, E. A. Hammel and J. W. O'Connell, "Sex Bias in Graduate Admissions: Data from Berkeley", *Science*, 1975
 - Yoav Benjamini and Yosef Hochberg, "Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing", *Journal of the Royal Statistical Society, Series B*, 1995
-- American Statistical Association, "The ASA Statement on p-Values: Context, Process, and Purpose" (2016) — https://www.amstat.org/
+- Ronald L. Wasserstein and Nicole A. Lazar, "The ASA's Statement on p-Values: Context, Process, and Purpose", *The American Statistician*, 2016 — https://www.amstat.org/
 - statsmodels documentation, power and proportion tests — https://www.statsmodels.org/stable/
 - SciPy documentation, `scipy.stats.chisquare` — https://docs.scipy.org/doc/scipy/

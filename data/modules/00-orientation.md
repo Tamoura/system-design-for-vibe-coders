@@ -50,6 +50,7 @@ Each step up the list needs everything below it. You cannot predict fraud from d
 **Same question, two definitions.** Here is the Monday-morning disagreement as SQL. Both queries are valid. They answer different questions.
 
 ```sql
+-- DuckDB syntax (in PostgreSQL, write INTERVAL '90 days')
 -- Retail's definition: holds at least one open account
 SELECT COUNT(DISTINCT customer_id) AS active_customers
 FROM accounts
@@ -112,7 +113,7 @@ Faisal's rule for Huda: *when you receive data, ask who produces it and what the
 
 **Value comes from decisions, not data.** A pipeline that runs perfectly but feeds a dashboard nobody uses has cost and no value. Strong data teams work backwards from a decision: "The fraud team decides each morning which alert rules to tighten. What do they need to see, how fresh, and how sure must it be?" That one sentence tells you the freshness target, the grain of the table, the quality checks that matter and who to call when it breaks.
 
-**Centralised, embedded or hub-and-spoke.** Organisations arrange these roles in three common ways. A *central* data team owns everything; it is consistent but becomes a queue. *Embedded* analysts sit in each business unit; they are fast but definitions drift apart, which is exactly the Monday-morning problem. *Hub and spoke* keeps a central platform and shared definitions (the hub) with analysts and scientists in the business (the spokes). Najm uses hub and spoke: Faisal's team owns the platform, the core models and the metric definitions; Kareem sits with retail. A related idea, **data mesh**, pushes ownership of data products further out to domain teams. It is a set of organisational principles, not a tool, and it only works where domain teams have the skills and the platform to own data well.
+**Centralised, embedded or hub-and-spoke.** Organisations arrange these roles in three common ways. A *central* data team owns everything; it is consistent but becomes a queue. *Embedded* analysts sit in each business unit; they are fast but definitions drift apart, which is exactly the Monday-morning problem. *Hub and spoke* keeps a central platform and shared definitions (the hub) with analysts and scientists in the business (the spokes). Najm uses hub and spoke: Faisal's team owns the platform, the core models and the metric definitions; Kareem sits with retail. A related idea, **data mesh** (described by Zhamak Dehghani in 2019), pushes ownership of data products further out to domain teams. It is a set of organisational principles, not a tool, and it only works where domain teams have the skills and the platform to own data well.
 
 **Regulated data raises the bar.** In a bank, a wrong number can become a wrong regulatory report or an unfair credit decision, not just an awkward meeting. That is why governance appears in every module of this course, and why Sara, Najm's Data Protection Officer, and Layla, Head of AI Governance, will often appear in the same conversation as a pipeline. For the legal and AI-governance side in depth, see [*AI Governance: Zero to Hero*, lesson 3.2 — Data governance and intellectual-property policies for AI](../aigp/index.html#/3.2).
 
@@ -168,10 +169,10 @@ The card is short on purpose. Its job is to force the two conversations that pre
 
 **1. At Najm's business review, retail reports 412,000 active customers and finance reports 368,000. Both queries run without errors. What is the most likely root cause?**
 
-- A. One of the queries has a syntax error that the database ignored
-- B. The two teams use different definitions of "active customer", and nobody owns a single definition
-- C. The warehouse is too slow to count customers accurately
-- D. Finance used Python and retail used SQL
+- A. One of the two queries contains a syntax error that the database quietly skipped over while counting
+- B. Two definitions of "active customer", with nobody owning one
+- C. The warehouse is too slow to count hundreds of thousands of customers accurately in one pass
+- D. Finance built its number in Python while retail built its number in SQL
 
 <details><summary>Answer</summary>
 
@@ -181,9 +182,9 @@ The card is short on purpose. Its job is to force the two conversations that pre
 
 **2. Which role is mainly responsible for turning raw tables into clean, tested, documented models with agreed metric definitions?**
 
-- A. Data scientist
-- B. ML engineer
-- C. Data analyst
+- A. Data scientist, who builds the predictive models
+- B. ML engineer, who keeps models running in production
+- C. Data analyst, who answers business questions with dashboards
 - D. Analytics engineer
 
 <details><summary>Answer</summary>
@@ -194,10 +195,10 @@ The card is short on purpose. Its job is to force the two conversations that pre
 
 **3. The fraud team asks Huda "Which card transactions tomorrow are likely to be fraud?" What kind of question is this, and who usually leads the answer?**
 
-- A. Predictive; a data scientist, using data the engineers have made reliable
-- B. Descriptive; a data analyst with a dashboard
-- C. Diagnostic; the data engineer, by checking the pipeline logs
-- D. Prescriptive; the Data Protection Officer
+- A. Predictive; a data scientist
+- B. Descriptive; a data analyst, who builds a dashboard of last month's confirmed fraud cases
+- C. Diagnostic; the data engineer, who checks the pipeline logs for what went wrong yesterday
+- D. Prescriptive; the Data Protection Officer, who decides which transactions may be scored
 
 <details><summary>Answer</summary>
 
@@ -207,10 +208,10 @@ The card is short on purpose. Its job is to force the two conversations that pre
 
 **4. The app team renames the event `card_freeze` to `card_freeze_tap`. The pipeline keeps running, but the "card freezes" dashboard drops to zero. Where did the chain break?**
 
-- A. In the BI tool's chart settings
-- B. In the data scientist's model
-- C. At the hand-off between the data producer and the data platform, where no agreement covered the event name
-- D. In the warehouse's storage format
+- A. In the BI tool's chart settings, because that is where the zero first appears to the business
+- B. In the data scientist's model, which was trained on the old event name
+- C. At the producer-to-platform hand-off, which no agreement covered
+- D. In the warehouse's storage format, which cannot hold two event names for the same action
 
 <details><summary>Answer</summary>
 
@@ -220,10 +221,10 @@ The card is short on purpose. Its job is to force the two conversations that pre
 
 **5. Najm has analysts in every business unit, each writing their own metric queries, and the numbers keep drifting apart. Which change best addresses this while keeping analysts close to the business?**
 
-- A. Move every analyst into one central team that handles all requests in a queue
-- B. Adopt hub and spoke: a central platform and shared metric definitions, with analysts staying embedded in the business
-- C. Buy a second BI tool so each unit can compare results
-- D. Ask each analyst to document their own definition in their own folder
+- A. Move every analyst into one central data team that takes all requests from a single shared queue
+- B. Hub and spoke: shared definitions centrally, analysts stay in the units
+- C. Buy a second BI tool so that each business unit can compare its results against the others
+- D. Ask each analyst to document their own metric definitions carefully in their own team folder
 
 <details><summary>Answer</summary>
 
@@ -246,18 +247,18 @@ The card is short on purpose. Its job is to force the two conversations that pre
 
 ## ⚡ In 60 seconds
 - The **modern data stack** is the usual chain of components: sources → ingestion → storage → transformation → serving (dashboards, models, apps), with orchestration, quality checks and governance running alongside.
-- Most teams today use **ELT**: load raw data first, then transform it inside the warehouse or lakehouse with SQL.
+- Many teams today use **ELT**: load raw data first, then transform it inside the warehouse or lakehouse with SQL.
 - Data moves through **layers**: **raw** (exactly as received), **staging** (cleaned and renamed) and **marts** (modelled for a business purpose).
 - The rule that matters most: **every hop can silently change the number**. Duplicates, time zones, late data and truncation each have a home somewhere on the path.
 - Decision cue: for any number on a dashboard, you should be able to name every hop it passed through, who owns each one, and how fresh it is.
 - Biggest trap: checking only the last step. A dashboard can be perfectly built on top of data that was wrong three hops earlier.
 
 ## 🧭 Why it matters
-In March, Najm Mobile launches a "Freeze card" button on the home screen. Kareem's dashboard says **daily users of Freeze card jumped 40% on launch day**. The product team celebrates. Two days later, Huda notices that the number of *taps* is far higher than the number of *customers*, and that the launch-day spike starts at 9 p.m. Doha time, when hardly anyone is awake to need it.
+In March, Najm Mobile launches a "Freeze card" button on the home screen. Kareem's dashboard says **daily users of Freeze card jumped 40% on launch day**. The product team celebrates. Two days later, Huda notices that the number of *taps* is far higher than the number of *customers*, and that many launch-day taps are stamped after 21:00 UTC, which is already after midnight, the next day, in Doha. (Najm, the feature and the figures are hypothetical.)
 
 It turns out two things happened on the way from the phone to the chart. The app retries sending an event when the network is slow, so some taps arrive twice. And the dashboard grouped events by **UTC** date, three hours behind Doha. Evening taps landed on the "wrong" day. Nothing was broken in the usual sense. Every component did what it was built to do. The number was still wrong.
 
-Public examples show how much a single hop can matter. In October 2020, England's COVID-19 case reporting missed nearly 16,000 positive cases for several days. Widely published accounts traced it to a step that loaded test results into an older spreadsheet file format with a row limit, so rows beyond the limit were dropped without an error. Every system around it worked. One hop silently truncated the data.
+Public examples show how much a single hop can matter. In early October 2020, it emerged that England's daily COVID-19 figures had left out nearly 16,000 positive cases over about a week. Widely published accounts traced it to a step that loaded test results into an older spreadsheet file format with a row limit, so rows beyond the limit were dropped without an error. Every system around it worked. One hop silently truncated the data.
 
 This lesson walks the whole path once, so you know where to look.
 
@@ -283,7 +284,7 @@ flowchart LR
 
 **Step 1: Source.** The app creates an **event**: a small record that something happened, such as `{"event_id": "e1", "customer_id": "c001", "event_name": "card_freeze_tap", "event_ts": "2026-03-01T21:30:00Z"}`. Other sources at Najm include the core banking database (customers, accounts, transactions, loans), the card authorisations stream, and Najm Assist conversation logs. For how product teams should design and own their events, see [*System Design for Vibe Coders*, lesson 7.5 — Product analytics in practice](../vibe/index.en.html#l7-5).
 
-**Step 2: Ingestion.** Something copies the data into the platform. Events usually go through a **message broker** such as **Apache Kafka**, which stores them in order and lets several systems read them. Database tables are copied by **batch** jobs (every hour or night) or by **change data capture** (CDC), which reads the database's own change log. Lesson 2.1 covers these choices.
+**Step 2: Ingestion.** Something copies the data into the platform. Events usually go through a **message broker** such as **Apache Kafka**, which stores them durably, in order within each partition, and lets several systems read them. Database tables are copied by **batch** jobs (every hour or night) or by **change data capture** (CDC), which reads the database's own change log. Lesson 2.1 covers these choices.
 
 **Step 3: Storage.** Data lands in a **warehouse** (a database built for analysis, such as PostgreSQL for small data, or Snowflake, BigQuery, Amazon Redshift or Microsoft Fabric as managed services), or in a **lake** (files, often **Parquet**, on cheap object storage), or in a **lakehouse**, which adds table features to the lake. Lesson 1.3 compares them. For learning, **DuckDB** on your laptop plays the warehouse role well.
 
@@ -297,7 +298,7 @@ flowchart LR
 
 **Step 5: Serving.** People and systems read the marts: dashboards in a **BI tool** (business intelligence) such as Metabase or Apache Superset, ML features for Smart Alerts, extracts for regulatory reports, and documents and embeddings for the Credit Memo Copilot.
 
-**ETL or ELT?** In **ETL** (extract, transform, load), data is transformed *before* it is loaded into the warehouse. In **ELT** (extract, load, transform), raw data is loaded first and transformed inside the warehouse with SQL. ELT became the common default as warehouses grew cheap and powerful enough to do the transforming. Its big advantage: because raw data is kept, you can fix a transformation and rebuild history. ETL still has a place, for example when personal data must be masked *before* it ever reaches the platform (lesson 6.2).
+**ETL or ELT?** In **ETL** (extract, transform, load), data is transformed *before* it is loaded into the warehouse. In **ELT** (extract, load, transform), raw data is loaded first and transformed inside the warehouse with SQL. ELT became a common default as warehouses grew cheap and powerful enough to do the transforming. Its big advantage: because raw data is kept, you can fix a transformation and rebuild history. ETL still has a place, for example when personal data must be masked *before* it ever reaches the platform (lesson 6.2).
 
 ### 🟡 Going deeper
 
@@ -311,7 +312,7 @@ flowchart LR
 | e3 | c002 | card_freeze_tap | 2026-03-01 08:05 |
 | e4 | c003 | card_freeze_tap | 2026-03-02 09:00 |
 
-The wrong way counts rows and groups by UTC date:
+The wrong way counts rows and groups by UTC date (the snippets use DuckDB syntax):
 
 ```sql
 -- Wrong: counts taps (including retries) and uses the UTC calendar day
@@ -367,11 +368,11 @@ Tools such as dbt tests or Great Expectations run these checks automatically (le
 ## 🧰 The toolkit
 | Tool, pattern or standard | What it is and does | When to reach for it |
 |---|---|---|
-| **Apache Kafka** | Distributed event log: producers write events to topics, many consumers read them in order | Collecting app and card events that several systems need (lesson 2.3) |
+| **Apache Kafka** | Distributed event log: producers write events to topics, many consumers read them, in order within each partition | Collecting app and card events that several systems need (lesson 2.3) |
 | **ELT** | Load raw data first, then transform it inside the warehouse | The default for analytics; keeps raw data so history can be rebuilt |
 | **Raw, staging and marts layers** | Data as received; cleaned per source; modelled for a business purpose | Organising every warehouse or lakehouse project |
 | **DuckDB** | In-process analytical database that runs SQL on local files, including Parquet and CSV | Learning, local development and small-to-medium analytics |
-| **Apache Airflow** | Open-source orchestrator that runs DAGs (ordered graphs) of tasks on a schedule | Running and retrying multi-step pipelines (lesson 2.2) |
+| **Apache Airflow** | Open-source orchestrator that runs DAGs (directed acyclic graphs) of tasks on a schedule | Running and retrying multi-step pipelines (lesson 2.2) |
 | **dbt** (dbt Labs; dbt Core is open source) | Runs SQL transformations as version-controlled models with tests and documentation | Building staging and mart layers (lesson 3.1) |
 | **Metabase** | Open-source BI tool for questions and dashboards over SQL databases | Serving marts to business users |
 | **Reconciliation checks** | Comparing counts and totals between hops of a pipeline | Catching silent truncation, duplication and loss |
@@ -414,12 +415,12 @@ Huda writes the team's first **data flow sheet** for one dashboard number. Faisa
 
 ## ✍️ Check yourself
 
-**1. Kareem's dashboard shows a 40% launch-day spike in Freeze card users, starting at 9 p.m. Doha time. Raw data shows some events with the same `event_id` twice. What should Huda fix first, and where?**
+**1. Kareem's dashboard shows a 40% launch-day spike in Freeze card users. Many of the taps are stamped after 21:00 UTC, and raw data shows some events with the same `event_id` twice. What should Huda fix first, and where?**
 
-- A. Add `DISTINCT` to Kareem's dashboard query only
-- B. Ask the mobile team to stop retrying events
-- C. Deduplicate by `event_id` and convert to Doha time in the staging layer, so every consumer gets the fix
-- D. Delete the duplicate rows from the raw layer
+- A. Add `DISTINCT` and a time-zone shift to Kareem's dashboard query, since that is where the error shows
+- B. Ask the mobile team to stop retrying events when the network is slow, so duplicates never arrive
+- C. Deduplicate and convert to Doha time once, in staging
+- D. Delete the duplicate rows from the raw layer so that every later layer starts from clean data
 
 <details><summary>Answer</summary>
 
@@ -429,10 +430,10 @@ Huda writes the team's first **data flow sheet** for one dashboard number. Faisa
 
 **2. What is the main advantage of ELT over ETL for an analytics platform?**
 
-- A. Raw data is kept, so when a transformation is fixed, history can be rebuilt from it
-- B. Data never needs cleaning
-- C. It needs no orchestrator
-- D. It always processes data in real time
+- A. Raw data is kept, so fixed logic can rebuild history
+- B. Data loaded this way never needs cleaning, because the warehouse handles quality automatically
+- C. It needs no orchestrator, because the warehouse runs every step by itself in the right order
+- D. It always processes data in real time, so dashboards never show yesterday's numbers
 
 <details><summary>Answer</summary>
 
@@ -455,10 +456,10 @@ Huda writes the team's first **data flow sheet** for one dashboard number. Faisa
 
 **4. A pipeline runs every night with no errors, but a monthly total is lower than finance's figure. A step loads data through a file format with a row limit. What practice would most likely have caught this early?**
 
-- A. Running the pipeline more often
-- B. Reconciliation checks that compare row counts and totals between hops
-- C. Moving the dashboard to a different BI tool
-- D. Adding more columns to the mart
+- A. Running the same pipeline more often, for example every hour instead of every night
+- B. Reconciling counts and totals between hops
+- C. Moving the finance dashboard to a different BI tool with better charts and alerts
+- D. Adding more columns to the mart so that analysts can spot missing values themselves
 
 <details><summary>Answer</summary>
 
@@ -468,10 +469,10 @@ Huda writes the team's first **data flow sheet** for one dashboard number. Faisa
 
 **5. The account balance in the warehouse's customer 360 mart differs from the balance in the core banking system. What should the team conclude?**
 
-- A. The warehouse is right, because it has been cleaned
-- B. Both are equally valid; publish both
-- C. The core banking system is the system of record; the difference is a pipeline issue to investigate
-- D. The difference is normal and can be ignored
+- A. The warehouse is right, because its data has been cleaned, deduplicated and tested
+- B. Both are equally valid, so publish both and let each team pick the one it prefers
+- C. Core banking wins; investigate the pipeline
+- D. The difference is normal for any copy of the data, and can safely be ignored
 
 <details><summary>Answer</summary>
 
@@ -511,7 +512,7 @@ On Huda's first day, Faisal gives her two things: a one-page map of the systems 
 
 ### 🟢 The essentials
 
-**Najm Bank at a glance.** Najm is fictional; any resemblance to a real institution is unintended. The same bank appears in the library's other courses, seen from other teams. Here you sit with the data team.
+**Najm Bank at a glance.** Najm is fictional; any resemblance to a real institution is unintended. The same bank appears in the library's other courses, seen from other teams.
 
 | Fact | Detail |
 |---|---|
@@ -535,8 +536,6 @@ Three jurisdictions matter: where data may be stored, how long it may be kept an
 | **Layla** | Head of AI Governance | Risk tiers, controls and approvals for models and AI | "What is the risk, and who signs off?" |
 | **Tariq** | Engineering lead, core banking and Najm Mobile | The systems that *produce* the data | "Will this change slow down production?" |
 | **Salem** | Head of Platform Engineering | Infrastructure, cloud, cost and reliability | "What does it cost to run, and who gets paged?" |
-
-Huda is deliberately imperfect: she trusts green pipelines and copies queries she does not understand. Whenever she acts, ask what Faisal would do instead.
 
 **The systems.** These are the data sources and products you will build on in every module.
 
@@ -585,7 +584,7 @@ flowchart LR
 | 6 Governance, privacy and security | Own, classify, protect and share data properly | 🔴 |
 | 7 Hero | Build the credit-risk mart end to end, plan your career and pass a 60-question practice exam | 🔴 |
 
-**How every lesson works.** The ten sections always come in the same order, from **⚡ In 60 seconds** to **📚 References**. In **📐 How it works**, read 🟢 *The essentials* first, try 🟡 *Going deeper*, and come back to 🔴 *Expert view* when you need it. **🏛️ In practice at Najm Bank** is the artefact to copy into your own portfolio, and **✍️ Check yourself** only asks what the lesson taught.
+**How every lesson works.** The ten sections always come in the same order. In **📐 How it works**, read 🟢 first, try 🟡, and return to 🔴 when you need it. **🏛️ In practice at Najm Bank** is the artefact to copy into your portfolio.
 
 **Three ways through.**
 - *Aiming at data engineering:* go in order, and spend extra time on Modules 2 and 3.
@@ -613,7 +612,7 @@ CREATE OR REPLACE TABLE customers AS
 SELECT
     printf('C%06d', i)                            AS customer_id,
     (['retail', 'sme', 'corporate'])[1 + i % 3]   AS segment,
-    (['QA', 'AE', 'DE'])[1 + i % 3]               AS country,
+    (['QA', 'AE', 'DE'])[1 + (i // 3) % 3]        AS country,
     DATE '2020-01-01' + CAST(i % 2000 AS INTEGER) AS opened_on
 FROM range(1, 1001) AS r(i);
 """)
@@ -645,16 +644,16 @@ It makes 1,000 customers and 50,000 transactions in the first quarter of 2026. N
 
 **Build a portfolio, not a pile of notes.** Hiring managers for data roles want evidence that you can do the work. Keep one git repository for this course. Each module adds something real: a modelled schema, an incremental pipeline, a tested dbt project, a metric card, a drift checklist, a classification table, and finally the credit-risk mart. Write a short README for each one, in the style of the Najm artefacts: what decision it supports, what it assumes, how to run it. For how to present this to employers, see [*From Graduate to Hired*, lesson 2.3 — Data engineer, analyst and data scientist](../career/index.html#/2.3) and lesson 7.2 of this course.
 
-**Use the companion courses.** Where another course goes deeper, a lesson points to it in one line:
+**Use the companion courses** where they go deeper:
 - Databases, backups and indexes in production: [*System Design for Vibe Coders*, lesson 2.1 — The database is the easy part](../vibe/index.en.html#l2-1).
 - The data layer and analytics pipeline of a SaaS product: [*SaaS Building Blocks*, lesson 2.1 — The data layer](../saas/index.html#/2.1).
 - Privacy law and AI governance: [*AI Governance: Zero to Hero*, lesson 4.1 — Data protection principles meet AI](../aigp/index.html#/4.1).
 - Data readiness and experiments from the product side: [*AI Product Management: Zero to Hero*, lesson 3.1 — Data readiness](../aipm/index.html#/3.1).
-- Protecting personal data and securing retrieval: [*Secure AI & Application Security*, lesson 5.3 — Protecting personal data](../secai/index.html#/5.3).
+- Protecting personal data: [*Secure AI & Application Security*, lesson 5.3 — Protecting personal data](../secai/index.html#/5.3).
 
-**Read the cast as a set of risks.** Tariq stands for the producer whose change breaks you; Sara for personal data you should not have copied; Layla for the model nobody approved; Salem for the bill nobody expected; Kareem for the number that reached the business unchecked. Before you ship anything, ask what each would say. It is a quick, surprisingly complete review.
+**Read the cast as a set of risks.** Tariq stands for the producer whose change breaks you; Sara for personal data you should not have copied; Layla for the model nobody approved; Salem for the bill nobody expected; Kareem for the number that reached the business unchecked. Before you ship anything, ask what each would say: a quick, surprisingly complete review.
 
-**Accuracy rules in this course.** Where a fact can change, lessons say "at the time of writing (2026)" and point to official documentation. Managed services' prices and limits are not quoted. Najm figures are hypothetical unless a source is given.
+**Accuracy rules.** Facts that can change are marked "at the time of writing (2026)" and point to official documentation; managed services' prices and limits are not quoted; Najm figures are hypothetical unless a source is given.
 
 ## 🧰 The toolkit
 | Tool, pattern or standard | What it is and does | When to reach for it |
@@ -691,7 +690,7 @@ Faisal hands every new joiner the **Data Platform onboarding pack**. Huda fills 
 | Git repository | A repository named for this course, with a README and the synthetic-data script committed |
 | Data rule | A line in your README: "This repository contains only synthetic or public open data" |
 
-**Part C: first conversations.** One question each for Faisal, Lina, Kareem, Dana and Sara, written before the meeting, answer noted after.
+**Part C: first conversations.** One question each for Faisal, Lina, Kareem, Dana and Sara; note the answers.
 
 ## 🛠️ Exercises
 - 🟢 Set up the lab: install Python and DuckDB, run the synthetic-data script and commit it to a new git repository with a README. *Done when:* a fresh clone of your repository runs the script and prints the same three rows as your first run.
@@ -700,7 +699,7 @@ Faisal hands every new joiner the **Data Platform onboarding pack**. Huda fills 
 
 ## ⚠️ Mistakes and traps
 - **Reading without running.** You will not learn SQL, pipelines or dbt by reading. Run every snippet, then break it on purpose.
-- **Using real personal data "just to practise".** Practise only on synthetic or open data. It is a habit you will need at work, where it is also the law.
+- **Using real personal data "just to practise".** Practise only on synthetic or open data. At work, data protection law and bank policy will usually require the same habit.
 - **Copying Huda.** She is there to make the mistakes first. When she says "it ran, so it's done", ask what Faisal would check.
 - **Keeping exercises on your desktop.** Work not in a repository with a README is not portfolio evidence.
 
@@ -708,17 +707,16 @@ Faisal hands every new joiner the **Data Platform onboarding pack**. Huda fills 
 - Najm Bank is a fictional Gulf bank; you join its Data Platform & Analytics team.
 - Its systems (core banking, card stream, app events, Najm Assist logs, warehouse marts, Smart Alerts and Credit Memo Copilot) are the running case for every module.
 - The cast stands for the people, and the risks, every data decision must account for.
-- Each lesson has the same ten sections, a level, a stage, an artefact, three exercises and five questions.
 - Set up a laptop lab, use only synthetic or open data, keep everything in git, and build a portfolio as you go.
 
 ## ✍️ Check yourself
 
 **1. Which statement about Najm Bank is correct?**
 
-- A. It is a real Qatari bank whose data is used in the exercises
-- B. It is a fictional bank, but its scenario figures are real industry statistics
-- C. It operates only in Qatar, so only Qatari data law applies
-- D. It is a fictional mid-sized Gulf bank with customers in Qatar, the UAE and the EU, used across the library
+- A. It is a real Qatari bank, and anonymised samples of its data are used in the exercises
+- B. It is a fictional bank, but the figures in its scenarios are real industry statistics
+- C. It operates only in Qatar, so only Qatari data protection law applies to its data
+- D. It is fictional, with customers in Qatar, the UAE and the EU
 
 <details><summary>Answer</summary>
 
@@ -728,10 +726,10 @@ Faisal hands every new joiner the **Data Platform onboarding pack**. Huda fills 
 
 **2. Huda wants to add customers' phone numbers to the customer 360 mart "in case someone needs them". Who should she talk to first, and why?**
 
-- A. Salem, because the mart will grow in size
-- B. Sara, the DPO, because adding personal data needs a purpose, a legal basis and a retention period
-- C. Kareem, because he uses the retail dashboards
-- D. Nobody; marts are the data team's to change
+- A. Salem, because the extra column will grow the mart and raise storage and compute costs
+- B. Sara, because new personal data needs a purpose
+- C. Kareem, because he builds the retail dashboards that will read the new column
+- D. Nobody, because marts belong to the data team and it may change them as it sees fit
 
 <details><summary>Answer</summary>
 
@@ -741,10 +739,10 @@ Faisal hands every new joiner the **Data Platform onboarding pack**. Huda fills 
 
 **3. Huda's practice dataset gives different answers every time she re-runs her generator script. What is the best fix?**
 
-- A. Generate the values deterministically, for example with `hash()` of the row number, so each run produces the same data
-- B. Run the script only once and never again
-- C. Use a sample of real customer data instead
-- D. Round all numbers to whole values
+- A. Derive values deterministically, for example from `hash()`
+- B. Run the script only once, keep that file, and never run the generator again
+- C. Use a small sample of real customer data instead, since it never changes between runs
+- D. Round all the generated numbers to whole values so small differences disappear
 
 <details><summary>Answer</summary>
 
@@ -754,10 +752,10 @@ Faisal hands every new joiner the **Data Platform onboarding pack**. Huda fills 
 
 **4. An aspiring data scientist asks which modules to prioritise. Which advice matches this course's guidance?**
 
-- A. Only Module 5, because the rest is engineering
-- B. Modules 2 and 3 only, because pipelines come first
-- C. Modules 0, 1, 4 and 5 thoroughly, plus lesson 3.2 on data quality, Module 6 and the capstone
-- D. Start with the practice exam and skip lessons you pass
+- A. Only Module 5, because everything else in the course is engineering work done by others
+- B. Only Modules 2 and 3, because pipelines have to come before any model can be built
+- C. Modules 0, 1, 4 and 5, plus 3.2, Module 6 and the capstone
+- D. Start with the practice exam and then skip every lesson whose questions you already passed
 
 <details><summary>Answer</summary>
 
@@ -767,10 +765,10 @@ Faisal hands every new joiner the **Data Platform onboarding pack**. Huda fills 
 
 **5. Lina proposes a new column in the credit-risk mart that changes how arrears are counted. Using the cast as a review checklist, which question is most important to answer before the change ships?**
 
-- A. Whether the column name follows the BI tool's colour scheme
-- B. Whether the new column makes the mart load faster
-- C. Whether Huda has seen it
-- D. Which regulatory extracts and dashboards read the old definition, and whether the risk owner has agreed the change
+- A. Whether the new column name fits the naming and colour conventions of the BI dashboards
+- B. Whether the new column makes the nightly mart load faster or slower than before
+- C. Whether Huda, as the newest engineer, has reviewed the change and approved it
+- D. Who reads the old definition, and has the risk owner agreed?
 
 <details><summary>Answer</summary>
 

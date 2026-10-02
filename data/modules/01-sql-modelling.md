@@ -203,7 +203,7 @@ WHERE rn = 1;
 
 You cannot write `WHERE ROW_NUMBER() OVER (...) = 1` directly, because `WHERE` is evaluated before window functions (see the diagram above). Hence the CTE.
 
-**Ranking ties.** On ties, `ROW_NUMBER()` gives 1, 2, 3 (picking arbitrarily), `RANK()` gives 1, 1, 3 and `DENSE_RANK()` gives 1, 1, 2. Add a tie-breaker such as `loaded_at DESC` so results repeat exactly.
+**Ranking ties.** On ties, `ROW_NUMBER()` gives 1, 2, 3 (picking arbitrarily), `RANK()` gives 1, 1, 3 and `DENSE_RANK()` gives 1, 1, 2. Add a tie-breaker, such as a load timestamp or a unique ID, so results repeat exactly.
 
 **Frames.** With `ORDER BY` in the window, aggregates such as `SUM` use a *frame*: by default in PostgreSQL, `RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`, which includes rows tied with the current one. Write the frame explicitly when it matters. `ROWS BETWEEN 6 PRECEDING AND CURRENT ROW` means *seven rows*, not seven days; on days with no transactions it spans more than a week. For a true seven-day window, fill missing days from a calendar table, or use `RANGE BETWEEN INTERVAL '6 days' PRECEDING AND CURRENT ROW` over a date column.
 
@@ -275,7 +275,7 @@ A question asked every month becomes a tested model (3.1) and a defined metric (
 ## 🛠️ Exercises
 Use synthetic data only: generate `customers`, `accounts` (one to three per customer) and about 100,000 `transactions` in DuckDB or PostgreSQL with `generate_series` and `random()`, including some customers with no accounts.
 
-- 🟢 Write the "active retail customers in September and their spend" query twice: once the wrong way (join everything, `COUNT(*)`) and once with CTEs, each commented with its grain. *Done when:* you can explain the exact ratio between the two counts (it is the average number of debits per active customer), and your correct query passes the grain check.
+- 🟢 Write the "active retail customers in September and their spend" query twice: once the wrong way (join everything with the same debit, date and segment filters, then `COUNT(*)`) and once with CTEs, each commented with its grain. *Done when:* you can explain the exact ratio between the two counts (it is the average number of debits per active customer), and your correct query passes the grain check.
 - 🟡 For each customer and month, compute spend, the previous month's spend, the change in percent, and the customer's rank within their segment for that month. Then return only each customer's single highest-spend month. *Done when:* the query uses `LAG`, `DENSE_RANK` and a "latest or top row per key" pattern, with a deterministic tie-breaker, and gives identical results on two runs.
 - 🔴 Build a seven-day rolling spend per customer that is correct on days with no transactions, using a calendar table (one row per date) cross-joined with customers. Compare it with a naive `ROWS BETWEEN 6 PRECEDING AND CURRENT ROW` version. *Done when:* you can show one customer and date where the two differ, explain why, and you have written the query header and run all four checks from 🔴 Expert view.
 
@@ -297,40 +297,40 @@ Use synthetic data only: generate `customers`, `accounts` (one to three per cust
 
 **1. Huda joins `customers` → `accounts` → `transactions` and runs `SELECT COUNT(*)` to count active customers. The result is about 35 times higher than Kareem expected. What is the most likely cause?**
 
-- A. The database's statistics are out of date
+- A. The planner's statistics are out of date, so PostgreSQL estimated the joins badly
 - B. `COUNT(*)` ignores rows with nulls
-- C. The result's grain is one row per transaction, so customers are counted once per transaction
-- D. The `JOIN` should have been a `CROSS JOIN`
+- C. Its grain is one row per transaction, not per customer
+- D. The `JOIN` should have been a `CROSS JOIN` to keep every customer
 
 <details><summary>Answer</summary>
 
-**C.** After joining to transactions, each row is a transaction, so `COUNT(*)` counts transactions. Aggregate to the customer grain first, or use `COUNT(DISTINCT customer_id)` for a count. B is wrong: `COUNT(*)` counts all rows, nulls included. (🟢 The essentials.)
+**C.** After joining to transactions, each row is a transaction, so `COUNT(*)` counts transactions. Aggregate to the customer grain first, or use `COUNT(DISTINCT customer_id)` for a count. A affects speed, never the result. B is wrong: `COUNT(*)` counts all rows, nulls included. (🟢 The essentials.)
 
 </details>
 
 **2. A query joins `customers` to both `loans` and `transactions` and sums loan balances. A customer with 2 loans and 30 transactions shows a loan balance 30 times too high. What is the right fix?**
 
-- A. Aggregate loans and transactions to one row per customer in separate CTEs, then join those to customers
-- B. Replace `SUM(l.balance)` with `SUM(DISTINCT l.balance)`
+- A. Aggregate each table to one row per customer first, then join
+- B. Replace `SUM(l.balance)` with `SUM(DISTINCT l.balance)` so each loan counts once
 - C. Add `ORDER BY customer_id`
-- D. Change the joins to `LEFT JOIN`
+- D. Change both joins to `LEFT JOIN` so customers without loans are kept
 
 <details><summary>Answer</summary>
 
-**A.** This is a fan-out: two one-to-many paths multiply each other. Aggregating each to the target grain first removes it. B looks tempting but silently drops two different loans that happen to have the same balance. (🟡 Going deeper.)
+**A.** This is a fan-out: two one-to-many paths multiply each other. Aggregating each path to the customer grain in its own CTE first removes it. B looks tempting but silently drops two different loans that happen to have the same balance. (🟡 Going deeper.)
 
 </details>
 
 **3. Kareem wants every retail customer listed, with zero for those who spent nothing in September. Huda's `LEFT JOIN` query has `WHERE t.txn_ts >= '2026-09-01'`, and the zero-spend customers are missing. Why?**
 
-- A. `LEFT JOIN` never returns unmatched rows
-- B. For unmatched customers `t.txn_ts` is `NULL`, the `WHERE` comparison is unknown, and those rows are filtered out; the condition belongs in the `ON` clause
-- C. `COALESCE` must be applied before the join
-- D. The query needs `HAVING` instead of `GROUP BY`
+- A. `LEFT JOIN` drops unmatched rows whenever a `GROUP BY` follows it
+- B. Unmatched rows have a `NULL` `txn_ts`, so the `WHERE` test drops them
+- C. `COALESCE` must wrap `t.txn_ts` before the join, or the nulls break the sum
+- D. The date filter needs `HAVING` instead of `WHERE`, because it runs after grouping
 
 <details><summary>Answer</summary>
 
-**B.** A filter on the optional side in `WHERE` turns a `LEFT JOIN` into an inner join in effect. A is false: keeping unmatched rows is exactly what `LEFT JOIN` does. (🟡 Going deeper.)
+**B.** For unmatched customers the comparison with `NULL` is unknown, so a filter on the optional side in `WHERE` turns the `LEFT JOIN` into an inner join in effect; move the condition into the `ON` clause. A is false: keeping unmatched rows is exactly what `LEFT JOIN` does, with or without `GROUP BY`. (🟡 Going deeper.)
 
 </details>
 
@@ -339,7 +339,7 @@ Use synthetic data only: generate `customers`, `accounts` (one to three per cust
 - A. `SELECT account_id, MAX(balance) FROM account_balances GROUP BY account_id`
 - B. `SELECT * FROM account_balances WHERE ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY balance_date DESC) = 1`
 - C. `SELECT account_id, balance FROM account_balances ORDER BY balance_date DESC LIMIT 1`
-- D. Compute `ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY balance_date DESC)` in a CTE, then keep rows where it equals 1 in the outer query
+- D. Number rows per account, newest first, with `ROW_NUMBER()` in a CTE; keep `rn = 1` outside
 
 <details><summary>Answer</summary>
 
@@ -349,14 +349,14 @@ Use synthetic data only: generate `customers`, `accounts` (one to three per cust
 
 **5. A query counts "customers with no loans" using `WHERE customer_id NOT IN (SELECT customer_id FROM loans)` and returns zero rows, although many customers have no loans. What is the most likely explanation?**
 
-- A. At least one `loans.customer_id` is `NULL`, which makes every `NOT IN` comparison unknown; use `NOT EXISTS`
-- B. The sub-query needs `DISTINCT`
-- C. PostgreSQL does not support sub-queries in `WHERE`
-- D. The customers table needs an index
+- A. A `loans.customer_id` is `NULL`, so `NOT IN` is never true
+- B. The sub-query needs `DISTINCT`, or duplicate IDs cancel each other out
+- C. PostgreSQL does not allow a sub-query inside a `WHERE` clause
+- D. The customers table needs an index on `customer_id` for `NOT IN`
 
 <details><summary>Answer</summary>
 
-**A.** `x NOT IN (…, NULL)` can never be true, so no rows qualify. `NOT EXISTS` handles nulls correctly. B changes nothing about the null; D affects speed, not results. (🔴 Expert view.)
+**A.** `x NOT IN (…, NULL)` can never be true, so no rows qualify. Rewrite it with `NOT EXISTS`, which handles nulls correctly. B changes nothing about the null; D affects speed, not results. (🔴 Expert view.)
 
 </details>
 
@@ -474,7 +474,7 @@ WHERE d.customer_id = s.customer_id
 
 -- 2. Insert a new current version for changed and brand-new customers
 INSERT INTO dim_customer (customer_id, branch_code, segment, valid_from, valid_to, is_current)
-SELECT s.customer_id, s.branch_code, s.segment, s.changed_at, TIMESTAMP '9999-12-31', true
+SELECT s.customer_id, s.branch_code, s.segment, s.changed_at, DATE '9999-12-31', true
 FROM stg_customer_changes s
 LEFT JOIN dim_customer d ON d.customer_id = s.customer_id AND d.is_current
 WHERE d.customer_id IS NULL;
@@ -511,7 +511,7 @@ With either approach, the March report gives the same answer in June. If you wan
 
 **Other building blocks.**
 - A **date dimension** has one row per calendar day, with attributes such as Doha business day, week start, month, quarter and Ramadan period, so nobody recomputes calendars in every query.
-- A **degenerate dimension** is a transaction identifier, such as the card authorisation code, kept on the fact table with no dimension table of its own.
+- A **degenerate dimension** is a transaction identifier, such as the card switch's transaction reference number, kept on the fact table with no dimension table of its own.
 - A **snowflake schema** normalises dimensions into further tables (customer → branch → region); it costs joins, so most teams keep dimensions flat.
 
 ### 🔴 Expert view
@@ -588,23 +588,23 @@ Use DuckDB or PostgreSQL with synthetic data.
 
 **1. A customer moved from branch DOH-07 to DOH-03 in June. Rerunning the March loans-by-branch report now shows the customer's March loans under DOH-03. Which change to the model prevents this?**
 
-- A. Add an index on `branch_code`
-- B. Make the customer dimension Type 2 on branch, and join March facts to the version valid in March
-- C. Make the customer dimension Type 1 on branch
-- D. Move `branch_code` into the fact table as a measure
+- A. Add an index on `branch_code` so the report reads a consistent value
+- B. Type 2 on branch, joining March facts to March's version
+- C. Make the customer dimension Type 1 on branch, overwriting the old value
+- D. Partition the fact table by branch so each branch's loans stay separate
 
 <details><summary>Answer</summary>
 
-**B.** Type 2 keeps each version with validity dates, so March facts find the March branch. C is the current behaviour (overwrite) that caused the problem. (🟡 Going deeper.)
+**B.** Type 2 keeps each version with validity dates, so March facts find the March branch. C is the current behaviour (overwrite) that caused the problem; A and D change speed and layout, not which branch a March fact is linked to. (🟡 Going deeper.)
 
 </details>
 
 **2. Lina must design a fact table for loan applications that tracks the dates of application, approval and disbursement, and the days between them. Which fact table type fits best?**
 
-- A. Accumulating snapshot: one row per application, updated as it passes each milestone
+- A. Accumulating snapshot: one row per application, updated at each milestone
 - B. Transaction fact: one row per loan repayment
-- C. Periodic snapshot: one row per loan per day
-- D. A Type 3 dimension
+- C. Periodic snapshot: one row per loan per day, carrying the end-of-day balance
+- D. A Type 3 dimension holding the previous and current application status
 
 <details><summary>Answer</summary>
 
@@ -614,40 +614,40 @@ Use DuckDB or PostgreSQL with synthetic data.
 
 **3. Kareem sums `outstanding_principal` from `fact_loan_daily_balance` over the 30 days of September and reports it as "September exposure". What is wrong?**
 
-- A. Nothing; balances are additive
-- B. The fact table should be normalised first
-- C. Principal is non-additive, so it cannot be summed even across loans
-- D. Balance is semi-additive: it can be summed across loans for one day, but not across days; use the closing or average balance
+- A. Nothing; balances are additive across every dimension, dates included
+- B. The fact table should be normalised to 3NF before any sum
+- C. Principal is non-additive, so it cannot be summed even across loans on one date
+- D. Balances are semi-additive: never sum them across days
 
 <details><summary>Answer</summary>
 
-**D.** Summing 30 daily balances gives about 30 times the exposure. C is wrong because summing balances across loans on a single date is valid. (🟢 The essentials.)
+**D.** Summing 30 daily balances gives about 30 times the exposure; use the closing or the average balance for the month. C is wrong because summing balances across loans on a single date is valid. (🟢 The essentials.)
 
 </details>
 
 **4. What is the first decision in Kimball's design steps after choosing the business process?**
 
-- A. Choosing the dashboard tool
+- A. Choosing the dashboard tool the business will use
 - B. Listing every column the source system offers
-- C. Declaring the grain: what one row of the fact table represents
-- D. Choosing surrogate key data types
+- C. Declaring the grain
+- D. Choosing data types for the surrogate keys
 
 <details><summary>Answer</summary>
 
-**C.** Dimensions and facts are chosen to be true at the declared grain, so the grain comes first. B is how mixed-grain tables get built. (🟢 The essentials.)
+**C.** The grain says what one row of the fact table represents. Dimensions and facts are chosen to be true at the declared grain, so the grain comes first. B is how mixed-grain tables get built. (🟢 The essentials.)
 
 </details>
 
 **5. The card mart and the loans mart each built their own customer table, and "customers by segment" differs between the two dashboards. What does the dimensional approach recommend?**
 
-- A. A conformed customer dimension, shared by both fact tables, with the same keys and attribute values
-- B. A snowflake schema for each mart
-- C. Rounding both numbers to the nearest thousand
-- D. Moving both marts back to third normal form
+- A. Build one conformed customer dimension shared by both
+- B. Normalise each mart's customer table into a snowflake schema
+- C. Round both numbers to the nearest thousand before publishing
+- D. Move both marts back to third normal form for consistency
 
 <details><summary>Answer</summary>
 
-**A.** Conformed dimensions let facts from different business processes be compared consistently. B adds joins but does not make the two marts agree. (🟡 Going deeper.)
+**A.** A conformed dimension has the same keys and attribute values for every fact table that uses it, so facts from different business processes be compared consistently. B adds joins but does not make the two marts agree. (🟡 Going deeper.)
 
 </details>
 
@@ -826,66 +826,66 @@ Use synthetic data only.
 
 **1. Huda's year-long analytical query slows branch transactions on the core banking primary. What is the best long-term fix?**
 
-- A. Run the query at night on the primary
-- B. Add more indexes to the primary
-- C. Load the data into an analytical store, with columnar storage and layered models, and query it there
+- A. Keep it on the primary but run it at night, when branches are closed
+- B. Add more indexes to the primary so the scan finishes faster
+- C. Move the workload to a separate analytical store
 - D. Export the tables to CSV files on a shared drive
 
 <details><summary>Answer</summary>
 
-**C.** OLAP workloads belong on a columnar analytical store, separate from the system that serves customers. A only moves the risk to another time window; D creates an ungoverned copy with no types or table guarantees. (🟢 The essentials.)
+**C.** OLAP workloads belong on a columnar analytical store with layered models, separate from the system that serves customers. A only moves the risk to another time window; D creates an ungoverned copy with no types or table guarantees. (🟢 The essentials.)
 
 </details>
 
 **2. Why does `SUM(amount) GROUP BY channel` usually run faster on Parquet than on CSV with the same rows?**
 
-- A. Parquet is columnar and compressed, so the engine reads only the two columns it needs and less data overall
-- B. Parquet files are always sorted by `amount`
+- A. It reads only the needed columns, compressed
+- B. Parquet files are always sorted by `amount`, so sums are quicker
 - C. CSV cannot store numbers
-- D. Parquet stores a pre-computed answer for every query
+- D. Parquet stores a pre-computed answer for common aggregate queries
 
 <details><summary>Answer</summary>
 
-**A.** Columnar layout and compression mean far less data is read. Row-group statistics also let engines skip data for filters. C is false: CSV stores numbers as text, without types. (🟢 The essentials.)
+**A.** Parquet is columnar and compressed, so the engine reads only the two columns it needs, and far less data overall. Row-group statistics also let engines skip data for filters. C is false: CSV stores numbers as text, without types. (🟢 The essentials.)
 
 </details>
 
 **3. A nightly job writing Parquet files to object storage crashed halfway, and analysts saw a half-loaded day. Which technology is designed to prevent this?**
 
-- A. A larger compute cluster
-- B. An open table format such as Apache Iceberg or Delta Lake, which commits each write atomically as a new snapshot
-- C. Converting the files to ORC
-- D. Partitioning by hour instead of by day
+- A. A larger compute cluster, so the job finishes before it can crash
+- B. An open table format with atomic snapshot commits
+- C. Converting the files to ORC, another columnar file format
+- D. Partitioning by hour instead of by day, so less is lost
 
 <details><summary>Answer</summary>
 
-**B.** Table formats publish a write by atomically switching to a new snapshot, so readers never see partial loads. C changes the file format, not the commit guarantees; D would also add small files. (🟡 Going deeper.)
+**B.** Table formats such as Apache Iceberg or Delta Lake publish a write by atomically switching to a new snapshot, so readers never see partial loads. C changes the file format, not the commit guarantees; D would also add small files. (🟡 Going deeper.)
 
 </details>
 
 **4. Sara, the DPO, asks whether a customer erased from an Iceberg table last week could still be recovered. What is the honest answer?**
 
-- A. No, deletes in table formats are always immediate and physical
-- B. Only if the customer asks
-- C. Yes, and nothing can be done about it
-- D. Possibly: older snapshots may still reference files containing the customer's rows until those snapshots are expired and the files removed, so erasure needs snapshot expiry, and raw-layer and backup retention, designed in
+- A. No: deletes in table formats are always immediate and physical on disk
+- B. Only from backups, because Iceberg never keeps old data files
+- C. Yes, and nothing can be done about it in an open table format
+- D. Possibly, until old snapshots are expired and their files removed
 
 <details><summary>Answer</summary>
 
-**D.** Time travel works by keeping old snapshots, so deletion is only complete after expiry and file clean-up, and raw copies and backups must be covered too. A is the tempting misunderstanding. (🔴 Expert view.)
+**D.** Time travel works by keeping old snapshots, which may still reference files containing the customer's rows, so deletion is only complete after expiry and file clean-up, and raw copies and backups must be covered too. C is wrong because expiry can be designed in. A is the tempting misunderstanding. (🔴 Expert view.)
 
 </details>
 
-**5. A neutral fintech with three engineers and 50 GB of data asks whether it needs a lakehouse. Following the lesson's decision order, what should it consider first?**
+**5. A small fintech with three engineers and 50 GB of data asks whether it needs a lakehouse. Following the lesson's decision order, what should it consider first?**
 
-- A. Which vendor has the newest features
-- B. Its workload: query patterns, volume, freshness and users; then governance, team skills, ecosystem and cost
-- C. Whether its competitors use Iceberg
-- D. How many partitions it can create
+- A. Which vendor has shipped the newest lakehouse features this year
+- B. Its workload: queries, volume, freshness and users
+- C. Whether its competitors and investors expect Iceberg
+- D. How many partitions its data can be split into
 
 <details><summary>Answer</summary>
 
-**B.** Storage is chosen by workload, governance and team first. A small team may be best served by a well-run PostgreSQL plus DuckDB or a managed warehouse. A and C are choosing by fashion. (🔴 Expert view.)
+**B.** Workload comes first, then governance, team skills, ecosystem and cost. A small team may be best served by a well-run PostgreSQL plus DuckDB or a managed warehouse. A and C are choosing by fashion. (🔴 Expert view.)
 
 </details>
 

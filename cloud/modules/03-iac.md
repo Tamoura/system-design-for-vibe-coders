@@ -28,7 +28,7 @@ Yousef's first ticket looks small: rename the Payments database from `payments-d
 Plan: 1 to add, 0 to change, 1 to destroy.
 ```
 
-The identifier cannot be changed in place, so the tool would delete the production payments database and create an empty one. The code was valid, and the plan said exactly what would happen; the only question was whether anyone would read it. Maha blocks the merge. That afternoon Salem adds two rules: every production database carries `prevent_destroy`, and no production pull request merges until a reviewer confirms the plan summary line.
+With the AWS provider version the team pins, the identifier cannot be changed in place (newer provider releases can rename it in place; only the plan tells you which you have), so the tool would delete the production payments database and create an empty one. The code was valid, and the plan said exactly what would happen; the only question was whether anyone would read it. Maha blocks the merge. That afternoon Salem adds two rules: every production database carries `prevent_destroy`, and no production pull request merges until a reviewer confirms the plan summary line.
 
 Why deploys need gates at all is covered in [*System Design for Vibe Coders*, lesson 4.4 — Rollback, staging, and release gates](../vibe/index.en.html#l4-4); here you learn how the infrastructure underneath is built and changed.
 
@@ -38,7 +38,7 @@ Why deploys need gates at all is covered in [*System Design for Vibe Coders*, le
 
 **Declarative versus imperative.** An *imperative* script lists steps ("create a network, then a database"); run it twice and you may get two databases. A *declarative* tool compares a description of the end state with what exists; run it twice and the second run does nothing. That property is **idempotence**, and it makes IaC safe to rerun.
 
-**Terraform and OpenTofu.** **Terraform**, made by HashiCorp, uses a configuration language called **HCL** (HashiCorp Configuration Language). In August 2023 HashiCorp moved Terraform from an open-source licence to the Business Source License (BSL). The community forked the last open-source version as **OpenTofu**, now a Linux Foundation project. The two remain close: same HCL, same providers, mostly the same commands (`terraform` versus `tofu`), though some features now differ, so check the docs for your tool and version. This lesson applies to both; the exercises use OpenTofu because it is open source.
+**Terraform and OpenTofu.** **Terraform**, made by HashiCorp, uses a configuration language called **HCL** (HashiCorp Configuration Language). In August 2023 HashiCorp moved Terraform from an open-source licence to the Business Source License (BSL). The community forked the last open-source version as **OpenTofu**, a Linux Foundation project (accepted into the CNCF sandbox in 2025). The two remain close: same HCL, same providers, mostly the same commands (`terraform` versus `tofu`), though some features now differ, so check the docs for your tool and version. This lesson applies to both; the exercises use OpenTofu because it is open source.
 
 The main building blocks:
 
@@ -59,7 +59,7 @@ terraform {
   required_providers {
     docker = {
       source  = "kreuzwerker/docker"
-      version = "~> 3.0" # allow 3.x patches, never a surprise 4.0
+      version = "~> 3.0" # allow any 3.x release, never a surprise 4.0
     }
   }
 }
@@ -227,7 +227,7 @@ All three run on your own machine with Docker and OpenTofu. If you choose a clou
 
 - 🟢 Use the Docker configuration from 🟢 The essentials. Run `init`, `plan -out=tfplan` and `apply tfplan`, check the page on port 8080, then change the external port and read the new plan. Finally, run `plan` again without changing anything. *Done when:* you can point to the line that says whether the container will be updated in place or replaced, and the final plan reports no changes.
 - 🟡 Turn the configuration into a module `modules/web` with validated inputs `name`, `port` and `image_tag`, and call it twice to run two containers. Use a `moved` block for the original container. *Done when:* an invalid port fails at `plan` with your error message, and the refactor plan shows a move with zero destroys.
-- 🔴 Run a local S3-compatible object store such as MinIO in Docker and use it as a locked remote backend. Start two applies at once from two terminals. Then add `prevent_destroy` to one container and change its name, which forces replacement. *Done when:* the second apply is refused because of the lock, the forced-replacement plan is rejected with a `prevent_destroy` error, and no state file sits in your working directory.
+- 🔴 Run a local S3-compatible object store in Docker (MinIO or an alternative; check its current licence and images) and use it as a locked remote backend. Start two applies at once from two terminals. Then add `prevent_destroy` to one container and change its name, which forces replacement. *Done when:* the second apply is refused because of the lock, the forced-replacement plan is rejected with a `prevent_destroy` error, and no state file sits in your working directory.
 
 ## ⚠️ Mistakes and traps
 - **Skimming the plan.** Read the summary line and every `-` and `-/+` before approving. Make the pipeline post the plan into the pull request so reviewers cannot skip it.
@@ -248,9 +248,9 @@ All three run on your own machine with Docker and OpenTofu. If you choose a clou
 **1. Yousef renames the identifier of the production payments database in Terraform code. The plan shows `-/+` and `# forces replacement` for the database. What will happen if this plan is applied?**
 
 - A. The database is renamed in place with no downtime
-- B. The existing database is destroyed and a new, empty one is created in its place
+- B. The database is destroyed and replaced by a new, empty one
 - C. Nothing, because Terraform never deletes databases
-- D. Only the state file is updated, not the real database
+- D. Only the state file is updated, and the real database is left untouched
 
 <details><summary>Answer</summary>
 
@@ -260,10 +260,10 @@ All three run on your own machine with Docker and OpenTofu. If you choose a clou
 
 **2. Why must the Terraform or OpenTofu state file be stored in a locked, encrypted, access-controlled backend rather than committed to Git?**
 
-- A. Git cannot store files larger than one megabyte
+- A. Git cannot store files larger than one megabyte, and state files often exceed that
 - B. State files are only needed during the first apply
 - C. Providers refuse to run if state is in a repository
-- D. State can contain secret values in plain text, and concurrent writes without a lock can corrupt it
+- D. State can hold plain-text secrets, and unlocked concurrent writes can corrupt it
 
 <details><summary>Answer</summary>
 
@@ -273,9 +273,9 @@ All three run on your own machine with Docker and OpenTofu. If you choose a clou
 
 **3. A pipeline runs `plan` when a pull request opens. The pull request is approved and merged three hours later, and the pipeline then runs a fresh `apply` without a saved plan. What is the risk?**
 
-- A. The apply may make changes nobody reviewed, because it recomputes the plan against whatever reality and code look like now
-- B. There is no risk; `apply` always repeats the earlier plan
-- C. The apply will fail because plans expire after one hour
+- A. It re-plans against current code and reality, so it may apply unreviewed changes
+- B. There is no risk, because `apply` always repeats the most recent plan the pipeline ran
+- C. The apply will fail, because every plan expires one hour after `plan` runs
 - D. The state file will be deleted
 
 <details><summary>Answer</summary>
@@ -286,9 +286,9 @@ All three run on your own machine with Docker and OpenTofu. If you choose a clou
 
 **4. Salem wants app teams to create PostgreSQL databases that are always private, encrypted and backed up. Which design best achieves this?**
 
-- A. A wiki page listing the recommended settings
+- A. A wiki page listing the recommended settings, linked from every team's onboarding guide
 - B. A module that exposes every provider argument as a variable so teams have full flexibility
-- C. A module with a small validated interface such as name, environment, size and owner, and the safety settings fixed inside it
+- C. A module with a small validated interface and the safety settings fixed inside it
 - D. Giving every team administrator access to the cloud console
 
 <details><summary>Answer</summary>
@@ -300,7 +300,7 @@ All three run on your own machine with Docker and OpenTofu. If you choose a clou
 **5. The platform team moves an existing database resource into a new module. The plan shows the old address being destroyed and a new one created. What is the safest fix?**
 
 - A. Apply it during a quiet hour and restore from backup afterwards
-- B. Add a `moved` block from the old address to the new one, so the plan shows a move with no destroy
+- B. Add a `moved` block from the old address to the new address
 - C. Delete the state file and run `import` from the command line for every resource
 - D. Copy the module code back into the root configuration permanently
 
@@ -446,7 +446,7 @@ spec:
 **Secrets in GitOps.** The GitOps repo must not contain plain secrets, and Kubernetes Secrets are only base64-encoded, not encrypted (2.3). Common patterns: the **External Secrets Operator**, which syncs values from a cloud secrets manager into the cluster, with only a reference in Git; **Sealed Secrets** or **SOPS**, which store encrypted values in Git that only the cluster can decrypt. Najm Bank uses references to its secrets manager; see [*Secure AI & Application Security*, lesson 5.2 — Secrets management: keys, tokens and where they leak](../secai/index.html#/5.2).
 
 ### 🔴 Expert view
-**Environments for infrastructure, too.** GitOps controllers handle what runs *inside* Kubernetes. The clusters, databases and networks underneath are managed with OpenTofu (3.1), and the same rules apply: one folder per environment calling the same module versions, so the difference between staging and production is a short, readable list of inputs. Terraform's **workspaces** let one configuration keep several states, but they hide which environment you are in behind a command-line setting and make it easy to apply to the wrong one; separate folders, backends and credentials per environment are clearer. Some teams use wrappers such as Terragrunt, or controllers that run IaC through GitOps (Flux's Terraform controller, Crossplane); evaluate them carefully against the simpler pipeline in 3.1.
+**Environments for infrastructure, too.** GitOps controllers handle what runs *inside* Kubernetes. The clusters, databases and networks underneath are managed with OpenTofu (3.1), and the same rules apply: one folder per environment calling the same module versions, so the difference between staging and production is a short, readable list of inputs. Terraform's **workspaces** let one configuration keep several states, but they hide which environment you are in behind a command-line setting and make it easy to apply to the wrong one; separate folders, backends and credentials per environment are clearer. Some teams use wrappers such as Terragrunt, or controllers that run IaC through GitOps (the community Tofu Controller for Flux, Crossplane); evaluate them carefully against the simpler pipeline in 3.1.
 
 **Separate accounts, not just namespaces.** Put production in its own cloud account (AWS), subscription (Azure) or project (Google Cloud), with its own identity boundaries. A dev pipeline whose credentials cannot even see production cannot break it.
 
@@ -516,10 +516,10 @@ Run these on a local cluster (kind or k3d) with a Git repository you own, such a
 
 **1. Maha finds that production runs an image built from the same commit as staging, but rebuilt two days later. Why is this a problem?**
 
-- A. It is not a problem, because the commit is the same
-- B. Production images must always be built on a weekend
-- C. A rebuild can pull different base images or dependencies, so production runs an artefact nobody tested
-- D. Rebuilt images cannot be stored in a registry
+- A. It is not a problem, because the same commit always produces an identical image
+- B. Production images must be rebuilt only in the approved weekend release window
+- C. A rebuild may pull different base images or dependencies: an untested artefact
+- D. Rebuilt images cannot be stored in the same registry as the original build
 
 <details><summary>Answer</summary>
 
@@ -529,10 +529,10 @@ Run these on a local cluster (kind or k3d) with a Git repository you own, such a
 
 **2. Which of these is one of the four OpenGitOps principles?**
 
-- A. Desired state is pulled automatically by software agents and continuously reconciled
+- A. Desired state is pulled automatically by agents and continuously reconciled
 - B. CI pipelines must hold cluster-admin credentials
-- C. Each environment must have its own Git branch
-- D. Deployments must be approved by a change advisory board
+- C. Each environment must have its own long-lived Git branch, merged in order
+- D. Every production deployment must first be approved by a change advisory board
 
 <details><summary>Answer</summary>
 
@@ -545,7 +545,7 @@ Run these on a local cluster (kind or k3d) with a Git repository you own, such a
 - A. Argo CD records the new value in Git automatically, so nothing else is needed
 - B. Argo CD deletes the Deployment entirely
 - C. The change stays forever because Argo CD only watches Git
-- D. Argo CD reverts the change to what Git says; if the change is needed, it must be made in Git by pull request
+- D. Argo CD reverts it to match Git; a needed change goes through a pull request
 
 <details><summary>Answer</summary>
 
@@ -555,10 +555,10 @@ Run these on a local cluster (kind or k3d) with a Git repository you own, such a
 
 **4. A promotion to production of the Najm Mobile API causes errors. What is the GitOps way to roll back?**
 
-- A. Run `helm rollback` directly against the production cluster
-- B. Revert the promotion pull request in the GitOps repo, so the previous digest returns and the controller syncs it
-- C. Rebuild the previous version from source and push it with the same tag
-- D. Delete the namespace and redeploy from a laptop
+- A. Run `helm rollback` directly against the production cluster, then tell the team in chat
+- B. Revert the promotion pull request so the previous digest returns and syncs
+- C. Rebuild the previous version from source and push it again under the same tag
+- D. Delete the namespace and redeploy the old version from a laptop
 
 <details><summary>Answer</summary>
 
@@ -568,10 +568,10 @@ Run these on a local cluster (kind or k3d) with a Git repository you own, such a
 
 **5. Yousef proposes one Terraform configuration with workspaces named dev, staging and prod, selected on the command line. What is the main concern?**
 
-- A. Workspaces are not supported by any backend
-- B. Workspaces force all environments to share one state file
-- C. The current environment is hidden in a command-line setting, so it is easy to apply to the wrong one; separate folders, backends and credentials per environment are clearer
-- D. Workspaces only work with Kubernetes
+- A. Workspaces are not supported by any remote backend, so state must stay local
+- B. Workspaces force all environments to share one state file, so every apply locks them all
+- C. The target environment is hidden in a command-line setting, making wrong applies easy
+- D. Workspaces only work with Kubernetes providers, not with cloud databases or networks
 
 <details><summary>Answer</summary>
 
@@ -667,12 +667,12 @@ deny contains msg if {
 deny contains msg if {
   some rc in input.resource_changes
   "delete" in rc.change.actions
-  startswith(rc.type, "aws_db_")
+  rc.type in {"aws_db_instance", "aws_rds_cluster"}
   msg := sprintf("%s would be deleted; deleting a database needs a platform-lead approved exception", [rc.address])
 }
 ```
 
-Note the messages: each says what is wrong *and* what to do. Rego syntax has changed between OPA versions, and `import rego.v1` keeps this example working on both older and newer engines; check the docs for the version you run.
+Each message says what is wrong *and* what to do. Rego syntax changed between OPA versions; `import rego.v1` makes this valid on 0.x releases from 0.59 and on OPA 1.x. Newer AWS code may use `aws_vpc_security_group_ingress_rule`, which needs its own rule.
 
 **Policies are code, so test them.** OPA has a built-in test runner (`opa test`), and Conftest can run test cases too. For each rule, keep at least one example that must be denied and one that must be allowed. A policy without tests will one day block every deployment, or none.
 
@@ -721,11 +721,11 @@ Never leave drift as "known". If an attribute legitimately changes outside IaC, 
 ### 🔴 Expert view
 **Rolling out a policy without a revolt.** Start in warn or audit mode, measure what would fail, fix or exempt it, announce a date, then enforce. Publish each policy with an ID, a reason, a compliant example and an owner. Track how often each fires, and how often wrongly: false positives teach people to ignore every policy.
 
-**Exceptions are part of the design.** Real systems need exceptions: a vendor appliance that must use a particular port, a migration that legitimately deletes a database. Make the exception path explicit: an exception file in the policy repo, approved by the policy owner, with a reason and an expiry date, which the policy reads. Expired exceptions fail the build. This is better than people disabling the check or asking for admin access.
+**Exceptions are part of the design.** Real systems need exceptions: a vendor appliance that must use a particular port, a migration that legitimately deletes a database. Make the exception path explicit: an exception file in the policy repo, approved by the policy owner, with a reason and an expiry date, which the policy reads. Expired exceptions fail the build. It beats disabled checks or admin access.
 
 **Organisation-level guardrails.** AWS Service Control Policies, Azure Policy at management-group level and Google Cloud Organization Policies apply to every account or project beneath them, whoever makes the call. Use them for a short list of non-negotiables (approved regions for data residency, audit logging always on, no public storage by default); they are hard to debug and affect everyone.
 
-**Break-glass, done properly.** Some day the pipeline will be down and someone must change production by hand. Plan for it: named break-glass roles, separately stored credentials, use that pages the SRE lead and security, a mandatory ticket, and drift detection that flags the change until it is in code. A planned emergency path beats one invented mid-emergency.
+**Break-glass, done properly.** Some day the pipeline will be down and someone must change production by hand. Plan for it: named break-glass roles, separately stored credentials, use that pages the SRE lead and security, a mandatory ticket, and drift detection that flags the change until it is in code. Plan the emergency path before the emergency.
 
 **Policy and regulation.** Policy as code leaves evidence auditors value: the rule, its history, every evaluation and exception. That supports change-management expectations such as EU DORA's and GCC regulators' cloud requirements; check current texts with compliance. Which misconfigurations matter most is covered in [*Secure AI & Application Security*, lesson 7.1 — Cloud security: shared responsibility, IAM and misconfiguration](../secai/index.html#/7.1) and [*Secure AI & Application Security*, lesson 7.2 — Containers, Kubernetes and infrastructure as code](../secai/index.html#/7.2).
 
@@ -790,10 +790,10 @@ Run these locally with OpenTofu, Conftest and a kind or k3d cluster.
 
 **1. AWS's response to the February 2017 S3 outage, caused by a mistyped command, was mainly to:**
 
-- A. Require two engineers to type every command
-- B. Stop using playbooks
-- C. Move S3 to another region permanently
-- D. Change the tool so it removed capacity more slowly and could not take a subsystem below its minimum capacity
+- A. Require a second engineer to check and confirm every command before it runs
+- B. Stop using written playbooks and let engineers decide steps during operations
+- C. Move S3 permanently to another region with fewer dependent services
+- D. Change the tool to remove capacity slowly, never below a subsystem's minimum
 
 <details><summary>Answer</summary>
 
@@ -803,10 +803,10 @@ Run these locally with OpenTofu, Conftest and a kind or k3d cluster.
 
 **2. Noura's team finds a test database whose network rule allows traffic from anywhere. It was created in the console and never appeared in any pull request. Which layer of checking could have caught it?**
 
-- A. An IaC scan on pull requests
-- B. Organisation-level policies and runtime checks such as configuration monitoring, which see changes whatever tool made them
-- C. A Kyverno admission policy
-- D. A code review of the application repository
+- A. An IaC scanner that runs automatically on every infrastructure pull request in CI
+- B. Organisation policies and runtime configuration monitoring, which see every change
+- C. A Kyverno admission policy in the production Kubernetes cluster
+- D. A careful code review of the application repository
 
 <details><summary>Answer</summary>
 
@@ -816,10 +816,10 @@ Run these locally with OpenTofu, Conftest and a kind or k3d cluster.
 
 **3. The nightly drift job runs `tofu plan -detailed-exitcode` for the Payments database state and gets exit code 2. What does this mean, and what should the team do first?**
 
-- A. Reality differs from the code, or merged code was never applied; investigate who changed what, then revert or adopt by pull request
-- B. The plan failed with an error; rerun it
-- C. Everything matches; no action needed
-- D. Run `apply` immediately to overwrite whatever changed
+- A. Drift or unapplied merged code; investigate, then revert or adopt
+- B. The plan failed with an error, so rerun it with more verbose logging switched on
+- C. Everything matches, so no action is needed until tomorrow's run
+- D. Run `apply` immediately to overwrite whatever changed in reality since the last run
 
 <details><summary>Answer</summary>
 
@@ -829,10 +829,10 @@ Run these locally with OpenTofu, Conftest and a kind or k3d cluster.
 
 **4. Salem wants to require images pinned by digest in every cluster. Many existing workloads use tags. What is the best rollout?**
 
-- A. Enforce immediately so teams learn quickly
-- B. Announce the rule by email and do not enforce it
-- C. Apply the policy in audit mode, measure and fix or exempt existing workloads, announce a date, then enforce, with a clear message on how to comply
-- D. Disable admission control and rely on code review
+- A. Enforce immediately in every cluster so that all teams learn the rule quickly
+- B. Announce the rule by email to all teams and do not enforce it
+- C. Audit first, fix or exempt existing workloads, announce a date, then enforce
+- D. Disable admission control and rely on careful code review instead
 
 <details><summary>Answer</summary>
 
@@ -842,10 +842,10 @@ Run these locally with OpenTofu, Conftest and a kind or k3d cluster.
 
 **5. A vendor appliance at Najm Bank legitimately needs a rule that the guardrail catalogue normally denies. What is the right way to allow it?**
 
-- A. Disable the policy for everyone until the vendor project ends
+- A. Disable the policy for everyone until the vendor project ends next year or later
 - B. Give the vendor team administrator access so they can bypass the pipeline
-- C. Make the change by hand in the console and ignore the drift alerts
-- D. Add a scoped exception with an owner, a reason and an expiry date, approved through the documented route, which the policy reads and the build enforces
+- C. Make the change by hand in the console and ignore the drift alerts it causes
+- D. Add a scoped exception with an owner, reason and expiry that the build enforces
 
 <details><summary>Answer</summary>
 

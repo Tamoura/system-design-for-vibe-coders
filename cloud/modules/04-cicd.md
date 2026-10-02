@@ -22,7 +22,7 @@ Yousef joins Najm Bank's platform team in the middle of a complaint. The Najm Mo
 
 Then an incident. A change passes staging on Thursday. On Friday the production job **rebuilds** the image from the same commit. The base image tag `latest` has moved overnight, a system library changed, and the API fails to start in production. Staging had tested an image that never reached production. Rollback works, but the post-incident review (5.3) records a hard truth: "what we tested is not what we shipped."
 
-Salem gives Yousef the task: "Make the pipeline something people trust. Fast enough that nobody batches work, honest enough that a red build means something, and the artefact we test is the artefact we ship." That is this lesson. The release side (how the artefact reaches customers) is lesson 4.2; securing the pipeline itself is lesson 4.3.
+Salem gives Yousef the task: "Make the pipeline something people trust. Fast enough that nobody batches work, honest enough that a red build means something, and the artefact we test is the artefact we ship." That is this lesson.
 
 ## 📐 How it works
 
@@ -59,7 +59,7 @@ Everything left of "Push" runs on every pull request and must be fast. The promo
 1. **Build once.** Build the artefact in one job, store it in a registry, and have every later stage pull it. Never run `docker build` again for staging or production.
 2. **Identify it immutably.** A tag such as `v1.4.2` or `latest` can be moved to a different image. A **digest** (`sha256:...`, a hash of the image's content) cannot. Tag images with the commit SHA for humans, but deploy by digest.
 
-Configuration that differs between environments (database host, feature flag defaults, replica counts) is injected at deploy time through environment variables, ConfigMaps or the GitOps overlay (lessons 2.3 and 3.2), never baked into the image. This is factor III of the Twelve-Factor App: store config in the environment.
+Configuration that differs between environments (database host, feature flag defaults, replica counts) is injected at deploy time through environment variables, ConfigMaps or the GitOps overlay (lessons 2.3 and 3.2), never baked into the image. This is factor III of the Twelve-Factor App: store config in the environment. [*System Design for Vibe Coders*, lesson 4.5 — Verify the artifact, not the source](../vibe/index.en.html#l4-5) tells this story for solo builders.
 
 **A minimal pipeline in GitHub Actions.** GitHub Actions is used here because it is free for public repositories and widely used; GitLab CI/CD, Jenkins, Azure Pipelines and others share the same concepts.
 
@@ -103,7 +103,7 @@ jobs:
           cache-to: type=gha,mode=max
 ```
 
-Note the defaults: read-only permissions, a timeout on every job, and cancellation of outdated pull-request runs. Runs on `main` are never cancelled, because every merged commit must produce its artefact.
+Note the defaults: read-only permissions, job timeouts, and cancelling outdated PR runs (never `main` runs: every merged commit must produce its artefact).
 
 **The test pyramid.** Not all tests cost the same. The pyramid, popularised by Mike Cohn, says to have many cheap tests at the bottom and few expensive ones at the top.
 
@@ -146,9 +146,9 @@ The result: lint and unit tests in 3 minutes, build and integration tests in 6, 
 
 **The pipeline is a product.** At Najm, product teams should not each write their own pipeline from scratch. The platform team publishes a **golden path**: a reusable workflow (in GitHub Actions, a workflow called with `uses: najm-bank/platform-workflows/.github/workflows/service-ci.yml@<version>`) that does build, scan, test, sign and push in the approved way. Teams pass a few inputs. When the platform team improves caching or adds a scanner, every service gets it. Version it, keep a changelog, and measure adoption and build times.
 
-**Reproducible and hermetic builds.** A **hermetic** build uses only declared, pinned inputs: a base image by digest, dependencies by lock file with hashes, a pinned toolchain. Given the same inputs, it produces the same output. Fully bit-for-bit **reproducible** builds are hard for container images (timestamps, file ordering), but hermetic inputs alone remove the Friday incident: a moving `latest` tag cannot sneak in.
+**Reproducible and hermetic builds.** A **hermetic** build uses only declared, pinned inputs: a base image by digest, dependencies by lock file with hashes, a pinned toolchain, and no undeclared network access. Fully bit-for-bit **reproducible** builds are hard for container images (timestamps, file ordering), but hermetic inputs alone remove the Friday incident: a moving `latest` tag cannot sneak in.
 
-**Feedback time is a design budget.** Publish a target, such as "95% of PR checks finish within 10 minutes". A new check that would break it must replace something, run in parallel, or run after the merge.
+**Feedback time is a design budget.** Publish a target (Najm's is below). A new check that would break it must replace something, run in parallel, or run after the merge.
 
 ## 🧰 The toolkit
 | Tool, practice or service | What it is and does | When to reach for it |
@@ -313,7 +313,7 @@ Use your own GitHub account and a public practice repository; never an employer'
 - Biggest trap: shipping a change to everyone at once because "it's only configuration". Configuration and content are code; stage them too.
 
 ## 🧭 Why it matters
-On 19 July 2024, CrowdStrike pushed a content configuration update for its Falcon sensor to Windows hosts. A defect in that update crashed affected machines, and Microsoft estimated about 8.5 million Windows devices were hit, grounding flights and disrupting hospitals and banks. CrowdStrike's own review said the update had gone out to all customers at once. Among its commitments afterwards was a staged deployment of this kind of content, with canary groups first and customer control over timing. A change that reaches everyone at once can fail for everyone at once.
+On 19 July 2024, CrowdStrike pushed a content configuration update for its Falcon sensor to Windows hosts. A defect in that update crashed affected machines, and Microsoft estimated about 8.5 million Windows devices were hit, grounding flights and disrupting hospitals and banks. CrowdStrike's own review said this kind of content had not been rolled out in stages. Among its commitments afterwards was a staged deployment of this kind of content, with canary groups first and customer control over timing. A change that reaches everyone at once can fail for everyone at once.
 
 At Najm, Maha has a closer example. Last quarter, a new version of the **Payments service** changed how it read a currency field. The deployment rolled across all pods in four minutes. Error rates rose on about 3% of transfers (those in one currency) and stayed below the old alert threshold for 40 minutes. By then every pod ran the new code, and the unpractised rollback took another 15 minutes.
 
@@ -323,7 +323,7 @@ Maha's goal: the next Payments release reaches 5% of traffic first, is judged by
 
 ### 🟢 The essentials
 
-**Deploy is not release.** In the old model, deploying the code and exposing it to users were the same moment. **Traffic shifting** (rolling, blue-green, canary) controls which *version* receives requests; **feature flags** control which *behaviour* users see inside one version.
+**Deploy is not release.** **Traffic shifting** (rolling, blue-green, canary) controls which *version* receives requests; **feature flags** control which *behaviour* users see inside one version.
 
 With both, you can deploy on Tuesday, enable the feature for staff on Wednesday and for 5% of customers on Thursday, and switch it off in seconds.
 
@@ -348,6 +348,8 @@ metadata:
   name: mobile-api
 spec:
   replicas: 10
+  selector:
+    matchLabels: { app: mobile-api }
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -356,6 +358,8 @@ spec:
   minReadySeconds: 20      # a new pod must stay ready 20s before it counts
   progressDeadlineSeconds: 600
   template:
+    metadata:
+      labels: { app: mobile-api }
     spec:
       containers:
         - name: api
@@ -367,7 +371,7 @@ spec:
 
 A rolling update stops pods that *never become ready*, not pods that start fine and return wrong answers, as Payments did. That needs a canary and metrics.
 
-**Rollback, two ways.** In a push-based setup, `kubectl rollout undo deployment/mobile-api` returns to the previous ReplicaSet. In a GitOps setup (lesson 3.2), the Git repository is the truth: a manual `kubectl` rollback is reverted by the GitOps controller at the next sync. The rollback is a `git revert` of the commit that changed the image digest, which the controller then applies. Decide which model you use and write the runbook to match.
+**Rollback, two ways.** In a push-based setup, `kubectl rollout undo deployment/mobile-api` returns to the previous ReplicaSet. In a GitOps setup (lesson 3.2), the Git repository is the truth: with automated sync and self-heal on, the controller soon reverts a manual `kubectl` rollback. The rollback is a `git revert` of the commit that changed the image digest, which the controller then applies. Decide which model you use and write the runbook to match.
 
 **Roll back or roll forward?** **Rolling back** returns to the last known good version. **Rolling forward** ships a new fix. Default to rolling back when customers are hurting: it is faster and already tested. Roll forward only when rollback is impossible (for example after an irreversible data change) or the fix is trivial and well understood.
 
@@ -384,6 +388,10 @@ spec:
   replicas: 12
   strategy:
     canary:
+      canaryMetadata:
+        labels: { track: canary }   # lets the query below select canary pods
+      stableMetadata:
+        labels: { track: stable }
       steps:
         - setWeight: 5
         - pause: { duration: 10m }
@@ -419,7 +427,7 @@ spec:
             sum(rate(http_requests_total{app="payments",track="canary"}[5m]))
 ```
 
-If the success rate of the canary falls below the threshold more than once, the rollout aborts and traffic returns to the stable version, with nobody woken up to decide. Field names change between versions; check the Argo Rollouts documentation for the version you run.
+If the canary's success rate misses the threshold more than once, the rollout aborts and traffic returns to stable, with nobody woken to decide. Without a traffic router, weights are approximated by pod count (5% of 12 replicas is one pod, about 8%); a mesh or Gateway API plugin gives exact splits. Field names change between versions; check the documentation for yours.
 
 ```mermaid
 flowchart TD
@@ -446,7 +454,7 @@ flowchart TD
 
 **OpenFeature**, a CNCF project, defines a vendor-neutral API for evaluating flags, so application code does not depend on one flag vendor. Flag *management* (who can change which flag, with what approval and audit trail) matters as much as flag evaluation, especially in a bank. [*SaaS Building Blocks*, lesson 6.3 — Feature flags and experiments](../saas/index.html#/6.3) compares flag services in depth.
 
-**Flags are code with a short life.** In 2012 Knight Capital, a US trading firm, deployed new code to eight servers but, according to the SEC's order, one server did not receive it. The release reused an old flag, which on that server switched on long-retired logic that sent millions of orders in about 45 minutes. The SEC order describes losses of roughly 460 million US dollars. Two lessons: never reuse a flag name for a new meaning, and verify that every instance runs the version you think it runs.
+**Flags are code with a short life.** In 2012 the US trading firm Knight Capital deployed new code to eight servers, but, according to the SEC's order, one server did not receive it. The release reused an old flag, which on that server woke long-retired logic that sent millions of orders in about 45 minutes. The order describes losses of over 460 million US dollars. Two lessons: never reuse a flag name for a new meaning, and verify that every instance runs the version you think it runs.
 
 **Databases: expand and contract.** During any rolling, canary or blue-green release, old and new versions run *at the same time* against the same database. A schema change must work for both. The **expand and contract** pattern (also called parallel change) does this in steps:
 1. **Expand:** add the new column or table; the old code ignores it.
@@ -459,9 +467,9 @@ Never rename or drop a column in the same release as the code that stops using i
 
 **Rings and regions.** Large platforms release in **rings** with soak time between them; CrowdStrike's commitments describe the same idea. Najm's: staff, then 5% of Qatar traffic, then all of Qatar, then the UAE, then the EU. Each ring limits the blast radius of the next mistake.
 
-**Automatic rollback on SLO burn.** Analysis during the rollout catches fast failures. Slow ones, like the Payments currency bug at 3% of traffic, need a longer watch. After a release completes, compare its **error budget burn rate** (lesson 5.2) for the next hour or two against the previous version. A sustained burn far above normal should trigger an automatic rollback, or at least a page that names the release.
+**Automatic rollback on SLO burn.** Analysis during the rollout catches obvious failures. Subtle ones, like the Payments currency bug at 3% of traffic, need a longer watch. After a release completes, compare its **error budget burn rate** (lesson 5.2) for the next hour or two against the previous version. A sustained burn far above normal should trigger an automatic rollback, or at least a page that names the release.
 
-**Small batches beat freezes.** Many organisations respond to bad releases by releasing less often, behind change boards and long freezes; DORA's research found that heavyweight external approval tends to slow delivery without improving stability. Najm keeps a short freeze around peak periods such as salary day and Eid, but its main defence is small, frequent, automated, observable releases with peer review. Regulators still expect evidence of change control: under EU DORA, ICT change management is part of the ICT risk framework that financial entities must maintain. A pipeline that records who approved what, which canary ran, and what it measured is that evidence. [*Secure AI & Application Security*, lesson 11.2 — Regulation that touches security](../secai/index.html#/11.2) covers the financial-sector rules.
+**Small batches beat freezes.** Many organisations react to bad releases with change boards and long freezes; DORA's research found that heavyweight external approval tends to slow delivery without improving stability. Najm keeps a short freeze around peak periods such as salary day and Eid, but its main defence is small, frequent, automated, observable releases with peer review. Regulators still expect change-control evidence; EU DORA, for example, requires ICT change management within the ICT risk framework. A pipeline that records who approved what, which canary ran, and what it measured is that evidence. [*Secure AI & Application Security*, lesson 11.2 — Regulation that touches security](../secai/index.html#/11.2) covers the financial-sector rules.
 
 ## 🧰 The toolkit
 | Tool, practice or service | What it is and does | When to reach for it |
@@ -509,12 +517,12 @@ The thresholds are Najm's own choices, set from each service's SLO (lesson 5.2),
 ## 🛠️ Exercises
 Run these on a local kind or k3d cluster.
 
-- 🟢 Deploy a small web app as a Deployment with 4 replicas, a readiness probe, `maxSurge: 1` and `maxUnavailable: 0`. Update the image and watch `kubectl rollout status`. Then roll back with `kubectl rollout undo`. *Done when:* a loop of `curl` requests against the Service during both the update and the rollback shows no failed requests.
+- 🟢 Deploy a small web app as a Deployment with 4 replicas, a readiness probe, `maxSurge: 1`, `maxUnavailable: 0` and a short `preStop` sleep so endpoints drain before pods stop. Update the image and watch `kubectl rollout status`. Then roll back with `kubectl rollout undo`. *Done when:* a loop of `curl` requests against the Service during both the update and the rollback shows no failed requests.
 - 🟡 Deploy a version whose readiness probe never passes. Observe what the rolling update does and what `progressDeadlineSeconds` reports. Then deploy a version that starts fine but returns HTTP 500 on one endpoint. *Done when:* you can explain in three sentences why the first bad version was stopped and the second was not, and what would stop the second.
-- 🔴 Install Argo Rollouts and Prometheus in your cluster. Convert the Deployment to a Rollout with a canary (10% → 50% → 100%) and an AnalysisTemplate on the success rate. Release a version that returns errors on 20% of requests. *Done when:* the rollout aborts by itself, traffic returns to the stable version, and you have a screenshot or log of the failed analysis run.
+- 🔴 Install Argo Rollouts and Prometheus in your cluster. Convert the Deployment to a Rollout with a canary (10% → 50% → 100%) and an AnalysisTemplate on the success rate. Release a version that returns errors on 20% of requests. *Done when:* the rollout aborts by itself, traffic returns to stable, and you can show the failed analysis run.
 
 ## ⚠️ Mistakes and traps
-- **Treating configuration and content as "not a release".** A bad config or content push can take down everything at once. Stage them through the same rings and canaries.
+- **Treating configuration and content as "not a release".** A bad config or content push can break everything at once. Stage them through the same rings.
 - **Canary without real analysis.** A human glancing at a dashboard for two minutes is not analysis. Define the metrics, thresholds and duration in code.
 - **Breaking the database in the same release.** Dropping or renaming a column alongside the code change makes rollback impossible. Expand, migrate, then contract in a later release.
 - **Never-deleted flags.** Old flags pile up into untested combinations, and reused names can wake up dead code, as at Knight Capital. Give each release flag an owner and a removal date.
@@ -525,16 +533,16 @@ Run these on a local kind or k3d cluster.
 - Rolling updates stop pods that never become ready; canaries with automated analysis stop versions that run but behave badly.
 - Pick the strategy by risk tier: canary for Payments and login, rolling for internal tools, blue-green when a fast clean switch is worth double capacity.
 - Old and new versions run at once, so databases and APIs change with expand and contract.
-- Rollback must be fast, rehearsed and done the GitOps way; small, frequent releases beat big, rare ones.
+- Rollback must be fast, rehearsed and done the GitOps way.
 
 ## ✍️ Check yourself
 
 **1. A new Payments version starts normally and passes its readiness probe, but fails transfers in one currency, about 3% of traffic. Which strategy would most likely have limited the impact?**
 
 - A. A rolling update with a larger `maxSurge`
-- B. A recreate deployment
-- C. A canary with automated analysis of success rate, starting at a small share of traffic
-- D. A longer `progressDeadlineSeconds`
+- B. A recreate deployment, so versions never mix
+- C. A canary judged automatically on success rate
+- D. A longer `progressDeadlineSeconds` on the Deployment
 
 <details><summary>Answer</summary>
 
@@ -544,10 +552,10 @@ Run these on a local kind or k3d cluster.
 
 **2. Yousef wants to rename a column in the Payments database in the same release that updates the code to use the new name. What should Maha advise?**
 
-- A. Fine, as long as the release uses blue-green
-- B. Add the new column first, write to both and backfill, switch reads, and drop the old column only in a later release
-- C. Do it during a freeze window
-- D. Use shadow traffic to test it
+- A. Fine, as long as blue-green switches all traffic at once
+- B. Add and backfill the new column; drop the old one later
+- C. Do it at night, during a low-traffic window
+- D. Test it first with shadow traffic, then release normally
 
 <details><summary>Answer</summary>
 
@@ -555,12 +563,12 @@ Run these on a local kind or k3d cluster.
 
 </details>
 
-**3. Najm deploys with Argo CD. During an incident, an engineer runs `kubectl rollout undo`, and ten minutes later the bad version is back. Why?**
+**3. Najm deploys with Argo CD, with automated sync and self-heal on. During an incident, an engineer runs `kubectl rollout undo`, and ten minutes later the bad version is back. Why?**
 
-- A. The GitOps controller reconciled the cluster back to the version declared in Git
-- B. kubectl rollbacks only last ten minutes
-- C. The readiness probe failed
-- D. The Horizontal Pod Autoscaler recreated the pods
+- A. Argo CD re-synced the cluster to the version declared in Git
+- B. `kubectl rollout undo` is temporary and expires after a set time
+- C. The old version's readiness probe failed, so Kubernetes rolled forward
+- D. The Horizontal Pod Autoscaler recreated the pods from its own template
 
 <details><summary>Answer</summary>
 
@@ -571,9 +579,9 @@ Run these on a local kind or k3d cluster.
 **4. Which use of shadow (mirrored) traffic is safe for the Payments service?**
 
 - A. Mirroring transfer requests to the new version with real settlement enabled
-- B. Mirroring all requests to the new version and returning whichever response arrives first
+- B. Mirroring all requests and returning whichever response arrives first
 - C. Using shadow traffic instead of any automated tests
-- D. Mirroring read-only balance and history requests, or transfer requests with side effects stubbed out, and comparing responses
+- D. Mirroring read-only requests, or ones with side effects stubbed out
 
 <details><summary>Answer</summary>
 
@@ -583,10 +591,10 @@ Run these on a local kind or k3d cluster.
 
 **5. After the CrowdStrike incident of July 2024, what release practice did the vendor commit to for this kind of content update?**
 
-- A. Stopping all content updates permanently
-- B. Staged deployment, starting with canary groups and expanding gradually, with more customer control over timing
-- C. Releasing only once a year
-- D. Moving to manual installation by each customer
+- A. Stopping content updates and shipping only full sensor releases
+- B. Staged deployment through canary groups, with customer control over timing
+- C. Releasing content updates only once a quarter, after a freeze
+- D. Requiring every customer to install each update by hand
 
 <details><summary>Answer</summary>
 
@@ -652,17 +660,19 @@ Each arrow has a control: branch protection and review on the source; pinned, ve
 2. **Short-lived secrets from a secrets manager**, fetched at run time with a federated identity.
 3. **Stored CI secrets**, only where nothing else works, scoped to one environment, rotated on a schedule, and never printed.
 
-**OIDC federation from GitHub Actions.** The workflow asks for an ID token, and the cloud role trusts only tokens whose claims match. A job deploying to production:
+**OIDC federation from GitHub Actions.** The workflow asks for an ID token, and the cloud role trusts only tokens whose claims match. A release job that pushes the image:
 
 ```yaml
 permissions:
-  contents: read
-  id-token: write          # allow this job to request an OIDC token
+  contents: read             # workflow default: read-only
 
 jobs:
   push-image:
     runs-on: ubuntu-latest
-    environment: production   # protected environment with required reviewers
+    environment: production   # protected: required reviewers, main branch only
+    permissions:
+      contents: read
+      id-token: write         # only this job may request an OIDC token
     steps:
       - uses: aws-actions/configure-aws-credentials@v4   # pin by SHA in real use
         with:
@@ -681,7 +691,7 @@ And the trust condition on the cloud side (AWS IAM shown; the subject format is 
 }
 ```
 
-A workflow in a fork, on another branch or in another repository gets a token with a different subject, so it cannot assume the role. All three major clouds support the same idea:
+A job in another repository, or one not running in the `production` environment, gets a token with a different subject, so it cannot assume the role. Because the subject names the environment, not the branch, restrict that environment to `main` in its deployment-branch settings. All three major clouds support the same idea:
 
 | Cloud | Feature | CI side |
 |---|---|---|
@@ -803,10 +813,10 @@ Use your own GitHub account and, if you use a cloud, a free-tier account with a 
 
 **1. Yousef's workflow stores a never-expiring cloud admin key as a repository secret. What should replace it?**
 
-- A. The same key, rotated every 90 days
+- A. The same admin key, rotated automatically every 90 days
 - B. A key for a less privileged user, stored in a different repository
-- C. A key encrypted with base64 in the workflow file
-- D. OIDC federation: the job requests a short-lived token, and a cloud role trusts only tokens from this repository and environment, with only the permissions the job needs
+- C. The key base64-encoded in the workflow file, so it is not plain text
+- D. OIDC federation, with a role trusting only this repository and environment
 
 <details><summary>Answer</summary>
 
@@ -829,23 +839,23 @@ Use your own GitHub account and, if you use a cloud, a free-tier account with a 
 
 **3. Najm signs every image but finds an unsigned image running in production. What is missing?**
 
-- A. A longer signature validity
-- B. Verification at admission, for example a Kyverno policy that rejects images not signed by the release workflow identity
-- C. Signing by tag instead of by digest
-- D. A larger SBOM
+- A. Longer-lived signing certificates, so signatures stay valid
+- B. Admission checks against the release workflow's identity
+- C. Signing by tag instead of by digest, so updates are covered
+- D. A more detailed SBOM attached to every image
 
 <details><summary>Answer</summary>
 
-**B.** A signature only protects you if something refuses unsigned or wrongly signed images. C would weaken signing, since tags can move. (🟡 Going deeper.)
+**B.** A signature only protects you if something, such as a Kyverno policy, refuses unsigned or wrongly signed images. C would weaken signing, since tags can move; A and D do not stop an unsigned image. (🟡 Going deeper.)
 
 </details>
 
 **4. Why does Najm prefer pull-based GitOps deploys over CI jobs running `kubectl apply`?**
 
-- A. Pull-based deploys are always faster
-- B. kubectl cannot apply Deployments
-- C. CI never holds cluster credentials; changes reach the cluster only through reviewed commits that an in-cluster controller applies
-- D. GitOps removes the need for code review
+- A. Pull-based deploys always reach production faster than CI jobs
+- B. `kubectl apply` cannot update an existing Deployment
+- C. CI holds no cluster credentials; only reviewed Git changes reach it
+- D. GitOps lets teams skip code review on deployment changes
 
 <details><summary>Answer</summary>
 
@@ -855,10 +865,10 @@ Use your own GitHub account and, if you use a cloud, a free-tier account with a 
 
 **5. Najm needs self-hosted runners that can reach private networks. Which setup is safest?**
 
-- A. Ephemeral runners that handle one job and are destroyed, in separate groups for production and non-production, never attached to public repositories
+- A. Ephemeral one-job runners, segregated by environment, kept off public repos
 - B. One long-lived runner shared by all repositories, for speed
 - C. Self-hosted runners attached to public repositories so the community can test
-- D. A runner with cluster-admin credentials stored on disk
+- D. A persistent runner with cluster-admin credentials cached on disk
 
 <details><summary>Answer</summary>
 

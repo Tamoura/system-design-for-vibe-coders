@@ -143,7 +143,7 @@ RUN --mount=type=secret,id=pip_conf,target=/etc/pip.conf \
 
 Approve one or two bases per language, patch them centrally, and rebuild when they change.
 
-**Build once, promote the digest.** The pipeline builds the image a single time on the main branch, pushes it, records the digest, and every environment (dev, test, staging, production) runs that digest. Promotion changes configuration, never the image. Rebuilding "the same commit" for production is how staging and production quietly diverge. Lesson 3.2 automates this promotion with GitOps and lesson 4.1 builds the pipeline.
+**Build once, promote the digest.** The pipeline builds the image a single time on the main branch, pushes it, records the digest, and every environment (dev, test, staging, production) runs that digest. Promotion changes configuration, never the image. Rebuilding "the same commit" for production is how staging and production quietly diverge. Lesson 3.2 automates this promotion with GitOps and lesson 4.1 builds the pipeline. The non-coder view of the same idea is [*System Design for Vibe Coders*, lesson 4.5 — Verify the artifact, not the source](../vibe/index.en.html#l4-5).
 
 ```mermaid
 flowchart LR
@@ -400,7 +400,9 @@ spec:
           ports:
             - name: http
               containerPort: 8080
----
+```
+
+```yaml
 apiVersion: v1
 kind: Service
 metadata:

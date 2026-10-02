@@ -35,7 +35,7 @@ Public history shows why the questions matter. In August 2012 Knight Capital dep
 2. **Every risky change can be undone** by a documented, timed method.
 3. **Every alert maps to an SLO or a runbook.** An alert with no action is noise.
 
-**The eight phases.** Plan, Code, Build, Test, Release, Deploy, Operate and Monitor each reuse an artefact from an earlier module; the summary page in 🏛️ below maps every phase to its evidence and its lesson. All numbers in this lesson are illustrative.
+**The eight phases.** Each phase reuses an artefact from an earlier module; the summary page in 🏛️ below maps each to its evidence and lesson. All numbers in this lesson are illustrative.
 
 **Start with the SLO.** Maha and the cards product owner agree the user journeys that matter and write **SLIs** (service level indicators: measurements of good events over valid events) and **SLOs** (targets for them over a window):
 
@@ -140,24 +140,24 @@ The factor 14.4 means the budget would be gone in about two days at this rate; t
 | Multi-zone or multi-region | Multi-zone in one region now | Meets the RTO for zone failure; multi-region doubles cost and complexity | Regulator or business requires a region-level RTO |
 | Failure mode if the service is down | The card processor applies a documented default agreed with the cards and risk teams | A blind "allow all" or "deny all" is a business decision, not a technical one | After every incident touching this path |
 
-The third row is the one most teams skip. Every dependency fails eventually; what the caller does then is a design decision that product, risk and security must sign.
+The third row is the one most teams skip: what a caller does when a dependency fails is a design decision that product, risk and security must sign.
 
-**Capacity and cost before launch.** Yousef load-tests staging at twice the expected payday peak, sets CPU and memory requests from measured usage, gives the Horizontal Pod Autoscaler a floor of four replicas, and spreads them across two zones with a topology spread constraint, so losing a zone still leaves two replicas that the load test showed can carry the peak. Mona asks for a **unit cost** (monthly cost from tagged resources divided by monthly requests, 6.2), shown next to the SLO so a "cheaper" change that burns budget, or a "safer" one that triples cost, is visible to both sides.
+**Capacity and cost before launch.** Yousef load-tests staging at twice the expected payday peak, sets CPU and memory requests from measured usage, gives the Horizontal Pod Autoscaler a floor of four replicas spread across two zones by a topology spread constraint, so losing a zone leaves two, enough for the measured peak. Mona asks for a **unit cost** (monthly cost from tagged resources divided by monthly requests, 6.2), shown next to the SLO so a "cheaper" change that burns budget, or a "safer" one that triples cost, is visible to both sides.
 
 **Regulation without guesswork.** The runbooks, incident records and recovery tests also feed operational resilience evidence: EU DORA (applied from January 2025) for the EU entity, and the cloud and outsourcing expectations of the Qatari and UAE regulators. Do not guess clause numbers; ask risk and compliance what they need ([*Secure AI & Application Security*, lesson 11.2 — Regulation that touches security](../secai/index.html#/11.2)).
 
-**The game day.** Before launch, Maha runs a two-hour **game day**: the team deliberately triggers failures in staging and practises the response:
+**The game day.** Before launch, Maha runs a two-hour **game day**, injecting failures in staging to practise the response:
 1. Deploy a canary that returns errors on 5% of reads. *Expected:* analysis aborts the rollout automatically.
 2. Cordon one zone's nodes and delete its pods. *Expected:* the read SLO holds; replacement pods start in the other zone.
 3. Fail over the database. *Expected:* writes pause briefly, then resume within the agreed time.
 4. Revoke the service's database credentials. *Expected:* readiness fails, the page fires and links to the right runbook.
 
-The first game day found two gaps: the credentials runbook pointed to a renamed secret, and failover took longer than the RTO assumed because the connection pool did not reconnect. Both became fixes and regression checks. It is cheaper to fail in staging on a Tuesday than in production on payday.
+The first game day found two gaps: the credentials runbook pointed to a renamed secret, and failover took longer than the RTO assumed because the connection pool did not reconnect. Both became fixes and regression checks.
 
 ## 🧰 The toolkit
 | Tool, practice or service | What it is and does | When to reach for it |
 |---|---|---|
-| **Production readiness review** | Structured, evidence-based check that a service can be operated safely before launch | Every new service and every major change of architecture |
+| **Production readiness review** | Structured, evidence-based check that a service can be operated safely before launch | Every new service or major architecture change |
 | **Architecture decision record** | One-page record of a decision, its options and its consequences | Any choice someone will later ask "why?" about |
 | **Argo CD** | GitOps controller that keeps clusters in sync with a Git repository | Promoting the same artefact through environments by pull request |
 | **Canary release** | Sending a small share of traffic to a new version and widening only if it is healthy | Every production rollout of a user-facing service |
@@ -193,7 +193,6 @@ The first game day found two gaps: the credentials runbook pointed to a renamed 
 - **Leaving the failure mode undecided.** Decide and sign in advance what callers do when the service is down.
 
 ## 🧾 Recap
-- Card Controls goes through all eight phases, with the evidence linked in a production readiness file.
 - The SLO, agreed first, drives the alerts, release policy, capacity and recovery targets.
 - One signed image, referenced by digest, moves through environments by pull request; rollback is a revert.
 - Canary analysis, feature flags and burn-rate alerts turn the error budget into automatic guardrails.

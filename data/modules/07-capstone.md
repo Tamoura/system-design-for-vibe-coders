@@ -383,7 +383,7 @@ Many employers now allow AI assistants in some rounds and ban them in others. As
 
 ### 🟡 Going deeper
 
-**What good answers sound like.** Interviewers rarely want the cleverest answer. They want to watch you reason. Four examples, with the moves that score:
+**What good answers sound like.** Interviewers want to watch you reason. Four examples:
 
 *Live SQL: "For each customer, return their most recent transaction."* Strong candidates ask about ties and NULLs before typing, then use a window function:
 
@@ -414,7 +414,7 @@ Saying out loud "the first query mixes values from different rows" is worth as m
 
 *Metrics: "Daily active users of the app fell 15% overnight. Walk me through it."* Strong analysts check the data before the business: did the pipeline run fully, did the event tracking change in a new app release, did the metric definition or time zone change? Only then segment by platform, region and app version. This is 4.1 and 4.2 in one answer.
 
-**STAR for the behavioural round.** Use **STAR**: Situation, Task, Action, Result. Prepare four or five stories from your projects: a bug you found in your own data, a definition you had to agree with someone, a time you were wrong, a trade-off you made under time pressure. Keep each to about two minutes and make the result concrete: "the reconciliation test caught a missing currency before the month-end report".
+**STAR for the behavioural round.** Use **STAR**: Situation, Task, Action, Result. Prepare four or five two-minute stories: a bug in your own data, a definition you agreed with someone, a time you were wrong, a trade-off under pressure. Make the result concrete: "the reconciliation test caught a missing currency before month-end".
 
 **The portfolio.** Two or three finished projects beat ten half-built notebooks. A strong data portfolio project has:
 - **A real question** on public, openly licensed data: city transport trips, public company filings, weather, open government datasets. Check each dataset's licence and never use personal data you are not entitled to use.
@@ -422,9 +422,9 @@ Saying out loud "the first query mixes values from different rows" is worth as m
 - **A README** that states the question, the grain of each table, how to run it in a few commands and what the tests check.
 - **A write-up of one problem**: a late-data bug, a duplicate key, a metric that looked wrong. Explaining how you found and fixed it shows the judgement interviewers look for.
 
-Match projects to the role: a pipeline with backfills and CDC for data engineering; a tested dbt project with metric definitions for analytics engineering; an analysis that ends in a decision and a clear chart for analysts; a model with honest evaluation, a leakage check and a drift plan for data science. The capstone in 7.1, rebuilt on public data, is a credible portfolio project for any of them.
+Match projects to the role: backfills and CDC for data engineering; tested dbt models with metric definitions for analytics engineering; an analysis ending in a decision for analysts; honest evaluation and a leakage check for data science. The 7.1 capstone, rebuilt on public data, works for any of them.
 
-**Certifications.** Cloud providers (AWS, Google Cloud, Microsoft), data-platform vendors such as Databricks and Snowflake, and dbt Labs offer data certifications. Names, levels and content change often, so check each provider's site for what is current. They help with the first filter in some markets, particularly in large enterprises and the public sector. They do not replace evidence that you can build and verify a pipeline.
+**Certifications.** Cloud providers (AWS, Google Cloud, Microsoft), Databricks, Snowflake and dbt Labs offer data certifications; names and content change, so check each provider's site. They help with first filters in some markets, especially large enterprises and the public sector, but do not replace evidence that you can build and verify.
 
 ### 🔴 Expert view
 
@@ -481,17 +481,17 @@ Faisal turns his hiring stack and Huda's question into two reusable artefacts.
 | Proof by next review | A running stream with exactly-once caveats documented; two presentations given |
 | Mentor and check-ins | Faisal monthly; Lina for modelling reviews |
 
-Kareem uses the same template with a target of analytics engineer: his proof is moving three Monday extracts into tested dbt models with metric cards, which removes the manual work and becomes his portfolio story.
+Kareem's plan targets analytics engineering: his proof is three Monday extracts rebuilt as tested dbt models with metric cards.
 
 ## 🛠️ Exercises
-- 🟢 **Map yourself.** Pick one target role from the role map. Find three real job adverts for it in your market and list the skills and tools they share. Map each to lessons in this course and mark which you can already prove. *Done when:* you have a one-page table with the role, the common requirements, your evidence for each and your three biggest gaps.
+- 🟢 **Map yourself.** Pick a target role. Find three real adverts for it in your market, list the shared requirements, map them to lessons in this course and mark which you can already prove. *Done when:* you have a one-page table with the role, the common requirements, your evidence for each and your three biggest gaps.
 - 🟡 **Build a portfolio project.** Choose an openly licensed public dataset and build an end-to-end project on your laptop: ingestion, DuckDB or PostgreSQL, dbt models with tests, one orchestrated run and one dashboard. Write the README with the grain of every table and a write-up of one problem you found. *Done when:* a friend can clone the repository and run it with the commands in the README, and your write-up explains one bug, how you found it and the test that now prevents it.
-- 🔴 **Run a mock loop.** With a peer, run four timed rounds: live SQL (30 minutes), a modelling case (30), a pipeline case (30) and a behavioural round (20), using the Najm scorecard. Swap roles. *Done when:* you have scored each other with written evidence for each signal, and you have rewritten your two weakest answers and practised them again.
+- 🔴 **Run a mock loop.** With a peer, run four timed rounds: live SQL (30 minutes), a modelling case (30), a pipeline case (30) and a behavioural round (20), using the Najm scorecard. Swap roles. *Done when:* you have scored each other with written evidence and rewritten and re-practised your two weakest answers.
 
 ## ⚠️ Mistakes and traps
-- **Choosing by title or hype.** "Data scientist" means very different jobs at different employers. Read the responsibilities and the interview process.
+- **Choosing by title or hype.** "Data scientist" means different jobs at different employers. Read the responsibilities.
 - **The tool-list CV.** Twenty logos prove nothing. Link one runnable project and say what it does and how you tested it.
-- **Notebooks that only run once.** Unrunnable, untested notebooks signal the opposite of what you want. Package the work so others can run it.
+- **Notebooks that only run once.** Package the work so others can run it.
 - **Jumping to code in a design round.** State the grain, the consumers and the failure cases first.
 - **Using personal or employer data in a portfolio.** Use openly licensed public data or synthetic data; never real customer records.
 - **Pasting AI output unreviewed.** In interviews and at work, show that you check generated SQL against grain, definitions and tests.
