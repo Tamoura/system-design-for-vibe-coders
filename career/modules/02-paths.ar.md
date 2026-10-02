@@ -100,7 +100,7 @@ flowchart LR
 
 **على شكل حرف T، لا قائمة (T-shaped, not a list).** يبحث مديرو التوظيف (hiring managers) مثل خالد عن وعي أساسي عبر الحزمة كلها (basic awareness across the stack) ومجال واحد من العمق الحقيقي (one area of real depth)، مثل «أستطيع أن أشرح لماذا صار استعلامي أسرع بعد ذلك الفهرس» (I can explain why my query got faster after that index) أو «كيف يتعامل تطبيقي بالضبط مع الإرسال المزدوج» (exactly how my app handles a double-submit). قصة عميقة واحدة (One deep story) تتفوق على عشر قصص سطحية، لأنها تتيح للمُقابِل اختبار طريقة تفكيرك.
 
-**ما الذي غيّره الذكاء الاصطناعي في هذا الدور (What AI changed in this role).** تؤدي وكلاء الذكاء الاصطناعي (AI agents) الآن كثيرًا من الكتابة (typing) التي كان يؤديها المبتدئون، وقد أفادت عدة تحليلات في 2025 بضعف التوظيف للعاملين في بداية مسيرتهم (early-career workers) في المهن المعرّضة للذكاء الاصطناعي (AI-exposed occupations). وما لم يتغير هو الحاجة إلى من يقرر ماذا يُبنى، ويتحقق من صحته، ويشغّله (operates it). والصفوف التي زادت أهميتها هي تلك التي تكون الوكلاء أقل موثوقية فيها: قراءة الشيفرة غير المألوفة (unfamiliar code)، وكتابة اختبارات ترمّز القاعدة الحقيقية (encode the real rule)، والمراجعة بحثًا عن الناقص (reviewing for what is missing)، والنشر والمتابعة (deploying and watching). لهذا تأتي مرحلة «العمل مع الذكاء الاصطناعي» (Work with AI) أخيرًا: تحتاج إلى المراحل السابقة كي تستطيع الحكم على مخرجات الوكيل (agent's output) أصلًا.
+**ما الذي غيّره الذكاء الاصطناعي في هذا الدور (What AI changed in this role).** يؤدي وكلاء الذكاء الاصطناعي (AI agents) الآن كثيرًا من الكتابة (typing) التي كان يؤديها المبتدئون، وقد أفادت عدة تحليلات في 2025 بضعف التوظيف للعاملين في بداية مسيرتهم (early-career workers) في المهن المعرّضة للذكاء الاصطناعي (AI-exposed occupations). وما لم يتغير هو الحاجة إلى من يقرر ماذا يُبنى، ويتحقق من صحته، ويشغّله (operates it). والصفوف التي زادت أهميتها هي تلك التي يكون الوكلاء أقل موثوقية فيها: قراءة الشيفرة غير المألوفة (unfamiliar code)، وكتابة اختبارات ترمّز القاعدة الحقيقية (encode the real rule)، والمراجعة بحثًا عن الناقص (reviewing for what is missing)، والنشر والمتابعة (deploying and watching). لهذا تأتي مرحلة «العمل مع الذكاء الاصطناعي» (Work with AI) أخيرًا: تحتاج إلى المراحل السابقة كي تستطيع الحكم على مخرجات الوكيل (agent's output) أصلًا.
 
 **كثافة الإشارة (Signal density).** يجب أن تترك كل ساعة دراسة شيئًا يستطيع صاحب العمل التحقق منه. قارن بين خطتين لأسبوع واحد:
 
@@ -272,7 +272,7 @@ flowchart LR
 
 **كيف يبدو العمل (What the work looks like).** قد يضيف مبتدئ (junior) في فريق الذكاء الاصطناعي لدى نجم نوعَ وثيقة (document type) إلى نظام استرجاع (retrieval system)، أو يكتب حالات اختبار (test cases) تكشف أين يخفق المساعد (assistant)، أو يخفّض تكلفة ميزة بتقصير موجّهها (shortening its prompt): عمل برمجي عادي مضافًا إليه حُكم واحد خاص بالذكاء الاصطناعي (one AI-specific judgement).
 
-**أربعة مصطلحات يجب معرفتها (Four terms to know).** **النموذج اللغوي الكبير (large language model, LLM)** نموذج يولّد النص من موجّه (prompt). و**التوليد المعزّز بالاسترجاع (Retrieval-augmented generation, RAG)** يعني جلب الوثائق ذات الصلة ووضعها في الموجّه، كي يجيب النموذج من بياناتك (from your data). و**الوكيل (agent)** نموذج يستطيع استدعاء الأدوات (call tools) (البحث، أو قاعدة بيانات، أو واجهة برمجة) في حلقة (in a loop) لإنجاز مهمة. و**التقييم (evaluation, eval)** اختبار قابل للتكرار لجودة المخرجات (repeatable test of output quality) مقابل مجموعة ثابتة من الحالات، تُسمّى غالبًا **المجموعة الذهبية (golden set)**.
+**أربعة مصطلحات يجب معرفتها (Four terms to know).** **النموذج اللغوي الكبير (large language model, LLM)** نموذج يولّد النص من موجّه (prompt). و**التوليد المعزّز بالاسترجاع (Retrieval-augmented generation, RAG)** يعني جلب الوثائق ذات الصلة ووضعها في الموجّه، كي يجيب النموذج من بياناتك (from your data). و**الوكيل (agent)** نموذج يستطيع استدعاء الأدوات (call tools)، كالبحث أو قاعدة بيانات أو واجهة برمجة (API)، في حلقة (in a loop) لإنجاز مهمة. و**التقييم (evaluation, eval)** اختبار قابل للتكرار لجودة المخرجات (repeatable test of output quality) مقابل مجموعة ثابتة من الحالات، تُسمّى غالبًا **المجموعة الذهبية (golden set)**.
 
 **معيار المبتدئ (The junior bar).**
 
@@ -302,14 +302,14 @@ flowchart LR
 | 4. التأمين (Secure) | التعامل مع المخرجات وصلاحيات الأدوات (Output handling and tool permissions) | [*الذكاء الاصطناعي الآمن وأمن التطبيقات (Secure AI & Application Security)*، الدرس 9.1 — حواجز الحماية والتعامل مع المخرجات (Guardrails and output handling)](../secai/index.ar.html#/9.1) · [*الذكاء الاصطناعي الآمن وأمن التطبيقات (Secure AI & Application Security)*، الدرس 9.2 — الوكلاء والأدوات (Agents and tools)](../secai/index.ar.html#/9.2) | أدوات بأقل الصلاحيات (least privilege)؛ ومخرجات النموذج لا تُنفَّذ أبدًا دون فحص (never executed unchecked) |
 | 4. التأمين (Secure) | التحكم في الوصول أثناء الاسترجاع (Access control in retrieval) | [*الذكاء الاصطناعي الآمن وأمن التطبيقات (Secure AI & Application Security)*، الدرس 9.3 — تأمين الاسترجاع (Securing retrieval (RAG))](../secai/index.ar.html#/9.3) | اختبار: سؤال المستخدم A لا يسترجع أبدًا وثائق المستخدم B (user A's question never retrieves user B's documents) |
 | 5. التشغيل (Operate) | التكلفة لكل طلب (Cost per request) | [*إدارة منتجات الذكاء الاصطناعي (AI Product Management)*، الدرس 8.2 — اقتصاديات الوحدة (Unit economics)](../aipm/index.ar.html#/8.2) · [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 11.4 — هندسة التكلفة (Cost engineering)](../vibe/index.ar.html#l11-4) | التكلفة لكل طلب مقيسة ومكتوبة |
-| 5. التشغيل (Operate) | المراقبة والانجراف (Monitoring and drift) | [*إدارة منتجات الذكاء الاصطناعي (AI Product Management)*، الدرس 8.3 — المراقبة والانجراف وحلقة التكرار (Monitoring, drift and the iteration loop)](../aipm/index.ar.html#/8.3) | طلبات مسجّلة (logged requests) (بلا بيانات شخصية، without personal data) وفحص أسبوعي للجودة (weekly quality check) |
+| 5. التشغيل (Operate) | المراقبة والانجراف (Monitoring and drift) | [*إدارة منتجات الذكاء الاصطناعي (AI Product Management)*، الدرس 8.3 — المراقبة والانجراف وحلقة التكرار (Monitoring, drift and the iteration loop)](../aipm/index.ar.html#/8.3) | طلبات مسجّلة (logged requests) بلا بيانات شخصية (without personal data)، وفحص أسبوعي للجودة (weekly quality check) |
 | 5. التشغيل (Operate) | المسؤولية عمّا يُشحن (Responsibility for what ships) | [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 9.8 — نظرة الحوكمة (The governance glance)](../vibe/index.ar.html#l9-8) | ملاحظة مخاطر (risk note) من فقرة واحدة في README |
 
 ولعمل الوكلاء (agent work)، يقدّم [*تشغيل وكلاء الذكاء الاصطناعي في بيئة الإنتاج (Running AI Agents in Production)*، المستوى 1 — البنّاء (Level 1 — Builder)](../agentic/learning-path.ar.html#level-1-builder) و[*تشغيل وكلاء الذكاء الاصطناعي في بيئة الإنتاج (Running AI Agents in Production)*، المستوى 2 — مهندس الوكلاء (Level 2 — Agent Engineer)](../agentic/learning-path.ar.html#level-2-agent-engineer) سلّمًا متدرجًا (ladder) مع مختبرات (labs).
 
 ### 🟡 التعمق أكثر (Going deeper)
 
-**الفجوة بين العرض التجريبي والمنتج (The demo-to-product gap).** تتوقف معظم مشاريع الذكاء الاصطناعي لدى الخرّيجين عند العرض التجريبي. ويوظّف أصحاب العمل لأجل العمود الأيمن (right-hand column).
+**الفجوة بين العرض التجريبي والمنتج (The demo-to-product gap).** تتوقف معظم مشاريع الذكاء الاصطناعي لدى الخرّيجين عند العرض التجريبي. ويوظّف أصحاب العمل لأجل العمود الأخير، عمود المنتج (right-hand column).
 
 | السؤال (Question) | العرض التجريبي (Demo) | المنتج (Product) |
 |---|---|---|
@@ -332,7 +332,7 @@ flowchart LR
     E -->|"التغيير التالي"| C
 ```
 
-ثلاثون إلى خمسين حالة بداية جيدة: أسئلة نموذجية (typical questions)، وحالات حدّية (edge cases) (كشف حساب فارغ، أو شهر غير موجود في الوثيقة)، والعربية والإنجليزية، وبضعة مُدخلات عدائية (hostile inputs). ولكل حالة، اكتب ما يجب أن تحتويه الإجابة الجيدة أو ما يجب ألا تحتويه (must contain or must not contain). ثم سجّل الدرجات آليًا حيث تستطيع (score automatically) (الحقائق الدقيقة، وحالات الرفض refusals) ويدويًا حيث يلزم. و**تحليل الأخطاء (Error analysis)**، أي قراءة الإخفاقات وتجميعها حسب السبب (grouping them by cause)، هو حيث يحدث معظم التعلم.
+ثلاثون إلى خمسين حالة بداية جيدة: أسئلة نموذجية (typical questions)، وحالات حدّية (edge cases)، ككشف حساب فارغ (empty statement) أو شهر غير موجود في الوثيقة، والعربية والإنجليزية، وبضعة مُدخلات عدائية (hostile inputs). ولكل حالة، اكتب ما يجب أن تحتويه الإجابة الجيدة أو ما يجب ألا تحتويه (must contain or must not contain). ثم سجّل الدرجات آليًا حيث تستطيع (score automatically)، كالحقائق الدقيقة (exact facts) وحالات الرفض (refusals)، ويدويًا حيث يلزم (by hand where you must). و**تحليل الأخطاء (Error analysis)**، أي قراءة الإخفاقات وتجميعها حسب السبب (grouping them by cause)، هو حيث يحدث معظم التعلم.
 
 **اشرح كل سطر (Explain every line).** وضع الدرس 1.2 القاعدة لوكلاء البرمجة: أنت تملك كل سطر تسلّمه (you own every line you submit). وفي تطبيقات الذكاء الاصطناعي تتضاعف أهميتها، لأن القرارات المهمة تختبئ في أماكن صغيرة: حجم الجزء والتداخل (chunk size and overlap)، وعدد الوثائق المسترجعة (how many documents to retrieve)، وصياغة موجّه النظام (system prompt)، وما يحدث عندما لا يعيد الاسترجاع شيئًا (retrieval returns nothing). قبل المقابلة، اكتب جملة واحدة لكل قرار من هذا النوع. وإن لم تستطع، فاختبره وتعلّم السبب.
 
@@ -358,9 +358,9 @@ flowchart LR
 
 **قائمة التحقق من أدلة ميزات الذكاء الاصطناعي (AI feature proof checklist)**
 
-| الفحص (Check) | ما يبحث عنه المراجع (What a reviewer looks for) | دليل ريم (الأسبوع 10) (Reem's evidence (week 10)) |
+| الفحص (Check) | ما يبحث عنه المراجع (What a reviewer looks for) | دليل ريم في الأسبوع 10 (Reem's evidence (week 10)) |
 |---|---|---|
-| الشرح (Explain) | لكل قرار رئيسي (key decision) (التقسيم chunking، وعدد المسترجَع retrieval count، والموجّه prompt، والبديل fallback) سبب من سطر واحد (one-line reason) في README | جدول القرارات (Decisions table) في README |
+| الشرح (Explain) | لكل قرار رئيسي (key decision)، كالتقسيم (chunking) وعدد الوثائق المسترجَعة (retrieval count) والموجّه (prompt) والبديل (fallback)، سبب من سطر واحد (one-line reason) في README | جدول القرارات (Decisions table) في README |
 | معيار الجودة (Quality bar) | تعريف مكتوب للإجابة الجيدة (written definition of a good answer) | «الرقم الصحيح، مع الاستشهاد بسطر كشف الحساب، وقول "غير موجود في هذا الكشف" عند غيابه» (Correct figure, cites the statement line, says 'not in this statement' when absent) |
 | المجموعة الذهبية (Golden set) | 30 حالة على الأقل، بالعربية والإنجليزية، مع حالات حدّية وعدائية (edge and hostile cases) | 52 حالة، ذات إصدارات (versioned) |
 | النتائج (Results) | درجات قبل وبعد (before and after scores) لكل تغيير مهم | جدول نتائج (Results table): من 31/52 إلى 44/52 |
@@ -369,7 +369,7 @@ flowchart LR
 | الموثوقية (Reliability) | المهلات وإعادة المحاولات والرسالة البديلة (Timeouts, retries, fallback message) | اختبارات مع مزوّد بطيء محاكى (simulated slow provider) |
 | التكلفة (Cost) | التكلفة لكل طلب مقيسة (Cost per request measured) | مسجّلة، مع الافتراضات (assumptions) |
 
-**المسار الدراسي لريم (مقتطف) (Reem's study path (extract))**
+**المسار الدراسي لريم، مقتطف (Reem's study path (extract))**
 
 | الأسابيع (Weeks) | الفجوة (Gap) | الدرس أو الدروس (Lesson(s)) | الدليل (Proof) |
 |---|---|---|---|
@@ -382,7 +382,7 @@ flowchart LR
 ## 🛠️ التمارين (Exercises)
 - 🟢 لأي مشروع ذكاء اصطناعي بنيته أو استخدمته، اكتب معيار الجودة (quality bar) في ثلاث جمل: ما يجب أن تفعله الإجابة الجيدة، وما يجب ألا تفعله، وما ينبغي أن تقوله حين لا تعرف. *يكتمل عندما (Done when):* يستطيع زميل (peer) قراءة الجمل الثلاث والحكم على إجابة حقيقية واحدة بها دون أن يسألك شيئًا.
 - 🟡 ابنِ مجموعة ذهبية (golden set) من 30 حالة على الأقل لمشروعك، تتضمن خمس حالات حدّية (edge cases) على الأقل وخمسة مُدخلات عدائية (hostile inputs). شغّلها وسجّل الدرجة. *يكتمل عندما (Done when):* تكون المجموعة الذهبية وجدول النتائج (results table) مُودَعين في مستودعك (committed to your repository) ويمكن تكرار التشغيل بأمر واحد (one command).
-- 🔴 أجرِ تغييرًا واحدًا ذا معنى (meaningful change) (إعدادات الاسترجاع، أو الموجّه، أو النموذج) وأعد تشغيل التقييمات (rerun the evals). أجرِ تحليل أخطاء (error analysis) للإخفاقات المتبقية، مجمّعةً حسب السبب، وأضف قسم «القرارات» (decisions) إلى README يشرح كل إعداد رئيسي. *يكتمل عندما (Done when):* يُظهر README الدرجات قبل وبعد، ومجموعات الإخفاق (failure groups)، وسببًا لكل إعداد، وتستطيع شرح أيٍّ منها بصوت عالٍ دون ملاحظات.
+- 🔴 أجرِ تغييرًا واحدًا ذا معنى (meaningful change)، في إعدادات الاسترجاع (retrieval settings) أو الموجّه أو النموذج، وأعد تشغيل التقييمات (rerun the evals). أجرِ تحليل أخطاء (error analysis) للإخفاقات المتبقية، مجمّعةً حسب السبب، وأضف قسم «القرارات» (decisions) إلى README يشرح كل إعداد رئيسي. *يكتمل عندما (Done when):* يُظهر README الدرجات قبل وبعد، ومجموعات الإخفاق (failure groups)، وسببًا لكل إعداد، وتستطيع شرح أيٍّ منها بصوت عالٍ دون ملاحظات.
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
 - **العرض التجريبي بوصفه دليلًا (Demo as proof).** العرض السلس على مُدخلات مختارة (chosen inputs) يُثبت القليل. اعرض مجموعة ذهبية ونتائج.
@@ -465,7 +465,7 @@ flowchart LR
 </details>
 
 ## 📚 المراجع (References)
-- مشروع OWASP لأمن الذكاء الاصطناعي التوليدي (OWASP GenAI Security Project) (أهم عشر مخاطر لتطبيقات النماذج اللغوية، Top 10 for LLM Applications) — https://genai.owasp.org/
+- مشروع OWASP لأمن الذكاء الاصطناعي التوليدي (OWASP GenAI Security Project)، وقائمته لأهم عشر مخاطر لتطبيقات النماذج اللغوية (Top 10 for LLM Applications) — https://genai.owasp.org/
 - إطار MITRE ATLAS — https://atlas.mitre.org/
 - إطار NIST لإدارة مخاطر الذكاء الاصطناعي (NIST AI Risk Management Framework) — https://www.nist.gov/itl/ai-risk-management-framework
 - وثائق Anthropic (Anthropic documentation) — https://docs.anthropic.com/
@@ -527,7 +527,7 @@ flowchart TD
 |---|---|---|---|---|
 | 1. الأساس (Core) | SQL: عمليات الربط (joins)، والتجميع (grouping)، ودوال النوافذ (window functions)، والقيم الفارغة (NULLs) | A E S | [*هندسة البيانات والتحليلات (Data Engineering & Analytics)*، الدرس 1.1 — SQL](../data/index.ar.html#/1.1) | مستودع من الاستعلامات المحلولة (solved queries)، كلٌّ منها مفحوص يدويًا على عيّنة (checked by hand on a sample) |
 | 1. الأساس (Core) | نمذجة البيانات (Data modelling): الحقائق (facts)، والأبعاد (dimensions)، والمفاتيح (keys) | A E S | [*هندسة البيانات والتحليلات (Data Engineering & Analytics)*، الدرس 1.2 — نمذجة البيانات (Data modelling)](../data/index.ar.html#/1.2) | مخطط للبنية (schema diagram) مع كتابة دقّة كل جدول (grain of each table) |
-| 1. الأساس (Core) | المستودعات والبحيرات (Warehouses and lakes) | E (و A S على دراية، aware) | [*هندسة البيانات والتحليلات (Data Engineering & Analytics)*، الدرس 1.3 — المستودعات والبحيرات (Warehouses and lakes)](../data/index.ar.html#/1.3) | ملاحظة قصيرة عن سبب استخدام مشروعك للتخزين الذي يستخدمه (the storage it does) |
+| 1. الأساس (Core) | المستودعات والبحيرات (Warehouses and lakes) | E، ويكفي A وS الإلمام بها (aware) | [*هندسة البيانات والتحليلات (Data Engineering & Analytics)*، الدرس 1.3 — المستودعات والبحيرات (Warehouses and lakes)](../data/index.ar.html#/1.3) | ملاحظة قصيرة عن سبب استخدام مشروعك للتخزين الذي يستخدمه (the storage it does) |
 | 1. الأساس (Core) | أداء الاستعلامات (Query performance) | E | [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 2.5 — الفهارس والاستعلامات ومجموعة العمل (Indexes, queries, and the working set)](../vibe/index.ar.html#l2-5) | استعلام بطيء جُعل أسرع، مع خطة التنفيذ (plan) قبل وبعد |
 | 1. الأساس (Core) | البيانات الشخصية والخصوصية (Personal data and privacy) | A E S | [*الذكاء الاصطناعي الآمن وأمن التطبيقات (Secure AI & Application Security)*، الدرس 5.3 — حماية البيانات الشخصية (Protecting personal data)](../secai/index.ar.html#/5.3) · [*هندسة البيانات والتحليلات (Data Engineering & Analytics)*، الوحدة 6 — الحوكمة والخصوصية والأمن (Governance, privacy and security)](../data/index.ar.html#/6.1) | بيانات اصطناعية أو عامة فقط (synthetic or public data only)؛ وملاحظة عن التعامل مع البيانات (data-handling note) في README |
 | 2. خطوط البيانات (Pipelines) | التحميل الدفعي وELT والتقاط تغييرات البيانات (Batch loads, ELT and change data capture) | E | [*هندسة البيانات والتحليلات (Data Engineering & Analytics)*، الدرس 2.1 — الدفعات وELT وCDC (Batch, ELT and CDC)](../data/index.ar.html#/2.1) | خط بيانات يحمّل مصدرًا عامًا حقيقيًا فوضويًا (real, messy public source) |
@@ -548,11 +548,11 @@ flowchart TD
 
 **معيار SQL (The SQL bar).** على مستوى المبتدئين، يتوقع المُقابِلون عادةً أن:
 
-- تربط الجداول (join tables) وتعرف ما يحدث لعدد الصفوف (row counts) (أي **التضاعف (fan-out)** الذي ضاعف إجماليات هدى)؛
+- تربط الجداول (join tables) وتعرف ما يحدث لعدد الصفوف (row counts)، أي **التضاعف (fan-out)** الذي ضاعف إجماليات هدى؛
 - تجمّع وتلخّص (group and aggregate)، وتصفّي المجموعات بـ `HAVING`؛
-- تستخدم **دوال النوافذ (window functions)** (`ROW_NUMBER`، و`LAG`، والمجاميع التراكمية running totals) لاستعلامات «الأحدث لكل عميل» (latest per customer) و«التغيّر منذ الشهر الماضي» (change since last month)؛
+- تستخدم **دوال النوافذ (window functions)**، مثل `ROW_NUMBER` و`LAG` والمجاميع التراكمية (running totals)، لاستعلامات «الأحدث لكل عميل» (latest per customer) و«التغيّر منذ الشهر الماضي» (change since last month)؛
 - تتعامل مع `NULL` تعاملًا صحيحًا، وتعرف أن `COUNT(*)` و`COUNT(column)` يختلفان؛
-- تكتب استعلامات مقروءة باستخدام تعابير الجداول المشتركة (common table expressions) (`WITH`)؛
+- تكتب استعلامات مقروءة باستخدام تعابير الجداول المشتركة (common table expressions)، أي `WITH`؛
 - تفحص النتائج (check results): عُدّ الصفوف قبل كل ربط وبعده، واختبر حالة واحدة يدويًا.
 
 هذا خطأ هدى وإصلاحه. يلخّص الإصلاح المعاملات لكل عميل *قبل* الربط (aggregates transactions per customer before joining)، كي لا تستطيع الحسابات الإضافية مضاعفة الصفوف.
@@ -587,8 +587,8 @@ LEFT JOIN spend s ON s.customer_id = n.customer_id;
 **من دفتر الملاحظات إلى الإنتاج (From notebook to production).** دفتر الملاحظات (notebook) مكان مناسب للاستكشاف. ويتحقق أصحاب العمل مما يحدث بعده. مشروع البيانات ذو العقلية الإنتاجية (production-minded data project):
 
 1. يحمّل البيانات من مصدر يتغير (source that changes)، لا من ملف نُزّل مرة واحدة؛
-2. يعمل وفق جدول زمني (on a schedule)، ويمكن إعادة تشغيله بأمان من دون تكرار الصفوف (it is **idempotent**، أي **متساوي القوى**)؛
-3. يختبر مُدخلاته ومُخرجاته (tests its inputs and outputs) (التفرّد uniqueness، والقيم المفقودة missing values، والحداثة freshness)؛
+2. يعمل وفق جدول زمني (on a schedule)، ويمكن إعادة تشغيله بأمان من دون تكرار الصفوف (without duplicating rows)، أي إنه **متساوي القوى (idempotent)**؛
+3. يختبر مُدخلاته ومُخرجاته (tests its inputs and outputs): التفرّد (uniqueness)، والقيم المفقودة (missing values)، والحداثة (freshness)؛
 4. يُبقي منطقه في ملفات تحت التحكم بالإصدارات (version-controlled files)، لا في خلايا دفتر ملاحظات تُشغَّل بترتيب ما؛
 5. يكتب ما يعنيه كل جدول وكل مقياس (what each table and metric means).
 
@@ -598,11 +598,11 @@ LEFT JOIN spend s ON s.customer_id = n.customer_id;
 
 **البيانات في القطاعات الخاضعة للتنظيم (Data in regulated sectors).** في البنوك وشركات الاتصالات وشركات الطاقة والحكومة في دول الخليج (GCC)، تقع أدوار البيانات قريبًا من الحوكمة (governance). توقّع أسئلة عن تصنيف البيانات (data classification)، ومن يحق له رؤية ماذا، والاحتفاظ والحذف (retention and deletion) (انظر [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 2.4 — الاحتفاظ والحذف والبيانات التي وعدت بمحوها (Retention, deletion, and the data you promised to erase)](../vibe/index.ar.html#l2-4))، وقوانين حماية البيانات الشخصية (personal data protection laws) مثل قانون PDPPL في قطر (القانون رقم 13 لسنة 2016). لا تضع أبدًا بيانات عملاء حقيقية أو بيانات شخصية في معرض أعمال؛ استخدم بيانات اصطناعية (synthetic) أو مرخّصة ترخيصًا مفتوحًا (openly licensed) وصرّح بذلك.
 
-**البيانات العربية ميزة (Arabic data is an advantage).** كثير من أعمال البيانات العامة بالإنجليزية فقط. والنص العربي (الخطوط المختلطة mixed scripts، واللهجات dialects، والعرض من اليمين إلى اليسار right-to-left display، والأسماء المنقولة حرفيًا transliterated names) يخلق مشكلات حقيقية في المطابقة والبحث والتحليل (matching, search and analysis). والمشروع الذي يتعامل معه جيدًا مميز (distinctive) في المنطقة.
+**البيانات العربية ميزة (Arabic data is an advantage).** كثير من أعمال البيانات العامة بالإنجليزية فقط. والنص العربي، بخطوطه المختلطة (mixed scripts) ولهجاته (dialects) وعرضه من اليمين إلى اليسار (right-to-left display) وأسمائه المنقولة حرفيًا (transliterated names)، يخلق مشكلات حقيقية في المطابقة والبحث والتحليل (matching, search and analysis). والمشروع الذي يتعامل معه جيدًا مميز (distinctive) في المنطقة.
 
 **الشهادات (Certifications).** يقدّم كبار مزوّدي الحوسبة السحابية (major cloud providers) شهادات لمهندسي البيانات (data-engineer certifications)، بعضها على المستوى المشارك (associate level). وقت كتابة هذا النص (2026)، قد تساعد على اجتياز فرز السير الذاتية (CV screen) لدى أصحاب العمل الذين يستخدمون تلك السحابة، لكنها لا تحلّ محل خط بيانات عامل (working pipeline). الأسماء والمستويات تتغير؛ تحقق من القائمة الحالية للمزوّد قبل أن تخطط حول إحداها.
 
-**خط الأساس الأمين (The honest baseline).** بالنسبة لعلماء البيانات، ليست أقوى إشارة في المقابلة تعقيدَ النموذج (model complexity). بل المقارنة مع خط أساس بسيط (simple baseline) (تنبّأ بالمتوسط، أو بقيمة الشهر الماضي)، واختيار مقياس يطابق التكلفة التجارية للأخطاء (business cost of errors)، والقول بوضوح متى لا يستحق النموذج المعقّد (fancy model) العناء.
+**خط الأساس الأمين (The honest baseline).** بالنسبة لعلماء البيانات، ليست أقوى إشارة في المقابلة تعقيدَ النموذج (model complexity). بل المقارنة مع خط أساس بسيط (simple baseline)، كالتنبؤ بالمتوسط أو بقيمة الشهر الماضي، واختيار مقياس يطابق التكلفة التجارية للأخطاء (business cost of errors)، والقول بوضوح متى لا يستحق النموذج المعقّد (fancy model) العناء.
 
 ## 🧰 الأدوات (The toolkit)
 | المورد أو الأداة أو النموذج (Resource, tool or template) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |
@@ -649,7 +649,7 @@ LEFT JOIN spend s ON s.customer_id = n.customer_id;
 - **معاملة SQL على أنها سهلة (Treating SQL as easy).** عمليات الربط المضاعِفة (fan-out joins) و`NULL` ومرشّحات التاريخ (date filters) توقع مرشحين أقوياء. تدرّب، وافحص عدد الصفوف في كل مرة.
 - **معارض أعمال من دفاتر الملاحظات فقط (Notebook-only portfolios).** حوّل مشروعًا واحدًا على الأقل إلى سكربتات (scripts) تعمل وفق جدول زمني مع اختبارات.
 - **مطاردة مسمى «عالم البيانات» (Chasing the title "data scientist").** انظر إلى المهام. قد تناسبك هندسة البيانات والتحليل أكثر، وهما تستحقان الاستهداف عن قصد (targeting deliberately).
-- **بيانات شخصية حقيقية في معرض أعمال (Real personal data in a portfolio).** أبدًا. استخدم بيانات اصطناعية (synthetic) أو مرخّصة ترخيصًا مفتوحًا (openly licensed) وصرّح بذلك.
+- **بيانات شخصية حقيقية في معرض أعمال (Real personal data in a portfolio).** لا تفعل ذلك أبدًا (Never). استخدم بيانات اصطناعية (synthetic) أو مرخّصة ترخيصًا مفتوحًا (openly licensed) وصرّح بذلك.
 - **نماذج معقدة بلا خط أساس (Complex models without a baseline).** قارن دائمًا بخط أساس بسيط (simple baseline) وأبلغ بأمانة (report honestly).
 
 ## 🧾 الخلاصة (Recap)
@@ -767,7 +767,7 @@ LEFT JOIN spend s ON s.customer_id = n.customer_id;
 | **مهندس الحوسبة السحابية أو DevOps (Cloud or DevOps engineer)** | بناء البيئات السحابية (cloud environments) وخطوط النشر والأتمتة | إصلاحات خطوط النشر (pipeline fixes)، وتغييرات البنية التحتية عبر مراجعة الشيفرة (code review)، وطلبات الوصول (access requests) |
 | **مهندس موثوقية المواقع (Site reliability engineer, SRE)** | إبقاء الخدمات موثوقة: المراقبة (monitoring)، والتنبيه (alerting)، والاستجابة للحوادث (incident response)، والسعة (capacity) | لوحات المعلومات والتنبيهات (dashboards and alerts)، وأدلة التشغيل (runbooks)، والانضمام إلى المناوبة (on-call) مع رفيق (buddy) |
 | **مهندس المنصات (Platform engineer)** | بناء «الطريق المعبّد» الداخلي (internal "paved road") الذي تستخدمه الفرق الأخرى للشحن: القوالب (templates)، والعناقيد (clusters)، والأدوات المشتركة (shared tools) | تحسين قالب، وتوثيق سير عمل (workflow)، وأتمتة مهمة يدوية (manual task) |
-| **مهندس الأمن (Security engineer)** (أمن التطبيقات application security، وأمن السحابة cloud security، وعمليات الأمن security operations) | إيجاد نقاط الضعف وإصلاحها (finding and fixing weaknesses)؛ واكتشاف الهجمات والاستجابة لها (detecting and responding to attacks) | فرز نتائج أدوات الفحص (triaging scanner findings)، ومراجعة طلبات الدمج (pull requests)، والتحقيق في التنبيهات (investigating alerts) |
+| **مهندس الأمن (Security engineer)**، في أمن التطبيقات (application security) أو أمن السحابة (cloud security) أو عمليات الأمن (security operations) | إيجاد نقاط الضعف وإصلاحها (finding and fixing weaknesses)؛ واكتشاف الهجمات والاستجابة لها (detecting and responding to attacks) | فرز نتائج أدوات الفحص (triaging scanner findings)، ومراجعة طلبات الدمج (pull requests)، والتحقيق في التنبيهات (investigating alerts) |
 
 **طرق الدخول (Routes in).** لأن هذه الأدوار تتوقع غالبًا بعض الخبرة التشغيلية (operational experience)، يصل إليها كثيرون من باب جانبي (side door).
 
@@ -823,7 +823,7 @@ flowchart LR
 
 ### 🟡 التعمق أكثر (Going deeper)
 
-**اختبار إعادة البناء (The rebuild test).** الدليل المفضّل لدى سالم مستودع واحد يحتوي كل شيء: شيفرة التطبيق (application code)، وتعريف الحاوية (container definition)، والبنية التحتية بوصفها شيفرة، وخط نشر، وإعدادات المراقبة والتنبيه (monitoring and alert configuration)، ودليل تشغيل (runbook). والاختبار بسيط: احذف البيئة وأعد بناءها من المستودع، مع قياس الوقت الذي تستغرقه. ثم اكسر شيئًا عمدًا (break something on purpose) (أوقف قاعدة البيانات، أو املأ القرص، أو انشر إصدارًا سيئًا)، واكتب مراجعة حادثة قصيرة (short incident review): ما الذي نبّه، وكيف وجدت السبب، وكيف تعافيت، وما الذي غيّرته. قليل من الخرّيجين يعرضون هذا.
+**اختبار إعادة البناء (The rebuild test).** الدليل المفضّل لدى سالم مستودع واحد يحتوي كل شيء: شيفرة التطبيق (application code)، وتعريف الحاوية (container definition)، والبنية التحتية بوصفها شيفرة، وخط نشر، وإعدادات المراقبة والتنبيه (monitoring and alert configuration)، ودليل تشغيل (runbook). والاختبار بسيط: احذف البيئة وأعد بناءها من المستودع، مع قياس الوقت الذي تستغرقه. ثم اكسر شيئًا عمدًا (break something on purpose)، كأن توقف قاعدة البيانات أو تملأ القرص أو تنشر إصدارًا سيئًا (bad version)، واكتب مراجعة حادثة قصيرة (short incident review): ما الذي نبّه، وكيف وجدت السبب، وكيف تعافيت، وما الذي غيّرته. قليل من الخرّيجين يعرضون هذا.
 
 **خلفيتك تُحتسب (Your background counts).** كثيرًا ما يقلّل خرّيجو هندسة الحاسوب (computer engineering graduates) مثل يوسف من شأن ما يعرفونه. العمل على الأنظمة المدمجة (embedded work) يعلّم التصحيح تحت القيود (debugging under constraints)؛ ومقررات الشبكات تعلّم استكشاف الأخطاء طبقة بطبقة (layer-by-layer troubleshooting) الذي تحتاجه حوادث السحابة. ضع هذا العمق في الواجهة (put that depth in front): تقرير مكتوب (write-up) يتتبّع مشكلة اتصال حقيقية من DNS إلى TLS إلى التطبيق دليلٌ قوي لأدوار المنصات والأمن على حد سواء.
 
@@ -833,19 +833,19 @@ flowchart LR
 
 ### 🔴 نظرة الخبير (Expert view)
 
-**أخلاقيات الأمن مِصفاة للتوظيف (Security ethics are a hiring filter).** لا تختبر إلا الأنظمة التي تملكها أو لديك إذن مكتوب (written permission) باختبارها. استخدم المختبرات المُعرَّضة للثغرات عمدًا (deliberately vulnerable labs) (مثل OWASP Juice Shop)، ومسابقات التقاط العلم (capture-the-flag competitions)، وبرامج مكافآت الثغرات (bug bounty programmes) في حدود نطاقها المنشور (published scope) حصرًا. والمرشح الذي يصف فحص موقع شركة «لأرى ماذا سيحدث» (to see what would happen) قد يُرفض بسبب هذه القصة وحدها، وقد يكون خالف القانون.
+**أخلاقيات الأمن مِصفاة للتوظيف (Security ethics are a hiring filter).** لا تختبر إلا الأنظمة التي تملكها أو لديك إذن مكتوب (written permission) باختبارها. استخدم المختبرات المُعرَّضة للثغرات عمدًا (deliberately vulnerable labs) مثل OWASP Juice Shop، ومسابقات التقاط العلم (capture-the-flag competitions)، وبرامج مكافآت الثغرات (bug bounty programmes) في حدود نطاقها المنشور (published scope) حصرًا. والمرشح الذي يصف فحص موقع شركة «لأرى ماذا سيحدث» (to see what would happen) قد يُرفض بسبب هذه القصة وحدها، وقد يكون خالف القانون.
 
-**ما يتحقق منه أصحاب العمل الخاضعون للتنظيم (What regulated employers check).** تطبّق البنوك وشركات الاتصالات وشركات الطاقة والجهات الحكومية في دول الخليج (GCC) إدارة التغيير (change management) (تُراجَع التغييرات وتُعتمد وتُسجَّل)، والفصل بين المهام (segregation of duties) (من يكتب التغيير ليس الوحيد الذي يعتمده)، وأدلة التدقيق (audit evidence). والبنية التحتية بوصفها شيفرة وخطوط النشر تُنتج هذه الأدلة تلقائيًا (naturally). وقول «كل تغيير في بيئتي يمر عبر طلب دمج وخط نشر، لذا يوجد سجل» (every change to my environment goes through a pull request and a pipeline, so there is a record) يُظهر أنك تفهم لماذا يعمل أصحاب العمل هؤلاء بالطريقة التي يعملون بها.
+**ما يتحقق منه أصحاب العمل الخاضعون للتنظيم (What regulated employers check).** تطبّق البنوك وشركات الاتصالات وشركات الطاقة والجهات الحكومية في دول الخليج (GCC) إدارة التغيير (change management)، أي مراجعة التغييرات واعتمادها وتسجيلها، والفصل بين المهام (segregation of duties)، أي ألا يكون كاتب التغيير هو الوحيد الذي يعتمده، وأدلة التدقيق (audit evidence). والبنية التحتية بوصفها شيفرة وخطوط النشر تُنتج هذه الأدلة تلقائيًا (naturally). وقول «كل تغيير في بيئتي يمر عبر طلب دمج وخط نشر، لذا يوجد سجل» (every change to my environment goes through a pull request and a pipeline, so there is a record) يُظهر أنك تفهم لماذا يعمل أصحاب العمل هؤلاء بالطريقة التي يعملون بها.
 
 **المناوبة جزء حقيقي من الوظيفة (On-call is a real part of the job).** كثيرًا ما تتضمن أدوار موثوقية المواقع والمنصات (SRE and platform roles) جداول مناوبة (on-call rotations) بعد أن تُدرَّب. اسأل عنها في المقابلات (الدرس 5.1): كم مرة، وكيف تُراجع الحوادث، وهل المراجعات بلا لوم (blameless). وعادةً ما ينضم المبتدئون أولًا مع رفيق أكثر خبرة (more experienced buddy).
 
-**الذكاء الاصطناعي يغيّر الأدوات لا الأسس (AI is changing the toolset, not the foundations).** تستطيع الوكلاء الآن كتابة كثير من شيفرة البنية التحتية (infrastructure code) وإعدادات خطوط النشر (pipeline configuration). والأخطاء في هذه الشيفرة مكلفة: حاوية تخزين مفتوحة (open storage bucket)، أو دور واسع الصلاحيات أكثر من اللازم (over-broad role)، أو قاعدة بيانات محذوفة. والأسس في المرحلة 1 هي ما يتيح لك مراجعة مخرجات الوكيل (review agent output)؛ و[*الذكاء الاصطناعي الآمن وأمن التطبيقات (Secure AI & Application Security)*، الدرس 6.3 — تأمين الشيفرة المولّدة بالذكاء الاصطناعي (Securing AI-generated code)](../secai/index.ar.html#/6.3) يُظهر ما تخطئ فيه الوكلاء عادةً.
+**الذكاء الاصطناعي يغيّر الأدوات لا الأسس (AI is changing the toolset, not the foundations).** يستطيع الوكلاء (agents) الآن كتابة كثير من شيفرة البنية التحتية (infrastructure code) وإعدادات خطوط النشر (pipeline configuration). والأخطاء في هذه الشيفرة مكلفة: سلة تخزين مفتوحة (open storage bucket)، أو دور واسع الصلاحيات أكثر من اللازم (over-broad role)، أو قاعدة بيانات محذوفة. والأسس في المرحلة 1 هي ما يتيح لك مراجعة مخرجات الوكيل (review agent output)؛ و[*الذكاء الاصطناعي الآمن وأمن التطبيقات (Secure AI & Application Security)*، الدرس 6.3 — تأمين الشيفرة المولّدة بالذكاء الاصطناعي (Securing AI-generated code)](../secai/index.ar.html#/6.3) يُظهر ما يخطئ فيه الوكلاء عادةً.
 
 ## 🧰 الأدوات (The toolkit)
 | المورد أو الأداة أو النموذج (Resource, tool or template) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |
 |---|---|---|
 | **Study-path table** — جدول المسار الدراسي | المهارة ← رابط الدرس ← الدليل (Skill → lesson link → proof)، مع عمود للحالة (status column) | في البداية، للتخطيط؛ وأسبوعيًا، لتتبّع الدليل (track proof) |
-| **Terraform** (HashiCorp؛ وOpenTofu تفرّع مفتوح المصدر، open-source fork) | البنية التحتية بوصفها شيفرة (Infrastructure as code): صِف الموارد السحابية (cloud resources) في ملفات وطبّقها | بناء بيئة قابلة لإعادة البناء (rebuildable environment) لمعرض أعمالك |
+| **Terraform** (HashiCorp) — وOpenTofu تفرّع مفتوح المصدر (open-source fork) عنه | البنية التحتية بوصفها شيفرة (Infrastructure as code): صِف الموارد السحابية (cloud resources) في ملفات وطبّقها | بناء بيئة قابلة لإعادة البناء (rebuildable environment) لمعرض أعمالك |
 | **Docker** | يبني الحاويات ويشغّلها من ملف تعريف (definition file) | تحزيم تطبيقك بالطريقة نفسها في كل مكان (the same way everywhere) |
 | **Kubernetes** | نظام مفتوح المصدر يشغّل الحاويات ويديرها عبر الأجهزة (across machines) | بعد Docker، حين يطلب الدور التنسيق (orchestration)؛ وابدأ بعنقود محلي (local cluster) |
 | **Prometheus** | جمع المقاييس والتنبيه (metrics collection and alerting) مفتوح المصدر؛ ويُقرن غالبًا بلوحات Grafana (Grafana dashboards) | إضافة المقاييس وتنبيه إلى مشروعك |
@@ -869,7 +869,7 @@ flowchart LR
 | المراجعة (Review) | مراجعة حادثة مكتوبة (written incident review) لإخفاق واحد تسبّب فيه عمدًا |
 | التكلفة (Cost) | يوجد تنبيه ميزانية (budget alert)، ويقدّر README التكلفة الشهرية (monthly cost) |
 
-**المسار الدراسي ليوسف (مقتطف) (Yousef's study path (extract))**
+**المسار الدراسي ليوسف، مقتطف (Yousef's study path (extract))**
 
 | الأسابيع (Weeks) | الفجوة (Gap) | أين تتعلمها (Where to learn it) | الدليل (Proof) |
 |---|---|---|---|
@@ -966,7 +966,7 @@ flowchart LR
 </details>
 
 ## 📚 المراجع (References)
-- Google، كتب هندسة موثوقية المواقع (Site Reliability Engineering books) (مجانية على الإنترنت، free online) — https://sre.google/books/
+- Google، كتب هندسة موثوقية المواقع (Site Reliability Engineering books)، مجانية على الإنترنت (free online) — https://sre.google/books/
 - وثائق Kubernetes (Kubernetes documentation) — https://kubernetes.io/docs/
 - وثائق Docker (Docker documentation) — https://docs.docker.com/
 - وثائق Terraform (Terraform documentation) — https://developer.hashicorp.com/terraform/docs
@@ -974,4 +974,4 @@ flowchart LR
 - خريطة CNCF للمنظومة السحابية الأصلية (CNCF Cloud Native Landscape) — https://landscape.cncf.io/
 - OWASP Juice Shop — https://owasp.org/www-project-juice-shop/
 - شهادة CompTIA Security+ — https://www.comptia.org/certifications/security
-- شهادات Linux Foundation (CKA وCKAD) (Linux Foundation certifications) — https://training.linuxfoundation.org/certification-catalog/
+- شهادات Linux Foundation (Linux Foundation certifications): CKA وCKAD — https://training.linuxfoundation.org/certification-catalog/
