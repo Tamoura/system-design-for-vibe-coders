@@ -12,7 +12,7 @@
 ## ⚡ In 60 seconds
 - **Scaling** handles more load; **resilience** survives failure, through redundancy, backups and recovery plans.
 - Autoscale in layers: the **Horizontal Pod Autoscaler** adds pods, a **node autoscaler** adds machines for those pods, and the **database** usually does not autoscale at all, so it is often the real limit.
-- Spread every production service across at least **two or three availability zones**, and make Kubernetes actually do it with topology spread constraints and PodDisruptionBudgets.
+- Spread every production service across at least **two or three availability zones**, and enforce it with topology spread constraints and PodDisruptionBudgets.
 - Recovery targets are business decisions: **RTO** (how long you may be down) and **RPO** (how much data you may lose). Write them down per service, then pick the cheapest design that meets them.
 - Decision cue: a backup you have not restored is a hope, not a backup. Schedule restore tests and time them against the RTO.
 - Biggest trap: treating multi-zone as disaster recovery. Zones survive a data-centre failure, not a bad deploy, a deleted table or ransomware, whose damage replicates everywhere in seconds.
@@ -113,7 +113,7 @@ A **PodDisruptionBudget** (PDB) limits *voluntary* disruptions such as node upgr
 | **Warm standby** | A smaller, working copy of the whole stack | Minutes / seconds to minutes | Medium |
 | **Multi-site active-active** | Full capacity serving traffic in both regions | Near zero / near zero, if the data design allows | Highest, and the hardest to build |
 
-The RTO and RPO columns are rough orders of magnitude; only your measured test result counts. Infrastructure as code (Module 3) makes pilot light and warm standby affordable: the recovery region is a `tofu apply` and a GitOps sync away, not a hand-built copy that drifts.
+These RTO and RPO figures are rough; only your measured result counts. Infrastructure as code (Module 3) makes pilot light and warm standby affordable: the recovery region is a `tofu apply` and a GitOps sync away, not a hand-built copy that drifts.
 
 ```mermaid
 flowchart LR
@@ -132,7 +132,7 @@ flowchart LR
 
 ### 🔴 Expert view
 
-**Separate the failure modes.** Different disasters need different defences. Write them out per service:
+**Separate the failure modes.** Different disasters need different defences:
 
 | Failure | Multi-AZ helps? | Cross-region replica helps? | Point-in-time backup helps? |
 |---|---|---|---|
@@ -218,7 +218,7 @@ The first run found three gaps no design review had caught: the replica-lag aler
 
 <details><summary>Answer</summary>
 
-**D.** Corruption is replicated to the standby and the replica within seconds, so A and B just give you the same bad data elsewhere. Only a point-in-time backup goes back before the change. (🔴 Expert view, the failure-mode table.)
+**D.** Corruption reaches the standby and replica within seconds, so A and B give you the same bad data. Only a point-in-time backup goes back before the change. (🔴 Expert view, the failure-mode table.)
 
 </details>
 

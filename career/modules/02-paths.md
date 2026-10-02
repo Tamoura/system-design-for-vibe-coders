@@ -340,7 +340,7 @@ Thirty to fifty cases is a good start: typical questions, edge cases (an empty s
 
 **Design for model change.** Models and prices change often. Strong candidates keep the model behind one small interface, keep prompts in version control, and rerun the golden set when they switch. Saying "I swapped the model and my eval score dropped on Arabic questions, so I kept the old one for those" is a senior-sounding answer from a junior.
 
-**What regulated employers ask.** At a bank like Najm, AI questions quickly become data questions. Which data goes to the model provider, and where is it processed? Is personal data minimised or masked before it enters a prompt? Who reviews outputs before they reach customers? Qatar's PDPPL (Law No. 13 of 2016), the EU's GDPR and the EU AI Act all shape these answers for Najm's markets. You are not expected to be a lawyer, but to notice the question and know where to look; [*AI Governance*, lesson 4.1 — Data protection principles meet AI](../aigp/index.html#/4.1) is a good start.
+**What regulated employers ask.** At a bank like Najm, AI questions quickly become data questions. Which data goes to the model provider, and where is it processed? Is personal data minimised or masked before it enters a prompt? Who reviews outputs before they reach customers? Qatar's personal data law (PDPPL, Law No. 13 of 2016), the EU's GDPR and the EU AI Act all shape these answers for Najm's markets. You are not expected to be a lawyer, but to notice the question and know where to look; [*AI Governance*, lesson 4.1 — Data protection principles meet AI](../aigp/index.html#/4.1) is a good start.
 
 **Evals are your portfolio.** Many applicants can show a chat interface. Few can show a results table: "version 3 answered 41 of 50 golden cases correctly, up from 33; injection cases now refused 8 of 8; cost per request down by a third after shortening the context." That table, with the failure analysis behind it, is the strongest single proof for this role.
 
@@ -381,7 +381,7 @@ After the interview, Najm offers Reem a place in the programme's software track,
 
 ## 🛠️ Exercises
 - 🟢 For any AI project you have built or used, write the quality bar in three sentences: what a good answer must do, must not do, and should say when it does not know. *Done when:* a peer can read the three sentences and judge one real answer against them without asking you anything.
-- 🟡 Build a golden set of at least 30 cases for your project, including at least five edge cases and five hostile inputs (such as instructions hidden in a document). Run it and record the score. *Done when:* the golden set and a results table are committed to your repository and the run can be repeated with one command.
+- 🟡 Build a golden set of at least 30 cases for your project, including at least five edge cases and five hostile inputs. Run it and record the score. *Done when:* the golden set and a results table are committed to your repository and the run can be repeated with one command.
 - 🔴 Make one meaningful change (retrieval settings, prompt or model) and rerun the evals. Do an error analysis of the remaining failures, grouped by cause, and add a "decisions" section to your README explaining every key setting. *Done when:* the README shows before and after scores, the failure groups, and a reason for each setting, and you can explain any of them aloud without notes.
 
 ## ⚠️ Mistakes and traps
@@ -393,7 +393,6 @@ After the interview, Najm offers Reem a place in the programme's software track,
 
 ## 🧾 Recap
 - An AI application engineer builds features on existing models; it is software engineering plus model literacy, evaluation, AI security and cost.
-- The study-path table runs from software core to model literacy, building, evaluation, security and operations.
 - No evaluation, no product: a golden set and a results table are the strongest proof.
 - Treat documents and model outputs as untrusted; test prompt injection and per-user access.
 - Design for model change, and be ready for data-protection questions at regulated employers.
@@ -755,7 +754,7 @@ Yousef studied computer engineering. He has built embedded devices, configured r
 
 Salem (Head of Platform Engineering) interviews him. He asks Yousef to explain what happens when a packet leaves a server for the internet, and Yousef's answer is the best Salem has heard from a graduate this year. Then Salem asks: "Walk me through how you would deploy a small web service so that someone else could rebuild it tomorrow. And how would you know it was down at three in the morning?" Yousef describes clicking through a cloud console. He has never written infrastructure as code, built a pipeline or set an alert.
 
-Salem's note: "Rare networking depth. No automation, no operations. Worth investing in." He suggests a graduate rotation and gives Yousef a short list of things to build first. Tariq (engineering lead), who also sits on security interviews, adds one line: "If he likes networks this much, show him the security path too." This lesson lays out both paths.
+Salem's note: "Rare networking depth. No automation, no operations. Worth investing in." Tariq (engineering lead), who also sits on security interviews, adds one line: "If he likes networks this much, show him the security path too." This lesson lays out both paths.
 
 ## 📐 How it works
 
@@ -824,7 +823,7 @@ A software role that takes on deployments, or an operations role where you autom
 
 ### 🟡 Going deeper
 
-**The rebuild test.** Salem's favourite proof is one repository that contains everything: application code, a container definition, infrastructure as code, a pipeline, monitoring and alert configuration, and a runbook. The test is simple: delete the environment and rebuild it from the repository, timing how long it takes. Then break something on purpose (stop the database, fill the disk, deploy a bad version), and write a short incident review: what alerted, how you found the cause, how you recovered, what you changed. Few graduates show this, and it maps directly to the daily work.
+**The rebuild test.** Salem's favourite proof is one repository that contains everything: application code, a container definition, infrastructure as code, a pipeline, monitoring and alert configuration, and a runbook. The test is simple: delete the environment and rebuild it from the repository, timing how long it takes. Then break something on purpose (stop the database, fill the disk, deploy a bad version), and write a short incident review: what alerted, how you found the cause, how you recovered, what you changed. Few graduates show this.
 
 **Your background counts.** Computer engineering graduates like Yousef often underrate what they know. Embedded work teaches debugging under constraints; networking courses teach the layer-by-layer troubleshooting that cloud incidents need. Put that depth in front: a write-up that traces a real connection problem from DNS to TLS to the application is strong proof for platform and security roles alike.
 
@@ -896,7 +895,6 @@ Najm places Yousef in the graduate programme's platform track. Salem gives every
 ## 🧾 Recap
 - Platform roles build and run the systems engineers ship on; security roles protect them; both share Linux, networking, cloud and identity foundations.
 - Entry routes include graduate rotations, operations roles and software roles that take on operations.
-- The two study-path tables map each skill to a library lesson and a proof.
 - The strongest proof is a system rebuilt from code, with a pipeline, monitoring, a runbook and an incident review.
 - Certifications help screens but never replace proof; security work demands permission and ethics.
 
@@ -977,4 +975,3 @@ Najm places Yousef in the graduate programme's platform track. Salem gives every
 - OWASP Juice Shop — https://owasp.org/www-project-juice-shop/
 - CompTIA Security+ — https://www.comptia.org/certifications/security
 - Linux Foundation certifications (CKA, CKAD) — https://training.linuxfoundation.org/certification-catalog/
-- [*Secure AI & Application Security*, lesson 12.2 — The security career: roles, certifications and portfolio](../secai/index.html#/12.2)
