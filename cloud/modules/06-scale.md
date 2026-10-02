@@ -211,8 +211,8 @@ The first run found three gaps no design review had caught: the replica-lag aler
 
 **2. A developer runs a migration that silently corrupts the `transfers` table. The database is multi-AZ with a cross-region replica. What recovers the data?**
 
-- A. Failing over to the multi-AZ standby
-- B. Promoting the cross-region replica
+- A. Failing over to the multi-AZ standby in another zone
+- B. Promoting the cross-region replica in the recovery region
 - C. Restarting the database
 - D. A point-in-time restore to just before the migration
 
@@ -224,10 +224,10 @@ The first run found three gaps no design review had caught: the replica-lag aler
 
 **3. Who should set the RPO for the Payments service?**
 
-- A. The business owner with risk, once the platform team has costed options
+- A. The business owner with risk, once the platform team costs options
 - B. The platform team alone, because it builds and runs the infrastructure
-- C. The cloud provider, through its SLA
-- D. Nobody; RPO is always zero for payments
+- C. The cloud provider, through the SLA in its service terms
+- D. Nobody, because RPO is always zero for a payments system
 
 <details><summary>Answer</summary>
 
@@ -251,7 +251,7 @@ The first run found three gaps no design review had caught: the replica-lag aler
 **5. Which statement about chaos engineering is most accurate?**
 
 - A. It means breaking production at random, as often as possible
-- B. A controlled test with a hypothesis and abort switch, started outside production
+- B. A controlled test of a stated hypothesis, with an abort switch
 - C. Once it runs regularly, it replaces backup restores and DR tests
 - D. It is only useful for companies running thousands of services
 
@@ -436,7 +436,7 @@ The first report's actions: tag policy enforced in the OpenTofu pipeline (untagg
 
 **2. A team requests 4 CPUs per pod but uses about 0.3 on average. In a shared cluster, how should their cost be allocated, and why?**
 
-- A. By the higher of requests and use: they pay for the 4 they reserve
+- A. By the higher of requests and use: they pay for the 4 reserved
 - B. By actual use only, because the rest of the request sat unused
 - C. Not at all, because shared clusters cannot be split between teams
 - D. Equally among all the teams that run workloads on the cluster
@@ -450,7 +450,7 @@ The first report's actions: tag policy enforced in the OpenTofu pipeline (untagg
 **3. Which order of optimisation steps is most sensible?**
 
 - A. Buy commitments first, then rightsize, then delete idle resources
-- B. Move everything to spot instances first, then add commitments
+- B. Move everything to spot instances first, then add commitments after
 - C. Rightsize only, since commitments are never worth the lock-in
 - D. Remove idle, schedule, rightsize, then commit for the steady base
 
@@ -698,7 +698,7 @@ Yousef's classifier now runs on vLLM with continuous batching and an 8-bit quant
 **1. Yousef runs a self-hosted model with a simple Python script on a GPU node. Latency is high and GPU utilisation is about 15%. What is the most likely fix?**
 
 - A. Move the same script to a larger GPU with more memory
-- B. Add an HPA that scales the pods on CPU utilisation
+- B. Add an HPA that scales the pods on their CPU utilisation
 - C. Switch to a managed API immediately and drop the GPU
 - D. Serve it with a continuous-batching engine such as vLLM
 
@@ -738,7 +738,7 @@ Yousef's classifier now runs on vLLM with continuous batching and an 8-bit quant
 
 - A. When steady volume keeps GPUs busy, or residency requires it
 - B. Always, because GPU hours are cheaper than paying for tokens
-- C. For a low-traffic internal tool used a few times a day
+- C. For a low-traffic internal tool used only a few times each day
 - D. Only when no managed API offers a model of similar quality
 
 <details><summary>Answer</summary>

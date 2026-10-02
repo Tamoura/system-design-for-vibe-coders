@@ -12,7 +12,7 @@
 ## ⚡ In 60 seconds
 - The capstone builds the **credit-risk mart**: a daily, tested, reconciled record of every loan's balance and days past due, for dashboards, regulators and models.
 - Treat it as a **data product**: named consumers, a grain statement, a source contract, metric definitions, an owner, a freshness promise and an access policy.
-- The spine is **traceability**: every dashboard number traces to a metric definition, a tested model and a contracted source, and totals reconcile to the general ledger.
+- The spine is **traceability**: every number traces to a metric definition, a tested model and a contracted source, and reconciles to the general ledger.
 - The central table is a **periodic snapshot fact**: one row per loan per calendar date. Get this grain right and most risk questions become simple SQL.
 - Decision cue: for every column, ask "who owns its definition, and how would we know tomorrow if it were wrong?"
 - Biggest trap: a mart that disagrees with Finance and nobody can say why. Reconcile from day one.
@@ -231,22 +231,20 @@ The output is the **credit-risk mart case file**: a one-page summary, then linke
 **Readiness rule.** The mart replaces the spreadsheets only after three month-ends in a row reconcile with no manual adjustment, Credit Risk and Finance get the same NPL ratio from it, and the drill has run once.
 
 ## 🛠️ Exercises
-- 🟢 **Build the slice.** Generate a few thousand synthetic loans with instalments and repayments in Python into PostgreSQL in Docker, some in arrears. Load them into DuckDB and build `dim_date`, `dim_loan`, a snapshot of `loans` and `fct_loan_daily` with dbt Core and generic tests. *Done when:* `dbt build` is green and a query returns the balance in each DPD bucket for any date you choose.
+- 🟢 **Build the slice.** Generate a few thousand synthetic loans, some in arrears, with instalments and repayments, into PostgreSQL in Docker. Load them into DuckDB and build `dim_date`, `dim_loan`, a snapshot of `loans` and `fct_loan_daily` with dbt Core and generic tests. *Done when:* `dbt build` is green and a query returns the balance in each DPD bucket for any date you choose.
 - 🟡 **Make it trustworthy.** Add the lookback, a Type 2 snapshot of `customers`, synthetic ledger control totals and the reconciliation test, scheduled in Dagster or Airflow. Insert a five-day-late repayment and a loan in a currency missing from the ledger. *Done when:* the reconciliation catches the currency gap, rerunning a day gives identical rows, and you can explain why the late repayment needs a backfill.
-- 🔴 **Ship the case file.** Write the case file for your build: summary, grain statements, metric cards for the NPL ratio and roll rate, a classification table, a row-level security rule tested in PostgreSQL, a point-in-time feature view with a leakage test, and a runbook. Then drill: rename a source column without warning. *Done when:* a peer can trace one NPL figure to source rows using only your documentation, and your drill write-up says what failed, who was alerted and what changed.
+- 🔴 **Ship the case file.** Write your case file: summary, grain statements, metric cards for the NPL ratio and roll rate, a classification table, a row-level security rule tested in PostgreSQL, a point-in-time feature view with a leakage test, and a runbook. Then drill: rename a source column without warning. *Done when:* a peer can trace one NPL figure to source rows using only your documentation, and your drill write-up says what failed, who was alerted and what changed.
 
 ## ⚠️ Mistakes and traps
 - **Building the wide "current state" table first.** It cannot answer trend or point-in-time questions. Start from the daily snapshot.
 - **Writing definitions in SQL before owners agree them.** "90 days past due" hides choices about partial payments, value dates and materiality. Get the card signed first.
-- **Reconciling only at month-end.** Reconcile daily; let failures block only the regulatory extract.
 - **Letting corrections rewrite history.** Freeze reported month-ends; give models point-in-time data.
 - **Copying identifiers "in case".** If no consumer needs a name or ID number, leave it out.
 
 ## 🧾 Recap
-- The credit-risk mart is a data product: consumers, signed definitions, an owner, a freshness promise, an access policy.
-- A loan-per-day snapshot fact with conformed and Type 2 dimensions answers most risk questions.
+- The credit-risk mart is a data product built on a loan-per-day snapshot fact with conformed and Type 2 dimensions answers most risk questions.
 - DPD logic hides business rules; owners sign them and unit tests pin the edge cases.
-- Reconciliation to ledger control totals, with a full outer join, earns trust that schema tests alone cannot.
+- Daily reconciliation to ledger control totals, with a full outer join, earns trust that schema tests alone cannot.
 - Freeze what is reported, give models point-in-time views, and use BCBS 239 as a checklist of outcomes.
 
 ## ✍️ Check yourself
