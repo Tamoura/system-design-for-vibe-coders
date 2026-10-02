@@ -233,7 +233,7 @@ jobs:
 
 <details><summary>الإجابة</summary>
 
-**B.** البناء مرة واحدة والنشر بالبصمة (building once and deploying by digest) يضمنان أن يشغّل الإنتاج بالضبط ما اختُبر. أما C فتزيد الأمر سوءًا، لأن `latest` يتحرك؛ وD تضيف إنسانًا (adds a human) لكنها لا تضمن الأثر البرمجي نفسه (same artefact). (🟢 الأساسيات، The essentials.)
+**B.** البناء مرة واحدة والنشر بالبصمة (building once and deploying by digest) يضمنان أن يشغّل الإنتاج بالضبط ما اختُبر. أما C فتزيد الأمر سوءًا، لأن `latest` يتحرك؛ وD تضيف إنسانًا (adds a human) لكنها لا تضمن الأثر البرمجي نفسه (same artefact). (🟢 الأساسيات، The essentials).
 
 </details>
 
@@ -246,7 +246,7 @@ jobs:
 
 <details><summary>الإجابة</summary>
 
-**C.** ما زالت الاختبارات تحمي الإنتاج، لكنها لم تعد تبطئ كل دمج. أما A فتفقد الحماية (loses protection)؛ وB مكلفة وتُبقي البنية دون تغيير (leaves the structure unchanged)؛ وD تشجّع التجميع في دفعات (batching) الذي سبّب المشكلة. (🟡 التعمق أكثر، Going deeper.)
+**C.** ما زالت الاختبارات تحمي الإنتاج، لكنها لم تعد تبطئ كل دمج. أما A فتفقد الحماية (loses protection)؛ وB مكلفة وتُبقي البنية دون تغيير (leaves the structure unchanged)؛ وD تشجّع التجميع في دفعات (batching) الذي سبّب المشكلة. (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -259,7 +259,7 @@ jobs:
 
 <details><summary>الإجابة</summary>
 
-**A.** أما B فهي النشر المستمر (continuous deployment). وC تصف تكاملًا غير متكرر (infrequent integration)، وD بناء ليلي (nightly build) وليست تكاملًا مستمرًا (not CI). (🟢 الأساسيات، The essentials.)
+**A.** أما B فهي النشر المستمر (continuous deployment). وC تصف تكاملًا غير متكرر (infrequent integration)، وD بناء ليلي (nightly build) وليست تكاملًا مستمرًا (not CI). (🟢 الأساسيات، The essentials).
 
 </details>
 
@@ -272,7 +272,7 @@ jobs:
 
 <details><summary>الإجابة</summary>
 
-**D.** يُبقي الحجر (quarantine) إشارة الدمج (merge signal) جديرة بالثقة بينما يبحث أحدهم عن السبب، الذي قد يكون حالة تسابق حقيقية (real race condition). أما A فتخفي المشكلات؛ وB قد تحذف تغطية مفيدة (useful coverage) دون فهمها؛ وC تعلّم الناس تجاهل عمليات البناء الحمراء (red builds). (🟡 التعمق أكثر، Going deeper.)
+**D.** يُبقي الحجر (quarantine) إشارة الدمج (merge signal) جديرة بالثقة بينما يبحث أحدهم عن السبب، الذي قد يكون حالة تسابق حقيقية (real race condition). أما A فتخفي المشكلات؛ وB قد تحذف تغطية مفيدة (useful coverage) دون فهمها؛ وC تعلّم الناس تجاهل عمليات البناء الحمراء (red builds). (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -285,7 +285,7 @@ jobs:
 
 <details><summary>الإجابة</summary>
 
-**C.** تُظهر المهلة الزمنية (lead time) السرعة، ويُظهر معدل فشل التغييرات (change failure rate) هل السرعة آمنة؛ ومراقبة أحدهما وحده قد تضلّل (can mislead). أما الخيارات الأخرى فأدوات تشخيص مفيدة (useful diagnostics)، لا نتائج (not outcomes). (🔴 نظرة الخبير، Expert view.)
+**C.** تُظهر المهلة الزمنية (lead time) السرعة، ويُظهر معدل فشل التغييرات (change failure rate) هل السرعة آمنة؛ ومراقبة أحدهما وحده قد تضلّل (can mislead). أما الخيارات الأخرى فأدوات تشخيص مفيدة (useful diagnostics)، لا نتائج (not outcomes). (🔴 نظرة الخبير، Expert view).
 
 </details>
 
@@ -373,7 +373,7 @@ spec:
 
 **التراجع، بطريقتين (Rollback, two ways).** في إعداد قائم على الدفع (push-based setup)، يعيد الأمر `kubectl rollout undo deployment/mobile-api` إلى مجموعة النسخ المتماثلة السابقة (previous ReplicaSet). أما في إعداد GitOps (GitOps setup) (الدرس 3.2)، فمستودع Git هو الحقيقة (the Git repository is the truth): ومع تفعيل المزامنة الآلية (automated sync) والإصلاح الذاتي (self-heal)، سرعان ما يعكس المتحكم (controller) أي تراجع يدوي عبر `kubectl` (manual rollback). فالتراجع هنا هو `git revert` للإيداع الذي غيّر بصمة الصورة (image digest)، ثم يطبّقه المتحكم. قرّر أي النموذجين تستخدم، واكتب دليل التشغيل (runbook) بما يطابقه.
 
-**التراجع أم المضي قدمًا؟ (Roll back or roll forward?)** **التراجع (Rolling back)** يعيدك إلى آخر إصدار معروف بأنه سليم (last known good version). و**المضي قدمًا (Rolling forward)** يشحن إصلاحًا جديدًا (new fix). اجعل التراجع خيارك الافتراضي حين يتضرر العملاء (when customers are hurting): فهو أسرع ومُختبر سلفًا (already tested). ولا تمضِ قدمًا إلا حين يكون التراجع مستحيلًا (مثلًا بعد تغيير في البيانات لا رجعة فيه، irreversible data change) أو حين يكون الإصلاح تافهًا ومفهومًا جيدًا (trivial and well understood).
+**التراجع أم المضي قدمًا؟ ⁦(Roll back or roll forward?)⁩** **التراجع (Rolling back)** يعيدك إلى آخر إصدار معروف بأنه سليم (last known good version). و**المضي قدمًا (Rolling forward)** يشحن إصلاحًا جديدًا (new fix). اجعل التراجع خيارك الافتراضي حين يتضرر العملاء (when customers are hurting): فهو أسرع ومُختبر سلفًا (already tested). ولا تمضِ قدمًا إلا حين يكون التراجع مستحيلًا (مثلًا بعد تغيير في البيانات لا رجعة فيه، irreversible data change) أو حين يكون الإصلاح تافهًا ومفهومًا جيدًا (trivial and well understood).
 
 ### 🟡 التعمق أكثر (Going deeper)
 
@@ -546,7 +546,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**C.** الحجيرات سليمة بمعيار المسبار (by the probe's standard)، فلا يلتقط العطل إلا مقارنة مقاييس على حركة مرور حقيقية (metric comparison on real traffic)، والكناري يحدّ ممّن يتعرّضون له (limits who is exposed). أما A وB وD فلا تستجيب إلا للحجيرات التي تفشل في الإقلاع أو في أن تصبح جاهزة. (🟡 التعمق أكثر، Going deeper.)
+**C.** الحجيرات سليمة بمعيار المسبار (by the probe's standard)، فلا يلتقط العطل إلا مقارنة مقاييس على حركة مرور حقيقية (metric comparison on real traffic)، والكناري يحدّ ممّن يتعرّضون له (limits who is exposed). أما A وB وD فلا تستجيب إلا للحجيرات التي تفشل في الإقلاع أو في أن تصبح جاهزة. (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -559,7 +559,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**B.** يُبقي التوسيع والتقليص (expand and contract) الإصدارين القديم والجديد يعملان معًا، فيبقى التراجع ممكنًا. أما الأزرق والأخضر (A) فما زال يشغّل الإصدارين على قاعدة بيانات واحدة، والتراجع سيصطدم بالعمود المعاد تسميته (renamed column). (🟡 التعمق أكثر، Going deeper.)
+**B.** يُبقي التوسيع والتقليص (expand and contract) الإصدارين القديم والجديد يعملان معًا، فيبقى التراجع ممكنًا. أما الأزرق والأخضر (A) فما زال يشغّل الإصدارين على قاعدة بيانات واحدة، والتراجع سيصطدم بالعمود المعاد تسميته (renamed column). (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -572,7 +572,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**A.** في GitOps، يكون Git مصدر الحقيقة (source of truth)، فتراجع باستخدام `git revert` لتغيير البصمة (digest change). أما الخيارات الأخرى فلا تعيد إصدارًا قديمًا من الصورة. (🟢 الأساسيات، The essentials.)
+**A.** في GitOps، يكون Git مصدر الحقيقة (source of truth)، فتراجع باستخدام `git revert` لتغيير البصمة (digest change). أما الخيارات الأخرى فلا تعيد إصدارًا قديمًا من الصورة. (🟢 الأساسيات، The essentials).
 
 </details>
 
@@ -585,7 +585,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**D.** تُتجاهل استجابات الظل (shadow responses are discarded)، لذا يجب ألا يُحدث الإصدار الجديد آثارًا حقيقية (real effects). أما A فستنقل المال مرتين؛ وB ليست ظلًا (not shadowing)؛ وC تسيء استخدامه (misuses it). (🟢 الأساسيات، The essentials.)
+**D.** تُتجاهل استجابات الظل (shadow responses are discarded)، لذا يجب ألا يُحدث الإصدار الجديد آثارًا حقيقية (real effects). أما A فستنقل المال مرتين؛ وB ليست ظلًا (not shadowing)؛ وC تسيء استخدامه (misuses it). (🟢 الأساسيات، The essentials).
 
 </details>
 
@@ -598,7 +598,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**B.** تحدّ عمليات الطرح المرحلية (staged rollouts) من نطاق ضرر (blast radius) التحديث السيئ، وهي الفكرة نفسها التي تقوم عليها الحلقات (rings) والكناري. أما الخيارات الأخرى فليست ما وُصف، وستترك العملاء دون تحديثات الحماية (protection updates). (🧭 لماذا يهم، Why it matters، 🔴 نظرة الخبير، Expert view.)
+**B.** تحدّ عمليات الطرح المرحلية (staged rollouts) من نطاق ضرر (blast radius) التحديث السيئ، وهي الفكرة نفسها التي تقوم عليها الحلقات (rings) والكناري. أما الخيارات الأخرى فليست ما وُصف، وستترك العملاء دون تحديثات الحماية (protection updates). (🧭 لماذا يهم، Why it matters، 🔴 نظرة الخبير، Expert view).
 
 </details>
 
@@ -820,7 +820,7 @@ cosign verify \
 
 <details><summary>الإجابة</summary>
 
-**D.** يزيل الاتحاد (federation) السر طويل العمر كليًا ويربط الوصول بمستودع وبيئة محددين. أما A وB فما زالتا تتركان مفتاحًا قابلًا للسرقة (stealable key)؛ وC ليست تشفيرًا (encryption) على الإطلاق. (🟢 الأساسيات، The essentials.)
+**D.** يزيل الاتحاد (federation) السر طويل العمر كليًا ويربط الوصول بمستودع وبيئة محددين. أما A وB فما زالتا تتركان مفتاحًا قابلًا للسرقة (stealable key)؛ وC ليست تشفيرًا (encryption) على الإطلاق. (🟢 الأساسيات، The essentials).
 
 </details>
 
@@ -833,7 +833,7 @@ cosign verify \
 
 <details><summary>الإجابة</summary>
 
-**A.** نقل المهاجم الأوسام (moved the tags)؛ أما معرّف الإيداع المثبّت (pinned commit SHA) فلا يمكن نقله. وB تتبع الوسم المنقول؛ وC وD لا تغيّران الشيفرة التي تعمل. (🧭 لماذا يهم، Why it matters، 🟢 الأساسيات، The essentials.)
+**A.** نقل المهاجم الأوسام (moved the tags)؛ أما معرّف الإيداع المثبّت (pinned commit SHA) فلا يمكن نقله. وB تتبع الوسم المنقول؛ وC وD لا تغيّران الشيفرة التي تعمل. (🧭 لماذا يهم، Why it matters، 🟢 الأساسيات، The essentials).
 
 </details>
 
@@ -846,7 +846,7 @@ cosign verify \
 
 <details><summary>الإجابة</summary>
 
-**B.** لا يحميك التوقيع إلا إذا كان هناك شيء، مثل سياسة Kyverno (Kyverno policy)، يرفض الصور غير الموقّعة أو الموقّعة خطأً (wrongly signed). أما C فستُضعف التوقيع، لأن الأوسام يمكن أن تتحرك؛ وA وD لا توقفان صورة غير موقّعة. (🟡 التعمق أكثر، Going deeper.)
+**B.** لا يحميك التوقيع إلا إذا كان هناك شيء، مثل سياسة Kyverno (Kyverno policy)، يرفض الصور غير الموقّعة أو الموقّعة خطأً (wrongly signed). أما C فستُضعف التوقيع، لأن الأوسام يمكن أن تتحرك؛ وA وD لا توقفان صورة غير موقّعة. (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -859,7 +859,7 @@ cosign verify \
 
 <details><summary>الإجابة</summary>
 
-**C.** لا يستطيع خط التسليم المخترق (compromised pipeline) تغيير العنقود مباشرة، وتصبح مراجعة Git سجل التغيير (change record). أما D فعكس الحقيقة؛ وA وB خاطئتان. (🟡 التعمق أكثر، Going deeper.)
+**C.** لا يستطيع خط التسليم المخترق (compromised pipeline) تغيير العنقود مباشرة، وتصبح مراجعة Git سجل التغيير (change record). أما D فعكس الحقيقة؛ وA وB خاطئتان. (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -872,7 +872,7 @@ cosign verify \
 
 <details><summary>الإجابة</summary>
 
-**A.** تمنع المشغّلات المؤقتة المعزولة (ephemeral, segregated runners) أي مهمة من ترك بيانات اعتماد أو برمجيات خبيثة للمهمة التالية. أما B وC وD فكلٌّ منها يمنح المهاجم موطئ قدم دائمًا (lasting foothold). (🔴 نظرة الخبير، Expert view.)
+**A.** تمنع المشغّلات المؤقتة المعزولة (ephemeral, segregated runners) أي مهمة من ترك بيانات اعتماد أو برمجيات خبيثة للمهمة التالية. أما B وC وD فكلٌّ منها يمنح المهاجم موطئ قدم دائمًا (lasting foothold). (🔴 نظرة الخبير، Expert view).
 
 </details>
 

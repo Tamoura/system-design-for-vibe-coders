@@ -405,7 +405,7 @@ models:
 
 | البُعد (Dimension) | السؤال (Question) | مثال فحص في نجم (Najm example check) |
 |---|---|---|
-| الاكتمال (Completeness) | هل كل ما يجب أن يكون موجودًا موجود؟ | لكل حساب نشط (active account) صفّ رصيد (balance row) ليوم أمس |
+| الاكتمال (Completeness) | هل كل ما يجب أن يكون موجودًا موجود؟ ⁦(Is everything there that should be?)⁩ | لكل حساب نشط (active account) صفّ رصيد (balance row) ليوم أمس |
 | الصحة (Validity) | هل تتبع القيم القواعد والتنسيقات (rules and formats)؟ | `currency_code` رمز معروف وفق ISO 4217 (a known ISO 4217 code) |
 | التفرّد (Uniqueness) | هل يُسجَّل كل شيء مرة واحدة (recorded once)؟ | `transaction_id` فريد (unique) |
 | الاتّساق (Consistency) | هل تتّفق البيانات المترابطة (related data)؟ | مجموع المعاملات لكل حساب (sum of transactions per account) يطابق الحركة في الرصيد (movement in the balance) |
