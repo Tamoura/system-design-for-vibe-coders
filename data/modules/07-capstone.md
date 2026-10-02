@@ -168,7 +168,8 @@ from (
 full outer join (
     -- only dates the mart has built
     select * from {{ ref('stg_finance__loan_control_totals') }}
-    where snapshot_date <= (select max(snapshot_date) from {{ ref('fct_loan_daily') }})
+    where snapshot_date between (select min(snapshot_date) from {{ ref('fct_loan_daily') }})
+                            and (select max(snapshot_date) from {{ ref('fct_loan_daily') }})
 ) g
   on g.snapshot_date = m.snapshot_date
  and g.currency = m.currency
