@@ -1,0 +1,135 @@
+{
+  "area": "m1",
+  "questions": [
+    {
+      "id": "m1-1",
+      "level": 1,
+      "lesson": "1.1",
+      "q": {
+        "en": "Khalid, the Najm Bank engineering manager, checks five baseline skills in every junior: Git, reading code, debugging, testing and writing it down. What question do these skills answer for a hiring manager?",
+        "ar": "يفحص خالد، مدير الهندسة (engineering manager) في بنك نجم (Najm Bank)، خمس مهارات أساسية (baseline skills) لدى كل مبتدئ (junior): Git، وقراءة الشيفرة (reading code)، وتصحيح الأخطاء (debugging)، والاختبار (testing)، والتوثيق الكتابي (writing it down). عن أي سؤال تجيب هذه المهارات لدى مدير التوظيف (hiring manager)؟"
+      },
+      "o": {
+        "en": [
+          "Whether you can solve hard algorithm problems quickly under time pressure",
+          "Whether you already know every framework and tool the team uses",
+          "Whether you can work safely in someone else's existing codebase",
+          "Whether you can design a large new system on your own from scratch"
+        ],
+        "ar": [
+          "هل تستطيع حلّ مسائل الخوارزميات (algorithm problems) الصعبة بسرعة تحت ضغط الوقت (time pressure)",
+          "هل تعرف مسبقًا كل إطار عمل (framework) وكل أداة (tool) يستخدمها الفريق (team)",
+          "هل تستطيع العمل بأمان (work safely) في قاعدة شيفرة (codebase) قائمة كتبها غيرك",
+          "هل تستطيع تصميم نظام كبير (large system) جديد بمفردك من الصفر (from scratch)"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Together the five skills show you can work safely in someone else's codebase, because a junior mostly changes existing code that others review. Strong algorithms, as Omar's case shows, do not answer that question.",
+        "ar": "تُثبت المهارات الخمس معًا أنك تستطيع العمل بأمان (work safely) في قاعدة شيفرة غيرك (someone else's codebase)، لأن المبتدئ (junior) يعدّل غالبًا شيفرة قائمة (existing code) يراجعها آخرون (others review). أما التفوّق في الخوارزميات (algorithms) فلا يجيب عن هذا السؤال، كما تُظهر حالة عمر."
+      }
+    },
+    {
+      "id": "m1-2",
+      "level": 2,
+      "lesson": "1.2",
+      "q": {
+        "en": "Yousef asks an AI coding agent to fix one date bug in a log parser. The agent's summary mentions only that fix, but the diff's file list shows it also reformatted four files he never mentioned and renamed things in them. What should he do?",
+        "ar": "يطلب يوسف من وكيل البرمجة بالذكاء الاصطناعي (AI coding agent) إصلاح خطأ تاريخ واحد (one date bug) في محلّل السجلات (log parser). لا يذكر ملخّص الوكيل (agent's summary) إلا ذلك الإصلاح، لكن قائمة الملفات في الفرق (diff's file list) تُظهر أنه أعاد أيضًا تنسيق (reformatted) أربعة ملفات لم يذكرها يوسف وغيّر أسماءً فيها (renamed things). ماذا ينبغي أن يفعل؟"
+      },
+      "o": {
+        "en": [
+          "Keep only the fix he asked for, reject the rest and run the tests himself",
+          "Accept the whole diff, since tidier code in those four files is a free bonus",
+          "Accept the whole diff if the project still builds and starts without errors",
+          "Merge it as it is and let the reviewer decide about the unrelated edits"
+        ],
+        "ar": [
+          "يُبقي الإصلاح المطلوب فقط، ويرفض بقية التعديلات (the rest)، ويشغّل الاختبارات (runs the tests) بنفسه",
+          "يقبل الفرق كاملًا (whole diff)، لأن الشيفرة الأكثر ترتيبًا (tidier code) في الملفات الأربعة مكسب مجاني (free bonus)",
+          "يقبل الفرق كاملًا (whole diff) إذا ظلّ المشروع يُبنى (builds) ويعمل (starts) بلا أخطاء (errors)",
+          "يدمجه (merge) كما هو، ويترك للمراجع (reviewer) البتّ في التعديلات غير المطلوبة (unrelated edits)"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Over-broad changes are a common agent failure: read the full file list, not the summary, reject what you did not ask for, and verify by running the tests yourself. Treating the extra edits as a free tidy-up means merging changes he never specified or checked.",
+        "ar": "التغييرات الواسعة أكثر من اللازم (over-broad changes) إخفاق شائع لدى الوكلاء (agents): اقرأ قائمة الملفات كاملة (full file list) لا الملخّص (summary)، وارفض ما لم تطلبه، وتحقّق (verify) بتشغيل الاختبارات بنفسك. أما عدّ التعديلات الإضافية ترتيبًا مجانيًا (free tidy-up) فيعني دمج تغييرات لم يحدّدها (specified) ولم يتحقّق منها (checked)."
+      }
+    },
+    {
+      "id": "m1-3",
+      "level": 2,
+      "lesson": "1.3",
+      "q": {
+        "en": "Huda builds a registration app for a Najm Bank workshop with 30 seats. In testing, two colleagues register for the last seat at the same moment and both succeed. Which change best prevents this?",
+        "ar": "تبني هدى تطبيق تسجيل (registration app) لورشة عمل في بنك نجم (Najm Bank) فيها 30 مقعدًا. في الاختبار (testing)، يسجّل زميلان في المقعد الأخير في اللحظة نفسها (at the same moment) وينجح الاثنان. أي تغيير يمنع ذلك على أفضل وجه؟"
+      },
+      "o": {
+        "en": [
+          "Check in the application code that a seat is free just before saving",
+          "Add a confirmation dialog so that users must click twice to register",
+          "Run the app on more servers so that each booking request finishes faster",
+          "Enforce the limit in the database with a constraint or a transaction"
+        ],
+        "ar": [
+          "التحقّق في شيفرة التطبيق (application code) من أن المقعد شاغر قبيل الحفظ (saving) مباشرة",
+          "إضافة نافذة تأكيد (confirmation dialog) كي ينقر المستخدمون (users) مرتين للتسجيل",
+          "تشغيل التطبيق على خوادم أكثر (more servers) كي ينتهي كل طلب حجز (booking request) أسرع",
+          "فرض الحدّ في قاعدة البيانات (database) بقيد (constraint) أو معاملة (transaction)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "For concurrent use, the lesson's answer is a database constraint or transaction, so only one of the two registrations can take the last seat. A check in application code can be passed by both requests at the same moment, so the race remains.",
+        "ar": "جواب الدرس عن الاستخدام المتزامن (concurrent use) هو قيد قاعدة البيانات (database constraint) أو المعاملة (transaction)، فلا يأخذ المقعد الأخير إلا تسجيل واحد. أما التحقّق في شيفرة التطبيق (application code) فقد يجتازه الطلبان (both requests) في اللحظة نفسها، فيبقى التسابق (race) قائمًا."
+      }
+    },
+    {
+      "id": "m1-4",
+      "level": 3,
+      "lesson": "1.2",
+      "q": {
+        "en": "In her first week at Najm Bank, Reem hits a bug that appears only with one real customer statement file. She is tempted to paste the file into a public AI chatbot that is not on Najm's approved list. What is the best course?",
+        "ar": "في أسبوعها الأول في بنك نجم (Najm Bank)، تواجه ريم خطأً (bug) لا يظهر إلا مع ملف كشف حساب (statement file) حقيقي لأحد العملاء. وتميل إلى لصق الملف في روبوت محادثة عام (public AI chatbot) ليس على قائمة الأدوات المعتمدة (approved list) في نجم. ما أفضل تصرّف؟"
+      },
+      "o": {
+        "en": [
+          "Paste it in, then delete the whole chat history as soon as the bug is found",
+          "Build a small synthetic file that shows the bug; use an approved tool",
+          "Remove the customer-name column, then paste it into the public chatbot",
+          "Stop debugging and hand the file to a senior engineer to fix instead"
+        ],
+        "ar": [
+          "تلصقه، ثم تحذف سجلّ المحادثة (chat history) كله فور العثور على الخطأ (bug)",
+          "تُعدّ ملفًا اصطناعيًا (synthetic file) صغيرًا يُظهر الخطأ، وتستخدم أداة معتمدة (approved tool)",
+          "تحذف عمود أسماء العملاء (customer-name column)، ثم تلصقه في روبوت المحادثة العام (public chatbot)",
+          "تتوقّف عن تصحيح الخطأ (debugging) وتسلّم الملف لمهندس أقدم (senior engineer) ليصلحه"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Najm's rules allow only approved tools and send no customer data anywhere else, and test data should be synthetic or anonymised; a small file that reproduces the bug keeps her debugging safely. Dropping one column still sends real customer data to an unapproved tool.",
+        "ar": "لا تسمح قواعد نجم إلا بالأدوات المعتمدة (approved tools)، ولا تُرسَل بيانات العملاء (customer data) إلى أي مكان آخر، وينبغي أن تكون بيانات الاختبار اصطناعية (synthetic) أو مجهّلة الهوية (anonymised)؛ فالملف الصغير الذي يعيد إنتاج الخطأ (reproduces the bug) يتيح لها مواصلة التصحيح بأمان. أما حذف عمود واحد فلا يزال يرسل بيانات عملاء حقيقية إلى أداة غير معتمدة (unapproved tool)."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m1-e1",
+      "lesson": "1.1",
+      "text": {
+        "en": "I have found a planted bug with git bisect, fixed it with a regression test that fails before the fix, and opened a pull request that names the commit that introduced it.",
+        "ar": "وجدتُ خطأً مزروعًا (planted bug) باستخدام git bisect، وأصلحته مع اختبار انحدار (regression test) يفشل قبل الإصلاح، وفتحتُ طلب دمج (pull request, PR) يذكر الإيداع (commit) الذي أدخل الخطأ."
+      }
+    },
+    {
+      "id": "m1-e2",
+      "lesson": "1.3",
+      "text": {
+        "en": "I have deployed a small project with config from the environment, no secrets in history, a /health endpoint, an uptime check and an error tracker, and a friend has opened its live URL.",
+        "ar": "نشرتُ (deployed) مشروعًا صغيرًا يقرأ الإعدادات من البيئة (config from the environment)، بلا أسرار في السجلّ (no secrets in history)، مع نقطة فحص الصحة (/health endpoint)، وفحص التوفّر (uptime check)، ومتتبّع الأخطاء (error tracker)، وفتح صديقٌ رابطه المباشر (live URL)."
+      }
+    }
+  ]
+}

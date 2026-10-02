@@ -1,0 +1,135 @@
+{
+  "area": "m7",
+  "questions": [
+    {
+      "id": "m7-1",
+      "level": 1,
+      "lesson": "7.2",
+      "q": {
+        "en": "Yousef asks Salem what a cloud certification will really do for his career. Which answer matches how this module describes certifications?",
+        "ar": "يسأل يوسف سالمًا عمّا ستفعله شهادة سحابية (cloud certification) فعلًا لمساره المهني (career). أيّ إجابة تطابق وصف هذه الوحدة للشهادات (certifications)؟"
+      },
+      "o": {
+        "en": [
+          "It proves he can run production systems, so a portfolio adds little beside it",
+          "It rarely matters, because Gulf employers seldom name certifications in job adverts",
+          "It is a signal that helps him pass the first filter; interviews test the real work",
+          "It stays valid for life, so earning several early on is the most efficient plan"
+        ],
+        "ar": [
+          "تثبت أنه يستطيع تشغيل أنظمة الإنتاج (run production systems)، فلا يضيف ملف الأعمال (portfolio) بجانبها إلا القليل",
+          "قلّما تهمّ، لأن أصحاب العمل في الخليج (Gulf employers) نادرًا ما يذكرون الشهادات في إعلانات الوظائف (job adverts)",
+          "هي إشارة (signal) تساعده على اجتياز التصفية الأولى (first filter)، أما المقابلات (interviews) فتختبر العمل الحقيقي (real work)",
+          "تبقى صالحة مدى الحياة (valid for life)، فالحصول على عدة شهادات مبكرًا هو الخطة الأكفأ (most efficient plan)"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "The lesson calls certifications a signal, not proof: adverts often name them and they help pass the first filter, but interviews and the pager test whether you can do the work. Treating a certificate as proof is the tempting mistake; many credentials also expire and need renewal.",
+        "ar": "يصف الدرس الشهادات بأنها إشارة لا دليل (a signal, not proof): كثيرًا ما تذكرها إعلانات الوظائف (job adverts) وتساعد على اجتياز التصفية الأولى (first filter)، لكن المقابلات (interviews) وجهاز الاستدعاء (pager) يختبران قدرتك على أداء العمل. أما عدّ الشهادة دليلًا (proof) فهو الخطأ المغري، كما أن كثيرًا من الشهادات تنتهي صلاحيتها (expire) وتحتاج إلى تجديد (renewal)."
+      }
+    },
+    {
+      "id": "m7-2",
+      "level": 2,
+      "lesson": "7.1",
+      "q": {
+        "en": "During a payday peak, Jassim raises the memory limit of the Card Controls production Deployment with kubectl edit. Ten minutes later the limit is back at its old value. The Argo CD Application has selfHeal enabled. What should he do?",
+        "ar": "أثناء ذروة يوم صرف الرواتب (payday peak)، يرفع جاسم حدّ الذاكرة (memory limit) لنشر الإنتاج (production Deployment) لخدمة ضوابط البطاقات (Card Controls) باستخدام kubectl edit. وبعد عشر دقائق يعود الحدّ إلى قيمته القديمة. وتطبيق Argo CD (Argo CD Application) مفعَّل فيه الإصلاح الذاتي (selfHeal). ماذا ينبغي أن يفعل؟"
+      },
+      "o": {
+        "en": [
+          "Change the limit in the prod overlay by pull request and let Argo CD sync it",
+          "Turn off selfHeal on the production Application so urgent cluster edits can stick",
+          "Rebuild the image with the higher limit baked in and push it straight to production",
+          "Repeat the kubectl edit every few minutes until the payday traffic has dropped off"
+        ],
+        "ar": [
+          "تغيير الحدّ في طبقة الإنتاج (prod overlay) عبر طلب سحب (pull request) وترك Argo CD يزامنه (sync)",
+          "إيقاف الإصلاح الذاتي (selfHeal) في تطبيق الإنتاج (production Application) كي تبقى التعديلات العاجلة في العنقود (cluster edits)",
+          "إعادة بناء الصورة (image) مع تضمين الحدّ الأعلى فيها ودفعها مباشرة إلى الإنتاج (production)",
+          "تكرار kubectl edit كل بضع دقائق إلى أن تنخفض حركة يوم صرف الرواتب (payday traffic)"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "With selfHeal, Argo CD reverts manual cluster edits back to Git, so the change belongs in the prod overlay via a reviewed pull request. Turning selfHeal off is the tempting shortcut, but it lets the cluster drift from Git and the edit vanishes or misleads on the next sync.",
+        "ar": "مع الإصلاح الذاتي (selfHeal) يُعيد Argo CD التعديلات اليدوية في العنقود (manual cluster edits) إلى ما في Git، لذا مكان التغيير هو طبقة الإنتاج (prod overlay) عبر طلب سحب مُراجَع (reviewed pull request). أما إيقاف الإصلاح الذاتي فهو الاختصار المغري، لكنه يترك العنقود ينحرف (drift) عن Git فيختفي التعديل أو يُضلِّل عند المزامنة التالية (next sync)."
+      }
+    },
+    {
+      "id": "m7-3",
+      "level": 2,
+      "lesson": "7.2",
+      "q": {
+        "en": "A junior engineer is writing up his capstone for a cloud portfolio and asks which sentence to lead with. Which one best follows the case-study shape this module recommends: context, decision, evidence, trade-off, lesson?",
+        "ar": "يكتب مهندس مبتدئ (junior engineer) مشروعه الختامي (capstone) لملف أعمال سحابي (cloud portfolio)، ويسأل بأيّ جملة يبدأ. أيّها يتّبع على أفضل وجه شكل دراسة الحالة (case-study shape) الذي توصي به هذه الوحدة: السياق والقرار والدليل والمفاضلة والدرس (context, decision, evidence, trade-off, lesson)؟"
+      },
+      "o": {
+        "en": [
+          "I built a cloud-native API using Docker, Kubernetes, Argo CD, Prometheus and Grafana",
+          "I hold the CKA, the Terraform Associate and two cloud associate-level certifications",
+          "I made the service production-grade, highly available and fully secure from day one",
+          "A load test showed two pods carry peak, so I kept a floor of four across two zones"
+        ],
+        "ar": [
+          "بنيتُ واجهة برمجة سحابية الأصل (cloud-native API) باستخدام Docker وKubernetes وArgo CD وPrometheus وGrafana",
+          "أحمل شهادة CKA وشهادة Terraform Associate وشهادتين سحابيتين بمستوى مشارك (associate-level certifications)",
+          "جعلتُ الخدمة جاهزة للإنتاج (production-grade) وعالية التوافر (highly available) وآمنة تمامًا (fully secure) منذ اليوم الأول",
+          "أظهر اختبار الحِمل (load test) أن حجيرتين (pods) تتحمّلان الذروة (peak)، فأبقيتُ حدًّا أدنى من أربع موزّعة على منطقتين (two zones)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "It states a decision backed by evidence (the load test) and implies the trade-off (extra replicas so losing a zone still leaves enough), which shows judgement. A list of tools is the tempting lead, but it shows only that he used them, not why he chose anything.",
+        "ar": "تذكر هذه الجملة قرارًا (decision) يسنده دليل (evidence) هو اختبار الحِمل (load test)، وتُلمّح إلى المفاضلة (trade-off): نسخ إضافية (extra replicas) كي يبقى ما يكفي عند فقد منطقة، وهذا يُظهر حسن التقدير (judgement). أما قائمة الأدوات (list of tools) فهي البداية المغرية، لكنها تُظهر أنه استخدمها فقط، لا لماذا اختار أيّ شيء."
+      }
+    },
+    {
+      "id": "m7-4",
+      "level": 3,
+      "lesson": "7.1",
+      "q": {
+        "en": "The day before launch, Salem reads the Card Controls readiness summary. Each line is the evidence offered for one item. Which line should stop him signing until it is fixed?",
+        "ar": "قبل الإطلاق بيوم، يقرأ سالم ملخص الجاهزية (readiness summary) لخدمة ضوابط البطاقات (Card Controls). كل سطر هو الدليل المقدَّم (evidence offered) لبند واحد. أيّ سطر ينبغي أن يمنعه من التوقيع (signing) حتى يُصلَح؟"
+      },
+      "o": {
+        "en": [
+          "Rollback: revert of the prod digest commit, timed at 4 minutes in staging, report linked",
+          "Overseas-block flag: the switch exists in the flag service and is listed in the runbook",
+          "Restore: point-in-time restore to a new instance in 22 minutes, 3 minutes of data lost",
+          "Alerts: each burn-rate alert fired once in a staging test and links to its own runbook"
+        ],
+        "ar": [
+          "التراجع (rollback): إرجاع إيداع البصمة في الإنتاج (prod digest commit)، مُوقَّت بـ 4 دقائق في بيئة التجهيز (staging)، والتقرير مرفق",
+          "علم حظر الاستخدام الخارجي (overseas-block flag): المفتاح موجود في خدمة الأعلام (flag service) ومُدرَج في دليل التشغيل (runbook)",
+          "الاستعادة (restore): استعادة إلى نقطة زمنية (point-in-time restore) على نسخة جديدة (new instance) في 22 دقيقة، مع فقد 3 دقائق من البيانات (data lost)",
+          "التنبيهات (alerts): أُطلق كل تنبيه معدّل احتراق (burn-rate alert) مرة في اختبار على بيئة التجهيز (staging test) ويرتبط بدليل تشغيله (runbook)"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Rollback, restore and kill switches each need a timed drill, and the flag line only says the switch exists and is documented, which is a claim ticked from memory. The restore line looks like the risky one, but it shows a measured drill within both targets: the 5-minute RPO and the 30-minute RTO.",
+        "ar": "يحتاج كلٌّ من التراجع (rollback) والاستعادة (restore) ومفاتيح الإيقاف (kill switches) إلى تمرين مُوقَّت (timed drill)، وسطر العلم (flag) يقول فقط إن المفتاح موجود وموثّق، وهذا ادعاء مُؤشَّر عليه من الذاكرة (ticked from memory). يبدو سطر الاستعادة هو الخطِر، لكنه يُظهر تمرينًا مقيسًا (measured drill) ضمن الهدفين معًا: هدف نقطة التعافي (RPO) البالغ 5 دقائق وهدف زمن التعافي (RTO) البالغ 30 دقيقة."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m7-e1",
+      "lesson": "7.1",
+      "text": {
+        "en": "I have taken a small service from an empty repo to a local kind or k3d cluster with a build-once pipeline and Argo CD, and timed both rolling forward by changing the digest in Git and rolling back by reverting the commit",
+        "ar": "أخذتُ خدمة صغيرة من مستودع فارغ (empty repo) إلى عنقود محلي (local cluster) على kind أو k3d، بخط تسليم يبني مرة واحدة (build-once pipeline) وArgo CD، ووقّتُّ كلًّا من التقدّم (rolling forward) بتغيير البصمة (digest) في Git والتراجع (rolling back) بإرجاع الإيداع (reverting the commit)"
+      }
+    },
+    {
+      "id": "m7-e2",
+      "lesson": "7.2",
+      "text": {
+        "en": "I have published a portfolio repository, scanned for secrets first, that a peer cloned and ran from the README alone and whose key design decision they could state after ten minutes of reading",
+        "ar": "نشرتُ مستودع ملف أعمال (portfolio repository) بعد فحصه بحثًا عن الأسرار (scanned for secrets) أولًا، فاستنسخه زميل (peer cloned) وشغّله من ملف README وحده، واستطاع أن يذكر قرار التصميم الرئيسي (key design decision) بعد عشر دقائق من القراءة"
+      }
+    }
+  ]
+}

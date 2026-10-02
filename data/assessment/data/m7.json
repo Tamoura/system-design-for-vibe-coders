@@ -1,0 +1,135 @@
+{
+ "area": "m7",
+ "questions": [
+  {
+   "id": "m7-1",
+   "level": 1,
+   "lesson": "7.2",
+   "q": {
+    "en": "Huda asks Faisal what mostly separates a senior data engineer from a junior one. Which answer matches the career ladder in this course?",
+    "ar": "تسأل هدى فيصل عمّا يميّز في الغالب مهندس البيانات الأول (senior data engineer) عن المبتدئ (junior). أيّ إجابة تطابق السلّم الوظيفي (career ladder) في هذه الدورة؟"
+   },
+   "o": {
+    "en": [
+     "Command of more tools, such as Kafka, Spark and every cloud warehouse",
+     "Wider scope and judgement: owning products and setting standards",
+     "More certifications from cloud providers and data platform vendors",
+     "Faster SQL typing and fewer syntax errors in live coding rounds"
+    ],
+    "ar": [
+     "إتقان أدوات أكثر (more tools)، مثل Kafka وSpark وكل مستودع سحابي (cloud warehouse)",
+     "نطاق أوسع وحكم أنضج (wider scope and judgement): امتلاك المنتجات (owning products) ووضع المعايير (setting standards)",
+     "شهادات أكثر (more certifications) من مزوّدي السحابة (cloud providers) ومنصات البيانات (data platform vendors)",
+     "كتابة SQL أسرع وأخطاء صياغة (syntax errors) أقل في جولات البرمجة الحية (live coding rounds)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "The ladder from junior to staff is mostly about scope and judgement: owning a product end to end, setting standards such as contracts and testing, mentoring. Collecting tools is the tempting answer, but the lesson says growth is not about tools.",
+    "ar": "يدور السلّم من المبتدئ (junior) إلى الخبير (staff) في الغالب حول النطاق والحكم (scope and judgement): امتلاك منتج من البداية إلى النهاية (end to end)، ووضع معايير مثل العقود والاختبار (contracts and testing)، والإرشاد (mentoring). أما جمع الأدوات (collecting tools) فهو الإجابة المغرية، لكن الدرس يقول إن التطوّر ليس مسألة أدوات."
+   }
+  },
+  {
+   "id": "m7-2",
+   "level": 2,
+   "lesson": "7.1",
+   "q": {
+    "en": "A Najm loan instalment was due on 1 May. On 3 May the customer paid 90% of it and has paid nothing since; Credit Risk has set no materiality threshold. In `fct_loan_daily` for 21 May, what does the loan show?",
+    "ar": "كان قسط قرض (loan instalment) في بنك نجم (Najm Bank) مستحقًا في 1 مايو. في 3 مايو دفع العميل 90% منه ولم يدفع شيئًا بعد ذلك، ولم تضع إدارة مخاطر الائتمان (Credit Risk) أي حدّ للأهمية النسبية (materiality threshold). ماذا يُظهر القرض في `fct_loan_daily` بتاريخ 21 مايو؟"
+   },
+   "o": {
+    "en": [
+     "0 days past due, bucket current, as a payment arrived after the due date",
+     "18 days past due, bucket 1-30, counted from the partial payment on 3 May",
+     "20 days past due, bucket 1-30, as the instalment is not paid in full",
+     "No value yet, until Finance assigns the loan's IFRS 9 stage for May"
+    ],
+    "ar": [
+     "0 أيام تأخّر (days past due)، والفئة current، لأن دفعة وصلت بعد تاريخ الاستحقاق (due date)",
+     "18 يوم تأخّر (days past due)، والفئة 1-30، محسوبة من الدفعة الجزئية (partial payment) في 3 مايو",
+     "20 يوم تأخّر (days past due)، والفئة 1-30، لأن القسط لم يُدفع بالكامل (paid in full)",
+     "لا قيمة بعد، حتى تحدّد المالية (Finance) مرحلة القرض وفق IFRS 9 ‏(IFRS 9 stage) لشهر مايو"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "DPD counts from the oldest instalment not paid in full, so a partial payment does not reset it: 21 May minus 1 May is 20 days, bucket 1-30. Treating any payment as a cure is the tempting mistake the mart's 'paid in full' rule exists to prevent.",
+    "ar": "تُحسب أيام التأخّر (DPD) من أقدم قسط لم يُدفع بالكامل (oldest instalment not paid in full)، فالدفعة الجزئية (partial payment) لا تعيد ضبطها: من 1 مايو إلى 21 مايو 20 يومًا، والفئة 1-30. أما اعتبار أي دفعة معالجةً للتأخّر فهو الخطأ المغري الذي وُضعت قاعدة «مدفوع بالكامل» (paid in full) في السوق البيانية (mart) لمنعه."
+   }
+  },
+  {
+   "id": "m7-3",
+   "level": 2,
+   "lesson": "7.2",
+   "q": {
+    "en": "In a data modelling interview at a logistics company, Kareem is asked: 'Design tables so operations can analyse late parcel deliveries.' What should he say first?",
+    "ar": "في مقابلة نمذجة البيانات (data modelling interview) لدى شركة لوجستية (logistics company)، يُطلب من كريم: «صمّم جداول تمكّن فريق العمليات (operations) من تحليل تأخّر توصيل الطرود (late parcel deliveries)». ماذا ينبغي أن يقول أولًا؟"
+   },
+   "o": {
+    "en": [
+     "The warehouse engine he would choose and how he would partition it",
+     "The full list of columns the delivery table needs, named and typed",
+     "The dashboard he would build for operations, with charts and filters",
+     "The grain, such as one row per delivery attempt, then dimensions"
+    ],
+    "ar": [
+     "محرّك المستودع (warehouse engine) الذي سيختاره وكيف سيقسّمه (partition)",
+     "القائمة الكاملة للأعمدة (columns) التي يحتاجها جدول التوصيل، بأسمائها وأنواعها (named and typed)",
+     "لوحة المعلومات (dashboard) التي سيبنيها للعمليات، بمخططاتها (charts) ومرشّحاتها (filters)",
+     "الحُبَيبية (grain)، مثل صف واحد لكل محاولة توصيل (one row per delivery attempt)، ثم الأبعاد (dimensions)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "A modelling case is about grain first: what one row means, then the dimensions, which attributes need history and what not to store. Jumping straight to a column list is what most candidates do, and the scorecard marks it as a weak signal.",
+    "ar": "تبدأ حالة النمذجة (modelling case) بالحُبَيبية (grain): ماذا يعني الصف الواحد، ثم الأبعاد (dimensions)، وأيّ السمات تحتاج إلى تاريخ (history)، وما الذي لا يُخزَّن. أما القفز مباشرة إلى قائمة الأعمدة (column list) فهو ما يفعله معظم المرشّحين، وتعدّه بطاقة التقييم (scorecard) إشارة ضعيفة (weak signal)."
+   }
+  },
+  {
+   "id": "m7-4",
+   "level": 3,
+   "lesson": "7.1",
+   "q": {
+    "en": "On the last business day of the month, the credit-risk mart's reconciliation test returns one row: USD outstanding principal exceeds the ledger control total by more than Finance's tolerance. The regulatory extract is due. What should Faisal's team do?",
+    "ar": "في آخر يوم عمل من الشهر، يعيد اختبار المطابقة (reconciliation test) في سوق بيانات مخاطر الائتمان (credit-risk mart) صفًا واحدًا: أصل الدين القائم بالدولار (USD outstanding principal) يتجاوز إجمالي الرقابة في دفتر الأستاذ (ledger control total) بأكثر من هامش التسامح (tolerance) الذي حدّدته المالية (Finance). والمستخرج التنظيمي (regulatory extract) مستحق. ماذا ينبغي أن يفعل فريق فيصل؟"
+   },
+   "o": {
+    "en": [
+     "Keep the extract blocked until the gap is explained and reconciled",
+     "Raise the tolerance variable so the test passes, then file it on time",
+     "File the extract now and record the fix later as a restatement",
+     "Edit the USD total in the extract by hand to match the ledger"
+    ],
+    "ar": [
+     "إبقاء المستخرج محجوبًا (blocked) حتى تُفسَّر الفجوة (gap) وتُسوّى (reconciled)",
+     "رفع متغيّر هامش التسامح (tolerance variable) ليجتاز الاختبار، ثم التقديم في الموعد",
+     "تقديم المستخرج الآن وتسجيل الإصلاح لاحقًا كإعادة بيان (restatement)",
+     "تعديل إجمالي الدولار في المستخرج يدويًا (by hand) ليطابق دفتر الأستاذ (ledger)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "A failed reconciliation is designed to block the month-end regulatory extract, and the tolerance belongs to Finance, not the data team. Filing now and restating later is tempting, but restatements are for corrections found after a correct sign-off, not for knowingly filing a figure that does not reconcile.",
+    "ar": "صُمّمت المطابقة الفاشلة (failed reconciliation) لتحجب المستخرج التنظيمي لنهاية الشهر (month-end regulatory extract)، وهامش التسامح (tolerance) تملكه المالية (Finance) لا فريق البيانات. أما التقديم الآن وإعادة البيان لاحقًا (restatement) فمغرٍ، لكن إعادة البيان للتصحيحات المكتشفة بعد اعتماد سليم (sign-off)، لا لتقديم رقم معروف أنه لا يتطابق."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m7-e1",
+   "lesson": "7.1",
+   "text": {
+    "en": "I have built a daily loan snapshot with dbt tests and a full-outer-join reconciliation to ledger control totals, and watched it catch a loan currency missing from the ledger",
+    "ar": "لقد بنيت لقطة يومية للقروض (daily loan snapshot) مع اختبارات dbt ‏(dbt tests) ومطابقة بربط خارجي كامل (full-outer-join reconciliation) مع إجماليات الرقابة في دفتر الأستاذ (ledger control totals)، ورأيتها تكشف عملة قرض مفقودة من دفتر الأستاذ (loan currency missing from the ledger)"
+   }
+  },
+  {
+   "id": "m7-e2",
+   "lesson": "7.2",
+   "text": {
+    "en": "I have built a portfolio project on openly licensed public data that a friend cloned and ran from the README, with a write-up of one bug and the test that now prevents it",
+    "ar": "لقد بنيت مشروعًا لملف أعمالي (portfolio project) على بيانات عامة مفتوحة الترخيص (openly licensed public data)، استنسخه صديق (cloned) وشغّله من ملف README، مع شرح مكتوب (write-up) لخطأ واحد (bug) والاختبار (test) الذي يمنعه الآن"
+   }
+  }
+ ]
+}

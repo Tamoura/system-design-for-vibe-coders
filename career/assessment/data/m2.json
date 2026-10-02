@@ -1,0 +1,135 @@
+{
+  "area": "m2",
+  "questions": [
+    {
+      "id": "m2-1",
+      "level": 1,
+      "lesson": "2.2",
+      "q": {
+        "en": "A junior on Najm's AI team is asked to add a new feature to the statement assistant. According to the lesson's core rule, which question should she answer before building it?",
+        "ar": "يُطلب من مبتدئة (junior) في فريق الذكاء الاصطناعي (AI team) في بنك نجم (Najm Bank) إضافة ميزة جديدة (new feature) إلى مساعد كشوف الحساب (statement assistant). وفق القاعدة الأساسية للدرس (core rule)، أيّ سؤال ينبغي أن تجيب عنه قبل البناء؟"
+      },
+      "o": {
+        "en": [
+          "Which newer model would make the answers sound more fluent?",
+          "How fast could a coding agent draft the feature end to end?",
+          "How would I know if the assistant's quality got worse?",
+          "Which agent framework do most AI teams now prefer to use?"
+        ],
+        "ar": [
+          "أيّ نموذج أحدث (newer model) سيجعل الإجابات أكثر طلاقة (more fluent)؟",
+          "ما مدى سرعة وكيل البرمجة (coding agent) في صياغة الميزة (feature) من البداية إلى النهاية (end to end)؟",
+          "كيف سأعرف إن ساءت جودة المساعد (assistant's quality)؟",
+          "أيّ إطار عمل للوكلاء (agent framework) يفضّله معظم فرق الذكاء الاصطناعي (AI teams) حاليًا؟"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "No evaluation, no product: before adding a feature, ask how you would know if it got worse, and build the evaluation first if you cannot answer. A newer or more fluent model is a guess until it has been measured on a golden set.",
+        "ar": "لا تقييم، لا منتج (no evaluation, no product): قبل إضافة ميزة (feature) اسأل كيف ستعرف إن ساءت، وابنِ التقييم (evaluation) أولًا إن لم تجد جوابًا. أمّا النموذج الأحدث أو الأكثر طلاقة (newer model) فمجرّد تخمين (guess) حتى يُقاس على مجموعة ذهبية (golden set)."
+      }
+    },
+    {
+      "id": "m2-2",
+      "level": 2,
+      "lesson": "2.3",
+      "q": {
+        "en": "Huda's daily load from a public open-data API fails halfway through on Tuesday. She reruns it, and the table now holds some of Tuesday's rows twice. Which production habit is missing?",
+        "ar": "يتعطّل التحميل اليومي (daily load) الذي بنته هدى من واجهة بيانات مفتوحة عامة (public open-data API) في منتصفه يوم الثلاثاء. تعيد تشغيله (rerun)، فيصبح الجدول (table) محتويًا على بعض صفوف الثلاثاء (rows) مرتين. أيّ عادة إنتاجية (production habit) غائبة؟"
+      },
+      "o": {
+        "en": [
+          "An idempotent load, so a rerun cannot duplicate any rows",
+          "An hourly schedule, so each run is smaller and fails less",
+          "A move into a notebook, so she can rerun cells by hand",
+          "A new dashboard, so business users spot doubled figures"
+        ],
+        "ar": [
+          "تحميل متساوي القوى (idempotent load)، فلا تستطيع إعادة التشغيل (rerun) تكرار أيّ صفوف (rows)",
+          "جدولة كل ساعة (hourly schedule)، فيصغر كل تشغيل (run) ويقلّ تعطّله",
+          "نقل العمل إلى دفتر ملاحظات (notebook)، فتعيد تشغيل الخلايا (cells) يدويًا",
+          "لوحة معلومات جديدة (dashboard)، فيلاحظ مستخدمو الأعمال (business users) الأرقام المضاعفة"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "A production pipeline must be idempotent: it can rerun safely without duplicating rows. Running more often only shrinks each batch and still duplicates data on the next failed rerun.",
+        "ar": "يجب أن يكون خط البيانات الإنتاجي (production pipeline) متساوي القوى (idempotent): يُعاد تشغيله بأمان (rerun safely) دون تكرار الصفوف (duplicating rows). أمّا التشغيل الأكثر تكرارًا (running more often) فيصغّر كل دفعة (batch) فقط، ويظل يكرّر البيانات عند الإعادة التالية بعد تعطّل."
+      }
+    },
+    {
+      "id": "m2-3",
+      "level": 2,
+      "lesson": "2.4",
+      "q": {
+        "en": "A coding agent drafts Yousef's infrastructure as code, and the pipeline role it creates has full administrator rights on his cloud account. The deploy works. What should he do before calling the project done?",
+        "ar": "يصوغ وكيل البرمجة (coding agent) البنية التحتية كشيفرة (infrastructure as code) الخاصة بيوسف، ويمنح دورُ خط النشر (pipeline role) الذي أنشأه صلاحياتِ مسؤول كاملة (full administrator rights) على حسابه السحابي (cloud account). النشر (deploy) يعمل. ماذا ينبغي أن يفعل قبل أن يعدّ المشروع مكتملًا؟"
+      },
+      "o": {
+        "en": [
+          "Keep it, since the pipeline only runs in his personal account",
+          "Keep it, but add a README note saying the role is too broad",
+          "Swap the role for his own long-lived personal key for deploys",
+          "Narrow the role to deploying this service and nothing else"
+        ],
+        "ar": [
+          "يُبقيه كما هو، لأن خط النشر (pipeline) يعمل في حسابه الشخصي (personal account) فقط",
+          "يُبقيه، لكن يضيف ملاحظة في ملف README تقول إن الدور واسع جدًا (too broad)",
+          "يستبدل بالدور مفتاحه الشخصي طويل العمر (long-lived personal key) لعمليات النشر (deploys)",
+          "يضيّق الدور (narrow the role) ليستطيع نشر هذه الخدمة (service) فقط ولا شيء غيرها"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Salem's checklist passes least privilege only when the pipeline's role can deploy this service and nothing else, and an over-broad role is one of the costly errors agents make in infrastructure code. A README note or a personal account leaves the role as broad as before, so the check still fails.",
+        "ar": "لا تجتاز قائمة سالم (Salem's checklist) بند أقل الصلاحيات (least privilege) إلا إذا كان دور خط النشر (pipeline's role) قادرًا على نشر هذه الخدمة (service) ولا شيء غيرها، والدور المفرط الاتساع (over-broad role) من الأخطاء المكلفة التي يرتكبها الوكلاء (agents) في شيفرة البنية التحتية (infrastructure code). أمّا ملاحظة في ملف README أو كون الحساب شخصيًا (personal account) فيُبقيان الدور واسعًا كما كان، فيظل البند غير مجتاز."
+      }
+    },
+    {
+      "id": "m2-4",
+      "level": 3,
+      "lesson": "2.1",
+      "q": {
+        "en": "After two months, Omar's study-path table shows 12 of 15 rows as \"Done\", yet in a Sadeem Pay take-home he again cannot get his API running with its database outside his laptop. What is the most likely diagnosis?",
+        "ar": "بعد شهرين، يُظهر جدول المسار الدراسي (study-path table) لعمر 12 صفًا من 15 بحالة «مكتمل» (Done)، ومع ذلك لا يستطيع مرة أخرى في المهمة المنزلية (take-home) لشركة سديم باي (Sadeem Pay) تشغيل واجهته البرمجية (API) مع قاعدة بياناتها (database) خارج حاسوبه المحمول. ما التشخيص الأرجح (most likely diagnosis)؟"
+      },
+      "o": {
+        "en": [
+          "He skipped the variant rows, so the backend core was never covered",
+          "He marked rows done once he read the lessons, without any proof",
+          "He did too little algorithm practice, so his problem-solving is weak",
+          "He left Work with AI to the end, when it belonged first in the order"
+        ],
+        "ar": [
+          "تخطّى صفوف المتغيّرات (variant rows)، فلم يُغطَّ جوهر الواجهة الخلفية (backend core) قط",
+          "علّم الصفوف مكتملة (Done) بمجرّد قراءة الدروس، دون أيّ إثبات (proof)",
+          "مارس حلّ الخوارزميات (algorithm practice) قليلًا، فبقيت مهارة حلّ المشكلات (problem-solving) ضعيفة",
+          "أجّل مرحلة العمل مع الذكاء الاصطناعي (Work with AI) إلى النهاية، وكان مكانها الأول في الترتيب"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Khalid's rule is proof before \"Done\": a row is done when the link exists, not when the lesson is read, so twelve unproven rows hide the same shipping gap. The variant rows only add to the shared core, and Work with AI belongs last because you need the earlier stages to judge an agent.",
+        "ar": "قاعدة خالد هي الإثبات قبل «مكتمل» (proof before \"Done\"): يكتمل الصف حين يوجد الرابط (link)، لا حين يُقرأ الدرس، فاثنا عشر صفًا بلا إثبات تُخفي فجوة الشحن (shipping gap) نفسها. أمّا صفوف المتغيّرات (variant rows) فتُضاف فوق الجوهر المشترك (shared core) فقط، ومرحلة العمل مع الذكاء الاصطناعي (Work with AI) مكانها الأخير لأنك تحتاج المراحل السابقة لتحكم على مخرجات الوكيل (agent)."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m2-e1",
+      "lesson": "2.2",
+      "text": {
+        "en": "I have built a golden set of at least 30 cases for an AI project, including edge and hostile inputs, and committed its results table so the run repeats with one command",
+        "ar": "بنيتُ مجموعة ذهبية (golden set) من 30 حالة (cases) على الأقل لمشروع ذكاء اصطناعي (AI project)، تشمل حالات حدّية (edge cases) ومدخلات عدائية (hostile inputs)، وأودعتُ جدول نتائجها (results table) في المستودع (repository) بحيث يتكرّر التشغيل بأمر واحد (one command)"
+      }
+    },
+    {
+      "id": "m2-e2",
+      "lesson": "2.4",
+      "text": {
+        "en": "I have destroyed and rebuilt a small environment from infrastructure as code, following my own README, and recorded how long the rebuild took",
+        "ar": "دمّرتُ بيئة صغيرة (small environment) وأعدتُ بناءها (rebuild) من البنية التحتية كشيفرة (infrastructure as code) باتباع ملف README الخاص بي، وسجّلتُ المدة التي استغرقتها إعادة البناء (rebuild)"
+      }
+    }
+  ]
+}

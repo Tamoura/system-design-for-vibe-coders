@@ -1,0 +1,135 @@
+{
+  "area": "m2",
+  "questions": [
+    {
+      "id": "m2-1",
+      "level": 1,
+      "lesson": "2.2",
+      "q": {
+        "en": "Faisal's rule for the Data Platform team is that every task must be safe to run twice. What property makes a pipeline task idempotent?",
+        "ar": "قاعدة فيصل لفريق منصة البيانات (Data Platform team) هي أن كل مهمة (task) يجب أن تكون آمنة إذا شُغّلت مرتين (safe to run twice). ما الخاصية التي تجعل مهمة خط البيانات (pipeline task) متساوية الأثر (idempotent)؟"
+      },
+      "o": {
+        "en": [
+          "It never fails, because transient errors are retried automatically with backoff",
+          "It always loads the freshest data, by reading the current date when it starts",
+          "Running it once or five times for the same period leaves the same result",
+          "It runs only once per period, because the orchestrator blocks any second attempt"
+        ],
+        "ar": [
+          "أنها لا تفشل أبدًا (never fails)، لأن الأخطاء العابرة (transient errors) تُعاد محاولتها تلقائيًا مع تراجع (backoff)",
+          "أنها تحمّل دائمًا أحدث البيانات (freshest data)، بقراءة التاريخ الحالي (current date) عند بدء تشغيلها",
+          "أن تشغيلها مرة أو خمس مرات للفترة نفسها (same period) يترك النتيجة نفسها (same result)",
+          "أنها تعمل مرة واحدة فقط لكل فترة (once per period)، لأن المنسِّق (orchestrator) يمنع أي محاولة ثانية (second attempt)"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Idempotency means repeated runs for the same period give exactly the same result, which is what makes retries and backfills safe. Retrying with backoff does not provide it: retrying a task that appends is exactly what double-counts a day.",
+        "ar": "تساوي الأثر (idempotency) يعني أن التشغيلات المتكررة (repeated runs) للفترة نفسها تعطي النتيجة نفسها تمامًا، وهذا ما يجعل إعادة المحاولة (retries) وإعادة التعبئة (backfills) آمنتين. أما إعادة المحاولة مع التراجع (backoff) فلا توفّره، بل إن إعادة محاولة مهمة تُلحق الصفوف (appends rows) هي بالضبط ما يحتسب يومًا مرتين (double-counts a day)."
+      }
+    },
+    {
+      "id": "m2-2",
+      "level": 2,
+      "lesson": "2.1",
+      "q": {
+        "en": "Najm's `branches` reference table has about 80 rows, changes a few times a year, and closed branches are deleted from the core system. Kareem's reports must stop showing a branch once it closes. Which load pattern should Huda choose?",
+        "ar": "يضم جدول `branches` المرجعي (reference table) في بنك نجم (Najm Bank) نحو 80 صفًا، ويتغيّر بضع مرات في السنة، وتُحذف الفروع المغلقة (closed branches) من النظام الأساسي (core system). ويجب أن تتوقف تقارير كريم (Kareem's reports) عن إظهار أي فرع بمجرد إغلاقه. ما نمط التحميل (load pattern) الذي ينبغي أن تختاره هدى؟"
+      },
+      "o": {
+        "en": [
+          "A full load each run that replaces the previous copy of the table",
+          "An incremental load on `updated_at` with an overlap and a merge on the key",
+          "An incremental load of only the new rows, using the increasing branch ID",
+          "Log-based CDC with Debezium, adding a replication slot on the core primary"
+        ],
+        "ar": [
+          "تحميل كامل (full load) في كل تشغيل يستبدل النسخة السابقة (previous copy) من الجدول",
+          "تحميل تزايدي (incremental load) على `updated_at` مع تداخل (overlap) ودمج على المفتاح (merge on the key)",
+          "تحميل تزايدي (incremental load) للصفوف الجديدة فقط (only the new rows)، باستخدام معرّف الفرع المتزايد (increasing branch ID)",
+          "التقاط تغيّر البيانات المعتمد على السجل (log-based CDC) عبر Debezium، مع فتحة نسخ متماثل (replication slot) على الخادم الأساسي (core primary)"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "For a small, slowly changing reference table a full load is simple, always correct and catches deletes for free, because a deleted branch is simply absent. An overlapping incremental load still never sees a hard delete, and CDC would work but adds replication privileges and slot monitoring that an 80-row table does not need.",
+        "ar": "في جدول مرجعي صغير بطيء التغيّر (small, slowly changing reference table) يكون التحميل الكامل (full load) بسيطًا وصحيحًا دائمًا ويلتقط عمليات الحذف مجانًا (catches deletes for free)، لأن الفرع المحذوف يغيب ببساطة. أما التحميل التزايدي المتداخل (overlapping incremental load) فلا يرى الحذف الفعلي (hard delete) أبدًا، والتقاط تغيّر البيانات (CDC) سيعمل لكنه يضيف صلاحيات النسخ المتماثل (replication privileges) ومراقبة الفتحة (slot monitoring) التي لا يحتاجها جدول من 80 صفًا."
+      }
+    },
+    {
+      "id": "m2-3",
+      "level": 2,
+      "lesson": "2.3",
+      "q": {
+        "en": "The `najm.card.authorisations` topic has six partitions. During evening peaks the `smart-alerts-features` consumer group falls behind, so Salem's team scales it from six to ten consumers. Lag does not improve at all. What is the most likely reason?",
+        "ar": "يضم الموضوع (topic) `najm.card.authorisations` ستة أقسام (partitions). وفي ذروات المساء (evening peaks) تتأخر مجموعة المستهلكين (consumer group) `smart-alerts-features`، فيوسّعها فريق سالم من ستة مستهلكين (consumers) إلى عشرة. لكن التأخر (lag) لا يتحسّن إطلاقًا. ما السبب الأرجح (most likely reason)؟"
+      },
+      "o": {
+        "en": [
+          "Every consumer in a group reads all six partitions, so work is repeated, not shared",
+          "Adding consumers resets the group's offsets, so the job restarts from the oldest event",
+          "The extra consumers form a new group of their own, so each event is processed twice",
+          "A partition is read by one consumer per group, so the four extra ones sit idle"
+        ],
+        "ar": [
+          "كل مستهلك (consumer) في المجموعة يقرأ الأقسام الستة كلها (all six partitions)، فيتكرر العمل (work is repeated) ولا يُوزَّع",
+          "إضافة المستهلكين تعيد ضبط إزاحات المجموعة (resets the group's offsets)، فتبدأ المهمة من أقدم حدث (oldest event)",
+          "المستهلكون الإضافيون (extra consumers) يشكّلون مجموعة مستقلة (new group of their own)، فيُعالَج كل حدث (event) مرتين",
+          "يقرأ القسمَ (partition) مستهلكٌ واحد في كل مجموعة (one consumer per group)، فتبقى الأربعة الإضافية خاملة (sit idle)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Consumers sharing a group ID split the partitions, and consumers beyond the partition count sit idle, so throughput stays capped at six readers. Members of one group do not each read every partition; that is what separate groups do.",
+        "ar": "المستهلكون الذين يتشاركون معرّف المجموعة (group ID) يتقاسمون الأقسام (split the partitions)، ومن يزيد منهم على عدد الأقسام (partition count) يبقى خاملًا (sits idle)، فتظل الإنتاجية (throughput) محدودة بستة قرّاء. ولا يقرأ كل عضو في المجموعة الواحدة كل الأقسام، فهذا ما تفعله المجموعات المنفصلة (separate groups)."
+      }
+    },
+    {
+      "id": "m2-4",
+      "level": 3,
+      "lesson": "2.2",
+      "q": {
+        "en": "Najm's nightly DAG fails at 03:00 when the \"run data tests\" task finds null `account_id` values in staging. The task has three retries with exponential backoff, so the on-call alert only arrives at 04:10, after every attempt has failed the same way. What should Faisal change?",
+        "ar": "يفشل الرسم البياني الموجّه غير الدوري (DAG) الليلي في بنك نجم عند الساعة 03:00 حين تجد مهمة \"تشغيل اختبارات البيانات\" (\"run data tests\") قيمًا فارغة (null values) في `account_id` بطبقة التهيئة (staging). وللمهمة ثلاث إعادات محاولة (three retries) مع تراجع أسّي (exponential backoff)، فلا يصل تنبيه المناوب (on-call alert) إلا عند 04:10، بعد أن تفشل كل المحاولات بالطريقة نفسها. ما الذي ينبغي أن يغيّره فيصل؟"
+      },
+      "o": {
+        "en": [
+          "Raise retries to six, so a later attempt can pass once the nulls clear",
+          "Stop retrying test failures; fail fast and alert the owner straight away",
+          "Let the marts refresh anyway and run the data tests after publishing",
+          "Lengthen the execution timeout so each test attempt has more time to pass"
+        ],
+        "ar": [
+          "رفع إعادات المحاولة (retries) إلى ست، لعل محاولة لاحقة (later attempt) تنجح حين تختفي القيم الفارغة (nulls)",
+          "إيقاف إعادة محاولة إخفاقات الاختبار (test failures)، مع الفشل السريع (fail fast) وتنبيه المالك (alert the owner) فورًا",
+          "ترك متاجر البيانات (marts) تتحدّث على أي حال، وتشغيل اختبارات البيانات (data tests) بعد النشر (after publishing)",
+          "إطالة مهلة التنفيذ (execution timeout) ليكون لكل محاولة اختبار (test attempt) وقت أطول لتنجح"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "A failed data test is deterministic: re-running it on the same data fails again, so retries only delay the alert. Retries belong to transient errors such as a dropped connection; adding more pushes the alert later still, and publishing first sends a broken day to dashboards.",
+        "ar": "إخفاق اختبار البيانات (failed data test) حتمي (deterministic): إعادة تشغيله على البيانات نفسها تفشل مجددًا، فلا تفعل إعادات المحاولة (retries) سوى تأخير التنبيه (delay the alert). فإعادة المحاولة مخصّصة للأخطاء العابرة (transient errors) مثل انقطاع الاتصال (dropped connection)، وزيادتها تؤخّر التنبيه أكثر، والنشر أولًا (publishing first) يرسل يومًا معطوبًا (broken day) إلى لوحات المعلومات (dashboards)."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m2-e1",
+      "lesson": "2.2",
+      "text": {
+        "en": "I have run an appending daily load and a delete-then-insert load three times each for the same date, and shown that the first tripled the day's total while the second left it unchanged.",
+        "ar": "شغّلتُ تحميلًا يوميًا بالإلحاق (appending daily load) وتحميلًا بالحذف ثم الإدراج (delete-then-insert load) ثلاث مرات لكلٍّ منهما للتاريخ نفسه (same date)، وأثبتُّ أن الأول ضاعف مجموع اليوم ثلاث مرات (tripled the day's total) بينما تركه الثاني دون تغيير (unchanged)."
+      }
+    },
+    {
+      "id": "m2-e2",
+      "lesson": "2.3",
+      "text": {
+        "en": "I have killed a stream consumer mid-run with auto-commit and again with manual commits after an `ON CONFLICT (auth_id) DO NOTHING` write, and shown events lost in the first and every event exactly once in the second.",
+        "ar": "أوقفتُ قسرًا مستهلك بث (stream consumer) في منتصف التشغيل (mid-run) مع التثبيت التلقائي للإزاحات (auto-commit)، ثم مجددًا مع التثبيت اليدوي (manual commits) بعد كتابة `ON CONFLICT (auth_id) DO NOTHING`، وأثبتُّ فقدان أحداث (events lost) في الأولى وظهور كل حدث مرة واحدة بالضبط (exactly once) في الثانية."
+      }
+    }
+  ]
+}

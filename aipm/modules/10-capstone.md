@@ -453,6 +453,7 @@ And Faisal's **one-page portfolio case study**, rewritten with Rania to meet the
 </details>
 
 ## 📚 References
+- *From Graduate to Hired*, the library's career course — role paths, portfolio, CV, interviews and the first 90 days: [../career/index.html](../career/index.html)
 - Marty Cagan, *Inspired* (2nd ed., 2017) and *Empowered* (2020) — https://www.svpg.com
 - Gayle Laakmann McDowell and Jackie Bavaro, *Cracking the PM Interview* (2013)
 - Lewis C. Lin, *Decode and Conquer* (CIRCLES method)

@@ -1,0 +1,135 @@
+{
+ "area": "m3",
+ "questions": [
+  {
+   "id": "m3-1",
+   "level": 1,
+   "lesson": "3.1",
+   "q": {
+    "en": "Najm's dbt standard makes a tested primary key (unique and not_null) the first test on every model, before any business rule. What is the main reason?",
+    "ar": "يجعل معيار dbt في بنك نجم (Najm's dbt standard) اختبار المفتاح الأساسي (tested primary key) بـunique وnot_null أولَ اختبار على كل نموذج (every model)، قبل أي قاعدة أعمال (business rule). ما السبب الرئيسي (main reason)؟"
+   },
+   "o": {
+    "en": [
+     "Without it, dbt cannot work out the order in which to build models",
+     "The test adds a unique constraint, so the warehouse rejects duplicates",
+     "A duplicate key silently multiplies totals downstream with no error",
+     "A model contract can be enforced only once every key has been tested"
+    ],
+    "ar": [
+     "من دونه لا تستطيع dbt تحديد ترتيب بناء النماذج (order in which to build models)",
+     "يضيف الاختبار قيد تفرّد (unique constraint)، فيرفض مستودع البيانات (warehouse) التكرارات",
+     "المفتاح المكرّر (duplicate key) يضاعف بصمت المجاميع اللاحقة (totals downstream) دون خطأ",
+     "لا يمكن فرض عقد النموذج (model contract) إلا بعد اختبار كل المفاتيح (every key)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "A broken grain doubles every sum downstream and nothing fails, so the key test is the cheapest guard against silently wrong numbers. dbt tests only query for failing rows; they do not add database constraints, and build order comes from ref(), not from tests.",
+    "ar": "الحُبَيبية المكسورة (broken grain) تضاعف كل مجموع لاحق (every sum downstream) دون أن يفشل شيء، لذا فاختبار المفتاح (key test) أرخص حماية من الأرقام الخاطئة بصمت (silently wrong numbers). أما اختبارات dbt (dbt tests) فهي استعلامات تبحث عن الصفوف الفاشلة (failing rows) فقط، ولا تضيف قيودًا في قاعدة البيانات (database constraints)، وترتيب البناء (build order) يأتي من ref() لا من الاختبارات."
+   }
+  },
+  {
+   "id": "m3-2",
+   "level": 2,
+   "lesson": "3.2",
+   "q": {
+    "en": "Each night a few dozen of Najm's two million card authorisations carry a merchant category code missing from the published list. Each can be corrected one by one, and the marketing dashboard is more useful with slightly partial data than with none. How should Huda's check on that code respond?",
+    "ar": "في كل ليلة يحمل بضع عشرات من تفويضات البطاقات (card authorisations) في بنك نجم (Najm Bank)، من أصل مليونين، رمزَ فئة تاجر (merchant category code) غير موجود في القائمة المنشورة (published list). ويمكن تصحيح كل منها على حدة (one by one)، ولوحة معلومات التسويق (marketing dashboard) أنفع ببيانات ناقصة قليلًا (slightly partial data) منها بلا بيانات. كيف ينبغي أن يستجيب فحص هدى (Huda's check) على هذا الرمز؟"
+   },
+   "o": {
+    "en": [
+     "Quarantine the bad rows, publish the rest and report the count",
+     "Fail the build and hold back the whole load until every row is fixed",
+     "Cast unknown codes to null in staging so that the nightly load succeeds",
+     "Remove the accepted_values test, since a few failures are expected"
+    ],
+    "ar": [
+     "اعزل الصفوف السيئة (quarantine)، وانشر الباقي، وأبلغ عن عددها (report the count)",
+     "أفشل البناء (fail the build) واحجب الحمولة كلها (whole load) حتى يُصلَح كل صف",
+     "حوّل الرموز المجهولة إلى null في طبقة التجهيز (staging) كي ينجح التحميل الليلي (nightly load)",
+     "احذف اختبار accepted_values (accepted_values test)، لأن بعض الإخفاقات متوقَّع (expected)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Quarantine is the response for a few expected, individually fixable bad rows when partial data beats none. Failing the build is meant for keys, critical fields and regulatory or money decisions, and casting to null would turn the problem into silent nulls.",
+    "ar": "العزل (quarantine) هو الاستجابة المناسبة لصفوف سيئة قليلة ومتوقَّعة (few expected bad rows) يمكن إصلاح كل منها على حدة (individually fixable)، حين تكون البيانات الجزئية (partial data) خيرًا من لا شيء. أما إفشال البناء (failing the build) فمخصّص للمفاتيح والحقول الحرجة (keys and critical fields) والقرارات التنظيمية أو المالية (regulatory or money decisions)، والتحويل إلى null يجعل المشكلة قيمًا فارغة صامتة (silent nulls)."
+   }
+  },
+  {
+   "id": "m3-3",
+   "level": 2,
+   "lesson": "3.3",
+   "q": {
+    "en": "Fifty tiles on Najm's executive dashboards each aggregate the billion-row transactions fact by day and branch whenever someone opens them, and the warehouse bill keeps rising. Which change fits best?",
+    "ar": "خمسون مربعًا (tiles) في لوحات المعلومات التنفيذية (executive dashboards) في بنك نجم يجمّع كلٌّ منها جدول حقائق المعاملات (transactions fact) ذا المليار صف حسب اليوم والفرع (by day and branch) كلما فتحه أحد، وفاتورة مستودع البيانات (warehouse bill) تواصل الارتفاع. أي تغيير هو الأنسب؟"
+   },
+   "o": {
+    "en": [
+     "Move to a larger warehouse size so each tile's query finishes sooner",
+     "Cluster the transactions fact by customer_id so that more blocks are skipped",
+     "Make the transactions fact an incremental model with a unique key",
+     "Build an aggregate mart by day and branch once per load for the tiles"
+    ],
+    "ar": [
+     "انتقل إلى حجم أكبر لمستودع البيانات (larger warehouse size) كي ينتهي استعلام كل مربع (each tile's query) أسرع",
+     "جمّع جدول حقائق المعاملات عنقوديًا (cluster the transactions fact) حسب customer_id كي تُتخطّى كتل أكثر (more blocks are skipped)",
+     "اجعل جدول حقائق المعاملات نموذجًا تزايديًا (incremental model) بمفتاح فريد (unique key)",
+     "ابنِ طبقة عرض تجميعية (aggregate mart) حسب اليوم والفرع مرة لكل تحميل (once per load)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "When many people ask the same heavy question, precompute it once per load and point the dashboards at the small summary, accepting some loss of freshness and one more model to test. More compute only pays more to read the same data, and an incremental model cuts build cost, not the tiles' reads.",
+    "ar": "حين يطرح كثيرون السؤال الثقيل نفسه (same heavy question)، احسبه مسبقًا (precompute) مرة لكل تحميل ووجّه لوحات المعلومات (dashboards) إلى الملخّص الصغير (small summary)، مع قبول قدر من فقدان الحداثة (freshness) ونموذج إضافي يجب اختباره. أما زيادة الموارد الحاسوبية (more compute) فتدفع أكثر لقراءة البيانات نفسها، والنموذج التزايدي (incremental model) يخفّض تكلفة البناء (build cost) لا قراءات المربعات (tiles' reads)."
+   }
+  },
+  {
+   "id": "m3-4",
+   "level": 3,
+   "lesson": "3.2",
+   "q": {
+    "en": "The general-ledger control total for 14 September never arrived, yet the loan-book reconciliation test passed and the credit-risk mart was published. The singular test inner-joins daily mart totals to ledger totals and returns days that differ by more than QAR 1. What is the soundest diagnosis?",
+    "ar": "لم يصل المجموع الرقابي لدفتر الأستاذ العام (general-ledger control total) ليوم 14 سبتمبر قط، ومع ذلك نجح اختبار مطابقة محفظة القروض (loan-book reconciliation test) ونُشرت طبقة عرض مخاطر الائتمان (credit-risk mart). يربط الاختبار المفرد (singular test) بربط داخلي (inner join) مجاميع طبقة العرض اليومية (daily mart totals) بمجاميع الدفتر (ledger totals)، ويُرجع الأيام التي يزيد فرقها على ريال قطري واحد (QAR 1). ما التشخيص الأسلم (soundest diagnosis)؟"
+   },
+   "o": {
+    "en": [
+     "The QAR 1 tolerance is too loose and should be tightened to zero",
+     "The inner join drops the day with no ledger row, so none fails",
+     "Singular tests cannot read ref() models, so the check never ran",
+     "A missing day needs a volume monitor, since tests cannot detect it"
+    ],
+    "ar": [
+     "هامش التسامح (tolerance) البالغ ريالًا واحدًا (QAR 1) واسع جدًا ويجب تضييقه إلى صفر",
+     "الربط الداخلي (inner join) يُسقط اليوم الذي لا صف له في الدفتر (no ledger row)، فلا يفشل أي صف",
+     "الاختبارات المفردة (singular tests) لا تستطيع قراءة نماذج ref() (ref() models)، فلم يعمل الفحص قط",
+     "اليوم المفقود (missing day) يحتاج إلى مراقب حجم (volume monitor)، إذ لا تستطيع الاختبارات (tests) كشفه"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "With an inner join, a day that has no ledger row simply disappears from the result, so the test returns nothing and passes; a left join that flags a missing control total makes the gap fail. Tightening the tolerance changes nothing, because the missing day is never compared at all.",
+    "ar": "مع الربط الداخلي (inner join) يختفي ببساطة اليوم الذي لا صف له في الدفتر (no ledger row) من النتيجة، فلا يُرجع الاختبار شيئًا وينجح؛ أما الربط اليساري (left join) الذي يرصد غياب المجموع الرقابي (missing control total) فيجعل هذه الفجوة تفشل. وتضييق هامش التسامح (tolerance) لا يغيّر شيئًا، لأن اليوم المفقود لا تجري مقارنته أصلًا."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m3-e1",
+   "lesson": "3.2",
+   "text": {
+    "en": "I have written a YAML data contract for a feed and a script that validates files against it, and seen a good file load while files with a wrong type, a missing column or dropped rows were each rejected with a message naming the breach.",
+    "ar": "كتبتُ عقد بيانات (data contract) بصيغة YAML لمصدر بيانات (feed)، وسكربتًا يتحقق من الملفات وفقه (validates files against it)، ورأيت ملفًا سليمًا يُحمَّل (good file load) بينما رُفض كل ملف فيه نوع خاطئ (wrong type) أو عمود مفقود (missing column) أو صفوف مُسقطة (dropped rows) برسالة تسمّي المخالفة (message naming the breach)."
+   }
+  },
+  {
+   "id": "m3-e2",
+   "lesson": "3.3",
+   "text": {
+    "en": "I have built an incremental model with a unique key and a lookback window on data with late-arriving events, and shown that it matches a full refresh exactly, and which late events were lost without the window.",
+    "ar": "بنيتُ نموذجًا تزايديًا (incremental model) بمفتاح فريد (unique key) ونافذة استرجاع (lookback window) على بيانات فيها أحداث متأخرة الوصول (late-arriving events)، وأثبتُّ أنه يطابق إعادة البناء الكاملة (full refresh) تمامًا، وبيّنتُ أي الأحداث المتأخرة ضاعت من دون النافذة (without the window)."
+   }
+  }
+ ]
+}

@@ -1,0 +1,135 @@
+{
+  "area": "m5",
+  "questions": [
+    {
+      "id": "m5-1",
+      "level": 1,
+      "lesson": "5.1",
+      "q": {
+        "en": "Why do behavioural interviews ask \"Tell me about a time…\" rather than what you would do in a hypothetical situation?",
+        "ar": "لماذا تسأل المقابلات السلوكية (behavioural interviews) «حدّثني عن موقف…» (Tell me about a time…) بدلًا من سؤالك عمّا ستفعله في موقف افتراضي (hypothetical situation)؟"
+      },
+      "o": {
+        "en": [
+          "To test how well you can tell a story in fluent and polished English",
+          "To check that the dates and job titles on your CV are accurate",
+          "To use real past behaviour as evidence of future behaviour",
+          "To see how you would handle the situation in an ideal world"
+        ],
+        "ar": [
+          "لاختبار قدرتك على سرد قصة (storytelling) بلغة إنجليزية طليقة ومصقولة (fluent English)",
+          "للتحقق من دقة التواريخ والمسمّيات الوظيفية (job titles) في سيرتك الذاتية (CV)",
+          "لاستخدام السلوك السابق الحقيقي (real past behaviour) دليلًا على السلوك المستقبلي (future behaviour)",
+          "لمعرفة كيف ستتصرف في الموقف لو سارت الأمور على أفضل وجه (ideal world)"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Past behaviour is the best evidence an interviewer has of future behaviour, so they ask for real events they can score against the rubric. Fluency is not the point: a polished but vague or hypothetical answer still gives the rubric nothing to record.",
+        "ar": "السلوك السابق (past behaviour) هو أفضل دليل (best evidence) لدى المُقابِل على السلوك المستقبلي، لذا يطلب أحداثًا حقيقية (real events) يقيّمها وفق معايير التقييم (rubric). وليست الطلاقة (fluency) هي المقصودة: فالإجابة المصقولة الغامضة أو الافتراضية (hypothetical) لا تمنح معايير التقييم شيئًا يُسجَّل."
+      }
+    },
+    {
+      "id": "m5-2",
+      "level": 2,
+      "lesson": "5.2",
+      "q": {
+        "en": "In Najm's AI-review round, Yousef reviews an agent-written refund endpoint. He finds no check that the caller owns the account, a test that only checks the status code, duplicated helper code and a misspelt variable name. How should he present his review?",
+        "ar": "في جولة مراجعة الشيفرة المكتوبة بالذكاء الاصطناعي (AI-review round) في بنك نجم (Najm Bank)، يراجع يوسف نقطة نهاية للاسترداد (refund endpoint) كتبها وكيل البرمجة بالذكاء الاصطناعي (AI coding agent). يجد غياب التحقق من ملكية المتصل للحساب (ownership check)، واختبارًا يتحقق من رمز الحالة فقط (status code)، وشيفرة مساعدة مكررة (duplicated helper code)، واسم متغير بخطأ إملائي (misspelt variable name). كيف ينبغي أن يعرض مراجعته؟"
+      },
+      "o": {
+        "en": [
+          "Mark the ownership check as blocking and rank the rest below it",
+          "List all four issues in the order he found them, with equal weight",
+          "Approve it because the tests pass, leaving the four points as notes",
+          "Rewrite the whole endpoint himself so the author has nothing to fix"
+        ],
+        "ar": [
+          "يصنّف غياب التحقق من الملكية (ownership check) عائقًا للدمج (blocker)، ويرتّب البقية بعده",
+          "يسرد المشكلات الأربع بترتيب اكتشافها، بوزن متساوٍ (equal weight) لكلٍّ منها",
+          "يوافق على الدمج (approve) لأن الاختبارات ناجحة (tests pass)، ويترك النقاط الأربع ملاحظاتٍ",
+          "يعيد كتابة نقطة النهاية (endpoint) كلها بنفسه كي لا يبقى على الكاتب ما يصلحه"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Tariq's rubric rewards separating blockers from suggestions and explaining why: a missing ownership check lets anyone move someone else's money, while naming and duplication are suggestions. Listing everything with equal weight is exactly what scores 1 on prioritising.",
+        "ar": "تكافئ معايير تقييم طارق (Tariq's rubric) الفصلَ بين عوائق الدمج (blockers) والاقتراحات (suggestions) مع شرح السبب: فغياب التحقق من الملكية (ownership check) يتيح لأي شخص تحريك أموال غيره، أما التسمية والتكرار (duplication) فاقتراحات. وسرد كل شيء بوزن متساوٍ (equal weight) هو بالضبط ما يحصل على 1 في بند ترتيب الأولويات (prioritising)."
+      }
+    },
+    {
+      "id": "m5-3",
+      "level": 2,
+      "lesson": "5.3",
+      "q": {
+        "en": "In Dana's data round, Mohammed is told that daily credit-card applications on Najm's dashboard fell 25% this week. What should he check first?",
+        "ar": "في جولة البيانات (data round) مع دانة، يُقال لمحمد إن طلبات بطاقات الائتمان اليومية (daily credit-card applications) في لوحة المتابعة (dashboard) لدى بنك نجم انخفضت 25% هذا الأسبوع. ما الذي ينبغي أن يتحقق منه أولًا؟"
+      },
+      "o": {
+        "en": [
+          "A model that forecasts next week's applications, to compare with",
+          "A campaign to win back the applicants who seem to have been lost",
+          "A split by platform and country right away, to see who has left",
+          "A check of the data itself, such as whether tracking broke"
+        ],
+        "ar": [
+          "نموذج للتنبؤ (forecast model) بطلبات الأسبوع القادم لمقارنته بالأرقام الفعلية",
+          "حملة تسويقية (marketing campaign) لاستعادة المتقدمين الذين يبدو أنهم فُقدوا",
+          "تقسيم فوري حسب المنصة والبلد (segment by platform and country) لمعرفة من غادر",
+          "فحص البيانات نفسها (data check)، كأن يكون التتبع (tracking) قد تعطّل"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "The lesson's order is data first (did tracking break?), then segment, then look for changes such as a release or a campaign ending. Segmenting straight away is tempting, but if tracking broke every segment shows the same false drop.",
+        "ar": "الترتيب في الدرس هو البيانات أولًا (data first) ⁦(did tracking break?)⁩، ثم التقسيم (segment)، ثم البحث عن تغييرات (changes) مثل إصدار جديد (release) أو انتهاء حملة (campaign ending). التقسيم الفوري مغرٍ، لكن إن تعطّل التتبع (tracking) فستُظهر كل شريحة الانخفاض الزائف نفسه."
+      }
+    },
+    {
+      "id": "m5-4",
+      "level": 3,
+      "lesson": "5.3",
+      "q": {
+        "en": "Asked to design a fault log where 50 branch staff report ATM problems, a candidate confidently proposes microservices, Kubernetes, Kafka and three databases, without saying why. Using Najm's junior design-round rubric, what is the best diagnosis and fix?",
+        "ar": "طُلب من مرشّح تصميم سجلّ أعطال (fault log) يبلّغ فيه 50 موظفًا في الفروع عن مشكلات أجهزة الصراف الآلي (ATM)، فاقترح بثقة الخدمات المصغّرة (microservices) وKubernetes وKafka وثلاث قواعد بيانات (databases) دون أن يذكر السبب. وفق معايير بنك نجم لتقييم جولات التصميم للمبتدئين (junior design-round rubric)، ما التشخيص والعلاج الأنسب؟"
+      },
+      "o": {
+        "en": [
+          "Strong range: naming Kafka and Kubernetes is what juniors must show",
+          "Over-built: clarify scale, start simple, give each part a \"because\"",
+          "Sound design: he loses points only for not estimating the cloud bill",
+          "Under-built: add a cache and a load balancer before being asked"
+        ],
+        "ar": [
+          "تنوّع قوي (strong range): ذكر Kafka وKubernetes هو ما يجب أن يُظهره المبتدئ (junior)",
+          "تصميم مُفرط (over-built): يوضّح الحجم (scale)، ويبدأ بسيطًا، ويعلّل كل جزء بـ«لأن» (because)",
+          "تصميم سليم (sound design): يخسر نقاطًا فقط لأنه لم يقدّر فاتورة السحابة (cloud bill)",
+          "تصميم ناقص (under-built): يضيف ذاكرة تخزين مؤقت (cache) وموزّع أحمال (load balancer) قبل أن يُسأل"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "No component has a reason and the scale is tiny, which scores 1 on \"simple, justified design\"; the fix is to clarify users and scale, start with the simplest design and justify each box with \"because\". Treating name-dropping as range is the tempting mistake the lesson warns against.",
+        "ar": "لا يحمل أي مكوّن (component) سببًا والحجم (scale) صغير جدًا، وهذا يحصل على 1 في بند «تصميم بسيط ومعلَّل» (simple, justified design)؛ والعلاج أن يوضّح المستخدمين والحجم، ويبدأ بأبسط تصميم (simplest design)، ويعلّل كل مربع بـ«لأن» (because). أما عدّ ذكر أسماء التقنيات (technology name-dropping) تنوّعًا فهو الخطأ المغري الذي يحذّر منه الدرس."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m5-e1",
+      "lesson": "5.1",
+      "text": {
+        "en": "I have built a story bank of at least eight true STAR stories, each with my own action, a result and a link or person who can confirm it.",
+        "ar": "لقد بنيت بنك قصص (story bank) من ثماني قصص حقيقية على الأقل وفق طريقة STAR (STAR method)، لكلٍّ منها إجراء شخصي (personal action) ونتيجة (result) ورابط أو شخص يمكنه تأكيدها (verifier)."
+      }
+    },
+    {
+      "id": "m5-e2",
+      "lesson": "5.2",
+      "text": {
+        "en": "I have reviewed an AI-written pull request in writing, separated blockers from suggestions, and added at least one test because of the review.",
+        "ar": "لقد راجعت كتابيًا طلب دمج (pull request, PR) كتبه الذكاء الاصطناعي (AI-written)، وفصلت عوائق الدمج (blockers) عن الاقتراحات (suggestions)، وأضفت اختبارًا واحدًا على الأقل (at least one test) بسبب المراجعة."
+      }
+    }
+  ]
+}

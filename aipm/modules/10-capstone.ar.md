@@ -453,6 +453,7 @@ flowchart TD
 </details>
 
 ## 📚 المراجع (References)
+- دورة «من التخرّج إلى التوظيف (From Graduate to Hired)»، دورة المكتبة المهنية (career course): مسارات الأدوار (role paths)، ومعرض الأعمال (portfolio)، والسيرة الذاتية (CV)، والمقابلات (interviews)، والأيام التسعون الأولى (first 90 days): [../career/index.ar.html](../career/index.ar.html)
 - Marty Cagan, *Inspired* (2nd ed., 2017) and *Empowered* (2020) — https://www.svpg.com
 - Gayle Laakmann McDowell and Jackie Bavaro, *Cracking the PM Interview* (2013)
 - Lewis C. Lin, *Decode and Conquer* (CIRCLES method)

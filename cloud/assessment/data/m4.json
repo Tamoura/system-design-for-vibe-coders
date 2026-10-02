@@ -1,0 +1,135 @@
+{
+  "area": "m4",
+  "questions": [
+    {
+      "id": "m4-1",
+      "level": 1,
+      "lesson": "4.2",
+      "q": {
+        "en": "In Najm Bank's release practice, what does it mean to separate deploying from releasing?",
+        "ar": "في ممارسة الإطلاق (release practice) لدى بنك نجم (Najm Bank)، ماذا يعني الفصل بين النشر (deploying) والإطلاق (releasing)؟"
+      },
+      "o": {
+        "en": [
+          "Deploys are approved by a change board; releases need only peer review",
+          "Releasing builds the artefact once; deploying copies it to every server",
+          "New code can run in production while users still cannot reach it",
+          "A deploy only ever reaches staging; a release always reaches production"
+        ],
+        "ar": [
+          "يوافق مجلس التغيير (change board) على عمليات النشر (deploys)، بينما تكفي مراجعة الأقران (peer review) للإطلاقات (releases)",
+          "الإطلاق (releasing) يبني الأثر البرمجي (artefact) مرة واحدة، والنشر (deploying) ينسخه إلى كل خادم (server)",
+          "يمكن أن تعمل الشيفرة الجديدة (new code) في الإنتاج (production) بينما لا يستطيع المستخدمون (users) الوصول إليها بعد",
+          "النشر (deploy) لا يصل إلا إلى بيئة ما قبل الإنتاج (staging)، أما الإطلاق (release) فيصل دائمًا إلى الإنتاج (production)"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Deploying puts new code on servers and releasing lets users reach it, so traffic shifting and feature flags can expose it gradually and switch it off in seconds. The second option mixes up the CI build step with release; building the artefact says nothing about who can see a feature.",
+        "ar": "النشر (deploying) يضع الشيفرة الجديدة على الخوادم (servers)، والإطلاق (releasing) يتيح للمستخدمين (users) الوصول إليها، لذا يستطيع تحويل حركة المرور (traffic shifting) وأعلام الميزات (feature flags) كشفها تدريجيًا (gradually) وإيقافها في ثوانٍ (in seconds). أما الخيار الثاني فيخلط بين خطوة البناء (build) في التكامل المستمر (CI) وبين الإطلاق؛ فبناء الأثر البرمجي (artefact) لا يحدد مَن يرى الميزة (feature)."
+      }
+    },
+    {
+      "id": "m4-2",
+      "level": 2,
+      "lesson": "4.1",
+      "q": {
+        "en": "Yousef notices that two Najm Mobile API pull requests often each pass the merge check on their own, yet `main` turns red as soon as both are merged. It happens several times a week. What should he add?",
+        "ar": "يلاحظ يوسف أن طلبَي سحب (pull requests) في واجهة برمجة تطبيق نجم للهاتف (Najm Mobile API) ينجح كلٌّ منهما غالبًا في فحص الدمج (merge check) وحده، ثم يتحول الفرع الرئيسي (`main`) إلى الأحمر (red) فور دمجهما معًا. يتكرر ذلك عدة مرات أسبوعيًا. ماذا ينبغي أن يضيف؟"
+      },
+      "o": {
+        "en": [
+          "A merge queue that tests each PR on top of the PRs ahead of it",
+          "Automatic retries of the main pipeline until the build turns green",
+          "A rule that developers bundle related work into larger weekly PRs",
+          "The full end-to-end suite as a blocking check on every pull request"
+        ],
+        "ar": [
+          "طابور دمج (merge queue) يختبر كل طلب سحب (PR) فوق طلبات السحب (PRs) التي تسبقه",
+          "إعادة تشغيل تلقائية (automatic retries) لخط التسليم (pipeline) الرئيسي حتى يصبح البناء (build) أخضر (green)",
+          "قاعدة تُلزم المطوّرين (developers) بتجميع العمل المترابط في طلبات سحب (PRs) أسبوعية أكبر",
+          "مجموعة الاختبارات الشاملة (end-to-end suite) كاملةً كفحص مانع (blocking check) على كل طلب سحب (pull request)"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "A merge queue tests each PR against the PRs ahead of it, so two changes that break only together are caught before they reach `main`. Retrying until green hides the failure instead of preventing it, and larger weekly PRs bring back the batching that CI is meant to end.",
+        "ar": "طابور الدمج (merge queue) يختبر كل طلب سحب (PR) مع طلبات السحب التي تسبقه، فيُكتشَف التغييران اللذان لا ينكسران إلا معًا (break only together) قبل وصولهما إلى الفرع `main`. أما إعادة التشغيل حتى الأخضر (re-run until green) فتخفي العطل (failure) ولا تمنعه، وطلبات السحب الأسبوعية الأكبر تعيد تجميع العمل (batching) الذي جاء التكامل المستمر (CI) لإنهائه."
+      }
+    },
+    {
+      "id": "m4-3",
+      "level": 2,
+      "lesson": "4.3",
+      "q": {
+        "en": "Noura reviews the OIDC trust policy on the Mobile API push role. It accepts only tokens whose subject is `repo:najm-bank/mobile-api:environment:production`. She worries that a job on a feature branch could still assume the role. What closes that gap?",
+        "ar": "تراجع نورة سياسة الثقة (trust policy) الخاصة بـ OIDC على دور الدفع (push role) لواجهة برمجة تطبيق نجم للهاتف (Mobile API). لا تقبل السياسة إلا الرموز (tokens) التي يكون موضوعها (subject) هو `repo:najm-bank/mobile-api:environment:production`. وتخشى أن تتمكن مهمة (job) على فرع ميزة (feature branch) من تولّي الدور (assume the role) رغم ذلك. ما الذي يسدّ هذه الثغرة؟"
+      },
+      "o": {
+        "en": [
+          "Grant `id-token: write` at workflow level rather than per job",
+          "Pin `configure-aws-credentials` to a full commit SHA in that job",
+          "Keep a backup access key for the role in the production environment",
+          "Limit the production environment's deployment branches to `main`"
+        ],
+        "ar": [
+          "منح صلاحية `id-token: write` على مستوى سير العمل (workflow level) بدلًا من كل مهمة (per job)",
+          "تثبيت `configure-aws-credentials` على بصمة إيداع كاملة (full commit SHA) في تلك المهمة (job)",
+          "حفظ مفتاح وصول احتياطي (backup access key) للدور في بيئة الإنتاج (production environment)",
+          "حصر فروع النشر (deployment branches) لبيئة الإنتاج (production environment) في الفرع `main`"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "The token's subject names the environment, not the branch, so any branch allowed to use the production environment could assume the role; limiting that environment's deployment branches to `main` closes the gap. SHA pinning is good practice, but it controls which action code runs, not which branch gets credentials.",
+        "ar": "موضوع الرمز (token subject) يسمّي البيئة (environment) لا الفرع (branch)، فأي فرع مسموح له باستخدام بيئة الإنتاج (production environment) يستطيع تولّي الدور (assume the role)؛ وحصر فروع النشر (deployment branches) لتلك البيئة في `main` يسدّ الثغرة. أما التثبيت ببصمة الإيداع (SHA pinning) فممارسة جيدة، لكنه يتحكم في شيفرة الإجراء (action) التي تعمل، لا في الفرع الذي يحصل على بيانات الاعتماد (credentials)."
+      }
+    },
+    {
+      "id": "m4-4",
+      "level": 3,
+      "lesson": "4.2",
+      "q": {
+        "en": "A Payments release finished its canary steps and has served 100% of traffic for an hour. Error-budget burn is now far above the previous version's, almost all of it on the new instant-transfer path, which sits behind a release flag switched on this morning. Najm runs Argo CD with automated sync and self-heal. What should Maha do first?",
+        "ar": "أنهى إصدار (release) من خدمة المدفوعات (Payments service) خطوات الكناري (canary steps)، ويخدم 100% من حركة المرور (traffic) منذ ساعة. صار معدل استهلاك ميزانية الأخطاء (error budget burn rate) الآن أعلى بكثير من الإصدار السابق (previous version)، ومعظمه في مسار التحويل الفوري (instant-transfer path) الجديد، الموجود خلف علم إطلاق (release flag) فُعِّل هذا الصباح. يعمل بنك نجم (Najm Bank) بـ Argo CD مع المزامنة التلقائية (automated sync) والإصلاح الذاتي (self-heal). ما أول ما ينبغي أن تفعله مها؟"
+      },
+      "o": {
+        "en": [
+          "Run `kubectl rollout undo` on Payments to restore the last version",
+          "Switch the release flag off, then judge whether to `git revert`",
+          "Write and ship a forward fix for the instant-transfer path at once",
+          "Wait for the next canary analysis run to confirm the fault first"
+        ],
+        "ar": [
+          "تشغيل `kubectl rollout undo` على خدمة المدفوعات (Payments) لاستعادة الإصدار السابق (previous version)",
+          "إيقاف علم الإطلاق (release flag)، ثم تقدير الحاجة (judge whether) إلى `git revert`",
+          "كتابة إصلاح أمامي (forward fix) لمسار التحويل الفوري (instant-transfer path) وشحنه فورًا",
+          "انتظار جولة تحليل الكناري (canary analysis) التالية لتأكيد العطل (fault) أولًا"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Najm's runbook says to switch an involved flag off first, because that is faster than any rollback; a `git revert` of the digest change can follow if needed. A manual `kubectl rollout undo` is soon undone by Argo CD's self-heal, because Git is the source of truth.",
+        "ar": "ينص دليل التشغيل (runbook) في بنك نجم على إيقاف العلم (flag) المعني أولًا، لأن ذلك أسرع من أي تراجع (rollback)؛ ويمكن أن يتبعه `git revert` لتغيير البصمة (digest) عند الحاجة. أما التراجع اليدوي (manual rollback) بـ `kubectl rollout undo` فسرعان ما يلغيه الإصلاح الذاتي (self-heal) في Argo CD، لأن Git هو مصدر الحقيقة (source of truth)."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m4-e1",
+      "lesson": "4.2",
+      "text": {
+        "en": "I have converted a Deployment to an Argo Rollouts canary with an AnalysisTemplate on success rate, and watched it abort by itself and return traffic to stable when I released a faulty version.",
+        "ar": "حوّلتُ نشرًا (Deployment) إلى إطلاق كناري (canary) عبر Argo Rollouts مع قالب تحليل (AnalysisTemplate) على معدل النجاح (success rate)، وشاهدتُه يُجهَض تلقائيًا (abort by itself) ويعيد حركة المرور (traffic) إلى النسخة المستقرة (stable) حين أطلقتُ إصدارًا معيبًا (faulty version)."
+      }
+    },
+    {
+      "id": "m4-e2",
+      "lesson": "4.3",
+      "text": {
+        "en": "I have audited my workflows so that each one declares read-only default permissions and every third-party action is pinned to a full 40-character commit SHA.",
+        "ar": "دقّقتُ سير العمل (workflows) لديّ بحيث يعلن كلٌّ منها صلاحيات افتراضية للقراءة فقط (read-only default permissions)، وتُثبَّت كل إجراءات الطرف الثالث (third-party actions) على بصمة إيداع كاملة (full commit SHA) من 40 حرفًا."
+      }
+    }
+  ]
+}

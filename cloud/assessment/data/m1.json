@@ -1,0 +1,135 @@
+{
+ "area": "m1",
+ "questions": [
+  {
+   "id": "m1-1",
+   "level": 1,
+   "lesson": "1.1",
+   "q": {
+    "en": "From inside a pod, Yousef runs `nc -vz` against the payments database host on port 5432. The command hangs for a while and then times out; it never says \"refused\". What does this most likely point to?",
+    "ar": "من داخل حجيرة (pod)، يشغّل يوسف الأمر `nc -vz` على مضيف قاعدة بيانات المدفوعات (payments database host) عند المنفذ (port) 5432. يتوقف الأمر (hangs) بعض الوقت ثم تنتهي مهلته (times out)، ولا تظهر أبدًا كلمة «مرفوض» (refused). إلامَ يشير هذا على الأرجح؟"
+   },
+   "o": {
+    "en": [
+     "Nothing on the database host is listening on port 5432",
+     "The database hostname no longer resolves to an address",
+     "Something along the path is silently dropping packets",
+     "The database server's TLS certificate has just expired"
+    ],
+    "ar": [
+     "لا شيء على مضيف قاعدة البيانات (database host) يستمع (listening) على المنفذ (port) 5432",
+     "اسم مضيف قاعدة البيانات (database hostname) لم يعد يُترجَم (resolve) إلى عنوان (address)",
+     "شيء ما على المسار (path) يُسقط الحزم (drops the packets) بصمت",
+     "شهادة TLS (TLS certificate) لخادم قاعدة البيانات انتهت صلاحيتها (expired) للتو"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "A timeout usually means a firewall rule or security group silently dropped the packets; if nothing were listening, the host would answer at once with \"Connection refused\". A name that failed to resolve would fail before any connection, and TLS only starts after TCP succeeds.",
+    "ar": "انتهاء المهلة (timeout) يعني عادةً أن قاعدة جدار حماية (firewall rule) أو مجموعة أمان (security group) أسقطت الحزم (packets) بصمت؛ ولو لم يكن شيء يستمع (listening) لردّ المضيف (host) فورًا برسالة «الاتصال مرفوض» (Connection refused). أما الاسم الذي يفشل في الترجمة (resolve) فيفشل قبل أي اتصال، ولا تبدأ TLS إلا بعد نجاح اتصال TCP (TCP connection)."
+   }
+  },
+  {
+   "id": "m1-2",
+   "level": 2,
+   "lesson": "1.2",
+   "q": {
+    "en": "Yousef drafts the Najm Mobile API's VPC as `10.20.0.0/16`. The Network team replies that a data-centre network already uses part of that range, and the cloud must reach core banking over a private link. What should he do?",
+    "ar": "يُعدّ يوسف مسودة السحابة الخاصة الافتراضية (VPC) لواجهة برمجة تطبيق نجم للهاتف (Najm Mobile API) بالنطاق `10.20.0.0/16`. يردّ فريق الشبكات (Network team) بأن شبكة في مركز البيانات (data-centre network) تستخدم جزءًا من هذا النطاق (range)، وأن السحابة (cloud) يجب أن تصل إلى الأنظمة المصرفية الأساسية (core banking) عبر رابط خاص (private link). ماذا يجب أن يفعل؟"
+   },
+   "o": {
+    "en": [
+     "Agree a non-overlapping range with the Network team before building",
+     "Keep the range; a VPC is private, so it cannot clash with the data centre",
+     "Keep the range and add a NAT gateway in front of the private link",
+     "Keep the range and reach core banking by DNS name, not by address"
+    ],
+    "ar": [
+     "الاتفاق مع فريق الشبكات (Network team) على نطاق غير متداخل (non-overlapping range) قبل البناء",
+     "الإبقاء على النطاق (range)؛ فالسحابة الخاصة الافتراضية (VPC) معزولة ولا يمكن أن تتعارض مع مركز البيانات (data centre)",
+     "الإبقاء على النطاق (range) وإضافة بوابة ترجمة العناوين (NAT gateway) أمام الرابط الخاص (private link)",
+     "الإبقاء على النطاق (range) والوصول إلى الأنظمة المصرفية الأساسية (core banking) باسم DNS (DNS name) لا بالعنوان (address)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Once the VPC is joined to the data centre over a private link, overlapping address ranges break routing, so the address plan must be agreed with the Network team before anything is built. \"A VPC is private\" holds only until it is connected to another network.",
+    "ar": "بمجرد ربط السحابة الخاصة الافتراضية (VPC) بمركز البيانات (data centre) عبر رابط خاص (private link)، تكسر نطاقات العناوين المتداخلة (overlapping address ranges) التوجيه (routing)، لذا يجب الاتفاق على خطة العناوين (address plan) مع فريق الشبكات (Network team) قبل بناء أي شيء. أما القول إن السحابة الخاصة الافتراضية (VPC) معزولة فيصحّ فقط حتى تُربط بشبكة أخرى (another network)."
+   }
+  },
+  {
+   "id": "m1-3",
+   "level": 2,
+   "lesson": "1.3",
+   "q": {
+    "en": "A new engineer has just joined the platform team and needs to inspect production resources from the command line. He asks Yousef for a personal access key \"with read-only rights, so it's safe\". Under Najm's access model, what should he get instead?",
+    "ar": "انضم مهندس جديد (new engineer) للتو إلى فريق المنصة (platform team) ويحتاج إلى فحص موارد الإنتاج (production resources) من سطر الأوامر (command line). يطلب من يوسف مفتاح وصول شخصيًا (personal access key) «بصلاحيات قراءة فقط (read-only rights)، ليكون آمنًا». وفق نموذج الوصول في نجم (Najm's access model)، ماذا ينبغي أن يحصل عليه بدلًا من ذلك؟"
+   },
+   "o": {
+    "en": [
+     "A read-only personal access key that is rotated every month",
+     "A separate cloud user with its own password and MFA turned on",
+     "Short-term use of the pipeline's deploy key until he is set up",
+     "SSO sign-in with MFA that lets him assume a read-only role"
+    ],
+    "ar": [
+     "مفتاح وصول شخصي (personal access key) للقراءة فقط (read-only) يُدوَّر (rotated) كل شهر",
+     "مستخدم سحابي منفصل (separate cloud user) بكلمة مرور خاصة به ومصادقة متعددة العوامل (MFA) مفعّلة",
+     "استخدام مؤقت لمفتاح النشر (deploy key) الخاص بخط التسليم (pipeline) إلى أن يُجهَّز وصوله",
+     "تسجيل دخول موحّد (SSO) مع مصادقة متعددة العوامل (MFA) يتيح له تولّي دور للقراءة فقط (read-only role)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "People sign in through the company identity provider with MFA and assume task roles, so there is no long-lived key to leak and disabling one account removes all their access. A rotated read-only key is still a long-lived secret that anyone who finds it can copy and use.",
+    "ar": "يسجّل الأشخاص الدخول عبر مزوّد الهوية في الشركة (identity provider) مع المصادقة متعددة العوامل (MFA) ويتولّون أدوار المهام (task roles)، فلا يوجد مفتاح طويل الأمد (long-lived key) يمكن أن يتسرّب، وتعطيل حساب واحد يزيل كل وصولهم. أما مفتاح القراءة فقط (read-only key) المُدوَّر (rotated) فيبقى سرًّا طويل الأمد (long-lived secret) يستطيع أي شخص يعثر عليه نسخه واستخدامه."
+   }
+  },
+  {
+   "id": "m1-4",
+   "level": 3,
+   "lesson": "1.2",
+   "q": {
+    "en": "The Najm Mobile API runs on Kubernetes nodes in three zones, with a managed database standby in a second zone. Last month it was down for two hours after a bad configuration push reached every zone at once. A manager now proposes adding a second region \"so this never happens again\". What is the soundest assessment?",
+    "ar": "تعمل واجهة برمجة تطبيق نجم للهاتف (Najm Mobile API) على عُقد Kubernetes (Kubernetes nodes) في ثلاث مناطق توافر (availability zones)، مع نسخة احتياطية جاهزة (standby) لقاعدة البيانات المُدارة (managed database) في منطقة توافر ثانية. في الشهر الماضي توقفت ساعتين بعد أن وصل دفع إعدادات خاطئ (bad configuration push) إلى كل مناطق التوافر في آنٍ واحد. يقترح مدير الآن إضافة منطقة ثانية (second region) «حتى لا يتكرر هذا أبدًا». ما التقييم الأسلم؟"
+   },
+   "o": {
+    "en": [
+     "Approve it; a second region would have kept the API serving throughout",
+     "It misses the cause: a bad push hits every region; fix how changes ship",
+     "Three zones proved too few; add a fourth zone before considering a region",
+     "Move the database onto self-run VMs so the team controls its own failover"
+    ],
+    "ar": [
+     "الموافقة؛ فالمنطقة الثانية (second region) كانت ستُبقي الواجهة (API) تعمل طوال الوقت",
+     "لا يعالج السبب: الدفع الخاطئ (bad push) يصل إلى كل منطقة (region)؛ أصلحوا طريقة إطلاق التغييرات (how changes ship)",
+     "ثلاث مناطق توافر (availability zones) لم تكفِ؛ أضيفوا منطقة توافر رابعة قبل التفكير في منطقة ثانية (second region)",
+     "نقل قاعدة البيانات إلى أجهزة افتراضية يديرها الفريق بنفسه (self-run VMs) ليتحكم في تجاوز الفشل (failover)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Zones and regions protect against hardware and location failures, but no zone or region design protects against a bad deploy or configuration push, which would reach the second region too; the fix lies in how changes are released. Multi-region should answer a stated recovery or regulatory need, not be added by reflex after an outage.",
+    "ar": "تحمي مناطق التوافر (availability zones) والمناطق (regions) من أعطال العتاد (hardware) والموقع، لكن لا يحمي أي تصميم لها من نشر خاطئ (bad deploy) أو دفع إعدادات خاطئ (bad configuration push)، إذ سيصل إلى المنطقة الثانية أيضًا؛ فالعلاج في طريقة إطلاق التغييرات (releases). وينبغي أن تلبّي المناطق المتعددة (multi-region) حاجة معلنة للتعافي (recovery) أو حاجة تنظيمية (regulatory need)، لا أن تُضاف كردّ فعل تلقائي (reflex) بعد انقطاع (outage)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m1-e1",
+   "lesson": "1.1",
+   "text": {
+    "en": "I have written a walk-the-chain script that tests DNS, TCP, TLS and HTTP in order, stops at the first failing hop with a clear message, and tried it on a non-existent name, a closed port and an expired certificate.",
+    "ar": "كتبتُ سكربت لتتبّع السلسلة (walk-the-chain script) يختبر DNS ثم TCP ثم TLS ثم HTTP بالترتيب، ويتوقف عند أول قفزة فاشلة (first failing hop) برسالة واضحة، وجرّبته على اسم غير موجود (non-existent name) ومنفذ مغلق (closed port) وشهادة منتهية الصلاحية (expired certificate)."
+   }
+  },
+  {
+   "id": "m1-e2",
+   "lesson": "1.3",
+   "text": {
+    "en": "I have built a CI workflow that gets short-lived cloud credentials through OIDC federation with no stored secret, and confirmed that a branch outside the trust condition is denied at the credential step.",
+    "ar": "بنيتُ سير عمل للتكامل المستمر (CI workflow) يحصل على بيانات اعتماد سحابية قصيرة الأمد (short-lived cloud credentials) عبر اتحاد OIDC (OIDC federation) دون أي سرّ مخزَّن (stored secret)، وتحققتُ من أن فرعًا (branch) خارج شرط الثقة (trust condition) يُرفَض عند خطوة بيانات الاعتماد (credential step)."
+   }
+  }
+ ]
+}

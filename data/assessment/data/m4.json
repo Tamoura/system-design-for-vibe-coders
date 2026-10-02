@@ -1,0 +1,135 @@
+{
+ "area": "m4",
+ "questions": [
+  {
+   "id": "m4-1",
+   "level": 1,
+   "lesson": "4.1",
+   "q": {
+    "en": "Najm's finance team needs quarterly figures and keeps a daily table for each of four measures. For which one does Huda get the correct quarterly figure by simply adding up the 90 daily values?",
+    "ar": "يحتاج فريق المالية (finance team) في بنك نجم (Najm Bank) إلى أرقام ربع سنوية (quarterly figures)، ويحتفظ بجدول يومي (daily table) لكل مقياس (measure) من أربعة مقاييس. في أيّها تحصل هدى على الرقم الربع سنوي الصحيح بمجرد جمع القيم اليومية التسعين (adding up the 90 daily values)؟"
+   },
+   "o": {
+    "en": [
+     "Digital adoption rate for each day, as a percentage",
+     "End-of-day balance of all current accounts",
+     "Card spend in QAR, net of reversals",
+     "Number of distinct active customers each day"
+    ],
+    "ar": [
+     "معدل التبنّي الرقمي (digital adoption rate) لكل يوم، كنسبة مئوية (percentage)",
+     "رصيد نهاية اليوم (end-of-day balance) لجميع الحسابات الجارية (current accounts)",
+     "إنفاق البطاقات (card spend) بالريال القطري (QAR)، بعد استبعاد العمليات المعكوسة (net of reversals)",
+     "عدد العملاء النشطين المميَّزين (distinct active customers) في كل يوم"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Card spend is additive, so the daily values sum to the quarter. End-of-day balances are semi-additive (take the period-end value or the average), and distinct counts and ratios are non-additive, so they must be recomputed from the underlying rows.",
+    "ar": "إنفاق البطاقات (card spend) مقياس قابل للجمع (additive)، فتُجمع قيمه اليومية لتعطي الربع. أما أرصدة نهاية اليوم (end-of-day balances) فهي شبه قابلة للجمع (semi-additive)، فتؤخذ قيمة نهاية الفترة أو المتوسط (period-end value or the average)، والأعداد المميَّزة (distinct counts) والنسب (ratios) غير قابلة للجمع (non-additive)، فيجب إعادة حسابها من الصفوف الأساسية (underlying rows)."
+   }
+  },
+  {
+   "id": "m4-2",
+   "level": 2,
+   "lesson": "4.2",
+   "q": {
+    "en": "Kareem must let four regional heads compare how weekly card spend moved over the last 52 weeks for four segments in each of four regions. Which design serves that comparison best?",
+    "ar": "على كريم أن يمكّن أربعة رؤساء إقليميين (regional heads) من مقارنة تحرّك إنفاق البطاقات الأسبوعي (weekly card spend) خلال آخر 52 أسبوعًا، لأربع شرائح (segments) في كل منطقة (region) من أربع مناطق. أي تصميم (design) يخدم هذه المقارنة على أفضل وجه؟"
+   },
+   "o": {
+    "en": [
+     "Small multiples: a line chart per region, shared axes, a line per segment",
+     "One line chart holding all 16 segment-and-region series in different colours",
+     "A stacked area chart with 16 layers, one for each segment-and-region pair",
+     "A grid of pie charts, one per region and week, showing each segment's share"
+    ],
+    "ar": [
+     "المضاعفات الصغيرة (small multiples): مخطط خطي (line chart) لكل منطقة على محاور مشتركة (shared axes)، وخط لكل شريحة (segment)",
+     "مخطط خطي واحد (one line chart) يضم السلاسل الست عشرة للشرائح والمناطق (segment-and-region series) بألوان مختلفة",
+     "مخطط مساحي مكدّس (stacked area chart) من 16 طبقة (layers)، طبقة لكل زوج من الشريحة والمنطقة (segment-and-region pair)",
+     "شبكة من المخططات الدائرية (pie charts)، واحد لكل منطقة وأسبوع، يُظهر حصة كل شريحة (segment's share)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Small multiples repeat the same chart on shared axes, so each region's trends are read by position and compare directly. One chart with 16 lines is the tempting shortcut, but the lines tangle and the reader cannot follow any single series.",
+    "ar": "تكرّر المضاعفات الصغيرة (small multiples) المخطط نفسه على محاور مشتركة (shared axes)، فتُقرأ اتجاهات (trends) كل منطقة بالموضع (position) وتُقارن مباشرة. أما مخطط واحد بستة عشر خطًا (one chart with 16 lines) فهو الاختصار المغري (tempting shortcut)، لكن الخطوط تتشابك ولا يستطيع القارئ تتبّع أي سلسلة (series) بمفردها."
+   }
+  },
+  {
+   "id": "m4-3",
+   "level": 2,
+   "lesson": "4.3",
+   "q": {
+    "en": "A Najm Mobile test's primary metric shows no clear effect (95% CI −0.4 to +0.6 points). After slicing by 12 segments and devices, an analyst finds SME customers on Android up with p = 0.02. The product manager wants to ship the change to that group. What should Dana advise?",
+    "ar": "لا يُظهر المقياس الأساسي (primary metric) في اختبار على تطبيق نجم للهاتف (Najm Mobile) أثرًا واضحًا (no clear effect)، إذ يمتد فاصل الثقة 95% (95% CI) من −0.4 إلى +0.6 نقطة. وبعد التقسيم (slicing) إلى 12 شريحة وجهازًا (segments and devices)، يجد محلّل أن عملاء المنشآت الصغيرة والمتوسطة (SME customers) على Android ارتفعوا بقيمة احتمالية (p-value) تساوي 0.02. يريد مدير المنتج (product manager) إطلاق التغيير لهذه المجموعة. بماذا تنصح دانة؟"
+   },
+   "o": {
+    "en": [
+     "Ship it to that group, since p is below 0.05 for a segment that matters",
+     "Keep the test running until the primary metric becomes significant too",
+     "Apply CUPED to the SME Android slice to confirm that the lift is real",
+     "Treat the slice as a hypothesis, the primary metric of a new test"
+    ],
+    "ar": [
+     "أطلقه لهذه المجموعة، لأن القيمة الاحتمالية (p) أقل من 0.05 في شريحة مهمة (segment that matters)",
+     "أبقِ الاختبار قائمًا (keep the test running) حتى يصبح المقياس الأساسي (primary metric) دالًّا إحصائيًا (significant) أيضًا",
+     "طبّق CUPED على شريحة SME على Android للتأكد من أن الارتفاع (lift) حقيقي",
+     "تعامل مع الشريحة كفرضية (hypothesis) تكون المقياس الأساسي (primary metric) لاختبار جديد (new test)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Slice a test a dozen ways and one p below 0.05 is likely by luck alone (multiple comparisons), so segment findings become hypotheses for the next test. Shipping on the slice is the tempting shortcut, but it picks the winner after the fact.",
+    "ar": "إذا قسّمت الاختبار بعشرات الطرق، فمن المرجّح أن تظهر قيمة احتمالية (p) أقل من 0.05 بمحض الصدفة (by luck alone)، وهذه هي المقارنات المتعددة (multiple comparisons)؛ لذا تصبح نتائج الشرائح (segment findings) فرضيات (hypotheses) للاختبار التالي. أما الإطلاق بناءً على الشريحة فهو الاختصار المغري (tempting shortcut)، لكنه يختار الفائز بعد وقوع الحدث (after the fact)."
+   }
+  },
+  {
+   "id": "m4-4",
+   "level": 3,
+   "lesson": "4.3",
+   "q": {
+    "en": "Najm put the ten branches with the worst card-spend month into a coaching programme. The next month their card spend rose 12% on average, and the regional head wants coaching rolled out to every branch. What is the soundest judgement?",
+    "ar": "أدخل بنك نجم (Najm Bank) الفروع العشرة صاحبة أسوأ شهر في إنفاق البطاقات (worst card-spend month) في برنامج تدريب (coaching programme). وفي الشهر التالي ارتفع إنفاق البطاقات فيها بنسبة 12% في المتوسط، ويريد الرئيس الإقليمي (regional head) تعميم التدريب على كل الفروع. ما الحكم الأسلم (soundest judgement)؟"
+   },
+   "o": {
+    "en": [
+     "Roll it out: a 12% rise across ten branches is too large to be chance",
+     "Doubt it: worst-month picks rebound by luck, so compare with a control",
+     "It is Simpson's paradox: break the ten branches down by customer segment",
+     "It is a novelty effect: wait for the rise to fade before deciding at all"
+    ],
+    "ar": [
+     "عمّمه (roll it out): فارتفاع بنسبة 12% في عشرة فروع أكبر من أن يكون صدفة (too large to be chance)",
+     "تشكّك فيه (doubt it): فالفروع المختارة لأسوأ شهر تتعافى بالصدفة (rebound by luck)، فقارن بمجموعة ضابطة (control)",
+     "إنها مفارقة سيمبسون (Simpson's paradox): قسّم الفروع العشرة حسب شريحة العملاء (customer segment)",
+     "إنه أثر الجِدّة (novelty effect): انتظر حتى يتلاشى الارتفاع (rise to fade) قبل أن تقرّر أي شيء"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "This is regression to the mean: branches picked for a bad month look better next month with no intervention, because part of the bad month was bad luck, so a programme judged without a control group will appear to work. A large rise feels convincing, but its size does not rule out a rebound.",
+    "ar": "هذا هو الانحدار نحو المتوسط (regression to the mean): الفروع المختارة بسبب شهر سيئ تبدو أفضل في الشهر التالي دون أي تدخّل (no intervention)، لأن جزءًا من الشهر السيئ كان سوء حظ (bad luck)، لذا سيبدو أن البرنامج المُقيَّم دون مجموعة ضابطة (without a control group) ناجح. قد يبدو الارتفاع الكبير مقنعًا، لكن حجمه لا ينفي احتمال التعافي التلقائي (rebound)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m4-e1",
+   "lesson": "4.1",
+   "text": {
+    "en": "I have written a complete metric definition card (formula, qualifying events, exclusions, window and time zone, grain, owner) for a metric that teams computed differently, and explained each difference row by row.",
+    "ar": "كتبتُ بطاقة تعريف مقياس كاملة (complete metric definition card) تشمل الصيغة (formula) والأحداث المؤهِّلة (qualifying events) والاستثناءات (exclusions) والنافذة الزمنية والمنطقة الزمنية (window and time zone) والحُبَيبية (grain) والمالك (owner)، لمقياس كانت الفرق تحسبه بطرق مختلفة (computed differently)، وشرحتُ كل فرق صفًّا بصف (row by row)."
+   }
+  },
+  {
+   "id": "m4-e2",
+   "lesson": "4.3",
+   "text": {
+    "en": "I have computed the sample size for an A/B test from its baseline, minimum detectable effect, alpha and power before launch, and run a sample ratio mismatch check before reading any result.",
+    "ar": "حسبتُ حجم العيّنة (sample size) لاختبار A/B (A/B test) من خط الأساس (baseline) والحد الأدنى للأثر القابل للكشف (minimum detectable effect) ومستوى الدلالة (alpha) والقوة الإحصائية (power) قبل الإطلاق، وأجريتُ فحص عدم تطابق نسبة العيّنة (sample ratio mismatch check) قبل قراءة أي نتيجة."
+   }
+  }
+ ]
+}
