@@ -137,7 +137,7 @@ RUN --mount=type=secret,id=pip_conf,target=/etc/pip.conf \
 |---|---|---|
 | Full distribution | `python:3.12` | Easy to debug; large; many unused packages |
 | Slim distribution | `python:3.12-slim` | Good default; still has a shell and package manager |
-| Alpine-based | `python:3.12-alpine` | Very small; uses musl instead of glibc, which breaks some compiled Python wheels |
+| Alpine-based | `python:3.12-alpine` | Very small; uses musl instead of glibc, so some Python packages lack prebuilt wheels and must compile |
 | Distroless / minimal | Google's distroless images, Chainguard-style minimal images | No shell or package manager; smallest attack surface; harder to debug interactively |
 | `scratch` | Empty image | Only for static binaries (often Go or Rust) |
 
@@ -163,7 +163,7 @@ flowchart LR
 
 **Scanning and the patch loop.** Scanners such as Trivy and Grype list known vulnerabilities in an image's packages. New vulnerabilities are published daily against unchanged images, so scan in the pipeline (block on new critical findings that have a fix), rescan running images on a schedule, and rebuild on a cadence even when code has not changed.
 
-**Multi-architecture builds.** Laptops and cloud nodes may differ (Arm or x86). `docker buildx build --platform linux/amd64,linux/arm64` builds both and pushes an index; test on the architecture you run on.
+**Multi-architecture builds.** Laptops and cloud nodes may differ (Arm or x86). `docker buildx build --platform linux/amd64,linux/arm64 --push` builds both and pushes an index; test on the architecture you run on.
 
 **Registry operations.** Treat the registry as production infrastructure: **tag immutability** on release repositories; **pull-through caches or mirrors** for public images, so a public registry's rate limits or outage cannot stop your deploys (Docker Hub limits anonymous and free-tier pulls; check its current limits); the same region as the cluster; and **retention rules** that never delete anything currently deployed.
 
@@ -186,7 +186,7 @@ Salem asks Yousef to turn his fixes into the **Najm Container Image Standard v1*
 | # | Rule | Checked by | Why |
 |---|---|---|---|
 | 1 | Base image from the approved list, pinned by digest | Pipeline policy | Known, patched starting point; no surprise changes |
-| 2 | Multi-stage build; no compilers or package managers in the final stage unless approved | hadolint plus review | Smaller attack surface and faster pulls |
+| 2 | Multi-stage build; no compilers or build tools in the final stage; a shell and package manager only via an approved slim base | hadolint plus review | Smaller attack surface and faster pulls |
 | 3 | Runs as a numeric non-root user (UID 10000 or above) | Pipeline check of image config; cluster admission in lesson 2.3 | Limits damage if the app is compromised |
 | 4 | No secrets in any layer; `.dockerignore` present; build secrets via secret mounts | Secret scanning of the image and repository | Layers are permanent and copied everywhere |
 | 5 | Exec-form `CMD`/`ENTRYPOINT`; app handles `SIGTERM` | Review; shutdown test in CI | Clean shutdown during deploys and scaling |
@@ -223,10 +223,10 @@ Work locally with Docker or a compatible tool. Push only to a registry you own, 
 
 **1. Yousef deletes `.env` with `RUN rm .env` right after `COPY . .`. Why is the secret still exposed?**
 
-- A. `rm` does not work inside a Docker build
-- B. Each instruction creates a layer, and the layer created by `COPY` still contains the file; a later layer only hides it
-- C. The build cache restores deleted files on the next build
-- D. Secrets are always visible in `docker ps`
+- A. `rm` is silently ignored inside a Docker build, so the file is never deleted
+- B. The `COPY` layer still holds the file; the later `rm` layer only hides it
+- C. The build cache restores deleted files from the previous build on every rebuild
+- D. Files in the working directory are always visible to anyone running `docker ps`
 
 <details><summary>Answer</summary>
 
@@ -236,10 +236,10 @@ Work locally with Docker or a compatible tool. Push only to a registry you own, 
 
 **2. Tariq says staging is running an old build even though the pipeline pushed `mobile-api:staging` an hour ago. Two pipelines both push to that tag. What is the most robust fix?**
 
-- A. Ask teams to coordinate their pushes on chat
-- B. Pull the tag more often
-- C. Rename the tag to `staging-v2`
-- D. Deploy by image digest recorded by the pipeline, and make release tags immutable in the registry
+- A. Ask the two teams to coordinate their pushes in a shared chat channel
+- B. Set the cluster to pull the `staging` tag more often, on every pod start
+- C. Rename the tag to `staging-v2` so that it is separate from the old one
+- D. Deploy the digest the pipeline recorded; make release tags immutable
 
 <details><summary>Answer</summary>
 
@@ -249,10 +249,10 @@ Work locally with Docker or a compatible tool. Push only to a registry you own, 
 
 **3. Every commit to the Mobile API rebuilds all dependencies, taking nine minutes. The Dockerfile copies the whole source tree and then runs `pip install`. What change helps most?**
 
-- A. Copy `requirements.txt` and install dependencies before copying the source code
-- B. Switch to the `latest` base image so it is always cached
-- C. Add more CPU to the build machine
-- D. Combine all steps into one `RUN` line
+- A. Copy `requirements.txt` and install it before copying the source
+- B. Switch to the `latest` base image so the base layer is always cached
+- C. Give the build machine more CPU cores and a faster disk
+- D. Combine every build step into one long `RUN` line to cut layers
 
 <details><summary>Answer</summary>
 
@@ -262,10 +262,10 @@ Work locally with Docker or a compatible tool. Push only to a registry you own, 
 
 **4. Why does the hardened Dockerfile use exec-form `CMD ["python", "-m", "src.main"]` rather than `CMD python -m src.main`?**
 
-- A. Exec form makes the image smaller
-- B. Shell form is not allowed in multi-stage builds
-- C. In exec form the application is process 1 and receives `SIGTERM` directly, so it can shut down cleanly
-- D. Exec form runs the process as a non-root user automatically
+- A. Exec form skips the shell layer, which makes the final image noticeably smaller
+- B. Shell form is not allowed in the final stage of a multi-stage build
+- C. The app becomes process 1 and gets `SIGTERM` directly, so it can stop cleanly
+- D. Exec form makes the process run as the non-root user automatically
 
 <details><summary>Answer</summary>
 
@@ -275,10 +275,10 @@ Work locally with Docker or a compatible tool. Push only to a registry you own, 
 
 **5. Mona from Finance asks why the platform team rebuilds images monthly even when no application code changed. What is the best answer?**
 
-- A. Rebuilding makes images smaller over time
-- B. New vulnerabilities are found in existing base images and libraries; rebuilding picks up patched bases, and rescans catch what changed
-- C. Registries delete images older than one month
-- D. Kubernetes refuses to run images older than one month
+- A. Each rebuild compresses the layers further, so images get smaller over time
+- B. New vulnerabilities are found in unchanged bases; rebuilds pick up the patches
+- C. Container registries delete any image older than one month by default
+- D. Kubernetes refuses to start images whose build date is over a month old
 
 <details><summary>Answer</summary>
 
@@ -346,7 +346,7 @@ flowchart LR
     K --> R["Container runtime starts containers"]
 ```
 
-Every component watches the API server and writes results back; none talks to the others directly.
+Controllers, the scheduler and kubelets each watch the API server and write results back; they never talk to each other directly.
 
 **Pods.** A **Pod** is the smallest thing Kubernetes runs: one or more containers sharing a network address, always on the same node. Pods are **ephemeral**: replacements get new names and IP addresses, and you never create one directly for a real workload.
 
@@ -481,7 +481,7 @@ This goes in the pod template's `spec`, paired with node pools in several zones 
 | Concept | AWS | Microsoft Azure | Google Cloud |
 |---|---|---|---|
 | Managed Kubernetes | Amazon EKS | Azure Kubernetes Service (AKS) | Google Kubernetes Engine (GKE) |
-| Serverless containers | ECS on Fargate, App Runner | Azure Container Apps | Cloud Run |
+| Serverless containers | Amazon ECS on AWS Fargate | Azure Container Apps | Cloud Run |
 
 ## 🧰 The toolkit
 | Tool, practice or service | What it is and does | When to reach for it |
@@ -545,10 +545,10 @@ Use a local cluster: install kind or k3d, and create a cluster with `kind create
 
 **1. Yousef deletes a misbehaving Mobile API pod, and a new one appears within seconds with a different name. What caused this?**
 
-- A. The kubelet restarted the same pod after it crashed
-- B. The Service recreated the pod to keep its endpoint
-- C. The ReplicaSet controller saw fewer pods than the Deployment declared and created a replacement
-- D. etcd restored the deleted pod from its backup
+- A. The kubelet on the node restarted the same pod after it was deleted
+- B. The Service recreated the pod so that it would keep at least one endpoint
+- C. The ReplicaSet controller saw too few pods and created a replacement
+- D. etcd restored the deleted pod object from its most recent backup
 
 <details><summary>Answer</summary>
 
@@ -559,9 +559,9 @@ Use a local cluster: install kind or k3d, and create a cluster with `kind create
 **2. A new team deploys a service. Its pods are `Running` and ready, but every request to the Service times out, and the Service has no endpoints. What is the most likely cause?**
 
 - A. The Service selector does not match the pod labels
-- B. The image digest is wrong
-- C. The pods have exceeded their memory limit
-- D. The scheduler could not find a node
+- B. The image digest in the pod template is wrong
+- C. The pods keep exceeding their memory limit
+- D. The scheduler could not find a node with room
 
 <details><summary>Answer</summary>
 
@@ -571,10 +571,10 @@ Use a local cluster: install kind or k3d, and create a cluster with `kind create
 
 **3. During a release, the new Mobile API pods never become ready. The Deployment uses `maxUnavailable: 0` and `maxSurge: 1`. What happens to customers?**
 
-- A. All old pods are deleted at once and the API goes down
-- B. Kubernetes automatically rolls back to the previous version
-- C. Half the traffic goes to broken pods
-- D. The rollout stalls with the old pods still serving traffic, and the Deployment eventually reports that it failed to progress
+- A. All old pods are deleted at once, and the API goes down until someone acts
+- B. Kubernetes detects the failure and automatically rolls back to the previous version
+- C. Traffic is split evenly, so about half of all requests reach the broken pods
+- D. The rollout stalls, old pods keep serving, and it is reported as not progressing
 
 <details><summary>Answer</summary>
 
@@ -584,10 +584,10 @@ Use a local cluster: install kind or k3d, and create a cluster with `kind create
 
 **4. Maha notices that all three Payments replicas are on nodes in the same availability zone. Which change addresses this most directly?**
 
-- A. Increase replicas from 3 to 6
-- B. Add a topology spread constraint on `topology.kubernetes.io/zone` and make sure node pools span several zones
-- C. Move Payments to its own namespace
-- D. Change the Service type to `LoadBalancer`
+- A. Increase replicas from 3 to 6 so that a single zone failure matters less
+- B. Add a zone topology spread constraint, with node pools in several zones
+- C. Move Payments into its own dedicated namespace with a separate quota
+- D. Change the Payments Service type to `LoadBalancer` across zones
 
 <details><summary>Answer</summary>
 
@@ -597,10 +597,10 @@ Use a local cluster: install kind or k3d, and create a cluster with `kind create
 
 **5. Yousef fixes a production setting with `kubectl edit`. The next morning the old value is back. Why, and what should he do?**
 
-- A. The GitOps reconciler restored the state declared in Git; he should make the change through a pull request to the GitOps repository
-- B. Kubernetes reverts every change after 24 hours; he should re-apply it daily
-- C. The kubelet cached the old setting; he should restart the node
-- D. etcd lost the change; he should ask the provider to restore etcd
+- A. GitOps restored what Git declares; he should change it by pull request
+- B. Kubernetes reverts every manual change after 24 hours; he should re-apply it daily
+- C. The kubelet cached the old setting overnight; he should drain and restart the node
+- D. etcd lost the change during compaction; he should ask the provider to restore etcd
 
 <details><summary>Answer</summary>
 

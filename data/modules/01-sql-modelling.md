@@ -46,8 +46,6 @@ Faisal, Head of Data Platform, points out that the database did exactly what it 
 | `accounts` | One row per account | `account_id`, `customer_id` (each customer has one or more accounts) |
 | `transactions` | One row per posted transaction | `txn_id`, `account_id`, `txn_ts`, `amount`, `direction` (`'debit'` or `'credit'`) |
 
-Keys are covered in 1.2.
-
 **The order a query is evaluated in.** You write `SELECT` first, but the database logically processes clauses in this order, which explains why, for example, `WHERE` cannot filter on a window function:
 
 ```mermaid
@@ -203,7 +201,7 @@ WHERE rn = 1;
 
 You cannot write `WHERE ROW_NUMBER() OVER (...) = 1` directly, because `WHERE` is evaluated before window functions (see the diagram above). Hence the CTE.
 
-**Ranking ties.** On ties, `ROW_NUMBER()` gives 1, 2, 3 (picking arbitrarily), `RANK()` gives 1, 1, 3 and `DENSE_RANK()` gives 1, 1, 2. Add a tie-breaker, such as a load timestamp or a unique ID, so results repeat exactly.
+**Ranking ties.** On ties, `ROW_NUMBER()` gives 1, 2, 3 (picking arbitrarily), `RANK()` gives 1, 1, 3 and `DENSE_RANK()` gives 1, 1, 2. Add a unique tie-breaker column so results repeat exactly.
 
 **Frames.** With `ORDER BY` in the window, aggregates such as `SUM` use a *frame*: by default in PostgreSQL, `RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`, which includes rows tied with the current one. Write the frame explicitly when it matters. `ROWS BETWEEN 6 PRECEDING AND CURRENT ROW` means *seven rows*, not seven days; on days with no transactions it spans more than a week. For a true seven-day window, fill missing days from a calendar table, or use `RANGE BETWEEN INTERVAL '6 days' PRECEDING AND CURRENT ROW` over a date column.
 
@@ -242,7 +240,7 @@ WHERE NOT EXISTS (SELECT 1 FROM loans l WHERE l.customer_id = c.customer_id);
 | **EXPLAIN ANALYZE** | Shows the plan PostgreSQL chose and the real time spent in each step | A query is slow or scans far more rows than expected |
 
 ## 🏛️ In practice at Najm Bank
-Faisal asks Huda to turn the incident into a standard. Every query that produces a number for a business review now starts with a **query header**, and is reviewed against a short checklist before it is shared.
+Faisal turns the incident into a standard: every number for a business review now starts with a **query header** and passes a review checklist.
 
 **The Najm query header (template)**
 
@@ -275,7 +273,7 @@ A question asked every month becomes a tested model (3.1) and a defined metric (
 ## 🛠️ Exercises
 Use synthetic data only: generate `customers`, `accounts` (one to three per customer) and about 100,000 `transactions` in DuckDB or PostgreSQL with `generate_series` and `random()`, including some customers with no accounts.
 
-- 🟢 Write the "active retail customers in September and their spend" query twice: once the wrong way (join everything with the same debit, date and segment filters, then `COUNT(*)`) and once with CTEs, each commented with its grain. *Done when:* you can explain the exact ratio between the two counts (it is the average number of debits per active customer), and your correct query passes the grain check.
+- 🟢 Write the "active retail customers in September and their spend" query twice: once the wrong way (same filters, join everything, `COUNT(*)`) and once with CTEs, each commented with its grain. *Done when:* you can explain the exact ratio between the two counts (it is the average number of debits per active customer), and your correct query passes the grain check.
 - 🟡 For each customer and month, compute spend, the previous month's spend, the change in percent, and the customer's rank within their segment for that month. Then return only each customer's single highest-spend month. *Done when:* the query uses `LAG`, `DENSE_RANK` and a "latest or top row per key" pattern, with a deterministic tie-breaker, and gives identical results on two runs.
 - 🔴 Build a seven-day rolling spend per customer that is correct on days with no transactions, using a calendar table (one row per date) cross-joined with customers. Compare it with a naive `ROWS BETWEEN 6 PRECEDING AND CURRENT ROW` version. *Done when:* you can show one customer and date where the two differ, explain why, and you have written the query header and run all four checks from 🔴 Expert view.
 
@@ -297,7 +295,7 @@ Use synthetic data only: generate `customers`, `accounts` (one to three per cust
 
 **1. Huda joins `customers` → `accounts` → `transactions` and runs `SELECT COUNT(*)` to count active customers. The result is about 35 times higher than Kareem expected. What is the most likely cause?**
 
-- A. The planner's statistics are out of date, so PostgreSQL estimated the joins badly
+- A. The planner's statistics are out of date
 - B. `COUNT(*)` ignores rows with nulls
 - C. Its grain is one row per transaction, not per customer
 - D. The `JOIN` should have been a `CROSS JOIN` to keep every customer
@@ -313,11 +311,11 @@ Use synthetic data only: generate `customers`, `accounts` (one to three per cust
 - A. Aggregate each table to one row per customer first, then join
 - B. Replace `SUM(l.balance)` with `SUM(DISTINCT l.balance)` so each loan counts once
 - C. Add `ORDER BY customer_id`
-- D. Change both joins to `LEFT JOIN` so customers without loans are kept
+- D. Change both joins to `LEFT JOIN`
 
 <details><summary>Answer</summary>
 
-**A.** This is a fan-out: two one-to-many paths multiply each other. Aggregating each path to the customer grain in its own CTE first removes it. B looks tempting but silently drops two different loans that happen to have the same balance. (🟡 Going deeper.)
+**A.** This is a fan-out: two one-to-many paths multiply each other. Aggregating each path to the customer grain first removes it. B looks tempting but silently drops two different loans that happen to have the same balance. (🟡 Going deeper.)
 
 </details>
 
@@ -330,7 +328,7 @@ Use synthetic data only: generate `customers`, `accounts` (one to three per cust
 
 <details><summary>Answer</summary>
 
-**B.** For unmatched customers the comparison with `NULL` is unknown, so a filter on the optional side in `WHERE` turns the `LEFT JOIN` into an inner join in effect; move the condition into the `ON` clause. A is false: keeping unmatched rows is exactly what `LEFT JOIN` does, with or without `GROUP BY`. (🟡 Going deeper.)
+**B.** Comparing `NULL` gives unknown, so a `WHERE` filter on the optional side turns the `LEFT JOIN` into an inner join; move it into `ON`. A is false: keeping unmatched rows is what `LEFT JOIN` does. (🟡 Going deeper.)
 
 </details>
 
@@ -356,7 +354,7 @@ Use synthetic data only: generate `customers`, `accounts` (one to three per cust
 
 <details><summary>Answer</summary>
 
-**A.** `x NOT IN (…, NULL)` can never be true, so no rows qualify. Rewrite it with `NOT EXISTS`, which handles nulls correctly. B changes nothing about the null; D affects speed, not results. (🔴 Expert view.)
+**A.** `x NOT IN (…, NULL)` can never be true, so no rows qualify. `NOT EXISTS` handles nulls correctly. B changes nothing about the null; D affects speed, not results. (🔴 Expert view.)
 
 </details>
 
@@ -382,7 +380,7 @@ Use synthetic data only: generate `customers`, `accounts` (one to three per cust
 ## 🧭 Why it matters
 In April, Huda built the "loans by branch" report for the credit-risk team, joining the loans table to the current customer table to get each customer's branch. It worked. In June, Najm merged two Doha branches and moved 4,000 customers from branch `DOH-07` to `DOH-03`. Then risk reran the March report for a regulator's follow-up question. Every March loan of those customers now showed under `DOH-03`, a branch whose March total grew overnight, while `DOH-07` shrank, three months after the report had been signed off.
 
-No query was wrong; the model was. The customer table only knew the *current* branch, so the past was rewritten whenever a customer moved. Faisal's verdict: "A bank's reports must be reproducible. If we cannot say what we believed on 31 March, we have a governance problem, not a SQL problem." This lesson gives you the patterns to design tables that keep history.
+No query was wrong; the model was. The customer table only knew the *current* branch, so the past was rewritten whenever a customer moved. Faisal's verdict: "A bank's reports must be reproducible. If we cannot say what we believed on 31 March, we have a governance problem, not a SQL problem."
 
 ## 📐 How it works
 
@@ -447,7 +445,7 @@ If a proposed column is not true at the declared grain (for example, "customer's
 | **Type 2** | Close the current row and insert a new version with its own surrogate key and validity dates | Fully kept | Branch, segment, risk grade, anything reports group by |
 | **Type 3** | Add a "previous value" column | One step back only | A one-off reorganisation where people want "old branch" next to "new branch" |
 
-The Data Warehouse Toolkit also describes further types that combine these; Types 1, 2 and 3 cover most needs.
+*The Data Warehouse Toolkit* also describes hybrid types (4 to 7); Types 1 to 3 cover most needs.
 
 A Type 2 customer dimension looks like this:
 
@@ -499,7 +497,7 @@ WHERE l.balance_date = DATE '2026-03-31'
 GROUP BY d.branch_code;
 ```
 
-With either approach, the March report gives the same answer in June. If you want "March loans by *today's* branch", join on `is_current = true` instead. That is a different question, and both are legitimate. The model should let people ask either one on purpose.
+With either approach, the March report gives the same answer in June. If you want "March loans by *today's* branch", join on `is_current = true` instead. The model should let people ask either one on purpose.
 
 **Conformed dimensions and the bus matrix.** If the card star and the loans star each build their own customer dimension, "customers by segment" will differ between them. A **conformed dimension** is one shared dimension (same keys, same attribute values) used by every fact table, so numbers from different processes line up. Kimball's **bus matrix** is a grid of business processes (rows) against dimensions (columns) that shows which dimensions each process shares. Najm's, in brief:
 
@@ -573,8 +571,6 @@ Use DuckDB or PostgreSQL with synthetic data.
 - **Starting with columns instead of grain.** Write the grain sentence first; reject any column not true at that grain.
 - **Mixing grains in one fact table.** Daily balances and monthly totals in one table get double-counted. Use one table per grain.
 - **Type 1 on attributes people group by.** Overwriting branch or segment rewrites past reports. Use Type 2 when history matters.
-- **Summing semi-additive measures over time.** Use closing or average balances for a period; document it on the model card.
-- **Each mart builds its own customer.** Conform dimensions, or numbers from different marts will never agree.
 - **Joining facts to dimensions on the current row by default.** Make "as it was" and "as it is now" two deliberate, named choices.
 
 ## 🧾 Recap
@@ -595,15 +591,15 @@ Use DuckDB or PostgreSQL with synthetic data.
 
 <details><summary>Answer</summary>
 
-**B.** Type 2 keeps each version with validity dates, so March facts find the March branch. C is the current behaviour (overwrite) that caused the problem; A and D change speed and layout, not which branch a March fact is linked to. (🟡 Going deeper.)
+**B.** Type 2 keeps each version with validity dates, so March facts find the March branch. C is the current behaviour (overwrite) that caused the problem; A and D do not change which version a fact joins to. (🟡 Going deeper.)
 
 </details>
 
 **2. Lina must design a fact table for loan applications that tracks the dates of application, approval and disbursement, and the days between them. Which fact table type fits best?**
 
-- A. Accumulating snapshot: one row per application, updated at each milestone
+- A. Accumulating snapshot: one row per application, updated per milestone
 - B. Transaction fact: one row per loan repayment
-- C. Periodic snapshot: one row per loan per day, carrying the end-of-day balance
+- C. Periodic snapshot: one row per loan per day
 - D. A Type 3 dimension holding the previous and current application status
 
 <details><summary>Answer</summary>
@@ -614,9 +610,9 @@ Use DuckDB or PostgreSQL with synthetic data.
 
 **3. Kareem sums `outstanding_principal` from `fact_loan_daily_balance` over the 30 days of September and reports it as "September exposure". What is wrong?**
 
-- A. Nothing; balances are additive across every dimension, dates included
+- A. Nothing; balances are additive across every dimension
 - B. The fact table should be normalised to 3NF before any sum
-- C. Principal is non-additive, so it cannot be summed even across loans on one date
+- C. Principal is non-additive, so it cannot be summed even across loans
 - D. Balances are semi-additive: never sum them across days
 
 <details><summary>Answer</summary>
@@ -634,7 +630,7 @@ Use DuckDB or PostgreSQL with synthetic data.
 
 <details><summary>Answer</summary>
 
-**C.** The grain says what one row of the fact table represents. Dimensions and facts are chosen to be true at the declared grain, so the grain comes first. B is how mixed-grain tables get built. (🟢 The essentials.)
+**C.** The grain (what one row represents) comes first: dimensions and facts must be true at it. B is how mixed-grain tables get built. (🟢 The essentials.)
 
 </details>
 
@@ -647,7 +643,7 @@ Use DuckDB or PostgreSQL with synthetic data.
 
 <details><summary>Answer</summary>
 
-**A.** A conformed dimension has the same keys and attribute values for every fact table that uses it, so facts from different business processes be compared consistently. B adds joins but does not make the two marts agree. (🟡 Going deeper.)
+**A.** A conformed dimension, with the same keys and values for every fact table, lets facts from different processes be compared consistently. B adds joins but does not make the two marts agree. (🟡 Going deeper.)
 
 </details>
 
@@ -675,7 +671,7 @@ Use DuckDB or PostgreSQL with synthetic data.
 ## 🧭 Why it matters
 On the last working day of the quarter, Huda runs a heavy query directly on the core banking PostgreSQL primary: a year of transactions joined to every account, grouped by product and month. It reads tens of millions of rows. Branch staff start reporting that account look-ups are slow, and the payments team sees timeouts. Salem, Head of Platform Engineering, finds the query and cancels it. His message to Faisal is short: "The core banking database exists to serve customers. Analytics needs its own home."
 
-Public cases show how storage choices fail in the other direction too. In October 2020, Public Health England reported that around 16,000 positive COVID-19 cases had been left out of England's daily figures. As widely reported, the cause was an automated process that loaded test results into the legacy Excel `.xls` format, whose worksheets are limited to 65,536 rows, so rows past the limit were silently dropped. The data existed; the container could not hold it, and nothing checked. Where data lives, and what that container guarantees, is an engineering decision. This lesson teaches you to make it.
+Public cases show how storage choices fail in the other direction too. In October 2020, Public Health England reported that around 16,000 positive COVID-19 cases had been left out of England's daily figures. As widely reported, the cause was an automated process that loaded test results into the legacy Excel `.xls` format, whose worksheets are limited to 65,536 rows, so rows past the limit were silently dropped. The data existed; the container could not hold it, and nothing checked. Where data lives, and what that container guarantees, is an engineering decision.
 
 ## 📐 How it works
 
@@ -753,7 +749,7 @@ All three store data as Parquet (Iceberg and Hudi can also use other file format
 
 **Catalogues.** An engine needs to find the table's current metadata. A **catalogue** maps table names to metadata locations and controls who can change them: for example, a Hive Metastore, an Iceberg REST catalogue, AWS Glue Data Catalog or Databricks Unity Catalog. The catalogue is also where access control and governance hook in (6.1, 6.3).
 
-**Partitioning and file layout.** Large tables are split by a column that queries filter on, usually date, so a query for September reads only September's files. Too fine a partitioning (per hour per merchant) creates thousands of tiny files, and opening files then costs more than reading them: the **small files problem**. Table formats offer **compaction** to merge small files, and expiring old snapshots to reclaim storage. Lesson 3.3 covers partitioning and clustering for performance and cost.
+**Partitioning and file layout.** Large tables are split by a column that queries filter on, usually date, so a query for September reads only September's files. Too fine a partitioning (per hour per merchant) creates thousands of tiny files, and opening files then costs more than reading them: the **small files problem**. Table formats offer **compaction** to merge small files, and expiring old snapshots to reclaim storage. More in 3.3.
 
 **Getting analytics off the primary.** The quickest relief is a **read replica**: a copy of the PostgreSQL database that follows the primary and takes read-only queries. It protects branch staff, but it is still a row store with the OLTP schema, fit for operational reports, not year-long scans. The lasting answer is to load data into an analytical store, incrementally or with change data capture (2.1). Replicas are covered in [*System Design for Vibe Coders*, lesson 10.3 — Scaling the database](../vibe/index.en.html#l10-3).
 
@@ -833,7 +829,7 @@ Use synthetic data only.
 
 <details><summary>Answer</summary>
 
-**C.** OLAP workloads belong on a columnar analytical store with layered models, separate from the system that serves customers. A only moves the risk to another time window; D creates an ungoverned copy with no types or table guarantees. (🟢 The essentials.)
+**C.** OLAP workloads belong on a columnar analytical store, separate from the system that serves customers. A only moves the risk to another time window; D creates an ungoverned copy with no types or table guarantees. (🟢 The essentials.)
 
 </details>
 
@@ -854,7 +850,7 @@ Use synthetic data only.
 
 - A. A larger compute cluster, so the job finishes before it can crash
 - B. An open table format with atomic snapshot commits
-- C. Converting the files to ORC, another columnar file format
+- C. Converting the files to ORC
 - D. Partitioning by hour instead of by day, so less is lost
 
 <details><summary>Answer</summary>
@@ -872,7 +868,7 @@ Use synthetic data only.
 
 <details><summary>Answer</summary>
 
-**D.** Time travel works by keeping old snapshots, which may still reference files containing the customer's rows, so deletion is only complete after expiry and file clean-up, and raw copies and backups must be covered too. C is wrong because expiry can be designed in. A is the tempting misunderstanding. (🔴 Expert view.)
+**D.** Time travel works by keeping old snapshots, which may still reference files containing the customer's rows, so deletion is only complete after expiry and file clean-up, and raw copies and backups must be covered too. A is the tempting misunderstanding. (🔴 Expert view.)
 
 </details>
 

@@ -22,7 +22,7 @@ It is the quarterly business review at Najm Bank. The retail team's slide says N
 
 Lina, Najm's analytics engineer, spends a week finding out why. Retail counts anyone who logged in to Najm Mobile **or** made any transaction in the last 90 days. Finance counts customers with at least one **customer-initiated** transaction in the calendar month, excluding salary credits and fees. Risk counts customers with an open account that is not dormant. Each definition suits its purpose; none is written down; each lives in a different, much-copied SQL query, and two silently include staff accounts.
 
-This is the most common way data teams lose trust: not wrong data, but **the same word meaning different things**. Each new dashboard adds another copy of the logic, and the copies drift. The fix is partly technical (compute each metric in one place) and partly social (agree a definition, give it an owner, publish it). For the dashboard side of the same problem in a startup setting, see [*System Design for Vibe Coders*, lesson 7.1 — The dashboard that lies and the metric that doesn't](../vibe/index.en.html#l7-1).
+This is the most common way data teams lose trust: not wrong data, but **the same word meaning different things**. The fix is partly technical (compute each metric in one place) and partly social (agree a definition, give it an owner, publish it). For the dashboard side of the same problem in a startup setting, see [*System Design for Vibe Coders*, lesson 7.1 — The dashboard that lies and the metric that doesn't](../vibe/index.en.html#l7-1).
 
 ## 📐 How it works
 
@@ -158,7 +158,7 @@ Dashboards show the status next to each number, so a reader knows whether it is 
 
 **Goodhart's law.** Often paraphrased as "when a measure becomes a target, it ceases to be a good measure". If branch staff are rewarded on "active customers" and a login counts as activity, expect campaigns that push customers to log in without doing anything. Pair every target metric with a guardrail and with a quality version of itself (for example, "active customers with two or more qualifying events").
 
-**Point-in-time correctness.** Many bank metrics depend on attributes that change: segment, risk grade, branch. "SME customers in March" should use the segment each customer had *in March*, not today's. That requires slowly changing dimensions (1.2) joined on effective dates, and a definition that says which one it uses: **as-was** (the attribute at the time of the event) or **as-is** (today's attribute applied to all history). Regulatory reports almost always need as-was. Write the choice on the metric card.
+**Point-in-time correctness.** Many bank metrics depend on attributes that change: segment, risk grade, branch. "SME customers in March" should use the segment each customer had *in March*, not today's. That requires slowly changing dimensions (1.2) joined on effective dates, and a definition that says which one it uses: **as-was** (the attribute at the time of the event) or **as-is** (today's attribute applied to all history). Regulatory reports usually need as-was. Write the choice on the metric card.
 
 **Reconciliation.** A certified financial metric must tie back to the system of record. Finance's "card spend" should reconcile with the card processor's settlement totals within a known tolerance, and the difference should be explained (timing, reversals, currency conversion). Build that check as a scheduled data test (3.2) and show the reconciliation status on the metric card. A number that has never been reconciled is not certified, however neat its YAML.
 
@@ -229,7 +229,7 @@ Use DuckDB or PostgreSQL with a synthetic table of 1,000 customers and 50,000 ev
 
 <details><summary>Answer</summary>
 
-**A.** The data is probably fine; the definitions differ. Agreeing one definition with an owner, then computing it once, ends the argument. D wastes effort on a problem that is not in the data; B and C just pick a number. (🧭 Why it matters; 🟢 The essentials.)
+**A.** The data is probably fine; the definitions differ. Agreeing one definition with an owner, then computing it once, ends the argument. D chases a problem that is not in the data; B and C just pick a number. (🧭 Why it matters; 🟢 The essentials.)
 
 </details>
 
@@ -546,7 +546,7 @@ The Najm Mobile team tests a redesigned card-activation screen. On day three, th
 
 Dana, Najm's lead data scientist, asks four questions. What sample size did the plan require? (About 15,000 users per group; they have about 2,000 per group.) How many metrics are on the screen? (Fourteen.) Was the split 50/50 as designed? (No: 52.4% in treatment.) And had anyone looked before day three? (Yes, every day.) Each answer points to a known trap. The test is stopped, the assignment bug is fixed (users who reinstalled the app were being reassigned to treatment) and the test is rerun with a fixed plan. The rerun finds a real but smaller effect of about one percentage point.
 
-Experiments are where clever people fool themselves most easily: the tool always produces a number, and it always looks precise. At a bank, experiments also touch fees, credit offers and customer communications, so they need governance too. For the engineering of assignment and feature flags, see [*SaaS Building Blocks*, lesson 6.3 — Feature flags and experiments](../saas/index.html#/6.3).
+Experiments are where clever people most easily fool themselves: the tool always produces a precise-looking number. At a bank, experiments also touch fees, credit offers and customer communications, so they need governance too. For the engineering of assignment and feature flags, see [*SaaS Building Blocks*, lesson 6.3 — Feature flags and experiments](../saas/index.html#/6.3).
 
 ## 📐 How it works
 
@@ -574,7 +574,7 @@ flowchart LR
 
 **p-values, read correctly.** If the change truly had no effect, how often would random assignment alone produce a difference at least as large as the one observed? That frequency is the p-value. A small p-value (by convention below 0.05, the **significance level**, alpha) means the result would be unusual if there were no effect. It does **not** mean "there is a 97% chance the new design is better", and it says nothing about whether the effect is large enough to matter.
 
-**Confidence intervals say how big.** A 95% confidence interval comes from a method that, over many repeated experiments, would contain the true effect 95% of the time. Report the effect and its interval: "activation rose by 1.0 percentage point, 95% CI 0.3 to 1.7 points". A decision-maker can work with that. "Significant" alone hides whether the effect is worth the cost.
+**Confidence intervals say how big.** A 95% confidence interval comes from a method that, over many repeated experiments, would contain the true effect 95% of the time. Report the effect and its interval: "activation rose by 1.0 percentage point, 95% CI 0.3 to 1.7 points". "Significant" alone hides whether the effect is worth the cost.
 
 ```python
 # Two-proportion test with statsmodels (Python 3.11+)
@@ -605,8 +605,8 @@ If Najm issues only a few thousand cards a week, detecting one percentage point 
 
 ### 🟡 Going deeper
 
-**Trap 1: peeking and optional stopping.** Statistical tests with a fixed horizon assume you look once, at the planned sample size. If you check every day and stop the first time p dips below 0.05, the real false-positive rate is far higher than 5%, because random fluctuations cross the line at some point surprisingly often. The fixes:
-- Fix the sample size and end date in the plan and look at the decision metric only at the end (monitoring guardrails and data quality daily is fine and wise).
+**Trap 1: peeking and optional stopping.** Fixed-horizon tests assume you look once, at the planned sample size. If you check daily and stop the first time p dips below 0.05, the real false-positive rate is far above 5%, because random fluctuations often cross the line at some point. The fixes:
+- Fix the sample size and end date in the plan and look at the decision metric only at the end (checking guardrails and data quality daily is wise).
 - Or use a method designed for continuous monitoring: **group sequential designs** with pre-planned interim looks and adjusted thresholds, or "always-valid" sequential tests that some experimentation platforms offer.
 
 **Trap 2: multiple comparisons.** Test enough metrics and something will "win" by luck: with 20 independent tests at alpha = 0.05 and no real change, the chance of at least one p < 0.05 is about 64%. Slicing by segment, device and week makes it worse. One primary metric decides; secondary metrics support; segment findings become hypotheses for the next test. For formal multiple testing, adjust with **Bonferroni** (divide alpha by the number of tests; strict) or **Benjamini–Hochberg** (controls the false discovery rate).
@@ -621,11 +621,11 @@ print(round(stat, 1), p)              # 14.4, p about 0.00015
 
 A p-value this small means the assignment or the logging is broken: users are being reassigned, a redirect drops some users, or bots land in one group. **An experiment with SRM is not trustworthy, whatever its result.** Find the cause before reading anything else. In Dana's case it was reinstalls being reassigned to treatment.
 
-**Trap 4: novelty and primacy effects.** Users click a new design because it is new (novelty) or resist it because it is unfamiliar (primacy); both fade. Run for full weekly cycles, look at the effect over time, and avoid straddling Ramadan or Eid unless that is what you want to learn about.
+**Trap 4: novelty and primacy effects.** Users click a new design because it is new (novelty) or resist it because it is unfamiliar (primacy); both fade. Run for full weekly cycles, look at the effect over time, and avoid straddling Ramadan or Eid.
 
 **Trap 5: the wrong unit.** If you randomise by session but measure per customer, one customer may see both versions. Randomise at the level you analyse, usually the customer; when customers influence each other (a joint account, an SME's employees), randomise by household or company.
 
-**Variance reduction (CUPED).** **CUPED** (Controlled-experiment Using Pre-Experiment Data; Deng, Xu, Kohavi and Walker, 2013) adjusts each customer's outcome using their pre-experiment value of the same metric, removing noise that existed before the test. When the pre-period predicts the outcome well, intervals shrink, so tests need fewer users.
+**Variance reduction (CUPED).** **CUPED** (Controlled-experiment Using Pre-Experiment Data; Deng, Xu, Kohavi and Walker, 2013) adjusts each customer's outcome using their pre-experiment value of the same metric. When the pre-period predicts the outcome well, intervals shrink, so tests need fewer users.
 
 ### 🔴 Expert view
 
@@ -655,7 +655,7 @@ The same can happen at Najm. A new loan pre-approval journey can show a lower ov
 | **CUPED** (Deng et al., 2013) | Variance reduction using each unit's pre-experiment data | Noisy metrics with a strong pre-period predictor, such as spend |
 
 ## 🏛️ In practice at Najm Bank
-Dana's team adopts a one-page **Experiment Plan** that must be completed and approved before any Najm Mobile or customer-communication test starts. Here is the rerun of the activation test.
+Dana's team adopts a one-page **Experiment Plan** that must be approved before any Najm Mobile or customer-communication test starts. Here is the rerun of the activation test.
 
 | Field | Value |
 |---|---|
@@ -708,7 +708,7 @@ Use Python with statsmodels and scipy, and simulated data only.
 
 <details><summary>Answer</summary>
 
-**A.** Stopping at the first significant look inflates the false-positive rate: repeated looks with a fixed-horizon test make a false "win" much more likely. D is still unplanned peeking; only a pre-planned sequential design adjusts thresholds correctly. (🟡 Going deeper, Trap 1.)
+**A.** Repeated looks with a fixed-horizon test, stopping at the first significant one, make a false "win" much more likely. D is still unplanned peeking; only a pre-planned sequential design adjusts thresholds correctly. (🟡 Going deeper, Trap 1.)
 
 </details>
 
@@ -747,7 +747,7 @@ Use Python with statsmodels and scipy, and simulated data only.
 
 <details><summary>Answer</summary>
 
-**C.** The new journey attracted a larger share of applicants from a segment with a low approval rate, so the mix changed the aggregate. Aggregating groups with different sizes and base rates can reverse a comparison, as in the 1973 Berkeley admissions data. It is entirely possible (not A). Break down by the mix variable before drawing conclusions. (🔴 Expert view.)
+**C.** The applicant mix shifted towards a low-approval segment. Aggregating groups with different sizes and base rates can reverse a comparison, as in the 1973 Berkeley admissions data. It is entirely possible (not A). Break down by the mix variable before drawing conclusions. (🔴 Expert view.)
 
 </details>
 
@@ -760,7 +760,7 @@ Use Python with statsmodels and scipy, and simulated data only.
 
 <details><summary>Answer</summary>
 
-**D.** Experiments on price, credit or eligibility raise fairness and regulatory questions, so they need compliance approval (and model-risk approval where models are involved). A ignores customer harm and rules; B would not answer the question; C raises transparency and consumer-protection concerns. (🔴 Expert view.)
+**D.** Price, credit and eligibility experiments raise fairness and regulatory questions, so they need compliance (and, where models are involved, model-risk) approval. A ignores customer harm and rules; B would not answer the question; C raises transparency and consumer-protection concerns. (🔴 Expert view.)
 
 </details>
 

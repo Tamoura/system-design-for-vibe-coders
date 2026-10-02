@@ -20,7 +20,7 @@
 ## 🧭 Why it matters
 On a Thursday afternoon, the contact centre forwards a complaint to Platform Engineering: transfers in the Najm Mobile app "spin for ages" before succeeding. Yousef opens the dashboard: CPU is fine and the Najm Mobile API's average response time is 180 milliseconds. He then spends two hours reading log files from the API pods, the Payments service and the core banking adapter in the data centre. Each logs in a different format, with no common request ID, so he cannot tell which slow line belongs to which transfer.
 
-Salem sits down with him. "The average hides the tail," he says. "If 3% of transfers take eight seconds, the average still looks healthy. And you can't follow one request across three systems because nothing ties them together." The fix is to instrument the path so every request carries a trace ID from the API, through Payments, across the hybrid link to core banking, and to record latency as a distribution, not an average.
+Salem sits down with him. "The average hides the tail," he says. "If one transfer in a hundred takes eight seconds, the average still looks healthy. And you can't follow one request across three systems because nothing ties them together." The fix is to instrument the path so every request carries a trace ID from the API, through Payments, across the hybrid link to core banking, and to record latency as a distribution, not an average.
 
 Two days after the team instruments the path, a trace shows the answer in one picture: 7.4 seconds of a slow transfer are spent waiting for a database connection inside Payments, and core banking is fast. Without telemetry, the team would have blamed the data centre. And you cannot set a reliability target, alert on it or run an incident on data you do not have.
 
@@ -62,7 +62,7 @@ The hardened version can be counted, carries the trace ID and contains no name o
 - **USE** for resources: **U**tilisation, **S**aturation and **E**rrors for each CPU, disk, network link or connection pool. Use it for nodes, databases and the hybrid link to the data centre.
 
 ### 🟡 Going deeper
-**OpenTelemetry in one paragraph.** OpenTelemetry is a CNCF project, formed in 2019 by merging two earlier projects, OpenTracing and OpenCensus. It provides: an **API and SDKs** for many languages, to create spans, metrics and logs in your code; **automatic (zero-code) instrumentation** for common frameworks and libraries, so HTTP servers, HTTP clients and database drivers emit spans without code changes; **OTLP**, the OpenTelemetry Protocol for sending telemetry; **semantic conventions**, standard attribute names such as `service.name`, `http.request.method`, `http.route` and `http.response.status_code`; and the **Collector**, a separate process that receives, processes and exports telemetry. At the time of writing (2026), the trace and metric specifications are stable, logs are stable in most major languages, and profiles are still in development. Check the status page for your language before relying on a signal.
+**OpenTelemetry in one paragraph.** OpenTelemetry is a CNCF project, formed in 2019 by merging two earlier projects, OpenTracing and OpenCensus. It provides: an **API and SDKs** for many languages, to create spans, metrics and logs in your code; **automatic (zero-code) instrumentation** for common frameworks and libraries, so HTTP servers, HTTP clients and database drivers emit spans without code changes; **OTLP**, the OpenTelemetry Protocol for sending telemetry; **semantic conventions**, standard attribute names such as `service.name`, `http.request.method`, `http.route` and `http.response.status_code`; and the **Collector**, a separate process that receives, processes and exports telemetry. At the time of writing (2026), the trace and metric specifications are stable, log support is stable in some language SDKs and still maturing in others, and profiles are still in development. Check the status page for your language before relying on a signal.
 
 **How a trace crosses services.** When the Najm Mobile API calls Payments over HTTP, the OTel SDK adds a `traceparent` header in the W3C Trace Context format: a version, the 32-hex-character trace ID, the 16-hex-character ID of the calling span, and flags (including whether the trace is sampled).
 
@@ -236,14 +236,14 @@ All three run locally with Docker or a kind/k3d cluster. Do not point them at an
 
 **2. A developer wants to add a `customer_id` label to the `http_requests_total` metric so support can see each customer's request rate. What is the best response?**
 
-- A. Accept it, because more labels always mean more observability
-- B. Accept it, but only in production
-- C. Hash the customer ID first, then use it as a label
-- D. Refuse the label, because unbounded values multiply time series; put the customer reference on spans or in logs where policy allows, and query those instead
+- A. Accept it, because labels are cheap and more of them always help
+- B. Accept it in production only, where support actually needs it
+- C. Accept it after hashing the customer ID, so no personal data is stored
+- D. Refuse it: unbounded values multiply series; use spans or logs instead
 
 <details><summary>Answer</summary>
 
-**D.** Each unique label value creates a new series; millions of customers make the metric system slow and costly. Hashing (C) keeps the same cardinality. Identifiers belong on spans and logs, within privacy rules. (🔴 Expert view.)
+**D.** Each unique label value creates a new series; millions of customers make the metric system slow and costly. Hashing (C) keeps exactly the same cardinality. Identifiers belong on spans and logs, within privacy rules. (🔴 Expert view.)
 
 </details>
 
@@ -262,10 +262,10 @@ All three run locally with Docker or a kind/k3d cluster. Do not point them at an
 
 **4. Why does Najm route all application telemetry through OpenTelemetry Collectors instead of having each service send data straight to its back end?**
 
-- A. Because Prometheus cannot scrape applications directly
-- B. Because OTLP only works through a Collector
-- C. Because the Collector lets the platform team batch, scrub and sample in one place, and change back ends without touching every service
-- D. Because the Collector stores telemetry for long-term retention
+- A. Because Prometheus has no way to scrape metrics from applications directly
+- B. Because OTLP data can only be received by a Collector, never by a back end
+- C. Because it centralises batching, scrubbing and sampling, and decouples services from back ends
+- D. Because the Collector is the long-term store that dashboards query for history
 
 <details><summary>Answer</summary>
 
@@ -275,10 +275,10 @@ All three run locally with Docker or a kind/k3d cluster. Do not point them at an
 
 **5. Najm wants to keep tracing costs down without losing the traces engineers need during incidents. Which approach fits best?**
 
-- A. Head sampling at 1% for all services
-- B. Tail sampling that keeps all error traces and all slow traces, plus a small random share of healthy ones
-- C. Turn tracing off and rely on logs
-- D. Keep every trace but delete them after one hour
+- A. Head sampling at 1% for every service, decided when each request starts
+- B. Tail sampling: keep all error and slow traces, plus a few healthy ones
+- C. Turn tracing off entirely and rely on structured logs with trace IDs
+- D. Keep every trace, but delete all of them automatically after one hour
 
 <details><summary>Answer</summary>
 
@@ -316,7 +316,7 @@ Maha inherits the on-call rota for the Najm Mobile API and the Payments service.
 
 This is **alert fatigue**: when most pages are noise, people learn to ignore pages, and then miss the real one. Maha's fix starts with a different question: "What does a customer need from the Payments service, and how much failure can they tolerate before it matters?" The answers become SLOs. Pages come only from SLO burn. Everything else becomes a ticket, a dashboard entry, or is deleted.
 
-SLOs also settle an old argument: Tariq's teams want speed, Maha's team wants stability. With an error budget, both agree in advance: while budget remains, ship; when it is spent, reliability work comes first. Regulators care too: the EU's Digital Operational Resilience Act (DORA), applicable to financial entities from January 2025, and GCC regulators' resilience expectations require banks to understand and test the resilience of important services. A measured SLO is part of that evidence.
+SLOs also settle an old argument: Tariq's teams want speed, Maha's team wants stability. With an error budget, both agree in advance: while budget remains, ship; when it is spent, reliability work comes first. Regulators care too: the EU's Digital Operational Resilience Act (DORA), applicable to financial entities from January 2025, and GCC regulators expect banks to understand and test the resilience of important services; a measured SLO is part of that evidence.
 
 ## 📐 How it works
 ### 🟢 The essentials
@@ -330,7 +330,7 @@ SLOs also settle an old argument: Tariq's teams want speed, Maha's team wants st
 
 Express SLIs as good events ÷ valid events: easy to compute from counters and comparable across services.
 
-**SLO, SLA and the window.** An SLO adds a target and a window: "99.9% of transfer requests succeed, measured over a rolling 30 days." A **rolling window** always looks at the last 30 days, so a bad day stays visible for a month. An **SLA** is an external promise with penalties, so it should be set below the internal SLO to leave room for error.
+**SLO, SLA and the window.** An SLO adds a target and a window: "99.9% of transfer requests succeed, measured over a rolling 30 days." A **rolling window** always looks at the last 30 days, so a bad day stays visible for a month. An **SLA** is an external promise with penalties, set below the internal SLO.
 
 **Error budget arithmetic.** The budget is 100% minus the SLO.
 
@@ -437,15 +437,15 @@ The same burn signal can drive automation: a canary release can roll itself back
 
 ### 🔴 Expert view
 **Sustainable on-call.** Google's *Site Reliability Engineering* book treats on-call load as something to measure and cap, and **toil** (manual, repetitive, automatable work that grows with the service and has no lasting value) as something to reduce deliberately. Practices Najm adopts:
-- **Rota size and hand-offs.** Enough people that each engineer is on call at most about one week in several, with a written hand-off at every shift change. Follow-the-sun rotas across time zones, where the team has them, remove most night pages.
+- **Rota size and hand-offs.** Enough people that each engineer is on call at most about one week in several, with a written hand-off at every shift change. Follow-the-sun rotas, where a team spans time zones, remove most night pages.
 - **Every page is actionable and has a runbook.** If the responder cannot do anything, it should not page. A **runbook** says what the alert means, how to confirm user impact, safe first actions (roll back, fail over, scale out) and who to escalate to.
-- **Measure the rota.** Pages per shift, pages outside working hours, time to acknowledge, share of pages that needed action. Any alert that fired without needing action is tuned or deleted within the week.
-- **Pay back the load.** Engineers coming off a heavy night have protected recovery time. Recurring pages create backlog items with an owner, not a shrug.
+- **Measure the rota.** Pages per shift, pages outside working hours, time to acknowledge, share of pages that needed action. Alerts that fired without needing action are tuned or deleted within the week.
+- **Pay back the load.** Engineers get protected recovery time after a heavy night; recurring pages become owned backlog items.
 - **New engineers shadow first.** Yousef shadows Maha for two rotations before carrying the pager alone.
 
 **Choosing SLIs where you measure them.** Server-side metrics miss failures that happen before the request reaches you (DNS, the CDN, the WAF, the load balancer). Najm measures the Payments availability SLI at the load balancer and adds **synthetic probes**: scripted transfers between test accounts every minute from outside the cloud, which also catch failures at the edge. 
 
-**Dependencies and composite SLOs.** If Payments depends serially on three services that each meet 99.9%, its own availability can be lower than any of them. Ask what each dependency must achieve for your SLO to be possible, and design for failure where the numbers do not add up: timeouts, retries with backoff, idempotency keys so retries never duplicate a transfer, and graceful degradation (show "transfer pending" rather than failing).
+**Dependencies and composite SLOs.** If Payments depends serially on three services that each meet 99.9%, its own availability can be lower than any of them. Check what each dependency must achieve, and design for failure where the numbers do not add up: timeouts, retries with backoff, idempotency keys so retries never duplicate a transfer, and graceful degradation (show "transfer pending" rather than failing).
 
 **SLOs for asynchronous and AI work.** For a queue, measure "messages processed within N minutes". For Najm Assist, measure time to first token as well as total time; operating AI agents is covered in [*Running AI Agents in Production*, Level 3 — Production Engineer](../agentic/learning-path.html#level-3-production-engineer).
 
@@ -482,7 +482,7 @@ For a gentler introduction to monitoring stacks and alert hygiene, see [*System 
 
 ## 🛠️ Exercises
 - 🟢 For one service you know (your own project or a public website you use), write three SLIs as good-event ÷ valid-event ratios, choose an SLO for each, and calculate the error budget in minutes and in requests for a 30-day window. *Done when:* each SLI states exactly which events count as good, bad and excluded, and you can justify each target in one sentence about users.
-- 🟡 In your local Prometheus lab from lesson 5.1, write recording rules and a multi-window, multi-burn-rate alert for a 99.9% availability SLO, routed through Alertmanager. Inject errors at two rates: a short blip and a steady 2% error ratio. *Done when:* the blip does not page, the steady errors page within minutes, and the alert stops after you remove the errors.
+- 🟡 In your local Prometheus lab from lesson 5.1, write recording rules and a multi-window, multi-burn-rate alert for a 99.9% availability SLO, routed through Alertmanager. Inject errors twice: a one-minute burst at a 10% error ratio, then a steady 10% error ratio. *Done when:* the burst does not page, the steady errors page within about ten minutes (work out why from the 1-hour window), and the alert stops after you remove the errors.
 - 🔴 Take any alert set you can access legally (your own project, an open-source project's published rules or a sample from a monitoring tutorial) and audit it: classify each alert as page, ticket or delete, rewrite cause-based pages as SLO burn alerts, write one runbook, and draft an error budget policy. *Done when:* you have a before/after table with a reason for every change and a one-page policy that a product owner could sign.
 
 ## ⚠️ Mistakes and traps
@@ -490,7 +490,7 @@ For a gentler introduction to monitoring stacks and alert hygiene, see [*System 
 - **SLIs that measure the server, not the user.** CPU and pod health are not experiences. Measure success and latency of real journeys, as close to the user as you can.
 - **Paging on causes.** CPU, memory, restarts and disk warnings wake people for nothing. Put them on dashboards or tickets; page on budget burn.
 - **SLOs without a policy.** If running out of budget changes nothing, nobody will trust or use the SLO. Agree the policy before the first bad month.
-- **Alerts without runbooks, and an ignored rota.** A page with no next step wastes the first minutes of an incident, and exhausted engineers make mistakes. Link a runbook to every page; fix the noisiest alert every week.
+- **Alerts without runbooks, and an ignored rota.** A page with no next step wastes the first minutes of an incident. Link a runbook to every page; fix the noisiest alert weekly.
 
 ## 🧾 Recap
 - SLIs measure user experience as good ÷ valid events; SLOs set a target over a window; SLAs are looser external promises.
@@ -517,10 +517,10 @@ For a gentler introduction to monitoring stacks and alert hygiene, see [*System 
 
 **2. Maha finds that the rota is paged several times a night for "CPU above 80%" on payment pods, and no action is ever needed. What should she do?**
 
-- A. Move CPU to a dashboard or ticket and page only on SLO burn rate for the Payments journeys
-- B. Raise the threshold to 90% and keep it as a page
-- C. Add a second engineer to the rota so the load is shared
-- D. Mute the channel at night
+- A. Demote CPU to a dashboard or ticket; page only on Payments SLO burn
+- B. Raise the threshold to 90% and keep it as a page, to cut the volume
+- C. Add a second engineer to the rota so that the night-time load is shared
+- D. Mute the paging channel at night and review the alerts each morning
 
 <details><summary>Answer</summary>
 
@@ -530,40 +530,40 @@ For a gentler introduction to monitoring stacks and alert hygiene, see [*System 
 
 **3. For a 99.9% SLO, the error ratio over the last hour is 1.5% and over the last five minutes is 1.6%. What does this mean under the alert rule in this lesson?**
 
-- A. Nothing: the 30-day ratio has not crossed 0.1% yet
-- B. A ticket, because the burn rate is only slightly above 1
+- A. Nothing yet, because the 30-day error ratio has not crossed 0.1%
+- B. A ticket, because the burn rate is only slightly above 1 and can wait
 - C. Nothing, because the short window is higher than the long window
-- D. A page, because both windows exceed 14.4 × 0.1% = 1.44%, so the budget is burning fast and still burning
+- D. A page, because both windows exceed 14.4 × 0.1% = 1.44%
 
 <details><summary>Answer</summary>
 
-**D.** Both windows exceed the 14.4× threshold, which is the fast-burn page condition. Waiting for the 30-day ratio (A) would page far too late; a burn rate above 14 is not "slightly above 1" (B). (🟡 Going deeper.)
+**D.** Both windows exceed the 14.4× threshold, so the budget is burning fast and still burning: the fast-burn page condition. Waiting for the 30-day ratio (A) would page far too late; a burn rate above 14 is not "slightly above 1" (B). (🟡 Going deeper.)
 
 </details>
 
 **4. Tariq's squad has used the whole Payments error budget halfway through the window and wants to release a new feature tomorrow. Under Najm's policy, what happens?**
 
-- A. They release as normal, because the budget resets at the end of the month
-- B. Only fixes and reliability work ship to Payments until the budget recovers, unless Salem and the product owner sign an exception
-- C. The SLO is lowered so the feature can ship
-- D. Maha's team takes over all Payments releases permanently
+- A. They release as normal, because the budget resets on the first of next month
+- B. Only fixes and reliability work ship, unless an exception is signed
+- C. The SLO target is lowered for this month so that the feature can ship
+- D. Maha's team takes over all Payments releases permanently from the squad
 
 <details><summary>Answer</summary>
 
-**B.** The error budget policy, agreed in advance, decides this without a fight. A rolling window does not reset on a date (A); lowering the SLO to suit a release (C) defeats its purpose. (🟡 Going deeper.)
+**B.** The error budget policy, agreed in advance, decides this without a fight; Salem and the product owner can sign an exception. A rolling window does not reset on a date (A); lowering the SLO to suit a release (C) defeats its purpose. (🟡 Going deeper.)
 
 </details>
 
 **5. The Payments availability SLI is measured from server-side metrics only. During a CDN misconfiguration, many customers cannot reach the API, yet the SLO dashboard stays green. What change best fixes this blind spot?**
 
-- A. Lower the SLO target
-- B. Add more CPU alerts on the API pods
-- C. Measure closer to the user: at the edge or load balancer, plus synthetic transfer probes from outside the cloud
-- D. Increase the scrape interval
+- A. Lower the SLO target so that short edge problems stay within budget
+- B. Add more CPU and memory alerts on the API pods behind the CDN
+- C. Add synthetic transfer probes from outside the cloud and edge-level SLIs
+- D. Increase the Prometheus scrape interval so that fewer gaps appear
 
 <details><summary>Answer</summary>
 
-**C.** Requests that never reach the server do not appear in server metrics; edge measurement and external probes see them. The other options do not observe failures before the server. (🔴 Expert view.)
+**C.** Requests that never reach the server do not appear in server metrics; external probes and edge measurement see them. The other options do not observe failures before the server. (🔴 Expert view.)
 
 </details>
 
@@ -592,11 +592,11 @@ For a gentler introduction to monitoring stacks and alert hygiene, see [*System 
 - Biggest trap: "human error" as the root cause. It is where an investigation should start, not where it ends.
 
 ## 🧭 Why it matters
-At 10:52 on a weekday morning, the fast-burn alert from lesson 5.2 pages Yousef: the Payments error budget is burning at more than 20 times the sustainable rate. Transfer requests are timing out. Yousef starts debugging alone. Ten minutes later, Tariq's squad is also debugging in a different chat, the contact centre is asking what to tell customers, and nobody knows who is in charge. Two engineers are about to restart the database at the same time.
+At 10:52 on a weekday morning, the fast-burn alert from lesson 5.2 pages Yousef: the Payments error budget is burning at dozens of times the sustainable rate. Transfer requests are timing out. Yousef starts debugging alone. Ten minutes later, Tariq's squad is also debugging in a different chat, the contact centre is asking what to tell customers, and nobody knows who is in charge. Two engineers are about to restart the database at the same time.
 
-Maha joins, declares a SEV2 incident, takes the role of incident commander and gives everyone a job. Thirteen minutes later the team rolls back a configuration change deployed at 10:40, and the errors stop. The cause turns out to be one line: a shared Helm values file intended for the development environment lowered the Payments database connection pool from 50 to 5, and it was promoted to production with a batch of unrelated changes. No transfer was duplicated, because every retry carried an idempotency key. About 3,100 customers saw failed or slow transfers for 37 minutes.
+Maha joins, declares a SEV2 incident, takes the role of incident commander and gives everyone a job. Thirteen minutes later the team rolls back a configuration change deployed at 10:40, and the errors stop. The cause turns out to be one line: a change meant only for development, made in a Helm values file shared by all environments, lowered the Payments database connection pool from 50 to 5, and it was promoted to production with a batch of unrelated changes. No transfer was duplicated, because every retry carried an idempotency key. About 3,100 customers saw failed or slow transfers for 37 minutes.
 
-Yousef approved the pull request that carried the change and expects to be blamed. Instead, the postmortem asks why a development value could reach production, why the pipeline did not show the diff of the effective configuration, and why the alert took twelve minutes to bring the right people together. The action items fix those, and the same class of failure does not happen again.
+Yousef approved the pull request that carried the change and expects to be blamed. Instead, the postmortem asks why a development value could reach production, why the pipeline did not show the diff of the effective configuration, and why the alert took twelve minutes to bring the right people together. The action items fix those.
 
 ## 📐 How it works
 ### 🟢 The essentials
@@ -615,7 +615,7 @@ When in doubt, choose the higher severity; you can downgrade later.
 
 **The roles.** The model is adapted from emergency services' incident command systems:
 - **Incident commander (IC).** Owns the incident. Keeps the big picture, assigns work, decides (roll back now? escalate?) and declares the end. The IC does **not** debug; the moment they do, nobody is coordinating.
-- **Operations lead.** Leads the hands-on work on systems, with subject-matter experts. Only people the operations lead names make changes to production, and they announce each change before making it.
+- **Operations lead.** Leads the hands-on work on systems, with subject-matter experts. Only people the operations lead names make changes to production.
 - **Communications lead.** Writes internal updates on a fixed schedule, and works with the contact centre and customer-facing teams on what customers are told.
 - **Scribe.** Records a timestamped timeline: what was seen, decided and changed. In a small incident the IC may do this with help from chat tooling.
 
@@ -649,7 +649,7 @@ Say what you know, what you do not know, and when you will speak next. Never gue
 
 **Coordination habits.** One incident channel, one bridge call, one IC. Announce changes before making them ("Tariq: rolling back payments-config to revision 41 now"). Hand over the IC role explicitly when shifts change or the incident outlasts one person's energy: "Maha handing IC to Salem at 13:00; Salem, confirm." 
 
-**When an incident is also a security incident.** If there is any sign of an attacker (unexpected access, data leaving, a tampered artefact), bring in Jassim's SOC immediately. Security incidents change the rules: preserve evidence, do not tip off the attacker, and follow the security incident response plan, which may involve legal and regulatory obligations. That process is taught in [*Secure AI & Application Security*, lesson 10.2 — Incident response: prepare, detect, contain, recover, learn](../secai/index.html#/10.2).
+**When an incident is also a security incident.** If there is any sign of an attacker (unexpected access, data leaving, a tampered artefact), bring in Jassim's SOC immediately. Security incidents change the rules: preserve evidence, do not tip off the attacker, and follow the security incident response plan, with its legal and regulatory duties. That process is taught in [*Secure AI & Application Security*, lesson 10.2 — Incident response: prepare, detect, contain, recover, learn](../secai/index.html#/10.2).
 
 **Regulatory reporting.** Financial entities have incident reporting duties. Under the EU's DORA, firms must classify ICT-related incidents and report major ones to their competent authority within set deadlines; GCC regulators, including the Qatar Central Bank, also set expectations for reporting incidents and outsourcing failures. Criteria and timelines are owned by Risk and Compliance; engineering's duty is to give them accurate facts fast (start time, services, customers and transactions affected, data impact), which is one more reason to keep a timeline from minute one.
 
@@ -666,9 +666,9 @@ Blameless does not mean nobody is accountable. Teams are accountable for complet
 Complex failures usually have several **contributing factors** rather than one root cause. List them all; fix the ones with the most leverage.
 
 ### 🔴 Expert view
-**A public example: the Amazon S3 outage of February 2017.** AWS published a summary of a disruption to S3 in its us-east-1 region. An authorised engineer, following an established playbook, ran a command meant to remove a small number of servers from an S3 subsystem; one input was entered incorrectly and a much larger set was removed. AWS's response was a model of blameless thinking: it changed the tool to remove capacity more slowly and to refuse to go below a safe minimum. The summary also noted that AWS's own status dashboard depended on S3, so it could not show the outage at first. The lessons for Najm: build guardrails into dangerous tools, and make sure your incident tooling does not depend on the thing that is failing.
+**A public example: the Amazon S3 outage of February 2017.** AWS published a summary of a disruption to S3 in its us-east-1 region. An authorised engineer, following an established playbook, ran a command meant to remove a small number of servers from an S3 subsystem; one input was entered incorrectly and a much larger set was removed. AWS's response focused on the tool rather than the person: it changed the tool to remove capacity more slowly and to refuse to go below a safe minimum. The summary also noted that AWS's own status dashboard depended on S3, so it could not show the outage at first. The lessons for Najm: build guardrails into dangerous tools, and make sure your incident tooling does not depend on the thing that is failing.
 
-**A second example: GitLab, January 2017.** During a late-night effort to fix database replication, an engineer deleted data on the primary database instead of the replica. GitLab's public postmortem then found that several of its backup and replication mechanisms were not working as expected, and about six hours of production data was lost. The lessons: a backup you have not restored is a hope, not a backup (lesson 6.1 covers recovery testing), and tired people doing risky manual work at night need tooling that makes the safe action the easy one.
+**A second example: GitLab, January 2017.** During a late-night effort to fix database replication, an engineer deleted data on the primary database instead of the replica. GitLab's public postmortem then found that several of its backup and replication mechanisms were not working as expected, and about six hours of production data was lost. The lessons: a backup you have not restored is a hope, not a backup (lesson 6.1 covers recovery testing), and tired people doing risky manual work at night need tooling that makes the safe action easy.
 
 **Action items that change things.** Weak items ("be more careful", "add more monitoring") do not survive the next sprint. Strong items are specific, owned, dated and change the system:
 
@@ -678,11 +678,11 @@ Complex failures usually have several **contributing factors** rather than one r
 | Improve monitoring | Add a USE panel and a ticket-level alert for Payments DB pool saturation above 80% (owner: Maha, due: 1 week) |
 | Communicate faster | Fast-burn pages for Payments also page the IC rota and auto-create the incident channel (owner: Salem's platform team, due: 3 weeks) |
 
-Prioritise items that **prevent** recurrence, then those that **detect** faster, then those that **mitigate** faster. Track them in the normal backlog and review them weekly.
+Prioritise items that **prevent** recurrence, then those that **detect** faster, then those that **respond** faster. Track them in the normal backlog and review them weekly.
 
 **Measuring incident response.** Teams track times such as **time to detect**, **time to acknowledge** and **time to restore**. DORA's research uses time to restore service (refined in later reports) as a key delivery metric. Treat these numbers with care: incidents are few and very different, so averages over a quarter mislead. Look at trends, the distribution and the story behind the longest ones.
 
-**Practise before it is real.** **Game days** are planned exercises where the team responds to a simulated incident in a test environment: a database failover, a lost zone, an expired certificate. They test runbooks, roles and tooling, and they train new people like Yousef without customer impact. Chaos engineering extends this (lesson 6.1). Najm runs one each quarter, some jointly with Jassim's SOC.
+**Practise before it is real.** **Game days** are planned exercises where the team responds to a simulated incident in a test environment: a database failover, a lost zone, an expired certificate. They test runbooks, roles and tooling, and train new people like Yousef safely. Chaos engineering extends this (lesson 6.1). Najm runs one each quarter, some jointly with Jassim's SOC.
 
 ## 🧰 The toolkit
 | Tool, practice or service | What it is and does | When to reach for it |
@@ -700,7 +700,7 @@ Prioritise items that **prevent** recurrence, then those that **detect** faster,
 |---|---|
 | Title and status | PM-2026-014 · Payments transfers failing after configuration change · SEV2 · Final |
 | Summary | A shared Helm values change reduced the Payments database connection pool from 50 to 5 in production. Transfers queued for connections and timed out. Rolling back the configuration restored service. |
-| Impact | 10:41–11:18 (37 min). About 8% of transfer requests failed or took over 2 s; about 3,100 customers affected. No duplicated or lost transfers (verified by reconciliation). Roughly 7–10% of the 30-day Payments availability error budget used, depending on traffic at that hour. |
+| Impact | 10:41–11:18 (37 min). About 8% of transfer requests failed or took over 2 s; about 3,100 customers affected. No duplicated or lost transfers (verified by reconciliation). Roughly 5–10% of the 30-day Payments availability error budget used, depending on traffic at that hour and how many requests failed rather than ran slow. |
 | Detection | Fast-burn SLO page at 10:52 (11 minutes after onset). Contact centre reports started at 10:49. |
 | Timeline (extract) | 10:40 config promoted · 10:41 errors begin · 10:52 page to Yousef · 11:04 SEV2 declared, Maha IC · 11:12 "what changed?" points to config · 11:17 rollback · 11:18 errors normal · 11:48 resolved |
 | Contributing factors | One values file shared by all environments; pipeline showed the source diff, not the rendered production diff; no alert on pool saturation; page did not reach the IC rota; batch promotion mixed unrelated changes |
@@ -733,10 +733,10 @@ Prioritise items that **prevent** recurrence, then those that **detect** faster,
 
 **1. Fifteen minutes into a Najm Mobile API outage, three engineers are debugging in separate chats and the contact centre does not know what to tell customers. What should happen first?**
 
-- A. The most senior engineer takes over all the debugging personally
-- B. Everyone stops until the root cause is known
-- C. The team waits for the postmortem to decide roles
-- D. Someone declares an incident, an incident commander is named, and roles (operations, communications, scribe) are assigned
+- A. The most senior engineer takes over all of the debugging personally
+- B. Everyone pauses changes until the root cause is fully understood
+- C. The team agrees roles later, in the postmortem, once things are calm
+- D. Declare an incident, name an incident commander and assign roles
 
 <details><summary>Answer</summary>
 
@@ -759,10 +759,10 @@ Prioritise items that **prevent** recurrence, then those that **detect** faster,
 
 **3. A draft postmortem gives the root cause as "Yousef approved a pull request with a wrong value". What should Maha ask for instead?**
 
-- A. Contributing factors in the system, such as why a development value could reach production unnoticed and why detection took eleven minutes
-- B. A written warning for Yousef
-- C. Removing Yousef from the approvers list
-- D. Deleting the postmortem, since the cause is obvious
+- A. Contributing factors, such as how a dev value reached production unnoticed
+- B. A written warning for Yousef, recorded in his performance file
+- C. Removing Yousef from the approvers list for the Payments repositories
+- D. Closing the postmortem early, since the cause is already obvious
 
 <details><summary>Answer</summary>
 
@@ -772,10 +772,10 @@ Prioritise items that **prevent** recurrence, then those that **detect** faster,
 
 **4. Which postmortem action item is strongest?**
 
-- A. Everyone should be more careful when editing configuration
-- B. Improve monitoring of Payments
-- C. Split the shared values file per environment and add a CI check that fails on unreviewed production changes; owner Yousef, due in two weeks
-- D. Discuss configuration practices at the next all-hands
+- A. Everyone should take more care when editing configuration in future
+- B. Improve monitoring of the Payments service across all environments
+- C. Per-environment values files plus a CI check; owner Yousef, due in two weeks
+- D. Discuss configuration practices with all engineers at the next all-hands
 
 <details><summary>Answer</summary>
 
@@ -785,14 +785,14 @@ Prioritise items that **prevent** recurrence, then those that **detect** faster,
 
 **5. During the February 2017 S3 disruption, AWS's own status dashboard could not show the problem at first. What lesson does Najm take from this?**
 
-- A. Status pages are not useful during incidents
-- B. Only use one cloud region
-- C. Never let engineers run commands in production
-- D. Host incident tooling, such as the status page and paging, independently of the systems it reports on
+- A. Status pages are not useful during incidents and can be dropped
+- B. Run every service in a single cloud region to keep things simple
+- C. Never let any engineer run commands against production systems
+- D. Host incident tooling independently of the systems it reports on
 
 <details><summary>Answer</summary>
 
-**D.** The dashboard depended on S3, so it failed with it; incident tooling must survive the failure it reports. Banning all production commands (C) is unworkable; AWS's fix was guardrails in the tool. (🔴 Expert view.)
+**D.** The dashboard depended on S3, so it failed with it; incident tooling, such as the status page and paging, must survive the failure it reports. Banning all production commands (C) is unworkable; AWS's fix was guardrails in the tool. (🔴 Expert view.)
 
 </details>
 

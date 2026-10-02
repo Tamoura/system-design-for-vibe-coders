@@ -200,10 +200,10 @@ Use synthetic data only. A generator script or a public sample database is fine;
 
 **1. Huda's incremental load on `updated_at` shows more open accounts than the core system. The operations team hard-deletes accounts opened in error. Which change fixes the root cause most reliably?**
 
-- A. Run the incremental load every hour instead of nightly
-- B. Change the watermark comparison from `>` to `>=`
-- C. Switch to log-based change data capture, which emits an event for every committed delete
-- D. Add an index on `updated_at` in the source
+- A. Run the incremental load every hour instead of nightly, so gaps close sooner
+- B. Change the watermark comparison from `>` to `>=` so boundary rows are kept
+- C. Switch to log-based CDC, which records deletes
+- D. Add an index on `updated_at` in the source so the query is faster
 
 <details><summary>Answer</summary>
 
@@ -213,10 +213,10 @@ Use synthetic data only. A generator script or a public sample database is fine;
 
 **2. What is the main advantage of ELT over ETL for Najm's warehouse?**
 
-- A. The raw data is kept in the warehouse, so tables can be rebuilt when business rules change without re-extracting from sources
-- B. It never puts any load on source systems
-- C. It removes the need for data quality tests
-- D. It guarantees that personal data never reaches the warehouse
+- A. Raw data stays in the warehouse, so tables can be rebuilt without re-extracting
+- B. It never puts any load on source systems, because transformation happens later
+- C. It removes the need for data quality tests, because raw is kept exactly as the source
+- D. It guarantees that personal data never reaches the warehouse in any form
 
 <details><summary>Answer</summary>
 
@@ -226,10 +226,10 @@ Use synthetic data only. A generator script or a public sample database is fine;
 
 **3. A nightly load reads `WHERE updated_at > :last_watermark`. Some rows are updated by a batch job whose transaction starts at 01:00 but commits at 01:20; the load runs at 01:10. What happens, and what is the standard fix?**
 
-- A. Nothing goes wrong, because the database orders commits by timestamp
-- B. The rows are loaded twice; fix it by switching to a full load
-- C. The rows cause a primary-key error; fix it by dropping the key
-- D. The rows can be skipped for ever because the watermark moves past their timestamp before they commit; overlap the window and merge on the primary key, or use CDC
+- A. Nothing goes wrong, because PostgreSQL makes committed rows visible in timestamp order
+- B. The rows are loaded twice; fix it by switching the whole table to a nightly full load
+- C. The rows cause a primary-key error on the next run; fix it by dropping the key
+- D. The rows can be skipped for ever; overlap the window and merge on the key, or use CDC
 
 <details><summary>Answer</summary>
 
@@ -239,10 +239,10 @@ Use synthetic data only. A generator script or a public sample database is fine;
 
 **4. Kafka Connect running Debezium for the core banking database stopped on Friday evening. On Monday, Salem reports that disk use on the core primary database has grown sharply. Why?**
 
-- A. Debezium writes its events to the source database
-- B. The replication slot keeps WAL on the primary until the consumer confirms it, so WAL piles up while the consumer is down
-- C. The snapshot restarted and copied the tables inside the database
-- D. Kafka's retention period expired
+- A. Debezium writes its change events back into tables in the source database
+- B. The replication slot keeps WAL on the primary until the consumer confirms it
+- C. The initial snapshot restarted and copied every captured table inside the database
+- D. Kafka's retention period expired, so the topics spilled over onto the primary
 
 <details><summary>Answer</summary>
 
@@ -252,14 +252,14 @@ Use synthetic data only. A generator script or a public sample database is fine;
 
 **5. Layla asks how Najm keeps national ID numbers out of the analytical platform when it introduces CDC from the `customers` table. Which answer is best?**
 
-- A. Mask the column in the dashboards
-- B. Copy it to raw, then delete it in staging
-- C. Exclude the column in the CDC connector configuration so it never leaves the core system, and record that decision in the ingestion design note
-- D. Encrypt the whole warehouse, which makes the column safe to copy
+- A. Mask the column in every retail and risk dashboard that shows customer details
+- B. Copy it to raw as usual, then drop the column in the staging models
+- C. Exclude the column in the CDC connector so it never leaves the core system
+- D. Encrypt the whole warehouse at rest, which makes the column safe to copy anywhere
 
 <details><summary>Answer</summary>
 
-**C.** Minimising at the source means the data never exists downstream. B still lands it in raw, where it stays in history; A only hides it from one audience; D protects storage but not access by everyone who can query it. (🟡 Going deeper.)
+**C.** Minimising at the source means the data never exists downstream; record the exclusion in the ingestion design note. B still lands it in raw, where it stays in history; A only hides it from one audience; D protects storage but not access by everyone who can query it. (🟡 Going deeper.)
 
 </details>
 
@@ -537,10 +537,10 @@ Use synthetic data and a local PostgreSQL or DuckDB. Airflow and Dagster both ru
 
 **1. Huda's task inserted a day of transactions, committed, then lost its connection before Airflow received success. Airflow retried, and the day's total doubled. What is the best fix?**
 
-- A. Turn off retries for that task
-- B. Rewrite the task to delete that day's rows and insert them again inside one transaction, using the data interval from Airflow
-- C. Add a monthly job that removes duplicate rows
-- D. Increase the task's timeout
+- A. Turn off retries for that task so it can never run a second time
+- B. Delete and re-insert that day in one transaction, for Airflow's data interval
+- C. Add a monthly clean-up job that removes duplicate rows from staging
+- D. Increase the task's timeout so the connection has longer to recover
 
 <details><summary>Answer</summary>
 
@@ -550,10 +550,10 @@ Use synthetic data and a local PostgreSQL or DuckDB. Airflow and Dagster both ru
 
 **2. A daily DAG failed on Saturday and was re-run manually on Monday. Its query uses `CURRENT_DATE - 1`. What happens?**
 
-- A. Saturday is loaded correctly, because the run belongs to Saturday
-- B. The run fails with a date error
-- C. Airflow automatically rewrites the date
-- D. Sunday is loaded instead of Saturday, so Saturday stays missing and Sunday may be duplicated
+- A. Saturday is loaded correctly, because the manual run belongs to Saturday's interval
+- B. The run fails with a date error because Monday is outside the run's interval
+- C. Airflow rewrites `CURRENT_DATE` in the query to the run's logical date
+- D. Sunday is loaded again and Saturday stays missing
 
 <details><summary>Answer</summary>
 
@@ -563,10 +563,10 @@ Use synthetic data and a local PostgreSQL or DuckDB. Airflow and Dagster both ru
 
 **3. Faisal needs to re-run the transactions pipeline for the last 90 days after a bug fix. Which plan is safest?**
 
-- A. Run the idempotent pipeline as a backfill with limited concurrency, re-run the downstream marts for the same dates, and agree with compliance whether already-submitted regulatory extracts may change
-- B. Run all 90 days in parallel to finish quickly
-- C. Truncate the staging table and run only today's load
-- D. Fix only future days, since history cannot be changed
+- A. Backfill with capped concurrency, re-run downstream marts, and agree submitted extracts with compliance
+- B. Trigger all 90 days in parallel at once so the backfill finishes before the morning dashboards
+- C. Truncate the staging table, then run only today's load and let history rebuild itself
+- D. Fix only future days, since history already shown to users must never be changed
 
 <details><summary>Answer</summary>
 
@@ -576,10 +576,10 @@ Use synthetic data and a local PostgreSQL or DuckDB. Airflow and Dagster both ru
 
 **4. In a `MERGE` that loads account changes from an overlapping incremental extract, why add `WHEN MATCHED AND s.updated_at > t.updated_at`?**
 
-- A. It makes the merge run faster
-- B. It is required by PostgreSQL syntax
-- C. It stops an older change that is re-read or replayed later from overwriting a newer value already in the table
-- D. It removes deleted accounts
+- A. It makes the merge faster by skipping rows whose timestamps have not changed
+- B. It is required by PostgreSQL syntax whenever a MERGE has a matched clause
+- C. It stops an older, replayed change from overwriting a newer value
+- D. It removes accounts that were deleted in the source since the last load
 
 <details><summary>Answer</summary>
 
@@ -589,10 +589,10 @@ Use synthetic data and a local PostgreSQL or DuckDB. Airflow and Dagster both ru
 
 **5. The credit-risk mart is built at 02:00 each day, but the core system's end-of-day batch sometimes finishes at 02:40. What is the best design?**
 
-- A. Move the schedule to 05:00 and hope the batch is never later
-- B. Start the pipeline when a readiness signal from the core end-of-day appears, with a timeout and an alert if it does not arrive by an agreed time
-- C. Retry the build every five minutes until the numbers look right
-- D. Build twice a day and let users pick the better one
+- A. Move the schedule to 05:00 and hope the end-of-day batch is never that late
+- B. Trigger on a readiness signal from core end-of-day, with a timeout and an alert
+- C. Retry the build every five minutes until the totals look right to the risk team
+- D. Build twice a day and let users pick whichever version looks better
 
 <details><summary>Answer</summary>
 
@@ -842,10 +842,10 @@ Run Kafka or Redpanda locally in Docker using their official quick-starts, and g
 
 **1. Kareem asks for a "real-time" dashboard of yesterday's branch deposits, which the branch managers review once each morning. What should the Data Platform team do?**
 
-- A. Build a Kafka and Flink pipeline so the dashboard updates every second
-- B. Use a Kafka consumer that writes each deposit to the dashboard database
-- C. Use session windows on deposit events
-- D. Serve it from the daily batch pipeline, because a fresher number would not change any decision
+- A. Build a Kafka and Flink pipeline so the dashboard refreshes every second
+- B. Use a Kafka consumer that writes each deposit straight to the dashboard database
+- C. Use session windows on deposit events so each branch visit is grouped
+- D. Serve it from the daily batch; a fresher number changes no decision
 
 <details><summary>Answer</summary>
 
@@ -855,10 +855,10 @@ Run Kafka or Redpanda locally in Docker using their official quick-starts, and g
 
 **2. Huda's consumer used automatic offset commits. It was restarted mid-batch, and some events were never counted. What delivery behaviour did this produce, and what is the standard fix?**
 
-- A. At-least-once; switch to automatic commits more often
-- B. At-most-once for the events in flight; turn off auto-commit, commit after writing, and make the write idempotent on the event ID
-- C. Exactly-once; nothing needs to change
-- D. At-least-once; add more partitions
+- A. At-least-once; switch to automatic commits on a shorter interval so less is lost
+- B. At-most-once; commit after an idempotent write keyed on the event ID
+- C. Exactly-once; nothing needs to change because Kafka tracks the offsets
+- D. At-least-once; add more partitions so the restart catches up faster
 
 <details><summary>Answer</summary>
 
@@ -868,23 +868,23 @@ Run Kafka or Redpanda locally in Docker using their official quick-starts, and g
 
 **3. Faisal enables Kafka transactions and the idempotent producer, then says Smart Alerts' feature table in PostgreSQL is now "exactly-once". Is he right?**
 
-- A. No. Those features give exactly-once for processing within Kafka; writes to PostgreSQL still need an idempotent sink, such as an upsert keyed on `auth_id`, or offsets stored in the same database transaction
-- B. Yes, because transactions cover every system the consumer touches
-- C. Yes, as long as the consumer group has one member
-- D. No, because Kafka cannot deliver any message more than once
+- A. No; PostgreSQL writes still need an idempotent sink or offsets stored with the result
+- B. Yes, because Kafka transactions extend to every system the consumer writes to
+- C. Yes, as long as the consumer group has exactly one member at a time
+- D. No, because Kafka can never deliver a message to a consumer more than once
 
 <details><summary>Answer</summary>
 
-**A.** The guarantee covers reading from and writing to Kafka atomically. PostgreSQL is outside that transaction. D is false: at-least-once delivery means duplicates are possible. (🟡 Going deeper.)
+**A.** The guarantee covers reading from and writing to Kafka atomically. PostgreSQL is outside that transaction, so use an upsert keyed on `auth_id` or store offsets in the same database transaction. D is false: at-least-once delivery means duplicates are possible. (🟡 Going deeper.)
 
 </details>
 
 **4. A card terminal loses connection and sends 40 authorisations three minutes late. The fraud feature counts authorisations per card per 5-minute window. Which approach puts them in the right windows?**
 
 - A. Count by processing time, so the counts reflect when Najm learned about them
-- B. Drop every event that arrives out of order
-- C. Count by event time, with a watermark delay chosen for the trade-off between completeness and speed, and handle events later than that explicitly
-- D. Increase the topic's retention period
+- B. Drop every event that arrives out of order to keep the windows clean
+- C. Count by event time, with a chosen watermark and explicit late handling
+- D. Increase the topic's retention period so the late events are kept longer
 
 <details><summary>Answer</summary>
 
@@ -894,14 +894,14 @@ Run Kafka or Redpanda locally in Docker using their official quick-starts, and g
 
 **5. The card authorisations topic is keyed by `merchant_country`. One consumer is overloaded and lag keeps growing, while others are idle. What is the most likely cause, and the fix?**
 
-- A. Retention is too short; increase it
-- B. The watermark is too long; shorten it
-- C. Auto-commit is on; turn it off
-- D. Most traffic shares one key, so it lands on one hot partition; key by a well-spread field such as the tokenised `card_id`, which still keeps each card's events in order
+- A. Retention is too short for the traffic volume; increase it to fourteen days
+- B. The watermark delay is too long for the window size; shorten it
+- C. Auto-commit is on, which slows the consumer; turn it off and commit manually
+- D. Most traffic shares one key on one hot partition; key by tokenised `card_id`
 
 <details><summary>Answer</summary>
 
-**D.** Partitioning by a skewed key puts most events on one partition, and only one consumer in a group can read it. A, B and C do not change how load is spread across partitions. (🔴 Expert view.)
+**D.** Partitioning by a skewed key puts most events on one partition, and only one consumer in a group can read it; `card_id` spreads load and still keeps each card in order. A, B and C do not change how load is spread across partitions. (🔴 Expert view.)
 
 </details>
 

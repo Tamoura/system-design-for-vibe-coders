@@ -387,7 +387,7 @@ import hashlib, hmac
 pseudo_id = hashlib.md5(national_id.encode()).hexdigest()
 
 # RIGHT: keyed hash (HMAC-SHA-256). Without the secret key, which lives in
-# the secrets manager (6.3) and never in code, the values cannot be recomputed.
+# the secrets manager and never in code, the values cannot be recomputed.
 def pseudonymise(value: str, key: bytes) -> str:
     normalised = value.strip().upper()
     return hmac.new(key, normalised.encode(), hashlib.sha256).hexdigest()
@@ -579,3 +579,294 @@ Use synthetic data only (for example generated with the Python Faker library). N
 - Apache Iceberg documentation: maintenance (expire snapshots) — https://iceberg.apache.org/docs/latest/maintenance/
 - Arvind Narayanan and Vitaly Shmatikov, "Robust De-anonymization of Large Sparse Datasets" (IEEE Symposium on Security and Privacy, 2008)
 - Latanya Sweeney, "k-anonymity: a model for protecting privacy" (International Journal of Uncertainty, Fuzziness and Knowledge-Based Systems, 2002)
+
+---
+
+# 6.3 — Securing the data platform: access control, secrets, audit and sharing safely
+*Level: 🔴 Advanced* · *Prerequisites: 6.1, 6.2* · *Stage: Govern, Operate*
+
+## ⚡ In 60 seconds
+- A data platform concentrates the bank's most valuable data in one place, so it needs **least privilege**: every person and every pipeline gets the minimum access its purpose needs, and nothing more.
+- Grant access to **named identities through roles**, never through shared accounts. Layer the controls: schema and table grants, **row-level security**, column grants and **masking**.
+- **Secrets** (passwords, keys, tokens) live in a secrets manager and reach pipelines at run time; prefer short-lived credentials to long-lived passwords.
+- **Audit logs** record who read and changed what, are stored where their subjects cannot alter them, and feed alerts for unusual access.
+- Decision cue: for every access path (dashboard, notebook, export, API, LLM retrieval), ask "whose identity does the warehouse see, and which policies apply to it?"
+- Biggest trap: one shared superuser account behind every pipeline and dashboard, which makes access control meaningless and audit logs useless.
+
+## 🧭 Why it matters
+Internal audit sends Faisal a simple question: "Who viewed the salary and balance of customer 10-447-221 last month?" The customer, a well-known business owner, has complained that a relative of a bank employee knew details of their finances.
+
+Faisal cannot answer. The warehouse logs show that every relevant query ran as `etl_admin`, a superuser created years ago to get the first pipelines working. Its password sits in an Airflow variable, in two notebooks committed to git, and in the connection settings of the BI tool, so every dashboard queries the warehouse as `etl_admin` too. Twenty-three people and fourteen jobs use it. Row-level security exists on the credit-risk mart, but superusers bypass it. One customer 360 dashboard also has a public sharing link that anyone with the URL can open.
+
+There is no evidence of misuse, and no evidence of anything else either. That is the problem: the bank cannot show who accessed what. Salem, Head of Platform Engineering, and Faisal agree on a programme for the quarter: retire `etl_admin`, give every person and pipeline its own identity, move secrets out of code, turn on audit logging and close the public links. This lesson is that programme.
+
+## 📐 How it works
+
+### 🟢 The essentials
+
+**What can go wrong.** The common ways data platforms leak are ordinary: access that is too broad, shared credentials, secrets committed to code, exports and public links, people with legitimate access looking at what they should not (insiders), and misconfigured storage such as a public object-storage bucket. Advanced attacks matter, but these come first.
+
+**The principles.**
+- **Least privilege:** grant only what the purpose needs, for as long as it needs it.
+- **Named identities:** every human and every workload has its own identity, so every action can be traced. People sign in through the bank's single sign-on (SSO) identity provider, not with local passwords.
+- **Separation of duties:** the people who build pipelines are not automatically the people who may read restricted data; the people who grant access do not approve their own requests.
+- **Defence in depth:** several independent layers, so one mistake does not expose everything.
+
+**Access models.**
+- **Role-based access control (RBAC):** permissions go to roles (`marts_reader`, `pii_reader`), and people get roles. Simple and auditable.
+- **Attribute-based access control (ABAC):** decisions use attributes of the person (country, team), the data (classification tags from 6.2) and the context. "Analysts may read confidential columns of their own country's customers" is one rule instead of dozens of roles.
+- **Row-level security (RLS):** filters the rows a user sees, for example by country or branch.
+- **Column-level security and masking:** hides or masks columns (6.2) based on the role.
+
+**Access in PostgreSQL, layer by layer.** Group roles hold permissions; people and pipelines inherit them.
+
+```sql
+-- Group roles: no login, they only hold permissions
+CREATE ROLE marts_reader NOLOGIN;
+CREATE ROLE pii_reader   NOLOGIN;
+
+-- Named people (authenticated via SSO or certificates in production), never shared
+CREATE ROLE kareem LOGIN;
+GRANT marts_reader TO kareem;
+
+-- Each pipeline gets its own identity, writing only to its own schema
+CREATE ROLE svc_dbt_marts LOGIN;
+GRANT USAGE, CREATE ON SCHEMA marts TO svc_dbt_marts;
+
+-- Readers see curated views, not raw or base tables
+GRANT USAGE ON SCHEMA marts TO marts_reader;
+GRANT SELECT ON marts.customer_360_analyst, marts.loan_book TO marts_reader;
+REVOKE ALL ON SCHEMA raw FROM PUBLIC;
+
+-- Row-level security: analysts see only loans in countries they are scoped to
+ALTER TABLE marts.loan_book ENABLE ROW LEVEL SECURITY;
+ALTER TABLE marts.loan_book FORCE ROW LEVEL SECURITY;   -- applies to the table owner too
+CREATE POLICY loan_book_by_country ON marts.loan_book
+    FOR SELECT TO marts_reader
+    USING (country_code IN (
+        SELECT country_code FROM security.analyst_scope
+        WHERE username = current_user));
+```
+
+Note two details. Readers need `SELECT` on `security.analyst_scope` for the policy's lookup to work (or wrap the lookup in a small function owned by a security role). And superusers and roles with the `BYPASSRLS` attribute skip every policy, which is exactly why `etl_admin` made Najm's RLS meaningless. Managed warehouses offer the same ideas under their own names (row access policies, row filters, column masks, policy tags); the design is the same.
+
+**The access path.** Every route to the data should carry the person's identity to the warehouse and leave a record:
+
+```mermaid
+flowchart LR
+    U["Analyst"] --> S["SSO identity provider"]
+    S --> G["Group: retail-analysts-qa"]
+    G --> R["Warehouse role: marts_reader"]
+    R --> P["Policies: grants, RLS, masking"]
+    P --> D["Data"]
+    P --> A["Audit log"]
+    A --> M["Monitoring and alerts"]
+```
+
+### 🟡 Going deeper
+
+**Grants as code.** Grants clicked into a console drift and cannot be reviewed. Keep them in version control and apply them on every deployment. dbt can do this for the objects it builds with the `grants` config:
+
+```yaml
+models:
+  - name: customer_360_analyst
+    config:
+      grants:
+        select: ['marts_reader']
+  - name: customer_360
+    config:
+      grants:
+        select: ['svc_smart_alerts_features']   # one named workload, no humans
+```
+
+Roles, group mappings and database-level settings belong in infrastructure as code (covered in *Cloud & DevOps: Zero to Hero*, Module 3). A pull request then becomes the access request, the review and the record.
+
+**Secrets.** A **secret** is anything that grants access: passwords, API keys, tokens, private keys, and the HMAC key from 6.2.
+
+```python
+import os, psycopg
+
+# WRONG: a password in code ends up in git history, notebooks and screenshots
+conn = psycopg.connect("postgresql://etl_admin:Najm2019!@dwh.internal/dwh")
+
+# BETTER: injected at run time by the orchestrator from the secrets manager
+conn = psycopg.connect(os.environ["DWH_DSN"])
+```
+
+Rules that hold across tools:
+- Store secrets in a **secrets manager** (HashiCorp Vault, or your cloud provider's service). Airflow and Dagster can read connections and variables from such back ends instead of their own metadata database.
+- Prefer **short-lived credentials**. Vault's database secrets engine, for example, creates a database user per job with an expiry, so a leaked credential soon stops working. Cloud platforms offer workload identity so jobs need no stored password at all.
+- **Scan** repositories and notebooks for secrets before they are pushed (gitleaks is a common open-source scanner), and **rotate** any secret that has ever been committed; deleting the line does not remove it from history.
+
+For depth, see [*Secure AI & Application Security: Zero to Hero*, lesson 5.2 — Secrets management: keys, tokens and where they leak](../secai/index.html#/5.2).
+
+**Audit logs.** An audit log answers "who did what, to which data, when and from where". For a data platform that means logins, grants and role changes, schema changes, writes, and reads of restricted data. In PostgreSQL the **pgaudit** extension adds detailed audit logging:
+
+```ini
+# postgresql.conf
+shared_preload_libraries = 'pgaudit'
+pgaudit.log = 'ddl, role, write'     # session audit: schema changes, grants, writes
+pgaudit.role = 'auditor'             # object audit: log access to objects 'auditor' holds rights on
+```
+
+```sql
+-- Log every read of the restricted customer table
+CREATE ROLE auditor NOLOGIN;
+GRANT SELECT ON core.customers TO auditor;
+```
+
+Managed warehouses keep query and access history in system views. Either way, ship the logs to a store that platform administrators cannot alter (a separate account or write-once storage), keep them for the period your policy sets, and alert on patterns: bulk reads of restricted tables, access outside working hours, a service account used from a laptop, grants made outside the pull-request process. Detection engineering is covered in [*Secure AI & Application Security: Zero to Hero*, lesson 10.1 — Logging, monitoring and detection engineering](../secai/index.html#/10.1).
+
+**Encryption** protects data in transit (TLS on every connection to the warehouse) and at rest (storage encryption with keys in a key management service). It is necessary but not sufficient: anyone with a valid login still sees decrypted data, which is why access control and audit matter more day to day.
+
+### 🔴 Expert view
+
+**Every consumer path must carry identity.** Najm's controls failed at the edges, not in the warehouse:
+- **BI tools.** A dashboard that connects with one service account shows every viewer what that account sees, so warehouse RLS cannot help. Either pass the viewer's identity to the warehouse where the tool supports it, apply equivalent row permissions inside the tool, or build separate marts per audience. Disable public links for anything above "internal".
+- **Notebooks and exports.** Data that leaves the warehouse leaves its controls. Limit export rights for restricted data, log exports, and prefer sharing a governed view over sharing a file.
+- **LLM applications.** The Credit Memo Copilot (5.3) must retrieve only documents the asking user may read; an index built with a superuser's view of all memos leaks them through answers. Permission-aware retrieval is covered in [*Secure AI & Application Security: Zero to Hero*, lesson 9.3 — Securing retrieval (RAG): data boundaries and access control](../secai/index.html#/9.3).
+
+**Sharing outside the bank.** Share the minimum, in the most controlled form: aggregates before rows, governed views before copies, pseudonymised before identified (6.2). Open protocols such as **Delta Sharing** and warehouse-native sharing let a partner query a live, read-only view you control and can revoke, instead of receiving a file you can never recall. **Data clean rooms** let two parties compute joint aggregates without either seeing the other's rows. Any external sharing of personal data also needs a legal basis and a data sharing agreement approved by Sara.
+
+**Access that expires.** Permanent access accumulates. Mature platforms add:
+- **Access reviews:** each quarter, data owners recertify who holds roles on their data; unconfirmed access is removed.
+- **Just-in-time access:** `pii_reader` is granted for a ticketed task and expires automatically after hours or days.
+- **Break-glass accounts:** a highly privileged account for emergencies, sealed, alerting on every use and reviewed afterwards.
+
+**Policies driven by classification.** When the classification tags of 6.2 are in the catalogue, policies can follow them automatically: any column tagged `pii:direct` is masked unless the caller holds `pii_reader`, whatever table it is in. This is ABAC in practice, and it scales better than per-table grants. General policy engines such as **Open Policy Agent** apply the same idea across services. Least privilege and zero-trust principles in depth are in [*Secure AI & Application Security: Zero to Hero*, lesson 1.2 — Security principles: least privilege, defence in depth, secure defaults, zero trust](../secai/index.html#/1.2).
+
+## 🧰 The toolkit
+| Tool, pattern or standard | What it is and does | When to reach for it |
+|---|---|---|
+| **Role-based access control (RBAC)** | Permissions granted to roles; people and workloads granted roles | The baseline for every warehouse and lake |
+| **Attribute-based access control (ABAC)** | Decisions based on attributes of user, data and context, such as classification tags | Many users and datasets where per-table roles would explode |
+| **Row-level security** (PostgreSQL) | Policies that filter the rows each role can see | Data scoped by country, branch, portfolio or customer |
+| **dbt grants** | Declares grants on dbt-built objects in version control and applies them at build | Every model that people or workloads read |
+| **HashiCorp Vault** | Secrets manager with short-lived, dynamic database credentials | Pipelines and services that need warehouse access |
+| **pgaudit** | PostgreSQL extension for detailed session and object audit logging | Proving who read restricted data and who changed grants |
+| **Delta Sharing** | Open protocol for sharing live, read-only tables with external recipients | Sharing data with partners without sending copies |
+
+## 🏛️ In practice at Najm Bank
+Faisal and Salem publish the **Najm Data Platform Access Policy v1**. Part A is the role matrix; part B the rules.
+
+**Part A: who may read which layer**
+
+| Role | Raw | Staging | Marts (curated views) | Marts (base tables with restricted columns) | Granted by |
+|---|---|---|---|---|---|
+| Data engineers (named) | Dev and test only | Dev and test only | Read | Just-in-time, ticketed | Faisal |
+| Pipeline service accounts | Own sources only | Own models only | Write own models | Own models only | Pull request |
+| `marts_reader` analysts | — | — | Read, RLS by country | — | Data owner |
+| `pii_reader` | — | — | Read unmasked | Read, time-limited | Data owner and Sara |
+| BI service accounts | — | — | One per audience, RLS applied | — | Lina |
+| Break-glass | All | All | All | All | Sealed; Salem and Faisal together |
+
+**Part B: rules**
+1. No shared human accounts. `etl_admin` is retired; superuser use is limited to break-glass and audited.
+2. Every grant is code (dbt `grants` or infrastructure as code), reviewed in a pull request; console grants are reverted by the next deployment.
+3. Secrets live only in the secrets manager; pipelines use short-lived credentials. Secret scanning runs on every repository and notebook; a committed secret is rotated within 24 hours.
+4. pgaudit (or the warehouse's access history) logs grants, schema changes, writes and all reads of restricted tables, shipped to the security team's log store. Alerts: bulk restricted reads, off-hours restricted access, service accounts used interactively.
+5. Public links are disabled in the BI tool. External sharing uses governed views or sharing protocols, never files, and needs a data sharing agreement approved by Sara.
+6. Data owners recertify access to their tier-1 datasets every quarter.
+
+With these in place, audit's question takes minutes: query the audit log for reads of `core.customers` and `customer_360` filtered to that customer key, by named user.
+
+## 🛠️ Exercises
+Use synthetic data in a local PostgreSQL (for example the official image in Docker). Never test against systems you do not own.
+
+- 🟢 Create the group roles, two named users and two schemas from this lesson. Grant one user `marts_reader` and verify with real queries that they can read the curated view but not the base table or the raw schema. *Done when:* you have a script that creates everything from scratch and a test script whose expected "permission denied" errors all appear.
+- 🟡 Add row-level security by country to a synthetic loan table, with a scope table mapping users to countries. Then show the bypass: run the same query as a superuser and as the table owner without `FORCE ROW LEVEL SECURITY`. *Done when:* each user sees only their country's rows, and you can explain in two sentences why both bypasses happen and how `FORCE` and removing superuser fix them.
+- 🔴 Run PostgreSQL with pgaudit (an image that includes it, or build one), configure session and object auditing, and run a small pipeline whose credentials come from a local Vault dev server or environment variables, never from code. Scan your repository with gitleaks. *Done when:* the audit log shows a named user's read of the restricted table, gitleaks reports zero findings, and changing the stored secret takes effect without a code change.
+
+## ⚠️ Mistakes and traps
+- **Shared superuser accounts.** They bypass RLS, defeat audit and cannot be revoked from one person. Give every human and workload its own identity and minimal role.
+- **Controls only in the warehouse.** BI tools with service accounts, exports and LLM indexes bypass warehouse policies. Carry the viewer's identity through or enforce equivalent controls on each path.
+- **Views that silently skip RLS.** A PostgreSQL view runs with its owner's rights by default, so base-table RLS is checked against the owner, not the caller. Use `security_invoker = true` (PostgreSQL 15 and later) when the caller's policies must apply, or filter inside the view.
+- **Deleting a committed secret instead of rotating it.** Git history, forks and clones keep it. Rotate first, then clean up.
+- **Logs the administrators can edit.** An audit trail its subjects can change proves nothing. Ship logs to a separate, append-only store.
+- **Access that never expires.** Roles pile up as people change jobs. Use quarterly recertification and time-limited grants for sensitive roles.
+
+## 🧾 Recap
+- Least privilege, named identities, separation of duties and defence in depth are the design principles.
+- Combine RBAC with attributes from classification, row-level security and column masking; manage grants as code.
+- Keep secrets in a secrets manager, prefer short-lived credentials, scan for leaks and rotate anything exposed.
+- Audit logs must record reads of restricted data, live outside administrators' reach and drive alerts.
+- Secure every consumer path (BI, exports, sharing, LLM retrieval) so the warehouse sees the real user's identity.
+
+## ✍️ Check yourself
+
+**1. Najm's credit-risk mart has row-level security policies, but analysts using the risk dashboard can see every country's loans. What is the most likely cause?**
+
+- A. Row-level security does not work on mart tables
+- B. The policies were written in SQL rather than in the BI tool
+- C. Row-level security policies only apply to INSERT and UPDATE statements
+- D. The dashboard queries the warehouse as a shared superuser, which bypasses row-level security
+
+<details><summary>Answer</summary>
+
+**D.** Superusers and roles with `BYPASSRLS` skip all policies, and a shared service account hides the viewer's identity anyway. A, B and C are false: RLS works on any table, belongs in the warehouse, and the policy here is `FOR SELECT`. (🟢 The essentials; 🔴 Expert view.)
+
+</details>
+
+**2. Huda finds a warehouse password in a notebook committed to git six months ago. What should happen first?**
+
+- A. Delete the line from the notebook and commit the change
+- B. Rotate the credential, then remove it from the code and move the pipeline to the secrets manager
+- C. Make the repository private
+- D. Nothing, if the repository is internal
+
+<details><summary>Answer</summary>
+
+**B.** A committed secret stays in history and every clone, so it must be treated as exposed and rotated. A is the tempting answer but leaves the old password valid. (🟡 Going deeper.)
+
+</details>
+
+**3. Najm wants analysts to see confidential columns only for customers in their own country, with masking driven by the classification tags of 6.2. Which access model fits best?**
+
+- A. One role per table per country
+- B. A single shared analyst account
+- C. Attribute-based access control, using user attributes and column tags, together with row-level security
+- D. Giving all analysts `pii_reader`
+
+<details><summary>Answer</summary>
+
+**C.** ABAC expresses "own country, masked unless authorised" as a few rules driven by attributes and tags. A works but explodes in number of roles; B and D break least privilege. (🔴 Expert view.)
+
+</details>
+
+**4. Which audit-log setup gives evidence that internal audit can rely on?**
+
+- A. Logs of grants, schema changes, writes and restricted reads by named users, shipped to an append-only store outside the platform administrators' control
+- B. Logs kept on the warehouse server, editable by the platform administrators
+- C. Logs of failed logins only
+- D. Screenshots of the access-control settings taken once a year
+
+<details><summary>Answer</summary>
+
+**A.** Evidence needs named identities, coverage of the actions that matter and a store its subjects cannot alter. B is tempting because it is easy, but administrators could change it. (🟡 Going deeper.)
+
+</details>
+
+**5. A fintech partner wants Najm's daily SME card-spend data by sector to build a joint product. Which approach is safest?**
+
+- A. Email a daily CSV of all SME card transactions
+- B. Give the partner a login to the warehouse with `marts_reader`
+- C. Copy the raw card stream into the partner's cloud account
+- D. Share a governed, aggregated, read-only view through a sharing protocol Najm can revoke, under a data sharing agreement approved by the DPO
+
+<details><summary>Answer</summary>
+
+**D.** Aggregates before rows, live views before copies, revocable access and a legal agreement. A and C send copies Najm can never recall; B exposes far more than the purpose needs. (🔴 Expert view.)
+
+</details>
+
+## 📚 References
+- PostgreSQL documentation: row security policies — https://www.postgresql.org/docs/current/ddl-rowsecurity.html
+- PostgreSQL documentation: privileges — https://www.postgresql.org/docs/current/ddl-priv.html
+- PostgreSQL documentation: CREATE VIEW (security_invoker) — https://www.postgresql.org/docs/current/sql-createview.html
+- pgaudit — https://github.com/pgaudit/pgaudit
+- dbt documentation: grants — https://docs.getdbt.com/reference/resource-configs/grants
+- HashiCorp Vault documentation — https://developer.hashicorp.com/vault/docs
+- Apache Airflow documentation: secrets backends — https://airflow.apache.org/docs/
+- Delta Sharing — https://delta.io/sharing/
+- gitleaks — https://github.com/gitleaks/gitleaks
+- Open Policy Agent — https://www.openpolicyagent.org/

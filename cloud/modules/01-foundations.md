@@ -136,7 +136,7 @@ curl -sv https://api.najm.example/health -o /dev/null
 
 **Layer 4 and layer 7 load balancers.** A **layer 4 (L4)** load balancer forwards TCP or UDP connections without reading the HTTP inside: fast and protocol-agnostic. A **layer 7 (L7)** load balancer understands HTTP: it terminates TLS, routes by host or path (`/v1/payments` to one service, `/v1/cards` to another) and returns its own error pages. The Najm Mobile API sits behind an L7 load balancer, so a 502 there means the backend misbehaved.
 
-**Services with systemd.** On a VM, a systemd **unit file** defines how a service runs: the command, the user it runs as (never root unless it truly must), and whether to restart it on failure (`Restart=on-failure`). `systemctl restart najm-agent` restarts it and `journalctl -u najm-agent -f` follows its logs. In containers, the runtime and Kubernetes take systemd's place, but the ideas carry over: a supervised process, a restart policy, a non-root user.
+**Services with systemd.** On a VM, a systemd **unit file** defines how a service runs: the command, the user it runs as (never root unless it must), and whether to restart it on failure (`Restart=on-failure`). In containers, the runtime and Kubernetes take systemd's place, but the ideas carry over: a supervised process, a restart policy, a non-root user.
 
 **Private addresses.** RFC 1918 reserves three IPv4 ranges for private networks: `10.0.0.0/8`, `172.16.0.0/12` and `192.168.0.0/16`. The `/16` is **CIDR** notation: the first 16 bits name the network, so `10.20.0.0/16` holds 65,536 addresses and `10.20.1.0/24` holds 256. Lesson 1.2 uses these to plan cloud networks.
 
@@ -146,9 +146,9 @@ curl -sv https://api.najm.example/health -o /dev/null
 
 **DNS is a dependency of everything.** Your monitoring, deploy tools and incident chat may depend on the same DNS and network you are fixing, as Facebook's 2021 outage showed. Keep an "out-of-band" list of how to reach consoles, runbooks and each other if your own names stop resolving.
 
-**Probe from outside.** Dashboards inside the cluster show healthy pods, not whether customers can reach them. A **synthetic check** (a scheduled request from outside your network, ideally from several places) tests the whole chain from the customer's side, and would have caught Najm's expired certificate before the contact centre did. Lesson 5.1 builds this in.
+**Probe from outside.** Dashboards inside the cluster show healthy pods, not whether customers can reach them. A **synthetic check** (a scheduled request from outside your network, ideally from several places) tests the whole chain from the customer's side, and would have caught Najm's expired certificate before the contact centre did. Lesson 5.2 builds this in.
 
-**Test from where the client is.** Your laptop may have a different resolver, proxy or VPN route; test from wherever the failing client sits.
+**Test from where the client is.** Your laptop's resolver, proxy or VPN route may differ from the customer's.
 
 ## 🧰 The toolkit
 | Tool, practice or service | What it is and does | When to reach for it |
@@ -202,10 +202,10 @@ All exercises run on your own machine with Docker and a terminal.
 
 **1. Customers report the Najm app will not load. All pods are running and application logs show no errors. What should Yousef do first?**
 
-- A. Restart the deployment to clear any bad state
-- B. Run `curl -v https://api.najm.example/health` from outside the network and see at which hop it fails
-- C. Scale the deployment up to more replicas
-- D. Roll back the last deploy
+- A. Restart the deployment so any bad in-memory state is cleared
+- B. Run `curl -v` on the health endpoint from outside and find the failing hop
+- C. Scale the deployment up so more replicas share the load
+- D. Roll back the most recent deploy to the last known-good version
 
 <details><summary>Answer</summary>
 
@@ -213,25 +213,25 @@ All exercises run on your own machine with Docker and a terminal.
 
 </details>
 
-**2. A service runs fine on a developer's laptop. In a container, `curl` from the host returns "connection refused", and `ss -tlnp` inside the container shows it listening on `127.0.0.1:8080`. What is wrong?**
+**2. A service runs fine on a developer's laptop. In a container, `curl` from the host fails at once (refused or reset), and `ss -tlnp` inside the container shows it listening on `127.0.0.1:8080`. What is wrong?**
 
-- A. The container's firewall blocks port 8080
-- B. The TLS certificate does not match the host name
-- C. DNS cannot resolve the container's name
-- D. The service is bound to the loopback address, which only accepts connections from inside the container
+- A. A firewall inside the container image blocks inbound traffic on port 8080
+- B. The TLS certificate presented does not match the requested host name
+- C. Docker's internal DNS cannot resolve the container's name
+- D. The service listens on loopback, reachable only from inside the container
 
 <details><summary>Answer</summary>
 
-**D.** `127.0.0.1` inside a container is the container itself. Bind to `0.0.0.0`. A firewall (A) would usually cause a timeout, not a refusal, and the request never reaches TLS (B) or needs DNS (C). (🟢 The essentials.)
+**D.** `127.0.0.1` inside a container is the container itself. Bind to `0.0.0.0`. A firewall (A) would usually cause a timeout, not an immediate failure, and the request never reaches TLS (B) or needs DNS (C). (🟢 The essentials.)
 
 </details>
 
 **3. The team will move `api.najm.example` to a new load balancer next Tuesday. The record's TTL is 86,400 seconds (one day). What should they do?**
 
-- A. Lower the TTL to a few minutes at least a day before the change, switch the record, then raise the TTL again
-- B. Change the record on Tuesday; the TTL only affects new clients
-- C. Delete the record first, then create the new one
-- D. Increase the TTL so the new answer is cached longer
+- A. Lower the TTL to minutes a day or more ahead, switch, then raise it again
+- B. Change the record on Tuesday; the TTL only affects clients that never asked before
+- C. Delete the old record first, wait for caches to clear, then create the new one
+- D. Raise the TTL beforehand so the new answer stays cached longer once it arrives
 
 <details><summary>Answer</summary>
 
@@ -254,10 +254,10 @@ All exercises run on your own machine with Docker and a terminal.
 
 **5. Kubernetes stops a pod during a deploy. What happens, and what must the application do?**
 
-- A. It sends SIGKILL immediately, so the application cannot react
-- B. It sends SIGTERM, waits for a grace period, then sends SIGKILL; the application should stop taking new work and finish in-flight requests before exiting
-- C. It sends SIGHUP, and the application should reload its configuration
-- D. It deletes the container image, so the application must save its state to disk
+- A. It sends SIGKILL immediately, so the application never gets a chance to clean up
+- B. SIGTERM, then SIGKILL after a grace period; the app should drain in-flight work and exit
+- C. It sends SIGHUP, and the application should reload its configuration and keep serving
+- D. It deletes the container image, so the application must first save its state to local disk
 
 <details><summary>Answer</summary>
 
@@ -342,7 +342,7 @@ Object storage is the default for anything that is a file: it scales without cap
 | Operating system and patching | You | Provider (control plane); shared for worker nodes | Provider | Provider |
 | Hardware and data centres | Provider | Provider | Provider | Provider |
 
-Look at the top two rows: data and identity stay with you whatever you buy. Most public cloud breaches come from customer-side configuration, such as a storage bucket made public or a key that leaked, not from the provider's hardware. Security detail is in [*Secure AI & Application Security*, lesson 7.1 — Cloud security: shared responsibility, IAM and misconfiguration](../secai/index.html#/7.1).
+Look at the top two rows: data and identity stay with you whatever you buy. Many widely reported cloud breaches came from customer-side configuration, such as a storage bucket made public or a key that leaked, not from the provider's hardware. Security detail is in [*Secure AI & Application Security*, lesson 7.1 — Cloud security: shared responsibility, IAM and misconfiguration](../secai/index.html#/7.1).
 
 ### 🟡 Going deeper
 
@@ -394,7 +394,7 @@ Every tier spans zones, only the edge faces the internet, and the database fails
 
 **Regulation shapes architecture.** GCC financial regulators, such as the Qatar Central Bank, set expectations on cloud outsourcing and on where customer data may be stored and processed; read the current rules with your compliance team. In the EU, the Digital Operational Resilience Act (DORA, Regulation (EU) 2022/2554, applying from January 2025) requires financial entities to manage ICT risk, report major incidents, test resilience and manage third-party ICT providers, including cloud, with exit plans. So your architecture notes must say how you would leave a provider.
 
-**Well-architected reviews.** AWS and Azure each publish a Well-Architected Framework, and Google Cloud an equivalent framework, structuring reviews around reliability, security, cost, operations and performance. Use one as a checklist for any new production service.
+**Well-architected reviews.** AWS, Azure and Google Cloud each publish a Well-Architected Framework, structuring reviews around reliability, security, cost, operations and performance. Use one as a checklist for any new production service.
 
 **Cost is a design input.** Managed services, cross-zone traffic and data leaving the cloud (**egress**) all cost money, and prices vary by region and over time. Use the provider's calculator and current pricing pages, never memory, and set a budget alert first (lesson 6.2).
 
@@ -407,7 +407,7 @@ Every tier spans zones, only the edge faces the internet, and the database fails
 | **VPC** | A private network with subnets, routes and firewall rules (VNet on Azure) | Every cloud deployment; plan address ranges first |
 | **NAT gateway** | Outbound-only internet access for private subnets | Private workloads that must call out but never be called in |
 | **Shared responsibility model** | The split of security duties between provider and customer by service model | Every architecture review and every outsourcing assessment |
-| **Well-Architected Framework** (AWS, Azure; Google Cloud equivalent) | Structured review questions for reliability, security, cost and operations | Reviewing a new production design |
+| **Well-Architected Framework** (AWS, Azure, Google Cloud) | Structured review questions for reliability, security, cost and operations | Reviewing a new production design |
 | **Budget alert** | A notification when spending passes a threshold | Before creating any resource in any account |
 
 ## 🏛️ In practice at Najm Bank
@@ -460,10 +460,10 @@ If you use a cloud account, use your own free-tier account and **set a budget al
 
 **1. Yousef's first draft puts all Kubernetes nodes and the database in one availability zone. What is the main risk?**
 
-- A. The provider will charge more for a single zone
-- B. Customers far from the region will see higher latency
-- C. A failure of that one zone takes the whole service down, with no automatic failover
-- D. Kubernetes cannot run in a single zone
+- A. The provider charges a premium for keeping every resource in one zone
+- B. Customers far from the region will see higher latency on every request
+- C. One zone failure takes down the whole service, with nothing to fail over to
+- D. Managed Kubernetes refuses to create a cluster whose nodes share one zone
 
 <details><summary>Answer</summary>
 
@@ -474,9 +474,9 @@ If you use a cloud account, use your own free-tier account and **set a budget al
 **2. Najm needs to store monthly PDF statements for millions of customers, written once and downloaded occasionally. Which storage fits best?**
 
 - A. Object storage, private, with versioning enabled
-- B. Block storage attached to one VM
-- C. A shared file system mounted by every pod
-- D. Rows in the PostgreSQL database
+- B. Block storage volumes attached to a single large VM
+- C. A shared network file system mounted by every pod
+- D. Binary rows in the PostgreSQL application database
 
 <details><summary>Answer</summary>
 
@@ -486,9 +486,9 @@ If you use a cloud account, use your own free-tier account and **set a budget al
 
 **3. Under the shared responsibility model, which of these does Najm remain responsible for even when it uses a managed PostgreSQL service?**
 
-- A. Patching the database engine
+- A. Patching the database engine when security fixes are released
 - B. Replacing failed disks in the provider's data centre
-- C. Running the hypervisor securely
+- C. Running and updating the hypervisor underneath it securely
 - D. Deciding who and which networks may connect to the database
 
 <details><summary>Answer</summary>
@@ -512,14 +512,14 @@ If you use a cloud account, use your own free-tier account and **set a budget al
 
 **5. A product manager asks for the Najm Mobile API to run in two regions "to be safe". What is the best first response?**
 
-- A. Agree; two regions are always better than one
-- B. Refuse; multi-region is never needed for banks
-- C. Ask which failure and recovery target it must meet; start multi-zone with backups copied to a second region, and add a full second region when targets or regulation require it
-- D. Move to a different provider instead
+- A. Agree; two regions are always safer than one, whatever the cost
+- B. Refuse; a bank never needs more than one region if it uses three zones
+- C. Ask which failure and recovery target it must meet, then design to that
+- D. Suggest moving to a provider whose single region is more reliable
 
 <details><summary>Answer</summary>
 
-**C.** Multi-region adds major complexity and cost, so it should answer a stated recovery or regulatory need. A is a reflex; B ignores real requirements; D misses the question. (🔴 Expert view.)
+**C.** Multi-region adds major complexity and cost, so it should answer a stated recovery or regulatory need; until then, multi-zone with backups copied to a second region is the default. A is a reflex; B ignores real requirements; D misses the question. (🔴 Expert view.)
 
 </details>
 
@@ -577,16 +577,18 @@ The model is the same everywhere: **nothing is allowed until something allows it
 
 **Least privilege, in practice.** Compare two policies for the Najm statements service, which only needs to read statement files from one bucket:
 
+Risky: any action on any resource, in the whole account.
+
 ```json
-// Risky: any action on any resource, in the whole account
 {
   "Version": "2012-10-17",
   "Statement": [{ "Effect": "Allow", "Action": "*", "Resource": "*" }]
 }
 ```
 
+Hardened: read objects from one bucket prefix, nothing else.
+
 ```json
-// Hardened: read objects from one bucket prefix, nothing else
 {
   "Version": "2012-10-17",
   "Statement": [{
@@ -597,7 +599,7 @@ The model is the same everywhere: **nothing is allowed until something allows it
 }
 ```
 
-(JSON does not allow comments; they are shown here only to label the examples.) The same idea on the other two providers:
+The same idea on the other two providers:
 
 ```bash
 # Azure: give a managed identity read access to blobs in one storage account only
@@ -731,7 +733,7 @@ After the leaked key, Salem and Noura agree the **Najm Cloud Access Standard v1*
 
 | Identity | Type | Can do | Where | How it gets credentials |
 |---|---|---|---|---|
-| `mobile-api-ci-build` | CI role | Push images to the registry repository for this service | Shared registry | OIDC, any branch of `mobile-api` |
+| `mobile-api-ci-build` | CI role | Push images to the registry repository for this service | Shared registry | OIDC, only the protected `main` branch of `mobile-api` |
 | `mobile-api-deploy-prod` | CI role | Update this service's resources in the production cluster | Production | OIDC, only the `production` environment of `mobile-api`, which requires approval |
 | `statements-reader` | Workload | Read objects under `statements/` in the production statements bucket | Production | Kubernetes service account mapped to a cloud role |
 | `mobile-api-db-app` | Workload | Connect to the application database as the application user | Production | Workload identity to fetch a short-lived token or a rotated secret |
@@ -765,10 +767,10 @@ Use your own free-tier account with a **budget alert set first**, or the provide
 
 **1. Yousef's pipeline uses a stored access key with administrator rights. What should replace it?**
 
-- A. The same key, rotated every 90 days
-- B. A personal access key from Salem's account, which has MFA
-- C. A key with fewer rights, stored in an encrypted pipeline secret
-- D. OIDC federation that exchanges the job's signed token for short-lived credentials of a narrowly scoped deploy role
+- A. The same administrator key, rotated every 90 days by a scheduled job
+- B. A personal access key from Salem's account, since it has MFA enabled
+- C. A key with fewer rights, kept in an encrypted pipeline secret
+- D. OIDC federation issuing short-lived credentials for a narrow deploy role
 
 <details><summary>Answer</summary>
 
@@ -778,10 +780,10 @@ Use your own free-tier account with a **budget alert set first**, or the provide
 
 **2. A role's OIDC trust condition allows any repository in the `najm-bank` organisation to assume the production deploy role. What is the risk?**
 
-- A. None, because all repositories belong to the bank
-- B. A workflow in any repository, or a branch nobody reviewed, can obtain production deploy credentials
-- C. The tokens will expire too quickly
-- D. Production deploys will be slower
+- A. None, because every repository in the organisation belongs to the bank
+- B. Any repository's workflow, even on an unreviewed branch, can get deploy credentials
+- C. The issued tokens will expire before long deployments can finish
+- D. Production deploys slow down because every repository queues for the role
 
 <details><summary>Answer</summary>
 
@@ -791,10 +793,10 @@ Use your own free-tier account with a **budget alert set first**, or the provide
 
 **3. Several pods on the same Kubernetes node need different cloud permissions. What is the right design?**
 
-- A. Give the node a role with all the permissions any pod needs
+- A. Give the node one role holding every permission any of its pods needs
 - B. Store a different access key in each pod's environment variables
-- C. Map each workload's Kubernetes service account to its own narrowly scoped cloud identity
-- D. Run each pod on its own VM
+- C. Map each pod's service account to its own narrow cloud identity
+- D. Run each pod on its own dedicated VM with its own instance role
 
 <details><summary>Answer</summary>
 
@@ -804,10 +806,10 @@ Use your own free-tier account with a **budget alert set first**, or the provide
 
 **4. An engineer is granted a powerful role at the top of the Azure management group hierarchy so they can fix one storage account. Why is this a problem?**
 
-- A. Grants inherit downwards, so the role applies to every subscription and resource below that scope
-- B. Azure ignores role assignments at that level
-- C. Role assignments cannot be removed once created
-- D. It only matters if the engineer has no MFA
+- A. Grants inherit downwards to every subscription and resource below
+- B. Azure ignores role assignments made at management group level
+- C. Role assignments at that scope cannot be removed once created
+- D. It only matters if the engineer's account has no MFA enabled
 
 <details><summary>Answer</summary>
 
@@ -817,10 +819,10 @@ Use your own free-tier account with a **budget alert set first**, or the provide
 
 **5. During a major incident, Najm's identity provider is unavailable and engineers cannot sign in to the cloud console. What should already be in place?**
 
-- A. A shared administrator password written in the team wiki
-- B. Long-lived access keys on every engineer's laptop
-- C. Disabling MFA during incidents
-- D. A small number of tested break-glass accounts with strong MFA, guarded credentials, and alerts on every use
+- A. A shared administrator password, recorded in the team wiki for emergencies
+- B. Long-lived administrator access keys stored on every engineer's laptop
+- C. A documented procedure for switching MFA off for everyone during incidents
+- D. A few tested break-glass accounts with strong MFA and alerts on every use
 
 <details><summary>Answer</summary>
 

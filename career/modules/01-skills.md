@@ -150,7 +150,7 @@ Keep pull requests small: a 50-line change gets a careful review; a 2,000-line c
 | **Pull request template** | A short What / Why / How I tested it / Notes form added to the repository | Every pull request, including on solo projects |
 
 ## 🏛️ In practice at Najm Bank
-In week zero of the Najm Tech Graduate Programme, Khalid asks every graduate to fill in the **Junior baseline audit**. The rule is "evidence, not adjectives": every rating needs a link someone else can check. Here is Omar's, redone six weeks after his first interview, before he reapplies.
+Khalid asks every graduate to fill in the **Junior baseline audit** in week zero of the Najm Tech Graduate Programme, and gives the same template to candidates invited to reapply. The rule is "evidence, not adjectives": every rating needs a link someone else can check. Here is Omar's, done six weeks after his first interview, before he reapplies.
 
 | Skill | Can I show it? Evidence (link or file) | Rating: not yet / getting there / ready | Next action and date |
 |---|---|---|---|
@@ -212,9 +212,9 @@ Khalid's review questions for each row: "Could a stranger verify this in two min
 **3. Huda is stuck on a failing data-import test and wants to ask Dana for help in the team chat. Which message is most useful?**
 
 - A. "`pytest tests/test_import.py` fails with `KeyError: 'amount'` on the March file. I expected the header row to be skipped. The file has a header and the January file passes. Has the March export format changed?"
-- B. "The import tests are broken again, can you take a look when you have time?"
-- C. "Is there any documentation for the import code?"
-- D. "I think the import code has a bug, should I rewrite it?"
+- B. "The import tests are broken again since this morning's merge, and I have no idea why. Can you take a look when you have time today?"
+- C. "Is there any documentation for the import code? I want to understand how the March file is read before I touch anything in it."
+- D. "I think the import code has a bug in how it reads the amount column. Should I rewrite the whole module from scratch?"
 
 <details><summary>Answer</summary>
 
@@ -224,10 +224,10 @@ Khalid's review questions for each row: "Could a stranger verify this in two min
 
 **4. You are given an unfamiliar repository and asked to change how one report is generated. According to the reading method in this lesson, what is the best early step after running the project?**
 
-- A. Read every file in alphabetical order
-- B. Delete code that looks unused, to reduce what you must read
-- C. Find the entry point for that report and follow it through the code, reading its tests
-- D. Ask an AI tool to rewrite the module in a style you understand
+- A. Read every file in the repository in alphabetical order, so that nothing is missed
+- B. Delete code that looks unused, to reduce what you must read and review
+- C. Find the report's entry point, follow it through the code and read its tests
+- D. Ask an AI tool to rewrite the whole module in a style you already understand
 
 <details><summary>Answer</summary>
 
@@ -237,10 +237,10 @@ Khalid's review questions for each row: "Could a stranger verify this in two min
 
 **5. Khalid says the five baseline skills matter more, not less, now that AI agents write much routine code. Why?**
 
-- A. Because AI tools cannot use Git
-- B. Because human effort shifts toward reading, testing, debugging and explaining code the tool produced
-- C. Because employers have banned AI tools for juniors
-- D. Because the skills are needed only for the interview, not the job
+- A. Because AI tools cannot use Git, so a human must still make every commit by hand
+- B. Because human effort shifts toward checking and explaining the code the tool produced
+- C. Because most employers have now banned AI coding tools for junior developers
+- D. Because the skills are needed to pass the interview, even if the job no longer uses them
 
 <details><summary>Answer</summary>
 

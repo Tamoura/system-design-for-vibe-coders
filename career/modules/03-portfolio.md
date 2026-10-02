@@ -27,7 +27,7 @@ Mohammed, the bootcamp career-switcher, has three projects. One is a class-booki
 
 ### 🟢 The essentials
 
-**What a reviewer is trying to learn.** Whoever looks at your portfolio has limited time and one question: does this person show the signals the role needs? For most junior roles those are the baseline from lesson 1.1, honest use of AI tools from lesson 1.2 and production thinking from lesson 1.3. A proof project is designed to show those signals where a stranger can check them.
+**What a reviewer is trying to learn.** A reviewer has limited time and one question: does this person show the signals the role needs? For most junior roles those are the baseline from lesson 1.1, honest use of AI tools from lesson 1.2 and production thinking from lesson 1.3. A proof project is designed to show those signals where a stranger can check them.
 
 **The proof ladder.** Projects sit on a ladder. Each rung is stronger evidence than the one below.
 
@@ -52,7 +52,7 @@ Many graduate portfolios stop at rung 2 or 3. Reaching rung 5 or 6 with one proj
 
 And one condition that sits over all six: **you can explain every line**, including the lines an AI agent wrote.
 
-**Choosing the problem.** Good problems come from your own life and community (a club, a family business, a department), a public dataset you care about, or an organisation you volunteer for (lesson 3.3). Weak choices are the ones reviewers have seen thousands of times: to-do lists, weather apps, streaming-site clones, the Titanic dataset, handwritten digits. Fine for learning, weak as proof: no real user, no hard question, and a finished answer anyone can copy.
+**Choosing the problem.** Good problems come from your own life and community (a club, a family business, a department), a public dataset you care about, or an organisation you volunteer for (lesson 3.3). Weak choices are the ones reviewers have seen many times: to-do lists, weather apps, streaming-site clones, the Titanic dataset, handwritten digits. Fine for learning, weak as proof: no real user, no hard question, and a finished answer anyone can copy.
 
 **The build loop.** Build a thin, working slice first and put it in front of someone, then deepen it.
 
@@ -67,8 +67,6 @@ flowchart LR
     G -->|"next slice"| C
     G --> H["Write up the project"]
 ```
-
-A plain stack you understand beats a fashionable one you cannot debug.
 
 ### 🟡 Going deeper
 
@@ -110,7 +108,7 @@ A plain stack you understand beats a fashionable one you cannot debug.
 
 **Decision density.** A strong portfolio has many *real* decisions a reviewer can question. A to-do app has almost none. Omar's rebuilt booking service has many: a constraint versus a lock against double bookings, what happens when email is down, how long to keep cancelled bookings. Each is an interview topic you have already prepared.
 
-**Breadth around depth.** A good shape is one capstone plus one or two smaller pieces that show range, such as an open-source contribution (lesson 3.3). Archive or unpin older repositories so they do not bury the capstone.
+**Breadth around depth.** A good shape is one capstone plus one or two smaller pieces that show range, such as an open-source contribution (lesson 3.3).
 
 **Building with AI agents, in the open.** Using AI coding agents is normal; hiding it is not. Reviewers want your judgement: the spec you gave the agent, the tests that checked its work, the bugs you caught. A short "How this was built" section (lesson 3.2) saying which parts were agent-assisted and how you verified them beats pretending you typed everything. See [*System Design for Vibe Coders*, lesson 9.4 — Verification before completion](../vibe/index.en.html#l9-4).
 
@@ -149,20 +147,20 @@ Khalid's verdict: "Now I have six things to ask you, and you know the answers."
 
 ## 🛠️ Exercises
 - 🟢 Audit your current repositories against the proof ladder. Give each one a rung from 1 to 6 and mark the single best candidate for a capstone. *Done when:* you have a table of every public repository with its rung, and one repository (or one new idea) circled as your capstone.
-- 🟡 Fill in the Proof project spec above for your target role, using the matching capstone spec from 🟡 Going deeper. Write the hard question and your planned answer. *Done when:* a peer or mentor can read the spec in two minutes and tell you what you are building, for whom, and what will be hard about it.
-- 🔴 Build and ship the thinnest slice of your capstone: running, reachable or reproducible with one command, with at least one automated test in CI and a real user who has tried it. *Done when:* the live link or one-command setup works on someone else's machine, CI is green, and you have written down one thing your first user did that you did not expect.
+- 🟡 Fill in the Proof project spec above for your target role, using the matching capstone spec from 🟡 Going deeper. *Done when:* a peer or mentor can read the spec in two minutes and tell you what you are building, for whom, and what will be hard about it.
+- 🔴 Ship the thinnest slice of your capstone, reachable or reproducible with one command, with at least one test in CI and a real user who has tried it. *Done when:* the live link or one-command setup works on someone else's machine, CI is green, and you have written down one thing your first user did that you did not expect.
 
 ## ⚠️ Mistakes and traps
 - **Quantity over depth.** Twenty shallow repositories hide your best work. Build one deep capstone and pin it; archive or unpin the rest.
 - **Picking the stack first.** A fashionable framework without a problem gives a demo with no user. Write the spec, then pick the simplest stack that meets it.
-- **Shipping what you cannot explain.** AI agents make it easy to build past your understanding. Read and test every part, and be ready to explain any file a reviewer opens.
+- **Shipping what you cannot explain.** AI agents make it easy to build past your understanding. Read and test every part, and be ready to explain any file.
 - **Using real personal data.** Real customer or patient records in a project are a serious mistake. Use public, permitted or synthetic data.
 - **Never finishing.** A capstone that is 80% done and never deployed proves less than a smaller one that runs. Cut scope until it ships, then deepen.
 
 ## 🧾 Recap
 - A proof project shows the signals of your target role where a stranger can check them; tutorial clones cannot.
 - Climb the proof ladder: your own project, deployed, used by a real person, operated over time.
-- Use the six marks: real problem and user, small scope, it runs, tests and CI, written decisions, evidence of operation, and be able to explain every line.
+- Use the six marks, and be able to explain every line, including what an agent wrote.
 - Each role has a different capstone; anchor yours on a hard question you can answer well.
 - Use AI agents openly, show how you verified their work, and use safe data.
 
@@ -508,7 +506,7 @@ Reem's capstone scored 3 of 14 before her rewrite. She rotated the leaked key fi
 ## ⚡ In 60 seconds
 - "Entry-level, one year of experience required" is frustrating but common. You can earn real experience before your first job: **internships, open-source contributions, freelance or volunteer work, hackathons, competitions, research and teaching.**
 - The rule that matters most: experience counts when **someone else depended on your work**: a maintainer merged it, a client used it, a team shipped it, a judge scored it.
-- Each route proves something different. Choose by the signal your target role needs and the constraint you have (time, money, location), not by what is fashionable.
+- Each route proves something different. Choose by the signal you lack and your constraints (time, money, location).
 - Decision cue: if you can only do one thing in the next eight weeks, pick the route that adds a signal your capstone (lesson 3.1) does not already show.
 - Biggest trap: low-effort volume. Spamming open-source projects with trivial or AI-generated pull requests, or collecting hackathon certificates for unfinished demos, can hurt more than it helps.
 
@@ -521,7 +519,7 @@ Huda has the opposite worry. She has a strong degree but has only ever worked al
 
 ### 🟢 The essentials
 
-**What "experience" means to a hiring team.** When a job advert asks for experience, the hiring team usually wants evidence of a few things: you have worked with other people's code and other people's expectations; you have received feedback and acted on it; you have finished something someone relied on; you have behaved professionally when things went wrong. A paid job is one way to show that. It is not the only way. Many teams treat requirements like "one to two years" as a guide rather than a hard rule, so if you match most of an advert and can show this evidence, apply (lesson 4.3 covers where and how).
+**What "experience" means to a hiring team.** Behind an experience requirement, a hiring team usually wants evidence that you have worked with other people's code and other people's expectations; you have received feedback and acted on it; you have finished something someone relied on; you have behaved professionally when things went wrong. A paid job is one way to show that, not the only one. Many teams treat requirements like "one to two years" as a guide rather than a hard rule, so if you match most of an advert and can show this evidence, apply (lesson 4.3 covers where and how).
 
 **The routes at a glance.**
 
@@ -564,8 +562,8 @@ flowchart TD
 ### 🟡 Going deeper
 
 **Internships.** Internships are the most direct route, because they are designed as a trial run for both sides.
-- *Timing:* large employers and graduate programmes often recruit well before the internship starts, sometimes many months ahead. Check each employer's careers page early in the academic year, and ask your university career centre for its calendar.
-- *Where:* banks, energy companies, telecoms, government agencies and multinationals' regional offices run internships and graduate programmes across the Gulf; startups hire interns less formally, often through networks (lesson 4.2). Some programmes are tied to workforce nationalisation schemes such as Qatarization in Qatar or Emiratisation in the UAE, and may be open only to citizens or have their own rules. Read each programme's eligibility carefully.
+- *Timing:* large employers often recruit many months before the internship starts. Check each employer's careers page early in the academic year, and ask your university career centre for its calendar.
+- *Where:* banks, energy companies, telecoms, government agencies and multinationals' regional offices run internships and graduate programmes across the Gulf; startups hire interns less formally, often through networks (lesson 4.2). Some programmes are tied to workforce nationalisation schemes such as Qatarization in Qatar or Emiratisation in the UAE, and may be open only to citizens or have their own rules.
 - *If you are an international student or graduate:* the rules on working during and after study vary by country and change. Check current rules with your university and official government sources before you apply.
 - *Making it count:* agree a project with a visible result, ask for feedback halfway through, write your brag document weekly, and ask at the end whether your manager will act as a reference.
 
@@ -586,18 +584,18 @@ Structured programmes can help. **Google Summer of Code** pays contributors to w
 - **Treat personal data seriously.** Collect the minimum, secure it and agree who is responsible. In Qatar, Law No. 13 of 2016 on personal data protection applies to processing personal data; similar laws exist across the region and in the EU.
 - **Ask permission** before you show the work publicly (lesson 3.2).
 
-**Hackathons.** Hackathons are good for speed, teamwork and meeting people, including sponsors' engineers who sometimes hire. Their weakness is that most projects are abandoned on Sunday night. The value comes from what you do next: finish the core feature, deploy it, add tests and a README, and write up your part. Read the event's rules on who owns the code, especially at corporate-sponsored events. Major League Hacking (MLH) lists many student hackathons; universities, banks, telecoms and government innovation programmes in the Gulf also run them.
+**Hackathons.** Hackathons are good for speed, teamwork and meeting people, including sponsors' engineers who sometimes hire. Their weakness is that many projects are abandoned on Sunday night. The value comes from what you do next: finish the core feature, deploy it, add tests and a README, and write up your part. Read the event's rules on who owns the code, especially at corporate-sponsored events. Major League Hacking (MLH) lists many student hackathons; universities, banks, telecoms and government innovation programmes in the Gulf also run them.
 
 **Competitions.**
 - *Algorithms:* contests such as the **ICPC** (International Collegiate Programming Contest) and online judges build the problem-solving that data-structures-and-algorithms interviews test (lesson 5.2). A regional ranking is a recognised signal for software roles.
-- *Data:* **Kaggle** competitions teach modelling under a clear metric. Reviewers value a clean, honest write-up of your approach and what did not work more than a leaderboard position, and they know leaderboard tuning differs from production work. Pair it with the pipeline habits from lesson 3.1.
+- *Data:* **Kaggle** competitions teach modelling under a clear metric. Reviewers value an honest write-up of your approach, including what did not work, more than a leaderboard position. Pair it with the pipeline habits from lesson 3.1.
 - *Security:* capture-the-flag (CTF) contests, such as the beginner-friendly **picoCTF**, build practical skills; CTFtime lists events. Only ever attack systems the contest provides. Responsible-disclosure and bug-bounty programmes are a later step, strictly within their published scope; see [*Secure AI & Application Security: Zero to Hero*, lesson 10.3 — Vulnerability management, disclosure and bug bounties](../secai/index.html#/10.3).
 
 **Research and teaching.** Research assistant posts show depth and rigour, and are especially useful for data science and AI roles; a short paper or poster is strong proof. Teaching assistant work shows you can explain ideas, which interviewers test constantly. Both come with a supervisor who can act as a reference.
 
 ### 🔴 Expert view
 
-**A previous career is experience.** Career-switchers often hide their past. Mohammed's eight years at the gym included scheduling staff, handling complaints and running the front desk system, which is domain knowledge, customer empathy and operational discipline. Written as outcomes and linked to his booking system, it becomes the reason a team might choose him over a graduate with no work history. The same applies to an accountant moving into data or a network technician moving into cloud, like Yousef's work placement in a telecom equipment room.
+**A previous career is experience.** Career-switchers often hide their past. Mohammed's eight years at the gym included scheduling staff, handling complaints and running the front desk system, which is domain knowledge, customer empathy and operational discipline. Written as outcomes and linked to his booking system, it becomes the reason a team might choose him over a graduate with no work history. The same applies to an accountant moving into data or a network technician moving into cloud.
 
 **Depth over badges.** One merged pull request with a real review conversation beats twenty typo fixes. One finished hackathon project beats five participation certificates. Reviewers increasingly see bulk, low-effort contributions, including AI-generated pull requests to open-source projects, which maintainers have publicly complained about. Use AI tools to help you understand a codebase, then submit only changes you have tested and can defend line by line.
 
@@ -632,11 +630,11 @@ Khalid's rule for the session: "One route each, done properly. We will check the
 
 ## 🛠️ Exercises
 - 🟢 Start a brag document and fill it with everything relevant from the last two years: coursework you led, projects, jobs (any jobs), volunteering, competitions. Write each as what you did, the outcome and a link where one exists. *Done when:* the document has at least eight dated entries, and at least three have a link or a named person who could confirm them.
-- 🟡 Make your first open-source contribution: choose a project you use, read its contribution and AI policies, find a suitable issue, comment, and open a small pull request with a test or documentation change. *Done when:* the pull request is open with a clear description, linked to its issue, and recorded in your brag document; merged is better, but an open, well-explained pull request counts for this exercise.
+- 🟡 Make your first open-source contribution: choose a project you use, read its contribution and AI policies, find a suitable issue, comment, and open a small pull request with a test or documentation change. *Done when:* the pull request is open with a clear description, linked to its issue, and recorded in your brag document (merged is better, but open counts).
 - 🔴 Fill in your own experience plan row using the Najm table, then deliver it: a merged contribution, a finished client or volunteer project with a written scope and a reference, or a competition entry with a published write-up. *Done when:* a peer can click your proof link and confirm what you did and who relied on it.
 
 ## ⚠️ Mistakes and traps
-- **Skipping adverts that ask for one or two years of experience.** Requirements are often a guide. If you match most of the advert and have evidence of real work, apply.
+- **Skipping adverts that ask for one or two years of experience.** If you match most of the advert and have evidence of real work, apply.
 - **Spamming open-source projects.** Trivial or AI-generated pull requests waste maintainers' time and can get you blocked. Make few, tested, focused contributions.
 - **Freelancing without a written scope.** Verbal agreements turn into endless changes and unpaid work. Write down deliverables, dates, ownership and handover first.
 - **Abandoning hackathon projects.** A demo that only worked on Sunday proves little. Finish, deploy and write up one hackathon project.
@@ -644,7 +642,7 @@ Khalid's rule for the session: "One route each, done properly. We will check the
 
 ## 🧾 Recap
 - Experience means someone relied on your work; you can earn it before your first job.
-- Internships, open source, freelance and volunteer work, hackathons, competitions, research and teaching each prove different signals.
+- Each route proves a different signal.
 - Choose the route that adds a signal your capstone lacks, within your constraints.
 - Do fewer things properly: merged and reviewed, finished and deployed, written up.
 - Record everything in a brag document; it feeds your CV and interview stories.

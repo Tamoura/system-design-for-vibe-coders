@@ -61,7 +61,7 @@ Everything left of "Push" runs on every pull request and must be fast. The promo
 
 Configuration that differs between environments (database host, feature flag defaults, replica counts) is injected at deploy time through environment variables, ConfigMaps or the GitOps overlay (lessons 2.3 and 3.2), never baked into the image. This is factor III of the Twelve-Factor App: store config in the environment. [*System Design for Vibe Coders*, lesson 4.5 — Verify the artifact, not the source](../vibe/index.en.html#l4-5) tells this story for solo builders.
 
-**A minimal pipeline in GitHub Actions.** GitHub Actions is used here because it is free for public repositories and widely used; GitLab CI/CD, Jenkins, Azure Pipelines and others share the same concepts.
+**A minimal pipeline in GitHub Actions.** GitHub Actions is used here because it is widely used and free for public repositories; GitLab CI/CD, Jenkins and Azure Pipelines share the concepts.
 
 ```yaml
 # .github/workflows/ci.yml
@@ -115,7 +115,7 @@ Note the defaults: read-only permissions, job timeouts, and cancelling outdated 
 | **Contract tests** | That the API still matches what its clients expect | Seconds | One per consumer | Every PR |
 | **End-to-end tests** | A full user journey through deployed services | Minutes each | A handful | After deploy to dev or staging |
 
-An inverted pyramid, with hundreds of slow, brittle browser tests and few unit tests, is the usual reason a pipeline takes 48 minutes.
+An inverted pyramid, with hundreds of slow, brittle browser tests and few unit tests, is a common reason for a 48-minute pipeline.
 
 ### 🟡 Going deeper
 
@@ -144,7 +144,7 @@ The result: lint and unit tests in 3 minutes, build and integration tests in 6, 
 
 **Measure the outcome, not the pipeline.** The DORA research programme tracks four key delivery measures: **deployment frequency**, **lead time for changes** (commit to production), **change failure rate** and **time to restore service**. DORA has since added a reliability measure and refined some names (for example, recent reports talk about failed deployment recovery time); check dora.dev for the current definitions. A fast pipeline improves lead time; trustworthy tests lower change failure rate. Watch both together: speeding up by deleting tests just moves the cost into incidents.
 
-**The pipeline is a product.** At Najm, product teams should not each write their own pipeline from scratch. The platform team publishes a **golden path**: a reusable workflow (in GitHub Actions, a workflow called with `uses: najm-bank/platform-workflows/.github/workflows/service-ci.yml@<version>`) that does build, scan, test, sign and push in the approved way. Teams pass a few inputs. When the platform team improves caching or adds a scanner, every service gets it. Version it, keep a changelog, and measure adoption and build times.
+**The pipeline is a product.** At Najm, product teams do not each write their own pipeline. The platform team publishes a **golden path**: a reusable workflow (in GitHub Actions, a workflow called with `uses: najm-bank/platform-workflows/.github/workflows/service-ci.yml@<version>`) that does build, scan, test, sign and push in the approved way. Teams pass a few inputs. When the platform team improves caching or adds a scanner, every service gets it. Version it, keep a changelog, and measure adoption and build times.
 
 **Reproducible and hermetic builds.** A **hermetic** build uses only declared, pinned inputs: a base image by digest, dependencies by lock file with hashes, a pinned toolchain, and no undeclared network access. Fully bit-for-bit **reproducible** builds are hard for container images (timestamps, file ordering), but hermetic inputs alone remove the Friday incident: a moving `latest` tag cannot sneak in.
 
@@ -211,7 +211,7 @@ Use your own GitHub account and a public practice repository; never an employer'
 ## ⚠️ Mistakes and traps
 - **Rebuilding per environment.** Staging tests one image and production runs another. Build once, deploy by digest, inject configuration at deploy time.
 - **"Re-run until green".** It hides flaky tests and real race conditions. Quarantine flaky tests with an owner and a deadline; never auto-retry whole pipelines.
-- **An inverted pyramid.** Hundreds of slow end-to-end tests on every PR make CI slow and brittle. Push checks down to unit and integration level, and run end-to-end suites after the merge.
+- **An inverted pyramid.** Hundreds of end-to-end tests on every PR make CI slow and brittle. Push checks down the pyramid; run end-to-end suites after the merge.
 - **Long-lived feature branches.** They turn integration into a weekly crisis. Merge small changes daily and hide unfinished work behind flags.
 - **Unpinned inputs.** `FROM node:latest` or unpinned tools make yesterday's green build meaningless today. Pin by digest or exact version and update deliberately.
 
@@ -307,7 +307,7 @@ Use your own GitHub account and a public practice repository; never an employer'
 
 ## ⚡ In 60 seconds
 - **Deploying** puts new code on servers; **releasing** lets users reach it. Separating the two, with feature flags and progressive traffic shifting, is the core of safe delivery.
-- The main strategies: **recreate** (stop old, start new), **rolling** (replace a few at a time), **blue-green** (two full environments, switch traffic at once), **canary** (send a small share of traffic to the new version and watch), **shadow** (copy traffic to the new version, discard its responses).
+- The main strategies are **recreate**, **rolling**, **blue-green**, **canary** and **shadow**; each trades cost, speed and blast radius differently.
 - Choose by blast radius and by how quickly you can detect a problem. High-risk services such as Payments get a canary with automatic analysis; internal tools can roll.
 - Every release needs a rehearsed rollback, and the database must work with both the old and the new version at the same time.
 - Biggest trap: shipping a change to everyone at once because "it's only configuration". Configuration and content are code; stage them too.
@@ -531,7 +531,7 @@ Run these on a local kind or k3d cluster.
 ## 🧾 Recap
 - Separate deploy from release: traffic shifting chooses the version; feature flags choose the behaviour.
 - Rolling updates stop pods that never become ready; canaries with automated analysis stop versions that run but behave badly.
-- Pick the strategy by risk tier: canary for Payments and login, rolling for internal tools, blue-green when a fast clean switch is worth double capacity.
+- Pick the strategy by risk tier: canary for Payments and login, rolling for internal tools.
 - Old and new versions run at once, so databases and APIs change with expand and contract.
 - Rollback must be fast, rehearsed and done the GitOps way.
 
@@ -827,9 +827,9 @@ Use your own GitHub account and, if you use a cloud, a free-tier account with a 
 **2. In March 2025, teams that referenced `tj-actions/changed-files` by a version tag ran malicious code. Which practice protected teams that were not affected?**
 
 - A. Pinning the action to a full commit SHA
-- B. Using the newest tag
+- B. Always using the newest version tag of the action
 - C. Running the workflow on a self-hosted runner
-- D. Setting a job timeout
+- D. Setting a short timeout on every job
 
 <details><summary>Answer</summary>
 

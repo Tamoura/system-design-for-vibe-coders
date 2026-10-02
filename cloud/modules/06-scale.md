@@ -24,7 +24,9 @@ Now bring it home. The Payments service has just moved to the cloud, and Hamad (
 
 ## 📐 How it works
 
-- 🟢 **The essentials.** **Scaling: vertical and horizontal.** *Vertical scaling* gives a server more CPU or memory. It is simple but has a ceiling and usually means a restart. *Horizontal scaling* adds more copies of a service behind a load balancer. It has a much higher ceiling but only works if the service is **stateless**: no session data, uploads or caches kept on the local disk or in memory that another copy would need. State goes to a database, a cache service or object storage. For the non-coder view of the same idea, see [*System Design for Vibe Coders*, lesson 10.1 — Stateless services and load balancing](../vibe/index.en.html#l10-1).
+### 🟢 The essentials
+
+**Scaling: vertical and horizontal.** *Vertical scaling* gives a server more CPU or memory. It is simple but has a ceiling and usually means a restart. *Horizontal scaling* adds more copies of a service behind a load balancer. It has a much higher ceiling but only works if the service is **stateless**: no session data, uploads or caches kept on the local disk or in memory that another copy would need. State goes to a database, a cache service or object storage. For the non-coder view of the same idea, see [*System Design for Vibe Coders*, lesson 10.1 — Stateless services and load balancing](../vibe/index.en.html#l10-1).
 
 **Autoscaling in Kubernetes happens in layers.**
 
@@ -174,10 +176,10 @@ Maha's team produces a **DR test plan** for the Payments service. It lives in th
 The first run found three gaps that no design review would have caught: the replica-lag alert went to a dashboard nobody watched, the payments DNS record had a TTL far longer than the RTO allowed, and the break-glass role for the recovery account needed a new MFA device.
 
 ## 🛠️ Exercises
-### 🟢 Watch an autoscaler work
-On a local kind or k3d cluster with the metrics server, deploy a small web container with CPU requests and an HPA (min 2, max 8, target 50% CPU). Generate load from another pod and watch `kubectl get hpa -w`. *Done when:* you have a screenshot or log showing replicas rising under load and falling after the stabilisation window, and one sentence explaining why scale-down was slower than scale-up.
+- 🟢 **Watch an autoscaler work.** On a local kind or k3d cluster with the metrics server, deploy a small web container with CPU requests and an HPA (min 2, max 8, target 50% CPU). Generate load from another pod and watch `kubectl get hpa -w`. *Done when:* you have a screenshot or log showing replicas rising under load and falling after the stabilisation window, and one sentence explaining why scale-down was slower than scale-up.
 - 🟡 **Spread across zones and survive a drain.** Create a kind cluster with four worker nodes and label them with `topology.kubernetes.io/zone` values `a`, `b`, `c` (one zone gets two nodes). Deploy six replicas with a topology spread constraint and a PDB of `minAvailable: 4`. Drain every node in one zone with `kubectl drain`. *Done when:* the pods were spread two per zone before the drain, the drain respected the PDB, and you can show that the service kept answering requests throughout.
 - 🔴 **Write and run a restore test.** Run PostgreSQL in Docker with WAL archiving or regular `pg_dump` backups. Insert timestamped rows, "accidentally" drop a table, then restore into a second container. Write a one-page DR test plan in the format above, with an RTO and RPO you choose. *Done when:* you have measured the actual restore time and data loss, compared them with your targets, and listed at least two changes that would close any gap.
+
 ## ⚠️ Mistakes and traps
 - **Calling replication a backup.** Replicas copy deletions and corruption instantly. Keep point-in-time and immutable backups in a separate account as well.
 - **Never restoring.** Backups that have not been restored end to end fail when you need them, as GitLab learned. Schedule restore tests and time them.
@@ -294,7 +296,9 @@ None of this is a finance problem that finance can fix. In the cloud, every engi
 
 ## 📐 How it works
 
-- 🟢 **The essentials.** **The FinOps Foundation framework.** The FinOps Foundation, part of the Linux Foundation, publishes the most widely used framework. At the time of writing (2026) it describes principles, personas (engineering, finance, leadership, procurement, product), capabilities and a cycle of three phases. The principles include that teams need to collaborate, that business value drives technology decisions, that everyone takes ownership of their cloud usage, that cost data should be accessible and timely, that FinOps is enabled by a central team, and that teams should take advantage of the cloud's variable cost model. Check finops.org for the current wording, which is revised from time to time.
+### 🟢 The essentials
+
+**The FinOps Foundation framework.** The FinOps Foundation, part of the Linux Foundation, publishes the most widely used framework. At the time of writing (2026) it describes principles, personas (engineering, finance, leadership, procurement, product), capabilities and a cycle of three phases. The principles include that teams need to collaborate, that business value drives technology decisions, that everyone takes ownership of their cloud usage, that cost data should be accessible and timely, that FinOps is enabled by a central team, and that teams should take advantage of the cloud's variable cost model. Check finops.org for the current wording, which is revised from time to time.
 
 ```mermaid
 flowchart LR
@@ -397,10 +401,10 @@ Mona and Salem agree a **monthly cloud cost report**, generated from the FOCUS e
 The first report's actions: tag policy enforced in the OpenTofu pipeline (untagged plans fail), the three hackathon GPU nodes deleted after confirming with the Najm Assist team, development clusters scaled down outside working hours, and the large "data transfer" line traced to Mobile API pods calling object storage through a NAT gateway instead of a private endpoint. Yousef suggested also reducing the Payments database to single-zone "to save a lot"; Maha pointed to the DR test plan from 6.1 and the idea was dropped.
 
 ## 🛠️ Exercises
-### 🟢 Design a tagging policy
-Write a tagging policy for a fictional company with three teams and three environments: the mandatory keys, allowed values, who owns enforcement, and what happens to untagged resources. Add a policy-as-code rule (for example, a Conftest or OPA check against an OpenTofu plan in JSON) that fails when `owner` or `environment` is missing. *Done when:* the rule fails on a plan with an untagged resource and passes when tags are added.
+- 🟢 **Design a tagging policy.** Write a tagging policy for a fictional company with three teams and three environments: the mandatory keys, allowed values, who owns enforcement, and what happens to untagged resources. Add a policy-as-code rule (for example, a Conftest or OPA check against an OpenTofu plan in JSON) that fails when `owner` or `environment` is missing. *Done when:* the rule fails on a plan with an untagged resource and passes when tags are added.
 - 🟡 **Allocate a shared cluster.** Install OpenCost on a local kind cluster (with its default or custom pricing) and deploy workloads in three namespaces with deliberately different requests. Compare requests with actual use for each namespace. *Done when:* you have a table of cost by namespace, identified the most over-requested workload, and proposed new requests with a short justification for the headroom you kept.
 - 🔴 **Build a unit-cost model.** Using a free-tier account with a budget alert set first, or a spreadsheet with made-up but labelled sample numbers, build a monthly model for a small API: allocated compute, database, storage and transfer, and requests served. Compute cost per 1,000 requests for three scenarios: current, rightsized, and rightsized plus a commitment on the baseline. *Done when:* the model shows unit cost for each scenario, states every assumption, and identifies which change you would make first and why.
+
 ## ⚠️ Mistakes and traps
 - **Buying commitments before cleaning up.** Discounts on waste lock the waste in for years. Remove idle, schedule and rightsize first.
 - **Tagging later.** Tags apply from when they are set, and untagged history cannot be allocated well. Enforce tags in IaC from the first resource.
@@ -514,7 +518,9 @@ Meanwhile the data science team wanted to self-host a small open-weight model fo
 
 ## 📐 How it works
 
-- 🟢 **The essentials.** **Why GPUs.** Running a model (*inference*) is mostly large matrix multiplications over its *weights*, the billions of numbers learned in training, which GPUs do in parallel far faster than CPUs. The usual limit is **GPU memory**: the weights must fit, plus working memory for every conversation served.
+### 🟢 The essentials
+
+**Why GPUs.** Running a model (*inference*) is mostly large matrix multiplications over its *weights*, the billions of numbers learned in training, which GPUs do in parallel far faster than CPUs. The usual limit is **GPU memory**: the weights must fit, plus working memory for every conversation served.
 
 A rough rule for the weights: memory ≈ number of parameters × bytes per parameter. A model with 8 billion parameters stored in 16-bit precision (2 bytes each) needs about 16 GB just for the weights; in 8-bit, about 8 GB; in 4-bit, about 4 GB. Add room for the **KV cache** (below) and the serving engine. This is arithmetic, not a vendor figure, and it tells you quickly whether a model fits on a given GPU.
 
@@ -672,10 +678,10 @@ Salem's team writes the **Najm Assist serving decision and gateway policy**, rev
 Yousef's classifier now runs on vLLM with continuous batching and an 8-bit quantised model that passed the evaluation set, and the next provider outage was absorbed by the fallback route with a brief rise in latency.
 
 ## 🛠️ Exercises
-### 🟢 Size a model
-Pick three open-weight models of different sizes. Compute weight memory at 16-, 8- and 4-bit, and decide which fit a GPU memory size you name, leaving a quarter for the KV cache and engine. *Done when:* you have a table of nine memory estimates with the arithmetic shown, and a one-line fit decision for each model.
+- 🟢 **Size a model.** Pick three open-weight models of different sizes. Compute weight memory at 16-, 8- and 4-bit, and decide which fit a GPU memory size you name, leaving a quarter for the KV cache and engine. *Done when:* you have a table of nine memory estimates with the arithmetic shown, and a one-line fit decision for each model.
 - 🟡 **Run a gateway locally.** Run a small open model locally (CPU is fine) behind an OpenAI-compatible API, and put an open-source LLM gateway in front of it in Docker with two routes, a per-key rate limit and a fallback to a second local model. *Done when:* you can show a request served by the primary route, a request rejected by the rate limit, and a request that falls back when you stop the primary model, with the gateway's logs or metrics showing tokens per request.
 - 🔴 **Write a break-even and serving decision.** For a fictional assistant handling a stated number of conversations per day with stated average input and output tokens, use current public prices from one managed API and one GPU instance type (record the date and source) to compute monthly cost both ways at 20%, 50% and 80% GPU utilisation. Add engineering time as a stated assumption. *Done when:* you have a one-page decision in the format of the Najm table, with the utilisation at which self-hosting breaks even and the non-cost reasons (data, control, reliability) that would change your choice.
+
 ## ⚠️ Mistakes and traps
 - **Direct calls with scattered keys.** Every team holding its own provider key means no cost view, no fallback and unknown data flows. Route everything through one gateway and block direct egress.
 - **Idle GPUs.** A GPU node running a model nobody calls costs the same as a busy one. Scale on queue depth, schedule non-production, and review utilisation weekly.
