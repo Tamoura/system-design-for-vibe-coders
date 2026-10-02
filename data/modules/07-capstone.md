@@ -20,7 +20,7 @@
 ## 🧭 Why it matters
 Every month, Najm's credit-risk team, Finance and the retail business each produce a non-performing loan ratio, and they never quite agree. Each cleans its own extract in a spreadsheet and applies its own reading of "90 days past due". When a supervisory review asks how its credit-risk figures are produced, from source to report, nobody can draw the line.
 
-Faisal (Head of Data Platform) gets a mandate from the Chief Risk Officer: one credit-risk mart, owned by his team, with definitions owned by Credit Risk and Finance, used by every report. He gives it to Huda (graduate data engineer) and Lina (analytics engineer), with Dana (lead data scientist) as the first model consumer and Sara (DPO) and Layla (Head of AI Governance) as reviewers.
+Faisal gets a mandate from the Chief Risk Officer: one credit-risk mart, owned by his team, with definitions owned by Credit Risk and Finance, used by every report. He gives it to Huda (graduate data engineer) and Lina (analytics engineer), with Dana (lead data scientist) as the first model consumer and Sara (DPO) and Layla (Head of AI Governance) as reviewers.
 
 The 2007–2009 financial crisis showed that many banks could not aggregate risk exposures quickly and accurately. In January 2013 the Basel Committee on Banking Supervision published **BCBS 239**, *Principles for effective risk data aggregation and risk reporting*: risk data must be accurate, complete, timely and adaptable. And in England in 2020, thousands of COVID-19 cases were left out of daily reporting by a legacy spreadsheet format's row limit: data that never arrived, and nobody noticed.
 
@@ -147,11 +147,11 @@ from with_dpd
 ```
 
 Three decisions hide here; each needs an owner's sign-off, not just code review:
-- **"Paid in full" is the test.** A partial payment does not reset DPD. Some banks ignore tiny unpaid remainders below a materiality threshold; that is a Credit Risk rule for the metric card.
+- **"Paid in full" is the test.** A partial payment does not reset DPD. Any materiality threshold for tiny remainders is a Credit Risk rule for the metric card.
 - **End-of-day state.** If the core system posts some payments next morning with yesterday's value date, use the value date, not the posting time. It is now in the data contract.
 - **The three-day lookback.** Late repayments correct the last three days on every run. Anything older needs a logged backfill (2.2).
 
-**Tests that encode the rules.** Generic dbt tests (3.1) catch broken plumbing: `unique_combination_of_columns` on `loan_id` and `snapshot_date` (dbt-utils), `not_null` and `relationships` on `loan_id`, a non-negative range on `days_past_due` and `accepted_values` on `dpd_bucket`. The business rules need unit tests with hand-built loans (dbt unit tests, version 1.8 and later): an instalment due on the 1st and unpaid on the 31st must give DPD 30 and bucket `1-30`. Bucket boundaries are where logic breaks.
+**Tests that encode the rules.** Generic dbt tests (3.1) catch broken plumbing: `unique_combination_of_columns` on `loan_id` and `snapshot_date` (dbt-utils), `not_null` and `relationships` on `loan_id`, a non-negative range on `days_past_due` and `accepted_values` on `dpd_bucket`. The business rules need unit tests with hand-built loans (dbt unit tests, version 1.8 and later): an instalment due on the 1st and unpaid on the 31st must give DPD 30 and bucket `1-30`.
 
 **Reconciliation: the test that earns trust.** A mart can pass every schema test and still miss a currency or product that was never loaded. Finance keeps **control totals** from the general ledger: outstanding principal by currency per day. A dbt singular test returns rows when they disagree:
 
@@ -242,7 +242,7 @@ The output is the **credit-risk mart case file**: a one-page summary, then linke
 - **Copying identifiers "in case".** If no consumer needs a name or ID number, leave it out.
 
 ## 🧾 Recap
-- The credit-risk mart is a data product built on a loan-per-day snapshot fact with conformed and Type 2 dimensions answers most risk questions.
+- The credit-risk mart is a data product; a loan-per-day snapshot fact with conformed and Type 2 dimensions answers most risk questions.
 - DPD logic hides business rules; owners sign them and unit tests pin the edge cases.
 - Daily reconciliation to ledger control totals, with a full outer join, earns trust that schema tests alone cannot.
 - Freeze what is reported, give models point-in-time views, and use BCBS 239 as a checklist of outcomes.

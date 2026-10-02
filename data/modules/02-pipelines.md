@@ -229,7 +229,7 @@ Use synthetic data only. A generator script or a public sample database is fine;
 - A. Nothing goes wrong, because PostgreSQL makes committed rows visible in timestamp order
 - B. The rows are loaded twice; fix it by switching the whole table to a nightly full load
 - C. The rows cause a primary-key error on the next run; fix it by dropping the key
-- D. The rows can be skipped for ever; overlap the window and merge on the key, or use CDC
+- D. Rows are skipped for ever; overlap the window and merge, or use CDC
 
 <details><summary>Answer</summary>
 
@@ -240,7 +240,7 @@ Use synthetic data only. A generator script or a public sample database is fine;
 **4. Kafka Connect running Debezium for the core banking database stopped on Friday evening. On Monday, Salem reports that disk use on the core primary database has grown sharply. Why?**
 
 - A. Debezium writes its change events back into tables in the source database
-- B. The replication slot keeps WAL on the primary until the consumer confirms it
+- B. The replication slot retains WAL until the consumer confirms it
 - C. The initial snapshot restarted and copied every captured table inside the database
 - D. Kafka's retention period expired, so the topics spilled over onto the primary
 
@@ -254,7 +254,7 @@ Use synthetic data only. A generator script or a public sample database is fine;
 
 - A. Mask the column in every retail and risk dashboard that shows customer details
 - B. Copy it to raw as usual, then drop the column in the staging models
-- C. Exclude the column in the CDC connector so it never leaves the core system
+- C. Exclude the column in the CDC connector so it never leaves core
 - D. Encrypt the whole warehouse at rest, which makes the column safe to copy anywhere
 
 <details><summary>Answer</summary>
@@ -346,7 +346,7 @@ WHERE business_date = :business_date;
 
 INSERT INTO staging.transactions_daily
 SELECT transaction_id, account_id, amount, currency,
-       booked_at::date AS business_date
+       :business_date AS business_date
 FROM raw.transactions
 WHERE booked_at >= :interval_start
   AND booked_at <  :interval_end;
@@ -399,11 +399,10 @@ def core_transactions_daily():
             )
             conn.execute(
                 """INSERT INTO staging.transactions_daily
-                   SELECT transaction_id, account_id, amount, currency,
-                          booked_at::date
+                   SELECT transaction_id, account_id, amount, currency, %s
                    FROM raw.transactions
                    WHERE booked_at >= %s AND booked_at < %s""",
-                (start, end),
+                (start.date(), start, end),
             )
 
     load_transactions()
@@ -871,7 +870,7 @@ Run Kafka or Redpanda locally in Docker using their official quick-starts, and g
 
 **3. Huda enables Kafka transactions and the idempotent producer, then says Smart Alerts' feature table in PostgreSQL is now "exactly-once". Is he right?**
 
-- A. No; PostgreSQL writes still need an idempotent sink or offsets stored with the result
+- A. No; the PostgreSQL write still needs an idempotent sink
 - B. Yes, because Kafka transactions extend to every system the consumer writes to
 - C. Yes, as long as the consumer group has exactly one member at a time
 - D. No, because Kafka can never deliver a message to a consumer more than once
@@ -900,7 +899,7 @@ Run Kafka or Redpanda locally in Docker using their official quick-starts, and g
 - A. Retention is too short for the traffic volume; increase it to fourteen days
 - B. The watermark delay is too long for the window size; shorten it
 - C. Auto-commit is on, which slows the consumer; turn it off and commit manually
-- D. Most traffic shares one key on one hot partition; key by tokenised `card_id`
+- D. One key holds most traffic on a hot partition; key by tokenised `card_id`
 
 <details><summary>Answer</summary>
 

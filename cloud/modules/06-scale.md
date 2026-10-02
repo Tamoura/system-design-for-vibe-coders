@@ -61,7 +61,7 @@ spec:
           averageUtilization: 65   # percent of the CPU *request*
   behavior:
     scaleDown:
-      stabilizationWindowSeconds: 300   # avoid flapping after a spike
+      stabilizationWindowSeconds: 300   # the default, made explicit: no flapping
 ```
 
 Two numbers are judgement, not defaults. `minReplicas: 6` keeps two pods per zone even at night. `maxReplicas: 30` protects the database: every pod opens connections, and an unbounded autoscaler can turn a traffic spike into a database outage.
