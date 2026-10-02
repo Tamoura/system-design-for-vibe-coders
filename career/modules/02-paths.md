@@ -127,14 +127,14 @@ Khalid asks every software-track graduate to keep a personal study-path table fo
 
 | Week | Skill gap | Lesson(s) | Proof he will produce | Status |
 |---|---|---|---|---|
-| 1 | Has never drawn a system | [*Vibe Coders*, lesson F.2](../vibe/index.en.html#lF-2) · [*Vibe Coders*, lesson 1.1](../vibe/index.en.html#l1-1) | Diagram of his booking API in the README | Done |
-| 2 | No database experience beyond coursework | [*SaaS Building Blocks*, lesson 2.1](../saas/index.html#/2.1) · [*Vibe Coders*, lesson 2.5](../vibe/index.en.html#l2-5) | Schema with migrations; one index justified by `EXPLAIN` output | Done |
-| 3 | API design | [*Vibe Coders*, lesson 6.6](../vibe/index.en.html#l6-6) | Documented endpoints with consistent error responses | In progress |
+| 1 | Has never drawn a system | [*System Design for Vibe Coders*, lesson F.2](../vibe/index.en.html#lF-2) · [*System Design for Vibe Coders*, lesson 1.1](../vibe/index.en.html#l1-1) | Diagram of his booking API in the README | Done |
+| 2 | No database experience beyond coursework | [*SaaS Building Blocks*, lesson 2.1](../saas/index.html#/2.1) · [*System Design for Vibe Coders*, lesson 2.5](../vibe/index.en.html#l2-5) | Schema with migrations; one index justified by `EXPLAIN` output | Done |
+| 3 | API design | [*System Design for Vibe Coders*, lesson 6.6](../vibe/index.en.html#l6-6) | Documented endpoints with consistent error responses | In progress |
 | 4 | Authorisation | [*SaaS Building Blocks*, lesson 1.3](../saas/index.html#/1.3) | Test: user A cannot read user B's booking | Not started |
-| 5 | Tests and CI | [*Vibe Coders*, lesson 8.2](../vibe/index.en.html#l8-2) · [*Vibe Coders*, lesson 8.3](../vibe/index.en.html#l8-3) | CI running on every pull request; badge in README | Not started |
-| 6 | Deploying | [*Vibe Coders*, lesson 4.1](../vibe/index.en.html#l4-1) · [*Vibe Coders*, lesson 4.4](../vibe/index.en.html#l4-4) | Live URL; rollback written up and rehearsed once | Not started |
-| 7 | Monitoring | [*Vibe Coders*, lesson 1.3](../vibe/index.en.html#l1-3) · [*Vibe Coders*, lesson 7.2](../vibe/index.en.html#l7-2) | Error tracker and uptime check connected | Not started |
-| 8 | Working with an agent | [*Vibe Coders*, lesson 9.4](../vibe/index.en.html#l9-4) · [*Vibe Coders*, lesson 9.7](../vibe/index.en.html#l9-7) | One feature built with an agent; PR description lists what he corrected | Not started |
+| 5 | Tests and CI | [*System Design for Vibe Coders*, lesson 8.2](../vibe/index.en.html#l8-2) · [*System Design for Vibe Coders*, lesson 8.3](../vibe/index.en.html#l8-3) | CI running on every pull request; badge in README | Not started |
+| 6 | Deploying | [*System Design for Vibe Coders*, lesson 4.1](../vibe/index.en.html#l4-1) · [*System Design for Vibe Coders*, lesson 4.4](../vibe/index.en.html#l4-4) | Live URL; rollback written up and rehearsed once | Not started |
+| 7 | Monitoring | [*System Design for Vibe Coders*, lesson 1.3](../vibe/index.en.html#l1-3) · [*System Design for Vibe Coders*, lesson 7.2](../vibe/index.en.html#l7-2) | Error tracker and uptime check connected | Not started |
+| 8 | Working with an agent | [*System Design for Vibe Coders*, lesson 9.4](../vibe/index.en.html#l9-4) · [*System Design for Vibe Coders*, lesson 9.7](../vibe/index.en.html#l9-7) | One feature built with an agent; PR description lists what he corrected | Not started |
 
 Khalid's three rules for the table:
 
@@ -297,7 +297,7 @@ At the time of writing (2026), many AI engineer ads ask for prior software exper
 | 1. Model literacy | Choosing prompt, RAG, fine-tune or buy | [*AI Product Management*, lesson 1.3 — The build spectrum](../aipm/index.html#/1.3) | A short design note: why you chose RAG, not fine-tuning |
 | 2. Build | Prompts, context and tools | [*System Design for Vibe Coders*, lesson 9.2 — Context engineering](../vibe/index.en.html#l9-2) · [*AI Product Management*, lesson 5.3 — Prompts, context and tools as product surface](../aipm/index.html#/5.3) | Prompts in version control, with a change history |
 | 2. Build | AI as a component of a product | [*SaaS Building Blocks*, lesson 8.2 — AI features as a SaaS component](../saas/index.html#/8.2) | A diagram showing where the model sits and what it can touch |
-| 2. Build | Preparing data for retrieval | [*Data Engineering & Analytics*, module 5 — Data science and ML in production](../data/index.html#/5.3) | A documented chunking and indexing choice, with the reason |
+| 2. Build | Preparing data for retrieval | [*Data Engineering & Analytics*, lesson 5.3 — Data for LLM apps](../data/index.html#/5.3) | A documented chunking and indexing choice, with the reason |
 | 2. Build | Calling a model provider reliably | [*System Design for Vibe Coders*, lesson 6.7 — You are someone's client too](../vibe/index.en.html#l6-7) | Timeouts, retries and a fallback message, with a test |
 | 3. Evaluate | Evals as requirements | [*AI Product Management*, lesson 5.1 — The AI product spec](../aipm/index.html#/5.1) · [*AI Product Management*, lesson 6.1 — Quality you can measure](../aipm/index.html#/6.1) | A golden set and a results table in the repo |
 | 3. Evaluate | Model-graded and human review | [*AI Product Management*, lesson 6.2 — LLM-as-judge, human review and red-teaming](../aipm/index.html#/6.2) | A note on how you checked that your automatic grader agrees with you |
@@ -531,21 +531,21 @@ flowchart TD
 
 | Stage | Skill | Roles | Where to learn it | Proof that shows it |
 |---|---|---|---|---|
-| 1. Core | SQL: joins, grouping, window functions, NULLs | A E S | [*Data Engineering & Analytics*, module 1 — SQL and data modelling](../data/index.html#/1.1) | A repo of solved queries, each checked by hand on a sample |
-| 1. Core | Data modelling: facts, dimensions, keys | A E S | [*Data Engineering & Analytics*, module 1 — SQL and data modelling](../data/index.html#/1.2) | A schema diagram with the grain of each table written down |
-| 1. Core | Warehouses and lakes | E (A S aware) | [*Data Engineering & Analytics*, module 1 — SQL and data modelling](../data/index.html#/1.3) | A short note on why your project uses the storage it does |
+| 1. Core | SQL: joins, grouping, window functions, NULLs | A E S | [*Data Engineering & Analytics*, lesson 1.1 — SQL](../data/index.html#/1.1) | A repo of solved queries, each checked by hand on a sample |
+| 1. Core | Data modelling: facts, dimensions, keys | A E S | [*Data Engineering & Analytics*, lesson 1.2 — Data modelling](../data/index.html#/1.2) | A schema diagram with the grain of each table written down |
+| 1. Core | Warehouses and lakes | E (A S aware) | [*Data Engineering & Analytics*, lesson 1.3 — Warehouses and lakes](../data/index.html#/1.3) | A short note on why your project uses the storage it does |
 | 1. Core | Query performance | E | [*System Design for Vibe Coders*, lesson 2.5 — Indexes, queries, and the working set](../vibe/index.en.html#l2-5) | A slow query made faster, with the plan before and after |
 | 1. Core | Personal data and privacy | A E S | [*Secure AI & Application Security*, lesson 5.3 — Protecting personal data](../secai/index.html#/5.3) · [*Data Engineering & Analytics*, module 6 — Governance, privacy and security](../data/index.html#/6.1) | Synthetic or public data only; a data-handling note in the README |
-| 2. Pipelines | Batch loads, ELT and change data capture | E | [*Data Engineering & Analytics*, module 2 — Ingestion and pipelines](../data/index.html#/2.1) | A pipeline that loads a real, messy public source |
-| 2. Pipelines | Orchestration and scheduling | E | [*Data Engineering & Analytics*, module 2 — Ingestion and pipelines](../data/index.html#/2.2) | A daily run, with a rerun that does not duplicate data |
-| 2. Pipelines | Transformation as code | E A | [*Data Engineering & Analytics*, module 3 — Transformation and quality](../data/index.html#/3.1) | Version-controlled models with documentation |
-| 2. Pipelines | Data quality tests | E A S | [*Data Engineering & Analytics*, module 3 — Transformation and quality](../data/index.html#/3.2) | Tests for uniqueness, nulls and freshness, and one bug they caught |
-| 3. Analysis | Metric definitions | A S | [*Data Engineering & Analytics*, module 4 — Analytics](../data/index.html#/4.1) | A metric written down so two people would compute it the same way |
-| 3. Analysis | Dashboards that drive decisions | A | [*Data Engineering & Analytics*, module 4 — Analytics](../data/index.html#/4.2) | A published dashboard with a one-paragraph finding |
+| 2. Pipelines | Batch loads, ELT and change data capture | E | [*Data Engineering & Analytics*, lesson 2.1 — Batch, ELT and CDC](../data/index.html#/2.1) | A pipeline that loads a real, messy public source |
+| 2. Pipelines | Orchestration and scheduling | E | [*Data Engineering & Analytics*, lesson 2.2 — Orchestration](../data/index.html#/2.2) | A daily run, with a rerun that does not duplicate data |
+| 2. Pipelines | Transformation as code | E A | [*Data Engineering & Analytics*, lesson 3.1 — dbt and transformations](../data/index.html#/3.1) | Version-controlled models with documentation |
+| 2. Pipelines | Data quality tests | E A S | [*Data Engineering & Analytics*, lesson 3.2 — Data quality](../data/index.html#/3.2) | Tests for uniqueness, nulls and freshness, and one bug they caught |
+| 3. Analysis | Metric definitions | A S | [*Data Engineering & Analytics*, lesson 4.1 — Metrics](../data/index.html#/4.1) | A metric written down so two people would compute it the same way |
+| 3. Analysis | Dashboards that drive decisions | A | [*Data Engineering & Analytics*, lesson 4.2 — Dashboards](../data/index.html#/4.2) | A published dashboard with a one-paragraph finding |
 | 3. Analysis | Product analytics and events | A | [*SaaS Building Blocks*, lesson 6.2 — Analytics](../saas/index.html#/6.2) | An event plan for a small app, and the queries it supports |
-| 3. Analysis | Experiments and A/B tests | A S | [*Data Engineering & Analytics*, module 4 — Analytics](../data/index.html#/4.3) · [*AI Product Management*, lesson 6.3 — Online evaluation](../aipm/index.html#/6.3) | A write-up of an experiment design, with sample size reasoning |
-| 4. Models | Notebook to pipeline | S | [*Data Engineering & Analytics*, module 5 — Data science and ML in production](../data/index.html#/5.1) | A model trained and scored by a script, not by hand |
-| 4. Models | Evaluation and drift | S | [*Data Engineering & Analytics*, module 5 — Data science and ML in production](../data/index.html#/5.2) · [*AI Governance*, lesson 9.3 — Testing, evaluation, validation and red-teaming](../aigp/index.html#/9.3) | A baseline, a held-out test set and a drift check |
+| 3. Analysis | Experiments and A/B tests | A S | [*Data Engineering & Analytics*, lesson 4.3 — Experiments](../data/index.html#/4.3) · [*AI Product Management*, lesson 6.3 — Online evaluation](../aipm/index.html#/6.3) | A write-up of an experiment design, with sample size reasoning |
+| 4. Models | Notebook to pipeline | S | [*Data Engineering & Analytics*, lesson 5.1 — Notebook to pipeline](../data/index.html#/5.1) | A model trained and scored by a script, not by hand |
+| 4. Models | Evaluation and drift | S | [*Data Engineering & Analytics*, lesson 5.2 — Evaluation and drift](../data/index.html#/5.2) · [*AI Governance*, lesson 9.3 — Testing, evaluation, validation and red-teaming](../aigp/index.html#/9.3) | A baseline, a held-out test set and a drift check |
 | 4. Models | Bias and representativeness | S | [*AI Governance*, lesson 9.2 — Quality, representativeness and bias](../aigp/index.html#/9.2) | A results table broken down by group, with what you did about gaps |
 
 The *Data Engineering & Analytics* course also ends with its own data-career module and capstone; use it once it is published, alongside lesson 3.1 of this course.
@@ -637,12 +637,12 @@ After the interview, Najm offers Huda a place in the programme's data track, sta
 
 | Week | Gap | Where to learn it | Proof | Status |
 |---|---|---|---|---|
-| 1–2 | SQL joins, windows, NULLs | [*Data Engineering & Analytics*, module 1 — SQL and data modelling](../data/index.html#/1.1) | 40 practice queries, each checked by hand | In progress |
-| 3 | Modelling and grain | [*Data Engineering & Analytics*, module 1 — SQL and data modelling](../data/index.html#/1.2) | Schema diagram for a public transport dataset | Not started |
-| 4–5 | Loading and scheduling | [*Data Engineering & Analytics*, module 2 — Ingestion and pipelines](../data/index.html#/2.1) | Daily load from a public open-data API; safe rerun | Not started |
-| 6 | Transformation and tests | [*Data Engineering & Analytics*, module 3 — Transformation and quality](../data/index.html#/3.1) | Tested models; one quality test that caught a real issue | Not started |
+| 1–2 | SQL joins, windows, NULLs | [*Data Engineering & Analytics*, lesson 1.1 — SQL](../data/index.html#/1.1) | 40 practice queries, each checked by hand | In progress |
+| 3 | Modelling and grain | [*Data Engineering & Analytics*, lesson 1.2 — Data modelling](../data/index.html#/1.2) | Schema diagram for a public transport dataset | Not started |
+| 4–5 | Loading and scheduling | [*Data Engineering & Analytics*, lesson 2.1 — Batch, ELT and CDC](../data/index.html#/2.1) | Daily load from a public open-data API; safe rerun | Not started |
+| 6 | Transformation and tests | [*Data Engineering & Analytics*, lesson 3.1 — dbt and transformations](../data/index.html#/3.1) | Tested models; one quality test that caught a real issue | Not started |
 | 7 | Privacy | [*Secure AI & Application Security*, lesson 5.3 — Protecting personal data](../secai/index.html#/5.3) | Data-handling note in README | Not started |
-| 8 | Turn her churn model into a scheduled job | [*Data Engineering & Analytics*, module 5 — Data science and ML in production](../data/index.html#/5.1) | Model retrained and scored by the pipeline | Not started |
+| 8 | Turn her churn model into a scheduled job | [*Data Engineering & Analytics*, lesson 5.1 — Notebook to pipeline](../data/index.html#/5.1) | Model retrained and scored by the pipeline | Not started |
 
 Dana's rule: "Every week ends with a row count you checked by hand."
 
@@ -803,17 +803,17 @@ A software role that takes on deployments, or an operations role where you autom
 
 | Stage | Skill | Where to learn it | Proof that shows it |
 |---|---|---|---|
-| 1. Foundations | Linux and networking | [*Cloud & DevOps*, module 1 — Foundations](../cloud/index.html#/1.1) · [*System Design for Vibe Coders*, lesson F.1 — What happens when you open a website](../vibe/index.en.html#lF-1) | A written trace of one request, with the commands you used to check each hop |
+| 1. Foundations | Linux and networking | [*Cloud & DevOps*, lesson 1.1 — Linux and networking](../cloud/index.html#/1.1) · [*System Design for Vibe Coders*, lesson F.1 — What happens when you open a website](../vibe/index.en.html#lF-1) | A written trace of one request, with the commands you used to check each hop |
 | 1. Foundations | DNS and TLS | [*System Design for Vibe Coders*, lesson 11.1 — Domains, DNS, and TLS](../vibe/index.en.html#l11-1) | Your own domain with a valid certificate, renewed automatically |
-| 1. Foundations | Cloud fundamentals | [*Cloud & DevOps*, module 1 — Foundations](../cloud/index.html#/1.2) | A small architecture diagram of your cloud setup |
-| 1. Foundations | Identity and access | [*Cloud & DevOps*, module 1 — Foundations](../cloud/index.html#/1.3) · [*Secure AI & Application Security*, lesson 7.1 — Cloud security](../secai/index.html#/7.1) | Roles with least privilege; no long-lived personal keys in use |
+| 1. Foundations | Cloud fundamentals | [*Cloud & DevOps*, lesson 1.2 — Cloud fundamentals](../cloud/index.html#/1.2) | A small architecture diagram of your cloud setup |
+| 1. Foundations | Identity and access | [*Cloud & DevOps*, lesson 1.3 — Identity and access](../cloud/index.html#/1.3) · [*Secure AI & Application Security*, lesson 7.1 — Cloud security](../secai/index.html#/7.1) | Roles with least privilege; no long-lived personal keys in use |
 | 2. Package | Containers and Kubernetes | [*Cloud & DevOps*, module 2 — Containers and Kubernetes](../cloud/index.html#/2.1) · [*Secure AI & Application Security*, lesson 7.2 — Containers, Kubernetes and infrastructure as code](../secai/index.html#/7.2) | A small image, not running as root, deployed to a local or managed cluster |
 | 3. Automate | Infrastructure as code and GitOps | [*Cloud & DevOps*, module 3 — Infrastructure as code and GitOps](../cloud/index.html#/3.1) | `destroy` then `apply` rebuilds the whole environment |
-| 3. Automate | CI/CD and releases | [*Cloud & DevOps*, module 4 — CI/CD and releases](../cloud/index.html#/4.1) · [*System Design for Vibe Coders*, lesson 4.4 — Rollback, staging, and release gates](../vibe/index.en.html#l4-4) | A pipeline that tests, builds and deploys, with a rehearsed rollback |
+| 3. Automate | CI/CD and releases | [*Cloud & DevOps*, lesson 4.1 — CI pipelines](../cloud/index.html#/4.1) · [*System Design for Vibe Coders*, lesson 4.4 — Rollback, staging, and release gates](../vibe/index.en.html#l4-4) | A pipeline that tests, builds and deploys, with a rehearsed rollback |
 | 3. Automate | Verifying what you ship | [*System Design for Vibe Coders*, lesson 4.5 — Verify the artifact, not the source](../vibe/index.en.html#l4-5) | A post-deploy check that tests the running version |
 | 3. Automate | Secrets | [*Secure AI & Application Security*, lesson 5.2 — Secrets management](../secai/index.html#/5.2) | Secrets from a secrets store; secret scanning in the pipeline |
-| 4. Operate | Telemetry and monitoring | [*Cloud & DevOps*, module 5 — Observability and reliability](../cloud/index.html#/5.1) · [*System Design for Vibe Coders*, lesson 7.6 — Your monitoring stack](../vibe/index.en.html#l7-6) | A dashboard and an alert that fired in a test |
-| 4. Operate | SLOs, on-call and incidents | [*Cloud & DevOps*, module 5 — Observability and reliability](../cloud/index.html#/5.2) | A runbook and a written review of a failure you caused on purpose |
+| 4. Operate | Telemetry and monitoring | [*Cloud & DevOps*, lesson 5.1 — Telemetry](../cloud/index.html#/5.1) · [*System Design for Vibe Coders*, lesson 7.6 — Your monitoring stack](../vibe/index.en.html#l7-6) | A dashboard and an alert that fired in a test |
+| 4. Operate | SLOs, on-call and incidents | [*Cloud & DevOps*, lesson 5.2 — SLOs and on-call](../cloud/index.html#/5.2) | A runbook and a written review of a failure you caused on purpose |
 | 5. Scale | Scaling and cost | [*System Design for Vibe Coders*, lesson 10.1 — Stateless services and load balancing](../vibe/index.en.html#l10-1) · [*Cloud & DevOps*, module 6 — Scale, cost and AI infrastructure](../cloud/index.html#/6.1) | A budget alert, and a cost estimate in the README |
 
 **The security study path.** Do the platform stage 1 first; then:
@@ -879,11 +879,11 @@ Najm places Yousef in the graduate programme's platform track. Salem gives every
 
 | Weeks | Gap | Where to learn it | Proof |
 |---|---|---|---|
-| 1 | Cloud identity | [*Cloud & DevOps*, module 1 — Foundations](../cloud/index.html#/1.3) | Least-privilege roles for the pipeline |
+| 1 | Cloud identity | [*Cloud & DevOps*, lesson 1.3 — Identity and access](../cloud/index.html#/1.3) | Least-privilege roles for the pipeline |
 | 2–3 | Containers | [*Cloud & DevOps*, module 2 — Containers and Kubernetes](../cloud/index.html#/2.1) | Small non-root image of a simple API |
 | 4–5 | Infrastructure as code | [*Cloud & DevOps*, module 3 — Infrastructure as code and GitOps](../cloud/index.html#/3.1) | Environment rebuilt from code, timed |
-| 6–7 | Pipeline and rollback | [*Cloud & DevOps*, module 4 — CI/CD and releases](../cloud/index.html#/4.1) | Pipeline, rehearsed rollback |
-| 8–9 | Monitoring and incidents | [*Cloud & DevOps*, module 5 — Observability and reliability](../cloud/index.html#/5.1) | Alert, runbook, incident review |
+| 6–7 | Pipeline and rollback | [*Cloud & DevOps*, lesson 4.1 — CI pipelines](../cloud/index.html#/4.1) | Pipeline, rehearsed rollback |
+| 8–9 | Monitoring and incidents | [*Cloud & DevOps*, lesson 5.1 — Telemetry](../cloud/index.html#/5.1) | Alert, runbook, incident review |
 | 10 | Security view | [*Secure AI & Application Security*, lesson 1.1 — Threat modelling](../secai/index.html#/1.1) | Threat model of his own setup |
 
 ## 🛠️ Exercises

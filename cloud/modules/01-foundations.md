@@ -27,7 +27,7 @@ Big public outages show the same structure. On 4 October 2021, Facebook, Instagr
 
 ### 🟢 The essentials
 
-**The shell.** The shell (usually `bash` or `zsh`) is a text interface to the operating system. You will use it on servers, inside containers, in CI jobs and on your laptop. You need a dozen commands you can use without thinking.
+**The shell.** The shell (usually `bash` or `zsh`) is a text interface to the operating system. You will use it on servers, inside containers, in CI jobs and on your laptop.
 
 **Processes.** A **process** is a running program. Each has a **process ID (PID)**, an owner (a user) and a parent process. On a modern Linux server, the first process (PID 1) is usually **systemd**, which starts and supervises services. Inside a container, PID 1 is your application itself, which matters for the next point.
 
@@ -117,7 +117,7 @@ openssl s_client -connect api.najm.example:443 -servername api.najm.example </de
 curl -sv https://api.najm.example/health -o /dev/null
 ```
 
-`curl -v` alone often covers all four steps: it prints the resolved address, the connection, the TLS handshake and the HTTP exchange. Learn to read it line by line.
+`curl -v` alone often covers all four steps; learn to read its output line by line.
 
 **Reading the result.**
 
@@ -285,7 +285,7 @@ All exercises run on your own machine with Docker and a terminal.
 ## ⚡ In 60 seconds
 - A cloud provider rents you computing on demand, through an API, billed by use. **AWS**, **Microsoft Azure** and **Google Cloud** sell similar building blocks under different names.
 - The physical layout is the first design decision: a **region** is a geographic area; an **availability zone** is one or more separate data centres inside it. Spread production across **at least two zones**; consider a second region only for a clear recovery or residency reason.
-- Choose the **most managed** service that meets your needs: you pay to hand over patching, backups and failover, and you get your engineers' time back.
+- Choose the **most managed** service that meets your needs: you pay to hand over patching, backups and failover.
 - Storage comes in three shapes: **object** (files by key over HTTP), **block** (a disk for one machine), **file** (a shared network folder). Pick by access pattern, not habit.
 - The **shared responsibility model** says the provider secures the cloud and you secure what you put in it. Configuration, identity and data are always yours.
 - Biggest trap: treating "it's in the cloud" as "it's resilient". A single-zone deployment with no tested backups fails exactly as a single server did.
@@ -329,7 +329,7 @@ Region choice turns on **latency** to users, **data residency** (where regulator
 
 Object storage is the default for anything that is a file: it scales without capacity planning and stores data redundantly. Always check its access settings rather than assuming it is private.
 
-**Managed databases.** A managed database service (Amazon RDS, Azure Database for PostgreSQL, Google Cloud SQL, and others) runs the database engine for you: it installs patches, takes automated backups and can keep a **standby replica** in another zone that takes over automatically if the primary fails. You still choose the size, the configuration, the backup retention and who can connect, and you still design the schema and queries.
+**Managed databases.** A managed database service (Amazon RDS, Azure Database for PostgreSQL, Google Cloud SQL, and others) runs the database engine for you: it installs patches, takes automated backups and can keep a **standby replica** in another zone that takes over automatically if the primary fails. You still choose the size, configuration, backup retention and who can connect.
 
 **Shared responsibility.** The provider is responsible for the security *of* the cloud: buildings, hardware, the virtualisation layer, and the managed service software. You are responsible for security *in* the cloud: what you configure, who you give access to, and your data. The line moves with the service model:
 
@@ -352,7 +352,7 @@ Look at the top two rows: data and identity stay with you whatever you buy. Many
 - A **NAT gateway** lets resources in private subnets make *outbound* connections (to download updates or call an external API) without being reachable from outside.
 - **Security groups** (AWS), **network security groups** (Azure) and **firewall rules** (Google Cloud) decide which traffic may reach which resource, by address and port.
 
-One difference to know: on AWS and Azure a VPC or VNet belongs to one region, while a Google Cloud VPC is global, with regional subnets.
+On AWS and Azure a VPC or VNet belongs to one region, while a Google Cloud VPC is global, with regional subnets.
 
 **A first placement.** Here is the shape Salem wants for the Najm Mobile API:
 
@@ -386,7 +386,7 @@ Every tier spans zones, only the edge faces the internet, and the database fails
 | Identity and access | IAM | Microsoft Entra ID and Azure RBAC | Cloud IAM |
 | Private link to on-premises | Direct Connect | ExpressRoute | Cloud Interconnect |
 
-**Managed versus self-run.** Najm's default is "use the managed service unless there is a written reason not to". Self-running PostgreSQL on VMs means your team owns patching, replication, failover, backups and restore tests, around the clock. A managed service does most of that, at a price and with less control (not every extension or setting). Valid reasons to self-run: a missing feature, portability, or very specific performance needs. Write the reason down.
+**Managed versus self-run.** Najm's default is "use the managed service unless there is a written reason not to". Self-running PostgreSQL on VMs means your team owns patching, replication, failover, backups and restore tests. A managed service does most of that, at a price and with less control (not every extension or setting). Valid reasons to self-run: a missing feature, portability or specific performance needs; write the reason down.
 
 ### 🔴 Expert view
 
@@ -447,7 +447,6 @@ If you use a cloud account, use your own free-tier account and **set a budget al
 - **"The provider handles security."** Only its part. Identity, configuration, network exposure and data are yours on every service model.
 - **Overlapping address ranges.** Choose cloud address ranges with the network team before building, or hybrid routing will fail later.
 - **Multi-region by reflex.** Start multi-zone; add a region when recovery targets or regulation require it.
-- **Guessing prices.** Use the provider's calculator and set budget alerts first.
 
 ## 🧾 Recap
 - The cloud is computing on demand through an API; the big three sell similar blocks under different names.
@@ -519,7 +518,7 @@ If you use a cloud account, use your own free-tier account and **set a budget al
 
 <details><summary>Answer</summary>
 
-**C.** Multi-region adds major complexity and cost, so it should answer a stated recovery or regulatory need; until then, multi-zone with backups copied to a second region is the default. A is a reflex; B ignores real requirements; D misses the question. (🔴 Expert view.)
+**C.** Multi-region adds major complexity and cost, so it should answer a stated recovery or regulatory need; until then, multi-zone with cross-region backup copies is the default. A is a reflex; B ignores real requirements; D misses the question. (🔴 Expert view.)
 
 </details>
 
@@ -545,11 +544,11 @@ If you use a cloud account, use your own free-tier account and **set a budget al
 - People should sign in through the company's identity provider with **single sign-on and MFA**, and get access through **roles**, never through personal long-lived keys.
 - Software should get **workload identity**: the platform gives a VM, pod or CI job short-lived credentials automatically. A pipeline should use **OIDC federation**, not a stored access key.
 - The rule that matters most: **least privilege**. Grant the smallest set of actions, on the narrowest resources, for the shortest time, and start from nothing.
-- Decision cue: before you create any credential, ask "can the platform issue this identity instead?" The answer is almost always yes.
+- Decision cue: before you create any credential, ask "can the platform issue this identity instead?"
 - Biggest trap: a long-lived key with broad rights, copied into a repository, a pipeline secret or a laptop. It works forever, for anyone who finds it.
 
 ## 🧭 Why it matters
-Yousef needs the Najm Mobile API's CI pipeline to push images and update the cluster. The quickest route he finds: create a cloud user called `ci-deployer`, attach the provider's built-in administrator policy "just to get it working", generate an access key and paste it into the pipeline's secret settings. It works on the first try. Two weeks later, Noura's team runs its regular secret scan and finds the same key in a debug log that a pipeline step printed and that was attached to a public issue on a fork. The key never expires, it can do anything in the production account, and nobody can say from the logs whether anyone else has used it.
+Yousef needs the Najm Mobile API's CI pipeline to push images and update the cluster. The quickest route he finds: create a cloud user called `ci-deployer`, attach the provider's built-in administrator policy "just to get it working", generate an access key and paste it into the pipeline's secret settings. It works on the first try. Two weeks later, Noura's team runs its regular secret scan and finds the same key in a debug log that a pipeline step printed and someone attached to a public issue. The key never expires, it can do anything in the production account, and until the audit logs are checked, nobody knows who else has used it.
 
 Salem walks Yousef through the clean-up: revoke the key, review the audit trail for every call made with it, and rebuild the pipeline with no stored key at all. "In the cloud," Salem says, "identity is your perimeter. A firewall does not help when the attacker holds a valid key to the API." This lesson builds identities that are narrow, short-lived and issued by the platform, so a leak is impossible or harmless.
 
@@ -614,7 +613,7 @@ gcloud storage buckets add-iam-policy-binding gs://najm-statements-prod \
   --role="roles/storage.objectViewer"
 ```
 
-Each grant names one identity, one narrow role and one resource. That is the shape to aim for.
+Each grant names one identity, one narrow role and one resource.
 
 **People: SSO, MFA and roles.** Engineers get no separate cloud passwords or personal keys. They sign in through the company identity provider with MFA and assume a role for the task: read-only by default, deploy rights in non-production, production writes only through the pipeline or an approved, logged, time-limited elevation. When someone leaves, disabling one account removes their cloud access everywhere.
 
@@ -675,7 +674,7 @@ jobs:
           aws-region: <region>
 ```
 
-Azure (workload identity federation on an app registration or user-assigned managed identity) and Google Cloud (Workload Identity Federation) support the same pattern. The most common mistake is a trust condition that is too loose, such as accepting any repository in the organisation, or any branch. Then a pull request from any branch can deploy to production.
+Azure (workload identity federation on an app registration or user-assigned managed identity) and Google Cloud (Workload Identity Federation) support the same pattern. The most common mistake is a trust condition that is too loose, such as any repository in the organisation or any branch: then unreviewed code can deploy to production.
 
 **Workload identity in Kubernetes.** Pods should not share the node's identity, or every pod on the node gets every permission any pod needs. Each managed Kubernetes service maps a Kubernetes service account to a cloud identity: on Amazon EKS, IAM Roles for Service Accounts (IRSA) or EKS Pod Identity; on AKS, Microsoft Entra Workload ID; on GKE, Workload Identity Federation for GKE. With IRSA, for example, the mapping is an annotation:
 
@@ -691,7 +690,7 @@ metadata:
 
 A pod that runs with `serviceAccountName: statements-reader` gets credentials for that role only. Other pods in the cluster do not.
 
-**How policies combine.** On AWS, a request is denied by default; it is allowed only if some policy allows it and no policy explicitly denies it. Organisation-wide guardrails (**service control policies** in AWS Organizations) and **permissions boundaries** can cap what any identity in an account may do, even if a policy grants more. Azure RBAC is additive across role assignments at the management group, subscription, resource group and resource scopes, with inheritance downwards. Google Cloud allow policies are inherited down the organisation, folder, project and resource hierarchy, and Google Cloud also offers deny policies. The practical lesson for all three: **grant at the narrowest scope that works**, because a grant high in the hierarchy flows down to everything beneath it.
+**How policies combine.** On AWS, a request is denied by default; it is allowed only if some policy allows it and no policy explicitly denies it. Organisation-wide guardrails (**service control policies** in AWS Organizations) and **permissions boundaries** can cap what any identity in an account may do, even if a policy grants more. Azure RBAC is additive across role assignments at the management group, subscription, resource group and resource scopes, with inheritance downwards. Google Cloud allow policies are inherited down the organisation, folder, project and resource hierarchy, and Google Cloud also offers deny policies. For all three: **grant at the narrowest scope that works**; a grant high in the hierarchy flows down to everything beneath it.
 
 **Audit trails.** Every provider records API calls: AWS CloudTrail, Azure Activity Log (plus Microsoft Entra sign-in logs), Google Cloud Audit Logs. They answer "who did what, when, from where". Make sure they are switched on for all accounts, sent to a central place that the people being audited cannot change, and kept for as long as policy requires. That is how Noura's team could reconstruct what Yousef's leaked key had done.
 

@@ -102,7 +102,7 @@ flowchart LR
 - *Hard question:* "Which finding would you fix first, and why that one?"
 - *Library path:* [*Secure AI & Application Security: Zero to Hero*, lesson 1.1 — Threat modelling: data flows, trust boundaries and STRIDE](../secai/index.html#/1.1); [*Secure AI & Application Security: Zero to Hero*, lesson 6.3 — Securing AI-generated code: what coding agents get wrong](../secai/index.html#/6.3).
 
-**Time, cost and data.** A capstone at this bar takes several weeks of part-time work, not a weekend; lesson 7.1 places it inside a 12-week plan. Free tiers and student credits change, and some projects run up real bills, so check current terms (2026), switch on budget alerts on day one and write down how to tear everything down. Use public, permitted or synthetic data, never real customer, patient or student records. If real users give you personal data, collect the minimum and delete it when you no longer need it. Employers in regulated sectors notice this habit; in Qatar, Law No. 13 of 2016 on personal data protection is a good reason to show it early.
+**Time, cost and data.** A capstone at this bar takes several weeks of part-time work, not a weekend; lesson 7.1 places it inside a 12-week plan. Free tiers and student credits change and some projects run up real bills: check current terms (2026), switch on budget alerts on day one and note how to tear everything down. Use public, permitted or synthetic data, never real customer, patient or student records. If real users give you personal data, collect the minimum and delete it when you no longer need it. Employers in regulated sectors notice this habit; in Qatar, Law No. 13 of 2016 on personal data protection is a good reason to show it early.
 
 ### 🔴 Expert view
 
@@ -119,7 +119,7 @@ flowchart LR
 ## 🧰 The toolkit
 | Resource, tool or template | What it is and does | When to reach for it |
 |---|---|---|
-| **Project spec (one page)** | A short document: problem, user, thin slice, production bar, hard question, data, timeline | Before writing any code; when scope starts to grow |
+| **Proof project spec** (one page) | A short document: problem, user, thin slice, production bar, hard question, data, timeline | Before writing any code; when scope starts to grow |
 | **The Twelve-Factor App** (Heroku authors) | A classic short guide to building apps that deploy and configure cleanly | Setting up configuration, logs and deployment for a web capstone |
 | **OWASP Juice Shop** | A deliberately vulnerable web application for legal security practice | Security capstones and learning attacks on your own machine |
 | **Public open-data portals** | Government, city and international-organisation sites that publish datasets with a licence | Finding real, permitted data for data and AI projects |
@@ -146,7 +146,7 @@ The Najm Tech Graduate Programme asks candidates at the technical stage to bring
 Khalid's verdict: "Now I have six things to ask you, and you know the answers."
 
 ## 🛠️ Exercises
-- 🟢 Audit your current repositories against the proof ladder. Give each one a rung from 1 to 6 and mark the single best candidate for a capstone. *Done when:* you have a table of every public repository with its rung, and one repository (or one new idea) circled as your capstone.
+- 🟢 Give every public repository a rung from 1 to 6 on the proof ladder. *Done when:* you have a table of repositories and rungs, with one repository (or one new idea) circled as your capstone.
 - 🟡 Fill in the Proof project spec above for your target role, using the matching capstone spec from 🟡 Going deeper. *Done when:* a peer or mentor can read the spec in two minutes and tell you what you are building, for whom, and what will be hard about it.
 - 🔴 Ship the thinnest slice of your capstone, reachable or reproducible with one command, with at least one test in CI and a real user who has tried it. *Done when:* the live link or one-command setup works on someone else's machine, CI is green, and you have written down one thing your first user did that you did not expect.
 
@@ -154,7 +154,7 @@ Khalid's verdict: "Now I have six things to ask you, and you know the answers."
 - **Quantity over depth.** Twenty shallow repositories hide your best work. Build one deep capstone and pin it; archive or unpin the rest.
 - **Picking the stack first.** A fashionable framework without a problem gives a demo with no user. Write the spec, then pick the simplest stack that meets it.
 - **Shipping what you cannot explain.** AI agents make it easy to build past your understanding. Read and test every part, and be ready to explain any file.
-- **Using real personal data.** Real customer or patient records in a project are a serious mistake. Use public, permitted or synthetic data.
+- **Using real personal data.** Customer or patient records never belong in a portfolio. Use public, permitted or synthetic data.
 - **Never finishing.** A capstone that is 80% done and never deployed proves less than a smaller one that runs. Cut scope until it ships, then deepen.
 
 ## 🧾 Recap
@@ -575,7 +575,7 @@ flowchart TD
 5. Open a small, focused pull request that follows the project's style, explains the change and includes a test.
 6. Respond to review politely and quickly. The review conversation itself is evidence.
 
-Structured programmes can help. **Google Summer of Code** pays contributors to work on a project with an open-source organisation and a mentor; its eligibility has widened in recent years, so check the current rules. **Outreachy** offers paid, remote open-source internships for people who face under-representation or systemic bias in tech. **Hacktoberfest**, run each October, encourages contributions; after maintainers reported floods of low-quality pull requests in 2020, the organisers changed the rules so that projects opt in. Treat that history as a warning.
+**Google Summer of Code** pays contributors to work on a project with an open-source organisation and a mentor; eligibility has widened in recent years, so check current rules. **Outreachy** offers paid, remote open-source internships for people who face under-representation or systemic bias in tech. **Hacktoberfest**, run each October, encourages contributions; after maintainers reported floods of low-quality pull requests in 2020, the organisers changed the rules so that projects opt in. Treat that history as a warning.
 
 **Freelance and volunteer work.** Building something for a real client, such as a small business, a charity, a mosque committee or a university department, proves what no course can: turning a vague request into working software and keeping a promise. Paid freelance marketplaces exist, but entry-level work there is very competitive at the time of writing (2026), so personal networks and volunteering are often the faster start. Protect yourself and the client:
 - **Write down the scope**: what you will deliver, by when, what is out of scope, who owns the code, and what happens after handover.
@@ -597,7 +597,7 @@ Structured programmes can help. **Google Summer of Code** pays contributors to w
 
 **A previous career is experience.** Career-switchers often hide their past. Mohammed's eight years at the gym included scheduling staff, handling complaints and running the front desk system, which is domain knowledge, customer empathy and operational discipline. Written as outcomes and linked to his booking system, it becomes the reason a team might choose him over a graduate with no work history. The same applies to an accountant moving into data or a network technician moving into cloud.
 
-**Depth over badges.** One merged pull request with a real review conversation beats twenty typo fixes. One finished hackathon project beats five participation certificates. Reviewers increasingly see bulk, low-effort contributions, including AI-generated pull requests to open-source projects, which maintainers have publicly complained about. Use AI tools to help you understand a codebase, then submit only changes you have tested and can defend line by line.
+**Depth over badges.** One merged pull request with a real review conversation beats twenty typo fixes. One finished hackathon project beats five participation certificates. Maintainers have publicly complained about bulk, low-effort contributions, including AI-generated pull requests. Use AI tools to help you understand a codebase, then submit only changes you have tested and can defend line by line.
 
 **Combine routes into one story.** The strongest early-career profiles connect their experience. Huda contributes a fix to an open-source data-quality library she uses in her capstone pipeline, and writes up both. Yousef volunteers to move his university society's website to a container platform with a pipeline, monitoring and a cost note, which doubles as his capstone. A reviewer sees one direction, not scattered activity.
 

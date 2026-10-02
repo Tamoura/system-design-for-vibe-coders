@@ -7,13 +7,13 @@
 ---
 
 # 7.1 — Capstone: build Najm's credit-risk data mart end to end
-*Level: 🔴 Advanced* · *Prerequisites: Modules 0–6* · *Stage: Ingest, Store, Model, Transform, Serve, Analyse, Operate, Govern*
+*Level: 🔴 Advanced* · *Prerequisites: Modules 0–6* · *Stage: Model, Operate*
 
 ## ⚡ In 60 seconds
 - The capstone builds the **credit-risk mart**: a daily, tested, reconciled record of every loan's balance and days past due, serving a risk dashboard, a regulatory extract and the credit models.
 - Treat it as a **data product**: named consumers, a grain statement, a source contract, metric definitions, an owner, a freshness promise and an access policy.
 - The spine is **traceability**: every dashboard number traces to a metric definition, a tested model and a contracted source, and totals reconcile to the general ledger.
-- The central table is a **periodic snapshot fact**: one row per loan per business date. Get this grain right and most risk questions become simple SQL.
+- The central table is a **periodic snapshot fact**: one row per loan per calendar date. Get this grain right and most risk questions become simple SQL.
 - Decision cue: for every column, ask "who owns its definition, and how would we know tomorrow if it were wrong?"
 - Biggest trap: a mart that disagrees with Finance and nobody can say why. Reconcile from day one.
 
@@ -80,7 +80,7 @@ On a laptop: synthetic core-banking tables in PostgreSQL in Docker, an increment
 
 | Table | Type | Grain: one row per… |
 |---|---|---|
-| `fct_loan_daily` | Periodic snapshot fact | loan per business date, end-of-day state |
+| `fct_loan_daily` | Periodic snapshot fact | loan per calendar date, end-of-day state |
 | `dim_customer` | SCD Type 2 dimension | customer version: segment, branch, internal risk grade |
 | `dim_loan` | Dimension, mostly static | loan: product, currency, origination date, original amount |
 | `dim_date` | Conformed date dimension | calendar date, with business-day and month-end flags |
@@ -108,7 +108,8 @@ with dates as (
 ),
 
 loans_as_of as (
-    -- the version of each loan that was current at the end of each date
+    -- the version current at the end of each date; the snapshot uses the
+    -- timestamp strategy on the source's updated_at, not the run time
     select d.snapshot_date, l.loan_id, l.customer_id, l.currency,
            l.outstanding_principal
     from dates d
@@ -123,8 +124,8 @@ oldest_unpaid as (
     from dates d
     join {{ ref('stg_core__instalments') }} i
       on i.due_date <= d.snapshot_date
-     and (i.paid_in_full_at is null
-          or cast(i.paid_in_full_at as date) > d.snapshot_date)
+     and (i.paid_in_full_value_date is null
+          or i.paid_in_full_value_date > d.snapshot_date)
     group by 1, 2
 ),
 
@@ -150,7 +151,7 @@ Three decisions hide in those lines, and each needs an owner's sign-off, not jus
 - **End-of-day state.** If the core system posts some payments next morning with yesterday's value date, use the value date, not the posting time. Huda learned this only by asking; it is now in the data contract.
 - **The three-day lookback.** Late repayments correct the last three days on every run. Anything older needs a logged backfill (2.2).
 
-**Tests that encode the rules.** Generic dbt tests (3.1) catch broken plumbing: `unique_combination_of_columns` on `loan_id` and `snapshot_date` (from the dbt-utils package), `not_null` and `relationships` on `loan_id`, a non-negative range on `days_past_due` and `accepted_values` on `dpd_bucket`. The business rules need unit tests with hand-built loans: an instalment due on the 1st and unpaid on the 31st must give DPD 30 and bucket `1-30`. Bucket boundaries are where logic breaks.
+**Tests that encode the rules.** Generic dbt tests (3.1) catch broken plumbing: `unique_combination_of_columns` on `loan_id` and `snapshot_date` (from the dbt-utils package), `not_null` and `relationships` on `loan_id`, a non-negative range on `days_past_due` and `accepted_values` on `dpd_bucket`. The business rules need unit tests with hand-built loans (dbt has native unit tests from version 1.8): an instalment due on the 1st and unpaid on the 31st must give DPD 30 and bucket `1-30`. Bucket boundaries are where logic breaks.
 
 **Reconciliation: the test that earns trust.** A mart can pass every schema test and still miss a currency or product that was never loaded. Finance keeps **control totals** from the general ledger: outstanding principal by currency per day. A dbt singular test returns rows when they disagree:
 
@@ -162,7 +163,11 @@ from (
     from {{ ref('fct_loan_daily') }}
     group by 1, 2
 ) m
-full outer join {{ ref('stg_finance__loan_control_totals') }} g
+full outer join (
+    -- only dates the mart has built, so today's ledger row is not a false alarm
+    select * from {{ ref('stg_finance__loan_control_totals') }}
+    where snapshot_date <= (select max(snapshot_date) from {{ ref('fct_loan_daily') }})
+) g
   on g.snapshot_date = m.snapshot_date
  and g.currency = m.currency
 where m.mart_total is null
@@ -172,13 +177,13 @@ where m.mart_total is null
 
 The full outer join matters: a currency in the ledger but missing from the mart is the error you most need to see. Finance sets the tolerance. A failed reconciliation shows a warning on the daily dashboard and **blocks** the month-end regulatory extract.
 
-**The contract with the source.** Huda's first pipeline broke when the core banking team renamed a column. Now a data contract (6.1) with the core banking owners covers the schema, the meaning of `paid_in_full_at` and value dates, CDC delivery and how breaking changes are announced. CDC with Debezium (2.1) reads the database log, so no nightly full extract loads the production database.
+**The contract with the source.** Huda's first pipeline broke when the core banking team renamed a column. Now a data contract (6.1) with the core banking owners covers the schema, the meaning of `paid_in_full_value_date`, CDC delivery and how breaking changes are announced. CDC with Debezium (2.1) reads the database log, so no nightly full extract loads the production database.
 
 ### 🔴 Expert view
 
 **As-reported versus as-corrected.** With a lookback, history changes: Tuesday's DPD may be corrected on Thursday. That is right for the dashboard and wrong for two consumers. The regulatory extract must never change after sign-off, so month-end is published as a frozen, versioned table and later corrections become documented restatements. Dana's models need **point-in-time** data: what the bank *knew* on the scoring date (5.1). Training on corrected history is temporal leakage. Options: filter on each record's load time, train from frozen month-end versions, or use the time travel of Apache Iceberg or Delta Lake (1.3). Pick one, document it and test it.
 
-**BCBS 239 as a design checklist.** The principles ask for outcomes, not tools. Read them as engineering questions. *Accuracy:* is the mart reconciled and tested? *Completeness:* can you prove every loan, currency and entity is in? *Timeliness:* can you produce figures fast in a stress event, not only at month-end? *Adaptability:* can you answer a new question, such as exposure to one sector, without a new project? *Governance:* is there an owner, a dictionary and lineage from report to source (6.1)? Column-level lineage from dbt plus the catalogue is evidence a supervisor can follow.
+**BCBS 239 as a design checklist.** The principles ask for outcomes, not tools. Read them as engineering questions. *Accuracy:* is the mart reconciled and tested? *Completeness:* can you prove every loan, currency and entity is in? *Timeliness:* can you produce figures fast in a stress event, not only at month-end? *Adaptability:* can you answer a new question, such as exposure to one sector, without a new project? *Governance:* is there an owner, a dictionary and lineage from report to source (6.1)? Model-level lineage from dbt, plus column-level lineage in the catalogue, is evidence a supervisor can follow.
 
 **Cost.** The DPD join is cheap for three days and painful for a seven-year rebuild: partition by month of `snapshot_date`, rebuild in yearly chunks and read the query plan first (3.3).
 
@@ -225,7 +230,7 @@ The output is the **credit-risk mart case file**: a one-page summary, then linke
 **Readiness rule.** The mart replaces the spreadsheets only after three month-ends in a row reconcile with no manual adjustment, Credit Risk and Finance get the same NPL ratio from it, and the drill has run once.
 
 ## 🛠️ Exercises
-- 🟢 **Build the slice.** Generate a few thousand synthetic loans with instalments and repayments in Python into PostgreSQL in Docker, some in arrears. Load them into DuckDB and build `dim_date`, `dim_loan` and `fct_loan_daily` with dbt Core and generic tests. *Done when:* `dbt build` is green and a query returns the balance in each DPD bucket for any date you choose.
+- 🟢 **Build the slice.** Generate a few thousand synthetic loans with instalments and repayments in Python into PostgreSQL in Docker, some in arrears. Load them into DuckDB and build `dim_date`, `dim_loan`, a snapshot of `loans` and `fct_loan_daily` with dbt Core and generic tests. *Done when:* `dbt build` is green and a query returns the balance in each DPD bucket for any date you choose.
 - 🟡 **Make it trustworthy.** Add the lookback, a Type 2 snapshot of `customers`, synthetic ledger control totals and the reconciliation test, scheduled in Dagster or Airflow. Insert a five-day-late repayment and a loan in a currency missing from the ledger. *Done when:* the reconciliation catches the currency gap, rerunning a day gives identical rows, and you can explain why the late repayment needs a backfill.
 - 🔴 **Ship the case file.** Write the case file for your build: summary, grain statements, metric cards for the NPL ratio and roll rate, a classification table, a row-level security rule tested in PostgreSQL, a point-in-time feature view with a leakage test, and a runbook. Then drill: rename a source column without warning. *Done when:* a peer can trace one NPL figure back to source rows using only your documentation, and your drill write-up says what failed, who was alerted and what changed.
 
@@ -238,7 +243,7 @@ The output is the **credit-risk mart case file**: a one-page summary, then linke
 
 ## 🧾 Recap
 - The credit-risk mart is a data product: consumers, signed definitions, an owner, a freshness promise, an access policy.
-- A loan-per-business-date snapshot fact with conformed and Type 2 dimensions answers most risk questions.
+- A loan-per-day snapshot fact with conformed and Type 2 dimensions answers most risk questions.
 - DPD logic hides business rules; owners sign them and unit tests pin the edge cases.
 - Reconciliation to ledger control totals, with a full outer join, earns trust that schema tests alone cannot.
 - Freeze what is reported, give models point-in-time views, and use BCBS 239 as a checklist of outcomes.
