@@ -157,7 +157,9 @@ Three decisions hide in those lines, and each needs an owner's sign-off, not jus
 
 ```sql
 -- tests/assert_credit_mart_reconciles_to_ledger.sql
-select m.snapshot_date, m.currency, m.mart_total, g.ledger_total
+select coalesce(m.snapshot_date, g.snapshot_date) as snapshot_date,
+       coalesce(m.currency, g.currency) as currency,
+       m.mart_total, g.ledger_total
 from (
     select snapshot_date, currency, sum(outstanding_principal) as mart_total
     from {{ ref('fct_loan_daily') }}
@@ -252,10 +254,10 @@ The output is the **credit-risk mart case file**: a one-page summary, then linke
 
 **1. Huda's first design has one row per loan with today's balance and DPD. Which requirement can it not meet?**
 
-- A. Showing the balance of a single loan today
-- B. Joining a loan to its product
-- C. Showing how the balance in each DPD bucket changed month by month, and the roll rates between buckets
-- D. Counting loans by currency
+- A. Showing each loan's balance and DPD bucket as of this morning
+- B. Joining each loan to its product, currency and origination date
+- C. Showing month-by-month DPD bucket trends and roll rates
+- D. Counting open loans by currency and by customer segment today
 
 <details><summary>Answer</summary>
 
@@ -265,10 +267,10 @@ The output is the **credit-risk mart case file**: a one-page summary, then linke
 
 **2. Every schema test passes, but the ledger shows AED loans and the mart has no AED rows at all. Which check is designed to catch this?**
 
-- A. A reconciliation test that full-outer-joins mart totals to ledger control totals by currency and date
-- B. A not_null test on `currency`
-- C. An accepted_values test on `dpd_bucket`
-- D. A uniqueness test on `loan_id` and `snapshot_date`
+- A. A full-outer-join reconciliation to ledger control totals by currency and date
+- B. A not_null test on `currency` in `fct_loan_daily` and in the staging model that feeds it
+- C. An accepted_values test on `dpd_bucket` listing the five buckets the metric card defines
+- D. A uniqueness test on the combination of `loan_id` and `snapshot_date`, from dbt-utils
 
 <details><summary>Answer</summary>
 
@@ -278,10 +280,10 @@ The output is the **credit-risk mart case file**: a one-page summary, then linke
 
 **3. A repayment posted on Thursday has a value date of Tuesday. The mart has a three-day lookback window. What happens, and what should the team do about month-end?**
 
-- A. Nothing; incremental models never update past rows
-- B. The whole history is rebuilt automatically
-- C. The dashboard ignores it until a full refresh
-- D. Tuesday's row is corrected on the next run; month-end figures are frozen and versioned, so later corrections become documented restatements
+- A. Nothing changes, because incremental models only append new dates and never touch rows already loaded
+- B. The loan's whole history since origination is rebuilt automatically on the next run
+- C. The dashboard ignores it until a full refresh, which then rewrites the filed month-end extract too
+- D. The next run corrects Tuesday's row; month-end stays frozen and later corrections become documented restatements
 
 <details><summary>Answer</summary>
 
@@ -291,23 +293,23 @@ The output is the **credit-risk mart case file**: a one-page summary, then linke
 
 **4. Dana trains a probability-of-default model on `fct_loan_daily` after corrections have been applied to history. Why is this a problem?**
 
-- A. Corrected data is always less accurate
-- B. The model learns from information that was not known on the scoring date, a temporal leakage that inflates offline results
-- C. dbt cannot read corrected rows
-- D. Regulators forbid models from using arrears data
+- A. Corrected data is always less accurate than the figures originally reported at the time
+- B. It learns from information not known on the scoring date: temporal leakage
+- C. dbt cannot read rows that a later incremental run has deleted and reinserted
+- D. Regulators forbid credit models from using arrears or days-past-due data as features
 
 <details><summary>Answer</summary>
 
-**B.** In production the model only sees what the bank knew at the time; training on later corrections leaks the future. Use a point-in-time view. (🔴 Expert view.)
+**B.** In production the model only sees what the bank knew at the time; training on later corrections leaks the future and inflates offline results. Use a point-in-time view. (🔴 Expert view.)
 
 </details>
 
 **5. Kareem asks for customer names and national ID numbers in the mart "for easier drill-down". No consumer question needs them. What should Faisal decide?**
 
-- A. Add them, because analysts need context
-- B. Add them but hide the columns in the dashboard
-- C. Keep surrogate keys only; allow a controlled lookup through the restricted mapping table for roles with a documented need
-- D. Remove customer keys as well
+- A. Add them, because analysts need context and the mart is internal to the bank anyway
+- B. Add them to the mart but hide the two columns in every dashboard view
+- C. Keep surrogate keys; allow audited lookups through the restricted mapping table for documented needs
+- D. Remove the customer keys as well, so no row can ever be linked to anyone
 
 <details><summary>Answer</summary>
 
@@ -512,10 +514,10 @@ Kareem's plan targets analytics engineering: his proof is three Monday extracts 
 
 **1. A job advert titled "Data Scientist" asks for building dbt models, owning dashboards and defining KPIs, with no mention of modelling or experiments. What is the best reading?**
 
-- A. It is a data science role; the advert is incomplete
-- B. It is closer to an analytics engineer or analyst role; prepare for SQL, modelling and metric cases
-- C. Ignore it, because the title is wrong
-- D. Prepare only for machine learning theory
+- A. It is a data science role; the advert simply left out the modelling and experiment duties
+- B. It is closer to analytics engineering; prepare for SQL, modelling and metric cases
+- C. Ignore it, because an advert whose title does not match its duties is not serious
+- D. Prepare mainly for machine learning theory, since that is what the title promises
 
 <details><summary>Answer</summary>
 
@@ -525,36 +527,36 @@ Kareem's plan targets analytics engineering: his proof is three Monday extracts 
 
 **2. In a live SQL round, a candidate writes `select customer_id, max(txn_ts), max(amount) from transactions group by customer_id` to get each customer's most recent transaction. What is wrong?**
 
-- A. Nothing; it is the standard answer
-- B. GROUP BY cannot be used with dates
-- C. It is too slow for large tables
-- D. The maximum amount may come from a different row than the latest timestamp; use a window function to keep one whole row per customer, with explicit tie-breaking
+- A. Nothing; grouping by customer and taking maxima is the standard answer to this question
+- B. GROUP BY cannot be combined with aggregates over timestamp columns in standard SQL
+- C. It is too slow on large tables, so it needs an index on `customer_id` first
+- D. The two maxima can come from different rows; keep one real row with `row_number()`
 
 <details><summary>Answer</summary>
 
-**D.** Aggregates are computed independently, so the result mixes values from different rows. `row_number()` over a partition keeps a real row. C may be true but misses the correctness bug. (🟡 Going deeper.)
+**D.** Aggregates are computed independently, so the result mixes values from different rows. `row_number()` over a partition keeps a real row, with explicit tie-breaking. C may be true but misses the correctness bug. (🟡 Going deeper.)
 
 </details>
 
 **3. In a pipeline interview at a neutral company, the interviewer asks what happens if the daily load runs twice. Which answer scores best?**
 
-- A. With a MERGE on the business key or a partition overwrite, the second run changes nothing; I would also add a uniqueness test and a volume check to catch duplicates if the design ever regresses
-- B. The scheduler prevents it, so it cannot happen
-- C. We would delete duplicates manually when someone notices
-- D. Duplicates do not matter in analytics
+- A. A MERGE or partition overwrite makes the rerun a no-op; tests catch duplicates if that regresses
+- B. The scheduler is configured to prevent concurrent runs, so a double run cannot happen in practice
+- C. We would notice the inflated totals in the dashboard and delete the duplicate rows by hand
+- D. Duplicates do not matter much in analytics, because trends stay roughly the same over time
 
 <details><summary>Answer</summary>
 
-**A.** It names idempotency and adds detection. B relies on something that does fail; C and D accept wrong numbers. (🟡 Going deeper.)
+**A.** It names idempotency and adds detection (a uniqueness test and a volume check). B relies on something that does fail; C and D accept wrong numbers. (🟡 Going deeper.)
 
 </details>
 
 **4. Kareem wants to move from analyst to analytics engineer. Which portfolio evidence would most convince Faisal?**
 
-- A. Five certificates in cloud data platforms
-- B. A long list of tools on his CV
-- C. Three of his manual Monday extracts rebuilt as tested, documented dbt models with metric cards, and a write-up of the definition disagreements he resolved
-- D. A notebook with a complex model that only runs on his machine
+- A. Five certificates in cloud data platforms, listed with their exam dates and scores
+- B. A CV listing every tool he has used, from Excel and SQL to dbt, Airflow and Python
+- C. Three Monday extracts rebuilt as tested dbt models with metric cards and a write-up
+- D. A notebook with a complex churn model that only runs on his own laptop
 
 <details><summary>Answer</summary>
 
@@ -564,10 +566,10 @@ Kareem's plan targets analytics engineering: his proof is three Monday extracts 
 
 **5. An AI assistant drafts an NPL ratio query for Huda in seconds. According to this lesson, what is now the most valuable part of her job on that task?**
 
-- A. Typing the query faster than the assistant
-- B. Memorising every SQL function
-- C. Avoiding AI tools entirely
-- D. Verifying the query against the agreed metric definition, the grain of the tables and an independent reconciliation before anyone uses the number
+- A. Typing the query faster than the assistant so she does not need to depend on it
+- B. Memorising every SQL function so she can spot syntax errors in the draft by eye
+- C. Refusing to use AI tools at all for numbers that go to regulators or the board
+- D. Checking the query against the metric definition, table grain and an independent reconciliation
 
 <details><summary>Answer</summary>
 

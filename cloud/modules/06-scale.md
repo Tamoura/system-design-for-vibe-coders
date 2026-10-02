@@ -20,7 +20,7 @@
 ## 🧭 Why it matters
 On 31 January 2017, a GitLab engineer fixing a replication problem ran a delete command on what they believed was the secondary database. It was the primary. GitLab's public postmortem describes how none of the backup and replication methods the team relied on worked as expected; they recovered from a staging copy about six hours old and lost roughly six hours of production data. Nobody had restored a backup end to end, so nobody knew the backups were broken.
 
-The Payments service has just moved to the cloud, and Hamad (CISO) and the risk function ask Salem: "If the primary region failed this afternoon, or someone deleted the payments database, how long until customers can send money again, and how many transfers would we lose?" The EU's Digital Operational Resilience Act (DORA), applicable to financial entities from 17 January 2025, expects the bank's EU entity to show tested backup, restoration and continuity arrangements, and GCC regulators such as the Qatar Central Bank set their own continuity and outsourcing expectations (check current texts with risk and governance). "We use multi-AZ" is not an answer. This lesson builds one: targets, design and the test that proves them.
+The Payments service has just moved to the cloud, and Hamad (CISO) and the risk function ask Salem: "If the primary region failed this afternoon, or someone deleted the payments database, how long until customers can send money again, and how many transfers would we lose?" The EU's Digital Operational Resilience Act (DORA), applicable to financial entities from 17 January 2025, expects the bank's EU entity to show tested backup, restoration and continuity arrangements, and GCC regulators such as the Qatar Central Bank set their own continuity and outsourcing expectations (check current texts with risk). "We use multi-AZ" is not an answer. This lesson builds one: targets, design and the test that proves them.
 
 ## 📐 How it works
 
@@ -78,7 +78,7 @@ The business owner sets them with risk, because tighter targets cost more; the p
 
 ### 🟡 Going deeper
 
-**Making Kubernetes spread across zones.** Running nodes in three zones does not guarantee your pods land in three zones; the scheduler might put all six on nodes in one zone. Ask for spreading explicitly, and protect replicas during maintenance:
+**Making Kubernetes spread across zones.** Running nodes in three zones does not guarantee your pods land in three zones; the scheduler may pack them into one. Ask for spreading explicitly, and protect replicas during maintenance:
 
 ```yaml
 # In the Deployment's pod template
@@ -143,7 +143,7 @@ flowchart LR
 
 The bottom two rows are why replication is not backup. **Point-in-time recovery** (PITR), which managed PostgreSQL services offer by keeping base backups plus the write-ahead log, lets you restore to a chosen second before the bad change. Know your retention window and how long a restore of your data size really takes.
 
-**Static stability and the recovery path.** A *statically stable* system keeps working without needing to change during the failure, for example because capacity is already provisioned in each zone rather than launched mid-outage when everyone else is launching too. Also check that the recovery path does not depend on what failed. In Facebook's October 2021 outage, a backbone change disconnected data centres and DNS servers withdrew their BGP routes; Facebook's engineering post notes that the internal tools needed for the fix were affected too. Ask: if our primary region is gone, are the runbooks, the GitOps repo, the CI runners, the secrets and the break-glass accounts still reachable?
+**Static stability and the recovery path.** A *statically stable* system keeps working without needing to change during the failure, for example because capacity is already provisioned in each zone rather than launched mid-outage. Also check that the recovery path does not depend on what failed. In Facebook's October 2021 outage, a backbone change disconnected data centres and DNS servers withdrew their BGP routes; Facebook's engineering post notes that the internal tools needed for the fix were affected too. Ask: if our primary region is gone, are the runbooks, the GitOps repo, the CI runners, the secrets and the break-glass accounts still reachable?
 
 **Chaos engineering and game days.** Chaos engineering runs controlled experiments that inject failure (kill pods, drain a zone, add latency) to check that the system behaves as predicted. Start small and in non-production; state a hypothesis ("if one zone is drained, the Mobile API stays within its SLO"); limit the blast radius; keep an abort switch. A **game day** is a scheduled rehearsal of a full scenario, such as a regional failover, with the on-call team, Maha as incident commander and observers timing each step. EU DORA expects resilience testing; game days produce the evidence.
 
@@ -182,7 +182,7 @@ The first run found three gaps no design review had caught: the replica-lag aler
 
 ## ⚠️ Mistakes and traps
 - **Calling replication a backup.** Replicas copy deletions and corruption instantly. Keep point-in-time and immutable backups in a separate account as well.
-- **Never restoring.** Backups that have not been restored end to end fail when you need them, as GitLab learned. Schedule restore tests and time them.
+- **Never restoring.** Untested backups fail when you need them, as GitLab learned. Schedule restore tests and time them.
 - **Unbounded autoscaling.** An HPA with a huge `maxReplicas` can exhaust database connections or a downstream quota. Set the ceiling from what the dependencies can take.
 - **A recovery path that depends on the failed region.** Keep runbooks, IaC, CI, secrets and break-glass access reachable from outside it.
 - **Targets nobody signed.** An RTO the platform team picked alone will be challenged after the incident. Get the business owner and risk to sign them.
@@ -190,7 +190,7 @@ The first run found three gaps no design review had caught: the replica-lag aler
 ## 🧾 Recap
 - Scaling adds capacity; resilience survives failure. Autoscale pods and nodes in layers, with floors and ceilings chosen on purpose.
 - Run production across two or three zones, enforced with spread constraints, PDBs and spare capacity.
-- RTO and RPO are business decisions; the DR strategy (backup and restore, pilot light, warm standby, active-active) is the cheapest design that meets them.
+- RTO and RPO are business decisions; the DR strategy is the cheapest design that meets them.
 - Zones and replicas do not protect against bad changes or deletion; point-in-time and immutable, separate-account backups do.
 - Only tested recovery counts: restore drills, game days and timed failovers produce the evidence regulators and executives need.
 
@@ -205,7 +205,7 @@ The first run found three gaps no design review had caught: the replica-lag aler
 
 <details><summary>Answer</summary>
 
-**B.** Two pods per zone means a zone failure removes only two, leaving the 4 needed. A helps only after new pods and nodes arrive; C covers voluntary disruptions, not zone failures, and would block drains; D creates a single point of failure. (🟢 The essentials and 🟡 Going deeper.)
+**B.** Two pods per zone means a zone failure removes only two, leaving the 4 needed. A helps only after new pods and nodes arrive; C covers voluntary disruptions, not zone failures, and would block drains; D creates a single point of failure. (🟡 Going deeper.)
 
 </details>
 

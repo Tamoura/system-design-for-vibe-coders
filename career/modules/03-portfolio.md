@@ -169,8 +169,8 @@ Khalid's verdict: "Now I have six things to ask you, and you know the answers."
 **1. Omar has 23 repositories: course assignments, LeetCode solutions and tutorial apps. He has four weeks before applications open. What should he do first?**
 
 - A. Add a LeetCode solution every day so his profile shows steady activity
-- B. Pick one capstone for his role, spec it around a hard question and ship a thin slice
-- C. Delete every old repository so that only his best course projects remain
+- B. Pick one capstone for his role, spec a hard question and ship a thin slice
+- C. Delete every old repository so that only his best course projects remain visible
 - D. Port his three best tutorial apps to a newer framework and pin them
 
 <details><summary>Answer</summary>
@@ -194,10 +194,10 @@ Khalid's verdict: "Now I have six things to ask you, and you know the answers."
 
 **3. Huda is building a data capstone. Which "hard question" best fits the data role?**
 
-- A. "Which chart library looks the most modern?"
-- B. "How many rows can my notebook load?"
+- A. "Which chart library makes my dashboard look the most modern to reviewers?"
+- B. "How many rows can my notebook load into memory before my laptop runs out?"
 - C. "Yesterday's file arrived twice and today's arrived late. What does my dashboard show?"
-- D. "Can I add a login page?"
+- D. "Can I add a login page and user accounts to the dashboard before I apply?"
 
 <details><summary>Answer</summary>
 
@@ -208,8 +208,8 @@ Khalid's verdict: "Now I have six things to ask you, and you know the answers."
 **4. Reem built most of her capstone with an AI coding agent. What is the best way to present it?**
 
 - A. Say nothing about the agent, since reviewers may assume she does not understand the code
-- B. Add a "How this was built" section on what the agent did and how she checked it, and know every file
-- C. Remove every agent-written part and rebuild it by hand, so the project is her unaided work
+- B. Add a "How this was built" section on what the agent did and how she checked it; know every file
+- C. Remove every agent-written part and rebuild it by hand, so the project is entirely her unaided work
 - D. List the agent as a co-author in the README and say nothing more about how the code was checked
 
 <details><summary>Answer</summary>
@@ -220,7 +220,7 @@ Khalid's verdict: "Now I have six things to ask you, and you know the answers."
 
 **5. Yousef wants to show cloud and platform skills. Which capstone fits best?**
 
-- A. A small app he runs with infrastructure as code, staged deploys, an SLO, a practised rollback and a cost note
+- A. A small app run with infrastructure as code, staged deploys, an SLO, a rollback drill and a cost note
 - B. Three associate-level cloud certifications on his profile, with no project that uses what they cover
 - C. A detailed blog series comparing the compute, storage and network services of the main cloud providers
 - D. A polished front-end portfolio site on a free hosting platform, with a custom domain and HTTPS
@@ -451,7 +451,7 @@ Reem's capstone scored 3 of 14 before her rewrite. She rotated the leaked key fi
 
 **3. Huda's notebooks only run if cells are executed in a particular order and load data from her laptop. Which fix matters most for a reviewer like Dana?**
 
-- A. Add more charts and a summary table so the conclusions are easier to see
+- A. Add more charts and a summary table so the conclusions are easier to see at a glance
 - B. Convert the notebooks into a slide deck that walks Dana through the results
 - C. Rename and number the notebooks so the intended running order is obvious
 - D. Make "Restart and run all" work, pin dependencies and explain how to get the data
@@ -478,9 +478,9 @@ Reem's capstone scored 3 of 14 before her rewrite. She rotated the leaked key fi
 **5. Mohammed built a reporting tool during a freelance job. The client owns the code. How should he use it in his portfolio?**
 
 - A. Publish the code on his GitHub, since he wrote every line of it himself
-- B. Leave it out of his portfolio and CV entirely, because he cannot show the code
-- C. Unless the client agrees in writing, describe his part and the outcome, or rebuild a generic version
-- D. Publish it under a different project name, with the client's name and branding removed
+- B. Leave it out of his portfolio and CV entirely, because he cannot show any of the code
+- C. Without written permission, describe his part and the outcome, or rebuild a generic version
+- D. Publish it under a different project name, with the client's name, logo and branding removed
 
 <details><summary>Answer</summary>
 
@@ -677,7 +677,7 @@ Khalid's rule for the session: "One route each, done properly. We will check the
 
 **3. Yousef agrees to rebuild a charity's donation website for free. Which step matters most before he starts?**
 
-- A. Choosing the newest framework so the charity gets a modern site that lasts for years
+- A. Choosing the newest framework so the charity gets a modern site that will last for years
 - B. Building it quickly on his personal cloud account and handing over the login later
 - C. Writing down scope, dates, ownership and handover, and using a hosted checkout for cards
 - D. Designing the database to collect as much donor data as possible for future features
@@ -690,9 +690,9 @@ Khalid's rule for the session: "One route each, done properly. We will check the
 
 **4. Reem plans to use an AI agent to open twenty small pull requests to popular open-source projects in one week. What is the best advice?**
 
-- A. Read each project's contribution and AI policies; make a few focused, tested changes she can explain
+- A. Read each project's contribution and AI policies; make a few tested changes she can explain
 - B. Go ahead, since a high volume of pull requests shows energy and commitment to reviewers
-- C. Contribute only to projects that have no contribution policy, so there are no rules to break
+- C. Contribute only to projects that have no contribution policy at all, so there are no rules to break
 - D. Open the pull requests without tests at first, to keep each change small for maintainers
 
 <details><summary>Answer</summary>

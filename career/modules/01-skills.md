@@ -131,7 +131,7 @@ Keep pull requests small: a 50-line change gets a careful review; a 2,000-line c
 
 ### 🔴 Expert view
 
-**What seniors actually notice.** Reviewing a junior's first month, Khalid does not count lines of code. He asks: are the changes **small and reversible**, does each fix come with **evidence**, and can he **follow the reasoning** without asking? Juniors who do this are trusted with bigger work quickly, because they are cheap to supervise.
+**What seniors actually notice.** Reviewing a junior's first month, Khalid does not count lines of code. He asks: are the changes **small and reversible**, does each fix come with **evidence**, and can he **follow the reasoning** without asking? Juniors who do this are trusted with bigger work sooner.
 
 **Why AI makes the baseline more important.** As AI tools write more routine code, human effort moves to this lesson's skills: reading the agent's code, debugging failures you did not cause, testing to verify a claim, and writing down what changed. Lesson 1.2 builds on this. A graduate who can generate code but not check it is replaceable by the tool; one who can check the tool's work is who the team needs.
 
@@ -275,7 +275,7 @@ Reem is the fastest builder in the cohort: with an AI coding agent she built thr
 
 The follow-up interview goes differently. Tariq opens her code and asks three questions. "Why does the retry loop wait longer each time?" Reem is not sure; the agent added it. "This test mocks the database. What would happen with a real one if two requests arrived at once?" She does not know. "Your config file has an API key in a test fixture. Is it real?" It is: a free-tier key she had pasted into the chat with the agent, which put it in the file. Tariq is not bothered that she used AI. He is bothered that the code was more capable than its author.
 
-Khalid's feedback: "Reem is excellent at getting things built. We need to see that she's in charge of what gets built." This lesson takes the hiring view of that difference: what employers check, how interviews probe it, and how to use agents so they make you stronger rather than hollow.
+Khalid's feedback: "Reem is excellent at getting things built. We need to see that she's in charge of what gets built." This lesson is about that difference.
 
 ## 📐 How it works
 
@@ -289,7 +289,7 @@ Khalid's feedback: "Reem is excellent at getting things built. We need to see th
 | Chat assistant | Answers questions and writes snippets you paste in | Editor chat panels; general assistants | Pasting code into a context it does not fit |
 | Coding agent | Reads the repository, edits many files, runs commands and tests, and iterates | Claude Code, GitHub Copilot's agent features, Cursor's agent mode, and others | Large, confident changes you never fully read |
 
-Tools change quickly; the principles below do not depend on which one you use.
+Tools change quickly; the principles below do not.
 
 **What employers check.** When a team hires a junior who will use AI tools, the questions behind the interview are:
 - **Can you specify?** Can you turn a vague request into a clear, small task with acceptance criteria?
@@ -316,7 +316,7 @@ flowchart LR
 ```
 
 Three habits make this loop work:
-1. **Small tasks.** "Validate the amount field, rejecting negatives and non-numbers, with tests" is reviewable. "Build the backend" is not.
+1. **Small tasks.** "Validate the amount field, rejecting negatives and non-numbers, with tests" is reviewable; "build the backend" is not.
 2. **Read the whole diff,** not the agent's summary. Agents sometimes report success for incomplete work, or change files you did not ask about.
 3. **The explain-back test.** Before committing, explain the change as if to a reviewer. Every hesitation is something to learn before you commit.
 
@@ -358,26 +358,24 @@ before writing the implementation.
 
 **How interviews probe it.** Expect some of these, and ask in advance which apply:
 - **"Walk me through your take-home."** The interviewer picks a random line and asks why. This is where carried candidates are found.
-- **"Extend it live,"** sometimes without AI tools. Easy if you understood your code.
+- **"Extend it live,"** sometimes without AI tools.
 - **AI-allowed live coding.** The interviewer watches how you prompt, read and verify.
 - **Reviewing a flawed AI-written pull request.** Described by interviewers and hiring guides as an increasingly common exercise at the time of writing (2026). Lesson 5.2 covers it.
 - **Algorithm rounds without AI.** Still common at large technology firms. They test reasoning you cannot borrow.
 
-**Learning mode versus producing mode.** When **learning** something new, ask the agent to explain, quiz you, or review code *you* wrote. When **producing** in an area you understand, let it write more, and review carefully.
+**Learning mode versus producing mode.** When **learning**, ask the agent to explain, quiz you, or review code *you* wrote. When **producing** in an area you understand, let it write more, and review carefully. Reem stayed in producing mode for topics (retries, concurrency) she had never learned. A simple rule: **the first time you use a concept, write it yourself or study it until you could.**
 
-Reem's mistake was staying in producing mode for topics (retries, concurrency) she had never learned. A simple rule: **the first time you use a concept, write it yourself or study it until you could.**
-
-**Speed is not the same as productivity.** METR, an AI research non-profit, published a study in July 2025 in which experienced open-source developers working on their own repositories were, on average, slower with AI tools, though they believed the tools had sped them up. It was one study in one setting, and tools have changed since; but measure your own results rather than trust the feeling of speed.
+**Speed is not the same as productivity.** METR, an AI research non-profit, published a study in July 2025 in which experienced open-source developers working on their own repositories were, on average, slower with AI tools, though they believed the tools had sped them up. It was one study in one setting, and tools have changed since; measure your own results rather than trust the feeling of speed.
 
 ### 🔴 Expert view
 
-**You are directing a teammate.** Think of an agent as a very fast, widely read colleague who never says "I don't know": it needs clear tasks, context and review. The library teaches these skills in [*System Design for Vibe Coders*, lesson 9.1 — You are the architect now](../vibe/index.en.html#l9-1), [*System Design for Vibe Coders*, lesson 9.2 — Context engineering](../vibe/index.en.html#l9-2), and the [*Running AI Agents in Production* learning path, Level 1 — Builder](../agentic/learning-path.html#level-1-builder). For a junior, they are *evidence*: an agent instruction file, tests written before code and small reviewed commits show you are in charge.
+**You are directing a teammate.** An agent is a fast, widely read colleague who never says "I don't know": it needs clear tasks, context and review. The library teaches these skills in [*System Design for Vibe Coders*, lesson 9.1 — You are the architect now](../vibe/index.en.html#l9-1), [*System Design for Vibe Coders*, lesson 9.2 — Context engineering](../vibe/index.en.html#l9-2), and the [*Running AI Agents in Production* learning path, Level 1 — Builder](../agentic/learning-path.html#level-1-builder). For a junior, an agent instruction file, tests written before code and small reviewed commits are *evidence* that you are in charge.
 
-**Where the value moves.** When code is cheap to generate, the scarce skills are deciding what to build, breaking it into checkable pieces, noticing what is wrong, and operating the result (lesson 1.3). Your computer science (complexity, concurrency, networks, databases) is how you spot the agent's mistakes.
+**Where the value moves.** When code is cheap to generate, the scarce skills are deciding what to build, breaking it into checkable pieces, noticing what is wrong, and operating the result (lesson 1.3). Your computer science fundamentals are how you spot the agent's mistakes.
 
 **Disclosure that builds trust.** A short, factual note in a README or pull request is enough: which tool you used, for what, and how you verified it. "I used an AI coding agent to scaffold the API routes and draft tests; I wrote the validation rules and test cases myself, reviewed every change, and added the concurrency test after finding a race in the generated code." That sentence is a strength in an interview, not a confession.
 
-**Employer data and tools.** At a bank like Najm, code and data are confidential and regulated, and employers typically approve specific AI tools for specific data. Find out what is approved before you paste anything anywhere; saying so in interviews shows the awareness regulated employers value. The governance view is in [*System Design for Vibe Coders*, lesson 9.8 — The governance glance: you own what your agent ships](../vibe/index.en.html#l9-8).
+**Employer data and tools.** At a bank like Najm, code and data are confidential and regulated, and employers typically approve specific AI tools for specific data. Find out what is approved before you paste anything; saying so in interviews shows awareness regulated employers value. The governance view is in [*System Design for Vibe Coders*, lesson 9.8 — The governance glance: you own what your agent ships](../vibe/index.en.html#l9-8).
 
 ## 🧰 The toolkit
 | Resource, tool or template | What it is and does | When to reach for it |
@@ -427,7 +425,7 @@ Tariq's comment: "I can see where the agent helped, where you overruled it, and 
 - 🔴 With a friend, each use an agent to add a small feature to the other's project, then plant one realistic flaw (a missing authorisation check, a weakened test, a date off-by-one, a hard-coded secret). Review each other's pull request cold, in 20 minutes. *Done when:* each of you has written review comments, you compare them with the planted flaw, and you note what you missed and why.
 
 ## ⚠️ Mistakes and traps
-- **Submitting code you cannot explain.** It is the fastest way to fail a follow-up interview. Do the explain-back test before every commit.
+- **Submitting code you cannot explain.** The fastest way to fail a follow-up interview. Do the explain-back test before every commit.
 - **Assuming AI rules.** Rules differ by employer and by round. Ask in writing before the assessment and follow the answer.
 - **Hiding AI use, or over-apologising for it.** Both damage trust. Disclose briefly and factually, with how you verified.
 - **Letting the agent change tests to make them pass.** Treat any test change as a design question that needs a reason.
