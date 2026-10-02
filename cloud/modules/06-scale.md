@@ -10,23 +10,23 @@
 *Level: 🔴 Advanced* · *Prerequisites: 2.3, 3.2, 5.2* · *Phase: Operate*
 
 ## ⚡ In 60 seconds
-- **Scaling** handles more load; **resilience** survives failure. Autoscalers do the first; redundancy, backups and recovery plans do the second.
+- **Scaling** handles more load; **resilience** survives failure, through redundancy, backups and recovery plans.
 - Autoscale in layers: the **Horizontal Pod Autoscaler** adds pods, a **node autoscaler** adds machines for those pods, and the **database** usually does not autoscale at all, so it is often the real limit.
 - Spread every production service across at least **two or three availability zones**, and make Kubernetes actually do it with topology spread constraints and PodDisruptionBudgets.
 - Recovery targets are business decisions: **RTO** (how long you may be down) and **RPO** (how much data you may lose). Write them down per service, then pick the cheapest design that meets them.
 - Decision cue: a backup you have not restored is a hope, not a backup. Schedule restore tests and time them against the RTO.
-- Biggest trap: treating multi-zone as disaster recovery. Zones survive a data-centre failure, not a bad deploy, a deleted table or ransomware, which replicate everywhere in seconds.
+- Biggest trap: treating multi-zone as disaster recovery. Zones survive a data-centre failure, not a bad deploy, a deleted table or ransomware, whose damage replicates everywhere in seconds.
 
 ## 🧭 Why it matters
 On 31 January 2017, a GitLab engineer fixing a replication problem ran a delete command on what they believed was the secondary database. It was the primary. GitLab's public postmortem describes how none of the backup and replication methods the team relied on worked as expected; they recovered from a staging copy about six hours old and lost roughly six hours of production data. Nobody had restored a backup end to end, so nobody knew the backups were broken.
 
-Now bring it home. The Payments service has just moved to the cloud, and Hamad (CISO) and the risk function ask Salem: "If the primary region failed this afternoon, or someone deleted the payments database, how long until customers can send money again, and how many transfers would we lose?" The EU's Digital Operational Resilience Act (DORA), applicable to financial entities from 17 January 2025, expects the bank's EU entity to show tested backup, restoration and continuity arrangements, and GCC regulators such as the Qatar Central Bank set their own continuity and outsourcing expectations (check current texts with risk and governance). "We use multi-AZ" is not an answer. This lesson builds one: targets, design and the test that proves them.
+The Payments service has just moved to the cloud, and Hamad (CISO) and the risk function ask Salem: "If the primary region failed this afternoon, or someone deleted the payments database, how long until customers can send money again, and how many transfers would we lose?" The EU's Digital Operational Resilience Act (DORA), applicable to financial entities from 17 January 2025, expects the bank's EU entity to show tested backup, restoration and continuity arrangements, and GCC regulators such as the Qatar Central Bank set their own continuity and outsourcing expectations (check current texts with risk and governance). "We use multi-AZ" is not an answer. This lesson builds one: targets, design and the test that proves them.
 
 ## 📐 How it works
 
 ### 🟢 The essentials
 
-**Scaling: vertical and horizontal.** *Vertical scaling* gives a server more CPU or memory. It is simple but has a ceiling and usually means a restart. *Horizontal scaling* adds more copies of a service behind a load balancer. It has a much higher ceiling but only works if the service is **stateless**: no session data, uploads or caches kept on the local disk or in memory that another copy would need. State goes to a database, a cache service or object storage. For the non-coder view of the same idea, see [*System Design for Vibe Coders*, lesson 10.1 — Stateless services and load balancing](../vibe/index.en.html#l10-1).
+**Scaling: vertical and horizontal.** *Vertical scaling* gives a server more CPU or memory. It is simple but has a ceiling and usually means a restart. *Horizontal scaling* adds more copies of a service behind a load balancer. It has a much higher ceiling but only works if the service is **stateless**: no session data, uploads or caches kept on the local disk or in memory that another copy would need. State goes to a database, a cache service or object storage. For the non-coder view, see [*System Design for Vibe Coders*, lesson 10.1 — Stateless services and load balancing](../vibe/index.en.html#l10-1).
 
 **Autoscaling in Kubernetes happens in layers.**
 
@@ -150,7 +150,7 @@ The bottom two rows are why replication is not backup. **Point-in-time recovery*
 ## 🧰 The toolkit
 | Tool, practice or service | What it is and does | When to reach for it |
 |---|---|---|
-| **Horizontal Pod Autoscaler** (Kubernetes) | Changes the replica count of a workload from CPU, memory or custom metrics | Every stateless service with variable load, with a min and max you chose |
+| **Horizontal Pod Autoscaler** (Kubernetes) | Changes the replica count of a workload from CPU, memory or custom metrics | Stateless services with variable load, with a chosen min and max |
 | **Cluster Autoscaler** / **Karpenter** | Add and remove nodes when pods cannot be scheduled or nodes are idle | Any cluster whose load varies; pair with HPA |
 | **KEDA** (CNCF) | Event-driven autoscaling from queues, streams and schedules, including to zero | Workers that drain queues; batch jobs; scale-to-zero for idle services |
 | **PodDisruptionBudget** | Caps how many replicas voluntary disruptions may remove at once | Every production Deployment with more than one replica |
@@ -173,7 +173,7 @@ Maha's team produces a **DR test plan** for the Payments service. It lives in th
 | Evidence | Timeline, dashboards, reconciliation report; filed for the resilience testing record |
 | Follow-ups | Each gap becomes a ticket with an owner and a date; the next test re-checks it |
 
-The first run found three gaps that no design review would have caught: the replica-lag alert went to a dashboard nobody watched, the payments DNS record had a TTL far longer than the RTO allowed, and the break-glass role for the recovery account needed a new MFA device.
+The first run found three gaps no design review had caught: the replica-lag alert went to a dashboard nobody watched, the payments DNS record had a TTL far longer than the RTO allowed, and the break-glass role for the recovery account needed a new MFA device.
 
 ## 🛠️ Exercises
 - 🟢 **Watch an autoscaler work.** On a local kind or k3d cluster with the metrics server, deploy a small web container with CPU requests and an HPA (min 2, max 8, target 50% CPU). Generate load from another pod and watch `kubectl get hpa -w`. *Done when:* you have a screenshot or log showing replicas rising under load and falling after the stabilisation window, and one sentence explaining why scale-down was slower than scale-up.
@@ -185,11 +185,11 @@ The first run found three gaps that no design review would have caught: the repl
 - **Never restoring.** Backups that have not been restored end to end fail when you need them, as GitLab learned. Schedule restore tests and time them.
 - **Unbounded autoscaling.** An HPA with a huge `maxReplicas` can exhaust database connections or a downstream quota. Set the ceiling from what the dependencies can take.
 - **A recovery path that depends on the failed region.** Keep runbooks, IaC, CI, secrets and break-glass access reachable from outside it.
-- **Targets nobody signed.** An RTO the platform team picked alone will be challenged after the incident. Get the business owner and risk to agree to them, in writing.
+- **Targets nobody signed.** An RTO the platform team picked alone will be challenged after the incident. Get the business owner and risk to sign them.
 
 ## 🧾 Recap
-- Scaling adds capacity; resilience survives failure. Autoscale pods and nodes in layers, with floors and ceilings you chose on purpose.
-- Run production across at least two or three zones, and enforce it with topology spread constraints, PDBs and spare capacity.
+- Scaling adds capacity; resilience survives failure. Autoscale pods and nodes in layers, with floors and ceilings chosen on purpose.
+- Run production across two or three zones, enforced with spread constraints, PDBs and spare capacity.
 - RTO and RPO are business decisions; the DR strategy (backup and restore, pilot light, warm standby, active-active) is the cheapest design that meets them.
 - Zones and replicas do not protect against bad changes or deletion; point-in-time and immutable, separate-account backups do.
 - Only tested recovery counts: restore drills, game days and timed failovers produce the evidence regulators and executives need.
@@ -257,7 +257,7 @@ The first run found three gaps that no design review would have caught: the repl
 
 <details><summary>Answer</summary>
 
-**B.** Chaos engineering tests a stated prediction under control. A is recklessness; C is wrong because it complements restore drills; D is wrong, since even a small zone-drain experiment teaches a lot. (🔴 Expert view.)
+**B.** Chaos engineering tests a stated prediction under control. A is recklessness; C: it complements restore drills; D is wrong: even a small zone drain teaches a lot. (🔴 Expert view.)
 
 </details>
 
@@ -267,7 +267,6 @@ The first run found three gaps that no design review would have caught: the repl
 - Kubernetes: Specifying a disruption budget — https://kubernetes.io/docs/tasks/run-application/configure-pdb/
 - KEDA documentation — https://keda.sh/docs/
 - Karpenter documentation — https://karpenter.sh/docs/
-- Velero documentation — https://velero.io/docs/
 - AWS whitepaper: Disaster recovery of workloads on AWS — https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-workloads-on-aws.html
 - Azure Well-Architected Framework, reliability — https://learn.microsoft.com/azure/well-architected/
 - Google Cloud Architecture Framework — https://cloud.google.com/architecture/framework

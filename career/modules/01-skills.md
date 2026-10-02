@@ -589,7 +589,8 @@ DB_URL = os.environ["DATABASE_URL"]  # fails loudly at startup if missing
 slot = request.json["slot_id"]
 
 # After: validate, return a clear error, and log enough to debug
-slot = request.json.get("slot_id")
+body = request.get_json(silent=True) or {}  # None if the body is not JSON
+slot = body.get("slot_id")
 if slot is None:
     log.warning("booking rejected: missing slot_id", extra={"request_id": req_id})
     return {"error": "slot_id is required"}, 422
@@ -599,7 +600,11 @@ if slot is None:
 # A health-check endpoint the platform and uptime checks can call
 @app.get("/health")
 def health():
-    db.execute("SELECT 1")  # proves the database is reachable
+    try:
+        db.execute("SELECT 1")  # proves the database is reachable
+    except Exception:
+        log.exception("health check: database unreachable")
+        return {"status": "unavailable"}, 503
     return {"status": "ok"}
 ```
 
@@ -621,8 +626,8 @@ The pattern in the strong answers: specific, honest about what is not done yet, 
 
 **Production thinking by role.** The ten questions take different forms:
 - **Software and AI application engineers:** the list above, plus for AI features: cost per request, evaluations of answer quality, and what happens when the model provider is down. See [*System Design for Vibe Coders*, lesson 6.7 — You are someone's client too: surviving third-party APIs](../vibe/index.en.html#l6-7).
-- **Data roles:** Huda learns that a notebook that ran once is not a pipeline. Production means safe reruns without duplicating data, quality checks, alerts when a source changes, and numbers traceable to their source. *Data Engineering & Analytics* builds this, from [Module 2 — Ingestion and pipelines](../data/index.html#/2.1) to [Module 5 — Data science and ML in production](../data/index.html#/5.1).
-- **Cloud and platform roles:** for Yousef, production is the product: infrastructure as code, least-privilege access, telemetry everywhere. *Cloud & DevOps* covers it, from [Module 1 — Foundations](../cloud/index.html#/1.1) to [Module 5 — Observability and reliability](../cloud/index.html#/5.1).
+- **Data roles:** Huda learns that a notebook that ran once is not a pipeline. Production means safe reruns without duplicating data, quality checks, alerts when a source changes, and numbers traceable to their source. The sister course builds this, from [*Data Engineering & Analytics*, Module 2 — Ingestion and pipelines](../data/index.html#/2.1) to [*Data Engineering & Analytics*, Module 5 — Data science and ML in production](../data/index.html#/5.1).
+- **Cloud and platform roles:** for Yousef, production is the product: infrastructure as code, least-privilege access, telemetry everywhere. The sister course covers it, from [*Cloud & DevOps*, Module 1 — Foundations](../cloud/index.html#/1.1) to [*Cloud & DevOps*, Module 5 — Observability and reliability](../cloud/index.html#/5.1).
 
 **What a production-minded portfolio project shows.** A small project, visibly operated: a live URL, CI on every push, no secrets in history, a `/health` endpoint with an uptime check, an error tracker, a README "Operations" section (deploy, roll back, restore), and one short **postmortem**: a blameless write-up of what went wrong, how you found it and what you changed. Module 3 builds this into your capstone. Small deploys are cheap or free on many platforms at the time of writing (2026); check current terms and set a budget alert first.
 
@@ -630,7 +635,7 @@ The pattern in the strong answers: specific, honest about what is not done yet, 
 
 **Production in a regulated employer.** At a bank like Najm, changes go through **change management** (an approved, recorded process for what goes live and when), production access is restricted and logged, and customer data falls under laws such as Qatar's Personal Data Privacy Protection Law (PDPPL, Law No. 13 of 2016). As a junior you will probably not deploy to production alone for months, and should not want to. Graduates who understand *why* the controls exist settle in faster. Regulated employers across the GCC (banks, government, energy, health) value this; saying in an interview why you would never test with real customer data is worth more than a buzzword.
 
-**You build it, you run it.** Many teams expect builders to help operate their service, including being **on call** (responding to alerts outside working hours on a rota). Juniors usually join after some months, shadowing first. Operating your own small project is the best preparation; the capstone of *System Design for Vibe Coders* (Module 12, "You Get Paged") simulates it.
+**You build it, you run it.** Many teams expect builders to help operate their service, including being **on call** (responding to alerts outside working hours on a rota). Juniors usually join after some months, shadowing first. Operating your own small project is the best preparation; the [*System Design for Vibe Coders*, Module 12 — Capstone: You Get Paged](../vibe/index.en.html#l12) simulates it.
 
 **Proportion is the senior skill.** Production thinking means matching safeguards to risk, not adding every tool. A personal project needs a repeatable deploy, logs, a health check and a backup; a payment service needs far more. Reaching for microservices, Kubernetes or message queues where they are not needed suggests repeating rather than reasoning. The [*System Design for Vibe Coders*, lesson 0.3 — Build vs buy: the highest-leverage decision you'll make](../vibe/index.en.html#l0-3) shows how to choose.
 
@@ -651,7 +656,7 @@ The pattern in the strong answers: specific, honest about what is not done yet, 
 After the hackathon, Salem and Khalid turn the game-day failures into the **Najm graduate ship-ready checklist**, used for every graduate project. Here is Omar's booker, two weeks later.
 
 | Question | Evidence required | Omar's evidence | Status |
-|---|---|---|
+|---|---|---|---|
 | Configured per environment | Config from environment; environments differ only in config | `DATABASE_URL`, `LOG_LEVEL` from environment | Done |
 | No secrets in the repository | Secret scan clean on full history; `.env.example` present | Password rotated and purged from history; scan clean | Done |
 | Data survives restarts and is backed up | Real database; a restore tested once | Managed Postgres; daily backup; restore tested into staging on 12 Nov | Done |
@@ -689,23 +694,23 @@ The README's "Operations" section gives exact commands to *Deploy*, *Roll back* 
 
 **1. During the game day, Salem restarts the server and all of Omar's bookings disappear. Which production question did Omar's team miss?**
 
-- A. How does it get deployed?
-- B. What does it cost?
-- C. Which dependencies does it use?
-- D. Where does data live, and does it survive restarts?
+- A. How does it get deployed, and is the deploy repeatable?
+- B. What does it cost, and is there a budget alert?
+- C. Which dependencies does it use, and are they pinned?
+- D. Where does the data live?
 
 <details><summary>Answer</summary>
 
-**D.** The bookings lived in memory, so a restart wiped them. A matters too, but no deploy process saves data that only lives in memory. (🟢 The essentials, the ten questions.)
+**D.** The bookings lived in memory, so a restart wiped them; data must live in a database or storage that survives restarts. A matters too, but no deploy process saves data that only lives in memory. (🟢 The essentials, the ten questions.)
 
 </details>
 
 **2. In an interview, Tariq asks Mohammed: "What happens to your app if the database goes down?" Which answer is strongest for a junior?**
 
-- A. "That won't happen; I use a managed database."
-- B. "The health check fails, users see an error page, and my uptime check alerts me. I haven't added retries yet; I'd add a limited retry for timeouts."
-- C. "I would migrate to Kubernetes so it can self-heal."
-- D. "I would ask a senior engineer."
+- A. "That won't happen. I use a managed database from a large cloud provider, and they guarantee it stays up."
+- B. "`/health` fails, users get an error page and my uptime check alerts me. No retries yet; I'd add a limited one."
+- C. "I would migrate the whole app to Kubernetes so that it can self-heal whenever anything goes down."
+- D. "I would ask a senior engineer on the team what to do, because they would know the right answer."
 
 <details><summary>Answer</summary>
 
@@ -715,10 +720,10 @@ The README's "Operations" section gives exact commands to *Deploy*, *Roll back* 
 
 **3. Omar discovers the database password was committed to his repository three weeks ago. He deletes the file in a new commit. What else must he do?**
 
-- A. Rotate the password, remove it from the repository history, and add secret scanning
-- B. Nothing, because the file is deleted
-- C. Make the repository private, which fully solves the problem
-- D. Add a comment asking people not to use the old password
+- A. Rotate the password, purge it from history and add secret scanning
+- B. Nothing more, because the file is deleted and the latest commit no longer contains it
+- C. Make the repository private, which fully solves the problem for anyone who has not cloned it
+- D. Add a comment in the code asking people not to use the old password any more
 
 <details><summary>Answer</summary>
 
@@ -728,10 +733,10 @@ The README's "Operations" section gives exact commands to *Deploy*, *Roll back* 
 
 **4. Huda's model runs well in a notebook. Which change would most move it toward production, from a data role's point of view?**
 
-- A. Add more charts to the notebook
-- B. Retrain the model with more features
-- C. Turn it into a pipeline that can rerun safely without duplicating data, checks data quality and alerts when a source changes
-- D. Share the notebook file with the team by email
+- A. Add more charts and explanatory text to the notebook so the team can follow every step
+- B. Retrain the model with more features and tune it until the accuracy is clearly higher
+- C. Make it a pipeline that reruns safely, checks data quality and alerts on source changes
+- D. Share the notebook file with the team by email so that anyone can run it when needed
 
 <details><summary>Answer</summary>
 
@@ -741,14 +746,14 @@ The README's "Operations" section gives exact commands to *Deploy*, *Roll back* 
 
 **5. Reem wants her portfolio project to look senior and plans to add Kubernetes, three microservices and a message queue to an app with a handful of users. What would Khalid most likely advise?**
 
-- A. Keep it simple and proportionate: a repeatable deploy, logs, a health check, backups and a rollback she can explain, and say what she would add at larger scale
-- B. Go ahead, because more infrastructure always impresses interviewers
-- C. Remove deployment entirely and show only the code
-- D. Add the infrastructure but leave it out of the README
+- A. Go ahead, because more infrastructure always impresses interviewers at a bank like Najm
+- B. Remove deployment entirely and show only the code, since juniors are not expected to operate anything
+- C. Add the infrastructure, but leave it out of the README so interviewers are not distracted by it
+- D. Keep it simple: a deploy, logs, a health check, backups and a rollback she can explain
 
 <details><summary>Answer</summary>
 
-**A.** Proportion is the senior skill; heavy tools for a tiny problem suggest copying, not judgement. C loses the evidence of production thinking. (🔴 Expert view, proportion.)
+**D.** Proportion is the senior skill; heavy tools for a tiny problem suggest copying, not judgement, and she can say what she would add at larger scale. B loses the evidence of production thinking. (🔴 Expert view, proportion.)
 
 </details>
 

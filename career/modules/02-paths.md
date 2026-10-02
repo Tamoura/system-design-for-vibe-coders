@@ -17,7 +17,7 @@
 - Biggest trap: treating algorithm practice as the whole preparation. It helps with some screens; it does not show you can do the job.
 
 ## 🧭 Why it matters
-Omar has solved more than four hundred practice problems on an online judge, and his CV leads with that number and a list of eleven technologies. He applies to the Najm Tech Graduate Programme and to Sadeem Pay, a Doha fintech startup. Sadeem Pay's take-home asks for a small API with a database, tests and a README. Omar writes the logic in an evening, then loses two days to database connections, environment variables and a copied Docker file. He submits code that runs only on his laptop, with no tests.
+Omar has solved more than four hundred practice problems on an online judge, and his CV leads with that number and a list of eleven technologies. He applies to the Najm Tech Graduate Programme and to Sadeem Pay, a Doha fintech startup. Sadeem Pay's take-home asks for a small API with a database, tests and a README. Omar writes the logic in an evening, then loses two days to database connections, environment variables and a copied Dockerfile. He submits code that runs only on his laptop, with no tests.
 
 At Najm's assessment centre, Khalid (Engineering Manager) asks him one question: "Show me something you built that someone else has used." Omar has nothing to show. He is not weak. He has trained hard for one part of the job and never practised the rest.
 
@@ -308,7 +308,7 @@ At the time of writing (2026), many AI engineer ads ask for prior software exper
 | 5. Operate | Monitoring and drift | [*AI Product Management*, lesson 8.3 — Monitoring, drift and the iteration loop](../aipm/index.html#/8.3) | Logged requests (without personal data) and a weekly quality check |
 | 5. Operate | Responsibility for what ships | [*System Design for Vibe Coders*, lesson 9.8 — The governance glance](../vibe/index.en.html#l9-8) | A one-paragraph risk note in the README |
 
-For agent work specifically, the levels in [*Running AI Agents in Production*, Level 1 — Builder](../agentic/learning-path.html#level-1-builder) and [Level 2 — Agent Engineer](../agentic/learning-path.html#level-2-agent-engineer) give a structured ladder with labs.
+For agent work specifically, [*Running AI Agents in Production*, Level 1 — Builder](../agentic/learning-path.html#level-1-builder) and [*Running AI Agents in Production*, Level 2 — Agent Engineer](../agentic/learning-path.html#level-2-agent-engineer) give a structured ladder with labs.
 
 ### 🟡 Going deeper
 
@@ -527,7 +527,7 @@ flowchart TD
 
 **The shared core.** Whatever you choose, four skills come first: SQL, data modelling, data quality and handling personal data. They appear in the first rows of the study-path table.
 
-**The study-path table.** The "Roles" column shows who needs each row: **A** analyst, **E** engineer, **S** scientist. The *Data Engineering & Analytics* course is being written now, so its links point to modules.
+**The study-path table.** The "Roles" column shows who needs each row: **A** analyst, **E** engineer, **S** scientist. The *Data Engineering & Analytics* course is being written now; its links follow its published module plan.
 
 | Stage | Skill | Roles | Where to learn it | Proof that shows it |
 |---|---|---|---|---|
@@ -564,7 +564,7 @@ The *Data Engineering & Analytics* course also ends with its own data-career mod
 Here is Huda's bug and the fix. The fix aggregates transactions per customer *before* joining, so extra accounts cannot multiply rows.
 
 ```sql
--- Wrong: a customer with two accounts has every transaction counted twice
+-- Wrong: a customer with two accounts opened this year has every transaction counted twice
 SELECT a.customer_id, SUM(t.amount) AS spend
 FROM accounts a
 JOIN transactions t ON t.customer_id = a.customer_id
@@ -752,7 +752,7 @@ Dana's rule: "Every week ends with a row count you checked by hand."
 - **Cloud, DevOps, site reliability (SRE) and platform engineers** build and run the systems other engineers ship on: servers, networks, containers, pipelines, monitoring. **Security engineers** protect those systems and the software on them.
 - Both start from the same foundations: Linux, networking, one cloud, identity and access, and automation written as code.
 - The proof that matters most: **a system you can rebuild from a repository**, with a pipeline, monitoring and a runbook. "I set it up in the console once" is not proof.
-- Pure entry-level openings are fewer here than in software engineering at the time of writing (2026). Common routes in are graduate rotations, operations or support roles, and software roles that take on operational work.
+- Pure entry-level openings are often fewer here than in software engineering at the time of writing (2026). Common routes in are graduate rotations, operations or support roles, and software roles that take on operational work.
 - Biggest traps: collecting certifications with nothing running behind them and, for security, testing systems you have no permission to test.
 
 ## 🧭 Why it matters
@@ -799,7 +799,7 @@ A software role that takes on deployments, or an operations role where you autom
 | Operations | Metrics, logs, an alert, a runbook, a written incident review | Leading a major incident |
 | Security | Least privilege, secrets out of code, patching | Penetration testing for hire |
 
-**The platform study path.** The *Cloud & DevOps* course is being written now, so its links point to modules.
+**The platform study path.** The *Cloud & DevOps* course is being written now; its links follow its published module plan.
 
 | Stage | Skill | Where to learn it | Proof that shows it |
 |---|---|---|---|
@@ -946,7 +946,7 @@ Najm places Yousef in the graduate programme's platform track. Salem gives every
 
 </details>
 
-**4. Reem applies for a "DevOps engineer" role and finds the duties describe mostly manual server operations. What is the best response?**
+**4. Yousef finds a "DevOps engineer" ad whose duties describe mostly manual server operations. What is the best response?**
 
 - A. Ignore the duties and apply based on the title
 - B. Read the duties carefully, since titles vary, and decide whether the work matches her target and offers a route to automation
