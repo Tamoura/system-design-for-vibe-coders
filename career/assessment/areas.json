@@ -1,0 +1,90 @@
+[
+ {
+  "id": "m0",
+  "key": "0",
+  "lessons": [
+   "0.1",
+   "0.2",
+   "0.3"
+  ],
+  "en": "Orientation",
+  "ar": "التوجيه (Orientation)"
+ },
+ {
+  "id": "m1",
+  "key": "1",
+  "lessons": [
+   "1.1",
+   "1.2",
+   "1.3"
+  ],
+  "en": "The skills employers check",
+  "ar": "المهارات التي يفحصها أصحاب العمل (The skills employers check)"
+ },
+ {
+  "id": "m2",
+  "key": "2",
+  "lessons": [
+   "2.1",
+   "2.2",
+   "2.3",
+   "2.4"
+  ],
+  "en": "Role paths through the library",
+  "ar": "مسارات الأدوار عبر المكتبة (Role paths through the library)"
+ },
+ {
+  "id": "m3",
+  "key": "3",
+  "lessons": [
+   "3.1",
+   "3.2",
+   "3.3"
+  ],
+  "en": "Proof: the portfolio",
+  "ar": "الدليل: معرض الأعمال (Proof: the portfolio)"
+ },
+ {
+  "id": "m4",
+  "key": "4",
+  "lessons": [
+   "4.1",
+   "4.2",
+   "4.3"
+  ],
+  "en": "Getting seen",
+  "ar": "الوصول إلى الأنظار (Getting seen)"
+ },
+ {
+  "id": "m5",
+  "key": "5",
+  "lessons": [
+   "5.1",
+   "5.2",
+   "5.3"
+  ],
+  "en": "Interviews",
+  "ar": "المقابلات (Interviews)"
+ },
+ {
+  "id": "m6",
+  "key": "6",
+  "lessons": [
+   "6.1",
+   "6.2",
+   "6.3"
+  ],
+  "en": "Offer and the first 90 days",
+  "ar": "العرض والأيام التسعون الأولى (Offer and the first 90 days)"
+ },
+ {
+  "id": "m7",
+  "key": "7",
+  "lessons": [
+   "7.1",
+   "7.2"
+  ],
+  "en": "Hero: capstone and practice",
+  "ar": "المحترف: المشروع الختامي والتدريب (Hero: capstone and practice)"
+ }
+]
