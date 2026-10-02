@@ -443,7 +443,7 @@ If you use a cloud account, use your own free-tier account and **set a budget al
 - 🔴 Write a placement note in the PN-01 format for a service of your choice (for example a fictional Najm card-dispute portal), with the shared responsibility table, the reason for each managed-versus-self-run choice, and what would trigger a second region. *Done when:* a classmate can answer "what happens when one zone fails?" and "who patches the database?" from your note alone.
 
 ## ⚠️ Mistakes and traps
-- **Lifting the data centre layout as is.** One VM per role in one zone gives the cloud's bill with the data centre's fragility. Spread across zones and use managed services.
+- **Lifting the data centre layout as is.** One VM per role in one zone brings the data centre's fragility. Spread across zones; use managed services.
 - **"The provider handles security."** Only its part. Identity, configuration, network exposure and data are yours on every service model.
 - **Overlapping address ranges.** Choose cloud address ranges with the network team before building, or hybrid routing will fail later.
 - **Multi-region by reflex.** Start multi-zone; add a region when recovery targets or regulation require it.
@@ -480,7 +480,7 @@ If you use a cloud account, use your own free-tier account and **set a budget al
 
 <details><summary>Answer</summary>
 
-**A.** Write-once files accessed over HTTP are exactly what object storage is for. Block storage (B) ties them to one machine; a file share (C) adds cost and complexity; large files in the database (D) bloat backups and slow it down. (🟢 The essentials.)
+**A.** Write-once files fetched over HTTP are what object storage is for. Block storage (B) ties them to one machine; a file share (C) adds cost; files in the database (D) bloat it. (🟢 The essentials.)
 
 </details>
 
@@ -493,7 +493,7 @@ If you use a cloud account, use your own free-tier account and **set a budget al
 
 <details><summary>Answer</summary>
 
-**D.** Access and configuration stay with the customer on every service model. A is done by the provider on a managed service; B and C are always the provider's. (🟢 The essentials.)
+**D.** Access and configuration stay with the customer on every model. A is the provider's job on a managed service; B and C always are. (🟢 The essentials.)
 
 </details>
 

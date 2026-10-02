@@ -76,7 +76,7 @@ permissions:
 
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true  # a new push cancels the outdated run
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}  # cancel outdated PR runs, never main builds
 
 jobs:
   test:
@@ -103,7 +103,7 @@ jobs:
           cache-to: type=gha,mode=max
 ```
 
-Note the defaults: read-only permissions, a timeout on every job, and cancellation of outdated runs.
+Note the defaults: read-only permissions, a timeout on every job, and cancellation of outdated pull-request runs. Runs on `main` are never cancelled, because every merged commit must produce its artefact.
 
 **The test pyramid.** Not all tests cost the same. The pyramid, popularised by Mike Cohn, says to have many cheap tests at the bottom and few expensive ones at the top.
 
@@ -227,9 +227,9 @@ Use your own GitHub account and a public practice repository; never an employer'
 **1. Staging passed on Thursday, but on Friday the production deploy failed because the image behaved differently. The production job had rebuilt the image from the same commit. What change prevents this class of failure?**
 
 - A. Run the staging tests again inside the production job
-- B. Build the image once, push it, and deploy that same image by digest to every environment
+- B. Build once and deploy the same image by digest everywhere
 - C. Use the `latest` tag everywhere so all environments match
-- D. Add a manual approval before production
+- D. Add a manual approval step before every production deploy
 
 <details><summary>Answer</summary>
 
@@ -239,10 +239,10 @@ Use your own GitHub account and a public practice repository; never an employer'
 
 **2. The Najm Mobile API PR check takes 48 minutes, and 13 of them are end-to-end tests. What is the best first move?**
 
-- A. Delete the end-to-end tests
+- A. Delete the end-to-end tests, since unit tests cover the logic
 - B. Buy larger runners and keep everything the same
-- C. Run the end-to-end tests after merge, against the dev environment, and make them gate promotion instead of merging
-- D. Ask developers to open fewer pull requests
+- C. Run end-to-end tests after the merge, gating promotion instead
+- D. Ask developers to open fewer, larger pull requests
 
 <details><summary>Answer</summary>
 
@@ -252,10 +252,10 @@ Use your own GitHub account and a public practice repository; never an employer'
 
 **3. Which statement best describes continuous delivery?**
 
-- A. Every change that passes the pipeline is releasable at any time, and a release decision puts it live
+- A. Every passing change is releasable; a release decision puts it live
 - B. Every change goes to production automatically with no human step
-- C. Developers merge to main at least once a week
-- D. The pipeline runs once a night on all changes
+- C. Developers merge their branches to main at least once a week
+- D. The pipeline builds and tests all changes once a night
 
 <details><summary>Answer</summary>
 
@@ -265,14 +265,14 @@ Use your own GitHub account and a public practice repository; never an employer'
 
 **4. A test in the Payments service fails about one run in ten and passes when re-run on the same commit. What does Najm's policy require?**
 
-- A. Enable automatic retries on the whole pipeline
-- B. Delete the test immediately
-- C. Ignore it, since it usually passes
-- D. Quarantine it in a non-blocking job with an owner and a ticket, and fix or remove it within the agreed time
+- A. Enable automatic retries on the whole pipeline so merges are not blocked
+- B. Delete the test immediately and rely on the remaining suite
+- C. Leave it blocking, and re-run the pipeline whenever it fails
+- D. Quarantine it in a non-blocking job, with an owner and a deadline
 
 <details><summary>Answer</summary>
 
-**D.** Quarantine keeps the merge signal trustworthy while someone finds the cause, which may be a real race condition. A hides problems; B may delete useful coverage without understanding it. (🟡 Going deeper.)
+**D.** Quarantine keeps the merge signal trustworthy while someone finds the cause, which may be a real race condition. A hides problems; B may delete useful coverage without understanding it; C teaches people to ignore red builds. (🟡 Going deeper.)
 
 </details>
 

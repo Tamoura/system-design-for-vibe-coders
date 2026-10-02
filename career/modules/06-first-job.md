@@ -47,7 +47,7 @@ Aisha, Najm's talent acquisition lead, has seen this many times. Graduates who c
 
 **Researching the range.** You cannot judge an offer without knowing what similar roles pay. At the time of writing (2026), good sources are:
 - **Recruiters**, including the employer's own: "What is the range for this role?"
-- **Job adverts that publish ranges**, less common in the GCC but not rare.
+- **Job adverts that publish ranges**, less common in the GCC, though some employers and platforms show them.
 - **Regional salary guides** from recruitment firms; note the year and method.
 - **Peers** one or two years ahead of you, your university career centre and alumni networks (lesson 4.2).
 - **Crowd-sourced sites** such as Levels.fyi or Glassdoor. GCC entry-level data there is thin; treat it as a rough signal.
@@ -85,7 +85,7 @@ flowchart TD
 Weak:
 > Hi, thanks for the offer. I was hoping for more money. Can you do better? I have other offers.
 
-Strong:
+Strong (Yousef, replying to Najm's platform-track offer):
 > Thank you for the offer. I'm excited about the platform team and about working with Salem. Having reviewed the package, I'd like to ask about two things. First, my research with recruiters and peers suggests a range for similar junior roles in Doha that sits slightly above the base in the offer. Is there flexibility there? Second, if the base is fixed by the programme band, would you consider support for an associate-level cloud certification in the first year? I can give you my answer by Thursday.
 
 The strong version shows interest, asks specifically, gives a reason, offers an alternative and sets a timeline, without threats or inventions.
@@ -181,23 +181,23 @@ Aisha shares the **offer comparison sheet** Najm's graduate team gives every can
 
 **1. Omar receives a verbal offer from Sadeem Pay with a 48-hour deadline. What should he do first?**
 
-- A. Accept immediately so he does not lose it
-- B. Ask for the offer in writing with the full package and contract terms, and ask whether the deadline can be extended
-- C. Tell Najm he has a better offer and ask them to beat it
-- D. Ignore the deadline and reply next week
+- A. Accept at once on the call, then ask for the written details afterwards
+- B. Ask for the full offer in writing and whether the deadline can move
+- C. Tell Najm he has a better offer and ask them to beat it today
+- D. Let the deadline pass and reply next week once he has thought
 
 <details><summary>Answer</summary>
 
-**B.** He cannot compare a verbal number with a written package, and a polite request for time is normal. A risks accepting unknown terms; C makes a claim he cannot yet support with a written offer. (🟢 The essentials; 🟡 Going deeper.)
+**B.** He cannot compare a verbal number with a written package, and a polite request for time is normal. A commits him to terms he has not seen; C makes a claim he cannot yet support with a written offer; D risks losing an offer he may want without even asking for time. (🟢 The essentials; 🟡 Going deeper.)
 
 </details>
 
 **2. Najm's graduate programme pays every graduate in the cohort the same band. Yousef wants a better package. What is the most effective approach?**
 
-- A. Ask, once and politely, whether any part of the package is flexible, and suggest an alternative such as certification support or a later start date
-- B. Insist on a higher base salary and refuse to sign until it is raised
-- C. Claim he has a higher offer from a multinational
-- D. Accept without asking anything, because graduates cannot negotiate
+- A. Ask once, politely, about flexibility, and suggest an alternative like certification support
+- B. Insist on a higher base and refuse to sign until the band is raised for him
+- C. Mention a higher offer from a multinational that he does not actually have
+- D. Accept without asking anything, because graduates are not allowed to negotiate
 
 <details><summary>Answer</summary>
 
@@ -207,40 +207,40 @@ Aisha shares the **offer comparison sheet** Najm's graduate team gives every can
 
 **3. A startup offers Reem options with four-year vesting and a one-year cliff. How should she value them when comparing against her floor?**
 
-- A. At the value the founder estimates
-- B. At the strike price multiplied by the number of options
-- C. At the company's last funding valuation divided by her share
-- D. At zero for budgeting, treating any future value as a bonus, after checking the terms
+- A. At whatever value the founder estimated on the offer call
+- B. At the strike price multiplied by the number of options granted
+- C. At the last funding valuation multiplied by her percentage stake
+- D. At zero for budgeting, after checking vesting, strike price and dilution
 
 <details><summary>Answer</summary>
 
-**D.** Early-stage options usually cannot be sold for years, may be diluted and may never be worth anything. A and C rely on estimates she cannot use to pay rent; B is the cost of buying the shares, not their value. (🟡 Going deeper.)
+**D.** Any future value is a bonus. Early-stage options usually cannot be sold for years, may be diluted and may never be worth anything. A and C rely on estimates she cannot use to pay rent; B is the cost of buying the shares, not their value. (🟡 Going deeper.)
 
 </details>
 
 **4. Mohammed's contract assigns to the employer "all inventions made during the term of employment". He maintains an open-source library from his bootcamp days. What should he do?**
 
-- A. Sign it; such clauses are never enforced
-- B. Delete his open-source library before starting
-- C. Ask for a written carve-out listing his existing and personal projects that do not use company time, equipment or information
-- D. Refuse the offer
+- A. Sign as written, since clauses like this are never enforced in practice
+- B. Delete or transfer his open-source library before his first day
+- C. Ask for a written carve-out listing his existing personal projects
+- D. Turn down the offer, because no employer will change the wording
 
 <details><summary>Answer</summary>
 
-**C.** A carve-out protects his portfolio and is a common, reasonable request. A is an assumption he cannot rely on; B and D are unnecessary losses. (🔴 Expert view.)
+**C.** A carve-out covering existing and personal projects that use no company time, equipment or information protects his portfolio and is a common, reasonable request. A is an assumption he cannot rely on; B and D are unnecessary losses. (🔴 Expert view.)
 
 </details>
 
-**5. Huda accepts the regional telecom's offer in writing. Two weeks later Najm's data track makes her an offer. Which statement best reflects this lesson?**
+**5. Huda accepts the regional telecom's offer in writing. Two weeks later Najm's data track makes her an offer. Which response best reflects this lesson?**
 
-- A. Withdrawing after acceptance causes real harm, so she should do it only for serious reasons, early, honestly and directly; once she had accepted, she should already have told Najm she was no longer in process
-- B. She can accept both and decide on her start date
-- C. She should ignore the telecom and simply not turn up
-- D. Accepting an offer in writing creates no obligations of any kind
+- A. Accept Najm's offer too, then pick whichever start date suits her best
+- B. Accept Najm and simply not turn up at the telecom on her first day
+- C. Treat her written acceptance as carrying no obligations until she starts
+- D. Honour the acceptance unless the reason is serious; if so, tell the telecom early, by phone then email
 
 <details><summary>Answer</summary>
 
-**A.** After acceptance, the other employer stops recruiting and starts preparing for you; integrity means telling other employers promptly and withdrawing only seriously and openly. B and C damage trust and reputation; D is false. (🔴 Expert view.)
+**D.** After acceptance, the other employer stops recruiting and starts preparing for you, so withdrawing is only for serious reasons, done early and honestly. She should also have told Najm, as soon as she accepted, that she was no longer in process. A and B damage trust and reputation; C is false. (🔴 Expert view.)
 
 </details>
 
@@ -305,7 +305,7 @@ Strong:
 > **What:** Adds `preferred_language` to the `/support/profile` response so the assistant can reply in Arabic or English.
 > **Why:** Ticket SUP-412. The assistant currently guesses from the browser locale.
 > **How:** New nullable column with a migration; defaults to null; the API returns it only when set.
-> **Tested:** Unit tests for the serializer; ran the migration on a local database copy; called the endpoint manually (screenshot attached).
+> **Tested:** Unit tests for the serializer; ran the migration on a local test database with synthetic data; called the endpoint manually (screenshot attached).
 > **AI assistance:** Drafted the migration with the approved coding assistant; I reviewed every line and wrote the tests myself.
 > **Risk:** Low; additive field, no existing clients break.
 
@@ -422,10 +422,10 @@ Najm's **PR checklist for graduates** (pinned in the squad's channel):
 
 **1. In her second week, Reem wants help from an AI coding assistant on an internal API. What should she do?**
 
-- A. Use her personal AI account, since it is more capable
-- B. Remove the comments from the code first, then paste it into any tool
-- C. Use only the AI tool the bank has approved, within its data rules, and ask if the policy is unclear
-- D. Avoid AI tools completely for her first year
+- A. Use her personal AI account, since its model is more capable
+- B. Strip the comments from the code, then paste it into any tool
+- C. Use the bank's approved AI tool, and ask if the policy is unclear
+- D. Avoid every AI tool completely until her first year is finished
 
 <details><summary>Answer</summary>
 
@@ -436,9 +436,9 @@ Najm's **PR checklist for graduates** (pinned in the squad's channel):
 **2. Which is the best first pull request for a new graduate?**
 
 - A. A 1,200-line refactor of a module that "could be cleaner"
-- B. A fix to the setup guide they just followed, or a small ticket chosen by their manager
-- C. Upgrading every dependency in the repository
-- D. A new feature they think users would like, built without a ticket
+- B. A fix to the setup guide they have just followed
+- C. Upgrading every dependency in the repository at once
+- D. A new feature users might like, built without a ticket
 
 <details><summary>Answer</summary>
 
@@ -448,23 +448,23 @@ Najm's **PR checklist for graduates** (pinned in the squad's channel):
 
 **3. Omar has been stuck on a failing local test for 40 minutes. Which message is best?**
 
-- A. "Tests don't work. Help?"
-- B. A private message to Tariq: "Are you free? I have a question."
-- C. Nothing yet; he will keep trying until the end of the week
-- D. In the team channel: his goal, the repository and branch, what he tried, the exact error as text, and a specific question
+- A. In the team channel: "The integration tests are broken on my laptop again. Can anyone help?"
+- B. A private message to Tariq: "Are you free at some point today? I have a quick question."
+- C. Nothing yet; he will keep trying alone until the end of the week
+- D. In the team channel: goal, repo and branch, what he tried, the exact error, a specific question
 
 <details><summary>Answer</summary>
 
-**D.** It follows the five-part template and is posted where the answer helps others. A gives no context; B forces a second round trip; C is the silence that costs teams most. (🟢 The essentials.)
+**D.** It follows the five-part template and is posted where the answer helps others. A is in the right place but gives no context; B forces a second round trip and helps nobody else; C is the silence that costs teams most. (🟢 The essentials.)
 
 </details>
 
 **4. On day 50, Huda runs a query that slows a shared reporting database for an hour. What should she do?**
 
-- A. Report it immediately with what she ran and what she sees, help fix it, and take part in the blameless review
-- B. Cancel the query and say nothing, since it has stopped
-- C. Wait to see if anyone notices
-- D. Blame the database for not having enough capacity
+- A. Report it at once with what she ran, help fix it, and join the blameless review
+- B. Cancel the query and say nothing, since the slowdown has already stopped
+- C. Wait quietly to see whether anyone on the team notices the slowdown
+- D. Tell the team the database is under-sized and should have coped with it
 
 <details><summary>Answer</summary>
 
@@ -474,10 +474,10 @@ Najm's **PR checklist for graduates** (pinned in the squad's channel):
 
 **5. Which question should a new graduate ask their manager in the first week?**
 
-- A. "When will I be promoted?"
+- A. "How soon after probation can I expect my first promotion?"
 - B. "What does success look like for me at 30, 60 and 90 days?"
-- C. "Can I skip the mandatory training?"
-- D. "Can I have production access today?"
+- C. "Which of the mandatory training modules can I safely skip?"
+- D. "Could I have production access today so I can move faster?"
 
 <details><summary>Answer</summary>
 
@@ -509,7 +509,7 @@ Najm's **PR checklist for graduates** (pinned in the squad's channel):
 - Biggest trap: chasing courses, certificates or a title change instead of bigger, visible, shipped work.
 
 ## 🧭 Why it matters
-Yousef is nine months into Najm's platform team under Salem. His mid-year review says he is "technically strong" and the fastest in the team at Linux and networking problems. It also says he "surprises people". He changed a shared build pipeline on a Friday without telling the two squads that depend on it, and a release was delayed. He fixed it quickly, but two team leads now ask Salem to check his changes. Yousef is hurt. He thought the review would talk about promotion.
+Yousef is nine months into Najm's platform team under Salem. His mid-year review says he is "technically strong" and the fastest in the team at Linux and networking problems. It also says he "surprises people". He changed a shared build pipeline on a Thursday afternoon, the last working day of the week, without telling the two squads that depend on it, and a release was delayed. He fixed it quickly, but two team leads now ask Salem to check his changes. Yousef is hurt. He thought the review would talk about promotion.
 
 At the same time, Omar asks Khalid directly: "What do I need to do to be promoted?" Khalid opens Najm's engineering ladder and points to one line under the mid-level description: "Breaks down ambiguous problems, keeps stakeholders informed, and owns outcomes after release." Omar has never been given an ambiguous problem, because he has never asked for one.
 
@@ -537,7 +537,7 @@ How long the move takes varies widely by employer, role and person. Do not judge
 - **Receive without defending.** Say thank you. Ask a clarifying question if needed. Do not explain why they are wrong, at least not in that moment.
 - **Act and show it.** Change one behaviour, then mention it later: "After your feedback I now post pipeline changes in both squads' channels two days ahead. Is that working?"
 
-A simple structure for giving and understanding feedback is **SBI**, from the Center for Creative Leadership: **Situation** (when and where), **Behaviour** (what was observed, not judgements about character), **Impact** (what it caused). Yousef's feedback in SBI form: "On Friday (S) you changed the shared pipeline without notice (B), and the payments squad's release slipped by a day (I)." Put like that, it is about an action he can change, not about who he is.
+A simple structure for giving and understanding feedback is **SBI**, from the Center for Creative Leadership: **Situation** (when and where), **Behaviour** (what was observed, not judgements about character), **Impact** (what it caused). Yousef's feedback in SBI form: "On Thursday afternoon (S) you changed the shared pipeline without notice (B), and the payments squad's release slipped by a day (I)." Put like that, it is about an action he can change, not about who he is.
 
 **Make your work visible.** Your manager does not see everything you do. Keep the **brag document** you started in lesson 6.2: shipped work, problems solved, people helped, things learned, with links. Before every review, turn it into a one-page summary organised by the ladder's dimensions.
 
@@ -649,10 +649,10 @@ After the review, Yousef and Salem build his **growth plan** against Najm's engi
 
 **1. Which description best marks the move from junior to mid-level?**
 
-- A. Writing code faster than anyone else on the team
-- B. Holding more certifications than other juniors
-- C. Being given a problem rather than a task, breaking it down, shipping it, keeping people informed and owning the result
-- D. Having worked at the company for two years
+- A. Writing code faster than anyone else on the team, with fewer bugs
+- B. Holding more cloud and security certifications than the other juniors
+- C. Being given a problem, not a task, and owning it through to the result
+- D. Having worked at the same company for at least two full years
 
 <details><summary>Answer</summary>
 
@@ -663,9 +663,9 @@ After the review, Yousef and Salem build his **growth plan** against Najm's engi
 **2. Yousef's review says he "surprises people" after he changed a shared pipeline without notice. What is the best response?**
 
 - A. Explain to Salem that the change was technically correct, so the feedback is unfair
-- B. Thank Salem, clarify the impact, adopt a change-notice habit, and propose a team rule so the problem cannot recur
-- C. Stop making pipeline changes entirely
-- D. Ask for a transfer to another team
+- B. Thank Salem, adopt a change-notice habit and propose a team rule to prevent a repeat
+- C. Stop making any changes to shared pipelines, so that nobody is surprised again
+- D. Ask Salem for a transfer to a team where his speed will be better appreciated
 
 <details><summary>Answer</summary>
 
@@ -675,10 +675,10 @@ After the review, Yousef and Salem build his **growth plan** against Najm's engi
 
 **3. Omar asks how to show he is ready for promotion. Which is most useful?**
 
-- A. A brag document organised by the ladder's dimensions, with links to shipped work, design notes and feedback acted on
-- B. A list of online courses he has completed
-- C. A message to the head of engineering asking for a promotion
-- D. Working late every evening so people notice his effort
+- A. A brag document mapped to the ladder, linking shipped work and feedback acted on
+- B. A list of every online course and certificate he has completed this year
+- C. A direct message to the head of engineering asking to be promoted this cycle
+- D. Working late every evening for a month so that people notice his effort
 
 <details><summary>Answer</summary>
 
@@ -688,10 +688,10 @@ After the review, Yousef and Salem build his **growth plan** against Najm's engi
 
 **4. Huda wants to learn data engineering in more depth. Which goal fits this lesson best?**
 
-- A. "Learn data engineering this year"
-- B. "Watch every video in a data engineering course"
-- C. "Get three cloud certifications by June"
-- D. "Move the weekly churn report from a notebook to a scheduled, tested pipeline with monitoring, by June"
+- A. "Learn data engineering properly at some point this year"
+- B. "Watch every video in a data engineering course by the end of June"
+- C. "Pass three cloud data certifications before the June review cycle"
+- D. "Move the weekly churn report from a notebook to a tested, monitored pipeline by June"
 
 <details><summary>Answer</summary>
 
@@ -699,16 +699,16 @@ After the review, Yousef and Salem build his **growth plan** against Najm's engi
 
 </details>
 
-**5. Feedback to Mohammed says: "On Tuesday's release (S) you merged without waiting for the second review (B), and an untested migration reached staging (I)." What model is this, and why is it useful?**
+**5. Feedback to Mohammed says: "On Tuesday's release you merged without waiting for the second review, and an untested migration reached staging." Which model is this, and why is it useful?**
 
-- A. STAR; it tells a story about a past achievement
-- B. SBI; it describes a specific situation, an observable behaviour and its impact, so it is about an action he can change rather than about his character
-- C. BATNA; it describes his alternatives
+- A. STAR; it structures a story about a past achievement for an interview
+- B. SBI; it names a situation, an observable behaviour and its impact
+- C. BATNA; it sets out his best alternatives if the situation goes badly
 - D. A blameless postmortem; it removes any individual responsibility
 
 <details><summary>Answer</summary>
 
-**B.** SBI keeps feedback concrete and changeable. A is for interview answers (lesson 5.1); C is a negotiation concept (lesson 6.1); D is an incident review that fixes conditions, and it is not a way to frame one-to-one feedback. (🟢 The essentials.)
+**B.** SBI keeps feedback concrete and changeable: it is about an action he can change, not about his character. A is for interview answers (lesson 5.1); C is a negotiation concept (lesson 6.1); D is an incident review that fixes conditions, and it is not a way to frame one-to-one feedback. (🟢 The essentials.)
 
 </details>
 

@@ -428,7 +428,7 @@ Match projects to the role: a pipeline with backfills and CDC for data engineeri
 
 ### 🔴 Expert view
 
-**What AI assistants change, and what they do not.** At the time of writing (2026), AI coding assistants and text-to-SQL tools draft queries, dbt models and pipeline code quickly. This shifts the junior job from typing SQL to **verifying it**: checking grain, joins, filters and definitions, and testing the result against something independent. A model that writes a plausible NPL query does not know that Najm's definition excludes a product, or that the value date matters. The data professional who knows the business definitions, writes tests and reconciles numbers becomes more valuable, not less. In interviews, if AI tools are allowed, show that you review their output critically; reviewing flawed generated SQL is itself becoming a common exercise.
+**What AI assistants change, and what they do not.** At the time of writing (2026), AI assistants and text-to-SQL tools draft queries, dbt models and pipeline code quickly. The junior job shifts from typing SQL to **verifying it**: checking grain, joins, filters and definitions, and testing the result against something independent. A plausible generated NPL query does not know that Najm's definition excludes a product or that the value date matters. People who know the definitions, write tests and reconcile numbers become more valuable, not less. Where AI tools are allowed in interviews, show that you review their output critically.
 
 **From junior to senior.** The ladder is mostly about scope and judgement, not tools:
 
@@ -439,21 +439,21 @@ Match projects to the role: a pipeline with backfills and CDC for data engineeri
 | Senior | Several products, or a hard one | Sets standards such as contracts or testing; mentors; reduces incidents |
 | Staff or principal | A platform or a domain across teams | Shapes architecture and governance; aligns business owners on definitions |
 
-**Domain knowledge compounds.** Engineers who understand credit risk, payments or regulatory reporting make better decisions than those who only know the tools. At Najm, Huda's most valuable year-one skill was not Kafka; it was knowing what a value date is. Spend deliberate time with the business teams you serve.
+**Domain knowledge compounds.** Huda's most valuable year-one skill was not Kafka; it was knowing what a value date is. Spend deliberate time with the business teams you serve.
 
-**The GCC market.** Banks, government entities, energy companies and telecoms in the Gulf run large data programmes and graduate schemes. Workforce nationalisation programmes, such as Qatarization in Qatar and Emiratisation in the UAE, shape hiring in many organisations. Regulated employers value awareness of data protection law, such as Qatar's PDPPL (Law No. 13 of 2016), of data residency expectations and of governance. Communicating clearly in both Arabic and English is an advantage. Rules and programmes change, so check current details with employers and official sources.
+**The GCC market.** Gulf banks, government entities, energy companies and telecoms run large data programmes and graduate schemes. Workforce nationalisation programmes, such as Qatarization and Emiratisation, shape hiring. Regulated employers value awareness of data protection law, such as Qatar's PDPPL (Law No. 13 of 2016), data residency and governance, and clear communication in Arabic and English. Programmes change, so check current details with employers and official sources.
 
-**A learning habit you can keep.** Pick one deep skill a quarter and build something with it. Read the documentation and release notes of the two or three tools you use daily, and the post-incident write-ups that companies publish. Keep a running "brag document" of what you shipped and what it changed; it makes reviews, promotions and interviews easier. If your interests move towards AI products or security, the library has paths for both: [*AI Product Management: Zero to Hero*, lesson 10.2 — The AI PM career: interviews, portfolio and growth](../aipm/index.html#/10.2) and [*Secure AI & Application Security*, lesson 12.2 — The security career: roles, certifications and portfolio](../secai/index.html#/12.2).
+**A learning habit you can keep.** Pick one deep skill a quarter and build something with it. Read the release notes of the tools you use daily and the post-incident write-ups companies publish. Keep a "brag document" of what you shipped and what it changed. If your interests move towards AI products or security, see [*AI Product Management: Zero to Hero*, lesson 10.2 — The AI PM career: interviews, portfolio and growth](../aipm/index.html#/10.2) and [*Secure AI & Application Security*, lesson 12.2 — The security career: roles, certifications and portfolio](../secai/index.html#/12.2).
 
 ## 🧰 The toolkit
 | Tool, pattern or standard | What it is and does | When to reach for it |
 |---|---|---|
-| **STAR** (Situation, Task, Action, Result) | A structure for behavioural answers that ends in a concrete result | Preparing four or five stories before any interview loop |
-| **Portfolio repository** | A runnable project with README, tests, dbt docs and a problem write-up | Proving you can build and verify, not just list tools |
-| **Public open data** | Openly licensed datasets from governments, cities and public bodies | Portfolio projects and practice without personal data |
-| **DuckDB** | An in-process analytical database that runs anywhere | Laptop-sized portfolio builds and SQL practice |
-| **Mock interview** | A timed practice round with a peer playing interviewer | Live SQL, modelling and metrics cases before the real loop |
-| **Brag document** | A running log of what you shipped, decided and changed | Reviews, promotions, CV updates and STAR stories |
+| **STAR** (Situation, Task, Action, Result) | A structure for behavioural answers ending in a concrete result | Preparing stories before any loop |
+| **Portfolio repository** | A runnable project with README, tests, dbt docs and a problem write-up | Proving you can build and verify |
+| **Public open data** | Openly licensed datasets from governments, cities and public bodies | Practice without personal data |
+| **DuckDB** | An in-process analytical database that runs anywhere | Laptop-sized portfolio builds |
+| **Mock interview** | A timed practice round with a peer as interviewer | Before the real loop |
+| **Brag document** | A running log of what you shipped and changed | Reviews, promotions and CVs |
 | **Cloud data certifications** (AWS, Google Cloud, Microsoft, Databricks, Snowflake, dbt Labs) | Vendor exams on their data platforms; names change, so check | Passing first filters in markets that ask for them |
 
 ## 🏛️ In practice at Najm Bank

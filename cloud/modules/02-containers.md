@@ -208,7 +208,7 @@ Work locally with Docker or a compatible tool. Push only to a registry you own, 
 ## ⚠️ Mistakes and traps
 - **Using `latest` or other moving tags in production.** Two pulls of the same name can give different code. Deploy by digest, and use immutable tags in the release repository.
 - **Secrets in layers.** `COPY . .` with a `.env` file, or `ENV DB_PASSWORD=…`, leaks a credential into every copy of the image. Use `.dockerignore`, build secret mounts and runtime secrets (lesson 2.3).
-- **Rebuilding per environment.** A "production build" of the same commit is a different artefact. Build once and promote the digest.
+- **Rebuilding per environment.** A "production build" is a different artefact. Promote the digest.
 - **Running as root "because it's in a container".** Containers share the host kernel. Set a numeric non-root `USER`.
 - **Scanning once.** New vulnerabilities appear in unchanged images. Rescan running images and rebuild on a schedule.
 
@@ -243,7 +243,7 @@ Work locally with Docker or a compatible tool. Push only to a registry you own, 
 
 <details><summary>Answer</summary>
 
-**D.** A digest names exact bytes and cannot be moved, so the environment runs what was promoted. A relies on people; B still races; C just moves the problem to a new mutable tag. (🟢 The essentials.)
+**D.** A digest names exact bytes and cannot be moved. A relies on people, B still races, and C just creates another mutable tag. (🟢 The essentials.)
 
 </details>
 
@@ -256,7 +256,7 @@ Work locally with Docker or a compatible tool. Push only to a registry you own, 
 
 <details><summary>Answer</summary>
 
-**A.** The cache is invalidated from the first changed step onwards; putting rarely changed dependency files first lets the expensive install layer be reused. B makes builds less predictable, C treats the symptom, and D removes caching altogether. (🟢 The essentials.)
+**A.** The cache breaks from the first changed step onwards, so stable dependency files go first. B makes builds unpredictable, C treats the symptom, and D defeats caching. (🟢 The essentials.)
 
 </details>
 
@@ -626,7 +626,7 @@ Use a local cluster: install kind or k3d, and create a cluster with `kind create
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 2.2* · *Phase: Deploy, Operate*
 
 ## ⚡ In 60 seconds
-- A manifest that "runs" is not production-ready. Production needs **configuration kept out of the image**, **secrets handled safely**, **health probes**, **resource requests and limits**, **autoscaling**, **graceful shutdown** and a **security context**.
+- A manifest that "runs" is not production-ready. Production adds **external configuration**, **safe secrets**, **health probes**, **requests and limits**, **autoscaling**, **graceful shutdown** and a **security context**.
 - **ConfigMaps** hold ordinary settings; **Secrets** hold sensitive ones. A Kubernetes Secret is only **base64-encoded, not encrypted** by default: turn on encryption at rest, limit who can read it, and prefer syncing from an external secrets manager.
 - **Readiness** decides whether a pod gets traffic; **liveness** decides whether it gets restarted; **startup** protects slow starters. Liveness must check only the process itself, never a database or another service.
 - **Requests** reserve capacity and drive scheduling and autoscaling; **limits** cap usage (CPU over the limit is throttled, memory over the limit is killed).
@@ -803,7 +803,7 @@ spec:
       app.kubernetes.io/name: mobile-api
 ```
 
-It does not protect against node crashes, and a PDB that allows zero disruptions blocks node upgrades forever.
+It does not cover node crashes, and a PDB allowing zero disruptions blocks node upgrades.
 
 ### 🔴 Expert view
 
@@ -936,7 +936,7 @@ Use a local kind or k3d cluster. For autoscaling, install metrics-server (on kin
 
 <details><summary>Answer</summary>
 
-**A.** Old pods still receive requests briefly while they are removed from endpoints; a graceful drain fixes that. B makes rollouts send traffic to pods that are not ready, C addresses a different failure, and D only keeps more old ReplicaSets. (🟡 Going deeper.)
+**A.** Old pods still receive requests briefly while leaving the endpoints; a graceful drain fixes that. B sends traffic to unready pods, C addresses a different failure, and D only keeps more old ReplicaSets. (🟡 Going deeper.)
 
 </details>
 
@@ -949,7 +949,7 @@ Use a local kind or k3d cluster. For autoscaling, install metrics-server (on kin
 
 <details><summary>Answer</summary>
 
-**C.** Autoscaling must respect downstream limits; more pods only add connections. A makes the overload permanent, B does not change connection count, and D would add a restart storm to the overload. (🟡 Going deeper.)
+**C.** Autoscaling must respect downstream limits. A makes the overload permanent, B does not change connection count, and D adds a restart storm. (🟡 Going deeper.)
 
 </details>
 

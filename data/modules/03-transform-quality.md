@@ -37,7 +37,7 @@ Faisal asks for one thing: "Every number we publish comes from code we can read,
 | Automated tests | The build fails when data breaks an assumption, such as duplicate keys |
 | One dependency graph | Each model is defined once and reused, so logic is not copied |
 
-**dbt in one paragraph.** dbt (dbt Core is the open-source command-line tool, maintained by dbt Labs) compiles and runs SQL `SELECT` statements against your warehouse. You do not write `CREATE TABLE`; you write the `SELECT`, and dbt wraps it in the right DDL for its **materialisation** (how the result is stored: `view`, `table`, `incremental` or `ephemeral`). Instead of hard-coding table names, you call `{{ ref('model_name') }}` for another model and `{{ source('source_name', 'table') }}` for a raw table. From those calls dbt builds a **DAG** (directed acyclic graph) of dependencies and runs models in the right order. dbt works with PostgreSQL, DuckDB (through the community `dbt-duckdb` adapter), and managed warehouses such as Snowflake, BigQuery, Databricks and Amazon Redshift through adapters.
+**dbt in one paragraph.** dbt (dbt Core is the open-source command-line tool, maintained by dbt Labs) compiles and runs SQL `SELECT` statements against your warehouse. You do not write `CREATE TABLE`; you write the `SELECT`, and dbt wraps it in the right DDL for its **materialisation** (how the result is stored: `view`, `table`, `incremental` or `ephemeral`). Instead of hard-coding table names, you call `{{ ref('model_name') }}` for another model and `{{ source('source_name', 'table') }}` for a raw table. From those calls dbt builds a **DAG** (directed acyclic graph) of dependencies and runs models in the right order. Adapters connect dbt to PostgreSQL, DuckDB (the community `dbt-duckdb` adapter), Snowflake, BigQuery, Databricks, Amazon Redshift and others.
 
 **The layers.** Najm follows the structure dbt Labs recommends in its project-structure guide. Each layer has one job:
 
@@ -91,7 +91,7 @@ from deduplicated
 where rn = 1
 ```
 
-**Tests next to the code.** In a YAML file beside the model, you declare **generic data tests**. dbt ships four: `unique`, `not_null`, `accepted_values` and `relationships` (every value must exist in another model, like a foreign key). Since dbt 1.8 the key is `data_tests:`; the older `tests:` still works. Newer releases (1.10 onward) prefer test parameters such as `values` nested under an `arguments:` key and warn about the form below, so check the docs for your version.
+**Tests next to the code.** In a YAML file beside the model, you declare **generic data tests**. dbt ships four: `unique`, `not_null`, `accepted_values` and `relationships` (every value must exist in another model, like a foreign key). Since dbt 1.8 the key is `data_tests:`; the older `tests:` still works. From 1.10, parameters such as `values` are preferably nested under `arguments:`.
 
 ```yaml
 # models/staging/core/_core__models.yml
@@ -140,7 +140,7 @@ join {{ ref('stg_core__accounts') }} a using (account_id)
 group by a.customer_id
 ```
 
-Now `dim_customer`, the retail dashboard and the finance report all read `is_active_90d`. If the business changes the definition, one pull request changes it everywhere, and the review shows exactly what changed.
+Now `dim_customer`, the retail dashboard and the finance report all read `is_active_90d`. If the definition changes, one reviewed pull request changes it everywhere.
 
 **Sources and freshness.** Declaring sources in YAML does more than name tables. You can add a freshness check, so `dbt source freshness` warns when ingestion has stalled:
 
@@ -159,7 +159,7 @@ sources:
       - name: accounts
 ```
 
-The exact placement of these keys has moved between dbt versions (newer releases prefer them under `config:`), so check the documentation for your version.
+Newer dbt releases prefer these keys under `config:`; check your version's docs.
 
 **Snapshots for history.** The core banking `customers` table is overwritten in place: when a customer moves from Doha to Dubai, the old city is gone. A **dbt snapshot** records each change as a new row with validity dates, which is a slowly changing dimension Type 2 (1.2):
 
@@ -197,7 +197,7 @@ unit_tests:
         - {customer_id: 'C1', is_active_90d: false}
 ```
 
-(A real version would pass "today" in as a variable rather than use `current_date`, so the result does not change as time passes: logic that depends on the clock is hard to test.)
+(A real version would pass "today" in as a variable instead of using `current_date`; logic that depends on the clock is hard to test.)
 
 **Documentation and lineage.** `dbt docs generate` turns every `description:` and the DAG into a browsable site. That lineage lets you answer "if the card feed breaks, which dashboards are wrong?" in minutes (6.1).
 
@@ -291,7 +291,7 @@ Use synthetic data only. Generate fake customers, accounts and transactions with
 - **Copying business logic into many queries.** Five copies of "active customer" become five numbers. Define it once in an intermediate or mart model and `ref()` it.
 - **Hard-coding table names.** `from analytics.dim_customer` breaks environments and lineage. Always use `ref()` and `source()`.
 - **No test on the grain.** A duplicate key doubles every total downstream with no error. Test the primary key of every model, first.
-- **Tests nobody reads.** Hundreds of warnings that never fail train people to ignore them. Fewer, meaningful tests; warn only when someone will act.
+- **Tests nobody reads.** Hundreds of never-failing warnings train people to ignore them; warn only when someone will act.
 - **Building in production by hand.** Running models from a laptop against production bypasses review. Develop in your own schema; production runs only from `main` via the orchestrator.
 
 ## 🧾 Recap
@@ -700,7 +700,7 @@ None of these were bugs: every query returned the right answer. They were simply
 
 ### 🟢 The essentials
 
-**Why scanned data is the key number.** Analytical engines (1.3) store data in **columnar** form: each column's values are stored together, often in files such as Parquet. A query that needs three of forty columns reads only those three. The work an engine does is dominated by how many bytes and rows it reads, and so is the bill. Managed warehouses charge in different ways (BigQuery's on-demand pricing is based on bytes processed; Snowflake and Databricks charge for compute time), but in both models, reading less means paying less. Check your provider's current pricing pages for numbers; they change.
+**Why scanned data is the key number.** Analytical engines (1.3) store data in **columnar** form: each column's values are stored together, often in files such as Parquet. A query that needs three of forty columns reads only those three. The work an engine does is dominated by how many bytes and rows it reads, and so is the bill. Managed warehouses charge in different ways (BigQuery's on-demand pricing is based on bytes processed; Snowflake and Databricks charge for compute time), but in both models, reading less means paying less. Check current pricing pages; they change.
 
 Three ways to read less:
 1. **Read fewer columns.** Never `select *` in production models or dashboards.
@@ -875,7 +875,7 @@ Huda and Lina write a **performance and cost review** for the three costly workl
 | Columns | No `select *` in models or dashboards |
 | Cost tags | Jobs tagged with team and model; owner named |
 
-The size threshold and lookback window are Najm's own choices, set from measured data, not universal numbers.
+Thresholds and lookback windows are Najm's own choices, set from measured data.
 
 ## 🛠️ Exercises
 Use synthetic data only: generate, for example, tens of millions of fake transactions over two years with DuckDB's `range()` and `random()` functions.
@@ -904,7 +904,7 @@ Use synthetic data only: generate, for example, tens of millions of fake transac
 **1. An analyst's query on the partitioned `fct_transactions` table uses `where to_char(transacted_at, 'YYYY-MM') = '2026-09'` and scans every partition. What is the best fix?**
 
 - A. Add more compute to the warehouse so the full scan finishes faster for analysts
-- B. Repartition the table by `account_id` so each partition is smaller and quicker to read
+- B. Repartition the table by `account_id` so partitions are smaller
 - C. Add `distinct` to the query
 - D. Filter with `transacted_at >= '2026-09-01' and transacted_at < '2026-10-01'`
 
@@ -916,7 +916,7 @@ Use synthetic data only: generate, for example, tens of millions of fake transac
 
 **2. `fct_card_authorisations` is built incrementally with `where authorised_at > (select max(authorised_at) from {{ this }})`. Some terminal retries arrive two days late, carrying their original `authorised_at`. What goes wrong, and what is the fix?**
 
-- A. Nothing goes wrong, because dbt tracks which source rows each incremental run has already processed
+- A. Nothing; dbt tracks which source rows each incremental run has already processed
 - B. The late events are skipped; reprocess a lookback window, keyed on a unique key so the overlap is replaced
 - C. The model will duplicate every late row on the next run; switch the strategy to `append` to avoid it
 - D. The model must be changed to a view
