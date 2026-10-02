@@ -37,13 +37,13 @@
 
 | الجزء (Part) | السؤال الذي يجيب عنه (Question it answers) | "العملاء النشطون" في نجم (النسخة المتفق عليها (agreed version)) |
 |---|---|---|
-| السؤال التجاري (Business question) | لماذا ينظر أي أحد إلى هذا؟ | كم عميلًا يستخدم نجم فعليًا بنكًا (actively use Najm as a bank)؟ |
-| الصيغة (Formula) | ما الذي يُعدّ أو يُجمع بالضبط؟ | العملاء المميّزون (distinct customers) الذين لديهم حدث مؤهِّل واحد على الأقل (at least one qualifying event) |
-| الأحداث المؤهِّلة (Qualifying events) | ما الذي يُحتسب؟ | معاملة يبادر بها العميل (customer-initiated transaction)، أو تسجيل دخول إلى تطبيق نجم للهاتف (Najm Mobile) أو الخدمات المصرفية عبر الإنترنت (online banking) |
-| الاستثناءات (Exclusions) | ما الذي لا يُحتسب أبدًا؟ | حسابات الموظفين والاختبار (staff and test accounts)، وإيداعات الرواتب (salary credits)، والرسوم (fees)، وقيود الفوائد (interest postings)، والعكوس (reversals) |
-| النافذة والمنطقة الزمنية (Window and time zone) | على أي فترة، وبأي ساعة؟ | آخر 30 يومًا متحركة (trailing 30 days) تنتهي في تاريخ التقرير (reporting date)، بتوقيت Asia/Qatar |
-| الحُبَيبية (Grain) | صفٌّ واحد لكل ماذا؟ | رقم واحد لكل يوم لكل شريحة (per day per segment) (التجزئة (retail)، والمنشآت الصغيرة والمتوسطة (SME))؛ لا يُجمع عبر الأيام أبدًا (never summed across days) |
-| المالك (Owner) | من يقرر التغييرات؟ | رئيس تحليلات التجزئة (Head of Retail Analytics)؛ وتصون لينا الشيفرة (maintains the code) |
+| السؤال التجاري (Business question) | لماذا ينظر أي أحد إلى هذا (why does anyone look at this)؟ | كم عميلًا يستخدم نجم فعليًا بنكًا (actively use Najm as a bank)؟ |
+| الصيغة (Formula) | ما الذي يُعدّ أو يُجمع بالضبط (counted or summed)؟ | العملاء المميّزون (distinct customers) الذين لديهم حدث مؤهِّل واحد على الأقل (at least one qualifying event) |
+| الأحداث المؤهِّلة (Qualifying events) | ما الذي يُحتسب (what counts)؟ | معاملة يبادر بها العميل (customer-initiated transaction)، أو تسجيل دخول إلى تطبيق نجم للهاتف (Najm Mobile) أو الخدمات المصرفية عبر الإنترنت (online banking) |
+| الاستثناءات (Exclusions) | ما الذي لا يُحتسب أبدًا (what never counts)؟ | حسابات الموظفين والاختبار (staff and test accounts)، وإيداعات الرواتب (salary credits)، والرسوم (fees)، وقيود الفوائد (interest postings)، والعكوس (reversals) |
+| النافذة والمنطقة الزمنية (Window and time zone) | على أي فترة (period)، وبأي ساعة (which clock)؟ | آخر 30 يومًا متحركة (trailing 30 days) تنتهي في تاريخ التقرير (reporting date)، بتوقيت Asia/Qatar |
+| الحُبَيبية (Grain) | صفٌّ واحد لكل ماذا (one row per what)؟ | رقم واحد لكل يوم لكل شريحة (per day per segment) (التجزئة (retail)، والمنشآت الصغيرة والمتوسطة (SME))؛ لا يُجمع عبر الأيام أبدًا (never summed across days) |
+| المالك (Owner) | من يقرر التغييرات (who decides changes)؟ | رئيس تحليلات التجزئة (Head of Retail Analytics)؛ وتصون لينا الشيفرة (maintains the code) |
 
 **لماذا يحدث الانجراف (Why the drift happens).** كل محلّل يحتاج الرقم يكتب استعلامًا (writes a query)، وينسخ مرشّحًا من استعلام أقدم (copies a filter from an older query)، وينسى استثناءً واحدًا (forgets one exclusion). ومع عشر لوحات معلومات يصبح لديك عشرة تعريفات. والعلاج هو نقل التعريف **إلى المنبع (upstream)**: احسبه مرة واحدة في مستودع البيانات (compute it once in the warehouse)، واختبره (test it) (3.1، 3.2)، واجعل كل أداة تقرأ النتيجة (have every tool read the result).
 
@@ -186,7 +186,7 @@ metrics:
 | الصيغة (Formula) | عدد `customer_id` المميّزة (distinct) التي لديها حدث مؤهِّل واحد على الأقل (at least one qualifying event) في الثلاثين يومًا المنتهية في تاريخ التقرير (reporting date) |
 | الأحداث المؤهِّلة (Qualifying events) | معاملة خصم أو إيداع يبادر بها العميل (customer-initiated debit or credit transaction)؛ تسجيل دخول إلى تطبيق نجم للهاتف (Najm Mobile) أو الخدمات المصرفية عبر الإنترنت (online banking) |
 | الاستثناءات (Exclusions) | حسابات الموظفين والاختبار (staff and test accounts)؛ إيداعات الرواتب (salary credits)؛ الرسوم والفوائد وقيود النظام (fees, interest and system postings)؛ المعاملات المعكوسة (reversed transactions) |
-| المنطقة الزمنية ووقت القطع (Time zone and cut-off) | Asia/Qatar؛ الأحداث حتى 23:59:59 في تاريخ التقرير |
+| المنطقة الزمنية ووقت القطع (Time zone and cut-off) | Asia/Qatar؛ الأحداث حتى 23:59:59 في تاريخ التقرير (reporting date) |
 | الحُبَيبية (Grain) | صف واحد لكل تاريخ تقرير × شريحة (reporting date × segment) (التجزئة (Retail)، والمنشآت الصغيرة والمتوسطة (SME))؛ غير قابل للجمع (non-additive): لا يُجمع أبدًا عبر التواريخ أو الشرائح؛ استخدم صف "الكل" ("All" row) |
 | تاريخ السمات (Attribute history) | الشريحة كما كانت (as-was) في تاريخ التقرير (ربط من النوع الثاني للبُعد المتغيّر ببطء (SCD Type 2 join)) |
 | المصدر (Source) | `mart_active_customers_daily` (dbt)، مبني من `fct_customer_activity` |
@@ -760,7 +760,7 @@ print(round(stat, 1), p)              # 14.4, p about 0.00015
 
 <details><summary>الإجابة</summary>
 
-**D.** تجارب السعر والائتمان والأهلية (price, credit and eligibility experiments) تثير أسئلة حول الإنصاف والجوانب التنظيمية (fairness and regulatory questions)، لذا تحتاج إلى موافقة الامتثال (و، حيث تُستخدم نماذج، موافقة مخاطر النماذج (model-risk)). أما A فتتجاهل ضرر العملاء والقواعد (customer harm and rules)؛ وB لن تجيب عن السؤال؛ وC تثير مخاوف تتعلق بالشفافية وحماية المستهلك (transparency and consumer-protection concerns). (🔴 نظرة الخبير (Expert view).)
+**D.** تجارب السعر والائتمان والأهلية (price, credit and eligibility experiments) تثير أسئلة حول الإنصاف والجوانب التنظيمية (fairness and regulatory questions)، لذا تحتاج إلى موافقة الامتثال (compliance approval) (وكذلك موافقة مخاطر النماذج (model-risk) حيث تُستخدم نماذج). أما A فتتجاهل ضرر العملاء والقواعد (customer harm and rules)؛ وB لن تجيب عن السؤال؛ وC تثير مخاوف تتعلق بالشفافية وحماية المستهلك (transparency and consumer-protection concerns). (🔴 نظرة الخبير (Expert view).)
 
 </details>
 

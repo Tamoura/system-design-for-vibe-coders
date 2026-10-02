@@ -579,7 +579,7 @@ flowchart TD
 | ما يفعله كلٌّ من العميل (client)، والخادم (server)، وقاعدة البيانات (database)، وذاكرة التخزين المؤقت (cache)، والطابور (queue)، وموزّع الأحمال (load balancer) | تصميم قاعدة بيانات موزّعة عالميًا (globally distributed database) |
 | الجداول العلائقية (Relational tables)، والمفاتيح (keys)، ومتى يفيد الفهرس (index) | ضبط عنقود قاعدة بيانات (database cluster) من الذاكرة |
 | لماذا لا تنفّذ عملًا بطيئًا داخل طلب ويب (slow work inside a web request) (استخدم طابورًا) | خوارزميات الإجماع (consensus algorithms) بالتفصيل |
-| التفكير الأساسي في الإخفاق (Basic failure thinking): ماذا لو تعطّل هذا الصندوق؟ | أرقام السعة الدقيقة (Exact capacity numbers) من الذاكرة |
+| التفكير الأساسي في الإخفاق (Basic failure thinking): ماذا لو تعطّل هذا الصندوق؟ ⁦(what if this box is down?)⁩ | أرقام السعة الدقيقة (Exact capacity numbers) من الذاكرة |
 | أساسيات الأمن (Security basics): المصادقة (authentication)، والتفويض (authorisation)، والأسرار (secrets)، والتحقق من المُدخلات (input validation) | نموذج تهديدات كامل (full threat model) تحت ضغط الوقت |
 | قول "لا أعرف، لكن إليك كيف سأعرف" ("I don't know, but here is how I would find out") | التظاهر بالمعرفة (Pretending to know) |
 

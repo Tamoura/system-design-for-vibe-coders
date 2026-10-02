@@ -1,6 +1,6 @@
 # الوحدة 3 — الإثبات (Proof): معرض الأعمال (portfolio)
 
-*الشهادة الجامعية (degree) تقول إنك درست. وقائمة لغات البرمجة (list of languages) تقول إنك كنت حاضرًا في القاعة. ولا هذه ولا تلك تخبر صاحب العمل (employer) بأنك قادر على أداء الوظيفة، وحين تستطيع وكلاء البرمجة بالذكاء الاصطناعي (AI coding agents) إنتاج تطبيق تجريبي أنيق (tidy demo app) في فترة ما بعد الظهر، فإن تطبيقًا تجريبيًا أنيقًا لا يثبت إلا القليل جدًا. أما ما يثبت فهو الإثبات (proof): عمل يستطيع شخص غريب (stranger) أن يفتحه ويشغّله ويسائله ويثق به في دقائق معدودة. تحوّل هذه الوحدة المهارات (skills) التي اكتسبتها في الوحدتين 1 و2 إلى هذا الإثبات. تبدأ بالمشروع الأهم على الإطلاق: مشروع التخرّج التطبيقي (capstone) المبني لدورك المستهدف (target role) وفق معيار الإنتاج (production bar)، مع مواصفات جاهزة (ready-made spec) لكل مسار دور (role path). ثم تبيّن كيف تعرض عملك حتى يراه فعلًا المراجع المشغول (busy reviewer): ملفك الشخصي على GitHub (GitHub profile)، وملف README يجيب عن أسئلة المراجع بترتيبها (in order)، وكتابات قصيرة عن قراراتك (short write-ups of your decisions). وتنتهي بالخبرة التي يمكنك اكتسابها قبل وظيفتك الأولى (before your first job): التدريب العملي (internships)، والمصادر المفتوحة (open source)، والعمل الحر (freelance) والتطوعي (volunteer work)، والهاكاثونات (hackathons) والمسابقات (competitions). ستتابع دفعة بنك نجم (Najm Bank cohort) بينما يستبدل عمر 23 مستودعًا لمقررات دراسية (course repositories) بخدمة واحدة تصمد أمام شخصين يحجزان آخر موعد (last slot) في اللحظة نفسها، وتعيد ريم كتابة ملف README لم تستطع الدفاع عنه، ويحوّل محمد مسيرته المهنية السابقة (previous career) إلى دليل (evidence) بدلًا من اعتذار.*
+*الشهادة الجامعية (degree) تقول إنك درست. وقائمة لغات البرمجة (list of languages) تقول إنك كنت حاضرًا في القاعة. ولا هذه ولا تلك تخبر صاحب العمل (employer) بأنك قادر على أداء الوظيفة، وحين تستطيع وكلاء البرمجة بالذكاء الاصطناعي (AI coding agents) إنتاج تطبيق تجريبي أنيق (tidy demo app) في فترة ما بعد الظهر (in an afternoon)، فإن تطبيقًا تجريبيًا أنيقًا لا يثبت إلا القليل جدًا (proves very little). أما ما يثبت فهو الإثبات (proof): عمل يستطيع شخص غريب (stranger) أن يفتحه ويشغّله ويسائله ويثق به في دقائق معدودة (in a few minutes). تحوّل هذه الوحدة المهارات (skills) التي اكتسبتها في الوحدتين 1 و2 إلى هذا الإثبات. تبدأ بالمشروع الأهم على الإطلاق: مشروع التخرّج التطبيقي (capstone) المبني لدورك المستهدف (target role) وفق معيار الإنتاج (production bar)، مع مواصفات جاهزة (ready-made spec) لكل مسار دور (role path). ثم تبيّن كيف تعرض عملك حتى يراه فعلًا المراجع المشغول (busy reviewer): ملفك الشخصي على GitHub (GitHub profile)، وملف README يجيب عن أسئلة المراجع بترتيبها (in order)، وكتابات قصيرة عن قراراتك (short write-ups of your decisions). وتنتهي بالخبرة التي يمكنك اكتسابها قبل وظيفتك الأولى (before your first job): التدريب العملي (internships)، والمصادر المفتوحة (open source)، والعمل الحر (freelance) والتطوعي (volunteer work)، والهاكاثونات (hackathons) والمسابقات (competitions). ستتابع دفعة بنك نجم (Najm Bank cohort) بينما يستبدل عمر 23 مستودعًا لمقررات دراسية (course repositories) بخدمة واحدة تصمد أمام شخصين يحجزان آخر موعد (last slot) في اللحظة نفسها، وتعيد ريم كتابة ملف README لم تستطع الدفاع عنه (a README she could not defend)، ويحوّل محمد مسيرته المهنية السابقة (previous career) إلى دليل (evidence) بدلًا من اعتذار.*
 
 > **الخطوات (Steps):** Build, Prove — تحويل ما تستطيع فعله إلى دليل (evidence) يستطيع شخص غريب (stranger) أن يفتحه ويشغّله ويتحقق منه في دقائق.
 
@@ -17,9 +17,9 @@
 - أكبر فخ (biggest trap): نشر شيفرة بناها الوكيل (agent-built code) لا تستطيع شرحها. يختار المراجعون ملفًا واحدًا ويسألون: «لماذا بهذه الطريقة؟ ⁦(why this way?)⁩». وإجابتك هي الإثبات (the proof).
 
 ## 🧭 لماذا يهم (Why it matters)
-في مراجعة تجريبية لمعرض الأعمال (mock portfolio review)، يفتح خالد، مدير الهندسة (engineering manager) الذي يوظّف المبتدئين (juniors) في برنامج نجم للخرّيجين التقنيين (Najm Tech Graduate Programme)، حساب عمر على GitHub: 23 مستودعًا (repositories) من حلول LeetCode، وواجبات مقررات (course assignments)، وتطبيق مهام من درس تعليمي (tutorial to-do app)، ونسخة متفرّعة لم تُلمس (untouched fork). وبعد دقيقة يقول بلطف: «كل ما هنا يخبرني بأنك قادر على إنهاء مقرر دراسي. ولا شيء يخبرني بأنك قادر على أداء الوظيفة. لا أجد شيئًا واحدًا يعمل (one thing that runs)، ولا اختبارًا واحدًا (one test)، ولا قرارًا واحدًا اتخذته بنفسك (one decision you made yourself)».
+في مراجعة تجريبية لمعرض الأعمال (mock portfolio review)، يفتح خالد، مدير الهندسة (engineering manager) الذي يوظّف المبتدئين (juniors) في برنامج نجم للخرّيجين التقنيين (Najm Tech Graduate Programme)، حساب عمر على GitHub: 23 مستودعًا (repositories) من حلول LeetCode، وواجبات مقررات (course assignments)، وتطبيق مهام من درس تعليمي (tutorial to-do app)، ونسخة متفرّعة لم تُلمس (untouched fork). وبعد دقيقة يقول بلطف: «كل ما هنا يخبرني بأنك قادر على إنهاء مقرر دراسي (finish a course). ولا شيء يخبرني بأنك قادر على أداء الوظيفة (do the job). لا أجد شيئًا واحدًا يعمل (one thing that runs)، ولا اختبارًا واحدًا (one test)، ولا قرارًا واحدًا اتخذته بنفسك (one decision you made yourself)».
 
-أما ريم فلديها المشكلة المعاكسة: اثنا عشر تطبيقًا حسن المظهر بُنيت بسرعة باستخدام وكلاء البرمجة بالذكاء الاصطناعي (AI coding agents). يسألها خالد عمّا يمنع مستخدمًا في تطبيقها لتقسيم المصاريف (expense-splitting app) من قراءة مصاريف مستخدم آخر. تفتح ريم الشيفرة (code) وتدرك أنها تقرؤها للمرة الأولى. فريق خالد يستخدم أدوات الذكاء الاصطناعي (AI tools) كل يوم؛ وفكرته أضيق من ذلك: «إن وظّفتك، فأنا أثق بأنك ستتحقق مما كتبه الوكيل (check what the agent wrote). أريني أنك قادرة على ذلك».
+أما ريم فلديها المشكلة المعاكسة: اثنا عشر تطبيقًا حسن المظهر (twelve good-looking apps) بُنيت بسرعة باستخدام وكلاء البرمجة بالذكاء الاصطناعي (AI coding agents). يسألها خالد عمّا يمنع مستخدمًا في تطبيقها لتقسيم المصاريف (expense-splitting app) من قراءة مصاريف مستخدم آخر. تفتح ريم الشيفرة (code) وتدرك أنها تقرؤها للمرة الأولى (for the first time). فريق خالد يستخدم أدوات الذكاء الاصطناعي (AI tools) كل يوم؛ وفكرته أضيق من ذلك: «إن وظّفتك، فأنا أثق بأنك ستتحقق مما كتبه الوكيل (check what the agent wrote). أريني أنك قادرة على ذلك».
 
 ومحمد، المتحوّل مهنيًا (career-switcher) القادم من معسكر تدريبي (bootcamp)، لديه ثلاثة مشاريع. أحدها نظام لحجز الحصص (class-booking system) للنادي الرياضي (gym) الذي كان يعمل فيه، استخدمه عشرون عضوًا لمدة شهرين، مع اختبارات (tests) وملاحظة قصيرة عن خلل الحجز المزدوج (double-booking bug) الذي أصلحه. يقضي خالد عشر دقائق عليه ثم يطلب سيرته الذاتية (CV).
 
@@ -102,7 +102,7 @@ flowchart LR
 - *السؤال الصعب (Hard question):* «أيّ نتيجة ستصلحها أولًا، ولماذا هي بالذات؟ ⁦(Which finding would you fix first, and why that one?)⁩».
 - *مسار المكتبة (Library path):* [*أمن الذكاء الاصطناعي وأمن التطبيقات: من الصفر إلى الاحتراف (Secure AI & Application Security: Zero to Hero)*، الدرس 1.1 — نمذجة التهديدات: تدفقات البيانات وحدود الثقة وSTRIDE (Threat modelling: data flows, trust boundaries and STRIDE)](../secai/index.ar.html#/1.1)؛ [*أمن الذكاء الاصطناعي وأمن التطبيقات: من الصفر إلى الاحتراف (Secure AI & Application Security: Zero to Hero)*، الدرس 6.3 — تأمين الشيفرة المولّدة بالذكاء الاصطناعي: أين تخطئ وكلاء البرمجة (Securing AI-generated code: what coding agents get wrong)](../secai/index.ar.html#/6.3).
 
-**الوقت والتكلفة والبيانات (Time, cost and data).** يستغرق مشروع تخرّج بهذا المعيار عدة أسابيع من العمل بدوام جزئي (several weeks of part-time work)، لا عطلة نهاية أسبوع واحدة؛ ويضعه الدرس 7.1 ضمن خطة من 12 أسبوعًا (12-week plan). تتغيّر الفئات المجانية (free tiers) والأرصدة الطلابية (student credits)، وبعض المشاريع تراكم فواتير حقيقية (real bills): تحقّق من الشروط الحالية (current terms) (2026)، وفعّل تنبيهات الميزانية (budget alerts) من اليوم الأول، ودوّن طريقة إزالة كل شيء (tear everything down). استخدم بيانات عامة أو مسموحًا بها أو اصطناعية (public, permitted or synthetic data)، ولا تستخدم أبدًا سجلات حقيقية لعملاء أو مرضى أو طلاب (real customer, patient or student records). وإن أعطاك مستخدمون حقيقيون بيانات شخصية (personal data)، فاجمع الحد الأدنى (collect the minimum) واحذفها حين لا تعود بحاجة إليها. يلاحظ أصحاب العمل في القطاعات الخاضعة للتنظيم (regulated sectors) هذه العادة؛ وفي قطر، يُعدّ القانون رقم 13 لسنة 2016 بشأن حماية البيانات الشخصية (Law No. 13 of 2016 on personal data protection) سببًا وجيهًا لإظهارها مبكرًا.
+**الوقت والتكلفة والبيانات (Time, cost and data).** يستغرق مشروع تخرّج بهذا المعيار عدة أسابيع من العمل بدوام جزئي (several weeks of part-time work)، لا عطلة نهاية أسبوع واحدة (not a weekend)؛ ويضعه الدرس 7.1 ضمن خطة من 12 أسبوعًا (12-week plan). تتغيّر الفئات المجانية (free tiers) والأرصدة الطلابية (student credits)، وبعض المشاريع تراكم فواتير حقيقية (real bills): تحقّق من الشروط الحالية (current terms) (2026)، وفعّل تنبيهات الميزانية (budget alerts) من اليوم الأول، ودوّن طريقة إزالة كل شيء (tear everything down). استخدم بيانات عامة أو مسموحًا بها أو اصطناعية (public, permitted or synthetic data)، ولا تستخدم أبدًا سجلات حقيقية لعملاء أو مرضى أو طلاب (real customer, patient or student records). وإن أعطاك مستخدمون حقيقيون بيانات شخصية (personal data)، فاجمع الحد الأدنى (collect the minimum) واحذفها حين لا تعود بحاجة إليها (delete it when you no longer need it). يلاحظ أصحاب العمل في القطاعات الخاضعة للتنظيم (regulated sectors) هذه العادة (this habit)؛ وفي قطر، يُعدّ القانون رقم 13 لسنة 2016 بشأن حماية البيانات الشخصية (Law No. 13 of 2016 on personal data protection) سببًا وجيهًا لإظهارها مبكرًا.
 
 ### 🔴 نظرة الخبير (Expert view)
 
@@ -128,7 +128,7 @@ flowchart LR
 | **Budget alerts** (تنبيهات الميزانية) | تنبيهات فوترة سحابية (cloud billing alerts) تحذّرك قبل أن يتجاوز الإنفاق حدًّا معيّنًا (before spending passes a limit) | في اليوم الذي تنشئ فيه أي حساب سحابي (cloud account) |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-يطلب برنامج نجم للخرّيجين التقنيين (Najm Tech Graduate Programme) من المرشحين (candidates) في المرحلة التقنية (technical stage) إحضار مشروع واحد مع **مواصفات مشروع الإثبات (Proof project spec)** في صفحة واحدة. ويستخدمها خالد لإعداد الأسئلة. وهذه مواصفات عمر، بعد أن أعاد كتابتها إثر المراجعة.
+يطلب برنامج نجم للخرّيجين التقنيين (Najm Tech Graduate Programme) من المرشحين (candidates) في المرحلة التقنية (technical stage) إحضار مشروع واحد مع **مواصفات مشروع الإثبات (Proof project spec)** في صفحة واحدة. ويستخدمها خالد لإعداد الأسئلة (prepare questions). وهذه مواصفات عمر، بعد أن أعاد كتابتها إثر المراجعة (rewritten after his review).
 
 | الحقل (Field) | إجابة عمر (Omar's answer) |
 |---|---|
@@ -137,7 +137,7 @@ flowchart LR
 | أرفع شريحة (Thinnest slice) | يسجّل الطلاب الدخول ببريدهم الجامعي (university email)، ويرون الطاولات المتاحة للأسبوع (free benches for the week)، ويحجزون موعدًا واحدًا مدته ساعتان (one two-hour slot)، ويلغونه. |
 | معيار الإنتاج (Production bar) | PostgreSQL مع ترحيلات (migrations)؛ وقيد تفرّد (unique constraint) على الطاولة والموعد؛ واختبارات لقواعد الحجز (tests for booking rules)؛ وتكامل مستمر مع كل دفع (CI on every push)؛ ونشر مع تتبّع الأخطاء (error tracking) وفحص التوافر (uptime check)؛ والأسرار في متغيرات البيئة (secrets in environment variables). |
 | السؤال الصعب (The hard question) | طالبان يحجزان آخر طاولة في اللحظة نفسها. الإجابة: قيد في قاعدة البيانات (database constraint)، ورسالة واضحة «حُجز للتو ('just taken')». مُختبَر باختبار تزامني (concurrent test). |
-| البيانات (Data) | الاسم، والبريد الجامعي، والحجوزات. تُحذف الحجوزات التي يزيد عمرها على فصل دراسي واحد آليًا (deleted automatically). لا بيانات شخصية أخرى (no other personal data). |
+| البيانات (Data) | الاسم، والبريد الجامعي، والحجوزات (name, university email, bookings). تُحذف الحجوزات التي يزيد عمرها على فصل دراسي واحد آليًا (deleted automatically). لا بيانات شخصية أخرى (no other personal data). |
 | خارج النطاق (Out of scope) | المدفوعات (payments)، وتطبيق الجوال (mobile app)، والحجوزات المتكررة (recurring bookings). |
 | المساعدة بالذكاء الاصطناعي (AI assistance) | استُخدم الوكيل (agent) للهيكلة الأولية (scaffolding) والنماذج (forms)؛ أما منطق الحجز والاختبارات (booking logic and tests) فكتبتها وراجعتها بنفسي؛ واكتُشف خطآن من أخطاء الوكيل (two agent bugs) وأُصلحا، وهما مذكوران في ملف README. |
 | الدليل (Evidence) | رابط مباشر (live link)، والمستودع (repository)، وسجل التكامل المستمر (CI history)، وملاحظة حادثة واحدة (one incident note)، وفيديو عرض مدته ثلاث دقائق (three-minute demo video). |
@@ -147,7 +147,7 @@ flowchart LR
 
 ## 🛠️ التمارين (Exercises)
 - 🟢 أعطِ كل مستودع عام (public repository) درجةً من 1 إلى 6 على سُلّم الإثبات (proof ladder). *يكتمل عندما (Done when):* يكون لديك جدول بالمستودعات ودرجاتها، مع مستودع واحد (أو فكرة جديدة واحدة) محدَّد بدائرة بوصفه مشروع تخرّجك (capstone).
-- 🟡 املأ مواصفات مشروع الإثبات (Proof project spec) أعلاه لدورك المستهدف (target role)، مستعينًا بمواصفات مشروع التخرّج المطابقة (matching capstone spec) من قسم 🟡 التعمق أكثر (Going deeper). *يكتمل عندما (Done when):* يستطيع زميل أو مرشد (peer or mentor) قراءة المواصفات في دقيقتين وإخبارك بما تبنيه، ولمن، وما الذي سيكون صعبًا فيه.
+- 🟡 املأ مواصفات مشروع الإثبات (Proof project spec) أعلاه لدورك المستهدف (target role)، مستعينًا بمواصفات مشروع التخرّج المطابقة (matching capstone spec) من قسم 🟡 التعمق أكثر (Going deeper). *يكتمل عندما (Done when):* يستطيع زميل أو مرشد (peer or mentor) قراءة المواصفات في دقيقتين وإخبارك بما تبنيه، ولمن، وما الذي سيكون صعبًا فيه (what will be hard about it).
 - 🔴 أطلق أرفع شريحة (ship the thinnest slice) من مشروع تخرّجك، قابلة للوصول أو لإعادة الإنتاج بأمر واحد (reachable or reproducible with one command)، مع اختبار واحد على الأقل في التكامل المستمر (at least one test in CI) ومستخدم حقيقي (real user) جرّبها. *يكتمل عندما (Done when):* يعمل الرابط المباشر أو الإعداد بأمر واحد (one-command setup) على جهاز شخص آخر، ويكون التكامل المستمر أخضر (CI is green)، وتكون قد دوّنت شيئًا واحدًا فعله مستخدمك الأول (first user) ولم تتوقّعه.
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
@@ -155,7 +155,7 @@ flowchart LR
 - **اختيار التقنيات أولًا (Picking the stack first).** إطار عمل رائج (fashionable framework) بلا مشكلة يعطيك عرضًا تجريبيًا بلا مستخدم (demo with no user). اكتب المواصفات (write the spec)، ثم اختر أبسط مجموعة تقنيات تلبّيها (simplest stack that meets it).
 - **إطلاق ما لا تستطيع شرحه (Shipping what you cannot explain).** يسهّل وكلاء الذكاء الاصطناعي (AI agents) البناء بما يتجاوز فهمك (build past your understanding). اقرأ كل جزء واختبره (read and test every part)، وكن مستعدًا لشرح أي ملف.
 - **استخدام بيانات شخصية حقيقية (Using real personal data).** لا مكان لسجلات العملاء أو المرضى (customer or patient records) في معرض الأعمال (portfolio) أبدًا. استخدم بيانات عامة أو مسموحًا بها أو اصطناعية (public, permitted or synthetic data).
-- **عدم الإنهاء أبدًا (Never finishing).** مشروع تخرّج منجز بنسبة 80% ولم يُنشر قط يثبت أقل من مشروع أصغر يعمل. قلّص النطاق (cut scope) حتى يُطلق، ثم عمّقه (then deepen).
+- **عدم الإنهاء أبدًا (Never finishing).** مشروع تخرّج منجز بنسبة 80% ولم يُنشر قط (never deployed) يثبت أقل من مشروع أصغر يعمل (a smaller one that runs). قلّص النطاق (cut scope) حتى يُطلق، ثم عمّقه (then deepen).
 
 ## 🧾 الخلاصة (Recap)
 - يُظهر مشروع الإثبات (proof project) إشارات دورك المستهدف (signals of your target role) حيث يستطيع شخص غريب التحقق منها؛ ولا تستطيع نسخ الدروس التعليمية (tutorial clones) ذلك.
@@ -188,7 +188,7 @@ flowchart LR
 
 <details><summary>الإجابة</summary>
 
-**D.** إنه منشور (deployed)، ويستخدمه أشخاص حقيقيون (used by real people)، ومُشغَّل عبر الزمن (operated over time)، أي الدرجة 6 (rung 6). أما C فمشروع أصلي (original project) (الدرجة 3) لكنه لم يعمل لأحد قط؛ وB هو الدرجة 2 وA الدرجة 1، مهما كان مصقولًا. (🟢 الأساسيات (The essentials).)
+**D.** إنه منشور (deployed)، ويستخدمه أشخاص حقيقيون (used by real people)، ومُشغَّل عبر الزمن (operated over time)، أي الدرجة 6 (rung 6). أما C فمشروع أصلي (original project) (الدرجة 3) لكنه لم يعمل لأحد قط (never ran for anyone)؛ وB هو الدرجة 2 وA الدرجة 1، مهما كان مصقولًا (however polished). (🟢 الأساسيات (The essentials).)
 
 </details>
 
@@ -214,7 +214,7 @@ flowchart LR
 
 <details><summary>الإجابة</summary>
 
-**B.** الإفصاح الصادق (honest disclosure) مع دليل التحقق (evidence of verification) هو ما يريده المراجعون. أما A فتضليل (misrepresentation) ينكشف مع أول سؤال تقني. وC إضاعة للوقت؛ فالتحقق من الشيفرة (verifying the code) أهم من هوية من كتبها. وD يفصح عن الأداة لكنه لا يُظهر شيئًا من التحقق الذي يختبره المراجع. (🔴 نظرة الخبير (Expert view).)
+**B.** الإفصاح الصادق (honest disclosure) مع دليل التحقق (evidence of verification) هو ما يريده المراجعون. أما A فتضليل (misrepresentation) ينكشف مع أول سؤال تقني. وC إضاعة للوقت؛ فالتحقق من الشيفرة (verifying the code) أهم من هوية من كتبها (who typed it). وD يفصح عن الأداة (discloses the tool) لكنه لا يُظهر شيئًا من التحقق الذي يختبره المراجع (none of the verification the reviewer is testing for). (🔴 نظرة الخبير (Expert view).)
 
 </details>
 
@@ -227,7 +227,7 @@ flowchart LR
 
 <details><summary>الإجابة</summary>
 
-**A.** يُظهر العمل اليومي لمهندس المنصّات (platform engineer's daily work): النشر الآمن (deploying safely)، والمراقبة (observing)، والتحكم في التكلفة (controlling cost). أما B فإشارة إضافية مفيدة (useful extra signal) لكنها ليست إثباتًا على تشغيل أي شيء؛ وC وD يُظهران مهارات أخرى. (🟡 التعمق أكثر (Going deeper).)
+**A.** يُظهر العمل اليومي لمهندس المنصّات (platform engineer's daily work): النشر الآمن (deploying safely)، والمراقبة (observing)، والتحكم في التكلفة (controlling cost). أما B فإشارة إضافية مفيدة (useful extra signal) لكنها ليست إثباتًا على تشغيل أي شيء؛ وC وD يُظهران مهارات أخرى (other skills). (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
@@ -247,7 +247,7 @@ flowchart LR
 - لا يقرأ المراجعون (reviewers) شيفرتك أولًا. بل يتصفّحون ملفك الشخصي (skim your profile) سريعًا، ويفتحون مستودعًا مثبّتًا واحدًا (one pinned repository)، ويقرؤون أعلى ملف README الخاص به (top of its README)، ثم ينظرون في ملف أو ملفين. **صمّم من أجل التصفّح السريع (Design for the skim).**
 - القاعدة الأهم (the rule that matters most): يجيب ملف README عن أسئلة المراجع **بالترتيب الذي يطرحها به (in the order they ask them)**: ما هذا (what is it)، وهل يعمل (does it work)، وكيف بُني (how is it built)، ولماذا هذه الاختيارات (why these choices)، وماذا تعلّمت (what did you learn).
 - إن **سجل الإيداعات والاختبارات والقرارات المكتوبة (commit history, tests and written decisions)** دليل أيضًا. فرسائل مثل "fix" و"fix2" و"final" تروي قصة؛ وكذلك يرويها طلب دمج (pull request) نظيف بوصف واضح (clear description).
-- إشارة القرار (decision cue): سلّم مستودعك إلى شخص لم يره قط. إن لم يستطع أن يقول ما يفعله وأن يشغّله خلال خمس دقائق (within five minutes)، فملف README لم يكتمل بعد.
+- إشارة القرار (decision cue): سلّم مستودعك إلى شخص لم يره قط (someone who has never seen it). إن لم يستطع أن يقول ما يفعله وأن يشغّله خلال خمس دقائق (within five minutes)، فملف README لم يكتمل بعد.
 - أكبر فخ (biggest trap): سرّ مُودَع في المستودع (committed secret)، مثل مفتاح API (API key) في ملف `.env`. حذف الملف لا يكفي؛ يجب إبطال المفتاح واستبداله (revoked and replaced).
 
 ## 🧭 لماذا يهم (Why it matters)
@@ -341,7 +341,7 @@ make test              # 42 tests, about 20 seconds
 
 يتبع العمود القوي (strong column) **الإيداعات الاصطلاحية (Conventional Commits)**، وهي اصطلاح واسع الاستخدام (widely used convention) يتكوّن من نوع (type) (`feat`، `fix`، `docs`، `test`، `refactor`)، ونطاق اختياري (optional scope)، ووصف قصير (short description). لست مضطرًا إلى اعتماده، لكن وجود اصطلاح متّسق ما (some consistent convention) يساعد.
 
-حتى حين تعمل وحدك، افتح **طلبات دمج (pull requests)** على فرعك الرئيسي (main branch) للتغييرات المهمة (meaningful changes): وصفًا لما تغيّر ولماذا (what changed and why)، وتشغيل التكامل المستمر (CI run)، وملاحظة عن طريقة اختبارك له (how you tested it). والمراجع الذي يفتح ثلاثة منها يرى بالضبط كيف سيكون العمل معك. وإن كنت تستخدم وكلاء الذكاء الاصطناعي (AI agents)، فطلب الدمج هو المكان الطبيعي لتدوين ما أنتجه الوكيل وما تحققت منه.
+حتى حين تعمل وحدك، افتح **طلبات دمج (pull requests)** على فرعك الرئيسي (main branch) للتغييرات المهمة (meaningful changes): وصفًا لما تغيّر ولماذا (what changed and why)، وتشغيل التكامل المستمر (CI run)، وملاحظة عن طريقة اختبارك له (how you tested it). والمراجع الذي يفتح ثلاثة منها يرى بالضبط كيف سيكون العمل معك (what working with you would look like). وإن كنت تستخدم وكلاء الذكاء الاصطناعي (AI agents)، فطلب الدمج هو المكان الطبيعي لتدوين ما أنتجه الوكيل وما تحققت منه (what the agent produced and what you checked).
 
 **سجلات القرارات المعمارية (Architecture decision records).** **سجل القرار المعماري (architecture decision record, ADR)** ملف قصير (short file)، يوضع غالبًا في `docs/adr/`، يسجّل قرارًا واحدًا (one decision): السياق (context)، والقرار (decision)، وعواقبه (consequences). ويُنسب هذا الشكل عادةً إلى مايكل نايغارد (Michael Nygard). يقع سجل القرار 003 (ADR 003) لدى عمر في نحو 150 كلمة: كانت الحجوزات المزدوجة (double bookings) ممكنة؛ والخيارات كانت فحصًا على مستوى التطبيق (application-level check)، أو قفلًا في قاعدة البيانات (database lock)، أو قيد تفرّد (unique constraint)؛ واختار القيد لأنه يصمد حتى لو وصل طلبان في اللحظة نفسها (two requests arrive at once)؛ والثمن رسالة خطأ أقل ودًّا (less friendly error)، عولجت في الواجهة (handled in the interface). وفي المقابلة (interview)، يصبح هذا الملف إجابة مدتها خمس دقائق تدرّب عليها مسبقًا (already rehearsed).
 
@@ -366,9 +366,9 @@ make test              # 42 tests, about 20 seconds
 
 ### 🔴 نظرة الخبير (Expert view)
 
-**مخطط المساهمات ليس درجة تقييم (The contribution graph is not a score).** شبكة المربعات الخضراء (grid of green squares) في ملف GitHub الشخصي تحصي النشاط لا الجودة (counts activity, not quality). ويعرف المراجعون ذوو الخبرة (experienced reviewers) أنه يمكن التلاعب بها (can be gamed) وأن كثيرًا من العمل الحقيقي يجري في مستودعات خاصة (private repositories). لا تصطنع إيداعات (manufacture commits) لملئها. فالمراجع الذي يرى 300 إيداع في مساء واحد بعنوان "update" يتعلّم شيئًا، لكنه ليس ما كنت تأمله.
+**مخطط المساهمات ليس درجة تقييم (The contribution graph is not a score).** شبكة المربعات الخضراء (grid of green squares) في ملف GitHub الشخصي تحصي النشاط لا الجودة (counts activity, not quality). ويعرف المراجعون ذوو الخبرة (experienced reviewers) أنه يمكن التلاعب بها (can be gamed) وأن كثيرًا من العمل الحقيقي يجري في مستودعات خاصة (private repositories). لا تصطنع إيداعات (manufacture commits) لملئها. فالمراجع الذي يرى 300 إيداع في مساء واحد بعنوان "update" يتعلّم شيئًا، لكنه ليس ما كنت تأمله (learns something, just not what you hoped).
 
-**الكتابة هي جوهر العمل (Writing is the job).** يقضي المهندسون جزءًا كبيرًا من وقتهم في الكتابة (writing): أوصاف طلبات الدمج (pull request descriptions)، ومستندات التصميم (design documents)، وملاحظات الحوادث (incident notes)، والتذاكر (tickets)، والرسائل إلى الزملاء. ومعرض الأعمال (portfolio) الذي يحوي كتابة واضحة (clear writing) يتنبّأ بأنك ستحسن ذلك. ويساعد أيضًا في المقابلات، لأن تدوين القرار (writing a decision down) يجبرك على فهمه. وجدت ريم أن كتابة قسم «كيف بُني هذا ("How this was built")» كانت أسرع طريقة لاكتشاف أجزاء شيفرتها التي لم تكن قادرة على شرحها بعد.
+**الكتابة هي جوهر العمل (Writing is the job).** يقضي المهندسون جزءًا كبيرًا من وقتهم في الكتابة (writing): أوصاف طلبات الدمج (pull request descriptions)، ومستندات التصميم (design documents)، وملاحظات الحوادث (incident notes)، والتذاكر (tickets)، والرسائل إلى الزملاء. ومعرض الأعمال (portfolio) الذي يحوي كتابة واضحة (clear writing) يتنبّأ بأنك ستحسن ذلك. ويساعد أيضًا في المقابلات، لأن تدوين القرار (writing a decision down) يجبرك على فهمه. وجدت ريم أن كتابة قسم «كيف بُني هذا ("How this was built")» كانت أسرع طريقة (fastest way) لاكتشاف أجزاء شيفرتها التي لم تكن قادرة على شرحها بعد.
 
 **أرقام صادقة وحجم صادق (Honest numbers and honest scale).** لا تضخّم أبدًا أعداد المستخدمين أو حجم الحركة أو النتائج (users, traffic or results). عبارة "Used by 14 classmates" («يستخدمه 14 زميلًا») ذات مصداقية ويمكن التحقق منها (credible and checkable)؛ أما "used by thousands" («يستخدمه الآلاف») فتستدعي سؤالًا لا تستطيع الإجابة عنه. اذكر ظروف أي قياس (conditions of any measurement)، وقل ما الذي لم تختبره (what you did not test).
 
@@ -400,11 +400,11 @@ make test              # 42 tests, about 20 seconds
 | الذكاء الاصطناعي والنزاهة (AI and integrity) | غير مُفصَح عنه، ولا يستطيع الشرح (undisclosed, cannot explain) | مُفصَح عنه، ومشروح جزئيًا (disclosed, partly explained) | مُفصَح عنه، مع دليل على التحقق (disclosed, with verification evidence) |
 | النظافة (Hygiene) | أسرار أو بيانات شخصية مُودَعة (secrets or personal data committed) | مشكلات بسيطة (minor issues) | نظيف، و`.env.example`، وترخيص (clean, licence) |
 
-حصل مشروع تخرّج ريم على 3 من 14 قبل إعادة الكتابة. فبدّلت المفتاح المسرَّب أولًا (rotated the leaked key first)، ثم أعادت كتابة ملف README بترتيب القالب (template order)، وسجّلت عرضًا تجريبيًا مدته ثلاث دقائق (three-minute demo)، وأضافت سجل قرار (ADR) عن طريقة تخزين الجلسات (how sessions are stored)، وكتبت قسم «كيف بُني هذا ("How this was built")» يعدّد خطأين كتبهما الوكيل (two agent-written bugs) واكتشفتهما، وفتحت تغييراتها الثلاثة التالية بوصفها طلبات دمج (pull requests). المراجعة الثانية: 12 من 14. وتغيّرت ملاحظات طارق للمقابلة (interview notes) من «تحقّق مما إذا كانت هي من كتب هذا ("check whether she wrote this")» إلى «اسألها عن سجل القرار 002 ⁦("ask about ADR 002.")⁩».
+حصل مشروع تخرّج ريم على 3 من 14 قبل إعادة الكتابة (before her rewrite). فبدّلت المفتاح المسرَّب أولًا (rotated the leaked key first)، ثم أعادت كتابة ملف README بترتيب القالب (template order)، وسجّلت عرضًا تجريبيًا مدته ثلاث دقائق (three-minute demo)، وأضافت سجل قرار (ADR) عن طريقة تخزين الجلسات (how sessions are stored)، وكتبت قسم «كيف بُني هذا ("How this was built")» يعدّد خطأين كتبهما الوكيل (two agent-written bugs) واكتشفتهما، وفتحت تغييراتها الثلاثة التالية بوصفها طلبات دمج (pull requests). المراجعة الثانية (second review): 12 من 14. وتغيّرت ملاحظات طارق للمقابلة (interview notes) من «تحقّق مما إذا كانت هي من كتب هذا ("check whether she wrote this")» إلى «اسألها عن سجل القرار 002 ⁦("ask about ADR 002.")⁩».
 
 ## 🛠️ التمارين (Exercises)
-- 🟢 أصلح ملفك الشخصي (fix your profile): نبذة من سطر واحد (one-line bio) تسمّي دورك المستهدف، ومن أربعة إلى ستة مستودعات مثبّتة (pinned repositories) ومشروع تخرّجك أولها، والواجبات الدراسية ملغى تثبيتها أو مؤرشفة (unpinned or archived)، وملف README للملف الشخصي (profile README) من ثلاثة أسطر. *يكتمل عندما (Done when):* يستطيع صديق فتح ملفك الشخصي، وفي غضون 30 ثانية، تسمية دورك المستهدف والنقر وصولًا إلى مشروع تخرّجك.
-- 🟡 أعد كتابة ملف README لمشروع تخرّجك باستخدام القالب ذي الأقسام العشرة (ten-section template)، مع `.env.example` وقسم «شغّله محليًا ("Run it locally")» يعمل فعلًا. ثم أجرِ اختبار الدقائق الخمس (five-minute test) مع شخص لم يره قط. *يكتمل عندما (Done when):* يستطيع أن يقول ما يفعله ويشغّله (أو يفتح العرض المباشر (live demo)) خلال خمس دقائق من دون أن يسألك شيئًا، وتكون قد منحته 10 درجات أو أكثر على معيار تقييم نجم (Najm rubric).
+- 🟢 أصلح ملفك الشخصي (fix your profile): نبذة من سطر واحد (one-line bio) تسمّي دورك المستهدف، ومن أربعة إلى ستة مستودعات مثبّتة (pinned repositories) ومشروع تخرّجك أولها، والواجبات الدراسية ملغى تثبيتها أو مؤرشفة (unpinned or archived)، وملف README للملف الشخصي (profile README) من ثلاثة أسطر. *يكتمل عندما (Done when):* يستطيع صديق فتح ملفك الشخصي، وفي غضون 30 ثانية (within 30 seconds)، تسمية دورك المستهدف والنقر وصولًا إلى مشروع تخرّجك.
+- 🟡 أعد كتابة ملف README لمشروع تخرّجك باستخدام القالب ذي الأقسام العشرة (ten-section template)، مع `.env.example` وقسم «شغّله محليًا ("Run it locally")» يعمل فعلًا. ثم أجرِ اختبار الدقائق الخمس (five-minute test) مع شخص لم يره قط. *يكتمل عندما (Done when):* يستطيع أن يقول ما يفعله ويشغّله (أو يفتح العرض المباشر (live demo)) خلال خمس دقائق من دون أن يسألك شيئًا (without asking you anything)، وتكون قد منحته 10 درجات أو أكثر على معيار تقييم نجم (Najm rubric).
 - 🔴 شغّل gitleaks على السجل الكامل (full history) لكل مستودع عام، وبدّل أي شيء يعثر عليه (rotate anything it finds). ثم اكتب سجل قرار معماري واحدًا (one ADR) لأهم قرار في مشروع تخرّجك، وعرضًا مكتوبًا للمشروع (project write-up) من 600 إلى 1,200 كلمة، منشورًا ومرتبطًا من ملف README. *يكتمل عندما (Done when):* يُظهر تقرير الفحص (scan report) عدم وجود أسرار سارية (no live secrets)، ويكون سجل القرار في `docs/adr/`، ويكون العرض المكتوب منشورًا على الإنترنت مع قسم «ما الذي تعطّل ("what broke")».
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
@@ -432,7 +432,7 @@ make test              # 42 tests, about 20 seconds
 
 <details><summary>الإجابة</summary>
 
-**C.** حين يصبح المفتاح عامًا مرة، فربما نُسخ بالفعل؛ ولا يوقف إساءة الاستخدام إلا إبطاله (only revoking it stops misuse). أما A وB وD فتخفي المفتاح عن الزوار المستقبليين لكنها تترك المفتاح القديم ساريًا (leave the old key working). وتنظيف السجل (cleaning the history) خطوة ثانية جيدة. (🟢 الأساسيات (The essentials).)
+**C.** حين يصبح المفتاح عامًا مرة، فربما نُسخ بالفعل؛ ولا يوقف إساءة الاستخدام إلا إبطاله (only revoking it stops misuse). أما A وB وD فتخفي المفتاح عن الزوار المستقبليين (future visitors) لكنها تترك المفتاح القديم ساريًا (leave the old key working). وتنظيف السجل (cleaning the history) خطوة ثانية جيدة. (🟢 الأساسيات (The essentials).)
 
 </details>
 
@@ -449,7 +449,7 @@ make test              # 42 tests, about 20 seconds
 
 </details>
 
-**3. لا تعمل دفاتر هدى (notebooks) إلا إذا نُفِّذت الخلايا بترتيب معيّن، وهي تحمّل البيانات من حاسوبها المحمول. أيّ إصلاح هو الأهم لمراجعة مثل دانة؟**
+**3. لا تعمل دفاتر هدى (notebooks) إلا إذا نُفِّذت الخلايا (cells) بترتيب معيّن (particular order)، وهي تحمّل البيانات من حاسوبها المحمول. أيّ إصلاح هو الأهم (which fix matters most) لمراجعة مثل دانة؟**
 
 - A. إضافة مزيد من الرسوم البيانية وجدول ملخّص (summary table) حتى يسهل رؤية الاستنتاجات بنظرة واحدة
 - B. تحويل الدفاتر إلى عرض شرائح (slide deck) يأخذ دانة في جولة عبر النتائج
@@ -507,13 +507,13 @@ make test              # 42 tests, about 20 seconds
 - عبارة «مستوى المبتدئين، مع اشتراط سنة خبرة واحدة ("Entry-level, one year of experience required")» محبطة لكنها شائعة. يمكنك اكتساب خبرة حقيقية (real experience) قبل وظيفتك الأولى: **التدريب العملي (internships)، والمساهمات في المصادر المفتوحة (open-source contributions)، والعمل الحر أو التطوعي (freelance or volunteer work)، والهاكاثونات (hackathons)، والمسابقات (competitions)، والبحث (research) والتدريس (teaching).**
 - القاعدة الأهم (the rule that matters most): تُحتسب الخبرة حين **يعتمد شخص آخر على عملك (someone else depended on your work)**: مشرف مشروع (maintainer) دمجه، أو عميل (client) استخدمه، أو فريق أطلقه (team shipped it)، أو حَكَم قيّمه (judge scored it).
 - كل طريق (route) يثبت شيئًا مختلفًا. اختر وفق الإشارة التي تنقصك (signal you lack) وقيودك (constraints) (الوقت، والمال، والموقع).
-- إشارة القرار (decision cue): إن لم تستطع فعل إلا شيء واحد في الأسابيع الثمانية القادمة، فاختر الطريق الذي يضيف إشارة لا يُظهرها مشروع تخرّجك (capstone) (الدرس 3.1) بالفعل.
+- إشارة القرار (decision cue): إن لم تستطع فعل إلا شيء واحد في الأسابيع الثمانية القادمة (in the next eight weeks)، فاختر الطريق الذي يضيف إشارة لا يُظهرها مشروع تخرّجك (capstone) (الدرس 3.1) بالفعل.
 - أكبر فخ (biggest trap): الكمّ قليل الجهد (low-effort volume). فإغراق مشاريع المصادر المفتوحة (spamming open-source projects) بطلبات دمج تافهة أو مولّدة بالذكاء الاصطناعي (trivial or AI-generated pull requests)، أو جمع شهادات الهاكاثونات (hackathon certificates) عن عروض تجريبية غير مكتملة (unfinished demos)، قد يضرّ أكثر مما ينفع.
 
 ## 🧭 لماذا يهم (Why it matters)
 يجد محمد وظيفة مطوّر مبتدئ (junior developer role) في سديم باي (Sadeem Pay)، وهي شركة ناشئة في التقنية المالية (fintech startup) في الدوحة، تطلب «سنة إلى سنتين من الخبرة ("one to two years of experience")». فيكاد يتجاوزها. فليست لديه شهادة في هذا المجال (no degree in the field) ولا وظيفة مطوّر في سيرته الذاتية (CV)، ويرى سنواته الثماني في إدارة نادٍ رياضي (managing a gym) فجوة عليه تبريرها (gap to explain). أما خالد، الذي يراجع سيرته الذاتية في جلسة إرشاد (mentoring session)، فيخالفه الرأي: «بنيتَ نظام حجز (booking system) استخدمه عشرون عضوًا، وأدرتَ العمليات (ran operations)، وتعاملتَ مع عملاء حقيقيين (real customers). هذه خبرة. كل ما في الأمر أنك لم تكتبها بوصفها خبرة (You just haven't written it as experience)».
 
-ولدى هدى القلق المعاكس. لديها شهادة قوية (strong degree) لكنها لم تعمل قط إلا وحدها على الواجبات الدراسية (coursework) ودفاتر Kaggle (Kaggle notebooks). وتريد إثباتًا على أنها قادرة على العمل في قاعدة شيفرة شخص آخر (someone else's codebase)، وتلقّي المراجعة (take review)، وإنهاء الأشياء مع فريق (finish things with a team). ويريد يوسف دليلًا لأدوار السحابة (cloud roles) لكنه لا يملك مالًا لفاتورة سحابية كبيرة (large cloud bill). كلٌّ منهم يحتاج إلى خبرة، وكلٌّ منهم يحتاج إلى طريق مختلف إليها. وهذا الدرس هو الخريطة (the map).
+ولدى هدى القلق المعاكس. لديها شهادة قوية (strong degree) لكنها لم تعمل قط إلا وحدها على الواجبات الدراسية (coursework) ودفاتر Kaggle (Kaggle notebooks). وتريد إثباتًا على أنها قادرة على العمل في قاعدة شيفرة شخص آخر (someone else's codebase)، وتلقّي المراجعة (take review)، وإنهاء الأشياء مع فريق (finish things with a team). ويريد يوسف دليلًا لأدوار السحابة (cloud roles) لكنه لا يملك مالًا لفاتورة سحابية كبيرة (large cloud bill). كلٌّ منهم يحتاج إلى خبرة، وكلٌّ منهم يحتاج إلى طريق مختلف إليها (a different route). وهذا الدرس هو الخريطة (the map).
 
 ## 📐 كيف يعمل (How it works)
 
@@ -575,7 +575,7 @@ flowchart TD
 5. افتح طلب دمج صغيرًا ومركّزًا (small, focused pull request) يتبع أسلوب المشروع (project's style)، ويشرح التغيير، ويتضمن اختبارًا.
 6. استجب للمراجعة بأدب وسرعة (politely and quickly). فمحادثة المراجعة نفسها دليل (the review conversation itself is evidence).
 
-يدفع **Google Summer of Code** (صيف البرمجة من Google) للمساهمين (pays contributors) مقابل العمل على مشروع مع منظمة مصادر مفتوحة ومرشد (mentor)؛ وقد اتسعت شروط الأهلية (eligibility) في السنوات الأخيرة، فتحقّق من القواعد الحالية. ويقدّم **Outreachy** تدريبًا عمليًا مدفوعًا عن بُعد في المصادر المفتوحة (paid, remote open-source internships) لمن يواجهون نقص التمثيل أو التحيّز المنهجي (under-representation or systemic bias) في قطاع التقنية. ويشجّع **Hacktoberfest**، الذي يُقام كل أكتوبر، على المساهمات؛ وبعد أن أبلغ المشرفون عن سيل من طلبات الدمج منخفضة الجودة (floods of low-quality pull requests) في عام 2020، غيّر المنظمون القواعد بحيث تختار المشاريع المشاركة طوعًا (projects opt in). فاتخذ من هذا التاريخ تحذيرًا (treat that history as a warning).
+يدفع **Google Summer of Code** (صيف البرمجة من Google) للمساهمين (pays contributors) مقابل العمل على مشروع مع منظمة مصادر مفتوحة ومرشد (mentor)؛ وقد اتسعت شروط الأهلية (eligibility) في السنوات الأخيرة، فتحقّق من القواعد الحالية. ويقدّم **Outreachy** تدريبًا عمليًا مدفوعًا عن بُعد في المصادر المفتوحة (paid, remote open-source internships) لمن يواجهون نقص التمثيل أو التحيّز المنهجي (under-representation or systemic bias) في قطاع التقنية. ويشجّع **Hacktoberfest**، الذي يُقام كل أكتوبر (run each October)، على المساهمات؛ وبعد أن أبلغ المشرفون عن سيل من طلبات الدمج منخفضة الجودة (floods of low-quality pull requests) في عام 2020، غيّر المنظمون القواعد بحيث تختار المشاريع المشاركة طوعًا (projects opt in). فاتخذ من هذا التاريخ تحذيرًا (treat that history as a warning).
 
 **العمل الحر والتطوعي (Freelance and volunteer work).** بناء شيء لعميل حقيقي (real client)، مثل مشروع تجاري صغير (small business)، أو جمعية خيرية (charity)، أو لجنة مسجد (mosque committee)، أو قسم جامعي (university department)، يثبت ما لا يستطيع أي مقرر إثباته: تحويل طلب مبهم (vague request) إلى برمجيات عاملة (working software) والوفاء بالوعد (keeping a promise). توجد منصات للعمل الحر المدفوع (paid freelance marketplaces)، لكن العمل بمستوى المبتدئين (entry-level work) عليها شديد التنافس وقت كتابة هذا النص (2026)، لذلك تكون العلاقات الشخصية والتطوع (personal networks and volunteering) في الغالب بداية أسرع. احمِ نفسك والعميل:
 - **اكتب النطاق (Write down the scope)**: ما الذي ستسلّمه (what you will deliver)، ومتى، وما الخارج عن النطاق (out of scope)، ومن يملك الشيفرة (who owns the code)، وماذا يحدث بعد التسليم (after handover).
@@ -649,7 +649,7 @@ flowchart TD
 
 ## ✍️ اختبر نفسك (Check yourself)
 
-**1. يُظهر مشروع تخرّج هدى نمذجة قوية (strong modelling)، لكنها لم تعمل قط إلا وحدها. أيّ طريق يضيف الإشارة التي تنقصها بأكثر الطرق مباشرة؟**
+**1. يُظهر مشروع تخرّج هدى نمذجة قوية (strong modelling)، لكنها لم تعمل قط إلا وحدها. أيّ طريق يضيف الإشارة التي تنقصها بأكثر الطرق مباشرة (most directly)؟**
 
 - A. المشاركة في ثلاث مسابقات Kaggle أخرى لرفع ترتيبها (ranking)
 - B. المساهمة بإصلاح خضع للمراجعة (reviewed fix) في مكتبة مفتوحة المصدر تستخدمها
@@ -671,7 +671,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**D.** الاشتراطات غالبًا ما تكون دليلًا إرشاديًا (often a guide)، ودليله حقيقي. أما A فيتخلّى عن فرصة معقولة (reasonable chance)؛ وB يخفي خبرة ذات صلة (relevant experience)؛ وC تلفيق (fabrication)، وهو ما لا توصي به هذه الدورة أبدًا، ويميل إلى الانكشاف في عمليات التحقق أو المقابلات (checks or interviews). (🟢 الأساسيات (The essentials)؛ 🔴 نظرة الخبير (Expert view).)
+**D.** الاشتراطات غالبًا ما تكون دليلًا إرشاديًا (often a guide)، ودليله حقيقي. أما A فيتخلّى عن فرصة معقولة (reasonable chance)؛ وB يخفي خبرة ذات صلة (relevant experience)؛ وC تلفيق (fabrication)، وهو ما لا توصي به هذه الدورة أبدًا (this course never recommends)، ويميل إلى الانكشاف في عمليات التحقق أو المقابلات (checks or interviews). (🟢 الأساسيات (The essentials)؛ 🔴 نظرة الخبير (Expert view).)
 
 </details>
 
@@ -688,7 +688,7 @@ flowchart TD
 
 </details>
 
-**4. تخطط ريم لاستخدام وكيل ذكاء اصطناعي (AI agent) لفتح عشرين طلب دمج صغيرًا في مشاريع مفتوحة المصدر شهيرة خلال أسبوع واحد. ما أفضل نصيحة؟**
+**4. تخطط ريم لاستخدام وكيل ذكاء اصطناعي (AI agent) لفتح عشرين طلب دمج صغيرًا في مشاريع مفتوحة المصدر شهيرة خلال أسبوع واحد (in one week). ما أفضل نصيحة (best advice)؟**
 
 - A. أن تقرأ سياسات المساهمة والذكاء الاصطناعي (contribution and AI policies) لكل مشروع؛ وأن تقدّم تغييرات قليلة مُختبَرة تستطيع شرحها
 - B. أن تمضي قُدمًا، لأن العدد الكبير من طلبات الدمج (high volume of pull requests) يُظهر للمراجعين الحماس والالتزام
@@ -697,7 +697,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**A.** يقدّر المشرفون العمل المركّز والمُختبَر (focused, tested work)، ولدى كثير منهم قواعد بشأن المساهمات المولّدة بالذكاء الاصطناعي (AI-generated contributions). أما B فيخاطر بأن يُرى إغراقًا (seen as spam)؛ وC يتجنّب المشاريع التي ينبغي أن تتعلّم من قواعدها؛ وD يخلق مزيدًا من العمل على المشرفين لا أقل. (🟡 التعمق أكثر (Going deeper)؛ 🔴 نظرة الخبير (Expert view).)
+**A.** يقدّر المشرفون العمل المركّز والمُختبَر (focused, tested work)، ولدى كثير منهم قواعد بشأن المساهمات المولّدة بالذكاء الاصطناعي (AI-generated contributions). أما B فيخاطر بأن يُرى إغراقًا (seen as spam)؛ وC يتجنّب المشاريع التي ينبغي أن تتعلّم من قواعدها (projects whose rules she should learn from)؛ وD يخلق مزيدًا من العمل على المشرفين لا أقل (more work for maintainers, not less). (🟡 التعمق أكثر (Going deeper)؛ 🔴 نظرة الخبير (Expert view).)
 
 </details>
 
@@ -710,7 +710,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**B.** الإكمال والكتابة (finishing and writing up) يحوّلان عرضًا تجريبيًا من عطلة نهاية أسبوع إلى إثبات. أما A وC فيتركان عرضًا تجريبيًا غير مكتمل (unfinished demo) بوصفه الدليل الوحيد؛ وD يحرّف جهدًا جماعيًا (misrepresents a team effort)؛ وإن واصل المشروع، فعليه أن يتبع قواعد الفعالية (event rules)، ويتفق مع زملائه، ويحفظ لهم حقّهم في الإسناد (keep their credit). (🟡 التعمق أكثر (Going deeper).)
+**B.** الإكمال والكتابة (finishing and writing up) يحوّلان عرضًا تجريبيًا من عطلة نهاية أسبوع (weekend demo) إلى إثبات (proof). أما A وC فيتركان عرضًا تجريبيًا غير مكتمل (unfinished demo) بوصفه الدليل الوحيد؛ وD يحرّف جهدًا جماعيًا (misrepresents a team effort)؛ وإن واصل المشروع، فعليه أن يتبع قواعد الفعالية (event rules)، ويتفق مع زملائه، ويحفظ لهم حقّهم في الإسناد (keep their credit). (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 

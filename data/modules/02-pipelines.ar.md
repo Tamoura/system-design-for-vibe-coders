@@ -133,7 +133,7 @@ WHERE rn = 1
 
 **فتحات النسخ المتماثل قد تملأ قرص الخادم الأساسي (Replication slots can fill the primary's disk).** تحتفظ الفتحة (slot) بـ WAL حتى يؤكد مستهلكها (its consumer confirms). فإن توقف Kafka Connect عطلة نهاية أسبوع (for a weekend)، تراكم WAL على خادم *الإنتاج (production)*. نبّه على تأخر الفتحة (slot lag) واضبط `max_slot_wal_keep_size` (في PostgreSQL 13 وما بعده) حتى لا يستطيع مستهلك ميت (dead consumer) إسقاط الأنظمة المصرفية الأساسية (take down core banking)؛ والثمن لقطة جديدة (fresh snapshot) إن أُبطلت الفتحة (slot is invalidated). اتفق على ذلك مع فريق المنصة لدى سالم (Salem's platform team) قبل الإطلاق (before go-live).
 
-**الترتيب (Ordering).** يرتّب Debezium الأحداث بمفاتيح (keys events) حسب المفتاح الأساسي (primary key)، فتبقى التغييرات على صف واحد بالترتيب (الدرس 2.3)، لكن التغييرات عبر الجداول ليست مرتّبة ترتيبًا شاملًا (not globally ordered): فقد تصل معاملة (transaction) قبل حسابها (its account). لا تفرض المفاتيح الأجنبية (foreign keys) على الطبقة الخام؛ وتحقّق من العلاقات (relationships) بالاختبارات (tests) (الدرس 3.2).
+**الترتيب (Ordering).** يجعل Debezium المفتاح الأساسي (primary key) مفتاحًا للأحداث (keys events by primary key)، فتبقى التغييرات على صف واحد بالترتيب (الدرس 2.3)، لكن التغييرات عبر الجداول ليست مرتّبة ترتيبًا شاملًا (not globally ordered): فقد تصل معاملة (transaction) قبل حسابها (its account). لا تفرض المفاتيح الأجنبية (foreign keys) على الطبقة الخام؛ وتحقّق من العلاقات (relationships) بالاختبارات (tests) (الدرس 3.2).
 
 **نمط صندوق الصادر (The outbox pattern).** يربط CDC المستهلكين (couples consumers) بالجداول الداخلية للمصدر (source's internal tables). والبديل أن يكتب التطبيق حدث عمل مقصودًا (deliberate business event)، مثل `AccountClosed`، في جدول **صندوق صادر (outbox)** ضمن المعاملة نفسها (same transaction) التي فيها التغيير، ولا يُلتقط إلا ذلك الجدول. وهو يحتاج تغييرات في التطبيق (application changes)، لذا يناسب الخدمات الجديدة (new services) أكثر من نظام أساسي قديم (legacy core).
 
@@ -178,7 +178,7 @@ WHERE rn = 1
 ## 🛠️ التمارين (Exercises)
 استخدم بيانات اصطناعية فقط (synthetic data only). لا بأس بسكربت توليد (generator script) أو بقاعدة بيانات نموذجية عامة (public sample database)؛ ولا تستخدم أبدًا بيانات عملاء حقيقية (real customer data).
 
-- 🟢 في PostgreSQL أو DuckDB، أنشئ جدول `accounts` اصطناعيًا (1,000 صف مع `updated_at`) وانسخه إلى `raw_accounts` مع `_loaded_at` و`_batch_id`. ثم حدّث 50 صفًا، واحذف 10، وأدرج 20، وشغّل تحميلًا تزايديًا بعلامة الحد الأعلى (high-water-mark incremental load). *يكتمل عندما (Done when):* تستطيع أن تُظهر باستعلام (with a query) بالضبط أي التغييرات التقطها التحميل التزايدي وأيها فاته، وتشرح السبب.
+- 🟢 في PostgreSQL أو DuckDB، أنشئ جدول `accounts` اصطناعيًا (synthetic) (1,000 صف مع `updated_at`) وانسخه إلى `raw_accounts` مع `_loaded_at` و`_batch_id`. ثم حدّث 50 صفًا (update 50 rows)، واحذف 10، وأدرج 20، وشغّل تحميلًا تزايديًا بعلامة الحد الأعلى (high-water-mark incremental load). *يكتمل عندما (Done when):* تستطيع أن تُظهر باستعلام (with a query) بالضبط أي التغييرات التقطها التحميل التزايدي (incremental load) وأيها فاته (which it missed)، وتشرح السبب (explain why).
 - 🟡 شغّل PostgreSQL بالإعداد `wal_level = logical`، وKafka (أو Redpanda) وKafka Connect مع موصِّل Debezium لـ PostgreSQL في Docker، متّبعًا دليل Debezium التعليمي (Debezium tutorial). التقط جدولًا واحدًا، ثم أدرج صفوفًا وحدّثها واحذفها. *يكتمل عندما (Done when):* تستطيع أن تُظهر أحداث `c` و`u` و`d` في الموضوع (topic)، واستعلام SQL على الأحداث المُنزَلة (landed events) يعيد بناء حالة الجدول الراهنة (current table state) بالضبط.
 - 🔴 اكتب مذكرة تصميم استيعاب (ingestion design note)، باستخدام قالب نجم (Najm template)، لجدول `transactions` الاصطناعي لديك، مع استعلام مطابقة (reconciliation query). أوقف موصِّل CDC ساعة أثناء توليد عمليات كتابة (generating writes). *يكتمل عندما (Done when):* تستطيع أن تُظهر نمو WAL المحتجز في الفتحة (slot's retained WAL growing)، ولحاقًا نظيفًا بعد إعادة التشغيل (clean catch-up after restart) (دون صفوف مفقودة أو مكررة (no lost or duplicated rows)) ونجاح المطابقة (reconciliation passing).
 
@@ -190,7 +190,7 @@ WHERE rn = 1
 - **لا مطابقة (No reconciliation).** خط البيانات الأخضر ليس خطًا صحيحًا (a green pipeline is not a correct one). قارن الأعداد والمجاميع (counts and totals) بالمصدر كل يوم.
 
 ## 🧾 الخلاصة (Recap)
-- يحمّل ELT البيانات الخام أولًا ويحوّل في مستودع البيانات (transforms in the warehouse)؛ ولا يزال ETL مناسبًا حين يجب إخفاء البيانات أو إسقاطها أو إعادة تشكيلها (masked, dropped or reshaped) قبل أن تُنزَل.
+- يحمّل ELT البيانات الخام (raw data) أولًا ويحوّل في مستودع البيانات (transforms in the warehouse)؛ ولا يزال ETL مناسبًا حين يجب إخفاء البيانات أو إسقاطها أو إعادة تشكيلها (masked, dropped or reshaped) قبل أن تُنزَل (before it lands).
 - الطبقة الخام (raw) بإلحاق فقط (append-only)، وبشكل المصدر (source-shaped)، ومختومة ببيانات وصفية للتحميل (load metadata).
 - التحميلات الكاملة (full loads) بسيطة وتلتقط عمليات الحذف؛ والتحميلات التزايدية (incremental loads) تتوسّع (scale) لكنها تحتاج تداخلًا ودمجًا (overlap, merges) وعمود تغيير جديرًا بالثقة (trustworthy change column).
 - يرى CDC القائم على السجل (log-based CDC) (Debezium على WAL في PostgreSQL) كل تغيير ملتزَم بالترتيب، بما في ذلك عمليات الحذف، لكن يجب تشغيله بعناية (operated with care).
@@ -200,23 +200,23 @@ WHERE rn = 1
 
 **1. يُظهر تحميل هدى التزايدي (incremental load) على `updated_at` حسابات مفتوحة أكثر من النظام الأساسي (core system). ويحذف فريق العمليات (operations team) فعليًا الحسابات المفتوحة بالخطأ (hard-deletes accounts opened in error). أي تغيير يعالج السبب الجذري (root cause) بأكبر موثوقية؟**
 
-- A. شغّل التحميل التزايدي كل ساعة بدلًا من كل ليلة (every hour instead of nightly)، لتُغلق الفجوات أسرع
+- A. شغّل التحميل التزايدي كل ساعة بدلًا من كل ليلة (every hour instead of nightly)، لتُغلق الفجوات أسرع (gaps close sooner)
 - B. غيّر مقارنة العلامة المائية (watermark comparison) من `>` إلى `>=` لتُحفظ صفوف الحدود (boundary rows)
 - C. انتقل إلى CDC القائم على السجل (log-based CDC)، الذي يسجّل عمليات الحذف (records deletes)
 - D. أضف فهرسًا (index) على `updated_at` في المصدر ليصبح الاستعلام أسرع
 
 <details><summary>الإجابة</summary>
 
-**C.** الصف المحذوف لم يعد موجودًا، فلا يستطيع أي استعلام على `updated_at` أن يراه؛ أما قراءة سجل قاعدة البيانات (database log) فتراه. A وB تغيّران التوقيت أو الحدود (timing or boundaries) لكنهما لا تريان عمليات الحذف أبدًا؛ وD لا تفعل سوى تسريع الاستعلام الأعمى نفسه (same blind query). (🟢 الأساسيات (The essentials))
+**C.** الصف المحذوف لم يعد موجودًا، فلا يستطيع أي استعلام على `updated_at` أن يراه (can see it)؛ أما قراءة سجل قاعدة البيانات (database log) فتراه. A وB تغيّران التوقيت أو الحدود (timing or boundaries) لكنهما لا تريان عمليات الحذف أبدًا؛ وD لا تفعل سوى تسريع الاستعلام الأعمى نفسه (same blind query). (🟢 الأساسيات (The essentials))
 
 </details>
 
 **2. ما الميزة الرئيسية لـ ELT على ETL في مستودع بيانات نجم (Najm's warehouse)؟**
 
 - A. تبقى البيانات الخام (raw data) في مستودع البيانات، فيمكن إعادة بناء الجداول دون إعادة الاستخراج (without re-extracting)
-- B. لا يضع أي عبء على الأنظمة المصدر (source systems) أبدًا، لأن التحويل يحدث لاحقًا
-- C. يلغي الحاجة إلى اختبارات جودة البيانات (data quality tests)، لأن الخام محفوظ تمامًا كما في المصدر
-- D. يضمن ألا تصل البيانات الشخصية (personal data) إلى مستودع البيانات بأي شكل
+- B. لا يضع أي عبء (load) على الأنظمة المصدر (source systems) أبدًا، لأن التحويل يحدث لاحقًا (transformation happens later)
+- C. يلغي الحاجة إلى اختبارات جودة البيانات (data quality tests)، لأن الخام محفوظ تمامًا كما في المصدر (raw is kept exactly as the source)
+- D. يضمن ألا تصل البيانات الشخصية (personal data) إلى مستودع البيانات (warehouse) أبدًا بأي شكل (in any form)
 
 <details><summary>الإجابة</summary>
 
@@ -237,7 +237,7 @@ WHERE rn = 1
 
 </details>
 
-**4. توقّف Kafka Connect الذي يشغّل Debezium لقاعدة بيانات الأنظمة المصرفية الأساسية مساء الجمعة. ويوم الاثنين، يبلّغ سالم أن استخدام القرص (disk use) على قاعدة البيانات الأساسية (core primary database) نما بحدة. لماذا؟**
+**4. توقّف Kafka Connect الذي يشغّل Debezium لقاعدة بيانات الأنظمة المصرفية الأساسية (core banking database) مساء الجمعة (Friday evening). ويوم الاثنين، يبلّغ سالم أن استخدام القرص (disk use) على قاعدة البيانات الأساسية (core primary database) نما بحدة. لماذا؟**
 
 - A. يكتب Debezium أحداث التغيير (change events) عائدًا بها إلى جداول في قاعدة البيانات المصدر
 - B. تحتفظ فتحة النسخ المتماثل (replication slot) بـ WAL حتى يؤكد المستهلك (consumer confirms)
@@ -255,7 +255,7 @@ WHERE rn = 1
 - A. أخفِ العمود (mask the column) في كل لوحة معلومات (dashboard) للتجزئة والمخاطر تعرض تفاصيل العملاء
 - B. انسخه إلى الطبقة الخام كالمعتاد، ثم أسقط العمود في نماذج التهيئة (staging models)
 - C. استبعد العمود في موصِّل CDC (exclude the column in the CDC connector) حتى لا يغادر النظام الأساسي أبدًا
-- D. شفّر مستودع البيانات كله وهو مخزَّن (encrypt the whole warehouse at rest)، مما يجعل نسخ العمود إلى أي مكان آمنًا
+- D. شفّر مستودع البيانات كله وهو مخزَّن (encrypt the whole warehouse at rest)، مما يجعل نسخ العمود إلى أي مكان آمنًا (safe to copy anywhere)
 
 <details><summary>الإجابة</summary>
 
@@ -323,7 +323,7 @@ flowchart LR
 
 يعمل التحميلان بالتوازي (in parallel). وإن فشلت اختبارات البيانات (data tests)، لا يعمل أي شيء لاحق (nothing downstream runs)، فلا يصل يوم معطوب (broken day) أبدًا إلى لوحة معلومات (dashboard) أو إلى جهة تنظيمية (regulator).
 
-**تساوي الأثر (Idempotency).** تكون العملية **متساوية الأثر (idempotent)** إن كان تنفيذها مرات كثيرة له الأثر نفسه لتنفيذها مرة واحدة (same effect as doing it once). فالضغط على زر استدعاء المصعد (lift's call button) متساوي الأثر؛ أما إضافة صف (adding a row) فليست كذلك. وهناك طريقتان معياريتان (two standard ways) لجعل التحميل متساوي الأثر:
+**تساوي الأثر (Idempotency).** تكون العملية **متساوية الأثر (idempotent)** إن كان لتنفيذها مرات كثيرة (doing it many times) الأثرُ نفسه الذي لتنفيذها مرة واحدة (same effect as doing it once). فالضغط على زر استدعاء المصعد (lift's call button) متساوي الأثر؛ أما إضافة صف (adding a row) فليست كذلك. وهناك طريقتان معياريتان (two standard ways) لجعل التحميل متساوي الأثر:
 
 1. **حذف قسم ثم إدراجه (Delete then insert a partition)** (ويسمّى أيضًا الكتابة فوق القسم (partition overwrite)): داخل معاملة واحدة (inside one transaction)، احذف كل شيء للفترة التي تحمّلها، ثم أدرجها من جديد (insert it fresh).
 2. **الدمج (الإدراج أو التحديث) على مفتاح (Merge (upsert) on a key)**: أدرج الصفوف الجديدة وحدّث الموجودة، بالمطابقة على مفتاح أساسي (matched on a primary key).
@@ -426,7 +426,7 @@ WHEN NOT MATCHED THEN
   VALUES (s.account_id, s.status, s.balance, s.updated_at);
 ```
 
-يفشل `MERGE` إن طابق صفّان من المصدر صفًا واحدًا في الهدف (two source rows match one target row)، لذا قلّص الدفعة أولًا إلى آخر صف لكل `account_id`. ويعني الحارس (guard) `s.updated_at > t.updated_at` أن تغييرًا أقدم يُعاد تشغيله لاحقًا (older change replayed later) لا يستطيع الكتابة فوق تغيير أحدث. وهذا هو الدمج الذي جعل العلامة المائية المتداخلة (overlapping watermark) في الدرس 2.1 آمنة.
+يفشل `MERGE` إن طابق صفّان من المصدر صفًا واحدًا في الهدف (two source rows match one target row)، لذا قلّص الدفعة (reduce the batch) أولًا إلى آخر صف لكل `account_id` (latest row per account_id). ويعني الحارس (guard) `s.updated_at > t.updated_at` أن تغييرًا أقدم يُعاد تشغيله لاحقًا (older change replayed later) لا يستطيع الكتابة فوق تغيير أحدث. وهذا هو الدمج الذي جعل العلامة المائية المتداخلة (overlapping watermark) في الدرس 2.1 آمنة.
 
 **إعادة التعبئة (Backfills).** **إعادة التعبئة (backfill)** تشغّل خط بيانات لفترات ماضية (past intervals): بعد إصلاح خطأ (bug fix)، أو عمود جديد، أو مصدر جديد. ومع المهام متساوية الأثر والمدفوعة بالفترات (idempotent, interval-driven tasks) تكون إعادة التعبئة مجرد "شغّل هذه الفترات اليومية الـ 90" ("run these 90 daily intervals")؛ ولكلٍّ من Airflow وDagster أوامر إعادة تعبئة مدمجة (built-in backfill commands) وإجراءات في الواجهة (UI actions) (تغيّرت واجهة سطر أوامر Airflow (Airflow CLI) في الإصدار 3؛ راجع توثيقك). ومن دون تساوي الأثر تصبح مشروعًا يدويًا محفوفًا بالمخاطر (risky manual project). خطّط لإعادة التعبئة كما تخطّط للتغييرات (plan backfills like changes):
 
@@ -490,7 +490,7 @@ def stg_transactions_daily(context: AssetExecutionContext) -> None:
 | إعادة المحاولة (Retries) | الأخطاء العابرة (transient errors) يُعاد محاولتها بتراجع (with backoff) (3 محاولات افتراضيًا)؛ وإخفاقات الاختبارات لا يُعاد محاولتها |
 | المهل الزمنية (Timeouts) | لكل مهمة مهلة تنفيذ (execution timeout) |
 | الجاهزية (Readiness) | تبدأ بمستشعِر (sensor) أو بمشغِّل واعٍ بالبيانات (data-aware trigger) مع مهلة زمنية، أو توثّق لماذا يكون الوقت الثابت آمنًا (why a fixed time is safe) |
-| الاختبارات تحرس النشر (Tests gate publishing) | تعمل اختبارات البيانات قبل تحديث المتاجر أو لوحات المعلومات أو المستخلصات |
+| الاختبارات تحرس النشر (Tests gate publishing) | تعمل اختبارات البيانات (data tests) قبل تحديث المتاجر أو لوحات المعلومات أو المستخلصات (marts, dashboards or extracts) |
 | الآثار الجانبية الخارجية (External side effects) | لكلٍّ منها مفتاح تساوي أثر (idempotency key) يُسجَّل عند النجاح |
 | التزامن (Concurrency) | ضبط `max_active_runs` والمجمّعات (pools) حتى لا تُثقل إعادة التعبئة المصادر (overload sources) |
 | الملكية (Ownership) | تسمية المالك وقناة التنبيه (alert channel)؛ وكتابة هدف الحداثة (freshness target) |
@@ -516,8 +516,8 @@ Approved by:      Faisal
 ## 🛠️ التمارين (Exercises)
 استخدم بيانات اصطناعية (synthetic data) وPostgreSQL أو DuckDB محليًا. ويعمل كلٌّ من Airflow (البدء السريع عبر Docker (Docker quick-start)) وDagster (`pip`) محليًا.
 
-- 🟢 اكتب نسختين من تحميل يومي (daily load) من جدول `raw.transactions` اصطناعي إلى `staging.transactions_daily`: واحدة تُلحق (appends) باستخدام `CURRENT_DATE - 1`، وأخرى تحذف وتُدرج قيمة `business_date` معطاة في معاملة واحدة. شغّل كلًّا منهما ثلاث مرات للتاريخ نفسه. *يكتمل عندما (Done when):* يُظهر استعلام أن النسخة الأولى ضاعفت مجموع اليوم ثلاث مرات (tripled the day's total) وأن الثانية تركته دون تغيير، وتستطيع شرح السبب في جملتين.
-- 🟡 ابنِ الرسم الموجّه ذا المهام الخمس (five-task DAG) "انتظار العلامة، تحميل الحسابات، تحميل المعاملات، بناء التهيئة، تشغيل الاختبارات" ("wait for marker, load accounts, load transactions, build staging, run tests") في Airflow أو Dagster، مستخدمًا فترة البيانات (data interval) أو مفتاح القسم (partition key) في كل استعلام. اجعل إحدى المهام تفشل في محاولتها الأولى فقط. *يكتمل عندما (Done when):* تنجح إعادة المحاولة دون صفوف مكررة (without duplicate rows)، وتنتج إعادة تعبئة (backfill) لـ 14 يومًا ماضيًا المجاميع نفسها بالضبط التي ينتجها تشغيل كل يوم مرة واحدة.
+- 🟢 اكتب نسختين من تحميل يومي (daily load) من جدول `raw.transactions` اصطناعي إلى `staging.transactions_daily`: واحدة تُلحق (appends) باستخدام `CURRENT_DATE - 1`، وأخرى تحذف وتُدرج قيمة `business_date` معطاة في معاملة واحدة. شغّل كلًّا منهما ثلاث مرات للتاريخ نفسه. *يكتمل عندما (Done when):* يُظهر استعلام أن النسخة الأولى ضاعفت مجموع اليوم ثلاث مرات (tripled the day's total) وأن الثانية تركته دون تغيير (left it unchanged)، وتستطيع شرح السبب في جملتين (in two sentences).
+- 🟡 ابنِ الرسم الموجّه ذا المهام الخمس (five-task DAG) "انتظار العلامة، تحميل الحسابات، تحميل المعاملات، بناء التهيئة، تشغيل الاختبارات" ("wait for marker, load accounts, load transactions, build staging, run tests") في Airflow أو Dagster، مستخدمًا فترة البيانات (data interval) أو مفتاح القسم (partition key) في كل استعلام. اجعل إحدى المهام تفشل في محاولتها الأولى فقط (on its first attempt only). *يكتمل عندما (Done when):* تنجح إعادة المحاولة دون صفوف مكررة (without duplicate rows)، وتنتج إعادة تعبئة (backfill) لـ 14 يومًا ماضيًا المجاميع نفسها بالضبط التي ينتجها تشغيل كل يوم مرة واحدة.
 - 🔴 أضف خطوة "نشر" ("publish") تكتب مستخلص CSV (CSV extract) لكل تاريخ عمل (business date) وتسجّل مفتاح تساوي أثر (idempotency key) في جدول `published_extracts`. حاكِ انهيارًا (simulate a crash) بعد كتابة الملف لكن قبل الإبلاغ عن النجاح. *يكتمل عندما (Done when):* تتخطى إعادة المحاولة المفتاح الموجود دون ملف ثانٍ، وتكون قد راجعت رسمك الموجّه وفق قائمة تحقق نجم (Najm checklist).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
@@ -530,13 +530,13 @@ Approved by:      Faisal
 ## 🧾 الخلاصة (Recap)
 - تشغّل المنسِّقات (orchestrators) رسومًا موجّهة من المهام (DAGs of tasks) مع تبعيات وجداول زمنية وإعادة محاولة ومهل زمنية وسجل تاريخي وإعادة تعبئة؛ وAirflow قائم على المهام (task-based)، وDagster قائم على الأصول (asset-based)، وPrefect يضع Python أولًا (Python-first).
 - تساوي الأثر (idempotency) هو القاعدة الجوهرية (core rule): التشغيل نفسه للفترة نفسها يعطي دائمًا النتيجة نفسها. استخدم الكتابة فوق القسم (partition overwrite) أو الدمج المحروس (guarded merges) داخل معاملة.
-- يجب أن تأخذ المهام فترتها من فترة البيانات لدى المنسِّق (orchestrator's data interval)، لا من "اليوم" أبدًا.
+- يجب أن تأخذ المهام (tasks) فترتها (period) من فترة البيانات لدى المنسِّق (orchestrator's data interval)، لا من "اليوم" أبدًا.
 - إعادة المحاولة وإعادة التعبئة آمنتان فقط على المهام متساوية الأثر؛ ضع سقفًا لتزامنهما (cap their concurrency) وأعد تشغيل اللاحق (re-run downstream).
 - انشر ذرّيًا (publish atomically)، واجعل الاختبارات بوابة (gate on tests)، وامنح الآثار الجانبية الخارجية مفاتيح تساوي أثر (idempotency keys)، ونبّه على الحداثة (alert on freshness)، لا على الفشل فقط.
 
 ## ✍️ اختبر نفسك (Check yourself)
 
-**1. أدرجت مهمة هدى يومًا من المعاملات، والتزمت (committed)، ثم فقدت اتصالها قبل أن يتلقى Airflow النجاح. أعاد Airflow المحاولة، فتضاعف مجموع اليوم (day's total doubled). ما أفضل إصلاح؟**
+**1. أدرجت مهمة هدى يومًا من المعاملات، والتزمت (committed)، ثم فقدت اتصالها قبل أن يتلقى Airflow النجاح (received success). أعاد Airflow المحاولة (retried)، فتضاعف مجموع اليوم (day's total doubled). ما أفضل إصلاح؟**
 
 - A. أوقف إعادة المحاولة لتلك المهمة (turn off retries) حتى لا تعمل مرة ثانية أبدًا
 - B. احذف ذلك اليوم وأعد إدراجه في معاملة واحدة (in one transaction)، لفترة البيانات (data interval) في Airflow
@@ -549,7 +549,7 @@ Approved by:      Faisal
 
 </details>
 
-**2. فشل رسم موجّه يومي (daily DAG) يوم السبت وأُعيد تشغيله يدويًا يوم الاثنين. ويستخدم استعلامه `CURRENT_DATE - 1`. ماذا يحدث؟**
+**2. فشل رسم موجّه يومي (daily DAG) يوم السبت وأُعيد تشغيله يدويًا (re-run manually) يوم الاثنين. ويستخدم استعلامه `CURRENT_DATE - 1`. ماذا يحدث؟**
 
 - A. يُحمَّل السبت بشكل صحيح، لأن التشغيل اليدوي ينتمي إلى فترة السبت (Saturday's interval)
 - B. يفشل التشغيل بخطأ تاريخ (date error) لأن الاثنين خارج فترة التشغيل
@@ -562,12 +562,12 @@ Approved by:      Faisal
 
 </details>
 
-**3. يحتاج فيصل إلى إعادة تشغيل خط بيانات المعاملات لآخر 90 يومًا بعد إصلاح خطأ (bug fix). أي خطة هي الأكثر أمانًا؟**
+**3. يحتاج فيصل إلى إعادة تشغيل خط بيانات المعاملات لآخر 90 يومًا (last 90 days) بعد إصلاح خطأ (bug fix). أي خطة هي الأكثر أمانًا (safest)؟**
 
 - A. إعادة تعبئة بتزامن مقيَّد (capped concurrency)، وإعادة تشغيل المتاجر اللاحقة (downstream marts)، والاتفاق مع الامتثال على المستخلصات المقدَّمة (submitted extracts)
-- B. تشغيل الأيام الـ 90 كلها بالتوازي دفعة واحدة لتنتهي إعادة التعبئة قبل لوحات المعلومات الصباحية
-- C. تفريغ جدول التهيئة (truncate the staging table)، ثم تشغيل تحميل اليوم فقط وترك التاريخ يعيد بناء نفسه
-- D. إصلاح الأيام المستقبلية فقط، لأن التاريخ الذي عُرض على المستخدمين يجب ألا يتغيّر أبدًا
+- B. تشغيل الأيام الـ 90 كلها بالتوازي دفعة واحدة (in parallel at once) لتنتهي إعادة التعبئة (backfill) قبل لوحات المعلومات الصباحية (morning dashboards)
+- C. تفريغ جدول التهيئة (truncate the staging table)، ثم تشغيل تحميل اليوم فقط (only today's load) وترك التاريخ يعيد بناء نفسه (let history rebuild itself)
+- D. إصلاح الأيام المستقبلية فقط (fix only future days)، لأن التاريخ الذي عُرض على المستخدمين (history already shown to users) يجب ألا يتغيّر أبدًا (must never be changed)
 
 <details><summary>الإجابة</summary>
 
@@ -580,7 +580,7 @@ Approved by:      Faisal
 - A. يجعل الدمج أسرع بتخطي الصفوف التي لم تتغيّر طوابعها الزمنية (timestamps)
 - B. تتطلبه صياغة PostgreSQL (PostgreSQL syntax) كلما كان في MERGE بند مطابقة (matched clause)
 - C. يمنع تغييرًا أقدم معادًا تشغيله (older, replayed change) من الكتابة فوق قيمة أحدث
-- D. يزيل الحسابات التي حُذفت في المصدر منذ التحميل الأخير
+- D. يزيل الحسابات التي حُذفت في المصدر (deleted in the source) منذ التحميل الأخير (since the last load)
 
 <details><summary>الإجابة</summary>
 
@@ -590,10 +590,10 @@ Approved by:      Faisal
 
 **5. يُبنى متجر مخاطر الائتمان (credit-risk mart) عند 02:00 كل يوم، لكن دفعة نهاية اليوم (end-of-day batch) في النظام الأساسي تنتهي أحيانًا عند 02:40. ما أفضل تصميم؟**
 
-- A. انقل الجدول الزمني إلى 05:00 وتمنَّ ألا تتأخر دفعة نهاية اليوم إلى هذا الحد أبدًا
+- A. انقل الجدول الزمني (move the schedule) إلى 05:00 وتمنَّ ألا تتأخر دفعة نهاية اليوم (end-of-day batch) إلى هذا الحد أبدًا (never that late)
 - B. شغّل عند إشارة جاهزية (readiness signal) من نهاية يوم النظام الأساسي، مع مهلة زمنية وتنبيه (timeout and an alert)
 - C. أعد محاولة البناء كل خمس دقائق حتى تبدو المجاميع صحيحة لفريق المخاطر (risk team)
-- D. ابنِ مرتين يوميًا ودع المستخدمين يختارون أي نسخة تبدو أفضل
+- D. ابنِ مرتين يوميًا (build twice a day) ودع المستخدمين يختارون أي نسخة تبدو أفضل (whichever version looks better)
 
 <details><summary>الإجابة</summary>
 
@@ -723,7 +723,7 @@ with psycopg.connect("postgresql://features@localhost/najm") as conn:
         consumer.commit(message=msg, asynchronous=False)
 ```
 
-إن ماتت العملية (process dies) بعد الإدراج لكن قبل الالتزام، يُقرأ الحدث مرة أخرى ويجعل `ON CONFLICT (auth_id) DO NOTHING` الكتابة الثانية بلا أثر (no-op)، فلا تحتسب الخصائص المحسوبة من هذا الجدول مرتين أبدًا. وفي الاستخدام الحقيقي، التزم لكل دفعة (commit per batch)؛ والمصبّ متساوي الأثر يُبقي ذلك آمنًا.
+إن ماتت العملية (process dies) بعد الإدراج لكن قبل الالتزام، يُقرأ الحدث مرة أخرى ويجعل `ON CONFLICT (auth_id) DO NOTHING` الكتابة الثانية بلا أثر (no-op)، فلا تحتسب الخصائص المحسوبة (features computed) من هذا الجدول مرتين أبدًا (never double-count). وفي الاستخدام الحقيقي، التزم لكل دفعة (commit per batch)؛ والمصبّ متساوي الأثر يُبقي ذلك آمنًا.
 
 **ما الذي تغطيه فعلًا المعالجة مرة واحدة بالضبط في Kafka (What Kafka's exactly-once really covers).** تُلخَّص ميزتان على أنهما "مرة واحدة بالضبط" ("exactly-once"):
 
@@ -834,54 +834,54 @@ GROUP BY card_id, window_start, window_end;
 - **لا مسار للرسائل الميتة ولا تنبيه على التأخر (No dead-letter path or lag alert).** حدث سيئ واحد يوقف التدفق، أو مستهلك عالق (stuck consumer) يتخلّف إلى ما بعد مدة الاحتفاظ. وجّه الإخفاقات (route failures) ونبّه على التأخر بالثواني.
 
 ## 🧾 الخلاصة (Recap)
-- استخدم البث المتدفق حين تتلاشى قيمة الجواب في ثوانٍ أو دقائق؛ وإلا فالدفعي أبسط وكافٍ (simpler and enough).
+- استخدم البث المتدفق (stream) حين تتلاشى قيمة الجواب في ثوانٍ أو دقائق (value of an answer decays in seconds or minutes)؛ وإلا فالدفعي أبسط وكافٍ (simpler and enough).
 - ينظّم Kafka الأحداث في مواضيع وأقسام (topics and partitions)؛ والترتيب قائم لكل قسم، لذا فالمفتاح مهم (the key matters). وتتقاسم مجموعات المستهلكين الأقسام؛ وتسجّل الإزاحات التقدّم (offsets record progress).
-- توقيت الالتزام (commit timing) يحدد مرة واحدة على الأكثر مقابل مرة واحدة على الأقل. ابنِ مرة واحدة على الأقل مع مصبّ متساوي الأثر (idempotent sink).
-- المعالجة مرة واحدة بالضبط في Kafka (المنتِجون متساوو الأثر والمعاملات (idempotent producers and transactions)) تغطي المعالجة من Kafka إلى Kafka؛ أما المعالجة مرة واحدة بالضبط من الطرف إلى الطرف فتحتاج مصبّات متساوية الأثر.
-- اجمع حسب وقت الحدث باستخدام نوافذ متعاقبة أو منزلقة أو نوافذ جلسات، مع علامة مائية تقايض الاكتمال بالسرعة عن قصد (trades completeness for speed on purpose).
+- توقيت الالتزام (commit timing) يحدد مرة واحدة على الأكثر مقابل مرة واحدة على الأقل (at-most-once versus at-least-once). ابنِ مرة واحدة على الأقل (build at-least-once) مع مصبّ متساوي الأثر (idempotent sink).
+- المعالجة مرة واحدة بالضبط في Kafka (Kafka's exactly-once) (المنتِجون متساوو الأثر والمعاملات (idempotent producers and transactions)) تغطي المعالجة من Kafka إلى Kafka (Kafka-to-Kafka processing)؛ أما المعالجة مرة واحدة بالضبط من الطرف إلى الطرف (end-to-end exactly-once) فتحتاج مصبّات متساوية الأثر (idempotent sinks).
+- اجمع حسب وقت الحدث (aggregate by event time) باستخدام نوافذ متعاقبة أو منزلقة أو نوافذ جلسات (tumbling, sliding or session windows)، مع علامة مائية (watermark) تقايض الاكتمال بالسرعة عن قصد (trades completeness for speed on purpose).
 
 ## ✍️ اختبر نفسك (Check yourself)
 
 **1. يطلب كريم لوحة معلومات "لحظية" ("real-time" dashboard) لودائع الفروع أمس (yesterday's branch deposits)، يراجعها مديرو الفروع (branch managers) مرة كل صباح. ماذا ينبغي أن يفعل فريق منصة البيانات (Data Platform team)؟**
 
-- A. بناء خط بيانات بـ Kafka وFlink لتتحدث لوحة المعلومات كل ثانية
+- A. بناء خط بيانات (pipeline) بـ Kafka وFlink لتتحدث لوحة المعلومات (dashboard) كل ثانية (every second)
 - B. استخدام مستهلك Kafka (Kafka consumer) يكتب كل إيداع مباشرة في قاعدة بيانات لوحة المعلومات
 - C. استخدام نوافذ الجلسات (session windows) على أحداث الإيداع لتُجمَّع كل زيارة فرع
 - D. تقديمها من الدفعة اليومية (daily batch)؛ فالرقم الأحدث لا يغيّر أي قرار (changes no decision)
 
 <details><summary>الإجابة</summary>
 
-**D.** لا يستحق البث المتدفق كلفته (earns its cost) إلا حين تتلاشى قيمة الجواب في ثوانٍ أو دقائق. A وB تضيفان كلفة بلا فائدة؛ وC تجيب عن سؤال لم يطرحه أحد. (🟢 الأساسيات (The essentials))
+**D.** لا يستحق البث المتدفق كلفته (earns its cost) إلا حين تتلاشى قيمة الجواب في ثوانٍ أو دقائق. A وB تضيفان كلفة بلا فائدة (add cost for no benefit)؛ وC تجيب عن سؤال لم يطرحه أحد (a question nobody asked). (🟢 الأساسيات (The essentials))
 
 </details>
 
-**2. استخدم مستهلك هدى الالتزام التلقائي بالإزاحات (automatic offset commits). أُعيد تشغيله في منتصف دفعة، ولم تُحتسب بعض الأحداث أبدًا. أي سلوك تسليم (delivery behaviour) أنتج ذلك، وما الإصلاح المعياري؟**
+**2. استخدم مستهلك هدى الالتزام التلقائي بالإزاحات (automatic offset commits). أُعيد تشغيله في منتصف دفعة (mid-batch)، ولم تُحتسب بعض الأحداث أبدًا (never counted). أي سلوك تسليم (delivery behaviour) أنتج ذلك، وما الإصلاح المعياري؟**
 
 - A. مرة واحدة على الأقل (at-least-once)؛ انتقل إلى التزامات تلقائية بفاصل أقصر (shorter interval) ليُفقد أقل
 - B. مرة واحدة على الأكثر (at-most-once)؛ التزم بعد كتابة متساوية الأثر مرتبطة بمعرّف الحدث (idempotent write keyed on the event ID)
 - C. مرة واحدة بالضبط (exactly-once)؛ لا شيء يحتاج إلى تغيير لأن Kafka يتتبّع الإزاحات
-- D. مرة واحدة على الأقل (at-least-once)؛ أضف مزيدًا من الأقسام لتلحق إعادة التشغيل أسرع
+- D. مرة واحدة على الأقل (at-least-once)؛ أضف مزيدًا من الأقسام (add more partitions) لتلحق إعادة التشغيل أسرع (catches up faster)
 
 <details><summary>الإجابة</summary>
 
-**B.** تحرّكت الإزاحات قبل إنجاز العمل، فتُخطّيت تلك الأحداث عند إعادة التشغيل. والالتزام بعد الكتابة يعطي مرة واحدة على الأقل، والمصبّ متساوي الأثر يجعل التكرارات الناتجة غير ضارة. A وD تخطئان تشخيص المشكلة (misdiagnose the problem). (🟢 الأساسيات (The essentials))
+**B.** تحرّكت الإزاحات قبل إنجاز العمل، فتُخطّيت تلك الأحداث عند إعادة التشغيل (skipped on restart). والالتزام بعد الكتابة (committing after the write) يعطي مرة واحدة على الأقل (at-least-once)، والمصبّ متساوي الأثر يجعل التكرارات الناتجة غير ضارة. A وD تخطئان تشخيص المشكلة (misdiagnose the problem). (🟢 الأساسيات (The essentials))
 
 </details>
 
 **3. تفعّل هدى معاملات Kafka (Kafka transactions) والمنتِج متساوي الأثر (idempotent producer)، ثم تقول إن جدول خصائص التنبيهات الذكية في PostgreSQL أصبح الآن "مرة واحدة بالضبط" ("exactly-once"). هل هي على حق؟**
 
 - A. لا؛ فالكتابة إلى PostgreSQL لا تزال تحتاج مصبًّا متساوي الأثر (idempotent sink)
-- B. نعم، لأن معاملات Kafka تمتد إلى كل نظام يكتب إليه المستهلك
-- C. نعم، ما دامت مجموعة المستهلكين تضم عضوًا واحدًا بالضبط في كل مرة
-- D. لا، لأن Kafka لا يستطيع أبدًا تسليم رسالة إلى مستهلك أكثر من مرة
+- B. نعم، لأن معاملات Kafka (Kafka transactions) تمتد إلى كل نظام يكتب إليه المستهلك (every system the consumer writes to)
+- C. نعم، ما دامت مجموعة المستهلكين (consumer group) تضم عضوًا واحدًا بالضبط في كل مرة (exactly one member at a time)
+- D. لا، لأن Kafka لا يستطيع أبدًا تسليم رسالة (deliver a message) إلى مستهلك (consumer) أكثر من مرة (more than once)
 
 <details><summary>الإجابة</summary>
 
-**A.** يغطي الضمان القراءة من Kafka والكتابة إليه ذرّيًا (atomically). وPostgreSQL خارج تلك المعاملة، لذا استخدم إدراجًا أو تحديثًا (upsert) مرتبطًا بـ `auth_id` أو خزّن الإزاحات في معاملة قاعدة البيانات نفسها. وD خاطئة: فتسليم مرة واحدة على الأقل يعني أن التكرارات ممكنة (duplicates are possible). (🟡 التعمق أكثر (Going deeper))
+**A.** يغطي الضمان القراءة من Kafka والكتابة إليه ذرّيًا (atomically). وPostgreSQL خارج تلك المعاملة (outside that transaction)، لذا استخدم إدراجًا أو تحديثًا (upsert) مرتبطًا بـ `auth_id` أو خزّن الإزاحات في معاملة قاعدة البيانات نفسها. وD خاطئة: فتسليم مرة واحدة على الأقل يعني أن التكرارات ممكنة (duplicates are possible). (🟡 التعمق أكثر (Going deeper))
 
 </details>
 
-**4. تفقد طرفية بطاقات (card terminal) اتصالها وترسل 40 تفويضًا متأخرة ثلاث دقائق. وتعدّ خاصية الاحتيال (fraud feature) التفويضات لكل بطاقة في كل نافذة مدتها 5 دقائق. أي نهج يضعها في النوافذ الصحيحة؟**
+**4. تفقد طرفية بطاقات (card terminal) اتصالها وترسل 40 تفويضًا متأخرة ثلاث دقائق. وتعدّ خاصية الاحتيال (fraud feature) التفويضات لكل بطاقة في كل نافذة مدتها 5 دقائق (per 5-minute window). أي نهج يضعها في النوافذ الصحيحة (right windows)؟**
 
 - A. العدّ حسب وقت المعالجة (processing time)، لتعكس الأعداد متى علم نجم بها
 - B. إسقاط كل حدث يصل بغير ترتيب (out of order) لإبقاء النوافذ نظيفة
@@ -890,15 +890,15 @@ GROUP BY card_id, window_start, window_end;
 
 <details><summary>الإجابة</summary>
 
-**C.** وقت الحدث يضع كل تفويض في النافذة التي وقع فيها؛ والعلامة المائية تحدد كم ننتظرها. A تضع الأربعين كلها في النافذة الخطأ؛ وB ترمي بيانات حقيقية (throws away real data)؛ وD لا تؤثر في التقسيم إلى نوافذ (windowing). (🟡 التعمق أكثر (Going deeper))
+**C.** وقت الحدث يضع كل تفويض في النافذة التي وقع فيها؛ والعلامة المائية تحدد كم ننتظرها. A تضع الأربعين كلها في النافذة الخطأ (wrong window)؛ وB ترمي بيانات حقيقية (throws away real data)؛ وD لا تؤثر في التقسيم إلى نوافذ (windowing). (🟡 التعمق أكثر (Going deeper))
 
 </details>
 
 **5. موضوع تفويضات البطاقات مفتاحه `merchant_country`. أحد المستهلكين مُثقَل (overloaded) والتأخر (lag) يتزايد باستمرار، بينما الآخرون خاملون (idle). ما السبب الأرجح، وما الإصلاح؟**
 
-- A. مدة الاحتفاظ قصيرة جدًا على حجم الحركة؛ زِدها إلى أربعة عشر يومًا
+- A. مدة الاحتفاظ (retention) قصيرة جدًا على حجم الحركة (traffic volume)؛ زِدها إلى أربعة عشر يومًا (fourteen days)
 - B. تأخير العلامة المائية (watermark delay) طويل جدًا على حجم النافذة؛ قصّره
-- C. الالتزام التلقائي مفعّل، مما يبطئ المستهلك؛ أوقفه والتزم يدويًا
+- C. الالتزام التلقائي (auto-commit) مفعّل، مما يبطئ المستهلك (slows the consumer)؛ أوقفه والتزم يدويًا (commit manually)
 - D. مفتاح واحد يحمل معظم الحركة على قسم ساخن (hot partition)؛ اجعل المفتاح `card_id` المرمَّز (tokenised)
 
 <details><summary>الإجابة</summary>

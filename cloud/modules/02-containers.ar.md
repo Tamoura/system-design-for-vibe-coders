@@ -6,7 +6,7 @@
 
 ---
 
-# 2.1 — الحاويات على الوجه الصحيح: الصور والطبقات وملفات Dockerfile والسجلات
+# 2.1 — الحاويات على الوجه الصحيح (Containers done right): الصور (images) والطبقات (layers) وملفات Dockerfile والسجلات (registries)
 *المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 1.1، 1.2* · *المرحلة (Phase): Build, Deploy*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
@@ -32,7 +32,7 @@
 
 **ما الصورة (What an image is).** الصورة (image) هي نظام الملفات الابتدائي (starting file system) مع البيانات الوصفية (metadata) (الأمر command، والمستخدم user، والبيئة environment). وتوحّدها **مبادرة الحاويات المفتوحة (Open Container Initiative, OCI)** في ثلاث مواصفات (specifications) (الصورة image، ووقت التشغيل runtime، والتوزيع distribution)، بحيث تعمل الصورة المبنية بـ Docker على containerd أو CRI-O أو Podman أو أي عنقود Kubernetes.
 
-تتكوّن الصورة من:
+تتكوّن الصورة (An image is made of):
 - **الطبقات (Layers)**: أرشيفات مضغوطة (compressed archives) لتغييرات نظام الملفات (file-system changes)، واحدة لكل خطوة بناء (build step) تغيّر الملفات. تُكدَّس لتكوّن شجرة الملفات النهائية (final file tree).
 - **إعداد (config)**: الأمر (command)، والمستخدم (user)، ومجلد العمل (working directory)، والمنافذ المكشوفة (exposed ports)، والبيئة (environment).
 - **بيان (manifest)**: قائمة تشير إلى الإعداد (config) والطبقات (layers) عبر **بصمتها (digest)**، أي تجزئة SHA-256 لمحتواها (SHA-256 hash of their content).
@@ -106,7 +106,7 @@ EXPOSE 8080
 CMD ["python", "-m", "src.main"]
 ```
 
-ما الذي يكسبه كل اختيار:
+ما الذي يكسبه كل اختيار (What each choice buys):
 - **صورة أساس مثبّتة بالبصمة (Pinned base by digest).** لا تتغيّر صورة الأساس (base) إلا حين يرفع أحدهم إصدارها (bumps it)، ويُفضَّل عبر طلب سحب آلي مُختبَر (tested bot pull request) (من Renovate أو Dependabot).
 - **`--require-hashes`.** أي حزمة مُتلاعَب بها أو مُستبدَلة (tampered or substituted package) تُفشل البناء (fails the build).
 - **تركيب الذاكرة المؤقتة (Cache mount).** يعيد BuildKit (باني Docker الحديث (modern Docker builder)) استخدام ذاكرة التنزيل المؤقتة لـ pip (pip's download cache) دون وضعها في طبقة (layer).
@@ -223,9 +223,9 @@ flowchart LR
 
 **1. يحذف يوسف `.env` باستخدام `RUN rm .env` مباشرة بعد `COPY . .`. لماذا يظل السرّ (secret) مكشوفًا؟**
 
-- A. يُتجاهَل الأمر `rm` بصمت (silently ignored) داخل بناء Docker
+- A. يُتجاهَل الأمر `rm` بصمت (silently ignored) داخل بناء Docker (Docker build)
 - B. ما زالت طبقة `COPY` تحوي الملف؛ وطبقة `rm` اللاحقة تخفيه فقط (only hides it)
-- C. تستعيد ذاكرة البناء المؤقتة (build cache) الملفات المحذوفة من البناء السابق مع كل إعادة بناء
+- C. تستعيد ذاكرة البناء المؤقتة (build cache) الملفات المحذوفة (deleted files) من البناء السابق (previous build) مع كل إعادة بناء
 - D. الملفات في مجلد العمل (working directory) مرئية دائمًا لأي شخص يشغّل `docker ps`
 
 <details><summary>الإجابة</summary>
@@ -237,8 +237,8 @@ flowchart LR
 **2. يقول طارق إن بيئة التجهيز (staging) تشغّل بناءً قديمًا (old build) مع أن خط التسليم (pipeline) دفع `mobile-api:staging` قبل ساعة. وهناك خطّا تسليم يدفعان كلاهما إلى ذلك الوسم (tag). ما الإصلاح الأمتن (most robust fix)؟**
 
 - A. اطلب من الفريقين تنسيق عمليات الدفع (coordinate their pushes) في قناة دردشة مشتركة (shared chat channel)
-- B. اضبط العنقود ليسحب الوسم `staging` أكثر، مع كل بدء تشغيل لحجيرة (pod start)
-- C. أعد تسمية الوسم إلى `staging-v2` حتى ينفصل عن القديم
+- B. اضبط العنقود (cluster) ليسحب الوسم `staging` أكثر (pull more often)، مع كل بدء تشغيل لحجيرة (pod start)
+- C. أعد تسمية الوسم (rename the tag) إلى `staging-v2` حتى ينفصل عن القديم (separate from the old one)
 - D. انشر البصمة (digest) التي سجّلها خط التسليم؛ واجعل وسوم الإصدارات ثابتة (release tags immutable)
 
 <details><summary>الإجابة</summary>
@@ -263,7 +263,7 @@ flowchart LR
 **4. لماذا يستخدم ملف Dockerfile المحصّن صيغة التنفيذ (exec-form) `CMD ["python", "-m", "src.main"]` بدلًا من `CMD python -m src.main`؟**
 
 - A. صيغة التنفيذ تتخطّى طبقة الصدفة (shell layer)، مما يجعل الصورة النهائية أصغر بشكل ملحوظ
-- B. صيغة الصدفة (shell form) غير مسموح بها في المرحلة النهائية من البناء متعدد المراحل
+- B. صيغة الصدفة (shell form) غير مسموح بها في المرحلة النهائية (final stage) من البناء متعدد المراحل (multi-stage build)
 - C. يصبح التطبيق العملية رقم 1 (process 1) ويتلقّى `SIGTERM` مباشرة، فيستطيع التوقّف بنظافة (stop cleanly)
 - D. صيغة التنفيذ تجعل العملية تعمل تلقائيًا بالمستخدم غير الجذري (non-root user)
 
@@ -275,10 +275,10 @@ flowchart LR
 
 **5. تسأل منى (Mona) من قسم المالية (Finance) لماذا يعيد فريق المنصة (platform team) بناء الصور شهريًا حتى حين لا تتغيّر شيفرة التطبيق (application code). ما أفضل إجابة؟**
 
-- A. كل إعادة بناء تضغط الطبقات أكثر، فتصغر الصور بمرور الوقت
+- A. كل إعادة بناء (rebuild) تضغط الطبقات (compresses the layers) أكثر، فتصغر الصور بمرور الوقت (smaller over time)
 - B. تُكتشف ثغرات جديدة (new vulnerabilities) في صور الأساس غير المتغيّرة؛ وإعادة البناء تلتقط الرقع (pick up the patches)
 - C. تحذف سجلات الحاويات (container registries) افتراضيًا أي صورة يزيد عمرها على شهر
-- D. يرفض Kubernetes تشغيل الصور التي يزيد عمرها على شهر
+- D. يرفض Kubernetes تشغيل الصور (start images) التي يزيد عمرها على شهر (older than one month)
 
 <details><summary>الإجابة</summary>
 
@@ -299,7 +299,7 @@ flowchart LR
 
 ---
 
-# 2.2 — أساسيات Kubernetes: الحجيرات وعمليات النشر والخدمات وطريقة تفكير العنقود
+# 2.2 — أساسيات Kubernetes (Kubernetes fundamentals): الحجيرات (pods) وعمليات النشر (deployments) والخدمات (services) وطريقة تفكير العنقود (how the cluster thinks)
 *المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 1.1، 1.2، 2.1* · *المرحلة (Phase): Deploy, Operate*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
@@ -545,7 +545,7 @@ kubectl -n mobile get events --sort-by=.lastTimestamp
 
 **1. يحذف يوسف حجيرة (pod) سيئة التصرّف من واجهة الهاتف (Mobile API)، فتظهر حجيرة جديدة خلال ثوانٍ باسم مختلف. ما الذي تسبّب في ذلك؟**
 
-- A. أعاد kubelet على العقدة تشغيل الحجيرة نفسها بعد حذفها
+- A. أعاد kubelet على العقدة (node) تشغيل الحجيرة نفسها (restarted the same pod) بعد حذفها
 - B. أعادت الخدمة (Service) إنشاء الحجيرة كي تحتفظ بنقطة نهاية (endpoint) واحدة على الأقل
 - C. رأى متحكّم مجموعة النسخ (ReplicaSet controller) عددًا أقل من اللازم من الحجيرات فأنشأ بديلًا
 - D. استعاد etcd كائن الحجيرة المحذوف من أحدث نسخة احتياطية (most recent backup)
@@ -559,9 +559,9 @@ kubectl -n mobile get events --sort-by=.lastTimestamp
 **2. ينشر فريق جديد خدمة. حجيراتها في حالة `Running` وجاهزة (ready)، لكن كل طلب إلى الخدمة (Service) تنتهي مهلته (times out)، وليس للخدمة نقاط نهاية (endpoints). ما السبب الأرجح؟**
 
 - A. محدِّد الخدمة (Service selector) لا يطابق ملصقات الحجيرات (pod labels)
-- B. بصمة الصورة (image digest) في قالب الحجيرة خاطئة
+- B. بصمة الصورة (image digest) في قالب الحجيرة (pod template) خاطئة
 - C. الحجيرات تتجاوز حدّ ذاكرتها (memory limit) باستمرار
-- D. لم يجد المُجدوِل (scheduler) عقدة فيها متّسع
+- D. لم يجد المُجدوِل (scheduler) عقدة فيها متّسع (node with room)
 
 <details><summary>الإجابة</summary>
 
@@ -571,9 +571,9 @@ kubectl -n mobile get events --sort-by=.lastTimestamp
 
 **3. أثناء إطلاق (release)، لا تصبح حجيرات واجهة الهاتف الجديدة جاهزة أبدًا. تستخدم عملية النشر `maxUnavailable: 0` و `maxSurge: 1`. ماذا يحدث للعملاء؟**
 
-- A. تُحذف كل الحجيرات القديمة دفعة واحدة، وتتوقّف الواجهة حتى يتصرّف أحدهم
+- A. تُحذف كل الحجيرات القديمة (old pods) دفعة واحدة (at once)، وتتوقّف الواجهة (API goes down) حتى يتصرّف أحدهم
 - B. يكتشف Kubernetes الفشل ويتراجع تلقائيًا (automatically rolls back) إلى الإصدار السابق
-- C. تُقسَّم حركة المرور بالتساوي، فيصل نحو نصف الطلبات إلى الحجيرات المعطوبة
+- C. تُقسَّم حركة المرور بالتساوي (traffic is split evenly)، فيصل نحو نصف الطلبات إلى الحجيرات المعطوبة (broken pods)
 - D. يتعثّر الطرح (rollout stalls)، وتواصل الحجيرات القديمة الخدمة، ويُبلَّغ عنه بأنه لا يتقدّم (not progressing)
 
 <details><summary>الإجابة</summary>
@@ -584,10 +584,10 @@ kubectl -n mobile get events --sort-by=.lastTimestamp
 
 **4. تلاحظ مها أن نسخ خدمة المدفوعات (Payments replicas) الثلاث كلها على عقد في منطقة التوافر (availability zone) نفسها. أي تغيير يعالج هذا بأكثر الطرق مباشرة؟**
 
-- A. زِد النسخ من 3 إلى 6 كي يقلّ أثر تعطّل منطقة واحدة
+- A. زِد النسخ (replicas) من 3 إلى 6 كي يقلّ أثر تعطّل منطقة واحدة (single zone failure)
 - B. أضف قيد توزيع طوبولوجيا حسب المنطقة (zone topology spread constraint)، مع مجمّعات عقد (node pools) في عدة مناطق
 - C. انقل المدفوعات إلى مساحة أسماء مخصّصة لها (dedicated namespace) بحصة منفصلة (separate quota)
-- D. غيّر نوع خدمة المدفوعات إلى `LoadBalancer` عبر المناطق
+- D. غيّر نوع خدمة المدفوعات (Payments Service type) إلى `LoadBalancer` عبر المناطق (across zones)
 
 <details><summary>الإجابة</summary>
 
@@ -598,8 +598,8 @@ kubectl -n mobile get events --sort-by=.lastTimestamp
 **5. يصلح يوسف إعدادًا إنتاجيًا (production setting) باستخدام `kubectl edit`. وفي صباح اليوم التالي تعود القيمة القديمة. لماذا، وماذا ينبغي أن يفعل؟**
 
 - A. أعاد GitOps ما يعلنه Git؛ وينبغي أن يغيّره عبر طلب سحب (pull request)
-- B. يعكس Kubernetes كل تغيير يدوي بعد 24 ساعة؛ وينبغي أن يعيد تطبيقه يوميًا
-- C. خزّن kubelet الإعداد القديم مؤقتًا طوال الليل؛ وينبغي أن يُفرغ العقدة ويعيد تشغيلها
+- B. يعكس Kubernetes كل تغيير يدوي (manual change) بعد 24 ساعة؛ وينبغي أن يعيد تطبيقه يوميًا (re-apply it daily)
+- C. خزّن kubelet الإعداد القديم مؤقتًا (cached the old setting) طوال الليل؛ وينبغي أن يُفرغ العقدة ويعيد تشغيلها (drain and restart the node)
 - D. فقد etcd التغيير أثناء الضغط (compaction)؛ وينبغي أن يطلب من المزوّد استعادة etcd
 
 <details><summary>الإجابة</summary>
@@ -624,7 +624,7 @@ kubectl -n mobile get events --sort-by=.lastTimestamp
 
 ---
 
-# 2.3 — Kubernetes عمليًا: الإعدادات والأسرار ومجسّات الصحة والتوسّع التلقائي و Helm
+# 2.3 — Kubernetes عمليًا (Kubernetes in practice): الإعدادات (config) والأسرار (secrets) ومجسّات الصحة (health probes) والتوسّع التلقائي (autoscaling) و Helm
 *المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 2.1، 2.2* · *المرحلة (Phase): Deploy, Operate*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
@@ -632,11 +632,11 @@ kubectl -n mobile get events --sort-by=.lastTimestamp
 - تحمل **خرائط الإعدادات (ConfigMaps)** الإعدادات العادية (ordinary settings)؛ وتحمل **الأسرار (Secrets)** الحسّاسة منها. وسرّ Kubernetes (Kubernetes Secret) افتراضيًا **مُرمَّز بـ base64 فقط، وليس مشفّرًا (base64-encoded, not encrypted)**: فعّل التشفير أثناء التخزين (encryption at rest)، وقيّد من يستطيع قراءته، وفضّل المزامنة من مدير أسرار خارجي (external secrets manager).
 - **الجاهزية (Readiness)** تقرّر ما إذا كانت الحجيرة تتلقّى حركة مرور (gets traffic)؛ و**الحيوية (liveness)** تقرّر ما إذا كانت تُعاد تشغيلها (gets restarted)؛ و**البدء (startup)** يحمي التطبيقات بطيئة الإقلاع (slow starters). ويجب أن تفحص الحيوية العملية نفسها فقط (only the process itself)، ولا تفحص أبدًا قاعدة بيانات أو خدمة أخرى.
 - **الطلبات (Requests)** تحجز السعة (reserve capacity) وتقود الجدولة (scheduling) والتوسّع التلقائي؛ و**الحدود (limits)** تسقّف الاستخدام (cap usage) (المعالج فوق الحد يُخنَق (throttled)، والذاكرة فوق الحد تُقتل (killed)).
-- إشارة القرار (Decision cue): قبل الإطلاق الفعلي (go-live)، امرّ على قائمة تحقق الجاهزية للإنتاج (production-readiness checklist)؛ فأي سطر فارغ انقطاع معروف ينتظر أن يقع (known outage waiting to happen).
+- إشارة القرار (Decision cue): قبل الإطلاق الفعلي (go-live)، مُرَّ على قائمة تحقق الجاهزية للإنتاج (production-readiness checklist)؛ فأي سطر فارغ انقطاع معروف ينتظر أن يقع (known outage waiting to happen).
 - أكبر فخ (Biggest trap): مجسّ حيوية (liveness probe) يعتمد على شيء خارج الحجيرة، فيحوّل تعثّرًا قصيرًا في قاعدة البيانات (short database blip) إلى عاصفة إعادة تشغيل على مستوى العنقود (cluster-wide restart storm).
 
 ## 🧭 لماذا يهم (Why it matters)
-في صباح يوم ثلاثاء، تنتقل قاعدة بيانات PostgreSQL المُدارة (managed PostgreSQL database) التي تقف خلف **خدمة المدفوعات (Payments service)** إلى نسختها الاحتياطية (fails over to its standby)، في تعثّر (blip) يدوم نحو ثلاثين ثانية. كان ينبغي أن تُرجع المدفوعات أخطاءً (errors) لفترة وجيزة ثم تتعافى (recovered). لكنها بدلًا من ذلك توقّفت أحد عشر دقيقة.
+في صباح يوم ثلاثاء، تنتقل قاعدة بيانات PostgreSQL المُدارة (managed PostgreSQL database) التي تقف خلف **خدمة المدفوعات (Payments service)** إلى نسختها الاحتياطية (fails over to its standby)، في تعثّر (blip) يدوم نحو ثلاثين ثانية. كان ينبغي أن تُرجع المدفوعات أخطاءً (errors) لفترة وجيزة ثم تتعافى (recovered). لكنها بدلًا من ذلك توقّفت إحدى عشرة دقيقة.
 
 تكشف مراجعة ما بعد الحادثة (postmortem) التي أجرتها مها (الدرس 5.3) مع يوسف السلسلة (the chain). كان مجسّ الحيوية (liveness probe) يستدعي `/health`، الذي يستعلم قاعدة البيانات، فأعاد kubelet أثناء الانتقال (failover) تشغيل كل الحجيرات دفعة واحدة. احتاجت الحجيرات المُعاد تشغيلها أربعين ثانية لتسخن (warm up)، ولم تكن لها مهلة إقلاع (startup allowance)، ففشلت في فحص الحيوية مجددًا وأُعيد تشغيلها مجددًا. وفي الأثناء، رأى المُوسِّع التلقائي (autoscaler) قفزة المعالج (CPU spike) فأضاف حجيرات، كلٌّ منها يفتح اتصالات أكثر (more connections) بقاعدة بيانات عادت للتوّ، حتى بلغت حدّ اتصالاتها (connection limit). وكل إعداد شارك في ذلك كان المقصود منه أن يجعل الخدمة *أكثر* موثوقية (more reliable).
 
@@ -698,7 +698,7 @@ flowchart TD
 
 **الطلبات والحدود (Requests and limits).** ينبغي لكل حاوية أن تعلن:
 - **الطلبات (Requests)**: المعالج (CPU) والذاكرة (memory) المحجوزان لها. لا يضع المُجدوِل (scheduler) الحجيرات إلا حيث تتّسع الطلبات، ويقيس المُوسِّع التلقائي (autoscaler) الاستخدام (utilisation) نسبةً مئوية من الطلب (percentage of the request).
-- **الحدود (Limits)**: السقف (the ceiling). فوق حدّ المعالج تُ**خنَق** الحاوية (**throttled**) (تُبطَّأ)؛ وفوق حدّ الذاكرة **تُقتل** (**killed**) (`OOMKilled`) ويُعاد تشغيلها.
+- **الحدود (Limits)**: السقف (the ceiling). فوق حدّ المعالج (CPU limit) **تُخنَق (throttled)** الحاوية (أي تُبطَّأ)؛ وفوق حدّ الذاكرة (memory limit) **تُقتل (killed)** (`OOMKilled`) ويُعاد تشغيلها.
 
 يُقاس المعالج (CPU) بالأنوية أو أجزاء الألف من النواة (cores or millicores) (`250m` ربع نواة)؛ والذاكرة (memory) بالبايتات (bytes) (`512Mi`).
 
@@ -753,10 +753,10 @@ flowchart TD
               drop: ["ALL"]
 ```
 
-خيارات تستحق الشرح:
+خيارات تستحق الشرح (Choices worth explaining):
 - **حدّ الذاكرة يساوي الطلب (Memory limit equals request).** لا يمكن خنق الذاكرة (cannot be throttled)، بل قتلها فقط، لذا فإن الإفراط في التزام الذاكرة (overcommitting) يسبّب عمليات قتل مفاجئة (surprise kills) حين ينشغل الجيران (neighbours).
 - **لا حدّ للمعالج هنا (No CPU limit here).** خيار مختلَف عليه (debated choice): قد تخنق حدود المعالج (CPU limits) خدمة حسّاسة لزمن الاستجابة (latency-sensitive service) حتى حين تكون العقدة خاملة (idle). تضبط فرق كثيرة طلبات المعالج (CPU requests) في كل مكان، والحدود فقط حيث تلزم العدالة الصارمة (hard fairness)؛ قِس الخنق (measure throttling) (الدرس 5.1) وقرّر لكل خدمة على حدة (per service).
-- **سياق الأمان (Security context).** بلا صلاحيات جذر (non-root)، وبلا تصعيد صلاحيات (no privilege escalation)، وبلا قدرات Linux (no Linux capabilities)، ونظام ملفات جذري للقراءة فقط (read-only root file system) (ركّب `emptyDir` حيث يجب أن يكتب التطبيق)، وملف seccomp الافتراضي (default seccomp profile). وكلها عدا نظام الملفات المخصّص للقراءة فقط يتطلّبها معيار أمان الحجيرات **المقيَّد (restricted)** (Pod Security Standard) الذي يفرضه بنك نجم على كل مساحة أسماء (per namespace) بالملصق `pod-security.kubernetes.io/enforce: restricted`. والمزيد في [*أمن الذكاء الاصطناعي وأمن التطبيقات (Secure AI & Application Security)*، الدرس 7.2 — الحاويات و Kubernetes والبنية التحتية بوصفها شيفرة (Containers, Kubernetes and infrastructure as code)](../secai/index.ar.html#/7.2).
+- **سياق الأمان (Security context).** بلا صلاحيات جذر (non-root)، وبلا تصعيد صلاحيات (no privilege escalation)، وبلا قدرات Linux (no Linux capabilities)، ونظام ملفات جذري للقراءة فقط (read-only root file system) (ركّب `emptyDir` حيث يجب أن يكتب التطبيق)، وملف seccomp الافتراضي (default seccomp profile). وكلها عدا نظام الملفات المخصّص للقراءة فقط يتطلّبها معيار أمان الحجيرات (Pod Security Standard) **المقيَّد (restricted)** الذي يفرضه بنك نجم على كل مساحة أسماء (per namespace) بالملصق `pod-security.kubernetes.io/enforce: restricted`. والمزيد في [*أمن الذكاء الاصطناعي وأمن التطبيقات (Secure AI & Application Security)*، الدرس 7.2 — الحاويات و Kubernetes والبنية التحتية بوصفها شيفرة (Containers, Kubernetes and infrastructure as code)](../secai/index.ar.html#/7.2).
 
 **جودة الخدمة (Quality of service).** تحدّد الطلبات والحدود أيضًا أولوية إخلاء (eviction priority) كل حجيرة تحت ضغط الذاكرة (memory pressure): **BestEffort** (لم يُضبط شيء؛ تُخلى أولًا (evicted first))، و**Burstable**، و**Guaranteed** (الطلبات تساوي الحدود للمعالج والذاكرة في كل حاوية؛ تُخلى أخيرًا (evicted last)). ومواصفة واجهة الهاتف أعلاه بلا حدّ للمعالج، لذا فهي Burstable؛ أما المدفوعات (Payments) فتضبط أيضًا حدود المعالج مساوية للطلبات وتعمل بفئة Guaranteed.
 
@@ -877,7 +877,7 @@ helm rollback mobile-api 3 -n mobile
 - **مجسّات حيوية تستدعي الاعتماديات (Liveness probes that call dependencies).** تعثّر في قاعدة البيانات (database blip) يعيد تشغيل كل حجيرة دفعة واحدة. الحيوية تفحص العملية فقط؛ وعالج فشل الاعتماديات (dependency failure) في الجاهزية (readiness) أو داخل التطبيق.
 - **لا مجسّ بدء للتطبيقات بطيئة الإقلاع (No startup probe for slow starters).** تقتل الحيوية التطبيق قبل أن ينتهي من الإقلاع، إلى ما لا نهاية (forever). أضف مجسّ بدء (startup probe) بحجم أسوأ زمن إقلاع (worst-case start).
 - **معاملة base64 على أنه تشفير (Treating base64 as encryption).** كل من يملك ملف YAML يملك السرّ. استخدم مدير أسرار (secrets manager)، والتشفير أثناء التخزين (encryption at rest)، والتحكم المحكم في الوصول (tight RBAC)؛ ولا تودِع (commit) أبدًا بيانات أسرار صريحة (plain Secret manifests).
-- **غياب الطلبات، أو طلبات خاطئة كليًا (No requests, or wildly wrong ones).** يرصّ المُجدوِل الحجيرات عشوائيًا (packs blindly) ولا يستطيع HPA حساب الاستخدام (compute utilisation)؛ والطلبات المضخّمة (oversized requests) تهدر المال. اضبطها بناءً على القياس (from measurement).
+- **غياب الطلبات، أو طلبات خاطئة كليًا (No requests, or wildly wrong ones).** يرصّ المُجدوِل (scheduler) الحجيرات دون بصيرة (packs blindly) ولا يستطيع HPA حساب الاستخدام (compute utilisation)؛ والطلبات المضخّمة (oversized requests) تهدر المال. اضبطها بناءً على القياس (from measurement).
 - **التوسّع التلقائي على الشيء الخطأ (Autoscaling the wrong thing).** توسّع بناءً على القيد الحقيقي (real constraint) وسقّف النسخ (cap replicas) مقابل حدود الأنظمة اللاحقة (downstream limits).
 - **الخروج فورًا عند `SIGTERM` (Exiting instantly).** تُسقَط الطلبات الجارية (requests in flight) مع كل نشر. أفرِغ ضمن مهلة السماح (grace period)، مع وقفة `preStop` قصيرة.
 
@@ -907,8 +907,8 @@ helm rollback mobile-api 3 -n mobile
 
 - A. هو محق؛ فخادم واجهة البرمجة (API server) يشفّر قيم الأسرار قبل أن تصل إلى Git
 - B. ترميز base64 ليس تشفيرًا (not encryption)؛ استخدم مدير أسرار (secrets manager) وزامِن القيمة إلى الداخل
-- C. ينبغي أن يحفظها في خريطة إعدادات (ConfigMap) بدلًا من ذلك، فقواعد الوصول فيها أشد
-- D. ينبغي أن يرمّز القيمة بـ base64 مرتين كي لا يسهل فكّها
+- C. ينبغي أن يحفظها في خريطة إعدادات (ConfigMap) بدلًا من ذلك، فقواعد الوصول فيها أشد (stricter access rules)
+- D. ينبغي أن يرمّز القيمة بـ base64 مرتين (base64-encode the value twice) كي لا يسهل فكّها (decoded easily)
 
 <details><summary>الإجابة</summary>
 
@@ -933,8 +933,8 @@ helm rollback mobile-api 3 -n mobile
 
 - A. عند `SIGTERM`، أنهِ الطلبات الجارية (in-flight requests)، بعد وقفة `preStop` قصيرة
 - B. أزِل مجسّ الجاهزية (readiness probe) كي تتلقّى الحجيرات الجديدة حركة المرور أسرع
-- C. ارفع حدّ الذاكرة (memory limit) كي لا تُقتل الحجيرات القديمة أثناء الطرح
-- D. زِد `revisionHistoryLimit` كي يحتفظ الطرح بمزيد من الحجيرات القديمة
+- C. ارفع حدّ الذاكرة (memory limit) كي لا تُقتل الحجيرات القديمة (old pods) أثناء الطرح (rollout)
+- D. زِد `revisionHistoryLimit` كي يحتفظ الطرح (rollout) بمزيد من الحجيرات القديمة (old pods)
 
 <details><summary>الإجابة</summary>
 

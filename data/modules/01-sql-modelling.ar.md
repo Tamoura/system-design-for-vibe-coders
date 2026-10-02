@@ -209,9 +209,9 @@ WHERE rn = 1;
 
 **الوقت تعريف، لا تفصيل (Time is a definition, not a detail).** تخزّن نجم قيم `timestamptz` (لحظات مطلقة (absolute moments)). و"سبتمبر" يبدأ في لحظة مختلفة في الدوحة (`Asia/Qatar`، UTC+3) ودبي (`Asia/Dubai`، UTC+4) والاتحاد الأوروبي (EU)، لذا جمّع في فترات بمنطقة زمنية صريحة (bucket with an explicit zone)، مثل `date_trunc('month', txn_ts AT TIME ZONE 'Asia/Qatar')`. استخدم **النطاقات نصف المفتوحة** (half-open ranges) (`>= start AND < end`): فعبارة `BETWEEN '2026-09-01' AND '2026-09-30'` تُسقط بصمت (silently drops) كل ما بعد منتصف الليل في اليوم الثلاثين.
 
-**المال دقيق، والعملات لا تُجمع (Money is exact, and currencies do not add).** خزّن المبالغ (amounts) بنوع `numeric`، ولا تستخدم أبدًا `float`، الذي يجعل التقريب (rounding) فيه المجاميع تنجرف (sums drift). ولا تستخدم `SUM` أبدًا عبر العملات (across currencies): حوّل أولًا بسعر موثّق (documented rate)، أو جمّع حسب العملة (group by currency).
+**المال دقيق، والعملات لا تُجمع (Money is exact, and currencies do not add).** خزّن المبالغ (amounts) بنوع `numeric`، ولا تستخدم أبدًا `float`، الذي يؤدّي التقريب (rounding) فيه إلى انجراف المجاميع (sums drift). ولا تستخدم `SUM` أبدًا عبر العملات (across currencies): حوّل أولًا بسعر موثّق (documented rate)، أو جمّع حسب العملة (group by currency).
 
-**‏`NOT IN` والقيم الفارغة (and nulls).** إن سؤال "العملاء الذين ليست لديهم قروض" (customers with no loans) مكتوبًا بصيغة `WHERE customer_id NOT IN (SELECT customer_id FROM loans)` يُعيد *صفر صفوف على الإطلاق* (no rows at all) إذا كان أي `loans.customer_id` بقيمة `NULL`، لأن `x NOT IN (..., NULL)` لا يكون صحيحًا أبدًا (never true). استخدم الربط العكسي (anti-join):
+**‏`NOT IN` والقيم الفارغة (NOT IN and nulls).** إن سؤال "العملاء الذين ليست لديهم قروض" (customers with no loans) مكتوبًا بصيغة `WHERE customer_id NOT IN (SELECT customer_id FROM loans)` يُعيد *صفر صفوف على الإطلاق* (no rows at all) إذا كان أي `loans.customer_id` بقيمة `NULL`، لأن `x NOT IN (..., NULL)` لا يكون صحيحًا أبدًا (never true). استخدم الربط العكسي (anti-join):
 
 ```sql
 SELECT c.customer_id
@@ -297,8 +297,8 @@ Checks       : grain unique OK; debit total reconciles to GL report within 0.1%,
 
 - A. إحصاءات المخطِّط (planner's statistics) قديمة (out of date)
 - B. يتجاهل `COUNT(*)` الصفوف التي فيها قيم فارغة (rows with nulls)
-- C. حُبَيبيته (grain) هي صف واحد لكل معاملة (one row per transaction)، لا لكل عميل
-- D. كان ينبغي أن يكون `JOIN` ربطًا من نوع `CROSS JOIN` للاحتفاظ بكل عميل
+- C. حُبَيبيته (grain) هي صف واحد لكل معاملة (one row per transaction)، لا لكل عميل (not per customer)
+- D. كان ينبغي أن يكون `JOIN` ربطًا من نوع `CROSS JOIN` للاحتفاظ بكل عميل (to keep every customer)
 
 <details><summary>الإجابة</summary>
 
@@ -309,9 +309,9 @@ Checks       : grain unique OK; debit total reconciles to GL report within 0.1%,
 **2. يربط استعلام `customers` بكل من `loans` و`transactions` ويجمع أرصدة القروض (loan balances). فيُظهر عميل لديه قرضان و30 معاملة رصيد قروض أعلى بـ 30 مرة. ما الإصلاح الصحيح (right fix)؟**
 
 - A. جمّع كل جدول إلى صف واحد لكل عميل (one row per customer) أولًا، ثم اربط
-- B. استبدل `SUM(l.balance)` بـ `SUM(DISTINCT l.balance)` كي يُعدّ كل قرض مرة واحدة
-- C. أضف `ORDER BY customer_id`
-- D. غيّر الربطين كليهما إلى `LEFT JOIN`
+- B. استبدل `SUM(l.balance)` بـ `SUM(DISTINCT l.balance)` كي يُعدّ كل قرض مرة واحدة (so each loan counts once)
+- C. أضف (add) `ORDER BY customer_id`
+- D. غيّر الربطين كليهما (change both joins) إلى `LEFT JOIN`
 
 <details><summary>الإجابة</summary>
 
@@ -322,7 +322,7 @@ Checks       : grain unique OK; debit total reconciles to GL report within 0.1%,
 **3. يريد كريم إدراج كل عملاء الأفراد (every retail customer)، مع صفر لمن لم ينفقوا شيئًا في سبتمبر. يحتوي استعلام `LEFT JOIN` لدى هدى على `WHERE t.txn_ts >= '2026-09-01'`، والعملاء ذوو الإنفاق الصفري (zero-spend customers) مفقودون. لماذا؟**
 
 - A. يُسقط `LEFT JOIN` الصفوف غير المتطابقة (unmatched rows) كلما تلاه `GROUP BY`
-- B. للصفوف غير المتطابقة قيمة `txn_ts` من نوع `NULL`، لذا يُسقطها اختبار `WHERE`
+- B. للصفوف غير المتطابقة (unmatched rows) قيمة `txn_ts` من نوع `NULL`، لذا يُسقطها اختبار `WHERE` (the WHERE test drops them)
 - C. يجب أن يُغلّف `COALESCE` القيمة `t.txn_ts` قبل الربط، وإلا أفسدت القيم الفارغة المجموع (the nulls break the sum)
 - D. يحتاج مرشّح التاريخ (date filter) إلى `HAVING` بدل `WHERE`، لأنه يعمل بعد التجميع (after grouping)
 
@@ -349,7 +349,7 @@ Checks       : grain unique OK; debit total reconciles to GL report within 0.1%,
 
 - A. إحدى قيم `loans.customer_id` هي `NULL`، لذا لا يكون `NOT IN` صحيحًا أبدًا (never true)
 - B. يحتاج الاستعلام الفرعي (sub-query) إلى `DISTINCT`، وإلا ألغت المعرّفات المكرّرة (duplicate IDs) بعضها بعضًا
-- C. لا يسمح PostgreSQL باستعلام فرعي داخل بند `WHERE`
+- C. لا يسمح PostgreSQL باستعلام فرعي (sub-query) داخل بند `WHERE` ‏(WHERE clause)
 - D. يحتاج جدول العملاء إلى فهرس (index) على `customer_id` من أجل `NOT IN`
 
 <details><summary>الإجابة</summary>
@@ -362,7 +362,7 @@ Checks       : grain unique OK; debit total reconciles to GL report within 0.1%,
 - توثيق PostgreSQL ‏(PostgreSQL documentation) — الاستعلامات (Queries) (الربط (joins)، واستعلامات `WITH`، و`GROUP BY`): https://www.postgresql.org/docs/current/queries.html
 - توثيق PostgreSQL — درس دوال النوافذ (Window functions tutorial): https://www.postgresql.org/docs/current/tutorial-window.html
 - توثيق DuckDB ‏(DuckDB documentation) — مقدمة إلى SQL ‏(SQL introduction)، ودوال النوافذ (window functions) و`QUALIFY`: https://duckdb.org/docs/
-- توثيق PostgreSQL — استخدام `EXPLAIN` ‏(Using): https://www.postgresql.org/docs/current/using-explain.html
+- توثيق PostgreSQL — استخدام `EXPLAIN` (Using EXPLAIN): https://www.postgresql.org/docs/current/using-explain.html
 
 ---
 
@@ -587,7 +587,7 @@ GROUP BY d.branch_code;
 - A. أضف فهرسًا (index) على `branch_code` كي يقرأ التقرير قيمة متّسقة (consistent value)
 - B. النوع 2 (Type 2) على الفرع، مع ربط حقائق مارس بنسخة مارس (March's version)
 - C. اجعل بُعد العملاء (customer dimension) من النوع 1 (Type 1) على الفرع، بالكتابة فوق القيمة القديمة
-- D. قسّم جدول الحقائق (partition the fact table) حسب الفرع كي تبقى قروض كل فرع منفصلة
+- D. قسّم جدول الحقائق (partition the fact table) حسب الفرع كي تبقى قروض كل فرع منفصلة (stay separate)
 
 <details><summary>الإجابة</summary>
 
@@ -822,7 +822,7 @@ flowchart LR
 
 **1. يُبطئ استعلام هدى التحليلي الممتد لسنة كاملة (year-long analytical query) معاملاتِ الفروع على الخادم الرئيسي للنظام المصرفي الأساسي (core banking primary). ما أفضل حل طويل الأمد (best long-term fix)؟**
 
-- A. أبقِه على الخادم الرئيسي لكن شغّله ليلًا، حين تكون الفروع مغلقة
+- A. أبقِه على الخادم الرئيسي (keep it on the primary) لكن شغّله ليلًا (run it at night)، حين تكون الفروع مغلقة (when branches are closed)
 - B. أضف مزيدًا من الفهارس (more indexes) إلى الخادم الرئيسي كي ينتهي المسح أسرع
 - C. انقل حِمل العمل (workload) إلى مخزن تحليلي منفصل (separate analytical store)
 - D. صدّر الجداول إلى ملفات CSV على محرّك أقراص مشترك (shared drive)
@@ -836,7 +836,7 @@ flowchart LR
 **2. لماذا يعمل `SUM(amount) GROUP BY channel` عادةً أسرع على Parquet منه على CSV بالصفوف نفسها؟**
 
 - A. يقرأ الأعمدة المطلوبة فقط (only the needed columns)، مضغوطةً (compressed)
-- B. ملفات Parquet مرتّبة دائمًا حسب `amount`، فتكون عمليات الجمع أسرع
+- B. ملفات Parquet مرتّبة دائمًا (always sorted) حسب `amount`، فتكون عمليات الجمع أسرع (sums are quicker)
 - C. لا يستطيع CSV تخزين الأرقام (cannot store numbers)
 - D. يخزّن Parquet إجابة محسوبة مسبقًا (pre-computed answer) لاستعلامات التجميع الشائعة (common aggregate queries)
 
@@ -850,7 +850,7 @@ flowchart LR
 
 - A. عنقود حوسبة أكبر (larger compute cluster)، كي تنتهي المهمة قبل أن تتعطّل
 - B. صيغة جداول مفتوحة (open table format) ذات التزامات لقطات ذرّية (atomic snapshot commits)
-- C. تحويل الملفات إلى ORC
+- C. تحويل الملفات إلى ORC ‏(converting the files to ORC)
 - D. التقسيم حسب الساعة بدلًا من اليوم (partitioning by hour instead of by day)، كي يضيع أقل
 
 <details><summary>الإجابة</summary>
@@ -887,7 +887,7 @@ flowchart LR
 
 ## 📚 المراجع (References)
 - توثيق Apache Parquet ‏(Apache Parquet documentation): https://parquet.apache.org/docs/
-- توثيق Apache Iceberg ومواصفة الجداول (documentation and table specification): https://iceberg.apache.org/
+- توثيق Apache Iceberg ومواصفة الجداول (Apache Iceberg documentation and table specification): https://iceberg.apache.org/
 - توثيق Delta Lake ‏(Delta Lake documentation): https://delta.io/
 - توثيق Apache Hudi ‏(Apache Hudi documentation): https://hudi.apache.org/
 - توثيق DuckDB ‏(DuckDB documentation) — ملفات Parquet ‏(Parquet files): https://duckdb.org/docs/

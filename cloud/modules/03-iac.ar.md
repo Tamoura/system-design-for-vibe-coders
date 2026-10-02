@@ -249,7 +249,7 @@ moved {
 
 - A. تُعاد تسمية قاعدة البيانات في مكانها (renamed in place) دون أي توقف (no downtime)
 - B. تُحذف قاعدة البيانات وتُستبدل بقاعدة جديدة فارغة (new, empty one)
-- C. لا شيء، لأن Terraform لا يحذف قواعد البيانات أبدًا
+- C. لا شيء، لأن Terraform لا يحذف قواعد البيانات أبدًا (never deletes databases)
 - D. يُحدَّث ملف الحالة (state file) فقط، وتبقى قاعدة البيانات الحقيقية (real database) دون مساس
 
 <details><summary>الإجابة</summary>
@@ -260,7 +260,7 @@ moved {
 
 **2. لماذا يجب تخزين ملف الحالة (state file) لـ Terraform أو OpenTofu في واجهة تخزين خلفية (backend) مقفلة ومشفّرة ومضبوطة الوصول (locked, encrypted, access-controlled) بدل إيداعه في Git؟**
 
-- A. لا يستطيع Git تخزين ملفات أكبر من ميغابايت واحد، وملفات الحالة كثيرًا ما تتجاوز ذلك
+- A. لا يستطيع Git تخزين ملفات أكبر من ميغابايت واحد (larger than one megabyte)، وملفات الحالة (state files) كثيرًا ما تتجاوز ذلك
 - B. لا تُحتاج ملفات الحالة (state files) إلا أثناء التطبيق الأول (first apply)
 - C. ترفض المزوّدات (providers) العمل إذا كانت الحالة في مستودع (repository)
 - D. قد تحمل الحالة أسرارًا بنص صريح (plain-text secrets)، وقد تُفسدها عمليات الكتابة المتزامنة غير المقفلة (unlocked concurrent writes)
@@ -274,8 +274,8 @@ moved {
 **3. يشغّل خط تسليم (pipeline) الأمر `plan` عند فتح طلب سحب (pull request). يُوافَق على طلب السحب ويُدمج بعد ثلاث ساعات، ثم يشغّل خط التسليم `apply` جديدًا (fresh) دون خطة محفوظة (saved plan). ما الخطر؟**
 
 - A. إنه يعيد التخطيط (re-plans) مقابل الشيفرة والواقع الحاليين (current code and reality)، لذا قد يطبّق تغييرات غير مُراجَعة (unreviewed changes)
-- B. لا يوجد خطر، لأن `apply` يكرّر دائمًا أحدث خطة شغّلها خط التسليم
-- C. سيفشل التطبيق، لأن كل خطة تنتهي صلاحيتها بعد ساعة من تشغيل `plan`
+- B. لا يوجد خطر (no risk)، لأن `apply` يكرّر دائمًا أحدث خطة (most recent plan) شغّلها خط التسليم (pipeline)
+- C. سيفشل التطبيق (apply will fail)، لأن كل خطة تنتهي صلاحيتها (every plan expires) بعد ساعة من تشغيل `plan`
 - D. سيُحذف ملف الحالة (state file)
 
 <details><summary>الإجابة</summary>
@@ -300,9 +300,9 @@ moved {
 **5. ينقل فريق المنصة (platform team) مورد قاعدة بيانات موجودًا (existing database resource) إلى وحدة برمجية جديدة (new module). تُظهر الخطة حذف العنوان القديم (old address) وإنشاء عنوان جديد. ما الإصلاح الأكثر أمانًا (safest fix)؟**
 
 - A. طبّقها في ساعة هادئة (quiet hour) واستعد من النسخة الاحتياطية (restore from backup) بعد ذلك
-- B. أضف كتلة `moved` من العنوان القديم إلى العنوان الجديد
+- B. أضف كتلة `moved` من العنوان القديم (old address) إلى العنوان الجديد (new address)
 - C. احذف ملف الحالة (state file) وشغّل `import` من سطر الأوامر (command line) لكل مورد
-- D. انسخ شيفرة الوحدة البرمجية عائدًا إلى التهيئة الجذرية (root configuration) بصورة دائمة
+- D. انسخ شيفرة الوحدة البرمجية (module code) عائدًا إلى التهيئة الجذرية (root configuration) بصورة دائمة
 
 <details><summary>الإجابة</summary>
 
@@ -542,10 +542,10 @@ spec:
 
 **3. أثناء حادثة (incident)، يرفع مهندس عدد النسخ المتماثلة في الإنتاج (production replica count) باستخدام `kubectl scale`. لدى Argo CD مزامنة آلية (automated sync) مع `selfHeal: true`. ماذا يحدث بعد ذلك، وماذا ينبغي للفريق أن يفعل؟**
 
-- A. يسجّل Argo CD القيمة الجديدة في Git آليًا، فلا حاجة إلى أي شيء آخر
-- B. يحذف Argo CD كائن Deployment بالكامل
-- C. يبقى التغيير إلى الأبد لأن Argo CD لا يراقب إلا Git
-- D. يعيده Argo CD ليطابق Git؛ والتغيير المطلوب (needed change) يمرّ عبر طلب سحب (pull request)
+- A. يسجّل Argo CD القيمة الجديدة (new value) في Git آليًا (automatically)، فلا حاجة إلى أي شيء آخر
+- B. يحذف Argo CD كائن Deployment بالكامل (deletes the Deployment entirely)
+- C. يبقى التغيير إلى الأبد (stays forever) لأن Argo CD لا يراقب إلا Git (only watches Git)
+- D. يعيده Argo CD ليطابق Git (reverts it to match Git)؛ والتغيير المطلوب (needed change) يمرّ عبر طلب سحب (pull request)
 
 <details><summary>الإجابة</summary>
 
@@ -609,7 +609,7 @@ spec:
 
 ## 📐 كيف يعمل (How it works)
 ### 🟢 الأساسيات (The essentials)
-**من قوائم التحقق إلى الشيفرة (From checklists to code).** المعيار المكتوب في ملف PDF ("يجب ألّا تكون قواعد البيانات قابلة للوصول العام (publicly reachable)") يعتمد على تذكّر الناس له. أما **السياسة بوصفها شيفرة (policy as code)** فتحوّل القاعدة إلى برنامج يأخذ تغييرًا مقترحًا (proposed change) ويُعيد "سماح (allow)" أو "رفض، لأن… (deny, because…)"، عند كل تغيير، في ثوانٍ، وبالطريقة نفسها للجميع. والقاعدة نفسها تُراجَع وتُدار إصداراتها (reviewed and versioned) مثل أي شيفرة أخرى.
+**من قوائم التحقق إلى الشيفرة (From checklists to code).** المعيار المكتوب في ملف PDF ("يجب ألّا تكون قواعد البيانات قابلة للوصول العام (publicly reachable)") يعتمد على تذكّر الناس له. أما **السياسة بوصفها شيفرة (policy as code)** فتحوّل القاعدة إلى برنامج يأخذ تغييرًا مقترحًا (proposed change) ويُعيد "سماح (allow)" أو "رفض، لأن… ⁦(deny, because…)⁩"، عند كل تغيير، في ثوانٍ، وبالطريقة نفسها للجميع. والقاعدة نفسها تُراجَع وتُدار إصداراتها (reviewed and versioned) مثل أي شيفرة أخرى.
 
 **أين تعمل السياسات (Where policies run).** لا يرى فحص واحد (single check) كل شيء، ولذلك يفحص بنك نجم (Najm Bank) عند عدة نقاط:
 
@@ -818,8 +818,8 @@ tofu plan -detailed-exitcode -input=false
 
 - A. انحراف (Drift) أو شيفرة مدموجة غير مطبَّقة (unapplied merged code)؛ تحقّق، ثم أرجِع أو تبنَّ (revert or adopt)
 - B. فشلت الخطة بخطأ (error)، فأعد تشغيلها مع تفعيل تسجيل أكثر تفصيلًا (more verbose logging)
-- C. كل شيء متطابق، فلا حاجة إلى أي إجراء حتى تشغيل الغد
-- D. شغّل `apply` فورًا لتكتب فوق كل ما تغيّر في الواقع منذ التشغيل الأخير
+- C. كل شيء متطابق (everything matches)، فلا حاجة إلى أي إجراء (no action) حتى تشغيل الغد (tomorrow's run)
+- D. شغّل `apply` فورًا (immediately) لتكتب فوق (overwrite) كل ما تغيّر في الواقع منذ التشغيل الأخير (last run)
 
 <details><summary>الإجابة</summary>
 
@@ -842,7 +842,7 @@ tofu plan -detailed-exitcode -input=false
 
 **5. يحتاج جهاز مورّد (vendor appliance) في بنك نجم (Najm Bank) على نحو مشروع إلى قاعدة يرفضها دليل الحواجز الواقية (guardrail catalogue) عادةً. ما الطريقة الصحيحة للسماح بها؟**
 
-- A. تعطيل السياسة (Disable the policy) للجميع حتى ينتهي مشروع المورّد العام المقبل أو بعده
+- A. تعطيل السياسة (Disable the policy) للجميع حتى ينتهي مشروع المورّد (vendor project) العام المقبل أو بعده
 - B. منح فريق المورّد صلاحية المسؤول (administrator access) كي يتجاوزوا خط التسليم (pipeline)
 - C. إجراء التغيير يدويًا في وحدة التحكم (console) وتجاهل تنبيهات الانحراف (drift alerts) التي يسبّبها
 - D. إضافة استثناء محصور (scoped exception) بمالك وسبب وتاريخ انتهاء (owner, reason and expiry) يفرضه البناء (build)

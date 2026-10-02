@@ -105,7 +105,7 @@ jobs:
 
 لاحظ الإعدادات الافتراضية (defaults): صلاحيات للقراءة فقط (read-only permissions)، ومهلات زمنية للمهام (job timeouts)، وإلغاء تشغيلات طلبات السحب القديمة (cancelling outdated PR runs) (ولا تُلغى تشغيلات `main` أبدًا: فكل إيداع مدموج (merged commit) يجب أن يُنتج أثره البرمجي).
 
-**هرم الاختبارات (The test pyramid).** ليست كل الاختبارات متساوية في الكلفة (not all tests cost the same). يقول الهرم، الذي نشره مايك كون (Mike Cohn)، أن يكون لديك كثير من الاختبارات الرخيصة (cheap tests) في القاعدة وقليل من الاختبارات المكلفة (expensive ones) في القمة.
+**هرم الاختبارات (The test pyramid).** ليست كل الاختبارات متساوية في الكلفة (not all tests cost the same). ينصّ الهرم، الذي روّج له مايك كون (Mike Cohn)، على أن يكون لديك كثير من الاختبارات الرخيصة (cheap tests) في القاعدة وقليل من الاختبارات المكلفة (expensive ones) في القمة.
 
 | الطبقة (Layer) | ما الذي تفحصه (What it checks) | السرعة (Speed) | العدد (How many) | أين تعمل (Where it runs) |
 |---|---|---|---|---|
@@ -484,7 +484,7 @@ flowchart TD
 | **Expand and contract** — التوسيع والتقليص | تغييرات المخطط وواجهات البرمجة (schema and API changes) على خطوات متوافقة مع الإصدارات السابقة (backward-compatible steps) | أي تغيير في قاعدة بيانات أو واجهة برمجة يستخدمها أكثر من إصدار واحد |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-تنشر مها وسالم **معيار الإطلاق في نجم، الإصدار 1 (Najm Release Standard v1)**: استراتيجية لكل فئة خدمات (strategy per service tier) وقائمة فحص للإطلاق (release checklist).
+ينشر سالم ومها **معيار الإطلاق في نجم، الإصدار 1 (Najm Release Standard v1)**: استراتيجية لكل فئة خدمات (strategy per service tier) وقائمة فحص للإطلاق (release checklist).
 
 **الجزء أ: الاستراتيجية حسب الفئة (Part A: strategy by tier)**
 
@@ -656,8 +656,8 @@ flowchart LR
 لكل سهم ضابط (control): حماية الفروع والمراجعة (branch protection and review) على المصدر؛ واعتماديات وإجراءات مثبّتة ومفحوصة (pinned, vetted dependencies and actions)؛ وبيانات اعتماد قصيرة العمر (short-lived credentials) للبناء؛ وتواقيع على الصورة (signatures on the image)؛ ومسار نشر ضيق (narrow deploy path) إلى العنقود. ويصف إطار SLSA (مستويات سلسلة التوريد للآثار البرمجية، Supply-chain Levels for Software Artifacts) هذه التهديدات بالتفصيل. ويغطي [*أمن الذكاء الاصطناعي وأمن التطبيقات (Secure AI & Application Security)*، الدرس 6.2 — سلسلة توريد البرمجيات (The software supply chain)](../secai/index.ar.html#/6.2) الاعتماديات وقوائم مكوّنات البرمجيات (SBOMs) وSLSA من الجانب الأمني (from the security side)؛ ويبقى هذا الدرس على كيفية بناء فريق المنصة لخط التسليم وتشغيله.
 
 **الأسرار: كلما قلّت كان أفضل (Secrets: the fewer, the better).** أفضل سر هو السر غير الموجود (one that does not exist). وترتيب الأفضلية (order of preference):
-1. **الهوية الموحّدة (Federated identity) (بلا سر، no secret).** تثبت مهمة التكامل المستمر هويتها برمز OIDC قصير العمر (short-lived OIDC token) تُصدره منصة التكامل المستمر (CI platform)؛ وتستبدله السحابة ببيانات اعتماد مؤقتة (temporary credentials) (الدرس 1.3).
-2. **أسرار قصيرة العمر من مدير أسرار (short-lived secrets from a secrets manager)**، تُجلب وقت التشغيل (fetched at run time) بهوية موحّدة (federated identity).
+1. **الهوية الاتحادية (Federated identity) (بلا سر، no secret).** تثبت مهمة التكامل المستمر هويتها برمز OIDC قصير العمر (short-lived OIDC token) تُصدره منصة التكامل المستمر (CI platform)؛ وتستبدله السحابة ببيانات اعتماد مؤقتة (temporary credentials) (الدرس 1.3).
+2. **أسرار قصيرة العمر من مدير أسرار (short-lived secrets from a secrets manager)**، تُجلب وقت التشغيل (fetched at run time) بهوية اتحادية (federated identity).
 3. **أسرار مخزّنة في التكامل المستمر (Stored CI secrets)**، فقط حيث لا يصلح شيء آخر، مقصورة على بيئة واحدة (scoped to one environment)، ومُدوَّرة وفق جدول (rotated on a schedule)، ولا تُطبع أبدًا (never printed).
 
 **الاتحاد عبر OIDC من GitHub Actions (OIDC federation from GitHub Actions).** يطلب سير العمل رمز هوية (ID token)، ولا يثق دور السحابة (cloud role) إلا بالرموز التي تطابق مطالباتها (claims) الشروط. وهذه مهمة إطلاق (release job) تدفع الصورة:
@@ -696,7 +696,7 @@ jobs:
 | السحابة (Cloud) | الميزة (Feature) | جانب التكامل المستمر (CI side) |
 |---|---|---|
 | AWS | مزوّد هوية OIDC في IAM (IAM OIDC identity provider) ودور بسياسة ثقة (role with a trust policy) | `aws-actions/configure-aws-credentials` |
-| Microsoft Azure | اتحاد هوية أعباء العمل (workload identity federation): بيانات اعتماد موحّدة (federated credential) على تسجيل تطبيق (app registration) أو هوية مُدارة (managed identity) في Entra ID | `azure/login` |
+| Microsoft Azure | اتحاد هوية أعباء العمل (workload identity federation): بيانات اعتماد اتحادية (federated credential) على تسجيل تطبيق (app registration) أو هوية مُدارة (managed identity) في Entra ID | `azure/login` |
 | Google Cloud | اتحاد هوية أعباء العمل (Workload Identity Federation) مع مجمّع هويات أعباء العمل (workload identity pool) ومزوّد (provider) | `google-github-actions/auth` |
 
 **رمز التكامل المستمر الخاص (The CI's own token).** يمنح GitHub كل سير عمل رمزًا `GITHUB_TOKEN`. اضبط `permissions: contents: read` في أعلى كل سير عمل، وامنح المزيد لكل مهمة على حدة فقط عند الحاجة (`packages: write` للدفع إلى سجل GitHub، و`id-token: write` لـOIDC). ويمكن لإعداد على مستوى المنظمة (organisation-level setting) أن يجعل القراءة فقط هي الافتراضي (read-only the default).
@@ -770,7 +770,7 @@ cosign verify \
 | **Ephemeral runners** — المشغّلات المؤقتة | مشغّلات تكامل مستمر تُنشأ لمهمة واحدة ثم تُدمَّر (created for one job and then destroyed) | أي مشغّل مستضاف ذاتيًا، خصوصًا مع وصول شبكي إلى الإنتاج (network access to production) |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-تنشر نورة وسالم **خط الأساس لأمن خطوط التسليم في نجم، الإصدار 1 (Najm Pipeline Security Baseline v1)**. ويُقيَّم كل مستودع مقابله على لوحة (dashboard)؛ ويجب أن تستوفيه خدمات الفئة 1 (tier-1 services) كاملًا بحلول نهاية الربع.
+ينشر سالم ونورة **خط الأساس لأمن خطوط التسليم في نجم، الإصدار 1 (Najm Pipeline Security Baseline v1)**. ويُقيَّم كل مستودع مقابله على لوحة (dashboard)؛ ويجب أن تستوفيه خدمات الفئة 1 (tier-1 services) كاملًا بحلول نهاية الربع.
 
 | # | الضابط (Control) | كيف يُنفَّذ (How it is enforced) | الدليل (Evidence) |
 |---|---|---|---|
@@ -803,7 +803,7 @@ cosign verify \
 - **تكامل مستمر بصلاحيات مسؤول العنقود (CI with cluster-admin).** خط التسليم القائم على الدفع (push-based pipeline) الذي يحمل بيانات اعتماد العنقود طريق مباشر إلى الإنتاج. فضّل GitOps القائم على السحب (pull-based GitOps).
 
 ## 🧾 الخلاصة (Recap)
-- خط التسليم نظام إنتاج ذو امتيازات (privileged production system)؛ فانمذج التهديدات (threat-model) لكل خطوة من الإيداع إلى العنقود.
+- خط التسليم نظام إنتاج ذو امتيازات (privileged production system)؛ فاعمل على نمذجة التهديدات (threat-model) لكل خطوة من الإيداع إلى العنقود.
 - استبدل المفاتيح السحابية المخزّنة (stored cloud keys) باتحاد OIDC مقصور على المستودع والبيئة؛ واجعل كل الرموز للقراءة فقط افتراضيًا (default all tokens to read-only).
 - ثبّت إجراءات الأطراف الثالثة والصور تثبيتًا ثابتًا (immutably)؛ ولا تكشف الأسرار أبدًا لطلبات السحب غير الموثوقة (untrusted pull requests).
 - وقّع الصور بالبصمة، وأرفق المصدرية (provenance) وقائمة مكوّنات البرمجيات (SBOM)، ولا تقبل إلا الصور المُتحقَّق منها (verified images).
