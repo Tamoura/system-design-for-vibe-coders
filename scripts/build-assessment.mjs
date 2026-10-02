@@ -462,7 +462,8 @@ function compute(){
     areas[a.id] = { k, kt: qs.length, e, et: ev.length, status: k >= 3 ? (e === ev.length ? 2 : 1) : 0 };
   }
   const st = Object.values(areas), aware = st.filter((x) => x.status >= 1).length, pract = st.filter((x) => x.status === 2).length;
-  const level = (aware === N && pract >= 10) ? 3 : (aware >= 10 && pract >= 5) ? 2 : aware >= 5 ? 1 : 0;
+  const hi = Math.ceil(0.7 * N), lo = Math.ceil(0.35 * N); // thresholds scale with the number of areas
+  const level = (aware === N && pract >= hi) ? 3 : (aware >= hi && pract >= lo) ? 2 : aware >= lo ? 1 : 0;
   return { areas, right, total: D.qs.length, aware, pract, level };
 }
 function renderR(){

@@ -523,6 +523,7 @@ Ali's **12-month development plan**, agreed with Noura:
 </details>
 
 ## 📚 References
+- *From Graduate to Hired*, the library's career course — role paths, portfolio, CV, interviews and the first 90 days: [../career/index.html](../career/index.html)
 - NIST SP 800-181 Rev. 1 (2020), Workforce Framework for Cybersecurity (NICE Framework) — https://csrc.nist.gov/pubs/sp/800/181/r1/final
 - NIST, NICE (National Initiative for Cybersecurity Education) — https://www.nist.gov/itl/applied-cybersecurity/nice
 - ENISA, European Cybersecurity Skills Framework (ECSF) — https://www.enisa.europa.eu
