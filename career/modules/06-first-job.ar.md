@@ -6,7 +6,7 @@
 
 ---
 
-# 6.1 — العروض الوظيفية: المقارنة والتفاوض وحسن الاختيار
+# 6.1 — العروض الوظيفية (Offers): المقارنة والتفاوض وحسن الاختيار (comparing, negotiating and choosing well)
 *المستوى (Level): 🔴 متقدم (Advanced)* · *المتطلبات (Prerequisites): 4.3، 5.1* · *الخطوة (Step): Apply, Start*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
@@ -184,7 +184,7 @@ flowchart TD
 - A. أن يقبل فورًا في المكالمة، ثم يطلب التفاصيل المكتوبة (written details) بعد ذلك
 - B. أن يطلب العرض كاملًا كتابيًا (full offer in writing)، ويسأل إن كان يمكن تمديد المهلة (deadline can move)
 - C. أن يخبر نجم بأن لديه عرضًا أفضل، ويطلب منهم تجاوزه (beat it) اليوم
-- D. أن يترك المهلة تنقضي، ويردّ الأسبوع القادم بعد أن يفكّر
+- D. أن يترك المهلة تنقضي (Let the deadline pass)، ويردّ الأسبوع القادم بعد أن يفكّر
 
 <details><summary>الإجابة</summary>
 
@@ -221,7 +221,7 @@ flowchart TD
 **4. ينقل عقد محمد إلى صاحب العمل "كل الاختراعات التي تتمّ خلال مدة التوظيف" ("all inventions made during the term of employment"). وهو يتولّى صيانة مكتبة مفتوحة المصدر (open-source library) منذ أيام المعسكر التدريبي (bootcamp). ماذا ينبغي أن يفعل؟**
 
 - A. أن يوقّع كما هو مكتوب، لأن بنودًا كهذه لا تُطبَّق أبدًا عمليًا (never enforced in practice)
-- B. أن يحذف مكتبته مفتوحة المصدر أو ينقلها (transfer) قبل يومه الأول
+- B. أن يحذف مكتبته مفتوحة المصدر (open-source library) أو ينقلها (transfer) قبل يومه الأول (first day)
 - C. أن يطلب استثناءً مكتوبًا (written carve-out) يُدرج مشاريعه الشخصية القائمة (existing personal projects)
 - D. أن يرفض العرض، لأنه لا يوجد صاحب عمل سيغيّر الصياغة (change the wording)
 
@@ -234,7 +234,7 @@ flowchart TD
 **5. تقبل هدى كتابيًا (in writing) عرض شركة الاتصالات الإقليمية (regional telecom). وبعد أسبوعين، يقدّم لها مسار البيانات (data track) في نجم عرضًا. أيّ ردّ يعكس هذا الدرس على أفضل وجه؟**
 
 - A. أن تقبل عرض نجم أيضًا، ثم تختار لاحقًا أيّ تاريخ بدء (start date) يناسبها أكثر
-- B. أن تقبل نجم ولا تحضر ببساطة إلى شركة الاتصالات في أول يوم عمل لها
+- B. أن تقبل نجم ولا تحضر ببساطة (simply not turn up) إلى شركة الاتصالات في أول يوم عمل لها (first day of work)
 - C. أن تعدّ قبولها المكتوب (written acceptance) غير مُلزِم بشيء (carrying no obligations) حتى تبدأ فعلًا
 - D. أن تفي بكلمتها (Keep her word) ما لم يكن السبب جدّيًا (serious)؛ وإن كان كذلك، فلتبلغ شركة الاتصالات مبكرًا هاتفيًا
 
@@ -254,7 +254,7 @@ flowchart TD
 
 ---
 
-# 6.2 — أيامك التسعون الأولى: التهيئة الوظيفية، وأول طلب دمج، وطرح الأسئلة الجيدة
+# 6.2 — أيامك التسعون الأولى (Your first 90 days): التهيئة الوظيفية (onboarding)، وأول طلب دمج (the first pull request)، وطرح الأسئلة الجيدة (asking good questions)
 *المستوى (Level): 🔴 متقدم (Advanced)* · *المتطلبات (Prerequisites): 1.1، 1.2، 6.1* · *الخطوة (Step): Start*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
@@ -313,7 +313,7 @@ flowchart TD
 
 **طرح الأسئلة الجيدة (Asking good questions).** يُتوقّع من المبتدئين (Juniors) أن يطرحوا الأسئلة. والفرق تخسر من الوقت بسبب مبتدئين عالقين في صمت (stuck in silence) أكثر مما تخسره بسبب مبتدئين يسألون. السؤال الجيد (A good question):
 1. يذكر هدفك (States your goal) ⁦("I'm trying to run the integration tests locally")⁩ "أحاول تشغيل اختبارات التكامل (integration tests) محليًا".
-2. يقدّم السياق (Gives context) ⁦("on the `support-api` repo, main branch, after following the setup guide")⁩ "على المستودع، الفرع الرئيسي (main branch)، بعد اتّباع دليل الإعداد (setup guide)".
+2. يقدّم السياق (Gives context) ⁦("on the `support-api` repo, main branch, after following the setup guide")⁩ "على مستودع support-api ‏(repo)، الفرع الرئيسي (main branch)، بعد اتّباع دليل الإعداد (setup guide)".
 3. يذكر ما جرّبته (Says what you tried) ⁦("I reset the database container and checked the env file; the error persists")⁩ "أعدت تعيين حاوية قاعدة البيانات (database container) وتحقّقت من ملف البيئة (env file)؛ والخطأ مستمر".
 4. يعرض الدليل (Shows the evidence) (الخطأ بنصّه الدقيق (exact error)، كنص (as text)).
 5. يسأل عن شيء محدد (Asks something specific) ⁦("Is there a step missing for the test database, or have I misconfigured something?")⁩ "هل توجد خطوة ناقصة لقاعدة بيانات الاختبار (test database)، أم أنني أخطأت في إعداد شيء ما (misconfigured)؟"
@@ -425,7 +425,7 @@ flowchart LR
 - A. أن تستخدم حسابها الشخصي للذكاء الاصطناعي (personal AI account)، لأن نموذجه أقدر (more capable)
 - B. أن تحذف التعليقات (comments) من الشيفرة، ثم تلصقها في أي أداة
 - C. أن تستخدم أداة الذكاء الاصطناعي المعتمدة من البنك (bank's approved AI tool)، وتسأل إن كانت السياسة غير واضحة
-- D. أن تتجنّب كل أدوات الذكاء الاصطناعي تمامًا حتى تنتهي سنتها الأولى
+- D. أن تتجنّب كل أدوات الذكاء الاصطناعي (every AI tool) تمامًا حتى تنتهي سنتها الأولى (first year)
 
 <details><summary>الإجابة</summary>
 
@@ -450,7 +450,7 @@ flowchart LR
 
 - A. في قناة الفريق (team channel): ⁦("The integration tests are broken on my laptop again. Can anyone help?")⁩ "اختبارات التكامل معطّلة على حاسوبي مجددًا. هل يستطيع أحد المساعدة؟"
 - B. رسالة خاصة (private message) إلى طارق: ⁦("Are you free at some point today? I have a quick question.")⁩ "هل أنت متفرّغ في وقت ما اليوم؟ لديّ سؤال سريع."
-- C. لا شيء بعد؛ سيواصل المحاولة وحده حتى نهاية الأسبوع
+- C. لا شيء بعد (Nothing yet)؛ سيواصل المحاولة وحده (keep trying alone) حتى نهاية الأسبوع
 - D. في قناة الفريق: الهدف (goal)، والمستودع والفرع (repo and branch)، وما جرّبه، والخطأ بنصّه الدقيق (exact error)، وسؤال محدد (specific question)
 
 <details><summary>الإجابة</summary>
@@ -463,7 +463,7 @@ flowchart LR
 
 - A. أن تبلغ عنه فورًا مع ما شغّلته، وتساعد في إصلاحه، وتشارك في المراجعة بلا لوم (blameless review)
 - B. أن تلغي الاستعلام ولا تقول شيئًا، لأن البطء (slowdown) قد توقّف بالفعل
-- C. أن تنتظر بهدوء لترى إن كان أحد في الفريق سيلاحظ البطء
+- C. أن تنتظر بهدوء (Wait quietly) لترى إن كان أحد في الفريق سيلاحظ البطء (slowdown)
 - D. أن تخبر الفريق بأن قاعدة البيانات أصغر من اللازم (under-sized) وكان ينبغي أن تتحمّل ذلك
 
 <details><summary>الإجابة</summary>
@@ -497,7 +497,7 @@ flowchart LR
 
 ---
 
-# 6.3 — النموّ من المستوى المبتدئ إلى المتوسط: الملاحظات، وامتلاك المسؤولية، والتعلّم المستمر
+# 6.3 — النموّ من المستوى المبتدئ إلى المتوسط (Growing from junior to mid-level): الملاحظات (feedback)، وامتلاك المسؤولية (ownership)، والتعلّم المستمر (continuous learning)
 *المستوى (Level): 🔴 متقدم (Advanced)* · *المتطلبات (Prerequisites): 6.2* · *الخطوة (Step): Grow*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
@@ -579,7 +579,7 @@ flowchart LR
 **مساعدة الدفعة التالية (Helping the next cohort).** حين يصل الخرّيجون التالون، تكون أنت الشخص الذي انضمّ مؤخرًا. تطوّع لتكون رفيقًا في الفريق (buddy). حدّث دليل الإعداد (setup guide). أدِر جلسة قصيرة عمّا تمنّيت لو عرفته. هذا يُظهر أثرًا على مستوى الفريق (team-level impact)، وهو من أوضح إشارات المستوى المتوسط (mid-level signals)، وتكلفته قليلة.
 
 **البقاء، أو الانتقال داخليًا، أو المغادرة (Staying, moving internally or leaving).** بعد سنة أو سنتين قد تتساءل إن كان عليك البقاء. أسئلة مفيدة (Useful questions):
-- هل ما زلت أتعلّم شيئًا جديدًا كل شهر؟
+- هل ما زلت أتعلّم شيئًا جديدًا كل شهر (learning something new every month)؟
 - هل توجد هنا مشكلة من المستوى التالي (next-level problem) أستطيع امتلاكها؟
 - هل يدعم مديري نموّي، بملاحظات محددة (specific feedback) وفرص (opportunities)؟
 - هل سيمنحني انتقال داخلي (internal move) (فريق آخر، أو مسار آخر (another track)) ما أريده بمخاطرة أقل؟
@@ -614,7 +614,7 @@ flowchart LR
 
 **الجزء B: قاعدة إشعار التغيير التي يقترحها يوسف على الفريق (Part B: the change-notice rule Yousef proposes to the team)** (إصلاحه للنظام (his fix to the system)، المنبثق من المراجعة بلا لوم (blameless review))
 - أي تغيير في خط بناء مشترك (shared pipeline) يُنشر في قنوات الفرق المتأثرة (affected squads' channels) قبل يومَي عمل (two working days) على الأقل، مع ماذا، ولماذا، وخطة التراجع (rollback plan)، وجهة اتصال محددة بالاسم (named contact).
-- لا تغييرات في خطوط البناء المشتركة بعد ظهر الخميس (after Thursday noon)، باستثناء إصلاحات الحوادث (fixes for incidents).
+- لا تغييرات في خطوط البناء المشتركة بعد منتصف نهار الخميس (after Thursday noon)، باستثناء إصلاحات الحوادث (fixes for incidents).
 - يُضاف إلى نموذج طلب الدمج (PR template) في مستودع خط البناء (pipeline repository) حقل ⁦("Who is affected and have they been told?")⁩ "من المتأثر، وهل أُبلغوا؟".
 
 **الجزء C: خطة التطوير الفردي لستة أشهر (Part C: the six-month individual development plan)**
@@ -649,10 +649,10 @@ flowchart LR
 
 **1. أيّ وصف يحدّد على أفضل وجه الانتقال من المبتدئ (junior) إلى المستوى المتوسط (mid-level)؟**
 
-- A. كتابة الشيفرة أسرع من أي شخص آخر في الفريق، مع أخطاء (bugs) أقل
+- A. كتابة الشيفرة أسرع (Writing code faster) من أي شخص آخر في الفريق، مع أخطاء (bugs) أقل
 - B. حيازة شهادات سحابية وأمنية (cloud and security certifications) أكثر من المبتدئين الآخرين
 - C. أن تُسند إليك مشكلة لا مهمة (a problem, not a task)، وأن تمتلكها حتى النتيجة (through to the result)
-- D. أن تكون قد عملت في الشركة نفسها سنتين كاملتين على الأقل
+- D. أن تكون قد عملت في الشركة نفسها (same company) سنتين كاملتين على الأقل (at least two full years)
 
 <details><summary>الإجابة</summary>
 
@@ -664,7 +664,7 @@ flowchart LR
 
 - A. أن يشرح لسالم أن التغيير كان صحيحًا تقنيًا (technically correct)، فالملاحظات إذن غير عادلة
 - B. أن يشكر سالم، ويتبنّى عادة الإشعار بالتغيير (change-notice habit)، ويقترح قاعدة للفريق تمنع التكرار
-- C. أن يتوقّف عن إجراء أي تغييرات على خطوط البناء المشتركة، كي لا يُفاجأ أحد مجددًا
+- C. أن يتوقّف عن إجراء أي تغييرات على خطوط البناء المشتركة (shared pipelines)، كي لا يُفاجأ أحد مجددًا
 - D. أن يطلب من سالم النقل (transfer) إلى فريق تُقدَّر فيه سرعته أكثر
 
 <details><summary>الإجابة</summary>
@@ -678,7 +678,7 @@ flowchart LR
 - A. سجلّ إنجازات (brag document) مربوط بالسلّم (mapped to the ladder)، يربط العمل المُسلَّم بالملاحظات التي تصرّف بناءً عليها
 - B. قائمة بكل دورة إلكترونية (online course) وشهادة أكملها هذا العام
 - C. رسالة مباشرة إلى رئيس الهندسة (head of engineering) يطلب فيها ترقيته في هذه الدورة
-- D. العمل حتى وقت متأخر كل مساء لمدة شهر كي يلاحظ الناس جهده
+- D. العمل حتى وقت متأخر كل مساء (Working late every evening) لمدة شهر كي يلاحظ الناس جهده (notice his effort)
 
 <details><summary>الإجابة</summary>
 
