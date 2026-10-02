@@ -861,7 +861,7 @@ flowchart TD
 |---|---|---|---|
 | البناء كل ساعة لـ`fct_card_authorisations` (hourly build) | التحديث الكامل (full refresh) يعيد قراءة كل السجلّ التاريخي كل ساعة | تزايدي (incremental)، `delete+insert` على `authorisation_id`، ونافذة رجوع 3 أيام (3-day lookback)؛ والتقسيم حسب تاريخ `authorised_at`؛ وتحديث كامل شهري (monthly full refresh) | البايتات الممسوحة لكل تشغيل (bytes scanned per run) قبل وبعد؛ ومجاميع التحديث الكامل الشهري تطابق الجدول التزايدي |
 | لوحة معلومات التجزئة (Retail dashboard) | `select *` على `fct_transactions` لكل بطاقة (per tile)؛ والتجميع نفسه يتكرر (same aggregate repeated) | طبقة عرض جديدة `agg_transactions_daily_branch`؛ والبطاقات تقرأ الأعمدة اللازمة فقط (only needed columns) | زمن تحميل لوحة المعلومات (dashboard load time) والبايتات الممسوحة لكل تحديث |
-| مرشّح الشهر لدى المحلّل (Analyst month filter) | `to_char⁦(transacted_at, ...)⁩` يمنع التقليم (prevents pruning) | إعادة كتابته كنطاق تاريخ نصف مفتوح (half-open date range)؛ وإضافة النمط إلى دليل أسلوب SQL (SQL style guide) وقائمة تحقق المراجعة (review checklist) | الخطة تُظهر قسمًا واحدًا ممسوحًا (one partition scanned) |
+| مرشّح الشهر لدى المحلّل (Analyst month filter) | `to_char(transacted_at, ...)` يمنع التقليم (prevents pruning) | إعادة كتابته كنطاق تاريخ نصف مفتوح (half-open date range)؛ وإضافة النمط إلى دليل أسلوب SQL (SQL style guide) وقائمة تحقق المراجعة (review checklist) | الخطة تُظهر قسمًا واحدًا ممسوحًا (one partition scanned) |
 
 **الجزء ب: قائمة تحقق الأداء لطبقات العرض الجديدة (Part B: the new-mart performance checklist)**
 

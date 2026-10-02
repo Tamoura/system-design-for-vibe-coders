@@ -143,7 +143,7 @@ LEFT JOIN loans_pc l ON l.customer_id = c.customer_id
 LEFT JOIN spend_pc s ON s.customer_id = c.customer_id;
 ```
 
-القاعدة (The rule): **جمّع إلى الحُبَيبية المستهدفة قبل أن تربط مسارين مختلفين من نوع واحد-إلى-متعدد (aggregate to the target grain before you join two different one-to-many paths).** يستطيع `COUNT⁦(DISTINCT ...)⁩` أن يُخفي التضاعف (hide a fan-out) في عمليات العدّ، لكنه لا يستطيع إصلاح `SUM`.
+القاعدة (The rule): **جمّع إلى الحُبَيبية المستهدفة قبل أن تربط مسارين مختلفين من نوع واحد-إلى-متعدد (aggregate to the target grain before you join two different one-to-many paths).** يستطيع `COUNT(DISTINCT ...)` أن يُخفي التضاعف (hide a fan-out) في عمليات العدّ، لكنه لا يستطيع إصلاح `SUM`.
 
 **الربط الأيسر الذي صار ربطًا داخليًا (The LEFT JOIN that became an INNER JOIN).** يريد كريم كل عملاء الأفراد (all retail customers)، مع إنفاقهم في سبتمبر أو صفر. إن وضع مرشّح التاريخ (date filter) في `WHERE` يُزيل العملاء الذين لا معاملات لهم، لأن `t.txn_ts` لديهم يكون `NULL` والمقارنة غير معروفة (the comparison is unknown):
 
