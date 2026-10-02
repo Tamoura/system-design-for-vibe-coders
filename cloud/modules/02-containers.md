@@ -912,7 +912,7 @@ Use a local kind or k3d cluster. For autoscaling, install metrics-server (on kin
 
 <details><summary>Answer</summary>
 
-**B.** Base64 is reversible by anyone. A is the misconception itself, C is worse because ConfigMaps are meant for non-sensitive data, and D is still just an encoding. (🟢 The essentials.)
+**B.** Base64 is reversible by anyone; also enable encryption at rest and limit read access. A is the misconception itself, C is worse because ConfigMaps are meant for non-sensitive data, and D is still just an encoding. (🟢 The essentials.)
 
 </details>
 
@@ -951,7 +951,7 @@ Use a local kind or k3d cluster. For autoscaling, install metrics-server (on kin
 
 <details><summary>Answer</summary>
 
-**C.** Autoscaling must respect downstream limits. A makes the overload permanent, B does not change connection count, and D adds a restart storm. (🟡 Going deeper.)
+**C.** Autoscaling must respect downstream limits; then scale on a metric that reflects the real bottleneck. A makes the overload permanent, B does not change connection count, and D adds a restart storm. (🟡 Going deeper.)
 
 </details>
 
