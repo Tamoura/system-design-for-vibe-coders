@@ -329,7 +329,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 **1. Yousef's market scan of ten junior platform ads finds Git in nine ads and Docker in four. How should he read those counts?**
 
 - A. Both are baseline skills, because each of them appears in more than three of the ten ads
-- B. Git is a baseline skill and Docker a differentiator, so he proves Git first
+- B. Git is a baseline skill and Docker a differentiator, so he proves Git first and Docker second
 - C. Both are differentiators, since neither of them appears in every single ad he collected
 - D. Docker is the real baseline, because newer tools always matter more to employers than old ones
 
@@ -344,7 +344,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 - A. As a data scientist role, because the title is what will appear on her CV later on
 - B. As an AI application role, since modern dashboards are increasingly built with models
 - C. As a software engineering role, because SQL reports and dashboards are a kind of code
-- D. As closer to a data analyst job; judge it by its duties, then decide
+- D. As closer to a data analyst role, judged by its listed duties rather than its title
 
 <details><summary>Answer</summary>
 
@@ -354,7 +354,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 **3. Aisha opens Omar's recruiter screen with "Tell me about yourself." Which answer fits the lesson's 60-second shape best?**
 
-- A. Graduate; deployed a booking API with tests; wants backend work; drawn by Najm's rotations
+- A. Graduate; built and deployed a booking API with tests; wants backend work; drawn by Najm's rotations
 - B. A five-minute walk through his degree, year by year, ending with his final-year grades and contest record
 - C. A list of the eleven technologies on his CV, so that she can match him to the advert quickly
 - D. "It's all on my CV. Is there anything specific on it that you would like me to explain further?"
@@ -369,7 +369,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 - A. Read every diff since last week from the top, in order, until something looks suspicious
 - B. Revert all 30 commits, then re-apply them one at a time by hand and rerun the app each time
-- C. Run `git bisect`, using the failing test to mark each commit good or bad
+- C. Run `git bisect` over the 30 commits, using the failing test to mark each commit good or bad
 - D. Rewrite the generator from scratch, since tracing the cause through history would take too long
 
 <details><summary>Answer</summary>
@@ -381,8 +381,8 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 **5. Reem has nine pinned repositories: six course assignments, two old tutorials and, sixth in the list, her capstone. A reviewer will spend about a minute on her profile. What should she change first?**
 
 - A. Add more repositories, so that her profile looks as active and broad as possible to reviewers
-- B. Fill the contribution graph with frequent small commits, so the profile looks busy every day
-- C. Pin four to six repositories with the capstone first, and unpin the coursework
+- B. Fill the contribution graph with small commits, so the profile looks busy every day
+- C. Pin four to six repositories, capstone first, and unpin the coursework and old tutorials
 - D. Make every repository private except the capstone, and delete the README files from the rest
 
 <details><summary>Answer</summary>
@@ -393,7 +393,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 **6. In his first week at Najm, Yousef is unsure how long he should try alone before asking for help. Nobody has told him. What should he do?**
 
-- A. Ask Salem in their first 1:1 how long he should try alone before asking
+- A. Ask Salem in their first 1:1 how long to try alone before asking, as teams differ
 - B. Never ask during probation, so that he looks independent and capable to the team
 - C. Ask immediately whenever anything fails, because every minute stuck is wasted time
 - D. Message the most senior engineer privately each time, since seniors answer fastest
@@ -409,7 +409,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 - A. Train her own small language model from scratch on public data, to show deep model knowledge
 - B. Build a multi-agent platform with ten cooperating agents, to show she can work at a senior level
 - C. Collect certificates from five AI frameworks, so that her CV matches as many adverts as possible
-- D. One RAG feature she can explain, a 30-case golden set, injection tests and cost per request
+- D. One RAG feature she can explain, plus a 30-case golden set, injection tests, per-request cost
 
 <details><summary>Answer</summary>
 
@@ -459,7 +459,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 **11. Huda's tracker shows four technical rounds in a month, all live SQL exercises, and no final-round invitations. According to the funnel table, what should she change first?**
 
 - A. Rewrite her CV and target list, since the early stages of her search are failing
-- B. Practise timed SQL mocks in that format and go back to her gap list
+- B. Practise timed live SQL mocks in that exact format, then go back to her gap list
 - C. Retarget to software engineering, where she suspects interviews will be easier
 - D. Stop applying for a month and finish two new portfolio projects before trying again
 
@@ -473,7 +473,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 - A. A music-streaming site clone rebuilt from a video course, with his own colour scheme
 - B. A weather dashboard on a public API, with animated icons and a five-day forecast view
-- C. Pitch booking for his old football club, where two captains may grab the last slot
+- C. Pitch booking for his old football club, where two captains could grab the last slot
 - D. A to-do list app with drag and drop, six colour themes and a polished mobile layout
 
 <details><summary>Answer</summary>
@@ -497,7 +497,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 **14. Najm's written offer to Omar is conditional on degree attestation and a background check. He also has a final round at a telecom next week. What should he do now?**
 
-- A. Keep the telecom process open, and wait to resign or decline until conditions clear
+- A. Keep the telecom process open and don't resign or decline until the conditions clear
 - B. Cancel the telecom final today, because a written offer means the job is now certain
 - C. Resign from his part-time job at once, so that he can start at Najm whenever they ask
 - D. Tell the telecom he has accepted elsewhere, to save everyone's time in the meantime
@@ -511,7 +511,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 **15. In a SQL exercise, Dana asks Huda for each customer's most recent transaction. Which approach is correct?**
 
 - A. `GROUP BY customer_id` with `MAX(amount)`, since the largest amount is usually the latest one
-- B. `ROW_NUMBER()` per customer, ordered by time descending, keeping row 1
+- B. `ROW_NUMBER()` partitioned by customer, ordered by time descending, keeping row 1 of each
 - C. `SELECT DISTINCT customer_id` from transactions, ordered by transaction time descending
 - D. Order the whole table by transaction time descending, then take `LIMIT 1` for the answer
 
@@ -525,7 +525,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 - A. Writing a summary from memory the night before each check-in, so Khalid sees the highlights
 - B. Sending Khalid his course certificates and study hours as evidence of the effort he has put in
-- C. One career folder holding every artefact, named by lesson, such as `0.3-starting-audit`
+- C. One career folder holding every artefact, each named by lesson, such as `0.3-starting-audit`
 - D. Keeping notes wherever is handy and collecting them into one portfolio at the end of the course
 
 <details><summary>Answer</summary>
@@ -536,10 +536,10 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 **17. In a data round, Dana says: "Mobile sign-ups dropped 20% this week. How would you investigate?" What should Huda say first?**
 
-- A. Check that tracking still works, then segment by platform, country and app version
+- A. First check that tracking still works, then segment by platform, country and app version
 - B. Build a model to predict sign-ups so the team can see which factors explain the drop
 - C. Report the drop to managers at once as a real decline in customer interest this week
-- D. Run an A/B test of a new sign-up page to win back the customers who stopped signing up
+- D. Run an A/B test of a new sign-up page to win back all the customers who stopped signing up
 
 <details><summary>Answer</summary>
 
@@ -549,10 +549,10 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 **18. Mohammed asks an agent to fix one validation bug. The diff fixes it and also "tidies" five unrelated files. What should he do?**
 
-- A. Merge it all, since tidier code is better and the agent's summary says the tests pass
+- A. Merge it all, since tidier code is better and the agent's summary says tests pass
 - B. Ask the agent to tidy the rest of the repository too, so that the style is consistent
 - C. Merge it, then mention the extra changes in the pull request after it has been merged
-- D. Keep only the requested fix, rejecting unasked changes, and run the tests himself
+- D. Keep only the requested fix, reject the unasked changes, and run the tests himself
 
 <details><summary>Answer</summary>
 
@@ -564,7 +564,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 - A. Add 100 more employers from the same board, since a bigger list means more chances
 - B. Keep the list but send her generic CV to all of them this week, to save tailoring time
-- C. Mix in graduate programmes, careers pages and referrals: at least three channels
+- C. Mix in graduate programmes, careers pages and referrals, for at least three channels
 - D. Narrow the list to only the five best-known brands, since they hire the most graduates
 
 <details><summary>Answer</summary>
@@ -576,7 +576,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 **20. Omar wants to reach mid-level. The ladder says mid-levels "break down ambiguous problems", but he has only ever had clear tickets. What is the best next step?**
 
 - A. Wait for the next promotion cycle and hope Khalid notices how many tickets he closed
-- B. Ask Khalid for a small, ambiguous problem; write a design note; ship it and watch it
+- B. Ask Khalid for a small, ambiguous problem, write a design note, then ship and watch it
 - C. Earn an architecture certificate first, so his profile shows he is ready for design work
 - D. Volunteer for every clear ticket in the backlog, to prove he can handle twice the workload
 
@@ -601,7 +601,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 **22. Huda's story about a team project says "we" in every sentence. Khalid asks, "What did you do?" How should she fix the story?**
 
-- A. "We" for context, "I" for her actions, and credit her teammates' parts
+- A. Use "we" for context, "I" for her own actions, and credit her teammates' parts
 - B. Change every "we" to "I", including the parts her teammates actually did
 - C. Keep saying "we", because talking about herself sounds arrogant in an interview
 - D. Replace the story with a hypothetical answer about what she would do next time
@@ -616,8 +616,8 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 - A. Keep the admin key, but store it in a text file outside the repository on his laptop
 - B. Share the admin key with a friend, so someone else can deploy if he is not available
-- C. Give the pipeline a role that can deploy this service and nothing else
-- D. Remove the pipeline and deploy by hand from the console, so no key is needed at all
+- C. Give the pipeline its own role that can deploy this one service and nothing else
+- D. Remove the pipeline and deploy by hand from the console, so no key is needed
 
 <details><summary>Answer</summary>
 
@@ -628,7 +628,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 **24. An ad for a junior role says the team "owns services end to end, in production, with an on-call rota". What does that wording most likely tell Omar?**
 
 - A. The role is really a senior one, so a graduate should not apply to it at all
-- B. Juniors are expected to ship and operate their work, not only write code
+- B. Juniors are expected to ship and operate their own work, not just write it
 - C. The team does not use AI coding tools, so he will write every line himself
 - D. The words are boilerplate from a template, so they can safely be ignored
 
@@ -640,7 +640,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 **25. Omar fixes a bug where refunds were rounded the wrong way. What should he add before opening the pull request?**
 
-- A. A regression test that fails before the fix and passes after it
+- A. A regression test for the rounding that fails before the fix and passes after it
 - B. A code comment asking reviewers to check the rounding by hand when they have time
 - C. A note in the README saying the rounding bug is fixed and should not come back
 - D. Nothing more, since he tested it manually and the refund now looks right on screen
@@ -656,7 +656,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 - A. Change his target role, because no offer has arrived yet after eight weeks of searching
 - B. Rebuild the capstone in a newer framework before he sends any more applications
 - C. Stop applying while he waits to hear back from the three technical rounds
-- D. Keep the target and shift more weekly hours toward interview practice
+- D. Keep the target and shift more of his weekly hours toward interview practice
 
 <details><summary>Answer</summary>
 
@@ -667,7 +667,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 **27. Reem's project write-up says her search feature is "blazing fast". What should she write instead?**
 
 - A. "Extremely fast, and faster than most similar apps on the market today"
-- B. A measured time with its conditions, such as data size and machine
+- B. A measured time with its conditions, such as the data size and the machine
 - C. Nothing about speed, since numbers in a write-up invite difficult questions
 - D. "Used by thousands of people every day, who all say it is very fast"
 
@@ -705,9 +705,9 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 **30. Mohammed pastes the text of his designer-template CV into a plain text file. His skills are missing and his job titles appear next to the wrong dates. What should he do?**
 
-- A. Move to a one-column, text-only layout and run the paste test again
-- B. Keep the template, since recruiters always see the original design rather than the text
-- C. Add his skills a second time in small white text, so that the parser can find them
+- A. Move to a one-column, text-only layout, then run the plain-text paste test again
+- B. Keep the template, since recruiters always see the original design, not the text
+- C. Add his skills a second time in small white text, so the parser finds them
 - D. Convert the CV into an image, so that its layout cannot be scrambled by any parser
 
 <details><summary>Answer</summary>
@@ -720,7 +720,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 - A. Watch a twelve-hour framework course from start to finish and take notes on every video
 - B. Read about five new frameworks so he can list them all on his CV by the end of the week
-- C. Add login, test that user A cannot see user B's bookings, deploy, document it
+- C. Add login, test that user A cannot see user B's bookings, deploy it, then document it
 - D. Solve fifty more algorithm problems, since his problem count is the number on his CV
 
 <details><summary>Answer</summary>
@@ -731,10 +731,10 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 **32. Mohammed has a startup offer and has found one salary figure on a crowd-sourced site. How should he judge whether the cash is fair?**
 
-- A. Trust the one figure, since crowd-sourced sites are accurate for GCC graduate roles
-- B. Build a range from several sources, then check the offer against his own floor
+- A. Trust the one figure, since crowd-sourced sites are accurate for graduate roles
+- B. Build a range from several sources, then check the offer against his real-cost floor
 - C. Ask the founder to match the highest figure he can find online from any country
-- D. Accept whatever is offered, since career-switchers have no right to ask questions
+- D. Accept whatever is offered, since career-switchers have no right to ask any questions
 
 <details><summary>Answer</summary>
 
@@ -744,10 +744,10 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 **33. Huda's three-month internship at a telecom ends next week. What will make it count most in her search?**
 
-- A. Ask her manager to be a reference and write it up without confidential details
-- B. Publish all the code she wrote on her GitHub, since she wrote every line of it herself during the internship
-- C. List the internship on her CV with the title "Data Engineer", since she did engineering work
-- D. Leave it off her CV, because three months is too short to count as real experience
+- A. Ask her manager to be a reference, and write it up leaving out confidential details
+- B. Publish all her internship code on GitHub, since she wrote every line herself
+- C. List it on her CV with the title "Data Engineer", since she did engineering work
+- D. Leave it off her CV, because three months is far too short to count as real experience
 
 <details><summary>Answer</summary>
 
@@ -758,9 +758,9 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 **34. Tariq asks Reem to estimate the load on the card-alert service. She does not know the real numbers. What is the best approach?**
 
 - A. Refuse to estimate, because any number she gives without real data would be wrong
-- B. Quote a large figure confidently, so that the design sounds suitably ambitious
+- B. Quote a large figure confidently, so that the whole design sounds suitably ambitious
 - C. Ask Tariq for the exact production figures and wait until he provides them all
-- D. State round assumptions aloud, do simple sums, and say what the result implies
+- D. State round assumptions out loud, do simple sums, and say what the result implies
 
 <details><summary>Answer</summary>
 
@@ -771,8 +771,8 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 **35. Reem wants an agent to add a currency-conversion step to her expense app. Which request keeps her in charge?**
 
 - A. "Add currency conversion to the app and make sure everything works properly at the end."
-- B. "Rewrite the backend to support every currency, and update any tests that start failing."
-- C. "Round to 2 places, error on missing rates, keep existing tests; show test cases first."
+- B. "Rewrite the backend to support every currency, and then update any tests that start failing."
+- C. "Round to 2 places, error on missing rates, keep existing tests; show me test cases first."
 - D. "Do whatever you think is best for currencies, then give me a short summary afterwards."
 
 <details><summary>Answer</summary>
@@ -783,9 +783,9 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 **36. Omar asks whether he should learn six frameworks to look employable in every role family. What does the T-shaped idea suggest?**
 
-- A. Learn all six to a basic level, since breadth across families is what gets juniors hired
-- B. Go deep in one area, with working knowledge of the areas next to it
-- C. Learn only algorithms in depth, because frameworks change too quickly to be worth learning
+- A. Learn all six to a basic level, since breadth across families gets juniors hired
+- B. Go deep in one role family first, and keep working knowledge of the areas next to it
+- C. Learn only algorithms in depth, since frameworks change too fast to be worth learning
 - D. Apply to every family at once with the same CV, then specialise after the first offer
 
 <details><summary>Answer</summary>
@@ -809,7 +809,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 **38. After eighteen months at Najm, Huda gets an outside offer with a small pay rise. She is still learning every month, and a next-level problem is open to her. What does the lesson suggest?**
 
-- A. Staying may be wiser: a small rise can cost more learning than it gains
+- A. Staying may be wiser, since a small rise can cost her more learning than it gains
 - B. Leave at once, because any pay rise outweighs every other factor at her stage
 - C. Accept the offer, then ask Najm to match it before she decides which one to keep
 - D. Stop learning new things for now, since the outside offer shows she is already ready
@@ -823,7 +823,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 **39. At her week-8 checkpoint, Reem's tracker shows replies to almost every application that followed a referral or a conversation, and to almost none of her cold ones. What should she change?**
 
 - A. Rewrite her CV, retarget, and start a new project, all this week, to speed things up
-- B. Keep the target and move hours from cold applications to conversations
+- B. Keep her target and move hours from cold applications to referral conversations
 - C. Stop all networking, since cold applications are the only channel she controls
 - D. Double the number of cold applications, since volume will eventually produce replies
 
@@ -837,7 +837,7 @@ Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 
 
 - A. Scanning a local company's public website to see which weaknesses he can find
 - B. A list of security certifications he plans to take, added to his LinkedIn profile
-- C. A threat model of one of his own projects, after platform stage 1
+- C. A threat model of a project he owns, written once he finishes platform stage 1
 - D. Testing a bank's login page gently, as long as nothing visibly breaks or slows down
 
 <details><summary>Answer</summary>

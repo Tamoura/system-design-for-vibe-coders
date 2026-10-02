@@ -663,9 +663,9 @@ The sheet feeds her development plan from 7.2.
 
 **1. The retail director asks Kareem for "a dashboard of customer churn" by next week. What should he do first?**
 
-- A. Build a draft dashboard quickly from the customer 360 mart so that retail has something concrete to react to
+- A. Build a quick draft dashboard from the customer 360 mart so retail has something to react to
 - B. Ask Dana to start a churn model, since churn is a predictive question for data science
-- C. Ask which decision it will change and how "churn" should be defined
+- C. Ask which decision the dashboard will change and how retail defines "churn" before building
 - D. Export every customer column to a spreadsheet so retail can explore churn themselves
 
 <details><summary>Answer</summary>
@@ -676,7 +676,7 @@ The sheet feeds her development plan from 7.2.
 
 **2. Some Najm Mobile phones stay offline overnight and send yesterday's taps in the morning. The daily feature-usage mart is built once at 07:00 and never rebuilt, so those taps never appear. What fixes this?**
 
-- A. Rebuild a short window of recent days on each run, by event time
+- A. Rebuild a short window of recent days on each run, keyed on when events happened
 - B. Move the mart build to 23:00 so that the whole day's events are in before it starts
 - C. Ask the mobile team to discard any event older than one hour before sending it
 - D. Group the dashboard by arrival time instead, so every event lands on some day
@@ -689,10 +689,10 @@ The sheet feeds her development plan from 7.2.
 
 **3. The retail dashboard has been late three mornings in a row. Each hop of its data flow sheet has a written freshness budget. Where should Huda look first?**
 
-- A. At the BI tool's cache and refresh settings, because that is where the delay is visible to users
+- A. At the BI tool's cache and refresh settings, where users first notice the delay
 - B. At the dashboard's query, rewriting it so it runs faster against the mart
 - C. At the warehouse bill, to see whether paying for more compute would help
-- D. At the hop budgets, to find which upstream step finished late
+- D. At the hop budgets, to find which upstream step finished later than its budget
 
 <details><summary>Answer</summary>
 
@@ -702,10 +702,10 @@ The sheet feeds her development plan from 7.2.
 
 **4. Huda wants to practise dbt on a copy of real customer data from her old internship, "because it is realistic". What does this course advise?**
 
-- A. Fine if she removes the names first, since the remaining columns are not personal data
-- B. Use synthetic or openly licensed public data instead
-- C. Fine as long as the repository stays private on her own laptop
-- D. Ask the former employer's IT team to send a fresh extract
+- A. Fine once she removes the names, since the remaining columns are not personal data
+- B. Use synthetic or open data; real customer data needs a purpose and legal basis
+- C. Fine as long as the repository stays private on her own laptop and is never pushed
+- D. Ask the former employer's IT team to send her a fresh, up-to-date extract
 
 <details><summary>Answer</summary>
 
@@ -717,8 +717,8 @@ The sheet feeds her development plan from 7.2.
 
 - A. It drops everything after midnight on the 30th and names no time zone
 - B. BETWEEN excludes both end points, so 1 and 30 September are lost entirely
-- C. BETWEEN cannot be used on timestamp columns in PostgreSQL
-- D. Nothing, as long as there is an index on `txn_ts` for the scan
+- C. BETWEEN cannot be used on timestamptz columns, only on plain dates
+- D. Nothing is wrong, as long as there is an index on `txn_ts` for the scan
 
 <details><summary>Answer</summary>
 
@@ -728,7 +728,7 @@ The sheet feeds her development plan from 7.2.
 
 **6. Lina reports `AVG(credit_score)` as "the average customer score" over 1,000 customers. 200 of them have no score (`NULL`). What should she know?**
 
-- A. AVG treats NULL as zero, so the 200 unscored customers pull the average down
+- A. AVG treats NULL as zero, so the 200 unscored pull the average down
 - B. AVG fails with an error whenever any value in the column is NULL
 - C. AVG skips NULLs, so it averages the 800 scored customers; say so
 - D. AVG counts NULL rows twice unless COALESCE is applied first
@@ -742,9 +742,9 @@ The sheet feeds her development plan from 7.2.
 **7. Huda builds a 7-day rolling spend with `ROWS BETWEEN 6 PRECEDING AND CURRENT ROW` on a table that has a row only for days with spend. What is the problem?**
 
 - A. None, because ROWS frames count calendar days in PostgreSQL by default
-- B. It spans seven rows, not seven days, when some days have no rows
+- B. It spans seven rows, not seven days, so missing days stretch it back
 - C. It double-counts the current day because CURRENT ROW is included twice
-- D. It fails, because a window frame needs a GROUP BY on the same column
+- D. It fails, because a window frame needs a GROUP BY on that column
 
 <details><summary>Answer</summary>
 
@@ -754,10 +754,10 @@ The sheet feeds her development plan from 7.2.
 
 **8. A proposed `fact_card_transaction` (one row per authorised transaction) includes a column "customer's total spend this month". Lina rejects it. Why?**
 
-- A. Monthly totals must always be stored as a Type 3 attribute in the customer dimension
+- A. Monthly totals must always be stored as a Type 3 attribute on the customer
 - B. Fact tables may hold only foreign keys and no numeric measures at all
 - C. It would make the table too wide for a columnar engine to scan
-- D. It is not true at the declared grain, so it belongs elsewhere
+- D. It is not true at the transaction grain, so it belongs in another table
 
 <details><summary>Answer</summary>
 
@@ -769,8 +769,8 @@ The sheet feeds her development plan from 7.2.
 
 - A. Average the branch ratios, giving every branch equal weight
 - B. Sum the branch ratios, because ratios add up across branches
-- C. Take the highest branch ratio, to be prudent in risk reporting
-- D. Store numerator and denominator; sum each, then divide
+- C. Take the highest branch ratio, to be prudent in regional risk reporting
+- D. Store numerator and denominator, sum each, then divide the sums
 
 <details><summary>Answer</summary>
 
@@ -781,9 +781,9 @@ The sheet feeds her development plan from 7.2.
 **10. Core banking reuses customer numbers after an account has been closed for ten years. Why does `dim_customer` carry its own surrogate key?**
 
 - A. It stays stable when business keys change or are reused, and allows versions
-- B. Surrogate keys hide the customer's identity, so the dimension counts as anonymous data under the GDPR
-- C. Natural keys cannot be indexed, so joins on them are always slow
-- D. It lets the fact table skip the date dimension entirely
+- B. Surrogate keys hide identity, so the dimension counts as anonymous under the GDPR
+- C. Natural keys cannot be indexed, so joins on them are always slow at scale
+- D. It lets the fact table skip the date dimension and join on customer alone
 
 <details><summary>Answer</summary>
 
@@ -795,7 +795,7 @@ The sheet feeds her development plan from 7.2.
 
 - A. Partitioning always slows queries, so lake tables should never be partitioned
 - B. Parquet files cannot be partitioned by more than one column at a time
-- C. Too many tiny files; partition by date and compact regularly
+- C. Too many small files; partition by date instead and compact them regularly
 - D. The partitions must be stored as CSV so that engines can open them faster
 
 <details><summary>Answer</summary>
@@ -807,9 +807,9 @@ The sheet feeds her development plan from 7.2.
 **12. Tariq offers Kareem a read replica of the core banking database for a three-year trend analysis of transactions. What should Faisal say?**
 
 - A. Ideal, because a replica is a columnar copy built for analytical scans
-- B. Fine for small operational reports, not for multi-year scans
+- B. Fine for small reports, but a row store is wrong for multi-year scans
 - C. Never acceptable, because replicas lag the primary by several days
-- D. Ideal, because a replica also accepts the analysts' writes and temporary tables
+- D. Ideal, because a replica also accepts the analysts' writes and temp tables
 
 <details><summary>Answer</summary>
 
@@ -819,10 +819,10 @@ The sheet feeds her development plan from 7.2.
 
 **13. Dana's Spark training jobs and Lina's SQL marts both need the same raw card history, and Faisal wants no extra copies. What fits?**
 
-- A. Nightly CSV exports, one folder per engine
-- B. An open table format such as Apache Iceberg over Parquet
-- C. Keeping the raw history only in the core banking primary
-- D. One warehouse copy for Spark users and a second one for SQL users
+- A. Nightly CSV exports of the history, one folder for each engine
+- B. An open table format such as Apache Iceberg over one Parquet copy
+- C. Keeping the raw history only in the core banking primary database
+- D. One warehouse copy for Spark users and a separate second one for SQL users
 
 <details><summary>Answer</summary>
 
@@ -835,7 +835,7 @@ The sheet feeds her development plan from 7.2.
 - A. Log-based CDC with Debezium, since it captures every change in commit order
 - B. An incremental load on `updated_at` with a 30-minute overlap window
 - C. A streaming consumer with an idempotent sink keyed on branch code
-- D. A full load each run, replacing the previous copy
+- D. A full load on each run, replacing the previous copy and catching deletes
 
 <details><summary>Answer</summary>
 
@@ -845,7 +845,7 @@ The sheet feeds her development plan from 7.2.
 
 **15. Huda spots a wrong currency code in some rows of `raw.core_transactions`. She wants to run an `UPDATE` on raw to fix them. What should she do instead?**
 
-- A. Leave raw as received; correct the code in staging
+- A. Leave raw as received evidence and correct the currency code in staging
 - B. Update raw, because every later layer will then inherit the correction
 - C. Delete the bad rows from raw and re-extract the whole table from the source
 - D. Update raw, keeping a screenshot of the old values as evidence
@@ -858,7 +858,7 @@ The sheet feeds her development plan from 7.2.
 
 **16. Kareem wants to pull CRM data with an open-source connector whose documentation says "incremental sync supported". What should Faisal ask for?**
 
-- A. Nothing, since connector maintainers test incremental modes against every source
+- A. Nothing, since maintainers test incremental modes against every source
 - B. Writing every extractor by hand in Python instead of using connectors
 - C. A test that it really catches updates and deletes from this source
 - D. Full loads only, since connectors cannot do incremental sync
@@ -871,7 +871,7 @@ The sheet feeds her development plan from 7.2.
 
 **17. A dbt test fails inside an Airflow DAG. The task retries three times with a five-minute backoff, so the alert arrives twenty minutes late. What should change?**
 
-- A. Retry only transient errors; fail fast on test failures
+- A. Retry only transient errors and fail fast when a data test fails
 - B. Increase retries to five, so the test has more chances to pass
 - C. Remove the tests from the DAG so that failures stop delaying the run
 - D. Lower the backoff to ten seconds so that the three retries finish sooner
@@ -885,7 +885,7 @@ The sheet feeds her development plan from 7.2.
 **18. A DAG task emails the daily risk extract to finance. A retry after a timeout sent it twice. What is the fix?**
 
 - A. Turn off retries for the whole DAG so that nothing can ever run twice
-- B. Record an idempotency key per report and date; skip if present
+- B. Record an idempotency key per report and date; skip it if one exists
 - C. Put the email step inside the same database transaction as the load
 - D. Ask finance to ignore the second email whenever two arrive in a day
 
@@ -897,10 +897,10 @@ The sheet feeds her development plan from 7.2.
 
 **19. Rebuilding `customer_360` in place takes 25 minutes, and dashboards opened during the rebuild show half-built numbers. What should Lina do?**
 
-- A. Rebuild at night and hope nobody opens a dashboard then
-- B. Add more retries so that the rebuild finishes in fewer minutes
-- C. Build a new table, test it, then swap it in atomically
-- D. Ask users to refresh twice whenever the numbers look odd
+- A. Rebuild at night and just hope nobody opens a dashboard then
+- B. Add more retries so the rebuild finishes in fewer minutes
+- C. Build a new table, test it, then swap it into place atomically
+- D. Ask users to refresh twice whenever the numbers look odd to them
 
 <details><summary>Answer</summary>
 
@@ -910,8 +910,8 @@ The sheet feeds her development plan from 7.2.
 
 **20. In Airflow, a daily run has the data interval for 14 September. When does it normally run, and for which data?**
 
-- A. At 00:00 on 14 September, loading 13 September's data
-- B. Whenever triggered, loading whatever arrived since the last run of the DAG
+- A. At 00:00 on 14 September, loading the data of 13 September
+- B. Whenever triggered, loading whatever arrived since the previous run
 - C. During 14 September, loading data up to the moment it starts
 - D. After the interval ends, early on 15 September, for 14 September
 
@@ -925,7 +925,7 @@ The sheet feeds her development plan from 7.2.
 
 - A. Lag drops, because ten consumers read faster than six on any topic
 - B. The four extra consumers sit idle; add partitions or speed up processing
-- C. Kafka rejects the extra consumers and stops the whole group until an administrator intervenes
+- C. Kafka rejects the extra consumers and halts the group until an admin acts
 - D. Each event is now processed twice, once by an old and once by a new consumer
 
 <details><summary>Answer</summary>
@@ -938,8 +938,8 @@ The sheet feeds her development plan from 7.2.
 
 - A. Nothing is lost, because Kafka keeps events until every group has read them
 - B. The consumer resumes from its committed offset with every event intact
-- C. Kafka pauses all producers while any consumer group is down
-- D. Events older than retention are gone; rebuild from the raw archive
+- C. Kafka pauses all producers on the topic while any consumer group is down
+- D. Events past seven-day retention are deleted; rebuild from the raw archive
 
 <details><summary>Answer</summary>
 
@@ -949,10 +949,10 @@ The sheet feeds her development plan from 7.2.
 
 **23. The Najm Mobile team wants app "visits": a customer's events grouped together until 30 minutes pass with no activity. Which window fits?**
 
-- A. Session windows
-- B. Tumbling windows of 30 minutes
+- A. Session windows that close after a 30-minute gap
+- B. Tumbling windows, each a fixed 30 minutes long
 - C. Sliding windows of 30 minutes, advancing every minute
-- D. Processing-time windows sized to a typical visit length
+- D. Processing-time windows sized to a typical visit
 
 <details><summary>Answer</summary>
 
@@ -965,7 +965,7 @@ The sheet feeds her development plan from 7.2.
 - A. Grant the CI user read access to the production analytics schema
 - B. Rename the CI schema so that it matches production exactly
 - C. Use `ref('stg_core__accounts')` so dbt resolves the environment
-- D. Materialise the model as a view so that the hard-coded name stops mattering
+- D. Materialise the model as a view so the hard-coded name stops mattering
 
 <details><summary>Answer</summary>
 
@@ -975,9 +975,9 @@ The sheet feeds her development plan from 7.2.
 
 **25. Huda's staging model joins core accounts to CRM contacts and computes an "active customer" flag. What should Lina say in review?**
 
-- A. Fine, because staging is the first place where cleaned sources can be combined
+- A. Fine, because staging is the first place cleaned sources can be combined
 - B. Move everything into the mart so that staging can be skipped entirely
-- C. Keep staging one-to-one and mechanical; move joins and logic later
+- C. Keep staging one-to-one; move joins and business logic to later models
 - D. Fine, as long as the model has unique and not_null tests on its key
 
 <details><summary>Answer</summary>
@@ -988,10 +988,10 @@ The sheet feeds her development plan from 7.2.
 
 **26. Lina wants to check the DPD bucket boundaries (0, 30, 31, 90, 91 days) before any real loan data exists. What should she write?**
 
-- A. A dbt unit test with hand-built input rows
-- B. A not_null data test on the bucket column of the production table
-- C. A freshness check on the source that feeds the instalments table
-- D. A model contract fixing the bucket column's data type
+- A. A dbt unit test with hand-built input rows at each boundary
+- B. A not_null data test on the bucket column in production
+- C. A freshness check on the source feeding the instalments table
+- D. A model contract that fixes the bucket column's data type
 
 <details><summary>Answer</summary>
 
@@ -1002,9 +1002,9 @@ The sheet feeds her development plan from 7.2.
 **27. Each day a few hundred out of millions of Najm Mobile events arrive with a malformed `app_version`. They feed a product-usage dashboard. How should the quality check respond?**
 
 - A. Fail the whole load every day until the mobile team fixes every event
-- B. Ignore the bad rows silently, since a few hundred will not move the totals
-- C. Block publishing and page on-call for each malformed event
-- D. Quarantine the bad rows, publish the rest and report the count
+- B. Ignore the bad rows silently, since a few hundred won't move totals
+- C. Block publishing and page on-call for each single malformed event
+- D. Quarantine bad rows, publish the rest and report the bad-row count
 
 <details><summary>Answer</summary>
 
@@ -1014,10 +1014,10 @@ The sheet feeds her development plan from 7.2.
 
 **28. Huda's reconciliation test inner-joins daily mart totals to ledger control totals. On a day when the ledger feed failed, the test passed. Why, and what is the fix?**
 
-- A. That is correct behaviour, because days without ledger data cannot be reconciled anyway
+- A. Correct behaviour, since days without ledger data cannot be reconciled
 - B. The missing side vanished in the join; use a left or full outer join
-- C. Add a not_null test on the mart total to cover missing days
-- D. Raise the tolerance so that gaps on such days do not fail
+- C. Add a not_null test on the mart total to catch the missing days
+- D. Raise the tolerance so that gaps on such days no longer fail the test
 
 <details><summary>Answer</summary>
 
@@ -1027,10 +1027,10 @@ The sheet feeds her development plan from 7.2.
 
 **29. Najm's data observability tool sends about 300 alerts a week to a shared channel. A real freshness breach on the credit-risk mart went unnoticed. What should change?**
 
-- A. Add more monitors on every column of every table so that the real breaches stand out among the rest
+- A. Add monitors on every column of every table so real breaches stand out
 - B. Turn off all monitors and rely on dbt tests alone from now on
-- C. Email every alert to the whole data team as well
-- D. Monitor critical tables, give each alert a named owner, tune the noisy ones
+- C. Email every alert to the whole data team as well as the channel
+- D. Monitor critical tables, give each alert an owner, tune noisy ones
 
 <details><summary>Answer</summary>
 
@@ -1053,7 +1053,7 @@ The sheet feeds her development plan from 7.2.
 
 **31. Fifty tiles on the executive dashboard each aggregate the billion-row transactions fact by day and branch. The dashboard is slow and expensive. What should Lina do?**
 
-- A. Give the BI tool a much larger compute warehouse so that every tile loads faster
+- A. Give the BI tool a much larger warehouse so every tile loads faster
 - B. Cache every tile for a month so the warehouse is rarely queried
 - C. Build an aggregate mart at day × branch and point the tiles at it
 - D. Switch each tile to `select *` so the BI tool aggregates locally
@@ -1066,10 +1066,10 @@ The sheet feeds her development plan from 7.2.
 
 **32. An incremental dbt model with a three-day lookback has run for eight months. Its logic changed last month, and its totals now differ from a full rebuild. What should the team do?**
 
-- A. Run a full refresh when logic changes, and on a schedule
-- B. Widen the lookback to eight months so that every run rebuilds all of history
+- A. Run a full refresh whenever logic changes, and on a regular schedule
+- B. Widen the lookback to eight months so every run rebuilds all history
 - C. Switch the strategy to append so that old rows are never touched
-- D. Remove the unique key so reprocessed rows are kept as new versions
+- D. Remove the unique key so that reprocessed rows are kept as new versions
 
 <details><summary>Answer</summary>
 
@@ -1080,9 +1080,9 @@ The sheet feeds her development plan from 7.2.
 **33. In June, many customers were reclassified from retail to SME. A regulator asks how many SME customers Najm had in March. Which approach is right?**
 
 - A. Each customer's segment as-was in March, via the Type 2 dimension
-- B. Today's segment for all history, so every report shows one consistent view
+- B. Today's segment for all history, so every report shows one view
 - C. Drop the reclassified customers, so the March count cannot be disputed
-- D. The average of the March and June segment counts
+- D. The average of the March and June SME counts, to split the difference
 
 <details><summary>Answer</summary>
 
@@ -1093,8 +1093,8 @@ The sheet feeds her development plan from 7.2.
 **34. Kareem's new "digital adoption" metric already appears on a dashboard, but retail and finance still disagree on its definition. What status should it carry in the metrics catalogue?**
 
 - A. Certified, because it is already in use on a dashboard people open
-- B. Deprecated, because a disputed metric should not be shown at all
-- C. Provisional, shown as such until the owner approves a definition
+- B. Deprecated, because a disputed metric should not be shown to any user
+- C. Provisional, labelled as such until the owner approves a definition
 - D. Unlisted, so the catalogue only ever contains agreed definitions
 
 <details><summary>Answer</summary>
@@ -1105,10 +1105,10 @@ The sheet feeds her development plan from 7.2.
 
 **35. Finance decides that "card spend" must exclude reversals. The change will lower the chart by about 3% overnight. What should Lina do?**
 
-- A. Change the filter quietly, since the new number is more correct
-- B. Version the definition, announce it, annotate the chart, backfill if needed
-- C. Keep the old definition for ever, since history must never change
-- D. Publish a second metric under the same name and let each team pick the version it prefers
+- A. Change the filter quietly, because the new number is more correct
+- B. Version it, announce it, annotate the chart, and backfill if needed
+- C. Keep the old definition for ever, because history must never change
+- D. Publish a second metric under the same name and let each team choose
 
 <details><summary>Answer</summary>
 
@@ -1118,10 +1118,10 @@ The sheet feeds her development plan from 7.2.
 
 **36. Kareem wants to show weekly card spend and weekly complaints over 52 weeks, to discuss whether they move together. Which chart is most honest?**
 
-- A. One chart with two y-axes, each scaled so that the lines overlap clearly
-- B. A pie chart per quarter showing spend and complaints shares
-- C. A 3D area chart stacking spend on top of complaints
-- D. Two aligned line charts, or a scatter plot of the two
+- A. One chart with two y-axes, scaled so that the lines overlap clearly
+- B. A pie chart per quarter showing the spend and complaints shares
+- C. A 3D area chart stacking weekly spend on top of complaints
+- D. Two aligned line charts, or a scatter plot of spend vs complaints
 
 <details><summary>Answer</summary>
 
@@ -1132,7 +1132,7 @@ The sheet feeds her development plan from 7.2.
 **37. The average balance of Najm's current customers has risen for six months. Over the same period, many low-balance customers closed their accounts. How should Kareem read it?**
 
 - A. Customers are saving more, so the retail team should celebrate the trend
-- B. Possibly survivorship; show population size and a cohort view
+- B. Possibly survivorship; show the population size and a cohort view
 - C. Balances are semi-additive, so they can never be averaged at all
 - D. It is Simpson's paradox, which only a randomised test can resolve
 
@@ -1158,9 +1158,9 @@ The sheet feeds her development plan from 7.2.
 **39. The cards team halves the minimum detectable effect of a planned test from 2 points to 1 point. Roughly how does the required sample change?**
 
 - A. About the same, since the baseline rate has not changed
-- B. About double, because the effect is half as large
-- C. About half, because a smaller effect is easier to measure
-- D. About four times as many users per group
+- B. About double, because the effect is now half as large
+- C. About half, since a smaller effect is easier to measure
+- D. About four times, since n grows with (1 ÷ MDE) squared
 
 <details><summary>Answer</summary>
 
@@ -1171,7 +1171,7 @@ The sheet feeds her development plan from 7.2.
 **40. Najm picks its ten worst-performing branches last month for a coaching programme. Next month, all ten improve. What can Kareem conclude?**
 
 - A. The programme worked, because every coached branch improved
-- B. The programme failed, because the improvement was too small to matter to the bank
+- B. The programme failed, because the improvement was too small to matter
 - C. Part may be regression to the mean; compare with a control group
 - D. It is a novelty effect that will fade after another month
 
@@ -1198,7 +1198,7 @@ The sheet feeds her development plan from 7.2.
 
 - A. Keep them, because recent data best reflects current fraud patterns
 - B. Label them all as fraud to balance the classes in the training set
-- C. Exclude rows younger than the agreed label maturity window
+- C. Exclude rows younger than the agreed chargeback maturity window
 - D. Keep them with double weight to emphasise recent behaviour
 
 <details><summary>Answer</summary>
@@ -1210,8 +1210,8 @@ The sheet feeds her development plan from 7.2.
 **43. A feature `account_age_days` is computed as today's date minus the account's opening date, then joined to 2024 transactions for training. What is wrong?**
 
 - A. Nothing, because account age only increases and cannot leak anything
-- B. Temporal leakage; compute age as of each transaction
-- C. Nothing, provided the test set is split at random
+- B. Temporal leakage; compute the age as of each transaction's date
+- C. Nothing, as long as the test set is split at random by row
 - D. It causes training-serving skew, which a larger model will absorb
 
 <details><summary>Answer</summary>
@@ -1223,7 +1223,7 @@ The sheet feeds her development plan from 7.2.
 **44. For Smart Alerts, the cost-minimising threshold produces about 4,000 alerts a day. Fraud operations can review about 1,500. What should Dana take to the business?**
 
 - A. Options and costs: raise the threshold, add staff, or a second-stage rule
-- B. The cost-minimising threshold anyway, since it is mathematically optimal for the bank
+- B. The cost-minimising threshold anyway, since it is the mathematically optimal one
 - C. The default threshold of 0.5, which balances both kinds of error
 - D. A switch to accuracy as the metric, so that fewer alerts are produced
 
@@ -1237,7 +1237,7 @@ The sheet feeds her development plan from 7.2.
 
 - A. Nothing, because a model that ranks well always gives good probabilities
 - B. Replace the model with rules, since ML scores are never probabilities
-- C. Check calibration with a reliability curve, and re-calibrate
+- C. Check calibration with a reliability curve, and re-calibrate the scores
 - D. Multiply every score by the down-sampling rate, then ship without checks
 
 <details><summary>Answer</summary>
@@ -1248,10 +1248,10 @@ The sheet feeds her development plan from 7.2.
 
 **46. A new scam makes transactions that used to look safe turn out to be fraud. The distribution of the model's inputs has barely changed. What kind of drift is this?**
 
-- A. Data drift: the inputs have moved away from training
-- B. An upstream data break caused by a schema change in the feed
+- A. Data drift: the inputs have moved away from the training data
+- B. An upstream data break caused by a schema change in the source feed
 - C. Label drift only, which a threshold change will fully correct
-- D. Concept drift: the input–outcome relationship changed
+- D. Concept drift: the same inputs now lead to a different outcome
 
 <details><summary>Answer</summary>
 
@@ -1262,9 +1262,9 @@ The sheet feeds her development plan from 7.2.
 **47. A customer's personal data is erased from core banking. Some of their credit memos are chunks with embeddings in the Credit Memo Copilot's pgvector index. What should happen?**
 
 - A. Delete their chunks and vectors too; derived vectors are personal data
-- B. Leave the vectors in place, because embeddings are only lists of numbers and not personal data
+- B. Leave the vectors; embeddings are only numbers, not personal data
 - C. Re-embed the whole corpus with a new model so the old vectors disappear
-- D. Mark the chunks as not current so they rank lower
+- D. Mark their chunks as not current so that they rank lower in search
 
 <details><summary>Answer</summary>
 
@@ -1275,9 +1275,9 @@ The sheet feeds her development plan from 7.2.
 **48. Fixed 500-character chunks split the loan-to-value table in the SME policy, so rows end up separated from their headers and answers mix up the limits. What should Huda change?**
 
 - A. Increase the overlap between fixed-size chunks to 400 characters
-- B. Chunk by structure: tables whole, with their heading path
-- C. Switch to a larger embedding model that understands broken tables
-- D. Strip all tables from policy documents before indexing
+- B. Chunk by structure, keeping each table whole with its heading path
+- C. Switch to a larger embedding model that can understand broken tables
+- D. Strip all tables out of the policy documents before indexing
 
 <details><summary>Answer</summary>
 
@@ -1287,10 +1287,10 @@ The sheet feeds her development plan from 7.2.
 
 **49. After a change to the copilot's retrieval, recall@5 on the golden set stays at 0.95 but MRR falls from 0.8 to 0.4. What does this tell the team?**
 
-- A. The right chunk is still found but ranked lower; check the ranking
-- B. The right chunk has dropped out of the top five results for most of the questions
-- C. Nothing that affects users, because MRR does not change answers
-- D. The golden set is too small, so both numbers should be ignored
+- A. The right chunk is still found but ranked lower; check the re-ranker
+- B. The right chunk has dropped out of the top five for most questions
+- C. Nothing that affects users, because MRR never changes the answers
+- D. The golden set is too small, so both numbers should be ignored entirely
 
 <details><summary>Answer</summary>
 
@@ -1300,10 +1300,10 @@ The sheet feeds her development plan from 7.2.
 
 **50. The marketing team wants to use customer 360 data for a new campaign. Under Najm's governance, who is accountable for approving this new use?**
 
-- A. The steward, Kareem, who answers day-to-day questions about meaning
-- B. The data owner, the Head of Retail Banking, with Sara consulted
+- A. The steward, Kareem, who answers the day-to-day questions on meaning
+- B. The data owner, Head of Retail Banking, with Sara (DPO) consulted
 - C. The technical owner, Lina, who runs the pipeline and its tests
-- D. Whoever in the data team built the most recent version of the mart
+- D. Whoever in the data team built the latest version of the mart
 
 <details><summary>Answer</summary>
 
@@ -1313,10 +1313,10 @@ The sheet feeds her development plan from 7.2.
 
 **51. Finance receives a weekly extract produced by a Python script outside dbt. It does not appear in Najm's lineage graph. How should the gap be closed?**
 
-- A. It cannot be; lineage only ever covers models built in dbt
-- B. Draw it on the architecture diagram at the next annual review
+- A. It cannot be; lineage only ever covers the models built in dbt
+- B. Draw it on the architecture diagram at the next annual review session
 - C. Ask finance to stop using extracts that lineage does not show
-- D. Declare it as an exposure, or emit OpenLineage events
+- D. Declare it as an exposure or emit OpenLineage events from the script
 
 <details><summary>Answer</summary>
 
@@ -1326,10 +1326,10 @@ The sheet feeds her development plan from 7.2.
 
 **52. Najm's policy says every tier-1 model needs a named data owner, but reviewers keep missing it in pull requests. What enforces the rule best?**
 
-- A. A monthly reminder email to every analytics engineer
-- B. Adding the rule to the governance policy document again
+- A. A monthly reminder email sent to every analytics engineer
+- B. Adding the rule to the governance policy document once again
 - C. A CI check on `manifest.json` that fails without `meta.data_owner`
-- D. Asking the catalogue team to add the missing owners by hand after each release
+- D. Asking the catalogue team to fill in missing owners after each release
 
 <details><summary>Answer</summary>
 
@@ -1339,9 +1339,9 @@ The sheet feeds her development plan from 7.2.
 
 **53. Kareem plans to release a dataset with age band, nationality and branch for a university study. Some combinations contain only one or two customers. Is it safe?**
 
-- A. Yes, because no names or national IDs are included in the release
+- A. Yes, because no names or national IDs are included in the released file
 - B. Yes, because the customer key was replaced with a keyed hash
-- C. No; small groups can identify people, so generalise or suppress
+- C. No; small groups can identify people, so generalise or suppress them
 - D. Only unsafe if the release also includes special-category data
 
 <details><summary>Answer</summary>
@@ -1352,10 +1352,10 @@ The sheet feeds her development plan from 7.2.
 
 **54. Najm Mobile raw events must be deleted after 13 months. Running `DELETE` on billions of rows each month is slow and locks the table. What is the better design?**
 
-- A. Partition by event date so expiry drops old partitions
+- A. Partition by event date so that expiry simply drops old partitions
 - B. Keep everything, since deleting history breaks reproducibility
 - C. Run the `DELETE` once a year instead of monthly, to save compute
-- D. Move expired rows into a sandbox schema rather than deleting them
+- D. Move expired rows into a sandbox schema rather than deleting them all
 
 <details><summary>Answer</summary>
 
@@ -1366,9 +1366,9 @@ The sheet feeds her development plan from 7.2.
 **55. Najm Assist conversation logs are loaded to the warehouse for complaint analysis. Customers often type their ID numbers and phone numbers into the chat. What should the pipeline do?**
 
 - A. Nothing, since free text is not structured personal data under the law
-- B. Hash the whole message text so analysts can still group conversations
-- C. Load the logs as they are and rely on analysts' training not to read individual conversations
-- D. Detect and redact PII before loading; restrict access and keep raw logs briefly
+- B. Hash the whole message text so analysts can still group the conversations
+- C. Load the logs unchanged and rely on analysts' training not to read individual chats
+- D. Detect and redact PII before loading; restrict access, keep raw logs briefly
 
 <details><summary>Answer</summary>
 
@@ -1378,10 +1378,10 @@ The sheet feeds her development plan from 7.2.
 
 **56. A view over `marts.loan_book` is owned by the dbt service account, which also owns the base table and is not subject to its policy. The base table has row-level security by country, but analysts querying the view see every country. Why?**
 
-- A. Row-level security never applies to tables that dbt has built in a marts schema, by design
-- B. The view runs with its owner's rights; use `security_invoker` or filter inside it
-- C. Views copy the base table's data, so the policies are lost
-- D. RLS applies only to the first query of each session
+- A. Row-level security never applies to tables that dbt has built in a marts schema
+- B. The view runs with its owner's rights; use `security_invoker` or filter in it
+- C. Views copy the base table's data, so its row policies are lost on the way
+- D. RLS applies only to the first query in each session, not to the later ones
 
 <details><summary>Answer</summary>
 
@@ -1391,10 +1391,10 @@ The sheet feeds her development plan from 7.2.
 
 **57. Huda still holds `pii_reader` from a project that ended 18 months ago. What control would have removed it?**
 
-- A. None needed, because she is still on the data team and may need it again
-- B. Time-limited grants for `pii_reader` and quarterly recertification
-- C. Removing her from the data team so every role is revoked at once
-- D. Renaming the role each year so that people who hold it no longer recognise what it grants
+- A. None needed, as she is still on the data team and may need it again
+- B. Time-limited grants for `pii_reader` and quarterly access recertification
+- C. Removing her from the data team so that every role is revoked at once
+- D. Renaming the role each year so that holders no longer recognise what it grants
 
 <details><summary>Answer</summary>
 
@@ -1404,10 +1404,10 @@ The sheet feeds her development plan from 7.2.
 
 **58. In December, a regulator asks Najm to resend the June credit-risk extract exactly as filed. The mart's June rows have since been corrected by late repayments. What should Faisal send?**
 
-- A. A re-run of June from today's mart, since it is now more accurate
-- B. A rebuild of June from raw with today's code, labelled and sent as the original filing
+- A. A re-run of June from today's mart, since it is now the most accurate
+- B. A rebuild of June from raw with today's code, sent as the original
 - C. An explanation that June can no longer be reproduced after corrections
-- D. The frozen, versioned June extract, with later corrections as restatements
+- D. The frozen, versioned June extract, with corrections as restatements
 
 <details><summary>Answer</summary>
 
@@ -1417,10 +1417,10 @@ The sheet feeds her development plan from 7.2.
 
 **59. A repayment arrives with a value date six days ago. The credit-risk mart has a three-day lookback window, and month-end is in two days. What should the team do?**
 
-- A. Nothing; the next run corrects it like any late repayment
-- B. Ignore it, because a DPD difference of a few days does not change any risk figure that matters
-- C. Run a logged backfill for the affected days before month-end
-- D. Widen the lookback permanently to the longest delay ever seen
+- A. Nothing; the next incremental run corrects it like any late repayment
+- B. Ignore it, since a few days of DPD difference never changes risk figures
+- C. Run a logged backfill for the affected days before the month-end freeze
+- D. Widen the lookback permanently to the longest delay ever seen in the data
 
 <details><summary>Answer</summary>
 
@@ -1430,8 +1430,8 @@ The sheet feeds her development plan from 7.2.
 
 **60. A candidate gets a 48-hour take-home: a small dataset and one business question. Which submission scores best on Najm's interview scorecard?**
 
-- A. Tested models, a README with assumptions, and a sanity check
-- B. A polished dashboard with many charts and no written explanation
+- A. Tested models, a README with assumptions, and a reconciliation check
+- B. A polished dashboard with many charts but no written explanation at all
 - C. A complex ML model with the highest accuracy on the given data
 - D. A long list of every tool used, with no tests and no README
 
