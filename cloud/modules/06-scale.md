@@ -257,7 +257,7 @@ The first run found three gaps no design review had caught: the replica-lag aler
 
 <details><summary>Answer</summary>
 
-**B.** Chaos engineering tests a stated prediction under control. A is recklessness; C: it complements restore drills; D is wrong: even a small zone drain teaches a lot. (🔴 Expert view.)
+**B.** Chaos engineering tests a stated prediction under control. A is recklessness; C is wrong, as it complements restore drills; even a small zone drain teaches a lot, so D is wrong. (🔴 Expert view.)
 
 </details>
 

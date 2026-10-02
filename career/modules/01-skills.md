@@ -21,7 +21,7 @@ Omar has a first-class CS degree and excels at algorithm puzzles. For Najm Bank'
 
 Khalid explains the decision to Aisha, the recruiter: "His algorithms are better than mine. But in his first month he will mostly read code he didn't write, chase bugs he didn't cause, and explain his changes in pull requests. I saw no evidence he can do that yet." Omar is invited to reapply to the next intake, with a list of what was missing.
 
-Omar's gap is common, and it is not about intelligence. University often grades the final answer; workplaces grade the process, because other people live with your work. This lesson names the five baseline skills, what each looks like at junior level, and how to show it.
+Omar's gap is common, and it is not about intelligence. University grades the final answer; workplaces grade the process, because other people live with your work.
 
 ## 📐 How it works
 
@@ -47,7 +47,7 @@ A commit message is where your reasoning lives. Compare:
 | `changes` | `Reject negative amounts in categoriser input` |
 | `final version 2` | `Add test for empty merchant name` |
 
-The strong versions say what the commit does, one change each. When the reason is not obvious, add a body after a blank line explaining why. Some teams use the **Conventional Commits** format (`fix: …`, `feat: …`); follow what the team already does.
+Each strong version says what the commit does, one change each; when the reason is not obvious, add a body after a blank line explaining why. Some teams use **Conventional Commits** (`fix: …`, `feat: …`); follow the team.
 
 **Reading code.** The skill nobody teaches, and the one you will use most. A method for an unfamiliar repository:
 
@@ -90,7 +90,7 @@ def test_parses_day_first_dates():
 
 The junior habit: **every bug fix comes with a test that would have caught it.** It is your proof, and it stops the bug returning.
 
-**Writing it down.** Commit messages, pull request descriptions, READMEs and questions cover most of a junior's writing. A good question to a colleague has four parts: what you are trying to do, what you expected, what happened instead (with the exact error), and what you already tried. "The tests don't work, can you help?" costs a senior ten minutes of questions; the four-part version often gets answered in one, and sometimes you answer it yourself while writing it.
+**Writing it down.** Commit messages, pull request descriptions, READMEs and questions cover most of a junior's writing. A good question to a colleague has four parts: what you are trying to do, what you expected, what happened instead (with the exact error), and what you already tried. "The tests don't work, can you help?" costs a senior ten minutes of questions; the four-part version often gets answered in one.
 
 ### 🟡 Going deeper
 
@@ -135,7 +135,7 @@ Keep pull requests small: a 50-line change gets a careful review; a 2,000-line c
 
 **Why AI makes the baseline more important.** As AI tools write more routine code, human effort moves to this lesson's skills: reading the agent's code, debugging failures you did not cause, testing to verify a claim, and writing down what changed. Lesson 1.2 builds on this. A graduate who can generate code but not check it is replaceable by the tool; one who can check the tool's work is who the team needs.
 
-**Writing is a technical skill.** Much engineering happens in issues, pull requests and chat. In the Gulf, many teams work in English with Arabic-speaking colleagues and customers; clear technical English, and explaining the same thing in Arabic to a business user, are real advantages. Put the conclusion first and include the exact command or error.
+**Writing is a technical skill.** Much engineering happens in issues, pull requests and chat. In the Gulf, clear technical English, plus explaining the same thing in Arabic to a business user, is a real advantage. Put the conclusion first and include the exact command or error.
 
 **Make your baseline visible.** "Proficient in Git" on a CV means nothing. A clean repository history, a well-described pull request, tests in CI and a short bug write-up prove it. Module 3 turns this into a portfolio.
 
