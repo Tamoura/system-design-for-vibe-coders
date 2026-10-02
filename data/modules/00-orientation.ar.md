@@ -491,3 +491,295 @@ ORDER BY 1;
 - Joe Reis وMatt Housley، *Fundamentals of Data Engineering* (O'Reilly)
 
 ---
+
+# 0.3 — تعرّف على فريق منصة البيانات في بنك نجم (Meet Najm Bank's data platform team)، وكيف تستخدم هذا المقرر
+*المستوى (Level): 🟢 مبتدئ (Beginner)* · *المتطلبات (Prerequisites): 0.1، 0.2* · *المرحلة (Stage): Operate, Govern*
+
+## ⚡ الدرس في دقيقة (In 60 seconds)
+- **بنك نجم خيالي (Najm Bank is fictional).** إنه بنك خليجي متوسط الحجم (mid-sized Gulf bank) (إقراض التجزئة والمنشآت الصغيرة والمتوسطة والشركات (retail, SME and corporate lending)) له عملاء في قطر والإمارات والاتحاد الأوروبي (Qatar, the UAE and the EU)، ويُستخدم عبر هذه المكتبة من المقررات (this library of courses). تنضم أنت إلى فريق **منصة البيانات والتحليلات (Data Platform & Analytics)** فيه.
+- يدير الفريق نسخة **الأنظمة المصرفية الأساسية (core banking)**، و**تدفق معاملات البطاقات (card transactions stream)**، وبيانات **تطبيق نجم للهاتف (Najm Mobile)** و**نجم أسيست (Najm Assist)**، ومستودع البيانات (warehouse) بمستودعيه الفرعيين **العميل الشامل (customer 360)** و**مخاطر الائتمان (credit-risk)**، ونموذج الاحتيال **التنبيهات الذكية (Smart Alerts)**، وبيانات الاسترجاع (retrieval data) الخاصة بـ**مساعد مذكرات الائتمان (Credit Memo Copilot)**.
+- ستعمل مع طاقم متكرّر (recurring cast): **فيصل** (مرشدك (your mentor))، و**هدى** (زميلتك (your peer)، التي ترتكب الأخطاء التي ينبغي أن تتجنّبها)، و**لينا**، و**دانة**، و**كريم**، و**سارة**، و**ليلى**، و**طارق**، و**سالم**.
+- لكل درس الأقسام العشرة نفسها (same ten sections)، ومستوى (level) (🟢 🟡 🔴)، ومرحلة أو مرحلتان (one or two stages)، ومُنتَج عمل من نجم (a Najm artefact)، وثلاثة تمارين متدرّجة (three graded exercises)، وخمسة أسئلة (five questions).
+- أفضل طريقة للدراسة (Best way to study): ابنِ نسختك الخاصة من كل مُنتَج عمل (every artefact) على حاسوبك المحمول بأدوات مجانية (free tools) وبيانات اصطناعية أو مفتوحة (synthetic or open data). بحلول الوحدة 7 سيكون لديك ملف أعمال (portfolio).
+- الفخ الأكبر (Biggest trap): القراءة دون تشغيل (reading without running). مهارات البيانات (data skills) تأتي من استعلامات تفشل (queries that fail) وخطوط بيانات تنكسر على جهازك أنت (pipelines that break on your own machine).
+
+## 🧭 لماذا يهم (Why it matters)
+عبارة «حدّد الحُبَيبية» (Define the grain) لا تعني الكثير حتى تحدّدها لمستودع فرعي لمخاطر الائتمان (credit-risk mart) تعتمد عليه لجنة مخاطر (risk committee)، مع عالم بيانات (data scientist) يريد تاريخًا أطول (more history)، ومسؤول حماية بيانات (DPO) يريد بيانات شخصية أقل (less personal data)، وقائد هندسي (engineering lead) قلق بشأن نافذة التحميل الليلي (nightly load window). الحالة المستمرة (A running case) تمنح كل فكرة مكانًا تهبط فيه (a place to land): الجداول وخطوط البيانات والأشخاص أنفسهم يعودون في كل وحدة.
+
+في اليوم الأول لهدى، يعطيها فيصل شيئين: خريطة من صفحة واحدة للأنظمة التي يملكها الفريق (one-page map of the systems)، وقائمة بأشخاص تلتقيهم في أسبوعيها الأولين (list of people to meet). يقول: «نصف هذه الوظيفة هو أن تعرف من أيّ نظام يأتي الرقم (which system a number comes from)، وأيّ شخص تسأل قبل أن تغيّره (which person to ask before you change it).» بنهاية هذا الدرس سيكون لديك الخريطة نفسها، ومختبر عامل (working lab) على حاسوبك المحمول.
+
+## 📐 كيف يعمل (How it works)
+
+### 🟢 الأساسيات (The essentials)
+
+**بنك نجم بنظرة سريعة (Najm Bank at a glance).** نجم خيالي (fictional)؛ وأيّ تشابه مع مؤسسة حقيقية (real institution) غير مقصود (unintended). ويظهر البنك نفسه في مقررات المكتبة الأخرى (the library's other courses)، من منظور فرق أخرى (seen from other teams).
+
+| الحقيقة (Fact) | التفاصيل (Detail) |
+|---|---|
+| النوع (Type) | بنك تجاري متوسط الحجم (mid-sized commercial bank): إقراض التجزئة والمنشآت الصغيرة والمتوسطة والشركات (retail, SME and corporate lending)، والبطاقات والودائع (cards and deposits) |
+| العملاء (Customers) | أفراد وشركات (individuals and businesses) في قطر والإمارات، وعملاء مقيمون في الاتحاد الأوروبي (EU-resident customers) |
+| اللغات (Languages) | العربية والإنجليزية (Arabic and English)، للعملاء والموظفين (for customers and staff) |
+| الفريق الذي تنضم إليه (The team you join) | **منصة البيانات والتحليلات (Data Platform & Analytics)**، بقيادة فيصل، ويخدم التجزئة والمخاطر والمالية والاحتيال والمنتج وفرق الذكاء الاصطناعي (retail, risk, finance, fraud, product and the AI teams) |
+
+ثلاث ولايات قضائية مهمة (three jurisdictions matter): أين يجوز تخزين البيانات (where data may be stored)، وكم يجوز الاحتفاظ بها (how long it may be kept)، ومن يجوز له رؤيتها (who may see it)، كلها قد تختلف بين قطر والإمارات والاتحاد الأوروبي. ستتعلّم متى تسأل سارة (when to ask Sara).
+
+**الطاقم (The cast).** تعلّم ما يهتم به كل شخص (what each person cares about). معظم عمل البيانات الحقيقي (most real data work) هو جعل هؤلاء الأشخاص يتفقون (getting these people to agree).
+
+| الشخص (Person) | الدور (Role) | ما يهتم به (What they care about) | السؤال الذي يطرحه دائمًا (The question they always ask) |
+|---|---|---|---|
+| **فيصل (Faisal)** | رئيس منصة البيانات (Head of Data Platform) (مرشدك (your mentor)) | منصة يثق بها الناس (a platform people trust): موثوقة ومختبرة ومملوكة (reliable, tested, owned) | «من يملك هذا، وماذا وعد؟ ⁦(Who owns this, and what did they promise?)⁩» |
+| **هدى (Huda)** | مهندسة بيانات خرّيجة (Graduate data engineer) (زميلتك (your peer)) | تسليم أول خطوط بياناتها بسرعة (shipping her first pipelines quickly) | «عمل دون أخطاء، إذن انتهى، صحيح؟ ⁦(It ran without errors, so it's done, right?)⁩» |
+| **لينا (Lina)** | مهندسة تحليلات (Analytics engineer) | نماذج نظيفة (clean models)، وتعريف واحد لكل مقياس (one definition per metric)، واختبارات (tests) | «ما حُبَيبية هذا الجدول؟ ⁦(What is the grain of this table?)⁩» |
+| **دانة (Dana)** | كبيرة علماء البيانات (Lead data scientist) | التنبيهات الذكية (Smart Alerts)، والتجارب (experiments)، والتقييم الصادق (honest evaluation) | «مقيس على أيّ بيانات، ومقارنةً بأيّ خط أساس؟ ⁦(Measured on which data, against which baseline?)⁩» |
+| **كريم (Kareem)** | محلّل بيانات، قطاع التجزئة (Data analyst, retail business) | إجابات يستطيع فريق التجزئة التصرف بناءً عليها هذا الأسبوع (answers the retail team can act on this week) | «هل أستطيع الوثوق بهذا الرقم أمام قطاع العمل؟ ⁦(Can I trust this number in front of the business?)⁩» |
+| **سارة (Sara)** | مسؤولة حماية البيانات (Data Protection Officer, DPO) | استخدام مشروع ومقتصد للبيانات الشخصية (lawful, minimal use of personal data)؛ وحقوق العملاء (customers' rights) | «أيّ بيانات شخصية، ولأيّ غرض، ويُحتفظ بها كم من الوقت؟ ⁦(Which personal data, for what purpose, kept for how long?)⁩» |
+| **ليلى (Layla)** | رئيسة حوكمة الذكاء الاصطناعي (Head of AI Governance) | مستويات المخاطر (risk tiers)، والضوابط (controls)، والموافقات (approvals) للنماذج والذكاء الاصطناعي | «ما المخاطرة، ومن يوقّع بالموافقة؟ ⁦(What is the risk, and who signs off?)⁩» |
+| **طارق (Tariq)** | قائد هندسي، الأنظمة المصرفية الأساسية وتطبيق نجم للهاتف (Engineering lead, core banking and Najm Mobile) | الأنظمة التي *تنتج (produce)* البيانات | «هل سيبطئ هذا التغيير بيئة الإنتاج؟ ⁦(Will this change slow down production?)⁩» |
+| **سالم (Salem)** | رئيس هندسة المنصات (Head of Platform Engineering) | البنية التحتية (infrastructure)، والسحابة (cloud)، والتكلفة (cost)، والموثوقية (reliability) | «كم يكلّف تشغيله، ومن يُستدعى عند العطل؟ ⁦(What does it cost to run, and who gets paged?)⁩» |
+
+**الأنظمة (The systems).** هذه مصادر البيانات والمنتجات (data sources and products) التي ستبني عليها في كل وحدة.
+
+| النظام (System) | ما هو (What it is) | نوع البيانات (Kind of data) |
+|---|---|---|
+| **قاعدة بيانات الأنظمة المصرفية الأساسية (Core banking database)** | قاعدة بيانات PostgreSQL تشغيلية (operational PostgreSQL database): العملاء والحسابات والمعاملات والقروض (customers, accounts, transactions, loans) | جداول تتغيّر طوال اليوم (tables, changing all day) |
+| **تدفق معاملات البطاقات (Card transactions stream)** | تفويضات البطاقات (card authorisations) منشورة كأحداث (published as events) إلى Kafka | تدفق أحداث عالي الحجم (high-volume event stream) |
+| **أحداث تطبيق نجم للهاتف (Najm Mobile events)** | الشاشات والنقرات واستخدام الميزات (screens, taps and feature usage) من التطبيق | أحداث شبه مهيكلة (semi-structured events) |
+| **سجلات نجم أسيست (Najm Assist logs)** | محادثات مع المساعد الآلي القائم على نموذج لغوي كبير والموجّه للعملاء (customer-facing LLM assistant) | نص يحتوي بيانات شخصية (text with personal data) |
+| **مستودع البيانات (The warehouse)** (الخام ← التهيئة ← المستودعات الفرعية (raw → staging → marts)) | المخزن التحليلي لنجم (Najm's analytical store) | جداول منمذجة (modelled tables) |
+| **المستودع الفرعي للعميل الشامل (Customer 360 mart)** | رؤية واحدة موثوقة لكل عميل عبر المنتجات (one trusted view of each customer across products) | مستودع فرعي (Mart) |
+| **المستودع الفرعي لمخاطر الائتمان (Credit-risk mart)** | القروض والتعرّضات والمدفوعات والمتأخرات (loans, exposures, payments and arrears) لتقارير المخاطر (risk reporting) | مستودع فرعي (Mart) |
+| **المستخلصات التنظيمية (Regulatory extracts)** | ملفات تُنتَج للجهات الرقابية (files produced for supervisors) من المستودعات الفرعية | مستخلصات (Extracts) |
+| **التنبيهات الذكية (Smart Alerts)** | نموذج تعلّم الآلة لكشف الاحتيال (fraud-detection ML model) | الخصائص والتسميات والدرجات (features, labels, scores) |
+| **مساعد مذكرات الائتمان (Credit Memo Copilot)** | ذكاء اصطناعي توليدي داخلي (internal GenAI) يسترجع من سياسات الائتمان والمذكرات (credit policies and memos) | مستندات ومقاطع وتضمينات (documents, chunks, embeddings) |
+| **لوحات معلومات التجزئة والمخاطر والمالية (Retail, risk and finance dashboards)** | لوحات معلومات ذكاء أعمال (BI dashboards) مبنية على المستودعات الفرعية | مقاييس (Metrics) |
+
+```mermaid
+flowchart LR
+    CB["قاعدة بيانات الأنظمة المصرفية الأساسية"] --> P["منصة بيانات نجم"]
+    CS["تدفق البطاقات"] --> P
+    MA["أحداث تطبيق نجم للهاتف"] --> P
+    NA["سجلات نجم أسيست"] --> P
+    DOC["سياسات الائتمان والمذكرات"] --> P
+    P --> C360["المستودع الفرعي للعميل الشامل"]
+    P --> CR["المستودع الفرعي لمخاطر الائتمان"]
+    C360 --> DB["لوحات المعلومات"]
+    CR --> DB
+    CR --> REG["المستخلصات التنظيمية"]
+    P --> SA["التنبيهات الذكية"]
+    P --> CMC["مساعد مذكرات الائتمان"]
+```
+
+### 🟡 التعمق أكثر (Going deeper)
+
+**كيف نُظّم المقرر (How the course is organised).** ثماني وحدات تأخذك من الصفر إلى الاحتراف (from zero to hero).
+
+| الوحدة (Module) | ستكون قادرًا على… (You will be able to…) | المستوى (Level) |
+|---|---|---|
+| 0 التوجيه (Orientation) | شرح الأدوار والحزمة والفريق (explain the roles, the stack and the team) | 🟢 |
+| 1 SQL ونمذجة البيانات (SQL and data modelling) | الإجابة عن أسئلة العمل بلغة SQL ونمذجة البيانات بالحُبَيبية الصحيحة (at the right grain) | 🟢 |
+| 2 الاستيعاب وخطوط البيانات (Ingestion and pipelines) | تحميل البيانات تزايديًا (load data incrementally)، وتنسيقها بأمان (orchestrate it safely)، ومعالجة التدفقات (handle streams) | 🟡 |
+| 3 التحويل والجودة (Transformation and quality) | بناء نماذج dbt مختبرة (tested dbt models)، وكتابة عقود البيانات (data contracts)، والتحكم في التكلفة (control cost) | 🟡 |
+| 4 تحليلات يثق بها الناس (Analytics people trust) | تعريف المقاييس مرة واحدة (define metrics once)، وتصميم لوحات معلومات تقود القرارات (drive decisions)، وإجراء تجارب سليمة (run sound experiments) | 🟡 |
+| 5 علم البيانات وتعلّم الآلة في الإنتاج (Data science and ML in production) | نقل النماذج من دفتر الملاحظات إلى خط البيانات (from notebook to pipeline)، ومراقبة الانجراف (monitor drift)، وتهيئة البيانات لتطبيقات النماذج اللغوية الكبيرة (LLM applications) | 🟡 |
+| 6 الحوكمة والخصوصية والأمن (Governance, privacy and security) | امتلاك البيانات وتصنيفها وحمايتها ومشاركتها كما ينبغي (own, classify, protect and share data properly) | 🔴 |
+| 7 الاحتراف (Hero) | بناء المستودع الفرعي لمخاطر الائتمان من طرف إلى طرف (end to end)، وتخطيط مسيرتك المهنية (plan your career)، واجتياز امتحان تدريبي من 60 سؤالًا (60-question practice exam) | 🔴 |
+
+**كيف يعمل كل درس (How every lesson works).** تأتي الأقسام العشرة دائمًا بالترتيب نفسه (in the same order). في **📐 كيف يعمل (How it works)**، اقرأ 🟢 أولًا، وجرّب 🟡، وعُد إلى 🔴 حين تحتاج إليه. و**🏛️ عمليًا في بنك نجم (In practice at Najm Bank)** هو مُنتَج العمل (artefact) الذي تنسخه إلى ملف أعمالك (portfolio).
+
+**ثلاثة مسارات (Three ways through).**
+- *إن كنت تستهدف هندسة البيانات (Aiming at data engineering):* اسلك الترتيب (go in order)، وامنح وقتًا إضافيًا للوحدتين 2 و3.
+- *إن كنت تستهدف التحليلات أو تحليل البيانات (Aiming at analytics or data analysis):* أنجز الوحدات 0 و1 و3 و4 بعمق (thoroughly)، وتصفّح الوحدة 2 سريعًا (skim) لتعرف كيف تصل بياناتك (how your data arrives).
+- *إن كنت تستهدف علم البيانات أو تعلّم الآلة (Aiming at data science or ML):* أنجز الوحدات 0 و1 و4 و5 بعمق؛ ولا تتخطَّ الدرس 3.2، لأن النموذج لا يكون أفضل من جودة بياناته (a model is only as good as its data quality).
+
+على الجميع إنجاز الوحدة 6 والمشروع الختامي (the capstone).
+
+**جهّز مختبرك (Set up your lab).** كل تمرين يعمل على حاسوب محمول بأدوات مجانية (free tools). تحتاج إلى:
+- **Python**، الإصدار 3.11 أو أحدث (version 3.11 or newer)، و**DuckDB** (`pip install duckdb`). وهذا يكفي للوحدتين 0 و1.
+- **PostgreSQL**، مثبّتًا محليًا (installed locally) أو مشغّلًا في حاوية (run in a container)، من الوحدة 1 فصاعدًا.
+- **Docker** (أو أداة حاويات متوافقة (compatible container tool)) لتشغيل Kafka أو Redpanda، وAirflow أو Dagster، وMetabase من الوحدة 2 فصاعدًا. وللحاويات كما ينبغي (containers done properly)، راجع [*السحابة وDevOps: من الصفر إلى الاحتراف (Cloud & DevOps: Zero to Hero)*، الدرس 2.1 — الحاويات بالطريقة الصحيحة (Containers done right)](../cloud/index.ar.html#/2.1).
+- **dbt Core** مع محوّل (adapter) DuckDB أو PostgreSQL من الوحدة 3.
+- **git**، لكي يعيش كل تمرين في مستودع شيفرة (repository) تستطيع عرضه.
+
+**لا تستخدم بيانات شخصية حقيقية أبدًا (Never use real personal data).** استخدم بيانات اصطناعية تولّدها بنفسك (synthetic data you generate)، أو بيانات مفتوحة عامة (public open data). هذا النص البرمجي (script) ينشئ مجموعة بيانات اصطناعية صغيرة لنجم (small synthetic Najm dataset) في ملف DuckDB واحد:
+
+```python
+import duckdb
+
+con = duckdb.connect("najm_lab.duckdb")  # one file on your laptop
+
+con.sql("""
+CREATE OR REPLACE TABLE customers AS
+SELECT
+    printf('C%06d', i)                            AS customer_id,
+    (['retail', 'sme', 'corporate'])[1 + i % 3]   AS segment,
+    (['QA', 'AE', 'DE'])[1 + (i // 3) % 3]        AS country,
+    DATE '2020-01-01' + CAST(i % 2000 AS INTEGER) AS opened_on
+FROM range(1, 1001) AS r(i);
+""")
+
+con.sql("""
+-- hash() instead of random(): the same "random-looking" rows on every run
+CREATE OR REPLACE TABLE transactions AS
+SELECT
+    i                                             AS txn_id,
+    printf('C%06d', 1 + hash(i, 'cust') % 1000)   AS customer_id,
+    5 + (hash(i, 'amount') % 99500) / 100         AS amount_qar,
+    TIMESTAMP '2026-01-01'
+      + to_minutes(CAST(hash(i, 'ts') % 129600 AS BIGINT)) AS txn_ts_utc
+FROM range(1, 50001) AS r(i);
+""")
+
+print(con.sql("""
+SELECT c.segment, COUNT(*) AS txns, round(SUM(t.amount_qar)) AS total_qar
+FROM transactions AS t
+JOIN customers AS c USING (customer_id)
+GROUP BY c.segment
+ORDER BY c.segment;
+"""))
+```
+
+ينشئ 1,000 عميل و50,000 معاملة في الربع الأول من 2026 (first quarter of 2026). لاحظ التعليق (notice the comment): مع `random()`، كانت إجابات تمارين هدى تتغيّر في كل إعادة تشغيل (on every re-run). أما استخدام `hash()` لرقم الصف (row number) فيعطي بيانات تبدو عشوائية (looks random) لكنها هي نفسها في كل تشغيل مع إصدار DuckDB نفسه (same DuckDB version). **قابلية إعادة الإنتاج (Reproducibility)** موضوع ستلتقيه مجددًا في خطوط البيانات (pipelines) (الدرس 2.2) وفي تعلّم الآلة (ML) (الدرس 5.1).
+
+### 🔴 نظرة الخبير (Expert view)
+
+**ابنِ ملف أعمال، لا كومة ملاحظات (Build a portfolio, not a pile of notes).** مديرو التوظيف (hiring managers) لأدوار البيانات يريدون دليلًا على أنك تستطيع أداء العمل (evidence that you can do the work). احتفظ بمستودع git واحد (one git repository) لهذا المقرر. كل وحدة تضيف شيئًا حقيقيًا: مخططًا منمذجًا (modelled schema)، وخط بيانات تزايديًا (incremental pipeline)، ومشروع dbt مختبرًا (tested dbt project)، وبطاقة مقياس (metric card)، وقائمة تحقق للانجراف (drift checklist)، وجدول تصنيف (classification table)، وأخيرًا المستودع الفرعي لمخاطر الائتمان (credit-risk mart). اكتب ملف README قصيرًا لكلٍّ منها، على طريقة مُنتَجات عمل نجم (in the style of the Najm artefacts): أيّ قرار يدعم (what decision it supports)، وما الذي يفترضه (what it assumes)، وكيف يُشغَّل (how to run it). ولمعرفة كيف تعرض هذا على أصحاب العمل (present this to employers)، راجع [*من الخرّيج إلى الموظّف (From Graduate to Hired)*، الدرس 2.3 — مهندس البيانات والمحلّل وعالم البيانات (Data engineer, analyst and data scientist)](../career/index.ar.html#/2.3) والدرس 7.2 من هذا المقرر.
+
+**استخدم المقررات المرافقة (Use the companion courses)** حيث تتعمّق أكثر:
+- قواعد البيانات والنسخ الاحتياطية والفهارس في الإنتاج (Databases, backups and indexes in production): [*تصميم الأنظمة لمبرمجي الحدس (System Design for Vibe Coders)*، الدرس 2.1 — قاعدة البيانات هي الجزء السهل (The database is the easy part)](../vibe/index.ar.html#l2-1).
+- طبقة البيانات وخط التحليلات لمنتج SaaS (The data layer and analytics pipeline of a SaaS product): [*لبنات بناء SaaS (SaaS Building Blocks)*، الدرس 2.1 — طبقة البيانات (The data layer)](../saas/index.ar.html#/2.1).
+- قانون الخصوصية وحوكمة الذكاء الاصطناعي (Privacy law and AI governance): [*حوكمة الذكاء الاصطناعي: من الصفر إلى الاحتراف (AI Governance: Zero to Hero)*، الدرس 4.1 — مبادئ حماية البيانات في مواجهة الذكاء الاصطناعي (Data protection principles meet AI)](../aigp/index.ar.html#/4.1).
+- جاهزية البيانات والتجارب من جانب المنتج (Data readiness and experiments from the product side): [*إدارة منتجات الذكاء الاصطناعي: من الصفر إلى الاحتراف (AI Product Management: Zero to Hero)*، الدرس 3.1 — جاهزية البيانات (Data readiness)](../aipm/index.ar.html#/3.1).
+- حماية البيانات الشخصية (Protecting personal data): [*أمن الذكاء الاصطناعي وأمن التطبيقات (Secure AI & Application Security)*، الدرس 5.3 — حماية البيانات الشخصية (Protecting personal data)](../secai/index.ar.html#/5.3).
+
+**اقرأ الطاقم كمجموعة من المخاطر (Read the cast as a set of risks).** طارق يمثّل المنتِج الذي يكسرك تغييره (the producer whose change breaks you)؛ وسارة البيانات الشخصية التي ما كان ينبغي أن تنسخها (personal data you should not have copied)؛ وليلى النموذج الذي لم يوافق عليه أحد (the model nobody approved)؛ وسالم الفاتورة التي لم يتوقعها أحد (the bill nobody expected)؛ وكريم الرقم الذي وصل إلى قطاع العمل دون فحص (the number that reached the business unchecked). قبل أن تسلّم أيّ شيء (before you ship anything)، اسأل ماذا سيقول كلٌّ منهم: مراجعة سريعة وكاملة على نحو مفاجئ (a quick, surprisingly complete review).
+
+**قواعد الدقة (Accuracy rules).** الحقائق التي يمكن أن تتغيّر (facts that can change) مُعلَّمة بعبارة «وقت كتابة هذا النص (2026)» (at the time of writing (2026)) وتشير إلى التوثيق الرسمي (official documentation)؛ ولا تُذكر أسعار الخدمات المُدارة وحدودها (managed services' prices and limits)؛ وأرقام نجم افتراضية (hypothetical) ما لم يُذكر مصدر (unless a source is given).
+
+## 🧰 الأدوات (The toolkit)
+| الأداة أو النمط أو المعيار (Tool, pattern or standard) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |
+|---|---|---|
+| **DuckDB** — قاعدة البيانات التحليلية DuckDB | قاعدة بيانات تحليلية داخل العملية (in-process analytical database) تشغّل SQL على الملفات المحلية (local files)، بما فيها Parquet وCSV | الوحدتان 0 و1، والتحليل المحلي السريع (fast local analysis) طوال المقرر |
+| **PostgreSQL** — قاعدة البيانات العلائقية PostgreSQL | قاعدة بيانات علائقية مفتوحة المصدر (open-source relational database)؛ تؤدي دور نظام الأنظمة المصرفية الأساسية لنجم (Najm's core banking system) في الأمثلة | من الوحدة 1: أمثلة معالجة المعاملات عبر الإنترنت (OLTP examples)، والتقاط تغيّر البيانات (CDC)، وpgvector |
+| **Docker** — منصة الحاويات Docker | يشغّل البرمجيات في حاويات (runs software in containers) فتبدأ حزمة كاملة بأمر واحد (a whole stack starts with one command) | من الوحدة 2: Kafka أو Redpanda، وAirflow أو Dagster، وMetabase |
+| **dbt Core** — أداة التحويل dbt Core | أداة سطر أوامر مفتوحة المصدر (open-source command-line tool) لتحويلات SQL مع اختبارات وتوثيق (tests and docs) | من الوحدة 3 |
+| **Git** — نظام التحكم في الإصدارات Git | التحكم في الإصدارات (version control) لكل تمرين واستعلام ونموذج | من التمرين الأول: ملف أعمالك يعيش هنا (your portfolio lives here) |
+| **Synthetic data** — البيانات الاصطناعية | بيانات مولّدة (generated data) ذات شكل واقعي (realistic shape) لكن دون أشخاص حقيقيين فيها (no real people in it) | كل تمرين كان سيحتاج لولا ذلك إلى بيانات شخصية (personal data) |
+
+## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
+يسلّم فيصل كل منضمّ جديد (every new joiner) **حزمة التهيئة لمنصة البيانات (Data Platform onboarding pack)**. تملأ هدى حزمتها خلال الأسبوع الأول (week one)؛ وتملأ أنت حزمتك لمختبرك (for your lab).
+
+**الجزء A: أنظمة أستطيع تسمية مالكها (Part A: systems I can name the owner of)**
+
+| النظام (System) | المالك (Owner) | أين تستقر بياناته (Where its data lands) | من تسأل قبل تغييره (Who to ask before changing it) |
+|---|---|---|---|
+| قاعدة بيانات الأنظمة المصرفية الأساسية (Core banking database) | الفريق الهندسي لطارق (Tariq's engineering team) | جداول `raw.core_*` (tables) | طارق |
+| تدفق معاملات البطاقات (Card transactions stream) | فريق منصة البطاقات (Card platform team) | موضوع Kafka (Kafka topic) `card_authorisations` | قائد منصة البطاقات (Card platform lead)، ودانة (التنبيهات الذكية (Smart Alerts) تعتمد عليه) |
+| أحداث تطبيق نجم للهاتف (Najm Mobile events) | فريق الهاتف (Mobile team) | موضوع Kafka (Kafka topic) `app_events` ← `raw.app_events` | طارق |
+| المستودع الفرعي للعميل الشامل (Customer 360 mart) | لينا | `marts.customer_360` | لينا؛ وسارة لأعمدة البيانات الشخصية الجديدة (new personal-data columns) |
+| المستودع الفرعي لمخاطر الائتمان (Credit-risk mart) | لينا، مع فريق المخاطر (with the risk team) | `marts.credit_risk_*` | لينا ومالك المخاطر (the risk owner) |
+| خصائص التنبيهات الذكية (Smart Alerts features) | دانة | جداول الخصائص (Feature tables) | دانة |
+| مستندات مساعد مذكرات الائتمان (Credit Memo Copilot documents) | فريق سياسات الائتمان (Credit policy team)، مع فريق الذكاء الاصطناعي (with the AI team) | مخزن المستندات والفهرس المتّجهي (Document store and vector index) | ليلى للنطاق (for scope)؛ وسارة للبيانات الشخصية (for personal data) |
+
+**الجزء B: قائمة تحقق مختبري (Part B: my lab checklist)**
+
+| البند (Item) | يكتمل عندما (Done when) |
+|---|---|
+| Python وDuckDB (Python and DuckDB) | يعمل النص البرمجي للبيانات الاصطناعية (synthetic-data script) ويطبع ثلاث شرائح (three segments) |
+| PostgreSQL | تستطيع الاتصال باستخدام `psql` وإنشاء جدول (create a table) |
+| Docker | ينجح الأمر `docker run hello-world` (succeeds) |
+| مستودع Git (Git repository) | مستودع مسمّى باسم هذا المقرر (named for this course)، فيه ملف README والنص البرمجي للبيانات الاصطناعية مُودَعَين (committed) |
+| قاعدة البيانات (Data rule) | سطر في ملف README لديك: «لا يحتوي هذا المستودع إلا على بيانات اصطناعية أو بيانات مفتوحة عامة ⁦(This repository contains only synthetic or public open data)⁩» |
+
+**الجزء C: المحادثات الأولى (Part C: first conversations).** سؤال واحد لكلٍّ من فيصل ولينا وكريم ودانة وسارة؛ ودوّن الإجابات (note the answers).
+
+## 🛠️ التمارين (Exercises)
+- 🟢 جهّز المختبر (set up the lab): ثبّت Python وDuckDB، وشغّل النص البرمجي للبيانات الاصطناعية (synthetic-data script) وأودِعه (commit it) في مستودع git جديد (new git repository) مع ملف README. *يكتمل عندما (Done when):* يشغّل استنساخ جديد لمستودعك (fresh clone of your repository) النص البرمجي ويطبع الصفوف الثلاثة نفسها (same three rows) التي طبعها تشغيلك الأول.
+- 🟡 وسّع مجموعة البيانات الاصطناعية (extend the synthetic dataset) بجدول `accounts` (من حساب إلى ثلاثة حسابات لكل عميل (one to three accounts per customer)، بعضها مغلق (some closed)) وجدول `loans` (بضع مئات من القروض (a few hundred loans) لكلٍّ منها مبلغ (amount) وتاريخ بدء (start date) وحالة (status)). ثم اكتب ثلاثة استعلامات قد يطرحها صاحب مصلحة في نجم (Najm stakeholder)، ودوّن أيّ عضو في الطاقم (which cast member) سيطرح كلًّا منها. *يكتمل عندما (Done when):* تُحمَّل الجداول، ويرتبط كل حساب وقرض بعميل موجود (links to an existing customer)، ويعلو كل استعلام سؤال عمل من سطر واحد (one-line business question).
+- 🔴 املأ الجزء A من حزمة التهيئة (Part A of the onboarding pack) لخمسة أنظمة في مؤسسة تعرفها (صاحب عمل، أو جامعة، أو خدمة عامة (an employer, a university, a public service))، مستخدمًا المعلومات العامة فقط (only public information) أو دورك الخاص. علّم كل خلية لا تستطيع ملأها (mark every cell you cannot fill). *يكتمل عندما (Done when):* يكتمل الجدول أو يُعلَّم، مع ثلاث جمل عمّا ستعنيه الفجوات (what the gaps would mean) لفريق بيانات جديد هناك.
+
+## ⚠️ أخطاء وفخاخ (Mistakes and traps)
+- **القراءة دون تشغيل (Reading without running).** لن تتعلّم SQL أو خطوط البيانات (pipelines) أو dbt بالقراءة. شغّل كل مقتطف (run every snippet)، ثم اكسره عن قصد (break it on purpose).
+- **استخدام بيانات شخصية حقيقية «للتدرّب فقط» (Using real personal data "just to practise").** تدرّب فقط على بيانات اصطناعية أو مفتوحة (synthetic or open data). وفي العمل، سيتطلّب قانون حماية البيانات (data protection law) وسياسة البنك (bank policy) عادةً العادة نفسها.
+- **تقليد هدى (Copying Huda).** هي موجودة لترتكب الأخطاء أولًا (to make the mistakes first). حين تقول «عمل، إذن انتهى» (it ran, so it's done)، اسأل ما الذي كان فيصل سيتحقق منه (what Faisal would check).
+- **الاحتفاظ بالتمارين على سطح مكتبك (Keeping exercises on your desktop).** العمل الذي ليس في مستودع مع README (not in a repository with a README) ليس دليلًا في ملف الأعمال (not portfolio evidence).
+
+## 🧾 الخلاصة (Recap)
+- بنك نجم بنك خليجي خيالي (fictional Gulf bank)؛ وأنت تنضم إلى فريق منصة البيانات والتحليلات (Data Platform & Analytics) فيه.
+- أنظمته (الأنظمة المصرفية الأساسية (core banking)، وتدفق البطاقات (card stream)، وأحداث التطبيق (app events)، وسجلات نجم أسيست (Najm Assist logs)، والمستودعات الفرعية في مستودع البيانات (warehouse marts)، والتنبيهات الذكية (Smart Alerts)، ومساعد مذكرات الائتمان (Credit Memo Copilot)) هي الحالة المستمرة (the running case) لكل وحدة.
+- يمثّل الطاقم (the cast) الأشخاص، والمخاطر (the risks)، التي يجب أن يأخذها كل قرار بيانات في الحسبان (every data decision must account for).
+- جهّز مختبرًا على حاسوبك المحمول (laptop lab)، واستخدم فقط بيانات اصطناعية أو مفتوحة (synthetic or open data)، واحفظ كل شيء في git، وابنِ ملف أعمال (portfolio) أثناء تقدّمك.
+
+## ✍️ اختبر نفسك (Check yourself)
+
+**1. أيّ عبارة عن بنك نجم (Najm Bank) صحيحة (correct)؟**
+
+- A. إنه بنك قطري حقيقي (real Qatari bank)، وتُستخدم عيّنات مجهّلة من بياناته (anonymised samples of its data) في التمارين
+- B. إنه بنك خيالي (fictional bank)، لكن الأرقام في سيناريوهاته إحصاءات صناعية حقيقية (real industry statistics)
+- C. يعمل في قطر فقط، لذا لا ينطبق على بياناته إلا قانون حماية البيانات القطري (Qatari data protection law)
+- D. إنه خيالي، وله عملاء في قطر والإمارات والاتحاد الأوروبي (customers in Qatar, the UAE and the EU)
+
+<details><summary>الإجابة</summary>
+
+**D.** نجم خيالي (fictional) ويمتد عبر ثلاث ولايات قضائية (three jurisdictions). الخيار B مغرٍ، لكن أرقام نجم توضيحية (illustrative) ما لم يُذكر مصدر (unless a source is given)؛ والخيار C يتجاهل عملاءه في الإمارات والاتحاد الأوروبي. (🟢 الأساسيات (The essentials).)
+
+</details>
+
+**2. تريد هدى إضافة أرقام هواتف العملاء (customers' phone numbers) إلى المستودع الفرعي للعميل الشامل (customer 360 mart) «تحسّبًا لأن يحتاجها أحد» (in case someone needs them). مع من ينبغي أن تتحدث أولًا، ولماذا (who should she talk to first, and why)؟**
+
+- A. سالم، لأن العمود الإضافي سيُكبّر المستودع الفرعي ويرفع تكاليف التخزين والحوسبة (storage and compute costs)
+- B. سارة، لأن البيانات الشخصية الجديدة تحتاج إلى غرض (new personal data needs a purpose)
+- C. كريم، لأنه يبني لوحات معلومات التجزئة (retail dashboards) التي ستقرأ العمود الجديد
+- D. لا أحد، لأن المستودعات الفرعية ملك فريق البيانات (belong to the data team) ويجوز له تغييرها كما يرى
+
+<details><summary>الإجابة</summary>
+
+**B.** البيانات الشخصية الجديدة في مستودع فرعي مشترك (shared mart) هي قرار خصوصية أولًا (a privacy decision first). عبارة «تحسّبًا لأن يحتاجها أحد» (In case someone needs them) لا غرض لها (has no purpose)، وهذا بالضبط ما ستسأل عنه سارة. الخيار A مصدر قلق حقيقي لكنه ثانوي (real but secondary concern)؛ والخيار D يتجاهل أن المستودعات الفرعية مشتركة ومحكومة (shared and governed). (🟢 الأساسيات (The essentials).)
+
+</details>
+
+**3. مجموعة بيانات التدريب لدى هدى (practice dataset) تعطي إجابات مختلفة في كل مرة تعيد فيها تشغيل نص التوليد البرمجي (generator script). ما أفضل حلّ (best fix)؟**
+
+- A. اشتقاق القيم بشكل حتمي (derive values deterministically)، مثلًا من `hash()`
+- B. تشغيل النص البرمجي مرة واحدة فقط، والاحتفاظ بذلك الملف، وعدم تشغيل المولّد مجددًا أبدًا
+- C. استخدام عيّنة صغيرة من بيانات عملاء حقيقية (real customer data) بدلًا من ذلك، لأنها لا تتغيّر بين التشغيلات
+- D. تقريب كل الأرقام المولّدة إلى قيم صحيحة (whole values) لكي تختفي الفروق الصغيرة
+
+<details><summary>الإجابة</summary>
+
+**A.** التوليد الحتمي (deterministic generation) يجعل النتائج قابلة لإعادة الإنتاج (reproducible)، وهذا مهم للتحقق من الإجابات ولاحقًا لخطوط البيانات وتعلّم الآلة (pipelines and ML). الخيار C يخرق قاعدة التدرّب فقط على بيانات اصطناعية أو مفتوحة (synthetic or open data)؛ والخيار B يُخفي المشكلة بدل إصلاحها (hides the problem instead of fixing it). (🟡 التعمق أكثر (Going deeper).)
+
+</details>
+
+**4. يسأل عالم بيانات طموح (aspiring data scientist) أيّ الوحدات ينبغي أن يقدّمها (which modules to prioritise). أيّ نصيحة تطابق توجيهات هذا المقرر (matches this course's guidance)؟**
+
+- A. الوحدة 5 فقط، لأن كل ما عداها في المقرر عمل هندسي يؤديه آخرون (engineering work done by others)
+- B. الوحدتان 2 و3 فقط، لأن خطوط البيانات (pipelines) يجب أن تأتي قبل بناء أيّ نموذج
+- C. الوحدات 0 و1 و4 و5، إضافةً إلى 3.2، والوحدة 6، والمشروع الختامي (the capstone)
+- D. ابدأ بالامتحان التدريبي (practice exam) ثم تخطَّ كل درس اجتزت أسئلته بالفعل
+
+<details><summary>الإجابة</summary>
+
+**C.** مسار علم البيانات (data science route) يعتمد على SQL والتحليلات وتعلّم الآلة (SQL, analytics and ML)، لكن جودة البيانات والحوكمة والمشروع الختامي (data quality, governance and the capstone) تنطبق على الجميع. الخيار A يتجاهل أن النموذج يعتمد على البيانات التي تحته (depends on the data underneath it). (🟡 التعمق أكثر (Going deeper).)
+
+</details>
+
+**5. تقترح لينا عمودًا جديدًا في المستودع الفرعي لمخاطر الائتمان (credit-risk mart) يغيّر طريقة عدّ المتأخرات (how arrears are counted). باستخدام الطاقم كقائمة تحقق للمراجعة (cast as a review checklist)، أيّ سؤال هو الأهم للإجابة عنه قبل تسليم التغيير (before the change ships)؟**
+
+- A. هل اسم العمود الجديد يناسب أعراف التسمية والألوان (naming and colour conventions) في لوحات معلومات ذكاء الأعمال
+- B. هل العمود الجديد يجعل التحميل الليلي للمستودع الفرعي (nightly mart load) أسرع أم أبطأ من قبل
+- C. هل راجعت هدى، بصفتها أحدث مهندسة (newest engineer)، التغيير ووافقت عليه
+- D. من يقرأ التعريف القديم، وهل وافق مالك المخاطر؟ ⁦(Who reads the old definition, and has the risk owner agreed?)⁩
+
+<details><summary>الإجابة</summary>
+
+**D.** تغيير تعريف (definition change) في مستودع فرعي يغذّي المستخلصات التنظيمية (feeds regulatory extracts) يؤثر في تقارير تعتمد عليها الجهات الرقابية (reports supervisors rely on). إيجاد المستهلكين (finding the consumers) والحصول على موافقة المالك (getting the owner's agreement) يأتيان أولًا. الخيار B مصدر قلق معقول لسالم (a fair concern for Salem) لكنه ثانوي مقارنةً بالصحة (secondary to correctness). (🔴 نظرة الخبير (Expert view).)
+
+</details>
+
+## 📚 المراجع (References)
+- تثبيت DuckDB وتوثيقه (DuckDB installation and documentation) — https://duckdb.org/docs/
+- تنزيلات PostgreSQL وتوثيقه (PostgreSQL downloads and documentation) — https://www.postgresql.org/
+- توثيق Docker (Docker documentation) — https://docs.docker.com/
+- توثيق dbt Core (dbt Core documentation) — https://docs.getdbt.com/
+- توثيق Git (Git documentation) — https://git-scm.com/doc
+- توثيق Python (Python documentation) — https://docs.python.org/3/

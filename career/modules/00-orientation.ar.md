@@ -466,3 +466,234 @@ flowchart TD
 - [*تشغيل وكلاء الذكاء الاصطناعي في بيئة الإنتاج (Running AI Agents in Production)*، المستوى 2 — مهندس الوكلاء (Agent Engineer)](../agentic/learning-path.ar.html#level-2-agent-engineer)
 
 ---
+
+# 0.3 — تعرّف على الدفعة، وكيف تستخدم هذه الدورة والمكتبة (Meet the cohort, and how to use this course and the library)
+*المستوى (Level): 🟢 مبتدئ (Beginner)* · *المتطلبات (Prerequisites): 0.1، 0.2* · *الخطوة (Step): Explore, Learn*
+
+## ⚡ الدرس في دقيقة (In 60 seconds)
+- ستتابع خمسة خرّيجين في **برنامج نجم للخرّيجين التقنيين (Najm Tech Graduate Programme)** لدى **بنك نجم (Najm Bank)**، وهو بنك خليجي خيالي (fictional Gulf bank)، إضافةً إلى الأشخاص الذين يوظّفونهم ويرشدونهم (hire and mentor them).
+- هذه الدورة لا تعيد تدريس الهندسة (does not re-teach engineering). إنها تخبرك **بما يفحصه أصحاب العمل (what employers check for)**، وترسلك إلى **الدروس المحدّدة (exact lessons)** في المكتبة (library) التي تبني كل مهارة، وتعلّمك مهارات البحث عن عمل (job-search skills) التي لا تغطيها أي دورة أخرى.
+- تتبع الدورة ثماني خطوات (eight steps): **Explore, Learn, Build, Prove, Apply, Interview, Start, Grow** (الاستكشاف، والتعلّم، والبناء، والإثبات، والتقديم، والمقابلة، والبدء، والنمو). وكل درس موسوم بخطوته (tagged with its step).
+- مؤشّر القرار (Decision cue): اختر كيف ستأخذ الدورة (المسار الكامل (the full path)، أو مسارًا موجّهًا (a targeted path)، أو بصفتك مرشدًا (as an adviser)) وحدّد ميزانية زمنية أسبوعية (weekly time budget) تستطيع الالتزام بها.
+- الفخ الأكبر (Biggest trap): القراءة دون إنتاج (reading without producing). كل درس ينتهي بمُنتَج عملي (artefact)؛ احتفظ بها كلها في **مجلد مسيرتك المهنية (career folder)**.
+
+## 🧭 لماذا يهم (Why it matters)
+لدى محمد، الذي يغيّر مساره المهني بعد معسكر تدريبي (bootcamp career-switcher)، عادة لا يفخر بها. خلال العام الماضي بدأ ست دورات عبر الإنترنت (online courses) ولم ينهِ أيًّا منها. وفي كل مرة كان يشعر بالإنتاجية (felt productive) وهو يشاهد المقاطع المرئية، ثم تبدو دورة جديدة أكثر إلحاحًا. معرض أعماله (portfolio) جيد، لكن لم يره أحد، لأنه لم يصل قط إلى مرحلة «التقديم» ("apply").
+
+في نهاية ورشة العمل الثانية (second workshop)، يُري خالد الدفعة (cohort) كيف يسير التعلّم في البرنامج. «الدورات ليست الهدف. الهدف هو العروض الوظيفية (offers)، وبعدها أن تكونوا جيدين في الوظيفة. ستنتجون كل أسبوع شيئًا: مسحًا للسوق (market scan)، أو بطاقة تقييم (scorecard)، أو مشروعًا (project)، أو بندًا في السيرة الذاتية (CV bullet)، أو رسالة تواصل (outreach message)، أو قصة للمقابلة (interview story). وإن مرّ أسبوع ولم تنتجوا شيئًا، فأخبروني، وسنصلح الخطة.» ويشير إلى المكتبة (library) على الشاشة: ثماني دورات أخرى تعلّم بالفعل مهارات الهندسة والبيانات والأمن والذكاء الاصطناعي بعمق (in depth). «لن تقرؤوها كلها. ستقرؤون الدروس التي يحتاجها دوركم المستهدف (target role)، وتثبتون كل واحد منها.»
+
+يقدّم هذا الدرس الأشخاص الذين ستتابعهم، ويشرح كيف تتكامل الدورة والمكتبة (how the course and the library fit together)، ويساعدك على إعداد خطة (plan) ستكملها فعلًا.
+
+## 📐 كيف يعمل (How it works)
+
+### 🟢 الأساسيات (The essentials)
+
+**بنك نجم خيالي (Najm Bank is fictional).** إنه بنك خليجي متوسط الحجم (mid-sized Gulf bank) مقرّه الرئيسي في الدوحة، وله عملاء في قطر والإمارات والاتحاد الأوروبي (EU)، وهو دراسة الحالة المستمرة (running case) عبر المكتبة كلها. وأي تشابه مع بنك حقيقي هو محض مصادفة (coincidence). وأصحاب العمل الآخرون في الدورة، مثل الشركة الناشئة للتقنية المالية (fintech startup) في الدوحة **سديم باي (Sadeem Pay)**، وشركة اتصالات إقليمية (regional telecom)، وجهة حكومية رقمية (government digital agency)، ومكتب إقليمي لشركة متعددة الجنسيات (multinational's regional office)، هم أيضًا خياليّون (fictional) أو عامّون (generic). ولا شيء في هذه الدورة يصف سياسة التوظيف الحقيقية (real hiring policy) لأي صاحب عمل.
+
+**الدفعة (The cohort).** خمسة خرّيجين، لكل منهم نقاط قوة حقيقية (real strengths) ونقطة ضعف واقعية (realistic weakness) ستتعلّم منها:
+
+| الشخص (Person) | الخلفية (Background) | نقطة القوة (Strength) | نقطة الضعف التي يجب إصلاحها (Weakness to fix) | يتّجه نحو (Heading toward) |
+|---|---|---|---|---|
+| **عمر (Omar)** | خرّيج علوم الحاسوب (computer science graduate) | الخوارزميات (algorithms)، وسجل المسابقات (contest record)، والدرجات القوية (strong grades) | لم ينشر أي شيء قط (has never deployed anything) | هندسة البرمجيات (software engineering) |
+| **هدى (Huda)** | خرّيجة علوم البيانات (data science graduate) | دفاتر الملاحظات البرمجية (notebooks)، والإحصاء (statistics)، والنماذج (models) | SQL والعمل على بيانات بيئة الإنتاج (production data work) | هندسة البيانات (data engineering) |
+| **يوسف (Yousef)** | خرّيج هندسة الحاسوب (computer engineering graduate) | الأنظمة المدمجة (embedded systems)، والشبكات (networks)، وLinux | غير مركّز (unfocused)؛ غير متأكد من الدور | هندسة السحابة والمنصّات (cloud and platform engineering) |
+| **ريم (Reem)** | خرّيجة علوم الحاسوب (computer science graduate) | تبني بسرعة باستخدام وكلاء البرمجة بالذكاء الاصطناعي (AI coding agents)؛ أربعة مشاريع جانبية (side projects) | لا تستطيع دائمًا شرح شيفرتها (explain her own code) | هندسة تطبيقات الذكاء الاصطناعي (AI application engineering) |
+| **محمد (Mohammed)** | خرّيج معسكر تدريبي (bootcamp graduate)، يغيّر مساره المهني (career-switcher) | معرض أعمال قوي (strong portfolio)، وخبرة عمل سابقة (previous work experience) | لا شهادة في المجال (no degree in the field)؛ لا يكمل البحث عن عمل أبدًا (never finishes the job search) | التطوير الشامل (full-stack development) |
+
+**جانب التوظيف (The hiring side).** خمسة أشخاص في بنك نجم سيرشدونهم ويختبرونهم ويتحدّونهم أحيانًا:
+- **خالد (Khalid)**، مدير الهندسة (Engineering Manager)، يوظّف المبتدئين (hires juniors) وهو مرشدك (mentor) طوال الدورة.
+- **عائشة (Aisha)**، رئيسة استقطاب المواهب (Talent Acquisition lead) (مسؤولة توظيف (recruiter))، تشرح الفرز (screening) والسير الذاتية (CVs) والعروض الوظيفية (offers).
+- **طارق (Tariq)**، القائد الهندسي (engineering lead)، يدير المقابلات التقنية (technical interviews).
+- **دانة (Dana)**، كبيرة علماء البيانات (lead data scientist)، تُجري المقابلات مع مرشّحي البيانات (data candidates).
+- **سالم (Salem)**، رئيس هندسة المنصّات (Head of Platform Engineering)، يُجري المقابلات مع مرشّحي السحابة (cloud candidates).
+
+سترى الدفعة أيضًا تتقدّم في أماكن أخرى، لتتمكّن من مقارنة برنامج الخرّيجين في بنك (a bank's graduate programme) بشركة ناشئة (startup)، وشركة اتصالات (telecom)، والقطاع العام (public sector)، وشركة متعددة الجنسيات (multinational).
+
+**الخطوات الثماني والوحدات (The eight steps and the modules).**
+
+```mermaid
+flowchart LR
+    S1["الاستكشاف: الوحدة 0"] --> S2["التعلم: الوحدتان 1 و2"]
+    S2 --> S3["البناء والإثبات: الوحدة 3"]
+    S3 --> S4["التقديم: الوحدة 4"]
+    S4 --> S5["المقابلة: الوحدة 5"]
+    S5 --> S6["البدء والنمو: الوحدة 6"]
+    S6 --> S7["المشروع الختامي: الوحدة 7"]
+    S4 -->|"لا ردود"| S3
+    S5 -->|"ملاحظات"| S2
+```
+
+الأسهم المتّجهة إلى الخلف (arrows going backwards) مهمّة. إن لم تتلقَّ طلباتك ردودًا (no replies)، فالحلّ عادةً دليل أفضل (better proof) (الوحدة 3 (Module 3))، لا مزيد من الطلبات. وإن كشفت المقابلات فجوة (gap)، فارجع لتتعلّمها. ويحوّل المشروع الختامي (capstone) في الدرس 7.1 الدورة كلها إلى خطة من 12 أسبوعًا (12-week plan) من التدقيق إلى العرض الوظيفي (from audit to offer)، والدرس 7.2 حزمة مقابلات تدريبية (practice interview pack).
+
+**كيف يسير كل درس (How every lesson works).** لكل درس الأجزاء العشرة نفسها (same ten parts): ⚡ الدرس في دقيقة (In 60 seconds)، و🧭 لماذا يهم (Why it matters)، و📐 كيف يعمل (How it works) (مع 🟢 الأساسيات (essentials)، و🟡 التعمق أكثر (going deeper)، و🔴 نظرة الخبير (expert view))، و🧰 الأدوات (The toolkit)، و🏛️ عمليًا في بنك نجم (In practice at Najm Bank)، و🛠️ التمارين (Exercises)، و⚠️ أخطاء وفخاخ (Mistakes and traps)، و🧾 الخلاصة (Recap)، و✍️ اختبر نفسك (Check yourself)، و📚 المراجع (References). ويعرض قسم 🏛️ دائمًا مُنتَجًا عمليًا (artefact) تستطيع نسخه وتكييفه (copy and adapt).
+
+### 🟡 التعمق أكثر (Going deeper)
+
+**هذه الدورة هي الباب الأمامي للمكتبة (This course is the front door to the library).** المكتبة تعلّم بالفعل معظم الهندسة بعمق. أمّا هذه الدورة فتعلّم *منظور التوظيف (hiring view)* لكل مهارة (كيف يبدو «الجيد بما يكفي لمبتدئ» ("good enough for a junior")، وكيف يُختبر، وكيف تثبته) وتربطك بالدرس الذي يبنيه. والدورات التي ستُرسَل إليها:
+
+| الدورة (Course) | ماذا تعلّم (What it teaches) | الأكثر فائدة لـ (Most useful for) |
+|---|---|---|
+| [*تصميم الأنظمة لمبرمجي الحدس (System Design for Vibe Coders)*، الدرس F.1 — ماذا يحدث حين تفتح موقعًا إلكترونيًا (What happens when you open a website)](../vibe/index.ar.html#lF-1) | هندسة بيئة الإنتاج (production engineering) لمن يبنون باستخدام وكلاء الذكاء الاصطناعي (AI agents): النشر (deploys)، والبيانات (data)، والتخزين المؤقت (caching)، والأمن (security)، وقابلية المراقبة (observability)، وتوجيه الوكلاء (directing agents) | الجميع، ولا سيما البرمجيات (software) وتطبيقات الذكاء الاصطناعي (AI application) |
+| [*لبنات بناء البرمجيات كخدمة (SaaS Building Blocks)*، الدرس 0.1 — الـ80% التي لا يبيعها أحد: تشريح كل برمجية كخدمة (The 80% nobody sells: the anatomy of every SaaS)](../saas/index.ar.html#/0.1) | المكوّنات (components) التي يشترك فيها كل منتج برمجي (المصادقة (auth)، والفوترة (billing)، والبريد الإلكتروني (email)، والمهام الخلفية (jobs)، والبحث (search))، مع شيفرة مفتوحة المصدر (open-source code) للقراءة | البرمجيات والتطوير الشامل (software and full-stack) |
+| [*الذكاء الاصطناعي الآمن وأمن التطبيقات (Secure AI & Application Security)*، الدرس 0.1 — ما أمن التطبيقات والذكاء الاصطناعي: الأصول والمهاجمون والمخاطر (What application and AI security is: assets, attackers and risk)](../secai/index.ar.html#/0.1) | أمن التطبيقات والسحابة والذكاء الاصطناعي (application, cloud and AI security) من نمذجة التهديدات (threat modelling) إلى الاستجابة للحوادث (incident response) | الأمن (security)، وأساسيات الأمن لكل مهندس (every engineer's security basics) |
+| [*إدارة منتجات الذكاء الاصطناعي (AI Product Management)*، الدرس 0.1 — ما إدارة منتجات الذكاء الاصطناعي، وما ليست (What AI product management is, and what it is not)](../aipm/index.ar.html#/0.1) | كيف تُختار منتجات الذكاء الاصطناعي (AI products) وتُحدَّد مواصفاتها وتُقيَّم وتُطلق (chosen, specified, evaluated and launched) | مهندسو تطبيقات الذكاء الاصطناعي (AI application engineers)، والمهندسون ذوو العقلية المنتجية (product-minded engineers) |
+| [*حوكمة الذكاء الاصطناعي (AI Governance)*، الدرس 0.1 — ما حوكمة الذكاء الاصطناعي، وما الذي تثبته شهادة AIGP (What AI governance is, and what the AIGP proves)](../aigp/index.ar.html#/0.1) | المخاطر (risk) والقانون (law) والمعايير (standards) لأنظمة الذكاء الاصطناعي (AI systems) | كل من يعمل على الذكاء الاصطناعي في القطاعات الخاضعة للتنظيم (regulated sectors) |
+| [*تشغيل وكلاء الذكاء الاصطناعي في بيئة الإنتاج (Running AI Agents in Production)*، المستوى 0 — الإلمام (Literate)](../agentic/learning-path.ar.html#level-0-literate) | مسار متدرّج المستويات (levelled path) من الإلمام بالذكاء الاصطناعي (AI literacy) إلى تشغيل الوكلاء في بيئة الإنتاج (running agents in production) | مهندسو تطبيقات الذكاء الاصطناعي (AI application engineers) |
+| [*هندسة البيانات والتحليلات: من الصفر إلى الاحتراف (Data Engineering & Analytics: Zero to Hero)*، الوحدة 1 — SQL ونمذجة البيانات (SQL and data modelling)](../data/index.ar.html#/1.1) | SQL، وخطوط البيانات (pipelines)، والجودة (quality)، والتحليلات (analytics)، والتعلّم الآلي في بيئة الإنتاج (ML in production) | أدوار البيانات (data roles) |
+| [*السحابة وDevOps: من الصفر إلى الاحتراف (Cloud & DevOps: Zero to Hero)*، الوحدة 1 — الأسس (Foundations)](../cloud/index.ar.html#/1.1) | Linux، والسحابة (cloud)، والحاويات (containers)، والبنية التحتية كشيفرة (infrastructure as code)، والتكامل والتسليم المستمرّان (CI/CD)، والموثوقية (reliability) | السحابة والمنصّات (cloud and platform)، وأساسيات النشر لكل مهندس (every engineer's deployment basics) |
+
+لا تحتاج إليها كلها. تمنح الوحدة 2 (Module 2) كل دور **جدول مسار دراسي (study path table)**: المهارات التي يحتاجها ذلك الدور، والدرس الذي يعلّم كل مهارة، والدليل (proof) الذي يُظهرها.
+
+**ثلاث طرق لأخذ هذه الدورة (Three ways to take this course).**
+
+| المسار (Path) | لمن يناسب (Who it suits) | كيف (How) |
+|---|---|---|
+| **المسار الكامل (Full path)** | طلاب السنة الأخيرة (final-year students) والخرّيجون الذين يبدؤون من الصفر | الوحدات من 0 إلى 7 بالترتيب، بنحو 6–10 ساعات أسبوعيًا، مع خطة المشروع الختامي (capstone plan) في الدرس 7.1 عمودًا فقريًا (backbone) |
+| **المسار الموجّه (Targeted path)** | الخرّيجون الذين يتقدّمون بالفعل، ولديهم حاجة عاجلة واحدة (one urgent need) | أنجز الدرسين 0.1 و0.2، ثم انتقل إلى الوحدة التي تحتاجها (مثلًا الوحدة 5 (Module 5) إن كانت لديك مقابلات الأسبوع القادم)، ثم عُد |
+| **مسار المرشد (Adviser path)** | مرشدو مراكز التوجيه المهني (career-centre advisers)، والمحاضرون (lecturers)، ومديرو التوظيف (hiring managers) | استخدم مُنتَجات قسم 🏛️ (artefacts) أوراقَ عمل (worksheets)، والتمارين (exercises) واجبات (assignments)، والدرس 7.2 بنكًا للمقابلات التجريبية (mock interview bank) |
+
+**مجلد المسيرة المهنية (The career folder).** أنشئ مجلدًا واحدًا (مستودعًا خاصًا (private repository) أو مجلدًا سحابيًا (cloud folder)) واحفظ فيه كل مُنتَج عملي (artefact)، مسمًّى بحسب الدرس: `0.1-market-scan`، و`0.2-role-fit-scorecard`، و`0.3-starting-audit`، وهكذا. وبنهاية الدورة سيضم دورك المستهدف (target role)، وخطتك الدراسية (study plan)، ومواصفات مشاريعك (project specs)، وسيرتك الذاتية (CV)، ورسائل التواصل (outreach messages)، وبنك القصص (story bank)، وخطة الأيام التسعين (90-day plan). وهو أيضًا دليل التقدّم (evidence of progress) الذي تستطيع عرضه على مرشد (mentor).
+
+**التقييمات الذاتية (Self-assessments).** لعدة دورات في المكتبة صفحة تقييم ذاتي (self-assessment page)، مثل [التقييم الذاتي لدورة *تصميم الأنظمة لمبرمجي الحدس (System Design for Vibe Coders)*](../vibe/assessment.ar.html) و[التقييم الذاتي لدورة *الذكاء الاصطناعي الآمن وأمن التطبيقات (Secure AI & Application Security)*](../secai/assessment.ar.html). استخدمها لتعرف أين تقف قبل المسار الدراسي (study path) وبعده.
+
+### 🔴 نظرة الخبير (Expert view)
+
+**استخدام الذكاء الاصطناعي بأمانة في أثناء التعلّم (Using AI honestly while you learn).** مساعدو الذكاء الاصطناعي (AI assistants) معلّمون ممتازون (excellent tutors) وبنّاؤون سريعون (fast builders)، وعليك أن تستخدمهم. لكن التعلّم (learning) والإثبات (proving) أمران مختلفان. ثلاث قواعد (three rules) تتبعها هذه الدورة في كل أجزائها:
+1. **تعلّم بالذكاء الاصطناعي، وأثبِت دون إخفائه (Learn with AI, prove without hiding it).** اطلب من المساعد أن يشرح لك، ويختبرك (quiz you)، ويراجع شيفرتك (review your code). وحين تعرض عملك على صاحب عمل، كن مستعدًا لشرح كل سطر (explain every line) والإفصاح عن المواضع التي ساعد فيها الذكاء الاصطناعي إن كان ذلك مهمًا.
+2. **لا تختلق أبدًا (Never fabricate).** لا خبرة مخترعة (invented experience)، ولا مسمّيات مضخّمة (inflated titles)، ولا مشاريع منسوخة (copied projects)، ولا ذكاء اصطناعي يخوض المقابلة عنك (AI sitting an interview for you). فإضافةً إلى أن ذلك غير أمين (dishonest)، فهو هشّ (fragile): سؤال متابعة واحد (single follow-up question) يكشفه، وفي القطاعات الخاضعة للتنظيم (regulated sectors) يشيع التحقّق من الخلفية والمراجع (background and reference checks).
+3. **تحقّق من كل شيء (Verify everything).** تعامل مع مخرجات الذكاء الاصطناعي (AI output)، بما فيها نصائحه المهنية (AI career advice)، على أنها مسودة يجب فحصها (draft to check). فالرواتب (salaries) ومواعيد البرامج النهائية (programme deadlines) وقواعد التأشيرات (visa rules) خصوصًا تتغيّر؛ فتأكّد منها من المصدر (at the source).
+
+وقصة ريم عبر الدورة تدور حول هذا بالضبط. فهي ليست مخطئة في البناء باستخدام الوكلاء (build with agents)؛ بل مخطئة في عدم فهم ما بنوه. والدرس 1.2 هو حيث تُصلح ذلك.
+
+**الخطط تفشل بسبب الوقت لا الدافعية (Plans fail on time, not motivation).** لم تكن مشكلة محمد يومًا في الدافعية (motivation)؛ بل في أن لا شيء مما فعله انتهى بطلب توظيف (application). عادتان تُصلحان ذلك:
+- **ميزانية أسبوعية ثابتة (A fixed weekly budget).** حدّد ساعاتك الآن وضعها في تقويمك (calendar). خطة من ست ساعات أسبوعيًا تلتزم بها أفضل من عشرين تتخلّى عنها.
+- **كل أسبوع ينتهي بمُنتَج عملي (Every week ends in an artefact).** إن لم تنتج شيئًا تستطيع عرضه على أحد، فقد ذهب الأسبوع في الاستهلاك (consumption)، لا في التقدّم (progress).
+
+**للمرشدين ومديري التوظيف (For advisers and hiring managers).** مفردات الدورة (the course's vocabulary) (الدور المستهدف (target role)، ومهارات خط الأساس والمهارات المميِّزة (baseline and differentiator skills)، والدليل (proof)، وبنك القصص (story bank)) مصمّمة لتكون مشتركة (meant to be shared). يستطيع المرشدون (advisers) استخدام بطاقة التقييم (scorecard) والتدقيق (audit) نفسيهما مع كل طالب؛ ويستطيع مديرو التوظيف (hiring managers) استخدام جداول الأدوار (role tables) ومعايير التقييم (rubrics) لشرح ما يبحثون عنه. واللغة المشتركة (shared language) تقصّر المسافة بين الحرم الجامعي والفريق (between campus and team).
+
+## 🧰 الأدوات (The toolkit)
+| المورد أو الأداة أو النموذج (Resource, tool or template) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |
+|---|---|---|
+| **Career folder** — مجلد المسيرة المهنية | مجلد خاص أو مستودع واحد (one private folder or repository) يضم كل مُنتَج عملي (artefact) من الدورة، مسمًّى بحسب الدرس | من اليوم؛ أضف إليه كل أسبوع |
+| **Starting audit** — التدقيق الأولي | لمحة من صفحة واحدة (one-page snapshot) عن دورك المستهدف (target role)، ودليلك الحالي (current proof)، والفجوات (gaps)، والساعات الأسبوعية (weekly hours)، والإجراءات الأولى (first actions) | في بداية الدورة، ومرة أخرى في نهاية كل وحدة |
+| **Study path table** — جدول المسار الدراسي | لكل دور (per role): كل مهارة، ودرس المكتبة (library lesson) الذي يعلّمها، والدليل الذي يُظهرها (يُبنى في الوحدة 2 (Module 2)) | عند تقرير ما تتعلّمه بعد ذلك وبأي ترتيب |
+| **Library self-assessments** — التقييمات الذاتية في المكتبة | صفحات فحص ذاتي (self-check pages) في عدة دورات من المكتبة | قبل المسار الدراسي وبعده، لترى التقدّم الحقيقي (real progress) |
+| **Weekly review** — المراجعة الأسبوعية | فحص أسبوعي مدّته 15 دقيقة (15-minute weekly check): ماذا أنتجت، وما الذي أعاقني، وما التالي | كل أسبوع، في اليوم نفسه |
+| **Brag document** — وثيقة الإنجازات | قائمة متجدّدة (running list) بما بنيته وأصلحته وتعلّمته وساعدت فيه، مع روابط | من اليوم؛ فهي تغذّي سيرتك الذاتية (CV) ومقابلاتك، ولاحقًا تقييمات أدائك (performance reviews) |
+
+## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
+يطلب خالد من كل عضو في الدفعة إكمال **تدقيق أولي (starting audit)** والاحتفاظ به صفحةً أولى في مجلد مسيرته المهنية (career folder). إليك تدقيق ريم.
+
+| القسم (Section) | إجابة ريم (Reem's answer) |
+|---|---|
+| **الدور المستهدف (Target role) (من بطاقة 0.2 (from the 0.2 scorecard))** | مهندسة تطبيقات ذكاء اصطناعي مبتدئة (Junior AI application engineer)؛ الخيار الثاني: مطوّرة شاملة مبتدئة (junior full-stack developer) |
+| **المسار عبر هذه الدورة (Path through this course)** | المسار الكامل (full path)، مع قفزة مبكرة إلى الوحدة 5 (Module 5) من أجل مقابلة في سديم باي (Sadeem Pay) بعد ثلاثة أسابيع |
+| **الميزانية الزمنية الأسبوعية (Weekly time budget)** | 8 ساعات: مساء الأحد والثلاثاء، وصباح السبت |
+| **ما أستطيع إثباته اليوم (What I can prove today)** | أربعة مشاريع جانبية منشورة (deployed side projects) بُنيت باستخدام وكلاء البرمجة بالذكاء الاصطناعي (AI coding agents)؛ أحدها له مستخدمون (has users) (أداة لجدولة مجموعات الدراسة (study-group scheduler)) |
+| **ما لا أستطيع إثباته بعد (What I cannot prove yet)** | أنني أفهم شيفرتي: لا اختبارات (no tests)، ولا قرارات تصميم مكتوبة (no written design decisions)، ولم أستطع شرح خيار في معالجة الأخطاء (error-handling choice) في مقابلة |
+| **أكبر ثلاث فجوات (Top three gaps) (من مسح السوق لديّ (from my market scan))** | الاختبار وتصحيح الأخطاء (testing and debugging)؛ وتقييم مخرجات النماذج اللغوية الكبيرة (evaluating LLM output)؛ وشرح شيفرتي وقراراتي كتابيًا (explaining my code and decisions in writing) |
+| **أول الدروس للدراسة (First lessons to study)** | الدرس 1.1 (خط أساس المبتدئ (junior baseline))، والدرس 1.2 (البناء باستخدام وكلاء الذكاء الاصطناعي دون أن يحملوك (building with AI agents without being carried))، ثم مسار تطبيقات الذكاء الاصطناعي (AI application path) في الدرس 2.2 |
+| **أول مُنتَج عملي مستحق (First artefact due)** | شرح تفصيلي (walkthrough) لشيفرة أداة الجدولة مع إضافة اختبارات لأهم ثلاث دوال (three most important functions)، بنهاية الأسبوع الثاني |
+| **ملاحظة النزاهة (Integrity note)** | في المقابلات سأقول إنني بنيت باستخدام وكلاء الذكاء الاصطناعي، وأُظهر أنني أستطيع شرح ما كتبوه واختباره |
+| **تاريخ المراجعة (Review date)** | نهاية الوحدة 2 (Module 2) |
+
+تعليق خالد: «ملاحظة النزاهة (integrity note) هي أهم سطر. السرعة مع الوكلاء مفيدة لنا. أمّا السرعة *مع* القدرة على شرح ما بُني فهي ما نوظّف من أجله.»
+
+أمّا تدقيق محمد، على النقيض، فيحدّد ميزانيته الأسبوعية بخمس ساعات، ويضع في أعلاه قاعدة واحدة: *«لا دورة جديدة حتى أرسل خمسة طلبات موجّهة (five targeted applications).»* ⁦("No new course until I have sent five targeted applications.")⁩
+
+## 🛠️ التمارين (Exercises)
+- 🟢 أنشئ مجلد مسيرتك المهنية (career folder) واحفظ فيه مسح السوق (market scan) (الدرس 0.1) وبطاقة ملاءمة الدور (role-fit scorecard) (الدرس 0.2)، مسمّاةً بحسب الدرس. *يكتمل عندما (Done when):* يكون المجلد موجودًا وفيه الملفان، وتستطيع مشاركة رابط إليه مع مرشد (mentor).
+- 🟡 أكمل تدقيقك الأولي (starting audit) باستخدام النموذج أعلاه، بما في ذلك ميزانية زمنية أسبوعية (weekly time budget) موضوعة في تقويمك. *يكتمل عندما (Done when):* يكون كل صف ممتلئًا، والفترات الزمنية (time blocks) في تقويمك للأسابيع الأربعة القادمة، ولأول مُنتَج عملي لديك (first artefact) تاريخ استحقاق (due date).
+- 🔴 افتح المكتبة (library)، وابحث لدورك المستهدف عن درس واحد في دورة أخرى يعلّم كل فجوة من أكبر ثلاث فجوات لديك. اقرأ أولها، ونفّذ أحد تمارينه أو مهمة صغيرة قائمة عليه. ابدأ وثيقة إنجازاتك (brag document) بما فعلته. *يكتمل عندما (Done when):* يضم تدقيقك ثلاثة روابط عاملة إلى المكتبة (three working library links) مطابقة لفجواتك، ويكون تمرين واحد مكتملًا ومحفوظًا، وتحتوي وثيقة إنجازاتك على أول مدخل (first entry).
+
+## ⚠️ أخطاء وفخاخ (Mistakes and traps)
+- **قراءة كل دورة في المكتبة (Reading every course in the library).** لا تحتاج إلا إلى الدروس التي يتطلّبها دورك المستهدف. اتبع المسار الدراسي (study path) في الوحدة 2 (Module 2).
+- **الاستهلاك دون إنتاج (Consuming without producing).** المقاطع المرئية والقراءة تبدو تقدّمًا (feel like progress). اجعل كل أسبوع ينتهي بمُنتَج عملي (artefact) في مجلد مسيرتك المهنية.
+- **ميزانية زمنية غير واقعية (An unrealistic time budget).** عشرون ساعة مخطّطة أسبوعيًا تنهار عادةً إلى صفر. اختر ساعات تستطيع الالتزام بها، واحمِها.
+- **معاملة بنك نجم على أنه حقيقي (Treating Najm Bank as real).** إنه دراسة حالة تعليمية خيالية (fictional teaching case). ابحث في برامج أصحاب العمل الحقيقيين ومواعيدهم النهائية وسياساتهم مباشرة (directly).
+- **استخدام الذكاء الاصطناعي للتزييف بدلًا من التعلّم (Using AI to fake rather than to learn).** استخدم المساعدين للشرح والاختبار والمراجعة (explain, quiz and review)؛ ولا تستخدمهم أبدًا لاختلاق الخبرة (fabricate experience) أو لخوض المقابلات عنك.
+- **تخطّي التدقيق الأولي (Skipping the starting audit).** من دون خط أساس (baseline)، لا تستطيع رؤية التقدّم، ولا يستطيع المرشد ذلك أيضًا.
+
+## 🧾 الخلاصة (Recap)
+- ستتابع عمر وهدى ويوسف وريم ومحمد عبر برنامج نجم للخرّيجين التقنيين (Najm Tech Graduate Programme)؛ وبنك نجم (Najm Bank) وأصحاب العمل الآخرون خياليّون (fictional).
+- تعلّم هذه الدورة منظور التوظيف (hiring view) ومهارات البحث عن عمل (job-search skills)، وتربطك بدروس المكتبة (library lessons) من أجل الهندسة.
+- ثماني خطوات (Explore, Learn, Build, Prove, Apply, Interview, Start, Grow) تقابل الوحدات من 0 إلى 7؛ والرجوع خطوة إلى الوراء أمر طبيعي (going back a step is normal).
+- اختر مسارًا كاملًا (full) أو موجّهًا (targeted) أو مسار المرشد (adviser)، وميزانية زمنية أسبوعية (weekly time budget) تستطيع الالتزام بها.
+- احتفظ بكل مُنتَج عملي (artefact) في مجلد المسيرة المهنية (career folder)، وابدأ وثيقة إنجازات (brag document)، واستخدم الذكاء الاصطناعي للتعلّم (to learn)، لا للتزييف أبدًا (never to fake).
+
+## ✍️ اختبر نفسك (Check yourself)
+
+**1. أي عبارة عن بنك نجم (Najm Bank) صحيحة؟**
+
+- A. إنه بنك خليجي خيالي (fictional Gulf bank) يُستخدم دراسةَ حالة تعليمية (teaching case) عبر المكتبة
+- B. إنه بنك حقيقي، ومواعيد برنامج الخرّيجين (graduate programme deadlines) لديه تنطبق عليك
+- C. إنه شركة ناشئة حقيقية للتقنية المالية (real fintech startup) في الدوحة تتشارك مع مؤلّفي المكتبة
+- D. إنه جهة حكومية (government agency) تضع قواعد التوظيف في قطر
+
+<details><summary>الإجابة</summary>
+
+**A.** بنك نجم خيالي، ومقرّه الرئيسي في الدوحة في القصة، ويُستخدم عبر المكتبة. الخيارات B وC وD تعامله على أنه حقيقي؛ فابحث في أصحاب العمل الحقيقيين مباشرة. (القسم: 🟢 الأساسيات (The essentials))
+
+</details>
+
+**2. لدى ريم مقابلة في سديم باي (Sadeem Pay) بعد ثلاثة أسابيع، لكنها لم تنهِ إلا الوحدة 0. ماذا يقترح الدرس؟**
+
+- A. أن تلغي المقابلة حتى تنهي كل وحدات الدورة بالترتيب
+- B. أن تقرأ كل دورات المكتبة أولًا، ثم تقرّر ما إذا كانت مستعدّة للمقابلة
+- C. أن تتخطّى المقابلة وتركّز على بناء مزيد من المشاريع الجانبية (side projects) باستخدام وكلاء البرمجة بالذكاء الاصطناعي (AI coding agents)
+- D. أن تستخدم المسار الموجّه (targeted path): تنتقل إلى وحدة المقابلات (interview module)، ثم تعود
+
+<details><summary>الإجابة</summary>
+
+**D.** المسار الموجّه مخصّص للخرّيجين الذين لديهم حاجة عاجلة واحدة (one urgent need). الخياران A وC يضيّعان فرصة حقيقية؛ والخيار B هو فخّ «قراءة كل شيء» ("read everything"). (القسم: 🟡 التعمق أكثر (Going deeper))
+
+</details>
+
+**3. بدأ محمد ست دورات ولم ينهِ أيًّا منها، ولم يتقدّم إلى أي مكان. أي عادة من هذا الدرس تعالج مشكلته بأكثر الطرق مباشرة؟**
+
+- A. أن يبدأ دورة سابعة ذات تقييمات أفضل وشهادة أكثر تنظيمًا في نهايتها
+- B. أن يخطّط لعشرين ساعة دراسة أسبوعيًا كي ينهي الدورات الست كلها أسرع
+- C. مُنتَجات عملية أسبوعية (weekly artefacts)، إضافةً إلى قاعدة: لا دورة جديدة حتى تُرسَل خمسة طلبات موجّهة (five targeted applications)
+- D. أن ينتظر حتى يصبح معرض أعماله (portfolio) مثاليًا تمامًا قبل أن يتقدّم إلى أي صاحب عمل
+
+<details><summary>الإجابة</summary>
+
+**C.** الخطط تفشل بسبب الوقت والمخرجات (time and output)، لا الدافعية (motivation)؛ والمُنتَجات العملية الأسبوعية وقاعدة «التقديم أولًا» (apply-first rule) تدفعانه إلى الأمام. الخيار A يكرّر النمط نفسه؛ والخيار B ميزانية غير واقعية (unrealistic budget)؛ والخيار D يؤجّل التقديم إلى أجل غير مسمّى. (القسم: 🔴 نظرة الخبير (Expert view))
+
+</details>
+
+**4. وفقًا لتصميم هذه الدورة (this course's design)، كيف تتعامل مع مهارة مثل كتابة الاختبارات (writing tests) أو نشر تطبيق (deploying an app)؟**
+
+- A. تعيد تدريس كل مهارة كاملة، من المبادئ الأولى (first principles)، في كل درس تكون فيه ذات صلة
+- B. تبيّن ما يفحصه أصحاب العمل (what employers check) وكيف تثبته، ثم تربطك بدرس المكتبة (library lesson)
+- C. تتجاهل المهارات الهندسية (engineering skills) تمامًا ولا تغطي إلا السير الذاتية والطلبات والمقابلات
+- D. توصي بدورة خارجية مدفوعة (paid external course) أو شهادة (certification) لكل مهارة، يختارها المؤلّفون
+
+<details><summary>الإجابة</summary>
+
+**B.** الدورة هي الباب الأمامي للمكتبة (front door to the library): منظور التوظيف (hiring view) هنا، والعمق (depth) هناك. الخيار A يكرّر المكتبة؛ والخيار C يُغفل نصف الدورة؛ والخيار D ليس طريقة عمل الدورة. (القسم: 🟡 التعمق أكثر (Going deeper))
+
+</details>
+
+**5. تطلب ريم من مساعد ذكاء اصطناعي (AI assistant) توليد الشيفرة لمشروع معرض أعمالها (portfolio project). أي استخدام يتّسق مع قواعد النزاهة (integrity rules) في هذه الدورة؟**
+
+- A. تقديم المشروع على أنه عملها الخاص دون مساعدة (her own unaided work) ورفض مناقشة كيف بُني أي جزء منه
+- B. استخدام أداة ذكاء اصطناعي للإجابة عنها في أثناء مقابلة تقنية مباشرة (live technical interview)، دون إخبار المُقابِل (interviewer) أو مسؤول التوظيف (recruiter)
+- C. نسخ مشروع مشابه لخرّيج آخر من GitHub وتغيير الاسم والألوان
+- D. البناء باستخدام الوكيل (agent)، ثم اختباره وتوثيقه (testing and documenting) كي تستطيع شرحه والإفصاح عن مساعدة الذكاء الاصطناعي (disclose AI help)
+
+<details><summary>الإجابة</summary>
+
+**D.** القاعدة هي أن تتعلّم وتبني بالذكاء الاصطناعي علنًا (openly)، وأن تكون قادرًا على شرح كل ما تقدّمه والتحقّق منه (explain and verify). الخيار A يحرّف حقيقة العمل (misrepresents the work)؛ والخيار B يجعل الذكاء الاصطناعي يخوض المقابلة (AI sit the interview)؛ والخيار C انتحال (plagiarism). (القسم: 🔴 نظرة الخبير (Expert view))
+
+</details>
+
+## 📚 المراجع (References)
+- [*تصميم الأنظمة لمبرمجي الحدس (System Design for Vibe Coders)*، الدرس F.4 — تعرّف على وكيلك: كيف توجّه بنّاءً لا تستطيع مراقبته (Meet your agent: how to direct a builder you can't watch)](../vibe/index.ar.html#lF-4)
+- [*تصميم الأنظمة لمبرمجي الحدس (System Design for Vibe Coders)*، الدرس 9.4 — التحقّق قبل الإكمال (Verification before completion)](../vibe/index.ar.html#l9-4)
+- [*حوكمة الذكاء الاصطناعي (AI Governance)*، الدرس 0.3 — تعرّف على بنك نجم: جرد للذكاء الاصطناعي من اليوم الأول (Meet Najm Bank: an AI inventory from day one)](../aigp/index.ar.html#/0.3)
+- [*الذكاء الاصطناعي الآمن وأمن التطبيقات (Secure AI & Application Security)*، الدرس 0.3 — تعرّف على فريق الأمن في بنك نجم، وكيف تستخدم هذه الدورة (Meet Najm Bank's security team, and how to use this course)](../secai/index.ar.html#/0.3)
+- [*تشغيل وكلاء الذكاء الاصطناعي في بيئة الإنتاج (Running AI Agents in Production)*، مسار التعلّم (learning path)](../agentic/learning-path.ar.html)
+- [التقييم الذاتي لدورة *تصميم الأنظمة لمبرمجي الحدس (System Design for Vibe Coders)*](../vibe/assessment.ar.html)
+- استبيان المطوّرين من Stack Overflow (Stack Overflow Developer Survey) — https://survey.stackoverflow.co/
+- roadmap.sh — https://roadmap.sh/

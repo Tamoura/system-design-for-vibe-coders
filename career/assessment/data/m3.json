@@ -91,7 +91,7 @@
       "lesson": "3.1",
       "q": {
         "en": "Reem's capstone is a question-answering assistant over her university's published regulations. Her README says answers \"got much better\" after a prompt change. Dana asks how she knows it is better and not just different. Which evidence answers that best?",
-        "ar": "مشروع تخرّج ريم (capstone) مساعدٌ للإجابة عن الأسئلة (question-answering assistant) فوق لوائح جامعتها المنشورة (published regulations). يقول ملفها README إن الإجابات «تحسّنت كثيرًا ⁦(got much better)⁩» بعد تغيير في الموجّه (prompt change). تسألها دانة كيف تعرف أنه أفضل لا مجرد مختلف (better and not just different). أي دليل (evidence) يجيب عن ذلك على أفضل وجه؟"
+        "ar": "مشروع تخرّج ريم (capstone) مساعدٌ للإجابة عن الأسئلة (question-answering assistant) فوق لوائح جامعتها المنشورة (published regulations). يقول ملف README الخاص بها إن الإجابات «تحسّنت كثيرًا ⁦(got much better)⁩» بعد تغيير في الموجّه (prompt change). تسألها دانة كيف تعرف أنه أفضل لا مجرد مختلف (better and not just different). أي دليل (evidence) يجيب عن ذلك على أفضل وجه؟"
       },
       "o": {
         "en": [

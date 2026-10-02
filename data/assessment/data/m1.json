@@ -12,13 +12,13 @@
       "o": {
         "en": [
           "It lags the primary by a day, so yearly totals would always miss recent data",
-          "It is still a row store with the OLTP schema, so long analytical scans stay slow",
+          "It is still a row store on the OLTP schema, so year-long scans stay slow",
           "It accepts only writes, so analysts would still have to query the primary itself",
           "It drops rows older than 90 days, so a full year of history is never available"
         ],
         "ar": [
-          "لأنها تتأخّر عن القاعدة الرئيسية (primary) يومًا كاملًا، فتفوت المجاميعَ السنوية (yearly totals) البياناتُ الحديثة (recent data) دائمًا",
-          "لأنها ما تزال مخزنًا صفّيًا (row store) بمخطّط المعالجة التشغيلية (OLTP schema)، فتبقى عمليات المسح التحليلية الطويلة (long analytical scans) بطيئة",
+          "لأنها تتأخّر عن القاعدة الرئيسية (primary) يومًا كاملًا، فتغيب البيانات الحديثة (recent data) عن المجاميع السنوية (yearly totals) دائمًا",
+          "لأنها ما تزال مخزنًا صفّيًا (row store) بمخطّط المعالجة التشغيلية (OLTP schema)، فيبقى مسح عام كامل (year-long scans) بطيئًا",
           "لأنها لا تقبل إلا الكتابات (writes)، فيظلّ على المحلّلين (analysts) أن يستعلموا القاعدة الرئيسية (primary) نفسها",
           "لأنها تحذف الصفوف الأقدم من 90 يومًا (older than 90 days)، فلا يتوفّر سجلّ تاريخي (history) لعام كامل أبدًا"
         ]
