@@ -7,7 +7,7 @@
       "lesson": "6.2",
       "q": {
         "en": "Of the protections Najm can apply to personal data in a copy made for analysis, which one gives the strongest privacy?",
-        "ar": "من بين وسائل الحماية (protections) التي يستطيع بنك نجم (Najm Bank) تطبيقها على البيانات الشخصية (personal data) في نسخة مُعدّة للتحليل (copy made for analysis)، أيّها يمنح أقوى حماية للخصوصية (strongest privacy)؟"
+        "ar": "من بين وسائل الحماية (protections) التي يستطيع بنك نجم (Najm Bank) تطبيقها على البيانات الشخصية (personal data) في نسخة مُعدّة للتحليل (copy made for analysis)، أيّها (which one) يمنح أقوى حماية للخصوصية (strongest privacy)؟"
       },
       "o": {
         "en": [
@@ -35,7 +35,7 @@
       "lesson": "6.1",
       "q": {
         "en": "A year into Najm's governance programme, the governance office's quarterly report lists 35 approved policies, 24 committee meetings and 9,000 tables in the catalogue. Faisal asks whether governance is actually working. What should the report measure instead?",
-        "ar": "بعد عام من برنامج الحوكمة (governance programme) في بنك نجم (Najm Bank)، يعرض التقرير الفصلي (quarterly report) لمكتب الحوكمة (governance office) 35 سياسة معتمدة (approved policies) و24 اجتماع لجنة (committee meetings) و9,000 جدول في الفهرس (catalogue). يسأل فيصل هل تعمل الحوكمة فعلًا. ماذا ينبغي أن يقيس التقرير بدلًا من ذلك؟"
+        "ar": "بعد عام من برنامج الحوكمة (governance programme) في بنك نجم (Najm Bank)، يعرض التقرير الفصلي (quarterly report) لمكتب الحوكمة (governance office) 35 سياسة معتمدة (approved policies) و24 اجتماع لجنة (committee meetings) و9,000 جدول في الفهرس (catalogue). يسأل فيصل هل تعمل الحوكمة فعلًا (actually working). ماذا ينبغي أن يقيس التقرير (report measure) بدلًا من ذلك؟"
       },
       "o": {
         "en": [
@@ -63,7 +63,7 @@
       "lesson": "6.3",
       "q": {
         "en": "Lina adds a view over marts.loan_book, which has a row-level security policy by country, and grants SELECT on the view to marts_reader. The view is owned by the pipeline account that builds the mart, and no one holds a superuser login. Analysts querying the view now see every country's loans. What is the cause and the fix?",
-        "ar": "تُضيف لينا عرضًا (view) فوق الجدول marts.loan_book الذي تحميه سياسة أمان على مستوى الصفوف (row-level security policy) حسب الدولة، وتمنح صلاحية SELECT على العرض للدور marts_reader. يملك العرضَ حسابُ خط البيانات (pipeline account) الذي يبني المستودع التحليلي (mart)، ولا أحد يستخدم حساب مستخدم خارق (superuser). صار المحلّلون الذين يستعلمون العرض يرون قروض كل الدول. ما السبب وما العلاج؟"
+        "ar": "تُضيف لينا عرضًا (view) فوق الجدول marts.loan_book الذي تحميه سياسة أمان على مستوى الصفوف (row-level security policy) حسب الدولة، وتمنح صلاحية SELECT على العرض للدور marts_reader. يملك العرضَ حسابُ خط البيانات (pipeline account) الذي يبني المستودع التحليلي (mart)، ولا أحد يستخدم حساب مستخدم خارق (superuser). صار المحلّلون (analysts) الذين يستعلمون العرض يرون قروض كل الدول (every country's loans). ما السبب وما العلاج (cause and fix)؟"
       },
       "o": {
         "en": [
@@ -91,7 +91,7 @@
       "lesson": "6.2",
       "q": {
         "en": "A university asks Najm for complaint data for research. Kareem prepares an extract with names and national IDs removed, customer IDs replaced by keyed hashes whose key stays in Najm's secrets manager, and exact birth date, nationality, branch and complaint notes kept. He proposes labelling it \"anonymous\". What is the soundest judgement?",
-        "ar": "تطلب جامعة من بنك نجم (Najm Bank) بيانات الشكاوى لأغراض البحث. يُعدّ كريم مستخرجًا (extract) حُذفت منه الأسماء وأرقام الهوية الوطنية (national IDs)، واستُبدلت فيه مُعرِّفات العملاء (customer IDs) بتجزئات مفتاحية (keyed hashes) يبقى مفتاحها في مدير الأسرار (secrets manager) لدى البنك، وبقي فيه تاريخ الميلاد الدقيق والجنسية والفرع وملاحظات الشكاوى (complaint notes). يقترح أن يصفه بأنه \"مجهول الهوية\" (anonymous). ما الحكم الأسلم؟"
+        "ar": "تطلب جامعة من بنك نجم (Najm Bank) بيانات الشكاوى (complaint data) لأغراض البحث (research). يُعدّ كريم مستخرجًا (extract) حُذفت منه الأسماء وأرقام الهوية الوطنية (national IDs)، واستُبدلت فيه مُعرِّفات العملاء (customer IDs) بتجزئات مفتاحية (keyed hashes) يبقى مفتاحها في مدير الأسرار (secrets manager) لدى البنك، وبقي فيه تاريخ الميلاد الدقيق والجنسية والفرع (exact birth date, nationality and branch) وملاحظات الشكاوى (complaint notes). يقترح أن يصفه بأنه \"مجهول الهوية\" (anonymous). ما الحكم الأسلم (soundest judgement)؟"
       },
       "o": {
         "en": [
@@ -103,7 +103,7 @@
         "ar": [
           "يصفه بأنه مجهول الهوية (anonymous)، لأن الجامعة لن تحصل أبدًا على مفتاح التجزئة (hashing key)",
           "يُشفّر الملف (encrypt) قبل إرساله، لأن التشفير (encryption) يجعل المستخرج مجهول الهوية",
-          "يعامله كبيانات شخصية (personal data): يُعمّم (generalise)، ويفحص إخفاء الهوية k (k-anonymity)، وينظّف الملاحظات، ويستشير سارة",
+          "يعامله كبيانات شخصية (personal data): يُعمّم (generalise)، ويفحص إخفاء الهوية k (k-anonymity)، وينظّف الملاحظات (cleans notes)، ويستشير سارة (asks Sara)",
           "يحذف عمود التجزئة المفتاحية (keyed-hash column) أيضًا، فبلا مُعرِّفات (identifiers) يصبح مجهول الهوية"
         ]
       },

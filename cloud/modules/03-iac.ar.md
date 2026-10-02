@@ -368,11 +368,11 @@ flowchart LR
     A["التزام في مستودع التطبيق"] --> B["التكامل المستمر يبني الصورة ويختبرها"]
     B --> C["السجل يخزّن الصورة ببصمتها"]
     C --> D["طلب سحب يرفع البصمة في مجلد التطوير"]
-    D --> E["مزامنة بيئة التطوير"]
+    D --> E["أرغو سي دي يزامن بيئة التطوير"]
     E --> F["طلب سحب يرقّي البصمة إلى ما قبل الإنتاج"]
-    F --> G["مزامنة بيئة ما قبل الإنتاج"]
+    F --> G["أرغو سي دي يزامن بيئة ما قبل الإنتاج"]
     G --> H["طلب سحب معتمد يرقّي إلى الإنتاج"]
-    H --> I["مزامنة بيئة الإنتاج"]
+    H --> I["أرغو سي دي يزامن بيئة الإنتاج"]
 ```
 
 ### 🟡 التعمق أكثر (Going deeper)
@@ -591,3 +591,276 @@ spec:
 
 ---
 
+# 3.3 — السياسة بوصفها شيفرة والانحراف والحواجز الواقية (Policy as code, drift and guardrails)
+*المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 3.1، 3.2* · *المرحلة (Phase): Test, Operate*
+
+## ⚡ الدرس في دقيقة (In 60 seconds)
+- تكتب **السياسة بوصفها شيفرة (policy as code)** قواعد مثل "لا قاعدة بيانات مفتوحة على الإنترنت (no database open to the internet)" أو "لكل مورد وسم مالك (every resource has an owner tag)" في صورة شيفرة تفحصها أداة آليًا، عند كل تغيير، وبالطريقة نفسها في كل مرة.
+- افحص على طبقات (Check in layers): في **طلب السحب (pull request)** (ماسحات البنية التحتية بوصفها شيفرة (IaC scanners))، وفي **وقت التخطيط (plan time)** (سياسات على الخطة (policies on the plan))، وعند **القبول (admission)** في Kubernetes (Kyverno، OPA Gatekeeper)، وعلى مستوى **المؤسسة (organisation)** في السحابة، و**أثناء التشغيل (at runtime)** (رصد الانحراف والتهيئة (drift and configuration monitoring)).
+- **الانحراف (Drift)** هو أي اختلاف بين الشيفرة وما يعمل فعلًا (what really runs). اكتشفه وفق جدول زمني (on a schedule)، ثم إما أن تعيد الواقع إلى الشيفرة (revert reality to the code) أو تحدّث الشيفرة لتطابقه (update the code to match)، ولا تتركه أبدًا دون تفسير (unexplained).
+- فضّل **الحواجز الواقية (guardrails)** التي لا تمنع إلا ما هو خطر حقًّا (truly dangerous) وتشرح كيف تصلحه، على البوابات (gates) التي تمنع كل شيء وتعلّم الناس الالتفاف عليها (bypass them).
+- اطرح السياسات الجديدة (new policies) في وضع التحذير (warn mode)، وقِس، ثم افرضها (enforce). ولكل استثناء (exception) مالك (owner) وسبب (reason) وتاريخ انتهاء (expiry date).
+- الفخ الأكبر (The biggest trap): سياسة لا يستطيع أحد اختبارها أو فهمها أو الحصول على استثناء منها. فينتهي بها الأمر إلى التعطيل (disabled).
+
+## 🧭 لماذا يهم (Why it matters)
+في 28 فبراير 2017 تعطّلت خدمة Amazon S3 في منطقة شرق الولايات المتحدة (فرجينيا الشمالية) (US East (Northern Virginia) region) لعدة ساعات. ويشرح الملخّص العلني (public summary) من AWS أن مهندسًا، باتّباعه دليل تشغيل معتمدًا (established playbook)، شغّل أمرًا يُقصد به إزالة عدد صغير من الخوادم من نظام فرعي للفوترة (billing subsystem)، وأُدخل أحد المُدخلات خطأً (entered incorrectly). فأُزيلت مجموعة أكبر بكثير من الخوادم، بينها خوادم تدعم أنظمة فرعية حرجة أخرى (other critical S3 subsystems) في S3، احتاجت بعدها إلى إعادة تشغيل كاملة (full restart). وفشلت معها خدمات كثيرة تعتمد على S3. ولم تكن استجابة AWS أن تطلب من المهندسين الكتابة بعناية أكبر. بل غيّروا الأداة (changed the tool) لتزيل السعة (capacity) ببطء أكبر وترفض إنزال أي نظام فرعي إلى ما دون الحد الأدنى من السعة المطلوبة (minimum required capacity).
+
+سيخطئ الناس والوكلاء (People and agents)؛ وينبغي للنظام أن يجعل الأخطاء الخطرة (dangerous ones) مستحيلة أو صاخبة (impossible or loud). لقد اكتُشفت إعادة تسمية يوسف لقاعدة البيانات في الدرس 3.1 لأن مها قرأت الخطة (plan)؛ ويسأل سالم عمّا يحدث في اليوم الذي يكون فيه المراجع (reviewer) متعبًا. وقد وجد فريق نورة للتو قاعدة بيانات اختبار (test database) تسمح قاعدة الشبكة (network rule) فيها بحركة المرور من أي مكان (traffic from anywhere)، أُنشئت قبل أشهر في وحدة التحكم (console)، ولم تكن في الشيفرة قط. ولم يلاحظ شيءٌ ذلك، لأن لا شيء كان يقارن الواقع بالشيفرة (compared reality with the code).
+
+## 📐 كيف يعمل (How it works)
+### 🟢 الأساسيات (The essentials)
+**من قوائم التحقق إلى الشيفرة (From checklists to code).** المعيار المكتوب في ملف PDF ("يجب ألّا تكون قواعد البيانات قابلة للوصول العام (publicly reachable)") يعتمد على تذكّر الناس له. أما **السياسة بوصفها شيفرة (policy as code)** فتحوّل القاعدة إلى برنامج يأخذ تغييرًا مقترحًا (proposed change) ويُعيد "سماح (allow)" أو "رفض، لأن… (deny, because…)"، عند كل تغيير، في ثوانٍ، وبالطريقة نفسها للجميع. والقاعدة نفسها تُراجَع وتُدار إصداراتها (reviewed and versioned) مثل أي شيفرة أخرى.
+
+**أين تعمل السياسات (Where policies run).** لا يرى فحص واحد (single check) كل شيء، ولذلك يفحص بنك نجم (Najm Bank) عند عدة نقاط:
+
+| الطبقة (Layer) | ما تراه (What it sees) | أدوات على سبيل المثال (Example tools) | قاعدة على سبيل المثال (Example rule) |
+|---|---|---|---|
+| **طلب السحب (Pull request)** | ملفات البنية التحتية بوصفها شيفرة والبيانات الوصفية (IaC and manifest files) | Checkov، Trivy، KICS | لا حاوية تخزين (storage bucket) ذات وصول عام (public access) |
+| **وقت التخطيط (Plan time)** | الخطة المحسوبة (computed plan): ما الذي سيتغيّر فعلًا | Conftest مع OPA، وميزات السياسات في HCP Terraform (HCP Terraform's policy features) | لا خطة تحذف قاعدة بيانات إنتاجية (production database)؛ ولا منفذ قاعدة بيانات (database port) مفتوح على 0.0.0.0/0 |
+| **القبول في Kubernetes (Kubernetes admission)** | كل كائن (object) يُرسَل إلى خادم واجهة برمجة التطبيقات (API server) في العنقود | Kyverno، OPA Gatekeeper، ValidatingAdmissionPolicy | الصور (Images) من سجل البنك (bank's registry) فقط، مثبّتة بالبصمة (pinned by digest) |
+| **المؤسسة السحابية (Cloud organisation)** | كل استدعاء لواجهة برمجة التطبيقات (API call) في حساب ما، أيًّا كانت الأداة التي أجرته | سياسات التحكم بالخدمات في AWS (AWS Service Control Policies)، وAzure Policy، وسياسة المؤسسة في Google Cloud (Google Cloud Organization Policy) | لا موارد خارج المناطق المعتمدة (approved regions) |
+| **وقت التشغيل (Runtime)** | ما هو موجود فعلًا الآن | اكتشاف الانحراف المجدوَل (Scheduled drift detection)، وحالة مزامنة Argo CD (Argo CD sync status)، وخدمات رصد التهيئة السحابية (cloud configuration-monitoring services) | التنبيه (Alert) عندما يختلف الواقع عن الشيفرة |
+
+كلما جرى الفحص أبكر، كان الإصلاح أرخص (the cheaper the fix). وكلما جرى متأخرًا، التقط أكثر (the more it catches)، بما في ذلك التغييرات التي لم تمرّ قط عبر خط التسليم (pipeline).
+
+```mermaid
+flowchart LR
+    A["تغيير في طلب سحب"] --> B["فحص البنية التحتية بوصفها شيفرة"]
+    B --> C["سياسة وقت التخطيط"]
+    C --> D["التطبيق أو المزامنة"]
+    D --> E["سياسات القبول والمؤسسة"]
+    E --> F["الموارد العاملة"]
+    F --> G["فحص الانحراف المجدول"]
+    G -->|"وُجد اختلاف"| H["الإرجاع أو تحديث الشيفرة"]
+```
+
+**ما هو الانحراف (What drift is).** **الانحراف (Drift)** هو أي اختلاف بين الحالة المُصرَّح بها في الشيفرة (state declared in code) والحالة الحقيقية (real state). وهو ينشأ من تغييرات وحدة التحكم (console changes) ("ClickOps")، والتعديلات اليدوية أثناء الحوادث (hand edits during incidents)، والأدوات الأخرى التي تلمس الموارد نفسها، والموارد التي تُنشأ خارج البنية التحتية بوصفها شيفرة كليًا (outside IaC entirely). وهو خطر لأن إعادة البناء من الشيفرة (rebuilding from code) لم تعد تمنحك النظام نفسه، ولأن التطبيق التالي (next apply) قد يلغي بصمت إصلاحًا مقصودًا (deliberate fix)، ولأن الإعداد المنحرف (drifted setting) قد يكون الثغرة التي يستغلّها مهاجم (attacker).
+
+**الحواجز الواقية مقابل البوابات (Guardrails versus gates).** **البوابة (gate)** توقف كل شيء حتى يوافق أحدهم. أما **الحاجز الواقي (guardrail)** فيدع الناس يتحرّكون بسرعة ولا يوقف إلا الحالات الخطرة (dangerous cases)، مع رسالة تقول كيف تصلحها. وتفضّل هندسة المنصات (platform engineering) الحواجز الواقية: فالمسار الآمن (safe path) (الوحدة البرمجية `postgres` من 3.1، وطلب سحب الترقية (promotion pull request) من 3.2) ينبغي أن يكون أيضًا المسار الأسهل (easiest path)، والسياسات (policies) تلتقط ما يسقط عنه.
+
+### 🟡 التعمق أكثر (Going deeper)
+**سياسة وقت التخطيط باستخدام OPA وConftest (Plan-time policy with OPA and Conftest).** **Open Policy Agent (OPA)** محرّك سياسات عام الأغراض (general-purpose policy engine)، وهو مشروع متخرّج (graduated) في CNCF، بلغة سياسات (policy language) تُسمّى **Rego**. ويشغّل **Conftest** سياسات Rego على ملفات منظّمة (structured files) مثل JSON أو YAML. ويستطيع Terraform وOpenTofu تصدير خطة محفوظة (saved plan) بصيغة JSON، فتستطيع كتابة قواعد حول ما سيتغيّر (what will change)، لا حول ما تقوله الملفات فحسب:
+
+```shell
+tofu plan -out=tfplan
+tofu show -json tfplan > tfplan.json
+conftest test tfplan.json --policy policy/
+```
+
+قاعدة تمنع فتح PostgreSQL على الإنترنت كله (the whole internet) (مثال من AWS؛ والفكرة نفسها تنطبق على مجموعات أمان الشبكة في Azure (Azure network security groups) أو قواعد جدار الحماية في Google Cloud (Google Cloud firewall rules)):
+
+```rego
+package main
+
+import rego.v1
+
+deny contains msg if {
+  some rc in input.resource_changes
+  rc.type == "aws_security_group_rule"
+  rc.change.after.type == "ingress"
+  "0.0.0.0/0" in rc.change.after.cidr_blocks
+  rc.change.after.from_port <= 5432
+  rc.change.after.to_port >= 5432
+  msg := sprintf("%s opens PostgreSQL to the internet; use the private endpoint from the postgres module", [rc.address])
+}
+
+deny contains msg if {
+  some rc in input.resource_changes
+  "delete" in rc.change.actions
+  rc.type in {"aws_db_instance", "aws_rds_cluster"}
+  msg := sprintf("%s would be deleted; deleting a database needs a platform-lead approved exception", [rc.address])
+}
+```
+
+كل رسالة تقول ما الخطأ *و(and)* ما العمل. تغيّرت صياغة Rego (Rego syntax) بين إصدارات OPA؛ و`import rego.v1` يجعل هذا صالحًا على إصدارات 0.x بدءًا من 0.59 وعلى OPA 1.x. وقد تستخدم شيفرة AWS الأحدث `aws_vpc_security_group_ingress_rule`، الذي يحتاج إلى قاعدة خاصة به (its own rule).
+
+**السياسات شيفرة، فاختبرها (Policies are code, so test them).** لدى OPA مشغّل اختبارات مدمج (built-in test runner) (`opa test`)، ويستطيع Conftest أيضًا تشغيل حالات اختبار (test cases). احتفظ لكل قاعدة بمثال واحد على الأقل يجب أن يُرفض (must be denied) ومثال يجب أن يُسمح به (must be allowed). فالسياسة غير المختبرة (policy without tests) ستمنع يومًا ما كل عمليات النشر (every deployment)، أو لن تمنع أيًّا منها.
+
+**سياسات القبول في Kubernetes (Admission policies in Kubernetes).** حتى مع خطوط تسليم مثالية (perfect pipelines)، يظل بوسع أحدهم تشغيل `kubectl apply`. يفحص **متحكّم القبول (admission controller)** كل كائن (object) يتلقّاه خادم واجهة برمجة التطبيقات (API server) ويستطيع رفضه. يكتب **Kyverno** السياسات بلغة YAML الخاصة بـ Kubernetes (Kubernetes YAML)؛ ويستخدم **OPA Gatekeeper** لغة Rego؛ ويوفّر Kubernetes نفسه الآن **ValidatingAdmissionPolicy**، باستخدام لغة التعبيرات CEL (CEL expression language)، التي أصبحت متاحة للعموم (generally available) في Kubernetes 1.30. قاعدة Kyverno تشترط تثبيت الصور بالبصمة (images pinned by digest):
+
+```yaml
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-image-digest
+spec:
+  validationFailureAction: Audit   # start in Audit, move to Enforce after review
+  rules:
+    - name: images-pinned-by-digest
+      match:
+        any:
+          - resources:
+              kinds: ["Pod"]
+      validate:
+        message: "Pin images by digest (image@sha256:...), as the promotion pipeline does."
+        pattern:
+          spec:
+            containers:
+              - image: "*@sha256:*"
+```
+
+تتّجه إصدارات Kyverno الحديثة (Recent Kyverno versions) إلى نقل إجراء الإخفاق (failure action) إلى كل قاعدة على حدة؛ تحقّق من أسماء الحقول (field names) في إصدارك.
+
+**اكتشاف الانحراف (Detecting drift).** في البنية التحتية بوصفها شيفرة (IaC)، أبسط كاشف (simplest detector) هو خطة مجدوَلة (scheduled plan) ينبغي ألّا تُظهر شيئًا:
+
+```shell
+tofu plan -detailed-exitcode -input=false
+# exit code 0: no changes, code and reality match
+# exit code 2: changes pending: drift, or merged code that was never applied
+# exit code 1: error
+```
+
+يشغّل بنك نجم (Najm Bank) هذا كل ليلة (nightly) لكل حالة (every state) ببيانات اعتماد للقراءة فقط (read-only credentials) ويفتح تذكرة (ticket) عند رمز الخروج (exit code) 2. ويُظهر `plan -refresh-only` ما تغيّر في الواقع فقط، وهذا يساعدك على فهم الانحراف (understand drift) قبل التصرّف. وفي Kubernetes، يُبلغ Argo CD وFlux عن الانحراف بحالة "OutOfSync"، ويستطيع الإصلاح الذاتي (self-heal) إلغاءه. كما تلتقط خدمات رصد التهيئة السحابية (cloud configuration-monitoring services) (مثل AWS Config، وامتثال Azure Policy (Azure Policy compliance)، وGoogle Cloud Security Command Center) الموارد التي لم تعرف عنها البنية التحتية بوصفها شيفرة قط.
+
+**الاستجابة للانحراف (Responding to drift).** كل بند انحراف (drift item) يحصل على إحدى إجابتين:
+- **الإرجاع (Revert)**: كانت الشيفرة محقّة؛ طبّقها مجددًا واكتشف من غيّر الواقع ولماذا.
+- **التبنّي (Adopt)**: كان التغيير محقًّا (غالبًا إصلاح حادثة (incident fix))؛ حدّث الشيفرة عبر طلب سحب (pull request) كي تتطابق الشيفرة والواقع، ثم أغلق التذكرة (close the ticket).
+
+لا تترك الانحراف أبدًا بوصفه "معروفًا (known)". وإن كانت سمة (attribute) ما تتغيّر خارج البنية التحتية بوصفها شيفرة على نحو مشروع (legitimately)، مثل عدد النسخ المتماثلة (replica count) الذي يديره موسِّع تلقائي (autoscaler)، فصرّح بذلك صراحةً باستخدام `lifecycle { ignore_changes = [...] }` لتلك السمة وحدها، مع تعليق (comment) يشرح السبب.
+
+### 🔴 نظرة الخبير (Expert view)
+**طرح سياسة دون تمرّد (Rolling out a policy without a revolt).** ابدأ في وضع التحذير أو التدقيق (warn or audit mode)، وقِس ما سيفشل، وأصلحه أو استثنِه (fix or exempt it)، وأعلن تاريخًا (announce a date)، ثم افرض (enforce). انشر كل سياسة بمعرّف (ID)، وسبب (reason)، ومثال ممتثل (compliant example)، ومالك (owner). وتتبّع عدد مرات انطلاق كل سياسة (how often each fires)، وعدد مرات انطلاقها خطأً: فالإيجابيات الكاذبة (false positives) تعلّم الناس تجاهل كل سياسة.
+
+**الاستثناءات جزء من التصميم (Exceptions are part of the design).** تحتاج الأنظمة الحقيقية إلى استثناءات (exceptions): جهاز مورّد (vendor appliance) يجب أن يستخدم منفذًا (port) بعينه، أو عملية ترحيل (migration) تحذف قاعدة بيانات على نحو مشروع. اجعل مسار الاستثناء (exception path) صريحًا: ملف استثناءات (exception file) في مستودع السياسات (policy repo)، يوافق عليه مالك السياسة (policy owner)، مع سبب (reason) وتاريخ انتهاء (expiry date)، وتقرؤه السياسة. والاستثناءات المنتهية (Expired exceptions) تُفشل البناء (fail the build). وهذا أفضل من الفحوص المعطّلة (disabled checks) أو صلاحية المسؤول (admin access).
+
+**الحواجز الواقية على مستوى المؤسسة (Organisation-level guardrails).** تنطبق سياسات التحكم بالخدمات في AWS (AWS Service Control Policies)، وAzure Policy على مستوى مجموعة الإدارة (management-group level)، وسياسات المؤسسة في Google Cloud (Google Cloud Organization Policies) على كل حساب أو مشروع تحتها، أيًّا كان من يُجري الاستدعاء. استخدمها لقائمة قصيرة من الأمور غير القابلة للتفاوض (non-negotiables) (المناطق المعتمدة لإقامة البيانات (approved regions for data residency)، وتسجيل التدقيق مُفعَّل دائمًا (audit logging always on)، ولا تخزين عام افتراضيًا (no public storage by default))؛ فهي صعبة التصحيح (hard to debug) وتؤثّر في الجميع.
+
+**كسر الزجاج على الوجه الصحيح (Break-glass, done properly).** سيأتي يوم يتعطّل فيه خط التسليم (pipeline) ويتعيّن على أحدهم تغيير الإنتاج يدويًا. خطّط لذلك: أدوار كسر زجاج مسمّاة (named break-glass roles)، وبيانات اعتماد مخزّنة على حدة (separately stored credentials)، واستخدام يستدعي (pages) قائد هندسة موثوقية المواقع (SRE lead) والأمن (security)، وتذكرة إلزامية (mandatory ticket)، واكتشاف انحراف (drift detection) يُعلِّم التغيير حتى يصبح في الشيفرة. خطّط لمسار الطوارئ (emergency path) قبل الطوارئ.
+
+**السياسة والتنظيم (Policy and regulation).** تترك السياسة بوصفها شيفرة (Policy as code) أدلّة (evidence) يقدّرها المدقّقون (auditors): القاعدة، وتاريخها، وكل تقييم (evaluation) واستثناء (exception). وهذا يدعم توقّعات إدارة التغيير (change-management expectations) مثل توقّعات قانون EU DORA ومتطلبات الجهات التنظيمية الخليجية للسحابة (GCC regulators' cloud requirements)؛ راجع النصوص الحالية مع فريق الامتثال (compliance). أما أيّ أخطاء التهيئة (misconfigurations) أهم فيتناوله [*أمن الذكاء الاصطناعي والتطبيقات (Secure AI & Application Security)*، الدرس 7.1 — أمن السحابة: المسؤولية المشتركة وإدارة الهوية والوصول وأخطاء التهيئة (Cloud security: shared responsibility, IAM and misconfiguration)](../secai/index.ar.html#/7.1) و[*أمن الذكاء الاصطناعي والتطبيقات (Secure AI & Application Security)*، الدرس 7.2 — الحاويات وKubernetes والبنية التحتية بوصفها شيفرة (Containers, Kubernetes and infrastructure as code)](../secai/index.ar.html#/7.2).
+
+## 🧰 الأدوات (The toolkit)
+| الأداة أو الممارسة أو الخدمة (Tool, practice or service) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
+|---|---|---|
+| **Open Policy Agent** (OPA، متخرّج في CNCF (CNCF graduated)) | محرّك سياسات عام الأغراض (general-purpose policy engine) بلغة Rego؛ يستطيع تقييم أي مُدخل JSON (any JSON input) | سياسات البنية التحتية بوصفها شيفرة في وقت التخطيط (plan-time IaC policies)، وتفويض واجهات برمجة التطبيقات (API authorisation)، ولغة سياسات واحدة (one policy language) عبر أنظمة كثيرة |
+| **Conftest** | يشغّل سياسات Rego على ملفات التهيئة (configuration files) وملف JSON للخطة (plan JSON) في التكامل المستمر (CI) | فحص خطط OpenTofu أو Terraform وبيانات Kubernetes الوصفية (Kubernetes manifests) في خط تسليم (pipeline) |
+| **Kyverno** (CNCF) | محرّك قبول وسياسات أصيل في Kubernetes (Kubernetes-native admission and policy engine)؛ تُكتب السياسات بلغة YAML | فرض قواعد العنقود (cluster rules) مثل السجل (registry) وتثبيت البصمة (digest pinning) وحدود الموارد (resource limits) |
+| **ValidatingAdmissionPolicy** (Kubernetes) | فحوص قبول مدمجة (built-in admission checks) مكتوبة بلغة CEL، دون حاجة إلى متحكّم إضافي (extra controller) | قواعد تحقّق بسيطة (simple validation rules) حين لا تريد مكوّنات إضافية (extra components) |
+| **IaC scanner** (e.g. Checkov, Trivy, KICS) — ماسح البنية التحتية بوصفها شيفرة | فحوص ثابتة (static checks) على ملفات البنية التحتية بوصفها شيفرة والبيانات الوصفية (manifests) بحثًا عن أخطاء تهيئة معروفة (known misconfigurations) | كل طلب سحب (pull request) يلمس البنية التحتية |
+| **Scheduled drift detection** — اكتشاف الانحراف المجدوَل | تشغيل ليلي لـ `plan -detailed-exitcode` لكل حالة (per state)، إضافةً إلى حالة مزامنة GitOps (GitOps sync status) | كل بيئة مُدارة (managed environment)؛ تذاكر (tickets) لأي اختلاف غير مفسَّر (unexplained difference) |
+| **Organisation guardrails** (AWS SCPs, Azure Policy, Google Cloud Organization Policy) — الحواجز الواقية للمؤسسة | قواعد تُفرض على كل استدعاء لواجهة برمجة التطبيقات (every API call) داخل تسلسل هرمي للحسابات (account hierarchy) | قائمة قصيرة من القواعد غير القابلة للتفاوض (non-negotiable rules) مثل المناطق المعتمدة (approved regions) وتسجيل التدقيق (audit logging) |
+
+## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
+ينشر سالم ونورة **دليل نجم للحواجز الواقية للمنصة، الإصدار 1 (Najm Platform Guardrail Catalogue v1)**. لكل حاجز واقٍ (guardrail) معرّف (ID)، ومكان تشغيله (where it runs)، ووضعه (mode)، ومسار الاستثناء (exception route) الخاص به.
+
+**الجزء أ: الحواجز الواقية (Part A: guardrails)**
+
+| المعرّف (ID) | القاعدة (Rule) | أين تعمل (Where it runs) | الوضع (Mode) | مسار الاستثناء (Exception route) |
+|---|---|---|---|---|
+| G-01 | الموارد في المناطق المعتمدة فقط (Resources only in approved regions) | سياسة المؤسسة (Organisation policy) | فرض (Enforce) | حمد (كبير مسؤولي أمن المعلومات (CISO)) والامتثال (compliance)، كتابيًا (written) |
+| G-02 | لا منفذ قاعدة بيانات (database port) مفتوح على 0.0.0.0/0 | Conftest في وقت التخطيط (Plan-time Conftest)؛ فحص البنية التحتية بوصفها شيفرة (IaC scan) | فرض (Enforce) | لا يوجد (None) |
+| G-03 | لا حذف أو استبدال (delete or replace) لمورد ذي حالة (stateful resource) في الإنتاج دون موافقة (approval) | Conftest في وقت التخطيط (Plan-time Conftest) | فرض (Enforce) | سالم أو مها، لكل تغيير (per change)، وينتهي بعد تطبيق واحد (expires after one apply) |
+| G-04 | الوسوم المطلوبة (Required tags): `owner`، `environment`، `data-class`، `cost-centre` | Conftest في وقت التخطيط (Plan-time Conftest) | تحذير حتى نهاية الربع، ثم فرض (Warn until end of quarter, then enforce) | فريق المنصة (Platform team)، 30 يومًا |
+| G-05 | الصور من سجل البنك (bank registry)، مثبّتة بالبصمة (pinned by digest) | قبول Kyverno (Kyverno admission) | فرض في الإنتاج، وتدقيق في التطوير (Enforce in prod, audit in dev) | فريق المنصة (Platform team)، 14 يومًا |
+| G-06 | طلبات المعالج والذاكرة (CPU and memory requests) مضبوطة على كل حاوية (container) | قبول Kyverno (Kyverno admission) | فرض (Enforce) | لا يوجد (None) |
+| G-07 | لا يمكن تعطيل تسجيل التدقيق (Audit logging cannot be disabled) | سياسة المؤسسة (Organisation policy) | فرض (Enforce) | لا يوجد (None) |
+| G-08 | لا انحراف غير مفسَّر (No unexplained drift) | خطة ليلية لكل حالة (Nightly plan per state)؛ حالة مزامنة Argo CD (Argo CD sync status) | تذكرة خلال يوم عمل واحد (Ticket within one working day) | الحلّ بالإرجاع أو التبنّي (Resolve by revert or adopt) |
+
+**الجزء ب: دليل تشغيل الانحراف (Part B: the drift runbook)**
+1. تجد المهمة الليلية (nightly job) رمز الخروج (exit code) 2 وتفتح تذكرة (ticket) مرفقًا بها مُخرج الخطة (plan output).
+2. يفحص الفريق المالك (owning team) سجلّ التدقيق السحابي (cloud audit log) لمعرفة من غيّر ماذا، ومتى.
+3. قرِّر: **الإرجاع (revert)** (طبّق الشيفرة) أو **التبنّي (adopt)** (طلب سحب لتغيير الشيفرة). وسجّل القرار في التذكرة.
+4. إن أُجري التغيير خارج كسر الزجاج (outside break-glass)، فأضف ملاحظة قصيرة إلى مراجعة المنصة الأسبوعية (weekly platform review)؛ فالانحراف المتكرّر على المورد نفسه (repeated drift on the same resource) يعني أن حاجزًا واقيًا أو وحدة برمجية مفقودة (a guardrail or module is missing).
+
+**الجزء ج: قواعد مستودع السياسات (Part C: policy repository rules).** لكل سياسة اختبارات (tests) لحالة مسموحة (allowed) واحدة على الأقل وحالة مرفوضة (denied) واحدة؛ وتمرّ التغييرات على السياسات عبر طلبات سحب (pull requests) يراجعها فريق المنصة (platform team)، ويراجعها فريق نورة أيضًا في القواعد الأمنية (security rules)؛ وتعيش الاستثناءات (exceptions) في `exceptions.yaml` مع المالك (owner) والسبب (reason) وتاريخ الانتهاء (expiry)، والمدخلات المنتهية (expired entries) تُفشل البناء (fail the build).
+
+## 🛠️ التمارين (Exercises)
+شغّل هذه التمارين محليًا (locally) باستخدام OpenTofu وConftest وعنقود kind أو k3d.
+
+- 🟢 باستخدام تهيئة مزوّد Docker (Docker-provider configuration) من الدرس 3.1، شغّل `plan -detailed-exitcode` ولاحظ رمز الخروج (exit code). ثم أوقف الحاوية أو أعد تسميتها يدويًا باستخدام واجهة سطر أوامر Docker (Docker CLI) وشغّله مجددًا. *يكتمل عندما (Done when):* ترى رمز الخروج 0 قبل ذلك و2 بعده، وتستطيع أن تشرح من مُخرج الخطة (plan output) ما الذي تقترح الأداة إعادته.
+- 🟡 اكتب سياسة Conftest (Conftest policy) على ملف JSON للخطة (plan JSON) تمنع أي `docker_container` يكشف منفذًا خارجيًا (external port) أقل من 1024، وأخرى تمنع أي وسم صورة (image tag) `latest`. واكتب اختبارات (tests) للاثنتين. *يكتمل عندما (Done when):* يفشل `conftest test` على خطة تخالف كل قاعدة برسالة تقول كيف تصلحها، وينجح على خطة ممتثلة (compliant plan)، وتنجح اختبارات سياستك (policy tests).
+- 🔴 ثبّت Kyverno على عنقود محلي (local cluster) وطبّق سياسة تشترط تثبيت الصور بالبصمة (images pinned by digest)، أولًا في وضع التدقيق (Audit)، ثم في وضع الفرض (Enforce). انشر حجيرة (pod) بالوسم (by tag) وأخرى بالبصمة (by digest) في كل وضع، واقرأ تقارير السياسة (policy reports). ثم أضف استثناءً (exception) لفضاء أسماء (namespace) واحد مع ملاحظة انتهاء (expiry note) في مستودعك. *يكتمل عندما (Done when):* يُبلَّغ عن الحجيرة الموسومة (tagged pod) في وضع التدقيق، وتُرفض في وضع الفرض برسالتك، وتعمل الحجيرة المثبّتة بالبصمة (digest-pinned pod)، ويكون استثناؤك محصورًا في فضاء أسماء واحد (scoped to one namespace) وموثّقًا (documented).
+
+## ⚠️ أخطاء وفخاخ (Mistakes and traps)
+- **فحص واحد عند نقطة واحدة (One check, at one point).** فحص طلب السحب (pull-request scan) يفوته تغييرات وحدة التحكم (console changes)؛ وسياسة المؤسسة (organisation policy) يفوتها Kubernetes. اجعل الفحوص طبقات (Layer the checks).
+- **الفرض من اليوم الأول (Enforcing on day one).** السياسة الجديدة التي تكسر كل خط تسليم (pipeline) تُعطَّل. دقّق أولًا (Audit first)، وأصلح أو استثنِ، ثم افرض في تاريخ معلَن (announced date).
+- **رسائل لا تقول إلا "مرفوض" (Messages that only say "denied").** يحتاج الناس إلى معرفة كيف يصلحون الأمر. كل رسالة سياسة (policy message) تسمّي المشكلة والبديل الممتثل (compliant alternative).
+- **استثناءات بلا تاريخ انتهاء (Exceptions with no expiry).** تصبح ثغرات دائمة (permanent holes). امنح كلًّا منها مالكًا (owner) وسببًا (reason) وتاريخ نهاية (end date) يفرضه البناء (build).
+- **تجاهل الانحراف أو "إصلاحه" بتطبيق أعمى (Ignoring drift or "fixing" it with a blind apply).** قد يلغي التطبيق (apply) إصلاحًا مقصودًا لحادثة (deliberate incident fix). تحقّق أولًا، ثم أرجِع أو تبنَّ (revert or adopt)، وسجّل أيّهما.
+- **سياسات غير مختبرة (Untested policies).** خطأ مطبعي (typo) قد يسمح بكل شيء أو يمنع كل شيء. احتفظ بحالات اختبار مسموحة ومرفوضة (allowed and denied test cases) لكل قاعدة.
+
+## 🧾 الخلاصة (Recap)
+- تحوّل السياسة بوصفها شيفرة (Policy as code) المعايير المكتوبة (written standards) إلى فحوص آلية ومُدارة الإصدارات وقابلة للاختبار (automated, versioned, testable checks) عند كل تغيير.
+- اجعل الفحوص طبقات (Layer the checks): طلب السحب (pull request)، ووقت التخطيط (plan time)، والقبول في Kubernetes (Kubernetes admission)، والمؤسسة السحابية (cloud organisation)، ووقت التشغيل (runtime).
+- الانحراف (Drift) هو أي فجوة بين الشيفرة والواقع (gap between code and reality)؛ اكتشفه وفق جدول زمني (on a schedule) وعالج كل بند بالإرجاع أو التبنّي (revert or adopt).
+- الحواجز الواقية (Guardrails) لا تمنع إلا الخطر الحقيقي (real danger)، وتشرح الإصلاح، وتُطرح في وضع التدقيق أولًا (audit mode first)، ولها مسار استثناء صريح ينتهي (explicit, expiring exception path).
+- خطّط لوصول كسر الزجاج (break-glass access) قبل أن تحتاج إليه، ودع اكتشاف الانحراف (drift detection) يعيد تغييرات الطوارئ (emergency changes) إلى الشيفرة.
+
+## ✍️ اختبر نفسك (Check yourself)
+
+**1. كانت استجابة AWS لانقطاع S3 في فبراير 2017 (February 2017 S3 outage)، الذي سبّبه أمر كُتب خطأً (mistyped command)، في الأساس:**
+
+- A. اشتراط أن يفحص مهندس ثانٍ (second engineer) كل أمر ويؤكّده قبل تشغيله
+- B. التوقّف عن استخدام أدلّة التشغيل المكتوبة (written playbooks) وترك المهندسين يقرّرون الخطوات أثناء العمليات (during operations)
+- C. نقل S3 نهائيًا إلى منطقة أخرى (another region) فيها خدمات معتمدة أقل
+- D. تغيير الأداة (Change the tool) لتزيل السعة (capacity) ببطء، ولا تنزل أبدًا دون الحد الأدنى لنظام فرعي (subsystem's minimum)
+
+<details><summary>الإجابة</summary>
+
+**D.** الدرس هو بناء الحواجز الواقية داخل الأدوات (build guardrails into tools)، كي لا يتحوّل الخطأ إلى كارثة (disaster). الخيار A يعتمد على أن يكون الناس مثاليين، وهي المشكلة التي تحلّها الحواجز الواقية. (🧭 لماذا يهم (Why it matters).)
+
+</details>
+
+**2. يجد فريق نورة قاعدة بيانات اختبار (test database) تسمح قاعدة الشبكة (network rule) فيها بحركة المرور من أي مكان. أُنشئت في وحدة التحكم (console) ولم تظهر في أي طلب سحب (pull request). أيّ طبقة فحص (layer of checking) كان يمكن أن تلتقطها؟**
+
+- A. ماسح بنية تحتية بوصفها شيفرة (IaC scanner) يعمل آليًا على كل طلب سحب للبنية التحتية في التكامل المستمر (CI)
+- B. سياسات المؤسسة (Organisation policies) ورصد التهيئة في وقت التشغيل (runtime configuration monitoring)، اللذان يريان كل تغيير
+- C. سياسة قبول Kyverno (Kyverno admission policy) في عنقود Kubernetes الإنتاجي (production Kubernetes cluster)
+- D. مراجعة شيفرة دقيقة (careful code review) لمستودع التطبيق (application repository)
+
+<details><summary>الإجابة</summary>
+
+**B.** التغييرات التي تُجرى خارج خط التسليم (outside the pipeline) لا تراها إلا الضوابط (controls) المفروضة على واجهة برمجة التطبيقات السحابية نفسها (cloud API itself) أو على الموارد العاملة (running resources). الخياران A وD لا يريان إلا الشيفرة؛ والخيار C لا يرى إلا كائنات Kubernetes (Kubernetes objects). (🟢 الأساسيات (The essentials).)
+
+</details>
+
+**3. تشغّل مهمة الانحراف الليلية (nightly drift job) الأمر `tofu plan -detailed-exitcode` لحالة قاعدة بيانات المدفوعات (Payments database state) وتحصل على رمز الخروج (exit code) 2. ماذا يعني هذا، وما أول ما ينبغي للفريق فعله؟**
+
+- A. انحراف (Drift) أو شيفرة مدموجة غير مطبَّقة (unapplied merged code)؛ تحقّق، ثم أرجِع أو تبنَّ (revert or adopt)
+- B. فشلت الخطة بخطأ (error)، فأعد تشغيلها مع تفعيل تسجيل أكثر تفصيلًا (more verbose logging)
+- C. كل شيء متطابق، فلا حاجة إلى أي إجراء حتى تشغيل الغد
+- D. شغّل `apply` فورًا لتكتب فوق كل ما تغيّر في الواقع منذ التشغيل الأخير
+
+<details><summary>الإجابة</summary>
+
+**A.** رمز الخروج 2 يعني أن هناك تغييرات معلّقة (changes are pending). والخيار D قد يلغي إصلاحًا مقصودًا لحادثة (deliberate incident fix)؛ تحقّق أولًا، ثم أرجِع أو تبنَّ. الخيار B هو رمز الخروج 1، والخيار C هو رمز الخروج 0. (🟡 التعمق أكثر (Going deeper).)
+
+</details>
+
+**4. يريد سالم اشتراط تثبيت الصور بالبصمة (images pinned by digest) في كل عنقود (cluster). كثير من أعباء العمل القائمة (existing workloads) تستخدم الوسوم (tags). ما أفضل طريقة للطرح (best rollout)؟**
+
+- A. الفرض فورًا (Enforce immediately) في كل عنقود كي تتعلّم كل الفرق القاعدة بسرعة
+- B. إعلان القاعدة بالبريد الإلكتروني (by email) لكل الفرق وعدم فرضها
+- C. التدقيق أولًا (Audit first)، وإصلاح أعباء العمل القائمة أو استثناؤها، وإعلان تاريخ، ثم الفرض
+- D. تعطيل التحكم بالقبول (admission control) والاعتماد على مراجعة شيفرة دقيقة (careful code review) بدلًا منه
+
+<details><summary>الإجابة</summary>
+
+**C.** التدقيق أولًا (Audit first) يتيح لك إيجاد المخالفات القائمة (existing violations) وإصلاحها دون كسر عمليات النشر (deployments). الخيار A يكسر خطوط تسليم كثيرة ويستدعي الالتفاف (invites bypassing)؛ والخيار B لا أثر له. (🔴 نظرة الخبير (Expert view).)
+
+</details>
+
+**5. يحتاج جهاز مورّد (vendor appliance) في بنك نجم (Najm Bank) على نحو مشروع إلى قاعدة يرفضها دليل الحواجز الواقية (guardrail catalogue) عادةً. ما الطريقة الصحيحة للسماح بها؟**
+
+- A. تعطيل السياسة (Disable the policy) للجميع حتى ينتهي مشروع المورّد العام المقبل أو بعده
+- B. منح فريق المورّد صلاحية المسؤول (administrator access) كي يتجاوزوا خط التسليم (pipeline)
+- C. إجراء التغيير يدويًا في وحدة التحكم (console) وتجاهل تنبيهات الانحراف (drift alerts) التي يسبّبها
+- D. إضافة استثناء محصور (scoped exception) بمالك وسبب وتاريخ انتهاء (owner, reason and expiry) يفرضه البناء (build)
+
+<details><summary>الإجابة</summary>
+
+**D.** الاستثناءات الصريحة المحصورة المنتهية (Explicit, scoped, expiring exceptions) تُبقي الحاجز الواقي (guardrail) قائمًا للجميع غيرهم وتحفظ دليلًا على القرار (evidence of the decision). أما الخيارات A وB وC فكلها تزيل الحماية على نطاق أوسع بكثير مما يلزم ولا تترك سجلًا نظيفًا (clean record). (🔴 نظرة الخبير (Expert view)، و🏛️ عمليًا (In practice).)
+
+</details>
+
+## 📚 المراجع (References)
+- توثيق Open Policy Agent (Open Policy Agent documentation) — https://www.openpolicyagent.org/docs/
+- Conftest — https://www.conftest.dev/
+- توثيق Kyverno (Kyverno documentation) — https://kyverno.io/docs/
+- Kubernetes، سياسة القبول التحقّقية (Validating Admission Policy) — https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy/
+- OpenTofu، أمر plan (plan command) — https://opentofu.org/docs/cli/commands/plan/
+- Terraform، اكتشاف الانحراف ووضع التحديث فقط (detecting drift and refresh-only mode) — https://developer.hashicorp.com/terraform/docs
+- AWS، ملخّص تعطّل خدمة Amazon S3 في منطقة فرجينيا الشمالية (summary of the Amazon S3 service disruption in the Northern Virginia (US-EAST-1) region) — https://aws.amazon.com/message/41926/
+- AWS Organizations، سياسات التحكم بالخدمات (service control policies) — https://docs.aws.amazon.com/organizations/
+- توثيق Azure Policy (Azure Policy documentation) — https://learn.microsoft.com/azure/governance/policy/
+- Google Cloud، خدمة سياسات المؤسسة (Organization Policy Service) — https://cloud.google.com/resource-manager/docs/organization-policy/overview-of-organization-policy

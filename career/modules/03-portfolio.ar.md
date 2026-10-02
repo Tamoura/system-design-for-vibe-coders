@@ -76,7 +76,7 @@ flowchart LR
 - *النطاق (Scope):* عيادة (clinic) أو نادٍ رياضي (gym) أو مختبر جامعي (university lab) بمواعيد محدودة (limited slots)؛ تسجيل دخول (login)، ودورا العضو والمسؤول (member and admin roles)، والحجز والإلغاء (book and cancel)، وتأكيد بالبريد الإلكتروني (email confirmation).
 - *معيار الإنتاج (Production bar):* قاعدة بيانات علائقية (relational database) مع ترحيلات (migrations)، واختبارات لقواعد الحجز (tests for the booking rules)، وتكامل مستمر (CI)، ونشر (deployed) مع متتبّع أخطاء (error tracker) وفحص توافر (uptime check)، ولا أسرار في المستودع (no secrets in the repository).
 - *السؤال الصعب (Hard question):* «شخصان يضغطان زر "احجز" ('Book') لآخر موعد في اللحظة نفسها. ماذا يحدث؟ ⁦(What happens?)⁩».
-- *مسار المكتبة (Library path):* [*تصميم الأنظمة لمبرمجي الإيحاء (System Design for Vibe Coders)*، الدرس 2.6 — نقرتان في وقت واحد: حالات التسابق والمعاملات والكتابات متساوية الأثر (Two clicks at once: races, transactions, and idempotent writes)](../vibe/index.ar.html#l2-6)؛ [*لبنات بناء البرمجيات كخدمة (SaaS Building Blocks)*، الدرس 2.1 — طبقة البيانات: Postgres وأدوات ORM والترحيلات والبيانات الأولية (The data layer: Postgres, ORMs, migrations and seeds)](../saas/index.ar.html#/2.1).
+- *مسار المكتبة (Library path):* [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 2.6 — نقرتان في وقت واحد: حالات التسابق والمعاملات والكتابات متساوية الأثر (Two clicks at once: races, transactions, and idempotent writes)](../vibe/index.ar.html#l2-6)؛ [*لبنات بناء البرمجيات كخدمة (SaaS Building Blocks)*، الدرس 2.1 — طبقة البيانات: Postgres وأدوات ORM والترحيلات والبيانات الأولية (The data layer: Postgres, ORMs, migrations and seeds)](../saas/index.ar.html#/2.1).
 
 **مهندس تطبيقات الذكاء الاصطناعي (AI application engineer) — مساعد للإجابة عن الأسئلة من مستندات يحق لك استخدامها (a question-answering assistant over documents you may use)**
 - *النطاق (Scope):* مجموعة نصوص عامة ومسموح باستخدامها (public, permitted text set)، مثل اللوائح المنشورة لجامعتك (published regulations) أو توثيق مشروع مفتوح المصدر (open-source project's documentation)؛ إجابات مع روابط إلى المصادر (links to sources)، وعبارة «لا أعرف ('I don't know')» حين لا تكون الإجابة موجودة.
@@ -94,7 +94,7 @@ flowchart LR
 - *النطاق (Scope):* خذ تطبيقًا صغيرًا (small application) (تطبيقك، أو تطبيقًا مفتوح المصدر) وضعه في حاوية (containerise it)، وعرّف بنيته التحتية كشيفرة (infrastructure as code)، وابنِ خط نشر (pipeline) ينشر إلى بيئة التجهيز (staging) ثم إلى الإنتاج (production).
 - *معيار الإنتاج (Production bar):* مراقبة (monitoring) مع هدف مستوى خدمة مكتوب واحد (one written service-level objective, SLO)، ودليل تشغيل (runbook)، وتراجع تدرّبت عليه (practised rollback)، وتقرير «يوم اختبار» ('game day' write-up) عن شيء عطّلته عمدًا (broke on purpose)، وملاحظة عن التكلفة (cost note) مع تفعيل تنبيهات الميزانية (budget alerts).
 - *السؤال الصعب (Hard question):* «الإصدار الجديد (new release) يفشل لدى بعض المستخدمين. اشرح لي ما تفعله في الدقائق العشر التالية ⁦(Walk me through the next ten minutes.)⁩».
-- *مسار المكتبة (Library path):* [*السحابة وDevOps: من الصفر إلى الاحتراف (Cloud & DevOps: Zero to Hero)*، الوحدة 4 — التكامل والنشر المستمران والإصدارات (CI/CD and releases)](../cloud/index.ar.html#/4.1)؛ [*تصميم الأنظمة لمبرمجي الإيحاء (System Design for Vibe Coders)*، الدرس 4.4 — التراجع وبيئة التجهيز وبوابات الإصدار (Rollback, staging, and release gates)](../vibe/index.ar.html#l4-4).
+- *مسار المكتبة (Library path):* [*السحابة وDevOps: من الصفر إلى الاحتراف (Cloud & DevOps: Zero to Hero)*، الوحدة 4 — التكامل والنشر المستمران والإصدارات (CI/CD and releases)](../cloud/index.ar.html#/4.1)؛ [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 4.4 — التراجع وبيئة التجهيز وبوابات الإصدار (Rollback, staging, and release gates)](../vibe/index.ar.html#l4-4).
 
 **مهندس الأمن (Security engineer) — أمّن تطبيقًا من طرف إلى طرف (secure an application end to end)**
 - *النطاق (Scope):* تطبيقك الخاص، أو أحد المشاريع السابقة: نموذج تهديدات (threat model) مع مخطط تدفق البيانات (data-flow diagram)، واختبارات التحكم في الوصول (access-control tests)، وخط نشر (pipeline) فيه فحص الأسرار (secret scanning) والتحليل الساكن (static analysis) وفحوص الاعتماديات (dependency checks).
@@ -110,11 +110,11 @@ flowchart LR
 
 **الاتساع حول العمق (Breadth around depth).** الشكل الجيد هو مشروع تخرّج واحد (one capstone) مع قطعة أو قطعتين أصغر تُظهران التنوّع (show range)، مثل مساهمة في مشروع مفتوح المصدر (open-source contribution) (الدرس 3.3).
 
-**البناء بوكلاء الذكاء الاصطناعي، علنًا (Building with AI agents, in the open).** استخدام وكلاء البرمجة بالذكاء الاصطناعي (AI coding agents) أمر طبيعي؛ أما إخفاؤه فليس كذلك. يريد المراجعون حُكمك (your judgement): المواصفات التي أعطيتها للوكيل (the spec you gave the agent)، والاختبارات التي تحققت من عمله (the tests that checked its work)، والأخطاء التي اكتشفتها (the bugs you caught). وقسم قصير بعنوان «كيف بُني هذا ('How this was built')» (الدرس 3.2) يذكر الأجزاء التي ساعد فيها الوكيل (agent-assisted) وكيف تحققت منها (how you verified them) أفضل من التظاهر بأنك كتبت كل شيء بنفسك. انظر [*تصميم الأنظمة لمبرمجي الإيحاء (System Design for Vibe Coders)*، الدرس 9.4 — التحقق قبل الإنجاز (Verification before completion)](../vibe/index.ar.html#l9-4).
+**البناء بوكلاء الذكاء الاصطناعي، علنًا (Building with AI agents, in the open).** استخدام وكلاء البرمجة بالذكاء الاصطناعي (AI coding agents) أمر طبيعي؛ أما إخفاؤه فليس كذلك. يريد المراجعون حُكمك (your judgement): المواصفات التي أعطيتها للوكيل (the spec you gave the agent)، والاختبارات التي تحققت من عمله (the tests that checked its work)، والأخطاء التي اكتشفتها (the bugs you caught). وقسم قصير بعنوان «كيف بُني هذا ('How this was built')» (الدرس 3.2) يذكر الأجزاء التي ساعد فيها الوكيل (agent-assisted) وكيف تحققت منها (how you verified them) أفضل من التظاهر بأنك كتبت كل شيء بنفسك. انظر [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 9.4 — التحقق قبل الإنجاز (Verification before completion)](../vibe/index.ar.html#l9-4).
 
 **المشاريع الجماعية (Team projects).** المشروع الجماعي (group project) إثبات قوي إن كنت دقيقًا في تحديد دورك (precise about your part): «بنيتُ مهمة التسوية (reconciliation job) واختباراتها؛ وبنى زملائي الواجهة الأمامية (front end)» عبارة صادقة ويمكن التحقق منها في سجل الإيداعات (commit history).
 
-**الميزة المحلية (Local advantage).** في سوق الخليج (Gulf market)، يبرز التعامل السليم مع النص العربي (Arabic text) والتخطيط من اليمين إلى اليسار (right-to-left layout)، أو العناية على الطريقة المصرفية (banking-style care) بحماية البيانات (data protection) وسجلات التدقيق (audit trails). انظر [*تصميم الأنظمة لمبرمجي الإيحاء (System Design for Vibe Coders)*، الدرس 11.2 — التدويل والكتابة من اليمين إلى اليسار (Internationalization and RTL)](../vibe/index.ar.html#l11-2).
+**الميزة المحلية (Local advantage).** في سوق الخليج (Gulf market)، يبرز التعامل السليم مع النص العربي (Arabic text) والتخطيط من اليمين إلى اليسار (right-to-left layout)، أو العناية على الطريقة المصرفية (banking-style care) بحماية البيانات (data protection) وسجلات التدقيق (audit trails). انظر [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 11.2 — التدويل والكتابة من اليمين إلى اليسار (Internationalization and RTL)](../vibe/index.ar.html#l11-2).
 
 ## 🧰 الأدوات (The toolkit)
 | المورد أو الأداة أو النموذج (Resource, tool or template) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |
@@ -235,8 +235,8 @@ flowchart LR
 - The Twelve-Factor App — https://12factor.net/
 - OWASP Juice Shop — https://owasp.org/www-project-juice-shop/
 - توثيق GitHub Actions (GitHub Actions documentation) — https://docs.github.com/en/actions
-- [*تصميم الأنظمة لمبرمجي الإيحاء (System Design for Vibe Coders)*، الدرس 2.6 — نقرتان في وقت واحد: حالات التسابق والمعاملات والكتابات متساوية الأثر (Two clicks at once: races, transactions, and idempotent writes)](../vibe/index.ar.html#l2-6)
-- [*تصميم الأنظمة لمبرمجي الإيحاء (System Design for Vibe Coders)*، الدرس 9.4 — التحقق قبل الإنجاز (Verification before completion)](../vibe/index.ar.html#l9-4)
+- [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 2.6 — نقرتان في وقت واحد: حالات التسابق والمعاملات والكتابات متساوية الأثر (Two clicks at once: races, transactions, and idempotent writes)](../vibe/index.ar.html#l2-6)
+- [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 9.4 — التحقق قبل الإنجاز (Verification before completion)](../vibe/index.ar.html#l9-4)
 
 ---
 
@@ -313,7 +313,7 @@ make test              # 42 tests, about 20 seconds
 1. **العنوان ووصف من سطر واحد (Title and one-line description)**، والمشكلة أولًا (problem first).
 2. **لمن هو والمشكلة التي يحلّها (Who it is for and the problem it solves).**
 3. **العرض التجريبي (Demo)**: رابط مباشر (live link)، أو لقطات شاشة (screenshots) أو صورة GIF قصيرة، وفيديو مدته دقيقتان إلى ثلاث.
-4. **كيف يعمل (How it works)**: مخطط معماري بسيط (simple architecture diagram) وفقرة. انظر [*تصميم الأنظمة لمبرمجي الإيحاء (System Design for Vibe Coders)*، الدرس 1.1 — ارسم الصناديق قبل أن يكتب الوكيل الشيفرة (Draw the boxes before the agent writes the code)](../vibe/index.ar.html#l1-1).
+4. **كيف يعمل (How it works)**: مخطط معماري بسيط (simple architecture diagram) وفقرة. انظر [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 1.1 — ارسم الصناديق قبل أن يكتب الوكيل الشيفرة (Draw the boxes before the agent writes the code)](../vibe/index.ar.html#l1-1).
 5. **شغّله محليًا (Run it locally)**: أوامر تعمل على جهاز نظيف (clean machine)، مع ملف `.env.example` فيه قيم بديلة (placeholder values).
 6. **الاختبارات والجودة (Tests and quality)**: كيف تُشغَّل الاختبارات، وما الذي تغطيه، وحالة التكامل المستمر (CI status).
 7. **القرارات والمفاضلات (Decisions and trade-offs)**: من ثلاثة إلى خمسة اختيارات وأسبابها، مع روابط إلى سجلات القرارات (decision records).
@@ -326,7 +326,7 @@ make test              # 42 tests, about 20 seconds
 2. ثم نظّف السجل (clean the history) إن أردت، وافحص الاستخدام والفوترة (usage and billing) بحثًا عن أي شيء لم تفعله أنت.
 3. امنع التكرار (prevent a repeat): ضع `.env` في `.gitignore`، وأودِع ملف `.env.example`، وأضف ماسحًا للأسرار (secret scanner) مثل **gitleaks** بوصفه خطّاف ما قبل الإيداع (pre-commit hook).
 
-انظر [*تصميم الأنظمة لمبرمجي الإيحاء (System Design for Vibe Coders)*، الدرس 5.7 — الأسرار والتهيئة: مفاتيح المملكة (Secrets and configuration: the keys to the kingdom)](../vibe/index.ar.html#l5-7) و[*أمن الذكاء الاصطناعي وأمن التطبيقات: من الصفر إلى الاحتراف (Secure AI & Application Security: Zero to Hero)*، الدرس 5.2 — إدارة الأسرار: المفاتيح والرموز وأين تتسرّب (Secrets management: keys, tokens and where they leak)](../secai/index.ar.html#/5.2).
+انظر [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 5.7 — الأسرار والتهيئة: مفاتيح المملكة (Secrets and configuration: the keys to the kingdom)](../vibe/index.ar.html#l5-7) و[*أمن الذكاء الاصطناعي وأمن التطبيقات: من الصفر إلى الاحتراف (Secure AI & Application Security: Zero to Hero)*، الدرس 5.2 — إدارة الأسرار: المفاتيح والرموز وأين تتسرّب (Secrets management: keys, tokens and where they leak)](../secai/index.ar.html#/5.2).
 
 ### 🟡 التعمق أكثر (Going deeper)
 
@@ -400,7 +400,7 @@ make test              # 42 tests, about 20 seconds
 | الذكاء الاصطناعي والنزاهة (AI and integrity) | غير مُفصَح عنه، ولا يستطيع الشرح (undisclosed, cannot explain) | مُفصَح عنه، ومشروح جزئيًا (disclosed, partly explained) | مُفصَح عنه، مع دليل على التحقق (disclosed, with verification evidence) |
 | النظافة (Hygiene) | أسرار أو بيانات شخصية مُودَعة (secrets or personal data committed) | مشكلات بسيطة (minor issues) | نظيف، و`.env.example`، وترخيص (clean, licence) |
 
-حصل مشروع تخرّج ريم على 3 من 14 قبل إعادة الكتابة. فبدّلت المفتاح المسرَّب أولًا (rotated the leaked key first)، ثم أعادت كتابة ملف README بترتيب القالب (template order)، وسجّلت عرضًا تجريبيًا مدته ثلاث دقائق (three-minute demo)، وأضافت سجل قرار (ADR) عن طريقة تخزين الجلسات (how sessions are stored)، وكتبت قسم «كيف بُني هذا ("How this was built")» يعدّد خطأين كتبهما الوكيل (two agent-written bugs) واكتشفتهما، وفتحت تغييراتها الثلاثة التالية بوصفها طلبات دمج (pull requests). المراجعة الثانية: 12 من 14. وتغيّرت ملاحظات طارق للمقابلة (interview notes) من «تحقّق مما إذا كانت هي من كتب هذا ("check whether she wrote this")» إلى «اسألها عن سجل القرار 002 ("ask about ADR 002.")».
+حصل مشروع تخرّج ريم على 3 من 14 قبل إعادة الكتابة. فبدّلت المفتاح المسرَّب أولًا (rotated the leaked key first)، ثم أعادت كتابة ملف README بترتيب القالب (template order)، وسجّلت عرضًا تجريبيًا مدته ثلاث دقائق (three-minute demo)، وأضافت سجل قرار (ADR) عن طريقة تخزين الجلسات (how sessions are stored)، وكتبت قسم «كيف بُني هذا ("How this was built")» يعدّد خطأين كتبهما الوكيل (two agent-written bugs) واكتشفتهما، وفتحت تغييراتها الثلاثة التالية بوصفها طلبات دمج (pull requests). المراجعة الثانية: 12 من 14. وتغيّرت ملاحظات طارق للمقابلة (interview notes) من «تحقّق مما إذا كانت هي من كتب هذا ("check whether she wrote this")» إلى «اسألها عن سجل القرار 002 ⁦("ask about ADR 002.")⁩».
 
 ## 🛠️ التمارين (Exercises)
 - 🟢 أصلح ملفك الشخصي (fix your profile): نبذة من سطر واحد (one-line bio) تسمّي دورك المستهدف، ومن أربعة إلى ستة مستودعات مثبّتة (pinned repositories) ومشروع تخرّجك أولها، والواجبات الدراسية ملغى تثبيتها أو مؤرشفة (unpinned or archived)، وملف README للملف الشخصي (profile README) من ثلاثة أسطر. *يكتمل عندما (Done when):* يستطيع صديق فتح ملفك الشخصي، وفي غضون 30 ثانية، تسمية دورك المستهدف والنقر وصولًا إلى مشروع تخرّجك.
@@ -496,7 +496,232 @@ make test              # 42 tests, about 20 seconds
 - توثيق Mermaid (Mermaid documentation) — https://mermaid.js.org/
 - gitleaks — https://github.com/gitleaks/gitleaks
 - Choose a License — https://choosealicense.com/
-- [*تصميم الأنظمة لمبرمجي الإيحاء (System Design for Vibe Coders)*، الدرس 5.7 — الأسرار والتهيئة: مفاتيح المملكة (Secrets and configuration: the keys to the kingdom)](../vibe/index.ar.html#l5-7)
+- [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 5.7 — الأسرار والتهيئة: مفاتيح المملكة (Secrets and configuration: the keys to the kingdom)](../vibe/index.ar.html#l5-7)
 
 ---
 
+# 3.3 — الخبرة قبل وظيفتك الأولى (Experience before your first job): التدريب العملي والمصادر المفتوحة والعمل الحر والهاكاثونات والمسابقات (internships, open source, freelancing, hackathons and competitions)
+*المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 3.1، 3.2* · *الخطوة (Step): Build, Prove*
+
+## ⚡ الدرس في دقيقة (In 60 seconds)
+- عبارة «مستوى المبتدئين، مع اشتراط سنة خبرة واحدة ("Entry-level, one year of experience required")» محبطة لكنها شائعة. يمكنك اكتساب خبرة حقيقية (real experience) قبل وظيفتك الأولى: **التدريب العملي (internships)، والمساهمات في المصادر المفتوحة (open-source contributions)، والعمل الحر أو التطوعي (freelance or volunteer work)، والهاكاثونات (hackathons)، والمسابقات (competitions)، والبحث (research) والتدريس (teaching).**
+- القاعدة الأهم (the rule that matters most): تُحتسب الخبرة حين **يعتمد شخص آخر على عملك (someone else depended on your work)**: مشرف مشروع (maintainer) دمجه، أو عميل (client) استخدمه، أو فريق أطلقه (team shipped it)، أو حَكَم قيّمه (judge scored it).
+- كل طريق (route) يثبت شيئًا مختلفًا. اختر وفق الإشارة التي تنقصك (signal you lack) وقيودك (constraints) (الوقت، والمال، والموقع).
+- إشارة القرار (decision cue): إن لم تستطع فعل إلا شيء واحد في الأسابيع الثمانية القادمة، فاختر الطريق الذي يضيف إشارة لا يُظهرها مشروع تخرّجك (capstone) (الدرس 3.1) بالفعل.
+- أكبر فخ (biggest trap): الكمّ قليل الجهد (low-effort volume). فإغراق مشاريع المصادر المفتوحة (spamming open-source projects) بطلبات دمج تافهة أو مولّدة بالذكاء الاصطناعي (trivial or AI-generated pull requests)، أو جمع شهادات الهاكاثونات (hackathon certificates) عن عروض تجريبية غير مكتملة (unfinished demos)، قد يضرّ أكثر مما ينفع.
+
+## 🧭 لماذا يهم (Why it matters)
+يجد محمد وظيفة مطوّر مبتدئ (junior developer role) في سديم باي (Sadeem Pay)، وهي شركة ناشئة في التقنية المالية (fintech startup) في الدوحة، تطلب «سنة إلى سنتين من الخبرة ("one to two years of experience")». فيكاد يتجاوزها. فليست لديه شهادة في هذا المجال (no degree in the field) ولا وظيفة مطوّر في سيرته الذاتية (CV)، ويرى سنواته الثماني في إدارة نادٍ رياضي (managing a gym) فجوة عليه تبريرها (gap to explain). أما خالد، الذي يراجع سيرته الذاتية في جلسة إرشاد (mentoring session)، فيخالفه الرأي: «بنيتَ نظام حجز (booking system) استخدمه عشرون عضوًا، وأدرتَ العمليات (ran operations)، وتعاملتَ مع عملاء حقيقيين (real customers). هذه خبرة. كل ما في الأمر أنك لم تكتبها بوصفها خبرة (You just haven't written it as experience)».
+
+ولدى هدى القلق المعاكس. لديها شهادة قوية (strong degree) لكنها لم تعمل قط إلا وحدها على الواجبات الدراسية (coursework) ودفاتر Kaggle (Kaggle notebooks). وتريد إثباتًا على أنها قادرة على العمل في قاعدة شيفرة شخص آخر (someone else's codebase)، وتلقّي المراجعة (take review)، وإنهاء الأشياء مع فريق (finish things with a team). ويريد يوسف دليلًا لأدوار السحابة (cloud roles) لكنه لا يملك مالًا لفاتورة سحابية كبيرة (large cloud bill). كلٌّ منهم يحتاج إلى خبرة، وكلٌّ منهم يحتاج إلى طريق مختلف إليها. وهذا الدرس هو الخريطة (the map).
+
+## 📐 كيف يعمل (How it works)
+
+### 🟢 الأساسيات (The essentials)
+
+**ما تعنيه «الخبرة» لفريق التوظيف (What "experience" means to a hiring team).** خلف اشتراط الخبرة (experience requirement)، يريد فريق التوظيف (hiring team) عادةً دليلًا على أنك عملت مع شيفرة الآخرين وتوقعاتهم (other people's code and other people's expectations)؛ وتلقّيت ملاحظات (feedback) وعملت بها؛ وأنهيت شيئًا اعتمد عليه أحد (something someone relied on)؛ وتصرّفت بمهنية حين ساءت الأمور (behaved professionally when things went wrong). والوظيفة المدفوعة (paid job) إحدى طرق إظهار ذلك، لا الطريقة الوحيدة. ويتعامل كثير من الفرق مع اشتراطات مثل «سنة إلى سنتين ("one to two years")» بوصفها دليلًا إرشاديًا لا قاعدة صارمة (a guide rather than a hard rule)، فإن كنت تطابق معظم الإعلان (match most of an advert) وتستطيع إظهار هذا الدليل، فتقدّم (apply) (يغطي الدرس 4.3 أين وكيف).
+
+**الطرق في لمحة (The routes at a glance).**
+
+| الطريق (Route) | ما يثبته على أفضل وجه (What it proves best) | التكلفة المعتادة (Typical cost) | كيف تُظهره (How to show it) |
+|---|---|---|---|
+| **التدريب العملي (Internship)** | العمل داخل فريق حقيقي، بعملية حقيقية (real team, with real process) | الوقت؛ وأحيانًا الانتقال إلى مكان آخر (relocation) | بند في السيرة الذاتية (CV entry)، وتزكية من المدير (manager reference)، وعرض مكتوب خالٍ من التفاصيل السرية (write-up without confidential details) |
+| **المساهمة في المصادر المفتوحة (Open-source contribution)** | قراءة قاعدة شيفرة كبيرة غير مألوفة (large unfamiliar codebase)، وتلقّي مراجعة الشيفرة (code review)، والتعاون العلني (public collaboration) | الوقت فقط (time only) | روابط إلى طلبات دمج مدموجة (merged pull requests) ونقاشات القضايا (issue discussions) |
+| **مشروع حرّ أو تطوعي (Freelance or volunteer project)** | العمل مع عميل حقيقي (real client): تحديد النطاق (scoping)، والمواعيد النهائية (deadlines)، والتسليم (handover) | الوقت؛ وبعض الأعمال الإدارية (some admin) | تزكية من العميل (client reference)، ونظام يعمل مباشرة (live system)، ودراسة حالة (case study) |
+| **الهاكاثون (Hackathon)** | السرعة (speed)، والعمل الجماعي (teamwork)، وتحديد النطاق تحت الضغط (scoping under pressure) | عطلة نهاية أسبوع (a weekend) | مشروع مكتمل ومنشور (finished, deployed project) ودورك المحدد فيه (your specific part) |
+| **المسابقة (Competition)** (الخوارزميات، والبيانات، والأمن (algorithms, data, security)) | حلّ المشكلات ضمن قواعد وحدود زمنية (problem-solving under rules and time limits) | الوقت | الترتيب أو النتائج (ranking or results)، مع عرض مكتوب لطريقتك (write-up of your approach) |
+| **مساعد بحث أو تدريس (Research or teaching assistant)** | العمق (depth)، والصرامة (rigour)، وشرح الأفكار للآخرين (explaining ideas to others) | الوقت؛ وغالبًا ما يكون مدفوعًا (often paid) | تزكية من المشرف (supervisor reference)، وورقة بحثية (paper)، ومواد المقرر (course materials) |
+| **المسيرة المهنية السابقة (Previous career)** | العادات المهنية (professional habits)، والمعرفة بالمجال (domain knowledge)، والتعامل مع العملاء (dealing with customers) | مكتسبة بالفعل (already earned) | بنود في السيرة الذاتية مكتوبة بوصفها نتائج (CV entries written as outcomes)، مرتبطة بالعمل التقني (linked to technical work) |
+
+**اختيار طريقك (Choosing your route).** ابدأ من الإشارة التي تنقصك (signal you are missing)، ثم افحص قيودك (check your constraints):
+
+```mermaid
+flowchart TD
+    A["ما الذي لا يُظهره مشروع تخرّجي بعد؟"] --> B{"العمل في فريق أو في شيفرة الآخرين؟"}
+    B -->|"نعم"| C["المصادر المفتوحة أو التدريب العملي"]
+    B -->|"لا"| D{"عميل أو مستخدم حقيقي؟"}
+    D -->|"نعم"| E["مشروع حرّ أو تطوعي"]
+    D -->|"لا"| F{"إشارة السرعة أم حلّ المشكلات؟"}
+    F -->|"السرعة والعمل الجماعي"| G["هاكاثون، ثم أكمله"]
+    F -->|"الخوارزميات أو البيانات أو الأمن"| H["مسابقة مع عرض مكتوب"]
+    C --> I["سجّله في وثيقة إنجازاتك"]
+    E --> I
+    G --> I
+    H --> I
+```
+
+**احتفظ بوثيقة إنجازات (Keep a brag document).** **وثيقة الإنجازات (brag document)** قائمة خاصة متجدّدة (private running list) بما فعلته، مع التواريخ والروابط والنتائج (dates, links and outcomes). حدّثها أسبوعيًا (update it weekly). وحين تكتب سيرتك الذاتية (CV) (الدرس 4.1) أو تُعدّ قصص المقابلات (interview stories) (الدرس 5.1)، ستستقي منها بدلًا من ذاكرتك. ويبدو البند الواحد هكذا:
+
+```text
+2026-09-14  Open source: fixed date parsing for Arabic month names in <library>.
+            Issue #<n>, PR #<n> merged after two rounds of review.
+            Learned: the project's test fixtures; how to write a failing test first.
+            Proof: <link to merged PR>
+```
+
+### 🟡 التعمق أكثر (Going deeper)
+
+**التدريب العملي (Internships).** التدريب العملي هو الطريق الأكثر مباشرة، لأنه مصمَّم بوصفه تجربة أولية للطرفين (trial run for both sides).
+- *التوقيت (Timing):* كثيرًا ما يوظّف كبار أصحاب العمل (large employers) قبل بدء التدريب العملي بأشهر عديدة (many months before). افحص صفحة الوظائف (careers page) لدى كل صاحب عمل مبكرًا في العام الدراسي (early in the academic year)، واطلب من مركز الخدمات المهنية في جامعتك (university career centre) تقويمه (calendar).
+- *أين (Where):* تدير البنوك (banks)، وشركات الطاقة (energy companies)، وشركات الاتصالات (telecoms)، والجهات الحكومية (government agencies)، والمكاتب الإقليمية للشركات متعددة الجنسيات (multinationals' regional offices) برامج تدريب عملي وبرامج للخرّيجين (graduate programmes) في أنحاء الخليج؛ أما الشركات الناشئة (startups) فتوظّف المتدرّبين بشكل أقل رسمية، وغالبًا عبر شبكات العلاقات (through networks) (الدرس 4.2). وبعض البرامج مرتبط بخطط توطين القوى العاملة (workforce nationalisation schemes) مثل التقطير (Qatarization) في قطر أو التوطين الإماراتي (Emiratisation) في الإمارات، وقد تكون مفتوحة للمواطنين فقط (open only to citizens) أو لها قواعدها الخاصة.
+- *إن كنت طالبًا أو خرّيجًا دوليًا (If you are an international student or graduate):* تختلف قواعد العمل أثناء الدراسة وبعدها (rules on working during and after study) من بلد إلى آخر وتتغيّر. تحقّق من القواعد الحالية مع جامعتك ومع المصادر الحكومية الرسمية (official government sources) قبل أن تتقدّم.
+- *اجعله يُحتسب (Making it count):* اتفق على مشروع ذي نتيجة مرئية (project with a visible result)، واطلب ملاحظات في منتصف المدة (feedback halfway through)، واكتب وثيقة إنجازاتك أسبوعيًا، واسأل في النهاية ما إذا كان مديرك سيقبل أن يكون مُزكّيًا لك (act as a reference).
+
+**المصادر المفتوحة (Open source).** المساهمة في مشروع مفتوح المصدر قائم (existing open-source project) هي أفضل طريق لإظهار أنك قادر على العمل في قاعدة شيفرة لم تصمّمها (codebase you did not design)، مع أشخاص لم تلتقهم قط. وهذا مسار معقول (sensible path):
+1. اختر مشروعًا **تستخدمه بالفعل (you already use)**، فيه نشاط حديث (recent activity) ومشرفون متجاوبون (responsive maintainers).
+2. اقرأ ملف `CONTRIBUTING` الخاص به، ومدوّنة السلوك (code of conduct)، وأي **سياسة بشأن المساهمات المولّدة بالذكاء الاصطناعي (policy on AI-generated contributions)**. فلدى بعض المشاريع الآن قواعد صريحة (explicit rules).
+3. ابدأ صغيرًا (start small): أعد إنتاج خلل مُبلَّغ عنه (reproduce a reported bug)، أو حسّن التوثيق (improve documentation)، أو أضف اختبارًا ناقصًا (add a missing test). وتشير تسميات مثل "good first issue" («قضية أولى جيدة») إلى مهام خصّصها المشرفون للقادمين الجدد (newcomers).
+4. علّق على القضية (comment on the issue) قبل أن تبدأ، حتى لا يعمل شخصان على الشيء نفسه.
+5. افتح طلب دمج صغيرًا ومركّزًا (small, focused pull request) يتبع أسلوب المشروع (project's style)، ويشرح التغيير، ويتضمن اختبارًا.
+6. استجب للمراجعة بأدب وسرعة (politely and quickly). فمحادثة المراجعة نفسها دليل (the review conversation itself is evidence).
+
+يدفع **Google Summer of Code** (صيف البرمجة من Google) للمساهمين (pays contributors) مقابل العمل على مشروع مع منظمة مصادر مفتوحة ومرشد (mentor)؛ وقد اتسعت شروط الأهلية (eligibility) في السنوات الأخيرة، فتحقّق من القواعد الحالية. ويقدّم **Outreachy** تدريبًا عمليًا مدفوعًا عن بُعد في المصادر المفتوحة (paid, remote open-source internships) لمن يواجهون نقص التمثيل أو التحيّز المنهجي (under-representation or systemic bias) في قطاع التقنية. ويشجّع **Hacktoberfest**، الذي يُقام كل أكتوبر، على المساهمات؛ وبعد أن أبلغ المشرفون عن سيل من طلبات الدمج منخفضة الجودة (floods of low-quality pull requests) في عام 2020، غيّر المنظمون القواعد بحيث تختار المشاريع المشاركة طوعًا (projects opt in). فاتخذ من هذا التاريخ تحذيرًا (treat that history as a warning).
+
+**العمل الحر والتطوعي (Freelance and volunteer work).** بناء شيء لعميل حقيقي (real client)، مثل مشروع تجاري صغير (small business)، أو جمعية خيرية (charity)، أو لجنة مسجد (mosque committee)، أو قسم جامعي (university department)، يثبت ما لا يستطيع أي مقرر إثباته: تحويل طلب مبهم (vague request) إلى برمجيات عاملة (working software) والوفاء بالوعد (keeping a promise). توجد منصات للعمل الحر المدفوع (paid freelance marketplaces)، لكن العمل بمستوى المبتدئين (entry-level work) عليها شديد التنافس وقت كتابة هذا النص (2026)، لذلك تكون العلاقات الشخصية والتطوع (personal networks and volunteering) في الغالب بداية أسرع. احمِ نفسك والعميل:
+- **اكتب النطاق (Write down the scope)**: ما الذي ستسلّمه (what you will deliver)، ومتى، وما الخارج عن النطاق (out of scope)، ومن يملك الشيفرة (who owns the code)، وماذا يحدث بعد التسليم (after handover).
+- **اجعل تشغيل النظام بسيطًا (Keep the system simple to run).** فضّل الخدمات المُدارة (managed services) التي يستطيع العميل الاستمرار في دفع اشتراكها من دونك.
+- **لا تتعامل مع بيانات البطاقات بنفسك (Do not handle card details yourself).** استخدم صفحة الدفع المستضافة (hosted checkout) لدى مزوّد دفع راسخ (established payment provider).
+- **تعامل مع البيانات الشخصية بجدية (Treat personal data seriously).** اجمع الحد الأدنى (collect the minimum)، وأمّنه، واتفقوا على من يتحمّل المسؤولية (who is responsible). في قطر، ينطبق القانون رقم 13 لسنة 2016 بشأن حماية البيانات الشخصية (Law No. 13 of 2016 on personal data protection) على معالجة البيانات الشخصية (processing personal data)؛ وتوجد قوانين مماثلة في أنحاء المنطقة وفي الاتحاد الأوروبي (EU).
+- **اطلب الإذن (Ask permission)** قبل أن تعرض العمل علنًا (الدرس 3.2).
+
+**الهاكاثونات (Hackathons).** الهاكاثونات جيدة للسرعة (speed) والعمل الجماعي (teamwork) والتعرّف إلى الناس، ومنهم مهندسو الجهات الراعية (sponsors' engineers) الذين يوظّفون أحيانًا. ونقطة ضعفها أن كثيرًا من المشاريع يُهجر ليلة الأحد (abandoned on Sunday night). وتأتي القيمة مما تفعله بعد ذلك (what you do next): أكمل الميزة الأساسية (core feature)، وانشرها (deploy it)، وأضف اختبارات وملف README، واكتب عرضًا لدورك (write up your part). واقرأ قواعد الفعالية بشأن ملكية الشيفرة (who owns the code)، خصوصًا في الفعاليات التي ترعاها الشركات (corporate-sponsored events). تُدرج Major League Hacking (MLH) كثيرًا من هاكاثونات الطلاب (student hackathons)؛ كما تنظّمها في الخليج الجامعات والبنوك وشركات الاتصالات وبرامج الابتكار الحكومية (government innovation programmes).
+
+**المسابقات (Competitions).**
+- *الخوارزميات (Algorithms):* تبني مسابقات مثل **ICPC** (المسابقة الدولية للبرمجة الجامعية (International Collegiate Programming Contest)) ومواقع التحكيم الإلكترونية (online judges) مهارة حلّ المشكلات (problem-solving) التي تختبرها مقابلات هياكل البيانات والخوارزميات (data-structures-and-algorithms interviews) (الدرس 5.2). والترتيب الإقليمي (regional ranking) إشارة معترف بها (recognised signal) لأدوار البرمجيات.
+- *البيانات (Data):* تعلّم مسابقات **Kaggle** النمذجة في ظل مقياس واضح (modelling under a clear metric). ويقدّر المراجعون عرضًا مكتوبًا صادقًا لطريقتك (honest write-up of your approach)، بما في ذلك ما لم ينجح، أكثر من موقعك في لوحة المتصدّرين (leaderboard position). واقرنها بعادات خطوط البيانات (pipeline habits) من الدرس 3.1.
+- *الأمن (Security):* تبني مسابقات التقاط العلم (capture-the-flag, CTF)، مثل **picoCTF** المناسبة للمبتدئين (beginner-friendly)، مهارات عملية (practical skills)؛ ويُدرج موقع CTFtime الفعاليات. ولا تهاجم أبدًا إلا الأنظمة التي توفّرها المسابقة (systems the contest provides). أما برامج الإفصاح المسؤول ومكافآت الثغرات (responsible-disclosure and bug-bounty programmes) فخطوة لاحقة، ضمن نطاقها المنشور حصرًا (strictly within their published scope)؛ انظر [*أمن الذكاء الاصطناعي وأمن التطبيقات: من الصفر إلى الاحتراف (Secure AI & Application Security: Zero to Hero)*، الدرس 10.3 — إدارة الثغرات والإفصاح عنها ومكافآت الثغرات (Vulnerability management, disclosure and bug bounties)](../secai/index.ar.html#/10.3).
+
+**البحث والتدريس (Research and teaching).** تُظهر وظائف مساعد البحث (research assistant posts) العمق والصرامة (depth and rigour)، وهي مفيدة خصوصًا لأدوار علم البيانات والذكاء الاصطناعي (data science and AI roles)؛ والورقة القصيرة أو الملصق العلمي (short paper or poster) إثبات قوي. ويُظهر عمل مساعد التدريس (teaching assistant work) أنك قادر على شرح الأفكار (explain ideas)، وهو ما يختبره من يجرون المقابلات باستمرار. وكلاهما يأتي مع مشرف (supervisor) يمكن أن يكون مُزكّيًا لك (act as a reference).
+
+### 🔴 نظرة الخبير (Expert view)
+
+**المسيرة المهنية السابقة خبرة (A previous career is experience).** كثيرًا ما يُخفي المتحوّلون مهنيًا (career-switchers) ماضيهم. وقد شملت سنوات محمد الثماني في النادي الرياضي جدولة الموظفين (scheduling staff)، ومعالجة الشكاوى (handling complaints)، وتشغيل نظام مكتب الاستقبال (front desk system)، وهذا كله معرفة بالمجال (domain knowledge)، وتعاطف مع العملاء (customer empathy)، وانضباط تشغيلي (operational discipline). وحين تُكتب بوصفها نتائج (written as outcomes) وتُربط بنظام الحجز الخاص به، تصبح السبب الذي قد يجعل فريقًا يختاره على خرّيج بلا تاريخ عمل (no work history). وينطبق الأمر نفسه على محاسب ينتقل إلى البيانات (accountant moving into data) أو فنّي شبكات ينتقل إلى السحابة (network technician moving into cloud).
+
+**العمق على حساب الشارات (Depth over badges).** طلب دمج مدموج واحد مع محادثة مراجعة حقيقية (one merged pull request with a real review conversation) يتفوّق على عشرين إصلاحًا لأخطاء مطبعية (typo fixes). ومشروع هاكاثون مكتمل واحد يتفوّق على خمس شهادات مشاركة (participation certificates). وقد اشتكى المشرفون علنًا من المساهمات الجماعية قليلة الجهد (bulk, low-effort contributions)، ومنها طلبات الدمج المولّدة بالذكاء الاصطناعي (AI-generated pull requests). استخدم أدوات الذكاء الاصطناعي (AI tools) لمساعدتك على فهم قاعدة الشيفرة (understand a codebase)، ثم لا تقدّم إلا تغييرات اختبرتها وتستطيع الدفاع عنها سطرًا سطرًا (defend line by line).
+
+**اجمع الطرق في قصة واحدة (Combine routes into one story).** أقوى الملفات في بداية المسيرة المهنية (strongest early-career profiles) تربط خبراتها بعضها ببعض. تساهم هدى بإصلاح (contributes a fix) في مكتبة مفتوحة المصدر لجودة البيانات (open-source data-quality library) تستخدمها في خط بيانات مشروع تخرّجها (capstone pipeline)، وتكتب عرضًا عن الاثنين. ويتطوّع يوسف لنقل موقع جمعية جامعته (university society's website) إلى منصة حاويات (container platform) مع خط نشر (pipeline) ومراقبة (monitoring) وملاحظة عن التكلفة (cost note)، فيكون ذلك في الوقت نفسه مشروع تخرّجه. فيرى المراجع اتجاهًا واحدًا (one direction)، لا نشاطًا متناثرًا (scattered activity).
+
+**طرق رخيصة إلى الخبرة السحابية (Cheap routes to cloud experience).** لا تتطلب الخبرة السحابية (cloud experience) فاتورة كبيرة. فالفئات المجانية (free tiers)، والأرصدة الطلابية (student credits)، وعناقيد Kubernetes المحلية على حاسوب محمول (local Kubernetes clusters on a laptop)، ومختبر منزلي من أجهزة قديمة (homelab of old machines) يمكن أن تغطي معظم المهارات بمستوى المبتدئين (junior-level skills)، شريطة أن تفعّل تنبيهات الميزانية (budget alerts) وتزيل الموارد بعد الانتهاء (tear things down). انظر [*السحابة وDevOps: من الصفر إلى الاحتراف (Cloud & DevOps: Zero to Hero)*، الوحدة 1 — الأسس (Foundations)](../cloud/index.ar.html#/1.2).
+
+## 🧰 الأدوات (The toolkit)
+| المورد أو الأداة أو النموذج (Resource, tool or template) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |
+|---|---|---|
+| **Brag document** (وثيقة الإنجازات) | قائمة خاصة مؤرّخة (private, dated list) بما فعلته، مع الروابط والنتائج (links and outcomes) | أسبوعيًا، بدءًا من اليوم؛ وقبل كل تحديث للسيرة الذاتية (CV update) وكل مقابلة |
+| **"good first issue" label** (تسمية «قضية أولى جيدة») | تسمية (label) يستخدمها كثير من مشاريع المصادر المفتوحة لتمييز المهام المناسبة للقادمين الجدد (tasks suited to newcomers) | العثور على مساهمة أولى (first contribution) في مشروع تستخدمه |
+| **Google Summer of Code** | برنامج يدفع للمساهمين (pays contributors) مقابل العمل على مشاريع مفتوحة المصدر مع مرشدين (with mentors) | خبرة منظَّمة مع إرشاد في المصادر المفتوحة (structured, mentored open-source experience)؛ تحقّق من شروط الأهلية الحالية (current eligibility) |
+| **Outreachy** | تدريب عملي مدفوع عن بُعد في المصادر المفتوحة (paid, remote open-source internships) لمن يعانون نقص التمثيل في قطاع التقنية (under-represented in tech) | إن كنت مؤهّلًا (eligible) وتريد تدريبًا عمليًا مع إرشاد (mentored internship) |
+| **Kaggle** | مسابقات علم البيانات (data science competitions)، ومجموعات البيانات (datasets)، والدفاتر المشتركة (shared notebooks) | التدرّب على النمذجة في ظل مقياس واضح (modelling under a clear metric)؛ ومعارض أعمال البيانات (data portfolios) |
+| **ICPC** | المسابقة الدولية للبرمجة الجامعية (International Collegiate Programming Contest)، مع جولات إقليمية (regional rounds) | حلّ المشكلات الخوارزمية (algorithmic problem-solving) بنتيجة معترف بها (recognised result) |
+| **picoCTF** | مسابقة أمنية مجانية من نوع التقاط العلم (free capture-the-flag security competition) مناسبة للمبتدئين | بدء التدرّب الأمني بشكل قانوني (starting security practice legally) |
+| **Freelance scope agreement** (اتفاقية نطاق العمل الحر) | اتفاقية مكتوبة من صفحة واحدة (one-page written agreement) للمخرجات والمواعيد والملكية والتسليم (deliverables, dates, ownership and handover) | قبل أي مشروع حرّ أو تطوعي (freelance or volunteer project) |
+
+## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
+في جلسة الإرشاد الثانية (second mentoring session) للبرنامج، يملأ كل عضو في الدفعة (cohort member) **خطة خبرة (experience plan)**: الإشارة الناقصة من معرض أعماله (signal missing from their portfolio)، والطريق (route)، والخطوة الأولى (first step)، والإثبات المتوقع بحلول الأسبوع 8 (proof expected by week 8).
+
+| الخرّيج (Graduate) | الإشارة الناقصة (Missing signal) | الطريق (Route) | الخطوة الأولى هذا الأسبوع (First step this week) | الإثبات بحلول الأسبوع 8 (Proof by week 8) |
+|---|---|---|---|---|
+| عمر | العمل في قاعدة شيفرة شخص آخر (someone else's codebase) | المصادر المفتوحة (open source): إطار الويب (web framework) الذي يستخدمه مشروع تخرّجه | قراءة CONTRIBUTING؛ وإعادة إنتاج خلل مفتوح واحد (reproduce one open bug) | طلب دمج مدموج واحد مع مراجعة (one merged pull request with review)، مع عرض مكتوب |
+| هدى | عمل بيانات إنتاجي مع فريق (production data work with a team) | مكتبة مفتوحة المصدر لجودة البيانات (open source data-quality library)، مع لوحة معلومات تطوعية لجمعية خيرية (volunteer dashboard for a charity) | الاتفاق على النطاق كتابةً مع الجمعية (agree scope in writing) | إصلاح مدموج (merged fix)؛ ولوحة معلومات قيد الاستخدام (dashboard in use)؛ ودراسة حالة (case study) |
+| يوسف | تشغيل البنية التحتية السحابية (operating cloud infrastructure) | تطوّع (volunteer): نقل موقع جمعية جامعية (university society website migration) | تفعيل تنبيهات الميزانية (budget alerts on)؛ وكتابة خطة النقل (migration plan) | موقع يعمل مع خط نشر ومراقبة وملاحظة تكلفة (running site with pipeline, monitoring, cost note) |
+| ريم | شرح شيفرتها والدفاع عنها تحت المراجعة (explaining and defending her code under review) | المصادر المفتوحة في إطار ذكاء اصطناعي (AI framework) تستخدمه، بتغييرات صغيرة فقط (small changes only) | قراءة سياسة المشروع بشأن المساهمات بالذكاء الاصطناعي (AI contribution policy) | طلبا دمج مدموجان (two merged pull requests) تستطيع شرحهما سطرًا سطرًا |
+| محمد | تحويل مسيرة مهنية سابقة إلى دليل (turning a previous career into evidence) | المسيرة المهنية السابقة (previous career)، مع عمل حرّ لعيادة محلية (freelance job for a local clinic) | إعادة كتابة خبرة النادي الرياضي بوصفها نتائج (as outcomes) في وثيقة إنجازاته | بنود في السيرة الذاتية بالنتائج (CV entries with outcomes)؛ وتزكية من العميل (client reference) |
+
+قاعدة خالد للجلسة: «طريق واحد لكلٍّ منكم، يُنجَز كما ينبغي. سنفحص الروابط في الأسبوع 8 (One route each, done properly. We will check the links in week 8)».
+
+## 🛠️ التمارين (Exercises)
+- 🟢 ابدأ وثيقة إنجازات (brag document) واملأها بكل ما هو ذو صلة من العامين الماضيين: الواجبات الدراسية التي قدتها (coursework you led)، والمشاريع، والوظائف (أيّ وظائف)، والتطوع (volunteering)، والمسابقات. اكتب كل بند بوصفه ما فعلته، والنتيجة (outcome)، ورابطًا حيثما وُجد. *يكتمل عندما (Done when):* تحوي الوثيقة ثمانية بنود مؤرّخة على الأقل (eight dated entries)، ولثلاثة منها على الأقل رابط أو شخص مسمّى يستطيع تأكيدها (named person who could confirm them).
+- 🟡 قدّم أول مساهمة لك في المصادر المفتوحة (first open-source contribution): اختر مشروعًا تستخدمه، واقرأ سياساته بشأن المساهمة والذكاء الاصطناعي (contribution and AI policies)، وابحث عن قضية مناسبة (suitable issue)، وعلّق عليها، وافتح طلب دمج صغيرًا (small pull request) مع اختبار أو تغيير في التوثيق. *يكتمل عندما (Done when):* يكون طلب الدمج مفتوحًا بوصف واضح (clear description)، ومرتبطًا بقضيته، ومسجّلًا في وثيقة إنجازاتك (الدمج أفضل، لكن الفتح يُحتسب (merged is better, but open counts)).
+- 🔴 املأ صفّ خطة الخبرة (experience plan row) الخاص بك باستخدام جدول نجم (Najm table)، ثم نفّذه: مساهمة مدموجة (merged contribution)، أو مشروع مكتمل لعميل أو تطوعي مع نطاق مكتوب وتزكية (written scope and a reference)، أو مشاركة في مسابقة مع عرض مكتوب منشور (published write-up). *يكتمل عندما (Done when):* يستطيع زميل النقر على رابط إثباتك (proof link) والتأكد مما فعلته ومن اعتمد عليه (who relied on it).
+
+## ⚠️ أخطاء وفخاخ (Mistakes and traps)
+- **تجاوز الإعلانات التي تطلب سنة أو سنتين من الخبرة (Skipping adverts that ask for one or two years of experience).** إن كنت تطابق معظم الإعلان ولديك دليل على عمل حقيقي (evidence of real work)، فتقدّم.
+- **إغراق مشاريع المصادر المفتوحة (Spamming open-source projects).** تهدر طلبات الدمج التافهة أو المولّدة بالذكاء الاصطناعي وقت المشرفين (waste maintainers' time) وقد تؤدي إلى حظرك (get you blocked). قدّم مساهمات قليلة، ومُختبَرة، ومركّزة (few, tested, focused contributions).
+- **العمل الحر من دون نطاق مكتوب (Freelancing without a written scope).** تتحوّل الاتفاقات الشفهية (verbal agreements) إلى تغييرات لا تنتهي وعمل غير مدفوع (unpaid work). اكتب أولًا المخرجات والمواعيد والملكية والتسليم (deliverables, dates, ownership and handover).
+- **هجر مشاريع الهاكاثون (Abandoning hackathon projects).** العرض التجريبي الذي لم يعمل إلا يوم الأحد (only worked on Sunday) لا يثبت إلا القليل. أكمل مشروع هاكاثون واحدًا وانشره واكتب عنه (finish, deploy and write up).
+- **إخفاء مسيرة مهنية سابقة (Hiding a previous career).** الخبرة المهنية خارج قطاع التقنية (professional experience outside tech) تظل خبرة. اكتبها بوصفها نتائج (as outcomes) واربطها بعملك التقني.
+
+## 🧾 الخلاصة (Recap)
+- الخبرة تعني أن شخصًا ما اعتمد على عملك (someone relied on your work)؛ ويمكنك اكتسابها قبل وظيفتك الأولى.
+- كل طريق يثبت إشارة مختلفة (each route proves a different signal).
+- اختر الطريق الذي يضيف إشارة يفتقر إليها مشروع تخرّجك (signal your capstone lacks)، ضمن قيودك (within your constraints).
+- افعل أشياء أقل ولكن كما ينبغي (do fewer things properly): مدموجة ومُراجَعة (merged and reviewed)، ومكتملة ومنشورة (finished and deployed)، ومكتوب عنها (written up).
+- سجّل كل شيء في وثيقة إنجازات (brag document)؛ فهي تغذّي سيرتك الذاتية وقصص مقابلاتك (CV and interview stories).
+
+## ✍️ اختبر نفسك (Check yourself)
+
+**1. يُظهر مشروع تخرّج هدى نمذجة قوية (strong modelling)، لكنها لم تعمل قط إلا وحدها. أيّ طريق يضيف الإشارة التي تنقصها بأكثر الطرق مباشرة؟**
+
+- A. المشاركة في ثلاث مسابقات Kaggle أخرى لرفع ترتيبها (ranking)
+- B. المساهمة بإصلاح خضع للمراجعة (reviewed fix) في مكتبة مفتوحة المصدر تستخدمها
+- C. جمع شهادات إلكترونية (online certificates) في العمل الجماعي والمنهجية الرشيقة وإدارة المشاريع (teamwork, agile and project management)
+- D. إضافة مزيد من الرسوم البيانية وملخص مصقول (polished summary) إلى دفاترها الحالية
+
+<details><summary>الإجابة</summary>
+
+**B.** تُظهر المساهمة في المصادر المفتوحة (open-source contribution) أنها قادرة على العمل في قاعدة شيفرة شخص آخر والعمل بالمراجعة (act on review). أما A فيضيف مزيدًا من النمذجة الفردية (solo modelling)، وهي الإشارة التي تملكها بالفعل؛ وC وD لا يُظهران العمل الجماعي (teamwork). (🟢 الأساسيات (The essentials).)
+
+</details>
+
+**2. يرى محمد وظيفة مبتدئ (junior role) في سديم باي (Sadeem Pay) تطلب «سنة إلى سنتين من الخبرة ("one to two years of experience")». وهو يطابق معظم المتطلبات الأخرى ولديه نظام حجز (booking system) يستخدمه أعضاء حقيقيون. ما الذي ينبغي أن يفعله؟**
+
+- A. يتجاوزها، ويتقدّم مجددًا حين يمضي عامين كاملين في وظيفة مطوّر مدفوعة (paid developer job)
+- B. يتقدّم، لكن يحذف مسيرته في النادي الرياضي من السيرة الذاتية حتى تبدو ملفًا تقنيًا بحتًا (purely technical profile)
+- C. يتقدّم، ويصف نظام الحجز بأنه سنتان من التطوير الحرّ (two years of freelance development)
+- D. يتقدّم، ويكتب عمله في عمليات النادي الرياضي (gym operations work) ونظام الحجز بوصفها نتائج مع أدلة (outcomes with evidence)
+
+<details><summary>الإجابة</summary>
+
+**D.** الاشتراطات غالبًا ما تكون دليلًا إرشاديًا (often a guide)، ودليله حقيقي. أما A فيتخلّى عن فرصة معقولة (reasonable chance)؛ وB يخفي خبرة ذات صلة (relevant experience)؛ وC تلفيق (fabrication)، وهو ما لا توصي به هذه الدورة أبدًا، ويميل إلى الانكشاف في عمليات التحقق أو المقابلات (checks or interviews). (🟢 الأساسيات (The essentials)؛ 🔴 نظرة الخبير (Expert view).)
+
+</details>
+
+**3. يوافق يوسف على إعادة بناء موقع التبرعات (donation website) لجمعية خيرية مجانًا. أيّ خطوة هي الأهم قبل أن يبدأ؟**
+
+- A. اختيار أحدث إطار عمل (newest framework) حتى تحصل الجمعية على موقع حديث يدوم لسنوات
+- B. بناؤه بسرعة على حسابه السحابي الشخصي (personal cloud account) وتسليم بيانات الدخول (login) لاحقًا
+- C. كتابة النطاق والمواعيد والملكية والتسليم (scope, dates, ownership and handover)، واستخدام صفحة دفع مستضافة (hosted checkout) للبطاقات
+- D. تصميم قاعدة البيانات لجمع أكبر قدر ممكن من بيانات المتبرعين (donor data) من أجل ميزات مستقبلية
+
+<details><summary>الإجابة</summary>
+
+**C.** النطاق المكتوب (written scope) يحمي الطرفين، وصفحة الدفع المستضافة تُبقي بيانات البطاقات بعيدًا عن شيفرته (keeps card data away from his code). أما B فيربط الجمعية بحسابه الشخصي، بلا تسليم حقيقي (no real handover)؛ وD يخالف مبادئ تقليل البيانات (data-minimisation principles)؛ وA لا علاقة له باحتياجات العميل (irrelevant to the client's needs). (🟡 التعمق أكثر (Going deeper).)
+
+</details>
+
+**4. تخطط ريم لاستخدام وكيل ذكاء اصطناعي (AI agent) لفتح عشرين طلب دمج صغيرًا في مشاريع مفتوحة المصدر شهيرة خلال أسبوع واحد. ما أفضل نصيحة؟**
+
+- A. أن تقرأ سياسات المساهمة والذكاء الاصطناعي (contribution and AI policies) لكل مشروع؛ وأن تقدّم تغييرات قليلة مُختبَرة تستطيع شرحها
+- B. أن تمضي قُدمًا، لأن العدد الكبير من طلبات الدمج (high volume of pull requests) يُظهر للمراجعين الحماس والالتزام
+- C. أن تساهم فقط في المشاريع التي ليست لديها سياسة مساهمة (contribution policy) على الإطلاق، حتى لا توجد قواعد تُخرَق
+- D. أن تفتح طلبات الدمج من دون اختبارات في البداية (without tests at first)، لإبقاء كل تغيير صغيرًا على المشرفين
+
+<details><summary>الإجابة</summary>
+
+**A.** يقدّر المشرفون العمل المركّز والمُختبَر (focused, tested work)، ولدى كثير منهم قواعد بشأن المساهمات المولّدة بالذكاء الاصطناعي (AI-generated contributions). أما B فيخاطر بأن يُرى إغراقًا (seen as spam)؛ وC يتجنّب المشاريع التي ينبغي أن تتعلّم من قواعدها؛ وD يخلق مزيدًا من العمل على المشرفين لا أقل. (🟡 التعمق أكثر (Going deeper)؛ 🔴 نظرة الخبير (Expert view).)
+
+</details>
+
+**5. فاز فريق عمر بالمركز الثاني في هاكاثون نهاية أسبوع (weekend hackathon). وقد عمل العرض التجريبي (demo) مرة واحدة مساء الأحد. كيف يحصل على أكبر قيمة منه؟**
+
+- A. يُدرج «وصيف الهاكاثون ("hackathon runner-up")» في سيرته الذاتية وينتقل إلى الفعالية التالية ما دامت التجربة حاضرة في ذهنه
+- B. يُكمل الميزة الأساسية (core feature)، وينشرها، ويضيف اختبارات وملف README، ويكتب عرضًا لدوره
+- C. يثبّت المستودع كما كان تمامًا عند الموعد النهائي (at the deadline)، حتى يرى المراجعون عمل الفعالية الحقيقي
+- D. يتفرّع من الشيفرة (fork the code) ويقدّمها بوصفها مشروعًا فرديًا (solo project)، لأنه كتب معظم المنطق الأساسي
+
+<details><summary>الإجابة</summary>
+
+**B.** الإكمال والكتابة (finishing and writing up) يحوّلان عرضًا تجريبيًا من عطلة نهاية أسبوع إلى إثبات. أما A وC فيتركان عرضًا تجريبيًا غير مكتمل (unfinished demo) بوصفه الدليل الوحيد؛ وD يحرّف جهدًا جماعيًا (misrepresents a team effort)؛ وإن واصل المشروع، فعليه أن يتبع قواعد الفعالية (event rules)، ويتفق مع زملائه، ويحفظ لهم حقّهم في الإسناد (keep their credit). (🟡 التعمق أكثر (Going deeper).)
+
+</details>
+
+## 📚 المراجع (References)
+- أدلة المصادر المفتوحة، كيف تساهم في المصادر المفتوحة (Open Source Guides, How to Contribute to Open Source) — https://opensource.guide/how-to-contribute/
+- Google Summer of Code — https://summerofcode.withgoogle.com/
+- Outreachy — https://www.outreachy.org/
+- Hacktoberfest — https://hacktoberfest.com/
+- Major League Hacking — https://mlh.io/
+- ICPC — https://icpc.global/
+- Kaggle — https://www.kaggle.com/
+- picoCTF — https://picoctf.org/
+- CTFtime — https://ctftime.org/
+- [*أمن الذكاء الاصطناعي وأمن التطبيقات: من الصفر إلى الاحتراف (Secure AI & Application Security: Zero to Hero)*، الدرس 10.3 — إدارة الثغرات والإفصاح عنها ومكافآت الثغرات (Vulnerability management, disclosure and bug bounties)](../secai/index.ar.html#/10.3)

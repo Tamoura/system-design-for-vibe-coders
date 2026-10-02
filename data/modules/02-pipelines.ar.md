@@ -62,7 +62,7 @@ WHERE updated_at >= :last_watermark - INTERVAL '30 minutes';
 
 قبل الاعتماد على `updated_at`، اسأل الفريق المالك (owning team): هل يضبطه كل مسار في الشيفرة (every code path)، بما فيه السكربتات المجمّعة (bulk scripts)؟ هل يضبطه ساعة قاعدة البيانات (database clock) أم خوادم ذات ساعات مختلفة (different clocks)؟ هل تُحذف الصفوف فعليًا (hard-deleted) أحيانًا؟ إن كان أي جواب غير مؤكد، فاستخدم CDC أو مطابقة كاملة دورية (periodic full reconciliation).
 
-**التقاط تغيّر البيانات (Change data capture).** كل قاعدة بيانات جادة (serious database) تكتب التغييرات في سجل (log) قبل تطبيقها، لأغراض التعافي من الانهيار (crash recovery) والنسخ المتماثل (replication). وسجل PostgreSQL هو **سجل الكتابة المسبقة (write-ahead log, WAL)**؛ وسجل MySQL هو الـ binlog. و**CDC القائم على السجل (log-based CDC)** يقرأ ذلك السجل ويحوّل كل تغيير ملتزَم (committed change) إلى حدث (event): هذا الصف أُدرج، وهذا حُدِّث من هذه القيم إلى تلك، وهذا حُذف. ولأنه يقرأ الالتزامات لا الطوابع الزمنية (commits, not timestamps)، فإنه يرى كل تغيير ملتزَم بالترتيب (in order)، بما في ذلك عمليات الحذف والالتزامات المتأخرة (deletes and late commits). فيختفي خطأا هدى كلاهما.
+**التقاط تغيّر البيانات (Change data capture).** كل قاعدة بيانات جادة (serious database) تكتب التغييرات في سجل (log) قبل تطبيقها، لأغراض التعافي من الانهيار (crash recovery) والنسخ المتماثل (replication). وسجل PostgreSQL هو **سجل الكتابة المسبقة (write-ahead log, WAL)**؛ وسجل MySQL هو الـ binlog. و**CDC القائم على السجل (log-based CDC)** يقرأ ذلك السجل ويحوّل كل تغيير ملتزَم (committed change) إلى حدث (event): هذا الصف أُدرج، وهذا حُدِّث من هذه القيم إلى تلك، وهذا حُذف. ولأنه يقرأ الالتزامات لا الطوابع الزمنية (commits, not timestamps)، فإنه يرى كل تغيير ملتزَم بالترتيب (in order)، بما في ذلك عمليات الحذف والالتزامات المتأخرة (deletes and late commits). فيختفي خطآ هدى كلاهما.
 
 ```mermaid
 flowchart LR
@@ -723,7 +723,7 @@ with psycopg.connect("postgresql://features@localhost/najm") as conn:
         consumer.commit(message=msg, asynchronous=False)
 ```
 
-إن مات العملية (process dies) بعد الإدراج لكن قبل الالتزام، يُقرأ الحدث مرة أخرى ويجعل `ON CONFLICT (auth_id) DO NOTHING` الكتابة الثانية بلا أثر (no-op)، فلا تحتسب الخصائص المحسوبة من هذا الجدول مرتين أبدًا. وفي الاستخدام الحقيقي، التزم لكل دفعة (commit per batch)؛ والمصبّ متساوي الأثر يُبقي ذلك آمنًا.
+إن ماتت العملية (process dies) بعد الإدراج لكن قبل الالتزام، يُقرأ الحدث مرة أخرى ويجعل `ON CONFLICT (auth_id) DO NOTHING` الكتابة الثانية بلا أثر (no-op)، فلا تحتسب الخصائص المحسوبة من هذا الجدول مرتين أبدًا. وفي الاستخدام الحقيقي، التزم لكل دفعة (commit per batch)؛ والمصبّ متساوي الأثر يُبقي ذلك آمنًا.
 
 **ما الذي تغطيه فعلًا المعالجة مرة واحدة بالضبط في Kafka (What Kafka's exactly-once really covers).** تُلخَّص ميزتان على أنهما "مرة واحدة بالضبط" ("exactly-once"):
 
@@ -868,7 +868,7 @@ GROUP BY card_id, window_start, window_end;
 
 </details>
 
-**3. تفعّل هدى معاملات Kafka (Kafka transactions) والمنتِج متساوي الأثر (idempotent producer)، ثم تقول إن جدول خصائص التنبيهات الذكية في PostgreSQL أصبح الآن "مرة واحدة بالضبط" ("exactly-once"). هل هو على حق؟**
+**3. تفعّل هدى معاملات Kafka (Kafka transactions) والمنتِج متساوي الأثر (idempotent producer)، ثم تقول إن جدول خصائص التنبيهات الذكية في PostgreSQL أصبح الآن "مرة واحدة بالضبط" ("exactly-once"). هل هي على حق؟**
 
 - A. لا؛ فالكتابة إلى PostgreSQL لا تزال تحتاج مصبًّا متساوي الأثر (idempotent sink)
 - B. نعم، لأن معاملات Kafka تمتد إلى كل نظام يكتب إليه المستهلك
