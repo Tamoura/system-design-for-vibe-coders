@@ -68,11 +68,11 @@
 
 ```mermaid
 flowchart TD
-    C["السحابة: بنية تحتية مستأجرة تُدار عبر واجهات برمجية"] --> P["هندسة المنصات: طرق ممهّدة فوق السحابة"]
-    P --> A["فرق التطبيقات التي تمارس DevOps: تبنيه وتشحنه وتشغّله"]
-    S["هندسة موثوقية المواقع: أهداف الموثوقية وميزانيات الأخطاء وممارسة الحوادث"] -.-> P
+    C["السحابة: بنية تحتية مستأجرة تُدار عبر واجهات برمجية<br/>(Cloud: rented, API-driven infrastructure)"] --> P["هندسة المنصات: طرق ممهّدة فوق السحابة<br/>(Platform engineering: paved roads on top of the cloud)"]
+    P --> A["فرق التطبيقات التي تمارس DevOps: تبنيه وتشحنه وتشغّله<br/>(App teams practising DevOps: build it, ship it, run it)"]
+    S["هندسة موثوقية المواقع: أهداف الموثوقية وميزانيات الأخطاء وممارسة الحوادث<br/>(SRE: reliability targets, error budgets, incident practice)"] -.-> P
     S -.-> A
-    A -->|"تغذية راجعة وطلبات"| P
+    A -->|"تغذية راجعة وطلبات (feedback and requests)"| P
 ```
 
 توفّر السحابة (cloud) القدرة الخام (raw capability). ويحوّلها فريق المنصة (platform team) إلى عدد صغير من الخيارات الآمنة المدعومة (safe, supported choices). وتستخدم فرق التطبيقات (app teams) هذه الخيارات لتسلّم كثيرًا (deliver often) وتملك خدماتها (own their services). أما ممارسات SRE فتمتد عبر الاثنين (cut across both): فهي تقرر مدى الموثوقية التي تحتاجها كل خدمة (how reliable each service needs to be)، وتُلزم الجميع بها (hold everyone to it).
@@ -254,17 +254,17 @@ flowchart TD
 **المراحل (The stages).** أيًّا كانت الأدوات (tools)، يمرّ التغيير على واجهة برمجة تطبيق نجم للهاتف (Najm Mobile API) بهذه الخطوات:
 
 ```mermaid
-flowchart LR
-    C["الإيداع والمراجعة"] --> B["البناء"]
-    B --> T["الاختبارات المؤتمتة"]
-    T --> P["تحزيم صورة"]
-    P --> R["التخزين في السجل"]
-    R --> S["النشر إلى بيئة التجهيز"]
-    S --> D["النشر إلى الإنتاج"]
-    D --> L["الإطلاق للمستخدمين تدريجيًا"]
-    L --> O["المراقبة"]
-    O -->|"اكتُشفت مشكلة"| X["التراجع"]
-    O -->|"تعلّم"| C
+flowchart RL
+    C["الإيداع والمراجعة<br/>(Commit and review)"] --> B["البناء<br/>(Build)"]
+    B --> T["الاختبارات المؤتمتة<br/>(Automated tests)"]
+    T --> P["تحزيم صورة<br/>(Package an image)"]
+    P --> R["التخزين في السجل<br/>(Store in registry)"]
+    R --> S["النشر إلى بيئة التجهيز<br/>(Deploy to staging)"]
+    S --> D["النشر إلى الإنتاج<br/>(Deploy to production)"]
+    D --> L["الإطلاق للمستخدمين تدريجيًا<br/>(Release to users gradually)"]
+    L --> O["المراقبة<br/>(Observe)"]
+    O -->|"اكتُشفت مشكلة (problem found)"| X["التراجع<br/>(Roll back)"]
+    O -->|"تعلّم (learning)"| C
 ```
 
 | المرحلة (Stage) | ما الذي يحدث (What happens) | ما الذي ينبغي أن تلتقطه (What it should catch) | أين تغطيها هذه الدورة (Where this course covers it) |

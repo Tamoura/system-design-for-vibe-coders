@@ -42,17 +42,17 @@
 **الطبقات (The layers).** يتّبع بنك نجم البنية التي توصي بها dbt Labs في دليل بنية المشاريع (project-structure guide). لكل طبقة (layer) مهمة واحدة (one job):
 
 ```mermaid
-flowchart LR
-    S1["المصدر: جدول المعاملات الخام"] --> ST1["نموذج تجهيز المعاملات"]
-    S2["المصدر: جدول العملاء الخام"] --> ST2["نموذج تجهيز العملاء"]
-    S3["المصدر: جدول تفويضات البطاقات الخام"] --> ST3["نموذج تجهيز تفويضات البطاقات"]
-    ST1 --> I1["النموذج الوسيط لنشاط العملاء"]
+flowchart RL
+    S1["المصدر: جدول المعاملات الخام<br/>(source: raw_core.transactions)"] --> ST1["نموذج تجهيز المعاملات<br/>(stg_core__transactions)"]
+    S2["المصدر: جدول العملاء الخام<br/>(source: raw_core.customers)"] --> ST2["نموذج تجهيز العملاء<br/>(stg_core__customers)"]
+    S3["المصدر: جدول تفويضات البطاقات الخام<br/>(source: raw_cards.authorisations)"] --> ST3["نموذج تجهيز تفويضات البطاقات<br/>(stg_cards__authorisations)"]
+    ST1 --> I1["النموذج الوسيط لنشاط العملاء<br/>(int_customer_activity)"]
     ST3 --> I1
-    ST2 --> D1["بُعد العميل"]
+    ST2 --> D1["بُعد العميل<br/>(dim_customer)"]
     I1 --> D1
-    ST1 --> F1["جدول حقائق المعاملات"]
+    ST1 --> F1["جدول حقائق المعاملات<br/>(fct_transactions)"]
     D1 --> F1
-    F1 --> E1["لوحات معلومات التجزئة والمالية"]
+    F1 --> E1["لوحات معلومات التجزئة والمالية<br/>(Retail and finance dashboards)"]
     D1 --> E1
 ```
 
@@ -490,10 +490,10 @@ where l.ledger_total is null                      -- no control total: cannot re
 **الكتابة ثم التدقيق ثم النشر (Write-audit-publish).** أكثر الأنماط أمانًا (the safest pattern) للجداول المهمة هو ألا تدع المستهلكين يرون أبدًا بيانات غير مفحوصة (unchecked data):
 
 ```mermaid
-flowchart LR
-    W["اكتب البيانات الجديدة في نسخة تجهيز"] --> A["دقّق: شغّل الاختبارات والمطابقات"]
-    A -->|"نجاح"| P["انشر: بدّل أو ادمج في الجدول الحي"]
-    A -->|"فشل"| Q["أبقِ جدول الأمس حيًا ونبّه المالك"]
+flowchart RL
+    W["اكتب البيانات الجديدة في نسخة تجهيز<br/>(Write new data to a staging copy)"] --> A["دقّق: شغّل الاختبارات والمطابقات<br/>(Audit: run tests and reconciliations)"]
+    A -->|"نجاح (pass)"| P["انشر: بدّل أو ادمج في الجدول الحي<br/>(Publish: swap or merge into the live table)"]
+    A -->|"فشل (fail)"| Q["أبقِ جدول الأمس حيًا ونبّه المالك<br/>(Keep yesterday's table live and alert the owner)"]
 ```
 
 في مستودع البيانات (warehouse) يمكنك الكتابة إلى جدول `_staging` ثم تبديله (swap it in) بإعادة تسمية داخل معاملة (a rename inside a transaction)؛ وتدعم تنسيقات الجداول المفتوحة (open table formats) مثل Apache Iceberg الفروع (branches) التي تجعل هذا أصيلًا (native). ومع dbt، فإن تشغيل الاختبارات قبل بناء طبقة العرض (فهي تقع قبلها في الرسم البياني الموجّه غير الدوري، upstream in the DAG) يمنح كثيرًا من الحماية نفسها: إذا فشل التجهيز (staging)، تحتفظ طبقة العرض ببيانات الأمس بدلًا من إعادة بنائها من مُدخل سيئ (bad input). لكن الاختبارات على طبقة العرض نفسها تعمل بعد استبدالها (after it has been replaced)، لذا ما زالت القواعد على مستوى طبقة العرض (mart-level rules) تحتاج إلى خطوة تدقيق حقيقية (a true audit step).
@@ -831,13 +831,13 @@ group by account_id;
 
 ```mermaid
 flowchart TD
-    Q["استعلام بطيء أو مكلف"] --> P["اقرأ الخطة والبايتات الممسوحة"]
-    P --> C{"هل يمسح أكثر بكثير مما يلزم؟"}
-    C -->|"أعمدة كثيرة جدًا"| F1["اختر الأعمدة اللازمة فقط"]
-    C -->|"كل الأقسام"| F2["صفِّ على عمود التقسيم بنطاقات بسيطة"]
-    C -->|"كل الكتل"| F3["جمّع عنقوديًا أو رتّب حسب عمود التصفية"]
-    C -->|"لا، الصفوف تنفجر في ربط"| F4["اختبر حُبَيبية الجدول المربوط وأصلحها"]
-    C -->|"لا، العمل الثقيل نفسه يتكرر"| F5["نموذج تزايدي أو طبقة عرض تجميعية"]
+    Q["استعلام بطيء أو مكلف<br/>(Slow or costly query)"] --> P["اقرأ الخطة والبايتات الممسوحة<br/>(Read the plan and bytes scanned)"]
+    P --> C{"هل يمسح أكثر بكثير مما يلزم؟<br/>(Scanning far more than needed?)"}
+    C -->|"أعمدة كثيرة جدًا (too many columns)"| F1["اختر الأعمدة اللازمة فقط<br/>(Select only needed columns)"]
+    C -->|"كل الأقسام (all partitions)"| F2["صفِّ على عمود التقسيم بنطاقات بسيطة<br/>(Filter on the partition column with plain ranges)"]
+    C -->|"كل الكتل (all blocks)"| F3["جمّع عنقوديًا أو رتّب حسب عمود التصفية<br/>(Cluster or sort by the filter column)"]
+    C -->|"لا، الصفوف تنفجر في ربط (no, rows explode in a join)"| F4["اختبر حُبَيبية الجدول المربوط وأصلحها<br/>(Test and fix the grain of the joined table)"]
+    C -->|"لا، العمل الثقيل نفسه يتكرر (no, same heavy work repeated)"| F5["نموذج تزايدي أو طبقة عرض تجميعية<br/>(Incremental model or aggregate mart)"]
 ```
 
 ## 🧰 الأدوات (The toolkit)
@@ -861,7 +861,7 @@ flowchart TD
 |---|---|---|---|
 | البناء كل ساعة لـ`fct_card_authorisations` (hourly build) | التحديث الكامل (full refresh) يعيد قراءة كل السجلّ التاريخي كل ساعة | تزايدي (incremental)، `delete+insert` على `authorisation_id`، ونافذة رجوع 3 أيام (3-day lookback)؛ والتقسيم حسب تاريخ `authorised_at`؛ وتحديث كامل شهري (monthly full refresh) | البايتات الممسوحة لكل تشغيل (bytes scanned per run) قبل وبعد؛ ومجاميع التحديث الكامل الشهري تطابق الجدول التزايدي |
 | لوحة معلومات التجزئة (Retail dashboard) | `select *` على `fct_transactions` لكل بطاقة (per tile)؛ والتجميع نفسه يتكرر (same aggregate repeated) | طبقة عرض جديدة `agg_transactions_daily_branch`؛ والبطاقات تقرأ الأعمدة اللازمة فقط (only needed columns) | زمن تحميل لوحة المعلومات (dashboard load time) والبايتات الممسوحة لكل تحديث |
-| مرشّح الشهر لدى المحلّل (Analyst month filter) | `to_char(transacted_at, ...)` يمنع التقليم (prevents pruning) | إعادة كتابته كنطاق تاريخ نصف مفتوح (half-open date range)؛ وإضافة النمط إلى دليل أسلوب SQL (SQL style guide) وقائمة تحقق المراجعة (review checklist) | الخطة تُظهر قسمًا واحدًا ممسوحًا (one partition scanned) |
+| مرشّح الشهر لدى المحلّل (Analyst month filter) | `to_char⁦(transacted_at, ...)⁩` يمنع التقليم (prevents pruning) | إعادة كتابته كنطاق تاريخ نصف مفتوح (half-open date range)؛ وإضافة النمط إلى دليل أسلوب SQL (SQL style guide) وقائمة تحقق المراجعة (review checklist) | الخطة تُظهر قسمًا واحدًا ممسوحًا (one partition scanned) |
 
 **الجزء ب: قائمة تحقق الأداء لطبقات العرض الجديدة (Part B: the new-mart performance checklist)**
 

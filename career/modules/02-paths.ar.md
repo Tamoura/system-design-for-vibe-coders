@@ -66,12 +66,12 @@
 **الترتيب أهم من الكمية (Order matters more than volume).** تعطي كل مرحلة المرحلةَ التالية شيئًا تعمل عليه.
 
 ```mermaid
-flowchart LR
-    A["الأسس: الويب وغيت والمخططات"] --> B["البناء الأساسي: البيانات وواجهة البرمجة والمصادقة"]
-    B --> C["شبكات الأمان: الاختبارات والتكامل المستمر والأسرار"]
-    C --> D["الشحن والتشغيل: النشر والمراقبة"]
-    D --> E["العمل مع الذكاء الاصطناعي: التوجيه والتحقق"]
-    E -->|"الميزة التالية"| B
+flowchart RL
+    A["الأسس: الويب وغيت والمخططات<br/>(Foundations: web, Git, diagrams)"] --> B["البناء الأساسي: البيانات وواجهة البرمجة والمصادقة<br/>(Core build: data, API, auth)"]
+    B --> C["شبكات الأمان: الاختبارات والتكامل المستمر والأسرار<br/>(Safety nets: tests, CI, secrets)"]
+    C --> D["الشحن والتشغيل: النشر والمراقبة<br/>(Ship and operate: deploy, monitor)"]
+    D --> E["العمل مع الذكاء الاصطناعي: التوجيه والتحقق<br/>(Work with AI: direct and verify)"]
+    E -->|"الميزة التالية (next feature)"| B
 ```
 
 إن قفزت إلى المرحلة 5 فستُنتج شيفرة بسرعة لكنك لن تستطيع الحكم عليها (cannot judge it). وإن بقيت في المرحلة 1 أشهرًا فلن يكون لديك ما تعرضه. استهدف نحو أسبوعين لكل مرحلة، تنتهي كلٌّ منها بدليلها (its proof). والسهم العائد هو حلقة العمل الحقيقية (real working loop): كل ميزة (feature) تمر بالبناء وشبكات الأمان والشحن من جديد.
@@ -323,13 +323,13 @@ flowchart LR
 **حلقة التقييم (The evaluation loop).** هذه هي العادة التي تفصل مهندسي الذكاء الاصطناعي عن مستخدميه (AI engineers from AI users).
 
 ```mermaid
-flowchart LR
-    A["اكتب معيار الجودة"] --> B["ابنِ مجموعة ذهبية"]
-    B --> C["غيّر الموجّه أو الاسترجاع أو الأدوات"]
-    C --> D["شغّل التقييمات"]
-    D --> E["اقرأ الإخفاقات"]
-    E -->|"حالات إخفاق جديدة"| B
-    E -->|"التغيير التالي"| C
+flowchart RL
+    A["اكتب معيار الجودة<br/>(Write the quality bar)"] --> B["ابنِ مجموعة ذهبية<br/>(Build a golden set)"]
+    B --> C["غيّر الموجّه أو الاسترجاع أو الأدوات<br/>(Change prompt, retrieval or tools)"]
+    C --> D["شغّل التقييمات<br/>(Run the evals)"]
+    D --> E["اقرأ الإخفاقات<br/>(Read the failures)"]
+    E -->|"حالات إخفاق جديدة (new failure cases)"| B
+    E -->|"التغيير التالي (next change)"| C
 ```
 
 ثلاثون إلى خمسين حالة بداية جيدة: أسئلة نموذجية (typical questions)، وحالات حدّية (edge cases)، ككشف حساب فارغ (empty statement) أو شهر غير موجود في الوثيقة، والعربية والإنجليزية، وبضعة مُدخلات عدائية (hostile inputs). ولكل حالة، اكتب ما يجب أن تحتويه الإجابة الجيدة أو ما يجب ألا تحتويه (must contain or must not contain). ثم سجّل الدرجات آليًا حيث تستطيع (score automatically)، كالحقائق الدقيقة (exact facts) وحالات الرفض (refusals)، ويدويًا حيث يلزم (by hand where you must). و**تحليل الأخطاء (Error analysis)**، أي قراءة الإخفاقات وتجميعها حسب السبب (grouping them by cause)، هو حيث يحدث معظم التعلم.
@@ -509,13 +509,13 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    A["أي عمل تستمتع به أكثر؟"] --> B["شرح ما تعنيه الأرقام"]
-    A --> C["جعل البيانات صحيحة وفي موعدها"]
-    A --> D["النمذجة والإحصاء والتنبؤ"]
-    B --> E["محلل البيانات"]
-    C --> F["مهندس البيانات"]
-    D --> G["عالم البيانات"]
-    F -.-> H["مهندس التحليلات"]
+    A["أي عمل تستمتع به أكثر؟<br/>(Which work do you enjoy most?)"] --> B["شرح ما تعنيه الأرقام<br/>(Explaining what the numbers mean)"]
+    A --> C["جعل البيانات صحيحة وفي موعدها<br/>(Making data correct and on time)"]
+    A --> D["النمذجة والإحصاء والتنبؤ<br/>(Modelling, statistics and prediction)"]
+    B --> E["محلل البيانات<br/>(Data analyst)"]
+    C --> F["مهندس البيانات<br/>(Data engineer)"]
+    D --> G["عالم البيانات<br/>(Data scientist)"]
+    F -.-> H["مهندس التحليلات<br/>(Analytics engineer)"]
     E -.-> H
 ```
 
@@ -772,11 +772,11 @@ LEFT JOIN spend s ON s.customer_id = n.customer_id;
 **طرق الدخول (Routes in).** لأن هذه الأدوار تتوقع غالبًا بعض الخبرة التشغيلية (operational experience)، يصل إليها كثيرون من باب جانبي (side door).
 
 ```mermaid
-flowchart LR
-    A["تناوب في برنامج الخرّيجين"] --> D["دور مبتدئ في المنصات أو موثوقية المواقع أو الأمن"]
-    B["دور في الدعم أو العمليات"] --> D
-    C["دور مهندس برمجيات"] --> D
-    D --> E["يملك خدمة أو ضابطًا أمنيًا"]
+flowchart RL
+    A["تناوب في برنامج الخرّيجين<br/>(Graduate rotation)"] --> D["دور مبتدئ في المنصات أو موثوقية المواقع أو الأمن<br/>(Junior platform, SRE or security role)"]
+    B["دور في الدعم أو العمليات<br/>(Support or operations role)"] --> D
+    C["دور مهندس برمجيات<br/>(Software engineer role)"] --> D
+    D --> E["يملك خدمة أو ضابطًا أمنيًا<br/>(Owns a service or a control)"]
 ```
 
 الدور البرمجي الذي يتولى عمليات النشر (deployments)، أو دور العمليات الذي تؤتمت فيه عملك بنفسك (automate your own work)، كلاهما طريق قوي. اقرأ المهام (Read the duties): بعض إعلانات «DevOps» تصف العمليات (operations)، وبعضها يصف تطوير البرمجيات (software development).

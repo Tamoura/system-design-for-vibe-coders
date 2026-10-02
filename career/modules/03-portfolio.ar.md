@@ -57,15 +57,15 @@
 **حلقة البناء (The build loop).** ابنِ أولًا شريحة رفيعة عاملة (thin, working slice) وضعها أمام شخص ما، ثم عمّقها (deepen it).
 
 ```mermaid
-flowchart LR
-    A["اختر الدور المستهدف"] --> B["اكتب مواصفات من صفحة واحدة"]
-    B --> C["ابنِ أرفع شريحة عاملة"]
-    C --> D["انشرها أو حزّمها"]
-    D --> E["أضف الاختبارات والتكامل المستمر"]
-    E --> F["سلّمها إلى مستخدم حقيقي"]
-    F --> G["أصلح ما يتعطّل ودوّنه"]
-    G -->|"الشريحة التالية"| C
-    G --> H["اكتب عرضًا للمشروع"]
+flowchart RL
+    A["اختر الدور المستهدف<br/>(Choose target role)"] --> B["اكتب مواصفات من صفحة واحدة<br/>(Write one-page spec)"]
+    B --> C["ابنِ أرفع شريحة عاملة<br/>(Build thinnest working slice)"]
+    C --> D["انشرها أو حزّمها<br/>(Deploy or package it)"]
+    D --> E["أضف الاختبارات والتكامل المستمر<br/>(Add tests and CI)"]
+    E --> F["سلّمها إلى مستخدم حقيقي<br/>(Give it to a real user)"]
+    F --> G["أصلح ما يتعطّل ودوّنه<br/>(Fix what breaks and write it down)"]
+    G -->|"الشريحة التالية (next slice)"| C
+    G --> H["اكتب عرضًا للمشروع<br/>(Write up the project)"]
 ```
 
 ### 🟡 التعمق أكثر (Going deeper)
@@ -264,13 +264,13 @@ flowchart LR
 **كيف يتصفّح المراجع (How a reviewer skims).** يتبع مسؤولو التوظيف والمهندسون والمديرون (recruiters, engineers and managers) عادةً المسار نفسه (same path)، ويتوقفون حالما يفقدون الثقة أو يجدون ما يحتاجونه:
 
 ```mermaid
-flowchart LR
-    A["الملف الشخصي والنبذة"] --> B["المستودعات المثبّتة"]
-    B --> C["أعلى ملف تعريفي واحد"]
-    C --> D["العرض التجريبي أو الرابط المباشر"]
-    D --> E["ملف أو ملفان من الشيفرة"]
-    E --> F["حالة الاختبارات والتكامل المستمر"]
-    F --> G["سجل الإيداعات وطلبات الدمج"]
+flowchart RL
+    A["الملف الشخصي والنبذة<br/>(Profile and bio)"] --> B["المستودعات المثبّتة<br/>(Pinned repositories)"]
+    B --> C["أعلى ملف تعريفي واحد<br/>(Top of one README)"]
+    C --> D["العرض التجريبي أو الرابط المباشر<br/>(Demo or live link)"]
+    D --> E["ملف أو ملفان من الشيفرة<br/>(One or two code files)"]
+    E --> F["حالة الاختبارات والتكامل المستمر<br/>(Tests and CI status)"]
+    F --> G["سجل الإيداعات وطلبات الدمج<br/>(Commit and PR history)"]
 ```
 
 كل خطوة موضع تكسبهم فيه أو تخسرهم (a place to win or lose them). اجعل الخطوات الثلاث الأولى بلا أي عناء (effortless).
@@ -537,14 +537,14 @@ make test              # 42 tests, about 20 seconds
 
 ```mermaid
 flowchart TD
-    A["ما الذي لا يُظهره مشروع تخرّجي بعد؟"] --> B{"العمل في فريق أو في شيفرة الآخرين؟"}
-    B -->|"نعم"| C["المصادر المفتوحة أو التدريب العملي"]
-    B -->|"لا"| D{"عميل أو مستخدم حقيقي؟"}
-    D -->|"نعم"| E["مشروع حرّ أو تطوعي"]
-    D -->|"لا"| F{"إشارة السرعة أم حلّ المشكلات؟"}
-    F -->|"السرعة والعمل الجماعي"| G["هاكاثون، ثم أكمله"]
-    F -->|"الخوارزميات أو البيانات أو الأمن"| H["مسابقة مع عرض مكتوب"]
-    C --> I["سجّله في وثيقة إنجازاتك"]
+    A["ما الذي لا يُظهره مشروع تخرّجي بعد؟<br/>(What does my capstone not yet show?)"] --> B{"العمل في فريق أو في شيفرة الآخرين؟<br/>(Working in a team or others' code?)"}
+    B -->|"نعم (yes)"| C["المصادر المفتوحة أو التدريب العملي<br/>(Open source or internship)"]
+    B -->|"لا (no)"| D{"عميل أو مستخدم حقيقي؟<br/>(A real client or user?)"}
+    D -->|"نعم (yes)"| E["مشروع حرّ أو تطوعي<br/>(Freelance or volunteer project)"]
+    D -->|"لا (no)"| F{"إشارة السرعة أم حلّ المشكلات؟<br/>(Speed or problem-solving signal?)"}
+    F -->|"السرعة والعمل الجماعي (speed and teamwork)"| G["هاكاثون، ثم أكمله<br/>(Hackathon, then finish it)"]
+    F -->|"الخوارزميات أو البيانات أو الأمن (algorithms, data or security)"| H["مسابقة مع عرض مكتوب<br/>(Competition with a write-up)"]
+    C --> I["سجّله في وثيقة إنجازاتك<br/>(Record it in your brag document)"]
     E --> I
     G --> I
     H --> I

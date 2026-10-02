@@ -116,13 +116,13 @@ spec:
 أرقام RTO وRPO هذه تقريبية (rough)؛ فلا يُعتدّ إلا بنتيجتك المقيسة (only your measured result counts). والبنية التحتية بوصفها شيفرة (infrastructure as code) (الوحدة 3، Module 3) تجعل الشعلة التجريبية والاستعداد الدافئ في المتناول (affordable): فمنطقة التعافي (the recovery region) لا تبعد سوى `tofu apply` ومزامنة GitOps (a GitOps sync)، لا نسخةً مبنية يدويًّا تنحرف (not a hand-built copy that drifts).
 
 ```mermaid
-flowchart LR
-    U["العملاء"] --> E["شبكة توصيل المحتوى وجدار حماية تطبيقات الويب"]
-    E --> R1["المنطقة الأساسية: ثلاث مناطق توافر"]
-    E -.->|"تحويل عند العطل"| R2["منطقة التعافي: استعداد دافئ"]
-    R1 --> D1["PostgreSQL الأساسية مع نسخة جاهزة متعددة مناطق التوافر"]
-    D1 -->|"تكرار غير متزامن"| D2["نسخة متماثلة عبر المناطق"]
-    D1 -->|"نسخ احتياطية"| V["خزنة غير قابلة للتغيير في حساب منفصل"]
+flowchart RL
+    U["العملاء<br/>(Customers)"] --> E["شبكة توصيل المحتوى وجدار حماية تطبيقات الويب<br/>(CDN and WAF)"]
+    E --> R1["المنطقة الأساسية: ثلاث مناطق توافر<br/>(Primary region: three zones)"]
+    E -.->|"تحويل عند العطل (failover)"| R2["منطقة التعافي: استعداد دافئ<br/>(Recovery region: warm standby)"]
+    R1 --> D1["PostgreSQL الأساسية مع نسخة جاهزة متعددة مناطق التوافر<br/>(PostgreSQL primary with multi-AZ standby)"]
+    D1 -->|"تكرار غير متزامن (async replication)"| D2["نسخة متماثلة عبر المناطق<br/>(Cross-region replica)"]
+    D1 -->|"نسخ احتياطية (backups)"| V["خزنة غير قابلة للتغيير في حساب منفصل<br/>(Immutable vault in separate account)"]
     R2 --> D2
 ```
 
@@ -300,9 +300,9 @@ flowchart LR
 **إطار مؤسسة FinOps (The FinOps Foundation framework).** تنشر مؤسسة FinOps (The FinOps Foundation)، وهي جزءٌ من مؤسسة Linux (part of the Linux Foundation)، إطار FinOps (the FinOps Framework). وفي وقت كتابة هذا النص (At the time of writing) (2026)، يصف الإطار مبادئ (principles)، وشخصيات (personas) (الهندسة، engineering؛ المالية، finance؛ القيادة، leadership؛ المشتريات، procurement؛ المنتج، product)، وقدرات (capabilities)، ودورةً من ثلاث مراحل (a cycle of three phases). ومن المبادئ أن الفرق بحاجةٍ إلى التعاون (teams need to collaborate)، وأن القيمة التجارية تقود القرارات التقنية (business value drives technology decisions)، وأن الجميع يتحمّل ملكية استخدامه للسحابة (everyone takes ownership of their cloud usage)، وأن بيانات التكلفة ينبغي أن تكون متاحةً وفي وقتها (accessible and timely)، وأن FinOps يُمكّنها فريقٌ مركزي (enabled by a central team)، وأن على الفرق الاستفادة من نموذج التكلفة المتغيّرة في السحابة (the cloud's variable cost model). تحقّق من موقع finops.org للصياغة الحالية (for the current wording).
 
 ```mermaid
-flowchart LR
-    I["الإعلام: الرؤية والتوزيع"] --> O["التحسين: الاستخدام والأسعار"]
-    O --> P["التشغيل: الملكية والميزانيات والروتين"]
+flowchart RL
+    I["الإعلام: الرؤية والتوزيع<br/>(Inform: visibility and allocation)"] --> O["التحسين: الاستخدام والأسعار<br/>(Optimise: usage and rates)"]
+    O --> P["التشغيل: الملكية والميزانيات والروتين<br/>(Operate: ownership, budgets, routines)"]
     P --> I
 ```
 
@@ -541,12 +541,12 @@ Cost per Najm Assist conversation  = (gateway + model API + GPU cost)
 **بوابة نماذج لغوية (An LLM gateway).** البوابة (A gateway) خدمةٌ بين تطبيقاتك وكل نموذج (between your applications and every model)، مُدارًا كان أو مستضافًا ذاتيًّا. تستدعي التطبيقات نقطة نهاية داخلية واحدة (one internal endpoint)؛ وتتولّى البوابة الباقي (the gateway does the rest).
 
 ```mermaid
-flowchart LR
-    A["نجم أسيست والتطبيقات الأخرى"] --> G["بوابة النماذج اللغوية: المصادقة والميزانيات والحجب"]
-    G --> M1["واجهة برمجة نماذج مُدارة: أساسية"]
-    G -->|"بديل احتياطي"| M2["واجهة برمجة نماذج مُدارة: مزوّد ثانٍ"]
-    G --> S["نموذج مستضاف ذاتيًّا على وحدات معالجة الرسوميات"]
-    G --> T["القياس عن بُعد: الرموز والتكلفة وزمن الاستجابة لكل فريق"]
+flowchart RL
+    A["نجم أسيست والتطبيقات الأخرى<br/>(Najm Assist and other apps)"] --> G["بوابة النماذج اللغوية: المصادقة والميزانيات والحجب<br/>(LLM gateway: auth, budgets, redaction)"]
+    G --> M1["واجهة برمجة نماذج مُدارة: أساسية<br/>(Managed model API: primary)"]
+    G -->|"بديل احتياطي (fallback)"| M2["واجهة برمجة نماذج مُدارة: مزوّد ثانٍ<br/>(Managed model API: second provider)"]
+    G --> S["نموذج مستضاف ذاتيًّا على وحدات معالجة الرسوميات<br/>(Self-hosted model on GPUs)"]
+    G --> T["القياس عن بُعد: الرموز والتكلفة وزمن الاستجابة لكل فريق<br/>(Telemetry: tokens, cost, latency per team)"]
 ```
 
 ### 🟡 التعمق أكثر (Going deeper)

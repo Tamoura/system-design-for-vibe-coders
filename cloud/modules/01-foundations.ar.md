@@ -65,12 +65,12 @@ kill -TERM <pid>                # ask a process to stop cleanly
 **مسار طلب واحد (The path of one request).** عندما يستدعي تطبيق نجم (the Najm app) العنوان `https://api.najm.example/v1/accounts`، يحدث ما يلي:
 
 ```mermaid
-flowchart LR
-    A["التطبيق على الهاتف"] --> B["نظام أسماء النطاقات: من الاسم إلى العنوان"]
-    B --> C["بروتوكول التحكم بالنقل: الاتصال بالمنفذ 443"]
-    C --> D["أمن طبقة النقل: فحص الشهادة والاتفاق على المفاتيح"]
-    D --> E["بروتوكول نقل النص التشعبي: الطلب والاستجابة"]
-    E --> F["موازن الأحمال إلى حجيرة سليمة"]
+flowchart RL
+    A["التطبيق على الهاتف<br/>(App on a phone)"] --> B["نظام أسماء النطاقات: من الاسم إلى العنوان<br/>(DNS: name to IP address)"]
+    B --> C["بروتوكول التحكم بالنقل: الاتصال بالمنفذ 443<br/>(TCP: connect to port 443)"]
+    C --> D["أمن طبقة النقل: فحص الشهادة والاتفاق على المفاتيح<br/>(TLS: check certificate, agree keys)"]
+    D --> E["بروتوكول نقل النص التشعبي: الطلب والاستجابة<br/>(HTTP: request and response)"]
+    E --> F["موازن الأحمال إلى حجيرة سليمة<br/>(Load balancer to a healthy pod)"]
 ```
 
 **نظام أسماء النطاقات (DNS).** يحوّل **نظام أسماء النطاقات (Domain Name System)** الأسماء إلى عناوين (turns names into addresses). أنواع السجلات (record types) التي ستستخدمها أكثر من غيرها:
@@ -358,16 +358,16 @@ curl -sv https://api.najm.example/health -o /dev/null
 
 ```mermaid
 flowchart TD
-    U["العملاء"] --> E["شبكة توصيل المحتوى وجدار حماية تطبيقات الويب"]
-    E --> LB["موازن أحمال من الطبقة السابعة في الشبكات الفرعية العامة"]
-    LB --> A["عقد كوبرنيتس في منطقة التوافر أ"]
-    LB --> B["عقد كوبرنيتس في منطقة التوافر ب"]
-    LB --> C["عقد كوبرنيتس في منطقة التوافر ج"]
-    A --> DB["قاعدة بيانات بوستجري مُدارة: الأساسية في أ والاحتياطية في ب"]
+    U["العملاء<br/>(Customers)"] --> E["شبكة توصيل المحتوى وجدار حماية تطبيقات الويب<br/>(CDN and WAF)"]
+    E --> LB["موازن أحمال من الطبقة السابعة في الشبكات الفرعية العامة<br/>(L7 load balancer in public subnets)"]
+    LB --> A["عقد كوبرنيتس في منطقة التوافر أ<br/>(Kubernetes nodes in zone A)"]
+    LB --> B["عقد كوبرنيتس في منطقة التوافر ب<br/>(Kubernetes nodes in zone B)"]
+    LB --> C["عقد كوبرنيتس في منطقة التوافر ج<br/>(Kubernetes nodes in zone C)"]
+    A --> DB["قاعدة بيانات بوستجري مُدارة: الأساسية في أ والاحتياطية في ب<br/>(Managed PostgreSQL: primary in A, standby in B)"]
     B --> DB
     C --> DB
-    A --> OS["تخزين الكائنات على مستوى المنطقة"]
-    DB --> DC["رابط خاص إلى النظام المصرفي الأساسي في مركز البيانات"]
+    A --> OS["تخزين الكائنات على مستوى المنطقة<br/>(Object storage, regional)"]
+    DB --> DC["رابط خاص إلى النظام المصرفي الأساسي في مركز البيانات<br/>(Private link to the data-centre core banking)"]
 ```
 
 كل طبقة (every tier) تمتد عبر مناطق التوافر (spans zones)، والحافة وحدها (only the edge) تواجه الإنترنت، وقاعدة البيانات تتجاوز الفشل تلقائيًا (fails over automatically).
@@ -629,12 +629,12 @@ gcloud storage buckets add-iam-policy-binding gs://najm-statements-prod \
 **كيف يعمل اتحاد الهوية عبر OIDC في التكامل المستمر (How OIDC federation for CI works).** OpenID Connect (OIDC) طبقة هوية (an identity layer) فوق OAuth 2.0. يمكن لمنصة تكامل مستمر (CI platform) مثل GitHub Actions أن تُصدر لكل مهمة **رمز هوية (ID token)** موقَّعًا يصف المهمة (describing the job): أي مستودع (which repository)، وأي فرع أو بيئة (which branch or environment)، وأي سير عمل (which workflow). ويُهيَّأ مزوّد السحابة للثقة بتلك الجهة المُصدِرة (to trust that issuer) ولاستبدال الرموز المطابقة (matching tokens) ببيانات اعتماد قصيرة العمر لدور واحد محدد (one specific role).
 
 ```mermaid
-flowchart LR
-    J["تبدأ مهمة التكامل المستمر"] --> T["تُصدر منصة التكامل المستمر رمز هوية موقّعًا"]
-    T --> S["تفحص خدمة الرموز السحابية سياسة الثقة"]
-    S -->|"المستودع والبيئة متطابقان"| C["بيانات اعتماد قصيرة العمر لدور واحد"]
-    C --> D["تدفع المهمة الصورة وتنشر"]
-    S -->|"لا تطابق"| X["رُفض الطلب"]
+flowchart RL
+    J["تبدأ مهمة التكامل المستمر<br/>(CI job starts)"] --> T["تُصدر منصة التكامل المستمر رمز هوية موقّعًا<br/>(CI platform issues signed OIDC token)"]
+    T --> S["تفحص خدمة الرموز السحابية سياسة الثقة<br/>(Cloud token service checks trust policy)"]
+    S -->|"المستودع والبيئة متطابقان (repo and environment match)"| C["بيانات اعتماد قصيرة العمر لدور واحد<br/>(Short-lived credentials for one role)"]
+    C --> D["تدفع المهمة الصورة وتنشر<br/>(Job pushes image and deploys)"]
+    S -->|"لا تطابق (no match)"| X["رُفض الطلب<br/>(Request denied)"]
 ```
 
 في AWS، تحدد **سياسة الثقة (trust policy)** الخاصة بالدور أي الرموز يجوز لها تقمّصه (which tokens may assume it). لاحظ الشرط (note the condition): لا تتأهل إلا بيئة `production` في مستودع واحد (one repository).

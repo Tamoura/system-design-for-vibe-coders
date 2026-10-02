@@ -49,13 +49,13 @@ WHERE c.segment = 'retail'
 **ترتيب تقييم الاستعلام (The order a query is evaluated in).** أنت تكتب `SELECT` أولًا، لكن قاعدة البيانات تعالج البنود (clauses) منطقيًا (logically) بهذا الترتيب، وهو ما يفسّر مثلًا لماذا لا يستطيع `WHERE` التصفية على دالة نافذة (window function):
 
 ```mermaid
-flowchart LR
-    A["المصدر والربط: بناء الصفوف"] --> B["شرط التصفية: تصفية الصفوف"]
-    B --> C["التجميع: تكوين المجموعات"]
-    C --> D["شرط المجموعات: تصفية المجموعات"]
-    D --> E["دوال النوافذ"]
-    E --> F["قائمة الاختيار وإزالة التكرار"]
-    F --> G["الترتيب والحد"]
+flowchart RL
+    A["المصدر والربط: بناء الصفوف<br/>(FROM and JOIN: build the rows)"] --> B["شرط التصفية: تصفية الصفوف<br/>(WHERE: filter rows)"]
+    B --> C["التجميع: تكوين المجموعات<br/>(GROUP BY: form groups)"]
+    C --> D["شرط المجموعات: تصفية المجموعات<br/>(HAVING: filter groups)"]
+    D --> E["دوال النوافذ<br/>(Window functions)"]
+    E --> F["قائمة الاختيار وإزالة التكرار<br/>(SELECT list and DISTINCT)"]
+    F --> G["الترتيب والحد<br/>(ORDER BY and LIMIT)"]
 ```
 
 **الربط (Joins).** يجمع الربط (join) صفوفًا من جدولين حيث يتحقّق شرط (condition).
@@ -143,7 +143,7 @@ LEFT JOIN loans_pc l ON l.customer_id = c.customer_id
 LEFT JOIN spend_pc s ON s.customer_id = c.customer_id;
 ```
 
-القاعدة (The rule): **جمّع إلى الحُبَيبية المستهدفة قبل أن تربط مسارين مختلفين من نوع واحد-إلى-متعدد (aggregate to the target grain before you join two different one-to-many paths).** يستطيع `COUNT(DISTINCT ...)` أن يُخفي التضاعف (hide a fan-out) في عمليات العدّ، لكنه لا يستطيع إصلاح `SUM`.
+القاعدة (The rule): **جمّع إلى الحُبَيبية المستهدفة قبل أن تربط مسارين مختلفين من نوع واحد-إلى-متعدد (aggregate to the target grain before you join two different one-to-many paths).** يستطيع `COUNT⁦(DISTINCT ...)⁩` أن يُخفي التضاعف (hide a fan-out) في عمليات العدّ، لكنه لا يستطيع إصلاح `SUM`.
 
 **الربط الأيسر الذي صار ربطًا داخليًا (The LEFT JOIN that became an INNER JOIN).** يريد كريم كل عملاء الأفراد (all retail customers)، مع إنفاقهم في سبتمبر أو صفر. إن وضع مرشّح التاريخ (date filter) في `WHERE` يُزيل العملاء الذين لا معاملات لهم، لأن `t.txn_ts` لديهم يكون `NULL` والمقارنة غير معروفة (the comparison is unknown):
 
@@ -404,13 +404,13 @@ Checks       : grain unique OK; debit total reconciles to GL report within 0.1%,
 - حين تُرتَّب مع جدول الحقائق في الوسط والأبعاد حوله، يكون هذا **مخطط النجمة** (star schema):
 
 ```mermaid
-flowchart LR
-    F["جدول حقائق معاملات البطاقات: صف واحد لكل معاملة بطاقة مصرّح بها"]
-    D1["بُعد التاريخ"] --- F
-    D2["بُعد العميل"] --- F
-    D3["بُعد البطاقة"] --- F
-    D4["بُعد التاجر"] --- F
-    D5["بُعد القناة"] --- F
+flowchart RL
+    F["جدول حقائق معاملات البطاقات: صف واحد لكل معاملة بطاقة مصرّح بها<br/>(fact_card_transaction: one row per authorised card transaction)"]
+    D1["بُعد التاريخ<br/>(dim_date)"] --- F
+    D2["بُعد العميل<br/>(dim_customer)"] --- F
+    D3["بُعد البطاقة<br/>(dim_card)"] --- F
+    D4["بُعد التاجر<br/>(dim_merchant)"] --- F
+    D5["بُعد القناة<br/>(dim_channel)"] --- F
 ```
 
 **خطوات كيمبال الأربع (Kimball's four steps).** صمّم كل نجمة بهذا الترتيب:
@@ -715,15 +715,15 @@ GROUP BY channel;
 **الطبقات (Layers).** أيًّا كان التخزين، تنظّم نجم البيانات في طبقات كي لا يضيع التاريخ الخام (raw history) أبدًا، وكي يقرأ كل مستهلك (consumer) جداول منسّقة (curated tables):
 
 ```mermaid
-flowchart LR
-    S1["قاعدة بيانات النظام المصرفي الأساسي"] --> R["الخام: كما حُمّل، للإلحاق فقط"]
-    S2["تدفق البطاقات"] --> R
-    S3["أحداث تطبيق نجم للهاتف"] --> R
-    R --> ST["التجهيز: منظّف، مُنمَّط، بلا تكرار"]
-    ST --> M["المتاجر: رؤية العميل الشاملة، مخاطر الائتمان"]
-    M --> C1["لوحات المعلومات"]
-    M --> C2["خصائص التنبيهات الذكية"]
-    M --> C3["المستخرجات التنظيمية"]
+flowchart RL
+    S1["قاعدة بيانات النظام المصرفي الأساسي<br/>(Core banking DB)"] --> R["الخام: كما حُمّل، للإلحاق فقط<br/>(Raw: as loaded, append-only)"]
+    S2["تدفق البطاقات<br/>(Card stream)"] --> R
+    S3["أحداث تطبيق نجم للهاتف<br/>(Najm Mobile events)"] --> R
+    R --> ST["التجهيز: منظّف، مُنمَّط، بلا تكرار<br/>(Staging: cleaned, typed, deduplicated)"]
+    ST --> M["المتاجر: رؤية العميل الشاملة، مخاطر الائتمان<br/>(Marts: customer 360, credit risk)"]
+    M --> C1["لوحات المعلومات<br/>(Dashboards)"]
+    M --> C2["خصائص التنبيهات الذكية<br/>(Smart Alerts features)"]
+    M --> C3["المستخرجات التنظيمية<br/>(Regulatory extracts)"]
 ```
 
 تسمّي Databricks الفكرة نفسها **معمارية الميداليات** (medallion architecture): البرونزية (bronze) ‏(الخام (raw))، والفضية (silver) ‏(المنظّفة (cleaned))، والذهبية (gold) ‏(المنسّقة (curated)). الأسماء تختلف؛ والمبدأ واحد (the principle is the same).

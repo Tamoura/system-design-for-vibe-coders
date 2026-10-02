@@ -51,15 +51,15 @@
 هذه حادثة `acct_status` مرسومةً بوصفها نسبًا على مستوى العمود (column-level lineage). ومع وجود هذا الرسم البياني (graph) في الفهرس (catalogue)، تصبح قائمة الأثر (impact list) على بُعد نقرة واحدة (one click away):
 
 ```mermaid
-flowchart LR
-    A["حالة الحساب في جدول حسابات النظام الأساسي"] --> B["حالة الحساب في نموذج التهيئة"]
-    B --> C["مؤشر النشاط في النموذج الوسيط لحسابات العملاء"]
-    C --> D["علامة النشاط في رؤية العميل الشاملة"]
-    C --> E["التعرّض القائم في متجر مخاطر الائتمان"]
-    C --> F["الحسابات النشطة في المستخلص التنظيمي"]
-    D --> G["لوحة معلومات التجزئة"]
-    D --> H["خصائص التنبيهات الذكية"]
-    E --> I["الحزمة المالية لمجلس الإدارة"]
+flowchart RL
+    A["حالة الحساب في جدول حسابات النظام الأساسي<br/>(core.accounts.acct_status)"] --> B["حالة الحساب في نموذج التهيئة<br/>(stg_accounts.account_status)"]
+    B --> C["مؤشر النشاط في النموذج الوسيط لحسابات العملاء<br/>(int_customer_accounts.is_active)"]
+    C --> D["علامة النشاط في رؤية العميل الشاملة<br/>(customer_360.active_flag)"]
+    C --> E["التعرّض القائم في متجر مخاطر الائتمان<br/>(credit_risk_mart.open_exposure)"]
+    C --> F["الحسابات النشطة في المستخلص التنظيمي<br/>(reg_extract.active_accounts)"]
+    D --> G["لوحة معلومات التجزئة<br/>(Retail dashboard)"]
+    D --> H["خصائص التنبيهات الذكية<br/>(Smart Alerts features)"]
+    E --> I["الحزمة المالية لمجلس الإدارة<br/>(Finance board pack)"]
 ```
 
 **كيف يبدو "النجاح" (What "working" looks like).** اختر عمودًا من الفئة الأولى (tier-1 column) عشوائيًا وقِس كم يستغرق الإجابة عن الأسئلة الأربعة (the four questions). في الحادثة استغرق الأمر ثلاثة أسابيع؛ والهدف أقل من ساعة (under an hour).
@@ -422,13 +422,13 @@ FROM marts.customer_360;
 **طلبات المحو (Erasure requests).** المحو ليس دائمًا "احذف كل شيء" ("delete everything"): فالبنوك ملزمة قانونًا بالاحتفاظ ببعض السجلات (must keep some records by law)، والمادة 17 تسمح بذلك. وتحتاج المنصة إلى إجراء قابل للتكرار (repeatable procedure): اعثر على كل موقع من النسب (find every location from lineage) ‏(6.1)، واحذف أو استخدم الأسماء المستعارة (delete or pseudonymise) حيث لا ينطبق واجب احتفاظ (no duty to keep applies)، وسجّل الأدلة (record evidence).
 
 ```mermaid
-flowchart LR
-    A["عمود المصدر"] --> B["التصنيف والوسم في البيانات الوصفية"]
-    B --> C["التحميل: إسقاط الأعمدة غير المطلوبة"]
-    C --> D["استبدال المعرِّفات بأسماء مستعارة"]
-    D --> E["عروض مُخفاة حسب الدور"]
-    D --> F["فئة الاحتفاظ ومهمة الحذف"]
-    F --> G["أدلة لمسؤول حماية البيانات"]
+flowchart RL
+    A["عمود المصدر<br/>(Source column)"] --> B["التصنيف والوسم في البيانات الوصفية<br/>(Classify and tag in meta)"]
+    B --> C["التحميل: إسقاط الأعمدة غير المطلوبة<br/>(Load: drop unneeded columns)"]
+    C --> D["استبدال المعرِّفات بأسماء مستعارة<br/>(Pseudonymise identifiers)"]
+    D --> E["عروض مُخفاة حسب الدور<br/>(Masked views by role)"]
+    D --> F["فئة الاحتفاظ ومهمة الحذف<br/>(Retention class and deletion job)"]
+    F --> G["أدلة لمسؤول حماية البيانات<br/>(Evidence for the DPO)"]
 ```
 
 ### 🔴 نظرة الخبير (Expert view)
@@ -653,14 +653,14 @@ CREATE POLICY loan_book_by_country ON marts.loan_book
 **مسار الوصول (The access path).** يجب أن يحمل كل طريق إلى البيانات (every route to the data) هوية الشخص إلى مستودع البيانات (carry the person's identity to the warehouse) وأن يترك سجلًّا (leave a record):
 
 ```mermaid
-flowchart LR
-    U["المحلّل"] --> S["مزوّد هوية الدخول الموحّد"]
-    S --> G["المجموعة: محلّلو التجزئة في قطر"]
-    G --> R["دور المستودع: قارئ المتاجر"]
-    R --> P["السياسات: الصلاحيات وأمن الصفوف والإخفاء"]
-    P --> D["البيانات"]
-    P --> A["سجل التدقيق"]
-    A --> M["المراقبة والتنبيهات"]
+flowchart RL
+    U["المحلّل<br/>(Analyst)"] --> S["مزوّد هوية الدخول الموحّد<br/>(SSO identity provider)"]
+    S --> G["المجموعة: محلّلو التجزئة في قطر<br/>(Group: retail-analysts-qa)"]
+    G --> R["دور المستودع: قارئ المتاجر<br/>(Warehouse role: marts_reader)"]
+    R --> P["السياسات: الصلاحيات وأمن الصفوف والإخفاء<br/>(Policies: grants, RLS, masking)"]
+    P --> D["البيانات<br/>(Data)"]
+    P --> A["سجل التدقيق<br/>(Audit log)"]
+    A --> M["المراقبة والتنبيهات<br/>(Monitoring and alerts)"]
 ```
 
 ### 🟡 التعمق أكثر (Going deeper)

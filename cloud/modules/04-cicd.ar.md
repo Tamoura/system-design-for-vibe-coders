@@ -43,14 +43,14 @@
 **ما خط التسليم؟ (What a pipeline is).** **خط التسليم (pipeline)** تسلسل مؤتمت (automated sequence) من **المراحل (stages)**، كلٌّ منها مكوّن من **مهام (jobs)** تعمل على أجهزة تُسمّى **المشغّلات (runners)** (أو الوكلاء، agents). ويُطلَق بحدث (triggered by an event): فتح طلب سحب (pull request opened)، أو دفع إيداع (commit pushed) إلى `main`، أو إنشاء وسم (tag created)، أو جدول زمني (schedule). ويعيش تعريف خط التسليم (pipeline definition) في المستودع (repository) بوصفه شيفرة (as code)، فيُراجَع ويُدار إصداره (reviewed and versioned) مثل كل شيء آخر. المراحل النموذجية (Typical stages):
 
 ```mermaid
-flowchart LR
-    C["إيداع أو طلب سحب"] --> L["الفحص الساكن واختبارات الوحدة"]
-    L --> B["بناء الصورة مرة واحدة"]
-    B --> S["الفحص الأمني واختبارات التكامل"]
-    S --> P["دفع الصورة بالبصمة"]
-    P --> D["النشر إلى بيئة التطوير"]
-    D --> ST["الترقية إلى بيئة التجهيز"]
-    ST --> PR["الترقية إلى الإنتاج"]
+flowchart RL
+    C["إيداع أو طلب سحب<br/>(Commit or PR)"] --> L["الفحص الساكن واختبارات الوحدة<br/>(Lint and unit tests)"]
+    L --> B["بناء الصورة مرة واحدة<br/>(Build image once)"]
+    B --> S["الفحص الأمني واختبارات التكامل<br/>(Scan and integration tests)"]
+    S --> P["دفع الصورة بالبصمة<br/>(Push image by digest)"]
+    P --> D["النشر إلى بيئة التطوير<br/>(Deploy to dev)"]
+    D --> ST["الترقية إلى بيئة التجهيز<br/>(Promote to staging)"]
+    ST --> PR["الترقية إلى الإنتاج<br/>(Promote to production)"]
 ```
 
 كل ما يقع يسار مرحلة "الدفع (Push)" يعمل على كل طلب سحب (every pull request) ويجب أن يكون سريعًا. أما عمليات الترقية (promotions) على اليمين فتنقل الصورة *نفسها* (the *same* image) عبر البيئات (environments)، كما وُصف في الدرس 3.2.
@@ -431,14 +431,14 @@ spec:
 
 ```mermaid
 flowchart TD
-    D["نشر الإصدار الجديد كناريًا"] --> W5["خمسة بالمئة من حركة المرور"]
-    W5 --> A1{"هل المقاييس سليمة؟"}
-    A1 -->|"نعم"| W25["خمسة وعشرون بالمئة"]
-    A1 -->|"لا"| RB["إجهاض: كل حركة المرور إلى المستقر"]
-    W25 --> A2{"هل المقاييس سليمة؟"}
-    A2 -->|"نعم"| W50["خمسون ثم مئة بالمئة"]
-    A2 -->|"لا"| RB
-    RB --> N["إبلاغ الفريق وفتح حادثة"]
+    D["نشر الإصدار الجديد كناريًا<br/>(New version deployed as canary)"] --> W5["خمسة بالمئة من حركة المرور<br/>(5 percent of traffic)"]
+    W5 --> A1{"هل المقاييس سليمة؟<br/>(Metrics healthy?)"}
+    A1 -->|"نعم (yes)"| W25["خمسة وعشرون بالمئة<br/>(25 percent)"]
+    A1 -->|"لا (no)"| RB["إجهاض: كل حركة المرور إلى المستقر<br/>(Abort: all traffic to stable)"]
+    W25 --> A2{"هل المقاييس سليمة؟<br/>(Metrics healthy?)"}
+    A2 -->|"نعم (yes)"| W50["خمسون ثم مئة بالمئة<br/>(50 then 100 percent)"]
+    A2 -->|"لا (no)"| RB
+    RB --> N["إبلاغ الفريق وفتح حادثة<br/>(Notify team and open incident)"]
 ```
 
 **اختيار ما يقيسه الكناري (Choosing what the canary measures).** استخدم الإشارات نفسها التي تستخدمها أهداف مستوى الخدمة (SLOs) لديك (الدرس 5.2): معدل الخطأ (error rate)، وزمن الاستجابة عند مئين مرتفع (latency at a high percentile) مثل p99، وإشارة أعمال (business signal) حيثما أمكن (للمدفوعات: نسبة التحويلات التي تبلغ حالة "مُسوّاة" (settled)). قارن الكناري بالمستقر *في الوقت نفسه (at the same time)*، لا بالأسبوع الماضي. واجعل الكناري كبيرًا بما يكفي (large enough): فعند 1% من خدمة هادئة (quiet service)، قد تحوي عشر دقائق طلبات أقل من أن يُحكم بها (too few requests to judge).
@@ -640,17 +640,17 @@ flowchart TD
 **نمذجة التهديدات لخط التسليم (Threat-model the pipeline).** فكّر فيما يستطيع المهاجم فعله في كل خطوة من الإيداع (commit) إلى الإنتاج (production):
 
 ```mermaid
-flowchart LR
-    S["مستودع المصدر"] --> B["مهمة البناء في التكامل المستمر"]
-    DEP["الاعتماديات والإجراءات"] --> B
-    B --> R["السجل"]
-    R --> G["مستودع جيت أوبس"]
-    G --> K["العنقود"]
-    A1["حساب مطوّر مسروق أو طلب سحب سيئ"] -.-> S
-    A2["إجراء أو حزمة مخترقة"] -.-> DEP
-    A3["سر مسرّب من التكامل المستمر"] -.-> B
-    A4["صورة عُبث بها"] -.-> R
-    A5["هوية نشر بصلاحيات مفرطة"] -.-> K
+flowchart RL
+    S["مستودع المصدر<br/>(Source repo)"] --> B["مهمة البناء في التكامل المستمر<br/>(CI build job)"]
+    DEP["الاعتماديات والإجراءات<br/>(Dependencies and actions)"] --> B
+    B --> R["السجل<br/>(Registry)"]
+    R --> G["مستودع جيت أوبس<br/>(GitOps repo)"]
+    G --> K["العنقود<br/>(Cluster)"]
+    A1["حساب مطوّر مسروق أو طلب سحب سيئ<br/>(Stolen dev account or bad PR)"] -.-> S
+    A2["إجراء أو حزمة مخترقة<br/>(Compromised action or package)"] -.-> DEP
+    A3["سر مسرّب من التكامل المستمر<br/>(Leaked CI secret)"] -.-> B
+    A4["صورة عُبث بها<br/>(Tampered image)"] -.-> R
+    A5["هوية نشر بصلاحيات مفرطة<br/>(Over-privileged deploy identity)"] -.-> K
 ```
 
 لكل سهم ضابط (control): حماية الفروع والمراجعة (branch protection and review) على المصدر؛ واعتماديات وإجراءات مثبّتة ومفحوصة (pinned, vetted dependencies and actions)؛ وبيانات اعتماد قصيرة العمر (short-lived credentials) للبناء؛ وتواقيع على الصورة (signatures on the image)؛ ومسار نشر ضيق (narrow deploy path) إلى العنقود. ويصف إطار SLSA (مستويات سلسلة التوريد للآثار البرمجية، Supply-chain Levels for Software Artifacts) هذه التهديدات بالتفصيل. ويغطي [*أمن الذكاء الاصطناعي وأمن التطبيقات (Secure AI & Application Security)*، الدرس 6.2 — سلسلة توريد البرمجيات (The software supply chain)](../secai/index.ar.html#/6.2) الاعتماديات وقوائم مكوّنات البرمجيات (SBOMs) وSLSA من الجانب الأمني (from the security side)؛ ويبقى هذا الدرس على كيفية بناء فريق المنصة لخط التسليم وتشغيله.

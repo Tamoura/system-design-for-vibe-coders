@@ -152,13 +152,13 @@ resource "aws_db_instance" "this" {
 **من يشغّل `apply` (Who runs apply).** في بنك نجم (Najm Bank) لا أحد يطبّق على الإنتاج (applies production) من حاسوب محمول (laptop). ينشر خط التسليم (pipeline) الخطة (plan) على كل طلب سحب (pull request)؛ وبعد الموافقة (approval) والدمج (merge) يطبّق *تلك الخطة المحفوظة (that saved plan)* بدور قصير العمر (short-lived role) يُحصل عليه عبر اتحاد الهوية OIDC (OIDC federation)، لا بمفاتيح مخزّنة (stored keys) (1.3). أما `apply` جديد بعد ساعة فسيحسب خطة جديدة (new plan) لم يراجعها أحد.
 
 ```mermaid
-flowchart LR
-    A["طلب سحب"] --> B["التكامل المستمر يشغّل الخطة"]
-    B --> C["نشر الخطة للمراجعة"]
-    C --> D["المراجع يوافق"]
-    D --> E["الدمج في الفرع الرئيسي"]
-    E --> F["التكامل المستمر يطبّق الخطة المحفوظة"]
-    F --> G["حفظ الحالة وتحرير القفل"]
+flowchart RL
+    A["طلب سحب<br/>(Pull request)"] --> B["التكامل المستمر يشغّل الخطة<br/>(CI runs plan)"]
+    B --> C["نشر الخطة للمراجعة<br/>(Plan posted for review)"]
+    C --> D["المراجع يوافق<br/>(Reviewer approves)"]
+    D --> E["الدمج في الفرع الرئيسي<br/>(Merge to main)"]
+    E --> F["التكامل المستمر يطبّق الخطة المحفوظة<br/>(CI applies saved plan)"]
+    F --> G["حفظ الحالة وتحرير القفل<br/>(State saved and lock released)"]
 ```
 
 ### 🔴 نظرة الخبير (Expert view)
@@ -364,15 +364,15 @@ moved {
 **الدفع مقابل السحب (Push versus pull).** في خط تسليم *الدفع (push)* التقليدي، يحمل التكامل المستمر (CI) بيانات اعتماد العنقود (cluster credentials) ويشغّل `kubectl apply` أو `helm upgrade` في النهاية. أما في GitOps القائم على *السحب (pull)*، فلا يلمس التكامل المستمر العنقود أبدًا: إنه يحدّث Git فقط. والمتحكّم (controller) داخل العنقود هو الذي يسحب. وهذا يعني بيانات اعتماد قوية (powerful credentials) أقل خارج العنقود، ومسار تدقيق كاملًا (full audit trail) في Git، وتصحيحًا آليًا (automatic correction) حين يغيّر أحدهم العنقود يدويًا.
 
 ```mermaid
-flowchart LR
-    A["التزام في مستودع التطبيق"] --> B["التكامل المستمر يبني الصورة ويختبرها"]
-    B --> C["السجل يخزّن الصورة ببصمتها"]
-    C --> D["طلب سحب يرفع البصمة في مجلد التطوير"]
-    D --> E["أرغو سي دي يزامن بيئة التطوير"]
-    E --> F["طلب سحب يرقّي البصمة إلى ما قبل الإنتاج"]
-    F --> G["أرغو سي دي يزامن بيئة ما قبل الإنتاج"]
-    G --> H["طلب سحب معتمد يرقّي إلى الإنتاج"]
-    H --> I["أرغو سي دي يزامن بيئة الإنتاج"]
+flowchart RL
+    A["التزام في مستودع التطبيق<br/>(Commit to app repo)"] --> B["التكامل المستمر يبني الصورة ويختبرها<br/>(CI builds and tests image)"]
+    B --> C["السجل يخزّن الصورة ببصمتها<br/>(Registry stores image by digest)"]
+    C --> D["طلب سحب يرفع البصمة في مجلد التطوير<br/>(PR bumps digest in dev folder)"]
+    D --> E["أرغو سي دي يزامن بيئة التطوير<br/>(Argo CD syncs dev)"]
+    E --> F["طلب سحب يرقّي البصمة إلى ما قبل الإنتاج<br/>(PR promotes digest to staging)"]
+    F --> G["أرغو سي دي يزامن بيئة ما قبل الإنتاج<br/>(Argo CD syncs staging)"]
+    G --> H["طلب سحب معتمد يرقّي إلى الإنتاج<br/>(Approved PR promotes to prod)"]
+    H --> I["أرغو سي دي يزامن بيئة الإنتاج<br/>(Argo CD syncs prod)"]
 ```
 
 ### 🟡 التعمق أكثر (Going deeper)
@@ -624,14 +624,14 @@ spec:
 كلما جرى الفحص أبكر، كان الإصلاح أرخص (the cheaper the fix). وكلما جرى متأخرًا، التقط أكثر (the more it catches)، بما في ذلك التغييرات التي لم تمرّ قط عبر خط التسليم (pipeline).
 
 ```mermaid
-flowchart LR
-    A["تغيير في طلب سحب"] --> B["فحص البنية التحتية بوصفها شيفرة"]
-    B --> C["سياسة وقت التخطيط"]
-    C --> D["التطبيق أو المزامنة"]
-    D --> E["سياسات القبول والمؤسسة"]
-    E --> F["الموارد العاملة"]
-    F --> G["فحص الانحراف المجدول"]
-    G -->|"وُجد اختلاف"| H["الإرجاع أو تحديث الشيفرة"]
+flowchart RL
+    A["تغيير في طلب سحب<br/>(Change in a PR)"] --> B["فحص البنية التحتية بوصفها شيفرة<br/>(IaC scan)"]
+    B --> C["سياسة وقت التخطيط<br/>(Plan-time policy)"]
+    C --> D["التطبيق أو المزامنة<br/>(Apply or sync)"]
+    D --> E["سياسات القبول والمؤسسة<br/>(Admission and org policies)"]
+    E --> F["الموارد العاملة<br/>(Running resources)"]
+    F --> G["فحص الانحراف المجدول<br/>(Scheduled drift check)"]
+    G -->|"وُجد اختلاف (difference found)"| H["الإرجاع أو تحديث الشيفرة<br/>(Revert or update code)"]
 ```
 
 **ما هو الانحراف (What drift is).** **الانحراف (Drift)** هو أي اختلاف بين الحالة المُصرَّح بها في الشيفرة (state declared in code) والحالة الحقيقية (real state). وهو ينشأ من تغييرات وحدة التحكم (console changes) ("ClickOps")، والتعديلات اليدوية أثناء الحوادث (hand edits during incidents)، والأدوات الأخرى التي تلمس الموارد نفسها، والموارد التي تُنشأ خارج البنية التحتية بوصفها شيفرة كليًا (outside IaC entirely). وهو خطر لأن إعادة البناء من الشيفرة (rebuilding from code) لم تعد تمنحك النظام نفسه، ولأن التطبيق التالي (next apply) قد يلغي بصمت إصلاحًا مقصودًا (deliberate fix)، ولأن الإعداد المنحرف (drifted setting) قد يكون الثغرة التي يستغلّها مهاجم (attacker).

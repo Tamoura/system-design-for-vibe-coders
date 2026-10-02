@@ -91,14 +91,14 @@ def reserve_funds(transfer):
 **خط معالجة المجمِّع (The Collector pipeline).** ترسل التطبيقات OTLP إلى مجمِّعٍ قريب (a nearby Collector)، وغالبًا ما يكون DaemonSet، أي واحدًا لكل عقدة Kubernetes (one per Kubernetes node)، إضافةً إلى مجمِّعٍ مركزي بدور «البوابة» (a central "gateway" Collector). ويقوم المجمِّع بالتجميع على دفعات والإثراء والتصفية والتوجيه (batches, enriches, filters and routes):
 
 ```mermaid
-flowchart LR
-  A["واجهة نجم للهاتف مع حزمة القياس المفتوح"] -->|"بروتوكول القياس المفتوح"| C["مجمِّع القياس المفتوح"]
-  P["المدفوعات مع حزمة القياس المفتوح"] -->|"بروتوكول القياس المفتوح"| C
-  K["عُقد العنقود"] -->|"المقاييس"| C
-  C --> M["بروميثيوس: المقاييس"]
-  C --> T["تمبو أو ييغر: التتبّعات"]
-  C --> L["لوكي أو مخزن السجلات: السجلات"]
-  M --> G["لوحات غرافانا وتنبيهاتها"]
+flowchart RL
+  A["واجهة نجم للهاتف مع حزمة القياس المفتوح<br/>(Najm Mobile API + OTel SDK)"] -->|"بروتوكول القياس المفتوح (OTLP)"| C["مجمِّع القياس المفتوح<br/>(OTel Collector)"]
+  P["المدفوعات مع حزمة القياس المفتوح<br/>(Payments + OTel SDK)"] -->|"بروتوكول القياس المفتوح (OTLP)"| C
+  K["عُقد العنقود<br/>(Kubernetes nodes)"] -->|"المقاييس (metrics)"| C
+  C --> M["بروميثيوس: المقاييس<br/>(Prometheus: metrics)"]
+  C --> T["تمبو أو ييغر: التتبّعات<br/>(Tempo or Jaeger: traces)"]
+  C --> L["لوكي أو مخزن السجلات: السجلات<br/>(Loki or log store: logs)"]
+  M --> G["لوحات غرافانا وتنبيهاتها<br/>(Grafana dashboards and alerts)"]
   T --> G
   L --> G
 ```
@@ -418,13 +418,13 @@ groups:
 **التوجيه والتجميع والإسكات (Routing, grouping and silences).** يقيّم Prometheus القواعد (evaluates rules)؛ ويقرّر **Alertmanager** (أو تنبيهات Grafana (Grafana alerting)) من يُبلَّغ (who is told). فهو **يجمّع (groups)** التنبيهات المترابطة في إشعارٍ واحد (into one notification)، و**يكبت (inhibits)** التنبيهات الأدنى حين ينطلق تنبيهٌ أعلى (lower alerts when a higher one is firing)، فلا تستدعِ بشأن 30 خطأ حجيرة حين يكون العنقود كله معطّلًا (do not page about 30 pod errors when the whole cluster is down)، و**يوجّه (routes)** حسب الوسوم (by labels)، فيذهب `service: payments` إلى جدول مناوبة المدفوعات (the Payments rota)، ويدعم **الإسكات (silences)** أثناء الصيانة المخطط لها (during planned maintenance).
 
 ```mermaid
-flowchart LR
-  S["ملف هدف مستوى الخدمة في مستودع الشيفرة"] --> R["قواعد تسجيل وتنبيه مولَّدة"]
-  R --> P["بروميثيوس يقيّم"]
-  P --> A["مدير التنبيهات: يجمّع ويكبت ويوجّه"]
-  A -->|"خطورة استدعاء"| O["هاتف المهندس المناوب"]
-  A -->|"خطورة تذكرة عمل"| T["طابور تذاكر الفريق"]
-  O --> B["دليل التشغيل ولوحة هدف مستوى الخدمة"]
+flowchart RL
+  S["ملف هدف مستوى الخدمة في مستودع الشيفرة<br/>(SLO file in Git)"] --> R["قواعد تسجيل وتنبيه مولَّدة<br/>(Generated recording and alert rules)"]
+  R --> P["بروميثيوس يقيّم<br/>(Prometheus evaluates)"]
+  P --> A["مدير التنبيهات: يجمّع ويكبت ويوجّه<br/>(Alertmanager: group, inhibit, route)"]
+  A -->|"خطورة استدعاء (severity page)"| O["هاتف المهندس المناوب<br/>(On-call engineer's phone)"]
+  A -->|"خطورة تذكرة عمل (severity ticket)"| T["طابور تذاكر الفريق<br/>(Team ticket queue)"]
+  O --> B["دليل التشغيل ولوحة هدف مستوى الخدمة<br/>(Runbook and SLO dashboard)"]
 ```
 
 **سياسة ميزانية الأخطاء (The error budget policy).** هدف مستوى الخدمة الذي لا عواقب له (An SLO without consequences) ليس سوى رسمٍ بياني (just a chart). سياسة نجم، التي اتفق عليها سالم ومها وطارق (agreed by Salem, Maha and Tariq):
@@ -622,13 +622,13 @@ flowchart LR
 **دورة الحياة (The lifecycle).**
 
 ```mermaid
-flowchart LR
-  D["الكشف: تنبيه أو بلاغ"] --> T["الإعلان والفرز: الخطورة والأدوار"]
-  T --> M["التخفيف: إيقاف الضرر"]
-  M --> R["الحل: التأكد من تعافي مؤشرات مستوى الخدمة"]
-  R --> P["مراجعة ما بعد الحادثة: التعلّم"]
-  P --> F["المتابعة: إنجاز بنود العمل"]
-  F -.->|"تنبيهات وضمانات أفضل"| D
+flowchart RL
+  D["الكشف: تنبيه أو بلاغ<br/>(Detect: alert or report)"] --> T["الإعلان والفرز: الخطورة والأدوار<br/>(Declare and triage: severity and roles)"]
+  T --> M["التخفيف: إيقاف الضرر<br/>(Mitigate: stop the harm)"]
+  M --> R["الحل: التأكد من تعافي مؤشرات مستوى الخدمة<br/>(Resolve: confirm SLIs recovered)"]
+  R --> P["مراجعة ما بعد الحادثة: التعلّم<br/>(Postmortem: learn)"]
+  P --> F["المتابعة: إنجاز بنود العمل<br/>(Follow up: action items done)"]
+  F -.->|"تنبيهات وضمانات أفضل (better alerts and safeguards)"| D
 ```
 
 **خفّف الضرر أولًا (Mitigate first).** الإجراء الآمن الأسرع الذي يوقف الضرر عن المستخدمين (The fastest safe action that stops user harm) يأتي قبل الفهم (comes before understanding). التخفيفات المعتادة (Typical mitigations)، بترتيب الأفضلية تقريبًا (in rough order of preference): **التراجع (roll back)** عن أحدث تغيير (the most recent change)، فعمليات النشر وتغييرات الإعدادات (deployments and configuration changes) تسبّب حصةً كبيرة من الحوادث، ولذلك فإن «ما الذي تغيّر؟» ⁦("what changed?")⁩ هو السؤال الأول (the first question)؛ و**إطفاء علَم الميزة (turn off a feature flag)**؛ و**التحويل إلى البديل (fail over)** إلى منطقةٍ سليمة أو نسخةٍ متماثلة سليمة (a healthy zone or replica)؛ و**التوسّع الأفقي (scale out)** أو **التخلّص من جزءٍ من الحمل (shed load)**، أي رفض الحركة منخفضة الأولوية لحماية المدفوعات (reject low-priority traffic to protect payments). احفظ الأدلة قبل أن تُتلفها (Keep evidence before you destroy it): التقط السجلات أو تفريغ الذاكرة (a heap dump) أو الإعدادات السيئة (the bad configuration) قبل إعادة تشغيل الأشياء، إذا كان ذلك يستغرق ثوانيَ لا دقائق (if it takes seconds rather than minutes).

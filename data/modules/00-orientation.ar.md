@@ -84,16 +84,16 @@ WHERE t.initiated_by = 'customer'
 | **الحوكمة (Govern)** | تُحدَّد الملكية والوصول والخصوصية والجودة (ownership, access, privacy and quality) وتُفرض (enforced) | الجميع (Everyone)، مع مسؤول حماية البيانات (DPO) وفريق الحوكمة (governance team) |
 
 ```mermaid
-flowchart LR
-    S["أنظمة المصدر"] --> I["الاستيعاب"]
-    I --> ST["التخزين"]
-    ST --> M["النمذجة والتحويل"]
-    M --> SV["التقديم"]
-    SV --> A["التحليل: لوحات المعلومات والتحليلات"]
-    SV --> DS["التنبؤ: نماذج تعلّم الآلة"]
-    A --> D["قرار العمل"]
+flowchart RL
+    S["أنظمة المصدر<br/>(Source systems)"] --> I["الاستيعاب<br/>(Ingest)"]
+    I --> ST["التخزين<br/>(Store)"]
+    ST --> M["النمذجة والتحويل<br/>(Model and Transform)"]
+    M --> SV["التقديم<br/>(Serve)"]
+    SV --> A["التحليل: لوحات المعلومات والتحليلات<br/>(Analyse: dashboards and analyses)"]
+    SV --> DS["التنبؤ: نماذج تعلّم الآلة<br/>(Predict: ML models)"]
+    A --> D["قرار العمل<br/>(Business decision)"]
     DS --> D
-    O["التشغيل والحوكمة"] -.-> I
+    O["التشغيل والحوكمة<br/>(Operate and Govern)"] -.-> I
     O -.-> M
     O -.-> SV
 ```
@@ -269,15 +269,15 @@ flowchart LR
 تتبّع نقرة واحدة على «تجميد البطاقة» (Freeze card) من هاتف هدى إلى الرسم البياني لدى كريم (Kareem's chart).
 
 ```mermaid
-flowchart LR
-    A["نقرة في تطبيق نجم للهاتف"] --> B["جامع الأحداث"]
-    B --> C["موضوع Kafka"]
-    C --> D["الطبقة الخام: ملفات أو جداول"]
-    D --> E["التهيئة: بيانات منظّفة"]
-    E --> F["المستودع الفرعي: استخدام الميزات اليومي"]
-    F --> G["لوحة المعلومات"]
-    F --> H["خصائص تعلّم الآلة"]
-    O["المنسّق والاختبارات والفهرس"] -.-> D
+flowchart RL
+    A["نقرة في تطبيق نجم للهاتف<br/>(Najm Mobile tap)"] --> B["جامع الأحداث<br/>(Event collector)"]
+    B --> C["موضوع Kafka<br/>(Kafka topic)"]
+    C --> D["الطبقة الخام: ملفات أو جداول<br/>(Raw layer: files or tables)"]
+    D --> E["التهيئة: بيانات منظّفة<br/>(Staging: cleaned)"]
+    E --> F["المستودع الفرعي: استخدام الميزات اليومي<br/>(Mart: daily feature usage)"]
+    F --> G["لوحة المعلومات<br/>(Dashboard)"]
+    F --> H["خصائص تعلّم الآلة<br/>(ML features)"]
+    O["المنسّق والاختبارات والفهرس<br/>(Orchestrator, tests, catalogue)"] -.-> D
     O -.-> E
     O -.-> F
 ```
@@ -554,19 +554,19 @@ ORDER BY 1;
 | **لوحات معلومات التجزئة والمخاطر والمالية (Retail, risk and finance dashboards)** | لوحات معلومات ذكاء أعمال (BI dashboards) مبنية على المستودعات الفرعية | مقاييس (Metrics) |
 
 ```mermaid
-flowchart LR
-    CB["قاعدة بيانات الأنظمة المصرفية الأساسية"] --> P["منصة بيانات نجم"]
-    CS["تدفق البطاقات"] --> P
-    MA["أحداث تطبيق نجم للهاتف"] --> P
-    NA["سجلات نجم أسيست"] --> P
-    DOC["سياسات الائتمان والمذكرات"] --> P
-    P --> C360["المستودع الفرعي للعميل الشامل"]
-    P --> CR["المستودع الفرعي لمخاطر الائتمان"]
-    C360 --> DB["لوحات المعلومات"]
+flowchart RL
+    CB["قاعدة بيانات الأنظمة المصرفية الأساسية<br/>(Core banking DB)"] --> P["منصة بيانات نجم<br/>(Najm data platform)"]
+    CS["تدفق البطاقات<br/>(Card stream)"] --> P
+    MA["أحداث تطبيق نجم للهاتف<br/>(Najm Mobile events)"] --> P
+    NA["سجلات نجم أسيست<br/>(Najm Assist logs)"] --> P
+    DOC["سياسات الائتمان والمذكرات<br/>(Credit policies and memos)"] --> P
+    P --> C360["المستودع الفرعي للعميل الشامل<br/>(Customer 360 mart)"]
+    P --> CR["المستودع الفرعي لمخاطر الائتمان<br/>(Credit-risk mart)"]
+    C360 --> DB["لوحات المعلومات<br/>(Dashboards)"]
     CR --> DB
-    CR --> REG["المستخلصات التنظيمية"]
-    P --> SA["التنبيهات الذكية"]
-    P --> CMC["مساعد مذكرات الائتمان"]
+    CR --> REG["المستخلصات التنظيمية<br/>(Regulatory extracts)"]
+    P --> SA["التنبيهات الذكية<br/>(Smart Alerts)"]
+    P --> CMC["مساعد مذكرات الائتمان<br/>(Credit Memo Copilot)"]
 ```
 
 ### 🟡 التعمق أكثر (Going deeper)

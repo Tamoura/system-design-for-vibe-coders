@@ -62,15 +62,15 @@
 
 ```mermaid
 flowchart TD
-    A["استلام العرض"] --> B["اطلبه كتابيًا"]
-    B --> C["اكتب كل مكوّن وشرط"]
-    C --> D["ابحث عن النطاق وحدّد حدّك الأدنى"]
-    D --> E{"فوق الحد الأدنى وتعلّم جيد؟"}
-    E -->|"لا"| F["تفاوض مرة واحدة أو اعتذر بلطف"]
-    E -->|"نعم"| G["قيّمه مقابل خياراتك الأخرى"]
+    A["استلام العرض<br/>(Offer received)"] --> B["اطلبه كتابيًا<br/>(Ask for it in writing)"]
+    B --> C["اكتب كل مكوّن وشرط<br/>(List every component and term)"]
+    C --> D["ابحث عن النطاق وحدّد حدّك الأدنى<br/>(Research the range and set your floor)"]
+    D --> E{"فوق الحد الأدنى وتعلّم جيد؟<br/>(Above floor and good learning?)"}
+    E -->|"لا (No)"| F["تفاوض مرة واحدة أو اعتذر بلطف<br/>(Negotiate once or decline politely)"]
+    E -->|"نعم (Yes)"| G["قيّمه مقابل خياراتك الأخرى<br/>(Score against your other options)"]
     F --> G
-    G --> H["اقبل كتابيًا"]
-    H --> I["أبلغ أصحاب العمل الآخرين فورًا"]
+    G --> H["اقبل كتابيًا<br/>(Accept in writing)"]
+    H --> I["أبلغ أصحاب العمل الآخرين فورًا<br/>(Tell other employers promptly)"]
 ```
 
 **التفاوض بصدق (Negotiation, honestly).** التفاوض (negotiation) محادثة للوصول إلى شروط يقبلها الطرفان (terms both sides accept)، لا معركة. ثلاث أفكار تساعد:
@@ -319,12 +319,12 @@ flowchart TD
 5. يسأل عن شيء محدد (Asks something specific) ⁦("Is there a step missing for the test database, or have I misconfigured something?")⁩ "هل توجد خطوة ناقصة لقاعدة بيانات الاختبار (test database)، أم أنني أخطأت في إعداد شيء ما (misconfigured)؟"
 
 ```mermaid
-flowchart LR
-    A["عالق"] --> B["حاول وحدك لمدة محددة"]
-    B --> C["ابحث في الوثائق وسجل المحادثات"]
-    C --> D{"هل حُلّت؟"}
-    D -->|"نعم"| E["دوّن الإجابة"]
-    D -->|"لا"| F["اسأل في قناة الفريق مع السياق"]
+flowchart RL
+    A["عالق<br/>(Stuck)"] --> B["حاول وحدك لمدة محددة<br/>(Try alone for a set time)"]
+    B --> C["ابحث في الوثائق وسجل المحادثات<br/>(Search docs and chat history)"]
+    C --> D{"هل حُلّت؟<br/>(Solved?)"}
+    D -->|"نعم (Yes)"| E["دوّن الإجابة<br/>(Write down the answer)"]
+    D -->|"لا (No)"| F["اسأل في قناة الفريق مع السياق<br/>(Ask in the team channel with context)"]
     F --> E
 ```
 
@@ -550,12 +550,12 @@ flowchart LR
 - **الإبلاغ عن التغيير (Communicating change):** أي شيء يؤثّر في فرق أخرى (خط بناء مشترك (shared pipeline)، أو واجهة برمجة (API)، أو مخطط بيانات (schema)) يحصل على إشعار مسبق (advance notice) في قناتها، وخطة تراجع (rollback plan)، وجهة اتصال محددة بالاسم (named contact). وهذا بالضبط ما فات يوسف.
 
 ```mermaid
-flowchart LR
-    A["خذ مشكلة لا مهمة"] --> B["اكتب ملاحظة تصميم قصيرة"]
-    B --> C["سلّم بخطوات صغيرة مع تحديثات"]
-    C --> D["راقبه في بيئة الإنتاج"]
-    D --> E["اطلب ملاحظات محددة"]
-    E --> F["دوّن الأدلة في سجلّ الإنجازات"]
+flowchart RL
+    A["خذ مشكلة لا مهمة<br/>(Take a problem, not a task)"] --> B["اكتب ملاحظة تصميم قصيرة<br/>(Write a short design note)"]
+    B --> C["سلّم بخطوات صغيرة مع تحديثات<br/>(Ship in small steps with updates)"]
+    C --> D["راقبه في بيئة الإنتاج<br/>(Watch it in production)"]
+    D --> E["اطلب ملاحظات محددة<br/>(Ask for specific feedback)"]
+    E --> F["دوّن الأدلة في سجلّ الإنجازات<br/>(Log evidence in brag doc)"]
     F --> A
 ```
 

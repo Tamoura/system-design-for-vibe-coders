@@ -86,13 +86,13 @@ SELECT SUM(digital_customers) * 1.0 / SUM(customers) AS adoption FROM branch_sum
 **ما الذي تفعله الطبقة الدلالية (What a semantic layer does).** الطبقة الدلالية (semantic layer) مجموعة من التعريفات المخزّنة على شكل شيفرة (stored as code)، تخبر محرّك الاستعلام (query engine) بأي الجداول تحمل أي المقادير (measures)، وكيف تُربط الجداول (how tables join) (عبر **الكيانات (entities)**، أي المفاتيح مثل `customer_id`)، وما الأبعاد الموجودة (which dimensions exist)، وكيف يُبنى كل مقياس (how each metric is built). تطلب أداةٌ "العملاء النشطين حسب الشريحة، حسب الشهر" (active customers by segment, by month) فتكتب الطبقة الدلالية شيفرة SQL. ولأن كل أداة تسأل الطبقة نفسها (the same layer)، تحصل كل أداة على الإجابة نفسها (the same answer).
 
 ```mermaid
-flowchart LR
-    W["أسواق بيانات المستودع"] --> S["الطبقة الدلالية: مقادير وأبعاد ومقاييس"]
-    S --> D["لوحات المعلومات"]
-    S --> N["دفاتر الملاحظات"]
-    S --> X["جداول البيانات"]
-    S --> A["مساعدات النماذج اللغوية الكبيرة"]
-    C["فهرس المقاييس"] -.-> S
+flowchart RL
+    W["أسواق بيانات المستودع<br/>(Warehouse marts)"] --> S["الطبقة الدلالية: مقادير وأبعاد ومقاييس<br/>(Semantic layer: measures, dimensions, metrics)"]
+    S --> D["لوحات المعلومات<br/>(Dashboards)"]
+    S --> N["دفاتر الملاحظات<br/>(Notebooks)"]
+    S --> X["جداول البيانات<br/>(Spreadsheets)"]
+    S --> A["مساعدات النماذج اللغوية الكبيرة<br/>(LLM assistants)"]
+    C["فهرس المقاييس<br/>(Metrics catalogue)"] -.-> S
 ```
 
 ثلاثة خيارات واسعة الاستخدام (widely used options)، موصوفة بحياد (described neutrally):
@@ -357,10 +357,10 @@ metrics:
 
 ```mermaid
 flowchart TD
-    Q["السؤال الرئيسي: هل تنمو التجزئة؟"] --> K["الصف العلوي: 5 مؤشرات أداء معتمدة مع الهدف والاتجاه"]
-    K --> B["الوسط: تفصيلات حسب الشريحة والمنطقة"]
-    B --> T["الأسفل أو التعمق: جداول الفروع والحملات"]
-    T --> A["الإجراء: افتح تقرير الحملة أو خطة الفرع"]
+    Q["السؤال الرئيسي: هل تنمو التجزئة؟<br/>(Main question: is retail growing?)"] --> K["الصف العلوي: 5 مؤشرات أداء معتمدة مع الهدف والاتجاه<br/>(Top row: 5 certified KPIs with target and trend)"]
+    K --> B["الوسط: تفصيلات حسب الشريحة والمنطقة<br/>(Middle: segment and region breakdowns)"]
+    B --> T["الأسفل أو التعمق: جداول الفروع والحملات<br/>(Bottom or drill-through: branch and campaign tables)"]
+    T --> A["الإجراء: افتح تقرير الحملة أو خطة الفرع<br/>(Action: open campaign report or branch plan)"]
 ```
 
 **المقارنات تجعل الأرقام ذات معنى (Comparisons make numbers meaningful).** "إنفاق البطاقات: 84.2 مليون ريال قطري" (Card spend: QAR 84.2 million) لا يعني شيئًا وحده. اعرض دائمًا مقارنة واحدة على الأقل (at least one comparison): الفترة السابقة (previous period)، أو الفترة نفسها من العام الماضي (same period last year) (وهي مهمة في الخليج، حيث يحرّك رمضان والعطلات الصيفية الإنفاق بحدّة، ويتقدّم رمضان نحو 11 يومًا كل عام ميلادي (Gregorian year))، أو الهدف (target) أو التوقّع (forecast). قارن المثيل بالمثيل (compare like with like): فأسبوع فيه عيد مقابل أسبوع عادي ليس مقارنة عادلة (fair comparison)، فعلّق عليه (annotate it) أو قارنه بالأسبوع المكافئ من العام الماضي (equivalent week last year).
@@ -562,14 +562,14 @@ flowchart TD
 - **فرضية العدم (Null hypothesis)**: الافتراض أن التغيير لا أثر له (no effect). ويسأل الاختبار هل البيانات مفاجئة (surprising) في ظل ذلك الافتراض.
 
 ```mermaid
-flowchart LR
-    P["الخطة: الفرضية والمقاييس وحجم العينة"] --> R["وزّع العملاء عشوائيًا"]
-    R --> A["المجموعة الضابطة أ"]
-    R --> B["مجموعة المعالجة ب"]
-    A --> M["قِس طوال المدة المخطط لها"]
+flowchart RL
+    P["الخطة: الفرضية والمقاييس وحجم العينة<br/>(Plan: hypothesis, metrics, sample size)"] --> R["وزّع العملاء عشوائيًا<br/>(Randomise customers)"]
+    R --> A["المجموعة الضابطة أ<br/>(Control A)"]
+    R --> B["مجموعة المعالجة ب<br/>(Treatment B)"]
+    A --> M["قِس طوال المدة المخطط لها<br/>(Measure for the planned duration)"]
     B --> M
-    M --> C["افحص عدم تطابق نسبة العينة ومقاييس الحماية"]
-    C --> D["قدّر الأثر بفاصل الثقة وقرّر"]
+    M --> C["افحص عدم تطابق نسبة العينة ومقاييس الحماية<br/>(Check SRM and guardrails)"]
+    C --> D["قدّر الأثر بفاصل الثقة وقرّر<br/>(Estimate effect with CI and decide)"]
 ```
 
 **قيم p، مقروءةً قراءة صحيحة (p-values, read correctly).** لو لم يكن للتغيير أثر فعلًا، فكم مرة سيُنتج التعيين العشوائي وحده (random assignment alone) فرقًا بحجم الفرق المرصود على الأقل (at least as large as the one observed)؟ ذلك التكرار هو قيمة p. وقيمة p الصغيرة (عُرفًا أقل من 0.05، وهو **مستوى الدلالة (significance level)**، ألفا (alpha)) تعني أن النتيجة ستكون غير معتادة (unusual) لو لم يكن هناك أثر. وهي **لا** تعني "هناك احتمال 97% أن التصميم الجديد أفضل" (there is a 97% chance the new design is better)، ولا تقول شيئًا عمّا إذا كان الأثر كبيرًا بما يكفي ليهم (large enough to matter).

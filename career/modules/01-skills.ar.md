@@ -62,13 +62,13 @@
 **تصحيح الأخطاء (Debugging).** تصحيح الأخطاء حلقة (loop) يمكنك اتّباعها تحت الضغط (under pressure)، وليس موهبة (talent):
 
 ```mermaid
-flowchart LR
-    R["أعِد إنتاج الخطأ بشكل موثوق"] --> O["لاحِظ: اقرأ رسالة الخطأ وتتبّع المكدّس"]
-    O --> H["كوّن فرضية واحدة"]
-    H --> T["اختبرها بتغيير واحد أو طباعة واحدة"]
-    T -->|"خاطئة"| H
-    T -->|"صحيحة"| F["أصلِح الخطأ وأضِف اختبارًا"]
-    F --> V["تحقّق من الحالة الأصلية ومن مجموعة الاختبارات"]
+flowchart RL
+    R["أعِد إنتاج الخطأ بشكل موثوق<br/>(Reproduce it reliably)"] --> O["لاحِظ: اقرأ رسالة الخطأ وتتبّع المكدّس<br/>(Observe: read the error and stack trace)"]
+    O --> H["كوّن فرضية واحدة<br/>(Form one hypothesis)"]
+    H --> T["اختبرها بتغيير واحد أو طباعة واحدة<br/>(Test it with one change or one print)"]
+    T -->|"خاطئة (wrong)"| H
+    T -->|"صحيحة (right)"| F["أصلِح الخطأ وأضِف اختبارًا<br/>(Fix it and add a test)"]
+    F --> V["تحقّق من الحالة الأصلية ومن مجموعة الاختبارات<br/>(Verify the original case and the suite)"]
 ```
 
 عادتان هما الأهم: **أعِد الإنتاج أولًا (reproduce first)** (وإلا فلن تعرف أنك أصلحته)، و**غيّر شيئًا واحدًا في كل مرة (change one thing at a time)**. **تتبّع المكدّس (stack trace)** يسرد استدعاءات الدوال (function calls) التي كانت نشطة لحظة وقوع الخطأ؛ والسطر المفيد عادةً هو آخر سطر في شيفرتك *أنت* (the last one in *your* code). تعلّم **مصحّح الأخطاء (debugger)** في محرّرك (editor) — نقاط التوقف (breakpoints)، والتنفيذ خطوة بخطوة (stepping)، وفحص المتغيرات (inspecting variables) — فهو يتفوّق على عشرين جملة طباعة (print statements).
@@ -303,16 +303,16 @@ How I tested it:
 **سير عمل يُبقيك مسيطرًا (A workflow that keeps you in charge).**
 
 ```mermaid
-flowchart LR
-    S["حدّد مهمة صغيرة بمعايير قبول"] --> G["يقترح الوكيل التغيير أو يكتبه"]
-    G --> R["تقرأ الفرق كاملًا"]
-    R -->|"غير واضح أو خاطئ"| S
-    R --> V["شغّل الاختبارات وأجرِ تحقّقًا فعليًا"]
-    V -->|"فشل"| S
-    V --> E["اشرح بالعكس: هل تستطيع الدفاع عن كل سطر"]
-    E -->|"لا"| L["تعلّم الجزء الذي لا تستطيع شرحه"]
+flowchart RL
+    S["حدّد مهمة صغيرة بمعايير قبول<br/>(Specify a small task with acceptance criteria)"] --> G["يقترح الوكيل التغيير أو يكتبه<br/>(Agent proposes or writes the change)"]
+    G --> R["تقرأ الفرق كاملًا<br/>(You read the whole diff)"]
+    R -->|"غير واضح أو خاطئ (unclear or wrong)"| S
+    R --> V["شغّل الاختبارات وأجرِ تحقّقًا فعليًا<br/>(Run tests and a real check)"]
+    V -->|"فشل (fails)"| S
+    V --> E["اشرح بالعكس: هل تستطيع الدفاع عن كل سطر<br/>(Explain-back: could you defend every line)"]
+    E -->|"لا (no)"| L["تعلّم الجزء الذي لا تستطيع شرحه<br/>(Learn the part you cannot explain)"]
     L --> E
-    E -->|"نعم"| C["أودِع برسالة صادقة"]
+    E -->|"نعم (yes)"| C["أودِع برسالة صادقة<br/>(Commit with an honest message)"]
 ```
 
 ثلاث عادات تجعل هذه الحلقة (loop) تعمل:
@@ -559,14 +559,14 @@ AI assistance and verification:
 **الطريق من الحاسوب إلى المستخدمين (The path from laptop to users).** إعداد صغير لكنه حقيقي (small but real setup) يبدو هكذا:
 
 ```mermaid
-flowchart LR
-    L["الحاسوب: الشيفرة والاختبارات"] --> G["مستودع Git"]
-    G --> C["التكامل المستمر: اختبارات وفحوص مع كل دفع"]
-    C --> S["بيئة التجهيز: نسخة من بيئة الإنتاج"]
-    S --> P["بيئة الإنتاج: مستخدمون وبيانات حقيقية"]
-    P --> M["السجلات والأخطاء وتنبيهات التوافر"]
-    M -->|"اكتُشف خطأ"| L
-    P -->|"إصدار سيئ"| B["التراجع إلى الإصدار السابق"]
+flowchart RL
+    L["الحاسوب: الشيفرة والاختبارات<br/>(Laptop: code and tests)"] --> G["مستودع Git<br/>(Git repository)"]
+    G --> C["التكامل المستمر: اختبارات وفحوص مع كل دفع<br/>(CI: tests and checks on every push)"]
+    C --> S["بيئة التجهيز: نسخة من بيئة الإنتاج<br/>(Staging: a copy of production)"]
+    S --> P["بيئة الإنتاج: مستخدمون وبيانات حقيقية<br/>(Production: real users and data)"]
+    P --> M["السجلات والأخطاء وتنبيهات التوافر<br/>(Logs, errors and uptime alerts)"]
+    M -->|"اكتُشف خطأ (bug found)"| L
+    P -->|"إصدار سيئ (bad release)"| B["التراجع إلى الإصدار السابق<br/>(Roll back to the previous version)"]
 ```
 
 كل سهم دليل لمعرض الأعمال (portfolio evidence): شارة CI ‏(CI badge)، ورابط حيّ (live URL)، وتنبيه (alert)، وملاحظة عن تراجع (rollback note).

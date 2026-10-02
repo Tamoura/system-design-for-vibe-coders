@@ -29,14 +29,14 @@
 **جولات التوظيف (The hiring loop).** يسمّي أصحاب العمل الخطوات بأسماء مختلفة، لكن معظم جولات مستوى المبتدئين (entry-level loops) تبدو هكذا:
 
 ```mermaid
-flowchart LR
-    A["التقديم والسيرة الذاتية"] --> B["مقابلة الفرز مع مسؤول التوظيف"]
-    B --> C["التقييم الإلكتروني أو المهمة المنزلية"]
-    C --> D["المقابلات التقنية"]
-    D --> E["المقابلة السلوكية"]
-    E --> F["اجتماع التقييم الختامي والقرار"]
-    F --> G["المراجع والتحقّقات"]
-    G --> H["العرض الوظيفي"]
+flowchart RL
+    A["التقديم والسيرة الذاتية<br/>(Application and CV)"] --> B["مقابلة الفرز مع مسؤول التوظيف<br/>(Recruiter screen)"]
+    B --> C["التقييم الإلكتروني أو المهمة المنزلية<br/>(Online assessment or take-home)"]
+    C --> D["المقابلات التقنية<br/>(Technical interviews)"]
+    D --> E["المقابلة السلوكية<br/>(Behavioural interview)"]
+    E --> F["اجتماع التقييم الختامي والقرار<br/>(Debrief and decision)"]
+    F --> G["المراجع والتحقّقات<br/>(References and checks)"]
+    G --> H["العرض الوظيفي<br/>(Offer)"]
 ```
 
 | الخطوة (Step) | ما تفحصه (What it checks) | من يديرها عادةً (Who usually runs it) | كيف تستعد (How to prepare) |
@@ -286,12 +286,12 @@ flowchart LR
 **منهجية لأي مشكلة برمجية (A method for any coding problem).** استخدم الخطوات الخمس نفسها في كل مرة، بصوت مسموع (out loud):
 
 ```mermaid
-flowchart LR
-    A["أعد صياغة المشكلة"] --> B["اسأل عن المدخلات والحالات الحدّية"]
-    B --> C["اذكر خطة بسيطة وكلفتها"]
-    C --> D["اكتب شيفرة نظيفة مع الشرح"]
-    D --> E["اختبر بالأمثلة والحالات الحدّية"]
-    E --> F["حسّن إن سمح الوقت"]
+flowchart RL
+    A["أعد صياغة المشكلة<br/>(Restate the problem)"] --> B["اسأل عن المدخلات والحالات الحدّية<br/>(Ask about inputs and edge cases)"]
+    B --> C["اذكر خطة بسيطة وكلفتها<br/>(Say a simple plan and its cost)"]
+    C --> D["اكتب شيفرة نظيفة مع الشرح<br/>(Write clean code, narrating)"]
+    D --> E["اختبر بالأمثلة والحالات الحدّية<br/>(Test with examples and edge cases)"]
+    E --> F["حسّن إن سمح الوقت<br/>(Improve if time allows)"]
 ```
 
 1. **أعد الصياغة (Restate).** "إذن أحصل على قائمة بالمعاملات (transactions) ويجب أن أُرجع معرّفات (IDs) أي معاملات تبدو مكرّرة (duplicates)، أي الحساب نفسه والمبلغ نفسه خلال 60 ثانية. هل هذا صحيح؟" ⁦("So I get a list of transactions and must return the IDs of any that look like duplicates, meaning the same account and amount within 60 seconds. Is that right?")⁩
@@ -560,11 +560,11 @@ def test_transfer(client):
 
 ```mermaid
 flowchart TD
-    A["استوضح: المستخدمون والحجم والضروريات والقيود"] --> B["ارسم: أبسط الصناديق والأسهم"]
-    B --> C["مرّر طلبًا أو سجلًا واحدًا عبره"]
-    C --> D["تعمّق في جزء واحد يهتم به المُحاور"]
-    D --> E["سمِّ المخاطر وحالات الإخفاق وما ستقيسه"]
-    E -->|"المُحاور يغيّر أحد المتطلبات"| A
+    A["استوضح: المستخدمون والحجم والضروريات والقيود<br/>(Clarify: users, scale, must-haves, constraints)"] --> B["ارسم: أبسط الصناديق والأسهم<br/>(Sketch: the simplest boxes and arrows)"]
+    B --> C["مرّر طلبًا أو سجلًا واحدًا عبره<br/>(Walk one request or record through it)"]
+    C --> D["تعمّق في جزء واحد يهتم به المُحاور<br/>(Deepen one part the interviewer cares about)"]
+    D --> E["سمِّ المخاطر وحالات الإخفاق وما ستقيسه<br/>(Name risks, failure cases and what you would measure)"]
+    E -->|"المُحاور يغيّر أحد المتطلبات (interviewer changes a requirement)"| A
 ```
 
 1. **استوضح (Clarify).** من يستخدمه؟ ماذا يجب أن يفعل، وما الذي خارج النطاق (out of scope)؟ كم الحِمل أو البيانات (load or data) تقريبًا؟ هل هناك قيود صارمة (hard constraints)، مثل التنظيم (regulation) أو زمن الاستجابة (latency) أو الكلفة (cost)؟ اكتب الإجابات حيث يستطيع المُحاور رؤيتها.

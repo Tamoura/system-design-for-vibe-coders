@@ -146,13 +146,13 @@ RUN --mount=type=secret,id=pip_conf,target=/etc/pip.conf \
 **ابنِ مرة واحدة ورقِّ البصمة (Build once, promote the digest).** يبني خط التسليم (pipeline) الصورة مرة واحدة فقط على الفرع الرئيسي (main branch)، ويدفعها (pushes it)، ويسجّل البصمة (records the digest)، ثم تشغّل كل بيئة (environment) (التطوير dev، والاختبار test، والتجهيز staging، والإنتاج production) تلك البصمة. الترقية (promotion) تغيّر الإعدادات (configuration)، لا الصورة أبدًا. وإعادة بناء "الإيداع نفسه (the same commit)" للإنتاج هي الطريقة التي تتباعد بها بيئتا التجهيز والإنتاج بصمت (quietly diverge). يؤتمت الدرس 3.2 هذه الترقية عبر GitOps، ويبني الدرس 4.1 خط التسليم. ونظرة غير المبرمجين (non-coder view) إلى الفكرة نفسها موجودة في [*تصميم الأنظمة لمبرمجي الحدس (System Design for Vibe Coders)*، الدرس 4.5 — تحقّق من الأثر البرمجي لا من المصدر (Verify the artifact, not the source)](../vibe/index.ar.html#l4-5).
 
 ```mermaid
-flowchart LR
-    C["إيداع على الفرع الرئيسي"] --> B["بناء مرة واحدة في التكامل المستمر"]
-    B --> S["فحص وقائمة مكوّنات وتوقيع"]
-    S --> R["دفع إلى السجل وتسجيل البصمة"]
-    R --> D["بيئة التطوير تشغّل البصمة"]
-    D --> T["بيئة التجهيز تشغّل البصمة نفسها"]
-    T --> P["الإنتاج يشغّل البصمة نفسها"]
+flowchart RL
+    C["إيداع على الفرع الرئيسي<br/>(Commit on main)"] --> B["بناء مرة واحدة في التكامل المستمر<br/>(Build once in CI)"]
+    B --> S["فحص وقائمة مكوّنات وتوقيع<br/>(Scan, SBOM, sign)"]
+    S --> R["دفع إلى السجل وتسجيل البصمة<br/>(Push to registry, record digest)"]
+    R --> D["بيئة التطوير تشغّل البصمة<br/>(Dev runs digest)"]
+    D --> T["بيئة التجهيز تشغّل البصمة نفسها<br/>(Staging runs same digest)"]
+    T --> P["الإنتاج يشغّل البصمة نفسها<br/>(Production runs same digest)"]
 ```
 
 **الملصقات لإمكانية التتبّع (Labels for traceability).** اختم ملصقات OCI القياسية (standard OCI labels) `org.opencontainers.image.revision` (الإيداع (the commit)) و `org.opencontainers.image.source` (المستودع (the repository)) في كل صورة، حتى يستطيع أي شخص أن يجيب عن سؤال "من أين جاءت هذه؟ ⁦(where did this come from?)⁩"
@@ -336,14 +336,14 @@ flowchart LR
 **الحالة المرغوبة والمواءمة (Desired state and reconciliation).** أنت لا تقول لـ Kubernetes "شغّل ثلاث حاويات (start three containers)". بل تقدّم كائنًا (object) يقول "يجب أن تكون هناك ثلاث (there should be three)". فيلاحظ متحكّم (controller) الفجوة (gap) بين ثلاث مطلوبة وصفر عاملة، ويتصرّف. وإذا تعطّلت عقدة (node dies) وأخذت معها حجيرة، تعود الفجوة للظهور ويتصرّف المتحكّم مجددًا. تُسمّى تلك الحلقة **المواءمة (reconciliation)**، وهي تفسّر مفاجآت يوسف الثلاث كلها.
 
 ```mermaid
-flowchart LR
-    U["تطبيق يدوي أو مزامنة من مستودع الشيفرة"] --> A["خادم واجهة البرمجة"]
-    A --> E["مخزن الحالة يحفظ الحالة المرغوبة"]
-    C["متحكّم عمليات النشر"] -->|"يراقب"| A
-    C -->|"ينشئ الحجيرات"| A
-    S["المُجدوِل"] -->|"يُسند العقدة"| A
-    K["وكيل العقدة"] -->|"يراقب حجيراته"| A
-    K --> R["بيئة تشغيل الحاويات تبدأ الحاويات"]
+flowchart RL
+    U["تطبيق يدوي أو مزامنة من مستودع الشيفرة<br/>(kubectl apply or GitOps)"] --> A["خادم واجهة البرمجة<br/>(API server)"]
+    A --> E["مخزن الحالة يحفظ الحالة المرغوبة<br/>(etcd stores desired state)"]
+    C["متحكّم عمليات النشر<br/>(Deployment controller)"] -->|"يراقب (watches)"| A
+    C -->|"ينشئ الحجيرات (creates pods)"| A
+    S["المُجدوِل<br/>(Scheduler)"] -->|"يُسند العقدة (assigns node)"| A
+    K["وكيل العقدة<br/>(kubelet on node)"] -->|"يراقب حجيراته (watches its pods)"| A
+    K --> R["بيئة تشغيل الحاويات تبدأ الحاويات<br/>(Container runtime starts containers)"]
 ```
 
 المتحكّمات (controllers) والمُجدوِل (scheduler) وعناصر kubelet، كلٌّ منها يراقب خادم واجهة البرمجة (watches the API server) ويكتب النتائج إليه؛ ولا يتخاطب بعضها مع بعض مباشرة أبدًا (never talk to each other directly).
@@ -684,14 +684,14 @@ echo 'cGFzc3dvcmQ=' | base64 --decode     # prints: password
 
 ```mermaid
 flowchart TD
-    S["الحاوية تبدأ"] --> P{"هل نجح مجسّ البدء؟"}
-    P -->|"لا، وبقيت محاولات"| P
-    P -->|"لا، ونفدت المحاولات"| X["إعادة تشغيل الحاوية"]
-    P -->|"نعم"| L{"هل تنجح الحيوية؟"}
-    L -->|"لا، وبُلغ الحد"| X
-    L -->|"نعم"| R{"هل تنجح الجاهزية؟"}
-    R -->|"نعم"| T["تتلقّى حركة المرور"]
-    R -->|"لا"| N["تُزال من الخدمة دون إعادة تشغيل"]
+    S["الحاوية تبدأ<br/>(Container starts)"] --> P{"هل نجح مجسّ البدء؟<br/>(Startup probe passed?)"}
+    P -->|"لا، وبقيت محاولات (no, retries left)"| P
+    P -->|"لا، ونفدت المحاولات (no, retries exhausted)"| X["إعادة تشغيل الحاوية<br/>(Restart container)"]
+    P -->|"نعم (yes)"| L{"هل تنجح الحيوية؟<br/>(Liveness passing?)"}
+    L -->|"لا، وبُلغ الحد (no, threshold reached)"| X
+    L -->|"نعم (yes)"| R{"هل تنجح الجاهزية؟<br/>(Readiness passing?)"}
+    R -->|"نعم (yes)"| T["تتلقّى حركة المرور<br/>(Receives traffic)"]
+    R -->|"لا (no)"| N["تُزال من الخدمة دون إعادة تشغيل<br/>(Removed from Service, not restarted)"]
 ```
 
 القاعدة التي كانت ستنقذ المدفوعات (Payments): **الحيوية تفحص العملية نفسها فقط (liveness checks only the process itself)** (هل تستجيب، أم أنها في حالة جمود (deadlocked)؟). فإعادة تشغيل التطبيق لا تُصلح قاعدة بيانات. أما **الجاهزية (Readiness)** فقد تراعي الاعتماديات الصلبة (hard dependencies)، لكن إن أصبحت كل حجيرة غير جاهزة دفعة واحدة، يتلقّى المستدعون (callers) أخطاء اتصال (connection errors) بدلًا من استجابة واضحة (clear response). وكثيرًا ما يكون الأفضل أن تبقى جاهزًا وتُرجع خطأً سريعًا وواضحًا (fast, clear error) (مع قاطع دائرة (circuit breaker)) ما دامت الاعتمادية متوقّفة.
