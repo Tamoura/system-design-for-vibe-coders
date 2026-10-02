@@ -535,3 +535,226 @@ def test_transfer(client):
 
 ---
 
+# 5.3 — مقابلات تصميم الأنظمة والبيانات وتعلّم الآلة للمبتدئين
+*المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 1.3، 5.2* · *الخطوة (Step): Interview*
+
+## ⚡ الدرس في دقيقة (In 60 seconds)
+- يواجه المبتدئون (Juniors) على نحو متزايد **جولات على نمط التصميم (design-style rounds)**: تصميم نظام صغير (small system design)، أو حالة SQL أو نمذجة بيانات (SQL or data-modelling case)، أو سؤال عن تقييم تعلّم الآلة (machine-learning evaluation question)، أو شرح متدرّج لاستكشاف أعطال السحابة (cloud troubleshooting walk-through). التوقعات أقل منها للخبراء (seniors)، لكن المنهجية واحدة.
+- يفحص المُحاور هل **تسأل عن المتطلبات (ask about requirements)، وتختار مكوّنات بسيطة لأسباب واضحة (simple components for clear reasons)، وتسمّي المفاضلات وحالات الإخفاق (trade-offs and failure cases)**. لا أحد يتوقع منك أن تصمّم منصّة عالمية (global platform) وحدك.
+- استخدم بنية واحدة لكل سؤال تصميم: **استوضح (clarify)، ارسم مخططًا (sketch)، مرّر طلبًا عبره (walk a request through it)، ثم تعمّق في جزء واحد وسمِّ المخاطر (deepen one part and name the risks).**
+- إشارة القرار (Decision cue): حين لا تكون متأكدًا، اختر أبسط تصميم يلبّي المتطلبات المذكورة (simplest design that meets the stated requirements)، وقل ما الذي سيجعلك تغيّره.
+- الفخ الأكبر (Biggest trap): ذكر تقنيات رائجة (fashionable technologies) ("Kafka، Kubernetes، الخدمات المصغّرة (microservices)") دون قول المشكلة التي تحلّها كلٌّ منها. كل صندوق (box) يحتاج إلى سبب.
+
+## 🧭 لماذا يهم (Why it matters)
+جولة هدى الثانية مع دانة، كبيرة علماء البيانات (lead data scientist) في نجم. تسأل دانة: "نريد تمييز معاملات البطاقات (card transactions) التي قد تكون احتيالًا (fraud). كيف ستتناولين ذلك؟" ⁦("How would you approach it?")⁩ تجيب هدى فورًا: "سأستخدم XGBoost، وأضبط المعاملات الفائقة (tune the hyperparameters)، وأرفع الدقة (accuracy) إلى أعلى حد ممكن." تسأل دانة: "ما نسبة المعاملات الاحتيالية؟" ⁦("What share of transactions are fraud?")⁩ لا تعرف هدى. "إذن ماذا تخبرنا دقة 99%؟" ⁦("Then what does 99% accuracy tell us?")⁩ تدرك هدى، بعد فوات الأوان، أنه إذا كان الاحتيال نادرًا (rare)، فإن نموذجًا لا يميّز أي شيء إطلاقًا سينال دقة عالية جدًا. ملاحظات دانة: "قوية في أسماء النماذج (model names). لم تسأل عن المشكلة، ولا البيانات، ولا كلفة الأخطاء (cost of errors)."
+
+يوسف، في جولة المنصّات (platform round) مع سالم، يُسأل: "تطبيق الويب الداخلي (internal web app) لدينا يُرجع فجأة أخطاء لبعض المستخدمين. اشرح لي خطوة بخطوة ما الذي ستفحصه" ⁦("Walk me through what you would check.")⁩ يعرف يوسف الشبكات (networks) جيدًا، فيمشي عبرها بمنهجية (methodically): DNS، ثم فحوص السلامة في موزّع الأحمال (load balancer health checks)، ثم عمليات النشر الأخيرة (recent deploys)، ثم السجلات (logs). ويسأل عمّا تغيّر مؤخرًا. ملاحظات سالم إيجابية، رغم أن يوسف لم يشغّل Kubernetes في بيئة الإنتاج (production) قط.
+
+الفرق في المنهجية (method)، لا في المعرفة (knowledge). يمنحك هذا الدرس المنهجية لكل نوع من جولات التصميم (design round)، ويوجّهك إلى دروس المكتبة (library lessons) التي تبني المعرفة الكامنة وراءها.
+
+## 📐 كيف يعمل (How it works)
+
+### 🟢 الأساسيات (The essentials)
+
+**البنية الشاملة (The universal structure).** كل جولة تصميم، أيًا كان مجالها (domain)، تكافئ الحركات الأربع نفسها (four moves):
+
+```mermaid
+flowchart TD
+    A["استوضح: المستخدمون والحجم والضروريات والقيود"] --> B["ارسم: أبسط الصناديق والأسهم"]
+    B --> C["مرّر طلبًا أو سجلًا واحدًا عبره"]
+    C --> D["تعمّق في جزء واحد يهتم به المُحاور"]
+    D --> E["سمِّ المخاطر وحالات الإخفاق وما ستقيسه"]
+    E -->|"المُحاور يغيّر أحد المتطلبات"| A
+```
+
+1. **استوضح (Clarify).** من يستخدمه؟ ماذا يجب أن يفعل، وما الذي خارج النطاق (out of scope)؟ كم الحِمل أو البيانات (load or data) تقريبًا؟ هل هناك قيود صارمة (hard constraints)، مثل التنظيم (regulation) أو زمن الاستجابة (latency) أو الكلفة (cost)؟ اكتب الإجابات حيث يستطيع المُحاور رؤيتها.
+2. **ارسم مخططًا (Sketch).** ارسم أبسط تصميم يعمل (simplest design that works): العميل (client)، وخادم التطبيق (application server)، وقاعدة البيانات (database)، وما يلزم فقط غير ذلك. انظر [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 1.1 — ارسم الصناديق قبل أن يكتب الوكيل الشيفرة (Draw the boxes before the agent writes the code)](../vibe/index.ar.html#l1-1).
+3. **مرّره عبر النظام (Walk it through).** تتبّع طلبًا واحدًا (one request) من المستخدم إلى قاعدة البيانات وعودةً. هذا يكشف الأجزاء الناقصة (missing pieces) بسرعة. ويعلّم [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 1.2 — رحلة الطلب (The request's journey)](../vibe/index.ar.html#l1-2) هذا بالضبط.
+4. **تعمّق وحدّد المخاطر (Deepen and risk).** سيضغط المُحاور على مجال واحد: "ماذا لو زادت حركة المرور (traffic) عشر مرات؟" ⁦("What if this gets ten times more traffic?")⁩ أو "ماذا لو تعطّل مزوّد البريد الإلكتروني (email provider)؟" ⁦("What if the email provider is down?")⁩ قل ما الذي ينكسر، وما الذي ستغيّره، وما الذي ستراقبه (monitor).
+
+**ما يُتوقع من المبتدئين معرفته وما لا يُتوقع (What juniors are and are not expected to know).**
+
+| متوقع على مستوى المبتدئين (Expected at junior level) | غير متوقع على مستوى المبتدئين (Not expected at junior level) |
+|---|---|
+| ما يفعله كلٌّ من العميل (client)، والخادم (server)، وقاعدة البيانات (database)، وذاكرة التخزين المؤقت (cache)، والطابور (queue)، وموزّع الأحمال (load balancer) | تصميم قاعدة بيانات موزّعة عالميًا (globally distributed database) |
+| الجداول العلائقية (Relational tables)، والمفاتيح (keys)، ومتى يفيد الفهرس (index) | ضبط عنقود قاعدة بيانات (database cluster) من الذاكرة |
+| لماذا لا تنفّذ عملًا بطيئًا داخل طلب ويب (slow work inside a web request) (استخدم طابورًا) | خوارزميات الإجماع (consensus algorithms) بالتفصيل |
+| التفكير الأساسي في الإخفاق (Basic failure thinking): ماذا لو تعطّل هذا الصندوق؟ | أرقام السعة الدقيقة (Exact capacity numbers) من الذاكرة |
+| أساسيات الأمن (Security basics): المصادقة (authentication)، والتفويض (authorisation)، والأسرار (secrets)، والتحقق من المُدخلات (input validation) | نموذج تهديدات كامل (full threat model) تحت ضغط الوقت |
+| قول "لا أعرف، لكن إليك كيف سأعرف" ("I don't know, but here is how I would find out") | التظاهر بالمعرفة (Pretending to know) |
+
+**أرقام تقريبية، موسومة بوصفها افتراضات (Rough numbers, labelled as assumptions).** قد يطلب منك المُحاورون تقدير الحِمل (estimate load). ضع افتراضات مُقرَّبة (round assumptions) بصوت مسموع وأبقِ الحساب بسيطًا. "لنفترض 100,000 عميل نشط، وكلٌّ منهم يتلقى نحو خمسة تنبيهات (alerts) يوميًا. هذا 500,000 تنبيه يوميًا. في اليوم نحو 86,400 ثانية، أي قرابة ستة في الثانية في المتوسط، وأكثر في الذروة (peak). يستطيع خادم واحد التعامل مع ذلك؛ الجزء الصعب هو الموثوقية (reliability)، لا الحجم (scale)." الأرقام افتراضاتك أنت، لا حقائق، وقول ذلك جزء من الإجابة الجيدة.
+
+### 🟡 التعمق أكثر (Going deeper)
+
+**تصميم الأنظمة لمرشّحي البرمجيات والذكاء الاصطناعي (System design for software and AI candidates).** سؤال التصميم للمبتدئين لدى طارق في نجم: "صمّم الخدمة التي ترسل للعملاء تنبيهًا حين تحدث معاملة بطاقة" ⁦("Design the service that sends customers an alert when a card transaction happens.")⁩ الإجابة القوية للمبتدئ تغطي:
+- **استوضح (Clarify):** إشعار فوري (push)، أم رسالة SMS، أم بريد إلكتروني؟ ما السرعة المطلوبة لوصول التنبيهات؟ هل يستطيع العميل إيقافها؟ هل يجب إرسال كل تنبيه مرة واحدة بالضبط (exactly once)؟
+- **ارسم مخططًا (Sketch):** ينشر نظام البطاقات حدث "وقعت معاملة" ("transaction happened" event) في **طابور (queue)** (قائمة بعناصر عمل (work items) يأخذها العمّال واحدًا تلو الآخر)؛ و**عامل (worker)** يقرأ الأحداث، ويبحث عن تفضيلات العميل (customer's preferences) في قاعدة البيانات، ويستدعي مزوّد الإشعارات الفورية أو SMS (push or SMS provider).
+- **مرّره عبر النظام (Walk):** معاملة واحدة من نظام البطاقات عبر الطابور، والعامل، والبحث عن التفضيلات (preference lookup)، والمزوّد، حتى هاتف العميل.
+- **المخاطر (Risks):** تعطّل مزوّد SMS (أعد المحاولة مع تباطؤ تدريجي (retry with back-off)، ثم نبّه مهندسًا)؛ معالجة الحدث نفسه مرتين (خزّن سجلًا للتنبيهات المرسلة مفتاحه معرّف المعاملة (keyed by transaction ID) كي لا ترسل إعادة المحاولة مرتين، وهذا ما يُسمّى **عدم التأثر بالتكرار (idempotency)**)؛ البيانات الشخصية في السجلات (سجّل المعرّفات (log IDs)، لا أرقام البطاقات (card numbers)).
+
+وراء كل فكرة درس في المكتبة: [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 10.2 — الطوابير والعمل غير المتزامن (Queues and asynchronous work)](../vibe/index.ar.html#l10-2)، و[*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 2.6 — نقرتان في آن واحد: حالات السباق والمعاملات والكتابات غير المتأثرة بالتكرار (Two clicks at once: races, transactions, and idempotent writes)](../vibe/index.ar.html#l2-6)، و[*لبنات بناء SaaS (SaaS Building Blocks)*، الدرس 4.2 — الإشعارات: داخل التطبيق، والفورية، وSlack، وSMS — والتفضيلات (Notifications: in-app, push, Slack, SMS — and preferences)](../saas/index.ar.html#/4.2). ولأدوار تطبيقات الذكاء الاصطناعي (AI application roles)، توقّع صيغة مختلفة مثل "صمّم روبوت محادثة (chatbot) يجيب عن الأسئلة من وثائق سياساتنا (policy documents)"؛ وتنطبق البنية نفسها، مضافًا إليها الاسترجاع (retrieval)، والتقييم (evaluation)، وخطر حقن الأوامر (prompt-injection risk)، وهي مشروحة في [*أمن الذكاء الاصطناعي والتطبيقات: من الصفر إلى الاحتراف (Secure AI & Application Security: Zero to Hero)*، الدرس 9.3 — تأمين الاسترجاع (RAG): حدود البيانات والتحكم في الوصول (Securing retrieval (RAG): data boundaries and access control)](../secai/index.ar.html#/9.3).
+
+**جولات البيانات للمحلّلين ومهندسي البيانات (Data rounds for analysts and data engineers).** تستخدم دانة وفريقها ثلاثة أنواع من الأسئلة:
+- **SQL مباشرة (SQL live).** اكتب استعلامًا (query) على مخطط صغير (small schema)، غالبًا مع عمليات الربط (joins)، والتجميع (grouping)، ودوال النوافذ (window functions). مثال: "لكل عميل، جد أكبر معاملة له في الشهر الماضي" ⁦("For each customer, find their largest transaction last month.")⁩ اذكر الحُبيبية (grain) (ما الذي يمثّله الصف الواحد (what one row means)) قبل الكتابة؛ وهنا، الشهر الماضي هو سبتمبر 2026.
+
+```sql
+SELECT customer_id, transaction_id, amount
+FROM (
+  SELECT customer_id, transaction_id, amount,
+         ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY amount DESC) AS rn
+  FROM transactions
+  WHERE txn_date >= DATE '2026-09-01' AND txn_date < DATE '2026-10-01'
+) ranked
+WHERE rn = 1;
+```
+
+  ويسأل المرشّح القوي أيضًا: "ماذا يحدث مع التعادلات (ties)؟ هل ينبغي احتساب المبالغ المستردّة (refunds)؟" ⁦("What should happen with ties? Should refunds count?")⁩
+- **نمذجة البيانات (Data modelling).** "صمّم جداول لبرنامج نقاط الولاء (loyalty-points programme)." سمِّ الكيانات (entities)، والمفاتيح (keys)، والعلاقات (relationships)، وقل ما الذي سيكون جدول حقائق (fact) وما الذي سيكون بُعدًا (dimension) في نموذج التقارير (reporting model). انظر [*هندسة البيانات والتحليلات: من الصفر إلى الاحتراف (Data Engineering & Analytics: Zero to Hero)*، الوحدة 1 — SQL ونمذجة البيانات (SQL and data modelling)](../data/index.ar.html#/1.2).
+- **خطوط المعالجة والمقاييس (Pipelines and metrics).** "كيف ستحمّل بيانات البطاقات اليومية إلى مستودع البيانات (warehouse) وتتحقق من صحتها؟" ⁦("How would you load daily card data into the warehouse and check it is right?")⁩ أو "انخفضت عمليات التسجيل (sign-ups) في تطبيق الجوال 20% هذا الأسبوع. كيف تحقّق في ذلك؟" ⁦("Mobile app sign-ups dropped 20% this week. How do you investigate?")⁩ افحص البيانات أولًا (هل تعطّل التتبّع (tracking)؟)، ثم قسّم إلى شرائح (segment) (المنصّة، والبلد، وإصدار التطبيق (app version))، ثم ابحث عن التغييرات (إصدار جديد (release)، أو انتهاء حملة (campaign ending)). والمقاييس والتجارب (Metrics and experiments) مشروحة في [*هندسة البيانات والتحليلات: من الصفر إلى الاحتراف (Data Engineering & Analytics: Zero to Hero)*، الوحدة 4 — التحليلات (Analytics)](../data/index.ar.html#/4.1).
+
+**جولات تعلّم الآلة لعلماء البيانات ومهندسي تعلّم الآلة (ML rounds for data scientists and ML engineers).** أسئلة المبتدئين الشائعة تدور حول **صياغة المشكلة والتقييم (framing and evaluation)**، لا حول النماذج الغريبة (exotic models):
+- ما الذي نتنبأ به بالضبط، ولمن، وما الإجراء الذي يلي التنبؤ (action follows a prediction)؟
+- ما البيانات التي لدينا، وهل أيٌّ منها لا يتوفّر إلا بعد وقوع الحدث (تسرّب البيانات (leakage))؟
+- كيف نقسّم بيانات التدريب والاختبار (split train and test data)؟ في المشكلات الزمنية (time-based problems) مثل الاحتيال، قسّم حسب الوقت (split by time).
+- أي مقياس (metric) يطابق كلفة الأخطاء (cost of errors)؟ مع الأحداث النادرة (rare events)، تكون **الدقة (accuracy)** مضلِّلة. استخدم **الدقة الإيجابية (precision)** (من الحالات التي ميّزناها، كم منها كان احتيالًا فعلًا) و**الاستدعاء (recall)** (من كل حالات الاحتيال الحقيقية، كم منها اكتشفنا)، وناقش العتبة (threshold) مع جهة العمل (business).
+- كيف سنراقبه بعد الإطلاق (after launch) لرصد **الانجراف (drift)** (تغيّر البيانات أو السلوك مع الوقت)؟
+
+وراء هذه الأسئلة [*هندسة البيانات والتحليلات: من الصفر إلى الاحتراف (Data Engineering & Analytics: Zero to Hero)*، الوحدة 5 — علم البيانات وتعلّم الآلة في بيئة الإنتاج (Data science and ML in production)](../data/index.ar.html#/5.2) و[*إدارة منتجات الذكاء الاصطناعي: من الصفر إلى الاحتراف (AI Product Management: Zero to Hero)*، الدرس 6.1 — جودة يمكنك قياسها: المقاييس والمجموعات الذهبية وتحليل الأخطاء (Quality you can measure: metrics, golden sets and error analysis)](../aipm/index.ar.html#/6.1).
+
+**جولات السحابة والمنصّات (Cloud and platform rounds).** أسئلة سالم عادةً أسئلة استكشاف أعطال (troubleshooting) أو شروح متدرّجة من نوع "اشرح كيف يعمل هذا" ("explain how this works"):
+- "ماذا يحدث حين يكتب أحدهم عنوان موقعنا ويضغط Enter؟" ⁦("What happens when someone types our web address and presses Enter?")⁩ (DNS، وTLS، وموزّع الأحمال (load balancer)، والتطبيق (application)، وقاعدة البيانات (database)، والاستجابة (response).) انظر [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس F.1 — ماذا يحدث حين تفتح موقعًا إلكترونيًا (What happens when you open a website)](../vibe/index.ar.html#lF-1).
+- "خادم بطيء. ماذا تفحص؟" ⁦("A server is slow. What do you check?")⁩ (المعالج (CPU)، والذاكرة (memory)، والقرص (disk)، والشبكة (network)، والتغييرات الأخيرة (recent changes)، والسجلات (logs).)
+- "كيف ستنشر هذا التطبيق بأمان؟" ⁦("How would you deploy this app safely?")⁩ (ابنِ مرة واحدة (Build once)، واختبر، وانشر إلى بيئة التجهيز (staging)، وطبّق تدريجيًا (roll out gradually)، وكن مستعدًا للتراجع (roll back).) انظر [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 4.4 — التراجع، وبيئة التجهيز، وبوابات الإصدار (Rollback, staging, and release gates)](../vibe/index.ar.html#l4-4) و[*السحابة وDevOps: من الصفر إلى الاحتراف (Cloud & DevOps: Zero to Hero)*، الوحدة 4 — CI/CD والإصدارات (CI/CD and releases)](../cloud/index.ar.html#/4.1).
+
+### 🔴 نظرة الخبير (Expert view)
+
+**المفاضلات هي الإجابة (Trade-offs are the answer).** يُصغي المُحاورون إلى كلمة "لأن" ("because"). عبارة "سأستخدم قاعدة بيانات علائقية (relational database) *لأن* التحويلات تحتاج إلى معاملات (transactions) وللبيانات علاقات واضحة" تنال درجة أعلى من "سأستخدم Postgres" ("I would use Postgres"). وحين تسمّي خيارًا، سمِّ البديل الذي رفضته (alternative you rejected) والسبب. وعبارة "يضيف الطابور (queue) جزءًا متحركًا إضافيًا (extra moving part)، لكنه يعني أن مزوّد SMS بطيئًا لا يستطيع إبطاء مدفوعات البطاقات (card payments)" إجابة مبتدئ تبدو كإجابة خبير (sounds senior).
+
+**الوعي بالقطاعات المنظَّمة (Regulated-sector awareness).** في مقابلات البنوك والحكومة والصحة في دول الخليج (GCC)، اذكر حماية البيانات (data protection) والتحكم في الوصول (access control) بشكل طبيعي، دون محاضرة: تقليل البيانات الشخصية إلى الحد الأدنى (personal data minimised) وإبقاؤها خارج السجلات، وتقييد الوصول حسب الدور (access limited by role)، وسجلات تدقيق (audit records) للإجراءات الحساسة، والوعي بأن قوانين مثل قانون حماية البيانات الشخصية في قطر (Qatar's personal data protection law) (القانون رقم 13 لسنة 2016 (Law No. 13 of 2016)) تنطبق. جملة واحدة في اللحظة المناسبة تُظهر أنك تفهم السياق الذي ستعمل فيه.
+
+**استخدام معرض أعمالك حالةً للتصميم (Using your portfolio as the design case).** يبدأ كثير من المُحاورين بعبارة "اشرح لي معمارية (architecture) مشروع في سيرتك الذاتية" ("Walk me through the architecture of a project on your CV."). هذه جولة تصميم على أرضك (on home ground). أعدّ مخططًا واحدًا (one diagram) لمشروعك الختامي (capstone) (3.1) وكن مستعدًا للإجابة: لماذا هذه المكوّنات، وما الذي يتعطّل أولًا تحت الحِمل (fails first under load)، وما الذي ستغيّره بعد التجربة (with hindsight)، وما الذي كتبه وكيل ذكاء اصطناعي (AI agent) مقابل ما صمّمته أنت. تُعدّ ريم هذا بالضبط لتطبيقها للأسئلة عن المستندات (document-question app) وتجد أنه أسهل جولة لديها، لأن كل إجابة شيء فعلته بنفسها.
+
+**قول "لا أعرف" بشكل جيد (Saying "I don't know" well).** "لم أستخدم Kubernetes في بيئة الإنتاج. فهمي أنه يجدول الحاويات (schedules containers) عبر الأجهزة ويعيد تشغيل الحاويات المتعطلة (restarts failed ones). في هذا التصميم سأبدأ بخدمة حاويات مُدارة (managed container service)، وأودّ أن أتعلّم كيف يشغّله الفريق." هذا صادق، ويُظهر الاستدلال (reasoning)، ويُبقي المحادثة مستمرة.
+
+## 🧰 الأدوات (The toolkit)
+| المورد أو الأداة أو النموذج (Resource, tool or template) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |
+|---|---|---|
+| **Four-move design structure** — بنية التصميم ذات الحركات الأربع | استوضح (Clarify)، ارسم مخططًا (sketch)، مرّر طلبًا عبره (walk a request through)، تعمّق وسمِّ المخاطر (deepen and name risks) | كل سؤال تصميم أنظمة (system design) أو بيانات أو تصميم تعلّم الآلة (ML design) |
+| **System Design Primer** (Donne Martin) | مجموعة مجانية مفتوحة المصدر (open-source) من مفاهيم تصميم الأنظمة وأسئلة نموذجية (example questions) | تعلّم مفردات المكوّنات والمفاضلات (vocabulary of components and trade-offs) |
+| **Designing Data-Intensive Applications** (Martin Kleppmann, O'Reilly) | كتاب يحظى باحترام واسع عن كيفية عمل قواعد البيانات والنسخ المتماثل (replication) وأنظمة البيانات (data systems) | تعميق الفهم بعد الأساسيات؛ لأدوار هندسة البيانات (data engineering) والواجهة الخلفية (backend) |
+| **Designing Machine Learning Systems** (Chip Huyen, O'Reilly, 2022) | كتاب عن بناء أنظمة تعلّم الآلة وتقييمها وتشغيلها في بيئة الإنتاج (in production) | الاستعداد لجولات التصميم لمهندسي تعلّم الآلة (ML engineer) وعلماء البيانات (data scientist) |
+| **StrataScratch** | موقع تدريب فيه أسئلة مقابلات في SQL وعلم البيانات (data-science interview questions) | التدرّب على حالات SQL والبيانات بتوقيت (timed SQL and data cases) |
+| **Machine Learning Interviews Book** (Chip Huyen) | كتاب مجاني على الإنترنت عن صيغ مقابلات تعلّم الآلة وأسئلتها (ML interview formats and questions) | فهم ما تغطيه جولات مقابلات تعلّم الآلة |
+| **Portfolio architecture diagram** — مخطط معمارية معرض الأعمال | مخطط واحد واضح لمشروعك الختامي (capstone) مع جملة لكل مكوّن تشرح سبب وجوده | أسئلة "اشرح لي مشروعك" ("Walk me through your project") |
+
+## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
+يتفق طارق ودانة وسالم على **معيار تقييم واحد لجولة التصميم للمبتدئين (junior design-round rubric)** كي يُقيَّم المرشّحون في المسارات المختلفة (different tracks) على السلوكيات نفسها. يُمنح كل سطر درجة من 1 إلى 3.
+
+| البُعد (Dimension) | 1 — ضعيف (Weak) | 3 — قوي (Strong) | مثال البرمجيات (Software example) (طارق) | مثال البيانات وتعلّم الآلة (Data and ML example) (دانة) | مثال المنصّات (Platform example) (سالم) |
+|---|---|---|---|---|---|
+| يستوضح المشكلة (Clarifies the problem) | يبدأ التصميم فورًا (Starts designing immediately) | يسأل عن المستخدمين والحجم والضروريات والقيود (users, scale, must-haves and constraints)، ويدوّنها | "هل يجب أن تصل التنبيهات خلال ثوانٍ؟" ⁦("Must alerts arrive within seconds?")⁩ | "ما مدى ندرة الاحتيال، وكم تكلّف الحالة الفائتة (missed case)؟" ⁦("How rare is fraud, and what does a missed case cost?")⁩ | "هل هم كل المستخدمين أم بعضهم؟ ما الذي تغيّر اليوم؟" ⁦("Is it all users or some? What changed today?")⁩ |
+| تصميم بسيط ومبرَّر (Simple, justified design) | يسرد التقنيات بلا أسباب (Lists technologies without reasons) | أبسط تصميم يعمل؛ ولكل مكوّن "لأن" ("because") | طابور (Queue) كي لا يستطيع مزوّد SMS إبطاء المدفوعات | التقسيم حسب الوقت (Split by time) لأن أنماط الاحتيال (fraud patterns) تتغيّر | فحص عمليات النشر الأخيرة (recent deploys) أولًا لأن كثيرًا من الانقطاعات (outages) تلي تغييرًا |
+| يمرّره عبر النظام (Walks it through) | مخطط ثابت فقط (Static diagram only) | يتتبّع طلبًا أو سجلًا واحدًا من البداية إلى النهاية (end to end) | من المعاملة إلى الهاتف (Transaction to phone) | من المعاملة الخام (Raw transaction) إلى تنبيه مُقيَّم ومُراجَع (scored, reviewed alert) | من المتصفح إلى DNS إلى موزّع الأحمال (load balancer) إلى التطبيق إلى قاعدة البيانات |
+| الإخفاق والمخاطر (Failure and risk) | يفترض أن كل شيء يعمل (Assumes everything works) | يسمّي ما ينكسر، وكيف يُكتشف، وكيف يُتعافى منه (how to recover) | التنبيهات المكرّرة (Duplicate alerts)، وانقطاع المزوّد (provider outage) | تسرّب البيانات (Leakage)، والانجراف (drift)، واختيار العتبة (threshold choice) | خطة التراجع (Rollback plan)، وفحوص السلامة (health checks) |
+| الوعي بالسياق (Context awareness) | يتجاهل التنظيم والبيانات (Ignores regulation and data) | يذكر البيانات الشخصية والوصول والتدقيق (personal data, access and audit) حيث يلزم | أرقام البطاقات ليست في السجلات (Card numbers not in logs) | الوصول إلى بيانات العملاء مقيّد حسب الدور (limited by role) | وصول بأقل الصلاحيات (Least-privilege access) إلى بيئة الإنتاج |
+| الصدق والتعلّم (Honesty and learning) | يخادع (Bluffs) | يقول ما لا يعرفه وكيف سيعرفه | "لم أستخدم Kafka؛ وطابور مُدار بسيط (simple managed queue) يكفي هنا" ("I haven't used Kafka; a simple managed queue would do here") | "سأتحقق مع فريق الاحتيال (fraud team) من كيفية إنشاء التصنيفات (labels)" ("I'd check with the fraud team how labels are created") | "سأقرأ دليل التشغيل (runbook) قبل لمس بيئة الإنتاج" ("I'd read the runbook before touching production") |
+
+**إجابة هدى المعاد كتابتها (Huda's rewritten answer)**، بعد شهر في جولة تجريبية (mock) مع دانة: "قبل اختيار نموذج، هل يمكنني أن أسأل عن مدى ندرة الاحتيال وما الذي يحدث بعد التمييز (after a flag)؟ إذا كان المحلّلون (analysts) يراجعون الحالات المميَّزة، فسأضبط النموذج على دقة إيجابية (precision) يستطيعون التعامل معها مع إبقاء الاستدعاء (recall) أعلى ما يمكن. سأقسّم بيانات التدريب والاختبار حسب الوقت (by time)، وأتحقق من أنه لا توجد سمة (feature) لا تُعرف إلا بعد استرداد المبلغ (chargeback)، وأبدأ بخط أساس بسيط قابل للتفسير (simple, explainable baseline) مثل الانحدار اللوجستي (logistic regression)، وبعدها فقط أجرّب التعزيز التدرّجي (gradient boosting). وبعد الإطلاق، سأراقب معدّلات التمييز (flag rates) والدقة الإيجابية أسبوعيًا لرصد الانجراف (drift)." تمنحها دانة 3 في الاستيضاح (clarifying) والتصميم (design) والمخاطر (risk).
+
+## 🛠️ التمارين (Exercises)
+- 🟢 خذ مشروعًا واحدًا من معرض أعمالك (portfolio) وارسم معماريته (architecture) صناديقَ وأسهمًا (boxes and arrows)، مع جملة لكل صندوق تقول لماذا هو موجود، وجملة عمّا سيتعطّل أولًا (what would fail first). *يكتمل عندما (Done when):* يكون المخطط في ملف README في مستودعك (repository README)، ويستطيع زميل أن يشرح لك نظامك منه.
+- 🟡 اختر سؤال التصميم الخاص بمسارك (track) (البرمجيات: خدمة تنبيهات المعاملات (transaction-alert service)؛ البيانات: جداول نقاط الولاء (loyalty-points tables) واستعلام SQL واحد عليها؛ تعلّم الآلة: خطة تقييم تمييز الاحتيال (fraud-flag evaluation plan)؛ المنصّات: الشرح المتدرّج لـ"أخطاء لبعض المستخدمين" ("errors for some users")). أجب عنه بصوت مسموع لمدة 30 دقيقة مع زميل، متّبعًا الحركات الأربع (four moves). *يكتمل عندما (Done when):* يكون الزميل قد منحك الدرجات بمعيار تقييم نجم (Najm rubric)، وتكون قد دوّنت السطرين الأقل درجة وما ستدرسه لكلٍّ منهما، مع رابط من المكتبة (library link).
+- 🔴 أجرِ جولة تصميم تجريبية كاملة (full mock design round) مع مهندس عامل (working engineer) أو عالم بيانات أو طالب متقدّم (senior student)، على سؤال يختاره هو. اطلب منه تغيير أحد المتطلبات (change a requirement) في منتصف الجولة. *يكتمل عندما (Done when):* تكون لديك ملاحظاته المكتوبة (written feedback) وفق معيار التقييم، وإجابة منقّحة (revised answer) تتعامل مع المتطلب المتغيّر وتسمّي حالتَي إخفاق (failure cases) على الأقل.
+
+## ⚠️ أخطاء وفخاخ (Mistakes and traps)
+- **التصميم قبل السؤال (Designing before asking).** استوضح المستخدمين والحجم والقيود (users, scale and constraints) أولًا؛ فالمُحاور كثيرًا ما يُخفي المتطلب الأساسي (key requirement) في الإجابة عن سؤالك الأول.
+- **التباهي بأسماء التقنيات (Technology name-dropping).** كل مكوّن يحتاج إلى سبب. "لأن" ("Because") هي أثمن كلمة في جولة التصميم.
+- **البناء الزائد (Over-building).** الخدمات المصغّرة (Microservices) وKubernetes وثلاث قواعد بيانات لأداة داخلية صغيرة (small internal tool) تشير إلى ضعف في حسن التقدير (poor judgement). ابدأ ببساطة، ثم قل ما الذي سيجعلك تتوسّع (scale).
+- **الدقة مع الأحداث النادرة (Accuracy on rare events).** في الاحتيال أو العيوب (defects) أو تسرّب العملاء (churn)، تكون الدقة (accuracy) مضلِّلة. تحدّث عن الدقة الإيجابية (precision) والاستدعاء (recall) وكلفة كل خطأ (cost of each error).
+- **تجاهل الإخفاق (Ignoring failure).** اسأل نفسك "ماذا لو تعطّل هذا الصندوق؟" ("what if this box is down?") لكل مكوّن قبل أن يسألك المُحاور.
+
+## 🧾 الخلاصة (Recap)
+- يواجه المبتدئون الآن جولات تصميم (design rounds) لأدوار البرمجيات والذكاء الاصطناعي والبيانات وتعلّم الآلة والمنصّات؛ والتوقعات أقل منها للخبراء (seniors)، لكن المنهجية واحدة.
+- استخدم الحركات الأربع (four moves): استوضح (clarify)، ارسم مخططًا (sketch)، مرّر طلبًا واحدًا عبره (walk one request through)، ثم تعمّق وسمِّ المخاطر (deepen and name risks).
+- في جولات البيانات وتعلّم الآلة، حدّد الحُبيبية (grain)، والهدف (target)، والتقسيم (split)، والمقياس (metric) الذي يطابق كلفة الأخطاء.
+- مشروعك الخاص في معرض أعمالك (portfolio project) هو أفضل حالة تصميم أعددتها (best-prepared design case).
+
+## ✍️ اختبر نفسك (Check yourself)
+
+**1. يطلب طارق من عمر تصميم خدمة تنبيهات المعاملات (transaction-alert service). ماذا ينبغي أن يفعل عمر أولًا؟**
+
+- A. أن يرسم تصميمًا فيه Kafka وKubernetes والخدمات المصغّرة (microservices) لإظهار سعة معرفته (show range)
+- B. أن يختار لغة برمجة وإطار عمل (programming language and framework) للعامل (worker)
+- C. أن يقدّر الفاتورة السحابية الشهرية (monthly cloud bill) للخدمة كلها
+- D. أن يسأل عن القنوات (channels)، والسرعة (speed)، وإمكانية إلغاء الاشتراك (opt-outs)، والحجم (volume)، والتكرارات (duplicates)
+
+<details><summary>الإجابة</summary>
+
+**D.** استيضاح المتطلبات (Clarifying requirements) يسبق أي تصميم؛ فالإجابات تشكّل كل ما عداها. وA تباهٍ بأسماء التقنيات بلا أسباب (technology name-dropping without reasons). (🟢 الأساسيات (The essentials).)
+
+</details>
+
+**2. تخبر دانة هدى بأن الاحتيال نادر جدًا. لماذا تُعدّ الدقة (accuracy) مقياسًا ضعيفًا هنا؟**
+
+- A. لا يمكن حساب الدقة حين تأتي التصنيفات (labels) من بلاغات الاحتيال (fraud reports)
+- B. النموذج الذي لا يميّز الاحتيال أبدًا سينال مع ذلك دقة عالية جدًا (very high accuracy)
+- C. الدقة مقياس لمشكلات الانحدار (regression problems)، لا التصنيف (classification)
+- D. تحظر الجهات التنظيمية المصرفية (Banking regulators) استخدام الدقة مقياسًا للنماذج
+
+<details><summary>الإجابة</summary>
+
+**B.** مع الأحداث النادرة (rare events)، يكون التنبؤ بـ"ليس احتيالًا" ("not fraud") لكل شيء صحيحًا في كل الحالات تقريبًا، لكنه عديم الفائدة. وتقيس الدقة الإيجابية (Precision) والاستدعاء (recall) جودة الحالات المميَّزة (flagged-case quality) والاحتيال الذي اكتُشف. (🟡 التعمق أكثر (Going deeper).)
+
+</details>
+
+**3. في تصميم التنبيهات، قد يعالج العامل (worker) حدث المعاملة نفسه مرتين بعد إعادة المحاولة (retry). ما الإجابة المعيارية على مستوى المبتدئين (standard junior-level answer)؟**
+
+- A. أن يتجاهل ذلك، لأن الأحداث المكرّرة (duplicate events) نادرة عمليًا
+- B. أن يزيل إعادة المحاولة تمامًا (Remove retries completely) كي يُعالَج كل حدث مرة واحدة فقط
+- C. أن يسجّل التنبيهات المرسلة حسب معرّف المعاملة (transaction ID) ويتخطّى أي تنبيه أُرسل سابقًا
+- D. أن يرسل كل تنبيه مرتين كي يتأكد من وصول واحد على الأقل إلى العميل
+
+<details><summary>الإجابة</summary>
+
+**C.** هذا يجعل الإرسال غير متأثر بالتكرار (idempotent): العملية المكرّرة آمنة. أما B فتستبدل التكرارات بتنبيهات مفقودة (lost alerts) كلما أخفق المزوّد. (🟡 التعمق أكثر (Going deeper).)
+
+</details>
+
+**4. يسأل سالم يوسف عن Kubernetes، الذي لم يستخدمه قط في بيئة الإنتاج (production). ما أفضل ردّ؟**
+
+- A. أن يعترف بذلك، ويشرح ما يفهمه عن وظيفته، ويستدل انطلاقًا من ذلك (reason from there)
+- B. أن يدّعي بعض الخبرة في بيئة الإنتاج (production experience) كي يبقى منافسًا
+- C. أن يرفض الإجابة، لأنها خارج خلفيته (outside his background)
+- D. أن يوجّه المحادثة إلى الشبكات (networking)، التي يعرفها أفضل بكثير
+
+<details><summary>الإجابة</summary>
+
+**A.** الإجابات الصادقة المستدَلّة (Honest, reasoned answers) تنال درجة جيدة في سطر "الصدق والتعلّم" ("honesty and learning")؛ أما الخداع (bluffing) فينهار أمام أسئلة المتابعة (follow-up questions). وD تتهرّب من السؤال بدلًا من الاستدلال عليه. (🔴 نظرة الخبير (Expert view).)
+
+</details>
+
+**5. أي عبارة هي أقوى تبرير تصميمي (strongest design justification) في مقابلة للمبتدئين؟**
+
+- A. "سأستخدم Postgres لأنها أكثر قواعد البيانات شعبية الآن" ⁦("I would use Postgres because it is the most popular database right now.")⁩
+- B. "سأستخدم الخدمات المصغّرة لأن أكبر شركات التقنية تستخدمها" ⁦("I would use microservices because the biggest tech companies use them.")⁩
+- C. "طابور، لأن مزوّد SMS البطيء يجب ألّا يُبطئ مدفوعات البطاقات" ⁦("A queue, because a slow SMS provider must not slow card payments.")⁩
+- D. "سأستخدم أحدث قاعدة بيانات قرأت عنها، لأنها الأفضل في التوسّع" ⁦("I would use the newest database I have read about, because it scales best.")⁩
+
+<details><summary>الإجابة</summary>
+
+**C.** إنها تسمّي المكوّن (component)، والمشكلة التي يحلّها، والمفاضلة (trade-off). أما A وB وD فتستند إلى الشعبية أو الحداثة (popularity or novelty) بدلًا من متطلب (requirement). (🔴 نظرة الخبير (Expert view).)
+
+</details>
+
+## 📚 المراجع (References)
+- Donne Martin، System Design Primer (مدخل إلى تصميم الأنظمة) — https://github.com/donnemartin/system-design-primer
+- Martin Kleppmann، *Designing Data-Intensive Applications* (O'Reilly) — https://dataintensive.net/
+- Chip Huyen، *Designing Machine Learning Systems* (O'Reilly، 2022) — https://huyenchip.com/
+- Chip Huyen، Machine Learning Interviews Book (كتاب مقابلات تعلّم الآلة) — https://huyenchip.com/ml-interviews-book/
+- Google for Developers، قواعد تعلّم الآلة (Rules of Machine Learning) — https://developers.google.com/machine-learning/guides/rules-of-ml
+- StrataScratch — https://www.stratascratch.com/
+- قطر، القانون رقم 13 لسنة 2016 بشأن حماية خصوصية البيانات الشخصية (Law No. 13 of 2016 on Personal Data Privacy Protection) — بوابة الميزان القانونية القطرية (Al Meezan Qatar Legal Portal)، https://www.almeezan.qa/
+- [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 10.2 — الطوابير والعمل غير المتزامن (Queues and asynchronous work)](../vibe/index.ar.html#l10-2)
+- [*هندسة البيانات والتحليلات: من الصفر إلى الاحتراف (Data Engineering & Analytics: Zero to Hero)*، الوحدة 1 — SQL ونمذجة البيانات (SQL and data modelling)](../data/index.ar.html#/1.1)
+- [*السحابة وDevOps: من الصفر إلى الاحتراف (Cloud & DevOps: Zero to Hero)*، الوحدة 5 — قابلية المراقبة والموثوقية (Observability and reliability)](../cloud/index.ar.html#/5.1)

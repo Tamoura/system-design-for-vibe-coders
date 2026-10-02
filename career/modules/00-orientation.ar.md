@@ -84,10 +84,10 @@ flowchart LR
 | «كل إعلان يطلب عشر أدوات؛ عليّ أن أتعلّمها كلها.» ⁦("Every ad asks for ten tools; I must learn all of them.")⁩ | «سبعة من عشرة إعلانات تطلب SQL وGit ومنصة سحابية واحدة (one cloud platform). سأثبت هذه الثلاث أولًا.» |
 
 **قراءة الأبحاث دون المبالغة في تفسيرها (Reading research without over-reading it).** حين تصادف دراسة عن الذكاء الاصطناعي والوظائف (AI and jobs)، اطرح أربعة أسئلة:
-- **بيانات من؟ (Whose data?)** استخدمت دراسة ⁦("Canaries in the Coal Mine?")⁩ بيانات الرواتب الأمريكية (US payroll data). وقد لا تصف التوظيف في الدوحة أو دبي أو الرياض.
-- **ارتباط أم سببية؟ (Correlation or cause?)** تغيّر التوظيف في الوقت نفسه الذي انتشر فيه الذكاء الاصطناعي (AI adoption) لا يثبت أن الذكاء الاصطناعي هو السبب. فأسعار الفائدة (interest rates)، ونهاية طفرة التوظيف في زمن الجائحة (the end of the pandemic hiring boom)، وخفض الشركات للتكاليف (company cost-cutting) حدثت كلها في السنوات نفسها. والأوراق البحثية الجيدة تناقش هذا بنفسها؛ فاقرأ ذلك القسم.
-- **أي وظائف؟ (Which jobs?)** «المعرّضة للذكاء الاصطناعي» ("AI-exposed") مقياس (measure) يعرّفه الباحثون. اقرأ كيف عرّفوه.
-- **ماذا يقولون إنه يساعد؟ (What do they say helps?)** تفصل دراسات عدة بين الاستخدامات *الأتمتية (automating)* للذكاء الاصطناعي (الأداة تؤدّي المهمة) والاستخدامات *المعزِّزة (augmenting)* (الأداة تساعد الشخص على أدائها). ضع نفسك في الجانب المعزِّز (augmenting side): الشخص الذي يوجّه الأدوات ويفحصها (directs and checks the tools).
+- **بيانات من؟ ⁦(Whose data?)⁩** استخدمت دراسة ⁦("Canaries in the Coal Mine?")⁩ بيانات الرواتب الأمريكية (US payroll data). وقد لا تصف التوظيف في الدوحة أو دبي أو الرياض.
+- **ارتباط أم سببية؟ ⁦(Correlation or cause?)⁩** تغيّر التوظيف في الوقت نفسه الذي انتشر فيه الذكاء الاصطناعي (AI adoption) لا يثبت أن الذكاء الاصطناعي هو السبب. فأسعار الفائدة (interest rates)، ونهاية طفرة التوظيف في زمن الجائحة (the end of the pandemic hiring boom)، وخفض الشركات للتكاليف (company cost-cutting) حدثت كلها في السنوات نفسها. والأوراق البحثية الجيدة تناقش هذا بنفسها؛ فاقرأ ذلك القسم.
+- **أي وظائف؟ ⁦(Which jobs?)⁩** «المعرّضة للذكاء الاصطناعي» ("AI-exposed") مقياس (measure) يعرّفه الباحثون. اقرأ كيف عرّفوه.
+- **ماذا يقولون إنه يساعد؟ ⁦(What do they say helps?)⁩** تفصل دراسات عدة بين الاستخدامات *الأتمتية (automating)* للذكاء الاصطناعي (الأداة تؤدّي المهمة) والاستخدامات *المعزِّزة (augmenting)* (الأداة تساعد الشخص على أدائها). ضع نفسك في الجانب المعزِّز (augmenting side): الشخص الذي يوجّه الأدوات ويفحصها (directs and checks the tools).
 
 لا تكرّر أبدًا نسبة مئوية (percentage) لم تتحقّق منها في المصدر الأصلي (original source).
 
@@ -242,7 +242,7 @@ flowchart LR
 ## ⚡ الدرس في دقيقة (In 60 seconds)
 - عبارة «وظيفة تقنية» ("Tech job") تغطي عدة وظائف مختلفة. خمس عائلات (five families) توظّف معظم الخرّيجين: **البرمجيات والتطوير الشامل (software and full-stack)**، و**تطبيقات الذكاء الاصطناعي (AI application)**، و**البيانات (data)**، و**السحابة والمنصّات (cloud and platform)**، و**الأمن (security)**.
 - لكل عائلة يوم عمل مختلف (different working day)، وتنتج أشياء مختلفة، وتُختبر بطريقة مختلفة في المقابلات (tested differently in interviews).
-- المسمّيات الوظيفية (job titles) غير موثوقة. اقرأ المسؤوليات (responsibilities) واسأل: ⁦("what would I produce in a normal week?")⁩ «ماذا سأنتج في أسبوع عادي؟»
+- المسمّيات الوظيفية (job titles) غير موثوقة. اقرأ المسؤوليات (responsibilities) واسأل: «ماذا سأنتج في أسبوع عادي؟» ⁦("what would I produce in a normal week?")⁩
 - مؤشّر القرار (Decision cue): اختر **دورًا مستهدفًا (target role)** للأشهر الثلاثة القادمة باستخدام ثلاث عدسات (three lenses): أي عمل يمنحك الطاقة (energises you)، وأين لديك دليل (evidence) على أنك جيد فيه، وما الذي يوظّف سوقك المبتدئين من أجله (what your market hires juniors for).
 - الفخ الأكبر (Biggest trap): التقديم لكل العائلات دفعة واحدة (applying to every family at once). السيرة الذاتية (CV) ومعرض الأعمال (portfolio) الموجّهان إلى كل شيء لا يقنعان أحدًا (convince no one).
 

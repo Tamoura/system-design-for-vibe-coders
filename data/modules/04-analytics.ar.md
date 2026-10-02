@@ -391,7 +391,7 @@ flowchart TD
 
 **انحياز البقاء في لوحات المعلومات (Survivorship in dashboards).** لوحات المعلومات المبنية من "العملاء الحاليين" (current customers) تستبعد بهدوء كل من غادر. فعبارة "متوسط رصيد عملائنا يرتفع" (average balance of our customers is rising) قد لا تعني سوى أن العملاء ذوي الأرصدة المنخفضة (low-balance customers) يغلقون حساباتهم. وحين يُحسب مقياس على مجتمع يتغيّر (population that changes)، اعرض حجم المجتمع (population size) بجانبه، وفكّر في **عرض الأفواج (cohort view)** (العملاء مجمّعين حسب الشهر الذي انضموا فيه) بدل لقطة (snapshot).
 
-**لا تطارد الضجيج (Do not chase noise).** كل رقم أسبوعي يتحرك. قبل أن تكتب "انخفض 6%"، اعرف النطاق الطبيعي (normal range) للتحرك من أسبوع لآخر لذلك المقياس. أدوات بسيطة تساعد: اعرض نطاق آخر 52 أسبوعًا شريطًا مظلّلًا (shaded band)، أو استخدم مخطط ضبط (control chart) (ضبط العمليات الإحصائي (statistical process control)، بحدود مُستمدّة من التباين السابق (limits set from past variation))) للمقاييس التشغيلية (operational metrics). تحرَّ التحركات خارج النطاق؛ ودوّن الباقي دون قصة. فالمحلّلون الذين يفسّرون كل تذبذب (explain every wiggle) يعلّمون المسؤولين التنفيذيين أن يتجاهلوهم.
+**لا تطارد الضجيج (Do not chase noise).** كل رقم أسبوعي يتحرك. قبل أن تكتب "انخفض 6%"، اعرف النطاق الطبيعي (normal range) للتحرك من أسبوع لآخر لذلك المقياس. أدوات بسيطة تساعد: اعرض نطاق آخر 52 أسبوعًا شريطًا مظلّلًا (shaded band)، أو استخدم مخطط ضبط (control chart) (ضبط العمليات الإحصائي (statistical process control)، بحدود مُستمدّة من التباين السابق (limits set from past variation)) للمقاييس التشغيلية (operational metrics). تحرَّ التحركات خارج النطاق؛ ودوّن الباقي دون قصة. فالمحلّلون الذين يفسّرون كل تذبذب (explain every wiggle) يعلّمون المسؤولين التنفيذيين أن يتجاهلوهم.
 
 **التنبيهات تتفوّق على لوحات المعلومات في العمل التشغيلي (Alerts beat dashboards for operational work).** إذا كان على شخص ما أن يتصرف حين يتجاوز رقمٌ عتبةً (crosses a threshold)، فلا تعتمد على أن ينظر إلى لوحة معلومات. أرسل تنبيهًا (send an alert) فيه الرقم، والعتبة، ورابط إلى التعمّق (drill-down)، ومالك. فعمليات الاحتيال (Fraud operations) لا تراقب مخطط التنبيهات الذكية (Smart Alerts)؛ بل تعمل من طابور (queue) ويُستدعى أفرادها (get paged) حين يخرج معدّل الإيجابيات الكاذبة (false-positive rate) عن نطاقه.
 
@@ -530,3 +530,245 @@ flowchart TD
 
 ---
 
+# 4.3 — التجارب والإحصاء للمحلّلين: اختبارات A/B والفخاخ التي تخدع الأذكياء
+*المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 1.1، 4.1* · *المرحلة (Stage): Analyse*
+
+## ⚡ الدرس في دقيقة (In 60 seconds)
+- **اختبار A/B (A/B test)** (تجربة عشوائية مضبوطة (randomised controlled experiment)) يقسم المستخدمين عشوائيًا (at random) إلى مجموعة ضابطة (control group) ومجموعة معالجة (treatment group) أو أكثر، بحيث يكون الفرق المنهجي الوحيد (only systematic difference) بين المجموعات هو التغيير المختبَر. وهو أكثر الطرق موثوقية لمعرفة هل *تسبّب* (caused) تغييرٌ ما في أثر.
+- قرّر قبل أن تبدأ (Decide before you start): الفرضية (hypothesis)، و**المقياس الأساسي (primary metric)**، و**مقاييس الحماية (guardrail metrics)**، وأدنى أثر يستحق الكشف (minimum effect worth detecting)، و**حجم العينة (sample size)**، وتاريخ الانتهاء (end date). اكتبها في خطة تجربة (experiment plan).
+- **قيمة p (p-value)** هي احتمال رؤية فرق بهذا الحجم على الأقل لو لم يكن للتغيير أثر حقيقي (no real effect). وهي ليست احتمال أن التغيير ينجح (probability that the change works). أبلغ عن **فاصل ثقة (confidence interval)** لحجم الأثر (size of the effect)، لا عن "دالّ إحصائيًا" (significant) فحسب.
+- الفخاخ (The traps): **التلصّص المبكر (peeking)** والتوقف المبكر (stopping early)، واختبار مقاييس أو شرائح كثيرة والإبلاغ عن الذي "فاز" (won)، و**عدم تطابق نسبة العينة (sample ratio mismatch)**، وآثار الجِدّة (novelty effects)، و**مفارقة سيمبسون (Simpson's paradox)** في البيانات الرصدية (observational data).
+- مؤشر القرار (Decision cue): إذا لم تستطع التوزيع العشوائي (randomise)، فأنت تُجري تحليلًا رصديًا (observational analysis)؛ فقل ذلك، وكن أكثر حذرًا بكثير بشأن السببية (cause).
+- للجانب المتعلق بالمنتج من التجريب (product side of experimentation)، انظر [*إدارة منتجات الذكاء الاصطناعي (AI Product Management)*، الدرس 6.3 — التقييم المباشر: التجارب واختبارات A/B والإطلاق المرحلي (Online evaluation: experiments, A/B tests and staged rollouts)](../aipm/index.ar.html#/6.3).
+
+## 🧭 لماذا يهم (Why it matters)
+يختبر فريق تطبيق نجم للهاتف (Najm Mobile) شاشة تفعيل بطاقة معاد تصميمها (redesigned card-activation screen). في اليوم الثالث، ينشر مدير المنتج (product manager) نتيجة أداة التجارب (experiment tool): التفعيل أعلى بنسبة 22% بالقيمة النسبية (in relative terms)، "دالّ إحصائيًا، p = 0.03" (statistically significant). ويريد الفريق الإطلاق (ship).
+
+تطرح دانة، كبيرة علماء البيانات (lead data scientist) في نجم، أربعة أسئلة. ما حجم العينة الذي تطلّبته الخطة (sample size did the plan require)؟ (نحو 15,000 مستخدم لكل مجموعة؛ ولديهم نحو 2,000 لكل مجموعة.) كم مقياسًا على الشاشة؟ (أربعة عشر.) هل كان التقسيم 50/50 كما صُمّم (split 50/50 as designed)؟ (لا: 52.4% في مجموعة المعالجة.) وهل نظر أحدٌ قبل اليوم الثالث؟ (نعم، كل يوم.) كل إجابة تشير إلى فخ معروف (known trap). أُوقف الاختبار، وأُصلح خلل التعيين (assignment bug) (كان المستخدمون الذين أعادوا تثبيت التطبيق (reinstalled the app) يُعاد تعيينهم إلى مجموعة المعالجة)، وأُعيد تشغيل الاختبار بخطة ثابتة (fixed plan). ووجدت الإعادة أثرًا حقيقيًا لكنه أصغر (real but smaller effect) بنحو نقطة مئوية واحدة (one percentage point).
+
+التجارب هي الموضع الذي يخدع فيه الأذكياء أنفسهم بأسهل ما يكون (most easily fool themselves): فالأداة تُنتج دائمًا رقمًا يبدو دقيقًا (precise-looking number). وفي البنك، تمسّ التجارب أيضًا الرسوم (fees)، وعروض الائتمان (credit offers)، ومراسلات العملاء (customer communications)، لذا تحتاج إلى حوكمة (governance) أيضًا. ولهندسة التعيين وأعلام الميزات (engineering of assignment and feature flags)، انظر [*لبنات بناء البرمجيات كخدمة (SaaS Building Blocks)*، الدرس 6.3 — أعلام الميزات والتجارب (Feature flags and experiments)](../saas/index.ar.html#/6.3).
+
+## 📐 كيف يعمل (How it works)
+
+### 🟢 الأساسيات (The essentials)
+
+**لماذا التوزيع العشوائي (Why randomise).** العملاء الذين اختاروا استخدام ميزة يختلفون عمّن لم يختاروها (أكثر تفاعلًا (more engaged)، وأصغر سنًّا، وأكثر ثراءً). هذه **المتغيّرات المُربِكة (confounders)**، أي المتغيّرات التي تؤثّر في من يحصل على المعالجة وفي النتيجة معًا (both who gets the treatment and the outcome)، تجعل المقارنة غير عادلة (unfair). والتعيين العشوائي (random assignment) يجعل المجموعات متشابهة في المتوسط (alike on average) من كل النواحي، المقيسة وغير المقيسة، فيمكن نسبة الفرق في النتيجة إلى التغيير (attributed to the change).
+
+**المصطلحات (The vocabulary).**
+- **وحدة التوزيع العشوائي (Unit of randomisation)**: ما تعيّنه (what you assign)، وهو عادةً العميل (customer) (لا الجلسة (session) ولا مشاهدة الصفحة (page view))، بحيث يرى الشخص الواحد النسخة نفسها دائمًا.
+- **الضابطة (Control)** (A) و**المعالجة (treatment)** (B): التجربة الحالية (current experience) والتغيير (the change).
+- **المقياس الأساسي (Primary metric)**: المقياس الوحيد الذي يحسم الاختبار، ويُختار مسبقًا (chosen in advance). هنا: تفعيل البطاقة خلال 7 أيام من إصدارها (card activation within 7 days of card issue).
+- **مقاييس الحماية (Guardrail metrics)**: مقاييس يجب ألّا تسوء (must not get worse)، مثل الشكاوى (complaints)، ومكالمات الدعم (support calls)، وتنبيهات الاحتيال (fraud alerts).
+- **فرضية العدم (Null hypothesis)**: الافتراض أن التغيير لا أثر له (no effect). ويسأل الاختبار هل البيانات مفاجئة (surprising) في ظل ذلك الافتراض.
+
+```mermaid
+flowchart LR
+    P["الخطة: الفرضية والمقاييس وحجم العينة"] --> R["وزّع العملاء عشوائيًا"]
+    R --> A["المجموعة الضابطة أ"]
+    R --> B["مجموعة المعالجة ب"]
+    A --> M["قِس طوال المدة المخطط لها"]
+    B --> M
+    M --> C["افحص عدم تطابق نسبة العينة ومقاييس الحماية"]
+    C --> D["قدّر الأثر بفاصل الثقة وقرّر"]
+```
+
+**قيم p، مقروءةً قراءة صحيحة (p-values, read correctly).** لو لم يكن للتغيير أثر فعلًا، فكم مرة سيُنتج التعيين العشوائي وحده (random assignment alone) فرقًا بحجم الفرق المرصود على الأقل (at least as large as the one observed)؟ ذلك التكرار هو قيمة p. وقيمة p الصغيرة (عُرفًا أقل من 0.05، وهو **مستوى الدلالة (significance level)**، ألفا (alpha)) تعني أن النتيجة ستكون غير معتادة (unusual) لو لم يكن هناك أثر. وهي **لا** تعني "هناك احتمال 97% أن التصميم الجديد أفضل" (there is a 97% chance the new design is better)، ولا تقول شيئًا عمّا إذا كان الأثر كبيرًا بما يكفي ليهم (large enough to matter).
+
+**فواصل الثقة تقول كم يبلغ الحجم (Confidence intervals say how big).** يأتي فاصل الثقة 95% (95% confidence interval) من طريقة (method) تحتوي، على مدى تجارب متكررة كثيرة (many repeated experiments)، على الأثر الحقيقي (true effect) في 95% من المرات. أبلغ عن الأثر وفاصله (report the effect and its interval): "ارتفع التفعيل بنقطة مئوية واحدة (1.0 percentage point)، وفاصل الثقة 95% من 0.3 إلى 1.7 نقطة". أما "دالّ إحصائيًا" (significant) وحدها فتُخفي هل الأثر يستحق التكلفة (worth the cost).
+
+```python
+# Two-proportion test with statsmodels (Python 3.11+)
+from statsmodels.stats.proportion import proportions_ztest, confint_proportions_2indep
+
+activated = [1800, 1650]     # treatment, control
+users     = [15000, 15000]
+
+z, p = proportions_ztest(activated, users)
+low, high = confint_proportions_2indep(1800, 15000, 1650, 15000)
+print(f"difference = {1800/15000 - 1650/15000:.3%}, p = {p:.4f}, 95% CI = [{low:.3%}, {high:.3%}]")
+# difference = 1.000%, p = 0.0066, 95% CI = [0.278%, 1.722%]
+```
+
+**حجم العينة والقوة الإحصائية (Sample size and power).** **القوة (Power)** هي احتمال أن يكشف الاختبار أثرًا بحجم معيّن حين يكون موجودًا فعلًا (when it really exists)؛ و80% عُرفٌ شائع (common convention). و**أدنى أثر قابل للكشف (minimum detectable effect)** (MDE) هو أصغر أثر يهمّك كشفه. والآثار الأصغر تحتاج إلى مستخدمين أكثر بكثير: فالعينة المطلوبة (required sample) تنمو مع مربع 1 ÷ MDE (with the square of 1 ÷ MDE)، لذا فإن تنصيف أدنى أثر قابل للكشف (halving the MDE) يضاعف العينة أربع مرات تقريبًا (roughly quadruples the sample). احسبه قبل أن تبدأ.
+
+```python
+from statsmodels.stats.power import NormalIndPower
+from statsmodels.stats.proportion import proportion_effectsize
+
+baseline, target = 0.10, 0.11                # hoping to detect 10% -> 11%
+effect = proportion_effectsize(target, baseline)
+n = NormalIndPower().solve_power(effect_size=effect, alpha=0.05, power=0.8, ratio=1)
+print(round(n))   # about 14,744 users per group
+```
+
+إذا كانت نجم تُصدر بضعة آلاف من البطاقات فقط أسبوعيًا، فإن كشف نقطة مئوية واحدة يستغرق أسابيع، لا أيامًا.
+
+### 🟡 التعمق أكثر (Going deeper)
+
+**الفخ 1: التلصّص المبكر والتوقف الاختياري (Trap 1: peeking and optional stopping).** تفترض اختبارات الأفق الثابت (fixed-horizon tests) أنك تنظر مرة واحدة، عند حجم العينة المخطط له. فإذا فحصت يوميًا وتوقفت أول مرة تنزل فيها p تحت 0.05، فإن معدّل الإيجابيات الكاذبة الحقيقي (real false-positive rate) يتجاوز 5% بكثير، لأن التقلّبات العشوائية (random fluctuations) كثيرًا ما تعبر الخط في لحظة ما. والحلول (The fixes):
+- ثبّت حجم العينة وتاريخ الانتهاء في الخطة (fix the sample size and end date in the plan) وانظر إلى مقياس القرار (decision metric) عند النهاية فقط (ومن الحكمة فحص مقاييس الحماية وجودة البيانات (guardrails and data quality) يوميًا).
+- أو استخدم طريقة مصمّمة للمراقبة المستمرة (continuous monitoring): **التصاميم التتابعية الجماعية (group sequential designs)** بنظرات مرحلية مخطط لها مسبقًا (pre-planned interim looks) وعتبات معدّلة (adjusted thresholds)، أو الاختبارات التتابعية "الصالحة دائمًا" ("always-valid" sequential tests) التي تقدّمها بعض منصات التجريب (experimentation platforms).
+
+**الفخ 2: المقارنات المتعددة (Trap 2: multiple comparisons).** اختبر عددًا كافيًا من المقاييس وسـ"يفوز" أحدها بالحظ (by luck): فمع 20 اختبارًا مستقلًا (independent tests) عند alpha = 0.05 ودون تغيير حقيقي، تبلغ فرصة الحصول على p < 0.05 مرة واحدة على الأقل نحو 64%. والتقسيم حسب الشريحة والجهاز والأسبوع (segment, device and week) يزيد الأمر سوءًا. مقياس أساسي واحد يحسم (one primary metric decides)؛ والمقاييس الثانوية تدعم (secondary metrics support)؛ ونتائج الشرائح تصبح فرضيات للاختبار التالي (hypotheses for the next test). وللاختبار المتعدد الرسمي (formal multiple testing)، عدّل باستخدام **بونفيروني (Bonferroni)** (اقسم alpha على عدد الاختبارات؛ صارم (strict)) أو **بنياميني–هوخبرغ (Benjamini–Hochberg)** (يضبط معدّل الاكتشافات الكاذبة (false discovery rate)).
+
+**الفخ 3: عدم تطابق نسبة العينة (Trap 3: sample ratio mismatch, SRM).** إذا كان التصميم 50/50 ورأيت 50,600 مقابل 49,400 مستخدم، فهل هذه مجرد صدفة (just chance)؟ يجيب عن ذلك اختبار كاي تربيع لجودة المطابقة (chi-square goodness-of-fit test):
+
+```python
+from scipy.stats import chisquare
+stat, p = chisquare([50600, 49400])   # expected 50/50 by default
+print(round(stat, 1), p)              # 14.4, p about 0.00015
+```
+
+قيمة p بهذا الصغر تعني أن التعيين أو التسجيل معطوب (assignment or the logging is broken): المستخدمون يُعاد تعيينهم (reassigned)، أو إعادة توجيه (redirect) تُسقط بعض المستخدمين، أو روبوتات (bots) تهبط في مجموعة واحدة. **التجربة التي فيها عدم تطابق في نسبة العينة ليست جديرة بالثقة، مهما كانت نتيجتها (An experiment with SRM is not trustworthy, whatever its result).** جد السبب قبل قراءة أي شيء آخر. وفي حالة دانة كان السبب إعادة تعيين من أعادوا التثبيت (reinstalls being reassigned) إلى مجموعة المعالجة.
+
+**الفخ 4: آثار الجِدّة والأسبقية (Trap 4: novelty and primacy effects).** ينقر المستخدمون على تصميم جديد لأنه جديد (الجِدّة (novelty)) أو يقاومونه لأنه غير مألوف (الأسبقية (primacy))؛ وكلا الأثرين يتلاشى (fade). شغّل التجربة لدورات أسبوعية كاملة (full weekly cycles)، وانظر إلى الأثر عبر الزمن (effect over time)، وتجنّب أن تمتد عبر رمضان أو العيد (straddling Ramadan or Eid).
+
+**الفخ 5: الوحدة الخطأ (Trap 5: the wrong unit).** إذا وزّعت عشوائيًا حسب الجلسة (randomise by session) لكنك قِست لكل عميل (measure per customer)، فقد يرى العميل الواحد كلتا النسختين. وزّع عشوائيًا على المستوى الذي تحلّله (randomise at the level you analyse)، وهو عادةً العميل؛ وحين يؤثّر العملاء بعضهم في بعض (influence each other) (حساب مشترك (joint account)، أو موظفو منشأة صغيرة ومتوسطة (SME's employees))، وزّع عشوائيًا حسب الأسرة أو الشركة (by household or company).
+
+**تقليل التباين (Variance reduction, CUPED).** **CUPED** (التجربة المضبوطة باستخدام بيانات ما قبل التجربة (Controlled-experiment Using Pre-Experiment Data)؛ دينغ وشو وكوهافي ووكر (Deng, Xu, Kohavi and Walker)، 2013) تعدّل نتيجة كل عميل باستخدام قيمته في فترة ما قبل التجربة (pre-experiment value) للمقياس نفسه. وحين تتنبّأ فترة ما قبل التجربة (pre-period) بالنتيجة جيدًا، تضيق الفواصل (intervals shrink)، فتحتاج الاختبارات إلى مستخدمين أقل (fewer users).
+
+### 🔴 نظرة الخبير (Expert view)
+
+**مفارقة سيمبسون: حين يختلف المجموع عن الأجزاء (Simpson's paradox: when the aggregate and the parts disagree).** في عام 1973، بدا أن بيانات القبول في الدراسات العليا (graduate admissions data) في جامعة كاليفورنيا، بيركلي (University of California, Berkeley) تُظهر أن الرجال قُبلوا بمعدّل أعلى بشكل ملحوظ من النساء إجمالًا (overall). وحين حلّل بيكل وهاميل وأوكونيل (Bickel, Hammel and O'Connell) البيانات حسب القسم (by department) (ونُشر ذلك في *Science* عام 1975)، قبلت معظم الأقسام النساء بمعدّل مماثل أو أعلى قليلًا من الرجال. وجاءت الفجوة الإجمالية (overall gap) من أن النساء تقدّمن أكثر إلى أقسام تقبل حصة صغيرة من كل المتقدّمين. فالتجميع عبر مجموعات ذات أحجام ومعدّلات أساس مختلفة (different sizes and base rates) قلب الصورة (reversed the picture).
+
+ويمكن أن يحدث الأمر نفسه في نجم. فقد تُظهر رحلة جديدة للموافقة المسبقة على القروض (loan pre-approval journey) معدّل موافقة إجماليًا أقل من القديمة لكنه أعلى في كل شريحة (higher rate in every segment)، لأنها اجتذبت متقدّمين أكثر بكثير من شريحة ذات معدّل موافقة منخفض بطبيعته (naturally low approval rate). والتوزيع العشوائي (randomisation) يمنح المجموعتين المزيج نفسه في المتوسط، فتكون المقارنة الرئيسية (headline comparison) في اختبار A/B سليم محميّة. أما في التحليل **الرصدي (observational)**، حيث تشكّلت المجموعات من تلقاء نفسها (groups formed themselves)، ففصّل النتائج دائمًا حسب متغيّرات المزيج الرئيسية (main mix variables) قبل استخلاص النتائج.
+
+**انحياز البقاء (Survivorship bias).** تحليل الوحدات التي نجت من عملية اختيار (survived a selection) فقط مضلِّل. والقصة الكلاسيكية (classic story)، المنسوبة إلى الإحصائي أبراهام والد (Abraham Wald)، هي أن دروع طائرات زمن الحرب (wartime aircraft armour) كان مكانها حيث *لا* توجد ثقوب رصاص (bullet holes) في الطائرات العائدة، لأن الطائرات التي أُصيبت هناك لم تعد. وفي نجم، فإن عبارة "العملاء الذين أكملوا فتح الحساب راضون" (customers who completed onboarding are satisfied) لا تقول شيئًا عن فتح الحساب إذا كان العملاء غير الراضين قد تخلّوا عنه (abandoned it). وفي التجربة، عرّف المجتمع عند **التعيين (assignment)**، لا عند الإكمال (completion)، كي يبقى المنسحبون (dropouts) ضمنه.
+
+**الانحدار نحو المتوسط (Regression to the mean).** الفروع المختارة لأن شهرها كان الأسوأ ستبدو، في المتوسط، أفضل في الشهر التالي دون أي تدخّل (with no intervention)، لأن جزءًا من الشهر السيئ كان سوء حظ (bad luck). و"برنامج التحوّل" (turnaround programme) الذي يُحكم عليه دون مجموعة ضابطة (control group) سيبدو ناجحًا.
+
+**قانون تويمان (Twyman's law)**، الذي شاع في مجال التجريب على يد روني كوهافي وزملائه (Ronny Kohavi and colleagues): أي رقم يبدو مثيرًا للاهتمام أو مختلفًا هو في الغالب خاطئ (usually wrong). تحقّق من البيانات والتعيين والتعريفات (data, assignment and definitions) قبل أن تحتفل بارتفاع مفاجئ (surprising lift).
+
+**حين لا تستطيع التوزيع العشوائي (When you cannot randomise)** (لائحة تنظيمية جديدة (new regulation)، أو إغلاق فرع (branch closure))، يمكن للطرق شبه التجريبية (quasi-experimental methods) مثل الفرق في الفروق (difference-in-differences) أن تقدّر الآثار في ظل افتراضات معلنة (stated assumptions). سمِّ تلك الافتراضات وقدّم النتيجة بوصفها دليلًا أضعف (weaker evidence) من اختبار عشوائي.
+
+**التجارب في البنك تحتاج إلى حوكمة (Experiments at a bank need governance).** تخطيط الشاشة منخفض المخاطر (low risk). أما التوزيع العشوائي لأسعار الفائدة (interest rates) أو الرسوم (fees) أو حدود الائتمان (credit limits) أو رسائل التحصيل (collection messages) فيثير أسئلة حول الإنصاف (fairness) وحماية المستهلك (consumer-protection) والجوانب التنظيمية (regulatory)، وقد لا يكون مقبولًا إطلاقًا. وقاعدة نجم (Najm's rule): التجارب التي تمسّ السعر أو الائتمان أو الأهلية أو المراسلات المطلوبة قانونًا (price, credit, eligibility or legally required communications) تحتاج إلى موافقة الامتثال (compliance approval) (وموافقة مخاطر النماذج (model-risk approval) حيث تُستخدم نماذج)، ولا تستهدف أبدًا على أساس الخصائص المحمية (protected characteristics)، وتتبع قواعد حماية البيانات (data-protection rules) (6.2)، مع استشارة سارة، مسؤولة حماية البيانات (DPO). وتختلف القواعد من بلد لآخر؛ فاسأل الامتثال (ask compliance) بدل الافتراض.
+
+## 🧰 الأدوات (The toolkit)
+| الأداة أو النمط أو المعيار (Tool, pattern or standard) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |
+|---|---|---|
+| **A/B test** (randomised controlled experiment) — اختبار A/B | تعيين عشوائي للوحدات (random assignment of units) إلى مجموعة ضابطة ومجموعة معالجة لتقدير أثر سببي (causal effect) | أي تغيير يمكنك أن تعرّض له بأمان مجموعة فرعية عشوائية من المستخدمين (random subset of users) |
+| **Experiment plan** — خطة التجربة | فرضية مسجّلة مسبقًا (pre-registered hypothesis)، والوحدة، والمقاييس الأساسية ومقاييس الحماية، وأدنى أثر قابل للكشف (MDE)، وحجم العينة، والمدة، وقاعدة القرار (decision rule) | قبل كل اختبار؛ ويُوقَّع عليها قبل الإطلاق (signed off before launch) |
+| **Power analysis** (statsmodels) — تحليل القوة | يحسب حجم العينة من خط الأساس (baseline) وأدنى أثر قابل للكشف وalpha والقوة (power) | وقت التخطيط، لتحديد المدة بنزاهة (set duration honestly) |
+| **Sample ratio mismatch (SRM) check** — فحص عدم تطابق نسبة العينة | اختبار كاي تربيع (chi-square test) لأحجام المجموعات المرصودة مقابل المصمّمة (observed against designed group sizes) | يوميًا خلال الاختبار وقبل قراءة أي نتيجة |
+| **Group sequential design** — التصميم التتابعي الجماعي | تحليلات مرحلية مخطط لها مسبقًا (pre-planned interim analyses) بعتبات معدّلة (adjusted thresholds) | حين تحتاج إلى النظر قبل النهاية، لدواعي السلامة أو السرعة (for safety or speed) |
+| **Benjamini–Hochberg procedure** — إجراء بنياميني–هوخبرغ | يضبط معدّل الاكتشافات الكاذبة (false discovery rate) عبر اختبارات كثيرة | الإبلاغ الرسمي عن مقاييس أو شرائح كثيرة |
+| **CUPED** (Deng et al., 2013) | تقليل التباين (variance reduction) باستخدام بيانات ما قبل التجربة لكل وحدة (pre-experiment data) | المقاييس كثيرة الضجيج (noisy metrics) التي لها متنبّئ قوي من فترة ما قبل التجربة (strong pre-period predictor)، مثل الإنفاق (spend) |
+
+## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
+يعتمد فريق دانة **خطة تجربة (Experiment Plan)** من صفحة واحدة يجب الموافقة عليها قبل بدء أي اختبار في تطبيق نجم للهاتف (Najm Mobile) أو في مراسلات العملاء (customer-communication test). وإليك إعادة تشغيل اختبار التفعيل (rerun of the activation test).
+
+| الحقل (Field) | القيمة (Value) |
+|---|---|
+| التجربة (Experiment) | EXP-2026-031 — شاشة تفعيل البطاقة، الإصدار 2 (Card activation screen v2) |
+| المالك والمحلّل (Owner and analyst) | مالك المنتج (Product owner): فريق البطاقات في تطبيق نجم للهاتف (Najm Mobile cards squad) · المحلّل (Analyst): دانة (التصميم (design))، وكريم (عرض النتائج (readout)) |
+| الفرضية (Hypothesis) | شاشة تفعيل من خطوة واحدة (single-step activation screen) مع تعيين الرقم السري داخل التطبيق (in-app PIN setting) تزيد تفعيل البطاقة خلال 7 أيام (7-day card activation) |
+| الوحدة والتقسيم (Unit and split) | العميل الذي يتسلّم بطاقة خصم أو ائتمان جديدة (new debit or credit card)؛ 50/50؛ التعيين مخزّن على الخادم (stored server-side) وثابت عبر عمليات إعادة التثبيت (stable across reinstalls) |
+| المجتمع (Population) | كل البطاقات الجديدة الصادرة في قطر خلال الاختبار؛ باستثناء حسابات الموظفين والاختبار (staff and test accounts)؛ ويُحلَّل كما وُزّع عشوائيًا (analysed as randomised) (نية المعالجة (intention to treat)) |
+| المقياس الأساسي (Primary metric) | معدّل التفعيل خلال 7 أيام (7-day activation rate) (المقياس المعتمد `card_activation_7d`، الإصدار v1.2) |
+| مقاييس الحماية (Guardrails) | مكالمات الدعم المتعلقة بالتفعيل لكل 1,000 بطاقة (activation-related support calls per 1,000 cards)؛ تنبيهات الاحتيال على البطاقات الجديدة في أول 14 يومًا (fraud alerts on new cards)؛ معدّل تعطّل التطبيق (app crash rate) على الشاشة |
+| خط الأساس وأدنى أثر قابل للكشف (Baseline and MDE) | خط الأساس نحو 10% (افتراضي (hypothetical))؛ أدنى أثر قابل للكشف نقطة مئوية واحدة مطلقة (1 percentage point absolute) |
+| حجم العينة (Sample size) | نحو 15,000 لكل مجموعة (alpha 0.05 ثنائي الطرف (two-sided)، والقوة (power) 80%)؛ نحو 30,000 إجمالًا |
+| المدة (Duration) | ثابتة (Fixed): أربعة أسابيع كاملة أو حتى 30,000 بطاقة، أيّهما أبعد (whichever is later)؛ ولا تنتهي داخل أسبوع العيد (Eid week) |
+| النظرات المرحلية (Interim looks) | لا شيء على المقياس الأساسي؛ ويُفحص عدم تطابق نسبة العينة (SRM) ومقاييس الحماية يوميًا |
+| قاعدة القرار (Decision rule) | أطلِق (ship) إذا كان فاصل الثقة 95% للأثر الأساسي فوق الصفر (above zero) ولم يتجاوز أي مقياس حماية عتبته (breaches its threshold) |
+| المقاييس والشرائح الثانوية (Secondary metrics and segments) | التفعيل حسب القناة ونوع البطاقة (by channel and card type): يُبلَّغ عنه بوصفه استكشافيًا (exploratory)، لا حاسمًا للقرار (not decision-making) |
+| الحوكمة (Governance) | مخاطر منخفضة (Low risk) (واجهة المستخدم فقط (UI only)، دون تغيير في التسعير أو الائتمان)؛ أُخطر الامتثال (compliance notified)؛ ولم تُستخدم أي خصائص محمية (protected characteristics) |
+| عرض النتائج (Readout) | الأثر مع فاصل الثقة 95% (effect with 95% CI)، ونتيجة فحص عدم تطابق نسبة العينة، ومقاييس الحماية، والأثر حسب الأسبوع (effect by week) (فحص الجِدّة (novelty check))، وتوصية بلغة بسيطة (plain-language recommendation) |
+
+## 🛠️ التمارين (Exercises)
+استخدم Python مع statsmodels وscipy، وبيانات محاكاة فقط (simulated data only).
+
+- 🟢 احسب حجم العينة لكل مجموعة (sample size per group) لخط أساس 10% وأدنى أثر قابل للكشف (MDE) قدره 2 و1 و0.5 نقطة مئوية، واشرح لمدير منتج (product manager) في خمسة أسطر لماذا لا يمكن أن ينتهي الاختبار في ثلاثة أيام. *يكتمل عندما (Done when):* يُظهر جدولك أن العينة تتضاعف أربع مرات تقريبًا (roughly quadrupling) كلما تنصّف أدنى أثر قابل للكشف، وتعرّف ملاحظتك كل مصطلح تستخدمه.
+- 🟡 حاكِ 1,000 اختبار A/A (A/A tests) (دون فرق حقيقي، والمجموعتان عند 10%) بخمسة عشر ألف مستخدم (15,000 users) لكل مجموعة. وفي كل منها، افحص p كل يوم لمدة 30 يومًا وتوقّف عند أول p < 0.05. *يكتمل عندما (Done when):* تُبلغ عن معدّل الإيجابيات الكاذبة مع التلصّص المبكر (false-positive rate with peeking) مقابل نحو 5% حين تنظر مرة واحدة فقط عند النهاية، وتشرح الفجوة في جملتين.
+- 🔴 ابنِ مجموعة بيانات اصطناعية لطلبات القروض (synthetic loan-application dataset) في DuckDB تكون فيها للرحلة الجديدة (new journey) معدّل موافقة أعلى من القديمة في كل شريحة لكن معدّلًا إجماليًا أقل (مفارقة سيمبسون (Simpson's paradox)). واكتب شيفرة SQL التي تُظهر الرؤيتين، وفحصًا لعدم تطابق نسبة العينة (SRM check) لتقسيم معطوب محاكى (simulated broken split). *يكتمل عندما (Done when):* تُظهر الاستعلامات الإجمالية (aggregate) واستعلامات كل شريحة (per-segment) الانقلاب (reversal)، وتستطيع تفسيره من مزيج الشرائح (segment mix)، وينبّه فحصك إلى التقسيم المعطوب بقيمة p أقل من 0.001.
+
+## ⚠️ أخطاء وفخاخ (Mistakes and traps)
+- **التلصّص المبكر والتوقف عند أول نتيجة دالّة (Peeking and stopping on the first significant result).** يضخّم الإيجابيات الكاذبة (inflates false positives). ثبّت حجم العينة وتاريخ الانتهاء، أو استخدم تصميمًا تتابعيًا (sequential design) مبنيًا للنظرات المرحلية (interim looks).
+- **اختيار المقياس الفائز بعد الحدث (Picking the winning metric afterwards).** أربعة عشر مقياسًا ستعطيك "فائزًا" بالحظ (by luck). اختر مقياسًا أساسيًا واحدًا مسبقًا (one primary metric in advance)؛ وعامل كل ما عداه على أنه استكشافي (exploratory).
+- **تجاهل عدم تطابق نسبة العينة (Ignoring sample ratio mismatch).** التقسيم المعطوب (broken split) يُبطل النتيجة (invalidates the result). شغّل فحص عدم تطابق نسبة العينة (SRM check) قبل قراءة أي نتيجة.
+- **قراءة p على أنها "احتمال أنه ينجح" (Reading p as "probability it works").** أبلغ عن حجم الأثر (effect size) مع فاصل ثقته، وقرّر بناءً على الدلالة العملية (practical significance).
+- **تحليل الناجين أو المكمِلين فقط (Analysing only survivors or completers).** عرّف المجتمع عند التعيين (define the population at assignment) وأبقِ المنسحبين (dropouts) ضمنه.
+- **اختبار السعر أو الائتمان أو الأهلية دون حوكمة (Testing price, credit or eligibility without governance).** يمكن للتجارب في البنك أن تضرّ العملاء وتخرق القواعد (harm customers and break rules). احصل أولًا على موافقة الامتثال ومخاطر النماذج (compliance and model-risk approval).
+
+## 🧾 الخلاصة (Recap)
+- التوزيع العشوائي (randomisation) يزيل المتغيّرات المُربِكة (confounders)؛ ولهذا تستطيع اختبارات A/B أن تُظهر السببية (show cause).
+- خطّط أولًا (plan first): الفرضية (hypothesis)، والوحدة (unit)، والمقاييس الأساسية ومقاييس الحماية (primary and guardrail metrics)، وأدنى أثر قابل للكشف (MDE)، وحجم العينة (sample size)، والمدة (duration)، وقاعدة القرار (decision rule).
+- تقيس قيمة p المفاجأة (surprise) في ظل "لا أثر" (no effect)؛ ويُظهر فاصل الثقة (confidence interval) كم قد يكون الأثر كبيرًا. أبلغ عن كليهما.
+- احترس من التلصّص المبكر (peeking)، والمقارنات المتعددة (multiple comparisons)، وعدم تطابق نسبة العينة (SRM)، وآثار الجِدّة (novelty effects)، والوحدة الخطأ (wrong unit)؛ ويمكن لـ CUPED أن يجعل الاختبارات أسرع.
+- في البيانات الرصدية (observational data)، احذر مفارقة سيمبسون (Simpson's paradox)، وانحياز البقاء (survivorship bias)، والانحدار نحو المتوسط (regression to the mean)؛ وفي البنك، تحتاج التجارب على السعر أو الائتمان أو الأهلية إلى حوكمة (governance).
+
+## ✍️ اختبر نفسك (Check yourself)
+
+**1. في اليوم الثالث من اختبار مخطط له لأربعة أسابيع، يُظهر ارتفاع التفعيل (activation lift) قيمة p = 0.03. وقد فحص الفريق النتائج كل يوم. بماذا ينبغي أن تنصح دانة؟**
+
+- A. إبقاؤه قيد التشغيل حتى حجم العينة وتاريخ الانتهاء المخطط لهما (planned sample size and end date)
+- B. الإطلاق الآن (ship now)، لأن p أقل من 0.05 والنتيجة دالّة (significant)
+- C. إعادة بدء الاختبار بعينة أصغر (smaller sample) كي ينتهي أسرع
+- D. خفض alpha إلى 0.01 وإيقاف الاختبار إذا نزلت p تحتها غدًا
+
+<details><summary>الإجابة</summary>
+
+**A.** النظرات المتكررة (repeated looks) في اختبار أفق ثابت (fixed-horizon test)، مع التوقف عند أول نتيجة دالّة، تجعل "الفوز" الكاذب (false "win") أرجح بكثير. أما D فما زالت تلصّصًا غير مخطط له (unplanned peeking)؛ ووحده التصميم التتابعي المخطط له مسبقًا (pre-planned sequential design) يعدّل العتبات تعديلًا صحيحًا. (🟡 التعمق أكثر (Going deeper)، الفخ 1 (Trap 1).)
+
+</details>
+
+**2. في اختبار صُمّم بتقسيم 50/50 يوجد 50,600 مستخدم في المجموعة الضابطة (control) و49,400 في مجموعة المعالجة (treatment). ويعطي اختبار كاي تربيع (chi-square test) قيمة p ≈ 0.00015. ماذا يعني هذا؟**
+
+- A. أداء مجموعة المعالجة أسوأ (performing worse)، لأن فيها مستخدمين أقل
+- B. لا شيء مهم: 1,200 مستخدم من أصل 100,000 أمر لا يُذكر (negligible)
+- C. يحتاج الاختبار إلى أدنى أثر قابل للكشف أكبر (larger minimum detectable effect) كي يكون موثوقًا
+- D. عدم تطابق نسبة العينة (sample ratio mismatch): التعيين أو التسجيل معطوب على الأرجح (probably broken)
+
+<details><summary>الإجابة</summary>
+
+**D.** مثل هذا الاختلال (imbalance) مستبعد جدًا بالصدفة مع تقسيم 50/50 صحيح، لذا لا يمكن الوثوق بأي نتيجة بعد. جد الخلل (find the bug) أولًا (هنا، إعادة تعيين من أعادوا التثبيت (reinstalls being reassigned)). (🟡 التعمق أكثر (Going deeper)، الفخ 3 (Trap 3).)
+
+</details>
+
+**3. أيّ عبارة عن قيمة p قدرها 0.03 صحيحة؟**
+
+- A. هناك احتمال 97% أن المعالجة أفضل من الضابطة (treatment is better than control)
+- B. في ظل غياب الأثر (under no effect)، تنشأ فجوة بهذا الحجم أو أكبر في نحو 3% من المرات
+- C. الأثر كبير بما يكفي ليهمّ الأعمال (large enough to matter for the business) وينبغي إطلاقه
+- D. هناك احتمال 3% أن النتيجة سببها خلل برمجي (caused by a bug)
+
+<details><summary>الإجابة</summary>
+
+**B.** تُحسب قيمة p بافتراض عدم وجود أثر (assuming no effect). وهي ليست احتمال أن الفرضية صحيحة (probability that the hypothesis is true) (A)، ولا تقول شيئًا عن الحجم العملي (practical size) (C). (🟢 الأساسيات (The essentials).)
+
+</details>
+
+**4. يُظهر تحليل رصدي (observational analysis) أن لرحلة قروض جديدة (new loan journey) معدّل موافقة إجماليًا أقل من القديمة، لكنه أعلى في كل شريحة عملاء (every customer segment). ما التفسير الأرجح؟**
+
+- A. لا بد أن البيانات تحتوي على خطأ، لأن مثل هذا الانقلاب (reversal) مستحيل
+- B. الانحدار نحو المتوسط (regression to the mean): الشرائح الضعيفة تتعافى من تلقاء نفسها
+- C. مفارقة سيمبسون (Simpson's paradox): اجتذبت الرحلة الجديدة متقدّمين أكثر من ذوي الموافقة المنخفضة (low-approval applicants)
+- D. أثر الجِدّة (novelty effect): اختار المتقدّمون الرحلة الجديدة لأنها جديدة
+
+<details><summary>الإجابة</summary>
+
+**C.** تحوّل مزيج المتقدّمين (applicant mix) نحو شريحة منخفضة الموافقة. فالتجميع عبر مجموعات ذات أحجام ومعدّلات أساس مختلفة (different sizes and base rates) يمكن أن يقلب المقارنة، كما في بيانات القبول في بيركلي عام 1973 (1973 Berkeley admissions data). وهو ممكن تمامًا (ليس A). فصّل حسب متغيّر المزيج (break down by the mix variable) قبل استخلاص النتائج. (🔴 نظرة الخبير (Expert view).)
+
+</details>
+
+**5. يريد فريق البطاقات (cards team) اختبار رسمين سنويين مختلفين (two different annual fees) على عملاء جدد عشوائيين لمعرفة أيّهما يحقق دخلًا أكبر. ماذا ينبغي أن يحدث أولًا؟**
+
+- A. تشغيله فورًا، لأن الاختبارات العشوائية هي أقوى دليل (strongest evidence)
+- B. تشغيله على حسابات الموظفين فقط (staff accounts only)، لتجنّب التأثير في العملاء الحقيقيين
+- C. تشغيله دون إخبار العملاء (without telling customers)، كي لا يتأثر سلوكهم
+- D. الحصول على موافقة الامتثال (compliance approval) أولًا وتسجيلها في خطة التجربة (experiment plan)
+
+<details><summary>الإجابة</summary>
+
+**D.** تجارب السعر والائتمان والأهلية (price, credit and eligibility experiments) تثير أسئلة حول الإنصاف والجوانب التنظيمية (fairness and regulatory questions)، لذا تحتاج إلى موافقة الامتثال (و، حيث تُستخدم نماذج، موافقة مخاطر النماذج (model-risk)). أما A فتتجاهل ضرر العملاء والقواعد (customer harm and rules)؛ وB لن تجيب عن السؤال؛ وC تثير مخاوف تتعلق بالشفافية وحماية المستهلك (transparency and consumer-protection concerns). (🔴 نظرة الخبير (Expert view).)
+
+</details>
+
+## 📚 المراجع (References)
+- رون كوهافي وديان تانغ ويا شو (Ron Kohavi, Diane Tang and Ya Xu)، *Trustworthy Online Controlled Experiments: A Practical Guide to A/B Testing* (Cambridge University Press، 2020)
+- أليكس دينغ ويا شو ورون كوهافي وتوبي ووكر (Alex Deng, Ya Xu, Ron Kohavi and Toby Walker)، "Improving the Sensitivity of Online Controlled Experiments by Utilizing Pre-Experiment Data" (تحسين حساسية التجارب المضبوطة عبر الإنترنت) (WSDM 2013)
+- ب. ج. بيكل وإ. أ. هاميل وج. و. أوكونيل (P. J. Bickel, E. A. Hammel and J. W. O'Connell)، "Sex Bias in Graduate Admissions: Data from Berkeley" (التحيّز الجنسي في القبول بالدراسات العليا)، *Science*، 1975
+- يوآف بنياميني ويوسف هوخبرغ (Yoav Benjamini and Yosef Hochberg)، "Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing" (ضبط معدّل الاكتشافات الكاذبة)، *Journal of the Royal Statistical Society, Series B*، 1995
+- رونالد ل. واسرستين ونيكول أ. لازار (Ronald L. Wasserstein and Nicole A. Lazar)، "The ASA's Statement on p-Values: Context, Process, and Purpose" (بيان الجمعية الأمريكية للإحصاء بشأن قيم p)، *The American Statistician*، 2016 — https://www.amstat.org/
+- توثيق statsmodels (statsmodels documentation)، اختبارات القوة والنسب (power and proportion tests) — https://www.statsmodels.org/stable/
+- توثيق SciPy (SciPy documentation)، `scipy.stats.chisquare` — https://docs.scipy.org/doc/scipy/

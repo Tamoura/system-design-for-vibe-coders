@@ -7,7 +7,7 @@
    "lesson": "1.1",
    "q": {
     "en": "From inside a pod, Yousef runs `nc -vz` against the payments database host on port 5432. The command hangs for a while and then times out; it never says \"refused\". What does this most likely point to?",
-    "ar": "من داخل حجيرة (pod)، يشغّل يوسف الأمر `nc -vz` على مضيف قاعدة بيانات المدفوعات (payments database host) عند المنفذ (port) 5432. يتعلّق الأمر بعض الوقت ثم تنتهي مهلته (times out)، ولا تظهر أبدًا كلمة «مرفوض» (refused). إلامَ يشير هذا على الأرجح؟"
+    "ar": "من داخل حجيرة (pod)، يشغّل يوسف الأمر `nc -vz` على مضيف قاعدة بيانات المدفوعات (payments database host) عند المنفذ (port) 5432. يتوقف الأمر (hangs) بعض الوقت ثم تنتهي مهلته (times out)، ولا تظهر أبدًا كلمة «مرفوض» (refused). إلامَ يشير هذا على الأرجح؟"
    },
    "o": {
     "en": [
@@ -62,8 +62,8 @@
    "level": 2,
    "lesson": "1.3",
    "q": {
-    "en": "Hamad has just joined the platform team and needs to inspect production resources from the command line. He asks Yousef for a personal access key \"with read-only rights, so it's safe\". Under the lesson's model, what should he get instead?",
-    "ar": "انضم حمد للتو إلى فريق المنصة (platform team) ويحتاج إلى فحص موارد الإنتاج (production resources) من سطر الأوامر (command line). يطلب من يوسف مفتاح وصول شخصيًا (personal access key) «بصلاحيات قراءة فقط (read-only rights)، ليكون آمنًا». وفق نموذج الدرس، ماذا ينبغي أن يحصل عليه بدلًا من ذلك؟"
+    "en": "A new engineer has just joined the platform team and needs to inspect production resources from the command line. He asks Yousef for a personal access key \"with read-only rights, so it's safe\". Under Najm's access model, what should he get instead?",
+    "ar": "انضم مهندس جديد (new engineer) للتو إلى فريق المنصة (platform team) ويحتاج إلى فحص موارد الإنتاج (production resources) من سطر الأوامر (command line). يطلب من يوسف مفتاح وصول شخصيًا (personal access key) «بصلاحيات قراءة فقط (read-only rights)، ليكون آمنًا». وفق نموذج الوصول في نجم (Najm's access model)، ماذا ينبغي أن يحصل عليه بدلًا من ذلك؟"
    },
    "o": {
     "en": [

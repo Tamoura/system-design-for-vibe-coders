@@ -611,3 +611,308 @@ Approved by:      Faisal
 - Joe Reis وMatt Housley، *Fundamentals of Data Engineering* (O'Reilly)
 
 ---
+
+# 2.3 — البث المتدفق: الأحداث، وKafka، والنوافذ، وأسطورة "مرة واحدة بالضبط" (Streaming: events, Kafka, windows and the exactly-once myth)
+*المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 2.1، 2.2* · *المرحلة (Stage): Ingest, Transform*
+
+## ⚡ الدرس في دقيقة (In 60 seconds)
+- **البث المتدفق (streaming)** يعالج البيانات باستمرار (continuously) على هيئة **أحداث (events)** (حقائق صغيرة غير قابلة للتغيير (small immutable facts) مثل "فُوِّضت البطاقة 4417 بمبلغ 120 ريالًا قطريًا عند 14:02:11" ("card 4417 was authorised for 120 QAR at 14:02:11")) بدلًا من الدفعات الليلية (nightly batches). استخدمه حين يفقد القرار قيمته خلال ثوانٍ أو دقائق (loses value within seconds or minutes)، مثل تقييم دفعة بطاقة للاحتيال (scoring a card payment for fraud).
+- يخزّن **Apache Kafka** الأحداث في **مواضيع (topics)**، مقسَّمة إلى **أقسام (partitions)**. والترتيب مضمون داخل القسم فقط (only within a partition)، فاختر **المفتاح (key)** (مثل معرّف البطاقة (card ID)) الذي يُبقي الأحداث المترابطة معًا.
+- يتتبّع المستهلكون (consumers) موضعهم بـ **الإزاحات (offsets)**. ومتى تلتزم بالإزاحة (commit the offset) نسبةً إلى أداء العمل يحدد هل تحصل على تسليم **مرة واحدة على الأكثر (at-most-once)** (قد يُفقد (may lose)) أو **مرة واحدة على الأقل (at-least-once)** (قد يتكرر (may duplicate)).
+- يقدّم Kafka **المعالجة مرة واحدة بالضبط داخل Kafka (exactly-once within Kafka)** عبر المنتِجين متساويي الأثر (idempotent producers) والمعاملات (transactions). أما من الطرف إلى الطرف (end to end)، فتحتاج المعالجة مرة واحدة بالضبط إلى **مصبّ متساوي الأثر (idempotent sink)**: صمّم للتكرارات (design for duplicates)، واجعلها غير ضارة (make them harmless).
+- اجمع حسب **وقت الحدث (event time)**، لا وقت الوصول (arrival time)، مستخدمًا **النوافذ (windows)** (المتعاقبة (tumbling)، والمنزلقة (sliding)، والجلسات (session)) و**العلامات المائية (watermarks)** التي تحدد كم تنتظر الأحداث المتأخرة (late events).
+- الفخ الأكبر (Biggest trap): الالتزام التلقائي بالإزاحات (auto-committing offsets) قبل إنجاز العمل، فيُسقط الانهيار (crash) أحداثًا بصمت.
+
+## 🧭 لماذا يهم (Why it matters)
+تحتاج التنبيهات الذكية (Smart Alerts)، نموذج كشف الاحتيال (fraud-detection model) في بنك نجم، إلى خصائص (features) مثل "تفويضات هذه البطاقة في آخر 10 دقائق" ("authorisations for this card in the last 10 minutes") و"الدول التي استُخدمت فيها اليوم" ("countries it was used in today"). والدفعة الليلية (nightly batch) عديمة الفائدة: فبحلول وقتها يكون المحتال قد انتهى. وتحتاجها دانة، كبيرة علماء البيانات (lead data scientist)، خلال ثوانٍ من كل تفويض (authorisation).
+
+يقرأ أول مستهلك لهدى (Huda's first consumer) موضوع تفويضات البطاقات (card authorisations topic) ويكتب الأعداد لكل بطاقة (counts per card) في جدول خصائص (feature table). وفي أسبوعه الأول في الإنتاج (first production week)، يعيد نشرٌ (deployment) تشغيله في منتصف دفعة (mid-batch)، وبعد ذلك تكون نحو دقيقتين من الحركة (two minutes of traffic) مفقودة: فقد كان المستهلك قد **التزم تلقائيًا (auto-committed)** بإزاحاته، قائلًا لـ Kafka "لقد عالجت هذه" ("I have processed these")، قبل كتابة النتائج. وعند إعادة التشغيل استأنف من الموضع الملتزَم به (committed position)، ولم تُحتسب تلك الأحداث أبدًا.
+
+أول ما خطر لهدى (first instinct) هو تفعيل "مرة واحدة بالضبط" ("exactly-once") في الإعدادات. فتوقفها دانة: "المعالجة مرة واحدة بالضبط في Kafka تغطي Kafka. وجدول خصائصنا في PostgreSQL. أريني ماذا يحدث حين نكتب الحدث نفسه مرتين." ⁦("Kafka's exactly-once covers Kafka. Our feature table is in PostgreSQL. Show me what happens when we write the same event twice.")⁩ والجواب الصادق عن سؤال "هل يُعالَج كل حدث مرة واحدة بالضبط؟" ⁦("is every event processed exactly once?")⁩ هو: "مرة واحدة على الأقل، ومعالجته مرتين غير ضارة." ⁦("at least once, and processing it twice is harmless.")⁩
+
+## 📐 كيف يعمل (How it works)
+
+### 🟢 الأساسيات (The essentials)
+
+**الدفعي مقابل المتدفق (Batch versus streaming).** يعمل المعالج الدفعي (batch) على مجموعة بيانات محدودة (bounded set of data)، مثل معاملات الأمس، ثم يتوقف. ويعمل المتدفق (streaming) على تسلسل **غير محدود (unbounded)** من الأحداث. والبث المتدفق أصعب في البناء والاختبار والتشغيل (harder to build, test and operate)، ومعظم التقارير (reporting) تخدمها الدفعات كل ساعة أو كل يوم جيدًا (well served by hourly or daily batch). اختر البث المتدفق حين *تتلاشى قيمة الجواب في ثوانٍ أو دقائق (value of the answer decays in seconds or minutes)*: تقييم الاحتيال (fraud scoring)، والحدود اللحظية (real-time limits)، والتنبيهات التشغيلية (operational alerts). واختبار مفيد (useful test): "لو كان عمر هذا الرقم ساعة، هل سيتخذ أحد قرارًا أسوأ؟" ⁦("If this number were an hour old, would anyone decide worse?")⁩ إن لم يكن، فاستخدم الدفعي (use batch).
+
+**الأحداث (Events).** **الحدث (event)** سجلّ بأن شيئًا ما حدث، في وقت ما، ولا يتغيّر أبدًا بعد ذلك (never changes afterwards). حدث تفويض بطاقة (card authorisation event) في نجم:
+
+```json
+{
+  "auth_id": "a9f3c2e1-7d4b-4c55-9a1e-2b6f0c8d1e77",
+  "card_id": "card_4417",
+  "merchant_country": "QA",
+  "amount": "120.00",
+  "currency": "QAR",
+  "event_time": "2026-10-01T14:02:11.384Z"
+}
+```
+
+`auth_id` معرّف فريد للحدث (unique event ID)، فيمكن كشف التكرارات (duplicates can be detected). و`event_time` هو وقت حدوث التفويض عند المصدر (at the source)، لا وقت تلقّيك له (not when you received it).
+
+**Kafka في خمس أفكار (Kafka in five ideas).**
+
+- **الموضوع (topic)** تدفق مسمّى (named stream)، مثل `najm.card.authorisations`. المنتِجون (producers) يكتبون؛ والمستهلكون (consumers) يقرؤون.
+- تنقسم المواضيع إلى **أقسام (partitions)**: سجلات مرتّبة بإلحاق فقط (ordered, append-only logs). والترتيب قائم *داخل* القسم فقط (within a partition only).
+- الأحداث ذات **المفتاح (key)** نفسه تذهب إلى القسم نفسه. اجعل المفتاح `card_id` فتصل أحداث كل بطاقة بالترتيب (in order).
+- **إزاحة (offset)** كل حدث هي موضعه (its position). ويقوم المستهلك "بالالتزام" ("commits") بالإزاحة التي بلغها، ليستأنف بعد إعادة التشغيل (resume after a restart).
+- يحتفظ Kafka بالأحداث مدة **احتفاظ (retention)** (بالوقت أو الحجم (by time or size)؛ والقيمة الافتراضية للوسيط (broker default) سبعة أيام) سواء قرأها أحد أم لا، فيستطيع المستهلكون إعادة تشغيل التاريخ (replay history). والموضوع **المضغوط (compacted)** يحتفظ بآخر حدث لكل مفتاح (latest event per key)، وهو مفيد لـ CDC (الدرس 2.1).
+
+**مجموعات المستهلكين (Consumer groups).** يتقاسم المستهلكون الذين يشتركون في **معرّف مجموعة (group ID)** الأقسامَ: ستة أقسام وثلاثة مستهلكين تعني قسمين لكلٍّ منهم. وإضافة مستهلك تطلق إعادة توازن (rebalance)؛ والمستهلكون الزائدون عن عدد الأقسام (beyond the partition count) يبقون خاملين (sit idle). وتقرأ المجموعات المختلفة باستقلال (independently)، فترى كلٌّ من مهمة الخصائص (features job) والمؤرشِف الخام (raw archiver) كل حدث.
+
+```mermaid
+flowchart LR
+  P["منتِج محوّل البطاقات"] --> T0["القسم 0"]
+  P --> T1["القسم 1"]
+  P --> T2["القسم 2"]
+  T0 --> C1["مستهلك الخصائص أ"]
+  T1 --> C1
+  T2 --> C2["مستهلك الخصائص ب"]
+  T0 --> R["مجموعة المؤرشِف الخام"]
+  T1 --> R
+  T2 --> R
+```
+
+**دلالات التسليم (Delivery semantics).** ما يحدث حين ينهار المستهلك يعتمد على *متى يلتزم بالإزاحة (when it commits the offset)*:
+
+| الدلالة (Semantics) | الالتزام بالإزاحة… (Commit offset…) | عند الانهيار (On a crash) | النتيجة (Result) |
+|---|---|---|---|
+| مرة واحدة على الأكثر (At-most-once) | قبل أداء العمل (before doing the work) | العمل لم يُنجز، لكن الإزاحة تحرّكت بالفعل (offset already moved) | يمكن أن **تُفقد (lost)** الأحداث |
+| مرة واحدة على الأقل (At-least-once) | بعد إنجاز العمل (after the work is done) | العمل أُنجز، والإزاحة لم تتحرّك بعد (offset not yet moved) | يمكن أن **تتكرر (duplicated)** الأحداث |
+| مرة واحدة بالضبط (Exactly-once) | ذرّيًا مع العمل (atomically with the work) | لا هذا ولا ذاك (neither) | أثر كل حدث يقع مرة واحدة (each event's effect happens once) |
+
+كان الالتزام التلقائي لدى هدى (Huda's automatic commit) يعمل على مؤقّت (on a timer) بغض النظر عن شيفرتها، مما جعله فعليًا مرة واحدة على الأكثر (effectively at-most-once) للأحداث قيد المعالجة (events in flight). والإصلاح هو مرة واحدة على الأقل مع مصبّ يتجاهل التكرارات (sink that ignores duplicates).
+
+### 🟡 التعمق أكثر (Going deeper)
+
+**مرة واحدة على الأقل مع مصبّ متساوي الأثر (At-least-once with an idempotent sink).** أوقف الالتزام التلقائي (turn off auto-commit)، واكتب النتيجة، ثم التزم. واجعل الكتابة متساوية الأثر (idempotent) بربطها بالمعرّف الفريد للحدث (event's unique ID). مسودة باستخدام عميل Python `confluent-kafka` (Python client) وPostgreSQL:
+
+```python
+import json
+
+import psycopg
+from confluent_kafka import Consumer
+
+consumer = Consumer({
+    "bootstrap.servers": "localhost:9092",
+    "group.id": "smart-alerts-features",
+    "enable.auto.commit": False,      # we decide when work is done
+    "auto.offset.reset": "earliest",
+})
+consumer.subscribe(["najm.card.authorisations"])
+
+with psycopg.connect("postgresql://features@localhost/najm") as conn:
+    while True:
+        msg = consumer.poll(timeout=1.0)
+        if msg is None:
+            continue
+        if msg.error():
+            print(msg.error())        # in real use: log and alert
+            continue
+        e = json.loads(msg.value())
+        with conn.transaction():
+            conn.execute(
+                """INSERT INTO features.card_auth_events
+                   (auth_id, card_id, amount, merchant_country, event_time)
+                   VALUES (%s, %s, %s, %s, %s)
+                   ON CONFLICT (auth_id) DO NOTHING""",
+                (e["auth_id"], e["card_id"], e["amount"],
+                 e["merchant_country"], e["event_time"]),
+            )
+        consumer.commit(message=msg, asynchronous=False)
+```
+
+إن مات العملية (process dies) بعد الإدراج لكن قبل الالتزام، يُقرأ الحدث مرة أخرى ويجعل `ON CONFLICT (auth_id) DO NOTHING` الكتابة الثانية بلا أثر (no-op)، فلا تحتسب الخصائص المحسوبة من هذا الجدول مرتين أبدًا. وفي الاستخدام الحقيقي، التزم لكل دفعة (commit per batch)؛ والمصبّ متساوي الأثر يُبقي ذلك آمنًا.
+
+**ما الذي تغطيه فعلًا المعالجة مرة واحدة بالضبط في Kafka (What Kafka's exactly-once really covers).** تُلخَّص ميزتان على أنهما "مرة واحدة بالضبط" ("exactly-once"):
+
+- **المنتِج متساوي الأثر (idempotent producer)** (افتراضي في عميل Java منذ Kafka 3.0؛ والعملاء المبنيون على librdkafka يحتاجون `enable.idempotence=true`) يمنح رسائل كل منتِج أرقامًا تسلسلية (sequence numbers)، فلا تستطيع إعادة محاولة الشبكة (network retry) كتابة الرسالة نفسها مرتين في قسم.
+- **المعاملات (transactions)** تتيح للمنتِج الكتابة في عدة أقسام *و*الالتزام بإزاحات المستهلك (commit consumer offsets) وحدةً ذرّية واحدة (one atomic unit). ويضبط المستهلكون `isolation.level=read_committed` ليروا النتائج الملتزَمة فقط. ويستخدم Kafka Streams ذلك لضمان المعالجة `exactly_once_v2` (processing guarantee).
+
+ومعًا تمنحان المعالجة مرة واحدة بالضبط لمسار **القراءة من Kafka، والمعالجة، والكتابة إلى Kafka (read from Kafka, process, write to Kafka)**. ولا تصلان إلى PostgreSQL، ولا إلى مخزن خصائص (feature store)، ولا إلى بريد إلكتروني. فما إن تغادر النتائج Kafka، تحتاج مصبًّا متساوي الأثر (idempotent sink) (إدراجًا أو تحديثًا على معرّف الحدث (upsert on an event ID)، أو تخزين الإزاحة في معاملة قاعدة البيانات نفسها مع النتيجة). وتلك هي "أسطورة المعالجة مرة واحدة بالضبط" ("exactly-once myth"): الضمان حقيقي لكنه أضيق من الشعار (narrower than the slogan).
+
+**وقت الحدث ووقت المعالجة (Event time and processing time).** **وقت الحدث (event time)** هو متى وقع الحدث؛ و**وقت المعالجة (processing time)** هو متى يتعامل معه نظامك. فطرفية (terminal) على اتصال متقطّع (flaky connection) ترسل التفويضات متأخرة دقائق؛ ومستهلك يتعافى (recovering consumer) يعيد تشغيل ساعة من المتراكم (backlog) في ثوانٍ، وعدٌّ حسب وقت المعالجة (processing-time count) سينسب تلك الساعة إلى دقيقة إعادة التشغيل. اجمع حسب وقت الحدث (aggregate by event time).
+
+**النوافذ (Windows).** **النافذة (window)** تجمّع تدفقًا لا نهائيًا (endless stream) في قطع محدودة (finite chunks) يمكنك تجميعها:
+
+| النافذة (Window) | الشكل (Shape) | مثال من نجم (Najm example) |
+|---|---|---|
+| **المتعاقبة (Tumbling)** | حجم ثابت، دون تداخل (fixed size, no overlap): 14:00–14:05، 14:05–14:10 | التفويضات لكل بطاقة كل 5 دقائق للوحة معلومات مراقبة (monitoring dashboard) |
+| **المنزلقة (Sliding)** (القافزة (hopping)) | حجم ثابت يتقدّم بخطوات أصغر، فتتداخل النوافذ (windows overlap): 10 دقائق، كل دقيقة | "التفويضات في آخر 10 دقائق" ("Authorisations in the last 10 minutes") خاصيةً للاحتيال (fraud feature) |
+| **الجلسة (Session)** | تُغلق بعد فجوة خمول (gap of inactivity)، فيتفاوت حجمها | زيارة لتطبيق نجم للهاتف (Najm Mobile): أحداث حتى 30 دقيقة من الصمت (30 minutes of silence) |
+
+**العلامات المائية (Watermarks).** متى *تنتهي (finished)* نافذة 14:00–14:05، إن كانت أحداث متأخرة قد تصل بعد؟ **العلامة المائية (watermark)** هي تقدير المعالِج (processor's estimate) بأنه "لا يُتوقع مزيد من الأحداث الأقدم من الوقت T" ("no more events older than time T are expected")، وهي عادةً أكبر وقت حدث شوهد ناقص تأخير تختاره (minus a delay you choose). وحين تتجاوز نهاية النافذة، تُصدَر النتيجة (the result is emitted). والأحداث اللاحقة **متأخرة (late)**: أسقطها، أو أرسلها إلى مخرج جانبي (side output)، أو اسمح بالتحديثات لفترة إضافية ("التأخر المسموح" ("allowed lateness")). والتأخير مقايضة مقصودة (deliberate trade-off): الأطول أكثر اكتمالًا لكنه أبطأ (more complete but slower). وللتنبيهات الذكية (Smart Alerts)، تختار دانة 30 ثانية: فدرجة احتيال (fraud score) تنتظر خمس دقائق عديمة الفائدة.
+
+نافذة متعاقبة مع علامة مائية (tumbling window with a watermark) في SQL الخاص بـ **Apache Flink** (Apache Flink SQL):
+
+```sql
+CREATE TABLE card_auths (
+  auth_id STRING,
+  card_id STRING,
+  amount DECIMAL(18, 2),
+  merchant_country STRING,
+  event_time TIMESTAMP_LTZ(3),
+  WATERMARK FOR event_time AS event_time - INTERVAL '30' SECOND
+) WITH (
+  'connector' = 'kafka',
+  'topic' = 'najm.card.authorisations',
+  'properties.bootstrap.servers' = 'localhost:9092',
+  'format' = 'json',
+  'json.timestamp-format.standard' = 'ISO-8601',
+  'scan.startup.mode' = 'earliest-offset'
+);
+
+SELECT card_id, window_start, window_end, COUNT(*) AS auths, SUM(amount) AS total
+FROM TABLE(TUMBLE(TABLE card_auths, DESCRIPTOR(event_time), INTERVAL '5' MINUTES))
+GROUP BY card_id, window_start, window_end;
+```
+
+ويعبّر **Spark Structured Streaming** (`withWatermark`، `window`) و**Kafka Streams** (نوافذ مع فترة سماح (grace period)) عن المفاهيم نفسها.
+
+### 🔴 نظرة الخبير (Expert view)
+
+**اختيار الأقسام والمفاتيح (Choosing partitions and keys).** جعل المفتاح `card_id` يُبقي كل بطاقة بالترتيب ويوزّع الحمل (spreads load). أما جعل المفتاح `merchant_country` فسيضع معظم حركة قطر (most Qatar traffic) على **قسم ساخن (hot partition)** واحد يحدّ الإنتاجية (caps throughput). وإضافة أقسام لاحقًا تعيد توزيع المفاتيح (remaps keys) وتُخِلّ بالترتيب لكل مفتاح (per-key order)، لذا حدّد أعداد الأقسام من اختبار حمل (load test) مع وضع النمو في الحسبان (growth in mind).
+
+**المخططات عقود (Schemas are contracts).** منتِج يعيد تسمية `amount` يكسر كل مستهلك. استخدم Avro أو Protobuf أو JSON Schema مع **سجل مخططات (schema registry)** يتحقق من التوافق (checks compatibility) قبل قبول نسخة جديدة (الدرس 3.2).
+
+**الرسائل المسمومة (Poison messages).** حدث واحد مشوّه (malformed event) قد يُسقط مستهلكًا في حلقة (crash a consumer in a loop). التقط الأخطاء لكل حدث (per-event errors)، وأرسل الحدث مع خطئه إلى **موضوع الرسائل الميتة (dead-letter topic)**، ونبّه وامضِ قُدمًا (alert and move on)؛ ويجب أن يملك أحدٌ مراجعته (someone must own reviewing it).
+
+**تأخر المستهلك هو إشارة الصحة الأساسية (Consumer lag is the key health signal).** **التأخر (lag)** هو مقدار تخلّف مجموعة عن أحدث إزاحة (newest offset). نبّه على التأخر بالثواني (lag in seconds)، وهو ما يهمّ نموذج الاحتيال (fraud model)؛ والمستهلك الذي يتأخر إلى ما بعد مدة الاحتفاظ (beyond retention) يفقد الأحداث إلى الأبد (loses events for good).
+
+**خط بيانات واحد أم اثنان (One pipeline or two).** تشغّل **معمارية لامدا (Lambda architecture)** (Nathan Marz) مساري الدفعي والمتدفق جنبًا إلى جنب (side by side)؛ وتستخدم **معمارية كابا (Kappa architecture)** (Jay Kreps) مسارًا متدفقًا واحدًا وتعيد تشغيل السجل لإعادة الحساب (replays the log to recompute). أبقِ تعريفًا واحدًا لكل مقياس (one definition of each metric) (الدرس 4.1) على المسارين، وإلا ستختلف الأرقام (the numbers will disagree).
+
+**البيانات الشخصية في التدفقات (Personal data in streams).** مدة احتفاظ الموضوع (topic retention) قرار احتفاظ بالبيانات (data retention decision): سبعة أيام من أحداث البطاقات هي سبعة أيام من البيانات الشخصية (personal data) في نظام آخر. استخدم معرّفات بطاقات مرمَّزة (tokenised card IDs)، واضبط مدة الاحتفاظ عن قصد (deliberately)، وقيّد الوصول (restrict access) (الوحدة 6 (Module 6)). وتُقارَن خطوط الأحداث لتحليلات المنتج (event pipelines for product analytics) في [*لبنات بناء SaaS* (SaaS Building Blocks)، الدرس 6.2 — التحليلات: المنتج والويب وخط الأحداث (Analytics: product, web and the event pipeline)](../saas/index.ar.html#/6.2)، وأنماط الطوابير (queue patterns) لعمل التطبيقات في [*تصميم الأنظمة لمبرمجي الحدس* (System Design for Vibe Coders)، الدرس 10.2 — الطوابير والعمل غير المتزامن (Queues and asynchronous work)](../vibe/index.ar.html#l10-2).
+
+## 🧰 الأدوات (The toolkit)
+| الأداة أو النمط أو المعيار (Tool, pattern or standard) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |
+|---|---|---|
+| **Apache Kafka** | سجل أحداث موزّع ومقسَّم ومنسوخ (distributed, partitioned, replicated event log) مع احتفاظ (retention) ومجموعات مستهلكين (consumer groups) وإزاحات (offsets) | العمود الفقري (backbone) لأحداث البطاقات وCDC وأحداث التطبيقات في نجم |
+| **Redpanda** | منصة بث متدفق (streaming platform) متوافقة مع واجهة Kafka (Kafka-API-compatible)، سهلة التشغيل في حاوية واحدة (single container) | المختبرات المحلية (local labs)؛ واجهة Kafka على محرّك مختلف (different engine) |
+| **Apache Flink** | معالِج تدفقات (stream processor) مع نوافذ وقت الحدث (event-time windows) وعلامات مائية وحالة (state) وFlink SQL | الخصائص ذات الحالة منخفضة الكمون (low-latency stateful features)، مثل أعداد سرعة البطاقات (card velocity counts) في التنبيهات الذكية |
+| **Spark Structured Streaming** | بث متدفق على محرّك Apache Spark باستخدام إطارات البيانات (DataFrames) والعلامات المائية والنوافذ | الفرق العاملة أصلًا على Spark أو على مستودع بحيري (lakehouse) مبني على Spark |
+| **Kafka Streams** | مكتبة Java لمعالجة التدفقات (stream processing) داخل تطبيقك، مع المعالجة مرة واحدة بالضبط داخل Kafka (exactly-once within Kafka) | تحويلات من Kafka إلى Kafka (Kafka-to-Kafka transformations) يملكها فريق تطبيق (application team) |
+| **Idempotent sink** — المصبّ متساوي الأثر | كتابات مرتبطة بمعرّف حدث (keyed on an event ID) (إدراج أو تحديث، أو إدراج إن لم يوجد (insert-if-absent)) فلا يكون للتكرارات أثر (no effect) | كل تدفق يكتب خارج Kafka (writes outside Kafka) |
+| **Schema registry** (Confluent Schema Registry، Apicurio Registry) — سجل المخططات | يخزّن مخططات الأحداث (event schemas) ويفرض التوافق بين الإصدارات (compatibility between versions) | أي موضوع له أكثر من منتِج أو مستهلك واحد |
+| **Dead-letter topic** — موضوع الرسائل الميتة | موضوع للأحداث التي فشلت معالجتها (failed processing)، مع إرفاق الخطأ | إبقاء التدفق متحركًا متجاوزًا الأحداث المشوّهة (malformed events) دون فقدانها |
+
+## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
+قبل أن يغذّي تدفق البطاقات (card stream) التنبيهاتِ الذكية (Smart Alerts) في الإنتاج، يكتب فيصل ودانة **بطاقة تصميم تدفق (stream design card)**، تُحفظ بجوار الشيفرة (next to the code) ويراجعها فريق المنصة لدى سالم (Salem's platform team) وسارة.
+
+**بطاقة تصميم التدفق (Stream design card): `najm.card.authorisations` → خصائص السرعة للتنبيهات الذكية (Smart Alerts velocity features)**
+
+| الحقل (Field) | القرار (Decision) |
+|---|---|
+| الغرض ولماذا البث المتدفق (Purpose and why streaming) | خصائص سرعة البطاقات اللحظية (real-time card velocity features)؛ قرارات الاحتيال تفقد قيمتها خلال ثوانٍ |
+| المنتِج والمالك (Producer and owner) | خدمة تكامل محوّل البطاقات (card switch integration service)؛ المالك (owner): هندسة المدفوعات (Payments engineering) |
+| مخطط الحدث (Event schema) | Avro، مسجَّل (registered)؛ وضع التوافق (compatibility mode): رجعي (backward)؛ `auth_id` فريد؛ `event_time` بتوقيت UTC |
+| المفتاح والأقسام (Key and partitions) | المفتاح `card_id` (مرمَّز (tokenised))؛ عدد الأقسام محدَّد من اختبار حمل (load test) مع هامش للنمو (headroom for growth) |
+| الاحتفاظ (Retention) | متفق عليه مع سارة؛ أحداث البطاقات بيانات شخصية (personal data)؛ أرشيف خام (raw archive) في المستودع البحيري وفق جدول الاحتفاظ في البنك (bank's retention schedule) |
+| مجموعات المستهلكين (Consumer groups) | `smart-alerts-features` (مهمة Flink (Flink job))؛ `raw-archiver` (يُنزل إلى الطبقة الخام (lands to raw layer)) |
+| دلالات التسليم (Delivery semantics) | مرة واحدة على الأقل (at-least-once)؛ نقاط التحقق في Flink مفعّلة (Flink checkpoints enabled)؛ المصبّات متساوية الأثر (sinks idempotent): الأحداث مرتبطة بـ `auth_id`، ونتائج النوافذ تُدرج أو تُحدَّث (upserted) على `card_id` مع النافذة |
+| الوقت والنوافذ (Time and windows) | وقت الحدث (event time)؛ عدد ومبلغ منزلقان لعشر دقائق لكل بطاقة (sliding 10-minute count and amount per card)، يتقدمان كل دقيقة؛ الدول المميزة لكل بطاقة يوميًا (distinct countries per card per day) |
+| العلامة المائية والبيانات المتأخرة (Watermark and late data) | تأخير علامة مائية 30 ثانية (30-second watermark delay)؛ الأحداث المتأخرة إلى مخرج جانبي (side output)، تُعدّ وتُراجَع يوميًا |
+| الأحداث السيئة (Bad events) | موضوع الرسائل الميتة (dead-letter topic) `najm.card.authorisations.dlq`؛ تنبيه عند أي حدث؛ يراجعه المالك خلال يوم عمل واحد (one business day) |
+| الصحة والتنبيهات (Health and alerts) | تأخر المستهلك بالثواني (consumer lag in seconds) (تنبيه فوق عتبة متفق عليها (agreed threshold))؛ عدد الرسائل الميتة (dead-letter count)؛ تأخير العلامة المائية؛ إعادات تشغيل المهمة (job restarts) |
+| خطة إعادة التشغيل (Replay plan) | أعد ضبط المجموعة إلى طابع زمني (reset the group to a timestamp)؛ آمن لأن المصبّ متساوي الأثر |
+| الوصول (Access) | الإنتاج (produce): خدمة محوّل البطاقات فقط؛ الاستهلاك (consume): حسابات خدمة مسمّاة فقط (named service accounts only)؛ لا وصول قراءة بشري (no human read access) إلى الموضوع الخام |
+
+اختبار الإطلاق لدى دانة (Dana's go-live test): *"اقتل مهمة الخصائص في منتصف التدفق، وأعد تشغيلها، وأظهر أن عدّ العشر دقائق لكل بطاقة يطابق إعادة حساب دفعية (batch recomputation) من الأرشيف الخام."* ⁦*("Kill the feature job mid-stream, restart it, and show every card's 10-minute count matches a batch recomputation from the raw archive.")*⁩
+
+## 🛠️ التمارين (Exercises)
+شغّل Kafka أو Redpanda محليًا في Docker باستخدام أدلة البدء السريع الرسمية (official quick-starts)، وولّد أحداث بطاقات اصطناعية (synthetic card events) بسكربت Python صغير. ولا تستخدم أبدًا أرقام بطاقات حقيقية (real card numbers).
+
+- 🟢 أنشئ موضوعًا بثلاثة أقسام (three-partition topic) باسم `card.auths` وأنتِج 1,000 حدث اصطناعي لـ 20 بطاقة، مفتاحها `card_id`. شغّل مستهلكَين في مجموعة واحدة، ثم ثالثًا. *يكتمل عندما (Done when):* تستطيع أن تُظهر ملكية الأقسام (partition ownership) قبل إعادة التوازن (rebalance) وبعدها، وأحداث كل بطاقة بالترتيب.
+- 🟡 اكتب مستهلكًا بالتزام تلقائي (auto-commit) ينام بين القراءة والكتابة إلى PostgreSQL، واقتله في منتصف التشغيل. ثم أعد كتابته بالتزامات يدوية بعد الكتابة (manual commits after writing) ومصبّ `ON CONFLICT (auth_id) DO NOTHING`، واقتله مجددًا. *يكتمل عندما (Done when):* تستطيع أن تُظهر الأحداث التي فقدتها النسخة الأولى، وكل حدث مرة واحدة بالضبط في جدول النسخة الثانية رغم أن بعضها قُرئ مرتين (read twice).
+- 🔴 باستخدام Flink SQL أو Spark Structured Streaming أو Kafka Streams، احسب عدًّا بنافذة متعاقبة مدتها 5 دقائق لكل بطاقة (5-minute tumbling count per card) حسب وقت الحدث مع علامة مائية 30 ثانية. أنتِج بعض الأحداث بأوقات حدث قبل دقيقتين (two minutes in the past). *يكتمل عندما (Done when):* تستطيع أن تُظهر أن تلك الأحداث المتأخرة عولجت كما صمّمت (أُسقطت، أو أُرسلت إلى مخرج جانبي، أو بتأخر مسموح (dropped, side output or allowed lateness))، وتشرح المقايضة (trade-off)، وتملأ بطاقة تصميم تدفق لنجم (Najm stream design card) لموضوعك.
+
+## ⚠️ أخطاء وفخاخ (Mistakes and traps)
+- **البث المتدفق لأنه يبدو حديثًا (Streaming because it sounds modern).** استخدمه فقط حين يؤدي جواب عمره ساعة إلى قرار أسوأ (worse decision).
+- **الالتزام التلقائي بالإزاحات (Auto-committing offsets).** قد يحدث الالتزام قبل إنجاز عملك، فتُفقد الأحداث في انهيار. التزم بعد العمل (commit after the work).
+- **الاعتقاد بأن "مرة واحدة بالضبط" في الإعدادات تعني من الطرف إلى الطرف (Believing "exactly-once" in a config means end to end).** ضمان Kafka يتوقف عند Kafka. اجعل كل كتابة خارجية (external write) متساوية الأثر، مرتبطة بمعرّف حدث (keyed on an event ID).
+- **التجميع حسب وقت المعالجة (Aggregating by processing time).** الأحداث المتأخرة والمعاد تشغيلها (late and replayed events) تقع في النافذة الخطأ. استخدم وقت الحدث مع علامة مائية اخترتها عن قصد (chose on purpose).
+- **لا مسار للرسائل الميتة ولا تنبيه على التأخر (No dead-letter path or lag alert).** حدث سيئ واحد يوقف التدفق، أو مستهلك عالق (stuck consumer) يتخلّف إلى ما بعد مدة الاحتفاظ. وجّه الإخفاقات (route failures) ونبّه على التأخر بالثواني.
+
+## 🧾 الخلاصة (Recap)
+- استخدم البث المتدفق حين تتلاشى قيمة الجواب في ثوانٍ أو دقائق؛ وإلا فالدفعي أبسط وكافٍ (simpler and enough).
+- ينظّم Kafka الأحداث في مواضيع وأقسام (topics and partitions)؛ والترتيب قائم لكل قسم، لذا فالمفتاح مهم (the key matters). وتتقاسم مجموعات المستهلكين الأقسام؛ وتسجّل الإزاحات التقدّم (offsets record progress).
+- توقيت الالتزام (commit timing) يحدد مرة واحدة على الأكثر مقابل مرة واحدة على الأقل. ابنِ مرة واحدة على الأقل مع مصبّ متساوي الأثر (idempotent sink).
+- المعالجة مرة واحدة بالضبط في Kafka (المنتِجون متساوو الأثر والمعاملات (idempotent producers and transactions)) تغطي المعالجة من Kafka إلى Kafka؛ أما المعالجة مرة واحدة بالضبط من الطرف إلى الطرف فتحتاج مصبّات متساوية الأثر.
+- اجمع حسب وقت الحدث باستخدام نوافذ متعاقبة أو منزلقة أو نوافذ جلسات، مع علامة مائية تقايض الاكتمال بالسرعة عن قصد (trades completeness for speed on purpose).
+
+## ✍️ اختبر نفسك (Check yourself)
+
+**1. يطلب كريم لوحة معلومات "لحظية" ("real-time" dashboard) لودائع الفروع أمس (yesterday's branch deposits)، يراجعها مديرو الفروع (branch managers) مرة كل صباح. ماذا ينبغي أن يفعل فريق منصة البيانات (Data Platform team)؟**
+
+- A. بناء خط بيانات بـ Kafka وFlink لتتحدث لوحة المعلومات كل ثانية
+- B. استخدام مستهلك Kafka (Kafka consumer) يكتب كل إيداع مباشرة في قاعدة بيانات لوحة المعلومات
+- C. استخدام نوافذ الجلسات (session windows) على أحداث الإيداع لتُجمَّع كل زيارة فرع
+- D. تقديمها من الدفعة اليومية (daily batch)؛ فالرقم الأحدث لا يغيّر أي قرار (changes no decision)
+
+<details><summary>الإجابة</summary>
+
+**D.** لا يستحق البث المتدفق كلفته (earns its cost) إلا حين تتلاشى قيمة الجواب في ثوانٍ أو دقائق. A وB تضيفان كلفة بلا فائدة؛ وC تجيب عن سؤال لم يطرحه أحد. (🟢 الأساسيات (The essentials))
+
+</details>
+
+**2. استخدم مستهلك هدى الالتزام التلقائي بالإزاحات (automatic offset commits). أُعيد تشغيله في منتصف دفعة، ولم تُحتسب بعض الأحداث أبدًا. أي سلوك تسليم (delivery behaviour) أنتج ذلك، وما الإصلاح المعياري؟**
+
+- A. مرة واحدة على الأقل (at-least-once)؛ انتقل إلى التزامات تلقائية بفاصل أقصر (shorter interval) ليُفقد أقل
+- B. مرة واحدة على الأكثر (at-most-once)؛ التزم بعد كتابة متساوية الأثر مرتبطة بمعرّف الحدث (idempotent write keyed on the event ID)
+- C. مرة واحدة بالضبط (exactly-once)؛ لا شيء يحتاج إلى تغيير لأن Kafka يتتبّع الإزاحات
+- D. مرة واحدة على الأقل (at-least-once)؛ أضف مزيدًا من الأقسام لتلحق إعادة التشغيل أسرع
+
+<details><summary>الإجابة</summary>
+
+**B.** تحرّكت الإزاحات قبل إنجاز العمل، فتُخطّيت تلك الأحداث عند إعادة التشغيل. والالتزام بعد الكتابة يعطي مرة واحدة على الأقل، والمصبّ متساوي الأثر يجعل التكرارات الناتجة غير ضارة. A وD تخطئان تشخيص المشكلة (misdiagnose the problem). (🟢 الأساسيات (The essentials))
+
+</details>
+
+**3. تفعّل هدى معاملات Kafka (Kafka transactions) والمنتِج متساوي الأثر (idempotent producer)، ثم تقول إن جدول خصائص التنبيهات الذكية في PostgreSQL أصبح الآن "مرة واحدة بالضبط" ("exactly-once"). هل هو على حق؟**
+
+- A. لا؛ فالكتابة إلى PostgreSQL لا تزال تحتاج مصبًّا متساوي الأثر (idempotent sink)
+- B. نعم، لأن معاملات Kafka تمتد إلى كل نظام يكتب إليه المستهلك
+- C. نعم، ما دامت مجموعة المستهلكين تضم عضوًا واحدًا بالضبط في كل مرة
+- D. لا، لأن Kafka لا يستطيع أبدًا تسليم رسالة إلى مستهلك أكثر من مرة
+
+<details><summary>الإجابة</summary>
+
+**A.** يغطي الضمان القراءة من Kafka والكتابة إليه ذرّيًا (atomically). وPostgreSQL خارج تلك المعاملة، لذا استخدم إدراجًا أو تحديثًا (upsert) مرتبطًا بـ `auth_id` أو خزّن الإزاحات في معاملة قاعدة البيانات نفسها. وD خاطئة: فتسليم مرة واحدة على الأقل يعني أن التكرارات ممكنة (duplicates are possible). (🟡 التعمق أكثر (Going deeper))
+
+</details>
+
+**4. تفقد طرفية بطاقات (card terminal) اتصالها وترسل 40 تفويضًا متأخرة ثلاث دقائق. وتعدّ خاصية الاحتيال (fraud feature) التفويضات لكل بطاقة في كل نافذة مدتها 5 دقائق. أي نهج يضعها في النوافذ الصحيحة؟**
+
+- A. العدّ حسب وقت المعالجة (processing time)، لتعكس الأعداد متى علم نجم بها
+- B. إسقاط كل حدث يصل بغير ترتيب (out of order) لإبقاء النوافذ نظيفة
+- C. العدّ حسب وقت الحدث (event time)، مع علامة مائية مختارة ومعالجة صريحة للمتأخر (explicit late handling)
+- D. زيادة مدة احتفاظ الموضوع (topic's retention period) لتُحفظ الأحداث المتأخرة أطول
+
+<details><summary>الإجابة</summary>
+
+**C.** وقت الحدث يضع كل تفويض في النافذة التي وقع فيها؛ والعلامة المائية تحدد كم ننتظرها. A تضع الأربعين كلها في النافذة الخطأ؛ وB ترمي بيانات حقيقية (throws away real data)؛ وD لا تؤثر في التقسيم إلى نوافذ (windowing). (🟡 التعمق أكثر (Going deeper))
+
+</details>
+
+**5. موضوع تفويضات البطاقات مفتاحه `merchant_country`. أحد المستهلكين مُثقَل (overloaded) والتأخر (lag) يتزايد باستمرار، بينما الآخرون خاملون (idle). ما السبب الأرجح، وما الإصلاح؟**
+
+- A. مدة الاحتفاظ قصيرة جدًا على حجم الحركة؛ زِدها إلى أربعة عشر يومًا
+- B. تأخير العلامة المائية (watermark delay) طويل جدًا على حجم النافذة؛ قصّره
+- C. الالتزام التلقائي مفعّل، مما يبطئ المستهلك؛ أوقفه والتزم يدويًا
+- D. مفتاح واحد يحمل معظم الحركة على قسم ساخن (hot partition)؛ اجعل المفتاح `card_id` المرمَّز (tokenised)
+
+<details><summary>الإجابة</summary>
+
+**D.** التقسيم بمفتاح منحرف (skewed key) يضع معظم الأحداث على قسم واحد، ولا يستطيع قراءته إلا مستهلك واحد في المجموعة؛ و`card_id` يوزّع الحمل. وA وB وC لا تغيّر طريقة توزيع الحمل (how load is spread). (🔴 نظرة الخبير (Expert view))
+
+</details>
+
+## 📚 المراجع (References)
+- توثيق Apache Kafka (Apache Kafka documentation) (التصميم، والدلالات، والمستهلكون، والمعاملات (design, semantics, consumers, transactions)) — https://kafka.apache.org/documentation/
+- توثيق Apache Flink (Apache Flink documentation)، وقت الحدث والعلامات المائية ودوال النوافذ ذات القيم الجدولية (event time, watermarks and windowing table-valued functions) — https://nightlies.apache.org/flink/flink-docs-stable/
+- Apache Spark، دليل برمجة Structured Streaming (Structured Streaming Programming Guide) — https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html
+- توثيق Redpanda (Redpanda documentation) — https://docs.redpanda.com/
+- confluent-kafka-python — https://github.com/confluentinc/confluent-kafka-python
+- Tyler Akidau وSlava Chernyak وReuven Lax، *Streaming Systems* (O'Reilly)
+- Tyler Akidau وآخرون (et al.)، "The Dataflow Model" (VLDB 2015) — https://research.google/pubs/
+- Martin Kleppmann، *Designing Data-Intensive Applications* (O'Reilly)، الفصل المتعلق بمعالجة التدفقات (chapter on stream processing)

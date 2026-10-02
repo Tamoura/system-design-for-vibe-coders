@@ -244,12 +244,12 @@ flowchart LR
 - كثير من الوظائف تُشغَل عبر أشخاص يعرفون المرشّح (candidate) مسبقًا أو سمعوا عنه. و**الإحالة (referral)** — أي أن يقدّم موظف اسمك — تجعل في العادة طلبك (application) يُقرأ من قِبل إنسان.
 - بناء العلاقات المهنية (networking) ليس تملّقًا (schmoozing). إنه **محادثات مفيدة ومحدّدة (useful, specific conversations)** مع أشخاص يسبقونك بخطوة أو خطوتين، إضافة إلى عرض عملك حيث يمكنهم رؤيته.
 - **ملفك على LinkedIn (LinkedIn profile)** سيرة ذاتية ثانية (second CV) يجدها الناس بأنفسهم؛ فاجعل العنوان التعريفي (headline) وقسم النبذة (About section) والروابط المميّزة (Featured links) تقوم بالعمل.
-- اطرح أسئلة صغيرة وواضحة وسهلة الإجابة. عبارة "هل يمكنني أن أسألك ثلاثة أسئلة عن فريق البيانات؟ (Can I ask you three questions about the data team?)" تنجح؛ أما "هل يمكنك أن تجد لي وظيفة؟ (Can you get me a job?)" فلا.
+- اطرح أسئلة صغيرة وواضحة وسهلة الإجابة. عبارة "هل يمكنني أن أسألك ثلاثة أسئلة عن فريق البيانات؟ ⁦(Can I ask you three questions about the data team?)⁩" تنجح؛ أما "هل يمكنك أن تجد لي وظيفة؟ ⁦(Can you get me a job?)⁩" فلا.
 - مؤشر القرار (Decision cue): لا تطلب أبدًا إحالة (referral) من شخص غريب في الرسالة الأولى (first message). اطلب النصيحة (advice)؛ ولا تطلب الإحالة إلا بعد أن يعرف عملك.
 - أكبر فخ (Biggest trap): الإرسال الجماعي (mass-sending) لطلب التواصل نفسه (connection request) إلى مئات الأشخاص. فهذا يهدر أفضل جهات اتصالك (best contacts) وقد يصنّفك مُرسِلًا للرسائل المزعجة (spam).
 
 ## 🧭 لماذا يهم (Why it matters)
-أرسلت هدى 40 طلبًا لأدوار علم البيانات (data-science roles) خلال شهرين وحصلت على مقابلة فرز (screen) واحدة. كانت دفاترها (notebooks) جيدة، لكن مهارتها في SQL ضعيفة، وكانت سيرتها الذاتية (CV) تقول "عالمة بيانات (data scientist)" لوظائف تريد في معظمها محلّلين (analysts) ومهندسين (engineers). ثم، في أمسية لخرّيجي الجامعة (university alumni evening)، قضت عشر دقائق مع مهندس بيانات (data engineer) في بنك نجم (Najm Bank) شرح لها ما يفعله فريقه طوال اليوم: خطوط معالجة البيانات (pipelines)، وجودة البيانات (data quality)، وSQL، ومزيد من SQL. تابعت معه في اليوم التالي برسالة شكر (thank-you) وسؤال واحد. وبعد أسبوعين أرسلت له رابطًا إلى مشروع خط معالجة صغير (small pipeline project) بنته بعد حديثهما (اتجاهها الجديد من الدرس 2.3). فردّ قائلًا: "هذا هو نوع العمل الذي نحتاجه — هل تريدين أن أرسله إلى دانة؟ (This is the kind of thing we need — do you want me to send it to Dana?)" كانت دانة، كبيرة علماء البيانات (lead data scientist) في نجم، عضوًا في لجنة التوظيف (hiring panel) لهندسة البيانات. ووصل طلب هدى مرفقًا بملاحظة من موظف رأى عملها.
+أرسلت هدى 40 طلبًا لأدوار علم البيانات (data-science roles) خلال شهرين وحصلت على مقابلة فرز (screen) واحدة. كانت دفاترها (notebooks) جيدة، لكن مهارتها في SQL ضعيفة، وكانت سيرتها الذاتية (CV) تقول "عالمة بيانات (data scientist)" لوظائف تريد في معظمها محلّلين (analysts) ومهندسين (engineers). ثم، في أمسية لخرّيجي الجامعة (university alumni evening)، قضت عشر دقائق مع مهندس بيانات (data engineer) في بنك نجم (Najm Bank) شرح لها ما يفعله فريقه طوال اليوم: خطوط معالجة البيانات (pipelines)، وجودة البيانات (data quality)، وSQL، ومزيد من SQL. تابعت معه في اليوم التالي برسالة شكر (thank-you) وسؤال واحد. وبعد أسبوعين أرسلت له رابطًا إلى مشروع خط معالجة صغير (small pipeline project) بنته بعد حديثهما (اتجاهها الجديد من الدرس 2.3). فردّ قائلًا: "هذا هو نوع العمل الذي نحتاجه — هل تريدين أن أرسله إلى دانة؟ ⁦(This is the kind of thing we need — do you want me to send it to Dana?)⁩" كانت دانة، كبيرة علماء البيانات (lead data scientist) في نجم، عضوًا في لجنة التوظيف (hiring panel) لهندسة البيانات. ووصل طلب هدى مرفقًا بملاحظة من موظف رأى عملها.
 
 لا شيء في هذه القصة حيلة (trick). سألت هدى سؤالًا حقيقيًا، وأصغت، وتصرّفت بناءً على الإجابة، وأظهرت النتيجة. هذه هي المهارة كلها، ويمكن تعلّمها (learnable) حتى لو كنت تجد الحديث مع الغرباء مزعجًا.
 
@@ -325,7 +325,7 @@ flowchart LR
 
 **أن تكون مرئيًا دون أن تصبح مؤثّرًا (Being visible without becoming an influencer).** لا تحتاج إلى علامة شخصية (personal brand). تحتاج إلى أثر صغير من العمل (small trail of work) يستطيع الناس العثور عليه. خيارات عملية:
 - اكتب منشورًا قصيرًا (short post) حين تنهي مشروعًا: المشكلة، وقرار واحد اتّخذته، وشيء واحد سار على نحو خاطئ، ورابط (يتناول الدرس 3.2 الكتابة عن عملك (writing about your work)).
-- علّق تعليقًا مفيدًا (Comment usefully) على منشورات مهندسين في مجالك المستهدف (target field) — سؤال حقيقي أو إضافة صغيرة، لا "منشور رائع! (Great post!)".
+- علّق تعليقًا مفيدًا (Comment usefully) على منشورات مهندسين في مجالك المستهدف (target field) — سؤال حقيقي أو إضافة صغيرة، لا "منشور رائع! ⁦(Great post!)⁩".
 - أجب عن أسئلة في مجتمع تعرفه جيدًا (منتدى مقرّر (course forum)، أو مجموعة دردشة لقاء (meetup's chat group)).
 - قدّم محاضرة خاطفة (lightning talk) مدتها خمس دقائق في نادٍ طلابي (student club) أو لقاء عن مشروع.
 
@@ -469,3 +469,223 @@ flowchart LR
 
 ---
 
+# 4.3 — أين توجد الوظائف: برامج الخرّيجين، ومواقع الوظائف، والشركات الناشئة، والقطاع العام، وسوق الخليج (Where the jobs are: graduate programmes, job boards, startups, the public sector and the GCC market)
+*المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 0.2، 4.1، 4.2* · *الخطوة (Step): Explore, Apply*
+
+## ⚡ الدرس في دقيقة (In 60 seconds)
+- تأتي وظائف مستوى المبتدئين (entry-level jobs) من قنوات (channels) عدّة لكلٍّ منها مواعيدها وقواعدها: **برامج الخرّيجين (graduate programmes)**، و**إعلانات الوظائف المباشرة (direct job ads)**، و**الشركات الناشئة (startups)**، و**القطاع العام والبرامج الوطنية (public sector and national programmes)**، و**مسؤولو التوظيف الخارجيون (recruiters)**، و**الإحالات (referrals)**.
+- كثيرًا ما توظّف برامج الخرّيجين قبل التخرّج بأشهر، وفق دفعات قبول ثابتة (fixed intakes)؛ والشركات الناشئة توظّف حين تحتاج إلى شخص؛ ومواقع الوظائف (job boards) مستمرة. اعرف على أي ساعة (clock) تسير كل جهة مستهدفة.
+- في دول الخليج (GCC)، تحدّد **برامج توطين القوى العاملة (workforce nationalisation programmes)** (التقطير (Qatarization)، والتوطين الإماراتي (Emiratisation) وبرنامج نافس (Nafis)، والسعودة (Saudization) وبرنامج نطاقات (Nitaqat)) من يُوظَّف وفي أي أدوار. اعرف موقعك وابحث عن البرامج المصمّمة لك.
+- ابنِ **قائمة مستهدفة من 20 إلى 40 صاحب عمل (target list of 20–40 employers)** عبر القنوات، لا مئات الطلبات العشوائية (random applications).
+- مؤشر القرار (Decision cue): اصرف ساعاتك الأسبوعية حيث تناسب أدلتك (evidence) أكثر، وقِس مسار طلباتك (pipeline) كل أسبوع.
+- أكبر فخ (Biggest trap): التقدّم عبر موقع وظائف كبير واحد فقط والحكم على نفسك من خلال الصمت (silence).
+
+## 🧭 لماذا يهم (Why it matters)
+قضى يوسف شهره الأول بعد التخرّج يتقدّم إلى كل إعلان "مهندس DevOps (DevOps engineer)" على موقع وظائف واحد، ومعظمها يطلب خبرة من ثلاث إلى خمس سنوات. لم يسمع شيئًا وبدأ يظن أنه غير قابل للتوظيف (unemployable). وحين التقى سالم، رئيس هندسة المنصّات (Head of Platform Engineering) في نجم، في معرض للتوظيف (careers fair)، طرح عليه سالم سؤالًا بسيطًا: "أين تتقدّم؟ ⁦(Where are you applying?)⁩" كان يوسف قد فاتته نافذة التقديم (application window) لبرنامج نجم للخرّيجين التقنيين (Najm Tech Graduate Programme) بأسبوعين، ولم ينظر قط في برنامج الخرّيجين (graduate scheme) لدى شركة الاتصالات الإقليمية، ولم يكن يعلم أن جهة حكومية رقمية (government digital agency) توظّف مبتدئين (juniors) عبر برنامج وطني (national programme)، ولم يتواصل مع شركتَي الاستشارات السحابية (cloud consultancies) في الدوحة اللتين تستقبلان الخرّيجين مهندسين مبتدئين (junior engineers).
+
+أما مشكلة محمد فكانت مختلفة. فبصفته متحوّلًا مهنيًا (career-switcher) بلا شهادة في الحوسبة (computing degree)، استبعدته متطلبات الشهادة (degree requirements) في عدد من برامج الخرّيجين. وكان طريقه الشركات الناشئة (startups) والشركات الأصغر (smaller firms) التي تحكم على معرض الأعمال (portfolio) لا على الشهادات — ومنها سديم باي (Sadeem Pay)، شركة التقنية المالية (fintech) في الدوحة. السوق نفسه، وخريطتان مختلفتان. يساعدك هذا الدرس على رسم خريطتك.
+
+## 📐 كيف يعمل (How it works)
+
+### 🟢 الأساسيات (The essentials)
+
+**القنوات الست (The six channels).**
+
+| القناة (Channel) | ما هي (What it is) | التوقيت (Timing) | الأنسب لـ (Best for) | انتبه إلى (Watch out for) |
+|---|---|---|---|---|
+| **برامج الخرّيجين (Graduate programmes)** | برامج منظّمة (Structured schemes) مدتها سنة إلى سنتين في البنوك وشركات الطاقة والاتصالات والاستشارات وشركات التقنية الكبرى؛ مع تدوير بين الفرق (rotations)، وتدريب، ودفعة (cohort) | دفعات قبول ثابتة (Fixed intakes)؛ وكثيرًا ما يُفتح التقديم قبل تاريخ البدء بأشهر عديدة | طلاب السنة النهائية (Final-year students) والخرّيجون الجدد الذين يستوفون معايير الشهادة والتاريخ | فوات النافذة (Missing the window)؛ وأهلية صارمة (strict eligibility) تتعلّق بالشهادة أو سنة التخرّج أو الجنسية |
+| **إعلانات الوظائف المباشرة (Direct job ads)** | أدوار مبتدئ (Junior) أو مساعد (associate) أو "مهندس I (engineer I)" على صفحات الوظائف في مواقع الشركات (company careers pages) ومواقع الوظائف | مستمرة (Continuous) | أي شخص لديه أدلة مطابقة (matching evidence) | إعلانات بعنوان "مبتدئ (junior)" تطلب سنوات من الخبرة؛ ومنافسة عالية (high competition) |
+| **الشركات الناشئة والمتوسعة (Startups and scale-ups)** | شركات صغيرة توظّف لاحتياجات محدّدة (specific needs) | حين تحصل على تمويل (funded) وحين تنشأ الحاجة | البنّاؤون (Builders) أصحاب معرض أعمال قوي (strong portfolio)؛ والمتحوّلون مهنيًا (career-switchers) | تدريب أقل وغموض أكبر (ambiguity)؛ فتحقّق من تمويل الشركة واستقرارها (funding and stability) |
+| **القطاع العام والبرامج الوطنية (Public sector and national programmes)** | الجهات الحكومية (Government entities)، والوكالات الرقمية (digital agencies)، والشركات شبه الحكومية (semi-government companies)، وبرامج التنمية الوطنية (national development programmes) | غالبًا سنوية أو قائمة على حملات (campaign-based)؛ وإجراءات رسمية (formal processes) | المواطنون (Nationals) في البرامج المصمّمة لهم؛ وغيرهم حيث تكون الأدوار مفتوحة | جداول زمنية أطول (Longer timelines)؛ وقواعد الأهلية (eligibility rules) |
+| **مسؤولو التوظيف الخارجيون والوكالات (Recruiters and agencies)** | مسؤولو توظيف خارجيون (External recruiters) يشغلون أدوارًا لصالح عملائهم | مستمرة (Continuous) | أدوار التعاقد (Contract) والأدوار المتوسطة؛ وبعض أدوار المبتدئين | يدفع لهم صاحب العمل؛ وأنت لست عميلهم. لا تدفع أبدًا لمسؤول توظيف (Never pay a recruiter) كي يجد لك وظيفة |
+| **الإحالات والمجتمع (Referrals and community)** | تعريفات (Introductions) عبر أشخاص يعرفون عملك (الدرس 4.2) | مستمرة (Continuous) | الجميع | يستغرق بناؤها أسابيع؛ فابدأ مبكرًا (start early) |
+
+**أين تجد الإعلانات (Where to find ads).** صفحات الوظائف في مواقع الشركات (Company careers pages) هي المصدر الأكثر موثوقية. أما المجمّعات (Aggregators) ومواقع الوظائف فتوسّع نطاق الوصول (reach): LinkedIn Jobs مستخدم على نطاق واسع في المنطقة؛ وBayt.com وGulfTalent وNaukrigulf مواقع وظائف خليجية عريقة (long-established GCC job boards)؛ وWellfound (المعروف سابقًا بـ AngelList Talent) يسرد أدوار الشركات الناشئة دوليًا. ومنصّات التوظيف الحكومية والوطنية (Government and national employment platforms) التي تديرها وزارات العمل (labour ministries) تسرد أدوار القطاع العام والبرامج الوطنية. وكثيرًا ما يملك مكتب التوظيف (careers office) في جامعتك شراكات مع أصحاب العمل (employer partnerships) ومعارض لا تظهر أبدًا على المواقع العامة. هذه أمثلة لا توصيات (examples, not endorsements)؛ فتحقّق من النطاق الحالي (current scope) لكلٍّ منها.
+
+**قراءة إعلان وظيفة للمبتدئين (Reading a junior job ad).** الإعلانات قوائم أمنيات (wish lists) يكتبها أشخاص مشغولون. افصل **المتطلبات الأساسية (must-haves)** (الشهادة إن كانت قاعدة صارمة (hard rule)، وحق العمل (right to work)، واللغة أو الأداة الجوهرية (core language or tool)) عن **المتطلبات المستحبّة (nice-to-haves)**. إن استوفيت المتطلبات الأساسية ونصيبًا جيدًا من البقية، ولديك دليل (proof) على ما تدّعيه، فتقدّم. وعبارة "خبرة سنتين (Two years' experience)" في إعلان للمبتدئين تشمل أحيانًا التدريب العملي (internships) والمشاريع الكبيرة (substantial projects)؛ وأحيانًا لا تشملها. وإن لم تكن متأكدًا، فاسأل مسؤول التوظيف (recruiter) أو أحد معارفك. لا تتقدّم إلى أدوار تريد بوضوح شخصًا متمرّسًا (senior)؛ فذلك الوقت يُصرف على نحو أفضل في مكان آخر.
+
+### 🟡 التعمق أكثر (Going deeper)
+
+**برامج الخرّيجين: كيف لا تفوتك (Graduate programmes: how to not miss them).** كثير من أصحاب العمل الكبار في القطاع المصرفي والطاقة والاتصالات والاستشارات يديرون برامج للخرّيجين أو برامج "تطوير (development)" وفق دورة سنوية (yearly cycle). والمراحل المعتادة (Typical stages) هي: طلب إلكتروني (online application)، واختبارات إلكترونية (online tests) (عددية أو منطقية أو برمجية (numerical, logical or coding))، ومقابلة بالفيديو أو الهاتف، ويوم تقييم (assessment day) فيه تمارين جماعية (group exercises) ومقابلات، ثم عرض وظيفي (offer) لتاريخ بدء بعد أشهر. ضع تقويمًا (calendar) في سنتك النهائية: سجّل البرامج المستهدفة، ودوّن متى فُتح التقديم في العام الماضي (من موقع الشركة، أو مكتب التوظيف، أو المتقدّمين السابقين (past applicants))، واضبط تذكيرات (reminders) قبل ذلك بشهر. بعض البرامج مخصّصة لجنسيات بعينها (specific nationalities) أو لنوافذ الخرّيجين الجدد (recent-graduate windows)؛ فاقرأ شروط الأهلية (eligibility) أولًا.
+
+في نجم، تشرح عائشة دورة برنامج نجم للخرّيجين التقنيين (Najm Tech Graduate Programme) الخيالي: يُفتح التقديم مرة في السنة، تليه اختبارات إلكترونية في البرمجة والاستدلال (online coding and reasoning tests)، ثم مقابلة تقنية (technical interview) مع طارق أو دانة أو سالم بحسب المسار (track)، ثم يوم تقييم (assessment day). وتُرسَل العروض قبل بدء شهر سبتمبر بأشهر. تقول لخالد: "كان ملف يوسف جيدًا. لكنه وصل بعد إغلاق النافذة ⁦(Yousef's profile was fine. He just arrived after the window closed.)⁩"
+
+**سوق الخليج: ما الذي يشكّل التوظيف (The GCC market: what shapes hiring).** أربع قوى (Four forces) مهمة للخرّيجين في المنطقة:
+- **توطين القوى العاملة (Workforce nationalisation).** لكل دولة خليجية سياسات لرفع نسبة المواطنين في وظائف القطاع الخاص (private-sector jobs): التقطير (Qatarization) في قطر، والتوطين الإماراتي (Emiratisation) في الإمارات (مع برنامج نافس (Nafis) الذي يدعم الإماراتيين في مسيراتهم المهنية بالقطاع الخاص)، والسعودة (Saudization) في السعودية (مع نظام تصنيف نطاقات (Nitaqat classification system))، وبرامج مماثلة في عُمان والكويت والبحرين. وهي تحدّد الأدوار المحجوزة (reserved) أو المستهدفة (targeted) أو المدعومة (supported)، وتموّل التدريب وبرامج الخرّيجين للمواطنين. والقواعد والمستهدفات (Rules and targets) تتغيّر؛ فاقرأ الصفحات الرسمية الحالية (current official pages) بدل الاعتماد على منشورات المنتديات (forum posts).
+- **أصحاب العمل الكبار الخاضعون للتنظيم (Large regulated employers).** البنوك وشركات الطاقة والاتصالات والجهات الحكومية والرعاية الصحية (healthcare) من كبار موظِّفي خرّيجي التقنية. وهم يقدّرون الوعي بالأمن وحماية البيانات والحوكمة (security, data protection and governance awareness) — ومن ذلك مثلًا قانون حماية خصوصية البيانات الشخصية (personal data protection law) في قطر (القانون رقم 13 لسنة 2016 (Law No. 13 of 2016)) — ويتحرّكون بحذر أكبر من الشركات الناشئة. والدرس [*أمن الذكاء الاصطناعي وأمن التطبيقات (Secure AI & Application Security)*، الدرس 11.2 — التنظيمات التي تمسّ الأمن: GDPR وPDPPL وقانون الذكاء الاصطناعي الأوروبي وقواعد القطاع المالي (Regulation that touches security: GDPR, PDPPL, the EU AI Act and financial-sector rules)](../secai/index.ar.html#/11.2) هو المكان المناسب لبناء هذا الوعي.
+- **منظومات متنامية للشركات الناشئة والاقتصاد الرقمي (Growing startup and digital ecosystems).** المراكز والحاضنات المدعومة حكوميًا (Government-backed hubs and incubators) (مثل واحة قطر للعلوم والتكنولوجيا (Qatar Science & Technology Park) في الدوحة وHub71 في أبوظبي) ونشاط التقنية المالية الإقليمي (regional fintech activity) تخلق أدوارًا للمبتدئين في شركات أصغر. وهذه تتغيّر بسرعة؛ فتحقّق من البرامج الحالية.
+- **اللغة (Language).** التواصل التقني ثنائي اللغة بالعربية والإنجليزية (Bilingual Arabic and English technical communication) — كتابة ملاحظة حادثة (incident note) واضحة أو شرح لوحة معلومات (dashboard) لمدير بأيٍّ من اللغتين — ميزة حقيقية (real advantage) في كثير من الأدوار.
+
+**إن لم تكن من مواطني الدولة التي تتقدّم فيها (If you are not a national of the country you are applying in).** قواعد التأشيرة والكفالة (Visa and sponsorship rules) تختلف من دولة إلى أخرى وتتغيّر؛ فتحقّق من القواعد الحالية في المواقع الحكومية الرسمية (official government sites) ولدى صاحب العمل. وكن صادقًا في نماذج التقديم بشأن وضعك (status). بعض برامج الخرّيجين مفتوحة للجميع؛ وأخرى مقيّدة (restricted). والمكاتب الإقليمية للشركات متعددة الجنسيات (Multinationals' regional offices) والشركات الناشئة وشركات الاستشارات كثيرًا ما تكون أكثر انفتاحًا على التوظيف الدولي (international hiring)، لكن ذلك يتفاوت كثيرًا. لا تدفع أبدًا لأي شخص مقابل وظيفة أو تأشيرة "مضمونة (guaranteed)" — فهذه عملية احتيال شائعة (common scam).
+
+**قائمتك المستهدفة (Your target list).** بدل مئات الطلبات العشوائية، ابنِ قائمة من 20 إلى 40 صاحب عمل يناسبون دورك ووضعك، عبر ثلاث قنوات على الأقل. ولكلٍّ منهم دوّن: لماذا يناسبك (why it fits)، والقناة (channel) (برنامج خرّيجين، أو تقديم مباشر (direct)، أو إحالة)، والتوقيت (timing)، وجهة اتصال (contact) إن وُجدت، والحالة (status). واهدف إلى مزيج (mix): بعض أصحاب العمل "الطموحين (reach)"، ومعظمهم "واقعيون (realistic)"، وبعضهم حيث تكون أدلتك قوية بوضوح.
+
+### 🔴 نظرة الخبير (Expert view)
+
+**أدِر البحث كمسار أسبوعي (Run the search as a weekly pipeline).** البحث عن عمل قمع (funnel) يمكنك قياسه. تتبّع كل أسبوع: الطلبات المرسلة (applications sent)، والمحادثات التي أجريتها (conversations held)، ومقابلات الفرز (screens)، والمقابلات (interviews)، والعروض (offers). والنِّسب (ratios) تخبرك بما يجب إصلاحه.
+
+```mermaid
+flowchart TD
+  A["القائمة المستهدفة: من 20 إلى 40 صاحب عمل"] --> B["الطلبات والإحالات"]
+  B --> C["مقابلات الفرز مع مسؤولي التوظيف"]
+  C --> D["المقابلات التقنية"]
+  D --> E["العروض الوظيفية"]
+  B -- "لا مقابلات فرز" --> F["أصلح السيرة الذاتية والاستهداف"]
+  C -- "مقابلات فرز بلا جولة تالية" --> G["أصلح قصصك ومدى ملاءمتك"]
+  D -- "مقابلات بلا عروض" --> H["أصلح التحضير التقني"]
+```
+
+إن لم تُثمر طلبات كثيرة أي مقابلات فرز (screens)، فالمشكلة في العادة في السيرة الذاتية (CV) أو الاستهداف (targeting) أو القناة (channel) (الدرس 4.1) — لا فيك أنت كشخص. وإن لم تقُد مقابلات الفرز إلى شيء، فتدرّب على طريقة حديثك عن عملك (الدرس 5.1). وإن وصلت إلى الجولات النهائية (final rounds) ولم تحصل على عروض، فانظر في التحضير التقني (technical preparation) في الوحدة 5. غيّر شيئًا واحدًا في كل مرة (one thing at a time) وراقب الأسبوعين أو الثلاثة التالية.
+
+**إيقاع أسبوعي مستدام (A sustainable weekly rhythm).** قد يستغرق البحث عن الوظيفة الأولى أشهرًا، وسوق مستوى المبتدئين (entry-level market) أصعب مما كان قبل بضع سنوات (الدرس 0.1). خطّط للتحمّل (endurance). وهذا إيقاع ينجح مع كثير من الخرّيجين، بنحو 15 إلى 25 ساعة أسبوعيًا إلى جانب الدراسة أو عمل آخر:
+- 40% لبناء الدليل وتحسينه (building and improving proof) (المشاريع، والمهارات من مسارك الدراسي (study path) في الوحدة 2)؛
+- 30% للطلبات المستهدفة (targeted applications)، كلٌّ منها مخصّص (tailored) (الدرس 4.1)؛
+- 20% لبناء العلاقات المهنية (networking) والمتابعات (follow-ups) (الدرس 4.2)؛
+- 10% لمراجعة مسار طلباتك (reviewing your pipeline) والتخطيط للأسبوع التالي.
+
+واصل البناء خلال البحث: فمشروع جديد أو طلب دمج مدموج (merged pull request) يمنحك أخبارًا تشاركها مع معارفك ويبقي مهاراتك حادّة.
+
+**الاختيار بين المسارات (Choosing between paths).** لكل قناة مفاضلات (trade-offs) في سنتيك الأوليين. برامج الخرّيجين (Graduate programmes) تمنح البنية (structure) والتدريب والدفعة (cohort)، لكنها قد تدوّرك بين فرق لم تخترها. والشركات الناشئة (Startups) تمنح الاتساع (breadth) والمسؤولية السريعة (fast responsibility)، لكن مع إرشاد (mentoring) أقل ومخاطرة أكبر. والقطاع العام (public sector) يمنح الاستقرار (stability)، وللمواطنين دعمًا قويًا، لكن مع تغيّر تقني أبطأ أحيانًا. لا يوجد "المسار الصحيح (the right one)"؛ فاختر المسار الذي تناسبك مفاضلاته، وتذكّر أن الوظيفة الأولى بداية لا حكم مؤبّد (a start, not a life sentence) (الدرس 6.3). ويمكن أن تساعدك النصائح المهنية الخاصة بالأدوار (Role-specific career advice) في الدورات الشقيقة (sister courses) — مثل [*إدارة منتجات الذكاء الاصطناعي (AI Product Management)*، الدرس 10.2 — المسيرة المهنية لمدير منتجات الذكاء الاصطناعي: المقابلات ومعرض الأعمال والنمو (The AI PM career: interviews, portfolio and growth)](../aipm/index.ar.html#/10.2) و[*أمن الذكاء الاصطناعي وأمن التطبيقات (Secure AI & Application Security)*، الدرس 12.2 — المسيرة المهنية في الأمن: الأدوار والشهادات المهنية ومعرض الأعمال (The security career: roles, certifications and portfolio)](../secai/index.ar.html#/12.2) — وكذلك [*السحابة وDevOps: من الصفر إلى الاحتراف (Cloud & DevOps: Zero to Hero)*، الوحدة 7 — مشروع التخرّج، والمسيرة المهنية في السحابة، والامتحان التدريبي (Capstone, cloud career and practice exam)](../cloud/index.ar.html#/7.1) ليوسف، و[*هندسة البيانات والتحليلات: من الصفر إلى الاحتراف (Data Engineering & Analytics: Zero to Hero)*، الوحدة 7 — مشروع التخرّج، والمسيرة المهنية في البيانات، والامتحان التدريبي (Capstone, data career and practice exam)](../data/index.ar.html#/7.1) لهدى.
+
+**عمليات الاحتيال والعلامات التحذيرية (Scams and red flags).** كن حذرًا من: طلبات الدفع (requests for payment) مقابل التقديم أو التدريب أو تأمين تأشيرة؛ و"المقابلات" التي تُجرى فقط عبر تطبيقات الدردشة (chat apps) دون بريد إلكتروني أو موقع للشركة؛ والعروض المقدّمة دون أي مقابلة (offers made without any interview)؛ وطلبات البيانات المصرفية أو نسخ الهوية (bank details or ID copies) قبل خطاب العرض (offer letter)؛ و"الوظائف" التي تطلب منك استلام أموال أو بضائع وتحويلها (receive and forward money or goods). تحقّق من الموقع الرسمي للشركة (company's official site)، وإن ساورك الشك، فتواصل مع الشركة عبر بيانات الاتصال المنشورة (published contact details).
+
+## 🧰 الأدوات (The toolkit)
+| المورد أو الأداة أو النموذج (Resource, tool or template) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |
+|---|---|---|
+| **Target employer list** — قائمة أصحاب العمل المستهدفين | من 20 إلى 40 صاحب عمل عبر القنوات (across channels)، مع مدى الملاءمة (fit) والتوقيت وجهة الاتصال والحالة | قبل طلبك الأول؛ وراجعها شهريًا |
+| **Graduate programme calendar** — تقويم برامج الخرّيجين | تواريخ فتح التقديم في البرامج المستهدفة في الدورة الماضية (last cycle)، مع تذكيرات قبلها بشهر | في السنة الدراسية النهائية والسنة التي تلي التخرّج |
+| **Application log** — سجلّ الطلبات | لكل طلب: التاريخ، والدور، والقناة، ونسخة السيرة الذاتية (CV version)، وجهة الاتصال، والحالة، والخطوة التالية (next step) | لكل طلب، بدءًا من الأول |
+| **Weekly pipeline review** — المراجعة الأسبوعية لمسار الطلبات | عُدّ الطلبات ومقابلات الفرز والمقابلات والعروض؛ وحدّد المرحلة المتعثّرة (stage that is failing) | كل أسبوع، 30 دقيقة |
+| **Company careers pages** — صفحات الوظائف في مواقع الشركات | قوائم الوظائف الخاصة بأصحاب العمل أنفسهم (Employers' own job listings)، وغالبًا ما تكون الأحدث | لكل صاحب عمل مستهدف، قبل أي موقع وظائف |
+| **Regional job boards** — مواقع الوظائف الإقليمية (مثل LinkedIn Jobs وBayt.com وGulfTalent وNaukrigulf وWellfound) | قوائم مجمّعة (Aggregated listings) من أصحاب عمل متعدّدين | لاكتشاف أصحاب عمل تضيفهم إلى قائمتك المستهدفة |
+| **Nationalisation programme portals** — بوابات برامج التوطين (مثل نافس (Nafis) في الإمارات؛ ومواقع وزارات العمل (labour-ministry sites) في قطر والسعودية) | معلومات رسمية (Official information) عن البرامج والأهلية والدعم المقدّم للمواطنين | إن كنت مواطنًا، فقبل التخطيط لبحثك؛ وإلا ففهم السوق |
+| **University careers office** — مكتب التوظيف الجامعي | شراكات مع أصحاب العمل (Employer partnerships)، ومعارض، ومراجعات للسيرة الذاتية، وجهات اتصال من الخرّيجين (alumni contacts) | طوال سنتك النهائية وما بعدها |
+
+## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
+بعد معرض التوظيف (careers fair)، يطلب سالم من يوسف أن يعيد بناء بحثه في صورة قائمة مستهدفة (target list) ومسار أسبوعي (weekly pipeline). إليك مقتطفًا من قائمة يوسف، ومسار طلباته بعد ستة أسابيع. (كل أصحاب العمل خياليون أو عامّون (fictional or generic).)
+
+**قائمة يوسف المستهدفة (مقتطف) (Yousef's target list (extract)) — الدور المستهدف (target role): مهندس سحابة أو منصّات خرّيج (graduate cloud or platform engineer)**
+
+| صاحب العمل (Employer) | القناة (Channel) | لماذا يناسب (Why it fits) | التوقيت (Timing) | جهة الاتصال (Contact) | الحالة (Status) |
+|---|---|---|---|---|---|
+| بنك نجم، برنامج الخرّيجين التقنيين (Tech Graduate Programme) (مسار المنصّات (platform track)) | برنامج خرّيجين (Graduate programme) | مسار المنصّات؛ وخلفيته في الشبكات (networking background) مقدّرة | فاتته هذه الدورة؛ وضُبط تذكير في التقويم (calendar reminder) للفتح التالي | سالم (معرض التوظيف (careers fair)) | ينتظر النافذة التالية؛ وسيرسل تحديثًا عن مشروع (project update) في الشهر الثالث |
+| شركة اتصالات إقليمية، برنامج خرّيجين (graduate scheme) | برنامج خرّيجين (Graduate programme) | تركيز على الشبكات والبنية التحتية (Networks and infrastructure focus) | مفتوح الآن (Open now) | خرّيج يعمل في عمليات الشبكات (network operations) | تقدّم؛ وأنجز الاختبار الإلكتروني (online test) |
+| جهة حكومية رقمية (Government digital agency) | القطاع العام (Public sector) | أدوار سحابية للمبتدئين (Junior cloud roles)؛ وشركاء في برنامج وطني (national programme partners) | حملة مستمرة (Rolling campaign) | جناح في معرض التوظيف (Careers fair stand) | تقدّم (Applied) |
+| شركة الاستشارات السحابية A في الدوحة (Doha cloud consultancy A) | مباشر، شركة صغيرة (Direct, small firm) | توظّف مبتدئين لدعم عمليات الترحيل إلى السحابة (cloud migrations) | مستمرة (Continuous) | منظّم لقاء (Meetup organiser) يعمل هناك | طلب إحالة (Referral requested) |
+| سديم باي (Sadeem Pay) | شركة ناشئة (Startup) | تحتاج مساعدة في CI/CD والحاويات (containers) | مستمرة (Continuous) | لا أحد بعد | حُجزت دردشة استطلاعية (Informational chat booked) |
+| مكتب إقليمي لشركة متعددة الجنسيات (Multinational regional office) | إعلان مباشر (Direct ad) | دور مهندس سحابة مساعد (Associate cloud engineer role) | نُشر هذا الشهر | لا أحد | تقدّم بالنسخة الثالثة المخصّصة من السيرة الذاتية (tailored CV v3) |
+
+**مسار طلبات يوسف بعد ستة أسابيع (Yousef's pipeline after six weeks)**
+
+| الأسبوع (Week) | الطلبات (Applications) | المحادثات (Conversations) | مقابلات الفرز (Screens) | المقابلات (Interviews) | العروض (Offers) | التغيير الذي أجراه (Change made) |
+|---|---|---|---|---|---|---|
+| 1–2 | 14 | 1 | 0 | 0 | 0 | أعاد بناء السيرة الذاتية وفق الدرس 4.1؛ واستبعد إعلانات المستوى المتمرّس (senior-level ads) |
+| 3–4 | 8 | 4 | 2 | 0 | 0 | أضاف مشروع Terraform والتكامل المستمر (CI) إلى أعلى السيرة الذاتية |
+| 5–6 | 6 | 3 | 2 | 1 | 0 | تدرّب على قصص STAR (STAR stories) (الدرس 5.1) |
+
+طلبات أقل وأحسن توجيهًا (better aimed) أثمرت مقابلات فرز أكثر. وتعليق سالم: "الآن يمكنك أن ترى على أي مرحلة يجب أن تعمل ⁦(Now you can see which stage to work on.)⁩"
+
+## 🛠️ التمارين (Exercises)
+- 🟢 ابنِ قائمتك المستهدفة (target list) من 20 صاحب عمل على الأقل عبر ثلاث قنوات (channels) على الأقل، مع ملء عمود "لماذا يناسب (why it fits)" لكلٍّ منهم. *يكتمل عندما (Done when):* توجد القائمة، ولكل صف قناة وسبب، ولا يأتي أكثر من نصفها من قناة واحدة.
+- 🟡 أعدّ تقويم برامج الخرّيجين (graduate programme calendar) للأشهر الاثني عشر القادمة لخمسة برامج على الأقل، مستعينًا بصفحات الشركات الرسمية أو بمكتب التوظيف (careers office). *يكتمل عندما (Done when):* يكون لكل برنامج رابط مصدر (source link)، وشهر فتح التقديم في الدورة الماضية أو "غير معروف — سألت مكتب التوظيف (unknown — asked careers office)"، وتذكير مضبوط قبله بشهر.
+- 🔴 أدِر بحثك كمسار (pipeline) لمدة أربعة أسابيع: سجّل كل طلب ومحادثة، وراجع أسبوعيًا، وأجرِ تغييرًا واحدًا بناءً على الأرقام. *يكتمل عندما (Done when):* يُظهر سجلّك أربع مراجعات أسبوعية (weekly reviews)، تسمّي كلٌّ منها المرحلة الأضعف (weakest stage) والتغيير الواحد الذي أجريته.
+
+## ⚠️ أخطاء وفخاخ (Mistakes and traps)
+- **قناة واحدة فقط (One channel only).** الاقتصار على مواقع الوظائف يعني منافسة عالية (high competition) وملاحظات قليلة (little feedback). امزج بين برامج الخرّيجين والطلبات المباشرة (direct applications) والشركات الناشئة والإحالات.
+- **فوات نوافذ برامج الخرّيجين (Missing graduate programme windows).** كثير منها يوظّف قبل تاريخ البدء بوقت طويل. ابنِ تقويمًا (calendar) في سنتك النهائية.
+- **التقدّم إلى كل شيء (Applying to everything).** مئات الطلبات غير المستهدفة (untargeted applications) تُنتج الصمت والإنهاك (burnout). قائمة مستهدفة وسير ذاتية مخصّصة (tailored CVs) تنجح أكثر.
+- **تجاهل الأهلية (Ignoring eligibility).** قواعد الجنسية والشهادة وسنة التخرّج (Nationality, degree and graduation-year rules) حقيقية. اقرأها أولًا واصرف ساعاتك حيث تكون مؤهّلًا.
+- **الحكم على نفسك من خلال الصمت (Judging yourself by silence).** الصمت بيانات (data) عن سيرتك الذاتية أو استهدافك أو قناتك. استخدم مسار الطلبات (pipeline) لتعرف أي مرحلة تحتاج إلى إصلاح.
+- **الدفع مقابل الوظائف أو التأشيرات (Paying for jobs or visas).** أصحاب العمل الشرعيون (Legitimate employers) لا يتقاضون منك مالًا لتوظيفك. تحقّق عبر القنوات الرسمية (official channels).
+
+## 🧾 الخلاصة (Recap)
+- تأتي وظائف مستوى المبتدئين (Entry-level jobs) عبر برامج الخرّيجين، والإعلانات المباشرة (direct ads)، والشركات الناشئة، والقطاع العام، ومسؤولي التوظيف الخارجيين (recruiters)، والإحالات — ولكلٍّ منها توقيته الخاص (its own timing).
+- تسير برامج الخرّيجين (Graduate programmes) وفق دورات ثابتة (fixed cycles)؛ فابنِ تقويمًا مبكرًا.
+- في دول الخليج (GCC)، تشكّل برامج التوطين (nationalisation programmes)، وأصحاب العمل الكبار الخاضعون للتنظيم (large regulated employers)، ومراكز الشركات الناشئة المتنامية (growing startup hubs)، والتواصل ثنائي اللغة (bilingual communication) ملامحَ التوظيف؛ فتحقّق من القواعد الرسمية الحالية (current official rules).
+- ابنِ قائمة مستهدفة من 20 إلى 40 صاحب عمل (target list of 20–40 employers) عبر القنوات؛ وخصّص كل طلب.
+- أدِر البحث كمسار أسبوعي (weekly pipeline) وأصلح المرحلة الأضعف (weakest stage)، تغييرًا واحدًا في كل مرة.
+
+## ✍️ اختبر نفسك (Check yourself)
+
+**1. تقدّم يوسف إلى 60 إعلانًا لهندسة المنصّات (platform-engineering ads) على موقع وظائف واحد في شهر ولم يحصل على أي مقابلة فرز (screens). ما الذي تقترح رؤية المسار (pipeline view) أن يصلحه أولًا؟**
+
+- A. أسلوبه في المقابلات (interview technique)، لأنه سيحتاج إليه في الجولات التقنية اللاحقة
+- B. توقّعاته للراتب (salary expectations)، التي قد تُنفّر أصحاب العمل قبل أن يردّوا
+- C. تفاوضه على العرض (offer negotiation)، كي تكون العروض التي سيتلقّاها في النهاية أقوى
+- D. سيرته الذاتية واستهدافه وقنواته (CV, targeting and channels)، لأن الطلبات لا تتحوّل إلى مقابلات فرز
+
+<details><summary>الإجابة</summary>
+
+**D.** حين لا تُثمر الطلبات أي مقابلات فرز، تكون المشكلة في مرحلة سابقة (upstream): السيرة الذاتية أو الاستهداف أو القناة. أما A وC فينطبقان على مراحل لاحقة لم يصل إليها بعد. (🔴 نظرة الخبير (Expert view).)
+
+</details>
+
+**2. يريد عمر الانضمام إلى برنامج خرّيجين (graduate programme) في بنك يبدأ في سبتمبر القادم. متى ينبغي أن يبدأ الاستعداد للتقديم؟**
+
+- A. بعد أن يتخرّج، حين يكون لديه وقت فراغ أكبر للتركيز على الطلبات كما ينبغي
+- B. الآن: يعرف متى فُتح التقديم في الدورة الماضية (last cycle) ويضبط تذكيرًا قبل ذلك بوقت كافٍ
+- C. في أغسطس، قبل بدء سبتمبر ببضعة أسابيع، حين تتشكّل الدفعة الجديدة (new cohort)
+- D. فقط حين يتواصل معه مسؤول توظيف من البنك مباشرة بشأن البرنامج
+
+<details><summary>الإجابة</summary>
+
+**B.** تسير برامج الخرّيجين وفق دفعات قبول ثابتة (fixed intakes) وكثيرًا ما توظّف قبل بدئها بوقت طويل. أما A وC فيعرّضانه لخطر فوات النافذة (missing the window)، كما حدث ليوسف. (🟡 التعمق أكثر (Going deeper).)
+
+</details>
+
+**3. لدى محمد معرض أعمال قوي (strong portfolio) لكن بلا شهادة في الحوسبة (computing degree)، وعدد من برامج الخرّيجين يشترطها. أي جزء من السوق يناسبه أولًا؟**
+
+- A. الشركات الناشئة والشركات الأصغر التي تحكم على معارض الأعمال، إضافة إلى الإحالات من عمله المجتمعي (community work)
+- B. برامج الخرّيجين التي تشترط الشهادة فقط، على أمل أن يستثنيه كلٌّ منها
+- C. وكالة تتقاضى منه رسومًا (fee) لكنها تعده بوظيفة مضمونة (guaranteed job) خلال ثلاثة أشهر
+- D. إيقاف بحثه كله حتى يُكمل شهادة في الحوسبة بدوام جزئي (part-time)
+
+<details><summary>الإجابة</summary>
+
+**A.** القنوات التي تزن الدليل أكثر من المؤهّلات (proof over credentials) تناسب أدلته. الخيار B يتجاهل الأهلية (eligibility)؛ والخيار C علامة تحذيرية (red flag) على احتيال. (🟢 الأساسيات (The essentials).)
+
+</details>
+
+**4. أي عبارة عن برامج توطين القوى العاملة (workforce nationalisation programmes) في دول الخليج دقيقة ومتحفّظة على نحو جيد (well hedged)؟**
+
+- A. يجب على كل شركة خاصة في الخليج الآن ألا توظّف إلا المواطنين في جميع الأدوار التقنية
+- B. أُلغيت تدريجيًا (phased out) قبل بضع سنوات ولم يعد لها أي أثر حقيقي في التوظيف التقني
+- C. التقطير (Qatarization) والتوطين الإماراتي (Emiratisation) والسعودة (Saudization) تشكّل التوظيف وتدعم المواطنين؛ والقواعد تتغيّر، فتحقّق من المصادر الرسمية (official sources)
+- D. تنطبق على الوزارات الحكومية فقط ولا أثر لها في أصحاب العمل في القطاع الخاص
+
+<details><summary>الإجابة</summary>
+
+**C.** إنها حقيقية، وتشكّل التوظيف في القطاعين الخاص والعام، وتفاصيلها تتغيّر. أما A وD فيبالغان في نطاقها أو يخطئان في وصفه (overstate or misstate their scope). (🟡 التعمق أكثر (Going deeper).)
+
+</details>
+
+**5. تتلقّى ريم رسالة عبر تطبيق دردشة (chat-app message) تعرض عليها وظيفة في هندسة الذكاء الاصطناعي (AI engineering) في الخارج، دون مقابلة، إن دفعت أولًا "رسوم معالجة التأشيرة (visa processing fee)". ماذا ينبغي أن تفعل؟**
+
+- A. تدفع الرسوم بسرعة، لأن العروض الجيدة في الخارج تنتهي بسرعة والمبلغ صغير
+- B. ترسل نسخة من جواز سفرها كي يبدأوا معالجة التأشيرة فورًا
+- C. تتفاوض لخفض الرسوم قبل الدفع، وتطلب منهم إيصالًا (receipt) لسجلّاتها
+- D. تعامل الأمر على أنه احتيال محتمل (likely scam) وتتحقّق من الشركة عبر موقعها الرسمي وبيانات الاتصال الخاصة بها
+
+<details><summary>الإجابة</summary>
+
+**D.** طلبات الدفع، وغياب المقابلة، والتواصل عبر الدردشة فقط علامات تحذيرية كلاسيكية (classic red flags). والخيارات A وB وC كلها تسلّم المال أو البيانات الشخصية (personal data) لطرف غير موثّق (unverified party). (🔴 نظرة الخبير (Expert view).)
+
+</details>
+
+## 📚 المراجع (References)
+- وزارة العمل في قطر (Qatar Ministry of Labour) — https://www.mol.gov.qa/
+- نافس (Nafis) (برنامج المواهب الإماراتية (UAE Emirati talent programme)) — https://www.nafis.gov.ae/
+- البوابة الرسمية لحكومة الإمارات (UAE Government portal)، التوطين (Emiratisation) — https://u.ae/
+- وزارة الموارد البشرية والتنمية الاجتماعية السعودية (Saudi Ministry of Human Resources and Social Development) (نطاقات والسعودة (Nitaqat and Saudization)) — https://www.hrsd.gov.sa/
+- القانون القطري رقم 13 لسنة 2016 بشأن حماية خصوصية البيانات الشخصية (Qatar Law No. 13 of 2016 on Personal Data Privacy Protection)، عبر بوابة الميزان (Al Meezan) (البوابة القانونية القطرية (Qatar legal portal)) — https://www.almeezan.qa/
+- واحة قطر للعلوم والتكنولوجيا (Qatar Science & Technology Park) — https://qstp.org.qa/
+- Hub71 — https://www.hub71.com/
+- LinkedIn Jobs — https://www.linkedin.com/jobs/
+- Bayt.com — https://www.bayt.com/
+- GulfTalent — https://www.gulftalent.com/
+- Naukrigulf — https://www.naukrigulf.com/
+- Wellfound — https://wellfound.com/
+- لجنة التجارة الفيدرالية الأمريكية (US Federal Trade Commission)، عمليات الاحتيال الوظيفي (job scams) — https://consumer.ftc.gov/articles/job-scams
+- [*أمن الذكاء الاصطناعي وأمن التطبيقات (Secure AI & Application Security)*، الدرس 11.2 — التنظيمات التي تمسّ الأمن: GDPR وPDPPL وقانون الذكاء الاصطناعي الأوروبي وقواعد القطاع المالي (Regulation that touches security: GDPR, PDPPL, the EU AI Act and financial-sector rules)](../secai/index.ar.html#/11.2)
+- [*إدارة منتجات الذكاء الاصطناعي (AI Product Management)*، الدرس 10.2 — المسيرة المهنية لمدير منتجات الذكاء الاصطناعي: المقابلات ومعرض الأعمال والنمو (The AI PM career: interviews, portfolio and growth)](../aipm/index.ar.html#/10.2)
+- [*أمن الذكاء الاصطناعي وأمن التطبيقات (Secure AI & Application Security)*، الدرس 12.2 — المسيرة المهنية في الأمن: الأدوار والشهادات المهنية ومعرض الأعمال (The security career: roles, certifications and portfolio)](../secai/index.ar.html#/12.2)
