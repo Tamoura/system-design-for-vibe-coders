@@ -209,7 +209,7 @@ curl -sv https://api.najm.example/health -o /dev/null
 
 <details><summary>الإجابة</summary>
 
-**B.** الحجيرات السليمة مع سجلات فارغة توحي بأن الطلبات لا تصل إلى التطبيق أصلًا (never reach the application)، فاختبر السلسلة من جهة العميل (from the customer's side). أما A وC وD فتغيّر الأشياء دون دليل (without evidence). (🟡 التعمق أكثر، Going deeper.)
+**B.** الحجيرات السليمة مع سجلات فارغة توحي بأن الطلبات لا تصل إلى التطبيق أصلًا (never reach the application)، فاختبر السلسلة من جهة العميل (from the customer's side). أما A وC وD فتغيّر الأشياء دون دليل (without evidence). (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -222,7 +222,7 @@ curl -sv https://api.najm.example/health -o /dev/null
 
 <details><summary>الإجابة</summary>
 
-**D.** العنوان `127.0.0.1` داخل الحاوية هو الحاوية نفسها. اربط الخدمة بـ `0.0.0.0`. جدار الحماية (A) يسبب عادةً انتهاء مهلة (timeout)، لا فشلًا فوريًا (immediate failure)، والطلب لا يصل إلى TLS (B) ولا يحتاج إلى DNS (C). (🟢 الأساسيات، The essentials.)
+**D.** العنوان `127.0.0.1` داخل الحاوية هو الحاوية نفسها. اربط الخدمة بـ `0.0.0.0`. جدار الحماية (A) يسبب عادةً انتهاء مهلة (timeout)، لا فشلًا فوريًا (immediate failure)، والطلب لا يصل إلى TLS (B) ولا يحتاج إلى DNS (C). (🟢 الأساسيات، The essentials).
 
 </details>
 
@@ -235,7 +235,7 @@ curl -sv https://api.najm.example/health -o /dev/null
 
 <details><summary>الإجابة</summary>
 
-**A.** تحتفظ ذاكرات التخزين المؤقت (caches) بالإجابة القديمة مدة تصل إلى TTL، لذا فإن خفضها مسبقًا يجعل التبديل ينتشر سريعًا (propagate quickly). يتجاهل B التخزين المؤقت (ignores caching)؛ ويسبب C فشل التحليل (resolution failures)؛ ويزيد D الأمر سوءًا. (🟢 الأساسيات، The essentials.)
+**A.** تحتفظ ذاكرات التخزين المؤقت (caches) بالإجابة القديمة مدة تصل إلى TTL، لذا فإن خفضها مسبقًا يجعل التبديل ينتشر سريعًا (propagate quickly). يتجاهل B التخزين المؤقت (ignores caching)؛ ويسبب C فشل التحليل (resolution failures)؛ ويزيد D الأمر سوءًا. (🟢 الأساسيات، The essentials).
 
 </details>
 
@@ -248,20 +248,20 @@ curl -sv https://api.najm.example/health -o /dev/null
 
 <details><summary>الإجابة</summary>
 
-**C.** كي يعيد موازن الأحمال 504 أصلًا، لا بد أن DNS (A) وTLS (B) وشبكة العميل (D) قد عملت؛ فالخلفية لم تُجب في الوقت المحدد (did not answer in time). (🟢 الأساسيات، The essentials.)
+**C.** كي يعيد موازن الأحمال 504 أصلًا، لا بد أن DNS (A) وTLS (B) وشبكة العميل (D) قد عملت؛ فالخلفية لم تُجب في الوقت المحدد (did not answer in time). (🟢 الأساسيات، The essentials).
 
 </details>
 
 **5. يوقف Kubernetes حجيرة أثناء عملية نشر (during a deploy). ماذا يحدث، وماذا يجب أن يفعل التطبيق؟**
 
-- A. يرسل SIGKILL فورًا (immediately)، فلا تحظى التطبيقات بفرصة للتنظيف (clean up)
+- A. يرسل SIGKILL فورًا (immediately)، فلا يحظى التطبيق بفرصة للتنظيف (clean up)
 - B. يرسل SIGTERM، ثم SIGKILL بعد مهلة سماح (grace period)؛ وعلى التطبيق تصريف العمل الجاري (drain in-flight work) ثم الخروج
 - C. يرسل SIGHUP، وعلى التطبيق إعادة تحميل إعداداته (reload its configuration) ومواصلة الخدمة
 - D. يحذف صورة الحاوية (container image)، فيجب على التطبيق أولًا حفظ حالته على القرص المحلي (local disk)
 
 <details><summary>الإجابة</summary>
 
-**B.** الإشارة SIGTERM هي الطلب المهذّب (the polite request)؛ وتليها SIGKILL بعد مهلة السماح (30 ثانية افتراضيًا، by default). تجاهل SIGTERM يُسقط طلبات مع كل عملية نشر (drops requests on every deploy). (🟢 الأساسيات، The essentials.)
+**B.** الإشارة SIGTERM هي الطلب المهذّب (the polite request)؛ وتليها SIGKILL بعد مهلة السماح (30 ثانية افتراضيًا، by default). تجاهل SIGTERM يُسقط طلبات مع كل عملية نشر (drops requests on every deploy). (🟢 الأساسيات، The essentials).
 
 </details>
 
@@ -466,7 +466,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**C.** وُجدت مناطق التوافر كي تفشل إحداها دون الأخرى (one can fail without the others)؛ واستخدام منطقة واحدة يهدر ذلك. زمن الاستجابة (B) يعتمد على المنطقة (depends on region)، لا على عدد مناطق التوافر؛ وD خاطئ. (🟢 الأساسيات، The essentials.)
+**C.** وُجدت مناطق التوافر كي تفشل إحداها دون الأخرى (one can fail without the others)؛ واستخدام منطقة واحدة يهدر ذلك. زمن الاستجابة (B) يعتمد على المنطقة (depends on region)، لا على عدد مناطق التوافر؛ وD خاطئ. (🟢 الأساسيات، The essentials).
 
 </details>
 
@@ -479,7 +479,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**A.** الملفات التي تُكتب مرة وتُجلب عبر HTTP (write-once files fetched over HTTP) هي بالضبط ما وُجد تخزين الكائنات من أجله. تخزين الكتل (B) يربطها بجهاز واحد (ties them to one machine)؛ والمشاركة الملفية (a file share) (C) تضيف تكلفة؛ والملفات في قاعدة البيانات (D) تُضخّمها (bloat it). (🟢 الأساسيات، The essentials.)
+**A.** الملفات التي تُكتب مرة وتُجلب عبر HTTP (write-once files fetched over HTTP) هي بالضبط ما وُجد تخزين الكائنات من أجله. تخزين الكتل (B) يربطها بجهاز واحد (ties them to one machine)؛ والمشاركة الملفية (a file share) (C) تضيف تكلفة؛ والملفات في قاعدة البيانات (D) تُضخّمها (bloat it). (🟢 الأساسيات، The essentials).
 
 </details>
 
@@ -492,7 +492,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**D.** الوصول والإعدادات (access and configuration) تبقى لدى العميل في كل نموذج. A من مهام المزوّد في الخدمة المُدارة؛ وB وC من مهامه دائمًا. (🟢 الأساسيات، The essentials.)
+**D.** الوصول والإعدادات (access and configuration) تبقى لدى العميل في كل نموذج. A من مهام المزوّد في الخدمة المُدارة؛ وB وC من مهامه دائمًا. (🟢 الأساسيات، The essentials).
 
 </details>
 
@@ -505,7 +505,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**B.** تتيح NAT الاتصالات الصادرة (outbound connections) دون جعل الحجيرات قابلة للوصول (reachable). أما A وD فتكشفانها (expose them)؛ وشبكة توصيل المحتوى (C) تتعامل مع الحركة الواردة (inbound traffic)، لا مع الاستدعاءات الصادرة (outbound calls). (🟡 التعمق أكثر، Going deeper.)
+**B.** تتيح NAT الاتصالات الصادرة (outbound connections) دون جعل الحجيرات قابلة للوصول (reachable). أما A وD فتكشفانها (expose them)؛ وشبكة توصيل المحتوى (C) تتعامل مع الحركة الواردة (inbound traffic)، لا مع الاستدعاءات الصادرة (outbound calls). (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -518,7 +518,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**C.** يضيف التعدد الإقليمي (multi-region) تعقيدًا وتكلفة كبيرين (major complexity and cost)، فيجب أن يلبّي حاجة معلنة للتعافي أو حاجة تنظيمية (a stated recovery or regulatory need)؛ وحتى ذلك الحين، يكون الخيار الافتراضي تعدد مناطق التوافر مع نسخ احتياطية عبر المناطق (multi-zone with cross-region backup copies). A ردّ فعل تلقائي (a reflex)؛ وB يتجاهل المتطلبات الحقيقية (ignores real requirements)؛ وD لا يجيب عن السؤال (misses the question). (🔴 نظرة الخبير، Expert view.)
+**C.** يضيف التعدد الإقليمي (multi-region) تعقيدًا وتكلفة كبيرين (major complexity and cost)، فيجب أن يلبّي حاجة معلنة للتعافي أو حاجة تنظيمية (a stated recovery or regulatory need)؛ وحتى ذلك الحين، يكون الخيار الافتراضي تعدد مناطق التوافر مع نسخ احتياطية عبر المناطق (multi-zone with cross-region backup copies). A ردّ فعل تلقائي (a reflex)؛ وB يتجاهل المتطلبات الحقيقية (ignores real requirements)؛ وD لا يجيب عن السؤال (misses the question). (🔴 نظرة الخبير، Expert view).
 
 </details>
 
@@ -773,7 +773,7 @@ metadata:
 
 <details><summary>الإجابة</summary>
 
-**D.** يُزيل اتحاد الهوية (federation) السرّ المخزّن كليًا (removes the stored secret entirely) ويحدّ مما تستطيع المهمة فعله. أما A وC فتُبقيان سرًّا طويل العمر قابلًا للتسرّب (a long-lived secret that can leak)؛ وB يربط خط التسليم بشخص (ties a pipeline to a person) ويظل يخزّن مفتاحًا. (🟡 التعمق أكثر، Going deeper.)
+**D.** يُزيل اتحاد الهوية (federation) السرّ المخزّن كليًا (removes the stored secret entirely) ويحدّ مما تستطيع المهمة فعله. أما A وC فتُبقيان سرًّا طويل العمر قابلًا للتسرّب (a long-lived secret that can leak)؛ وB يربط خط التسليم بشخص (ties a pipeline to a person) ويظل يخزّن مفتاحًا. (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -786,7 +786,7 @@ metadata:
 
 <details><summary>الإجابة</summary>
 
-**B.** سياسة الثقة (the trust policy) هي البوابة (the gate)؛ والشرط الفضفاض يُمرّر أي مهمة مطابقة. طابِق المستودع بالضبط والبيئة المحمية (the protected environment). (🟡 التعمق أكثر، Going deeper.)
+**B.** سياسة الثقة (the trust policy) هي البوابة (the gate)؛ والشرط الفضفاض يُمرّر أي مهمة مطابقة. طابِق المستودع بالضبط والبيئة المحمية (the protected environment). (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -799,7 +799,7 @@ metadata:
 
 <details><summary>الإجابة</summary>
 
-**C.** تمنح هوية أحمال العمل (workload identity) كل حجيرة صلاحياتها فقط، دون مفاتيح مخزّنة (no stored keys). A تمنح كل حجيرة كل صلاحية؛ وB تعيد الأسرار طويلة العمر (reintroduces long-lived secrets)؛ وD مكلف وغير ضروري (expensive and unnecessary). (🟡 التعمق أكثر، Going deeper.)
+**C.** تمنح هوية أحمال العمل (workload identity) كل حجيرة صلاحياتها فقط، دون مفاتيح مخزّنة (no stored keys). A تمنح كل حجيرة كل صلاحية؛ وB تعيد الأسرار طويلة العمر (reintroduces long-lived secrets)؛ وD مكلف وغير ضروري (expensive and unnecessary). (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -812,7 +812,7 @@ metadata:
 
 <details><summary>الإجابة</summary>
 
-**A.** النطاق جزء من أقل الصلاحيات (scope is part of least privilege)؛ امنح على حساب التخزين أو مجموعة موارده (its resource group). B وC خاطئتان؛ وD يخلط المصادقة بالتفويض (confuses authentication with authorisation). (🟡 التعمق أكثر، Going deeper.)
+**A.** النطاق جزء من أقل الصلاحيات (scope is part of least privilege)؛ امنح على حساب التخزين أو مجموعة موارده (its resource group). B وC خاطئتان؛ وD يخلط المصادقة بالتفويض (confuses authentication with authorisation). (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -825,7 +825,7 @@ metadata:
 
 <details><summary>الإجابة</summary>
 
-**D.** وصول كسر الزجاج (break-glass access) مخطَّط ومحمي ومراقَب ومُختبَر (planned, protected, monitored and tested). أما A وB وC فتخلق نقاط ضعف دائمة (permanent weaknesses) من أجل حدث نادر (a rare event). (🔴 نظرة الخبير، Expert view.)
+**D.** وصول كسر الزجاج (break-glass access) مخطَّط ومحمي ومراقَب ومُختبَر (planned, protected, monitored and tested). أما A وB وC فتخلق نقاط ضعف دائمة (permanent weaknesses) من أجل حدث نادر (a rare event). (🔴 نظرة الخبير، Expert view).
 
 </details>
 

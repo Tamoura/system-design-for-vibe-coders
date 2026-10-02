@@ -120,7 +120,7 @@ flowchart LR
 ## 🧰 الأدوات (The toolkit)
 | الأداة أو النمط أو المعيار (Tool, pattern or standard) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |
 |---|---|---|
-| **SQL** — لغة الاستعلام البنيوية | اللغة المعيارية (standard language) للاستعلام عن الجداول وتشكيلها (querying and shaping tables)؛ يستخدمها كل دور بيانات يوميًا (every data role uses it daily) | دائمًا (Always). إنها المهارة الوحيدة التي تشترك فيها كل الأدوار في هذا الدرس (the one skill every role shares) |
+| **SQL** — لغة الاستعلام البنيوية | اللغة المعيارية (standard language) للاستعلام عن الجداول وتشكيلها (querying and shaping tables)؛ يستخدمها كل دور بيانات يوميًا (every data role uses it daily) | دائمًا (Always). إنها المهارة الوحيدة التي تشترك فيها كل الأدوار في هذا الدرس (the one skill every role in this lesson shares) |
 | **Python** (pandas, Polars) — لغة البرمجة بايثون | لغة عامة الأغراض (general-purpose language) مع مكتبات لأُطر البيانات (data frames) والإحصاء (statistics) وتعلّم الآلة (ML) | البيانات التي لا تتعامل معها SQL جيدًا (data that SQL handles badly): الملفات (files)، وواجهات البرمجة (APIs)، والإحصاء، والنماذج (models) |
 | **dbt** (dbt Labs; dbt Core is open source) — أداة التحويل dbt (وdbt Core مفتوحة المصدر) | تشغّل تحويلات SQL (SQL transformations) كنماذج خاضعة للتحكم في الإصدارات (version-controlled models) مع اختبارات وتوثيق (tests and documentation) | تحويل الجداول الخام (raw tables) إلى نماذج موثوقة ومختبرة (trusted, tested models) (الدرس 3.1) |
 | **Jupyter notebooks** — دفاتر Jupyter التفاعلية | مستندات تفاعلية (interactive documents) تمزج الشيفرة والمخرجات والملاحظات (code, output and notes) | الاستكشاف والتحليل (exploration and analysis)؛ لا كخط بيانات الإنتاج نفسه (not as the production pipeline itself) |
@@ -172,7 +172,7 @@ flowchart LR
 - A. أحد الاستعلامين يحتوي خطأً نحويًا (syntax error) تخطّته قاعدة البيانات بصمت (quietly skipped over) أثناء العدّ
 - B. تعريفان لـ«العميل النشط» (active customer)، دون أن يملك أحدٌ أيًّا منهما (with nobody owning one)
 - C. مستودع البيانات (warehouse) أبطأ من أن يعدّ مئات الآلاف من العملاء بدقة في تمريرة واحدة (in one pass)
-- D. بنت المالية رقمها بلغة Python بينما بنت التجزئة رقمها بلغة SQL
+- D. بنت المالية (finance) رقمها بلغة Python بينما بنت التجزئة (retail) رقمها بلغة SQL
 
 <details><summary>الإجابة</summary>
 
@@ -211,7 +211,7 @@ flowchart LR
 - A. في إعدادات الرسم البياني (chart settings) في أداة ذكاء الأعمال (BI tool)، لأن هناك يظهر الصفر أولًا لقطاع العمل
 - B. في نموذج عالم البيانات (data scientist's model)، الذي دُرّب على اسم الحدث القديم (old event name)
 - C. عند نقطة التسليم من المنتِج إلى المنصة (producer-to-platform hand-off)، التي لم يغطّها أيّ اتفاق (no agreement covered)
-- D. في صيغة التخزين (storage format) في مستودع البيانات، التي لا تستطيع حمل اسمَي حدث للإجراء نفسه
+- D. في صيغة التخزين (storage format) في مستودع البيانات (warehouse)، التي لا تستطيع حمل اسمَي حدث للإجراء نفسه
 
 <details><summary>الإجابة</summary>
 
@@ -345,7 +345,7 @@ ORDER BY 1;
 **التنسيق (Orchestration).** لا بد من شيء يشغّل كل خطوة بالترتيب (in order)، في الوقت الصحيح، ويعيد المحاولة أو ينبّه (retry or alert) حين تفشل خطوة. ذلك هو **المنسّق (orchestrator)** مثل **Apache Airflow** أو **Dagster**. فهو يعرف أن نموذج التهيئة (staging model) يجب أن ينتظر التحميل الخام (raw load)، وأن المستودع الفرعي (mart) يجب أن ينتظر التهيئة. يعلّم الدرس 2.2 التنسيق، بما في ذلك كيف تجعل كل خطوة آمنة لإعادة التشغيل (safe to re-run).
 
 **فحوص الجودة عند كل طبقة (Quality checks at every layer).** الاختبارات مكانها في كل طبقة (on each layer)، لا في الأخيرة فقط (not only the last):
-- الخام (Raw): هل وصلت البيانات أصلًا، وبكمية تقارب المعتاد تقريبًا (roughly as much as usual)؟ (الحداثة والحجم (freshness and volume))
+- الخام (Raw): هل وصلت البيانات أصلًا، وبكمية قريبة من المعتاد (roughly as much as usual)؟ (الحداثة والحجم (freshness and volume))
 - التهيئة (Staging): هل قيم `event_id` فريدة بعد إزالة التكرار (unique after deduplication)؛ وهل `customer_id` غير فارغ أبدًا (never empty)؟
 - المستودعات الفرعية (Marts): هل يطابق كل صف عميلًا حقيقيًا (match a real customer)؛ وهل يتحرك العدد اليومي ضمن نطاق متوقع (within an expected range)؟
 
@@ -467,7 +467,7 @@ ORDER BY 1;
 
 </details>
 
-**5. يختلف رصيد الحساب (account balance) في المستودع الفرعي للعميل الشامل (customer 360 mart) في مستودع البيانات عن الرصيد في نظام الأنظمة المصرفية الأساسية (core banking system). ماذا ينبغي أن يستنتج الفريق (what should the team conclude)؟**
+**5. يختلف رصيد الحساب (account balance) في المستودع الفرعي للعميل الشامل (customer 360 mart) في مستودع البيانات عن الرصيد في النظام المصرفي الأساسي (core banking system). ماذا ينبغي أن يستنتج الفريق (what should the team conclude)؟**
 
 - A. مستودع البيانات على حق، لأن بياناته نُظّفت وأُزيل تكرارها واختُبرت (cleaned, deduplicated and tested)
 - B. كلاهما صالح بالقدر نفسه (equally valid)، فانشر الاثنين ودع كل فريق يختار ما يفضّله
@@ -659,7 +659,7 @@ ORDER BY c.segment;
 | الأداة أو النمط أو المعيار (Tool, pattern or standard) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |
 |---|---|---|
 | **DuckDB** — قاعدة البيانات التحليلية DuckDB | قاعدة بيانات تحليلية داخل العملية (in-process analytical database) تشغّل SQL على الملفات المحلية (local files)، بما فيها Parquet وCSV | الوحدتان 0 و1، والتحليل المحلي السريع (fast local analysis) طوال المقرر |
-| **PostgreSQL** — قاعدة البيانات العلائقية PostgreSQL | قاعدة بيانات علائقية مفتوحة المصدر (open-source relational database)؛ تؤدي دور نظام الأنظمة المصرفية الأساسية لنجم (Najm's core banking system) في الأمثلة | من الوحدة 1: أمثلة معالجة المعاملات عبر الإنترنت (OLTP examples)، والتقاط تغيّر البيانات (CDC)، وpgvector |
+| **PostgreSQL** — قاعدة البيانات العلائقية PostgreSQL | قاعدة بيانات علائقية مفتوحة المصدر (open-source relational database)؛ تؤدي دور النظام المصرفي الأساسي لنجم (Najm's core banking system) في الأمثلة | من الوحدة 1: أمثلة معالجة المعاملات عبر الإنترنت (OLTP examples)، والتقاط تغيّر البيانات (CDC)، وpgvector |
 | **Docker** — منصة الحاويات Docker | يشغّل البرمجيات في حاويات (runs software in containers) فتبدأ حزمة كاملة بأمر واحد (a whole stack starts with one command) | من الوحدة 2: Kafka أو Redpanda، وAirflow أو Dagster، وMetabase |
 | **dbt Core** — أداة التحويل dbt Core | أداة سطر أوامر مفتوحة المصدر (open-source command-line tool) لتحويلات SQL مع اختبارات وتوثيق (tests and docs) | من الوحدة 3 |
 | **Git** — نظام التحكم في الإصدارات Git | التحكم في الإصدارات (version control) لكل تمرين واستعلام ونموذج | من التمرين الأول: ملف أعمالك يعيش هنا (your portfolio lives here) |
@@ -716,7 +716,7 @@ ORDER BY c.segment;
 - A. إنه بنك قطري حقيقي (real Qatari bank)، وتُستخدم عيّنات مجهّلة من بياناته (anonymised samples of its data) في التمارين
 - B. إنه بنك خيالي (fictional bank)، لكن الأرقام في سيناريوهاته إحصاءات صناعية حقيقية (real industry statistics)
 - C. يعمل في قطر فقط، لذا لا ينطبق على بياناته إلا قانون حماية البيانات القطري (Qatari data protection law)
-- D. إنه خيالي، وله عملاء في قطر والإمارات والاتحاد الأوروبي (customers in Qatar, the UAE and the EU)
+- D. إنه خيالي (fictional)، وله عملاء في قطر والإمارات والاتحاد الأوروبي (customers in Qatar, the UAE and the EU)
 
 <details><summary>الإجابة</summary>
 

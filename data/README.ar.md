@@ -53,7 +53,7 @@
 
 ## المسار من الصفر إلى الاحتراف (The path from zero to hero)
 
-| المرحلة (Stage) | الوحدات (Modules) | ستكون قادرًا على… (You will be able to…) |
+| المرحلة (Stage) | الوحدات (Modules) | ستكون قادرًا على… ⁦(You will be able to…)⁩ |
 |---|---|---|
 | 🟢 **الأسس (Foundations)** | 0–1 | شرح منظومة البيانات الحديثة (modern data stack)، وكتابة SQL تجيب عن أسئلة الأعمال (business questions)، ونمذجة البيانات بالحُبَيبية (grain) الصحيحة. |
 | 🟡 **الممارس (Practitioner)** | 2–5 | بناء خطوط بيانات (pipelines) آمنة لإعادة التشغيل (safe to re-run)، واختبار تحويلاتك (transformations)، وتعريف مقاييس موثوقة (trusted metrics)، وإجراء تجارب سليمة (sound experiments)، ونقل النماذج وبيانات النماذج اللغوية الكبيرة (LLM data) إلى الإنتاج (production). |

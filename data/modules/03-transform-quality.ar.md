@@ -199,7 +199,7 @@ unit_tests:
 
 (النسخة الحقيقية ستمرّر "اليوم" (today) بوصفه متغيرًا (as a variable) بدلًا من استخدام `current_date`؛ فالمنطق الذي يعتمد على الساعة (logic that depends on the clock) يصعب اختباره.)
 
-**التوثيق والنسب (Documentation and lineage).** يحوّل الأمر `dbt docs generate` كل `description:` والرسم البياني الموجّه غير الدوري (DAG) إلى موقع قابل للتصفح (browsable site). ويتيح لك ذلك النسب (lineage) أن تجيب عن سؤال ⁦("if the card feed breaks, which dashboards are wrong?")⁩ أي "إذا تعطّل مصدر بيانات البطاقات، فأي لوحات المعلومات تصبح خاطئة؟" في دقائق (6.1).
+**التوثيق والنسب (Documentation and lineage).** يحوّل الأمر `dbt docs generate` كل `description:` والرسم البياني الموجّه غير الدوري (DAG) إلى موقع قابل للتصفح (browsable site). ويتيح لك ذلك النسب (lineage) أن تجيب عن سؤال "إذا تعطّل مصدر بيانات البطاقات، فأي لوحات المعلومات تصبح خاطئة؟" ⁦(if the card feed breaks, which dashboards are wrong?)⁩ في دقائق (in minutes) (6.1).
 
 **سير العمل (The workflow).** الحلقة اليومية في نجم (Najm's daily loop):
 
@@ -554,7 +554,7 @@ where d = current_date - 1
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
 بعد حادثة المتأخرات (arrears incident)، يكتب فيصل وهدى أول **عقد بيانات في نجم (Najm data contract)** مع فريق الأنظمة المصرفية الأساسية (core banking team)، وخطة جودة (quality plan) لطبقة عرض مخاطر الائتمان (credit-risk mart).
 
-**الجزء أ: عقد البيانات (ملخّص ملف YAML في المستودع) (Part A: data contract (summary of the YAML in the repo))**
+**الجزء أ: عقد البيانات (Part A: data contract) — ملخّص ملف YAML في المستودع (summary of the YAML in the repo)**
 
 | القسم (Section) | المحتوى المتّفق عليه (Agreed content) |
 |---|---|
@@ -857,7 +857,7 @@ flowchart TD
 
 **الجزء أ: النتائج والتغييرات (Part A: findings and changes)**
 
-| عبء العمل (Workload) | النتيجة (من سجلّ الاستعلامات والخطط) (Finding (from query history and plans)) | التغيير (Change) | كيف نتحقق (How we verify) |
+| عبء العمل (Workload) | النتيجة (Finding) — من سجلّ الاستعلامات والخطط (from query history and plans) | التغيير (Change) | كيف نتحقق (How we verify) |
 |---|---|---|---|
 | البناء كل ساعة لـ`fct_card_authorisations` (hourly build) | التحديث الكامل (full refresh) يعيد قراءة كل السجلّ التاريخي كل ساعة | تزايدي (incremental)، `delete+insert` على `authorisation_id`، ونافذة رجوع 3 أيام (3-day lookback)؛ والتقسيم حسب تاريخ `authorised_at`؛ وتحديث كامل شهري (monthly full refresh) | البايتات الممسوحة لكل تشغيل (bytes scanned per run) قبل وبعد؛ ومجاميع التحديث الكامل الشهري تطابق الجدول التزايدي |
 | لوحة معلومات التجزئة (Retail dashboard) | `select *` على `fct_transactions` لكل بطاقة (per tile)؛ والتجميع نفسه يتكرر (same aggregate repeated) | طبقة عرض جديدة `agg_transactions_daily_branch`؛ والبطاقات تقرأ الأعمدة اللازمة فقط (only needed columns) | زمن تحميل لوحة المعلومات (dashboard load time) والبايتات الممسوحة لكل تحديث |
@@ -917,7 +917,7 @@ flowchart TD
 **2. يُبنى `fct_card_authorisations` تزايديًا (incrementally) باستخدام `where authorised_at > (select max(authorised_at) from {{ this }})`. تصل بعض إعادات المحاولة من الأجهزة الطرفية (terminal retries) متأخرة يومين، حاملةً `authorised_at` الأصلي. ما الذي يحدث خطأً، وما الإصلاح؟**
 
 - A. لا شيء؛ فـdbt تتتبّع أي صفوف المصدر عالجها كل تشغيل تزايدي (incremental run) بالفعل
-- B. تُتخطّى الأحداث المتأخرة (late events are skipped)؛ أعد معالجة نافذة رجوع (lookback window)، مفهرسة على مفتاح فريد (keyed on a unique key) حتى يُستبدَل التداخل (overlap is replaced)
+- B. تُتخطّى الأحداث المتأخرة (late events are skipped)؛ أعد معالجة نافذة رجوع (lookback window)، مربوطة بمفتاح فريد (keyed on a unique key) حتى يُستبدَل التداخل (overlap is replaced)
 - C. سيكرّر النموذج كل صف متأخر في التشغيل التالي؛ غيّر الاستراتيجية إلى `append` لتجنّب ذلك
 - D. يجب تحويل النموذج إلى عرض (view)
 

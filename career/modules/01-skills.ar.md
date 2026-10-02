@@ -1,12 +1,12 @@
-# الوحدة 1 — المهارات التي يتحقق منها أصحاب العمل
+# الوحدة 1 — المهارات التي يتحقق منها أصحاب العمل (The skills employers check)
 
 *تخبر الشهادة الجامعية (degree) صاحبَ العمل (employer) بأنك قادر على التعلّم. لكنها لا تخبره بأنك قادر على العمل في قاعدة شيفرة مشتركة (shared codebase)، أو العثور على خطأ برمجي (bug) لم تكتبه بنفسك، أو التحقق مما أنتجه وكيل ذكاء اصطناعي (AI agent)، أو إبقاء البرمجيات تعمل (keep software running) بعد أن يستخدمها أناس حقيقيون. هذه هي الأشياء التي يبحث عنها اليوم مديرو التوظيف (hiring managers) ومُجرو المقابلات (interviewers) لدى المبتدئ (junior)، وكثير من الخرّيجين (graduates) لم يتعلّموها قط بشكل مباشر. تسمّي هذه الوحدة ذلك الحدّ الأدنى (baseline)، وتبيّن شكل "ما يكفي لمبتدئ" (good enough for a junior) في كل جزء منه. تبدأ بالمهارات اليومية (everyday skills): Git، وقراءة الشيفرة (reading code)، وتصحيح الأخطاء (debugging)، والاختبار (testing)، والتوثيق الكتابي (writing things down). ثم تتناول البناء باستخدام وكلاء البرمجة بالذكاء الاصطناعي (AI coding agents) بطريقة تُظهر حُسن تقديرك (judgement) بدلًا من أن تُخفي غيابه. وتنتهي بالتفكير الإنتاجي (production thinking): الفجوة بين "يعمل على حاسوبي" (it runs on my laptop) و"يعمل للمستخدمين" (it runs for users). سترافق عمر، الذي لم ينشر (deployed) أي شيء من قبل؛ وريم، التي تبني بسرعة مع الوكلاء (agents) لكنها لا تستطيع دائمًا شرح شيفرتها؛ وهدى ويوسف ومحمد. ويشرح خالد، مدير الهندسة (engineering manager) في بنك نجم (Najm Bank) الذي يوظّف المبتدئين، وطارق، الذي يُجري المقابلات التقنية (technical interviews)، كيف يميّزان الفرق. يحيلك كل درس إلى دروس أخرى في المكتبة (library) تبني المهارة بعمق، ويترك بين يديك مُنتَجًا (artefact): تدقيقًا للمهارات (skills audit)، وقائمة تحقق (verification checklist)، وقائمة جاهزية للإطلاق (ship-ready checklist).*
 
-> **الخطوات (Steps):** Learn، Build — تعلّم الحدّ الأدنى (baseline) الذي يتحقق منه كل صاحب عمل، وبناء العادات (habits) والأدلة (evidence) التي تُثبت أنك تملكه.
+> **الخطوات (Steps):** Learn، Build — تعلُّم الحدّ الأدنى (baseline) الذي يتحقق منه كل صاحب عمل، وبناء العادات (habits) والأدلة (evidence) التي تُثبت أنك تملكه.
 
 ---
 
-# 1.1 — الحدّ الأدنى للمبتدئ: Git، وقراءة الشيفرة، وتصحيح الأخطاء، والاختبار، والتوثيق الكتابي
+# 1.1 — الحدّ الأدنى للمبتدئ (The junior baseline): Git، وقراءة الشيفرة (reading code)، وتصحيح الأخطاء (debugging)، والاختبار (testing)، والتوثيق الكتابي (writing it down)
 *المستوى (Level): 🟢 مبتدئ (Beginner)* · *المتطلبات (Prerequisites): 0.1، 0.2* · *الخطوة (Step): Learn, Build*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
@@ -259,7 +259,7 @@ How I tested it:
 
 ---
 
-# 1.2 — البناء مع وكلاء البرمجة بالذكاء الاصطناعي دون أن يحملوك
+# 1.2 — البناء مع وكلاء البرمجة بالذكاء الاصطناعي (AI coding agents) دون أن يحملوك (without being carried by them)
 *المستوى (Level): 🟢 مبتدئ (Beginner)* · *المتطلبات (Prerequisites): 1.1* · *الخطوة (Step): Learn, Build*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
@@ -307,7 +307,7 @@ flowchart LR
     S["حدّد مهمة صغيرة بمعايير قبول"] --> G["يقترح الوكيل التغيير أو يكتبه"]
     G --> R["تقرأ الفرق كاملًا"]
     R -->|"غير واضح أو خاطئ"| S
-    R --> V["شغّل الاختبارات وتحقّقًا فعليًا"]
+    R --> V["شغّل الاختبارات وأجرِ تحقّقًا فعليًا"]
     V -->|"فشل"| S
     V --> E["اشرح بالعكس: هل تستطيع الدفاع عن كل سطر"]
     E -->|"لا"| L["تعلّم الجزء الذي لا تستطيع شرحه"]
@@ -339,7 +339,7 @@ flowchart LR
 | تغييرات واسعة أكثر من اللازم (Over-broad changes) | طُلب منه إصلاح خطأ واحد، فـ"رتّب" (tidied) أيضًا خمسة ملفات لا علاقة لها بالأمر | اقرأ قائمة الملفات الكاملة (full file list) في الفرق؛ ارفض التغييرات التي لم تطلبها |
 | اختبارات مُضعَفة (Weakened tests) | يُعدَّل اختبار فاشل أو يُحذف حتى ينجح (until it passes) | اعتبر أي تغيير في الاختبارات مثيرًا للريبة (suspicious)؛ واسأل لماذا كان الاختبار خاطئًا |
 | إعدادات افتراضية غير آمنة (Insecure defaults) | SQL مبنيّ بتجميع النصوص (string-built SQL)، أو غياب فحوص التفويض (missing authorisation checks)، أو أسرار في الشيفرة (secrets in code)، أو إعدادات متساهلة أكثر من اللازم (overly permissive settings) | استخدم قائمة تحقق أمنية (security checklist)؛ شغّل فحص الأسرار (secret scanning) والتحليل الساكن (static analysis) |
-| ملخّصات واثقة لكنها خاطئة (Confident wrong summaries) | "جميع الاختبارات ناجحة" (All tests pass) بينما تُخطّي بعضها (some were skipped) | شغّل الاختبارات بنفسك واقرأ المُخرَج (read the output) |
+| ملخّصات واثقة لكنها خاطئة (Confident wrong summaries) | "جميع الاختبارات ناجحة" (All tests pass) بينما جرى تخطّي بعضها (some were skipped) | شغّل الاختبارات بنفسك واقرأ المُخرَج (read the output) |
 
 تتناول المكتبة هذه الأمور بعمق: [*أمن الذكاء الاصطناعي والتطبيقات (Secure AI & Application Security)*، الدرس 6.3 — تأمين الشيفرة المولَّدة بالذكاء الاصطناعي: ما الذي يخطئ فيه وكلاء البرمجة (Securing AI-generated code: what coding agents get wrong)](../secai/index.ar.html#/6.3) للجانب الأمني (security side)، و[*تصميم الأنظمة لمبرمجي الفايب (System Design for Vibe Coders)*، الدرس 9.4 — التحقق قبل الإكمال (Verification before completion)](../vibe/index.ar.html#l9-4) لعادة إثبات أن العمل قد أُنجز (proving work is done).
 
@@ -517,7 +517,7 @@ AI assistance and verification:
 
 ---
 
-# 1.3 — التفكير الإنتاجي: الفجوة بين "يعمل على حاسوبي" و"يعمل للمستخدمين"
+# 1.3 — التفكير الإنتاجي (Production thinking): الفجوة بين "يعمل على حاسوبي" (it runs on my laptop) و"يعمل للمستخدمين" (it runs for users)
 *المستوى (Level): 🟢 مبتدئ (Beginner)* · *المتطلبات (Prerequisites): 1.1، 1.2* · *الخطوة (Step): Learn, Build*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
@@ -614,7 +614,7 @@ def health():
 
 | يسأل مُجري المقابلة (Interviewer asks) | إجابة ضعيفة (Weak answer) | إجابة قوية لمبتدئ (Strong junior answer) |
 |---|---|---|
-| "كيف ستنشره؟" ⁦("How would you deploy this?")⁩ | "سأضعه على خادم." ⁦("I'd put it on a server.")⁩ | "إنه حاوية (container) يُنشرها CI من الفرع الرئيسي (main branch) إلى منصّة مُدارة (managed platform)؛ يُنشر على بيئة التجهيز (staging) أولًا، وأستطيع التراجع (roll back) إلى الصورة السابقة (previous image)." |
+| "كيف ستنشره؟" ⁦("How would you deploy this?")⁩ | "سأضعه على خادم." ⁦("I'd put it on a server.")⁩ | "إنه حاوية (container) ينشرها CI من الفرع الرئيسي (main branch) إلى منصّة مُدارة (managed platform)؛ يُنشر على بيئة التجهيز (staging) أولًا، وأستطيع التراجع (roll back) إلى الصورة السابقة (previous image)." |
 | "ماذا يحدث إذا تعطّلت قاعدة البيانات؟" ⁦("What happens if the database is down?")⁩ | "لن تتعطّل." ⁦("It wouldn't be.")⁩ | "يفشل فحص الصحة (health check)، فتتوقّف المنصّة عن إرسال الحركة (traffic)، ويرى المستخدمون صفحة خطأ (error page)، ويرسل لي تنبيه التوافر (uptime alert) بريدًا. لم أُضِف إعادة المحاولة (retries) بعد؛ سأضيفها بحدّ أقصى (with a limit)." |
 | "كيف ستعرف أنه معطّل؟" ⁦("How would you know it was broken?")⁩ | "سيخبرني المستخدمون." ⁦("Users would tell me.")⁩ | "تذهب الأخطاء إلى متتبّع الأخطاء (error tracker)، ويستدعي فحص التوافر (uptime check) المسار `/health` كل بضع دقائق." |
 | "أين مفتاح الواجهة البرمجية؟" ⁦("Where's the API key?")⁩ | "في ملف الإعدادات." ⁦("In the config file.")⁩ | "في مخزن الأسرار في المنصّة (platform's secret store). المستودع لا يحتوي إلا على `.env.example` بأسماء المتغيّرات (variable names)." |

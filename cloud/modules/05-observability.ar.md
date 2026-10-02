@@ -580,3 +580,228 @@ flowchart LR
 
 ---
 
+# 5.3 — الحوادث ومراجعات ما بعد الحادثة الخالية من اللوم (Incidents and blameless postmortems)
+*المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 5.1، 5.2* · *المرحلة (Phase): Operate*
+
+## ⚡ الدرس في دقيقة (In 60 seconds)
+- **الحادثة (incident)** حدثٌ غير مخطط له (an unplanned event) يؤذي المستخدمين أو الأعمال، أو يهدّد بإيذائهم (hurts, or threatens to hurt, users or the business)، ويحتاج إلى استجابةٍ منسّقة (a coordinated response). إعلان الحادثة مبكرًا رخيص (Declaring one early is cheap)؛ وإعلانها متأخرًا مكلف (declaring one late is expensive).
+- أدِر الحوادث بـ **أدوارٍ (roles)** واضحة: **قائد الحادثة (incident commander)** الذي ينسّق ويقرّر (coordinates and decides)، و**قائد العمليات (operations lead)** الذي يغيّر الأنظمة (changes systems)، و**قائد الاتصالات (communications lead)** الذي يُبقي الناس على اطلاع (keeps people informed)، و**المدوّن (scribe)** الذي يسجّل الخط الزمني (records the timeline).
+- **خفّف الضرر أولًا، وحقّق لاحقًا (Mitigate first, investigate later).** تراجَع (Roll back)، أو حوّل إلى البديل (fail over)، أو أطفئ علَم ميزة (turn off a feature flag)، أو تخلّص من جزءٍ من الحمل (shed load) لإيقاف الضرر (to stop the harm)؛ واعثر على السبب الجذري (root cause) بعد أن يصبح العملاء في أمان (once customers are safe).
+- **مراجعة ما بعد الحادثة الخالية من اللوم (blameless postmortem)** تسأل كيف سمح النظام لتصرّف شخصٍ معقول بأن يسبّب ضررًا (how the system allowed a reasonable person's action to cause harm)، لا من يُلام (not who to blame). اللوم يُخفي المعلومات (Blame hides information)؛ والتعلّم يحتاج إليها (learning needs it).
+- لا تكتمل مراجعة ما بعد الحادثة (A postmortem is finished) إلا حين يكون لـ **بنود العمل (action items)** فيها مالكون وتواريخ استحقاق (owners and due dates)، وتُتابَع حتى إنجازها (tracked to completion).
+- أكبر فخ (Biggest trap): «الخطأ البشري» ("human error") بوصفه السبب الجذري (as the root cause). إنه المكان الذي ينبغي أن يبدأ منه التحقيق (where an investigation should start)، لا حيث ينتهي (not where it ends).
+
+## 🧭 لماذا يهم (Why it matters)
+في الساعة 10:52 من صباح يوم عمل (on a weekday morning)، يستدعي تنبيه الاحتراق السريع (the fast-burn alert) من الدرس 5.2 يوسفَ: ميزانية أخطاء المدفوعات (the Payments error budget) تحترق بعشرات أضعاف المعدل المستدام (dozens of times the sustainable rate). طلبات التحويل تنتهي مهلتها (Transfer requests are timing out). يبدأ يوسف التصحيح وحده (starts debugging alone). وبعد عشر دقائق، تكون فرقة طارق تصحّح أيضًا في محادثةٍ مختلفة (in a different chat)، ومركز الاتصال (the contact centre) يسأل عمّا يقوله للعملاء، ولا أحد يعرف من المسؤول (nobody knows who is in charge). ومهندسان على وشك إعادة تشغيل قاعدة البيانات في الوقت نفسه (restart the database at the same time).
+
+تنضم مها، فتعلن حادثةً من مستوى SEV2 (declares a SEV2 incident)، وتتولى دور قائدة الحادثة (incident commander)، وتعطي كل شخصٍ مهمة (gives everyone a job). وبعد ثلاث عشرة دقيقة، يتراجع الفريق (rolls back) عن تغيير إعداداتٍ (configuration change) نُشر الساعة 10:40، فتتوقف الأخطاء. ويتبيّن أن السبب سطرٌ واحد (one line): تغييرٌ مقصود للتطوير فقط (a change meant only for development)، أُجري في ملف قيم Helm (Helm values file) مشترك بين كل البيئات (shared by all environments)، خفّض مجمّع اتصالات قاعدة بيانات المدفوعات (the Payments database connection pool) من 50 إلى 5، ثم رُقّي إلى الإنتاج (promoted to production) مع دفعةٍ من التغييرات غير المترابطة (a batch of unrelated changes). لم يتكرر أي تحويل (No transfer was duplicated)، لأن كل إعادة محاولة حملت مفتاح عدم تكرار (every retry carried an idempotency key). ورأى نحو 3,100 عميل تحويلاتٍ فاشلة أو بطيئة (failed or slow transfers) مدة 37 دقيقة.
+
+كان يوسف قد وافق على طلب السحب (approved the pull request) الذي حمل التغيير، ويتوقع أن يُلام (expects to be blamed). لكن مراجعة ما بعد الحادثة (the postmortem) تسأل بدلًا من ذلك: لماذا أمكن لقيمة تطويرٍ أن تصل إلى الإنتاج (why a development value could reach production)، ولماذا لم يُظهر خط التسليم (the pipeline) فروقات الإعدادات الفعلية (the diff of the effective configuration)، ولماذا استغرق التنبيه اثنتي عشرة دقيقة ليجمع الأشخاص المناسبين (bring the right people together). وبنود العمل (The action items) تُصلح هذه الأمور.
+
+## 📐 كيف يعمل (How it works)
+### 🟢 الأساسيات (The essentials)
+**متى تُعلن الحادثة (When to declare).** أعلن حادثةً حين يصحّ أيٌّ مما يلي (when any of these is true): المستخدمون متأثرون الآن (users are affected now)؛ أو تنبيه احتراقٍ سريع لهدف مستوى الخدمة ينطلق (an SLO fast-burn alert is firing)؛ أو تحتاج إلى أكثر من فريقٍ واحد لإصلاحها (more than one team to fix it)؛ أو لست متأكدًا مما إذا كانت خطيرة (unsure whether it is serious). الإنذار الكاذب يكلّف دقائق (A false alarm costs minutes)؛ والإعلان المتأخر يكلّف ساعات (a late declaration costs hours). اجعل الإعلان سهلًا (Make declaring easy): أمرٌ واحد في المحادثة أو زرٌّ واحد (one chat command or button) يفتح قناة حادثة (opens an incident channel) ويستدعي جدول مناوبة قادة الحوادث (pages the incident commander rota).
+
+**مستويات الخطورة (Severity levels).** تحدّد الخطورة (Severity) عدد الأشخاص المشاركين (how many people are involved)، وعدد مرات التواصل (how often you communicate)، ومن يجب إبلاغه (who must be told). مقياس نجم (Najm's scale):
+
+| الخطورة (Severity) | المعنى (Meaning) | أمثلة (Examples) | الاستجابة (Response) |
+|---|---|---|---|
+| **SEV1** | خدمةٌ حرجة معطّلة أو بياناتٌ معرّضة للخطر لعددٍ كبير من العملاء (Critical service down or data at risk for many customers) | المدفوعات غير متاحة (Payments unavailable)؛ اشتباهٌ في تلف بيانات أو اختراق (suspected data corruption or breach) | قائد حادثة من جدول المناوبة الأقدم (IC from the senior rota)، وإبلاغ الإدارة التنفيذية ومسؤول التواصل مع الجهة التنظيمية (executive and regulator liaison informed)، وتحديثات كل 30 دقيقة (updates every 30 minutes) |
+| **SEV2** | تدهورٌ كبير لحصةٍ معتبرة من العملاء (Major degradation for a significant share of customers) | تحويلاتٌ تفشل لحصةٍ من المستخدمين (Transfers failing for a share of users)؛ واجهة برمجة تطبيق نجم للهاتف بطيئة جدًّا (Najm Mobile API very slow) | قائد حادثة من جدول مناوبة هندسة موثوقية المواقع (IC from the SRE rota)، وإبلاغ مالك المنتج (product owner informed)، وتحديثات كل 30–60 دقيقة |
+| **SEV3** | أثرٌ محدود أو يوجد حلٌّ بديل (Limited impact or a workaround exists) | ميزةٌ واحدة غير حرجة معطّلة (One non-critical feature broken)؛ البوابة الداخلية معطّلة (internal portal down) | يتولاها الفريق المالك (Owning team handles it)؛ ومراجعة ما بعد الحادثة اختيارية (postmortem optional) |
+| **SEV4** | لا أثر حاليًّا على المستخدمين، لكن ثمة خطر (No current user impact, but risk) | فشلت نسخةٌ متماثلة (A replica failed)؛ شهادةٌ تنتهي صلاحيتها بعد 3 أيام (a certificate expires in 3 days) | تذكرة عمل (Ticket)؛ تُعالج في ساعات العمل (handled in working hours) |
+
+عند الشك، اختر الخطورة الأعلى (When in doubt, choose the higher severity)؛ إذ تستطيع خفضها لاحقًا (you can downgrade later).
+
+**الأدوار (The roles).** النموذج مقتبس من أنظمة قيادة الحوادث في خدمات الطوارئ (adapted from emergency services' incident command systems):
+- **قائد الحادثة (Incident commander, IC).** يملك الحادثة (Owns the incident). يحافظ على الصورة الكبيرة (Keeps the big picture)، ويوزّع العمل (assigns work)، ويقرّر (decides)، مثل: هل نتراجع الآن؟ هل نصعّد؟ (roll back now? escalate?)، ويعلن النهاية (declares the end). قائد الحادثة **لا** يصحّح الأخطاء (does **not** debug)؛ ففي اللحظة التي يفعل فيها ذلك، لا يبقى أحدٌ ينسّق (nobody is coordinating).
+- **قائد العمليات (Operations lead).** يقود العمل العملي على الأنظمة (Leads the hands-on work on systems)، مع خبراء الموضوع (subject-matter experts). ولا يُجري تغييراتٍ على الإنتاج إلا الأشخاص الذين يسمّيهم قائد العمليات (Only people the operations lead names make changes to production).
+- **قائد الاتصالات (Communications lead).** يكتب التحديثات الداخلية وفق جدولٍ ثابت (on a fixed schedule)، ويعمل مع مركز الاتصال والفرق التي تتعامل مع العملاء (customer-facing teams) على ما يُقال للعملاء (what customers are told).
+- **المدوّن (Scribe).** يسجّل خطًّا زمنيًّا مختومًا بالوقت (a timestamped timeline): ما شوهد وما تقرّر وما تغيّر (what was seen, decided and changed). وفي الحادثة الصغيرة قد يتولى قائد الحادثة ذلك بمساعدة أدوات المحادثة (with help from chat tooling).
+
+**دورة الحياة (The lifecycle).**
+
+```mermaid
+flowchart LR
+  D["الكشف: تنبيه أو بلاغ"] --> T["الإعلان والفرز: الخطورة والأدوار"]
+  T --> M["التخفيف: إيقاف الضرر"]
+  M --> R["الحل: التأكد من تعافي مؤشرات مستوى الخدمة"]
+  R --> P["مراجعة ما بعد الحادثة: التعلّم"]
+  P --> F["المتابعة: إنجاز بنود العمل"]
+  F -.->|"تنبيهات وضمانات أفضل"| D
+```
+
+**خفّف الضرر أولًا (Mitigate first).** الإجراء الآمن الأسرع الذي يوقف الضرر عن المستخدمين (The fastest safe action that stops user harm) يأتي قبل الفهم (comes before understanding). التخفيفات المعتادة (Typical mitigations)، بترتيب الأفضلية تقريبًا (in rough order of preference): **التراجع (roll back)** عن أحدث تغيير (the most recent change)، فعمليات النشر وتغييرات الإعدادات (deployments and configuration changes) تسبّب حصةً كبيرة من الحوادث، ولذلك فإن «ما الذي تغيّر؟» ⁦("what changed?")⁩ هو السؤال الأول (the first question)؛ و**إطفاء علَم الميزة (turn off a feature flag)**؛ و**التحويل إلى البديل (fail over)** إلى منطقةٍ سليمة أو نسخةٍ متماثلة سليمة (a healthy zone or replica)؛ و**التوسّع الأفقي (scale out)** أو **التخلّص من جزءٍ من الحمل (shed load)**، أي رفض الحركة منخفضة الأولوية لحماية المدفوعات (reject low-priority traffic to protect payments). احفظ الأدلة قبل أن تُتلفها (Keep evidence before you destroy it): التقط السجلات أو تفريغ الذاكرة (a heap dump) أو الإعدادات السيئة (the bad configuration) قبل إعادة تشغيل الأشياء، إذا كان ذلك يستغرق ثوانيَ لا دقائق (if it takes seconds rather than minutes).
+
+### 🟡 التعمق أكثر (Going deeper)
+**التحديث الجيد (A good update)** له شكلٌ ثابت سهل المسح بالعين (a fixed, scannable shape):
+
+```text
+[SEV2 · Payments · Update 3 · 11:30]
+Impact: ~8% of transfer requests failing or slow since 10:41. No duplicate transfers.
+Current status: Mitigated. Config rolled back at 11:17; error ratio back to normal since 11:18.
+Next steps: Monitoring for 30 min before resolving. Investigating why the change reached prod.
+Next update: 12:00 or sooner if anything changes.
+IC: Maha · Ops: Tariq · Comms: Salem · Scribe: Yousef
+```
+
+قل ما تعرفه (Say what you know)، وما لا تعرفه (what you do not know)، ومتى ستتحدث في المرة القادمة (when you will speak next). ولا تخمّن سببًا أبدًا في رسالةٍ موجّهة إلى العملاء (Never guess a cause in a customer-facing message).
+
+**عادات التنسيق (Coordination habits).** قناة حادثة واحدة، ومكالمة جسر واحدة، وقائد حادثة واحد (One incident channel, one bridge call, one IC). أعلِن التغييرات قبل إجرائها (Announce changes before making them): «طارق: أتراجع الآن عن payments-config إلى المراجعة 41» ⁦("Tariq: rolling back payments-config to revision 41 now")⁩. وسلِّم دور قائد الحادثة صراحةً (Hand over the IC role explicitly) عند تغيّر المناوبات (when shifts change) أو حين تتجاوز الحادثة طاقة شخصٍ واحد (outlasts one person's energy): «مها تسلّم قيادة الحادثة إلى سالم الساعة 13:00؛ سالم، أكّد» ⁦("Maha handing IC to Salem at 13:00; Salem, confirm.")⁩ 
+
+**حين تكون الحادثة حادثةً أمنية أيضًا (When an incident is also a security incident).** إذا ظهرت أي علامة على وجود مهاجم (any sign of an attacker)، مثل وصولٍ غير متوقع (unexpected access) أو بياناتٍ تغادر (data leaving) أو أثرٍ برمجي عُبث به (a tampered artefact)، فأشرِك مركز العمليات الأمنية لدى جاسم (Jassim's SOC) فورًا. فالحوادث الأمنية تغيّر القواعد (Security incidents change the rules): احفظ الأدلة (preserve evidence)، ولا تنبّه المهاجم (do not tip off the attacker)، واتبع خطة الاستجابة للحوادث الأمنية (the security incident response plan)، بواجباتها القانونية والتنظيمية (with its legal and regulatory duties). وتُدرَّس هذه العملية في [*أمن الذكاء الاصطناعي وأمن التطبيقات (Secure AI & Application Security)*، الدرس 10.2 — الاستجابة للحوادث: الاستعداد والكشف والاحتواء والتعافي والتعلّم (Incident response: prepare, detect, contain, recover, learn)](../secai/index.ar.html#/10.2).
+
+**الإبلاغ التنظيمي (Regulatory reporting).** على الكيانات المالية واجبات إبلاغٍ عن الحوادث (incident reporting duties). فبموجب قانون DORA في الاتحاد الأوروبي (Under the EU's DORA)، يجب على الشركات تصنيف الحوادث المتعلقة بتقنية المعلومات والاتصالات (classify ICT-related incidents) والإبلاغ عن الكبرى منها إلى السلطة المختصة (report major ones to their competent authority) ضمن مهلٍ محددة (within set deadlines)؛ كما تضع الجهات التنظيمية الخليجية (GCC regulators)، ومنها مصرف قطر المركزي (the Qatar Central Bank)، توقعاتٍ للإبلاغ عن الحوادث وإخفاقات الإسناد الخارجي (reporting incidents and outsourcing failures). وتملك إدارة المخاطر والامتثال (Risk and Compliance) المعايير والمهل (Criteria and timelines)؛ أمّا واجب الهندسة (engineering's duty) فهو تزويدها بحقائق دقيقة بسرعة (accurate facts fast)، أي وقت البدء والخدمات والعملاء والمعاملات المتأثرة وأثر البيانات (start time, services, customers and transactions affected, data impact)، وهذا سببٌ إضافي للاحتفاظ بخطٍّ زمني من الدقيقة الأولى (keep a timeline from minute one).
+
+**مراجعة ما بعد الحادثة الخالية من اللوم (The blameless postmortem).** **مراجعة ما بعد الحادثة (postmortem)**، وتُسمّى أيضًا مراجعة ما بعد الحادثة (post-incident review)، تحليلٌ مكتوب للحادثة (a written analysis of an incident): ما الذي حدث (what happened)، وأثره (its impact)، ولماذا حدث (why it happened)، وكيف سارت الاستجابة (how the response went)، وما الذي سيتغيّر (what will change). و**الخالية من اللوم (Blameless)** تعني أنها تفترض أن الجميع تصرّفوا بشكلٍ معقول بالنظر إلى ما كانوا يعرفونه حينها (acted reasonably given what they knew at the time)، وتبحث عن الظروف التي جعلت التصرّف الضار سهلًا والتصرّف الآمن صعبًا (made the harmful action easy and the safe action hard). والغاية عملية (The point is practical): إذا خاف الناس من اللوم، أخفوا التفاصيل (hide details)، ودون التفاصيل لا تستطيع إصلاح النظام (you cannot fix the system).
+
+الخلوّ من اللوم لا يعني أن لا أحد مساءل (Blameless does not mean nobody is accountable). فالفرق مساءلة عن إنجاز بنود العمل (accountable for completing action items)؛ والقادة مساءلون عن جعل قول الحقيقة آمنًا (making it safe to tell the truth).
+
+**من «الخطأ البشري» إلى العوامل المساهمة (From "human error" to contributing factors).** «وافق يوسف على تغييرٍ سيئ» ("Yousef approved a bad change") صحيحٌ وعديم الفائدة (true and useless). اطرح أسئلةً أفضل (Ask better questions):
+- كيف كان الأمر منطقيًّا في حينه؟ ⁦(How did it make sense at the time?)⁩ (أظهرت الفروقات سطرًا واحدًا في ملفٍ اسمه `values-shared.yaml`، وبدا غير ضار (looked harmless).)
+- ما الذي جعل الخطأ سهلًا؟ ⁦(What made the error easy?)⁩ (قيمٌ مشتركة لكل البيئات (Shared values for all environments)؛ ولا فروقات مُصيَّرة لإعدادات الإنتاج في خط التسليم (no rendered diff of the production configuration in the pipeline).)
+- ما الذي جعل الكشف بطيئًا؟ ⁦(What made detection slow?)⁩ (استدعى التنبيه شخصًا واحدًا (paged one person) ولم يجمع شيءٌ الفريق المناسب (nothing gathered the right team).)
+- ما الذي حدّ من الضرر؟ ⁦(What limited the damage?)⁩ (مفاتيح عدم التكرار (Idempotency keys)، ومسار تراجعٍ سريع (a fast rollback path).)
+
+للأعطال المعقدة عادةً عدة **عوامل مساهمة (contributing factors)** بدل سببٍ جذري واحد (rather than one root cause). اذكرها كلها (List them all)؛ وأصلح الأكثر تأثيرًا منها (fix the ones with the most leverage).
+
+### 🔴 نظرة الخبير (Expert view)
+**مثالٌ علني: انقطاع Amazon S3 في فبراير 2017 (A public example: the Amazon S3 outage of February 2017).** نشرت AWS ملخصًا (published a summary) لتعطّلٍ أصاب S3 في منطقتها us-east-1 (its us-east-1 region). فقد شغّل مهندسٌ مخوَّل (An authorised engineer)، متّبعًا دليل إجراءاتٍ معتمدًا (following an established playbook)، أمرًا مقصودًا لإزالة عددٍ صغير من الخوادم من نظامٍ فرعي في S3 (remove a small number of servers from an S3 subsystem)؛ فأُدخل أحد المدخلات بشكلٍ خاطئ (one input was entered incorrectly) وأُزيلت مجموعةٌ أكبر بكثير (a much larger set was removed). وركّزت استجابة AWS على الأداة لا على الشخص (focused on the tool rather than the person): فقد غيّرت الأداة لتزيل السعة ببطءٍ أكبر (remove capacity more slowly) وترفض النزول تحت حدٍّ أدنى آمن (refuse to go below a safe minimum). وأشار الملخص أيضًا إلى أن لوحة الحالة الخاصة بـ AWS (AWS's own status dashboard) كانت تعتمد على S3، فلم تستطع إظهار الانقطاع في البداية (could not show the outage at first). والدروس لنجم (The lessons for Najm): ابنِ حواجز حماية في الأدوات الخطرة (build guardrails into dangerous tools)، وتأكد من أن أدوات الحوادث لديك لا تعتمد على الشيء الذي يفشل (your incident tooling does not depend on the thing that is failing).
+
+**مثالٌ ثانٍ: GitLab، يناير 2017 (A second example: GitLab, January 2017).** أثناء جهدٍ في وقتٍ متأخر من الليل لإصلاح تكرار قاعدة البيانات (fix database replication)، حذف مهندسٌ بياناتٍ على قاعدة البيانات الرئيسية بدل النسخة المتماثلة (on the primary database instead of the replica). ثم وجدت مراجعة ما بعد الحادثة العلنية لدى GitLab (GitLab's public postmortem) أن عددًا من آليات النسخ الاحتياطي والتكرار لديها (several of its backup and replication mechanisms) لم تكن تعمل كما هو متوقع (not working as expected)، وفُقدت بيانات إنتاج لنحو ست ساعات (about six hours of production data was lost). والدروس (The lessons): النسخة الاحتياطية التي لم تستعِدها أملٌ لا نسخة احتياطية (a backup you have not restored is a hope, not a backup)، والدرس 6.1 يغطي اختبار الاستعادة (recovery testing)، والأشخاص المتعبون الذين يؤدون عملًا يدويًّا خطرًا ليلًا (tired people doing risky manual work at night) يحتاجون إلى أدواتٍ تجعل التصرّف الآمن سهلًا (tooling that makes the safe action easy).
+
+**بنود عملٍ تغيّر الأشياء (Action items that change things).** البنود الضعيفة (Weak items)، مثل «كن أكثر حذرًا» ("be more careful") و«أضِف مزيدًا من المراقبة» ("add more monitoring")، لا تصمد حتى السباق التالي (do not survive the next sprint). أمّا البنود القوية (Strong items) فهي محددة، ومملوكة، ومؤرّخة، وتغيّر النظام (specific, owned, dated and change the system):
+
+| ضعيف (Weak) | قوي (Strong) |
+|---|---|
+| كن أكثر حذرًا مع تغييرات الإعدادات (Be more careful with config changes) | قسّم `values-shared.yaml` إلى ملفاتٍ لكل بيئة (per-environment files)؛ ويفشل التكامل المستمر (CI fails) إذا تغيّرت قيمةٌ إنتاجية دون مراجعةٍ موسومة للإنتاج (without a production-labelled review) (المالك (owner): يوسف، الاستحقاق (due): أسبوعان) |
+| حسّن المراقبة (Improve monitoring) | أضِف لوحة USE (a USE panel) وتنبيهًا بمستوى تذكرة عمل (a ticket-level alert) لتشبّع مجمّع اتصالات قاعدة بيانات المدفوعات فوق 80% (Payments DB pool saturation above 80%) (المالك (owner): مها، الاستحقاق (due): أسبوع واحد) |
+| تواصل بسرعة أكبر (Communicate faster) | استدعاءات الاحتراق السريع للمدفوعات (Fast-burn pages for Payments) تستدعي أيضًا جدول مناوبة قادة الحوادث (also page the IC rota) وتُنشئ قناة الحادثة تلقائيًّا (auto-create the incident channel) (المالك (owner): فريق المنصة لدى سالم (Salem's platform team)، الاستحقاق (due): 3 أسابيع) |
+
+أعطِ الأولوية للبنود التي **تمنع (prevent)** التكرار، ثم التي **تكشف (detect)** بسرعة أكبر، ثم التي **تستجيب (respond)** بسرعة أكبر. تابعها في قائمة الأعمال العادية (the normal backlog) وراجعها أسبوعيًّا (review them weekly).
+
+**قياس الاستجابة للحوادث (Measuring incident response).** تتابع الفرق أزمنةً مثل **الوقت حتى الكشف (time to detect)**، و**الوقت حتى الإقرار (time to acknowledge)**، و**الوقت حتى الاستعادة (time to restore)**. ويستخدم بحث DORA (DORA's research) الوقت حتى استعادة الخدمة (time to restore service)، الذي نُقّح في تقارير لاحقة (refined in later reports)، بوصفه مقياس تسليمٍ رئيسيًّا (a key delivery metric). تعامل مع هذه الأرقام بحذر (with care): فالحوادث قليلة ومختلفة جدًّا (few and very different)، لذا تضلّل المتوسطات على مدى ربع سنة (averages over a quarter mislead). انظر إلى الاتجاهات (trends) والتوزيع (the distribution) والقصة وراء أطولها (the story behind the longest ones).
+
+**تدرّب قبل أن يكون الأمر حقيقيًّا (Practise before it is real).** **أيام التمرين (Game days)** تمارين مخطط لها (planned exercises) يستجيب فيها الفريق لحادثةٍ محاكاة (a simulated incident) في بيئة اختبار (a test environment): تحويل قاعدة بيانات إلى البديل (a database failover)، أو فقدان منطقة (a lost zone)، أو شهادة منتهية الصلاحية (an expired certificate). وهي تختبر أدلة التشغيل والأدوار والأدوات (runbooks, roles and tooling)، وتدرّب الأشخاص الجدد مثل يوسف بأمان (train new people like Yousef safely). وهندسة الفوضى (Chaos engineering) توسّع ذلك (الدرس 6.1). وتُجري نجم يومًا واحدًا كل ربع سنة (one each quarter)، بعضها بالاشتراك مع مركز العمليات الأمنية لدى جاسم (jointly with Jassim's SOC).
+
+## 🧰 الأدوات (The toolkit)
+| الأداة أو الممارسة أو الخدمة (Tool, practice or service) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
+|---|---|---|
+| **Incident commander** — قائد الحادثة | الشخص الوحيد الذي ينسّق الاستجابة (The single person who coordinates the response)، ويوزّع الأدوار (assigns roles)، ويتخذ القرارات (makes decisions)؛ ولا يصحّح الأخطاء (does not debug) | كل حادثةٍ مُعلنة (Every declared incident)، منذ الدقائق الأولى (from the first minutes) |
+| **Severity levels** — مستويات الخطورة | مقياسٌ مشترك (A shared scale) يحدّد من يشارك، وعدد مرات التواصل، ومن يجب إبلاغه (who is involved, how often to communicate and who must be told) | إعلان الحوادث وتصعيدها باتساق (Declaring and escalating incidents consistently) |
+| **Blameless postmortem** (Google SRE) — مراجعة ما بعد الحادثة الخالية من اللوم | مراجعةٌ مكتوبة (A written review) تبحث عن العوامل المساهمة في النظام (contributing factors in the system)، لا عن أشخاصٍ يُلامون (not people to blame) | بعد كل حادثة SEV1 وSEV2 (After every SEV1 and SEV2)، وأي حادثة استهلكت حصةً كبيرة من ميزانية الأخطاء (a large share of the error budget) |
+| **Status page** — صفحة الحالة | صفحةٌ عامة أو داخلية (A public or internal page) تُظهر حالة الخدمة الحالية وتحديثات الحوادث (current service status and incident updates)، مستضافةٌ بشكلٍ مستقل عن الخدمات التي تبلّغ عنها (hosted independently of the services it reports on) | الحوادث التي تمسّ العملاء (Customer-facing incidents)؛ إبقاء مركز الاتصال على اطلاع (keeping the contact centre informed) |
+| **Game day** — يوم التمرين | حادثةٌ محاكاة مخطط لها في بيئةٍ آمنة (A planned, simulated incident in a safe environment) لاختبار أدلة التشغيل والأدوار والأدوات (to test runbooks, roles and tooling) | كل ربع سنة (Quarterly)، وقبل أن تبدأ خدمةٌ جديدة أو جدول مناوبة جديد العمل (before a new service or rota goes live) |
+
+## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
+**الأثر البرمجي (Artefact): مراجعة ما بعد الحادثة لحادثة مجمّع اتصالات المدفوعات (the postmortem for the Payments connection-pool incident)، مختصرةً (abridged)، باستخدام قالب نجم (using Najm's template).**
+
+| القسم (Section) | المحتوى (Content) |
+|---|---|
+| العنوان والحالة (Title and status) | PM-2026-014 · تحويلات المدفوعات تفشل بعد تغيير إعدادات (Payments transfers failing after configuration change) · SEV2 · نهائية (Final) |
+| الملخص (Summary) | خفّض تغييرٌ في قيم Helm المشتركة (A shared Helm values change) مجمّع اتصالات قاعدة بيانات المدفوعات (the Payments database connection pool) من 50 إلى 5 في الإنتاج. فاصطفّت التحويلات بانتظار الاتصالات (Transfers queued for connections) وانتهت مهلتها (timed out). وأعاد التراجع عن الإعدادات (Rolling back the configuration) الخدمة (restored service). |
+| الأثر (Impact) | 10:41–11:18 (37 دقيقة). نحو 8% من طلبات التحويل فشلت أو استغرقت أكثر من ثانيتين (failed or took over 2 s)؛ ونحو 3,100 عميل متأثر. لا تحويلات مكرّرة أو مفقودة (No duplicated or lost transfers)، وقد تحقّقت المطابقة من ذلك (verified by reconciliation). واستُهلك نحو 5–10% من ميزانية أخطاء التوافر للمدفوعات على مدى 30 يومًا (of the 30-day Payments availability error budget)، تبعًا لحجم الحركة في تلك الساعة (depending on traffic at that hour) وعدد الطلبات التي فشلت بدل أن تكون بطيئة (how many requests failed rather than ran slow). |
+| الكشف (Detection) | استدعاء احتراقٍ سريع لهدف مستوى الخدمة (Fast-burn SLO page) الساعة 10:52 (بعد 11 دقيقة من البدء (11 minutes after onset)). وبدأت بلاغات مركز الاتصال (Contact centre reports) الساعة 10:49. |
+| الخط الزمني (مقتطف) (Timeline (extract)) | 10:40 ترقية الإعدادات (config promoted) · 10:41 بدء الأخطاء (errors begin) · 10:52 استدعاء يوسف (page to Yousef) · 11:04 إعلان SEV2، ومها قائدة الحادثة (SEV2 declared, Maha IC) · 11:12 سؤال «ما الذي تغيّر؟» يشير إلى الإعدادات ("what changed?" points to config) · 11:17 التراجع (rollback) · 11:18 عودة الأخطاء إلى طبيعتها (errors normal) · 11:48 الحل (resolved) |
+| العوامل المساهمة (Contributing factors) | ملف قيم واحد مشترك بين كل البيئات (One values file shared by all environments)؛ أظهر خط التسليم فروقات المصدر لا فروقات الإنتاج المُصيَّرة (the source diff, not the rendered production diff)؛ لا تنبيه على تشبّع المجمّع (no alert on pool saturation)؛ لم يصل الاستدعاء إلى جدول مناوبة قادة الحوادث (page did not reach the IC rota)؛ خلطت الترقية الجماعية تغييراتٍ غير مترابطة (batch promotion mixed unrelated changes) |
+| ما سار جيدًا (What went well) | منعت مفاتيح عدم التكرار التحويلات المكرّرة (Idempotency keys prevented duplicate transfers)؛ واستغرق التراجع أمرًا واحدًا (rollback took one command)؛ وأبقت تحديثات قائد الاتصالات مركزَ الاتصال متّسقًا (kept the contact centre aligned) |
+| أين حالفنا الحظ (Where we got lucky) | وقعت الحادثة في ساعات العمل ومها متصلة (in business hours with Maha online) |
+| بنود العمل (Action items) | ملفات قيمٍ لكل بيئة وفحصٌ للفروقات المُصيَّرة في التكامل المستمر (Per-environment values files and a rendered-diff check in CI) (يوسف، أسبوعان، منع (prevent)) · تنبيه تشبّع المجمّع بوصفه تذكرة عمل (Pool saturation alert as a ticket) (مها، أسبوع واحد، كشف (detect)) · استدعاءات الاحتراق السريع تستدعي أيضًا جدول مناوبة قادة الحوادث (Fast-burn pages also page the IC rota) (فريق المنصة، 3 أسابيع، استجابة (respond)) · ترقية مجموعة تغييراتٍ واحدة في كل مرة إلى المدفوعات (Promote one change set at a time to Payments) (طارق، أسبوعان، منع (prevent)) |
+| المراجعة (Review) | عُرضت في مراجعة العمليات الأسبوعية (the weekly operations review)؛ وتُتابع بنود العمل حتى الإغلاق (tracked to closure)؛ وشوركت الحقائق مع إدارة المخاطر والامتثال لسجل الحوادث (facts shared with Risk and Compliance for the incident register) |
+
+## 🛠️ التمارين (Exercises)
+- 🟢 اقرأ ملخص AWS عن انقطاع S3 في فبراير 2017 (the AWS S3 February 2017 summary) أو مراجعة ما بعد الحادثة لدى GitLab في يناير 2017 (GitLab's January 2017 postmortem). اكتب ملخصًا من نصف صفحة (a half-page summary) بقالب نجم (in Najm's template): الأثر والخط الزمني والعوامل المساهمة وثلاثة بنود عمل (impact, timeline, contributing factors and three action items). *يكتمل عندما (Done when):* لا يكون أيٌّ من عواملك المساهمة «خطأً بشريًّا» ("human error")، ويغيّر كل بند عمل نظامًا أو أداة (changes a system or tool).
+- 🟡 أدِر تمرينًا مكتبيًّا (a tabletop exercise) مدته 45 دقيقة مع صديقين أو ثلاثة أو زملاء دراسة (friends or classmates). استخدم سيناريو مثل «زمن استجابة واجهة برمجة تطبيق نجم للهاتف يتضاعف ثلاث مرات بعد نشر» ("Najm Mobile API latency triples after a deploy"). وزّع أدوار قائد الحادثة والعمليات والاتصالات والمدوّن (Assign IC, operations, communications and scribe)؛ ويكشف «مدير اللعبة» ("game master") حقائق جديدة كل بضع دقائق. *يكتمل عندما (Done when):* يكون لديك خطٌّ زمني مختوم بالوقت (a timestamped timeline)، وثلاثة تحديثات حالة بالصيغة أعلاه (three status updates in the format above)، وقائمة بما أبطأكم (a list of what slowed you down).
+- 🔴 في مختبر kind أو k3d المحلي لديك (your local kind or k3d lab) مع منظومة قابلية المراقبة من الدرسين 5.1 و5.2 (the observability stack from lessons 5.1 and 5.2)، أدِر يوم تمرين (run a game day): انشر تغييرًا يسبّب احتراقًا سريعًا لهدف مستوى الخدمة (an SLO fast burn)، مثل مجمّع اتصالاتٍ صغيرٍ جدًّا أو تأخيرٍ محقون (a tiny connection pool or an injected delay)، واستجب بالأدوار (respond with roles)، وخفّف الضرر بالتراجع (mitigate by rollback)، واكتب مراجعة ما بعد الحادثة كاملةً خاليةً من اللوم (a full blameless postmortem). *يكتمل عندما (Done when):* يكون التنبيه قد استدعى كما صُمّم (paged as designed)، والتراجع مسجّلًا في الخط الزمني (recorded in the timeline)، ولمراجعة ما بعد الحادثة ثلاثة بنود عمل على الأقل مملوكة ومؤرّخة (at least three owned, dated action items) موزّعة بين المنع والكشف والاستجابة (split across prevent, detect and respond).
+
+## ⚠️ أخطاء وفخاخ (Mistakes and traps)
+- **التصحيح قبل الإعلان (Debugging before declaring).** عشرة أشخاص يحقّقون في خمس محادثات (Ten people investigating in five chats) ليست استجابة (not a response). أعلِن مبكرًا (Declare early)، وسمِّ قائد حادثة (name an IC)، ثم حقّق (then investigate).
+- **قائد الحادثة الذي يصحّح الأخطاء (The IC who debugs).** حين يضيع المنسّق في الطرفية (lost in a terminal)، لا يبقى أحدٌ يراقب الصورة الكبيرة (watching the big picture). يفوّض قائد الحادثة العمل العملي (delegates hands-on work).
+- **البحث عن السبب الجذري بينما ما زال العملاء يواجهون الفشل (Looking for the root cause while customers are still failing).** تراجَع، أو حوّل إلى البديل، أو أطفئ العلَم أولًا (Roll back, fail over or turn the flag off first)؛ وحقّق بعد ذلك (investigate after).
+- **«الخطأ البشري» بوصفه الخلاصة ("Human error" as the conclusion).** إنه يوقف التعلّم (stops learning) ويعلّم الناس إخفاء الأخطاء (teaches people to hide mistakes). اسأل عمّا جعل الخطأ سهلًا والكشف بطيئًا (what made the error easy and detection slow).
+- **بنود عملٍ لا تُغلق أبدًا (Action items that never close).** مراجعة ما بعد الحادثة التي فيها «كن أكثر حذرًا» ("be more careful") أو بنودٌ غير متابَعة (untracked items) لا تغيّر شيئًا. اجعل البنود محددة ومملوكة ومؤرّخة ومُراجَعة (specific, owned, dated and reviewed).
+
+## 🧾 الخلاصة (Recap)
+- أعلِن الحوادث مبكرًا (Declare incidents early)، وحدّد خطورةً (set a severity)، وعيّن قائد حادثة وقائد عمليات وقائد اتصالات ومدوّنًا (an incident commander, operations lead, communications lead and scribe).
+- أوقف الضرر أولًا (Stop the harm first): تراجَع، أو اقلب العلَم، أو حوّل إلى البديل، أو تخلّص من جزءٍ من الحمل (roll back, flip a flag, fail over or shed load)؛ واحفظ الأدلة حيث يكون ذلك رخيصًا (preserve evidence where it is cheap).
+- تواصل وفق جدولٍ ثابت (on a fixed schedule) بالأثر والحالة والخطوات التالية وموعد التحديث القادم (impact, status, next steps and next update time)؛ ووجّه الحوادث الأمنية إلى مركز العمليات الأمنية (route security incidents to the SOC).
+- مراجعات ما بعد الحادثة الخالية من اللوم (Blameless postmortems) تبحث عن العوامل المساهمة في النظام (contributing factors in the system) لأن اللوم يُخفي الحقائق التي تحتاجها (blame hides the facts you need).
+- بنود العمل القوية (Strong action items) محددة ومملوكة ومؤرّخة ومتابَعة (specific, owned, dated and tracked)؛ امنع، ثم اكشف، ثم استجب بسرعة أكبر (prevent, then detect, then respond faster).
+- تدرّب بأيام التمرين والتمارين المكتبية (game days and tabletop exercises) حتى لا تكون الحادثة الحقيقية الأولى هي البروفة الأولى (the first real incident is not the first rehearsal).
+
+## ✍️ اختبر نفسك (Check yourself)
+
+**1. بعد خمس عشرة دقيقة من انقطاع واجهة برمجة تطبيق نجم للهاتف (a Najm Mobile API outage)، يصحّح ثلاثة مهندسين في محادثاتٍ منفصلة (separate chats)، ولا يعرف مركز الاتصال ماذا يقول للعملاء. ما الذي ينبغي أن يحدث أولًا؟**
+
+- A. يتولى المهندس الأقدم كل التصحيح بنفسه (The most senior engineer takes over all of the debugging personally)
+- B. يوقف الجميع التغييرات حتى يُفهم السبب الجذري تمامًا (until the root cause is fully understood)
+- C. يتفق الفريق على الأدوار لاحقًا، في مراجعة ما بعد الحادثة (agrees roles later, in the postmortem)، حين تهدأ الأمور
+- D. أعلِن حادثةً، وسمِّ قائد حادثة، ووزّع الأدوار (Declare an incident, name an incident commander and assign roles)
+
+<details><summary>الإجابة</summary>
+
+**D.** الأدوار ونقطة تنسيقٍ واحدة (Roles and one point of coordination) تحوّل الجهد المتوازي إلى استجابة (turn parallel effort into a response). أمّا مهندسٌ أقدم يصحّح (A senior engineer debugging) (A) فلا يترك أحدًا ينسّق؛ وانتظار السبب الجذري (waiting for the root cause) (B) يؤخّر التخفيف (delays mitigation). (🟢 الأساسيات (The essentials).)
+
+</details>
+
+**2. بدأت أخطاء المدفوعات بعد دقيقتين من ترقية تغيير إعدادات (a configuration change was promoted). والسبب لم يتأكد بعد (not yet confirmed). ما الخطوة التالية الأفضل؟**
+
+- A. واصل التحقيق حتى يثبت السبب الجذري بدقة (until the exact root cause is proven)
+- B. تراجَع عن تغيير الإعدادات لإيقاف الضرر، ثم حقّق (Roll back the configuration change to stop the harm, then investigate)
+- C. أعِد تشغيل قاعدة البيانات لمسح أي حالةٍ سيئة (Restart the database to clear any bad state)
+- D. انشر رسالةً للعملاء تقول إن قاعدة البيانات فشلت (Post a customer message saying the database has failed)
+
+<details><summary>الإجابة</summary>
+
+**B.** التغييرات الحديثة هي السبب الأرجح (Recent changes are the most likely cause) والتراجع سريعٌ وآمن (fast and safe)؛ خفّف الضرر أولًا (mitigate first). إعادة تشغيل قاعدة البيانات (C) تخاطر بمزيدٍ من الضرر وتُتلف الأدلة (risks more harm and destroys evidence)؛ وتخمين سببٍ علنًا (guessing a cause publicly) (D) خطأٌ في التواصل (a communication error). (🟢 الأساسيات (The essentials).)
+
+</details>
+
+**3. تذكر مسودة مراجعة ما بعد الحادثة (A draft postmortem) أن السبب الجذري هو «وافق يوسف على طلب سحبٍ بقيمةٍ خاطئة» ("Yousef approved a pull request with a wrong value"). ماذا ينبغي أن تطلب مها بدلًا من ذلك؟**
+
+- A. العوامل المساهمة (Contributing factors)، مثل كيف وصلت قيمة تطوير إلى الإنتاج دون أن يلاحظها أحد (how a dev value reached production unnoticed)
+- B. إنذارًا كتابيًّا ليوسف (A written warning for Yousef)، يُسجَّل في ملف أدائه (in his performance file)
+- C. إزالة يوسف من قائمة الموافقين (approvers list) على مستودعات المدفوعات (Payments repositories)
+- D. إغلاق مراجعة ما بعد الحادثة مبكرًا (Closing the postmortem early)، لأن السبب واضحٌ أصلًا
+
+<details><summary>الإجابة</summary>
+
+**A.** التحليل الخالي من اللوم (Blameless analysis) يسأل عمّا جعل الخطأ سهلًا والكشف بطيئًا، ما يُنتج إصلاحاتٍ تمنع التكرار (fixes that prevent recurrence). أمّا العقاب (Punishment) (B، C) فيعلّم الناس إخفاء المعلومات (hide information) ويُبقي الفخ في مكانه (leaves the trap in place). (🟡 التعمق أكثر (Going deeper).)
+
+</details>
+
+**4. أيّ بند عملٍ في مراجعة ما بعد الحادثة هو الأقوى (strongest)؟**
+
+- A. ينبغي أن يحرص الجميع أكثر عند تعديل الإعدادات مستقبلًا (Everyone should take more care when editing configuration in future)
+- B. تحسين مراقبة خدمة المدفوعات عبر كل البيئات (Improve monitoring of the Payments service across all environments)
+- C. ملفات قيمٍ لكل بيئة إضافةً إلى فحصٍ في التكامل المستمر (Per-environment values files plus a CI check)؛ المالك يوسف، والاستحقاق خلال أسبوعين (owner Yousef, due in two weeks)
+- D. مناقشة ممارسات الإعدادات مع كل المهندسين في الاجتماع العام القادم (at the next all-hands)
+
+<details><summary>الإجابة</summary>
+
+**C.** إنه محدد ومملوك ومؤرّخ (specific, owned, dated) ويغيّر النظام بحيث لا يتكرر الخطأ بالطريقة نفسها (cannot recur the same way). أمّا A وB وD فغامضة وغير متابَعة (vague and untracked). (🔴 نظرة الخبير (Expert view).)
+
+</details>
+
+**5. أثناء تعطّل S3 في فبراير 2017 (the February 2017 S3 disruption)، لم تستطع لوحة الحالة الخاصة بـ AWS (AWS's own status dashboard) إظهار المشكلة في البداية. ما الدرس الذي تأخذه نجم من ذلك؟**
+
+- A. صفحات الحالة غير مفيدة أثناء الحوادث ويمكن الاستغناء عنها (Status pages are not useful during incidents and can be dropped)
+- B. شغّل كل خدمة في منطقةٍ سحابية واحدة (a single cloud region) لإبقاء الأمور بسيطة
+- C. لا تدع أي مهندسٍ يشغّل أوامر على أنظمة الإنتاج أبدًا (Never let any engineer run commands against production systems)
+- D. استضِف أدوات الحوادث بشكلٍ مستقل عن الأنظمة التي تبلّغ عنها (Host incident tooling independently of the systems it reports on)
+
+<details><summary>الإجابة</summary>
+
+**D.** كانت اللوحة تعتمد على S3، ففشلت معه (it failed with it)؛ ويجب أن تصمد أدوات الحوادث (incident tooling)، مثل صفحة الحالة والاستدعاء (the status page and paging)، أمام العطل الذي تبلّغ عنه (survive the failure it reports). أمّا حظر كل أوامر الإنتاج (Banning all production commands) (C) فغير عملي (unworkable)؛ وكان إصلاح AWS حواجز حماية في الأداة (guardrails in the tool). (🔴 نظرة الخبير (Expert view).)
+
+</details>
+
+## 📚 المراجع (References)
+- Google، *هندسة موثوقية المواقع (Site Reliability Engineering)*، «إدارة الحوادث» ("Managing Incidents") — https://sre.google/sre-book/managing-incidents/
+- Google، *هندسة موثوقية المواقع (Site Reliability Engineering)*، «ثقافة مراجعة ما بعد الحادثة: التعلّم من الفشل» ("Postmortem Culture: Learning from Failure") — https://sre.google/sre-book/postmortem-culture/
+- Google، *كتاب عمل هندسة موثوقية المواقع (The Site Reliability Workbook)*، «الاستجابة للحوادث» ("Incident Response") — https://sre.google/workbook/incident-response/
+- Google، *كتاب عمل هندسة موثوقية المواقع (The Site Reliability Workbook)*، «ثقافة مراجعة ما بعد الحادثة» ("Postmortem Culture") — https://sre.google/workbook/postmortem-culture/
+- AWS، ملخص تعطّل خدمة Amazon S3 في منطقة شمال فرجينيا (US-EAST-1) (Summary of the Amazon S3 Service Disruption in the Northern Virginia (US-EAST-1) Region) — https://aws.amazon.com/message/41926/
+- GitLab، مراجعة ما بعد الحادثة لانقطاع قاعدة البيانات في 31 يناير (Postmortem of database outage of January 31) — https://about.gitlab.com/blog/
+- أبحاث DORA (DORA research) — https://dora.dev/
+- اللائحة (EU) 2022/2554 (DORA) (Regulation (EU) 2022/2554 (DORA)) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj

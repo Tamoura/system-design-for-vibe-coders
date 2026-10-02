@@ -581,3 +581,881 @@ Kareem's plan targets analytics engineering: his proof is three Monday extracts 
 - dbt documentation — https://docs.getdbt.com
 - DuckDB documentation — https://duckdb.org/docs/
 - Qatar Law No. 13 of 2016 on Personal Data Privacy Protection (PDPPL) — see the official Al Meezan legal portal, https://www.almeezan.qa
+
+---
+
+# 7.3 — Practice exam: 60 scenario questions
+*Level: 🔴 Advanced* · *Prerequisites: 7.1, 7.2* · *Stage: Analyse*
+
+## ⚡ In 60 seconds
+- Sixty multiple-choice questions cover every module and all eight stages: Ingest, Store, Model, Transform, Serve, Analyse, Operate and Govern. Most are short scenarios at Najm Bank.
+- Take it in **one sitting of about 90 minutes**, with no notes, no search and no AI assistant. Write down your answer and how sure you were (sure, unsure, guess) before you open any answer.
+- Every answer ends with a stage and a lesson, such as *(Model · 1.2)*. That tag is the point of the exam: it tells you exactly where to go back.
+- Read every explanation, including those for questions you got right. A lucky guess counts as a miss.
+- Decision cue: treat your result as a **map of gaps**, not a grade. Two misses in one stage matter more than your total.
+- Biggest trap: reading the answers first and calling it revision. Recognising an answer is much easier than producing it.
+
+## 🧭 Why it matters
+At the end of her first year, Huda asks Faisal how she will know she is ready to own a data product on her own. He hands her sixty questions written from the team's real incidents: the double-counted retry, the dormant status code, the superseded policy in the copilot, the shared superuser account. "Every one of these happened here, or nearly did," he says. "I don't care about your score. I care which stage you miss, because that's where your next incident will come from."
+
+Huda scores well on modelling and pipelines and badly on governance and experiments. Her plan for the next quarter writes itself: re-read 4.3 and 6.2, redo their exercises, and sit the exam again in a month. The same exam works for you. Interviewers ask these questions in different clothes (7.2), and the habit of tracing a wrong answer back to a stage and a lesson is the habit that finds bugs at work.
+
+## 📐 How it works
+
+### 🟢 The essentials
+**Before you start.** Finish lessons 7.1 and 7.2 first. Set a timer for 90 minutes, about a minute and a half per question. Keep a sheet with four columns: question number, your letter, your confidence (sure, unsure, guess) and, later, right or wrong.
+
+**While you answer.** Read the whole scenario before the options. Name the stage the question is really about, then ask what Faisal would ask: what is the grain, who owns it, what happens if it runs twice, what does the law say? Eliminate options that are false in principle, then choose between the rest. Do not choose an option because it is the longest or the most detailed; the exam is written so that length gives nothing away.
+
+**After the timer.** Open each answer in order and mark your sheet. Do not change any letter.
+
+### 🟡 Going deeper
+**Review by stage, not by score.** Copy the stage and lesson tag of every miss and every "guess" into a second table, grouped by stage. A cluster shows a gap; a single miss may only be a slip.
+
+| Your result in a stage | What to do |
+|---|---|
+| No misses, mostly "sure" | Move on; revisit only the 🔴 Expert view sections |
+| One miss or several guesses | Re-read the tagged lesson's 📐 section and its ⚠️ traps |
+| Two or more misses | Redo the tagged lesson's 🟡 exercise on your laptop, then re-take its five-question quiz |
+
+These bands are this course's suggestion, not a standard. Adjust them to your goal: an analytics-engineering candidate should be strongest on Model, Transform and Serve; a data scientist on Analyse and the Module 5 lessons.
+
+**Explain every distractor.** For each question you missed, write one sentence saying why your choice was wrong. Every distractor in this exam is a real mistake: an append that doubles on retry, a hash called "anonymous", a filter in the dashboard instead of the warehouse. If you can say why it fails, you will recognise it in a pull request.
+
+### 🔴 Expert view
+**Retest after a gap.** Sit the exam again two to four weeks later, without looking at your first sheet. Questions you get right twice, sure both times, are learned; anything else goes back on the list.
+
+**Turn misses into artefacts.** For your weakest stage, build or improve the matching portfolio artefact from that module: a grain statement, a DAG review, a data contract, a metric card, a monitoring plan or an access policy. A fixed gap with evidence is worth more in an interview than a high score.
+
+**Write your own questions.** The strongest test of understanding is writing a good distractor. Write three new scenario questions for your weakest stage, each with one right answer and three tempting wrong ones, and ask a peer to take them.
+
+## 🧰 The toolkit
+| Tool, pattern or standard | What it is and does | When to reach for it |
+|---|---|---|
+| **Answer sheet with confidence** | Records your letter and how sure you were before you see the answer | Every sitting; separates knowledge from lucky guesses |
+| **Stage-and-lesson tag** | The *(Stage · lesson)* at the end of each answer, pointing to where the idea is taught | Grouping misses and planning what to re-read |
+| **Spaced retest** | Sitting the same exam again after two to four weeks, without your old sheet | Checking that a fix has stuck |
+
+## 🏛️ In practice at Najm Bank
+Faisal asks every new joiner to fill in an **exam review sheet** after the practice exam and bring it to their next one-to-one. Huda's first one:
+
+| Stage | Misses and guesses | Lessons tagged | Next action | Evidence by next review |
+|---|---|---|---|---|
+| Analyse | 3 misses, 1 guess | 4.3, 4.2 | Redo the A/A peeking simulation; re-read the traps | Simulation notebook and a one-page experiment plan |
+| Govern | 2 misses | 6.2, 6.1 | Redo the keyed-hash exercise; write a classification table | Classification table reviewed by Sara |
+| Operate | 1 guess | 2.2 | Re-read idempotency and retries | None; retest only |
+| All others | 0 | — | None | Retest in four weeks |
+
+The sheet feeds her development plan from 7.2.
+
+## 🛠️ Exercises
+- 🟢 **Sit the exam.** Take all 60 questions in one 90-minute sitting with no notes, recording letter and confidence. *Done when:* your sheet has 60 answers, each with a confidence mark, all written before you opened any answer.
+- 🟡 **Map your gaps.** Mark your sheet, group misses and guesses by stage and lesson, and write one sentence per miss explaining why your choice was wrong. *Done when:* you have an exam review sheet like Huda's, with a next action and a piece of evidence for every stage with a miss.
+- 🔴 **Close one gap and retest.** Redo the 🟡 exercise of your weakest lesson, write three new scenario questions for that stage, and sit the full exam again after two to four weeks. *Done when:* your weakest stage has no misses on the retest, and a peer has answered your three questions and agreed each has exactly one defensible answer.
+
+## ⚠️ Mistakes and traps
+- **Reading answers instead of answering.** Recognition feels like knowledge. Commit to a letter first.
+- **Counting lucky guesses as right.** Mark confidence, and review every guess as if it were a miss.
+- **Chasing the total.** A good overall score can hide a whole stage you never learned. Review by stage.
+- **Memorising the letters.** On a retest, you should be able to explain the answer, not recall its position. Cover the options and say the answer in your own words first.
+
+## ✍️ Practice exam
+
+**1. The retail director asks Kareem for "a dashboard of customer churn" by next week. What should he do first?**
+
+- A. Build a draft dashboard quickly from the customer 360 mart so that retail has something concrete to react to
+- B. Ask Dana to start a churn model, since churn is a predictive question for data science
+- C. Ask which decision it will change and how "churn" should be defined
+- D. Export every customer column to a spreadsheet so retail can explore churn themselves
+
+<details><summary>Answer</summary>
+
+**C.** A request for a dashboard is a solution, not a question; the decision and the definition decide everything else. A is tempting because it feels fast, but it builds on an undefined word. *(Analyse · 0.1)*
+
+</details>
+
+**2. Some Najm Mobile phones stay offline overnight and send yesterday's taps in the morning. The daily feature-usage mart is built once at 07:00 and never rebuilt, so those taps never appear. What fixes this?**
+
+- A. Rebuild a short window of recent days on each run, by event time
+- B. Move the mart build to 23:00 so that the whole day's events are in before it starts
+- C. Ask the mobile team to discard any event older than one hour before sending it
+- D. Group the dashboard by arrival time instead, so every event lands on some day
+
+<details><summary>Answer</summary>
+
+**A.** Reprocessing a few recent days, keyed on when the event happened, picks up late arrivals. B still misses events that arrive the next morning; C throws away real data; D puts taps on the wrong day. *(Ingest · 0.2)*
+
+</details>
+
+**3. The retail dashboard has been late three mornings in a row. Each hop of its data flow sheet has a written freshness budget. Where should Huda look first?**
+
+- A. At the BI tool's cache and refresh settings, because that is where the delay is visible to users
+- B. At the dashboard's query, rewriting it so it runs faster against the mart
+- C. At the warehouse bill, to see whether paying for more compute would help
+- D. At the hop budgets, to find which upstream step finished late
+
+<details><summary>Answer</summary>
+
+**D.** Freshness is a promise split into budgets per hop; a late dashboard is usually a late upstream step. A is tempting because that is where people notice, but the dashboard only shows what arrived. *(Serve · 0.2)*
+
+</details>
+
+**4. Huda wants to practise dbt on a copy of real customer data from her old internship, "because it is realistic". What does this course advise?**
+
+- A. Fine if she removes the names first, since the remaining columns are not personal data
+- B. Use synthetic or openly licensed public data instead
+- C. Fine as long as the repository stays private on her own laptop
+- D. Ask the former employer's IT team to send a fresh extract
+
+<details><summary>Answer</summary>
+
+**B.** Practise only on synthetic or open data; real customer data needs a purpose and a legal basis. A is wrong because account numbers, birth dates and similar fields are still personal data. *(Govern · 0.3)*
+
+</details>
+
+**5. Kareem asks for total September debits per customer. Huda filters with `WHERE txn_ts BETWEEN '2026-09-01' AND '2026-09-30'` on a `timestamptz` column. What is wrong?**
+
+- A. It drops everything after midnight on the 30th and names no time zone
+- B. BETWEEN excludes both end points, so 1 and 30 September are lost entirely
+- C. BETWEEN cannot be used on timestamp columns in PostgreSQL
+- D. Nothing, as long as there is an index on `txn_ts` for the scan
+
+<details><summary>Answer</summary>
+
+**A.** The upper bound is midnight at the start of the 30th, and "September" begins at a different moment in Doha than in UTC. Use a half-open range with a named zone. B is false: BETWEEN is inclusive. *(Analyse · 1.1)*
+
+</details>
+
+**6. Lina reports `AVG(credit_score)` as "the average customer score" over 1,000 customers. 200 of them have no score (`NULL`). What should she know?**
+
+- A. AVG treats NULL as zero, so the 200 unscored customers pull the average down
+- B. AVG fails with an error whenever any value in the column is NULL
+- C. AVG skips NULLs, so it averages the 800 scored customers; say so
+- D. AVG counts NULL rows twice unless COALESCE is applied first
+
+<details><summary>Answer</summary>
+
+**C.** `AVG` (like `SUM`) skips nulls, so the label must say "of scored customers", or the unscored must be handled on purpose. A is the tempting misreading. *(Model · 1.1)*
+
+</details>
+
+**7. Huda builds a 7-day rolling spend with `ROWS BETWEEN 6 PRECEDING AND CURRENT ROW` on a table that has a row only for days with spend. What is the problem?**
+
+- A. None, because ROWS frames count calendar days in PostgreSQL by default
+- B. It spans seven rows, not seven days, when some days have no rows
+- C. It double-counts the current day because CURRENT ROW is included twice
+- D. It fails, because a window frame needs a GROUP BY on the same column
+
+<details><summary>Answer</summary>
+
+**B.** ROWS counts rows. On days with no spend the frame reaches further back than a week. Fill missing days from a calendar table or use a RANGE frame over a date. *(Analyse · 1.1)*
+
+</details>
+
+**8. A proposed `fact_card_transaction` (one row per authorised transaction) includes a column "customer's total spend this month". Lina rejects it. Why?**
+
+- A. Monthly totals must always be stored as a Type 3 attribute in the customer dimension
+- B. Fact tables may hold only foreign keys and no numeric measures at all
+- C. It would make the table too wide for a columnar engine to scan
+- D. It is not true at the declared grain, so it belongs elsewhere
+
+<details><summary>Answer</summary>
+
+**D.** Every column must be true at the grain; a monthly customer total is a different grain and belongs in another table. B is false: measures are what fact tables are for. *(Model · 1.2)*
+
+</details>
+
+**9. The credit-risk mart stores a precomputed `npl_ratio` per branch per day. Risk now wants the ratio for each region. What should the model provide?**
+
+- A. Average the branch ratios, giving every branch equal weight
+- B. Sum the branch ratios, because ratios add up across branches
+- C. Take the highest branch ratio, to be prudent in risk reporting
+- D. Store numerator and denominator; sum each, then divide
+
+<details><summary>Answer</summary>
+
+**D.** Ratios are non-additive. Keep the defaulted principal and the total principal as measures and divide after aggregating. A gives a small branch the same weight as a large one. *(Model · 1.2)*
+
+</details>
+
+**10. Core banking reuses customer numbers after an account has been closed for ten years. Why does `dim_customer` carry its own surrogate key?**
+
+- A. It stays stable when business keys change or are reused, and allows versions
+- B. Surrogate keys hide the customer's identity, so the dimension counts as anonymous data under the GDPR
+- C. Natural keys cannot be indexed, so joins on them are always slow
+- D. It lets the fact table skip the date dimension entirely
+
+<details><summary>Answer</summary>
+
+**A.** A meaningless key survives reuse and gives each Type 2 version its own row. B is wrong: a surrogate key does not make data anonymous. *(Model · 1.2)*
+
+</details>
+
+**11. Huda partitions the raw card table by hour and by merchant. Queries become slower, not faster. What happened?**
+
+- A. Partitioning always slows queries, so lake tables should never be partitioned
+- B. Parquet files cannot be partitioned by more than one column at a time
+- C. Too many tiny files; partition by date and compact regularly
+- D. The partitions must be stored as CSV so that engines can open them faster
+
+<details><summary>Answer</summary>
+
+**C.** Over-fine partitioning creates the small files problem: opening files costs more than reading them. Partition by what queries filter on, usually date. *(Store · 1.3)*
+
+</details>
+
+**12. Tariq offers Kareem a read replica of the core banking database for a three-year trend analysis of transactions. What should Faisal say?**
+
+- A. Ideal, because a replica is a columnar copy built for analytical scans
+- B. Fine for small operational reports, not for multi-year scans
+- C. Never acceptable, because replicas lag the primary by several days
+- D. Ideal, because a replica also accepts the analysts' writes and temporary tables
+
+<details><summary>Answer</summary>
+
+**B.** A replica protects the primary but is still a row store with the OLTP schema. Long analytical scans belong in a columnar analytical store. A is the tempting misunderstanding. *(Store · 1.3)*
+
+</details>
+
+**13. Dana's Spark training jobs and Lina's SQL marts both need the same raw card history, and Faisal wants no extra copies. What fits?**
+
+- A. Nightly CSV exports, one folder per engine
+- B. An open table format such as Apache Iceberg over Parquet
+- C. Keeping the raw history only in the core banking primary
+- D. One warehouse copy for Spark users and a second one for SQL users
+
+<details><summary>Answer</summary>
+
+**B.** Open table formats let several engines read the same tables with atomic commits and time travel. A and D are the copies Faisal wants to avoid; C puts analytics on the OLTP system. *(Store · 1.3)*
+
+</details>
+
+**14. The branch codes table has about 40 rows and changes a few times a year. Which load pattern fits?**
+
+- A. Log-based CDC with Debezium, since it captures every change in commit order
+- B. An incremental load on `updated_at` with a 30-minute overlap window
+- C. A streaming consumer with an idempotent sink keyed on branch code
+- D. A full load each run, replacing the previous copy
+
+<details><summary>Answer</summary>
+
+**D.** Small reference tables are simplest and safest as full loads, which also catch deletes for free. A and C add operational weight for no benefit. *(Ingest · 2.1)*
+
+</details>
+
+**15. Huda spots a wrong currency code in some rows of `raw.core_transactions`. She wants to run an `UPDATE` on raw to fix them. What should she do instead?**
+
+- A. Leave raw as received; correct the code in staging
+- B. Update raw, because every later layer will then inherit the correction
+- C. Delete the bad rows from raw and re-extract the whole table from the source
+- D. Update raw, keeping a screenshot of the old values as evidence
+
+<details><summary>Answer</summary>
+
+**A.** Raw is append-only evidence that lets you rebuild; cleaning happens in staging. B is tempting because one fix reaches everything, but it destroys the record of what arrived. *(Ingest · 2.1)*
+
+</details>
+
+**16. Kareem wants to pull CRM data with an open-source connector whose documentation says "incremental sync supported". What should Faisal ask for?**
+
+- A. Nothing, since connector maintainers test incremental modes against every source
+- B. Writing every extractor by hand in Python instead of using connectors
+- C. A test that it really catches updates and deletes from this source
+- D. Full loads only, since connectors cannot do incremental sync
+
+<details><summary>Answer</summary>
+
+**C.** Treat a connector's "incremental" as a claim to test. Also ask who maintains it and where it can run. A takes the claim on trust; B throws away a useful tool; D is false. *(Ingest · 2.1)*
+
+</details>
+
+**17. A dbt test fails inside an Airflow DAG. The task retries three times with a five-minute backoff, so the alert arrives twenty minutes late. What should change?**
+
+- A. Retry only transient errors; fail fast on test failures
+- B. Increase retries to five, so the test has more chances to pass
+- C. Remove the tests from the DAG so that failures stop delaying the run
+- D. Lower the backoff to ten seconds so that the three retries finish sooner
+
+<details><summary>Answer</summary>
+
+**A.** A failed data test is deterministic and will fail again; retries only delay the alert. Retry dropped connections and lock timeouts, not bad data. D shortens the delay but still retries a failure that cannot pass. *(Operate · 2.2)*
+
+</details>
+
+**18. A DAG task emails the daily risk extract to finance. A retry after a timeout sent it twice. What is the fix?**
+
+- A. Turn off retries for the whole DAG so that nothing can ever run twice
+- B. Record an idempotency key per report and date; skip if present
+- C. Put the email step inside the same database transaction as the load
+- D. Ask finance to ignore the second email whenever two arrive in a day
+
+<details><summary>Answer</summary>
+
+**B.** Side effects outside the warehouse are not covered by a transaction (C), so give each one a key and record it on success. A trades duplicates for missing runs. *(Operate · 2.2)*
+
+</details>
+
+**19. Rebuilding `customer_360` in place takes 25 minutes, and dashboards opened during the rebuild show half-built numbers. What should Lina do?**
+
+- A. Rebuild at night and hope nobody opens a dashboard then
+- B. Add more retries so that the rebuild finishes in fewer minutes
+- C. Build a new table, test it, then swap it in atomically
+- D. Ask users to refresh twice whenever the numbers look odd
+
+<details><summary>Answer</summary>
+
+**C.** Atomic publishing means readers see the old version or the new one, never a half-written one, and a failed test leaves yesterday's table live. A only narrows the window. *(Operate · 2.2)*
+
+</details>
+
+**20. In Airflow, a daily run has the data interval for 14 September. When does it normally run, and for which data?**
+
+- A. At 00:00 on 14 September, loading 13 September's data
+- B. Whenever triggered, loading whatever arrived since the last run of the DAG
+- C. During 14 September, loading data up to the moment it starts
+- D. After the interval ends, early on 15 September, for 14 September
+
+<details><summary>Answer</summary>
+
+**D.** A run starts after its interval closes and is responsible for that interval only, which is what makes re-runs and backfills load the right day. C is the "today" thinking that causes wrong-day loads. *(Ingest · 2.2)*
+
+</details>
+
+**21. The card authorisations topic has six partitions and a consumer group of six members. To cut lag, the team adds four more consumers to the group. What happens?**
+
+- A. Lag drops, because ten consumers read faster than six on any topic
+- B. The four extra consumers sit idle; add partitions or speed up processing
+- C. Kafka rejects the extra consumers and stops the whole group until an administrator intervenes
+- D. Each event is now processed twice, once by an old and once by a new consumer
+
+<details><summary>Answer</summary>
+
+**B.** Within a group each partition is read by one consumer, so members beyond the partition count are idle. A is the tempting assumption. *(Ingest · 2.3)*
+
+</details>
+
+**22. The Smart Alerts feature consumer was down for nine days. The topic's retention is seven days. What is the situation?**
+
+- A. Nothing is lost, because Kafka keeps events until every group has read them
+- B. The consumer resumes from its committed offset with every event intact
+- C. Kafka pauses all producers while any consumer group is down
+- D. Events older than retention are gone; rebuild from the raw archive
+
+<details><summary>Answer</summary>
+
+**D.** Retention deletes events by time or size whether or not anyone read them, so a consumer lagging past retention loses data. Alert on lag well before that. A is the common myth. *(Ingest · 2.3)*
+
+</details>
+
+**23. The Najm Mobile team wants app "visits": a customer's events grouped together until 30 minutes pass with no activity. Which window fits?**
+
+- A. Session windows
+- B. Tumbling windows of 30 minutes
+- C. Sliding windows of 30 minutes, advancing every minute
+- D. Processing-time windows sized to a typical visit length
+
+<details><summary>Answer</summary>
+
+**A.** A session window closes after a gap of inactivity, so its length varies with behaviour. B and C have fixed sizes and would split or merge visits. *(Transform · 2.3)*
+
+</details>
+
+**24. Lina's model reads `from analytics.stg_core__accounts`. It works in production, but CI builds fail and the model is missing from lineage. What is the fix?**
+
+- A. Grant the CI user read access to the production analytics schema
+- B. Rename the CI schema so that it matches production exactly
+- C. Use `ref('stg_core__accounts')` so dbt resolves the environment
+- D. Materialise the model as a view so that the hard-coded name stops mattering
+
+<details><summary>Answer</summary>
+
+**C.** `ref()` lets dbt pick the right schema per environment and records the dependency for the DAG and lineage. A makes CI read production, which is the opposite of isolation. *(Transform · 3.1)*
+
+</details>
+
+**25. Huda's staging model joins core accounts to CRM contacts and computes an "active customer" flag. What should Lina say in review?**
+
+- A. Fine, because staging is the first place where cleaned sources can be combined
+- B. Move everything into the mart so that staging can be skipped entirely
+- C. Keep staging one-to-one and mechanical; move joins and logic later
+- D. Fine, as long as the model has unique and not_null tests on its key
+
+<details><summary>Answer</summary>
+
+**C.** Staging cleans one source table each; joins between sources and business logic belong in intermediate or mart models. D is tempting, but tests do not fix a layer doing the wrong job. *(Transform · 3.1)*
+
+</details>
+
+**26. Lina wants to check the DPD bucket boundaries (0, 30, 31, 90, 91 days) before any real loan data exists. What should she write?**
+
+- A. A dbt unit test with hand-built input rows
+- B. A not_null data test on the bucket column of the production table
+- C. A freshness check on the source that feeds the instalments table
+- D. A model contract fixing the bucket column's data type
+
+<details><summary>Answer</summary>
+
+**A.** Unit tests check logic against small, hand-written inputs, ideal for boundaries. Data tests (B) check the data you have; a contract (D) checks shape, not logic. *(Transform · 3.1)*
+
+</details>
+
+**27. Each day a few hundred out of millions of Najm Mobile events arrive with a malformed `app_version`. They feed a product-usage dashboard. How should the quality check respond?**
+
+- A. Fail the whole load every day until the mobile team fixes every event
+- B. Ignore the bad rows silently, since a few hundred will not move the totals
+- C. Block publishing and page on-call for each malformed event
+- D. Quarantine the bad rows, publish the rest and report the count
+
+<details><summary>Answer</summary>
+
+**D.** When a few bad rows are expected and fixable, quarantine keeps the dashboard useful and the problem visible. A is right for regulatory data, not here; B hides the problem. *(Operate · 3.2)*
+
+</details>
+
+**28. Huda's reconciliation test inner-joins daily mart totals to ledger control totals. On a day when the ledger feed failed, the test passed. Why, and what is the fix?**
+
+- A. That is correct behaviour, because days without ledger data cannot be reconciled anyway
+- B. The missing side vanished in the join; use a left or full outer join
+- C. Add a not_null test on the mart total to cover missing days
+- D. Raise the tolerance so that gaps on such days do not fail
+
+<details><summary>Answer</summary>
+
+**B.** An inner join drops days missing on either side, so the check passes silently. An outer join turns a missing day into a failing row. A is the trap: a day you cannot reconcile must fail. *(Transform · 3.2)*
+
+</details>
+
+**29. Najm's data observability tool sends about 300 alerts a week to a shared channel. A real freshness breach on the credit-risk mart went unnoticed. What should change?**
+
+- A. Add more monitors on every column of every table so that the real breaches stand out among the rest
+- B. Turn off all monitors and rely on dbt tests alone from now on
+- C. Email every alert to the whole data team as well
+- D. Monitor critical tables, give each alert a named owner, tune the noisy ones
+
+<details><summary>Answer</summary>
+
+**D.** Alert fatigue is the real enemy: monitor what matters, route to an owner and review noisy monitors. A adds noise; B loses the protection for unknown failures. *(Operate · 3.2)*
+
+</details>
+
+**30. `fct_transactions` is partitioned by date. Most queries filter one month and one `account_id`, yet each still reads every block in that month. What helps most?**
+
+- A. Repartition the whole table by `account_id` instead of by date
+- B. Sort or cluster by `account_id` so block statistics can skip data
+- C. Add `distinct` to the queries so the engine reads fewer duplicate rows
+- D. Convert the table to CSV, which engines can scan block by block
+
+<details><summary>Answer</summary>
+
+**B.** Clustering narrows each block's min and max for `account_id`, so engines skip blocks inside the month. A creates millions of tiny partitions. *(Store · 3.3)*
+
+</details>
+
+**31. Fifty tiles on the executive dashboard each aggregate the billion-row transactions fact by day and branch. The dashboard is slow and expensive. What should Lina do?**
+
+- A. Give the BI tool a much larger compute warehouse so that every tile loads faster
+- B. Cache every tile for a month so the warehouse is rarely queried
+- C. Build an aggregate mart at day × branch and point the tiles at it
+- D. Switch each tile to `select *` so the BI tool aggregates locally
+
+<details><summary>Answer</summary>
+
+**C.** Precompute once per load what many people ask. A pays more for the same repeated work; B serves stale numbers. *(Operate · 3.3)*
+
+</details>
+
+**32. An incremental dbt model with a three-day lookback has run for eight months. Its logic changed last month, and its totals now differ from a full rebuild. What should the team do?**
+
+- A. Run a full refresh when logic changes, and on a schedule
+- B. Widen the lookback to eight months so that every run rebuilds all of history
+- C. Switch the strategy to append so that old rows are never touched
+- D. Remove the unique key so reprocessed rows are kept as new versions
+
+<details><summary>Answer</summary>
+
+**A.** Incremental runs only touch the window, so a logic change leaves older rows on the old logic; scheduled full refreshes, with totals compared, keep the table true. B throws away the point of an incremental model. *(Operate · 3.3)*
+
+</details>
+
+**33. In June, many customers were reclassified from retail to SME. A regulator asks how many SME customers Najm had in March. Which approach is right?**
+
+- A. Each customer's segment as-was in March, via the Type 2 dimension
+- B. Today's segment for all history, so every report shows one consistent view
+- C. Drop the reclassified customers, so the March count cannot be disputed
+- D. The average of the March and June segment counts
+
+<details><summary>Answer</summary>
+
+**A.** Regulatory reports usually need as-was attributes, joined on effective dates; the metric card should say so. B is as-is, which rewrites March. *(Model · 4.1)*
+
+</details>
+
+**34. Kareem's new "digital adoption" metric already appears on a dashboard, but retail and finance still disagree on its definition. What status should it carry in the metrics catalogue?**
+
+- A. Certified, because it is already in use on a dashboard people open
+- B. Deprecated, because a disputed metric should not be shown at all
+- C. Provisional, shown as such until the owner approves a definition
+- D. Unlisted, so the catalogue only ever contains agreed definitions
+
+<details><summary>Answer</summary>
+
+**C.** Provisional tells readers the number is in use but not yet official. A is the trap: use is not approval. *(Serve · 4.1)*
+
+</details>
+
+**35. Finance decides that "card spend" must exclude reversals. The change will lower the chart by about 3% overnight. What should Lina do?**
+
+- A. Change the filter quietly, since the new number is more correct
+- B. Version the definition, announce it, annotate the chart, backfill if needed
+- C. Keep the old definition for ever, since history must never change
+- D. Publish a second metric under the same name and let each team pick the version it prefers
+
+<details><summary>Answer</summary>
+
+**B.** A silent definition change looks exactly like a real business event. Treat it like an API change. D recreates the "same word, different numbers" problem. *(Model · 4.1)*
+
+</details>
+
+**36. Kareem wants to show weekly card spend and weekly complaints over 52 weeks, to discuss whether they move together. Which chart is most honest?**
+
+- A. One chart with two y-axes, each scaled so that the lines overlap clearly
+- B. A pie chart per quarter showing spend and complaints shares
+- C. A 3D area chart stacking spend on top of complaints
+- D. Two aligned line charts, or a scatter plot of the two
+
+<details><summary>Answer</summary>
+
+**D.** Dual axes let the author choose scales that make any two series look related. Aligned lines or a scatter plot show the relationship without that trick. *(Serve · 4.2)*
+
+</details>
+
+**37. The average balance of Najm's current customers has risen for six months. Over the same period, many low-balance customers closed their accounts. How should Kareem read it?**
+
+- A. Customers are saving more, so the retail team should celebrate the trend
+- B. Possibly survivorship; show population size and a cohort view
+- C. Balances are semi-additive, so they can never be averaged at all
+- D. It is Simpson's paradox, which only a randomised test can resolve
+
+<details><summary>Answer</summary>
+
+**B.** A metric over a changing population can rise just because some members left. Show the population behind it and follow cohorts. C confuses summing over time with averaging across customers. *(Analyse · 4.2)*
+
+</details>
+
+**38. An A/B test's primary metric shows no significant effect. Among twelve segments, SME customers on Android show a lift with p = 0.02. What should Dana advise?**
+
+- A. Treat the segment result as a hypothesis for a new, planned test
+- B. Ship the change to SME Android users only, since p is below 0.05
+- C. Report the segment win as the experiment's headline result
+- D. Lower alpha for the other eleven segments and re-run the analysis
+
+<details><summary>Answer</summary>
+
+**A.** With twelve slices, one "win" by luck is likely; segment findings become hypotheses for the next planned test. B and C report a multiple-comparisons artefact as a result. *(Analyse · 4.3)*
+
+</details>
+
+**39. The cards team halves the minimum detectable effect of a planned test from 2 points to 1 point. Roughly how does the required sample change?**
+
+- A. About the same, since the baseline rate has not changed
+- B. About double, because the effect is half as large
+- C. About half, because a smaller effect is easier to measure
+- D. About four times as many users per group
+
+<details><summary>Answer</summary>
+
+**D.** Required sample grows with the square of 1 ÷ MDE, so halving the effect roughly quadruples it. B is the tempting linear guess. *(Analyse · 4.3)*
+
+</details>
+
+**40. Najm picks its ten worst-performing branches last month for a coaching programme. Next month, all ten improve. What can Kareem conclude?**
+
+- A. The programme worked, because every coached branch improved
+- B. The programme failed, because the improvement was too small to matter to the bank
+- C. Part may be regression to the mean; compare with a control group
+- D. It is a novelty effect that will fade after another month
+
+<details><summary>Answer</summary>
+
+**C.** Units picked for an extreme month tend to move back towards average on their own. Without a comparison group, A is unsupported. *(Analyse · 4.3)*
+
+</details>
+
+**41. Huda fits a `StandardScaler` on the full dataset, then splits it into train, validation and test sets. What is the problem?**
+
+- A. None, because scaling does not change the order of the values
+- B. None, as long as the split is by time rather than random
+- C. A problem only for tree models, which do not need scaling anyway
+- D. Test information leaks; fit inside a Pipeline on training rows
+
+<details><summary>Answer</summary>
+
+**D.** Preprocessing fitted on all data contaminates the split. A scikit-learn `Pipeline` fits it on training rows only and ships it with the model. B fixes a different leak. *(Transform · 5.1)*
+
+</details>
+
+**42. Dana's fraud training set includes the last three weeks of transactions, all labelled "genuine" because no chargeback has arrived yet. What should she do?**
+
+- A. Keep them, because recent data best reflects current fraud patterns
+- B. Label them all as fraud to balance the classes in the training set
+- C. Exclude rows younger than the agreed label maturity window
+- D. Keep them with double weight to emphasise recent behaviour
+
+<details><summary>Answer</summary>
+
+**C.** Fraud labels arrive weeks later, so recent rows are not yet labelled truthfully. A is tempting, but it teaches the model that recent fraud is genuine. *(Transform · 5.1)*
+
+</details>
+
+**43. A feature `account_age_days` is computed as today's date minus the account's opening date, then joined to 2024 transactions for training. What is wrong?**
+
+- A. Nothing, because account age only increases and cannot leak anything
+- B. Temporal leakage; compute age as of each transaction
+- C. Nothing, provided the test set is split at random
+- D. It causes training-serving skew, which a larger model will absorb
+
+<details><summary>Answer</summary>
+
+**B.** Measured to today, the feature uses information from after the prediction time. Every feature must be computed as of the moment the model would have scored. *(Transform · 5.1)*
+
+</details>
+
+**44. For Smart Alerts, the cost-minimising threshold produces about 4,000 alerts a day. Fraud operations can review about 1,500. What should Dana take to the business?**
+
+- A. Options and costs: raise the threshold, add staff, or a second-stage rule
+- B. The cost-minimising threshold anyway, since it is mathematically optimal for the bank
+- C. The default threshold of 0.5, which balances both kinds of error
+- D. A switch to accuracy as the metric, so that fewer alerts are produced
+
+<details><summary>Answer</summary>
+
+**A.** The threshold is a business decision that must respect capacity; the data team shows the curve and each option's cost. B produces alerts nobody reviews. *(Analyse · 5.2)*
+
+</details>
+
+**45. Credit Risk wants to use a model's score directly as a probability of default in an expected-loss calculation. The model was trained on down-sampled data. What is needed?**
+
+- A. Nothing, because a model that ranks well always gives good probabilities
+- B. Replace the model with rules, since ML scores are never probabilities
+- C. Check calibration with a reliability curve, and re-calibrate
+- D. Multiply every score by the down-sampling rate, then ship without checks
+
+<details><summary>Answer</summary>
+
+**C.** When scores are read as probabilities, calibration matters, and down-sampling breaks it unless corrected. A confuses ranking with calibration. *(Analyse · 5.2)*
+
+</details>
+
+**46. A new scam makes transactions that used to look safe turn out to be fraud. The distribution of the model's inputs has barely changed. What kind of drift is this?**
+
+- A. Data drift: the inputs have moved away from training
+- B. An upstream data break caused by a schema change in the feed
+- C. Label drift only, which a threshold change will fully correct
+- D. Concept drift: the input–outcome relationship changed
+
+<details><summary>Answer</summary>
+
+**D.** The inputs look the same but mean something different for the outcome. Input PSI will not show it; true performance as labels mature will. *(Operate · 5.2)*
+
+</details>
+
+**47. A customer's personal data is erased from core banking. Some of their credit memos are chunks with embeddings in the Credit Memo Copilot's pgvector index. What should happen?**
+
+- A. Delete their chunks and vectors too; derived vectors are personal data
+- B. Leave the vectors in place, because embeddings are only lists of numbers and not personal data
+- C. Re-embed the whole corpus with a new model so the old vectors disappear
+- D. Mark the chunks as not current so they rank lower
+
+<details><summary>Answer</summary>
+
+**A.** Deletions must propagate into every copy, including chunks and vectors derived from the documents. B is the tempting myth. *(Store · 5.3)*
+
+</details>
+
+**48. Fixed 500-character chunks split the loan-to-value table in the SME policy, so rows end up separated from their headers and answers mix up the limits. What should Huda change?**
+
+- A. Increase the overlap between fixed-size chunks to 400 characters
+- B. Chunk by structure: tables whole, with their heading path
+- C. Switch to a larger embedding model that understands broken tables
+- D. Strip all tables from policy documents before indexing
+
+<details><summary>Answer</summary>
+
+**B.** Structure-aware chunking keeps tables and clauses intact and prefixes the heading path, so each chunk keeps its meaning. A still cuts the table, just in more places. *(Store · 5.3)*
+
+</details>
+
+**49. After a change to the copilot's retrieval, recall@5 on the golden set stays at 0.95 but MRR falls from 0.8 to 0.4. What does this tell the team?**
+
+- A. The right chunk is still found but ranked lower; check the ranking
+- B. The right chunk has dropped out of the top five results for most of the questions
+- C. Nothing that affects users, because MRR does not change answers
+- D. The golden set is too small, so both numbers should be ignored
+
+<details><summary>Answer</summary>
+
+**A.** Recall@5 says the chunk is in the top five; MRR says it is no longer first. Look at the re-ranker or fusion step. B contradicts the stable recall. *(Serve · 5.3)*
+
+</details>
+
+**50. The marketing team wants to use customer 360 data for a new campaign. Under Najm's governance, who is accountable for approving this new use?**
+
+- A. The steward, Kareem, who answers day-to-day questions about meaning
+- B. The data owner, the Head of Retail Banking, with Sara consulted
+- C. The technical owner, Lina, who runs the pipeline and its tests
+- D. Whoever in the data team built the most recent version of the mart
+
+<details><summary>Answer</summary>
+
+**B.** The data owner approves definition, use and access, and a new purpose needs the DPO's view under purpose limitation. A and C run meaning and pipelines, not decisions on use. *(Govern · 6.1)*
+
+</details>
+
+**51. Finance receives a weekly extract produced by a Python script outside dbt. It does not appear in Najm's lineage graph. How should the gap be closed?**
+
+- A. It cannot be; lineage only ever covers models built in dbt
+- B. Draw it on the architecture diagram at the next annual review
+- C. Ask finance to stop using extracts that lineage does not show
+- D. Declare it as an exposure, or emit OpenLineage events
+
+<details><summary>Answer</summary>
+
+**D.** Declarations and runtime lineage events fill gaps that SQL parsing cannot see. B goes stale; C does not reflect how the bank actually works. *(Govern · 6.1)*
+
+</details>
+
+**52. Najm's policy says every tier-1 model needs a named data owner, but reviewers keep missing it in pull requests. What enforces the rule best?**
+
+- A. A monthly reminder email to every analytics engineer
+- B. Adding the rule to the governance policy document again
+- C. A CI check on `manifest.json` that fails without `meta.data_owner`
+- D. Asking the catalogue team to add the missing owners by hand after each release
+
+<details><summary>Answer</summary>
+
+**C.** Gates, not memos: a CI check holds for every change, not only the ones a reviewer notices. A and B are paperwork; D patches gaps only after they have shipped. *(Govern · 6.1)*
+
+</details>
+
+**53. Kareem plans to release a dataset with age band, nationality and branch for a university study. Some combinations contain only one or two customers. Is it safe?**
+
+- A. Yes, because no names or national IDs are included in the release
+- B. Yes, because the customer key was replaced with a keyed hash
+- C. No; small groups can identify people, so generalise or suppress
+- D. Only unsafe if the release also includes special-category data
+
+<details><summary>Answer</summary>
+
+**C.** Quasi-identifiers in combination identify people; a k-anonymity check finds small groups. B is wrong twice: keyed hashes are pseudonymous, and the quasi-identifiers alone can identify. *(Govern · 6.2)*
+
+</details>
+
+**54. Najm Mobile raw events must be deleted after 13 months. Running `DELETE` on billions of rows each month is slow and locks the table. What is the better design?**
+
+- A. Partition by event date so expiry drops old partitions
+- B. Keep everything, since deleting history breaks reproducibility
+- C. Run the `DELETE` once a year instead of monthly, to save compute
+- D. Move expired rows into a sandbox schema rather than deleting them
+
+<details><summary>Answer</summary>
+
+**A.** Partitioning by the retention clock turns deletion into a cheap drop. B and D break the retention promise; C keeps data past its period. *(Store · 6.2)*
+
+</details>
+
+**55. Najm Assist conversation logs are loaded to the warehouse for complaint analysis. Customers often type their ID numbers and phone numbers into the chat. What should the pipeline do?**
+
+- A. Nothing, since free text is not structured personal data under the law
+- B. Hash the whole message text so analysts can still group conversations
+- C. Load the logs as they are and rely on analysts' training not to read individual conversations
+- D. Detect and redact PII before loading; restrict access and keep raw logs briefly
+
+<details><summary>Answer</summary>
+
+**D.** Personal data hides in free text; detect and redact it (Presidio is one tool), and add access control and short retention because detection is imperfect. B makes the text useless. *(Govern · 6.2)*
+
+</details>
+
+**56. A view over `marts.loan_book` is owned by the dbt service account, which also owns the base table and is not subject to its policy. The base table has row-level security by country, but analysts querying the view see every country. Why?**
+
+- A. Row-level security never applies to tables that dbt has built in a marts schema, by design
+- B. The view runs with its owner's rights; use `security_invoker` or filter inside it
+- C. Views copy the base table's data, so the policies are lost
+- D. RLS applies only to the first query of each session
+
+<details><summary>Answer</summary>
+
+**B.** By default a PostgreSQL view checks base-table policies against the view owner, not the caller. `security_invoker = true` (PostgreSQL 15 and later) applies the caller's policies. *(Govern · 6.3)*
+
+</details>
+
+**57. Huda still holds `pii_reader` from a project that ended 18 months ago. What control would have removed it?**
+
+- A. None needed, because she is still on the data team and may need it again
+- B. Time-limited grants for `pii_reader` and quarterly recertification
+- C. Removing her from the data team so every role is revoked at once
+- D. Renaming the role each year so that people who hold it no longer recognise what it grants
+
+<details><summary>Answer</summary>
+
+**B.** Just-in-time grants expire on their own, and owners recertifying access each quarter catch what is left. A is how access piles up. *(Operate · 6.3)*
+
+</details>
+
+**58. In December, a regulator asks Najm to resend the June credit-risk extract exactly as filed. The mart's June rows have since been corrected by late repayments. What should Faisal send?**
+
+- A. A re-run of June from today's mart, since it is now more accurate
+- B. A rebuild of June from raw with today's code, labelled and sent as the original filing
+- C. An explanation that June can no longer be reproduced after corrections
+- D. The frozen, versioned June extract, with later corrections as restatements
+
+<details><summary>Answer</summary>
+
+**D.** Reported figures are frozen and versioned; corrections become documented restatements. A and B silently change a filed figure. *(Operate · 7.1)*
+
+</details>
+
+**59. A repayment arrives with a value date six days ago. The credit-risk mart has a three-day lookback window, and month-end is in two days. What should the team do?**
+
+- A. Nothing; the next run corrects it like any late repayment
+- B. Ignore it, because a DPD difference of a few days does not change any risk figure that matters
+- C. Run a logged backfill for the affected days before month-end
+- D. Widen the lookback permanently to the longest delay ever seen
+
+<details><summary>Answer</summary>
+
+**C.** Changes older than the lookback need a deliberate backfill, done before the month-end freeze. A is the tempting assumption, but the incremental run never reaches back six days. *(Operate · 7.1)*
+
+</details>
+
+**60. A candidate gets a 48-hour take-home: a small dataset and one business question. Which submission scores best on Najm's interview scorecard?**
+
+- A. Tested models, a README with assumptions, and a sanity check
+- B. A polished dashboard with many charts and no written explanation
+- C. A complex ML model with the highest accuracy on the given data
+- D. A long list of every tool used, with no tests and no README
+
+<details><summary>Answer</summary>
+
+**A.** The scorecard rewards tests, a README, a reconciliation or sanity check and honest limitations. B is the weak signal the scorecard names: polish with no tests or assumptions. *(Govern · 7.2)*
+
+</details>
+
+## 🧾 Recap
+- The exam has 60 scenario questions across all modules and all eight stages; each answer is tagged with a stage and a lesson.
+- Take it in one timed sitting, without notes or tools, and record your confidence before you open any answer.
+- Review by stage: a cluster of misses is a gap; a guess counts as a miss.
+- Explain why each wrong option is wrong; every distractor is a real mistake you will meet at work.
+- Close your weakest gap with the lesson's exercise and an artefact, then retest after two to four weeks.
+
+## 📚 References
+- Ralph Kimball and Margy Ross, *The Data Warehouse Toolkit*, 3rd edition (Wiley, 2013)
+- Martin Kleppmann, *Designing Data-Intensive Applications* (O'Reilly, 2017)
+- Joe Reis and Matt Housley, *Fundamentals of Data Engineering* (O'Reilly, 2022)
+- Ron Kohavi, Diane Tang and Ya Xu, *Trustworthy Online Controlled Experiments* (Cambridge University Press, 2020)
+- DAMA International, *DAMA-DMBOK: Data Management Body of Knowledge*, 2nd edition (2017) — https://www.dama.org/
+- dbt documentation — https://docs.getdbt.com
+- Apache Kafka documentation — https://kafka.apache.org/documentation/
+- PostgreSQL documentation — https://www.postgresql.org/docs/
+- Regulation (EU) 2016/679 (GDPR), EUR-Lex — https://eur-lex.europa.eu/eli/reg/2016/679/oj
+- Basel Committee on Banking Supervision, *Principles for effective risk data aggregation and risk reporting* (BCBS 239), 2013 — https://www.bis.org/publ/bcbs239.htm
