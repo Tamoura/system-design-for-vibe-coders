@@ -334,7 +334,7 @@ The output is the **credit-risk mart case file**: a one-page summary, then linke
 - Interviews test a few things in different clothes: **SQL under pressure**, **modelling and grain**, **pipeline reasoning** (idempotency, late data, backfills), **metric and statistics judgement**, and communication.
 - A **portfolio of two or three finished, tested projects** on open data, with a clear README and an honest write-up, beats a list of tools.
 - AI assistants now draft much of the SQL and Python. Employers still pay for knowing whether the answer is right: grain, definitions, tests and reconciliation.
-- Decision cue: choose your next learning step by the role you want in two years and what employers in your market ask for, not by trends.
+- Decision cue: choose your next learning step by the role you want in two years and what your market asks for, not by trends.
 - Biggest trap: collecting tools and certificates while shipping nothing anyone can run, read or question.
 
 ## 🧭 Why it matters
@@ -432,7 +432,7 @@ Match projects to the role: backfills and CDC for data engineering; tested dbt m
 
 ### 🔴 Expert view
 
-**What AI assistants change, and what they do not.** At the time of writing (2026), AI assistants and text-to-SQL tools draft queries, dbt models and pipeline code quickly. The junior job shifts from typing SQL to **verifying it**: checking grain, joins, filters and definitions, and testing the result against something independent. A plausible generated NPL query does not know that Najm's definition excludes a product or that the value date matters. People who know the definitions, write tests and reconcile numbers become more valuable, not less. Where AI tools are allowed in interviews, show that you review their output critically.
+**What AI assistants change, and what they do not.** At the time of writing (2026), AI assistants and text-to-SQL tools draft queries, dbt models and pipeline code quickly. The junior job shifts from typing SQL to **verifying it**: checking grain, joins, filters and definitions, and testing the result against something independent. A plausible generated NPL query does not know that Najm's definition excludes a product or that the value date matters. People who know the definitions, write tests and reconcile numbers become more valuable, not less.
 
 **From junior to senior.** The ladder is mostly about scope and judgement, not tools:
 
@@ -574,8 +574,6 @@ Kareem's plan targets analytics engineering: his proof is three Monday extracts 
 </details>
 
 ## 📚 References
-- [*From Graduate to Hired*, lesson 2.3 — Data engineer, analyst and data scientist](../career/index.html#/2.3)
-- [*From Graduate to Hired*, lesson 5.3 — System design, data and ML interviews for juniors](../career/index.html#/5.3)
 - Martin Kleppmann, *Designing Data-Intensive Applications* (O'Reilly, 2017)
 - Ralph Kimball and Margy Ross, *The Data Warehouse Toolkit*, 3rd edition (Wiley, 2013)
 - Joe Reis and Matt Housley, *Fundamentals of Data Engineering* (O'Reilly, 2022)

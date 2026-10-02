@@ -7,7 +7,7 @@
 ---
 
 # 7.1 — Capstone: take a new Najm service from empty repo to production with an SLO
-*Level: 🔴 Advanced* · *Prerequisites: Modules 0–6* · *Phase: Plan, Code, Build, Test, Release, Deploy, Operate, Monitor*
+*Level: 🔴 Advanced* · *Prerequisites: Modules 0–6* · *Phase: Deploy, Operate*
 
 ## ⚡ In 60 seconds
 - The capstone takes **Card Controls**, a new Najm service for freezing cards and setting limits, from an empty repository to production through all eight phases.
