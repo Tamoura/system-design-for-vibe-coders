@@ -53,6 +53,15 @@ jobs:
       - name: Verify the security course output matches its markdown
         run: if [ -f secai/index.html ]; then npm run secai:check; else echo "secai course not built yet — skipped"; fi
 
+      - name: Verify the career course output matches its markdown
+        run: if [ -f career/index.html ]; then npm run career:check; else echo "career course not built yet — skipped"; fi
+
+      - name: Verify the data course output matches its markdown
+        run: if [ -f data/index.html ]; then npm run data:check; else echo "data course not built yet — skipped"; fi
+
+      - name: Verify the cloud course output matches its markdown
+        run: if [ -f cloud/index.html ]; then npm run cloud:check; else echo "cloud course not built yet — skipped"; fi
+
       - name: Verify the agentic pages carry the site navigation
         run: node scripts/agentic-nav.mjs --check
 
@@ -68,7 +77,7 @@ jobs:
       - name: Assemble the site
         run: |
           # Course library: landing hub at root, each course in its own subpath.
-          mkdir -p _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai
+          mkdir -p _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai _site/career _site/data _site/cloud
           cp landing.html _site/index.html
           # The vibe course (bilingual pages + downloads) → /vibe/
           cp index.html index.en.html index.ar.html assessment.html assessment.ar.html _site/vibe/
@@ -94,7 +103,25 @@ jobs:
                secai/index.ar.html secai/course.ar.html secai/COURSE.ar.md secai/TOOLKIT.ar.md \
                secai/assessment.html secai/assessment.ar.html _site/secai/
           fi
-          ls -lh _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai
+          # From Graduate to Hired → /career/ (once built)
+          if [ -f career/index.html ]; then
+            cp career/index.html career/course.html career/COURSE.md career/TOOLKIT.md \
+               career/index.ar.html career/course.ar.html career/COURSE.ar.md career/TOOLKIT.ar.md \
+               career/assessment.html career/assessment.ar.html _site/career/
+          fi
+          # Data Engineering & Analytics: Zero to Hero → /data/ (once built)
+          if [ -f data/index.html ]; then
+            cp data/index.html data/course.html data/COURSE.md data/TOOLKIT.md \
+               data/index.ar.html data/course.ar.html data/COURSE.ar.md data/TOOLKIT.ar.md \
+               data/assessment.html data/assessment.ar.html _site/data/
+          fi
+          # Cloud & DevOps: Zero to Hero → /cloud/ (once built)
+          if [ -f cloud/index.html ]; then
+            cp cloud/index.html cloud/course.html cloud/COURSE.md cloud/TOOLKIT.md \
+               cloud/index.ar.html cloud/course.ar.html cloud/COURSE.ar.md cloud/TOOLKIT.ar.md \
+               cloud/assessment.html cloud/assessment.ar.html _site/cloud/
+          fi
+          ls -lh _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai _site/career _site/data _site/cloud
 
       # Every link on the assembled site, internal and external. Report only: a dead third-party
       # page should be fixed in the lesson, not block the deploy. Results are in the run summary.

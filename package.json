@@ -18,7 +18,13 @@
     "assess:build": "node scripts/build-assessment.mjs",
     "assess:check": "node scripts/build-assessment.mjs --check",
     "secai:build": "node scripts/build-secai.mjs",
-    "secai:check": "node scripts/build-secai.mjs --check"
+    "secai:check": "node scripts/build-secai.mjs --check",
+    "career:build": "node scripts/build-career.mjs",
+    "career:check": "node scripts/build-career.mjs --check",
+    "data:build": "node scripts/build-data.mjs",
+    "data:check": "node scripts/build-data.mjs --check",
+    "cloud:build": "node scripts/build-cloud.mjs",
+    "cloud:check": "node scripts/build-cloud.mjs --check"
   },
   "devDependencies": {
     "archiver": "^7.0.1",
