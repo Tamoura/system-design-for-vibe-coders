@@ -914,5 +914,5 @@ GROUP BY card_id, window_start, window_end;
 - توثيق Redpanda (Redpanda documentation) — https://docs.redpanda.com/
 - confluent-kafka-python — https://github.com/confluentinc/confluent-kafka-python
 - Tyler Akidau وSlava Chernyak وReuven Lax، *Streaming Systems* (O'Reilly)
-- Tyler Akidau وآخرون (et al.)، "The Dataflow Model" (VLDB 2015) — https://research.google/pubs/
+- Tyler Akidau وآخرون ⁦(et al.)⁩، "The Dataflow Model" (VLDB 2015) — https://research.google/pubs/
 - Martin Kleppmann، *Designing Data-Intensive Applications* (O'Reilly)، الفصل المتعلق بمعالجة التدفقات (chapter on stream processing)

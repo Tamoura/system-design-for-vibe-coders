@@ -96,21 +96,21 @@
       "o": {
         "en": [
           "Rollback: revert of the prod digest commit, timed at 4 minutes in staging, report linked",
-          "Overseas-block flag: the switch exists in the flag service and is in the runbook",
-          "Restore: last night's backup restored to a new instance in 22 minutes, drill report linked",
+          "Overseas-block flag: the switch exists in the flag service and is listed in the runbook",
+          "Restore: point-in-time restore to a new instance in 22 minutes, 3 minutes of data lost",
           "Alerts: each burn-rate alert fired once in a staging test and links to its own runbook"
         ],
         "ar": [
           "التراجع (rollback): إرجاع إيداع البصمة في الإنتاج (prod digest commit)، مُوقَّت بـ 4 دقائق في بيئة التجهيز (staging)، والتقرير مرفق",
-          "علم حظر الاستخدام الخارجي (overseas-block flag): المفتاح موجود في خدمة الأعلام (flag service) ومذكور في دليل التشغيل (runbook)",
-          "الاستعادة (restore): استُعيدت نسخة الليلة الماضية الاحتياطية (backup) إلى نسخة جديدة (new instance) في 22 دقيقة، وتقرير التمرين (drill report) مرفق",
+          "علم حظر الاستخدام الخارجي (overseas-block flag): المفتاح موجود في خدمة الأعلام (flag service) ومُدرَج في دليل التشغيل (runbook)",
+          "الاستعادة (restore): استعادة إلى نقطة زمنية (point-in-time restore) على نسخة جديدة (new instance) في 22 دقيقة، مع فقد 3 دقائق من البيانات (data lost)",
           "التنبيهات (alerts): أُطلق كل تنبيه معدّل احتراق (burn-rate alert) مرة في اختبار على بيئة التجهيز (staging test) ويرتبط بدليل تشغيله (runbook)"
         ]
       },
       "a": 1,
       "why": {
-        "en": "Rollback, restore and kill switches each need a timed drill, and the flag line only says the switch exists and is documented, which is a claim ticked from memory. The restore line looks like the risky one, but it shows a measured drill within the 30-minute RTO.",
-        "ar": "يحتاج كلٌّ من التراجع (rollback) والاستعادة (restore) ومفاتيح الإيقاف (kill switches) إلى تمرين مُوقَّت (timed drill)، وسطر العلم (flag) يقول فقط إن المفتاح موجود وموثّق، وهذا ادعاء مُؤشَّر عليه من الذاكرة (ticked from memory). يبدو سطر الاستعادة هو الخطِر، لكنه يُظهر تمرينًا مقيسًا (measured drill) ضمن هدف زمن التعافي (RTO) البالغ 30 دقيقة."
+        "en": "Rollback, restore and kill switches each need a timed drill, and the flag line only says the switch exists and is documented, which is a claim ticked from memory. The restore line looks like the risky one, but it shows a measured drill within both targets: the 5-minute RPO and the 30-minute RTO.",
+        "ar": "يحتاج كلٌّ من التراجع (rollback) والاستعادة (restore) ومفاتيح الإيقاف (kill switches) إلى تمرين مُوقَّت (timed drill)، وسطر العلم (flag) يقول فقط إن المفتاح موجود وموثّق، وهذا ادعاء مُؤشَّر عليه من الذاكرة (ticked from memory). يبدو سطر الاستعادة هو الخطِر، لكنه يُظهر تمرينًا مقيسًا (measured drill) ضمن الهدفين معًا: هدف نقطة التعافي (RPO) البالغ 5 دقائق وهدف زمن التعافي (RTO) البالغ 30 دقيقة."
       }
     }
   ],

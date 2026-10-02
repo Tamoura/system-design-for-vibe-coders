@@ -672,7 +672,7 @@ deny contains msg if {
 }
 ```
 
-كل رسالة تقول ما الخطأ *و(and)* ما العمل. تغيّرت صياغة Rego (Rego syntax) بين إصدارات OPA؛ و`import rego.v1` يجعل هذا صالحًا على إصدارات 0.x بدءًا من 0.59 وعلى OPA 1.x. وقد تستخدم شيفرة AWS الأحدث `aws_vpc_security_group_ingress_rule`، الذي يحتاج إلى قاعدة خاصة به (its own rule).
+كل رسالة تقول ما الخطأ *وكذلك (and)* ما العمل. تغيّرت صياغة Rego (Rego syntax) بين إصدارات OPA؛ و`import rego.v1` يجعل هذا صالحًا على إصدارات 0.x بدءًا من 0.59 وعلى OPA 1.x. وقد تستخدم شيفرة AWS الأحدث `aws_vpc_security_group_ingress_rule`، الذي يحتاج إلى قاعدة خاصة به (its own rule).
 
 **السياسات شيفرة، فاختبرها (Policies are code, so test them).** لدى OPA مشغّل اختبارات مدمج (built-in test runner) (`opa test`)، ويستطيع Conftest أيضًا تشغيل حالات اختبار (test cases). احتفظ لكل قاعدة بمثال واحد على الأقل يجب أن يُرفض (must be denied) ومثال يجب أن يُسمح به (must be allowed). فالسياسة غير المختبرة (policy without tests) ستمنع يومًا ما كل عمليات النشر (every deployment)، أو لن تمنع أيًّا منها.
 
