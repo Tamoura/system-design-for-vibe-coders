@@ -18,7 +18,7 @@
 - Biggest trap: treating multi-zone as disaster recovery. Zones survive a data-centre failure, not a bad deploy, a deleted table or ransomware, which replicate everywhere in seconds.
 
 ## 🧭 Why it matters
-On 31 January 2017, a GitLab engineer fixing a replication problem ran a delete command on what he believed was the secondary database. It was the primary. GitLab's public postmortem describes how none of the backup and replication methods the team relied on worked as expected; they recovered from a staging copy about six hours old and lost roughly six hours of production data. Nobody had restored a backup end to end, so nobody knew the backups were broken.
+On 31 January 2017, a GitLab engineer fixing a replication problem ran a delete command on what they believed was the secondary database. It was the primary. GitLab's public postmortem describes how none of the backup and replication methods the team relied on worked as expected; they recovered from a staging copy about six hours old and lost roughly six hours of production data. Nobody had restored a backup end to end, so nobody knew the backups were broken.
 
 Now bring it home. The Payments service has just moved to the cloud, and Hamad (CISO) and the risk function ask Salem: "If the primary region failed this afternoon, or someone deleted the payments database, how long until customers can send money again, and how many transfers would we lose?" The EU's Digital Operational Resilience Act (DORA), applicable to financial entities from 17 January 2025, expects the bank's EU entity to show tested backup, restoration and continuity arrangements, and GCC regulators such as the Qatar Central Bank set their own continuity and outsourcing expectations (check current texts with risk and governance). "We use multi-AZ" is not an answer. This lesson builds one: targets, design and the test that proves them.
 
@@ -126,7 +126,7 @@ flowchart LR
     R2 --> D2
 ```
 
-**Why active-active is hard.** For stateless services it is mostly routing. For data, two regions accepting writes to the same balance can conflict, and synchronous cross-region replication adds the inter-region round trip to every write. Many banks run the stateless edge active-active and the system of record active-passive. For the Payments service, every payment carries an **idempotency key**, so a request retried after failover finds the existing record instead of creating a second transfer.
+**Why active-active is hard.** For stateless services it is mostly routing. For data, two regions accepting writes to the same balance can conflict, and synchronous cross-region replication adds the inter-region round trip to every write. A common pattern is to run the stateless edge active-active and the system of record active-passive. For the Payments service, every payment carries an **idempotency key**, so a request retried after failover finds the existing record instead of creating a second transfer.
 
 **Asynchronous replication sets your RPO.** A cross-region replica usually lags the primary by seconds or more, and that lag *is* your RPO in a regional disaster. Monitor it (5.1) and alert when it exceeds the RPO.
 
@@ -177,7 +177,7 @@ The first run found three gaps that no design review would have caught: the repl
 
 ## 🛠️ Exercises
 - 🟢 **Watch an autoscaler work.** On a local kind or k3d cluster with the metrics server, deploy a small web container with CPU requests and an HPA (min 2, max 8, target 50% CPU). Generate load from another pod and watch `kubectl get hpa -w`. *Done when:* you have a screenshot or log showing replicas rising under load and falling after the stabilisation window, and one sentence explaining why scale-down was slower than scale-up.
-- 🟡 **Spread across zones and survive a drain.** Create a kind cluster with four worker nodes and label them with `topology.kubernetes.io/zone` values `a`, `b`, `c` (one zone gets two nodes). Deploy six replicas with a topology spread constraint and a PDB of `minAvailable: 4`. Drain every node in one zone with `kubectl drain`. *Done when:* the pods were spread two per zone before the drain, the drain respected the PDB, and you can show that the service kept answering requests throughout.
+- 🟡 **Spread across zones and survive a drain.** Create a kind cluster with four worker nodes and label them with `topology.kubernetes.io/zone` values `a`, `b`, `c` (one zone gets two nodes). Deploy six replicas with a topology spread constraint and a PDB of `minAvailable: 4`. Drain every node in one zone with `kubectl drain`. Expect the evicted pods to stay `Pending`: the drained zone still counts for the spread constraint. *Done when:* the pods were spread two per zone, the drain respected the PDB, the service kept answering throughout, and you can explain the `Pending` pods.
 - 🔴 **Write and run a restore test.** Run PostgreSQL in Docker with WAL archiving or regular `pg_dump` backups. Insert timestamped rows, "accidentally" drop a table, then restore into a second container. Write a one-page DR test plan in the format above, with an RTO and RPO you choose. *Done when:* you have measured the actual restore time and data loss, compared them with your targets, and listed at least two changes that would close any gap.
 
 ## ⚠️ Mistakes and traps
@@ -198,14 +198,14 @@ The first run found three gaps that no design review would have caught: the repl
 
 **1. The Najm Mobile API runs 6 pods across three zones and needs 4 to handle peak load. Which change best ensures that losing one zone does not overload the service?**
 
-- A. Raise the HPA `maxReplicas` to 100
-- B. Keep `minReplicas` at 6 with a zone topology spread constraint so each zone holds two pods, leaving 4 if a zone fails
-- C. Add a PodDisruptionBudget with `minAvailable: 6`
+- A. Raise the HPA `maxReplicas` to 100 so new pods replace lost ones
+- B. Keep 6 pods with a zone spread constraint, two per zone
+- C. Add a PodDisruptionBudget with `minAvailable: 6` on the Deployment
 - D. Move all pods to the largest zone to reduce cross-zone traffic
 
 <details><summary>Answer</summary>
 
-**B.** Spreading with spare capacity means a zone failure removes only a third of the pods. A helps only after new pods and nodes arrive; C covers voluntary disruptions, not zone failures, and would block drains; D creates a single point of failure. (🟢 The essentials and 🟡 Going deeper.)
+**B.** Two pods per zone means a zone failure removes only two, leaving the 4 needed. A helps only after new pods and nodes arrive; C covers voluntary disruptions, not zone failures, and would block drains; D creates a single point of failure. (🟢 The essentials and 🟡 Going deeper.)
 
 </details>
 
@@ -224,8 +224,8 @@ The first run found three gaps that no design review would have caught: the repl
 
 **3. Who should set the RPO for the Payments service?**
 
-- A. The business owner, together with risk, after the platform team explains what each target costs
-- B. The platform team alone, because it runs the infrastructure
+- A. The business owner with risk, once the platform team has costed options
+- B. The platform team alone, because it builds and runs the infrastructure
 - C. The cloud provider, through its SLA
 - D. Nobody; RPO is always zero for payments
 
@@ -237,10 +237,10 @@ The first run found three gaps that no design review would have caught: the repl
 
 **4. Maha's DR test shows the cross-region replica usually lags by a few seconds but once reached 40 minutes during a batch job. The agreed RPO is 5 minutes. What is the right reading?**
 
-- A. The RPO is met, because the usual lag is seconds
-- B. The RPO only applies to zone failures
-- C. The real RPO during that window was about 40 minutes; alert on lag above the RPO and fix the cause
-- D. Switch to synchronous cross-region replication without measuring latency
+- A. The RPO is met, because the usual lag is only a few seconds
+- B. The RPO only applies to zone failures, not to regional ones
+- C. The real RPO then was 40 minutes; alert on lag and fix the cause
+- D. Switch to synchronous cross-region replication now, without measuring latency
 
 <details><summary>Answer</summary>
 
@@ -250,10 +250,10 @@ The first run found three gaps that no design review would have caught: the repl
 
 **5. Which statement about chaos engineering is most accurate?**
 
-- A. It means randomly breaking production as often as possible
-- B. It is a controlled experiment with a hypothesis, a limited blast radius and an abort switch, started in non-production
-- C. It replaces backups and DR tests
-- D. It is only useful for companies with thousands of services
+- A. It means breaking production at random, as often as possible
+- B. A controlled test with a hypothesis and abort switch, started outside production
+- C. Once it runs regularly, it replaces backup restores and DR tests
+- D. It is only useful for companies running thousands of services
 
 <details><summary>Answer</summary>
 
@@ -324,7 +324,7 @@ flowchart LR
 | `cost-centre` | finance code | Chargeback or showback to the business |
 | `data-classification` | `confidential` | Shared with security; not a cost key but enforced the same way |
 
-Tags must usually be activated for billing reports (for example, AWS cost allocation tags), and they apply only from when they are set, so start early. Enforce them in infrastructure as code (3.1) and with policy as code (3.3): a plan that creates an untagged resource fails the check.
+Tags must usually be activated for billing reports (for example, AWS cost allocation tags), and they mostly apply only from when they are set (backfill, where offered, is limited), so start early. Enforce them in infrastructure as code (3.1) and with policy as code (3.3): a plan that creates an untagged resource fails the check.
 
 **Showback and chargeback.** *Showback* shows each team what it spent; *chargeback* actually moves the cost to the team's budget. Most organisations start with showback, because the first goal is awareness, not accounting.
 
@@ -402,7 +402,7 @@ The first report's actions: tag policy enforced in the OpenTofu pipeline (untagg
 
 ## 🛠️ Exercises
 - 🟢 **Design a tagging policy.** Write a tagging policy for a fictional company with three teams and three environments: the mandatory keys, allowed values, who owns enforcement, and what happens to untagged resources. Add a policy-as-code rule (for example, a Conftest or OPA check against an OpenTofu plan in JSON) that fails when `owner` or `environment` is missing. *Done when:* the rule fails on a plan with an untagged resource and passes when tags are added.
-- 🟡 **Allocate a shared cluster.** Install OpenCost on a local kind cluster (with its default or custom pricing) and deploy workloads in three namespaces with deliberately different requests. Compare requests with actual use for each namespace. *Done when:* you have a table of cost by namespace, identified the most over-requested workload, and proposed new requests with a short justification for the headroom you kept.
+- 🟡 **Allocate a shared cluster.** Install OpenCost and the Prometheus it needs on a local kind cluster (default or custom pricing) and deploy workloads in three namespaces with deliberately different requests. Compare requests with actual use for each namespace. *Done when:* you have a table of cost by namespace, identified the most over-requested workload, and proposed new requests with a short justification for the headroom you kept.
 - 🔴 **Build a unit-cost model.** Using a free-tier account with a budget alert set first, or a spreadsheet with made-up but labelled sample numbers, build a monthly model for a small API: allocated compute, database, storage and transfer, and requests served. Compute cost per 1,000 requests for three scenarios: current, rightsized, and rightsized plus a commitment on the baseline. *Done when:* the model shows unit cost for each scenario, states every assumption, and identifies which change you would make first and why.
 
 ## ⚠️ Mistakes and traps
@@ -424,10 +424,10 @@ The first report's actions: tag policy enforced in the OpenTofu pipeline (untagg
 
 **1. Mona finds that a large share of Najm's cloud spend cannot be attributed to any team. What should Salem do first?**
 
-- A. Buy a three-year savings plan to reduce the total
-- B. Ask finance to split the unattributed cost equally across all teams forever
-- C. Define mandatory tags, enforce them in the OpenTofu pipeline with policy as code, and chase owners for existing untagged resources
-- D. Move all workloads to spot instances
+- A. Buy a three-year savings plan to bring the total down quickly
+- B. Ask finance to split the unattributed cost equally across all teams
+- C. Mandate tags, enforce them in the OpenTofu pipeline, chase owners
+- D. Move all workloads to spot instances before allocating anything
 
 <details><summary>Answer</summary>
 
@@ -437,10 +437,10 @@ The first report's actions: tag policy enforced in the OpenTofu pipeline (untagg
 
 **2. A team requests 4 CPUs per pod but uses about 0.3 on average. In a shared cluster, how should their cost be allocated, and why?**
 
-- A. By the higher of requests and use, so they pay for the 4 CPUs they reserve, which encourages rightsizing
-- B. By use only, because they did not use the rest
-- C. Not at all, because shared clusters cannot be allocated
-- D. Equally among all teams on the cluster
+- A. By the higher of requests and use: they pay for the 4 they reserve
+- B. By actual use only, because the rest of the request sat unused
+- C. Not at all, because shared clusters cannot be split between teams
+- D. Equally among all the teams that run workloads on the cluster
 
 <details><summary>Answer</summary>
 
@@ -450,10 +450,10 @@ The first report's actions: tag policy enforced in the OpenTofu pipeline (untagg
 
 **3. Which order of optimisation steps is most sensible?**
 
-- A. Commitments, then rightsizing, then deleting idle resources
-- B. Spot instances for everything, then commitments
-- C. Rightsizing only; commitments are never worth it
-- D. Delete idle resources and schedule non-production, rightsize and autoscale, then commit to discounts for the remaining steady baseline
+- A. Buy commitments first, then rightsize, then delete idle resources
+- B. Move everything to spot instances first, then add commitments
+- C. Rightsize only, since commitments are never worth the lock-in
+- D. Remove idle, schedule, rightsize, then commit for the steady base
 
 <details><summary>Answer</summary>
 
@@ -463,23 +463,23 @@ The first report's actions: tag policy enforced in the OpenTofu pipeline (untagg
 
 **4. Yousef proposes running the Payments database in a single zone to cut its cost. What is the best response?**
 
-- A. Approve it, because cost reduction is always the priority
-- B. Treat it as a resilience change: it alters the RTO and RPO agreed in the DR plan, so it needs the service owner's and SRE's approval, and is very likely to be rejected
-- C. Approve it but keep it secret from risk
-- D. Approve it if Infracost shows a saving
+- A. Approve it, because cost reduction is the priority this quarter
+- B. Treat it as a resilience change for the service owner and SRE
+- C. Approve it quietly and leave risk out of the decision
+- D. Approve it as long as Infracost shows a clear monthly saving
 
 <details><summary>Answer</summary>
 
-**B.** Removing zone redundancy changes recovery targets that the business signed; cost and resilience are one decision. A and D look only at money; C undermines governance. (🔴 Expert view.)
+**B.** Removing zone redundancy changes the RTO and RPO the business signed, so the service owner and SRE decide, and will very likely refuse; cost and resilience are one decision. A and D look only at money; C undermines governance. (🔴 Expert view.)
 
 </details>
 
 **5. Najm's total cloud bill rose this quarter while customers grew faster. Cost per successful payment fell. How should Mona read this?**
 
-- A. As a problem, because the total bill rose
+- A. As a problem, because the total bill rose this quarter
 - B. As proof that no optimisation work is needed anywhere
-- C. As healthy growth on this measure, while still checking other unit costs and the waste list
-- D. As a billing error
+- C. As healthy growth, while still checking the waste list
+- D. As a likely billing error to raise with the provider
 
 <details><summary>Answer</summary>
 
@@ -514,7 +514,7 @@ The first report's actions: tag policy enforced in the OpenTofu pipeline (untagg
 ## 🧭 Why it matters
 Najm Assist started as a pilot in which three teams called a hosted model API directly, each with its own key. Then, in one month, a provider had a partial outage and the assistant failed with it, because there was no fallback; Mona's cost report from 6.2 showed model spend rising weekly with no way to tell which team drove it; and Noura asked which customer data went to which provider and where it was logged. Nobody could answer completely.
 
-Meanwhile the data science team wanted to self-host a small open-weight model for a classification task whose data must stay in Najm's chosen region. Yousef ran it in a container on a GPU node with default settings and reported it was "slow and the GPU sits at 15%". Salem must now decide what goes through managed APIs, what is self-hosted, how both are controlled, and what each conversation costs. For operating agents built on top of these models, see *Running AI Agents in Production*, [Level 3 — Production Engineer](../agentic/learning-path.html#level-3-production-engineer).
+Meanwhile the data science team wanted to self-host a small open-weight model for a classification task whose data must stay in Najm's chosen region. Yousef ran it in a container on a GPU node with default settings and reported it was "slow and the GPU sits at 15%". Salem must now decide what goes through managed APIs, what is self-hosted, how both are controlled, and what each conversation costs. For operating agents built on these models, see [*Running AI Agents in Production*, Level 3 — Production Engineer](../agentic/learning-path.html#level-3-production-engineer).
 
 ## 📐 How it works
 
@@ -612,7 +612,7 @@ Small workloads can share a GPU with time-slicing or, on some NVIDIA data-centre
 
 **The concepts behind the speed.**
 - **Batching:** serving many conversations at once raises throughput a lot, at some cost to each request's latency; continuous batching keeps the waiting short.
-- **KV cache:** while generating, the model keeps intermediate results (keys and values) for every earlier token so it does not recompute them. The cache grows with context length and with the number of concurrent conversations, and it is often what limits how many users one GPU can serve. `--max-model-len` caps it.
+- **KV cache:** while generating, the model keeps intermediate results (keys and values) for every earlier token so it does not recompute them. The cache grows with context length and with the number of concurrent conversations, and it is often what limits how many users one GPU can serve. In vLLM, `--max-model-len` caps the context per request and `--gpu-memory-utilization` caps the engine's share of GPU memory.
 - **Quantisation:** storing weights in 8 or 4 bits instead of 16 cuts memory and often raises speed, with some quality loss you must measure on your own evaluation set.
 
 ### 🔴 Expert view
@@ -701,10 +701,10 @@ Yousef's classifier now runs on vLLM with continuous batching and an 8-bit quant
 
 **1. Yousef runs a self-hosted model with a simple Python script on a GPU node. Latency is high and GPU utilisation is about 15%. What is the most likely fix?**
 
-- A. Buy a larger GPU
-- B. Add a CPU-based HPA
-- C. Switch to a managed API immediately
-- D. Serve the model with an engine that supports continuous batching, such as vLLM, and measure tokens per second
+- A. Move the same script to a larger GPU with more memory
+- B. Add an HPA that scales the pods on CPU utilisation
+- C. Switch to a managed API immediately and drop the GPU
+- D. Serve it with a continuous-batching engine such as vLLM
 
 <details><summary>Answer</summary>
 
@@ -714,10 +714,10 @@ Yousef's classifier now runs on vLLM with continuous batching and an 8-bit quant
 
 **2. Roughly how much GPU memory do the weights of an 8-billion-parameter model need at 4-bit precision?**
 
-- A. About 32 GB
-- B. About 4 GB, plus room for the KV cache and engine
-- C. About 8 GB, with no extra room needed
-- D. It cannot be estimated without the vendor
+- A. About 32 GB, because every parameter needs four bytes
+- B. About 4 GB, plus room for the KV cache
+- C. About 8 GB, with no extra room needed for serving
+- D. It cannot be estimated without asking the vendor
 
 <details><summary>Answer</summary>
 
@@ -727,10 +727,10 @@ Yousef's classifier now runs on vLLM with continuous batching and an 8-bit quant
 
 **3. A model provider has a partial outage and Najm Assist fails completely. Which change most directly prevents this next time?**
 
-- A. Asking the provider for a better SLA
-- B. Adding more replicas of the chat front end
-- C. A gateway route with retries and a tested fallback to a second approved model
-- D. Caching every answer forever
+- A. Asking the provider for a stronger SLA in the next contract
+- B. Adding more replicas of the chat front end in every zone
+- C. A gateway route with retries and a tested fallback model
+- D. Caching every answer forever so the provider is rarely called
 
 <details><summary>Answer</summary>
 
@@ -740,23 +740,23 @@ Yousef's classifier now runs on vLLM with continuous batching and an 8-bit quant
 
 **4. When does self-hosting an open-weight model usually make the most sense?**
 
-- A. When volume is steady and high enough to keep GPUs busy, or when data residency or control requires it, and the model passes your evaluation
-- B. Always, because GPUs are cheaper than tokens
+- A. When steady volume keeps GPUs busy, or residency requires it
+- B. Always, because GPU hours are cheaper than paying for tokens
 - C. For a low-traffic internal tool used a few times a day
-- D. Only when no managed APIs exist
+- D. Only when no managed API offers a model of similar quality
 
 <details><summary>Answer</summary>
 
-**A.** Self-hosting pays off with high utilisation or non-cost requirements. B ignores idle cost and engineering time; C leaves GPUs idle; D ignores residency and control. (🔴 Expert view.)
+**A.** Self-hosting pays off with high utilisation or non-cost requirements. B ignores idle cost and engineering time; C leaves GPUs idle; D ignores residency, control and utilisation. (🔴 Expert view.)
 
 </details>
 
 **5. Which metric is the best autoscaling signal for a self-hosted LLM server?**
 
-- A. Node CPU utilisation
-- B. Number of pods
-- C. Disk usage
-- D. Queue depth or running requests at the serving engine
+- A. Node CPU utilisation averaged across the GPU pool
+- B. The number of pods currently serving the model
+- C. Disk usage on the nodes that hold model files
+- D. Queue depth or running requests at the engine
 
 <details><summary>Answer</summary>
 

@@ -356,7 +356,7 @@ COMMIT;
 
 Run the second version once or ten times, for any day, and the table ends up the same. The `BEGIN`/`COMMIT` matters: if the insert fails, the delete rolls back and yesterday's good data is still there.
 
-**Data intervals, not "today".** Orchestrators give each run a **data interval**: the slice of time it is responsible for. A daily run for 14 September has the interval from 14 September 00:00 to 15 September 00:00, and it normally *starts* after the interval ends, early on 15 September. Airflow calls the start of the interval the **logical date** (older docs say "execution date", which confuses everyone because it is not when the run executes). Your task should read its interval from the orchestrator and use it in every query. Then a re-run on Monday for Saturday's interval loads Saturday.
+**Data intervals, not "today".** Orchestrators give each run a **data interval**: the slice of time it is responsible for. A daily run for 14 September has the interval from 14 September 00:00 to 15 September 00:00, and it normally *starts* after the interval ends, early on 15 September. Airflow calls the start of the interval the **logical date** (older docs say "execution date", which is not when the run executes). Check your version: in Airflow 3, cron strings and presets such as `@daily` default to a trigger timetable whose interval has zero length, so ask for an interval timetable explicitly, as below. Your task should read its interval from the orchestrator and use it in every query. Then a re-run on Monday for Saturday's interval loads Saturday.
 
 **Retries.** Many failures pass: a dropped connection, a lock timeout, a rate limit. Retry automatically with a growing pause (**exponential backoff**), and set a **timeout** so a hung task fails instead of blocking for hours. Retries are only safe on idempotent tasks.
 
@@ -365,17 +365,20 @@ Run the second version once or ten times, for any day, and the table ends up the
 **An idempotent Airflow DAG.** Airflow defines DAGs in Python. With the TaskFlow style, each decorated function is a task. A sketch of Najm's transactions load (in Airflow 3 the decorators import from `airflow.sdk`; in Airflow 2 from `airflow.decorators`):
 
 ```python
-from datetime import datetime, timedelta
+from datetime import timedelta
 
+import pendulum
 import psycopg
 from airflow.sdk import dag, task  # Airflow 2: from airflow.decorators import dag, task
+from airflow.timetables.interval import CronDataIntervalTimetable
 
 DSN = "postgresql://etl@warehouse/najm"  # in real use, an Airflow connection with a secret backend
 
 
 @dag(
-    schedule="@daily",
-    start_date=datetime(2026, 1, 1),
+    # Daily intervals on the Doha calendar, so a run covers one business day
+    schedule=CronDataIntervalTimetable("0 0 * * *", timezone="Asia/Qatar"),
+    start_date=pendulum.datetime(2026, 1, 1, tz="Asia/Qatar"),
     catchup=False,
     max_active_runs=1,
     default_args={
@@ -425,7 +428,7 @@ WHEN NOT MATCHED THEN
   VALUES (s.account_id, s.status, s.balance, s.updated_at);
 ```
 
-The `s.updated_at > t.updated_at` guard means an older change replayed later cannot overwrite a newer one. This is the merge that made the overlapping watermark in lesson 2.1 safe.
+`MERGE` fails if two source rows match one target row, so first reduce the batch to the latest row per `account_id`. The `s.updated_at > t.updated_at` guard means an older change replayed later cannot overwrite a newer one. This is the merge that made the overlapping watermark in lesson 2.1 safe.
 
 **Backfills.** A **backfill** runs a pipeline for past intervals. You need one when you fix a bug, add a column that must exist for history, or bring a new table online. With idempotent, interval-driven tasks a backfill is just "run these 90 daily intervals"; Airflow and Dagster both have built-in backfill commands and UI actions (the Airflow CLI changed between versions 2 and 3, so check the docs for yours). Without idempotency a backfill is a manual, risky project. Plan backfills like changes:
 
@@ -446,7 +449,7 @@ daily = DailyPartitionsDefinition(start_date="2026-01-01")
 @asset(partitions_def=daily)
 def stg_transactions_daily(context: AssetExecutionContext) -> None:
     day = context.partition_key  # e.g. "2026-09-14"
-    # delete-then-insert this one day, exactly as in the SQL above
+    ...  # delete-then-insert this one day, exactly as in the SQL above
 ```
 
 The partition key plays the role of Airflow's data interval. The asset view makes lineage and freshness visible ("this mart is stale because this upstream partition failed"). **Prefect** is a third option, with flows and tasks as plain Python functions. Pick one for the team; the principles are the same in all three.
@@ -726,7 +729,7 @@ If the process dies after the insert but before the commit, the event is read ag
 
 **What Kafka's exactly-once really covers.** Two features are summarised as "exactly-once":
 
-- An **idempotent producer** (on by default in recent Kafka clients) gives each producer's messages sequence numbers, so a network retry cannot write the same message twice to a partition.
+- An **idempotent producer** (on by default in the Java client since Kafka 3.0; other clients, including librdkafka-based ones, may need `enable.idempotence=true`) gives each producer's messages sequence numbers, so a network retry cannot write the same message twice to a partition.
 - **Transactions** let a producer write to several partitions *and* commit consumer offsets as one atomic unit. Consumers set `isolation.level=read_committed` to see only committed results. Kafka Streams uses this for its `exactly_once_v2` processing guarantee.
 
 Together these give exactly-once for **read from Kafka, process, write to Kafka**. They do not reach PostgreSQL, a feature store or an email. Once results leave Kafka, you need an idempotent sink (upsert on an event ID, or the offset stored in the same database transaction as the result). That is the "exactly-once myth": the guarantee is real but narrower than the slogan.
@@ -751,13 +754,14 @@ CREATE TABLE card_auths (
   card_id STRING,
   amount DECIMAL(18, 2),
   merchant_country STRING,
-  event_time TIMESTAMP(3),
+  event_time TIMESTAMP_LTZ(3),
   WATERMARK FOR event_time AS event_time - INTERVAL '30' SECOND
 ) WITH (
   'connector' = 'kafka',
   'topic' = 'najm.card.authorisations',
   'properties.bootstrap.servers' = 'localhost:9092',
   'format' = 'json',
+  'json.timestamp-format.standard' = 'ISO-8601',
   'scan.startup.mode' = 'earliest-offset'
 );
 
@@ -807,7 +811,7 @@ Before the card stream feeds Smart Alerts in production, Faisal and Dana write a
 | Key and partitions | Key `card_id` (tokenised); partition count sized from a load test with headroom for growth |
 | Retention | Agreed with Sara; card events are personal data; raw archive in the lakehouse under the bank's retention schedule |
 | Consumer groups | `smart-alerts-features` (Flink job); `raw-archiver` (lands to raw layer) |
-| Delivery semantics | At-least-once; idempotent sink keyed on `auth_id`; Flink checkpoints enabled |
+| Delivery semantics | At-least-once; Flink checkpoints enabled; sinks idempotent: events keyed on `auth_id`, window results upserted on `card_id` plus window |
 | Time and windows | Event time; sliding 10-minute count and amount per card, advancing every minute; distinct countries per card per day |
 | Watermark and late data | 30-second watermark delay; late events to a side output, counted and reviewed daily |
 | Bad events | Dead-letter topic `najm.card.authorisations.dlq`; alert on any event; owner reviews within one business day |

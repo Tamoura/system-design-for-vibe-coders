@@ -552,7 +552,7 @@ Use a local cluster: install kind or k3d, and create a cluster with `kind create
 
 <details><summary>Answer</summary>
 
-**C.** Reconciliation: the controller compares desired with actual replicas and fixes the gap. A describes a container restart inside the same pod, which keeps its name. B is wrong because Services route traffic and never create pods. D misreads etcd's role as a store of state. (🟢 The essentials.)
+**C.** Reconciliation: the controller compares desired with actual replicas and fixes the gap. A is wrong because the kubelet restarts containers inside an existing pod, which keeps its name; a deleted pod is gone. B is wrong because Services route traffic and never create pods. D misreads etcd's role as a store of state. (🟢 The essentials.)
 
 </details>
 
@@ -669,7 +669,7 @@ echo 'cGFzc3dvcmQ=' | base64 --decode     # prints: password
 
 So a Secret is only as safe as three things you must set up:
 1. **Encryption at rest** for the cluster's data store. Managed services differ; many offer envelope encryption with your cloud KMS key. Check what yours does by default.
-2. **Access control (RBAC).** Anyone who can `get` Secrets in a namespace, or create pods there that mount them, can read them. Keep that list short.
+2. **Access control (RBAC).** Anyone who can `get` or `list` Secrets in a namespace, or create pods there that mount them, can read them. Keep that list short.
 3. **Never in Git as plain Secret manifests.** Keep the value in a secrets manager (AWS Secrets Manager, Azure Key Vault, Google Secret Manager, HashiCorp Vault) and sync it in with the **External Secrets Operator** or the **Secrets Store CSI Driver**; secrets that must live in Git are encrypted first (Sealed Secrets, SOPS).
 
 **Workload identity** (lesson 1.3) lets the sync tool authenticate without a stored key. More in [*Secure AI & Application Security*, lesson 5.2 — Secrets management: keys, tokens and where they leak](../secai/index.html#/5.2).
@@ -756,9 +756,9 @@ CPU is measured in cores or millicores (`250m` is a quarter of a core); memory i
 Choices worth explaining:
 - **Memory limit equals request.** Memory cannot be throttled, only killed, so overcommitting it causes surprise kills when neighbours get busy.
 - **No CPU limit here.** A debated choice: CPU limits can throttle a latency-sensitive service even when the node is idle. Many teams set CPU requests everywhere and limits only where hard fairness is needed; measure throttling (lesson 5.1) and decide per service.
-- **Security context.** Non-root, no privilege escalation, no Linux capabilities, a read-only root file system (mount an `emptyDir` where the app must write) and the default seccomp profile, matching the **restricted** Pod Security Standard that Najm enforces per namespace with the label `pod-security.kubernetes.io/enforce: restricted`. More in [*Secure AI & Application Security*, lesson 7.2 — Containers, Kubernetes and infrastructure as code](../secai/index.html#/7.2).
+- **Security context.** Non-root, no privilege escalation, no Linux capabilities, a read-only root file system (mount an `emptyDir` where the app must write) and the default seccomp profile. All but the read-only file system are required by the **restricted** Pod Security Standard that Najm enforces per namespace with the label `pod-security.kubernetes.io/enforce: restricted`. More in [*Secure AI & Application Security*, lesson 7.2 — Containers, Kubernetes and infrastructure as code](../secai/index.html#/7.2).
 
-**Quality of service.** Requests and limits also set each pod's eviction priority under memory pressure: **BestEffort** (none set; evicted first), **Burstable**, and **Guaranteed** (requests equal limits for CPU and memory in every container; evicted last). Payments runs Guaranteed.
+**Quality of service.** Requests and limits also set each pod's eviction priority under memory pressure: **BestEffort** (none set; evicted first), **Burstable**, and **Guaranteed** (requests equal limits for CPU and memory in every container; evicted last). The Mobile API spec above has no CPU limit, so it is Burstable; Payments also sets CPU limits equal to requests and runs Guaranteed.
 
 **Graceful shutdown.** Pods are stopped on every deploy, scale-down and node upgrade. On deletion, Kubernetes starts removing the pod from Service endpoints and, at the same time, runs any `preStop` hook and then sends `SIGTERM`. Endpoint removal takes a moment to propagate, so a pod that exits instantly drops requests still arriving. The fix: on `SIGTERM`, stop accepting new work, finish in-flight requests and exit within `terminationGracePeriodSeconds` (30 seconds by default), after which `SIGKILL` follows. A short `preStop` pause lets endpoint removal complete first; newer Kubernetes versions offer a built-in sleep action for this (check yours). For Payments, it also means never acknowledging a transfer that has not been committed.
 
@@ -892,9 +892,9 @@ Use a local kind or k3d cluster. For autoscaling, install metrics-server (on kin
 
 **1. During a 30-second database failover, every Payments pod is restarted repeatedly. Which probe design caused this?**
 
-- A. A readiness probe that checks the process only
-- B. A startup probe with a long failure threshold
-- C. A PodDisruptionBudget with `minAvailable: 2`
+- A. A readiness probe that checks only that the process responds
+- B. A startup probe with a long failure threshold for slow starts
+- C. A PodDisruptionBudget with `minAvailable: 2` on Payments
 - D. A liveness probe that queries the database
 
 <details><summary>Answer</summary>
@@ -905,10 +905,10 @@ Use a local kind or k3d cluster. For autoscaling, install metrics-server (on kin
 
 **2. A developer says the database password in their Secret manifest is safe to commit because "Kubernetes encrypts Secrets". What is the correct response?**
 
-- A. They are right; Secrets are encrypted in YAML
-- B. Secret values are only base64-encoded; keep the real value in a secrets manager, sync it into the cluster, enable encryption at rest and limit read access
-- C. They should change the type to ConfigMap, which is safer
-- D. They should base64-encode it twice
+- A. They are right; the API server encrypts Secret values before they reach Git
+- B. Base64 is not encryption; use a secrets manager and sync the value in
+- C. They should store it in a ConfigMap instead, which has stricter access rules
+- D. They should base64-encode the value twice so it cannot be decoded easily
 
 <details><summary>Answer</summary>
 
@@ -931,10 +931,10 @@ Use a local kind or k3d cluster. For autoscaling, install metrics-server (on kin
 
 **4. During every deploy, the Mobile API returns a small burst of connection errors, even though rolling-update settings never reduce capacity. What is the most likely fix?**
 
-- A. Make the app handle `SIGTERM` by finishing in-flight requests, and add a short `preStop` pause so endpoint removal completes before it stops accepting connections
-- B. Remove the readiness probe
-- C. Set the memory limit higher
-- D. Increase `revisionHistoryLimit`
+- A. On `SIGTERM`, finish in-flight requests, after a short `preStop` pause
+- B. Remove the readiness probe so new pods receive traffic sooner
+- C. Raise the memory limit so old pods are not killed during the rollout
+- D. Increase `revisionHistoryLimit` so the rollout keeps more old pods
 
 <details><summary>Answer</summary>
 
@@ -944,10 +944,10 @@ Use a local kind or k3d cluster. For autoscaling, install metrics-server (on kin
 
 **5. Payments' connection-pool size is 20 per pod and the database accepts at most 300 connections, with some reserved for administration. Under load, the HPA keeps adding pods and the database rejects connections. What should Maha change first?**
 
-- A. Remove the HPA and run 40 fixed replicas
-- B. Increase the pods' CPU limits
-- C. Cap `maxReplicas` so that replicas × pool size stays safely below the database limit, and scale on a metric that reflects the real bottleneck
-- D. Switch the liveness probe to check the database
+- A. Remove the HPA and run 40 fixed replicas so capacity is always there
+- B. Raise the pods' CPU limits so each pod handles more requests
+- C. Cap `maxReplicas` so replicas × pool size stays under the limit
+- D. Make the liveness probe check the database so bad pods restart
 
 <details><summary>Answer</summary>
 
