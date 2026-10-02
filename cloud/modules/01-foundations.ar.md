@@ -17,7 +17,7 @@
 - أكبر فخ (biggest trap): إعادة تشغيل الأشياء (restarting things) قبل أن تعرف أي قفزة فشلت. إعادة التشغيل تُتلف الأدلة (destroys evidence) ولا يمكنها إصلاح DNS أو جدار حماية (firewall) أو شهادة (certificate).
 
 ## 🧭 لماذا يهم (Why it matters)
-في يوم الاثنين الثاني ليوسف، يُبلغ مركز الاتصال (contact centre) أن تطبيق نجم للأفراد (Najm retail app) «لا يفتح» (won't load). كل الحجيرات (pods) تعمل، وسجلات التطبيق (application logs) لا تُظهر أي أخطاء. يعيد يوسف تشغيل النشر (restarts the deployment) على أي حال؛ فلا يتغير شيء. تكتب مها، قائدة فريق هندسة موثوقية المواقع (SRE lead)، أمرًا واحدًا: `curl -v https://api.najm.example/health`. يتوقف عند مصافحة TLS (TLS handshake) برسالة `certificate has expired`. كانت شهادة الحافة (edge certificate) تُجدَّد يدويًا (renewed by hand) مرة في السنة، وكان الشخص الذي يتولى ذلك قد انتقل إلى فريق آخر. كان التطبيق سليمًا (healthy) طوال الوقت؛ كل ما في الأمر أن العملاء لم يستطيعوا الوصول إليه (could not reach it).
+في ثاني يوم اثنين يقضيه يوسف في العمل (Yousef's second Monday)، يُبلغ مركز الاتصال (contact centre) أن تطبيق نجم للأفراد (Najm retail app) «لا يفتح» (won't load). كل الحجيرات (pods) تعمل، وسجلات التطبيق (application logs) لا تُظهر أي أخطاء. يعيد يوسف تشغيل النشر (restarts the deployment) على أي حال؛ فلا يتغير شيء. تكتب مها، قائدة فريق هندسة موثوقية المواقع (SRE lead)، أمرًا واحدًا: `curl -v https://api.najm.example/health`. يتوقف عند مصافحة TLS (TLS handshake) برسالة `certificate has expired`. كانت شهادة الحافة (edge certificate) تُجدَّد يدويًا (renewed by hand) مرة في السنة، وكان الشخص الذي يتولى ذلك قد انتقل إلى فريق آخر. كان التطبيق سليمًا (healthy) طوال الوقت؛ كل ما في الأمر أن العملاء لم يستطيعوا الوصول إليه (could not reach it).
 
 كانت إعادة تشغيل الحجيرات (restarting pods) تخمينًا (a guess). أما `curl -v` الذي نفّذته مها فقد اختبر قفزة محددة واحدة (one specific hop). هذه هي العادة (the habit) التي يبنيها هذا الدرس: اعرف القفزات التي يعبرها الطلب، واعرف الأداة التي تختبر كلًّا منها، وامشِ عليها بالترتيب (walk them in order).
 
@@ -142,7 +142,7 @@ curl -sv https://api.najm.example/health -o /dev/null
 
 ### 🔴 نظرة الخبير (Expert view)
 
-**أتمِت الشهادات، ثم أطلق التنبيهات على أي حال (Automate certificates, then alert anyway).** التجديد السنوي اليدوي (manual yearly renewal) انقطاعٌ مؤقَّت بساعة (an outage on a timer). استخدم **ACME** (RFC 8555)، وهو البروتوكول (the protocol) الذي يقوم عليه Let's Encrypt، أو مدير الشهادات لدى مزوّدك (your provider's certificate manager)، وفي Kubernetes متحكّمًا (controller) مثل cert-manager. وقد اتفق منتدى CA/Browser Forum على تقصير الحد الأقصى لعمر الشهادات العامة (maximum public certificate lifetimes) على مراحل خلال السنوات المقبلة (تحقّق من الحد الحالي، check the current limit)، مما يجعل التجديد اليدوي غير عملي (unworkable). ومع ذلك أطلق تنبيهًا (alert) قبل انتهاء الصلاحية بـ 14 يومًا مثلًا: فالأتمتة تفشل بصمت (automation fails quietly) عندما يتغير DNS أو الصلاحيات (permissions).
+**أتمِت الشهادات، ثم أطلق التنبيهات على أي حال (Automate certificates, then alert anyway).** التجديد السنوي اليدوي (manual yearly renewal) انقطاعٌ موقوتٌ ينتظر موعده (an outage on a timer). استخدم **ACME** (RFC 8555)، وهو البروتوكول (the protocol) الذي يقوم عليه Let's Encrypt، أو مدير الشهادات لدى مزوّدك (your provider's certificate manager)، وفي Kubernetes متحكّمًا (controller) مثل cert-manager. وقد اتفق منتدى CA/Browser Forum على تقصير الحد الأقصى لعمر الشهادات العامة (maximum public certificate lifetimes) على مراحل خلال السنوات المقبلة (تحقّق من الحد الحالي، check the current limit)، مما يجعل التجديد اليدوي غير عملي (unworkable). ومع ذلك أطلق تنبيهًا (alert) قبل انتهاء الصلاحية بـ 14 يومًا مثلًا: فالأتمتة تفشل بصمت (automation fails quietly) عندما يتغير DNS أو الصلاحيات (permissions).
 
 **نظام DNS تبعيةٌ لكل شيء (DNS is a dependency of everything).** قد تعتمد أدوات المراقبة (monitoring) وأدوات النشر (deploy tools) ومحادثة الحوادث (incident chat) لديك على نظام DNS والشبكة نفسيهما اللذين تحاول إصلاحهما، كما أظهر انقطاع Facebook عام 2021. احتفظ بقائمة «خارج النطاق» (out-of-band) لكيفية الوصول إلى لوحات التحكم (consoles) وأدلة التشغيل (runbooks) وبعضكم بعضًا إذا توقفت أسماؤكم عن التحليل (stop resolving).
 
@@ -512,7 +512,7 @@ flowchart TD
 **5. يطلب مدير منتج (product manager) تشغيل واجهة برمجة تطبيق نجم للهاتف في منطقتين «من باب الاحتياط» (to be safe). ما أفضل ردّ أولي (the best first response)؟**
 
 - A. الموافقة؛ فمنطقتان أكثر أمانًا من واحدة دائمًا، أيًّا كانت التكلفة (whatever the cost)
-- B. الرفض؛ فالبنك لا يحتاج أبدًا إلى أكثر من منطقة واحدة إذا استخدم ثلاث مناطق توافر
+- B. الرفض (refuse)؛ فالبنك لا يحتاج أبدًا إلى أكثر من منطقة واحدة (never needs more than one region) إذا استخدم ثلاث مناطق توافر (three zones)
 - C. السؤال عن الفشل وهدف التعافي (which failure and recovery target) الذي يجب تلبيته، ثم التصميم وفقه
 - D. اقتراح الانتقال إلى مزوّد تكون منطقته الواحدة أكثر موثوقية (more reliable)
 
@@ -688,7 +688,7 @@ metadata:
     eks.amazonaws.com/role-arn: arn:aws:iam::111122223333:role/najm-statements-reader
 ```
 
-الحجيرة التي تعمل بـ `serviceAccountName: statements-reader` تحصل على بيانات اعتماد لذلك الدور فقط (for that role only). أما الحجيرات الأخرى في العنقود فلا.
+الحجيرة التي تعمل بـ `serviceAccountName: statements-reader` تحصل على بيانات اعتماد لذلك الدور فقط (for that role only). أما الحجيرات الأخرى في العنقود (other pods in the cluster) فلا.
 
 **كيف تتجمّع السياسات (How policies combine).** في AWS، يُرفض الطلب افتراضيًا (denied by default)؛ ولا يُسمح به إلا إذا سمحت به سياسة ما ولم ترفضه أي سياسة رفضًا صريحًا (explicitly denies it). ويمكن للحواجز الحامية على مستوى المؤسسة (organisation-wide guardrails) — **سياسات التحكم بالخدمات (service control policies)** في AWS Organizations — و**حدود الصلاحيات (permissions boundaries)** أن تضع سقفًا (cap) لما يمكن لأي هوية في الحساب فعله، حتى لو منحتها سياسةٌ أكثر. أما Azure RBAC فتراكمي (additive) عبر تعيينات الأدوار (role assignments) على نطاقات مجموعة الإدارة (management group) والاشتراك (subscription) ومجموعة الموارد (resource group) والمورد (resource)، مع التوريث نزولًا (inheritance downwards). وتُورَّث سياسات السماح (allow policies) في Google Cloud نزولًا عبر تسلسل المؤسسة والمجلد والمشروع والمورد (organisation, folder, project and resource hierarchy)، كما يوفّر Google Cloud سياسات رفض (deny policies). والقاعدة للثلاثة جميعًا: **امنح على أضيق نطاق يفي بالغرض (grant at the narrowest scope that works)**؛ فالمنح العالي في التسلسل الهرمي (a grant high in the hierarchy) يتدفق إلى كل ما تحته.
 
@@ -779,7 +779,7 @@ metadata:
 
 **2. شرط الثقة عبر OIDC (OIDC trust condition) لأحد الأدوار يسمح لأي مستودع في مؤسسة `najm-bank` بتقمّص دور النشر في الإنتاج (the production deploy role). ما الخطر؟**
 
-- A. لا خطر، لأن كل مستودع في المؤسسة يخص البنك
+- A. لا خطر (none)، لأن كل مستودع في المؤسسة يخص البنك (every repository in the organisation belongs to the bank)
 - B. يستطيع سير العمل في أي مستودع (any repository's workflow)، حتى على فرع غير مُراجَع (an unreviewed branch)، الحصول على بيانات اعتماد النشر
 - C. ستنتهي صلاحية الرموز الصادرة (issued tokens) قبل أن تكتمل عمليات النشر الطويلة
 - D. تتباطأ عمليات النشر في الإنتاج لأن كل مستودع يصطف في طابور (queues) للحصول على الدور
@@ -792,7 +792,7 @@ metadata:
 
 **3. تحتاج عدة حجيرات على عقدة Kubernetes واحدة (the same Kubernetes node) إلى صلاحيات سحابية مختلفة. ما التصميم الصحيح (the right design)؟**
 
-- A. منح العقدة دورًا واحدًا يحمل كل صلاحية تحتاجها أي من حجيراتها
+- A. منح العقدة دورًا واحدًا (give the node one role) يحمل كل صلاحية تحتاجها أي من حجيراتها (every permission any of its pods needs)
 - B. تخزين مفتاح وصول مختلف في متغيرات البيئة (environment variables) لكل حجيرة
 - C. ربط حساب الخدمة لكل حجيرة (each pod's service account) بهوية سحابية ضيّقة خاصة بها (its own narrow cloud identity)
 - D. تشغيل كل حجيرة على جهاز افتراضي مخصّص لها (dedicated VM) بدور مثيل خاص (its own instance role)
@@ -808,7 +808,7 @@ metadata:
 - A. تُورَّث المنح نزولًا (grants inherit downwards) إلى كل اشتراك ومورد تحتها
 - B. يتجاهل Azure تعيينات الأدوار (role assignments) المُجراة على مستوى مجموعة الإدارة
 - C. لا يمكن إزالة تعيينات الأدوار على ذلك النطاق (at that scope) بعد إنشائها
-- D. لا يهم الأمر إلا إذا لم تكن المصادقة متعددة العوامل مفعّلة في حساب المهندس
+- D. لا يهم الأمر إلا إذا لم تكن المصادقة متعددة العوامل (MFA) مفعّلة في حساب المهندس (the engineer's account)
 
 <details><summary>الإجابة</summary>
 
