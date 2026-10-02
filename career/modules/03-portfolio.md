@@ -17,11 +17,11 @@
 - Biggest trap: shipping agent-built code you cannot explain. Reviewers pick one file and ask "why this way?" Your answer is the proof.
 
 ## 🧭 Why it matters
-In a mock portfolio review, Khalid, the engineering manager who hires juniors for the Najm Tech Graduate Programme, opens Omar's GitHub: 23 repositories of LeetCode solutions, course assignments, a tutorial to-do app and an untouched fork. After about a minute he says, kindly: "Everything here tells me you can finish a course. Nothing tells me you can do the job. I can't find one thing that runs, one test, or one decision you made yourself."
+In a mock portfolio review, Khalid, the engineering manager who hires juniors for the Najm Tech Graduate Programme, opens Omar's GitHub: 23 repositories of LeetCode solutions, course assignments, a tutorial to-do app and an untouched fork. After a minute he says, kindly: "Everything here tells me you can finish a course. Nothing tells me you can do the job. I can't find one thing that runs, one test, or one decision you made yourself."
 
 Reem has the opposite problem: twelve good-looking apps built quickly with AI coding agents. Khalid asks what stops one user of her expense-splitting app from reading another's expenses. Reem opens the code and realises she is reading it for the first time. Khalid's team uses AI tools every day; his point is narrower: "If I hire you, I am trusting you to check what the agent wrote. Show me that you can."
 
-Mohammed, the bootcamp career-switcher, has three projects. One is a class-booking system for the gym where he used to work, used by twenty members for two months, with tests and a short note on a double-booking bug he fixed. Khalid spends ten minutes on it and asks for his CV. That contrast is this lesson.
+Mohammed, the bootcamp career-switcher, has three projects. One is a class-booking system for the gym where he used to work, used by twenty members for two months, with tests and a short note on a double-booking bug he fixed. Khalid spends ten minutes on it and asks for his CV.
 
 ## 📐 How it works
 
@@ -40,7 +40,7 @@ Mohammed, the bootcamp career-switcher, has three projects. One is a class-booki
 | 5. Used by someone else | A named real user, even a small group | That it solves a problem and survives real input |
 | 6. Operated over time | Bugs found in use, fixed, written up; changes released safely | That you can be trusted with a running system |
 
-Many graduate portfolios stop at rung 2 or 3. Reaching rung 5 or 6 with one project sets you apart.
+Reaching rung 5 or 6 with one project sets you apart.
 
 **The six marks of a proof project.** Use these as a checklist:
 1. **A real problem and a named user.** "Students in my department waiting for lab slots", not "a booking app".
@@ -114,7 +114,7 @@ flowchart LR
 
 **Team projects.** A group project is strong proof if you are precise about your part: "Built the reconciliation job and its tests; teammates built the front end" is honest and checkable in the commit history.
 
-**Local advantage.** In the Gulf market, proper handling of Arabic text and right-to-left layout, or banking-style care for data protection and audit trails, stands out because many portfolios ignore both. See [*System Design for Vibe Coders*, lesson 11.2 — Internationalization and RTL](../vibe/index.en.html#l11-2).
+**Local advantage.** In the Gulf market, proper handling of Arabic text and right-to-left layout, or banking-style care for data protection and audit trails, stands out. See [*System Design for Vibe Coders*, lesson 11.2 — Internationalization and RTL](../vibe/index.en.html#l11-2).
 
 ## 🧰 The toolkit
 | Resource, tool or template | What it is and does | When to reach for it |

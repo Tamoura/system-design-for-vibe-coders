@@ -291,7 +291,7 @@ Khalid's feedback: "Reem is excellent at getting things built. We need to see th
 
 Tools change quickly; the principles below do not.
 
-**What employers check.** When a team hires a junior who will use AI tools, the questions behind the interview are:
+**What employers check.** Behind the interview, the questions are:
 - **Can you specify?** Can you turn a vague request into a clear, small task with acceptance criteria?
 - **Can you review?** Do you read the diff (the exact lines changed) and notice what is wrong, missing or unnecessary?
 - **Can you verify?** Do you prove it works with tests and real runs, rather than trusting the agent's summary?
@@ -360,7 +360,7 @@ before writing the implementation.
 - **"Walk me through your take-home."** The interviewer picks a random line and asks why. This is where carried candidates are found.
 - **"Extend it live,"** sometimes without AI tools.
 - **AI-allowed live coding.** The interviewer watches how you prompt, read and verify.
-- **Reviewing a flawed AI-written pull request.** Described by interviewers and hiring guides as an increasingly common exercise at the time of writing (2026). Lesson 5.2 covers it.
+- **Reviewing a flawed AI-written pull request.** Reported as an increasingly common exercise at the time of writing (2026); lesson 5.2 covers it.
 - **Algorithm rounds without AI.** Still common at large technology firms. They test reasoning you cannot borrow.
 
 **Learning mode versus producing mode.** When **learning**, ask the agent to explain, quiz you, or review code *you* wrote. When **producing** in an area you understand, let it write more, and review carefully. Reem stayed in producing mode for topics (retries, concurrency) she had never learned. A simple rule: **the first time you use a concept, write it yourself or study it until you could.**
@@ -388,18 +388,18 @@ before writing the implementation.
 | **Secret scanning** (for example gitleaks, platform push protection) | Detects keys and passwords in code before they are pushed | On every repository, especially when agents edit config and fixtures |
 
 ## 🏛️ In practice at Najm Bank
-After Reem's interview, Khalid and Tariq write the one-page **AI-assisted work rules** every Najm graduate receives on day one. Adapt them as a template.
+After Reem's interview, Khalid and Tariq write the one-page **AI-assisted work rules** every Najm graduate receives on day one. Adapt them.
 
 **Part A: the rules**
 
 | Rule | What it means in practice |
 |---|---|
-| Use approved tools only | Only the AI tools on the internal list, with the settings it states. No Najm code or customer data goes into anything else. |
+| Use approved tools only | Only tools on the internal list, with its settings. No Najm code or customer data goes anywhere else. |
 | You own every line | Whoever typed it, your name is on the commit. If you cannot explain it, do not commit it. |
 | Small, specified tasks | Give the agent tasks you could review in fifteen minutes, with acceptance criteria. |
 | Tests are yours | Write or approve the test cases yourself. Any change to an existing test needs a reason in the pull request. |
 | Disclose in the pull request | One line: tool, what it did, how you verified it. |
-| Learning first | The first time you meet a concept, write it yourself or study it until you could. Your mentor will ask. |
+| Learning first | The first time you meet a concept, write it yourself or study it until you could. |
 
 **Part B: the pull request disclosure and verification block** (Reem's, on her first Najm pull request)
 
@@ -420,14 +420,14 @@ AI assistance and verification:
 Tariq's comment: "I can see where the agent helped, where you overruled it, and how you know it works."
 
 ## 🛠️ Exercises
-- 🟢 For three files of a project you built with heavy AI help, do the explain-back test in writing: one or two sentences per function on what it does and why. Mark every gap. *Done when:* the note exists, and every marked gap has either been learned (with a sentence added) or listed as a next study item.
+- 🟢 For three files of a project you built with heavy AI help, do the explain-back test in writing: a sentence or two per function on what it does and why. Mark every gap. *Done when:* the note exists, and every marked gap has either been learned (with a sentence added) or listed as a next study item.
 - 🟡 Choose a small feature for one of your projects. Write the test cases first, then use an agent with a test-first prompt to implement it. Review the diff with the checklist from 🟡 Going deeper and record every change you rejected or edited. *Done when:* the feature is merged through a pull request whose description includes an AI-assistance and verification block like Najm's, and at least one rejected or edited change is recorded with the reason.
 - 🔴 With a friend, each use an agent to add a small feature to the other's project, then plant one realistic flaw (a missing authorisation check, a weakened test, a date off-by-one, a hard-coded secret). Review each other's pull request cold, in 20 minutes. *Done when:* each of you has written review comments, you compare them with the planted flaw, and you note what you missed and why.
 
 ## ⚠️ Mistakes and traps
 - **Submitting code you cannot explain.** The fastest way to fail a follow-up interview. Do the explain-back test before every commit.
 - **Assuming AI rules.** Rules differ by employer and by round. Ask in writing before the assessment and follow the answer.
-- **Hiding AI use, or over-apologising for it.** Both damage trust. Disclose briefly and factually, with how you verified.
+- **Hiding AI use, or over-apologising for it.** Both damage trust. Disclose briefly, with how you verified.
 - **Letting the agent change tests to make them pass.** Treat any test change as a design question that needs a reason.
 - **Skipping the learning.** Producing code in a topic you have never studied leaves you hollow there. Write it yourself the first time.
 

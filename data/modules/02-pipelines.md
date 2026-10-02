@@ -22,7 +22,7 @@ Huda's first real task at Najm Bank is a nightly load of the `accounts` table fr
 
 Then Kareem, the retail data analyst, notices that the customer 360 mart shows 312 more open accounts than the core banking report. Faisal and Huda find two causes. First, accounts opened by mistake are **hard-deleted** in the core system, and a query on `updated_at` cannot see a row that no longer exists. Second, a long-running batch transaction stamps `updated_at` at its start but commits minutes later, after Huda's load has moved the watermark past that time. Those updates are skipped for ever.
 
-Nothing crashed and no alert fired. The pipeline was "green" and wrong. That is the normal way ingestion fails, and it is why the load pattern is an engineering decision, not a connector setting.
+Nothing crashed and no alert fired. The pipeline was "green" and wrong. That is how ingestion usually fails, and why the load pattern is an engineering decision, not a connector setting.
 
 ## 📐 How it works
 
@@ -40,7 +40,7 @@ ETL still fits when you must transform *before* loading: to drop or mask persona
 - **Same shape as the source.** Keep column names and types as close to the source as possible. Renaming and cleaning happen in staging.
 - **Load metadata on every row.** At least `_loaded_at` (when your pipeline wrote it), `_source` (which system and table) and `_batch_id` (which run). These columns answer "where did this number come from?" months later.
 
-**Full loads.** The simplest pattern: copy the whole table every run and replace the previous copy. It is always correct and captures deletes for free (a deleted row is simply absent). It becomes impractical for large tables, where copying everything nightly loads the source and costs time and money. For reference tables such as branches or currency codes, it is usually right.
+**Full loads.** The simplest pattern: copy the whole table every run and replace the previous copy. It is always correct and captures deletes for free (a deleted row is simply absent). It becomes impractical for large tables. For reference tables such as branches or currency codes, it is usually right.
 
 **Incremental loads with a high-water mark.** For large tables you copy only rows that changed since the last run. The usual method is a **high-water mark**: remember the largest `updated_at` (or an increasing ID) you have loaded, and next time ask for rows above it.
 
@@ -58,11 +58,11 @@ SELECT * FROM accounts
 WHERE updated_at >= :last_watermark - INTERVAL '30 minutes';
 ```
 
-The overlap means you will re-read some rows you already have. That is fine, as long as the next step is a **merge** (upsert) on the primary key rather than a blind append. Lesson 2.2 covers that idempotent merge in detail.
+The overlap means you will re-read some rows you already have. That is fine, as long as the next step is a **merge** (upsert) on the primary key rather than a blind append (lesson 2.2).
 
 Before relying on `updated_at`, ask the owning team: does every code path, including bulk scripts, set it? Is it set by the database clock or by servers with different clocks? Are rows ever hard-deleted? If any answer is uncertain, use CDC or periodic full reconciliation.
 
-**Change data capture.** Every serious database writes changes to a log before applying them, for crash recovery and replication. PostgreSQL's is the **write-ahead log** (WAL); MySQL's is the binlog. **Log-based CDC** reads that log and turns each committed change into an event: this row was inserted, this one updated from these values to those, this one deleted. Because it reads commits, not timestamps, it sees every change exactly in commit order, including deletes and late commits. Huda's two bugs both disappear.
+**Change data capture.** Every serious database writes changes to a log before applying them, for crash recovery and replication. PostgreSQL's is the **write-ahead log** (WAL); MySQL's is the binlog. **Log-based CDC** reads that log and turns each committed change into an event: this row was inserted, this one updated from these values to those, this one deleted. Because it reads commits, not timestamps, it sees every committed change in order, including deletes and late commits. Huda's two bugs both disappear.
 
 ```mermaid
 flowchart LR
@@ -139,7 +139,7 @@ WHERE rn = 1
 
 **Reconciliation is not optional.** Even with CDC, compare daily row counts and amount totals between source and warehouse. When they differ, you want to know that morning, not when Kareem finds it.
 
-**Where ingestion runs.** Customer data for Qatar, UAE and EU customers may carry residency expectations that limit where connectors, Kafka and storage live; confirm with Sara (the DPO) rather than assuming a cloud region is acceptable (Module 6).
+**Where ingestion runs.** Data on Qatar, UAE and EU customers may carry residency expectations that limit where connectors, Kafka and storage run; confirm with Sara (the DPO) rather than assuming (Module 6).
 
 ## 🧰 The toolkit
 | Tool, pattern or standard | What it is and does | When to reach for it |
@@ -270,7 +270,6 @@ Use synthetic data only. A generator script or a public sample database is fine;
 - Apache Kafka documentation, Kafka Connect — https://kafka.apache.org/documentation/
 - Airbyte documentation — https://docs.airbyte.com/
 - dlt documentation — https://dlthub.com/docs/
-- Apache Parquet — https://parquet.apache.org/
 - Martin Kleppmann, *Designing Data-Intensive Applications* (O'Reilly), chapters on replication and derived data
 - Joe Reis and Matt Housley, *Fundamentals of Data Engineering* (O'Reilly)
 
@@ -292,7 +291,7 @@ Huda moves her nightly transactions load into Airflow. The task runs a query for
 
 Lina, the analytics engineer, spots it just before the finance team does. Then a second, quieter bug appears. A Saturday load had failed and Huda re-ran it by hand on Monday. Because the query said `CURRENT_DATE - 1`, the re-run loaded *Sunday* again, and Saturday never arrived.
 
-Neither bug is about Airflow. The task appended instead of replacing, and chose its own day. Faisal's rule for the team comes out of that morning: **"Every task must be safe to run twice, for any date, at any time."** This lesson is how you meet that rule.
+Neither bug is about Airflow. The task appended instead of replacing, and chose its own day. Faisal's rule for the team comes out of that morning: **"Every task must be safe to run twice, for any date, at any time."**
 
 ## 📐 How it works
 
@@ -303,7 +302,7 @@ Neither bug is about Airflow. The task appended instead of replacing, and chose 
 - **Dependencies**: run "build customer 360" only after "load accounts" and "load transactions" have both succeeded.
 - **Scheduling**: by time ("daily at 02:00") or by event ("when the settlement file lands").
 - **Retries and timeouts**: try a failed task again after a pause; kill one that hangs.
-- **History**: every run, its parameters, logs and outcome, in one place. For a bank, that history is also audit evidence.
+- **History**: every run, its parameters, logs and outcome, in one place.
 - **Backfills**: run a pipeline for a range of past dates.
 - **Alerting**: tell a named person when something fails or is late.
 
@@ -356,7 +355,7 @@ COMMIT;
 
 Run the second version once or ten times, for any day, and the table ends up the same. The `BEGIN`/`COMMIT` matters: if the insert fails, the delete rolls back and yesterday's good data is still there.
 
-**Data intervals, not "today".** Orchestrators give each run a **data interval**: the slice of time it is responsible for. A daily run for 14 September has the interval from 14 September 00:00 to 15 September 00:00, and it normally *starts* after the interval ends, early on 15 September. Airflow calls the start of the interval the **logical date** (older docs say "execution date", which is not when the run executes). Check your version: in Airflow 3, cron strings and presets such as `@daily` default to a trigger timetable whose interval has zero length, so ask for an interval timetable explicitly, as below. Your task should read its interval from the orchestrator and use it in every query. Then a re-run on Monday for Saturday's interval loads Saturday.
+**Data intervals, not "today".** Orchestrators give each run a **data interval**: the slice of time it is responsible for. A daily run for 14 September has the interval from 14 September 00:00 to 15 September 00:00, and it normally *starts* after the interval ends, early on 15 September. Airflow calls the start of the interval the **logical date** (older docs say "execution date", which is not when the run executes). In Airflow 3, cron strings and presets such as `@daily` default to a zero-length trigger interval, so request an interval timetable explicitly, as below. Your task should read its interval from the orchestrator and use it in every query. Then a re-run on Monday for Saturday's interval loads Saturday.
 
 **Retries.** Many failures pass: a dropped connection, a lock timeout, a rate limit. Retry automatically with a growing pause (**exponential backoff**), and set a **timeout** so a hung task fails instead of blocking for hours. Retries are only safe on idempotent tasks.
 
@@ -430,7 +429,7 @@ WHEN NOT MATCHED THEN
 
 `MERGE` fails if two source rows match one target row, so first reduce the batch to the latest row per `account_id`. The `s.updated_at > t.updated_at` guard means an older change replayed later cannot overwrite a newer one. This is the merge that made the overlapping watermark in lesson 2.1 safe.
 
-**Backfills.** A **backfill** runs a pipeline for past intervals. You need one when you fix a bug, add a column that must exist for history, or bring a new table online. With idempotent, interval-driven tasks a backfill is just "run these 90 daily intervals"; Airflow and Dagster both have built-in backfill commands and UI actions (the Airflow CLI changed between versions 2 and 3, so check the docs for yours). Without idempotency a backfill is a manual, risky project. Plan backfills like changes:
+**Backfills.** A **backfill** runs a pipeline for past intervals: after a bug fix, a new column or a new source. With idempotent, interval-driven tasks a backfill is just "run these 90 daily intervals"; Airflow and Dagster both have built-in backfill commands and UI actions (the Airflow CLI changed in version 3; check your docs). Without idempotency a backfill is a manual, risky project. Plan backfills like changes:
 
 - **Limit concurrency** with `max_active_runs` or pools, so ninety runs cannot flood the source.
 - **Run downstream too**: marts and extracts built from those dates.
@@ -460,13 +459,13 @@ The partition key plays the role of Airflow's data interval. The asset view make
 
 **The orchestrator orchestrates.** A task should tell the warehouse, Spark or dbt to do heavy work, not pull ten million rows into Python on the scheduler's machine.
 
-**Retry the right failures.** Retrying a dropped connection is good. Retrying a data test failure or a syntax error three times only delays the alert. Distinguish *transient* errors (retry) from *deterministic* ones (fail fast, alert a human), and make sure failures send a message to an owned channel with a link to the logs.
+**Retry the right failures.** Retrying a dropped connection is good. Retrying a data test failure or a syntax error three times only delays the alert. Distinguish *transient* errors (retry) from *deterministic* ones (fail fast, alert a human), and send failures to an owned channel with a link to the logs.
 
 **Service levels for data.** Agree a freshness target per data product, for example "credit-risk mart for day D ready by 07:00 on D+1", and alert when it is at risk, not only when a task fails. Monitoring patterns for jobs nobody watches are covered in [*System Design for Vibe Coders*, lesson 7.4 — Background jobs: the code nobody watches](../vibe/index.en.html#l7-4), and durable workflow engines for application work in [*SaaS Building Blocks*, lesson 5.4 — Workflow engines and durable execution](../saas/index.html#/5.4).
 
 **Side effects outside the warehouse.** An email, API call or file upload is not covered by a database transaction. Give each an **idempotency key** (such as report name plus business date), record it when done, and let retries skip it. The same idea for application writes is taught in [*System Design for Vibe Coders*, lesson 2.6 — Two clicks at once: races, transactions, and idempotent writes](../vibe/index.en.html#l2-6).
 
-**Run history as evidence.** Auditors ask "how was this figure produced, and when?". Run history with parameters, code version and test results answers that; keep it as long as the bank's retention rules require, and keep DAG code under review in version control (lesson 3.1).
+**Run history as evidence.** Auditors ask how a figure was produced and when. Run history with parameters, code version and test results answers that; retain it as the bank's rules require and keep DAG code in version control (lesson 3.1).
 
 ## 🧰 The toolkit
 | Tool, pattern or standard | What it is and does | When to reach for it |
@@ -905,7 +904,7 @@ Run Kafka or Redpanda locally in Docker using their official quick-starts, and g
 
 <details><summary>Answer</summary>
 
-**D.** Partitioning by a skewed key puts most events on one partition, and only one consumer in a group can read it; `card_id` spreads load and still keeps each card in order. A, B and C do not change how load is spread across partitions. (🔴 Expert view.)
+**D.** Partitioning by a skewed key puts most events on one partition, and only one consumer in a group can read it; `card_id` spreads load. A, B and C do not change how load is spread across partitions. (🔴 Expert view.)
 
 </details>
 
