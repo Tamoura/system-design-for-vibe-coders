@@ -420,7 +420,7 @@ spec:
 
 يظهر الملصق نفسه (same label) ثلاث مرات: محدِّد عملية النشر (Deployment selector)، وقالب الحجيرة (pod template)، ومحدِّد الخدمة (Service selector). ويضيف الدرس 2.3 المجسّات (probes) والموارد (resources) وإعدادات الأمان (security settings) التي يحتاجها الإنتاج.
 
-**تصريحي لا أمري (Declarative, not imperative).** يغيّر `kubectl run` و `kubectl edit` العنقود الحيّ (live cluster) مباشرة؛ أما `kubectl apply -f` فيقدّم ملفات تصف الحالة المرغوبة (desired state). ومع GitOps، يكون Git مصدر الحقيقة الوحيد (only source of truth) وتُعكس التعديلات اليدوية (manual edits are reverted)، مما يزيل مشكلة "أحدهم غيّر شيئًا في الثالثة فجرًا (someone changed something at 3 a.m.)".
+**تصريحي لا أمري (Declarative, not imperative).** يغيّر `kubectl run` و `kubectl edit` العنقود الحيّ (live cluster) مباشرة؛ أما `kubectl apply -f` فيقدّم ملفات تصف الحالة المرغوبة (desired state). ومع GitOps، يكون Git مصدر الحقيقة الوحيد (only source of truth) وتُعكس التعديلات اليدوية (manual edits are reverted)، مما يزيل مشكلة "أحدهم غيّر شيئًا في الثالثة فجرًا ⁦(someone changed something at 3 a.m.)⁩".
 
 **كيف يمضي التحديث المتدحرج (How a rolling update proceeds).** مع الإعدادات أعلاه، يبدأ Kubernetes حجيرة جديدة واحدة (`maxSurge: 1`)، وينتظر حتى تصبح **جاهزة (ready)**، ويزيل حجيرة قديمة واحدة، ويكرّر. وإذا لم تصبح الحجيرات الجديدة جاهزة أبدًا، يتعثّر الطرح (rollout stalls) بدلًا من إسقاط الخدمة؛ وبعد `progressDeadlineSeconds` (600 ثانية افتراضيًا) تُبلغ عملية النشر أنها فشلت في التقدّم (failed to progress). وكلتا القيمتين (both values) افتراضيتهما 25% حين لا تضبطهما.
 
@@ -476,7 +476,7 @@ kubectl -n mobile get events --sort-by=.lastTimestamp
 
 **الترقيات عمل دائم (Upgrades are a standing job).** يشحن مشروع Kubernetes نحو ثلاثة إصدارات فرعية (minor releases) سنويًا، ويدعم كلًّا منها قرابة أربعة عشر شهرًا؛ وينشر المزوّدون المُدارون (managed providers) نوافذهم الخاصة (own windows) (تحقّق من مزوّدك). اقرأ ملاحظات الإهمال (deprecation notes) واختبر الترقيات في البيئات غير الإنتاجية (non-production) أولًا؛ فواجهات البرمجة المُزالة (removed APIs) هي السبب المعتاد للأعطال (breakage).
 
-**كم من Kubernetes ينبغي أن تشغّل؟ (How much Kubernetes should you run?)** يستحق Kubernetes تعقيده (earns its complexity) حين تتشارك خدمات وفرق وبيئات كثيرة منصة واحدة. أما لخدمة صغيرة واحدة، فقد تكون خدمة الحاويات عديمة الخوادم (serverless container service) أو المنصة كخدمة (PaaS) القرار الأفضل. اختار بنك نجم Kubernetes المُدار (managed Kubernetes) لأنه يشغّل عشرات الخدمات ويريد طريقة واحدة لنشرها. وصورة OCI نفسها تعمل على كل هذه، فيبقى الخيار قابلًا للعكس (reversible).
+**كم من Kubernetes ينبغي أن تشغّل؟ ⁦(How much Kubernetes should you run?)⁩** يستحق Kubernetes تعقيده (earns its complexity) حين تتشارك خدمات وفرق وبيئات كثيرة منصة واحدة. أما لخدمة صغيرة واحدة، فقد تكون خدمة الحاويات عديمة الخوادم (serverless container service) أو المنصة كخدمة (PaaS) القرار الأفضل. اختار بنك نجم Kubernetes المُدار (managed Kubernetes) لأنه يشغّل عشرات الخدمات ويريد طريقة واحدة لنشرها. وصورة OCI نفسها تعمل على كل هذه، فيبقى الخيار قابلًا للعكس (reversible).
 
 | المفهوم (Concept) | AWS | Microsoft Azure | Google Cloud |
 |---|---|---|---|

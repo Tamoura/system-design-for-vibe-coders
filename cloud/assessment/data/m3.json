@@ -7,7 +7,7 @@
       "lesson": "3.2",
       "q": {
         "en": "In pull-based GitOps with Argo CD or Flux, what is the last step the CI pipeline takes after it builds and tests a new Mobile API image?",
-        "ar": "في نهج GitOps القائم على السحب (pull-based GitOps) مع Argo CD أو Flux، ما الخطوة الأخيرة التي يتّخذها خط التسليم (CI pipeline) بعد أن يبني صورة (image) جديدة لـ واجهة برمجة تطبيق نجم للهاتف (Najm Mobile API) ويختبرها؟"
+        "ar": "في نهج GitOps القائم على السحب (pull-based GitOps) مع Argo CD أو Flux، ما الخطوة الأخيرة (last step) التي يتّخذها خط التسليم (CI pipeline) بعد أن يبني صورة (image) جديدة لواجهة برمجة تطبيق نجم للهاتف (Najm Mobile API) ويختبرها (tests it)؟"
       },
       "o": {
         "en": [
@@ -47,8 +47,8 @@
         "ar": [
           "ما زالت كلمة المرور في الحالة (state) نصًا صريحًا (plain text)؛ ولِّدها بمدير أسرار (secrets manager)",
           "لا بأس، لأن العلامة `sensitive` تشفّر القيمة (encrypts the value) أيضًا قبل كتابة ملف الحالة (state)",
-          "لا بأس متى نُقل ملف الحالة (state file) إلى مستودع Git، حيث تُحفظ كل قراءة في السجل التاريخي (history)",
-          "فعّل قفل الحالة (state locking) أولًا، لأن القفل (lock) يمنع الأشخاص الآخرين من قراءة هذه القيمة"
+          "لا بأس متى نُقل ملف الحالة (state file) إلى مستودع Git (Git repository)، حيث تُحفظ كل قراءة (every read) في السجل التاريخي (history)",
+          "فعّل قفل الحالة (state locking) أولًا، لأن القفل (lock) يمنع الأشخاص الآخرين (other people) من قراءة هذه القيمة (reading the value)"
         ]
       },
       "a": 0,
@@ -73,7 +73,7 @@
           "Adopt it: change the code by pull request so code and reality match"
         ],
         "ar": [
-          "شغّل `apply` الليلة كي تعود قاعدة البيانات إلى القيمة المكتوبة في الشيفرة (code)",
+          "شغّل `apply` الليلة (tonight) كي تعود قاعدة البيانات (database) إلى القيمة المكتوبة في الشيفرة (value in the code)",
           "أضف `ignore_changes` لهذا الحدّ (limit) كي تكفّ المهمة الليلية (nightly job) عن الإبلاغ عنه",
           "علّم التذكرة (ticket) بأنها انحراف معروف (known drift) وأبقِ القيمة حتى المراجعة التالية (next review)",
           "تبنَّه (adopt): غيّر الشيفرة بطلب سحب (pull request) كي تتطابق الشيفرة والواقع (code and reality)"
@@ -102,9 +102,9 @@
         ],
         "ar": [
           "اجعل مجلسًا استشاريًا للتغيير (change advisory board) يوافق على كل عملية دمج (merge) في فرع prod",
-          "فرع واحد (one branch)، ومجلد لكل بيئة (folder per environment)، وطلب سحب للملخّص (digest PR)",
+          "استخدم فرعًا واحدًا (one branch)، ومجلدًا لكل بيئة (folder per environment)، وطلب سحب لترقية الملخّص (digest promotion PR)",
           "انتقِ (cherry-pick) إيداع الصورة (image commit) وحده من staging إلى prod في كل ترقية (promotion)",
-          "دع خط التسليم (CI) يشغّل `kubectl apply` على prod مباشرةً ويتجاوز دمج الفروع (branch merge) كليًا"
+          "دع خط التسليم (CI) يشغّل `kubectl apply` على prod مباشرةً ويتجاوز دمج الفروع (branch merge)"
         ]
       },
       "a": 1,

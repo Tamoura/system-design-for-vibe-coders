@@ -177,7 +177,7 @@ from {{ source('core_banking', 'customers') }}
 {% endsnapshot %}
 ```
 
-تضيف dbt العمودين `dbt_valid_from` و`dbt_valid_to`؛ والصف الحالي (the current row) تكون فيه قيمة `dbt_valid_to` فارغة (null). استخدم استراتيجية `check` (the `check` strategy) عندما لا يملك المصدر عمود `updated_at` موثوقًا. وتتيح الإصدارات الحديثة (recent versions) (من 1.9 فصاعدًا) أيضًا تعريف اللقطات في YAML. ويجب أن تعمل اللقطات وفق جدول زمني (on a schedule): فالتغيير الذي يحدث ثم يُعكَس بين تشغيلين (happens and reverts between two runs) لا يُرى أبدًا.
+تضيف dbt العمودين `dbt_valid_from` و`dbt_valid_to`؛ والصف الحالي (the current row) تكون فيه قيمة `dbt_valid_to` فارغة (null). استخدم استراتيجية `check` (the check strategy) عندما لا يملك المصدر عمود `updated_at` موثوقًا. وتتيح الإصدارات الحديثة (recent versions) (من 1.9 فصاعدًا) أيضًا تعريف اللقطات في YAML. ويجب أن تعمل اللقطات وفق جدول زمني (on a schedule): فالتغيير الذي يحدث ثم يُعكَس بين تشغيلين (happens and reverts between two runs) لا يُرى أبدًا.
 
 **اختبارات الوحدة للمنطق (Unit tests for logic).** اختبارات البيانات (data tests) تفحص البيانات التي لديك. أما **اختبارات الوحدة (unit tests)** (المضافة في dbt 1.8) فتفحص المنطق مقابل مدخلات صغيرة مكتوبة يدويًا (small, hand-written inputs)، قبل وصول أي بيانات حقيقية. وهي مثالية لعبارات `case` المعقّدة (tricky) وحدود التواريخ (date boundaries):
 
@@ -312,7 +312,7 @@ models:
 
 <details><summary>الإجابة</summary>
 
-**C.** تعريف واحد في نموذج واحد، يُعاد استخدامه عبر `ref()`، هو ما توفّره التحويلات بوصفها شيفرة (transformations as code). الخيار B يختبر البيانات لكنه لا يفعل شيئًا حيال المنطق المكرّر (duplicated logic)؛ والخيار A يغيّر الأداة لا المنطق. (🟡 التعمق أكثر، Going deeper.)
+**C.** تعريف واحد في نموذج واحد، يُعاد استخدامه عبر `ref()`، هو ما توفّره التحويلات بوصفها شيفرة (transformations as code). الخيار B يختبر البيانات لكنه لا يفعل شيئًا حيال المنطق المكرّر (duplicated logic)؛ والخيار A يغيّر الأداة لا المنطق. (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -325,7 +325,7 @@ models:
 
 <details><summary>الإجابة</summary>
 
-**A.** اختبارات البيانات في dbt (dbt data tests) استعلامات للبحث عن الصفوف الفاشلة (failing rows). فهي لا تغيّر البيانات (C) ولا تنشئ قيودًا في قاعدة البيانات (database constraints) (B)؛ يمكن لعقود النماذج (model contracts) أن تضيف بعض القيود، لكنها ميزة مختلفة. (🟢 الأساسيات، The essentials.)
+**A.** اختبارات البيانات في dbt (dbt data tests) استعلامات للبحث عن الصفوف الفاشلة (failing rows). فهي لا تغيّر البيانات (C) ولا تنشئ قيودًا في قاعدة البيانات (database constraints) (B)؛ يمكن لعقود النماذج (model contracts) أن تضيف بعض القيود، لكنها ميزة مختلفة. (🟢 الأساسيات، The essentials).
 
 </details>
 
@@ -338,7 +338,7 @@ models:
 
 <details><summary>الإجابة</summary>
 
-**D.** تسجّل اللقطات (snapshots) كل تغيير بوصفه صفًا جديدًا مع `dbt_valid_from` و`dbt_valid_to`، وهذا هو SCD من النوع الثاني (SCD Type 2). العقد (contract) (C) يثبّت شكل النموذج (shape of a model)، لا سجلّه التاريخي (history). (🟡 التعمق أكثر، Going deeper.)
+**D.** تسجّل اللقطات (snapshots) كل تغيير بوصفه صفًا جديدًا مع `dbt_valid_from` و`dbt_valid_to`، وهذا هو SCD من النوع الثاني (SCD Type 2). العقد (contract) (C) يثبّت شكل النموذج (shape of a model)، لا سجلّه التاريخي (history). (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -351,7 +351,7 @@ models:
 
 <details><summary>الإجابة</summary>
 
-**B.** يشغّل `dbt build` الاختبارات بترتيب الرسم البياني الموجّه غير الدوري (in DAG order) ويتخطى العُقد اللاحقة (downstream nodes) عندما يُخطئ اختبار. ولهذا بالتحديد يحمي الاختبار في طبقة التجهيز طبقاتِ العرض (testing in staging protects marts). ولا تُصلح dbt البيانات بنفسها أبدًا (D). (🟢 الأساسيات، The essentials.)
+**B.** يشغّل `dbt build` الاختبارات بترتيب الرسم البياني الموجّه غير الدوري (in DAG order) ويتخطى العُقد اللاحقة (downstream nodes) عندما يُخطئ اختبار. ولهذا بالتحديد يحمي الاختبار في طبقة التجهيز طبقاتِ العرض (testing in staging protects marts). ولا تُصلح dbt البيانات بنفسها أبدًا (D). (🟢 الأساسيات، The essentials).
 
 </details>
 
@@ -364,7 +364,7 @@ models:
 
 <details><summary>الإجابة</summary>
 
-**C.** الأمر `dbt build --select state:modified+ --defer --state ...` هو نمط "التكامل المستمر النحيل" (slim CI). الخياران A وD يزيلان شبكة الأمان (safety net)؛ والخيار B قد لا يجعله أسرع أصلًا ويغيّر سلوك الإنتاج (production behaviour). (🟡 التعمق أكثر، Going deeper.)
+**C.** الأمر `dbt build --select state:modified+ --defer --state ...` هو نمط "التكامل المستمر النحيل" (slim CI). الخياران A وD يزيلان شبكة الأمان (safety net)؛ والخيار B قد لا يجعله أسرع أصلًا ويغيّر سلوك الإنتاج (production behaviour). (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -603,7 +603,7 @@ where d = current_date - 1
 
 ## ✍️ اختبر نفسك (Check yourself)
 
-**1. كل مهام Airflow (Airflow task) خضراء، لكن لوحة معلومات رئيس المخاطر (CRO dashboard) تُظهر انخفاض المتأخرات (arrears) بمقدار الثلث بين ليلة وضحاها لأن حقلًا في المصدر (source field) تغيّر نوعه وحُوّل إلى قيمة فارغة (cast to null). أي فحص كان سيلتقط ذلك في أبكر وقت (earliest)؟**
+**1. كل مهمة في Airflow خضراء (every Airflow task is green)، لكن لوحة معلومات رئيس المخاطر (CRO dashboard) تُظهر انخفاض المتأخرات (arrears) بمقدار الثلث بين ليلة وضحاها لأن حقلًا في المصدر (source field) تغيّر نوعه وحُوّل إلى قيمة فارغة (cast to null). أي فحص كان سيلتقط ذلك في أبكر وقت (earliest)؟**
 
 - A. فحص يتأكد من أن لوحة معلومات رئيس المخاطر قد تحدّثت بنجاح (refreshed successfully) قبل 07:00
 - B. فحص للمخطط عند الاستيعاب (schema check at ingestion)، أو `not_null` على `days_past_due` بعد تحويل الأنواع (after the cast)
@@ -612,7 +612,7 @@ where d = current_date - 1
 
 <details><summary>الإجابة</summary>
 
-**B.** كان الفشل تغيّرًا في المخطط (schema change) تحوّل إلى قيم فارغة (nulls)؛ وكان فحص للمخطط أو فحص `not_null` مباشرة بعد الاستيعاب سيُفشل البناء (fail the build) قبل إعادة بناء طبقة العرض. إعادة المحاولات (retries) (C) تعيد تشغيل البيانات السيئة نفسها؛ والتدقيق الفصلي (quarterly audit) (D) متأخر جدًا. (🟢 الأساسيات، The essentials.)
+**B.** كان الفشل تغيّرًا في المخطط (schema change) تحوّل إلى قيم فارغة (nulls)؛ وكان فحص للمخطط أو فحص `not_null` مباشرة بعد الاستيعاب سيُفشل البناء (fail the build) قبل إعادة بناء طبقة العرض. إعادة المحاولات (retries) (C) تعيد تشغيل البيانات السيئة نفسها؛ والتدقيق الفصلي (quarterly audit) (D) متأخر جدًا. (🟢 الأساسيات، The essentials).
 
 </details>
 
@@ -625,7 +625,7 @@ where d = current_date - 1
 
 <details><summary>الإجابة</summary>
 
-**D.** تفرض عقود نماذج dbt الشكل (shape): الأسماء، والأنواع، وبعض القيود (names, types and some constraints). أما الدلالات (semantics)، ومستويات الخدمة (service levels)، وعملية التغيير (change process) فهي جزء من عقد البيانات المتّفق عليه مع المنتج (agreed with the producer). (🟡 التعمق أكثر، Going deeper.)
+**D.** تفرض عقود نماذج dbt الشكل (shape): الأسماء، والأنواع، وبعض القيود (names, types and some constraints). أما الدلالات (semantics)، ومستويات الخدمة (service levels)، وعملية التغيير (change process) فهي جزء من عقد البيانات المتّفق عليه مع المنتج (agreed with the producer). (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -638,7 +638,7 @@ where d = current_date - 1
 
 <details><summary>الإجابة</summary>
 
-**A.** الكتابة ثم التدقيق ثم النشر (write-audit-publish) تكتب في نسخة مخفية (hidden copy)، وتدقّقها، ثم تنشر بعدها فقط، فيترك الفشل آخر نسخة جيدة حيّة (last good version live). أما العزل (quarantine) (B) فينشر بيانات جزئية (partial data)، وهذا خاطئ لتقرير تنظيمي. (🟡 التعمق أكثر، Going deeper.)
+**A.** الكتابة ثم التدقيق ثم النشر (write-audit-publish) تكتب في نسخة مخفية (hidden copy)، وتدقّقها، ثم تنشر بعدها فقط، فيترك الفشل آخر نسخة جيدة حيّة (last good version live). أما العزل (quarantine) (B) فينشر بيانات جزئية (partial data)، وهذا خاطئ لتقرير تنظيمي. (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -651,7 +651,7 @@ where d = current_date - 1
 
 <details><summary>الإجابة</summary>
 
-**C.** عطلات نهاية الأسبوع في الخليج (Gulf weekends) تجعل أيام الجمعة تبدو مختلفة عن أيام العمل؛ ومقارنة الشيء بمثيله (comparing like with like) تزيل الإنذارات الكاذبة (false alarms) مع الإبقاء على المراقب. الخيار B يجعله أكثر إزعاجًا (noisier)؛ والخياران A وD يُفقدان الحماية. (🔴 نظرة الخبير، Expert view.)
+**C.** عطلات نهاية الأسبوع في الخليج (Gulf weekends) تجعل أيام الجمعة تبدو مختلفة عن أيام العمل؛ ومقارنة الشيء بمثيله (comparing like with like) تزيل الإنذارات الكاذبة (false alarms) مع الإبقاء على المراقب. الخيار B يجعله أكثر إزعاجًا (noisier)؛ والخياران A وD يُفقدان الحماية. (🔴 نظرة الخبير، Expert view).
 
 </details>
 
@@ -664,7 +664,7 @@ where d = current_date - 1
 
 <details><summary>الإجابة</summary>
 
-**B.** إنهما متكاملتان (complementary): الاختبارات ترمّز القواعد المعروفة (encode known rules)، وقابلية الملاحظة تلتقط غير المتوقَّع (the unexpected). ولا تُغني إحداهما عن الأخرى (C). (🔴 نظرة الخبير، Expert view.)
+**B.** إنهما متكاملتان (complementary): الاختبارات ترمّز القواعد المعروفة (encode known rules)، وقابلية الملاحظة تلتقط غير المتوقَّع (the unexpected). ولا تُغني إحداهما عن الأخرى (C). (🔴 نظرة الخبير، Expert view).
 
 </details>
 
@@ -910,7 +910,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**D.** النطاق نصف المفتوح البسيط (plain half-open range) على عمود التقسيم يتيح للمحرّك التقليم إلى قسم واحد (prune to one partition). الحوسبة الإضافية (A) تدفع أكثر لقراءة البيانات نفسها؛ والخيار B يجعل مرشّحات التاريخ أسوأ ويُنشئ أقسامًا صغيرة كثيرة (many small partitions). (🟢 الأساسيات، The essentials.)
+**D.** النطاق نصف المفتوح البسيط (plain half-open range) على عمود التقسيم يتيح للمحرّك التقليم إلى قسم واحد (prune to one partition). الحوسبة الإضافية (A) تدفع أكثر لقراءة البيانات نفسها؛ والخيار B يجعل مرشّحات التاريخ أسوأ ويُنشئ أقسامًا صغيرة كثيرة (many small partitions). (🟢 الأساسيات، The essentials).
 
 </details>
 
@@ -923,7 +923,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**B.** التصفية على "وقت حدث أحدث من الأحدث" (event time newer than the latest) تفوّت الأحداث التي تصل متأخرة. ونافذة الرجوع مع مفتاح فريد (a lookback window plus a unique key) تعيد معالجة التداخل دون مكرّرات (without duplicates). أما `append` (C) فسيُنشئ مكرّرات في التداخل. (🟡 التعمق أكثر، Going deeper.)
+**B.** التصفية على "وقت حدث أحدث من الأحدث" (event time newer than the latest) تفوّت الأحداث التي تصل متأخرة. ونافذة الرجوع مع مفتاح فريد (a lookback window plus a unique key) تعيد معالجة التداخل دون مكرّرات (without duplicates). أما `append` (C) فسيُنشئ مكرّرات في التداخل. (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -936,7 +936,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**C.** قسّم حسب العمود الذي تُصفّي عليه معظم الاستعلامات والذي يوزّع البيانات بالتساوي (spreads data evenly)؛ وبالنسبة للأحداث فهو التاريخ. والمفاتيح عالية التعدّد (high-cardinality keys) مثل `card_id` أو `transaction_id` تُنشئ أعدادًا هائلة من الأقسام الصغيرة جدًا (tiny partitions) (مشكلة الملفات الصغيرة، the small files problem). (🟢 الأساسيات، The essentials.)
+**C.** قسّم حسب العمود الذي تُصفّي عليه معظم الاستعلامات والذي يوزّع البيانات بالتساوي (spreads data evenly)؛ وبالنسبة للأحداث فهو التاريخ. والمفاتيح عالية التعدّد (high-cardinality keys) مثل `card_id` أو `transaction_id` تُنشئ أعدادًا هائلة من الأقسام الصغيرة جدًا (tiny partitions) (مشكلة الملفات الصغيرة، the small files problem). (🟢 الأساسيات، The essentials).
 
 </details>
 
@@ -949,7 +949,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**A.** الربط على مفتاح غير فريد (non-unique key) يضاعف الصفوف؛ والسبب حُبَيبية مكسورة (a broken grain) في البُعد. أما `distinct` (B) فيخفي الخطأ ويضيف عملًا إضافيًا مكلفًا. (🔴 نظرة الخبير، Expert view.)
+**A.** الربط على مفتاح غير فريد (non-unique key) يضاعف الصفوف؛ والسبب حُبَيبية مكسورة (a broken grain) في البُعد. أما `distinct` (B) فيخفي الخطأ ويضيف عملًا إضافيًا مكلفًا. (🔴 نظرة الخبير، Expert view).
 
 </details>
 
@@ -962,7 +962,7 @@ flowchart TD
 
 <details><summary>الإجابة</summary>
 
-**D.** ضبط التكلفة ممارسة (cost control is a practice): النسبة (attribution)، والحواجز (guardrails)، والمراجعة المنتظمة (regular review) للاستعلامات التي تهيمن على الإنفاق. والخيار B هو ما سبّب المشكلة أصلًا. (🔴 نظرة الخبير، Expert view.)
+**D.** ضبط التكلفة ممارسة (cost control is a practice): النسبة (attribution)، والحواجز (guardrails)، والمراجعة المنتظمة (regular review) للاستعلامات التي تهيمن على الإنفاق. والخيار B هو ما سبّب المشكلة أصلًا. (🔴 نظرة الخبير، Expert view).
 
 </details>
 

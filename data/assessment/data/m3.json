@@ -74,7 +74,7 @@
     ],
     "ar": [
      "انتقل إلى حجم أكبر لمستودع البيانات (larger warehouse size) كي ينتهي استعلام كل مربع (each tile's query) أسرع",
-     "جمّع جدول الحقائق عنقوديًا (cluster the fact) حسب customer_id كي تُتخطّى كتل أكثر (more blocks are skipped)",
+     "جمّع جدول حقائق المعاملات عنقوديًا (cluster the transactions fact) حسب customer_id كي تُتخطّى كتل أكثر (more blocks are skipped)",
      "اجعل جدول حقائق المعاملات نموذجًا تزايديًا (incremental model) بمفتاح فريد (unique key)",
      "ابنِ طبقة عرض تجميعية (aggregate mart) حسب اليوم والفرع مرة لكل تحميل (once per load)"
     ]
@@ -98,13 +98,13 @@
      "The QAR 1 tolerance is too loose and should be tightened to zero",
      "The inner join drops the day with no ledger row, so none fails",
      "Singular tests cannot read ref() models, so the check never ran",
-     "A missing day needs a volume monitor; tests cannot detect it"
+     "A missing day needs a volume monitor, since tests cannot detect it"
     ],
     "ar": [
      "هامش التسامح (tolerance) البالغ ريالًا واحدًا (QAR 1) واسع جدًا ويجب تضييقه إلى صفر",
      "الربط الداخلي (inner join) يُسقط اليوم الذي لا صف له في الدفتر (no ledger row)، فلا يفشل أي صف",
      "الاختبارات المفردة (singular tests) لا تستطيع قراءة نماذج ref() (ref() models)، فلم يعمل الفحص قط",
-     "اليوم المفقود (missing day) يحتاج إلى مراقب حجم (volume monitor)؛ والاختبارات لا تكشفه"
+     "اليوم المفقود (missing day) يحتاج إلى مراقب حجم (volume monitor)، إذ لا تستطيع الاختبارات (tests) كشفه"
     ]
    },
    "a": 1,
