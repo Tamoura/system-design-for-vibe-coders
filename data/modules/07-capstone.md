@@ -338,11 +338,11 @@ The output is the **credit-risk mart case file**: a one-page summary, then linke
 - Biggest trap: collecting tools and certificates while shipping nothing anyone can run, read or question.
 
 ## 🧭 Why it matters
-A year after joining, Huda asks Faisal a question he hears often: "Should I move towards data science or stay in engineering? Everyone online says something different." Faisal asks her which parts of the last year she enjoyed. She lights up about the DPD bug she chased to a value-date rule and the reconciliation test that made Finance trust the mart; tuning model features excites her much less. "That sounds like engineering with a strong analytics streak," he says. "Let's plan for that, and keep the ML literacy."
+A year after joining, Huda asks Faisal a question he hears often: "Should I move towards data science or stay in engineering? Everyone online says something different." Faisal asks which parts of the year she enjoyed. She lights up about the DPD bug she chased to a value-date rule and the reconciliation test that made Finance trust the mart; tuning model features excites her less. "That sounds like engineering with a strong analytics streak," he says. "Let's plan for that, and keep the ML literacy."
 
-Kareem, the retail data analyst, has the opposite question. He writes good SQL and his dashboards are used, but he spends Mondays rebuilding the same extracts by hand. He wants to move into analytics engineering and does not know what evidence would convince a hiring manager.
+Kareem, the retail data analyst, has the opposite question. He writes good SQL and his dashboards are used, but he spends Mondays rebuilding the same extracts by hand. He wants to move into analytics engineering and needs evidence that would convince a hiring manager.
 
-And Faisal is hiring a junior data engineer. Most CVs list a dozen tools; few show anything he can open. One candidate links a small repository: a dbt project on public transport data, with tests, a README stating the grain of each table, and a short write-up of a late-arriving-data bug they found and fixed in their own pipeline. Faisal invites that candidate first. This lesson covers both sides of that table.
+And Faisal is hiring a junior data engineer. Most CVs list a dozen tools; few show anything he can open. One candidate links a small repository: a dbt project on public transport data, with tests, a README stating the grain of each table, and a short write-up of a late-arriving-data bug they fixed. Faisal invites that candidate first. This lesson covers both sides of that table.
 
 ## 📐 How it works
 
@@ -359,9 +359,9 @@ And Faisal is hiring a junior data engineer. Most CVs list a dozen tools; few sh
 | **ML engineer** | Takes models to production: features, serving, monitoring, retraining | Module 5, 2.2, 3.2 |
 | **Data governance and platform roles** | Data stewards, catalogue owners, privacy engineering, data platform product owners | Module 6 |
 
-At Najm the boundaries blur: Huda builds pipelines but writes metric cards; Dana's data scientists ship features to production. Small companies often hire one "data person" for all of it. Read the responsibilities in the advert to see which job it really is.
+At Najm the boundaries blur: Huda builds pipelines but writes metric cards; Dana's data scientists ship features to production. Small companies often hire one "data person" for all of it.
 
-For a deeper walk through each path, including which other courses in the library to take, see [*From Graduate to Hired*, lesson 2.3 — Data engineer, analyst and data scientist](../career/index.html#/2.3).
+For each path and which courses in the library to take, see [*From Graduate to Hired*, lesson 2.3 — Data engineer, analyst and data scientist](../career/index.html#/2.3).
 
 **What every data role shares.** Four skills appear in every interview loop and every first year:
 - **SQL fluency:** joins, aggregation, CTEs and window functions without looking them up (1.1).
@@ -383,7 +383,7 @@ For a deeper walk through each path, including which other courses in the librar
 | Take-home | A small dataset and a question; judged on correctness, tests and write-up | Everything, plus 🏛️ below |
 | Behavioural | Past work, conflict, mistakes, ownership | STAR stories from your projects |
 
-Many employers now allow AI assistants in some rounds and ban them in others. Ask the recruiter what applies; never assume. For how these technical rounds run and how to prepare for each, see [*From Graduate to Hired*, lesson 5.3 — System design, data and ML interviews for juniors](../career/index.html#/5.3).
+Many employers now allow AI assistants in some rounds and ban them in others. Ask the recruiter what applies; never assume. For how these rounds run and how to prepare, see [*From Graduate to Hired*, lesson 5.3 — System design, data and ML interviews for juniors](../career/index.html#/5.3).
 
 ### 🟡 Going deeper
 
@@ -416,7 +416,7 @@ Saying out loud "the first query mixes values from different rows" is worth as m
 
 *Pipeline: "Your daily load ran twice by mistake. What happens?"* The answer the interviewer wants is idempotency (2.2): with a MERGE on a key or a partition overwrite, running twice gives the same result; with a plain INSERT, you double-count. Then add how you would detect it: a uniqueness test and a volume check (3.2).
 
-*Metrics: "Daily active users of the app fell 15% overnight. Walk me through it."* Strong analysts check the data before the business: did the pipeline run fully, did the event tracking change in a new app release, did the metric definition or time zone change? Only then segment by platform, region and app version. This is 4.1 and 4.2 in one answer.
+*Metrics: "Daily active users of the app fell 15% overnight. Walk me through it."* Strong analysts check the data before the business: did the pipeline run fully, did event tracking change in a new app release, did the definition or time zone change? Only then segment by platform, region and app version (4.1, 4.2).
 
 **STAR for the behavioural round.** Use **STAR**: Situation, Task, Action, Result. Prepare four or five two-minute stories: a bug in your own data, a definition you agreed with someone, a time you were wrong, a trade-off under pressure. Make the result concrete: "the reconciliation test caught a missing currency before month-end".
 
@@ -426,7 +426,7 @@ Saying out loud "the first query mixes values from different rows" is worth as m
 - **A README** that states the question, the grain of each table, how to run it in a few commands and what the tests check.
 - **A write-up of one problem**: a late-data bug, a duplicate key, a metric that looked wrong. Explaining how you found and fixed it shows the judgement interviewers look for.
 
-Match projects to the role: backfills and CDC for data engineering; tested dbt models with metric definitions for analytics engineering; an analysis ending in a decision for analysts; honest evaluation and a leakage check for data science. The 7.1 capstone, rebuilt on public data, works for any of them.
+Match projects to the role: backfills and CDC for data engineering; tested dbt models with metric definitions for analytics engineering; an analysis ending in a decision for analysts; honest evaluation and a leakage check for data science. The 7.1 capstone, rebuilt on public data, fits any of them.
 
 **Certifications.** Cloud providers (AWS, Google Cloud, Microsoft), Databricks, Snowflake and dbt Labs offer data certifications; names and content change, so check each provider's site. They help with first filters in some markets, especially large enterprises and the public sector, but do not replace evidence that you can build and verify.
 
@@ -443,11 +443,11 @@ Match projects to the role: backfills and CDC for data engineering; tested dbt m
 | Senior | Several products, or a hard one | Sets standards such as contracts or testing; mentors; reduces incidents |
 | Staff or principal | A platform or a domain across teams | Shapes architecture and governance; aligns business owners on definitions |
 
-**Domain knowledge compounds.** Huda's most valuable year-one skill was not Kafka; it was knowing what a value date is. Spend deliberate time with the business teams you serve.
+**Domain knowledge compounds.** Huda's most valuable year-one skill was not Kafka; it was knowing what a value date is. Spend deliberate time with the business teams you serve. For feedback, ownership and the step to mid-level, see [*From Graduate to Hired*, lesson 6.3 — Growing from junior to mid-level: feedback, ownership and continuous learning](../career/index.html#/6.3).
 
-**The GCC market.** Gulf banks, government entities, energy companies and telecoms run large data programmes and graduate schemes. Workforce nationalisation programmes, such as Qatarization and Emiratisation, shape hiring. Regulated employers value awareness of data protection law, such as Qatar's PDPPL (Law No. 13 of 2016), data residency and governance, and clear communication in Arabic and English. Programmes change, so check current details with employers and official sources.
+**The GCC market.** Gulf banks, government entities, energy companies and telecoms run large data programmes and graduate schemes. Workforce nationalisation programmes, such as Qatarization, Emiratisation and Saudization, shape hiring. Regulated employers value awareness of data protection law, such as Qatar's PDPPL (Law No. 13 of 2016), data residency and governance, and clear communication in Arabic and English. Programmes change, so check current details with employers and official sources.
 
-**A learning habit you can keep.** Pick one deep skill a quarter and build something with it. Read the release notes of the tools you use daily and the post-incident write-ups companies publish. Keep a "brag document" of what you shipped and what it changed. If your interests move towards AI products or security, see [*AI Product Management: Zero to Hero*, lesson 10.2 — The AI PM career: interviews, portfolio and growth](../aipm/index.html#/10.2) and [*Secure AI & Application Security*, lesson 12.2 — The security career: roles, certifications and portfolio](../secai/index.html#/12.2).
+**A learning habit you can keep.** Pick one deep skill a quarter and build something with it. Read release notes for your daily tools and published post-incident write-ups. Keep a "brag document" of what you shipped and what it changed. If your interests move towards AI products or security, see [*AI Product Management: Zero to Hero*, lesson 10.2 — The AI PM career: interviews, portfolio and growth](../aipm/index.html#/10.2) and [*Secure AI & Application Security*, lesson 12.2 — The security career: roles, certifications and portfolio](../secai/index.html#/12.2).
 
 ## 🧰 The toolkit
 | Tool, pattern or standard | What it is and does | When to reach for it |
@@ -495,7 +495,6 @@ Kareem's plan targets analytics engineering: his proof is three Monday extracts 
 ## ⚠️ Mistakes and traps
 - **Choosing by title or hype.** "Data scientist" means different jobs at different employers. Read the responsibilities.
 - **The tool-list CV.** Twenty logos prove nothing. Link one runnable project and say what it does and how you tested it.
-- **Notebooks that only run once.** Package the work so others can run it.
 - **Jumping to code in a design round.** State the grain, the consumers and the failure cases first.
 - **Using personal or employer data in a portfolio.** Use openly licensed public data or synthetic data; never real customer records.
 - **Pasting AI output unreviewed.** In interviews and at work, show that you check generated SQL against grain, definitions and tests.
