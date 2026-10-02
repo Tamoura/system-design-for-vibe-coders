@@ -317,7 +317,7 @@ flowchart LR
 
 Three habits make this loop work:
 1. **Small tasks.** "Validate the amount field, rejecting negatives and non-numbers, with tests" is reviewable; "build the backend" is not.
-2. **Read the whole diff,** not the agent's summary. Agents sometimes report success for incomplete work, or change files you did not ask about.
+2. **Read the whole diff,** not the agent's summary. Agents sometimes report success for incomplete work, or touch files you did not mention.
 3. **The explain-back test.** Before committing, explain the change as if to a reviewer. Every hesitation is something to learn before you commit.
 
 **Integrity rules.** Using AI is not cheating when it is allowed. These things are:
@@ -365,7 +365,7 @@ before writing the implementation.
 
 **Learning mode versus producing mode.** When **learning**, ask the agent to explain, quiz you, or review code *you* wrote. When **producing** in an area you understand, let it write more, and review carefully. Reem stayed in producing mode for topics (retries, concurrency) she had never learned. A simple rule: **the first time you use a concept, write it yourself or study it until you could.**
 
-**Speed is not the same as productivity.** METR, an AI research non-profit, published a study in July 2025 in which experienced open-source developers working on their own repositories were, on average, slower with AI tools, though they believed the tools had sped them up. It was one study in one setting, and tools have changed since; measure your own results rather than trust the feeling of speed.
+**Speed is not the same as productivity.** In a July 2025 study by METR, an AI research non-profit, experienced open-source developers working on their own repositories were on average slower with AI tools, though they believed the tools had sped them up. It was one study in one setting, and tools have changed since; measure your own results rather than trust the feeling of speed.
 
 ### 🔴 Expert view
 
@@ -373,7 +373,7 @@ before writing the implementation.
 
 **Where the value moves.** When code is cheap to generate, the scarce skills are deciding what to build, breaking it into checkable pieces, noticing what is wrong, and operating the result (lesson 1.3). Your computer science fundamentals are how you spot the agent's mistakes.
 
-**Disclosure that builds trust.** A short, factual note in a README or pull request is enough: which tool you used, for what, and how you verified it. "I used an AI coding agent to scaffold the API routes and draft tests; I wrote the validation rules and test cases myself, reviewed every change, and added the concurrency test after finding a race in the generated code." That sentence is a strength in an interview, not a confession.
+**Disclosure that builds trust.** A short note in a README or pull request is enough: which tool, for what, and how you verified it. "I used an AI coding agent to scaffold the API routes and draft tests; I wrote the validation rules and test cases myself, reviewed every change, and added the concurrency test after finding a race in the generated code." That sentence is a strength in an interview, not a confession.
 
 **Employer data and tools.** At a bank like Najm, code and data are confidential and regulated, and employers typically approve specific AI tools for specific data. Find out what is approved before you paste anything; saying so in interviews shows awareness regulated employers value. The governance view is in [*System Design for Vibe Coders*, lesson 9.8 — The governance glance: you own what your agent ships](../vibe/index.en.html#l9-8).
 
@@ -384,8 +384,8 @@ before writing the implementation.
 | **Explain-back test** | Explaining a change line by line, out loud or in writing, before committing it | Every agent-written change; always before an interview about your own project |
 | **Test-first prompt** | A prompt that fixes the rules and asks for test cases before implementation | Any task where "correct" has edge cases: money, dates, permissions |
 | **Diff review checklist** | A short list of what to check in a diff: scope, tests, security, secrets, invented APIs | Reviewing an agent's change, or a flawed pull request in an interview |
-| **AI use log** | A running note of where AI helped, what you changed and how you verified it | Writing honest disclosures in READMEs, pull requests and interviews |
-| **Secret scanning** (for example gitleaks, platform push protection) | Detects keys and passwords in code before they are pushed | On every repository, especially when agents edit config and fixtures |
+| **AI use log** | A running note of where AI helped, what you changed and how you verified it | Writing honest disclosures |
+| **Secret scanning** (for example gitleaks, platform push protection) | Detects keys and passwords in code before they are pushed | Every repository, especially when agents edit config |
 
 ## 🏛️ In practice at Najm Bank
 After Reem's interview, Khalid and Tariq write the one-page **AI-assisted work rules** every Najm graduate receives on day one. Adapt them.
@@ -496,7 +496,7 @@ Tariq's comment: "I can see where the agent helped, where you overruled it, and 
 **5. Which pull request note best shows the honest, useful disclosure this lesson recommends?**
 
 - A. "Written entirely by me, from scratch, over the weekend. Every line is my own work and I am happy to explain any of it."
-- B. "An AI agent drafted the routes and tests; I wrote the validation rules, reviewed every change and added a concurrency test for a race I found."
+- B. "An agent drafted the routes and tests; I wrote the validation rules, reviewed every change and added a test for a race I found."
 - C. "Sorry, I used AI for most of this. I know it is not ideal and I will try to write more of it myself next time."
 - D. "AI-generated with an agent. I have not had time to go through all of it, so please check it carefully before merging."
 
@@ -525,21 +525,21 @@ Tariq's comment: "I can see where the agent helped, where you overruled it, and 
 - Employers do not expect juniors to design large systems. They do expect you to **ask the production questions**, and to have put something live and kept it working at least once.
 - The rule that matters most: **if you cannot see it, roll it back and restore its data, you are not ready to ship it.**
 - Decision cue: for every project, ask "Where are config and secrets? How do I know it is broken? How do I undo a bad deploy? What happens to the data?"
-- One small project, actually deployed and operated, beats five that only run locally. It is one of the cheapest gaps to close.
+- One small project, actually deployed and operated, beats five that only run locally.
 - Biggest trap: over-engineering to look senior. Kubernetes for three users shows less judgement than a simple deploy you can explain.
 
 ## 🧭 Why it matters
 Najm's graduate programme ends its first month with a two-day internal hackathon. Each team must put a small app live on the bank's sandbox platform, and on day two the platform team, led by Salem, runs a "game day": they restart servers, slow the database down and send malformed requests.
 
-Omar's team builds a branch-appointment booker that is flawless on his laptop. On the sandbox it fails within ten minutes. The database address is hard-coded to `localhost`, and its password is committed in the repository. When Salem restarts the server, all bookings vanish: they were stored in memory. Two testers book the last slot at the same moment, and both succeed. A request with a missing field crashes the app with no log, and the team spends an hour guessing. Omar has never deployed anything; nobody ever asked him to.
+Omar's team builds a branch-appointment booker that is flawless on his laptop. On the sandbox it fails within ten minutes. The database address is hard-coded to `localhost`, and its password is committed in the repository. When Salem restarts the server, all bookings vanish: they were stored in memory. Two testers book the last slot at the same moment, and both succeed. A request with a missing field crashes the app with no log, and the team spends an hour guessing. Omar has never deployed anything.
 
-Yousef's team, with less polished code, does far better. From computer engineering, where field failures are expensive, Yousef asked the dull questions on day one: where does config come from, where are the logs, what happens on restart? Khalid's comment at the debrief: "Writing code that works is the entry ticket. Knowing what can go wrong once it's live is what makes me trust a junior with something real." This lesson gives you those questions.
+Yousef's team, with less polished code, does far better. Yousef, from computer engineering, asked the dull questions on day one: where does config come from, where are the logs, what happens on restart? Khalid's comment at the debrief: "Writing code that works is the entry ticket. Knowing what can go wrong once it's live is what makes me trust a junior with something real." This lesson gives you those questions.
 
 ## 📐 How it works
 
 ### 🟢 The essentials
 
-**What changes in production.** On your laptop there is one user (you), friendly input and a fast local database, and if something breaks nobody notices. In production, all of that changes. The library's [*System Design for Vibe Coders*, lesson 0.1 — "It works" is not a property of a system](../vibe/index.en.html#l0-1) makes the case in full. For a junior, the gap comes down to ten questions:
+**What changes in production.** On your laptop there is one user (you), friendly input and a fast local database, and nobody notices if something breaks. The library's [*System Design for Vibe Coders*, lesson 0.1 — "It works" is not a property of a system](../vibe/index.en.html#l0-1) makes the case in full. For a junior, the gap comes down to ten questions:
 
 | Question | Production answer (junior level) | Library lesson that builds it |
 |---|---|---|
@@ -554,7 +554,7 @@ Yousef's team, with less polished code, does far better. From computer engineeri
 | Which dependencies does it use? | Pinned in a lock file and scanned for known vulnerabilities | [*System Design for Vibe Coders*, lesson 8.4 — The software you didn't write: dependencies and supply chain](../vibe/index.en.html#l8-4) |
 | What does it cost? | You know what you pay for, have a budget alert, and shut down what you do not use | [*System Design for Vibe Coders*, lesson 11.4 — Cost engineering](../vibe/index.en.html#l11-4) |
 
-You do not need deep answers to all ten: know the questions, have a simple answer in your own projects, and know where to learn more.
+You do not need deep answers to all ten: know the questions, have a simple answer in your projects, and know where to learn more.
 
 **The path from laptop to users.** A small but real setup looks like this:
 
@@ -569,7 +569,7 @@ flowchart LR
     P -->|"bad release"| B["Roll back to the previous version"]
 ```
 
-Each arrow is portfolio evidence: a CI badge, a live URL, an alert you received, a note on the time you rolled back.
+Each arrow is portfolio evidence: a CI badge, a live URL, an alert, a rollback note.
 
 **Three tiny code habits that carry a long way.**
 
@@ -606,7 +606,7 @@ def health():
     return {"status": "ok"}
 ```
 
-None of these is advanced. Together they answer three of the ten questions.
+None is advanced; together they answer three of the ten questions.
 
 ### 🟡 Going deeper
 
@@ -618,26 +618,26 @@ None of these is advanced. Together they answer three of the ten questions.
 | "What happens if the database is down?" | "It wouldn't be." | "The health check fails, the platform stops sending traffic, users see an error page, and the uptime alert emails me. I haven't added retries yet; I'd add them with a limit." |
 | "How would you know it was broken?" | "Users would tell me." | "Errors go to an error tracker, and an uptime check calls `/health` every few minutes." |
 | "Where's the API key?" | "In the config file." | "In the platform's secret store. The repository only has `.env.example` with the variable names." |
-| "What would you do differently with a thousand times more users?" | "Use Kubernetes." | "First I'd measure where the time goes. Likely the database queries; I'd add indexes and maybe caching, and only then think about more servers." |
+| "What would you do differently with a thousand times more users?" | "Use Kubernetes." | "First I'd measure where the time goes, probably database queries; I'd add indexes and maybe caching before more servers." |
 
-The pattern in the strong answers: specific, honest about what is not done yet, and proportionate. "I haven't added that yet, and here's how I would" is a good answer. Lesson 5.3 covers system design interviews for juniors.
+The strong answers are specific, honest about what is not done yet, and proportionate. Lesson 5.3 covers system design interviews for juniors.
 
 **Production thinking by role.** The ten questions take different forms:
-- **Software and AI application engineers:** the list above, plus for AI features: cost per request, evaluations of answer quality, and what happens when the model provider is down. See [*System Design for Vibe Coders*, lesson 6.7 — You are someone's client too: surviving third-party APIs](../vibe/index.en.html#l6-7).
+- **Software and AI application engineers:** the list above, plus for AI features: cost per request, answer-quality evaluations, and what happens when the model provider is down. See [*System Design for Vibe Coders*, lesson 6.7 — You are someone's client too: surviving third-party APIs](../vibe/index.en.html#l6-7).
 - **Data roles:** Huda learns that a notebook that ran once is not a pipeline. Production means safe reruns without duplicating data, quality checks, alerts when a source changes, and numbers traceable to their source. The sister course builds this, from [*Data Engineering & Analytics*, Module 2 — Ingestion and pipelines](../data/index.html#/2.1) to [*Data Engineering & Analytics*, Module 5 — Data science and ML in production](../data/index.html#/5.1).
 - **Cloud and platform roles:** for Yousef, production is the product: infrastructure as code, least-privilege access, telemetry everywhere. The sister course covers it, from [*Cloud & DevOps*, Module 1 — Foundations](../cloud/index.html#/1.1) to [*Cloud & DevOps*, Module 5 — Observability and reliability](../cloud/index.html#/5.1).
 
-**What a production-minded portfolio project shows.** A small project, visibly operated: a live URL, CI on every push, no secrets in history, a `/health` endpoint with an uptime check, an error tracker, a README "Operations" section (deploy, roll back, restore), and one short **postmortem**: a blameless write-up of what went wrong, how you found it and what you changed. Module 3 builds this into your capstone. Small deploys are cheap or free on many platforms at the time of writing (2026); check current terms and set a budget alert first.
+**A production-minded portfolio project** is small and visibly operated: a live URL, CI on every push, no secrets in history, a `/health` endpoint with an uptime check, an error tracker, a README "Operations" section (deploy, roll back, restore), and one short **postmortem**: a blameless write-up of what went wrong, how you found it and what you changed. Module 3 builds this into your capstone. Small deploys are cheap or free on many platforms at the time of writing (2026); check current terms and set a budget alert.
 
 ### 🔴 Expert view
 
-**Production in a regulated employer.** At a bank like Najm, changes go through **change management** (an approved, recorded process for what goes live and when), production access is restricted and logged, and customer data falls under laws such as Qatar's Personal Data Privacy Protection Law (PDPPL, Law No. 13 of 2016). As a junior you will probably not deploy to production alone for months, and should not want to. Graduates who understand *why* the controls exist settle in faster. Regulated employers across the GCC (banks, government, energy, health) value this; saying in an interview why you would never test with real customer data is worth more than a buzzword.
+**Production in a regulated employer.** At a bank like Najm, changes go through **change management** (an approved, recorded process for what goes live and when), production access is restricted and logged, and customer data falls under laws such as Qatar's Personal Data Privacy Protection Law (PDPPL, Law No. 13 of 2016). As a junior you will probably not deploy to production alone for months. Graduates who understand *why* the controls exist settle in faster, and regulated GCC employers (banks, government, energy, health) value it: saying why you would never test with real customer data is worth more than a buzzword.
 
-**You build it, you run it.** Many teams expect builders to help operate their service, including being **on call** (responding to alerts outside working hours on a rota). Juniors usually join after some months, shadowing first. Operating your own small project is the best preparation; the [*System Design for Vibe Coders*, Module 12 — Capstone: You Get Paged](../vibe/index.en.html#l12) simulates it.
+**You build it, you run it.** Many teams expect builders to help operate their service, including being **on call** (responding to alerts outside working hours on a rota), usually after some months of shadowing. Operating your own small project is the best preparation; the [*System Design for Vibe Coders*, Module 12 — Capstone: You Get Paged](../vibe/index.en.html#l12) simulates it.
 
-**Proportion is the senior skill.** Production thinking means matching safeguards to risk, not adding every tool. A personal project needs a repeatable deploy, logs, a health check and a backup; a payment service needs far more. Reaching for microservices, Kubernetes or message queues where they are not needed suggests repeating rather than reasoning. The [*System Design for Vibe Coders*, lesson 0.3 — Build vs buy: the highest-leverage decision you'll make](../vibe/index.en.html#l0-3) shows how to choose.
+**Proportion is the senior skill.** Production thinking means matching safeguards to risk. A personal project needs a repeatable deploy, logs, a health check and a backup; a payment service needs far more. Microservices, Kubernetes or message queues where they are not needed suggest repeating rather than reasoning. The [*System Design for Vibe Coders*, lesson 0.3 — Build vs buy: the highest-leverage decision you'll make](../vibe/index.en.html#l0-3) shows how to choose.
 
-**AI agents and production.** Agents often miss operational details: hard-coded values, skipped error handling, secrets in fixtures (lesson 1.2). State your production requirements in the task and check them in review.
+**AI agents and production.** Agents often miss operational details such as hard-coded values and secrets in fixtures (lesson 1.2); state production requirements in the task and check them in review.
 
 ## 🧰 The toolkit
 | Resource, tool or template | What it is and does | When to reach for it |
@@ -666,7 +666,7 @@ After the hackathon, Salem and Khalid turn the game-day failures into the **Najm
 | Dependencies pinned and scanned | Lock file; dependency scan in CI | Both; no high-severity findings | Done |
 | Cost known | Monthly cost estimate and a budget alert | Not set up yet | Next: by 20 Nov |
 
-The README's "Operations" section gives exact commands to *Deploy*, *Roll back* and *Restore data*, and links Omar's first postmortem, "Bookings lost on restart". Khalid: "I'd let you show this to any interviewer at Najm."
+The README's "Operations" section gives exact commands to *Deploy*, *Roll back* and *Restore data*, and links Omar's first postmortem, "Bookings lost on restart".
 
 ## 🛠️ Exercises
 - 🟢 Take one of your projects and answer the ten production questions for it in a table, honestly, with "not yet" where that is the truth. *Done when:* the table is committed to the repository (for example as `OPERATIONS.md`), and every "not yet" has a one-line plan.
@@ -676,10 +676,10 @@ The README's "Operations" section gives exact commands to *Deploy*, *Roll back* 
 ## ⚠️ Mistakes and traps
 - **Calling a project "done" because it runs locally.** It has passed one test of many. Deploy it and answer the ten questions.
 - **Secrets in the repository.** Deleting the file is not enough; the secret stays in history. Rotate the secret, clean the history and add secret scanning.
-- **No way to see failures.** Without logs, an error tracker and an uptime check, you debug by guessing. Add them on day one.
+- **No way to see failures.** Without logs, an error tracker and an uptime check, you debug by guessing.
 - **Never practising rollback or restore.** An untested backup or rollback is a hope, not a plan. Do each once, on purpose.
 - **Over-engineering to look senior.** Heavy infrastructure for a tiny project signals copying, not judgement. Match safeguards to risk and explain why.
-- **Testing with real personal data.** It is a legal and trust problem, especially in regulated sectors. Use synthetic or anonymised data.
+- **Testing with real personal data.** A legal and trust problem, especially in regulated sectors. Use synthetic or anonymised data.
 
 ## 🧾 Recap
 - Production is where real users and data are; laptop success is only the first test.
@@ -705,10 +705,10 @@ The README's "Operations" section gives exact commands to *Deploy*, *Roll back* 
 
 **2. In an interview, Tariq asks Mohammed: "What happens to your app if the database goes down?" Which answer is strongest for a junior?**
 
-- A. "That won't happen. I use a managed database from a large cloud provider, and they guarantee it stays up."
+- A. "That won't happen. I use a managed database from a large provider that keeps it up."
 - B. "`/health` fails, users get an error page and my uptime check alerts me. No retries yet; I'd add a limited one."
-- C. "I would migrate the whole app to Kubernetes so that it can self-heal whenever anything goes down."
-- D. "I would ask a senior engineer on the team what to do, because they would know the right answer."
+- C. "I would migrate the whole app to Kubernetes so it can self-heal when anything fails."
+- D. "I would ask a senior engineer on the team, because they would know the answer."
 
 <details><summary>Answer</summary>
 
@@ -719,9 +719,9 @@ The README's "Operations" section gives exact commands to *Deploy*, *Roll back* 
 **3. Omar discovers the database password was committed to his repository three weeks ago. He deletes the file in a new commit. What else must he do?**
 
 - A. Rotate the password, purge it from history and add secret scanning
-- B. Nothing more, because the file is deleted and the latest commit no longer contains it
-- C. Make the repository private, which fully solves the problem for anyone who has not cloned it
-- D. Add a comment in the code asking people not to use the old password any more
+- B. Nothing more, because the latest commit no longer contains the file
+- C. Make the repository private, which fully solves the problem
+- D. Add a code comment asking people not to use the old password
 
 <details><summary>Answer</summary>
 
@@ -731,8 +731,8 @@ The README's "Operations" section gives exact commands to *Deploy*, *Roll back* 
 
 **4. Huda's model runs well in a notebook. Which change would most move it toward production, from a data role's point of view?**
 
-- A. Add more charts and explanatory text to the notebook so the team can follow every step
-- B. Retrain the model with more features and tune it until the accuracy is clearly higher
+- A. Add more charts and explanations so the team can follow every step of the notebook
+- B. Retrain the model with more features and tune it until accuracy is clearly higher
 - C. Make it a pipeline that reruns safely, checks data quality and alerts on source changes
 - D. Share the notebook file with the team by email so that anyone can run it when needed
 

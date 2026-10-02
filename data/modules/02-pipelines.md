@@ -77,7 +77,7 @@ flowchart LR
 
 ### 🟡 Going deeper
 
-**Connectors.** A **connector** is a packaged extractor for one kind of source, handling pagination, rate limits, authentication and schema changes for you. Open-source options include **Airbyte** (a platform with a large catalogue of connectors), **dlt** (data load tool, a Python library for writing pipelines as code) and the **Singer** specification with **Meltano**. Managed services such as Fivetran do the same as a hosted product. The judgement call is not which logo but: who maintains this connector when the source API changes, does it support incremental sync and deletes for this source, and can we run it where our data residency rules require? Treat every connector's "incremental" mode as a claim to test, not a fact.
+**Connectors.** A **connector** is a packaged extractor for one kind of source, handling pagination, rate limits, authentication and schema changes for you. Open-source options include **Airbyte** (a platform with a large catalogue of connectors), **dlt** (data load tool, a Python library for writing pipelines as code) and the **Singer** specification with **Meltano**. Managed services such as Fivetran host the same idea. The judgement call is not which logo but: who maintains this connector when the source API changes, does it support incremental sync and deletes for this source, and can we run it where our data residency rules require? Treat every connector's "incremental" mode as a claim to test, not a fact.
 
 **Three ways to do CDC.**
 
@@ -137,7 +137,7 @@ WHERE rn = 1
 
 **The outbox pattern.** CDC couples consumers to the source's internal tables. Alternatively, the application writes a deliberate business event, such as `AccountClosed`, into an **outbox** table in the same transaction as the change, and only that table is captured. It needs application changes, so it suits new services better than a legacy core.
 
-**Reconciliation is not optional.** Even with CDC, compare daily row counts and amount totals between source and warehouse. When they differ, you want to know that morning, not when Kareem finds it.
+**Reconciliation is not optional.** Even with CDC, compare daily row counts and amount totals between source and warehouse. When they differ, you want to know that morning.
 
 **Where ingestion runs.** Data on Qatar, UAE and EU customers may carry residency expectations that limit where connectors, Kafka and storage run; confirm with Sara (the DPO) rather than assuming (Module 6).
 
@@ -185,7 +185,7 @@ Use synthetic data only. A generator script or a public sample database is fine;
 ## ⚠️ Mistakes and traps
 - **Trusting `updated_at` without checking.** Bulk scripts, triggers and long transactions break it. Ask the source owner, overlap the window, merge on the key, or use CDC.
 - **Ignoring deletes.** Incremental loads never see hard deletes. Use CDC, soft deletes agreed with the source team, or a periodic full key comparison.
-- **Copying every column "just in case".** Unneeded personal data now lives in more places. Exclude sensitive columns at source.
+- **Copying every column "just in case".** Exclude sensitive columns at source.
 - **Running CDC without monitoring the replication slot.** A stopped consumer can fill the primary database's disk. Alert on slot lag and cap retained WAL.
 - **No reconciliation.** A green pipeline is not a correct one. Compare counts and totals against the source every day.
 
@@ -287,9 +287,9 @@ Use synthetic data only. A generator script or a public sample database is fine;
 - Biggest trap: a task that appends rows. The first retry silently double-counts a day of transactions.
 
 ## 🧭 Why it matters
-Huda moves her nightly transactions load into Airflow. The task runs a query for "yesterday's" transactions using `CURRENT_DATE - 1` and appends the rows to `staging.transactions_daily`. One night the warehouse connection drops after the insert has committed but before Airflow hears back. Airflow marks the task failed and, as configured, retries it five minutes later. The retry succeeds. The next morning the finance dashboard shows card spend for 14 September at almost exactly twice the usual amount.
+Huda moves her nightly transactions load into Airflow. The task runs a query for "yesterday's" transactions using `CURRENT_DATE - 1` and appends the rows to `staging.transactions_daily`. One night the warehouse connection drops after the insert has committed but before Airflow hears back. Airflow marks the task failed and retries it five minutes later, successfully. The next morning the finance dashboard shows card spend for 14 September at almost exactly twice the usual amount.
 
-Lina, the analytics engineer, spots it just before the finance team does. Then a second, quieter bug appears. A Saturday load had failed and Huda re-ran it by hand on Monday. Because the query said `CURRENT_DATE - 1`, the re-run loaded *Sunday* again, and Saturday never arrived.
+Lina, the analytics engineer, spots it before finance does. Then a second, quieter bug appears. A Saturday load had failed and Huda re-ran it by hand on Monday. Because the query said `CURRENT_DATE - 1`, the re-run loaded *Sunday* again, and Saturday never arrived.
 
 Neither bug is about Airflow. The task appended instead of replacing, and chose its own day. Faisal's rule for the team comes out of that morning: **"Every task must be safe to run twice, for any date, at any time."**
 
@@ -326,7 +326,7 @@ The two loads run in parallel. If the data tests fail, nothing downstream runs, 
 **Idempotency.** An operation is **idempotent** if doing it many times has the same effect as doing it once. Pressing a lift's call button is idempotent; adding a row is not. There are two standard ways to make a load idempotent:
 
 1. **Delete then insert a partition** (also called partition overwrite): inside one transaction, delete everything for the period you are loading, then insert it fresh.
-2. **Merge (upsert) on a key**: insert rows that are new, update rows that already exist, matched on a primary key.
+2. **Merge (upsert) on a key**: insert new rows and update existing ones, matched on a primary key.
 
 The wrong way and the right way side by side:
 
@@ -361,7 +361,7 @@ Run the second version once or ten times, for any day, and the table ends up the
 
 ### 🟡 Going deeper
 
-**An idempotent Airflow DAG.** Airflow defines DAGs in Python. With the TaskFlow style, each decorated function is a task. A sketch of Najm's transactions load (in Airflow 3 the decorators import from `airflow.sdk`; in Airflow 2 from `airflow.decorators`):
+**An idempotent Airflow DAG.** Airflow defines DAGs in Python. With the TaskFlow style, each decorated function is a task. A sketch of Najm's transactions load for Airflow 3:
 
 ```python
 from datetime import timedelta
@@ -429,7 +429,7 @@ WHEN NOT MATCHED THEN
 
 `MERGE` fails if two source rows match one target row, so first reduce the batch to the latest row per `account_id`. The `s.updated_at > t.updated_at` guard means an older change replayed later cannot overwrite a newer one. This is the merge that made the overlapping watermark in lesson 2.1 safe.
 
-**Backfills.** A **backfill** runs a pipeline for past intervals: after a bug fix, a new column or a new source. With idempotent, interval-driven tasks a backfill is just "run these 90 daily intervals"; Airflow and Dagster both have built-in backfill commands and UI actions (the Airflow CLI changed in version 3; check your docs). Without idempotency a backfill is a manual, risky project. Plan backfills like changes:
+**Backfills.** A **backfill** runs a pipeline for past intervals: after a bug fix, a new column or a new source. With idempotent, interval-driven tasks a backfill is just "run these 90 daily intervals"; Airflow and Dagster both have built-in backfill commands and UI actions (the Airflow CLI changed in version 3; check your docs). Without idempotency it is a risky manual project. Plan backfills like changes:
 
 - **Limit concurrency** with `max_active_runs` or pools, so ninety runs cannot flood the source.
 - **Run downstream too**: marts and extracts built from those dates.
@@ -451,7 +451,7 @@ def stg_transactions_daily(context: AssetExecutionContext) -> None:
     ...  # delete-then-insert this one day, exactly as in the SQL above
 ```
 
-The partition key plays the role of Airflow's data interval. The asset view makes lineage and freshness visible ("this mart is stale because this upstream partition failed"). **Prefect** is a third option, with flows and tasks as plain Python functions. Pick one for the team; the principles are the same in all three.
+The partition key plays the role of Airflow's data interval. The asset view makes lineage and freshness visible ("this mart is stale because this upstream partition failed"). **Prefect** is a third option. Pick one; the principles are the same.
 
 ### 🔴 Expert view
 
@@ -515,7 +515,7 @@ Approved by:      Faisal
 The regulatory line matters most: re-running history must never silently change a figure already reported. That is compliance's decision, not a pipeline setting.
 
 ## 🛠️ Exercises
-Use synthetic data and a local PostgreSQL or DuckDB. Airflow and Dagster both run locally (Airflow in Docker using its official quick-start; Dagster with `pip` and its development server).
+Use synthetic data and a local PostgreSQL or DuckDB. Airflow (Docker quick-start) and Dagster (`pip`) both run locally.
 
 - 🟢 Write two versions of a daily load from a synthetic `raw.transactions` table into `staging.transactions_daily`: one that appends using `CURRENT_DATE - 1`, and one that deletes and inserts a given `business_date` in one transaction. Run each three times for the same date. *Done when:* a query shows the first version tripled the day's total and the second left it unchanged, and you can explain why in two sentences.
 - 🟡 Build the five-task DAG "wait for marker, load accounts, load transactions, build staging, run tests" in Airflow or Dagster, using the data interval or partition key in every query. Make one task fail on its first attempt only. *Done when:* the retry succeeds without duplicate rows, and a backfill for 14 past days produces exactly the same totals as running each day once.
@@ -524,8 +524,8 @@ Use synthetic data and a local PostgreSQL or DuckDB. Airflow and Dagster both ru
 ## ⚠️ Mistakes and traps
 - **Appending in a task that can be retried.** Retries and re-runs double-count. Overwrite the period or merge on a key.
 - **Using "today" inside a task.** Re-runs and backfills then load the wrong day. Read the data interval or partition key from the orchestrator.
-- **Retrying everything.** Retrying a failed data test or a code error only delays the alert. Retry transient errors; fail fast on deterministic ones.
-- **Unbounded backfills.** Cap concurrency and plan downstream re-runs.
+- **Retrying everything.** A failed data test or code error will fail again. Retry transient errors only; fail fast on the rest.
+- **Unbounded backfills.** Cap concurrency; plan downstream re-runs.
 - **Silently changing reported history.** A backfill can alter figures already sent to a regulator or the board. Decide explicitly, with compliance, what may change.
 
 ## 🧾 Recap
@@ -546,7 +546,7 @@ Use synthetic data and a local PostgreSQL or DuckDB. Airflow and Dagster both ru
 
 <details><summary>Answer</summary>
 
-**B.** It makes the task idempotent, so any number of retries leaves the same result. A trades double-counting for missing data whenever a passing failure happens; C lets wrong numbers sit on dashboards for a month; D does not address the duplicate. (🟢 The essentials.)
+**B.** It makes the task idempotent, so any number of retries leaves the same result. A trades double-counting for missing data; C leaves wrong numbers on dashboards for weeks; D ignores the duplicate. (🟢 The essentials.)
 
 </details>
 
@@ -598,7 +598,7 @@ Use synthetic data and a local PostgreSQL or DuckDB. Airflow and Dagster both ru
 
 <details><summary>Answer</summary>
 
-**B.** Scheduling on data readiness avoids loading half a day, and the timeout plus alert turns a silent stall into a visible problem. A only moves the risk; C and D push quality checks onto guesswork and users. (🟡 Going deeper.)
+**B.** Readiness avoids loading half a day; the timeout and alert make a stall visible. A only moves the risk; C and D replace checks with guesswork. (🟡 Going deeper.)
 
 </details>
 
@@ -629,7 +629,7 @@ Smart Alerts, Najm Bank's fraud-detection model, needs features such as "authori
 
 Huda's first consumer reads the card authorisations topic and writes counts per card to a feature table. In its first production week, a deployment restarts it mid-batch, and afterwards about two minutes of traffic is missing: the consumer had **auto-committed** its offsets, telling Kafka "I have processed these", before writing the results. On restart it resumed from the committed position, and those events were never counted.
 
-Faisal's first instinct is to switch on "exactly-once" in the configuration. Dana stops him: "Kafka's exactly-once covers Kafka. Our feature table is in PostgreSQL. Show me what happens when we write the same event twice." The honest answer to "is every event processed exactly once?" is: "at least once, and processing it twice is harmless."
+Huda's first instinct is to switch on "exactly-once" in the configuration. Dana stops her: "Kafka's exactly-once covers Kafka. Our feature table is in PostgreSQL. Show me what happens when we write the same event twice." The honest answer to "is every event processed exactly once?" is: "at least once, and processing it twice is harmless."
 
 ## 📐 How it works
 
@@ -724,11 +724,11 @@ with psycopg.connect("postgresql://features@localhost/najm") as conn:
         consumer.commit(message=msg, asynchronous=False)
 ```
 
-If the process dies after the insert but before the commit, the event is read again and `ON CONFLICT (auth_id) DO NOTHING` makes the second write a no-op, so features computed from this table never double-count. In real use, commit per batch rather than per message; it is just as safe because the sink is idempotent.
+If the process dies after the insert but before the commit, the event is read again and `ON CONFLICT (auth_id) DO NOTHING` makes the second write a no-op, so features computed from this table never double-count. In real use, commit per batch; the idempotent sink keeps that safe.
 
 **What Kafka's exactly-once really covers.** Two features are summarised as "exactly-once":
 
-- An **idempotent producer** (on by default in the Java client since Kafka 3.0; other clients, including librdkafka-based ones, may need `enable.idempotence=true`) gives each producer's messages sequence numbers, so a network retry cannot write the same message twice to a partition.
+- An **idempotent producer** (default in the Java client since Kafka 3.0; librdkafka-based clients need `enable.idempotence=true`) gives each producer's messages sequence numbers, so a network retry cannot write the same message twice to a partition.
 - **Transactions** let a producer write to several partitions *and* commit consumer offsets as one atomic unit. Consumers set `isolation.level=read_committed` to see only committed results. Kafka Streams uses this for its `exactly_once_v2` processing guarantee.
 
 Together these give exactly-once for **read from Kafka, process, write to Kafka**. They do not reach PostgreSQL, a feature store or an email. Once results leave Kafka, you need an idempotent sink (upsert on an event ID, or the offset stored in the same database transaction as the result). That is the "exactly-once myth": the guarantee is real but narrower than the slogan.
@@ -743,7 +743,7 @@ Together these give exactly-once for **read from Kafka, process, write to Kafka*
 | **Sliding** (hopping) | Fixed size that advances in smaller steps, so windows overlap: 10 minutes, every minute | "Authorisations in the last 10 minutes" as a fraud feature |
 | **Session** | Closes after a gap of inactivity, so size varies | A Najm Mobile visit: events until 30 minutes of silence |
 
-**Watermarks.** When is the 14:00–14:05 window *finished*, if late events may still arrive? A **watermark** is the processor's estimate that "no more events older than time T are expected", usually the largest event time seen minus a delay you choose. When it passes a window's end, the result is emitted. Later events are **late**: drop them, send them to a side output, or allow updates for an extra period ("allowed lateness"). The delay is a deliberate trade-off: longer is more complete but slower. For Smart Alerts, Dana chooses 30 seconds, because a fraud score that waits five minutes is useless.
+**Watermarks.** When is the 14:00–14:05 window *finished*, if late events may still arrive? A **watermark** is the processor's estimate that "no more events older than time T are expected", usually the largest event time seen minus a delay you choose. When it passes a window's end, the result is emitted. Later events are **late**: drop them, send them to a side output, or allow updates for an extra period ("allowed lateness"). The delay is a deliberate trade-off: longer is more complete but slower. For Smart Alerts, Dana chooses 30 seconds: a fraud score that waits five minutes is useless.
 
 A tumbling window with a watermark in **Apache Flink** SQL:
 
@@ -781,7 +781,7 @@ GROUP BY card_id, window_start, window_end;
 
 **Consumer lag is the key health signal.** **Lag** is how far a group is behind the newest offset. Alert on lag in seconds, which is what the fraud model cares about; a consumer lagging beyond retention loses events for good.
 
-**One pipeline or two.** The **Lambda architecture** (Nathan Marz) runs batch and streaming paths side by side; the **Kappa architecture** (Jay Kreps) uses one streaming path and replays the log to recompute. Many teams land the stream in the raw layer for batch reporting and also process it in real time. Keep one definition of each metric (lesson 4.1) on both paths, or the numbers will disagree.
+**One pipeline or two.** The **Lambda architecture** (Nathan Marz) runs batch and streaming paths side by side; the **Kappa architecture** (Jay Kreps) uses one streaming path and replays the log to recompute. Keep one definition of each metric (lesson 4.1) on both paths, or the numbers will disagree.
 
 **Personal data in streams.** Topic retention is a data retention decision: seven days of card events is seven days of personal data in another system. Use tokenised card IDs, set retention deliberately and restrict access (Module 6). Event pipelines for product analytics are compared in [*SaaS Building Blocks*, lesson 6.2 — Analytics: product, web and the event pipeline](../saas/index.html#/6.2), and queue patterns for application work in [*System Design for Vibe Coders*, lesson 10.2 — Queues and asynchronous work](../vibe/index.en.html#l10-2).
 
@@ -789,7 +789,7 @@ GROUP BY card_id, window_start, window_end;
 | Tool, pattern or standard | What it is and does | When to reach for it |
 |---|---|---|
 | **Apache Kafka** | Distributed, partitioned, replicated event log with retention, consumer groups and offsets | The backbone for card events, CDC and app events at Najm |
-| **Redpanda** | Kafka-API-compatible streaming platform, easy to run in a single container | Local labs and teams that want Kafka's API with a different engine |
+| **Redpanda** | Kafka-API-compatible streaming platform, easy to run in a single container | Local labs; Kafka's API on a different engine |
 | **Apache Flink** | Stream processor with event-time windows, watermarks, state and Flink SQL | Low-latency stateful features, such as Smart Alerts' card velocity counts |
 | **Spark Structured Streaming** | Streaming on the Apache Spark engine using DataFrames, watermarks and windows | Teams already on Spark or a Spark-based lakehouse |
 | **Kafka Streams** | Java library for stream processing inside your own application, with exactly-once within Kafka | Kafka-to-Kafka transformations owned by an application team |
@@ -825,7 +825,7 @@ Run Kafka or Redpanda locally in Docker using their official quick-starts, and g
 
 - 🟢 Create a three-partition topic `card.auths` and produce 1,000 synthetic events for 20 cards, keyed by `card_id`. Start two consumers in one group, then a third. *Done when:* you can show partition ownership before and after the rebalance, and each card's events in order.
 - 🟡 Write a consumer with auto-commit that sleeps between reading and writing to PostgreSQL, and kill it mid-run. Rewrite it with manual commits after writing and an `ON CONFLICT (auth_id) DO NOTHING` sink, and kill it again. *Done when:* you can show events lost by the first version, and every event exactly once in the second version's table although some were read twice.
-- 🔴 Using Flink SQL, Spark Structured Streaming or Kafka Streams, compute a 5-minute tumbling count per card by event time with a 30-second watermark. Produce some events with event times two minutes in the past. *Done when:* you can show those late events handled as you designed (dropped, side output or allowed lateness), explain the trade-off, and write a stream design card for your topic using the Najm template.
+- 🔴 Using Flink SQL, Spark Structured Streaming or Kafka Streams, compute a 5-minute tumbling count per card by event time with a 30-second watermark. Produce some events with event times two minutes in the past. *Done when:* you can show those late events handled as you designed (dropped, side output or allowed lateness), explain the trade-off, and fill in a Najm stream design card for your topic.
 
 ## ⚠️ Mistakes and traps
 - **Streaming because it sounds modern.** Use it only when an hour-old answer leads to a worse decision.
@@ -852,7 +852,7 @@ Run Kafka or Redpanda locally in Docker using their official quick-starts, and g
 
 <details><summary>Answer</summary>
 
-**D.** Streaming earns its cost only when the value of the answer decays within seconds or minutes. A and B add complexity with no benefit; C is a windowing choice for a problem that does not need streaming. (🟢 The essentials.)
+**D.** Streaming earns its cost only when an answer's value decays in seconds or minutes. A and B add cost for no benefit; C answers a question nobody asked. (🟢 The essentials.)
 
 </details>
 
@@ -869,7 +869,7 @@ Run Kafka or Redpanda locally in Docker using their official quick-starts, and g
 
 </details>
 
-**3. Faisal enables Kafka transactions and the idempotent producer, then says Smart Alerts' feature table in PostgreSQL is now "exactly-once". Is he right?**
+**3. Huda enables Kafka transactions and the idempotent producer, then says Smart Alerts' feature table in PostgreSQL is now "exactly-once". Is he right?**
 
 - A. No; PostgreSQL writes still need an idempotent sink or offsets stored with the result
 - B. Yes, because Kafka transactions extend to every system the consumer writes to
@@ -891,7 +891,7 @@ Run Kafka or Redpanda locally in Docker using their official quick-starts, and g
 
 <details><summary>Answer</summary>
 
-**C.** Event time places each authorisation in the window when it happened; the watermark decides how long to wait, and late events go to a side output or allowed lateness. A puts all 40 in the wrong window; B throws away real data; D does not affect windowing. (🟡 Going deeper.)
+**C.** Event time places each authorisation in the window when it happened; the watermark decides how long to wait for them. A puts all 40 in the wrong window; B throws away real data; D does not affect windowing. (🟡 Going deeper.)
 
 </details>
 
@@ -904,7 +904,7 @@ Run Kafka or Redpanda locally in Docker using their official quick-starts, and g
 
 <details><summary>Answer</summary>
 
-**D.** Partitioning by a skewed key puts most events on one partition, and only one consumer in a group can read it; `card_id` spreads load. A, B and C do not change how load is spread across partitions. (🔴 Expert view.)
+**D.** Partitioning by a skewed key puts most events on one partition, and only one consumer in a group can read it; `card_id` spreads load. A, B and C do not change how load is spread. (🔴 Expert view.)
 
 </details>
 
@@ -916,5 +916,4 @@ Run Kafka or Redpanda locally in Docker using their official quick-starts, and g
 - confluent-kafka-python — https://github.com/confluentinc/confluent-kafka-python
 - Tyler Akidau, Slava Chernyak and Reuven Lax, *Streaming Systems* (O'Reilly)
 - Tyler Akidau et al., "The Dataflow Model" (VLDB 2015) — https://research.google/pubs/
-- Jay Kreps, *I Heart Logs* (O'Reilly)
 - Martin Kleppmann, *Designing Data-Intensive Applications* (O'Reilly), chapter on stream processing

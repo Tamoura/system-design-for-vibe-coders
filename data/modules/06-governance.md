@@ -103,7 +103,7 @@ models:
           - not_null
 ```
 
-A model **contract** (available since dbt Core 1.5) makes dbt check at build time that the model returns exactly the declared columns and data types; an enforced contract must list every column (two are shown to save space). **Groups** and **access** (`private`, `protected` or `public`) say which models other teams may build on. Older dbt versions use `tests:` instead of `data_tests:`. dbt ignores the free-form `meta` block, but catalogues such as OpenMetadata and DataHub ingest it, so owners and classifications are typed once.
+A model **contract** (available since dbt Core 1.5) makes dbt check at build time that the model returns exactly the declared columns and data types; an enforced contract must list every column (two are shown to save space). **Groups** and **access** (`private`, `protected` or `public`) say which models other teams may build on. Older dbt versions use `tests:` instead of `data_tests:`. dbt does not act on the free-form `meta` block, but catalogues such as OpenMetadata and DataHub ingest it, so owners and classifications are typed once.
 
 A dbt **exposure** declares a consumer (dashboard, report or ML model), so lineage reaches beyond the warehouse:
 
@@ -137,7 +137,7 @@ INSERT INTO lineage_edges VALUES
 
 -- Everything downstream of one source column, with distance
 WITH RECURSIVE impact(node, depth) AS (
-  SELECT 'core.accounts.acct_status', 0
+  SELECT CAST('core.accounts.acct_status' AS TEXT), 0
   UNION ALL
   SELECT e.downstream, i.depth + 1
   FROM lineage_edges e
@@ -171,7 +171,7 @@ The `D` status looked harmless: no column renamed, no type changed. It was a **s
 - **Federated:** a small central office sets standards and tooling; domains (retail, risk, finance) own their data and appoint stewards. Most banks end up here.
 - **Data mesh:** Zhamak Dehghani's approach (first described in 2019): domain ownership, data as a product, a self-serve platform and *federated computational governance*, meaning rules enforced by the platform automatically, not by meetings.
 
-**Enforce with gates, not memos.** A short script over `manifest.json` in Najm's CI (*Cloud & DevOps: Zero to Hero* covers CI in its Module 4) fails a pull request when a tier-1 model has no `meta.data_owner` or a `public` model has no enforced contract. The rules then hold for every change, not only those a reviewer notices.
+**Enforce with gates, not memos.** A short script over `manifest.json` in Najm's CI (see [*Cloud & DevOps: Zero to Hero*, lesson 4.1 — Continuous integration: pipelines, tests, artefacts and fast feedback](../cloud/index.html#/4.1)) fails a pull request when a tier-1 model has no `meta.data_owner` or a `public` model has no enforced contract. The rules then hold for every change, not only those a reviewer notices.
 
 **Measure it.** Measure coverage and speed, not activity: the share of tier-1 models with owner, description, contract and tests; the share of CDEs with column-level lineage; the time to answer an impact question; incidents caused by unannounced upstream changes.
 
@@ -232,10 +232,10 @@ Use synthetic or public open data only.
 
 **1. The core banking team adds a new value `D` (dormant) to `acct_status`. No column is renamed and no type changes. How should Najm's change policy classify this change?**
 
-- A. Non-breaking, because the schema is unchanged
-- B. A semantic breaking change, needing notice to downstream consumers and an `accepted_values` test to catch it
-- C. A grain change, needing a new dataset
-- D. Not a governance matter, because only the producer's application uses the column
+- A. Non-breaking, because no column was renamed and no data type changed
+- B. A semantic breaking change that needs notice to consumers in lineage
+- C. A grain change, so it must ship as a new dataset
+- D. Not a governance matter, because only the producer's application writes the column
 
 <details><summary>Answer</summary>
 
@@ -245,10 +245,10 @@ Use synthetic or public open data only.
 
 **2. Which statement best describes the difference between data governance and data management?**
 
-- A. Governance is done by IT; management is done by the business
-- B. Governance is the catalogue tool; management is everything else
-- C. They are two names for the same activity
-- D. Governance sets decision rights and accountability over data; management is the work of building, running and protecting it
+- A. Governance is done by the IT department; management is done by business teams
+- B. Governance is the catalogue tool; management is everything else the data team does
+- C. They are two names for the same activity, used by different vendors
+- D. Governance sets decision rights and accountability; management does the work
 
 <details><summary>Answer</summary>
 
@@ -258,23 +258,23 @@ Use synthetic or public open data only.
 
 **3. Huda must find every report affected by a change to `core.accounts.acct_status` before the change ships. What gives her the most reliable answer?**
 
-- A. Column-level lineage harvested from the transformation code and run-time events, walked downstream and joined to the ownership register
+- A. Current column-level lineage, walked downstream and joined to the ownership register
 - B. Asking in the analytics team's chat channel who uses the accounts table
-- C. Table-level lineage showing which marts read `core.accounts`
-- D. A lineage diagram drawn in last year's architecture review
+- C. Table-level lineage showing every mart and report that reads `core.accounts`
+- D. The detailed lineage diagram drawn during last year's architecture review
 
 <details><summary>Answer</summary>
 
-**A.** Column-level lineage from code and run events is current, and the register turns it into people to notify. C is tempting but too coarse: many tables read `core.accounts` without this column; D is stale. (🟡 Going deeper.)
+**A.** Column-level lineage harvested from code and run events is current, and the register turns it into people to notify. C is tempting but too coarse: many tables read `core.accounts` without this column; D is stale. (🟡 Going deeper.)
 
 </details>
 
 **4. Najm wants to start governance with limited people. Which starting scope is most sensible?**
 
-- A. Catalogue every table in the warehouse before assigning any owners
-- B. Buy a commercial catalogue and let usage grow on its own
-- C. Identify the critical data elements behind regulatory reports, risk numbers and models, and give each an owner, definition, lineage, contract and tests
-- D. Write a data governance policy and wait for teams to adopt it
+- A. Catalogue every table in the warehouse first, then assign owners once the inventory is complete
+- B. Buy a commercial catalogue tool and let adoption grow on its own
+- C. Start with critical data elements and give each an owner, definition, lineage, contract and tests
+- D. Write a full governance policy, approve it in committee and wait for teams to adopt it
 
 <details><summary>Answer</summary>
 
@@ -284,10 +284,10 @@ Use synthetic or public open data only.
 
 **5. What does an enforced dbt model contract check?**
 
-- A. That the model's row count matches the source table
-- B. That, at build time, the model returns exactly the declared columns with the declared data types
-- C. That the data owner has approved the latest change
-- D. That no personal data is present in the model
+- A. That the model's row count matches its source table after every run
+- B. That the model returns exactly the declared columns and data types
+- C. That the data owner named in `meta` has approved the latest change
+- D. That no column tagged as personal data is present in the model
 
 <details><summary>Answer</summary>
 
@@ -416,7 +416,7 @@ This is **dynamic data masking**: the same query returns different values depend
 
 **Retention and deletion.** A **retention schedule**, decided with the DPO and legal, gives each class a period and a trigger, such as "closed account records: the period required by banking and anti-money-laundering rules, from closure". Engineering makes deletion real:
 - **Partition by the retention clock** (event date, closure date), so deletion is a `DROP` of old partitions, not a slow `DELETE`.
-- **Lakehouse tables keep history.** In Delta Lake and Apache Iceberg, old snapshots still hold deleted rows for time travel until you run `VACUUM` (Delta) or expire snapshots and remove orphan files (Iceberg).
+- **Lakehouse tables keep history.** In Delta Lake and Apache Iceberg, old snapshots still hold deleted rows for time travel until you run `VACUUM` (Delta) or expire snapshots (Iceberg), which deletes data files no longer referenced.
 - **Copies count.** Backups, sandboxes, CSV exports and feature stores all hold personal data too.
 
 **Erasure requests.** Erasure is not always "delete everything": banks must keep some records by law, and Article 17 allows for that. The platform needs a repeatable procedure: find every location from lineage (6.1), delete or pseudonymise where no duty to keep applies, and record evidence.
@@ -505,10 +505,10 @@ Use synthetic data only (for example generated with the Python Faker library). N
 
 **1. Huda replaces each national ID with its unsalted MD5 hash and labels the table "anonymised". What is the main problem?**
 
-- A. MD5 output is too long to store efficiently
+- A. MD5 output is too long to store efficiently in a column used for joins
 - B. Hashing destroys the ability to join tables on the customer
-- C. National IDs have a small, structured value space, so the hashes can be reversed by hashing every possible ID; the data is not anonymous
-- D. Hashing is not allowed under the GDPR
+- C. The hashes can be reversed by hashing every possible ID, so the data is not anonymous
+- D. Hashing personal data is prohibited outright under the GDPR
 
 <details><summary>Answer</summary>
 
@@ -518,10 +518,10 @@ Use synthetic data only (for example generated with the Python Faker library). N
 
 **2. Under the GDPR, how should Najm treat a dataset where customer IDs have been replaced by HMAC-SHA-256 values with a secret key held by the platform team?**
 
-- A. As personal data, because it is pseudonymised and can be re-linked by whoever holds the key
-- B. As anonymous data outside the GDPR's scope
-- C. As special-category data
-- D. As public data once the key is rotated
+- A. As personal data, because the key holder can re-link it
+- B. As anonymous data outside the GDPR's scope, because no ID is visible
+- C. As special-category data that needs Article 9 protection
+- D. As public data once the key is rotated, since old pseudonyms no longer match
 
 <details><summary>Answer</summary>
 
@@ -544,10 +544,10 @@ Use synthetic data only (for example generated with the Python Faker library). N
 
 **4. Lina runs `DELETE` on an Apache Iceberg table for customers whose retention period has ended. What else must happen before the data is physically gone?**
 
-- A. Nothing; `DELETE` removes the files immediately
-- B. Expire old snapshots and remove the data files no longer referenced, and handle backups and other copies
-- C. Rename the table
-- D. Re-run the dbt models that read the table
+- A. Nothing; in Iceberg a `DELETE` removes the underlying data files immediately
+- B. Expire old snapshots so unreferenced data files are deleted, and clean up copies
+- C. Rename the table so time-travel queries can no longer find the old rows
+- D. Re-run the dbt models that read the table so downstream marts are rebuilt
 
 <details><summary>Answer</summary>
 
@@ -558,13 +558,13 @@ Use synthetic data only (for example generated with the Python Faker library). N
 **5. An EU customer of Najm asks for erasure. Some of their transaction records must be kept under banking record-keeping rules. What should the data platform do?**
 
 - A. Delete every record immediately, including those the law requires the bank to keep
-- B. Refuse the request, because the bank holds data that must be kept
-- C. Use lineage to find every copy, delete or pseudonymise where no legal duty to keep applies, keep what the law requires under restricted access, and record evidence, as decided with the DPO
-- D. Delete only the row in `core.customers`
+- B. Refuse the whole request, because some of the records must be kept by law
+- C. Find every copy via lineage, erase where no duty to keep applies, restrict the rest and record evidence
+- D. Delete only the customer's row in `core.customers`, since every mart rebuilds from it
 
 <details><summary>Answer</summary>
 
-**C.** The right to erasure has exceptions, including legal obligations to retain, so the answer is a precise procedure, not all or nothing. D is tempting but misses every downstream copy. (🟡 Going deeper.)
+**C.** The right to erasure has exceptions, including legal obligations to retain, so the answer is a precise procedure agreed with the DPO, not all or nothing. D is tempting but misses every downstream copy. (🟡 Going deeper.)
 
 </details>
 
@@ -648,7 +648,7 @@ CREATE POLICY loan_book_by_country ON marts.loan_book
         WHERE username = current_user));
 ```
 
-Note two details. Readers need `SELECT` on `security.analyst_scope` for the policy's lookup to work (or wrap the lookup in a small function owned by a security role). And superusers and roles with the `BYPASSRLS` attribute skip every policy, which is exactly why `etl_admin` made Najm's RLS meaningless. Managed warehouses offer the same ideas under their own names (row access policies, row filters, column masks, policy tags); the design is the same.
+Note two details. Readers need `USAGE` on the `security` schema and `SELECT` on `security.analyst_scope` for the policy's lookup to work (or wrap the lookup in a small function owned by a security role). And superusers and roles with the `BYPASSRLS` attribute skip every policy, which is exactly why `etl_admin` made Najm's RLS meaningless. Managed warehouses offer the same ideas under their own names (row access policies, row filters, column masks, policy tags); the design is the same.
 
 **The access path.** Every route to the data should carry the person's identity to the warehouse and leave a record:
 
@@ -679,7 +679,7 @@ models:
         select: ['svc_smart_alerts_features']   # one named workload, no humans
 ```
 
-Roles, group mappings and database-level settings belong in infrastructure as code (covered in *Cloud & DevOps: Zero to Hero*, Module 3). A pull request then becomes the access request, the review and the record.
+Roles, group mappings and database-level settings belong in infrastructure as code (see [*Cloud & DevOps: Zero to Hero*, lesson 3.1 — Infrastructure as code with Terraform/OpenTofu: state, modules and plans](../cloud/index.html#/3.1)). A pull request then becomes the access request, the review and the record.
 
 **Secrets.** A **secret** is anything that grants access: passwords, API keys, tokens, private keys, and the HMAC key from 6.2.
 
@@ -768,7 +768,7 @@ Faisal and Salem publish the **Najm Data Platform Access Policy v1**. Part A is 
 5. Public links are disabled in the BI tool. External sharing uses governed views or sharing protocols, never files, and needs a data sharing agreement approved by Sara.
 6. Data owners recertify access to their tier-1 datasets every quarter.
 
-With these in place, audit's question takes minutes: query the audit log for reads of `core.customers` and `customer_360` filtered to that customer key, by named user.
+With these in place, audit's question takes minutes: list every named user whose logged queries read `core.customers` or `customer_360` last month, then narrow to statements that touched that customer. pgaudit logs statements, not returned rows, so a broad query is a lead to follow up, not proof.
 
 ## 🛠️ Exercises
 Use synthetic data in a local PostgreSQL (for example the official image in Docker). Never test against systems you do not own.
@@ -796,10 +796,10 @@ Use synthetic data in a local PostgreSQL (for example the official image in Dock
 
 **1. Najm's credit-risk mart has row-level security policies, but analysts using the risk dashboard can see every country's loans. What is the most likely cause?**
 
-- A. Row-level security does not work on mart tables
-- B. The policies were written in SQL rather than in the BI tool
+- A. Row-level security does not work on mart tables built by dbt
+- B. The policies were written in SQL in the warehouse rather than in the BI tool
 - C. Row-level security policies only apply to INSERT and UPDATE statements
-- D. The dashboard queries the warehouse as a shared superuser, which bypasses row-level security
+- D. The dashboard connects as a shared superuser, which bypasses the policies
 
 <details><summary>Answer</summary>
 
@@ -809,10 +809,10 @@ Use synthetic data in a local PostgreSQL (for example the official image in Dock
 
 **2. Huda finds a warehouse password in a notebook committed to git six months ago. What should happen first?**
 
-- A. Delete the line from the notebook and commit the change
-- B. Rotate the credential, then remove it from the code and move the pipeline to the secrets manager
-- C. Make the repository private
-- D. Nothing, if the repository is internal
+- A. Delete the line from the notebook, commit the change and push it
+- B. Rotate the credential, then move the pipeline to the secrets manager
+- C. Make the repository private so no one else can see the password
+- D. Nothing, because the repository is internal to the bank
 
 <details><summary>Answer</summary>
 
@@ -822,10 +822,10 @@ Use synthetic data in a local PostgreSQL (for example the official image in Dock
 
 **3. Najm wants analysts to see confidential columns only for customers in their own country, with masking driven by the classification tags of 6.2. Which access model fits best?**
 
-- A. One role per table per country
-- B. A single shared analyst account
-- C. Attribute-based access control, using user attributes and column tags, together with row-level security
-- D. Giving all analysts `pii_reader`
+- A. One role per table per country, granted by each data owner
+- B. A single shared analyst account with a masked view for everyone
+- C. ABAC on user attributes and column tags, with row-level security
+- D. Giving all analysts `pii_reader` and relying on training
 
 <details><summary>Answer</summary>
 
@@ -835,10 +835,10 @@ Use synthetic data in a local PostgreSQL (for example the official image in Dock
 
 **4. Which audit-log setup gives evidence that internal audit can rely on?**
 
-- A. Logs of grants, schema changes, writes and restricted reads by named users, shipped to an append-only store outside the platform administrators' control
-- B. Logs kept on the warehouse server, editable by the platform administrators
-- C. Logs of failed logins only
-- D. Screenshots of the access-control settings taken once a year
+- A. Named-user logs of grants, writes and restricted reads, in a store administrators cannot alter
+- B. Detailed logs kept on the warehouse server, editable by the platform administrators
+- C. Logs of failed logins only, kept for seven years
+- D. Screenshots of the access-control settings, taken once a year for the auditors
 
 <details><summary>Answer</summary>
 
@@ -848,10 +848,10 @@ Use synthetic data in a local PostgreSQL (for example the official image in Dock
 
 **5. A fintech partner wants Najm's daily SME card-spend data by sector to build a joint product. Which approach is safest?**
 
-- A. Email a daily CSV of all SME card transactions
-- B. Give the partner a login to the warehouse with `marts_reader`
-- C. Copy the raw card stream into the partner's cloud account
-- D. Share a governed, aggregated, read-only view through a sharing protocol Najm can revoke, under a data sharing agreement approved by the DPO
+- A. Email a daily encrypted CSV of all SME card transactions to the partner
+- B. Give the partner a named login to the warehouse with `marts_reader`
+- C. Copy the raw card stream into the partner's cloud account each night
+- D. A revocable, read-only aggregated view, shared under a DPO-approved agreement
 
 <details><summary>Answer</summary>
 

@@ -281,7 +281,7 @@ The first run found three gaps no design review had caught: the replica-lag aler
 *Level: 🔴 Advanced* · *Prerequisites: 1.2, 3.1, 6.1* · *Phase: Operate, Monitor*
 
 ## ⚡ In 60 seconds
-- **FinOps** is the practice of making engineering, finance and the business share responsibility for cloud spending, so that cost becomes an engineering signal like latency, not a surprise at the end of the month.
+- **FinOps** is the practice of making engineering, finance and the business share responsibility for cloud spending, so cost becomes an engineering signal like latency, not a month-end surprise.
 - The FinOps Foundation framework runs in a loop of three phases: **Inform** (see and allocate cost), **Optimise** (reduce waste and get better rates) and **Operate** (make it routine and owned).
 - You cannot cut what you cannot attribute. Start with **tagging and allocation**: every resource has an owner, a service and an environment.
 - Cut usage before you buy discounts: delete idle resources, rightsize, autoscale and schedule non-production, then commit to **reserved capacity or savings plans** for the steady base, and use **spot** capacity only for work that can be interrupted.
@@ -289,15 +289,15 @@ The first run found three gaps no design review had caught: the replica-lag aler
 - Biggest trap: cost-cutting that quietly removes resilience, such as dropping the second zone or the backup copies built in 6.1 to save money.
 
 ## 🧭 Why it matters
-Six months after the first services moved to the cloud, Mona, the FinOps analyst in Finance, brings Salem a chart. Najm's monthly cloud bill has grown much faster than the number of active mobile customers. Her questions are simple and fair: "What are we paying for? Who owns it? Is the growth good growth?" Salem cannot answer from the console. A large share of the spend is untagged. There is a line called "data transfer" that nobody budgeted for. Three GPU nodes created for a Najm Assist experiment have been running every hour of every day since a hackathon. The development clusters run at full size over the weekend.
+Six months after the first services moved to the cloud, Mona, the FinOps analyst in Finance, brings Salem a chart. Najm's monthly cloud bill has grown much faster than the number of active mobile customers. Her questions are fair: "What are we paying for? Who owns it? Is the growth good growth?" Salem cannot answer from the console. A large share of the spend is untagged. There is a line called "data transfer" that nobody budgeted for. Three GPU nodes created for a Najm Assist experiment have been running every hour of every day since a hackathon. The development clusters run at full size over the weekend.
 
-None of this is a finance problem that finance can fix. In the cloud, every engineer who merges an OpenTofu change or raises an HPA ceiling is making a spending decision, often without seeing the price. The old data-centre model, where procurement approved hardware months ahead, is gone. FinOps puts the cost signal back where decisions are made: in the pull request, the dashboard and the team's own backlog. This lesson gives you the language Mona speaks, the mechanics of allocating cost, and an order of operations for cutting it without harming reliability. For a lighter treatment aimed at small teams, see [*System Design for Vibe Coders*, lesson 11.4 — Cost engineering](../vibe/index.en.html#l11-4).
+Finance cannot fix this alone. In the cloud, every engineer who merges an OpenTofu change or raises an HPA ceiling is making a spending decision, often without seeing the price. The old data-centre model, where procurement approved hardware months ahead, is gone. FinOps puts the cost signal back where decisions are made: in the pull request, the dashboard and the team's own backlog. This lesson gives you Mona's language, the mechanics of allocation, and an order for cutting cost without harming reliability. For a lighter treatment aimed at small teams, see [*System Design for Vibe Coders*, lesson 11.4 — Cost engineering](../vibe/index.en.html#l11-4).
 
 ## 📐 How it works
 
 ### 🟢 The essentials
 
-**The FinOps Foundation framework.** The FinOps Foundation, part of the Linux Foundation, publishes the most widely used framework. At the time of writing (2026) it describes principles, personas (engineering, finance, leadership, procurement, product), capabilities and a cycle of three phases. The principles include that teams need to collaborate, that business value drives technology decisions, that everyone takes ownership of their cloud usage, that cost data should be accessible and timely, that FinOps is enabled by a central team, and that teams should take advantage of the cloud's variable cost model. Check finops.org for the current wording, which is revised from time to time.
+**The FinOps Foundation framework.** The FinOps Foundation, part of the Linux Foundation, publishes the FinOps Framework. At the time of writing (2026) it describes principles, personas (engineering, finance, leadership, procurement, product), capabilities and a cycle of three phases. The principles include that teams need to collaborate, that business value drives technology decisions, that everyone takes ownership of their cloud usage, that cost data should be accessible and timely, that FinOps is enabled by a central team, and that teams should take advantage of the cloud's variable cost model. Check finops.org for the current wording.
 
 ```mermaid
 flowchart LR
@@ -310,7 +310,7 @@ flowchart LR
 - **Compute** is billed by time (per second or hour, depending on service) and size. A large instance idling costs the same as a busy one.
 - **Storage** is billed by amount stored per month, with tiers: frequently accessed storage costs more per gigabyte than archive tiers, which charge more to read back.
 - **Requests and operations**: many managed services charge per API call, per million requests or per read and write.
-- **Data transfer (egress)**: moving data *out* of a provider to the internet usually costs money, and so does traffic between regions and, with some providers, between zones. Managed NAT gateways often charge per gigabyte processed. Check your provider's current pricing pages, because egress is the line that surprises teams most.
+- **Data transfer (egress)**: moving data *out* of a provider to the internet usually costs money, and so does traffic between regions and, with some providers, between zones. Managed NAT gateways often charge per gigabyte processed. Check your provider's current pricing pages, because egress often surprises teams.
 - **Managed service premiums**: a managed database costs more than the virtual machine underneath, and buys you patching, backups and failover. That is usually a good trade; just know you are making it.
 
 **Allocation: tags and labels.** Every provider lets you attach key-value metadata to resources: *tags* in AWS and Azure, *labels* in Google Cloud. A cost allocation policy defines a small, mandatory set:
@@ -325,11 +325,11 @@ flowchart LR
 
 Tags must usually be activated for billing reports (for example, AWS cost allocation tags), and they mostly apply only from when they are set (backfill, where offered, is limited), so start early. Enforce them in infrastructure as code (3.1) and with policy as code (3.3): a plan that creates an untagged resource fails the check.
 
-**Showback and chargeback.** *Showback* shows each team what it spent; *chargeback* actually moves the cost to the team's budget. Most organisations start with showback, because the first goal is awareness, not accounting.
+**Showback and chargeback.** *Showback* shows each team what it spent; *chargeback* actually moves the cost to the team's budget. Start with showback: the first goal is awareness, not accounting.
 
 ### 🟡 Going deeper
 
-**Shared costs and Kubernetes.** Tags work well for a database owned by one team. They fail for a shared Kubernetes cluster where twenty services run on the same nodes. Allocate shared clusters by what each workload *reserves* (its CPU and memory requests) or *uses*, whichever is higher, per namespace. Tools such as **OpenCost** (a CNCF project) read the cluster's resource data and the provider's prices to produce cost per namespace, label and workload. Decide openly how to split what is left over: idle capacity, the control plane, the observability stack and shared networking. A common rule is to spread it in proportion to each team's direct cost, and to show idle capacity as its own line so that the platform team is accountable for packing efficiency.
+**Shared costs and Kubernetes.** Tags work well for a database owned by one team. They fail for a shared Kubernetes cluster where twenty services run on the same nodes. Allocate shared clusters by what each workload *reserves* (its CPU and memory requests) or *uses*, whichever is higher, per namespace. Tools such as **OpenCost** (a CNCF project) read the cluster's resource data and the provider's prices to produce cost per namespace, label and workload. Decide openly how to split what is left over: idle capacity, the control plane, the observability stack and shared networking. A common rule is to spread it in proportion to each team's direct cost, and to show idle capacity as its own line so the platform team owns packing efficiency.
 
 Requests matter here. A team that requests 4 CPUs per pod and uses 0.3 pays, in a fair allocation, for 4. That is the right incentive: over-requesting blocks that capacity from everyone else.
 
@@ -406,7 +406,7 @@ The first report's actions: tag policy enforced in the OpenTofu pipeline (untagg
 
 ## ⚠️ Mistakes and traps
 - **Buying commitments before cleaning up.** Discounts on waste lock the waste in for years. Remove idle, schedule and rightsize first.
-- **Tagging later.** Tags apply from when they are set, and untagged history cannot be allocated well. Enforce tags in IaC from the first resource.
+- **Tagging later.** Untagged history cannot be allocated well. Enforce tags in IaC from the first resource.
 - **Finance-only FinOps.** A monthly spreadsheet from finance changes nothing if engineers never see it. Put cost in pull requests, dashboards and team reviews.
 - **Ignoring data transfer.** Egress, cross-zone traffic and NAT processing can become a large line. Check pricing pages and design traffic paths with them in mind.
 - **Cutting resilience to save money.** One zone, smaller standbys and shorter retention change your RTO and RPO. Route such changes through the service owner and SRE.
@@ -469,7 +469,7 @@ The first report's actions: tag policy enforced in the OpenTofu pipeline (untagg
 
 <details><summary>Answer</summary>
 
-**B.** Removing zone redundancy changes the RTO and RPO the business signed, so the service owner and SRE decide, and will very likely refuse; cost and resilience are one decision. A and D look only at money; C undermines governance. (🔴 Expert view.)
+**B.** Removing zone redundancy changes the RTO and RPO the business signed, so the service owner and SRE decide, and will very likely refuse. A and D look only at money; C undermines governance. (🔴 Expert view.)
 
 </details>
 
@@ -521,7 +521,7 @@ Meanwhile the data science team wanted to self-host a small open-weight model fo
 
 **Why GPUs.** Running a model (*inference*) is mostly large matrix multiplications over its *weights*, the billions of numbers learned in training, which GPUs do in parallel far faster than CPUs. The usual limit is **GPU memory**: the weights must fit, plus working memory for every conversation served.
 
-A rough rule for the weights: memory ≈ number of parameters × bytes per parameter. A model with 8 billion parameters stored in 16-bit precision (2 bytes each) needs about 16 GB just for the weights; in 8-bit, about 8 GB; in 4-bit, about 4 GB. Add room for the **KV cache** (below) and the serving engine. This is arithmetic, not a vendor figure, and it tells you quickly whether a model fits on a given GPU.
+A rough rule for the weights: memory ≈ number of parameters × bytes per parameter. A model with 8 billion parameters stored in 16-bit precision (2 bytes each) needs about 16 GB just for the weights; in 8-bit, about 8 GB; in 4-bit, about 4 GB. Add room for the **KV cache** (below) and the serving engine. This quick arithmetic tells you whether a model fits a given GPU.
 
 **Managed API or self-hosted?**
 
@@ -606,7 +606,7 @@ Small workloads can share a GPU with time-slicing or, on some NVIDIA data-centre
 
 **Serving engines.** Running a model with a plain script serves one request at a time and leaves the GPU mostly idle, which is what Yousef saw. Serving engines fix this:
 - **vLLM** is an open-source engine known for *PagedAttention*, which manages KV-cache memory in pages, and *continuous batching*, which adds new requests to the running batch as others finish. It exposes an OpenAI-compatible HTTP API.
-- **NVIDIA Triton Inference Server** serves models from several frameworks with dynamic batching; NVIDIA has been bringing it under its newer inference platform branding, so check current naming.
+- **NVIDIA Triton Inference Server** serves models from several frameworks with dynamic batching; check NVIDIA's current naming for it.
 - **KServe** is a Kubernetes-native model-serving layer that manages model deployments, autoscaling and rollouts, and can run engines such as vLLM underneath.
 
 **The concepts behind the speed.**
@@ -644,7 +644,7 @@ Self-hosted per month   = GPU node hours × node rate (busy or idle)
 Self-hosted cost per 1M tokens = self-hosted per month / (tokens served / 1,000,000)
 ```
 
-The self-hosted cost per token falls as utilisation rises; at low utilisation it is usually worse than the managed API. Self-host when volume keeps GPUs busy, or when residency, control or latency requires it, and redo the sum when prices change. GPU capacity can be hard to obtain on demand, so for a critical self-hosted model reserve capacity or keep a managed fallback.
+The self-hosted cost per token falls as utilisation rises; at low utilisation it is usually worse than the managed API. Redo the sum when prices change. GPU capacity can be hard to obtain on demand, so for a critical self-hosted model reserve capacity or keep a managed fallback.
 
 **Release safety for models.** Changing the model version, quantisation or system prompt changes answers, so it is a release. Canary it at the gateway (4.2): send a small share of traffic, compare evaluation results, feedback, latency and cost, then promote or roll back. Pin model versions where providers allow; an alias that silently moves to a newer model is an unreviewed deploy.
 
@@ -657,7 +657,6 @@ The self-hosted cost per token falls as utilisation rises; at low utilisation it
 | **KServe** | Kubernetes-native model-serving layer with autoscaling and rollouts | Standardising model deployments on the platform |
 | **NVIDIA device plugin** and **DCGM exporter** | Expose GPUs to Kubernetes as a resource; export GPU metrics to Prometheus | Any cluster with NVIDIA GPU nodes |
 | **KEDA** (CNCF) | Event-driven autoscaling from queues, streams and metrics | Scaling model servers on queue depth instead of CPU |
-| **Quantisation** | Store weights in fewer bits to save memory and gain speed, with measured quality loss | Fitting a model on smaller or fewer GPUs |
 | **OpenTelemetry** GenAI conventions | Standard attributes for model calls, token counts and latency | Consistent cost and latency data across models and teams |
 
 ## 🏛️ In practice at Najm Bank
@@ -685,13 +684,11 @@ Yousef's classifier now runs on vLLM with continuous batching and an 8-bit quant
 - **Direct calls with scattered keys.** Every team holding its own provider key means no cost view, no fallback and unknown data flows. Route everything through one gateway and block direct egress.
 - **Idle GPUs.** A GPU node running a model nobody calls costs the same as a busy one. Scale on queue depth, schedule non-production, and review utilisation weekly.
 - **Serving without a serving engine.** A plain script handles one request at a time. Use an engine with continuous batching and measure tokens per second.
-- **Autoscaling model servers on CPU.** CPU says little about GPU load. Scale on queue depth or running requests, and plan for slow cold starts.
 - **Quantising or switching models without evaluation.** Smaller and cheaper can be worse. Run your evaluation set and a canary before promoting.
 - **Unsafe semantic caching.** Reusing answers to "similar" prompts can leak one customer's data to another. Cache only non-personal answers, or scope caches per user.
 
 ## 🧾 Recap
 - AI workloads are bound by GPU memory and priced by tokens; size models with simple arithmetic and track cost per conversation.
-- Use managed APIs for variable volume and frontier capability; self-host when volume is steady, GPUs stay busy, or data and control require it.
 - An LLM gateway gives one place for auth, routing by data class, budgets, fallbacks, caching, redaction and telemetry; run it as critical infrastructure.
 - Serve self-hosted models with an engine such as vLLM, Triton or KServe, using batching, KV-cache limits and evaluated quantisation, and scale on queue depth.
 - Treat every model, prompt or quantisation change as a release: evaluate, canary, pin versions, roll back if needed.
