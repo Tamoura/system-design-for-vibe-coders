@@ -167,7 +167,7 @@ flowchart LR
 
 **Registry operations.** Treat the registry as production infrastructure: **tag immutability** on release repositories; **pull-through caches or mirrors** for public images, so a public registry's rate limits or outage cannot stop your deploys (Docker Hub limits anonymous and free-tier pulls; check its current limits); the same region as the cluster; and **retention rules** that never delete anything currently deployed.
 
-**The container is not a VM.** Run one main process per container, log to standard output, keep state outside it, and expect it to be killed and replaced at any time. These are ideas from the Twelve-Factor App, and Kubernetes assumes them.
+**The container is not a VM.** Run one main process per container, log to standard output, keep state outside it, and expect it to be killed and replaced at any time. Kubernetes assumes these Twelve-Factor App ideas.
 
 ## 🧰 The toolkit
 | Tool, practice or service | What it is and does | When to reach for it |
@@ -223,7 +223,7 @@ Work locally with Docker or a compatible tool. Push only to a registry you own, 
 
 **1. Yousef deletes `.env` with `RUN rm .env` right after `COPY . .`. Why is the secret still exposed?**
 
-- A. `rm` is silently ignored inside a Docker build, so the file is never deleted
+- A. `rm` is silently ignored inside a Docker build
 - B. The `COPY` layer still holds the file; the later `rm` layer only hides it
 - C. The build cache restores deleted files from the previous build on every rebuild
 - D. Files in the working directory are always visible to anyone running `docker ps`
@@ -278,7 +278,7 @@ Work locally with Docker or a compatible tool. Push only to a registry you own, 
 - A. Each rebuild compresses the layers further, so images get smaller over time
 - B. New vulnerabilities are found in unchanged bases; rebuilds pick up the patches
 - C. Container registries delete any image older than one month by default
-- D. Kubernetes refuses to start images whose build date is over a month old
+- D. Kubernetes refuses to start images older than one month
 
 <details><summary>Answer</summary>
 

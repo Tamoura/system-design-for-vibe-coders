@@ -410,7 +410,8 @@ AI assistance and verification:
 - Tool: approved coding agent (internal list, version as configured).
 - Used for: drafting the retry wrapper and its tests.
 - I wrote: the retry policy (3 attempts, exponential backoff with jitter,
-  only on timeouts and 503s, never on 4xx), and the test cases.
+  only on timeouts and 503s, never on 4xx; every attempt reuses the
+  same idempotency key, so a retry cannot pay twice), and the test cases.
 - Verified by: unit tests (12, all mine or reviewed line by line);
   a manual run against the sandbox with the payment service stopped;
   secret scan clean.
@@ -444,10 +445,10 @@ Tariq's comment: "I can see where the agent helped, where you overruled it, and 
 
 **1. Reem's take-home allowed AI tools, and she disclosed them. Why did the follow-up interview still go badly?**
 
-- A. Using AI on a take-home is always a reason for rejection
-- B. Her code had no tests
-- C. She could not explain key parts of the code she submitted, such as the retry logic
-- D. She used the wrong AI tool
+- A. Using AI on a take-home is always a reason for rejection, even when it is allowed
+- B. Her code had no tests, so Tariq could not tell whether any of it worked
+- C. She could not explain key parts of her own code, such as the retry logic
+- D. She used an AI tool that was not on the employer's list of approved tools
 
 <details><summary>Answer</summary>
 
@@ -458,8 +459,8 @@ Tariq's comment: "I can see where the agent helped, where you overruled it, and 
 **2. Mohammed is invited to a Sadeem Pay technical interview. The invitation does not mention AI tools. What should he do?**
 
 - A. Ask the recruiter in writing whether AI tools are allowed in each round, and follow the answer
-- B. Use AI tools, since no rule forbids them
-- C. Avoid mentioning AI entirely, so it does not come up
+- B. Use AI tools in every round, since the invitation does not forbid them
+- C. Avoid mentioning AI entirely, so the question never comes up in the process
 - D. Use an AI assistant quietly in a second window during the live round
 
 <details><summary>Answer</summary>
@@ -470,40 +471,40 @@ Tariq's comment: "I can see where the agent helped, where you overruled it, and 
 
 **3. An agent reports "Fixed the bug, all tests pass". The diff shows it also edited an existing test's expected value. What is the best response?**
 
-- A. Accept it, because the tests pass
-- B. Ask the agent to summarise the change again
+- A. Accept it, because the full suite passes and the agent says the bug is fixed
+- B. Ask the agent to summarise its change again, in more detail this time
 - C. Revert only the test change and merge the rest without running anything
-- D. Treat the test change as suspicious: find out why the expected value changed, run the suite yourself and only accept it with a stated reason
+- D. Find out why the expected value changed and run the suite yourself
 
 <details><summary>Answer</summary>
 
-**D.** Weakening tests is a common agent failure; a passing suite means little if the test was bent to match the bug. C distrusts the edit but merges unverified. (🟡 Going deeper, what agents commonly get wrong.)
+**D.** Weakening tests is a common agent failure; a passing suite means little if the test was bent to match the bug, so treat the edit as suspicious and accept it only with a stated reason. C distrusts the edit but merges unverified. (🟡 Going deeper, what agents commonly get wrong.)
 
 </details>
 
 **4. Huda wants to learn how database transactions work, and needs them for her project. According to this lesson, how should she use her AI tool?**
 
-- A. Let the agent write all the transaction code, since it is faster
-- B. Write a first version herself or study it until she could, and use the tool to explain, quiz her and review her code
-- C. Avoid AI tools entirely for the rest of the project
-- D. Copy a transaction example from the tool's chat and adjust it until the tests pass
+- A. Let the agent write all the transaction code, since it is faster and she can read it later
+- B. Write it herself first, using the tool to explain, quiz her and review her code
+- C. Avoid AI tools entirely for the rest of the project, so that she learns everything the hard way
+- D. Copy a transaction example from the tool's chat window and adjust it until the tests pass
 
 <details><summary>Answer</summary>
 
-**B.** This is learning mode: the first time you meet a concept, write it yourself or study it until you could. A and D keep her in producing mode and leave her unable to explain or debug the result. (🟡 Going deeper, learning mode versus producing mode.)
+**B.** This is learning mode: the first time you meet a concept, write it yourself or study it until you could, and use the tool as a tutor and reviewer. A and D keep her in producing mode and leave her unable to explain or debug the result. (🟡 Going deeper, learning mode versus producing mode.)
 
 </details>
 
 **5. Which pull request note best shows the honest, useful disclosure this lesson recommends?**
 
-- A. "Written entirely by me."
-- B. "Used an AI agent to scaffold routes and draft tests; I wrote the validation rules and test cases, reviewed every change, and added a concurrency test after finding a race in the generated code."
-- C. "Sorry, I used AI for most of this."
-- D. "AI-generated. Please check carefully."
+- A. "Written entirely by me, from scratch, over the weekend. Every line is my own work and I am happy to explain any of it."
+- B. "An AI agent drafted the routes and tests; I wrote the validation rules, reviewed every change and added a concurrency test for a race I found."
+- C. "Sorry, I used AI for most of this. I know it is not ideal and I will try to write more of it myself next time."
+- D. "AI-generated with an agent. I have not had time to go through all of it, so please check it carefully before merging."
 
 <details><summary>Answer</summary>
 
-**B.** It says which tool helped, with what, what you did, and how you verified it. D hands verification to the reviewer; A is dishonest if AI helped; C apologises without useful detail. (🔴 Expert view, disclosure that builds trust.)
+**B.** It says what the agent did, what you did, and how you verified it. D hands verification to the reviewer; A is dishonest if AI helped; C apologises without useful detail. (🔴 Expert view, disclosure that builds trust.)
 
 </details>
 
