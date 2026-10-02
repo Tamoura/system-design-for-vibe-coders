@@ -375,7 +375,7 @@ Use synthetic data only. Generate fake customers, accounts and transactions with
 - dbt-duckdb adapter — https://github.com/duckdb/dbt-duckdb
 - DuckDB documentation — https://duckdb.org/docs/
 - PostgreSQL documentation — https://www.postgresql.org/docs/
-- SQLMesh — https://sqlmesh.com
+- SQLMesh — https://github.com/TobikoData/sqlmesh
 - Ralph Kimball and Margy Ross, *The Data Warehouse Toolkit* (3rd edition, Wiley)
 
 ---

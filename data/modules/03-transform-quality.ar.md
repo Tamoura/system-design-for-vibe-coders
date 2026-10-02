@@ -375,7 +375,7 @@ models:
 - محوّل dbt-duckdb (dbt-duckdb adapter) — https://github.com/duckdb/dbt-duckdb
 - توثيق DuckDB (DuckDB documentation) — https://duckdb.org/docs/
 - توثيق PostgreSQL (PostgreSQL documentation) — https://www.postgresql.org/docs/
-- SQLMesh — https://sqlmesh.com
+- SQLMesh — https://github.com/TobikoData/sqlmesh
 - رالف كيمبول ومارجي روس (Ralph Kimball and Margy Ross)، *The Data Warehouse Toolkit* (الطبعة الثالثة، 3rd edition، Wiley)
 
 ---

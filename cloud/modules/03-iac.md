@@ -863,4 +863,4 @@ Run these locally with OpenTofu, Conftest and a kind or k3d cluster.
 - AWS, summary of the Amazon S3 service disruption in the Northern Virginia (US-EAST-1) region — https://aws.amazon.com/message/41926/
 - AWS Organizations, service control policies — https://docs.aws.amazon.com/organizations/
 - Azure Policy documentation — https://learn.microsoft.com/azure/governance/policy/
-- Google Cloud, Organization Policy Service — https://cloud.google.com/resource-manager/docs/organization-policy/overview-of-organization-policy
+- Google Cloud, Organization Policy Service — https://cloud.google.com/resource-manager/docs

@@ -126,7 +126,8 @@ jobs:
       # Every link on the assembled site, internal and external. Report only: a dead third-party
       # page should be fixed in the lesson, not block the deploy. Results are in the run summary.
       # Excluded official sites work in a browser but fail automated checks: qcb.gov.qa and
-      # almeezan.qa serve an incomplete certificate chain, canada.ca breaks lychee's HTTP/2, and
+      # almeezan.qa serve an incomplete certificate chain, Gulf labour-ministry and job-board sites
+      # (mol.gov.qa, mohre.gov.ae, nafis.gov.ae, naukrigulf.com) refuse or time out automated checks, canada.ca breaks lychee's HTTP/2, and
       # fda.gov answers 404 to bots.
       - name: Check every link on the site (report only)
         continue-on-error: true
@@ -136,7 +137,7 @@ jobs:
             --no-progress --max-concurrency 8 --timeout 20 --max-retries 2
             --accept '200..=299,403,429'
             --exclude-loopback --exclude '^https?://(www\.)?example\.(com|org)'
-            --exclude '^https://www\.(qcb\.gov\.qa|almeezan\.qa|canada\.ca|fda\.gov)/'
+            --exclude '^https://www\.(qcb\.gov\.qa|almeezan\.qa|canada\.ca|fda\.gov|mol\.gov\.qa|mohre\.gov\.ae|nafis\.gov\.ae|naukrigulf\.com)/'
             '_site/**/*.html'
           jobSummary: true
         env:

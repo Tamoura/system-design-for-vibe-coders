@@ -863,4 +863,4 @@ tofu plan -detailed-exitcode -input=false
 - AWS، ملخّص تعطّل خدمة Amazon S3 في منطقة فرجينيا الشمالية (summary of the Amazon S3 service disruption in the Northern Virginia (US-EAST-1) region) — https://aws.amazon.com/message/41926/
 - AWS Organizations، سياسات التحكم بالخدمات (service control policies) — https://docs.aws.amazon.com/organizations/
 - توثيق Azure Policy (Azure Policy documentation) — https://learn.microsoft.com/azure/governance/policy/
-- Google Cloud، خدمة سياسات المؤسسة (Organization Policy Service) — https://cloud.google.com/resource-manager/docs/organization-policy/overview-of-organization-policy
+- Google Cloud، خدمة سياسات المؤسسة (Organization Policy Service) — https://cloud.google.com/resource-manager/docs
