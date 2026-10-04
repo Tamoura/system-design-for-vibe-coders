@@ -34,6 +34,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
+import { trailerHtml, TRAILER_CSS } from './trailer.mjs';
 import puppeteer from 'puppeteer';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -151,7 +152,7 @@ const filesFor = (lang) => (lang === 'en' ? enFiles : enFiles.map((f) => f.repla
 const SOURCE_FILES = [
   ...LANGS.flatMap((lang) => [`saas/${T[lang].readme}`, ...filesFor(lang).map((f) => `saas/modules/${f}`)]),
   'scripts/build-saas.mjs',
-  'scripts/saas.css',
+  'scripts/saas.css', 'scripts/trailer.mjs',
 ];
 for (const f of SOURCE_FILES) {
   if (!fs.existsSync(path.join(ROOT, f))) {
@@ -469,7 +470,7 @@ ${rows.map((r) => `<tr data-q="${esc(r.cells.join(' ').toLowerCase())}">${r.cell
   });
   document.querySelectorAll('[data-keep-hash]').forEach(function(a){a.addEventListener('click',function(){a.href=a.getAttribute('href').split('#')[0]+location.hash;});});
   try{localStorage.setItem('saas-lang','${lang}');}catch(e){}`;
-  const css = fs.readFileSync(path.join(ROOT, 'scripts/saas.css'), 'utf8');
+  const css = fs.readFileSync(path.join(ROOT, 'scripts/saas.css'), 'utf8') + TRAILER_CSS;
   const head = (title, desc, extraCss = '') => `<!doctype html>
 <html lang="${lang}" dir="${t.dir}">
 <head>
@@ -514,6 +515,7 @@ ${css}${extraCss}
     <div><b>1</b>${t.stats[3]}</div>
   </div>
   <div class="cta"><a class="btn" href="#/0.1">${t.start}</a><a class="btn ghost" href="#/about">${t.how}</a></div>
+  ${trailerHtml('saas', lang)}
 </section>
 <section class="tracks">
 ${['b', 'i', 'a'].map((k) => `  <a href="#/map" data-track="${k}" class="track t-${k}"><span class="lvl lvl-${k}">${t.tracks[k][0]}</span><b>${t.lessonsN(n({ b: 'Beginner', i: 'Intermediate', a: 'Advanced' }[k]))}</b><span>${t.tracks[k][1]}</span></a>`).join('\n')}
@@ -560,7 +562,7 @@ ${fill(ALL_LESSONS.map(lessonTemplate).join('\n'))}
     var h=location.hash.replace(/^#\\/?/,'');
     var id = !h ? 't-home' : /^\\d+\\.\\d+$/.test(h) ? 't-l'+h.replace('.','-') : 't-'+h;
     var tpl=document.getElementById(id) || document.getElementById('t-home');
-    view.innerHTML=''; view.appendChild(tpl.content.cloneNode(true));
+    view.innerHTML=''; view.appendChild(document.importNode(tpl.content,true));
     document.title = (tpl.id.indexOf('t-l')===0 ? view.querySelector('h1').textContent.trim()+' · ' : '') + ${JSON.stringify(t.title)};
     view.querySelectorAll('.filters button').forEach(function(b){b.addEventListener('click',function(){filter=b.dataset.f;applyFilter();try{sessionStorage.setItem('saas-filter',filter);}catch(e){}});});
     applyFilter();

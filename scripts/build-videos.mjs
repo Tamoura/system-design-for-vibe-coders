@@ -2,7 +2,7 @@
 //
 //   node scripts/build-videos.mjs                 # generate projects into videos/build/<slug>/
 //   node scripts/build-videos.mjs --check         # generate + `hyperframes check` each project
-//   node scripts/build-videos.mjs --render        # generate + render videos/renders/<slug>.mp4
+//   node scripts/build-videos.mjs --render        # generate + render videos/renders/<slug>.mp4 (+ .jpg poster)
 //   node scripts/build-videos.mjs --only=vibe,saas --render --quality=high   (default: standard)
 //
 // Course copy lives in videos/courses.json; this file owns the shared design and
@@ -293,5 +293,7 @@ for (const c of courses) {
   if (doRender) {
     mkdirSync(RENDERS, { recursive: true });
     run("render", ".", "-q", quality, "-o", join(RENDERS, `${c.slug}.mp4`));
+    // Poster for the course pages' <video>: the title card, once the title has landed.
+    execFileSync("ffmpeg", ["-v", "error", "-y", "-ss", "3.2", "-i", join(RENDERS, `${c.slug}.mp4`), "-frames:v", "1", "-vf", "scale=1280:-2", "-q:v", "4", join(RENDERS, `${c.slug}.jpg`)], { stdio: "inherit" });
   }
 }

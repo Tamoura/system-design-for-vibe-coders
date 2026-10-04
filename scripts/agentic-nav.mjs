@@ -14,17 +14,19 @@
  *     curriculum, playbook, assessment and poster (the current page highlighted);
  *   - in the long pages' sidebar, every h3 (the curriculum's 33 modules) under its section;
  *   - the section you are reading highlighted in the sidebar, which keeps it in view;
+ *   - on the program page (index), the course trailer under the intro;
  *   - on narrow screens, the contents as a slide-out drawer opened from the top bar instead
  *     of a 30-item list above the content, no sideways scrolling, and a back-to-top button.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { trailerHtml, TRAILER_CSS } from './trailer.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIR = path.join(ROOT, 'agentic');
 const CHECK = process.argv.includes('--check');
-const VERSION = 'agx-nav v4';
+const VERSION = 'agx-nav v5';
 
 // [English page, English label, Arabic label]. Each page has an Arabic twin named *.ar.html.
 const PAGES = [
@@ -82,7 +84,7 @@ main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
   img,svg{max-width:100%;height:auto}
 }
 @media print{.agx-bar,.agx-top,.agx-scrim{display:none !important}}
-`;
+${TRAILER_CSS}`;
 
 const JS = `
 (function(){
@@ -169,6 +171,12 @@ function patch(file, html) {
   s = strip(s, '<script id="agx-nav">', '</script>');
   s = s.replace(/<button class="agx-top"[^>]*>[^<]*<\/button>\n?/g, '');
   if (PAGES_WITH_TOC.has(file)) s = addH3s(s);
+  s = strip(s, '<!--AGX:trailer-->', '<!--/AGX:trailer-->');
+  if (file === 'index.html' || file === 'index.ar.html') {
+    // After the intro paragraph that follows the page's h1.
+    s = s.replace(/(<h1[\s\S]*?<\/h1>\s*<p class="lede">[\s\S]*?<\/p>\n)/, (m) =>
+      `${m}<!--AGX:trailer-->\n${trailerHtml('agentic', isAr(file) ? 'ar' : 'en')}\n<!--/AGX:trailer-->\n`);
+  }
   s = s.replace('</head>', `<style id="agx-nav">${CSS}</style>\n</head>`);
   s = s.replace(/<body([^>]*)>\n?/, (m) => `${m.trimEnd()}\n${topBar(file)}`);
   s = s.replace('</body>', `<button class="agx-top" type="button" aria-label="${isAr(file) ? 'العودة إلى الأعلى' : 'Back to top'}">↑</button>\n<script id="agx-nav">${JS}</script>\n</body>`);

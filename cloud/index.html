@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="cloud-source" content="76af55d829550264">
+<meta name="cloud-source" content="7ab582daac3c6834">
 <meta name="description" content="Cloud &amp; DevOps: Zero to Hero — a free, bilingual course: Linux and cloud fundamentals, containers and Kubernetes, infrastructure as code, CI/CD and safe releases, observability and SLOs, incidents, scaling, FinOps and AI infrastructure, with a quiz in every lesson and a 60-question practice exam.">
 <title>Cloud &amp; DevOps: Zero to Hero</title>
 <style>
@@ -166,6 +166,13 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 @media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
 @media print{.top,.pager,.filters,footer{display:none}.sec{box-shadow:none;break-inside:avoid-page}}
 
+/* Course trailer (scripts/trailer.mjs) */
+.trailer{margin:1.8rem 0;max-width:720px}
+.trailer video{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:14px;background:#131519;
+  border:1px solid var(--line,#e4e0d8);box-shadow:0 10px 30px rgba(20,20,30,.12)}
+.trailer figcaption{margin-top:.5rem;font-size:.8rem;color:var(--muted,#5c6470)}
+@media print{.trailer{display:none}}
+
 .bok{font:600 .78rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;padding:.2rem .45rem;border-radius:6px;border:1px solid currentColor;opacity:.8;unicode-bidi:isolate}
 
 </style>
@@ -198,6 +205,10 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
     <div><b>175</b>practice questions</div>
   </div>
   <div class="cta"><a class="btn" href="#/0.1">Start with lesson 0.1 →</a><a class="btn ghost" href="#/about">How the course works</a></div>
+  <figure class="trailer">
+  <video controls preload="none" playsinline poster="../videos/renders/cloud.jpg" aria-label="Course trailer"><source src="../videos/renders/cloud.mp4" type="video/mp4"></video>
+  <figcaption>Course trailer · 22 seconds</figcaption>
+</figure>
 </section>
 <section class="tracks">
   <a href="#/map" data-track="b" class="track t-b"><span class="lvl lvl-b">🟢 Foundations</span><b>6 lessons</b><span>Zero: the path to production, Linux and networking, cloud fundamentals and identity.</span></a>
@@ -10687,7 +10698,7 @@ Strong answer, out loud, in order:
     var h=location.hash.replace(/^#\/?/,'');
     var id = !h ? 't-home' : /^\d+\.\d+$/.test(h) ? 't-l'+h.replace('.','-') : 't-'+h;
     var tpl=document.getElementById(id) || document.getElementById('t-home');
-    view.innerHTML=''; view.appendChild(tpl.content.cloneNode(true));
+    view.innerHTML=''; view.appendChild(document.importNode(tpl.content,true));
     document.title = (tpl.id.indexOf('t-l')===0 ? view.querySelector('h1').textContent.trim()+' · ' : '') + "Cloud & DevOps: Zero to Hero";
     view.querySelectorAll('.filters button').forEach(function(b){b.addEventListener('click',function(){filter=b.dataset.f;applyFilter();try{sessionStorage.setItem('cloud-filter',filter);}catch(e){}});});
     applyFilter();
