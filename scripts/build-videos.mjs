@@ -125,14 +125,14 @@ function composition(c) {
         border: 2px solid rgba(var(--c-rgb), 0.55); background: rgba(var(--c-rgb), 0.12);
         color: var(--c); font-size: 30px; font-weight: 600; letter-spacing: 0.02em; opacity: 0;
       }
-      .title { margin-top: 40px; font-size: 128px; line-height: 1.04; font-weight: 800; letter-spacing: -0.035em; max-width: 1640px; }
+      .title { margin-top: 40px; font-size: 128px; line-height: 1.04; font-weight: 800; letter-spacing: -0.035em; max-width: 1640px; text-wrap: balance; }
       .tw-mask { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.08em; }
       .tw { display: inline-block; }
       .subtitle { margin-top: 18px; font-size: 56px; font-weight: 600; color: var(--c); letter-spacing: -0.02em; opacity: 0; }
       .underline { margin-top: 44px; width: 520px; height: 10px; border-radius: 5px; background: var(--c); transform-origin: 0 50%; display: block; }
 
       /* 2 — Hook */
-      .hook { font-size: 92px; line-height: 1.14; font-weight: 800; letter-spacing: -0.03em; max-width: 1600px; }
+      .hook { font-size: 92px; line-height: 1.14; font-weight: 800; letter-spacing: -0.03em; max-width: 1600px; text-wrap: balance; }
       .hw { display: inline-block; opacity: 0; }
       .hw.em { color: var(--c); }
 
@@ -157,7 +157,7 @@ function composition(c) {
       /* 5 — End card */
       .end { align-items: center; text-align: center; }
       .end .verb { align-self: center; }
-      .end-title { margin-top: 36px; font-size: 104px; line-height: 1.06; font-weight: 800; letter-spacing: -0.035em; max-width: 1600px; opacity: 0; }
+      .end-title { margin-top: 36px; font-size: 104px; line-height: 1.06; font-weight: 800; letter-spacing: -0.035em; max-width: 1600px; text-wrap: balance; opacity: 0; }
       .end-ar { margin-top: 26px; font-family: "Plex Arabic", "Inter", sans-serif; font-size: 52px; font-weight: 600; color: var(--c); opacity: 0; }
       .end-meta { margin-top: 54px; font-size: 32px; color: var(--muted); opacity: 0; }
       .end-url {
