@@ -1,0 +1,162 @@
+[
+  {
+    "slug": "vibe",
+    "verb": "Build with AI",
+    "title": "System Design for Vibe Coders",
+    "subtitle": "",
+    "titleAr": "تصميم الأنظمة لمبرمجي الفايب",
+    "color": "#7cc0a4",
+    "hook": "Learn what your AI won't warn you about — *before* *production* *is* *down.*",
+    "topicsLabel": "Every lesson starts with a real outage",
+    "topics": ["Caching & CDNs", "Zero-downtime deploys", "Data & backups", "Auth & abuse", "Observability", "Scaling"],
+    "stats": [
+      { "value": 13, "label": "modules" },
+      { "value": 69, "label": "lessons" },
+      { "value": 56, "label": "assessment questions" }
+    ],
+    "tags": ["Non-coders welcome", "Incident-driven", "PDF + EPUB"]
+  },
+  {
+    "slug": "agentic",
+    "verb": "Run AI in production",
+    "title": "Running AI Agents in Production",
+    "subtitle": "",
+    "titleAr": "تشغيل وكلاء الذكاء الاصطناعي في بيئة الإنتاج",
+    "color": "#dd8a94",
+    "hook": "Operate AI agents as *governed* *digital* *employees* — in a regulated bank.",
+    "topicsLabel": "Zero to hero, level by level",
+    "topics": ["Build", "Secure", "Govern", "Evaluate", "Operate", "Reference framework"],
+    "stats": [
+      { "value": 6, "label": "levels" },
+      { "value": 33, "label": "modules" },
+      { "text": "L0–L5", "label": "gated progression" }
+    ],
+    "tags": ["Engineers → Leadership", "Regulated / banking", "Hands-on labs"]
+  },
+  {
+    "slug": "saas",
+    "verb": "Learn the building blocks",
+    "title": "SaaS Building Blocks",
+    "subtitle": "",
+    "titleAr": "لبنات بناء SaaS",
+    "color": "#8fa9e6",
+    "hook": "Every SaaS is the *same* *app* wearing a different product.",
+    "topicsLabel": "The ~25 components they all share",
+    "topics": ["Auth", "Orgs & teams", "Billing", "Background jobs", "Webhooks", "SSO", "Audit logs"],
+    "stats": [
+      { "value": 10, "label": "modules" },
+      { "value": 31, "label": "lessons" },
+      { "value": 220, "suffix": "+", "label": "open-source repos" },
+      { "value": 155, "label": "quiz questions" }
+    ],
+    "tags": ["Junior developers", "Beginner → Advanced"]
+  },
+  {
+    "slug": "aigp",
+    "verb": "Govern AI",
+    "title": "AI Governance",
+    "subtitle": "Zero to Hero",
+    "titleAr": "حوكمة الذكاء الاصطناعي — من الصفر إلى الاحتراف",
+    "color": "#e0b46a",
+    "hook": "Govern AI from *first* *idea* to *retirement* — the way regulators expect.",
+    "topicsLabel": "The laws and frameworks that apply",
+    "topics": ["GDPR", "EU AI Act", "NIST AI RMF", "ISO/IEC 42001", "AI lifecycle", "100-question mock exam"],
+    "stats": [
+      { "value": 13, "label": "modules" },
+      { "value": 40, "label": "lessons" },
+      { "value": 58, "label": "laws & frameworks" },
+      { "value": 295, "label": "practice questions" }
+    ],
+    "tags": ["IAPP AIGP-aligned", "Legal · risk · product · data"]
+  },
+  {
+    "slug": "aipm",
+    "verb": "Ship AI",
+    "title": "AI Product Management",
+    "subtitle": "Zero to Hero",
+    "titleAr": "إدارة منتجات الذكاء الاصطناعي — من الصفر إلى الاحتراف",
+    "color": "#b39ddb",
+    "hook": "Find problems *worth* *solving* with AI — then *prove* *the* *value.*",
+    "topicsLabel": "From idea to launch to strategy",
+    "topics": ["What AI can & can't do", "Trustworthy AI UX", "Specs & evals", "Experiments", "Launch & pricing", "Leading AI teams"],
+    "stats": [
+      { "value": 11, "label": "modules" },
+      { "value": 34, "label": "lessons" },
+      { "value": 176, "label": "tools & frameworks" },
+      { "value": 225, "label": "practice questions" }
+    ],
+    "tags": ["Product · design · business · engineering"]
+  },
+  {
+    "slug": "secai",
+    "verb": "Secure AI",
+    "title": "Secure AI & Application Security",
+    "subtitle": "Zero to Hero",
+    "titleAr": "أمن الذكاء الاصطناعي والتطبيقات — من الصفر إلى الاحتراف",
+    "color": "#6cc4c0",
+    "hook": "Think like an *attacker.* Defend like a *team.*",
+    "topicsLabel": "From threat model to incident response",
+    "topics": ["Threat modelling", "Web & API security", "Identity & cloud", "Supply chain", "Prompt injection", "Securing agents"],
+    "stats": [
+      { "value": 13, "label": "modules" },
+      { "value": 40, "label": "lessons" },
+      { "value": 224, "label": "controls & tools" },
+      { "value": 255, "label": "practice questions" }
+    ],
+    "tags": ["OWASP · MITRE · NIST", "Developers · architects · AI teams"]
+  },
+  {
+    "slug": "data",
+    "verb": "Build with data",
+    "title": "Data Engineering & Analytics",
+    "subtitle": "Zero to Hero",
+    "titleAr": "هندسة البيانات والتحليلات — من الصفر إلى الاحتراف",
+    "color": "#e09ac8",
+    "hook": "From raw tables to *numbers* *people* *trust.*",
+    "topicsLabel": "Runnable on a laptop",
+    "topics": ["SQL & modelling", "Lakehouses", "Batch & streaming", "dbt & data quality", "Metrics & experiments", "ML & LLM data"],
+    "stats": [
+      { "value": 8, "label": "modules" },
+      { "value": 24, "label": "lessons" },
+      { "value": 141, "label": "tools & patterns" },
+      { "value": 175, "label": "practice questions" }
+    ],
+    "tags": ["Data · analytics · ML", "Laptop labs"]
+  },
+  {
+    "slug": "cloud",
+    "verb": "Ship and operate",
+    "title": "Cloud & DevOps",
+    "subtitle": "Zero to Hero",
+    "titleAr": "السحابة وDevOps — من الصفر إلى الاحتراف",
+    "color": "#86c3e8",
+    "hook": "From one Linux box to a *platform* a bank can *trust.*",
+    "topicsLabel": "Cloud-neutral and hands-on",
+    "topics": ["Linux & networks", "Containers & Kubernetes", "IaC & GitOps", "CI/CD & safe releases", "SLOs & on-call", "DR & cost"],
+    "stats": [
+      { "value": 8, "label": "modules" },
+      { "value": 24, "label": "lessons" },
+      { "value": 132, "label": "tools & practices" },
+      { "value": 175, "label": "practice questions" }
+    ],
+    "tags": ["Cloud · platform · SRE", "Cloud-neutral"]
+  },
+  {
+    "slug": "career",
+    "verb": "Get hired",
+    "title": "From Graduate to Hired",
+    "subtitle": "",
+    "titleAr": "من التخرّج إلى التوظيف",
+    "color": "#f0a07f",
+    "hook": "AI writes routine code now. Learn *what* *employers* *check* instead.",
+    "topicsLabel": "For CS, data and computer engineering grads",
+    "topics": ["Role paths", "A portfolio that proves the job", "CV & outreach", "Today's interviews", "Offers", "Your first 90 days"],
+    "stats": [
+      { "value": 8, "label": "modules" },
+      { "value": 24, "label": "lessons" },
+      { "value": 129, "label": "resources & templates" },
+      { "value": 155, "label": "practice questions" }
+    ],
+    "tags": ["Role paths", "Self-assessment"]
+  }
+]

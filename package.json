@@ -24,7 +24,10 @@
     "data:build": "node scripts/build-data.mjs",
     "data:check": "node scripts/build-data.mjs --check",
     "cloud:build": "node scripts/build-cloud.mjs",
-    "cloud:check": "node scripts/build-cloud.mjs --check"
+    "cloud:check": "node scripts/build-cloud.mjs --check",
+    "videos:build": "node scripts/build-videos.mjs",
+    "videos:check": "node scripts/build-videos.mjs --check",
+    "videos:render": "node scripts/build-videos.mjs --render"
   },
   "devDependencies": {
     "archiver": "^7.0.1",
