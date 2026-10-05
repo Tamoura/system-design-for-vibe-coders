@@ -79,6 +79,10 @@ jobs:
           # Course library: landing hub at root, each course in its own subpath.
           mkdir -p _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai _site/career _site/data _site/cloud
           cp landing.html _site/index.html
+          # Course trailers (scripts/build-videos.mjs): played on the landing page and each course home
+          mkdir -p _site/videos/renders _site/vibe/videos/renders
+          cp videos/renders/*.mp4 videos/renders/*.jpg _site/videos/renders/
+          cp videos/renders/vibe.mp4 videos/renders/vibe.jpg _site/vibe/videos/renders/
           # The vibe course (bilingual pages + downloads) → /vibe/
           cp index.html index.en.html index.ar.html assessment.html assessment.ar.html _site/vibe/
           cp dist/course-en.pdf dist/course-ar.pdf _site/vibe/

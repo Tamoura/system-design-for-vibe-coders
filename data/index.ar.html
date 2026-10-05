@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="data-source" content="4df01dd8304078f2">
+<meta name="data-source" content="eaf47f4fb2044424">
 <meta name="description" content="هندسة البيانات والتحليلات من الصفر إلى الاحتراف: دورة مجانية ثنائية اللغة عن SQL والنمذجة، وخطوط البيانات والتدفق، وdbt وجودة البيانات، والمقاييس الموثوقة والتجارب، وبيانات تعلّم الآلة والنماذج اللغوية في الإنتاج، وحوكمة البيانات، مع اختبار في كل درس وامتحان تدريبي من 60 سؤالًا.">
 <title>هندسة البيانات والتحليلات — من الصفر إلى الاحتراف</title>
 <style>
@@ -166,6 +166,13 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 @media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
 @media print{.top,.pager,.filters,footer{display:none}.sec{box-shadow:none;break-inside:avoid-page}}
 
+/* Course trailer (scripts/trailer.mjs) */
+.trailer{margin:1.8rem 0;max-width:720px}
+.trailer video{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:14px;background:#131519;
+  border:1px solid var(--line,#e4e0d8);box-shadow:0 10px 30px rgba(20,20,30,.12)}
+.trailer figcaption{margin-top:.5rem;font-size:.8rem;color:var(--muted,#5c6470)}
+@media print{.trailer{display:none}}
+
 .bok{font:600 .78rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;padding:.2rem .45rem;border-radius:6px;border:1px solid currentColor;opacity:.8;unicode-bidi:isolate}
 
 </style>
@@ -198,6 +205,10 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
     <div><b>175</b>سؤالًا تدريبيًا</div>
   </div>
   <div class="cta"><a class="btn" href="#/0.1">ابدأ بالدرس 0.1 ←</a><a class="btn ghost" href="#/about">كيف تعمل الدورة</a></div>
+  <figure class="trailer">
+  <video controls preload="none" playsinline poster="../videos/renders/data.jpg" aria-label="عرض تعريفي بالدورة"><source src="../videos/renders/data.mp4" type="video/mp4"></video>
+  <figcaption>عرض تعريفي بالدورة (بالإنجليزية) · 22 ثانية</figcaption>
+</figure>
 </section>
 <section class="tracks">
   <a href="#/map" data-track="b" class="track t-b"><span class="lvl lvl-b">🟢 الأساسيات <bdi>(Foundations)</bdi></span><b>6 دروس</b><span>البداية: حزمة البيانات الحديثة <bdi>(modern data stack)</bdi>، ولغة SQL التي تجيب عن أسئلة العمل، ونماذج بيانات بالحُبَيبية الصحيحة <bdi>(grain)</bdi>.</span></a>
@@ -10651,7 +10662,7 @@ where rn = 1;
     var h=location.hash.replace(/^#\/?/,'');
     var id = !h ? 't-home' : /^\d+\.\d+$/.test(h) ? 't-l'+h.replace('.','-') : 't-'+h;
     var tpl=document.getElementById(id) || document.getElementById('t-home');
-    view.innerHTML=''; view.appendChild(tpl.content.cloneNode(true));
+    view.innerHTML=''; view.appendChild(document.importNode(tpl.content,true));
     document.title = (tpl.id.indexOf('t-l')===0 ? view.querySelector('h1').textContent.trim()+' · ' : '') + "هندسة البيانات والتحليلات — من الصفر إلى الاحتراف";
     view.querySelectorAll('.filters button').forEach(function(b){b.addEventListener('click',function(){filter=b.dataset.f;applyFilter();try{sessionStorage.setItem('data-filter',filter);}catch(e){}});});
     applyFilter();

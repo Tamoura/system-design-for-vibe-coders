@@ -100,7 +100,7 @@ em { color: inherit; }
 }
 </style>
 <style id="agx-nav">
-/* agx-nav v4: navigation added by scripts/agentic-nav.mjs */
+/* agx-nav v5: navigation added by scripts/agentic-nav.mjs */
 .agx-bar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;
   padding:.5rem 1rem;background:color-mix(in srgb,var(--bg,#f7f6f2) 92%,transparent);backdrop-filter:blur(8px);
   border-bottom:1px solid var(--line,#e4e0d8);font:600 .82rem/1.2 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
@@ -139,6 +139,13 @@ main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
   img,svg{max-width:100%;height:auto}
 }
 @media print{.agx-bar,.agx-top,.agx-scrim{display:none !important}}
+
+/* Course trailer (scripts/trailer.mjs) */
+.trailer{margin:1.8rem 0;max-width:720px}
+.trailer video{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:14px;background:#131519;
+  border:1px solid var(--line,#e4e0d8);box-shadow:0 10px 30px rgba(20,20,30,.12)}
+.trailer figcaption{margin-top:.5rem;font-size:.8rem;color:var(--muted,#5c6470)}
+@media print{.trailer{display:none}}
 </style>
 </head>
 <body>

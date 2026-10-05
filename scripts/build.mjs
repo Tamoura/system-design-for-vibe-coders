@@ -17,6 +17,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
+import { trailerHtml, TRAILER_CSS } from './trailer.mjs';
 import puppeteer from 'puppeteer';
 import archiver from 'archiver';
 
@@ -90,7 +91,7 @@ const T = {
    and a byte comparison would fail on CI while passing locally. */
 const SOURCE_FILES = [
   'README.md', 'README.ar.md', 'GLOSSARY.md', 'GLOSSARY.ar.md',
-  'scripts/build.mjs', 'scripts/style.css', 'scripts/print.css',
+  'scripts/build.mjs', 'scripts/style.css', 'scripts/print.css', 'scripts/trailer.mjs',
 ];
 const SOURCE_DIGEST = (() => {
   const h = crypto.createHash('sha256');
@@ -433,6 +434,7 @@ function appPage(C, langs) {
 </div></header>
 <section class="hero" id="top"><div class="wrap">
 ${heroFor(C, langs)}
+${trailerHtml('vibe', bilingual ? 'both' : primary, 'videos/renders/')}
 ${otherEditions}
 </div></section>
 <section class="map" id="map"><div class="wrap">
@@ -517,7 +519,7 @@ ${block({
     lang: primary,
     dir: !bilingual && T[primary].dir === 'rtl' ? 'rtl' : '',
     title: bilingual ? `${T.en.title} — The Complete Course` : T[primary].title,
-    css: CSS(),
+    css: CSS() + TRAILER_CSS,
     body,
     scripts: langScript + navScript,
   });
