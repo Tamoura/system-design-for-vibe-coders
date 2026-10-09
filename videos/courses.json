@@ -172,7 +172,7 @@
     "stats": [
       { "value": 9, "label": "modules" },
       { "value": 27, "label": "lessons" },
-      { "value": 130, "label": "tools & techniques" },
+      { "value": 139, "label": "tools & techniques" },
       { "value": 190, "label": "practice questions" }
     ],
     "tags": ["QA · SDET · quality", "Testing AI systems"]

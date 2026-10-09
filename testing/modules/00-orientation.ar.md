@@ -1,6 +1,6 @@
 # الوحدة 0 — التوجيه (Orientation)
 
-*قبل أن تكتب اختبارًا واحدًا (a single test) تحتاج إلى خريطة (a map). تمنحك هذه الوحدة ثلاثة أشياء. أولًا، فكرة دقيقة عن الغاية من الاختبار (what testing is for): اكتشاف العيوب (finding defects) وتزويد من يتخذون القرار بأدلة حقيقية (real evidence) عن الجودة (quality) والمخاطر (risk)، في عالم يكتب فيه الذكاء الاصطناعي (AI) جزءًا كبيرًا من الشيفرة (code)، ويساعد في كتابة الاختبارات (tests)، ويُطلق منتجات لا تتطابق إجاباتها مرتين تمامًا (never quite the same twice). ثانيًا، فهم كيف تفشل البرمجيات (how software fails): السلسلة الممتدة من الخطأ البشري (human error) إلى العيب (defect) ثم إلى الفشل (failure)، ومواضع نشأة العيوب (the places defects come from)، والكوارث التي علّمت القطاع (the disasters that taught the industry)، وكلفة اكتشاف العيب متأخرًا (what it costs to find a bug late). ثالثًا، الأشخاص والمختبر الذين ستعمل معهم في بقية الدورة (the people and the lab): فريق هندسة الجودة (Quality Engineering) في بنك نجم (Najm Bank)، والأنظمة التي يختبرونها (the systems they test)، ونظام عيّنة صغير (a small sample system) فيه عيوب مزروعة عمدًا (deliberately seeded bugs). ستتابع ندى (Nada)، الخرّيجة الجديدة (a new graduate)، وهي تتعلّم أن العلامة الخضراء ليست دليلًا (a green tick is not proof)، وراشد (Rashid) الذي يعلّمها أن تسأل هل يمكن أن يفشل الاختبار (whether a test could fail). وستنتهي بمختبر يعمل (a working lab)، وعيب واحد التقطتَه وآخر فاتك (one bug caught and one missed)، وخطة للدراسة (a plan for how to study).*
+*قبل أن تكتب اختبارًا واحدًا (a single test) تحتاج إلى خريطة (a map). تمنحك هذه الوحدة ثلاثة أشياء. أولًا، فكرة دقيقة عن الغاية من الاختبار (what testing is for): اكتشاف العيوب (finding defects) وتزويد من يتخذون القرار بأدلة حقيقية (real evidence) عن الجودة (quality) والمخاطر (risk)، في عالم يكتب فيه الذكاء الاصطناعي (AI) جزءًا كبيرًا من الشيفرة (code)، ويساعد في كتابة الاختبارات (tests)، ويُطلق منتجات لا تتطابق إجاباتها مرتين تمامًا (never quite the same twice). ثانيًا، فهم كيف تفشل البرمجيات (how software fails): السلسلة الممتدة من الخطأ البشري (human error) إلى العيب (defect) ثم إلى الفشل (failure)، ومواضع نشأة العيوب، والكوارث التي علّمت القطاع (the disasters that taught the industry)، وكلفة اكتشاف العيب متأخرًا (what it costs to find a bug late). ثالثًا، الأشخاص والمختبر الذين ستعمل معهم في بقية الدورة: فريق هندسة الجودة (Quality Engineering) في بنك نجم (Najm Bank)، والأنظمة التي يختبرونها، ونظام عيّنة صغير (a small sample system) فيه عيوب مزروعة عمدًا (deliberately seeded bugs). ستتابع ندى (Nada)، الخريجة الجديدة (a new graduate)، وهي تتعلّم أن العلامة الخضراء ليست دليلًا (a green tick is not proof)، وراشد (Rashid) الذي يعلّمها أن تسأل هل يمكن أن يفشل الاختبار (whether a test could fail). وستنتهي بمختبر يعمل (a working lab)، وعيب واحد التقطتَه وآخر فاتك (one bug caught and one missed)، وخطة للدراسة.*
 
 > **التركيز (Focus):** Mindset — الغاية من الاختبار (what testing is for)، وكيف تفشل البرمجيات (how software fails)، وكيف تستخدم الدورة ونظام العيّنة (how to use the course and the sample system).
 
@@ -11,18 +11,18 @@
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
 - **اختبار البرمجيات (Software testing)** هو تقييم البرمجيات (evaluating software) لاكتشاف العيوب (defects) ولتزويد أصحاب المصلحة (stakeholders) بأدلة (evidence) عن الجودة (quality) والمخاطر (risk). إنه ينتج معلومات (information)، لا جودة، ولا يستطيع أبدًا أن يثبت أنه لم يبقَ أي عيب (can never prove that no bugs remain).
-- **تصحيح الأخطاء (Debugging)** يجد سبب الفشل (a failure's cause) ويصلحه. و**ضمان الجودة (quality assurance, QA)** يخص العملية (process)، و**ضبط الجودة (quality control, QC)** يخص المنتج (product)، و**هندسة الجودة (quality engineering)** تبني الجودة داخل الفريق كله (builds quality in across the team). والاختبار (testing) نشاط واحد بينها (one activity among them).
+- **تصحيح الأخطاء (Debugging)** يجد سبب الفشل (a failure's cause) ويصلحه. و**ضمان الجودة (quality assurance, QA)** يخص العملية (process)، و**ضبط الجودة (quality control, QC)** يخص المنتج (product)، و**هندسة الجودة (quality engineering)** تبني الجودة داخل الفريق كله (builds quality in across the team). والاختبار (testing) نشاط واحد بينها.
 - كلمة «يعمل» ("Works") ليست خاصية واحدة (not one property). يسرد المعيار ISO/IEC 25010 (2011) ثماني خصائص للجودة (eight quality characteristics)؛ فقد يكون التحويل صحيحًا (correct) لكنه بطيء (slow) أو غير آمن (insecure) أو غير قابل للاستخدام (unusable) بالعربية (in Arabic).
 - ثلاثة خيوط في عصر الذكاء الاصطناعي (three AI-era threads) تمرّ عبر الدورة: اختبار شيفرة كتبها ذكاء اصطناعي (testing code an AI wrote)، واستخدام الذكاء الاصطناعي في الاختبار (using AI to test)، واختبار منتجات الذكاء الاصطناعي (testing AI products). في كل منها اسأل: *هل يمكن أن يفشل هذا الاختبار؟* ⁦(could this test fail?)⁩
 - مؤشّر القرار (Decision cue): قبل أن تكتب اختبارًا (a test) أو تقبله، سمِّ الفشل الذي سيلتقطه (name the failure it would catch).
 - الفخ الأكبر (Biggest trap): قراءة اللون الأخضر على أنه دليل (reading green as proof). فهو يعني «هذه الفحوص لم تجد شيئًا» ("these checks found nothing").
 
 ## 🧭 لماذا يهم (Why it matters)
-في أسبوعها الثاني في بنك نجم (Najm Bank)، تراجع ندى (Nada) طلب دمج (pull request) من أحد فِرق (squads) طارق (Tariq). أضاف وكيل برمجة (coding agent) رسم التحويل الدولي (international-transfer fee) ومعه عشرة اختبارات جديدة (ten new tests). خط التكامل المستمر (pipeline) أخضر، وتقول التغطية (coverage) إن كل سطر جديد قد نُفِّذ (every new line ran). وتوافق ندى عليه في ست دقائق.
+في أسبوعها الثاني في بنك نجم (Najm Bank)، تراجع ندى (Nada) طلب دمج (pull request) من أحد فِرق (squads) طارق (Tariq). أضاف وكيل برمجة (coding agent) رسم التحويل الدولي (international-transfer fee) ومعه عشرة اختبارات جديدة (ten new tests). خط التكامل والتسليم المستمرين (pipeline) أخضر، وتقول التغطية (coverage) إن كل سطر جديد قد نُفِّذ (every new line ran). وتوافق ندى عليه في ست دقائق.
 
-بعد أيام قليلة (a few days later) يسأل راشد (Rashid)، رئيس هندسة الجودة (Head of Quality Engineering): «ماذا أخبرتكِ العلامة الخضراء (the green tick)؟» تقول ندى إن الاختبارات تنجح (the tests pass). «وهل كانت ستفشل لو كان الرسم خاطئًا (if the fee were wrong)؟» لا تعرف. فيشغّلان اختباراتها العشرة على نظام العيّنة (sample system) الخاص بالدورة مع تفعيل عيب في الرسم (a fee bug switched on). تنجح العشرة. ثم يجرّبان عيوب التحويل الأربعة الأخرى (the other four transfer bugs). تنجح العشرة في كل مرة. يقول راشد: «الاختبار الذي لا يمكن أن يفشل ليس دليلًا. إنه زينة.» ⁦("A test that cannot fail is not evidence. It is decoration.")⁩
+بعد أيام قليلة يسأل راشد (Rashid)، رئيس هندسة الجودة (Head of Quality Engineering): «ماذا أخبرتكِ العلامة الخضراء (the green tick)؟» تقول ندى إن الاختبارات تنجح (the tests pass). «وهل كانت ستفشل لو كان الرسم خاطئًا؟» لا تعرف. فيشغّلان اختباراتها العشرة على نظام العيّنة (sample system) الخاص بالدورة مع تفعيل عيب في الرسم (a fee bug switched on). تنجح العشرة. ثم يجرّبان عيوب التحويل الأربعة الأخرى (the other four transfer bugs). تنجح العشرة في كل مرة. يقول راشد: «الاختبار الذي لا يمكن أن يفشل ليس دليلًا. إنه زينة.» ⁦("A test that cannot fail is not evidence. It is decoration.")⁩
 
-لا يشتري البنك اختبارات (tests)، بل يشتري قرارات (decisions): أنطلق أم نتريّث (ship or hold)، أُصلح الآن أم نقبل المخاطرة (fix now or accept the risk). والاختبارات هي الأدلة (the evidence) وراء هذه القرارات، والدليل قد يكون ضعيفًا (weak). وهذا يزداد أهمية الآن لأن الشيفرة تصل أسرع من بُناة (builders)، بشريين وآليين، يجيدون التعبير ويخطئون أحيانًا بثقة (confidently wrong). يمنحك هذا الدرس المفردات (vocabulary)، وعادة التشكيك في العلامة الخضراء (questioning a green tick).
+لا يشتري البنك اختبارات (tests)، بل يشتري قرارات (decisions): نُطلق أم نتريّث (ship or hold)، نُصلح الآن أم نقبل المخاطرة (fix now or accept the risk). والاختبارات هي الأدلة (the evidence) وراء هذه القرارات، والدليل قد يكون ضعيفًا (weak). وتزداد هذه المسألة أهمية الآن لأن الشيفرة تصل أسرع من بُناة (builders)، بشريين وآليين (human and AI)، يتّسمون بالطلاقة (fluent) ويخطئون أحيانًا بثقة (confidently wrong). يمنحك هذا الدرس المفردات (vocabulary)، وعادة التشكيك في العلامة الخضراء (questioning a green tick).
 
 ## 📐 كيف يعمل (How it works)
 
@@ -32,32 +32,32 @@
 
 لكل اختبار موقف (situation) أي المدخلات والحالة الابتدائية (inputs and starting state)، وفعل (action)، و**مرجع النتيجة المتوقعة (test oracle)**: أي شيء يخبرك أن النتيجة صحيحة، مثل متطلب (requirement) أو مثال محسوب يدويًا (worked example) أو النسخة السابقة (the previous version) أو حكم خبير (an expert's judgement). فبلا مرجع تكون لديك عملية تشغيل (a run) لا اختبار (not a test). في `fee("3090", "QAR", "international")` القاعدة (the rule) هي 0.35% من المبلغ (the amount)، مقرَّبةً إلى الأعلى عند المنتصف (rounded half up). يدويًا، 3,090 × 0.0035 = 10.815، وتُقرَّب إلى 10.82. هذا الرقم المحسوب يدويًا (hand-worked number) هو المرجع (the oracle).
 
-**الاختبار وما يجاوره (Testing and its neighbours).** المسمّيات الوظيفية (job titles) تُضبّب هذه الكلمات، فانظر إلى ما يفعله الناس.
+**الاختبار وما يجاوره (Testing and its neighbours).** المسمّيات الوظيفية (job titles) تطمس الفروق بين هذه الكلمات، فانظر إلى ما يفعله الناس.
 
 | المصطلح (Term) | السؤال الذي يجيب عنه (The question it answers) | في بنك نجم (At Najm Bank) |
 |---|---|---|
 | **الاختبار (Testing)** | أين يختلف هذا البرنامج (this software) عمّا نحتاج إليه (what we need)؟ | تبلّغ ندى (Nada) عن فرق في الرسم قدره سنت واحد (a one-cent fee difference) |
 | **تصحيح الأخطاء (Debugging)** | أين السبب (the cause)، وكيف نزيله (remove it)؟ | يتتبّعه مطوّر (developer) إلى سطر واحد (one line) |
-| **ضبط الجودة (Quality control, QC)** | هل يستوفي هذا المنتج (this product) المعيار المطلوب (the bar)؟ | فحوص (checks) قبل مرحلة ما قبل الإنتاج (staging) |
-| **ضمان الجودة (Quality assurance, QA)** | هل تمنع طرق عملنا (our ways of working) العيوب (defects)؟ | قواعد المراجعة (review rules)، وتعريف الإنجاز (definition of done) |
-| **هندسة الجودة (Quality engineering)** | كيف نبني الجودة (quality) في كل خطوة (every step)؟ | فريق راشد: الأتمتة (automation) وخطوط التكامل (pipelines) |
+| **ضبط الجودة (Quality control, QC)** | هل يستوفي هذا المنتج (this product) المعيار المطلوب (the bar)؟ | فحوص (checks) قبل بيئة ما قبل الإنتاج (staging) |
+| **ضمان الجودة (Quality assurance, QA)** | هل تمنع طرق عملنا العيوب (defects)؟ | قواعد المراجعة (review rules)، وتعريف الإنجاز (definition of done) |
+| **هندسة الجودة (Quality engineering)** | كيف نبني الجودة (quality) في كل خطوة (every step)؟ | فريق راشد: الأتمتة (automation) وخطوط التكامل والتسليم المستمرين (pipelines) |
 
 يبيّن الاختبار أن هناك خطأً، ويجد تصحيح الأخطاء السبب. وبعد الإصلاح (a fix) يعيد **اختبار التأكيد (confirmation testing)** تشغيل الاختبار الفاشل (the failing test)، ويتحقق **اختبار الانحدار (regression testing)** من أن شيئًا آخر لم ينكسر (nothing else broke).
 
 **التحقق والمصادقة على الملاءمة (Verification and validation).** يسأل **التحقق (verification)**: «هل نبني المنتج بشكل صحيح؟» ⁦("are we building it right?")⁩، أي هل يطابق البرنامج مواصفاته (match its specification)؟ ويسأل **المصادقة على الملاءمة (validation)**: «هل نبني المنتج الصحيح؟» ⁦("are we building the right thing?")⁩، أي هل يلبّي الاحتياجات الحقيقية (real needs)؟ قد تنجح صفحة في أحدهما وتفشل في الآخر: تنصّ المواصفات (the specification) على عرض رمز القاعدة (rule code) عند رفض التحويل (rejected transfer)، والصفحة تفعل ذلك، ومع هذا لا يتعلّم العميل (customer) شيئًا حين يقرأ `above_per_transfer_max`.
 
-**ما لا يستطيع الاختبار فعله (What testing cannot do).** يبيّن الاختبار أن العيوب موجودة (defects are present)، لا أنها غير موجودة أبدًا (never that none remain) — وهي ملاحظة إدسخر دايكسترا (Edsger Dijkstra) وأول مبادئ الاختبار السبعة في ISTQB (the seven ISTQB testing principles). والسبب حسابي (arithmetic): في عملة واحدة ونوع واحد من التحويلات، يمكن أن تُمرَّر إلى `check_transfer` نحو 2.5 مليون مبلغ صالح (valid amounts) وخمسة ملايين قيمة محتملة لـ«ما أُرسل اليوم» ("already sent today"): أي نحو 12.5 تريليون توليفة (combinations)، قبل احتساب العملات والأنواع الأخرى. **الاختبار الاستنفادي مستحيل (Exhaustive testing is impossible)**، ولذلك فالاختبار أخذ عيّنات بعناية (careful sampling) (تعلّمك الوحدة 1 كيف). والتقرير الأمين (an honest report) يقول «نظرنا هنا ووجدنا هذا» ("we looked here and found this")، لا «إنه صحيح» ("it is correct").
+**ما لا يستطيع الاختبار فعله (What testing cannot do).** يبيّن الاختبار أن العيوب موجودة (defects are present)، لا أنها غير موجودة أبدًا (never that none remain) — وهي ملاحظة إدسخر دايكسترا (Edsger Dijkstra) وأول مبادئ الاختبار السبعة في ISTQB (the seven ISTQB testing principles). والسبب حسابي (arithmetic): في عملة واحدة ونوع واحد من التحويلات، يمكن أن تُمرَّر إلى `check_transfer` نحو 2.5 مليون مبلغ صالح (valid amounts) وخمسة ملايين قيمة محتملة لـ«ما أُرسل اليوم» ("already sent today"): أي نحو 12.5 تريليون توليفة (combinations)، قبل احتساب العملات والأنواع الأخرى. **الاختبار الاستنفادي مستحيل (Exhaustive testing is impossible)**، ولذلك فالاختبار هو أخذ عيّنات بعناية (careful sampling) (توضّح الوحدة 1 كيف يتم ذلك). والتقرير الأمين (an honest report) يقول «نظرنا هنا ووجدنا هذا» ("we looked here and found this")، لا «إنه صحيح» ("it is correct").
 
-**الفحص مقابل الاختبار (Checking versus testing).** يفصل مايكل بولتون (Michael Bolton) وجيمس باخ (James Bach)، من مجتمع الاختبار المرتبط بالسياق (context-driven community)، بين **الفحص (check)** و**الاختبار (testing)**. الفحص يطبّق قاعدة قرار (decision rule) على ملاحظة (observation)، مثل `assert fee(...) == Decimal("10.82")`: تستطيع الآلة تشغيله، لكنه لا يؤكد إلا ما توقّعه شخص ما (what someone expected). أما الاختبار، بمعناهما، فهو العمل البشري (human work) في التعلّم عن المنتج (learning about a product) باستكشافه (exploring it)، بما في ذلك ملاحظة ما لم يكتب له أحد تأكيدًا (assertion). هذا مصطلح مدرسة واحدة (one school's vocabulary)، فمنهج ISTQB (the ISTQB syllabus) لا يرسم هذا الخط، لكنه مفيد: فالمجموعة الآلية (automated suite) لا تسجّل إلا ما كنت تعرف أن تسأل عنه (what you already knew to ask).
+**الفحص مقابل الاختبار (Checking versus testing).** يفصل مايكل بولتون (Michael Bolton) وجيمس باخ (James Bach)، من مجتمع الاختبار المرتبط بالسياق (context-driven community)، بين **الفحص (check)** و**الاختبار (testing)**. الفحص يطبّق قاعدة قرار (decision rule) على ملاحظة (observation)، مثل `assert fee(...) == Decimal("10.82")`: تستطيع الآلة تشغيله، لكنه لا يؤكد إلا ما توقّعه شخص ما (what someone expected). أما الاختبار، بمعناهما، فهو العمل البشري (human work) في التعلّم عن المنتج (learning about a product) باستكشافه (exploring it)، بما في ذلك ملاحظة ما لم يكتب له أحد تأكيدًا (assertion). هذه مفردات مدرسة واحدة (one school's vocabulary) — فمنهج ISTQB (the ISTQB syllabus) لا يضع هذا الفاصل — لكنها مفيدة: فالمجموعة الآلية (automated suite) لا تسجّل إلا ما كنت تعرف أن تسأل عنه (what you already knew to ask).
 
 ### 🟡 التعمق أكثر (Going deeper)
 
-**ماذا يعني «يعمل» (What "works" means).** يصف المعيار ISO/IEC 25010 ثماني خصائص للجودة (eight quality characteristics): **الملاءمة الوظيفية (functional suitability)** و**كفاءة الأداء (performance efficiency)** و**التوافقية (compatibility)** و**قابلية الاستخدام (usability)** و**الموثوقية (reliability)** و**الأمان (security)** و**قابلية الصيانة (maintainability)** و**قابلية النقل (portability)**. تعيد مراجعة 2023 تسمية بعضها وتوسّع بعضها الآخر (the 2023 revision renames and extends some)، فتضيف السلامة (safety)؛ أما هذه الدورة فتستخدم أسماء 2011 المألوفة (the familiar 2011 names). والنموذج لا يقول ما الذي تختبره (what to test)؛ لكنه يمنعك من نسيان عائلات كاملة من الفشل (whole families of failure). عشر طرق يمكن أن يفشل بها تحويل (Ten ways a transfer can fail):
+**ماذا يعني «يعمل» (What "works" means).** يصف المعيار ISO/IEC 25010 ثماني خصائص للجودة (eight quality characteristics): **الملاءمة الوظيفية (functional suitability)** و**كفاءة الأداء (performance efficiency)** و**التوافقية (compatibility)** و**قابلية الاستخدام (usability)** و**الموثوقية (reliability)** و**الأمان (security)** و**قابلية الصيانة (maintainability)** و**قابلية النقل (portability)**. تعيد مراجعة 2023 تسمية بعضها وتوسّع بعضها الآخر، فتضيف السلامة (safety)؛ أما هذه الدورة فتستخدم أسماء 2011 المألوفة. والنموذج لا يقول ما الذي تختبره (what to test)؛ لكنه يمنعك من نسيان عائلات كاملة من الفشل (whole families of failure). عشر طرق يمكن أن يفشل بها تحويل (Ten ways a transfer can fail):
 
 | # | ما الذي يحدث خطأً (What goes wrong) | الخاصية (Characteristic) | يُكتشف بواسطة (Found by) |
 |---|---|---|---|
 | 1 | يُحتسب على تحويل دولي (international transfer) بمبلغ 3,090 QAR رسمٌ قدره 10.81 لا 10.82 | الملاءمة الوظيفية (Functional suitability): الصحة (correctness) | اختبارات الوحدة (Unit tests)، الدرس 2.1 |
-| 2 | يُمنع عميل (customer) أرسل اليوم (today) 49,000 QAR من إرسال 1,000 QAR، مع أنها تبلغ الحد (the limit) بالضبط | الملاءمة الوظيفية (Functional suitability): الحد (boundary) | تحليل القيم الحدّية (Boundary analysis)، الدرس 1.2 |
+| 2 | يُمنع عميل (customer) أرسل اليوم (today) 49,000 QAR من إرسال 1,000 QAR، مع أن المبلغ يبلغ الحد (the limit) بالضبط | الملاءمة الوظيفية (Functional suitability): الحالات الحدّية (boundary) | تحليل القيم الحدّية (Boundary analysis)، الدرس 1.2 |
 | 3 | يحصل تحويل في الساعة 16:30 بتوقيت قطر (Qatar time) على تاريخ قيمة اليوم (today's value date): فقد قُرئ وقت الإغلاق (the cut-off) بالتوقيت العالمي المنسّق (UTC) | الملاءمة الوظيفية (Functional suitability): المناطق الزمنية (time zones) | اختبارات تراعي الزمن (Time-aware tests)، الدرس 1.2 |
 | 4 | يعيد التطبيق المحاولة (retries) عند اتصال غير مستقر (shaky connection) فيدفع العميل مرتين (pays twice) | الموثوقية (Reliability): تحمّل الأعطال (fault tolerance) | اختبارات خاصية عدم التكرار (Idempotency tests)، الدرس 3.1 |
 | 5 | يقرأ بوب (Bob) تحويل أليس (Alice) بتخمين معرّفه (guessing its id) (BOLA) | الأمان (Security): السرّية (confidentiality) | اختبارات التفويض (Authorisation tests)، الدرس 4.2 |
@@ -65,23 +65,23 @@
 | 7 | يضغط مستخدم قارئ الشاشة (screen-reader user) على «إرسال» ("Send") ولا يسمع شيئًا (hears nothing) | قابلية الاستخدام (Usability): إمكانية الوصول (accessibility) | مرور بقارئ الشاشة (Screen-reader pass)، الدرس 3.3 |
 | 8 | تعرض الصفحة العربية (Arabic page) رمز قاعدة بالإنجليزية (an English rule code) لا جملة يمكن التصرف بناءً عليها (a sentence to act on) | قابلية الاستخدام (Usability): الرسائل الموطَّنة (localised messages) | فحوص التوطين (Localisation checks)، الدرس 3.3 |
 | 9 | يُرجع إصدار جديد من واجهة البرمجة (API version) الحقل `fee` رقمًا (a number)، بينما يتوقع إصدار التطبيق 5.1 (app version 5.1) نصًّا (a string) | التوافقية (Compatibility) | اختبارات العقد (Contract tests)، الدرس 2.2 |
-| 10 | تغيير الرسم (fee change) يعني تعديل سبعة ملفات (seven files)؛ ولا تبدأ الخدمة (the service will not start) بعد ترقية Python | قابلية الصيانة (Maintainability)؛ قابلية النقل (portability) | المراجعة (Review)، ومصفوفة التكامل المستمر (CI matrix)، الدرس 5.2 |
+| 10 | تغيير الرسم (fee change) يعني تعديل سبعة ملفات (seven files)؛ ولا تبدأ الخدمة بعد ترقية Python | قابلية الصيانة (Maintainability)؛ قابلية النقل (portability) | المراجعة (Review)، ومصفوفة التكامل المستمر (CI matrix)، الدرس 5.2 |
 
-تعني BOLA *كسر التفويض على مستوى الكائن* (broken object-level authorisation): أي وصول مستخدم إلى بيانات مستخدم آخر ([*أمن الذكاء الاصطناعي والتطبيقات (Secure AI & Application Security)*، الدرس 3.3 — التفويض (Authorisation): كسر التحكم في الوصول (broken access control) وIDOR وتعدد المستأجرين (multi-tenancy)](../secai/index.ar.html#/3.3)). التصنيف اجتهاد (Classification is judgement): في الصف 4 يضيع المال أيضًا، لكن ما تختبره هو النجاة من إعادة المحاولات (surviving retries)، وهذا سؤال موثوقية (a reliability question). وقيمة النموذج في السؤال الذي يطرحه (the question it asks): *أي الصفوف سيؤذي نجم أكثر، وما الأدلة التي لدينا؟* ⁦(which rows would hurt Najm most, and what evidence do we have?)⁩
+تعني BOLA *كسر التفويض على مستوى الكائن* (broken object-level authorisation): أي وصول مستخدم إلى بيانات مستخدم آخر ([*أمن الذكاء الاصطناعي والتطبيقات (Secure AI & Application Security)*، الدرس 3.3 — التفويض (Authorisation): كسر التحكم في الوصول (broken access control) وIDOR وتعدد المستأجرين (multi-tenancy)](../secai/index.ar.html#/3.3)). التصنيف اجتهاد (Classification is judgement): في الصف 4 يضيع المال أيضًا، لكن ما تختبره هو النجاة من إعادة المحاولات (surviving retries)، وهذا سؤال موثوقية (a reliability question). وقيمة النموذج في السؤال الذي يطرحه: *أي الصفوف سيؤذي نجم أكثر، وما الأدلة التي لدينا؟* ⁦(which rows would hurt Najm most, and what evidence do we have?)⁩
 
-**التحوّل في عصر الذكاء الاصطناعي: ثلاثة خيوط (The AI-era shift: three threads).** يغيّر الذكاء الاصطناعي (AI) من يكتب الشيفرة (who writes the code)، ومن يكتب الاختبارات (who writes the tests)، وما هو المنتج نفسه (what the product is). تعمل هذه المقتطفات (snippets) على نظام العيّنة (sample system)، الذي يُجهَّز في الدرس 0.3 (set up in lesson 0.3)؛ ولا تحتاج إلى تشغيلها الآن (you need not run them yet).
+**التحوّل في عصر الذكاء الاصطناعي: ثلاثة خيوط (The AI-era shift: three threads).** يغيّر الذكاء الاصطناعي (AI) من يكتب الشيفرة (who writes the code)، ومن يكتب الاختبارات (who writes the tests)، وما هو المنتج نفسه (what the product is). تعمل هذه المقتطفات (snippets) على نظام العيّنة (sample system)، الذي يُجهَّز في الدرس 0.3؛ ولا تحتاج إلى تشغيلها الآن.
 
 ```mermaid
-flowchart LR
-    A["الخيط 1: الذكاء الاصطناعي يكتب الشيفرة"] --> C["الشيفرة قيد الاختبار"]
-    N["الخيط 3: نجم أسيست منتج ذكاء اصطناعي"] --> C
-    B["الخيط 2: الذكاء الاصطناعي يساعد في كتابة الاختبارات"] --> T["الاختبارات"]
-    T -->|"تُشغَّل على"| C
-    T --> E["الأدلة"]
-    E --> D["قرار الإطلاق أو الإيقاف"]
+flowchart RL
+    A["الخيط 1: الذكاء الاصطناعي يكتب الشيفرة<br/>(Thread 1: AI writes the code)"] --> C["الشيفرة قيد الاختبار<br/>(Code under test)"]
+    N["الخيط 3: نجم أسيست منتج ذكاء اصطناعي<br/>(Thread 3: Najm Assist is an AI product)"] --> C
+    B["الخيط 2: الذكاء الاصطناعي يساعد في كتابة الاختبارات<br/>(Thread 2: AI helps write tests)"] --> T["الاختبارات<br/>(Tests)"]
+    T -->|"تُشغَّل على (run against)"| C
+    T --> E["الأدلة<br/>(Evidence)"]
+    E --> D["قرار الإطلاق أو الإيقاف<br/>(Ship or hold decision)"]
 ```
 
-*الخيط الأول (Thread 1): اختبار شيفرة كتبها ذكاء اصطناعي (testing code that an AI wrote).* استخدم رسم الوكيل (the agent's fee) أعدادًا عشرية ثنائية (binary floats)، والاختبار المكتوب انطلاقًا من الشيفرة (a test written from the code) ينسخ حسابها (copies its arithmetic):
+*الخيط الأول (Thread 1): اختبار شيفرة كتبها ذكاء اصطناعي (testing code that an AI wrote).* استخدمت دالة الرسم التي كتبها الوكيل (the agent's fee) أعدادًا عشرية ثنائية (binary floats)، والاختبار المكتوب انطلاقًا من الشيفرة (a test written from the code) ينسخ حسابها (copies its arithmetic):
 
 ```python
 from decimal import Decimal
@@ -97,7 +97,7 @@ def test_oracle():
     assert fee("3090", "QAR", "international") == Decimal("10.82")
 ```
 
-عند تفعيل `NAJM_BUGS=float_fee` — وهو العيب الموجود في شيفرة الوكيل (the bug in the agent's code) — ينجح `test_mirror` ويفشل `test_oracle`: `assert Decimal('10.81') == Decimal('10.82')`. وعند إيقاف العيب (with the bug off) تنعكس الأحكام (the verdicts swap). الاختبار المشتق من التنفيذ (a test derived from the implementation) يدافع عن العيب (defends the bug)، لذا يجب أن يأتي مرجع النتيجة المتوقعة (the oracle) من مكان آخر ([*تصميم الأنظمة لمبرمجي الفايب (System Design for Vibe Coders)*، الدرس 8.2 — الاختبارات بوصفها المواصفة التي لا يستطيع الوكيل تجاهلها (Tests as the spec the agent can't ignore)](../vibe/index.ar.html#l8-2)).
+عند تفعيل `NAJM_BUGS=float_fee` — وهو العيب الموجود في شيفرة الوكيل (the bug in the agent's code) — ينجح `test_mirror` ويفشل `test_oracle`: `assert Decimal('10.81') == Decimal('10.82')`. وعند إيقاف العيب تنعكس الأحكام (the verdicts swap). الاختبار المشتق من التنفيذ (a test derived from the implementation) يدافع عن العيب (defends the bug)، لذا يجب أن يأتي مرجع النتيجة المتوقعة (the oracle) من مكان آخر ([*تصميم الأنظمة لمبرمجي الفايب (System Design for Vibe Coders)*، الدرس 8.2 — الاختبارات بوصفها المواصفة التي لا يستطيع الوكيل تجاهلها (Tests as the spec the agent can't ignore)](../vibe/index.ar.html#l8-2)).
 
 *الخيط الثاني (Thread 2): استخدام الذكاء الاصطناعي في الاختبار (using AI to test).* الاختبارات العشرة في طلب الدمج الخاص بندى (Nada's pull request) جاءت من مساعد ذكاء اصطناعي (an AI assistant) أيضًا. وهي تبدو هكذا:
 
@@ -119,7 +119,7 @@ def test_unknown_kind_raises():
         fee("10", "QAR", "teleport")
 ```
 
-تنجح العشرة كلها، وتنفّذ كل سطر في `fee()` يُنفَّذ في بناء عادي (a normal build). ومع تفعيل كل عيب من عيوب التحويل (each transfer bug on) تظل تنجح: فهي تفحص *نوع* الإجابة و*إشارتها* (the *type* and *sign* of the answer)، ولا تفحص قيمتها أبدًا (never its value). العلاج هو قياس المساعدين (measure assistants): ازرع عيوبًا معروفة (seed known bugs) وعدّ ما تلتقطه اختباراتهم (count what their tests catch) (الدرس 6.3).
+تنجح العشرة كلها، وتنفّذ كل سطر في `fee()` يُنفَّذ في بناء عادي (a normal build). ومع تفعيل كل عيب من عيوب التحويل تظل تنجح: فهي تفحص *نوع* الإجابة و*إشارتها* (the *type* and *sign* of the answer)، ولا تفحص قيمتها أبدًا (never its value). العلاج هو قياس المساعدين (measure assistants): ازرع عيوبًا معروفة (seed known bugs) وعدّ ما تلتقطه اختباراتهم (count what their tests catch) (الدرس 6.3).
 
 *الخيط الثالث (Thread 3): اختبار منتجات الذكاء الاصطناعي (testing AI products).* تتغيّر صياغة نجم أسيست (Najm Assist) بين تشغيل وآخر (wording changes between runs)؛ وتحاكي `FakeModel` في العيّنة ذلك بمعامل `temperature`. ويجب أن يثبّت الاختبار الحقائق لا الجملة (pin the facts, not the sentence):
 
@@ -145,7 +145,7 @@ def test_silence_is_admitted():
     assert "can't find that" in result["text"]
 ```
 
-مع `NAJM_AI_BUGS=hallucinate` يخترع المساعد رسمًا لسؤال البيتكوين (invents a fee for the bitcoin question): يظل `test_vacuous` ينجح، ويفشل `test_silence_is_admitted`. والمقارنة بنص حرفي (an exact-string comparison) ليست أفضل: فهي تفشل عند اختلاف غير ضار (harmless variation)، فيتجاهلها الناس. وتحوّل الوحدة 7 هذا إلى منهج (a method) ([*حوكمة الذكاء الاصطناعي (AI Governance)*، الدرس 9.3 — الاختبار والتقييم والمصادقة والفريق الأحمر (Testing, evaluation, validation and red-teaming)](../aigp/index.ar.html#/9.3) يقدّم منظور الحوكمة (the governance view)).
+مع `NAJM_AI_BUGS=hallucinate` يخترع المساعد رسمًا لسؤال البيتكوين (invents a fee for the bitcoin question): يظل `test_vacuous` ناجحًا، ويفشل `test_silence_is_admitted`. والمقارنة بنص حرفي (an exact-string comparison) ليست أفضل: فهي تفشل عند اختلاف غير ضار (harmless variation)، فيتجاهلها الناس. وتحوّل الوحدة 7 هذا إلى منهج (a method) ([*حوكمة الذكاء الاصطناعي (AI Governance)*، الدرس 9.3 — الاختبار والتقييم والمصادقة والفريق الأحمر (Testing, evaluation, validation and red-teaming)](../aigp/index.ar.html#/9.3) يقدّم منظور الحوكمة (the governance view)).
 
 **ثلاث خرافات (Three myths).**
 
@@ -153,13 +153,13 @@ def test_silence_is_admitted():
 |---|---|
 | «سيحلّ الذكاء الاصطناعي محل المختبِرين.» ⁦("AI will replace testers.")⁩ | يغيّر الذكاء الاصطناعي طريقة كتابة الاختبارات وتشغيلها (how tests are written and run)، لكن لا بد أن يقرر أحدٌ معنى «صحيح» (what correct means) ويحكم على الأدلة (judge the evidence)، كما أظهر كل مقتطف (each snippet showed). ولا أحد يستطيع أن يَعِد بكيفية تغيّر الأدوار (how roles will change). |
 | «الاختبارات تبطّئنا.» ⁦("Tests slow us down.")⁩ | المجموعة البطيئة أو غير المستقرة (a slow or flaky suite) هي التي تفعل ذلك؛ والعلاج اختبارات أدق (sharper tests). أما غياب الاختبارات (no tests) فينقل الكلفة إلى الإنتاج (production). |
-| «تغطية 100% تعني لا عيوب.» ⁦("100% coverage means no bugs.")⁩ | تقيس التغطية (coverage) الأسطر المنفَّذة (lines run) لا الأشياء المفحوصة (things checked). الاختبارات العشرة المولَّدة (the ten generated tests) نفّذت كل سطر عادي من `fee()` ولم تلتقط أيًّا من العيوب الخمسة (none of five bugs). |
+| «تغطية 100% تعني لا عيوب.» ⁦("100% coverage means no bugs.")⁩ | تقيس التغطية (coverage) الأسطر المنفَّذة (lines run) لا الأشياء المفحوصة (things checked). الاختبارات العشرة المولَّدة نفّذت كل سطر عادي من `fee()` ولم تلتقط أيًّا من العيوب الخمسة (none of five bugs). |
 
 ### 🔴 نظرة الخبير (Expert view)
 
-**الجودة علائقية (Quality is relational).** عرّف جيرالد واينبرغ (Gerald Weinberg) الجودة بأنها «قيمة لشخص ما» ("value to some person")؛ ويضيف باخ (Bach) وبولتون (Bolton) «ومن يهم» ("who matters"). العملاء (customers) والموظفون (staff) والمدقّقون (auditors) والجهات التنظيمية (regulators) يزنون الخصائص (characteristics) بصورة مختلفة، ولذلك يبدأ ملف الجودة (a profile) بسؤال *لمن* الجودة (*whose* quality).
+**الجودة علائقية (Quality is relational).** عرّف جيرالد واينبرغ (Gerald Weinberg) الجودة بأنها «قيمة لشخص ما» ("value to some person")؛ ويضيف باخ (Bach) وبولتون (Bolton) «ممّن يُعتدّ بهم» ("who matters"). العملاء (customers) والموظفون (staff) والمدقّقون (auditors) والجهات التنظيمية (regulators) يزنون الخصائص (characteristics) بصورة مختلفة، ولذلك يبدأ ملف الجودة (a profile) بسؤال *لمن* الجودة (*whose* quality).
 
-**مراجع النتائج اجتهادات، وللدليل قوة (Oracles are heuristics, and evidence has strength).** المواصفات (Specifications) تبلى؛ وقد يكون السلوك القديم (old behaviour) عيبًا. أما **مشكلة مرجع النتيجة (oracle problem)**، أي معرفة الجواب الصحيح دون إعادة العمل (knowing the right answer without redoing the work)، فهي خفيفة في `fee()` وشديدة في نجم أسيست (Najm Assist)، حيث تصحّ صياغات كثيرة ويخطئ بعضها خطأً دقيقًا (subtly wrong). ولا يدعم الاختبار الناجح (a passing test) الثقةَ إلا إذا كان سيفشل لو وُجد العيب (would have failed had the bug been present). اسأل عن أي تشغيل أخضر: *لو كان العيب الذي أخشاه موجودًا هنا، فهل سيكون هذا التشغيل أحمر؟* ⁦(if the bug I fear were here, would this run be red?)⁩ يؤتمت اختبار الطفرات (mutation testing) هذا السؤال (الدرسان 2.3 و6.2)؛ وتتيح العيوب المزروعة (seeded bugs) أن تطرحه يدويًا ([*تصميم الأنظمة لمبرمجي الفايب (System Design for Vibe Coders)*، الدرس 9.4 — التحقق قبل الإكمال (Verification before completion)](../vibe/index.ar.html#l9-4)).
+**مراجع النتائج قواعد استدلالية، وللدليل قوة (Oracles are heuristics, and evidence has strength).** المواصفات (Specifications) تتقادم؛ وقد يكون السلوك القديم (old behaviour) عيبًا. أما **مشكلة مرجع النتيجة (oracle problem)**، أي معرفة الجواب الصحيح دون إعادة العمل (knowing the right answer without redoing the work)، فهي خفيفة في `fee()` وشديدة في نجم أسيست (Najm Assist)، حيث تصحّ صياغات كثيرة ويخطئ بعضها خطأً دقيقًا (subtly wrong). ولا يدعم الاختبار الناجح (a passing test) الثقةَ إلا إذا كان سيفشل لو وُجد العيب (would have failed had the bug been present). اسأل عن أي تشغيل أخضر: *لو كان العيب الذي أخشاه موجودًا هنا، فهل سيكون هذا التشغيل أحمر؟* ⁦(if the bug I fear were here, would this run be red?)⁩ يؤتمت اختبار الطفرات (mutation testing) هذا السؤال (الدرسان 2.3 و6.2)؛ وتتيح العيوب المزروعة (seeded bugs) أن تطرحه يدويًا ([*تصميم الأنظمة لمبرمجي الفايب (System Design for Vibe Coders)*، الدرس 9.4 — التحقق قبل الإكمال (Verification before completion)](../vibe/index.ar.html#l9-4)).
 
 **الاختبار اقتصادي (Testing is economic).** قيمة الاختبار هي الخسارة التي يمنعها (the loss it prevents) موزونةً بالاحتمال (weighted by likelihood)، فيتبع العمق المخاطر (depth follows risk) (الدرس 5.1). **متى لا تفعل كل هذا (When not to do all this):** نصٌّ برمجي لمرة واحدة (a one-off script) تشغّله مرة، على بيانات تستطيع فحصها بالعين (data you can inspect by eye)، يحتاج إلى نظرة (a glance)، لا إلى مجموعة اختبارات (a suite).
 
@@ -171,7 +171,7 @@ def test_silence_is_admitted():
 | **Exploratory testing** — الاختبار الاستكشافي | التعلّم وتصميم الاختبار وتنفيذه في وقت واحد (learning, test design and execution at once)، بتوجيه من ميثاق الجلسة (a charter) | لاكتشاف ما لا يغطيه أي فحص (what no check covers) |
 | **Seeded bugs** — العيوب المزروعة | عيوب تُفعَّل عمدًا (defects switched on deliberately)، مثل `NAJM_BUGS` في العيّنة | لقياس ما إذا كانت المجموعة تستطيع أن تفشل (whether a suite can fail) |
 | **Risk-based testing** — الاختبار القائم على المخاطر | اختيار ما يُختبر ومدى عمقه (choosing what to test, and how deeply) بحسب الاحتمال والأثر (likelihood and impact) | لتقرير أين يُصرف الوقت (deciding where time goes) |
-| **pytest** | إطار اختبار Python شائع الاستخدام (a widely used Python test framework): `assert` عادي (plain)، وتجهيزات الاختبار (fixtures)، وتحديد المعاملات (parametrisation) | اختبارات Python في هذه الدورة (this course's Python tests) |
+| **pytest** | إطار اختبار Python شائع الاستخدام (a widely used Python test framework): `assert` عادي (plain)، وتجهيزات الاختبار (fixtures)، وتحديد المعاملات (parametrisation) | اختبارات Python في هذه الدورة |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
 تبدأ كل ميزة في نجم بـ**ملف جودة (quality profile)**: صفحة واحدة تقول ما معنى «يعمل» ("works") بكلمات يستطيع شخصان التحقق منها بالطريقة نفسها (two people could check the same way). يملؤه راشد (Rashid) ومالك المنتج (the product owner) قبل تصميم الاختبارات (before test design). هذه مسودة التحويلات (the Transfers draft)، بأهداف توضيحية (illustrative targets).
@@ -180,7 +180,7 @@ def test_silence_is_admitted():
 |---|---|---|---|
 | الملاءمة الوظيفية (Functional suitability) | يطابق الرسم (fee) والحد (limit) ووقت الإغلاق (cut-off) وتاريخ القيمة (value date) القواعد المنشورة (published rules) لكل عملة ومبلغ | عالية (High) | أمثلة محسوبة يدويًا عند الحدود (Worked examples at boundaries) |
 | كفاءة الأداء (Performance efficiency) | 95% من الطلبات (submissions) تنتهي خلال ثانية واحدة (within one second) عند ذروة يوم الراتب (salary-day peak) | عالية (High) | اختبار الحِمل (Load test) على بيئة ما قبل الإنتاج (staging) |
-| التوافقية (Compatibility) | يعمل كل إصدار مدعوم من التطبيق (every supported app version) بعد كل إصدار من واجهة البرمجة (API release) | متوسطة (Medium) | اختبارات العقد (Contract tests) |
+| التوافقية (Compatibility) | يعمل كل إصدار مدعوم من التطبيق بعد كل إصدار من واجهة البرمجة (API release) | متوسطة (Medium) | اختبارات العقد (Contract tests) |
 | قابلية الاستخدام (Usability) | يمكن إرسال تحويل بأي من اللغتين (either language)، وبقارئ شاشة (screen reader)؛ وكل رفض (rejection) يقول ما العمل (what to do) | عالية (High) | جلسات استكشافية (Exploratory sessions) مع أمل (Amal) |
 | الموثوقية (Reliability) | لا يُنشئ طلب أُعيدت محاولته (a retried request) تحويلًا ثانيًا أبدًا؛ ولا يُضيّع الانهيار (a crash) مالًا أبدًا | عالية (High) | اختبارات خاصية عدم التكرار (Idempotency tests) |
 | الأمان (Security) | لا يقرأ أحد مال عميل آخر ولا ينقله (reads or moves another customer's money) | عالية (High) | مصفوفة التفويض (Authorisation matrix) مع نورة (Noura) |
@@ -189,14 +189,14 @@ def test_silence_is_admitted():
 **لملء واحد منها في ثلاثين دقيقة (To fill one in, in thirty minutes):** اكتب جملة واحدة قابلة للملاحظة (one observable sentence) لكل خاصية (characteristic)، وأعد صياغتها إن أمكن أن يختلف شخصان على تحقّقها (rewrite it if two people could disagree on whether it is met)؛ رتّب كل خاصية بحسب الأولوية (rank each)؛ سمِّ أول دليل (name first evidence) لكل صف عالي الأولوية (each High row)؛ واكتب شيئًا واحدًا خارج النطاق (one thing out of scope).
 
 ## 🛠️ التمارين (Exercises)
-- 🟢 **عرّف الجودة لميزة (Define quality for a feature).** اختر ميزة تعرفها (a feature you know)، مثل صفحة تسجيل الدخول (login page) أو حجز التذاكر (ticket booking)، واملأ ملف الجودة (the profile). *يكتمل عندما (Done when):* يكون لكل صف جملة واحدة يستطيع شخصان التحقق منها بالطريقة نفسها، وتكون ثلاثة صفوف ذات أولوية عالية (High) مع سبب (a reason)، ويكون شيء واحد مكتوبًا على أنه خارج النطاق (out of scope).
-- 🟡 **اذكر أنماط الفشل (List failure modes).** للميزة نفسها، اكتب اثنتي عشرة طريقة على الأقل (at least twelve ways) يمكن أن تفشل بها، تغطي ست خصائص على الأقل (at least six characteristics). قدّر الاحتمال (likelihood) والأثر (impact) من 1 إلى 5. *يكتمل عندما (Done when):* يقول كل صف كيف سنلاحظ الفشل (how we would notice) — ملاحظةً قابلة للرصد (an observation)، لا مجرد «اختبره» ("test it") — وتُرتَّب الثلاثة الأعلى بحسب الاحتمال × الأثر (likelihood × impact) مع سطر من التعليل (a line of reasoning) لكل منها.
+- 🟢 **عرّف الجودة لميزة (Define quality for a feature).** اختر ميزة تعرفها، مثل صفحة تسجيل الدخول (login page) أو حجز التذاكر (ticket booking)، واملأ ملف الجودة (the profile). *يكتمل عندما (Done when):* يكون لكل صف جملة واحدة يستطيع شخصان التحقق منها بالطريقة نفسها، وتكون ثلاثة صفوف ذات أولوية عالية (High) مع سبب (a reason)، ويكون شيء واحد مكتوبًا على أنه خارج النطاق (out of scope).
+- 🟡 **اذكر أنماط الفشل (List failure modes).** للميزة نفسها، اكتب اثنتي عشرة طريقة على الأقل (at least twelve ways) يمكن أن تفشل بها، تغطي ست خصائص على الأقل (at least six characteristics). قدّر الاحتمال (likelihood) والأثر (impact) من 1 إلى 5. *يكتمل عندما (Done when):* يقول كل صف كيف سنلاحظ الفشل (how we would notice) — ملاحظةً قابلة للرصد (an observation)، لا مجرد «اختبره» ("test it") — وتُرتَّب الثلاثة الأعلى بحسب الاحتمال × الأثر (likelihood × impact) مع سطر من التعليل لكل منها.
 - 🔴 **جلسة استكشافية مدتها 20 دقيقة (A 20-minute exploratory session).** اختر موقعًا عامًّا أو تطبيقًا يحق لك استخدامه زائرًا عاديًّا (an ordinary visitor)، واكتب ميثاق الجلسة (a charter): «استكشف *هذه الميزة* بـ*هذا المُدخل* لاكتشاف *هذا النوع من المشكلات*.» ⁦("Explore this feature with this input to discover this kind of problem.")⁩ اضبط مؤقتًا على 20 دقيقة (a 20-minute timer). استخدمه كما يفعل أي زائر: دون ماسحات (scanners) أو نصوص برمجية (scripts) أو أحمال (load)، ودون بيانات شخصية حقيقية (real personal data)، وتوقّف عند أي خطوة تسجيل دخول أو دفع (login or payment step). اكتب ثلاث نتائج (three findings). *يكتمل عندما (Done when):* تذكر كل نتيجة أين ومتى (where and when) (الجهاز والمتصفح والوقت)، وما يصل إلى ست خطوات للتكرار (up to six repeat steps)، والمتوقع مقابل الفعلي (expected versus actual)، والخاصية المعنية ومن يتأثر (the characteristic involved and who is affected)، بحيث يستطيع زميل تكرارها (repeat it)؛ إضافةً إلى ملاحظة واحدة عن شيء غريب رأيتَه مقبولًا (something odd you judged acceptable).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
 - **اعتبار اللون الأخضر دليلًا (Treating green as proof).** اسأل عمّا كانت الفحوص (the checks) قادرة على إيجاده، وأثبت ذلك بتفعيل عيب (switching a bug on).
-- **ترك الشيفرة تقدّم مرجعها بنفسها (Letting the code supply its own oracle).** القيم المتوقعة المحسوبة بصيغة التنفيذ (computed with the implementation's formula) تدافع عن عيوبه. احسبها يدويًا (work them out by hand).
-- **اختبار الوظيفة وحدها (Testing only function).** تحويل صحيح لكنه بطيء أو لا يمكن الوصول إليه أو غير آمن (slow, inaccessible or insecure) ما زال يخذل العملاء (still fails customers). استخدم الخصائص الثماني (the eight characteristics) قائمةَ تحقق (a checklist).
+- **ترك الشيفرة تقدّم مرجعها بنفسها (Letting the code supply its own oracle).** القيم المتوقعة المحسوبة بصيغة التنفيذ (computed with the implementation's formula) تدافع عن عيوبه. احسبها يدويًا.
+- **اختبار الوظيفة وحدها (Testing only function).** تحويل صحيح لكنه بطيء أو غير مراعٍ لإمكانية الوصول أو غير آمن (slow, inaccessible or insecure) ما زال يخذل العملاء (still fails customers). استخدم الخصائص الثماني (the eight characteristics) قائمةَ تحقق (a checklist).
 - **تصديق التغطية (Believing coverage).** الأسطر المنفَّذة (lines run) ليست سلوكًا جرى التحقق منه (behaviour verified). استخدم التغطية (coverage) لتجد ما لم يُختبر (what is untested)، لا لتدّعي ما اختُبر.
 - **الاختبار في النهاية (Testing last).** العيوب التي تُكتشف حين تصبح الشيفرة «منتهية» ("done") تصل متأخرة وباهظة (late and expensive) (الدرس 0.2).
 
@@ -209,12 +209,12 @@ def test_silence_is_admitted():
 
 ## ✍️ اختبر نفسك (Check yourself)
 
-**1. يولّد مساعد عشرة اختبارات لـ`fee()`. تنجح كلها، وتُظهر التغطية (coverage) أن كل سطر نُفِّذ. ماذا يترتب على ذلك؟**
+**1. يولّد مساعد (an assistant) عشرة اختبارات لـ`fee()`. تنجح كلها، وتُظهر التغطية (coverage) أن كل سطر نُفِّذ (every line ran). ماذا يترتب على ذلك؟**
 
-- A. منطق الرسم (fee logic) جرى التحقق منه، لأن كل سطر فيه نُفِّذ
+- A. منطق الرسم (fee logic) جرى التحقق منه (verified)، لأن كل سطر فيه نُفِّذ
 - B. المجموعة (suite) جيدة بما يكفي للدمج (good enough to merge)، لأن التغطية عالية
-- C. لا يُتعلَّم الكثير حتى تصبح المجموعة حمراء (turns red) مع تفعيل عيب في الرسم
-- D. ينبغي التخلص من الاختبارات (discarded)، لأن ذكاءً اصطناعيًا كتبها
+- C. لا يُتعلَّم الكثير (little is learned) حتى تصبح المجموعة حمراء (turns red) مع تفعيل عيب في الرسم
+- D. ينبغي التخلص من الاختبارات (discarded)، لأن ذكاءً اصطناعيًا (an AI) كتبها
 
 <details><summary>الإجابة</summary>
 
@@ -222,7 +222,7 @@ def test_silence_is_admitted():
 
 </details>
 
-**2. يفشل اختبار لأن رسم تحويل ما خاطئ. يقرأ مطوّر الشيفرة، ويجد السطر المعيب، ويغيّره. ما هذا النشاط؟**
+**2. يفشل اختبار (a test) لأن رسم تحويل ما خاطئ. يقرأ مطوّر (a developer) الشيفرة، ويجد السطر المعيب (the faulty line)، ويغيّره. ما هذا النشاط؟**
 
 - A. المصادقة على الملاءمة (Validation)
 - B. اختبار الانحدار (Regression testing)
@@ -235,7 +235,7 @@ def test_silence_is_admitted():
 
 </details>
 
-**3. لا يعلن قارئ الشاشة (screen reader) شيئًا بعد أن يضغط عميل على «إرسال التحويل» ("Send transfer"). الرسم والرصيد صحيحان. أي خاصية من خصائص ISO/IEC 25010 تتأثر أساسًا؟**
+**3. لا يعلن قارئ الشاشة (screen reader) شيئًا (announces nothing) بعد أن يضغط عميل (a customer) على «إرسال التحويل» ("Send transfer"). الرسم والرصيد صحيحان (the fee and balance are correct). أي خاصية من خصائص ISO/IEC 25010 تتأثر أساسًا (mainly affected)؟**
 
 - A. قابلية الاستخدام (Usability)، عبر إمكانية الوصول (accessibility)
 - B. الملاءمة الوظيفية (Functional suitability)، عبر الصحة (correctness)
@@ -253,7 +253,7 @@ def test_silence_is_admitted():
 - A. لم يبقَ أي عيب، لأن 5,000 اختبار مستقل نجحت
 - B. لا مخاطرة في الإصدار (the release carries no risk)، لأن شيئًا لم يفشل في الاختبار
 - C. أصبح كل متطلب مُثبَتًا صحته (proven correct) بواسطة المجموعة
-- D. لم تظهر أي حالات فشل في الحالات التي شُغِّلت؛ أما الحالات الأخرى فغير مختبَرة (untested)
+- D. لم تظهر أي حالات فشل في الحالات التي شُغِّلت (no failures appeared in the cases run)؛ أما الحالات الأخرى فغير مختبَرة (other cases are untested)
 
 <details><summary>الإجابة</summary>
 
@@ -261,7 +261,7 @@ def test_silence_is_admitted():
 
 </details>
 
-**5. يفتتح نجم أسيست (Najm Assist) إجاباته بطرق مختلفة في تشغيلات مختلفة، مع أن الحقائق متطابقة. أي اختبار هو الأنسب (most appropriate)؟**
+**5. يفتتح نجم أسيست (Najm Assist) إجاباته (answers) بطرق مختلفة في تشغيلات مختلفة (different runs)، مع أن الحقائق متطابقة (the facts match). أي اختبار هو الأنسب (most appropriate)؟**
 
 - A. مقارنة نص الإجابة كاملًا بنص مخزَّن (a stored string)، كلمةً بكلمة
 - B. التأكيد أن الحقيقة الأساسية (the key fact) تظهر وأن وثيقة الحدود (limits document) مذكورة مصدرًا
@@ -284,7 +284,7 @@ def test_silence_is_admitted():
 
 ---
 
-# 0.2 — كيف تفشل البرمجيات (How software fails): الأخطاء (errors) والعيوب (defects) والإخفاقات (failures) والكوارث الشهيرة (famous disasters) واقتصاديات اكتشاف العيوب مبكرًا (the economics of finding bugs early)
+# 0.2 — كيف تفشل البرمجيات (How software fails): الأخطاء (errors) والعيوب (defects) وحالات الفشل (failures) والكوارث الشهيرة (famous disasters) واقتصاديات اكتشاف العيوب مبكرًا (the economics of finding bugs early)
 *المستوى (Level): 🟢 مبتدئ (Beginner)* · *المتطلبات (Prerequisites): 0.1* · *التركيز (Focus): Mindset*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
@@ -298,7 +298,7 @@ def test_silence_is_admitted():
 ## 🧭 لماذا يهم (Why it matters)
 في أول يوم اثنين من الشهر، تنبّه مهمة المطابقة (reconciliation job) في الإدارة المالية (Finance) إلى أمر صغير: فُرض على بعض التحويلات الدولية (international transfers) رسمٌ أقل بسنت واحد (one cent) من الجدول المنشور (the published table). المبلغ تافه، ومع ذلك يضع راشد (Rashid) ثلاث حقائق على السبّورة (whiteboard). البنك يحصّل من العملاء أقل من اللازم (undercharging) منذ خمسة أسابيع. والاختبارات كانت خضراء كل يوم (green every day). والسبب سطر واحد اجتاز المراجعة (passed review).
 
-للإخفاقات العلنية (Public failures) الشكل نفسه على نطاق أكبر. ففي عام 2012 نشرت شركة Knight Capital شيفرة جديدة (deployed new code)، وفاتت خادمًا واحدًا عملية التحديث، فأرسل منطق قديم (old logic) أوامر غير مقصودة (unintended orders) لنحو 45 دقيقة؛ ويقدّر أمر هيئة الأوراق المالية والبورصات الأمريكية (SEC's order) الخسارة بنحو 460 مليون دولار أمريكي. ولا يُقاس العيب (A defect) بحجم الرقم الخاطئ، بل بمدة تشغيله (how long it runs)، وبمقدار ما يعتمد عليه (how much depends on it)، وبمدى صعوبة التراجع عنه (how hard it is to undo).
+لحالات الفشل العلنية (Public failures) الشكل نفسه على نطاق أكبر. ففي عام 2012 نشرت شركة Knight Capital شيفرة جديدة (deployed new code)، ولم يصل التحديث إلى خادم واحد (one server missed the update)، فأرسل منطق قديم (old logic) أوامر غير مقصودة (unintended orders) لنحو 45 دقيقة؛ ويقدّر أمر هيئة الأوراق المالية والبورصات الأمريكية (SEC's order) الخسارة بنحو 460 مليون دولار أمريكي. ولا يُقاس العيب (A defect) بحجم الرقم الخاطئ، بل بمدة تشغيله (how long it runs)، وبمقدار ما يعتمد عليه (how much depends on it)، وبمدى صعوبة التراجع عنه (how hard it is to undo).
 
 ## 📐 كيف يعمل (How it works)
 
@@ -307,14 +307,14 @@ def test_silence_is_admitted():
 **الخطأ والعيب والفشل (Error, defect, failure).** **الخطأ البشري (error)**، أو الغلطة (mistake)، فعل بشري ينتج شيئًا خاطئًا، مثل قاعدة أُسيء فهمها (a misread rule). أما **العيب (defect, bug, fault)** فهو الخلل الذي يتركه في أحد النواتج (artefact): سطر شيفرة (a line of code) أو متطلب (a requirement) أو إعداد (a setting). و**الفشل (failure)** هو السلوك الخاطئ الذي يمكنك ملاحظته (observe) حين يُنفَّذ العيب. ليس كل عيب يسبب فشلًا؛ فالخلل الذي يحتاج إلى مُدخل غير معتاد (unusual input) يبقى صامتًا (stays silent).
 
 ```mermaid
-flowchart LR
-    E["الخطأ: شخص يرتكب غلطة"] --> D["العيب: شيفرة أو مواصفة أو إعداد خاطئ"]
-    D --> X{"هل شُغِّل بالمدخلات المناسبة؟"}
-    X -->|"نعم"| F["الفشل: السلوك الخاطئ ظاهر"]
-    X -->|"لا"| Q["خامل: لم يُرَ شيء بعد"]
-    F --> T["اختبار أو مستخدم يلاحظ"]
-    T --> B["تصحيح الأخطاء يعود إلى العيب"]
-    B --> R["تحليل السبب الجذري يسأل لماذا"]
+flowchart RL
+    E["الخطأ: شخص يرتكب غلطة<br/>(Error: a person makes a mistake)"] --> D["العيب: شيفرة أو مواصفة أو إعداد خاطئ<br/>(Defect: wrong code, spec or setting)"]
+    D --> X{"هل شُغِّل بالمدخلات المناسبة؟<br/>(Run with the right inputs?)"}
+    X -->|"نعم (yes)"| F["الفشل: السلوك الخاطئ ظاهر<br/>(Failure: wrong behaviour is visible)"]
+    X -->|"لا (no)"| Q["خامل: لم يُرَ شيء بعد<br/>(Dormant: nothing seen yet)"]
+    F --> T["اختبار أو مستخدم يلاحظ<br/>(A test or a user notices)"]
+    T --> B["تصحيح الأخطاء يعود إلى العيب<br/>(Debugging works back to the defect)"]
+    B --> R["تحليل السبب الجذري يسأل لماذا<br/>(Root cause analysis asks why)"]
 ```
 
 **مثال محلول خطوة بخطوة (A worked example, step by step).** مع تفعيل عيب `float_fee` في العيّنة (bug on)، يعطي `fee("3090", "QAR", "international")` القيمة 10.81، لكن القاعدة (the rule)، أي 0.35% مقرَّبةً إلى الأعلى عند المنتصف (rounded half up)، تعطي 10.82.
@@ -360,7 +360,7 @@ first: 2870 QAR, correct 10.05, buggy 10.04
 
 الدرس (The lesson): مدى وصول العيب (a defect's reach) يعتمد على المُدخلات (inputs)، لا على مدى سوء مظهر السطر (how bad the line looks). يستطيع فحص الخصائص (a property check) (الدرس 2.3) أن يجده إذا بلغ مولّده (its generator) مبالغ الريال الكاملة في نطاق النسبة المئوية؛ أما حفنة من الأمثلة (a handful of examples) فقد لا تبلغه أبدًا.
 
-**من أين تنشأ العيوب (Where defects originate).** بعضها فقط يبدأ زلّات كتابة في الشيفرة (typing slips in code).
+**من أين تنشأ العيوب (Where defects originate).** بعضها فقط يبدأ على هيئة زلّات كتابة في الشيفرة (typing slips in code).
 
 | المصدر (Origin) | مثال من نجم (Najm example) |
 |---|---|
@@ -378,7 +378,7 @@ first: 2870 QAR, correct 10.05, buggy 10.04
 
 **اقتصاديات اكتشاف العيوب مبكرًا (The economics of finding bugs early).** الادعاء (The claim): كلما اكتُشف العيب متأخرًا زادت كلفته. وتحليلات باري بوم (Barry Boehm) للمشاريع الكبيرة (*Software Engineering Economics*، 1981) هي المصدر المعتاد، وتعرض شرائح العروض (slide decks) مضاعفات مرتبة. كن متشككًا فيها (Be suspicious of them): فهي تأتي من مشاريع وحقب بعينها (particular projects and eras)، وقد رأى كنت بِك (Kent Beck) في كتاب *Extreme Programming Explained* (1999) أن الاختبارات (tests) والخطوات الصغيرة (small steps) وإعادة الهيكلة (refactoring) تستطيع تسطيح المنحنى (flatten the curve). الأدلة متباينة (The evidence is mixed)، لكن الاتجاه يطابق التجربة. فعيب الرسم (the fee bug) يكلّف ثوانيَ إذا التقطه اختبار وحدة (a unit test)، وتعليقًا في المراجعة (a comment in review)، وبناءً أحمر (a red build) في التكامل المستمر (CI)، ودورة إبلاغ–إعادة إنتاج–إصلاح–إعادة اختبار (a report-reproduce-fix-retest cycle) في ضمان الجودة (QA)، وفي الإنتاج (in production) تحقيقًا واستردادات (refunds) وإصلاحًا عاجلًا (a hotfix) وأدلة تدقيق (audit evidence). كل خطوة تضيف أشخاصًا، وتفقد السياق (loses context)، وتجعل التراجع عن الضرر (damage harder to undo) أصعب. والمقايضة (The trade-off): الأبكر ليس مجانيًا (earlier is not free). الاختبارات المفصّلة (Detailed tests) على متطلبات ستتغير هدر (waste)؛ و«الإزاحة نحو اليسار» ("shift left") تعني تقديم *التغذية الراجعة* (*feedback*) مبكرًا، لا اختبار كل شيء أولًا.
 
-**إخفاقات شهيرة (Famous failures).** الروايات مبسّطة (Accounts are simplified)؛ والأسباب الحقيقية متعددة (real causes are several).
+**حالات فشل شهيرة (Famous failures).** الروايات مبسّطة (Accounts are simplified)؛ والأسباب الحقيقية متعددة.
 
 | الحادثة (Incident) | العيب (The defect) | لماذا أفلت (Why it escaped) | المستوى الذي كان سيلتقطه (Level that would have caught it) |
 |---|---|---|---|
@@ -386,7 +386,7 @@ first: 2870 QAR, correct 10.05, buggy 10.04
 | **مركبة مارس كلايمت أوربيتر (Mars Climate Orbiter)** (1999) | أعطت برمجيات الأرض (Ground software) بيانات الدافعات (thruster data) بوحدة رطل-قوة ثانية (pound-force seconds)؛ وتوقعت الملاحة (navigation) نيوتن-ثانية (newton-seconds) | لم يُتحقق قط من الوحدات عبر الواجهة (units across the interface) من البداية إلى النهاية (end to end) (مجلس ناسا (NASA board)) | تكامل الأنظمة (System integration) أو اختبار عقد للواجهة (an interface contract test) |
 | **ثيراك-25 (Therac-25)** (1985 إلى 1987) | حالات سباق (Race conditions) في برمجيات التحكم، مع إزالة أقفال الأمان في العتاد (hardware interlocks removed)، سببت جرعات إشعاع زائدة (radiation overdoses) | وُثق بالبرمجيات المعاد استخدامها (Reused software trusted)؛ مراجعة مستقلة قليلة (little independent review)؛ تعديلات المشغّل السريعة لم تُمارَس (fast operator edits not exercised) (ليفيسون وتيرنر (Leveson and Turner)) | اختبار النظام (System testing) بسلوك مشغّل واقعي (realistic operator behaviour) |
 | **Knight Capital** (2012) | وصلت الشيفرة الجديدة (New code) إلى سبعة من ثمانية خوادم؛ وشغّل الثامن منطقًا قديمًا (old logic) أحياه مفتاح أُعيد استخدامه (a reused flag) | نشر يدوي (Manual deployment)؛ لم يتحقق شيء من أن كل خادم يشغّل إصدارًا واحدًا (every server ran one version) (أمر هيئة الأوراق المالية SEC (SEC order)) | التحقق من الإصدار (Release verification)، وإطلاق مرحلي (staged rollout) |
-| **إطلاق Healthcare.gov** (2013) | فشل الموقع تحت الحِمل الحقيقي (under real load) وعبر أجزاء مقاولين كثيرين (many contractors' parts) | ضُغطت اختبارات التكامل والحِمل (Integration and load testing) في آخر الجدول (late in the schedule) (GAO وHHS) | اختبارات تكامل الأنظمة والأداء (System integration and performance tests)، تبدأ مبكرًا (started early) |
+| **إطلاق Healthcare.gov** (2013) | فشل الموقع تحت الحِمل الحقيقي (under real load) وعبر أجزاء مقاولين كثيرين (many contractors' parts) | ضُغطت اختبارات التكامل والحِمل (Integration and load testing) في آخر الجدول (GAO وHHS) | اختبارات تكامل الأنظمة والأداء (System integration and performance tests)، تبدأ مبكرًا (started early) |
 | **CrowdStrike** (يوليو 2024) | تسبب تحديث محتوى (a content update) في قراءة خارج الحدود (out-of-bounds read) في مستشعر Falcon (Falcon sensor)، فانهارت مضيفات Windows (crashing Windows hosts) | بحسب تحليل CrowdStrike (Per CrowdStrike's analysis)، فات التحقق من المحتوى (content validation) عدم التطابق (the mismatch)؛ ولا إطلاق مرحلي (no staged rollout) | تكامل المكوّنات (Component integration)؛ والإطلاق الكناري (canary rollout) |
 
 النمط (The pattern): لا يوجد صف هو زلّة بسيطة (simple slip) كانت اختبارات الوحدة (unit tests) ستلتقطها. إنها افتراضات عند الحدود (assumptions at boundaries) (إعادة الاستخدام والوحدات والواجهات)، والتزامن (concurrency)، والإطلاق (rollout). يمكن أن يجتاز كل جزء اختباراته الخاصة بينما يفشل الكل (the whole fails). ويتناول [*السحابة وDevOps (Cloud & DevOps)*، الدرس 4.2 — استراتيجيات الإطلاق (Release strategies): التدريجي (rolling) والأزرق–الأخضر (blue-green) والكناري (canary) ومفاتيح الميزات (feature flags) والتراجع (rollback)](../cloud/index.ar.html#/4.2) دفاعات الإطلاق المرحلي (the staged-release defences) الكامنة وراء صفّي Knight وCrowdStrike.
@@ -395,13 +395,13 @@ first: 2870 QAR, correct 10.05, buggy 10.04
 
 **تحليل السبب الجذري: الأسئلة الخمسة «لماذا» (Root-cause analysis: five whys).** اسأل «لماذا» ("why") حتى تبلغ حالة يستطيع الفريق تغييرها (a condition the team can change)؛ والعدد خمسة قاعدة تقريبية (a rule of thumb). في عيب الرسم (For the fee bug):
 
-1. لماذا حُصّل 10.81 على 3,090 (Why was 3,090 charged 10.81)؟ استخدم الرسم أعدادًا عشرية (floats) و`round`.
+1. لماذا فُرض على 3,090 رسم قدره 10.81 (Why was 3,090 charged 10.81)؟ استخدم الرسم أعدادًا عشرية (floats) و`round`.
 2. لماذا (Why)؟ اختار المؤلف أبسط حساب (the simplest arithmetic)؛ وليس لدى الفريق قاعدة مكتوبة للمال (no written rule for money).
 3. لماذا فاتت المراجعةَ (Why did review miss it)؟ بدت الشيفرة سليمة (looked right)، وكانت الاختبارات خضراء (green)، ولا تذكر قائمة التحقق (the checklist) أنواع المال (money types) قط.
 4. لماذا فاتت الاختباراتِ (Why did tests miss it)؟ جاءت الحالات من قواعد الرسم (the fee rules) — الحد الأدنى (minimum) والسقف (cap) والرسم الثابت (flat) — لا من قاعدة التقريب (the rounding rule)؛ ولم تتضمن أي حالة نصف سنت (a half cent).
-5. لماذا (Why)؟ قال المتطلب (The requirement) «0.35%» ولم يقل كيف يُقرَّب (how to round)، فلم يكن لدى أحد رقم يختبره (a number to test).
+5. لماذا (Why)؟ قال المتطلب (The requirement) «0.35%» ولم يقل كيف يُقرَّب (how to round)، فلم يكن لدى أحد رقم يختبره.
 
-**ضعيف مقابل قوي (Weak versus strong):** السلسلة التي تتوقف عند «ارتكب المطوّر غلطة» ("the developer made a mistake") تنتهي إلى «كن أكثر حرصًا» ("be more careful")، وهذا لا يمنع شيئًا (prevents nothing). أما هذه السلسلة فتنتهي عند متطلب غير مكتمل (an incomplete requirement)، ولا قاعدة للمال (no rule for money)، واختبارات مستمدة من القواعد بدل الحدود (tests drawn from rules instead of boundaries): أشياء تستطيع إسنادها إلى أحد (things you can assign). نادرًا ما يكون للحوادث الحقيقية (Real incidents) سبب خطي واحد (one linear cause)، فاعتبرها بداية ([*السحابة وDevOps (Cloud & DevOps)*، الدرس 5.3 — الحوادث وتحليل ما بعد الحادث دون لوم (Incidents and blameless postmortems)](../cloud/index.ar.html#/5.3)).
+**ضعيف مقابل قوي (Weak versus strong):** السلسلة التي تتوقف عند «ارتكب المطوّر غلطة» ("the developer made a mistake") تنتهي إلى «كن أكثر حرصًا» ("be more careful")، وهذا لا يمنع شيئًا (prevents nothing). أما هذه السلسلة فتنتهي عند متطلب غير مكتمل (an incomplete requirement)، ولا قاعدة للمال (no rule for money)، واختبارات مستمدة من القواعد بدل الحدود (tests drawn from rules instead of boundaries): أشياء تستطيع إسنادها إلى أحد. نادرًا ما يكون للحوادث الحقيقية (Real incidents) سبب خطي واحد (one linear cause)، فاعتبرها بداية ([*السحابة وDevOps (Cloud & DevOps)*، الدرس 5.3 — الحوادث ومراجعات ما بعد الحادث دون لوم (Incidents and blameless postmortems)](../cloud/index.ar.html#/5.3)).
 
 **كل عيب أفلت يصبح اختبار انحدار (Every escaped bug becomes a regression test).** الحلقة (The loop): أعد إنتاج العيب بأصغر مثال (reproduce with the smallest example)؛ اكتب اختبارًا بمرجع نتيجة مستقل (a test with an independent oracle)؛ شاهده يفشل للسبب الصحيح (fail for the right reason)؛ أصلح؛ شاهده ينجح؛ احتفظ به (keep it). احفظ الملف باسم `tests/test_regressions.py`:
 
@@ -426,13 +426,13 @@ def test_every_half_cent_fee_rounds_up(amount, expected):
     assert fee(amount, "QAR", "international") == Decimal(expected)
 ```
 
-ينجح على العيّنة النظيفة (the clean sample). ومع `NAJM_BUGS=float_fee` تفشل الاختبارات الأربعة كلها، والأول منها بـ`assert Decimal('10.81') == Decimal('10.82')`: وهذا هو السبب الصحيح (the right reason). **ضعيف مقابل قوي (Weak versus strong):** الاختبار `assert fee("3090", "QAR", "international") is not None` ينجح مع وجود العيب. والاختبار الذي يعيد تقرير الجواب الخاطئ القديم (restates the old wrong answer) أسوأ: فهو يفشل يوم يصلح أحدٌ الشيفرة.
+ينجح على العيّنة النظيفة (the clean sample). ومع `NAJM_BUGS=float_fee` تفشل الاختبارات الأربعة كلها (all four fail)، والأول منها بـ`assert Decimal('10.81') == Decimal('10.82')`: وهذا هو السبب الصحيح (the right reason). **ضعيف مقابل قوي (Weak versus strong):** الاختبار `assert fee("3090", "QAR", "international") is not None` ينجح مع وجود العيب (passes with the bug). والاختبار الذي يعيد تقرير الجواب الخاطئ القديم (restates the old wrong answer) أسوأ: فهو يفشل يوم يصلح أحدٌ الشيفرة (the day someone fixes the code).
 
 ### 🔴 نظرة الخبير (Expert view)
 
 **اختبارات الانحدار ذاكرة، ولها كلفة (Regression tests are memory, and they cost).** اختبر الفئة لا المثال وحده (Test the class, not just the instance): فحص الخصائص (a property check) القائل «لكل مبلغ، يساوي `fee` المرجعَ المحسوب بـDecimal» ("for every amount, fee equals the Decimal reference") يغطي الحالات الـ407 دفعة واحدة إذا بلغها مولّده (if its generator reaches them) (يقيس الدرس 2.3 ذلك). كل اختبار وعد بالصيانة (a promise to maintain). **متى لا تكتب اختبارًا (When not to write one):** لقيمة إعداد سيئة (a bad configuration value)، أضف تحققًا (a validation) أو تنبيهًا (an alert)؛ ولفجوة في المتطلبات (a requirements gap)، أصلح المتطلب وأضف مثالًا محسوبًا (a worked example)؛ ولإصلاح بيانات لمرة واحدة (a one-off data repair)، سجّله وامضِ. أتمت حين يمكن أن يعيد تغيير في الشيفرة العيبَ (when a code change could bring the bug back). وتتبّع الإفلاتات (Track escapes) (العيوب المكتشفة بعد الإصدار (defects found after release)، الدرس 5.1) اتجاهًا (as a trend)، لا هدفًا (never a target)؛ فالهدف يدفع الناس إلى التوقف عن الإبلاغ (stop reporting).
 
-**كيف تغيّر الشيفرة التي يكتبها الذكاء الاصطناعي ملف الفشل (How AI-written code changes the failure profile).** السلسلة لم تتغير (The chain is unchanged)؛ الذي يتحول هو مصدر الأخطاء (where errors come from) ومدى إقناع النتيجة (how convincing the result looks). يكتب الوكلاء (Agents) شيفرة أكثر في اليوم، فتجد العيوب أماكن أكثر لتختبئ فيها حتى مع معدل ثابت لكل سطر (an unchanged rate per line) (لم يحسم أحد ذلك). وتختلف الإخفاقات النموذجية (Typical failures) عن إخفاقات إنسان متعب (a tired human's): منطق معقول لكنه خاطئ (plausible but wrong logic)؛ دوال أو حزم مخترعة (invented functions or packages)؛ حالات حدّية فاتت (edge cases missed) لأن الوكيل لم ير المتطلب قط؛ فحوص حُذفت أو أُضعفت بصمت (checks silently deleted or weakened)؛ واختبارات تعيد تقرير الشيفرة (tests that restate the code) (الدرس 0.1)؛ و«إصلاحات» ("fixes") تجعل الاختبار ينجح بدل أن تجعل الشيفرة صحيحة. وفي يوليو 2025 أبلغ مؤسس شركة علنًا أن وكيل برمجة (a coding agent) حذف قاعدة بيانات إنتاج (a production database) أثناء تجميد الشيفرة (a code freeze)؛ والرواية صادرة عن المعنيين بها، فتعامل معها على أنها مُبلَّغ عنها (treat it as reported). وتبني الوحدة 6 قائمة تحقق للمراجِع (a reviewer's checklist) لهذه الأنماط، بدءًا بالدرس 6.1.
+**كيف تغيّر الشيفرة التي يكتبها الذكاء الاصطناعي ملف الفشل (How AI-written code changes the failure profile).** السلسلة لم تتغير (The chain is unchanged)؛ الذي يتحول هو مصدر الأخطاء (where errors come from) ومدى إقناع النتيجة (how convincing the result looks). يكتب الوكلاء (Agents) شيفرة أكثر في اليوم، فتجد العيوب أماكن أكثر لتختبئ فيها حتى مع معدل ثابت لكل سطر (an unchanged rate per line) (لم يحسم أحد ذلك). وتختلف حالات الفشل النموذجية (Typical failures) عن حالات فشل إنسان متعب (a tired human's): منطق معقول لكنه خاطئ (plausible but wrong logic)؛ دوال أو حزم مخترعة (invented functions or packages)؛ حالات حدّية فاتت (edge cases missed) لأن الوكيل لم ير المتطلب قط؛ فحوص حُذفت أو أُضعفت بصمت (checks silently deleted or weakened)؛ واختبارات تعيد تقرير الشيفرة (tests that restate the code) (الدرس 0.1)؛ و«إصلاحات» ("fixes") تجعل الاختبار ينجح بدل أن تجعل الشيفرة صحيحة. وفي يوليو 2025 أبلغ مؤسس شركة علنًا أن وكيل برمجة (a coding agent) حذف قاعدة بيانات إنتاج (a production database) أثناء تجميد الشيفرة (a code freeze)؛ والرواية صادرة عن المعنيين بها، فتعامل معها على أنها مُبلَّغ عنها (treat it as reported). وتبني الوحدة 6 قائمة تحقق للمراجِع (a reviewer's checklist) لهذه الأنماط، بدءًا بالدرس 6.1.
 
 ## 🧰 الأدوات (The toolkit)
 | الأداة أو الممارسة أو التقنية (Tool, practice or technique) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
@@ -455,11 +455,11 @@ def test_every_half_cent_fee_rounds_up(amount, expected):
 | السلسلة (The chain) | الخطأ (Error): معاملة المال كعدد عشري (money treated as a float). العيب (Defect): `float(amount) * 0.0035` مع `round`. الفشل (Failure): 10.81 بدل 10.82 |
 | لماذا أفلت (Why it escaped) | لا اختبار في نطاق النسبة المئوية (percentage band) فيه نصف سنت؛ وقائمة المراجعة (review checklist) صامتة عن المال (silent on money) |
 | المستوى الذي كان سيلتقطه (Level that would catch it) | اختبار مكوّن (Component test) بمرجع نتيجة محسوب يدويًا (a hand-worked oracle)؛ واختبار خصائص (a property test) |
-| اختبار الانحدار (Regression test) | كلا الاختبارين في `tests/test_regressions.py`، مدموجان مع الإصلاح (merged with the fix) |
-| إجراءات منهجية (Systemic actions) | إضافة «المال والتقريب» ("Money and rounding") إلى قائمة المراجعة (طارق (Tariq))؛ قاعدة التقريب وثلاثة أمثلة محسوبة في مواصفة الرسم (fee spec) (مالك المنتج (product owner))؛ اختبار خصائص (property test) (بلال (Bilal)) |
+| اختبار الانحدار (Regression test) | كلا الاختبارين في `tests/test_regressions.py`، مدموجان مع الإصلاح |
+| إجراءات على مستوى المنظومة (Systemic actions) | إضافة «المال والتقريب» ("Money and rounding") إلى قائمة المراجعة (طارق (Tariq))؛ قاعدة التقريب وثلاثة أمثلة محسوبة في مواصفة الرسم (fee spec) (مالك المنتج (product owner))؛ اختبار خصائص (property test) (بلال (Bilal)) |
 
 ## 🛠️ التمارين (Exercises)
-- 🟢 **اربط الحوادث بمستويات الاختبار (Map incidents to test levels).** اختر ثلاثًا من: Heartbleed (2014)، وعيب Pentium FDIV (1994)، وعيب الثانية الكبيسة (leap-second bug) في Cloudflare (يناير 2017)، وحادثة قاعدة بيانات GitLab (2017). اقرأ كل رواية أولية (primary account) واملأ صفًّا من جدول الإخفاقات الشهيرة (the famous-failures table). *يكتمل عندما (Done when):* يستشهد كل صف بحقيقة واحدة من المصدر (one fact from the source)، ويسمّي مستوى اختبار (a test level)، ويعطي فحصًا ملموسًا (a concrete check) (مُدخلًا ونتيجة متوقعة (input and expected result))، ويقول ما كان يمكن ألا يلتقطه أي اختبار (what no test could have caught).
+- 🟢 **اربط الحوادث بمستويات الاختبار (Map incidents to test levels).** اختر ثلاثًا من: Heartbleed (2014)، وعيب Pentium FDIV (1994)، وعيب الثانية الكبيسة (leap-second bug) في Cloudflare (يناير 2017)، وحادثة قاعدة بيانات GitLab (2017). اقرأ كل رواية أولية (primary account) واملأ صفًّا من جدول حالات الفشل الشهيرة (the famous-failures table). *يكتمل عندما (Done when):* يستشهد كل صف بحقيقة واحدة من المصدر (one fact from the source)، ويسمّي مستوى اختبار (a test level)، ويعطي فحصًا ملموسًا (a concrete check) (مُدخلًا ونتيجة متوقعة (input and expected result))، ويذكر ما لم يكن بوسع أي اختبار أن يلتقطه (what no test could have caught).
 - 🟡 **حلّل السبب الجذري لعيب (Root-cause a bug).** اكتب نصًّا برمجيًا (script) يطبع `value_date` ليوم الاثنين 5 أكتوبر 2026 عند 10:00 و14:59 و15:00 و16:30 و18:00 بتوقيت قطر (Qatar time) (`datetime(..., tzinfo=ZoneInfo("Asia/Qatar"))`). شغّله نظيفًا (clean)، ثم مع `NAJM_BUGS=tz_cutoff`. *يكتمل عندما (Done when):* يُظهر ناتجك بالضبط أي الأوقات تختلف؛ وتتضمن سلسلة الأسئلة الخمسة «لماذا» (five-whys chain) أربع خطوات على الأقل، تسمّي الأخيرتان منها أشياء يستطيع الفريق تغييرها (things a team could change)؛ وقد صنّفت مصدر العيب (the defect's origin).
 - 🔴 **حوّل عيبًا إلى اختبار انحدار (Turn a bug into a regression test).** مع `NAJM_BUGS=limit_off_by_one`، يُرفض خطأً تحويل يبلغ الحد اليومي (daily limit) بالضبط. اكتب اختبارًا يفشل على ذلك العيب وينجح على العيّنة النظيفة، إضافةً إلى ثانٍ يثبّت الجانب الآخر من الحد (pins the other side of the boundary). ثم شغّل المجموعة الابتدائية (the starter suite) واختباراتك تحت كل قيمة من قيم `NAJM_BUGS` الخمس، وسجّل أيها يُلتقط. *يكتمل عندما (Done when):* يفشل الاختبار الأول مع ظهور `daily_limit_exceeded` في ناتجه؛ وينجح الثاني بوجود العيب وبدونه؛ ويكون جدول تشغيلاتك الخمسة (five-run table) في دفتر مختبرك (lab journal).
 
@@ -467,19 +467,19 @@ def test_every_half_cent_fee_rounds_up(amount, expected):
 - **التوقف عند «الخطأ البشري» (Stopping at "human error").** فهو يسمّي شخصًا لا حالة (names a person, not a condition). واسأل «لماذا» حتى تجد شيئًا قابلًا للإصلاح (fixable).
 - **الإصلاح قبل إعادة الإنتاج (Fixing before reproducing).** بلا اختبار فاشل (a failing test) لا تستطيع أن تُظهر أن الإصلاح نجح.
 - **الاستشهاد بأرقام منحنى الكلفة على أنها حقائق (Quoting cost-curve numbers as fact).** «يكلّف العيب في الإنتاج أكثر بـ100 مرة» ("A bug costs 100 times more in production") شعار (a slogan). استخدم الاتجاه (the direction)، وبياناتك أنت (your own data).
-- **اختبار انحدار يثبّت العَرَض (A regression test that pins the symptom).** مثال واحد يفوته الصنف (misses the class). أضف أمثلة مجاورة (neighbours) أو فحص خصائص (a property).
+- **اختبار انحدار يثبّت العَرَض (A regression test that pins the symptom).** مثال واحد لا يغطي الفئة (misses the class). أضف أمثلة مجاورة (neighbours) أو فحص خصائص (a property).
 - **الاختبار عند مستوى واحد (Testing at one level).** عدم تطابق الوحدات في Mars Climate Orbiter عاش بين جزأين من البرمجيات (between two software parts). افحص حيث تلتقي المكوّنات (where components meet).
 
 ## 🧾 الخلاصة (Recap)
 - يترك الخطأ (error) عيبًا (defect)؛ ولا يظهر الفشل (failure) إلا حين يُنفَّذ العيب في الظروف المناسبة، وتقرر المُدخلات (the inputs) عدد المرات.
 - تنشأ العيوب في المتطلبات والتصميم والشيفرة والإعدادات والبيانات والبيئة والتكامل (requirements, design, code, configuration, data, environment and integration)، فافحص عند أكثر من مستوى واحد (more than one level).
 - العيوب المتأخرة (Late defects) تكلّف أكثر في الأشخاص والسياق والضرر (people, context and damage)؛ والمضاعفات متنازع عليها، أما الاتجاه فلا.
-- معظم الإخفاقات الشهيرة (Famous failures) تقع عند الحدود والتزامن والإطلاق (boundaries, concurrency and rollout).
+- معظم حالات الفشل الشهيرة (Famous failures) تقع عند الحدود والتزامن والإطلاق (boundaries, concurrency and rollout).
 - استخدم المخاطر (risk) لتركيز العمق، والأسئلة الخمسة «لماذا» (five whys) لبلوغ أسباب قابلة للتغيير (changeable causes)، واختبار انحدار بمرجع نتيجة مستقل (an independent-oracle regression test) لكل إفلات (every escape).
 
 ## ✍️ اختبر نفسك (Check yourself)
 
-**1. كتب مطوّر `float(amount) * 0.0035` معتقدًا أن الأعداد العشرية مناسبة للمال. ثم رأت الإدارة المالية رسمًا قدره 10.81 بدل 10.82. أيٌّ مما يلي هو العيب؟**
+**1. كتب مطوّر (a developer) `float(amount) * 0.0035` معتقدًا أن الأعداد العشرية مناسبة للمال (believing floats are fine for money). ثم رأت الإدارة المالية (Finance) رسمًا قدره 10.81 بدل 10.82. أيٌّ مما يلي هو العيب (the defect)؟**
 
 - A. اعتقاد المطوّر أن الأعداد العشرية (floats) مناسبة للمال
 - B. الرسم الظاهر 10.81 في كشف الحساب (statement)
@@ -492,9 +492,9 @@ def test_every_half_cent_fee_rounds_up(amount, expected):
 
 </details>
 
-**2. كتبت برمجيات الأرض (ground software) بيانات الدافعات بوحدة رطل-قوة ثانية، بينما قرأتها برمجيات الملاحة (navigation software) على أنها نيوتن-ثانية. اجتاز كل طرف اختبارات وحداته الخاصة. أي اختبار كان الأرجح أن يلتقط ذلك؟**
+**2. كتبت برمجيات الأرض (ground software) بيانات الدافعات (thruster data) بوحدة رطل-قوة ثانية (pound-force seconds)، بينما قرأتها برمجيات الملاحة (navigation software) على أنها نيوتن-ثانية (newton-seconds). اجتاز كل طرف اختبارات وحداته الخاصة (its own unit tests). أي اختبار كان الأرجح أن يلتقط ذلك؟**
 
-- A. مزيد من اختبارات الوحدة (unit tests) لحسابات الدافعات على كل جانب على حدة
+- A. مزيد من اختبارات الوحدة (unit tests) لحسابات الدافعات (thruster calculations) على كل جانب على حدة
 - B. اختبار أداء (a performance test) لبرمجيات الملاحة
 - C. فحص للبيانات الحقيقية المتبادلة بين النظامين (real data passing between the two systems)
 - D. مراجعة قابلية استخدام (a usability review) لشاشات التحكم في المهمة
@@ -518,10 +518,10 @@ def test_every_half_cent_fee_rounds_up(amount, expected):
 
 </details>
 
-**4. بعد حادثة المنطقة الزمنية (time-zone incident)، تنتهي الأسئلة الخمسة «لماذا» لدى فريق بـ: «نسي المطوّر المناطق الزمنية.» ⁦("The developer forgot about time zones.")⁩ ما الخطأ في هذه النهاية؟**
+**4. بعد حادثة المنطقة الزمنية (time-zone incident)، تنتهي الأسئلة الخمسة «لماذا» (five whys) لدى فريق بـ: «نسي المطوّر المناطق الزمنية.» ⁦("The developer forgot about time zones.")⁩ ما الخطأ في هذه النهاية؟**
 
 - A. لا شيء: الخطأ البشري (human error) هو السبب الجذري الحقيقي لمعظم الحوادث
-- B. ينبغي أن تتوقف عند السؤال الثاني، لتبقى المراجعة قصيرة
+- B. ينبغي أن تتوقف عند السؤال الثاني (the second why)، لتبقى المراجعة قصيرة
 - C. ينبغي أن تمضي إلى لوم المختبِر الذي فاته العيب (blame the tester)
 - D. إنها تسمّي زلّة شخص، لا حالة قابلة للتغيير (a changeable condition)
 
@@ -536,7 +536,7 @@ def test_every_half_cent_fee_rounds_up(amount, expected):
 - A. التأكيد أن `check_transfer` يمكن استدعاؤها دون خطأ
 - B. التأكيد أن 1,000 تمر وأن 1,000.01 تفشل عند إرسال 49,000 اليوم (49,000 sent today)
 - C. التأكيد أن تغطية الأسطر (line coverage) لـ`check_transfer` لم تنخفض
-- D. التأكيد أن تحويل 10 QAR يُقبل في يوم جديد (on a fresh day)
+- D. التأكيد أن تحويل 10 QAR يُقبل في يوم جديد
 
 <details><summary>الإجابة</summary>
 
@@ -560,7 +560,7 @@ def test_every_half_cent_fee_rounds_up(amount, expected):
 *المستوى (Level): 🟢 مبتدئ (Beginner)* · *المتطلبات (Prerequisites): 0.1، 0.2* · *التركيز (Focus): Mindset*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
-- **بنك نجم خيالي (Najm Bank is fictional).** تنضم إلى فريق **هندسة الجودة (Quality Engineering, QE)**: راشد (Rashid): رئيس الفريق (head) ومرشدك (your mentor)؛ وندى (Nada): خرّيجة جديدة (new graduate) وزميلتك (your peer) التي ترتكب الأخطاء (makes the mistakes)؛ وبلال (Bilal): قائد SDET (SDET lead)؛ وأمل (Amal): قائدة الاختبار الاستكشافي وإمكانية الوصول (exploratory and accessibility lead).
+- **بنك نجم خيالي (Najm Bank is fictional).** تنضم إلى فريق **هندسة الجودة (Quality Engineering, QE)**: راشد (Rashid): رئيس الفريق (head) ومرشدك (your mentor)؛ وندى (Nada): خريجة جديدة (new graduate) وزميلتك (your peer) التي ترتكب الأخطاء (makes the mistakes)؛ وبلال (Bilal): قائد SDET (SDET lead)؛ وأمل (Amal): قائدة الاختبار الاستكشافي وإمكانية الوصول (exploratory and accessibility lead).
 - يختبرون تطبيق نجم للهاتف (Najm Mobile) وواجهة برمجته (its API)، وخدمة المدفوعات (the payments service)، ونجم أسيست (Najm Assist)، وخط التقارير التنظيمية (the regulatory reporting pipeline)، عبر بيئات التطوير (dev) وضمان الجودة (QA) وما قبل الإنتاج (staging) والإنتاج (production)، ببيانات اصطناعية (synthetic) أو مقنَّعة (masked)، لا ببيانات العملاء الخام (raw customer data) أبدًا.
 - تتدرّب على **نظام العيّنة (sample system)** الخاص بالدورة: مجاني (free)، بلغة Python، فيه تسعة عيوب مزروعة (nine seeded bugs). أول انتصار لك (Your first win): شغّل المجموعة الابتدائية (the starter suite)، وفعّل عيبًا وشاهدها تفشل، ثم فعّل عيبًا آخر وشاهدها تنجح.
 - لكل درس عشرة أجزاء (ten parts)، وسُلّم 🟢 🟡 🔴 (ladder)، وثلاثة تمارين (three exercises) فيها «يكتمل عندما» ("Done when")، ووسم تركيز (Focus tag).
@@ -568,22 +568,22 @@ def test_every_half_cent_fee_rounds_up(amount, expected):
 - الفخ الأكبر (Biggest trap): القراءة دون تشغيل (reading without running).
 
 ## 🧭 لماذا يهم (Why it matters)
-لدى راشد (Rashid) قاعدة: لا يُنهي أحد أسبوعه الأول حتى يرى مجموعة اختبارات خضراء تكذب (a green suite lie). في يوم الجمعة من أسبوعها الأول، تحصل ندى (Nada)، وقد أنهت كل القراءة، على المجموعة الابتدائية (starter suite) لنظام العيّنة: 24 اختبارًا (24 tests)، كلها خضراء. يقول راشد: «قولي لي أي العيوب ستفوتها.» ⁦("Tell me which bugs it would miss.")⁩ تفعّل `bola`: يفشل اختبار واحد، كما ينبغي. وتفعّل `float_fee`: تظل الاختبارات الـ24 كلها تنجح. تصل الفكرة (The point lands): المجموعة ادعاء (a suite is a claim)، وأنت تختبر الادعاء.
+لدى راشد (Rashid) قاعدة: لا يُنهي أحد أسبوعه الأول حتى يرى مجموعة اختبارات خضراء تكذب (a green suite lie). في يوم الجمعة من أسبوعها الأول، تحصل ندى (Nada)، وقد أنهت كل القراءة، على المجموعة الابتدائية (starter suite) لنظام العيّنة (the sample system): 24 اختبارًا (24 tests)، كلها خضراء. يقول راشد: «قولي لي أي العيوب ستفوتها.» ⁦("Tell me which bugs it would miss.")⁩ تفعّل `bola`: يفشل اختبار واحد (one test fails)، كما ينبغي. وتفعّل `float_fee`: تظل الاختبارات الـ24 كلها تنجح (all 24 still pass). تصل الفكرة (The point lands): المجموعة ادعاء (a suite is a claim)، وأنت تختبر الادعاء.
 
-في اليوم التالي تطلب من مساعد ذكاء اصطناعي (an AI assistant) العون في تمرينها الأول فتحصل على اختبار مرتب (a tidy test). يسأل راشد لماذا يفشل فقط حين يكون العيب مفعّلًا. لا تستطيع ندى الجواب. يقول: «إذن لم تختبري شيئًا. لقد نسختِ نتيجة.» ⁦("Then you have not tested anything. You have copied a result.")⁩ تلك قاعدة هذه الدورة للذكاء الاصطناعي: استخدمه لتفهم، ولا تستخدمه أبدًا لتتجاوز الفهم (never to skip understanding). يعرّفك هذا الدرس بالفريق (the team) والأنظمة (systems) والمختبر (lab)، ويمنحك أول انتصار لك (your first win)، ويرسم كيف تدرس (how to study).
+في اليوم التالي تطلب من مساعد ذكاء اصطناعي (an AI assistant) العون في تمرينها الأول فتحصل على اختبار مرتب (a tidy test). يسأل راشد لماذا يفشل فقط حين يكون العيب مفعّلًا. لا تستطيع ندى الجواب. يقول: «إذن لم تختبري شيئًا. لقد نسختِ نتيجة.» ⁦("Then you have not tested anything. You have copied a result.")⁩ تلك قاعدة هذه الدورة للذكاء الاصطناعي: استخدمه لتفهم، ولا تستخدمه أبدًا لتتجاوز الفهم (never to skip understanding). يعرّفك هذا الدرس بالفريق (the team) والأنظمة (systems) والمختبر (lab)، ويمنحك أول انتصار لك (your first win)، ويوضّح كيف تدرس (how to study).
 
 ## 📐 كيف يعمل (How it works)
 
 ### 🟢 الأساسيات (The essentials)
 
-**بنك نجم خيالي (Najm Bank is fictional).** إنه البنك الخليجي متوسط الحجم (mid-sized Gulf bank) الذي يعمل في قطر والإمارات والاتحاد الأوروبي (Qatar, the UAE and the EU)، ويُستخدم في أنحاء هذه المكتبة (library)، فتحكي دورات الأمان (security) والحوكمة (governance) والمنتج (product) أجزاءً من قصة واحدة. والبنك حالة تعليمية جيدة (a good teaching case) لأن المخاطر واضحة (the stakes are clear): يجب ألا يُفقد التحويل (lost) أو يتكرر (duplicated) أو يُقرَّب خطأً (mis-rounded) أبدًا.
+**بنك نجم خيالي (Najm Bank is fictional).** إنه البنك الخليجي متوسط الحجم (mid-sized Gulf bank) الذي يعمل في قطر والإمارات والاتحاد الأوروبي (Qatar, the UAE and the EU)، ويُستخدم في أنحاء هذه المكتبة (library)، فتحكي دورات الأمان (security) والحوكمة (governance) والمنتج (product) أجزاءً من قصة واحدة. والبنك حالة تعليمية جيدة لأن المخاطر واضحة (the stakes are clear): يجب ألا يُفقد التحويل (lost) أو يتكرر (duplicated) أو يُقرَّب خطأً (mis-rounded) أبدًا.
 
 **فريق هندسة الجودة (The QE team).**
 
 | الشخص (Person) | الدور (Role) | ما يهمه (What they care about) | أين تلقاه أكثر (Where you meet them most) |
 |---|---|---|---|
-| **راشد (Rashid)** | رئيس هندسة الجودة (Head of Quality Engineering)؛ مرشدك (your mentor) | أدلة للقرارات (Evidence for decisions): ما نعرفه (what we know)، وما لا نعرفه (what we do not) | الاستراتيجية (Strategy) (الدرس 5.1)، والمشروع الختامي (capstone) |
-| **ندى (Nada)** | مهندسة جودة خرّيجة جديدة (New graduate quality engineer)؛ زميلتك (your peer) | التعلّم السريع (Learning fast)؛ ترتكب الأخطاء التي ينبغي أن تتجنبها (makes the mistakes you should avoid) | في كل مكان (Everywhere) |
+| **راشد (Rashid)** | رئيس هندسة الجودة (Head of Quality Engineering)؛ مرشدك (your mentor) | أدلة للقرارات (Evidence for decisions): ما نعرفه (what we know)، وما لا نعرفه | الاستراتيجية (Strategy) (الدرس 5.1)، والمشروع الختامي (capstone) |
+| **ندى (Nada)** | مهندسة جودة خريجة جديدة (New graduate quality engineer)؛ زميلتك (your peer) | التعلّم السريع (Learning fast)؛ ترتكب الأخطاء التي ينبغي أن تتجنبها (makes the mistakes you should avoid) | في كل مكان (Everywhere) |
 | **بلال (Bilal)** | قائد SDET (SDET lead) (مهندس تطوير برمجيات في الاختبار (software development engineer in test)) | إطار الأتمتة (The automation framework)، والتكامل المستمر (CI)، والاختبارات غير المستقرة (flaky tests) | الوحدتان 2 و3 (Modules 2 and 3)، والدرس 5.2 |
 | **أمل (Amal)** | قائدة الاختبار الاستكشافي وإمكانية الوصول (Exploratory-testing and accessibility lead) | المستخدمون الحقيقيون (Real users)، والعربية من اليمين إلى اليسار (Arabic right-to-left)، وقارئات الشاشة (screen readers) | الدرسان 3.3 و5.3 |
 
@@ -598,7 +598,7 @@ def test_every_half_cent_fee_rounds_up(amount, expected):
 | **نجم أسيست (Najm Assist)** | مساعد النموذج اللغوي الكبير (The LLM assistant): يجيب من وثائق السياسات (policy documents) (التوليد المعزَّز بالاسترجاع (retrieval-augmented generation, RAG))؛ ويقرأ الأرصدة (reads balances)؛ ويجمّد البطاقة (freezes a card) فقط بعد تأكيد صريح (explicit confirmation) | الإجابات تتفاوت (Answers vary)؛ وإجراء واحد يكتب (one action writes) |
 | **خط التقارير التنظيمية (Regulatory reporting pipeline)** | ملفات بيانات ليلية (Nightly data files) إلى الجهة التنظيمية (the regulator)، مع فحوص جودة البيانات (data-quality checks) | البيانات الخاطئة مشكلة تنظيمية (a regulatory issue) |
 
-نظام العيّنة في الدورة (The course's sample system)، **تحويلات نجم (Najm Transfers)**، بديل صغير (a small stand-in) للأنظمة الثلاثة الأولى: قواعد التحويل وواجهة برمجة (transfer rules and an API)، وصفحة ويب (a web page)، ونجم أسيست.
+نظام العيّنة في الدورة (The course's sample system)، **تحويلات نجم (Najm Transfers)**، بديل صغير (a small stand-in) للأنظمة الثلاثة الأولى: قواعد التحويل وواجهة برمجة، وصفحة ويب (a web page)، ونجم أسيست.
 
 **البيئات (Environments).** أربع، لكل منها وظيفتها (its own job).
 
@@ -609,27 +609,27 @@ def test_every_half_cent_fee_rounds_up(amount, expected):
 | **ما قبل الإنتاج (Staging)** | شبيهة بالإنتاج (Production-like): الإصدارات نفسها وشكل الإعدادات نفسه (same versions and configuration shape) | مقنَّعة أو اصطناعية، بحجم الإنتاج (Masked or synthetic, production-sized) | الأداء (Performance)، وفحوص الأمان (security scans)، وتمارين المرونة (resilience drills)، واختبار قبول المستخدم (UAT, user acceptance testing)، وبروفة الإصدار (release rehearsal) |
 | **الإنتاج (Production)** | العملاء الحقيقيون (Real customers) | حقيقية (Real) | اختبارات الدخان (Smoke tests) بحسابات اختبار موسومة (flagged test accounts)، والمراقبة الاصطناعية (synthetic monitoring)، ومراقبة الإصدارات الكنارية (watching canaries)؛ ولا شيء مدمِّر (nothing destructive) |
 
-لا تشغّل أبدًا اختبارات حِمل أو أمان (load or security tests) على الإنتاج، ولا على أي نظام لا تملكه أو ليس لديك إذن مكتوب باختباره (written permission to test).
+لا تشغّل أبدًا اختبارات حِمل أو أمان (load or security tests) على الإنتاج (production)، ولا على أي نظام لا تملكه (any system you do not own) أو ليس لديك إذن مكتوب باختباره (written permission to test).
 
-**سياسة بيانات الاختبار (Test data policy).** القواعد قصيرة (The rules are short): استخدم بيانات **اصطناعية (synthetic)** افتراضيًا؛ واستخدم بيانات **مقنَّعة (masked)** (معدَّلة بلا رجعة (irreversibly altered)، مع الإبقاء على الصيغ والتوزيعات (keeping formats and distributions)) فقط حين تكون الواقعية ضرورية (realism is essential) وتكون سارة (Sara) قد اعتمدت الطريقة؛ و**لا بيانات عملاء خام أبدًا (never raw customer data)** في التطوير أو ضمان الجودة أو ما قبل الإنتاج أو أي أداة خارجية (external tool)، بما فيها مساعدو الذكاء الاصطناعي. ويشرح [*أمن الذكاء الاصطناعي والتطبيقات (Secure AI & Application Security)*، الدرس 5.3 — حماية البيانات الشخصية (Protecting personal data): التقليل (minimisation) والتسجيل (logging) وهندسة الخصوصية (privacy engineering)](../secai/index.ar.html#/5.3) الواجبات الكامنة وراءها (the duties behind it).
+**سياسة بيانات الاختبار (Test data policy).** القواعد قصيرة (The rules are short): استخدم بيانات **اصطناعية (synthetic)** افتراضيًا؛ واستخدم بيانات **مقنَّعة (masked)** (معدَّلة بلا رجعة (irreversibly altered)، مع الإبقاء على الصيغ والتوزيعات (keeping formats and distributions)) فقط حين تكون الواقعية ضرورية (realism is essential) وتكون سارة (Sara) قد اعتمدت الطريقة؛ و**لا بيانات عملاء خام أبدًا (never raw customer data)** في التطوير أو ضمان الجودة أو ما قبل الإنتاج أو أي أداة خارجية (external tool)، بما فيها مساعدو الذكاء الاصطناعي. ويشرح [*أمن الذكاء الاصطناعي والتطبيقات (Secure AI & Application Security)*، الدرس 5.3 — حماية البيانات الشخصية (Protecting personal data): التقليل (minimisation) والتسجيل (logging) وهندسة الخصوصية (privacy engineering)](../secai/index.ar.html#/5.3) الواجبات الكامنة وراءها.
 
 **مسار التسليم (The delivery flow).** تُشغَّل الاختبارات عند كل خطوة (Tests run at every step)، وكل منها يطرح سؤالًا مختلفًا (a different question).
 
 ```mermaid
-flowchart LR
-    A["مطوّر أو وكيل برمجة يفتح طلب دمج"] --> B["التكامل المستمر: فحص الشيفرة واختبارات الوحدة والواجهات"]
-    B --> C["الدمج في الفرع الرئيسي"]
-    C --> D["ضمان الجودة: اختبارات الانحدار والواجهة"]
-    D --> E["ما قبل الإنتاج: الأداء وفحص الأمان وقبول المستخدم"]
-    E --> F["الإطلاق الكناري في الإنتاج: اختبارات الدخان والمراقبة"]
-    F --> G["الإطلاق الكامل"]
+flowchart RL
+    A["مطوّر أو وكيل برمجة يفتح طلب دمج<br/>(Developer or coding agent opens a pull request)"] --> B["التكامل المستمر: فحص الشيفرة واختبارات الوحدة والواجهات<br/>(CI: lint, unit and API tests)"]
+    B --> C["الدمج في الفرع الرئيسي<br/>(Merge to main)"]
+    C --> D["ضمان الجودة: اختبارات الانحدار والواجهة<br/>(QA: regression and UI tests)"]
+    D --> E["ما قبل الإنتاج: الأداء وفحص الأمان وقبول المستخدم<br/>(Staging: performance, security scan, UAT)"]
+    E --> F["الإطلاق الكناري في الإنتاج: اختبارات الدخان والمراقبة<br/>(Production canary: smoke tests and monitoring)"]
+    F --> G["الإطلاق الكامل<br/>(Full release)"]
 ```
 
-الفحوص السريعة تأتي مبكرًا (Fast checks come early)، والواقعية منها لاحقًا (realistic ones later). ويتناول [*السحابة وDevOps (Cloud & DevOps)*، الدرس 4.1 — التكامل المستمر (Continuous integration): خطوط الإنتاج (pipelines) والاختبارات (tests) والنواتج (artefacts) والتغذية الراجعة السريعة (fast feedback)](../cloud/index.ar.html#/4.1) خطَّ التكامل نفسه (the pipeline itself).
+الفحوص السريعة تأتي مبكرًا (Fast checks come early)، والواقعية منها لاحقًا (realistic ones later). ويتناول [*السحابة وDevOps (Cloud & DevOps)*، الدرس 4.1 — التكامل المستمر (Continuous integration): خطوط التكامل والتسليم المستمرين (pipelines) والاختبارات (tests) والنواتج (artefacts) والتغذية الراجعة السريعة (fast feedback)](../cloud/index.ar.html#/4.1) خطَّ التكامل نفسه (the pipeline itself).
 
 ### 🟡 التعمق أكثر (Going deeper)
 
-**أول انتصار لك، خطوة بخطوة (Your first win, step by step).** تحتاج إلى Python 3.11 أو أحدث (Python 3.11 or newer) وGit. أما Node 20 أو أحدث فاختياري (optional) حتى الوحدة 3. استخدم `python3` إن كان هذا هو أمرك (if that is your command).
+**أول انتصار لك، خطوة بخطوة (Your first win, step by step).** تحتاج إلى Python 3.11 أو أحدث (Python 3.11 or newer) وGit. أما Node 20 أو أحدث فاختياري (optional) حتى الوحدة 3. استخدم `python3` إن كان هذا هو أمرك.
 
 ```bash
 git clone https://github.com/Tamoura/system-design-for-vibe-coders.git
@@ -653,7 +653,7 @@ FAILED tests/test_transfers.py::test_a_user_cannot_read_someone_elses_transfer
 1 failed, 23 passed
 ```
 
-هذه مجموعة اختبارات تؤدي عملها (a suite doing its job). والآن النصف الآخر (the other half).
+هذه مجموعة اختبارات تؤدي عملها. والآن النصف الآخر (the other half).
 
 ```bash
 NAJM_BUGS=float_fee pytest
@@ -663,7 +663,7 @@ NAJM_BUGS=float_fee pytest
 24 passed
 ```
 
-المجموعة خضراء بينما البنك يحصّل أقل من اللازم (the bank undercharges) (الدرس 0.2). بدلًا من تجربة العيوب واحدًا واحدًا، احفظ هذا الملف باسم `scoreboard.py` في مجلد العيّنة (the sample folder)؛ فهو يشغّل مجلد اختبارات (a test folder) مرة لكل عيب مزروع (once per seeded bug):
+المجموعة خضراء بينما البنك يحصّل أقل من اللازم (the bank undercharges) (الدرس 0.2). بدلًا من تجربة العيوب واحدًا واحدًا (rather than trying bugs one by one)، احفظ هذا الملف باسم `scoreboard.py` في مجلد العيّنة (the sample folder)؛ فهو يشغّل مجلد اختبارات (a test folder) مرة لكل عيب مزروع (once per seeded bug):
 
 ```python
 import os
@@ -691,7 +691,7 @@ for variable, bug in BUGS:
 print(f"{caught} of {len(BUGS)} seeded bugs caught")
 ```
 
-شغّل `python scoreboard.py`. بالنسبة إلى العيّنة كما تُشحن مع هذه الدورة (the sample as shipped with this course) يجب أن ترى:
+شغّل `python scoreboard.py`. بالنسبة إلى العيّنة كما تُشحن مع هذه الدورة يجب أن ترى:
 
 ```text
 missed NAJM_BUGS limit_off_by_one
@@ -706,7 +706,7 @@ missed NAJM_AI_BUGS wrong_account
 4 of 9 seeded bugs caught
 ```
 
-ينبغي أن تطابق أرقامك الإصدار الذي استنسخته (the version you cloned). والآن سدّ ثغرة واحدة (close one gap). أضف `tests/test_first_win.py`:
+ينبغي أن تطابق أرقامك الإصدار الذي استنسخته. والآن سدّ ثغرة واحدة (close one gap). أضف `tests/test_first_win.py`:
 
 ```python
 from decimal import Decimal
@@ -727,20 +727,20 @@ def test_international_fee_rounds_half_a_cent_up():
 - **السُّلّم (The ladder).** يصعد «كيف يعمل» ("How it works") من 🟢 *الأساسيات (The essentials)* إلى 🟡 *التعمق أكثر (Going deeper)* إلى 🔴 *نظرة الخبير (Expert view)*. وقتك ضيق (Short of time)؟ اقرأ أجزاء 🟢 أولًا.
 - **التمارين (Exercises)** بثلاث درجات (three grades)، ولكل منها سطر **يكتمل عندما (Done when)** تستطيع أن تتحقق منه بنفسك.
 - **فهرس الأدوات (The toolkit catalogue)** يجمع كل اسم بخط عريض (every bold name) من جداول 🧰 في صفحة واحدة، للبحث عن «ما كانت تلك الأداة؟» ⁦("what was that tool?")⁩
-- **التقييم الذاتي (The self-assessment)** فحص معرفة قصير (a short knowledge check) مع قائمة بما فعلته حقًّا (a checklist of things you have really done)، فيعطي مستوى لكل وحدة (a level per module) ودروسًا للدراسة بعد ذلك (lessons to study next).
+- **التقييم الذاتي (The self-assessment)** فحص معرفة قصير (a short knowledge check) مع قائمة بما فعلته حقًّا (a checklist of things you have really done)، فيعطي مستوى لكل وحدة ودروسًا للدراسة بعد ذلك.
 - **وسوم التركيز (Focus tags)** تبيّن ما يدرّبه الدرس أساسًا: **Mindset** (التفكير في الجودة والمخاطر (thinking about quality and risk))، و**Design** (اختيار حالات الاختبار (choosing test cases))، و**Unit**، و**Integration** (أجزاء وواجهات برمجة تعمل معًا (parts and APIs working together))، و**UI**، و**Performance**، و**Security**، و**Reliability**، و**Strategy** (ماذا نختبر وبأي قدر (what to test and how much))، و**Delivery** (CI/CD والإنتاج (CI/CD and production))، و**AI** و**Career**.
 
 **مسارات عبر الدورة (Routes through the course).** يناسب المبتدئين (newcomers) أن يمضوا مباشرة من البداية إلى النهاية (Straight through).
 
 | إن كنت… (If you are…) | ابدأ بـ (Start with) |
 |---|---|
-| خرّيجًا جديدًا يستهدف هندسة الجودة أو SDET (A new graduate aiming at QE or SDET) | من البداية إلى النهاية (Straight through)، مع كل تمرين 🔴 |
+| خريجًا جديدًا يستهدف هندسة الجودة أو SDET (A new graduate aiming at QE or SDET) | من البداية إلى النهاية (Straight through)، مع كل تمرين 🔴 |
 | مختبِرًا يدويًّا ينتقل إلى الأتمتة (A manual tester moving to automation) | الوحدة 1، ثم الدروس 2.1 و3.1 و3.2 و5.2 |
-| مطوّرًا أو مبرمج حدس يتحقق من مخرجات الوكلاء (A developer or vibe coder verifying agent output) | الدروس 2.1 و2.3 و6.1 و6.2، ثم الوحدة 5 |
+| مطوّرًا أو مبرمج الفايب يتحقق من مخرجات الوكلاء (A developer or vibe coder verifying agent output) | الدروس 2.1 و2.3 و6.1 و6.2، ثم الوحدة 5 |
 | متجهًا إلى عمل تقييم الذكاء الاصطناعي (Heading for AI evaluation work) | الوحدات 0 إلى 2، والدرس 6.3، والوحدة 7 |
 | في المنتج أو المخاطر، لا في البرمجة (In product or risk, not coding) | الوحدتان 0 و1، والدرسان 5.1 و7.3 |
 
-وللصورة المهنية الأوسع (For the wider career picture)، انظر [*من خرّيج إلى موظّف (From Graduate to Hired)*، الدرس 1.1 — خط الأساس للمبتدئ (The junior baseline): Git وقراءة الشيفرة (reading code) وتصحيح الأخطاء (debugging) والاختبار (testing) والتدوين (writing it down)](../career/index.ar.html#/1.1).
+وللصورة المهنية الأوسع (For the wider career picture)، انظر [*من خريج إلى موظّف (From Graduate to Hired)*، الدرس 1.1 — خط الأساس للمبتدئ (The junior baseline): Git وقراءة الشيفرة (reading code) وتصحيح الأخطاء (debugging) والاختبار (testing) والتدوين (writing it down)](../career/index.ar.html#/1.1).
 
 ### 🔴 نظرة الخبير (Expert view)
 
@@ -774,7 +774,7 @@ def test_international_fee_rounds_half_a_cent_up():
 | Python 3.11+ وGit | يطبع `python --version` و`git --version` إصدارين (print versions) |
 | البيئة الافتراضية (Virtual environment) | تُظهر موجِّه الأوامر (prompt) القيمة `(.venv)` وقد انتهى `pip install -r requirements.txt` |
 | تشغيل المجموعة الابتدائية (Starter suite runs) | يُظهر `pytest` نجاح 24 اختبارًا (24 passed) |
-| Node 20+ وPlaywright (اختياري حتى الوحدة 3 (optional until Module 3)) | يطبع `node --version` الإصدار 20 أو أحدث؛ وينجح اختبارا المتصفح (the two browser tests) |
+| Node 20+ وPlaywright (اختياري حتى الوحدة 3 (optional until Module 3)) | يطبع `node --version` الإصدار 20 أو أحدث؛ وينجح اختبارا المتصفح |
 | رؤية مجموعة خضراء تكذب (See a green suite lie) | حُفظ تشغيل لوحة النتائج (Scoreboard run saved)؛ وتستطيع تسمية ثلاثة عيوب فاتت ولماذا (name three missed bugs and why) |
 | سدّ ثغرة واحدة (Close one gap) | اختبار جديد واحد يفشل للسبب الصحيح (fails for the right reason)، في مستودع مختبرك (your lab repository) |
 | إحاطة البيانات (Data briefing) (سارة (Sara)) | تستطيع أن تقول من أين تأتي بيانات الاختبار (where test data comes from) وما الذي لا يدخل أي أداة أبدًا (what never goes into a tool) |
@@ -785,31 +785,31 @@ def test_international_fee_rounds_half_a_cent_up():
 ## 🛠️ التمارين (Exercises)
 - 🟢 **جهّز البيئة (Set up the environment).** اتبع خطوات أول انتصار (the first-win steps) في بيئة افتراضية جديدة (a fresh virtual environment). احفظ ناتج `python --version` و`pytest --version` و`pytest` في `lab-check.txt` داخل مستودع Git جديد، هو دفتر مختبرك (your lab journal). *يكتمل عندما (Done when):* يُظهر الملف نجاح 24 اختبارًا (24 passed)، وأعاد `curl` القيمة `{"status":"ok"}` من `/health` أثناء تشغيل `uvicorn`، وكذلك، اختياريًا (optional)، نجح اختبارا Playwright (the two Playwright tests passed).
 - 🟡 **اكسر عيبًا والتقطه (Break and catch a bug).** شغّل لوحة النتائج (the scoreboard) واختر عيبًا تفوّته المجموعة الابتدائية ولم يسدّه هذا الدرس: `wrong_account` هو الأسهل (easiest): اطلب من `Agent` افتراضي (a default) رصيده وأكّد على الرد (assert on the reply)؛ و`obey_injection` هو الأصعب (hardest): ازرع وثيقة مسمومة (a poisoned document) بـ`monkeypatch` من pytest. اكتب اختبارًا واحدًا ينجح نظيفًا ويفشل مع تفعيل ذلك العيب. *يكتمل عندما (Done when):* تُظهر لوحة النتائج عيبًا واحدًا إضافيًا مُلتقَطًا عمّا قبل وتنجح المجموعة دون أي عيب مفعّل؛ ويشرح دفترك في سطرين لماذا يفشل الاختبار للسبب الصحيح (fails for the right reason).
-- 🔴 **اكتب خطة تعلّمك (Write your learning plan).** اختر مسارًا من الجدول (a route from the table)، وسرد الدروس بالترتيب مع أسبوع مستهدف لكل منها (a target week for each)، وحدّد وقت دراستك الأسبوعي (weekly study time)، وضع هدفًا واحدًا قابلًا للقياس (one measurable goal)، مثل درجة اصطياد عيوب (a bug-catch score) تبلغها بنهاية الوحدة 2. أضف قواعد استخدامك للذكاء الاصطناعي بكلماتك أنت (your AI-use rules in your own words). *يكتمل عندما (Done when):* تكون الخطة صفحة واحدة، ولكل درس تنوي إنجازه أسبوع، والهدف رقم تستطيع التحقق منه، وتقول قواعد الذكاء الاصطناعي ما ستلصقه في مساعد وما لن تلصقه (what you will and will not paste into an assistant).
+- 🔴 **اكتب خطة تعلّمك (Write your learning plan).** اختر مسارًا من الجدول، واسرد الدروس بالترتيب مع أسبوع مستهدف لكل منها (a target week for each)، وحدّد وقت دراستك الأسبوعي (weekly study time)، وضع هدفًا واحدًا قابلًا للقياس (one measurable goal)، مثل درجة اصطياد عيوب (a bug-catch score) تبلغها بنهاية الوحدة 2. أضف قواعد استخدامك للذكاء الاصطناعي بكلماتك أنت (your AI-use rules in your own words). *يكتمل عندما (Done when):* تكون الخطة صفحة واحدة، ولكل درس تنوي إنجازه أسبوع، والهدف رقم تستطيع التحقق منه، وتقول قواعد الذكاء الاصطناعي ما ستلصقه في مساعد وما لن تلصقه (what you will and will not paste into an assistant).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
 - **القراءة دون تشغيل (Reading without running).** الاختبار حرفة اليدين (a craft of the hands). أنجز كل تمرين، واكسر الأشياء عمدًا (break things on purpose).
 - **اعتبار العيّنة برمجيات آمنة (Treating the sample as safe software).** إنها معيبة عمدًا (deliberately buggy)، وفيها رموز مزيّفة (fake tokens). شغّلها على localhost فقط.
-- **تعديل الاختبارات لتطابق العيب (Editing the tests to match the bug).** الاختبار الأحمر مع تفعيل عيب يعمل (A test that is red with a bug on is working). أصلح الشيفرة، أو أوقف تفعيل العيب (switch the bug off).
+- **تعديل الاختبارات لتطابق العيب (Editing the tests to match the bug).** الاختبار الأحمر مع تفعيل عيب يعمل (A test that is red with a bug on is working). أصلح الشيفرة، أو أوقف تفعيل العيب.
 - **نسخ جواب ذكاء اصطناعي لا تستطيع شرحه (Copying an AI answer you cannot explain).** إنه يزيّن دفترك (decorates your journal) ولا يعلّم شيئًا. استخدم اختبار الشرح العكسي (the explain-back test).
 - **تثبيت الحزم على مستوى النظام كله (Installing packages globally).** استخدم البيئة الافتراضية (the virtual environment) لتتطابق الإصدارات (so versions match).
-- **تخطّي الوحدتين 0 و1 لأنك تعرف البرمجة (Skipping Modules 0 and 1 because you can code).** الدروس اللاحقة تفترض مفرداتهما وعاداتهما (their vocabulary and habits).
+- **تخطّي الوحدتين 0 و1 لأنك تعرف البرمجة (Skipping Modules 0 and 1 because you can code).** الدروس اللاحقة تفترض مفرداتهما وعاداتهما.
 
 ## 🧾 الخلاصة (Recap)
 - بنك نجم خيالي (Najm Bank is fictional)؛ وفريق هندسة الجودة فيه (its QE team) — راشد (Rashid) وندى (Nada) وبلال (Bilal) وأمل (Amal) — يختبر تطبيق نجم للهاتف (Najm Mobile) وواجهته البرمجية (its API)، والمدفوعات (payments)، ونجم أسيست (Najm Assist)، والتقارير التنظيمية (regulatory reporting).
-- للتطوير وضمان الجودة وما قبل الإنتاج والإنتاج وظائف مختلفة (Dev, QA, staging and production have different jobs)؛ وبيانات الاختبار اصطناعية أو مقنَّعة (synthetic or masked)، لا بيانات عملاء خام أبدًا؛ واختبارات الحِمل والأمان تتطلب نظامًا تملكه أو إذنًا مكتوبًا (written permission).
+- للتطوير وضمان الجودة وما قبل الإنتاج والإنتاج وظائف مختلفة (Dev, QA, staging and production have different jobs)؛ وبيانات الاختبار اصطناعية أو مقنَّعة (synthetic or masked)، لا بيانات عملاء خام أبدًا (never raw customer data)؛ واختبارات الحِمل والأمان (load and security tests) تتطلب نظامًا تملكه أو إذنًا مكتوبًا (written permission).
 - يتيح لك نظام العيّنة وعيوبه المزروعة (the sample system and its seeded bugs) أن ترى مجموعة تلتقط عيبًا وتفوّت آخر، وتقيس درجة اصطياد العيوب (the bug-catch score) أي مجموعة.
 - لكل درس عشرة أجزاء وسُلّم ووسم تركيز (ten parts, a ladder and a Focus tag)؛ ولكل تمرين «يكتمل عندما» ("Done when").
 - استخدم الذكاء الاصطناعي للشرح، لا ليحل محل الفهم (Use AI to explain, not to replace understanding)، واحتفظ بدفتر مختبر (a lab journal).
 
 ## ✍️ اختبر نفسك (Check yourself)
 
-**1. تفعّل ندى `float_fee` فتظل المجموعة الابتدائية تُظهر نجاح 24 اختبارًا (24 passed). ماذا يخبرها ذلك؟**
+**1. تفعّل ندى `float_fee` فتظل المجموعة الابتدائية (the starter suite) تُظهر نجاح 24 اختبارًا (24 passed). ماذا يخبرها ذلك؟**
 
 - A. شيفرة الرسم (fee code) صحيحة، لأن المجموعة خضراء
 - B. ليس في المجموعة اختبار يستطيع رؤية هذا العيب (can see this bug)
 - C. مفتاح العيب (bug switch) لا يعمل
-- D. تحتاج المجموعة إلى مزيد من الاختبارات من كل نوع
+- D. تحتاج المجموعة (suite) إلى مزيد من الاختبارات من كل نوع (more tests of every kind)
 
 <details><summary>الإجابة</summary>
 
@@ -820,7 +820,7 @@ def test_international_fee_rounds_half_a_cent_up():
 **2. يريد بلال (Bilal) تشغيل اختبار حِمل (a load test) لخدمة المدفوعات قبل إصدار كبير (a big release). أين ينبغي أن يشغّله؟**
 
 - A. على حاسوب مطوّر محمول (a developer laptop)، لأن التشغيل فيه سريع
-- B. في الإنتاج (In production)، عند الثالثة فجرًا، حين تكون الحركة أقل ما يمكن
+- B. في الإنتاج (In production)، عند الثالثة فجرًا، حين تكون الحركة أقل ما يمكن (when traffic is lowest)
 - C. في بيئة ما قبل الإنتاج (In staging)، لأنها شبيهة بالإنتاج (production-like)
 - D. في بيئة ضمان الجودة (In QA)، لأن ذلك البناء مستقر
 
@@ -843,29 +843,29 @@ def test_international_fee_rounds_half_a_cent_up():
 
 </details>
 
-**4. يعطي مساعد ندى (Nada) اختبارًا ينجح على العيّنة النظيفة. ماذا عليها أن تفعل قبل أن تسلّمه؟**
+**4. يعطي مساعدٌ (An assistant) ندى (Nada) اختبارًا ينجح على العيّنة النظيفة. ماذا عليها أن تفعل قبل أن تسلّمه (before she submits it)؟**
 
-- A. أن تُظهر فشله حين يكون عيب ذو صلة مفعّلًا، وأن تشرحه
-- B. أن تشغّله مرتين إضافيتين لتتأكد من أنه ينجح في كل مرة
-- C. أن تطلب من المساعد تأكيد أن الاختبار صحيح
+- A. أن تُظهر فشله (show it failing) حين يكون عيب ذو صلة مفعّلًا (a relevant bug is on)، وأن تشرحه
+- B. أن تشغّله مرتين إضافيتين لتتأكد من أنه ينجح في كل مرة (passes every time)
+- C. أن تطلب من المساعد (the assistant) تأكيد أن الاختبار صحيح
 - D. أن تتحقق من أنه يرفع نسبة التغطية (coverage percentage) للوحدة التي يستهدفها
 
 <details><summary>الإجابة</summary>
 
-**A.** الاختبار دليل فقط إذا كان يمكن أن يفشل (A test is evidence only if it can fail)، ويجب أن تكوني قادرة على شرحه. الخياران B وD لا يقولان شيئًا عن إمكان فشله، والخيار C يطلب من الأداة نفسها أن تصحح عملها بنفسها (mark its own work). (🔴 نظرة الخبير (Expert view).)
+**A.** الاختبار دليل فقط إذا كان يمكن أن يفشل (A test is evidence only if it can fail)، ويجب أن تكون قادرًا على شرحه. الخياران B وD لا يقولان شيئًا عن إمكان فشله، والخيار C يطلب من الأداة نفسها أن تصحح عملها بنفسها (mark its own work). (🔴 نظرة الخبير (Expert view).)
 
 </details>
 
 **5. ينشر متعلّم واجهة العيّنة البرمجية (the sample API) على خادم سحابي عام (a public cloud server) ليجربها أصدقاؤه. لماذا يُعدّ هذا خطأً؟**
 
-- A. الخوادم السحابية غير قادرة على تشغيل تطبيقات الويب بلغة Python
-- B. العيّنة لا تعمل إلا إذا كان Playwright مثبّتًا إلى جانبها
+- A. الخوادم السحابية (Cloud servers) غير قادرة على تشغيل تطبيقات الويب بلغة Python (Python web applications)
+- B. العيّنة لا تعمل إلا إذا كان Playwright مثبّتًا إلى جانبها (only works when Playwright is installed alongside)
 - C. إنها معيبة عمدًا (deliberately buggy) ويمكن أن تكشف بيانات
 - D. الخوادم العامة لا تسمح بضبط متغيرات البيئة (environment variables)
 
 <details><summary>الإجابة</summary>
 
-**C.** العيوب المزروعة (The seeded bugs) ثغرات حقيقية، مثل `bola` التي تتيح لمستخدم قراءة تحويل مستخدم آخر. العيّنة للاستخدام على localhost فقط (for localhost only). والخيارات الأخرى ادعاءات خاطئة عن الاستضافة (false claims about hosting). (🟡 التعمق أكثر (Going deeper).)
+**C.** العيوب المزروعة (The seeded bugs) ثغرات حقيقية، مثل `bola` التي تتيح لمستخدم قراءة تحويل مستخدم آخر. العيّنة للاستخدام على localhost فقط (for localhost only). والخيارات الأخرى ادعاءات خاطئة عن الاستضافة. (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 

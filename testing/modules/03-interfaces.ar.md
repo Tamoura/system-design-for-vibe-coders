@@ -1,6 +1,6 @@
 # الوحدة 3 — اختبار الواجهات (Testing interfaces)
 
-*الواجهة (interface) هي أي مكان يلتقي فيه مستخدم أو نظام آخر ببرمجياتك (your software)، ولكل واجهة طريقتها الخاصة في الفشل (fails in its own way). اختبرت الوحدة 2 (Module 2) الشيفرة من الداخل (from the inside). أما هذه الوحدة فتختبرها من الخارج (from the outside)، كما يلتقي بها عملاء بنك نجم (Najm Bank) والبنوك الشريكة (partner banks) والمهاجمون (attackers). تبدأ بواجهة برمجة التطبيقات (API): الباب الأمامي (the front door) الذي يتشاركه تطبيق iOS وتطبيق Android وصفحة الويب (the web page) والأنظمة الشريكة (partner systems)، وفيها تختبر رموز الحالة (status codes) والمخططات (schemas) والمصادقة (authentication) والحالات السلبية (negative cases) والإرسال المزدوج المتزامن (the concurrent double-submit). ثم واجهة المستخدم على الويب (the web UI) مع اختبارات شاملة من البداية إلى النهاية (end-to-end tests) بأداة Playwright تبقى سريعة وجديرة بالثقة (fast and trustworthy). وأخيرًا الأسطح الأصعب (the harder surfaces): تطبيقات الهاتف (mobile apps) وإمكانية الوصول (accessibility) والاختلافات بين المتصفحات (cross-browser differences) والتوطين (localisation)، بما فيه التخطيط العربي من اليمين إلى اليسار (Arabic right-to-left layout). ستتابع ندى (Nada) وبلال (Bilal) وساعة واحدة من اختبار واجهات البرمجة (API testing) تكشف انهيارًا (a crash) وحالة تسابق (a race) وصيغة أخطاء غير متسقة (an inconsistent error format) في النظام النموذجي (the sample system)، ثم بلالًا مرة أخرى وهو يُبقي مجموعة اختبارات المتصفح صغيرة ومستقرة (a browser suite small and stable)، ثم أمل (Amal) وهي تجد في تدقيق الصفحة العربية (an audit of the Arabic page) ما لا يجده أي فحص آلي (no automated scan). ويسري الذكاء الاصطناعي (AI) في ذلك كله: احكم على اختبارات الواجهات والمتصفح التي يكتبها الوكيل (an agent) من خلال جدول الحالات الذي تركه فارغًا (the table of cases it left empty)، وتذكّر أن الواجهات نفسها هي ما تقودها أدوات الذكاء الاصطناعي (AI tools) حين تختبر نيابةً عنك (الدرس 6.3).*
+*الواجهة (interface) هي أي مكان يلتقي فيه مستخدم أو نظام آخر ببرمجياتك (your software)، ولكل واجهة طريقتها الخاصة في الفشل (fails in its own way). اختبرت الوحدة 2 (Module 2) الشيفرة من الداخل (from the inside). أما هذه الوحدة فتختبرها من الخارج (from the outside)، كما يلتقي بها عملاء بنك نجم (Najm Bank) والبنوك الشريكة (partner banks) والمهاجمون (attackers). تبدأ بواجهة برمجة التطبيقات (API): الباب الأمامي (the front door) الذي يتشاركه تطبيق iOS وتطبيق Android وصفحة الويب (the web page) والأنظمة الشريكة (partner systems)، وفيها تختبر رموز الحالة (status codes) والمخططات (schemas) والمصادقة (authentication) والحالات السلبية (negative cases) والإرسال المزدوج المتزامن (the concurrent double-submit). ثم واجهة المستخدم على الويب (the web UI) مع اختبارات شاملة من البداية إلى النهاية (end-to-end tests) بأداة Playwright تبقى سريعة وجديرة بالثقة (fast and trustworthy). وأخيرًا الأسطح الأصعب (the harder surfaces): تطبيقات الهاتف (mobile apps) وإمكانية الوصول (accessibility) والاختلافات بين المتصفحات (cross-browser differences) والتوطين (localisation)، بما فيه التخطيط العربي من اليمين إلى اليسار (Arabic right-to-left layout). ستتابع ندى (Nada) وبلالًا (Bilal) خلال ساعة واحدة من اختبار واجهات البرمجة (API testing) تكشف انهيارًا (a crash) وحالة تسابق (a race) وصيغة أخطاء غير متسقة (an inconsistent error format) في النظام النموذجي (the sample system)، ثم بلالًا مرة أخرى وهو يُبقي مجموعة اختبارات المتصفح صغيرة ومستقرة (a browser suite small and stable)، ثم أمل (Amal) وهي تجد في تدقيق الصفحة العربية (an audit of the Arabic page) ما لا يجده أي فحص آلي (no automated scan). ويسري الذكاء الاصطناعي (AI) في ذلك كله: احكم على اختبارات واجهة البرمجة والمتصفح (the API and browser tests) التي يكتبها الوكيل (an agent) من خلال جدول الحالات الذي تركه فارغًا (the table of cases it left empty)، وتذكّر أن الواجهات نفسها هي ما تقودها أدوات الذكاء الاصطناعي (AI tools) حين تختبر نيابةً عنك (الدرس 6.3).*
 
 > **التركيز (Focus):** Integration, UI — اختبار الأسطح التي يلتقي فيها الناس والأنظمة الأخرى ببرمجياتك (testing the surfaces where people and other systems meet your software)، واختيار الفحوص التي تُؤتمت والتي تُترك لإنسان (choosing which checks to automate and which to leave to a human).
 
@@ -149,7 +149,7 @@ def test_strong_the_shape_and_the_rule(client):
 
 مع `NAJM_BUGS=float_fee` ينجح الاختبار الضعيف (the weak test passes) ويظل المخطط يتحقق (the schema still validates) (فـ`"10.81"` سليمة الصيغة (well formed))؛ ويفشل السطر الأخير: `assert '10.81' == '10.82'`. الشكل والقاعدة فحصان مختلفان (Shape and rule are different checks).
 
-**وثيقة OpenAPI بوصفها عقدًا، وأداة Schemathesis (The OpenAPI document as a contract, and Schemathesis).** يَنشر FastAPI الوثيقة `/openapi.json` التي تسرد كل مسار ومعامل واستجابة (lists every path, parameter and response)؛ وتبني عليها العملاء والبوابات (clients and gateways). تولّد أداة **Schemathesis** (المبنية على Hypothesis (built on Hypothesis)، الدرس 2.3) طلبات صالحة وغير صالحة منها (generates valid and invalid requests) وتفحص كل استجابة (checks every response). شغّل النظام النموذجي بالأمر `uvicorn najm.api:app --port 8000`، ثم نفّذ:
+**وثيقة OpenAPI بوصفها عقدًا، وأداة Schemathesis (The OpenAPI document as a contract, and Schemathesis).** يَنشر FastAPI الوثيقة `/openapi.json` التي تسرد كل مسار ومعامل واستجابة (lists every path, parameter and response)؛ ويبني عليها العملاء والبوابات (clients and gateways). تولّد أداة **Schemathesis** (المبنية على Hypothesis (built on Hypothesis)، الدرس 2.3) طلبات صالحة وغير صالحة منها (generates valid and invalid requests) وتفحص كل استجابة (checks every response). شغّل النظام النموذجي بالأمر `uvicorn najm.api:app --port 8000`، ثم نفّذ:
 
 ```bash
 schemathesis run http://127.0.0.1:8000/openapi.json --checks all --max-examples 50 --seed 1 \
@@ -168,7 +168,7 @@ API rejected schema-compliant request: 422 decimal_parsing on "amount"
 
 كل سطر قرار (Each line is a decision). تقول الوثيقة (the document) 200 و422، لكن الشيفرة (the code) تجيب أيضًا (also answers) بـ 201 و400 و401 و403 و404 و409. وهي تصف `amount` بأنه «رقم أو سلسلة نصية» ("a number or a string")، ومع ذلك يُرفض `"abc"` (yet it is refused). ويظهر شكل خطأ ثالث (A third error shape appears). لا تستطيع Schemathesis أن تجد *قاعدة* خاطئة (a wrong rule): فقد بنى FastAPI الوثيقة من الشيفرة (built the document from the code).
 
-فاتت الجولة الأولى خطأ 500 (The first pass missed the 500): فمعرّفات الحسابات العشوائية (random account ids) توقفت عند `403 not_owner` قبل أي فحص للمبلغ (any amount check). يُبقي ملف الخطافات (A hooks file) بقية الحقول صالحة (keeps the other fields valid) فيُختبر المبلغ، ويعطي كل استدعاء مفتاحًا جديدًا (a fresh key) فلا توقف أخطاء 409 التشغيل. احفظه بجانب `najm/`، وضع `SCHEMATHESIS_HOOKS=najm_hooks` قبل الأمر نفسه، واحذف منه ترويسة `Idempotency-Key` (فهي تتجاوز ما في الخطاف، it overrides the hook's):
+فاتت الجولة الأولى خطأ 500 (The first pass missed the 500): فمعرّفات الحسابات العشوائية (random account ids) توقفت عند `403 not_owner` قبل أي فحص للمبلغ (any amount check). يُبقي ملف الخطافات (A hooks file) بقية الحقول صالحة (keeps the other fields valid) فيُختبر المبلغ، ويعطي كل استدعاء مفتاحًا جديدًا (a fresh key) فلا توقف أخطاء 409 التشغيل. احفظه بجانب `najm/`، وضع `SCHEMATHESIS_HOOKS=najm_hooks` قبل الأمر نفسه، واحذف منه ترويسة `Idempotency-Key` لأنها تتجاوز ما في الخطاف (it overrides the hook's):
 
 ```python
 # najm_hooks.py
@@ -227,7 +227,7 @@ FAILED test_absurd_amounts_are_rejected_not_crashed[1e+30]     (same)
 
 ثلاثة من الأسباب الخمسة تستخدم شكل الإطار (Three of five causes use the framework's shape). والخيار `raise_server_exceptions=False` مهم: فبشكل افتراضي يعيد عميل الاختبار (the test client) رفع الانهيار على هيئة استثناء (re-raises a crash as an exception)، مخفيًا الخطأ 500 الذي يراه العملاء (hiding the 500 customers see).
 
-**401 و403 وترتيب الفحوص (401, 403 and the order of checks).** يعني **401** «لا أعرف من أنت» ("I do not know who you are")، وقد يحلّه تسجيل الدخول (signing in can fix it). ويعني **403** «أعرفك، والجواب لا» ("I know, and the answer is no")؛ والتطبيق الذي يعامله على أنه «انتهت الجلسة» ("session expired") يُخرج العملاء بلا داعٍ (logs customers out for nothing). ترتيب الفحوص جزء من العقد (The order of checks is part of the contract). يتحقق النظام النموذجي (The sample) من المحتوى (validates the body) (422، شكل الإطار)، ثم الرمز (the token) (401)، ثم مفتاح خاصية عدم التكرار (idempotency key) (400)، ثم الملكية (ownership) (403)، ثم قواعد العمل (business rules) (422، شكل البنك)، فيحصل الطلب بلا رمز (no token) وبمحتوى فارغ (an empty body) على 422 لا 401. و**BOLA** (كسر التفويض على مستوى الكائن، broken object-level authorisation) هو الوصول إلى كائن مستخدم آخر بتغيير معرّف (reaching another user's object by changing an id). والاختبار الضعيف، وهو قراءة أليس (Alice) تحويلها هي، ينجح والعيب مفعّل (passes with the bug on). أما الاختبار القوي ففيه بوب (Bob) هو من يطلب (has Bob ask):
+**401 و403 وترتيب الفحوص (401, 403 and the order of checks).** يعني **401** «لا أعرف من أنت» ("I do not know who you are")، وقد يحلّه تسجيل الدخول (signing in can fix it). ويعني **403** «أعرفك، والجواب لا» ("I know, and the answer is no")؛ والتطبيق الذي يعامله على أنه «انتهت الجلسة» ("session expired") يُخرج العملاء بلا داعٍ (logs customers out for nothing). ترتيب الفحوص جزء من العقد (The order of checks is part of the contract). يتحقق النظام النموذجي (The sample) من المحتوى (validates the body) (422، شكل الإطار)، ثم الرمز (the token) (401)، ثم مفتاح خاصية عدم التكرار (idempotency key) (400)، ثم الملكية (ownership) (403)، ثم قواعد العمل (business rules) (422، شكل البنك)، فيحصل الطلب بلا رمز (no token) وبمحتوى فارغ (an empty body) على 422 لا 401. و**BOLA**، أي كسر التفويض على مستوى الكائن (broken object-level authorisation)، هو الوصول إلى كائن مستخدم آخر بتغيير معرّف (reaching another user's object by changing an id). والاختبار الضعيف، وهو قراءة أليس (Alice) تحويلها هي، ينجح والعيب مفعّل (passes with the bug on). أما الاختبار القوي ففيه بوب (Bob) هو من يطلب (has Bob ask):
 
 ```python
 # tests/test_api_security.py
@@ -250,7 +250,7 @@ E   assert 200 == 403          1 failed
 
 ### 🔴 نظرة الخبير (Expert view)
 
-**خاصية عدم التكرار والإرسال المزدوج المتزامن (Idempotency and the concurrent double-submit).** ينجح اختبار إعادة الإرسال المتتابع في المجموعة الابتدائية (The starter's sequential replay test passes). أما طلبان متزامنان فلا: فالدالة `submit()` تبحث عن المفتاح، ثم تؤدي العمل، ثم تسجّل المفتاح، ويستطيع الطلبان معًا اجتياز البحث (both can pass the look). يفرض الاختبار تبديل الخيوط (forces thread switches)، ويكرر 100 مرة، ويفحص الرصيد (checks the balance). و`xfail(strict=True)` يركن عيبًا معروفًا (parks a known defect)، ويُحمّر المجموعة في اليوم الذي يُصلَح فيه إن لم تُزَل العلامة (turns the suite red the day it is fixed without removing the mark).
+**خاصية عدم التكرار والإرسال المزدوج المتزامن (Idempotency and the concurrent double-submit).** ينجح اختبار إعادة الإرسال المتتابع في المجموعة الابتدائية (The starter's sequential replay test passes). أما طلبان متزامنان فلا: فالدالة `submit()` تبحث عن المفتاح، ثم تؤدي العمل، ثم تسجّل المفتاح، ويستطيع الطلبان معًا اجتياز البحث (both can pass the look). يفرض الاختبار تبديل الخيوط (forces thread switches)، ويكرر 100 مرة، ويفحص الرصيد (checks the balance). و`xfail(strict=True)` يضع عيبًا معروفًا جانبًا (parks a known defect)، ويُحمّر مجموعة الاختبارات في اليوم الذي يُصلَح فيه العيب إن لم تُزَل العلامة (turns the suite red the day it is fixed without removing the mark).
 
 ```python
 # tests/test_api_idempotency.py
@@ -298,13 +298,13 @@ FAILED test_a_concurrent_double_submit_creates_one_transfer - AssertionError: at
 
 تتفاوت المحاولة الفاشلة (The failing attempt varies). عند فترة التبديل العادية في Python (At Python's normal switch interval) ظهر التسابق في 1 من 900 تجربة على الأكثر (at most 1 of 900 trials)، لذا يفرضه الاختبار. القفل (A lock) يصلح عملية واحدة (one process)؛ أما الإنتاج فيشغّل عدة عمليات (production runs several)، فالإصلاح الحقيقي قيد فريد (unique constraint) على `(user, key)` ([*تصميم الأنظمة لمبرمجي الفايب (System Design for Vibe Coders)*، الدرس 2.6 — نقرتان في آن واحد: حالات التسابق والمعاملات والكتابات الآمنة للتكرار (Two clicks at once: races, transactions, and idempotent writes)](../vibe/index.ar.html#l2-6)).
 
-**استبدل ما لا تملكه ببدائل (Mock or virtualise what you do not own).** ستستدعي التحويلات خدمة فحص العقوبات (a sanctions-screening service) لا يتحكم فيها نجم. والبديل المزيّف (A fake) الذي يقول دائمًا «سليم» ("clear") لا يختبر إلا المسار السعيد (tests only the happy path)؛ فاختبر كيف تنهار التبعية (test how the dependency breaks). ومع `httpx.MockTransport` يصبح البديل دالة Python: أعد `httpx.Response(503)` أو ارفع `httpx.ConnectTimeout`، وتأكد أن التحويل يُرفض (the transfer is refused) (**الفشل المغلق، fail closed**). يزيّف `respx` الاستدعاءات الصادرة من شيفرة تبني عميل `httpx` خاصًا بها (fakes calls from code that builds its own client)؛ و**WireMock** و**MockServer** خادمان مزيّفان قائمان بذاتهما (standalone fake servers). والبديل المزيّف الذي ينحرف عن الخدمة الحقيقية يكذب (A fake that drifts from the real service lies)، فافحص الاثنين وفق عقد واحد (check both against one contract) (الدرس 2.2).
+**استعن ببدائل محاكاة أو خدمات افتراضية لما لا تملكه (Mock or virtualise what you do not own).** ستستدعي التحويلات خدمة فحص العقوبات (a sanctions-screening service) لا يتحكم فيها نجم. والبديل المزيّف (A fake) الذي يقول دائمًا «سليم» ("clear") لا يختبر إلا المسار السعيد (tests only the happy path)؛ فاختبر كيف تنهار التبعية (test how the dependency breaks). ومع `httpx.MockTransport` يصبح البديل دالة Python: أعد `httpx.Response(503)` أو ارفع `httpx.ConnectTimeout`، وتأكد أن التحويل يُرفض (the transfer is refused)، أي **الفشل المغلق (fail closed)**. يزيّف `respx` الاستدعاءات الصادرة من شيفرة تبني عميل `httpx` خاصًا بها (fakes calls from code that builds its own client)؛ و**WireMock** و**MockServer** خادمان مزيّفان قائمان بذاتهما (standalone fake servers). والبديل المزيّف الذي ينحرف عن الخدمة الحقيقية يكذب (A fake that drifts from the real service lies)، فافحص الاثنين وفق عقد واحد (check both against one contract) (الدرس 2.2).
 
-**إدارة الإصدارات والتوافق مع الإصدارات السابقة (Versioning and backward compatibility).** يدعم نجم نسخ التطبيق القديمة أشهرًا (supports old app versions for months). إضافة حقل اختياري إلى الاستجابة (an optional response field) آمنة للعملاء الذين يتجاهلون الحقول المجهولة (clients that ignore unknown fields)؛ أما حذف حقل أو إعادة تسميته أو تغيير نوعه، أو اشتراط حقل جديد في الطلب، فيكسر العملاء القدامى (breaks old clients). احتفظ بـ**تجهيزة من العميل القديم (a fixture from the old client)**، مثل طلب بلا `kind`، وتأكد أن واجهة اليوم ما زالت تعيد 201 مع كل حقول الاستجابة القديمة (every old response field). وتسرد الأداة `oasdiff` التغييرات الكاسرة (breaking changes) بين وثيقتي OpenAPI.
+**إدارة الإصدارات والتوافق مع الإصدارات السابقة (Versioning and backward compatibility).** يدعم نجم نسخ التطبيق القديمة أشهرًا (supports old app versions for months). إضافة حقل اختياري إلى الاستجابة (an optional response field) آمنة للعملاء الذين يتجاهلون الحقول المجهولة (clients that ignore unknown fields)؛ أما حذف حقل أو إعادة تسميته أو تغيير نوعه، أو اشتراط حقل جديد في الطلب، فيكسر العملاء القدامى (breaks old clients). احتفظ بـ**تجهيزة اختبار من العميل القديم (fixture from the old client)**، مثل طلب بلا `kind`، وتأكد أن واجهة اليوم ما زالت تعيد 201 مع كل حقول الاستجابة القديمة (every old response field). وتسرد الأداة `oasdiff` التغييرات الكاسرة (breaking changes) بين وثيقتي OpenAPI.
 
-**GraphQL وgRPC (GraphQL and gRPC).** لدى GraphQL نقطة نهاية واحدة يختار فيها العميل الحقول: اختبر التفويض لكل حقل على حدة (authorisation per field) (فـ BOLA يختبئ في الكائنات المتداخلة، nested objects)، وحدود العمق (depth limits)، والأخطاء في المصفوفة `errors` حتى مع HTTP 200. أما gRPC فعقد مكتوب الأنواع بـ Protocol Buffers (a typed contract): أكّد رموزًا مثل `UNAUTHENTICATED`، وحدّد المهل (set deadlines)، ولا تعِد ترقيم حقل أبدًا (never renumber a field) (يفحص ذلك `buf breaking`).
+**GraphQL وgRPC (GraphQL and gRPC).** لدى GraphQL نقطة نهاية واحدة يختار فيها العميل الحقول: اختبر التفويض لكل حقل على حدة (authorisation per field) — فـ BOLA يختبئ في الكائنات المتداخلة (nested objects) — وحدود العمق (depth limits)، والأخطاء في المصفوفة `errors` حتى مع HTTP 200. أما gRPC فعقد محدَّد الأنواع (a typed contract) معرَّف بـ Protocol Buffers: أكّد رموزًا مثل `UNAUTHENTICATED`، وحدّد المهل (set deadlines)، ولا تعِد ترقيم حقل أبدًا (never renumber a field) (يفحص ذلك `buf breaking`).
 
-**أدوات التعاون والتكامل المستمر (Collaboration and CI tools).** تعمل مجموعات **Postman** في التكامل المستمر (CI) عبر **Newman**؛ ويحتفظ **Bruno** بالطلبات ملفاتٍ نصية بسيطة في Git (plain-text files). وقعنا في فخ مع النظام النموذجي (we hit a trap): قرأ Bruno العبارة `eq 0.00` على أنها *الرقم* 0 (the *number* 0)، لكن واجهة البرمجة ترسل السلسلة النصية `"0.00"` (the string)، فاكتب `eq "0.00"`. وتستخدم المؤسسات التي تعتمد Java أداة **REST Assured**.
+**أدوات التعاون والتكامل المستمر (Collaboration and CI tools).** تعمل مجموعات الطلبات (collections) في **Postman** ضمن التكامل المستمر (CI) عبر **Newman**؛ ويحتفظ **Bruno** بالطلبات ملفاتٍ نصية بسيطة في Git (plain-text files). وقعنا في فخ مع النظام النموذجي (we hit a trap): قرأ Bruno العبارة `eq 0.00` على أنها *الرقم* 0 (the *number* 0)، لكن واجهة البرمجة ترسل السلسلة النصية `"0.00"` (the string)، فاكتب `eq "0.00"`. وتستخدم المؤسسات التي تعتمد Java (Java shops) أداة **REST Assured**.
 
 ```bash
 bru run --env local --reporter-junit bruno-results.xml
@@ -316,24 +316,24 @@ newman run najm.postman_collection.json -e local.postman_environment.json --repo
 |---|---|---|
 | **pytest with TestClient and httpx** | اختبارات Python تستدعي التطبيق داخل العملية أو عبر الشبكة (call the app in-process or over the network) | الخيار الافتراضي لواجهات Python (Default for Python APIs)؛ وتعمل مع كل طلب دمج (on every pull request) |
 | **JSON Schema** — مخطط JSON | لغة معيارية لوصف شكل JSON (A standard language for the shape of JSON) | فحوص تفشل عند الحقول الزائدة أو خاطئة النوع (Checks that fail on extra or mistyped fields) |
-| **OpenAPI and Schemathesis** | وصف لواجهة البرمجة (An API description)، وأداة تولّد طلبات منه (a tool that generates requests from it) | العقود بين الفرق (Contracts between teams)؛ وصيد ليلي للانهيارات والانحراف (nightly hunts for crashes and drift) |
+| **OpenAPI and Schemathesis** | وصف لواجهة البرمجة (An API description)، وأداة تولّد طلبات منه (a tool that generates requests from it) | العقود بين الفرق (Contracts between teams)؛ وصيد ليلي للانهيارات والانجراف (nightly hunts for crashes and drift) |
 | **Postman, Newman and Bruno** | مجموعات طلبات مع اختبارات (Request collections with tests)، ومشغّل بسطر الأوامر (a command-line runner)، وعميل مناسب لـ Git (a Git-friendly client) | الاستكشاف المشترك (Shared exploration)؛ وطلبات تعمل في التكامل المستمر (requests run in CI) |
 | **httpx MockTransport and WireMock** | وسيلة نقل مزيّفة داخل العملية (An in-process fake transport)، وخادم HTTP مزيّف (a fake HTTP server) | تبعية متوقفة أو بطيئة أو خاطئة (A dependency that is down, slow or wrong) |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-ينشر بلال (Bilal) **معيار نجم لاختبار واجهات البرمجة، الإصدار 1 (Najm API Test Standard v1)**، وهو قائمة تحقق من صفحة واحدة (a one-page checklist) لكل نقطة نهاية (every endpoint). الجزء أ (Part A) هو الدليل على أن المجموعة تعمل (the evidence a suite works)، كتبها إنسان أو الذكاء الاصطناعي (human- or AI-written): يفعّل راشد (Rashid) كل عيب مزروع (each seeded bug) ويجب أن يحمرّ اختباره المقابل (its mapped test must turn red).
+ينشر بلال (Bilal) **معيار نجم لاختبار واجهات البرمجة، الإصدار 1 (Najm API Test Standard v1)**، وهو قائمة تحقق من صفحة واحدة (a one-page checklist) لكل نقطة نهاية (every endpoint). الجزء أ (Part A) هو الدليل على أن مجموعة الاختبارات تعمل (the evidence a suite works)، كتبها إنسان أو الذكاء الاصطناعي (human- or AI-written): يفعّل راشد (Rashid) كل عيب مزروع (each seeded bug) ويجب أن يحمرّ اختباره المقابل (its mapped test must turn red).
 
 | العيب (Defect) | الاختبار الذي يلتقطه (Test that catches it) | الحالة (Status) |
 |---|---|---|
-| `float_fee` | `test_strong_the_shape_and_the_rule` | التُقط (caught) |
-| `limit_off_by_one` | `test_a_day_total_of_exactly_50000_is_allowed` | التُقط (caught) |
-| `no_idempotency`, `bola` | اختبار إعادة الإرسال في المجموعة الابتدائية (the starter replay test)؛ `test_bob_cannot_read_alices_transfer` | التُقط (caught) |
+| `float_fee` | `test_strong_the_shape_and_the_rule` | يُلتقط (caught) |
+| `limit_off_by_one` | `test_a_day_total_of_exactly_50000_is_allowed` | يُلتقط (caught) |
+| `no_idempotency`, `bola` | اختبار إعادة الإرسال في المجموعة الابتدائية (the starter replay test)؛ `test_bob_cannot_read_alices_transfer` | يُلتقط (caught) |
 | `tz_cutoff` | لا شيء (none): واجهة البرمجة تقرأ الساعة الحقيقية (the API reads the real clock) | ثغرة (gap)؛ تتولاها اختبارات الساعة في الدرس 2.1 (lesson 2.1's clock tests own it) |
 | 500 على المبالغ الضخمة (500 on absurd amounts) | `test_absurd_amounts_are_rejected_not_crashed` | عيب مفتوح (open defect) |
 | سباق خاصية عدم التكرار (Idempotency race) | `test_a_concurrent_double_submit_creates_one_transfer` | مفتوح (open)، `xfail` |
 | شكلا خطأ (Two error shapes) | `test_every_error_has_one_shape` | عيب مفتوح (open defect) |
 
-**الجزء ب: خط الإنتاج (Part B: pipeline).** مع كل طلب دمج (Every pull request): المجموعة داخل العملية (the in-process suite) في أقل من دقيقتين. ليليًا (Nightly): Schemathesis ببذرة ثابتة (with a fixed seed) على بيئة ما قبل الإنتاج (staging). وبعد كل نشر (After each deploy): فحص دخان (a smoke check).
+**الجزء ب: خط التكامل والتسليم المستمرين (Part B: pipeline).** مع كل طلب دمج (Every pull request): مجموعة الاختبارات داخل العملية (the in-process suite) في أقل من دقيقتين (under two minutes). ليليًا (Nightly): Schemathesis ببذرة ثابتة (with a fixed seed) على بيئة ما قبل الإنتاج (staging). وبعد كل نشر (After each deploy): فحص دخان (a smoke check).
 
 **الجزء ج: القواعد (Part C: rules).** شكل خطأ واحد (One error shape)؛ وكل رمز حالة في وثيقة OpenAPI (every status in the OpenAPI document)؛ ومفتاح خاصية عدم التكرار على كل `POST` ينقل المال (an idempotency key on every money-moving POST)؛ ولا اختبار عشوائي موجَّه (fuzzing) دون إذن مكتوب (without written permission)؛ ولكل عيب اختبار قبل الإصلاح (every defect a test before the fix).
 
@@ -341,7 +341,7 @@ newman run najm.postman_collection.json -e local.postman_environment.json --repo
 اعمل في نسخة من `testing/sample` (Work in a copy).
 
 - 🟢 **صمّم واختبر `GET /accounts/{id}/balance` (Design and test).** اكتب جدول تصميمه (its design table)، ثم اختبارات للمسار السعيد مع مخطط (the happy path with a schema)، وبلا رمز (no token)، ورمز مزوَّر (a forged token)، وبوب (Bob) يقرأ `acc-1`، وحساب مجهول (an unknown account). *يكتمل عندما (Done when):* تنجح كلها (all pass)، وإعادة الرصيد رقمًا في نسختك (returning the balance as a number in your copy) تُفشل اختبار المخطط (fails the schema test) بينما يظل `assert "balance" in body` ينجح (still passes).
-- 🟡 **أغلق ثغرات العقد (Close the contract gaps).** شغّل أمر Schemathesis الأول. في `najm/api.py`، صرّح بكل رمز حالة تعيده الشيفرة (declare every status the code returns) (`status_code=201`، ثم `responses=` لبقيتها) وأضف معالجًا لـ `RequestValidationError` يستخدم الشكل `{"error": ...}`. *يكتمل عندما (Done when):* تنخفض إخفاقات «Undocumented HTTP status code» الأربعة إلى صفر (the four failures drop to zero) ويمرّ `test_every_error_has_one_shape` لجميع الأسباب الخمسة (for all five causes).
+- 🟡 **أغلق ثغرات العقد (Close the contract gaps).** شغّل أمر Schemathesis الأول. في `najm/api.py`، صرّح بكل رمز حالة تعيده الشيفرة (declare every status the code returns) (`status_code=201`، ثم `responses=` لبقيتها) وأضف معالجًا (handler) لـ `RequestValidationError` يستخدم الشكل `{"error": ...}`. *يكتمل عندما (Done when):* تنخفض إخفاقات «Undocumented HTTP status code» الأربعة إلى صفر (the four failures drop to zero) ويمرّ `test_every_error_has_one_shape` لجميع الأسباب الخمسة (for all five causes).
 - 🔴 **أصلح التسابق بأمانة (Fix the race, honestly).** شغّل الاختبار المتزامن (the concurrent test) مع `--runxfail` وشاهده يفشل. اقفل `submit()` في نسختك وأزل `xfail`. *يكتمل عندما (Done when):* ينجح الاختبار 20 تشغيلة متتالية (passes 20 runs in a row)، ويظل يفشل تحت `NAJM_BUGS=no_idempotency`، وتوضح ملاحظة ما الذي ينكسر مع أربع عمليات خادم (what breaks with four server processes) وتسمّي قيد قاعدة البيانات الذي يصلحه (names the database constraint that fixes it).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
@@ -369,20 +369,20 @@ newman run najm.postman_collection.json -e local.postman_environment.json --repo
 
 <details><summary>الإجابة</summary>
 
-**D.** 0.99 غير صالح تحت الحدّين، والاختبار يقبل حالتين (accepts two statuses)، فلا شيء يحمرّ (nothing turns red). أما تثبيت الرمز (Pinning the code) واختبار 4.99 و5.00 فيكشفان ذلك. (🟢 الأساسيات، The essentials.)
+**D.** 0.99 غير صالح تحت الحدّين، والاختبار يقبل حالتين (accepts two statuses)، فلا شيء يحمرّ (nothing turns red). أما تثبيت الرمز (Pinning the code) واختبار 4.99 و5.00 فيكشفان ذلك. (🟢 الأساسيات (The essentials).)
 
 </details>
 
 **2. بعد انتهاء مهلة الجلسة (After a session timeout)، يُخرج تطبيق نجم (Najm app) العملاء (logs customers out) كلما أجابت واجهة البرمجة (the API) بـ 403. أي عبارة عن 401 و403 صحيحة؟**
 
 - A. 401 تعني معروف لكن مرفوض (known but refused)؛ و403 تعني مجهول (unknown)
-- B. كلتاهما تعنيان «غير مسجّل الدخول» ("not signed in")، فيجوز للتطبيقات معاملتهما سواء
+- B. كلتاهما تعنيان «غير مسجّل الدخول» ("not signed in")، فيجوز للتطبيقات معاملتهما سواء (apps may treat them alike)
 - C. 403 تعني معروف لكن مرفوض (known but refused)؛ و401 تعني مجهول (unknown)
 - D. 401 لـ JSON غير الصالح (invalid JSON)، و403 لقواعد العمل المخروقة (broken business rules)
 
 <details><summary>الإجابة</summary>
 
-**C.** مع 401 لا يعرفك الخادم (does not know you)، فيفيد تسجيل الدخول (signing in helps)؛ ومع 403 يعرفك (it does)، والجواب لا (and the answer is no). (🟡 التعمق أكثر، Going deeper.)
+**C.** مع 401 لا يعرفك الخادم (does not know you)، فيفيد تسجيل الدخول (signing in helps)؛ ومع 403 يعرفك (it does)، والجواب لا (and the answer is no). (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
@@ -395,24 +395,24 @@ newman run najm.postman_collection.json -e local.postman_environment.json --repo
 
 <details><summary>الإجابة</summary>
 
-**B.** قراءة أليس تحويلها هي صحيحة مع العيب ودونه (true with and without the bug)؛ وحده طلب بوب (Bob) يستطيع أن يفشل (only Bob requesting it can fail). (🟡 التعمق أكثر، Going deeper.)
+**B.** قراءة أليس تحويلها هي صحيحة مع العيب ودونه (true with and without the bug)؛ وحده طلب بوب (Bob) يستطيع أن يفشل (only Bob requesting it can fail). (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
 **4. يرسل اختبار مفتاح خاصية عدم التكرار (idempotency key) نفسه مرتين بالتتابع (in sequence) ويؤكد 201 ثم 200. ينجح دائمًا، لكن العملاء يرسلون أحيانًا مرتين في آن واحد (double-submit at once). ما أفضل خطوة تالية؟**
 
 - A. إرسال الطلبين معًا، وتكرار ذلك مرات كثيرة، وفحص الرصيد (check the balance)
-- B. إضافة فترة انتظار (a sleep) بين الاستدعاءين ليستقر الناتج (so the result is stable)
+- B. إضافة انتظار ثابت (a sleep) بين الاستدعاءين ليستقر الناتج (so the result is stable)
 - C. حذف الاختبار، لأن نجاحه يثبت سلامة الميزة (a pass proves the feature is fine)
 - D. محاكاة الخدمة (Mock the service) بحيث يعيد الاستدعاء الثاني 200 دائمًا كما هو متوقع
 
 <details><summary>الإجابة</summary>
 
-**A.** وحده اختبار متزامن متكرر (a repeated concurrent test) يفحص الرصيد (that checks the balance) يستطيع رؤية حالة التسابق (a race)؛ وفترة الانتظار تزيل التداخل (a sleep removes the overlap). (🔴 نظرة الخبير، Expert view.)
+**A.** وحده اختبار متزامن متكرر (a repeated concurrent test) يفحص الرصيد (that checks the balance) يستطيع رؤية حالة التسابق (a race)؛ والانتظار الثابت يزيل التداخل (a sleep removes the overlap). (🔴 نظرة الخبير (Expert view).)
 
 </details>
 
-**5. تبلّغ Schemathesis عن «Undocumented HTTP status code: Received 403, Documented 200, 422» على `POST /transfers`. ما القراءة الصحيحة؟**
+**5. تبلّغ Schemathesis (reports) عن «Undocumented HTTP status code: Received 403, Documented 200, 422» على `POST /transfers`. ما القراءة الصحيحة؟ ⁦(What is the right reading?)⁩**
 
 - A. واجهة البرمجة خاطئة؛ غيّرها لتعيد 200 كي تطابق الوثيقة (to match the document)
 - B. النتيجة ضجيج (noise)، لأن 403 أمر عادي
@@ -421,7 +421,7 @@ newman run najm.postman_collection.json -e local.postman_environment.json --repo
 
 <details><summary>الإجابة</summary>
 
-**D.** الرمز 403 صحيح (is right)؛ والوثيقة (the document) لا تخبر العملاء بما يتوقعونه (does not tell clients what to expect). ومطابقة واجهة البرمجة لها ستحذف قاعدة حقيقية (would delete a real rule). (🟡 التعمق أكثر، Going deeper.)
+**D.** الرمز 403 صحيح (is right)؛ والوثيقة (the document) لا تخبر العملاء بما يتوقعونه (does not tell clients what to expect). ومطابقة واجهة البرمجة لها ستحذف قاعدة حقيقية (would delete a real rule). (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
@@ -442,33 +442,33 @@ newman run najm.postman_collection.json -e local.postman_environment.json --repo
 - يمنح **Playwright** كل اختبار **سياق متصفح (browser context)** جديدًا، و**ينتظر تلقائيًا (auto-waits)** العناصر، ويعيد محاولة **التأكيدات المعاودة (web-first assertions)** حتى تنجح أو تنتهي المهلة (until they pass or time out).
 - حدّد العناصر كما يراها المستخدم أو قارئ الشاشة (as a user or screen reader would): الدور (role) والتسمية (label) والنص (text) ومعرّف الاختبار (test id). ويأتي CSS وXPath أخيرًا (come last).
 - لا تستخدم `sleep` أبدًا. انتظر شرطًا (Wait on a condition)، وامتلك بياناتك (own your data)، وسجّل الدخول عبر واجهة البرمجة (log in through the API).
-- أكبر فخ (Biggest trap): مجموعة يعيد الناس تشغيلها حتى تخضرّ (a suite people re-run until green). أصلح كل اختبار غير مستقر (flaky test) أو اعزله (quarantine).
+- أكبر فخ (Biggest trap): مجموعة اختبارات يعيد الناس تشغيلها حتى تخضرّ (a suite people re-run until green). أصلح كل اختبار غير مستقر (flaky test) أو اعزله (quarantine).
 
 ## 🧭 لماذا يهم (Why it matters)
 تنقر أليس (Alice) **Send transfer** مرتين لأن الشاشة بطيئة (the screen is slow)، فيغادر حسابها 500 QAR بدل 250. اختبارات واجهة البرمجة التي كتبتها ندى (Nada's API tests) خضراء: فكل طلب كان صالحًا وحمل مفتاح خاصية عدم التكرار فريدًا (a unique idempotency key). العيب في الصفحة (The bug is in the page)، فهي تصنع مفتاحًا *جديدًا* مع كل نقرة، فيعامل الخادم النقرتين بحق على أنهما تحويلان (correctly treats two clicks as two transfers). لا يراه إلا اختبار ينقر كما ينقر الإنسان (a test that clicks like a human).
 
-الاختبارات الشاملة (E2E tests) سهلة الخطأ أيضًا (easy to get wrong). مجموعة من 200 اختبار متصفح (200 browser tests) تستغرق 40 دقيقة وتفشل مرة كل عشر تشغيلات تعلّم الفريق أن يضغط «إعادة التشغيل» ("re-run")، فتختبئ الإخفاقات الحقيقية (real failures hide). وتخمين الخطأ في الدرس 1.2، «النقر المزدوج: تحويل واحد لكل نقرة» ("double-click: one transfer per click")، هو اختبار يكتبه هذا الدرس (a test this lesson writes). وتحكم المعايير نفسها على اختبارات المتصفح المولَّدة بالذكاء الاصطناعي (AI-generated browser tests)، التي كثيرًا ما تصل ومعها فترات انتظار ثابتة (sleeps) ومحدِّدات موضعية (positional selectors).
+الاختبارات الشاملة (E2E tests) سهلة الخطأ أيضًا (easy to get wrong). مجموعة اختبارات تضم 200 اختبار متصفح (a suite of 200 browser tests) تستغرق 40 دقيقة وتفشل مرة كل عشر تشغيلات تعلّم الفريق أن يضغط «إعادة التشغيل» ("re-run")، فتختبئ الإخفاقات الحقيقية (real failures hide). وتخمين الخطأ في الدرس 1.2، «النقر المزدوج: تحويل واحد لكل نقرة» ("double-click: one transfer per click")، هو اختبار يكتبه هذا الدرس (a test this lesson writes). وتحكم المعايير نفسها على اختبارات المتصفح المولَّدة بالذكاء الاصطناعي (AI-generated browser tests)، التي كثيرًا ما تصل ومعها فترات انتظار ثابتة (sleeps) ومحدِّدات موضعية (positional selectors).
 
 ## 📐 كيف يعمل (How it works)
 
 ### 🟢 الأساسيات (The essentials)
 
-**متى تستخدم الاختبار الشامل (When to use E2E).** استخدمه لـ**قلة من الرحلات الحرجة (a few critical journeys)** (تسجيل الدخول، وإرسال تحويل، وعرض رصيد: sign in, send a transfer, view a balance) ولما لا يُظهره إلا المتصفح: العرض (rendering) والنقرات (clicks) والتركيز (focus) والتوقيت الحقيقي (real timing). ولا تستخدمه للقواعد: رسم 3,090.00 QAR مكانه اختبار وحدة (a unit test) (الدرس 2.1) أو اختبار واجهة برمجة (an API test) (الدرس 3.1)، وهما يعملان في أجزاء من الثانية (milliseconds) ويفشلان بسبب واضح (fail with a clear cause).
+**متى تستخدم الاختبار الشامل (When to use E2E).** استخدمه لـ**قلة من الرحلات الحرجة (a few critical journeys)** (تسجيل الدخول، وإرسال تحويل، وعرض رصيد) (sign in, send a transfer, view a balance) ولما لا يُظهره إلا المتصفح: العرض (rendering) والنقرات (clicks) والتركيز (focus) والتوقيت الحقيقي (real timing). ولا تستخدمه للقواعد: رسم 3,090.00 QAR مكانه اختبار وحدة (a unit test) (الدرس 2.1) أو اختبار واجهة برمجة (an API test) (الدرس 3.1)، وهما يعملان في أجزاء من الثانية (milliseconds) ويفشلان بسبب واضح (fail with a clear cause).
 
-**بنية Playwright (Playwright's architecture).** مشغّل الاختبارات (The test runner) عملية Node.js (a Node.js process). وهو يتحكم في متصفح (Chromium, Firefox or WebKit) يستضيف عدة **سياقات متصفح (browser contexts)**: ملفات تعريف معزولة (isolated profiles) لكل منها ملفات ارتباطه وتخزينه الخاصة (their own cookies and storage)، وإنشاؤها رخيص (cheap to create). يحصل كل اختبار على سياق وصفحة جديدين، فلا تتسرب الحالة بين الاختبارات (tests do not leak state into each other).
+**بنية Playwright (Playwright's architecture).** مشغّل الاختبارات (The test runner) عملية Node.js (a Node.js process). وهو يتحكم في متصفح (Chromium, Firefox or WebKit) يستضيف عدة **سياقات متصفح (browser contexts)**: ملفات تعريف معزولة (isolated profiles) لكل منها ملفات تعريف الارتباط والتخزين الخاصة بها (their own cookies and storage)، وإنشاؤها رخيص (cheap to create). يحصل كل اختبار على سياق وصفحة جديدين، فلا تتسرب الحالة بين الاختبارات (tests do not leak state into each other).
 
 ```mermaid
-flowchart LR
-    R["مشغّل الاختبارات في نود"] --> B["المتصفح"]
-    B --> C1["السياق 1: ملفات ارتباطه الخاصة"]
-    B --> C2["السياق 2: ملفات ارتباطه الخاصة"]
-    C1 --> P1["الصفحة"]
-    C2 --> P2["الصفحة"]
-    P1 --> S["التطبيق قيد الاختبار"]
+flowchart RL
+    R["مشغّل الاختبارات في نود<br/>(Test runner in Node)"] --> B["المتصفح<br/>(Browser)"]
+    B --> C1["السياق 1: ملفات تعريف الارتباط الخاصة به<br/>(Context 1: own cookies)"]
+    B --> C2["السياق 2: ملفات تعريف الارتباط الخاصة به<br/>(Context 2: own cookies)"]
+    C1 --> P1["الصفحة<br/>(Page)"]
+    C2 --> P2["الصفحة<br/>(Page)"]
+    P1 --> S["التطبيق قيد الاختبار<br/>(App under test)"]
     P2 --> S
 ```
 
-فكرتان تزيلان معظم عدم الاستقرار (Two ideas remove most flakiness). **الانتظار التلقائي (Auto-waiting):** قبل `click` أو `fill` أو `check`، ينتظر Playwright حتى يصبح العنصر مرئيًا ومستقرًا ومفعّلًا وغير مغطًّى (visible, stable, enabled and not covered). أما **التأكيدات المعاودة (Web-first assertions)** مثل `toBeVisible` و`toHaveText` و`toHaveValue` فتعيد المحاولة حتى تنجح أو تنتهي مهلتها (5 ثوانٍ افتراضيًا، 5 seconds by default)، بدل قراءة الصفحة مرة واحدة (instead of reading the page once).
+فكرتان تزيلان معظم عدم الاستقرار (Two ideas remove most flakiness). **الانتظار التلقائي (Auto-waiting):** قبل `click` أو `fill` أو `check`، ينتظر Playwright حتى يصبح العنصر مرئيًا ومستقرًا ومفعّلًا وغير مغطًّى (visible, stable, enabled and not covered). أما **التأكيدات المعاودة (Web-first assertions)** مثل `toBeVisible` و`toHaveText` و`toHaveValue` فتعيد المحاولة حتى تنجح أو تنتهي مهلتها (until they pass or time out)، وهي 5 ثوانٍ افتراضيًا (5 seconds by default)، بدل قراءة الصفحة مرة واحدة (instead of reading the page once).
 
 **هيكل المشروع والإعداد (Project layout and config).** في نسخة من `testing/sample`، نفّذ `npm install` و`npm install -D @axe-core/playwright` و`npx playwright install chromium`؛ وتعيش الاختبارات في `e2e/`. استبدل ملف `e2e/playwright.config.ts` الابتدائي (the starter):
 
@@ -498,7 +498,7 @@ export default defineConfig({
 
 شغّل من `testing/sample`: `npx playwright test --config e2e/playwright.config.ts`. وأضف `.auth/` إلى `.gitignore`؛ فالجلسة المحفوظة بيانات اعتماد (a saved session is a credential).
 
-**المحدِّدات: الدور أولًا (Locators: role first).** **المحدِّد (locator)** يقول كيف تجد عنصرًا في كل مرة تحتاج إليه (how to find an element each time it is needed). فضّل ما يدركه المستخدم أو قارئ الشاشة (what a user or screen reader perceives). كل خطوة إلى الأسفل أكثر هشاشة (more fragile)، والصفوف العليا تعمل أيضًا فحوص إمكانية وصول (double as accessibility checks)، لأنها تفشل إذا غابت تسمية أو دور (a label or role is missing).
+**المحدِّدات: الدور أولًا (Locators: role first).** **المحدِّد (locator)** يقول كيف تجد عنصرًا في كل مرة تحتاج إليه (how to find an element each time it is needed). فضّل ما يدركه المستخدم أو قارئ الشاشة (what a user or screen reader perceives). كل خطوة إلى الأسفل أكثر هشاشة (more fragile)، وتؤدي الصفوف العليا أيضًا دور فحوص إمكانية الوصول (double as accessibility checks)، لأنها تفشل إذا غابت تسمية أو دور (a label or role is missing).
 
 | الأولوية (Priority) | المحدِّد (Locator) | الضعيف (Weak) | القوي (Strong) |
 |---|---|---|---|
@@ -506,11 +506,11 @@ export default defineConfig({
 | 2 | التسمية (Label) | `locator('input').nth(1)` | `getByLabel('Amount')` |
 | 3 | النص (Text) | `locator('p.msg-3')` | `getByText('Transfer sent')`، للمحتوى (for content) |
 | 4 | معرّف الاختبار (Test id) | `locator('div > div:nth-child(4)')` | `getByTestId('balance-card')`، متفق عليه مع المطوّرين (agreed with developers) |
-| 5 | CSS أو XPath (CSS or XPath) | سلاسل طويلة أو موضعية (Long or positional chains) | قصيرة، داخل أب مستقر (inside a stable parent)، ولا تُستخدم إلا حين لا يوجد ما فوقها (only when nothing above exists) |
+| 5 | CSS أو XPath (CSS or XPath) | سلاسل طويلة أو موضعية (Long or positional chains) | قصيرة، داخل عنصر أب مستقر (inside a stable parent)، ولا تُستخدم إلا حين لا يوجد ما فوقها (only when nothing above exists) |
 
-ينكسر النص حين يتغير النص المكتوب أو تُترجم الصفحة (Text breaks when copy changes or the page is translated)؛ وعلى `?lang=ar` استخدم الدور مع الاسم العربي (the role with the Arabic name)، أو معرّف اختبار (a test id).
+ينكسر المحدِّد القائم على النص حين تتغير صياغة المحتوى أو تُترجم الصفحة (Text breaks when copy changes or the page is translated)؛ وعلى `?lang=ar` استخدم الدور مع الاسم العربي (the role with the Arabic name)، أو معرّف اختبار (a test id).
 
-**لا تستخدم النوم أبدًا (Never sleep).** اختبار ضعيف وآخر قوي لرحلة واحدة (A weak and a strong test of one journey)، يُشغَّلان على صفحة غُيّرت كما قد يغيّرها فريق (changed the way a squad might change it): حقل `Note` فوق Amount (يُحقن عبر `page.route`، فلا تُمسّ الصفحة الحقيقية، so the real page is untouched) وواجهة برمجة بطيئة (a slow API).
+**لا تستخدم الانتظار الثابت أبدًا (Never sleep).** اختبار ضعيف وآخر قوي لرحلة واحدة (A weak and a strong test of one journey)، يُشغَّلان على صفحة غُيّرت كما قد يغيّرها فريق (changed the way a squad might change it): حقل `Note` فوق Amount (يُحقن عبر `page.route`)، فلا تُمسّ الصفحة الحقيقية (so the real page is untouched)، وواجهة برمجة بطيئة (a slow API).
 
 ```typescript
 // e2e/locators.spec.ts
@@ -554,11 +554,11 @@ test('weak: position, sleep and a single read', async ({ page }) => {    // MEAN
     Received string:    ""
 ```
 
-للاختبار الضعيف ثلاثة عيوب (The weak test has three faults): `nth(1)` يصيب المُدخل الخطأ (hits the wrong input)، وفترة النوم 500 ms تنتهي قبل استجابة تستغرق 1.5 ثانية (the sleep ends before a 1.5 s response)، و`innerText()` يقرأ مرة واحدة (reads once). ويصمد الاختبار القوي أمام التغييرين لأنه ينتظر الشروط (waits on conditions).
+للاختبار الضعيف ثلاثة عيوب (The weak test has three faults): `nth(1)` يصيب المُدخل الخطأ (hits the wrong input)، وفترة الانتظار الثابت 500 ms تنتهي قبل استجابة تستغرق 1.5 ثانية (the 500 ms sleep ends before a 1.5 s response)، و`innerText()` يقرأ مرة واحدة (reads once). ويصمد الاختبار القوي أمام التغييرين لأنه ينتظر الشروط (waits on conditions).
 
 ### 🟡 التعمق أكثر (Going deeper)
 
-**العزل والتجهيزات وحالة التخزين (Isolation, fixtures and storage state).** يجب أن ينجح كل اختبار وحده ومتوازيًا (alone and in parallel). السياق جديد (The context is fresh)، لكن *بيانات الخادم* مشتركة (the server's data is shared): اختباران متوازيان يرسلان من `acc-1` يغيّر كل منهما رصيد الآخر، فأعطِ كل اختبار بياناته الخاصة (give each test its own data). **سجّل الدخول عبر واجهة البرمجة مرة واحدة، لا عبر شاشة الدخول في كل اختبار (Log in through the API once, not through the login screen in every test)**: يسجّل **مشروع إعداد (setup project)** الدخول، ويحفظ حالة المتصفح (ملفات تعريف الارتباط والتخزين المحلي، cookies and local storage) في ملف، وتبدأ المشاريع الأخرى منه. احتفظ باختبار دخول واحد عبر الواجهة لرحلة الدخول نفسها (one UI login test for the login journey itself). لا تحتوي صفحة النظام النموذجي على شاشة دخول، فهذا الإعداد ينوب عن واحدة (this setup stands in for one).
+**العزل والتجهيزات وحالة التخزين (Isolation, fixtures and storage state).** يجب أن ينجح كل اختبار وحده ومتوازيًا (alone and in parallel). السياق جديد (The context is fresh)، لكن *بيانات الخادم* مشتركة (the server's data is shared): اختباران متوازيان يرسلان من `acc-1` يغيّر كل منهما رصيد الآخر، فأعطِ كل اختبار بياناته الخاصة (give each test its own data). **سجّل الدخول عبر واجهة البرمجة مرة واحدة، لا عبر شاشة الدخول في كل اختبار (Log in through the API once, not through the login screen in every test)**: يسجّل **مشروع إعداد (setup project)** الدخول، ويحفظ حالة المتصفح (browser state)، أي ملفات تعريف الارتباط والتخزين المحلي (cookies and local storage)، في ملف، وتبدأ المشاريع الأخرى منه. احتفظ باختبار دخول واحد عبر الواجهة لرحلة الدخول نفسها (one UI login test for the login journey itself). لا تحتوي صفحة النظام النموذجي على شاشة دخول، فهذا الإعداد ينوب عن واحدة (this setup stands in for one).
 
 ```typescript
 // e2e/auth.setup.ts
@@ -573,7 +573,7 @@ setup('sign in as Alice through the API', async ({ page, request }) => {
 });
 ```
 
-**كائنات الصفحة وكائنات المكوّنات والتجهيزات (Page objects, component objects and fixtures).** **كائن الصفحة (page object)** صنف (class) يضم محدِّدات الصفحة وأفعال المستخدم (a page's locators and user actions)، فيُصلَح تغيير التسمية مرة واحدة (a changed label is fixed once). و**كائن المكوّن (component object)** يفعل الشيء نفسه لأداة تُعاد استخدامها (a reused widget)، مثل صنف `Toast` يغلّف التنبيه (wrapping the alert). أما **التجهيزات (Fixtures)** (`test.extend`) فتسلّم الاختبارات كائنًا جاهزًا وتتولى الإعداد والتفكيك (setup and teardown). أبقِ التأكيدات في الاختبارات، فيُقرأ الفشل كأنه جملة (so a failure reads like a sentence). ولاختبارين أو ثلاثة تكفي تجهيزة ودالة مساعدة (a fixture and a helper function are enough)؛ أضف الصنف حين تبدأ المحدِّدات بالتكرار (when locators start repeating).
+**كائنات الصفحة وكائنات المكوّنات والتجهيزات (Page objects, component objects and fixtures).** **كائن الصفحة (page object)** صنف (class) يضم محدِّدات الصفحة وأفعال المستخدم (a page's locators and user actions)، فيُصلَح تغيير التسمية مرة واحدة (a changed label is fixed once). و**كائن المكوّن (component object)** يفعل الشيء نفسه لعنصر واجهة يُعاد استخدامه (a reused widget)، مثل صنف `Toast` يغلّف التنبيه (wrapping the alert). أما **التجهيزات (Fixtures)** (`test.extend`) فتسلّم الاختبارات كائنًا جاهزًا وتتولى الإعداد والتفكيك (setup and teardown). أبقِ التأكيدات في الاختبارات، فيُقرأ الفشل كأنه جملة (so a failure reads like a sentence). ولاختبارين أو ثلاثة تكفي تجهيزة ودالة مساعدة (a fixture and a helper function are enough)؛ أضف الصنف حين تبدأ المحدِّدات بالتكرار (when locators start repeating).
 
 ```typescript
 // e2e/fixtures.ts
@@ -637,20 +637,20 @@ test('a failed request tells the customer something', async ({ page, transferPag
 
 كلاهما عيب حقيقي في النظام النموذجي (Both are real sample defects): تصنع الصفحة `Idempotency-Key` جديدًا مع كل نقرة ولا تعطّل الزر أبدًا (never disables the button)، ويجعل خطأ غير JSON (a non-JSON error) نصَّها البرمجي يرمي استثناءً، فلا يرى العميل شيئًا (so the customer sees nothing). وأكدنا الأول على واجهة البرمجة (We confirmed the first against the API): نقرتان نقلتا الحساب من 12,000 إلى 11,500.
 
-**التتبع وتنقيح الأخطاء (Tracing and debugging).** يسجّل **الأثر (trace)** لقطة من DOM قبل كل إجراء وبعده (a DOM snapshot before and after each action)، مع سجلات الشبكة ووحدة التحكم (network and console logs). يسجّل `trace: 'on-first-retry'` أثرًا حين يعيد التكامل المستمر (CI) تشغيل اختبار (استخدم `--trace on` محليًا)؛ افتحه بـ `npx playwright show-trace path/to/trace.zip`، أو تصفّح `npx playwright show-report`. أثناء التأليف (While authoring)، استخدم `npx playwright test --ui` (عرض يتيح السفر عبر الزمن، a time-travel view) و`--debug` (خطوة بخطوة، step by step) و`npx playwright codegen http://127.0.0.1:8000/app` (يسجّل النقرات محدِّداتٍ: مسودة تُهذَّب لا اختبار يُحتفظ به، a draft to tidy, not a test to keep).
+**التتبع وتنقيح الأخطاء (Tracing and debugging).** يسجّل **الأثر (trace)** لقطة من DOM قبل كل إجراء وبعده (a DOM snapshot before and after each action)، مع سجلات الشبكة ووحدة التحكم (network and console logs). يسجّل `trace: 'on-first-retry'` أثرًا حين يعيد التكامل المستمر (CI) تشغيل اختبار (استخدم `--trace on` محليًا)؛ افتحه بـ `npx playwright show-trace path/to/trace.zip`، أو تصفّح `npx playwright show-report`. أثناء التأليف (While authoring)، استخدم `npx playwright test --ui`، وهو عرض يتيح السفر عبر الزمن (a time-travel view)، و`--debug` للتنفيذ خطوة بخطوة (step by step)، و`npx playwright codegen http://127.0.0.1:8000/app` الذي يسجّل النقرات محدِّداتٍ؛ وهو مسودة تُهذَّب لا اختبار يُحتفظ به (a draft to tidy, not a test to keep).
 
 **عدم استقرار الاختبارات الشاملة (E2E flakiness).**
 
 | السبب (Cause) | العَرَض (Symptom) | الإصلاح (Fix) |
 |---|---|---|
-| فترات نوم ثابتة وقراءات لمرة واحدة (Fixed sleeps, one-shot reads) | ينجح محليًا ويفشل في التكامل المستمر (Passes locally, fails in CI) | تأكيدات معاودة (Web-first assertions)؛ و`expect.poll` للقيم المقروءة من واجهة البرمجة (for values read from the API) |
+| فترات انتظار ثابتة وقراءات لمرة واحدة (Fixed sleeps, one-shot reads) | ينجح محليًا ويفشل في التكامل المستمر (Passes locally, fails in CI) | تأكيدات معاودة (Web-first assertions)؛ و`expect.poll` للقيم المقروءة من واجهة البرمجة (for values read from the API) |
 | بيانات مشتركة واختبارات متوازية (Shared data and parallel tests) | يفشل مع عدة عمال فقط (Fails only with several workers) | كل اختبار يملك بياناته (Each test owns its data)؛ ونسخة تطبيق لكل عامل (app instance per worker) |
 | حركة وعناصر متحركة (Animation, moving elements) | «العنصر غير مستقر» ("Element is not stable") | انتظر الحالة النهائية (Wait for the end state)؛ وعطّل الحركة في إصدارات الاختبار (disable animations in test builds) |
 | أطراف ثالثة وساعات حقيقية (Real third parties, clocks) | يفشل في أوقات معينة (Fails at certain times) | حاكِها (Mock them)؛ وجمّد الوقت بـ `page.clock` (freeze time) |
 
-قِس بدل أن تخمّن (Measure instead of guessing): يعطيك `npx playwright test --repeat-each=20 locators.spec.ts` معدل فشل (a failure rate). وإعادة المحاولة التي تنجح نتيجة **غير مستقرة (flaky)** يجب الإبلاغ عنها وتملّكها لا إخفاؤها (to report and own, not hide) (يغطي الدرس 2.3 العزل، quarantine)؛ ويمكن للإصدارات الحديثة أن تُفشل التشغيل بسببها بالخيار `--fail-on-flaky-tests`.
+قِس بدل أن تخمّن (Measure instead of guessing): يعطيك `npx playwright test --repeat-each=20 locators.spec.ts` معدل فشل (a failure rate). وإعادة المحاولة التي تنجح نتيجة **غير مستقرة (flaky)** يجب الإبلاغ عنها وتحمّل مسؤوليتها لا إخفاؤها (to report and own, not hide)؛ ويغطي الدرس 2.3 عزل الاختبارات (lesson 2.3 covers quarantine)؛ ويمكن للإصدارات الحديثة أن تُفشل التشغيل بسببها بالخيار `--fail-on-flaky-tests`.
 
-**التوازي والتقسيم (Parallelism and sharding).** تعمل الملفات بالتوازي في عمال (parallel workers) افتراضيًا؛ والخيار `fullyParallel: true` يوازي أيضًا الاختبارات داخل الملف الواحد؛ و`--workers=N` يحدد العدد. ولتقسيم مجموعة على أجهزة التكامل المستمر (To split a suite across CI machines)، شغّل `--shard=1/3` و`2/3` و`3/3` مهامَّ منفصلة (as separate jobs)، مع مُبلِّغ `blob` (reporter) والأمر `npx playwright merge-reports` لتقرير واحد (for one report).
+**التوازي والتقسيم (Parallelism and sharding).** تعمل الملفات بالتوازي عبر عمّال (parallel workers) افتراضيًا؛ والخيار `fullyParallel: true` يوازي أيضًا الاختبارات داخل الملف الواحد؛ و`--workers=N` يحدد العدد. ولتقسيم مجموعة الاختبارات على أجهزة التكامل المستمر (To split a suite across CI machines)، شغّل `--shard=1/3` و`2/3` و`3/3` مهامَّ منفصلة (as separate jobs)، مع مُبلِّغ `blob` (reporter) والأمر `npx playwright merge-reports` لتقرير واحد (for one report).
 
 ### 🔴 نظرة الخبير (Expert view)
 
@@ -671,7 +671,7 @@ Error: A snapshot doesn't exist at .../visual.spec.ts-snapshots/transfer-form-ch
   (after a styling change)   19678 pixels (ratio 0.03 of all image pixels) are different.
 ```
 
-يفشل التشغيل الأول ويكتب صورة الأساس (The first run fails and writes the baseline)؛ أودِعها وراجعها كما تراجع الشيفرة (commit it and review it like code). أبقِ التسامح ضئيلًا (Keep the tolerance tiny): `maxDiffPixels: 100` يسمح بقليل من وحدات البكسل المنعّمة (a few anti-aliased pixels)، بينما سمحت نسبة 0.01 بمرور زوايا الأزرار المستديرة (1,451 بكسل) في تشغيلنا. وينتهي الاسم بـ `chromium-linux` لأن الخطوط والتنعيم (fonts and anti-aliasing) تختلف بين أنظمة التشغيل، فتفشل صورة أساس من Mac على تكامل مستمر يعمل بـ Linux. أنشئ صور الأساس وحدّثها في صورة حاوية واحدة (in one container image): `docker run --rm --network=host --ipc=host -v "$PWD":/work -w /work mcr.microsoft.com/playwright:v<version>-noble npx playwright test --config e2e/playwright.config.ts --update-snapshots`، بحيث تطابق العلامة (the tag) إصدار Playwright لديك وتكون واجهة البرمجة تعمل على المضيف (the API already running on the host) (لم يُشغَّل هنا لعدم وجود Docker؛ راجع توثيق Docker في Playwright، not run here, no Docker; check Playwright's Docker docs). احذر من «حدّث اللقطات حتى يخضرّ» ("update snapshots until green"): أخفِ المناطق الديناميكية (mask dynamic areas) ولا تقبل فرقًا لم تره (never accept a diff unseen). وتقدم Percy وChromatic وApplitools مقارنة مستضافة (hosted comparison).
+يفشل التشغيل الأول ويكتب صورة الأساس (The first run fails and writes the baseline)؛ أودِعها وراجعها كما تراجع الشيفرة (commit it and review it like code). أبقِ التسامح ضئيلًا (Keep the tolerance tiny): `maxDiffPixels: 100` يسمح بقليل من وحدات البكسل المنعّمة (a few anti-aliased pixels)، بينما سمحت نسبة 0.01 بمرور زوايا الأزرار المستديرة (1,451 بكسل) في تشغيلنا. وينتهي الاسم بـ `chromium-linux` لأن الخطوط والتنعيم (fonts and anti-aliasing) تختلف بين أنظمة التشغيل، فتفشل صورة أساس من Mac على تكامل مستمر يعمل بـ Linux. أنشئ صور الأساس وحدّثها في صورة حاوية واحدة (in one container image): `docker run --rm --network=host --ipc=host -v "$PWD":/work -w /work mcr.microsoft.com/playwright:v<version>-noble npx playwright test --config e2e/playwright.config.ts --update-snapshots`، بحيث تطابق العلامة (the tag) إصدار Playwright لديك وتكون واجهة البرمجة تعمل على المضيف (the API already running on the host) (لم يُشغَّل هنا لعدم وجود Docker؛ راجع توثيق Docker في Playwright) (not run here, no Docker; check Playwright's Docker docs). احذر من «حدّث اللقطات حتى يخضرّ» ("update snapshots until green"): أخفِ المناطق الديناميكية (mask dynamic areas) ولا تقبل فرقًا لم تره (never accept a diff unseen). وتقدم Percy وChromatic وApplitools مقارنة مستضافة (hosted comparison).
 
 **فحص إمكانية الوصول (Accessibility scan).** يشغّل `@axe-core/playwright` محرك قواعد axe داخل الصفحة (runs the axe rule engine inside the page). يجد التسميات الناقصة وARIA الخاطئة والتباين المنخفض بسرعة (missing labels, bad ARIA and low contrast)، ولا يجد إلا المشكلات التي يمكن فحصها بقواعد (rule-checkable problems)؛ ويبيّن الدرس 3.3 ما يفوّته (what it misses).
 
@@ -689,17 +689,17 @@ for (const [name, url] of [['English', '/app'], ['Arabic', '/app?lang=ar']] as c
 }
 ```
 
-**مشاريع تعدد المتصفحات (Cross-browser projects).** كل ما هنا عمل في Chromium. ولإضافة غيره، ثبّته (`npx playwright install --with-deps firefox webkit`)، وأضف مشاريع مثل `{ name: 'webkit', use: { ...devices['Desktop Safari'] } }`، واختر بـ `--project=webkit`. ومتصفح WebKit في Playwright إصدار خاص به (its own build)، قريب من Safari لكنه ليس Safari: فتأكد من سلوك iOS على جهاز حقيقي (confirm iOS behaviour on a real device) (الدرس 3.3).
+**مشاريع تعدد المتصفحات (Cross-browser projects).** شُغِّل كل ما هنا في Chromium (Everything here ran in Chromium). ولإضافة غيره، ثبّته (`npx playwright install --with-deps firefox webkit`)، وأضف مشاريع مثل `{ name: 'webkit', use: { ...devices['Desktop Safari'] } }`، واختر بـ `--project=webkit`. ومتصفح WebKit في Playwright إصدار خاص به (its own build)، قريب من Safari لكنه ليس Safari: فتأكد من سلوك iOS على جهاز حقيقي (confirm iOS behaviour on a real device) (الدرس 3.3).
 
 **Selenium أم Cypress أم Playwright؟ ⁦(Selenium, Cypress or Playwright?)⁩** مقارنة صادقة وقت الكتابة (An honest comparison at the time of writing) (2026)؛ أعد التحقق قبل الاختيار (re-check before choosing).
 
 | | Selenium | Cypress | Playwright |
 |---|---|---|---|
 | كيف يعمل (How it works) | معيار W3C WebDriver؛ يقود المتصفحات من الخارج (drives browsers from outside) | يعمل داخل المتصفح بجانب التطبيق (Runs inside the browser alongside the app) | يقود المتصفحات عبر بروتوكولاتها الخاصة (over their own protocols) |
-| المتصفحات (Browsers) | كل الرئيسية، وSafari الحقيقي عبر مشغّله (All major, real Safari via its driver) | عائلة Chrome وFirefox؛ وWebKit تجريبي (experimental) | إصدارات Chromium وFirefox وWebKit (builds) |
+| المتصفحات (Browsers) | كل المتصفحات الرئيسية، وSafari الحقيقي عبر برنامج التشغيل الخاص به (All major, real Safari via its driver) | عائلة Chrome وFirefox؛ وWebKit تجريبي (experimental) | إصدارات Chromium وFirefox وWebKit (builds) |
 | التشغيل المتوازي (Parallel runs) | Selenium Grid | Cypress Cloud أو إعدادك الخاص (your own setup) | مدمج ومجاني مع التقسيم (Built in, free, with sharding) |
-| نقطة الضعف (Weak spot) | شيفرة تمهيدية أكثر (More boilerplate)؛ وتكتب الانتظارات بنفسك (you write the waits) | لا تبويبات متعددة (No multi-tab)؛ والنطاقات المتعددة تتطلب عناية (cross-origin needs care) | لا أجهزة iOS حقيقية (No real iOS devices)؛ ودعم Android تجريبي (experimental) |
-| اخترْه حين (Pick it when) | مجموعة قديمة كبيرة (A large legacy suite)، أو مؤسسة ملتزمة بالمعايير (a standard-bound shop) | فريق واجهات أمامية يريد تغذية راجعة سريعة (A front-end team wanting fast feedback) | مجموعات جديدة (New suites)، وتعدد متصفحات (cross-browser)، وتكامل مستمر واسع النطاق (CI at scale) |
+| نقطة الضعف (Weak spot) | شيفرة تمهيدية أكثر (More boilerplate)؛ وتكتب الانتظارات بنفسك (you write the waits) | لا تبويبات متعددة (No multi-tab)؛ والتعامل مع الطلبات عبر الأصول المختلفة يتطلب عناية (cross-origin needs care) | لا أجهزة iOS حقيقية (No real iOS devices)؛ ودعم Android تجريبي (experimental) |
+| اخترْه حين (Pick it when) | مجموعة اختبارات قديمة كبيرة (A large legacy suite)، أو مؤسسة ملتزمة بالمعايير (a standard-bound shop) | فريق واجهات أمامية يريد تغذية راجعة سريعة (A front-end team wanting fast feedback) | مجموعات اختبارات جديدة (New suites)، وتعدد متصفحات (cross-browser)، وتكامل مستمر واسع النطاق (CI at scale) |
 
 العادات أهم من الأداة (Habits matter more than the tool). وللاستعانة بالذكاء الاصطناعي في الاختبارات الشاملة (For AI help with E2E tests)، انظر الدرس 6.3.
 
@@ -731,10 +731,10 @@ for (const [name, url] of [['English', '/app'], ['Arabic', '/app?lang=ar']] as c
 
 - 🟢 **أنقذ اختبارًا ضعيفًا (Rescue a weak test).** شغّل اختبار `weak`، ثم أعد كتابته بمحدِّدات الدور والتسمية وتأكيد معاود (a web-first assertion). *يكتمل عندما (Done when):* ينجح `--repeat-each=10` تحت الشبكة البطيئة والحقل المضاف (under the slow network and the added field)، ولا يجد `grep waitForTimeout e2e` شيئًا (finds nothing).
 - 🟡 **اعثر على الخصم المزدوج (Find the double debit).** شغّل اختبار النقرة الواحدة (the one-click test) مع `--trace on`، وافتح الأثر (trace)، وارفع تقرير عيب كما في الدرس 1.3 (file a bug report). *يكتمل عندما (Done when):* يتضمن التقرير إعادة إنتاج دنيا (a minimal reproduction)، وقيمتي `Idempotency-Key` من الأثر، وإصلاحًا مقترحًا (a suggested fix).
-- 🔴 **اجعله مستقرًا في التوازي (Make it stable in parallel).** اكتب اختبارين يقرأ كل منهما رصيد `acc-1` عبر واجهة البرمجة، ويرسل 250.00 ويؤكد أنه انخفض بمقدار 250.00 بالضبط؛ شغّل `--workers=4 --repeat-each=10` لتُظهر عدم الاستقرار (to show the flake). أصلحه بالتأكيد على ما يملكه كل اختبار فقط (asserting only on what each test owns) (تحويله، يُقرأ بمعرّفه، its transfer, read by id)، أو بتشغيل تطبيق لكل عامل (starting one app per worker). *يكتمل عندما (Done when):* يفشل الزوج مرة على الأقل قبل الإصلاح ولا يفشل أبدًا في 10 تكرارات بعده، وتوضح جملة لماذا كانت إعادة المحاولة ستخفيه (why a retry would have hidden it).
+- 🔴 **اجعله مستقرًا في التوازي (Make it stable in parallel).** اكتب اختبارين يقرأ كل منهما رصيد `acc-1` عبر واجهة البرمجة، ويرسل 250.00 ويؤكد أنه انخفض بمقدار 250.00 بالضبط؛ شغّل `--workers=4 --repeat-each=10` لتُظهر عدم الاستقرار (to show the flake). أصلحه بالتأكيد على ما يملكه كل اختبار فقط (asserting only on what each test owns)، أي تحويله المقروء بمعرّفه (its transfer, read by id)، أو بتشغيل تطبيق لكل عامل (starting one app per worker). *يكتمل عندما (Done when):* يفشل الزوج مرة على الأقل قبل الإصلاح ولا يفشل أبدًا في 10 تكرارات بعده، وتوضح جملة لماذا كانت إعادة المحاولة ستخفيه (why a retry would have hidden it).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
-- **النوم والقراءات لمرة واحدة (Sleeps and one-shot reads).** `waitForTimeout` و`innerText()` يخمّنان (guess). استخدم الانتظار التلقائي (auto-waiting) والتأكيدات المعاودة (web-first assertions).
+- **الانتظار الثابت والقراءات لمرة واحدة (Sleeps and one-shot reads).** `waitForTimeout` و`innerText()` يخمّنان (guess). استخدم الانتظار التلقائي (auto-waiting) والتأكيدات المعاودة (web-first assertions).
 - **CSS وXPath أولًا (CSS and XPath first).** ينكسران عند إعادة التصميم (break on redesign) ويفوّتان عيوب إمكانية الوصول (miss accessibility bugs). ابدأ من الدور والتسمية (Start at role and label).
 - **كل شيء عبر الواجهة (Everything through the UI).** حساب الرسوم في المتصفح بطيء وغير واضح (Fee maths in a browser is slow and unclear). ادفع القواعد إلى الأسفل (Push rules down).
 - **تسجيل الدخول عبر الشاشة في كل مرة (Logging in through the screen every time).** سجّل الدخول عبر واجهة البرمجة مرة واحدة (Sign in through the API once).
@@ -742,7 +742,7 @@ for (const [name, url] of [['English', '/app'], ['Arabic', '/app?lang=ar']] as c
 
 ## 🧾 الخلاصة (Recap)
 - استخدم الاختبار الشامل (E2E) لقلة من الرحلات الحرجة وللأشياء التي لا يُظهرها إلا المتصفح، كالنقر المزدوج (the double click).
-- السياقات الجديدة (Fresh contexts) والانتظار التلقائي (auto-waiting) والتأكيدات المعاودة (retrying assertions) تزيل معظم عدم الاستقرار (flakiness)، إن لم تستخدم النوم أبدًا.
+- السياقات الجديدة (Fresh contexts) والانتظار التلقائي (auto-waiting) والتأكيدات المعاودة (retrying assertions) تزيل معظم عدم الاستقرار (flakiness)، إن لم تستخدم الانتظار الثابت أبدًا (if you never sleep).
 - حدّد بالدور والتسمية والنص ومعرّف الاختبار، ثم CSS؛ واستخدم كائنات الصفحة (page objects) والتجهيزات (fixtures) والدخول عبر واجهة البرمجة.
 - حاكِ الشبكة (Mock the network) للحالات الحدّية؛ واقرأ الآثار (traces) للتشخيص.
 - امتلك بياناتك (Own your data)، وقسّم للسرعة (shard for speed)، وأبقِ لقطات الشاشة في صورة حاوية واحدة (one container image).
@@ -758,20 +758,20 @@ for (const [name, url] of [['English', '/app'], ['Arabic', '/app?lang=ar']] as c
 
 <details><summary>الإجابة</summary>
 
-**B.** وحده المتصفح (Only a browser) يستطيع أن ينقر مرتين ويرى ما ترسله الصفحة (see what the page sends)؛ أما A وC وD فقواعد (rules) يفحصها اختبار وحدة أو واجهة برمجة أسرع (a unit or API test checks faster). (🟢 الأساسيات، The essentials.)
+**B.** وحده المتصفح (Only a browser) يستطيع أن ينقر مرتين ويرى ما ترسله الصفحة (see what the page sends)؛ أما A وC وD فقواعد (rules) يفحصها اختبار وحدة أو واجهة برمجة أسرع (a unit or API test checks faster). (🟢 الأساسيات (The essentials).)
 
 </details>
 
 **2. يكتب اختبار في `page.locator('input').nth(1)`. يضيف فريق (a squad) حقلًا فوقه (a field above it) فيفشل الاختبار. ما أفضل إصلاح؟**
 
-- A. إضافة نوم قبل الكتابة (Add a sleep before typing)
+- A. إضافة انتظار ثابت قبل الكتابة (Add a sleep before typing)
 - B. تغيير الفهرس إلى 2 (Change the index to 2)
 - C. استخدام `getByLabel('Amount')`
 - D. إعادة الاختبار مرتين في التكامل المستمر (Retry the test twice in CI)
 
 <details><summary>الإجابة</summary>
 
-**C.** التسمية هي الطريقة التي يجد بها المستخدمون الحقل، وتصمد أمام تغيّر التخطيط (survives layout changes). B يكرر الخطأ، وA وD يخفيانه (hide it). (🟢 الأساسيات، The essentials.)
+**C.** التسمية هي الطريقة التي يجد بها المستخدمون الحقل، وتصمد أمام تغيّر التخطيط (survives layout changes). B يكرر الخطأ، وA وD يخفيانه (hide it). (🟢 الأساسيات (The essentials).)
 
 </details>
 
@@ -784,20 +784,20 @@ for (const [name, url] of [['English', '/app'], ['Arabic', '/app?lang=ar']] as c
 
 <details><summary>الإجابة</summary>
 
-**D.** النوم الثابت والقراءة لمرة واحدة يفترضان سرعة (A fixed sleep and a one-shot read assume a speed). و`await expect(...).toContainText(...)` يعيد المحاولة حتى يتحقق الشرط (retries until the condition holds). (🟢 الأساسيات، The essentials.)
+**D.** الانتظار الثابت والقراءة لمرة واحدة يفترضان سرعة (A fixed sleep and a one-shot read assume a speed). و`await expect(...).toContainText(...)` يعيد المحاولة حتى يتحقق الشرط (retries until the condition holds). (🟢 الأساسيات (The essentials).)
 
 </details>
 
-**4. اختبارات بلال (Bilal) الثمانون تسجّل الدخول كلها عبر الواجهة، وتستغرق المجموعة 25 دقيقة. ما الذي يعطي أكبر تسريع وأكثره أمانًا (the biggest, safest speed-up)؟**
+**4. اختبارات بلال (Bilal) الـ80 تسجّل الدخول كلها عبر الواجهة (sign in through the UI)، وتستغرق مجموعة الاختبارات 25 دقيقة (the suite takes 25 minutes). ما الذي يعطي أكبر تسريع وأكثره أمانًا (the biggest, safest speed-up)؟**
 
 - A. تسجيل الدخول مرة واحدة عبر واجهة البرمجة وإعادة استخدام حالة التخزين (Sign in once through the API and reuse the storage state)
 - B. تعطيل الدخول لكل الاختبارات بعلم اختبار (Disable the login for all tests with a test flag)
-- C. دمج الاختبارات الثمانين في بضعة اختبارات طويلة (Merge the 80 tests into a few long ones)
+- C. دمج الاختبارات الـ80 في بضعة اختبارات طويلة (Merge the 80 tests into a few long ones)
 - D. تشغيلها كلها في عامل واحد (Run them all in a single worker)
 
 <details><summary>الإجابة</summary>
 
-**A.** يزيل 80 عملية دخول بطيئة ويُبقي السياقات معزولة (keeps contexts isolated). B يتخطى المسار الحقيقي (skips the real path)، وC يخفي الأسباب (hides causes)، وD أبطأ (slower). (🟡 التعمق أكثر، Going deeper.)
+**A.** يزيل 80 عملية دخول بطيئة ويُبقي السياقات معزولة (keeps contexts isolated). B يتخطى المسار الحقيقي (skips the real path)، وC يخفي الأسباب (hides causes)، وD أبطأ (slower). (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
@@ -810,7 +810,7 @@ for (const [name, url] of [['English', '/app'], ['Arabic', '/app?lang=ar']] as c
 
 <details><summary>الإجابة</summary>
 
-**C.** تختلف الخطوط والتنعيم عبر أنظمة التشغيل (Fonts and anti-aliasing differ across operating systems)، فلا بد أن تملك بيئة واحدة صور الأساس. A يخفي تغييرات حقيقية (hides real changes). (🔴 نظرة الخبير، Expert view.)
+**C.** تختلف الخطوط والتنعيم عبر أنظمة التشغيل (Fonts and anti-aliasing differ across operating systems)، فلا بد أن تملك بيئة واحدة صور الأساس. A يخفي تغييرات حقيقية (hides real changes). (🔴 نظرة الخبير (Expert view).)
 
 </details>
 
@@ -827,8 +827,8 @@ for (const [name, url] of [['English', '/app'], ['Arabic', '/app?lang=ar']] as c
 *المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 1.2، 3.2* · *التركيز (Focus): UI, Design*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
-- تضيف تطبيقات الهاتف (Mobile apps) مخاطر لا يراها أي اختبار متصفح (risks no browser test sees): المقاطعات (interruptions) والأذونات (permissions) والشبكات السيئة (bad networks) والعمليات المقتولة (killed processes) وإصدارات نظام التشغيل القديمة (old OS versions) وقواعد المتاجر (store rules). اختبر المنطق سريعًا (Test logic fast)، والواجهة أصليًا (the UI natively)، وبضع رحلات على أجهزة حقيقية (a few journeys on real devices).
-- **إمكانية الوصول (Accessibility)** تتبع WCAG 2.2: قابلة للإدراك والتشغيل والفهم والمتانة (perceivable, operable, understandable, robust). الماسحات (Scanners) مثل axe تجد بعض المشكلات فقط (find only some problems)؛ والناس يجدون الباقي (people find the rest).
+- تضيف تطبيقات الهاتف (Mobile apps) مخاطر لا يراها أي اختبار متصفح (risks no browser test sees): المقاطعات (interruptions) والأذونات (permissions) والشبكات السيئة (bad networks) والعمليات المُنهاة قسرًا (killed processes) وإصدارات نظام التشغيل القديمة (old OS versions) وقواعد المتاجر (store rules). اختبر المنطق سريعًا (Test logic fast)، والواجهة أصليًا (the UI natively)، وبضع رحلات على أجهزة حقيقية (a few journeys on real devices).
+- **إمكانية الوصول (Accessibility)** تتبع WCAG 2.2: قابلة للإدراك وقابلة للتشغيل ومفهومة ومتينة (perceivable, operable, understandable, robust). الماسحات (Scanners) مثل axe تجد بعض المشكلات فقط (find only some problems)؛ والناس يجدون الباقي (people find the rest).
 - **التوطين (Localisation)** أكثر من الترجمة (more than translation): الاتجاه (direction)، والنص ثنائي الاتجاه (bidirectional text)، والأرقام (digits)، والتواريخ (dates)، وصيغ الجمع (plurals)، والفرز (sorting). و**التوطين الزائف (Pseudo-localisation)** يجد النص المكتوب داخل الشيفرة مبكرًا (finds hard-coded text early).
 - اختر الأجهزة من التحليلات (Choose devices from analytics)؛ وقلّص المصفوفة بالاختبار الزوجي (shrink the matrix with pairwise testing).
 - أكبر فخ (Biggest trap): اعتبار «لم يجد axe شيئًا» ("axe found nothing") أو «اعتُمدت الترجمة» ("the translation was approved") دليلًا على أن العمل «انتهى» ("done").
@@ -850,7 +850,7 @@ for (const [name, url] of [['English', '/app'], ['Arabic', '/app?lang=ar']] as c
 | اختبارات الواجهة الأصلية (Native UI tests) | **Espresso** (Android)، **XCUITest** (iOS) | محاكٍ أو جهاز (Emulator, simulator or device) | شاشة واحدة في كل مرة (One screen at a time) |
 | الرحلات (Journeys) | **Appium** (WebDriver, any language)، **Maestro** (YAML flows)، **Detox** (React Native) | محاكيات، وقليل من الأجهزة الحقيقية (Emulators, a few real devices) | خمس أو ست رحلات حرجة (Five or six critical journeys) |
 
-يُقرأ تدفق Maestro كأنه الرحلة نفسها (A Maestro flow reads like the journey) (رسم تخطيطي، والمعرّف وهمي: a sketch; the app id is fictional):
+يُقرأ تدفق Maestro كأنه الرحلة نفسها (A Maestro flow reads like the journey) (رسم تخطيطي، والمعرّف وهمي) (a sketch; the app id is fictional):
 
 ```yaml
 appId: bank.najm.mobile
@@ -868,15 +868,15 @@ appId: bank.najm.mobile
 
 | الخطر (Risk) | فكرة الاختبار (Test idea) |
 |---|---|
-| المقاطعات والقتل (Interruptions, kills) | مكالمة أثناء التحويل، أو إنهاء التطبيق وإعادة فتحه (A call mid-transfer, or the app killed and reopened): لا تكرار ولا فقدان، وتُستعاد الحالة (no duplicate, no loss, state restored) |
+| المقاطعات وإنهاء التطبيق قسرًا (Interruptions, kills) | مكالمة أثناء التحويل، أو إنهاء التطبيق وإعادة فتحه (A call mid-transfer, or the app killed and reopened): لا تكرار ولا فقدان، وتُستعاد الحالة (no duplicate, no loss, state restored) |
 | الأذونات (Permissions) | ارفض، ثم اسحب الإذن أثناء الجلسة (Deny, then revoke mid-session): شاشة واضحة، ولا انهيار (a clear screen, no crash) |
 | الاتصال بالشبكة (Connectivity) | وضع الطيران (Airplane mode)، والانتقال من Wi-Fi إلى الخلوي (Wi-Fi to cellular)، ومهلة بعد Send (a timeout after Send): تعيد المحاولة استخدام مفتاح خاصية عدم التكرار نفسه (the retry reuses its idempotency key) |
 | إصدارات نظام التشغيل والتحديثات (OS versions and updates) | أقدم نظام تشغيل مدعوم (Oldest supported OS)؛ والترقية من أقدم إصدار للتطبيق مع بيانات محفوظة (upgrade from the oldest app version with saved data) |
 | الروابط العميقة والبطارية والتخزين (Deep links, battery, storage) | رابط تحويل أثناء تسجيل الخروج، أو رابط مشوَّه (A transfer link while logged out, or malformed)؛ وبطارية منخفضة أو تخزين ممتلئ أثناء التدفق (low battery or full storage mid-flow) |
 
-**بوابات المتاجر والإطلاق المرحلي (Store gating and staged rollouts).** لا يمكن التراجع عن إصدار الهاتف بزر (A mobile release cannot be rolled back with a button): فالمتاجر تراجعه والمستخدمون يحدّثون متى شاؤوا (stores review it and users update when they choose). وقت الكتابة (At the time of writing) (2026)، تقدم Apple إصدارًا مرحليًا لسبعة أيام (a seven-day phased release) للتحديثات التلقائية وGoogle Play إطلاقًا مرحليًا بالنسبة المئوية (a percentage-based staged rollout)؛ ويمكن إيقاف كليهما مؤقتًا (both can be paused). البوابة (The gate): المجموعات خضراء (suites green)، وتمرير الرحلات على أقدم نظام تشغيل مدعوم وجهاز حقيقي لكل منصة (journeys passed on the oldest supported OS and a real device per platform)، ثم 1% و5% و20% و100% مع **قاعدة إيقاف (halt rule)** (الجلسات الخالية من الانهيار أو نجاح التحويلات أدنى من خط الأساس، crash-free sessions or transfer success below baseline). واحتفظ بمفتاح إيقاف من جهة الخادم للميزات الخطرة (a server-side kill switch for risky features) ([*تصميم الأنظمة لمبرمجي الفايب (System Design for Vibe Coders)*، الدرس 6.2](../vibe/index.ar.html#l6-2)).
+**بوابات المتاجر والإطلاق المرحلي (Store gating and staged rollouts).** لا يمكن التراجع عن إصدار الهاتف بزر (A mobile release cannot be rolled back with a button): فالمتاجر تراجعه والمستخدمون يحدّثون متى شاؤوا (stores review it and users update when they choose). وقت الكتابة (At the time of writing) (2026)، تقدم Apple إصدارًا مرحليًا لسبعة أيام (a seven-day phased release) للتحديثات التلقائية وGoogle Play إطلاقًا مرحليًا بالنسبة المئوية (a percentage-based staged rollout)؛ ويمكن إيقاف كليهما مؤقتًا (both can be paused). البوابة (The gate): مجموعات الاختبارات خضراء (suites green)، وتمرير الرحلات على أقدم نظام تشغيل مدعوم وجهاز حقيقي لكل منصة (journeys passed on the oldest supported OS and a real device per platform)، ثم 1% و5% و20% و100% مع **قاعدة إيقاف (halt rule)** (الجلسات الخالية من الانهيار أو نجاح التحويلات أدنى من خط الأساس) (crash-free sessions or transfer success below baseline). واحتفظ بمفتاح إيقاف من جهة الخادم للميزات الخطرة (a server-side kill switch for risky features) ([*تصميم الأنظمة لمبرمجي الفايب (System Design for Vibe Coders)*، الدرس 6.2](../vibe/index.ar.html#l6-2)).
 
-**إمكانية الوصول: ما يطلبه المعيار (Accessibility: what the standard asks).** تجمّع **WCAG 2.2** (توصية من W3C، أكتوبر 2023: a W3C Recommendation, October 2023) معاييرها تحت أربعة مبادئ هي **POUR**: *قابلة للإدراك (perceivable)* (بدائل نصية وتباين: text alternatives, contrast)، و*قابلة للتشغيل (operable)* (لوحة المفاتيح وحجم الهدف: keyboard, target size)، و*مفهومة (understandable)* (أخطاء واضحة وسلوك متوقع: clear errors, predictable behaviour)، و*متينة (robust)* (تعمل مع التقنيات المساعدة: works with assistive technology). المعايير (Criteria) من المستوى A أو AA أو AAA؛ ويستهدف نجم المستوى AA. وأضاف الإصدار 2.2 تسعة معايير، منها حد أدنى لحجم الهدف 24 × 24 بكسل CSS (a 24 by 24 CSS pixel minimum target size). و**الفحوص الآلية (Automated checks)** مثل axe-core تجد المشكلات التي تُفحص بقواعد (rule-checkable problems): تسمية ناقصة (a missing label)، ودور ARIA خاطئ (a bad ARIA role)، وتباين منخفض (low contrast). لكنها لا تستطيع الحكم هل للنص البديل معنى (whether alt text means anything)، أو هل ترتيب التركيز منطقي (whether focus order makes sense)، أو هل رسالة الخطأ مفيدة (whether an error message helps).
+**إمكانية الوصول: ما يطلبه المعيار (Accessibility: what the standard asks).** تجمع **WCAG 2.2** (توصية من W3C صدرت في أكتوبر 2023) (a W3C Recommendation, October 2023) معاييرها تحت أربعة مبادئ هي **POUR**: *قابلة للإدراك (perceivable)* وتشمل البدائل النصية والتباين (text alternatives, contrast)، و*قابلة للتشغيل (operable)* وتشمل لوحة المفاتيح وحجم الهدف (keyboard, target size)، و*مفهومة (understandable)* وتشمل الأخطاء الواضحة والسلوك المتوقع (clear errors, predictable behaviour)، و*متينة (robust)* أي تعمل مع التقنيات المساعدة (works with assistive technology). المعايير (Criteria) من المستوى A أو AA أو AAA؛ ويستهدف نجم المستوى AA. وأضاف الإصدار 2.2 تسعة معايير، منها حد أدنى لحجم الهدف 24 × 24 بكسل CSS (a 24 by 24 CSS pixel minimum target size). و**الفحوص الآلية (Automated checks)** مثل axe-core تجد المشكلات التي تُفحص بقواعد (rule-checkable problems): تسمية ناقصة (a missing label)، ودور ARIA خاطئ (a bad ARIA role)، وتباين منخفض (low contrast). لكنها لا تستطيع الحكم على ما إذا كان للنص البديل معنى (whether alt text means anything)، أو ما إذا كان ترتيب التركيز منطقيًا (whether focus order makes sense)، أو ما إذا كانت رسالة الخطأ مفيدة (whether an error message helps).
 
 | الفحص اليدوي (Manual check) | ما الذي تفعله (What to do) | ما يكشفه (Catches) |
 |---|---|---|
@@ -888,7 +888,7 @@ appId: bank.najm.mobile
 
 ### 🟡 التعمق أكثر (Going deeper)
 
-**تدقيق عملي لـ `/app` (A worked audit).** شغّلنا `@axe-core/playwright` (الدرس 3.2) على الصفحتين بوسمي WCAG A وAA (with the WCAG A and AA tags): **صفر مخالفات بالإنجليزية والعربية (zero violations in English and Arabic)**. وبدون المرشّح (Without the filter) يضيف axe بندين من أفضل الممارسات (two best-practice items): لا معلم `main` (no landmark)، ومحتوى خارج أي معلم (content outside any landmark). أخضر، لا منتهٍ (Green, not finished). وتضيف الفحوص اليدوية (The manual checks add):
+**تدقيق عملي لـ `/app` (A worked audit).** شغّلنا `@axe-core/playwright` (الدرس 3.2) على الصفحتين بوسمي WCAG A وAA (with the WCAG A and AA tags): **صفر مخالفات بالإنجليزية والعربية (zero violations in English and Arabic)**. وبدون المرشّح (Without the filter) يضيف axe بندين من أفضل الممارسات (two best-practice items): لا معلم `main` (no main landmark)، ومحتوى خارج أي معلم (content outside any landmark). أخضر، لا منتهٍ (Green, not finished). وتضيف الفحوص اليدوية (The manual checks add):
 
 | # | الفحص (Check) | النتيجة (Result) | WCAG |
 |---|---|---|---|
@@ -896,10 +896,10 @@ appId: bank.najm.mobile
 | 2 | إعادة التدفق عند 320 بكسل (Reflow at 320 px)؛ وحجم الهدف (target size)؛ والتباين (contrast) | نجح: لا تمرير أفقي (no sideways scrolling)؛ عناصر التحكم من 288 × 39 إلى 44 بكسل عند 320 (controls 288 by 39 to 44 px at 320)؛ التباين 9.1:1 و6.5:1 | 1.4.10, 2.5.8, 1.4.3 |
 | 3 | نص الخطأ (Error text) | **فشل (Fail):** `daily_limit_exceeded` أو `error` فقط؛ لا شرح (no explanation) | 3.3.1, 3.3.3 |
 | 4 | الخطأ مرتبط بالحقل (Error tied to field) | **فشل (Fail):** لا `aria-invalid` ولا `aria-describedby` على Amount (on Amount) | 3.3.1, 1.3.1 |
-| 5 | إعلان الحالة (Status announced) | **غير متحقَّق (Unverified):** يتغير الدور والنص معًا، وقد يفوّت القارئون ذلك (which readers can miss)؛ ويحتاج إلى قارئ شاشة (needs a screen reader) | 4.1.3 |
+| 5 | إعلان الحالة (Status announced) | **غير متحقَّق (Unverified):** يتغير الدور والنص معًا، وقد تفوّت قارئات الشاشة ذلك (which readers can miss)؛ ويحتاج إلى قارئ شاشة (needs a screen reader) | 4.1.3 |
 | 6 | الصفحة العربية (Arabic page) | **فشل (Fail):** خيارات الحساب تبقى بالإنجليزية، بلا `lang` (account options stay English, with no lang) | 3.1.2 |
 
-الصفان 1 و4 اختبارين (Rows 1 and 4 as tests) (الصف 5 يحتاج إلى شخص، row 5 needs a person):
+الصفان 1 و4 في صورة اختبارين (Rows 1 and 4 as tests)، أما الصف 5 فيحتاج إلى شخص (row 5 needs a person):
 
 ```typescript
 // e2e/audit.spec.ts
@@ -932,7 +932,7 @@ test('an error is tied to its field', async ({ page }) => {      // MEANT TO FAI
 
 **ضعيف مقابل قوي (Weak versus strong):** «صفر مخالفات axe» ("zero axe violations") يبيّن أن القواعد نجحت، لا أن العميل يستطيع إصلاح تحويل مرفوض (that a customer can fix a rejected transfer): فالصفوف من 3 إلى 6 كانت ستُشحن (would ship). الفحص النظيف حدّ أدنى (A clean scan is a floor).
 
-**التوطين والتدويل (Localisation and internationalisation).** **التدويل (Internationalisation, i18n)** يبني البرمجيات بحيث يمكن تكييفها (builds software so it can be adapted)؛ و**التوطين (localisation, l10n)** يكيّفها مع لغة ومكان (adapts it to a language and place). و**التوطين الزائف (Pseudo-localisation)** يستبدل كتالوج الإنجليزية (the English catalogue) بنص أطول محاط بأقواس (longer, bracketed text) (في الأدوات الحقيقية بحروف مشكَّلة، in real tools, accented)، فيكشف النص الإنجليزي الذي لم يُمسّ السلاسل المكتوبة داخل الشيفرة والتخطيطات المقصوصة (hard-coded strings and clipped layouts) دون مترجم (without a translator):
+**التوطين والتدويل (Localisation and internationalisation).** **التدويل (Internationalisation, i18n)** يبني البرمجيات بحيث يمكن تكييفها (builds software so it can be adapted)؛ و**التوطين (localisation, l10n)** يكيّفها مع لغة ومكان (adapts it to a language and place). و**التوطين الزائف (Pseudo-localisation)** يستبدل كتالوج الإنجليزية (the English catalogue) بنص أطول محاط بأقواس (longer, bracketed text)، وفي الأدوات الحقيقية بحروف لاتينية ذات علامات نبر (in real tools, accented)، فيكشف النص الإنجليزي الذي لم يُمسّ السلاسل المكتوبة داخل الشيفرة والتخطيطات المقصوصة (hard-coded strings and clipped layouts) دون مترجم (without a translator):
 
 ```typescript
 // e2e/arabic.spec.ts
@@ -959,7 +959,7 @@ test('every visible string comes from the catalogue', async ({ page }) => {   //
 + "Current account (QAR)", "Euro account (EUR)"
 ```
 
-أسماء الحسابات إنجليزية مكتوبة داخل الشيفرة (The account names are hard-coded English) (رموز العملات ثابتة بحق، currency codes are legitimately constant). ويفحص النص الزائف عند 320 بكسل التمدد أيضًا (Pseudo-text at 320 px also checks expansion)؛ وهنا يتسع (here it fits).
+أسماء الحسابات إنجليزية مكتوبة داخل الشيفرة (The account names are hard-coded English) (رموز العملات ثابتة بحق) (currency codes are legitimately constant). ويفحص النص الزائف عند 320 بكسل التمدد أيضًا (Pseudo-text at 320 px also checks expansion)؛ وهنا يتسع (here it fits).
 
 **تخطيط RTL، بالقياس (RTL layout, checked by measuring).** تُقرأ العربية من اليمين إلى اليسار (Arabic reads right to left)، فـ**تنعكس (mirror)** التخطيطات: حواف البداية وأسهم الرجوع وأشرطة التقدم والأيقونات الاتجاهية (start edges, back arrows, progress bars and directional icons) تنقلب. ابنِ بـ `dir="rtl"` وخصائص CSS المنطقية (CSS logical properties) (`margin-inline-start`، لا `margin-left`). وتحوّل الصناديق المحيطة (Bounding boxes) «تبدو معكوسة» ("looks mirrored") إلى رقم. وتسميات النظام النموذجي بعرض كامل (The sample's labels are full width)، فقِس أين يبدأ *النص* (measure where the *text* starts):
 
@@ -991,7 +991,7 @@ test('labels start at the right edge in Arabic and the left edge in English', as
 
 تلتقط التقنية نفسها CSS الفيزيائي (physical CSS): فمع `margin-right: 8px` على أيقونة، تكون الفجوة إلى تسميتها 8 بكسل بالإنجليزية و**0** بالعربية؛ بينما يُبقي `margin-inline-end` القيمة 8 في الاثنتين (keeps 8 in both).
 
-**النص ثنائي الاتجاه (Bidirectional text).** تضع خوارزمية يونيكود لثنائية الاتجاه (The Unicode bidirectional algorithm) كل مقطع نصي بحسب أنواع حروفه (each run of text by its character types): تذهب العربية من اليمين إلى اليسار، والأرقام والكلمات اللاتينية من اليسار إلى اليمين، وتأخذ المحارف المحايدة (neutral characters) (المسافات والشرطات: spaces, hyphens) الاتجاه المحيط (the surrounding direction). واسم إنجليزي *يبدأ برقم* (starts with a digit) ينكسر:
+**النص ثنائي الاتجاه (Bidirectional text).** تضع خوارزمية يونيكود لثنائية الاتجاه (The Unicode bidirectional algorithm) كل مقطع نصي بحسب أنواع حروفه (each run of text by its character types): تذهب العربية من اليمين إلى اليسار، والأرقام والكلمات اللاتينية من اليسار إلى اليمين، وتأخذ المحارف المحايدة (neutral characters)، مثل المسافات والشرطات (spaces, hyphens)، الاتجاه المحيط (the surrounding direction). واسم إنجليزي *يبدأ برقم* (starts with a digit) ينكسر:
 
 ```typescript
 // e2e/arabic.spec.ts (continued)
@@ -1028,13 +1028,13 @@ Expected: true      Received: false     (the "7" sits to the right of "Seas")
 
 | المجال (Area) | ما الذي يسوء (What goes wrong) | الاختبار (Test) |
 |---|---|---|
-| الأرقام والفواصل (Digits and separators) | تقبل واجهة البرمجة `٢٥٠.٥٠` لكنها ترفض `٢٥٠٫٥٠` (الفاصلة العشرية العربية، Arabic decimal comma) و`250,50` و`1,000` بكلمة `error` مجردة (a bare error) | اكتب المبالغ كما تفعل لوحتا المفاتيح العربية والألمانية (Type amounts as Arabic and German keyboards do) |
+| الأرقام والفواصل (Digits and separators) | تقبل واجهة البرمجة `٢٥٠.٥٠` لكنها ترفض `٢٥٠٫٥٠` (الفاصلة العشرية العربية) (Arabic decimal comma) و`250,50` و`1,000` بكلمة `error` مجردة (a bare error) | اكتب المبالغ كما تفعل لوحتا المفاتيح العربية والألمانية (Type amounts as Arabic and German keyboards do) |
 | الهجري والميلادي (Hijri and Gregorian) | في Node 22، يوافق 9 أكتوبر 2026 يوم 28 ربيع الآخر 1448 في أم القرى و26 في التقويم المدني (In Node 22, 9 October 2026 is 28 Rabi' al-Thani 1448 in Umm al-Qura and 26 in the civil calendar) | أبقِ تواريخ القيمة ميلادية بصيغة ISO (Keep value dates Gregorian ISO)؛ ولا تنسّق الهجري إلا للعرض، مع تسمية المتغير (format Hijri only for display, naming the variant) |
 | صيغ الجمع (Plurals) | منطق `n === 1` الإنجليزي يفشل مع 2 (`حوالتان`) و11 (`11 حوالة`) (English logic fails for 2 and 11) | رسالة واحدة لكل فئة في CLDR (One message per CLDR category) |
 | الفرز (Sorting) | يضع `sort()` العادي `Émile` بعد `bob` و`أحمد` قبل `إبراهيم` (Plain sort misorders names) | يراجع متحدث أصلي (A native speaker) قائمة مرتبة بـ `Intl.Collator` |
-| الخطوط والتشكيل (Fonts and shaping) | تتغير أشكال الحروف العربية بحسب موضعها (Arabic letters change shape by position)؛ والخط المفقود يعرض مربعات (a missing font shows boxes) | لقطات شاشة لكل نظام تشغيل (Screenshots per OS)، يراجعها قارئ (reviewed by a reader) |
+| الخطوط وتشكيل الحروف (Fonts and shaping) | تتغير أشكال الحروف العربية بحسب موضعها (Arabic letters change shape by position)؛ والخط المفقود يعرض مربعات (a missing font shows boxes) | لقطات شاشة لكل نظام تشغيل (Screenshots per OS)، يراجعها قارئ (reviewed by a reader) |
 
-للعربية ست فئات جمع في CLDR (Arabic has six CLDR plural categories): zero وone وtwo وfew وmany وother. وهذا اختبار Vitest (`npm install -D vitest`، ثم `npx vitest run unit`) يفشل في اليوم الذي يشحن فيه مترجم أقل منها (fails the day a translator ships fewer):
+للعربية ست فئات جمع في CLDR (Arabic has six CLDR plural categories): zero وone وtwo وfew وmany وother. وهذا اختبار Vitest (This Vitest test) (`npm install -D vitest`، ثم `npx vitest run unit`) يفشل في اليوم الذي يشحن فيه مترجم أقل منها (fails the day a translator ships fewer):
 
 ```typescript
 // unit/plurals.test.ts
@@ -1056,9 +1056,9 @@ test.each([[0, 'لا توجد حوالات'], [2, 'حوالتان'], [11, '11 ح
 });
 ```
 
-يؤكد متحدث أصلي (A native speaker confirms) الصياغة؛ ويحرس الاختبار البنية (the test guards the structure). المساعدون والمترجمون يكتبون عربية سلسة قد تكون خاطئة (Assistants and translators write fluent Arabic that can be wrong): هم يصوغون المسودة والناس يعتمدون (they draft, people approve).
+يؤكد متحدث أصلي (A native speaker confirms) الصياغة؛ ويحرس الاختبار البنية (the test guards the structure). مساعدو الذكاء الاصطناعي والمترجمون يكتبون عربية سلسة قد تكون خاطئة (Assistants and translators write fluent Arabic that can be wrong): هم يصوغون المسودة والناس يعتمدون (they draft, people approve).
 
-**اختيار المصفوفة من التحليلات (Choosing the matrix from analytics).** لا تختبر كل شيء (Do not test everything). خذ **التحليلات (analytics)** (حصة الجلسات لكل منصة وإصدار ولغة وحجم نص: share of sessions per platform, version, language and text size)، وأبقِ القيم التي تغطي نحو 90% من المستخدمين، وأضف أقدم الإصدارات المدعومة وأحدثها (the oldest supported and newest versions)، ثم قلّص التوليفات بالاختبار الزوجي (shrink the combinations with pairwise testing) (الدرس 1.2). وبحصص افتراضية (With fictional shares)، يبلغ أحدث iOS (38%) وiOS السابق (21%) وأحدث Android (18%) وAndroid السابق (14%) نسبة 91%، فيصبح أقدم Android مدعوم (6%) فحصًا فصليًا على جهاز حقيقي (a quarterly real-device check). وبإعادة استخدام `pairwise()` من الدرس 1.2 (Reusing the pairwise function from lesson 1.2):
+**اختيار المصفوفة من التحليلات (Choosing the matrix from analytics).** لا تختبر كل شيء (Do not test everything). خذ **التحليلات (analytics)**، أي حصة الجلسات لكل منصة وإصدار ولغة وحجم نص (share of sessions per platform, version, language and text size)، وأبقِ القيم التي تغطي نحو 90% من المستخدمين، وأضف أقدم الإصدارات المدعومة وأحدثها (the oldest supported and newest versions)، ثم قلّص التوليفات بالاختبار الزوجي (shrink the combinations with pairwise testing) (الدرس 1.2). وبحصص افتراضية (With fictional shares)، يبلغ أحدث iOS (38%) وiOS السابق (21%) وأحدث Android (18%) وAndroid السابق (14%) نسبة 91%، فيصبح أقدم إصدار Android مدعوم (6%) فحصًا فصليًا على جهاز حقيقي (a quarterly real-device check). وبإعادة استخدام `pairwise()` من الدرس 1.2 (Reusing pairwise from lesson 1.2):
 
 ```python
 # matrix.py
@@ -1081,7 +1081,7 @@ print(f"{len(every)} combinations, {len(chosen)} pairwise cases")
 
 اثنا عشر هو الحد الأدنى (Twelve is the minimum) (4 منصات × 3 شبكات). أضف يدويًا أي توليفة يسمّيها تحليل مخاطرك (Add by hand any combination your risk analysis names)، مثل العربية بأكبر حجم نص على أقدم Android (Arabic with the largest text on the oldest Android).
 
-**تعدد المتصفحات: ما الذي يختلف (Cross-browser: what differs).** القواعد لا تتغير بتغير المتصفح؛ بل العرض والإدخال والتخزين (rendering, input and storage). اختر المتصفحات من التحليلات، كما مع الأجهزة، وشغّل الرحلات وفحوص التخطيط (journeys and layout checks) على كل منها، لا اختبارات القواعد (not rule tests). المشتبه بهم المعتادون (Usual suspects): مدخلات التاريخ (date inputs)، والتعبئة التلقائية (autofill)، ووحدات منفذ العرض خلف شريط أدوات الهاتف (viewport units behind a mobile toolbar)، وأعمار ملفات تعريف الارتباط (cookie lifetimes)، والتنزيلات (downloads)، والخطوط (fonts). واستخدمت متصفحات iPhone تاريخيًا WebKit (have historically used WebKit)، فـ Chrome هناك ليس بمحرك Chrome (is not Chrome's engine).
+**تعدد المتصفحات: ما الذي يختلف (Cross-browser: what differs).** القواعد لا تتغير بتغير المتصفح؛ بل العرض والإدخال والتخزين (rendering, input and storage). اختر المتصفحات من التحليلات، كما مع الأجهزة، وشغّل الرحلات وفحوص التخطيط (journeys and layout checks) على كل منها، لا اختبارات القواعد (not rule tests). الأسباب المعتادة (Usual suspects): مدخلات التاريخ (date inputs)، والتعبئة التلقائية (autofill)، ووحدات منفذ العرض خلف شريط أدوات الهاتف (viewport units behind a mobile toolbar)، وأعمار ملفات تعريف الارتباط (cookie lifetimes)، والتنزيلات (downloads)، والخطوط (fonts). واستخدمت متصفحات iPhone تاريخيًا WebKit (have historically used WebKit)، فـ Chrome هناك ليس بمحرك Chrome (is not Chrome's engine).
 
 **اختبار قابلية الاستخدام (Usability testing).** لا توجد قائمة تحقق تبيّن أن شاشة *صحيحة* تُربك الناس (that a *correct* screen confuses people). راقب نحو خمسة مستخدمين ممثِّلين (about five representative users)، منهم متحدثون بالعربية ومستخدمو قارئات الشاشة وأصحاب الهواتف القديمة (Arabic speakers, screen-reader users and people with old phones)، وهم يجربون مهمة مثل «أرسل 250 QAR إلى بوب» ("send 250 QAR to Bob") دون مساعدة (without help) (الدرس 5.3).
 
@@ -1101,23 +1101,23 @@ print(f"{len(every)} combinations, {len(chosen)} pairwise cases")
 
 | المجال (Area) | البوابة (Gate) | الدليل (Evidence) |
 |---|---|---|
-| الرحلات (Journeys) | تنجح الإرسال والرصيد والدخول على مصفوفة الحالات الاثنتي عشرة (Send, balance and login pass on the 12-case matrix) | تقرير المجموعة (Suite report) |
+| الرحلات (Journeys) | ينجح الإرسال والرصيد والدخول على مصفوفة الحالات الـ12 (Send, balance and login pass on the 12-case matrix) | تقرير المجموعة (Suite report) |
 | الأجهزة الحقيقية (Real devices) | أقدم نظام تشغيل مدعوم، وجهاز حالي لكل منصة (Oldest supported OS, one current device per platform) | قائمة تحقق موقَّعة (Signed checklist) |
 | إمكانية الوصول (Accessibility) | لا مخالفات axe من المستوى A أو AA؛ ونجاح لوحة المفاتيح وقارئ شاشة واحد (No axe A or AA violations; keyboard and one screen reader pass) | تقرير الفحص، وملاحظات التدقيق (Scan report, audit notes) |
 | العربية (Arabic) | التوطين الزائف نظيف (Pseudo-localisation clean)؛ ونجاح اختبارات `dir` والانعكاس وثنائية الاتجاه (mirroring and bidi tests pass)؛ ومراجعة متحدث أصلي للنص (a native speaker reviewed the copy) | تقرير الاختبار، واسم المراجع (Test report, reviewer's name) |
 | الإطلاق (Rollout) | 1% و5% و20% و100% مع توقفات (holds)؛ والإيقاف عند هبوط الجلسات الخالية من الانهيار دون خط الأساس (halt below baseline crash-free sessions) | لوحة المتابعة (Dashboard)، ومالك مسمّى (named owner) |
 
-تذهب نتائج `/app` (صياغة الأخطاء، وربط الحقول، وأسماء الحسابات، و`250,50`) إلى الفرق في صورة تقارير عيوب (Findings go to squads as bug reports) (الدرس 1.3).
+تذهب نتائج `/app` (صياغة الأخطاء، وربط الحقول، وأسماء الحسابات، و`250,50`) (error wording, field association, account names, 250,50) إلى الفرق في صورة تقارير عيوب (Findings go to squads as bug reports) (الدرس 1.3).
 
 ## 🛠️ التمارين (Exercises)
 اعمل في نسخة من `testing/sample` مثبَّت عليها Playwright و`@axe-core/playwright` (installed).
 
 - 🟢 **دقّق شاشة واحدة (Audit one screen).** شغّل فحص axe على `/app` و`/app?lang=ar`، ثم نفّذ فحوص لوحة المفاتيح و320 بكسل والتباين يدويًا (by hand). *يكتمل عندما (Done when):* يسرد جدول كل فحص نجاحًا أو فشلًا مع معيار WCAG الخاص به (a table lists each check as pass or fail with its WCAG criterion)، وما فاته axe وحده (what axe alone missed).
-- 🟡 **وطِّن توطينًا زائفًا واعكس (Pseudo-localise and mirror).** شغّل اختباري التوطين الزائف وحافة النص (the pseudo-localisation and text-edge tests)، ثم اعرض أسماء الحسابات بالعربية على `?lang=ar` في نسختك. *يكتمل عندما (Done when):* ينجح اختبار السلاسل المكتوبة داخل الشيفرة (the hard-coded-strings test)، ويفشل اختبار حافة النص دون `dir="rtl"`.
+- 🟡 **طبّق التوطين الزائف واعكس التخطيط (Pseudo-localise and mirror).** شغّل اختباري التوطين الزائف وحافة النص (the pseudo-localisation and text-edge tests)، ثم اعرض أسماء الحسابات بالعربية على `?lang=ar` في نسختك. *يكتمل عندما (Done when):* ينجح اختبار السلاسل المكتوبة داخل الشيفرة (the hard-coded-strings test)، ويفشل اختبار حافة النص دون `dir="rtl"`.
 - 🔴 **صيغ الجمع ومصفوفة (Plurals and a matrix).** اكتب اختبارات صيغ جمع لكتالوجي الإنجليزية والعربية، ثم ابنِ مصفوفة اختبار زوجي لمنتجك أنت بحصص تحليلات مختلقة (from invented analytics shares). *يكتمل عندما (Done when):* يفشل الاختبار العربي إذا حذفت رسالة `two`، وتذكر المصفوفة ما تغطيه وما تضيفه يدويًا (what it covers and what you add by hand).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
-- **«axe أخضر، إذن هي متاحة.» ⁦(Axe is green, so it is accessible.)⁩** يغطي axe المشكلات التي تُفحص بقواعد (rule-checkable issues)؛ فأبقِ الفحوص اليدوية (keep manual checks).
+- **«axe أخضر، إذن يمكن الوصول إليها.» ⁦(Axe is green, so it is accessible.)⁩** يغطي axe المشكلات التي تُفحص بقواعد (rule-checkable issues)؛ فأبقِ الفحوص اليدوية (keep manual checks).
 - **ترجمة النص فقط (Translating only the text).** الاتجاه (Direction) وثنائية الاتجاه (bidi) والأرقام (digits) والتواريخ (dates) وصيغ الجمع (plurals) تفشل أيضًا.
 - **CSS الفيزيائي في منتج RTL (Physical CSS in an RTL product).** `margin-left` لا ينعكس (does not mirror). استخدم الخصائص المنطقية (Use logical properties).
 - **اختبار الهاتف على المحاكيات فقط (Emulator-only mobile testing).** يفوّت الراديوهات والمستشعرات والسرعة (radios, sensors and speed). أبقِ الأجهزة الحقيقية (Keep real devices).
@@ -1132,7 +1132,7 @@ print(f"{len(every)} combinations, {len(chosen)} pairwise cases")
 
 ## ✍️ اختبر نفسك (Check yourself)
 
-**1. يضغط عميل Send في قطار، فيفقد الإشارة، ويعيد التطبيق المحاولة عند عودة الاتصال (retries on reconnecting). أي اختبار هاتف هو الأهم لتطبيق التحويلات (Transfers)؟**
+**1. يضغط عميل Send في قطار، فيفقد الإشارة، ويعيد التطبيق المحاولة عند عودة الاتصال (retries on reconnecting). أي اختبار هاتف هو الأهم للتحويلات (Transfers)؟**
 
 - A. إعادة المحاولة تستخدم مفتاح خاصية عدم التكرار نفسه (The retry reuses the same idempotency key)
 - B. لزر إعادة المحاولة اسم يمكن الوصول إليه (The retry button has an accessible name)
@@ -1141,11 +1141,11 @@ print(f"{len(every)} combinations, {len(chosen)} pairwise cases")
 
 <details><summary>الإجابة</summary>
 
-**A.** إعادة المحاولة بمفتاح جديد قد تنشئ تحويلًا ثانيًا (can create a second transfer)؛ وB وC وD مهمة، لكنها لا تحمي المال (do not protect money). (🟢 الأساسيات، The essentials.)
+**A.** إعادة المحاولة بمفتاح جديد قد تنشئ تحويلًا ثانيًا (can create a second transfer)؛ وB وC وD مهمة، لكنها لا تحمي المال (do not protect money). (🟢 الأساسيات (The essentials).)
 
 </details>
 
-**2. يبلّغ فحص axe للصفحة العربية عن عدم وجود مخالفات WCAG A أو AA. ماذا تستنتج؟**
+**2. يبلّغ فحص axe (An axe scan) للصفحة العربية (the Arabic page) عن عدم وجود مخالفات (violations) WCAG A أو AA. ماذا تستنتج؟ ⁦(What can you conclude?)⁩**
 
 - A. الصفحة تستوفي WCAG 2.2 AA (The page meets WCAG 2.2 AA)
 - B. الصفحة قابلة للاستخدام بقارئ الشاشة (The page is usable with a screen reader)
@@ -1154,11 +1154,11 @@ print(f"{len(every)} combinations, {len(chosen)} pairwise cases")
 
 <details><summary>الإجابة</summary>
 
-**C.** يفحص axe القواعد؛ ولا يستطيع الحكم على صياغة الأخطاء أو ترتيب التركيز أو الإعلانات (error wording, focus order or announcements). الخيارات الأخرى تدّعي أكثر (The others claim more). (🟡 التعمق أكثر، Going deeper.)
+**C.** يفحص axe القواعد؛ ولا يستطيع الحكم على صياغة الأخطاء أو ترتيب التركيز أو الإعلانات (error wording, focus order or announcements). الخيارات الأخرى تدّعي أكثر (The others claim more). (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
-**3. يعرض إيصال نجم المستفيد "7 Seas Trading" على أنه "Seas Trading 7" في التطبيق العربي. ما السبب الأرجح والإصلاح؟**
+**3. يعرض إيصال (receipt) نجم المستفيد (beneficiary) "7 Seas Trading" على أنه "Seas Trading 7" في التطبيق العربي (the Arabic app). ما السبب الأرجح والإصلاح؟ ⁦(What is the most likely cause and fix?)⁩**
 
 - A. خط عربي مفقود؛ ثبّت خطًا (A missing Arabic font; install one)
 - B. قيمة `lang` خاطئة؛ صحّحها (A wrong lang value; correct it)
@@ -1167,7 +1167,7 @@ print(f"{len(every)} combinations, {len(chosen)} pairwise cases")
 
 <details><summary>الإجابة</summary>
 
-**D.** يأخذ الرقم والمسافات اتجاه اليمين إلى اليسار المحيط (take the surrounding right-to-left direction)؛ وعزل الاسم يُبقيه وحدة واحدة من اليسار إلى اليمين (one left-to-right unit). (🟡 التعمق أكثر، Going deeper.)
+**D.** يأخذ الرقم والمسافات اتجاه اليمين إلى اليسار المحيط (take the surrounding right-to-left direction)؛ وعزل الاسم يُبقيه وحدة واحدة من اليسار إلى اليمين (one left-to-right unit). (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
@@ -1180,7 +1180,7 @@ print(f"{len(every)} combinations, {len(chosen)} pairwise cases")
 
 <details><summary>الإجابة</summary>
 
-**A.** للعربية ست فئات جمع (six plural categories)، ولا يرى كل الفجوات إلا فحص على الفئات التي تبلّغ عنها اللغة (a check over the categories the locale reports). الأعداد 1 و5 و100 تصيب `one` و`few` و`other` فقط؛ والمراجع أو لقطة الشاشة لا يريان إلا الأعداد المعروضة (only the counts shown). (🔴 نظرة الخبير، Expert view.)
+**A.** للعربية ست فئات جمع (six plural categories)، ولا يرى كل الفجوات إلا فحص على الفئات التي تبلّغ عنها اللغة (a check over the categories the locale reports). الأعداد 1 و5 و100 تصيب `one` و`few` و`other` فقط؛ والمراجع أو لقطة الشاشة لا يريان إلا الأعداد المعروضة (only the counts shown). (🔴 نظرة الخبير (Expert view).)
 
 </details>
 
@@ -1193,7 +1193,7 @@ print(f"{len(every)} combinations, {len(chosen)} pairwise cases")
 
 <details><summary>الإجابة</summary>
 
-**B.** تبيّن التحليلات أي القيم مهمة؛ ويغطي الاختبار الزوجي كل زوج منها في نحو 12 حالة (covers every pair of them in about 12 cases). أما الخيارات الأخرى فتتجاهل الدليل (ignore the evidence). (🔴 نظرة الخبير، Expert view.)
+**B.** تبيّن التحليلات أي القيم مهمة؛ ويغطي الاختبار الزوجي كل زوج منها في نحو 12 حالة (covers every pair of them in about 12 cases). أما الخيارات الأخرى فتتجاهل الدليل (ignore the evidence). (🔴 نظرة الخبير (Expert view).)
 
 </details>
 

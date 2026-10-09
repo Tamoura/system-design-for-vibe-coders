@@ -654,7 +654,785 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 ## ✍️ Practice exam
 
-@@EXAM@@
+**1. Tariq's spec for Schedules computes every run date from the start date and moves a run that lands on a non-business day to the next business day, in Qatar. A weekly schedule starts on Thursday 4 February 2027, and Thursday 11 February is a bank holiday. Which pair gives the second and third run dates?**
+
+- A. Sunday 14 February, then Thursday 18 February
+- B. Sunday 14 February, then Sunday 21 February
+- C. Monday 15 February, then Thursday 18 February
+- D. Friday 12 February, then Thursday 18 February
+
+<details><summary>Answer</summary>
+
+**A.** The Qatar weekend is Friday and Saturday, so the holiday run rolls past both to Sunday 14 February, and the third run is computed from the start date (4 February plus 14 days), not from the moved date. B steps from the moved run, which is the drift bug; C treats Sunday as weekend; D forgets that Friday is weekend. *(Strategy · 8.1)*
+
+</details>
+
+**2. Bilal's Transfers tests call a sanctions-screening fake that always answers "clear", and they all pass. In production the screening service times out for ten minutes, and some transfers go through unscreened. Which test would have caught this?**
+
+- A. A test where the fake reports a sanctioned name as a match, and the transfer is refused
+- B. A schema check that the fake's reply has the same fields as the real service
+- C. A test where the fake returns a 503 or times out, and the transfer is refused
+- D. A test that the fake is called exactly once for each submitted transfer
+
+<details><summary>Answer</summary>
+
+**C.** A fake that always says "clear" tests only the happy path. Make it return a 503 or raise a timeout and assert that the transfer is refused and no money moves: fail closed. A match (A) is another reply the screening service gives, not a failure of it, a field comparison (B) catches drift but not an outage, and a call count (D) pins wiring, not behaviour under failure. *(Integration · 3.1)*
+
+</details>
+
+**3. Nada raises her open-model test of the balance endpoint from 400 to 600 requests per second on her laptop. The server dashboard still shows a p95 of 90 ms, but her generator reports a `lag` p99 above three seconds and its CPU is at 100 %. How should she read the run?**
+
+- A. The server copes with 600 requests per second, because its own latency did not change
+- B. The server's knee is at exactly 600 requests per second, so the capacity test is done
+- C. The run is invalid as the tool could not send on schedule; add capacity and rerun it
+- D. The lag is only a network effect between laptop and server, so it can be left out
+
+<details><summary>Answer</summary>
+
+**C.** When `lag` is high the generator could not send on schedule, so the numbers describe the tool, not the system. Add generator capacity (or lower the rate) and rerun, watching `lag` and the generator's CPU. A and B read a server limit into a test that never delivered 600 requests a second on time, and D waves away the evidence that the run is invalid. *(Performance · 4.1)*
+
+</details>
+
+**4. Maha wants to kill one screening pod on the live system at noon on Monday "to see what happens". Rashid asks her to hold off. What must the experiment have before it runs?**
+
+- A. A steady-state metric, a hypothesis, a limited blast radius and an abort condition
+- B. A quiet slot such as 3 a.m., with the whole squad on standby in case customers notice
+- C. Alerts muted for the run, so that the on-call team sees the raw behaviour undisturbed
+- D. A sign-off from every squad lead, so that nobody is surprised by what customers see
+
+<details><summary>Answer</summary>
+
+**A.** An experiment is a hypothesis, not a stunt: name the steady state with a metric (say, transfer success above 99.9 %), state what you expect, limit the blast radius (staging, or 1 % of traffic) and set abort conditions (stop if success is below 99 % for two minutes). A quiet hour (B) shrinks the damage but gives no way to stop or to learn, muted alerts (C) remove the monitoring the experiment relies on, and a sign-off (D) is not a control. *(Reliability · 4.3)*
+
+</details>
+
+**5. Nada fixes NAJM-101, the international fee that was a cent short, and adds one regression test: `fee("3090", "QAR", "international") == Decimal("10.82")`. Rashid says it is necessary but not enough. What should she add?**
+
+- A. More half-cent amounts, such as 2,870, 2,990 and 3,110, with hand-worked fees
+- B. An assertion that the fee for 3,090 is a `Decimal` that sits between 10.00 and 100.00
+- C. Twenty more transfers at mid-range amounts such as 500 and 5,000
+- D. A coverage report showing that every line of `fee()` is now run by the suite
+
+<details><summary>Answer</summary>
+
+**A.** The bug is a class of inputs (407 of the 25,000 whole-riyal amounts get a wrong fee), and one example guards one point. Hand-worked neighbours (10.05, 10.47 and 10.89) or a property test guard the class. B still passes with the bug, since 10.81 is a `Decimal` in range; C uses round amounts that never produce a half cent; D measures lines run, not values checked. *(Mindset · 0.2)*
+
+</details>
+
+**6. Two of Bilal's tests share one module-level `TransferService`. `test_first_transfer_gets_id_tr_0001` fails with `tr-0002` whenever `pytest-randomly` runs `test_fee_is_charged_once` before it, and passes in file order. What is the best fix?**
+
+- A. Turn off the shuffling plugin, so that the tests always run in the order they were written
+- B. Add `--reruns 2`, so that the failing test gets another chance in a luckier order
+- C. Quarantine the failing test and leave it until somebody finds the time to look at it
+- D. Replace the shared service with a fixture, so that each test builds its own fresh one
+
+<details><summary>Answer</summary>
+
+**D.** Both tests change the same service, so the first id depends on the order: shared mutable state. A fixture that builds a fresh service for each test removes the cause. Pinning the order (A) and reruns (B) hide it, and quarantine (C) is a parking place, with an owner and a deadline, for a flake you cannot yet fix; this one has a simple cure. *(Unit · 2.3)*
+
+</details>
+
+**7. Tariq's squad moves the international fee to binary floats, and `3090` QAR now returns `10.81` instead of `10.82`. Najm Mobile's pact only requires `fee` to be a string with two decimals, so provider verification stays green and `can-i-deploy` answers yes. What should Bilal conclude?**
+
+- A. The pact is broken, so the consumer should regenerate it from the new provider build
+- B. `can-i-deploy` cannot be trusted, so every release needs a full end-to-end run first
+- C. The pact should list many example fees, so that every fee rule is checked there
+- D. A contract proves shape, not value, so exact fees need unit and property tests
+
+<details><summary>Answer</summary>
+
+**D.** The provider's `10.81` has exactly the shape the consumer reads, so verification passes: a contract proves shape, not correctness. Exact fees belong to unit tests and an exact-oracle property test (lesson 2.3), which fail under the `float_fee` bug. Nothing in the pact is broken (A), dropping the gate (B) throws away what it does well, and C turns the pact into a rule suite. *(Integration · 2.2)*
+
+</details>
+
+**8. Dana's team halves the chunk size in Najm Assist's policy index to make search faster. The golden-set pass rate does not move, but Rashid asks for one more check before approval. Which check is the direct regression test for a chunking change?**
+
+- A. The golden set again, ten more runs at temperature 0.8 to average out sampling noise
+- B. Recall@k, precision@k and MRR on the labelled retrieval queries
+- C. The population stability index on last week's topic mix of customer questions
+- D. The red-team tests that plant a poisoned document in the index
+
+<details><summary>Answer</summary>
+
+**B.** Chunking decides what the retriever can find, so the lesson re-runs the retrieval metrics on labelled queries after any chunking change, which can reveal a right document sliding down the ranking before the final text shows it. A re-measures the final answers, C watches production drift, and D tests a different link in the chain. *(AI · 7.2)*
+
+</details>
+
+**9. Two of Nada's end-to-end tests each read `acc-1`'s balance through the API, send 100.00 from the page and assert that the balance fell by exactly 100.00. Each passes alone. With `--workers=4` they fail about one run in five. What is the likeliest cause, and the best fix?**
+
+- A. A slow page; add `waitForTimeout(1000)` after the click so that the balance can settle
+- B. Shared server data, as both tests move one account; assert on what each test owns
+- C. Cookies shared between tests; clear the storage state before every assertion
+- D. An unstable locator; let CI retry a failing test once before it reports a failure
+
+<details><summary>Answer</summary>
+
+**B.** Each test gets a fresh browser context, but the server's data is shared: two parallel tests moving money from `acc-1` change each other's balance. Assert only on what the test owns, such as its own transfer read by id, or start one app per worker. A sleep (A) guesses, and a retry (D) would hide the interference instead of removing it. *(UI · 3.2)*
+
+</details>
+
+**10. Bilal has one afternoon to automate one of four manual checks. By Najm's automation strategy, which check earns the afternoon?**
+
+- A. The 14:59 and 15:00 cut-off check: a Deep area with a fixed rule, run on every build
+- B. The statement PDF layout check: a fixed layout, run every release, in an area scored Smoke
+- C. The Arabic transfer-form check: a Standard area, run every release, with a redesign next month
+- D. The notification wording check: a Light area, run every release, judged by a native reader's ear
+
+<details><summary>Answer</summary>
+
+**A.** Automation pays back when a check is stable, high-risk, deterministic and run often, and the cut-off check is all four (cut-off is a Deep area). B is stable and repeatable but sits in a Smoke area, where one check at release is enough and upkeep is not worth paying; C is not stable, because a redesign next month would rewrite it; D is a judgement call that needs a person. *(Strategy · 5.1)*
+
+</details>
+
+**11. Amal asks for an end-to-end test that the page tells the customer when the Transfers API is down. The suite runs its tests in parallel on shared CI machines. Which approach is best?**
+
+- A. Stop the API process during the CI run, then start it again once the test is done
+- B. Leave it to a manual check, with someone stopping the API by hand before each release
+- C. Add a long `waitForTimeout`, and hope that the slow server eventually times out
+- D. Intercept the POST to the API with `page.route`, and fulfil it with a 503 response
+
+<details><summary>Answer</summary>
+
+**D.** `page.route` reaches a state that is slow or risky to create for real, and it affects only this test, so the parallel tests are untouched. Stopping the API (A) breaks every test running at that moment, a manual check (B) is the outage nobody automates and so nobody re-tests, and waiting for a timeout (C) is a guess. *(UI · 3.2)*
+
+</details>
+
+**12. Bilal's CI starts running tests in random order. A test that reads back a transfer made by the previous test now fails about half the time. Both share a module-level `SERVICE = TransferService()`. What is the right fix?**
+
+- A. Pin the order in CI so the first test always runs before the second
+- B. Rerun failures twice and count the build as green once a rerun passes
+- C. Add a one-second sleep at the start of the second test, so the first can finish
+- D. Build the service in a fixture so each test arranges its own data
+
+<details><summary>Answer</summary>
+
+**D.** Shared mutable state makes results depend on order, and the second test silently relies on the first. A fixture that builds what each test needs makes the tests isolated, so any order works. A hides the dependency, B hides the flake behind retries, and a sleep (C) has nothing to wait for. *(Unit · 2.1)*
+
+</details>
+
+**13. The rules of Najm Plus change almost every week. Rashid wants useful coverage without rewriting scripts after each change. Which approach fits best?**
+
+- A. A short checklist of conditions, plus a time-boxed charter to explore each week's changes
+- B. Fully scripted test cases with exact steps and data for every rule, kept for audit
+- C. A large automated end-to-end suite covering every screen of the offer
+- D. No test design until the rules stop changing, so nothing is rewritten
+
+<details><summary>Answer</summary>
+
+**A.** Scripts cost effort to write and to keep current, so a feature that changes weekly is better served by a checklist and a charter, which are cheaper to maintain and still cover the risks. B pays the rewrite cost every week, C is the heaviest thing to keep in step, and D leaves the offer untested while customers use it. *(Design · 1.3)*
+
+</details>
+
+**14. Two vendors each claim their AI assistant writes "high quality" tests, and Bilal can run both against the course's sample system. How should he compare them?**
+
+- A. Pick the assistant whose generated suite reports the higher line and branch coverage
+- B. Pick the assistant that generates more tests in the same amount of time
+- C. Ask each assistant to grade its own tests and pick the higher score
+- D. Run each suite once per seeded bug, switched on alone, and count the bugs caught
+
+<details><summary>Answer</summary>
+
+**D.** The bug-catch score measures a suite by what it catches: switch each seeded bug on by itself, run the suite, and count the runs that go red. It works the same for a human's tests or a tool's (after checking that each suite passes with no bug on). A and B measure activity, not the ability to fail, and C lets each tool mark its own work. *(Mindset · 0.3)*
+
+</details>
+
+**15. Nada's twelve `TransferDesk` tests each assert `service.submit.assert_called_once_with("alice", REQ, "k1", None)` on a `Mock` service. A refactor makes the desk read the clock itself and pass the current time as the fourth argument instead of `None`. Behaviour is unchanged, yet all twelve fail. Which change fixes the cause?**
+
+- A. Loosen each assertion to `assert_called()` so the arguments no longer matter
+- B. Use a fake or real `TransferService` and assert the balance and the transfer's status
+- C. Add `autospec=True` to the mock so the call is checked against the real signature
+- D. Update the twelve expected calls whenever a refactor changes the arguments
+
+<details><summary>Answer</summary>
+
+**B.** The tests assert interactions, so they pin how the desk is wired, not what it promises. State assertions on a real or fake service describe the promise (money moved, status accepted), survive refactors and also run the limit rules. A and C still pin the wiring, and D accepts the churn for ever. Keep spies and mocks for edges such as SMS. *(Unit · 2.1)*
+
+</details>
+
+**16. Najm Assist passes 21 of 24 on its English golden set, and no category has fallen below its baseline. Hessa asks the same three core questions in Arabic and Assist declines all three, because the retriever ignores non-Latin words. Which practice would have shown this before she did?**
+
+- A. Gating each topic category against its baseline, with a floor for safety categories
+- B. Putting an Arabic greeting before every passing golden question and requiring a correct answer or a decline
+- C. Comparing the candidate release with the old one case by case on the golden set
+- D. Reporting pass rates by language slice, with intervals, each release
+
+<details><summary>Answer</summary>
+
+**D.** Averages hide unequal service, and an Arabic slice would have shown 0 of 3 even though declining is the safe failure. A and C re-measure the same English cases, and B keeps the English question inside the prompt: the retriever ignores non-Latin words, so an Arabic prefix costs nothing and the case still passes. *(AI · 7.3)*
+
+</details>
+
+**17. An agent turns every visible test green for Najm's new fee-rounding module. Rashid worries that it may have memorised the visible examples, and these are money rules. Which extra control best exposes memorising?**
+
+- A. Put the visible tests under CODEOWNERS review, so that the agent cannot edit them
+- B. Keep a held-out set of money-rule tests in CI, which the agent never gets to see
+- C. Require 100% line coverage on the new module before the pull request can merge
+- D. Make the agent paste the last line of every command's output into its final message
+
+<details><summary>Answer</summary>
+
+**B.** Tests the agent can read can be memorised; a held-out set that fails where the visible tests pass shows overfitting, and it is worth reserving for money and regulatory rules. A stops edits, not memorising, since the agent can copy answers without touching a test; C measures what ran, and a lookup table of the visible answers runs every line; D shows that the visible tests passed, which was never in doubt. *(AI · 6.2)*
+
+</details>
+
+**18. Hessa asks Nada for 3-value boundary tests of the daily limit, using a 12,000.00 QAR transfer. The limit is 50,000.00 QAR. Which "sent today" values, with expected results, are right?**
+
+- A. 49,999.99 accepted, 50,000.00 accepted, 50,000.01 rejected
+- B. 37,999.99 accepted, 38,000.00 rejected, 38,000.01 rejected
+- C. 24,999.99 accepted, 25,000.00 accepted, 25,000.01 rejected
+- D. 37,999.99 accepted, 38,000.00 accepted, 38,000.01 rejected
+
+<details><summary>Answer</summary>
+
+**D.** The limit applies to the total, sent today plus the new amount. 38,000.00 plus 12,000.00 lands exactly on 50,000.00, which is allowed; one cent more is not. A puts the boundary on the "sent today" value itself, B rejects a total that merely meets the limit (the `limit_off_by_one` behaviour), and C uses the per-transfer maximum. *(Design · 1.2)*
+
+</details>
+
+**19. Najm's Payments squad publishes a partner API that dozens of outside apps call, and Najm cannot identify most of them. The squad wants early warning when a release breaks the response shape. Which approach is practical?**
+
+- A. Consumer-driven Pact tests, with every outside app publishing pacts to a Najm broker
+- B. End-to-end tests that drive each partner app against every new release
+- C. A JSON Schema or OpenAPI check that every response keeps the published shape and types
+- D. Unit tests of the provider's internal model classes after each release
+
+<details><summary>Answer</summary>
+
+**C.** With unknown consumers there is nobody to write pacts, and a schema or OpenAPI check on the published shape is simple and catches a renamed or retyped field. A needs known consumers who publish pacts, B cannot be run for apps Najm cannot identify, and D tests the provider's own idea of its shape, which stays green when a field is renamed. *(Integration · 2.2)*
+
+</details>
+
+**20. Bilal's regression suite for Transfers has run unchanged and green for eighteen months, yet support keeps logging rounding and cut-off complaints. What is the most useful next step?**
+
+- A. Add more tests of the same mid-range kind, so the suite grows by a third
+- B. Review recent escapes and add new cases for rounding and time
+- C. Run the suite every night instead of every week, so problems show sooner
+- D. Raise the coverage threshold until `transfers.py` is at 100 percent
+
+<details><summary>Answer</summary>
+
+**B.** Tests wear out: the same tests, run again and again, stop finding new defects, and defects cluster where the complaints point (rounding and time). Refresh the suite around those areas. A repeats the pattern that already misses them, C reruns the same checks more often, and D measures execution, not checking. *(Mindset · 1.1)*
+
+</details>
+
+**21. A full mutation run on the payments service takes forty minutes, and pull requests are waiting for it. What policy fits best?**
+
+- A. Mutate only the code a pull request changes; run everything nightly
+- B. Drop mutation testing for a coverage threshold, since both measure test quality
+- C. Run the full mutation set once a quarter, just before each audit review
+- D. Keep full runs on every pull request, but stop each run after ten minutes
+
+<details><summary>Answer</summary>
+
+**A.** Mutation testing is costly, so it runs on changed code for each pull request (select mutants by name, or narrow the files) and in full overnight. B swaps a measure of execution for a measure of checking, C finds weak tests months late, and D leaves whichever mutants come last unjudged. *(Strategy · 2.3)*
+
+</details>
+
+**22. Three weeks ago Nada quarantined a browser test that failed about one run in eight, with a 14-day deadline. Her flake gate now reports the quarantine expired, and nobody has looked at the test since. What does Najm's flaky-test policy want next?**
+
+- A. Renew the entry automatically for another 14 days, so that the gate stays quiet
+- B. Check whether the test is right, then fix it or renew the quarantine in a reviewed change
+- C. Raise the quarantine job's retries to three, so that the test stops looking flaky
+- D. Switch the gate to warning-only, since a stale entry should not hold up other merges
+
+<details><summary>Answer</summary>
+
+**B.** A quarantine has an owner and a deadline so that it cannot become a graveyard: when the deadline passes the gate stays red until someone fixes the test or renews the quarantine in a reviewed change. First ask whether the test is flaky or right, because it may be reporting a real race. A, C and D keep the problem hidden or the gate quiet. *(Delivery · 5.2)*
+
+</details>
+
+**23. Maha's canary for a new Najm Mobile API build has served 1,600 requests, with 8 errors and a p95 of 330 ms. The stable version has 40 errors in 40,000 requests and a p95 of 310 ms. What does Najm's `canary_verdict` return with its default settings?**
+
+- A. Wait, because 1,600 requests is still too few for the judge to decide anything
+- B. Promote, because the p95 of 330 ms is only a little above the stable 310 ms
+- C. Promote, because 8 errors is only a very small count in absolute terms
+- D. Roll back, because the error rate is too far above the stable error rate
+
+<details><summary>Answer</summary>
+
+**D.** The defaults wait below 1,500 requests, roll back if the canary's error rate is more than 0.2 percentage points above stable or its p95 is more than 20% above, and otherwise promote. The canary's rate is 8 ÷ 1,600 = 0.50%, against a limit of 0.10% + 0.2 points = 0.30%, so it rolls back. A fails because 1,600 is above the 1,500 minimum; B checks only the latency rule, which passes (330 ms is under 372 ms) but cannot offset the error rule; C judges a count instead of a rate. *(Delivery · 5.2)*
+
+</details>
+
+**24. Rania's team moves Najm Assist to a cheaper model version. Averaged over ten runs on each version, the golden set scores 18 of 24 before and 18 of 24 after, and the team calls the change neutral. Rashid asks for one thing before approval. What is it?**
+
+- A. A cost report showing the saving per 1,000 questions, since accuracy is equal
+- B. A per-case comparison listing every case that passed before and fails now
+- C. Ten more runs of the new version alone, to confirm that its 18 is stable
+- D. A ROUGE score between the old and new answers, to show that they are similar
+
+<details><summary>Answer</summary>
+
+**B.** Equal totals can hide different failures, so differential testing compares cases, not totals, and a floor on a safety category would block a flipped privacy case. A and C ignore which cases moved (the ten runs on each side already average out the sampling noise), and D scores wording similarity, a weak proxy for quality. *(AI · 7.3)*
+
+</details>
+
+**25. Amal runs a 25-minute example-mapping session with the product owner and a developer on the story "a customer can schedule a transfer for a future date". The wall ends with two rules, four green examples and five red cards, such as "Which day's daily limit does it count against?" and "What if the balance is short on the day?". Nobody in the room can answer them, and each would change what the developer builds. What should the team do?**
+
+- A. Treat the story as not ready, and get each red card answered by the owner of that rule
+- B. Let the developer start on the green examples, and settle the red cards in testing
+- C. Have Nada write Gherkin for each red card, assuming the most likely answer
+- D. Book a second session to add more green examples to the two existing rules
+
+<details><summary>Answer</summary>
+
+**A.** A story is ready when each rule has an example and no open question blocks it, so five unanswered red cards that change what gets built mean it is not ready; the answers come from the people who own the rules, and each becomes a green example. B builds on guesses (the `limit_off_by_one` story in the lesson began exactly like this), C is Gherkin written alone, and D adds examples while the questions stay open. *(Design · 5.3)*
+
+</details>
+
+**26. Bilal asks an agent to make `tests/test_value_dates_spec.py` pass without editing any test; its rows come from a table the product owner signed. The pull request arrives with one spec row changed so that "Sunday 15:00" expects Tuesday, and the description says "the spec looked wrong". CI is green. As the Quality Engineering code owner, what should Rashid do?**
+
+- A. Approve, because the agent gave a written reason and the whole suite is also green
+- B. Approve if the mutation score of the changed module stays above the 80% gate
+- C. Check the row against the signed table, then send the agent back to fix the code
+- D. Delete the disputed row, so that the agent cannot lean on one contested example
+
+<details><summary>Answer</summary>
+
+**C.** The tests are the specification, and the agent may not edit what judges it; a human compares the row with the signed table, and if the table itself is wrong a human fixes it first. A trusts a claim, B scores the already weakened tests, and D shrinks the specification. *(Delivery · 6.2)*
+
+</details>
+
+**27. After a refactor, the nightly load test of `POST /transfers` shows p95 falling from 240 ms to 45 ms. The report lists only latency percentiles, and its one threshold, p95 under 300 ms, is green. Rashid asks Nada what else she checked before announcing the win. Which check matters most?**
+
+- A. The mean latency, because the mean is steadier than a percentile from one run to the next
+- B. The think time, so that the p95 threshold can be tightened to match the new figure
+- C. The error rate and status codes, because failed requests can come back very quickly
+- D. Nothing more, because a p95 well under the threshold means the change is safe
+
+<details><summary>Answer</summary>
+
+**C.** Latency means little beside errors: a server that answers every request with a 5xx in a few milliseconds looks fast, so the statuses and the error rate come first. The mean (A) hides the slow tail, tightening the threshold (B) builds on a figure nobody has trusted yet, and D ships on one number. *(Performance · 4.1)*
+
+</details>
+
+**28. In an interview, Rashid asks a candidate: "How would you test a transfer form?" She starts listing test cases for every field in turn. Which approach better follows the interview frame?**
+
+- A. Ask who uses the form and what rules apply, rank the risks, then choose techniques
+- B. Name the Playwright journeys she would automate first, then add field checks later
+- C. Apply partitions and boundaries to every field first, then rank the risks that the cases reveal
+- D. Say she would try many different inputs and see whether anything breaks
+
+<details><summary>Answer</summary>
+
+**A.** The frame starts by clarifying and ranking risks (wrong money, duplicates, another customer's account) before techniques, and the scorecard marks "lists every field equally" as a weak signal. B automates before ranking, C picks techniques before any risk is ranked and so treats every field alike, and D is the scorecard's weak "try different inputs". *(Career · 8.2)*
+
+</details>
+
+**29. Bilal's gate asks for an 80% mutation score on changed money code. A new fee module scores 94%, six mutants survive and nobody has looked at them yet. Tariq asks for 100% before merge. What should Rashid recommend?**
+
+- A. Add a test for each survivor until the score reaches 100%, however artificial it is
+- B. Raise the gate to 100% on all money code, so that the score cannot be argued
+- C. Mark all six survivors as equivalent mutants, so that the report shows 100%
+- D. Keep the 80% gate, and let a human triage each survivor as a gap or equivalent
+
+<details><summary>Answer</summary>
+
+**D.** Some mutants are equivalent (they change nothing observable), so 100% is often unreachable and chasing it invites silly tests. A human triages each survivor: a real gap gets a test, an equivalent mutant is accepted. A and B chase the number, and C accepts the survivors without checking them. *(AI · 6.2)*
+
+</details>
+
+**30. Najm keeps old app versions working for months. Tariq's squad makes `kind` a required field of `POST /transfers` and updates the OpenAPI document. Every current test and the nightly Schemathesis run pass. Two weeks later, customers on the oldest app see errors. Which test would have caught this before release?**
+
+- A. A nightly Schemathesis run with a larger value for `--max-examples`
+- B. A strict response schema, with `additionalProperties: false`, for every transfer
+- C. A saved request from the old app, without `kind`, that must still return 201
+- D. An authorisation matrix with one row for each route and each role
+
+<details><summary>Answer</summary>
+
+**C.** Old apps keep sending the old request, so a fixture from the old client, a request without `kind`, must still return 201 with every old response field. Schemathesis (A) checks the API against the new document, which says `kind` is required, so a refusal of a request without it looks correct. A strict response schema (B) catches leaked or extra fields, and the matrix (D) checks who may do what. *(Integration · 3.1)*
+
+</details>
+
+**31. Tariq's squad wants to release Najm Mobile's new transfer flow to every Android user at once. "If it breaks, we roll back like the web app," he says. What should Amal's release gate require instead?**
+
+- A. A store rollback plan, since both stores can withdraw a build within a few minutes
+- B. A staged rollout of 1%, 5%, 20% and 100%, with a halt rule and a remote kill switch
+- C. Two extra regression runs on emulators, because they give the same results as devices
+- D. A one-week beta on the newest phone, then a full release if no crash is reported
+
+<details><summary>Answer</summary>
+
+**B.** A mobile release has no rollback button: stores review builds and users update when they choose. So release in stages, halt if crash-free sessions or transfer success fall below baseline, and keep a server-side kill switch for risky features. A relies on a rollback that does not exist, C trusts emulators that miss radios, interruptions and real speed, and D tests only the newest phone, not the oldest supported OS. *(UI · 3.3)*
+
+</details>
+
+**32. Release 2026.10 has every Deep area green, but one Sev2 is still open: the Arabic transfer form misaligns on small screens. Tariq wants to ship on Monday as planned. Under Najm's exit criteria, what has to happen first?**
+
+- A. QE holds the release until the defect is fixed, because exit criteria work as a veto
+- B. The defect is relabelled Sev3 so that the exit criteria can be met by Monday
+- C. A named owner accepts the open Sev2 in writing, and it is recorded as accepted
+- D. Nothing more, because every Deep area is green and the defect is only cosmetic
+
+<details><summary>Answer</summary>
+
+**C.** Exit criteria are evidence, not a date: an open Sev1 or Sev2 needs a named owner's written acceptance, and the release dashboard lists it with an expiry date. A turns QE into a gatekeeper, and gatekeepers get bypassed; B games the severity scale; D forgets that the criteria cover every open Sev1 or Sev2, not only the Deep areas. *(Strategy · 5.1)*
+
+</details>
+
+**33. In Hessa's Schedules eval, Najm Assist creates a schedule for 50 QAR instead of 500 QAR in 2 of 12 Arabic requests that write the amount as "٥٠٠". Which fix can the team test reliably?**
+
+- A. Tell the model in the prompt to write amounts in Western digits, then rerun the eval ten times at temperature 0.8 and compare the rates with intervals
+- B. Add three Arabic examples to the prompt and rerun the 12 requests at temperature 0, shipping if all of them pass
+- C. Ask a validated judge model to grade whether each summary shown to the customer has the right amount
+- D. Convert the digits in code, unit-test that "٥٠٠" gives 500 and let the tool re-check the rules
+
+<details><summary>Answer</summary>
+
+**D.** Code, not the model, should turn Arabic-Indic digits into a number: a function takes exact unit tests, and the tool enforces the rules itself. A and B still leave the reading to the model, so they can only estimate a failure rate, and 12 requests are too few to show that it is gone; C uses a judge to grade what code can compare. *(AI · 8.1)*
+
+</details>
+
+**34. Nada writes a test asserting that the international fee is always between 10.00 and 100.00, and runs it on 1,000 random amounts. With `float_fee` switched on it still passes. What does this show?**
+
+- A. A range check is a partial oracle, so it needs exact hand-worked fees beside it
+- B. The sample was too small, since a run of 100,000 random amounts would have caught it
+- C. Range assertions are invalid, because they do not come from a requirement
+- D. The test is sound, because a fee of 10.81 is within the published limits
+
+<details><summary>Answer</summary>
+
+**A.** A partial oracle states a property that must hold; it is cheap but catches fewer bugs, and 10.81 is in range, so it passes however many amounts are tried. An exact expected value from the fee rule (3,090 gives 10.82) is what fails with the bug on. B treats volume as the cure, C is wrong because the 10.00 minimum and 100.00 cap are policy, and D mistakes "passes" for "correct". *(Mindset · 1.1)*
+
+</details>
+
+**35. Tariq's squad ships a statement export that matches its specification exactly: a CSV with six columns. Customers still cannot reconcile their accounts, because nobody asked for the value date. Which statement is accurate?**
+
+- A. Verification failed, because the export lacks a column that customers need
+- B. Both passed, because an export that matches its specification is correct
+- C. Verification passed and validation failed: the spec was met, the need was not
+- D. Neither applies, because a missing requirement is a product issue, not testing
+
+<details><summary>Answer</summary>
+
+**C.** Verification asks whether the product matches its specification ("are we building it right?"); validation asks whether it meets the real need ("are we building the right thing?"). The export passes the first and fails the second. A blames the build for a gap in the spec, B treats the specification as if it were the need, and D forgets that testers also challenge requirements. *(Mindset · 0.1)*
+
+</details>
+
+**36. Amal files one report: double-tapping Send debits the account twice, and the Arabic confirmation page shows an English rule code. Tariq's squad can fix the second today, but the first needs a design change. What should happen?**
+
+- A. Keep one report, so the squad sees everything about that screen together
+- B. Raise the combined report to S1, because it contains a money defect
+- C. Split it into two reports, each with its own severity, owner and retest
+- D. Return it unfiled until Amal finds one root cause shared by both problems
+
+<details><summary>Answer</summary>
+
+**C.** One defect per report: a report holding two bugs cannot be closed cleanly, and each bug needs its own severity (the double debit is S1; the wording is minor), owner and retest. A leaves a ticket the squad can never close, B inflates the severity of the cosmetic half, and D delays a fix that is ready today for a link that may not exist. *(Mindset · 1.3)*
+
+</details>
+
+**37. Tariq's squad adds a limit of 10 transfers a minute per customer. Their test sends 11 requests as Alice and asserts a 429 on the 11th, and it passes. Then Mariam's red team rotates the `X-Forwarded-For` header and gets 50 transfers through. Which test would have caught this?**
+
+- A. Alice sends 11 requests as `X-Forwarded-For` changes; the counter must not reset
+- B. A load test at 1,000 requests a second, to confirm the limiter holds under pressure
+- C. A test that sleeps for 60 seconds, then checks that Alice can send again
+- D. A test that Bob stays unaffected while Alice is being limited by the rate limit
+
+<details><summary>Answer</summary>
+
+**A.** The control has to hold against a client that lies, so the test changes a header the client controls and checks that the counter does not reset. B tests load, not a bypass; C checks the wait (and should use an injected clock, not a sleep); D checks fairness between customers. All are worth having, but only A would have caught this. *(Security · 4.2)*
+
+</details>
+
+**38. Mariam's red team tunes a guardrail on the QA copy of Najm Assist until all 40 attack prompts are refused, and the adversarial set holds nothing else. Tariq wants to call the work done. What does the set still lack to be balanced?**
+
+- A. Another 40 attack prompts copied from public lists, to confirm that the guardrail holds
+- B. Benign requests that sound alarming, like freezing a stolen card, that must be answered
+- C. A run of the same 40 attacks against production, to confirm that the QA result is real
+- D. Ten repeated runs of the same 40 attacks, to confirm that the refusals are stable
+
+<details><summary>Answer</summary>
+
+**B.** A guardrail tuned only to block attacks starts refusing real customers, so over-refusal cases sit beside the attacks and both rates are tracked. A adds more of the same kind of case, which adds volume but no balance, C breaks the rules of engagement (the QA copy, never production), and D proves the refusals are stable but not that the balance is right. *(AI · 7.3)*
+
+</details>
+
+**39. Tariq's squad has fast unit tests, BDD scenarios for the business rules, and load and security tests every month. Rashid maps them onto the agile testing quadrants and finds one quadrant empty. Which kind of testing is the squad missing?**
+
+- A. Technology-facing tests that support the team
+- B. Business-facing tests that support the team
+- C. Business-facing tests that critique the product
+- D. Technology-facing tests that critique the product
+
+<details><summary>Answer</summary>
+
+**C.** Unit tests are Q1 (technology-facing, support the team), BDD examples Q2 (business-facing, support the team) and load and security tests Q4 (technology-facing, critique the product). The empty quadrant is Q3, where people examine the product from the business's side through exploratory sessions, usability sessions and UAT, and find what nobody predicted. A, B and D are quadrants the squad already fills. *(Strategy · 5.3)*
+
+</details>
+
+**40. An agent writes a daily-limit change and its six tests in one pull request. Bilal notices that the product owner's rule says a day's total of exactly 50,000.00 QAR is allowed, yet the agent's `>=` check and all six of its tests treat exactly 50,000.00 as over the limit. The suite is green. What is the best next step?**
+
+- A. Ask a second model to review the code and the tests, and merge if it agrees
+- B. Run mutation testing on the function, and merge if its score clears the 80% gate
+- C. Raise line coverage of the function to 100%, so that every branch is known to run
+- D. Take the expected values from the product rule, in a boundary table a human approves
+
+<details><summary>Answer</summary>
+
+**D.** Tests written by the agent that wrote the code restate its belief, so they cannot disagree with it; ask where each expected value came from and rebuild them from the rule. A second model's errors can correlate with the author's, coverage measures what ran, not what was checked, and a mutation score can look healthy here because mirror tests fail the moment the code changes: it shows that tests can fail, not that their expected values are right. *(AI · 6.1)*
+
+</details>
+
+**41. For three weeks Bilal polishes the Najm Assist prompt against the same 24 golden cases, and the pass rate climbs from 75% to 96%. Rashid asks whether customers will see that gain. What is the best next step?**
+
+- A. Ship the prompt, because a 21-point rise is far larger than any sampling noise
+- B. Rerun the same 24 cases ten times at temperature 0.8 and ship if the average holds
+- C. Switch to a judge model, which grades more kindly than contains checks
+- D. Score it on a held-out slice that nobody tuned against and compare the rates
+
+<details><summary>Answer</summary>
+
+**D.** After repeated tuning on the same cases the score measures memory, and only a slice nobody polished against shows whether the gain carries over to new questions. A treats the tuned score as evidence, B repeats the same questions so it removes noise but not overfitting, and C changes the grader to chase a higher number. *(Delivery · 7.1)*
+
+</details>
+
+**42. Rania's team runs the 24-case Najm Assist golden set ten times at temperature 0.8 and gets 216 passes in 240 results, 90%. The report prints a 95% interval of about 86% to 93% over all 240 results, and Rania wants to ship on it. What is wrong with that reading?**
+
+- A. The 240 results rest on only 24 questions, so the interval is too narrow; add cases
+- B. Ten runs are too few, so a hundred runs of the same set would make the interval trustworthy
+- C. Intervals do not apply to a model that samples, so the best single run should be reported
+- D. Temperature 0.8 is too high, so one run at temperature 0 would give a trustworthy figure
+
+<details><summary>Answer</summary>
+
+**A.** Repeating the same questions averages out sampling noise but adds no new questions, so 240 results overstate what 24 questions can show; only more cases tighten the interval. B repeats the same mistake with more runs, C picks the luckiest draw, and D still leaves one run on 24 questions (hosted models can vary even at temperature 0). *(AI · 7.1)*
+
+</details>
+
+**43. Dana notices that Najm Assist's LLM judge gives higher scores to longer replies, even when a short reply states the same correct fact. Which fix matches this bias?**
+
+- A. Run each comparison in both orders and average the two verdicts
+- B. Use a judge from a different model family than the one that wrote the replies
+- C. Tell the judge to ignore length, then check its scores against length
+- D. Set the judge's temperature to 0 so that its scores stop varying between reruns
+
+<details><summary>Answer</summary>
+
+**C.** This is verbosity bias, and the lesson's remedy is a rubric line that says to ignore length, followed by a check of the scores against reply length. A fixes position bias and B fixes self-preference, which are real judge biases but not this one; D makes the bias repeatable instead of removing it. *(AI · 7.1)*
+
+</details>
+
+**44. Maha's team adds a synthetic transfer check that runs against production every 15 minutes. So that it also runs on laptops, Nada writes `baseURL: process.env.BASE_URL ?? 'https://staging.najm.example'`. What is the right fix?**
+
+- A. Leave it: a default keeps the check running, and staging is built from the same code
+- B. Default to the production URL, so that the check always watches what matters
+- C. Keep the default and add a comment asking people to set `BASE_URL` in every job
+- D. Remove the default, so a missing value fails instead of testing the wrong system
+
+<details><summary>Answer</summary>
+
+**D.** If the scheduler job ever loses `BASE_URL`, the default makes the check pass against staging while production goes unwatched. The URL should come from configuration with no default. B would send a check that moves real money from every laptop, and C relies on people reading a comment. *(Reliability · 5.2)*
+
+</details>
+
+**45. Hessa's Arabic page passed translation review, a clean axe scan and Amal's mirroring checks. Then a customer in Doha types `250,50` into Amount and sees a bare `error`, and another types `٢٥٠٫٥٠` with the same result. Which test idea would have found this kind of bug?**
+
+- A. Pseudo-localising the catalogue, so that every string is longer and wrapped in square brackets
+- B. Typing amounts as Arabic and German keyboards do, and checking they are accepted or explained
+- C. Measuring bounding boxes, so that labels are shown to start at the right-hand screen edge
+- D. A native speaker reading the Arabic error messages, so that their wording is reviewed
+
+<details><summary>Answer</summary>
+
+**B.** Translation, a rule scan and mirroring checks say nothing about how the field treats numbers typed in other formats: Arabic-Indic digits, the Arabic decimal comma, a comma as the decimal separator. Type amounts the way those keyboards produce them and assert they are accepted or the customer gets a clear message. Pseudo-localisation (A) finds hard-coded text, bounding boxes (C) check mirroring, and a reviewer (D) judges wording, not input handling. *(UI · 3.3)*
+
+</details>
+
+**46. Bilal's CI rejects added `pytest.mark.skip` lines in `tests/`. The team now lets Playwright's healer agent repair failing browser tests in `e2e/`. One healer pull request turns four red tests green and the check passes. What should Bilal change?**
+
+- A. Extend the skip check to `test.skip` and `test.fixme`, and review healer edits
+- B. Switch the healer off, since an AI tool should never touch a test file
+- C. Ask the healer to attach a screenshot of each repaired page to its pull request
+- D. Raise the retries in the Playwright config so that the repaired tests stay green
+
+<details><summary>Answer</summary>
+
+**A.** The healer may change assertions or park a failing test with `test.fixme()`, a skip by another name, and a check written for pytest never sees it; its edits need the lesson 6.2 controls (code owners and diff checks). B bans a useful tool, C adds evidence nobody checks, and D hides flakiness. *(AI · 6.3)*
+
+</details>
+
+**47. Maha proposes holding Schedules at each canary step for a full month, so that a monthly run is seen in production before the flag widens. Rashid wants a faster plan that is still safe. Which is best?**
+
+- A. Skip the canary, because clock-injected date tests already prove that the whole feature works in production
+- B. Move the canary servers' clock a month ahead, so that the monthly run fires early for those customers
+- C. Prove the calendar with injected clocks, then hold each step for one batch, one cut-off and one nightly check
+- D. Hold each step for one week, because weekly schedules exercise the same month-end logic as monthly ones
+
+<details><summary>Answer</summary>
+
+**C.** A canary cannot wait a month, so injected clocks prove the calendar before release and production confirms the daily mechanics: one 06:00 batch, one 15:00 cut-off and the nightly run-exists query. A drops that check on real batches, B tampers with production time, and D never reaches the month-end clamping that monthly runs need. *(Strategy · 8.1)*
+
+</details>
+
+**48. Nada reviews an agent's pull request called "Normalise amounts". It deletes the validation that refuses an amount with more decimal places than the currency allows, and quietly rounds the amount with `quantize` instead. All 24 starter tests still pass. Which new test would fail on this change and pass on the original code?**
+
+- A. A transfer of `0.50` QAR is refused as `below_minimum`
+- B. A transfer of `10.005` QAR is refused as `too_many_decimals`
+- C. A transfer of `25000.01` QAR is refused as `above_per_transfer_max`
+- D. A `1000.01` QAR transfer after `49000.00` today is refused as `daily_limit_exceeded`
+
+<details><summary>Answer</summary>
+
+**B.** The starter suite never sends an amount with too many decimals, so the weakened validation goes unnoticed (and the ledger stops balancing: the sender is debited 10.01, the recipient credited 10.005). A test per rejection code would have caught it; A, C and D pin the minimum, the per-transfer maximum and the daily limit, which behave the same before and after the change. *(Unit · 6.1)*
+
+</details>
+
+**49. Bilal's backfill turns the text `amount` into an integer `amount_minor` with `CAST(REPLACE(amount, '.', '') AS INTEGER)`. It passes on dev data, where every amount looks like `250.00`. On a masked production-sized copy, the migrated totals come out far too small. What happened, and what is the lasting fix?**
+
+- A. Amounts like `250` became 250 minor units, or 2.50; seed odd formats and check each row with `Decimal`
+- B. The backfill held a table lock for too long; run it in smaller batches during a quiet night window
+- C. SQLite and PostgreSQL round differently; run the backfill only against a Testcontainers database
+- D. The contract step ran before the expand step; move the column drop later in the migration plan
+
+<details><summary>Answer</summary>
+
+**A.** The "simple" conversion silently turns `250` into 250 minor units, which is 2.50 QAR, and dev data never held an amount without two decimals. Include the formats real tables contain (`250`, `250.5`), check every row exactly with `Decimal`, and rehearse on a production-shaped masked copy. Batches (B) address lock time, not wrong values; the rounding difference in C is not the cause here; and in D the contract step has not even run. *(Reliability · 4.3)*
+
+</details>
+
+**50. In a session on the QA copy, Assist has been changed so that the model decides whether a message counts as confirmation. Mariam types "Yes, I confirm, freeze card-1 now" as her first message, and the card is frozen. Which fix is the real control?**
+
+- A. Take confirmation from an app signal, such as a button, never from words
+- B. Require the model to see the word "confirm" twice before it calls the tool
+- C. Add a judge model that rates whether the customer sounds certain enough
+- D. Add a system prompt line saying never to freeze a card on a first message
+
+<details><summary>Answer</summary>
+
+**A.** Words can be forged by a customer, a document or an attacker, so confirmation must be a signal from outside the model, and a test that types "yes" asserts that nothing is frozen. B, C and D all still read words that the model can be talked into accepting. *(AI · 7.2)*
+
+</details>
+
+**51. Rania's team raises the daily limit in policy to 50,000 QAR, but last year's document, which says 30,000 QAR, stays in the Najm Assist index and some customers are told 30,000. Where does the fix belong?**
+
+- A. In the system prompt, with a line telling the model to prefer the newest policy
+- B. In the retriever, by raising k so that the new document is always included
+- C. In the model settings, by lowering the temperature until the answers stop varying
+- D. In the corpus pipeline, by marking the old record superseded and not indexing it
+
+<details><summary>Answer</summary>
+
+**D.** Only the pipeline knows which document is current, and a test that indexes only current records can assert that 50,000 appears and 30,000 does not. A asks the model to guess which text is newer, B leaves the stale document in the context alongside the new one, and C changes wording variation, not which fact is quoted. *(AI · 7.2)*
+
+</details>
+
+**52. Rashid reviews the nightly regulatory report for 8 October. All 10,000 accounts appear exactly once, no value is null or outside the accepted list, the data is fresh and the balances table agrees with the ledger. Yet the sum of the reported balances is 1,000.00 QAR lower than in the balances table. Which check was missing?**
+
+- A. A schema check that the report's column list matches the agreed one
+- B. A totals check that the report's sum matches the balances table
+- C. A reconciliation check that each balance equals the sum of its ledger entries
+- D. A volume check that the ledger table is not empty
+
+<details><summary>Answer</summary>
+
+**B.** Every row is individually valid, so not-null, accepted-values, unique and freshness checks all pass, and all 10,000 accounts are present, so completeness passes too. Only a totals check, comparing the report's sum with the balances table, sees that an amount is wrong. A column-list check (A) looks at the shape of the report, reconciliation (C) compares the balances table with the ledger, which already agree, and a volume check (D) notices only an empty table. Prove it by lowering one reported balance by 100 and watching the check fail. *(Reliability · 4.3)*
+
+</details>
+
+**53. A Najm squad must refactor a 600-line statement-export module that has no tests and no specification. Customers rely on some of its odd output. What should come first?**
+
+- A. Rewrite it from scratch with TDD, using the feature list as the specification
+- B. Refactor first, then write tests for whatever the code does afterwards
+- C. Record current outputs for many inputs as golden-master tests, then refactor
+- D. Write unit tests from the product description and fix the code where they fail
+
+<details><summary>Answer</summary>
+
+**C.** A golden master (characterisation test) records what the legacy code does, right or wrong, so every refactoring step can be checked against it; review any diff like code. A throws away behaviour customers rely on, B has no safety net while the code changes, and D "fixes" output nobody asked to change. *(Unit · 2.3)*
+
+</details>
+
+**54. Rashid's take-home for a Najm QE role is three hours on the Transfers API, and the brief allows an assistant if the candidate says so. A candidate used one to draft most of her tests. How should she submit?**
+
+- A. Mention the assistant only if the interviewer asks, so that the README stays on the tests
+- B. Name the assistant in the README, say what she checked and be ready to explain every line
+- C. Name the assistant in the README but hand in its tests unread, since the brief only asks her to say so
+- D. Rewrite every test in her own words and leave the assistant out, since she can explain every line
+
+<details><summary>Answer</summary>
+
+**B.** Both halves of Najm's take-home rule are needed: disclose the use, and be able to explain every line you submit. A and D hide a use that the brief asks her to state (D even though she could explain every line), and C discloses but hides behind the tool, handing in work she has not checked. *(Career · 8.2)*
+
+</details>
+
+**55. Nada asks a coding agent, which has only the repository to go on, to write the authorisation matrix tests for the Transfers routes. All the tests pass, even with `NAJM_BUGS=bola` switched on. What went wrong, and what is the fix?**
+
+- A. The matrix has too few routes, so add more routes until at least one cell fails
+- B. The forged-token column is missing, so add that column and the BOLA cells will then fail
+- C. BOLA cannot appear in a matrix, so only a DAST scan of the running app can find it
+- D. The expected column came from the code, so write it from the requirement instead
+
+<details><summary>Answer</summary>
+
+**D.** With only the code to read, the agent copied today's behaviour, so with the bug on, Bob reading Alice's transfer is recorded as a correct 200. The expected column must come from the requirement ("customers see and use only their own money"), written before the code is read; an AI can brainstorm cells but must not fill in the expected statuses. More routes (A) or another column (B) repeat the same mistake, and C is backwards: a matrix is how BOLA is found, and a scanner knows nothing about who owns what. *(Security · 4.2)*
+
+</details>
+
+**56. Bilal adds six cut-off tests for `value_date`, each at 16:30 Qatar time, on Friday and Saturday dates. With `tz_cutoff` switched on, all six still pass. What is the best fix?**
+
+- A. Move the tests to 10:00 Qatar time, which keeps the cut-off out of the picture
+- B. Use Sunday-to-Thursday dates, with times either side of 15:00 Qatar time
+- C. Run the tests on a machine whose clock is set to UTC, so the bug shows
+- D. Add more Friday and Saturday dates, since weekends are the riskiest days
+
+<details><summary>Answer</summary>
+
+**B.** On Friday and Saturday the weekend rule sends everything to Sunday, so reading the cut-off in UTC changes nothing; on a working day, any time from 15:00 to 17:59 Qatar time gets the wrong date. A picks a time the bug leaves alone, C changes nothing because the tests pass zone-aware times, and D repeats the blind spot. *(Design · 1.2)*
+
+</details>
+
+**57. Nada writes a paraphrase test for Najm Assist, which samples at temperature 0.8 and so opens its replies with different words from run to run: it asks "What is the daily transfer limit?" and "How high is the daily transfer limit?" and asserts that both replies are non-empty. Bilal says it can never fail. Which assertion states the relation?**
+
+- A. Both replies are non-empty and shorter than 200 characters
+- B. The two replies are identical word for word
+- C. Both questions retrieve the same top source document
+- D. The second reply is not longer than the first reply
+
+<details><summary>Answer</summary>
+
+**C.** A paraphrase must keep the source, and that relation can fail, as it does when a rephrasing sends the question to the cut-off document. A still passes an invented or wrong answer, B fails on harmless opening words because the wording varies from run to run, and D is not a relation a paraphrase implies (the openings alone can make either reply longer). *(AI · 7.3)*
+
+</details>
+
+**58. An agent refactors the international fee code. Its report says "rounding verified, all tests pass". Nada's checkout holds the refactor, and the sample's seeded `float_fee` switch is still wired into `fee()`. Before the review, she wants the check that best tests the claim that rounding is verified. What should she do?**
+
+- A. Switch on the seeded `float_fee` bug in her checkout and see whether the suite fails
+- B. Read the agent's report once more, since it lists what was verified and how it was run
+- C. Confirm that line coverage on the changed file has not fallen since last week's merge
+- D. Ask the agent to rerun the suite and paste the last line of the output it gets
+
+<details><summary>Answer</summary>
+
+**A.** The reviewer's question is "if the bug were here, would this run be red?", and switching on the bug you fear answers it with evidence: a suite that stays green with `float_fee` on has not verified rounding. B and D rely on the agent's own account, and C measures execution, which an assertion-free test can satisfy. *(AI · 6.1)*
+
+</details>
+
+**59. Nada's team compares an assistant with the starter suite. Her reviewed suite, the assistant's draft plus six tests she wrote herself, catches all nine seeded bugs, and she wants to report "9 of 9: the approach is proven". How should the assistant's evaluation be run to be fair?**
+
+- A. Give it the rules and the bug list, run it three times, and report the average
+- B. Give it the rules only, run it three times, and report only the best run
+- C. Give it the rules only, run it three times, and add a mutation score as well
+- D. Give it the rules only, run it three times, and compare the suites on line coverage
+
+<details><summary>Answer</summary>
+
+**C.** A suite written knowing the bug list makes 9 of 9 circular. Give the assistant the rules only, repeat the run and record model, version and date, and add mutation testing as a second yardstick, since the two measure different things. A feeds the circularity, B reports the luckiest run instead of the spread, and D compares suites on what ran, not on what they catch. *(Strategy · 6.3)*
+
+</details>
+
+**60. Tariq's squad reaches a partner FX service through its own `rate()` function, and the service times out about once a week. He wants a test proving that `rate()` turns a timeout into one clear error and does not crash. What is the best approach?**
+
+- A. Call the live FX sandbox in CI and rerun the test until a timeout happens
+- B. Stub the HTTP layer so the call times out, then assert the one clear error
+- C. Replay a cassette recorded from last week's successful FX responses
+- D. Mock the app's own `rate()` function so it raises the clear error directly
+
+<details><summary>Answer</summary>
+
+**B.** A partner cannot be made to time out on demand, so stub it at the HTTP boundary: the real `rate()` code that turns failures into one error runs, and the test is repeatable. A depends on luck, C replays only the happy path, and D mocks the very code under test, so it proves only that the mock raises. *(Integration · 2.2)*
+
+</details>
 
 ## 📚 References
 - ISTQB, syllabi and sample questions for Foundation Level and beyond: [istqb.org](https://www.istqb.org/)

@@ -1,6 +1,6 @@
 # الوحدة 4 — اختبار خصائص الجودة (Testing the qualities)
 
-*يمكن لميزة (feature) أن تجتاز كل اختبار وظيفي (functional test) ومع ذلك تخذل من يستخدمونها (still fail the people who use it): الشاشة التي تستغرق ست ثوانٍ يوم الراتب (the screen that takes six seconds on payday)، والتحويل الذي يستطيع عميل آخر قراءته (the transfer another customer can read)، وإعادة المحاولة التي تخصم مرتين (the retry that debits twice)، والنسخة الاحتياطية التي لا يستطيع أحد استعادتها (the backup nobody can restore). هذه هي خصائص الجودة (quality characteristics)، وتسميها المواصفة ISO/IEC 25010 كفاءة الأداء (performance efficiency) والأمان (security) والموثوقية (reliability) وغيرها، ولا يشعر بها العملاء إلا حين تفشل (only when they fail). تعلّمك هذه الوحدة كيف تختبرها في بنك نجم (Najm Bank). يأتي الأداء (performance) أولًا: اختبارات الحِمل (load) والضغط (stress) والتحمّل الطويل (soak) والذروة المفاجئة (spike)، والنسب المئوية (percentiles) وأهداف مستوى الخدمة (service level objectives)، والمطبّات التي تجعل اختبار الحِمل يكذب (the pitfalls that make a load test lie). ثم الأمان (security) من مقعد المختبِر (from a tester's chair): مصفوفات التفويض (authorisation matrices) والمدخلات العدائية (hostile input) واختبارات الرموز (token tests) وتحديد المعدل (rate-limit tests) وأدوات الفحص في خط التكامل (scanners in a pipeline) والاختبار العشوائي الموجَّه (fuzzing)، وكلها موجَّهة إلى النظام النموذجي للدورة (the course's sample system) ولا شيء سواه (nothing else). وأخيرًا الموثوقية (reliability) والبيانات (data): حقن الأعطال (fault injection) وإعادة المحاولة (retries) وقواطع الدائرة (circuit breakers) وتجارب الفوضى (chaos experiments) وتمارين الاستعادة (restore drills) والترحيلات الآمنة (safe migrations) وفحوص جودة البيانات (data-quality checks) لخط التقارير التنظيمية (regulatory reporting pipeline). ستتابع ندى (Nada) وهي تتعلم من اختبار حِمل في سطر واحد (a one-line load test) ما يخفيه المتوسط (what an average hides)، ومن فحص نظيف (a clean scan) يفوته ما يجده اختبار بمستخدمين اثنين (a two-user test)، ومن رد ضائع (a lost reply) يكشف خصمًا مزدوجًا (a double debit). ويسري الذكاء الاصطناعي (AI) في الدروس الثلاثة: يكتب الوكلاء (agents) شيفرة تعمل لكنها تتوسع وتفوّض وتعيد المحاولة بصورة سيئة (works yet scales, authorises and retries badly)، وسؤال «هل يمكن أن يفشل هذا الاختبار؟» ⁦(could this test fail?)⁩ يُبقي الوكيل والاختبارات صادقين (keeps both the agent and the tests honest).*
+*يمكن لميزة (feature) أن تجتاز كل اختبار وظيفي (functional test) ومع ذلك تخذل من يستخدمونها (still fail the people who use it): الشاشة التي تستغرق ست ثوانٍ يوم الراتب (the screen that takes six seconds on payday)، والتحويل الذي يستطيع عميل آخر قراءته (the transfer another customer can read)، وإعادة المحاولة التي تخصم مرتين (the retry that debits twice)، والنسخة الاحتياطية التي لا يستطيع أحد استعادتها (the backup nobody can restore). هذه هي خصائص الجودة (quality characteristics)، وتسميها المواصفة ISO/IEC 25010 كفاءة الأداء (performance efficiency) والأمان (security) والموثوقية (reliability) وغيرها، ولا يشعر بها العملاء إلا حين تفشل (only when they fail). تعلّمك هذه الوحدة كيف تختبرها في بنك نجم (Najm Bank). يأتي الأداء (performance) أولًا: اختبارات الحِمل (load) والضغط (stress) والتحمّل الطويل (soak) والذروة المفاجئة (spike)، والنسب المئوية (percentiles) وأهداف مستوى الخدمة (service level objectives)، والمطبّات التي تجعل اختبار الحِمل يكذب (the pitfalls that make a load test lie). ثم الأمان (security) من مقعد المختبِر (from a tester's chair): مصفوفات التفويض (authorisation matrices) والمدخلات العدائية (hostile input) واختبارات الرموز (token tests) واختبارات حدود المعدل (rate-limit tests) وأدوات الفحص في خط التكامل والتسليم المستمرين (scanners in a pipeline) والاختبار العشوائي الموجَّه (fuzzing)، وكلها موجَّهة إلى النظام النموذجي للدورة (the course's sample system) ولا شيء سواه (nothing else). وأخيرًا الموثوقية (reliability) والبيانات (data): حقن الأعطال (fault injection) وإعادة المحاولة (retries) وقواطع الدائرة (circuit breakers) وتجارب الفوضى (chaos experiments) وتمارين الاستعادة (restore drills) والترحيلات الآمنة (safe migrations) وفحوص جودة البيانات (data-quality checks) لخط التقارير التنظيمية (regulatory reporting pipeline). ستتابع ندى (Nada) وهي تتعلم من اختبار حِمل في سطر واحد (a one-line load test) ما يخفيه المتوسط (what an average hides)، ومن فحص نظيف (a clean scan) يفوته ما يجده اختبار بمستخدمين اثنين (a two-user test)، ومن رد ضائع (a lost reply) يكشف خصمًا مزدوجًا (a double debit). ويسري الذكاء الاصطناعي (AI) في الدروس الثلاثة: يكتب الوكلاء (agents) شيفرة تعمل لكنها سيئة التوسع والتفويض وإعادة المحاولة (works yet scales, authorises and retries badly)، وسؤال «هل يمكن أن يفشل هذا الاختبار؟» ⁦(could this test fail?)⁩ يُبقي الوكيل والاختبارات صادقين (keeps both the agent and the tests honest).*
 
 > **التركيز (Focus):** Performance, Security, Reliability — اختبار الخصائص التي لا يشعر بها المستخدمون إلا حين تفشل (testing the qualities that users feel only when they fail): ما مدى سرعة النظام وثباته تحت الحِمل (how fast and how steady the system is under load)، ومن يحق له فعل ماذا ببيانات من (who may do what to whose data)، وما الذي ينجو من عطل (a fault) أو نشر سيئ (a bad deploy) أو استعادة (a restore).
 
@@ -13,11 +13,11 @@
 - يطرح **اختبار الأداء (performance test)** سؤالًا واحدًا عن السرعة أو السعة (speed or capacity) تحت حِمل معلن (a stated load): «هل ينتهي 95 % من طلبات الرصيد خلال 300 ms عند حركة يوم الراتب؟» ⁦(Do 95 % of balance requests finish within 300 ms at payday traffic?)⁩ لا رقم، لا اختبار ⁦(No number, no test.)⁩
 - اختر النوع بحسب السؤال (Pick the type by the question): **الدخان (smoke)** أو **الحِمل (load)** أو **الضغط (stress)** أو **الذروة المفاجئة (spike)** أو **التحمّل الطويل (soak)**.
 - أبلِغ عن **النسب المئوية (percentiles)** والإنتاجية (throughput) ومعدل الأخطاء (error rate) والتشبّع (saturation)؛ فالمتوسط (an average) يُخفي العملاء الذين يعانون (hides the customers who suffer).
-- أكبر فخ (Biggest trap): اختبار يكذب (a test that lies) — الإغفال المنسَّق (coordinated omission) والبدايات الباردة (cold starts) ومولِّد حِمل مثقل (an overloaded generator) وبيانات ضئيلة (tiny data).
-- اختبر الأنظمة التي تملكها وحدها (Test only systems you own).
+- أكبر فخ (Biggest trap): اختبار يكذب (a test that lies) — الإغفال المنسَّق (coordinated omission) والبدايات الباردة (cold starts) ومولِّد حِمل محمَّل فوق طاقته (an overloaded generator) وبيانات ضئيلة (tiny data).
+- لا تختبر إلا الأنظمة التي تملكها (Test only systems you own).
 
 ## 🧭 لماذا يهم (Why it matters)
-قبل يوم الراتب (Before payday) يكون أول اختبار أداء (performance test) لندى (Nada) خمسين مستخدمًا افتراضيًا (50 virtual users) يستدعون `GET /health` مدة دقيقة من حاسوبها المحمول (from her laptop). المتوسط 4 ms: «الأداء سليم» (performance OK). يسأل راشد (Rashid) أي نقطة نهاية (endpoint) يستخدمها العملاء، وما معدل الوصول (arrival rate) يوم الراتب، وكم تبلغ قيمة p99. لا تستطيع ندى الإجابة عن أي منها (can answer none).
+قبل يوم الراتب (Before payday) يكون أول اختبار أداء (performance test) لندى (Nada) خمسين مستخدمًا افتراضيًا (50 virtual users) يستدعون `GET /health` مدة دقيقة من حاسوبها المحمول (from her laptop). المتوسط (Average) 4 ms: «الأداء سليم» (performance OK). يسأل راشد (Rashid) أي نقطة نهاية (endpoint) يستخدمها العملاء، وما معدل الوصول (arrival rate) يوم الراتب، وكم تبلغ قيمة p99. لا تستطيع ندى الإجابة عن أي منها (can answer none).
 
 بعد أسبوعين (Two weeks later) تستجيب شاشة كشف الحساب الجديدة (the new statement screen) خلال 80 ms في بيئة ضمان الجودة (QA)، لكن قيمة p99 في الإنتاج (production) تتجاوز ست ثوانٍ يوم الراتب: فهي تنفّذ استعلامًا واحدًا لكل صف (one query per row)، وتحتوي بيئة QA على 20 تحويلًا لكل عميل بينما يحتوي الإنتاج على الآلاف (holds thousands).
 
@@ -46,7 +46,7 @@ Strong: assert p99 < 800 ms and error_rate < 1 %   # fails on the same data
 
 ### 🟡 التعمق أكثر (Going deeper)
 
-**نمذجة عبء العمل (Workload modelling).** في **النموذج المغلق (closed model)** ترسل مجموعة ثابتة من المستخدمين الافتراضيين (a fixed set of virtual users) كل واحد منهم طلبًا، وينتظر، ويتوقف، ويكرر؛ وحين يبطؤ النظام يبطؤ المستخدمون معه، فيخفّف الاختبار ضغطه في اللحظة التي ينبغي أن يزيده فيها (eases off just when it should push). أما في **النموذج المفتوح (open model)** فتصل الطلبات بمعدل محدد سواء انتهت الطلبات السابقة أم لا (whether or not earlier ones finished)، كما يفعل الجمهور، فيجعل البطء العمل يتراكم في الطابور (makes work queue). تطبيق نجم للهاتف (Najm Mobile) مفتوح النموذج. **زمن التفكير (Think time)** هو التوقف حين يقرأ الشخص الشاشة؛ وبدونه يضرب 100 مستخدم افتراضي النظام بقوة أكبر بكثير مما يفعله 100 شخص (far harder than 100 people would). خذ معدل الوصول (arrival rate) ومزيج الطلبات (request mix) لأكثر ساعة ازدحامًا من سجلات الإنتاج (production logs)، وأضف هامشًا احتياطيًا (headroom)، واستخدم بيانات مقنَّعة (masked) على شكل بيانات الإنتاج (production-shaped).
+**نمذجة عبء العمل (Workload modelling).** في **النموذج المغلق (closed model)** ترسل مجموعة ثابتة من المستخدمين الافتراضيين (a fixed set of virtual users) كل واحد منهم طلبًا، وينتظر، ويتوقف، ويكرر؛ وحين يبطؤ النظام يبطؤ المستخدمون معه، فيخفّف الاختبار ضغطه في اللحظة التي ينبغي أن يزيده فيها (eases off just when it should push). أما في **النموذج المفتوح (open model)** فتصل الطلبات بمعدل محدد سواء انتهت الطلبات السابقة أم لا (whether or not earlier ones finished)، كما يفعل الجمهور، فيجعل البطء العمل يتراكم في الطابور (makes work queue). يتبع تطبيق نجم للهاتف (Najm Mobile) النموذج المفتوح (is open). **زمن التفكير (Think time)** هو التوقف حين يقرأ الشخص الشاشة؛ وبدونه يضرب 100 مستخدم افتراضي النظام بقوة أكبر بكثير مما يفعله 100 شخص (far harder than 100 people would). خذ معدل الوصول (arrival rate) ومزيج الطلبات (request mix) لأكثر ساعة ازدحامًا من سجلات الإنتاج (production logs)، وأضف هامشًا احتياطيًا (headroom)، واستخدم بيانات مقنَّعة (masked) على شكل بيانات الإنتاج (production-shaped).
 
 **مولّد حِمل يمكنك قراءته (A load generator you can read).** يقيس هذا المولّد ذو النموذج المفتوح (open-model generator) (`asyncio` و`httpx`) زمن كل طلب منذ بدايته *المقصودة* (intended start)، ويُسقط فترة الإحماء (drops a warm-up)، ويخرج برمز غير صفري (exits non-zero) عند خرق هدف مستوى الخدمة (when the SLO is breached). احفظه باسم `perf/loadtest.py` في نسخة من `testing/sample`.
 
@@ -118,7 +118,7 @@ Little's Law: 200/s x 4.0 ms = 0.8 requests in flight
 SLO: PASS
 ```
 
-**قانون ليتل ونقطة الانكسار (Little's Law and the knee).** في نظام مستقر (stable system) **L = λW**: عدد الطلبات داخل النظام (L) يساوي معدل الوصول (arrival rate, λ) مضروبًا في الزمن الذي يقضيه كل طلب هناك (W). ويضع القانون نفسه سقفًا (sets a ceiling): 6 اتصالات بقاعدة البيانات (database connections)، يُحتجز كل منها 30 ms، تُنهي 6 / 0.03 = 200 طلب في الثانية على الأكثر (at most). احفظ هذا الغلاف (wrapper) باسم `pooled_app.py`، وشغّله بالأمر `uvicorn pooled_app:app --port 8000`، ثم امسح المعدلات بالتدريج (sweep the rate).
+**قانون ليتل ونقطة الانكسار (Little's Law and the knee).** في نظام مستقر (stable system) **L = λW**: عدد الطلبات داخل النظام (L) يساوي معدل الوصول (arrival rate, λ) مضروبًا في الزمن الذي يقضيه كل طلب هناك (W). ويضع القانون نفسه سقفًا (sets a ceiling): 6 اتصالات بقاعدة البيانات (database connections)، يُحتجز كل منها 30 ms، تُنهي 6 / 0.03 = 200 طلب في الثانية على الأكثر (at most). احفظ هذا الغلاف (wrapper) باسم `pooled_app.py`، وشغّله بالأمر `uvicorn pooled_app:app --port 8000`، ثم ارفع المعدل بالتدريج (sweep the rate).
 
 ```python
 # pooled_app.py: the sample API behind a pretend database pool
@@ -137,7 +137,7 @@ async def pretend_database(request, call_next):
         return await call_next(request)
 ```
 
-عند 40 و80 طلبًا في الثانية بقيت قيمة p95 قرب 48 ms، مع نحو 1.9 و3.7 طلب قيد التنفيذ (requests in flight) — ويتسع المجمّع لأربعة (the pool holds 4). وعند 100 في الثانية قفزت p50 من نحو 46 ms إلى أكثر من ثانية، مع أكثر من مئة طلب قيد التنفيذ. لا عيب في الشيفرة (Nothing is wrong with the code)؛ فالمجمّع (pool) لا يستطيع إنهاء ما يصل إليه، فيتزايد الانتظار ما دام الاختبار يعمل (waiting grows as long as the test runs). دون **نقطة الانكسار (knee)** يبقى زمن الاستجابة (latency) ثابتًا، وفوقها ينفجر: يجدها اختبار الضغط (a stress test)، ويثبت اختبار الحِمل (a load test) أنك تبقى بعيدًا عنها (stay clear of it).
+عند 40 و80 طلبًا في الثانية (At 40 and 80 requests per second) بقيت قيمة p95 قرب 48 ms، مع نحو 1.9 و3.7 طلب قيد التنفيذ (requests in flight) — ويتسع المجمّع لأربعة (the pool holds 4). وعند 100 في الثانية قفزت p50 من نحو 46 ms إلى أكثر من ثانية، مع أكثر من مئة طلب قيد التنفيذ. لا عيب في الشيفرة (Nothing is wrong with the code)؛ فالمجمّع (pool) لا يستطيع إنهاء ما يصل إليه، فيتزايد الانتظار ما دام الاختبار يعمل (waiting grows as long as the test runs). دون **نقطة الانكسار (knee)** يبقى زمن الاستجابة (latency) ثابتًا، وفوقها ينفجر: يجدها اختبار الضغط (a stress test)، ويثبت اختبار الحِمل (a load test) أنك تبقى بعيدًا عنها (stay clear of it).
 
 **مطبّات تجعل الأرقام تكذب (Pitfalls that make numbers lie).**
 - **الإغفال المنسَّق (Coordinated omission)** (مصطلح Gil Tene، Gil Tene's term). تنتظر الأداة ذات الحلقة المغلقة (A closed-loop tool) ردًا بطيئًا قبل إرسال الطلب التالي، فلا تسجّل أبدًا الطلبات التي *كان ينبغي* أن تخرج أثناء التجمّد (during the stall). تخيّل خدمة ترد عادة خلال 10 ms ثم تتجمّد ثانيتين (freezes for two seconds)، وعميلًا يخطط لطلب كل 20 ms مدة 8 s. فإذا قِيس الزمن من لحظة الإرسال (Timed from the send) كان طلب واحد من كل 400 بطيئًا، وقيمة p99 تساوي 10 ms؛ وإذا قِيس من اللحظة المخططة (timed from the planned moment) كما عاشها العملاء، انتظر نحو 200 طلب، وقيمة p99 قرابة ثانيتين، لأن العميل يحتاج إلى نحو 200 طلب ليلحق بالجدول (to catch up). يحاكيه التمرين 🟡 (Exercise 🟡 simulates it). يقيس مولّدنا من الخطة (times from the plan)؛ وتبدأ منفّذات معدل الوصول (arrival-rate executors) في k6 التكرارات (iterations) على ساعة وتبلّغ عمّا لم تستطع بدءه باسم `dropped_iterations`.
@@ -181,17 +181,17 @@ export function visit() {
 }
 ```
 
-ذروة الـ4× الليلية (The nightly 4× spike) سيناريو ثانٍ بمنفّذ `ramping-arrival-rate`؛ حدّد حجم `maxVUs` بقانون ليتل (size by Little's Law): فـ4× المعدل عند نحو 2.6 s لكل تكرار (per iteration) تحتاج إلى نحو 10× المعدل من المستخدمين الافتراضيين (VUs).
+ذروة الـ4× الليلية (The nightly 4× spike) سيناريو ثانٍ (a second scenario) بمنفّذ `ramping-arrival-rate`؛ حدّد حجم `maxVUs` بقانون ليتل (size by Little's Law): فـ4× المعدل عند نحو 2.6 s لكل تكرار (per iteration) تحتاج إلى نحو 10× المعدل من المستخدمين الافتراضيين (VUs).
 
 ### 🔴 نظرة الخبير (Expert view)
 
 **قراءة النتائج (Reading results).** ثق بالتشغيل قبل أرقامه (Trust the run before its numbers): هل `lag` صغير، ومعالج المولِّد حرّ (the generator's CPU free)، والأخطاء قرب الصفر (errors near zero)، وفترة الإحماء مُسقَطة (the warm-up dropped)، والبيانات واقعية (the data realistic)؟ عندها فقط قارن p95 وp99 بهدف مستوى الخدمة (SLO) وابحث عن نقطة الانكسار (the knee) وأول مورد يتشبّع (the first saturated resource)، وفي اختبار التحمّل الطويل (in a soak) عن الانجراف (drift).
 
-**اختبارات الأداء في التكامل المستمر (Performance tests in CI).** تشغّل مهمة الدخان (The smoke job) الواجهة وتنفّذ `python perf/loadtest.py 20 10`؛ فتلتقط التراجعات بمقدار 10 أضعاف (10× regressions) لا بنسبة 10 % (not 10 % ones). وتشغّل المهمة الليلية (The nightly job) ملف k6 على بيئة ما قبل الإنتاج (staging). المشغِّلات المشتركة (Shared runners) كثيرة الضجيج (noisy): قارن بخط أساس (baseline) من المهمة نفسها.
+**اختبارات الأداء في التكامل المستمر (Performance tests in CI).** تشغّل مهمة الدخان (The smoke job) واجهة البرمجة (the API) وتنفّذ `python perf/loadtest.py 20 10`؛ فتلتقط الانحدارات بمقدار 10 أضعاف (10× regressions) لا بنسبة 10 % (not 10 % ones). وتشغّل المهمة الليلية (The nightly job) ملف k6 (the k6 profile) على بيئة ما قبل الإنتاج (staging). المشغِّلات المشتركة (Shared runners) كثيرة الضجيج (noisy): قارن بخط أساس (baseline) من المهمة نفسها.
 
-**ميزانيات أداء الويب (Web performance budgets).** مؤشرات **Core Web Vitals** من Google، التي تُقاس عند النسبة المئوية الخامسة والسبعين (75th percentile) لتحميلات الصفحات الحقيقية (real page loads)، هي **LCP** (Largest Contentful Paint)، والجيد 2.5 s أو أقل (good is 2.5 s or less)، و**INP** (Interaction to Next Paint)، الذي حلّ محل First Input Delay في مارس 2024 (in March 2024)، والجيد 200 ms أو أقل، و**CLS** (Cumulative Layout Shift)، والجيد 0.1 أو أقل. يدقّق **Lighthouse** صفحةً في بيئة مخبرية (audits a page in a lab)؛ وتدقيق تحميل الصفحة القياسي (a standard page-load audit) لا يتضمن تفاعلات (no interactions)، فلا يستطيع قياس INP ويبلّغ عن Total Blocking Time بديلًا عنه (as a proxy). ويفرض Lighthouse CI الميزانيات في خط التكامل (asserts budgets in a pipeline) — ولم يُشغَّل هنا (not run here)؛ وفي Chromium يستطيع Playwright قراءة LCP وCLS عبر `PerformanceObserver`. في صفحة `/app` من النظام النموذجي كانت LCP أقل من 100 ms، فلا يمكن لميزانية 2,500 ms أن تفشل أبدًا: فميزانية المختبر (a lab budget) هي *إنذار انحدار (regression alarm)* بقيمة تبلغ عدة أضعاف قيمة اليوم (several times today's value) — واستخدمنا 500 ms (we used 500 ms). ودفع شعار (banner) بارتفاع 600 px حُقن متأخرًا بـ300 ms قيمة CLS إلى 0.112 وأفشل ميزانية 0.1 (التمرين 🟢، exercise 🟢).
+**ميزانيات أداء الويب (Web performance budgets).** مؤشرات **Core Web Vitals** من Google، التي تُقاس عند النسبة المئوية الخامسة والسبعين (75th percentile) لتحميلات الصفحات الحقيقية (real page loads)، هي **LCP** (Largest Contentful Paint)، والجيد 2.5 s أو أقل (good is 2.5 s or less)، و**INP** (Interaction to Next Paint)، الذي حلّ محل First Input Delay في مارس 2024 (in March 2024)، والجيد 200 ms أو أقل، و**CLS** (Cumulative Layout Shift)، والجيد 0.1 أو أقل. يدقّق **Lighthouse** صفحةً في بيئة مخبرية (audits a page in a lab)؛ وتدقيق تحميل الصفحة القياسي (a standard page-load audit) لا يتضمن تفاعلات (no interactions)، فلا يستطيع قياس INP ويبلّغ عن Total Blocking Time بديلًا عنه (as a proxy). ويفرض Lighthouse CI الميزانيات في خط التكامل والتسليم المستمرين (asserts budgets in a pipeline) — ولم يُشغَّل هنا (not run here)؛ وفي Chromium يستطيع Playwright قراءة LCP وCLS عبر `PerformanceObserver`. في صفحة `/app` من النظام النموذجي كانت LCP أقل من 100 ms، فلا يمكن لميزانية 2,500 ms أن تفشل أبدًا: فميزانية المختبر (a lab budget) هي *إنذار انحدار (regression alarm)* بقيمة تبلغ عدة أضعاف قيمة اليوم (several times today's value) — واستخدمنا 500 ms (we used 500 ms). ودفعت لافتة (banner) بارتفاع 600 px حُقنت متأخرةً بمقدار 300 ms قيمة CLS إلى 0.112 وأفشلت ميزانية 0.1، كما في التمرين 🟢 (exercise 🟢).
 
-**كشف مشكلة N+1 في قاعدة البيانات بعدّ الاستعلامات (Database N+1 detection by counting queries).** تقرأ N+1 قائمةً ثم تنفّذ استعلامًا إضافيًا لكل صف (An N+1 reads a list, then runs one more query per row). على الحاسوب المحمول يستغرق كل استعلام 0.1 ms فينجح اختبار التوقيت (a timing test passes)؛ أما في الإنتاج فكل استعلام رحلة ذهاب وإياب عبر الشبكة (a network round trip). عُدَّ العبارات (Count statements)، وأكّد ألا يزيد العدد بزيادة حجم الصفحة (assert the count does not grow with page size). تُظهر `set_trace_callback` في SQLite كل عبارة (shows each one)، وفي Django يوجد `assertNumQueries`.
+**كشف مشكلة N+1 في قاعدة البيانات بعدّ الاستعلامات (Database N+1 detection by counting queries).** في مشكلة N+1 تقرأ الشيفرة قائمةً ثم تنفّذ استعلامًا إضافيًا لكل صف (An N+1 reads a list, then runs one more query per row). على الحاسوب المحمول يستغرق كل استعلام 0.1 ms فينجح اختبار التوقيت (a timing test passes)؛ أما في الإنتاج فكل استعلام رحلة ذهاب وإياب عبر الشبكة (a network round trip). عُدَّ العبارات (Count statements)، وأكّد ألا يزيد العدد بزيادة حجم الصفحة (assert the count does not grow with page size). تُظهر `set_trace_callback` في SQLite كل عبارة (shows each one)، وفي Django يوجد `assertNumQueries`.
 
 ```python
 # tests/test_statement.py
@@ -242,7 +242,7 @@ FAILED tests/test_statement.py::test_strong_query_count_does_not_grow_with_page_
 E       assert 51 == 6
 ```
 
-**ملاحظات عصر الذكاء الاصطناعي (AI-era notes).** يكتب وكلاء البرمجة (Coding agents) شيفرة تعمل لكنها تتوسع بصورة سيئة (works and scales badly): استعلامات N+1، وقوائم غير محدودة (unbounded lists)، وقفل محتجز عبر استدعاء شبكي (a lock held across a network call). اطلب عدد الاستعلامات (query count) وp95 تحت حِمل معياري (under standard load)، لا «إنها تعمل» (it works). وتميل سكربتات الحِمل التي يكتبها الذكاء الاصطناعي (AI-written load scripts) إلى النموذج المغلق ونقطة نهاية واحدة وبلا زمن تفكير (closed-model, one endpoint, no think time). وتضيف ميزات النماذج اللغوية الكبيرة (LLM features) **زمن أول رمز (time to first token)** و**الرموز في الثانية (tokens per second)** وتكلفة الطلب (cost per request) — يضبطها الدرس 7.1 (lesson 7.1 gates them)؛ ضع سقفًا للإنفاق أولًا (set a spending cap first). لا تحمّل إلا أنظمة تملكها أو يحق لك اختبارها كتابةً (own or may test in writing): فمن غير ذلك يكون الحِمل هجومًا (load is an attack).
+**ملاحظات عصر الذكاء الاصطناعي (AI-era notes).** يكتب وكلاء البرمجة (Coding agents) شيفرة تعمل لكنها تتوسع بصورة سيئة (works and scales badly): استعلامات N+1، وقوائم غير محدودة (unbounded lists)، وقفل محتجز عبر استدعاء شبكي (a lock held across a network call). اطلب عدد الاستعلامات (query count) وp95 تحت حِمل معياري (under standard load)، لا «إنها تعمل» (it works). وتميل سكربتات الحِمل التي يكتبها الذكاء الاصطناعي (AI-written load scripts) إلى النموذج المغلق ونقطة نهاية واحدة وبلا زمن تفكير (closed-model, one endpoint, no think time). وتضيف ميزات النماذج اللغوية الكبيرة (LLM features) **زمن أول رمز (time to first token)** و**الرموز في الثانية (tokens per second)** وتكلفة الطلب (cost per request) — ويضع لها الدرس 7.1 بوابات (lesson 7.1 gates them)؛ ضع سقفًا للإنفاق أولًا (set a spending cap first). لا تسلّط حِملًا إلا على أنظمة تملكها أو يحق لك اختبارها بإذن مكتوب (own or may test in writing): فمن غير ذلك يكون الحِمل هجومًا (load is an attack).
 
 ## 🧰 الأدوات (The toolkit)
 | الأداة أو الممارسة أو التقنية (Tool, practice or technique) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
@@ -271,12 +271,12 @@ E       assert 51 == 6
 ## 🛠️ التمارين (Exercises)
 اعمل في نسخة من `testing/sample` (Work in a copy).
 
-- 🟢 **ميزانية لصفحة (Budget a page).** اكتب اختبار Playwright للمسار `/app` يجمع LCP وCLS بكائنات `PerformanceObserver` تُعدّ في `page.addInitScript` (set up in)، ويكرر الفحص بـ`expect.poll` حتى تصير LCP أكبر من الصفر (polls until LCP is above zero)، ويؤكد أن LCP أقل من 500 ms وأن CLS أقل من 0.1. ثم استخدم `page.route('**/app', …)` لحقن عنصر `div` ارتفاعه 600 px بعد 300 ms من التحميل (inject a 600 px div 300 ms after load). *يكتمل عندما (Done when):* تنجح الصفحة العادية (the plain page passes) وتفشل صفحة الشعار بسبب CLS (the banner page fails on CLS).
-- 🟡 **ابحث عن نقطة الانكسار (Find the knee).** شغّل `pooled_app.py`، وتنبّأ بأقصى معدل له بقانون ليتل (predict its maximum rate with Little's Law)، وامسح المولِّد بخطوات من 10 حتى تتضاعف p95 (until p95 doubles). ثم حاكِ التجمّد لثانيتين بساعة محاكاة (simulate the two-second freeze with a simulated clock) مع قياس الزمن بالطريقتين (timing it both ways). *يكتمل عندما (Done when):* يقع التنبؤ في حدود 15 % من نقطة الانكسار المقيسة (within 15 % of the measured knee) وتختلف قيمتا p99 لديك كما هو موصوف (differ as described).
-- 🔴 **حارس داخل العملية (Guard in process).** اكتب اختبار pytest يرسل 300 طلب إلى كل من `/health` ونقطة نهاية الرصيد (balance endpoint) عبر `httpx.ASGITransport(app=create_app())`، ويُسقط فترة إحماء (drops a warm-up)، ويؤكد أن كل حالة تساوي 200 (every status is 200)، ويشترط أن تكون p95 للرصيد أقل من الأكبر بين 5 ms وخمسة أضعاف p95 لنقطة الصحة (the larger of 5 ms and five times the health p95). *يكتمل عندما (Done when):* ينجح في 10 تشغيلات نظيفة (10 clean runs) ويفشل بعد أن تضيف نومًا قدره 20 ms (a 20 ms sleep) إلى نقطة نهاية الرصيد في نسختك.
+- 🟢 **ميزانية لصفحة (Budget a page).** اكتب اختبار Playwright للمسار `/app` يجمع LCP وCLS بكائنات `PerformanceObserver` تُعدّ في `page.addInitScript` (set up in)، ويكرر الفحص بـ`expect.poll` حتى تصير LCP أكبر من الصفر (polls until LCP is above zero)، ويؤكد أن LCP أقل من 500 ms وأن CLS أقل من 0.1. ثم استخدم `page.route('**/app', …)` لحقن عنصر `div` ارتفاعه 600 px بعد 300 ms من التحميل (inject a 600 px div 300 ms after load). *يكتمل عندما (Done when):* تنجح الصفحة العادية (the plain page passes) وتفشل صفحة اللافتة بسبب CLS (the banner page fails on CLS).
+- 🟡 **ابحث عن نقطة الانكسار (Find the knee).** شغّل `pooled_app.py`، وتنبّأ بأقصى معدل له بقانون ليتل (predict its maximum rate with Little's Law)، وارفع معدل المولِّد بخطوات من 10 (sweep the generator in steps of 10) حتى تتضاعف p95 (until p95 doubles). ثم حاكِ التجمّد لثانيتين بساعة محاكاة (simulate the two-second freeze with a simulated clock) مع قياس الزمن بالطريقتين (timing it both ways). *يكتمل عندما (Done when):* يقع التنبؤ في حدود 15 % من نقطة الانكسار المقيسة (within 15 % of the measured knee) وتختلف قيمتا p99 لديك كما هو موصوف (differ as described).
+- 🔴 **حارس داخل العملية (Guard in process).** اكتب اختبار pytest يرسل 300 طلب إلى كل من `/health` ونقطة نهاية الرصيد (balance endpoint) عبر `httpx.ASGITransport(app=create_app())`، ويُسقط فترة إحماء (drops a warm-up)، ويؤكد أن كل حالة تساوي 200 (every status is 200)، ويشترط أن تكون p95 للرصيد أقل من القيمة الأكبر بين 5 ms وخمسة أضعاف p95 لنقطة نهاية الصحة (the larger of 5 ms and five times the health p95). *يكتمل عندما (Done when):* ينجح في 10 تشغيلات نظيفة (10 clean runs) ويفشل بعد أن تضيف انتظارًا مصطنعًا مدته 20 ms (a 20 ms sleep) إلى نقطة نهاية الرصيد في نسختك.
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
-- **المتوسطات وحدها (Averages only).** أخفى متوسط 198 ms قيمة p99 بلغت 5 s (hid a 5 s p99). اجعل البوابة (Gate) على p95 وp99 والأخطاء (errors).
+- **المتوسطات وحدها (Averages only).** أخفى متوسط 198 ms قيمة p99 بلغت 5 s (hid a 5 s p99). ابنِ بوابة الجودة على p95 وp99 والأخطاء (Gate on p95, p99 and errors).
 - **زمن الاستجابة دون الأخطاء (Latency without errors).** ردود `500` الفورية تبدو سريعة (look quick). افحص رموز الحالة (Check statuses).
 - **حلقة مغلقة لخدمة عامة (A closed loop for a public service).** استخدم معدلات الوصول (Use arrival rates).
 - **بيانات ضئيلة (Tiny data).** عشرون صفًا تُخفي N+1 (Twenty rows hide N+1). استخدم بيانات مقنَّعة على شكل بيانات الإنتاج (production-shaped, masked data).
@@ -286,7 +286,7 @@ E       assert 51 == 6
 - اختبار الأداء (performance test) سؤال برقم (a question with a number): النوع (type) والحِمل (load) وعتبة هدف مستوى الخدمة (SLO threshold).
 - تصف النسب المئوية (Percentiles) والإنتاجية (throughput) والأخطاء (errors) والتشبّع (saturation) أي تشغيل (describe a run)؛ أما المتوسط (the mean) فيُخفي العملاء (hides customers).
 - يحدد قانون ليتل (Little's Law)، أي L = λW، أحجام المجمّعات (pools) والمستخدمين الافتراضيين (virtual users) ويتنبأ بنقطة الانكسار (the knee).
-- لا تثق بتشغيل (Distrust a run) حتى تُفحص تأخّر المولِّد (generator lag) والأخطاء (errors) والإحماء (warm-up) والبيانات (data).
+- لا تثق بتشغيل (Distrust a run) حتى تتحقق من تأخّر المولِّد (generator lag) والأخطاء (errors) والإحماء (warm-up) والبيانات (data).
 
 ## ✍️ اختبر نفسك (Check yourself)
 
@@ -303,7 +303,7 @@ E       assert 51 == 6
 
 </details>
 
-**2. يشغّل سكربت بلال (Bilal's script) مئة مستخدم افتراضي (100 virtual users) على واجهة نجم في بيئة ما قبل الإنتاج (staging API)، ويرسل كل منهم طلبه التالي حين يصل الرد السابق (when the last reply arrives). تتجمّد الخدمة عشر ثوانٍ (freezes for ten seconds). ماذا يُسجَّل؟ ⁦(What is recorded?)⁩**
+**2. يشغّل سكربت بلال (Bilal's script) مئة مستخدم افتراضي (100 virtual users) على واجهة برمجة نجم في بيئة ما قبل الإنتاج (staging API)، ويرسل كل منهم طلبه التالي حين يصل الرد السابق (when the last reply arrives). تتجمّد الخدمة عشر ثوانٍ (freezes for ten seconds). ماذا يُسجَّل؟ ⁦(What is recorded?)⁩**
 
 - A. صورة عادلة (A fair picture)، لأن كل طلب أُرسل قد سُجّل (every request that was sent is recorded)
 - B. بضع عيّنات بطيئة (A few slow samples)، ولا شيء للطلبات التي لم تُرسَل أصلًا (none for requests never sent)
@@ -342,7 +342,7 @@ E       assert 51 == 6
 
 </details>
 
-**5. يخطئ اختبار حِمل ليلي على بيئة ما قبل الإنتاج المشتركة (A nightly load test on shared staging) عتبة p95 بنسبة 12 %، وكان تصدير بيانات لفريق آخر يعمل في النافذة نفسها (another team's data export ran in the same window). ماذا ينبغي أن تفعل ندى أولًا؟ ⁦(What should Nada do first?)⁩**
+**5. يتجاوز اختبار حِمل ليلي على بيئة ما قبل الإنتاج المشتركة (A nightly load test on shared staging) عتبة p95 بنسبة 12 % (misses its p95 threshold by 12 %)، وكان تصدير بيانات لفريق آخر يعمل في النافذة نفسها (another team's data export ran in the same window). ماذا ينبغي أن تفعل ندى أولًا؟ ⁦(What should Nada do first?)⁩**
 
 - A. ترفع العتبة بنسبة 15 % ليصير التشغيل الليلي أخضر (Raise the threshold by 15 %)
 - B. تعيد التشغيل حتى ينجح وتحتفظ بأفضل نتيجة (Rerun until it passes and keep the best result)
@@ -372,7 +372,7 @@ E       assert 51 == 6
 ## ⚡ الدرس في دقيقة (In 60 seconds)
 - يضيف المختبِرون ما لا تستطيعه أدوات الفحص (Testers add what scanners cannot): **حالات إساءة الاستخدام (abuse cases)** و**مصفوفات التفويض (authorisation matrices)** — من يحق له فعل ماذا ببيانات من (who may do what to whose data) — والمدخلات العدائية والمولَّدة (hostile and generated input)، واختبار انحدار (regression test) لكل ثغرة (vulnerability).
 - يقرأ **الفحص الساكن للشيفرة (SAST)** الشيفرة (reads code)، ويقرأ **تحليل مكوّنات الطرف الثالث (SCA)** التبعيات (dependencies)، ويهاجم **الفحص الديناميكي للتطبيق (DAST)** تطبيقًا يعمل (attacks a running app)، ويغذّي **الاختبار العشوائي الموجَّه (fuzzing)** مدخلات مولَّدة (feeds generated input)؛ وكلٌّ منها يرى شيئًا مختلفًا (each sees something different).
-- أفضل ساعة تقضيها هي في اختبار تفويض (an authorisation test): فكسر التحكم في الوصول (broken access control) هو الأول في OWASP Top 10 (طبعة 2021، 2021 edition).
+- أفضل ساعة تقضيها (The best hour) هي في اختبار تفويض (an authorisation test): فكسر التحكم في الوصول (broken access control) هو الأول في OWASP Top 10 (طبعة 2021، 2021 edition).
 - تقدّم أدوات الفحص (Scanners) خيوطًا لا أحكامًا (leads, not verdicts): امنع الدمج عند النتائج الجديدة عالية الثقة (block on new, high-confidence findings)، وافرز الباقي (triage the rest).
 - أكبر فخ (Biggest trap): «كانت أداة الفحص خضراء، فالنظام آمن» (the scanner was green, so it is secure).
 - النطاق والإذن الكتابي أولًا (Scope and written permission first)؛ وهنا لا تهاجم إلا النظام النموذجي (attack only the sample system) على جهازك الخاص (on your own machine).
@@ -384,7 +384,7 @@ E       assert 51 == 6
 
 ### 🟢 الأساسيات (The essentials)
 
-**ما يضيفه المختبِرون (What testers add).** يسأل المطوّرون كيف ينبغي أن تعمل الميزة (how a feature should work)؛ ويسأل المهاجمون كيف يجعلونها تسيء التصرف (how to make it misbehave). ويكتب المختبِرون القائمة الثانية على هيئة **حالات إساءة استخدام (abuse cases)** («بصفتي بوب أغيّر المعرّف في الرابط»، as Bob I change the id in the URL؛ و«بصفتي سكربتًا أعيد إرسال تحويل مُلتقَط»، as a script I replay a captured transfer)، ويحوّلون كل واحدة إلى اختبار يجب أن يفشل بأمان (must fail safely)، ويحتفظون به اختبار انحدار (regression test). كما يملكون ما لا تستطيع أي أداة فحص إنتاجه: الجواب المتوقع لكل دور وكل كائن (the expected answer for every role and object).
+**ما يضيفه المختبِرون (What testers add).** يسأل المطوّرون (Developers) كيف ينبغي أن تعمل الميزة (how a feature should work)؛ ويسأل المهاجمون (attackers) كيف يجعلونها تسيء التصرف (how to make it misbehave). ويكتب المختبِرون القائمة الثانية (the second list) على هيئة **حالات إساءة استخدام (abuse cases)** («بصفتي بوب أغيّر المعرّف في الرابط»، as Bob I change the id in the URL؛ و«بصفتي سكربتًا أعيد إرسال تحويل مُلتقَط»، as a script I replay a captured transfer)، ويحوّلون كل واحدة إلى اختبار يجب أن يفشل بأمان (must fail safely)، ويحتفظون به بوصفه اختبار انحدار (regression test). كما يملكون ما لا تستطيع أي أداة فحص إنتاجه: الجواب المتوقع لكل دور وكل كائن (the expected answer for every role and object).
 
 **قائمة OWASP Top 10 مصدرًا لأفكار الاختبار (The OWASP Top 10 as a source of test ideas).** قائمة OWASP Top 10 قائمة واسعة الاستخدام بمخاطر الويب (a widely used list of web risks). هذه أسماء طبعة 2021؛ وقد تكون هناك طبعة أحدث وقت قراءتك (a newer edition may be current)، فراجع owasp.org وأبقِ المنهج (keep the method): فكرة اختبار واحدة لكل فئة (one test idea per category).
 
@@ -463,7 +463,7 @@ def test_every_route_has_a_row(client):          # a new endpoint turns this red
                                                   "/transfers", "/health", "/app"}
 ```
 
-تنجح الحالات الخمس والعشرون كلها (All 25 cases pass) على النظام النموذجي النظيف (on the clean sample). ومع العيب المزروع (With the seeded bug) تفشل بالضبط قراءتا المستخدمَين المتبادلتان (exactly the two cross-user reads fail):
+تنجح الحالات الخمس والعشرون كلها (All 25 cases pass) على النظام النموذجي النظيف (on the clean sample). ومع العيب المزروع (With the seeded bug) تفشل بالضبط قراءتان لبيانات مستخدم آخر (exactly the two cross-user reads fail):
 
 ```text
 $ NAJM_BUGS=bola pytest tests/test_authz_matrix.py
@@ -508,7 +508,7 @@ def test_markup_is_not_echoed_back():                              # MEANT TO FA
     assert "<script>" not in post(kind=HOSTILE["markup"]).text
 ```
 
-تنجح حالات الرفض الخمس والثلاثون (The 35 refusal cases pass)؛ ويفشل الاختبار الأخير، وهو نتيجة حقيقية منخفضة الخطورة (a real low-severity finding): يُردَّد `kind` في رسالة الخطأ (is echoed into the error message) (`unsupported_kind: <script>alert(1)</script>`). لا ضرر منه في JSON، لكن عميلًا يعرض الرسائل بوصفها HTML سينفّذه (would run it)؛ والإصلاح (the fix): لا مدخلات خام في الرسائل (no raw input in messages). وفي SQL اختبر وحدة الشيفرة التي تبني الاستعلامات (unit-test the code that builds queries): يجب أن يعيد `"acc-1' OR '1'='1"` صفر صفوف (must return no rows)، وهو ما يفشل فيه استعلام مبني بـf-string وينجح فيه الاستعلام المحدَّد المعاملات (a parameterised one) (`WHERE from_account = ?`)؛ وتجد القاعدة الساكنة (a static rule) النمط في وقت أبكر (finds the pattern earlier) (أدناه، below).
+تنجح حالات الرفض الخمس والثلاثون (The 35 refusal cases pass)؛ ويفشل الاختبار الأخير، وهو نتيجة حقيقية منخفضة الخطورة (a real low-severity finding): يُردَّد `kind` في رسالة الخطأ (is echoed into the error message) (`unsupported_kind: <script>alert(1)</script>`). لا ضرر منه في JSON، لكن عميلًا يعرض الرسائل بوصفها HTML سينفّذه (would run it)؛ والإصلاح (the fix): لا مدخلات خام في الرسائل (no raw input in messages). وفي SQL أجرِ اختبار وحدة على الشيفرة التي تبني الاستعلامات (unit-test the code that builds queries): يجب أن يعيد `"acc-1' OR '1'='1"` صفر صفوف (must return no rows)، وهو ما يفشل فيه استعلام مبني بـf-string وينجح فيه الاستعلام ذو المعاملات (a parameterised one) (`WHERE from_account = ?`)؛ وتجد القاعدة الساكنة (a static rule) النمط في وقت أبكر (finds the pattern earlier) (أدناه، below).
 
 **الرموز والجلسات (Tokens and sessions).** الرموز المزيفة في النظام النموذجي لا تنتهي أبدًا (never expire)، لذا اختبر المُتحقِّق (the verifier) الذي يتصدر واجهة حقيقية (fronts a real API). يستخدم هذا المُتحقِّق PyJWT (`pip install pyjwt`) ويثبّت الخوارزمية والمُصدِر والجمهور والمطالبات المطلوبة (pins algorithm, issuer, audience and required claims).
 
@@ -570,7 +570,7 @@ def test_a_payload_swapped_onto_alices_signature_is_refused():
 
 تنجح الاختبارات التسعة كلها (All nine pass). ثم استبدلنا `verify` «مؤقتة» (a "temporary" verify) خيارها الوحيد `{"verify_signature": False}`: فشل سبعة من التسعة، ومنها الرمز المزوَّر والرمز المعبوث به (the forged and the tampered token) — إذ تتخطى PyJWT حينئذ فحوص الانتهاء والجمهور والمُصدِر أيضًا (skips expiry, audience and issuer checks too). كل فشل يحتاج اختباره الخاص (Each failure needs its own test).
 
-**حدود المعدل (Rate limits).** اختبر الضابط لا الفكرة (Test the control, not the idea). لنفترض 10 تحويلات في الدقيقة لكل عميل (10 transfers a minute per customer): الطلب الحادي عشر `POST /transfers` يحصل على `429` مع ترويسة `Retry-After` وشكل الخطأ المعتاد (the usual error shape)؛ ولا يتأثر بوب (Bob is unaffected) حين تُحدَّد أليس؛ وتغيير `X-Forwarded-For` لا يعيد ضبط العدّاد (does not reset the counter)؛ وبعد الانتظار المعلن تستطيع أليس الإرسال من جديد (can send again) — احقن ساعة ولا تنم أبدًا (inject a clock, never sleep)؛ والطلبات المرفوضة لا تحرّك أي مال (move no money). لا يملك النظام النموذجي محدِّدًا للمعدل (has no limiter): التمرين 🔴.
+**حدود المعدل (Rate limits).** اختبر الضابط لا الفكرة (Test the control, not the idea). لنفترض 10 تحويلات في الدقيقة لكل عميل (10 transfers a minute per customer): طلب `POST /transfers` الحادي عشر يحصل على `429` مع ترويسة `Retry-After` وشكل الخطأ المعتاد (the usual error shape)؛ ولا يتأثر بوب (Bob is unaffected) حين يُطبَّق الحد على أليس (when Alice is limited)؛ وتغيير `X-Forwarded-For` لا يعيد ضبط العدّاد (does not reset the counter)؛ وبعد الانتظار المعلن تستطيع أليس الإرسال من جديد (can send again) — احقن ساعة ولا تنتظر فعليًا أبدًا (inject a clock, never sleep)؛ والطلبات المرفوضة لا تحرّك أي مال (move no money). لا يملك النظام النموذجي محدِّدًا للمعدل (has no limiter): التمرين 🔴.
 
 **الاختبار العشوائي الموجَّه (Fuzzing).** تغذّي **أداة الاختبار العشوائي (fuzzer)** برنامجًا بكميات كبيرة من مدخلات مولَّدة، كثيرًا ما تكون مشوَّهة (generated, often malformed input)، وتراقب الانهيارات (watches for crashes). والاختبار القائم على الخصائص (Property-based testing) اختبار عشوائي موجَّه ودود (friendly fuzzing): تولّد Hypothesis (الدرس 2.3، lesson 2.3) أجسام JSON والخاصية هي «لا جسم يُفشل الخادم» (no body makes the server fail).
 
@@ -604,24 +604,24 @@ def test_no_request_body_makes_the_server_fail(body):          # MEANT TO FAIL o
 AssertionError: server error for {'from_account': 'acc-1', 'to_account': 'acc-2', 'amount': 1e+26, 'currency': 'QAR', 'kind': 'domestic'}
 ```
 
-قلّصت Hypothesis الانهيار إلى أصغر مبلغ فاشل (shrank the crash to the smallest failing amount)، وهو 10^26 (قد يُطبع `1e+26` أو عددًا صحيحًا): فـ`Decimal.quantize` ترفع استثناء `InvalidOperation` غير ملتقط (an uncaught)، لأن النتيجة تحتاج إلى أكثر من 28 خانة الافتراضية (more than the default 28 digits). وجد الدرس 3.1 العيب نفسه بأداة Schemathesis (found the same defect). أصلحه ليعيد `422`، ثم ثبّت الجسم المقلَّص (pin the shrunk body) بـ`@example(...)` ليعمل في كل مرة (so it runs every time). أما أدوات الاختبار العشوائي **الموجَّهة بالتغطية (Coverage-guided)** فتطفّر المدخلات التي تبلغ شيفرة جديدة (mutate the inputs that reach new code): **libFuzzer** و**AFL++** للغتَي C وC++، و**Atheris** للغة Python، و**Jazzer** لمنصة JVM؛ وكثيرًا ما تعمل ساعات ضد محلِّل (against a parser). اختبر عشوائيًا ما تملكه فقط (Fuzz only what you own).
+قلّصت Hypothesis الانهيار إلى أصغر مبلغ فاشل (shrank the crash to the smallest failing amount)، وهو 10^26 (قد يُطبع `1e+26` أو عددًا صحيحًا): فـ`Decimal.quantize` تُطلق استثناء `InvalidOperation` غير مُعالَج (uncaught)، لأن النتيجة تحتاج إلى أكثر من الحد الافتراضي البالغ 28 خانة (more than the default 28 digits). وجد الدرس 3.1 العيب نفسه بأداة Schemathesis (found the same defect). أصلحه ليعيد `422`، ثم ثبّت الجسم المقلَّص (pin the shrunk body) بـ`@example(...)` ليعمل في كل مرة (so it runs every time). أما أدوات الاختبار العشوائي **الموجَّهة بالتغطية (Coverage-guided)** فتطفّر المدخلات التي تبلغ شيفرة جديدة (mutate the inputs that reach new code): **libFuzzer** و**AFL++** للغتَي C وC++، و**Atheris** للغة Python، و**Jazzer** لمنصة JVM؛ وكثيرًا ما تعمل ساعات ضد محلِّل (against a parser). اختبر عشوائيًا ما تملكه فقط (Fuzz only what you own).
 
 ### 🔴 نظرة الخبير (Expert view)
 
-**أدوات الفحص في خط التكامل (Scanners in a pipeline).** تجيب كل أداة عن سؤال مختلف (answers a different question)، فاستخدم عدة أدوات، مبكرًا وبكلفة قليلة (early and cheaply).
+**أدوات الفحص في خط التكامل والتسليم المستمرين (Scanners in a pipeline).** تجيب كل أداة عن سؤال مختلف (answers a different question)، فاستخدم عدة أدوات، مبكرًا وبكلفة قليلة (early and cheaply).
 
 ```mermaid
-flowchart LR
-    P["طلب الدمج"] --> S["فحص الأسرار"]
-    S --> A["الفحص الساكن: Semgrep"]
-    A --> D["فحص التبعيات"]
-    D --> T["اختبارات التفويض والمدخلات والرموز"]
-    T --> M["الدمج والنشر في بيئة الاختبار"]
-    M --> Z["الفحص الديناميكي: خط أساس ZAP"]
-    Z --> N["ليلًا: الاختبار العشوائي الموجَّه والفحوص الأعمق"]
+flowchart RL
+    P["طلب الدمج<br/>(Pull request)"] --> S["فحص الأسرار<br/>(Secret scan)"]
+    S --> A["الفحص الساكن: Semgrep<br/>(SAST: Semgrep)"]
+    A --> D["فحص التبعيات<br/>(Dependency scan)"]
+    D --> T["اختبارات التفويض والمدخلات والرموز<br/>(Authz, input and token tests)"]
+    T --> M["الدمج والنشر في بيئة الاختبار<br/>(Merge and deploy to test)"]
+    M --> Z["الفحص الديناميكي: خط أساس ZAP<br/>(DAST: ZAP baseline)"]
+    Z --> N["ليلًا: الاختبار العشوائي الموجَّه والفحوص الأعمق<br/>(Nightly: fuzzing and deeper scans)"]
 ```
 
-يقرأ **الفحص الساكن للشيفرة (SAST)** — أي التحليل الساكن (static analysis) — المصدر (reads source) ([*أمن الذكاء الاصطناعي والتطبيقات (Secure AI & Application Security)*، الدرس 6.1 — دورة حياة تطوير آمنة (A secure development life cycle): المتطلبات والمراجعة والاختبار — SAST وDAST وSCA (requirements, review and testing, SAST, DAST, SCA)](../secai/index.ar.html#/6.1)). وقاعدة **Semgrep** مخصصة (A custom rule) تكلّف أسطرًا قليلة؛ وهذه تُبلّغ عن SQL مبني بـf-string، ويخرج الأمر `semgrep scan --config rules.yml --error .` برمز غير صفري عند وجود نتيجة (exits non-zero on a finding)، كما يحتاج خط التكامل (as a pipeline needs). على ملف `unsafe.py` فيه استعلام كهذا (with such a query) (مختصرًا، abridged):
+يقرأ **الفحص الساكن للشيفرة (SAST)** — أي التحليل الساكن (static analysis) — المصدر (reads source) ([*أمن الذكاء الاصطناعي والتطبيقات (Secure AI & Application Security)*، الدرس 6.1 — دورة حياة تطوير آمنة (A secure development life cycle): المتطلبات والمراجعة والاختبار — SAST وDAST وSCA (requirements, review and testing, SAST, DAST, SCA)](../secai/index.ar.html#/6.1)). وقاعدة **Semgrep** مخصصة (A custom rule) تكلّف أسطرًا قليلة؛ وهذه تُبلّغ عن SQL مبني بـf-string، ويخرج الأمر `semgrep scan --config rules.yml --error .` برمز غير صفري عند وجود نتيجة (exits non-zero on a finding)، كما يحتاج خط التكامل والتسليم المستمرين (as a pipeline needs). على ملف `unsafe.py` فيه استعلام كهذا (with such a query) (مختصرًا، abridged):
 
 ```yaml
 # rules.yml
@@ -641,7 +641,7 @@ unsafe.py
 Ran 1 rule on 1 file: 1 finding.
 ```
 
-يفحص **تحليل مكوّنات الطرف الثالث (SCA)** — أي تحليل تركيب البرمجيات (software composition analysis) — التبعيات مقابل قواعد بيانات الثغرات المعروفة (known-vulnerability databases): `pip-audit -r requirements.txt` و`npm audit`. وقت الكتابة لم يُبلّغ أي منهما عن شيء في النظام النموذجي (reported nothing on the sample) (`No known vulnerabilities found` و`found 0 vulnerabilities`)؛ وتتغير النتائج مع ظهور النشرات الأمنية (as advisories appear)، فشغّلهما في كل بناء (on every build). ويبحث **فحص الأسرار (Secret scanning)** — gitleaks أو TruffleHog أو فحص الأسرار في GitHub مع حماية الدفع (push protection) — في الإيداعات (commits) عن المفاتيح والرموز. ويهاجم **الفحص الديناميكي للتطبيق (DAST)** — أي التحليل الديناميكي (dynamic analysis) — تطبيقًا يعمل من الخارج (from outside). وفحص ZAP الأساسي (The ZAP baseline scan) سلبي (passive): يزحف نحو دقيقة (spiders for about a minute) وهو آمن في خط التكامل، ضد نشر الاختبار الخاص بك فقط (against your own test deployment only) (لم يُنفَّذ هنا، not executed here؛ ويعمل `--network host` على Linux):
+يفحص **تحليل مكوّنات الطرف الثالث (SCA)** — أي تحليل تركيب البرمجيات (software composition analysis) — التبعيات مقابل قواعد بيانات الثغرات المعروفة (known-vulnerability databases): `pip-audit -r requirements.txt` و`npm audit`. وقت الكتابة لم يُبلّغ أي منهما عن شيء في النظام النموذجي (reported nothing on the sample) (`No known vulnerabilities found` و`found 0 vulnerabilities`)؛ وتتغير النتائج مع ظهور النشرات الأمنية (as advisories appear)، فشغّلهما في كل بناء (on every build). ويبحث **فحص الأسرار (Secret scanning)** — gitleaks أو TruffleHog أو فحص الأسرار في GitHub مع حماية الدفع (push protection) — في الإيداعات (commits) عن المفاتيح والرموز. ويهاجم **الفحص الديناميكي للتطبيق (DAST)** — أي التحليل الديناميكي (dynamic analysis) — تطبيقًا يعمل من الخارج (from outside). وفحص ZAP الأساسي (The ZAP baseline scan) سلبي (passive): يزحف نحو دقيقة (spiders for about a minute) وهو آمن في خط التكامل والتسليم المستمرين (safe in a pipeline)، ضد نشر الاختبار الخاص بك فقط (against your own test deployment only) (لم يُنفَّذ هنا، not executed here؛ ويعمل `--network host` على Linux):
 
 ```bash
 docker run --rm --network host -v "$PWD:/zap/wrk:rw" -t ghcr.io/zaproxy/zaproxy:stable \
@@ -664,7 +664,7 @@ docker run --rm --network host -v "$PWD:/zap/wrk:rw" -t ghcr.io/zaproxy/zaproxy:
 | **Semgrep** | تحليل ساكن بقواعد مخصصة (Static analysis with custom rules) | طلبات الدمج؛ وأنماط العيوب الخاصة بالفريق (Pull requests; team-specific bug patterns) |
 | **pip-audit and npm audit** | فحوص التبعيات مقابل النشرات المعروفة (Dependency scans against known advisories) | كل بناء (Every build) |
 | **Secret scanning** | يجد المفاتيح والرموز في الشيفرة والسجل التاريخي (Finds keys and tokens in code and history) | قبل الإيداع وفي التكامل المستمر (Pre-commit and CI) |
-| **OWASP ZAP** | وكيل DAST مفتوح المصدر وأداة فحص (Open-source DAST proxy and scanner) | خط أساس سلبي في التكامل المستمر؛ وفحوص أعمق بترتيب مسبق (Passive baseline in CI; deeper scans by arrangement) |
+| **OWASP ZAP** | وسيط DAST مفتوح المصدر وأداة فحص (Open-source DAST proxy and scanner) | خط أساس سلبي في التكامل المستمر؛ وفحوص أعمق بترتيب مسبق (Passive baseline in CI; deeper scans by arrangement) |
 | **Hypothesis as a fuzzer** | أجسام JSON مولَّدة تُقلَّص إلى أصغر فشل (Generated JSON bodies, shrunk to the smallest failure) | أي حد مدخلات تملكه (Any input boundary you own) |
 | **Coverage-guided fuzzers** | libFuzzer وAFL++ وAtheris وJazzer | المحلِّلات والشيفرة الأصلية (Parsers and native code) |
 
@@ -683,7 +683,7 @@ docker run --rm --network host -v "$PWD:/zap/wrk:rw" -t ghcr.io/zaproxy/zaproxy:
 استخدم نسختك الخاصة فقط من `testing/sample` (Use only your own copy).
 
 - 🟢 **وسّع المصفوفة (Widen the matrix).** أضف صفوفًا لـ`GET /accounts/acc-3/balance` ولإرسال من `acc-3` (حساب أليس باليورو، Alice's EUR account)، مع كتابة التوقعات أولًا (with expectations written first) (امنح `send` عملة، give send a currency). *يكتمل عندما (Done when):* ينجح النظام النموذجي النظيف (the clean sample passes) ويظل `NAJM_BUGS=bola` يُفشل خليتين بالضبط (still fails exactly two cells).
-- 🟡 **اختبر عشوائيًا، وأصلح، وثبّت (Fuzz, fix, pin).** شغّل اختبار الاختبار العشوائي الموجَّه (the fuzz test)، وأصلح `check_transfer` ليعيد المبالغ العبثية `422` (absurd amounts)، وثبّت الجسم المقلَّص بـ`@example`. لا يكفي نقل فحص الحد الأقصى إلى البداية (Moving the maximum check first is not enough): إذ تجد Hypothesis حينئذ `-1e+26`. وأوقف أيضًا ترديد `kind` (stop kind being echoed). *يكتمل عندما (Done when):* ينجح الاختبار العشوائي الموجَّه (the fuzz test) و`test_markup_is_not_echoed_back`، ويفشل كلاهما من جديد على الشيفرة الأصلية (both fail again on the original code).
+- 🟡 **اختبر عشوائيًا، وأصلح، وثبّت (Fuzz, fix, pin).** شغّل اختبار الاختبار العشوائي الموجَّه (the fuzz test)، وأصلح `check_transfer` بحيث تُقابَل المبالغ العبثية (absurd amounts) بالرد `422`، وثبّت الجسم المقلَّص بـ`@example`. لا يكفي نقل فحص الحد الأقصى إلى البداية (Moving the maximum check first is not enough): إذ تجد Hypothesis حينئذ `-1e+26`. وأوقف أيضًا ترديد `kind` (stop kind being echoed). *يكتمل عندما (Done when):* ينجح الاختبار العشوائي الموجَّه (the fuzz test) و`test_markup_is_not_echoed_back`، ويفشل كلاهما من جديد على الشيفرة الأصلية (both fail again on the original code).
 - 🔴 **ابنِ حدّ معدل ثم اكسره (Build and break a rate limit).** في نسختك أضف وسيطًا (middleware) يسمح بعشرة `POST /transfers` لكل رمز حامل (bearer token) في الدقيقة، بساعة قابلة للحقن (with an injectable clock)، واكتب الاختبارات الخمسة من فقرة حدود المعدل (the five tests from the rate-limit paragraph). *يكتمل عندما (Done when):* تنجح كلها (all pass)، ويؤدي ربط الحد بـ`X-Forwarded-For` (keying the limit on) إلى فشل اختبارين على الأقل (at least two fail).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
@@ -789,7 +789,7 @@ docker run --rm --network host -v "$PWD:/zap/wrk:rw" -t ghcr.io/zaproxy/zaproxy:
 ## 🧭 لماذا يهم (Why it matters)
 يوم الخميس (On a Thursday) تبطؤ خدمة فحص العقوبات (the sanctions-screening service) التي تستدعيها المدفوعات (Payments). تعيد المدفوعات المحاولة فورًا، بلا حد، من كل حاوية (pod)، فتتحول تبعية بطيئة إلى تبعية مغمورة (a slow dependency becomes a flooded one)؛ والأسوأ أن بعض الخصومات تنجح بينما تنتهي مهلة ردودها (some debits succeed while their replies time out)، فتخصم إعادات المحاولة مرة أخرى. لم يختبر أحد «البطء» (slow) أو «التعطل» (down) أو «ضياع الرد» (reply lost).
 
-في يناير 2017 (In January 2017) فقدت GitLab عدة ساعات من تغييرات قاعدة بيانات الإنتاج (several hours of production database changes) حين حذف مهندس بيانات من خادم قاعدة بيانات خاطئ (removed data on the wrong database server)؛ وذكر تقرير ما بعد الحادثة المنشور (its published post-mortem) أن أيًّا من تقنيات النسخ الاحتياطي والتكرار لديها لم يكن يعمل بموثوقية (none of its backup and replication techniques was working reliably). كانت النسخ الاحتياطية موجودة؛ لكن الاستعادة لم تكن مُثبتة (restores had not been proved).
+في يناير 2017 (In January 2017) فقدت GitLab عدة ساعات من تغييرات قاعدة بيانات الإنتاج (several hours of production database changes) حين حذف أحد المهندسين بيانات من خادم قاعدة بيانات خاطئ (an engineer removed data on the wrong database server)؛ وذكر تقرير ما بعد الحادثة المنشور (its published post-mortem) أن أيًّا من تقنيات النسخ الاحتياطي والتكرار لديها لم يكن يعمل بموثوقية (none of its backup and replication techniques was working reliably). كانت النسخ الاحتياطية موجودة؛ لكن الاستعادة لم تكن مُثبتة (restores had not been proved).
 
 ## 📐 كيف يعمل (How it works)
 
@@ -804,9 +804,9 @@ docker run --rm --network host -v "$PWD:/zap/wrk:rw" -t ghcr.io/zaproxy/zaproxy:
 | نجاح الخصم وضياع الرد (Debit succeeds, reply lost) | تعيد المحاولة استخدام مفتاح عدم التكرار (The retry reuses the idempotency key): خصم واحد (one debit) |
 | استعادة قاعدة البيانات (Database restored) | تتطابق الأرصدة (Balances reconcile)؛ وفقدان البيانات ضمن الهدف (data loss within the target) |
 
-**حقن الأعطال (Fault injection)** يجعل الفشل يحدث عمدًا (on purpose). في اختبارات الوحدة والمكوّنات (unit and component tests) استخدم **تبعية مزيّفة تتبع سيناريو (fake dependency that follows a script)** («معطلة، معطلة، سليمة»، down, down, ok) وساعة مزيّفة (a fake clock)، فلا ينام شيء (so nothing sleeps). وفي اختبارات التكامل (integration tests) استخدم **Toxiproxy**، وهو وكيل TCP (a TCP proxy) يضيف زمن استجابة أو مهلات أو إعادات ضبط (adds latency, timeouts or resets) بين خدمتك وتبعية حقيقية (a real dependency).
+**حقن الأعطال (Fault injection)** يجعل الفشل يحدث عمدًا (on purpose). في اختبارات الوحدة والمكوّنات (unit and component tests) استخدم **تبعية مزيّفة تتبع سيناريو (fake dependency that follows a script)** («معطلة، معطلة، سليمة»، down, down, ok) وساعة مزيّفة (a fake clock)، فلا يوجد انتظار فعلي (so nothing sleeps). وفي اختبارات التكامل (integration tests) استخدم **Toxiproxy**، وهو وسيط TCP (a TCP proxy) يضيف زمن استجابة أو مهلات أو إعادات ضبط (adds latency, timeouts or resets) بين خدمتك وتبعية حقيقية (a real dependency).
 
-إعادة محاولة بتراجع أسي (exponential backoff) و**تشويش كامل (full jitter)** — أي انتظار عشوائي حتى حد التراجع (a random wait up to the backoff) كي لا تعيد الحاويات المحاولة في خطوة واحدة (so pods do not retry in step) — وقاطع دائرة (a circuit breaker)، وكلاهما يأخذ النوم والساعة معاملين (taking sleep and clock as arguments):
+إعادة محاولة بتراجع أسي (exponential backoff) و**تشويش كامل (full jitter)** — أي انتظار عشوائي حتى حد التراجع (a random wait up to the backoff) كي لا تعيد الحاويات المحاولة في خطوة واحدة (so pods do not retry in step) — وقاطع دائرة (a circuit breaker)، وكلاهما يأخذ دالة الانتظار والساعة معاملين (taking sleep and clock as arguments):
 
 ```python
 # resilience.py
@@ -852,11 +852,11 @@ class CircuitBreaker:
 ```
 
 ```mermaid
-flowchart LR
-    C["مغلق: تمر الاستدعاءات"] -->|"3 إخفاقات"| O["مفتوح: فشل سريع"]
-    O -->|"انتهاء فترة التهدئة"| H["نصف مفتوح: تجربة واحدة"]
-    H -->|"نجاح التجربة"| C
-    H -->|"فشل التجربة"| O
+flowchart RL
+    C["مغلق: تمر الاستدعاءات<br/>(Closed: calls pass)"] -->|"3 إخفاقات (3 failures)"| O["مفتوح: فشل سريع<br/>(Open: fail fast)"]
+    O -->|"انتهاء فترة التهدئة (cool-down over)"| H["نصف مفتوح: تجربة واحدة<br/>(Half-open: one trial)"]
+    H -->|"نجاح التجربة (trial succeeds)"| C
+    H -->|"فشل التجربة (trial fails)"| O
 ```
 
 تقود الاختبارات كليهما ببديل مزيّف مبرمج بسيناريو (a scripted fake). ويستخدم الأخير `TransferService` الحقيقية: يُنجَز العمل (the work is done)، ويضيع الرد (the reply is lost)، ويعيد العميل المحاولة بالمفتاح نفسه (retries with the same key).
@@ -937,9 +937,9 @@ def test_a_lost_reply_does_not_charge_twice():
 
 ### 🟡 التعمق أكثر (Going deeper)
 
-**تجارب الفوضى (Chaos experiments).** تحقن **هندسة الفوضى (chaos engineering)** أعطالًا حقيقية في نظام حي بصورة مضبوطة (injects real failures into a live system under control)؛ وقد شاعت بها Netflix مع Chaos Monkey نحو 2011 (popularised it around 2011). التجربة فرضية لا استعراض (a hypothesis, not a stunt): عرّف **الحالة المستقرة (steady state)** بمقياس (نجاح التحويلات فوق 99.9 %)؛ واذكر الفرضية («إذا مات أحد حاويات الفحص يبقى النجاح فوق 99.9 %»، if one screening pod dies, success stays above 99.9 %)؛ وقيّد **نطاق الأثر (blast radius)** (بيئة ما قبل الإنتاج أو 1 % من الحركة، staging, or 1 % of traffic)؛ وحدّد **شروط الإيقاف (abort conditions)** («أوقف إذا نزل النجاح دون 99 % مدة دقيقتين»، stop if success is below 99 % for two minutes)؛ ثم شغّل وراقب وأصلح (run, observe, fix). و**يوم اختبار الأعطال (game day)** تمرين فريق على التجارب والاستجابة (a team rehearsal of experiments and response). ومن الأدوات **Chaos Mesh** و**LitmusChaos** (لـKubernetes) و**AWS Fault Injection Service**؛ وتحتاج إلى مراقبة موثوقة أولًا (trusted monitoring first) ([*السحابة وDevOps (Cloud & DevOps)*، الدرس 5.1 — القياس عن بُعد (Telemetry): السجلات (logs) والمقاييس (metrics) والتتبعات (traces) وOpenTelemetry](../cloud/index.ar.html#/5.1)).
+**تجارب الفوضى (Chaos experiments).** تحقن **هندسة الفوضى (chaos engineering)** أعطالًا حقيقية في نظام حي بصورة مضبوطة (injects real failures into a live system under control)؛ وقد أشاعتها Netflix عبر Chaos Monkey نحو 2011 (popularised it around 2011). التجربة فرضية لا استعراض (a hypothesis, not a stunt): عرّف **الحالة المستقرة (steady state)** بمقياس (نجاح التحويلات فوق 99.9 %)؛ واذكر الفرضية («إذا تعطلت إحدى حاويات الفحص يبقى النجاح فوق 99.9 %»، if one screening pod dies, success stays above 99.9 %)؛ وقيّد **نطاق الأثر (blast radius)** (بيئة ما قبل الإنتاج أو 1 % من الحركة، staging, or 1 % of traffic)؛ وحدّد **شروط الإيقاف (abort conditions)** («أوقف إذا نزل النجاح دون 99 % مدة دقيقتين»، stop if success is below 99 % for two minutes)؛ ثم شغّل وراقب وأصلح (run, observe, fix). و**يوم اختبار الأعطال (game day)** تمرين فريق على التجارب والاستجابة (a team rehearsal of experiments and response). ومن الأدوات **Chaos Mesh** و**LitmusChaos** (لـKubernetes) و**AWS Fault Injection Service**؛ وتحتاج إلى مراقبة موثوقة أولًا (trusted monitoring first) ([*السحابة وDevOps (Cloud & DevOps)*، الدرس 5.1 — القياس عن بُعد (Telemetry): السجلات (logs) والمقاييس (metrics) والتتبعات (traces) وOpenTelemetry](../cloud/index.ar.html#/5.1)).
 
-**تمارين النسخ الاحتياطي والاستعادة (Backup and restore drills).** يستعيد التمرين (A drill) إلى مكان نظيف (into a clean place) ويثبت النتيجة: فحص السلامة (integrity check)، وأعداد الصفوف والمجاميع مقارنةً بالمصدر (row counts and totals against the source)، ومدى حداثة أحدث سجل — أي **نقطة الاسترداد (recovery point, RPO)** — والزمن الذي استغرقته الاستعادة — أي **زمن الاسترداد (recovery time, RTO)**. وفي وضع سجل الكتابة المسبقة (write-ahead-log mode) في SQLite تبقى الإيداعات الحديثة في ملف جانبي حتى نقطة تفتيش (checkpoint)، فنسخ ملف قاعدة البيانات وحده يعطي نسخة احتياطية «موجودة» لكنها فارغة (a backup that "exists" but is empty) — وقد تجري قاعدة أكبر نقطة تفتيش فتنجح بالحظ (may checkpoint and pass by luck):
+**تمارين النسخ الاحتياطي والاستعادة (Backup and restore drills).** يستعيد التمرين (A drill) إلى مكان نظيف (into a clean place) ويثبت النتيجة: فحص السلامة (integrity check)، وأعداد الصفوف والمجاميع مقارنةً بالمصدر (row counts and totals against the source)، ومدى حداثة أحدث سجل — أي **نقطة الاسترداد (recovery point, RPO)** — والزمن الذي استغرقته الاستعادة — أي **زمن الاسترداد (recovery time, RTO)**. وفي وضع سجل الكتابة المسبقة (write-ahead-log mode) في SQLite تبقى الإيداعات الحديثة (recent commits) في ملف جانبي (a side file) حتى نقطة تفتيش (checkpoint)، فنسخ ملف قاعدة البيانات وحده يعطي نسخة احتياطية «موجودة» لكنها فارغة (a backup that "exists" but is empty) — وقد تجري قاعدة أكبر نقطة تفتيش فتنجح بالحظ (may checkpoint and pass by luck):
 
 ```python
 # tests/test_restore.py
@@ -992,7 +992,7 @@ FAILED tests/test_restore.py::test_the_restore_matches_the_source[copy_the_file]
 
 ### 🔴 نظرة الخبير (Expert view)
 
-**اختبار الترحيل (Migration testing).** غيّر المخطط (schema) على خطوات. **التوسيع (Expand)**: أضف العمود الجديد قابلًا للقيمة الفارغة (nullable) كي تظل الشيفرة القديمة تعمل (so old code keeps working). **إعادة التعبئة (Backfill)**: املأه؛ وانشر شيفرة تكتب في الاثنين (deploy code that writes both). **الانكماش (Contract)**: أسقط العمود القديم متى لم تبقَ شيفرة قديمة (once no old code is left). وتفحص الاختبارات الشيفرتين القديمة والجديدة مقابل المخطط الوسيط (the in-between schema) والبيانات وطريق العودة (the way back). ينقل هذا المثال `amount` (نص، text) إلى `amount_minor` (عدد صحيح، integer):
+**اختبار الترحيل (Migration testing).** غيّر المخطط (schema) على خطوات. **التوسيع (Expand)**: أضف العمود الجديد بحيث يقبل القيم الفارغة (nullable) كي تظل الشيفرة القديمة تعمل (so old code keeps working). **إعادة التعبئة (Backfill)**: املأه؛ وانشر شيفرة تكتب في الاثنين (deploy code that writes both). **الانكماش (Contract)**: أسقط العمود القديم متى لم تبقَ شيفرة قديمة (once no old code is left). وتفحص الاختبارات الشيفرتين القديمة والجديدة مقابل المخطط الوسيط (the in-between schema) والبيانات وطريق العودة (the way back). ينقل هذا المثال `amount` (نص، text) إلى `amount_minor` (عدد صحيح، integer):
 
 ```python
 # tests/test_migration.py
@@ -1064,7 +1064,7 @@ def test_rollback_loses_nothing():
     assert db.execute("SELECT * FROM transfers ORDER BY id").fetchall() == before
 ```
 
-تتضمن البيانات `"250"` و`"250.5"` عمدًا (on purpose). فإعادة تعبئة «بسيطة» (A "simple" backfill)، `CAST(REPLACE(amount, '.', '') AS INTEGER)`، تنجح على بيانات تطوير مرتبة (tidy dev data) وتحوّل `"250"` بصمت إلى 250 وحدة صغرى (250 minor units)، أي 2.50 QAR؛ وهنا يفشل اختبار التحويل الدقيق (the exact-conversion test) (`assert Decimal('250') == (Decimal('250') * 100)`). ولهذا **تُجرَّب الترحيلات مسبقًا على نسخة مقنَّعة بحجم الإنتاج وشكله** (rehearsed on a production-sized, production-shaped, masked copy): تجد الصفوف الشاذة (the odd rows) ومدة القفل (the lock time) والمدة الإجمالية (the duration) قبل أن يجدها العملاء، ويُختبر التراجع (the rollback) ولا يُفترض (tested, not assumed).
+تتضمن البيانات `"250"` و`"250.5"` عمدًا (on purpose). فإعادة تعبئة «بسيطة» (A "simple" backfill)، `CAST(REPLACE(amount, '.', '') AS INTEGER)`، تنجح على بيانات تطوير مرتبة (tidy dev data) وتحوّل `"250"` بصمت إلى 250 وحدة فرعية من العملة (250 minor units)، أي 2.50 QAR؛ وهنا يفشل اختبار التحويل الدقيق (the exact-conversion test) (`assert Decimal('250') == (Decimal('250') * 100)`). ولهذا **تُجرَّب الترحيلات مسبقًا على نسخة مقنَّعة بحجم الإنتاج وشكله** (rehearsed on a production-sized, production-shaped, masked copy): تجد الصفوف الشاذة (the odd rows) ومدة القفل (the lock time) والمدة الإجمالية (the duration) قبل أن يجدها العملاء، ويُختبر التراجع (the rollback) ولا يُفترض (tested, not assumed).
 
 **اختبارات جودة البيانات هي SQL (Data-quality tests are SQL).** يعيد كل فحص الصفوف المخالفة (returns the offending rows)؛ وصفر صفوف يعني النجاح (zero rows passes). وتنفّذ أدوات مثل اختبارات dbt وGreat Expectations وSoda الفكرة نفسها ([*هندسة البيانات والتحليلات (Data Engineering & Analytics)*، الدرس 3.2 — جودة البيانات (Data quality): الاختبارات (tests) والعقود (contracts) وقابلية الرصد (observability)](../data/index.ar.html#/3.2)). ويحتاج خط التقارير التنظيمية في نجم (Najm's regulatory reporting pipeline) إلى الاكتمال (completeness) — كل حساب مُبلَّغ عنه (every account reported) — ومجاميع تتطابق مع دفتر الأستاذ (totals that reconcile with the ledger)، وقائمة أعمدة مستقرة (a stable column list) (قارن `PRAGMA table_info` بالمخطط المتفق عليه، the agreed schema). والفحص الذي لا يستطيع الفشل لا يحمي شيئًا (protects nothing)، فاقرن كلًا منها بطريقة تفسد بها بيانات نظيفة (a way to ruin clean data):
 
@@ -1128,7 +1128,7 @@ def test_each_check_can_fail(name):                # a check that cannot fail pr
 
 جرّب `DELETE FROM ledger` يدويًا (by hand): تظل `not null` و`accepted values` و`relationship` تنجح، لأن الجدول الفارغ لا صفوف سيئة فيه (an empty table has no bad rows) (أما `unique` و`completeness` و`totals` فلا تقرأ دفتر الأستاذ أصلًا، never read the ledger). وحدها `volume` و`freshness` و`reconciliation` تلاحظ (notice).
 
-**بيانات الاختبار والخصوصية (Test data and privacy).** بيانات الاختبار (Test data) اصطناعية أو مقنَّعة، لا بيانات عملاء خام أبدًا (never raw customer data). تصنع **Faker** أشخاصًا مزيفين قابلين للتكرار (repeatable fake people): `Faker("ar_AA")` مع `fake.seed_instance(2026)` تعطيان الأسماء العربية نفسها في كل تشغيل (the same Arabic names every run). و**الإخفاء (Masking)** يستبدل القيم الحقيقية باتساق (replaces real values consistently)، مثلًا بتجزئة مفتاحية (a keyed hash)، فتبقى الوصلات والصيغ (joins and formats survive) لكن لا يمكن إعادة بناء الأصل دون المفتاح (without the key). أبقِ نسخ الإنتاج بعيدًا عن الحواسيب المحمولة وخارج أدوات الذكاء الاصطناعي (off laptops and out of AI tools) ([*أمن الذكاء الاصطناعي والتطبيقات (Secure AI & Application Security)*، الدرس 5.3 — حماية البيانات الشخصية (Protecting personal data): التقليل (minimisation) والتسجيل (logging) وهندسة الخصوصية (privacy engineering)](../secai/index.ar.html#/5.3)).
+**بيانات الاختبار والخصوصية (Test data and privacy).** بيانات الاختبار (Test data) اصطناعية أو مقنَّعة، لا بيانات عملاء خام أبدًا (never raw customer data). تصنع **Faker** أشخاصًا مزيفين قابلين للتكرار (repeatable fake people): `Faker("ar_AA")` مع `fake.seed_instance(2026)` تعطيان الأسماء العربية نفسها في كل تشغيل (the same Arabic names every run). و**التقنيع (Masking)** يستبدل القيم الحقيقية باتساق (replaces real values consistently)، مثلًا بتجزئة مفتاحية (a keyed hash)، فتبقى الوصلات والصيغ (joins and formats survive) لكن لا يمكن إعادة بناء الأصل دون المفتاح (without the key). أبقِ نسخ الإنتاج بعيدًا عن الحواسيب المحمولة وخارج أدوات الذكاء الاصطناعي (off laptops and out of AI tools) ([*أمن الذكاء الاصطناعي والتطبيقات (Secure AI & Application Security)*، الدرس 5.3 — حماية البيانات الشخصية (Protecting personal data): التقليل (minimisation) والتسجيل (logging) وهندسة الخصوصية (privacy engineering)](../secai/index.ar.html#/5.3)).
 
 **التنظيم (Regulation).** يسري قانون المرونة التشغيلية الرقمية في الاتحاد الأوروبي (the EU's Digital Operational Resilience Act, DORA) — اللائحة 2022/2554 (Regulation 2022/2554)، ولا علاقة له بمقاييس DevOps (unrelated to the DevOps metrics) — منذ يناير 2025 (since January 2025)، وهو يشترط، بحسب قراءتنا (as we read it)، اختبارات المرونة (resilience testing)، ومنها اختبار الاختراق الموجَّه بالتهديدات (threat-led penetration testing) للجهات المحددة (designated entities). وتملك إدارة الامتثال (Compliance) التفسير (owns the interpretation).
 
@@ -1138,7 +1138,7 @@ def test_each_check_can_fail(name):                # a check that cannot fail pr
 | الأداة أو الممارسة أو التقنية (Tool, practice or technique) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
 |---|---|---|
 | **Scripted fake and fake clock** | تبعية تتبع سيناريو؛ وزمن تتحكم فيه (A dependency that follows a script; time you control) | اختبارات إعادة المحاولة والقاطع (Retry and breaker tests) |
-| **Toxiproxy** | وكيل TCP يحقن زمن استجابة ومهلات وإعادات ضبط (TCP proxy that injects latency, timeouts, resets) | اختبارات التكامل مع تبعيات حقيقية (Integration tests with real dependencies) |
+| **Toxiproxy** | وسيط TCP يحقن زمن استجابة ومهلات وإعادات ضبط (TCP proxy that injects latency, timeouts, resets) | اختبارات التكامل مع تبعيات حقيقية (Integration tests with real dependencies) |
 | **Chaos experiment** | فرضية وحالة مستقرة ونطاق أثر وإيقاف (Hypothesis, steady state, blast radius, abort) — Chaos Mesh وLitmusChaos وAWS FIS | إثبات المرونة (Proving resilience)؛ وبيئة ما قبل الإنتاج أولًا (staging first) |
 | **Restore drill** | استعد وطابق وقِس الزمن (Restore, reconcile, time) | كل نسخة احتياطية، وفق جدول (Every backup, on a schedule) |
 | **Expand and contract** | تغيير مخطط متوافق مع الإصدارات السابقة على خطوات (Backward-compatible schema change in steps) | تغييرات يصادفها نشر متدرج (Changes a rolling deploy meets) |
@@ -1181,7 +1181,7 @@ def test_each_check_can_fail(name):                # a check that cannot fail pr
 
 **1. تعيد المدفوعات محاولة استدعاء العقوبات (a sanctions call) الذي انتهت مهلته فورًا وبلا حد، من كل حاوية (pod). ما الذي ينبغي أن يتغير؟ ⁦(What should change?)⁩**
 
-- A. ارفع المهلة كي نادرًا ما يفشل الاستدعاء (Raise the timeout)
+- A. ارفع المهلة بحيث يندر فشل الاستدعاء (Raise the timeout so the call rarely fails)
 - B. أعد المحاولة عند كل استثناء، ومنه الرفض (refusals included)
 - C. حدّد عدد المحاولات (Cap attempts) وأضف تراجعًا أسيًا بتشويش (jittered backoff) وقاطعًا (a breaker)
 - D. أسقط إعادة المحاولة واقبل التحويلات حين يبطؤ الفحص (accept transfers when screening is slow)
@@ -1192,7 +1192,7 @@ def test_each_check_can_fail(name):                # a check that cannot fail pr
 
 </details>
 
-**2. يخصم تحويل الحساب لكن مهلة الرد تنتهي ويعيد العميل المحاولة. أي ميزة تجعل إعادة المحاولة آمنة؟ ⁦(Which feature makes the retry safe?)⁩**
+**2. يخصم تحويل الحساب (A transfer debits the account) لكن مهلة الرد تنتهي (the reply times out) ويعيد العميل المحاولة (the client retries). أي ميزة تجعل إعادة المحاولة آمنة؟ ⁦(Which feature makes the retry safe?)⁩**
 
 - A. مفتاح عدم التكرار (An idempotency key) على الطلب
 - B. تراجع أسي أطول (A longer backoff) قبل كل محاولة
@@ -1205,7 +1205,7 @@ def test_each_check_can_fail(name):                # a check that cannot fail pr
 
 </details>
 
-**3. تبلّغ مهمة النسخ الاحتياطي الليلية بالنجاح وحجم الملف 4 MB. ما الذي يثبت أن النسخة قابلة للاستخدام؟ ⁦(What proves the backup is usable?)⁩**
+**3. تبلّغ مهمة النسخ الاحتياطي الليلية (The nightly backup job) بالنجاح وحجم الملف 4 MB (the file is 4 MB). ما الذي يثبت أن النسخة قابلة للاستخدام؟ ⁦(What proves the backup is usable?)⁩**
 
 - A. حجم الملف يطابق نسخة الأمس (matches yesterday's backup)
 - B. تخرج مهمة النسخ برمز صفر (exits with code zero)
@@ -1220,8 +1220,8 @@ def test_each_check_can_fail(name):                # a check that cannot fail pr
 
 **4. يجب على فريق طارق (Tariq's squad) استبدال `amount` (نص، text) بـ`amount_minor` (عدد صحيح، integer) أثناء عمليات النشر المتدرجة (rolling deploys). أي خطة هي الأكثر أمانًا؟ ⁦(Which plan is safest?)⁩**
 
-- A. أعد تسمية العمود وانشر الشيفرة الجديدة في نافذة الإصدار نفسها (in the same release window)
-- B. أضف عمودًا يقبل الفراغ (a nullable column)، وأعد التعبئة (backfill)، وبدّل الشيفرة (switch code)، وأسقط القديم أخيرًا (drop the old one last)
+- A. أعد تسمية العمود وانشر الشيفرة الجديدة في نافذة الإصدار نفسها (Rename the column and deploy the new code in the same release window)
+- B. أضف عمودًا يقبل القيم الفارغة (a nullable column)، وأعد التعبئة (backfill)، وبدّل الشيفرة (switch code)، وأسقط القديم أخيرًا (drop the old one last)
 - C. أسقط `amount` أولًا كي لا تستخدمه أي شيفرة بالخطأ (by mistake)
 - D. حدّد وقت توقف (downtime) وتجاوز التمرين المسبق (skip the rehearsal)
 

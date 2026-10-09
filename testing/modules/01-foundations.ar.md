@@ -21,7 +21,7 @@
 
 يطرح راشد أربعة أسئلة. *بماذا قارنتِ ما فحصتِه؟ ⁦(Against what did you check?)⁩ لو كان معطوبًا، فما الذي كنتِ سترينه مختلفًا؟ ⁦(If it were broken, what would you have seen differently?)⁩ ما الذي لم تجرّبيه؟ ⁦(What did you not try?)⁩ من الذي يقرر أننا انتهينا؟ ⁦(Who decides that we are done?)⁩* لا تستطيع ندى الإجابة عن أي منها. [النظام النموذجي للدورة (The course's sample system)](https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/testing/sample) يخفي عيبًا في هذا الموضع تحديدًا: فعّل `limit_off_by_one` وسيُرفض خطأً أي تحويل يجعل إجمالي اليوم مساويًا للسقف تمامًا (exactly the limit). أربعون تحويلًا اعتياديًا (forty typical transfers) لا تلمس هذا العيب أبدًا. أما عميل يرسل آخر 1,000 QAR من حدّه المسموح (allowance) فسيصطدم به.
 
-ندى ليست مهملة. لم يخبرها أحد أن الاختبار مسألة قرار (a decision problem): مع اختبارات ممكنة بلا حدود (unlimited possible tests) ووقت محدود (limited time)، أيُّ القليل منها تشغّله، وماذا يُثبت؟ هذه الأسئلة الأربعة هي موضوع هذا الدرس، وهي في عصر الذكاء الاصطناعي (AI era) أهم: فالوكيل (agent) يستطيع أن يكتب قاعدة واختباراتها معًا ويعيد تشغيلًا أخضر (green run) في ثوانٍ.
+ندى ليست مهملة. لم يخبرها أحد أن الاختبار مسألة قرار (a decision problem): مع اختبارات ممكنة بلا حدود (unlimited possible tests) ووقت محدود (limited time)، فأيَّ قلّة منها تشغّل، وماذا تُثبت؟ ⁦(which few do you run, and what do they prove?)⁩ هذه الأسئلة الأربعة هي موضوع هذا الدرس، وهي في عصر الذكاء الاصطناعي (AI era) أهم: فالوكيل (agent) يستطيع أن يكتب قاعدة واختباراتها معًا ويعيد تشغيلًا أخضر (green run) في ثوانٍ.
 
 ## 📐 كيف يعمل (How it works)
 
@@ -31,18 +31,18 @@
 
 **مبادئ الاختبار السبعة (The seven testing principles)** مأخوذة من منهج المستوى التأسيسي (Foundation syllabus) الصادر عن ISTQB (CTFL v4.0). نعرضها بكلمات بسيطة (in plain words)، ولكل منها مثال من بنك نجم (a Najm example):
 
-1. **الاختبار يُظهر وجود العيوب لا غيابها (Testing shows the presence of defects, not their absence).** تخفّض الاختبارات الناجحة (passing tests) احتمال بقاء العيوب لكنها لا تبلغ به الصفر أبدًا. *تنجح مجموعة الاختبارات الابتدائية المؤلفة من 24 اختبارًا (the 24-test starter suite) نظيفةً، ومع ذلك يفلت ثلاثة من أصل خمسة عيوب مزروعة في التحويلات (the sample's five seeded transfer bugs) في النظام النموذجي.*
+1. **الاختبار يُظهر وجود العيوب لا غيابها (Testing shows the presence of defects, not their absence).** تخفّض الاختبارات الناجحة (passing tests) احتمال بقاء العيوب (the odds that bugs remain) لكنها لا تبلغ به الصفر أبدًا (never to zero). *تنجح مجموعة الاختبارات الابتدائية المؤلفة من 24 اختبارًا (the 24-test starter suite) نظيفةً، ومع ذلك يفلت ثلاثة من أصل خمسة عيوب مزروعة في التحويلات (the sample's five seeded transfer bugs) في النظام النموذجي.*
 2. **الاختبار الشامل مستحيل (Exhaustive testing is impossible).** المدخلات والحالات والتوقيتات (inputs, states and timings) تتضاعف أسرع مما تستطيع أي آلة تشغيله. *في تحويلات QAR وحدها: 2,499,901 مبلغًا × 5,000,001 إجمالي «مرسَل اليوم» (sent today) × 3 أنواع (kinds) تعطي نحو 3.75 × 10^13 توليفة (combinations).*
 3. **الاختبار المبكر يوفّر الوقت والمال (Early testing saves time and money).** ابدأ حين يوجد أي شيء تفحصه، ولو جملة واحدة (even a sentence). *سؤال «ما الذي يُعدّ يومًا؟» ⁦(what counts as a day?)⁩ في مراجعة القصة (story review) يكلّف حوارًا؛ وبعد الإطلاق (after launch) يكلّف إصلاحًا عاجلًا (a hotfix).*
 4. **العيوب تتجمّع (Defects cluster).** عدد قليل من المكوّنات (components) يحتوي معظم العيوب. *عيوب التحويلات (Transfers) تشير مرارًا إلى التقريب والتعامل مع الوقت (rounding and time handling)، لذا يضع راشد اختبارات إضافية هناك.*
-5. **الاختبارات تبلى (Tests wear out)** (مفارقة المبيد الحشري، the pesticide paradox). الاختبارات نفسها حين تُشغَّل مرة بعد مرة تتوقف عن إيجاد عيوب جديدة. *مجموعة من المبالغ المتوسطة (mid-range amounts) تبقى خضراء بينما ينتظر عيب حدّي (a boundary bug).*
-6. **الاختبار يعتمد على السياق (Testing is context dependent).** ما تختبره ومدى عمقه يتوقفان على ما قد يسوء ولمن (what can go wrong and for whom). *تحتاج المدفوعات (Payments) إلى كسور عشرية دقيقة ومسار تدقيق (exact decimals and an audit trail)؛ أما لافتة تسويقية (a marketing banner) فتكفيها فحص خفيف (a light check).*
-7. **وهم خلو النظام من العيوب (Absence of defects is a fallacy).** النظام الذي لا عيوب معروفة فيه قد يظل النظام الخطأ (the wrong one). *شاشة تحويل بلا عيب لكنها لا تستطيع جدولة دفعة يوم الراتب (schedule a salary-day payment) تظل تخذل العملاء.*
+5. **الاختبارات تبلى (Tests wear out)** (مفارقة المبيد الحشري، the pesticide paradox). الاختبارات نفسها حين تُشغَّل مرة بعد مرة (run again and again) تتوقف عن إيجاد عيوب جديدة (stop finding new defects). *مجموعة من المبالغ المتوسطة (mid-range amounts) تبقى خضراء (stays green) بينما ينتظر عيب حدّي (a boundary bug).*
+6. **الاختبار يعتمد على السياق (Testing is context dependent).** ما تختبره ومدى عمقه يتوقفان على ما قد يسوء ولمن (what can go wrong and for whom). *تحتاج المدفوعات (Payments) إلى كسور عشرية دقيقة ومسار تدقيق (exact decimals and an audit trail)؛ أما لافتة تسويقية (a marketing banner) فيكفيها فحص خفيف (a light check).*
+7. **وهم خلو النظام من العيوب (Absence of defects is a fallacy).** النظام الذي لا عيوب معروفة فيه (A system with no known bugs) قد يظل النظام الخطأ (the wrong one). *شاشة تحويل بلا عيب لكنها لا تستطيع جدولة دفعة يوم الراتب (schedule a salary-day payment) تظل تخذل العملاء.*
 
 **عقلية المختبِر (The tester's mindset)** خمس عادات (five habits):
 - **الفضول (Curiosity):** اسأل «ماذا لو؟» من تلقاء نفسك ⁦(what if?)⁩ عن الأرقام الهندية العربية (Arabic-Indic digits)، والنقر المزدوج (the double-click)، واليوم الكبيس (the leap day).
 - **التشكيك الصحي (Healthy scepticism):** لا تقبل عبارة «إنه يعمل» (it works) من عرض تجريبي (a demo) أو مطوّر أو وكيل ذكاء اصطناعي (an AI agent). أنت تشكّك في الادعاءات لا في الأشخاص، وفي اختبارك أنت أيضًا: فقد صدّقت ندى عيّناتها الأربعين (her forty samples).
-- **التواصل (Communication):** أنت تحمل الأخبار السيئة (bad news) إلى الفريق. عبارة «يُرفض مبلغ 1,000.00 QAR بالضبط بعد إرسال 49,000.00» (Exactly 1,000.00 QAR is rejected after 49,000.00 sent) تصل إلى المطوّر؛ أما «شيفرة السقف عندك معطوبة» (your limit code is broken) فلا تصل.
+- **التواصل (Communication):** أنت تحمل الأخبار السيئة (bad news). عبارة «يُرفض مبلغ 1,000.00 QAR بالضبط بعد إرسال 49,000.00» (Exactly 1,000.00 QAR is rejected after 49,000.00 sent) تصل؛ أما «شيفرة السقف عندك معطوبة» (your limit code is broken) فلا تصل.
 - **التعاطف (Empathy):** مع العميل الذي يصطدم بالخطأ يوم الراتب (salary day)، ومع المطوّر الذي يقرأ تقريرك (the developer reading your report).
 - **الإبلاغ البنّاء عن العيوب (Constructive defect reporting):** ما رأيته، وما توقعته ولماذا، مع الأدلة (with evidence) (الدرس 1.3).
 
@@ -50,13 +50,13 @@
 
 ```mermaid
 flowchart TD
-    P["التخطيط"] --> A["التحليل: ماذا نختبر"]
-    A --> D["التصميم: كيف نختبر"]
-    D --> I["التهيئة: كل شيء جاهز للتشغيل"]
-    I --> E["التنفيذ"]
-    E --> C["الإنجاز"]
-    E -->|"عيوب ومخاطر جديدة"| A
-    M["المراقبة والتحكم"] -.-> A
+    P["التخطيط<br/>(Planning)"] --> A["التحليل: ماذا نختبر<br/>(Analysis: what to test)"]
+    A --> D["التصميم: كيف نختبر<br/>(Design: how to test)"]
+    D --> I["التهيئة: كل شيء جاهز للتشغيل<br/>(Implementation: ready to run)"]
+    I --> E["التنفيذ<br/>(Execution)"]
+    E --> C["الإنجاز<br/>(Completion)"]
+    E -->|"عيوب ومخاطر جديدة (defects and new risks)"| A
+    M["المراقبة والتحكم<br/>(Monitoring and control)"] -.-> A
     M -.-> D
     M -.-> I
     M -.-> E
@@ -126,7 +126,7 @@ Found 2 errors in 1 file (checked 1 source file)
 
 تختلف الصياغة الدقيقة بحسب إصدار mypy (Exact wording varies by mypy version). ويشير الأمر `ruff check fee_draft.py` أيضًا إلى الاسم المكتوب خطأً (the misspelt name)، وبعد أن تصلحه يبلّغ mypy عن عيب ثالث: جمع سلسلة نصية (a string) مع `Decimal`. في ثوانٍ، ودون كتابة أي اختبار، وجدنا خطأً إملائيًا (a typo)، وعددًا عشريًا ثنائيًا (a binary float) حيث يحتاج المال إلى عدد عشري دقيق (a decimal) (وهو الخطأ وراء عيب `float_fee` في النظام النموذجي)، وخطأً في الأنواع (a type error). لا يستطيع التحليل الساكن أن يقول هل الرسم هو المبلغ *الصحيح* (the right amount). استخدم النوعين من الاختبار: فهما يجدان عيوبًا مختلفة (different defects).
 
-**المراجع: من أين يأتي «المتوقع» (Oracles: where "expected" comes from).** للاختبار مُدخَل (an input)، و**مرجع (oracle)** يزوّد بالنتيجة المتوقعة، و**حكم (verdict)** ينتج من مقارنة المتوقع بالفعلي (comparing expected with actual). هذا أصغر مثال مفيد بـ pytest؛ احفظه باسم `tests/test_oracle_demo.py` في نسخة من النظام النموذجي (a copy of the sample):
+**مراجع النتيجة المتوقعة: من أين يأتي «المتوقع» (Oracles: where "expected" comes from).** للاختبار مُدخَل (an input)، و**مرجع (oracle)** يزوّد بالنتيجة المتوقعة، و**حكم (verdict)** ينتج من مقارنة المتوقع بالفعلي (comparing expected with actual). هذا أصغر مثال مفيد بـ pytest؛ احفظه باسم `tests/test_oracle_demo.py` في نسخة من النظام النموذجي (a copy of the sample):
 
 ```python
 from decimal import Decimal
@@ -154,7 +154,7 @@ FAILED tests/test_oracle_demo.py::test_international_fee_on_3090_qar
 1 failed, 1 passed
 ```
 
-الاختبار الثاني أخضر على النظام الصحيح وعلى النظام المعطوب معًا. وللمراجع نقاط قوة متفاوتة (Oracles have strengths). فـ**المواصفة (specification)** أو الحساب المستقل (independent calculation) (تقول السياسة 0.35 %، بالتقريب إلى الأعلى عند المنتصف (half-up)، فالنتيجة 10.82) تكشف `float_fee`. أما **المرجع الجزئي (partial oracle)**، وهو خاصية يجب أن تتحقق (a property that must hold) («الرسم يقع دائمًا بين 10.00 و100.00»، the fee is always between 10.00 and 100.00)، فلا يكشفه: لأن 10.81 ضمن النطاق (in range). وهو رخيص حين لا توجد إجابة دقيقة (no exact answer exists)، لكنه يكشف عيوبًا أقل. أما رسالة «تُقرأ بوضوح» (reads clearly) فالمرجع فيها إنسان (a human).
+الاختبار الثاني أخضر على النظام الصحيح وعلى النظام المعطوب معًا. ولمراجع النتيجة المتوقعة نقاط قوة متفاوتة (Oracles have strengths). فـ**المواصفة (specification)** أو الحساب المستقل (independent calculation) (تقول السياسة 0.35 %، بالتقريب إلى الأعلى عند المنتصف (half-up)، فالنتيجة 10.82) تكشف `float_fee`. أما **المرجع الجزئي (partial oracle)**، وهو خاصية يجب أن تتحقق (a property that must hold) («الرسم يقع دائمًا بين 10.00 و100.00»، the fee is always between 10.00 and 100.00)، فلا يكشفه، لأن 10.81 ضمن النطاق (in range). وهو رخيص حين لا توجد إجابة دقيقة (no exact answer exists)، لكنه يكشف عيوبًا أقل. أما رسالة «تُقرأ بوضوح» (reads clearly) فالمرجع فيها إنسان (a human).
 
 ### 🔴 نظرة الخبير (Expert view)
 
@@ -172,7 +172,7 @@ for seed in range(1, 5):
 
 هناك فخ مرتبط بالشيفرة التي يكتبها الذكاء الاصطناعي (AI-written code). فإذا كتب وكيلٌ (agent) الدالة `check_transfer` واختبارها معًا، فقد تكون القيمة «المتوقعة» مجرد ما أعادته الشيفرة: **مرجع دائري (circular oracle)**. يظل ينجح حين تكون الشيفرة خاطئة. خذ المرجع من مصدر مستقل (independent). يبني [*تصميم الأنظمة لمبرمجي الفايب (System Design for Vibe Coders)*، الدرس 9.4 — التحقق قبل الإكمال (Verification before completion)](../vibe/index.ar.html#l9-4) عادة ألا تقبل «تم» (done) من دون دليل رأيتَه يفشل (evidence you have seen fail).
 
-**متى تتوقف عن الاختبار (When to stop testing).** لا ينتهي الاختبار أبدًا؛ فهناك من يقرر أن المخاطر المتبقية (the remaining risk) مقبولة، ويجعل المختبِر هذا القرار قرارًا مستنيرًا (informed). والأسباب الوجيهة للتوقف قائمة على المخاطر وعلى الأدلة (risk-based and evidence-based): استيفاء معايير الخروج (the exit criteria are met)، وتغطية الشروط الخطرة (the risky conditions are covered)، وكون العيوب المفتوحة معروفة (open defects are known) ومقبولة كتابةً (accepted in writing) من مالك الإصدار (release owner). ونفاد الوقت سبب مشروع أيضًا (Running out of time is valid too)، إذا أبلغتَ بما لم يُختبر (what is untested) ومن قبِل بذلك. وعبارة «نجحت كل الاختبارات» (All tests passed) لا تقول شيئًا عن اختبارات لم تكتبها. مثال: «أوصي بألا نُصدر الإصدار: فحص السقف غير مختبَر عند حدّه، ويستطيع عميل أن يصطدم به في اليوم الأول» (I recommend we do not release: the limit check is untested at its boundary, and a customer can hit it on day one).
+**متى تتوقف عن الاختبار (When to stop testing).** لا ينتهي الاختبار أبدًا؛ فهناك من يقرر أن المخاطر المتبقية (the remaining risk) مقبولة، ويجعل المختبِر هذا القرار قرارًا مستنيرًا (informed). والأسباب الوجيهة للتوقف قائمة على المخاطر وعلى الأدلة (risk-based and evidence-based): استيفاء معايير الخروج (the exit criteria are met)، وتغطية الشروط الخطرة (the risky conditions are covered)، وكون العيوب المفتوحة معروفة (open defects are known) ومقبولة كتابةً (accepted in writing) من مالك الإصدار (release owner). ونفاد الوقت سبب مشروع أيضًا (Running out of time is valid too)، إذا أبلغتَ بما لم يُختبر (what is untested) ومن قبِل بذلك. وعبارة «نجحت كل الاختبارات» (All tests passed) لا تقول شيئًا عن اختبارات لم تكتبها. مثال: «أوصي بعدم إطلاق الإصدار: فحص السقف غير مختبَر عند حدّه، ويستطيع عميل أن يصطدم به في اليوم الأول» (I recommend we do not release: the limit check is untested at its boundary, and a customer can hit it on day one).
 
 ## 🧰 الأدوات (The toolkit)
 | الأداة أو الممارسة أو التقنية (Tool, practice or technique) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
@@ -207,7 +207,7 @@ for seed in range(1, 5):
 - **اعتبار اللون الأخضر برهانًا (Treating green as proof).** الأخضر دليل فقط إذا كان الاختبار قادرًا على الفشل (could have failed). اسأل: أي عيب يحوّل هذا الاختبار إلى أحمر؟ ⁦(which bug turns this red?)⁩
 - **نسخ القيم المتوقعة من المخرجات (Expected values copied from the output).** يعيد الاختبار صياغة الشيفرة (restates the code). خذ التوقعات من مواصفة (specification) أو حساب (calculation) أو شخص (a person).
 - **اختبار ما بنيتَه فقط (Testing only what you built).** المؤلفون يؤكدون نيّتهم هم (confirm their own intent)؛ اطلب من شخص آخر أن يهاجمه (attack it).
-- **العملية معاملاتٍ ورقية (Process as paperwork).** الأنشطة السبعة طريقة تفكير (a way to think). يحتاج نص مؤقت (a throwaway script) إلى دقيقة، وتحتاج المدفوعات (Payments) إلى خطة قابلة للتدقيق (an auditable plan)؛ فقِس الجهد على المخاطر (scale to the risk).
+- **العملية بوصفها أعمالًا ورقية (Process as paperwork).** الأنشطة السبعة طريقة تفكير (a way to think). يحتاج نص برمجي مؤقت (a throwaway script) إلى دقيقة، وتحتاج المدفوعات (Payments) إلى خطة قابلة للتدقيق (an auditable plan)؛ فقِس الجهد على المخاطر (scale to the risk).
 
 ## 🧾 الخلاصة (Recap)
 - ينتج الاختبار أدلة لا ضمانات (evidence, not guarantees): يُظهر وجود العيوب، ولا يمكن أن يكون شاملًا (cannot be exhaustive)، ويُختار بحسب المخاطر والسياق (by risk and context).
@@ -270,7 +270,7 @@ for seed in range(1, 5):
 
 </details>
 
-**5. في يوم الخميس (Thursday) تنجح كل اختبارات TRF-212 المخطط لها (every planned test passes)، ويبقى عيب رئيسي واحد (one major defect) مفتوحًا (open)، وهو رسم خاطئ لمُدخل نادر (a wrong fee for a rare input)، وموعد الإصدار (release) يوم الجمعة (due Friday). ماذا ينبغي أن يفعل المختبِر (tester)؟**
+**5. في يوم الخميس (Thursday) تنجح كل اختبارات TRF-212 المخطط لها (every planned TRF-212 test passes)، ويبقى عيب رئيسي واحد (one major defect) مفتوحًا (open)، وهو رسم خاطئ لمُدخل نادر (a wrong fee for a rare input)، وموعد الإصدار (release) يوم الجمعة (due Friday). ماذا ينبغي أن يفعل المختبِر (tester)؟**
 
 - A. يعلّم القصة منتهية (Mark the story done)، لأن كل الاختبارات المخطط لها نجحت
 - B. يقدّم لمالك المنتج (product owner) الأدلة والعيب المفتوح وتوصية (a recommendation)
@@ -349,7 +349,7 @@ def test_equivalence_partitions(amount, currency, sent_today, expected):
 
 يشغّل `@pytest.mark.parametrize` دالة واحدة مرة لكل صف (once per row)؛ ويسمّي `id=` كل صف في التقرير (names each row in the report).
 
-**تحليل القيم الحدّية (Boundary value analysis, BVA).** تتجمع العيوب عند حواف الفئات (edges of partitions)، كما حين تُكتب `<` فتصبح `<=`. **الحدّ (boundary)** هو أول قيمة أو آخر قيمة في فئة مرتبة (ordered partition)؛ و**الخطوة (step)** هي أصغر فرق ذي معنى (smallest meaningful difference)، وهي 0.01 لـ QAR. يختبر تحليل **القيمتين (2-value)** الحدَّ وأقرب جار له في الفئة الأخرى (its closest neighbour in the other partition)؛ ويضيف تحليل **الثلاث قيم (3-value)** جارًا من الجهة الأخرى (a neighbour on the other side). لنفترض أن أحدهم برمج الحد الأدنى هكذا `amount == 1.00` بدلًا من `amount >= 1.00`. المجموعة ذات القيمتين {0.99, 1.00} تنجح مع الصيغتين، فتفوتها الزلّة (the slip is missed)؛ أما المجموعة ذات الثلاث قيم {0.99, 1.00, 1.01} فتكشفها، لأن الزلّة ترفض 1.01 خطأً. تكلّف القيم الثلاث اختبارات أكثر بنسبة 50 %: استخدم القيمتين للمقارنات البسيطة (simple comparisons)، والثلاث حيث يكون الإخفاق مكلفًا (where a miss is costly)، كما هي الحال عادةً مع المال.
+**تحليل القيم الحدّية (Boundary value analysis, BVA).** تتجمع العيوب عند حواف الفئات (edges of partitions)، كما حين يُكتب `<=` بدلًا من `<`. **الحدّ (boundary)** هو أول قيمة أو آخر قيمة في فئة مرتبة (ordered partition)؛ و**الخطوة (step)** هي أصغر فرق ذي معنى (smallest meaningful difference)، وهي 0.01 لـ QAR. يختبر تحليل **القيمتين (2-value)** الحدَّ وأقرب جار له في الفئة الأخرى (its closest neighbour in the other partition)؛ ويضيف تحليل **الثلاث قيم (3-value)** جارًا من الجهة الأخرى (a neighbour on the other side). لنفترض أن أحدهم برمج الحد الأدنى هكذا `amount == 1.00` بدلًا من `amount >= 1.00`. المجموعة ذات القيمتين {0.99, 1.00} تنجح مع الصيغتين (passes both)، فتفوتها الزلّة (the slip is missed)؛ أما المجموعة ذات الثلاث قيم {0.99, 1.00, 1.01} فتكشفها (catches it)، لأن الزلّة ترفض 1.01 خطأً (wrongly rejects). تكلّف القيم الثلاث اختبارات أكثر بنسبة 50 % (Three values cost 50 % more tests): استخدم القيمتين للمقارنات البسيطة (simple comparisons)، والثلاث حيث يكون الإخفاق مكلفًا (where a miss is costly)، كما هي الحال عادةً مع المال.
 
 السقف اليومي (The daily limit) حدّ (a boundary) على قيمة *مشتقة* (a derived value) هي `sent_today + amount`. ولجعل الإجمالي يبلغ السقف (make the total meet the limit)، اضبط `sent_today` على السقف ناقصًا المبلغ (the limit minus the amount): 49,000.00 مرسلة (sent) زائد 1,000.00 تساوي 50,000.00 بالضبط (exactly).
 
@@ -378,7 +378,7 @@ FAILED tests/test_design.py::test_boundaries[daily-limit-exactly-met]
 1 failed, 4 passed, 6 deselected
 ```
 
-يفشل اختبار واحد بالضبط (Exactly one test fails): الذي *يبلغ* فيه الإجمالي السقف (meets the limit). العيب (The bug) الذي فاتت 24 اختبارًا ابتدائيًا (24 starter tests) و100,000 حالة عشوائية (100,000 random cases) يكشفه اختبارٌ واحد اختير عن قصد (chosen on purpose).
+يفشل اختبار واحد بالضبط (Exactly one test fails): الذي *يبلغ* فيه الإجمالي السقف (meets the limit). العيب (The bug) الذي لم تكتشفه 24 اختبارًا ابتدائيًا (24 starter tests) ولا 100,000 حالة عشوائية (100,000 random cases) يكشفه اختبارٌ واحد اختير عن قصد (chosen on purpose).
 
 ### 🟡 التعمق أكثر (Going deeper)
 
@@ -412,7 +412,7 @@ def test_fee_rules(amount, kind, expected):
     assert fee(amount, "QAR", kind) == Decimal(expected)
 ```
 
-علّمنا بناء الجدول (building the table) شيئًا قبل أن يعمل أي اختبار (before any test ran). القاعدة R6 لا يمكن بلوغها (reachable) إلا باستدعاء `fee` مباشرة (calling directly): فأكبر تحويل (the biggest transfer) تقبله `check_transfer`، وهو 25,000.00 QAR، يكلّف (costs) 87.50. أهي حماية للمستقبل (future-proofing) أم شيفرة ميتة (dead code)؟ سؤال لفريق المنتج (a question for product). ومع تفعيل `float_fee` (with the bug on) يفشل اختبار واحد بالضبط (exactly one test fails) هو `R5-half-up-rounding`: يجب أن تُقرَّب 10.815 إلى الأعلى عند المنتصف (round half up) إلى 10.82، لكن شيفرة العدد العشري الثنائي (the float code) تعيد 10.81. ويمرّ `R5-exact` تحت العيب (passes under the bug)، فلم يكن مبلغ مستدير (a round-number amount) ليكتشفه أبدًا.
+علّمنا بناء الجدول (building the table) شيئًا قبل تشغيل أي اختبار (before any test ran). القاعدة R6 لا يمكن بلوغها (reachable) إلا باستدعاء `fee` مباشرة (directly): فأكبر تحويل (the biggest transfer) تقبله `check_transfer`، وهو 25,000.00 QAR، يكلّف (costs) 87.50. أهي حماية للمستقبل (future-proofing) أم شيفرة ميتة (dead code)؟ سؤال لفريق المنتج (a question for product). ومع تفعيل `float_fee` (with the bug on) يفشل اختبار واحد بالضبط (exactly one test fails) هو `R5-half-up-rounding`: يجب أن تُقرَّب 10.815 إلى الأعلى عند المنتصف (round half up) إلى 10.82، لكن شيفرة العدد العشري الثنائي (the float code) تعيد 10.81. ويمرّ `R5-exact` تحت العيب (passes under the bug)، فلم يكن مبلغ مستدير (a round-number amount) ليكتشفه أبدًا.
 
 **حين تتصادم القواعد (When rules collide).** تحويل 30,000.00 QAR مع 49,000.00 مرسلة سابقًا (already sent) يخالف الحد الأقصى للتحويل الواحد (per-transfer maximum) والسقف اليومي (daily limit) معًا. يبلّغ النظام النموذجي (The sample) عن `above_per_transfer_max`، لأنه يفحص بترتيب ثابت (a fixed order). لا يوجد متطلب (requirement) يقول أي رسالة (message) ينبغي أن تنتصر (win)، فاسأل فريق المنتج (ask product). وإلى أن يجيبوا، يكون الاختبار الذي يثبّت هذا السلوك (pins it) **اختبار توصيف (characterisation test)**: يسجّل ما تفعله الشيفرة (what the code does) لا ما ينبغي أن تفعله (what it should do).
 
@@ -424,12 +424,12 @@ def test_two_broken_rules_report_the_per_transfer_maximum_first():
 **اختبار انتقال الحالات (State-transition testing).** للتحويل دورة حياة (a life cycle): مقبول (accepted)، ثم قيد المعالجة (processing)، ثم مسوّى (settled) أو فاشل (failed)؛ وقد يُعكس التحويل المسوّى (reversed). الانتقالات الصالحة (valid moves) رسم بياني صغير (a small graph)، وكل ما عداها يجب أن يُرفض. لا ينشئ النظام النموذجي سوى تحويلات `accepted`، لذا نمذجنا الباقي في وحدة خاصة بالدرس (a lesson-local module). احفظ الشيفرة التي تلي المخطط باسم `najm/lifecycle.py`:
 
 ```mermaid
-flowchart LR
-    A["مقبول"] -->|"بدء"| P["قيد المعالجة"]
-    A -->|"فشل"| F["فاشل"]
-    P -->|"تسوية"| S["مسوّى"]
-    P -->|"فشل"| F
-    S -->|"عكس"| R["معكوس"]
+flowchart RL
+    A["مقبول<br/>(accepted)"] -->|"بدء (start)"| P["قيد المعالجة<br/>(processing)"]
+    A -->|"فشل (fail)"| F["فاشل<br/>(failed)"]
+    P -->|"تسوية (settle)"| S["مسوّى<br/>(settled)"]
+    P -->|"فشل (fail)"| F
+    S -->|"عكس (reverse)"| R["معكوس<br/>(reversed)"]
 ```
 
 ```python
@@ -484,7 +484,7 @@ def test_every_cell_of_the_state_table(state, event):
             apply(state, event)
 ```
 
-لتعرف قيمة الاختبارات، ازرع عيبًا (plant a defect) (**طفرة (mutant)**؛ والدرس 2.3 يؤتمت هذه الفكرة) يسمح بعكس تحويل *فاشل*. يفعل ذلك مُجهِّز تلقائي مؤقت (a temporary autouse fixture) في `tests/conftest.py`؛ احذف الملف بعد ذلك:
+لتعرف قيمة الاختبارات، ازرع عيبًا (plant a defect) (**طفرة (mutant)**؛ والدرس 2.3 يؤتمت هذه الفكرة) يسمح بعكس تحويل *فاشل* (lets a *failed* transfer be reversed). يفعل ذلك تجهيز اختبار تلقائي مؤقت (a temporary autouse fixture) في `tests/conftest.py`؛ احذف الملف بعد ذلك (delete the file afterwards):
 
 ```python
 import pytest
@@ -503,9 +503,9 @@ FAILED tests/test_lifecycle.py::test_every_cell_of_the_state_table[failed-revers
 1 failed, 19 passed
 ```
 
-لا يلاحظ سوى الخلية المرفوضة (the refused cell). فاختبار المسار السعيد (A happy-path test) (مقبول، بدء، تسوية) يمرّر الطفرة، وكذلك الاختبار الذي يقرأ توقعاته من `lifecycle.TRANSITIONS` الحية (live): فهو يفحص الجدول المطفَّر مقابل نفسه، أي المرجع الدائري (circular oracle) في الدرس 1.1. جرّبنا الاثنين.
+لا يلاحظ سوى الخلية المرفوضة (the refused cell). فاختبار المسار السعيد (A happy-path test) (مقبول، بدء، تسوية) يمرّر الطفرة (passes the mutant)، وكذلك الاختبار الذي يقرأ توقعاته من `lifecycle.TRANSITIONS` الحية (live): فهو يفحص الجدول المطفَّر مقابل نفسه (checks the mutated table against itself)، أي المرجع الدائري (circular oracle) في الدرس 1.1. جرّبنا الاثنين (We tried both).
 
-**الاختبار الزوجي (Pairwise testing).** تنفجر مصفوفات الإعداد (Configuration matrices) عددًا. يعمل تطبيق نجم للهاتف (Najm Mobile) على 4 متصفحات (browsers) ولغتين (2 languages) و3 عملات (currencies) و3 فئات أجهزة (device classes): 4 × 2 × 3 × 3 = 72 توليفة (combinations)، و66 بدون Safari على Android. يختار **الاختبار الزوجي (Pairwise)** (كل الأزواج، all-pairs) مجموعة صغيرة يظهر فيها كل زوج من القيم من أي معاملين معًا مرة واحدة على الأقل (every pair of values from any two parameters appears together at least once). الرهان، وهو قاعدة استرشادية (a heuristic) وليس قانونًا، أن كثيرًا من حالات الفشل تتعلق بمعامل واحد أو بتفاعل بين اثنين (an interaction of two). احفظ هذا باسم `pairwise.py` بجانب `najm/`:
+**الاختبار الزوجي (Pairwise testing).** تتضخم مصفوفات الإعداد (Configuration matrices explode) تضخمًا انفجاريًا. يعمل تطبيق نجم للهاتف (Najm Mobile) على 4 متصفحات (browsers) ولغتين (2 languages) و3 عملات (currencies) و3 فئات أجهزة (device classes): 4 × 2 × 3 × 3 = 72 توليفة (combinations)، و66 بدون Safari على Android. يختار **الاختبار الزوجي (Pairwise)** (كل الأزواج، all-pairs) مجموعة صغيرة يظهر فيها كل زوج من القيم من أي معاملين معًا مرة واحدة على الأقل (every pair of values from any two parameters appears together at least once). الرهان، وهو قاعدة استرشادية (a heuristic) وليس قانونًا، أن كثيرًا من حالات الفشل تتعلق بمعامل واحد أو بتفاعل بين اثنين (an interaction of two). احفظ هذا باسم `pairwise.py` بجانب `najm/`:
 
 ```python
 from itertools import combinations, product
@@ -539,9 +539,9 @@ def pairwise(params, t=2):
     return cases, chosen
 ```
 
-ينتج عن تشغيل `pairwise(PARAMS)` الحالات الممكنة الـ66 (the 66 feasible cases) و**12 حالة مختارة (12 chosen ones)**، تغطي كل الأزواج الممكنة الـ52 (all 52 feasible pairs). الاثنا عشر هي الحد الأدنى (the minimum)، لأن 4 متصفحات (browsers) × 3 عملات (currencies) وحدها تحتاج 12 زوجًا مختلفًا (12 distinct pairs). وتتعامل أدوات (tools) مثل `allpairspy` وPICT من Microsoft مع القيود (constraints) والمصفوفات الأكبر (bigger matrices) (`allpairspy` أعطت 13 حالة (13 cases) وتركت زوجًا ممكنًا واحدًا (one feasible pair)، Edge مع iPhone، غير مغطى (uncovered): فحص مخرجات الأداة ضروري، check tool output).
+ينتج عن تشغيل `pairwise(PARAMS)` الحالات الممكنة الـ66 (the 66 feasible cases) و**12 حالة مختارة (12 chosen ones)**، تغطي كل الأزواج الممكنة الـ52 (all 52 feasible pairs). الاثنا عشر هي الحد الأدنى (the minimum)، لأن 4 متصفحات (browsers) × 3 عملات (currencies) وحدها تحتاج 12 زوجًا مختلفًا (12 distinct pairs). وتتعامل أدوات (tools) مثل `allpairspy` وPICT من Microsoft مع القيود (constraints) والمصفوفات الأكبر (bigger matrices) (`allpairspy` أعطت 13 حالة (13 cases) وتركت زوجًا ممكنًا واحدًا (one feasible pair)، Edge مع iPhone، غير مغطى (uncovered): افحص مخرجات الأداة، check tool output).
 
-الثمن (The price): يُظهر العدّ بـ`combos_of(case, 3)` أن الحالات الاثنتي عشرة لا تغطي سوى 46 من 97 توليفة ثلاثية ممكنة (feasible three-way combinations)، فقد يفلت عيب يحتاج مثلًا إلى العربية وQAR وiPhone معًا. وإذا سمّى تحليل المخاطر (risk analysis) ثلاثية خطرة (a dangerous triple)، فأضف تلك الحالة يدويًا أو ارفع القوة (the strength) `t`.
+الثمن (The price): يُظهر العدّ بـ`combos_of(case, 3)` أن الحالات الاثنتي عشرة لا تغطي سوى 46 من 97 توليفة ثلاثية ممكنة (feasible three-way combinations)، فقد يفلت عيب (can slip through) يحتاج مثلًا إلى العربية وQAR وiPhone معًا. وإذا سمّى تحليل المخاطر (risk analysis) ثلاثية خطرة (a dangerous triple)، فأضف تلك الحالة يدويًا أو ارفع القوة (the strength) `t`.
 
 ### 🔴 نظرة الخبير (Expert view)
 
@@ -573,7 +573,7 @@ def test_value_date(when, expected):
     assert value_date(when).isoformat() == expected
 ```
 
-الحالتان الأخيرتان هما التوقيت نفسه على ساعة الجدار في برلين (the same Berlin wall-clock time) على جانبي تغيير ساعة الاتحاد الأوروبي (EU clock change) في 25 أكتوبر 2026: الساعة 13:30 هناك تساوي 14:30 في قطر قبل التغيير و15:30 بعده، والخليج لا يتغير أبدًا، فتنقلب النتيجة (the outcome flips). ومع تفعيل `tz_cutoff` تفشل أربع حالات من الست: يقرأ العيب موعد الإغلاق (the cut-off) على أنه UTC، فيحصل كل تقديم في يوم عمل (working day)، من الأحد إلى الخميس، بين 15:00 و17:59 بتوقيت قطر على التاريخ الخاطئ (the wrong date). وفي الجمعة والسبت تُخفي قاعدة عطلة نهاية الأسبوع (the weekend rule) العيب، فاختر تواريخ الاختبار عن قصد (on purpose).
+الحالتان الأخيرتان هما التوقيت المحلي نفسه في برلين (the same Berlin wall-clock time) على جانبي تغيير ساعة الاتحاد الأوروبي (EU clock change) في 25 أكتوبر 2026: الساعة 13:30 هناك تساوي 14:30 في قطر قبل التغيير و15:30 بعده، والخليج لا يتغير أبدًا (never shifts)، فتنقلب النتيجة (the outcome flips). ومع تفعيل `tz_cutoff` تفشل أربع حالات من الست (four of the six fail): يقرأ العيب موعد الإغلاق (the cut-off) على أنه UTC، فيحصل كل تقديم (every submission) في يوم عمل (working day)، من الأحد إلى الخميس (Sunday to Thursday)، بين 15:00 و17:59 بتوقيت قطر (Qatar time) على التاريخ الخاطئ (the wrong date). وفي يومي الجمعة والسبت تُخفي قاعدة عطلة نهاية الأسبوع (the weekend rule) العيب، فاختر تواريخ الاختبار عن قصد (on purpose).
 
 للنص، أضف هذا إلى الملف الابتدائي `tests/test_api.py` (الذي يعرّف `client` و`ALICE` و`BODY`). يجرّب اسمًا عربيًا (an Arabic name)، ورمزًا تعبيريًا (emoji)، ومسافة زائدة في النهاية (a trailing space)، وسلسلة طويلة جدًا (a very long string) بوصفها المستلم (the recipient):
 
@@ -599,7 +599,7 @@ def test_odd_recipient_text_is_a_clean_422_never_a_500(client, recipient):
 | **Error guessing** | تخمين الأخطاء: اختبارات من خبرة بالأخطاء الشائعة (from experience of common faults)، تُحفظ في قوائم تحقق (kept in checklists) | بعد التقنيات الرسمية (After the formal techniques) |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-تُرفق الفرق (squads) **ورقة تصميم الاختبار (test-design sheet)** بكل قصة فيها قواعد (every story with rules). وهذه تغطي حدود التحويلات ورسومها (Transfers limits and fees).
+ترفق الفرق (squads) **ورقة تصميم الاختبار (test-design sheet)** بكل قصة فيها قواعد (every story with rules). وهذه تغطي حدود التحويلات ورسومها (Transfers limits and fees).
 
 | المعرّف (ID) | التقنية (Technique) | البيانات (Data) | المتوقع وفق المرجع (Expected, oracle) | الخطر المحروس (Risk guarded) |
 |---|---|---|---|---|
@@ -614,18 +614,18 @@ def test_odd_recipient_text_is_a_clean_422_never_a_500(client, recipient):
 اعمل في نسخة من النظام النموذجي (a copy of the sample)، مع ملفات الدرس في `tests/`.
 
 - 🟢 **حدود اليورو (EUR boundaries).** يسمح EUR بمبالغ من 1.00 إلى 5,000.00 للتحويل الواحد (per transfer) و10,000.00 في اليوم (per day). اكتب حالات حدّية بثلاث قيم (3-value boundary cases) للسقفين معًا (both limits) (2,500.00 بعد إرسال 7,500.00 تبلغ السقف اليومي، reaches the daily limit) في اختبار مُحدَّد بمعاملات (a parametrised test) له معرّفات (ids)، إضافةً إلى حالات منتصف النطاق (mid-range cases) بمعرّفات تبدأ بـ`mid` (ids starting). *يكتمل عندما (Done when):* تنجح كلها على النظام النموذجي النظيف (all pass on the clean sample)؛ وفي ظل `NAJM_BUGS=limit_off_by_one` يفشل اختبار حدّي (a boundary test fails) بينما ينجح كل اختبار `mid`؛ وتشرح جملة واحدة السبب (a sentence explains why).
-- 🟡 **أضف حجزًا للامتثال (Add a compliance hold).** أضف حالة (a state) `on_hold`، يُدخَل إليها (entered) من `accepted` بالحدث `hold` ويُخرَج منها (left) بـ`release` (إلى `processing`) أو `fail` (إلى `failed`)، واكتب الجدول المتوقع يدويًا (the expected table by hand). *يكتمل عندما (Done when):* تغطي الاختبارات المولَّدة (generated tests) الخلايا الـ36 كلها (all 36 cells) (6 حالات × 6 أحداث، 6 states × 6 events)، 8 صالحة (valid) و28 مرفوضة (refused)، وتنجح؛ وطفرة (a mutant) تجعل `release` تعمل من `failed` تفشل في تلك الخلية بالضبط (fails exactly that cell)؛ ويظل اختبار يقرأ توقعاته من `TRANSITIONS` (a test reading its expectations) يمرّر تلك الطفرة (still passes that mutant).
+- 🟡 **أضف حجزًا للامتثال (Add a compliance hold).** أضف حالة (a state) `on_hold`، يُدخَل إليها (entered) من `accepted` بالحدث `hold` ويُخرَج منها (left) بـ`release` (إلى `processing`) أو `fail` (إلى `failed`)، واكتب الجدول المتوقع يدويًا (the expected table by hand). *يكتمل عندما (Done when):* تغطي الاختبارات المولَّدة (generated tests) الخلايا الـ36 كلها (all 36 cells) (6 حالات × 6 أحداث، 6 states × 6 events)، 8 صالحة (valid) و28 مرفوضة (refused)، وتنجح؛ وتؤدي طفرة (a mutant) تجعل `release` تعمل من `failed` إلى فشل تلك الخلية بالضبط (fails exactly that cell)؛ ويظل اختبار يقرأ توقعاته من `TRANSITIONS` (a test reading its expectations) يمرّر تلك الطفرة (still passes that mutant).
 - 🔴 **القوة والقيود (Strength and constraints).** اكتب مدققًا مستقلًا (an independent checker) يثبت (proving) أن `pairwise(PARAMS, t)` تغطي كل توليفة ممكنة من `t` اتجاهات (every feasible t-way combination)، وشغّله لقيم t = 2 و3 و4 (توقّع 12 و33 و66 حالة، expect 12, 33 and 66 cases). أضف القاعدة (the rule) «Edge يعمل على Desktop فقط» (Edge runs only on Desktop) إلى `feasible` وشغّله مرة أخرى (run again) (حصلنا على 13 و30 و54، we got 13, 30 and 54). *يكتمل عندما (Done when):* يعرض جدول الأعداد قبل القاعدة وبعدها (the counts before and after the rule)؛ وينجح المدقق في التشغيلات الستة كلها (passes all six runs)؛ وتختار جملتان قوةً (a strength) للإصدار (for release) وأخرى للتشغيل الليلي (for nightly).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
 - **قيم منتصف النطاق فقط (Only mid-range values).** المبالغ «النموذجية» (Typical) خضراء بحكم بنائها (green by construction). أضف الحد وسنتًا واحدًا على كل جانب من كل سقف (a cent either side of every limit).
-- **بيانات الأرقام المستديرة (Round-number data).** لا يطلق 500 و5,000 أبدًا أخطاء التقريب (rounding bugs). استخدم 3,090.00 حيث يظهر نصف السنت (a half-cent).
+- **بيانات الأرقام المستديرة (Round-number data).** لا يُثير 500 و5,000 أبدًا أخطاء التقريب (rounding bugs). استخدم 3,090.00 حيث يظهر نصف السنت (a half-cent).
 - **توقعات دائرية (Circular expectations).** نسخ المخرجات إلى `assert` ينتج اختبارًا لا يستطيع الفشل (cannot fail). اكتب التوقعات من المتطلب أولًا (from the requirement first).
 - **إغفال ما يجب ألا يحدث (Skipping what must not happen).** اختبر حالات الرفض والانتقالات غير المشروعة (refusals and illegal moves): ففيها تعيش أخطاء المال (money bugs).
 - **الإفراط في الهندسة (Over-engineering).** يفترض تقسيم فئات التكافؤ (EP) فئةً متجانسة (a uniform partition)، ويفترض تحليل القيم الحدّية (BVA) نطاقًا مرتبًا (an ordered domain)؛ وتنفجر جداول القرارات (decision tables explode)، ويتجاهل الاختبار الزوجي (pairwise) القيود المنسية (forgotten constraints). طوِّع التقنية للمخاطر (Fit the technique to the risk).
 
 ## 🧾 الخلاصة (Recap)
-- التقنية تتفوق على الحجم (Technique beats volume): فالاختبارات الـ25 المصمَّمة (the 25 designed tests) كشفت العيوب الثلاثة كلها التي تفوتها الاختبارات الابتدائية الـ24، مع أن اختبارات تقسيم فئات التكافؤ الخمسة (the 5 equivalence-partition tests) وحدها لم تكشف أيًّا منها وأن 100,000 حالة عشوائية فاتها عيب. زِن الاختبارات بالمخاطر التي تستطيع كشفها، لا بعددها (not by count).
+- التقنية تتفوق على الحجم (Technique beats volume): فالاختبارات الـ25 المصمَّمة (the 25 designed tests) كشفت العيوب الثلاثة كلها (all three bugs) التي تفوتها الاختبارات الابتدائية الـ24 (the 24 starter tests miss)، مع أن اختبارات تقسيم فئات التكافؤ الخمسة (the 5 equivalence-partition tests) وحدها لم تكشف أيًّا منها وأن 100,000 حالة عشوائية فاتها عيب. زِن الاختبارات بالمخاطر التي تستطيع كشفها، لا بعددها (not by count).
 - تختار فئات التكافؤ (equivalence partitions) قيمة واحدة لكل مجموعة؛ ويضيف تحليل القيم الحدّية (boundary analysis) الحواف (the edges).
 - تكشف جداول القرارات (decision tables) أسئلة، مثل سقف رسم لا يبلغه أي تحويل صالح (a fee cap no valid transfer can reach) وأي قاعدة تنتصر (which rule wins)؛ وتختبر جداول الحالات (state tables) كل خلية مقابل جدول متوقع مستقل عن الشيفرة (independent of the code).
 - خفّض الاختبار الزوجي (Pairwise) 66 إعدادًا إلى 12، فغطى كل زوج وقليلًا من الثلاثيات (few triples). ويغطي تخمين الأخطاء (error guessing) المال والوقت والنص.
@@ -675,12 +675,12 @@ def test_odd_recipient_text_is_a_clean_422_never_a_500(client, recipient):
 
 - A. يضمن تغطية كل توليفة ثلاثية أيضًا (every three-way combination)
 - B. يختار الحالات عشوائيًا (at random)، فتتفاوت النتائج بين التشغيلات (results vary between runs)
-- C. يلغي الحاجة إلى سرد التوليفات المستحيلة (listing impossible combinations)
+- C. يلغي الحاجة إلى سرد التوليفات المستحيلة (list impossible combinations)
 - D. يغطي كل زوج من القيم، لكنه قد يفوّت تفاعلات أخرى (can miss other interactions)
 
 <details><summary>الإجابة</summary>
 
-**D.** غطت حالاتنا الاثنتا عشرة كل زوج لكن 46 فقط من 97 ثلاثية ممكنة (feasible triples). يسيء B وصف طريقة منهجية (a systematic method)، وC خاطئ: يجب سرد القيود (constraints must still be listed). (🟡 التعمق أكثر، Going deeper).
+**D.** غطت حالاتنا الاثنتا عشرة كل زوج (every pair)، لكنها غطت 46 فقط من 97 ثلاثية ممكنة (feasible triples). يسيء B وصف طريقة منهجية (a systematic method)، وC خاطئ: يجب سرد القيود (constraints must still be listed). (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -710,7 +710,7 @@ def test_odd_recipient_text_is_a_clean_422_never_a_500(client, recipient):
 ## ⚡ الدرس في دقيقة (In 60 seconds)
 - المتطلب (requirement) **قابل للاختبار (testable)** إذا اتفق شخصان بصورة مستقلة على النجاح أو الفشل (agree on pass or fail). وكلمات مثل «سريع» (fast) و«سهل الاستخدام» (user-friendly) و«إلخ» ⁦(etc.)⁩ علامات تحذير (warnings).
 - **معايير القبول (Acceptance criteria)** تحوّل القصة إلى أمثلة بأرقام (examples with numbers). و**صيغة «المعطى/عندما/إذن» (Given/When/Then)** طريقة واضحة لكتابتها؛ ويأتي التطوير الموجَّه بالسلوك (behaviour-driven development, BDD) في الدرس 5.3.
-- **حالة الاختبار (test case)** فحص مكتوب بنص (a scripted check)، و**قائمة التحقق (checklist)** قائمة محفزات (a list of prompts)، و**ميثاق الجلسة (charter)** مهمة للاستكشاف (a mission for exploring). و**التتبّع (traceability)** يربط المتطلب بالاختبار والعيب (links requirement, test and defect).
+- **حالة الاختبار (test case)** فحص مكتوب سلفًا (a scripted check)، و**قائمة التحقق (checklist)** قائمة محفزات (a list of prompts)، و**ميثاق الجلسة (charter)** مهمة للاستكشاف (a mission for exploring). و**التتبّع (traceability)** يربط المتطلب بالاختبار والعيب (links requirement, test and defect).
 - تقرير العيب الذي يُصلَح (A bug report that gets fixed) له عنوان محدد (a specific title)، وبيئة (environment)، و**حد أدنى لإعادة الإنتاج (minimal reproduction)**، والمتوقع مقابل الفعلي مع المرجع (expected versus actual with the oracle)، وأدلة (evidence).
 - **الخطورة (Severity)** هي الأثر (impact)؛ و**الأولوية (priority)** هي الإلحاح (urgency). وهما مختلفتان، والفرز (triage) هو الذي يقرر.
 - يستطيع مساعد الذكاء الاصطناعي (AI assistant) ترتيب التقرير لكنه لا يعرف ما رأيته. لا تلصق أبدًا أسرارًا (secrets) أو بيانات عملاء (customer data) فيه.
@@ -718,7 +718,7 @@ def test_odd_recipient_text_is_a_clean_422_never_a_500(client, recipient):
 ## 🧭 لماذا يهم (Why it matters)
 يحمل أول تقرير عيب كتبته ندى (Nada's first bug report) العنوان «التحويلات معطوبة؟؟» ⁦(Transfers broken??)⁩ ويقول المتن «الرسم خاطئ، أصلحوه بأقصى سرعة» (Fee is wrong, please fix ASAP) ومعه لقطة شاشة للشاشة الرئيسية (a screenshot of the home screen). يجرّب فريق طارق (Tariq's squad) تحويلًا محليًا بقيمة 1,000 QAR، فيرى الرسم صحيحًا، ويغلقه بعبارة «لا يمكن إعادة إنتاجه» (cannot reproduce) في أربع دقائق. وبعد أسبوعين تلاحظ الإدارة المالية (finance) أن بعض الرسوم الدولية (international fees) ينقصها سنت واحد. لم يكن أحد مهملًا؛ لكن التقرير لم يكن قابلًا للتنفيذ (could not be acted on).
 
-يجلس راشد مع ندى عشر دقائق (ten minutes). يسمّي التقرير الجديد (The new report) المبلغ (the amount) (3,090.00 QAR) والنوع (the kind) (دولي، international) والرسم المتوقع (the expected fee) 10.82 والرسم الفعلي (the actual fee) 10.81 وأمرًا واحدًا يعيد إنتاج المشكلة (one command that reproduces it). وتُصلَح في عصر اليوم نفسه. تقرير العيب منتَج (a product)، ومستخدمه هو المطوّر (the developer). وتبدأ السلسلة قبل ذلك: لا تستطيع كتابة «المتوقع 10.82» (expected 10.82) ما لم يقل المتطلب ما الذي يُتوقع (said what to expect).
+يجلس راشد مع ندى عشر دقائق (ten minutes). يسمّي التقرير الجديد (The new report) المبلغ (the amount) (3,090.00 QAR) والنوع (the kind) (دولي، international) والرسم المتوقع (the expected fee) 10.82 والرسم الفعلي (the actual fee) 10.81 وأمرًا واحدًا يعيد إنتاج المشكلة (one command that reproduces it). ويُصلَح العيب بعد ظهر ذلك اليوم (it is fixed that afternoon). تقرير العيب منتَج (a product)، ومستخدمه هو المطوّر (the developer). وتبدأ السلسلة قبل ذلك: لا تستطيع كتابة «المتوقع 10.82» (expected 10.82) ما لم يقل المتطلب ما الذي يُتوقع (said what to expect).
 
 ## 📐 كيف يعمل (How it works)
 
@@ -731,7 +731,7 @@ def test_odd_recipient_text_is_a_clean_422_never_a_500(client, recipient):
 | «سريع» (fast) | سريع بالنسبة لمن، وبأي قياس؟ ⁦(Fast for whom, measured how?)⁩ | «95 % من استدعاءات `POST /transfers` تُجاب خلال 800 ms عند 20 طلبًا في الثانية على بيئة الاختبار (staging)» |
 | «سهل الاستخدام» (user-friendly) | رأي لا فحص (An opinion, not a check) | «من بين 5 مستخدمين لأول مرة (first-time users)، يُكمل 4 على الأقل تحويلًا بين حساباتهم دون مساعدة (unaided)» |
 | «إلخ» ⁦(etc.)⁩ | نطاق مخفي (Hidden scope) | اسرد البنود (List the items): «QAR وAED وEUR» |
-| «السقف اليومي» (daily limit) | أي يوم؟ وأي تحويلات؟ ⁦(Which day? Which transfers?)⁩ | «التحويلات المقبولة لكل عميل وعملة، من 00:00 إلى 23:59 بتوقيت قطر» |
+| «السقف اليومي» (daily limit) | أي يوم؟ وأي تحويلات؟ ⁦(Which day? Which transfers?)⁩ | «التحويلات المقبولة لكل عميل وعملة (Accepted transfers per customer and currency)، من 00:00 إلى 23:59 بتوقيت قطر (Qatar time)» |
 
 ابحث أيضًا عمّا *لم* يُقل (what is *not* said)، أي الأخطاء (errors) والحدود (limits) ومن يقرر (who decides)، واطلب مثالًا (an example). فحتى الجملة الدقيقة (a precise sentence) تخفي ثغرات (gaps). عبارة «التحويلات بين حسابات العميل نفسه مجانية» (Own-account transfers are free) لا تقول من الذي يتحقق من أن المستلم (the recipient) حسابك أنت فعلًا. في النظام النموذجي (the sample) يرسل العميل (the client) الحقل `kind`، وحين جرّبنا `own` إلى حساب عميل آخر قُبل التحويل بلا رسم (accepted with no fee).
 
@@ -767,7 +767,7 @@ Scenario: Limits are per currency
 | **قائمة التحقق (Checklist)** | «السقف: بلوغه بالضبط، وسنت واحد فوقه، ولكل عملة، والمحاولة المرفوضة لا تُحتسب» (Limit: exactly met, one cent over, per currency, rejected attempt not counted) | المختبِرون ذوو الخبرة (Experienced testers)، والتغطية السريعة (fast coverage) |
 | **ميثاق الجلسة (Charter)** | «استكشف السقف اليومي بدفعات موزعة على عملات لاكتشاف أخطاء العدّ» (Explore the daily limit with payments split across currencies to discover counting errors) لمدة 45 دقيقة (45 minutes) | المناطق المجهولة (Unknown territory)، وجلسات الاستكشاف (exploratory sessions) |
 
-تكلّف النصوص المكتوبة جهدًا في كتابتها وإبقائها محدَّثة (keep current)، فلا تكتب نصًا لميزة تتغير أسبوعيًا؛ فقائمة التحقق أو الميثاق أرخص (cheaper).
+تكلّف الحالات المكتوبة سلفًا (scripts) جهدًا في كتابتها وإبقائها محدَّثة (keep current)، فلا تكتب سيناريو اختبار لميزة تتغير أسبوعيًا (do not script a feature that changes weekly)؛ فقائمة التحقق أو الميثاق أرخص (cheaper).
 
 يربط **التتبّع (Traceability)** كل متطلب باختباراته وكل عيب بالاختبار الذي وجده: TRF-212 AC1 وTC-LIM-03 وDEF-231. وهو يجيب عن «أي المتطلبات بلا اختبار؟» ⁦(which requirements have no test?)⁩ و«ماذا يجب أن نعيد اختباره إن تغيّر هذا؟» ⁦(what must we retest if this changes?)⁩. ولّده من أسماء الاختبارات أو وسومها (test names or tags) بدلًا من صيانة جدول بيانات يدويًا (a spreadsheet by hand).
 
@@ -802,42 +802,42 @@ Suspected cause (a guess): rounding done on a binary float.
 Suggested severity: S2 (wrong money amount). Priority: for triage.
 ```
 
-ينجح التقرير القوي لأن العنوان يقول ماذا وأين وفي أي شرط (what, where and under which condition)، ولأن المرجع، أي السياسة، مسمّى (the oracle is named). و**الحد الأدنى لإعادة الإنتاج (minimal reproduction)**، أي أقل الخطوات والبيانات التي ما زالت تُظهر الفشل (the smallest steps and data that still show the failure)، هو أمر `python -c` واحد؛ وتجده بإزالة الخطوات والبيانات حتى يتوقف الفشل، ثم تُعيد آخر شيء أزلته (put the last thing back). ونطاق التأثير (the scope) قيس ولم يُخمَّن، والتخمين بشأن السبب موسوم بأنه تخمين (labelled as one).
+ينجح التقرير القوي (The strong report works) لأن العنوان يقول ماذا وأين وفي أي شرط (what, where and under which condition)، ولأن المرجع (the oracle)، أي السياسة (the policy)، مسمّى (is named). و**الحد الأدنى لإعادة الإنتاج (minimal reproduction)**، أي أقل الخطوات والبيانات التي ما زالت تُظهر الفشل (the smallest steps and data that still show the failure)، هو أمر `python -c` واحد؛ وتجده بإزالة الخطوات والبيانات حتى يتوقف الفشل، ثم تُعيد آخر شيء أزلته (put the last thing back). ونطاق التأثير (the scope) قيس ولم يُخمَّن، والتخمين بشأن السبب موسوم بأنه تخمين (labelled as one).
 
 **الخطورة مقابل الأولوية (Severity versus priority).** **الخطورة (Severity)** هي مدى سوء الأثر إذا وقع العيب (how bad the effect is if the bug happens). و**الأولوية (Priority)** هي مدى سرعة إصلاحه (how soon to fix it). يقترح المختبِر الخطورة؛ ويحدد قطاع الأعمال (the business) الأولوية في الفرز (triage) انطلاقًا من الخطورة، وعدد المتأثرين (how many people are affected)، والمواعيد النهائية (deadlines)، والحلول البديلة (workarounds)، وتكلفة الإصلاح (the cost of the fix). وهما مختلفتان:
 
 | العيب (Bug) | الخطورة (Severity) | الأولوية (Priority) | السبب (Why) |
 |---|---|---|---|
 | شعار بدرجة زرقاء خاطئة في الشاشة التي سيعرضها الرئيس التنفيذي غدًا (Logo in the wrong blue on the screen the CEO demos tomorrow) | منخفضة (Low) | عالية (High) | غير ضار، لكن الجميع سيراه (Harmless, but everyone will see it) |
-| تعطّل التطبيق على إصدار نظام تشغيل متقاعد بعد سبع خطوات غير معتادة (App crashes on a retired OS version after seven unusual steps) | عالية (High) | منخفضة (Low) | خطير، لكن يكاد لا يصل إليه أحد (Serious, but almost nobody reaches it) |
+| تعطّل التطبيق على إصدار نظام تشغيل سُحب دعمه بعد سبع خطوات غير معتادة (App crashes on a retired OS version after seven unusual steps) | عالية (High) | منخفضة (Low) | خطير، لكن يكاد لا يصل إليه أحد (Serious, but almost nobody reaches it) |
 | فشل كل تحويل بعد الساعة 15:00 (Every transfer fails after 15:00) | عالية (High) | عالية (High) | لا يمكن تحريك المال، للجميع (Money cannot move, for everyone) |
 
 **دورة الحياة والفرز (Lifecycle and triage).** ينتقل العيب بين حالات (states)؛ تسمّيها الفرق أسماء مختلفة، لكن الشكل مشترك (the shape is common).
 
 ```mermaid
-flowchart LR
-    N["جديد"] --> T["مفروز"]
-    T --> A["مُسنَد"]
-    A --> F["مُصلَح"]
-    F --> R["إعادة اختبار"]
-    R -->|"ينجح"| C["مغلق"]
-    R -->|"ما زال يفشل"| O["أُعيد فتحه"]
+flowchart RL
+    N["جديد<br/>(New)"] --> T["مفروز<br/>(Triaged)"]
+    T --> A["مُسنَد<br/>(Assigned)"]
+    A --> F["مُصلَح<br/>(Fixed)"]
+    F --> R["إعادة اختبار<br/>(Retest)"]
+    R -->|"ينجح (passes)"| C["مغلق<br/>(Closed)"]
+    R -->|"ما زال يفشل (still fails)"| O["أُعيد فتحه<br/>(Reopened)"]
     O --> A
-    N --> X["مرفوض أو مكرر"]
-    T --> D["مؤجَّل"]
+    N --> X["مرفوض أو مكرر<br/>(Rejected or duplicate)"]
+    T --> D["مؤجَّل<br/>(Deferred)"]
 ```
 
-**الفرز (Triage)** اجتماع قصير ومنتظم (a short, regular meeting) ينظر فيه فريق هندسة الجودة (QE) والتطوير والمنتج في كل تقرير جديد ويقررون: هل هو صالح (valid)، أم مكرر (a duplicate)، أم «يعمل كما صُمّم» (works as designed)؟ ما خطورته وأولويته؟ من يملكه؟ ابحث قبل أن ترفع تقريرًا (Search before you file). وإن كان مكررًا، فاربطه وأضف ما هو جديد (بيئة أخرى، أو نطاق أوسع، another environment, a wider scope) بدلًا من فتح خيط ثانٍ (a second thread). والتقرير الذي يحمل عيبين لا يمكن إغلاقه بنظافة (cannot be closed cleanly)؛ فقسّمه.
+**الفرز (Triage)** اجتماع قصير ومنتظم (a short, regular meeting) ينظر فيه فريق هندسة الجودة (QE) والتطوير والمنتج في كل تقرير جديد ويقررون: هل هو صالح (valid)، أم مكرر (a duplicate)، أم «يعمل كما صُمّم» (works as designed)؟ ما خطورته وأولويته؟ من يملكه؟ ابحث قبل أن ترفع تقريرًا (Search before you file). وإن كان مكررًا، فاربطه وأضف ما هو جديد (بيئة أخرى، أو نطاق أوسع، another environment, a wider scope) بدلًا من فتح خيط ثانٍ (a second thread). والتقرير الذي يحمل عيبين لا يمكن إغلاقه إغلاقًا سليمًا (cannot be closed cleanly)؛ فقسّمه.
 
 **النبرة (Tone).** اكتب عن النظام لا عن الشخص (about the system, not the person). تتحول عبارة «المطوّر كسر السقف مرة أخرى» (Dev broke the limit again) إلى «تُرفض تحويلات 1,000.00 QAR بعد إرسال 49,000.00 اليوم» (Transfers of 1,000.00 QAR after 49,000.00 sent today are rejected). قدّم الوقائع والأدلة (facts and evidence)، وتجنّب اللوم والحروف الكبيرة (blame and capital letters)؛ فعبارة «لا يمكن إعادة إنتاجه» (cannot reproduce) نتيجة أيضًا. وتأتي عادة عدم اللوم (the blameless habit) من مراجعات الحوادث ([*الحوسبة السحابية وDevOps (Cloud & DevOps)*، الدرس 5.3 — الحوادث وتحليل ما بعد الحادثة دون لوم (Incidents and blameless postmortems)](../cloud/index.ar.html#/5.3)).
 
 ### 🔴 نظرة الخبير (Expert view)
 
-**استخدام مساعد ذكاء اصطناعي في تقرير عيب (Using an AI assistant on a bug report).** يستطيع المساعدة في البنية (structure) (تطبيق قالبك، apply your template)، والتكثيف (tightening)، والترجمة الأولية بين الإنجليزية والعربية (first-draft English-Arabic translation) التي يراجعها قارئ متمكن (a fluent reader)، وتلخيص سجل طويل (summarising a long log). لكنه لا يعرف ما رأيته. تحقّق مما يلي (Check):
+**استخدام مساعد ذكاء اصطناعي في تقرير عيب (Using an AI assistant on a bug report).** يستطيع المساعدة في البنية (structure) (تطبيق قالبك، apply your template)، وإحكام الصياغة (tightening)، والترجمة الأولية بين الإنجليزية والعربية (first-draft English-Arabic translation) التي يراجعها قارئ متمكن (a fluent reader)، وتلخيص سجل طويل (summarising a long log). لكنه لا يعرف ما رأيته. تحقّق مما يلي (Check):
 - **الوقائع (Facts).** يجب أن يأتي كل رقم وإصدار وخطوة من ملاحظاتك (your notes). قد تملأ النماذج الثغرات باختراعات معقولة (plausible inventions)، كبيئة لم تستخدمها أو خطوة لم تنفذها.
 - **إعادة الإنتاج (The repro).** شغّل الخطوات من النص *النهائي* (final text). فالصقل (polishing) قد يغيّر خطوة.
 - **المرجع (The oracle).** يجب أن تستشهد النتيجة المتوقعة بالمتطلب (cite the requirement). ولا تدع النموذج يستنتج «المتوقع» (expected) من الفعلي (from the actual).
-- **ما تلصقه (What you paste).** لا تضع أبدًا بيانات العملاء (customer data) أو أرقام الحسابات (account numbers) أو الرموز (tokens) أو كلمات المرور (passwords) أو أسماء المضيفين الداخلية (internal hostnames) أو تفاصيل ثغرات غير مُصدَرة (unreleased vulnerability details) في أداة لم يعتمدها بنكك (a tool your bank has not approved). احجب المعلومات أولًا (Redact first)، واستخدم بيانات اصطناعية (synthetic data) كـ`acc-1` في النظام النموذجي. وعيب أمني مثل `bola` يمر عبر مسار الإفصاح الأمني (the security disclosure route)، لا عبر أداة محادثة عامة (a general chat tool) ([*الذكاء الاصطناعي الآمن وأمن التطبيقات (Secure AI & Application Security)*، الدرس 10.3 — إدارة الثغرات والإفصاح ومكافآت اكتشاف الثغرات (Vulnerability management, disclosure and bug bounties)](../secai/index.ar.html#/10.3)).
+- **ما تلصقه (What you paste).** لا تضع أبدًا بيانات العملاء (customer data) أو أرقام الحسابات (account numbers) أو الرموز (tokens) أو كلمات المرور (passwords) أو أسماء المضيفين الداخلية (internal hostnames) أو تفاصيل ثغرات لم يُعلَن عنها بعد (unreleased vulnerability details) في أداة لم يعتمدها بنكك (a tool your bank has not approved). احجب المعلومات أولًا (Redact first)، واستخدم بيانات اصطناعية (synthetic data) كـ`acc-1` في النظام النموذجي. وعيب أمني مثل `bola` يمر عبر مسار الإفصاح الأمني (the security disclosure route)، لا عبر أداة محادثة عامة (a general chat tool) ([*الذكاء الاصطناعي الآمن وأمن التطبيقات (Secure AI & Application Security)*، الدرس 10.3 — إدارة الثغرات والإفصاح ومكافآت اكتشاف الثغرات (Vulnerability management, disclosure and bug bounties)](../secai/index.ar.html#/10.3)).
 
 أنت صاحب التقرير (You own the report). وعبارة «المساعد هو من كتبه» (The assistant wrote it) ليست جوابًا حين يجد المطوّر خطوة خاطئة. وفي عيوب ميزات الذكاء الاصطناعي (defects in AI features)، أضف ما يجعل السلوك قابلًا لإعادة الإنتاج (reproducible): إصدارات النموذج والتوجيه (model and prompt versions)، وإعدادات مثل درجة الحرارة (temperature)، والمُدخل بالضبط (the exact input)، ومعدل تكرار الحدوث (how often it happens) («3 من 10 تشغيلات»، "3 of 10 runs")، وعدة مخرجات نموذجية (several sample outputs).
 
@@ -848,8 +848,8 @@ flowchart LR
 |---|---|---|
 | **Acceptance criteria** | معايير القبول: شروط يجب أن تستوفيها القصة، مكتوبة أمثلةً بأرقام (examples with numbers) | كل قصة، قبل بدء التطوير (Every story, before development starts) |
 | **Given/When/Then** | صيغة من ثلاثة أجزاء لسيناريو (A three-part notation for a scenario): السياق والفعل والنتيجة (context, action, outcome) | تحويل المعايير إلى أمثلة مشتركة قابلة للاختبار (shared, testable examples) |
-| **Test case** | حالة الاختبار: فحص مكتوب بنص مع شروط مسبقة وخطوات وبيانات ونتيجة متوقعة (preconditions, steps, data and expected result) | الفحوص القابلة للتكرار أو للتدقيق أو المؤتمتة (Repeatable, auditable or automated checks) |
-| **Test charter** | ميثاق الاختبار: مهمة محددة بزمن (A time-boxed mission) للاختبار الاستكشافي (exploratory testing) | المناطق المجهولة أو الخطرة بلا نص مكتوب (Unknown or risky areas without a script) |
+| **Test case** | حالة الاختبار: فحص مكتوب سلفًا (A scripted check) مع شروط مسبقة وخطوات وبيانات ونتيجة متوقعة (preconditions, steps, data and expected result) | الفحوص القابلة للتكرار أو للتدقيق أو المؤتمتة (Repeatable, auditable or automated checks) |
+| **Test charter** | ميثاق الجلسة (charter): مهمة محددة بزمن (A time-boxed mission) للاختبار الاستكشافي (exploratory testing) | المناطق المجهولة أو الخطرة بلا سيناريو مكتوب (Unknown or risky areas without a script) |
 | **Traceability matrix** | مصفوفة التتبّع: تربط المتطلب بالاختبارات ثم بالعيوب (Links requirement to tests to defects) | أسئلة التغطية (Coverage questions)، وتحليل الأثر (impact analysis)، والتدقيق (audits) |
 | **Bug report template** | قالب تقرير العيب: العنوان (title) والبيئة (environment) والخطوات (steps) والمتوقع (expected) والفعلي (actual) والأدلة (evidence) والنطاق (scope) والأثر (impact) | كل عيب؛ فهو يمنع «لا يمكن إعادة إنتاجه» (cannot reproduce) |
 | **Severity and priority matrix** | مصفوفة الخطورة والأولوية: مقياس للأثر ومقياس للإلحاح، يُحددان منفصلين (Impact scale and urgency scale, set separately) | اجتماعات الفرز (Triage meetings) |
@@ -884,7 +884,7 @@ Severity:   S1 to S4, proposed by the tester
 
 - 🟢 **معايير القبول (Acceptance criteria).** القصة: «بصفتي عميلًا، أريد أن أرى الرسم قبل أن أؤكد تحويلًا دوليًا، كي لا تكون هناك مفاجآت» (As a customer, I want to see the fee before I confirm an international transfer, so there are no surprises). اكتب خمسة سيناريوهات Given/When/Then على الأقل من قواعد الرسوم (fee rules). *يكتمل عندما (Done when):* يحمل كل سيناريو أرقامًا محددة (concrete numbers)؛ وتكون اثنتان على الأقل حالتين حدّيتين أو سلبيتين (boundary or negative cases)؛ وتستخدم واحدة الحد الأدنى 10.00 (the 10.00 minimum) وأخرى حالة تقريب نصف سنت (a half-cent rounding case) مثل 3,090.00 QAR التي تعطي 10.82؛ ولا يحتوي أي منها كلمة تحذير (warning word) من الجدول؛ وتسمّي كل واحدة مرجعها (names its oracle).
 - 🟡 **تقرير من فشل حقيقي (A report from a real failure).** شغّل النظام النموذجي (Start the sample) مع `NAJM_BUGS=tz_cutoff` وابحث عن وقت تقديم (a submission time) تعيد عنده `value_date` اليوم الخاطئ (the wrong day) (السياسة، policy: من الساعة 15:00 بتوقيت قطر فصاعدًا يكون يوم العمل التالي، the next business day؛ جرّب الاثنين 5 أكتوبر 2026 الساعة 16:00). اكتب تقريرًا بكل حقل من قالب نجم (every field of the Najm template). *يكتمل عندما (Done when):* تستغرق الخطوات خمسة أسطر على الأكثر؛ ولصق إعادة الإنتاج في طرفية جديدة (a fresh terminal) يطبع التاريخ الخاطئ مع تفعيل العيب والصحيح مع إيقافه؛ ويذكر النطاق (the scope) النافذة المتأثرة (the affected window)، مقيسة بمسح يوم اثنين واحد بخطوات دقيقة واحدة (one-minute steps)، إضافة إلى ما يُظهره مسح يوم جمعة ولماذا.
-- 🔴 **افرز ثمانية عيوب (Triage eight bugs).** أعطِ كل عيب خطورة (a severity) وأولوية (a priority) وسببًا في سطر واحد (a one-line reason) ومكانًا في ترتيب الإصلاح (a place in the fix order). (1) النقر المزدوج على «إرسال» (Double-tapping Send) يُقدّم تحويلين ويخصم مرتين. (2) عميل مسجَّل الدخول (A signed-in customer) يقرأ تحويل عميل آخر (another's transfer) بتغيير المعرّف (changing the id). (3) نجم أسيست (Najm Assist) يختلق رسمًا «5.00 شهريًا» (5.00 monthly) حين لا تنطبق أي سياسة. (4) الرسوم الدولية (International fees) ينقصها سنت (a cent short) في 407 من 25,000 مبلغ بالريال القطري الصحيح (whole-QAR amounts). (5) اسم البنك مكتوب خطأً (misspelled) في شاشة الترحيب العربية (the Arabic welcome screen)؛ وحدث الإطلاق (the launch event) بعد يومين (in two days). (6) الملف التنظيمي الليلي (The nightly regulatory file) يتخطى (skips) 3 حسابات فيها رمز تعبيري (emoji) في اسم صاحب الحساب (the holder's name)؛ والتقديم التالي (the next submission) مستحق يوم الخميس (due Thursday)، ويستطيع فريق العمليات (operations) إضافة الصفوف يدويًا (by hand). (7) على إصدار Android قديم واحد (one old Android version) يتعطل التطبيق عند التشغيل (crashes on launch) بالعربية مع أكبر حجم خط (the largest font)؛ وتغيير إعداد (a setting) يتفادى ذلك. (8) تحويل مسوّى (A settled transfer) يعرض «قيد المعالجة» (Processing) إلى أن يسحب العميل للتحديث (pulls to refresh). *يكتمل عندما (Done when):* تكتمل الصفوف الثمانية وتتبع المقاييس المكتوبة (the written scales)؛ ويصنَّف اثنان بالضبط S1 (exactly two qualify as S1)؛ ويحمل اثنان على الأقل أولوية أشد إلحاحًا مما توحي به خطورتهما (a priority more urgent than their severity suggests) وواحد على الأقل العكس (the reverse)؛ وتذكر جملة واحدة كيف فككت التعادل (how you broke ties).
+- 🔴 **افرز ثمانية عيوب (Triage eight bugs).** أعطِ كل عيب خطورة (a severity) وأولوية (a priority) وسببًا في سطر واحد (a one-line reason) ومكانًا في ترتيب الإصلاح (a place in the fix order). (1) النقر المزدوج على «إرسال» (Double-tapping Send) يُقدّم تحويلين ويخصم مرتين. (2) عميل مسجَّل الدخول (A signed-in customer) يقرأ تحويل عميل آخر (another's transfer) بتغيير المعرّف (changing the id). (3) نجم أسيست (Najm Assist) يختلق رسمًا «5.00 شهريًا» (5.00 monthly) حين لا تنطبق أي سياسة. (4) الرسوم الدولية (International fees) ينقصها سنت (a cent short) في 407 من 25,000 مبلغ مؤلف من ريالات قطرية كاملة (whole-QAR amounts). (5) اسم البنك مكتوب خطأً (misspelled) في شاشة الترحيب العربية (the Arabic welcome screen)؛ وحدث الإطلاق (the launch event) بعد يومين (in two days). (6) الملف التنظيمي الليلي (The nightly regulatory file) يتخطى (skips) 3 حسابات فيها رمز تعبيري (emoji) في اسم صاحب الحساب (the holder's name)؛ والتقديم التالي (the next submission) مستحق يوم الخميس (due Thursday)، ويستطيع فريق العمليات (operations) إضافة الصفوف يدويًا (by hand). (7) على إصدار Android قديم واحد (one old Android version) يتعطل التطبيق عند التشغيل (crashes on launch) بالعربية مع أكبر حجم خط (the largest font)؛ وتغيير إعداد (a setting) يتفادى ذلك. (8) تحويل مسوّى (A settled transfer) يعرض «قيد المعالجة» (Processing) إلى أن يسحب العميل للتحديث (pulls to refresh). *يكتمل عندما (Done when):* تكتمل الصفوف الثمانية وتتبع المقاييس المكتوبة (the written scales)؛ ويصنَّف اثنان بالضبط S1 (exactly two qualify as S1)؛ ويحمل اثنان على الأقل أولوية أشد إلحاحًا مما توحي به خطورتهما (a priority more urgent than their severity suggests) وواحد على الأقل العكس (the reverse)؛ وتذكر جملة واحدة كيف حسمت التعادل (how you broke ties).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
 - **كتابة ما فعلته لا ما هو خاطئ (Writing what you did, not what is wrong).** ابدأ بالعَرَض (the symptom) وبأصغر الخطوات التي تُظهره.
@@ -899,7 +899,7 @@ Severity:   S1 to S4, proposed by the tester
 - معايير القبول بصيغة Given/When/Then وحالات الاختبار وقوائم التحقق والمواثيق (acceptance criteria, test cases, checklists and charters) تسجّل الشروط نفسها بمستويات حرية مختلفة (different levels of freedom)؛ والتتبّع (traceability) يربطها بالمتطلبات والعيوب.
 - لتقرير العيب الجيد (good bug report) عنوان محدد وبيئة وحد أدنى لإعادة الإنتاج (minimal reproduction) ونتيجة متوقعة مع مرجعها ونتيجة فعلية وأدلة ونطاق مقيس (measured scope).
 - الخطورة (severity) أثر والأولوية (priority) إلحاح؛ والفرز (triage) يقرر، وتظل النبرة (tone) واقعية.
-- يستطيع الذكاء الاصطناعي ترتيب التقرير، لكنك أنت من يتحقق من كل واقعة ولا تلصق أبدًا أسرارًا أو بيانات عملاء. استخدم تسرّب العيوب (defect escapes) قائمةً باختبارات فائتة (missed tests)، لا درجة (not a score).
+- يستطيع الذكاء الاصطناعي (AI) ترتيب التقرير (tidy a report)، لكنك أنت من يتحقق من كل واقعة (verify every fact) ولا تلصق أبدًا أسرارًا (secrets) أو بيانات عملاء (customer data). استخدم تسرّب العيوب (defect escapes) قائمةً باختبارات فائتة (missed tests)، لا درجة (not a score).
 
 ## ✍️ اختبر نفسك (Check yourself)
 
@@ -912,7 +912,7 @@ Severity:   S1 to S4, proposed by the tester
 
 <details><summary>الإجابة</summary>
 
-**B.** تسمّي الظروف (conditions) (staging، 4G، تفاعلية) وعتبة (a threshold) ونسبة من مرات التحميل (a share of loads)، فيتفق مختبِران على النجاح أو الفشل. أما A ففيه رقم لكن بلا شبكة وبلا معنى لـ«التحميل» (load) وبلا هامش تسامح (tolerance)؛ وبقية الخيارات ذاتية (subjective). (🟢 الأساسيات، The essentials).
+**B.** تسمّي الظروف (conditions): بيئة الاختبار (staging) وشبكة 4G والتفاعلية (interactive)، وعتبة (a threshold) ونسبة من مرات التحميل (a share of loads)، فيتفق مختبِران على النجاح أو الفشل. أما A ففيه رقم لكن بلا شبكة وبلا معنى لـ«التحميل» (load) وبلا هامش تسامح (tolerance)؛ وبقية الخيارات ذاتية (subjective). (🟢 الأساسيات، The essentials).
 
 </details>
 
@@ -955,9 +955,9 @@ Severity:   S1 to S4, proposed by the tester
 
 </details>
 
-**5. في الإصدار 2026.09 وُجد 46 عيبًا قبل الإطلاق وأُبلغ عن 6 بعده. ما الخطوة التالية الأكثر فائدة؟**
+**5. في الإصدار (Release) 2026.09 وُجد 46 عيبًا قبل الإطلاق (46 defects found before launch) وأُبلغ عن 6 بعده (6 reported afterwards). ما الخطوة التالية الأكثر فائدة؟ ⁦(What is the most useful next step?)⁩**
 
-- A. ترتيب المختبِرين (Rank the testers) بعدد العيوب التي رفعها كل منهم (by defects raised)
+- A. ترتيب المختبِرين بعدد العيوب التي رفعها كل منهم (Rank the testers by the number of defects each one raised)
 - B. مراجعة كل واحد من التسرّبات الستة (Review each of the 6 escapes) بحثًا عن سببه (cause) وإضافة اختبار له
 - C. الإبلاغ عن رقم الاكتشاف 88.5 % (the 88.5 % detection figure) وإغلاق الإصدار (close the release)
 - D. مضاعفة عدد حالات الاختبار المخططة (Double the number of test cases) للإصدار التالي (next release)
