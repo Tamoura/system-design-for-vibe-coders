@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Najm Mobile - Send a transfer</title>
+<style>
+  body { font: 16px/1.5 system-ui, sans-serif; max-width: 28rem; margin: 2rem auto; padding: 0 1rem; }
+  label { display: block; margin-top: 1rem; font-weight: 600; }
+  input, select, button { font: inherit; padding: .5rem; width: 100%; box-sizing: border-box; }
+  button { margin-top: 1.5rem; }
+  [role="alert"] { color: #8a1f1f; margin-top: 1rem; }
+  [role="status"] { color: #1f6b3a; margin-top: 1rem; }
+</style>
+</head>
+<body>
+<h1 id="title">Send a transfer</h1>
+<form id="form" novalidate>
+  <label for="from">From account</label>
+  <select id="from" name="from_account">
+    <option value="acc-1">Current account (QAR)</option>
+    <option value="acc-3">Euro account (EUR)</option>
+  </select>
+  <label for="to">Recipient account</label>
+  <input id="to" name="to_account" value="acc-2" autocomplete="off">
+  <label for="amount">Amount</label>
+  <input id="amount" name="amount" inputmode="decimal" autocomplete="off">
+  <label for="currency">Currency</label>
+  <select id="currency" name="currency">
+    <option value="QAR">QAR</option>
+    <option value="EUR">EUR</option>
+  </select>
+  <button type="submit">Send transfer</button>
+</form>
+<p id="result" aria-live="polite"></p>
+<script>
+const T = {
+  en: { title: "Send a transfer", from: "From account", to: "Recipient account", amount: "Amount",
+        currency: "Currency", send: "Send transfer", ok: "Transfer sent. Reference", doc: "Najm Mobile - Send a transfer" },
+  ar: { title: "إرسال حوالة", from: "من الحساب", to: "حساب المستلم", amount: "المبلغ",
+        currency: "العملة", send: "إرسال الحوالة", ok: "تم إرسال الحوالة. المرجع", doc: "نجم موبايل - إرسال حوالة" },
+};
+const lang = new URLSearchParams(location.search).get("lang") === "ar" ? "ar" : "en";
+const t = T[lang];
+document.documentElement.lang = lang;
+document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+document.title = t.doc;
+document.getElementById("title").textContent = t.title;
+for (const [id, key] of [["from", "from"], ["to", "to"], ["amount", "amount"], ["currency", "currency"]]) {
+  document.querySelector(`label[for="${id}"]`).textContent = t[key];
+}
+document.querySelector("button").textContent = t.send;
+
+document.getElementById("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const out = document.getElementById("result");
+  out.removeAttribute("role");
+  const data = Object.fromEntries(new FormData(e.target));
+  const res = await fetch("/transfers", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": "Bearer token-alice",
+               "Idempotency-Key": crypto.randomUUID() },
+    body: JSON.stringify({ ...data, kind: "domestic" }),
+  });
+  const body = await res.json();
+  if (res.ok) { out.setAttribute("role", "status"); out.textContent = `${t.ok} ${body.id}`; }
+  else { out.setAttribute("role", "alert"); out.textContent = body.error?.code ?? "error"; }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+[
+ {
+  "id": "m0",
+  "key": "0",
+  "lessons": [
+   "0.1",
+   "0.2",
+   "0.3"
+  ],
+  "en": "Orientation",
+  "ar": "التوجيه (Orientation)"
+ },
+ {
+  "id": "m1",
+  "key": "1",
+  "lessons": [
+   "1.1",
+   "1.2",
+   "1.3"
+  ],
+  "en": "Testing foundations",
+  "ar": "أساسيات الاختبار (Testing foundations)"
+ },
+ {
+  "id": "m2",
+  "key": "2",
+  "lessons": [
+   "2.1",
+   "2.2",
+   "2.3"
+  ],
+  "en": "Testing code",
+  "ar": "اختبار الشيفرة (Testing code)"
+ },
+ {
+  "id": "m3",
+  "key": "3",
+  "lessons": [
+   "3.1",
+   "3.2",
+   "3.3"
+  ],
+  "en": "Testing interfaces",
+  "ar": "اختبار الواجهات (Testing interfaces)"
+ },
+ {
+  "id": "m4",
+  "key": "4",
+  "lessons": [
+   "4.1",
+   "4.2",
+   "4.3"
+  ],
+  "en": "Testing the qualities",
+  "ar": "اختبار الخصائص الجودية (Testing the qualities)"
+ },
+ {
+  "id": "m5",
+  "key": "5",
+  "lessons": [
+   "5.1",
+   "5.2",
+   "5.3"
+  ],
+  "en": "Strategy and delivery",
+  "ar": "الاستراتيجية والتسليم (Strategy and delivery)"
+ },
+ {
+  "id": "m6",
+  "key": "6",
+  "lessons": [
+   "6.1",
+   "6.2",
+   "6.3"
+  ],
+  "en": "Testing in the AI era: code and tools",
+  "ar": "الاختبار في عصر الذكاء الاصطناعي: الشيفرة والأدوات (Testing in the AI era: code and tools)"
+ },
+ {
+  "id": "m7",
+  "key": "7",
+  "lessons": [
+   "7.1",
+   "7.2",
+   "7.3"
+  ],
+  "en": "Testing AI systems",
+  "ar": "اختبار أنظمة الذكاء الاصطناعي (Testing AI systems)"
+ },
+ {
+  "id": "m8",
+  "key": "8",
+  "lessons": [
+   "8.1",
+   "8.2",
+   "8.3"
+  ],
+  "en": "Hero: capstone and practice exam",
+  "ar": "المحترف: المشروع الختامي والامتحان التدريبي (Hero: capstone and practice exam)"
+ }
+]
