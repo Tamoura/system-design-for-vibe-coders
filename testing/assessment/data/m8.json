@@ -1,0 +1,135 @@
+{
+ "area": "m8",
+ "questions": [
+  {
+   "id": "m8-1",
+   "level": 1,
+   "lesson": "8.2",
+   "q": {
+    "en": "At Najm Bank an assistant now writes a plausible test in seconds. Rashid is hiring a second quality engineer. Which skill has become scarcer, and so worth more?",
+    "ar": "صار مساعد الذكاء الاصطناعي (AI assistant) في بنك نجم (Najm Bank) يكتب اختبارًا معقولًا (a plausible test) في ثوانٍ. ويوظّف راشد مهندس جودة (quality engineer) ثانيًا. أيّ مهارة صارت أندر (scarcer)، ومن ثمّ أعلى قيمة (worth more)؟"
+   },
+   "o": {
+    "en": [
+     "Drafting a first test for a new rule from its written description",
+     "Judging whether an assistant's test can fail for the right reason",
+     "Pushing the suite's line coverage as high as the team can get it",
+     "Knowing the syntax of the team's main test framework by heart"
+    ],
+    "ar": [
+     "صياغة أول اختبار لقاعدة جديدة (a new rule) انطلاقًا من وصفها المكتوب (written description)",
+     "الحكم (judging) على قدرة اختبار المساعد على الفشل لسبب صحيح (fail for the right reason)",
+     "رفع تغطية الأسطر (line coverage) في المجموعة (the suite) إلى أعلى مستوى ممكن",
+     "معرفة صياغة (syntax) أداة الاختبار الرئيسية (main test framework) في الفريق عن ظهر قلب"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Routine scripts are now cheap, so the scarce person is the one who can tell a test that can fail from one that only passes. Drafting a first test (A) is what the assistant already does in seconds, and a high coverage figure (C) can be reached with tests that cannot fail.",
+    "ar": "أصبحت النصوص الروتينية (routine scripts) رخيصة، لذا فالنادر هو من يميّز الاختبار الذي يمكن أن يفشل (a test that can fail) من الذي ينجح فقط (one that only passes). أما صياغة أول اختبار (drafting a first test) في الخيار A فيؤديها المساعد (the assistant) في ثوانٍ أصلًا، ويمكن بلوغ رقم تغطية مرتفع (a high coverage figure) في الخيار C باختبارات لا تفشل أبدًا (tests that cannot fail)."
+   }
+  },
+  {
+   "id": "m8-2",
+   "level": 2,
+   "lesson": "8.1",
+   "q": {
+    "en": "The agent's code for monthly schedules adds a month to the previous run date. Bilal's only test for a schedule that starts on 31 January 2027 asserts that six run dates come back, and it passes. What should he change?",
+    "ar": "تضيف شيفرة الوكيل (the agent's code) للجداول الشهرية (monthly schedules) شهرًا إلى تاريخ التشغيل السابق (previous run date). واختبار بلال الوحيد لجدول يبدأ في 31 يناير 2027 (31 January 2027) يؤكد (asserts) أن ستة تواريخ تشغيل (six run dates) تُعاد، وهو ينجح. ماذا ينبغي أن يغيّر؟"
+   },
+   "o": {
+    "en": [
+     "Add a coverage gate so that every line of `schedule.py` must run",
+     "Paste the dates the agent's code returns into the expected list",
+     "Assert that the six dates are in order and all business days",
+     "Assert the six exact dates, worked out by hand from R2 and R3"
+    ],
+    "ar": [
+     "إضافة بوابة تغطية (coverage gate) تُلزم بتنفيذ كل سطر (every line) في `schedule.py`",
+     "لصق التواريخ التي تعيدها شيفرة الوكيل (the agent's code) في قائمة المتوقع (expected list)",
+     "التأكيد (assert) أن التواريخ الستة تتزايد وأن كلًّا منها يوم عمل (business day)",
+     "التأكيد (assert) على التواريخ الستة بدقة، محسوبة يدويًا (by hand) من القاعدتين R2 وR3"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Dates worked out by hand pin R2 and R3 exactly, so the drift bug has nowhere to hide, while a count or a loose check on the dates can still pass with it. Pasting the code's output (B) makes the test agree with the bug.",
+    "ar": "التواريخ المحسوبة يدويًا (dates worked out by hand) تثبّت القاعدتين R2 وR3 بدقة فلا يجد عيب الانجراف (the drift bug) مكانًا يختبئ فيه، بينما قد ينجح مع العيب اختبار يعدّ التواريخ (a count) أو يفحصها فحصًا فضفاضًا (a loose check). أما لصق مخرجات الشيفرة (pasting the code's output) في الخيار B فيجعل الاختبار يوافق العيب (agree with the bug)."
+   }
+  },
+  {
+   "id": "m8-3",
+   "level": 2,
+   "lesson": "8.2",
+   "q": {
+    "en": "In an interview, Rashid asks a graduate: \"How would you test a transfer form?\" On his scorecard, which opening counts as the strongest signal?",
+    "ar": "في مقابلة توظيف (interview) يسأل راشد خريجًا (a graduate): «كيف تختبر نموذج تحويل؟» ⁦(How would you test a transfer form?)⁩ أيّ بداية للإجابة (opening) تعدّها بطاقة تقييمه (his scorecard) الإشارة الأقوى (the strongest signal)؟"
+   },
+   "o": {
+    "en": [
+     "Ask who uses the form and which rules apply, then rank the risks",
+     "List every field and run the same checks on each one in turn",
+     "Say you would automate the whole form in Playwright on day one",
+     "Ask which test tools the team uses and describe your skills in them"
+    ],
+    "ar": [
+     "السؤال عمّن يستخدم النموذج (who uses it) وعن قواعده (its rules) ثم ترتيب المخاطر (rank risks)",
+     "سرد كل حقل (every field) وإجراء الفحوص نفسها (the same checks) عليه واحدًا بعد الآخر",
+     "القول إنك ستؤتمت النموذج كله (the whole form) بـ Playwright منذ اليوم الأول (from day one)",
+     "السؤال عن أدوات الاختبار (test tools) التي يستخدمها الفريق ثم وصف مهاراتك فيها (your skills)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "The scorecard's first criterion rewards asking who is hurt and how, then ranking, so effort follows the harm: wrong money, duplicates, another customer's account. Listing every field and checking each the same way (B) is its weak signal; boundary values come later, once the risks are ranked.",
+    "ar": "المعيار الأول في بطاقة التقييم (scorecard) يكافئ من يسأل من المتضرر وكيف ثم يرتّب المخاطر (rank risks)، فيتبع الجهد حجم الضرر: مال خاطئ (wrong money) وتكرار (duplicates) وحساب عميل آخر (another customer's account). أما سرد كل حقل وفحصه بالطريقة نفسها (listing every field and checking each the same way) في الخيار B فهو إشارتها الضعيفة (weak signal)، وتأتي القيم الحدّية (boundary values) لاحقًا بعد ترتيب المخاطر."
+   }
+  },
+  {
+   "id": "m8-4",
+   "level": 3,
+   "lesson": "8.1",
+   "q": {
+    "en": "Nada's traceability matrix for Schedules has a row for the risk \"a schedule is silently skipped\". A date table covers it and a gate runs that table on every pull request, but the production-signal cell is empty. What should she do before the 5% step?",
+    "ar": "في مصفوفة التتبّع (traceability matrix) التي أعدّتها ندى للتحويلات المجدولة (Schedules) صفٌّ لخطر «تخطّي الجدول بصمت» (a schedule is silently skipped). يغطيه جدول تواريخ (date table) وتشغّله بوابة (gate) في كل طلب دمج (pull request)، لكن خانة إشارة الإنتاج (production signal) فارغة. ماذا ينبغي أن تفعل قبل خطوة 5% (the 5% step)؟"
+   },
+   "o": {
+    "en": [
+     "Raise the mutation gate on `schedule.py` from 80% to 95% per change",
+     "Add two more Playwright journeys that create a monthly schedule",
+     "Add a nightly check and an alert that every due schedule has a run",
+     "Delete the row, since a test and a gate already cover the risk"
+    ],
+    "ar": [
+     "رفع بوابة الطفرات (mutation gate) في `schedule.py` من 80% إلى 95% لكل طلب دمج (pull request)",
+     "إضافة رحلتين أخريين (two more journeys) بـ Playwright تنشئان جدولًا شهريًا (monthly schedule)",
+     "إضافة فحص ليلي (nightly check) مع تنبيه (alert) يتأكد من وجود تشغيل لكل جدول مستحق",
+     "حذف الصف (the row) لأن اختبارًا وبوابة يغطيان ذلك الخطر تغطية كاملة (cover fully)"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Tests and gates act before release; a silent skip in production needs a signal, and an empty cell is a gap. Raising the gate (A) tightens a check that already exists and still leaves a skipped run invisible once it is live.",
+    "ar": "الاختبارات والبوابات (tests and gates) تعمل قبل الإطلاق، أما التخطّي الصامت (a silent skip) في الإنتاج فيحتاج إلى إشارة (a signal)، والخانة الفارغة (an empty cell) ثغرة (a gap). ورفع البوابة (raising the gate) في الخيار A يشدّد فحصًا قائمًا أصلًا ويبقي التشغيل المتخطّى غير مرئي بعد الإطلاق (once it is live)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m8-e1",
+   "lesson": "8.1",
+   "text": {
+    "en": "I have worked out by hand the expected run dates for a date table of at least ten rows, planted a drift bug and a missing-holiday bug in my copy of the sample, and seen the table go red for both.",
+    "ar": "حسبتُ يدويًا (by hand) تواريخ التشغيل المتوقعة (expected run dates) في جدول تواريخ (date table) من عشرة صفوف على الأقل (at least ten rows)، وزرعتُ عيب انجراف التواريخ (drift bug) وعيب عطلة مفقودة (missing-holiday bug) في نسختي من النظام النموذجي (sample system)، ورأيتُ الجدول يصبح أحمر (go red) مع العيبين."
+   }
+  },
+  {
+   "id": "m8-e2",
+   "lesson": "8.2",
+   "text": {
+    "en": "I have held a 45-minute mock interview with a peer, switched `float_fee` on and off while reviewing an AI-written test with the sample running, and had the peer complete the scorecard with a note per criterion.",
+    "ar": "أجريتُ مقابلة تجريبية (mock interview) مدتها 45 دقيقة مع زميل (a peer)، وشغّلتُ `float_fee` وأوقفتُه أثناء مراجعة اختبار كتبه الذكاء الاصطناعي (an AI-written test) مع تشغيل النظام النموذجي (the sample)، وأكمل زميلي بطاقة التقييم (scorecard) بملاحظة لكل معيار (a note per criterion)."
+   }
+  }
+ ]
+}

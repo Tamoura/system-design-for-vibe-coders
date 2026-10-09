@@ -39,13 +39,13 @@
    },
    "o": {
     "en": [
-     "Send Alice's 12th and 13th requests and expect `429` with the usual error shape each time",
+     "Exhaust Alice's limit, then send Bob's first transfer and expect it to succeed with `201`",
      "Move an injected clock past the minute and expect Alice's next transfer to succeed again",
      "Check that none of the refused requests has debited or credited either account at all",
      "Exhaust Alice's limit, change `X-Forwarded-For` and expect her next request to get `429`"
     ],
     "ar": [
-     "أرسل طلبي أليس (Alice) الثاني عشر والثالث عشر (12th, 13th) وتوقّع `429` بشكل الخطأ المعتاد (usual error shape)",
+     "استنفد (exhaust) حد أليس (Alice) ثم أرسل أول تحويل لبوب (Bob) وتوقّع أن ينجح بالحالة `201`",
      "حرّك ساعة محقونة (injected clock) إلى ما بعد الدقيقة وتوقّع أن ينجح تحويل أليس (Alice) التالي من جديد",
      "تحقق من أن أيًّا من الطلبات المرفوضة (refused requests) لم يخصم (debit) من أي حساب أو يضف (credit) إليه أصلًا",
      "استنفد (exhaust) حد أليس (Alice) ثم غيّر ترويسة (header) `X-Forwarded-For` وتوقّع أن يبقى طلبها التالي `429`"
@@ -96,21 +96,21 @@
    "o": {
     "en": [
      "Record 600 per second as the knee, and size the database connection pool to hold that rate",
-     "Open a defect against Transfers, since its p99 sits far above the 800 ms target in this run",
-     "Discard the run: the tool could not send on schedule, so rerun it from a stronger machine",
+     "Open a defect against Transfers, since its p99 sits far above its target in this run",
+     "Discard the run: the tool could not send on schedule, so its numbers describe the tool, not the API",
      "Switch to a closed model with 600 virtual users, so that the tool can never fall behind"
     ],
     "ar": [
      "سجّل 600 في الثانية نقطةَ انعطاف (knee) وحدّد حجم مجمّع قاعدة البيانات (database pool) ليتحمل هذا المعدل بأكمله",
-     "افتح عيبًا (defect) على التحويلات (Transfers) لأن p99 أعلى بكثير من هدفها البالغ 800 ms في هذا التشغيل نفسه",
-     "ألغِ نتائج التشغيل (discard the run): الأداة لم ترسل في الموعد (on schedule)، فأعده من جهاز أقوى (stronger machine)",
+     "افتح عيبًا (defect) على التحويلات (Transfers) لأن p99 أعلى بكثير من هدفها (target) في هذا التشغيل نفسه",
+     "ألغِ نتائج التشغيل (discard the run): الأداة لم ترسل في الموعد (on schedule)، فأرقامها تصف الأداة (tool) لا الواجهة (API)",
      "انتقل إلى نموذج مغلق (closed model) بـ600 مستخدم افتراضي (virtual users) كي لا تتأخر الأداة (tool) عن الجدول المحدد أبدًا"
     ]
    },
    "a": 2,
    "why": {
-    "en": "A `lag` as large as the latency shows the generator could not send on schedule, so the numbers describe the tool, not the API. Claiming a knee or blaming Transfers charges the system with the tool's limit, and a closed model would hide the stall instead of fixing it.",
-    "ar": "يدل `lag` الكبير بقدر زمن الاستجابة (latency) على أن المولّد (generator) لم يستطع الإرسال في الموعد، فالأرقام تصف الأداة (tool) لا الواجهة (API). وإعلان نقطة انعطاف (knee) أو لوم التحويلات (Transfers) يحمّل النظام حدَّ الأداة، والنموذج المغلق (closed model) يخفي التوقف (stall) ولا يعالجه."
+    "en": "A `lag` as large as the latency shows the generator could not send on schedule, so the numbers describe the tool, not the API: trust the run before its numbers, and discard this one. Claiming a knee or blaming Transfers charges the system with the tool's limit, and a closed model would hide the stall instead of fixing it.",
+    "ar": "يدل `lag` الكبير بقدر زمن الاستجابة (latency) على أن المولّد (generator) لم يستطع الإرسال في الموعد، فالأرقام تصف الأداة (tool) لا الواجهة (API): فثق بالتشغيل قبل أرقامه، وألغِ هذا التشغيل. وإعلان نقطة انعطاف (knee) أو لوم التحويلات (Transfers) يحمّل النظام حدَّ الأداة، والنموذج المغلق (closed model) يخفي التوقف (stall) ولا يعالجه."
    }
   }
  ],

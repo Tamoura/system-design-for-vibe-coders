@@ -12,21 +12,21 @@
    "o": {
     "en": [
      "A documentation gap: once 500 is listed in the OpenAPI document, the behaviour is correct",
-     "A caller mistake: the amount is absurd, so a server error is a fair answer to it",
-     "An API defect: no client input should produce a 5xx, so it must be rejected with a 4xx",
+     "Correct as is: 1e30 is far over the 25,000.00 maximum, so a server error is a valid refusal",
+     "An API defect: no client input should produce a 5xx, so the API must reject it with a 4xx",
      "A low-priority finding: the web page validates amounts, so real customers never send it"
     ],
     "ar": [
      "فجوة في التوثيق (documentation gap): بعد إدراج 500 في وثيقة OpenAPI (OpenAPI document) يصبح السلوك (behaviour) صحيحًا",
-     "خطأ من المستدعي (caller mistake): المبلغ غير معقول (absurd)، فخطأ الخادم (server error) ردّ عادل عليه",
+     "سلوك صحيح (correct as is): المبلغ يفوق كثيرًا الحد الأقصى 25,000.00، فخطأ الخادم (server error) رفض مقبول",
      "عيب في الواجهة (API defect): لا يجوز أن ينتج أي إدخال من العميل (client input) حالة 5xx، فيجب رفضه بحالة 4xx",
      "ملاحظة منخفضة الأولوية (low-priority finding): صفحة الويب (web page) تتحقق من المبالغ، فلا يرسلها العملاء الحقيقيون أبدًا"
     ]
    },
    "a": 2,
    "why": {
-    "en": "No client input should produce a 5xx: the API must reject the amount with a 4xx, here 422, whoever sends it. The web page's own validation is the tempting excuse, but any caller can send anything to the API, and listing 500 in the OpenAPI document would only make the crash official.",
-    "ar": "لا يجوز أن ينتج أي إدخال من العميل (client input) استجابة (response) 5xx، فيجب أن ترفض الواجهة المبلغ (amount) بحالة 4xx، وهي هنا 422، أيًّا كان المرسِل. وتحقق الصفحة الذاتي (the page's own validation) هو العذر المغري، لكن أي مستدعٍ (caller) يستطيع إرسال أي شيء إلى الواجهة (API)، ولن يفعل إدراج 500 في وثيقة OpenAPI (OpenAPI document) سوى أن يجعل الانهيار (crash) رسميًا."
+    "en": "No client input should produce a 5xx: the API must reject the amount with a 4xx, here 422, whoever sends it. Being over the 25,000.00 maximum is a reason for that 422, never for a crash. The web page's own validation is the tempting excuse, but any caller can send anything to the API, and listing 500 in the OpenAPI document would only make the crash official.",
+    "ar": "لا يجوز أن ينتج أي إدخال من العميل (client input) استجابة (response) 5xx، فيجب أن ترفض الواجهة المبلغ (amount) بحالة 4xx، وهي هنا 422، أيًّا كان المرسِل. وتجاوز الحد الأقصى 25,000.00 سبب لهذه الـ422، لا للانهيار (crash). وتحقق الصفحة الذاتي (the page's own validation) هو العذر المغري، لكن أي مستدعٍ (caller) يستطيع إرسال أي شيء إلى الواجهة (API)، ولن يفعل إدراج 500 في وثيقة OpenAPI (OpenAPI document) سوى أن يجعل الانهيار رسميًا."
    }
   },
   {
@@ -39,22 +39,22 @@
    },
    "o": {
     "en": [
-     "Assert only on what each test owns, such as its own transfer read back by its id",
+     "Assert only on what each test owns, such as the transfer it sends, read back by its id",
      "Allow one CI retry, so a failed run passes the second time and the build stays green",
      "Add a short wait after the send, so the other test's debit has landed before the check",
-     "Set the suite to one worker, so the two tests can never run at the same time"
+     "Assert that the balance fell by at least 250.00, so a parallel debit cannot fail the check"
     ],
     "ar": [
-     "تحقق (assert) فقط مما يملكه كل اختبار (what each test owns)، كحوالته الخاصة (own transfer) المقروءة بمعرّفها (id)",
+     "تحقق (assert) فقط مما يملكه كل اختبار (what each test owns)، كالحوالة التي يرسلها، المقروءة بمعرّفها (id)",
      "اسمح بإعادة محاولة واحدة (one retry) في CI، فينجح التشغيل الفاشل في المرة الثانية ويبقى البناء أخضر (green)",
      "أضف انتظارًا قصيرًا (short wait) بعد الإرسال، فيكون خصم الاختبار الآخر (the other test's debit) قد استقر قبل الفحص",
-     "اضبط مجموعة الاختبارات (test suite) على عامل واحد (one worker)، فلا يعمل الاختباران في اللحظة نفسها أبدًا"
+     "تحقق (assert) من أن الرصيد انخفض بمقدار 250.00 على الأقل (at least)، فلا يفشل الفحص بسبب خصم متوازٍ"
     ]
    },
    "a": 0,
    "why": {
-    "en": "The browser context is fresh but the server's data is shared, so parallel tests sending from the same account change each other's balance; asserting only on what a test owns removes that coupling. A retry or a wait only hides the flakiness, and one worker gives up the speed without fixing the tests.",
-    "ar": "سياق المتصفح (browser context) جديد لكن بيانات الخادم (server's data) مشتركة، فيغيّر اختباران متوازيان (parallel tests) يرسلان من الحساب نفسه رصيد أحدهما الآخر؛ والتحقق مما يملكه الاختبار فقط يزيل هذا الارتباط (coupling). أما إعادة المحاولة (retry) أو الانتظار (wait) فيخفيان عدم استقرار الاختبار (flakiness) فقط، والعامل الواحد (one worker) يضيّع السرعة دون إصلاح الاختبارات."
+    "en": "The browser context is fresh but the server's data is shared, so parallel tests sending from the same account change each other's balance; asserting only on what a test owns removes that coupling. A retry or a wait only hides the flakiness, and asserting \"at least 250.00\" would pass even through a double debit, so it stops testing what the test was written to test.",
+    "ar": "سياق المتصفح (browser context) جديد لكن بيانات الخادم (server's data) مشتركة، فيغيّر اختباران متوازيان (parallel tests) يرسلان من الحساب نفسه رصيد أحدهما الآخر؛ والتحقق مما يملكه الاختبار فقط يزيل هذا الارتباط (coupling). أما إعادة المحاولة (retry) أو الانتظار (wait) فيخفيان عدم استقرار الاختبار (flakiness) فقط، والتحقق من «250.00 على الأقل» كان سينجح حتى مع خصم مزدوج (double debit)، فيتوقف الاختبار عن فحص ما كُتب لفحصه."
    }
   },
   {
@@ -69,20 +69,20 @@
     "en": [
      "They are legitimate constants, like currency codes, so the test should simply skip them",
      "They overflow the layout, so the stretched text was clipped and the brackets were then cut off",
-     "They await a translator, so the catalogue still needs an Arabic entry for each of them",
+     "They are catalogue strings that lack an Arabic entry, so the translator must add one for each",
      "They are hard-coded in the page, not read from the catalogue, so Arabic users see English"
     ],
     "ar": [
      "هما ثابتان مشروعان (legitimate constants) مثل رموز العملات (currency codes)، فيتجاهلهما الاختبار ببساطة (ignore them)",
      "هما يفيضان عن التصميم (overflow the layout)، فاقتُطع النص الممدود (stretched text) وقُطعت الأقواس (brackets)",
-     "هما بانتظار مترجم (await a translator)، فيحتاج الفهرس (catalogue) إلى إدخال عربي (Arabic entry) لكل منهما",
+     "هما نصّان في الفهرس (catalogue) ينقصهما إدخال عربي (Arabic entry)، فعلى المترجم (translator) إضافة إدخال لكل منهما",
      "هما مكتوبان مباشرةً في الصفحة (hard-coded) لا من الفهرس (catalogue)، فيرى مستخدمو العربية (Arabic users) الإنجليزية"
     ]
    },
    "a": 3,
    "why": {
-    "en": "Pseudo-localisation changes only what the catalogue supplies, so plain English means a string hard-coded in the page, which no translator ever sees; only things like currency codes are legitimately constant. Approving the spreadsheet cannot fix text that is not in it.",
-    "ar": "لا يغيّر التوطين الزائف (pseudo-localisation) إلا ما يأتي من الفهرس (catalogue)، فبقاء الإنجليزية كما هي يعني نصًّا مكتوبًا مباشرةً في الصفحة (hard-coded string) لا يراه أي مترجم (translator)؛ وحدها أمور كرموز العملات (currency codes) ثابتة بحق (legitimately constant). واعتماد جدول الترجمة (translation spreadsheet) لا يصلح نصًّا ليس فيه."
+    "en": "Pseudo-localisation changes only what the catalogue supplies, and it wraps a catalogue string whether or not that string has an Arabic entry, so plain English means a string hard-coded in the page, which no translator ever sees; only things like currency codes are legitimately constant. Approving the spreadsheet cannot fix text that is not in it.",
+    "ar": "لا يغيّر التوطين الزائف (pseudo-localisation) إلا ما يأتي من الفهرس (catalogue)، ويلفّ أي نص فيه سواء أكان له إدخال عربي أم لا، فبقاء الإنجليزية كما هي يعني نصًّا مكتوبًا مباشرةً في الصفحة (hard-coded string) لا يراه أي مترجم (translator)؛ وحدها أمور كرموز العملات (currency codes) ثابتة بحق (legitimately constant). واعتماد جدول الترجمة (translation spreadsheet) لا يصلح نصًّا ليس فيه."
    }
   },
   {
@@ -98,19 +98,19 @@
      "Restore the xfail, since a test that unexpectedly passes is unreliable and should not be allowed to block the merge",
      "Remove the xfail once repeated runs pass and the seeded bug still fails it, and note the lock guards one process only",
      "Close the defect as fixed, since a lock around `submit()` removes the check-then-act race on every server that runs the code",
-     "Cut the test to one attempt, since the lock removed the race and keeping 100 attempts now only slows down the whole suite"
+     "Delete the test, since the lock makes the race impossible and the sequential replay test still covers idempotency"
     ],
     "ar": [
      "أعد وضع `xfail`، فالاختبار الذي ينجح فجأة (unexpectedly passes) غير موثوق ولا ينبغي أن يعطّل الدمج (block the merge)",
      "أزل `xfail` بعد أن تنجح تشغيلات متكررة (repeated runs) ويظل العيب المزروع (seeded bug) يُفشله، ودوّن أن القفل يحمي عملية واحدة",
      "أغلق العيب (defect) على أنه مُصلَح، فالقفل حول `submit()` يزيل سباق التحقق ثم التنفيذ (check-then-act race) في كل خادم (server)",
-     "اختصر الاختبار إلى محاولة واحدة (one attempt)، فالقفل أزال السباق (race) ولم تعد 100 محاولة تفعل سوى إبطاء المجموعة (suite)"
+     "احذف الاختبار، فالقفل يجعل السباق (race) مستحيلًا ويكفي اختبار الإعادة المتسلسلة (sequential replay) لتغطية التكرار"
     ]
    },
    "a": 1,
    "why": {
-    "en": "A strict xfail turns the suite red the day the defect is fixed, so removing it is the intended step, provided the test passes repeatedly and still fails with the seeded bug switched on. A lock guards one process while production runs several, so the unique constraint on `(user, key)` is the real fix; closing the defect now would hide that.",
-    "ar": "يحوّل `xfail` الصارم (strict xfail) المجموعة (suite) إلى الأحمر (red) في اليوم الذي يُصلَح فيه العيب (defect)، فإزالته هي الخطوة المقصودة، بشرط أن ينجح الاختبار مرارًا ويظل يفشل عند تفعيل العيب المزروع (seeded bug). والقفل (lock) يحمي عملية واحدة (one process) بينما يشغّل الإنتاج (production) عدة عمليات، فالإصلاح الحقيقي هو القيد الفريد (unique constraint) على `(user, key)`؛ وإغلاق العيب الآن سيخفي ذلك."
+    "en": "A strict xfail turns the suite red the day the defect is fixed, so removing it is the intended step, provided the test passes repeatedly and still fails with the seeded bug switched on. A lock guards one process while production runs several, so the unique constraint on `(user, key)` is the real fix; closing the defect now would hide that. Deleting the test would also lose the only check that sees the race, because the sequential replay test passes with or without it.",
+    "ar": "يحوّل `xfail` الصارم (strict xfail) المجموعة (suite) إلى الأحمر (red) في اليوم الذي يُصلَح فيه العيب (defect)، فإزالته هي الخطوة المقصودة، بشرط أن ينجح الاختبار مرارًا ويظل يفشل عند تفعيل العيب المزروع (seeded bug). والقفل (lock) يحمي عملية واحدة (one process) بينما يشغّل الإنتاج (production) عدة عمليات، فالإصلاح الحقيقي هو القيد الفريد (unique constraint) على `(user, key)`؛ وإغلاق العيب الآن سيخفي ذلك. كما أن حذف الاختبار يفقدنا الفحص الوحيد الذي يرى السباق، لأن اختبار الإعادة المتسلسلة (sequential replay test) ينجح بوجود السباق وبدونه."
    }
   }
  ],

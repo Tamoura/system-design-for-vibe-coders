@@ -149,7 +149,7 @@ def test_strong_the_shape_and_the_rule(client):
 
 مع `NAJM_BUGS=float_fee` ينجح الاختبار الضعيف (the weak test passes) ويظل المخطط يتحقق (the schema still validates) (فـ`"10.81"` سليمة الصيغة (well formed))؛ ويفشل السطر الأخير: `assert '10.81' == '10.82'`. الشكل والقاعدة فحصان مختلفان (Shape and rule are different checks).
 
-**وثيقة OpenAPI بوصفها عقدًا، وأداة Schemathesis (The OpenAPI document as a contract, and Schemathesis).** يَنشر FastAPI الوثيقة `/openapi.json` التي تسرد كل مسار ومعامل واستجابة (lists every path, parameter and response)؛ وتبني عليها العملاء والبوابات (clients and gateways). تولّد أداة **Schemathesis** (المبنية على Hypothesis، الدرس 2.3) طلبات صالحة وغير صالحة منها (generates valid and invalid requests) وتفحص كل استجابة (checks every response). شغّل النظام النموذجي بالأمر `uvicorn najm.api:app --port 8000`، ثم نفّذ:
+**وثيقة OpenAPI بوصفها عقدًا، وأداة Schemathesis (The OpenAPI document as a contract, and Schemathesis).** يَنشر FastAPI الوثيقة `/openapi.json` التي تسرد كل مسار ومعامل واستجابة (lists every path, parameter and response)؛ وتبني عليها العملاء والبوابات (clients and gateways). تولّد أداة **Schemathesis** (المبنية على Hypothesis (built on Hypothesis)، الدرس 2.3) طلبات صالحة وغير صالحة منها (generates valid and invalid requests) وتفحص كل استجابة (checks every response). شغّل النظام النموذجي بالأمر `uvicorn najm.api:app --port 8000`، ثم نفّذ:
 
 ```bash
 schemathesis run http://127.0.0.1:8000/openapi.json --checks all --max-examples 50 --seed 1 \
@@ -166,7 +166,7 @@ Undocumented HTTP status code (documented: 200, 422). Received:
 API rejected schema-compliant request: 422 decimal_parsing on "amount"
 ```
 
-كل سطر قرار (Each line is a decision). تقول الوثيقة 200 و422، لكن الشيفرة تجيب أيضًا بـ 201 و400 و401 و403 و404 و409. وهي تصف `amount` بأنه «رقم أو سلسلة نصية» ("a number or a string")، ومع ذلك يُرفض `"abc"`. ويظهر شكل خطأ ثالث (A third error shape appears). لا تستطيع Schemathesis أن تجد *قاعدة* خاطئة (a wrong rule): فقد بنى FastAPI الوثيقة من الشيفرة (built the document from the code).
+كل سطر قرار (Each line is a decision). تقول الوثيقة (the document) 200 و422، لكن الشيفرة (the code) تجيب أيضًا (also answers) بـ 201 و400 و401 و403 و404 و409. وهي تصف `amount` بأنه «رقم أو سلسلة نصية» ("a number or a string")، ومع ذلك يُرفض `"abc"` (yet it is refused). ويظهر شكل خطأ ثالث (A third error shape appears). لا تستطيع Schemathesis أن تجد *قاعدة* خاطئة (a wrong rule): فقد بنى FastAPI الوثيقة من الشيفرة (built the document from the code).
 
 فاتت الجولة الأولى خطأ 500 (The first pass missed the 500): فمعرّفات الحسابات العشوائية (random account ids) توقفت عند `403 not_owner` قبل أي فحص للمبلغ (any amount check). يُبقي ملف الخطافات (A hooks file) بقية الحقول صالحة (keeps the other fields valid) فيُختبر المبلغ، ويعطي كل استدعاء مفتاحًا جديدًا (a fresh key) فلا توقف أخطاء 409 التشغيل. احفظه بجانب `najm/`، وضع `SCHEMATHESIS_HOOKS=najm_hooks` قبل الأمر نفسه، واحذف منه ترويسة `Idempotency-Key` (فهي تتجاوز ما في الخطاف، it overrides the hook's):
 
@@ -227,7 +227,7 @@ FAILED test_absurd_amounts_are_rejected_not_crashed[1e+30]     (same)
 
 ثلاثة من الأسباب الخمسة تستخدم شكل الإطار (Three of five causes use the framework's shape). والخيار `raise_server_exceptions=False` مهم: فبشكل افتراضي يعيد عميل الاختبار (the test client) رفع الانهيار على هيئة استثناء (re-raises a crash as an exception)، مخفيًا الخطأ 500 الذي يراه العملاء (hiding the 500 customers see).
 
-**401 و403 وترتيب الفحوص (401, 403 and the order of checks).** يعني **401** «لا أعرف من أنت» ("I do not know who you are")، وقد يحلّه تسجيل الدخول (signing in can fix it). ويعني **403** «أعرفك، والجواب لا» ("I know, and the answer is no")؛ والتطبيق الذي يعامله على أنه «انتهت الجلسة» ("session expired") يُخرج العملاء بلا داعٍ (logs customers out for nothing). ترتيب الفحوص جزء من العقد (The order of checks is part of the contract). يتحقق النظام النموذجي من المحتوى (validates the body) (422، شكل الإطار)، ثم الرمز (the token) (401)، ثم مفتاح خاصية عدم التكرار (idempotency key) (400)، ثم الملكية (ownership) (403)، ثم قواعد العمل (business rules) (422، شكل البنك)، فيحصل الطلب بلا رمز وبمحتوى فارغ على 422 لا 401. و**BOLA** (كسر التفويض على مستوى الكائن، broken object-level authorisation) هو الوصول إلى كائن مستخدم آخر بتغيير معرّف (reaching another user's object by changing an id). والاختبار الضعيف، وهو قراءة أليس (Alice) تحويلها هي، ينجح والعيب مفعّل (passes with the bug on). أما الاختبار القوي ففيه بوب (Bob) هو من يطلب (has Bob ask):
+**401 و403 وترتيب الفحوص (401, 403 and the order of checks).** يعني **401** «لا أعرف من أنت» ("I do not know who you are")، وقد يحلّه تسجيل الدخول (signing in can fix it). ويعني **403** «أعرفك، والجواب لا» ("I know, and the answer is no")؛ والتطبيق الذي يعامله على أنه «انتهت الجلسة» ("session expired") يُخرج العملاء بلا داعٍ (logs customers out for nothing). ترتيب الفحوص جزء من العقد (The order of checks is part of the contract). يتحقق النظام النموذجي (The sample) من المحتوى (validates the body) (422، شكل الإطار)، ثم الرمز (the token) (401)، ثم مفتاح خاصية عدم التكرار (idempotency key) (400)، ثم الملكية (ownership) (403)، ثم قواعد العمل (business rules) (422، شكل البنك)، فيحصل الطلب بلا رمز (no token) وبمحتوى فارغ (an empty body) على 422 لا 401. و**BOLA** (كسر التفويض على مستوى الكائن، broken object-level authorisation) هو الوصول إلى كائن مستخدم آخر بتغيير معرّف (reaching another user's object by changing an id). والاختبار الضعيف، وهو قراءة أليس (Alice) تحويلها هي، ينجح والعيب مفعّل (passes with the bug on). أما الاختبار القوي ففيه بوب (Bob) هو من يطلب (has Bob ask):
 
 ```python
 # tests/test_api_security.py
@@ -373,7 +373,7 @@ newman run najm.postman_collection.json -e local.postman_environment.json --repo
 
 </details>
 
-**2. بعد انتهاء مهلة الجلسة (After a session timeout)، يُخرج تطبيق نجم العملاء كلما أجابت واجهة البرمجة بـ 403. أي عبارة عن 401 و403 صحيحة؟**
+**2. بعد انتهاء مهلة الجلسة (After a session timeout)، يُخرج تطبيق نجم (Najm app) العملاء (logs customers out) كلما أجابت واجهة البرمجة (the API) بـ 403. أي عبارة عن 401 و403 صحيحة؟**
 
 - A. 401 تعني معروف لكن مرفوض (known but refused)؛ و403 تعني مجهول (unknown)
 - B. كلتاهما تعنيان «غير مسجّل الدخول» ("not signed in")، فيجوز للتطبيقات معاملتهما سواء
@@ -382,11 +382,11 @@ newman run najm.postman_collection.json -e local.postman_environment.json --repo
 
 <details><summary>الإجابة</summary>
 
-**C.** مع 401 لا يعرفك الخادم (does not know you)، فيفيد تسجيل الدخول؛ ومع 403 يعرفك، والجواب لا. (🟡 التعمق أكثر، Going deeper.)
+**C.** مع 401 لا يعرفك الخادم (does not know you)، فيفيد تسجيل الدخول (signing in helps)؛ ومع 403 يعرفك (it does)، والجواب لا (and the answer is no). (🟡 التعمق أكثر، Going deeper.)
 
 </details>
 
-**3. مع تفعيل `NAJM_BUGS=bola`، ينشئ اختبار ندى (Nada) تحويلًا بصفة أليس (Alice) ويقرأه بصفة أليس. ينجح. ماذا يُظهر ذلك؟**
+**3. مع تفعيل `NAJM_BUGS=bola`، ينشئ اختبار (test) ندى (Nada) تحويلًا (a transfer) بصفة أليس (Alice) ويقرأه بصفة أليس. ينجح (It passes). ماذا يُظهر ذلك؟**
 
 - A. أن العيب المزروع ليس في الشيفرة (The seeded bug is not in the code)
 - B. لا شيء عن التفويض على مستوى الكائن (Nothing about object-level authorisation)
@@ -395,7 +395,7 @@ newman run najm.postman_collection.json -e local.postman_environment.json --repo
 
 <details><summary>الإجابة</summary>
 
-**B.** قراءة أليس تحويلها هي صحيحة مع العيب ودونه (true with and without the bug)؛ وحده طلب بوب (Bob) يستطيع أن يفشل. (🟡 التعمق أكثر، Going deeper.)
+**B.** قراءة أليس تحويلها هي صحيحة مع العيب ودونه (true with and without the bug)؛ وحده طلب بوب (Bob) يستطيع أن يفشل (only Bob requesting it can fail). (🟡 التعمق أكثر، Going deeper.)
 
 </details>
 
@@ -408,7 +408,7 @@ newman run najm.postman_collection.json -e local.postman_environment.json --repo
 
 <details><summary>الإجابة</summary>
 
-**A.** وحده اختبار متزامن متكرر يفحص الرصيد يستطيع رؤية حالة التسابق (a race)؛ وفترة الانتظار تزيل التداخل (a sleep removes the overlap). (🔴 نظرة الخبير، Expert view.)
+**A.** وحده اختبار متزامن متكرر (a repeated concurrent test) يفحص الرصيد (that checks the balance) يستطيع رؤية حالة التسابق (a race)؛ وفترة الانتظار تزيل التداخل (a sleep removes the overlap). (🔴 نظرة الخبير، Expert view.)
 
 </details>
 
@@ -421,7 +421,7 @@ newman run najm.postman_collection.json -e local.postman_environment.json --repo
 
 <details><summary>الإجابة</summary>
 
-**D.** الرمز 403 صحيح؛ والوثيقة لا تخبر العملاء بما يتوقعونه (does not tell clients what to expect). ومطابقة واجهة البرمجة لها ستحذف قاعدة حقيقية (would delete a real rule). (🟡 التعمق أكثر، Going deeper.)
+**D.** الرمز 403 صحيح (is right)؛ والوثيقة (the document) لا تخبر العملاء بما يتوقعونه (does not tell clients what to expect). ومطابقة واجهة البرمجة لها ستحذف قاعدة حقيقية (would delete a real rule). (🟡 التعمق أكثر، Going deeper.)
 
 </details>
 
@@ -455,7 +455,7 @@ newman run najm.postman_collection.json -e local.postman_environment.json --repo
 
 **متى تستخدم الاختبار الشامل (When to use E2E).** استخدمه لـ**قلة من الرحلات الحرجة (a few critical journeys)** (تسجيل الدخول، وإرسال تحويل، وعرض رصيد: sign in, send a transfer, view a balance) ولما لا يُظهره إلا المتصفح: العرض (rendering) والنقرات (clicks) والتركيز (focus) والتوقيت الحقيقي (real timing). ولا تستخدمه للقواعد: رسم 3,090.00 QAR مكانه اختبار وحدة (a unit test) (الدرس 2.1) أو اختبار واجهة برمجة (an API test) (الدرس 3.1)، وهما يعملان في أجزاء من الثانية (milliseconds) ويفشلان بسبب واضح (fail with a clear cause).
 
-**بنية Playwright (Playwright's architecture).** مشغّل الاختبارات (The test runner) عملية Node.js (a Node.js process). وهو يتحكم في متصفح (Chromium أو Firefox أو WebKit) يستضيف عدة **سياقات متصفح (browser contexts)**: ملفات تعريف معزولة (isolated profiles) لكل منها ملفات ارتباطه وتخزينه الخاصة (their own cookies and storage)، وإنشاؤها رخيص (cheap to create). يحصل كل اختبار على سياق وصفحة جديدين، فلا تتسرب الحالة بين الاختبارات (tests do not leak state into each other).
+**بنية Playwright (Playwright's architecture).** مشغّل الاختبارات (The test runner) عملية Node.js (a Node.js process). وهو يتحكم في متصفح (Chromium, Firefox or WebKit) يستضيف عدة **سياقات متصفح (browser contexts)**: ملفات تعريف معزولة (isolated profiles) لكل منها ملفات ارتباطه وتخزينه الخاصة (their own cookies and storage)، وإنشاؤها رخيص (cheap to create). يحصل كل اختبار على سياق وصفحة جديدين، فلا تتسرب الحالة بين الاختبارات (tests do not leak state into each other).
 
 ```mermaid
 flowchart LR
@@ -558,7 +558,7 @@ test('weak: position, sleep and a single read', async ({ page }) => {    // MEAN
 
 ### 🟡 التعمق أكثر (Going deeper)
 
-**العزل والتجهيزات وحالة التخزين (Isolation, fixtures and storage state).** يجب أن ينجح كل اختبار وحده ومتوازيًا (alone and in parallel). السياق جديد، لكن *بيانات الخادم* مشتركة (the server's data is shared): اختباران متوازيان يرسلان من `acc-1` يغيّر كل منهما رصيد الآخر، فأعطِ كل اختبار بياناته الخاصة (give each test its own data). **سجّل الدخول عبر واجهة البرمجة مرة واحدة، لا عبر شاشة الدخول في كل اختبار (Log in through the API once, not through the login screen in every test)**: يسجّل **مشروع إعداد (setup project)** الدخول، ويحفظ حالة المتصفح (ملفات تعريف الارتباط والتخزين المحلي، cookies and local storage) في ملف، وتبدأ المشاريع الأخرى منه. احتفظ باختبار دخول واحد عبر الواجهة لرحلة الدخول نفسها (one UI login test for the login journey itself). لا تحتوي صفحة النظام النموذجي على شاشة دخول، فهذا الإعداد ينوب عن واحدة (this setup stands in for one).
+**العزل والتجهيزات وحالة التخزين (Isolation, fixtures and storage state).** يجب أن ينجح كل اختبار وحده ومتوازيًا (alone and in parallel). السياق جديد (The context is fresh)، لكن *بيانات الخادم* مشتركة (the server's data is shared): اختباران متوازيان يرسلان من `acc-1` يغيّر كل منهما رصيد الآخر، فأعطِ كل اختبار بياناته الخاصة (give each test its own data). **سجّل الدخول عبر واجهة البرمجة مرة واحدة، لا عبر شاشة الدخول في كل اختبار (Log in through the API once, not through the login screen in every test)**: يسجّل **مشروع إعداد (setup project)** الدخول، ويحفظ حالة المتصفح (ملفات تعريف الارتباط والتخزين المحلي، cookies and local storage) في ملف، وتبدأ المشاريع الأخرى منه. احتفظ باختبار دخول واحد عبر الواجهة لرحلة الدخول نفسها (one UI login test for the login journey itself). لا تحتوي صفحة النظام النموذجي على شاشة دخول، فهذا الإعداد ينوب عن واحدة (this setup stands in for one).
 
 ```typescript
 // e2e/auth.setup.ts
@@ -758,11 +758,11 @@ for (const [name, url] of [['English', '/app'], ['Arabic', '/app?lang=ar']] as c
 
 <details><summary>الإجابة</summary>
 
-**B.** وحده المتصفح يستطيع أن ينقر مرتين ويرى ما ترسله الصفحة؛ أما A وC وD فقواعد يفحصها اختبار وحدة أو واجهة برمجة أسرع (a unit or API test checks faster). (🟢 الأساسيات، The essentials.)
+**B.** وحده المتصفح (Only a browser) يستطيع أن ينقر مرتين ويرى ما ترسله الصفحة (see what the page sends)؛ أما A وC وD فقواعد (rules) يفحصها اختبار وحدة أو واجهة برمجة أسرع (a unit or API test checks faster). (🟢 الأساسيات، The essentials.)
 
 </details>
 
-**2. يكتب اختبار في `page.locator('input').nth(1)`. يضيف فريق (a squad) حقلًا فوقه فيفشل الاختبار. ما أفضل إصلاح؟**
+**2. يكتب اختبار في `page.locator('input').nth(1)`. يضيف فريق (a squad) حقلًا فوقه (a field above it) فيفشل الاختبار. ما أفضل إصلاح؟**
 
 - A. إضافة نوم قبل الكتابة (Add a sleep before typing)
 - B. تغيير الفهرس إلى 2 (Change the index to 2)
@@ -775,7 +775,7 @@ for (const [name, url] of [['English', '/app'], ['Arabic', '/app?lang=ar']] as c
 
 </details>
 
-**3. ينقر اختبار Send، ثم ينتظر 500 ms، ثم يقرأ النتيجة مرة واحدة. ينجح محليًا ويفشل في التكامل المستمر. ما السبب الجذري (root cause)؟**
+**3. ينقر اختبار Send، ثم ينتظر 500 ms (waits)، ثم يقرأ النتيجة مرة واحدة (reads the result once). ينجح محليًا (passes locally) ويفشل في التكامل المستمر (fails in CI). ما السبب الجذري (root cause)؟**
 
 - A. التكامل المستمر يشغّل محرك متصفح مختلفًا (CI runs a different browser engine)
 - B. الاختبارات تحتاج إلى مهلة عامة أطول (Tests need a longer global timeout)
@@ -801,7 +801,7 @@ for (const [name, url] of [['English', '/app'], ['Arabic', '/app?lang=ar']] as c
 
 </details>
 
-**5. ينجح اختبار لقطة شاشة (screenshot test) على جهاز Mac لمطوّر ويفشل في التكامل المستمر على Linux بفروق بكسل صغيرة. ماذا ينبغي للفريق أن يفعل؟**
+**5. ينجح اختبار لقطة شاشة (screenshot test) على جهاز Mac لمطوّر (a developer's Mac) ويفشل في التكامل المستمر على Linux (in Linux CI) بفروق بكسل صغيرة (tiny pixel differences). ماذا ينبغي للفريق أن يفعل؟**
 
 - A. رفع تسامح البكسل حتى ينجح (Raise the pixel tolerance until it passes)
 - B. حذف صورة الأساس وترك التكامل المستمر يعيد إنشاءها (Delete the baseline and let CI recreate it)
@@ -848,7 +848,7 @@ for (const [name, url] of [['English', '/app'], ['Arabic', '/app?lang=ar']] as c
 |---|---|---|---|
 | اختبارات وحدة المنطق (Logic unit tests) | شيفرة الرسوم والتقريب والتحقق (Fee, rounding and validation code) | حاسوب محمول، في أجزاء من الثانية (A laptop, in milliseconds) | كل قاعدة (Every rule) (الدرس 2.1) |
 | اختبارات الواجهة الأصلية (Native UI tests) | **Espresso** (Android)، **XCUITest** (iOS) | محاكٍ أو جهاز (Emulator, simulator or device) | شاشة واحدة في كل مرة (One screen at a time) |
-| الرحلات (Journeys) | **Appium** (WebDriver، بأي لغة، any language)، **Maestro** (تدفقات YAML، YAML flows)، **Detox** (React Native) | محاكيات، وقليل من الأجهزة الحقيقية (Emulators, a few real devices) | خمس أو ست رحلات حرجة (Five or six critical journeys) |
+| الرحلات (Journeys) | **Appium** (WebDriver, any language)، **Maestro** (YAML flows)، **Detox** (React Native) | محاكيات، وقليل من الأجهزة الحقيقية (Emulators, a few real devices) | خمس أو ست رحلات حرجة (Five or six critical journeys) |
 
 يُقرأ تدفق Maestro كأنه الرحلة نفسها (A Maestro flow reads like the journey) (رسم تخطيطي، والمعرّف وهمي: a sketch; the app id is fictional):
 
@@ -862,7 +862,7 @@ appId: bank.najm.mobile
 - assertVisible: "Transfer sent"
 ```
 
-**المحاكيات والأجهزة الحقيقية وسحابات الأجهزة (Emulators, real devices, device clouds).** المحاكيات (Emulators وsimulators) سريعة ومجانية وقابلة للبرمجة (fast, free and scriptable): استخدمها للمنطق والتخطيط ومعظم الرحلات (logic, layout and most journeys). وتُظهر الأجهزة الحقيقية (Real devices) القياسات الحيوية والإشعارات والراديوهات والبطارية وواجهات الشركات المصنِّعة والأداء الحقيقي (biometrics, push, radios, battery, manufacturer skins and true performance). و**سحابات الأجهزة (Device clouds)** (BrowserStack وSauce Labs وFirebase Test Lab وAWS Device Farm) تؤجّرها؛ توقّع طوابير وتكلفة (expect queues and cost)، واستخدم حسابات اختبار (test accounts)، ولا تستخدم بيانات العملاء أبدًا (never customer data).
+**المحاكيات والأجهزة الحقيقية وسحابات الأجهزة (Emulators, real devices, device clouds).** المحاكيات (Emulators and simulators) سريعة ومجانية وقابلة للبرمجة (fast, free and scriptable): استخدمها للمنطق والتخطيط ومعظم الرحلات (logic, layout and most journeys). وتُظهر الأجهزة الحقيقية (Real devices) القياسات الحيوية والإشعارات والراديوهات والبطارية وواجهات الشركات المصنِّعة والأداء الحقيقي (biometrics, push, radios, battery, manufacturer skins and true performance). و**سحابات الأجهزة (Device clouds)** (BrowserStack, Sauce Labs, Firebase Test Lab, AWS Device Farm) تؤجّرها؛ توقّع طوابير وتكلفة (expect queues and cost)، واستخدم حسابات اختبار (test accounts)، ولا تستخدم بيانات العملاء أبدًا (never customer data).
 
 **مخاطر خاصة بالهاتف (Mobile-specific risks).** كل صف فكرة اختبار (Each row is a test idea)؛ وصفوف المال تحتاج إلى فحوص خاصية عدم التكرار في الدرس 3.1 (money rows need the idempotency checks of lesson 3.1).
 
@@ -1090,7 +1090,7 @@ print(f"{len(every)} combinations, {len(chosen)} pairwise cases")
 |---|---|---|
 | **Appium and Maestro** | أتمتة عبر المنصات: شيفرة WebDriver وتدفقات YAML (Cross-platform automation: WebDriver code, and YAML flows) | بضع رحلات حرجة، على المحاكيات والأجهزة الحقيقية (A few critical journeys, on emulators and real devices) |
 | **Espresso and XCUITest** | أطر اختبار واجهة أصلية لـ Android وiOS (Native UI test frameworks for Android and iOS) | اختبارات على مستوى الشاشة بخطافات التطبيق نفسه (Screen-level tests using the app's own hooks) |
-| **Device clouds** — سحابات الأجهزة | أجهزة حقيقية مؤجَّرة (Rented real devices) (BrowserStack وSauce Labs وFirebase Test Lab) | اتساع التغطية عبر إصدارات النظام والمصنِّعين (Breadth across OS versions and makers) |
+| **Device clouds** — سحابات الأجهزة | أجهزة حقيقية مؤجَّرة (Rented real devices) (BrowserStack, Sauce Labs, Firebase Test Lab) | اتساع التغطية عبر إصدارات النظام والمصنِّعين (Breadth across OS versions and makers) |
 | **axe-core** | محرك قواعد لمشكلات إمكانية الوصول التي تُفحص بقواعد (A rule engine for rule-checkable accessibility problems) | بوابة آلية، لا التدقيق كله أبدًا (An automated gate, never the whole audit) |
 | **Screen readers** — قارئات الشاشة | NVDA وVoiceOver وTalkBack تقرأ الواجهة بصوت مسموع (read the interface aloud) | فحوص يدوية للأسماء والإعلانات (Manual checks of names and announcements) |
 | **Pseudo-localisation** — التوطين الزائف | نص أطول محاط بأقواس بدل الكتالوج (Longer, bracketed text in place of the catalogue) | إيجاد السلاسل المكتوبة داخل الشيفرة والنص المقصوص مبكرًا (Finding hard-coded strings and clipped text early) |
@@ -1171,7 +1171,7 @@ print(f"{len(every)} combinations, {len(chosen)} pairwise cases")
 
 </details>
 
-**4. يشحن مترجم رسائل جمع عربية لـ `one` و`other` فقط. أي فحص يلتقط الفجوة مهما كانت الأعداد التي يعرضها التطبيق؟**
+**4. يشحن مترجم (A translator ships) رسائل جمع عربية (Arabic plural messages) لـ `one` و`other` فقط. أي فحص يلتقط الفجوة (the gap) مهما كانت الأعداد (counts) التي يعرضها التطبيق؟**
 
 - A. التأكيد بأن الكتالوج فيه رسالة لكل فئة في `Intl.PluralRules` (Assert the catalogue has a message for every Intl.PluralRules category)
 - B. اختبار الأعداد 1 و5 و100، التي تغطي المفرد والجمع في الإنجليزية (Test the counts 1, 5 and 100, which cover singular and plural in English)
@@ -1184,7 +1184,7 @@ print(f"{len(every)} combinations, {len(chosen)} pairwise cases")
 
 </details>
 
-**5. يدعم نجم 4 منصات ولغتين وحجمي نص و3 شبكات، ولا يستطيع تشغيل كل التوليفات الـ48 (combinations). ما أفضل طريقة للاختيار؟**
+**5. يدعم نجم 4 منصات (platforms) ولغتين (languages) وحجمي نص (text sizes) و3 شبكات (networks)، ولا يستطيع تشغيل كل التوليفات الـ48 (combinations). ما أفضل طريقة للاختيار؟**
 
 - A. اختيار 12 توليفة عشوائية في كل إصدار (Pick a random 12 combinations at each release)
 - B. استخدام التحليلات للقيم، ثم الاختبار الزوجي (Use analytics for the values, then pairwise)

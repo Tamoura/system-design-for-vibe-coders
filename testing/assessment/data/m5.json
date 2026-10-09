@@ -11,22 +11,22 @@
    },
    "o": {
     "en": [
-     "Spread the hours evenly over every area, so that no area is left untested",
-     "Put the hours where a defect is likeliest and would hurt most if it escaped",
-     "Begin with the areas that are quickest to automate, so as to run the most tests",
-     "Follow the order of the requirements document, so that nothing is skipped"
+     "Put the hours where past releases logged the most defects, whatever each one would cost them",
+     "Put the hours where a defect is likeliest and would hurt customers most if it escaped",
+     "Put the hours only where the most money moves, however unlikely a defect is there",
+     "Spread the hours evenly over every area, so that no area is left untested"
     ],
     "ar": [
-     "توزيع الساعات بالتساوي (evenly) على كل منطقة (every area)، حتى لا تبقى منطقة دون اختبار (untested)",
-     "وضع الساعات حيث يكون العيب (defect) أرجح (likeliest) وأشد ضررًا (hurt most) إن أفلت (escaped)",
-     "البدء بالمناطق الأسرع أتمتةً (quickest to automate) لتشغيل أكبر عدد من الاختبارات (most tests)",
-     "اتباع ترتيب وثيقة المتطلبات (requirements document) حتى لا يُغفَل شيء (nothing is skipped)"
+     "وضع الساعات حيث سجّلت الإصدارات السابقة (past releases) أكثر العيوب (defects)، مهما بلغت كلفة كل منها (whatever each would cost)",
+     "وضع الساعات حيث يكون العيب (defect) أرجح (likeliest) وأشد ضررًا (hurt most) على العملاء إن أفلت (escaped)",
+     "وضع الساعات فقط حيث يتحرك أكبر قدر من المال (most money moves)، مهما قلّ احتمال وجود عيب (however unlikely) هناك",
+     "توزيع الساعات بالتساوي (evenly) على كل منطقة (every area)، حتى لا تبقى منطقة دون اختبار (untested)"
     ]
    },
    "a": 1,
    "why": {
-    "en": "Risk = likelihood × impact, so effort goes where failure is most probable and most costly: duplicate submit earns a deep suite and the statement layout a smoke check. An even spread feels fair, but it gives the statement layout the same effort as duplicate submit.",
-    "ar": "المخاطرة = الاحتمال × الأثر (risk = likelihood × impact)، فيذهب الجهد إلى حيث يكون الفشل (failure) أرجح وأكثر كلفة: يستحق تكرار الإرسال (duplicate submit) مجموعة اختبارات عميقة (deep suite) ويكفي لتخطيط كشف الحساب (statement layout) فحص دخان (smoke check). أما التوزيع المتساوي (even spread) فيبدو عادلًا، لكنه يمنح تخطيط كشف الحساب جهدًا مساويًا لتكرار الإرسال."
+    "en": "Risk = likelihood × impact, so effort goes where failure is most probable and most costly: duplicate submit earns a deep suite and the statement layout a smoke check. Past defect counts see only likelihood, a money-only rule sees only impact, and an even spread gives the statement layout the same effort as duplicate submit.",
+    "ar": "المخاطرة = الاحتمال × الأثر (risk = likelihood × impact)، فيذهب الجهد إلى حيث يكون الفشل (failure) أرجح وأكثر كلفة: يستحق تكرار الإرسال (duplicate submit) مجموعة اختبارات عميقة (deep suite) ويكفي لتخطيط كشف الحساب (statement layout) فحص دخان (smoke check). أما عدد العيوب السابقة (past defect counts) فيرى الاحتمال وحده، وقاعدة المال وحده (money-only rule) ترى الأثر وحده، والتوزيع المتساوي (even spread) يمنح تخطيط كشف الحساب جهدًا مساويًا لتكرار الإرسال."
    }
   },
   {
@@ -34,8 +34,8 @@
    "level": 2,
    "lesson": "5.2",
    "q": {
-    "en": "Hamad's squad adds a kill switch, the flag `international-transfers`, to the international transfer feature, which is already live. The flag service is sometimes unreachable. What should the code and its tests do?",
-    "ar": "يضيف فريق حمد (Hamad's squad) مفتاح إيقاف طارئ (kill switch) إلى ميزة التحويل الدولي (international transfer) الحيّة بالفعل (already live)، وهو مفتاح الميزة (feature flag) `international-transfers`. ولا يمكن الوصول إلى خدمة المفاتيح (flag service) أحيانًا (sometimes unreachable). ماذا ينبغي أن تفعل الشيفرة واختباراتها؟"
+    "en": "Hamad's squad adds a kill switch, the flag `international-transfers`, to the international transfer feature, which is already live and used by customers every day. The flag service is sometimes unreachable, and an outage must not take the feature away from those customers. What should the code and its tests do?",
+    "ar": "يضيف فريق حمد (Hamad's squad) مفتاح إيقاف طارئ (kill switch) إلى ميزة التحويل الدولي (international transfer) الحيّة بالفعل (already live) ويستخدمها العملاء كل يوم، وهو مفتاح الميزة (feature flag) `international-transfers`. ولا يمكن الوصول إلى خدمة المفاتيح (flag service) أحيانًا (sometimes unreachable)، ويجب ألا يحرم الانقطاع (outage) هؤلاء العملاء من الميزة. ماذا ينبغي أن تفعل الشيفرة واختباراتها؟"
    },
    "o": {
     "en": [
@@ -53,8 +53,8 @@
    },
    "a": 3,
    "why": {
-    "en": "A kill switch on a live feature must default to on, so a flag-service outage does not switch off what customers use, and both states plus a provider that knows nothing need tests. Defaulting to off looks safe but turns every outage into a transfer outage, and testing only on skips the path you roll back to.",
-    "ar": "يجب أن تكون القيمة الافتراضية (default) لمفتاح الإيقاف الطارئ (kill switch) في ميزة حيّة (live feature) «مفعَّل» (on)، حتى لا يُطفئ انقطاع خدمة المفاتيح (flag service outage) ما يستخدمه العملاء، وتلزم اختبارات للحالتين (both states) وللمزوِّد الذي لا يعرف شيئًا (provider that knows nothing). أما الافتراضي «معطَّل» (off) فيبدو آمنًا (safe) لكنه يحوّل كل انقطاع إلى انقطاع في التحويلات (transfer outage)، واختبار حالة التفعيل وحدها (only on) يتجاهل المسار الذي يُرجَع إليه عند التراجع (rollback)."
+    "en": "A kill switch on a live feature must default to on, the value you can live with when the flag service is down, so an outage does not switch off what customers use; both states plus a provider that knows nothing need tests. Defaulting to off or raising an error looks safe or loud but turns every outage into a transfer outage, and testing only on skips the path you roll back to.",
+    "ar": "يجب أن تكون القيمة الافتراضية (default) لمفتاح الإيقاف الطارئ (kill switch) في ميزة حيّة (live feature) «مفعَّل» (on)، وهي القيمة التي تستطيع التعايش معها حين تتعطل خدمة المفاتيح (flag service)، حتى لا يُطفئ الانقطاع (outage) ما يستخدمه العملاء، وتلزم اختبارات للحالتين (both states) وللمزوِّد الذي لا يعرف شيئًا (provider that knows nothing). أما الافتراضي «معطَّل» (off) أو رفع الخطأ (raising an error) فيبدوان آمنين أو ظاهرين (loud) لكنهما يحوّلان كل انقطاع إلى انقطاع في التحويلات (transfer outage)، واختبار حالة التفعيل وحدها (only on) يتجاهل المسار الذي يُرجَع إليه عند التراجع (rollback)."
    }
   },
   {
@@ -62,27 +62,27 @@
    "level": 2,
    "lesson": "5.3",
    "q": {
-    "en": "A transfer sent just after the 15:00 cut-off got the wrong value date in production. Amal gives Nada one 90-minute session on the cut-off. Which charter is best?",
-    "ar": "حصل تحويل أُرسل مباشرةً بعد وقت الإغلاق (cut-off) عند الساعة 15:00 على تاريخ قيمة (value date) خاطئ في الإنتاج (production). تمنح أمل ندى جلسة واحدة مدتها 90 دقيقة (90-minute session) لوقت الإغلاق. أي ميثاق جلسة (charter) هو الأفضل؟"
+    "en": "A transfer sent just after the 15:00 cut-off got the wrong value date in production. Amal gives Nada one 90-minute session on the cut-off. All four options are written as charters. Which is best for that session?",
+    "ar": "حصل تحويل أُرسل مباشرةً بعد وقت الإغلاق (cut-off) عند الساعة 15:00 على تاريخ قيمة (value date) خاطئ في الإنتاج (production). تمنح أمل ندى جلسة واحدة مدتها 90 دقيقة (90-minute session) لوقت الإغلاق. الخيارات الأربعة كلها مكتوبة على هيئة ميثاق جلسة (charter). أيها الأفضل لهذه الجلسة؟"
    },
    "o": {
     "en": [
-     "Explore transfers sent around 15:00 on several days to discover how value dates are assigned",
-     "Test the transfer page for 90 minutes and then report to the team whatever looks wrong to you",
-     "Re-run the saved cut-off scenarios with new data to confirm that each one still passes today",
-     "Explore the whole Najm Mobile app on every device to discover any defect before the release"
+     "Explore the cut-off with transfers sent either side of 15:00 on several days to discover how value dates are assigned",
+     "Explore the daily limit with totals just under and just over 50,000.00 QAR to discover which sums the checks accept and refuse",
+     "Explore the saved cut-off scenarios with fresh data to confirm that each one still passes today, one by one",
+     "Explore the whole Najm Mobile app with every device and network to discover any defect before the release"
     ],
     "ar": [
-     "استكشاف (explore) تحويلات مُرسلة حول الساعة 15:00 في عدة أيام (several days) لاكتشاف كيفية تحديد تاريخ القيمة (value date)",
-     "اختبار صفحة التحويل (transfer page) مدة 90 دقيقة (90 minutes) ثم إبلاغ الفريق بكل ما يبدو خاطئًا (looks wrong)",
-     "إعادة تشغيل سيناريوهات وقت الإغلاق المحفوظة (saved scenarios) ببيانات جديدة (new data) للتأكد من أنها ما زالت تنجح (still passes)",
-     "استكشاف (explore) تطبيق نجم للهاتف (Najm Mobile) كله على كل جهاز (every device) لاكتشاف أي عيب (defect) قبل الإصدار"
+     "استكشاف (explore) وقت الإغلاق (cut-off) بتحويلات مُرسلة على جانبي الساعة 15:00 في عدة أيام (several days) لاكتشاف كيفية تحديد تاريخ القيمة (value date)",
+     "استكشاف (explore) الحد اليومي (daily limit) بمجاميع أقل بقليل وأكثر بقليل من 50,000.00 QAR لاكتشاف المجاميع التي تقبلها الفحوص (checks)",
+     "استكشاف (explore) سيناريوهات وقت الإغلاق المحفوظة (saved scenarios) ببيانات جديدة (fresh data) للتأكد من أنها ما زالت تنجح (still passes) واحدًا واحدًا",
+     "استكشاف (explore) تطبيق نجم للهاتف (Najm Mobile) كله على كل جهاز وشبكة (every device and network) لاكتشاف أي عيب (defect) قبل الإصدار"
     ]
    },
    "a": 0,
    "why": {
-    "en": "A charter states a mission, Explore X with Y to discover Z, narrow enough for one time-boxed session, and this one targets the incident's risk. Re-running saved scenarios is scripted testing that cannot find what nobody thought to script, and \"test the transfer page\" names no mission.",
-    "ar": "يحدد ميثاق الجلسة (charter) مهمة على صيغة «استكشف X باستخدام Y لتكتشف Z» (Explore X with Y to discover Z)، ضيقة بما يكفي لجلسة واحدة محددة المدة (time-boxed session)، وهذا الميثاق يستهدف خطر الحادثة (incident). أما إعادة تشغيل السيناريوهات المحفوظة (saved scenarios) فاختبار مكتوب مسبقًا (scripted testing) لا يجد ما لم يخطر ببال أحد أن يكتبه، وعبارة «اختبر صفحة التحويل» (test the transfer page) لا تحدد مهمة (names no mission)."
+    "en": "A charter states a mission, Explore X with Y to discover Z, narrow enough for one time-boxed session, and this one targets the incident's risk. The limit charter is well formed but explores another area, the whole app is far too broad for one session, and re-running saved scenarios to confirm they pass is scripted testing that cannot find what nobody thought to script.",
+    "ar": "يحدد ميثاق الجلسة (charter) مهمة على صيغة «استكشف X باستخدام Y لتكتشف Z» (Explore X with Y to discover Z)، ضيقة بما يكفي لجلسة واحدة محددة المدة (time-boxed session)، وهذا الميثاق يستهدف خطر الحادثة (incident). أما ميثاق الحد اليومي (limit charter) فحسن الصياغة لكنه يستكشف منطقة أخرى، وتطبيق الهاتف كله أوسع من أن تستوعبه جلسة واحدة، وإعادة تشغيل السيناريوهات المحفوظة (saved scenarios) للتأكد من نجاحها اختبار مكتوب مسبقًا (scripted testing) لا يجد ما لم يخطر ببال أحد أن يكتبه."
    }
   },
   {
@@ -90,27 +90,27 @@
    "level": 3,
    "lesson": "5.1",
    "q": {
-    "en": "Release 2026.11 of Transfers is due on Thursday. All five Deep areas have green evidence on this build and the rollback is rehearsed, but two Sev2 defects are open, in Notification text and Statement PDF layout, and nobody has accepted them. Tariq wants to ship. What should Rashid's report say?",
-    "ar": "يحين موعد الإصدار (release) 2026.11 من التحويلات (Transfers) يوم الخميس. للمناطق العميقة (Deep areas) الخمس كلها دليل أخضر (green evidence) على هذا البناء (build)، وقد جرى التدرب على التراجع (rollback rehearsed)، لكن عيبين (defects) من النوع Sev2 ما زالا مفتوحين في نص الإشعارات (Notification text) وتخطيط كشف الحساب PDF (Statement PDF layout)، ولم يقبل بهما أحد (nobody has accepted them). يريد طارق إطلاق الإصدار (ship). ماذا ينبغي أن يقول تقرير راشد؟"
+    "en": "Release 2026.11 of Transfers is due on Thursday. All five Deep areas have green evidence on this build and the rollback is rehearsed, but two Sev2 defects are open, in Notification text and Statement PDF layout, and nobody has accepted them. Tariq wants to ship. What headline should Rashid's report give?",
+    "ar": "يحين موعد الإصدار (release) 2026.11 من التحويلات (Transfers) يوم الخميس. للمناطق العميقة (Deep areas) الخمس كلها دليل أخضر (green evidence) على هذا البناء (build)، وقد جرى التدرب على التراجع (rollback rehearsed)، لكن عيبين (defects) من النوع Sev2 ما زالا مفتوحين في نص الإشعارات (Notification text) وتخطيط كشف الحساب PDF (Statement PDF layout)، ولم يقبل بهما أحد (nobody has accepted them). يريد طارق إطلاق الإصدار (ship). ما العنوان الرئيسي (headline) الذي ينبغي أن يضعه تقرير راشد؟"
    },
    "o": {
     "en": [
-     "Ship, since every Deep area is green and the two Sev2s sit in low-risk areas",
+     "Ship, since every Deep area is green and the two Sev2s sit in low-risk areas of the product",
      "Hold, since the exit criteria allow no open Sev2 under any circumstances",
-     "Ship, once a named owner has accepted each of the two open Sev2s in writing",
+     "Ship with conditions: a named owner must first accept each open Sev2 in writing",
      "Ship, and report the overall pass rate, since stakeholders want one number"
     ],
     "ar": [
-     "الإطلاق (ship) لأن كل منطقة عميقة (Deep area) خضراء وعيبا Sev2 يقعان في مناطق منخفضة الخطر (low-risk areas)",
-     "الإيقاف (hold) لأن معايير الخروج (exit criteria) لا تسمح بأي Sev2 مفتوح في أي ظرف (under any circumstances)",
-     "الإطلاق (ship) متى قبِل مالك مسمّى (named owner) كلًّا من عيبَي Sev2 المفتوحين (open) كتابةً (in writing) مسبقًا",
+     "الإطلاق (ship) لأن كل منطقة عميقة (Deep area) خضراء وعيبا Sev2 يقعان في مناطق منخفضة الخطر (low-risk areas) من المنتج (of the product)",
+     "الإيقاف (hold) لأن معايير الخروج (exit criteria) لا تسمح بأي Sev2 مفتوح (open Sev2) في أي ظرف (under any circumstances)",
+     "الإطلاق بشروط (ship with conditions): أن يقبل مالك مسمّى (named owner) كلًّا من عيبَي Sev2 المفتوحين كتابةً (in writing) أولًا",
      "الإطلاق (ship) مع ذكر نسبة النجاح الإجمالية (overall pass rate) لأن أصحاب المصلحة (stakeholders) يريدون رقمًا واحدًا"
     ]
    },
    "a": 2,
    "why": {
-    "en": "Exit criteria are evidence, not a date: no open Sev1 or Sev2 unless a named owner accepts it in writing, and the dashboard lists each accepted risk with its expiry date. Green Deep areas do not waive that rule, and a flat hold ignores that the rule allows a named acceptance.",
-    "ar": "معايير الخروج (exit criteria) أدلة لا موعد (evidence, not a date): لا Sev1 أو Sev2 مفتوح إلا إذا قبِله مالك مسمّى (named owner) كتابةً، وتسرد لوحة التقرير (dashboard) كل مخاطرة مقبولة (accepted risk) مع تاريخ انتهائها (expiry date). خضرة المناطق العميقة (green Deep areas) لا تعفي من هذه القاعدة، والإيقاف المطلق يتجاهل أن القاعدة تتيح القبول المسمّى."
+    "en": "Exit criteria are evidence, not a date: no open Sev1 or Sev2 unless a named owner accepts it in writing, and the dashboard lists each accepted risk with its expiry date. With nothing accepted yet, the honest headline is ship with conditions: release only once each acceptance is written down. Green Deep areas do not waive that rule, a flat hold ignores that the rule allows a named acceptance, and a pass rate is a number, not a decision.",
+    "ar": "معايير الخروج (exit criteria) أدلة لا موعد (evidence, not a date): لا Sev1 أو Sev2 مفتوح إلا إذا قبِله مالك مسمّى (named owner) كتابةً، وتسرد لوحة التقرير (dashboard) كل مخاطرة مقبولة (accepted risk) مع تاريخ انتهائها (expiry date). ولأن أحدًا لم يقبل بعد، يكون العنوان الصادق «الإطلاق بشروط» (ship with conditions): لا إصدار إلا بعد تدوين كل قبول كتابةً. خضرة المناطق العميقة (green Deep areas) لا تعفي من هذه القاعدة، والإيقاف المطلق يتجاهل أن القاعدة تتيح القبول المسمّى، ونسبة النجاح رقم لا قرار."
    }
   }
  ],

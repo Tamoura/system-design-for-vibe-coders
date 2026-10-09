@@ -6,8 +6,8 @@
    "level": 1,
    "lesson": "6.2",
    "q": {
-    "en": "Bilal's agent turns all eight value-date spec tests green. In review, Amal finds that a Thursday 16:00 submission is dated Friday, a weekend day, and no test covers the case. In the spec-first loop, what happens next?",
-    "ar": "يجعل وكيل بلال (Bilal's agent) اختبارات المواصفة (spec tests) الثمانية لتاريخ القيمة (value date) خضراء (green). وفي المراجعة (review) تكتشف أمل (Amal) أن تحويلًا مقدَّمًا الخميس الساعة 16:00 (Thursday 16:00 submission) يُؤرَّخ يوم الجمعة (Friday)، وهو يوم عطلة (weekend day)، ولا يغطي هذه الحالة أي اختبار (no test covers). في حلقة المواصفة أولًا (spec-first loop)، ما الخطوة التالية؟"
+    "en": "Bilal's agent turns all eight value-date spec tests green. In review, Amal finds that a Thursday 16:30 submission is dated Friday, a weekend day, and none of the eight tests sends that time. In the spec-first loop, what happens next?",
+    "ar": "يجعل وكيل بلال (Bilal's agent) اختبارات المواصفة (spec tests) الثمانية لتاريخ القيمة (value date) خضراء (green). وفي المراجعة (review) تكتشف أمل (Amal) أن تحويلًا مقدَّمًا الخميس الساعة 16:30 (Thursday 16:30 submission) يُؤرَّخ يوم الجمعة (Friday)، وهو يوم عطلة (weekend day)، ولا يرسل أي من الاختبارات الثمانية هذا الوقت (none of the eight tests sends that time). في حلقة المواصفة أولًا (spec-first loop)، ما الخطوة التالية؟"
    },
    "o": {
     "en": [
@@ -41,13 +41,13 @@
     "en": [
      "A test sending `10.005` and expecting the `too_many_decimals` rejection",
      "A coverage report showing that the changed lines are executed by tests",
-     "A stricter ruff configuration with every available lint rule switched on",
+     "A test sending `10.00` and expecting the transfer to be accepted as valid",
      "Running mypy in strict mode, with every function in the file annotated"
     ],
     "ar": [
      "اختبار (a test) يرسل المبلغ `10.005` ويتوقع رفضه برمز `too_many_decimals` (rejection code)",
      "تقرير تغطية (coverage report) يبيّن أن الاختبارات تنفّذ الأسطر المتغيرة (changed lines)",
-     "إعداد ruff أكثر صرامة (stricter configuration) مع تفعيل كل قواعد الفحص المتاحة (every lint rule)",
+     "اختبار (a test) يرسل المبلغ `10.00` ويتوقع قبول التحويل (accepted) على أنه صالح (valid)",
      "تشغيل mypy في الوضع الصارم (strict mode) مع توصيف أنواع كل دالة (annotating every function)"
     ]
    },
@@ -67,13 +67,13 @@
    },
    "o": {
     "en": [
-     "That a second AI model reads all of the tests and agrees they look right",
+     "That a second AI model reviews all of the tests and signs them off as correct",
      "That the healer is switched on, so broken locators repair themselves",
      "That the count reaches the 24 tests of the starter suite, for parity",
      "That each expected value comes from the rules and not the app's output"
     ],
     "ar": [
-     "أن يقرأ نموذج ذكاء اصطناعي ثانٍ (a second AI model) الاختبارات ويوافق على أنها تبدو سليمة (look right)",
+     "أن يراجع نموذج ذكاء اصطناعي ثانٍ (a second AI model) كل الاختبارات ويعتمدها على أنها صحيحة (signs them off as correct)",
      "أن يكون المُصلِح (healer) مفعّلًا، فتُصلح محدِّدات العناصر المعطوبة (broken locators) نفسها",
      "أن يبلغ عدد الاختبارات (the count) أربعة وعشرين كما في المجموعة الابتدائية (starter suite)",
      "أن تأتي كل قيمة متوقعة (expected value) من القواعد (the rules) لا من مخرجات التطبيق (output)"
@@ -90,20 +90,20 @@
    "level": 3,
    "lesson": "6.2",
    "q": {
-    "en": "Nada's agent writes tests for an honest `value_date`, and `mutmut` kills 21 of 24 mutants (87.5%), above Najm's 80% gate. Of the three survivors, two reword the `ValueError` message and one turns `>= CUTOFF` into `> CUTOFF`. What is the best call?",
-    "ar": "يكتب وكيل ندى (Nada's agent) اختبارات لدالة `value_date` سليمة (honest)، ويقتل `mutmut` 21 طفرة (mutants) من أصل 24 أي 87.5%، وهي درجة أعلى من بوابة 80% (80% gate) في بنك نجم (Najm Bank). ومن بين الطفرات الناجية (survivors) الثلاث تعيد اثنتان صياغة رسالة `ValueError` (reword the message)، وتحوّل الثالثة `>= CUTOFF` إلى `> CUTOFF`. ما أفضل قرار (best call)؟"
+    "en": "Nada's agent writes tests for an honest `value_date`, and `mutmut` kills 22 of 24 mutants (91.7%), above Najm's 80% gate. Of the two survivors, one rewords the `ValueError` message and the other turns `>= CUTOFF` into `> CUTOFF`. What is the best call?",
+    "ar": "يكتب وكيل ندى (Nada's agent) اختبارات لدالة `value_date` سليمة (honest)، ويقتل `mutmut` 22 طفرة (mutants) من أصل 24 أي 91.7%، وهي درجة أعلى من بوابة 80% (80% gate) في بنك نجم (Najm Bank). ومن بين الطفرتين الناجيتين (survivors) تعيد إحداهما صياغة رسالة `ValueError` (reword the message)، وتحوّل الأخرى `>= CUTOFF` إلى `> CUTOFF`. ما أفضل قرار (best call)؟"
    },
    "o": {
     "en": [
-     "Merge now, since the score clears the gate and some survivors are normal",
-     "Accept the message survivors, and add a test that kills the cut-off one",
-     "Send all three back until every mutant dies and the score reaches 100%",
+     "Merge now: the score clears the gate, so no survivor needs a look",
+     "Accept the message survivor, and add a test that kills the cut-off one",
+     "Send both back until every mutant dies and the score reaches 100%",
      "Let the agent edit `value_date` so that the cut-off mutant cannot occur"
     ],
     "ar": [
-     "ادمج الآن (merge now)، فالدرجة (the score) تتجاوز البوابة وبعض الطفرات الناجية (survivors) أمر معتاد",
-     "اقبل الطفرتين الخاصتين بالرسالة (message survivors) واطلب اختبارًا يقتل طفرة وقت الإغلاق (cut-off)",
-     "أعد الثلاث كلها (send all three back) حتى تُقتل كل طفرة (every mutant dies) وتبلغ الدرجة 100%",
+     "ادمج الآن (merge now): الدرجة (the score) تتجاوز البوابة، فلا تحتاج أي طفرة ناجية (survivor) إلى نظرة",
+     "اقبل الطفرة الخاصة بالرسالة (message survivor) واطلب اختبارًا يقتل طفرة وقت الإغلاق (cut-off)",
+     "أعد الاثنتين (send both back) حتى تُقتل كل طفرة (every mutant dies) وتبلغ الدرجة 100%",
      "دع الوكيل (the agent) يعدّل `value_date` حتى تتعذر طفرة وقت الإغلاق (the cut-off mutant)"
     ]
    },

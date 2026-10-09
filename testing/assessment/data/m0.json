@@ -62,27 +62,27 @@
    "level": 2,
    "lesson": "0.3",
    "q": {
-    "en": "Nada writes a new test for the daily limit and runs it once with `NAJM_BUGS=limit_off_by_one` on. It goes red, and she wants to report the bug as caught. What must be true of her test first?",
-    "ar": "تكتب ندى اختبارًا (test) جديدًا للحد اليومي (daily limit) وتشغّله مرة واحدة والعيب المزروع (seeded bug) `NAJM_BUGS=limit_off_by_one` مفعَّل (on). يصبح أحمر (red) فتريد الإبلاغ (report) بأن العيب قد اصطيد (caught). ما الذي يجب أن يصح في اختبارها أولًا؟"
+    "en": "Nada has a coding assistant write a new test for the daily limit, and runs it once with `NAJM_BUGS=limit_off_by_one` on. It goes red, and she wants to report the bug as caught. What must be true of her test first?",
+    "ar": "تطلب ندى من مساعد البرمجة (coding assistant) أن يكتب اختبارًا (test) جديدًا للحد اليومي (daily limit)، وتشغّله مرة واحدة والعيب المزروع (seeded bug) `NAJM_BUGS=limit_off_by_one` مفعَّل (on). يصبح أحمر (red) فتريد الإبلاغ (report) بأن العيب قد اصطيد (caught). ما الذي يجب أن يصح في اختبارها أولًا؟"
    },
    "o": {
     "en": [
      "It passes with no bug on, and its red is a failed limit assertion",
      "It also turns red under each of the other eight seeded bugs",
      "It raises the line coverage of `check_transfer` in the sample code",
-     "It stays red when she repeats the run with the bug still on"
+     "The assistant that wrote it has confirmed that the test is correct"
     ],
     "ar": [
      "ينجح بلا عيب مفعَّل (passes with no bug on)، ويأتي احمراره من فشل تأكيد الحد (a failed limit assertion)",
      "يصبح أحمر أيضًا (also turns red) تحت كل عيب من العيوب المزروعة الثمانية الأخرى (the other eight seeded bugs)",
      "يرفع تغطية الأسطر (line coverage) للدالة `check_transfer` في شيفرة العيّنة (the sample code)",
-     "يبقى أحمر في كل مرة تكرر فيها التشغيل (repeats the run) والعيب ما زال مفعَّلًا (still on)"
+     "أكّد المساعد (the assistant) الذي كتبه أن الاختبار صحيح (the test is correct)"
     ]
    },
    "a": 0,
    "why": {
-    "en": "Red counts as evidence only when it is red for the right reason: the test must pass clean and fail on an assertion about the limit rule, not on an error that would appear without the bug. Repeating the run is the tempting check, but it shows the red is stable, not what it is red about.",
-    "ar": "لا يُعدّ الاحمرار دليلًا (evidence) إلا إذا كان لسبب صحيح (red for the right reason): يجب أن ينجح الاختبار على العيّنة النظيفة (passes clean) ويفشل عند تأكيد يخص قاعدة الحد (an assertion about the limit rule)، لا عند خطأ (error) كان سيظهر دون العيب. وتكرار التشغيل (repeating the run) هو الفحص المغري (the tempting check)، لكنه يُظهر أن الاحمرار ثابت (stable)، لا ما سببه (what it is red about)."
+    "en": "Red counts as evidence only when it is red for the right reason: the test must pass clean and fail on an assertion about the limit rule, not on an error that would appear without the bug. The assistant's approval is the tempting shortcut, but a tool marking its own work shows nothing about what the red is about.",
+    "ar": "لا يُعدّ الاحمرار دليلًا (evidence) إلا إذا كان لسبب صحيح (red for the right reason): يجب أن ينجح الاختبار على العيّنة النظيفة (passes clean) ويفشل عند تأكيد يخص قاعدة الحد (an assertion about the limit rule)، لا عند خطأ (error) كان سيظهر دون العيب. وتأكيد المساعد (the assistant's approval) هو الاختصار المغري (the tempting shortcut)، لكن أداة تقيّم عملها بنفسها (a tool marking its own work) لا تُظهر شيئًا عن سبب الاحمرار (what the red is about)."
    }
   },
   {
@@ -90,8 +90,8 @@
    "level": 3,
    "lesson": "0.2",
    "q": {
-    "en": "Production gives the wrong value date for transfers submitted near 15:00. Maha traces it to a deployment setting that names UTC as the cut-off time zone; `value_date()` is correct for any zone it is given. The setting is fixed. What is the best follow-up for this escaped defect?",
-    "ar": "يعطي الإنتاج (production) تاريخ قيمة (value date) خاطئًا للتحويلات المقدَّمة (submitted transfers) قرابة الساعة 15:00. تتتبع مها السبب إلى إعداد نشر (deployment setting) يسمّي UTC المنطقة الزمنية لموعد القطع (cut-off time zone)؛ أما `value_date()` فصحيحة لأي منطقة تُعطى لها (any zone it is given). جرى إصلاح الإعداد. ما أفضل متابعة (follow-up) لهذا العيب المتسرّب (escaped defect)؟"
+    "en": "Production gives the wrong value date for transfers submitted between 15:00 and 18:00 Qatar time. Maha traces it to a deployment setting that names UTC as the cut-off time zone; `value_date()` is correct for any zone it is given. The setting is fixed. Which follow-up would catch this escaped defect if it came back?",
+    "ar": "يعطي الإنتاج (production) تاريخ قيمة (value date) خاطئًا للتحويلات المقدَّمة (submitted transfers) بين الساعة 15:00 و18:00 بتوقيت قطر (Qatar time). تتتبع مها السبب إلى إعداد نشر (deployment setting) يسمّي UTC المنطقة الزمنية لموعد القطع (cut-off time zone)؛ أما `value_date()` فصحيحة لأي منطقة تُعطى لها (any zone it is given). جرى إصلاح الإعداد. أيّ متابعة (follow-up) كانت ستكشف هذا العيب المتسرّب (escaped defect) لو عاد (if it came back)؟"
    },
    "o": {
     "en": [
@@ -109,8 +109,8 @@
    },
    "a": 2,
    "why": {
-    "en": "The defect lives in a configuration value, so the follow-up that can catch a recurrence is a validation or an alert at that point; a unit test of the correct code passes whether or not the setting is wrong. \"Every escape gets a test\" is the tempting rule, but automated regression tests are for bugs a code change could bring back.",
-    "ar": "العيب يسكن قيمة إعداد (a configuration value)، فالمتابعة التي تكشف تكرّره (a recurrence) هي التحقق (validation) أو التنبيه (alert) عند ذلك الموضع؛ أما اختبار الوحدة (unit test) للشيفرة الصحيحة (the correct code) فينجح سواء أكان الإعداد خاطئًا أم لا. وقاعدة «كل تسرّب يحصل على اختبار» (every escape gets a test) هي القاعدة المغرية، لكن اختبارات الانحدار الآلية (automated regression tests) تُكتب للعيوب التي قد يعيدها تغيير في الشيفرة (a code change could bring back)."
+    "en": "The defect lives in a configuration value, so the follow-up that can catch a recurrence is a validation or an alert at that point; a unit test of the correct code passes whether or not the setting is wrong. \"Every escape gets a test\" is the tempting rule, but automated regression tests are for bugs a code change could bring back. The escaped-defect card is still owed, but it records the escape and detects nothing.",
+    "ar": "العيب يسكن قيمة إعداد (a configuration value)، فالمتابعة التي تكشف تكرّره (a recurrence) هي التحقق (validation) أو التنبيه (alert) عند ذلك الموضع؛ أما اختبار الوحدة (unit test) للشيفرة الصحيحة (the correct code) فينجح سواء أكان الإعداد خاطئًا أم لا. وقاعدة «كل تسرّب يحصل على اختبار» (every escape gets a test) هي القاعدة المغرية، لكن اختبارات الانحدار الآلية (automated regression tests) تُكتب للعيوب التي قد يعيدها تغيير في الشيفرة (a code change could bring back). أما بطاقة العيب المتسرّب (the escaped-defect card) فواجبة على أي حال، لكنها تسجّل التسرّب ولا تكشف شيئًا (detects nothing)."
    }
   }
  ],

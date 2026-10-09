@@ -6,8 +6,8 @@
       "level": 1,
       "lesson": "2.1",
       "q": {
-        "en": "Nada writes a unit test for the rule that a 1,000.00 QAR domestic transfer is free. The test passes the first time she runs it. Before she relies on it, what should she do?",
-        "ar": "تكتب ندى اختبار وحدة (unit test) لقاعدة أن التحويل المحلي (domestic transfer) بمبلغ 1,000.00 QAR مجاني (free). وينجح الاختبار (passes) في أول تشغيل له (the first time she runs it). قبل أن تعتمد عليه (relies on it)، ماذا ينبغي أن تفعل؟"
+        "en": "Nada writes a unit test for the rule that a 1,000.00 QAR domestic transfer is free. The test passes the first time she runs it. Before she relies on it, what should she do to learn whether it can catch a mistake in the rule?",
+        "ar": "تكتب ندى اختبار وحدة (unit test) لقاعدة أن التحويل المحلي (domestic transfer) بمبلغ 1,000.00 QAR مجاني (free). وينجح الاختبار (passes) في أول تشغيل له (the first time she runs it). قبل أن تعتمد عليه (relies on it)، ماذا ينبغي أن تفعل لتعرف ما إذا كان يستطيع التقاط خطأ في القاعدة (catch a mistake in the rule)؟"
       },
       "o": {
         "en": [
@@ -25,8 +25,8 @@
       },
       "a": 1,
       "why": {
-        "en": "A test that has never been red may never go red: breaking the rule once (changing `<=` to `<` in the domestic fee) proves the test can fail for the right reason. A coverage report only shows that the line ran, not that the test would notice a change.",
-        "ar": "قد لا يتحول الاختبار الذي لم يُرَ أحمر قط إلى الأحمر أبدًا (a test that has never been red may never go red): كسر القاعدة مرة واحدة (breaking the rule once)، أي تغيير `<=` إلى `<` في رسم التحويل المحلي (domestic fee)، يثبت أن الاختبار (test) يستطيع الفشل لسبب صحيح (fail for the right reason). أما تقرير التغطية (coverage report) فيبيّن أن السطر نُفّذ (ran) فقط، لا أن الاختبار سيلاحظ أي تغيير (notice a change)."
+        "en": "A test that has never been red may never go red: breaking the rule once (changing `<=` to `<` in the domestic fee) proves the test can fail for the right reason. A coverage report only shows that the line ran, not that the test would notice a change, and rerunning it only shows that it is stable, since a test that cannot fail stays green every time.",
+        "ar": "قد لا يتحول الاختبار الذي لم يُرَ أحمر قط إلى الأحمر أبدًا (a test that has never been red may never go red): كسر القاعدة مرة واحدة (breaking the rule once)، أي تغيير `<=` إلى `<` في رسم التحويل المحلي (domestic fee)، يثبت أن الاختبار (test) يستطيع الفشل لسبب صحيح (fail for the right reason). أما تقرير التغطية (coverage report) فيبيّن أن السطر نُفّذ (ran) فقط، لا أن الاختبار سيلاحظ أي تغيير (notice a change)، وإعادة التشغيل (rerunning) لا تبيّن إلا ثباته (stable)، لأن اختبارًا لا يستطيع الفشل يبقى أخضر في كل مرة."
       }
     },
     {
@@ -40,21 +40,21 @@
       "o": {
         "en": [
           "Record one real reply from the sandbox and replay it on every test run",
-          "Call the live sandbox from CI and rerun the test until it fails once",
+          "Write a Pact contract for the partner's reply and verify it in CI",
           "Mock `rate` itself so that it raises the error, then assert that error",
           "Stub the HTTP call to time out or return a 503, then assert the error"
         ],
         "ar": [
           "تسجيل ردّ حقيقي واحد (one real reply) من البيئة التجريبية (sandbox) وإعادة عرضه (replay it) في كل تشغيل للاختبارات",
-          "استدعاء البيئة التجريبية الحيّة (live sandbox) من خط التكامل المستمر (CI) وإعادة الاختبار حتى يفشل مرة",
+          "كتابة عقد Pact (contract) لردّ الشريك والتحقق منه (verify) في خط التكامل المستمر (CI)",
           "استبدال الدالة `rate` نفسها بكائن محاكاة (mock) يرفع الخطأ، ثم التأكيد على رفع هذا الخطأ (assert that error)",
           "استبدال استدعاء HTTP ببديل ثابت الاستجابة (stub) ينتهي بمهلة أو يرجع 503، ثم التأكيد على الخطأ (assert)"
         ]
       },
       "a": 3,
       "why": {
-        "en": "A partner's service cannot be made to time out on demand, so stub the HTTP layer (respx or WireMock) and run the real `rate` code against each failure. Mocking `rate` itself only proves that the mock raises, and a recording freezes the happy path and goes stale.",
-        "ar": "لا يمكن إجبار خدمة الشريك (partner's service) على انتهاء المهلة عند الطلب (on demand)، لذا نستبدل طبقة HTTP ببديل ثابت الاستجابة (stub the HTTP layer) باستخدام respx أو WireMock، ونشغّل شيفرة `rate` الحقيقية (the real code) على كل فشل (failure). أما محاكاة `rate` نفسها (mocking `rate` itself) فلا تثبت إلا أن كائن المحاكاة (mock) يرفع الخطأ، والتسجيل (a recording) يجمّد المسار السعيد (freezes the happy path) ويصبح قديمًا (goes stale)."
+        "en": "A partner's service cannot be made to time out on demand, so stub the HTTP layer (respx or WireMock) and run the real `rate` code against each failure. Mocking `rate` itself only proves that the mock raises, a recording freezes the happy path and goes stale, and a contract checks the shape of a reply, not how `rate` copes with a timeout or a 503 (stubs for failures, contracts for shape).",
+        "ar": "لا يمكن إجبار خدمة الشريك (partner's service) على انتهاء المهلة عند الطلب (on demand)، لذا نستبدل طبقة HTTP ببديل ثابت الاستجابة (stub the HTTP layer) باستخدام respx أو WireMock، ونشغّل شيفرة `rate` الحقيقية (the real code) على كل فشل (failure). أما محاكاة `rate` نفسها (mocking `rate` itself) فلا تثبت إلا أن كائن المحاكاة (mock) يرفع الخطأ، والتسجيل (a recording) يجمّد المسار السعيد (freezes the happy path) ويصبح قديمًا (goes stale)، والعقد (contract) يفحص شكل الردّ لا طريقة تعامل `rate` مع انتهاء المهلة أو ردّ 503 (بدائل ثابتة للإخفاقات وعقود للشكل)."
       }
     },
     {
@@ -62,27 +62,27 @@
       "level": 2,
       "lesson": "2.3",
       "q": {
-        "en": "Amal runs mutmut on `check_transfer`. One surviving mutant changes only the wording of the message that goes with a rejection; the rejection's `code` is untouched. Her tests assert the stable `code`. How should she class this survivor?",
-        "ar": "تشغّل أمل أداة mutmut على `check_transfer`. تغيّر إحدى الطفرات الناجية (surviving mutants) صياغة الرسالة المصاحبة لرفض (rejection) فقط، أما الرمز `code` فلم يتغير. وتؤكد اختباراتها (assert) على `code` الثابت (stable). كيف تصنّف هذه الطفرة الناجية (survivor)؟"
+        "en": "Amal runs mutmut on `check_transfer`. One surviving mutant changes only the wording of the message that goes with a rejection; the rejection's `code` is untouched. Najm's standard is that tests pin a rejection's `code`, never its wording. How should she class this survivor?",
+        "ar": "تشغّل أمل أداة mutmut على `check_transfer`. تغيّر إحدى الطفرات الناجية (surviving mutants) صياغة الرسالة المصاحبة لرفض (rejection) فقط، أما الرمز `code` فلم يتغير. ومعيار نجم (Najm's standard) أن تثبّت الاختبارات `code` الرفض ولا تثبّت صياغته أبدًا (never its wording). كيف تصنّف هذه الطفرة الناجية (survivor)؟"
       },
       "o": {
         "en": [
-          "Accepted: the stable code is the contract, so note it as a choice",
+          "Accepted: wording is left untested on purpose, so note it as a choice",
           "Real gap: add a test that asserts the exact wording of the message",
           "Equivalent: no test could ever tell the mutant from the original",
-          "Ignored: drop it from the score and do not record the reason why"
+          "Ignored: delete it from the results without classing it or noting why"
         ],
         "ar": [
-          "مقبولة (Accepted): الرمز `code` الثابت هو العقد (the contract)، فتُسجَّل قرارًا واعيًا (a choice)",
+          "مقبولة (Accepted): تُترك الصياغة دون اختبار عن قصد (on purpose)، فتُسجَّل قرارًا واعيًا (a choice)",
           "ثغرة حقيقية (Real gap): إضافة اختبار جديد يؤكد صياغة الرسالة الدقيقة (the exact wording)",
           "مكافئة (Equivalent): لا يستطيع أي اختبار على الإطلاق التمييز بين الطفرة (mutant) والأصل (original)",
-          "متجاهَلة (Ignored): استبعادها من الدرجة (score) دون تسجيل السبب (the reason) وراء ذلك"
+          "متجاهَلة (Ignored): حذفها من النتائج (results) دون تصنيفها أو تسجيل سبب ذلك (noting why)"
         ]
       },
       "a": 0,
       "why": {
-        "en": "Changing only the wording leaves the stable `code`, the contract, intact, so the team consciously accepts this survivor rather than pin the exact text, which would break tests on harmless rewording. It is not equivalent, because a test that asserted the text could kill it.",
-        "ar": "تغيير الصياغة وحدها يترك الرمز `code` الثابت، وهو العقد (contract)، سليمًا، فيقبل الفريق هذه الطفرة الناجية (survivor) عن وعي (consciously accepts) بدل تثبيت النص الدقيق (pinning the exact text) الذي يكسر الاختبارات عند أي إعادة صياغة غير ضارة (harmless rewording). وهي ليست مكافئة (equivalent)، لأن اختبارًا يؤكد النص (asserts the text) كان سيقتلها (kill it)."
+        "en": "Changing only the wording leaves the stable `code`, the contract, intact, and the standard says not to pin the text, so the team consciously accepts this survivor rather than add a test that would break on harmless rewording. It is not equivalent, because a test that asserted the text could kill it, and it is not a real gap, because no promised behaviour changed.",
+        "ar": "تغيير الصياغة وحدها يترك الرمز `code` الثابت، وهو العقد (contract)، سليمًا، والمعيار يمنع تثبيت النص، فيقبل الفريق هذه الطفرة الناجية (survivor) عن وعي (consciously accepts) بدل إضافة اختبار ينكسر عند أي إعادة صياغة غير ضارة (harmless rewording). وهي ليست مكافئة (equivalent)، لأن اختبارًا يؤكد النص (asserts the text) كان سيقتلها (kill it)، وليست ثغرة حقيقية (real gap)، لأن أي سلوك موعود (promised behaviour) لم يتغير."
       }
     },
     {
@@ -90,27 +90,27 @@
       "level": 3,
       "lesson": "2.2",
       "q": {
-        "en": "The Najm Mobile pact is verified against the Transfers API and `can-i-deploy` says yes, so the release ships. Customers then see a 3,090.00 QAR international transfer quoted at 10.81 instead of 10.82. Tariq says: \"The contract passed, so the API is right.\" What should the team do?",
-        "ar": "يُتحقَّق من عقد Pact (the pact) الخاص بتطبيق نجم للهاتف (Najm Mobile) مقابل واجهة Transfers API، ويقول `can-i-deploy` نعم، فيُطلق الإصدار (the release ships). ثم يرى العملاء (customers) تحويلًا دوليًا (international transfer) بمبلغ 3,090.00 QAR مسعّرًا بـ 10.81 بدل 10.82. ويقول طارق: «نجح العقد (the contract passed)، إذن الواجهة صحيحة (the API is right).» ماذا ينبغي أن يفعل الفريق؟"
+        "en": "The Najm Mobile pact is verified against the Transfers API and `can-i-deploy` says yes, so the release ships. Customers then see a 3,090.00 QAR international transfer quoted at 10.81 instead of 10.82. Tariq says: \"The contract passed, so the API is right.\" Which response best stops this kind of bug from shipping again?",
+        "ar": "يُتحقَّق من عقد Pact (the pact) الخاص بتطبيق نجم للهاتف (Najm Mobile) مقابل واجهة Transfers API، ويقول `can-i-deploy` نعم، فيُطلق الإصدار (the release ships). ثم يرى العملاء (customers) تحويلًا دوليًا (international transfer) بمبلغ 3,090.00 QAR مسعّرًا بـ 10.81 بدل 10.82. ويقول طارق: «نجح العقد (the contract passed)، إذن الواجهة صحيحة (the API is right).» ما أفضل استجابة تمنع وصول هذا النوع من العيوب (this kind of bug) إلى العملاء مرة أخرى؟"
       },
       "o": {
         "en": [
-          "Close it as an environment issue, as a verified pact proves the API is right",
-          "Drop the pact and rely on end-to-end checks of every single release",
-          "Keep the pact for shape and add a property test against exact arithmetic",
+          "Add 10.82 for a 3,090.00 QAR international transfer to the pact and verify the provider again",
+          "Record today's quotes in a golden-master test and fail the build whenever any quote changes",
+          "Keep the pact for shape and add a property test against exact arithmetic on whole amounts",
           "Raise the line coverage of the provider's fee module to 100 percent"
         ],
         "ar": [
-          "إغلاقها كمشكلة بيئة (environment issue) لأن العقد المتحقق منه (verified pact) يثبت صحة الواجهة",
-          "التخلي عن العقد (drop the pact) والاكتفاء باختبارات شاملة من البداية إلى النهاية (end-to-end) لكل إصدار",
-          "إبقاء العقد لفحص الشكل (shape) وإضافة اختبار قائم على الخصائص (property test) يقارن الرسوم بحساب دقيق",
+          "إضافة 10.82 لتحويل دولي (international) بمبلغ 3,090.00 QAR إلى العقد (the pact) والتحقق من المزوّد (provider) مرة أخرى",
+          "تسجيل تسعيرات اليوم (today's quotes) في اختبار النسخة المرجعية (golden-master test) وإفشال البناء عند أي تغيّر في أي تسعيرة",
+          "إبقاء العقد لفحص الشكل (shape) وإضافة اختبار خصائص (property test) يقارن الرسوم بحساب دقيق على المبالغ الصحيحة",
           "رفع تغطية الأسطر (line coverage) لوحدة الرسوم لدى المزوّد (provider) إلى 100 بالمئة"
         ]
       },
       "a": 2,
       "why": {
-        "en": "A contract proves the shape two teams agreed on, not that a value is right: 10.81 and 10.82 look identical to a shape check, so a green pact must not be read as correctness. A property test comparing fees with plain exact arithmetic on whole amounts catches this float rounding bug, and the pact still gates releases cheaply.",
-        "ar": "يثبت العقد (contract) الشكل (shape) الذي اتفق عليه الفريقان، لا صحة القيمة (value): فالرقمان 10.81 و10.82 متطابقان في نظر فحص الشكل (shape check)، فلا يجوز قراءة العقد الأخضر على أنه صحة (correctness). أما الاختبار القائم على الخصائص (property test) الذي يقارن الرسوم بحساب دقيق (exact arithmetic) على المبالغ الصحيحة (whole amounts) فيكشف عيب تقريب الفاصلة العائمة (float rounding bug) هذا، ويبقى العقد بوابة إصدار رخيصة (gates releases cheaply)."
+        "en": "A contract proves the shape two teams agreed on, not that a value is right: 10.81 and 10.82 look identical to a shape check, so a green pact must not be read as correctness. A property test comparing fees with plain exact arithmetic on whole amounts, where the rounding ties occur, catches this float rounding bug, and the pact still gates releases cheaply. Pinning one value in the pact guards a single case, a golden master would record the wrong 10.81 and pin the bug, and line coverage shows only that code ran.",
+        "ar": "يثبت العقد (contract) الشكل (shape) الذي اتفق عليه الفريقان، لا صحة القيمة (value): فالرقمان 10.81 و10.82 متطابقان في نظر فحص الشكل (shape check)، فلا يجوز قراءة العقد الأخضر على أنه صحة (correctness). أما الاختبار القائم على الخصائص (property test) الذي يقارن الرسوم بحساب دقيق (exact arithmetic) على المبالغ الصحيحة (whole amounts) فيكشف عيب تقريب الفاصلة العائمة (float rounding bug) هذا، ويبقى العقد بوابة إصدار رخيصة (gates releases cheaply). أما تثبيت قيمة واحدة في العقد فيحمي حالة واحدة فقط، والنسخة المرجعية (golden master) ستسجّل 10.81 الخاطئ وتثبّت العيب (pin the bug)، وتغطية الأسطر (line coverage) تبيّن أن الشيفرة نُفّذت (ran) فقط."
       }
     }
   ],

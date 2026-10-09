@@ -6,27 +6,27 @@
    "level": 1,
    "lesson": "1.1",
    "q": {
-    "en": "Hamad's squad closes the last open defect on the new transfer screen, so no known bugs remain. At launch, customers complain that the screen cannot schedule a salary-day payment, which nobody had asked for. Which testing principle does this show?",
-    "ar": "يغلق فريق حمد (Hamad's squad) آخر عيب مفتوح (open defect) في شاشة التحويل (transfer screen) الجديدة، فلا تبقى عيوب معروفة (known bugs). وعند الإطلاق (at launch) يشكو العملاء (customers complain) من أن الشاشة لا تتيح جدولة دفعة يوم الراتب (schedule a salary-day payment)، وهو ما لم يطلبه أحد (nobody had asked for). أي مبدأ من مبادئ الاختبار (testing principles) يوضحه هذا؟"
+    "en": "Hamad's squad finishes the new beneficiary screen. Every planned test passes, no defect is open, and the screen does exactly what its story says. At launch, customers complain that they cannot pay a recipient by mobile number, which no story had ever asked for. Which testing principle does this show?",
+    "ar": "ينهي فريق حمد (Hamad's squad) شاشة المستفيد (beneficiary screen) الجديدة: تنجح كل الاختبارات المخطط لها (every planned test passes)، ولا يبقى عيب مفتوح (no defect is open)، وتفعل الشاشة ما تقوله قصتها (its story) بالضبط. وعند الإطلاق (at launch) يشكو العملاء (customers complain) من أنهم لا يستطيعون الدفع لمستفيد برقم الجوال (pay a recipient by mobile number)، وهو ما لم تطلبه أي قصة (no story had ever asked for). أي مبدأ من مبادئ الاختبار (testing principles) يوضحه هذا؟"
    },
    "o": {
     "en": [
-     "Testing shows the presence of defects, so the team must have missed a bug",
-     "Exhaustive testing is impossible, so the team simply ran too few tests",
-     "Absence of defects is a fallacy, so a bug-free system can still be wrong",
-     "Tests wear out, so the old tests stopped finding the remaining defects"
+     "Testing shows the presence of defects, so the team must have missed a bug in the screen",
+     "Exhaustive testing is impossible, so the team simply ran too few tests before launch day",
+     "Absence of defects is a fallacy, so a bug-free screen can still be the wrong screen",
+     "Testing is context dependent, so the team tested a payments screen far too lightly"
     ],
     "ar": [
-     "يُظهر الاختبار وجود العيوب (testing shows the presence of defects)، فلا بد أن يكون الفريق قد فوّت عيبًا (missed a bug)",
-     "الاختبار الشامل مستحيل (exhaustive testing is impossible)، فنفّذ الفريق اختبارات قليلة جدًا (too few tests)",
-     "غياب العيوب مغالطة (absence of defects is a fallacy)، فقد يبقى النظام الخالي من العيوب (bug-free system) خاطئًا",
-     "الاختبارات تتآكل (tests wear out)، فتوقفت الاختبارات القديمة عن كشف العيوب المتبقية (remaining defects)"
+     "يُظهر الاختبار وجود العيوب (testing shows the presence of defects)، فلا بد أن يكون الفريق قد فوّت عيبًا (missed a bug) في الشاشة",
+     "الاختبار الشامل مستحيل (exhaustive testing is impossible)، فنفّذ الفريق اختبارات قليلة جدًا (too few tests) قبل الإطلاق",
+     "غياب العيوب مغالطة (absence of defects is a fallacy)، فقد تظل الشاشة الخالية من العيوب (bug-free screen) هي الشاشة الخاطئة",
+     "الاختبار يعتمد على السياق (testing is context dependent)، فاختبر الفريق شاشة مدفوعات (payments screen) بعمق أقل مما يلزم"
     ]
    },
    "a": 2,
    "why": {
-    "en": "A system with no known bugs can still be the wrong system (principle 7): the screen met its specification but not the customers' need. Blaming a missed bug is the tempting reading, but nothing in the code was broken; the requirement itself was incomplete.",
-    "ar": "قد يظل النظام الخالي من العيوب المعروفة (known bugs) هو النظام الخاطئ (wrong system)، وهذا هو المبدأ السابع (principle 7): حققت الشاشة مواصفاتها (met its specification) لكنها لم تلبِّ حاجة العملاء (not the customers' need). أما لوم عيب فائت (missed bug) فهو القراءة المغرية (tempting reading)، لكن لم يُكسر شيء في الشيفرة (nothing in the code was broken)؛ فالنقص كان في المتطلب (requirement) نفسه."
+    "en": "A system with no known bugs can still be the wrong system (principle 7): the screen did what its story said, but paying by mobile number was never specified, so no test written from the story could have flagged it. Blaming a missed bug is the tempting reading, yet nothing in the code departs from the story; the gap is in what was asked for.",
+    "ar": "قد يظل النظام الخالي من العيوب المعروفة (known bugs) هو النظام الخاطئ (wrong system)، وهذا هو المبدأ السابع (principle 7): فعلت الشاشة ما تقوله قصتها (its story)، لكن الدفع برقم الجوال (paying by mobile number) لم يُحدَّد قط، فلا يستطيع أي اختبار مكتوب من القصة أن يكشفه. أما لوم عيب فائت (missed bug) فهو القراءة المغرية (tempting reading)، لكن لا شيء في الشيفرة يخالف القصة؛ فالنقص في ما طُلب (what was asked for)."
    }
   },
   {
@@ -67,22 +67,22 @@
    },
    "o": {
     "en": [
-     "Attach a screen recording that shows all fourteen steps being followed",
-     "Replace the fourteen steps with her best guess about the likely cause",
-     "Raise the severity to S1 so that the developer treats it as urgent",
-     "Cut steps and data until the failure stops, then restore the last cut"
+     "Attach a screen recording that shows all fourteen steps being followed, start to finish",
+     "Delete the steps she thinks are unimportant and send the shorter list untried",
+     "Raise the severity to S1 so that the developer treats the whole report as urgent",
+     "Remove steps and data one by one, re-running each time, until only what fails is left"
     ],
     "ar": [
-     "إرفاق تسجيل شاشة (screen recording) يعرض الخطوات الأربع عشرة كلها (all fourteen steps)",
-     "استبدال الخطوات الأربع عشرة بأفضل تخمين (best guess) لديها عن السبب المرجّح للعيب (likely cause)",
-     "رفع الخطورة (severity) إلى S1 حتى يعامل المطوّر التقرير على أنه عاجل (urgent)",
-     "حذف الخطوات والبيانات (steps and data) حتى يتوقف الفشل (failure stops)، ثم إعادة آخر ما حُذف"
+     "إرفاق تسجيل شاشة (screen recording) يعرض الخطوات الأربع عشرة كلها (all fourteen steps) بالترتيب",
+     "حذف الخطوات التي تراها غير مهمة (unimportant) وإرسال القائمة الأقصر دون تجربتها (untried)",
+     "رفع الخطورة (severity) إلى S1 حتى يعامل المطوّر التقرير كله على أنه عاجل (urgent)",
+     "إزالة الخطوات والبيانات واحدًا واحدًا مع إعادة التشغيل حتى لا يبقى إلا ما يفشل (what fails)"
     ]
    },
    "a": 3,
    "why": {
-    "en": "A minimal reproduction, the smallest steps and data that still show the failure, is what a developer can act on, and you find it by cutting until the failure stops and restoring the last cut. A longer recording adds bulk, a higher severity adds pressure, and a guess is not evidence.",
-    "ar": "إعادة الإنتاج المصغّرة (minimal reproduction)، أي أصغر خطوات وبيانات (smallest steps and data) ما زالت تُظهر الفشل (failure)، هي ما يستطيع المطوّر العمل عليه (act on)، وتصل إليها بالحذف حتى يتوقف الفشل ثم استعادة آخر ما حُذف (restoring the last cut). أما التسجيل الأطول فيزيد الحجم (bulk)، ورفع الخطورة (higher severity) يزيد الضغط (pressure)، والتخمين (guess) ليس دليلًا (evidence)."
+    "en": "A minimal reproduction, the smallest steps and data that still show the failure, is what a developer can act on, and you find it by removing one thing at a time and re-running until the failure stops, then putting the last one back. A longer recording adds bulk, a higher severity adds pressure, and a cut that was never re-run may have lost the failure, so it is a guess, not evidence.",
+    "ar": "إعادة الإنتاج المصغّرة (minimal reproduction)، أي أصغر خطوات وبيانات (smallest steps and data) ما زالت تُظهر الفشل (failure)، هي ما يستطيع المطوّر العمل عليه (act on)، وتصل إليها بإزالة شيء واحد في كل مرة وإعادة التشغيل حتى يتوقف الفشل، ثم استعادة آخر ما أُزيل (putting the last one back). أما التسجيل الأطول فيزيد الحجم (bulk)، ورفع الخطورة (higher severity) يزيد الضغط (pressure)، والحذف الذي لم تُعد تجربته (never re-run) قد يكون أضاع الفشل، فهو تخمين (guess) وليس دليلًا (evidence)."
    }
   },
   {
