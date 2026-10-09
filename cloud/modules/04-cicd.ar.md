@@ -299,6 +299,7 @@ jobs:
 - مواصفة صور OCI، التعليقات التوضيحية (OCI image specification, annotations) — https://github.com/opencontainers/image-spec/blob/main/annotations.md
 - التطبيق ذو العوامل الاثني عشر (The Twelve-Factor App) — https://12factor.net/
 - التطوير القائم على الجذع (Trunk-based development) — https://trunkbaseddevelopment.com/
+- [*اختبار البرمجيات من الصفر إلى الاحتراف في عصر الذكاء الاصطناعي (Software Testing: Zero to Hero in the AI Era)*، الدرس 5.2 — الاختبار في CI/CD وفي بيئة الإنتاج (Testing in CI/CD and in production)](../testing/index.ar.html#/5.2) — منظور الاختبار (testing) لهذا الموضوع
 
 ---
 

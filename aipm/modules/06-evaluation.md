@@ -250,6 +250,7 @@ All cases are labelled by credit officers (Arabic speakers for the Arabic slice)
 - Guo, C., Pleiss, G., Sun, Y. and Weinberger, K. Q. (2017), "On Calibration of Modern Neural Networks" — https://arxiv.org/abs/1706.04599
 - NIST AI Risk Management Framework 1.0 (the Measure function) — https://www.nist.gov/itl/ai-risk-management-framework
 - Google PAIR, People + AI Guidebook — https://pair.withgoogle.com/guidebook
+- [*Software Testing: Zero to Hero in the AI Era*, lesson 7.1 — Evals: testing LLM applications](../testing/index.html#/7.1) — the testing view of this topic
 
 ---
 

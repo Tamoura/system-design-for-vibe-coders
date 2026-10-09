@@ -269,6 +269,7 @@ Run hands-on work only against your own code, a local lab, or a deliberately vul
 - NVD, CVE-2017-5638 (Apache Struts) — https://nvd.nist.gov/vuln/detail/CVE-2017-5638
 - ZAP — https://www.zaproxy.org/
 - Semgrep documentation — https://semgrep.dev/docs/
+- [*Software Testing: Zero to Hero in the AI Era*, lesson 4.2 — Security testing for testers](../testing/index.html#/4.2) — the testing view of this topic
 
 ---
 

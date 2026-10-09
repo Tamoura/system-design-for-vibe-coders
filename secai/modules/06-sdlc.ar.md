@@ -269,6 +269,7 @@ cur.execute(
 - NVD، الثغرة CVE-2017-5638 في Apache Struts — https://nvd.nist.gov/vuln/detail/CVE-2017-5638
 - ZAP — https://www.zaproxy.org/
 - توثيق Semgrep (Semgrep documentation) — https://semgrep.dev/docs/
+- [*اختبار البرمجيات من الصفر إلى الاحتراف في عصر الذكاء الاصطناعي (Software Testing: Zero to Hero in the AI Era)*، الدرس 4.2 — اختبار الأمان للمختبِرين (Security testing for testers)](../testing/index.ar.html#/4.2) — منظور الاختبار (testing) لهذا الموضوع
 
 ---
 

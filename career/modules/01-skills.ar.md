@@ -256,6 +256,7 @@ How I tested it:
 - توثيق pytest ‏(pytest documentation) — https://docs.pytest.org/
 - مركز مساعدة Stack Overflow ‏(Stack Overflow Help Center)، كيف تُنشئ مثالًا أدنى قابلًا لإعادة الإنتاج (How to create a Minimal, Reproducible Example) — https://stackoverflow.com/help/minimal-reproducible-example
 - [*تصميم الأنظمة لمبرمجي الفايب (System Design for Vibe Coders)*، الدرس F.3 — الإصدارات والمستودعات والنشر: كيف تنتقل البرمجيات (Versions, repos, and deploys — how software moves)](../vibe/index.ar.html#lF-3)
+- [*اختبار البرمجيات من الصفر إلى الاحتراف في عصر الذكاء الاصطناعي (Software Testing: Zero to Hero in the AI Era)*، الدرس 2.1 — اختبار الوحدة والتطوير الموجَّه بالاختبار (Unit testing and TDD)](../testing/index.ar.html#/2.1) — منظور الاختبار (testing) لهذا الموضوع
 
 ---
 

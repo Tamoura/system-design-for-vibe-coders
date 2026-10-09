@@ -677,6 +677,7 @@ Use synthetic data only.
 - Apache Iceberg documentation (branching and tagging) — https://iceberg.apache.org/docs/latest/
 - DuckDB documentation: Parquet — https://duckdb.org/docs/
 - UK Parliament and national press coverage of the October 2020 Public Health England case-reporting error (search "PHE Excel error October 2020")
+- [*Software Testing: Zero to Hero in the AI Era*, lesson 4.3 — Reliability and data testing](../testing/index.html#/4.3) — the testing view of this topic
 
 ---
 

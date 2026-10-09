@@ -677,6 +677,7 @@ where d = current_date - 1
 - توثيق Apache Iceberg (التفريع والوسم، branching and tagging) — https://iceberg.apache.org/docs/latest/
 - توثيق DuckDB: Parquet (DuckDB documentation: Parquet) — https://duckdb.org/docs/
 - تغطية البرلمان البريطاني والصحافة الوطنية (UK Parliament and national press coverage) لخطأ الإبلاغ عن الحالات لدى هيئة الصحة العامة في إنجلترا (Public Health England case-reporting error) في أكتوبر 2020 (ابحث عن "PHE Excel error October 2020")
+- [*اختبار البرمجيات من الصفر إلى الاحتراف في عصر الذكاء الاصطناعي (Software Testing: Zero to Hero in the AI Era)*، الدرس 4.3 — اختبار الموثوقية والبيانات (Reliability and data testing)](../testing/index.ar.html#/4.3) — منظور الاختبار (testing) لهذا الموضوع
 
 ---
 

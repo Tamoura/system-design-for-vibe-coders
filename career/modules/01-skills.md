@@ -256,6 +256,7 @@ Khalid's review questions for each row: "Could a stranger verify this in two min
 - pytest documentation — https://docs.pytest.org/
 - Stack Overflow Help Center, How to create a Minimal, Reproducible Example — https://stackoverflow.com/help/minimal-reproducible-example
 - [*System Design for Vibe Coders*, lesson F.3 — Versions, repos, and deploys — how software moves](../vibe/index.en.html#lF-3)
+- [*Software Testing: Zero to Hero in the AI Era*, lesson 2.1 — Unit testing and TDD](../testing/index.html#/2.1) — the testing view of this topic
 
 ---
 

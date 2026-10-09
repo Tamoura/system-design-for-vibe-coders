@@ -464,6 +464,7 @@ flowchart TD
 - [*هندسة البيانات والتحليلات: من الصفر إلى الاحتراف (Data Engineering & Analytics: Zero to Hero)*، الوحدة 1 — SQL ونمذجة البيانات (SQL and data modelling)](../data/index.ar.html#/1.1)
 - [*السحابة وDevOps: من الصفر إلى الاحتراف (Cloud & DevOps: Zero to Hero)*، الوحدة 1 — الأسس (Foundations)](../cloud/index.ar.html#/1.1)
 - [*تشغيل وكلاء الذكاء الاصطناعي في بيئة الإنتاج (Running AI Agents in Production)*، المستوى 2 — مهندس الوكلاء (Agent Engineer)](../agentic/learning-path.ar.html#level-2-agent-engineer)
+- [*اختبار البرمجيات من الصفر إلى الاحتراف في عصر الذكاء الاصطناعي (Software Testing: Zero to Hero in the AI Era)*، الدرس 8.2 — مسار الاختبار المهني: الأدوار والشهادات والمقابلات ومعرض الأعمال (The testing career: roles, certifications, interviews and a portfolio)](../testing/index.ar.html#/8.2) — منظور الاختبار (testing) لهذا الموضوع
 
 ---
 
