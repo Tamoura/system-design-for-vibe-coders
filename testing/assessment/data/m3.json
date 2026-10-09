@@ -1,0 +1,135 @@
+{
+ "area": "m3",
+ "questions": [
+  {
+   "id": "m3-1",
+   "level": 1,
+   "lesson": "3.1",
+   "q": {
+    "en": "Nada sends `POST /transfers` with the amount `1e30` and the API answers HTTP 500. Tariq says no customer would ever type that amount. How should the result be read?",
+    "ar": "ترسل ندى طلبًا (request) `POST /transfers` بالمبلغ (amount) `1e30` فترد واجهة البرمجة (API) برمز الحالة (status code) HTTP 500. يقول طارق إن أي عميل (customer) لن يكتب هذا المبلغ أبدًا. كيف ينبغي أن تقرأ ندى النتيجة (the result)؟"
+   },
+   "o": {
+    "en": [
+     "A documentation gap: once 500 is listed in the OpenAPI document, the behaviour is correct",
+     "A caller mistake: the amount is absurd, so a server error is a fair answer to it",
+     "An API defect: no client input should produce a 5xx, so it must be rejected with a 4xx",
+     "A low-priority finding: the web page validates amounts, so real customers never send it"
+    ],
+    "ar": [
+     "فجوة في التوثيق (documentation gap): بعد إدراج 500 في وثيقة OpenAPI (OpenAPI document) يصبح السلوك (behaviour) صحيحًا",
+     "خطأ من المستدعي (caller mistake): المبلغ غير معقول (absurd)، فخطأ الخادم (server error) ردّ عادل عليه",
+     "عيب في الواجهة (API defect): لا يجوز أن ينتج أي إدخال من العميل (client input) حالة 5xx، فيجب رفضه بحالة 4xx",
+     "ملاحظة منخفضة الأولوية (low-priority finding): صفحة الويب (web page) تتحقق من المبالغ، فلا يرسلها العملاء الحقيقيون أبدًا"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "No client input should produce a 5xx: the API must reject the amount with a 4xx, here 422, whoever sends it. The web page's own validation is the tempting excuse, but any caller can send anything to the API, and listing 500 in the OpenAPI document would only make the crash official.",
+    "ar": "لا يجوز أن ينتج أي إدخال من العميل (client input) استجابة (response) 5xx، فيجب أن ترفض الواجهة المبلغ (amount) بحالة 4xx، وهي هنا 422، أيًّا كان المرسِل. وتحقق الصفحة الذاتي (the page's own validation) هو العذر المغري، لكن أي مستدعٍ (caller) يستطيع إرسال أي شيء إلى الواجهة (API)، ولن يفعل إدراج 500 في وثيقة OpenAPI (OpenAPI document) سوى أن يجعل الانهيار (crash) رسميًا."
+   }
+  },
+  {
+   "id": "m3-2",
+   "level": 2,
+   "lesson": "3.2",
+   "q": {
+    "en": "Bilal writes two Playwright tests. Each reads the balance of `acc-1` through the API, sends 250.00 and asserts that the balance fell by exactly 250.00. Each passes alone, but with `--workers=4` one of them fails now and then. What is the best fix?",
+    "ar": "يكتب بلال اختبارين (two tests) بأداة Playwright. يقرأ كل منهما رصيد (balance) الحساب `acc-1` عبر الواجهة (API)، ويرسل 250.00، ويتحقق (asserts) من أن الرصيد انخفض بمقدار 250.00 بالضبط. ينجح كل منهما منفردًا (alone)، لكن مع `--workers=4` يفشل أحدهما أحيانًا. ما أفضل إصلاح (best fix)؟"
+   },
+   "o": {
+    "en": [
+     "Assert only on what each test owns, such as its own transfer read back by its id",
+     "Allow one CI retry, so a failed run passes the second time and the build stays green",
+     "Add a short wait after the send, so the other test's debit has landed before the check",
+     "Set the suite to one worker, so the two tests can never run at the same time"
+    ],
+    "ar": [
+     "تحقق (assert) فقط مما يملكه كل اختبار (what each test owns)، كحوالته الخاصة (own transfer) المقروءة بمعرّفها (id)",
+     "اسمح بإعادة محاولة واحدة (one retry) في CI، فينجح التشغيل الفاشل في المرة الثانية ويبقى البناء أخضر (green)",
+     "أضف انتظارًا قصيرًا (short wait) بعد الإرسال، فيكون خصم الاختبار الآخر (the other test's debit) قد استقر قبل الفحص",
+     "اضبط مجموعة الاختبارات (test suite) على عامل واحد (one worker)، فلا يعمل الاختباران في اللحظة نفسها أبدًا"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "The browser context is fresh but the server's data is shared, so parallel tests sending from the same account change each other's balance; asserting only on what a test owns removes that coupling. A retry or a wait only hides the flakiness, and one worker gives up the speed without fixing the tests.",
+    "ar": "سياق المتصفح (browser context) جديد لكن بيانات الخادم (server's data) مشتركة، فيغيّر اختباران متوازيان (parallel tests) يرسلان من الحساب نفسه رصيد أحدهما الآخر؛ والتحقق مما يملكه الاختبار فقط يزيل هذا الارتباط (coupling). أما إعادة المحاولة (retry) أو الانتظار (wait) فيخفيان عدم استقرار الاختبار (flakiness) فقط، والعامل الواحد (one worker) يضيّع السرعة دون إصلاح الاختبارات."
+   }
+  },
+  {
+   "id": "m3-3",
+   "level": 2,
+   "lesson": "3.3",
+   "q": {
+    "en": "Najm's translation spreadsheet is approved. Amal's pseudo-localisation test then wraps every catalogue string in brackets and stretches it by 40%, yet two account names on the page still read `Current account (QAR)` and `Euro account (EUR)`. What does this show?",
+    "ar": "جدول الترجمة (translation spreadsheet) في بنك نجم معتمد. ثم يلفّ اختبار أمل للتوطين الزائف (pseudo-localisation test) كل نص في الفهرس (catalogue string) بين أقواس (brackets) ويمدّه بنسبة 40%، ومع ذلك يظل اسما حسابين (account names) في الصفحة يُقرآن `Current account (QAR)` و`Euro account (EUR)`. ماذا يُظهر هذا؟"
+   },
+   "o": {
+    "en": [
+     "They are legitimate constants, like currency codes, so the test should simply skip them",
+     "They overflow the layout, so the stretched text was clipped and the brackets were then cut off",
+     "They await a translator, so the catalogue still needs an Arabic entry for each of them",
+     "They are hard-coded in the page, not read from the catalogue, so Arabic users see English"
+    ],
+    "ar": [
+     "هما ثابتان مشروعان (legitimate constants) مثل رموز العملات (currency codes)، فيتجاهلهما الاختبار ببساطة (ignore them)",
+     "هما يفيضان عن التصميم (overflow the layout)، فاقتُطع النص الممدود (stretched text) وقُطعت الأقواس (brackets)",
+     "هما بانتظار مترجم (await a translator)، فيحتاج الفهرس (catalogue) إلى إدخال عربي (Arabic entry) لكل منهما",
+     "هما مكتوبان مباشرةً في الصفحة (hard-coded) لا من الفهرس (catalogue)، فيرى مستخدمو العربية (Arabic users) الإنجليزية"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Pseudo-localisation changes only what the catalogue supplies, so plain English means a string hard-coded in the page, which no translator ever sees; only things like currency codes are legitimately constant. Approving the spreadsheet cannot fix text that is not in it.",
+    "ar": "لا يغيّر التوطين الزائف (pseudo-localisation) إلا ما يأتي من الفهرس (catalogue)، فبقاء الإنجليزية كما هي يعني نصًّا مكتوبًا مباشرةً في الصفحة (hard-coded string) لا يراه أي مترجم (translator)؛ وحدها أمور كرموز العملات (currency codes) ثابتة بحق (legitimately constant). واعتماد جدول الترجمة (translation spreadsheet) لا يصلح نصًّا ليس فيه."
+   }
+  },
+  {
+   "id": "m3-4",
+   "level": 3,
+   "lesson": "3.1",
+   "q": {
+    "en": "Hamad's squad wraps a lock around `submit()`. Nada's concurrent double-submit test, parked with `xfail(strict=True)`, now passes and turns the suite red. Maha wants to merge. What is the best response?",
+    "ar": "يضع فريق حمد قفلًا (lock) حول الدالة `submit()`. فيجتاز الآن اختبار ندى للإرسال المزدوج المتزامن (concurrent double-submit test)، الذي علّقته (parked) بـ `xfail(strict=True)`، ويصبح تشغيل مجموعة الاختبارات (test suite) أحمر (red). تريد مها الدمج (merge). ما أفضل استجابة (best response)؟"
+   },
+   "o": {
+    "en": [
+     "Restore the xfail, since a test that unexpectedly passes is unreliable and should not be allowed to block the merge",
+     "Remove the xfail once repeated runs pass and the seeded bug still fails it, and note the lock guards one process only",
+     "Close the defect as fixed, since a lock around `submit()` removes the check-then-act race on every server that runs the code",
+     "Cut the test to one attempt, since the lock removed the race and keeping 100 attempts now only slows down the whole suite"
+    ],
+    "ar": [
+     "أعد وضع `xfail`، فالاختبار الذي ينجح فجأة (unexpectedly passes) غير موثوق ولا ينبغي أن يعطّل الدمج (block the merge)",
+     "أزل `xfail` بعد أن تنجح تشغيلات متكررة (repeated runs) ويظل العيب المزروع (seeded bug) يُفشله، ودوّن أن القفل يحمي عملية واحدة",
+     "أغلق العيب (defect) على أنه مُصلَح، فالقفل حول `submit()` يزيل سباق التحقق ثم التنفيذ (check-then-act race) في كل خادم (server)",
+     "اختصر الاختبار إلى محاولة واحدة (one attempt)، فالقفل أزال السباق (race) ولم تعد 100 محاولة تفعل سوى إبطاء المجموعة (suite)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "A strict xfail turns the suite red the day the defect is fixed, so removing it is the intended step, provided the test passes repeatedly and still fails with the seeded bug switched on. A lock guards one process while production runs several, so the unique constraint on `(user, key)` is the real fix; closing the defect now would hide that.",
+    "ar": "يحوّل `xfail` الصارم (strict xfail) المجموعة (suite) إلى الأحمر (red) في اليوم الذي يُصلَح فيه العيب (defect)، فإزالته هي الخطوة المقصودة، بشرط أن ينجح الاختبار مرارًا ويظل يفشل عند تفعيل العيب المزروع (seeded bug). والقفل (lock) يحمي عملية واحدة (one process) بينما يشغّل الإنتاج (production) عدة عمليات، فالإصلاح الحقيقي هو القيد الفريد (unique constraint) على `(user, key)`؛ وإغلاق العيب الآن سيخفي ذلك."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m3-e1",
+   "lesson": "3.2",
+   "text": {
+    "en": "I have run the one-click test from lesson 3.2 on a copy of the sample with `--trace on`, opened the trace, and filed a bug report with a minimal reproduction, the two `Idempotency-Key` values from the trace and a suggested fix.",
+    "ar": "شغّلتُ اختبار النقرة الواحدة (one-click test) من الدرس 3.2 على نسخة من النظام النموذجي (sample system) مع `--trace on`، وفتحتُ أثر التنفيذ (trace)، وكتبتُ تقرير عيب (bug report) فيه إعادة إنتاج مصغّرة (minimal reproduction) وقيمتا `Idempotency-Key` المختلفتان من الأثر وإصلاح مقترح (suggested fix)."
+   }
+  },
+  {
+   "id": "m3-e2",
+   "lesson": "3.3",
+   "text": {
+    "en": "I have audited `/app` and `/app?lang=ar` with an axe scan plus keyboard, 320 px reflow and contrast checks by hand, and written a table of pass or fail results by WCAG criterion that lists what axe alone missed.",
+    "ar": "دقّقتُ (audited) الصفحتين `/app` و`/app?lang=ar` بفحص axe مع فحوص يدوية (manual checks) للوحة المفاتيح (keyboard) وإعادة التدفق (reflow) عند 320 px والتباين (contrast)، وكتبتُ جدولًا بنتائج النجاح والفشل (pass or fail) حسب معيار WCAG يسرد ما فاته axe وحده (what axe alone missed)."
+   }
+  }
+ ]
+}

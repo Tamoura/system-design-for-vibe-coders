@@ -1,0 +1,135 @@
+{
+ "area": "m5",
+ "questions": [
+  {
+   "id": "m5-1",
+   "level": 1,
+   "lesson": "5.1",
+   "q": {
+    "en": "Tariq's squad has two days of testing time left before a Transfers release, and Nada cannot test everything. Following the test strategy, how should she decide where the hours go?",
+    "ar": "لدى فريق طارق (Tariq's squad) يومان متبقيان من وقت الاختبار (testing time) قبل إصدار (release) التحويلات (Transfers)، ولا تستطيع ندى اختبار كل شيء (test everything). وفق استراتيجية الاختبار (test strategy)، كيف تقرر أين تُنفق الساعات (where the hours go)؟"
+   },
+   "o": {
+    "en": [
+     "Spread the hours evenly over every area, so that no area is left untested",
+     "Put the hours where a defect is likeliest and would hurt most if it escaped",
+     "Begin with the areas that are quickest to automate, so as to run the most tests",
+     "Follow the order of the requirements document, so that nothing is skipped"
+    ],
+    "ar": [
+     "توزيع الساعات بالتساوي (evenly) على كل منطقة (every area)، حتى لا تبقى منطقة دون اختبار (untested)",
+     "وضع الساعات حيث يكون العيب (defect) أرجح (likeliest) وأشد ضررًا (hurt most) إن أفلت (escaped)",
+     "البدء بالمناطق الأسرع أتمتةً (quickest to automate) لتشغيل أكبر عدد من الاختبارات (most tests)",
+     "اتباع ترتيب وثيقة المتطلبات (requirements document) حتى لا يُغفَل شيء (nothing is skipped)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "Risk = likelihood × impact, so effort goes where failure is most probable and most costly: duplicate submit earns a deep suite and the statement layout a smoke check. An even spread feels fair, but it gives the statement layout the same effort as duplicate submit.",
+    "ar": "المخاطرة = الاحتمال × الأثر (risk = likelihood × impact)، فيذهب الجهد إلى حيث يكون الفشل (failure) أرجح وأكثر كلفة: يستحق تكرار الإرسال (duplicate submit) مجموعة اختبارات عميقة (deep suite) ويكفي لتخطيط كشف الحساب (statement layout) فحص دخان (smoke check). أما التوزيع المتساوي (even spread) فيبدو عادلًا، لكنه يمنح تخطيط كشف الحساب جهدًا مساويًا لتكرار الإرسال."
+   }
+  },
+  {
+   "id": "m5-2",
+   "level": 2,
+   "lesson": "5.2",
+   "q": {
+    "en": "Hamad's squad adds a kill switch, the flag `international-transfers`, to the international transfer feature, which is already live. The flag service is sometimes unreachable. What should the code and its tests do?",
+    "ar": "يضيف فريق حمد (Hamad's squad) مفتاح إيقاف طارئ (kill switch) إلى ميزة التحويل الدولي (international transfer) الحيّة بالفعل (already live)، وهو مفتاح الميزة (feature flag) `international-transfers`. ولا يمكن الوصول إلى خدمة المفاتيح (flag service) أحيانًا (sometimes unreachable). ماذا ينبغي أن تفعل الشيفرة واختباراتها؟"
+   },
+   "o": {
+    "en": [
+     "Default to off in the code, so that an outage fails closed and the feature is disabled",
+     "Raise an error when the service is unreachable, so that the outage is loud and fixed fast",
+     "Default to on in the code, and test only the on state because off is just the rollback",
+     "Default to on in the code, and test both states as well as a provider that knows nothing"
+    ],
+    "ar": [
+     "جعل القيمة الافتراضية (default) «معطَّل» (off) في الشيفرة، فيفشل النظام مغلقًا (fails closed) عند الانقطاع (outage) وتتعطل الميزة",
+     "رفع خطأ (raise an error) في الشيفرة عند تعذر الوصول إلى الخدمة (unreachable)، ليكون الانقطاع ظاهرًا (loud) ويُصلَح سريعًا (fixed fast)",
+     "جعل القيمة الافتراضية (default) «مفعَّل» (on) في الشيفرة، واختبار حالة التفعيل وحدها (only the on state) لأن الإيقاف مجرد تراجع (rollback)",
+     "جعل القيمة الافتراضية (default) «مفعَّل» (on)، واختبار الحالتين (both states) مع مزوِّد لا يعرف شيئًا (a provider that knows nothing)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "A kill switch on a live feature must default to on, so a flag-service outage does not switch off what customers use, and both states plus a provider that knows nothing need tests. Defaulting to off looks safe but turns every outage into a transfer outage, and testing only on skips the path you roll back to.",
+    "ar": "يجب أن تكون القيمة الافتراضية (default) لمفتاح الإيقاف الطارئ (kill switch) في ميزة حيّة (live feature) «مفعَّل» (on)، حتى لا يُطفئ انقطاع خدمة المفاتيح (flag service outage) ما يستخدمه العملاء، وتلزم اختبارات للحالتين (both states) وللمزوِّد الذي لا يعرف شيئًا (provider that knows nothing). أما الافتراضي «معطَّل» (off) فيبدو آمنًا (safe) لكنه يحوّل كل انقطاع إلى انقطاع في التحويلات (transfer outage)، واختبار حالة التفعيل وحدها (only on) يتجاهل المسار الذي يُرجَع إليه عند التراجع (rollback)."
+   }
+  },
+  {
+   "id": "m5-3",
+   "level": 2,
+   "lesson": "5.3",
+   "q": {
+    "en": "A transfer sent just after the 15:00 cut-off got the wrong value date in production. Amal gives Nada one 90-minute session on the cut-off. Which charter is best?",
+    "ar": "حصل تحويل أُرسل مباشرةً بعد وقت الإغلاق (cut-off) عند الساعة 15:00 على تاريخ قيمة (value date) خاطئ في الإنتاج (production). تمنح أمل ندى جلسة واحدة مدتها 90 دقيقة (90-minute session) لوقت الإغلاق. أي ميثاق جلسة (charter) هو الأفضل؟"
+   },
+   "o": {
+    "en": [
+     "Explore transfers sent around 15:00 on several days to discover how value dates are assigned",
+     "Test the transfer page for 90 minutes and then report to the team whatever looks wrong to you",
+     "Re-run the saved cut-off scenarios with new data to confirm that each one still passes today",
+     "Explore the whole Najm Mobile app on every device to discover any defect before the release"
+    ],
+    "ar": [
+     "استكشاف (explore) تحويلات مُرسلة حول الساعة 15:00 في عدة أيام (several days) لاكتشاف كيفية تحديد تاريخ القيمة (value date)",
+     "اختبار صفحة التحويل (transfer page) مدة 90 دقيقة (90 minutes) ثم إبلاغ الفريق بكل ما يبدو خاطئًا (looks wrong)",
+     "إعادة تشغيل سيناريوهات وقت الإغلاق المحفوظة (saved scenarios) ببيانات جديدة (new data) للتأكد من أنها ما زالت تنجح (still passes)",
+     "استكشاف (explore) تطبيق نجم للهاتف (Najm Mobile) كله على كل جهاز (every device) لاكتشاف أي عيب (defect) قبل الإصدار"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "A charter states a mission, Explore X with Y to discover Z, narrow enough for one time-boxed session, and this one targets the incident's risk. Re-running saved scenarios is scripted testing that cannot find what nobody thought to script, and \"test the transfer page\" names no mission.",
+    "ar": "يحدد ميثاق الجلسة (charter) مهمة على صيغة «استكشف X باستخدام Y لتكتشف Z» (Explore X with Y to discover Z)، ضيقة بما يكفي لجلسة واحدة محددة المدة (time-boxed session)، وهذا الميثاق يستهدف خطر الحادثة (incident). أما إعادة تشغيل السيناريوهات المحفوظة (saved scenarios) فاختبار مكتوب مسبقًا (scripted testing) لا يجد ما لم يخطر ببال أحد أن يكتبه، وعبارة «اختبر صفحة التحويل» (test the transfer page) لا تحدد مهمة (names no mission)."
+   }
+  },
+  {
+   "id": "m5-4",
+   "level": 3,
+   "lesson": "5.1",
+   "q": {
+    "en": "Release 2026.11 of Transfers is due on Thursday. All five Deep areas have green evidence on this build and the rollback is rehearsed, but two Sev2 defects are open, in Notification text and Statement PDF layout, and nobody has accepted them. Tariq wants to ship. What should Rashid's report say?",
+    "ar": "يحين موعد الإصدار (release) 2026.11 من التحويلات (Transfers) يوم الخميس. للمناطق العميقة (Deep areas) الخمس كلها دليل أخضر (green evidence) على هذا البناء (build)، وقد جرى التدرب على التراجع (rollback rehearsed)، لكن عيبين (defects) من النوع Sev2 ما زالا مفتوحين في نص الإشعارات (Notification text) وتخطيط كشف الحساب PDF (Statement PDF layout)، ولم يقبل بهما أحد (nobody has accepted them). يريد طارق إطلاق الإصدار (ship). ماذا ينبغي أن يقول تقرير راشد؟"
+   },
+   "o": {
+    "en": [
+     "Ship, since every Deep area is green and the two Sev2s sit in low-risk areas",
+     "Hold, since the exit criteria allow no open Sev2 under any circumstances",
+     "Ship, once a named owner has accepted each of the two open Sev2s in writing",
+     "Ship, and report the overall pass rate, since stakeholders want one number"
+    ],
+    "ar": [
+     "الإطلاق (ship) لأن كل منطقة عميقة (Deep area) خضراء وعيبا Sev2 يقعان في مناطق منخفضة الخطر (low-risk areas)",
+     "الإيقاف (hold) لأن معايير الخروج (exit criteria) لا تسمح بأي Sev2 مفتوح في أي ظرف (under any circumstances)",
+     "الإطلاق (ship) متى قبِل مالك مسمّى (named owner) كلًّا من عيبَي Sev2 المفتوحين (open) كتابةً (in writing) مسبقًا",
+     "الإطلاق (ship) مع ذكر نسبة النجاح الإجمالية (overall pass rate) لأن أصحاب المصلحة (stakeholders) يريدون رقمًا واحدًا"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Exit criteria are evidence, not a date: no open Sev1 or Sev2 unless a named owner accepts it in writing, and the dashboard lists each accepted risk with its expiry date. Green Deep areas do not waive that rule, and a flat hold ignores that the rule allows a named acceptance.",
+    "ar": "معايير الخروج (exit criteria) أدلة لا موعد (evidence, not a date): لا Sev1 أو Sev2 مفتوح إلا إذا قبِله مالك مسمّى (named owner) كتابةً، وتسرد لوحة التقرير (dashboard) كل مخاطرة مقبولة (accepted risk) مع تاريخ انتهائها (expiry date). خضرة المناطق العميقة (green Deep areas) لا تعفي من هذه القاعدة، والإيقاف المطلق يتجاهل أن القاعدة تتيح القبول المسمّى."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m5-e1",
+   "lesson": "5.2",
+   "text": {
+    "en": "I have added a deliberately flaky Playwright test tagged @quarantine, kept it out of the blocking run, and run tools/flake_gate.py until it named the retried test and the expired register entry and exited 1, then exited 0 once I set a future deadline.",
+    "ar": "أضفتُ اختبار Playwright غير مستقر (flaky test) عمدًا (deliberately) ووسمتُه `@quarantine`، وأبقيتُه خارج التشغيل المانع (blocking run)، وشغّلتُ `tools/flake_gate.py` حتى سمّى الاختبار المُعاد (retried test) والإدخال المنتهي في سجل الحجر (expired quarantine register entry) وخرج بالرمز 1، ثم بالرمز 0 بعد أن وضعتُ موعدًا نهائيًا مستقبليًا (future deadline)."
+   }
+  },
+  {
+   "id": "m5-e2",
+   "lesson": "5.3",
+   "text": {
+    "en": "I have run a time-boxed exploratory session on the sample's Transfers page from a written charter and written up at least three findings with steps someone else can follow, plus one question I could not answer alone.",
+    "ar": "أجريتُ جلسة استكشافية (exploratory session) محددة المدة (time-boxed) على صفحة التحويلات (Transfers page) في النظام النموذجي (sample system) انطلاقًا من ميثاق جلسة مكتوب (written charter)، ودوّنتُ ثلاث نتائج (findings) على الأقل بخطوات يستطيع شخص آخر اتباعها (steps someone else can follow)، مع سؤال واحد لم أستطع الإجابة عنه وحدي (a question I could not answer alone)."
+   }
+  }
+ ]
+}

@@ -1,0 +1,135 @@
+{
+  "area": "m7",
+  "questions": [
+    {
+      "id": "m7-1",
+      "level": 1,
+      "lesson": "7.1",
+      "q": {
+        "en": "Mariam is writing graders for three checks on Najm Assist replies: the daily limit amount is right, the limits document is cited, and the tone suits a worried customer. How should the graders be assigned?",
+        "ar": "تكتب مريم مقيِّمات (graders) لثلاثة فحوصات (checks) على ردود نجم أسيست (Najm Assist): أن مبلغ الحد اليومي (daily limit amount) صحيح، وأن وثيقة الحدود (limits document) مذكورة مصدرًا (cited)، وأن النبرة (tone) تناسب عميلًا قلقًا (worried customer). كيف تُوزَّع المقيِّمات على هذه الفحوصات؟"
+      },
+      "o": {
+        "en": [
+          "A single judge model scores all three, reading the whole reply",
+          "Embedding similarity to a reference reply, with one threshold",
+          "Code checks for amount and source, and a judge for tone alone",
+          "Human review of every reply on all three, before each release"
+        ],
+        "ar": [
+          "نموذج لغوي حَكَم واحد (single judge model) يقيّم الثلاثة كلها، فيقرأ الرد كاملًا (whole reply)",
+          "تشابه التضمينات (embedding similarity) مع رد مرجعي (reference reply) وعتبة واحدة (one threshold)",
+          "فحوصات برمجية (code checks) للمبلغ والمصدر (amount and source)، وحَكَم (judge) للنبرة وحدها",
+          "مراجعة بشرية (human review) لكل رد في الثلاثة كلها، قبل كل إصدار (before each release)"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "The amount and the source are facts that code can check cheaply and exactly, so the judge, once validated against human labels, is kept for tone, which code cannot decide. One judge for everything is the tempting shortcut, but a judge is itself an unreliable model and must never decide amounts or codes.",
+        "ar": "المبلغ والمصدر حقيقتان (facts) يفحصهما الكود (code) بدقة وبكلفة زهيدة، فيُترك الحَكَم (judge)، بعد التحقق منه مقابل تصنيفات بشرية (human labels)، للنبرة (tone) التي لا يحسمها الكود. أما حَكَم واحد لكل شيء فهو الاختصار المغري (tempting shortcut)، لكنه نموذج غير موثوق بذاته ولا يجوز أن يحسم المبالغ أو الرموز (amounts or codes)."
+      }
+    },
+    {
+      "id": "m7-2",
+      "level": 2,
+      "lesson": "7.2",
+      "q": {
+        "en": "Maha's test for the card-freeze flow sends “Please freeze card-1” and checks that the reply contains “Please confirm”. After a refactor, Assist calls freeze_card at once and still prints that same sentence, yet the test stays green. What should the test also assert?",
+        "ar": "يرسل اختبار مها (Maha's test) لمسار تجميد البطاقة (card-freeze flow) الرسالة «Please freeze card-1» ويتحقق (checks) أن الرد (reply) يتضمن «Please confirm». وبعد إعادة هيكلة (refactor) يستدعي نجم أسيست (Najm Assist) الأداة freeze_card فورًا (at once) ويطبع الجملة نفسها، ومع ذلك يبقى الاختبار أخضر (stays green). ماذا ينبغي أن يؤكّده الاختبار (assert) أيضًا؟"
+      },
+      "o": {
+        "en": [
+          "That no tool was called and no card froze before confirmation",
+          "That the reply names card-1 and is worded as a clear question",
+          "That a judge model scores the confirmation request as polite",
+          "That the reply text is identical across ten runs at temperature 0"
+        ],
+        "ar": [
+          "ألّا يوجد استدعاء أداة (tool call) وألّا تُجمَّد بطاقة (card frozen) قبل ضغط التأكيد",
+          "أن يذكر الرد البطاقة card-1 (names the card) وأن يُصاغ سؤالًا واضحًا (clear question)",
+          "أن يقيّم نموذج حَكَم (judge model) طلب التأكيد (confirmation request) بأنه مهذب (polite)",
+          "أن يتطابق نص الرد (reply text) في عشرة تشغيلات عند درجة الحرارة 0 (temperature 0)"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "The harm is in the call and the state, so assert that tool_calls is empty and no card is frozen until the app's confirm signal arrives. More checks on the reply's words are the tempting fix, but the words were already right while the action was wrong.",
+        "ar": "الضرر في الاستدعاء (call) والحالة (state)، لذا يُفحص أن قائمة استدعاءات الأدوات (tool_calls) فارغة وأن لا بطاقة مجمَّدة حتى تصل إشارة التأكيد (confirm signal) من التطبيق. أما مزيد من فحوص ألفاظ الرد (reply's words) فهو الحل المغري (tempting fix)، لكن الألفاظ كانت صحيحة أصلًا بينما الفعل (action) خاطئ."
+      }
+    },
+    {
+      "id": "m7-3",
+      "level": 2,
+      "lesson": "7.3",
+      "q": {
+        "en": "Dana tightens the Najm Assist guardrail until all twelve cases in Mariam's attack set are blocked. A week later support reports that customers writing “My card was stolen and I need to stop it now” are told “I can't find that”. Which practice would have caught this before release?",
+        "ar": "تشدّد دانة الضوابط الوقائية (guardrail) في نجم أسيست (Najm Assist) حتى تُحجب (blocked) كل الحالات (cases) الاثنتي عشرة في مجموعة هجمات مريم (Mariam's attack set). وبعد أسبوع يبلّغ الدعم (support) أن عملاء (customers) يكتبون «My card was stolen and I need to stop it now» يُقال لهم «I can't find that». أي ممارسة (practice) كانت ستكشف ذلك قبل الإطلاق (before release)؟"
+      },
+      "o": {
+        "en": [
+          "A longer attack list from public sources, to catch more patterns",
+          "A tighter floor on the attack category, held at 100% blocked",
+          "A judge model that rates how polite each refusal sounds",
+          "Benign requests that sound alarming, tracked beside the attacks"
+        ],
+        "ar": [
+          "قائمة هجمات أطول (longer attack list) من مصادر عامة، لحجب أنماط أكثر (more patterns)",
+          "حدّ أدنى أشد (tighter floor) لفئة الهجمات (attack category) يبقى عند 100% محجوبة",
+          "نموذج حَكَم (judge model) يقيّم مدى لباقة كل رفض (how polite each refusal sounds)",
+          "طلبات سليمة تبدو مقلقة (benign requests that sound alarming) تُتابَع بجانب الهجمات"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Over-refusal cases, benign requests that sound dangerous, show when a guardrail tuned only to block attacks starts refusing real customers, so both rates are tracked together. A longer attack list is the tempting answer, but it pushes the guardrail further toward refusing.",
+        "ar": "تكشف حالات الرفض المفرط (over-refusal cases)، وهي طلبات سليمة تبدو خطيرة (benign requests that sound dangerous)، متى بدأ ضابط وقائي (guardrail) مضبوط على حجب الهجمات (blocking attacks) وحده يرفض عملاء حقيقيين (real customers)، ولذلك يُتابَع المعدلان معًا (both rates). أما قائمة هجمات أطول (longer attack list) فهي الإجابة المغرية (tempting answer)، لكنها تدفع الضابط أكثر نحو الرفض (refusing)."
+      }
+    },
+    {
+      "id": "m7-4",
+      "level": 3,
+      "lesson": "7.2",
+      "q": {
+        "en": "Customers who ask for the most they can send in one day get the cut-off time sentence from Najm Assist, and the logged sources show only the cut-off document. Amal fixes the context to the limits document, and the generator then answers 50,000 QAR at all ten seeds. Where does the defect live, and what should the team do?",
+        "ar": "يسأل عملاء عن أكبر مبلغ يمكنهم إرساله في يوم واحد (the most they can send in one day) فيعرض نجم أسيست (Najm Assist) جملة وقت الإغلاق (cut-off time)، وتُظهر سجلات المصادر (logged sources) وثيقة الإغلاق وحدها. تثبّت أمل السياق (context) على وثيقة الحدود (limits document)، فيجيب المولِّد (generator) بـ 50,000 QAR في كل البذور العشر (all ten seeds). أين يقع العيب (defect)، وماذا ينبغي للفريق أن يفعل؟"
+      },
+      "o": {
+        "en": [
+          "In generation: tighten the system prompt about quoting figures",
+          "In retrieval: add labelled queries and track recall@k and MRR",
+          "In sampling: set the temperature to 0 and trust one clean run",
+          "In the golden set: drop the case until its answer is stable"
+        ],
+        "ar": [
+          "في التوليد (generation): شدّد موجّه النظام (system prompt) بشأن نقل الأرقام (quoting figures)",
+          "في الاسترجاع (retrieval): استعلامات موسومة (labelled queries) وتتبّع الاستدعاء (recall@k) وMRR",
+          "في أخذ العيّنات (sampling): اضبط درجة الحرارة (temperature) على 0 واعتمد تشغيلًا نظيفًا واحدًا (one clean run)",
+          "في المجموعة المرجعية (golden set): احذف الحالة (drop the case) حتى يستقر جوابها (answer is stable)"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "With the context fixed the generator answers correctly at every seed, so the defect is upstream: the limits document never reached the model, and recall@k and MRR on labelled queries measure exactly that. Blaming the model or its sampling is tempting, but the fixed-context test rules both out.",
+        "ar": "ما دام المولِّد (generator) يجيب صحيحًا مع السياق المثبَّت (fixed context) في كل البذور، فالعيب سابق عليه (upstream): لم تصل وثيقة الحدود (limits document) إلى النموذج، والاستدعاء (recall@k) وMRR على استعلامات موسومة (labelled queries) يقيسان ذلك تمامًا. أما لوم النموذج أو أخذ العيّنات (sampling) فمغرٍ (tempting)، لكن اختبار السياق المثبَّت (fixed-context test) يستبعد الاثنين."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m7-e1",
+      "lesson": "7.1",
+      "text": {
+        "en": "I have written a baseline file and a gate test for the Najm Assist sample's golden set, run it with NAJM_AI_BUGS=hallucinate to see it fail on the right category, and named a seeded bug it misses.",
+        "ar": "كتبتُ ملف خط الأساس (baseline file) واختبار بوابة (gate test) للمجموعة المرجعية (golden set) في نجم أسيست (Najm Assist) بالنظام النموذجي (sample system)، وشغّلتُه مع `NAJM_AI_BUGS=hallucinate` فرأيتُه يفشل في الفئة الصحيحة (right category)، وسمّيتُ عيبًا مزروعًا (seeded bug) لا يكشفه."
+      }
+    },
+    {
+      "id": "m7-e2",
+      "lesson": "7.3",
+      "text": {
+        "en": "I have added a Population Stability Index alert at 0.1 on the top-source mix of 200 questions I wrote, and shown that it fires on a shifted mix and stays quiet on identical data.",
+        "ar": "أضفتُ تنبيهًا (alert) عند 0.1 على مؤشر استقرار المجتمع (Population Stability Index, PSI) لتوزيع المصدر الأول (top-source mix) في مئتي سؤال كتبتُها، وبيّنتُ أنه يعمل عند توزيع متغيّر (shifted mix) ويسكت مع بيانات مطابقة (identical data)."
+      }
+    }
+  ]
+}
