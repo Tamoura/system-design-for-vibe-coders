@@ -250,6 +250,7 @@ flowchart RL
 - Guo, C., Pleiss, G., Sun, Y. and Weinberger, K. Q. (2017), "On Calibration of Modern Neural Networks" — https://arxiv.org/abs/1706.04599
 - NIST AI Risk Management Framework 1.0 (the Measure function) — https://www.nist.gov/itl/ai-risk-management-framework
 - Google PAIR, People + AI Guidebook — https://pair.withgoogle.com/guidebook
+- [*اختبار البرمجيات من الصفر إلى الاحتراف في عصر الذكاء الاصطناعي (Software Testing: Zero to Hero in the AI Era)*، الدرس 7.1 — التقييمات الآلية: اختبار تطبيقات النماذج اللغوية (Evals: testing LLM applications)](../testing/index.ar.html#/7.1) — منظور الاختبار (testing) لهذا الموضوع
 
 ---
 

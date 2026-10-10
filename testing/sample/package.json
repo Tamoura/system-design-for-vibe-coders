@@ -1,0 +1,7 @@
+{
+  "name": "najm-transfers-sample",
+  "private": true,
+  "description": "Sample system under test for the Software Testing: Zero to Hero course",
+  "scripts": { "e2e": "playwright test --config e2e/playwright.config.ts" },
+  "devDependencies": { "@playwright/test": "^1.50.0" }
+}

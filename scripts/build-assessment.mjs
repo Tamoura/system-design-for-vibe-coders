@@ -128,6 +128,19 @@ const COURSES = [
         ['🟡 ممارس (Practitioner)', 'تستطيع وضع الخدمات في حاويات ونشرها وأتمتتها (automate). مارِس على عنقود محلي (local cluster) وضع علامات على الأدلة.'],
         ['🟠 مهندس منصات (Platform engineer)', 'تستطيع تشغيل الخدمات بموثوقية: الإطلاقات (releases)، وقابلية المراقبة (observability)، وأهداف مستوى الخدمة (SLOs)، والحوادث (incidents). أغلق الفجوات المتبقية.'],
         ['🔴 قائد منصات (Platform lead)', 'تعرف كل الوحدات ومارست معظمها تقريبًا. تستطيع قيادة ممارسة المنصات وهندسة الموثوقية (platform and SRE)، وتعليم غيرك.']] } },
+  { id: 'testing', src: 'testing/assessment', out: 'testing', reader: { en: 'index.html', ar: 'index.ar.html' }, mode: 'hash', store: 'testing', theme: 'testing-theme',
+    name: { en: 'Software Testing: Zero to Hero in the AI Era', ar: 'اختبار البرمجيات: من الصفر إلى الاحتراف في عصر الذكاء الاصطناعي (Software Testing: Zero to Hero in the AI Era)' }, brand: 'Software Testing',
+    unit: { en: 'module', ens: 'modules', ar: 'وحدة (module)', ars: 'وحدات (modules)' },
+    evidenceHint: { en: 'on your own machine with the course\'s sample system or your own project, with the result checked — never against systems you do not own or have written permission to test', ar: 'على جهازك (your own machine) باستخدام النظام النموذجي للدورة (sample system) أو مشروعك، مع التحقق من النتيجة، وليس أبدًا على أنظمة لا تملكها أو لا تملك إذنًا مكتوبًا باختبارها' },
+    levels: {
+      en: [['🟢 Aware', 'You know what testing is for and how it fits delivery. Next: test design, unit tests and the basics — start with the modules marked Not yet.'],
+        ['🟡 Practitioner', 'You can design and automate tests at several levels. Practise on the sample system and tick the evidence.'],
+        ['🟠 Quality engineer', 'You can build a suite that can fail for the right reasons, test non-functional qualities, and verify AI-written code. Close the remaining gaps.'],
+        ['🔴 Quality lead', 'You know every module and have practised nearly all of it, including testing AI systems. You can set a quality strategy — and teach others.']],
+      ar: [['🟢 مُدرِك (Aware)', 'تعرف الغاية من الاختبار (testing) وكيف يتصل بالتسليم (delivery). الخطوة التالية: تصميم الاختبارات (test design) واختبارات الوحدة (unit tests) والأساسيات؛ ابدأ بالوحدات الموسومة «ليس بعد (Not yet)».'],
+        ['🟡 ممارس (Practitioner)', 'تستطيع تصميم الاختبارات وأتمتتها على عدة مستويات (levels). مارِس على النظام النموذجي (sample system) وضع علامات على الأدلة.'],
+        ['🟠 مهندس جودة (Quality engineer)', 'تستطيع بناء مجموعة اختبارات تفشل لأسباب صحيحة، واختبار الخصائص غير الوظيفية (non-functional qualities)، والتحقق من الشيفرة المكتوبة بالذكاء الاصطناعي (AI-written code). أغلق الفجوات المتبقية.'],
+        ['🔴 قائد جودة (Quality lead)', 'تعرف كل الوحدات ومارست معظمها تقريبًا، بما فيها اختبار أنظمة الذكاء الاصطناعي (testing AI systems). تستطيع وضع استراتيجية جودة (quality strategy)، وتعليم غيرك.']] } },
 ];
 
 /* ---------------------------------------------------------------- load + validate */

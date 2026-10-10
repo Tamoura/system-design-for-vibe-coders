@@ -158,5 +158,23 @@
       { "value": 155, "label": "practice questions" }
     ],
     "tags": ["CS · data · computer engineering grads", "Role paths"]
+  },
+  {
+    "slug": "testing",
+    "verb": "Test and verify",
+    "title": "Software Testing",
+    "subtitle": "Zero to Hero in the AI Era",
+    "titleAr": "اختبار البرمجيات — من الصفر إلى الاحتراف في عصر الذكاء الاصطناعي",
+    "color": "#b4d56b",
+    "hook": "Prove it *works.* Know *fast* when it *doesn't.*",
+    "topicsLabel": "Hands-on, with free tools",
+    "topics": ["Test design", "Unit & contract tests", "APIs & Playwright", "Performance & security", "AI-written code", "Evals for LLM apps"],
+    "stats": [
+      { "value": 9, "label": "modules" },
+      { "value": 27, "label": "lessons" },
+      { "value": 139, "label": "tools & techniques" },
+      { "value": 190, "label": "practice questions" }
+    ],
+    "tags": ["QA · SDET · quality", "Testing AI systems"]
   }
 ]

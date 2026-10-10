@@ -641,3 +641,4 @@ Good red-teams are **diverse** (security, domain, language, affected-community p
 - New York City Department of Consumer and Worker Protection (AEDT law) — https://www.nyc.gov/site/dca/index.page
 - ISO/IEC 42001:2023 — https://www.iso.org/standard/81230.html
 - IAPP AIGP Body of Knowledge — https://iapp.org/certify/aigp/
+- [*Software Testing: Zero to Hero in the AI Era*, lesson 7.3 — Safety, robustness, fairness and monitoring](../testing/index.html#/7.3) — the testing view of this topic

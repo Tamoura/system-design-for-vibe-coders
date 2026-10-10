@@ -299,6 +299,7 @@ Use your own GitHub account and a public practice repository; never an employer'
 - OCI image specification, annotations — https://github.com/opencontainers/image-spec/blob/main/annotations.md
 - The Twelve-Factor App — https://12factor.net/
 - Trunk-based development — https://trunkbaseddevelopment.com/
+- [*Software Testing: Zero to Hero in the AI Era*, lesson 5.2 — Testing in CI/CD and in production](../testing/index.html#/5.2) — the testing view of this topic
 
 ---
 

@@ -25,6 +25,8 @@
     "data:check": "node scripts/build-data.mjs --check",
     "cloud:build": "node scripts/build-cloud.mjs",
     "cloud:check": "node scripts/build-cloud.mjs --check",
+    "testing:build": "node scripts/build-testing.mjs",
+    "testing:check": "node scripts/build-testing.mjs --check",
     "videos:build": "node scripts/build-videos.mjs",
     "videos:check": "node scripts/build-videos.mjs --check",
     "videos:render": "node scripts/build-videos.mjs --render"

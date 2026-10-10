@@ -62,6 +62,9 @@ jobs:
       - name: Verify the cloud course output matches its markdown
         run: if [ -f cloud/index.html ]; then npm run cloud:check; else echo "cloud course not built yet — skipped"; fi
 
+      - name: Verify the testing course output matches its markdown
+        run: if [ -f testing/index.html ]; then npm run testing:check; else echo "testing course not built yet — skipped"; fi
+
       - name: Verify the agentic pages carry the site navigation
         run: node scripts/agentic-nav.mjs --check
 
@@ -77,7 +80,7 @@ jobs:
       - name: Assemble the site
         run: |
           # Course library: landing hub at root, each course in its own subpath.
-          mkdir -p _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai _site/career _site/data _site/cloud
+          mkdir -p _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai _site/career _site/data _site/cloud _site/testing
           cp landing.html _site/index.html
           # Course trailers (scripts/build-videos.mjs): played on the landing page and each course home
           mkdir -p _site/videos/renders _site/vibe/videos/renders
@@ -125,7 +128,13 @@ jobs:
                cloud/index.ar.html cloud/course.ar.html cloud/COURSE.ar.md cloud/TOOLKIT.ar.md \
                cloud/assessment.html cloud/assessment.ar.html _site/cloud/
           fi
-          ls -lh _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai _site/career _site/data _site/cloud
+          # Software Testing: Zero to Hero in the AI Era → /testing/ (once built)
+          if [ -f testing/index.html ]; then
+            cp testing/index.html testing/course.html testing/COURSE.md testing/TOOLKIT.md \
+               testing/index.ar.html testing/course.ar.html testing/COURSE.ar.md testing/TOOLKIT.ar.md \
+               testing/assessment.html testing/assessment.ar.html _site/testing/
+          fi
+          ls -lh _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai _site/career _site/data _site/cloud _site/testing
 
       # Every link on the assembled site, internal and external. Report only: a dead third-party
       # page should be fixed in the lesson, not block the deploy. Results are in the run summary.

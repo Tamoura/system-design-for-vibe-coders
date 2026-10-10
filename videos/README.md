@@ -15,6 +15,7 @@ No narration; 1920×1080, 30 fps, H.264.
 | Data Engineering & Analytics: Zero to Hero | [renders/data.mp4](renders/data.mp4) |
 | Cloud & DevOps: Zero to Hero | [renders/cloud.mp4](renders/cloud.mp4) |
 | From Graduate to Hired | [renders/career.mp4](renders/career.mp4) |
+| Software Testing: Zero to Hero in the AI Era | [renders/testing.mp4](renders/testing.mp4) |
 
 ## Structure of each trailer
 

@@ -641,3 +641,4 @@
 - إدارة حماية المستهلك والعامل في مدينة نيويورك (قانون أدوات قرارات التوظيف الآلية (AEDT law)، AEDT) — https://www.nyc.gov/site/dca/index.page
 - ISO/IEC 42001:2023 — https://www.iso.org/standard/81230.html
 - IAPP، مجال المعرفة (BoK) لشهادة AIGP — https://iapp.org/certify/aigp/
+- [*اختبار البرمجيات من الصفر إلى الاحتراف في عصر الذكاء الاصطناعي (Software Testing: Zero to Hero in the AI Era)*، الدرس 7.3 — السلامة والمتانة والعدالة والمراقبة (Safety, robustness, fairness and monitoring)](../testing/index.ar.html#/7.3) — منظور الاختبار (testing) لهذا الموضوع

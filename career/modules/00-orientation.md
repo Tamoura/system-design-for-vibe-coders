@@ -464,6 +464,7 @@ Dana's note in the margin: "Good choice for this market. Your modelling backgrou
 - [*Data Engineering & Analytics: Zero to Hero*, Module 1 — SQL and data modelling](../data/index.html#/1.1)
 - [*Cloud & DevOps: Zero to Hero*, Module 1 — Foundations](../cloud/index.html#/1.1)
 - [*Running AI Agents in Production*, Level 2 — Agent Engineer](../agentic/learning-path.html#level-2-agent-engineer)
+- [*Software Testing: Zero to Hero in the AI Era*, lesson 8.2 — The testing career: roles, certifications, interviews and a portfolio](../testing/index.html#/8.2) — the testing view of this topic
 
 ---
 
