@@ -428,7 +428,7 @@ newman run najm.postman_collection.json -e local.postman_environment.json --repo
 ## 📚 المراجع (References)
 - توثيق pytest (pytest documentation) — https://docs.pytest.org/
 - توثيق Hypothesis، المحرك وراء Schemathesis (Hypothesis documentation, the engine behind Schemathesis) — https://hypothesis.readthedocs.io/
-- مشروع OWASP لأمان واجهات البرمجة (OWASP API Security Project) — https://owasp.org/www-project-api-security/
+- مشروع OWASP لأمان واجهات البرمجة (OWASP API Security Project) — https://owasp.org/API-Security/
 - توثيق Pact، اختبار العقود الموجَّه بالمستهلك (Pact documentation, consumer-driven contract testing) — https://docs.pact.io/
 - Martin Fowler، عن البدائل الاختبارية واختبارات العقد (on test doubles and contract tests) — https://martinfowler.com/
 
