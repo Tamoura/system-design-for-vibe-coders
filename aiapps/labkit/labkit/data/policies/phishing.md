@@ -1,0 +1,1 @@
+Suspicious emails must be reported with the Report Phishing button, never forwarded. Staff who clicked a link or opened an attachment should call the Security Operations hotline at once; the device is isolated until it is checked.

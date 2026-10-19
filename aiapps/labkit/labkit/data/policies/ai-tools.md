@@ -1,0 +1,1 @@
+Staff may use the approved internal AI assistant for Internal data. External AI services must not receive Confidential or Restricted data, customer data, source code from regulated systems, or credentials. Every use of AI-generated content in customer communications needs human review.

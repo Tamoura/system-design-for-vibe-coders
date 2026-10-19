@@ -1,0 +1,1 @@
+Staff can request a new laptop through the IT Service Desk portal under Hardware > New device. Standard laptops are approved by the line manager and delivered within 5 business days. Engineering staff may request a high-spec model with a written justification from their engineering lead.
