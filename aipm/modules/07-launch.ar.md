@@ -231,6 +231,7 @@ flowchart TD
 - Beyer, B. et al., *Site Reliability Engineering* (Google)، فصول إدارة الحوادث ومراجعات ما بعد الحوادث (incident management and postmortem chapters) — https://sre.google/books/
 - NIST AI Risk Management Framework — https://www.nist.gov/itl/ai-risk-management-framework
 - EU AI Act، اللائحة (Regulation) (EU) 2024/1689 — https://eur-lex.europa.eu/eli/reg/2024/1689/oj
+- [*بناء تطبيقات الذكاء الاصطناعي والوكلاء من الصفر إلى الاحتراف (Building AI Applications & Agents: Zero to Hero)*، الدرس 13.2 — ضوابط المؤسسات وحزمة الحوكمة (Enterprise controls and the governance pack)](../aiapps/index.ar.html#/13.2) — منظور البناء والتسليم (build and ship) لهذا الموضوع
 
 ---
 

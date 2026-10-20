@@ -237,6 +237,7 @@ flowchart RL
 - توثيق GitHub Actions (GitHub Actions documentation) — https://docs.github.com/en/actions
 - [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 2.6 — نقرتان في وقت واحد: حالات التسابق والمعاملات والكتابات متساوية الأثر (Two clicks at once: races, transactions, and idempotent writes)](../vibe/index.ar.html#l2-6)
 - [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 9.4 — التحقق قبل الإنجاز (Verification before completion)](../vibe/index.ar.html#l9-4)
+- [*بناء تطبيقات الذكاء الاصطناعي والوكلاء من الصفر إلى الاحتراف (Building AI Applications & Agents: Zero to Hero)*، الدرس 16.1 — المشروع الختامي: خذ نجم ديسك من الاستكشاف إلى الإطلاق الفعلي (Capstone: take Najm Desk from discovery to go-live)](../aiapps/index.ar.html#/16.1) — منظور البناء والتسليم (build and ship) لهذا الموضوع
 
 ---
 

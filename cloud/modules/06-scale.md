@@ -772,3 +772,4 @@ Yousef's classifier now runs on vLLM with continuous batching and an 8-bit quant
 - FinOps Foundation (including FinOps for AI work) — https://www.finops.org/
 - Security for LLM applications: [*Secure AI & Application Security*, lesson 8.1 — The AI attack surface: OWASP Top 10 for LLM Applications and MITRE ATLAS](../secai/index.html#/8.1)
 - Operating agents in production: [*Running AI Agents in Production*, Level 3 — Production Engineer](../agentic/learning-path.html#level-3-production-engineer)
+- [*Building AI Applications & Agents: Zero to Hero*, lesson 14.2 — Cost, latency and reliability engineering](../aiapps/index.html#/14.2) — the build-and-ship view of this topic

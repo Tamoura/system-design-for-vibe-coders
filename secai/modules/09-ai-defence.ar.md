@@ -251,6 +251,7 @@ flowchart RL
 - Hines, K. et al. (2024)، «الدفاع ضد هجمات حقن الموجّهات غير المباشر بالتسليط» ("Defending Against Indirect Prompt Injection Attacks With Spotlighting") — https://arxiv.org/abs/2403.14720
 - Inan, H. et al. (2023)، «Llama Guard: ضابطٌ وقائي قائم على النماذج اللغوية الكبيرة لمدخلات المحادثات بين الإنسان والذكاء الاصطناعي ومخرجاتها» ("Llama Guard: LLM-based Input-Output Safeguard for Human-AI Conversations") — https://arxiv.org/abs/2312.06674
 - NIST AI 600-1، ملف تعريف الذكاء الاصطناعي التوليدي (Generative AI Profile) — https://doi.org/10.6028/NIST.AI.600-1
+- [*بناء تطبيقات الذكاء الاصطناعي والوكلاء من الصفر إلى الاحتراف (Building AI Applications & Agents: Zero to Hero)*، الدرس 13.1 — التهديدات والحواجز الوقائية: حقن الموجّه وصلاحيات الأدوات والموافقات (Threats and guardrails: prompt injection, tool permissions and approvals)](../aiapps/index.ar.html#/13.1) — منظور البناء والتسليم (build and ship) لهذا الموضوع
 
 ---
 
@@ -498,6 +499,7 @@ def freeze_card(session, card_last4: str) -> dict:
 - Beurer-Kellner, L. et al. (2025)، «أنماط تصميمٍ لتأمين وكلاء النماذج اللغوية الكبيرة ضد حقن الموجّهات» ("Design Patterns for Securing LLM Agents against Prompt Injections") — https://arxiv.org/abs/2506.08837
 - مواصفة بروتوكول سياق النموذج (Model Context Protocol specification)، بما فيها صفحات التفويض وأفضل الممارسات الأمنية (including its authorization and security best practices pages) — https://modelcontextprotocol.io
 - RFC 8693، تبادل الرموز المميزة في OAuth 2.0 (OAuth 2.0 Token Exchange) — https://www.rfc-editor.org/rfc/rfc8693
+- [*بناء تطبيقات الذكاء الاصطناعي والوكلاء من الصفر إلى الاحتراف (Building AI Applications & Agents: Zero to Hero)*، الدرس 10.1 — بروتوكول سياق النموذج وأقل الصلاحيات (The Model Context Protocol and least privilege)](../aiapps/index.ar.html#/10.1) — منظور البناء والتسليم (build and ship) لهذا الموضوع
 
 ---
 
@@ -744,6 +746,7 @@ hits = index.query(
 - Hines, K. وزملاؤه ⁦(et al.)⁩، 2024، ورقة "Defending Against Indirect Prompt Injection Attacks With Spotlighting" — https://arxiv.org/abs/2403.14720
 - Regulation (EU) 2016/679، اللائحة العامة لحماية البيانات (General Data Protection Regulation) — https://eur-lex.europa.eu/eli/reg/2016/679/oj
 - وثيقة NIST AI 600-1، ملف تعريف الذكاء الاصطناعي التوليدي (Generative AI Profile) — https://doi.org/10.6028/NIST.AI.600-1
+- [*بناء تطبيقات الذكاء الاصطناعي والوكلاء من الصفر إلى الاحتراف (Building AI Applications & Agents: Zero to Hero)*، الدرس 4.1 — التوليد المعزَّز بالاسترجاع: التضمينات والتقطيع والبحث الهجين ولماذا يفشل (RAG: embeddings, chunking, hybrid search and why it fails)](../aiapps/index.ar.html#/4.1) — منظور البناء والتسليم (build and ship) لهذا الموضوع
 
 ---
 

@@ -577,6 +577,7 @@ For a gentler introduction to monitoring stacks and alert hygiene, see [*System 
 - Prometheus, Alertmanager — https://prometheus.io/docs/alerting/latest/alertmanager/
 - OpenSLO specification — https://github.com/OpenSLO/OpenSLO
 - Regulation (EU) 2022/2554 (DORA) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj
+- [*Building AI Applications & Agents: Zero to Hero*, lesson 15.1 — Running an agent in production: observability, incidents and runbooks](../aiapps/index.html#/15.1) — the build-and-ship view of this topic
 
 ---
 

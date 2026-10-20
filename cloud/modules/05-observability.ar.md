@@ -577,6 +577,7 @@ flowchart RL
 - Prometheus، Alertmanager — https://prometheus.io/docs/alerting/latest/alertmanager/
 - مواصفة OpenSLO (OpenSLO specification) — https://github.com/OpenSLO/OpenSLO
 - اللائحة (EU) 2022/2554 (DORA) (Regulation (EU) 2022/2554 (DORA)) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj
+- [*بناء تطبيقات الذكاء الاصطناعي والوكلاء من الصفر إلى الاحتراف (Building AI Applications & Agents: Zero to Hero)*، الدرس 15.1 — تشغيل وكيل في الإنتاج: قابلية المراقبة والحوادث وأدلة التشغيل (Running an agent in production: observability, incidents and runbooks)](../aiapps/index.ar.html#/15.1) — منظور البناء والتسليم (build and ship) لهذا الموضوع
 
 ---
 

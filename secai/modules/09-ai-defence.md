@@ -251,6 +251,7 @@ Noura and Ali write the **Najm Assist Output Handling Standard v1**. Tariq (engi
 - Hines, K. et al. (2024), "Defending Against Indirect Prompt Injection Attacks With Spotlighting" — https://arxiv.org/abs/2403.14720
 - Inan, H. et al. (2023), "Llama Guard: LLM-based Input-Output Safeguard for Human-AI Conversations" — https://arxiv.org/abs/2312.06674
 - NIST AI 600-1, Generative AI Profile — https://doi.org/10.6028/NIST.AI.600-1
+- [*Building AI Applications & Agents: Zero to Hero*, lesson 13.1 — Threats and guardrails: prompt injection, tool permissions and approvals](../aiapps/index.html#/13.1) — the build-and-ship view of this topic
 
 ---
 
@@ -498,6 +499,7 @@ Noura, Tariq and Rania agree the **Najm Assist Tool Register v1**. No tool reach
 - Beurer-Kellner, L. et al. (2025), "Design Patterns for Securing LLM Agents against Prompt Injections" — https://arxiv.org/abs/2506.08837
 - Model Context Protocol specification, including its authorization and security best practices pages — https://modelcontextprotocol.io
 - RFC 8693, OAuth 2.0 Token Exchange — https://www.rfc-editor.org/rfc/rfc8693
+- [*Building AI Applications & Agents: Zero to Hero*, lesson 10.1 — The Model Context Protocol and least privilege](../aiapps/index.html#/10.1) — the build-and-ship view of this topic
 
 ---
 
@@ -744,6 +746,7 @@ The suite runs in CI with 40 ordinary and adversarial queries per persona. One f
 - Hines, K. et al. (2024), "Defending Against Indirect Prompt Injection Attacks With Spotlighting" — https://arxiv.org/abs/2403.14720
 - Regulation (EU) 2016/679, General Data Protection Regulation — https://eur-lex.europa.eu/eli/reg/2016/679/oj
 - NIST AI 600-1, Generative AI Profile — https://doi.org/10.6028/NIST.AI.600-1
+- [*Building AI Applications & Agents: Zero to Hero*, lesson 4.1 — RAG: embeddings, chunking, hybrid search and why it fails](../aiapps/index.html#/4.1) — the build-and-ship view of this topic
 
 ---
 

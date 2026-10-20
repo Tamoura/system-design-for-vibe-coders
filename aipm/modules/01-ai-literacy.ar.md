@@ -655,3 +655,4 @@ flowchart TD
 - Martin Zinkevich, *Rules of Machine Learning* (Google) — https://developers.google.com/machine-learning/guides/rules-of-ml
 - NIST AI Risk Management Framework (third-party and supply-chain considerations) — https://www.nist.gov/itl/ai-risk-management-framework
 - OWASP Top 10 for Large Language Model Applications — https://owasp.org/www-project-top-10-for-large-language-model-applications/
+- [*بناء تطبيقات الذكاء الاصطناعي والوكلاء من الصفر إلى الاحتراف (Building AI Applications & Agents: Zero to Hero)*، الدرس 4.1 — التوليد المعزَّز بالاسترجاع: التضمينات والتقطيع والبحث الهجين ولماذا يفشل (RAG: embeddings, chunking, hybrid search and why it fails)](../aiapps/index.ar.html#/4.1) — منظور البناء والتسليم (build and ship) لهذا الموضوع

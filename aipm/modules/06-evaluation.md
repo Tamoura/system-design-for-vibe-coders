@@ -510,6 +510,7 @@ Before the agent features of Najm Assist go to pilot, Faisal, Hessa and Dana pro
 - NIST AI 600-1, Generative AI Profile — https://doi.org/10.6028/NIST.AI.600-1
 - OWASP GenAI Security Project (Top 10 for LLM Applications) — https://genai.owasp.org
 - Microsoft PyRIT (open-source red-teaming toolkit) — https://github.com/Azure/PyRIT
+- [*Building AI Applications & Agents: Zero to Hero*, lesson 12.1 — Evaluating agents: eval sets, graders and regression gates](../aiapps/index.html#/12.1) — the build-and-ship view of this topic
 
 ---
 
