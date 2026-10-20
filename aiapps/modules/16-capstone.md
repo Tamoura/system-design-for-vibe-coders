@@ -705,14 +705,14 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 **21. A Najm Desk reply arrives with `stop_reason` set to `refusal` and no text to show, so Yara's chat window shows a blank bubble. What should the application do?**
 
-- A. Retry the same request until the model finally answers it
-- B. Show the user a clear message and log the stop details for the team
+- A. Resend it with a reworded prompt until the model gives an answer
+- B. Tell the user plainly and log the stop details for the team
 - C. Raise `max_tokens`, because a missing reply means it was cut off
 - D. Treat it like `end_turn` and show the reply as it came back
 
 <details><summary>Answer</summary>
 
-**B.** `refusal` means a safety classifier declined, so the app should tell the user plainly and record `stop_details` (which can be None). Retrying the same request will not turn a refusal into an answer, `max_tokens` is the fix for a cut-off reply, and showing the reply as if it were an answer gives the blank bubble. *(Model · 1.1)*
+**B.** `refusal` means a safety classifier declined, so the app should tell the user plainly and record `stop_details` (which can be None). Rewording the request until it passes is not a fix, `max_tokens` is the fix for a cut-off reply, and showing the reply as if it were an answer gives the blank bubble. *(Model · 1.1)*
 
 </details>
 
@@ -833,7 +833,7 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 </details>
 
-**31. Noura wants reported emails screened by three independent reviewers who each judge "does this look like phishing?", with any "yes" flagging the email, so that one blind spot cannot let a phish through. Lujain plans to send the same prompt to the same model three times; the current model has no temperature setting to make the votes differ. What should she do instead?**
+**31. Noura wants reported emails screened by three independent reviewers who each judge "does this look like phishing?", with any "yes" flagging the email, so that one blind spot cannot let a phish through. Lujain plans to send the same prompt to the same model three times and flag the email if any call says yes. What should she do instead?**
 
 - A. Send the same prompt three times in a row so each call can build on the earlier verdict
 - B. Ask a single call to play three reviewers and return their three verdicts together
@@ -859,16 +859,16 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 </details>
 
-**33. Hind asks for a new capability: when staff report a lost phone, Najm Desk prepares a request to revoke the phone's access to the bank mailbox in Najm ID, and a Service Desk agent approves it. Lujain files it as Tier 2 "because a person approves". How should it be tiered, and what follows?**
+**33. Hind asks for a new capability: when staff report a lost phone, Najm Desk prepares a request to revoke the phone's access to the bank mailbox in Najm ID, and a Service Desk agent approves it. How should it be tiered, and what follows?**
 
 - A. Tier 1, because Najm Desk only prepares the request and changes nothing in Najm ID itself
 - B. Tier 2, because a person approves before anything happens to the account, as with tickets
 - C. Tier 3, because it touches identity with a person approving, so Noura and Hamad join early
-- D. Tier 4, because any change touching identity is act-alone, so Hamad's team alone reviews it
+- D. Tier 4, because identity is the highest-risk area, so Hamad's team reviews it on its own
 
 <details><summary>Answer</summary>
 
-**C.** The tier follows what the capability touches, not who clicks last: identity or security with a person approving is Tier 3, and the highest tier decides who you invite, so Noura and Hamad join from week one. B is Lujain's tempting reading. A ignores that the request leads to an identity change, and Tier 4 means acting alone on identity or money, which is not what this design does. Whether the capability enters version one is a separate scope and risk change request (6.2). *(Delivery · 6.1)*
+**C.** The tier follows what the capability touches, not who clicks last: identity or security with a person approving is Tier 3, and the highest tier decides who you invite, so Noura and Hamad join from week one. B is the tempting reading. A ignores that the request leads to an identity change, and Tier 4 means acting alone on identity or money, which is not what this design does. Whether the capability enters version one is a separate scope and risk change request (6.2). *(Delivery · 6.1)*
 
 </details>
 
@@ -963,16 +963,16 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 </details>
 
-**41. The Najm Desk team already has an eval set with a CI gate and a runbook with an on-call rota. After one bad conversation on Sunday, Maha asks which steps the agent took and why, and nobody can answer. Which enterprise-grade property is missing, and what is its evidence?**
+**41. The Najm Desk team already has an eval set with a CI gate and a runbook with an on-call rota. After one bad conversation on Sunday, Maha asks what the agent did in that conversation and why, and nobody can reconstruct it. Which enterprise-grade property is missing, and what is its evidence?**
 
-- A. Observable: a trace of every step the agent took
-- B. Documented: a specification and decision records
-- C. Reliable: timeouts, capped retries and loop limits
-- D. Governed: a risk assessment signed by a named approver
+- A. Observable: a trace of each conversation's steps, tool calls and results
+- B. Documented: a specification, decision records and a design diagram
+- C. Reliable: timeouts, capped retries and loop limits with a tested stop rule
+- D. Governed: a risk assessment signed by a named approver before launch
 
 <details><summary>Answer</summary>
 
-**A.** "Can you see what it did and why?" is the observability question, and its evidence is a trace of every step. Testing and support already exist; documentation records how the agent was designed, not what it did in one conversation, reliability is about coping with faults, and governance is about approval. *(Delivery · 0.1)*
+**A.** "Can you see what it did and why?" is the observability question, and its evidence is a trace of each step. Testing and support already exist; documentation records how the agent was designed, not what it did in one conversation, reliability is about coping with faults, and governance is about approval. *(Delivery · 0.1)*
 
 </details>
 

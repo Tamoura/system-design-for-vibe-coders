@@ -13,13 +13,13 @@
         "en": [
           "When the planner, writer and editor would look tidy as separate boxes on a diagram",
           "When a second agent could redo the first one's work, to double-check the answer",
-          "When Sara's team needs nine contracts checked and no check needs another's result",
+          "When Sara's team needs nine documents checked and no check needs another's result",
           "When Hind has seen a rival bank advertise its new assistant as a team of agents"
         ],
         "ar": [
           "حين تبدو أدوار المخطِّط (planner) والكاتب (writer) والمحرِّر (editor) مرتبة كصناديق منفصلة (separate boxes) في الرسم (diagram)",
           "حين يستطيع وكيل ثانٍ (second agent) أن يعيد عمل الأول (redo the work) تحقّقًا مزدوجًا (double-check) من الإجابة",
-          "حين يحتاج فريق سارة إلى فحص (checking) تسعة عقود موردين (vendor contracts) ولا يعتمد أي فحص على نتيجة غيره (another's result)",
+          "حين يحتاج فريق سارة إلى فحص (checking) تسعة مستندات (documents) ولا يعتمد أي فحص على نتيجة غيره (another's result)",
           "حين ترى هند بنكًا منافسًا (rival bank) يعرض مساعده الجديد (new assistant) على أنه فريق من الوكلاء (team of agents)"
         ]
       },
@@ -54,7 +54,7 @@
       "a": 1,
       "why": {
         "en": "A step cap bounds one agent's turn, not the number of rounds, so the team needs its own limits in the supervisor: a round cap on the loop and a token budget over every agent, checked before each call. A prompt line (C) is only a request, and a manager agent (D) adds one more thing that can loop.",
-        "ar": "حدّ الخطوات (step cap) يقيّد دور وكيل واحد لا عدد الجولات (rounds)، فيحتاج الفريق (team) إلى حدوده في المشرف (supervisor): حدّ للجولات في الحلقة وميزانية رموز (token budget) على كل الوكلاء تُفحص قبل كل استدعاء (call). وسطر الموجّه (الخيار C) طلب فقط (a request)، ووكيل المدير (الخيار D) يضيف شيئًا آخر قد يدخل حلقة (loop)."
+        "ar": "حدّ الخطوات (step cap) يقيّد دور وكيل واحد لا عدد الجولات (rounds)، فيحتاج الفريق (team) إلى حدود خاصة به في المشرف (supervisor): حدّ للجولات في الحلقة وميزانية رموز (token budget) على كل الوكلاء تُفحص قبل كل استدعاء (call). وسطر الموجّه (الخيار C) طلب فقط (a request)، ووكيل المدير (الخيار D) يضيف شيئًا آخر قد يدخل حلقة (loop)."
       }
     },
     {
@@ -101,7 +101,7 @@
           "Ship one agent for v1 with the same contract and checks, then revisit the team"
         ],
         "ar": [
-          "إبقاء الفريق (team) في الإصدار الأول (v1) لأن عينًا ثانية (second pair of eyes) تستحق بعض التكلفة",
+          "إبقاء الفريق (team) في الإصدار الأول (v1) لأن عينًا ثانية (second pair of eyes) تستحق بعض التكلفة والوقت",
           "إبقاء الفريق (team) في الإصدار الأول (v1) وإضافة مراجِع ثانٍ (second reviewer) يلتقط الخطأين المشتركين بينهما",
           "إبقاء الفريق (team) في الإصدار الأول (v1) مع نقل مراجِعه إلى نموذج أرخص (cheaper model) لخفض التكلفة",
           "إطلاق وكيل واحد (one agent) في الإصدار الأول (v1) بالعقد (contract) والفحوص نفسها، ثم إعادة النظر في الفريق"
@@ -110,7 +110,7 @@
       "a": 3,
       "why": {
         "en": "The single agent, with the same contract and checks, is the baseline a team must beat on the same eval; equal scores at about twice the cost fail the exit criterion, so the team goes. \"A second pair of eyes\" (A) is a claim, and the numbers show the reviewer buying no better score.",
-        "ar": "الوكيل الواحد (single agent) بالعقد (contract) والفحوص (checks) نفسها هو خط الأساس (baseline) الذي يجب أن يتفوق عليه الفريق (team) في مجموعة التقييم (eval) نفسها؛ ونتيجتان متساويتان بنحو ضعف التكلفة تُخفقان في معيار الخروج (exit criterion)، فيُترك الفريق. و«العين الثانية» (second pair of eyes) في الخيار A ادعاء فقط (a claim)، والأرقام تُظهر أن المراجِع (reviewer) لم يشترِ درجة أفضل (better score)."
+        "ar": "الوكيل الواحد (single agent) بالعقد (contract) والفحوص (checks) نفسها هو خط الأساس (baseline) الذي يجب أن يتفوق عليه الفريق (team) في مجموعة التقييم (eval) نفسها؛ والنتائج المتساوية بنحو ضعف التكلفة تُخفق في معيار الخروج (exit criterion)، فيُترك الفريق. و«العين الثانية» (second pair of eyes) في الخيار A ادعاء فقط (a claim)، والأرقام تُظهر أن المراجِع (reviewer) لم يرفع الدرجة (score)."
       }
     }
   ],
@@ -120,7 +120,7 @@
       "lesson": "11.1",
       "text": {
         "en": "I have written the two hand-off contracts between a triage agent and an access specialist in Pydantic, with a closed vocabulary, limits and `extra=\"forbid\"`, added two code checks a schema cannot hold, and run six inputs, three valid and three invalid, that behaved as I predicted.",
-        "ar": "لقد كتبتُ عقدي التسليم بين الوكلاء (hand-off contracts) لوكيل الفرز (triage agent) واختصاصي الوصول (access specialist) بواسطة Pydantic، بمفردات مغلقة (closed vocabulary) وحدود (limits) و`extra=\"forbid\"`، وأضفتُ فحصين في الشيفرة (code checks) لا يستطيع المخطط (schema) حملهما، وشغّلتُ ستة مدخلات (six inputs) ثلاثة صحيحة (valid) وثلاثة غير صحيحة (invalid) جاء سلوكها كما توقعتُ (as predicted)."
+        "ar": "لقد كتبتُ بواسطة Pydantic عقدي التسليم بين الوكلاء (hand-off contracts) اللذين يربطان وكيل الفرز (triage agent) باختصاصي الوصول (access specialist)، بمفردات مغلقة (closed vocabulary) وحدود (limits) و`extra=\"forbid\"`، وأضفتُ فحصين في الشيفرة (code checks) لا يستطيع المخطط (schema) حملهما، وشغّلتُ ستة مدخلات (six inputs) ثلاثة صحيحة (valid) وثلاثة غير صحيحة (invalid) جاء سلوكها كما توقعتُ (as predicted)."
       }
     },
     {

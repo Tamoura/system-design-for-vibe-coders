@@ -1,0 +1,135 @@
+{
+  "area": "m12",
+  "questions": [
+    {
+      "id": "m12-1",
+      "level": 1,
+      "lesson": "12.1",
+      "q": {
+        "en": "Lujain's first draft of the Najm Desk eval set has 30 cases, all passing, covering policy answers and ticket status. Hind asks whether the requirement that staff see only their own tickets (GR-02) is covered. No case traces to GR-02, and the agents have no way to tell who is asking. What is the accurate answer?",
+        "ar": "يضم الإصدار الأول من مجموعة التقييم (eval set) التي أعدّتها لجين لنجم ديسك (Najm Desk) ثلاثين حالة (30 cases) تنجح كلها، وتشمل إجابات السياسات (policy answers) والاستعلام عن حالة التذكرة (ticket status). وتسأل هند هل المتطلب (requirement) القاضي بأن يرى الموظف تذاكره وحدها (own tickets only)، وهو GR-02، مغطّى. لا توجد أي حالة مرتبطة بـ GR-02، ولا يملك الوكلاء (agents) وسيلة لمعرفة من يسأل. ما الإجابة الدقيقة (accurate answer)؟"
+      },
+      "o": {
+        "en": [
+          "Covered: all 30 cases pass, so no requirement can be failing",
+          "Untested: with no case behind it, GR-02 stays a gap, not a pass",
+          "Covered: the ticket-status cases would expose another person's ticket",
+          "Not applicable: a rule the agents cannot enforce needs no case"
+        ],
+        "ar": [
+          "مغطّى (Covered): الحالات الثلاثون كلها تنجح، فلا يمكن أن يكون أي متطلب (requirement) فاشلًا",
+          "غير مختبَر (Untested): لا توجد أي حالة وراء GR-02، فهو فجوة (a gap) وليس نجاحًا (a pass)",
+          "مغطّى (Covered): حالات الاستعلام عن التذاكر (ticket-status cases) ستكشف تذكرة موظف آخر",
+          "لا ينطبق (Not applicable): قاعدة لا يستطيع الوكلاء (agents) فرضها لا تحتاج إلى حالة (case)"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "A requirement with no case is untested, so the honest report is a gap, not a pass. A green run only speaks for the requirements that have cases, and counting an untested one as covered is the tempting mistake.",
+        "ar": "المتطلب (requirement) الذي لا حالة له (no case) غير مختبَر (untested)، فالتقرير الصادق هو أنه فجوة (a gap) لا نجاح (a pass). والتشغيل الأخضر (green run) لا يشهد إلا للمتطلبات التي لها حالات، واعتبار المتطلب غير المختبَر مغطّى هو الخطأ المغري (tempting mistake)."
+      }
+    },
+    {
+      "id": "m12-2",
+      "level": 2,
+      "lesson": "12.2",
+      "q": {
+        "en": "The Sunday real-model eval of 50 cases exits 2 with the message `15 cases errored: the harness is broken, the score means nothing`. The 35 cases that did run all match the baseline, and Lujain proposes raising `max_errors` in the gate config so the run goes green. What should the team do?",
+        "ar": "ينتهي تقييم يوم الأحد على النموذج الحقيقي (real-model eval) لخمسين حالة (50 cases) برمز الخروج 2 (exit 2) مع الرسالة (message) `15 cases errored: the harness is broken, the score means nothing`. أما الحالات الخمس والثلاثون (35 cases) التي نُفِّذت فعلًا فتطابق كلها خط الأساس (baseline)، وتقترح لجين رفع `max_errors` في إعدادات البوابة (gate config) كي يصير التشغيل أخضر (green). ماذا ينبغي أن يفعل الفريق؟"
+      },
+      "o": {
+        "en": [
+          "Fix what made the cases error and rerun, since 15 cases went unmeasured",
+          "Raise the limit, since 35 matching cases show that quality held",
+          "Count the 15 errors as failures, so the gate exits 1 and blocks the merge",
+          "Re-baseline on this run, so the next comparison is like with like"
+        ],
+        "ar": [
+          "أصلح سبب أخطاء الحالات (case errors) وأعد التشغيل (rerun)، فخمس عشرة حالة بلا قياس",
+          "ارفع الحد (limit)، فخمس وثلاثون حالة مطابقة تبيّن أن الجودة (quality) لم تتراجع",
+          "احسب الأخطاء الخمسة عشر إخفاقات (failures)، فتخرج البوابة (gate) برمز 1 وتمنع الدمج",
+          "أعد ضبط خط الأساس (re-baseline) على هذا التشغيل لتصير المقارنة التالية بين متماثلين (like with like)"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Exit 2 means the eval cannot be trusted: the 15 errored cases never ran, so the harness is fixed and the run repeated. Raising the limit hides the gap, because 35 matching cases say nothing about those 15, and counting errors as failures blames the agent for a fault in the harness.",
+        "ar": "رمز الخروج 2 (exit 2) يعني أن التقييم (eval) لا يمكن الوثوق به: الحالات الخمس عشرة (15 errored cases) لم تعمل أصلًا، فتُصلَح أداة التشغيل (harness) ويُعاد التشغيل (rerun). ورفع الحد (limit) يخفي الفجوة، لأن خمسًا وثلاثين حالة مطابقة لا تقول شيئًا عن تلك الخمس عشرة، واحتساب الأخطاء إخفاقات (failures) يلوم الوكيل (agent) على عطل في أداة التشغيل."
+      }
+    },
+    {
+      "id": "m12-3",
+      "level": 2,
+      "lesson": "12.2",
+      "q": {
+        "en": "Lujain's pull request rewrites a tool description. The offline run, which uses the deterministic mock, scores 38 of 46, the same as the baseline, with no errors, no leaks and an unchanged dataset. But one critical case that passed in the baseline now fails, and a different case that failed in the baseline now passes. What does the gate do?",
+        "ar": "تعيد لجين في طلب دمج (pull request) كتابة وصف أداة (tool description). ويسجّل التشغيل دون اتصال (offline run)، الذي يستخدم المحاكي الحتمي (deterministic mock)، 38 من 46 كما في خط الأساس (baseline)، دون أخطاء ودون تسريبات (leaks) ومع مجموعة بيانات (dataset) لم تتغير. لكن حالة حرجة (critical case) كانت تنجح في خط الأساس تفشل الآن، وحالة أخرى كانت تفشل فيه تنجح الآن. ماذا تفعل البوابة (gate)؟"
+      },
+      "o": {
+        "en": [
+          "Exits 0: the overall score is unchanged, so nothing has regressed",
+          "Exits 0 with a note: a failing critical case is only an open defect",
+          "Exits 2: the same score from different cases means the runs differ",
+          "Exits 1: a critical case that used to pass now fails, so it blocks"
+        ],
+        "ar": [
+          "تخرج برمز 0 (exit 0): الدرجة الإجمالية (overall score) لم تتغير، فلا انحدار (regression)",
+          "تخرج برمز 0 مع ملاحظة (note): حالة حرجة فاشلة ليست سوى عيب مفتوح (open defect)",
+          "تخرج برمز 2 (exit 2): الدرجة نفسها من حالات مختلفة (different cases) تعني أن التشغيلين مختلفان (the runs differ)",
+          "تخرج برمز 1 (exit 1): حالة حرجة كانت تنجح تفشل الآن، فتمنع الدمج (blocks the merge)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "A critical case that passed in the baseline must still pass whatever the total does: one gain cannot pay for one loss. The open-defect note is only for a case that already failed in the baseline.",
+        "ar": "الحالة الحرجة (critical case) التي نجحت في خط الأساس (baseline) يجب أن تظل ناجحة مهما كان المجموع (the total)، فمكسب واحد لا يسدد خسارة واحدة (one gain cannot pay for one loss). أما ملاحظة العيب المفتوح (open-defect note) فتخص حالة كانت فاشلة أصلًا في خط الأساس."
+      }
+    },
+    {
+      "id": "m12-4",
+      "level": 3,
+      "lesson": "12.1",
+      "q": {
+        "en": "In the pilot, a user asks whether contractors may use their own laptops on the bank network. The policy library says nothing about contractors. Yara's trace shows retrieval returned the staff remote-work passages (word overlap on \"laptops\" and \"network\") and the agent repeated one as its answer. Yara signs \"I don't know\" as the expectation. What is the best fix?",
+        "ar": "في التجربة التشغيلية (pilot) يسأل مستخدم هل يجوز للمتعاقدين (contractors) استخدام حواسيبهم المحمولة الخاصة على شبكة البنك (bank network). مكتبة السياسات (policy library) لا تقول شيئًا عن المتعاقدين. ويُظهر تتبّع (trace) يارا أن الاسترجاع (retrieval) أعاد مقاطع العمل عن بُعد للموظفين (staff remote-work passages) بسبب تشابه الكلمات (word overlap) في «الحواسيب» و«الشبكة»، وأن الوكيل (agent) كرّر أحدها جوابًا. وتعتمد يارا «لا أعرف» (I don't know) توقعًا (expectation). ما أفضل إصلاح (best fix)؟"
+      },
+      "o": {
+        "en": [
+          "Add this question to the prompt as an example answered \"I don't know\"",
+          "Add ten more answerable policy cases so this miss weighs less in the score",
+          "Add a rule that a passage must address the question, then add near-miss cases",
+          "Special-case retrieval so this one question returns no passage, then close the case"
+        ],
+        "ar": [
+          "أضف هذا السؤال إلى الموجّه (prompt) مثالًا جوابه «لا أعرف» (I don't know)، ثم أعد تشغيل التقييم (eval)",
+          "أضف عشر حالات سياسات قابلة للإجابة (answerable cases) كي يقلّ وزن هذا الإخفاق (miss) في الدرجة الإجمالية (score)",
+          "أضف قاعدة: المقطع يعالج السؤال (a passage must address the question)، ثم حالات شبه مطابقة (near-miss cases)",
+          "اجعل الاسترجاع (retrieval) يستثني هذا السؤال وحده فلا يعيد مقطعًا (passage)، ثم أغلق الحالة (close the case)"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "The cause is a missing rule, so the fix is the rule plus near-miss cases that test it. Pasting the failing question into the prompt turns the case into an answer key, which is leakage.",
+        "ar": "السبب قاعدة ناقصة (a missing rule)، فالإصلاح هو القاعدة مع حالات شبه مطابقة (near-miss cases) تختبرها. ولصق السؤال الفاشل في الموجّه (prompt) يحوّل الحالة إلى مفتاح إجابات (answer key)، وهذا تسرّب (leakage)."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m12-e1",
+      "lesson": "12.1",
+      "text": {
+        "en": "I have written ten JSONL cases in the lab set's format from one requirement (GR-02 or another), three of them adversarial, loaded them with `load_cases`, and compared three expectations with a colleague's, with a stated reason for every difference.",
+        "ar": "لقد كتبتُ عشر حالات (ten cases) بصيغة JSONL على نسق مجموعة المختبر من متطلب واحد (one requirement) هو GR-02 أو غيره، ثلاث منها حالات عدائية (adversarial)، وحمّلتها بـ `load_cases`، وقارنتُ ثلاثة توقعات (expectations) بما كتبه زميل، مع سبب مذكور لكل اختلاف (stated reason for every difference)."
+      }
+    },
+    {
+      "id": "m12-e2",
+      "lesson": "12.2",
+      "text": {
+        "en": "I have run the four gate drills and one of my own, recorded each run's exit code and first reason in a table, and explained why `classify_v4_overfit` scored higher yet did not pass.",
+        "ar": "لقد شغّلتُ تمارين البوابة (gate drills) الأربعة وتمرينًا من عندي، ودوّنتُ في جدول (table) رمز الخروج (exit code) والسبب الأول (first reason) لكل تشغيل، وشرحتُ لماذا حقق `classify_v4_overfit` درجة أعلى (scored higher) ومع ذلك لم يجتز البوابة (did not pass)."
+      }
+    }
+  ]
+}
