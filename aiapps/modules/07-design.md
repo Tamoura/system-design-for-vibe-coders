@@ -1,6 +1,6 @@
 # Module 7 — Designing the solution with the customer
 
-*A specification says what the customer needs; it does not yet say how you will deliver it, what you will show, or what you have promised. This module turns the specification into an architecture, a prototype, a proposal and an agreed scope. Lesson 7.1 is a design workshop for Najm Desk: the ladder from single prompt to multi-agent, the autonomy of each action, human-in-the-loop patterns, a tool surface built from the permissions matrix, a comparison of build surfaces, C4 diagrams, failure design, privacy and data flow, cost and latency budgets, architecture decision records, and the design review that Layla, Noura, Hamad, Sara and Maha will hold. Lesson 7.2 climbs the prototype ladder, runs a thin-slice demo on the lab kit, and teaches the customer demo, the statement of work, estimating under uncertainty, the phased rollout plan and change control. The lab runs offline against the kit's mock and, unchanged, against the real API.*
+*A specification says what the customer needs; it does not yet say how you will deliver it, what you will show, or what you have promised. This module turns the specification into an architecture, a prototype, a proposal and an agreed scope. Lesson 7.1 is a design workshop for Najm Desk: the ladder from single prompt to multi-agent, the autonomy of each action, human-in-the-loop patterns, a tool surface built from the permissions matrix, a build-or-buy check and a comparison of build surfaces, C4 diagrams, failure design, privacy and data flow, cost and latency budgets, architecture decision records, and the design review that Layla, Noura, Hamad, Sara and Maha will hold. Lesson 7.2 climbs the prototype ladder, runs a thin-slice demo on the lab kit, and teaches the customer demo, the statement of work, estimating under uncertainty, the phased rollout plan and change control. The lab runs offline against the kit's mock and, unchanged, against the real API; it says plainly what the mock cannot show.*
 
 > **Layer:** Delivery — turning an agreed specification into an architecture, a prototype, a proposal and a scope the customer has signed up to.
 
@@ -10,22 +10,22 @@
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 5.1, 6.2* · *Layer: Delivery, Agents*
 
 ## ⚡ In 60 seconds
-- **Design** turns the specification into decisions a reviewer can read; each element traces to a requirement or risk.
-- Climb the **ladder** (prompt, workflow, agent, multi-agent) only for a named need. Najm Desk v1 is a router workflow with route-scoped tools.
-- **Autonomy is set per action**, by the worst realistic outcome, not by how good the demo looked.
-- A human in the loop needs evidence, time and an owner; a model's stated confidence is not a control.
-- Design failures first and price a conversation before building. Biggest trap: a design that lives in one head.
+- **Design** turns the specification into decisions a reviewer can read, each traced to a requirement or risk.
+- Climb the **ladder** (prompt, workflow, agent, multi-agent) only for a named need. Najm Desk v1: a router workflow, route-scoped tools.
+- **Autonomy is set per action**, by worst realistic outcome, not by the demo.
+- A human in the loop needs evidence, time and an owner; stated confidence is not a control.
+- Design failures first; price a conversation. Biggest trap: a design in one head.
 
 ## 🧭 Why it matters
-Lujain brings her first Najm Desk design to review (hypothetical): one agent, nine tools, the strongest model, every policy pasted into the prompt. **Layla** asks which actions it can take alone, **Noura** what happens when a ticket says "unlock the CFO's account", **Hamad** who can switch it off at 02:00, **Sara** which fields leave the bank, **Maha** what users see at 07:05 on Sunday when the model is slow. Lujain answers "it depends" five times: the decisions lived in her head, where nobody can approve them.
+Lujain brings her first Najm Desk design to review (hypothetical): one agent, nine tools, the strongest model, every policy pasted into the prompt. **Layla** asks which actions run alone, **Noura** what happens when a ticket says "unlock the CFO's account", **Hamad** who can switch it off at 02:00, **Sara** which fields leave the bank, **Maha** what users see at 07:05 on Sunday if the model is slow. Lujain answers "it depends" five times: the decisions lived in her head, where nobody can approve them.
 
-Fahad ends the meeting: bring it back on paper. Design is the cheapest stage to be wrong in. This workshop builds the pack that survives review.
+Fahad: bring it back on paper; design is the cheapest stage to be wrong in.
 
 ## 📐 How it works
 
 ### 🟢 The essentials
 
-**What design produces.** From the brief (lesson 6.1) and the specification (lesson 6.2) you write `docs/architecture.md` and `docs/adr/`. Every element traces to a requirement (FR, GR, NFR) or a risk. "A vector database because everyone has one" is cut; a requirement with no element becomes a question for Hind.
+**What design produces.** From the specification (lesson 6.2) you write `docs/architecture.md` and `docs/adr/`. Every element traces to a requirement (FR, GR, NFR) or a risk: "a vector database because everyone has one" is cut; a requirement with no element becomes a question for Hind.
 
 **The decision ladder.** Anthropic's "Building effective agents" advises the simplest thing that works (lesson 5.1). Choose a rung by what the one below cannot do.
 - **Single prompt:** the eval passes. Najm Desk: summarise a thread.
@@ -33,51 +33,48 @@ Fahad ends the meeting: bring it back on paper. Design is the cheapest stage to 
 - **Single agent with tools:** the path depends on what tools return. Najm Desk: "why does my VPN fail?" (not v1).
 - **Multi-agent:** contexts, owners or permissions one agent cannot hold; costs multiply, errors compound (Module 11).
 
-The v1 verdict is a **router workflow**. A cheap model classifies the message, code picks one of five routes, and each route runs a short, capped tool loop with a **route-scoped tool surface**: the policy route sees `search_policies` only, so a poisoned passage cannot ask for `request_unlock`. The features are known in advance; a free-roaming agent adds variance, not capability.
+The v1 verdict is a **router workflow**. A cheap model returns one label from a fixed list (a structured output, validated in code) and code picks one of five routes: policy question, ticket status, report a problem, unlock request, person or other. Each route runs a short, capped loop with a **route-scoped tool surface**: the policy route sees `search_policies` only, so a poisoned passage cannot ask for `request_unlock`. Features known in advance do not need a free-roaming agent, which adds variance, not capability.
 
-**The autonomy ladder** ([*AI Product Management*, lesson 4.1 — Levels of automation: suggest, draft, decide, act](../aipm/index.html#/4.1)). **Suggest (S):** show information; the person does everything. **Draft (D):** prepare the artefact; the person sends it. **Decide with approval (A):** propose the action; a named human approves first. **Act (X):** do it, tell afterwards, review a sample. Set the level per action, by the worst realistic outcome and reversibility, not by model quality, and raise it only on evidence (lesson 7.2). OWASP's excessive agency (LLM Top 10, 2025) includes too much autonomy.
+**The autonomy ladder** ([*AI Product Management*, lesson 4.1 — Levels of automation: suggest, draft, decide, act](../aipm/index.html#/4.1)). **Suggest (S):** show information; the person does everything. **Draft (D):** prepare the artefact; the person sends it. **Decide with approval (A):** propose; a named human approves first. **Act (X):** do it, tell afterwards, review a sample. Set the level per action by worst outcome and reversibility, not model quality; raise it only on evidence (lesson 7.2). OWASP's excessive agency (LLM Top 10, 2025) includes too much autonomy.
 
-| Action and its worst outcome | Pilot (copilot) | Release and GA |
+| Action and its worst outcome | Pilot (copilot) | Limited release and GA |
 |---|---|---|
 | Answer a policy question: a wrong rule is believed | Draft; an agent reviews | Act if the citation gate passes, else hand off |
 | Show ticket status: another person's ticket leaks | Suggest | Act; owner check in code |
 | Create a ticket: noise in the queue | Draft | Decide with approval; the employee confirms a preview |
 | Request an account unlock: an attacker gets in | Decide with approval | Same; never higher in v1 |
-| Hand off to a person: a delay | Act | Act |
 
 ### 🟡 Going deeper
 
 **Human-in-the-loop patterns.**
 - **Approval gate:** the action waits for a named human. Show the evidence, deny on timeout, watch the approval rate: near 100% in seconds is theatre.
-- **Review queue:** act, then sample, for reversible high-volume work; findings feed evals.
-- **Escalation rule:** code that routes to a person: a security incident, a privacy request, "let me talk to someone", a third failure.
-- **Confidence threshold:** act only above a score. A model's stated confidence is often poorly calibrated; use checkable signals (retrieval score, citation gate, schema validity), set the cut-off on labelled data (lesson 12.1), name an owner, expect drift.
+- **Review queue** and **escalation rule:** act, then sample reversible work; code routes to a person on set triggers.
+- **Confidence threshold:** act only above a score. Stated confidence is poorly calibrated, so use checkable signals (retrieval score, citation gate, schema validity), set the cut-off on labelled data (lesson 12.1) and name an owner.
 
-**Tool surface from the permissions matrix.** Each row of the specification's matrix (lesson 6.2) becomes a decision: who runs it, where the gate sits.
+**Tool surface from the permissions matrix.** Each row of the specification's matrix (lesson 6.2) becomes a decision: who calls it, where the gate sits.
 
-| Tool | Staff cell | Runs as, and the gate |
+| Tool | Staff cell | Called by, runs as, and the gate |
 |---|---|---|
-| `search_policies` | X | Service identity, read-only; passages are data |
-| `get_ticket_status` | X own | The employee; owner check in code (GR-02); code shows the record (data flow) |
-| `draft_ticket` | D | The employee; a preview, nothing filed |
-| `request_unlock` | A agent | The employee; a Desk agent approves in Najm ID after the call-back (GR-03) |
-| `create_ticket` | A user | Code, not a model tool: files after the employee confirms (FR-04) |
-| `hand_off` | X | Code, not a model tool: runs on an escalation rule or request (FR-06) |
+| `search_policies` | X | The model; service identity, read-only; passages are data |
+| `get_ticket_status` | X own | Code, status route; the employee; owner check (GR-02); the record goes to the screen, not to a model |
+| `draft_ticket` | D | The model; the employee; a preview, nothing filed |
+| `request_unlock` | A agent | The model; the employee; a Desk agent approves in Najm ID after the call-back (GR-03) |
+| `create_ticket` | A user | Code: files after the employee confirms (FR-04) |
+| `hand_off` | X | Code: on an escalation rule (security incident, privacy request, "let me talk to someone", a third failure) or request (FR-06) |
 
-The model sees at most four tools, not twelve: definitions are input tokens on every call (lesson 3.1 used the lab names `create_ticket_draft` and `request_account_unlock`). Identity comes from the session, never a model argument. A write tool is a request; a gate commits it.
+The model sees three tools at most, one per route. The dispatcher still rejects any name outside the route's list. Identity comes from the session, never a model argument. A write tool is a request; a gate commits it. Lesson 3.1's lab names: `create_ticket_draft`, `request_account_unlock`.
 
-**Build surfaces.** "Build or buy" has two layers. Does the service-management product's own assistant meet the spec? Build when policies, languages, tools or governance need more; legal and procurement decide terms. Then choose a base; availability changes quickly, so check the documentation and the platform availability table.
+**Build or buy** has two layers. First, would the service-management product's own assistant do? Score it on your specification, not the vendor's demo: run the 12 seed scenarios (`labkit/data/m06_eval_seed.jsonl`) and ask about Arabic, citations, the owner check, approvals, a kill switch and data location. Buy if it passes and leaving is affordable; build when policies, languages, tools or governance need more; or buy the channel and build the gates. Legal and procurement decide terms. Second, pick a base (availability changes; check the documentation and the platform availability table).
 
 | Surface | Built for, and what to weigh |
 |---|---|
 | Raw SDK loop | Your own loop: most control, most code |
-| Beta tool runner | SDK-run loop with approval and cap hooks: less code; beta; check its stop-reason handling |
-| Claude Agent SDK | Claude Code's harness as a library: files and shell work; more than v1 needs |
+| Beta tool runner | SDK-run loop: less code; beta; approvals go in your tool functions; check iteration caps and `pause_turn` |
+| Claude Agent SDK | Claude Code's harness as a library (a different package): more than v1 needs |
 | Managed Agents | Anthropic-hosted loop and sandbox, beta: less to run; check availability, residency |
-| LangGraph | Graph workflows with state and human pauses: resumable; one more abstraction |
-| CrewAI, Google ADK, Microsoft Agent Framework | Role-based crews; Google Cloud; .NET and Azure: fit if your estate uses one; check maturity |
+| Other frameworks (LangGraph, CrewAI, Google ADK, Microsoft Agent Framework) | Resumable graphs, role-based crews, vendor-backed kits: fit if your estate uses one; check maturity |
 
-**Recommendation:** for v1, the raw SDK loop of the labs, the simplest that meets the spec. Revisit for a named need such as resumable runs.
+**Recommendation:** for v1, the raw SDK loop of the labs. Anthropic's SDK guidance currently leans to the tool runner (check the documentation), so this is a trade: gates, caps and per-route tools are the design, and a beta dependency is one more thing to review. Record it as an ADR.
 
 **C4 diagrams.** Simon Brown's C4 model zooms from context to containers, components and code; reviews need the first two. DeviceDesk is absent on purpose: refresh advice is out of scope.
 
@@ -95,7 +92,7 @@ flowchart TB
     llm["Model provider, external"]
     emp -->|"asks"| desk
     sda -->|"reviews"| desk
-    desk -->|"reads, drafts"| th
+    desk -->|"reads, files tickets"| th
     desk -->|"approval requests"| nid
     desk -->|"manager lookup"| pc
     desk -->|"retrieves"| lib
@@ -119,37 +116,38 @@ flowchart LR
     orch -->|"search"| idx
     orch -->|"question"| mask
     mask -->|"masked prompt"| llm["Model provider"]
-    orch -->|"reads, drafts"| th["TicketHub"]
+    orch -->|"reads, files tickets"| th["TicketHub"]
     orch -->|"approval requests"| nid["Najm ID"]
     orch -->|"manager lookup"| pc["PeopleCore"]
     orch -->|"masked traces"| aud
 ```
 
-**Failure design.** Every dependency fails. For each, write the trigger, the response and what the user reads.
+**Failure design.** For each dependency, write the trigger, the response and what the user reads.
 
 | Failure | Response and what the user sees |
 |---|---|
-| Model slow or down | A per-call `timeout` (SDK default: ten minutes) inside a per-turn budget; the SDK retries connection errors, 408, 409, 429 and 5xx twice by default; then **degraded mode**: closest passage, source, "not an answer", hand-off. A fallback model needs the same eval |
-| Nothing retrieved, a gate fails, or `stop_reason` is `max_tokens` or `refusal` | No model call or a withheld answer: "I don't know", plus a hand-off; never show half an answer |
+| Model slow or down | Set `timeout` and `max_retries` so (retries + 1) × timeout fits the turn budget; the SDK defaults (ten minutes, two retries of connection errors, 408, 409, 429, 5xx) cannot meet NFR-01. A few failures in a row trip a **circuit breaker**, then **degraded mode**: closest passage, source, "not an answer", hand-off. A fallback model needs the same eval |
+| Nothing retrieved, a gate fails, or `stop_reason` is `max_tokens` or `refusal` | No model call or a withheld answer: "I don't know" and a hand-off. Never show half an answer or run a tool from a truncated or refused turn |
 | Tool error | "I could not reach TicketHub", never "Done"; no write retry without an idempotency key |
 | Human takeover | A summary (question, route, reason, passages) to a named queue; out of hours, a queued ticket |
-| Something is wrong now | A **kill switch**: `model_calls` off gives degraded mode, `write_tools` off gives read-only; no deploy, drilled. If the service is down, the portal shows phone and ticket routes (NFR-02) |
+| Something is wrong now | A drilled **kill switch**, no deploy: `model_calls` off gives degraded mode, `write_tools` off gives read-only. If the service is down, the portal shows phone and ticket routes (NFR-02) |
 
 ### 🔴 Expert view
 
-**Privacy by design and data flow.** Draw where each field goes and justify each arrow. The constraint is the AI-tools policy: external AI services must not receive Confidential or Restricted data, customer data or credentials.
-- **Question text** and **retrieved passages** (Internal): sent after masking pasted secrets (GR-01) and filtering by document access.
-- **Ticket record:** Confidential in the specification, so code shows it and no model sees it (as in lesson 7.2). Letting even id, status and category reach a model is the open data-class question (Layla, Hamad, Sara).
+**Privacy by design and data flow.** Draw where each field goes and justify each arrow. The constraint: the AI-tools policy bars Confidential or Restricted data, customer data and credentials from external AI services.
+- **Question and passages** (Internal): sent after masking pasted secrets (GR-01) and filtering by document access.
+- **Ticket record:** Confidential, so code shows it and no model sees it (lesson 7.2). Whether even id, status and category may reach a model is the open data-class question (Layla, Hamad, Sara).
 - **Employee identity:** never in a prompt; the gateway holds it.
-- **Logs and traces:** every tool call logged (NFR-04), stored masked; retention per NFR-03, which Sara decides.
+- **Logs and traces:** every tool call logged (NFR-04), stored masked; Sara decides retention (NFR-03).
+- **Where it runs:** inference, embeddings and provider retention: Sara and procurement ([*AI Governance*, lesson 4.3 — DPIAs and the global privacy map, from the EU to the GCC](../aigp/index.html#/4.3)).
 
-Where inference and embeddings run (retrieval needs an embedding model, separate from the chat model) and what providers retain are for Sara and procurement ([*AI Governance*, lesson 4.3 — DPIAs and the global privacy map, from the EU to the GCC](../aigp/index.html#/4.3)).
-
-**Cost and latency budgets.** Keep prices symbolic until you read the price page. One call costs `(n_in - n_cr - n_cw)·p_in + n_cr·r·p_in + n_cw·w·p_in + n_out·p_out`: `n_in` is all input tokens (the API's `input_tokens` excludes cached tokens, so add the cache fields), `n_cr` and `n_cw` the cache-read and cache-write parts, `r` and `w` the price page's multipliers, and `n_out` includes thinking tokens. A conversation sums its calls per tier (`S` strong, `H` cheap), times `(1 + ρ)` for retries. Take four turns, no retries or caching (fictional numbers): 1,500 tokens of system prompt and tools, 600 of passages, 60 per question, 250 per answer, thinking included. The answerer reads `Σ(2,100 + 60t + 250(t-1))` = 10,500 tokens. The router reads a 300-token prompt and the latest question each turn (1,440) and returns a 10-token label:
+**Cost and latency budgets.** One call costs `(n_in - n_cr - n_cw)·p_in + n_cr·r·p_in + n_cw·w·p_in + n_out·p_out`: `n_in` is all input tokens (the API's `input_tokens` is only the uncached part), `n_cr` and `n_cw` the cache-read and cache-write parts, `r` and `w` the price page's multipliers, and `n_out` includes thinking tokens, so `effort` is a cost dial too. A conversation sums its calls per tier (`S` strong, `H` cheap), times `(1 + ρ)` for retries that bill. Take four turns, no retries or caching (fictional numbers): 1,500 tokens of system prompt and tools, 600 of passages, 60 per question, 250 per answer, thinking included. The answerer reads `Σ(2,100 + 60t + 250(t-1))` = 10,500 tokens; the router reads a 300-token prompt plus the latest question each turn (1,440) and returns a 10-token label:
 
 `C = 10,500·p_in^S + 1,000·p_out^S + 1,440·p_in^H + 40·p_out^H`
 
-Cheapening the router touches only the small term. The big levers are the repeated 2,100 tokens (a byte-identical prefix can be cached: lesson 14.2), passage size and turn count. `python labs/m00/cost.py --system 2100 --turns 4` reproduces the strong tier. Compare the total with NFR-06, which caps cost per *resolved* conversation, so hand-offs raise it. Latency sums along the critical path (gateway, router, retrieval, first token): split NFR-01's targets across it, stream the answer, and cap tokens and steps. Count tokens per model with `count_tokens`.
+Cheapening the router touches only the small term. The big levers are the stable 1,500 tokens (cacheable once past the model's minimum length: lesson 14.2), the 600 passage tokens that change with each question, and turn count. `python labs/m00/cost.py --system 2100 --turns 4` reproduces the strong tier. NFR-06 caps cost per *resolved* conversation, so hand-offs raise it. Count tokens per model with `count_tokens`, in English and Arabic: the same sentence can cost more in one.
+
+Latency sums along the critical path (gateway, router, retrieval, first token): split NFR-01's targets across it and cap tokens and steps. Streaming shortens the wait for first words but fights the citation gate: text on screen cannot be withheld. If Hind accepts a progress line as "first words within 3 seconds", show that, then the checked answer whole.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -158,26 +156,26 @@ Cheapening the router touches only the small term. The big levers are the repeat
 | **Autonomy table** | Each action at suggest, draft, approve or act | Agents that do more than answer |
 | **C4 diagrams** (Simon Brown) | Context and container views | Reviews, onboarding |
 | **Failure table** | Trigger, response, message | Before the happy path |
-| **Cost model** | Tokens times symbolic prices | Choosing models, context |
-| **ADR** (Michael Nygard) | One page: context, decision, consequences | A choice someone may reverse |
+| **Cost model** | Tokens times symbolic prices | Choosing models |
+| **ADR** (Michael Nygard) | One page: context, decision, consequences | A reversible choice |
 
 ## 🏛️ In practice at Najm Bank
-Your artefacts: `docs/architecture.md` (traceability, diagrams, autonomy table, tool surface, data flow, failure design, budgets, ADR index) and `docs/adr/`.
+Your artefacts: `docs/architecture.md` (traceability, diagrams, autonomy table, tool surface, data flow, failure design, budgets) and `docs/adr/`.
 
-**ADR format.** Michael Nygard's 2011 format: **Title**, **Status** (proposed, accepted, superseded), **Context**, **Decision**, **Consequences**. One page, numbered; once accepted its text is not rewritten, and a new ADR supersedes it while the old Status line points to the new one. Three fictional examples; use your own figures from evals.
+**ADR format.** Michael Nygard's 2011 format: **Title**, **Status** (proposed, accepted, superseded), **Context**, **Decision**, **Consequences**. One page, numbered; an accepted ADR is not rewritten: a new one supersedes it and the old Status line points to it. Weak consequence: "better quality". Strong: a cost and a trigger to revisit.
 
 ```markdown
 # ADR 001: Route with a cheap model, answer with a strong one
 Status: Accepted
 Context: Every message needs a label; only some need a careful answer. Volume: about 1,800 tickets a week (fictional baseline).
 Decision: The router and hand-off summary use claude-haiku-5-5; policy answers use claude-sonnet-5-5. Ids come from environment variables.
-Consequences: Cheaper, faster routing; two prompts to version and evaluate. A wrong label means a wrong route, so the router gets its own eval and an "other" exit. Revisit if the router's own eval misses its target.
+Consequences: Cheaper, faster routing; two prompts to version and evaluate. A wrong label means a wrong route, so the router gets its own eval and an "other" exit. Revisit if its eval misses target.
 ```
 
 ```markdown
 # ADR 002: Retrieve passages instead of pasting the whole library
 Status: Accepted
-Context: Fifteen short policies fit in a context window today. But every token is resent on every call, answers need citable passages, some documents are for some staff only, and the library will grow.
+Context: Fifteen short policies fit in a context window today. But every token is resent each call, answers need citable passages, some documents are staff-specific, and the library will grow.
 Decision: Hybrid retrieval (vector plus BM25) returns three passages; the answer must cite them.
 Consequences: Fewer input tokens, auditable sources. Retrieval can miss, so recall is measured apart and a miss means "I don't know". A policy index to operate. Supersede if a cached full-library prompt wins on the eval.
 ```
@@ -185,25 +183,22 @@ Consequences: Fewer input tokens, auditable sources. Retrieval can miss, so reca
 ```markdown
 # ADR 003: Write tools are requests; nothing writes alone in v1
 Status: Accepted
-Context: Text the model reads can carry instructions. The constraints say every write needs a human or a policy gate.
-Decision: draft_ticket returns a preview; code runs create_ticket, with an idempotency key, only after the employee confirms. request_unlock files a request that a Desk agent decides in Najm ID after the call-back. Identity comes from the session. No tool changes an account.
-Consequences: One more click for employees, a queue for approvers (approval time tracked). A tricked model can at most draft or request, never change. A tool moves up the ladder only through a new ADR with eval and rollout evidence.
+Context: Text the model reads can carry instructions. Every write needs a human or a policy gate.
+Decision: draft_ticket returns a preview; code runs create_ticket, with an idempotency key, only after the employee confirms. request_unlock files a request that a Desk agent decides after the call-back. No tool changes an account.
+Consequences: One more click for employees, a queue for approvers. A tricked model can at most draft or request. A tool moves up the ladder only by a new ADR with eval and rollout evidence.
 ```
 
-**The design review.** Rehearse each reviewer's question; a document should answer it.
-
-- **Layla:** which actions run alone; what moves one up? Autonomy table.
-- **Noura:** what if ticket text gives orders? Route-scoped tools.
-- **Hamad:** who switches it off, how fast? Kill switch.
-- **Sara:** which personal data reaches the model; how long are logs kept? Data flow.
-- **Maha:** what breaks at 07:05 on Sunday; who is paged? Failure table.
+**The design review.** Rehearse the opening story's five questions; a section should answer each: the autonomy table (Layla), route-scoped tools (Noura), the kill switch (Hamad), the data flow (Sara), the failure table (Maha).
 
 **Your platform.** Fill in before the review:
 
 | Question | Your answer |
 |---|---|
-| Where does each container run, and as whom? | |
-| Where do secrets, traces and approvals live? | |
+| Identity and secrets: which logins, tokens and keys, and who rotates them? | |
+| Deploy target: where does each container run, as whom? | |
+| Observability: where do traces and audit logs go? | |
+| Tickets and approvals: which workflow carries unlock requests? | |
+| Data residency: where may prompts, logs and the index live? | |
 
 **Weekly deliverable.** Commit `week-07/` with `docs/architecture.md`, `docs/adr/001` to `003` and `NOTES.md` (quiz answers, notes). **Group session (60 minutes).** (1) Draw the container diagram from memory (10). (2) Role-played review, answers from documents only (25). (3) Swap ADRs; attack the consequences (15). (4) Agree one cost table (10).
 
@@ -211,37 +206,36 @@ Consequences: One more click for employees, a queue for approvers (approval time
 
 ```text
 Goal: review docs/architecture.md and docs/adr/ against docs/najm-desk-spec.md and list the gaps. Change no design file.
-Context: CLAUDE.md, docs/najm-desk-spec.md (requirement ids, permissions matrix), docs/architecture.md, docs/adr/*.md.
+Context: CLAUDE.md; the spec's requirement ids and permissions matrix.
 Task:
-1. For each FR, GR and NFR id in the spec, find the design element that meets it. Quote both.
-2. List design elements no requirement or risk justifies.
-3. List contradictions, such as a tool in a diagram but not in the matrix.
-4. List decisions with no ADR, and questions the five reviewers would ask that the pack cannot answer.
-Output: docs/design-gaps.md, a table of gap, type, evidence (file and quoted line), severity, fix.
-Constraints: quote, never paraphrase; write "unclear" rather than guess; invent no requirements, prices or model ids; no code changes.
+1. For each FR, GR and NFR id, find the design element that meets it. Quote both.
+2. List design elements no requirement or risk justifies, and contradictions such as a tool in a diagram but not in the matrix.
+3. List decisions with no ADR and questions the five reviewers would ask that the pack cannot answer.
+Output: docs/design-gaps.md, a table of gap, type, evidence (file, quoted line), severity, fix.
+Constraints: quote, never paraphrase; write "unclear" rather than guess; invent no requirements, prices or model ids.
 ```
 
 **Verify before you accept it.**
-- Open every quoted line in its file. A claim without a matching quote is a guess.
-- Check three "covered" and three "gap" claims yourself, with `grep -rn "FR-04" docs/` and other ids; look for a missed gap or false alarm.
-- `git diff --stat` shows only `docs/design-gaps.md` as new. The list is a second reader's view, not a sign-off.
+- Open every quoted line in its file; no matching quote, no credit.
+- Spot-check three "covered" and three "gap" claims with `grep -rn "FR-04" docs/`.
+- `git status --short` shows only `?? docs/design-gaps.md`: a second reader's view, not a sign-off.
 
 ## 🛠️ Exercises
 - 🟢 **Draw the C4 diagrams.** Offline. Redraw both in mermaid for your spec. *Done when:* both render, every arrow is labelled, every external system appears, and a colleague can name two v1 omissions.
-- 🟡 **Write three ADRs.** Offline. Model tiering, retrieval against long context, write-action policy. *Done when:* each has five parts, a consequence that is a cost, a trigger to revisit, and no unmeasured figures.
-- 🔴 **Cost per conversation, three ways.** Offline, prices from the price page; real `count_tokens` on your prompt and tools *needs the real API* (the mock only estimates). Fill the formula for low, expected and high assumptions (turns, passage tokens, cached share, retries). *Done when:* a table gives cost per conversation and per 1,000, the assumption that moves it most, and the price date.
+- 🟡 **Write three ADRs.** Offline. Model tiering, retrieval against long context, write-action policy. *Done when:* each has five parts, a cost as consequence, a trigger to revisit and no unmeasured figures.
+- 🔴 **Cost per conversation, three ways.** Offline with prices from the price page (real `count_tokens` *needs the real API*; the mock only estimates). Fill the formula for low, expected and high assumptions (turns, passage tokens, cached share, retries). *Done when:* a table gives cost per conversation and per 1,000, the assumption that moves it most, and the price date.
 
 ## ⚠️ Mistakes and traps
-- **Designing only the happy path.** Reviewers ask about failure first; write that table before the flow.
-- **Setting autonomy by demo quality or stated confidence.** Use outcome, reversibility and checkable signals.
-- **Copying the back end as the tool list.** Twelve tools cost tokens and widen the attack surface.
+- **Designing only the happy path.** Reviewers ask about failure first; write that table first.
+- **Autonomy by demo quality or stated confidence.** Use outcome, reversibility and checkable signals.
+- **Copying the back end as the tool list.** Nine tools cost tokens and widen the attack surface.
 - **An approval gate nobody reads.** Show evidence, limit volume.
 
 ## 🧾 Recap
-- Design turns the spec into diagrams, an autonomy table and ADRs a reviewer can read.
+- Design turns the spec into diagrams, an autonomy table and ADRs.
 - Take the lowest rung that meets the spec; scope tools by route.
 - Set autonomy per action by worst outcome; human checks need evidence and an owner.
-- Design failures first; price a conversation symbolically; record hard choices as ADRs.
+- Design failures first, price a conversation symbolically, record hard choices as ADRs.
 
 ## ✍️ Check yourself
 
@@ -254,7 +248,7 @@ Constraints: quote, never paraphrase; write "unclear" rather than guess; invent 
 
 <details><summary>Answer</summary>
 
-**B.** A tool missing from the request cannot be called, and the dispatcher should still reject any name outside the route's list; prompt rules only ask. (🟢 The decision ladder.)
+**B.** A tool that is not offered cannot be called, and the dispatcher rejects any name outside the route's list; a prompt rule only asks. (🟢 The decision ladder.)
 
 </details>
 
@@ -267,7 +261,7 @@ Constraints: quote, never paraphrase; write "unclear" rather than guess; invent 
 
 <details><summary>Answer</summary>
 
-**C.** A model's own number is not a measured probability; gate on checkable signals, with the cut-off set on labelled data. (🟡 Human-in-the-loop patterns.)
+**C.** A model's own number is not a measured probability; gate on checkable signals, cut-off set on labelled data. (🟡 Human-in-the-loop patterns.)
 
 </details>
 
@@ -293,7 +287,7 @@ Constraints: quote, never paraphrase; write "unclear" rather than guess; invent 
 
 <details><summary>Answer</summary>
 
-**D.** An accepted ADR's text is not rewritten; a new one records why you changed course, and the old Status line points to it. (🏛️ ADR format.)
+**D.** An accepted ADR is not rewritten; a new one records the change and the old Status line points to it. (🏛️ ADR format.)
 
 </details>
 
@@ -312,10 +306,10 @@ Constraints: quote, never paraphrase; write "unclear" rather than guess; invent 
 
 ## 📚 References
 - Anthropic, "Building effective agents": https://www.anthropic.com/engineering/building-effective-agents
-- Claude API: Pricing https://platform.claude.com/docs/en/about-claude/pricing; Prompt caching https://platform.claude.com/docs/en/build-with-claude/prompt-caching; Managed Agents https://platform.claude.com/docs/en/managed-agents/overview; Agent SDK and other documentation: https://docs.anthropic.com/
-- OWASP GenAI Security Project: https://genai.owasp.org/
+- Claude API: Pricing https://platform.claude.com/docs/en/about-claude/pricing; Prompt caching https://platform.claude.com/docs/en/build-with-claude/prompt-caching; Managed Agents https://platform.claude.com/docs/en/managed-agents/overview
+- OWASP GenAI Security Project: https://genai.owasp.org/; Simon Brown's C4 model: https://c4model.com/
 - [*Secure AI & Application Security*, lesson 9.2 — Agents and tools: excessive agency, least-privilege tools and MCP](../secai/index.html#/9.2)
-- **Read this week (Module 7).** The plan assigns no chapters to Module 7; the nearest, as given: Gulli, *Agentic Design Patterns*, chapters 13 (Human-in-the-Loop) and 16 (Resource-Aware Optimisation), the free draft of lesson 0.1; *Grokking AI Applications*, chapter 8 (Deploying and orchestrating GenAI apps): https://www.manning.com/books/grokking-ai-applications
+- **Read this week (Module 7).** No chapters are assigned to Module 7; the nearest, as given: Gulli, *Agentic Design Patterns*, chapters 13 (Human-in-the-Loop) and 16 (Resource-Aware Optimisation): the free draft listed in lesson 0.1. *Grokking AI Applications*, chapter 8 (Deploying and orchestrating GenAI apps): https://www.manning.com/books/grokking-ai-applications
 
 ---
 
@@ -324,27 +318,27 @@ Constraints: quote, never paraphrase; write "unclear" rather than guess; invent 
 
 ## ⚡ In 60 seconds
 - A **prototype ladder** (paper, Wizard of Oz, thin slice, pilot) buys the cheapest evidence first.
-- A **demo** is a rehearsed experiment: a script, one failure shown on purpose, limits in the customer's words.
-- A **statement of work** (SOW) turns the design into scope in and out, deliverables, phases, assumptions, acceptance and change control. Prices and legal terms belong to legal and procurement.
+- A **demo** is a rehearsed experiment: a script, failures shown on purpose, limits in the customer's words.
+- A **statement of work** (SOW) fixes scope in and out, deliverables, phases, assumptions, acceptance and change control; legal and procurement own prices and terms.
 - **Estimate in ranges**; roll out in **phases with exit criteria**; answer every change request with yes, not yet or no.
 - Biggest trap: a demo that only succeeds, and a scope that never says "not".
 
 ## 🧭 Why it matters
 Lujain demos Najm Desk to Hind and Yara (hypothetical): seven polished minutes. Hind says, "Can it also reset passwords? I want my whole team on it next month." Lujain says "Sure." Nothing is written down. Two weeks later "password reset" is on Hind's slide as a promise, and Noura asks who approved it. In pilot week one a wrong answer reaches Hind's team; nobody had said it could. Yara: "You said it was ready."
 
-Fahad's verdict: a demo room is where scope is quietly written, so write it down on purpose. This lesson covers proving risk cheaply, showing the customer the truth, agreeing in writing what you will not do, and releasing in steps.
+Fahad: a demo room is where scope is quietly written, so write it down on purpose.
 
 ## 📐 How it works
 
 ### 🟢 The essentials
 
 **The prototype ladder.** Each rung costs more and answers a different question; stop when the next biggest risk is retired.
-- **Paper:** scripted conversations on cards, walked through with Yara's agents. Do flow and words match how staff ask?
-- **Wizard of Oz:** a person behind a real chat window plays the assistant by the design's rules; staff are told it is a trial (ask Sara about handling messages). Do people trust it? What do they ask?
-- **Thin slice:** the smallest end-to-end build, here on the lab kit: two jobs, real guards. Can it be built; what do latency and cost look like?
-- **Pilot:** real users and tickets, limited scope and time, watched. Adoption, quality, operations, benefit.
+- **Paper:** scripted conversations on cards, walked through with Yara's agents: do flow and words match how staff ask?
+- **Wizard of Oz:** a person behind a real chat window plays the assistant by the design's rules; staff are told it is a trial (ask Sara). Do they trust it? What do they ask?
+- **Thin slice:** the smallest end-to-end build, here on the lab kit: two jobs, real guards. Can it be built? Latency and cost?
+- **Pilot:** real users and tickets, limited scope and time, watched: adoption, quality, operations, benefit.
 
-**Running a customer demo.** A demo is an experiment with a script. Decide what you want from the room: a decision, a name, a date. Fix scenarios and expected results, announce the failure first, rehearse on the same environment, log every request. This script doubles as the slice's acceptance checks; each scenario cites the worked specification's requirement it exercises (`labkit/data/m07_demo_script.json`):
+**Running a customer demo.** A demo is an experiment with a script. Decide what you want from the room: a decision, a name, a date. Fix scenarios and expected results, announce the failures first, rehearse on the same environment, log every request. This script doubles as the slice's acceptance checks; each scenario cites the worked specification's requirement it exercises (`labkit/data/m07_demo_script.json`):
 
 | Scenario | What you say |
 |---|---|
@@ -353,26 +347,26 @@ Fahad's verdict: a demo room is where scope is quietly written, so write it down
 | D3 Someone else's ticket (AC-2) | "It will not even say whether that ticket exists." |
 | D4 Not in the library (FR-06) | "When it does not know, it says so and a person takes over." |
 | D5 "Please reset my password" (GR-03) | "Not in this version, and here is why we will not rush it." |
-| D6 Failure: an invented source | "Watch it get this wrong. The check caught it first." |
-| D7 Failure: the model is down | "Same question, model off: closest policy text, labelled." |
+| D6 Failure: an invented source (FR-01) | "Watch it get this wrong. The check caught it first." |
+| D7 Failure: the model is down (NFR-02) | "Same question, model off: closest policy text, labelled." |
 
-State limits plainly: "It will sometimes be wrong; that is why every answer shows its source and the Service Desk sees every hand-off."
+State limits plainly: "It will sometimes be wrong; that is why every answer shows its source."
 
 ### 🟡 Going deeper
 
-**The lab: a thin slice you can run.** It reuses the Module 4 retrieval lab and the kit's ticket tool. From `aiapps/labkit`:
+**The lab: a thin slice you can run.** It reuses the Module 4 retrieval lab and the kit's ticket tool; run it from `aiapps/labkit`:
 
 ```bash
 python -m labkit.mock_server --port 8787 --playbook playbooks/m07_lab.json &
 export ANTHROPIC_BASE_URL=http://127.0.0.1:8787 ANTHROPIC_API_KEY=mock
 python labs/m07/demo.py                                  # the seven scenarios
-python labs/m07/demo.py "Status of ticket 4473?" Lujain  # one question, one person
+python labs/m07/demo.py "Status of ticket 4473?" Lujain  # 4473 is Rayan's: Lujain is refused
 pytest tests/test_m07_labs.py
 ```
 
-On the real API the code is identical (spending cap first, lesson 0.2), but D6 will not fail on cue, and retrieval keeps Module 4's toy embedding unless `EMBEDDER=default`. The run ends with `7/7 slice checks passed`; D6 shows `kind=withheld` and the reason `citation gate: ['finance-budget#3']`.
+On the real API the code is identical (spending cap first, lesson 0.2), but D6 will not fail on cue, and retrieval keeps Module 4's toy embedding unless `EMBEDDER=default`. The run ends with `7/7 slice checks passed`; D6 shows `kind=withheld` and the reason `citation gate: ['finance-budget#3']`. Against a mock started without `--playbook`, nothing invents a source: D6 fails and the run ends `6/7`.
 
-*Works offline:* routing, the owner check, the citation gate, degraded mode, the hand-off, the tests (the mock copies the best passage, so D1 proves wiring, not understanding). *Needs a real model:* answer quality, whether it invents sources (the playbook stages D6), router accuracy, latency, cost.
+*Works offline:* routing, the owner check, the citation gate, degraded mode, the hand-off, the tests (the mock copies the best passage, so D1 proves wiring, not understanding). *Needs a real model:* answer quality, whether it invents sources (the playbook stages D6), router accuracy, latency, cost. *Not built:* masking (GR-01) and the audit log (NFR-04): paste no real secret.
 
 ```python
 # labs/m07/demo.py
@@ -481,33 +475,34 @@ if __name__ == "__main__":
 
 - **The router is code.** Keywords misroute real sentences: "Is the VPN status page reliable in 2025?" goes to the ticket route, "Unlock policy: how long is the lockout?" to the action route. ADR 001's cheap model replaces `route()`.
 - **Three guards.** "Not yours" and "does not exist" get the same words. The citation gate wants a citation, and only retrieved ones. No hits, no model call.
-- **Degraded mode.** The drill aims the client at a dead port, a real connection failure; `finally` restores it. It swaps a global: a drill, not production code.
+- **Degraded mode.** The drill aims the client at a dead port, a real connection failure; `finally` restores it. It swaps a global: a drill, not production code. Catching every `anthropic.APIError` is too broad for production: a 400 is your bug, not an outage.
+- **What the checks cannot see.** A refusal or `max_tokens` also returns Module 4's "I don't know", so that hand-off says "no answer in the library". With a real model, an exact-wording `contains` check can fail a correct answer.
 
-**Proposal and SOW anatomy.** Sections: objectives; scope in and out; deliverables; phases and milestones; assumptions; dependencies; acceptance criteria and process; change control; roles (RACI: responsible, accountable, consulted, informed); risks; support or warranty period; commercials. Commercials and contract terms belong to legal and procurement. Two sections work hardest. **Scope out** turns D5 into a visible decision; **assumptions** ("the policy library is current and has an owner") move a risk onto the page.
+**Proposal and SOW anatomy.** Sections: objectives; scope in and out; deliverables; phases; assumptions and dependencies; acceptance; change control; roles (RACI: responsible, accountable, consulted, informed); risks; warranty; commercials. Commercials and contract terms belong to legal and procurement. Two sections work hardest. **Scope out** turns D5 into a visible decision; **assumptions** ("the policy library is current and has an owner") move a risk onto the page.
 
-**Estimating under uncertainty.** A single number is a promise you cannot keep. Give a range, a confidence and assumptions: "six to nine weeks to a pilot-ready build, about 80% confident, if TicketHub test access arrives early". Run a **spike** first: a time-boxed experiment on the riskiest unknown, such as Arabic retrieval.
+**Estimating under uncertainty.** A single number is a promise you cannot keep. Give a range, a confidence and assumptions (fictional): "six to nine weeks to a pilot-ready build, about 80% confident, if TicketHub test access arrives early". Run a **spike** first: a time-boxed experiment on the riskiest unknown, such as Arabic retrieval. If it finds weak recall, the range moves up now, while scope can still change.
 
 ### 🔴 Expert view
 
-**Phased rollout with exit criteria.** Pilot with Service Desk staff as a copilot, then one business unit, then everyone. Each gate is a measurable **exit criterion** with a named decider; each phase can fall back to the one before through lesson 7.1's kill switch. Weak: "staff liked it", "four weeks passed". Strong: "correctness at target for two weekly eval runs; zero security incidents; kill-switch drill passed". In the pilot, try **shadow mode**: the assistant drafts silently and you compare its drafts with the agents'.
+**Phased rollout with exit criteria.** Each phase (table below) ends at a gate: a measurable **exit criterion** with a named decider. Each can fall back to the one before through lesson 7.1's kill switch. Weak: "staff liked it", "four weeks passed". Strong: "correctness at target for two weekly eval runs; zero security incidents; kill-switch drill passed". In the pilot, try **shadow mode**: the assistant drafts silently; compare its drafts with the agents'.
 
-**Change requests.** "Can it also reset passwords?" deserves an impact analysis, not a reflex. Ask: what is the need; what changes (requirement, tools, autonomy, data flow, ADRs); who must agree; what new evidence it needs; what it costs in effort and schedule. Then answer one of three ways.
+**Change requests.** "Can it also reset passwords?" deserves an impact analysis, not a reflex. Ask: what is the need; what changes (requirement, tools, autonomy, data flow, ADRs); who must agree; what evidence it needs; what it costs in effort and schedule. Then answer one of three ways.
 - **Yes:** inside the design, small, no new risk. Update specification and tests; log it.
 - **Not yet:** valuable, but a precondition is missing. Name it, its owner and a date to revisit.
 - **No:** it breaks a constraint, or the benefit does not justify the risk. Say why.
 
-Password reset is **not yet**. It is a scope and risk change (lesson 6.2's change log: Hind and Fahad; Layla, Noura or Sara). The worst outcome is account takeover; GR-03, the Out list and ADR 003 exclude it; and the password policy itself needs a manager call-back when the authenticator is lost. Until then Najm Desk answers "how do I reset?" from the policy and hands off.
+Password reset is **not yet**. It is a scope and risk change (lesson 6.2's change log: Hind and Fahad; Layla, Noura or Sara). The worst outcome is account takeover; GR-03, the Out list and ADR 003 exclude it; and the password policy needs a manager call-back when the authenticator is lost. Until then Najm Desk answers "how do I reset?" from the policy, and "please reset mine" is declined with a hand-off (D5).
 
-**Premortem, one-pager, decision log.** In a premortem (Gary Klein) it is week eight and the pilot is paused; write why (nobody reads hand-offs, a policy changed, approvers click yes) and plan a fix for each. The **customer one-pager** says in Hind's words what Najm Desk does, does not do, and how to report a wrong answer; Yara reviews it, in English and Arabic. The **decision log** records each decision with date, decider, link ("DEC-004: password reset, not yet; Hind; CR-001, ADR 003").
+**Premortem, one-pager, decision log.** In a premortem (Gary Klein) it is week eight and the pilot is paused; write why (nobody reads hand-offs, a policy changed, approvers click yes) and a fix for each. The **customer one-pager** says in Hind's words what Najm Desk does and does not do and how to report a wrong answer; Yara reviews it in English and Arabic. The **decision log** records each decision with date, decider and link ("DEC-004: password reset, not yet; Hind; CR-001, ADR 003").
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
 | **Prototype ladder** | Paper, Wizard of Oz, thin slice, pilot | Choosing evidence for the next risk |
-| **Demo script** | Fixed scenarios, expected results, one failure | Every customer demo |
+| **Demo script** | Fixed scenarios, expected results, failures | Every customer demo |
 | **Statement of work** | Scope, phases, acceptance, change control | Before build starts |
 | **Rollout plan** | Phases, autonomy, exit criteria, rollback | Before the pilot |
-| **Change request** | Impact analysis, then yes, not yet or no | Any request after scope is agreed |
+| **Change request** | Impact analysis, then yes, not yet or no | After scope is agreed |
 | **Decision log** | Dated decisions, decider, link | From day one |
 
 ## 🏛️ In practice at Najm Bank
@@ -524,7 +519,7 @@ Your artefacts: the demo (`labs/m07/demo.py`, `docs/demo-script.md`), `docs/prop
 7. Acceptance: AC-1 to AC-5, the eval set and the demo script, run by Yara's team; sponsor review in 5 working days.
 8. Change control: changes to scope, autonomy, model data or dates need a change request.
 9. Roles: Hind accepts; Yara advises; Fahad delivers; Layla, Noura, Hamad, Sara sign off their areas.
-10. Risks, warranty, commercials: premortem risks; defect fixes for a period agreed with legal; prices with legal and procurement.
+10. Risks, warranty, commercials: premortem risks; warranty period and prices with legal and procurement.
 ```
 
 The rollout plan (the numbers are the worked specification's fictional targets; use yours):
@@ -548,33 +543,33 @@ Constraints:
 - The router is plain code. Routing, ticket status and out-of-scope requests make no model call.
 - The requester is a function argument, never read from the question.
 - Guards: ticket owner, citation gate, "I don't know" with hand-off, degraded mode when a model call raises anthropic.APIError.
-- No temperature, prefill or keys in code; no new dependencies; nothing beyond the seven scenarios.
+- No temperature, prefill, forced tool_choice or keys in code; no new dependencies; nothing beyond the seven scenarios.
 Plan first; small steps; tests after each.
 ```
 
 **Verify before you accept it.**
-- Run the seven scenarios yourself and compare each with the script, not Claude's summary.
+- Run the seven scenarios yourself; compare each with the script, not Claude's summary.
 - Mutate: delete the owner check, then the citation gate, then the `except anthropic.APIError`. Each must turn a test red, or the tests are decoration.
 - Read the diff for a model call in `route()`, the user taken from the question, `except Exception`, copied Module 4 code, `content[0]`.
-- `git diff --stat` shows only `labs/m07/`, its test and the `m07_` data and playbook.
+- `git status --short` lists only `labs/m07/`, its test and the `m07_` data and playbook.
 
 ## 🛠️ Exercises
-- 🟢 **Run the demo, write the sentences.** Offline. Run all seven scenarios and write what you would tell Hind for each, avoiding "model", "token" and "hallucination"; D6's says how the wrong answer was caught. *Done when:* `NOTES.md` holds seven plain sentences a colleague can match to scenarios.
-- 🟡 **Write the proposal and rollout plan.** Offline. Fill both, then analyse "can it also reset passwords?". *Done when:* scope-out names three things including password reset, each deliverable has an acceptance criterion, estimates are ranges with a confidence and a spike, each exit criterion has a number and a decider, and the request ends in yes, not yet or no.
-- 🔴 **Find a real failure.** *Needs the real API* (spending cap first, lesson 0.2). Without the playbook, run 20 policy questions (five the library cannot answer) through `rag.py` with `MODEL=claude-sonnet-5-5` and look for a real failure. *Done when:* `NOTES.md` has the questions, outputs, the failing case, whether the citation gate caught it, the date, the model id and your replacement for D6.
+- 🟢 **Run the demo, write the sentences.** Offline. Run all seven scenarios and write what you would tell Hind for each, without "model", "token" or "hallucination"; D6's says how the wrong answer was caught. *Done when:* `NOTES.md` holds seven plain sentences a colleague can match to scenarios.
+- 🟡 **Write the proposal and rollout plan.** Offline. Fill both, then analyse "can it also reset passwords?". *Done when:* scope-out names three things including password reset, estimates are ranges with a confidence, each exit criterion has a number and a decider, and the request ends in yes, not yet or no.
+- 🔴 **Find a real failure.** *Needs the real API* (spending cap first, lesson 0.2). Without the playbook, run 20 policy questions of your own (five the library cannot answer) through `rag.ask` in a short loop with `MODEL=claude-sonnet-5-5`, looking for a real failure. *Done when:* `NOTES.md` has the questions, outputs, the failing case, whether the citation gate caught it, the date, the model id and your replacement for D6.
 
 ## ⚠️ Mistakes and traps
-- **A demo that only succeeds.** Show one failure and the check that catches it.
+- **A demo that only succeeds.** Show a failure and the check that catches it.
 - **Saying "sure" in the room.** Log it; answer after analysis.
 - **A scope with no "out".** Name what you will not do.
-- **A single-number estimate.** Give a range, a confidence, assumptions.
-- **Exit criteria that are feelings or dates.** Use specification numbers and a named decider.
+- **A single-number estimate.** Give a range, confidence, assumptions.
+- **Exit criteria that are feelings or dates.** Use specification numbers and a decider.
 
 ## 🧾 Recap
 - Climb the prototype ladder only as far as the next risk requires.
-- A demo is a script with a failure in it and limits in the customer's words.
-- Scope-out, assumptions, acceptance and change control are the SOW's hardest-working sections.
-- Estimate in ranges; roll out in phases with measurable exit criteria; answer every change request yes, not yet or no, with a reason.
+- A demo is a script with failures in it and limits in the customer's words.
+- Scope-out and assumptions are the SOW's hardest-working sections.
+- Estimate in ranges, roll out in phases with measurable exit criteria, answer change requests yes, not yet or no.
 
 ## ✍️ Check yourself
 
@@ -593,8 +588,8 @@ Plan first; small steps; tests after each.
 
 **2. The team wants real, unscripted staff questions and reactions to wrong answers before writing code. Which rung fits?**
 
-- A. A paper prototype of scripted conversation cards
-- B. A thin slice built on the lab kit with guards
+- A. A paper prototype of scripted cards
+- B. A thin slice built on the lab kit
 - C. A Wizard of Oz trial with a person behind it
 - D. A pilot run with every Service Desk agent
 
@@ -607,7 +602,7 @@ Plan first; small steps; tests after each.
 **3. Why does the demo script include D6, an invented source?**
 
 - A. To let the customer watch a wrong answer get caught
-- B. To lower expectations so that acceptance becomes easier later
+- B. To show the failure rate is low enough to skip the pilot
 - C. To prove the model never makes mistakes on policy questions
 - D. To avoid writing acceptance criteria for the pilot
 
@@ -619,23 +614,23 @@ Plan first; small steps; tests after each.
 
 **4. Which estimate follows the lesson?**
 
-- A. "Ten weeks, and we add a ten percent safety buffer on top"
+- A. "Ten weeks, plus a ten percent buffer if the scope grows"
 - B. "Six to nine weeks, about 80% confident, if access comes early"
-- C. "Between four and seven weeks, since that is the average of our best cases"
-- D. "We cannot give any estimate until the pilot has fully finished"
+- C. "Between four and seven weeks, going by our best past cases"
+- D. "None, as nothing reliable exists before the pilot has fully finished"
 
 <details><summary>Answer</summary>
 
-**B.** A range, a confidence and a named assumption; a padded point or best-case average hides the uncertainty. (🟡 Estimating under uncertainty.)
+**B.** A range, a confidence and a named assumption; a padded point or a best-case range hides the uncertainty. (🟡 Estimating under uncertainty.)
 
 </details>
 
 **5. Which is a proper exit criterion from pilot to limited release?**
 
-- A. Four calendar weeks have passed since the pilot first started
-- B. Pilot staff have told us they like using the assistant
+- A. Four calendar weeks have passed since the pilot started
+- B. Pilot staff have told us they like the assistant
 - C. The model provider has released a newer model version
-- D. Correctness at target for two weekly runs, no incidents
+- D. Correctness met its target in two weekly runs, no incidents
 
 <details><summary>Answer</summary>
 

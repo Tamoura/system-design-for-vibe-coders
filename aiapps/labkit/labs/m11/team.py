@@ -1,6 +1,6 @@
 # labs/m11/team.py
 """Lab 11.2: a researcher, a writer and a reviewer, run by a supervisor that is plain code.
-  Environment: TEAM_TOKEN_BUDGET, MAX_ROUNDS, TRACE_FILE."""
+  Environment: MODEL, TEAM_TOKEN_BUDGET, MAX_ROUNDS, TRACE_FILE."""
 import json
 import os
 import re

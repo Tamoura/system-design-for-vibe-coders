@@ -10,6 +10,7 @@ import sys
 import time
 from collections import namedtuple
 from pathlib import Path
+from urllib.parse import urlparse
 
 Row = namedtuple("Row", "id criterion who says expect how")
 HERE = Path(__file__).resolve().parent
@@ -45,6 +46,7 @@ def parse(text):
 def load_app(spec=None):
     if spec:
         module, _, name = spec.partition(":")
+        sys.path.insert(0, os.getcwd())                       # your app is a file in the folder you run this from
         return getattr(importlib.import_module(module), name)
     sys.path.append(str(HERE.parent / "m07"))
     import demo                                           # noqa: E402  Lab 7.2: respond(user, text) -> (route, Reply)
@@ -53,7 +55,7 @@ def load_app(spec=None):
 
 def is_real():
     """Real mode: not the local mock, and a real key (the same test as Lab 12.2's check_mode)."""
-    local = os.environ.get("ANTHROPIC_BASE_URL", "").startswith(("http://127.0.0.1", "http://localhost"))
+    local = urlparse(os.environ.get("ANTHROPIC_BASE_URL", "")).hostname in ("127.0.0.1", "localhost")
     return not local and os.environ.get("ANTHROPIC_API_KEY", "mock") != "mock"
 
 

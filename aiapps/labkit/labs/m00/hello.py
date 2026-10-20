@@ -11,7 +11,7 @@ import anthropic
 from anthropic import Anthropic
 from dotenv import find_dotenv, load_dotenv
 
-load_dotenv(find_dotenv(usecwd=True))          # reads .env from where you run; exported variables win over the file
+load_dotenv(find_dotenv(usecwd=True))          # nearest .env, here or in a parent folder; exported variables win over the file
 MODEL = os.environ.get("MODEL", "claude-sonnet-5-5")   # never hard-code a model id in lab code
 
 

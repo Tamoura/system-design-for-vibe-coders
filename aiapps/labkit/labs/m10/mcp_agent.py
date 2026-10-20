@@ -64,7 +64,7 @@ async def run_agent(question: str, server, approve=ask_human, claude=None, max_s
         for _ in range(max_steps):                                  # a hard cap, as in Module 8
             resp = await claude.messages.create(model=MODEL, max_tokens=1024, output_config={"effort": "low"},
                                                 system=SYSTEM, tools=tools, messages=messages)
-            if resp.stop_reason != "tool_use":                      # end_turn, or max_tokens, refusal, pause_turn: stop here
+            if resp.stop_reason != "tool_use":                      # stop on end_turn, max_tokens, refusal; pause_turn needs server tools (Module 8)
                 text = next((b.text for b in resp.content if b.type == "text"), "")
                 return text if resp.stop_reason == "end_turn" else f"Stopped: stop_reason={resp.stop_reason}"
             messages.append({"role": "assistant", "content": resp.content})

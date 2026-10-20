@@ -19,7 +19,7 @@
 ## 🧭 Why it matters
 It is the second Wednesday of the Najm Desk pilot (hypothetical, with fictional numbers). Lujain's prototype has survived every demo. Then three messages arrive. Yara, the Service Desk team lead: "It forgot my laptop model two messages after I told it." Hind, the sponsor: "One answer stopped mid-sentence and one was blank." Fahad, from the usage report: "Why are input tokens twenty times output tokens when staff type one short line at a time?"
 
-Lujain hunts for three bugs. There is one idea. The handler starts every request with `history = []`, so the model never saw the laptop model. `max_tokens=400` was spent on thinking before the first word of the answer. And the report is right: in a twenty-turn chat each call resent every earlier turn. **The model is a stateless function, and everything it "knows" about the conversation is the list your code sends.** Every later module answers one question more carefully: *what should be in the list on this call?*
+Lujain hunts for three bugs. Two ideas explain all three. The handler starts every request with `history = []`, so the model never saw the laptop model. `max_tokens=400` was spent on thinking (output) before the first word of the answer. And the report is right: in a twenty-turn chat each call resent every earlier turn. **The model is a stateless function, and everything it "knows" about the conversation is the list your code sends.** Every later module answers one question more carefully: *what should be in the list on this call?*
 
 ## 📐 How it works
 
@@ -39,7 +39,7 @@ sequenceDiagram
 
 > **Statelessness.** Every call starts from zero. "Conversation memory" is an illusion created by your code resending the history each time. It is the fact behind much of the confusion about LLMs, and much of the cost of running them.
 
-**Tokens.** The model reads *tokens*, sub-word chunks: a common English word is often one token, while a rare word, a number or an Arabic word may be several. For English prose, 4 characters per token is a rough rule (750 words is about 1,000 tokens), not a Claude fact. Code, JSON and other languages split differently; Arabic is often quoted at "two to three times" the English count per word. Do not rely on that figure; **measure** with `client.messages.count_tokens(...)` for your model. Counts are model-specific; Anthropic's migration notes say some newer models count the same text as about 30% more tokens than their predecessors, so an upgrade can change your bill. Never use `tiktoken` for Claude: it is another vendor's tokenizer and undercounts.
+**Tokens.** The model reads *tokens*, sub-word chunks: a common English word is often one token, while a rare word, a number or an Arabic word may be several. For English prose, 4 characters per token is a rough rule (750 words is about 1,000 tokens), not a Claude fact. Code, JSON and other languages split differently; Arabic is often quoted at "two to three times" the English count per word. Do not rely on that figure; **measure** with `client.messages.count_tokens(...)` for your model. Counts are model-specific: Anthropic's notes say some newer models count the same text as about 30% more tokens than their predecessors, so an upgrade can change your bill. Never use `tiktoken` for Claude: it is another vendor's tokenizer and undercounts.
 
 **The context window** is the most tokens the model can handle in one call. Input and output (thinking included) must fit together.
 
@@ -49,11 +49,11 @@ sequenceDiagram
 |<------------------- must fit inside the context window ------------------------>|
 ```
 
-Current Claude models list 200K to 1M tokens (most list 1M; Haiku 4.5 lists 200K). Ask the API: `client.models.retrieve(MODEL)` returns `max_input_tokens` and `max_tokens` (real API only). Three facts survive any window size: you pay for every input token on every call; quality can degrade before the limit; and a prompt longer than the window is a 400, so your code must manage the list. Input and reply share the window, so on a nearly full prompt a long reply is rejected or, on newer models, stops with `model_context_window_exceeded`. A bigger window moves the wall, not the cost.
+Current Claude models list 200K to 1M tokens (most list 1M; Haiku 4.5 lists 200K). Ask the API: `client.models.retrieve(MODEL)` returns `max_input_tokens` and `max_tokens` (real API only). Three facts survive any window size: you pay for every input token on every call; quality can degrade before the limit; and a prompt longer than the window is refused, so your code must manage the list. Input and reply share the window: on a nearly full prompt a long reply stops with `model_context_window_exceeded` (newer models) or the request is refused (older ones). A bigger window moves the wall, not the cost.
 
 **The messages list.** `messages` is a list of `{"role": ..., "content": ...}` dicts with two roles, `user` and `assistant`. The first must be `user`. `content` is a string or a list of blocks (`text` now; `tool_use`, `tool_result` and `thinking` in lesson 1.2). Your code appends each reply as an `assistant` message; that is all "remembered" means. Alternate roles strictly: two same-role messages in a row may be merged into one turn or rejected, so never depend on either.
 
-**The system prompt is not a message.** Who the model is, what it may answer and which language to use go in the separate `system=` parameter. It is sent and billed on every call, and a `{"role": "system"}` entry as the first message is an error (some models accept such entries later in a conversation; ignore that for now). A complete call, run on the mock:
+**The system prompt is not a message.** Who the model is, what it may answer and which language to use go in the separate `system=` parameter. It is sent and billed on every call, and a `{"role": "system"}` entry as the first message is an error (some models accept one later in a conversation). A complete call, run on the mock:
 
 ```python
 import os
@@ -81,7 +81,7 @@ sent 3 messages | input_tokens=62 output_tokens=12 stop=end_turn
 sent 5 messages | input_tokens=84 output_tokens=9 stop=end_turn
 ```
 
-Input climbs although each question is one short line; real replies are longer than the mock's scripted ones, so the real climb is steeper. **Read the response, not just the text.** `content` is a *list of blocks*; `stop_reason` says why it stopped; `usage` is your bill:
+Input climbs although each question is one short line; real replies are longer than the mock's, so the real climb is steeper. **Read the response, not just the text.** `content` is a *list of blocks*; `stop_reason` says why it stopped; `usage` is your bill:
 
 | `stop_reason` | Meaning | Your code should |
 |---|---|---|
@@ -91,7 +91,7 @@ Input climbs although each question is one short line; real replies are longer t
 | `stop_sequence` | Hit a custom stop string you set | Handle like `end_turn` |
 | `tool_use` | The model asks for a tool | Run it, return the result (lesson 1.2) |
 | `pause_turn` | A long server-tool turn paused | Send the conversation back to resume |
-| `refusal` | A safety classifier declined | Show a clear message; read `stop_details` |
+| `refusal` | A safety classifier declined | Show a clear message; `stop_details` may say why (it can be `None`) |
 
 `usage` holds `input_tokens` and `output_tokens`, plus `cache_creation_input_tokens` and `cache_read_input_tokens` once you use prompt caching (lesson 14.2); with caching on, `input_tokens` counts only the uncached part.
 
@@ -108,9 +108,9 @@ Input climbs although each question is one short line; real replies are longer t
 
 Check turn 10: input 34,500 × $1 ÷ 1,000,000 = $0.0345; output 3,000 × $5 ÷ 1,000,000 = $0.0150; total $0.0495. Doubling the turns from 10 to 20 triples the cost ($0.0495 to $0.1490): the total grows with the *square* of the turns. Of the 119,000 input tokens billed over 20 turns, only 4,000 were new user words; 95,000 were history resent and 20,000 the system prompt. Levers: one conversation per topic, trim or summarise (lesson 1.2, Module 9), cache the prefix (lesson 14.2), a cheaper model for easy steps.
 
-**Thinking, effort and `max_tokens`.** Current models think before answering. On several it is on by default, on some it cannot be switched off, and the model decides how much. Thinking tokens are **output tokens**, billed and counted against `max_tokens`. If the budget runs out during thinking you get `stop_reason == "max_tokens"` and a short or empty text block: Lujain's bug. Set `max_tokens` to at least 1024 (the API reference's examples use about 16,000), check `stop_reason`, and steer depth and cost with `output_config={"effort": "low"}`. Levels run `low` to `max`; the default differs by model (`high` on Sonnet 5.5). The labs use `low`; `budget_tokens` is removed on current models.
+**Thinking, effort and `max_tokens`.** Current models think before answering. On several it is on by default, on some it cannot be switched off, and the model decides how much. Thinking tokens are **output tokens**, billed and counted against `max_tokens`. If the budget runs out during thinking you get `stop_reason == "max_tokens"` and a short or empty text block: Lujain's bug. Set `max_tokens` to at least 1024 (the API reference's examples use about 16,000), check `stop_reason`, and steer depth and cost with `output_config={"effort": "low"}`. Levels run `low` to `max`; the default differs by model (`high` on Sonnet 5.5). The labs use `low`; `budget_tokens` is removed on the newest models.
 
-**Errors are typed.** Catch the SDK's classes, never message strings. A 400 is `anthropic.BadRequestError`: your request is wrong, so fix it. 401, 403 and 404 mean a bad key, a missing permission or an unknown model id; 429 is `RateLimitError`; 500 and 529 are server-side. The SDK retries 408, 409, 429, 5xx and connection errors twice by default, never a 400. A prompt over the window is also a 400. On a mock started with `MOCK_CONTEXT_WINDOW=8000`, a 40,000-character message raises `BadRequestError`: `400 prompt is too long: 10003 tokens > 8000 maximum`. The real API words it differently: match the class, not the sentence.
+**Errors are typed.** Catch the SDK's classes, never message strings. A 400 is `anthropic.BadRequestError`: your request is wrong, so fix it. 401, 403 and 404 mean a bad key, a missing permission or an unknown model id; 429 is `RateLimitError`; 500 and 529 are server-side. The SDK retries 408, 409, 429, 5xx and connection errors twice by default, never a 400. A prompt over the window is refused up front, usually as a 400 (a body over the byte limit is a 413, `RequestTooLargeError`). Lesson 1.2 triggers one on purpose, on a mock started with `MOCK_CONTEXT_WINDOW=8000`. The real wording differs: match the class, not the sentence.
 
 **Temperature and the other knobs, honestly.** The model's last step turns scores into probabilities for the next token and picks one. *Temperature* rescales them first: low values let the likeliest token win almost always (plainer, repeatable); high values give unlikely tokens a chance (varied, riskier). *Top-p* and *top-k* trim the candidate list instead. Tutorials say "set temperature to 0". Three facts:
 
@@ -124,7 +124,7 @@ Instead: for the same *format*, structured output with a JSON schema (Module 3);
 
 **Where memory can live.** The Messages API is stateless, so memory is your design: a list in a process (labs), a database row per conversation (production), a summary replacing old turns (Module 9), or a platform feature (compaction, Managed Agents sessions; several are beta).
 
-**Trimming has a hidden cost.** Prompt caching matches an exact prefix, so dropping the oldest turn on every call misses the cache; trim in larger steps or summarise. Keep the *full log* for audit and send a trimmed *view* (lesson 1.2). The list is also data: whoever keeps it owns its privacy duties (Modules 9 and 13).
+**Trimming has a hidden cost.** Prompt caching matches an exact prefix, so dropping the oldest turn on every call breaks the cached prefix of the conversation; trim in larger steps or summarise. Keep the *full log* for audit and send a trimmed *view* (lesson 1.2). The list is also data: whoever keeps it owns its privacy duties (Modules 9 and 13).
 
 **Long contexts are not free recall.** The 2023 "Lost in the Middle" paper reported that models used the middle of a long prompt less reliably than its start or end. Newer models may do better; test with your own documents.
 
@@ -162,7 +162,7 @@ Grades: 🟢 offline only, 🟡 offline plus a price page, 🔴 a real API key.
 - **A global `history`, or a new `[]` on every request.** One leaks a user's chat to others; the other forgets. Keep one list per conversation id.
 - **`resp.content[0].text`.** The first block can be `thinking`. Take the block whose `type` is `"text"`.
 - **A small `max_tokens`.** Thinking eats it and the answer is empty or cut off. Use 1024 or more, lower `effort`, check `stop_reason`.
-- **A token ratio in your head, or `tiktoken`.** Both are only estimates, and `tiktoken` is another vendor's tokenizer. Call `count_tokens`.
+- **A token ratio in your head, or `tiktoken`.** Both are guesses for Claude. Call `count_tokens`.
 - **`temperature=0` and exact-text tests.** One raises a `TypeError`, the other flakes. Test the shape.
 
 ## 🧾 Recap
@@ -242,7 +242,7 @@ Grades: 🟢 offline only, 🟡 offline plus a price page, 🔴 a real API key.
 
 ## 📚 References
 - Claude API, Models overview (context windows, model ids): https://platform.claude.com/docs/en/about-claude/models/overview
-- Claude API: Pricing https://platform.claude.com/docs/en/about-claude/pricing; Context windows https://platform.claude.com/docs/en/build-with-claude/context-windows; Token counting https://platform.claude.com/docs/en/build-with-claude/token-counting; Adaptive thinking https://platform.claude.com/docs/en/build-with-claude/adaptive-thinking; Errors https://platform.claude.com/docs/en/api/errors
+- Claude API: Pricing https://platform.claude.com/docs/en/about-claude/pricing; Effort https://platform.claude.com/docs/en/build-with-claude/effort; Token counting https://platform.claude.com/docs/en/build-with-claude/token-counting; Adaptive thinking https://platform.claude.com/docs/en/build-with-claude/adaptive-thinking; Errors https://platform.claude.com/docs/en/api/errors
 - Anthropic Python SDK: https://github.com/anthropics/anthropic-sdk-python
 - **Read this week (Module 1).** Grokking AI Applications, chapters 1 and 2 (Peeking inside the black box; Building your first GenAI app): the illustrated version of this lesson, read first: https://www.manning.com/. Microsoft, *AI Agents for Beginners*, lesson 01 (15 minutes plus the video): https://github.com/microsoft/ai-agents-for-beginners. Gulli, *Agentic Design Patterns*: the introduction and "What makes an AI system an agent?" (9 pages; lesson 0.1 says where to find the draft). Anthropic, "Building effective agents": only the section "When (and when not) to use agents"; argue about it in the group: https://www.anthropic.com/engineering
 
@@ -252,19 +252,19 @@ Grades: 🟢 offline only, 🟡 offline plus a price page, 🔴 a real API key.
 *Level: 🟢 Beginner* · *Prerequisites: 0.2, 1.1* · *Layer: Model, Agents*
 
 ## ⚡ In 60 seconds
-- **Lab A.** A chatbot is a list plus one function: append your message, send the whole list, append the reply. Send only the newest message and it forgets your name.
+- **Lab A.** A chatbot is a list plus one function: append your message, send the whole list, append the reply. Send less and it forgets.
 - **Break it on purpose.** An over-long list is a 400. `trim()` sends a trimmed *view*; budget = window − `max_tokens` − a margin.
 - **Lab B.** An agent adds one thing: the model may answer with an action; your code runs it and returns a `tool_result`. **The model proposes, your code disposes.**
 - The loop must cap its steps, handle every `stop_reason`, answer every `tool_use` id in **one** user message, and flag failures with `is_error`. The mock proves mechanics, not quality.
 
 ## 🧭 Why it matters
-Fahad asks Lujain to show Yara the first thing that touches her tickets. The Lab A chatbot answers "Is ticket 4471 done yet?" fluently: "Yes, it was closed yesterday." The ticket is still open. A chatbot that cannot look anything up produces plausible text, which sounds like knowledge. The fix is not a better prompt but a loop in which the model can *ask* TicketHub: the smallest agent, and easy to build badly. Lujain's first version (hypothetical) has no step cap: when TicketHub times out, the model asks again and again, each call carrying the full history, until the spending alarm.
+Fahad asks Lujain to show Yara the first thing that touches her tickets. Asked "Is ticket 4471 done yet?", the Lab A chatbot can only admit it cannot look anything up, or guess fluently ("Yes, it was closed yesterday."), and a guess sounds like knowledge. The fix is not a better prompt but a loop in which the model can *ask* TicketHub: the smallest agent, and easy to build badly. Lujain's first version (hypothetical) has no step cap: when TicketHub times out, the model can keep asking, each call carrying the full history, until the spending alarm.
 
 ## 📐 How it works
 
 ### 🟢 The essentials
 
-**Lab A: a chatbot with memory in about 40 lines.** Start the mock and point the SDK at it; against the real API the code is identical (unset the two variables, use your real key).
+**Lab A: a chatbot with memory in about 40 lines.** Start the mock and point the SDK at it; against the real API the code is identical (unset `ANTHROPIC_BASE_URL` and put your real key in `ANTHROPIC_API_KEY`).
 
 ```bash
 cd aiapps/labkit
@@ -303,10 +303,12 @@ def ask(user_text: str) -> str:
             system=SYSTEM,                     # a separate parameter, resent on EVERY call
             messages=history,                  # the whole conversation, every time
         )
+        reply = text_of(resp)
+        if not reply:                          # thinking can eat max_tokens and leave no text at all
+            raise RuntimeError(f"no text in the reply (stop_reason={resp.stop_reason}): raise max_tokens")
     except Exception:
-        history.pop()                          # the call failed: take the question back out of the list
+        history.pop()                          # failed or empty: take the question back out of the list
         raise
-    reply = text_of(resp)
     history.append({"role": "assistant", "content": reply})   # write it back or it is gone
 
     # These numbers are your bill. Watch input climb: that is the history being resent.
@@ -325,13 +327,13 @@ if __name__ == "__main__":
         print("bot>", ask(text))
 ```
 
-> **What the mock can and cannot show.** It runs the real SDK against scripted replies (`(mock) I received: ...`) and estimated token counts, so it proves mechanics: the resend, token growth, the 400 on an overflow, the loop, the protocol errors. It cannot judge answer quality, tool descriptions or honesty.
+> **What the mock can and cannot show.** It runs the real SDK against scripted replies and estimated token counts, so it proves mechanics: the resend, token growth, the 400 on an overflow, the loop, the protocol errors. It cannot judge answer quality, tool descriptions or honesty.
 
-Type "My name is Rayan.", "How do I request a new laptop?", "What is my name?" and "What did I just ask?". On the mock the bot answers `Your name is Rayan.` and quotes your previous question, while `in=` climbs 33, 56, 79, 95 as the history is resent.
+The `if not reply` guard is Lujain's blank answer, handled: an empty assistant message in the list would make the *next* call a 400.
 
-**Prove statelessness to yourself.** In `ask`, change `messages=history,` to `messages=history[-1:],` so only the newest message is sent, and ask the same questions. The name answer becomes `I don't know your name. It has not come up in this conversation.` (mock wording). Only the list changed.
+Type "My name is Rayan.", "How do I request a new laptop?", "What is my name?" and "What did I just ask?". The mock answers `Your name is Rayan.` and quotes your last question, while `in=` climbs 33, 56, 79, 95 as the history is resent.
 
-Now restore the line and comment out the assistant `history.append`. The bot still knows your name, because *your* messages are in the list, but not its own earlier answers (the mock merges consecutive user messages; if the real API rejects them with a 400, restore the append). *Needs the real API to see the amnesia:* ask "What did you answer to my first question?"
+**Prove statelessness to yourself.** In `ask`, change `messages=history,` to `messages=history[-1:],` and ask the same questions. The name answer becomes `I don't know your name. It has not come up in this conversation.` (mock wording). Only the list changed.
 
 ### 🟡 Going deeper
 
@@ -373,7 +375,7 @@ def trim(history: list[dict], max_tokens: int, count=count) -> list[dict]:
     return kept
 ```
 
-Wire it into `chat.py` with two edits: `from trim import trim` under `import os`, and `messages=trim(history, 6000),` in place of `messages=history,` (6000 is the window 8000 minus `max_tokens` 1024 and a margin). Run `big.txt` again: all four lines succeed and `in=` levels off at 5169. `history` stays the complete log; only the *view* is trimmed. Trimming forgets silently, so real products summarise (Module 9); one message bigger than the window cannot be trimmed away.
+Wire it into `chat.py` with two edits: `from trim import trim` under `import os`, and `messages=trim(history, 6000),` for `messages=history,` (6000 is the window 8000 minus `max_tokens` 1024 and a margin). Run `big.txt` again: all four lines succeed and `in=` levels off at 5169. `history` stays the complete log; only the *view* is trimmed. Trimming forgets silently, so real products summarise (Module 9); one message bigger than the window cannot be trimmed away.
 
 **From chatbot to agent.** A chatbot's loop is: user speaks, model answers, wait. An agent changes one thing: the model may answer with an *action*, your code performs it, and the result goes back into the list, until the model decides it is done.
 
@@ -485,14 +487,16 @@ Run it and read the trace:
 Here is what I found: In progress, assigned to Networks; Closed.
 ```
 
-Two requests in one reply, both answered in one message, then the final text. That trace is the core of every agent platform, however large.
+Two requests in one reply, both answered in one message, then the final text: the core of every agent platform, however large. On the mock, the call comes from word overlap with the tool's description; a real model decides for itself, so expect different calls.
 
-**The protocol rules.** Append the *whole* `resp.content` as the assistant turn, not just its text: it carries the `tool_use` blocks (and any thinking blocks) the next call must match. Every `tool_use` id needs a `tool_result` with the same `tool_use_id`, all in **one** user message; miss one and the next call is a 400. Use `is_error: True` when a tool *fails* (timeout, bad arguments, unknown tool) so the model can recover; "ticket not found" is a normal result. Never run tools from a `max_tokens` reply: the call may be half-written. Some newest models (Sonnet 5.5, Opus 5.5, Fable 5.1) reject a forced `tool_choice`; steer with descriptions instead. The SDK's beta tool runner can run this loop for you, and has hooks for caps and approvals; build it by hand first, so you know what it does for you.
+**The protocol rules.** Append the *whole* `resp.content` as the assistant turn, not just its text: it carries the `tool_use` blocks (and any thinking blocks) the next call must match. Every `tool_use` id needs a `tool_result` with the same `tool_use_id`, all in **one** user message; miss one and the next call is a 400. Use `is_error: True` when a tool *fails* (timeout, bad arguments, unknown tool); "ticket not found" is a normal result. Never run tools from a `max_tokens` or `refusal` reply: the call may be half-written.
 
-> **Warning: the three loops juniors write first.** Each is a small mistake, reproducible on the mock:
+**A tool description is a prompt.** Weak: `does stuff`. Strong: the lab's, which says what the tool does *and when to call it*. The newest models (Sonnet 5.5, Opus 5.5, Fable 5.1) reject a forced `tool_choice`, so steer with the description, `strict: true` or structured output (Module 3). The SDK's beta tool runner can run this loop for you (it takes a `max_iterations` cap); build it by hand first, so you know what it does for you.
+
+> **Warning: the three loops juniors write first.** Each is reproducible on the mock:
 > - **No step cap.** With `[mock:loop]` in the goal the model asks for the same ticket until the cap stops it.
 > - **No `stop_reason` handling.** Treat the first reply as final: `resp.content[0].text` raises `AttributeError: 'ToolUseBlock' object has no attribute 'text'`, and printing the reply shows the user raw JSON.
-> - **A plain string instead of a `tool_result` block.** The next call returns `400 ... tool_use ids were found without tool_result blocks` (the real API's wording differs).
+> - **A plain string instead of a `tool_result` block.** The next call is a 400 whose message says that `tool_use` ids were found without `tool_result` blocks (the real API's exact wording may differ).
 
 Lab B avoids all three (comments 3, 5a to 5e, and `run_tools`).
 
@@ -506,9 +510,9 @@ Lab B avoids all three (comments 3, 5a to 5e, and `run_tools`).
 | **History trim** | Send a trimmed view; keep the full log | Long chats, until you summarise |
 
 ## 🏛️ In practice at Najm Bank
-**Weekly deliverable.** Commit `chat.py` (with your `trim()`), `agent.py`, passing offline tests and a `NOTES.md` that answers the Check yourself questions of both lessons, records the Arabic-to-English token ratio, and quotes the sentence that fixed Exercise 1.3(c).
+**Weekly deliverable.** Commit `chat.py` (with your `trim()`), `agent.py`, passing offline tests and a `NOTES.md` that answers the Check yourself questions of both lessons, records the Arabic-to-English token ratio, and quotes your Exercise 1.3(c) sentence.
 
-**Group session (60 minutes).** Everyone demos Exercise 1.3(c) and its fixing sentence and compares Arabic ratios. Each person draws the loop from memory and points to the line that stops it. Close by arguing "When (and when not) to use agents".
+**Group session (60 minutes).** Everyone demos Exercise 1.3(c) and their `SYSTEM` sentence, and compares Arabic ratios. Each person draws the loop from memory and points to the line that stops it. Close by arguing "When (and when not) to use agents".
 
 **Build it with Claude Code.** Give this spec to Claude Code in an empty repository, in plan mode (check the current Claude Code documentation), and review its plan before it edits anything:
 
@@ -519,7 +523,7 @@ Context: Python 3.11, anthropic>=1,<2, the offline mock in aiapps/labkit (read i
 MODEL from the environment, default claude-sonnet-5-5.
 Constraints:
 - max_tokens>=1024, output_config={"effort": "low"}. No temperature, top_p, top_k, prefill or
-  forced tool_choice. Take the text block; never content[0].text.
+  forced tool_choice. Take the text block; never content[0].text; never store an empty reply.
 - Agent loop: capped steps; handle end_turn, tool_use, max_tokens, refusal, pause_turn; ONE
   user message with a tool_result for EVERY tool_use id; is_error when a tool raises or is
   unknown; never run tools from a max_tokens reply.
@@ -537,19 +541,19 @@ gets one user message holding three tool_results.
 
 ## 🛠️ Exercises
 In `NOTES.md`, say which observations came from the mock and which from a real model.
-- 🟢 **Exercise 1.1: break it on purpose, then write `trim()`.** Overflow the chatbot as shown, record the error, then write `trim(history, max_tokens)` with tests: it keeps the newest message, starts with a user message and never mutates its input. *Done when:* `big.txt` runs to the end with your trim wired in. On the real API use a small budget (2,000 tokens); never fill a real window.
+- 🟢 **Exercise 1.1: break it on purpose, then write `trim()`.** Overflow the chatbot as shown, record the error, then write `trim(history, max_tokens)` with tests (newest message kept, user message first, input never mutated). *Done when:* `big.txt` runs to the end with your trim wired in. On the real API use a small budget (2,000 tokens); never fill a real window.
 - 🟡 **Exercise 1.2: Arabic cost check.** *Needs the real API* (`count_tokens`). Count a 200-word English paragraph and an Arabic version (translate with Claude Code, then check it) with your `MODEL`. *Done when:* `NOTES.md` has both counts, the ratio, the model id and date, and what the ratio does to a six-turn chat's cost. The mock's counts come from a made-up rule and mean nothing here. No key yet? Write "not measured" rather than a guess.
-- 🔴 **Exercise 1.3: make it misbehave, then fix it.** (a) Offline: `max_steps=1` with three tickets, then `[mock:loop]` with a cap of 5. (b) *Needs the real API:* change only the description to `does stuff`; then also rename the tool `tool_one` and drop the property description; five runs each. (c) *Needs the real API:* ask about ticket 9999 five times; add a sentence to `SYSTEM` ("If a tool reports that a ticket was not found, say so plainly; never guess a status") and run five more. *Done when:* each part has a note. The mock cannot show (b) or (c): it never calls a tool whose name and description share no words with the question, and it echoes tool results, so (c) passes either way.
+- 🔴 **Exercise 1.3: make it misbehave, then fix it.** (a) Offline: `max_steps=1` with three tickets, then `[mock:loop]` with a cap of 5. (b) *Needs the real API:* change only the description to `does stuff`, then also rename the tool `tool_one` and drop the property description; five runs each. (c) *Needs the real API:* ask about ticket 9999 five times: honest report or invented status? Add one `SYSTEM` sentence that prevents the invented kind and run five more (if all five were honest, say so). *Done when:* each part has a note. The mock cannot show (b) or (c): it never calls a tool whose name and description share no words with the question, and it echoes tool results, so (c) passes either way.
 
 ## ⚠️ Mistakes and traps
-- **Treating the mock as a judge.** It proves the loop works, not that your prompt or tool description is good. Repeat the experiments on a real model.
-- **Answering only some `tool_use` ids, or splitting results across messages.** A missing id is a 400; splitting breaks the documented format. Send one user message, one `tool_result` per id.
+- **Treating the mock as a judge.** It proves the loop works, not that your prompt or tool description is good; repeat on a real model.
+- **Answering only some `tool_use` ids, or splitting results across messages.** A missing id is a 400, and splitting breaks the format. Send one user message, one `tool_result` per id.
 - **A loop where a function call would do.** If the steps are fixed (look up, then format), call the tool in your own code; loop only when the model must choose (Module 5).
 - **Trusting `block.input`.** It is model output: validate it, and check permissions, in `run_tools` (Module 13).
 
 ## 🧾 Recap
-- A chatbot is a list and a function. Its memory is the list; send less and it knows less.
-- Avoid the too-long 400 by sending a trimmed view and keeping the full log. Trimming forgets.
+- A chatbot is a list and a function; send less and it knows less.
+- Avoid the too-long 400 with a trimmed view and a full log. Trimming forgets.
 - The model proposes, your code disposes: every control belongs in that gap.
 - Cap the steps, handle every stop reason, answer every id in one message, flag failures with `is_error`.
 
@@ -557,18 +561,18 @@ In `NOTES.md`, say which observations came from the mock and which from a real m
 
 **1. A deployment restarts the chatbot process and every conversation is forgotten. Where was the memory?**
 
-- A. In the model's short-term memory, which resets on each deploy
-- B. In the Python `history` list inside the process
+- A. In the Python `history` list inside the process
+- B. In the model's short-term memory, which resets on each deploy
 - C. In a server-side session tied to the API key
 - D. In the system prompt that the SDK caches
 
 <details><summary>Answer</summary>
 
-**B.** The API is stateless; the only memory was your process's list. (🟢 Lab A.)
+**A.** The API is stateless; the only memory was your process's list. (🟢 Lab A.)
 
 </details>
 
-**2. Lujain's `trim()` deletes the oldest message until the history fits; the next call returns a 400. What most likely broke it?**
+**2. Lujain's `trim()` deletes the oldest message until the history fits; the next call is a 400, though the history is well under the window. What most likely broke it?**
 
 - A. The system prompt was trimmed with the oldest turn
 - B. The list now starts with an assistant message
@@ -590,7 +594,7 @@ In `NOTES.md`, say which observations came from the mock and which from a real m
 
 <details><summary>Answer</summary>
 
-**A.** The model only asks; your program decides whether to honour it. Every control lives in that gap, and even the SDK's tool runner only runs your functions. (🟡 From chatbot to agent.)
+**A.** The model only asks; your program decides whether to honour it, and even the SDK's tool runner only runs your functions. (🟡 From chatbot to agent.)
 
 </details>
 
@@ -603,20 +607,20 @@ In `NOTES.md`, say which observations came from the mock and which from a real m
 
 <details><summary>Answer</summary>
 
-**D.** Every id needs a matching `tool_result` block in one user message; a joined string or a missing id is a 400, and results are user content. (🔴 The protocol rules.)
+**D.** Every id needs a matching `tool_result` block in one user message; a joined string or a missing id is a 400. (🔴 The protocol rules.)
 
 </details>
 
-**5. A ticket service errors on every call and the loop has no cap. What is the most likely outcome?**
+**5. A ticket service errors on every call and the loop has no step cap. What can you rely on to end the loop?**
 
-- A. The API refuses a repeated identical tool call as a duplicate
-- B. The model gives up by itself after three failed tool calls
-- C. It keeps asking, paying for the full history at every step
-- D. The SDK stops the loop once its two default retries are used
+- A. The API rejects a repeated identical tool call as a duplicate
+- B. The model always stops by itself after three failed attempts
+- C. Only your own step cap; neither the API nor the SDK ends it
+- D. The SDK ends it once its two default retries are used up
 
 <details><summary>Answer</summary>
 
-**C.** Nothing in the API or SDK ends the loop: the model may keep asking, and each step re-sends the growing history. The SDK's retries cover HTTP failures, not your loop. (🔴 The three loops.)
+**C.** Nothing in the API or SDK ends the loop; the model decides whether to keep asking, so only your cap bounds the cost, since each step re-sends the growing history. The SDK's retries cover HTTP failures, not your loop. (🔴 The three loops.)
 
 </details>
 

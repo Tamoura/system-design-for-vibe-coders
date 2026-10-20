@@ -29,7 +29,7 @@ from pathlib import Path
 from . import tokens
 
 DATA = Path(__file__).parent / "data"
-DIRECTIVE = re.compile(r"\[mock:([a-z_]+)\]")
+DIRECTIVE = re.compile(r"\[mock:([a-z0-9_]+)\]")
 STOP = {
     "a", "an", "the", "is", "are", "was", "of", "to", "in", "on", "for", "and", "or", "do", "does", "i", "my",
     "me", "what", "how", "can", "be", "it", "that", "this", "at", "by", "with", "much", "many", "when", "will",

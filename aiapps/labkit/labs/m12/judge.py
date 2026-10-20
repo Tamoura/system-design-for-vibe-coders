@@ -22,5 +22,5 @@ def make_judge(client, model: str = JUDGE_MODEL):
             verdict = json.loads(next(b.text for b in resp.content if b.type == "text"))
         except (StopIteration, ValueError):
             return False, "the judge did not return JSON"        # unreadable means fail, never pass
-        return bool(verdict.get("pass")), str(verdict.get("reason", ""))[:120]
+        return verdict.get("pass") is True, str(verdict.get("reason", ""))[:120]      # only a real true passes: "false" the string is not true
     return judge

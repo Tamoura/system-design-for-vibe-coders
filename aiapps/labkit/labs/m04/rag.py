@@ -28,8 +28,8 @@ client = Anthropic()
 
 
 def chunk_text(text, max_chars=150, overlap=1):
-    """Pack whole sentences into chunks of at most max_chars; each new chunk repeats the last `overlap` sentences
-    of the previous one (if they fit), so a rule stays with its condition."""
+    """Pack whole sentences into chunks of at most max_chars (one longer sentence stays whole); each new chunk repeats
+    the last `overlap` sentences of the previous one (if they fit), so a rule stays with its condition."""
     sentences = [s for s in re.split(r"(?<=[.!?])\s+", " ".join(text.split())) if s]
     chunks, cur = [], []
     for s in sentences:

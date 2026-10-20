@@ -1,12 +1,12 @@
 # labs/m14/release.yml
-# Copy to .github/workflows/release.yml; set working-directory to where labkit lives
+# Copy to .github/workflows/; set working-directory to where labkit lives
 name: najm-desk-release
 on:
-  pull_request: {paths: ["aiapps/labkit/labs/**"]}      # a prompt, tool, model id or the service changed: prove it first
+  pull_request: {paths: ["aiapps/labkit/labs/**"]}      # prove a change first
   push: {branches: [main]}
   workflow_dispatch:
     inputs:
-      canary_percent: {description: "Share of users on the candidate", default: "5"}
+      canary_percent: {description: "Share on the candidate", default: "5"}
 permissions: {contents: read}
 concurrency: {group: release, cancel-in-progress: false}   # never two rollouts at once
 defaults: {run: {working-directory: aiapps/labkit}}

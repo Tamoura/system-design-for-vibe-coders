@@ -371,6 +371,15 @@ def test_the_status_line_survives_a_turn_that_forgets_everything(m09):
     assert s.exchanges == [] and s.tokens() > 0
 
 
+def test_the_token_count_describes_a_request_that_ends_on_a_user_turn(m09, monkeypatch):
+    """Current models reject a request that ends on an assistant turn (a prefill), so the estimate adds a stand-in user turn."""
+    s, roles, real = m09.session(), [], m09.agent.client.messages.count_tokens
+    monkeypatch.setattr(m09.agent.client.messages, "count_tokens", lambda **kw: roles.append(kw["messages"][-1]["role"]) or real(**kw))
+    s.chat("How do I book a meeting room?")                          # the history now ends on the assistant's answer
+    assert s.messages()[-1]["role"] == "assistant" and s.tokens() > 0
+    assert roles and set(roles) == {"user"}
+
+
 def run_cli(m09, user, *lines, **env):
     full = {**os.environ, "ANTHROPIC_BASE_URL": m09.url, "ANTHROPIC_API_KEY": "mock", "MEMORY_DB": str(m09.db), **env}
     return subprocess.run([sys.executable, str(LABS / "memory_agent.py"), user], input="\n".join(lines) + "\n", capture_output=True,

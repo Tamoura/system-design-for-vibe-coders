@@ -18,9 +18,9 @@
 - Biggest trap: a green gate trusted beyond its dataset.
 
 ## 🧭 Why it matters
-Lujain tidies the classifier prompt and the tool descriptions in one pull request (hypothetical). Five hand-asked questions look good. Two weeks into the pilot Yara finds what nobody asked: a ransomware message filed under Hardware, a laptop-abroad question answered with the remote-work policy, a two-ticket comparison answered from one lookup. Hind asks "is it right?" and nobody can answer with a number.
+Lujain tidies the classifier prompt and the tool descriptions in one pull request (hypothetical). Five hand-asked questions look good. Two weeks into the pilot Yara finds what nobody asked: a ransomware message filed under Hardware, a laptop-abroad question answered with the remote-work policy, a two-ticket comparison answered from one lookup. Hind asks "is it right?" and nobody has a number.
 
-Wrong answers are the bank's answers: in *Moffatt v. Air Canada* (2024, British Columbia Civil Resolution Tribunal), the airline was held responsible for what its chatbot said about a fare. An eval turns "it looked fine" into a sentence Hind can use, like the lab's offline result: "38 of 46 cases pass, nothing that passed last week fails, and the two failing critical cases are known and owned".
+Wrong answers are the bank's answers: in *Moffatt v. Air Canada* (2024, British Columbia Civil Resolution Tribunal), the airline was held responsible for what its chatbot said about a bereavement fare. An eval turns "it looked fine" into a sentence Hind can use: "nothing that passed last week fails, and the two failing critical cases are known and owned". The lab's offline run can print that sentence; only a real-model run makes its percentage mean anything.
 
 ## 📐 How it works
 
@@ -42,7 +42,7 @@ Wrong answers are the bank's answers: in *Moffatt v. Air Canada* (2024, British 
 | Task evals | The whole agent, graded on the outcome | "Is ticket 4471 done?" gets that ticket's status |
 | Trajectory evals | The path: tools, arguments, steps, hand-off | One `get_ticket_status` call with `4471`, in at most 3 steps |
 
-**Where cases come from.** First, the specification: lesson 6.2 gave each requirement acceptance criteria, and each needs a case. That chain is *traceability*, and it cuts both ways: a requirement with no case is untested; a case with no requirement tests something nobody agreed. The lab's set has 16 cases for FR-01 (policy answers) and none for FR-04, FR-05, GR-02 or GR-03, which these agents cannot do yet. Second, real failures: each pilot incident becomes a case before it is fixed (three of the 50 are fictional incidents). A case is one line of JSON in Git (`critical` marks a case whose failure is unacceptable):
+**Where cases come from.** First, the specification: lesson 6.2 gave each requirement acceptance criteria, and each needs a case. That chain is *traceability*, and it cuts both ways: a requirement with no case is untested; a case with no requirement tests something nobody agreed. The lab's set has 16 cases for FR-01 (policy answers) and none for FR-04, FR-05, GR-02 or GR-03: these agents have no write tools and cannot tell who is asking, so those stay untested (a finding, not a pass). Yara signs the expectations; the model under test never writes them. Second, real failures: each pilot incident becomes a case before it is fixed (three of the 50 are fictional incidents). A case is one line of JSON in Git (`critical` marks a case whose failure is unacceptable):
 
 ```json
 {"id": "P11", "agent": "policy", "category": "policy_near_miss", "reqs": ["FR-01", "FR-06"], "source": "failure", "lang": "en", "critical": true, "real_only": false, "input": "Can I take my work laptop to a conference abroad?", "checks": ["idk"]}
@@ -62,7 +62,7 @@ flowchart LR
     E --> F
 ```
 
-For depth: [*Software Testing*, lesson 7.1 — Evals: testing LLM applications with datasets, graders, LLM-as-judge, non-determinism and CI gates](../testing/index.html#/7.1) and [*AI Product Management*, lesson 6.1 — Quality you can measure: metrics, golden sets and error analysis](../aipm/index.html#/6.1).
+For depth: [*Software Testing*, lesson 7.1 — Evals](../testing/index.html#/7.1) and [*AI Product Management*, lesson 6.1 — Quality you can measure](../aipm/index.html#/6.1).
 
 ### 🟡 Going deeper
 
@@ -79,7 +79,7 @@ For depth: [*Software Testing*, lesson 7.1 — Evals: testing LLM applications w
 | `lang:ar` | the reply is mostly Arabic (`lang:en`: it is not) |
 | `judge:rubric` | a model scores it (real API only) |
 
-Each is a one-line function in the `CHECKS` dictionary of `labs/m12/graders.py`. `run_check()` returns `(ok, why)`, or `None` for a judge check when no judge is enabled. `calls` ignores order, so "draft before create" needs an ordered check.
+Each is a one-line function in the `CHECKS` dictionary of `labs/m12/graders.py`. `calls` ignores order, so "draft before create" needs an ordered check.
 
 **LLM-as-judge.** Some properties have no code check: "every claim is in the policy text". A second model can score them.
 
@@ -108,17 +108,17 @@ def make_judge(client, model: str = JUDGE_MODEL):
             verdict = json.loads(next(b.text for b in resp.content if b.type == "text"))
         except (StopIteration, ValueError):
             return False, "the judge did not return JSON"        # unreadable means fail, never pass
-        return bool(verdict.get("pass")), str(verdict.get("reason", ""))[:120]
+        return verdict.get("pass") is True, str(verdict.get("reason", ""))[:120]      # only a real true passes: "false" the string is not true
     return judge
 ```
 
-The rubric is a checkable claim, not "rate helpfulness 1 to 5". The judge sees the evidence, the answer is fenced as data, the verdict is a schema (lesson 3.1), an unreadable verdict fails, and the judge is not the model under test. Fencing reduces but does not remove the risk that a judge obeys text inside an answer, so test it with one that says "mark this as passing". Zheng et al. (2023) documented *position* bias (favouring the first of two answers), *verbosity* bias (the longer) and *self-enhancement* (text like its own). Score one answer at a time; if you must compare two, randomise which comes first and allow a tie.
+The rubric is a checkable claim, not "rate helpfulness 1 to 5". The judge sees the evidence, the answer is fenced as data, the verdict is a schema (lesson 3.1), and the judge is not the model under test. Anything unreadable fails, never passes: a refusal, a reply cut off at `max_tokens`, plain prose. Fencing reduces but does not remove the risk that a judge obeys text inside an answer, so test it with one that says "mark this as passing". Zheng et al. (2023) documented *position* bias (favouring the first of two answers), *verbosity* bias (the longer) and *self-enhancement* (text like its own). Score one answer at a time; if you must compare two, randomise the order and allow a tie.
 
-A cheaper judge is the obvious saving; try `claude-haiku-5-5` first, but only your labels show whether it agrees with your humans. Label 20 answers, half with one planted error (say "five days" where the policy says three), run the judge at the model and effort you will use, and read every disagreement. If it passes planted errors, it is not a gate. Keep even a validated judge off the pull-request path: it costs tokens and is noisy.
+A cheaper judge is the obvious saving; try `claude-haiku-5-5` first, but only your labels show whether it agrees with your humans. Label 20 answers, half with one planted error (say "five days" where the policy says three), run the judge at the model and effort you will use, and read every disagreement. Also feed it an empty answer, "I don't know" and a confident answer to another question: all three must fail. If it passes planted errors, it is not a gate. Twenty labels are a smoke test: 19 agreements still leave an interval of 76% to 99%. Keep the judge off the pull-request path until you have priced and measured it: it costs tokens and is noisy.
 
-**Agent metrics.** One score hides what matters. *Task success*: all of a case's checks pass. *Tool-call accuracy*: right tools and arguments, no extras (`calls:`). *Steps* (`max_steps:`). *Escalation correctness*: handed off when it should, and only then; count a missed hand-off apart from a false one, since the first usually costs more. *Cost*: tokens times the current price. *Latency*: p50 and p95.
+**Agent metrics.** One score hides what matters. *Task success*: all of a case's checks pass. *Tool-call accuracy*: right tools and arguments, no extras (`calls:`). *Steps* (`max_steps:`). *Escalation correctness*: handed off when it should, and only then; count a missed hand-off apart from a false one, since the first usually costs more. *Latency*: p50 and p95. *End state*: an agent that writes can say "done" without having done it, so grade what a sandbox TicketHub holds, not the transcript (the three lab agents only read).
 
-**Non-determinism and confidence.** The newest Claude models reject a non-default `temperature` (lesson 1.1), and 0 never promised identical output, so a case can pass in one run and fail in the next. Repeat runs (`--reps 3`) and score a case as the share of runs that pass: two of three earns two thirds, the gate counts it as passing when more than half do, and mixed ones are listed as *flaky*. Report an interval: 38 of 46 is 83%, but the 95% Wilson interval is 69% to 91%, and it assumes the cases are a fair sample of real questions. One case in 46 is 2.2 points, so a "2-point gain" is one case flipping: read the cases that changed, not the headline. The offline mock is deterministic; your agent is not.
+**Non-determinism and confidence.** The newest Claude models reject a non-default `temperature` (lesson 1.1), and 0 never promised identical output: a case can pass once and fail next time. Repeat runs (`--reps 3`) and score a case as the share of runs that pass: two of three earns two thirds, the gate counts it as passing when more than half do, and mixed ones are listed as *flaky*. Report an interval: 38 of 46 is 83%, but the 95% Wilson interval is 69% to 91%, and it assumes the cases are a fair sample of real questions. Repeats calm run-to-run noise, not the uncertainty of having only 46 cases. One case in 46 is 2.2 points, so a "2-point gain" is one case flipping: read the cases that changed, not the headline.
 
 ### 🔴 Expert view
 
@@ -133,16 +133,16 @@ A cheaper judge is the obvious saving; try `claude-haiku-5-5` first, but only yo
 | Tokens per case and p95 latency | A change that costs more is a regression |
 | Quarantine with owner and end date | A flaky case is isolated, not deleted |
 
-The *baseline* is the last accepted run, committed to Git; it moves only in a reviewed commit apart from the change it excuses. Gate on regression, not perfection: the lab's baseline has eight known failures, and a gate demanding 100% on day one is soon switched off. *Floors* are promises you can keep today, raised as you improve. When not to gate: a throwaway prototype needs ten cases and a hand check, not a pipeline. A gate that cries wolf gets ignored ([*System Design for Vibe Coders*, lesson 8.3 — CI preflight and the boy-who-cried-wolf check](../vibe/index.en.html#l8-3)).
+The *baseline* is the last accepted run, committed to Git; it moves only in a reviewed commit apart from the change it excuses. Gate on regression, not perfection: the lab's baseline has eight known failures, and a gate demanding 100% is soon switched off. *Floors* are promises you can keep today, raised as you improve. When not to gate: a throwaway prototype needs ten cases and a hand check, not a pipeline. A gate that cries wolf gets ignored ([*System Design for Vibe Coders*, lesson 8.3 — CI preflight](../vibe/index.en.html#l8-3)).
 
-**The error-analysis loop.** Read the failures, not the score. Open each failed case, write its cause in a few words, group the causes, fix the biggest group, add cases, run again. The eight offline failures (the mock's rules; a real model's will differ, the method will not) fall into four causes: ties and gaps in the classifier's keywords, retrieval returning the wrong sentence or nothing, an answer where "I don't know" was right, and a plural word the tool match missed. Fix the cause, not the case. For P11, retrieval returned the remote-work passages (word overlap on "work") and the answer repeated one: the cause is a missing rule ("answer only if the passage addresses the question"). Fix the rule and add near-miss cases; pasting the P11 question into the prompt is leakage. Production feedback closes the loop ([*AI Product Management*, lesson 6.3 — Online evaluation: experiments, A/B tests and staged rollouts](../aipm/index.html#/6.3)).
+**The error-analysis loop.** Read the failures, not the score. Write each failed case's cause in a few words, group them, fix the biggest group, add cases, run again. The eight offline failures (the mock's rules; a real model's will differ, the method will not) fall into four causes: ties and gaps in the classifier's keywords, retrieval returning the wrong sentence or nothing, an answer where "I don't know" was right, and a plural word the tool match missed. Fix the cause, not the case. For P11, retrieval returned the remote-work passages (word overlap on "work") and the answer repeated one: the cause is a missing rule ("answer only if the passage addresses the question"). Fix the rule and add near-miss cases; pasting the P11 question into the prompt is leakage. Production feedback closes the loop ([*AI Product Management*, lesson 6.3 — Online evaluation](../aipm/index.html#/6.3)).
 
 **Eval data hygiene.**
 - *Held-out data.* Keep cases you never tune on (lesson 2.2).
 - *Leakage.* An eval input that is also a prompt example is an answer key. The runner checks: with `classify_v4_overfit`, whose two extra examples are eval tickets, the score rises four points and the gate answers "broken".
 - *Personal data.* Real tickets hold names, phone numbers, sometimes passwords. Use synthetic cases, or de-identified ones Sara has reviewed, follow her retention rules, and send no Confidential data to an external judge.
 
-**Tracing and cost.** Keep per case what was retrieved, which tools ran with which arguments and the stop reasons, so a wrong answer traces to a stage: was the right thing retrieved or called, was the result right, did the model use it? (Production uses OpenTelemetry; its generative-AI conventions are still evolving.) Cost is cases times repeats times tokens times price, plus the judge: the offline run uses 10,656 input and 761 output tokens for 46 cases (the mock's estimates), and three repeats triple that. Count every usage field: cached tokens are priced differently. Run the full real eval weekly and on release, not on every pull request. The Batch API (asynchronous, discounted; check the pricing page) suits scheduled single-call work such as the classifier and the judge, but an agent loop needs each result before its next request.
+**Tracing and cost.** Keep per case what was retrieved, which tools ran with which arguments and the stop reasons, so you can tell which stage failed: retrieval, the tool call, or the model's use of the result (the lab's results file keeps less: the output, the failed checks and the judge's verdicts). Cost is cases times repeats times tokens times price, plus the judge; the offline run's 10,656 input and 761 output tokens (the mock's estimates) triple with three repeats. Price one full real run before choosing how often: weekly and on release is the lab's default. The Batch API (asynchronous, discounted; check the pricing page) suits scheduled single-call work such as the classifier and the judge, but an agent loop needs each result before its next request.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -177,7 +177,7 @@ Hind's questions now have answers. Is it right? Category scores with an interval
 
 ## 🛠️ Exercises
 - 🟢 **Read the failures.** Offline. In `labs/m12/baseline_mock.json` (lesson 12.2) list the eight cases scoring under 1. For each, write the cause and whether the fix is the prompt, retrieval, a tool description or the dataset. *Done when:* eight rows of cause and next step, and a sentence on why 83% hides the near-miss category.
-- 🟡 **Ten cases from one requirement.** Offline. Take GR-02 (own tickets only) or another requirement and write ten JSONL cases in the lab set's format, three adversarial, each with checks, requirement id and critical flag; they will probably fail today, which is the point. A colleague writes three expectations before seeing yours. *Done when:* the cases load with `load_cases` and the three expectations match or differ for stated reasons.
+- 🟡 **Ten cases from one requirement.** Offline. Take GR-02 (own tickets only) or another requirement and write ten JSONL cases in the lab set's format, three adversarial; most will probably fail today, which is the point. A colleague writes three expectations before seeing yours. *Done when:* the cases load with `load_cases` and the three expectations match or differ for stated reasons.
 - 🔴 **Validate a judge.** *Needs the real API*, with the cap from lesson 0.2. Label 20 policy answers by hand, 10 right and 10 with one planted error; run the judge with `claude-haiku-5-5` and with `claude-opus-5-5` (neither is the agent's `claude-sonnet-5-5`). *Done when:* `NOTES.md` has agreement per model, each disagreement explained, the date, model ids, and whether the judge may gate.
 
 ## ⚠️ Mistakes and traps
@@ -185,12 +185,11 @@ Hind's questions now have answers. Is it right? Category scores with an interval
 - **Tuning on the eval.** Pasting failing inputs into the prompt proves nothing. Hold cases out; check for leaks.
 - **One run as a measurement.** Repeat; report an interval.
 - **The judge as the only grader.** Let code carry the gate; validate the judge on labels.
-- **A gate that cannot fail.** Errors counted as zero failures, or a subset compared with a full baseline, turn it green with nothing checked.
+- **A gate that cannot fail.** Errors counted as zero failures, or a subset against a full baseline, turn it green.
 
 ## 🧾 Recap
 - An eval is cases, a runner, graders, category scores and a gate: numbers instead of "it looked fine".
-- Test in four layers; add a trajectory check to anything with tools.
-- Build cases from the specification and real failures; trace each to a requirement.
+- Test in four layers, with a trajectory check on anything that uses tools; build cases from the specification and real failures, each traced to a requirement.
 - Code graders carry the gate; a judge needs a rubric, evidence, another model and validation.
 - Repeat runs, report intervals, and gate on regressions, critical cases, floors, cost and the eval's health.
 
@@ -265,7 +264,7 @@ Hind's questions now have answers. Is it right? Category scores with an interval
 - Claude docs, the test-and-evaluate pages (section names change): https://docs.anthropic.com/. Structured outputs: https://platform.claude.com/docs/en/build-with-claude/structured-outputs. Batch processing: https://platform.claude.com/docs/en/build-with-claude/batch-processing. Pricing: https://platform.claude.com/docs/en/about-claude/pricing
 - Lab kit: https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/aiapps/labkit
 - Found by title: Zheng et al., "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena" (2023); *Moffatt v. Air Canada* (2024).
-- [*Software Testing*, lesson 7.2 — Testing RAG, tool use and agents: retrieval metrics, groundedness, trajectories and sandboxes](../testing/index.html#/7.2); [*AI Product Management*, lesson 6.2 — LLM-as-judge, human review and red-teaming](../aipm/index.html#/6.2)
+- [*Software Testing*, lesson 7.2 — Testing RAG, tool use and agents](../testing/index.html#/7.2); [*AI Product Management*, lesson 6.2 — LLM-as-judge, human review and red-teaming](../aipm/index.html#/6.2)
 - **Read this week (Module 12).** Gulli, *Agentic Design Patterns*, chapter 19 (Evaluation & Monitoring): the free draft listed in lesson 0.1. Microsoft, *AI Agents for Beginners*, lesson 10: https://github.com/microsoft/ai-agents-for-beginners. Chip Huyen, the *aie-book* repository, the chapter notes on evaluation (free): https://github.com/chiphuyen/aie-book
 
 ---
@@ -274,7 +273,7 @@ Hind's questions now have answers. Is it right? Category scores with an interval
 *Level: 🔴 Advanced* · *Prerequisites: 2.2, 4.2, 8.2, 12.1* · *Layer: Delivery, Production*
 
 ## ⚡ In 60 seconds
-- One command runs 50 cases over the classifier, the policy Q&A and the ticket agent (Modules 2, 4, 8) and writes category scores, tokens and latency.
+- One command runs 50 cases (46 offline) over the classifier, the policy Q&A and the ticket agent (Modules 2, 4, 8) and writes category scores, tokens and latency.
 - `gate.py` compares a run with a committed baseline: exit 0 pass, 1 regression, 2 the eval itself is broken.
 - Pull requests run the offline eval, which proves the pipeline; the real-model eval, the only measure of quality, runs by hand or on a schedule with the key protected.
 - The offline baseline is 38 of 46 with eight known failures: a baseline is where you are.
@@ -302,13 +301,13 @@ python labs/m12/gate.py results.json --baseline labs/m12/baseline_mock.json
   policy_answerable         5/7    71%
   policy_near_miss          0/2     0%
   ticket_multi              2/3    67%
-  ... nine more categories, all 100%
+  (nine more categories, all 100%, not shown)
 note: P11 is critical and fails here and in the baseline: an open defect, not a regression
 note: P12 is critical and fails here and in the baseline: an open defect, not a regression
 gate: pass (exit 0)
 ```
 
-Tokens and milliseconds are the mock's. Four `real_only` (Arabic) cases are skipped: the mock cannot read them. Eight fail, and that is the baseline. `adapters.py` (not printed) puts the three agents behind one shape and meters the SDK call, but sees only `messages.create` and only `input_tokens` and `output_tokens`: an agent that streams, uses `parse()` or caches prompts needs a better adapter. `stats.py` holds the Wilson interval, tally, percentiles, cost and the results file.
+The real run lists all 13 categories in alphabetical order; this shows the four below 100%. Tokens and milliseconds are the mock's (the milliseconds vary per run). Four `real_only` (Arabic) cases are skipped: the mock cannot read them. `adapters.py` (not printed) puts the three agents behind one shape, meters the SDK call, and turns the ticket agent's `model_error` hand-off into an error, because an outage is not a wrong answer. The meter sees only `messages.create` and only `input_tokens` and `output_tokens`: an agent that streams, uses `parse()` or caches prompts needs a better adapter. `stats.py` holds the Wilson interval, tally, percentiles, cost and the results file.
 
 ```python
 # labs/m12/run_eval.py
@@ -319,6 +318,7 @@ import json
 import os
 import sys
 from pathlib import Path
+from urllib.parse import urlparse
 
 import adapters
 import graders
@@ -348,10 +348,12 @@ def run_case(case: dict, reps: int, judge) -> dict:
             return {**head, "error": f"{type(e).__name__}: {e}"[:120]}
         ran = [c for c in checks if c[1] is not None]        # None = not run: it neither passes nor fails the case
         runs.append({"ok": bool(ran) and all(c[1] for c in ran), "text": out.text[:200], "ms": ms, "in": meter.tokens_in,
-                     "out": meter.tokens_out, "judge": jm.tokens_in + jm.tokens_out, "why": [f"{c[0]}: {c[2]}" for c in ran if not c[1]]})
+                     "out": meter.tokens_out, "judge": jm.tokens_in + jm.tokens_out, "why": [f"{c[0]}: {c[2]}" for c in ran if not c[1]],
+                     "judged": [f"{c[0]}: {'pass' if c[1] else 'fail'}, {c[2]}" for c in ran if c[0].startswith("judge:")]})
     avg = lambda key: round(sum(r[key] for r in runs) / reps)
     return {**head, "score": sum(r["ok"] for r in runs) / reps, "ms": avg("ms"), "tokens_in": avg("in"), "tokens_out": avg("out"),
-            "judge_tokens": sum(r["judge"] for r in runs), "output": runs[0]["text"], "failed": next((r["why"] for r in runs if not r["ok"]), [])}
+            "judge_tokens": sum(r["judge"] for r in runs), "output": runs[0]["text"],
+            "judged": runs[0]["judged"], "failed": next((r["why"] for r in runs if not r["ok"]), [])}
 
 
 def run_all(cases: list[dict], mode: str, reps: int = 1, judge=None) -> dict:
@@ -363,7 +365,7 @@ def run_all(cases: list[dict], mode: str, reps: int = 1, judge=None) -> dict:
 
 def check_mode(mode: str) -> None:
     """Fail closed: a mock run must never reach the real API, and a real run must never pass for a mock one."""
-    local = os.environ.get("ANTHROPIC_BASE_URL", "").startswith(("http://127.0.0.1", "http://localhost"))
+    local = urlparse(os.environ.get("ANTHROPIC_BASE_URL", "")).hostname in ("127.0.0.1", "localhost")
     if (mode == "mock") != local or (mode == "real" and os.environ.get("ANTHROPIC_API_KEY", "mock") == "mock"):
         sys.exit(f"--mode {mode} does not match ANTHROPIC_BASE_URL and ANTHROPIC_API_KEY: refusing to run")
 
@@ -389,7 +391,7 @@ if __name__ == "__main__":
     stats.show(res)
 ```
 
-A crash is an *error*, never a fail. A check that did not run (`None`) neither passes nor fails a case, but a case where no check ran fails. `run_all` skips `real_only` cases in mock mode and records the versions under test, the dataset hash and any leaked input. `check_mode` fails closed: a "mock" run that would reach the real API, or a "real" run that would hit the mock, stops before spending anything.
+A crash is an *error*, never a fail. A check that did not run (`None`) neither passes nor fails a case, but a case where no check ran fails. Each case row keeps the first run's output and the judge's verdicts beside it, so a pass can be read as well as a failure. `run_all` skips `real_only` cases in mock mode and records the versions under test, the dataset hash and any leaked input. `check_mode` fails closed: a "mock" run that would reach the real API, or a "real" run that would hit the mock, stops before spending anything.
 
 ### 🟡 Going deeper
 
@@ -459,7 +461,7 @@ if __name__ == "__main__":
     sys.exit(2 if broken else 1 if failed else 0)
 ```
 
-`gate.json` allows 0 regressed cases (the mock is deterministic, so any case that stops passing is real; `gate_real.json` allows 3), an overall drop of 0.03, a token rise of 0.25 and a p95 ceiling; `quarantine` maps a case id to an end date. Floors are the baseline's category scores rounded down, with none for the two at 0%. A tolerated critical failure still needs an owner and a date, agreed with Layla.
+`gate.json` allows 0 regressed cases (the mock is deterministic; `gate_real.json` allows 3), an overall drop of 0.03, a token rise of 0.25 and a p95 ceiling; `quarantine` maps a case id to an end date (name the owner in the commit that adds it). Floors are the baseline's category scores rounded down to a tenth, with none for the two at 0%. A tolerated critical failure still needs an owner and a date, agreed with Layla. To re-baseline, run `python labs/m12/run_eval.py --mode mock --out labs/m12/baseline_mock.json`, read the diff and commit it alone.
 
 **Drills.** Run the eval, then the gate, and predict the exit code first.
 
@@ -527,14 +529,14 @@ jobs:
 ```
 
 The offline job runs the tests, starts the mock, waits for `/health`, then runs eval and gate: free, and no secret (the key is the literal `mock`). A `paths` filter leaves a required check pending on pull requests it skips: drop it if you require this check. Handle the secret properly:
-- Keep it in an Environment with required reviewers, used by the real job only (a scheduled run then waits for approval). Use a dedicated key with a spending limit.
+- Keep it in an Environment with required reviewers and a branch rule, used by the real job only (a scheduled run then waits for approval). Use a dedicated key with a spending limit.
 - Keep `permissions: contents: read`. Never use `pull_request_target` to run a pull request's code with secrets.
 - Never echo it: log masking catches exact matches only.
-- Pin actions to a commit SHA in production (tags here are for readability; check current versions). See [*Cloud & DevOps*, lesson 4.3 — Securing the pipeline: secrets, signed artefacts and least-privilege deploys](../cloud/index.html#/4.3).
+- Pin actions to a commit SHA in production (tags here are for readability; check current versions). See [*Cloud & DevOps*, lesson 4.3 — Securing the pipeline](../cloud/index.html#/4.3).
 
 **The first real run.** With no `baseline_real.json` the gate step is skipped. Start the workflow by hand, read every failure and ten judge verdicts, then commit `baseline_real.json` and tune `gate_real.json`, whose values are starters. The toy embedding and BM25 know only English words, so the Arabic policy cases probably retrieve nothing.
 
-**What the tests prove.** `pytest tests/test_m12_*.py` runs 55 tests: checks, judge (against a fake client), dataset, runner, every gate rule and exit code, and the workflow, parsed as YAML. Each gate rule has a test that fails when the rule is removed; the verify list below has you prove it. Add a workflow linter such as `actionlint`.
+**What the tests prove.** `pytest tests/test_m12_*.py` runs 56 tests: checks, judge (against a fake client), dataset, runner, every gate rule and exit code, and the workflow, parsed as YAML. Remove any gate rule and a test fails; the verify list has you prove it. Add a workflow linter such as `actionlint`.
 
 **Honest caveats.** *Works offline:* every mechanic here. *Needs the real API:* whether a score reflects quality, the judge, real cost and latency, Arabic. The workflow is parsed and tested, not run on GitHub.
 
@@ -574,7 +576,7 @@ Plan first; one file at a time; run the tests after each step.
 
 ## 🛠️ Exercises
 - 🟢 **Fire every alarm.** Offline. Run the four drills and one of your own. *Done when:* a table of runs with exit code and first reason, and why `classify_v4_overfit` scored higher yet did not pass.
-- 🟡 **A new check.** Offline. Add `max_chars:N` to `graders.py` (answers short enough for a phone), test it first, and apply it to three policy cases. The gate says `dataset_sha changed`: re-baseline in a separate commit. *Done when:* tests pass, the new baseline is committed alone and the gate exits 0.
+- 🟡 **A new check.** Offline. Add `max_chars:N` to `graders.py` (short enough for a phone), test it first, and apply it to three policy cases. The gate says `dataset_sha changed`: re-baseline in a separate commit. *Done when:* tests pass, the new baseline is committed alone and the gate exits 0.
 - 🔴 **The first real baseline.** *Needs the real API*, with the cap from lesson 0.2. Run `--mode real --reps 3 --judge`, read every failure, set `gate_real.json` from the run, commit `baseline_real.json`, start the workflow by hand. *Done when:* `NOTES.md` has score and interval, flaky cases, cost arithmetic, ten judge verdicts you checked, model ids and date, and the real gate passed once.
 
 ## ⚠️ Mistakes and traps
@@ -587,7 +589,7 @@ Plan first; one file at a time; run the tests after each step.
 - One runner puts three agents under 50 cases and writes scores, tokens and latency.
 - The gate exits 0, 1 or 2: pass, regression, or an eval that cannot be trusted.
 - The baseline records where you are; the gate stops a passing case from failing.
-- Offline CI runs on every pull request; real runs are manual or scheduled with the key protected, and only they say anything about quality.
+- Offline CI runs on every pull request; only real runs, manual or scheduled with the key protected, say anything about quality.
 
 ## ✍️ Check yourself
 
@@ -606,14 +608,14 @@ Plan first; one file at a time; run the tests after each step.
 
 **2. Which design keeps the real API key safest?**
 
-- A. Keep it in the repository, readable by every job
+- A. Store it as a repository secret every job can read
 - B. Use `pull_request_target` so forks can run the eval
-- C. Echo it at the start of the job for debugging
+- C. Commit it in an encrypted file beside the workflow
 - D. Keep it in a protected environment, real job only
 
 <details><summary>Answer</summary>
 
-**D.** Only the real job uses the environment, reviewers approve it, and pull requests never reach it. The others expose the key to unreviewed code. (🔴 Expert view.)
+**D.** Only the real job uses the environment, reviewers approve it, and pull requests never reach it. The others expose the key to unreviewed code or to history. (🔴 Expert view.)
 
 </details>
 

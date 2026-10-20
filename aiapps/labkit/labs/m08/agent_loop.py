@@ -76,7 +76,7 @@ def mentions_every_ticket(goal, answer):
 
 
 def run(goal, lim=Limits(), client=None, trace=None, check=None):
-    client, trace = client or anthropic.Anthropic(timeout=30.0), trace or Trace()      # the SDK retries 429 and 5xx twice
+    client, trace = client or anthropic.Anthropic(timeout=30.0), trace or Trace()      # the SDK retries transient errors twice
     t0, spent, last_in, seen = time.monotonic(), 0, 0, Counter()
     messages = [{"role": "user", "content": goal}]
     trace.log("start", goal=goal, model=MODEL, **asdict(lim))

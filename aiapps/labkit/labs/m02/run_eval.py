@@ -22,7 +22,7 @@ def load_cases(split: str, path: Path = DATA) -> list[dict]:
 def run(prompt: str, split: str = "dev", reps: int = 1, cases: list[dict] | None = None, predict=classify) -> dict:
     rows, usage = [], Counter()
     for case in cases or load_cases(split):
-        preds = [predict(case["text"], prompt) for _ in range(reps)]      # no temperature knob: repeat
+        preds = [predict(case["text"], prompt) for _ in range(reps)]      # runs can differ: repeat
         for p in preds:
             usage["input"] += p.input_tokens
             usage["output"] += p.output_tokens
@@ -49,7 +49,8 @@ def show(result: dict) -> None:
     for expected, counts in confusion(result).items():
         print(f"{expected:<15}" + "".join(f"{counts[c]:>10}" for c in cols))
     for r in [r for r in result["cases"] if r["score"] < 1][:8]:           # the misses: the next version's to-do list
-        print(f"  miss {r['id']}: expected {r['expected']}, got {r['got'][0][:30]!r}  {r['text'][:44]}")
+        wrong = next(g for g in r["got"] if g != r["expected"])           # with --reps, show a wrong answer, not the first
+        print(f"  miss {r['id']}: expected {r['expected']}, got {wrong[:30]!r}  {r['text'][:44]}")
     unstable = [r["id"] for r in result["cases"] if len(set(r["got"])) > 1]
     if unstable:
         print("  unstable across reps:", ", ".join(unstable))               # same prompt, different answers

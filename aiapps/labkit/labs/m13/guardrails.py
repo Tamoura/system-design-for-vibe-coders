@@ -31,7 +31,7 @@ def check_output(text, html_out=False):
         found.append("link:" + host)
         return "[link removed]"
 
-    text, kinds = mask_pii(re.sub(r"https?://[^\s)\]]+", link, text))
+    text, kinds = mask_pii(re.sub(r"(?i)(?<![\w/])(?:https?:)?//[^\s)\]]+", link, text))     # any case, and //host links
     return (html.escape(text) if html_out else text), found + kinds
 
 
@@ -57,7 +57,7 @@ class Session:
     calls: dict = field(default_factory=dict)
 
 
-NAJM_DESK_V1 = {               # the permissions matrix (lesson 6.2) as reviewed data. No send_email: v1 has no outward channel.
+NAJM_DESK_V1 = {               # the permissions matrix (lesson 6.2) as reviewed data, plus this lab's two comment tools. No send_email: v1 has no outward channel.
     "search_policies": Rule("read", "policies:read", ("query",), untrusted=True),
     "get_ticket_status": Rule("read", "tickets:read", ("ticket_id",), owner_arg="ticket_id"),
     "get_ticket_notes": Rule("read", "tickets:read", ("ticket_id",), owner_arg="ticket_id", untrusted=True),

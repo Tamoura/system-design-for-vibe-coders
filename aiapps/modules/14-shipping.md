@@ -1,6 +1,6 @@
 # Module 14 — Shipping to production
 
-*An agent that works on your laptop has not shipped. This module takes Najm Desk from the laptop to the customer's hands: safely, so that a bad release is caught and undone in minutes, and affordably, so that Hind can be told what a resolved ticket costs. Lesson 14.1 covers deployment: the reference architecture, containers, environments and secrets, queues and durable execution for long runs, idempotency keys, streaming and timeouts, versioning the prompt, tools and model together, canary and shadow releases, rollback, and a pipeline with the eval gate. You package Najm Desk as a FastAPI service with health and readiness checks, versioned prompt files, structured logs and a smoke test. Lesson 14.2 covers cost, latency and reliability: the cost model, caching, routing, the Batch API, retries and backoff, circuit breakers, fallbacks, SLOs and error budgets, and capacity. You build a cost and latency layer around the SDK client, a router with tests, retry tests against the mock's failure knobs, and a cost report. Docker and the real API are not available to the course's verification, so each lab says what runs offline and what needs a container runtime or a real model.*
+*An agent that works on your laptop has not shipped. This module takes Najm Desk from the laptop to the customer's hands: safely, so that a bad release is caught and undone in minutes, and affordably, so that Hind can be told what a resolved ticket costs. Lesson 14.1 covers deployment: the reference architecture, containers, environments and secrets, queues and durable execution for long runs, idempotency keys, streaming and timeouts, versioning the prompt, tools and model together, canary and shadow releases, rollback, and a pipeline with the eval gate. You package Najm Desk as a FastAPI service with health and readiness checks, versioned prompt files, structured logs and a smoke test. Lesson 14.2 covers cost, latency and reliability: the cost model, caching, routing, the Batch API, retries and backoff, circuit breakers, fallbacks, SLOs and error budgets, and capacity. You build a cost and latency layer around the SDK client, a router with tests, retry tests against the mock's failure knobs, and a cost report. Each lab says what runs offline and what needs a container runtime or a real model.*
 
 > **Layer:** Delivery, Production — taking the agent off your laptop and into the customer's hands, safely and affordably.
 
@@ -13,13 +13,13 @@
 - A deployed agent is a service around a model call you do not control: expect it slow, wrong, down or costly.
 - Build once, configure per environment: pinned base, non-root user, multi-stage build, no secret in a layer.
 - Long work leaves the request: queue it, checkpoint it, give every write an idempotency key.
-- A release is image, prompt, tools, model id and eval baseline as one: gate it, canary it, rehearse the rollback.
+- A release is image, prompt, tools, model id and eval baseline as one: gate, canary, rehearse the rollback.
 - Biggest trap: green probes, wrong agent.
 
 ## 🧭 Why it matters
-The pilot works on Lujain's laptop. Fahad asks what happens on Sunday at 07:00 when fourteen agents open Najm Desk at once, and how to undo a bad prompt by 07:05. Lujain's plan (hypothetical): `git pull` on one virtual machine, edit the prompt in place, restart. A second machine keeps the old prompt. Staff get two answers to one question and nothing records which prompt wrote which. In 2012 Knight Capital lost hundreds of millions of dollars within an hour after a release reached only some of its servers (as widely reported).
+The pilot works on Lujain's laptop. Fahad asks what happens on Sunday at 07:00 when fourteen agents open Najm Desk at once, and how to undo a bad prompt by 07:05. Lujain's plan (hypothetical): `git pull` on one machine, edit the prompt in place, restart. A second machine keeps the old prompt: staff get two answers to one question and nothing records which prompt wrote which. In 2012 Knight Capital lost hundreds of millions of dollars within an hour after a release reached only some of its servers (as widely reported).
 
-The discipline is old. New: the "code" includes a prompt and a model id, and a bad release is rarely *down*. It is *wrong*.
+The discipline is old. New: the "code" includes a prompt and a model id, and a bad release is rarely *down*; it is *wrong*.
 
 ## 📐 How it works
 
@@ -39,67 +39,11 @@ flowchart LR
   R["Git: prompts, tools, config"] -.-> A
 ```
 
-**Containers.** An image holds code, dependencies and a runtime, built once and run unchanged everywhere. Pin the base (an exact tag, in production its digest), build in stages, run as a numeric non-root user, and keep secrets out of every layer, which can be read. Pinned must not mean unpatched: refresh the base on a schedule, and lock exact dependency versions (the lab's `requirements.txt` uses ranges to stay short). No image was built for this lesson. Tests read these files; you run hadolint (a Dockerfile linter) and `docker compose config`.
+**Containers.** An image is built once and runs unchanged everywhere. Pin the base (an exact tag, in production its digest), build in stages, run as a numeric non-root user, and keep secrets out of every layer, which can be read. Pinned must not mean unpatched: refresh the base on a schedule and lock exact dependency versions (the lab uses ranges). The tests only read these files; you run hadolint (a Dockerfile linter), `docker compose config` and, in the 🔴 exercise, the build.
 
-```dockerfile
-# labs/m14/Dockerfile
-# From aiapps/labkit: docker build -f labs/m14/Dockerfile --target runtime -t najm-desk:dev .
-# Pin the base: an exact tag, in production its digest (image@sha256:...).
-ARG PYTHON_IMAGE=python:3.11.9-slim-bookworm
+`labs/m14/Dockerfile` has three stages. `build` makes a virtualenv from `requirements.txt`. `mock` is the offline model stand-in, for development only: never deploy it. `runtime`, the last stage and so what `docker build` ships, copies in the virtualenv, the policy documents, the prompt files and `app.py` (no tests, mock or key), creates user ID 10001 and starts `uvicorn`. Its base, `python:3.11.9-slim-bookworm`, is an example pin: choose and refresh your own, and in production pin the digest. `docker-compose.yml` runs `runtime` beside `mock`: environment variables only, a read-only filesystem, no capabilities, `no-new-privileges`; its `mock` key is a placeholder. See [*Cloud & DevOps*, lesson 2.1 — Containers done right](../cloud/index.html#/2.1).
 
-FROM ${PYTHON_IMAGE} AS build
-WORKDIR /build
-COPY labs/m14/requirements.txt .
-RUN python -m venv /venv && /venv/bin/pip install --no-cache-dir -r requirements.txt
-
-# Development only: the offline stand-in for the model API. Never deploy this stage.
-FROM ${PYTHON_IMAGE} AS mock
-WORKDIR /app
-COPY --from=build /venv /venv
-COPY labkit ./labkit
-ENV PATH="/venv/bin:$PATH"
-CMD ["python", "-m", "labkit.mock_server", "--host", "0.0.0.0", "--port", "8787"]
-
-# The last stage is what `docker build` ships: no compiler, no tests, no mock, no key.
-FROM ${PYTHON_IMAGE} AS runtime
-WORKDIR /app
-RUN useradd --system --uid 10001 app
-COPY --from=build /venv /venv
-COPY labkit/data/policies ./labkit/data/policies
-COPY labs/m14/prompts ./labs/m14/prompts
-COPY labs/m14/app.py ./labs/m14/app.py
-ARG GIT_SHA=dev
-ENV PATH="/venv/bin:$PATH" PYTHONUNBUFFERED=1 GIT_SHA=${GIT_SHA}
-# Numeric, so an orchestrator can check that the process is not root.
-USER 10001
-EXPOSE 8000
-CMD ["uvicorn", "--app-dir", "labs/m14", "app:app", "--host", "0.0.0.0", "--port", "8000"]
-```
-
-```yaml
-# labs/m14/docker-compose.yml
-# From aiapps/labkit: docker compose -f labs/m14/docker-compose.yml up --build
-name: najm-desk
-services:
-  mock:                                 # offline stand-in for the model API: not in staging or production
-    build: {context: ../.., dockerfile: labs/m14/Dockerfile, target: mock}
-  api:
-    build: {context: ../.., dockerfile: labs/m14/Dockerfile, target: runtime, args: {GIT_SHA: "${GIT_SHA:-dev}"}}
-    ports: ["8000:8000"]
-    environment:                        # configuration, not code: one image for every environment
-      APP_ENV: dev
-      ANTHROPIC_BASE_URL: http://mock:8787
-      ANTHROPIC_API_KEY: mock           # offline only: a real key comes from the secret store, never a file in Git
-      PROMPT_VERSION: ${PROMPT_VERSION:-najm_desk_v2}
-      CANARY_PROMPT: ${CANARY_PROMPT:-}
-      CANARY_PERCENT: ${CANARY_PERCENT:-0}
-    depends_on: [mock]
-    read_only: true                     # nothing can write to the container's filesystem
-    cap_drop: ["ALL"]
-    security_opt: ["no-new-privileges:true"]
-```
-
-**Configuration and probes.** One image runs everywhere with different environment variables (the twelve-factor rule). `Settings` reads them once and refuses nonsense, such as production with the mock key; secrets come from the platform's store, one key per environment with a spend cap. *Liveness* touches no dependency, or a provider blip restarts every replica. *Readiness* checks only what the service owns, never makes a paid call per probe, and says what is running.
+**Configuration and probes.** One image runs everywhere with different environment variables (the twelve-factor rule). `Settings` reads them once and refuses nonsense, such as production with the mock key; secrets come from the platform's store, one key per environment in a workspace with a spend limit. *Liveness* touches no dependency, or a provider blip restarts every replica. *Readiness* checks only what the service owns, never makes a paid call per probe, and says what is running.
 
 ```python
 # labs/m14/app.py
@@ -123,7 +67,7 @@ class Settings:
     def __init__(self, env=os.environ):
         self.app_env = env.get("APP_ENV", "dev")
         self.model = env.get("MODEL", "claude-sonnet-5-5")
-        self.prompt, self.canary_prompt = env.get("PROMPT_VERSION", "najm_desk_v2"), env.get("CANARY_PROMPT", "")
+        self.prompt, self.canary_prompt = env.get("PROMPT_VERSION", "najm_desk_v1"), env.get("CANARY_PROMPT", "")
         self.canary_pct = int(env.get("CANARY_PERCENT", "0"))            # rollback = set this to 0
         self.timeout_s = float(env.get("REQUEST_TIMEOUT_S", "20"))
         self.prompt_dir = Path(env.get("PROMPT_DIR", HERE / "prompts"))
@@ -149,7 +93,7 @@ def pick_prompt(cfg: Settings, user: str) -> str:
 
 
 def load_docs(folder: Path) -> str:
-    """The whole policy library (about 800 tokens), identical on every request: a cacheable prefix. Bigger libraries need Module 4."""
+    """The whole policy library (about 800 tokens), identical on every request: a stable prefix. Bigger libraries need Module 4."""
     return "".join(f'<document id="{p.stem}">{p.read_text(encoding="utf-8").strip()}</document>\n' for p in sorted(folder.glob("*.md")))
 
 
@@ -169,11 +113,11 @@ def create_app(cfg: Settings | None = None, client=None) -> FastAPI:
         print(json.dumps({"ts": round(time.time(), 3), "env": cfg.app_env, "release": cfg.release, **fields}), flush=True)
 
     @app.get("/health")
-    def health():                         # liveness: the process is up. No dependencies, or a provider blip restarts every replica.
+    def health():                         # liveness: the process is up, no dependencies
         return {"status": "ok"}
 
     @app.get("/ready")
-    def ready():                          # readiness: may traffic come? Check what you own; never call the paid model per probe.
+    def ready():                          # readiness: check what you own, never the paid model
         problems = [p for p, bad in [("no policy documents", not docs), ("no API key", "ANTHROPIC_API_KEY" not in os.environ)] if bad]
         if problems:
             raise HTTPException(503, {"ready": False, "problems": problems})
@@ -211,39 +155,41 @@ def create_app(cfg: Settings | None = None, client=None) -> FastAPI:
 app = create_app()
 ```
 
-Prompts are files in `labs/m14/prompts/`: `najm_desk_v1.txt` is in production, `v2` the candidate, and a version is the file name plus a hash of its text. In `ask`, the policy library comes first in `system`, with the cache marker, so a new version leaves the cache intact (lesson 14.2).
+Prompts are files in `labs/m14/prompts/`: `najm_desk_v1.txt` is in production, `v2` the candidate, and a version is the file name plus a hash of its text. In `ask`, the policy library comes first in `system`, with the cache marker, so a new version leaves the cache intact (whether a library this short is cached depends on the model: lesson 14.2).
 
 ### 🟡 Going deeper
-**Queues and durable execution.** Gateways often cut requests at 30 to 60 seconds, so the API stores a job, enqueues it and answers 202 with a job id the screen polls. A worker dying at step 7 of 9 and restarting at step 1 repeats six model calls and tool writes. A durable-execution engine (Temporal, AWS Step Functions and similar) saves each step's result and resumes after it; a cheaper start checkpoints the messages list and step number. It also suits approvals: an unlock request may wait hours for a person, and a saved run waits at no cost. Store the manifest with the job: a run that began under prompt v1 should finish under v1, and workers should drain on SIGTERM. See [*SaaS Building Blocks*, lesson 5.4 — Workflow engines and durable execution](../saas/index.html#/5.4).
+**Queues and durable execution.** Gateways often cut requests at 30 to 60 seconds, so the API enqueues a job and answers 202 with a job id the screen polls. A worker dying at step 7 of 9 and restarting at step 1 repeats six model calls and tool writes. A durable-execution engine (Temporal, AWS Step Functions and similar) saves each step's result and resumes after it; a cheaper start checkpoints the messages and step number. It also suits approvals: an unlock request may wait hours for a person, at no cost. Keep the manifest with the job, so a run that began under prompt v1 finishes under v1, and drain workers on SIGTERM. See [*SaaS Building Blocks*, lesson 5.4 — Workflow engines](../saas/index.html#/5.4).
 
-**Idempotency keys.** The client picks a key per intended action; the server stores the first result under (user, key) and replays it. Without one, a timeout and a retry file two tickets. Pass the key on to the system that writes (TicketHub), or a replay protects only your own API.
+**Idempotency keys.** The client picks a key per intended action; the server stores the first result under (user, key) and replays it. Without one, a timeout and a retry file two tickets. Pass the key on to the system that writes (TicketHub), or a replay protects only your own API. A production store also hashes the body and refuses a reused key with a different question; the lab skips this.
 
-**Streaming and timeouts.** Stream with `client.messages.stream` so staff see the first word early. Nest timeouts outside in: browser, gateway, API, SDK call (default ten minutes: set it), tools.
+**Streaming and timeouts.** `client.messages.stream` shows staff the first word early. Each timeout is shorter than the one around it: browser, gateway, API, SDK call (default ten minutes: set it, and each retry restarts it), tools.
 
 **One manifest.** Image digest, prompt version, tool-schema hash, model id, eval baseline: change one and the gate runs again. Remote tools (an MCP server, an internal API) can change without your release, so hash their schemas at start-up and compare.
 
 ### 🔴 Expert view
 | Strategy | How | The agent-specific catch |
 |---|---|---|
-| **Canary** | A stable hash sends a few users to the candidate | Fourteen pilot agents are too few to see a rare failure: add shadow |
+| **Canary** | A stable hash sends a few users to the candidate | Fourteen agents are too few to see a rare failure: add shadow |
 | **Shadow** | The candidate also gets live requests, unseen | Doubles cost; tools read-only or stubbed |
 | **Feature flag** | A runtime switch for one capability | Flags rot; test both states; also a kill switch |
 | **Blue-green** | Swap whole environments | Says nothing about prompt quality |
 
-**Rollback** restores the whole manifest: a prompt rollback is one value (`CANARY_PERCENT=0`), an image rollback redeploys the previous digest. Rehearse both. Roll back automatically on error rate, p95 latency, cost per conversation or escalation rate; on a safety signal, by decision. See [*Cloud & DevOps*, lesson 4.2 — Release strategies: rolling, blue-green, canary, feature flags and rollback](../cloud/index.html#/4.2).
+A canary needs its stop rule first. Weak: "a small canary for an hour, then look at the dashboard." Strong: "v2 to three of the fourteen pilot agents for two working days; stop if p95 passes 15 s, cost per conversation passes 1.3 times v1, or sampled review finds a wrong hand-off." The thresholds are fictional; Yara and Maha set real ones.
 
-**The pipeline** verifies every pull request without secrets, builds the image once, and promotes that image where people approve.
+**Rollback** restores the whole manifest: a prompt rollback is one value (`CANARY_PERCENT=0`), an image rollback redeploys the previous digest. Rehearse both. Roll back automatically on error rate, p95 latency, cost per conversation or escalation rate. On a safety signal, stop the agent first (the kill switch of lesson 15.1) and let a person decide. See [*Cloud & DevOps*, lesson 4.2 — Release strategies](../cloud/index.html#/4.2).
+
+**The pipeline** verifies every pull request without secrets and builds the image once.
 
 ```yaml
 # labs/m14/release.yml
-# Copy to .github/workflows/release.yml; set working-directory to where labkit lives
+# Copy to .github/workflows/; set working-directory to where labkit lives
 name: najm-desk-release
 on:
-  pull_request: {paths: ["aiapps/labkit/labs/**"]}      # a prompt, tool, model id or the service changed: prove it first
+  pull_request: {paths: ["aiapps/labkit/labs/**"]}      # prove a change first
   push: {branches: [main]}
   workflow_dispatch:
     inputs:
-      canary_percent: {description: "Share of users on the candidate", default: "5"}
+      canary_percent: {description: "Share on the candidate", default: "5"}
 permissions: {contents: read}
 concurrency: {group: release, cancel-in-progress: false}   # never two rollouts at once
 defaults: {run: {working-directory: aiapps/labkit}}
@@ -281,20 +227,19 @@ jobs:
       - run: echo "deploy najm-desk:${{ github.sha }} with CANARY_PERCENT=${{ inputs.canary_percent }} on your platform"
 ```
 
-The offline gate is lesson 12.2's; a real-model eval is R2's evidence. Tests parse this file (a YAML parser turns the bare key `on` into `True`), and it passes a check against the public GitHub workflow schema; it has not run on GitHub. The `image` job only builds: pushing and signing are your platform's. The `canary` job waits for a person only after you add required reviewers to that environment in the repository settings. See [*Cloud & DevOps*, lesson 4.1 — Continuous integration: pipelines, tests, artefacts and fast feedback](../cloud/index.html#/4.1).
+The offline gate (lesson 12.2) proves the plumbing, not the answers; a real-model eval is R2's evidence. Tests only parse this file and it has not run on GitHub: expect first-run fixes and pin current action versions. The `image` job only builds; pushing and signing are your platform's. The `canary` job waits for a person only once you add required reviewers to that environment. See [*Cloud & DevOps*, lesson 4.1 — Continuous integration](../cloud/index.html#/4.1).
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
-| **Multi-stage image** | Pinned base, clean runtime stage, non-root | Every service |
-| **Settings from the environment** | Read once, validated, refuses unsafe combinations | Every environment |
+| **Multi-stage image** | Pinned base, clean runtime, non-root | Every service |
 | **Idempotency key** | Client-chosen id; first result stored and replayed | Any retried write |
 | **Durable execution** | Saved step results; a crash resumes | Long runs with side effects |
 | **Release manifest** | Image, prompt, tools, model, baseline as one | Every release |
 | **Canary release** | A stable hash sends a few users to the candidate | After the gate |
 
 ## 🏛️ In practice at Najm Bank
-**The artefact** is the **Najm Desk release pack**: image, manifest, pipeline and the release checklist, `labs/m14/release_checklist.yaml`. Rows R1 to R9 each need evidence, not a tick: R1 tests, smoke and offline gate green; R2 a real-model eval with no critical regression; R3 an image that is non-root, pinned and secret-free; R4 a per-environment key with a spend cap; R5 readiness proven to fail; R6 canary stop signals written first; R7 a rehearsed rollback; R8 a working kill switch; R9 sign-offs.
+**The artefact** is the **Najm Desk release pack**: image, manifest, pipeline and checklist (`labs/m14/release_checklist.yaml`). Rows R1 to R9 each need evidence, not a tick: R1 tests, smoke and offline gate green; R2 a real-model eval with no critical regression; R3 an image that is non-root, pinned and secret-free; R4 a per-environment key with a spend cap; R5 readiness proven to fail; R6 canary stop signals written first; R7 a rehearsed rollback; R8 a working kill switch; R9 sign-offs (Noura for security, Layla for governance).
 
 ```text
 $ ANTHROPIC_BASE_URL=http://127.0.0.1:9014 ANTHROPIC_API_KEY=mock python labs/m14/smoke.py
@@ -306,7 +251,7 @@ PASS  the same key replays and does not pay twice
 PASS  bad input is refused, not crashed
 ```
 
-`smoke.py` (not printed) boots the app with FastAPI's TestClient; `SMOKE_URL` checks a deployed service. Offline proves mechanics; only a real run shows answer quality and a cache hit.
+`smoke.py` (not printed) boots the app with FastAPI's TestClient; `SMOKE_URL` checks a deployed service. Real API: only the URL and key change. Offline proves mechanics; needs the real API: answer quality, a cache hit, R2's eval.
 
 > **Your platform.** Fill the right column with your platform's owners.
 
@@ -320,48 +265,47 @@ PASS  bad input is refused, not crashed
 | Release control | `CANARY_PERCENT`, `release.yml` | |
 | Logs, egress | JSON on stdout; mock only | |
 
-**Weekly deliverable (first half of week 14).** Commit `week-14/` with `labs/m14/` and passing tests, the smoke output, a filled checklist for the v2 prompt canary, the "Your platform" table, and `NOTES.md` with quiz answers and Read this week notes.
+**Weekly deliverable (first half of week 14).** Commit `week-14/` with `labs/m14/` and passing tests, the smoke output, a filled checklist for the v2 canary, the platform table, and `NOTES.md` with quiz answers and reading notes.
 
-**Group session (45 minutes).** (1) Place each diagram box on your platform (10). (2) Time a rollback (10). (3) Check the Dockerfile and compose file against R3 and R4 (15). (4) Write one canary's stop signals (10).
+**Group session (45 minutes).** (1) Place each diagram box on your platform (10). (2) Time a rollback (10). (3) Check the Dockerfile and compose file against R3 and R4 (15). (4) Write a canary's stop signals (10).
 
 **Build it with Claude Code.** Give this spec in plan mode (check the current Claude Code documentation):
 
 ```text
-Goal: package the Najm Desk answer path as a FastAPI service as in lesson 14.1: labs/m14/app.py, smoke.py, Dockerfile, docker-compose.yml,
+Goal: package the Najm Desk answer path as a FastAPI service (lesson 14.1): labs/m14/app.py, smoke.py, Dockerfile, docker-compose.yml,
 release.yml, release_checklist.yaml, with pytest tests in labkit/tests/test_m14_service.py.
-Context: Python 3.11, anthropic>=1,<2, the offline mock in aiapps/labkit, prompt files in labs/m14/prompts.
+Context: Python 3.11, anthropic>=1,<2, the offline mock in aiapps/labkit.
 Constraints: config only from the environment; refuse prod with the mock key; prompt version is name@hash; /health touches no dependency, /ready
 never calls the model; logs hold ids and counts, never the question; Idempotency-Key scoped per user; pinned base, multi-stage, numeric
 non-root USER; no secret in ENV, ARG or compose; no temperature, prefill or forced tool_choice.
 Acceptance: pytest passes; smoke.py prints six PASS lines; hadolint and docker compose config pass.
-Do not: build images, add dependencies, touch other modules' files. Plan first; one file at a time; run the tests after each.
+Do not: build images, add dependencies or touch other modules. Plan first; one file at a time; test after each.
 ```
 
 **Verify before you accept it.**
 - Run the tests and the offline eval gate, then break one property at a time (`USER root`, a `:latest` base, an `ENV` key, a `/health` that calls the model): a named test must fail.
-- Read the diff for `latest`, `--privileged`, `docker.sock`, request bodies in logs, a dumped `os.environ`.
+- Read the diff for `--privileged`, `docker.sock`, request bodies in logs, a dumped `os.environ`.
 
 ## 🛠️ Exercises
-- 🟢 **Run it and read the logs.** Offline. Start the mock and `uvicorn`, `curl` the three endpoints, ask one question twice with the same `Idempotency-Key` and once without. *Done when:* a table of status, replayed or not and model calls (count the log lines), and the field you would search to find one complaint.
-- 🟡 **Canary and rollback drill.** Offline. Set `PROMPT_VERSION=najm_desk_v1`, `CANARY_PROMPT=najm_desk_v2`, `CANARY_PERCENT=20`; send 100 users' questions and count versions; set 0 and prove nobody sees v2. *Done when:* both counts, the rollback's seconds, and why Python's `hash()` would break the bucket.
-- 🔴 **Build, break, ship to staging.** Needs a container runtime, your platform's staging and, for R2, the real API. Build the image, run compose, read `docker history`, deploy with a key from the secret store, run `SMOKE_URL` against it. *Done when:* the process runs as UID 10001, no layer holds a key, smoke passes on the deployed URL, and R1 to R9 have evidence.
+- 🟢 **Run it and read the logs.** Offline. Start the mock and `uvicorn`, `curl` the three endpoints, ask one question twice with one `Idempotency-Key` and once without. *Done when:* a table of status, replayed or not, and model calls (count the log lines), plus the field that finds one complaint.
+- 🟡 **Canary and rollback drill.** Offline. Set `PROMPT_VERSION=najm_desk_v1`, `CANARY_PROMPT=najm_desk_v2`, `CANARY_PERCENT=20`; send 100 users' questions, count versions; set 0 and prove nobody sees v2. *Done when:* both counts, the rollback's seconds, and why Python's `hash()` would break the bucket.
+- 🔴 **Build, break, ship to staging.** Needs a container runtime, your platform's staging and, for R2, the real API. Build the image, run compose, read `docker history`, deploy with a key from the secret store, run `SMOKE_URL`. *Done when:* the process runs as UID 10001, no layer holds a key, smoke passes on the deployed URL, and R1 to R9 have evidence.
 
 ## ⚠️ Mistakes and traps
-- **A floating base image.** `latest` changes under you. Pin an exact tag and, in production, the digest.
-- **A secret in `ENV`, `ARG` or compose.** Image history shows it. Inject it at run time.
+- **A floating base image or a baked-in secret.** `latest` changes under you and image history shows an `ENV` key: pin the tag, inject secrets at run time.
 - **A health check that calls the model.** It costs money and restarts healthy replicas in an outage.
-- **A prompt edited on a live machine.** Nobody can say which version answered. Release prompts as files, with the image.
+- **A prompt edited on a live machine.** Nobody can say which version answered: release prompts as files.
 - **A canary with no stop rule.** Write signals and thresholds first.
 
 ## 🧾 Recap
-- A deployed agent is a service: gateway, API, queue, workers, state store, secrets.
+- A deployed agent is a service: queue, workers, state, secrets.
 - One pinned, non-root, multi-stage image; configuration from the environment.
 - Long runs need a queue, checkpoints and idempotency keys.
 - Release image, prompt, tools and model as one manifest: gate, canary, rehearse.
 
 ## ✍️ Check yourself
 
-**1. Staging and production run the same image but answer differently. What do you check first?**
+**1. Staging and production run the same image digest but answer differently. What do you check first?**
 
 - A. Whether the base image tag changed
 - B. Whether the environment variables differ
@@ -370,20 +314,20 @@ Do not: build images, add dependencies, touch other modules' files. Plan first; 
 
 <details><summary>Answer</summary>
 
-**B.** Same image, different behaviour points to configuration: model id, prompt version or canary share. (🟢 Configuration and probes.)
+**B.** Same image, different behaviour points to configuration: model, prompt version or canary share. (🟢 Configuration and probes.)
 
 </details>
 
 **2. A liveness probe calls the model every five seconds to "prove the whole path works". The provider has a short outage. What happens?**
 
 - A. Healthy replicas restart again and again
-- B. Traffic moves to the canary prompt
-- C. The idempotency store replays old answers
-- D. The queue retries each probe until recovery
+- B. Replicas leave the load balancer but keep running
+- C. Nothing, because the SDK retries every probe
+- D. The orchestrator rolls back to the previous image
 
 <details><summary>Answer</summary>
 
-**A.** A dependency inside liveness turns a provider blip into restarts, and each probe is a paid call. (🟢 Configuration and probes.)
+**A.** A failing liveness probe restarts the container, so a provider blip becomes a restart loop; readiness only removes a replica from traffic. (🟢 Configuration and probes.)
 
 </details>
 
@@ -396,7 +340,7 @@ Do not: build images, add dependencies, touch other modules' files. Plan first; 
 
 <details><summary>Answer</summary>
 
-**C.** The checkpoint resumes after step 6 and the key makes a repeat harmless; the others repeat paid or side-effecting work. (🟡 Queues and durable execution.)
+**C.** The checkpoint resumes after step 6 and the key makes any repeat harmless; the others redo paid or side-effecting work. (🟡 Queues and durable execution.)
 
 </details>
 
@@ -404,12 +348,12 @@ Do not: build images, add dependencies, touch other modules' files. Plan first; 
 
 - A. A canary with write tools switched on
 - B. A rolling update of the image
-- C. A feature flag that is never switched off
+- C. A blue-green swap of the whole environment
 - D. A shadow run with read-only tools
 
 <details><summary>Answer</summary>
 
-**D.** A shadow run records answers without showing them, so its tools must not write. A canary shows answers to real users. (🔴 Expert view.)
+**D.** A shadow run records answers unseen, so its tools must not write; a canary shows answers to real users. (🔴 Expert view.)
 
 </details>
 
@@ -422,14 +366,14 @@ Do not: build images, add dependencies, touch other modules' files. Plan first; 
 
 <details><summary>Answer</summary>
 
-**B.** Probes see the process, not answer quality. Roll the whole manifest back, then reproduce the regression. (🔴 Expert view.)
+**B.** Probes see the process, not answer quality: roll the whole manifest back, then reproduce the regression. (🔴 Expert view.)
 
 </details>
 
 ## 📚 References
 - Claude API: Streaming https://platform.claude.com/docs/en/build-with-claude/streaming; Errors https://platform.claude.com/docs/en/api/errors
-- [*Cloud & DevOps*, lesson 2.3 — Kubernetes in practice: config, secrets, health probes, autoscaling and Helm](../cloud/index.html#/2.3); [*System Design for Vibe Coders*, lesson 4.4 — Rollback, staging, and release gates](../vibe/index.en.html#l4-4)
-- Found by title: *The Twelve-Factor App*; the GitHub Actions, Docker and FastAPI documentation; hadolint. Lab kit: https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/aiapps/labkit
+- [*Cloud & DevOps*, lesson 2.3 — Kubernetes in practice](../cloud/index.html#/2.3); [*System Design for Vibe Coders*, lesson 4.4 — Rollback, staging, and release gates](../vibe/index.en.html#l4-4)
+- Found by title: *The Twelve-Factor App*; GitHub Actions, Docker, FastAPI and hadolint documentation. Lab kit: https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/aiapps/labkit
 - **Read this week (Module 14).** Grokking AI Applications, chapter 8 (Deploying and orchestrating GenAI apps): https://www.manning.com/books/grokking-ai-applications. Gulli, *Agentic Design Patterns*, chapter 16 (Resource-Aware Optimisation): the free draft listed in lesson 0.1. Microsoft, *AI Agents for Beginners*, lessons 15-17 (Deployment, Local agents): https://github.com/microsoft/ai-agents-for-beginners
 
 ---
@@ -438,28 +382,28 @@ Do not: build images, add dependencies, touch other modules' files. Plan first; 
 *Level: 🔴 Advanced* · *Prerequisites: 0.2, 12.2, 14.1* · *Layer: Production, Delivery*
 
 ## ⚡ In 60 seconds
-- Cost is tokens times the current price on four meters: input, output, cache write, cache read. Judge it per conversation and per resolved ticket.
+- Cost is tokens times the current price on four meters: input, output, cache write, cache read. Judge it per resolved ticket.
 - Free wins first (cache the prefix, trim tool output, batch offline work); trade-offs last (lower effort, a cheaper model), each checked against the eval.
-- Retries need a jittered wait, a cap and one layer; never retry a 400. Add a circuit breaker and a tested fallback.
+- Retry with jitter, a cap and one layer; never a 400. Add a circuit breaker and a tested fallback.
 - Four SLOs: task success, p95 latency, cost per conversation, escalation rate. The error budget says when to stop shipping.
-- Biggest trap: a lower price per token and a higher cost per resolved ticket.
+- Biggest trap: a lower price per token, a higher cost per resolved ticket.
 
 ## 🧭 Why it matters
-Hind asks what one resolved ticket costs, and what the bill becomes if every employee uses Najm Desk. Lujain's first answer (hypothetical) is the invoice divided by conversations, which includes her eval runs, paid retries that failed, and hand-offs. Then, one Sunday at 07:02, the provider answers 529 overloaded. Her wrapper retries five times with no wait, each question becomes six paid calls, the burst hits the rate limit, and a brief overload becomes a twenty-minute outage. Nobody measured, and nobody tested the retry code against a provider that misbehaves.
+Hind asks what one resolved ticket costs, and what the bill becomes if every employee uses Najm Desk. Lujain's first answer (hypothetical) is the invoice divided by conversations, eval runs, abandoned calls and hand-offs included. Then, one Sunday at 07:02, the provider answers 529 overloaded. Her wrapper retries five times with no wait, so each question becomes six calls, the burst hits the rate limit, and a brief overload becomes a twenty-minute outage. Nobody measured, or tested the retry code against a provider that misbehaves.
 
 ## 📐 How it works
 
 ### 🟢 The essentials
-**The cost model.** A call costs four meters at four prices per million tokens, from the current price page. `input_tokens` excludes cached tokens, so the input meters add up without overlap.
+**The cost model.** A call costs four meters at four prices per million tokens, from the current price page.
 
 | Meter in `resp.usage` | Priced at | Note |
 |---|---|---|
 | `input_tokens` | P_in | Uncached input |
 | `output_tokens` | P_out | Includes thinking |
-| `cache_creation_input_tokens` | P_in × w | w was about 1.25 for the five-minute cache when written |
+| `cache_creation_input_tokens` | P_in × w | w is about 1.25 for the default five-minute cache, about 2 for the one-hour option (at the time of writing) |
 | `cache_read_input_tokens` | P_in × r | r is a fraction, about 0.1 on many models: check yours |
 
-A conversation sums its calls; input grows each turn as history is resent (lesson 0.2). Cost per resolved ticket is all spend divided by tickets resolved without a person: failed calls and hand-offs stay in.
+A conversation sums its calls; input grows each turn as history is resent (lesson 0.2). Cost per resolved ticket is all spend divided by tickets resolved without a person: unresolved conversations and hand-offs stay in.
 
 **Worked example.** A six-turn chat with a 1,500-token system prompt sends 14,010 input tokens and receives 1,500. Each cell is tokens × invented price (input 1, output 5, write 1.25, read 0.1):
 
@@ -470,7 +414,7 @@ A conversation sums its calls; input grows each turn as history is resent (lesso
 
 The bill falls 30%, its input half 45%. A test checks this.
 
-**Measure every call.** `Tracked` wraps the SDK client: one JSON line per call, and a cap that refuses the next call once spent. Prices come from a file you fill in and date; undated, it warns.
+**Measure every call.** `Tracked` wraps the SDK client: one JSON line per call, and a cap that refuses the next call once spent. It prices every cache write at the five-minute rate: extend `cost_of` for the one-hour option.
 
 ```python
 # labs/m14/cost.py
@@ -536,34 +480,22 @@ class Tracked:
             f.write(json.dumps(rec) + "\n")
 ```
 
-`prices.json` is invented until you replace it:
+`prices.json` holds four per-million-token prices per model id and a `checked` date; the shipped numbers are placeholders.
 
-```json
-{
-  "_note": "INVENTED placeholders, per million tokens. Copy the real prices from the price page, then set checked.",
-  "checked": "",
-  "per_million_tokens": {
-    "claude-haiku-5-5": {"input": 1, "output": 5, "cache_write": 1.25, "cache_read": 0.1},
-    "claude-sonnet-5-5": {"input": 3, "output": 15, "cache_write": 3.75, "cache_read": 0.3},
-    "claude-opus-5-5": {"input": 5, "output": 25, "cache_write": 6.25, "cache_read": 0.5}
-  }
-}
-```
-
-**Budgets and alerts.** Three layers: a cap in code, a limit and alert on the key in the provider console (lesson 0.2), and a per-feature view from `tag`. Alert below the cap, and decide who looks.
+**Budgets and alerts.** Three layers: a cap in code, a limit and alert on the key or workspace in the provider console (lesson 0.2), and a per-feature view from `tag`. Alert below the cap; name who looks.
 
 ### 🟡 Going deeper
-**Prompt caching** is a prefix match over tools, system, then messages: one changed byte invalidates everything after it. Mark the end of the stable part with `cache_control`, and put what varies after it, as `app.py` does. Verify with `cache_read_input_tokens`; if it stays zero, a silent invalidator is at work: a timestamp, request id or unsorted JSON in the prefix, a per-user line in the system prompt, a changing tool list, a different model or effort. A prefix under the model's minimum is silently not cached; the default lifetime is five minutes, renewed by each read. `probe.py` (not printed) sends one prefix twice and exits 1 unless the second call reads it. Offline the cache fields are always zero: this needs the real API.
+**Prompt caching** is a prefix match over tools, system, then messages: one changed byte invalidates everything after it. Mark the end of the stable part with `cache_control`, and put what varies after it, as `app.py` does. Verify with `cache_read_input_tokens`. If it stays zero while `cache_creation_input_tokens` is large on every call, a silent invalidator is at work: a timestamp, request id or unsorted JSON in the prefix, a per-user line in the system prompt, a changing tool list, a different model or effort. If both stay zero, the prefix is under the model's minimum and is silently not cached. The minimum depends on the model (hundreds of tokens on the newest, thousands on some older ones, at the time of writing: check yours), so the lab's roughly 800-token library may cache on one model and not another. The default lifetime is five minutes, renewed by each read. `probe.py` (not printed) exits 1 unless a repeated prefix is read from the cache. Offline the cache fields are always zero: this needs the real API.
 
 | Lever | Kind | The catch |
 |---|---|---|
 | **Response cache**: exact answers under a versioned key | Free | Never for answers using the user's own data; flush on a policy change |
 | **Trim tool output**: cap rows, select fields | Free | Cut too much and the agent calls again |
 | **Summarise history** | Trade-off | Rewrites the prefix: the cache restarts |
-| **Batch API**: about half price, results by `custom_id` within hours to a day | Free if nobody waits | Evals and nightly jobs; no tool loop |
+| **Batch API**: about half price; results by `custom_id`, most within an hour, all within 24 | Free if nobody waits | Evals and nightly jobs; one request, not a loop |
 | **Lower effort**, **cheaper model** | Trade-off | Test the hard cases; one change at a time |
 
-**Routing.** Start on `claude-haiku-5-5`; escalate to `claude-sonnet-5-5` or `claude-opus-5-5` for hard cases or low confidence. Make the signal checkable (a cited answer): a model's own confidence is poorly calibrated. Routing pays only when e < 1 − c/s, with e the share escalated and c, s the cheap and strong prices, and each escalation adds a second call's latency. Validate it with the eval (lesson 12.2): with and without routing, per category.
+**Routing.** Start on `claude-haiku-5-5`; escalate to `claude-sonnet-5-5` or `claude-opus-5-5` for hard cases or low confidence. Make the signal checkable (a cited answer): a model's stated confidence is often poorly calibrated. Routing pays only when e < 1 − c/s, with e the share escalated and c, s the cost per call of the cheap and strong tiers on your traffic; each escalation also adds a second call's latency. Validate it with the eval (lesson 12.2): with and without routing, per category.
 
 ```python
 # labs/m14/router.py
@@ -588,7 +520,7 @@ def confident(answer: str) -> bool:
 
 
 def answer_with_escalation(ask, question: str, turns: int = 0):
-    """ask(model) -> text. Try the routed tier, then ONE stronger tier, then stop. Returns (text, tried)."""
+    """Try the routed tier, then ONE stronger tier, then stop. ask(model) -> text; returns (text, tried)."""
     first, tried = TIERS.index(route(question, turns)[0]), []
     for model in TIERS[first:first + 2]:
         tried.append(model)
@@ -598,10 +530,8 @@ def answer_with_escalation(ask, question: str, turns: int = 0):
     return text, tried
 ```
 
-**Latency levers.** Stream for the first word; run independent tool calls in parallel; lower effort; a smaller model; shorter output; a cached prefix.
-
 ### 🔴 Expert view
-**Rate limits and retries.** A 429 carries `retry-after`; 5xx and 529 are transient. The SDK already retries them twice with backoff, so add a layer only for what it lacks: a longer budgeted wait, a breaker, a fallback. Wait with full jitter so clients do not retry in step; honour `retry-after`; retry only the transient; set a timeout on every call; build the client with `max_retries=0` beneath your layer; stay inside the run deadline; make tool writes idempotent (lesson 14.1), since repeating a model call only costs money.
+**Rate limits and retries.** A 429 carries `retry-after`; 5xx and 529 are transient. The SDK already retries them twice with backoff, so add a layer only for what it lacks: a longer budgeted wait, a breaker, a fallback. Wait with full jitter so clients do not retry in step; honour `retry-after` (the lab waits at most 8 s; a longer one ends in the fallback); retry only the transient; time out every call; build the client with `max_retries=0` beneath your layer; stay inside the run deadline; make tool writes idempotent (lesson 14.1), since repeating a model call only costs money.
 
 ```python
 # labs/m14/reliable.py
@@ -613,7 +543,7 @@ import anthropic
 
 
 def retryable(e: Exception) -> bool:
-    """The SDK's policy: network trouble, 408, 409, 429 and any 5xx (529 is its own class). A 400 is a bug: never retry it."""
+    """The SDK's policy: network trouble, 408, 409, 429 and any 5xx. A 400 is a bug: never retry it."""
     return isinstance(e, anthropic.APIConnectionError) or (isinstance(e, anthropic.APIStatusError) and (e.status_code in (408, 409, 429) or e.status_code >= 500))
 
 
@@ -661,20 +591,20 @@ class Reliable:
         return self.inner.create(**{**kw, "model": self.fallback})      # another model: its cache starts cold
 ```
 
-A *circuit breaker* stops calling a failing provider for a cool-down, then allows one trial. A *fallback model* answers meanwhile; put it under the eval, since quality changes and its cache starts cold. The tests drive the mock with `MOCK_FAIL_EVERY=2` (every second request a 529) and `MOCK_RATE_LIMIT_EVERY` (a 429 with `retry-after: 1`): the SDK alone hides the overloads, without retries exactly half fail, and the breaker opens and recovers.
+A *circuit breaker* stops calling a failing provider for a cool-down, then allows one trial; each replica keeps its own. A *fallback model* answers meanwhile; put it under the eval, since quality changes and its cache starts cold. The tests drive the mock with `MOCK_FAIL_EVERY=2` (every second request a 529) and `MOCK_RATE_LIMIT_EVERY` (a 429 with `retry-after: 1`): the SDK alone hides the overloads, without retries exactly half fail, and `Reliable` rides out both; the breaker runs on a fake clock.
 
-**SLOs for an agent.** Targets are fictional; Hind and Yara set real ones.
+**SLOs for an agent.** Targets are fictional; Hind and Yara set real ones, Maha the paging.
 
 | SLI | Measure | Target |
 |---|---|---|
-| Task success | Resolved or handed off correctly: eval plus sampled review | 90% over 28 days |
+| Task success | Resolved or handed off correctly (eval, sampled review) | 90% over 28 days |
 | p95 latency | Question to final answer | 15 s |
 | Cost per conversation | Spend ÷ conversations | Hind's budget |
 | Escalation rate | Hand-offs ÷ conversations; alert both ways | 15% to 35% |
 
-The *error budget* is what the target allows: 90% over 28 days lets 10% of conversations miss. A fast burn means stop releases, roll back. See [*Cloud & DevOps*, lesson 5.2 — SLOs, error budgets, alerting and on-call that people can sustain](../cloud/index.html#/5.2).
+The *error budget* is what the target allows: 90% over 28 days lets 10% of conversations miss. The burn rate is budget spent over window elapsed: half gone after 2 of 28 days is 0.5 ÷ (2/28) = 7, so the budget is empty in four days. A fast burn means stop releases, roll back. See [*Cloud & DevOps*, lesson 5.2 — SLOs and error budgets](../cloud/index.html#/5.2).
 
-**Capacity** (fictional). 1,800 tickets a week, 40% reaching Najm Desk, is 14.4 conversations an hour; plan for a 3× peak, 43 an hour or 0.012 a second. A conversation is six calls of about 12 seconds: 72 seconds. Little's law, concurrency = arrival rate × time in system, gives 0.012 × 72 ≈ 0.9: one worker. Tokens: 43 × 14,010 ≈ 10,000 input a minute, against your rate limit. Redo this before each rollout phase.
+**Capacity** (fictional). 1,800 tickets a week, 40% reaching Najm Desk, is 720 conversations, or 14.4 an hour over a 50-hour week; plan for a 3× peak: 43 an hour, 0.012 a second. A conversation is six calls of about 12 seconds: 72 seconds of model time. Little's law, concurrency = arrival rate × time in system, gives 0.012 × 72 ≈ 0.9: one worker. Tokens: 43 × 14,010 ≈ 10,000 input a minute, against your rate limit.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -688,40 +618,36 @@ The *error budget* is what the target allows: 90% over 28 days lets 10% of conve
 | **SLO and error budget** | Targets with a burn rule | Every production agent |
 
 ## 🏛️ In practice at Najm Bank
-**The artefact** is the **Najm Desk cost and reliability sheet**, one page for Hind from the report: unit costs, budget and alert levels, routing rules, retry, timeout, breaker and fallback settings, the SLO table, the capacity arithmetic.
+**The artefact** is the **Najm Desk cost and reliability sheet**, one page for Hind: unit costs, budget and alert levels, routing rules, retry, timeout, breaker and fallback settings, the SLO table, the capacity arithmetic.
 
-`report.py` (not printed) reads the log and prints cost per model, conversation and resolved ticket, then checks p95 latency, error rate and cost against SLO targets (`--slo-p95-ms`, `--slo-error-rate`, `--slo-convo-cost`). It exits 1 on a breach.
+`report.py` (not printed) reads the log and prints cost per model, conversation and resolved ticket, then checks p95 latency, error rate and cost against targets (`--slo-p95-ms`, `--slo-error-rate`, `--slo-convo-cost`) and exits 1 on a breach.
 
 ```text
-$ python labs/m14/demo.py && python labs/m14/report.py usage.jsonl --resolved 9
-claude-haiku-5-5   tried 1  How many days a week can I work remotely -> Remote work is allowed u
-claude-sonnet-5-5  tried 2  What are the working from home rules?    -> I don't know based on th
-claude-sonnet-5-5  tried 2  What happens to my account when I leave  -> I don't know based on th
-claude-sonnet-5-5  tried 2  What is the weather in Doha?             -> (mock) I received: What
-...
-claude-haiku-5-5    11 calls    816 in   232 out cost 0.00198  p95 21 ms
+$ python labs/m14/demo.py > /dev/null && python labs/m14/report.py usage.jsonl --resolved 9
+warning: prices.json has no 'checked' date: totals are lab units, not money
+claude-haiku-5-5    11 calls    816 in   232 out cost 0.00198  p95 26 ms
 claude-sonnet-5-5    4 calls    271 in    57 out cost 0.00167  p95 2 ms
 total 0.00364 over 6 conversations = 0.00061 each; 0.00040 per resolved ticket; 0 errors
 SLO: all inside their targets
-$ ... --slo-convo-cost 0.0005    (exit 1)
+$ python labs/m14/report.py usage.jsonl --slo-convo-cost 0.0005 | tail -n 1
 SLO: BREACH of cost per conversation
 ```
 
-Three of twelve questions escalated and none improved. Two were lesson 4.2's vocabulary gaps: retrieval missed, and no stronger model can cite a document it never saw. They cost 0.00095 of 0.00364, 26%; twelve first attempts on the middle tier would cost 0.00664. Prices are invented and the mock ignores the model: take the method. `demo.py` (not printed) runs the questions. Real prices, latency, cache hits and lost answers need the real API.
+In the twelve lines `demo.py` printed (hidden above), `tried 2` marks the three questions that escalated; none improved, because the mock answers alike whatever the model. Two were lesson 4.2's vocabulary gaps ("working from home" against "remote work"): the mock's word matching stumbles as a retriever would, and no stronger model can cite a document it never saw. Escalation cost 0.00095 of 0.00364, 26%; twelve first attempts on the middle tier would cost about 0.0066. Prices are invented and times vary; real prices, latency, cache hits and answer quality need the real API.
 
-**Weekly deliverable (second half of week 14).** Commit the cost files in `labs/m14/` with passing tests, a dated `prices.json`, the demo and report output, the one-page sheet, and `NOTES.md` (quiz answers, Read this week notes).
+**Weekly deliverable (second half of week 14).** Commit the cost files in `labs/m14/` with passing tests, a dated `prices.json`, the demo and report output, the one-page sheet, and `NOTES.md` (quiz answers, reading notes).
 
-**Group session (45 minutes).** (1) Compare costs per resolved ticket; find the biggest lever (15). (2) Break the router with phrasings it misses (10). (3) Argue the SLO targets and who is paged (20).
+**Group session (45 minutes).** (1) Compare costs per resolved ticket; find the biggest lever (15). (2) Break the router with phrasings it misses, Arabic included (10). (3) Argue the SLO targets and who is paged, as Hind, Yara and Maha would (20).
 
 **Build it with Claude Code.** Give this spec in plan mode (check the current Claude Code documentation):
 
 ```text
-Goal: add a cost and reliability layer around the Anthropic client: labs/m14/cost.py, router.py, reliable.py, report.py, prices.json,
-as in lesson 14.2, with pytest tests in labkit/tests/test_m14_cost.py.
+Goal: add a cost and reliability layer around the Anthropic client (lesson 14.2): labs/m14/cost.py, router.py, reliable.py, report.py,
+prices.json, with pytest tests in labkit/tests/test_m14_cost.py.
 Context: Python 3.11, anthropic>=1,<2, the offline mock (MOCK_FAIL_EVERY, MOCK_RATE_LIMIT_EVERY).
 Constraints: prices only from prices.json; log four token meters, never the prompt; budget checked before the call; retries with jitter,
 retry-after, never a 400, under max_retries=0; routing a pure function; no temperature, prefill or forced tool_choice.
-Acceptance: pytest passes; report.py exits 1 on a breached SLO. Do not hard-code prices or add dependencies.
+Acceptance: pytest passes; report.py exits 1 on a breached SLO. No new dependencies.
 ```
 
 **Verify before you accept it.**
@@ -729,16 +655,15 @@ Acceptance: pytest passes; report.py exits 1 on a breached SLO. Do not hard-code
 - Read the diff for a price in code, an uncapped sleep, a retry inside a retry, a prompt in the log.
 
 ## 🛠️ Exercises
-- 🟢 **Fill the prices.** Offline, with the public price page. Copy current prices into `prices.json`, date them, run the demo and report. *Done when:* the warning is gone and the report matches your hand arithmetic for one conversation to five decimals.
-- 🟡 **Smarter escalation.** Offline. Make "I don't know based on the provided documents" a final answer, not an escalation; write the failing test first. *Done when:* tests pass, escalations fall from three to one, and one case shows when not escalating is wrong.
-- 🔴 **Prove it on the real API.** Needs the real API and the cap from lesson 0.2. Run `probe.py`; run your 20 questions routed and all on the middle tier. *Done when:* `NOTES.md` has the probe output, both costs per question with the date, a verdict on each differing answer, and your decision with a threshold.
+- 🟢 **Fill the prices.** Offline. Copy current prices from the public price page into `prices.json`, date them, run the demo and report. *Done when:* the warning is gone and the report matches your hand arithmetic for one conversation to five decimals.
+- 🟡 **Smarter escalation.** Offline. Make "I don't know based on the provided documents" a final answer, not an escalation; write the failing test first. *Done when:* tests pass, escalations fall from three to one, and one case shows when that is wrong.
+- 🔴 **Prove it on the real API.** Needs the real API and the cap from lesson 0.2. Run `probe.py`, then your 20 questions routed and all on the middle tier. *Done when:* `NOTES.md` holds the probe output, both costs per question (dated), a verdict on each differing answer and your decision with a threshold.
 
 ## ⚠️ Mistakes and traps
-- **Cost per call, not per resolved ticket.** Hand-offs and failed calls still cost.
-- **A volatile prefix.** A timestamp pays the write premium and reads nothing. Check `cache_read_input_tokens`.
-- **Stacked or unbounded retries.** Layers multiply and no wait makes a storm. One layer, jitter, a cap.
-- **Escalating what a stronger model cannot fix.** A retrieval miss stays a miss.
-- **An untested fallback.** It runs on the worst day. Put it under the eval.
+- **Cost per call, not per resolved ticket.** Hand-offs and unresolved conversations still cost.
+- **A volatile prefix.** A timestamp pays the write premium and reads nothing: check `cache_read_input_tokens`.
+- **Stacked or unbounded retries.** Layers multiply and no wait makes a storm: one layer, jitter, a cap.
+- **Escalating what a stronger model cannot fix.** A retrieval miss stays a miss, and a correct HANDOFF needs no upgrade.
 
 ## 🧾 Recap
 - Cost is four meters times current prices, judged per resolved ticket.
@@ -748,33 +673,33 @@ Acceptance: pytest passes; report.py exits 1 on a breached SLO. Do not hard-code
 
 ## ✍️ Check yourself
 
-**1. Haiku-first routing cut the price per call by 60%, yet cost per resolved ticket rose. Which is the most likely cause?**
+**1. A cheap-tier call costs 40% of a middle-tier call, but 90% of questions escalate to the middle tier. Compared with always using the middle tier, what happens to cost per answered question?**
 
-- A. The cheap tier's tokens are counted twice in the report
-- B. Prompt caching stopped working on the cheap tier
-- C. Many conversations escalate, so cheap calls are wasted
-- D. Latency rose, and latency is billed by the second
+- A. It falls by about 60%, as the discount suggests
+- B. It rises by about 30%, as most questions pay twice
+- C. It falls by about 10%, as that share does not escalate
+- D. It stays the same, as each question is answered once
 
 <details><summary>Answer</summary>
 
-**C.** Per-call price ignores escalations, retries and hand-offs, which still cost. (🟢 The cost model.)
+**B.** Every question pays the cheap call and 90% also the middle call: 0.4 + 0.9 = 1.3 times the middle tier alone. Routing pays only below 1 − c/s = 0.6 escalated. (🟡 Routing.)
 
 </details>
 
-**2. The system prompt is identical for every user, yet `cache_read_input_tokens` is always zero. What do you check first?**
+**2. Calls arrive every few seconds with an identical system prompt, yet every call reports a large `cache_creation_input_tokens` and a `cache_read_input_tokens` of zero. What do you check first?**
 
 - A. A timestamp or request id inside the prompt prefix
-- B. Whether temperature is set to zero for this model
-- C. Whether `max_tokens` is set above 1024 tokens
-- D. Whether the response is delivered by streaming to the client
+- B. Whether the prefix is shorter than the model's minimum
+- C. Whether `max_tokens` leaves room for the whole reply
+- D. Whether the replies are streamed to the client
 
 <details><summary>Answer</summary>
 
-**A.** Any changed byte in the prefix invalidates the cache after it, and it can look identical to the eye. (🟡 Prompt caching.)
+**A.** A prefix under the minimum would show no writes at all; large writes and no reads mean the bytes change on every call. (🟡 Prompt caching.)
 
 </details>
 
-**3. During an overload, a wrapper retries five times at once on top of the SDK's own retries. What is wrong?**
+**3. During an overload, a wrapper tries each call five times with no wait, on top of the SDK's own retries. What is wrong?**
 
 - A. Nothing: more attempts always raise the success rate
 - B. It should retry 400 errors too
@@ -787,33 +712,32 @@ Acceptance: pytest passes; report.py exits 1 on a breached SLO. Do not hard-code
 
 </details>
 
-**4. The error budget for the 90% task-success SLO is half spent in two days of a 28-day window. What do you do?**
+**4. The error budget for the 90% task-success SLO is half spent two days into a 28-day window. What do you do?**
 
-- A. Raise the SLO to 95% to be safe
-- B. Pause releases, then investigate or roll back
-- C. Wait until the 28-day window ends before acting
-- D. Hide the dashboard from the sponsor
+- A. Loosen the SLO to 85% so the burn looks smaller
+- B. Keep shipping, because half the budget is left
+- C. Pause releases, then investigate or roll back
+- D. Wait for the window to end before acting
 
 <details><summary>Answer</summary>
 
-**B.** A fast burn means the target will be missed; an error budget exists to stop risky change early. (🔴 SLOs.)
+**C.** Half the budget in 2 of 28 days is a burn about seven times too fast; at that rate it is empty in four days. (🔴 SLOs.)
 
 </details>
 
 **5. Every night 20,000 old tickets must be re-classified, and nobody waits for the result. Which lever fits?**
 
-- A. The Batch API
-- B. A response cache keyed by question
-- C. Streaming the replies
-- D. A lower `max_tokens`
+- A. A response cache keyed by the question text
+- B. Streaming each reply as it is generated
+- C. A lower `max_tokens` on every request
+- D. The Batch API, with one request per ticket
 
 <details><summary>Answer</summary>
 
-**A.** Asynchronous batches cost about half and suit work nobody waits for; the others target repeats, perceived speed or length. (🟡 The levers.)
+**D.** Batches cost about half and suit work nobody waits for; the others target repeats, speed or length. (🟡 The levers.)
 
 </details>
 
 ## 📚 References
 - Claude API: Pricing https://platform.claude.com/docs/en/about-claude/pricing; Prompt caching https://platform.claude.com/docs/en/build-with-claude/prompt-caching; Batch processing https://platform.claude.com/docs/en/build-with-claude/batch-processing
-- [*Cloud & DevOps*, lesson 6.2 — FinOps: understanding, allocating and cutting cloud cost](../cloud/index.html#/6.2); [*AI Product Management*, lesson 8.2 — Unit economics: cost to serve, pricing models and margins](../aipm/index.html#/8.2). Lab kit: https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/aiapps/labkit
-- **Read this week (Module 14).** Grokking AI Applications, chapter 8 (Deploying and orchestrating GenAI apps): https://www.manning.com/books/grokking-ai-applications. Gulli, *Agentic Design Patterns*, chapter 16 (Resource-Aware Optimisation): the free draft listed in lesson 0.1. Microsoft, *AI Agents for Beginners*, lessons 15-17 (Deployment, Local agents): https://github.com/microsoft/ai-agents-for-beginners
+- [*Cloud & DevOps*, lesson 6.2 — FinOps](../cloud/index.html#/6.2); [*AI Product Management*, lesson 8.2 — Unit economics](../aipm/index.html#/8.2). Lab kit: https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/aiapps/labkit

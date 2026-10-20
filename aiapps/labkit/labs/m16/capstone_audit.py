@@ -3,7 +3,8 @@
   python labs/m16/capstone_audit.py REPO [--tier 1|2|3] [--strict]      strict: a leftover TODO is a problem
 EXISTS: each deliverable in labkit/data/m16_checklist.json is present and not empty, milestone by milestone.
 LINKED: each requirement id the spec defines is cited downstream, and no cited id is missing from the spec.
-It cannot tell whether evidence is good, true or signed: that stays with people."""
+Tier 3 also runs Lab 13.2's pack check on docs/governance (with --strict, every signer's row must say approved).
+It cannot tell whether evidence is good or true, or whether an "approved" row was really given: that stays with people."""
 import argparse
 import json
 import re

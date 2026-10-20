@@ -137,6 +137,10 @@ def test_real_mode_means_not_the_mock_and_a_real_key(uat, monkeypatch):
     assert uat.is_real()
     monkeypatch.setenv("ANTHROPIC_API_KEY", "mock")
     assert not uat.is_real()
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-test")
+    for url, real in [("https://localhost:8787", False), ("http://localhost.example.com", True), ("https://api.anthropic.com", True)]:
+        monkeypatch.setenv("ANTHROPIC_BASE_URL", url)               # the host decides, as in Lab 12.2's check_mode, not the start of the string
+        assert uat.is_real() is real, url
 
 
 def test_the_verdict_never_says_accepted_unless_every_row_passed_and_even_then_leaves_the_signing_to_people(uat, capsys):
@@ -175,6 +179,15 @@ def test_exit_codes_a_pass_a_fail_and_the_strict_flag(tmp_path):
     assert run_cli(tmp_path, ONE_WAITING).returncode == 0                                # something waits for a person: not a failure...
     strict = run_cli(tmp_path, ONE_WAITING, "--strict")
     assert strict.returncode == 1 and "NOT READY TO SIGN" in strict.stdout                # ...unless you ask for strict
+
+
+def test_an_app_file_in_the_folder_you_run_from_is_found_without_pythonpath(tmp_path):
+    """--app module:function must work for the learner's own file next to where they run the command, as the lesson says."""
+    (tmp_path / "my_app.py").write_text(APP.replace("def app", "def respond"), encoding="utf-8")
+    (tmp_path / "s.md").write_text(ALL_PASS, encoding="utf-8")
+    env = {k: v for k, v in os.environ.items() if k not in ("ANTHROPIC_BASE_URL", "PYTHONPATH")} | {"ANTHROPIC_API_KEY": "mock"}
+    r = subprocess.run([sys.executable, "-I", str(LABS / "uat_runner.py"), "s.md", "--app", "my_app:respond"], cwd=tmp_path, env=env, capture_output=True, text=True)
+    assert r.returncode == 0 and "1 passed, 0 failed, 0 not run" in r.stdout, r.stdout + r.stderr
 
 
 def test_the_evidence_file_records_the_mode_the_rows_and_a_date(tmp_path):

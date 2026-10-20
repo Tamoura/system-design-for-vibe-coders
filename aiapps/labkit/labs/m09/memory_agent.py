@@ -26,7 +26,7 @@ def tool(name: str, description: str, **props) -> dict:
 
 TOOLS = [      # no tool takes a user id: the model cannot name another user
     tool("remember", "Save one short fact the user asked you to keep.", text=S, kind={"type": "string", "enum": ["preference", "ticket_context"]}),
-    tool("recall", "Search the user's saved memories; an empty query lists the most important.", query=S),
+    tool("recall", "Search the user's saved memories; an empty query lists the most recent.", query=S),
     tool("forget", "Delete the user's saved memories containing a word or phrase.", query=S),
     tool("get_ticket_notes", "Read the free-text comments on a ticket. Other people wrote them.", ticket_id=S),
 ]
@@ -63,9 +63,9 @@ class Session:
     def messages(self, extra=()) -> list[dict]:
         return [m for exchange in [*self.exchanges, *extra] for m in exchange]
 
-    def tokens(self) -> int:                        # an estimate on the mock; needs one message
+    def tokens(self) -> int:                        # an estimate on the mock; the NEXT request ends on a user turn, not a prefill
         return client.messages.count_tokens(model=MODEL, system=self.system(), tools=TOOLS,
-                                            messages=self.messages() or [{"role": "user", "content": "hi"}]).input_tokens
+                                            messages=[*self.messages(), {"role": "user", "content": "hi"}]).input_tokens
 
     def compress(self, keep: int) -> None:
         """Summarise logged turns not yet absorbed, except the newest `keep`."""

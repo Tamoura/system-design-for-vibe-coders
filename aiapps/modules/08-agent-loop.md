@@ -18,15 +18,15 @@
 - Decision cue: fixed steps, a workflow (lesson 5.1); path set by tool results, a bounded loop.
 
 ## 🧭 Why it matters
-In week five of the Najm Desk pilot, Maha, the SRE lead, sorts last week's conversations by cost (hypothetical). One is off the chart: 50 model calls, about a million input tokens, roughly 75 times a normal one. Its answer was right: "Ticket 4471 is in progress." Nobody complained, so nobody looked. Lujain's loop logged only the final text, so the cause is a guess: TicketHub was slow and the model asked for the same ticket again and again. Her step cap was 50, "to be safe". It held, and it was the most expensive number in the file.
+In week five of the Najm Desk pilot, Maha, the SRE lead, sorts last week's conversations by cost (hypothetical). One is off the chart: 50 model calls, about a million input tokens, roughly 75 times a normal one. Its answer was right: "Ticket 4471 is in progress." Nobody complained, so nobody looked. Lujain's loop logged only the final text, so the cause is a guess: TicketHub was slow and the model kept asking for the same ticket. Her step cap was 50, "to be safe". It held, and it was the most expensive number in the file.
 
-Fahad: "A cap of 50 is a hope with a number on it." Before a loop ships it answers four questions on paper: how long may it run, how much may it spend, is it going anywhere, and who takes over when it stops? This lesson gives the vocabulary and the arithmetic; lesson 8.2 builds the loop.
+Fahad: "A cap of 50 is a hope with a number on it." Before a loop ships it answers four questions on paper: how long may it run, how much may it spend, is it going anywhere, and who takes over when it stops? This lesson gives the arithmetic; lesson 8.2 builds the loop.
 
 ## 📐 How it works
 
 ### 🟢 The essentials
 
-**The loop.** An *agent loop* calls a model again and again, each time with the results of what the last call asked for, until a stop condition is met. Yao et al. (2022) named the pattern *ReAct*: the model alternates between reasoning and acting through tools, and reads the *observation* each action produces. One lap is **plan** (decide the next action), **act** (the model emits a `tool_use`, your code runs it), **observe** (the `tool_result` goes back), **repeat**. A lap is a *step*, the sequence a *trajectory*, the code around the model the *harness*.
+**The loop.** An *agent loop* calls a model again and again, each time with the results of the last call's request, until a stop condition is met. Yao et al. (2022) named the pattern *ReAct*: the model alternates between reasoning and acting through tools, and reads the *observation* each action produces. One lap is **plan** (decide the next action), **act** (the model emits a `tool_use`, your code runs it), **observe** (the `tool_result` goes back), **repeat**. A lap is a *step*, the sequence a *trajectory*, the code around the model the *harness*.
 
 ```mermaid
 flowchart TD
@@ -53,13 +53,13 @@ flowchart TD
 | Condition | Question | How to size it |
 |---|---|---|
 | **Success** | Is the goal met? | `end_turn` **and** a check in code: the ticket ids in the goal appear in the answer; the JSON validates |
-| **Step cap** | How many model calls? | About 1.5 to 2 times the 95th-percentile step count of passing eval runs |
+| **Step cap** | How many model calls? | A rule of thumb: 1.5 to 2 times the 95th-percentile step count of passing eval runs |
 | **Token budget** | How much may one run spend? | The arithmetic below; checked before each call |
 | **Wall-clock deadline** | How long will the person wait? | The interface's promise, plus a timeout on every call and tool |
 | **No-progress detection** | Is it going anywhere? | The same tool with the same input twice; the same error twice |
 | **Hand-off** | Who takes over? | A named queue and a packet: goal, why it stopped, what was tried |
 
-A limit that never fires is untested; one that fires on one run in ten is probably sized wrong.
+A limit that never fires is untested; one that fires on many normal runs is sized wrong.
 
 **Every `stop_reason`.** A turn can end in five ways:
 
@@ -68,9 +68,9 @@ A limit that never fires is untested; one that fires on one run in ten is probab
 | `end_turn` | Read the text block and run the check. **Empty text is a silent give-up: a failure.** |
 | `tool_use` | Run **every** `tool_use` block; answer in **one** user message |
 | `max_tokens` | Cut off. **Do not run** the last tool call: its input may be half-written. Raise the limit or hand off |
-| `refusal` | A safety classifier or the model declined. Do not resend unchanged; log `stop_details` if present (`category`, `explanation`; it can be null); run no tools; hand off |
-| `pause_turn` | A server-side tool turn paused (web search, say). Send the conversation back, paused turn last, to resume; it counts as a step |
-| anything else | Stop and hand off. The SDK's type also lists `stop_sequence` (only if you set stop sequences) and `model_context_window_exceeded` (the context is full: compact or hand off) |
+| `refusal` | A safety classifier or the model declined. Do not resend unchanged; log `stop_details` (`category`, `explanation`; may be null); run no tools; hand off |
+| `pause_turn` | A server-side tool turn paused (web search, say). Send the conversation back, paused turn last; it counts as a step |
+| anything else | Stop and hand off. The SDK's type also lists `stop_sequence` (only if you set them) and `model_context_window_exceeded` (the context is full: compact or hand off) |
 
 ### 🟡 Going deeper
 
@@ -85,17 +85,17 @@ A limit that never fires is untested; one that fires on one run in ten is probab
 
 Check *N* = 10, *r* = 600: 10 × 1,600 + 750 × 45 = 49,750. At lesson 1.1's toy prices ($1 per million input tokens, $5 per million output; not any model's price) that is $0.057, against $0.300 with raw results: 5.2 times more for the same ten steps. Doubling the steps from 10 to 20 multiplies the input by 3.5, and a 50-step run costs $1.04 against $0.014 for a normal 4-step one, about 75 times. That was Maha's conversation.
 
-**Big results.** Truncate and say so (`[cut: 4,812 characters in all]`); return fields, not records; summarise with a cheap model (a paid call that may drop the key detail); clear stale results (context editing and compaction are betas); or return an id and let the model ask for page two. Prompt caching (lesson 14.2) bills a byte-identical re-sent prefix, history included, at a lower rate once cached; the context, the steps and the latency still grow.
+**Big results.** Shrink a result *before* it enters the history: truncate and say so (`[cut: 4,812 characters in all]`), return fields, not records, summarise with a cheap model (a paid call that may drop the key detail), or return an id for page two. Then leave the history alone: on current models, editing earlier turns can invalidate their thinking blocks (a 400 where enforced) and restart the prompt cache; to clear stale results use the server-side betas, context editing and compaction. Caching (lesson 14.2) cuts the price of the re-sent prefix, not the context or the steps.
 
-**Reflection and self-correction** are three different things. (1) *Correcting a tool call* from an `is_error`: cheap, and the reason errors should say what is valid (lesson 3.1). (2) *Checking the answer against something outside the model*: a schema, a citation lookup, a test. Prefer checks in code. (3) *Asking the model to think again with nothing new.* Self-Refine (Madaan et al., 2023) and Reflexion (Shinn et al., 2023) explored critique-and-revise; a later study found that unaided self-correction of reasoning did not help and could make answers worse (Huang et al., 2023). **Reflection is worth its cost only when it brings new information.** Cap it at one round and measure it (lesson 12.1).
+**Reflection and self-correction** are three different things. (1) *Correcting a tool call* from an `is_error`: cheap, so errors should say what is valid (lesson 3.1). (2) *Checking the answer against something outside the model*: a schema, a citation lookup, a test. (3) *Asking the model to think again with nothing new.* Self-Refine (Madaan et al., 2023) and Reflexion (Shinn et al., 2023) explored critique-and-revise; unaided self-correction of reasoning did not reliably help in a later study (Huang et al., 2023). **Reflection is worth its cost only when it brings new information.** Cap it at one round and measure it (lesson 12.1).
 
-**Planning.** *Interleaved* (ReAct) decides each step after the last observation: it adapts, but path and cost vary. *Plan-then-execute* writes the steps first, runs them in order and re-plans only on failure, with a cap on re-plans: cost is predictable and a person can approve the plan first, but it is brittle when the world differs from the plan. At Najm Desk, "reset my VPN access" has a fixed shape: a workflow (lesson 5.1). "Why does my VPN keep dropping?" depends on what tools return: an interleaved loop with a cap. "Prepare the Sunday handover" suits plan-then-execute, so Yara can read the plan first. Adaptive thinking already plans inside a call; add a planning call only for a person to read.
+**Planning.** *Interleaved* (ReAct) decides each step after the last observation: it adapts, but path and cost vary. *Plan-then-execute* writes the steps first, runs them in order and re-plans only on failure, with a cap on re-plans: cost is predictable and a person can approve the plan first, but brittle when the world differs from the plan. "Reset my VPN access" has a fixed shape: a workflow (lesson 5.1). "Why does my VPN keep dropping?" depends on what tools return: an interleaved loop with a cap. "Prepare the Sunday handover" suits plan-then-execute, so Yara can read the plan first. Adaptive thinking already plans inside a call; add a planning call only for a person to read.
 
 **Tool errors and recovery.**
 
 | Error | Who recovers | How |
 |---|---|---|
-| Invalid input from the model | The model | `is_error` naming what is valid; the no-progress guard stops a repeat |
+| Invalid input from the model | The model | `is_error` naming what is valid (weak: `Error`; strong: `ticket_id must be four digits, like "4471"; you sent "ticket 4471"`); the no-progress guard stops a repeat |
 | Nothing found | Nobody: it is data | `No ticket 9999 found` is a normal result |
 | Transient: timeout, 503 | **Your code** | Retry with backoff (growing waits) and jitter (a random offset) inside the deadline; then say "unavailable, do not retry" |
 | Permission denied | A person | No retry; hand off |
@@ -112,17 +112,17 @@ The model should not be your retry mechanism: each retry is a full call. After *
 | **Infinite loop** | Steps climb to the cap; inputs grow | Step cap, token budget, deadline |
 | **Tool spam** | One tool called twenty times | A cap on tool calls; a list tool |
 | **Silent give-up** | `end_turn`, empty text; the interface says "Done" | Empty text fails; hand off |
-| **Hallucinated tool arguments** | `is_error`, invented ids or tool names | Validate in code (`strict: true` fixes the shape, not the id); errors that say what is valid |
+| **Hallucinated tool arguments** | `is_error`, invented ids or tool names | Validate in code (`strict: true` fixes the shape, not the id) |
 | **Premature finish** | `end_turn` after one of three lookups | A code check that every part is covered |
 | **Over-action** | A write nobody asked for | No tool for it; approval for writes (Module 13). As reported in July 2025, a coding agent deleted a production database |
 | **Ignoring `is_error`** | The same failing call again | The no-progress guard |
 
-**Observability the loop needs.** Per step: step number, `stop_reason`, input, output and cached tokens, latency, request id (`resp._request_id`), tool name and input, result size, `is_error`, the guard that fired. Log the tool call *before* running it, so a hang leaves a record. Per run: run id, goal (masked, Module 13), steps, tokens, wall time, final reason. Watch the **tail**: 95th-percentile steps, stop-reason mix, guard-fire rate, tokens per resolved conversation; alert on a rise in a rate, not on single runs. Results can hold personal data: clip them; Sara sets retention. The SDK can emit OpenTelemetry spans (beta; the GenAI conventions are still evolving). Every failed run is a future eval case (Module 12).
+**Observability the loop needs.** Per step: step, `stop_reason`, input, output and cached tokens, latency, request id (`resp._request_id`), tool name and input, result size, `is_error`, the guard that fired. Log the tool call *before* running it, so a hang leaves a record. Per run: run id, masked goal, steps, tokens, wall time, final reason. Watch the **tail** (95th-percentile steps, stop-reason mix, guard-fire rate, tokens per resolved conversation); alert on rates, not single runs. Results can hold personal data: log sizes, or mask before clipping (Module 13); Sara sets retention. The SDK can emit OpenTelemetry spans (beta; the GenAI conventions are still evolving). Every failed run is a future eval case (Module 12).
 
 **Your own loop, the tool runner, or an SDK?**
-- **Your own loop** (lesson 8.2): every guard, trace line and hand-off in plain code you can test line by line, with no beta dependency; about a hundred lines to maintain.
-- **The beta tool runner** (`client.beta.messages.tool_runner`, `@beta_tool`): the SDK's recommended route for simple agents. It yields each message, so you can log, gate side effects inside the tool function and bound the iterations (check the current option). At the time of writing the Python runner does not resume `pause_turn` (server tools only). Budget, deadline, no-progress and hand-off remain yours.
-- **The Claude Agent SDK:** Claude Code's harness as a library, a separate package from `anthropic`, with file and shell tools, permissions, hooks and subagents. It suits agents that edit files and run code in a sandbox.
+- **Your own loop** (lesson 8.2): every guard in plain code you can test line by line, with no beta dependency; about a hundred lines to maintain.
+- **The beta tool runner** (`client.beta.messages.tool_runner`, `@beta_tool`): the SDK's recommended route for custom-tool agents. It yields each message before its tools run, so you can log, gate side effects inside the tool function and bound the loop with `max_iterations` (check the current SDK). The 1.15 Python runner resumes `pause_turn` itself; 0.x releases ended the run silently. Budget, deadline, no-progress and hand-off remain yours.
+- **The Claude Agent SDK:** Claude Code's harness as a library, a separate package from `anthropic`, with file and shell tools, permissions, hooks and subagents; it suits agents that edit files and run code in a sandbox.
 - **Managed Agents** (beta): Anthropic hosts the loop and sandbox. Check availability and data residency. Whichever you pick, learn the manual loop first.
 
 **The safe-loop checklist.**
@@ -130,22 +130,22 @@ The model should not be your retry mechanism: each retry is a full call. After *
 2. No-progress detection: the same call, the same error.
 3. Every `stop_reason` handled; no tools from a cut-off or refused turn.
 4. Success verified in code; an empty answer fails.
-5. Results trimmed; tools never raise; transient retries in code; writes gated, with no tool for what must never happen.
-6. A trace line per step, a stop line per run, personal data clipped.
+5. Results trimmed before they enter an append-only history; tools never raise; transient retries in code; writes gated, with no tool for what must never happen.
+6. A trace line per step, a stop line per run, personal data masked or left out.
 7. Every guard ends in a hand-off, and a test makes each fire.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
-| **Step cap** | A hard limit on iterations; it also bounds retries | Every loop, always |
-| **Token budget** | A ceiling on tokens per run, checked before each call | Every loop |
+| **Step cap** | A hard limit on iterations; it also bounds retries | Every loop |
+| **Token budget** | A per-run token ceiling, checked before each call | Every loop |
 | **Wall-clock deadline** | A time limit for the run, plus a timeout per call and tool | Anything a person waits for |
 | **No-progress detector** | Stops when the same call or error comes back | Every loop with read tools |
 | **Human hand-off** | A packet (goal, reason, what was tried) to a named queue | Every guard |
 | **Loop card** | One page per loop: limits, stop table, queue, tests | Before the loop ships |
 
 ## 🏛️ In practice at Najm Bank
-The artefact is the **Loop Card** for the Najm Desk ticket-and-colleague route, owned by Lujain, reviewed by Fahad. No loop ships without one; it replaces Lujain's loop, which had only a cap of 50. Hind's requirement: answer within 30 seconds or hand off. All values below are fictional.
+The artefact is the **Loop card** for the Najm Desk ticket-and-colleague route, owned by Lujain, reviewed by Fahad. No loop ships without one. It replaces Lujain's cap-of-50 loop. Hind's requirement: answer within 30 seconds or hand off. All values below are fictional.
 
 | Limit | Value | Why |
 |---|---|---|
@@ -228,7 +228,7 @@ The artefact is the **Loop Card** for the Najm Desk ticket-and-colleague route, 
 
 </details>
 
-**4. Najm Desk adds a "review your answer" call to every run. A week later the eval score is unchanged and cost per run is up by a third. What does the lesson suggest?**
+**4. Najm Desk adds a "review your answer" call to every run. The eval score is unchanged and cost per run is up by a third. What does the lesson suggest?**
 
 - A. Run the review on a larger model, for every run
 - B. Run the review twice, so more mistakes get caught
@@ -243,25 +243,25 @@ The artefact is the **Loop Card** for the Najm Desk ticket-and-colleague route, 
 
 **5. Hind wants an agent that edits a folder of runbooks and runs a script in a sandbox. Lujain starts writing file and shell tools for her own loop. What should she consider first?**
 
-- A. The beta tool runner, which includes file and shell tools
+- A. The beta tool runner, so she need not write the loop
 - B. A higher step cap, so the edits can finish
 - C. The Claude Agent SDK, whose harness already has them
 - D. A forced `tool_choice`, so every step calls a tool
 
 <details><summary>Answer</summary>
 
-**C.** The Agent SDK packages Claude Code's harness, file and shell tools included. The tool runner runs your functions but ships none; the newest models reject forced `tool_choice`. (🔴 Your own loop, the tool runner, or an SDK?)
+**C.** The Agent SDK packages Claude Code's harness, file and shell tools included. The tool runner would save the loop, not the tools; the newest models reject forced `tool_choice`. (🔴 Your own loop, the tool runner, or an SDK?)
 
 </details>
 
 ## 📚 References
 - Anthropic, "Building effective agents": https://www.anthropic.com/engineering/building-effective-agents
 - Claude API, Handling stop reasons: https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons; Tool use overview: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview; Errors: https://platform.claude.com/docs/en/api/errors
-- Claude API, Context editing: https://platform.claude.com/docs/en/build-with-claude/context-editing; Compaction: https://platform.claude.com/docs/en/build-with-claude/compaction; OpenTelemetry: https://platform.claude.com/docs/en/manage-claude/opentelemetry
+- Claude API, Preserved thinking: https://platform.claude.com/docs/en/build-with-claude/preserved-thinking; Context editing: https://platform.claude.com/docs/en/build-with-claude/context-editing; Compaction: https://platform.claude.com/docs/en/build-with-claude/compaction; OpenTelemetry: https://platform.claude.com/docs/en/manage-claude/opentelemetry
 - Managed Agents: https://platform.claude.com/docs/en/managed-agents/overview; Anthropic Python SDK (tool runner): https://github.com/anthropics/anthropic-sdk-python; Claude Agent SDK: start at https://docs.anthropic.com/
 - Papers named above, found by title: Yao et al., "ReAct: Synergizing Reasoning and Acting in Language Models" (2022); Madaan et al., "Self-Refine" (2023); Shinn et al., "Reflexion" (2023); Huang et al., "Large Language Models Cannot Self-Correct Reasoning Yet" (2023).
 - [*Software Testing*, lesson 7.2 — Testing RAG, tool use and agents](../testing/index.html#/7.2); [*Secure AI & Application Security*, lesson 9.2 — Agents and tools: excessive agency, least-privilege tools and MCP](../secai/index.html#/9.2)
-- **Read this week (Module 8).** Grokking AI Applications, chapter 6 (Implementing agentic structures): https://www.manning.com/books/grokking-ai-applications. Gulli, *Agentic Design Patterns*, chapter 4 (Reflection) and chapter 6 (Planning): the free draft listed in lesson 0.1. Microsoft, *AI Agents for Beginners*, lessons 06-07: https://github.com/microsoft/ai-agents-for-beginners
+- **Read this week (Module 8).** Grokking AI Applications, chapter 6 (Implementing agentic structures): https://www.manning.com/ (search the title). Gulli, *Agentic Design Patterns*, chapter 4 (Reflection) and chapter 6 (Planning): the free draft listed in lesson 0.1. Microsoft, *AI Agents for Beginners*, lessons 06-07: https://github.com/microsoft/ai-agents-for-beginners
 
 ---
 
@@ -276,7 +276,7 @@ The artefact is the **Loop Card** for the Najm Desk ticket-and-colleague route, 
 - The mock simulates failures; real models fail differently.
 
 ## 🧭 Why it matters
-After the 50-step conversation, Maha asks Lujain for one thing: show what the agent did and why it stopped (hypothetical). The old loop kept only the final text. Two weeks later a staff member pastes "ref 3f2a9c01" to Yara. She runs the replay tool and in half a minute can say: the agent asked for ticket 4471 twice, was stopped, and the Service Desk has the packet. This lab builds that.
+After the 50-step conversation, Maha asks Lujain for one thing: show what the agent did and why it stopped (hypothetical). The old loop kept only the final text. Two weeks later a staff member pastes "ref 3f2a9c01" to Yara. She runs the replay tool and can say: the agent asked for ticket 4471 twice, was stopped, and the Service Desk has the packet. This lab builds that.
 
 ## 📐 How it works
 
@@ -293,7 +293,7 @@ python labs/m08/replay.py m08_trace.jsonl
 pytest tests/test_m08_labs.py
 ```
 
-**Read a run first.** `labs/m08/replay.py` (42 lines, tested) groups the JSONL lines by run id and prints one line per event: the tool Yara used. It flags a run with no `stop` line, a process that died. Read the file after this lesson; first, what it prints:
+**Read a run first.** `labs/m08/replay.py` (42 lines, tested) groups the JSONL lines by run id and prints one line per event: the tool Yara used. It flags a run with no `stop` line, a process that died. Read it later. Its output:
 
 ```text
 run de885b3e: Is ticket 4471 done yet? And what about 4472?   (limits: 6 steps, 25000 tokens, 30.0 s)
@@ -309,7 +309,7 @@ Step 1 asked for two tools; both were answered in one message. Step 2 read 232 i
 
 ### 🟡 Going deeper
 
-**The loop, part by part.** Lines 59 to 133 hold the loop proper, `run_tool` and `run`: about 80 lines. The rest is configuration, the trace and a command line.
+**The loop, part by part.** Lines 59 to 133 (75 lines) hold `run_tool`, the completion check and `run`; the rest is configuration, the trace and a command line.
 
 ```python
 # labs/m08/agent_loop.py
@@ -390,7 +390,7 @@ def mentions_every_ticket(goal, answer):
 
 
 def run(goal, lim=Limits(), client=None, trace=None, check=None):
-    client, trace = client or anthropic.Anthropic(timeout=30.0), trace or Trace()      # the SDK retries 429 and 5xx twice
+    client, trace = client or anthropic.Anthropic(timeout=30.0), trace or Trace()      # the SDK retries transient errors twice
     t0, spent, last_in, seen = time.monotonic(), 0, 0, Counter()
     messages = [{"role": "user", "content": goal}]
     trace.log("start", goal=goal, model=MODEL, **asdict(lim))
@@ -455,15 +455,15 @@ if __name__ == "__main__":
         print(json.dumps(res.handoff, indent=2, ensure_ascii=False))
 ```
 
-1. **`run_tool`** is the gap. It never raises, and it knows two read tools only (TicketHub and PeopleCore stand-ins), so the model *cannot* close a ticket: there is nothing to call.
-2. **`stop`** is the only exit; a failed run builds its hand-off packet from the trace and prints the reason code.
+1. **`run_tool`** is the gap. It never raises, and it knows two read tools only (TicketHub and PeopleCore stand-ins), so the model *cannot* close a ticket.
+2. **`stop`** is the only exit; a failed run builds its hand-off packet from the trace.
 3. **Guards run before the call**: the cap is the `for` loop, then the deadline, then the token budget, using the last call's input as a floor because history only grows. The deadline is checked *between* steps, so one slow call can overshoot. The client's `timeout=30.0` bounds one attempt and the SDK retries a timeout twice by default, so a step can take about three times that; to tighten it, pass your own client: `run(goal, client=anthropic.Anthropic(timeout=10.0, max_retries=1))`.
 4. **Every `stop_reason` has a branch.** No text is `empty_answer`; a failed code check is `failed_check`; `pause_turn` loops again; `max_tokens`, `refusal` and unknown values stop *before* any tool runs.
-5. **No-progress** counts identical (tool, input) pairs and refuses the second *before* running it. Long results are cut before they enter the context; the trace keeps the true size.
+5. **No-progress** counts identical (tool, input) pairs and refuses the second *before* running it. Long results are cut before they enter the context; the trace keeps the true size. The tool line is written after the tool returns; if tools can hang, log one before the call.
 
 ### 🔴 Expert view
 
-**Make it fail, on demand.** Run these. The playbook scripts the model's moves for the Noura, `close`, `handover`, `4479` and `4480` goals; the directives need no script. Then count the stop reasons:
+**Make it fail, on demand.** The playbook scripts the model's moves for the Noura, `close`, `handover`, `4479` and `4480` goals; the directives need no script. Then count the stop reasons (the file also holds the first run above):
 
 ```bash
 for g in "Check ticket 4474, then find the colleague Noura so I can forward it." "Please close ticket 4472." \
@@ -495,7 +495,7 @@ Counter({'done': 4, 'no_progress': 2, 'empty_answer': 1, 'failed_check': 1, 'mod
 | `TIMEOUT_S=2`, `[mock:slow]` | A 3-second call | `timeout` |
 | `MAX_STEPS=1`; `TOKEN_BUDGET=300` | Limits too low | `iteration_cap`; `token_budget` |
 
-`MOCK_FAIL_EVERY=3` fails every third request instead: the SDK's retries hide it, and only the latency shows it. The packet for the `[mock:loop]` run, cut after `tried`:
+Start the mock with `MOCK_FAIL_EVERY=3` instead and every third request fails: the SDK's retries hide it, and only the latency shows it. The packet for the `[mock:loop]` run, cut after `tried`:
 
 ```bash
 python labs/m08/agent_loop.py "Are tickets 4471 and 4473 resolved? [mock:loop]" | head -10
@@ -528,11 +528,11 @@ run 8e654913: Are tickets 4471 and 4473 resolved? [mock:loop]   (limits: 6 steps
   2 steps, 383 tokens, 0.0 s
 ```
 
-Read it top to bottom: the model asked for 4471, got the answer, asked for 4471 again, and the guard refused the repeat before the tool ran. That is the diagnosis.
+Read it top to bottom: the model asked for 4471, got the answer, asked again, and the guard refused the repeat before the tool ran.
 
 **One test per guard.** `tests/test_m08_labs.py` makes each guard fire against the mock, with a fake client for what the mock cannot produce: a `refusal`, a `pause_turn`, an unknown `stop_reason`.
 
-**Honest caveats.** *Works offline:* every guard, the trace, the replay, the packet, the tests. *Needs a real model:* whether it repeats a call exactly (a real model can vary the input, which an exact-match guard misses), whether it recovers from an `is_error`, whether its answer passes your check, and real latency and tokens (the mock's counts are estimates). Directives *simulate* failures and the playbook *scripts* recoveries: green offline proves your code only. One more real-API trap: with prompt caching on, `usage.input_tokens` counts just the uncached tail, so add the two cache fields to the budget.
+**Honest caveats.** *Works offline:* every guard, the trace, the replay, the packet, the tests. *Needs the real API:* whether it repeats a call exactly (a real model can vary the input, which an exact-match guard misses), whether it recovers from an `is_error`, whether its answer passes your check, and real latency and tokens (the mock's counts are estimates). Directives *simulate* failures and the playbook *scripts* recoveries: green offline proves your code only. One more real-API trap: with prompt caching on, `usage.input_tokens` counts just the uncached tail, so add the two cache fields to the budget.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -542,7 +542,7 @@ Read it top to bottom: the model asked for 4471, got the answer, asked for 4471 
 | **Guard test** | Error injection (directives, playbooks, fake clients) that makes a guard fire, proven by removing the guard | Every loop |
 
 ## 🏛️ In practice at Najm Bank
-**Weekly deliverable.** Commit `week-08/` with `labs/m08/` and passing tests; the reason counts and a packet per failure above; the Loop Card of lesson 8.1; and `NOTES.md` with your quiz answers and Read this week notes.
+**Weekly deliverable.** Commit `week-08/` with `labs/m08/` and passing tests; the reason counts and a packet per failure above; the Loop card of lesson 8.1; and `NOTES.md` with your quiz answers and Read this week notes.
 
 **Group session (60 minutes).** (1) Swap a trace; your partner explains the run using only `replay.py` (15). (2) "Beat the guard": find a goal no-progress misses (15). (3) Compare real-API results (15). (4) Agree one packet (15).
 
@@ -575,7 +575,7 @@ Plan first; move one module at a time; run the tests after each move.
 
 ## ⚠️ Mistakes and traps
 - **Checking a guard after the call.** You pay first, stop second.
-- **`except Exception` around the model call.** It hides your bugs. Catch `anthropic.APIError`, and alert on 4xx `status`: a 400 or 401 is your bug, not an outage.
+- **`except Exception` around the model call.** It hides your bugs. Catch `anthropic.APIError`, and alert on a `status` of 400 or 401: that is your bug or your key, not an outage.
 - **Trusting the offline recovery.** The playbook scripted the fix; a real model may not find it.
 - **Calling clipping "redaction".** Cutting to 300 characters is not masking.
 

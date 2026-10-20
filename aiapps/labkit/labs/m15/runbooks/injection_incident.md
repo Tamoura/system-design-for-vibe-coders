@@ -3,7 +3,7 @@
 Owner: Noura (Application and AI Security)   Last drilled: TODO date   Version: 1
 
 ## Trigger
-A guard-fire spike in the trace report (taint or approval refusals); an unexpected tool call; a user or the desk reports odd behaviour after reading a ticket or policy page; Noura's red-team run finds a gap.
+A guard-fire spike on the dashboard or in the raw traces (taint or approval refusals: `refused` on `tool` events; the lab's trace report does not count them); an unexpected tool call; a user or the desk reports odd behaviour after reading a ticket or policy page; Noura's red-team run finds a gap.
 
 ## First five minutes
 1. Press `write_tools off` at once (`kill_switch.md`); `model_calls off` too if data may be leaving.

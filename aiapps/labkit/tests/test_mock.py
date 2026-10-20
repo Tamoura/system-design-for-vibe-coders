@@ -137,6 +137,15 @@ def test_rate_limit_directive_raises_after_retries(server):
         c.messages.create(model=MODEL, max_tokens=50, messages=[{"role": "user", "content": "hi [mock:ratelimit]"}])
 
 
+def test_error_directives_return_500_and_529(server):
+    c = anthropic.Anthropic(base_url=server, api_key="mock", max_retries=0)
+    with pytest.raises(anthropic.InternalServerError):
+        c.messages.create(model=MODEL, max_tokens=50, messages=[{"role": "user", "content": "hi [mock:error500]"}])
+    with pytest.raises(anthropic.APIStatusError) as e:
+        c.messages.create(model=MODEL, max_tokens=50, messages=[{"role": "user", "content": "hi [mock:overloaded]"}])
+    assert e.value.status_code == 529
+
+
 def test_classification_by_labels(client):
     system = "Classify the ticket. Reply with exactly one label. Labels: hardware, access, network, software, security, other"
     r = client.messages.create(model=MODEL, max_tokens=20, system=system, messages=[{"role": "user", "content": "The wifi keeps dropping in the meeting room"}])

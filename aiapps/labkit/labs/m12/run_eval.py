@@ -6,6 +6,7 @@ import json
 import os
 import sys
 from pathlib import Path
+from urllib.parse import urlparse
 
 import adapters
 import graders
@@ -35,10 +36,12 @@ def run_case(case: dict, reps: int, judge) -> dict:
             return {**head, "error": f"{type(e).__name__}: {e}"[:120]}
         ran = [c for c in checks if c[1] is not None]        # None = not run: it neither passes nor fails the case
         runs.append({"ok": bool(ran) and all(c[1] for c in ran), "text": out.text[:200], "ms": ms, "in": meter.tokens_in,
-                     "out": meter.tokens_out, "judge": jm.tokens_in + jm.tokens_out, "why": [f"{c[0]}: {c[2]}" for c in ran if not c[1]]})
+                     "out": meter.tokens_out, "judge": jm.tokens_in + jm.tokens_out, "why": [f"{c[0]}: {c[2]}" for c in ran if not c[1]],
+                     "judged": [f"{c[0]}: {'pass' if c[1] else 'fail'}, {c[2]}" for c in ran if c[0].startswith("judge:")]})
     avg = lambda key: round(sum(r[key] for r in runs) / reps)
     return {**head, "score": sum(r["ok"] for r in runs) / reps, "ms": avg("ms"), "tokens_in": avg("in"), "tokens_out": avg("out"),
-            "judge_tokens": sum(r["judge"] for r in runs), "output": runs[0]["text"], "failed": next((r["why"] for r in runs if not r["ok"]), [])}
+            "judge_tokens": sum(r["judge"] for r in runs), "output": runs[0]["text"],
+            "judged": runs[0]["judged"], "failed": next((r["why"] for r in runs if not r["ok"]), [])}
 
 
 def run_all(cases: list[dict], mode: str, reps: int = 1, judge=None) -> dict:
@@ -50,7 +53,7 @@ def run_all(cases: list[dict], mode: str, reps: int = 1, judge=None) -> dict:
 
 def check_mode(mode: str) -> None:
     """Fail closed: a mock run must never reach the real API, and a real run must never pass for a mock one."""
-    local = os.environ.get("ANTHROPIC_BASE_URL", "").startswith(("http://127.0.0.1", "http://localhost"))
+    local = urlparse(os.environ.get("ANTHROPIC_BASE_URL", "")).hostname in ("127.0.0.1", "localhost")
     if (mode == "mock") != local or (mode == "real" and os.environ.get("ANTHROPIC_API_KEY", "mock") == "mock"):
         sys.exit(f"--mode {mode} does not match ANTHROPIC_BASE_URL and ANTHROPIC_API_KEY: refusing to run")
 

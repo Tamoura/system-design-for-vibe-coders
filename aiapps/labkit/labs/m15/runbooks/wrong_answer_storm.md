@@ -3,7 +3,7 @@
 Owner: Yara (domain) and Lujain (builder)   Last drilled: TODO date   Version: 1
 
 ## Trigger
-Thumbs-down or "that is wrong" reports rise above the weekly norm; the desk reports staff quoting wrong policy; the daily canary questions fail; the share of answers with a citation drops in the trace report.
+Thumbs-down or "that is wrong" reports rise above the weekly norm; the desk reports staff quoting wrong policy; the daily canary questions fail; the share of answers with a citation drops on the dashboard (the lab's trace report shows it only after you add a `cited` flag to `stop`).
 
 ## First five minutes
 1. Is the wrong answer harmful (security advice, an access decision, a deadline)? Then press the kill switch (`kill_switch.md`).

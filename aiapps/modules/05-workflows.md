@@ -17,7 +17,7 @@
 - Biggest trap: an agent, or a ten-step chain, for a job one prompt would do.
 
 ## 🧭 Why it matters
-Lujain's first Najm Desk prototype is one agent with a long system prompt and six tools. The demo is magnificent. In week two of the pilot, Maha shows the cost dashboard: the median conversation makes seven model calls and the slowest tenth make eighteen, because the agent keeps "exploring". Yara finds "What are the Service Desk hours?" answered after four tool calls. Nobody can say which step is weak, because there are no steps, only a loop. (Hypothetical, like every Najm story; the numbers are invented.)
+Lujain's first Najm Desk prototype is one agent with a long system prompt and six tools. The demo is magnificent. In week two of the pilot, Maha shows the cost dashboard: the median conversation makes seven model calls and the slowest tenth make eighteen, because the agent keeps "exploring". Yara finds "What are the Service Desk hours?" answered after four tool calls. Nobody can say which step is weak, because there are no steps, only a loop. (Hypothetical; the numbers are invented.)
 
 Fahad takes a marker to the whiteboard and asks what we know before the message arrives. Almost everything. Decide what kind of message it is. Policy questions go to retrieval with citations, ticket questions to the ticket tool, anything else to a person. Then write the reply. Four boxes, no loop. Lujain rebuilds it in two days; each box gets its own prompt, eval and dashboard line. The assistant is not smarter; it is cheaper, quicker and testable, and when it is wrong you can point at the box. Agents are right when the path cannot be known in advance (Module 8); this lesson teaches you to tell the cases apart.
 
@@ -25,7 +25,7 @@ Fahad takes a marker to the whiteboard and asks what we know before the message 
 
 ### 🟢 The essentials
 
-**Workflow or agent.** Anthropic's engineering article "Building effective agents" (paraphrased here) separates two kinds of system built from model calls. In a *workflow*, your code defines the path and calls the model inside each step. In an *agent*, the model directs its own process, choosing tools and deciding when it is done, as in the loop from lesson 1.2. A workflow is a railway timetable; an agent is a taxi driver who knows the city. The timetable is predictable, cheap and easy to audit; the taxi copes with a closed road. The article's advice: find the simplest solution that works and add complexity only when needed. A ladder in that spirit (ours, not the article's): one call, one call with retrieval or tools, a workflow, an agent. Climb only when you can name what the rung below fails to do.
+**Workflow or agent.** Anthropic's engineering article "Building effective agents" (paraphrased here) separates two kinds of system built from model calls. In a *workflow*, your code defines the path and calls the model inside each step. In an *agent*, the model directs its own process, choosing tools and deciding when it is done, as in the loop from lesson 1.2. A workflow is a railway timetable; an agent is a taxi driver who knows the city. The timetable is predictable, cheap and easy to audit; the taxi copes with a closed road. Its advice: the simplest solution that works, with complexity added only when needed. A ladder in that spirit (ours): one call, one call with retrieval or tools, a workflow, an agent. Climb only when you can name what the rung below fails to do.
 
 **Prompt chaining with gates.** Split a task into fixed steps; each output becomes the next input. The check between two steps is a **gate**: ordinary code that decides whether the chain may continue. It can confirm the JSON is valid, the label is on your list, a summary is under 60 words, or every number in it appears in the source. A gate is cheap and fails fast: a bad output stops at step two, not step four.
 
@@ -39,7 +39,10 @@ Fahad takes a marker to the whiteboard and asks what we know before the message 
 
 **Parallelisation.** Independent work runs at once. *Sectioning* splits a task into independent parts and combines the results: check six claims together, one call each. *Voting* runs the same judgement several times and combines the answers: three reviewers each decide "does this email look like phishing?" and any "yes" flags it. Time is that of the slowest call; cost is the sum. Temperature is mostly out of your hands on current models (lesson 1.1), so make voters differ by prompt or model.
 
-**Chaining and routing in one picture.** Najm Desk's triage as a workflow; parallelisation joins in lesson 5.2. Every arrow is code; the model never chooses the next box.
+- Weak: six two-second checks awaited in a `for` loop: 12 s, though none needs another's answer.
+- Strong: the six started together: about 2 s, the same bill.
+
+**Chaining and routing in one picture.** Najm Desk's triage; parallelisation joins in lesson 5.2. Every arrow is code; the model never chooses the next box.
 
 ```mermaid
 flowchart TD
@@ -47,7 +50,7 @@ flowchart TD
     B --> G1{"Gate: valid label?"}
     G1 -- "no" --> H["Hand off to a person with context"]
     G1 -- "policy" --> P["Policy Q and A with citations"]
-    G1 -- "ticket" --> T["Ticket lookup tool"]
+    G1 -- "ticket" --> T["TicketHub status lookup"]
     G1 -- "human" --> H
     P --> S["Write the reply"]
     T --> S
@@ -58,7 +61,7 @@ flowchart TD
 
 ### 🟡 Going deeper
 
-**Orchestrator-workers.** A central model reads the input, decides at run time which subtasks are needed, hands each to a worker call and merges the results. Unlike parallelisation, the subtasks are not known in advance: a notice may change two documents or twenty. You pay for a plan, N workers and a merge, and the model now makes a decision: a step toward an agent. Cap N and gate the plan (Module 11).
+**Orchestrator-workers.** A central model decides at run time which subtasks are needed, hands each to a worker call and merges the results. Unlike parallelisation, the subtasks are not known in advance: a notice may change two documents or twenty. You pay for a plan, N workers and a merge, and the model now makes a decision: a step toward an agent. Cap N and gate the plan (Module 11).
 
 **Evaluator-optimiser.** One call writes, another judges against written criteria, and the feedback goes back until the judge accepts or a cap is hit. It pays when criteria are clear and revision measurably helps, such as an Arabic translation checked against a tone checklist, not when the judge is no better than the writer. Cap rounds at two or three; judges have biases ([*Software Testing*, lesson 7.1 — Evals](../testing/index.html#/7.1)).
 
@@ -77,13 +80,13 @@ flowchart TD
 
 **Error propagation and partial failure.** Reliabilities multiply. Toy arithmetic, not a measurement: four steps, each right 95% of the time with independent errors, give 0.95⁴ ≈ 81%. Real errors correlate, so measure each step and the whole chain. Early mistakes cost most: a wrong label sends a notice to the wrong specialist, who writes a fluent, wrong summary.
 
-Parallel steps add partial failure. Decide per fan-out whether it is all-or-nothing or best-effort, and never let a failed check look like a passed one. Return a status for every part (for example `ok`, `failed`, `timeout`, `unchecked`) and for the whole (`ok`, `partial`, `needs_review`, `human`, `failed`). Give every call a deadline and keep two retries apart: *transport retries* (429, 5xx, connection errors), which the SDK does with backoff, and *content retries* when an output fails a gate, which you do, capped, showing the model the problem. Steps that write need an idempotency key (lesson 14.1).
+Parallel steps add partial failure. Decide per fan-out whether it is all-or-nothing or best-effort, and never let a failed check look like a passed one. Return a status for every part (for example `ok`, `failed`, `timeout`, `unchecked`) and for the whole (`ok`, `partial`, `needs_review`, `human`, `failed`). Give every call a deadline and keep two retries apart: *transport retries* (connection errors, 408, 409, 429, 5xx), which the SDK does with backoff, and *content retries* when an output fails a gate, which you do, capped, showing the model the problem. Steps that write need an idempotency key (lesson 14.1).
 
-**Cost and latency: a four-step chain against a loop.** A chain call sends what its step needs; a loop resends the whole history, so each iteration is bigger than the last. Toy numbers and toy prices, not any model's: replace them with `count_tokens` results and the current price page.
+**Cost and latency: a four-step chain against a loop.** A chain call sends what its step needs; a loop resends the whole history, so each iteration is bigger than the last. Toy numbers and prices, not any model's: replace them with `count_tokens` results and the current price page.
 
 ```python
 def chain(steps, tokens_in, tokens_out):
-    """Separate calls, each sending about the same input."""
+    """Separate calls of similar size."""
     return steps * tokens_in, steps * tokens_out
 
 def loop(iterations, base_in, growth, tokens_out):
@@ -99,7 +102,7 @@ print(loop(6, 600, 450, 150))    # (10350, 900)
 | Chain of four | 4 | 2,400 | 600 | 2,400 × 1 + 600 × 5 = 5,400 millionths of a dollar | 8 s, always |
 | Loop of six | 6 | 10,350 | 900 | 10,350 × 1 + 900 × 5 = 14,850 millionths | 12 s; 4 to 12 iterations means 8 to 24 s |
 
-The loop reads 4.3 times the input and costs 2.75 times as much, because output costs more per token. Caching can discount a repeated prefix (lesson 14.2). The real difference is variance: a chain's bill and delay are known before it runs.
+The loop reads 4.3 times the input but costs 2.75 times as much, because output, which costs five times more per token here, grows only 1.5 times. Caching can discount a repeated prefix (lesson 14.2). The real difference is variance: a chain's calls, and so its worst case, are bounded before it runs.
 
 **Observability per step.** Log one row per call: run id, step, prompt version, model, tokens, latency, stop reason, request id, gate result. Rolled up by step, "the answer was wrong" becomes "gate 2 passed an invented date at step 3", and you fix one box.
 
@@ -107,9 +110,9 @@ The loop reads 4.3 times the input and costs 2.75 times as much, because output 
 
 **Tail latency.** A fan-out waits for its slowest member. If each call has a 5% chance of being slow, independently, four parallel calls give 1 − 0.95⁴ ≈ 18.5% that one is. Share one concurrency limit across the application and widen it while 429 responses stay rare.
 
-**Durable execution.** A workflow that runs for minutes or must survive a restart belongs in a workflow engine such as Temporal or AWS Step Functions ([*SaaS Building Blocks*, lesson 5.4 — Workflow engines and durable execution](../saas/index.html#/5.4)). Checkpoint each step's output, keyed by a hash of its input, so retrying step three does not repay steps one and two.
+**Durable execution.** A workflow that runs for minutes or must survive a restart may belong in a workflow engine such as Temporal or AWS Step Functions ([*SaaS Building Blocks*, lesson 5.4 — Workflow engines and durable execution](../saas/index.html#/5.4)). Checkpoint each step's output, keyed by a hash of its input, so retrying step three does not repay steps one and two.
 
-**Batch, caching, frameworks.** Overnight pipelines can use the Message Batches API: asynchronous, about half the price, results in any order keyed by `custom_id` (Module 14). Steps sharing a long, byte-identical prefix, above the model's minimum cacheable length, can use prompt caching; verify it with `cache_read_input_tokens`. Each pattern here is plain asyncio; compare frameworks in Module 11.
+**Batch, caching, frameworks.** Overnight pipelines can use the Message Batches API: asynchronous, about half the price, results in any order keyed by `custom_id`. Steps sharing a long, byte-identical prefix above the model's minimum cacheable length can use prompt caching, verified with `cache_read_input_tokens` (Module 14). These patterns are plain asyncio; Module 11 compares frameworks.
 
 **Workflow into agent.** Warning signs: branches such as "if the model did not find it, try X", a step count that depends on the data, a task described as "figure out why". Keep the workflow outside and put a bounded agent in one box, with a step cap and a trace (Module 8).
 
@@ -126,13 +129,13 @@ The loop reads 4.3 times the input and costs 2.75 times as much, because output 
 | **Workflow card** | One page: steps, tiers, gates, failure paths, eval | Before building |
 
 ## 🏛️ In practice at Najm Bank
-The artefact is the **Najm Desk triage workflow card** (v1, fictional), owned by Lujain, reviewed by Fahad, with Yara checking step 3's wording. Fahad's rule: no workflow is built without a card, and no box lacks a gate, a failure path and an eval. It is the diagram above in table form.
+The artefact is the **Najm Desk triage workflow card** (v1, fictional), owned by Lujain, reviewed by Fahad, with Yara checking step 3's wording. Fahad's rule: no workflow is built without a card, and no box lacks a gate, a failure path and an eval.
 
 | # | Step | Tier | Output | Gate (code) | If it fails | Eval |
 |---|---|---|---|---|---|---|
 | 1 | Classify intent | Cheap model | `policy`, `ticket` or `human` | Label is on the list | To a person | Router accuracy, confusion table |
 | 2a | Policy Q and A | Strong model | Answer with document ids | Every id was retrieved; "I don't know" allowed | To a person, with the question | Groundedness on the question set |
-| 2b | Ticket lookup | None, a tool call | Status record | Ticket belongs to the asker | "I cannot see that ticket", then a person | Fixed ticket cases |
+| 2b | Ticket lookup (TicketHub) | None, a tool call | Status record | Ticket belongs to the asker | "I cannot see that ticket", then a person | Fixed ticket cases |
 | 3 | Write the reply | Strong model | Two short paragraphs | No number or date absent from 2a or 2b | Send the raw answer from 2a or 2b | Style checklist |
 | 4 | Hand-off | None | Case summary for a person | Required fields present | Create a plain ticket | Read by Yara |
 
@@ -163,7 +166,7 @@ This v1 card is read-only; write steps (a new ticket, an unlock) add their own c
 - Chaining adds gates, routing adds specialised paths and an exit to a person, parallelisation runs independent calls together.
 - Every step adds latency, compounds errors and needs a gate, a failure path and a trace.
 - A fan-out must survive partial failure: deadlines, bounded retries, a status per part.
-- A workflow's cost and delay are known in advance; a loop's are not.
+- A workflow's cost and delay are bounded in advance; a loop's depend on what the model finds.
 
 ## ✍️ Check yourself
 
@@ -259,7 +262,7 @@ Fahad's diagnosis: a model checking its own summary in the same breath is gradin
 
 ### 🟢 The essentials
 
-**Run it.** The mock loads this lab's playbook, which scripts summaries and verdicts. On the real API the code is identical: stop the mock, unset both variables, use your key (spending cap first, lesson 0.2).
+**Run it.** The six sample notices are a list of `id` and `text` in `labkit/data/m05_notices.json`; the mock loads this lab's playbook of scripted summaries and verdicts for them. On the real API the code is identical: stop the mock, unset both variables, use your key (spending cap first, lesson 0.2).
 
 ```bash
 cd aiapps/labkit
@@ -289,7 +292,7 @@ fact_check     18   2823   103        1407       1
 wall clock 1.49s
 ```
 
-Statuses: `ok` (every claim supported), `needs_review` (one unsupported or contradicted), `partial` (a check could not run), `human` (not routable), `failed` (classify or summarise gave up). The playbook scripts every surprise. N-102's first summary invents a 30-day grace period; gate 2 catches it and one retry fixes it. N-103's fourth claim carries a `[mock:overloaded]` directive, so the SDK retries and gives up. N-104's summary invents an exception with no digit in it: gate 2 passes it and only the independent check objects.
+Statuses: `ok` (every claim supported), `needs_review` (one unsupported or contradicted), `partial` (a check could not run and no claim is unsupported), `human` (not routable), `failed` (classify or summarise gave up). N-102's first summary invents a 30-day grace period; gate 2 catches it and one retry fixes it. N-103's fourth claim carries a `[mock:overloaded]` directive, so the SDK retries and gives up. N-104's summary invents an exception with no digit in it: gate 2 passes it and only the independent check objects.
 
 *Works offline:* gates, the retry, the fan-out and its limit, deadlines, partial failure, the trace. *Needs a real model:* classifier accuracy (the mock matches keywords), summary quality, subtle errors, real latency and cost.
 
@@ -504,11 +507,12 @@ if __name__ == "__main__":
                                 int(os.environ.get("MAX_RETRIES", "2")), one_prompt if os.environ.get("BASELINE") else run_notice)))
 ```
 
-- **Gates are code:** an unknown label stops (1); `check_summary` wants 1 to 6 claims, 60 words and no digit absent from the notice (2); the verdicts set the status (3). Gate 2 reads digits, not words, so "thirty days" passes: that is why the independent check exists.
-- **Two retries:** the SDK retries 429, 5xx and connection errors; `summarise` retries once when a gate fails, showing the model the problem.
-- **Two timeouts:** the SDK's `timeout` covers each HTTP attempt; `asyncio.timeout` covers the whole call, backoff included (try `STEP_TIMEOUT=0.5`). A timed-out request may still be processed and billed; the trace shows zero tokens only because no usage arrived.
+- **Gates are code:** an unknown label stops (1); `check_summary` wants 1 to 6 claims, 60 words and no digit absent from the notice (2); the verdicts set the status (3). Gate 2 reads digits, not words, so "thirty days" passes: that is why the independent check exists. It is independent of the summary's context, not of the model: have a person sample the `ok` notices.
+- **Two retries:** the SDK retries connection errors, 408, 409, 429 and 5xx; `summarise` retries once when a gate fails, showing the model the problem.
+- **Two timeouts:** the SDK's `timeout` (10 minutes by default) limits connecting, sending and waiting for data in each HTTP attempt, and every retry starts it afresh; `asyncio.timeout` covers the whole call, backoff included (try `STEP_TIMEOUT=0.5`). A timed-out request may still be processed and billed; the trace shows zero tokens because no usage arrived.
 - **`return_exceptions=True`:** without it the first exception escapes and the other checks run on unheard. `TaskGroup` would cancel them: all-or-nothing, wrong here. The outer `gather` over notices keeps its default: anything but a `StepError` is a bug and should stop the run.
 - **One semaphore, one call:** `WIDTH` caps calls across all notices. Held around code that awaits other calls, it deadlocks: four notices hold four slots, each waiting for a fifth.
+- **`effort: low`:** current models may think before they answer, and thinking tokens are billed as output and count against `max_tokens`. These tasks are short and structured, so every request asks for little thinking; raise it if a real-API eval says the verdicts need it. The mock ignores it.
 
 ### 🔴 Expert view
 
@@ -523,15 +527,15 @@ The pipeline reads 5.3 times the input but costs 1.7 times as much: output is as
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
 | **Parallel fan-out** | `asyncio.gather`, one coroutine per part, `return_exceptions=True` | Independent checks or documents |
-| **Concurrency limit** | One `asyncio.Semaphore`, held for one call | Any fan-out; protects rate limits |
+| **Concurrency limit** | One `asyncio.Semaphore`, held for one call | Any fan-out; keeps bursts away from rate limits |
 | **Partial-failure report** | A status per part and for the whole | Any fan-out |
 
 ## 🏛️ In practice at Najm Bank
-**Weekly deliverable.** Commit `week-05/` with `labs/m05/` and passing tests; the sample and `BASELINE=1` outputs with a table comparing them (calls, tokens, cost arithmetic); the lesson 5.1 workflow card; and `NOTES.md` with your quiz answers and Read this week notes.
+**Weekly deliverable.** Commit `week-05/` with `labs/m05/` and passing tests; the sample and `BASELINE=1` outputs with a comparison table (calls, tokens, cost arithmetic); the lesson 5.1 workflow card; and `NOTES.md` with your quiz answers and reading notes.
 
 **Group session (60 minutes).** (1) Read the step table aloud (10). (2) Break gate 2: write a summary it lets through (15). (3) Argue pipeline versus one prompt from your table (20). (4) Agree a status vocabulary (15).
 
-**Build it with Claude Code.** Give this spec to Claude Code in plan mode (check the current Claude Code documentation) and review the plan before it edits anything:
+**Build it with Claude Code.** Give this spec to Claude Code in plan mode (check the current Claude Code documentation) and review the plan before it edits:
 
 ```text
 Goal: labs/m05/calls.py, notice_prompts.py, pipeline.py: classify with the cheap model, route to a
@@ -603,10 +607,10 @@ Implement in small steps; run the tests after each.
 
 **3. A fact-check call hits its deadline and the client gives up. Which statement about the trace row and the bill holds?**
 
-- A. The row says `timeout` with zero tokens, yet the call may be billed
-- B. The row says `ok`, because the server was still writing the answer
-- C. The row says `error 529`, because a deadline usually means the API is overloaded
-- D. The row says `timeout` with zero tokens, so it cannot have been billed
+- A. Zero tokens in the row does not prove the call was free
+- B. The row says `ok`, since the server may still finish writing
+- C. The row says `error 529`, as a deadline means overload
+- D. Zero tokens in the row proves the call was never billed
 
 <details><summary>Answer</summary>
 

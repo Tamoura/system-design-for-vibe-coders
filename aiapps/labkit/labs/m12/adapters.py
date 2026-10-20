@@ -67,6 +67,8 @@ def ticket(goal: str) -> Output:
     import agent_loop                                # labs/m08: the guarded loop; its trace is the trajectory
     trace = agent_loop.Trace()
     res = agent_loop.run(goal, trace=trace)
+    if res.reason == "model_error":                  # the API failed after the SDK's retries: plumbing, not a wrong answer
+        raise RuntimeError(res.handoff["why"])       # so the runner records an error, never a failed case
     calls = [(e["tool"], e["input"]) for e in trace.events if e["event"] == "tool" and "refused" not in e]
     return Output(text=res.answer, tools=calls, steps=res.steps, reason=res.reason)
 

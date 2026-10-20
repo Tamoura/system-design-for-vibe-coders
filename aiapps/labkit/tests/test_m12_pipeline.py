@@ -153,6 +153,9 @@ def test_the_mode_guard_fails_closed(m12, monkeypatch):
     monkeypatch.setenv("ANTHROPIC_BASE_URL", "https://api.anthropic.com")
     with pytest.raises(SystemExit, match="does not match"):
         m12.run_eval.check_mode("mock")                            # a "mock" run that would reach the real API
+    monkeypatch.setenv("ANTHROPIC_BASE_URL", "http://localhost.example.com")
+    with pytest.raises(SystemExit, match="does not match"):
+        m12.run_eval.check_mode("mock")                            # a look-alike host is not the local mock: compare the host, not a prefix
     monkeypatch.setenv("ANTHROPIC_BASE_URL", "http://127.0.0.1:8787")
     with pytest.raises(SystemExit, match="does not match"):
         m12.run_eval.check_mode("real")                            # a "real" run that would hit the mock
@@ -194,6 +197,14 @@ def test_a_harness_error_is_an_error_not_a_fail_and_the_gate_refuses_it(m12, bas
     assert any("harness is broken" in b for b in broken) and failed == []       # exit 2, not "0 cases failed, all good"
 
 
+def test_an_api_outage_is_an_error_even_when_the_ticket_agent_catches_it(m12):
+    """agent_loop hands off with reason model_error instead of raising; the adapter must not let that pass for a wrong answer."""
+    case = {"id": "T99", "agent": "ticket", "category": "ticket_lookup", "critical": False, "real_only": False,
+            "input": "[mock:overloaded] Is ticket 4471 done yet?", "checks": ["calls:get_ticket_status=4471"]}
+    row = m12.run_eval.run_case(case, 1, None)
+    assert "score" not in row and row["error"].startswith("RuntimeError") and "after the SDK's retries" in row["error"]       # an error, not a failed case
+
+
 def test_repetitions_give_a_fractional_score_and_a_flaky_list(m12, monkeypatch):
     replies = iter(["hardware", "hardware", "software"])           # the same ticket, three runs, one different answer
     monkeypatch.setitem(m12.adapters.AGENTS, "classifier", lambda text: m12.adapters.Output(text=next(replies), steps=1))
@@ -209,8 +220,11 @@ def test_judge_tokens_are_counted_apart_from_the_agents(m12, client):
     r = m12.run_eval.run_case(case, 1, judge.make_judge(client))
     assert r["judge_tokens"] > 0 and r["tokens_in"] > 0
     assert r["score"] == 0.0 and any(w.startswith("judge:grounded") for w in r["failed"])      # the mock's judge says no
+    assert len(r["judged"]) == 1 and r["judged"][0].startswith("judge:grounded: fail, ")        # the verdict is kept beside the output
     plain = m12.run_eval.run_case(case, 1, None)                   # no judge: the judge check is skipped, the case is graded on code
-    assert plain["score"] == 1.0 and plain["judge_tokens"] == 0
+    assert plain["score"] == 1.0 and plain["judge_tokens"] == 0 and plain["judged"] == []
+    only_judge = m12.run_eval.run_case({**case, "checks": ["judge:grounded"]}, 1, None)
+    assert only_judge["score"] == 0.0                              # no check ran: that is not a pass
 
 
 # ---------------------------------------------------------------- the gate against the committed baseline
@@ -322,6 +336,8 @@ def test_a_case_that_passes_most_repetitions_still_passes(g):
     assert verdict(g, flaky, cfg={**CFG, "max_regressed_cases": 0, "max_overall_drop": 0.5}) == []
     worse = results(*[case(f"x{i}", 1 / 3 if i == 0 else 1.0) for i in range(10)])
     assert verdict(g, worse, cfg={**CFG, "max_regressed_cases": 0, "max_overall_drop": 0.5}) == ["1"]
+    half = results(*[case(f"x{i}", 0.5 if i == 0 else 1.0) for i in range(10)])        # exactly half is not "more than half"
+    assert verdict(g, half, cfg={**CFG, "max_regressed_cases": 0, "max_overall_drop": 0.5}) == ["1"]
 
 
 def test_tokens_and_latency(g):

@@ -1,5 +1,5 @@
 # labs/m15/kill_switch.py
-"""Lab 15.1: a kill switch, a cost breaker that pulls it, and a drill that proves both (the mock supplies [mock:loop]).
+"""Lab 15.1: a kill switch, a cost breaker that pulls it, and a drill that proves both.
   python labs/m15/kill_switch.py drill [DIR]
   python labs/m15/kill_switch.py flip FILE FLAG on|off WHO WHY   FLAG: model_calls, write_tools or all"""
 import json

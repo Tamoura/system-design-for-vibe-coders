@@ -129,6 +129,8 @@ def test_the_judge_sends_a_schema_a_fenced_answer_and_no_sampling_parameters(lab
 def test_the_judge_reads_the_text_block_even_after_a_thinking_block(lab):
     client = FakeClient(SimpleNamespace(type="thinking", thinking=""), text('{"pass": false, "reason": "invented a number"}'))
     assert lab.judge.make_judge(client)("grounded", {"input": "q"}, out("x")) == (False, "invented a number")
+    odd = FakeClient(text('{"pass": "false", "reason": "x"}'))        # the string "false" is truthy in Python: only a real true may pass
+    assert lab.judge.make_judge(odd)("grounded", {"input": "q"}, out("x"))[0] is False
 
 
 @pytest.mark.parametrize("reply", ["The answer looks fine to me.", "", "{'pass': True}"])

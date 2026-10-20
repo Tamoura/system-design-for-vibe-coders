@@ -10,16 +10,16 @@
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 5.1* · *Layer: Delivery*
 
 ## ⚡ In 60 seconds
-- **Discovery** is the work between "we should have an AI assistant" and "here is what we build, for whom, and what it must never do": find out what the customer needs and write it down, as a one-page **agent brief**, so it can be built and tested.
+- **Discovery** is the work between "we should have an AI assistant" and "here is what we build, for whom, and what it must never do". It ends in a one-page **agent brief**.
 - Talk to the sponsor, the people who do the work and the risk owners. Ask about **past behaviour**, not future opinions.
 - Two sources that disagree are a finding, not noise. Size value as a **range**, never one number.
 - Before choosing an agent, ask four questions and try cheaper alternatives.
 - Biggest trap: trusting one source, then letting an AI assistant smooth over contradictions or invent quotes.
 
 ## 🧭 Why it matters
-Lujain reads Hind's email: *seventy percent deflection, open 24 hours, unlock accounts by itself*. In four days she builds a lovely demo that unlocks accounts through a test tool. Then Yara asks: "Where is the call-back?" Policy has an agent verify a lost-authenticator request by calling the person's manager. The demo skips it, Noura's team would block it, and the work is thrown away. (Hypothetical, as all Najm stories are.)
+Lujain reads Hind's email: *seventy percent deflection, open 24 hours, unlock accounts by itself*. In four days she builds a demo that unlocks accounts through a test tool. Then Yara asks: "Where is the call-back?" Policy has an agent verify a lost-authenticator request by calling the person's manager. The demo skips it, Noura's team would block it, and the work is thrown away. (Hypothetical, like all Najm stories.)
 
-Nothing in the code was wrong. The brief was: Lujain had one source, and the sponsor sees the dashboard, not the floor. A wrong sentence in a brief costs an afternoon; in code, weeks; in a pilot, trust.
+Nothing in the code was wrong. The brief was: Lujain had one source, and the sponsor sees the dashboard, not the floor. A wrong sentence in a brief costs an afternoon to fix; in code, much more; in a pilot, trust.
 
 ## 📐 How it works
 
@@ -32,9 +32,9 @@ Nothing in the code was wrong. The brief was: Lujain had one source, and the spo
 - **Risk owners** (can say no): Layla, Hamad, Noura, Sara.
 - **Blockers** (hold a dependency): Salem's platform team; the owners of TicketHub, Najm ID, PeopleCore and the policy library.
 
-**A five-day plan.** Read and map; interview Hind and Yara; shadow the desk; walk the systems and meet the risk owners; write the brief and read it back to Hind.
+**A five-day plan.** Read and map; interview Hind and Yara; shadow the desk; meet the risk owners and walk the systems; write the brief and read it back to Hind.
 
-**Interviews: ask about their life, not your idea.** Rob Fitzpatrick's *The Mom Test* is a good short guide. Paraphrased: people are kind about your idea, so ask about specific things that happened, and listen more than you talk. Ask about **past behaviour** ("Tell me about the last time…"); future opinions are polite guesses. Ask **open questions**; answer vagueness with "for example?". Never **pitch or lead**: a question holding your solution earns agreement, not evidence.
+**Interviews: ask about their life, not your idea.** Rob Fitzpatrick's *The Mom Test* is a short guide; paraphrased, people are kind about your idea, so ask about specific things that happened and listen more than you talk. Ask about **past behaviour** ("Tell me about the last time…"); future opinions are polite guesses. Ask **open questions**; answer vagueness with "for example?". Never **pitch or lead**: a question holding your solution earns agreement, not evidence.
 
 | Weak question | Why it fails | Stronger |
 |---|---|---|
@@ -42,7 +42,7 @@ Nothing in the code was wrong. The brief was: Lujain had one source, and the spo
 | "And you think staff would use a chat assistant in the portal?" (H-19) | Future opinion | "How did the last ten VPN callers reach you?" |
 | "So English first, then Arabic later?" (H-17) | Confirms your guess | "What share of last week's tickets were in Arabic?" |
 
-**Shadow the work.** An interview tells you what someone believes; shadowing shows what happens. Sit beside agents, time what you see, and draw the **as-is process**: each step, who does it, what it touches, where it waits. This is Najm's. Najm Desk can speed up the clarifying loop and the answers; it must stay out of the call-back.
+**Shadow the work.** An interview tells you what someone believes; shadowing shows what happens. Sit beside agents, time what you see, and draw the **as-is process**: each step, who does it, what it touches, where it waits. Najm's is below. Najm Desk can speed up the clarifying loop and the answers; it stays out of the call-back.
 
 ```mermaid
 flowchart TD
@@ -61,8 +61,6 @@ flowchart TD
 - **Risk:** social engineering; a chat that unlocks accounts is an attacker's favourite door.
 - **Open question:** if the manager does not answer, who is the delegate?
 
-Hind sees the minute the click takes; Yara sees the hour it takes to get there.
-
 ### 🟡 Going deeper
 
 **Systems and data inventory** (fictional figures). For each system the agent will touch, write what you need from it, how **access** is granted, the **quality** of its data and its **classification** (Public, Internal, Confidential or Restricted; "proposed" until Sara confirms).
@@ -74,11 +72,11 @@ Hind sees the minute the click takes; Yara sees the hour it takes to get there.
 
 > **Your platform.** Add rows for its identity provider, secrets store, ticketing and approvals: owner, how you get a read-only credential, what it logs.
 
-**Size the value as a range.** Weekly hours freed = tickets in scope × share handled alone × minutes saved ÷ 60, each term a low and a high with a source or "assumption". Fictional baseline: 450 policy tickets a week (A-03); of 40 sampled, 22 fully covered and 10 partly (A-05), so 20% to 50% handled alone is defensible; 4 to 8 minutes saved (assumption). Low: 450 × 0.20 × 4 ÷ 60 = 6 hours. High: 450 × 0.50 × 8 ÷ 60 = 30 hours. Against about 560 agent hours a week (assumption: 14 agents at 40 hours) that is 1% to 5%. Requesters' waiting time is probably the bigger, softer prize. Subtract running cost, Yara's review time and source upkeep. Hind's 70% lies outside the range; the range is the conversation to have.
+**Size the value as a range.** Weekly hours freed = tickets in scope × share handled alone × minutes saved ÷ 60, each term a low and a high with a source or "assumption". Fictional baseline: 450 policy tickets a week (A-03). Yara's sample of 40 found 22 fully covered, 55% (A-05); allow for retrieval misses and people who still want a person, and 20% to 50% handled alone is defensible (40 tickets is a lead, not a statistic). Minutes saved: 4 to 8 (assumption, between A-15's macro and written-answer timings). Low: 450 × 0.20 × 4 ÷ 60 = 6 hours. High: 450 × 0.50 × 8 ÷ 60 = 30 hours. Against about 560 agent hours a week (assumption: 14 agents at 40 hours) that is 1% to 5%. Requesters' waiting time is probably the bigger, softer prize. Net out running cost, Yara's review time and upkeep. Hind's 70% lies outside the range (70% of what?); the range is the conversation to have.
 
-**Risk tiering** sets how much review a capability needs. It is a working tier, not a legal one; Layla classifies formally ([*AI Governance*, lesson 8.1 — Use-case intake, business case and risk tiering](../aigp/index.html#/8.1)). **Tier 1** reads Internal data and changes nothing: policy answers. **Tier 2** reads personal data or writes with the user's confirmation: ticket status, draft, creation. **Tier 3** touches identity or security with a person approving: the unlock request, the security hand-off. **Tier 4**, acting alone on identity or money, is not in v1. The highest tier decides who you invite; Tier 3 means Noura and Hamad from week one.
+**Risk tiering** sets how much review a capability needs. It is a working tier, not a legal one; Layla classifies formally ([*AI Governance*, lesson 8.1 — Use-case intake and risk tiering](../aigp/index.html#/8.1)). **Tier 1** reads Internal data and changes nothing: policy answers. **Tier 2** reads personal data or writes with the user's confirmation: ticket status, draft, creation. **Tier 3** touches identity or security with a person approving: the unlock request. **Tier 4**, acting alone on identity or money, is not in v1. The highest tier decides who you invite; Tier 3 means Noura and Hamad from week one.
 
-**Constraints you inherit.** The AI-tools policy keeps Confidential and Restricted data, customer data and credentials out of external AI services. Staff data is personal data (Qatar's PDPPL; the GDPR for EU staff; Sara advises). Languages: Arabic, English, mixed. Governance signs off changes; every write needs a person or a policy gate. First question to Layla and Hamad: is our model service an approved destination for Internal and Confidential data?
+**Constraints you inherit.** The AI-tools policy keeps Confidential and Restricted data, customer data and credentials out of external AI services. Staff data is personal data (Qatar's PDPPL; the GDPR for EU staff; Sara advises). Languages: Arabic, English, mixed. Governance signs off changes; every write needs a person or a policy gate. First question for Layla and Hamad: is our model service approved for Internal and Confidential data?
 
 **Should this be an agent?** Four questions, in the spirit of Anthropic's advice on when to use agents (linked below). They are a heuristic, not a quotation:
 1. **Complexity:** is the path unknown in advance? If you can draw the flowchart, build a workflow (lesson 5.1).
@@ -88,25 +86,25 @@ Hind sees the minute the click takes; Yara sees the hour it takes to get there.
 
 Try the cheaper alternatives first: **search** (the answer is on one page); a **form** (the same facts are missing every time); **rules** (explicit, stable decisions); a **workflow** (you can draw the path); a **process change** (the notice reaches the page); **RPA**, scripts that click through screens (stable work, no language).
 
-Najm Desk's verdicts. Value and viability come from the value range and inventory above; the other two questions set the shape. Do ticket status and hand-off yourself:
+Najm Desk's verdicts (value and viability come from the range and inventory above; do ticket status and hand-off yourself):
 
 | Capability | Path known? | Cost of error | Verdict |
 |---|---|---|---|
 | Policy answers | Yes: search, then answer | High: wrong policy (H-10) | Workflow |
-| Draft a ticket | Varies: ask for what is missing | Low: the user confirms | Bounded loop; try a form first |
+| Draft a ticket | Varies: ask for what is missing | Low: the user confirms | Bounded loop; test a four-field form first (Y-02) |
 | Unlock request | Yes: fixed steps | High: social engineering | Workflow, a person approves |
 
 So v1 is a **workflow with one bounded loop**; Module 7 decides the architecture. The brief records *why*, so nobody quietly enlarges the autonomy.
 
 ### 🔴 Expert view
 
-**Anti-requirements** say what the agent must not do, as firmly as what it must. They stop scope creep and calm risk owners. Najm Desk v1 sets no priority (Y-08), changes no account, approves nothing, gives no refresh advice, reads no restricted ticket and promises no response time after hours.
+**Anti-requirements** say what the agent must not do, as firmly as what it must. They stop scope creep and calm risk owners. Najm Desk v1 suggests a priority but never sets one (Y-08), changes no account, approves nothing, gives no refresh advice, reads no restricted ticket and promises no response time after hours.
 
 **Red flags.** The sponsor cannot name a user. The solution came before the problem. Nobody lets you meet the people doing the work. Nobody has chosen between "never wrong" and "seventy percent" (H-08, H-04). Risk owners first hear of it at the demo. One flag is a question; three is a different project.
 
-**Using an AI assistant in discovery.** Good uses: interview guides, first lists from notes, clustering, critique, role-playing Hind. Limits:
-- **Confidentiality.** Real transcripts hold personal and internal data, which the AI-tools policy keeps out of external AI tools. Use the approved internal assistant, redact first, or ask Sara. The transcripts here are fictional.
-- **Invention and smoothing.** It writes plausible quotes confidently and merges two conflicting claims into one tidy sentence.
+**Using an AI assistant in discovery.** Good uses: interview guides, first lists, clustering, critique, role-playing Hind. Limits:
+- **Confidentiality.** Real transcripts hold personal and internal data that the AI-tools policy keeps out of external AI tools. Use the approved internal assistant, redact first, or ask Sara. These transcripts are fictional.
+- **Invention and smoothing.** It writes plausible quotes and merges two conflicting claims into one tidy sentence.
 - **Blindness.** A hidden requirement is not in the transcript; only shadowing finds it.
 
 ## 🧰 The toolkit
@@ -149,7 +147,7 @@ The artefact is the **agent brief** in `docs/agent-brief.md`, with its evidence 
 ```python
 # labs/m06/check_notes.py
 """Check that discovery notes quote their sources.   python labs/m06/check_notes.py docs/discovery-notes.md
-A citation is [Y-10 "call-back"]: a turn id, then two or more words copied from that turn. Every REQ, RISK, CON or Q line needs one.
+A citation is [Y-10 "call-back"]: a turn id, then two or more words copied from that turn. Every REQ, RISK, CON or Q line needs one, on that same line.
 Exit 0 = clean. It checks that a quote is REAL; it cannot check that your reading of it is right."""
 import re
 import sys
@@ -158,7 +156,7 @@ from pathlib import Path
 DATA = Path(__file__).resolve().parents[2] / "labkit/data"
 TURN = re.compile(r"^\[([HYA]-\d+)\]\s*(.*)$")                   # a source line:  [Y-10] text
 CITE = re.compile(r'\[([HYA]-\d+)\s+"([^"]+)"\]')                # a citation:     [Y-10 "text"]
-ITEM = re.compile(r"^\s*[-*]\s*\*{0,2}(?:REQ|RISK|CON|Q)-\d+")   # a line you must defend
+ITEM = re.compile(r"^\s*(?:[-*]\s*)?\*{0,2}(?:REQ|RISK|CON|Q)-\d+")   # a line you must defend, bullet or not
 
 
 def norm(s: str) -> str:
@@ -195,19 +193,19 @@ if __name__ == "__main__":
     sys.exit(1 if problems else 0)
 ```
 
-It catches invented and misquoted evidence and lists uncited answer turns, where missed requirements hide. *Works offline:* both scripts and their tests need no key, model or mock server. *Needs people:* whether a requirement is right; the kit's mock is scripted rules, not judgement.
+Run it from `aiapps/labkit`, keeping your notes in its `docs/` folder and copying them into `week-06/` to commit. It catches invented and misquoted evidence and lists uncited answer turns, where missed requirements hide. *Works offline:* the script and its tests need no key, model or mock server. *Needs the real API:* nothing, but Claude Code uses a model, so the confidentiality rules above apply. *Needs people:* whether a requirement is right; the kit's mock is scripted rules, not judgement, and cannot read an interview.
 
 **Weekly deliverable.** Commit `week-06/` with `docs/discovery-notes.md`, `docs/agent-brief.md`, the second-interview guide and a `NOTES.md` with quiz answers and what you would challenge.
 
-**Group session (60 minutes).** (1) Find who is missing from each stakeholder map (10). (2) Two learners interview a third, who plays Hind from the transcript only; the room scores leading questions (20). (3) Compare contradiction lists (15). (4) Read each "decision requested" aloud (15).
+**Group session (60 minutes).** (1) Find who is missing from each stakeholder map (10). (2) Two learners interview a third, who plays Hind from the transcript; the room scores leading questions (20). (3) Compare contradiction lists (15). (4) Read each "decision requested" aloud (15).
 
 **Build it with Claude Code.** After your own pass, give this to Claude Code in plan mode (check the current Claude Code documentation):
 
 ```text
-Goal: draft docs/discovery-notes.md for Najm Desk from aiapps/labkit/labkit/data/m06_interview_hind.md,
-m06_interview_yara.md and m06_as_is_process.md.
-Format: lines starting REQ-n (mark Stated, Implied or Hidden), RISK-n, CON-n or Q-n, each ending in a
-citation: [Y-10 "words copied exactly from that turn"].
+Goal: draft docs/discovery-notes.md for Najm Desk from labkit/data/m06_interview_hind.md,
+m06_interview_yara.md and m06_as_is_process.md. Work in aiapps/labkit.
+Format: one line per item, starting REQ-n (mark Stated, Implied or Hidden), RISK-n, CON-n or Q-n, each ending
+in a citation on the same line: [Y-10 "words copied exactly from that turn"].
 Constraints:
 - Use only those files. Invent no fact, number, name or quote; if the sources are silent, write a Q.
 - Never merge a contradiction: give both claims, both citations and a way to settle it.
@@ -218,18 +216,18 @@ Acceptance: python labs/m06/check_notes.py docs/discovery-notes.md exits 0. Show
 **Verify before you accept it.**
 - Compare its list with your own: what did it miss, and what did you?
 - Run `check_notes.py`; each uncited answer turn is noise or a missed requirement.
-- Check five citations by eye, and hunt invented facts: a number not in a source, a "must" where the speaker said "I'd like".
+- Check five citations by eye; hunt invented facts, such as a number no source gives or a "must" where the speaker said "I'd like".
 
 ## 🛠️ Exercises
 None needs the real API.
 
 - 🟢 **Extract.** Write `docs/discovery-notes.md` from the three sources: 12 requirements, 6 risks, 8 open questions and every contradiction. *Done when:* `check_notes.py` exits 0 and five requirements are ones Hind never asked for.
 - 🟡 **Write the brief.** Fill the template, with your own value range and a four-question verdict for each of the five capabilities. *Done when:* every number cites a turn or says "assumption", and the decision requested is one clear sentence.
-- 🔴 **Plan round two.** Write a ten-question guide for a second interview, aimed at your open questions and contradictions, and rehearse it with a partner playing Hind from the transcript (an approved assistant may play her, on these fictional files only; the mock cannot). *Done when:* every question traces to an open question, none pitches or asks "would", and your partner lists which earned a fact.
+- 🔴 **Plan round two.** Write a ten-question guide for a second interview, aimed at your open questions and contradictions, and rehearse it with a partner playing Hind from the transcript (an approved assistant may play her, on these fictional files only). *Done when:* each question traces to an open question, none pitches or asks "would", and your partner lists which earned a fact.
 
 ## ⚠️ Mistakes and traps
 - **Interviewing only the sponsor.** You get the dashboard view. Shadow the people doing the work.
-- **Pasting a real transcript into an external tool.** It breaks the AI-tools policy. Use the approved tool, or redact.
+- **Pasting a real transcript into an external tool.** Use the approved tool, or redact.
 - **A one-number value case.** Give a range and the assumption that flips it.
 - **Choosing "agent" first.** Run the four questions and the alternatives, and record the answer.
 
@@ -238,7 +236,7 @@ None needs the real API.
 - Interview about past events and shadow the work: sponsors see the dashboard, operators the floor.
 - Contradictions are findings: keep both claims, cited.
 - Size value as a range, tier the risk, inventory systems, ask the four questions.
-- An assistant drafts; you verify against the source.
+- An assistant drafts; you verify.
 
 ## ✍️ Check yourself
 
@@ -303,14 +301,14 @@ None needs the real API.
 
 <details><summary>Answer</summary>
 
-**B.** The steps are known and only the number of questions varies, so a capped loop in a fixed workflow is enough; a form asks all four every time. (🟡 Should this be an agent?)
+**B.** The steps are known and only the number of questions varies, so a capped loop in a fixed workflow is enough. A form fits only when the same facts are missing every time. (🟡 Should this be an agent?)
 
 </details>
 
 ## 📚 References
 - **Read this week (Module 6).** The owner's plan assigns no chapters here, so this is a suggestion: Rob Fitzpatrick, *The Mom Test*; Anthropic, "Building effective agents", the section "When (and when not) to use agents": https://www.anthropic.com/engineering/building-effective-agents
 - Claude Code: https://github.com/anthropics/claude-code
-- [*AI Product Management*, lesson 2.1 — Discovery for AI: jobs, workflows and where AI fits](../aipm/index.html#/2.1) and [lesson 2.3 — When not to use AI, and killing ideas early](../aipm/index.html#/2.3)
+- [*AI Product Management*, lesson 2.1 — Discovery for AI](../aipm/index.html#/2.1) and [lesson 2.3 — When not to use AI](../aipm/index.html#/2.3)
 
 ---
 
@@ -333,34 +331,34 @@ Fahad's rule: a requirement you cannot fail is a wish. This lesson turns the 6.1
 
 ### 🟢 The essentials
 
-**The template.** The worked specification's ten headings are the template: purpose; users and scenarios; scope, in and out; tools, data and permissions; requirements (functional **FR**, guardrail **GR**, non-functional **NFR**, each with a priority); success metrics; acceptance criteria; the eval seed; assumptions, risks and open questions; sign-off. NFRs cover latency, availability, privacy, audit, accessibility and cost; security lives in the guardrails and permissions.
+**The template.** The worked specification's ten sections, purpose to sign-off, are the template. Requirements come in three kinds, each with a priority: functional (**FR**), guardrail (**GR**) and non-functional (**NFR**: latency, availability, privacy, audit, accessibility, cost); security lives in the guardrails and permissions. A throwaway prototype needs a half-page brief; write all ten when others will build, test or sign against it.
 
 **Testable means failable.** A requirement is testable when a stranger could design a test that might fail from the sentence alone: what would you observe, and who measures it? (All figures here are fictional.)
 
 | Vague | Testable |
 |---|---|
-| "Be fast." | At the 95th percentile, 40 open conversations: first words within 3 s, full reply within 10 s (NFR-01). |
-| "Be accurate." | At least 95% of eval answers correct and supported, judged by two reviewers; zero invented citations. Answers vary between runs, and on 30 cases 95% allows one miss. |
+| "Be fast." | At the 95th percentile, 40 open conversations: first words within 3 s, full reply within 10 s, measured in the portal (NFR-01). |
+| "Be accurate." | At least 95% of eval answers correct and supported, judged by two reviewers; zero invented citations. On 30 cases 95% allows one miss. |
 | "Be easy to use." | Five first-time users check a ticket status in under 60 s unaided, one with a screen reader. |
-| "Be secure." | In 20 attempts to read others' tickets, zero details appear (GR-02). |
-| "Support Arabic." | Every Arabic or mixed eval question gets a reply in its language, checked by a native reader (FR-07). |
+| "Be secure." | In 20 attempts to read others' tickets, zero details appear (GR-02). Twenty clean tries do not prove no leak exists. |
+| "Support Arabic." | Every Arabic or mixed eval question gets a reply in its main language, checked by a native reader (FR-07). |
 | "Reduce ticket volume." | At least 35% of in-scope policy conversations end with no ticket and no repeat contact in 3 working days. |
 
-**Given, When, Then.** From behaviour-driven development: *given* a situation, *when* one thing happens, *then* one observable result. Weak: "Given a user, when they ask something sensible, then the answer is helpful." Strong: AC-4 below. Make a third of your criteria about what must *not* happen.
+**Given, When, Then.** From behaviour-driven development: *given* a situation, *when* one thing happens, *then* one observable result. Weak: "Given a user, when they ask something sensible, then the answer is helpful." Strong: AC-4 below. Make at least a third of your criteria about what must *not* happen.
 
-**MoSCoW.** Must, Should, Could, Won't (this time). A Must is needed for go-live and has a criterion tested before launch. If everything is a Must, nothing is. The Won't list is the anti-requirements from 6.1.
+**MoSCoW.** Must, Should, Could, Won't (this time). A Must is needed for go-live and tested before launch; if everything is a Must, nothing is. The Won't list is 6.1's anti-requirements.
 
 **Traceability.** Each requirement has a chain: GR-04 → AC-5 → scenario S10 → the result of a release's eval run. It must hold both ways: a requirement with no scenario is untested; a scenario with no requirement tests something nobody agreed.
 
 ### 🟡 Going deeper
 
-**The permissions matrix: tool by role by autonomy.** Section 4's rows are tools, its columns roles, each cell an autonomy: **S** suggest, **D** draft, **A** a person approves first, **X** acts alone. Start at the lowest level that delivers value, treat every write as at most **A** until evidence says otherwise, and let every **X** on personal data name its limit ("own"; `unrestricted` means no restricted flag in TicketHub). "None" is a requirement: agents unlock in the Najm ID console, never through Najm Desk. Each cell becomes a test (AC-2 tests "own"); Module 7 designs the controls.
+**The permissions matrix: tool by role by autonomy.** Section 4's rows are tools, its columns roles, each cell an autonomy: **S** suggest, **D** draft, **A** a person approves first, **X** acts alone. Start at the lowest level that delivers value, treat every write as at most **A** (the exception is `hand_off`, which only puts a case in front of a person), and let every **X** on personal data name its limit ("own"; `unrestricted` means no restricted flag in TicketHub). "None" is a requirement: agents unlock in the Najm ID console, never through Najm Desk. Each cell becomes a test (AC-2 tests "own"); Module 7 designs the controls.
 
-**The eval seed set.** About 30 scenarios by v0.2: half ordinary (some Arabic or mixed), a quarter adversarial (injection, others' tickets, pasted secrets, "skip the call-back"), a quarter out of scope or ambiguous. A row holds requirement ids, the user's message, the expected *behaviour* (not exact words) and checkable tags. A scenario you cannot write means a requirement you do not understand. Module 12 adds graders and a gate ([*Software Testing*, lesson 7.1 — Evals: testing LLM applications with datasets, graders, LLM-as-judge, non-determinism and CI gates](../testing/index.html#/7.1)).
+**The eval seed set.** About 30 scenarios by v0.2: half ordinary (some Arabic or mixed), a quarter adversarial (injection, others' tickets, pasted secrets, "skip the call-back"), a quarter out of scope or ambiguous. A row holds requirement ids, the user's message, the expected *behaviour* (not exact words) and checkable tags. Answers vary between runs, and current Claude models mostly reject a temperature setting, so run the set repeatedly. A scenario you cannot write means a requirement you do not understand. Module 12 adds graders and a gate ([*Software Testing*, lesson 7.1 — Evals](../testing/index.html#/7.1)).
 
-**Versioning and change control.** Keep the specification in Git: v0.x drafts, v1.0 signed, ids never reused. Each change gets a log line: who asked, why, which ids, the effect on evals and cost. Four kinds: *editorial* (anyone), *clarification* (owner and Yara), *scope* (Hind and Fahad, with an estimate), *risk* (Layla, Noura or Sara: data, tools, autonomy or guardrails). Hind's mid-build "add refresh advice from DeviceDesk" is a scope and a risk change, and it is on the Out list.
+**Versioning and change control.** Keep the specification in Git: v0.x drafts, v1.0 signed, ids never reused. Log each change: who asked, why, which ids, the effect on evals and cost. Four kinds: *editorial* (anyone), *clarification* (owner and Yara), *scope* (Hind and Fahad, with an estimate), *risk* (Layla, Noura or Sara: data, tools, autonomy or guardrails). Hind's mid-build "add refresh advice from DeviceDesk" is a scope and a risk change (it is on the Out list).
 
-**The spec review workshop.** Ninety minutes with Hind, Yara and a risk owner, spec sent two days ahead. Agenda: scope and Out list (10); permissions matrix (20); five eval scenarios read aloud, each followed by "is this the right behaviour?" (30), since customers judge behaviour faster than prose; targets (15); open questions (10); sign, or list changes (5). New ideas go to the change log, not into the room. Silence is not agreement: ask each person what would make them reject it. This is an engineering agreement, not a contract; lesson 7.2 and your legal team handle commercial terms.
+**The spec review workshop.** Ninety minutes with Hind, Yara and a risk owner, spec sent two days ahead. Agenda: scope and Out list (10); permissions matrix (20); five eval scenarios read aloud, each with "is this the right behaviour?" (30), because customers judge behaviour faster than prose; targets (15); open questions (10); sign, or list changes (5). New ideas go to the change log. Silence is not agreement: ask each person what would make them reject it. This is an engineering agreement, not a contract; lesson 7.2 and your legal team cover commercial terms.
 
 ### 🔴 Expert view
 
@@ -424,7 +422,7 @@ if __name__ == "__main__":
     sys.exit(main())
 ```
 
-From `aiapps/labkit`, `python labs/m06/spec_lint.py labkit/data/m06_spec_worked.md --skip NFR --min-cases 1` prints `clean`; at the default of two cases per requirement it lists eleven thin ones. NFRs are skipped because load and accessibility tests check them. Lint cannot see a wrong but precise requirement. *Works offline:* lint and its tests need no key, model or mock server. *Needs a real model:* how Najm Desk actually answers a scenario; the kit's mock is scripted rules.
+From `aiapps/labkit`, `python labs/m06/spec_lint.py labkit/data/m06_spec_worked.md --skip NFR --min-cases 1` prints `clean`; at the default of two cases per requirement (still skipping NFRs) it lists eleven thin ones. NFRs are skipped because load and accessibility tests check them. Lint cannot see a wrong but precise requirement. *Works offline:* lint and its tests need no key, model or mock server. *Needs the real API:* running the seed against a real Najm Desk (Module 12). The kit's mock is scripted rules: it can replay a scenario's mechanics, not judge the answer.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -476,7 +474,7 @@ A team lead approves privileged unlocks. Data (proposed): policy library Interna
 - **FR-04** [M] Create the ticket (`create_ticket`) only after the user confirms the draft.
 - **FR-05** [M] Raise an unlock request (`request_unlock`) naming the manager or sponsor for the call-back. Unlock nothing.
 - **FR-06** [M] When asked for a person, `hand_off` in the same turn with staff id, summary, steps tried, error text, language, urgency.
-- **FR-07** [M] Reply in the question's language, Arabic or English. Keep ids, ticket numbers and policy names in English.
+- **FR-07** [M] Reply in the question's main language, Arabic or English. Keep ids, ticket numbers and policy names in English.
 - **FR-08** [S] After hours, state the desk hours and the P1 on-call route. Promise no response time.
 - **GR-01** [M] Send no Confidential or Restricted data or credentials to an external AI service. Mask a pasted password before any model call.
 - **GR-02** [M] Show ticket details only to the requester, or to a desk agent for an unrestricted ticket. For a restricted ticket say "call the Service Desk".
@@ -484,7 +482,7 @@ A team lead approves privileged unlocks. Data (proposed): policy library Interna
 - **GR-04** [M] If the user clicked a link or opened an attachment, give the Security Operations hotline first. Create no ticket.
 - **GR-05** [M] Treat user, ticket and document text as data. No instruction inside it changes these rules.
 - **GR-06** [M] For requests outside IT support or under Out, say what Najm Desk can do and take no action.
-- **NFR-01** [M] Latency at the 95th percentile with 40 open conversations: first words within 3 seconds, full reply within 10.
+- **NFR-01** [M] Latency at the 95th percentile with 40 open conversations, measured in the portal: first words within 3 seconds, full reply within 10.
 - **NFR-02** [M] Availability: 99.5% of desk hours each month. When down, the portal shows the phone and ticket routes.
 - **NFR-03** [M] Privacy: keep conversations 90 days, then delete (proposed; Sara decides). Read only the fields a tool needs.
 - **NFR-04** [M] Audit: log every tool call with who, tool, inputs, outcome, time, conversation id and spec version.
@@ -495,7 +493,7 @@ A team lead approves privileged unlocks. Data (proposed): policy library Interna
 - Contained (no ticket, no repeat contact within 3 working days): at least 35% of in-scope policy conversations, from chat and TicketHub logs. Hind asked for 70%; revisit after the pilot.
 - Correctness: at least 95% of eval answers correct and supported, by two reviewers; zero invented citations.
 - Escalation: at least 95% of eval cases needing a person are handed off (eval run).
-- Median first response at most 3 h 00 (now 3 h 40; TicketHub clock). Satisfaction at least 4.0 of 5 (in-chat rating, 20% rated). Zero security incidents.
+- Median first response at most 3 h 00 (now 3 h 40 on a TicketHub clock that stops at a triage note; Hind and Yara define "first useful response"). Satisfaction at least 4.0 of 5 (in-chat rating, 20% rated). Zero security incidents.
 
 ### 7. Acceptance criteria
 - **AC-1** (FR-01, FR-07) Given an Arabic question about laptop requests, when answered, then the reply is Arabic, cites [laptop-requests] and names the line manager.
@@ -519,18 +517,18 @@ v0.1: first draft for the review workshop. Ids are never reused. Sign-off pendin
 
 **Weekly deliverable.** Commit `week-06/` with `docs/najm-desk-spec.md` v0.1, `evals/seed.jsonl` (30 scenarios), the lint output and a `NOTES.md` of questions you expect from Hind.
 
-**Group session (60 minutes).** Run the review workshop with learners playing Hind, Yara and Noura: the author presents (10), the room reads five scenarios aloud (15), the customers say what would make them reject it (25), the scribe logs changes (10).
+**Group session (60 minutes).** Run the review workshop with learners as Hind, Yara and Noura: the author presents (10), the room reads five scenarios aloud (15), the customers object (25), the scribe logs changes (10).
 
 **Build it with Claude Code.** Give this to Claude Code in plan mode (check the current documentation):
 
 ```text
 Goal: review docs/najm-desk-spec.md; write docs/spec-review.md and docs/eval-candidates.jsonl.
-Context: ids are FR-nn, GR-nn, NFR-nn; rows follow aiapps/labkit/labkit/data/m06_eval_seed.jsonl.
+Context: work in aiapps/labkit; ids are FR-nn, GR-nn, NFR-nn; rows follow labkit/data/m06_eval_seed.jsonl.
 Tasks: list ambiguous or untestable sentences, conflicts and missing negative cases; propose at most 20
 new scenarios, each citing a requirement id from the spec.
 Constraints: do not edit the spec; invent no facts about Najm Bank; "expect" describes behaviour.
-Acceptance: python labs/m06/spec_lint.py docs/najm-desk-spec.md docs/eval-candidates.jsonl --skip NFR
-reports no unknown ids. Show the plan first.
+Acceptance: python labs/m06/spec_lint.py docs/najm-desk-spec.md docs/eval-candidates.jsonl --min-cases 0
+prints no line "cites ..., which the spec does not define" (other lines are findings about the spec). Show the plan first.
 ```
 
 **Verify before you accept it.**
@@ -540,13 +538,13 @@ reports no unknown ids. Show the plan first.
 ## 🛠️ Exercises
 None needs the real API.
 
-- 🟢 **Rewrite eight.** Make these testable: "helpful", "timely", "reliable", "respects privacy", "escalates complex issues", "protects data", "works for all staff", "users are satisfied". *Done when:* each has a number or condition, a method and an owner, and `spec_lint.py` finds no vague word.
-- 🟡 **Matrix and criteria.** Build the permissions matrix for your tools and write ten acceptance criteria. *Done when:* every cell has a limit or "none", each criterion cites an id, one trigger and one result, and four say what must not happen.
+- 🟢 **Rewrite eight.** Make these testable: "helpful", "timely", "reliable", "respects privacy", "escalates complex issues", "protects data", "works for all staff", "users are satisfied". *Done when:* each, written as a bullet with an id such as **FR-01**, has a number or condition, a method and an owner, and `spec_lint.py` prints no "vague word" line (ignore its eval-case lines).
+- 🟡 **Matrix and criteria.** Build the permissions matrix for your tools and write ten acceptance criteria. *Done when:* every X names its limit, each criterion cites an id, one trigger and one result, and four say what must not happen.
 - 🔴 **Grow the seed.** Extend the 12 scenarios to 30 in `evals/seed.jsonl`. *Done when:* `spec_lint.py` exits 0 with `--skip NFR`, at least 7 scenarios are adversarial, 5 out of scope and 6 Arabic or mixed, and a colleague finds none without a requirement.
 
 ## ⚠️ Mistakes and traps
 - **Adjectives as requirements.** "Fast" and "secure" start arguments. Give a number, a method and an owner.
-- **Only happy paths.** A spec of what the agent does cannot fail. Write what must not happen.
+- **Only happy paths.** A spec of what the agent does cannot fail; write what must not happen.
 - **Scenarios with no requirement, or the reverse.** Keep the chain both ways.
 - **Everything is a Must.** Then nothing can slip. Say what will not ship.
 
@@ -624,6 +622,6 @@ None needs the real API.
 </details>
 
 ## 📚 References
-- [*Software Testing*, lesson 5.3 — Exploratory testing, agile teams and BDD: working with developers, product owners and users](../testing/index.html#/5.3) for Given/When/Then; [lesson 1.3 — Requirements, test cases and bug reports: from acceptance criteria to a defect someone can fix](../testing/index.html#/1.3)
-- [*AI Product Management*, lesson 5.1 — The AI product spec: behaviour, quality bars and evals as requirements](../aipm/index.html#/5.1)
+- [*Software Testing*, lesson 5.3 — Exploratory testing, agile teams and BDD](../testing/index.html#/5.3) for Given/When/Then; [lesson 1.3 — Requirements, test cases and bug reports](../testing/index.html#/1.3)
+- [*AI Product Management*, lesson 5.1 — The AI product spec](../aipm/index.html#/5.1)
 - Claude API, tool use overview: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview

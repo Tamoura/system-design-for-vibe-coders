@@ -1,6 +1,6 @@
 # labs/m06/check_notes.py
 """Check that discovery notes quote their sources.   python labs/m06/check_notes.py docs/discovery-notes.md
-A citation is [Y-10 "call-back"]: a turn id, then two or more words copied from that turn. Every REQ, RISK, CON or Q line needs one.
+A citation is [Y-10 "call-back"]: a turn id, then two or more words copied from that turn. Every REQ, RISK, CON or Q line needs one, on that same line.
 Exit 0 = clean. It checks that a quote is REAL; it cannot check that your reading of it is right."""
 import re
 import sys
@@ -9,7 +9,7 @@ from pathlib import Path
 DATA = Path(__file__).resolve().parents[2] / "labkit/data"
 TURN = re.compile(r"^\[([HYA]-\d+)\]\s*(.*)$")                   # a source line:  [Y-10] text
 CITE = re.compile(r'\[([HYA]-\d+)\s+"([^"]+)"\]')                # a citation:     [Y-10 "text"]
-ITEM = re.compile(r"^\s*[-*]\s*\*{0,2}(?:REQ|RISK|CON|Q)-\d+")   # a line you must defend
+ITEM = re.compile(r"^\s*(?:[-*]\s*)?\*{0,2}(?:REQ|RISK|CON|Q)-\d+")   # a line you must defend, bullet or not
 
 
 def norm(s: str) -> str:

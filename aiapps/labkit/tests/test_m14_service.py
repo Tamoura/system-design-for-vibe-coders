@@ -64,9 +64,9 @@ def lines(capsys):
 
 # ---------------------------------------------------------------- configuration
 
-def test_defaults_are_a_dev_environment_with_the_lab_model_and_the_newest_prompt(svc):
+def test_defaults_are_a_dev_environment_with_the_lab_model_and_the_production_prompt(svc):
     cfg = svc.app.Settings({})
-    assert (cfg.app_env, cfg.model, cfg.prompt, cfg.canary_prompt, cfg.canary_pct) == ("dev", "claude-sonnet-5-5", V2, "", 0)
+    assert (cfg.app_env, cfg.model, cfg.prompt, cfg.canary_prompt, cfg.canary_pct) == ("dev", "claude-sonnet-5-5", V1, "", 0)
     assert cfg.release == "dev" and cfg.timeout_s == 20
 
 
@@ -162,7 +162,7 @@ def test_the_bucket_is_the_same_in_every_process_so_replicas_agree(svc):
 
 def test_no_canary_prompt_means_no_canary_whatever_the_percentage(svc):
     cfg = svc.app.Settings({"CANARY_PERCENT": "100"})
-    assert {svc.app.pick_prompt(cfg, f"u{i}") for i in range(50)} == {V2}
+    assert {svc.app.pick_prompt(cfg, f"u{i}") for i in range(50)} == {V1}
 
 
 def test_rollback_is_one_value(svc, capsys):
@@ -214,7 +214,7 @@ def test_readiness_also_reports_what_is_running_and_every_prompt_that_can_be_ser
 def test_an_answer_cites_a_document_and_names_the_prompt_and_request(svc):
     _, http = svc.make({})
     body = http.post("/v1/ask", json=Q).json()
-    assert "[remote-work]" in body["answer"] and body["prompt_version"].startswith(V2) and body["request_id"].startswith("req_mock_")
+    assert "[remote-work]" in body["answer"] and body["prompt_version"].startswith(V1) and body["request_id"].startswith("req_mock_")
     assert body["model"] == "claude-sonnet-5-5"
 
 
@@ -320,7 +320,7 @@ def test_one_structured_log_line_per_answer_with_tokens_and_ids_and_no_question_
     http.post("/v1/ask", json={"question": secret, "user": "rayan"}, headers={"Idempotency-Key": "k-private"})
     out = capsys.readouterr().out
     (rec,) = [json.loads(x) for x in out.splitlines() if x.startswith("{")]
-    assert rec["event"] == "ask" and rec["env"] == "staging" and rec["release"] == "abc123" and rec["prompt_version"].startswith(V2)
+    assert rec["event"] == "ask" and rec["env"] == "staging" and rec["release"] == "abc123" and rec["prompt_version"].startswith(V1)
     assert rec["input_tokens"] > 0 and rec["output_tokens"] > 0 and rec["cache_read"] == 0 and rec["request_id"].startswith("req_mock_")
     assert set(rec) == {"ts", "env", "release", "event", "prompt_version", "model", "input_tokens", "output_tokens", "cache_read", "ms", "request_id"}
     assert "Summer2026" not in out and "rayan" not in out and "mock" not in out.replace("req_mock_", "")      # no question, no user, no key
@@ -369,6 +369,12 @@ def test_the_smoke_test_can_check_a_deployed_service_by_url(svc):
 def test_the_smoke_test_fails_when_the_provider_is_down(svc):
     r = run_smoke("http://127.0.0.1:9", REQUEST_TIMEOUT_S="2")                  # nothing listens there
     assert r.returncode == 1 and "FAIL  an answer arrives with a citation" in r.stdout
+
+
+def test_the_smoke_test_imports_httpx2_because_anthropic_1x_does_not_install_the_old_httpx():
+    import ast
+    imported = {a.name for n in ast.walk(ast.parse((LABS / "smoke.py").read_text())) if isinstance(n, ast.Import) for a in n.names}
+    assert "httpx2" in imported and "httpx" not in imported       # `import httpx` only worked where another package happened to install it
 
 
 # ---------------------------------------------------------------- the container files (as text and as YAML: Docker is not run)
@@ -423,7 +429,7 @@ def test_the_service_runs_from_the_layout_the_image_builds(svc, tmp_path):
             "print(c.get('/ready').status_code, c.get('/ready').json()['prompts'])")
     env = {"ANTHROPIC_BASE_URL": svc.url, "ANTHROPIC_API_KEY": "mock", "PATH": "/usr/bin:/bin"}
     r = subprocess.run([sys.executable, "-c", code], cwd=root, env=env, capture_output=True, text=True, timeout=60)
-    assert r.returncode == 0 and r.stdout.startswith("200 {'najm_desk_v2': 'najm_desk_v2@"), r.stderr
+    assert r.returncode == 0 and r.stdout.startswith("200 {'najm_desk_v1': 'najm_desk_v1@"), r.stderr
 
 
 def test_the_requirements_pin_the_sdk_range_and_nothing_heavy_ships():

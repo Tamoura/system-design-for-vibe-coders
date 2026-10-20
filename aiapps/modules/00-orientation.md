@@ -13,14 +13,14 @@
 - Shipping an agent is a **lifecycle**, not a build: discover, design, build, evaluate, secure, ship, operate, hand over.
 - **Enterprise-grade** means ten properties you can show evidence for, such as reliable, governed and supportable. "We are careful" is not evidence.
 - A **chatbot** answers, a **workflow** follows a path your code defines, an **agent** chooses its own steps. Use the simplest that works.
-- Many pilots stall after the build, because a demo only proves the first half.
+- Pilots often stall after the build, because a demo only proves the first half.
 - The course is a reading group, one module a week, on a **fictional** engagement, Najm Desk. Labs run offline and, unchanged, on the real API.
 - Claude Code writes much of your code; you must still explain every line that ships.
 
 ## 🧭 Why it matters
-Picture a pilot at Najm Bank that never reached its users. (The story is hypothetical, like every Najm story in the course.) A small team built **Ask HR**, a chatbot over the HR policies, and after six weeks the demo made the steering committee clap. Then it met the second half of the lifecycle. **Sara**, the Data Protection Officer, asked which staff details the prompts sent to the model provider. Nobody knew. **Layla** asked for the risk assessment. There was none. **Hamad's** team asked what stopped a pasted document from giving the bot new instructions. **Maha** asked who would be paged; the answer was "the developer", who had moved teams. The prompt lived in a notebook cell and, with no tests, nobody dared edit it. Four months later the pilot was paused. The model never failed. The delivery did.
+Picture a pilot at Najm Bank that never reached its users. (The story is hypothetical, like every Najm story.) A small team built **Ask HR**, a chatbot over the HR policies, and after six weeks the demo made the steering committee clap. Then it met the second half of the lifecycle. **Sara**, the Data Protection Officer, asked which staff details the prompts sent to the model provider. Nobody knew. **Layla** asked for the risk assessment. There was none. **Hamad's** team asked what stopped a pasted document from giving the bot new instructions (prompt injection, Module 13). **Maha** asked who would be paged; the answer was "the developer", who had moved teams. The prompt lived in a notebook cell and, with no tests, nobody dared edit it. Four months later the pilot was paused. The model never failed. The delivery did.
 
-As reported, in *Moffatt v. Air Canada* (2024) a British Columbia tribunal held an airline responsible for wrong information its website chatbot gave a customer. It is one ruling in one jurisdiction, but plan as if your organisation will answer for what its agent says, and ask your legal team early. "It works in the demo" is the start of the job. This lesson is your map: the lifecycle, a ten-point test for "enterprise-grade", the five layers and the reading-group routine.
+As reported, in *Moffatt v. Air Canada* (2024) a British Columbia tribunal held an airline responsible for wrong information its website chatbot gave a customer. It is one ruling in one jurisdiction, but plan as if your organisation will answer for what its agent says, and ask your legal team early. "It works in the demo" is the start of the job.
 
 ## 📐 How it works
 
@@ -47,7 +47,7 @@ flowchart LR
 | **Design** | What may it do alone, and who approves what? | Architecture, agreed scope |
 | **Build** | How do model, prompts, tools and loop fit together? | A working agent |
 | **Evaluate** | Is it good enough, and will we notice if it stops being so? | Eval set, CI gate |
-| **Secure** | What can go wrong, or be made to? | Threat model, guardrails |
+| **Secure** | What can go wrong, or be made to, and who signs off? | Threat model, guardrails, governance sign-off |
 | **Ship** | How does it reach users, and roll back? | Pipeline, release plan, budget |
 | **Operate** | How do we see it, fix it, improve it? | Dashboards, runbook |
 | **Hand over** | Who owns it tomorrow? | Training, support model, acceptance |
@@ -75,7 +75,7 @@ Weak: "It is enterprise-grade. We use a strong model and we tested it." Strong: 
 
 A **workflow** arranges model calls and tools along a path your code defines; it is predictable, testable and cheaper, and it solves a large share of real problems.
 
-An **agent** lets the model direct its own process: it picks the next tool, reads the result and repeats until it decides it is done. That flexibility is also its risk, so agents need caps, traces and evals. The distinction follows Anthropic's "Building effective agents", which advises finding the simplest thing that works.
+An **agent** lets the model direct its own process: it picks the next tool, reads the result and repeats until it decides it is done. That flexibility is also its risk, so agents need caps, traces and evals. The workflow-versus-agent split follows Anthropic's "Building effective agents", which advises finding the simplest thing that works; "chatbot" is this course's own label.
 
 ### 🟡 Going deeper
 
@@ -100,11 +100,11 @@ Build was the only stage with a finished artefact, a familiar shape for a stalle
 | **Agents** | The agent loop, memory, MCP, multi-agent teams | 8–11 |
 | **Production** | Evaluation, security and governance, deployment, cost, operation | 12–15 |
 
-**How the course works.** By Module 16 you will have taken Najm Desk from first interview to go-live, with a brief, a specification, an eval gate, a governance pack, a runbook and a handover. It suits a reading group of juniors and a mentor, one module a week; Modules 0 to 16 make seventeen weeks, and a solo reader can go faster. Each week has six parts: the **lesson**; a **read**, the matching chapter of a source (the Grokking chapter first for the mental model, then the free sources for code); a **lab** you run and extend, offline first, designed to be finished in an evening; a **checkpoint** of five questions; a **deliverable**, a `week-NN/` folder with a `NOTES.md` in your own repository; and a **group session** of demos, one failure shown live, and discussion. Roles rotate weekly: facilitator, demo lead, sceptic (reviews one deliverable against the ten properties) and scribe.
+**How the course works.** By Module 16 you will have taken Najm Desk from first interview to go-live, with a brief, a specification, an eval gate, a governance pack, a runbook and a handover. It suits a reading group with a mentor, one module a week (seventeen weeks); a solo reader can go faster. Each week has six parts: the **lesson**; a **read**, the matching chapter of a source (the Grokking chapter first for the mental model, then the free sources for code); a **lab** you run and extend, offline first, designed to be finished in an evening; a **checkpoint** of five questions; a **deliverable**, a `week-NN/` folder with a `NOTES.md` in your own repository; and a **group session** of demos, one failure shown live, and discussion. Roles rotate weekly: facilitator, demo lead, sceptic (reviews one deliverable against the ten properties) and scribe.
 
-**The sources, and using them without copying.** Five main sources plus an add-on; the course links to them and never reproduces them. **Grokking AI Applications** (Andrea De Mauro, Manning) is the one paid book; its tutorials use Langflow and KNIME, so treat them as demos. **Agentic Design Patterns** (Antonio Gulli) is a free draft; the course plan counted 21 patterns. **AI Agents for Beginners** (Microsoft) offers illustrated lessons with videos and notebooks; the plan counted eighteen and noted an Arabic translation. Anthropic's **Building effective agents** is the source of the workflow-versus-agent distinction. Chip Huyen's **aie-book** is the free companion to *AI Engineering*. The add-on, the free **LangChain Academy** course, serves only the multi-agent module. Contents change, so check each page. Take notes in your own words, add a line headed "what I would challenge", cite source and chapter in `NOTES.md`, and never paste their text or code into your repository.
+**The sources, and using them without copying.** Five main sources plus an add-on; the course links to them and never reproduces them. **Grokking AI Applications** (Andrea De Mauro, Manning) is the one paid book; the course plan says its tutorials use Langflow and KNIME, so treat them as demos. **Agentic Design Patterns** (Antonio Gulli) is a free draft; the plan counted 21 patterns. **AI Agents for Beginners** (Microsoft) offers illustrated lessons with videos and notebooks; the plan counted eighteen and noted an Arabic translation. Anthropic's **Building effective agents** is the source of the workflow-versus-agent distinction. Chip Huyen's **aie-book** is the free companion to *AI Engineering*. The add-on, the free **LangChain Academy** course, serves only the multi-agent module. The plan's chapter numbers and counts are the course owner's, not independently checked; contents change, so check each page. Take notes in your own words, add a line headed "what I would challenge", cite source and chapter in `NOTES.md`, and never paste their text or code into your repository.
 
-**Framework churn.** At the time of writing, Microsoft's lessons use Microsoft's agent framework, Gulli's code uses LangChain, CrewAI and Google ADK, and the labs here use the raw Anthropic SDK. That is deliberate: a developer who has met one pattern in three syntaxes has learned the pattern, not the library. Frameworks churn; the agent loop does not. Raw SDK first, and no group standard before the comparison box in Module 11.
+**Framework churn.** At the time of writing, Microsoft's lessons use Microsoft's agent framework, Gulli's code uses LangChain, CrewAI and Google ADK, and the labs here use the raw Anthropic SDK. That is deliberate: a developer who has met one pattern in three syntaxes has learned the pattern, not the library. Raw SDK first, and no group standard before the comparison box in Module 11.
 
 **How the labs run.** Every lab runs in two modes with identical code. The **offline** mock is free and scripted, so it suits mechanics: messages, tool results, loops, errors, token growth. The **real API** bills per token and gives a real model, which you need for prompt quality, retrieval, safety and true token counts. Switch by pointing `ANTHROPIC_BASE_URL` at the mock or unsetting it. Lesson 0.2 builds the setup.
 
@@ -158,7 +158,7 @@ None of these needs the real API.
 - **Treating the demo as the product.** It proves only the first half. Run a premortem in week one.
 - **Building before "done" is agreed.** Without acceptance criteria, opinion decides, and it moves. Agree them in Module 6.
 - **Using "enterprise-grade" as a slogan.** Replace it with the ten questions and their artefacts.
-- **Copying instead of reading.** Pasted text or framework code teaches nothing and may breach licences. Write notes in your own words and rebuild with the raw SDK.
+- **Copying instead of reading.** Pasted text or code teaches nothing and may breach licences. Write notes in your own words and rebuild with the raw SDK.
 
 ## 🧾 Recap
 - An agent project is eight stages, each with an artefact; a stalled pilot often has only the build artefact.
@@ -235,7 +235,7 @@ None of these needs the real API.
 </details>
 
 ## 📚 References
-- Manning, *Grokking AI Applications* (Andrea De Mauro; the one paid book): https://www.manning.com/books/grokking-ai-applications
+- Manning, *Grokking AI Applications* (Andrea De Mauro; the one paid book; search the title): https://www.manning.com/
 - Antonio Gulli, *Agentic Design Patterns* (free draft; if the link has moved, search the title): https://docs.google.com/document/d/1rsaK53T3Lg5KoGwvf8ukOUvbELRtH-V0LnOIFDxBryE/
 - Microsoft, *AI Agents for Beginners*: https://github.com/microsoft/ai-agents-for-beginners
 - Anthropic, "Building effective agents": https://www.anthropic.com/engineering/building-effective-agents
@@ -254,18 +254,18 @@ None of these needs the real API.
 - Your lab has two modes and one codebase: an **offline mock** (free, scripted) and the **real API** (billed). Only `ANTHROPIC_BASE_URL` and `ANTHROPIC_API_KEY` change.
 - Set up once: Python 3.11 or newer, a virtual environment, the pinned SDK (`anthropic>=1,<2`) and the lab kit.
 - A key lives in `.env`, and `.env` lives in `.gitignore`. Set a spending cap before the first real call.
-- Run `hello.py` at the start of every session. It names the mode before it spends a cent.
-- The mock teaches mechanics, not quality. It accepts any key and model id, and it cannot judge a prompt.
+- Run `hello.py` at the start of every session. It names the mode before it spends anything.
+- The mock teaches mechanics, not quality: it accepts any key and model id and cannot judge a prompt.
 - Cost is arithmetic: tokens from `resp.usage` times prices from the current price page.
 
 ## 🧭 Why it matters
-On her second Tuesday, Lujain pushes her API key to the team repository inside `chat.py`. (Hypothetical, like all Najm stories.) Noura's secret scanner flags it within minutes and the key is revoked. Without a scanner it could cost far more: treat any pushed key as public, since scrapers are widely reported to harvest keys from public repositories. On Thursday she thinks she is offline, but her shell has no `ANTHROPIC_BASE_URL` and her `.env` holds the real key, so a loop test makes dozens of billed calls. The cap she set on Wednesday keeps it small. Two habits prevent both: keep keys out of code, and know your mode before you spend.
+On her second Tuesday, Lujain pushes her API key to the team repository inside `chat.py`. (Hypothetical, like all Najm stories.) Noura's secret scanner flags it within minutes and the key is revoked. Treat any pushed key as public: scrapers are widely reported to harvest keys. On Thursday she thinks she is offline, but her shell has no `ANTHROPIC_BASE_URL` and her `.env` holds the real key, so a loop test makes dozens of billed calls. The cap she set on Wednesday keeps it small.
 
 ## 📐 How it works
 
 ### 🟢 The essentials
 
-**Install.** You need Python 3.11 or newer, the course repository (with the lab kit) and a virtual environment, a private package folder that keeps the course apart from other projects.
+**Install.** You need Python 3.11 or newer, the course repository (with the lab kit) and a virtual environment, a private package folder that keeps this course apart from other projects.
 
 ```bash
 python3 --version                  # 3.11 or newer
@@ -284,7 +284,7 @@ The labs rely on the 1.x SDK's shape, so keep the pin. The shell lines assume ba
 
 ```bash
 python -m labkit.mock_server --port 8787 &       # the offline "API" on your machine
-MOCK_PID=$!                                       # remember the process id
+MOCK_PID=$!
 sleep 2                                           # let it start
 export ANTHROPIC_BASE_URL=http://127.0.0.1:8787 ANTHROPIC_API_KEY=mock
 python labs/m00/hello.py
@@ -300,7 +300,7 @@ stop     : end_turn   request id: req_mock_1e53b1df9d8d
 tokens   : in=18 out=19
 ```
 
-**The API key.** For the real API, create an account in the Claude Console, add billing, and create a key named for the course. The Console usually shows a key once, so copy it into `.env` in the folder you run scripts from; commit only a `.env.example`.
+**The API key.** For the real API, create a Claude Console account, add billing and create a key named for the course. The Console usually shows a key once, so copy it into `.env` in the folder you run scripts from; commit only a `.env.example`.
 
 ```text
 # .gitignore (first lines of your own repository)
@@ -315,9 +315,9 @@ ANTHROPIC_API_KEY=paste-your-real-key-here
 MODEL=claude-sonnet-5-5
 ```
 
-One key per person, never in code, a notebook, a chat message or a screenshot. If one leaks, revoke it in the Console first and clean up second. Before sharing a repository, check its history: `git log -p --all | grep -n "sk-ant-" || echo clean`.
+One key per person, never in code, a notebook, a chat message or a screenshot. If one leaks, revoke it in the Console first and clean up second. Before sharing a repository, check its history without printing a leaked key: `git log -p --all | grep -q "sk-ant-" && echo FOUND || echo clean`. The course repository itself prints FOUND: `flawed_chat.py` in lesson 0.3 plants a fake key on purpose.
 
-**A spending cap.** Set one before the first real call. At the time of writing, the documentation describes a monthly organisation spend limit (on the Console's Billing page) and per-workspace spend limits with alerts. Give the course its own workspace so its key and limit stay separate. Names and places change, so check the Console and the rate-limits page. The cap is a backstop, not a meter: usage figures can lag.
+**A spending cap.** Set one before the first real call. At the time of writing, the documentation describes a monthly spend cap for each usage tier, a lower limit you can set yourself in the Console, and spend and rate limits per workspace (not the default one, so create a workspace for the course). When a limit bites, calls fail (see Troubleshooting). Names and places change; check the rate-limits page. A cap is a backstop, not a meter: watch the Usage page too.
 
 ### 🟡 Going deeper
 
@@ -325,11 +325,11 @@ One key per person, never in code, a notebook, a chat message or a screenshot. I
 
 | The mock does… | The mock does not… |
 |---|---|
-| Keep mechanics honest: stateless calls, `tool_use` and `tool_result` pairing, `max_tokens` truncation, over-long prompts, sampling parameters rejected on the newest models | Understand anything: answers come from rules and keywords |
+| Keep mechanics honest: stateless calls, `tool_use` and `tool_result` pairing, `max_tokens` truncation, over-long prompts, sampling parameters rejected on the newest models (the SDK's `TypeError` comes first) | Understand anything: answers come from rules and keywords |
 | Grow estimated token counts as the history grows | Count tokens like the real tokenizer or enforce real rate limits |
 | Misbehave on request through directives | Check your key or model id: any key works, a typo gives no 404 |
 
-Where a lab needs prompt quality, retrieval quality or safety, it says **Needs the real API**. A directive is a tag in a message that makes the mock misbehave: `[mock:thinking]` adds a thinking block, `[mock:ratelimit]` returns a 429, `[mock:slow]` waits three seconds. `MOCK_CONTEXT_WINDOW=8000` makes overflow cheap.
+Where a lab needs prompt quality, retrieval quality or safety, it says **Needs the real API**. A directive is a tag in a message that makes the mock misbehave: `[mock:thinking]` adds a thinking block, `[mock:ratelimit]` returns a 429, `[mock:slow]` waits three seconds. `MOCK_CONTEXT_WINDOW=8000` makes overflow cheap. Running `pytest` in `aiapps/labkit` checks the mock against the real SDK.
 
 **One codebase, two modes.** The SDK reads two environment variables, a base URL and a key (any dummy value offline), and nothing else changes.
 
@@ -341,7 +341,7 @@ flowchart LR
     Q -->|"no"| R["Anthropic API<br/>billed per token"]
 ```
 
-To go real, stop the mock and run `unset ANTHROPIC_BASE_URL ANTHROPIC_API_KEY`, so the key comes from `.env`. The unset matters: `load_dotenv` never overrides an exported variable, which is a feature until you forget you exported `mock`. The smoke script reports the mode so you need not remember.
+To go real, stop the mock and run `unset ANTHROPIC_BASE_URL ANTHROPIC_API_KEY` so the key comes from `.env`: `load_dotenv` never overrides an exported variable, a feature until you forget you exported `mock`. The smoke script reports the mode so you need not remember.
 
 ```python
 # labs/m00/hello.py
@@ -357,7 +357,7 @@ import anthropic
 from anthropic import Anthropic
 from dotenv import find_dotenv, load_dotenv
 
-load_dotenv(find_dotenv(usecwd=True))          # reads .env from where you run; exported variables win over the file
+load_dotenv(find_dotenv(usecwd=True))          # nearest .env, here or in a parent folder; exported variables win over the file
 MODEL = os.environ.get("MODEL", "claude-sonnet-5-5")   # never hard-code a model id in lab code
 
 
@@ -410,9 +410,9 @@ if __name__ == "__main__":
     sys.exit(main())
 ```
 
-`MODEL` comes from the environment. `max_tokens` is required, and 1024 is a sensible floor on current models because thinking tokens count as output. The reply is the text block chosen by type, never `resp.content[0].text`. Log `resp.usage` and `resp._request_id` on every call. `stop` is `resp.stop_reason`; a production loop must handle every value (Module 1). The two `except` clauses show the SDK's split: no response at all, or an HTTP error with a status.
+`MODEL` comes from the environment. `max_tokens` is required; 1024 is a sensible floor on current models because thinking tokens count as output. The reply is the text block chosen by type, never `resp.content[0].text`. Log `resp.usage` and `resp._request_id` on every call, and handle every `stop_reason` in a production loop (Module 1).
 
-**From usage to money.** A call costs `(input tokens × input price + output tokens × output price) ÷ 1,000,000`. Prices change, so copy them from the current price page into two environment variables, never into code. `output_tokens` includes thinking tokens, and some newer model generations count the same text as about 30% more tokens (per the model reference), so re-measure after a model change. Usage also reports cache tokens, priced differently (Module 14). To count before sending, use `client.messages.count_tokens`, never `tiktoken`. Input grows fast, because every call resends the whole history.
+**From usage to money.** A call costs `(input tokens × input price + output tokens × output price) ÷ 1,000,000`. Prices change, so copy them from the current price page into two environment variables, never into code. `output_tokens` includes thinking tokens, and Anthropic's model notes say some newer generations count the same text as about 30% more tokens, so re-measure after a model change. With caching on, `input_tokens` counts only the uncached part and the cache fields are priced differently (Module 14). Count before sending with `client.messages.count_tokens`, never `tiktoken`. Input grows fast, because every call resends the history.
 
 ```python
 # labs/m00/cost.py
@@ -450,31 +450,30 @@ if __name__ == "__main__":
         print("set PRICE_IN_PER_MTOK and PRICE_OUT_PER_MTOK from the current price page to see money")
 ```
 
-With invented prices of 1 and 5 units per million tokens, used only to show the arithmetic, `python labs/m00/cost.py --turns 12` prints:
+With invented prices of 1 and 5 units per million tokens, only to show the arithmetic, `PRICE_IN_PER_MTOK=1 PRICE_OUT_PER_MTOK=5 python labs/m00/cost.py --turns 12` prints:
 
 ```text
 one conversation: in=39180 out=3000 tokens;  pilot: 70,524,000 in, 5,400,000 out over 1,800 conversations
 cost: 0.05418 per conversation, 97.52 for the pilot; budget at x2: 195.05
 ```
 
-Doubling the turns from six to twelve nearly tripled the input tokens (14,010 to 39,180). The "x2" is a rule of thumb; replace it with your measured ratio.
-
-**Run the lab-kit tests.** From `aiapps/labkit`, run `pytest`. They check the mock against the real SDK, and this lesson's scripts; rerun them after any SDK upgrade. They say nothing about your prompts.
+Doubling the turns from six to twelve multiplied the input tokens by about 2.8 (14,010 to 39,180). The model ignores caching, tool schemas and retrieval, and `--answer` must include thinking tokens. The "x2" is a rule of thumb; use your measured ratio.
 
 **Troubleshooting.** Real error texts differ from the mock's approximations, so read yours.
 
 | Symptom | Likely cause | What to do |
 |---|---|---|
-| 401 `AuthenticationError`, or "Could not resolve authentication method" | Key missing, wrong or revoked; `mock` sent to the real API; `ANTHROPIC_AUTH_TOKEN` also set | Run `hello.py`; check `.env` is found from where you run; make a new key |
-| 404 `NotFoundError` "model: …" | Typo (dots for dashes), a retired model, or one your organisation cannot use | Copy the id from the models page; the mock never rejects a model id |
+| `TypeError` "Could not resolve authentication method" (nothing sent), or 401 `AuthenticationError` | No key; or a key wrong or revoked; `mock` sent to the real API; `ANTHROPIC_AUTH_TOKEN` also set | Run `hello.py`; check `.env` is found; make a new key |
+| 404 `NotFoundError` "model: …" | Typo (dots for dashes), a retired model, or one your organisation cannot use | Copy the id from the models page (the mock never rejects one) |
 | 400 `BadRequestError`, such as "prompt is too long" | History past the context window, an invalid parameter, a missing `tool_result` | Read `e.message`; trim old turns (Module 1) |
 | 429 `RateLimitError`, or 500 and 529 | Rate limit; or provider-side trouble | The SDK retries twice; slow down, check `retry-after`, retry with backoff |
+| 400 "You have reached your specified API usage limits", a 402 `billing_error`, or a 429 with no `retry-after` | Your spend limit, the tier's monthly cap or a billing problem | Raise the limit, fix billing or wait for the reset; retries cannot help |
 | "Connection refused" (`APIConnectionError`) | Mock not running, wrong port, a firewall | Start the mock; use `127.0.0.1` and the same port |
-| Works at home, fails at the bank | A corporate proxy or TLS inspection | Set `HTTPS_PROXY`; add `127.0.0.1` to `NO_PROXY`; ask IT for the certificate bundle; or pass `DefaultHttpxClient(proxy=...)` to the client |
+| Works at home, fails at the bank | A corporate proxy or TLS inspection | Set `HTTPS_PROXY` and `NO_PROXY=127.0.0.1`; point `SSL_CERT_FILE` at IT's certificate bundle; or pass `DefaultHttpxClient(proxy=...)` |
 
 ### 🔴 Expert view
 
-**A key is a credential; a base URL is a trust decision.** Pair a real key with a non-local `ANTHROPIC_BASE_URL` and that server receives your key and every prompt. Enterprise gateways are legitimate, but treat one like any third party; that is why `hello.py` flags a custom endpoint. Custody also grows: `.env` suits a laptop, and later modules move keys into a secret manager, one per environment. The cap bounds any leak.
+**A key is a credential; a base URL is a trust decision.** Pair a real key with a non-local `ANTHROPIC_BASE_URL` and that server receives your key and every prompt. Enterprise gateways are legitimate; treat one as a third party, which is why `hello.py` flags it. `.env` suits a laptop; later modules move keys into a secret manager, one per environment.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -487,7 +486,7 @@ Doubling the turns from six to twelve nearly tripled the input tokens (14,010 to
 | **Cost estimate** | Tokens × price, projected over a pilot | Before a pilot, then with measured numbers |
 
 ## 🏛️ In practice at Najm Bank
-**Deliverable, part 1 of week 0: your lab repository.** Create a private repository next to the cloned course repository. Claude Code builds the skeleton below; you read every file it writes.
+**Deliverable, part 1 of week 0: your lab repository.** Create a private repository next to the cloned course repository. Claude Code builds the skeleton below; you read every file.
 
 ```text
 najm-desk-lab/                  your own private repository
@@ -497,9 +496,9 @@ najm-desk-lab/                  your own private repository
 └── week-00/NOTES.md  hello-mock.txt  hello-real.txt   (one week-NN folder per module)
 ```
 
-`week-00/NOTES.md` has five headings: **Spending cap**, **Key storage**, **Mode checks** (pasted output), **Cost estimate** (assumptions and a range) and **Surprises**.
+`week-00/NOTES.md` has five headings: **Spending cap**, **Key storage**, **Mode checks** (pasted output), **Cost estimate** (assumptions and a range) and **Surprises**. Only the 🟡 exercise needs the real API; nothing this week shows whether a real model answers well.
 
-**Group session, part 1: setup clinic (30 minutes).** Everyone shows the mode line of an offline run. One person stops the mock and shows the failure. Pairs search each other's history for `sk-ant-`. Everyone says where their cap is set.
+**Group session, part 1: setup clinic (30 minutes).** Everyone shows the mode line of an offline run; one person stops the mock and shows the failure. Pairs search each other's history for `sk-ant-`. Everyone says where their cap is set.
 
 **Build it with Claude Code.** Give it this spec, and approve its plan before it edits anything.
 
@@ -532,25 +531,25 @@ Add CI, Docker or extra features. Do not commit. Plan first and wait for my OK.
 
 **Verify before you accept it.**
 - Run all four acceptance checks yourself; "it should work" is no result.
-- Read the Makefile for kill-by-name and for edits to the course repository.
+- Read the Makefile for kill-by-name and edits to the course repository.
 - Read both scripts: does `use-real.sh` unset both variables, and does anything echo a key?
 
 ## 🛠️ Exercises
-- 🟢 **The smoke script, offline.** Run `hello.py` with the mock running, with it stopped, and with the key unset. *Done when:* three outputs are saved in `week-00/` with their exit codes (0, 1, 2 from `echo $?`) and you can explain every line of the first. No real API needed.
-- 🟡 **The same script, real API.** Put your key in `.env`, set the price variables, unset the mock variables and run it. *Done when:* the mode says `REAL API (billable)`, the token counts differ from the mock's, the request id is saved, the cost line matches your arithmetic, and a history search for `sk-ant-` finds nothing. **Needs the real API.**
-- 🔴 **Record the cap and the estimate.** Run `cost.py` for the whole course under a low, an expected and a high scenario. *Done when:* `NOTES.md` states the cap (where, amount, who can change it), three scenario costs with assumptions, an alert threshold below the cap, and your response when usage reaches it. Needs Console access, not API calls.
+- 🟢 **The smoke script, offline.** Run `hello.py` with the mock running, with it stopped, and with the key unset. *Done when:* three outputs are saved in `week-00/` with their exit codes (0, 1, 2 from `echo $?`) and you can explain every line of the first. Run the third where no `.env`, in the folder or a parent, supplies a key. No real API needed.
+- 🟡 **The same script, real API.** Put your key in `.env`, set the price variables, unset the mock variables and run it. *Done when:* the mode says `REAL API (billable)`, the token counts differ from the mock's, the request id is saved, the cost line matches your arithmetic, and a history search finds no `sk-ant-`. **Needs the real API.**
+- 🔴 **Record the cap and the estimate.** Run `cost.py` for the whole course under a low, an expected and a high scenario. *Done when:* `NOTES.md` states the cap (where, amount, who can change it), three scenario costs with assumptions, a warning threshold below the cap (a Console alert if offered, otherwise a calendar check) and your response when usage reaches it. Needs Console access, not API calls.
 
 ## ⚠️ Mistakes and traps
-- **A key in code, a notebook or a screenshot.** Use `.env`, ignore it, scan history, revoke at once if it leaks.
-- **Not knowing your mode.** A forgotten variable turns "offline" into billed calls. Run `hello.py` first, every session.
-- **Trusting the mock for quality.** It cannot tell a good prompt from a bad one. Use the real API for that.
-- **Hard-coding the model id or prices.** Both change. Read them from the environment.
+- **A key in code, a notebook or a screenshot.** Use `.env`, scan history, revoke at once if it leaks.
+- **Not knowing your mode.** A forgotten variable turns "offline" into billed calls. Run `hello.py` first.
+- **Trusting the mock for quality.** It cannot tell a good prompt from a bad one; use the real API.
+- **Hard-coding the model id or prices.** Both change; read them from the environment.
 
 ## 🧾 Recap
-- One codebase, two modes: the mock is free and scripted, the real API is billed; two environment variables switch them.
-- Pin `anthropic>=1,<2`, keep keys in an ignored `.env`, and set a spending cap before the first real call.
-- The mock accepts any key and model id, and never judges quality.
-- Cost is tokens times price, and input grows each turn because the history is resent.
+- One codebase, two modes: the mock is free and scripted, the real API is billed; two variables switch them.
+- Pin `anthropic>=1,<2`, keep keys in an ignored `.env`, and cap spending before the first real call.
+- The mock accepts any key and model id and never judges quality.
+- Cost is tokens times price; input grows each turn because the history is resent.
 
 ## ✍️ Check yourself
 
@@ -621,10 +620,10 @@ Add CI, Docker or extra features. Do not commit. Plan first and wait for my OK.
 
 ## 📚 References
 - Anthropic SDK for Python: https://github.com/anthropics/anthropic-sdk-python
-- Anthropic developer documentation (start page): https://docs.anthropic.com/
 - Models overview: https://platform.claude.com/docs/en/about-claude/models/overview
 - Pricing: https://platform.claude.com/docs/en/about-claude/pricing
 - Rate limits and spend limits: https://platform.claude.com/docs/en/api/rate-limits
+- Workspaces: https://platform.claude.com/docs/en/manage-claude/workspaces
 - Errors: https://platform.claude.com/docs/en/api/errors
 - Token counting: https://platform.claude.com/docs/en/build-with-claude/token-counting
 - Python virtual environments: https://docs.python.org/3/library/venv.html
@@ -644,9 +643,9 @@ Add CI, Docker or extra features. Do not commit. Plan first and wait for my OK.
 - Biggest trap: green tests you have not read.
 
 ## 🧭 Why it matters
-Lujain asks Claude Code for a Najm Desk chat script. Forty seconds later she has sixty tidy lines and passing tests. In review, Fahad asks: what happens when the reply starts with a thinking block? Where does the history grow, and where does it stop? What have you checked besides "it ran"? Lujain cannot answer: she has not read the code. (Hypothetical.)
+Lujain asks Claude Code for a Najm Desk chat script. Forty seconds later she has sixty tidy lines and passing tests. In review, Fahad asks: what happens when the reply starts with a thinking block? Where does the history grow, and where does it stop? Lujain cannot answer: she has not read the code. (Hypothetical.)
 
-Delegating the typing does not delegate the responsibility. As reported in July 2025, an AI coding assistant deleted a production database during a declared code freeze and then misdescribed what it had done. Details vary by account, but an agent acts on the instructions and permissions you give it.
+Delegating the typing does not delegate the responsibility. As reported in July 2025, an AI coding assistant deleted a production database during a declared code freeze and then misdescribed what it had done. Details vary by account, but an agent acts on the permissions you give it.
 
 ## 📐 How it works
 
@@ -679,7 +678,7 @@ Weak: "Write a chatbot for the service desk using Claude." Expect a framework, a
 
 ### 🟡 Going deeper
 
-**CLAUDE.md: project memory.** Claude Code reads this file at the start of a session (check the current documentation for how and where). Keep it short and specific (the documentation suggests staying under about 200 lines): commands, conventions and rules beat prose. This is a complete template for an agent project.
+**CLAUDE.md: project memory.** Claude Code reads this file at the start of a session. Keep it short and specific (the documentation suggests staying under about 200 lines): commands, conventions and rules beat prose. This is a complete template for an agent project.
 
 ```markdown
 # CLAUDE.md — Najm Desk agent project
@@ -692,7 +691,7 @@ Najm Desk is an AI assistant for the IT Service Desk of Najm Bank (a fictional e
 - Mock server (offline, free): make mock; make stop when done
 - Smoke test: source scripts/use-mock.sh && make hello
 - Tests (offline): make test for the lab kit, pytest -q for this repository
-- Evals (from Module 12): python evals/run_eval.py --mode mock. Real-API evals cost money: only when I say "real API OK" and week-00/NOTES.md records a spending cap
+- Evals (add the command in Module 12). Real-API runs cost money: only when I say "real API OK" and week-00/NOTES.md records a spending cap
 
 ### Conventions
 - Python 3.11+, type hints, small functions, comments that explain why.
@@ -728,7 +727,7 @@ Tests pass offline; new behaviour has a test that fails without the change; eval
 | **Hooks** | Commands run automatically on events, such as after an edit | Run `pytest -q` or the eval after edits; block edits to `.env` |
 | **Subagents** | Separate assistants with their own context and tool limits | A read-only reviewer fed the diff and the checklist |
 | **MCP servers** | Add outside tools or data | Read-only sandbox access first; each is code you run and text the model reads, so vet it |
-| **Headless mode** | A non-interactive run for scripts and CI | Advisory review comments; never auto-merge |
+| **Headless mode** | A non-interactive run (`claude -p`) for scripts and CI | Advisory review comments; never auto-merge |
 
 **A build-spec template.** Fill it in for every change; each field removes a way to guess.
 
@@ -759,7 +758,7 @@ PROCESS: plan first and wait for my OK; small steps; tests after each; summarise
 
 | Look for | Why it bites | How to catch it |
 |---|---|---|
-| **Stale or invented parameters** (`temperature`, `budget_tokens`, prefill, forced `tool_choice`) | A `TypeError` for sampling arguments in the 1.x SDK; a 400 from current models for the rest | Run it; read the SDK signature and the models page |
+| **Stale or invented parameters** (`temperature`, `budget_tokens`, prefill, forced `tool_choice`) | A `TypeError` for sampling arguments in the 1.x SDK; a 400 from the newest models for the rest | Run it; read the SDK signature and the models page |
 | **`content[0].text`** | Breaks when a thinking block comes first | A `[mock:thinking]` test; choose the block by type |
 | **No `max_tokens`, or no loop cap** | A `TypeError`, or a runaway loop and bill | Read every `create` and every `while` |
 | **A missing `tool_result`** | A 400, or a model that loses the thread | One result per `tool_use` id, in one message |
@@ -772,7 +771,7 @@ PROCESS: plan first and wait for my OK; small steps; tests after each; summarise
 
 **The verification pyramid.** Climb from the cheap base; do not stop low when a higher rung matters.
 
-1. **Static checks** (linter, types, secret scan): seconds, free, on every save.
+1. **Static checks** (linter, types, secret scan): on every save.
 2. **Offline unit tests against the mock**: mechanics, on every commit.
 3. **Contract tests**: tool schemas and structured output validate.
 4. **Evals on a real model**: quality on a golden set, which costs money (Module 12).
@@ -807,7 +806,7 @@ For depth, see [*System Design for Vibe Coders*, lesson 9.4 — Verification bef
 | **Verification pyramid** | Static, offline, contract, eval, human, production checks | To decide how much evidence a change needs |
 
 ## 🏛️ In practice at Najm Bank
-Fahad's rule: nothing an agent writes is merged unread. Your artefacts are a `CLAUDE.md`, the checklist as a pull-request template, and a first review. Lujain's agent wrote this `chat.py`. It runs, it looks fine, and it has five planted flaws. Read it as the reviewer.
+Fahad's rule: nothing an agent writes is merged unread. Your artefacts are a `CLAUDE.md`, the checklist as a pull-request template, and a first review. Lujain's agent wrote this `chat.py`. It runs, it looks fine, and it has five planted flaws (plus ordinary gaps, such as no `stop_reason` check, that you may list as extras). Read it as the reviewer.
 
 ```python
 # labs/m00/flawed_chat.py
@@ -875,9 +874,9 @@ if __name__ == "__main__":
             print("bot>", ask(line))
 ```
 
-The tests in `labkit/tests/test_m00_flawed_chat.py` prove each flaw against the 1.x SDK or the mock; to see the amnesia, start the mock with `--playbook playbooks/m00_flawed_chat.json` and ask "How do I request a laptop?", then "And how long does it take?". Do not fix the lab file: copy it into your repository and fix the copy.
+The tests in `labkit/tests/test_m00_flawed_chat.py` prove each flaw against the 1.x SDK or the mock; to see the amnesia, start the mock with `--playbook playbooks/m00_flawed_chat.json` and ask "How do I request a laptop?", then "And how long does it take?".
 
-**What the mock can and cannot show here.** The `TypeError`s come from the real 1.x SDK; the thinking block and the amnesia from the mock's scripted replies. It cannot show flaw 1's real effect (a 401; **Needs the real API**) or whether a real model answers well.
+**What the mock can and cannot show here.** The `TypeError`s come from the real 1.x SDK; the thinking block and the amnesia from the mock's scripted replies. It cannot show flaw 1's real effect (a 401; **Needs the real API**) or whether a real model answers well. A real model may skip the thinking block on a given prompt, which is how flaw 2 hides in demos.
 
 **Week 0 deliverable, complete.** In `week-00/`: the lesson 0.2 `NOTES.md` and outputs; a `review.md` with the five flaws; the 🔴 exercise's spec and diff review; the platform table; and, at the repository root, your `CLAUDE.md`.
 
@@ -959,7 +958,7 @@ The tests in `labkit/tests/test_m00_flawed_chat.py` prove each flaw against the 
 
 - A. Nothing, since passing tests prove the answers are correct
 - B. A longer `CLAUDE.md` with many more rules in it
-- C. A real-model eval on a golden set that you can explain
+- C. A real-model eval on a golden set of questions
 - D. A second Claude Code review of the same passing tests
 
 <details><summary>Answer</summary>

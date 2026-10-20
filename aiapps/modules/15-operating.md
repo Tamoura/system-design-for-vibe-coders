@@ -1,6 +1,6 @@
 # Module 15 — Operating and handing over
 
-*A shipped agent still has to be kept healthy, and then it has to belong to someone else. Lesson 15.1 is about the first job: traces that show what every run did without keeping what staff said, dashboards and SLO alerts that do not train people to ignore them, five incident classes with a runbook and a kill switch, blameless postmortems, a feedback loop that turns failures into eval cases, and change management for prompts and models. Its lab turns JSONL traces into a cost, latency and failure report and runs an incident drill that proves the kill switch stops a runaway agent. Lesson 15.2 is the handover workshop: acceptance testing with the customer, the documentation set, training, the support model, adoption, benefits tracking against the fictional baseline, hypercare, and closing the engagement. Its lab turns the acceptance criteria into a UAT script that a runner can rehearse, with a user guide, a runbook index and a handover checklist for Najm Desk.*
+*A shipped agent still has to be kept healthy, and then it has to belong to someone else. Lesson 15.1 is about the first job: traces that show what every run did without keeping what staff said, dashboards and SLO alerts that do not train people to ignore them, five incident classes with a runbook and a kill switch, blameless postmortems, a feedback loop that turns failures into eval cases, and change management for prompts and models. Its lab turns JSONL traces into a cost, latency and failure report and runs an incident drill in which the kill switch stops a runaway mock agent. Lesson 15.2 is the handover workshop: acceptance testing with the customer, the documentation set, training, the support model, adoption, benefits tracking against the fictional baseline, hypercare, and closing the engagement. Its lab turns the acceptance criteria into a UAT script that a runner can rehearse, with a user guide, a runbook index and a handover checklist for Najm Desk.*
 
 > **Layer:** Production, Delivery — keeping an agent healthy while it runs, and handing it to the customer so that they can own it.
 
@@ -23,7 +23,7 @@ Thursday night Lujain ships a prompt that shortens answers (hypothetical). Sunda
 
 ### 🟢 The essentials
 
-**Agents fail softly.** A web service fails loudly. An agent also gives confident wrong answers, loops while burning tokens, or obeys an injected order. So observe the **run**: one message handled until a stop reason (lesson 8.2).
+**Agents fail softly.** A web service fails loudly; an agent can answer wrongly with confidence, loop while burning tokens, or obey an injected order, all without an error. So observe the **run**: one message handled until a stop reason (lesson 8.2).
 
 ```mermaid
 flowchart TD
@@ -32,9 +32,9 @@ flowchart TD
     T --> L["Tool call: tool, result size, error, refused"]
 ```
 
-**PII-safe logging** (PII is personal data). Weak: log every prompt and answer "for debugging". Strong: log ids, sizes and reasons; mask first (lesson 13.1); allow-list logged fields; keep any text in a separate, short-lived store (Sara decides, lesson 13.2). Conversation ids are random, never an employee number; a hashed user id is still personal data. Lab 8.2's `Trace` keeps clipped text: fine for a lab; in production log sizes instead.
+**PII-safe logging** (PII is personal data). Weak: log every prompt and answer "for debugging". Strong: log ids, sizes and reasons; mask first (lesson 13.1); allow-list logged fields; keep any text in a separate, short-lived store (Sara decides, lesson 13.2). Conversation ids are random, never an employee number; a hashed user id is usually still personal data. Lab 8.2's `Trace` keeps clipped text: fine for a lab; in production log sizes instead.
 
-**OpenTelemetry.** The Anthropic SDK can emit OpenTelemetry spans, one per call (beta at the time of writing; pin the version), with `gen_ai.*` attributes from the GenAI semantic conventions, still evolving. Content is off by default; enable it only after Sara agrees. A `conversation_id` you set is exported even then: never put personal data in it.
+**OpenTelemetry.** The Anthropic SDK can emit OpenTelemetry spans, one per call (beta at the time of writing; pin the version), with `gen_ai.*` attributes from the still-evolving GenAI semantic conventions. Spans hold metadata only by default (`metadata_only`); turn on `content` only after Sara agrees. A `conversation_id` you set is exported in both modes: never put personal data in it. Log `resp._request_id` per call, for failure reports.
 
 ### 🟡 Going deeper
 
@@ -53,7 +53,7 @@ slo      : success 65.4% (want 90%+) BREACH | p95 11.9 s (want 10 s or less) BRE
 privacy  : card in start.goal x1, email in start.goal x1, secret in start.goal x1
 ```
 
-(`r41` prints first.) Read outcomes, tails (p95) and money per **resolved** conversation, since failed runs cost too. The baseline passes both SLOs; the canary fails both and costs over twice as much per resolved conversation: roll it back. The privacy line is a second finding: an old logger kept raw text. The exit code makes this a cron job, the cheapest alert. The report counts `done`, so it would have missed the Sunday incident: add a `cited` flag to `stop`.
+(`r41` prints first.) Read outcomes, tails (p95) and money per **resolved** conversation, since failed runs cost too. The baseline passes both SLOs; the canary fails both and costs over twice as much per resolved conversation: roll it back. The privacy line is a second finding: an old logger kept raw text. The exit code makes this a cron job, the cheapest alert. The report counts `done`, so it would have missed the Sunday incident: add a `cited` flag to `stop`. `input_tokens` excludes cached tokens: if you cache prompts, also log `cache_creation_input_tokens` and `cache_read_input_tokens` (lesson 14.2), or cost and the breaker undercount.
 
 ```python
 # labs/m15/trace_report.py
@@ -79,7 +79,7 @@ def pct(xs, p):
 
 
 def report(label, runs):
-    """Print one group of runs (each a list of events); return True when it breaches an SLO."""
+    """Print one group of runs; return True when it breaches an SLO."""
     stops = [next((e for e in ev if e["event"] == "stop"), {}) for ev in runs]       # no stop event: the process died or was killed
     reasons, secs = Counter(s.get("reason", "no_stop_line") for s in stops), [s["seconds"] for s in stops if "seconds" in s]
     usage = [[sum(e.get(k, 0) for e in ev if e["event"] == "model") for k in ("input_tokens", "output_tokens")] for ev in runs]
@@ -115,23 +115,23 @@ if __name__ == "__main__":
     sys.exit(1 if any(breached) or leaks or bad or not runs else 0)        # no traces at all is an incident too
 ```
 
-**Dashboards, SLOs and alerts.** Four panels: outcomes by stop reason, quality proxies (citations, hand-offs, ratings), latency and cost, guard and tool errors. Targets come from requirements: success (`done` is a proxy), p95 (NFR-01), availability (NFR-02), cost per resolved conversation (NFR-06). A month has about 217 desk hours, so 99.5% leaves about one; at a **burn rate** (bad fraction seen over allowed) of 10 it is gone in about two desk days. Page when a short and a long window burn fast ([*Cloud & DevOps*, lesson 5.2 — SLOs, error budgets, alerting and on-call that people can sustain](../cloud/index.html#/5.2)). Against fatigue: page on symptoms, give each alert a runbook, delete alerts nobody acts on.
+**Dashboards, SLOs and alerts.** Four panels: outcomes by stop reason, quality proxies (citations, hand-offs, ratings), latency and cost, guard and tool errors. Targets come from requirements: success (`done` is a proxy), p95 (NFR-01), availability (NFR-02), cost per resolved conversation (NFR-06). A month has about 217 desk hours, so 99.5% leaves about one; at a **burn rate** (bad fraction seen over allowed) of 10 it is gone in about two desk days. Page when a short and a long window burn fast ([*Cloud & DevOps*, lesson 5.2 — SLOs, error budgets and alerting](../cloud/index.html#/5.2)). Against fatigue: page on symptoms, give each alert a runbook, delete ignored alerts.
 
 | Incident class | It looks like | Then |
 |---|---|---|
 | Wrong-answer storm | Ratings fall, citations vanish | `--by release`; roll back |
 | Tool outage | Tool errors; the agent apologises | `write_tools` off; ask the owner |
 | Cost spike | Tokens jump; `iteration_cap` rises | Did the breaker act? |
-| Injection incident | Guard fires; an odd tool call | `write_tools` off; call Noura |
+| Injection incident | Guard fires; an odd tool call | `write_tools` off; call Noura, and Sara if data left |
 | Regression after a change | The canary is worse | Previous release |
 
-Each has a runbook (`labs/m15/runbooks/`); all start by **stopping**. The kill switch is a file outside the model, read on every loop step, with two flags (lesson 7.1): `model_calls` off gives degraded mode, `write_tools` off gives read-only. It **fails closed** (an unreadable file means off); anyone on the IT on-call rota may press it, only L2 or L3 resumes, and it is **drilled**. One host can share a file; several instances need shared configuration, read the same way.
+Each has a runbook (`labs/m15/runbooks/`); all start by **stopping**. The kill switch is a file outside the model, read on every loop step, with two flags (lesson 7.1): `model_calls` off gives degraded mode, `write_tools` off gives read-only. It **fails closed** (an unreadable file means off); anyone on the IT on-call rota may press it, only L2 or L3 resumes, and it is **drilled**. One host can share a file; several instances need shared configuration.
 
 **The drill.** `[mock:loop]` plays an agent that repeats one tool for ever, with the cap raised to 500 so only the switch can stop it. Act one: a person flips it after call five. Act two: the cost breaker, at 12,000 tokens an hour, must. A drill number: the sample's busiest normal hour is far higher.
 
 ```python
 # labs/m15/kill_switch.py
-"""Lab 15.1: a kill switch, a cost breaker that pulls it, and a drill that proves both (the mock supplies [mock:loop]).
+"""Lab 15.1: a kill switch, a cost breaker that pulls it, and a drill that proves both.
   python labs/m15/kill_switch.py drill [DIR]
   python labs/m15/kill_switch.py flip FILE FLAG on|off WHO WHY   FLAG: model_calls, write_tools or all"""
 import json
@@ -256,13 +256,13 @@ operator {'reason': 'killed', 'model_calls': 5, 'tokens': 4950, 'new_request': '
 breaker {'reason': 'killed', 'model_calls': 8, 'tokens': 13392, 'new_request': 'killed', 'new_request_calls': 0}
 ```
 
-No call started after the flip, and the loop ended at call five, not 500. The breaker overshot by under one call, since spend is added after a call: set limits below the pain point. A new conversation reached the model zero times. *Works offline:* the switch, breaker, drill and report. *Needs the real API:* whether a real model loops like `[mock:loop]`, real token counts (the mock estimates them), your own peak hour. The lab agent has no writes: wire `write_tools` into your tool gate.
+No call started after the flip; the loop ended at call five, not 500. The breaker overshot by under one call (spend is added after a call): set limits below the pain point. A new conversation made no model call. *Works offline:* the switch, breaker, drill and report. *Needs the real API:* whether a real model loops like `[mock:loop]`, real token counts (the mock estimates them), your own peak hour. The lab agent has no writes: wire `write_tools` into your tool gate.
 
 ### 🔴 Expert view
 
-**Blameless postmortems.** Each incident has a lead, an operator and a scribe. Within five working days of every use of the switch, write up impact, timeline, detection, contributing factors, actions with owner and date. Weak: "Lujain pushed a bad prompt." Strong: "A prompt reached all traffic with no canary and no trace version, so detection took two hours." Blameless is not ownerless ([*Cloud & DevOps*, lesson 5.3 — Incidents and blameless postmortems](../cloud/index.html#/5.3)).
+**Blameless postmortems.** Name a lead, an operator and a scribe. Within five working days of every use of the switch, write up impact, timeline, detection, contributing factors, actions with owner and date. Weak: "Lujain pushed a bad prompt." Strong: "A prompt reached all traffic with no canary and no trace version, so detection took two hours." Blameless is not ownerless ([*Cloud & DevOps*, lesson 5.3 — Incidents and blameless postmortems](../cloud/index.html#/5.3)).
 
-**The feedback loop.** Sources: ratings with a reason, hand-offs, draft rewrites, repeat contacts within three working days, runs not ending `done`. A weekly triage (Yara, Lujain) labels causes and turns the worst into **eval cases**: personal data removed, one expected behaviour, a requirement id. Review first; duplicates hide regressions ([*Software Testing*, lesson 7.3 — Safety, robustness, fairness and monitoring: red-teaming, metamorphic tests, drift and turning incidents into tests](../testing/index.html#/7.3)).
+**The feedback loop.** Sources: ratings with a reason, hand-offs, draft rewrites, repeat contacts within three working days, runs not ending `done`. A weekly triage (Yara, Lujain) labels causes and turns the worst into **eval cases**: personal data removed, one expected behaviour, a requirement id. Review first; duplicates hide regressions ([*Software Testing*, lesson 7.3 — Safety, robustness, fairness and monitoring](../testing/index.html#/7.3)).
 
 **Change management.** Prompt, tool, retrieval content, guardrail rule, model id and limits are all changes. Name the version to roll back to; evaluate with the gate (lesson 12.2) and red-team set (lesson 13.1), comparing cost and latency; approve per the change policy (lesson 13.2); canary with desk agents against preset thresholds (`--by release`); then promote, or roll back: a prompt or model id by repointing configuration, an image by redeploying the previous digest (lesson 14.1). Pin and record the model id; name who watches deprecation notices.
 
@@ -346,7 +346,7 @@ Do not weaken a test. Run the tests after each step.
 
 **3. The canary shows 65% done and p95 11.9 s; the baseline 93% and 5.3 s. What first?**
 
-- A. Wait a week to collect more data first
+- A. Wait a week for more data
 - B. Raise the p95 target to 12 s
 - C. Add retries to the canary's tool calls
 - D. Point configuration back at the old release
@@ -359,9 +359,9 @@ Do not weaken a test. Run the tests after each step.
 
 **4. A CPU alert pages the on-call person thirty times a month and nobody acts. What is the best fix?**
 
-- A. Page a second person so that someone acts
+- A. Page a second person as well
 - B. Retire the page and alert on symptoms instead
-- C. Raise its threshold a little each month until it stops
+- C. Raise its threshold each month until it stops
 - D. Mute the channel and read it on Mondays
 
 <details><summary>Answer</summary>
@@ -420,7 +420,7 @@ flowchart LR
     E --> F["Close: lessons learned, next phase"]
 ```
 
-**Acceptance testing.** UAT is not QA, where builders hunt defects, and not an eval, which scores a set. The customer's people run agreed scenarios in a production-like environment and decide. Derive the script from the acceptance criteria (lesson 6.2): each row has an id, the criteria and requirements it proves, who runs it, what they say, what must be true, and how it runs (`auto`, `real` model, or `person`). Weak: "it answers policy questions well". Strong: "a laptop question gets an answer citing [laptop-requests], and no ticket appears". A reply shows what the agent said; only the system of record, TicketHub or Najm ID, shows what it did.
+**Acceptance testing.** UAT is not QA, where builders hunt defects, and not an eval, which scores a set. The customer's people run agreed scenarios in a production-like environment and decide. Derive the script from the acceptance criteria (lesson 6.2): each row has an id, the criteria and requirements it proves, who acts, what they say, what must be true, and how it runs (`auto`, `real` model, or `person`). Weak: "it answers policy questions well". Strong: "a laptop question gets an answer citing [laptop-requests], and no ticket appears". A reply shows what the agent said; only the system of record, TicketHub or Najm ID, shows what it did.
 
 **Who signs.** Hind for business acceptance, Yara for operations, Noura for the security rows, Layla for the governance pack and residual risk, Fahad for the truthfulness of the evidence. People sign; tools only gather evidence.
 
@@ -434,7 +434,7 @@ flowchart LR
 
 ### 🟡 Going deeper
 
-**The lab.** The UAT script's scenario table is data. `uat_runner.py` executes the rows it can and reports; the default app is Lab 7.2's thin slice, and yours plugs in with `--app module:function`. An excerpt of `labs/m15/handover/uat_script.md`:
+**The lab.** The UAT script's scenario table is data. `uat_runner.py` executes the rows it can and reports; the default app is Lab 7.2's thin slice, and yours plugs in with `--app module:function` (a file in the folder you run from). An excerpt of `labs/m15/handover/uat_script.md`:
 
 ```markdown
 | ID | Criterion | Who | Says | Expect | How |
@@ -457,6 +457,7 @@ import sys
 import time
 from collections import namedtuple
 from pathlib import Path
+from urllib.parse import urlparse
 
 Row = namedtuple("Row", "id criterion who says expect how")
 HERE = Path(__file__).resolve().parent
@@ -492,6 +493,7 @@ def parse(text):
 def load_app(spec=None):
     if spec:
         module, _, name = spec.partition(":")
+        sys.path.insert(0, os.getcwd())                       # your app is a file in the folder you run this from
         return getattr(importlib.import_module(module), name)
     sys.path.append(str(HERE.parent / "m07"))
     import demo                                           # noqa: E402  Lab 7.2: respond(user, text) -> (route, Reply)
@@ -500,7 +502,7 @@ def load_app(spec=None):
 
 def is_real():
     """Real mode: not the local mock, and a real key (the same test as Lab 12.2's check_mode)."""
-    local = os.environ.get("ANTHROPIC_BASE_URL", "").startswith(("http://127.0.0.1", "http://localhost"))
+    local = urlparse(os.environ.get("ANTHROPIC_BASE_URL", "")).hostname in ("127.0.0.1", "localhost")
     return not local and os.environ.get("ANTHROPIC_API_KEY", "mock") != "mock"
 
 
@@ -578,18 +580,18 @@ Seven rows pass: the thin slice implements them, and the mock copies the best se
 
 Each level escalates to the next; risk owners join for injection and privacy. Yara decides what Najm Desk should say or do, Developer Enablement makes and tests the change, Noura approves anything security-relevant, and Layla hears of material changes. Hind sets the response targets; name who reads the provider's deprecation notices.
 
-**Adoption.** Train **champions**, one or two per shift, first. Communicate before go-live (what it does and will not do), at go-live (how to give feedback) and after (what changed because of feedback). Offer three channels: a rating with a reason, a chat channel, a weekly huddle. **Sceptics** are your best testers: invite them to break it, log each failure as an eval case and show the fix ([*AI Product Management*, lesson 7.3 — Adoption and change management inside the enterprise](../aipm/index.html#/7.3)).
+**Adoption.** Train **champions** (respected desk agents who help colleagues), one or two per shift, first. Communicate before go-live (what it does and will not do), at go-live (how to give feedback) and after (what changed because of feedback). Offer three channels: a rating with a reason, a chat channel, a weekly huddle. **Sceptics** are your best testers: invite them to break it, log each failure as an eval case and show the fix ([*AI Product Management*, lesson 7.3 — Adoption and change management](../aipm/index.html#/7.3)).
 
 **Benefits tracking.** Compare with the fictional baseline, measured the same way:
 
-| Measure | Baseline (fictional) | Target | Source |
+| Measure | Baseline (fictional) | Target (fictional) | Source |
 |---|---|---|---|
 | Median first response | 3 h 40 min | At most 3 h 00 | TicketHub clock |
 | Contained policy conversations | None | At least 35% of in-scope | Chat and TicketHub logs |
 | Answer correctness | Not measured | At least 95% | Eval run |
 | Satisfaction | Not measured | At least 4.0 of 5 | In-chat rating; count who answers |
 
-Agree "first useful response" before go-live, because today the clock stops at the triage note. Label each figure measured or estimated. Fictional arithmetic: a quarter of 1,800 weekly tickets is about 450 policy questions, and 35% of those is about 158 contained a week ([*AI Product Management*, lesson 8.1 — Product metrics for AI: value, quality, adoption, trust](../aipm/index.html#/8.1)).
+Agree "first useful response" before go-live, because today the clock stops at the triage note. Label each figure measured or estimated. Fictional arithmetic: a quarter of 1,800 weekly tickets is about 450 policy questions, and 35% of those is about 158 contained a week ([*AI Product Management*, lesson 8.1 — Product metrics for AI](../aipm/index.html#/8.1)).
 
 **Cadence, hypercare, close.** Weekly: a 30-minute feedback triage. Monthly: eval refresh, cost and benefits report. Quarterly: review scope, model, risks and roadmap with Layla. **Hypercare** (a proposal of four weeks) means daily dashboard checks and written exit criteria, such as two weekly eval runs at target, no incident that harmed people or exposed data, and operators handling an incident alone. Warranty terms belong to the contract: involve legal and procurement. To close: the checklist complete with evidence, a blameless lessons-learned review (keep, stop, start), a closure report, and a next phase argued from evidence: benefits, a ranked backlog, what you learned about adoption.
 
@@ -621,12 +623,13 @@ The artefact is the **Najm Desk v1 Handover Pack** (Fahad owns it): `docs/handov
 |---|---|
 | Where do your handover documents live, and who edits them? | |
 | Who holds the provider account and its notices? | |
+| Who can write to the repository, CI and the switch file after handover? | |
 
 **Weekly deliverable.** Add `docs/handover/` for your own agent to `week-15/`, with the runner output and evidence file, tests passing, and `NOTES.md`.
 
 **Group session (60 minutes).** Role-play the handover meeting. (1) Two readers play Hind and Yara with only the pack and ten minutes; each marks the claim they trust least (20). (2) The author runs the runner live; the group sets a severity per FAIL and decides fix, waiver or re-scope (25). (3) Name the document that will rot first and its check (15).
 
-**Build it with Claude Code.** Have it dry-run the handover as a sceptical customer. Give this spec in plan mode, which cannot edit (check the current Claude Code documentation):
+**Build it with Claude Code.** Have it dry-run the handover as a sceptical customer. Give this spec in plan mode, which proposes without editing (check the current Claude Code documentation):
 
 ```text
 Goal: act as a sceptical customer and list what would stop you signing the Najm Desk v1 handover.
@@ -645,7 +648,7 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 
 ## 🛠️ Exercises
 - 🟢 **Run the rehearsal.** Offline. Run the runner and classify U-09 and U-10. *Done when:* `NOTES.md` holds the report and, per failed row, a severity, a reason and a decision: fix, waiver or re-scope.
-- 🟡 **Add the sceptic's row.** Offline. Add a row for a requirement of your own, such as GR-01 (a pasted password never reaches the model), and a copy of the app that breaks it. *Done when:* a test shows the row passes on the original, fails on the copy.
+- 🟡 **Add the sceptic's row.** Offline. Add a row for a requirement of your own, such as GR-01 as far as a reply can show it (a pasted password is never repeated; the thin slice has no masking, so whether it reached the model needs a log), and a copy of the app that breaks it. *Done when:* a test shows the row passes on the original, fails on the copy.
 - 🔴 **Run it for real.** *Needs the real API*, the cap from lesson 0.2 and a colleague who plays Hind. Run the script against your own build with `--app`; the colleague runs the `person` rows and alone signs. *Done when:* `NOTES.md` has the evidence file, their decisions, each waiver with owner and date, and what the mock had hidden.
 
 ## ⚠️ Mistakes and traps
@@ -730,4 +733,4 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 
 ## 📚 References
 - Claude API, Models overview (status, deprecations and retirements): https://platform.claude.com/docs/en/about-claude/models/overview; lab kit: https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/aiapps/labkit
-- [*AI Product Management*, lesson 7.3 — Adoption and change management inside the enterprise](../aipm/index.html#/7.3); [*AI Product Management*, lesson 8.1 — Product metrics for AI: value, quality, adoption, trust](../aipm/index.html#/8.1); [*AI Governance*, lesson 2.3 — AI literacy, training and culture](../aigp/index.html#/2.3); [*AI Governance*, lesson 10.3 — Change management, maintenance and retirement](../aigp/index.html#/10.3); [*Software Testing*, lesson 1.3 — Requirements, test cases and bug reports: from acceptance criteria to a defect someone can fix](../testing/index.html#/1.3); [*Running AI Agents in Production*, levels L0–L5](../agentic/learning-path.html#level-3-production-engineer)
+- [*AI Product Management*, lesson 7.3 — Adoption and change management](../aipm/index.html#/7.3); [*AI Product Management*, lesson 8.1 — Product metrics for AI](../aipm/index.html#/8.1); [*AI Governance*, lesson 2.3 — AI literacy, training and culture](../aigp/index.html#/2.3); [*AI Governance*, lesson 10.3 — Change management, maintenance and retirement](../aigp/index.html#/10.3); [*Software Testing*, lesson 1.3 — Requirements, test cases and bug reports](../testing/index.html#/1.3); [*Running AI Agents in Production*, levels L0–L5](../agentic/learning-path.html#level-3-production-engineer)

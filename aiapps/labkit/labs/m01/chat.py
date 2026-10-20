@@ -27,10 +27,12 @@ def ask(user_text: str) -> str:
             system=SYSTEM,                     # a separate parameter, resent on EVERY call
             messages=history,                  # the whole conversation, every time
         )
+        reply = text_of(resp)
+        if not reply:                          # thinking can eat max_tokens and leave no text at all
+            raise RuntimeError(f"no text in the reply (stop_reason={resp.stop_reason}): raise max_tokens")
     except Exception:
-        history.pop()                          # the call failed: take the question back out of the list
+        history.pop()                          # failed or empty: take the question back out of the list
         raise
-    reply = text_of(resp)
     history.append({"role": "assistant", "content": reply})   # write it back or it is gone
 
     # These numbers are your bill. Watch input climb: that is the history being resent.

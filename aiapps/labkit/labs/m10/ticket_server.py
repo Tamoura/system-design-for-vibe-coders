@@ -69,7 +69,7 @@ def build_server(tickets_file=DATA / "tickets.json", user: str | None = None, sc
                           description: Annotated[str, Field(max_length=1000, description="What happened. No passwords.")],
                           category: Literal["hardware", "access", "network", "software", "security", "other"],
                           priority: Annotated[Literal["P2", "P3", "P4"], Field(description="P1 is set by a person, not offered here")]) -> str:
-            same = next((t for t in tickets.values() if t.get("requested_by") == who and t["summary"].lower() == title.lower()), None)
+            same = next((t for t in tickets.values() if t.get("requested_by", "").lower() == who.lower() and t["summary"].lower() == title.lower()), None)
             if same:                                                         # idempotent: a retry must not file twice
                 audit(who, "create_ticket", "duplicate", ticket_id=same["id"])
                 return f"Ticket {same['id']} already exists: {same['summary']}"

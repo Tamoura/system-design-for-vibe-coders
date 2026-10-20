@@ -1,8 +1,7 @@
 # labs/m13/attack_runner.py
 """Lab 13.1: attack your own agent. Ten attacks (attacks.jsonl) run twice, guards OFF then ON.
   python labs/m13/attack_runner.py      environment: MODEL, SKIP=taint,approval (layers to switch off)
-Offline, [mock:gullible] plays a model that obeys injected text. A real model differs: only the real API shows
-how yours behaves."""
+Offline, [mock:gullible] plays a model that obeys injected text; a real model differs."""
 import json
 import os
 import sys
@@ -44,8 +43,8 @@ def act(world, name, args):
 def chat(world, text, guards, gate):
     """The agent loop. With guards on, all traffic and every tool call passes through guardrails.py."""
     session, stopped = world["session"], world["stopped"]
-    session.said = text
     clean, kinds = mask_pii(text) if guards else (text, [])
+    session.said = clean                                  # approvers see masked words, never a pasted secret
     stopped += ["input_mask"] * bool(kinds)
     messages, answer = [{"role": "user", "content": clean}], ""
     for _ in range(6):

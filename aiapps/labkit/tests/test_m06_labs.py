@@ -110,6 +110,12 @@ def test_check_notes_catches_an_invented_quote_an_unknown_turn_and_a_missing_cit
     assert len(found) == 3
 
 
+def test_check_notes_holds_an_item_line_to_a_citation_with_or_without_a_bullet(lab):
+    notes = 'REQ-1 no bullet, no citation\n**RISK-2** bold, no bullet, no citation\n* CON-3 star bullet, no citation\nQ-4 fine [H-04 "Seventy percent"]\n'
+    found = lab.check_notes.check(notes, lab.check_notes.load_turns())
+    assert [f.split(":")[0] for f in found] == ["line 1", "line 2", "line 3"] and all("no citation" in f for f in found)
+
+
 def test_check_notes_rejects_a_one_word_quote_and_a_quote_cut_from_inside_a_word(lab):
     notes = '- REQ-1 x [Y-10 "the"]\n- REQ-2 x [Y-10 "all back"]\n- REQ-3 x [Y-10 "call-back"]\n'      # "all back" only occurs inside "call back"
     found = lab.check_notes.check(notes, lab.check_notes.load_turns())

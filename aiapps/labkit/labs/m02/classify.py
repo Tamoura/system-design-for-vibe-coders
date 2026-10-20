@@ -25,7 +25,7 @@ class Prediction:
 
 def classify(ticket_text: str, prompt_name: str = "classify_v3") -> Prediction:
     prompt = load_prompt(prompt_name)
-    fenced = ticket_text.replace("</ticket>", "")      # a ticket cannot close its own fence (hygiene only)
+    fenced = ticket_text.replace("<", "&lt;")          # no tag inside a ticket can close the fence (hygiene, not a defence)
     resp = client.messages.create(
         model=MODEL,
         max_tokens=1024,                  # thinking tokens count against it, even for a one-word answer

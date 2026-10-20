@@ -191,7 +191,7 @@ def test_the_policy_resource(m10):
     assert "P1 means a service is down" in body
 
 
-def test_create_ticket_is_idempotent_private_and_never_touches_the_file(m10):
+def test_create_ticket_is_idempotent_private_and_never_touches_the_file(m10, tmp_path):
     before = hashlib.sha256(TICKETS.read_bytes()).hexdigest()
     srv = m10.server.build_server(scopes=RW, user="rayan")
     args = {"title": "Replace my laptop charger", "description": "Lost it", "category": "hardware", "priority": "P4"}
@@ -209,6 +209,10 @@ def test_create_ticket_is_idempotent_private_and_never_touches_the_file(m10):
     assert s.startswith("Ticket 4481: Open") and n == "No ticket 4482 found for you"
     assert hashlib.sha256(TICKETS.read_bytes()).hexdigest() == before
     assert asyncio.run(call(m10.server.build_server(scopes=RW), "get_ticket_status", {"ticket_id": "4481"}))[1] == "No ticket 4481 found for you"
+    earlier = tickets_file(tmp_path, {"4490": {"id": "4490", "status": "Open", "category": "hardware", "priority": "P4",
+                                               "summary": "Replace my laptop charger", "requested_by": "Rayan"}})
+    assert asyncio.run(call(m10.server.build_server(earlier, scopes=RW, user="rayan"), "create_ticket", args))[1] == (
+        "Ticket 4490 already exists: Replace my laptop charger")          # names compare without case here too, as in may_read
 
 
 def test_a_ticket_you_file_is_not_visible_to_colleagues(m10):

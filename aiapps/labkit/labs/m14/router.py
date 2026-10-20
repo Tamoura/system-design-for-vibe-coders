@@ -20,7 +20,7 @@ def confident(answer: str) -> bool:
 
 
 def answer_with_escalation(ask, question: str, turns: int = 0):
-    """ask(model) -> text. Try the routed tier, then ONE stronger tier, then stop. Returns (text, tried)."""
+    """Try the routed tier, then ONE stronger tier, then stop. ask(model) -> text; returns (text, tried)."""
     first, tried = TIERS.index(route(question, turns)[0]), []
     for model in TIERS[first:first + 2]:
         tried.append(model)

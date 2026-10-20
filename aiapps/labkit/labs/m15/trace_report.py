@@ -21,7 +21,7 @@ def pct(xs, p):
 
 
 def report(label, runs):
-    """Print one group of runs (each a list of events); return True when it breaches an SLO."""
+    """Print one group of runs; return True when it breaches an SLO."""
     stops = [next((e for e in ev if e["event"] == "stop"), {}) for ev in runs]       # no stop event: the process died or was killed
     reasons, secs = Counter(s.get("reason", "no_stop_line") for s in stops), [s["seconds"] for s in stops if "seconds" in s]
     usage = [[sum(e.get(k, 0) for e in ev if e["event"] == "model") for k in ("input_tokens", "output_tokens")] for ev in runs]

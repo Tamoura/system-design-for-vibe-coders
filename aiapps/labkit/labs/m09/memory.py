@@ -63,7 +63,7 @@ class Memory:
 
     def forget(self, what: str) -> dict:
         """A real delete, this user only: memories and turns containing the phrase, and the summary that may hold them.
-        Derived data is dropped, not edited; the caller re-derives it."""
+        Derived data is dropped, not edited."""
         term = what.strip().lower()
         if not term:
             raise ValueError("say what to forget: a word or phrase from the memory")

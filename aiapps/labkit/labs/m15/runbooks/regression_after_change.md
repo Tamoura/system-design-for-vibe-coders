@@ -3,7 +3,7 @@
 Owner: Lujain (builder) with Yara   Last drilled: TODO date   Version: 1
 
 ## Trigger
-The canary or a fresh release shows worse numbers than the baseline in `trace_report.py --by release`: success, p95, cost per resolved conversation, hand-off rate, thumbs-down.
+The canary or a fresh release shows worse numbers than the baseline: success, p95 and cost per resolved conversation in `trace_report.py --by release`; hand-off rate and thumbs-down on the dashboard.
 
 ## First five minutes
 1. Canary only? Send all traffic back to the previous release now (`change_prompt_or_model.md`, step "Promote or roll back"). No approval needed.

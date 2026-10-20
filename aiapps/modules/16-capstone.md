@@ -10,16 +10,16 @@
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–15* · *Layer: Delivery, Production*
 
 ## ⚡ In 60 seconds
-- The capstone takes one engagement, Najm Desk, through eight milestones (M1 to M8) in about four weeks. After each, the customer answers a gate question.
-- Each milestone feeds the next: a requirement id in the specification reappears in an eval case, a UAT row and a runbook.
-- Pick a **scope tier**: 🟢 core path, 🟡 with MCP and the evals gate, 🔴 with multi-agent and full governance. Finish a smaller tier with evidence.
+- Eight milestones, about four weeks; after each, the customer answers a gate question.
+- Ids thread through: a specification id reappears in an eval case, a UAT row, a runbook.
+- Pick a **scope tier**: 🟢 core path, 🟡 MCP and evals gate, 🔴 multi-agent and full governance. Finish a smaller tier with evidence.
 - Decision cue: before each gate, write the question its owner will ask. If the artefact cannot answer it, stop.
-- Biggest trap: treating the capstone as a build exercise. The code is one milestone of eight.
+- Biggest traps: treating it as a build exercise (code is one milestone of eight), and quoting offline mock results as quality evidence.
 
 ## 🧭 Why it matters
-On Thursday Lujain demos her Najm Desk prototype: it answers policy questions and drafts tickets. Hind says, "Go live on Sunday." But nobody agreed a specification, and there is no eval set, so nobody can say whether Sunday's build is worse than Thursday's. Layla asks for the system card, Noura for the injection results, Maha for who is paged at 07:05.
+On Thursday Lujain demos her Najm Desk prototype: it answers policy questions and drafts tickets. Hind says, "Go live on Sunday." But nobody agreed a specification and there is no eval set, so nobody can say whether Sunday's build is worse than Thursday's. Layla asks for the system card, Noura for injection results, Maha for who is paged at 07:05.
 
-Fahad: "A demo shows it can work. Go-live shows we know when it doesn't." In *Moffatt v. Air Canada* (2024) a tribunal held an airline responsible for what its chatbot told a customer. The capstone closes such gaps in order.
+Fahad: "A demo shows it can work. Go-live shows we know when it doesn't." In *Moffatt v. Air Canada* (2024, British Columbia Civil Resolution Tribunal) an airline was held responsible for its chatbot's answer about a bereavement fare. The capstone closes the gaps in the order the owners ask.
 
 ## 📐 How it works
 
@@ -32,44 +32,50 @@ Request: "Staff wait too long for a first answer. Give me an assistant for polic
 Baseline (fictional): about 1,800 tickets a week; median first response 3 h 40 min; English and Arabic.
 Constraints: no Confidential or Restricted data to external AI tools; every write needs a person or a policy
   gate; Layla, Noura, Hamad and Sara sign off before any pilot.
-Systems: TicketHub, Najm ID, PeopleCore, DeviceDesk, the policy library. Timeline: about four weeks.
 ```
 
-| Milestone (lessons) | You deliver | Gate question, and who answers | Week |
-|---|---|---|---|
-| **M1** discovery pack (6.1) | notes, stakeholder map, agent brief | Right problem? Hind | 1 |
-| **M2** specification (6.2) | spec with ids, 30 seeds | Would my team recognise it? Yara | 1 |
-| **M3** architecture and ADRs (7.1) | architecture, three ADRs | Design review answered? Layla, Noura, Maha | 2 |
-| **M4** prototype and proposal (7.2) | demo, statement of work, rollout plan | What do I get, when? Hind signs | 2 |
-| **M5** build with evals (Modules 1–5, 8–12) | prompt, tools, RAG, tests, 50-case eval | Better than last week? The eval gate | 2–3 |
-| **M6** security review and governance pack (13.1, 13.2) | threat sheet, attacks, governance pack | Safe to trust? Risk owners sign | 3 |
-| **M7** deployment and release (14.1, 14.2) | image, release checklist, cost sheet | Rollback in minutes? Maha | 3–4 |
-| **M8** runbook, handover and go-live (15.1, 15.2) | runbooks, UAT, handover pack, go/no-go | Go or no-go? Hind | 4 |
+| Milestone (lessons) | Gate question, and who answers | Week |
+|---|---|---|
+| **M1** discovery pack: notes, stakeholder map, agent brief (6.1) | Right problem? Hind | 1 |
+| **M2** specification with ids and about 30 seeds (6.2) | Would my team recognise it? Yara | 1 |
+| **M3** architecture and three ADRs (7.1) | Design review answered? Layla, Noura, Hamad, Sara, Maha | 2 |
+| **M4** prototype, statement of work, rollout plan (7.2) | What do I get, when? Hind signs | 2 |
+| **M5** build with a 50-case eval (Modules 1–5, 8–12) | Better than last week? The eval gate | 2–3 |
+| **M6** security review and governance pack (13.1, 13.2) | Safe to trust? Risk owners sign | 3 |
+| **M7** image, release checklist, cost sheet (14.1, 14.2) | Rollback in minutes? Maha | 3–4 |
+| **M8** runbooks, UAT, handover pack, go/no-go (15.1, 15.2) | Go or no-go? Hind | 4 |
 
-Three rules apply. **Gate before step:** the owner answers in writing. **Ids thread through:** FR, GR, NFR and AC ids reappear in eval cases, UAT rows, runbooks and the cost sheet. **After M4, scope moves by change request:** an impact analysis, not a quick edit.
+Four rules apply. **Gate before step:** the owner answers in writing. **Ids thread through:** FR, GR, NFR and AC ids reappear in eval cases, UAT rows, runbooks and the cost sheet. **After M4, scope moves by change request:** an impact analysis, not a quick edit. **Book reviews in week 1:** four weeks is the course's compression; Layla's committee meets every second Tuesday and a review takes about a month.
 
-Scope tiers: 🟢 **Core path:** policy answers with citations, ticket status, draft and create with confirmation, unlock request, hand-off, two governance documents. 🟡 **MCP and evals gate:** adds a TicketHub MCP server (lesson 10.2) and a CI eval gate (lesson 12.2). 🔴 **Multi-agent and full governance:** adds a second agent if an ADR and an eval justify it (lesson 11.1), and all seven governance documents.
+```text
+Gate M2 (fictional) · Would my team recognise it? · Owner: Yara
+Weak:   "Looks fine, carry on." In a corridor: nothing to file, nothing to check.
+Strong: Yara, in writing: "No. FR-05 lets it unlock; we never unlock before the manager's call-back. Make it a
+        request; for contractors the sponsor gets the call. The rest: yes." Result: spec v0.2 changes FR-05, AC-4.
+```
+
+Scope tiers: 🟢 **Core path:** cited policy answers, ticket status, draft and create with confirmation, unlock request, hand-off, two governance documents. 🟡 **MCP and evals gate:** adds a TicketHub MCP server (lesson 10.2) and a CI eval gate (lesson 12.2). 🔴 **Multi-agent and full governance:** adds a second agent if an ADR and an eval justify it (lessons 11.1 and 11.2), and all seven governance documents.
 
 ### 🟡 Going deeper
-**The deliverables checklist and layout.** The tree is the checklist: docs, code, prompts, evals and CI, governance pack, deployment files, runbooks, handover pack. 🟡 and 🔴 mark what a larger tier adds.
+**The deliverables checklist and layout.** The tree is the checklist (`labkit/data/m16_checklist.json`; edit it for your customer); 🟡 and 🔴 mark what a larger tier adds.
 
 ```text
 najm-desk/
-├── README.md  CLAUDE.md  Dockerfile  deploy/release_checklist.yaml   M7
+├── CLAUDE.md                                                       M5
+├── Dockerfile  deploy/release_checklist.yaml                       M7
+├── README.md                                                       M8
 ├── docs/
 │   ├── discovery-notes  stakeholder-map  agent-brief               M1
 │   ├── najm-desk-spec                                              M2
-│   ├── architecture  adr/ (three or more)  (🔴 team-design-record) M3
+│   ├── architecture  adr/ (3+)  (🔴 team-design-record)            M3
 │   ├── demo-script  proposal  rollout-plan                         M4
 │   ├── threat-control-sheet  governance/ (two; 🔴 seven)           M6
 │   ├── cost-and-reliability                                        M7
 │   └── runbooks/  handover/  go-no-go  retrospective               M8
-├── prompts/  src/najm_desk/ (🟡 ticket_server  🔴 team)  tests/
+├── prompts/  src/najm_desk/ (🟡 ticket_server  🔴 team)  tests/    M5
 ├── evals/  seed  cases  report  (🟡 baseline  gate)                M2, M5
 └── .github/workflows/  (🟡 eval  release)                          M5, M7
 ```
-
-The paths live in `labkit/data/m16_checklist.json`; edit them for your customer.
 
 ```python
 # labs/m16/capstone_audit.py
@@ -77,7 +83,8 @@ The paths live in `labkit/data/m16_checklist.json`; edit them for your customer.
   python labs/m16/capstone_audit.py REPO [--tier 1|2|3] [--strict]      strict: a leftover TODO is a problem
 EXISTS: each deliverable in labkit/data/m16_checklist.json is present and not empty, milestone by milestone.
 LINKED: each requirement id the spec defines is cited downstream, and no cited id is missing from the spec.
-It cannot tell whether evidence is good, true or signed: that stays with people."""
+Tier 3 also runs Lab 13.2's pack check on docs/governance (with --strict, every signer's row must say approved).
+It cannot tell whether evidence is good or true, or whether an "approved" row was really given: that stays with people."""
 import argparse
 import json
 import re
@@ -148,29 +155,29 @@ if __name__ == "__main__":
     sys.exit(main())
 ```
 
-On the course's own worked specification, eval seed and UAT script it reports NFR-01, NFR-03, NFR-04 and NFR-06 as cited nowhere.
+Run it from `aiapps/labkit` as `python labs/m16/capstone_audit.py REPO --tier 2 --strict`, where `REPO` is the folder of your `najm-desk` repository; the exit code is 1 while any problem is left. Tier 3 also runs Lab 13.2's pack check on `docs/governance`: with `--strict`, every signer's row must say approved, and the signer fills it in, not you or Claude.
 
-**The stakeholder role-play guide.** Each fictional composite hides things that surface only if you ask about a real past event.
+Put the course's own specification, eval seed and UAT script into an empty folder as `docs/najm-desk-spec.md`, `evals/seed.jsonl` and `docs/handover/uat_script.md`, and the audit reports NFR-01, NFR-03, NFR-04 and NFR-06 as cited nowhere: a load test, a retention job, an audit-log check and the cost sheet are still to write.
+
+**Works offline:** the audit and its tests (no key, model or mock server). **Needs the real API:** what it points at, and the stakeholder simulator below (the mock only echoes a question back; it cannot play a persona). The mock is scripted rules that replay mechanics (tool protocol, errors, token growth), not quality, retrieval or safety: a table or cost figure from it shows the harness runs, not that Najm Desk is accurate, safe or cheap.
+
+**The stakeholder role-play guide.** Each fictional persona hides things that surface only if you ask about a real past event. A weak question invites a number: "Wouldn't it be great if it resolved most tickets?" earned 70 percent and no evidence (H-03, H-04 in lesson 6.1). A strong one asks for a story: "Tell me about the last time the desk was under pressure" (H-01).
 
 | Persona | Opens with | Hides until you ask about the last time |
 |---|---|---|
 | **Hind**, sponsor | "Seventy percent, and never wrong." | the 2022 vendor bot had no route to a person; governance takes weeks |
-| **Yara**, team lead | "Nobody finds the answers." | triage is by hand; the PeopleCore manager is wrong one time in ten |
+| **Yara**, team lead | "I ask the same four questions." | triage is by hand; the PeopleCore manager is wrong one time in ten |
 | **Layla**, AI governance | "What can it do without a person?" | the committee meets every second Tuesday; no write tool without eval evidence |
-| **Noura**, security | "What if a ticket gives it orders?" | attacks run with guards off and on; an unlock tool that only requests |
+| **Noura**, security | "What if a ticket gives it orders?" | attacks run with guards off and on; unlock only requests |
 
-A weak question invites a number: "Wouldn't it be great if it resolved most tickets?" earned 70 percent and no evidence. A strong one asks for a story: "Tell me about the last time the desk was under pressure."
-
-An **AI stakeholder simulator** is a model told to play one row. It is **practice only**: it agrees too easily, invents detail and knows nothing about your real Hind. Use it to find weak questions, never as a source. The same template, read-only in Claude Code, plays a sceptical reviewer of your repository:
+An **AI stakeholder simulator** is a model told to play one row. It is **practice only**: it agrees too easily, invents detail and knows nothing about your real Hind. Use it to find weak questions, never as a source:
 
 ```text
 PRACTICE ONLY: you are a simulator, not the real person. Play <Hind|Yara|Layla|Noura> of Najm Bank (fictional).
 Persona: <paste the row>.
-Interview (chat): stay in character, answer in two to four sentences, reveal a hidden fact only when asked about
-  a real past event, never for a leading question, and invent no numbers.
-Review (Claude Code, plan mode, read-only): read docs/ and ask this person's three hardest go/no-go questions,
-  each with the file and line that should answer it, or "no answer found".
-Never write "approved" or edit a file. Then list the facts I missed and my weakest question.
+Stay in character, answer in two to four sentences, reveal a hidden fact only when asked about a real past
+event, never for a leading question, and invent no numbers. Never write "approved".
+At the end list the facts I missed and my weakest question.
 ```
 
 ### 🔴 Expert view
@@ -180,7 +187,7 @@ Never write "approved" or edit a file. Then list the facts I missed and my weake
  5  Scope: changes since the proposal; change requests; written waivers
 10  Quality: eval report against targets; critical cases; open defects
 10  Safety: attack results with guards on; governance pack; any risk owner's objection
- 8  Operations: rollback minutes; kill-switch drill; owned runbooks; cost per conversation
+ 8  Operations: rollback minutes; kill-switch drill; owned runbooks; cost per conversation from the current price page
  5  Adoption: UAT by Yara's team; training; support model
  7  Decision: go, go with written conditions, or no-go and the date to meet again
 ```
@@ -190,59 +197,54 @@ Show evidence; do not describe it. A condition needs an owner and a date, and no
 **The final demo script.** Twelve minutes on the release candidate, rehearsed twice; each step shows evidence for one claim.
 
 1. The problem in Hind's (fictional) numbers.
-2. A cited policy answer, in English and Arabic.
+2. A cited answer, in English and Arabic.
 3. An unanswerable question: "I don't know", then a hand-off.
 4. Your ticket's status; someone else's refused.
 5. A drafted ticket; nothing saved until "yes".
 6. An unlock request naming the manager; Najm ID unchanged.
 7. Hidden instructions in ticket text ignored.
 8. One real eval failure and the gate that caught it.
-9. Kill switch off, degraded message, on.
-10. Eval table, cost per conversation, open conditions.
+9. Flip `model_calls` off: the degraded message; flip it on.
+10. Eval table (mode, model id, date), cost per conversation, open conditions.
 
-**The rubric.** Pass means no Developing; distinction means Customer-ready in four or more.
+**The rubric.** Pass means no Developing; distinction means Customer-ready in three or more.
 
 | Criterion | Developing | Competent | Customer-ready |
 |---|---|---|---|
-| Discovery, spec, design | copied requirements; boxes only | contradictions found; ADRs with costs | hidden needs found; options rejected on evidence |
+| Discovery, spec, design | requirements copied; templates filled in | contradictions found; ADRs with costs | hidden needs found; options rejected on evidence |
 | Build and evals | demo path works | 50-case eval, gate | error analysis drives change |
-| Security, release, operations | rules in the prompt; runs on a laptop | tool gate, attacks run; rollback rehearsed | pack checked by owners; kill switch drilled |
-| Handover and judgement | a zip file | customer-run UAT | unaided task; honest go/no-go |
+| Security, release, operations | rules in the prompt; laptop only | tool gate, attacks run; rollback rehearsed | owners checked the pack; kill switch drilled |
+| Handover and judgement | code handed over as a zip | customer-run UAT | customer works unaided; honest go/no-go |
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
 | **Milestone gate** | A question its owner answers in writing before the next step | Between milestones |
-| **Capstone audit** | Checks deliverables exist and requirement ids are cited downstream | Before each gate |
+| **Capstone audit** | Checks deliverables exist and ids are cited downstream | Before each gate |
 | **Go/no-go record** | Decision, evidence, conditions with owners and dates | The last meeting |
-| **Persona rehearsal** | Practice interviews with a simulated stakeholder | Before real meetings |
 
 ## 🏛️ In practice at Najm Bank
-The artefact is the **Najm Desk capstone repository** (`najm-desk/`, above): yours, reviewed by Fahad at every gate, read by Hind at the end. The **reference-solution outline** says what a strong one decides, not how to build it:
+The artefact is the **Najm Desk capstone repository** (`najm-desk/`): yours, reviewed by Fahad at every gate, read by Hind at the end. The **reference-solution outline** says what a strong one decides where judgement shows, not how to build it:
 
 - **M1:** five capabilities in, the rest out; contradictions cited by turn id (70% against the data, Arabic in v1, an unlock needs a call-back).
-- **M2:** metrics with definitions; 30 seeds citing ids.
+- **M2:** metrics with definitions; about 30 seeds citing ids.
 - **M3:** a workflow before an agent; ADRs for model tiers, retrieval, request-only write tools.
-- **M4:** seven scenarios, one planned failure; password reset in the scope-out.
-- **M5:** versioned prompt; 50 cases, some critical; a regression gate.
+- **M4:** seven scenarios, two planned failures (invented source, model down); password reset out of scope.
 - **M6:** attacks fail with guards on; claims have evidence; signatures blank.
-- **M7:** non-root pinned image; one manifest; rehearsed rollback.
 - **M8:** owned runbooks; UAT run by Yara's team; conditions recorded.
 
-**Your platform.** Before M3, note how identity reaches tools, where secrets and traces live, how deploys are approved and where data rests.
+**Your platform.** Fill in before M3:
 
-**Retrospective template.**
+| Question | Your answer |
+|---|---|
+| Identity and secrets: how does the user's identity reach each tool; where do keys live? | |
+| Deploy: where does it run; who approves a release and rolls back? | |
+| Traces, audit logs, alerts: where do they go? | |
+| Approvals and residency: which workflow carries unlock requests and sign-offs; where may prompts, logs and the index live? | |
 
-```text
-Retrospective (within two weeks of closing): Najm Desk v1, <date>, <attendees>
-1. Facts: planned and actual dates; gates passed first time; conditions at go.
-2. Went well.  3. Surprised us.  4. Escaped defects: which gate missed each, the eval case added.
-5. Decisions to reverse (new ADR).  6. Customer feedback.  7. One method change, owner and date.
-```
+**Retrospective** (`docs/retrospective.md`, within two weeks of closing): planned against actual dates, gates passed first time, each escaped defect with the gate that missed it and the eval case added, decisions to reverse (new ADR), customer feedback, one method change with owner and date.
 
-**Presenting it as a portfolio piece.** Label it a course engagement. The README leads with the problem, the fictional baseline and the result, marking what you measured; then three ADRs, the eval table with its failures and the go/no-go record. Publish no real data, keys or names, and claim no production use. See [*From Graduate to Hired*, lesson 3.1 — Projects that prove you can do the job: one capstone spec per role](../career/index.html#/3.1) and [lesson 3.2 — Your GitHub, READMEs and writing about your work](../career/index.html#/3.2).
-
-**Weekly deliverable.** Commit the repository at your tier, the strict audit output, the retrospective and a one-page portfolio README.
+**Weekly deliverable.** Commit the repository at your tier, the strict audit output, the retrospective and a one-page portfolio README (a course engagement: no production claim, no real data or keys).
 
 **Group session (60 minutes).** (1) Demo the release candidate from the script (20). (2) Role-play the go/no-go (40).
 
@@ -250,47 +252,48 @@ Retrospective (within two weeks of closing): Najm Desk v1, <date>, <attendees>
 
 ```text
 Goal: build the Najm Desk capstone at tier <1|2|3>, one milestone at a time, stopping at every gate.
-Context: CLAUDE.md; the layout in lesson 16.1; docs/; labkit/data/m16_checklist.json; the labs of Modules 4 to 15.
-Per milestone: read the last gate's answer; plan at most ten steps, each with the command that proves it, and wait;
-  do one step, run it, show the diff; finish with labs/m16/capstone_audit.py and stop.
-Constraints: invent no numbers, names, dates or approvals; every claim cites a file, test or command; never write
-  "approved" in a sign-off row; no sampling parameters, prefill or forced tool_choice.
+Context: CLAUDE.md; lesson 16.1's layout; docs/; labkit/data/m16_checklist.json; Modules 4 to 15's labs.
+Per milestone: read the last gate's answer; plan at most ten steps, each with its proving command, and wait;
+  do one step, run it, show the diff; end by running labs/m16/capstone_audit.py on the repo at this tier and stop.
+Constraints: invent no numbers, names, dates or approvals; cite a file, test or command for every claim; never
+  write "approved" in a sign-off row; no sampling parameters, prefill or forced tool_choice; model id from the
+  MODEL variable; read the text block, never content[0]; label eval tables mock or real.
 Do not: start the next milestone before I answer the gate; weaken a test or eval case; edit a signed document.
 ```
 
 **Verify before you accept it.**
-- Run the audit with `--strict` (a pass shows presence, not truth) and trace three ids by hand, from specification to runbook.
+- Run the audit with `--strict` (a pass shows presence, not truth); trace three ids by hand, specification to runbook.
 - Break it: weaken the prompt and watch the gate fail; delete an owner check and watch a test fail.
-- Read `git log` and search the diff for secrets, `temperature`, `content[0]` and filled sign-off rows.
+- Search the diff for secrets, `temperature`, `budget_tokens`, `content[0]` and filled sign-off rows.
 
 ## 🛠️ Exercises
-- 🟢 **Core path.** Offline on the mock (mechanics, not quality); a real eval run *needs the real API*. Build M1 to M8 at tier 1. *Done when:* the strict audit shows 0 problems, you traced three ids by hand, a peer playing Hind answered the M8 gate, and the retrospective is filled.
-- 🟡 **With MCP and the evals gate.** *Needs the real API* and a spending cap. Add the MCP server and CI gate. *Done when:* the tier 2 audit passes, a weakened prompt fails the pull request, and the MCP scopes match the permissions matrix.
-- 🔴 **Multi-agent and full governance.** *Needs the real API* and a human reviewer. *Done when:* the strict tier 3 audit passes; a second agent has an ADR and an eval showing it beats one (or is removed, with a reason); a colleague playing Layla signed or refused; `docs/go-no-go.md` records conditions.
+- 🟢 **Core path.** Offline on the mock; a real eval run *needs the real API*. Build M1 to M8 at tier 1. *Done when:* the strict audit shows 0 problems, you traced three ids by hand, a peer playing Hind answered the M8 gate, every eval table names its mode, and the retrospective is filled.
+- 🟡 **With MCP and the evals gate.** *Needs the real API* and a spending cap. Add the MCP server and CI gate. *Done when:* the tier 2 audit passes, a weakened prompt fails the pull request, MCP scopes match the permissions matrix.
+- 🔴 **Multi-agent and full governance.** *Needs the real API* and a human reviewer. *Done when:* the strict tier 3 audit passes, with every sign-off row filled in by the colleague playing that risk owner, or a refusal keeps it red and `docs/go-no-go.md` records the no-go and what would change it; a second agent has an ADR and an eval showing it beats one (or goes, with a reason); `docs/go-no-go.md` records any conditions.
 
 ## ⚠️ Mistakes and traps
 - **Demo first, documents later.** A demo invites a date. Specify first.
-- **Taking the simulator's word.** It is practice. Cite people in discovery notes.
 - **One giant prompt to Claude Code.** Sixty files cannot be verified. Work in milestones.
 - **Ticking boxes for people.** A green audit is not an approval. Signers sign.
+- **Mock numbers as evidence.** The mock passes what its rules allow. Claim quality from a real run.
 
 ## 🧾 Recap
-- Eight milestones, a customer gate after each, answered in writing.
-- Ids thread from specification to eval case, UAT row and runbook; the audit checks they exist and link.
-- Choose the tier you can finish with evidence; later scope moves by change request. Rehearse with personas as practice only.
+- Eight milestones, a written customer gate after each.
+- Ids thread from specification to runbook; the audit checks they exist and link.
+- Choose the tier you can finish with evidence; later scope moves by change request.
 - Go or no-go needs evidence, conditions and owners; a risk owner's no stops the go.
 
 ## ✍️ Check yourself
-**1. Lujain finishes the demo and wants to start building, but Hind has not signed the scope and rollout plan. What should Fahad insist on?**
+**1. Lujain wants to start building after the demo, but Hind has not signed the scope and rollout plan. What should Fahad insist on?**
 
-- A. Build behind a feature flag and sign after the pilot
-- B. Wait for Hind's written answer, then use change requests
-- C. Build the safest capabilities now and sign at the go/no-go
+- A. Build behind a flag and sign after the pilot
+- B. Wait for Hind's written answer; later asks become change requests
+- C. Build the safest capabilities now and sign at the go/no-go meeting
 - D. Build the core path and let Yara sign for Hind
 
 <details><summary>Answer</summary>
 
-**B.** The M4 gate is Hind's written answer on scope; later asks need change control. A and C delay it until the work is sunk cost; D lets the wrong person answer.
+**B.** The M4 gate is Hind's written answer; later asks need change control. A and C let sunk cost decide; D lets the wrong person answer.
 
 </details>
 
@@ -303,24 +306,24 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 <details><summary>Answer</summary>
 
-**D.** It checks presence and links only. It never runs the eval gate (A), never judges whether a document is true or signed (B), and "cited" is not "tested" (C).
+**D.** It checks presence and links only: not the eval gate (A), not whether a document is true or signed (B); "cited" is not "tested" (C).
 
 </details>
 
-**3. Lujain pastes an AI Hind's answers, praising every idea and agreeing that 70 percent is realistic, into `discovery-notes.md`. What is the right correction?**
+**3. Lujain pastes an AI Hind's answers, praising every idea and accepting 70 percent, into `discovery-notes.md`. What is the right correction?**
 
 - A. Keep them, because a model has seen many sponsors
 - B. Make it disagree more, then cite it as Hind's view
 - C. Remove them and interview Hind about a recent event
-- D. Keep them, marked low confidence until Yara has confirmed them
+- D. Keep them, marked low confidence until Yara confirms
 
 <details><summary>Answer</summary>
 
-**C.** A simulator agrees too easily and knows nothing about the real person, so it is practice, never a source. A, B and D still treat invented answers as evidence.
+**C.** A simulator agrees too easily and knows nothing about the real person: practice, never a source. A, B and D still treat invented answers as evidence.
 
 </details>
 
-**4. At the go/no-go meeting the eval gate is green and the UAT passed, but Noura reports that two of ten injection attacks still succeed with guards on. Hind wants to go. What follows?**
+**4. At the go/no-go meeting the eval gate is green and UAT passed, but Noura, who holds the security veto, withholds her sign-off: two of ten injection attacks still succeed with guards on. Hind wants to go. What follows?**
 
 - A. No-go on safety until both attacks fail
 - B. Go, because Hind decides and the other areas are green
@@ -329,27 +332,27 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 <details><summary>Answer</summary>
 
-**A.** A risk owner's "no" stops the go in that area, and no condition overrides it. Hind's decision (B) does not outrank a veto, and a smaller audience (D) changes exposure, not the hole.
+**A.** A risk owner's no stops the go in that area; no condition overrides it. Hind's decision (B) cannot outrank a veto, and a smaller audience (D) changes exposure, not the hole.
 
 </details>
 
 **5. Lujain asks Claude Code to build the whole capstone in one prompt and gets sixty files and a green test run. What should she do first?**
 
-- A. Merge it, since the tests pass and the files exist
+- A. Merge it, since the tests pass
 - B. Split it into milestones, each with a plan and a gate
 - C. Ask a second agent to review all sixty files before merging
 - D. Add tests until every file is covered, then merge
 
 <details><summary>Answer</summary>
 
-**B.** Sixty files at once cannot be verified, and a green run shows only that the tests Claude Code wrote pass. A trusts them, C stacks one unverified opinion on another, and D chases coverage.
+**B.** Sixty files cannot be verified at once, and a green run shows only that Claude Code's own tests pass. A trusts them, C stacks one unverified opinion on another, D chases coverage.
 
 </details>
 
 ## 📚 References
-- Claude Code documentation (from the Anthropic start page): https://docs.anthropic.com/; repository: https://github.com/anthropics/claude-code
-- [*From Graduate to Hired*, lesson 2.2 — AI application engineer](../career/index.html#/2.2); [*System Design for Vibe Coders*, lesson 9.4 — Verification before completion](../vibe/index.en.html#l9-4)
-- **Read this week (Module 16).** The course plan assigns no chapters to Module 16; its capstone closes the plan's last module, whose reading is under Module 14 (Grokking AI Applications, chapter 8; Gulli, chapter 16; Microsoft, lessons 15-17). Revisit chapters you skipped in lessons 1.1 to 15.1.
+- Claude Code overview: https://code.claude.com/docs/en/overview; repository: https://github.com/anthropics/claude-code; Anthropic documentation: https://docs.anthropic.com/
+- [*From Graduate to Hired*, lesson 2.2 — AI application engineer](../career/index.html#/2.2), [lesson 3.1 — Projects that prove you can do the job: one capstone spec per role](../career/index.html#/3.1) and [lesson 3.2 — Your GitHub, READMEs and writing about your work](../career/index.html#/3.2); [*System Design for Vibe Coders*, lesson 9.4 — Verification before completion](../vibe/index.en.html#l9-4)
+- **Read this week (Module 16).** The plan assigns no chapters to Module 16; its reading sits under Module 14 (Grokking AI Applications, chapter 8; Gulli, chapter 16; Microsoft, lessons 15-17). Revisit chapters you skipped in lessons 1.1 to 15.1.
 
 ---
 
@@ -417,13 +420,14 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 | Layer tag | Misses | Reread | Redo | By |
 |---|---|---|---|---|
 | Production | 2 | 13.1, 15.1 | the attack run with one layer skipped; the kill-switch drill | Friday |
+| Agents | 1 | 8.1 | its exercise | next Wednesday |
 | Delivery | 1 | 12.2 | the gate drill | next Monday |
 | Retake | | | the whole exam, closed book | in two weeks |
 
 ## 🛠️ Exercises
-- 🟢 **Review your misses.** Tally every wrong or guessed question by Layer tag in the table above and label each "did not know", "misread" or "tempted". *Done when:* you can name your two weakest tags and the habit behind each, and every miss has a lesson to reread.
-- 🟡 **Write five questions of your own.** Choose your weakest tag. Write five scenarios in the exam's format, each with one defensible answer, three tempting wrong ones and an explanation that ends with its tag and lesson. *Done when:* a peer has answered all five, every disagreement is settled in your explanation, and the correct option is not always the longest.
-- 🔴 **Teach one lesson.** Teach the lesson behind your weakest tag to a peer in 20 minutes, with one failing-then-passing run from the lab kit. *Done when:* the peer can state the lesson's main rule and one weak-versus-strong pair in their own words, and you have redone anything you could not answer.
+- 🟢 **Review your misses.** No API needed. Tally every wrong or guessed question by Layer tag in the table above and label each "did not know", "misread" or "tempted". *Done when:* you can name your two weakest tags and the habit behind each, and every miss has a lesson to reread.
+- 🟡 **Write five questions of your own.** No API needed. Choose your weakest tag. Write five scenarios in the exam's format, each with one defensible answer, three tempting wrong ones and an explanation that ends with its tag and lesson. *Done when:* a peer has answered all five, every disagreement is settled in your explanation, and the correct option is not always the longest.
+- 🔴 **Teach one lesson.** Offline on the mock, which shows mechanics, not quality. Teach the lesson behind your weakest tag to a peer in 20 minutes, with one failing-then-passing run from the lab kit. *Done when:* the peer can state the lesson's main rule and one weak-versus-strong pair in their own words, and you have redone anything you could not answer.
 
 ## ⚠️ Mistakes and traps
 - **Checking answers as you go.** You learn one answer and lose the measure of the rest. Answer all 60, then check.

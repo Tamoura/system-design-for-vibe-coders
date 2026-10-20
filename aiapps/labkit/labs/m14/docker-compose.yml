@@ -11,7 +11,7 @@ services:
       APP_ENV: dev
       ANTHROPIC_BASE_URL: http://mock:8787
       ANTHROPIC_API_KEY: mock           # offline only: a real key comes from the secret store, never a file in Git
-      PROMPT_VERSION: ${PROMPT_VERSION:-najm_desk_v2}
+      PROMPT_VERSION: ${PROMPT_VERSION:-najm_desk_v1}
       CANARY_PROMPT: ${CANARY_PROMPT:-}
       CANARY_PERCENT: ${CANARY_PERCENT:-0}
     depends_on: [mock]

@@ -1,6 +1,6 @@
 # labs/m02/promptfile.py
-"""Prompts as code: a prompt is a file in Git. The loader returns the text to send and a PROMPT_VERSION to log.
-Leading lines that start with # are notes for humans and are not sent."""
+"""Prompts as code: a prompt is a file in Git; the loader returns the text to send and a PROMPT_VERSION to log.
+Leading # lines are notes for humans and are not sent."""
 import hashlib
 from dataclasses import dataclass
 from pathlib import Path

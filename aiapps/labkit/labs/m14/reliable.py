@@ -7,7 +7,7 @@ import anthropic
 
 
 def retryable(e: Exception) -> bool:
-    """The SDK's policy: network trouble, 408, 409, 429 and any 5xx (529 is its own class). A 400 is a bug: never retry it."""
+    """The SDK's policy: network trouble, 408, 409, 429 and any 5xx. A 400 is a bug: never retry it."""
     return isinstance(e, anthropic.APIConnectionError) or (isinstance(e, anthropic.APIStatusError) and (e.status_code in (408, 409, 429) or e.status_code >= 500))
 
 

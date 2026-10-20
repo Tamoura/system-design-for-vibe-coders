@@ -27,7 +27,7 @@ Write-ups disagree because tasks differ. Anthropic described a research system t
 
 ### 🟢 The essentials
 
-**Terms.** A *multi-agent system* has more than one agent (Module 8). A *hand-off* is the message that moves work from one agent to the next. The *supervisor* decides who speaks next: plain code, a model choosing from a short list, or a model that proposes while code checks the move. Prefer code: it is cheap, testable and never "decides" to call itself fifty times. Let a model route only when the next step depends on content you cannot list in advance, and check its choice against an allow-list. A team with a code supervisor is a workflow (lesson 5.1) whose steps are agents, a common shape for production teams.
+**Terms.** A *multi-agent system* has more than one agent (Module 8). A *hand-off* is the message that moves work from one agent to the next. The *supervisor* decides who speaks next: plain code, a model choosing from a short list, or a model that proposes while code checks the move. Prefer code: it is cheap, testable and never "decides" to call itself fifty times. Let a model route only when the next step depends on content you cannot list in advance, and check its choice against an allow-list. A team with a code supervisor is a workflow (lesson 5.1) whose steps are agents.
 
 | Pattern | Who decides what happens next | Najm Desk example |
 |---|---|---|
@@ -39,7 +39,7 @@ Write-ups disagree because tasks differ. Anthropic described a research system t
 | Group chat | Agents talk in free turns | None: hard to bound and test |
 
 **The price.**
-- *Calls, tokens, latency.* Each agent re-reads its prompt and its input: forward 3,000 tokens of search results to a writer and a reviewer and you pay three times. Sequential agents add their delays; parallel ones cost the slowest.
+- *Calls, tokens, latency.* Each agent re-reads its prompt and its input: forward 3,000 tokens of search results to a writer and a reviewer and you pay for them as input three times. Sequential agents add their delays; parallel ones cost the slowest.
 - *Errors compound.* Four stages, each right 95% of the time with independent failures, give a chain right 0.95 to the fourth power, about 81%; at 90% each, about 66%. These rates are illustrative; yours come from an eval.
 - *Debugging and context loss.* A failure surfaces three agents from its cause, and a summary drops the fact that mattered.
 - *New failures.* Ping-pong, a "reviewer" that starts rewriting, conflicting assumptions, and injection that travels: text a researcher read in a document reaches the next agent as an instruction (Module 13).
@@ -47,7 +47,7 @@ Write-ups disagree because tasks differ. Anthropic described a research system t
 **Three reasons that justify a team.**
 1. *Parallel independent work.* Twelve documents to summarise, none needing another's output. If the subtasks are fixed in advance, plain parallelisation (lesson 5.1) needs no agents.
 2. *Context isolation.* A worker reads 40 pages of ticket history in a throwaway context and returns 200 words as a typed summary. The supervisor's context stays small; personal data can come back redacted.
-3. *Different permissions per role.* The agent that reads text strangers wrote gets no write tools; the agent that can request an unlock never reads it. Splitting private data, untrusted content and outward actions is one defence against Simon Willison's "lethal trifecta" (one practitioner's framing), if the hand-off is validated data and not free text.
+3. *Different permissions per role.* The agent that reads text strangers wrote gets no write tools; the agent that can request an unlock never reads it. Splitting private data, untrusted content and external communication across roles is one defence against Simon Willison's "lethal trifecta" (one practitioner's framing), if the hand-off is validated data and not free text.
 
 **The decision rule: one agent first.**
 
@@ -86,14 +86,14 @@ class Finding(BaseModel):
 try:   # a sloppy reply: a title instead of an id, a two-letter "quote", an extra field
     Finding.model_validate_json('{"source": "Laptop policy", "quote": "ok", "confidence": 0.9}')
 except ValidationError as e:
-    for err in e.errors():
+    for err in sorted(e.errors(), key=lambda err: err["loc"]):    # sorted: pydantic versions order the errors differently
         print(err["loc"][0], "->", err["msg"])
 ```
 
 ```text
 confidence -> Extra inputs are not permitted
-source -> String should match pattern '^[a-z0-9-]+$'
 quote -> String should have at least 10 characters
+source -> String should match pattern '^[a-z0-9-]+$'
 ```
 
 Structured outputs (lesson 3.1) constrain the shape, but the schema subset the API accepts cannot enforce limits such as `max_length`, and a reply cut off by `max_tokens` or a `refusal` may not match, so validate anyway. A schema cannot hold two rules, so code checks them: *grounding* (is the quote really in what the tool returned?) and *consistency* (does the draft cite only sources in the notes?). On a failure, repair once with the error text; then hand a packet to a person (lesson 8.1).
@@ -265,7 +265,7 @@ Hind needs none of the vocabulary: she asks whether answers are right, fast and 
 - A researcher, writer and reviewer run by a supervisor in plain code, each with its own prompt, tools and contract.
 - Only the researcher has a tool (read-only search), enforced by a dispatcher.
 - Guards: step cap, team token budget, round cap, one repair per broken contract, then a hand-off packet.
-- Offline, the team costs about twice one agent's calls for the same scripted answers.
+- Offline, the team makes about 2.3 times one agent's calls for the same scripted answers: cost, not quality.
 
 ## 🧭 Why it matters
 Fahad's condition for Lujain's crew (hypothetical): every hand-off checked, a stop that needs nobody, its cost beside one agent's. Her first version passed free text: the researcher wrote "found some relevant policies, see above", the writer filled the gap from memory ("3 business days") and the reviewer, the same model, approved. Nobody knew which agent invented the number.
@@ -274,7 +274,7 @@ Fahad's condition for Lujain's crew (hypothetical): every hand-off checked, a st
 
 ### 🟢 The essentials
 
-**Run it.** The playbook (`playbooks/m11_lab.json`) makes the mock deterministic: its rules match the role in each system prompt (`ROLE: researcher`) and reply with fixed JSON or a tool call. Against the real API the code is identical.
+**Run it.** The playbook (`playbooks/m11_lab.json`) scripts the mock: its rules match the role in each system prompt (`ROLE: researcher`) and reply with fixed JSON or a tool call. Against the real API the code is identical.
 
 ```bash
 cd aiapps/labkit
@@ -288,7 +288,7 @@ Staff can request a new laptop through the IT Service Desk portal under Hardware
 [done: 4 calls, 633 tokens; per role (calls, in, out): {'researcher': [2, 333, 56], 'writer': [1, 82, 36], 'reviewer': [1, 117, 9]}]
 ```
 
-The writer's one call took 82 input tokens, the researcher's two 333: the writer sees the notes, not the search results.
+The writer's one call took 82 input tokens, the researcher's two 333: the writer sees the notes, not the search results. `m11_trace.jsonl` holds one JSON line per model call, tool call, hand-off, review verdict and stop, each tagged with the run id (the file is appended to, so several runs share it).
 
 **contracts.py.** Read `check_notes` first: a schema can say a quote is a string; only code can say it is true.
 
@@ -361,7 +361,7 @@ def describe(e: ValueError) -> str:
 ```python
 # labs/m11/team.py
 """Lab 11.2: a researcher, a writer and a reviewer, run by a supervisor that is plain code.
-  Environment: TEAM_TOKEN_BUDGET, MAX_ROUNDS, TRACE_FILE."""
+  Environment: MODEL, TEAM_TOKEN_BUDGET, MAX_ROUNDS, TRACE_FILE."""
 import json
 import os
 import re
@@ -557,6 +557,7 @@ if __name__ == "__main__":
 ```
 
 ```text
+...
 What is the response time for a P2 ticket?            team right   calls=6 in=746 out=147
 What is the response time for a P2 ticket?            solo right   calls=2 in=298 out=47
 ...
@@ -565,9 +566,9 @@ solo: 10 calls, 1902 tokens
 team / solo: calls x2.3, tokens x2.1
 ```
 
-That is 2.3 times the calls and 2.1 times the tokens for the same answers; money is tokens times the current prices. The caps allow at most 4 + 2 × (4 + 4) = 20 calls.
+That is 2.3 times the calls and 2.1 times the tokens; money is tokens times the current prices. The caps allow at most 4 + 2 × (4 + 4) = 20 calls.
 
-**The drills.** Run `python labs/m11/team.py "<question>"`. A `[drill:...]` tag ends the laptop question and only the playbook reads it.
+**The drills.** Run `python labs/m11/team.py "<question>"`. A `[drill:...]` tag ends the laptop question and only the playbook acts on it.
 
 | Question | What happens | Guard |
 |---|---|---|
@@ -582,21 +583,21 @@ The budget is checked before a call, so one call can cross it.
 
 ### 🔴 Expert view
 
-**Honest caveats.** `pytest tests/test_m11_team.py` covers every guard and drill and the shape of every request, but it shares the playbook's script: it proves the plumbing, not the team. *Works offline:* contracts, caps, allow-list, stop reasons, packets and the trace; token counts are estimates. *Needs the real API:* whether the researcher quotes the right policy, the writer stays in the notes and the reviewer catches real errors; latency, cost, and how tools and structured outputs combine. The `right` in `compare.py` is only a phrase match. The overreach drill has the mock ask for a tool the writer never had, which a real model rarely does: the allow-list is a second lock. The library is trusted text, so nothing here tests injection, and `gaps` and `issues` are still free text. For Najm Desk v1, build one agent and a citation check.
+**Honest caveats.** `pytest tests/test_m11_team.py` covers every guard, drill and request shape, but it shares the playbook's script: it proves the plumbing, not the team. *Works offline:* contracts, caps, allow-list, stop reasons, packets and the trace; token counts are estimates. *Needs the real API:* whether the researcher quotes the right policy, the writer stays in the notes and the reviewer catches real errors; latency, cost, and how tools and structured outputs combine. The `right` in `compare.py` is only a phrase match. In the overreach drill the mock asks for a tool the writer never had; a real model rarely would, and the real API's reaction to a `tool_result` in a request that declares no tools is untested here (if it returns an error, the run ends in `model_error`). The library is trusted text, so nothing tests injection, and `gaps` and `issues` stay free text.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
-| **Hand-off contract** | A Pydantic model per message, validated by the supervisor, plus code checks | Every hand-off |
+| **Hand-off contract** | A Pydantic model per message, plus code checks | Every hand-off |
 | **Team budget** | A token budget, round cap and step cap, checked before each call | Every team |
 | **Hand-off packet** | Run id, reason, last draft, issues, for a named queue | Every guard that fires |
 
 ## 🏛️ In practice at Najm Bank
-**Weekly deliverable.** Commit `week-11/` with `labs/m11/` and passing tests; the `compare.py` table with a paragraph; the packet from each drill that ends in one; a Team Design Record (lesson 11.1) for a feature of your own; and `NOTES.md` with quiz answers and reading notes.
+**Weekly deliverable.** Commit `week-11/` with `labs/m11/` and passing tests; the `compare.py` table with a paragraph; the packet from each drill that ends in one; a Team Design Record (lesson 11.1) for a feature of your own; and `NOTES.md` with quiz answers.
 
 **Group session (60 minutes).** (1) Swap `compare` tables; explain the ratios (15). (2) Run the drills; name each guard and the packet field a Service Desk agent needs (20). (3) Write a hand-off that passes the schema yet is wrong (15). (4) Team or one agent for v1 (10)?
 
-**Build it with Claude Code.** Give this spec to Claude Code in plan mode (check the current Claude Code documentation) and review the plan before it edits anything:
+**Build it with Claude Code.** Give this spec to Claude Code in plan mode (check the current Claude Code documentation) and review the plan before any edit:
 
 ```text
 Goal: build labs/m11/contracts.py, team.py and compare.py as in lesson 11.2, with pytest tests in
@@ -616,13 +617,13 @@ One file at a time; run the tests after each step.
 ```
 
 **Verify before you accept it.**
-- Run the tests, then break one guard at a time: a named test must fail each time. Run `compare.py`: ten rows, all `right`.
+- Run the tests, then break one guard at a time: a named test must fail. Run `compare.py`: ten rows, all `right`.
 - Search the diff for `temperature`, `tool_choice`, `eval(`, `content[0]` and a writer given a tool. Read `Team.tool` and `Team.agent`; confirm the tests are untouched.
 
 ## 🛠️ Exercises
 - 🟢 **Break each guard.** Offline. In turn, remove the allow-list, grounding and budget checks and run the tests. *Done when:* `NOTES.md` names the failing tests per change and the code is restored.
 - 🟡 **Add a deadline and a no-progress rule.** Offline. Escalate `timeout` once `TEAM_DEADLINE_S` has passed (fake the clock) and `no_progress` when the reviewer repeats its issues. *Done when:* a new test for each fails without your change and passes with it.
-- 🔴 **Does the team beat one agent?** *Needs the real API*, with the spending cap from lesson 0.2. Write 15 policy questions with known answers, five unanswerable. With `MODEL=claude-sonnet-5-5`, run `run` and `run_solo` three times each. *Done when:* `NOTES.md` counts right, wrong and escalated, with calls, tokens, cost, date, model id and your verdict.
+- 🔴 **Does the team beat one agent?** *Needs the real API*, with the spending cap from lesson 0.2. Write 15 questions with known answers in `labkit/data/policies/` and five that no policy covers. With `MODEL=claude-sonnet-5-5`, run `run` and `run_solo` three times each. *Done when:* `NOTES.md` counts right, wrong and escalated, with calls, tokens, cost, date, model id and your verdict.
 
 ## ⚠️ Mistakes and traps
 - **Passing the whole state to every agent.** It costs tokens. Send each role its contract.
@@ -699,7 +700,7 @@ One file at a time; run the tests after each step.
 
 <details><summary>Answer</summary>
 
-**C.** Four researcher calls, then per round four for the writer and four for the reviewer: 4 + 3 × (4 + 4) = 28. (🟡 Going deeper.)
+**C.** Four researcher calls, then per round four writer and four reviewer calls: 4 + 3 × (4 + 4) = 28. (🟡 Going deeper.)
 
 </details>
 

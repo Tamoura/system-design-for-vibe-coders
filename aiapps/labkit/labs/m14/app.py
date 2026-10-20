@@ -19,7 +19,7 @@ class Settings:
     def __init__(self, env=os.environ):
         self.app_env = env.get("APP_ENV", "dev")
         self.model = env.get("MODEL", "claude-sonnet-5-5")
-        self.prompt, self.canary_prompt = env.get("PROMPT_VERSION", "najm_desk_v2"), env.get("CANARY_PROMPT", "")
+        self.prompt, self.canary_prompt = env.get("PROMPT_VERSION", "najm_desk_v1"), env.get("CANARY_PROMPT", "")
         self.canary_pct = int(env.get("CANARY_PERCENT", "0"))            # rollback = set this to 0
         self.timeout_s = float(env.get("REQUEST_TIMEOUT_S", "20"))
         self.prompt_dir = Path(env.get("PROMPT_DIR", HERE / "prompts"))
@@ -45,7 +45,7 @@ def pick_prompt(cfg: Settings, user: str) -> str:
 
 
 def load_docs(folder: Path) -> str:
-    """The whole policy library (about 800 tokens), identical on every request: a cacheable prefix. Bigger libraries need Module 4."""
+    """The whole policy library (about 800 tokens), identical on every request: a stable prefix. Bigger libraries need Module 4."""
     return "".join(f'<document id="{p.stem}">{p.read_text(encoding="utf-8").strip()}</document>\n' for p in sorted(folder.glob("*.md")))
 
 
@@ -65,11 +65,11 @@ def create_app(cfg: Settings | None = None, client=None) -> FastAPI:
         print(json.dumps({"ts": round(time.time(), 3), "env": cfg.app_env, "release": cfg.release, **fields}), flush=True)
 
     @app.get("/health")
-    def health():                         # liveness: the process is up. No dependencies, or a provider blip restarts every replica.
+    def health():                         # liveness: the process is up, no dependencies
         return {"status": "ok"}
 
     @app.get("/ready")
-    def ready():                          # readiness: may traffic come? Check what you own; never call the paid model per probe.
+    def ready():                          # readiness: check what you own, never the paid model
         problems = [p for p, bad in [("no policy documents", not docs), ("no API key", "ANTHROPIC_API_KEY" not in os.environ)] if bad]
         if problems:
             raise HTTPException(503, {"ready": False, "problems": problems})

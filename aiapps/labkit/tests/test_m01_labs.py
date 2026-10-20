@@ -132,6 +132,15 @@ def test_a_failed_call_leaves_the_history_valid(chat):
     assert chat.history == []
 
 
+def test_an_empty_reply_is_never_written_into_the_history():
+    """Thinking can use up max_tokens and leave no text; an empty assistant message would make the NEXT call a 400."""
+    chat = load("chat")
+    chat.client = FakeClient(fake_response("max_tokens", []))
+    with pytest.raises(RuntimeError, match="max_tokens"):
+        chat.ask("How do I request a new laptop?")
+    assert chat.history == []                           # the question was taken back out too
+
+
 # ------------------------------------------------------------------ Exercise 1.1: trim.py
 
 def words(history):                                       # a stand-in counter: one "token" per word

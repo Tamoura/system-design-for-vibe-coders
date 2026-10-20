@@ -213,6 +213,15 @@ def test_a_budget_that_is_big_enough_changes_nothing(loop, real):
     assert loop.run("Is ticket 4471 done yet?", loop.Limits(token_budget=100_000), client=real).ok
 
 
+def test_the_budget_counts_what_the_next_call_has_to_re_send(loop):
+    """Lesson 8.2, quiz 1: 14,000 spent, the last call read 7,000, the budget is 20,000. 14,000 alone is under it; 14,000 + 7,000 is not."""
+    first = fake("tool_use", tool_use())
+    first.usage = SimpleNamespace(input_tokens=7_000, output_tokens=7_000)
+    client = FakeClient(first, fake("end_turn", text("Ticket 4471 is in progress.")))
+    res = loop.run("Is ticket 4471 done yet?", loop.Limits(token_budget=20_000), client=client)
+    assert res.reason == "token_budget" and res.tokens == 14_000 and res.steps == 1 and len(client.calls) == 1
+
+
 # ------------------------------------------------------------------ guard 3: the wall clock
 
 def test_the_wall_clock_stops_a_slow_run_between_steps(loop):
@@ -339,6 +348,13 @@ def test_a_wrong_argument_name_is_corrected_on_the_next_step(loop, real):
     res = loop.run("What is the status of ticket 4479?", client=real, trace=trace)
     errors = [e["is_error"] for e in tool_events(trace)]
     assert res.ok and res.steps == 3 and errors == [True, False]
+
+
+def test_a_failed_tool_call_goes_back_to_the_model_marked_is_error(loop, real):
+    spy = Spy(real)
+    loop.run("Please close ticket 4472.", client=spy)
+    sent = spy.calls[1][2]["content"][0]                              # the one user message that answers the one tool_use
+    assert sent["type"] == "tool_result" and sent["is_error"] is True and "unknown tool" in sent["content"]
 
 
 def test_a_long_tool_result_is_cut_before_it_enters_the_context(loop, real, monkeypatch):
