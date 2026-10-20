@@ -29,12 +29,12 @@
 
 ```mermaid
 sequenceDiagram
-    participant C as شيفرتك
-    participant M as النموذج
-    C->>M: الاستدعاء 1: موجّه النظام، رسالة المستخدم 1
-    M-->>C: الرد 1، وتضيفه شيفرتك إلى القائمة
-    C->>M: الاستدعاء 2: موجّه النظام، رسالة المستخدم 1، الرد 1، رسالة المستخدم 2
-    M-->>C: الرد 2
+    participant M as النموذج (The model)
+    participant C as شيفرتك (Your code)
+    C->>M: الاستدعاء 1: موجّه النظام، رسالة المستخدم 1 (Call 1: system, user 1)
+    M-->>C: الرد 1، وتضيفه شيفرتك إلى القائمة (reply 1, which your code appends)
+    C->>M: الاستدعاء 2: موجّه النظام، رسالة المستخدم 1، الرد 1، رسالة المستخدم 2 (Call 2: system, user 1, reply 1, user 2)
+    M-->>C: الرد 2 (reply 2)
 ```
 
 > **انعدام الحالة (Statelessness).** يبدأ كل استدعاء من الصفر (starts from zero). و«ذاكرة المحادثة» (conversation memory) وهم (an illusion) تصنعه شيفرتك بإعادة إرسال السجل (history) في كل مرة. وهذه الحقيقة وراء كثير من الالتباس (confusion) حول النماذج اللغوية الكبيرة (LLMs) وكثير من تكلفة تشغيلها (cost of running them).
@@ -381,16 +381,16 @@ def trim(history: list[dict], max_tokens: int, count=count) -> list[dict]:
 
 ```mermaid
 flowchart TD
-    G["الهدف من المستخدم"] --> L["استدعاء النموذج"]
-    L --> Q{"قراءة سبب التوقف"}
-    Q -->|"نهاية الدور"| D["النص النهائي: تم"]
-    Q -->|"طلب أداة"| T["شيفرتك تتحقق من كل أداة وتنفّذها"]
-    T --> A["إضافة رسالة مستخدم واحدة تضم نتائج الأدوات"]
-    A --> C{"هل بلغنا حدّ الخطوات؟"}
-    C -->|"لا"| L
-    C -->|"نعم"| S["التوقف والإبلاغ"]
-    Q -->|"بلوغ حد الرموز أو الرفض أو غير ذلك"| O["التوقف ومعالجتها صراحةً"]
-    Q -->|"توقف الدور مؤقتًا"| C
+    G["الهدف من المستخدم<br/>(Goal from the user)"] --> L["استدعاء النموذج<br/>(Call the model)"]
+    L --> Q{"قراءة سبب التوقف<br/>(Read stop_reason)"}
+    Q -->|"نهاية الدور (end_turn)"| D["النص النهائي: تم<br/>(Final text: done)"]
+    Q -->|"طلب أداة (tool_use)"| T["شيفرتك تتحقق من كل أداة وتنفّذها<br/>(Your code checks and runs each tool)"]
+    T --> A["إضافة رسالة مستخدم واحدة تضم نتائج الأدوات<br/>(Append one user message of tool_results)"]
+    A --> C{"هل بلغنا حدّ الخطوات؟<br/>(Step cap reached?)"}
+    C -->|"لا (no)"| L
+    C -->|"نعم (yes)"| S["التوقف والإبلاغ<br/>(Stop and report)"]
+    Q -->|"بلوغ حد الرموز أو الرفض أو غير ذلك (max_tokens, refusal, other)"| O["التوقف ومعالجتها صراحةً<br/>(Stop and handle it explicitly)"]
+    Q -->|"توقف الدور مؤقتًا (pause_turn)"| C
 ```
 
 > **النموذج يقترح وشيفرتك تقرر (The model proposes, your code disposes).** لا ينفّذ النموذج شيفرة أبدًا (never runs code)، ولا يلمس قاعدة بيانات، ولا يرسل بريدًا إلكترونيًا. إنه يُصدر طلبًا مهيكلًا (a structured request) — «استدعِ `get_ticket_status` مع `ticket_id` بقيمة 4471» (call get_ticket_status with ticket_id 4471) — ويقرر برنامجك هل يلبّيه (honour it)، ثم ينفّذه ويبلّغ النموذج بالنتيجة (reports back). وكل حاجز وقائي (guardrail) وفحص صلاحيات (permission check) وسجل تدقيق (audit log) في هذه الدورة يعيش في تلك الفجوة (that gap).

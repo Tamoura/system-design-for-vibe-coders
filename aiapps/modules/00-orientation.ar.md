@@ -29,16 +29,16 @@
 **دورة حياة التسليم (The delivery lifecycle).** يمرّ مشروع الوكيل (agent project) بثماني مراحل (eight stages). تنتهي كل مرحلة بمُخرَج (artefact) تستطيع أن تسلّمه لشخص آخر، ولكل مرحلة موضع في هذه الدورة.
 
 ```mermaid
-flowchart LR
-    A["الاستكشاف<br/>الوحدة 6"] --> B["التصميم<br/>الوحدة 7"]
-    B --> C["البناء<br/>الوحدات 1 إلى 5 و8 إلى 11"]
-    C --> D["التقييم<br/>الوحدة 12"]
-    D --> E["التأمين<br/>الوحدة 13"]
-    E --> F["الإطلاق<br/>الوحدة 14"]
-    F --> G["التشغيل<br/>الوحدة 15"]
-    G --> H["التسليم<br/>الوحدتان 15 و16"]
-    D -.->|"دون المستوى المطلوب"| C
-    G -.->|"ما نتعلّمه"| A
+flowchart RL
+    A["الاستكشاف<br/>الوحدة 6<br/>(Discover<br/>Module 6)"] --> B["التصميم<br/>الوحدة 7<br/>(Design<br/>Module 7)"]
+    B --> C["البناء<br/>الوحدات 1 إلى 5 و8 إلى 11<br/>(Build<br/>Modules 1 to 5, 8 to 11)"]
+    C --> D["التقييم<br/>الوحدة 12<br/>(Evaluate<br/>Module 12)"]
+    D --> E["التأمين<br/>الوحدة 13<br/>(Secure<br/>Module 13)"]
+    E --> F["الإطلاق<br/>الوحدة 14<br/>(Ship<br/>Module 14)"]
+    F --> G["التشغيل<br/>الوحدة 15<br/>(Operate<br/>Module 15)"]
+    G --> H["التسليم<br/>الوحدتان 15 و16<br/>(Hand over<br/>Modules 15 and 16)"]
+    D -.->|"دون المستوى المطلوب (below the bar)"| C
+    G -.->|"ما نتعلّمه (what we learn)"| A
 ```
 
 | المرحلة (Stage) | السؤال الذي تجيب عنه (The question it answers) | ما تسلّمه (You hand over) |
@@ -334,11 +334,11 @@ MODEL=claude-sonnet-5-5
 **قاعدة شيفرة واحدة بوضعين (One codebase, two modes).** تقرأ حزمة التطوير (SDK) متغيري بيئة (two environment variables)، عنوانًا أساسيًا (a base URL) ومفتاحًا (a key) (أي قيمة وهمية (dummy value) دون اتصال)، ولا يتغير شيء آخر.
 
 ```mermaid
-flowchart LR
-    L["شيفرة مختبرك<br/>متطابقة في الوضعين"] --> K["حزمة التطوير anthropic<br/>تقرأ متغيرين"]
-    K --> Q{"المتغير ANTHROPIC_BASE_URL<br/>هل هو مضبوط؟"}
-    Q -->|"نعم، 127.0.0.1"| M["محاكي عدّة المختبر<br/>مجاني ومبرمج مسبقًا"]
-    Q -->|"لا"| R["واجهة Anthropic البرمجية<br/>تُحاسَب لكل رمز"]
+flowchart RL
+    L["شيفرة مختبرك<br/>متطابقة في الوضعين<br/>(Your lab code<br/>identical in both modes)"] --> K["حزمة التطوير anthropic<br/>تقرأ متغيرين<br/>(anthropic SDK<br/>reads two variables)"]
+    K --> Q{"المتغير ANTHROPIC_BASE_URL<br/>هل هو مضبوط؟<br/>(ANTHROPIC_BASE_URL<br/>set?)"}
+    Q -->|"نعم، 127.0.0.1 (yes, 127.0.0.1)"| M["محاكي عدّة المختبر<br/>مجاني ومبرمج مسبقًا<br/>(Lab kit mock<br/>free and scripted)"]
+    Q -->|"لا (no)"| R["واجهة Anthropic البرمجية<br/>تُحاسَب لكل رمز<br/>(Anthropic API<br/>billed per token)"]
 ```
 
 للتحول إلى الوضع الحقيقي (to go real)، أوقف المحاكي ونفّذ `unset ANTHROPIC_BASE_URL ANTHROPIC_API_KEY` ليأتي المفتاح من `.env`: فالدالة `load_dotenv` لا تتجاوز أبدًا متغيرًا مُصدَّرًا (exported variable)، وهي ميزة إلى أن تنسى أنك صدّرت القيمة `mock`. ويُبلغك سكربت الفحص السريع (smoke script) بالوضع (mode) فلا تحتاج إلى التذكّر.
@@ -654,15 +654,15 @@ Add CI, Docker or extra features. Do not commit. Plan first and wait for my OK.
 **المنهج (The method).** ست خطوات (six steps)، والحلقة (loop) أهم من أي واحدة منها.
 
 ```mermaid
-flowchart LR
-    S["المواصفة<br/>الهدف والحدود والفحوص"] --> P["الخطة<br/>توافق عليها أنت"]
-    P --> I["التنفيذ<br/>خطوة صغيرة واحدة"]
-    I --> V["التحقق<br/>الاختبارات والتقييمات"]
-    V --> R["مراجعة الفروقات<br/>قائمة الفحص"]
-    R --> C["الإيداع"]
+flowchart RL
+    S["المواصفة<br/>الهدف والحدود والفحوص<br/>(Spec<br/>goal, limits, checks)"] --> P["الخطة<br/>توافق عليها أنت<br/>(Plan<br/>you approve it)"]
+    P --> I["التنفيذ<br/>خطوة صغيرة واحدة<br/>(Implement<br/>one small step)"]
+    I --> V["التحقق<br/>الاختبارات والتقييمات<br/>(Verify<br/>tests and evals)"]
+    V --> R["مراجعة الفروقات<br/>قائمة الفحص<br/>(Review the diff<br/>checklist)"]
+    R --> C["الإيداع<br/>(Commit)"]
     C --> I
-    V -.->|"أحمر"| P
-    R -.->|"مرفوض"| S
+    V -.->|"أحمر (red)"| P
+    R -.->|"مرفوض (rejected)"| S
 ```
 
 1. **المواصفة (Spec).** اكتب الهدف (goal) والحدود (limits) والفحوص (checks) التي تثبته قبل أي شيفرة. فإن لم تستطع كتابة الفحوص، فتعلّم أكثر أولًا (learn more first).

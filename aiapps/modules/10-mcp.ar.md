@@ -30,16 +30,16 @@
 **المضيفون والعملاء والخوادم (Hosts, clients and servers).** **المضيف (host)** هو تطبيق الذكاء الاصطناعي (Najm Desk وClaude Code)؛ وهو يملك استدعاء النموذج والحلقة والسياسة (owns the model call, the loop and the policy). ولكل خادم ينشئ **عميلًا (client)**، أي الاتصال الذي يتحدث البروتوكول مع ذلك الخادم وحده (the connection that speaks the protocol with that one server). و**الخادم (server)** برنامج صغير يغلّف نظامًا (a small program that wraps a system). وقرارات الثقة (Trust decisions) تقيم في المضيف: أي الخوادم تُوصَل (which servers to connect)، وأي الأدوات يراها النموذج (which tools the model sees)، وما الذي يحتاج إلى «نعم» (what needs a yes).
 
 ```mermaid
-flowchart LR
-    subgraph H["المضيف: وكيل نجم ديسك"]
-        M["النموذج"] --> P["الحلقة والسياسة"]
-        P --> C1["عميل MCP أ"]
-        P --> C2["عميل MCP ب"]
+flowchart RL
+    subgraph H["المضيف: وكيل نجم ديسك (Host: the Najm Desk agent)"]
+        M["النموذج<br/>(Model)"] --> P["الحلقة والسياسة<br/>(Loop and policy)"]
+        P --> C1["عميل MCP أ<br/>(MCP client A)"]
+        P --> C2["عميل MCP ب<br/>(MCP client B)"]
     end
-    C1 -->|"stdio"| S1["خادم MCP لـ TicketHub"]
-    C2 -->|"Streamable HTTP وOAuth"| S2["خادم MCP للمورّد"]
-    S1 --> T["واجهة TicketHub البرمجية"]
-    S2 --> V["خدمة المورّد"]
+    C1 -->|"stdio"| S1["خادم MCP لـ TicketHub<br/>(TicketHub MCP server)"]
+    C2 -->|"Streamable HTTP وOAuth (Streamable HTTP and OAuth)"| S2["خادم MCP للمورّد<br/>(Vendor MCP server)"]
+    S1 --> T["واجهة TicketHub البرمجية<br/>(TicketHub API)"]
+    S2 --> V["خدمة المورّد<br/>(Vendor service)"]
 ```
 
 **ثلاثة عناصر أولية (Three primitives).** تختلف في من يقرر استخدامها (They differ in who decides to use them).
@@ -285,8 +285,8 @@ export ANTHROPIC_BASE_URL=http://127.0.0.1:8787 ANTHROPIC_API_KEY=mock
 **أين تقع البوابات (Where the gates sit)** بترتيب مرور الطلب من أوله إلى آخره (in order, first to last):
 
 ```mermaid
-flowchart LR
-    A["النطاق يحدد الأدوات"] --> B["السياسة تصفّيها"] --> C["النموذج يطلب"] --> D["شخص يوافق على الكتابات"] --> E["فحوص المخطط والمالك"]
+flowchart RL
+    A["النطاق يحدد الأدوات<br/>(Scope lists tools)"] --> B["السياسة تصفّيها<br/>(POLICY filters them)"] --> C["النموذج يطلب<br/>(Model asks)"] --> D["شخص يوافق على الكتابات<br/>(Person approves writes)"] --> E["فحوص المخطط والمالك<br/>(Schema and owner checks)"]
 ```
 
 **الخادم (The server).** الأدوات دوال عادية (plain functions): تبني الحزمة (the SDK) كل مخطط JSON Schema من تلميحات الأنواع (type hints) و`Field(...)`، فالمخطط هو أيضًا التحقق من الصحة (the schema is also the validation). وتعمل `may_read` على كل تذكرة يسمّيها النموذج (runs on every ticket the model names).

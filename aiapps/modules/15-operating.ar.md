@@ -27,9 +27,9 @@
 
 ```mermaid
 flowchart TD
-    C["المحادثة: المعرّف والقناة واللغة"] --> T["الدور أو التشغيل: الإصدار ونسخة الموجّه وسبب التوقف والثواني والرموز"]
-    T --> M["استدعاء النموذج: الرموز والمللي ثانية ومعرّف الطلب"]
-    T --> L["استدعاء الأداة: الأداة وحجم النتيجة والخطأ والرفض"]
+    C["المحادثة: المعرّف والقناة واللغة<br/>(Conversation: id, channel, language)"] --> T["الدور أو التشغيل: الإصدار ونسخة الموجّه وسبب التوقف والثواني والرموز<br/>(Turn, or run: release, prompt version, stop reason, seconds, tokens)"]
+    T --> M["استدعاء النموذج: الرموز والمللي ثانية ومعرّف الطلب<br/>(Model call: tokens, ms, request id)"]
+    T --> L["استدعاء الأداة: الأداة وحجم النتيجة والخطأ والرفض<br/>(Tool call: tool, result size, error, refused)"]
 ```
 
 **التسجيل الآمن للبيانات الشخصية (PII-safe logging)** (الاختصار PII يعني البيانات الشخصية، personal data). الضعيف (Weak): تسجيل كل موجّه وكل إجابة «لأغراض التنقيح» ("for debugging"). والقوي (Strong): سجّل المعرّفات والأحجام والأسباب (log ids, sizes and reasons)؛ وأخفِ أولًا (mask first) (الدرس 13.1)؛ واعتمد قائمة سماح للحقول المسجَّلة (allow-list logged fields)؛ واحتفظ بأي نص في مخزن منفصل قصير العمر (a separate, short-lived store) (تقرر سارة ذلك، الدرس 13.2). معرّفات المحادثات عشوائية (Conversation ids are random)، ولا تكون رقم موظف أبدًا (never an employee number)؛ ومعرّف المستخدم بعد تجزئته (a hashed user id) يظل في الغالب بيانات شخصية. يحتفظ `Trace` في المختبر 8.2 بنص مقتطع (clipped text): لا بأس بذلك في مختبر؛ أما في الإنتاج (in production) فسجّل الأحجام بدلًا منه.
@@ -412,12 +412,12 @@ Do not weaken a test. Run the tests after each step.
 **التسليم مشروع (Handover is a project).** خطّط له منذ التصميم (Plan it from design).
 
 ```mermaid
-flowchart LR
-    A["القبول: اختبار قبول المستخدم والاعتماد"] --> B["التدريب: المكتب والمشغّلون"]
-    B --> C["الإطلاق على مراحل"]
-    C --> D["الرعاية المكثفة: يراقب المطوّرون يوميًا"]
-    D --> E["الحالة المستقرة: يملك العميل"]
-    E --> F["الإغلاق: الدروس المستفادة والمرحلة التالية"]
+flowchart RL
+    A["القبول: اختبار قبول المستخدم والاعتماد<br/>(Acceptance: UAT and sign-off)"] --> B["التدريب: المكتب والمشغّلون<br/>(Training: desk and operators)"]
+    B --> C["الإطلاق على مراحل<br/>(Go-live in phases)"]
+    C --> D["الرعاية المكثفة: يراقب المطوّرون يوميًا<br/>(Hypercare: builders watch daily)"]
+    D --> E["الحالة المستقرة: يملك العميل<br/>(Steady state: the customer owns)"]
+    E --> F["الإغلاق: الدروس المستفادة والمرحلة التالية<br/>(Close: lessons learned, next phase)"]
 ```
 
 **اختبار القبول (Acceptance testing).** اختبار قبول المستخدم (UAT) ليس ضمان الجودة (QA)، حيث يطارد المطوّرون العيوب (where builders hunt defects)، وليس تقييمًا (eval) يمنح درجة لمجموعة (scores a set). يشغّل أشخاص العميل سيناريوهات متفقًا عليها (agreed scenarios) في بيئة شبيهة بالإنتاج (a production-like environment) ويقررون. اشتق النص من معايير القبول (Derive the script from the acceptance criteria) (الدرس 6.2): لكل صف معرّف، والمعايير والمتطلبات التي يثبتها (the criteria and requirements it proves)، ومن يتصرف (who acts)، وما يقوله (what they say)، وما يجب أن يكون صحيحًا (what must be true)، وكيف يُشغَّل (how it runs) (`auto`، أو نموذج `real`، أو `person`). الضعيف (Weak): «يجيب عن أسئلة السياسات جيدًا» ("it answers policy questions well"). والقوي (Strong): «سؤال الحاسوب المحمول يحصل على إجابة تستشهد بـ[laptop-requests]، ولا تظهر تذكرة» ("a laptop question gets an answer citing [laptop-requests], and no ticket appears"). يُظهر الرد ما قاله الوكيل (A reply shows what the agent said)؛ ولا يُظهر ما فعله إلا النظام المرجعي (only the system of record shows what it did)، أي TicketHub أو Najm ID.

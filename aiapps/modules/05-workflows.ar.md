@@ -46,17 +46,17 @@
 
 ```mermaid
 flowchart TD
-    A["رسالة الموظف"] --> B["تصنيف النية بنموذج رخيص"]
-    B --> G1{"البوابة: هل التسمية صالحة؟"}
-    G1 -- "لا" --> H["التحويل إلى شخص مع السياق"]
-    G1 -- "سياسة" --> P["أسئلة وأجوبة السياسات مع الاستشهادات"]
-    G1 -- "تذكرة" --> T["استعلام عن حالة التذكرة في TicketHub"]
-    G1 -- "إنسان" --> H
-    P --> S["كتابة الرد"]
+    A["رسالة الموظف<br/>(Staff message)"] --> B["تصنيف النية بنموذج رخيص<br/>(Classify intent with a cheap model)"]
+    B --> G1{"البوابة: هل التسمية صالحة؟<br/>(Gate: valid label?)"}
+    G1 -- "لا (no)" --> H["التحويل إلى شخص مع السياق<br/>(Hand off to a person with context)"]
+    G1 -- "سياسة (policy)" --> P["أسئلة وأجوبة السياسات مع الاستشهادات<br/>(Policy Q and A with citations)"]
+    G1 -- "تذكرة (ticket)" --> T["استعلام عن حالة التذكرة في TicketHub<br/>(TicketHub status lookup)"]
+    G1 -- "إنسان (human)" --> H
+    P --> S["كتابة الرد<br/>(Write the reply)"]
     T --> S
-    S --> G2{"البوابة: هل الاستشهادات موجودة ولا أرقام جديدة؟"}
-    G2 -- "نجاح" --> R["إرسال الرد"]
-    G2 -- "فشل" --> H
+    S --> G2{"البوابة: هل الاستشهادات موجودة ولا أرقام جديدة؟<br/>(Gate: citations present and no new numbers?)"}
+    G2 -- "نجاح (pass)" --> R["إرسال الرد<br/>(Send the reply)"]
+    G2 -- "فشل (fail)" --> H
 ```
 
 ### 🟡 التعمق أكثر (Going deeper)

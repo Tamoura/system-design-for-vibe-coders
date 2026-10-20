@@ -33,11 +33,11 @@
 **الصلاحيات المفرطة للوكيل (Excessive agency)** (OWASP LLM06) هي أدوات أكثر من اللازم (too many tools)، أو صلاحيات أوسع من اللازم (too broad permissions) — كحساب خدمة يقرأ أي تذكرة (a service account that reads any ticket) — أو استقلالية أكبر من اللازم (too much autonomy). القراءة قد تسرّب والكتابة قد تغيّر الأشياء (Reads can leak and writes can change things)، ولذلك تُعدّ المحادثة التي قرأت نصًّا كتبه غرباء **ملوَّثة (tainted)** (الدرس 9.1): يجوز لها أن تقرأ لا أن تكتب. اسأل عن كل أداة: هل يمكن إزالتها، أو تقليصها، أو جعلها تستخدم حقوق المستخدم، أو إبقاؤها بانتظار شخص؟ ⁦(For each tool ask: can it go, shrink, use the user's rights, or wait for a person?)⁩
 
 ```mermaid
-flowchart LR
-    T["النص الوارد"] --> I["حارس المدخلات"] --> M["النموذج"]
-    M -->|"يطلب"| G["بوابة الأدوات: قائمة السماح، النطاق، المعاملات، المالك، المعدل، التلوث، الموافقة"] --> X["الأداة"] --> R["حارس النتائج"] --> M
-    M -->|"يجيب"| O["حارس المخرجات"] --> S["الشاشة"]
-    G -.-> L["سجل التدقيق"]
+flowchart RL
+    T["النص الوارد<br/>(Text in)"] --> I["حارس المدخلات<br/>(Input guard)"] --> M["النموذج<br/>(Model)"]
+    M -->|"يطلب (asks)"| G["بوابة الأدوات: قائمة السماح، النطاق، المعاملات، المالك، المعدل، التلوث، الموافقة<br/>(Tool gate: allow-list, scope, parameters, owner, rate, taint, approval)"] --> X["الأداة<br/>(Tool)"] --> R["حارس النتائج<br/>(Result guard)"] --> M
+    M -->|"يجيب (answers)"| O["حارس المخرجات<br/>(Output guard)"] --> S["الشاشة<br/>(Screen)"]
+    G -.-> L["سجل التدقيق<br/>(Audit log)"]
 ```
 
 ### 🟡 التعمق أكثر (Going deeper)
@@ -580,16 +580,16 @@ if __name__ == "__main__":
 
 ```mermaid
 flowchart TD
-    A["لجين تصوغ الحزمة"] --> B["فهد يراجع الجانب الهندسي"]
-    B --> C["تنجح pack_check والاختبارات"]
-    C --> D["نورة: الأدوات وتشغيل الفريق الأحمر"]
-    C --> E["سارة: محفّز تقييم أثر حماية البيانات والسجلات والإقامة"]
-    C --> F["حمد: المزوّد والاستمرارية ومفتاح الإيقاف"]
-    D --> G["ليلى: الاكتمال وقبول المخاطر"]
+    A["لجين تصوغ الحزمة<br/>(Lujain drafts the pack)"] --> B["فهد يراجع الجانب الهندسي<br/>(Fahad reviews the engineering)"]
+    B --> C["تنجح pack_check والاختبارات<br/>(pack_check and the tests pass)"]
+    C --> D["نورة: الأدوات وتشغيل الفريق الأحمر<br/>(Noura: tools and the red-team run)"]
+    C --> E["سارة: محفّز تقييم أثر حماية البيانات والسجلات والإقامة<br/>(Sara: DPIA trigger, logs, residency)"]
+    C --> F["حمد: المزوّد والاستمرارية ومفتاح الإيقاف<br/>(Hamad: provider, continuity, kill switch)"]
+    D --> G["ليلى: الاكتمال وقبول المخاطر<br/>(Layla: completeness and risk acceptance)"]
     E --> G
     F --> G
-    G --> H["هند تقبل المخاطر المتبقية وتعتمد الانطلاق الفعلي"]
-    G -.->|"تغيير"| A
+    G --> H["هند تقبل المخاطر المتبقية وتعتمد الانطلاق الفعلي<br/>(Hind accepts the residual risk and approves go-live)"]
+    G -.->|"تغيير (a change)"| A
 ```
 
 ### 🔴 نظرة الخبير (Expert view)

@@ -42,23 +42,23 @@
 
 ```mermaid
 flowchart TD
-    subgraph ING["الاستيعاب"]
-        A["المستندات مع جمهورها"] --> B["التقطيع مع تداخل"]
-        B --> C["تضمين كل قطعة"]
-        C --> D["تخزين المتجه والنص والبيانات الوصفية"]
+    subgraph ING["الاستيعاب (Ingest)"]
+        A["المستندات مع جمهورها<br/>(Documents with audience)"] --> B["التقطيع مع تداخل<br/>(Chunk with overlap)"]
+        B --> C["تضمين كل قطعة<br/>(Embed each chunk)"]
+        C --> D["تخزين المتجه والنص والبيانات الوصفية<br/>(Store vector, text, metadata)"]
     end
-    subgraph QRY["الاستعلام"]
-        Q["سؤال الموظف"] --> W["إعادة كتابة الاستعلام"]
-        W --> R1["بحث المتجهات"]
-        W --> R2["بحث BM25"]
-        R1 --> F["الدمج بالرتب التبادلية"]
+    subgraph QRY["الاستعلام (Query)"]
+        Q["سؤال الموظف<br/>(Staff question)"] --> W["إعادة كتابة الاستعلام<br/>(Rewrite the query)"]
+        W --> R1["بحث المتجهات<br/>(Vector search)"]
+        W --> R2["بحث BM25<br/>(BM25 search)"]
+        R1 --> F["الدمج بالرتب التبادلية<br/>(Fuse with RRF)"]
         R2 --> F
-        F --> K["إعادة ترتيب المرشحين"]
-        K --> P["تجميع موجّه الإسناد"]
-        P --> G["التوليد"]
-        G --> X["فحص الاستشهادات"]
+        F --> K["إعادة ترتيب المرشحين<br/>(Rerank candidates)"]
+        K --> P["تجميع موجّه الإسناد<br/>(Assemble grounded prompt)"]
+        P --> G["التوليد<br/>(Generate)"]
+        G --> X["فحص الاستشهادات<br/>(Check citations)"]
     end
-    D -. "التصفية حسب الجمهور" .-> R1
+    D -. "التصفية حسب الجمهور (filter by audience)" .-> R1
     D -.-> R2
 ```
 

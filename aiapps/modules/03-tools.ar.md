@@ -35,13 +35,13 @@
 
 ```mermaid
 sequenceDiagram
-    participant Y as شيفرتك
-    participant M as النموذج
-    Y->>M: رسالة المستخدم مع تعريفات الأدوات
-    M-->>Y: دور المساعد بطلب أداة، وسبب التوقف طلب أداة
-    Note over Y: التحقق من المدخلات ثم تشغيل الأداة
-    Y->>M: رسالة مستخدم فيها نتيجة أداة بالمعرّف نفسه
-    M-->>Y: دور المساعد بالنص النهائي، وسبب التوقف نهاية الدور
+    participant M as النموذج (The model)
+    participant Y as شيفرتك (Your code)
+    Y->>M: رسالة المستخدم مع تعريفات الأدوات (User message plus tool definitions)
+    M-->>Y: دور المساعد بطلب أداة، وسبب التوقف طلب أداة (Assistant turn with tool_use, stop_reason tool_use)
+    Note over Y: التحقق من المدخلات ثم تشغيل الأداة (Validate the input, then run the tool)
+    Y->>M: رسالة مستخدم فيها نتيجة أداة بالمعرّف نفسه (User message holding a tool_result with the same id)
+    M-->>Y: دور المساعد بالنص النهائي، وسبب التوقف نهاية الدور (Assistant turn with final text, stop_reason end_turn)
 ```
 
 بعد رحلة ذهاب وإياب واحدة تبدو قائمة الرسائل (messages list) هكذا، والمعرّفات مختصرة (ids shortened):

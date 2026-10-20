@@ -41,16 +41,16 @@
 **الحلقة (The loop).** في كل دور (turn) يقرأ الوكيل الذاكرة ويبني الطلب وقد يقترح كتابة (reads memory, builds the request and may propose a write)؛ وبوابتك (your gate) هي التي تقرر:
 
 ```mermaid
-flowchart LR
-    U["رسالة المستخدم"] --> R["الاسترجاع: البحث في المخزن"]
-    R --> C["بناء الطلب"]
-    C --> M["النموذج"]
-    M --> P["كتابة أو نسيان مقترح"]
-    P --> G{"البوابة: السياسة والمنشأ والتأكيد"}
-    G -->|"مرور"| S["مخزن الذاكرة"]
-    G -->|"رفض"| X["السبب يُرسل إلى النموذج"]
+flowchart RL
+    U["رسالة المستخدم<br/>(User message)"] --> R["الاسترجاع: البحث في المخزن<br/>(Recall: search the store)"]
+    R --> C["بناء الطلب<br/>(Build the request)"]
+    C --> M["النموذج<br/>(Model)"]
+    M --> P["كتابة أو نسيان مقترح<br/>(Proposed write or forget)"]
+    P --> G{"البوابة: السياسة والمنشأ والتأكيد<br/>(Gate: policy, provenance, confirmation)"}
+    G -->|"مرور (pass)"| S["مخزن الذاكرة<br/>(Memory store)"]
+    G -->|"رفض (refuse)"| X["السبب يُرسل إلى النموذج<br/>(Reason sent back to the model)"]
     S --> R
-    E["انتهاء الصلاحية وطلبات المستخدم"] --> S
+    E["انتهاء الصلاحية وطلبات المستخدم<br/>(Expiry and the user's requests)"] --> S
 ```
 
 **عمليات الكتابة استدعاءات أدوات (Writes are tool calls).** كما في الوحدة 3، النموذج يطلب وشيفرتك تبتّ في الأمر (the model asks and your code disposes). تكفي ثلاث أدوات ضيقة (Three narrow tools suffice):

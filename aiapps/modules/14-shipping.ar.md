@@ -27,16 +27,16 @@
 يجيب الإصدار الأول من نجم ديسك (Najm Desk v1) داخل الطلب نفسه (answers inline)، فيحتاج إلى الصناديق الأربعة الأولى (the first four boxes)؛ ويأتي الباقي حين تعيش المهمة أطول من الطلب (when a task outlives a request).
 
 ```mermaid
-flowchart LR
-  U["واجهة الموظفين"] --> G["البوابة: المصادقة والحدود"]
-  G --> A["خدمة واجهة البرمجة"]
-  A --> M["واجهة برمجة النموذج"]
-  A --> Q["الطابور"]
-  Q --> W["العمّال: حلقة الوكيل"]
+flowchart RL
+  U["واجهة الموظفين<br/>(Staff UI)"] --> G["البوابة: المصادقة والحدود<br/>(Gateway: auth and limits)"]
+  G --> A["خدمة واجهة البرمجة<br/>(API service)"]
+  A --> M["واجهة برمجة النموذج<br/>(Model API)"]
+  A --> Q["الطابور<br/>(Queue)"]
+  Q --> W["العمّال: حلقة الوكيل<br/>(Workers: agent loop)"]
   W --> M
-  W --> S["مخزن الحالة"]
-  K["مدير الأسرار"] -.-> A
-  R["Git: الموجّهات والأدوات والإعدادات"] -.-> A
+  W --> S["مخزن الحالة<br/>(State store)"]
+  K["مدير الأسرار<br/>(Secrets manager)"] -.-> A
+  R["Git: الموجّهات والأدوات والإعدادات<br/>(Git: prompts, tools, config)"] -.-> A
 ```
 
 **الحاويات (Containers).** تُبنى الصورة (An image) مرة واحدة وتعمل دون تغيير في كل مكان (is built once and runs unchanged everywhere). ثبّت الأساس (Pin the base) (بوسم دقيق، an exact tag، وفي الإنتاج ببصمته، in production its digest)، وابنِ على مراحل (build in stages)، وشغّل بمستخدم رقمي غير جذري (run as a numeric non-root user)، وأبقِ الأسرار خارج كل طبقة (keep secrets out of every layer) لأن الطبقات يمكن قراءتها (which can be read). ولا يعني التثبيت ترك الثغرات دون ترقيع (Pinned must not mean unpatched): حدّث الأساس وفق جدول (refresh the base on a schedule) وثبّت إصدارات الاعتماديات بدقة (lock exact dependency versions) (يستخدم المختبر نطاقات، the lab uses ranges). تقرأ الاختبارات هذه الملفات فقط (The tests only read these files)؛ وأنت من يشغّل hadolint (مدقّق لملفات Dockerfile، a Dockerfile linter) و`docker compose config`، وفي التمرين 🔴 تشغّل البناء (the build).

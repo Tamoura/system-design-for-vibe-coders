@@ -51,14 +51,14 @@
 أدرج حالات حدّية وعدائية وحالات لا جواب لها وحالات عربية (Include edge, adversarial, unanswerable and Arabic cases)؛ فالمسارات السعيدة (happy paths) لا تثبت إلا نفسها (prove only themselves).
 
 ```mermaid
-flowchart LR
-    S["المواصفة"] --> D["مجموعة التقييم في Git"]
-    F["الإخفاقات الحقيقية"] --> D
-    D --> R["المُشغِّل والمقيِّمات"]
-    R --> X["الدرجات والرموز وزمن الاستجابة"]
-    X --> G["البوابة مقابل خط الأساس"]
-    G -->|"نجاح"| M["الدمج"]
-    G -->|"حجب"| E["تحليل الأخطاء"]
+flowchart RL
+    S["المواصفة<br/>(Specification)"] --> D["مجموعة التقييم في Git<br/>(Eval set in Git)"]
+    F["الإخفاقات الحقيقية<br/>(Real failures)"] --> D
+    D --> R["المُشغِّل والمقيِّمات<br/>(Runner and graders)"]
+    R --> X["الدرجات والرموز وزمن الاستجابة<br/>(Scores, tokens, latency)"]
+    X --> G["البوابة مقابل خط الأساس<br/>(Gate against the baseline)"]
+    G -->|"نجاح (pass)"| M["الدمج<br/>(Merge)"]
+    G -->|"حجب (block)"| E["تحليل الأخطاء<br/>(Error analysis)"]
     E --> F
 ```
 

@@ -80,46 +80,46 @@
 
 ```mermaid
 flowchart TB
-    emp["الموظف"]
-    sda["مختص مكتب الخدمة"]
-    subgraph bank["أنظمة بنك نجم"]
-        desk["نجم ديسك"]
+    emp["الموظف<br/>(Employee)"]
+    sda["مختص مكتب الخدمة<br/>(Service Desk agent)"]
+    subgraph bank["أنظمة بنك نجم (Najm Bank systems)"]
+        desk["نجم ديسك<br/>(Najm Desk)"]
         th["TicketHub"]
         nid["Najm ID"]
         pc["PeopleCore"]
-        lib["مكتبة السياسات"]
+        lib["مكتبة السياسات<br/>(Policy library)"]
     end
-    llm["مزوّد النموذج، خارجي"]
-    emp -->|"يسأل"| desk
-    sda -->|"يراجع"| desk
-    desk -->|"يقرأ ويسجّل التذاكر"| th
-    desk -->|"طلبات الموافقة"| nid
-    desk -->|"البحث عن المدير"| pc
-    desk -->|"يسترجع"| lib
-    desk -->|"موجّهات بعد الإخفاء"| llm
+    llm["مزوّد النموذج، خارجي<br/>(Model provider, external)"]
+    emp -->|"يسأل (asks)"| desk
+    sda -->|"يراجع (reviews)"| desk
+    desk -->|"يقرأ ويسجّل التذاكر (reads, files tickets)"| th
+    desk -->|"طلبات الموافقة (approval requests)"| nid
+    desk -->|"البحث عن المدير (manager lookup)"| pc
+    desk -->|"يسترجع (retrieves)"| lib
+    desk -->|"موجّهات بعد الإخفاء (masked prompts)"| llm
 ```
 
 يفتح مخطط الحاويات (The container view) الصندوق؛ وكل حاوية تُنشر وتُؤمَّن وتُراقَب (deployed, secured and monitored).
 
 ```mermaid
-flowchart LR
-    ui["واجهة المحادثة"] -->|"الرسائل"| gw
-    subgraph desk["نجم ديسك"]
-        gw["بوابة الدخول<br/>الهوية والحدود ومفاتيح الميزة"]
-        orch["المنسِّق<br/>الموزِّع والمسارات والبوابات"]
-        idx["فهرس السياسات"]
-        mask["مرشّح الإخفاء"]
-        aud["مخزن التدقيق والتتبّع"]
+flowchart RL
+    ui["واجهة المحادثة<br/>(Chat UI)"] -->|"الرسائل (messages)"| gw
+    subgraph desk["نجم ديسك (Najm Desk)"]
+        gw["بوابة الدخول<br/>الهوية والحدود ومفاتيح الميزة<br/>(Gateway<br/>identity, limits, flags)"]
+        orch["المنسِّق<br/>الموزِّع والمسارات والبوابات<br/>(Orchestrator<br/>router, routes, gates)"]
+        idx["فهرس السياسات<br/>(Policy index)"]
+        mask["مرشّح الإخفاء<br/>(Masking filter)"]
+        aud["مخزن التدقيق والتتبّع<br/>(Audit and trace store)"]
     end
-    ks["مفاتيح الميزة لمفتاح الإيقاف"] -->|"تشغيل أو إيقاف"| gw
-    gw -->|"مستخدم معروف"| orch
-    orch -->|"بحث"| idx
-    orch -->|"السؤال"| mask
-    mask -->|"موجّه بعد الإخفاء"| llm["مزوّد النموذج"]
-    orch -->|"يقرأ ويسجّل التذاكر"| th["TicketHub"]
-    orch -->|"طلبات الموافقة"| nid["Najm ID"]
-    orch -->|"البحث عن المدير"| pc["PeopleCore"]
-    orch -->|"تتبّعات بعد الإخفاء"| aud
+    ks["مفاتيح الميزة لمفتاح الإيقاف<br/>(Kill switch flags)"] -->|"تشغيل أو إيقاف (on or off)"| gw
+    gw -->|"مستخدم معروف (known user)"| orch
+    orch -->|"بحث (search)"| idx
+    orch -->|"السؤال (question)"| mask
+    mask -->|"موجّه بعد الإخفاء (masked prompt)"| llm["مزوّد النموذج<br/>(Model provider)"]
+    orch -->|"يقرأ ويسجّل التذاكر (reads, files tickets)"| th["TicketHub"]
+    orch -->|"طلبات الموافقة (approval requests)"| nid["Najm ID"]
+    orch -->|"البحث عن المدير (manager lookup)"| pc["PeopleCore"]
+    orch -->|"تتبّعات بعد الإخفاء (masked traces)"| aud
 ```
 
 **تصميم الإخفاق (Failure design).** لكل تبعية (For each dependency) اكتب المحفِّز (the trigger) والاستجابة وما يقرؤه المستخدم (what the user reads).

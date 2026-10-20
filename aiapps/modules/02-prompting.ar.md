@@ -88,8 +88,8 @@ Examples (illustrative: match their shape, not their wording):
 **الترتيب (Order).** أوصت إرشادات Anthropic بوضع المستندات الطويلة أولًا والسؤال أخيرًا (long documents first and the question last)؛ فاختبر ذلك على مستنداتك أنت (test that on your own documents) — راجع التوثيق الحالي (check the current documentation). والنص الثابت أولًا (fixed text first) يُخزَّن مؤقتًا بأفضل صورة (caches best) أيضًا.
 
 ```mermaid
-flowchart LR
-    S["موجّه النظام: نفسه في كل استدعاء"] --> D["المستندات: تتغير بحسب السؤال"] --> Q["السؤال: جديد في كل استدعاء"]
+flowchart RL
+    S["موجّه النظام: نفسه في كل استدعاء<br/>(System prompt: same every call)"] --> D["المستندات: تتغير بحسب السؤال<br/>(Documents: vary with the question)"] --> Q["السؤال: جديد في كل استدعاء<br/>(Question: new every call)"]
 ```
 
 **اللغة والتنسيق (Language and format).** قل «ردّ بلغة السؤال» (reply in the language of the question) واختبر ذلك على حالات عربية (Arabic cases): وهل يطيع النموذج أم لا أمرٌ يقرره التقييم (an eval) لا التخمين (not a guess). أبقِ المعرّفات وأرقام التذاكر بالإنجليزية (ids and ticket numbers in English) كي تقرأها الشيفرة (so code can read them). وحين يجب على الشيفرة تحليل المخرجات (parse the output) فإن `HANDOFF:` مجرد عرض توضيحي (only a demo)؛ أما الإنتاج فيستخدم **المخرجات المهيكلة (structured outputs)**، أي مخطط JSON (JSON schema) تفرضه الواجهة (the API enforces) — الوحدة 3. وتفرض الشروحات القديمة (old tutorials) تنسيقًا بكتابة بداية الرد مسبقًا (pre-writing the start of the reply)، أي التعبئة المسبقة (a prefill)؛ وأحدث النماذج ترفضها (reject it).
