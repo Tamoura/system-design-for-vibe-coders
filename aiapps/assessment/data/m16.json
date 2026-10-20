@@ -62,27 +62,27 @@
       "level": 2,
       "lesson": "16.1",
       "q": {
-        "en": "Halfway through week 3, Lujain, who chose tier 3, has M1 to M5 done, a second agent half built with no ADR and no eval, and M6 to M8 untouched. What should Fahad advise?",
-        "ar": "في منتصف الأسبوع الثالث، أنجزت لجين، التي اختارت الفئة (tier) 3، المراحل (milestones) من M1 إلى M5، وبنت وكيلًا ثانيًا (second agent) إلى نصفه دون سجل قرار معماري (ADR) ودون تقييم (eval)، ولم تلمس المراحل من M6 إلى M8. بماذا ينبغي أن ينصحها فهد؟"
+        "en": "Lujain chose tier 2. She runs `python labs/m16/capstone_audit.py najm-desk --strict` with no `--tier` flag, and the last line reads \"audit (tier 1, strict): 0 problem(s)\". What can Fahad conclude?",
+        "ar": "اختارت لجين الفئة 2 (tier 2). شغّلت `python labs/m16/capstone_audit.py najm-desk --strict` دون راية (flag) `--tier`، وجاء السطر الأخير: «audit (tier 1, strict): 0 problem(s)». ماذا يستنتج فهد؟"
       },
       "o": {
         "en": [
-          "Finish the second agent first and write its ADR and eval afterwards, so that tier 3 stays whole",
-          "Compress M6 to M8 into the last days, since the code was the hard part and the rest is writing",
-          "Keep tier 3 in the README and list the unfinished governance documents as work for later",
-          "Park the second agent and finish M6 to M8 properly, at the tier she can back with evidence"
+          "Tier 2 is covered too, because a strict run counts every item up to the largest tier",
+          "Tier 2 is ready to ship, because a clean audit shows each cited requirement id has a passing test",
+          "Tier 2 is signed off, because strict mode makes the audit check that every owner approved",
+          "Only tier 1 was audited, so the tier 2 MCP server and CI gate files have not been looked for"
         ],
         "ar": [
-          "إنهاء الوكيل الثاني (second agent) أولًا وكتابة سجل قراره (ADR) وتقييمه (eval) بعد ذلك، لتبقى الفئة 3 (tier 3) كاملة",
-          "ضغط المراحل (milestones) من M6 إلى M8 في الأيام الأخيرة، لأن الشيفرة (code) كانت الجزء الصعب والباقي كتابة",
-          "إبقاء الفئة 3 (tier 3) في ملف README وإدراج وثائق الحوكمة (governance documents) غير المكتملة بوصفها عملًا لاحقًا",
-          "إيقاف الوكيل الثاني (second agent) مؤقتًا وإنهاء المراحل من M6 إلى M8، ضمن الفئة التي تدعمها بالأدلة (evidence)"
+          "الفئة 2 (tier 2) مشمولة أيضًا، لأن التشغيل الصارم (strict run) يحسب كل بند حتى أكبر فئة",
+          "الفئة 2 جاهزة للإطلاق (ship)، لأن التدقيق النظيف (clean audit) يثبت أن لكل معرّف متطلب (requirement id) مذكور اختبارًا ناجحًا",
+          "الفئة 2 معتمَدة (signed off)، لأن الوضع الصارم (strict mode) يجعل التدقيق يتحقق من موافقة كل مالك (owner)",
+          "دُقِّقت الفئة 1 (tier 1) وحدها، فلم يُبحث عن ملفات خادم MCP وبوابة التكامل المستمر (CI gate) الخاصة بالفئة 2"
         ]
       },
       "a": 3,
       "why": {
-        "en": "A smaller tier finished with evidence beats a larger one claimed without it, and a second agent belongs only where an ADR and an eval justify it. Justifying it afterwards, or squeezing M6 to M8, treats the capstone as a build exercise when code is one milestone of eight.",
-        "ar": "إنهاء فئة (tier) أصغر بالأدلة (evidence) خير من ادعاء فئة أكبر بلا أدلة، ولا يجوز وكيل ثانٍ (second agent) إلا حيث يبرّره سجل قرار معماري (ADR) وتقييم (eval). أما تبرير الوكيل لاحقًا أو ضغط المراحل من M6 إلى M8 فيعامل المشروع الختامي (capstone) كتمرين بناء (build exercise) مع أن الشيفرة (code) مرحلة واحدة من ثماني."
+        "en": "The audit counts only the items up to the tier it is given, and the default is tier 1, as the printed line shows, so the MCP server and CI gate were never looked for. Even a tier 2 run would show presence and links only: not that tests pass (cited is not tested), and not that anyone approved.",
+        "ar": "يعدّ التدقيق (audit) البنود حتى الفئة (tier) المعطاة فقط، والافتراضي هو الفئة 1 كما يبيّن السطر المطبوع، فلم يُبحث عن خادم MCP ولا عن بوابة التكامل المستمر (CI gate). وحتى تشغيل الفئة 2 لا يثبت إلا وجود الملفات وترابطها (links): لا نجاح الاختبارات (المذكور ليس مختبَرًا)، ولا موافقة أحد."
       }
     },
     {
@@ -90,8 +90,8 @@
       "level": 3,
       "lesson": "16.1",
       "q": {
-        "en": "At the go/no-go meeting, Hind leans towards go with written conditions. Fahad, who chairs, will put only one of these four proposed conditions into docs/go-no-go.md. Which one?",
-        "ar": "في اجتماع قرار الإطلاق (go/no-go meeting) تميل هند إلى المضي (go) بشروط مكتوبة (written conditions). لن يدرج فهد، الذي يترأس الاجتماع، في docs/go-no-go.md إلا شرطًا واحدًا من هذه الشروط الأربعة المقترحة. أيّها؟"
+        "en": "At the go/no-go meeting, two items are open: the M7 cost sheet (Maha answers that gate) quotes an old price page, and Sara has not yet signed her governance pack row. Hind leans towards go with written conditions. Fahad, who chairs, will put only one of these four proposed conditions into docs/go-no-go.md. Which one?",
+        "ar": "في اجتماع قرار الإطلاق (go/no-go meeting) بقي بندان مفتوحان: ورقة التكلفة (cost sheet) للمرحلة M7 (تجيب مها عن بوابتها) ما زالت تستند إلى صفحة أسعار قديمة (old price page)، ولم توقّع سارة بعد سطرها في حزمة الحوكمة (governance pack). تميل هند إلى المضي (go) بشروط مكتوبة (written conditions). لن يدرج فهد، الذي يترأس الاجتماع، في docs/go-no-go.md إلا شرطًا واحدًا من هذه الشروط الأربعة المقترحة. أيّها؟"
       },
       "o": {
         "en": [
@@ -104,7 +104,7 @@
           "تحدّث مها ورقة التكلفة (cost sheet) من صفحة الأسعار الحالية (current price page) قبل نهاية أول أسبوع من التجربة التشغيلية (pilot)",
           "تحدّث مها ورقة التكلفة (cost sheet) من صفحة الأسعار الحالية (current price page) متى توفّرت الطاقة لدى مشغّليها (operators)",
           "تُحدَّث ورقة التكلفة (cost sheet) من صفحة الأسعار الحالية (current price page) قبل نهاية أول أسبوع من التجربة التشغيلية (pilot)",
-          "توقّع سارة سطرها في حزمة الحوكمة (governance pack) قبل نهاية الأسبوع الأول؛ وإلى ذلك الحين تسجّل هند سطرها معتمَدًا (approved) في الحزمة"
+          "توقّع سارة سطرها في حزمة الحوكمة (governance pack) قبل نهاية الأسبوع الأول؛ وإلى ذلك الحين تسجّل هند سطر سارة معتمَدًا (approved)"
         ]
       },
       "a": 0,
