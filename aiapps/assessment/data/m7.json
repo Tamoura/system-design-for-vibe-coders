@@ -1,0 +1,135 @@
+{
+ "area": "m7",
+ "questions": [
+  {
+   "id": "m7-1",
+   "level": 1,
+   "lesson": "7.1",
+   "a": 1,
+   "q": {
+    "en": "Layla asks Lujain how she set the autonomy level (suggest, draft, decide with approval, act) for each Najm Desk action. Which answer holds up in the design review?",
+    "ar": "تسأل ليلى لجين كيف حدّدت مستوى الاستقلالية (autonomy level) لكل إجراء في نجم ديسك (Najm Desk): يقترح (suggest) أو يصوغ مسودة (draft) أو يقرّر بموافقة (decide with approval) أو يتصرف (act). أي جواب يصمد في مراجعة التصميم (design review)؟"
+   },
+   "o": {
+    "en": [
+     "By how accurate the model looked in the team's last demo run",
+     "By the worst realistic outcome and whether it can be reversed",
+     "By the confidence score the model reports alongside each request",
+     "By one level for the whole assistant, agreed once at the kickoff"
+    ],
+    "ar": [
+     "بحسب دقة النموذج (model) كما ظهرت في آخر عرض تجريبي (demo) أجراه الفريق",
+     "بحسب أسوأ نتيجة واقعية (worst realistic outcome) وإمكان التراجع (reversibility) عنها",
+     "بحسب درجة الثقة (confidence score) التي يذكرها النموذج (model) مع كل طلب",
+     "بمستوى واحد (one level) للمساعد (assistant) كله، يُتفق عليه مرة عند الانطلاق (kickoff)"
+    ]
+   },
+   "why": {
+    "en": "Autonomy is set per action by its worst realistic outcome and reversibility, and raised only on evidence. A good demo is the tempting basis but the weakest, because it shows the happy path, not the worst case.",
+    "ar": "يُضبط مستوى الاستقلالية (autonomy level) لكل إجراء بحسب أسوأ نتيجة واقعية (worst realistic outcome) وإمكان التراجع (reversibility)، ولا يُرفع إلا بدليل (evidence). أما العرض التجريبي (demo) الجيد فهو الأساس المغري (tempting basis) لكنه الأضعف، لأنه يُظهر المسار السعيد (happy path) لا أسوأ حالة (worst case)."
+   }
+  },
+  {
+   "id": "m7-2",
+   "level": 2,
+   "lesson": "7.1",
+   "a": 3,
+   "q": {
+    "en": "In the pilot, Noura's weekly report shows that Service Desk agents approve almost every Najm Desk unlock request within seconds of its arrival. Fahad asks what the team should conclude.",
+    "ar": "في التجربة التشغيلية (pilot)، يُظهر تقرير نورة الأسبوعي (weekly report) أن موظفي مكتب الخدمة (Service Desk agents) يوافقون على كل طلب إلغاء قفل (unlock request) في نجم ديسك (Najm Desk) تقريبًا خلال ثوانٍ (within seconds) من وصوله. ويسأل فهد عمّا ينبغي أن يستنتجه الفريق."
+   },
+   "o": {
+    "en": [
+     "The model is now accurate enough to let unlock requests run unapproved",
+     "The gate works well, because the approvers and the model agree so often",
+     "The gate needs the model's confidence added so that approvers can go faster",
+     "The gate is theatre: show approvers the evidence and limit their volume"
+    ],
+    "ar": [
+     "النموذج (model) صار دقيقًا بما يكفي لتعمل طلبات إلغاء القفل (unlock requests) دون موافقة",
+     "البوابة (gate) تعمل جيدًا، لأن المعتمِدين (approvers) والنموذج (model) يتفقون كثيرًا في قراراتهم",
+     "البوابة (gate) تحتاج إلى إضافة ثقة النموذج (model's confidence) كي يُسرع المعتمِدون في عملهم",
+     "البوابة (gate) صارت مسرحية (theatre)؛ اعرض الدليل (evidence) على المعتمِدين وحدّد حجم عملهم"
+    ]
+   },
+   "why": {
+    "en": "Near-100% approval within seconds means nobody is really checking, so the gate must show the evidence (here, the call-back) and limit volume. Reading it as proof of accuracy is the tempting error: an unlock's worst outcome is an attacker getting in, so v1 never raises it above approval.",
+    "ar": "الموافقة (approval) شبه التامة خلال ثوانٍ تعني أن أحدًا لا يفحص فعلًا، فيجب أن تعرض البوابة (gate) الدليل (evidence)، وهنا نتيجة المكالمة الراجعة (call-back)، وأن تحدّ من الحجم (volume). وقراءتها دليلًا على الدقة (accuracy) هي الخطأ المغري (tempting error): فأسوأ نتيجة لإلغاء القفل (unlock) أن يدخل مهاجم، ولذلك لا يرفعه الإصدار v1 فوق الموافقة."
+   }
+  },
+  {
+   "id": "m7-3",
+   "level": 2,
+   "lesson": "7.2",
+   "a": 0,
+   "q": {
+    "en": "Fahad asks Lujain for a delivery estimate for Najm Desk. Her range hinges on one unknown: whether Arabic policy retrieval will reach an acceptable recall. What should she do before she gives Hind the range?",
+    "ar": "يطلب فهد من لجين تقديرًا (estimate) لموعد تسليم نجم ديسك (Najm Desk). ويتوقف مدى تقديرها (her range) على مجهول واحد: هل سيبلغ استرجاع السياسات العربية (Arabic policy retrieval) استدعاءً (recall) مقبولًا. ماذا تفعل قبل أن تعطي هند هذا المدى؟"
+   },
+   "o": {
+    "en": [
+     "Run a time-boxed spike on Arabic retrieval, then set the range from it",
+     "Quote one number with a large buffer for any weak Arabic recall",
+     "Quote the best case and learn about Arabic recall once the pilot is running",
+     "Drop Arabic from the first release so that the estimate is simple to give"
+    ],
+    "ar": [
+     "تجري تجربة استكشافية مقيّدة بوقت (time-boxed spike) على الاسترجاع العربي ثم تحدد المدى (range) من نتيجتها",
+     "تذكر رقمًا واحدًا (one number) مع هامش كبير (large buffer) يمتص أي ضعف في الاستدعاء العربي (Arabic recall)",
+     "تذكر أفضل حالة (best case) وتعرف أمر الاستدعاء العربي (Arabic recall) حين تعمل التجربة التشغيلية (pilot)",
+     "تحذف اللغة العربية (Arabic) من الإصدار الأول (first release) كي يسهل إعطاء التقدير (estimate)"
+    ]
+   },
+   "why": {
+    "en": "A spike is a time-boxed experiment on the riskiest unknown, so weak recall moves the range now, while scope can still change. A single buffered number is the tempting shortcut, but it hides the uncertainty instead of retiring it.",
+    "ar": "التجربة الاستكشافية (spike) تجربة مقيّدة بوقت (time-boxed) على أخطر مجهول (riskiest unknown)، فإن كان الاستدعاء (recall) ضعيفًا ارتفع المدى (range) الآن، والنطاق (scope) ما زال قابلًا للتغيير. أما الرقم الواحد ذو الهامش فهو الاختصار المغري (tempting shortcut)، لكنه يُخفي عدم اليقين (uncertainty) بدل أن يزيله."
+   }
+  },
+  {
+   "id": "m7-4",
+   "level": 3,
+   "lesson": "7.2",
+   "a": 2,
+   "q": {
+    "en": "Lujain runs the lab demo against the offline mock with its playbook, sees `7/7 slice checks passed` and writes to Hind: \"Najm Desk is ready for the pilot.\" What does that run actually show?",
+    "ar": "تشغّل لجين عرض المختبر (lab demo) على المحاكي دون اتصال (offline mock) مع ملف سيناريوهاته (playbook)، فترى `7/7 slice checks passed`، وتكتب إلى هند: «نجم ديسك (Najm Desk) جاهز للتجربة التشغيلية (pilot)». ماذا تُظهر هذه الجولة (run) فعلًا؟"
+   },
+   "o": {
+    "en": [
+     "That answers are accurate, since D1 returned the right policy text",
+     "That the model never invents sources, since D6 was caught by the gate",
+     "That the wiring and guards work, though answer quality is still untested",
+     "That the router copes with real staff sentences, since all seven were routed"
+    ],
+    "ar": [
+     "أن الإجابات دقيقة (answers are accurate)، لأن D1 أعاد نص السياسة (policy text) الصحيح",
+     "أن النموذج (model) لا يختلق مصادر (invents sources)، لأن بوابة الاستشهاد (citation gate) ضبطت D6",
+     "أن الربط (wiring) والحواجز (guards) تعمل، وأن جودة الإجابة (answer quality) لم تُختبر بعد",
+     "أن الموجِّه (router) يتعامل مع جمل الموظفين الحقيقية (real staff sentences)، لأن السيناريوهات السبعة وُجّهت"
+    ]
+   },
+   "why": {
+    "en": "Offline, the mock copies the best passage and the playbook stages D6, so 7/7 proves the routing, owner check, citation gate, degraded mode and hand-off are wired; answer quality, invented sources, router accuracy, latency and cost need a real model. D6 is the tempting proof, but the playbook made the invented source appear on cue.",
+    "ar": "دون اتصال (offline)، ينسخ المحاكي (mock) أفضل مقطع (best passage) ويرتّب ملف السيناريوهات (playbook) ظهور D6، فيثبت 7/7 أن التوجيه (routing) وفحص المالك (owner check) وبوابة الاستشهاد (citation gate) والوضع المتدهور (degraded mode) والتسليم لإنسان (hand-off) موصولة؛ أما جودة الإجابة (answer quality) والمصادر المختلقة (invented sources) ودقة الموجِّه (router) والزمن (latency) والكلفة (cost) فتحتاج إلى نموذج حقيقي (real model). وD6 هو الدليل المغري (tempting proof)، لكن ملف السيناريوهات جعل المصدر المختلق يظهر عند الطلب."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m7-e1",
+   "lesson": "7.1",
+   "text": {
+    "en": "I have written three ADRs for my Najm Desk design (model tiering, retrieval against long context, write-action policy), each with five parts, a cost as its consequence, a trigger to revisit and no unmeasured figures.",
+    "ar": "لقد كتبتُ ثلاثة سجلات قرار معماري (architecture decision records, ADRs) لتصميم نجم ديسك (Najm Desk) الخاص بي: تدرّج النماذج (model tiering)، والاسترجاع مقابل السياق الطويل (retrieval against long context)، وسياسة إجراءات الكتابة (write-action policy)؛ لكل منها خمسة أجزاء (five parts)، وكلفة (cost) بوصفها نتيجة (consequence)، ومحفّز لإعادة النظر (trigger to revisit)، ودون أرقام غير مقيسة (unmeasured figures)."
+   }
+  },
+  {
+   "id": "m7-e2",
+   "lesson": "7.2",
+   "text": {
+    "en": "I have written a proposal and a rollout plan for Najm Desk whose scope-out names three things including password reset, whose estimates are ranges with a confidence, and whose exit criteria each carry a number and a decider.",
+    "ar": "لقد كتبتُ مقترحًا (proposal) وخطة إطلاق مرحلي (rollout plan) لنجم ديسك (Najm Desk): يسمّي فيهما قسم خارج النطاق (scope out) ثلاثة أمور منها إعادة تعيين كلمة المرور (password reset)، وتقديراتهما على شكل مدى (ranges) مع درجة ثقة (confidence)، ولكل معيار خروج (exit criterion) رقم (number) وصاحب قرار (decider)."
+   }
+  }
+ ]
+}

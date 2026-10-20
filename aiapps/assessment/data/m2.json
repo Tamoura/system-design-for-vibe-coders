@@ -1,0 +1,135 @@
+{
+  "area": "m2",
+  "questions": [
+    {
+      "id": "m2-1",
+      "level": 1,
+      "lesson": "2.1",
+      "q": {
+        "en": "In the Najm Desk pilot, a staff member asks whether a work laptop may be taken to a conference abroad. The policy documents say nothing about it, yet the assistant answers with a confident rule it invented. Its whole prompt is: \"You are a helpful IT assistant. Answer questions about IT policy.\" What is the best fix?",
+        "ar": "في التجربة التشغيلية (pilot) لنجم ديسك (Najm Desk)، سأل موظف (staff member) هل يجوز اصطحاب حاسوب العمل المحمول (work laptop) إلى مؤتمر في الخارج. وثائق السياسة (policy documents) لا تقول شيئًا عن ذلك، ومع ذلك أجاب المساعد بقاعدة واثقة اخترعها (invented rule). وكل ما في موجّه النظام (system prompt) عنده هو: «أنت مساعد تقنية معلومات مفيد، أجب عن أسئلة سياسة تقنية المعلومات» ⁦(You are a helpful IT assistant. Answer questions about IT policy.)⁩ ما أفضل إصلاح (best fix)؟"
+      },
+      "o": {
+        "en": [
+          "Open the prompt with a shouted \"NEVER guess!!!\" so that the model stops inventing new rules",
+          "Name the documents as the only source, with a HANDOFF: way out for when they are silent",
+          "Lower the temperature so that the model keeps to the likeliest wording of the policy",
+          "Add \"think step by step\" and a demand for accuracy so that the model checks itself"
+        ],
+        "ar": [
+          "ابدأ الموجّه (prompt) بعبارة صارخة «لا تخمّن أبدًا» ⁦(NEVER guess!!!)⁩، كي يكفّ النموذج (model) عن اختلاق القواعد",
+          "اجعل الوثائق (documents) المصدر الوحيد (only source)، وأضف مخرجًا (way out) هو `HANDOFF:` حين تسكت عن السؤال",
+          "اخفض درجة الحرارة (temperature)، كي يلتزم النموذج (model) بأرجح صياغة (likeliest wording) في السياسة (policy)",
+          "أضف «فكّر خطوة بخطوة» (think step by step) مع طلب الدقة (accuracy)، كي يراجع النموذج (model) إجابته بنفسه"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "A prompt is a specification and the model guesses whatever it leaves out: here the source of truth and what to do when it cannot answer. Shouted emphasis is the tempting shortcut, but it gives the model no testable rule and no allowed way to say \"I do not know\".",
+        "ar": "الموجّه (prompt) مواصفة (specification)، وكل ما يُغفَل منها يخمّنه النموذج (model): هنا مصدر الحقيقة (source of truth) وما يفعله حين لا يستطيع الإجابة. والتأكيد الصارخ (shouted emphasis) هو الاختصار المغري (tempting shortcut)، لكنه لا يمنح النموذج (model) قاعدة قابلة للاختبار (testable rule) ولا طريقة مسموحة ليقول «لا أعرف» (I do not know)."
+      }
+    },
+    {
+      "id": "m2-2",
+      "level": 2,
+      "lesson": "2.2",
+      "q": {
+        "en": "Lujain's classifier prompt scores 80% on the ten held-out tickets. She reads the two misses, adds an example for each, and the new version scores 100% on held-out. She plans to tell Hind the classifier is now 100% accurate. What should the team do?",
+        "ar": "يحقق موجّه المصنِّف (classifier prompt) عند لجين نسبة 80% على التذاكر العشر المحجوزة (held-out tickets). فتقرأ الإخفاقين (misses)، وتضيف مثالًا (example) لكل منهما، فيحقق الإصدار الجديد (new version) نسبة 100% على المجموعة المحجوزة (held-out set). وتنوي أن تخبر هند بأن المصنِّف صار دقيقًا بنسبة 100% (100% accurate). ما الذي ينبغي أن يفعله الفريق؟"
+      },
+      "o": {
+        "en": [
+          "Report the 100%: held-out is the set that counts, and the new version gained two tickets",
+          "Re-split the 30 tickets at random and report the new version's score on the new held-out ten",
+          "Re-run held-out with --reps 3 to check that the 100% is a stable result",
+          "Treat the old held-out set as dev and score the new version on ten fresh tickets"
+        ],
+        "ar": [
+          "أبلغ بنسبة 100%، فالمجموعة المحجوزة (held-out set) هي المعتمدة في القرار، وقد ربح الإصدار الجديد (new version) تذكرتين",
+          "أعد تقسيم التذاكر الثلاثين عشوائيًا (random re-split)، وأبلغ بنتيجة الإصدار الجديد على المجموعة المحجوزة الجديدة (new held-out set)",
+          "أعد تشغيل المجموعة المحجوزة (held-out set) بالخيار `--reps 3` للتأكد من أن 100% نتيجة مستقرة (stable)",
+          "اعتبر المجموعة المحجوزة (held-out set) القديمة مجموعة تطوير (dev set)، وقيّم الإصدار الجديد على عشر تذاكر جديدة (fresh tickets)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Once the held-out misses shaped the prompt, that set became dev, so its 100% shows memory, not skill; a decision needs tickets nobody has tuned on. A is the tempting error: held-out counts only while nobody tunes on it, and a random re-split of tickets already seen would not restore that.",
+        "ar": "حين شكّلت إخفاقات المجموعة المحجوزة (held-out set) الموجّه (prompt) صارت تلك المجموعة مجموعة تطوير (dev set)، فتدل نسبة 100% على الحفظ (memory) لا على المهارة؛ والقرار يحتاج إلى تذاكر لم يضبط عليها أحد الموجّه. والخيار A هو الخطأ المغري (tempting error): فالمجموعة المحجوزة لا قيمة لها إلا ما دام لا يُضبط عليها، وإعادة التقسيم العشوائي (random re-split) لتذاكر سبقت رؤيتها لا تعيد لها ذلك."
+      }
+    },
+    {
+      "id": "m2-3",
+      "level": 2,
+      "lesson": "2.1",
+      "q": {
+        "en": "On Tuesday Yara reports that Najm Desk's Arabic answers are worse than on Monday. Najm Desk loads its prompt only through load_prompt, from a file in Git. Lujain finds that every call logged on both days carries najm_desk_v1@a632d2f0. What does that tell her?",
+        "ar": "يوم الثلاثاء تفيد يارا بأن إجابات نجم ديسك (Najm Desk) العربية أسوأ منها يوم الاثنين. ويحمّل نجم ديسك موجّهه (prompt) من ملف في Git عبر المحمِّل (loader) `load_prompt` وحده. وتجد لجين أن كل استدعاء (call) سُجّل في اليومين يحمل `najm_desk_v1@a632d2f0`. ماذا يخبرها ذلك؟"
+      },
+      "o": {
+        "en": [
+          "The system prompt text was the same on both days, so an edit to it is not the cause",
+          "The text may still have changed, because the version records only the file name",
+          "Nothing reliable, because the version is a label typed by hand and can lag the text",
+          "Yara's report must be mistaken, since a given version always produces the same answers"
+        ],
+        "ar": [
+          "أن نص موجّه النظام (system prompt) كان واحدًا في اليومين، فليس تعديله هو السبب (cause)",
+          "أن النص ربما تغيّر مع ذلك، لأن الإصدار (version) لا يسجّل سوى اسم الملف (file name)",
+          "لا شيء يُعتمد عليه، لأن الإصدار (version) وسم يكتبه الناس يدويًا (typed by hand) وقد يتأخر عن النص",
+          "أن تقرير يارا خاطئ، لأن الإصدار الواحد للموجّه (prompt version) يعطي الإجابات نفسها (same answers) دائمًا"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "The loader hashes the exact text it sends, so an identical PROMPT_VERSION on both days means an identical system prompt and the cause lies elsewhere. D is the tempting error: the same prompt does not promise the same answers, since the documents, the model and run-to-run variance can all change them.",
+        "ar": "يحسب المحمِّل (loader) تجزئة (hash) للنص المُرسَل حرفًا بحرف، فتعني `PROMPT_VERSION` المتطابقة في اليومين أن موجّه النظام (system prompt) متطابق، وأن السبب في مكان آخر. والخيار D هو الخطأ المغري (tempting error): فالموجّه (prompt) نفسه لا يضمن الإجابات نفسها، إذ قد تغيّرها الوثائق (documents) أو النموذج (model) أو التباين بين التشغيلات (run-to-run variance)."
+      }
+    },
+    {
+      "id": "m2-4",
+      "level": 3,
+      "lesson": "2.2",
+      "q": {
+        "en": "Najm Desk's CI runs the eval gate only when a file under prompts/ changes. Maha opens a pull request that switches MODEL from claude-sonnet-5-5 to claude-haiku-5-5 to cut cost; it touches no prompt file, so the gate does not run. What is the right judgement?",
+        "ar": "يشغّل التكامل المستمر (continuous integration, CI) في نجم ديسك (Najm Desk) بوابة التقييم (eval gate) عندما يتغير ملف تحت المجلد `prompts/` فقط. وتفتح مها طلب دمج (pull request) يبدّل `MODEL` من `claude-sonnet-5-5` إلى `claude-haiku-5-5` لخفض التكلفة (cut cost)؛ وهو لا يمسّ أي ملف موجّه (prompt file)، فلا تعمل البوابة. ما الحكم السليم (right judgement)؟"
+      },
+      "o": {
+        "en": [
+          "Merge it as it stands, because PROMPT_VERSION is unchanged and so is the behaviour",
+          "Merge it, then let a week of staff feedback in the pilot show whether it is good enough",
+          "Merge it once the gate has passed on the new model, and let MODEL changes trigger it",
+          "Merge it once the provider's own ratings show that the cheaper tier suits classification"
+        ],
+        "ar": [
+          "ادمجه كما هو (as it stands)، لأن `PROMPT_VERSION` لم يتغير ولا يتغير السلوك (behaviour) معه",
+          "ادمجه ثم دع أسبوعًا من ملاحظات الموظفين (staff feedback) في التجربة التشغيلية (pilot) يبيّن كفايته",
+          "ادمجه متى نجحت بوابة التقييم (eval gate) على النموذج (model) الجديد، واجعل تغييرات `MODEL` تشغّلها",
+          "ادمجه متى أظهرت تقييمات المزوّد (provider's ratings) أن الفئة الأرخص (cheaper tier) تناسب التصنيف (classification)"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "A model change is a prompt change: the same text can classify differently on another model, and only the eval on the model you will ship can say whether the cheaper one suffices. A is the tempting error: PROMPT_VERSION hashes the prompt text, so it does not move when only the model does, which is why the gate must also watch MODEL.",
+        "ar": "تغيير النموذج (model) هو تغيير للموجّه (prompt): فالنص نفسه قد يصنّف تصنيفًا مختلفًا على نموذج آخر، ولا يحسم كفاية النموذج الأرخص إلا التقييم (eval) على النموذج الذي ستشحنه. والخيار A هو الخطأ المغري (tempting error): فـ `PROMPT_VERSION` تجزئة (hash) لنص الموجّه، فلا تتحرك حين يتغير النموذج وحده، ولهذا يجب أن تراقب بوابة التقييم (eval gate) المتغير `MODEL` أيضًا."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m2-e1",
+      "lesson": "2.1",
+      "text": {
+        "en": "I have written prompts/ticket_summary_v1.txt, a prompt that summarises a ticket thread for a hand-off, with all six parts (role, task, context, format, constraints, examples), checked that it loads with load_prompt and that its header names an owner, and asked a colleague what it does with an empty thread",
+        "ar": "كتبتُ الملف `prompts/ticket_summary_v1.txt`، وهو موجّه (prompt) يلخّص سلسلة تذكرة (ticket thread) للتسليم (hand-off) ويضم الأجزاء الستة: الدور (role) والمهمة (task) والسياق (context) والصيغة (format) والقيود (constraints) والأمثلة (examples)، وتحققتُ من أنه يُحمَّل بـ `load_prompt` وأن ترويسته (header) تسمّي مالكًا (owner)، وسألتُ زميلًا (colleague) ماذا يفعل مع سلسلة فارغة (empty thread)"
+      }
+    },
+    {
+      "id": "m2-e2",
+      "lesson": "2.2",
+      "text": {
+        "en": "I have run classify_v1, classify_v2, classify_v3 and classify_v4_overfit on both the dev and held-out splits, compared v2 with v3 ticket by ticket, recorded the results table in NOTES.md, and seen the gate fail for v2 and pass for v3",
+        "ar": "شغّلتُ `classify_v1` و`classify_v2` و`classify_v3` و`classify_v4_overfit` على مجموعتي التطوير (dev) والمحجوزة (held-out)، وقارنتُ v2 بـ v3 تذكرةً تذكرة (ticket by ticket)، ودوّنتُ جدول النتائج (results table) في `NOTES.md`، ورأيتُ بوابة التقييم (eval gate) تفشل مع v2 وتنجح مع v3"
+      }
+    }
+  ]
+}
