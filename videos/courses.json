@@ -190,8 +190,8 @@
     "stats": [
       { "value": 17, "label": "modules" },
       { "value": 35, "label": "lessons" },
-      { "value": 150, "label": "tools & patterns" },
-      { "value": 245, "label": "practice questions" }
+      { "value": 159, "label": "tools & patterns" },
+      { "value": 230, "label": "practice questions" }
     ],
     "tags": ["Agents · LLM apps · delivery", "Requirements to production"]
   }
