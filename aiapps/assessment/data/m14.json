@@ -1,0 +1,135 @@
+{
+  "area": "m14",
+  "questions": [
+    {
+      "id": "m14-1",
+      "level": 1,
+      "lesson": "14.1",
+      "q": {
+        "en": "Lujain changes one sentence in the Najm Desk prompt file and touches no code. She says nothing needs releasing and wants it live today. What does Fahad tell her?",
+        "ar": "تعدّل لجين جملة واحدة في ملف الموجّه (prompt file) الخاص بنجم ديسك (Najm Desk) دون لمس أي شيفرة (code)، وتقول إنه لا شيء يستدعي إصدارًا (release) وتريده مباشرًا (live) اليوم. ماذا يقول لها فهد؟"
+      },
+      "o": {
+        "en": [
+          "A configuration tweak: only images and code count as releases, so the eval gate can be skipped",
+          "A hotfix: a prompt is only text, so it can be edited on the live machine and checked afterwards",
+          "A release: the prompt version travels with the image, tools and model id as one manifest, so the gate runs again",
+          "A minor edit: one sentence cannot move behaviour much, so the last eval result still holds for it"
+        ],
+        "ar": [
+          "تعديل إعدادات (configuration tweak): الإصدار يخص صور الحاويات (container images) والشيفرة (code) وحدهما، فتُتخطى بوابة التقييم (eval gate)",
+          "إصلاح عاجل (hotfix): الموجّه (prompt) نص فقط، فيُعدَّل على الجهاز الحي (live machine) ويُفحص بعد ذلك",
+          "إصدار (release): نسخة الموجّه (prompt version) تسير مع الصورة والأدوات (tools) ومعرّف النموذج (model id) في بيان واحد (one manifest)، فتعيد البوابة (gate) عملها",
+          "تعديل بسيط (minor edit): جملة واحدة لا تحرّك السلوك (behaviour) كثيرًا، فتبقى نتيجة التقييم (eval result) الأخيرة سارية عليه"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "A release is the image, prompt, tools, model id and eval baseline as one manifest, so a changed sentence is a new prompt version that must pass the gate again. Calling it just text is the tempting shortcut, but a bad release is rarely down: it is wrong, and green probes will not show it.",
+        "ar": "الإصدار (release) هو صورة الحاوية (image) والموجّه (prompt) والأدوات (tools) ومعرّف النموذج (model id) وخط الأساس (eval baseline) في بيان واحد (one manifest)، فالجملة المعدَّلة نسخة موجّه جديدة (new prompt version) يجب أن تجتاز البوابة (gate) من جديد. واعتبارها نصًا فقط هو الاختصار المغري (tempting shortcut)، لكن الإصدار السيئ نادرًا ما يتوقف عن العمل (down): إنه يخطئ (wrong)، ولا تكشف ذلك فحوص الصحة الخضراء (green probes)."
+      }
+    },
+    {
+      "id": "m14-2",
+      "level": 2,
+      "lesson": "14.2",
+      "q": {
+        "en": "On a busy Sunday, three calls from Najm Desk fail: one with a 529 overloaded error, one with a 429 carrying a retry-after header, and one with a 400 for a malformed request. How should the retry layer treat them?",
+        "ar": "في يوم أحد مزدحم، تفشل ثلاثة استدعاءات (calls) من نجم ديسك (Najm Desk): الأول بالخطأ 529 (overloaded) والثاني بالخطأ 429 مع ترويسة (header) هي retry-after والثالث بالخطأ 400 لطلب مشوَّه (malformed request). كيف تعاملها طبقة إعادة المحاولة (retry layer)؟"
+      },
+      "o": {
+        "en": [
+          "Retry the 529 and 429 after a jittered wait that honours retry-after, and raise the 400 at once",
+          "Retry only the 529, because retrying a rate-limited call just deepens the limit for everyone",
+          "Retry all three after a jittered wait, because any failure may clear on a later attempt",
+          "Retry the 529 and 429 at once with no wait, so staff see the shortest possible delay"
+        ],
+        "ar": [
+          "تُعاد محاولة (retry) الخطأين 529 و429 بعد انتظار بإزاحة عشوائية (jittered wait) يراعي retry-after، ويُرفع الخطأ 400 فورًا",
+          "تُعاد محاولة (retry) الخطأ 529 وحده، لأن إعادة محاولة استدعاء محدود المعدل (rate-limited call) تعمّق الحد (limit) على الجميع",
+          "تُعاد محاولة (retry) الأخطاء الثلاثة بعد انتظار بإزاحة عشوائية (jittered wait)، لأن أي إخفاق قد يزول في محاولة لاحقة",
+          "تُعاد محاولة (retry) الخطأين 529 و429 فورًا بلا انتظار (no wait)، ليرى الموظفون أقصر تأخير (delay) ممكن"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Only transient failures are retried: 529 and other 5xx, and 429 after the server's retry-after, with jitter and a cap. A 400 is a bug in the request, so retrying it only repeats the bug; retrying everything is the tempting shortcut and just burns calls.",
+        "ar": "تُعاد محاولة الأعطال العابرة (transient failures) فقط: 529 وسائر أخطاء 5xx، و429 بعد مدة retry-after من الخادم، مع إزاحة عشوائية (jitter) وسقف (cap). أما 400 فخلل في الطلب نفسه (bug in the request) فإعادته تكرر الخلل فقط؛ وإعادة محاولة كل شيء هي الاختصار المغري (tempting shortcut) ولا تفعل سوى حرق الاستدعاءات (burn calls)."
+      }
+    },
+    {
+      "id": "m14-3",
+      "level": 2,
+      "lesson": "14.1",
+      "q": {
+        "en": "Najm Desk's API stores the first answer under the user and Idempotency-Key and replays it when a client retries. One slow Sunday, Najm Desk's own code retries a TicketHub create call that timed out, and Yara finds two identical tickets. What fixes the cause?",
+        "ar": "تخزّن واجهة نجم ديسك (Najm Desk API) الإجابة الأولى تحت المستخدم ومفتاح عدم التأثر بالتكرار (user and Idempotency-Key) وتعيدها حين يعيد العميل (client) المحاولة. وفي يوم أحد بطيء، يعيد كود نجم ديسك نفسه محاولة استدعاء إنشاء تذكرة في TicketHub انتهت مهلته (timed out)، فتجد يارا تذكرتين متطابقتين (two identical tickets). ما الذي يعالج السبب؟"
+      },
+      "o": {
+        "en": [
+          "Keep stored answers in the API for longer, so every later repeat is replayed from memory",
+          "Generate a fresh key for each attempt, so a stuck request can never block the retry",
+          "Raise the TicketHub timeout, so the first attempt always finishes before any retry starts",
+          "Pass the same key to TicketHub's create call, so a repeated write returns the first ticket"
+        ],
+        "ar": [
+          "إبقاء الإجابات المخزَّنة (stored answers) في الواجهة (API) مدة أطول، فيُعاد كل تكرار لاحق من الذاكرة (memory)",
+          "توليد مفتاح جديد (fresh key) لكل محاولة، فلا يستطيع طلب عالق (stuck request) أن يعطّل إعادة المحاولة (retry)",
+          "رفع مهلة (timeout) TicketHub، فتنتهي المحاولة الأولى دائمًا قبل أن تبدأ أي إعادة محاولة (retry)",
+          "تمرير المفتاح نفسه (same key) إلى استدعاء إنشاء التذكرة في TicketHub، فتعيد الكتابة المكررة (repeated write) التذكرة الأولى"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "The API's store only catches repeats that arrive from the client; this retry starts inside Najm Desk, so the system that writes must receive the key too and return the first ticket. Keeping answers longer is the tempting fix, but it protects only your own API.",
+        "ar": "لا يلتقط مخزن الواجهة (API store) إلا التكرارات القادمة من العميل (client)، أما إعادة المحاولة (retry) هنا فتبدأ من داخل نجم ديسك (Najm Desk)، فيجب أن يستلم النظام الذي يكتب (writing system) المفتاح (key) أيضًا ويعيد التذكرة الأولى. وإبقاء الإجابات مدة أطول هو الحل المغري (tempting fix)، لكنه يحمي واجهتك أنت (your own API) فحسب."
+      }
+    },
+    {
+      "id": "m14-4",
+      "level": 3,
+      "lesson": "14.2",
+      "q": {
+        "en": "To cut spend, Lujain moves Najm Desk to claude-haiku-5-5 and, in the same release, caps tool output at two rows. The price per call falls by half, yet the cost per resolved ticket rises. Hind asks what to do. Which response is best?",
+        "ar": "لخفض الإنفاق (spend)، تنقل لجين نجم ديسك (Najm Desk) إلى claude-haiku-5-5 وتحدّ في الإصدار نفسه مخرجات الأدوات (tool output) بصفين اثنين (two rows). ينخفض سعر الاستدعاء (price per call) إلى النصف، لكن التكلفة لكل تذكرة محلولة (cost per resolved ticket) ترتفع. وتسأل هند عما ينبغي فعله. أي استجابة هي الأفضل؟"
+      },
+      "o": {
+        "en": [
+          "Keep both changes, because a lower price per call means the saving is real and the report will catch up",
+          "Test each change on its own against the eval's hard cases, and compare them by cost per resolved ticket",
+          "Move every question to the strongest tier, because that tier hands off the fewest conversations to people",
+          "Lower the effort setting as well, because fewer thinking tokens cut the price of every call even further"
+        ],
+        "ar": [
+          "الإبقاء على التغييرين، لأن انخفاض سعر الاستدعاء (price per call) يعني أن التوفير (saving) حقيقي وسيلحق به التقرير (report)",
+          "اختبار كل تغيير على حدة (on its own) بحالات التقييم (eval) الصعبة، ومقارنتهما بالتكلفة لكل تذكرة محلولة (cost per resolved ticket)",
+          "نقل كل سؤال إلى الطبقة الأقوى (strongest tier)، لأنها تسلّم أقل عدد من المحادثات (conversations) إلى الموظفين",
+          "خفض إعداد الجهد (effort setting) أيضًا، لأن قلة رموز التفكير (thinking tokens) تخفض سعر كل استدعاء (call) أكثر"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "A cheaper model and less tool output can each leave more conversations unresolved or force repeat calls, and hand-offs and extra calls still cost, so the price per call hides the loss. Trade-offs are tested against the eval one at a time and judged per resolved ticket; keeping both because the per-call price fell is the trap.",
+        "ar": "قد يترك النموذج الأرخص ومخرجات الأدوات (tool output) الأقل مزيدًا من المحادثات (conversations) بلا حل أو يفرضان استدعاءات متكررة (repeat calls)، والتسليم إلى موظف (hand-offs) والاستدعاءات الإضافية تكلّف أيضًا، فيُخفي سعر الاستدعاء (price per call) الخسارة. وتُختبر المفاضلات (trade-offs) على مجموعة التقييم (eval set) واحدة تلو الأخرى وتُقاس بكل تذكرة محلولة (per resolved ticket)؛ والإبقاء عليهما معًا لأن سعر الاستدعاء انخفض هو الفخ (the trap)."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m14-e1",
+      "lesson": "14.1",
+      "text": {
+        "en": "I have run the canary and rollback drill offline: sent 100 users' questions with the candidate prompt at 20%, counted both versions, then set the share to 0, timed it, and shown that nobody still sees v2.",
+        "ar": "لقد نفّذتُ تمرين الإطلاق الكناري والتراجع (canary and rollback drill) دون اتصال (offline): أرسلتُ أسئلة 100 مستخدم بالموجّه المرشح (candidate prompt) بنسبة 20%، وعددتُ النسختين (both versions)، ثم ضبطتُ النسبة على 0 وقسْتُ الثواني (timed it) وأثبتُّ أن أحدًا لا يرى v2."
+      }
+    },
+    {
+      "id": "m14-e2",
+      "lesson": "14.2",
+      "text": {
+        "en": "I have filled prices.json from the current public price page, dated it, and checked that the cost report matches my own hand arithmetic for one conversation to five decimals.",
+        "ar": "لقد ملأتُ `prices.json` من صفحة الأسعار العامة الحالية (current public price page) وأرّختُه، وتحققتُ من أن تقرير التكلفة (cost report) يطابق حسابي اليدوي (hand arithmetic) لمحادثة واحدة حتى خمس خانات عشرية (five decimals)."
+      }
+    }
+  ]
+}
