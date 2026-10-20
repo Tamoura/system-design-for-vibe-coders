@@ -1,6 +1,6 @@
 # الوحدة 11 — أنظمة تعدد الوكلاء (Multi-agent systems)
 
-*فريق الوكلاء (a team of agents) هو أكثر الأفكار إغراءً في هندسة الوكلاء (agent engineering)، وهو في أغلب الأحيان الفكرة الخاطئة. وتعلّمك هذه الوحدة النصفين معًا: كيف تبني فريقًا بالطريقة الصحيحة (how to build a team properly)، وكيف تعرف هل ينبغي لك أن تبنيه أصلًا (whether you should). يغطي الدرس 11.1 الأنماط (the patterns) — المشرف والعمّال (supervisor and workers)، والمنسِّق والعمّال (orchestrator-workers)، وخطوط المعالجة (pipelines)، وحلقات الناقد (critic loops)، والتسليم بين الوكلاء (hand-offs) — وما يجلبه الفريق من تكاليف وإخفاقات جديدة (the costs and new failures a team brings)، والأسباب الثلاثة التي تبرر وجوده (the three reasons that justify one) وهي العمل المستقل المتوازي (parallel independent work) وعزل السياق (context isolation) واختلاف الصلاحيات لكل دور (different permissions per role)، وعقود التسليم المنمّطة (typed hand-off contracts)، وصلاحيات الأدوات الخاصة بكل دور (role-specific tool permissions)، والحالة المشتركة (shared state)، والميزانيات والإنهاء للفريق كله (budgets and termination for the whole team)، والتتبّع عبر الوكلاء (tracing across agents)، وجولة صريحة في خمسة أطر عمل (an honest tour of five frameworks)، وقاعدة قرار (a decision rule): جرّب وكيلًا واحدًا بأدوات جيدة أولًا (try one agent with good tools first). أما الدرس 11.2 فهو المختبر (the lab): باحث وكاتب ومراجع (a researcher, a writer and a reviewer) يديرهم مشرف في شيفرة عادية (a supervisor in plain code)، مع عقد Pydantic يُفحص عند كل تسليم (a Pydantic contract checked at every hand-off)، وميزانية للفريق وحدّ للجولات (a team budget and a round cap)، وتدريبات تجعل كل حاجز يعمل (drills that make each guard fire)، ومقارنة بوكيل منفرد على خمسة أسئلة (a comparison against a single agent on five questions)، وقائمة صريحة بما تستطيع النسخة المحاكاة دون اتصال (the offline mock) إظهاره وما لا تستطيع (can and cannot show).*
+*فريق الوكلاء (a team of agents) هو أكثر الأفكار إغراءً في هندسة الوكلاء (agent engineering)، وهو في أغلب الأحيان الفكرة الخاطئة. وتعلّمك هذه الوحدة النصفين معًا: كيف تبني فريقًا بالطريقة الصحيحة، وكيف تعرف هل ينبغي لك أن تبنيه أصلًا (how to build a team properly, and how to tell whether you should). يغطي الدرس 11.1 الأنماط (the patterns) — المشرف والعمّال (supervisor and workers)، والمنسِّق والعمّال (orchestrator-workers)، وخطوط المعالجة (pipelines)، وحلقات الناقد (critic loops)، والتسليم بين الوكلاء (hand-offs) — وما يجلبه الفريق من تكاليف وإخفاقات جديدة (the costs and new failures a team brings)، والأسباب الثلاثة التي تبرر وجوده (the three reasons that justify one) وهي العمل المستقل المتوازي (parallel independent work) وعزل السياق (context isolation) واختلاف الصلاحيات لكل دور (different permissions per role)، وعقود التسليم المنمّطة (typed hand-off contracts)، وصلاحيات الأدوات الخاصة بكل دور (role-specific tool permissions)، والحالة المشتركة (shared state)، والميزانيات والإنهاء للفريق كله (budgets and termination for the whole team)، والتتبّع عبر الوكلاء (tracing across agents)، وجولة صريحة في خمسة أطر عمل (an honest tour of five frameworks)، وقاعدة قرار (a decision rule): جرّب وكيلًا واحدًا بأدوات جيدة أولًا (try one agent with good tools first). أما الدرس 11.2 فهو المختبر (the lab): باحث وكاتب ومراجع (a researcher, a writer and a reviewer) يديرهم مشرف في شيفرة عادية (a supervisor in plain code)، مع عقد Pydantic يُفحص عند كل تسليم (a Pydantic contract checked at every hand-off)، وميزانية للفريق وحدّ للجولات (a team budget and a round cap)، وتدريبات تجعل كل حاجز يعمل (drills that make each guard fire)، ومقارنة بوكيل منفرد على خمسة أسئلة (a comparison against a single agent on five questions)، وقائمة صريحة بما تستطيع النسخة المحاكاة دون اتصال إظهاره وما لا تستطيع (an honest list of what the offline mock can and cannot show).*
 
 > **الطبقة (Layer):** Agents — متى ينبغي أن يصبح الوكيل الواحد عدة وكلاء (when one agent should become several)، وكيف يسلّم بعضهم العمل إلى بعض (how they hand work to each other)، والحدود التي تمنع الفريق من الخروج عن السيطرة (the limits that keep a team from running away).
 
@@ -11,43 +11,43 @@
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
 - **الفريق (team)** هو عدة وكلاء (several agents)، لكل منهم موجّهه (prompt) وأدواته (tools) وسياقه (context) الخاص، ويضاف إليهم **مشرف (supervisor)** يقرر من يتكلم بعد ذلك (decides who goes next)، و**عمليات تسليم (hand-offs)** بينهم.
-- الفريق تكلفة لا ميزة (A team is a cost, not a feature): مزيد من الاستدعاءات (calls) والرموز (tokens) وزمن الاستجابة (latency)، وأخطاء متراكمة (compounding errors)، وسياق مفقود (lost context).
+- الفريق تكلفة لا ميزة (A team is a cost, not a feature): مزيد من الاستدعاءات (calls) والرموز (tokens) وزمن الاستجابة (latency)، وأخطاء متراكمة وسياق مفقود (compounding errors, lost context).
 - ثلاثة أسباب تبرر ثمنه (Three reasons pay for it): **العمل المستقل المتوازي (parallel independent work)**، و**عزل السياق (context isolation)**، و**اختلاف الصلاحيات لكل دور (different permissions per role)**.
-- التسليم **عقد (contract)**: رسالة Pydantic منمّطة (a typed message) يتحقق منها المشرف (validates)، مع فحوص بالشيفرة (code checks). والصلاحيات تنتمي إلى الدور (Permissions belong to the role).
+- التسليم **عقد (contract)**: رسالة Pydantic منمّطة يتحقق منها المشرف (a typed Pydantic message the supervisor validates)، مع فحوص بالشيفرة (code checks). والصلاحيات تنتمي إلى الدور (Permissions belong to the role).
 - قاعدة عملية (Rule of thumb): ابنِ وكيلًا واحدًا بأدوات جيدة أولًا (build one agent with good tools first)؛ ولا تضف ثانيًا إلا لإخفاق مسمّى يعالجه (only for a named failure it fixes).
 
 ## 🧭 لماذا يهم (Why it matters)
-قرأت لجين (Lujain) عن «أطقم الوكلاء» ("agent crews"). ولمسار إجابات السياسات (policy-answer route) في نجم ديسك (Najm Desk) تقترح ستة وكلاء (six agents): مخططًا (a planner) وباحثًا (a searcher) ومدقق حقائق (a fact-checker) وكاتبًا (a writer) ومحررًا (an editor) ومديرًا يختار من يتكلم (a manager who picks who speaks) — وهذا افتراضي (hypothetical). يجيب العرض التجريبي (The demo) عن «كيف أطلب حاسوبًا محمولًا جديدًا؟» ⁦("How do I request a new laptop?")⁩ جيدًا. ويطرح فهد (Fahad) ثلاثة أسئلة. كم استدعاءً للنموذج (model calls) كان ذلك؟ أحد عشر. وكيف يسجّل وكيل واحد بأداة البحث نفسها (one agent with the same search tool) في الأسئلة العشرين نفسها (the same twenty questions)؟ لم تشغّل ذلك بعد (She has not run it). وإن لم يتفق وكيلان أبدًا (If two agents never agree)، فمن يوقفهما؟ لا أحد (Nobody).
+قرأت لجين عن «أطقم الوكلاء» ("agent crews"). ولمسار إجابات السياسات (policy-answer route) في نجم ديسك (Najm Desk) تقترح ستة وكلاء (six agents): مخططًا وباحثًا ومدقق حقائق وكاتبًا ومحررًا ومديرًا يختار من يتكلم (a planner, a searcher, a fact-checker, a writer, an editor and a manager who picks who speaks) — وهذا افتراضي (hypothetical). يجيب العرض التجريبي (The demo) عن «كيف أطلب حاسوبًا محمولًا جديدًا؟» ⁦("How do I request a new laptop?")⁩ جيدًا. ويطرح فهد ثلاثة أسئلة. كم استدعاءً للنموذج (model calls) كان ذلك؟ أحد عشر. وما الدرجة التي يحصل عليها وكيل واحد بأداة البحث نفسها في الأسئلة العشرين نفسها (one agent with the same search tool on the same twenty questions)؟ لم تشغّل ذلك بعد. وإن لم يتفق وكيلان أبدًا (If two agents never agree)، فمن يوقفهما؟ لا أحد.
 
-التتبّع (The trace) ستة سجلات منفصلة (six separate logs). كان مدقق الحقائق (The fact-checker) قد نبّه إلى «يُسلَّم خلال 3 أيام عمل» ("delivered within 3 business days")؛ والسياسة (the policy) تقول 5. ومرّر المدير (The manager) عبارة «اجتاز التحقق من الحقائق، تعديلات طفيفة» ("fact-check passed, minor edits")، فأبقى المحرر (the editor) الرقم الخاطئ (the wrong number). ماتت الملاحظة عند عملية تسليم (The finding died at a hand-off)، ولم يُظهر ذلك أي سجل (no log showed it).
+التتبّع (trace) عبارة عن ستة سجلات منفصلة (six separate logs). كان مدقق الحقائق قد نبّه إلى «يُسلَّم خلال 3 أيام عمل» ("delivered within 3 business days")؛ والسياسة تقول 5. ومرّر المدير عبارة «اجتاز التحقق من الحقائق، تعديلات طفيفة» ("fact-check passed, minor edits")، فأبقى المحرر الرقم الخاطئ. ضاعت الملاحظة عند عملية تسليم (The finding died at a hand-off)، ولم يُظهر ذلك أي سجل (no log showed it).
 
-تختلف الكتابات المنشورة (Write-ups) لأن المهام مختلفة (tasks differ). وصفت Anthropic نظام بحث (a research system) يوزّع الأسئلة على عمّال متوازين (fans questions out to parallel workers) وأبلغت عن استهلاك رموز (token use) يعادل أضعاف استهلاك محادثة عادية (many times that of a chat). ويرى مقال Cognition «لا تبنِ أنظمة متعددة الوكلاء» ("Don't Build Multi-Agents") أنه حين يعتمد كل قرار على سابقه (when each decision depends on the last)، كما في البرمجة (as in coding)، ينتج السياق المنقسم (split context) قرارات متعارضة (conflicting decisions). للفريق ثمن (A team has a price)؛ ويجب أن يشتري شيئًا (it must buy something).
+تتضارب الكتابات المنشورة (Write-ups disagree) لأن المهام تختلف. وصفت Anthropic نظام بحث (a research system) يوزّع الأسئلة على عمّال متوازين (fans questions out to parallel workers) وأبلغت عن استهلاك رموز (token use) يعادل أضعاف استهلاك محادثة عادية (many times that of a chat). ويرى مقال Cognition «لا تبنِ أنظمة متعددة الوكلاء» ("Don't Build Multi-Agents") أنه حين يعتمد كل قرار على سابقه (when each decision depends on the last)، كما في البرمجة، ينتج السياق المنقسم (split context) قرارات متعارضة (conflicting decisions). للفريق ثمن (A team has a price)؛ ويجب أن يشتري شيئًا.
 
 ## 📐 كيف يعمل (How it works)
 
 ### 🟢 الأساسيات (The essentials)
 
-**المصطلحات (Terms).** يضم *نظام تعدد الوكلاء (multi-agent system)* أكثر من وكيل واحد (more than one agent) — الوحدة 8. و*التسليم بين الوكلاء (hand-off)* هو الرسالة التي تنقل العمل من وكيل إلى التالي (moves work from one agent to the next). أما *المشرف (supervisor)* فيقرر من يتكلم بعد ذلك (decides who speaks next): شيفرة عادية (plain code)، أو نموذج يختار من قائمة قصيرة (a model choosing from a short list)، أو نموذج يقترح بينما تفحص الشيفرة الخطوة (a model that proposes while code checks the move). فضّل الشيفرة (Prefer code): فهي رخيصة (cheap) وقابلة للاختبار (testable) ولا «تقرر» أبدًا أن تستدعي نفسها خمسين مرة (never "decides" to call itself fifty times). ولا تدع نموذجًا يوجّه (route) إلا حين تعتمد الخطوة التالية على محتوى لا تستطيع سرده سلفًا (content you cannot list in advance)، وافحص اختياره بقائمة سماح (check its choice against an allow-list). الفريق ذو المشرف المكتوب بالشيفرة (A team with a code supervisor) هو سير عمل (workflow) — الدرس 5.1 — خطواته وكلاء (whose steps are agents).
+**المصطلحات (Terms).** يضم *نظام تعدد الوكلاء (multi-agent system)* أكثر من وكيل واحد — الوحدة 8. و*التسليم بين الوكلاء (hand-off)* هو الرسالة التي تنقل العمل من وكيل إلى التالي (moves work from one agent to the next). أما *المشرف (supervisor)* فيقرر من يتكلم بعد ذلك (decides who speaks next): شيفرة عادية (plain code)، أو نموذج يختار من قائمة قصيرة (a model choosing from a short list)، أو نموذج يقترح بينما تفحص الشيفرة الخطوة (a model that proposes while code checks the move). فضّل الشيفرة (Prefer code): فهي رخيصة وقابلة للاختبار ولا «تقرر» أبدًا أن تستدعي نفسها خمسين مرة (cheap, testable and never "decides" to call itself fifty times). ولا تدع نموذجًا يوجّه (route) إلا حين تعتمد الخطوة التالية على محتوى لا تستطيع سرده سلفًا (content you cannot list in advance)، وافحص اختياره بقائمة سماح (an allow-list). الفريق ذو المشرف المكتوب بالشيفرة (A team with a code supervisor) هو سير عمل (workflow) — الدرس 5.1 — خطواته وكلاء.
 
 | النمط (Pattern) | من يقرر ما يحدث بعد ذلك (Who decides what happens next) | مثال من نجم ديسك (Najm Desk example) |
 |---|---|---|
-| المشرف والعمّال (Supervisor and workers) | يوجّه المشرف (The supervisor) المهام إلى المتخصصين (routes tasks to specialists) ويدمج النتائج (merges results) | متخصصو الوصول والعتاد والسياسات (Access, hardware and policy specialists) |
-| المنسِّق والعمّال (Orchestrator-workers) | يخطط نموذج للمهام الفرعية (plans subtasks) أثناء التشغيل (at run time)؛ وينفذها العمّال (workers)، غالبًا بالتوازي (in parallel) | إشعار يعدّل N سياسة (A notice amends N policies): عامل لكل واحدة (one worker each) |
-| خط المعالجة (Pipeline) وهو تسلسل الموجّهات (prompt chaining) | ترتيب ثابت (A fixed order)؛ كل مخرج يغذي التالي (each output feeds the next) | بحث وكتابة ومراجعة (Research, write, review) |
-| حلقة الناقد (Critic loop) أو المقيِّم والمحسِّن (evaluator-optimiser) | ينتج منتِج (A producer) ويحكم حَكَم (a judge) ويتكرران حتى القبول أو بلوغ الحد (repeat until accepted or capped) | مسودة ومراجع (A draft and a reviewer) |
-| التسليم بين الوكلاء (Hand-off) | ينتقل التحكم إلى وكيل يملك المحادثة الآن (Control moves to an agent that now owns the conversation) | تذهب حالة إلى وكيل الوصول (A case goes to the access agent)، أو إلى شخص (or to a person) |
-| المحادثة الجماعية (Group chat) | يتحدث الوكلاء بأدوار حرة (Agents talk in free turns) | لا شيء (None): يصعب تقييدها واختبارها (hard to bound and test) |
+| المشرف والعمّال (Supervisor and workers) | يوجّه المشرف المهام إلى المتخصصين (The supervisor routes tasks to specialists) ويدمج النتائج (merges results) | متخصصو الوصول والعتاد والسياسات (Access, hardware and policy specialists) |
+| المنسِّق والعمّال (Orchestrator-workers) | يخطط نموذج للمهام الفرعية أثناء التشغيل (A model plans subtasks at run time)؛ وينفذها العمّال (workers) غالبًا بالتوازي (often in parallel) | إشعار يعدّل N سياسة: عامل لكل واحدة (A notice amends N policies: one worker each) |
+| خط المعالجة (Pipeline) وهو تسلسل الموجّهات (prompt chaining) | ترتيب ثابت؛ كل مخرج يغذي التالي (A fixed order; each output feeds the next) | بحث وكتابة ومراجعة (Research, write, review) |
+| حلقة الناقد (Critic loop) أو المقيِّم والمحسِّن (evaluator-optimiser) | يتكرر عمل منتِج وحَكَم حتى القبول أو بلوغ الحد (A producer and a judge repeat until accepted or capped) | مسودة ومراجع (A draft and a reviewer) |
+| التسليم بين الوكلاء (Hand-off) | ينتقل التحكم إلى وكيل يملك المحادثة الآن (Control moves to an agent that now owns the conversation) | تذهب حالة إلى وكيل الوصول أو إلى شخص (A case goes to the access agent, or to a person) |
+| المحادثة الجماعية (Group chat) | يتحدث الوكلاء بالتناوب الحر (Agents talk in free turns) | لا شيء: يصعب تقييدها واختبارها (None: hard to bound and test) |
 
 **الثمن (The price).**
-- *الاستدعاءات والرموز وزمن الاستجابة (Calls, tokens, latency).* يعيد كل وكيل قراءة موجّهه ومدخلاته (Each agent re-reads its prompt and its input): إن مرّرت 3,000 رمز من نتائج البحث (3,000 tokens of search results) إلى كاتب ومراجع (a writer and a reviewer) دفعت ثمنها مدخلاتٍ (as input) ثلاث مرات (three times). الوكلاء المتتابعون (Sequential agents) تتراكم تأخيراتهم (add their delays)؛ أما المتوازون (parallel ones) فيكلّفون زمن أبطئهم (cost the slowest).
-- *الأخطاء تتراكم (Errors compound).* أربع مراحل (Four stages)، كل منها صحيحة 95% من الوقت (right 95% of the time) مع إخفاقات مستقلة (independent failures)، تعطي سلسلة صحيحة بمقدار 0.95 أُسّ أربعة (0.95 to the fourth power)، أي نحو 81%؛ وبنسبة 90% لكل مرحلة (at 90% each) نحو 66%. هذه النسب توضيحية (These rates are illustrative)؛ ونسبك أنت تأتي من تقييم (yours come from an eval).
-- *تصحيح الأخطاء وفقدان السياق (Debugging and context loss).* يظهر الإخفاق على بعد ثلاثة وكلاء من سببه (A failure surfaces three agents from its cause)، ويُسقط الملخص (a summary) الحقيقة التي كانت مهمة (drops the fact that mattered).
-- *إخفاقات جديدة (New failures).* التراشق (Ping-pong)، و«مراجع» يبدأ بإعادة الكتابة (a "reviewer" that starts rewriting)، وافتراضات متعارضة (conflicting assumptions)، وحقن ينتقل (injection that travels): نص قرأه الباحث في مستند (text a researcher read in a document) يصل إلى الوكيل التالي بوصفه تعليمة (reaches the next agent as an instruction) — الوحدة 13.
+- *الاستدعاءات والرموز وزمن الاستجابة (Calls, tokens, latency).* يعيد كل وكيل قراءة موجّهه ومدخلاته (Each agent re-reads its prompt and its input): إن مرّرت 3,000 رمز من نتائج البحث (3,000 tokens of search results) إلى كاتب ومراجع دفعت ثمنها بوصفها مدخلات ثلاث مرات (you pay for them as input three times). الوكلاء المتتابعون (Sequential agents) تتراكم تأخيراتهم (add their delays)؛ أما المتوازون فزمنهم زمن أبطئهم (parallel ones cost the slowest).
+- *الأخطاء تتراكم (Errors compound).* أربع مراحل (Four stages)، كل منها صحيحة 95% من الوقت مع إخفاقات مستقلة (each right 95% of the time with independent failures)، تعطي سلسلة صحيحة بنسبة 0.95 أُسّ أربعة (0.95 to the fourth power)، أي نحو 81%؛ وبنسبة 90% لكل مرحلة نحو 66%. هذه النسب توضيحية (These rates are illustrative)؛ ونسبك أنت تأتي من تقييم (yours come from an eval).
+- *تصحيح الأخطاء وفقدان السياق (Debugging and context loss).* يظهر الإخفاق على بعد ثلاثة وكلاء من سببه (A failure surfaces three agents from its cause)، ويُسقط الملخص الحقيقة التي كانت مهمة (a summary drops the fact that mattered).
+- *إخفاقات جديدة (New failures).* التراشق (Ping-pong)، و«مراجع» يبدأ بإعادة الكتابة (a "reviewer" that starts rewriting)، وافتراضات متعارضة (conflicting assumptions)، وحقن ينتقل (injection that travels): نص قرأه الباحث في مستند يصل إلى الوكيل التالي بوصفه تعليمة (text a researcher read in a document reaches the next agent as an instruction) — الوحدة 13.
 
 **ثلاثة أسباب تبرر وجود فريق (Three reasons that justify a team).**
-1. *العمل المستقل المتوازي (Parallel independent work).* اثنا عشر مستندًا للتلخيص (Twelve documents to summarise)، لا يحتاج أي منها إلى مخرجات غيره (none needing another's output). وإن كانت المهام الفرعية (subtasks) ثابتة مسبقًا (are fixed in advance) فإن التوازي البسيط (plain parallelisation) — الدرس 5.1 — لا يحتاج إلى وكلاء (needs no agents).
-2. *عزل السياق (Context isolation).* يقرأ عامل (A worker) 40 صفحة من تاريخ التذاكر (40 pages of ticket history) في سياق يُرمى بعد الاستخدام (a throwaway context) ويعيد 200 كلمة في ملخص منمّط (returns 200 words as a typed summary). يبقى سياق المشرف صغيرًا (The supervisor's context stays small)؛ ويمكن أن تعود البيانات الشخصية (personal data) محجوبة (redacted).
-3. *اختلاف الصلاحيات لكل دور (Different permissions per role).* الوكيل الذي يقرأ نصًّا كتبه غرباء (reads text strangers wrote) لا يحصل على أدوات كتابة (gets no write tools)؛ والوكيل الذي يستطيع طلب فتح قفل حساب (request an unlock) لا يقرؤه أبدًا. وتوزيع البيانات الخاصة (private data) والمحتوى غير الموثوق (untrusted content) والاتصال الخارجي (external communication) على أدوار مختلفة هو أحد أشكال الدفاع ضد «الثلاثية القاتلة» ("lethal trifecta") عند Simon Willison — وهي صياغة ممارس واحد (one practitioner's framing) — بشرط أن يكون التسليم بيانات مُتحقَّقًا منها (validated data) لا نصًّا حرًّا (free text).
+1. *العمل المستقل المتوازي (Parallel independent work).* اثنا عشر مستندًا للتلخيص، لا يحتاج أي منها إلى مخرجات غيره (Twelve documents to summarise, none needing another's output). وإن كانت المهام الفرعية ثابتة مسبقًا (the subtasks are fixed in advance) فإن التوازي البسيط (plain parallelisation) — الدرس 5.1 — لا يحتاج إلى وكلاء (needs no agents).
+2. *عزل السياق (Context isolation).* يقرأ عامل 40 صفحة من تاريخ التذاكر (A worker reads 40 pages of ticket history) في سياق مؤقت يُتخلص منه بعد الاستخدام (a throwaway context) ويعيد 200 كلمة في ملخص منمّط (returns 200 words as a typed summary). يبقى سياق المشرف صغيرًا (The supervisor's context stays small)؛ ويمكن أن تعود البيانات الشخصية (personal data) محجوبة (redacted).
+3. *اختلاف الصلاحيات لكل دور (Different permissions per role).* الوكيل الذي يقرأ نصًّا كتبه غرباء (reads text strangers wrote) لا يحصل على أدوات كتابة (gets no write tools)؛ والوكيل الذي يستطيع طلب فتح قفل حساب (request an unlock) لا يقرؤه أبدًا. وتوزيع البيانات الخاصة والمحتوى غير الموثوق والاتصال الخارجي على أدوار مختلفة (splitting private data, untrusted content and external communication across roles) هو أحد أشكال الدفاع ضد «الثلاثية القاتلة» ("lethal trifecta") عند Simon Willison — وهي صياغة ممارس واحد (one practitioner's framing) — بشرط أن يكون التسليم بيانات مُتحقَّقًا منها (validated data) لا نصًّا حرًّا (free text).
 
 **قاعدة القرار: وكيل واحد أولًا (The decision rule: one agent first).**
 
@@ -70,7 +70,7 @@ flowchart TD
 
 ### 🟡 التعمق أكثر (Going deeper)
 
-**التسليم عقد (A hand-off is a contract).** وهو القناة الوحيدة بين وكيلين (the only channel between two agents)، فاجعله رسالة منمّطة (a typed message): نموذج Pydantic بأنواع (types) وحدود (limits) ومفردات مغلقة (closed vocabularies) و`extra="forbid"`، يتحقق منه المشرف في الاتجاهين (validated by the supervisor in both directions). حقل واحد من عقد الباحث (One field of the researcher's contract)، مع رد مهمل (given a sloppy reply):
+**التسليم عقد (A hand-off is a contract).** وهو القناة الوحيدة بين وكيلين (the only channel between two agents)، فاجعله رسالة منمّطة (a typed message): نموذج Pydantic بأنواع وحدود ومفردات مغلقة (types, limits, closed vocabularies) و`extra="forbid"`، يتحقق منه المشرف في الاتجاهين (validated by the supervisor in both directions). حقل واحد من عقد الباحث (One field of the researcher's contract)، مع رد غير منضبط (given a sloppy reply):
 
 ```python
 # one field of a hand-off contract: what the researcher owes the writer
@@ -96,9 +96,9 @@ quote -> String should have at least 10 characters
 source -> String should match pattern '^[a-z0-9-]+$'
 ```
 
-تقيّد المخرجات المهيكلة (Structured outputs) — الدرس 3.1 — الشكل (the shape)، لكن المجموعة الجزئية من المخطط (the schema subset) التي تقبلها الواجهة (the API) لا تستطيع فرض حدود مثل `max_length`، وقد لا يطابق المخطط ردٌّ قُطع بسبب `max_tokens` أو `refusal`، فتحقق على أي حال (validate anyway). والمخطط (A schema) لا يستطيع حمل قاعدتين، فتفحصهما الشيفرة (code checks them): *الإسناد (grounding)*، أي هل الاقتباس موجود فعلًا فيما أعادته الأداة (is the quote really in what the tool returned)؟ و*الاتساق (consistency)*، أي هل تستشهد المسودة بالمصادر الموجودة في الملاحظات وحدها (does the draft cite only sources in the notes)؟ وعند الإخفاق، أصلح مرة واحدة بنص الخطأ (repair once with the error text)؛ ثم سلّم حزمة (hand a packet) إلى شخص (to a person) — الدرس 8.1.
+تقيّد المخرجات المهيكلة (Structured outputs) — الدرس 3.1 — الشكل، لكن المجموعة الجزئية من المخطط (the schema subset) التي تقبلها الواجهة (the API) لا تستطيع فرض حدود مثل `max_length`، وقد لا يطابق المخطط ردٌّ قُطع بسبب `max_tokens` أو ردٌّ من نوع `refusal`، فتحقق على أي حال (validate anyway). والمخطط لا يستطيع التعبير عن قاعدتين، فتفحصهما الشيفرة (A schema cannot hold two rules, so code checks them): *الإسناد (grounding)*، أي هل الاقتباس موجود فعلًا فيما أعادته الأداة (is the quote really in what the tool returned)؟ و*الاتساق (consistency)*، أي هل تستشهد المسودة بالمصادر الموجودة في الملاحظات وحدها (does the draft cite only sources in the notes)؟ وعند الإخفاق، أصلح مرة واحدة بنص الخطأ (repair once with the error text)؛ ثم سلّم حزمة إلى شخص (hand a packet to a person) — الدرس 8.1.
 
-**الصلاحيات تنتمي إلى الدور (Permissions belong to the role).** اكتب الجدول قبل الموجّهات (Write the table before the prompts)؛ وافرضه ثلاث مرات (enforce it three times): يسرد الطلب (the request) أدوات الدور وحدها (lists only the role's tools)؛ ويرفض المُرسِل (the dispatcher) أي استدعاء خارج قائمة السماح (any call outside its allow-list)؛ وتمرّ الكتابة (a write) عبر بوابة (a gate) أو شخص (a person) — الوحدتان 7 و13. وعبارة «يجب ألا تبحث» ("You must not search") في موجّه ليست سوى طلب (only a request). اجعل الرفض هو الافتراضي (Default to deny)؛ ولا تعطِ أي دور مدخلًا غير موثوق وأداة كتابة معًا (both untrusted input and a write tool). العقد يضيّق القناة (A contract narrows the channel)، لكن حقل النص (a string field) ما زال يستطيع حمل تعليمة (carry an instruction): قيّده (bound it)، وأسنده إلى المصدر (ground it in the source)، ولا تضعه أبدًا بين تعليمات الوكيل التالي (the next agent's instructions) ([*أمن الذكاء الاصطناعي وأمن التطبيقات (Secure AI & Application Security)*، الدرس 9.2 — الوكلاء والأدوات: الصلاحيات المفرطة وأدوات أقل الصلاحيات وMCP (Agents and tools: excessive agency, least-privilege tools and MCP)](../secai/index.ar.html#/9.2)).
+**الصلاحيات تنتمي إلى الدور (Permissions belong to the role).** اكتب الجدول قبل الموجّهات (Write the table before the prompts)؛ وافرضه ثلاث مرات (enforce it three times): يسرد الطلب أدوات الدور وحدها (the request lists only the role's tools)؛ ويرفض المُرسِل (the dispatcher) أي استدعاء خارج قائمة السماح (any call outside its allow-list)؛ وتمرّ الكتابة عبر بوابة أو شخص (a write passes a gate or a person) — الوحدتان 7 و13. وعبارة «يجب ألا تبحث» ("You must not search") في موجّه ليست سوى طلب (only a request). اجعل الرفض هو الافتراضي (Default to deny)؛ ولا تعطِ أي دور مدخلًا غير موثوق وأداة كتابة معًا (both untrusted input and a write tool). العقد يضيّق القناة (A contract narrows the channel)، لكن حقل النص (a string field) ما زال يستطيع حمل تعليمة (carry an instruction): قيّده وأسنده إلى المصدر (bound it, ground it in the source)، ولا تضعه أبدًا بين تعليمات الوكيل التالي (the next agent's instructions) ([*أمن الذكاء الاصطناعي وأمن التطبيقات (Secure AI & Application Security)*، الدرس 9.2 — الوكلاء والأدوات: الصلاحيات المفرطة للوكيل وأدوات أقل الصلاحيات وMCP (Agents and tools: excessive agency, least-privilege tools and MCP)](../secai/index.ar.html#/9.2)).
 
 | الدور (Role) | الأدوات (Tools) | ما يراه (What it sees) |
 |---|---|---|
@@ -106,42 +106,42 @@ source -> String should match pattern '^[a-z0-9-]+$'
 | الكاتب (Writer) | لا شيء (None) | الملاحظات المنمّطة وحدها (The typed notes only) |
 | المراجع (Reviewer) | لا شيء (None) | الملاحظات والمسودة (The notes and the draft) |
 
-**الحالة المشتركة والمراسلة (Shared state and messaging).** في *تمرير الرسائل (message passing)* يرسل المشرف عقدًا إلى عامل ويستلم عقدًا في المقابل (sends a contract to a worker and gets one back). وفي *الحالة المشتركة (shared state)*، أي اللوح المشترك (a blackboard)، يقرأ الوكلاء كائنًا واحدًا ويكتبون فيه (read and write one object). فضّل كاتبًا واحدًا (Prefer one writer): يملك المشرف الحالة (owns the state)، والوكلاء دوال (functions) من عقد إلى العقد التالي، وتُدمج النتائج المتوازية في الشيفرة (parallel results merge in code) وفق قاعدة تعارض معلنة (under a stated conflict rule). كاتبان يتسابقان (Two writers race)؛ وقارئ كل شيء يدفع ثمن التلوث (a reader of everything pays for pollution) — الوحدة 9.
+**الحالة المشتركة والمراسلة (Shared state and messaging).** في *تمرير الرسائل (message passing)* يرسل المشرف عقدًا إلى عامل ويستلم عقدًا في المقابل (sends a contract to a worker and gets one back). وفي *الحالة المشتركة (shared state)*، أي اللوح المشترك (a blackboard)، يقرأ الوكلاء كائنًا واحدًا ويكتبون فيه (read and write one object). فضّل كاتبًا واحدًا (Prefer one writer): يملك المشرف الحالة، والوكلاء دوال من عقد إلى العقد التالي (the supervisor owns the state, agents are functions from one contract to the next)، وتُدمج النتائج المتوازية في الشيفرة (parallel results merge in code) وفق قاعدة تعارض معلنة (under a stated conflict rule). كاتبان يتسابقان (Two writers race)؛ وقارئ كل شيء يدفع ثمن التلوث (a reader of everything pays for pollution) — الوحدة 9.
 
-**الميزانيات والإنهاء للفريق (Budgets and termination for the team).** تنطبق حواجز الوحدة 8 (The Module 8 guards) على كل وكيل وعلى الفريق: حدّ للخطوات (a step cap) لكل وكيل؛ وميزانية رموز (a token budget) تُجمع على كل الوكلاء وتُفحص قبل كل استدعاء (checked before each call)؛ وحدّ للجولات (a round cap) على كل حلقة ناقد (critic loop)؛ وحدّ لعدد العمّال الذين يبدأون (a cap on workers started) مع التحقق من الخطة بوصفها عقدًا قبل أن يعمل أي عامل (the plan validated as a contract before any worker runs)؛ وأجل أقصى (a deadline)؛ وقاعدة انعدام التقدم (a no-progress rule): أن يصدر المراجع نفسه الملاحظات ذاتها مرتين (the same reviewer issues twice)؛ وحزمة إلى شخص (a packet to a person) متى انطلق أي منها (when any fires). احسب أسوأ حالة (Compute the worst case): 4 خطوات لكل دور وكيل (4 steps per agent turn) وجولتا مراجعة (2 review rounds) تسمحان بـ 4 + 2 × (4 + 4) = 20 استدعاءً (calls). وإن لم يناسبك ذلك، فاخفض الحدود (lower the caps).
+**الميزانيات والإنهاء للفريق (Budgets and termination for the team).** تنطبق حواجز الوحدة 8 (The Module 8 guards) على كل وكيل وعلى الفريق: حدّ للخطوات (a step cap) لكل وكيل؛ وميزانية رموز (a token budget) تُجمع على كل الوكلاء وتُفحص قبل كل استدعاء (checked before each call)؛ وحدّ للجولات (a round cap) على كل حلقة ناقد (critic loop)؛ وحدّ لعدد العمّال الذين يبدأون (a cap on workers started) مع التحقق من الخطة بوصفها عقدًا قبل أن يعمل أي عامل (the plan validated as a contract before any worker runs)؛ وأجل أقصى (a deadline)؛ وقاعدة انعدام التقدم (a no-progress rule): أن يصدر المراجع نفسه الملاحظات ذاتها مرتين (the same reviewer issues twice)؛ وحزمة إلى شخص (a packet to a person) متى انطلق أي منها (when any fires). احسب أسوأ حالة (Compute the worst case): 4 خطوات لكل نوبة وكيل وجولتا مراجعة (4 steps per agent turn and 2 review rounds) تسمحان بـ 4 + 2 × (4 + 4) = 20 استدعاءً. وإن لم يناسبك ذلك، فاخفض الحدود (lower the caps).
 
-**التتبّع عبر الوكلاء (Tracing across agents).** أعطِ التشغيل (the run) معرّفًا واحدًا (one id) وسجّل كل استدعاء نموذج (model call) — الوكيل والخطوة والرموز وسبب التوقف ومعرّف الطلب (agent, step, tokens, stop reason, request id) — وكل استدعاء أداة (tool call) سواء سُمح به أو رُفض (allowed or refused)، وكل تسليم (hand-off) مع عقده وصلاحيته (contract, valid or not)، والتوقف مع حزمته (the stop with its packet). وبمصطلحات OpenTelemetry: امتداد جذري (a root span) للتشغيل، وامتداد فرعي (a child span) لكل دور وكيل (per agent turn)، وتحتها استدعاءات النموذج والأدوات (model and tool calls beneath)؛ ويستطيع Anthropic SDK إصدار امتدادات (spans)، وهي في الإصدار التجريبي (beta) وقت الكتابة (at the time of writing). ويجب أن يقول التتبّع (A trace must say) أي وكيل أدخل ادعاءً (which agent introduced a claim) وأين ذهبت الرموز (where the tokens went) ([*السحابة وDevOps (Cloud & DevOps)*، الدرس 5.1 — القياس عن بُعد: السجلات والمقاييس والتتبّعات وOpenTelemetry (Telemetry: logs, metrics, traces and OpenTelemetry)](../cloud/index.ar.html#/5.1)).
+**التتبّع عبر الوكلاء (Tracing across agents).** أعطِ التشغيل معرّفًا واحدًا (Give the run one id) وسجّل كل استدعاء نموذج (model call) — الوكيل والخطوة والرموز وسبب التوقف ومعرّف الطلب (agent, step, tokens, stop reason, request id) — وكل استدعاء أداة (tool call) سواء سُمح به أو رُفض (allowed or refused)، وكل تسليم (hand-off) مع عقده وصلاحيته (contract, valid or not)، والتوقف مع حزمته (the stop with its packet). وبمصطلحات OpenTelemetry: امتداد جذري (a root span) للتشغيل، وامتداد فرعي (a child span) لكل نوبة وكيل (per agent turn)، وتحتها استدعاءات النموذج والأدوات (model and tool calls beneath)؛ ويستطيع Anthropic SDK إصدار امتدادات، وهي في الإصدار التجريبي (beta) وقت الكتابة. ويجب أن يقول التتبّع أي وكيل أدخل ادعاءً وأين ذهبت الرموز (A trace must say which agent introduced a claim and where the tokens went) ([*السحابة وDevOps (Cloud & DevOps)*، الدرس 5.1 — القياس عن بُعد: السجلات والمقاييس والتتبّعات وOpenTelemetry (Telemetry: logs, metrics, traces and OpenTelemetry)](../cloud/index.ar.html#/5.1)).
 
 ### 🔴 نظرة الخبير (Expert view)
 
-**خمسة أطر عمل (Five frameworks).** تغلّف الأنماط نفسها بصياغات مختلفة (wrap the same patterns in different syntax)، فيستطيع المطوّر الذي بنى هذا الفريق يدويًا (built this team by hand) قراءة أي منها. ولا تعرض هذه الدورة شيفرتها (This course shows none of their code) لأنها تتغير بين الإصدارات (changes between releases). وما يقوم عليه كل منها كما يصفه صانعوه (What each is built around, as its makers describe it) وقت الكتابة (at the time of writing) — 2026؛ راجع التوثيق الحالي (check the current documentation):
+**خمسة أطر عمل (Five frameworks).** تغلّف الأنماط نفسها بصياغات مختلفة (wrap the same patterns in different syntax)، فيستطيع المطوّر الذي بنى هذا الفريق يدويًا (built this team by hand) قراءة أي منها. ولا تعرض هذه الدورة شيفرتها (This course shows none of their code) لأنها تتغير بين الإصدارات. وما يقوم عليه كل منها كما يصفه صانعوه (What each is built around, as its makers describe it) وقت الكتابة (at the time of writing) — 2026؛ راجع التوثيق الحالي (check the current documentation):
 
 | إطار العمل (Framework) | ما يقوم عليه (Built around) |
 |---|---|
-| LangGraph | رسم بياني من العُقد (A graph of nodes) فوق حالة مشتركة (over a shared state)، مع نقاط تحقق (checkpoints) وإيقافات مؤقتة لإنسان (pauses for a human) |
+| LangGraph | رسم بياني من العُقد (A graph of nodes) فوق حالة مشتركة (over a shared state)، مع نقاط تحقق وإيقافات مؤقتة لإنسان (checkpoints and pauses for a human) |
 | CrewAI | أطقم قائمة على الأدوار (Role-based crews): وكلاء بدور وهدف (agents with a role and goal)، ومهام (tasks)، وعملية متسلسلة أو هرمية (a sequential or hierarchical process) |
 | Google ADK | أشجار من الوكلاء الفرعيين (Trees of sub-agents)، مع وكلاء سير عمل (workflow agents) يشغّلونهم بالتتابع أو بالتوازي أو في حلقة (in sequence, in parallel or in a loop) |
 | Microsoft Agent Framework | وكلاء وسير عمل لـ .NET وPython (Agents and workflows for .NET and Python)، يُقدَّم خلفًا لـ Semantic Kernel وAutoGen (positioned as the successor) |
 | OpenAI Agents SDK | قليل من اللبنات الأساسية (Few primitives): الوكلاء والتسليم بين الوكلاء والحواجز الوقائية والتتبّع (agents, hand-offs, guardrails, tracing) |
 
-ومن جهة Claude (On the Claude side)، يتضمن Claude Agent SDK وكلاء فرعيين (subagents)، وتتيح Managed Agents، وهي تجريبية (beta)، لمنسِّق (a coordinator) أن يفوّض إلى وكلاء يعملون في خيوط معزولة السياق (their own context-isolated threads)؛ تحقق من التوفر (check availability).
+ومن جهة Claude، يتضمن Claude Agent SDK وكلاء فرعيين (subagents)، وتتيح Managed Agents، وهي تجريبية (beta)، لمنسِّق (a coordinator) أن يفوّض إلى وكلاء يعملون في خيوط معزولة السياق (their own context-isolated threads)؛ تحقق من التوفر (check availability).
 
-**ما الذي يجب تقييمه (What to evaluate).** هل أستطيع وضع حدود (cap) للخطوات (steps) والرموز (tokens) والجولات (rounds) والوقت (time) للتشغيل كله (the whole run)؟ هل يُظهر تتبّع واحد (one trace) كل استدعاء وكل تسليم (every call and hand-off)؟ هل أستطيع اختبار فريق مقابل نموذج مزيّف (test a team against a fake model)؟ كيف تبقى الحالة وتُستأنف (How does state persist and resume)؟ هل التسليمات منمّطة ومتحقَّق منها (typed and validated)؟ هل أستطيع ضبط الأدوات والموافقات لكل وكيل (set tools and approvals per agent)؟ هل أستطيع التحكم في الموجّهات بدقة (control the exact prompts)؟ هل يناسب هويتنا وأسرارنا ونشرنا (identity, secrets and deployment) — أي منصتك (your platform)؟ الاختبار الحاسم (The decisive test): انقل مشرف الدرس 11.2 إليه في يوم واحد (port the supervisor of lesson 11.2 into it in a day). فإن لم تستطع الإبقاء على الحدود والعقود والتتبّع (keep the caps, contracts and trace)، فقد استولى على ما يجب أن تملكه أنت (it has taken over what you must own). ولا توحّد معايير المجموعة (Do not standardise the group) قبل أن تشغّل ذلك المختبر (before you have run that lab).
+**ما الذي يجب تقييمه (What to evaluate).** هل أستطيع وضع حدود للخطوات والرموز والجولات والوقت (cap steps, tokens, rounds and time) للتشغيل كله (the whole run)؟ هل يُظهر تتبّع واحد (one trace) كل استدعاء وكل تسليم (every call and hand-off)؟ هل أستطيع اختبار فريق مقابل نموذج مزيّف (test a team against a fake model)؟ كيف تبقى الحالة وتُستأنف (How does state persist and resume)؟ هل التسليمات منمّطة ومتحقَّق منها (typed and validated)؟ هل أستطيع ضبط الأدوات والموافقات لكل وكيل (set tools and approvals per agent)؟ هل أستطيع التحكم في الموجّهات بدقة (control the exact prompts)؟ هل يناسب هويتنا وأسرارنا ونشرنا (identity, secrets and deployment) — أي منصتك (your platform)؟ الاختبار الحاسم (The decisive test): انقل مشرف الدرس 11.2 إليه في يوم واحد (port the supervisor of lesson 11.2 into it in a day). فإن لم تستطع الإبقاء على الحدود والعقود والتتبّع (keep the caps, contracts and trace)، فقد استولى على ما يجب أن تملكه أنت (it has taken over what you must own). ولا تعتمد إطارًا موحّدًا للمجموعة قبل أن تشغّل ذلك المختبر (Do not standardise the group before you have run that lab).
 
-**كيف تفشل الفرق، وكيف تختبر فريقًا (How teams fail, and how to test one).** صنّفت دراسة من عام 2025 (A 2025 study) بعنوان «لماذا تفشل أنظمة النماذج اللغوية متعددة الوكلاء؟» ⁦("Why Do Multi-Agent LLM Systems Fail?")⁩ لـ Cemri وآخرين ⁦(Cemri et al.)⁩ الإخفاقات في عدة أطر مفتوحة (several open frameworks) إلى: مواصفات وتصميم معيبان (flawed specification and design)، وعدم اتساق بين الوكلاء (misalignment between agents)، وتحقق وإنهاء ضعيفان (weak verification and termination): قائمة فحص لكل تسليم (a checklist for every hand-off). اختبر الفريق من طرف إلى طرف (Test a team end to end) مقابل خط أساس الوكيل المنفرد (the single-agent baseline) على المجموعة نفسها (on the same set) — الوحدة 12 — ثم جزءًا جزءًا (then by part): استدعاء الباحث (the researcher's recall)، وإسناد الكاتب (the writer's groundedness)، ومعدل التقاط المراجع (the reviewer's catch rate) في مسودات فيها خطأ واحد مزروع (drafts with one planted error)، بما في ذلك الإنذارات الكاذبة (false alarms included). والمراجع الذي هو النموذج نفسه بالسياق نفسه يشارك الكاتب بقعه العمياء (shares the writer's blind spots)، ويميل الحُكّام إلى تفضيل نص يشبه نصّهم (judges tend to favour text like their own) ([*اختبار البرمجيات (Software Testing)*، الدرس 7.1 — التقييمات (Evals)](../testing/index.ar.html#/7.1)). وقبل إضافة مراجع (Before adding one)، جرّب أدوات أفضل (better tools)، وتعليمة «افحص عملك بنفسك» ("check your own work")، وجهدًا أعلى (higher effort)، وفحوصًا بالشيفرة (code checks).
+**كيف تفشل الفرق، وكيف تختبر فريقًا (How teams fail, and how to test one).** صنّفت دراسة من عام 2025 بعنوان «لماذا تفشل أنظمة النماذج اللغوية متعددة الوكلاء؟» ⁦("Why Do Multi-Agent LLM Systems Fail?")⁩ لـ Cemri وآخرين الإخفاقات في عدة أطر عمل مفتوحة (several open frameworks) إلى: مواصفات وتصميم معيبة (flawed specification and design)، وعدم اتساق بين الوكلاء (misalignment between agents)، وتحقق وإنهاء ضعيفان (weak verification and termination): قائمة فحص لكل تسليم (a checklist for every hand-off). اختبر الفريق من طرف إلى طرف (Test a team end to end) مقابل خط أساس الوكيل المنفرد (the single-agent baseline) على المجموعة نفسها — الوحدة 12 — ثم جزءًا جزءًا (then by part): استرجاع الباحث (the researcher's recall)، وإسناد الكاتب (the writer's groundedness)، ومعدل التقاط المراجع (the reviewer's catch rate) في مسودات فيها خطأ واحد مزروع (drafts with one planted error)، بما في ذلك الإنذارات الكاذبة (false alarms included). والمراجع الذي هو النموذج نفسه بالسياق نفسه يشارك الكاتب بقعه العمياء (shares the writer's blind spots)، وتميل النماذج الحَكَم إلى تفضيل النصوص الشبيهة بنصوصها (judges tend to favour text like their own) ([*اختبار البرمجيات (Software Testing)*، الدرس 7.1 — التقييمات (Evals)](../testing/index.ar.html#/7.1)). وقبل إضافة مراجع، جرّب أدوات أفضل (better tools)، وتعليمة «افحص عملك بنفسك» ("check your own work")، وجهدًا أعلى (higher effort)، وفحوصًا بالشيفرة (code checks).
 
 ## 🧰 الأدوات (The toolkit)
 | الأداة أو الممارسة أو النمط (Tool, practice or pattern) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
 |---|---|---|
-| **Supervisor** — المشرف | آلة حالات بالشيفرة (A state machine in code) تقرر من يعمل (decides who runs) وتملك الحالة (owns the state) وتفرض الحدود (enforces the caps) | كل فريق (Every team) |
+| **Supervisor** — المشرف | آلة حالات بالشيفرة (A state machine in code) تقرر من يعمل وتملك الحالة وتفرض الحدود (decides who runs, owns the state and enforces the caps) | كل فريق (Every team) |
 | **Hand-off contract** — عقد التسليم | نموذج Pydantic لكل رسالة (A Pydantic model per message) يتحقق منه المشرف (validated by the supervisor)، مع فحوص بالشيفرة للإسناد والاتساق (code checks for grounding and consistency) | كل تسليم (Every hand-off) |
 | **Role permission table** — جدول صلاحيات الأدوار | لكل دور (Per role): الأدوات والبيانات وحقوق الكتابة (tools, data and write rights)، تُفرض في المُرسِل (enforced in the dispatcher) | قبل أن يوجد الوكيل الثاني (Before the second agent exists) |
-| **Team budget** — ميزانية الفريق | ميزانية الرموز (Token budget) وحدود الجولات والخطوات والتفرّع (round, step and fan-out caps) وأجل أقصى (a deadline)، تُفحص قبل كل استدعاء (checked before each call) | كل فريق (Every team) |
+| **Team budget** — ميزانية الفريق | ميزانية الرموز وحدود الجولات والخطوات والتفرّع وأجل أقصى (Token budget, round, step and fan-out caps and a deadline)، تُفحص قبل كل استدعاء (checked before each call) | كل فريق (Every team) |
 | **Cross-agent trace** — التتبّع عبر الوكلاء | معرّف تشغيل واحد (One run id)؛ وسجل لكل استدعاء نموذج واستدعاء أداة وتسليم وتوقف (a record per model call, tool call, hand-off and stop) | كل تشغيل (Every run) |
 | **Single-agent baseline** — خط أساس الوكيل المنفرد | المهمة والعقد والفحوص نفسها بوكيل واحد (The same task, contract and checks with one agent) | قبل إضافة وكيل وبعدها (Before and after adding an agent) |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-المُخرَج (The artefact) هو **سجل تصميم الفريق (Team Design Record)**: صفحة واحدة (one page)، تُكتب قبل أن يوجد وكيل ثانٍ (written before a second agent exists) ويراجعها فهد (Fahad)، ونورة (Noura) حيث تقسم الأدوار الصلاحيات (where roles split permissions). وهذا هو السجل لطاقم لجين (Lujain's crew) — وهو مقترح خيالي (a fictional proposal):
+المُخرَج (The artefact) هو **سجل تصميم الفريق (Team Design Record)**: صفحة واحدة، تُكتب قبل أن يوجد وكيل ثانٍ (written before a second agent exists) ويراجعها فهد، ونورة حيث تقسم الأدوار الصلاحيات (where roles split permissions). وهذا هو السجل لطاقم لجين — وهو مقترح خيالي (a fictional proposal):
 
 | السؤال (Question) | إجابات السياسات في نجم ديسك (Najm Desk policy answers) |
 |---|---|
@@ -152,38 +152,38 @@ source -> String should match pattern '^[a-z0-9-]+$'
 | الأدوار والعقود والحدود (Roles, contracts, caps) | جدول الصلاحيات (The permission table)؛ وعقد Pydantic لكل تسليم (a Pydantic contract per hand-off)؛ وحدود الرموز والجولات والخطوات والوقت (token, round, step and time caps) |
 | معيار الخروج (Exit criterion) | تخلَّ عن الفريق إن لم يتفوق على خط الأساس بأكثر مما يكلّف (Drop the team if it does not beat the baseline by more than it costs) |
 
-لا تحتاج هند (Hind) إلى أي من هذا المعجم (needs none of the vocabulary): فهي تسأل هل الإجابات صحيحة وسريعة ورخيصة (whether answers are right, fast and cheap).
+لا تحتاج هند إلى أي من هذا المعجم (needs none of the vocabulary): فهي تسأل هل الإجابات صحيحة وسريعة ورخيصة (whether answers are right, fast and cheap).
 
-**منصتك (Your platform).** قبل أن يُشحن فريق (Before a team ships):
+**منصتك (Your platform).** قبل أن يُطلَق فريق (Before a team ships):
 
 | السؤال (Question) | إجابتك (Your answer) |
 |---|---|
 | هل يحصل كل دور على هويته ونطاقاته الخاصة (its own identity and scopes)، أم حساب خدمة واحد للجميع (one service account for all)؟ | |
-| أين يذهب تتبّع التشغيل (a run's trace)، ومن يستطيع قراءته (who can read it)؟ | |
+| أين يذهب تتبّع التشغيل (a run's trace)، ومن يستطيع قراءته؟ | |
 | أين تُضبط الحدود (the caps)، وكيف تُعتمد كتابة أي دور وتُدقَّق (approved and audited)؟ | |
 
 ## 🛠️ التمارين (Exercises)
-- 🟢 **هل هو فريق؟ ⁦(Is it a team?)⁩** دون اتصال (Offline)، على الورق (on paper). صنّف خمسة رسوم تخطيطية (five sketches) على أنها موجّه (prompt) أو سير عمل (workflow) أو وكيل منفرد (single agent) أو تعدد وكلاء (multi-agent)، وسمِّ النمط (name the pattern): (a) موجّه واحد يلخّص سلسلة تذاكر (one prompt that summarises a ticket thread)؛ (b) موزِّع بخمسة مسارات (a router with five routes)، لكل منها حلقة أدوات (a tool loop)؛ (c) مخطِّط يبدأ عاملًا لكل سياسة تغيّرت (a planner that starts one worker per changed policy)؛ (d) كاتب ومراجع في حلقة (a writer and a reviewer in a loop)؛ (e) «مدير» يتحدث بحرية إلى ستة نظراء (a "manager" talking freely to six peers). *يكتمل عندما (Done when):* يكون لكل منها صنف ونمط وبناء أول (a class, a pattern and a first build)، وقد سمّيت الرسم الذي لا ينبغي أن يوجد (named the sketch that should not exist).
-- 🟡 **اكتب عقدين (Write two contracts).** دون اتصال (Offline). لوكيل فرز (a triage agent) يسلّم حالة إلى متخصص وصول (an access specialist)، اكتب نموذجي التسليم (both hand-off models) بـ Pydantic — مفردات مغلقة (closed vocabulary) وحدود (limits) و`extra="forbid"` — وفحصين بالشيفرة لا يستطيع المخطط حملهما (two code checks a schema cannot hold). *يكتمل عندما (Done when):* تتصرف ستة مدخلات (six inputs)، ثلاثة صالحة وثلاثة غير صالحة (three valid and three invalid)، كما تنبأت (behave as predicted).
-- 🔴 **هل يستطيع مراجع التقاط الأخطاء المزروعة؟ ⁦(Can a reviewer catch planted errors?)⁩** *يحتاج إلى واجهة البرمجة الحقيقية (Needs the real API)*، مع سقف الإنفاق (the spending cap) من الدرس 0.2. اكتب عشر إجابات قصيرة عن السياسات (ten short policy answers): خمسًا صحيحة (five correct)، وخمسًا فيها خطأ واحد مزروع (one planted error) — رقم خاطئ (a wrong number)، أو ادعاء بلا سند (an unsupported claim)، أو جملة بلا استشهاد (an uncited sentence). مع `MODEL=claude-sonnet-5-5`، اطلب من موجّه مراجع (a reviewer prompt)، معطًى نص السياسة (given the policy text)، أن يوافق على كل إجابة أو يطلب تعديلها (approve or revise each)؛ وكرّر مع `claude-haiku-5-5`. عشر إجابات هي تجربة تشغيلية (a pilot) لا قياس (not a measurement). *يكتمل عندما (Done when):* يحوي `NOTES.md` الأخطاء الملتقطة والإنذارات الكاذبة (caught errors and false alarms) لكل نموذج، والتاريخ (the date)، والمعرّفات (the ids)، وهل كنت ستدفع ثمن المراجع (whether you would pay for the reviewer).
+- 🟢 **هل هو فريق؟ ⁦(Is it a team?)⁩** دون اتصال، على الورق (Offline, on paper). صنّف خمسة رسوم تخطيطية (five sketches) على أنها موجّه (prompt) أو سير عمل (workflow) أو وكيل منفرد (single agent) أو تعدد وكلاء (multi-agent)، وسمِّ النمط: (a) موجّه واحد يلخّص سلسلة تذاكر (one prompt that summarises a ticket thread)؛ (b) موزِّع بخمسة مسارات (a router with five routes)، لكل منها حلقة أدوات (a tool loop)؛ (c) مخطِّط يبدأ عاملًا لكل سياسة تغيّرت (a planner that starts one worker per changed policy)؛ (d) كاتب ومراجع في حلقة (a writer and a reviewer in a loop)؛ (e) «مدير» يتحدث بحرية إلى ستة نظراء (a "manager" talking freely to six peers). *يكتمل عندما (Done when):* يكون لكل منها صنف ونمط وبناء أول (a class, a pattern and a first build)، وقد سمّيت الرسم الذي لا ينبغي أن يوجد (named the sketch that should not exist).
+- 🟡 **اكتب عقدين (Write two contracts).** دون اتصال (Offline). لوكيل فرز (a triage agent) يسلّم حالة إلى متخصص وصول (an access specialist)، اكتب نموذجي التسليم (both hand-off models) بـ Pydantic — مفردات مغلقة وحدود (closed vocabulary, limits) و`extra="forbid"` — وفحصين بالشيفرة لا يستطيع المخطط التعبير عنهما (two code checks a schema cannot hold). *يكتمل عندما (Done when):* تتصرف ستة مدخلات، ثلاثة صالحة وثلاثة غير صالحة، كما تنبأت (six inputs, three valid and three invalid, behave as predicted).
+- 🔴 **هل يستطيع مراجع التقاط الأخطاء المزروعة؟ ⁦(Can a reviewer catch planted errors?)⁩** *يحتاج إلى واجهة البرمجة الحقيقية (Needs the real API)*، مع سقف الإنفاق (the spending cap) من الدرس 0.2. اكتب عشر إجابات قصيرة عن السياسات (ten short policy answers): خمسًا صحيحة (five correct)، وخمسًا فيها خطأ واحد مزروع (one planted error) — رقم خاطئ، أو ادعاء بلا سند، أو جملة بلا استشهاد (a wrong number, an unsupported claim, an uncited sentence). مع `MODEL=claude-sonnet-5-5`، اطلب من موجّه مراجع (a reviewer prompt)، بعد إعطائه نص السياسة (given the policy text)، أن يوافق على كل إجابة أو يطلب تعديلها (approve or revise each)؛ وكرّر مع `claude-haiku-5-5`. عشر إجابات هي تجربة تشغيلية (a pilot) لا قياس (not a measurement). *يكتمل عندما (Done when):* يحوي `NOTES.md` الأخطاء الملتقطة والإنذارات الكاذبة (caught errors and false alarms) لكل نموذج، والتاريخ والمعرّفات (the date, the ids)، وهل كنت ستدفع ثمن المراجع (whether you would pay for the reviewer).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
-- **فريق لأن الأدوار تبدو مرتبة (A team because the roles look tidy).** الهيكل التنظيمي (An org chart) ليس إخفاقًا (not a failure). سمِّ الإخفاق الذي يعانيه وكيل واحد (Name the failure one agent has)، أو ابنِ وكيلًا واحدًا (or build one agent).
-- **تسليمات بنص حر (Free-text hand-offs).** تُسقط الحقيقة المهمة (They drop the fact that mattered). مرّر عقدًا مُتحقَّقًا منه (Pass a validated contract) مع الأدلة (with the evidence): الاقتباسات والمعرّفات (quotes, ids).
-- **مراجع له البقع العمياء نفسها للكاتب (A reviewer with the writer's blind spots).** النموذج نفسه والسياق نفسه بلا أدلة (Same model, same context, no evidence): فيوافق على ما يعتقده الكاتب (it approves what the writer believes). أعطه المصادر (Give it the sources)، وافحص بالشيفرة أولًا (check in code first)، وضع حدًّا للجولات (cap the rounds).
+- **فريق لأن الأدوار تبدو مرتبة (A team because the roles look tidy).** الهيكل التنظيمي ليس إخفاقًا (An org chart is not a failure). سمِّ الإخفاق الذي يعانيه وكيل واحد (Name the failure one agent has)، أو ابنِ وكيلًا واحدًا.
+- **تسليمات بنص حر (Free-text hand-offs).** تُسقط الحقيقة المهمة (They drop the fact that mattered). مرّر عقدًا مُتحقَّقًا منه (Pass a validated contract) مع الأدلة: الاقتباسات والمعرّفات (the evidence: quotes, ids).
+- **مراجع يشارك الكاتب بقعه العمياء (A reviewer with the writer's blind spots).** النموذج نفسه والسياق نفسه بلا أدلة (Same model, same context, no evidence): فيوافق على ما يعتقده الكاتب (it approves what the writer believes). أعطه المصادر، وافحص بالشيفرة أولًا، وضع حدًّا للجولات (Give it the sources, check in code first, cap the rounds).
 - **حدود لكل وكيل ولا حدّ للفريق (Caps per agent and none for the team).** يستطيع خمسة وكلاء يلتزمون بحدودهم الخاصة (Five agents obeying their own limits) أن يتراشقوا أربعين استدعاءً (still ping-pong for forty calls). ضع الميزانية والجولات والأجل الأقصى في المشرف (Put budget, rounds and deadline in the supervisor).
 - **إطار العمل أولًا (The framework first).** عندئذ يقرر هو أنماطك (It then decides your patterns)؛ فابنِ النمط خامًا (build the pattern raw).
 
 ## 🧾 الخلاصة (Recap)
 - الفريق وكلاء ومشرف وعمليات تسليم (A team is agents, a supervisor and hand-offs)؛ وينبغي أن يكون المشرف في الغالب شيفرة (the supervisor should usually be code).
-- تكلّف الفرق مزيدًا من الاستدعاءات والرموز وزمن الاستجابة (Teams cost more calls, tokens and latency)، وتراكم الأخطاء (compound errors)، ويصعب تصحيحها (harder to debug).
+- تكلّف الفرق مزيدًا من الاستدعاءات والرموز وزمن الاستجابة (Teams cost more calls, tokens and latency)، وتراكم الأخطاء ويصعب تصحيحها (compound errors and are harder to debug).
 - ثلاثة أسباب تبرر الفريق (Three reasons justify one): العمل المتوازي (parallel work)، وعزل السياق (context isolation)، واختلاف الصلاحيات لكل دور (different permissions per role).
 - العقود المتحقَّق منها (Validated contracts)، ومُرسِل يفرض القواعد (an enforcing dispatcher)، وحدود على مستوى الفريق (team-wide caps)، وتتبّع واحد (one trace) تُبقي الفريق آمنًا.
 - جرّب وكيلًا واحدًا أولًا (Try one agent first)؛ واجعل كل فريق يتفوق عليه في التقييم نفسه (make every team beat it on the same eval).
 
 ## ✍️ اختبر نفسك (Check yourself)
 
-**1. يجيب طاقم لجين (Lujain) المؤلف من ستة وكلاء (six-agent crew) عن أسئلة السياسات جيدًا في عرض تجريبي (a demo). ما الذي ينبغي أن يطلبه فهد (Fahad) أولًا؟ ⁦(What should Fahad ask for first?)⁩**
+**1. يجيب طاقم لجين المؤلف من ستة وكلاء (six-agent crew) عن أسئلة السياسات جيدًا في عرض تجريبي (a demo). ما الذي ينبغي أن يطلبه فهد أولًا؟ ⁦(What should Fahad ask for first?)⁩**
 
 - A. وكيل مراجع ثالث (A third reviewer agent) يدقق عمل المحرر مرة أخرى (to double-check the editor)
 - B. مقارنة بين أطر العمل (A comparison of frameworks) لاختيار مكتبة الطاقم (to choose the crew's library)
@@ -198,14 +198,14 @@ source -> String should match pattern '^[a-z0-9-]+$'
 
 **2. لخط معالجة (A pipeline) أربع مراحل (four stages). كل منها صحيحة 90% من الوقت (right 90% of the time)، والإخفاقات مستقلة (failures are independent). كم مرة تقريبًا تكون السلسلة كلها صحيحة؟ ⁦(About how often is the whole chain right?)⁩**
 
-- A. نحو 90% (About 90%)
-- B. نحو 81% (About 81%)
-- C. نحو 66% (About 66%)
-- D. نحو 36% (About 36%)
+- A. نحو 90%
+- B. نحو 81%
+- C. نحو 66%
+- D. نحو 36%
 
 <details><summary>الإجابة</summary>
 
-**C.** اضرب (Multiply): 0.9 أُسّ أربعة (to the fourth power) يساوي نحو 0.66. الأخطاء تتراكم (Errors compound)، فمرحلة غير لازمة (a needless stage) تكلّف الدقة (costs accuracy). 🟢 الثمن (The price).
+**C.** اضرب: 0.9 أُسّ أربعة (to the fourth power) يساوي نحو 0.66. الأخطاء تتراكم (Errors compound)، فمرحلة غير لازمة (a needless stage) تكلّف الدقة (costs accuracy). 🟢 الثمن (The price).
 
 </details>
 
@@ -218,7 +218,7 @@ source -> String should match pattern '^[a-z0-9-]+$'
 
 <details><summary>الإجابة</summary>
 
-**B.** اختلاف الصلاحيات لكل دور (Different permissions per role)، يربط بينها عقد بيانات متحقَّق منه (joined by a validated contract of data)، يزيل اقتران المدخل غير الموثوق بأداة الكتابة (remove the pairing of untrusted input and a write tool). وسطر الموجّه طلب (A prompt line is a request)؛ والقارئ الثاني يرث التعرّض نفسه (a second reader inherits the exposure). 🟢 الأسباب الثلاثة (Three reasons).
+**B.** اختلاف الصلاحيات من دور إلى آخر (Different permissions per role)، مع ربط الأدوار بعقد بيانات متحقَّق منه (joined by a validated contract of data)، يزيل اقتران المدخل غير الموثوق بأداة الكتابة (remove the pairing of untrusted input and a write tool). وسطر الموجّه طلب (A prompt line is a request)؛ والقارئ الثاني يرث التعرّض نفسه (a second reader inherits the exposure). 🟢 الأسباب الثلاثة (Three reasons).
 
 </details>
 
@@ -262,13 +262,13 @@ source -> String should match pattern '^[a-z0-9-]+$'
 *المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 3.2، 8.2، 11.1* · *الطبقة (Layer): Agents*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
-- باحث وكاتب ومراجع (A researcher, writer and reviewer) يديرهم مشرف في شيفرة عادية (a supervisor in plain code)، لكل منهم موجّهه (prompt) وأدواته (tools) وعقده (contract) الخاص.
+- باحث وكاتب ومراجع (A researcher, writer and reviewer) يديرهم مشرف في شيفرة عادية (a supervisor in plain code)، لكل منهم موجّهه وأدواته وعقده الخاص (its own prompt, tools and contract).
 - الباحث وحده لديه أداة (Only the researcher has a tool)، وهي بحث للقراءة فقط (read-only search)، يفرضها مُرسِل (enforced by a dispatcher).
 - الحواجز (Guards): حدّ الخطوات (step cap)، وميزانية رموز للفريق (team token budget)، وحدّ الجولات (round cap)، وإصلاح واحد لكل عقد مكسور (one repair per broken contract)، ثم حزمة تسليم (a hand-off packet).
 - دون اتصال (Offline)، يجري الفريق نحو 2.3 ضعف استدعاءات وكيل واحد (about 2.3 times one agent's calls) للإجابات المبرمجة نفسها (the same scripted answers): تكلفة لا جودة (cost, not quality).
 
 ## 🧭 لماذا يهم (Why it matters)
-شرط فهد (Fahad) لطاقم لجين (Lujain's crew) — وهو افتراضي (hypothetical): أن يُفحص كل تسليم (every hand-off checked)، وأن يكون هناك توقف لا يحتاج إلى أحد (a stop that needs nobody)، وتكلفته إلى جانب تكلفة وكيل واحد (its cost beside one agent's). كانت نسختها الأولى تمرر نصًّا حرًّا (passed free text): كتب الباحث «وجدت بعض السياسات ذات الصلة، انظر أعلاه» ("found some relevant policies, see above")، فسدّ الكاتب الفجوة من الذاكرة بعبارة «3 أيام عمل» ("3 business days")، ووافق المراجع، وهو النموذج نفسه (the same model). ولم يعرف أحد أي وكيل اخترع الرقم (which agent invented the number).
+شرط فهد لطاقم لجين — وهو افتراضي (hypothetical): أن يُفحص كل تسليم (every hand-off checked)، وأن يكون هناك توقف لا يحتاج إلى أحد (a stop that needs nobody)، وتكلفته إلى جانب تكلفة وكيل واحد (its cost beside one agent's). كانت نسختها الأولى تمرر نصًّا حرًّا (passed free text): كتب الباحث «وجدت بعض السياسات ذات الصلة، انظر أعلاه» ("found some relevant policies, see above")، فسدّ الكاتب الفجوة من الذاكرة بعبارة «3 أيام عمل» ("3 business days")، ووافق المراجع، وهو النموذج نفسه (the same model). ولم يعرف أحد أي وكيل اخترع الرقم (which agent invented the number).
 
 ## 📐 كيف يعمل (How it works)
 
@@ -288,9 +288,9 @@ Staff can request a new laptop through the IT Service Desk portal under Hardware
 [done: 4 calls, 633 tokens; per role (calls, in, out): {'researcher': [2, 333, 56], 'writer': [1, 82, 36], 'reviewer': [1, 117, 9]}]
 ```
 
-استغرق استدعاء الكاتب الوحيد 82 رمز إدخال (The writer's one call took 82 input tokens)، واستدعاءا الباحث 333: الكاتب يرى الملاحظات لا نتائج البحث (the writer sees the notes, not the search results). ويحوي `m11_trace.jsonl` سطر JSON واحدًا لكل استدعاء نموذج واستدعاء أداة وتسليم وحكم مراجعة وتوقف (one JSON line per model call, tool call, hand-off, review verdict and stop)، موسومًا كل منها بمعرّف التشغيل (each tagged with the run id)؛ ويُلحَق بالملف (the file is appended to)، فتتشاركه عدة تشغيلات (so several runs share it).
+استهلك استدعاء الكاتب الوحيد 82 رمزًا في الإدخال (The writer's one call took 82 input tokens)، واستدعاءا الباحث 333: الكاتب يرى الملاحظات لا نتائج البحث (the writer sees the notes, not the search results). ويحوي `m11_trace.jsonl` سطر JSON واحدًا لكل استدعاء نموذج واستدعاء أداة وتسليم وحكم مراجعة وتوقف (one JSON line per model call, tool call, hand-off, review verdict and stop)، موسومًا كل منها بمعرّف التشغيل (each tagged with the run id)؛ ويُلحَق بالملف (the file is appended to)، فتتشاركه عدة تشغيلات (so several runs share it).
 
-**contracts.py.** اقرأ `check_notes` أولًا (Read check_notes first): يستطيع المخطط (a schema) أن يقول إن الاقتباس نص (a quote is a string)؛ والشيفرة وحدها تستطيع أن تقول إنه صحيح (only code can say it is true).
+**contracts.py.** اقرأ `check_notes` أولًا: يستطيع المخطط (a schema) أن يقول إن الاقتباس نص (a quote is a string)؛ والشيفرة وحدها تستطيع أن تقول إنه صحيح (only code can say it is true).
 
 ```python
 # labs/m11/contracts.py
@@ -356,7 +356,7 @@ def describe(e: ValueError) -> str:
 
 ### 🟡 التعمق أكثر (Going deeper)
 
-**team.py.** يحمل `Team` الحالة المشتركة (holds the shared state)، ولا يكتبها إلا المشرف (which only the supervisor writes). اقرأ `Team.tool`، وفيه تأتي قائمة السماح أولًا (the allow-list comes first)، ثم `Team.agent`، وفيه حدّان قبل الاستدعاء (two caps before the call) ثم التحليل والفحص وإصلاح واحد (parse, check, one repair)، ثم `run`: المشرف كله (the whole supervisor).
+**team.py.** يحتفظ `Team` بالحالة المشتركة (holds the shared state)، ولا يكتبها إلا المشرف (which only the supervisor writes). اقرأ `Team.tool`، وفيه تأتي قائمة السماح أولًا (the allow-list comes first)، ثم `Team.agent`، وفيه حدّان قبل الاستدعاء (two caps before the call) ثم التحليل والفحص وإصلاح واحد (parse, check, one repair)، ثم `run`: المشرف كله (the whole supervisor).
 
 ```python
 # labs/m11/team.py
@@ -521,7 +521,7 @@ if __name__ == "__main__":
         print(json.dumps(res.packet, indent=2, ensure_ascii=False))
 ```
 
-يمرّر **compare.py** كل سؤال عبر `Team.run`، ثم عبر `Team.run_solo` (runs each question through):
+يمرّر **compare.py** كل سؤال (runs each question) عبر `Team.run`، ثم عبر `Team.run_solo`:
 
 ```python
 # labs/m11/compare.py
@@ -566,7 +566,7 @@ solo: 10 calls, 1902 tokens
 team / solo: calls x2.3, tokens x2.1
 ```
 
-هذا 2.3 ضعف الاستدعاءات (2.3 times the calls) و2.1 ضعف الرموز (2.1 times the tokens)؛ والمال هو الرموز مضروبة في الأسعار الحالية (money is tokens times the current prices). وتسمح الحدود (The caps allow) بما لا يزيد على (at most) 4 + 2 × (4 + 4) = 20 استدعاءً (calls).
+هذا 2.3 ضعف الاستدعاءات (2.3 times the calls) و2.1 ضعف الرموز (2.1 times the tokens)؛ والتكلفة المالية هي الرموز مضروبة في الأسعار الحالية (money is tokens times the current prices). وتسمح الحدود بما لا يزيد على 4 + 2 × (4 + 4) = 20 استدعاءً (the caps allow at most 20 calls).
 
 **التدريبات (The drills).** شغّل `python labs/m11/team.py "<question>"`. الوسم `[drill:...]` يُلحَق بنهاية سؤال الحاسوب المحمول (ends the laptop question) ولا يتصرف بناءً عليه إلا السيناريو (only the playbook acts on it).
 
@@ -574,16 +574,16 @@ team / solo: calls x2.3, tokens x2.1
 |---|---|---|
 | زمن الاستجابة لتذكرة P2 (P2 response time) | تُرفض المسودة الأولى وتُعتمد الثانية (Draft one rejected, draft two approved) — 6 استدعاءات (6 calls) | حلقة المراجع (Reviewer loop) |
 | ساعات عمل مكتب الخدمة (Service Desk opening hours) | المسودة الأولى لا تستشهد بشيء (Draft one cites nothing)؛ ويصلحها إصلاح واحد (one repair fixes it) — 5 استدعاءات (5 calls) | العقد، وإصلاح واحد (Contract, one repair) |
-| الحاسوب المحمول `[drill:never-approve]` (Laptop) | `max_rounds` بعد 6 استدعاءات (after 6 calls)؛ وفي الحزمة آخر مسودة (the packet has the last draft) | حدّ الجولات (Round cap) |
-| الحاسوب المحمول `[drill:fabricate]` (Laptop) | `contract` بعد 3 استدعاءات (after 3 calls)؛ ولا كاتب (no writer) | فحص الإسناد (Grounding check) |
-| الحاسوب المحمول `[drill:overreach]` (Laptop) | يُرفض بحث الكاتب (The writer's search is refused)؛ ويكتمل التشغيل (the run finishes) | قائمة السماح (Allow-list) |
-| الحاسوب المحمول مع `TEAM_TOKEN_BUDGET=300` (Laptop with) | `token_budget` بعد استدعاءين و389 رمزًا (after 2 calls, 389 tokens) | ميزانية الفريق (Team budget) |
+| الحاسوب المحمول (Laptop) `[drill:never-approve]` | `max_rounds` بعد 6 استدعاءات؛ وفي الحزمة آخر مسودة (after 6 calls; the packet has the last draft) | حدّ الجولات (Round cap) |
+| الحاسوب المحمول (Laptop) `[drill:fabricate]` | `contract` بعد 3 استدعاءات؛ ولا كاتب (after 3 calls; no writer) | فحص الإسناد (Grounding check) |
+| الحاسوب المحمول (Laptop) `[drill:overreach]` | يُرفض بحث الكاتب ويكتمل التشغيل (The writer's search is refused; the run finishes) | قائمة السماح (Allow-list) |
+| الحاسوب المحمول (Laptop) مع `TEAM_TOKEN_BUDGET=300` | `token_budget` بعد استدعاءين و389 رمزًا (after 2 calls, 389 tokens) | ميزانية الفريق (Team budget) |
 
 تُفحص الميزانية قبل الاستدعاء (The budget is checked before a call)، فقد يتجاوزها استدعاء واحد (so one call can cross it).
 
 ### 🔴 نظرة الخبير (Expert view)
 
-**تحفظات صادقة (Honest caveats).** يغطي `pytest tests/test_m11_team.py` كل حاجز وكل تدريب وكل شكل طلب (every guard, drill and request shape)، لكنه يتشارك مع السيناريو نصَّه (shares the playbook's script): فهو يثبت السباكة لا الفريق (it proves the plumbing, not the team). *يعمل دون اتصال (Works offline):* العقود والحدود وقائمة السماح وأسباب التوقف والحزم والتتبّع (contracts, caps, allow-list, stop reasons, packets and the trace)؛ وأعداد الرموز تقديرية (token counts are estimates). *يحتاج إلى واجهة البرمجة الحقيقية (Needs the real API):* هل يقتبس الباحث السياسة الصحيحة (the researcher quotes the right policy)، وهل يبقى الكاتب داخل الملاحظات (the writer stays in the notes)، وهل يلتقط المراجع الأخطاء الحقيقية (the reviewer catches real errors)؛ وزمن الاستجابة والتكلفة (latency, cost)، وكيف تتضافر الأدوات والمخرجات المهيكلة (how tools and structured outputs combine). و`right` في `compare.py` مجرد مطابقة عبارة (only a phrase match). وفي تدريب تجاوز الصلاحيات (the overreach drill) يطلب المحاكي (the mock) أداة لم تكن لدى الكاتب أصلًا (a tool the writer never had)؛ والنموذج الحقيقي نادرًا ما يفعل ذلك (a real model rarely would)، ولم يُختبر هنا رد فعل الواجهة الحقيقية على `tool_result` في طلب لا يعلن أي أدوات (the real API's reaction to a tool_result in a request that declares no tools is untested here)، فإن أعادت خطأً انتهى التشغيل بـ `model_error` (if it returns an error, the run ends in model_error). والمكتبة نص موثوق (The library is trusted text)، فلا شيء يختبر الحقن (nothing tests injection)، وتبقى `gaps` و`issues` نصًّا حرًّا (stay free text).
+**تحفظات صادقة (Honest caveats).** يغطي `pytest tests/test_m11_team.py` كل حاجز وكل تدريب وكل شكل طلب (every guard, drill and request shape)، لكنه يتشارك مع السيناريو نصَّه (shares the playbook's script): فهو يثبت سلامة التوصيلات الداخلية لا جودة الفريق (it proves the plumbing, not the team). *يعمل دون اتصال (Works offline):* العقود والحدود وقائمة السماح وأسباب التوقف والحزم والتتبّع (contracts, caps, allow-list, stop reasons, packets and the trace)؛ وأعداد الرموز تقديرية (token counts are estimates). *يحتاج إلى واجهة البرمجة الحقيقية (Needs the real API):* هل يقتبس الباحث السياسة الصحيحة (the researcher quotes the right policy)، وهل يبقى الكاتب داخل الملاحظات (the writer stays in the notes)، وهل يلتقط المراجع الأخطاء الحقيقية (the reviewer catches real errors)؛ وزمن الاستجابة والتكلفة (latency, cost)، وكيف تتضافر الأدوات والمخرجات المهيكلة (how tools and structured outputs combine). و`right` في `compare.py` مجرد مطابقة عبارة (only a phrase match). وفي تدريب تجاوز الصلاحيات (the overreach drill) يطلب المحاكي (the mock) أداة لم تكن لدى الكاتب أصلًا (a tool the writer never had)؛ والنموذج الحقيقي نادرًا ما يفعل ذلك (a real model rarely would)، ولم يُختبر هنا (untested here) رد فعل الواجهة الحقيقية على `tool_result` في طلب لا يعلن أي أدوات، فإن أعادت خطأً انتهى التشغيل بـ `model_error`. والمكتبة نص موثوق (The library is trusted text)، فلا شيء يختبر الحقن (nothing tests injection)، وتبقى `gaps` و`issues` نصًّا حرًّا (stay free text).
 
 ## 🧰 الأدوات (The toolkit)
 | الأداة أو الممارسة أو النمط (Tool, practice or pattern) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
@@ -593,11 +593,11 @@ team / solo: calls x2.3, tokens x2.1
 | **Hand-off packet** — حزمة التسليم | معرّف التشغيل والسبب وآخر مسودة والملاحظات (Run id, reason, last draft, issues)، لطابور مسمّى (for a named queue) | كل حاجز ينطلق (Every guard that fires) |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-**المُسلَّم الأسبوعي (Weekly deliverable).** أودِع (Commit) المجلد `week-11/` مع `labs/m11/` واختبارات ناجحة (passing tests)؛ وجدول `compare.py` مع فقرة (table with a paragraph)؛ والحزمة (the packet) من كل تدريب ينتهي بحزمة (from each drill that ends in one)؛ وسجل تصميم الفريق (Team Design Record) — الدرس 11.1 — لميزة من تصميمك (for a feature of your own)؛ و`NOTES.md` مع إجاباتك عن الاختبار (quiz answers).
+**المُسلَّم الأسبوعي (Weekly deliverable).** أودِع (Commit) المجلد `week-11/` مع `labs/m11/` واختبارات ناجحة (passing tests)؛ وجدول `compare.py` مع فقرة (table with a paragraph)؛ والحزمة من كل تدريب ينتهي بحزمة (the packet from each drill that ends in one)؛ وسجل تصميم الفريق (Team Design Record) — الدرس 11.1 — لميزة من تصميمك (for a feature of your own)؛ و`NOTES.md` مع إجاباتك عن الاختبار (quiz answers).
 
-**جلسة المجموعة (Group session)، 60 دقيقة (60 minutes).** (1) تبادلوا جداول `compare` (Swap compare tables)؛ واشرحوا النسب (explain the ratios) (15). (2) شغّلوا التدريبات (Run the drills)؛ وسمّوا كل حاجز (name each guard) وحقل الحزمة الذي يحتاج إليه موظف مكتب الخدمة (the packet field a Service Desk agent needs) (20). (3) اكتبوا تسليمًا يجتاز المخطط لكنه خاطئ (a hand-off that passes the schema yet is wrong) (15). (4) فريق أم وكيل واحد للإصدار 1؟ ⁦(Team or one agent for v1?)⁩ (10)
+**جلسة المجموعة (Group session)، 60 دقيقة (60 minutes).** (1) تبادلوا جداول `compare`؛ واشرحوا النسب (Swap compare tables; explain the ratios) (15). (2) شغّلوا التدريبات؛ وسمّوا كل حاجز وحقل الحزمة الذي يحتاج إليه موظف مكتب الخدمة (Run the drills; name each guard and the packet field a Service Desk agent needs) (20). (3) اكتبوا تسليمًا يجتاز المخطط لكنه خاطئ (a hand-off that passes the schema yet is wrong) (15). (4) فريق أم وكيل واحد للإصدار 1؟ ⁦(Team or one agent for v1?)⁩ (10)
 
-**ابنِه مع Claude Code (Build it with Claude Code).** أعطِ Claude Code هذه المواصفة (spec) في وضع التخطيط (plan mode) — وتحقق من توثيق Claude Code الحالي (check the current Claude Code documentation) — وراجع الخطة (review the plan) قبل أي تعديل (before any edit):
+**ابنِه مع Claude Code (Build it with Claude Code).** أعطِ Claude Code هذه المواصفة (spec) في وضع التخطيط (plan mode) — وتحقق من توثيق Claude Code الحالي (check the current Claude Code documentation) — وراجع الخطة قبل أي تعديل (review the plan before any edit):
 
 ```text
 Goal: build labs/m11/contracts.py, team.py and compare.py as in lesson 11.2, with pytest tests in
@@ -618,11 +618,11 @@ One file at a time; run the tests after each step.
 
 **تحقق قبل أن تقبله (Verify before you accept it).**
 - شغّل الاختبارات (Run the tests)، ثم اكسر حاجزًا واحدًا في كل مرة (break one guard at a time): يجب أن يفشل اختبار مسمّى (a named test must fail). شغّل `compare.py`: عشرة صفوف، كلها `right` (ten rows, all right).
-- ابحث في الفرق (diff) عن `temperature` و`tool_choice` و`eval(` و`content[0]` وكاتب مُنح أداة (a writer given a tool). اقرأ `Team.tool` و`Team.agent`؛ وتأكد من أن الاختبارات لم تُمَس (confirm the tests are untouched).
+- ابحث في التغييرات (the diff) عن `temperature` و`tool_choice` و`eval(` و`content[0]` وكاتب مُنح أداة (a writer given a tool). اقرأ `Team.tool` و`Team.agent`؛ وتأكد من أن الاختبارات لم تُمَس (confirm the tests are untouched).
 
 ## 🛠️ التمارين (Exercises)
-- 🟢 **اكسر كل حاجز (Break each guard).** دون اتصال (Offline). واحدًا تلو الآخر (In turn)، أزل فحوص قائمة السماح والإسناد والميزانية (remove the allow-list, grounding and budget checks) وشغّل الاختبارات (run the tests). *يكتمل عندما (Done when):* يسمّي `NOTES.md` الاختبارات الفاشلة لكل تغيير (names the failing tests per change)، وتُستعاد الشيفرة (the code is restored).
-- 🟡 **أضف أجلًا أقصى وقاعدة انعدام التقدم (Add a deadline and a no-progress rule).** دون اتصال (Offline). صعّد `timeout` (Escalate) متى انقضى `TEAM_DEADLINE_S` (has passed) — زيّف الساعة (fake the clock) — و`no_progress` متى كرر المراجع ملاحظاته (when the reviewer repeats its issues). *يكتمل عندما (Done when):* يفشل اختبار جديد لكل منهما دون تغييرك ويجتاز معه (a new test for each fails without your change and passes with it).
+- 🟢 **اكسر كل حاجز (Break each guard).** دون اتصال (Offline). واحدًا تلو الآخر، أزل فحوص قائمة السماح والإسناد والميزانية وشغّل الاختبارات (In turn, remove the allow-list, grounding and budget checks and run the tests). *يكتمل عندما (Done when):* يسمّي `NOTES.md` الاختبارات الفاشلة لكل تغيير (names the failing tests per change)، وتُستعاد الشيفرة (the code is restored).
+- 🟡 **أضف أجلًا أقصى وقاعدة انعدام التقدم (Add a deadline and a no-progress rule).** دون اتصال (Offline). صعّد (Escalate) بالسبب `timeout` متى انقضى `TEAM_DEADLINE_S` — زيّف الساعة (fake the clock) — و`no_progress` متى كرر المراجع ملاحظاته (when the reviewer repeats its issues). *يكتمل عندما (Done when):* يفشل اختبار جديد لكل منهما دون تغييرك ويجتاز معه (a new test for each fails without your change and passes with it).
 - 🔴 **هل يتفوق الفريق على وكيل واحد؟ ⁦(Does the team beat one agent?)⁩** *يحتاج إلى واجهة البرمجة الحقيقية (Needs the real API)*، مع سقف الإنفاق (the spending cap) من الدرس 0.2. اكتب 15 سؤالًا بإجابات معروفة (15 questions with known answers) في `labkit/data/policies/` وخمسة لا تغطيها أي سياسة (five that no policy covers). مع `MODEL=claude-sonnet-5-5`، شغّل `run` و`run_solo` ثلاث مرات لكل منهما (three times each). *يكتمل عندما (Done when):* يعدّ `NOTES.md` الصحيح والخاطئ والمُصعَّد (counts right, wrong and escalated)، مع الاستدعاءات والرموز والتكلفة والتاريخ ومعرّف النموذج وحكمك (calls, tokens, cost, date, model id and your verdict).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
@@ -648,7 +648,7 @@ One file at a time; run the tests after each step.
 
 <details><summary>الإجابة</summary>
 
-**B.** البحث والملاحظات وإصلاح واحد تصنع ثلاثة استدعاءات (Search, notes and one repair make three calls)؛ وفشل الإسناد الثاني يُصعِّد قبل الكاتب (a second grounding failure escalates before the writer). 🟡 التدريبات (The drills).
+**B.** البحث والملاحظات وإصلاح واحد تشكّل ثلاثة استدعاءات (Search, notes and one repair make three calls)؛ وفشل الإسناد الثاني يُصعِّد قبل الكاتب (a second grounding failure escalates before the writer). 🟡 التدريبات (The drills).
 
 </details>
 
@@ -665,7 +665,7 @@ One file at a time; run the tests after each step.
 
 </details>
 
-**3. دون اتصال، يطبع `compare.py` عشرة صفوف `right` وفريقًا بـ 2.3 ضعف الاستدعاءات. ماذا يدعم ذلك؟ ⁦(What does that support?)⁩**
+**3. دون اتصال، يطبع `compare.py` عشرة صفوف `right` ويُظهر أن الفريق يجري 2.3 ضعف الاستدعاءات. ماذا يدعم ذلك؟ ⁦(What does that support?)⁩**
 
 - A. الفريق ترقية آمنة، لأن كل إجابة كانت صحيحة (The team is a safe upgrade, because every answer was right)
 - B. الفريق أدق، ولو على هذه الأسئلة الخمسة فقط (The team is more accurate, if only on these five questions)
@@ -691,7 +691,7 @@ One file at a time; run the tests after each step.
 
 </details>
 
-**5. مع ضبط `MAX_ROUNDS` على 3 و4 خطوات لكل دور وكيل (4 steps per agent turn)، ما أكبر عدد استدعاءات قد يجريه تشغيل واحد؟ ⁦(What is the most calls one run may make?)⁩**
+**5. مع ضبط `MAX_ROUNDS` على 3 و4 خطوات لكل نوبة وكيل (4 steps per agent turn)، ما أكبر عدد استدعاءات قد يجريه تشغيل واحد؟ ⁦(What is the most calls one run may make?)⁩**
 
 - A. 12
 - B. 20

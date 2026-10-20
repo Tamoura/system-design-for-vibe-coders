@@ -1,8 +1,8 @@
 # الوحدة 8 — حلقة الوكيل بإتقان (The agent loop, properly)
 
-*خطِّط ونفِّذ ولاحِظ وكرِّر (Plan, act, observe, repeat): هذا كل ما يفعله الوكيل (an agent)، وفي الحلقة نفسها يخطئ الوكلاء. قدّمت لك الوحدة 1 أصغر حلقة (the smallest loop) وقدّمت الوحدة 3 بروتوكول الأدوات (the tool protocol) الذي تقوم عليه. وهذه الوحدة هي الفرق بين حلقة تنجح في عرض تجريبي (a demo) وحلقة تستطيع تركها تعمل في الثانية صباحًا (at 02:00). الدرس 8.1 هو الدرس المفاهيمي (the concept lesson): تشريح الحلقة (the anatomy of the loop) وفق نمط ReAct، وطرق التوقف الست (the six ways it should stop)، وما يُفعل مع كل `stop_reason`، والتأمل الذاتي والتخطيط (reflection and planning) — متى يُجديان ومتى يضيفان كلفة فحسب — وأخطاء الأدوات (tool errors)، وكيف ينمو السياق (how context grows) مع الحساب (with the arithmetic)، وأنماط الإخفاق التي يصادفها المبتدئون أولًا (the failure modes juniors meet first)، وقابلية المراقبة (the observability) التي تحتاجها الحلقة، ومتى تستخدم مشغّل الأدوات في حزمة التطوير (the SDK's tool runner) أو Claude Agent SDK بدلًا من حلقتك الخاصة (your own loop)، وقائمة فحص الحلقة الآمنة (a safe-loop checklist). أما الدرس 8.2 فهو المختبر (the lab): حلقة من الصفر (a loop from scratch) بحدّ صارم للخطوات (a hard step cap)، وميزانية رموز (a token budget)، ومهلة بالساعة الفعلية (a wall-clock deadline)، وكشف انعدام التقدم (no-progress detection)، وسجل تتبّع JSONL (a JSONL trace)، وأداة إعادة تشغيل (a replay tool)، وتسليم إلى شخص (a hand-off to a person) حين يُطلَق أحد الحواجز (a guard fires)، واختبار يجعل كل حاجز يُطلَق (a test that makes each guard fire). يعمل المختبر دون اتصال (offline) على النسخة المحاكاة (the mock) في عدّة المختبر (the lab kit) وعلى واجهة البرمجة الحقيقية (the real API) دون أي تغيير. وتحصل استعلامات التذاكر والزملاء في نجم ديسك (Najm Desk) على أول حواجزها (their first guards).*
+*خطِّط ونفِّذ ولاحِظ وكرِّر (Plan, act, observe, repeat): هذا كل ما يفعله الوكيل (an agent)، وفي الحلقة نفسها يخطئ الوكلاء. قدّمت لك الوحدة 1 أصغر حلقة (the smallest loop) وقدّمت الوحدة 3 بروتوكول الأدوات (the tool protocol) الذي تقوم عليه. وهذه الوحدة هي الفرق بين حلقة تنجح في عرض تجريبي (a demo) وحلقة تستطيع تركها تعمل في الثانية صباحًا. الدرس 8.1 هو الدرس المفاهيمي (the concept lesson): تشريح الحلقة (the anatomy of the loop) وفق نمط ReAct، وطرق التوقف الست (the six ways it should stop)، وما يُفعل مع كل `stop_reason`، والتأمل الذاتي والتخطيط (reflection and planning) — متى يُجديان ومتى يضيفان كلفة فحسب — وأخطاء الأدوات (tool errors)، وكيف ينمو السياق مع الحساب (how context grows, with the arithmetic)، وأنماط الإخفاق التي يصادفها المبتدئون أولًا (the failure modes juniors meet first)، وقابلية المراقبة (the observability) التي تحتاجها الحلقة، ومتى تستخدم مشغّل الأدوات في حزمة التطوير (the SDK's tool runner) أو Claude Agent SDK بدلًا من حلقتك الخاصة (your own loop)، وقائمة فحص الحلقة الآمنة (a safe-loop checklist). أما الدرس 8.2 فهو المختبر (the lab): حلقة من الصفر (a loop from scratch) بحدّ صارم للخطوات (a hard step cap)، وميزانية رموز (a token budget)، وأجل بالساعة الفعلية (a wall-clock deadline)، وكشف انعدام التقدم (no-progress detection)، وسجل تتبّع JSONL (a JSONL trace)، وأداة إعادة تشغيل (a replay tool)، وتسليم إلى شخص (a hand-off to a person) حين ينطلق أحد الحواجز (a guard fires)، واختبار يجعل كل حاجز ينطلق (a test that makes each guard fire). يعمل المختبر دون اتصال (offline) على النسخة المحاكاة (the mock) في عدّة المختبر (the lab kit) وعلى واجهة البرمجة الحقيقية (the real API) دون أي تغيير. وتحصل استعلامات التذاكر والزملاء في نجم ديسك (Najm Desk) على أول حواجزها (their first guards).*
 
-> **الطبقة (Layer):** Agents — الحلقة التي تتيح للنموذج أن يتصرف بنفسه (the loop that lets a model act on its own)، والحدود والفحوص وعمليات التسليم (the limits, checks and hand-offs) التي تُبقيه آمنًا (that keep it safe).
+> **الطبقة (Layer):** Agents — الحلقة التي تتيح للنموذج أن يتصرف بنفسه (the loop that lets a model act on its own)، والحدود والفحوص وعمليات التسليم التي تُبقيه آمنًا (the limits, checks and hand-offs that keep it safe).
 
 ---
 
@@ -10,23 +10,23 @@
 *المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 1.2، 3.2* · *الطبقة (Layer): Agents*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
-- **حلقة الوكيل (agent loop)** تسأل النموذج، وتقرأ `stop_reason`، وتنفّذ الأداة التي طلبها، وتعيد النتيجة، ثم تكرر (ReAct, Yao et al., 2022). النموذج يقترح؛ و**شيفرتك أنت تقرر متى تتوقف (your code decides when to stop).**
-- **ستة مخارج (Six exits):** نجاح متحقَّق منه (verified success)، وحدّ الخطوات (step cap)، وميزانية الرموز (token budget)، ومهلة الساعة الفعلية (deadline)، وكشف انعدام التقدم (no-progress detection)، وتسليم إلى شخص (hand-off to a person). وكل حاجز (guard) ينتهي بتسليم لا بانهيار (Every guard ends in a hand-off, never a crash).
+- **حلقة الوكيل (agent loop)** تسأل النموذج، وتقرأ `stop_reason`، وتنفّذ الأداة التي طلبها، وتعيد النتيجة، ثم تكرر (asks the model, reads stop_reason, runs the tool it asked for, returns the result and repeats; ReAct, Yao et al., 2022). النموذج يقترح (the model proposes)؛ و**شيفرتك أنت تقرر متى تتوقف (your code decides when to stop).**
+- **ستة مخارج (Six exits):** نجاح متحقَّق منه (verified success)، وحدّ الخطوات (step cap)، وميزانية الرموز (token budget)، وأجل الساعة الفعلية (deadline)، وكشف انعدام التقدم (no-progress detection)، وتسليم إلى شخص (hand-off to a person). وكل حاجز ينتهي بتسليم لا بانهيار (Every guard ends in a hand-off, never a crash).
 - عالِج **كل `stop_reason`** (Handle every stop_reason)؛ وتوقف عند القيم المجهولة (stop on unknown values)؛ ولا تنفّذ أي أداة من دور مقطوع أو مرفوض (run no tools from a cut-off or refused turn).
 - تنمو كلفة الإدخال (Input cost) مع **مربّع عدد الخطوات (the square of the steps)**. قلّص نتائج الأدوات (Trim tool results).
 - **التأمل الذاتي (Reflection)** لا يُجدي إلا بمعلومة جديدة (new information)؛ و**التخطيط أولًا (planning first)** يُجدي حين تكون الخطوات متوقعة (steps are predictable).
 - إشارة القرار (Decision cue): خطوات ثابتة (fixed steps) فسير عمل (a workflow) — الدرس 5.1؛ ومسار تحدده نتائج الأدوات (path set by tool results) فحلقة محدودة (a bounded loop).
 
 ## 🧭 لماذا يهم (Why it matters)
-في الأسبوع الخامس من التجربة التشغيلية لنجم ديسك (the Najm Desk pilot) ترتّب مها (Maha)، قائدة فريق هندسة الموثوقية (the SRE lead)، محادثات الأسبوع الماضي بحسب الكلفة (by cost)، وهذا افتراضي (hypothetical). إحداها خارج المألوف تمامًا: 50 استدعاءً للنموذج (50 model calls)، وقرابة مليون رمز إدخال (about a million input tokens)، أي نحو 75 ضعف المحادثة العادية. وكانت إجابتها صحيحة: «التذكرة 4471 قيد المعالجة.» ⁦(Ticket 4471 is in progress.)⁩ لم يشتكِ أحد، فلم ينظر أحد. وحلقة لجين (Lujain) لم تسجّل إلا النص النهائي (logged only the final text)، فالسبب تخمين: كان TicketHub بطيئًا وظل النموذج يطلب التذكرة نفسها. وكان حدّ الخطوات (step cap) عندها 50 «للاحتياط» (to be safe). وقد صمد الحدّ، وكان أغلى رقم في الملف.
+في الأسبوع الخامس من التجربة التشغيلية لنجم ديسك (the Najm Desk pilot) ترتّب مها، قائدة فريق هندسة الموثوقية (the SRE lead)، محادثات الأسبوع الماضي بحسب الكلفة، وهذا افتراضي (hypothetical). إحداها خارج المألوف تمامًا: 50 استدعاءً للنموذج (50 model calls)، وقرابة مليون رمز إدخال (about a million input tokens)، أي نحو 75 ضعف المحادثة العادية (roughly 75 times a normal one). وكانت إجابتها صحيحة: «التذكرة 4471 قيد المعالجة.» ⁦(Ticket 4471 is in progress.)⁩ لم يشتكِ أحد، فلم ينظر أحد (Nobody complained, so nobody looked). وحلقة لجين لم تسجّل إلا النص النهائي (logged only the final text)، فالسبب تخمين: كان TicketHub بطيئًا وظل النموذج يطلب التذكرة نفسها (TicketHub was slow and the model kept asking for the same ticket). وكان حدّ الخطوات (step cap) عندها 50 «للاحتياط» (to be safe). وقد صمد الحدّ، وكان أغلى رقم في الملف (It held, and it was the most expensive number in the file).
 
-يقول فهد (Fahad): «حدّ الخمسين أمنية وُضع عليها رقم.» ⁦(A cap of 50 is a hope with a number on it.)⁩ قبل أن تُطلَق أي حلقة (Before a loop ships) تجيب على الورق عن أربعة أسئلة: كم يجوز أن تعمل (how long may it run)، وكم يجوز أن تنفق (how much may it spend)، وهل تتجه إلى مكان ما (is it going anywhere)، ومن يتسلّم الأمر حين تتوقف (who takes over when it stops)؟ يقدّم هذا الدرس الحساب (the arithmetic)، ويبني الدرس 8.2 الحلقة.
+يقول فهد: «حدّ الخمسين أمنية وُضع عليها رقم.» ⁦(A cap of 50 is a hope with a number on it.)⁩ قبل أن تُطلَق أي حلقة (Before a loop ships) تجيب على الورق عن أربعة أسئلة: كم من الوقت يجوز أن تعمل (how long may it run)، وكم يجوز أن تنفق (how much may it spend)، وهل تتجه إلى مكان ما (is it going anywhere)، ومن يتسلّم الأمر حين تتوقف (who takes over when it stops)؟ يقدّم هذا الدرس الحساب (the arithmetic)، ويبني الدرس 8.2 الحلقة.
 
 ## 📐 كيف يعمل (How it works)
 
 ### 🟢 الأساسيات (The essentials)
 
-**الحلقة (The loop).** تستدعي *حلقة الوكيل (agent loop)* النموذج مرة بعد مرة، وفي كل مرة تُرفق نتائج الطلب الذي صدر في الاستدعاء السابق (the results of the last call's request)، إلى أن يتحقق شرط التوقف (a stop condition). وقد سمّى Yao وزملاؤه (Yao et al., 2022) هذا النمط *ReAct*: يتناوب النموذج بين التفكير (reasoning) والفعل (acting) عبر الأدوات (through tools)، ويقرأ *الملاحظة (observation)* التي ينتجها كل فعل. الدورة الواحدة (One lap) هي **التخطيط (plan)** — أي تقرير الإجراء التالي (decide the next action)، و**الفعل (act)** — يُصدر النموذج `tool_use` وتنفّذه شيفرتك، و**الملاحظة (observe)** — يعود `tool_result`، و**التكرار (repeat)**. وتُسمّى الدورة *خطوة (step)*، وتسلسل الخطوات *مسار التنفيذ (trajectory)*، والشيفرة المحيطة بالنموذج *إطار التشغيل (harness)*.
+**الحلقة (The loop).** تستدعي *حلقة الوكيل (agent loop)* النموذج مرة بعد مرة (calls a model again and again)، وفي كل مرة تُرفق نتائج الطلب الذي صدر في الاستدعاء السابق (the results of the last call's request)، إلى أن يتحقق شرط التوقف (a stop condition). وقد سمّى Yao وزملاؤه (Yao et al., 2022) هذا النمط *ReAct*: يتناوب النموذج بين التفكير والفعل عبر الأدوات (alternates between reasoning and acting through tools)، ويقرأ *الملاحظة (observation)* التي ينتجها كل فعل. الدورة الواحدة (One lap) هي **التخطيط (plan)** — أي تقرير الإجراء التالي (decide the next action)، و**الفعل (act)** — يُصدر النموذج `tool_use` وتنفّذه شيفرتك، و**الملاحظة (observe)** — يعود `tool_result`، و**التكرار (repeat)**. وتُسمّى الدورة *خطوة (step)*، وتسلسل الخطوات *مسار التنفيذ (trajectory)*، والشيفرة المحيطة بالنموذج *إطار التشغيل (harness)*.
 
 ```mermaid
 flowchart TD
@@ -46,7 +46,7 @@ flowchart TD
     R -->|"تجاوز حد الرموز أو رفض أو سبب مجهول"| H
 ```
 
-**تُنفَّذ الحواجز (Guards run) قبل كل استدعاء**، لأن الاستدعاء الخاطئ يكون ثمنه قد دُفع بالفعل (a wrong call is already paid for)، و**كل مسار عدا «تم» (Done) ينتهي عند تسليم إلى شخص (every path except "Done" ends at a hand-off)**.
+**تُنفَّذ الحواجز قبل كل استدعاء (Guards run before each call)**، لأن الاستدعاء الخاطئ يكون ثمنه قد دُفع بالفعل (a wrong call is already paid for)، و**كل مسار عدا «تم» ينتهي عند تسليم إلى شخص (every path except "Done" ends at a hand-off)**.
 
 **ست طرق للتوقف (Six ways to stop).** الحلقة التي لا تملك سوى الأولى فاتورة بلا سقف (A loop with only the first is a bill without a ceiling).
 
@@ -55,22 +55,22 @@ flowchart TD
 | **النجاح (Success)** | هل تحقق الهدف؟ ⁦(Is the goal met?)⁩ | `end_turn` **و** فحص في الشيفرة (a check in code): معرّفات التذاكر الواردة في الهدف تظهر في الإجابة (the ticket ids in the goal appear in the answer)؛ ويجتاز JSON التحقق (the JSON validates) |
 | **حدّ الخطوات (Step cap)** | كم استدعاءً للنموذج؟ ⁦(How many model calls?)⁩ | قاعدة عملية (A rule of thumb): من 1.5 إلى 2 ضعف عدد الخطوات عند المئين 95 (the 95th-percentile step count) في تشغيلات التقييم الناجحة (passing eval runs) |
 | **ميزانية الرموز (Token budget)** | كم يجوز أن ينفق التشغيل الواحد؟ ⁦(How much may one run spend?)⁩ | الحساب أدناه (The arithmetic below)؛ ويُفحص قبل كل استدعاء (checked before each call) |
-| **مهلة الساعة الفعلية (Wall-clock deadline)** | كم سينتظر الشخص؟ ⁦(How long will the person wait?)⁩ | وعد الواجهة (The interface's promise)، مضافًا إليه مهلة على كل استدعاء وكل أداة (a timeout on every call and tool) |
+| **أجل الساعة الفعلية (Wall-clock deadline)** | كم سينتظر الشخص؟ ⁦(How long will the person wait?)⁩ | وعد الواجهة (The interface's promise)، مضافًا إليه مهلة على كل استدعاء وكل أداة (a timeout on every call and tool) |
 | **كشف انعدام التقدم (No-progress detection)** | هل تتجه إلى مكان ما؟ ⁦(Is it going anywhere?)⁩ | الأداة نفسها بالمدخل نفسه مرتين (The same tool with the same input twice)؛ والخطأ نفسه مرتين (the same error twice) |
 | **التسليم (Hand-off)** | من يتسلّم الأمر؟ ⁦(Who takes over?)⁩ | طابور مسمّى (A named queue) وحزمة (a packet): الهدف وسبب التوقف وما جُرِّب (goal, why it stopped, what was tried) |
 
-الحدّ الذي لا يُطلَق أبدًا لم يُختبر (A limit that never fires is untested)؛ والذي يُطلَق في كثير من التشغيلات العادية حجمه خاطئ (one that fires on many normal runs is sized wrong).
+الحدّ الذي لا ينطلق أبدًا لم يُختبر (A limit that never fires is untested)؛ والذي ينطلق في كثير من التشغيلات العادية حجمه خاطئ (one that fires on many normal runs is sized wrong).
 
-**كل `stop_reason`.** يمكن أن ينتهي الدور (A turn) بخمس طرق (five ways):
+**كل `stop_reason`.** يمكن أن ينتهي الدور بخمس طرق (A turn can end in five ways):
 
 | `stop_reason` | ما تفعله الحلقة (The loop does) |
 |---|---|
-| `end_turn` | اقرأ كتلة النص (Read the text block) وشغّل الفحص (run the check). **النص الفارغ استسلام صامت: إخفاق (Empty text is a silent give-up: a failure).** |
+| `end_turn` | اقرأ كتلة النص وشغّل الفحص (Read the text block and run the check). **النص الفارغ استسلام صامت: إخفاق (Empty text is a silent give-up: a failure).** |
 | `tool_use` | نفّذ **كل** كتلة `tool_use` (Run every tool_use block)؛ وأجب في رسالة مستخدم **واحدة** (answer in one user message) |
-| `max_tokens` | الرد مقطوع (Cut off). **لا تنفّذ** آخر استدعاء أداة (Do not run the last tool call): فقد يكون مدخله نصف مكتوب (its input may be half-written). ارفع الحدّ أو سلّم إلى شخص (Raise the limit or hand off) |
-| `refusal` | رفض مصنِّف أمان أو النموذج نفسه الإجابة (A safety classifier or the model declined). لا تعد إرساله دون تغيير (Do not resend unchanged)؛ سجّل `stop_details` (`category` و`explanation`)؛ وقد يكون null (may be null)؛ ولا تنفّذ أي أداة (run no tools)؛ وسلّم إلى شخص (hand off) |
-| `pause_turn` | توقف دور أداة على الخادم مؤقتًا (A server-side tool turn paused)، كالبحث في الويب مثلًا (web search, say). أعد إرسال المحادثة (Send the conversation back) والدور الموقوف في آخرها (paused turn last)؛ ويُحتسب خطوة (it counts as a step) |
-| أي قيمة أخرى (anything else) | توقف وسلّم إلى شخص (Stop and hand off). ويسرد نوع الحزمة (The SDK's type) أيضًا `stop_sequence` — فقط إن ضبطتها (only if you set them) — و`model_context_window_exceeded` — السياق ممتلئ، فاضغطه أو سلّم (the context is full: compact or hand off) |
+| `max_tokens` | الرد مقطوع (Cut off). **لا تنفّذ** آخر استدعاء أداة: فقد يكون مدخله نصف مكتوب (Do not run the last tool call: its input may be half-written). ارفع الحدّ أو سلّم إلى شخص (Raise the limit or hand off) |
+| `refusal` | رفض مصنِّف أمان أو النموذج نفسه الإجابة (A safety classifier or the model declined). لا تعد إرساله دون تغيير (Do not resend unchanged)؛ سجّل `stop_details` (`category` و`explanation`)؛ وقد يكون null (may be null)؛ ولا تنفّذ أي أداة وسلّم إلى شخص (run no tools; hand off) |
+| `pause_turn` | توقف دور أداة على الخادم مؤقتًا (A server-side tool turn paused)، كالبحث في الويب مثلًا (web search, say). أعد إرسال المحادثة والدور الموقوف في آخرها (Send the conversation back, paused turn last)؛ ويُحتسب خطوة (it counts as a step) |
+| أي قيمة أخرى (anything else) | توقف وسلّم إلى شخص (Stop and hand off). ويسرد نوع حزمة التطوير (The SDK's type) أيضًا `stop_sequence` — فقط إن ضبطتَ تسلسلات توقف (only if you set them) — و`model_context_window_exceeded` — السياق ممتلئ، فاضغطه أو سلّم (the context is full: compact or hand off) |
 
 ### 🟡 التعمق أكثر (Going deeper)
 
@@ -83,75 +83,75 @@ flowchart TD
 | 20 | 174,500 | 1,200,500 |
 | 50 | 998,750 | 7,613,750 |
 
-تحقق من *N* = 10 و*r* = 600 (Check): 10 × 1,600 + 750 × 45 = 49,750. وبالأسعار الافتراضية للعبة في الدرس 1.1 (toy prices) — دولار واحد لكل مليون رمز إدخال و5 دولارات لكل مليون رمز إخراج؛ وليست سعر أي نموذج (not any model's price) — يساوي ذلك 0.057 دولار، مقابل 0.300 دولار مع النتائج الخام (raw results): أي 5.2 أضعاف لعشر الخطوات نفسها (for the same ten steps). ومضاعفة الخطوات من 10 إلى 20 (Doubling the steps) تضرب الإدخال في 3.5 (multiplies the input by 3.5)، وتكلّف الجولة ذات الخمسين خطوة (a 50-step run) 1.04 دولار مقابل 0.014 دولار للجولة العادية ذات الأربع خطوات (a normal 4-step one)، أي نحو 75 ضعفًا (about 75 times). وتلك كانت محادثة مها (Maha).
+تحقق من *N* = 10 و*r* = 600: 10 × 1,600 + 750 × 45 = 49,750. وبأسعار لعبة كما في الدرس 1.1 (lesson 1.1's toy prices) — دولار واحد لكل مليون رمز إدخال و5 دولارات لكل مليون رمز إخراج ($1 per million input tokens, $5 per million output)؛ وليست سعر أي نموذج (not any model's price) — يساوي ذلك 0.057 دولار، مقابل 0.300 دولار مع النتائج الخام (raw results): أي 5.2 أضعاف لعشر الخطوات نفسها. ومضاعفة الخطوات من 10 إلى 20 تضرب الإدخال في 3.5 (Doubling the steps from 10 to 20 multiplies the input by 3.5)، ويكلّف التشغيل ذو الخمسين خطوة (a 50-step run) 1.04 دولار مقابل 0.014 دولار للتشغيل العادي ذي الأربع خطوات (a normal 4-step one)، أي نحو 75 ضعفًا. وتلك كانت محادثة مها.
 
-**النتائج الكبيرة (Big results).** قلّص النتيجة *قبل* أن تدخل السجل (Shrink a result before it enters the history): اقتطعها وقل ذلك صراحة (truncate and say so) مثل `[cut: 4,812 characters in all]`، أو أعِد حقولًا لا سجلات كاملة (return fields, not records)، أو لخِّصها بنموذج رخيص (summarise with a cheap model) — وهو استدعاء مدفوع قد يُسقط التفصيل الأهم (a paid call that may drop the key detail) — أو أعِد معرّفًا للصفحة الثانية (return an id for page two). ثم اترك السجل بحاله (leave the history alone): ففي النماذج الحالية (on current models) قد يُبطل تعديل الأدوار السابقة كتل التفكير فيها (invalidate their thinking blocks) — خطأ 400 حيث يُفرض ذلك (a 400 where enforced) — ويُعيد بدء التخزين المؤقت للموجّه (restart the prompt cache)؛ ولمسح النتائج القديمة (to clear stale results) استخدم الإصدارات التجريبية على الخادم (the server-side betas): تحرير السياق (context editing) والضغط (compaction). ويخفّض التخزين المؤقت (Caching) — الدرس 14.2 — سعر البادئة المُعاد إرسالها (the price of the re-sent prefix) لا السياق ولا الخطوات.
+**النتائج الكبيرة (Big results).** قلّص النتيجة *قبل* أن تدخل السجل (Shrink a result before it enters the history): اقتطعها وقل ذلك صراحة (truncate and say so) مثل `[cut: 4,812 characters in all]`، أو أعِد حقولًا لا سجلات كاملة (return fields, not records)، أو لخِّصها بنموذج رخيص (summarise with a cheap model) — وهو استدعاء مدفوع قد يُسقط التفصيل الأهم (a paid call that may drop the key detail) — أو أعِد معرّفًا للصفحة الثانية (return an id for page two). ثم اترك السجل بحاله (leave the history alone): ففي النماذج الحالية قد يُبطل تعديل الأدوار السابقة كتل التفكير فيها (invalidate their thinking blocks) — خطأ 400 حيث يُفرض ذلك (a 400 where enforced) — ويُعيد بدء التخزين المؤقت للموجّه (restart the prompt cache)؛ ولمسح النتائج القديمة (to clear stale results) استخدم الإصدارات التجريبية على الخادم (the server-side betas): تحرير السياق (context editing) والضغط (compaction). ويخفّض التخزين المؤقت (Caching) — الدرس 14.2 — سعر البادئة المُعاد إرسالها (the price of the re-sent prefix) لا السياق ولا الخطوات.
 
-**التأمل الذاتي والتصحيح الذاتي (Reflection and self-correction)** ثلاثة أمور مختلفة. (1) *تصحيح استدعاء أداة (Correcting a tool call)* انطلاقًا من `is_error`: رخيص، لذا ينبغي أن تقول الأخطاء ما هو الصالح (errors should say what is valid) — الدرس 3.1. (2) *فحص الإجابة بشيء خارج النموذج (Checking the answer against something outside the model)*: مخطط (a schema) أو بحث عن استشهاد (a citation lookup) أو اختبار (a test). (3) *أن تطلب من النموذج أن يفكر مرة أخرى دون أي جديد (Asking the model to think again with nothing new).* وقد استكشفت Self-Refine (Madaan et al., 2023) وReflexion (Shinn et al., 2023) النقد ثم المراجعة (critique-and-revise)؛ أما التصحيح الذاتي للاستدلال دون عون خارجي (unaided self-correction of reasoning) فلم يُجدِ بصورة موثوقة في دراسة لاحقة (Huang et al., 2023). **لا يستحق التأمل الذاتي كلفته إلا حين يأتي بمعلومة جديدة (Reflection is worth its cost only when it brings new information).** ضع له سقف جولة واحدة (Cap it at one round) وقِسه (measure it) — الدرس 12.1.
+**التأمل الذاتي والتصحيح الذاتي (Reflection and self-correction)** ثلاثة أمور مختلفة. (1) *تصحيح استدعاء أداة (Correcting a tool call)* انطلاقًا من `is_error`: رخيص، لذا ينبغي أن تقول الأخطاء ما هو الصالح (errors should say what is valid) — الدرس 3.1. (2) *فحص الإجابة بشيء خارج النموذج (Checking the answer against something outside the model)*: مخطط (a schema) أو بحث عن استشهاد (a citation lookup) أو اختبار (a test). (3) *أن تطلب من النموذج أن يفكر مرة أخرى دون أي جديد (Asking the model to think again with nothing new).* وقد استكشفت Self-Refine (Madaan et al., 2023) وReflexion (Shinn et al., 2023) النقد ثم المراجعة (critique-and-revise)؛ أما التصحيح الذاتي للاستدلال دون عون خارجي (unaided self-correction of reasoning) فلم يُجدِ بصورة موثوقة في دراسة لاحقة (Huang et al., 2023). **لا يستحق التأمل الذاتي كلفته إلا حين يأتي بمعلومة جديدة (Reflection is worth its cost only when it brings new information).** ضع له سقف جولة واحدة وقِسه (Cap it at one round and measure it) — الدرس 12.1.
 
-**التخطيط (Planning).** *التخطيط المتداخل (Interleaved)* — أي ReAct — يقرر كل خطوة بعد آخر ملاحظة (decides each step after the last observation): يتكيّف، لكن المسار والكلفة يتفاوتان (path and cost vary). أما *التخطيط ثم التنفيذ (Plan-then-execute)* فيكتب الخطوات أولًا (writes the steps first) وينفّذها بالترتيب (runs them in order) ولا يعيد التخطيط إلا عند الإخفاق (re-plans only on failure)، مع سقف لإعادات التخطيط (a cap on re-plans): فالكلفة متوقعة (cost is predictable) ويستطيع شخص اعتماد الخطة أولًا (a person can approve the plan first)، لكنه هشّ حين يختلف الواقع عن الخطة (brittle when the world differs from the plan). «أعد ضبط وصولي إلى VPN» (Reset my VPN access) له شكل ثابت: سير عمل (a workflow) — الدرس 5.1. و«لماذا ينقطع VPN عندي باستمرار؟» ⁦(Why does my VPN keep dropping?)⁩ يتوقف على ما تعيده الأدوات: حلقة متداخلة بسقف (an interleaved loop with a cap). و«جهّز تسليم الأحد» (Prepare the Sunday handover) يناسبه التخطيط ثم التنفيذ، فتقرأ يارا (Yara) الخطة أولًا. ويخطط التفكير التكيفي (Adaptive thinking) داخل الاستدعاء أصلًا؛ فأضف استدعاء تخطيط (a planning call) فقط ليقرأه شخص (for a person to read).
+**التخطيط (Planning).** *التخطيط المتداخل (Interleaved)* — أي ReAct — يقرر كل خطوة بعد آخر ملاحظة (decides each step after the last observation): يتكيّف، لكن المسار والكلفة يتفاوتان (path and cost vary). أما *التخطيط ثم التنفيذ (Plan-then-execute)* فيكتب الخطوات أولًا وينفّذها بالترتيب ولا يعيد التخطيط إلا عند الإخفاق (writes the steps first, runs them in order and re-plans only on failure)، مع سقف لإعادات التخطيط (with a cap on re-plans): فالكلفة متوقعة ويستطيع شخص اعتماد الخطة أولًا (cost is predictable and a person can approve the plan first)، لكنه هشّ حين يختلف الواقع عن الخطة (brittle when the world differs from the plan). «أعد ضبط وصولي إلى VPN» (Reset my VPN access) له شكل ثابت: سير عمل (a workflow) — الدرس 5.1. و«لماذا ينقطع VPN عندي باستمرار؟» ⁦(Why does my VPN keep dropping?)⁩ يتوقف على ما تعيده الأدوات (depends on what tools return): حلقة متداخلة بسقف (an interleaved loop with a cap). و«جهّز تسليم الأحد» (Prepare the Sunday handover) يناسبه التخطيط ثم التنفيذ، فتقرأ يارا الخطة أولًا. ويخطط التفكير التكيفي (Adaptive thinking) داخل الاستدعاء أصلًا؛ فأضف استدعاء تخطيط (a planning call) فقط ليقرأه شخص (for a person to read).
 
 **أخطاء الأدوات والتعافي منها (Tool errors and recovery).**
 
 | الخطأ (Error) | من يتعافى (Who recovers) | كيف (How) |
 |---|---|---|
-| مدخل غير صالح من النموذج (Invalid input from the model) | النموذج (The model) | `is_error` يسمّي الصالح (naming what is valid) — ضعيف (weak): `Error`؛ وقوي (strong): `ticket_id must be four digits, like "4471"; you sent "ticket 4471"`؛ وحاجز انعدام التقدم (the no-progress guard) يوقف التكرار (stops a repeat) |
+| مدخل غير صالح من النموذج (Invalid input from the model) | النموذج (The model) | `is_error` يسمّي الصالح (naming what is valid) — ضعيف (weak): `Error`؛ وقوي (strong): `ticket_id must be four digits, like "4471"; you sent "ticket 4471"`؛ وحاجز انعدام التقدم يوقف التكرار (the no-progress guard stops a repeat) |
 | لا شيء موجود (Nothing found) | لا أحد: إنها بيانات (Nobody: it is data) | `No ticket 9999 found` نتيجة عادية (is a normal result) |
-| عابر (Transient): انتهاء مهلة أو 503 (timeout, 503) | **شيفرتك (Your code)** | أعِد المحاولة (Retry) بتراجع أسي (backoff) — أي انتظار متزايد (growing waits) — وبعشوائية (jitter) — أي إزاحة عشوائية (a random offset) — ضمن المهلة (inside the deadline)؛ ثم قل «غير متاح، لا تعد المحاولة» (unavailable, do not retry) |
-| رفض الصلاحية (Permission denied) | شخص (A person) | دون إعادة محاولة (No retry)؛ وسلّم إلى شخص (hand off) |
+| عابر: انتهاء مهلة أو 503 (Transient: timeout, 503) | **شيفرتك (Your code)** | أعِد المحاولة بتراجع أسي (backoff) — أي انتظار متزايد (growing waits) — وبعشوائية (jitter) — أي إزاحة عشوائية (a random offset) — ضمن الأجل (inside the deadline)؛ ثم قل «غير متاح، لا تعد المحاولة» (unavailable, do not retry) |
+| رفض الصلاحية (Permission denied) | شخص (A person) | دون إعادة محاولة؛ وسلّم إلى شخص (No retry; hand off) |
 | فشل كتابة (A write fails) | شيفرتك (Your code) | لا تكرار بلا مفتاح عدم التأثر بالتكرار (No repeat without an idempotency key) |
 
-لا ينبغي أن يكون النموذج آلية إعادة المحاولة عندك (The model should not be your retry mechanism): فكل إعادة محاولة استدعاء كامل (each retry is a full call). وبعد *k* إخفاقات متتالية (k failures in a row) يوقف **قاطع الدائرة (circuit breaker)** استدعاء تلك الأداة، ويتدهور التشغيل بسلاسة أو يسلّم إلى شخص (the run degrades or hands off) — الدرس 7.1.
+لا ينبغي أن يكون النموذج آلية إعادة المحاولة عندك (The model should not be your retry mechanism): فكل إعادة محاولة استدعاء كامل (each retry is a full call). وبعد *k* إخفاقات متتالية (k failures in a row) يوقف **قاطع الدائرة (circuit breaker)** استدعاء تلك الأداة (stops calling that tool)، ويتدهور التشغيل أو يسلّم إلى شخص (the run degrades or hands off) — الدرس 7.1.
 
 ### 🔴 نظرة الخبير (Expert view)
 
-**أولى أنماط الإخفاق (The first failure modes).** يظهر كل منها في سجل التتبّع (visible in a trace) ويوقفه حاجز (stopped by a guard).
+**أولى أنماط الإخفاق (The first failure modes).** يظهر كل منها في سجل التتبّع ويوقفه حاجز (Each is visible in a trace and stopped by a guard).
 
 | الإخفاق (Failure) | ما يظهره التتبّع (What the trace shows) | الحاجز أو الإصلاح (Guard or fix) |
 |---|---|---|
-| **حلقة لا نهائية (Infinite loop)** | الخطوات تتصاعد حتى السقف (Steps climb to the cap)؛ والمدخلات تكبر (inputs grow) | حدّ الخطوات (Step cap) وميزانية الرموز (token budget) والمهلة (deadline) |
-| **إغراق الأدوات بالاستدعاءات (Tool spam)** | أداة واحدة تُستدعى عشرين مرة (One tool called twenty times) | سقف لاستدعاءات الأدوات (A cap on tool calls)؛ وأداة قائمة (a list tool) |
-| **استسلام صامت (Silent give-up)** | `end_turn` ونص فارغ (empty text)؛ والواجهة تقول «تم» (Done) | النص الفارغ يفشل (Empty text fails)؛ وسلّم إلى شخص (hand off) |
-| **وسائط أدوات مُهلوَسة (Hallucinated tool arguments)** | `is_error` ومعرّفات أو أسماء أدوات مخترعة (invented ids or tool names) | تحقق في الشيفرة (Validate in code) — `strict: true` يضبط الشكل لا المعرّف (fixes the shape, not the id) |
+| **حلقة لا نهائية (Infinite loop)** | الخطوات تتصاعد حتى السقف؛ والمدخلات تكبر (Steps climb to the cap; inputs grow) | حدّ الخطوات (Step cap) وميزانية الرموز (token budget) والأجل (deadline) |
+| **إغراق الأدوات بالاستدعاءات (Tool spam)** | أداة واحدة تُستدعى عشرين مرة (One tool called twenty times) | سقف لاستدعاءات الأدوات؛ وأداة قائمة (A cap on tool calls; a list tool) |
+| **استسلام صامت (Silent give-up)** | `end_turn` ونص فارغ؛ والواجهة تقول «تم» (end_turn, empty text; the interface says "Done") | النص الفارغ يفشل؛ وسلّم إلى شخص (Empty text fails; hand off) |
+| **وسائط أدوات مختلَقة (Hallucinated tool arguments)** | `is_error` ومعرّفات أو أسماء أدوات مخترعة (invented ids or tool names) | تحقق في الشيفرة (Validate in code) — `strict: true` يضبط الشكل لا المعرّف (fixes the shape, not the id) |
 | **إنهاء مبكر (Premature finish)** | `end_turn` بعد استعلام واحد من ثلاثة (after one of three lookups) | فحص في الشيفرة يتأكد من تغطية كل جزء (A code check that every part is covered) |
-| **الإفراط في الفعل (Over-action)** | كتابة لم يطلبها أحد (A write nobody asked for) | لا أداة لها (No tool for it)؛ وموافقة على الكتابات (approval for writes) — الوحدة 13. وكما أُفيد في يوليو 2025، حذف وكيل برمجة (a coding agent) قاعدة بيانات إنتاج (a production database) |
+| **الإفراط في الفعل (Over-action)** | كتابة لم يطلبها أحد (A write nobody asked for) | لا أداة لها؛ وموافقة على الكتابات (No tool for it; approval for writes) — الوحدة 13. وكما أُفيد في يوليو 2025، حذف وكيل برمجة (a coding agent) قاعدة بيانات إنتاج (a production database) |
 | **تجاهل `is_error` (Ignoring is_error)** | الاستدعاء الفاشل نفسه مرة أخرى (The same failing call again) | حاجز انعدام التقدم (The no-progress guard) |
 
-**قابلية المراقبة التي تحتاجها الحلقة (Observability the loop needs).** لكل خطوة (Per step): رقم الخطوة (step)، و`stop_reason`، ورموز الإدخال والإخراج والمخزَّنة مؤقتًا (input, output and cached tokens)، وزمن الاستجابة (latency)، ومعرّف الطلب (request id) وهو `resp._request_id`، واسم الأداة ومدخلها (tool name and input)، وحجم النتيجة (result size)، و`is_error`، والحاجز الذي أُطلق (the guard that fired). سجّل استدعاء الأداة *قبل* تنفيذه (Log the tool call before running it) كي يترك التعليق أثرًا (so a hang leaves a record). ولكل تشغيل (Per run): معرّف التشغيل (run id)، والهدف بعد إخفاء البيانات (masked goal)، والخطوات (steps)، والرموز (tokens)، والزمن الفعلي (wall time)، والسبب النهائي (final reason). راقب **الذيل (the tail)** — الخطوات عند المئين 95 (95th-percentile steps) وخليط أسباب التوقف (stop-reason mix) ومعدل إطلاق الحواجز (guard-fire rate) والرموز لكل محادثة محلولة (tokens per resolved conversation) — ونبّه على المعدلات لا على تشغيل منفرد (alert on rates, not single runs). قد تحمل النتائج بيانات شخصية (personal data): سجّل الأحجام (log sizes)، أو أخفِ البيانات قبل الاقتطاع (mask before clipping) — الوحدة 13؛ وتحدد سارة (Sara) مدة الاحتفاظ (retention). ويمكن أن تُصدر الحزمة (The SDK) امتدادات OpenTelemetry (spans) — إصدار تجريبي (beta)، وما تزال اصطلاحات GenAI تتطور (the GenAI conventions are still evolving). وكل تشغيل فاشل حالة تقييم مستقبلية (Every failed run is a future eval case) — الوحدة 12.
+**قابلية المراقبة التي تحتاجها الحلقة (Observability the loop needs).** لكل خطوة (Per step): رقم الخطوة، و`stop_reason`، ورموز الإدخال والإخراج والمخزَّنة مؤقتًا (input, output and cached tokens)، وزمن الاستجابة (latency)، ومعرّف الطلب (request id) وهو `resp._request_id`، واسم الأداة ومدخلها (tool name and input)، وحجم النتيجة (result size)، و`is_error`، والحاجز الذي انطلق (the guard that fired). سجّل استدعاء الأداة *قبل* تنفيذه (Log the tool call before running it) كي يترك أي تجمّد أثرًا (so a hang leaves a record). ولكل تشغيل (Per run): معرّف التشغيل (run id)، والهدف بعد إخفاء البيانات (masked goal)، والخطوات والرموز والزمن الفعلي (steps, tokens, wall time)، والسبب النهائي (final reason). راقب **الذيل (the tail)** — الخطوات عند المئين 95 (95th-percentile steps) وخليط أسباب التوقف (stop-reason mix) ومعدل انطلاق الحواجز (guard-fire rate) والرموز لكل محادثة محلولة (tokens per resolved conversation) — ونبّه على المعدلات لا على تشغيل منفرد (alert on rates, not single runs). قد تحمل النتائج بيانات شخصية (personal data): سجّل الأحجام (log sizes)، أو أخفِ البيانات قبل الاقتطاع (mask before clipping) — الوحدة 13؛ وتحدد سارة مدة الاحتفاظ (retention). ويمكن أن تُصدر حزمة التطوير (The SDK) امتدادات OpenTelemetry (spans) — إصدار تجريبي (beta)، وما تزال اصطلاحات GenAI تتطور (the GenAI conventions are still evolving). وكل تشغيل فاشل حالة تقييم مستقبلية (Every failed run is a future eval case) — الوحدة 12.
 
 **حلقتك الخاصة أم مشغّل الأدوات أم حزمة تطوير؟ ⁦(Your own loop, the tool runner, or an SDK?)⁩**
 - **حلقتك الخاصة (Your own loop)** (الدرس 8.2): كل حاجز في شيفرة بسيطة تستطيع اختبارها سطرًا سطرًا (every guard in plain code you can test line by line)، دون اعتماد على إصدار تجريبي (no beta dependency)؛ وهي نحو مئة سطر تتولى صيانتها (about a hundred lines to maintain).
-- **مشغّل الأدوات التجريبي (The beta tool runner)** (`client.beta.messages.tool_runner` و`@beta_tool`): المسار الذي توصي به الحزمة (the SDK's recommended route) لوكلاء الأدوات المخصصة (custom-tool agents). يُنتج كل رسالة (yields each message) قبل تنفيذ أدواتها، فتستطيع أن تسجّل (log) وأن تقيّد الآثار الجانبية (gate side effects) داخل دالة الأداة وأن تحدّ الحلقة بـ `max_iterations` (تحقق من الحزمة الحالية) (check the current SDK). ويستأنف مشغّل Python في الإصدار 1.15 الدور `pause_turn` بنفسه (resumes pause_turn itself)؛ أما إصدارات 0.x فكانت تنهي التشغيل بصمت (ended the run silently). وتبقى الميزانية والمهلة وانعدام التقدم والتسليم على عاتقك (Budget, deadline, no-progress and hand-off remain yours).
+- **مشغّل الأدوات التجريبي (The beta tool runner)** (`client.beta.messages.tool_runner` و`@beta_tool`): المسار الذي توصي به حزمة التطوير (the SDK's recommended route) لوكلاء الأدوات المخصصة (custom-tool agents). يُنتج كل رسالة (yields each message) قبل تنفيذ أدواتها، فتستطيع أن تسجّل وأن تقيّد الآثار الجانبية داخل دالة الأداة وأن تحدّ الحلقة بـ `max_iterations` (so you can log, gate side effects inside the tool function and bound the loop with max_iterations) — تحقق من حزمة التطوير الحالية (check the current SDK). ويستأنف مشغّل Python في الإصدار 1.15 الدور `pause_turn` بنفسه (resumes pause_turn itself)؛ أما إصدارات 0.x فكانت تنهي التشغيل بصمت (ended the run silently). وتبقى الميزانية والمهلة وانعدام التقدم والتسليم على عاتقك (Budget, deadline, no-progress and hand-off remain yours).
 - **Claude Agent SDK:** إطار تشغيل Claude Code (Claude Code's harness) على هيئة مكتبة (as a library)، وهي حزمة منفصلة عن `anthropic` (a separate package)، فيها أدوات ملفات وصدفة (file and shell tools) وصلاحيات (permissions) وخطافات (hooks) ووكلاء فرعيون (subagents)؛ وتناسب الوكلاء الذين يعدّلون الملفات وينفّذون الشيفرة في صندوق رملي (agents that edit files and run code in a sandbox).
 - **Managed Agents** (تجريبي) (beta): تستضيف Anthropic الحلقة والصندوق الرملي (hosts the loop and sandbox). تحقق من التوفر وإقامة البيانات (Check availability and data residency). وأيًّا اخترت، تعلّم الحلقة اليدوية أولًا (learn the manual loop first).
 
 **قائمة فحص الحلقة الآمنة (The safe-loop checklist).**
-1. حدّ للخطوات (A step cap) وميزانية رموز (a token budget) تُفحص قبل كل استدعاء (checked before each call) ومهلة للتشغيل (a run deadline)، بأحجام مستمدة من تشغيلات مقيسة (sized from measured runs)؛ ومهلة على كل استدعاء وأداة (a timeout on every call and tool).
+1. حدّ للخطوات (A step cap) وميزانية رموز (a token budget) تُفحص قبل كل استدعاء (checked before each call) وأجل للتشغيل (a run deadline)، بأحجام مستمدة من تشغيلات مقيسة (sized from measured runs)؛ ومهلة على كل استدعاء وأداة (a timeout on every call and tool).
 2. كشف انعدام التقدم (No-progress detection): الاستدعاء نفسه والخطأ نفسه (the same call, the same error).
 3. معالجة كل `stop_reason` (Every stop_reason handled)؛ ولا أدوات من دور مقطوع أو مرفوض (no tools from a cut-off or refused turn).
 4. التحقق من النجاح في الشيفرة (Success verified in code)؛ والإجابة الفارغة تفشل (an empty answer fails).
 5. قصّ النتائج قبل دخولها سجلًّا يقبل الإلحاق فقط (Results trimmed before they enter an append-only history)؛ والأدوات لا ترفع استثناءات أبدًا (tools never raise)؛ وإعادات المحاولة العابرة في الشيفرة (transient retries in code)؛ والكتابات مقيَّدة ببوابة (writes gated)، ولا أداة لما يجب ألا يحدث أبدًا (no tool for what must never happen).
 6. سطر تتبّع لكل خطوة (A trace line per step)، وسطر توقف لكل تشغيل (a stop line per run)، والبيانات الشخصية مخفاة أو محذوفة (personal data masked or left out).
-7. كل حاجز ينتهي بتسليم إلى شخص (Every guard ends in a hand-off)، واختبار يجعل كلًّا منها يُطلَق (a test makes each fire).
+7. كل حاجز ينتهي بتسليم إلى شخص (Every guard ends in a hand-off)، واختبار يجعل كلًّا منها ينطلق (a test makes each fire).
 
 ## 🧰 الأدوات (The toolkit)
 | الأداة أو الممارسة أو النمط (Tool, practice or pattern) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
 |---|---|---|
-| **Step cap** — حدّ الخطوات | حدّ صارم للتكرارات (A hard limit on iterations)؛ ويقيّد أيضًا إعادات المحاولة (it also bounds retries) | كل حلقة (Every loop) |
-| **Token budget** — ميزانية الرموز | سقف رموز لكل تشغيل (A per-run token ceiling) يُفحص قبل كل استدعاء (checked before each call) | كل حلقة (Every loop) |
-| **Wall-clock deadline** — مهلة الساعة الفعلية | حدّ زمني للتشغيل (A time limit for the run) مع مهلة لكل استدعاء وأداة (plus a timeout per call and tool) | أي شيء ينتظره شخص (Anything a person waits for) |
+| **Step cap** — حدّ الخطوات | حدّ صارم للتكرارات؛ ويقيّد أيضًا إعادات المحاولة (A hard limit on iterations; it also bounds retries) | كل حلقة (Every loop) |
+| **Token budget** — ميزانية الرموز | سقف رموز لكل تشغيل يُفحص قبل كل استدعاء (A per-run token ceiling, checked before each call) | كل حلقة (Every loop) |
+| **Wall-clock deadline** — أجل الساعة الفعلية | حدّ زمني للتشغيل مع مهلة لكل استدعاء وأداة (A time limit for the run, plus a timeout per call and tool) | أي شيء ينتظره شخص (Anything a person waits for) |
 | **No-progress detector** — كاشف انعدام التقدم | يتوقف حين يعود الاستدعاء نفسه أو الخطأ نفسه (Stops when the same call or error comes back) | كل حلقة فيها أدوات قراءة (Every loop with read tools) |
 | **Human hand-off** — التسليم إلى إنسان | حزمة (A packet): الهدف والسبب وما جُرِّب (goal, reason, what was tried) إلى طابور مسمّى (to a named queue) | كل حاجز (Every guard) |
 | **Loop card** — بطاقة الحلقة | صفحة واحدة لكل حلقة (One page per loop): الحدود وجدول التوقف والطابور والاختبارات (limits, stop table, queue, tests) | قبل إطلاق الحلقة (Before the loop ships) |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-المُخرَج (The artefact) هو **بطاقة الحلقة (Loop card)** لمسار التذاكر والزملاء في نجم ديسك (the Najm Desk ticket-and-colleague route)، تملكها لجين (Lujain) ويراجعها فهد (Fahad). ولا تُطلَق حلقة دونها (No loop ships without one). وهي تحلّ محل حلقة لجين ذات حدّ الخمسين (cap-of-50 loop). ومتطلب هند (Hind): أن تجيب خلال 30 ثانية أو تسلّم إلى شخص (answer within 30 seconds or hand off). وكل القيم أدناه خيالية (All values below are fictional).
+المُخرَج (The artefact) هو **بطاقة الحلقة (Loop card)** لمسار التذاكر والزملاء في نجم ديسك (the Najm Desk ticket-and-colleague route)، تملكها لجين ويراجعها فهد. ولا تُطلَق حلقة دونها (No loop ships without one). وهي تحلّ محل حلقة لجين ذات حدّ الخمسين (cap-of-50 loop). ومتطلب هند: أن تجيب خلال 30 ثانية أو تسلّم إلى شخص (answer within 30 seconds or hand off). وكل القيم أدناه خيالية (All values below are fictional).
 
 | الحدّ (Limit) | القيمة (Value) | السبب (Why) |
 |---|---|---|
 | حدّ الخطوات (Step cap) | 6 | التشغيلات العادية تأخذ خطوتين أو ثلاثًا (Normal runs take 2 or 3 steps)؛ وأبطأ تشغيل تقييم ناجح أخذ 4 (the slowest passing eval run took 4)؛ 1.5 × 4 = 6 |
-| ميزانية الرموز (Token budget) | 25,000 | ست خطوات بنتائج من 600 رمز تقرأ 20,850 رمز إدخال (Six steps with 600-token results read 20,850 input tokens)، مع نحو 900 رمز إخراج (plus about 900 output) |
-| المهلة (Deadline) | 30 ثانية | وعد نافذة المحادثة (The chat window's promise)؛ ولكل استدعاء مهلته أيضًا (each call also has a timeout) |
+| ميزانية الرموز (Token budget) | 25,000 | ست خطوات بنتائج من 600 رمز تقرأ 20,850 رمز إدخال، مع نحو 900 رمز إخراج (Six steps with 600-token results read 20,850 input tokens, plus about 900 output) |
+| الأجل (Deadline) | 30 ثانية | وعد نافذة المحادثة (The chat window's promise)؛ ولكل استدعاء مهلته أيضًا (each call also has a timeout) |
 | التكرارات (Repeats) | 2 | يُرفض استدعاء القراءة المطابق الثاني (The second identical read call is refused): فهو لا يضيف شيئًا (it adds nothing) |
 | حجم النتيجة (Result size) | 2,000 حرف | سجل التذكرة نحو 120 (A ticket record is about 120) |
 
@@ -159,10 +159,10 @@ flowchart TD
 |---|---|---|
 | `done` | الإجابة (The answer) | لا أحد (Nobody) |
 | `iteration_cap` و`token_budget` و`timeout` و`no_progress` و`failed_check` و`empty_answer` | «لم أستطع إنهاء هذا. مررته إلى مكتب الخدمة (Service Desk) مع كل ما جرّبته: المرجع 3f2a9c01» (I could not finish this. I passed it to the Service Desk with everything I tried: ref 3f2a9c01) | طابور مكتب الخدمة (Service Desk queue) |
-| `refusal` و`max_tokens` و`unknown_stop` | الرسالة نفسها (The same message) | طابور مكتب الخدمة (Service Desk queue)؛ ويراجعه فريق نورة (Noura) أسبوعيًا (reviews weekly) |
+| `refusal` و`max_tokens` و`unknown_stop` | الرسالة نفسها (The same message) | طابور مكتب الخدمة (Service Desk queue)؛ ويراجعه فريق نورة أسبوعيًا (Noura's team reviews weekly) |
 | `model_error` | رسالة الوضع المتدهور (The degraded-mode message) في الدرس 7.1 | طابور مكتب الخدمة (Service Desk queue) |
 
-**منصتك (Your platform).** قبل أن تُطلَق حلقة على منصتك الخاصة (Before a loop ships on your own platform)، املأ ما يلي (fill in):
+**منصتك (Your platform).** قبل أن تُطلَق حلقة على منصتك الخاصة (Before a loop ships on your own platform)، املأ ما يلي:
 
 | السؤال (Question) | إجابتك (Your answer) |
 |---|---|
@@ -171,9 +171,9 @@ flowchart TD
 | أي مفتاح إيقاف طارئ يوقف كل الحلقات دون نشر؟ ⁦(Which kill switch stops every loop without a deploy?)⁩ | |
 
 ## 🛠️ التمارين (Exercises)
-- 🟢 **دقّق حلقة (Audit a loop).** دون اتصال (Offline). اقرأ `labs/m01/agent.py`. لكل شرط من شروط التوقف الستة (the six stopping conditions) اكتب موجود أو مفقود (present or missing) مع رقم السطر (with the line)؛ ولكل `stop_reason` اكتب ما يفعله (what it does). *يكتمل عندما (Done when):* يسرد جدول الأمرين معًا، وتسمّي جملة واحدة الحاجز المفقود الذي كان سيكلّف مها (Maha) أكثر من غيره (the missing guard that would have cost Maha most).
-- 🟡 **حدّد حجم الحدود (Size the limits).** دون اتصال (Offline). بالصيغة (With the formula) احسب رموز الإدخال (input tokens) لـ 3 و6 و12 خطوة مع نتائج من 300 رمز و3,000 رمز. اختر حدًّا للخطوات وميزانية (Choose a cap and budget)؛ واكتب جدول التوقف (write the stop table). *يكتمل عندما (Done when):* ستة أرقام (six numbers)، وحدّان مع أسبابهما (two limits with reasons)، وجدول توقف يعيد فيه سبب واحد المحاولة بدل التسليم (a stop table where one reason retries instead of handing off).
-- 🔴 **قِس ولا تخمّن (Measure, do not guess).** *يحتاج إلى واجهة البرمجة الحقيقية (Needs the real API)* وسقف الإنفاق (the spending cap) من الدرس 0.2. شغّل `labs/m03/tools_agent.py` على اثني عشر هدفًا (twelve goals) — أربعة تحتاج أداة واحدة وأربعة أداتين وأربعة لا تحتاج شيئًا (four needing one tool, four two, four none) — بالنموذجين `claude-sonnet-5-5` و`claude-haiku-5-5` مع ضبط `TRACE_FILE`. *يكتمل عندما (Done when):* يحتوي `NOTES.md`، لكل نموذج، على الوسيط والحد الأقصى للخطوات (median and maximum steps) — اثنا عشر تشغيلًا قليلة جدًا لحساب مئين (twelve runs are too few for a percentile) — والرموز مقابل الصيغة (tokens against the formula)، وحدّ مقترح للخطوات (a proposed cap)، والتاريخ ومعرّفات النماذج (the date and the model ids).
+- 🟢 **دقّق حلقة (Audit a loop).** دون اتصال (Offline). اقرأ `labs/m01/agent.py`. لكل شرط من شروط التوقف الستة (the six stopping conditions) اكتب موجود أو مفقود مع رقم السطر (write present or missing, with the line)؛ ولكل `stop_reason` اكتب ما يفعله (what it does). *يكتمل عندما (Done when):* يسرد جدول الأمرين معًا، وتسمّي جملة واحدة الحاجز المفقود الذي كان سيكلّف مها أكثر من غيره (the missing guard that would have cost Maha most).
+- 🟡 **حدّد حجم الحدود (Size the limits).** دون اتصال (Offline). بالصيغة (With the formula) احسب رموز الإدخال (input tokens) لـ 3 و6 و12 خطوة مع نتائج من 300 رمز و3,000 رمز. اختر حدًّا للخطوات وميزانية؛ واكتب جدول التوقف (Choose a cap and budget; write the stop table). *يكتمل عندما (Done when):* ستة أرقام (six numbers)، وحدّان مع أسبابهما (two limits with reasons)، وجدول توقف يعيد فيه سبب واحد المحاولة بدل التسليم (a stop table where one reason retries instead of handing off).
+- 🔴 **قِس ولا تخمّن (Measure, do not guess).** *يحتاج إلى واجهة البرمجة الحقيقية (Needs the real API)* وسقف الإنفاق (the spending cap) من الدرس 0.2. شغّل `labs/m03/tools_agent.py` على اثني عشر هدفًا (twelve goals) — أربعة تحتاج أداة واحدة وأربعة أداتين وأربعة لا تحتاج شيئًا (four needing one tool, four two, four none) — بالنموذجين `claude-sonnet-5-5` و`claude-haiku-5-5` مع ضبط `TRACE_FILE`. *يكتمل عندما (Done when):* يحتوي `NOTES.md`، لكل نموذج، على الوسيط والحد الأقصى للخطوات (median and maximum steps) — اثنا عشر تشغيلًا قليلة جدًا لحساب مئين (twelve runs are too few for a percentile) — والرموز مقابل الصيغة، وحدّ مقترح للخطوات، والتاريخ ومعرّفات النماذج (tokens against the formula, a proposed cap, the date and the model ids).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
 - **حدّ الخمسين «للاحتياط» (A cap of 50 "to be safe").** خمسون خطوة تكلّف نحو 75 تشغيلًا عاديًا (Fifty steps cost about 75 normal runs). حدّد حجم الحدّ من الخطوات المقيسة (Size the cap from measured steps).
@@ -182,23 +182,23 @@ flowchart TD
 - **تسجيل الإجابة النهائية وحدها (Logging only the final answer).** تتبّع كل خطوة (Trace every step).
 
 ## 🧾 الخلاصة (Recap)
-- خطِّط ونفِّذ ولاحِظ وكرِّر (Plan, act, observe, repeat): النموذج يقترح، وشيفرتك تقرر متى تتوقف (your code decides when to stop)، عبر ستة مخارج (six exits) تنتهي كلها بتسليم إلى شخص (hand-off).
+- خطِّط ونفِّذ ولاحِظ وكرِّر (Plan, act, observe, repeat): النموذج يقترح، وشيفرتك تقرر متى تتوقف، عبر ستة مخارج تنتهي كلها بتسليم إلى شخص (the model proposes, your code decides when to stop, through six exits that all end in a hand-off).
 - عالِج كل `stop_reason` (Handle every stop_reason)؛ ولا تنفّذ أداة من دور مقطوع أو مرفوض (run no tools from a cut-off or refused turn).
-- ينمو الإدخال مع مربّع عدد الخطوات (Input grows with the square of the steps)؛ فقلّص نتائج الأدوات (trim tool results).
-- يحتاج التأمل الذاتي (Reflection) إلى معلومة جديدة (new information)؛ وتزيل الحزمة (an SDK) شيفرة لا مسؤولية (removes code, not responsibility).
+- ينمو الإدخال مع مربّع عدد الخطوات؛ فقلّص نتائج الأدوات (Input grows with the square of the steps; trim tool results).
+- يحتاج التأمل الذاتي (Reflection) إلى معلومة جديدة (new information)؛ وتزيل حزمة التطوير شيفرة لا مسؤولية (an SDK removes code, not responsibility).
 
 ## ✍️ اختبر نفسك (Check yourself)
 
-**1. يُظهر تتبّع مها (Maha) أن `get_ticket_status` استُدعيت سبع مرات متتالية بالمدخل نفسه (seven times in a row with the same input). حدّ الخطوات 50 (Cap 50 steps) وميزانية الرموز 200,000 (budget 200,000 tokens). أي حاجز يوقفها أبكر وأرخص؟ ⁦(Which guard stops it earliest and cheapest?)⁩**
+**1. يُظهر تتبّع مها أن `get_ticket_status` استُدعيت سبع مرات متتالية بالمدخل نفسه (seven times in a row with the same input). حدّ الخطوات 50 وميزانية الرموز 200,000 (Cap 50 steps, budget 200,000 tokens). أي حاجز يوقفها أبكر وأرخص؟ ⁦(Which guard stops it earliest and cheapest?)⁩**
 
 - A. حدّ الخطوات (The step cap)، مخفَّضًا من 50 إلى 40 خطوة (lowered from 50 to 40 steps)
-- B. مهلة الساعة الفعلية (The wall-clock deadline) البالغة 30 ثانية لكل تشغيل (of 30 seconds per run)
+- B. أجل الساعة الفعلية (The wall-clock deadline) البالغ 30 ثانية لكل تشغيل (of 30 seconds per run)
 - C. فحص انعدام التقدم (A no-progress check) على الاستدعاءات المتطابقة (on identical calls)
 - D. ميزانية الرموز (The token budget) البالغة 200,000 رمز لكل تشغيل (of 200,000 tokens per run)
 
 <details><summary>الإجابة</summary>
 
-**C.** يدل الاستدعاء المطابق الثاني على أنه لن يأتي جديد (nothing new is coming)، فيتوقف التشغيل عند الخطوة 2. أما الحواجز الأخرى فتُطلَق بعد إنفاق المال (The others fire after the money is spent). 🟢 ست طرق للتوقف (Six ways to stop).
+**C.** يدل الاستدعاء المطابق الثاني على أنه لن يأتي جديد (the second identical call shows nothing new is coming)، فيتوقف التشغيل عند الخطوة 2. أما الحواجز الأخرى فتنطلق بعد إنفاق المال (The others fire after the money is spent). 🟢 ست طرق للتوقف (Six ways to stop).
 
 </details>
 
@@ -241,7 +241,7 @@ flowchart TD
 
 </details>
 
-**5. تريد هند (Hind) وكيلًا يعدّل مجلدًا من أدلة التشغيل (a folder of runbooks) وينفّذ سكربتًا في صندوق رملي (a script in a sandbox). تبدأ لجين (Lujain) بكتابة أدوات ملفات وصدفة (file and shell tools) لحلقتها الخاصة. ما الذي ينبغي أن تنظر فيه أولًا؟ ⁦(What should she consider first?)⁩**
+**5. تريد هند وكيلًا يعدّل مجلدًا من أدلة التشغيل (a folder of runbooks) وينفّذ سكربتًا في صندوق رملي (a script in a sandbox). تبدأ لجين بكتابة أدوات ملفات وصدفة (file and shell tools) لحلقتها الخاصة. ما الذي ينبغي أن تنظر فيه أولًا؟ ⁦(What should she consider first?)⁩**
 
 - A. مشغّل الأدوات التجريبي (The beta tool runner) كي لا تكتب الحلقة (so she need not write the loop)
 - B. حدّ خطوات أعلى (A higher step cap) كي تنتهي التعديلات (so the edits can finish)
@@ -269,14 +269,14 @@ flowchart TD
 *المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 3.2، 8.1* · *الطبقة (Layer): Agents, Production*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
-- تبني حلقة الدرس 8.1 في ملف واحد (in one file) دون أي إطار عمل (no framework)، في نحو 80 سطرًا: **حدّ الخطوات (step cap)** و**ميزانية الرموز (token budget)** و**المهلة (deadline)** و**كشف انعدام التقدم (no-progress detection)** وكل `stop_reason`، والنجاح تفحصه الشيفرة (success checked by code).
+- تبني حلقة الدرس 8.1 في ملف واحد دون أي إطار عمل (in one file, no framework)، في نحو 80 سطرًا: **حدّ الخطوات (step cap)** و**ميزانية الرموز (token budget)** و**الأجل (deadline)** و**كشف انعدام التقدم (no-progress detection)** وكل `stop_reason`، والنجاح تفحصه الشيفرة (success checked by code).
 - يكتب كل تشغيل **سجل تتبّع JSONL (JSONL trace)** — الخطوة والأداة والمدخل وحجم النتيجة والرموز وزمن الاستجابة (step, tool, input, result size, tokens, latency)؛ وتحكيه أداة **إعادة التشغيل (replay)** كقصة (tells it as a story).
 - ينتهي كل حاجز (guard) بـ**حزمة تسليم (hand-off packet)**: الهدف وسبب التوقف وما جُرِّب (goal, why it stopped, what was tried).
-- توجيهات النسخة المحاكاة (Mock directives) تجعل الإخفاقات تقع عند الطلب (on demand)؛ و**اختبار لكل حاجز (one test per guard)** يثبت أنه يُطلَق (proves it fires).
+- توجيهات النسخة المحاكاة (Mock directives) تجعل الإخفاقات تقع عند الطلب (on demand)؛ و**اختبار لكل حاجز (one test per guard)** يثبت أنه ينطلق (proves it fires).
 - تحاكي النسخة المحاكاة (The mock) الإخفاقات؛ أما النماذج الحقيقية (real models) فتخفق بطرق مختلفة (fail differently).
 
 ## 🧭 لماذا يهم (Why it matters)
-بعد محادثة الخمسين خطوة (After the 50-step conversation) تطلب مها (Maha) من لجين (Lujain) أمرًا واحدًا: أن تُظهر ما فعله الوكيل ولماذا توقف (show what the agent did and why it stopped)، وهذا افتراضي (hypothetical). كانت الحلقة القديمة تحتفظ بالنص النهائي فقط (kept only the final text). وبعد أسبوعين يلصق أحد الموظفين «ref 3f2a9c01» عند يارا (Yara). فتشغّل أداة إعادة التشغيل (the replay tool) وتستطيع أن تقول: طلب الوكيل التذكرة 4471 مرتين، وأُوقف، ولدى مكتب الخدمة (the Service Desk) الحزمة (the packet). وهذا ما يبنيه هذا المختبر.
+بعد محادثة الخمسين خطوة (After the 50-step conversation) تطلب مها من لجين أمرًا واحدًا: أن تُظهر ما فعله الوكيل ولماذا توقف (show what the agent did and why it stopped)، وهذا افتراضي (hypothetical). كانت الحلقة القديمة تحتفظ بالنص النهائي فقط (kept only the final text). وبعد أسبوعين يلصق أحد الموظفين «ref 3f2a9c01» في رسالة إلى يارا. فتشغّل أداة إعادة التشغيل (the replay tool) وتستطيع أن تقول: طلب الوكيل التذكرة 4471 مرتين، وأُوقف، ولدى مكتب الخدمة (the Service Desk) الحزمة (the packet). وهذا ما يبنيه هذا المختبر.
 
 ## 📐 كيف يعمل (How it works)
 
@@ -293,7 +293,7 @@ python labs/m08/replay.py m08_trace.jsonl
 pytest tests/test_m08_labs.py
 ```
 
-**اقرأ تشغيلًا أولًا (Read a run first).** يجمّع `labs/m08/replay.py` (42 سطرًا، ومختبَر (tested)) أسطر JSONL بحسب معرّف التشغيل (groups the JSONL lines by run id) ويطبع سطرًا لكل حدث (one line per event): وهو الأداة التي استخدمتها يارا (Yara). ويضع علامة على أي تشغيل بلا سطر `stop` (flags a run with no stop line)، أي عملية ماتت (a process that died). اقرأ شيفرته لاحقًا (Read it later). ومخرجاته (Its output):
+**اقرأ تشغيلًا أولًا (Read a run first).** يجمّع `labs/m08/replay.py` (42 سطرًا، ومختبَر) أسطر JSONL بحسب معرّف التشغيل (groups the JSONL lines by run id) ويطبع سطرًا لكل حدث (one line per event): وهو الأداة التي استخدمتها يارا (the tool Yara used). ويضع علامة على أي تشغيل بلا سطر `stop` (flags a run with no stop line)، أي عملية ماتت (a process that died). اقرأ شيفرته لاحقًا (Read it later). ومخرجاته (Its output):
 
 ```text
 run de885b3e: Is ticket 4471 done yet? And what about 4472?   (limits: 6 steps, 25000 tokens, 30.0 s)
@@ -305,7 +305,7 @@ run de885b3e: Is ticket 4471 done yet? And what about 4472?   (limits: 6 steps, 
   2 steps, 464 tokens, 0.0 s
 ```
 
-طلبت الخطوة 1 أداتين؛ وأُجيب عنهما في رسالة واحدة (both were answered in one message). وقرأت الخطوة 2 ما مقداره 232 رمز إدخال مقابل 159 لأنها أعادت إرسال النتائج (re-sent the results) — وهو النمو الذي شرحه الدرس 8.1 (lesson 8.1's growth).
+طلبت الخطوة 1 أداتين؛ وأُجيب عنهما في رسالة واحدة (both were answered in one message). وقرأت الخطوة 2 ما مقداره 232 رمز إدخال مقابل 159 (232 input tokens against 159) لأنها أعادت إرسال النتائج (re-sent the results) — وهو النمو الذي شرحه الدرس 8.1 (lesson 8.1's growth).
 
 ### 🟡 التعمق أكثر (Going deeper)
 
@@ -455,11 +455,11 @@ if __name__ == "__main__":
         print(json.dumps(res.handoff, indent=2, ensure_ascii=False))
 ```
 
-1. **`run_tool`** هي الفجوة (the gap). لا ترفع استثناءً أبدًا (It never raises)، ولا تعرف سوى أداتي قراءة (two read tools only) — بديلان عن TicketHub وPeopleCore — فالنموذج *لا يستطيع* إغلاق تذكرة (cannot close a ticket).
+1. **`run_tool`** هي الفجوة (the gap). لا ترفع استثناءً أبدًا (It never raises)، ولا تعرف سوى أداتي قراءة (two read tools only) — بديلان عن TicketHub وPeopleCore — فالنموذج *لا يستطيع* إغلاق تذكرة (the model cannot close a ticket).
 2. **`stop`** هي المخرج الوحيد (the only exit)؛ والتشغيل الفاشل يبني حزمة التسليم (its hand-off packet) من التتبّع (from the trace).
-3. **تُنفَّذ الحواجز قبل الاستدعاء (Guards run before the call)**: الحدّ الأقصى هو حلقة `for` نفسها (the cap is the for loop)، ثم المهلة (the deadline)، ثم ميزانية الرموز (the token budget)، مع اعتبار مدخل الاستدعاء الأخير حدًّا أدنى (using the last call's input as a floor) لأن السجل لا ينمو إلا (history only grows). وتُفحص المهلة *بين* الخطوات (between steps)، فقد يتجاوزها استدعاء بطيء واحد (one slow call can overshoot). و`timeout=30.0` الخاص بالعميل (The client's) يحدّ محاولة واحدة (bounds one attempt)، وتعيد الحزمة محاولة المهلة مرتين افتراضيًا (retries a timeout twice by default)، فقد تستغرق الخطوة نحو ثلاثة أمثال ذلك؛ ولتشديده مرّر عميلك الخاص (pass your own client): `run(goal, client=anthropic.Anthropic(timeout=10.0, max_retries=1))`.
+3. **تُنفَّذ الحواجز قبل الاستدعاء (Guards run before the call)**: الحدّ الأقصى هو حلقة `for` نفسها (the cap is the for loop)، ثم الأجل (the deadline)، ثم ميزانية الرموز (the token budget)، مع اعتبار مدخل الاستدعاء الأخير حدًّا أدنى (using the last call's input as a floor) لأن السجل لا يفعل سوى أن ينمو (history only grows). ويُفحص الأجل *بين* الخطوات (between steps)، فقد يتجاوزه استدعاء بطيء واحد (one slow call can overshoot). و`timeout=30.0` الخاص بالعميل (The client's) يحدّ محاولة واحدة (bounds one attempt)، وتعيد حزمة التطوير المحاولة مرتين افتراضيًا عند انتهاء المهلة (retries a timeout twice by default)، فقد تستغرق الخطوة نحو ثلاثة أمثال ذلك؛ ولتشديده مرّر عميلك الخاص (pass your own client): `run(goal, client=anthropic.Anthropic(timeout=10.0, max_retries=1))`.
 4. **لكل `stop_reason` فرع (Every stop_reason has a branch).** غياب النص (No text) هو `empty_answer`؛ وفشل فحص الشيفرة (a failed code check) هو `failed_check`؛ و`pause_turn` يكرر الحلقة (loops again)؛ أما `max_tokens` و`refusal` والقيم المجهولة (unknown values) فتتوقف *قبل* أن تعمل أي أداة (before any tool runs).
-5. **كشف انعدام التقدم (No-progress)** يعدّ الأزواج المتطابقة من (الأداة، المدخل) (counts identical tool and input pairs) ويرفض الثاني *قبل* تنفيذه (refuses the second before running it). وتُقتطع النتائج الطويلة قبل دخولها السياق (Long results are cut before they enter the context)؛ ويحتفظ التتبّع بالحجم الحقيقي (keeps the true size). ويُكتب سطر الأداة بعد عودتها (The tool line is written after the tool returns)؛ فإن كانت الأدوات قد تعلق (if tools can hang) فسجّل سطرًا قبل الاستدعاء (log one before the call).
+5. **كشف انعدام التقدم (No-progress)** يعدّ الأزواج المتطابقة من (الأداة، المدخل) (counts identical tool and input pairs) ويرفض الثاني *قبل* تنفيذه (refuses the second before running it). وتُقتطع النتائج الطويلة قبل دخولها السياق (Long results are cut before they enter the context)؛ ويحتفظ التتبّع بالحجم الحقيقي (the trace keeps the true size). ويُكتب سطر الأداة بعد عودتها (The tool line is written after the tool returns)؛ فإن كانت الأدوات قد تتجمّد (if tools can hang) فسجّل سطرًا قبل الاستدعاء (log one before the call).
 
 ### 🔴 نظرة الخبير (Expert view)
 
@@ -489,13 +489,13 @@ Counter({'done': 4, 'no_progress': 2, 'empty_answer': 1, 'failed_check': 1, 'mod
 | `[mock:loop]` | نموذج عالق (A stuck model) | `no_progress` |
 | `[mock:giveup]` | **استسلام صامت (Silent give-up)** | `empty_answer` |
 | `shift handover` | **إنهاء مبكر (Premature finish)**: تذكرة واحدة من اثنتين (one ticket of two) | `failed_check` |
-| `4479` | **وسيط مُهلوَس (Hallucinated argument)** ثم إصلاح (then a fix) | `done` مع `is_error` واحد (one is_error) |
+| `4479` | **وسيط مختلَق (Hallucinated argument)** ثم إصلاح (then a fix) | `done` مع `is_error` واحد (one is_error) |
 | `4480` | **تجاهل `is_error` (Ignoring is_error)** | `no_progress` |
 | `[mock:overloaded]` | خطأ 5xx (529) في كل مرة (every time) | `model_error` |
 | `TIMEOUT_S=2` و`[mock:slow]` | استدعاء مدته 3 ثوانٍ (A 3-second call) | `timeout` |
 | `MAX_STEPS=1`؛ `TOKEN_BUDGET=300` | حدود منخفضة جدًا (Limits too low) | `iteration_cap`؛ `token_budget` |
 
-ابدأ النسخة المحاكاة بـ `MOCK_FAIL_EVERY=3` بدلًا من ذلك فيفشل كل طلب ثالث (every third request fails): تخفي إعادات المحاولة في الحزمة ذلك (the SDK's retries hide it) ولا يكشفه إلا زمن الاستجابة (only the latency shows it). وهذه حزمة تشغيل `[mock:loop]` مقتطعة بعد `tried` (cut after tried):
+ابدأ النسخة المحاكاة بـ `MOCK_FAIL_EVERY=3` بدلًا من ذلك فيفشل كل طلب ثالث (every third request fails): تخفي إعادات المحاولة في حزمة التطوير ذلك (the SDK's retries hide it) ولا يكشفه إلا زمن الاستجابة (only the latency shows it). وهذه حزمة التسليم الخاصة بتشغيل `[mock:loop]`، مقتطعة بعد `tried` (The packet for the mock:loop run, cut after tried):
 
 ```bash
 python labs/m08/agent_loop.py "Are tickets 4471 and 4473 resolved? [mock:loop]" | head -10
@@ -516,7 +516,7 @@ I could not finish this (no_progress). I passed it to the Service Desk with ever
 
 يسرد `tried` كل استدعاء ومدخله ونتيجته (each call, its input and result) والتكرار المرفوض (the refused repeat). ويخزّن سطر `stop` الحزمة أيضًا (stores the packet too).
 
-التشغيل نفسه كما تقرؤه يارا (Yara)، من `replay.py`، دون أي استدعاء للنموذج لإنتاجه (with no model call to produce it):
+التشغيل نفسه كما تقرؤه يارا، من `replay.py`، دون أي استدعاء للنموذج لإنتاجه (with no model call to produce it):
 
 ```text
 run 8e654913: Are tickets 4471 and 4473 resolved? [mock:loop]   (limits: 6 steps, 25000 tokens, 30.0 s)
@@ -528,21 +528,21 @@ run 8e654913: Are tickets 4471 and 4473 resolved? [mock:loop]   (limits: 6 steps
   2 steps, 383 tokens, 0.0 s
 ```
 
-اقرأه من الأعلى إلى الأسفل (Read it top to bottom): طلب النموذج 4471 (the model asked for 4471)، وحصل على الجواب (got the answer)، وطلبه ثانيةً (asked again)، فرفض الحاجز التكرار قبل أن تعمل الأداة (the guard refused the repeat before the tool ran).
+اقرأه من الأعلى إلى الأسفل (Read it top to bottom): طلب النموذج 4471، وحصل على الجواب، وطلبه ثانيةً، فرفض الحاجز التكرار قبل أن تعمل الأداة (the model asked for 4471, got the answer, asked again, and the guard refused the repeat before the tool ran).
 
-**اختبار لكل حاجز (One test per guard).** يجعل `tests/test_m08_labs.py` كل حاجز يُطلَق أمام النسخة المحاكاة (makes each guard fire against the mock)، مع عميل مزيّف (a fake client) لما لا تستطيع النسخة المحاكاة إنتاجه: `refusal` و`pause_turn` و`stop_reason` غير معروف (an unknown stop_reason).
+**اختبار لكل حاجز (One test per guard).** يجعل `tests/test_m08_labs.py` كل حاجز ينطلق أمام النسخة المحاكاة (makes each guard fire against the mock)، مع عميل مزيّف (a fake client) لما لا تستطيع النسخة المحاكاة إنتاجه: `refusal` و`pause_turn` و`stop_reason` غير معروف (an unknown stop_reason).
 
-**تحفظات صادقة (Honest caveats).** *يعمل دون اتصال (Works offline):* كل حاجز، والتتبّع، وإعادة التشغيل، والحزمة، والاختبارات (every guard, the trace, the replay, the packet, the tests). *يحتاج إلى واجهة البرمجة الحقيقية (Needs the real API):* هل يكرر النموذج الاستدعاء حرفيًا (whether it repeats a call exactly) — فقد يغيّر النموذج الحقيقي المدخل، وهو ما يفوّته حاجز المطابقة التامة (an exact-match guard misses) — وهل يتعافى من `is_error` (recovers)، وهل تجتاز إجابته فحصك (passes your check)، وزمن الاستجابة والرموز الحقيقيان (real latency and tokens) — فأعداد النسخة المحاكاة تقديرية (the mock's counts are estimates). التوجيهات (Directives) *تحاكي* الإخفاقات، والسيناريو (the playbook) *يبرمج* حالات التعافي (scripts recoveries): فالأخضر دون اتصال يثبت شيفرتك وحدها (green offline proves your code only). وفخ آخر في الواجهة الحقيقية (One more real-API trap): حين يكون التخزين المؤقت للموجّه (prompt caching) مفعّلًا، يعدّ `usage.input_tokens` الذيل غير المخزَّن مؤقتًا فقط (counts just the uncached tail)، فأضف حقلي التخزين المؤقت إلى الميزانية (add the two cache fields to the budget).
+**تحفظات صادقة (Honest caveats).** *يعمل دون اتصال (Works offline):* كل حاجز، والتتبّع، وإعادة التشغيل، والحزمة، والاختبارات (every guard, the trace, the replay, the packet, the tests). *يحتاج إلى واجهة البرمجة الحقيقية (Needs the real API):* هل يكرر النموذج الاستدعاء حرفيًا (whether it repeats a call exactly) — فقد يغيّر النموذج الحقيقي المدخل، وهو ما يفوّته حاجز المطابقة التامة (a real model can vary the input, which an exact-match guard misses) — وهل يتعافى من `is_error`، وهل تجتاز إجابته فحصك (whether it recovers from an is_error, whether its answer passes your check)، وزمن الاستجابة والرموز الحقيقيان (real latency and tokens) — فأعداد النسخة المحاكاة تقديرية (the mock's counts are estimates). التوجيهات (Directives) *تحاكي* الإخفاقات، والسيناريو (the playbook) *يبرمج* حالات التعافي (scripts recoveries): فالأخضر دون اتصال يثبت شيفرتك وحدها (green offline proves your code only). وفخ آخر في الواجهة الحقيقية (One more real-API trap): حين يكون التخزين المؤقت للموجّه (prompt caching) مفعّلًا، يعدّ `usage.input_tokens` الذيل غير المخزَّن مؤقتًا فقط (counts just the uncached tail)، فأضف حقلي التخزين المؤقت إلى الميزانية (add the two cache fields to the budget).
 
 ## 🧰 الأدوات (The toolkit)
 | الأداة أو الممارسة أو النمط (Tool, practice or pattern) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
 |---|---|---|
-| **Tool trace** — سجل تتبّع الأدوات | سجل JSONL لاستدعاءات النموذج والأدوات (A JSONL log of model and tool calls)، وسطر توقف واحد لكل تشغيل (one stop line per run)؛ وتحكيه إعادة التشغيل كقصة (replay tells it as a story) | كل تشغيل وكل حادثة (Every run, every incident) |
-| **Hand-off packet** — حزمة التسليم | الهدف والسبب وما جُرِّب ومعرّف التشغيل (Goal, reason, what was tried and the run id) إلى طابور مسمّى (for a named queue) | كل حاجز يُطلَق (Every guard that fires) |
-| **Guard test** — اختبار الحاجز | حقن الأخطاء (Error injection) — توجيهات وسيناريوهات وعملاء مزيّفون (directives, playbooks, fake clients) — يجعل الحاجز يُطلَق، ويثبت ذلك بإزالة الحاجز (proven by removing the guard) | كل حلقة (Every loop) |
+| **Tool trace** — سجل تتبّع الأدوات | سجل JSONL لاستدعاءات النموذج والأدوات، وسطر توقف واحد لكل تشغيل (A JSONL log of model and tool calls, one stop line per run)؛ وتحكيه إعادة التشغيل كقصة (replay tells it as a story) | كل تشغيل وكل حادثة (Every run, every incident) |
+| **Hand-off packet** — حزمة التسليم | الهدف والسبب وما جُرِّب ومعرّف التشغيل إلى طابور مسمّى (Goal, reason, what was tried and the run id, for a named queue) | كل حاجز ينطلق (Every guard that fires) |
+| **Guard test** — اختبار الحاجز | حقن الأخطاء (Error injection) — توجيهات وسيناريوهات وعملاء مزيّفون (directives, playbooks, fake clients) — يجعل الحاجز ينطلق، ويثبت ذلك بإزالة الحاجز (proven by removing the guard) | كل حلقة (Every loop) |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-**المُسلَّم الأسبوعي (Weekly deliverable).** أودِع (Commit) المجلد `week-08/` ومعه `labs/m08/` واختبارات ناجحة (passing tests)؛ وأعداد الأسباب وحزمة لكل إخفاق من الإخفاقات أعلاه (the reason counts and a packet per failure above)؛ وبطاقة الحلقة (the Loop card) من الدرس 8.1؛ و`NOTES.md` وفيه إجاباتك عن الاختبار وملاحظات «اقرأ هذا الأسبوع» (Read this week notes).
+**المُسلَّم الأسبوعي (Weekly deliverable).** أودِع المجلد `week-08/` ومعه `labs/m08/` واختبارات ناجحة (passing tests)؛ وأعداد الأسباب وحزمة لكل إخفاق من الإخفاقات أعلاه (the reason counts and a packet per failure above)؛ وبطاقة الحلقة (the Loop card) من الدرس 8.1؛ و`NOTES.md` وفيه إجاباتك عن الاختبار وملاحظات «اقرأ هذا الأسبوع» (Read this week notes).
 
 **جلسة المجموعة (Group session) — 60 دقيقة.** (1) تبادلوا سجل تتبّع (Swap a trace)؛ ويشرح زميلك التشغيل باستخدام `replay.py` وحده (15). (2) «اهزم الحاجز» (Beat the guard): جِد هدفًا يفوّته كشف انعدام التقدم (find a goal no-progress misses) (15). (3) قارنوا نتائج الواجهة الحقيقية (Compare real-API results) (15). (4) اتفقوا على حزمة واحدة (Agree one packet) (15).
 
@@ -565,25 +565,25 @@ Plan first; move one module at a time; run the tests after each move.
 ```
 
 **تحقق قبل أن تقبله (Verify before you accept it).**
-- شغّل الاختبارات (Run the tests)، ثم **أزل كل حاجز بدوره (remove each guard in turn)** — الحدّ الأقصى والمهلة والميزانية وانعدام التقدم وفحص الإجابة الفارغة وكل فرع من فروع `stop_reason` (cap, deadline, budget, no-progress, empty-answer check, each stop_reason branch) — وتأكد من أن اختبارًا يفشل في كل مرة (confirm a test fails every time). والحاجز الذي لا يلاحظه أي اختبار ليس حاجزًا (A guard no test notices is not a guard).
-- اقرأ الفرق (Read the diff) بحثًا عن حاجز نُقل إلى ما بعد الاستدعاء (a guard moved after the call)، و`except Exception` حوله (around it)، وحقول تتبّع أُعيدت تسميتها (renamed trace fields). وأعد تشغيل مصفوفة الإخفاقات (Re-run the failure matrix) وقارن الأعداد (compare the counts).
+- شغّل الاختبارات (Run the tests)، ثم **أزل كل حاجز بدوره (remove each guard in turn)** — الحدّ الأقصى والأجل والميزانية وانعدام التقدم وفحص الإجابة الفارغة وكل فرع من فروع `stop_reason` (cap, deadline, budget, no-progress, empty-answer check, each stop_reason branch) — وتأكد من أن اختبارًا يفشل في كل مرة (confirm a test fails every time). والحاجز الذي لا يلاحظه أي اختبار ليس حاجزًا (A guard no test notices is not a guard).
+- اقرأ الفرق (Read the diff) بحثًا عن حاجز نُقل إلى ما بعد الاستدعاء، و`except Exception` حوله، وحقول تتبّع أُعيدت تسميتها (for a guard moved after the call, except Exception around it, renamed trace fields). وأعد تشغيل مصفوفة الإخفاقات وقارن الأعداد (Re-run the failure matrix and compare the counts).
 
 ## 🛠️ التمارين (Exercises)
-- 🟢 **اجعل كل حاجز يُطلَق (Make each guard fire).** دون اتصال (Offline). باستخدام الجدول (Using the table)، تسبّب في `done` وستة أسباب توقف مختلفة (six different stop reasons) واقرأ كلًّا منها في `replay.py`. *يكتمل عندما (Done when):* يحتوي `NOTES.md` على أعداد الأسباب (the reason counts)، ولكل سبب الأمر والسطر الذي أوقفه (the command and the line that stopped it).
-- 🟡 **سُدّ ثغرة إغراق الأدوات (Close the tool-spam hole).** دون اتصال (Offline). أضف `max_tool_calls` إلى `Limits` بقيمة افتراضية (default) هي 8؛ وتوقف بالسبب `tool_budget` عند تجاوزها (stop with reason beyond it). *يكتمل عندما (Done when):* يفشل اختبار بعميل مزيّف يطلب عشر تذاكر في رد واحد (a test with a fake client asking for ten tickets in one reply) دون تغييرك، وينجح معه (fails without your change and passes with it).
-- 🔴 **هل ينجو مع نموذج حقيقي؟ ⁦(Does it survive a real model?)⁩** *يحتاج إلى واجهة البرمجة الحقيقية (Needs the real API)* وسقف الإنفاق (the spending cap). شغّل عشرة أهداف (ten goals) — منها التذكرة 9999 وتذكرتان وعبارة «close ticket 4472» (include ticket 9999, two tickets, "close ticket 4472") — بالنموذجين `claude-sonnet-5-5` و`claude-haiku-5-5`. *يكتمل عندما (Done when):* يحتوي `NOTES.md`، لكل نموذج، على أسباب التوقف والخطوات والرموز الفعلية وزمن الاستجابة (stop reasons, steps, real tokens and latency)، وتتبّع واحد مفاجئ (one surprising trace)، والتاريخ ومعرّفات النماذج (the date and the model ids).
+- 🟢 **اجعل كل حاجز ينطلق (Make each guard fire).** دون اتصال (Offline). باستخدام الجدول (Using the table)، تسبّب في `done` وستة أسباب توقف مختلفة (six different stop reasons) واقرأ كلًّا منها في `replay.py`. *يكتمل عندما (Done when):* يحتوي `NOTES.md` على أعداد الأسباب (the reason counts)، ولكل سبب الأمر والسطر الذي أوقفه (the command and the line that stopped it).
+- 🟡 **سُدّ ثغرة إغراق الأدوات (Close the tool-spam hole).** دون اتصال (Offline). أضف `max_tool_calls` إلى `Limits` بقيمة افتراضية (default) هي 8؛ وتوقف بالسبب `tool_budget` عند تجاوزها (stop with reason tool_budget beyond it). *يكتمل عندما (Done when):* يفشل اختبار بعميل مزيّف يطلب عشر تذاكر في رد واحد دون تغييرك وينجح معه (a test with a fake client asking for ten tickets in one reply fails without your change and passes with it).
+- 🔴 **هل ينجو مع نموذج حقيقي؟ ⁦(Does it survive a real model?)⁩** *يحتاج إلى واجهة البرمجة الحقيقية (Needs the real API)* وسقف الإنفاق (the spending cap). شغّل عشرة أهداف (ten goals) — منها التذكرة 9999 وتذكرتان وعبارة «close ticket 4472» (include ticket 9999, two tickets, "close ticket 4472") — بالنموذجين `claude-sonnet-5-5` و`claude-haiku-5-5`. *يكتمل عندما (Done when):* يحتوي `NOTES.md`، لكل نموذج، على أسباب التوقف والخطوات والرموز الفعلية وزمن الاستجابة (stop reasons, steps, real tokens and latency)، وتتبّع واحد مفاجئ، والتاريخ ومعرّفات النماذج (one surprising trace, the date and the model ids).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
 - **فحص الحاجز بعد الاستدعاء (Checking a guard after the call).** تدفع أولًا وتتوقف ثانيًا (You pay first, stop second).
-- **`except Exception` حول استدعاء النموذج (around the model call).** فهي تخفي أخطاءك البرمجية (It hides your bugs). التقط `anthropic.APIError` (Catch)، ونبّه على `status` بقيمة 400 أو 401 (alert on a status of 400 or 401): فذلك خطؤك أو مفتاحك لا انقطاع في الخدمة (that is your bug or your key, not an outage).
+- **`except Exception` حول استدعاء النموذج (around the model call).** فهي تخفي أخطاءك البرمجية (It hides your bugs). التقط `anthropic.APIError`، ونبّه على `status` بقيمة 400 أو 401 (alert on a status of 400 or 401): فذلك خطؤك أو مفتاحك لا انقطاع في الخدمة (that is your bug or your key, not an outage).
 - **الوثوق بالتعافي دون اتصال (Trusting the offline recovery).** فالسيناريو برمج الإصلاح (The playbook scripted the fix)؛ وقد لا يجده نموذج حقيقي (a real model may not find it).
 - **تسمية الاقتطاع «تنقيحًا» (Calling clipping "redaction").** الاقتطاع إلى 300 حرف ليس إخفاءً للبيانات (Cutting to 300 characters is not masking).
 
 ## 🧾 الخلاصة (Recap)
-- ملف واحد دون إطار عمل (One file, no framework): حواجز قبل كل استدعاء (guards before each call)، ومخرج واحد (one exit)، وسطر توقف واحد لكل تشغيل (one stop line per run).
+- ملف واحد دون إطار عمل (One file, no framework): حواجز قبل كل استدعاء، ومخرج واحد، وسطر توقف واحد لكل تشغيل (guards before each call, one exit, one stop line per run).
 - لكل `stop_reason` فرع (Every stop_reason has a branch)؛ والدور المقطوع أو المرفوض لا ينفّذ أي أداة (a cut-off or refused turn runs no tool).
-- يسجل التتبّع (The trace records) الخطوة والأداة والمدخل وحجم النتيجة والرموز وزمن الاستجابة (step, tool, input, result size, tokens, latency)؛ وتحكي إعادة التشغيل القصة (replay tells the story).
-- ينتهي كل حاجز بحزمة تسليم (Every guard ends in a hand-off packet)؛ وتثبت الاختبارات أن كل حاجز يُطلَق (tests prove each guard fires).
+- يسجل التتبّع الخطوة والأداة والمدخل وحجم النتيجة والرموز وزمن الاستجابة (The trace records step, tool, input, result size, tokens, latency)؛ وتحكي إعادة التشغيل القصة (replay tells the story).
+- ينتهي كل حاجز بحزمة تسليم (Every guard ends in a hand-off packet)؛ وتثبت الاختبارات أن كل حاجز ينطلق (tests prove each guard fires).
 
 ## ✍️ اختبر نفسك (Check yourself)
 
@@ -609,16 +609,16 @@ Plan first; move one module at a time; run the tests after each move.
 
 <details><summary>الإجابة</summary>
 
-**D.** `end_turn` بلا نص استسلام صامت (a silent give-up): إخفاق مع حزمة (a failure with a packet). 🟡 الحلقة جزءًا جزءًا (The loop, part by part).
+**D.** `end_turn` بلا نص هو استسلام صامت (a silent give-up): إخفاق مع حزمة (a failure with a packet). 🟡 الحلقة جزءًا جزءًا (The loop, part by part).
 
 </details>
 
 **3. مع `TIMEOUT_S=2` و`[mock:slow]` تُظهر إعادة التشغيل (the replay) استدعاءً مدته نحو 3,000 ms ثم `STOPPED by timeout`. لماذا لم يُقطع الاستدعاء عند ثانيتين؟ ⁦(Why was the call not cut off at 2 seconds?)⁩**
 
-- A. تُفحص المهلة بين الخطوات فقط (checked between steps only)
+- A. يُفحص الأجل بين الخطوات فقط (The deadline is checked between steps only)
 - B. تتجاهل النسخة المحاكاة (The mock) إعداد `TIMEOUT_S`
-- C. رفعت الحزمة (The SDK) المهلة لتلائم الاستدعاء (raised the timeout to fit the call)
-- D. تعدّ المهلة الرموز لا الثواني (counts tokens, not seconds)
+- C. رفعت حزمة التطوير المهلة لتلائم الاستدعاء (The SDK raised the timeout to fit the call)
+- D. يعدّ الأجل الرموز لا الثواني (The deadline counts tokens, not seconds)
 
 <details><summary>الإجابة</summary>
 
@@ -626,7 +626,7 @@ Plan first; move one module at a time; run the tests after each move.
 
 </details>
 
-**4. يعيد Claude Code هيكلة الحلقة (refactors the loop) وما زالت كل الاختبارات تنجح (every test still passes). أي فحص يُظهر على أفضل وجه أن الحواجز ما زالت تُطلَق؟ ⁦(Which check best shows the guards still fire?)⁩**
+**4. يعيد Claude Code هيكلة الحلقة (refactors the loop) وما زالت كل الاختبارات تنجح (every test still passes). أي فحص يُظهر على أفضل وجه أن الحواجز ما زالت تنطلق؟ ⁦(Which check best shows the guards still fire?)⁩**
 
 - A. شغّل هدفًا واحدًا على المسار السعيد (Run one happy-path goal) واقرأ الإجابة
 - B. عُدّ الأسطر وتحقق من أنها نقصت (check they went down)
@@ -639,7 +639,7 @@ Plan first; move one module at a time; run the tests after each move.
 
 </details>
 
-**5. لا تتلقى يارا (Yara) سوى «ref 3f2a9c01». ماذا ينبغي أن تحمل الحزمة (the packet) كي تواصل دون أن يبدأ المستخدم من جديد (without making the user start over) ودون بيانات شخصية أكثر مما تحتاجه الحالة (without more personal data than the case needs)؟**
+**5. لا تتلقى يارا سوى «ref 3f2a9c01». ماذا ينبغي أن تحمل الحزمة (the packet) كي تواصل دون أن يبدأ المستخدم من جديد (without making the user start over) ودون بيانات شخصية أكثر مما تحتاجه الحالة (without more personal data than the case needs)؟**
 
 - A. السبب وآخر جملة للنموذج فقط (The reason and the model's last sentence only)
 - B. الهدف والسبب واستدعاءات الأدوات التي جُرّبت (The goal, the reason and the tool calls tried)
@@ -648,7 +648,7 @@ Plan first; move one module at a time; run the tests after each move.
 
 <details><summary>الإجابة</summary>
 
-**B.** الهدف وسبب التوقف وما جُرِّب تأتي مباشرة من التتبّع (come straight from the trace). أما التفريغ الكامل (A full dump) فينسخ بيانات شخصية بلا فائدة (copies personal data for no gain)؛ والملخص الذي يكتبه النموذج ادعاء جديد غير موثَّق (a new, unverified claim). 🔴 اجعله يفشل عند الطلب (Make it fail, on demand).
+**B.** الهدف وسبب التوقف وما جُرِّب تأتي مباشرة من التتبّع (come straight from the trace). أما التفريغ الكامل (A full dump) فينسخ بيانات شخصية بلا فائدة (copies personal data for no gain)؛ والملخص الذي يكتبه النموذج ادعاء جديد غير موثَّق (a model-written summary is a new, unverified claim). 🔴 اجعله يفشل عند الطلب (Make it fail, on demand).
 
 </details>
 
