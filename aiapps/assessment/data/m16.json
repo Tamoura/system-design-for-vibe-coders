@@ -1,0 +1,135 @@
+{
+  "area": "m16",
+  "questions": [
+    {
+      "id": "m16-1",
+      "level": 1,
+      "lesson": "16.1",
+      "q": {
+        "en": "Lujain finishes the draft specification (M2) and shows it to Yara in the corridor. Yara glances at it and says, \"Looks fine, carry on.\" What should Fahad ask for before M3 starts?",
+        "ar": "أنهت لجين مسودة المواصفة (draft specification) للمرحلة (milestone) M2 وعرضتها على يارا في الممر (corridor). نظرت يارا إليها سريعًا وقالت: «تبدو جيدة، تابعوا» (Looks fine, carry on). ماذا ينبغي أن يطلب فهد قبل أن تبدأ المرحلة M3؟"
+      },
+      "o": {
+        "en": [
+          "A note of Yara's spoken nod in the spec's change log, since she is the domain expert for the desk",
+          "The spec sent round her team, with silence until Friday counted as the owner's answer",
+          "Yara's written answer to the gate question, naming by id what her team would not recognise",
+          "A check that every seed cites a requirement id, accepted in place of Yara's own answer"
+        ],
+        "ar": [
+          "تدوين إيماءة يارا الشفهية (spoken nod) في سجل تغييرات المواصفة (change log)، لأنها خبيرة المجال (domain expert) في المكتب",
+          "إرسال المواصفة (spec) إلى جميع أفراد فريقها واعتبار الصمت حتى الجمعة (silence until Friday) إجابةً من المالك (owner)",
+          "إجابة يارا المكتوبة (written answer) عن سؤال البوابة (gate question)، تسمّي بالمعرّف (id) ما لن يتعرّف عليه فريقها",
+          "فحص آلي يثبت أن كل حالة بذرة (seed) تذكر معرّفًا لمتطلب (requirement id)، ويُقبل بدلًا من إجابة يارا نفسها"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "The gate is the owner's answer in writing, and a strong one names what to change, as in the lesson's example of FR-05 and AC-4. A nod in the corridor is the tempting shortcut, but it leaves nothing to file and nothing to check; silence and a seed check are not her answer either.",
+        "ar": "البوابة (gate) هي إجابة المالك (owner) المكتوبة، والإجابة القوية (strong answer) تسمّي ما يجب تغييره، كما في مثال الدرس: FR-05 وAC-4. أما إيماءة في الممر (corridor) فهي الاختصار المغري، لكنها لا تترك شيئًا يُحفظ ولا يُفحص، والصمت وفحص البذور (seed check) ليسا إجابتها."
+      }
+    },
+    {
+      "id": "m16-2",
+      "level": 2,
+      "lesson": "16.1",
+      "q": {
+        "en": "Lujain has no real API run yet, so her 50-case eval ran only on the offline mock and passed 49 cases. Step 10 of her demo script puts an eval table in front of Hind. What should the table say?",
+        "ar": "ليس لدى لجين تشغيل حقيقي (real run) بعد، فلم تُجرِ تقييمها (eval) المكوَّن من 50 حالة إلا على النسخة المحاكاة (mock) دون اتصال (offline)، ونجحت 49 حالة. في الخطوة 10 من نص العرض (demo script) يُوضع جدول التقييم (eval table) أمام هند. ماذا ينبغي أن يقول الجدول؟"
+      },
+      "o": {
+        "en": [
+          "49 of 50 as Najm Desk's accuracy, since the mock replays the same 50 cases a real run would use",
+          "49 of 50 marked as mock and shown as proof the harness runs; quality is claimed after a real run",
+          "49 of 50 as a floor for its accuracy, since the mock's rules are stricter than a live model's answers",
+          "A pass rate from a longer mock run of 150 cases, so that the figure rests on a larger sample"
+        ],
+        "ar": [
+          "الرقم 49 من 50 بوصفه دقة نجم ديسك (Najm Desk accuracy)، لأن النسخة المحاكاة (mock) تعيد الحالات الخمسين نفسها التي سيستخدمها التشغيل الحقيقي",
+          "الرقم 49 من 50 موسومًا بأنه محاكاة (mock) ودليلًا على أن أداة التشغيل (harness) تعمل، ولا تُدّعى الجودة إلا بعد تشغيل حقيقي (real run)",
+          "الرقم 49 من 50 حدًّا أدنى للدقة (floor for accuracy)، لأن قواعد النسخة المحاكاة (mock) أشد من إجابات نموذج حي (live model)",
+          "نسبة نجاح (pass rate) من تشغيل محاكى أطول يضم 150 حالة، ليستند الرقم إلى عيّنة أكبر (larger sample)"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "The mock replays mechanics, not quality: it passes what its rules allow, so its table shows only that the harness runs. A bigger mock sample is the tempting fix, but more of the same rules still does not measure Najm Desk.",
+        "ar": "تحاكي النسخة المحاكاة (mock) الآليات (mechanics) لا الجودة (quality)؛ فهي تُنجح ما تسمح به قواعدها، فلا يثبت جدولها إلا أن أداة التشغيل (harness) تعمل. وعيّنة محاكاة أكبر (bigger mock sample) هي الحل المغري، لكن المزيد من القواعد نفسها لا يقيس نجم ديسك (Najm Desk)."
+      }
+    },
+    {
+      "id": "m16-3",
+      "level": 2,
+      "lesson": "16.1",
+      "q": {
+        "en": "Halfway through week 3, Lujain, who chose tier 3, has M1 to M5 done, a second agent half built with no ADR and no eval, and M6 to M8 untouched. What should Fahad advise?",
+        "ar": "في منتصف الأسبوع الثالث، أنجزت لجين، التي اختارت الفئة (tier) 3، المراحل (milestones) من M1 إلى M5، وبنت وكيلًا ثانيًا (second agent) إلى نصفه دون سجل قرار معماري (ADR) ودون تقييم (eval)، ولم تلمس المراحل من M6 إلى M8. بماذا ينبغي أن ينصحها فهد؟"
+      },
+      "o": {
+        "en": [
+          "Finish the second agent first and write its ADR and eval afterwards, so that tier 3 stays whole",
+          "Compress M6 to M8 into the last days, since the code was the hard part and the rest is writing",
+          "Keep tier 3 in the README and list the unfinished governance documents as work for later",
+          "Park the second agent and finish M6 to M8 properly, at the tier she can back with evidence"
+        ],
+        "ar": [
+          "إنهاء الوكيل الثاني (second agent) أولًا وكتابة سجل قراره (ADR) وتقييمه (eval) بعد ذلك، لتبقى الفئة 3 (tier 3) كاملة",
+          "ضغط المراحل (milestones) من M6 إلى M8 في الأيام الأخيرة، لأن الشيفرة (code) كانت الجزء الصعب والباقي كتابة",
+          "إبقاء الفئة 3 (tier 3) في ملف README وإدراج وثائق الحوكمة (governance documents) غير المكتملة بوصفها عملًا لاحقًا",
+          "إيقاف الوكيل الثاني (second agent) مؤقتًا وإنهاء المراحل من M6 إلى M8، ضمن الفئة التي تدعمها بالأدلة (evidence)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "A smaller tier finished with evidence beats a larger one claimed without it, and a second agent belongs only where an ADR and an eval justify it. Justifying it afterwards, or squeezing M6 to M8, treats the capstone as a build exercise when code is one milestone of eight.",
+        "ar": "إنهاء فئة (tier) أصغر بالأدلة (evidence) خير من ادعاء فئة أكبر بلا أدلة، ولا يجوز وكيل ثانٍ (second agent) إلا حيث يبرّره سجل قرار معماري (ADR) وتقييم (eval). أما تبرير الوكيل لاحقًا أو ضغط المراحل من M6 إلى M8 فيعامل المشروع الختامي (capstone) كتمرين بناء (build exercise) مع أن الشيفرة (code) مرحلة واحدة من ثماني."
+      }
+    },
+    {
+      "id": "m16-4",
+      "level": 3,
+      "lesson": "16.1",
+      "q": {
+        "en": "At the go/no-go meeting, Hind leans towards go with written conditions. Fahad, who chairs, will put only one of these four proposed conditions into docs/go-no-go.md. Which one?",
+        "ar": "في اجتماع قرار الإطلاق (go/no-go meeting) تميل هند إلى المضي (go) بشروط مكتوبة (written conditions). لن يدرج فهد، الذي يترأس الاجتماع، في docs/go-no-go.md إلا شرطًا واحدًا من هذه الشروط الأربعة المقترحة. أيّها؟"
+      },
+      "o": {
+        "en": [
+          "Maha refreshes the cost sheet from the current price page before the end of the pilot's first week",
+          "Maha refreshes the cost sheet from the current price page once her operators have capacity",
+          "The cost sheet is refreshed from the current price page before the end of the pilot's first week",
+          "Sara signs her row in the governance pack before the end of week 1; until then Hind records it as approved"
+        ],
+        "ar": [
+          "تحدّث مها ورقة التكلفة (cost sheet) من صفحة الأسعار الحالية (current price page) قبل نهاية أول أسبوع من التجربة التشغيلية (pilot)",
+          "تحدّث مها ورقة التكلفة (cost sheet) من صفحة الأسعار الحالية (current price page) متى توفّرت الطاقة لدى مشغّليها (operators)",
+          "تُحدَّث ورقة التكلفة (cost sheet) من صفحة الأسعار الحالية (current price page) قبل نهاية أول أسبوع من التجربة التشغيلية (pilot)",
+          "توقّع سارة سطرها في حزمة الحوكمة (governance pack) قبل نهاية الأسبوع الأول؛ وإلى ذلك الحين تسجّل هند سطرها معتمَدًا (approved) في الحزمة"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "A condition needs both an owner and a date, so only the first says who does what and by when; with no owner (C) or no date (B) nobody can be chased. D fails too, because Hind cannot mark Sara's row approved for her, and no condition overrides a risk owner's veto.",
+        "ar": "يحتاج الشرط (condition) إلى مالك (owner) وتاريخ (date) معًا، فالأول وحده يحدد من يفعل ماذا ومتى؛ وبلا مالك في الخيار C أو بلا تاريخ في الخيار B لا يجد أحد من يلاحقه. ويفشل الخيار D كذلك، لأن هند لا تستطيع تسجيل سطر سارة معتمَدًا نيابةً عنها، ولا يتجاوز أي شرط حق النقض (veto) لصاحب المخاطر (risk owner)."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m16-e1",
+      "lesson": "16.1",
+      "text": {
+        "en": "I have run the strict capstone audit on my najm-desk repository until it showed 0 problems, and traced three requirement ids by hand from the specification to a runbook.",
+        "ar": "لقد شغّلتُ تدقيق المشروع الختامي (capstone audit) الصارم (strict) على مستودع najm-desk الخاص بي حتى أظهر 0 مشكلات (problems)، وتتبّعتُ يدويًا ثلاثة معرّفات متطلبات (requirement ids) من المواصفة (specification) إلى دليل التشغيل (runbook)."
+      }
+    },
+    {
+      "id": "m16-e2",
+      "lesson": "16.1",
+      "text": {
+        "en": "I have held a go/no-go meeting on my release candidate with a peer playing Hind, and recorded the decision in docs/go-no-go.md with an owner and a date on every condition, or what would change a no-go.",
+        "ar": "لقد عقدتُ اجتماع قرار الإطلاق (go/no-go meeting) على النسخة المرشحة للإصدار (release candidate) مع زميل يؤدي دور هند، وسجّلتُ القرار في docs/go-no-go.md مع مالك (owner) وتاريخ لكل شرط (condition)، أو ما الذي سيغيّر قرارًا بعدم الإطلاق (no-go)."
+      }
+    }
+  ]
+}

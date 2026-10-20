@@ -35,8 +35,8 @@
    "lesson": "3.2",
    "a": 3,
    "q": {
-    "en": "Rayan asks about ticket 5820. Najm Desk's trace shows `lookup_ticket` called with `ticket_id` \"5802\", two digits swapped, and the tool honestly returned another ticket, so the assistant gave the wrong status. Noura wants a change that would have stopped this answer, not only explained it. Which one?",
-    "ar": "يسأل ريان (Rayan) عن التذكرة (ticket) 5820. ويُظهر تتبّع (trace) نجم ديسك (Najm Desk) أن `lookup_ticket` استُدعيت بالمعرّف (id) \"5802\" أي بتبديل رقمين متجاورين (two digits swapped)، فأعادت الأداة (tool) بأمانة تذكرة أخرى، فأعطى المساعد (assistant) حالة خاطئة. وتريد نورة (Noura) تغييرًا كان سيمنع هذه الإجابة لا يكتفي بتفسيرها. أي تغيير؟"
+    "en": "Rayan asks about ticket 5820. Najm Desk's trace shows `lookup_ticket` called with `ticket_id` \"5802\", two digits swapped, and the tool honestly returned another ticket, so the assistant gave the wrong status. Noura wants a change that would have stopped this answer whatever the model does, not only explained it. Which one?",
+    "ar": "يسأل ريان (Rayan) عن التذكرة (ticket) 5820. ويُظهر تتبّع (trace) نجم ديسك (Najm Desk) أن `lookup_ticket` استُدعيت بالمعرّف (id) \"5802\" أي بتبديل رقمين متجاورين (two digits swapped)، فأعادت الأداة (tool) بأمانة تذكرة أخرى، فأعطى المساعد (assistant) حالة خاطئة. وتريد نورة (Noura) تغييرًا كان سيمنع هذه الإجابة أيًّا كان ما يفعله النموذج (model)، لا يكتفي بتفسيرها. أي تغيير؟"
    },
    "o": {
     "en": [
@@ -53,8 +53,8 @@
     ]
    },
    "why": {
-    "en": "A schema checks shape and a trace only records what happened; a code check that the id appears in the user's message refuses the wrong id before the lookup runs. `strict: true` is the tempting fix, but \"5802\" is a well-formed id, so it passes.",
-    "ar": "المخطط (schema) يتحقق من الشكل (shape) والتتبّع (trace) يسجّل ما حدث فقط؛ أما فحص الشيفرة (code check) لظهور المعرّف (id) في رسالة المستخدم فيرفض المعرّف الخاطئ قبل تنفيذ البحث (lookup). والخيار A هو الإصلاح المغري (tempting fix)، لكن \"5802\" معرّف سليم الصيغة (well-formed) فيمرّ."
+    "en": "A schema checks shape and a trace only records what happened; a code check that the id appears in the user's message refuses the wrong id before the lookup runs. `strict: true` is the tempting fix, but \"5802\" is a well-formed id, so it passes. A request in the description is a hope, not a control: the model can still swap digits.",
+    "ar": "المخطط (schema) يتحقق من الشكل (shape) والتتبّع (trace) يسجّل ما حدث فقط؛ أما فحص الشيفرة (code check) لظهور المعرّف (id) في رسالة المستخدم فيرفض المعرّف الخاطئ قبل تنفيذ البحث (lookup). و`strict: true` هو الإصلاح المغري (tempting fix)، لكن \"5802\" معرّف سليم الصيغة (well-formed) فيمرّ. وطلبٌ في الوصف (description) أمنية لا ضابط (a hope, not a control): فقد يبدّل النموذج (model) الرقمين مرة أخرى."
    }
   },
   {
@@ -63,26 +63,26 @@
    "lesson": "3.2",
    "a": 0,
    "q": {
-    "en": "In a pilot trace, the model sends `INC-4471` to `lookup_ticket` six times in a row. Each time `run_tool` returns an `invalid_input` error, and the run ends at the step cap after six paid calls. A goal that recovers on its second try needs three model calls and must still finish. How should Lujain cut the cost of runs like this?",
-    "ar": "في تتبّع (trace) من التجربة التشغيلية (pilot) يرسل النموذج (model) القيمة `INC-4471` إلى `lookup_ticket` ست مرات متتالية (in a row). وفي كل مرة تعيد `run_tool` خطأ `invalid_input`، وتنتهي الجولة (run) عند حدّ الخطوات (step cap) بعد ستة استدعاءات مدفوعة (six paid calls). أما الهدف (goal) الذي يتعافى في محاولته الثانية (recovers on its second try) فيحتاج إلى ثلاثة استدعاءات للنموذج (model calls) ويجب أن يكتمل (must still finish). كيف تخفّض لجين (Lujain) كلفة (cost) مثل هذه الجولات؟"
+    "en": "In a pilot trace, the model sends `INC-4471` to `lookup_ticket` six times in a row. Each time `run_tool` returns an `invalid_input` error, and the run ends at the step cap after six paid calls. A goal that recovers on its second try needs three model calls and must still finish. Lujain wants the model to keep seeing each of its own errors. How should she cut the cost of runs like this?",
+    "ar": "في تتبّع (trace) من التجربة التشغيلية (pilot) يرسل النموذج (model) القيمة `INC-4471` إلى `lookup_ticket` ست مرات متتالية (in a row). وفي كل مرة تعيد `run_tool` خطأ `invalid_input`، وتنتهي الجولة (run) عند حدّ الخطوات (step cap) بعد ستة استدعاءات مدفوعة (six paid calls). أما الهدف (goal) الذي يتعافى في محاولته الثانية (recovers on its second try) فيحتاج إلى ثلاثة استدعاءات للنموذج (model calls) ويجب أن يكتمل (must still finish). وتريد لجين (Lujain) أن يظل النموذج (model) يرى كل خطأ (error) يرتكبه بنفسه. كيف تخفّض كلفة (cost) مثل هذه الجولات؟"
    },
    "o": {
     "en": [
      "Stop the run after two `invalid_input` results from one tool, but keep the cap",
      "Lower `max_steps` to 2, so that no run can ever pay for more than two model calls",
      "Raise `max_steps` to 20, so that the model gets more chances to fix its input",
-     "Repair `INC-4471` to `4471` in code, so that the model never sees the error"
+     "Repair `INC-4471` to `4471` in code, so that the call succeeds on the first try"
     ],
     "ar": [
      "توقف الجولة (run) بعد نتيجتين (two results) `invalid_input` من أداة واحدة، مع إبقاء الحد (step cap)",
      "تخفض (lower) `max_steps` إلى 2 كي لا تدفع أي جولة (run) ثمن أكثر من استدعاءين مدفوعين (two paid calls)",
      "ترفع (raise) `max_steps` إلى 20 كي تتاح للنموذج (model) فرص أكثر لإصلاح مُدخله (input) بنفسه",
-     "تصحّح (repair) `INC-4471` إلى `4471` في الشيفرة (code) كي لا يرى النموذج (model) أي خطأ (error) أبدًا"
+     "تصحّح (repair) `INC-4471` إلى `4471` في الشيفرة (code) كي ينجح الاستدعاء (call) من المحاولة الأولى (first try)"
     ]
    },
    "why": {
-    "en": "The cap limits the damage, but a stuck run still pays for six calls; stopping after repeated invalid input from one tool saves most of that and leaves a one-slip recovery alone. A lower cap is the tempting fix, but it cuts the recovering goals short too.",
-    "ar": "حدّ الخطوات (step cap) يحصر الضرر (limits the damage)، لكن الجولة العالقة (stuck run) تظل تدفع ستة استدعاءات (six calls)؛ أما التوقف بعد تكرار المُدخل غير الصالح (invalid input) من أداة واحدة فيوفّر معظمها ويترك التعافي من زلة واحدة (one-slip recovery) على حاله. وخفض الحد هو الإصلاح المغري (tempting fix)، لكنه يقطع الأهداف المتعافية (recovering goals) أيضًا."
+    "en": "The cap limits the damage, but a stuck run still pays for six calls; stopping after repeated invalid input from one tool saves most of that and leaves a one-slip recovery alone. A lower cap is the tempting fix, but it cuts the recovering goals short too. Repairing the value in code would hide the mistake from the model, and raising the cap only buys a stuck run more paid calls.",
+    "ar": "حدّ الخطوات (step cap) يحصر الضرر (limits the damage)، لكن الجولة العالقة (stuck run) تظل تدفع ستة استدعاءات (six calls)؛ أما التوقف بعد تكرار المُدخل غير الصالح (invalid input) من أداة واحدة فيوفّر معظمها ويترك التعافي من زلة واحدة (one-slip recovery) على حاله. وخفض الحد هو الإصلاح المغري (tempting fix)، لكنه يقطع الأهداف المتعافية (recovering goals) أيضًا. وتصحيح القيمة في الشيفرة (code) يُخفي الخطأ (mistake) عن النموذج (model)، ورفع الحد لا يمنح الجولة العالقة إلا استدعاءات مدفوعة أكثر."
    }
   },
   {

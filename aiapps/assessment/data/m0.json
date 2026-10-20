@@ -40,21 +40,21 @@
    "o": {
     "en": [
      "Multiply one single-turn call's tokens by six turns and the conversation count",
-     "Read them off the offline mock, which grows its counts as the chat history grows",
+     "Run one six-turn chat on the offline mock and scale its token counts up",
      "Count them with tiktoken, the tokenizer library most developers already know",
-     "Measure real usage from the API, then project each turn with the history resent"
+     "Take real counts from the API, then project each turn with the history resent"
     ],
     "ar": [
      "تضرب رموز استدعاء الجولة الواحدة (single-turn call) في ست جولات (turns) ثم في عدد المحادثات (the conversation count)",
-     "تقرؤها من المحاكي (mock) العامل دون اتصال (offline)، فهو يزيد عدّها مع نمو سجل المحادثة (chat history)",
+     "تشغّل محادثة واحدة من ست جولات (turns) على المحاكي (mock) دون اتصال (offline) ثم تكبّر أعداد رموزها",
      "تحسبها بمكتبة tiktoken، وهي مكتبة الترميز (tokenizer library) التي يعرفها أغلب المطوّرين (developers)",
-     "تقيس الاستخدام الفعلي (real usage) من الواجهة (API) ثم تقدّر كل جولة مع إعادة إرسال السجل (the history resent)"
+     "تأخذ أعدادًا فعلية (real counts) من الواجهة (API) ثم تقدّر كل جولة مع إعادة إرسال السجل (the history resent)"
     ]
    },
    "a": 3,
    "why": {
-    "en": "Every call resends the system prompt and the whole history, so input tokens grow faster than the number of turns; scaling one call (the tempting shortcut) undercounts them. The mock's counts are only estimates and tiktoken is not for Claude, so counts must come from real usage.",
-    "ar": "كل استدعاء (call) يعيد إرسال موجّه النظام (system prompt) وسجل المحادثة (history) كاملًا، فتنمو رموز الإدخال (input tokens) أسرع من عدد الجولات (turns)؛ وضرب رموز استدعاء واحد (وهو الاختصار المغري) يقلّل العدّ. أما أعداد المحاكي (mock) فتقديرات فقط، ومكتبة tiktoken ليست لـ Claude، لذا يجب أن تأتي الأعداد من الاستخدام الفعلي (real usage)."
+    "en": "Every call resends the system prompt and the whole history, so input tokens grow faster than the number of turns; scaling one call (the tempting shortcut) undercounts them. The mock's counts are only estimates and tiktoken is not for Claude, so counts must come from the real API: usage after a call, count_tokens before one.",
+    "ar": "كل استدعاء (call) يعيد إرسال موجّه النظام (system prompt) وسجل المحادثة (history) كاملًا، فتنمو رموز الإدخال (input tokens) أسرع من عدد الجولات (turns)؛ وضرب رموز استدعاء واحد (وهو الاختصار المغري) يقلّل العدّ. أما أعداد المحاكي (mock) فتقديرات فقط، ومكتبة tiktoken ليست لـ Claude، لذا يجب أن تأتي الأعداد من الواجهة الحقيقية (real API): usage بعد الاستدعاء أو count_tokens قبله."
    }
   },
   {
@@ -68,21 +68,21 @@
    "o": {
     "en": [
      "Decide how she would tell it is right, then write the spec with those checks",
-     "Delegate it now and trust the summary Claude Code writes of what it did",
+     "Delegate it now and accept the result if the existing tests stay green",
      "Delegate it now and ask Claude Code to write the tests that prove it works well",
      "Delegate it in small steps and let each diff stand in for the checks"
     ],
     "ar": [
      "تحدد كيف ستعرف صحة النتيجة (how she would tell it is right)، ثم تكتب المواصفة (spec) بتلك الفحوص",
-     "تفوّض المهمة الآن (delegate it now) وتثق بالملخص (summary) الذي يكتبه Claude Code عمّا فعله",
+     "تفوّض المهمة الآن (delegate it now) وتقبل النتيجة ما دامت الاختبارات (tests) الحالية تبقى خضراء (green)",
      "تفوّض المهمة الآن (delegate it now) وتطلب من Claude Code كتابة الاختبارات (tests) التي تثبت نجاحها",
      "تفوّضها على خطوات صغيرة (small steps) وتترك كل فرق (diff) يحلّ محل الفحوص المطلوبة (checks)"
     ]
    },
    "a": 0,
    "why": {
-    "en": "The method starts with a spec whose checks you can state: if you cannot say how you would know the result is right, do not delegate it yet. Small steps (the tempting option) keep diffs readable but cannot tell you what correct means.",
-    "ar": "تبدأ الطريقة بمواصفة (spec) تستطيع أن تصوغ فحوصها (checks): فإن لم تستطع القول كيف ستعرف أن النتيجة صحيحة (the result is right) فلا تفوّض المهمة بعد. والخطوات الصغيرة (small steps)، وهي الخيار المغري، تُبقي الفروق (diffs) مقروءة لكنها لا تخبرك بمعنى الصحيح (what correct means)."
+    "en": "The method starts with a spec whose checks you can state: if you cannot say how you would know the result is right, do not delegate it yet. Existing tests staying green say nothing about \"smarter\", and small steps (the tempting option) keep diffs readable but cannot tell you what correct means.",
+    "ar": "تبدأ الطريقة بمواصفة (spec) تستطيع أن تصوغ فحوصها (checks): فإن لم تستطع القول كيف ستعرف أن النتيجة صحيحة (the result is right) فلا تفوّض المهمة بعد. واستمرار نجاح الاختبارات (tests) القائمة لا يقول شيئًا عن «الأذكى»، والخطوات الصغيرة (small steps)، وهي الخيار المغري، تُبقي الفروق (diffs) مقروءة لكنها لا تخبرك بمعنى الصحيح (what correct means)."
    }
   },
   {
@@ -96,20 +96,20 @@
    "o": {
     "en": [
      "Agree, and add an audit log so every account change can be reviewed afterwards",
-     "Agree, since a model strong enough to answer policy questions can be trusted to act",
+     "Agree, if the unlock scores 8 out of 10 or better on the enterprise-grade checklist",
      "Keep the unlock approval-gated in v1; autonomous changes need much more evidence",
      "Refuse every write action in v1, because enterprise-grade means the agent only reads"
     ],
     "ar": [
      "توافق وتضيف سجل تدقيق (audit log) كي يمكن مراجعة كل تغيير في الحساب (account change) لاحقًا",
-     "توافق، لأن نموذجًا قادرًا على الإجابة عن أسئلة السياسات (policy questions) يمكن الوثوق به في التنفيذ",
+     "توافق، إذا نال فتح الحساب 8 من 10 أو أكثر في قائمة فحص المستوى المؤسسي (enterprise-grade checklist)",
      "تُبقي فتح الحساب في الإصدار الأول (v1) بموافقة (approval-gated)، فالتغيير المستقل يحتاج أدلة (evidence) أكثر",
      "ترفض كل إجراء كتابي (write action) في الإصدار الأول، لأن المستوى المؤسسي (enterprise-grade) يعني أن الوكيل (agent) يقرأ فقط"
     ]
    },
    "a": 2,
    "why": {
-    "en": "Enterprise-grade is a negotiation: the evidence a feature needs depends on its autonomy level, and every write action needs a human or a policy gate. A log reviewed after the fact (the tempting option) is observability, not a gate, so the change would still be ungoverned.",
+    "en": "Enterprise-grade is a negotiation, not a score: the evidence a feature needs depends on its autonomy level, and every write action needs a human or a policy gate. A log reviewed after the fact (the tempting option) is observability, not a gate, so the change would still be ungoverned.",
     "ar": "المستوى المؤسسي (enterprise-grade) تفاوض لا درجة: فالأدلة (evidence) التي تحتاجها الميزة تتوقف على مستوى استقلاليتها (autonomy level)، وكل إجراء كتابي (write action) يحتاج إنسانًا أو بوابة سياسة (policy gate). وسجل يُراجَع بعد وقوع التغيير، وهو الخيار المغري، مجرد قابلية مراقبة (observability) لا بوابة، فيبقى التغيير بلا حوكمة (governance)."
    }
   }

@@ -14,19 +14,19 @@
           "When the planner, writer and editor would look tidy as separate boxes on a diagram",
           "When a second agent could redo the first one's work, to double-check the answer",
           "When Sara's team needs nine documents checked and no check needs another's result",
-          "When Hind has seen a rival bank advertise its new assistant as a team of agents"
+          "When Sara's team needs one document checked in nine steps, each using the last result"
         ],
         "ar": [
           "حين تبدو أدوار المخطِّط (planner) والكاتب (writer) والمحرِّر (editor) مرتبة كصناديق منفصلة (separate boxes) في الرسم (diagram)",
           "حين يستطيع وكيل ثانٍ (second agent) أن يعيد عمل الأول (redo the work) تحقّقًا مزدوجًا (double-check) من الإجابة",
           "حين يحتاج فريق سارة إلى فحص (checking) تسعة مستندات (documents) ولا يعتمد أي فحص على نتيجة غيره (another's result)",
-          "حين ترى هند بنكًا منافسًا (rival bank) يعرض مساعده الجديد (new assistant) على أنه فريق من الوكلاء (team of agents)"
+          "حين يحتاج فريق سارة إلى فحص (checking) مستند (document) واحد في تسع خطوات، وتعتمد كل خطوة على نتيجة سابقتها (the last result)"
         ]
       },
       "a": 2,
       "why": {
-        "en": "Parallel independent work is one of the three reasons that justify a team, with context isolation and different permissions per role. Tidy roles (A) are not a failure the single agent has, and a team must buy something.",
-        "ar": "العمل المستقل المتوازي (parallel independent work) أحد الأسباب الثلاثة التي تبرر الفريق (team)، ومعه عزل السياق (context isolation) والصلاحيات المختلفة لكل دور (different permissions per role). أما ترتيب الأدوار (الخيار A) فليس إخفاقًا عند الوكيل الواحد (single agent)، والفريق يجب أن يشتري شيئًا (buy something)."
+        "en": "Parallel independent work is one of the three reasons that justify a team, with context isolation and different permissions per role. Tidy roles (A) are not a failure the single agent has, and a team must buy something. Steps that each need the last result (D) are sequential, so nothing runs in parallel.",
+        "ar": "العمل المستقل المتوازي (parallel independent work) أحد الأسباب الثلاثة التي تبرر الفريق (team)، ومعه عزل السياق (context isolation) والصلاحيات المختلفة لكل دور (different permissions per role). أما ترتيب الأدوار (الخيار A) فليس إخفاقًا عند الوكيل الواحد (single agent)، والفريق يجب أن يشتري شيئًا (buy something). أما الخطوات التي تحتاج كل منها إلى نتيجة سابقتها (الخيار D) فمتسلسلة (sequential) فلا شيء فيها يعمل بالتوازي."
       }
     },
     {
@@ -62,20 +62,20 @@
       "level": 2,
       "lesson": "11.2",
       "q": {
-        "en": "In Lujain's lab team, the researcher's notes pass the Pydantic `Notes` model: well-formed ids, quotes of valid length, no extra fields. But one quote is a sentence found in none of the policies the search returned. What should reject it?",
-        "ar": "في فريق المختبر الذي بنته لجين (Lujain's lab team)، تجتاز ملاحظات الباحث (researcher's notes) عقد `Notes` المكتوب بـPydantic (Pydantic model): معرّفات سليمة الصيغة (well-formed ids) واقتباسات بطول صحيح (valid length) ولا حقول زائدة (extra fields). لكن أحد الاقتباسات (quotes) جملة لا توجد في أي سياسة أعادها البحث (policies the search returned). ما الذي ينبغي أن يرفضها؟"
+        "en": "In Lujain's lab team, the researcher's notes pass the Pydantic `Notes` model: well-formed ids, quotes of valid length, no extra fields. The reviewer gets the notes and the draft, not the search results. But one quote is a sentence found in none of the policies the search returned. What should reject it?",
+        "ar": "في فريق المختبر الذي بنته لجين (Lujain's lab team)، تجتاز ملاحظات الباحث (researcher's notes) عقد `Notes` المكتوب بـPydantic (Pydantic model): معرّفات سليمة الصيغة (well-formed ids) واقتباسات بطول صحيح (valid length) ولا حقول زائدة (extra fields). ويتلقى المراجِع (reviewer) الملاحظات والمسوّدة لا نتائج البحث (search results). لكن أحد الاقتباسات (quotes) جملة لا توجد في أي سياسة أعادها البحث (policies the search returned). ما الذي ينبغي أن يرفضها؟"
       },
       "o": {
         "en": [
           "A code check that looks for each quote in the text the search returned",
           "A stricter schema, with a longer minimum length and a pattern on `quote`",
-          "The reviewer agent, which reads the notes and the draft before approving",
+          "The reviewer agent, which approves or sends back every draft it is given",
           "The writer's prompt, if it says to use only what the notes contain"
         ],
         "ar": [
           "فحص في الشيفرة (code check) يبحث عن كل اقتباس (quote) في النص الذي أعاده البحث (search)",
           "مخطط أشد صرامة (stricter schema) بطول أدنى أكبر (longer minimum length) ونمط (pattern) على `quote`",
-          "وكيل المراجعة (reviewer agent) الذي يقرأ الملاحظات (notes) والمسوّدة (draft) قبل أن يوافق",
+          "وكيل المراجعة (reviewer agent) الذي يوافق على كل مسوّدة (draft) تُعطى له أو يعيدها للتعديل",
           "موجّه الكاتب (writer's prompt) إذا نصّ على استعمال ما في الملاحظات (notes) وحده"
         ]
       },
@@ -97,20 +97,20 @@
         "en": [
           "Keep the team for v1, since a second pair of eyes is worth some extra cost and time",
           "Keep the team for v1 and add a second reviewer to catch the two shared misses",
-          "Keep the team for v1 but move its reviewer to a cheaper model to cut the cost",
+          "Ship one agent for v1 but drop the code checks, since the reviewer did that job",
           "Ship one agent for v1 with the same contract and checks, then revisit the team"
         ],
         "ar": [
           "إبقاء الفريق (team) في الإصدار الأول (v1) لأن عينًا ثانية (second pair of eyes) تستحق بعض التكلفة والوقت",
           "إبقاء الفريق (team) في الإصدار الأول (v1) وإضافة مراجِع ثانٍ (second reviewer) يلتقط الخطأين المشتركين بينهما",
-          "إبقاء الفريق (team) في الإصدار الأول (v1) مع نقل مراجِعه إلى نموذج أرخص (cheaper model) لخفض التكلفة",
+          "إطلاق وكيل واحد (one agent) في الإصدار الأول (v1) مع حذف الفحوص في الشيفرة (code checks) لأن المراجِع كان يؤدي هذه المهمة",
           "إطلاق وكيل واحد (one agent) في الإصدار الأول (v1) بالعقد (contract) والفحوص نفسها، ثم إعادة النظر في الفريق"
         ]
       },
       "a": 3,
       "why": {
-        "en": "The single agent, with the same contract and checks, is the baseline a team must beat on the same eval; equal scores at about twice the cost fail the exit criterion, so the team goes. \"A second pair of eyes\" (A) is a claim, and the numbers show the reviewer buying no better score.",
-        "ar": "الوكيل الواحد (single agent) بالعقد (contract) والفحوص (checks) نفسها هو خط الأساس (baseline) الذي يجب أن يتفوق عليه الفريق (team) في مجموعة التقييم (eval) نفسها؛ والنتائج المتساوية بنحو ضعف التكلفة تُخفق في معيار الخروج (exit criterion)، فيُترك الفريق. و«العين الثانية» (second pair of eyes) في الخيار A ادعاء فقط (a claim)، والأرقام تُظهر أن المراجِع (reviewer) لم يرفع الدرجة (score)."
+        "en": "The single agent, with the same contract and checks, is the baseline a team must beat on the same eval; equal scores at about twice the cost fail the exit criterion, so the team goes. \"A second pair of eyes\" (A) is a claim, and the numbers show the reviewer buying no better score. The baseline keeps the same contract and checks, so dropping them (C) is not the comparison either.",
+        "ar": "الوكيل الواحد (single agent) بالعقد (contract) والفحوص (checks) نفسها هو خط الأساس (baseline) الذي يجب أن يتفوق عليه الفريق (team) في مجموعة التقييم (eval) نفسها؛ والنتائج المتساوية بنحو ضعف التكلفة تُخفق في معيار الخروج (exit criterion)، فيُترك الفريق. و«العين الثانية» (second pair of eyes) في الخيار A ادعاء فقط (a claim)، والأرقام تُظهر أن المراجِع (reviewer) لم يرفع الدرجة (score). وخط الأساس يحتفظ بالعقد والفحوص نفسها، فحذفها (الخيار C) ليس المقارنة الصحيحة أيضًا."
       }
     }
   ],

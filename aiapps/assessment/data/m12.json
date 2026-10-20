@@ -6,27 +6,27 @@
       "level": 1,
       "lesson": "12.1",
       "q": {
-        "en": "Lujain's first draft of the Najm Desk eval set has 30 cases, all passing, covering policy answers and ticket status. Hind asks whether the requirement that staff see only their own tickets (GR-02) is covered. No case traces to GR-02, and the agents have no way to tell who is asking. What is the accurate answer?",
-        "ar": "يضم الإصدار الأول من مجموعة التقييم (eval set) التي أعدّتها لجين لنجم ديسك (Najm Desk) ثلاثين حالة (30 cases) تنجح كلها، وتشمل إجابات السياسات (policy answers) والاستعلام عن حالة التذكرة (ticket status). وتسأل هند هل المتطلب (requirement) القاضي بأن يرى الموظف تذاكره وحدها (own tickets only)، وهو GR-02، مغطّى. لا توجد أي حالة مرتبطة بـ GR-02، ولا يملك الوكلاء (agents) وسيلة لمعرفة من يسأل. ما الإجابة الدقيقة (accurate answer)؟"
+        "en": "Lujain's first draft of the Najm Desk eval set has 30 cases, all passing, covering policy answers and ticket status. Hind asks whether the requirement that staff see only their own tickets (GR-02) is covered. Lujain's traceability table links each case to the requirement ids it tests, and GR-02 appears in none of them. The agents also have no way to tell who is asking. How should the eval pack report GR-02?",
+        "ar": "يضم الإصدار الأول من مجموعة التقييم (eval set) التي أعدّتها لجين لنجم ديسك (Najm Desk) ثلاثين حالة (30 cases) تنجح كلها، وتشمل إجابات السياسات (policy answers) والاستعلام عن حالة التذكرة (ticket status). وتسأل هند هل المتطلب (requirement) القاضي بأن يرى الموظف تذاكره وحدها (own tickets only)، وهو GR-02، مغطّى. يربط جدول التتبّع (traceability table) عند لجين كل حالة بمعرّفات المتطلبات التي تختبرها، ولا يظهر GR-02 في أي منها. كما لا يملك الوكلاء (agents) وسيلة لمعرفة من يسأل. كيف تُبلِّغ حزمة التقييم (eval pack) عن GR-02؟"
       },
       "o": {
         "en": [
-          "Covered: all 30 cases pass, so no requirement can be failing",
-          "Untested: with no case behind it, GR-02 stays a gap, not a pass",
           "Covered: the ticket-status cases would expose another person's ticket",
+          "Untested: a finding beside the score, neither a pass nor a fail",
+          "Failing: score it 0%, since the agents cannot tell who is asking",
           "Not applicable: a rule the agents cannot enforce needs no case"
         ],
         "ar": [
-          "مغطّى (Covered): الحالات الثلاثون كلها تنجح، فلا يمكن أن يكون أي متطلب (requirement) فاشلًا",
-          "غير مختبَر (Untested): لا توجد أي حالة وراء GR-02، فهو فجوة (a gap) وليس نجاحًا (a pass)",
           "مغطّى (Covered): حالات الاستعلام عن التذاكر (ticket-status cases) ستكشف تذكرة موظف آخر",
+          "غير مختبَر (Untested): نتيجة مُلاحَظة (a finding) بجانب الدرجة، لا نجاح ولا إخفاق",
+          "فاشل (Failing): سجّله بنسبة 0%، لأن الوكلاء (agents) لا يعرفون من يسأل",
           "لا ينطبق (Not applicable): قاعدة لا يستطيع الوكلاء (agents) فرضها لا تحتاج إلى حالة (case)"
         ]
       },
       "a": 1,
       "why": {
-        "en": "A requirement with no case is untested, so the honest report is a gap, not a pass. A green run only speaks for the requirements that have cases, and counting an untested one as covered is the tempting mistake.",
-        "ar": "المتطلب (requirement) الذي لا حالة له (no case) غير مختبَر (untested)، فالتقرير الصادق هو أنه فجوة (a gap) لا نجاح (a pass). والتشغيل الأخضر (green run) لا يشهد إلا للمتطلبات التي لها حالات، واعتبار المتطلب غير المختبَر مغطّى هو الخطأ المغري (tempting mistake)."
+        "en": "A requirement with no case is untested. A 0% score would claim a measurement nobody made and a pass would claim a protection nobody checked, so the honest report is a finding beside the score. That the agents cannot tell who is asking is a reason to write the cases, not a score.",
+        "ar": "المتطلب (requirement) الذي لا حالة له (no case) غير مختبَر (untested). ونسبة 0% تدّعي قياسًا لم يجرِه أحد، والنجاح (a pass) يدّعي حماية لم يتحقق منها أحد، فالتقرير الصادق هو نتيجة مُلاحَظة (a finding) بجانب الدرجة. وعجز الوكلاء (agents) عن معرفة من يسأل سبب لكتابة الحالات (cases)، لا درجة."
       }
     },
     {
@@ -34,27 +34,27 @@
       "level": 2,
       "lesson": "12.2",
       "q": {
-        "en": "The Sunday real-model eval of 50 cases exits 2 with the message `15 cases errored: the harness is broken, the score means nothing`. The 35 cases that did run all match the baseline, and Lujain proposes raising `max_errors` in the gate config so the run goes green. What should the team do?",
-        "ar": "ينتهي تقييم يوم الأحد على النموذج الحقيقي (real-model eval) لخمسين حالة (50 cases) برمز الخروج 2 (exit 2) مع الرسالة (message) `15 cases errored: the harness is broken, the score means nothing`. أما الحالات الخمس والثلاثون (35 cases) التي نُفِّذت فعلًا فتطابق كلها خط الأساس (baseline)، وتقترح لجين رفع `max_errors` في إعدادات البوابة (gate config) كي يصير التشغيل أخضر (green). ماذا ينبغي أن يفعل الفريق؟"
+        "en": "The Sunday real-model eval of 50 cases makes the gate exit 2, and the results file shows 15 cases errored. The 35 cases that did run all match the baseline, and Lujain proposes raising `max_errors` in the gate config so the run goes green. What should the team do?",
+        "ar": "يجعل تقييم يوم الأحد على النموذج الحقيقي (real-model eval) لخمسين حالة (50 cases) البوابة (gate) تخرج برمز 2 (exit 2)، ويُظهر ملف النتائج (results file) أن خمس عشرة حالة (15 cases) حدث فيها خطأ (errored). أما الحالات الخمس والثلاثون (35 cases) التي نُفِّذت فعلًا فتطابق كلها خط الأساس (baseline)، وتقترح لجين رفع `max_errors` في إعدادات البوابة (gate config) كي يصير التشغيل أخضر (green). ماذا ينبغي أن يفعل الفريق؟"
       },
       "o": {
         "en": [
           "Fix what made the cases error and rerun, since 15 cases went unmeasured",
           "Raise the limit, since 35 matching cases show that quality held",
-          "Count the 15 errors as failures, so the gate exits 1 and blocks the merge",
-          "Re-baseline on this run, so the next comparison is like with like"
+          "Count the 15 errors as failures, so the gate reports a regression and exits 1",
+          "Quarantine the 15 cases with an owner and an end date, then rerun the gate"
         ],
         "ar": [
           "أصلح سبب أخطاء الحالات (case errors) وأعد التشغيل (rerun)، فخمس عشرة حالة بلا قياس",
           "ارفع الحد (limit)، فخمس وثلاثون حالة مطابقة تبيّن أن الجودة (quality) لم تتراجع",
-          "احسب الأخطاء الخمسة عشر إخفاقات (failures)، فتخرج البوابة (gate) برمز 1 وتمنع الدمج",
-          "أعد ضبط خط الأساس (re-baseline) على هذا التشغيل لتصير المقارنة التالية بين متماثلين (like with like)"
+          "احسب الأخطاء الخمسة عشر إخفاقات (failures)، فتبلّغ البوابة (gate) عن انحدار (regression) وتخرج برمز 1",
+          "ضع الحالات الخمس عشرة في الحجر (quarantine) مع مالك وتاريخ انتهاء (owner and end date)، ثم أعد تشغيل البوابة"
         ]
       },
       "a": 0,
       "why": {
-        "en": "Exit 2 means the eval cannot be trusted: the 15 errored cases never ran, so the harness is fixed and the run repeated. Raising the limit hides the gap, because 35 matching cases say nothing about those 15, and counting errors as failures blames the agent for a fault in the harness.",
-        "ar": "رمز الخروج 2 (exit 2) يعني أن التقييم (eval) لا يمكن الوثوق به: الحالات الخمس عشرة (15 errored cases) لم تعمل أصلًا، فتُصلَح أداة التشغيل (harness) ويُعاد التشغيل (rerun). ورفع الحد (limit) يخفي الفجوة، لأن خمسًا وثلاثين حالة مطابقة لا تقول شيئًا عن تلك الخمس عشرة، واحتساب الأخطاء إخفاقات (failures) يلوم الوكيل (agent) على عطل في أداة التشغيل."
+        "en": "Exit 2 means the eval cannot be trusted: the 15 errored cases never ran, so the harness is fixed and the run repeated. Raising the limit hides the gap, because 35 matching cases say nothing about those 15. Counting errors as failures blames the agent for a fault in the harness, and quarantine is for flaky cases: the errors are still counted before it applies.",
+        "ar": "رمز الخروج 2 (exit 2) يعني أن التقييم (eval) لا يمكن الوثوق به: الحالات الخمس عشرة (15 errored cases) لم تعمل أصلًا، فتُصلَح أداة التشغيل (harness) ويُعاد التشغيل (rerun). ورفع الحد (limit) يخفي الفجوة، لأن خمسًا وثلاثين حالة مطابقة لا تقول شيئًا عن تلك الخمس عشرة. واحتساب الأخطاء إخفاقات (failures) يلوم الوكيل (agent) على عطل في أداة التشغيل، والحجر (quarantine) للحالات المتذبذبة (flaky)، والأخطاء تُحتسب قبل أن يسري."
       }
     },
     {

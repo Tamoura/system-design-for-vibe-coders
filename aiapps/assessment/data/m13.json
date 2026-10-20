@@ -6,27 +6,27 @@
       "level": 1,
       "lesson": "13.1",
       "q": {
-        "en": "Hamad, the CISO, asks Lujain why the team cannot close prompt injection the way developers closed SQL injection, with a parameterised query. Which answer is correct?",
-        "ar": "يسأل حمد، مدير أمن المعلومات (CISO)، لجين: لماذا لا يستطيع الفريق إغلاق حقن الموجّه (prompt injection) كما أغلق المطوّرون حقن SQL (SQL injection) باستعلام ذي معاملات (parameterised query)؟ أي إجابة صحيحة؟"
+        "en": "Hamad, the CISO, asks Lujain whether prompt injection has a fix like the one developers found for SQL injection, a parameterised query. Which answer is correct?",
+        "ar": "يسأل حمد، مدير أمن المعلومات (CISO)، لجين: هل لحقن الموجّه (prompt injection) علاج كالذي وجده المطوّرون لحقن SQL (SQL injection)، وهو الاستعلام ذو المعاملات (parameterised query)؟ أي إجابة صحيحة؟"
       },
       "o": {
         "en": [
-          "Vendors will close it once their training improves, so the team should wait for the next model release",
-          "Rules, user messages and retrieved pages share one stream of text, so the model decides which to obey",
-          "It enters only through the chat box, so strict validation of what staff type there closes the gap",
-          "Wrapping each page in XML tags gives the model the same guarantee a parameterised query gives a database"
+          "Yes: a system prompt line saying pages are data keeps them apart from the rules, as a parameter does for a query",
+          "No: rules, user messages and retrieved pages share one stream of text, so the model decides which to obey",
+          "Not yet: training still leaves gaps, but a later model release will remove them, so the team should wait",
+          "Yes: wrapping each page in XML tags gives the model the same guarantee a parameterised query gives a database"
         ],
         "ar": [
-          "سيغلقه مزوّدو النماذج (model vendors) حين يتحسّن التدريب (training)، فينتظر الفريق الإصدار التالي من النموذج (next model release) دون عمل آخر",
-          "القواعد (rules) ورسائل المستخدم (user messages) والصفحات المسترجعة (retrieved pages) تشترك في تيار نص واحد (one stream of text)، فالنموذج يقرر ما يطيعه",
-          "يدخل من مربع المحادثة (chat box) وحده، فيغلقه التحقق الصارم (strict validation) مما يكتبه الموظفون هناك قبل وصوله إلى النموذج (model)",
-          "يمنح تغليف كل صفحة بوسوم XML (XML tags) النموذج (model) الضمان نفسه الذي يمنحه الاستعلام ذو المعاملات (parameterised query) لقاعدة البيانات (database) تمامًا"
+          "نعم: سطر في موجّه النظام (system prompt) يقول إن الصفحات بيانات يفصلها عن القواعد (rules) كما يفعل المعامل (parameter) في الاستعلام (query)",
+          "لا: القواعد (rules) ورسائل المستخدم (user messages) والصفحات المسترجعة (retrieved pages) تشترك في تيار نص واحد (one stream of text)، فالنموذج يقرر ما يطيعه",
+          "ليس بعد: ما زال التدريب (training) يترك ثغرات، لكن إصدارًا لاحقًا من النموذج (model release) سيزيلها، فينتظر الفريق ولا يضيف ضوابط",
+          "نعم: يمنح تغليف كل صفحة بوسوم XML (XML tags) النموذج (model) الضمان نفسه الذي يمنحه الاستعلام ذو المعاملات (parameterised query) لقاعدة البيانات (database)"
         ]
       },
       "a": 1,
       "why": {
-        "en": "A prompt carries rules, user messages and page text as one stream, and the model decides which to follow, so prompting and training lower the risk but never remove it; code must limit what a fooled model can do. Wrapping pages in tags is the tempting fix, but tags are only more text in the same stream.",
-        "ar": "يحمل الموجّه (prompt) القواعد (rules) ورسائل المستخدم (user messages) ونص الصفحات (page text) في تيار واحد (one stream) يقرر النموذج (model) أيها يتبع، فالتوجيه والتدريب (prompting and training) يخفضان الخطر ولا يزيلانه، ويجب أن تحدّ الشيفرة (code) مما يستطيع نموذج مخدوع (fooled model) فعله. وتغليف الصفحات بوسوم (tags) هو الحل المغري، لكن الوسوم مجرد نص إضافي في التيار نفسه."
+        "en": "A prompt carries rules, user messages and page text as one stream, and the model decides which to follow, so prompting and training lower the risk but never remove it; code must limit what a fooled model can do. A system prompt line or tags around pages are the tempting fixes, but they are requests and more text in the same stream, not controls.",
+        "ar": "يحمل الموجّه (prompt) القواعد (rules) ورسائل المستخدم (user messages) ونص الصفحات (page text) في تيار واحد (one stream) يقرر النموذج (model) أيها يتبع، فالتوجيه والتدريب (prompting and training) يخفضان الخطر ولا يزيلانه، ويجب أن تحدّ الشيفرة (code) مما يستطيع نموذج مخدوع (fooled model) فعله. وسطر موجّه النظام أو الوسوم (tags) حول الصفحات هما الحلان المغريان، لكنهما طلبات ونص إضافي في التيار نفسه، لا ضوابط (controls)."
       }
     },
     {
@@ -34,27 +34,27 @@
       "level": 2,
       "lesson": "13.2",
       "q": {
-        "en": "Hamad asks what happens to Najm Desk if its model provider is down for an afternoon. The Service Desk's volume and risk do not justify a second provider. Which plan fits best?",
-        "ar": "يسأل حمد ماذا يحدث لنجم ديسك (Najm Desk) إذا تعطّل مزوّد النموذج (model provider) طوال فترة بعد الظهر. ولا يبرّر حجم مكتب الخدمة (Service Desk) ومخاطره مزوّدًا ثانيًا (second provider). أي خطة تناسب أكثر؟"
+        "en": "Hamad asks what happens to Najm Desk if its whole model provider, not just one model, is down for an afternoon. The Service Desk's volume and risk do not justify a second provider. Which plan fits best?",
+        "ar": "يسأل حمد ماذا يحدث لنجم ديسك (Najm Desk) إذا تعطّل مزوّد النموذج (model provider) كله، لا نموذج واحد فقط، طوال فترة بعد الظهر. ولا يبرّر حجم مكتب الخدمة (Service Desk) ومخاطره مزوّدًا ثانيًا (second provider). أي خطة تناسب أكثر؟"
       },
       "o": {
         "en": [
           "A fallback model from the same provider, already run on the eval set and switched on by one setting",
           "A higher retry limit in the client, so each call keeps trying until the provider answers again",
-          "A second provider's key kept in the config, to be switched on by one setting during an outage",
+          "A second provider's key kept in the config and switched on by one setting, its prompts and tools never run on the eval set",
           "A degraded mode with phone and ticket routes and keyword search, tested in a drill before go-live"
         ],
         "ar": [
           "نموذج احتياطي (fallback model) من المزوّد نفسه، سبق تشغيله فعلًا على مجموعة التقييم (eval set)، ويُفعَّل بإعداد واحد (one setting)",
           "حدّ أعلى لإعادة المحاولة (retry limit) في العميل (client)، فيواصل كل استدعاء (call) المحاولة حتى يعود المزوّد للإجابة من جديد",
-          "مفتاح مزوّد ثانٍ (second provider) محفوظ في الإعدادات (config)، يُفعَّل بإعداد واحد (one setting) عند انقطاع الخدمة (outage)",
+          "مفتاح مزوّد ثانٍ (second provider) محفوظ في الإعدادات (config) ويُفعَّل بإعداد واحد (one setting)، ولم تُشغَّل موجّهاته وأدواته (prompts and tools) على مجموعة التقييم (eval set)",
           "وضع متدهور (degraded mode) فيه مسارا الهاتف والتذاكر والبحث بالكلمات المفتاحية (keyword search)، مُختبَر قبل الإطلاق (go-live)"
         ]
       },
       "a": 3,
       "why": {
-        "en": "A same-provider fallback model covers one model's retirement or overload, and a second provider is a project with its own vendor assessment and eval, not a switch; where risk does not justify one, a tested degraded mode (phone and ticket routes, keyword search, hand-off) is the plan. The fallback model is the tempting choice, but it fails when the provider itself is down.",
-        "ar": "النموذج الاحتياطي (fallback model) من المزوّد نفسه يغطي إيقاف نموذج واحد أو ازدحامه (retirement or overload) فقط، والمزوّد الثاني (second provider) مشروع له تقييم موردين (vendor assessment) وتقييم (eval) خاصان به وليس مفتاح تبديل؛ وحين لا تبرّره المخاطر تكون الخطة وضعًا متدهورًا (degraded mode) مُختبَرًا: مسارا الهاتف والتذاكر والبحث بالكلمات المفتاحية والتسليم إلى شخص (hand-off). والنموذج الاحتياطي هو الخيار المغري، لكنه يفشل حين يتعطل المزوّد نفسه."
+        "en": "A same-provider fallback model covers one model's retirement or overload, and a second provider is a project with its own vendor assessment and fresh eval, not a switch; where risk does not justify one, a tested degraded mode (phone and ticket routes, keyword search, hand-off) is the plan, because untested fallbacks fail on the day. The fallback model is the tempting choice, but it fails when the provider itself is down.",
+        "ar": "النموذج الاحتياطي (fallback model) من المزوّد نفسه يغطي إيقاف نموذج واحد أو ازدحامه (retirement or overload) فقط، والمزوّد الثاني (second provider) مشروع له تقييم موردين (vendor assessment) وتقييم (eval) جديد خاصان به وليس مفتاح تبديل؛ وحين لا تبرّره المخاطر تكون الخطة وضعًا متدهورًا (degraded mode) مُختبَرًا: مسارا الهاتف والتذاكر والبحث بالكلمات المفتاحية والتسليم إلى شخص (hand-off)، لأن البدائل غير المختبرة تفشل يوم الحاجة. والنموذج الاحتياطي هو الخيار المغري، لكنه يفشل حين يتعطل المزوّد نفسه."
       }
     },
     {
@@ -98,19 +98,19 @@
           "Keep it and cite the provider's sales page as its evidence line, since a source is now named in it",
           "Soften it to “rarely retains Najm Bank data”, so that it becomes much harder to disprove",
           "Replace it with TODO, list it as an open item on the risk register and read the provider's docs",
-          "Delete it, so that the document holds only claims that can be shown to the reviewers"
+          "Delete it and record nothing, so the signed document holds only claims that can be shown to the reviewers"
         ],
         "ar": [
           "تُبقيه وتضع صفحة مبيعات المزوّد (sales page) سطرَ دليل (evidence line) له، إذ صار له الآن مصدر مذكور فيه",
           "تخفّفه إلى «نادرًا ما يحتفظ المزوّد ببيانات بنك نجم (Najm Bank)»، فيصبح أصعب كثيرًا في الدحض (disprove)",
-          "تستبدل به TODO وتدرجه بندًا مفتوحًا (open item) في سجل المخاطر (risk register) وتراجع وثائق المزوّد",
-          "تحذفه (delete it) ليبقى في المستند ما يمكن إثباته فقط من الادعاءات (claims) أمام المراجعين"
+          "تستبدل به TODO وتدرجه بندًا مفتوحًا (open item) في سجل المخاطر (risk register) وتراجع وثائق المزوّد (provider docs)",
+          "تحذفه (delete it) ولا تسجّل شيئًا، ليبقى في المستند الموقَّع ما يمكن إثباته فقط من الادعاءات (claims) أمام المراجعين"
         ]
       },
       "a": 2,
       "why": {
-        "en": "What cannot be evidenced stays TODO and goes on the risk register as an open item, which is more honest than a smooth sentence. Softening it to “rarely” is the tempting move, but it is still a claim with no evidence, only harder to test.",
-        "ar": "ما لا يمكن إثباته بالدليل (evidence) يبقى TODO ويُدرج بندًا مفتوحًا (open item) في سجل المخاطر (risk register)، وهذا أصدق من جملة ملساء (smooth sentence). والتخفيف إلى «نادرًا» هو التصرف المغري، لكنه يظل ادعاءً بلا دليل (claim with no evidence)، أصعب في الاختبار فحسب."
+        "en": "What cannot be evidenced stays TODO and goes on the risk register as an open item, which is more honest than a smooth sentence. Softening it to “rarely” is the tempting move, but it is still a claim with no evidence, only harder to test; deleting it with no record hides an unknown the risk owners should see.",
+        "ar": "ما لا يمكن إثباته بالدليل (evidence) يبقى TODO ويُدرج بندًا مفتوحًا (open item) في سجل المخاطر (risk register)، وهذا أصدق من جملة ملساء (smooth sentence). والتخفيف إلى «نادرًا» هو التصرف المغري، لكنه يظل ادعاءً بلا دليل (claim with no evidence)، أصعب في الاختبار فحسب؛ وحذفه دون تسجيل يخفي مجهولًا (unknown) ينبغي أن يراه أصحاب المخاطر (risk owners)."
       }
     }
   ],

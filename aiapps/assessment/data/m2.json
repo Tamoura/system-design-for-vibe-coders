@@ -12,13 +12,13 @@
       "o": {
         "en": [
           "Open the prompt with a shouted \"NEVER guess!!!\" so that the model stops inventing new rules",
-          "Name the documents as the only source, with a HANDOFF: way out for when they are silent",
+          "Name the documents as the only source and add a HANDOFF: reply for when they are silent",
           "Lower the temperature so that the model keeps to the likeliest wording of the policy",
           "Add \"think step by step\" and a demand for accuracy so that the model checks itself"
         ],
         "ar": [
           "ابدأ الموجّه (prompt) بعبارة صارخة «لا تخمّن أبدًا» ⁦(NEVER guess!!!)⁩، كي يكفّ النموذج (model) عن اختلاق القواعد",
-          "اجعل الوثائق (documents) المصدر الوحيد (only source)، وأضف مخرجًا (way out) هو `HANDOFF:` حين تسكت عن السؤال",
+          "اجعل الوثائق (documents) المصدر الوحيد (only source)، وأضف ردّ `HANDOFF:` مخرجًا (way out) حين تسكت عن السؤال",
           "اخفض درجة الحرارة (temperature)، كي يلتزم النموذج (model) بأرجح صياغة (likeliest wording) في السياسة (policy)",
           "أضف «فكّر خطوة بخطوة» (think step by step) مع طلب الدقة (accuracy)، كي يراجع النموذج (model) إجابته بنفسه"
         ]
@@ -34,27 +34,27 @@
       "level": 2,
       "lesson": "2.2",
       "q": {
-        "en": "Lujain's classifier prompt scores 80% on the ten held-out tickets. She reads the two misses, adds an example for each, and the new version scores 100% on held-out. She plans to tell Hind the classifier is now 100% accurate. What should the team do?",
-        "ar": "يحقق موجّه المصنِّف (classifier prompt) عند لجين نسبة 80% على التذاكر العشر المحجوزة (held-out tickets). فتقرأ الإخفاقين (misses)، وتضيف مثالًا (example) لكل منهما، فيحقق الإصدار الجديد (new version) نسبة 100% على المجموعة المحجوزة (held-out set). وتنوي أن تخبر هند بأن المصنِّف صار دقيقًا بنسبة 100% (100% accurate). ما الذي ينبغي أن يفعله الفريق؟"
+        "en": "Lujain's classifier prompt scores 80% on the ten held-out tickets. She reads the two misses, adds an example for each, and the new version scores 100% on held-out. She had tuned the earlier versions on the other 20 tickets. She plans to tell Hind the classifier is now 100% accurate. What should the team do?",
+        "ar": "يحقق موجّه المصنِّف (classifier prompt) عند لجين نسبة 80% على التذاكر العشر المحجوزة (held-out tickets). فتقرأ الإخفاقين (misses)، وتضيف مثالًا (example) لكل منهما، فيحقق الإصدار الجديد (new version) نسبة 100% على المجموعة المحجوزة (held-out set). وكانت قد ضبطت الإصدارات السابقة (earlier versions) على التذاكر العشرين الأخرى. وتنوي أن تخبر هند بأن المصنِّف صار دقيقًا بنسبة 100% (100% accurate). ما الذي ينبغي أن يفعله الفريق؟"
       },
       "o": {
         "en": [
           "Report the 100%: held-out is the set that counts, and the new version gained two tickets",
-          "Re-split the 30 tickets at random and report the new version's score on the new held-out ten",
+          "Re-split the same 30 tickets at random and report the new version's score on the new held-out ten",
           "Re-run held-out with --reps 3 to check that the 100% is a stable result",
           "Treat the old held-out set as dev and score the new version on ten fresh tickets"
         ],
         "ar": [
           "أبلغ بنسبة 100%، فالمجموعة المحجوزة (held-out set) هي المعتمدة في القرار، وقد ربح الإصدار الجديد (new version) تذكرتين",
-          "أعد تقسيم التذاكر الثلاثين عشوائيًا (random re-split)، وأبلغ بنتيجة الإصدار الجديد على المجموعة المحجوزة الجديدة (new held-out set)",
+          "أعد تقسيم التذاكر الثلاثين نفسها عشوائيًا (random re-split)، وأبلغ بنتيجة الإصدار الجديد على المجموعة المحجوزة الجديدة (new held-out set)",
           "أعد تشغيل المجموعة المحجوزة (held-out set) بالخيار `--reps 3` للتأكد من أن 100% نتيجة مستقرة (stable)",
           "اعتبر المجموعة المحجوزة (held-out set) القديمة مجموعة تطوير (dev set)، وقيّم الإصدار الجديد على عشر تذاكر جديدة (fresh tickets)"
         ]
       },
       "a": 3,
       "why": {
-        "en": "Once the held-out misses shaped the prompt, that set became dev, so its 100% shows memory, not skill; a decision needs tickets nobody has tuned on. A is the tempting error: held-out counts only while nobody tunes on it, and a random re-split of tickets already seen would not restore that.",
-        "ar": "حين شكّلت إخفاقات المجموعة المحجوزة (held-out set) الموجّه (prompt) صارت تلك المجموعة مجموعة تطوير (dev set)، فتدل نسبة 100% على الحفظ (memory) لا على المهارة؛ والقرار يحتاج إلى تذاكر لم يضبط عليها أحد الموجّه. والخيار A هو الخطأ المغري (tempting error): فالمجموعة المحجوزة لا قيمة لها إلا ما دام لا يُضبط عليها، وإعادة التقسيم العشوائي (random re-split) لتذاكر سبقت رؤيتها لا تعيد لها ذلك."
+        "en": "Once the held-out misses shaped the prompt, that set became dev, so its 100% shows memory, not skill; a decision needs tickets nobody has tuned on. A is the tempting error: held-out counts only while nobody tunes on it, and a random re-split of the same 30 tickets, which the prompt has already been tuned on, would not restore that.",
+        "ar": "حين شكّلت إخفاقات المجموعة المحجوزة (held-out set) الموجّه (prompt) صارت تلك المجموعة مجموعة تطوير (dev set)، فتدل نسبة 100% على الحفظ (memory) لا على المهارة؛ والقرار يحتاج إلى تذاكر لم يضبط عليها أحد الموجّه. والخيار A هو الخطأ المغري (tempting error): فالمجموعة المحجوزة لا قيمة لها إلا ما دام لا يُضبط عليها، وإعادة التقسيم العشوائي (random re-split) للتذاكر الثلاثين نفسها، وقد ضُبط الموجّه (prompt) عليها بالفعل، لا تعيد لها ذلك."
       }
     },
     {
@@ -62,8 +62,8 @@
       "level": 2,
       "lesson": "2.1",
       "q": {
-        "en": "On Tuesday Yara reports that Najm Desk's Arabic answers are worse than on Monday. Najm Desk loads its prompt only through load_prompt, from a file in Git. Lujain finds that every call logged on both days carries najm_desk_v1@a632d2f0. What does that tell her?",
-        "ar": "يوم الثلاثاء تفيد يارا بأن إجابات نجم ديسك (Najm Desk) العربية أسوأ منها يوم الاثنين. ويحمّل نجم ديسك موجّهه (prompt) من ملف في Git عبر المحمِّل (loader) `load_prompt` وحده. وتجد لجين أن كل استدعاء (call) سُجّل في اليومين يحمل `najm_desk_v1@a632d2f0`. ماذا يخبرها ذلك؟"
+        "en": "On Tuesday Yara reports that Najm Desk's Arabic answers are worse than on Monday. Najm Desk loads its prompt only through load_prompt, from a file in Git. Lujain finds that every call logged on both days carries najm_desk_v1@a632d2f0. What does that tell her about the cause?",
+        "ar": "يوم الثلاثاء تفيد يارا بأن إجابات نجم ديسك (Najm Desk) العربية أسوأ منها يوم الاثنين. ويحمّل نجم ديسك موجّهه (prompt) من ملف في Git عبر المحمِّل (loader) `load_prompt` وحده. وتجد لجين أن كل استدعاء (call) سُجّل في اليومين يحمل `najm_desk_v1@a632d2f0`. ماذا يخبرها ذلك عن السبب (cause)؟"
       },
       "o": {
         "en": [
@@ -98,13 +98,13 @@
           "Merge it as it stands, because PROMPT_VERSION is unchanged and so is the behaviour",
           "Merge it, then let a week of staff feedback in the pilot show whether it is good enough",
           "Merge it once the gate has passed on the new model, and let MODEL changes trigger it",
-          "Merge it once the provider's own ratings show that the cheaper tier suits classification"
+          "Merge it once the provider's published benchmarks show that the cheaper tier suits classification"
         ],
         "ar": [
           "ادمجه كما هو (as it stands)، لأن `PROMPT_VERSION` لم يتغير ولا يتغير السلوك (behaviour) معه",
           "ادمجه ثم دع أسبوعًا من ملاحظات الموظفين (staff feedback) في التجربة التشغيلية (pilot) يبيّن كفايته",
           "ادمجه متى نجحت بوابة التقييم (eval gate) على النموذج (model) الجديد، واجعل تغييرات `MODEL` تشغّلها",
-          "ادمجه متى أظهرت تقييمات المزوّد (provider's ratings) أن الفئة الأرخص (cheaper tier) تناسب التصنيف (classification)"
+          "ادمجه متى أظهرت المقاييس المنشورة (published benchmarks) لدى المزوّد أن الفئة الأرخص (cheaper tier) تناسب التصنيف (classification)"
         ]
       },
       "a": 2,

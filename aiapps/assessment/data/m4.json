@@ -62,27 +62,27 @@
       "level": 2,
       "lesson": "4.2",
       "q": {
-        "en": "In Lujain's comparison table, hybrid search misses q08, q09 and q10, three vocabulary gaps such as \"working from home\" against \"remote work\". She wants a better hybrid column before Fahad's review. Which step is sound?",
-        "ar": "في جدول المقارنة (comparison table) الذي أعدّته لجين، يخطئ البحث الهجين (hybrid search) في q08 وq09 وq10، وهي ثلاث فجوات مفردات (vocabulary gaps) مثل «العمل من المنزل (working from home)» مقابل «العمل عن بُعد (remote work)». وتريد لجين عمودًا هجينًا (hybrid column) أفضل قبل مراجعة (review) فهد. أي خطوة سليمة؟"
+        "en": "In Lujain's comparison table, hybrid search misses q08, q09 and q10, three vocabulary gaps such as \"working from home\" against \"remote work\". The log shows the right chunk is not among the candidates. She wants a better hybrid column before Fahad's review. Which step is honest and could close the gap?",
+        "ar": "في جدول المقارنة (comparison table) الذي أعدّته لجين، يخطئ البحث الهجين (hybrid search) في q08 وq09 وq10، وهي ثلاث فجوات مفردات (vocabulary gaps) مثل «العمل من المنزل (working from home)» مقابل «العمل عن بُعد (remote work)». ويُظهر السجل (log) أن المقطع (chunk) الصحيح ليس بين المرشحين (candidates) أصلًا. وتريد لجين عمودًا هجينًا (hybrid column) أفضل قبل مراجعة (review) فهد. أي خطوة أمينة ويمكن أن تسد الفجوة؟"
       },
       "o": {
         "en": [
-          "Keep the questions and MIN_SIM fixed, test query rewriting or a real embedding, then re-run the table",
-          "Reword the three questions in the policies' own vocabulary until they match, then re-run the table",
-          "Lower MIN_SIM until the three right chunks clear the vector gate, then re-run the table",
-          "Drop the three questions because a toy embedding cannot be expected to pass them, then re-run the table"
+          "Try query rewriting or a real embedding model in the retriever and keep the labelled questions unchanged",
+          "Reword the three labelled questions in the policies' own vocabulary and keep the retriever unchanged",
+          "Lower MIN_SIM until the three right chunks clear the vector gate and keep the labelled questions unchanged",
+          "Add a reranker to reorder the top 20 candidates and keep the labelled questions and MIN_SIM unchanged"
         ],
         "ar": [
-          "إبقاء الأسئلة (questions) و`MIN_SIM` ثابتة، واختبار إعادة كتابة الاستعلام (query rewriting) أو تضمين حقيقي (real embedding)، ثم إعادة تشغيل الجدول",
-          "إعادة صياغة (rewording) الأسئلة الثلاثة (three questions) بمفردات السياسات نفسها (policies' own vocabulary) حتى تتطابق مع نصها، ثم إعادة تشغيل الجدول",
-          "خفض `MIN_SIM` حتى تتجاوز المقاطع (chunks) الثلاثة الصحيحة بوابة المتجهات (vector gate)، ثم إعادة تشغيل (re-run) الجدول",
-          "حذف الأسئلة الثلاثة (three questions) لأن التضمين التجريبي (toy embedding) لا يُنتظر منه اجتيازها، ثم إعادة تشغيل (re-run) الجدول"
+          "تجربة إعادة كتابة الاستعلام (query rewriting) أو تضمين حقيقي (real embedding) في المسترجِع مع إبقاء الأسئلة الموسومة كما هي",
+          "إعادة صياغة (rewording) الأسئلة الموسومة الثلاثة بمفردات السياسات نفسها (policies' own vocabulary) مع إبقاء المسترجِع كما هو",
+          "خفض `MIN_SIM` حتى تتجاوز المقاطع (chunks) الثلاثة الصحيحة بوابة المتجهات (vector gate) مع إبقاء الأسئلة الموسومة كما هي",
+          "إضافة مُعيد ترتيب (reranker) لإعادة ترتيب أعلى 20 مرشحًا (top 20 candidates) مع إبقاء الأسئلة الموسومة و`MIN_SIM` كما هي"
         ]
       },
       "a": 0,
       "why": {
-        "en": "The labelled questions and MIN_SIM are the yardstick: the vocabulary gap is the finding, and the honest response is to change the retriever and measure again on the same questions. Rewording the questions is the tempting shortcut, but it removes the very gap the table exists to expose.",
-        "ar": "الأسئلة الموسومة (labelled questions) و`MIN_SIM` هما المسطرة (yardstick): فجوة المفردات (vocabulary gap) هي النتيجة (finding)، والاستجابة الأمينة تغيير المسترجِع (retriever) ثم القياس (measurement) من جديد على الأسئلة نفسها. وإعادة صياغة الأسئلة اختصار مغرٍ (tempting shortcut)، لكنه يزيل الفجوة ذاتها التي وُضع الجدول لكشفها."
+        "en": "The labelled questions and MIN_SIM are the yardstick: the vocabulary gap is the finding, and the honest response is to change the retriever and measure again on the same questions. Rewording the questions is the tempting shortcut, but it removes the very gap the table exists to expose; lowering MIN_SIM is tuning on the test too, and a reranker only reorders candidates, so it cannot find a chunk that retrieval never returned.",
+        "ar": "الأسئلة الموسومة (labelled questions) و`MIN_SIM` هما المسطرة (yardstick): فجوة المفردات (vocabulary gap) هي النتيجة (finding)، والاستجابة الأمينة تغيير المسترجِع (retriever) ثم القياس (measurement) من جديد على الأسئلة نفسها. وإعادة صياغة الأسئلة اختصار مغرٍ (tempting shortcut)، لكنه يزيل الفجوة ذاتها التي وُضع الجدول لكشفها؛ وخفض `MIN_SIM` ضبط على الاختبار أيضًا، ومُعيد الترتيب (reranker) لا يعيد إلا ترتيب المرشحين (candidates) فلا يجد مقطعًا لم يُرجعه الاسترجاع (retrieval)."
       }
     },
     {
@@ -90,8 +90,8 @@
       "level": 3,
       "lesson": "4.2",
       "q": {
-        "en": "Lujain's refusal test passed on the vector retriever: \"What time does the bus leave?\" got the refusal sentence. After she ships hybrid search, the same question is answered with a citation to the Service Desk hours chunk. The log shows vector search returned nothing and BM25 returned that chunk. What explains it?",
-        "ar": "نجح اختبار الرفض (refusal test) عند لجين مع المسترجِع المتجهي (vector retriever): سؤال «متى تغادر الحافلة» ⁦(What time does the bus leave?)⁩ جاء رده بجملة الرفض (refusal sentence). وبعد أن أطلقت البحث الهجين (hybrid search) صار السؤال نفسه يُجاب باستشهاد (citation) من مقطع ساعات مكتب الخدمة (Service Desk hours chunk). ويُظهر السجل (log) أن البحث المتجهي لم يُرجع شيئًا وأن BM25 أرجع ذلك المقطع. ما التفسير؟"
+        "en": "Lujain's refusal test passed on the vector retriever: \"What time does the bus leave?\" got the refusal sentence. After she switches to hybrid search, the lab's mock model answers the same question with a citation to the Service Desk hours chunk. The log shows vector search returned nothing and BM25 returned that chunk. What explains it?",
+        "ar": "نجح اختبار الرفض (refusal test) عند لجين مع المسترجِع المتجهي (vector retriever): سؤال «متى تغادر الحافلة» ⁦(What time does the bus leave?)⁩ جاء رده بجملة الرفض (refusal sentence). وبعد أن انتقلت إلى البحث الهجين (hybrid search) صار النموذج التجريبي (mock model) في المختبر يجيب عن السؤال نفسه باستشهاد (citation) من مقطع ساعات مكتب الخدمة (Service Desk hours chunk). ويُظهر السجل (log) أن البحث المتجهي لم يُرجع شيئًا وأن BM25 أرجع ذلك المقطع. ما التفسير؟"
       },
       "o": {
         "en": [
@@ -109,8 +109,8 @@
       },
       "a": 2,
       "why": {
-        "en": "The similarity floor applies to the vector list only, so a lexical match on an ordinary word such as \"time\" reaches the model and the answer cites it. Fusion merely combines ranks: it neither rescores cosine similarity nor gates anything, so blaming it misses the cause; test refusals on the retriever you ship.",
-        "ar": "يُطبَّق الحد الأدنى للتشابه (similarity floor) على قائمة المتجهات (vector list) وحدها، فتصل مطابقة معجمية (lexical match) لكلمة عادية مثل «time» إلى النموذج (model) فيستشهد بها الجواب. والدمج (fusion) يجمع الرتب (ranks) فقط: فلا يعيد تسجيل تشابه جيب التمام (cosine similarity) ولا يحجب شيئًا، ولذلك فلومه يخطئ السبب؛ فاختبر الرفض (refusals) على المسترجِع (retriever) الذي ستطلقه."
+        "en": "The similarity floor applies to the vector list only, so a lexical match on an ordinary word such as \"time\" reaches the model and the answer cites it. Fusion merely combines ranks: it neither rescores cosine similarity nor gates anything, and the earlier refusal came from the code (no hits, no model call), not from the prompt. A real model might still refuse, so test refusals on the retriever you ship.",
+        "ar": "يُطبَّق الحد الأدنى للتشابه (similarity floor) على قائمة المتجهات (vector list) وحدها، فتصل مطابقة معجمية (lexical match) لكلمة عادية مثل «time» إلى النموذج (model) فيستشهد بها الجواب. والدمج (fusion) يجمع الرتب (ranks) فقط: فلا يعيد تسجيل تشابه جيب التمام (cosine similarity) ولا يحجب شيئًا، وجملة الرفض السابقة جاءت من الشيفرة (code) لا من الموجّه (prompt): لا مقاطع فلا استدعاء للنموذج. وقد يرفض نموذج حقيقي مع ذلك، فاختبر الرفض (refusals) على المسترجِع (retriever) الذي ستطلقه."
       }
     }
   ],

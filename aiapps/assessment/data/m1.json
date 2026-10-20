@@ -39,22 +39,22 @@
       },
       "o": {
         "en": [
-          "Call `count_tokens` on real Arabic tickets with her model id, as counts vary by model",
+          "Call `count_tokens` on real Arabic tickets with the model id she will run, as that sets her bill",
           "Count real Arabic tickets with `tiktoken`, as it is a popular and well-tested tokenizer",
-          "Scale the English count by the widely quoted Arabic ratio, as it saves an API call",
+          "Call `count_tokens` on real Arabic tickets with any model id to hand, as every Claude model counts text alike",
           "Divide Arabic character counts by four, as four characters per token is the usual rule"
         ],
         "ar": [
-          "تستدعي `count_tokens` على تذاكر عربية حقيقية (real Arabic tickets)، لأن العدّ يختلف باختلاف النموذج (model)",
+          "تستدعي `count_tokens` على تذاكر عربية حقيقية (real Arabic tickets) بمعرّف النموذج (model id) الذي ستشغّله، لأن ذلك هو العدّ الذي ستُحاسَب عليه",
           "تعدّ التذاكر العربية الحقيقية (real Arabic tickets) باستخدام `tiktoken`، لأنه محلّل رموز (tokenizer) شائع وموثوق",
-          "تضرب العدد الإنجليزي (English count) في النسبة العربية المتداولة (quoted Arabic ratio)، لأن ذلك يوفّر استدعاءً (API call)",
+          "تستدعي `count_tokens` على تذاكر عربية حقيقية (real Arabic tickets) بأي معرّف نموذج (model id) في متناولها، لأن كل نماذج Claude تعدّ النص نفسه بالطريقة نفسها",
           "تقسم عدد الأحرف العربية (Arabic characters) على أربعة، لأن أربعة أحرف لكل رمز (token) هي القاعدة المعتادة"
         ]
       },
       "a": 0,
       "why": {
-        "en": "Counts are model-specific and an Arabic word may split into several tokens, so the reliable number comes from `count_tokens` for the model you will run. `tiktoken` is another vendor's tokenizer and undercounts for Claude, and fixed ratios are only guesses.",
-        "ar": "تختلف الأعداد من نموذج إلى آخر (counts are model-specific)، وقد تنقسم الكلمة العربية (Arabic word) إلى عدة رموز (tokens)، ولذلك يأتي الرقم الموثوق (reliable number) من `count_tokens` للنموذج الذي ستشغّله. أما `tiktoken` فهو محلّل رموز (tokenizer) لمزوّد آخر (another vendor) ويقلّل العدّ (undercounts) مع Claude، وأما النسب الثابتة (fixed ratios) فمجرد تخمين (guesses)."
+        "en": "Counts are model-specific and an Arabic word may split into several tokens, so the reliable number comes from `count_tokens` for the model you will run; some newer models count the same text as about 30% more tokens. `tiktoken` is another vendor's tokenizer and undercounts for Claude, and four characters per token is only a rough rule for English prose.",
+        "ar": "تختلف الأعداد من نموذج إلى آخر (counts are model-specific)، وقد تنقسم الكلمة العربية (Arabic word) إلى عدة رموز (tokens)، ولذلك يأتي الرقم الموثوق (reliable number) من `count_tokens` للنموذج الذي ستشغّله؛ فبعض النماذج الأحدث تعدّ النص نفسه بنحو 30% رمزًا أكثر. أما `tiktoken` فهو محلّل رموز (tokenizer) لمزوّد آخر (another vendor) ويقلّل العدّ (undercounts) مع Claude، وأما أربعة أحرف لكل رمز فقاعدة تقريبية (rough rule) للنثر الإنجليزي (English prose) فقط."
       }
     },
     {
@@ -90,27 +90,27 @@
       "level": 3,
       "lesson": "1.2",
       "q": {
-        "en": "Hind wants a digest at 07:00: for each of the 40 tickets opened overnight, fetch its status from TicketHub and write a one-line summary. The steps never vary. Lujain proposes giving the model the `get_ticket_status` tool inside an agent loop. What is the best design?",
-        "ar": "تريد هند ملخصًا صباحيًا (digest) في الساعة 07:00: لكل تذكرة من التذاكر الأربعين المفتوحة طوال الليل (opened overnight)، تُجلب حالتها (status) من TicketHub ويُكتب لها ملخص من سطر واحد (one-line summary). والخطوات ثابتة لا تتغير (steps never vary). وتقترح لجين إعطاء النموذج (model) أداة `get_ticket_status` داخل حلقة وكيل (agent loop). ما أفضل تصميم (best design)؟"
+        "en": "Hind wants a digest at 07:00: for each of the 40 tickets opened overnight, fetch its status from TicketHub and write a one-line summary. Lujain proposes giving the model the `get_ticket_status` tool inside an agent loop. What is the best design?",
+        "ar": "تريد هند ملخصًا صباحيًا (digest) في الساعة 07:00: لكل تذكرة من التذاكر الأربعين المفتوحة طوال الليل (opened overnight)، تُجلب حالتها (status) من TicketHub ويُكتب لها ملخص من سطر واحد (one-line summary). وتقترح لجين إعطاء النموذج (model) أداة `get_ticket_status` داخل حلقة وكيل (agent loop). ما أفضل تصميم (best design)؟"
       },
       "o": {
         "en": [
-          "Use the loop with a step cap of 40, so the model handles one ticket per step",
+          "Use the loop with a step cap, so a stuck run cannot spend without limit",
           "Look up each ticket in your own code and call the model only to write the summary",
           "Use the loop but force the tool with `tool_choice`, so the model cannot skip a ticket",
-          "Give the model all 40 ids in one prompt and let it decide which tickets to look up"
+          "Put the 40 ids in one prompt and ask for each status and summary, as one call costs least"
         ],
         "ar": [
-          "تستخدم الحلقة (loop) مع حدّ خطوات (step cap) قدره 40، فيعالج النموذج (model) تذكرة واحدة في كل خطوة",
+          "تستخدم الحلقة (loop) مع حدّ خطوات (step cap)، كي لا يستنزف تشغيلٌ عالق (stuck run) الميزانية بلا حدود",
           "تجلب حالة كل تذكرة بنفسك في شيفرتك (your own code) ثم تستدعي النموذج (model) لكتابة الملخص (summary) فقط",
           "تستخدم الحلقة (loop) وتُجبر الأداة (tool) باستخدام `tool_choice` كي لا يتخطى النموذج (model) أي تذكرة",
-          "تعطي النموذج (model) المعرّفات الأربعين (40 ids) في موجّه (prompt) واحد وتتركه يقرر أي التذاكر يبحث عنها"
+          "تضع المعرّفات الأربعين (40 ids) في موجّه (prompt) واحد وتطلب كل حالة وملخصها، لأن استدعاءً (call) واحدًا هو الأقل كلفة"
         ]
       },
       "a": 1,
       "why": {
-        "en": "When the steps are fixed, call the tool in your own code and use the model only for the part that needs language; loop only when the model must choose what to do next. A is the tempting one: a cap limits the damage, but the loop still resends the growing history on every step and adds nothing a plain function call would not do.",
-        "ar": "حين تكون الخطوات ثابتة (fixed steps)، تستدعي الأداة (tool) في شيفرتك (your own code) وتستخدم النموذج (model) فيما يحتاج إلى لغة فقط؛ ولا تستخدم الحلقة (loop) إلا حين يجب على النموذج أن يختار ما يفعله بعد ذلك (choose what to do next). والخيار A هو المغري (tempting): فحدّ الخطوات (step cap) يقلّل الضرر، لكن الحلقة تعيد إرسال السجل المتنامي (growing history) في كل خطوة، ولا تضيف شيئًا لا يفعله استدعاء دالة عادي (function call)."
+        "en": "When the steps are fixed (look up, then format), call the tool in your own code and use the model only for the part that needs language; loop only when the model must choose what to do next. A is the tempting one: a cap limits the damage, but the loop still resends the growing history on every step and adds nothing a plain function call would not do. C adds a forced `tool_choice`, which the newest models reject, to a loop that was not needed, and D gives the model no way to look anything up, so it would invent the statuses.",
+        "ar": "حين تكون الخطوات ثابتة (fixed steps)، تستدعي الأداة (tool) في شيفرتك (your own code) وتستخدم النموذج (model) فيما يحتاج إلى لغة فقط؛ ولا تستخدم الحلقة (loop) إلا حين يجب على النموذج أن يختار ما يفعله بعد ذلك (choose what to do next). والخيار A هو المغري (tempting): فحدّ الخطوات (step cap) يقلّل الضرر، لكن الحلقة تعيد إرسال السجل المتنامي (growing history) في كل خطوة، ولا تضيف شيئًا لا يفعله استدعاء دالة عادي (function call). أما C فيضيف `tool_choice` مفروضًا (forced) ترفضه أحدث النماذج إلى حلقة لا حاجة إليها، وأما D فلا يمنح النموذج (model) أي وسيلة للبحث، فيختلق الحالات (invent the statuses)."
       }
     }
   ],

@@ -6,27 +6,27 @@
    "level": 1,
    "lesson": "5.1",
    "q": {
-    "en": "Maha reviews a Najm Desk design. Code first asks a cheap model to label each staff message, then sends it down one of three fixed paths, and the model only writes text inside each path. How does Anthropic's distinction classify it?",
-    "ar": "تراجع مها تصميمًا لنجم ديسك (Najm Desk): تطلب الشيفرة (code) أولًا من نموذج رخيص (cheap model) أن يضع تصنيفًا (label) لكل رسالة موظف (staff message)، ثم ترسلها عبر أحد ثلاثة مسارات ثابتة (fixed paths)، ولا يكتب النموذج (model) إلا النص داخل كل مسار. كيف يصنّف تمييز Anthropic هذا التصميم؟"
+    "en": "Maha reviews a Najm Desk design. Code first asks a cheap model to label each staff message, checks the label against a fixed list, then sends the message down one of three fixed paths, and the model only writes text inside each path. How does Anthropic's distinction classify it?",
+    "ar": "تراجع مها تصميمًا لنجم ديسك (Najm Desk): تطلب الشيفرة (code) أولًا من نموذج رخيص (cheap model) أن يضع تصنيفًا (label) لكل رسالة موظف (staff message)، وتتحقق من التصنيف مقابل قائمة ثابتة (fixed list)، ثم ترسلها عبر أحد ثلاثة مسارات ثابتة (fixed paths)، ولا يكتب النموذج (model) إلا النص داخل كل مسار. كيف يصنّف تمييز Anthropic هذا التصميم؟"
    },
    "o": {
     "en": [
      "An agent, because one message triggers several model calls in sequence",
      "A workflow, because the code fixes the paths and the model works inside them",
-     "An agent, because a model's output chooses which of the three paths runs",
+     "An agent, because the model, not the code, decides which of the three paths runs",
      "A workflow, but only when the paths run at the same time, not one after another"
     ],
     "ar": [
      "وكيل (agent)، لأن الرسالة الواحدة تُطلق عدة استدعاءات للنموذج (model calls) بالتتابع",
-     "سير عمل (workflow)، لأن الشيفرة (code) تحدد المسارات (paths) والنموذج يعمل داخلها",
-     "وكيل (agent)، لأن مخرجات النموذج (model output) تختار أي مسار من الثلاثة سيعمل",
+     "سير عمل (workflow)، لأن الشيفرة (code) تحدد المسارات (paths) كلها والنموذج يعمل داخلها",
+     "وكيل (agent)، لأن النموذج (model) لا الشيفرة (code) هو من يقرر أي مسار من الثلاثة سيعمل",
      "سير عمل (workflow)، لكن فقط إذا عملت المسارات (paths) في الوقت نفسه لا الواحد تلو الآخر"
     ]
    },
    "a": 1,
    "why": {
-    "en": "In a workflow the code defines the path and the model works inside the steps; here the model only supplies a label that code checks and looks up. C is tempting, but using a model to classify is not the same as letting it direct the process or decide when it is done.",
-    "ar": "في سير العمل (workflow) تحدد الشيفرة (code) المسار ويعمل النموذج (model) داخل الخطوات؛ وهنا لا يعطي النموذج إلا تصنيفًا (label) تفحصه الشيفرة وتبحث عنه في جدول. والخيار C مغرٍ، لكن استخدام النموذج في التصنيف (classification) لا يعني أنه يوجّه العملية بنفسه أو يقرر متى تنتهي."
+    "en": "In a workflow the code defines the path and the model works inside the steps; here the model only supplies a label that code checks and looks up. C is tempting because the label starts the routing, but the code, not the model, picks the path, and a model that classifies is not directing the process or deciding when it is done.",
+    "ar": "في سير العمل (workflow) تحدد الشيفرة (code) المسار ويعمل النموذج (model) داخل الخطوات؛ وهنا لا يعطي النموذج إلا تصنيفًا (label) تفحصه الشيفرة وتبحث عنه في جدول. والخيار C مغرٍ لأن التصنيف يبدأ التوجيه (routing)، لكن الشيفرة لا النموذج هي التي تختار المسار، والنموذج الذي يصنّف لا يوجّه العملية ولا يقرر متى تنتهي."
    }
   },
   {
@@ -34,8 +34,8 @@
    "level": 2,
    "lesson": "5.1",
    "q": {
-    "en": "Lujain builds a three-step chain for Najm Bank's finance team: extract supplier names and amounts from an invoice, convert the amounts, then draft a payment note. Tariq wants a gate after step one that stops a bad extraction before step two runs. Which gate fits best?",
-    "ar": "تبني لجين لفريق المالية في بنك نجم (Najm Bank) سلسلة من ثلاث خطوات (three-step chain): تستخرج (extract) أسماء الموردين (supplier names) والمبالغ (amounts) من الفاتورة (invoice)، ثم تحوّل المبالغ، ثم تصوغ مذكرة دفع (payment note). ويريد طارق بوابة (gate) بعد الخطوة الأولى توقف أي استخراج خاطئ قبل أن تعمل الخطوة الثانية. أي بوابة هي الأنسب؟"
+    "en": "Lujain builds a three-step chain for Najm Bank's finance team: extract supplier names and amounts from an invoice, convert the amounts, then draft a payment note. Tariq wants an automatic gate after step one that can run on all of the hundreds of invoices a day and stops a bad extraction before step two runs. Which gate fits best?",
+    "ar": "تبني لجين لفريق المالية في بنك نجم (Najm Bank) سلسلة من ثلاث خطوات (three-step chain): تستخرج (extract) أسماء الموردين (supplier names) والمبالغ (amounts) من الفاتورة (invoice)، ثم تحوّل المبالغ، ثم تصوغ مذكرة دفع (payment note). ويريد طارق بوابة (gate) آلية بعد الخطوة الأولى تستطيع العمل على مئات الفواتير كل يوم وتوقف أي استخراج خاطئ قبل أن تعمل الخطوة الثانية. أي بوابة هي الأنسب؟"
    },
    "o": {
     "en": [
@@ -53,8 +53,8 @@
    },
    "a": 3,
    "why": {
-    "en": "A gate is ordinary code that checks what code can, so a schema check and amounts found in the source stop a bad extraction at step one, cheaply. B is tempting, but it adds a model call that can be wrong too, and a confidence score confirms nothing against the invoice.",
-    "ar": "البوابة (gate) شيفرة (code) عادية تفحص ما تستطيع الشيفرة فحصه، فالتحقق من المخطط (schema) ووجود المبالغ في المصدر (source) يوقفان الاستخراج الخاطئ مبكرًا وبكلفة زهيدة. والخيار B مغرٍ، لكنه يضيف استدعاءً للنموذج (model call) قد يخطئ بدوره، ودرجة الثقة (confidence score) لا تؤكد شيئًا مقابل الفاتورة."
+    "en": "A gate is ordinary code that checks what code can, so a schema check and amounts found in the source stop a bad extraction at step one, cheaply. B is tempting, but it adds a model call that can be wrong too, and a confidence score confirms nothing against the invoice. Sending every extraction to a person is not an automatic gate and cannot keep up with hundreds a day.",
+    "ar": "البوابة (gate) شيفرة (code) عادية تفحص ما تستطيع الشيفرة فحصه، فالتحقق من المخطط (schema) ووجود المبالغ في المصدر (source) يوقفان الاستخراج الخاطئ مبكرًا وبكلفة زهيدة. والخيار B مغرٍ، لكنه يضيف استدعاءً للنموذج (model call) قد يخطئ بدوره، ودرجة الثقة (confidence score) لا تؤكد شيئًا مقابل الفاتورة. أما إرسال كل استخراج إلى شخص فليس بوابة آلية ولا يواكب مئات الفواتير يوميًا."
    }
   },
   {
@@ -62,18 +62,18 @@
    "level": 2,
    "lesson": "5.2",
    "q": {
-    "en": "Lujain's pipeline fact-checks a policy-change notice for Hind in parallel. Of its five claims, three come back supported, one unsupported, and one check misses its deadline. What status should the report give the notice?",
-    "ar": "يتحقق خط الأنابيب (pipeline) الذي بنته لجين من ادعاءات (claims) إشعار تغيير سياسة (policy-change notice) لصالح هند بالتوازي (in parallel). من بين ادعاءاته الخمسة، ثلاثة تعود مدعومة (supported)، وواحد غير مدعوم (unsupported)، وفحص واحد يتجاوز مهلته (deadline). أي حالة (status) يجب أن يمنحها التقرير للإشعار؟"
+    "en": "Lujain's pipeline fact-checks a policy-change notice for Hind in parallel. Of its five claims, three come back supported, one unsupported, and one check misses its deadline. What status does gate 3 give the notice?",
+    "ar": "يتحقق خط الأنابيب (pipeline) الذي بنته لجين من ادعاءات (claims) إشعار تغيير سياسة (policy-change notice) لصالح هند بالتوازي (in parallel). من بين ادعاءاته الخمسة، ثلاثة تعود مدعومة (supported)، وواحد غير مدعوم (unsupported)، وفحص واحد يتجاوز مهلته (deadline). أي حالة (status) تمنحها البوابة الثالثة (gate 3) للإشعار؟"
    },
    "o": {
     "en": [
-     "`needs_review`, because an unsupported claim has to reach a person at once",
+     "`needs_review`, because one claim is unsupported, whatever else stays unrun",
      "`partial`, because one check could not run, so the report has a gap in it",
      "`failed`, because one fact-check gave up before it could return a verdict",
      "`ok`, because most claims are supported and the missing check can be ignored"
     ],
     "ar": [
-     "`needs_review`، لأن ادعاءً غير مدعوم (unsupported claim) يجب أن يصل إلى شخص",
+     "`needs_review`، لأن ادعاءً واحدًا غير مدعوم (unsupported) مهما بقي غير مفحوص",
      "`partial`، لأن فحصًا واحدًا (check) لم يعمل، فيبقى في التقرير فراغ (gap)",
      "`failed`، لأن أحد الفحوص (fact-checks) استسلم قبل أن يُرجع حكمًا (verdict) نهائيًا",
      "`ok`، لأن معظم الادعاءات (claims) مدعومة ويمكن تجاهل الفحص المفقود (missing check)"
@@ -81,8 +81,8 @@
    },
    "a": 0,
    "why": {
-    "en": "The status follows the worst finding: an unsupported claim means a person must review the notice, and the unfinished check is still listed as unchecked. B is tempting because a check could not run, but `partial` applies only when no claim is unsupported.",
-    "ar": "تتبع الحالة (status) أسوأ ما وُجد: الادعاء غير المدعوم (unsupported claim) يعني أن شخصًا يجب أن يراجع الإشعار، ويبقى الفحص غير المنجز مذكورًا في التقرير باسم «unchecked». والخيار B مغرٍ لأن فحصًا لم يعمل، لكن `partial` لا تنطبق إلا حين لا يوجد ادعاء غير مدعوم."
+    "en": "Gate 3 gives `needs_review` when any claim is unsupported or contradicted, and `partial` only when a check could not run and no claim is unsupported. The unfinished check is still listed as unchecked. B is tempting because a check could not run, but an unsupported claim settles the status first.",
+    "ar": "تمنح البوابة الثالثة (gate 3) الحالة `needs_review` متى وُجد أي ادعاء غير مدعوم أو متناقض، ولا تمنح `partial` إلا حين يتعذر تشغيل فحص ولا يوجد ادعاء غير مدعوم. ويبقى الفحص غير المنجز مذكورًا في التقرير باسم «unchecked». والخيار B مغرٍ لأن فحصًا لم يعمل، لكن الادعاء غير المدعوم هو الذي يحسم الحالة أولًا."
    }
   },
   {

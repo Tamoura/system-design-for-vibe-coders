@@ -70,13 +70,13 @@
           "Keep it in the system prompt, because Najm's server supplied it",
           "Offer it as a tool and tell the model to call it first",
           "Keep it in the system prompt, but wrap it in a labelled tag",
-          "Quote it as a document in a user turn, marked as data only"
+          "Quote it as a document in a user turn, not the system prompt"
         ],
         "ar": [
           "يُبقيه في موجّه النظام (system prompt)، لأن خادم نجم نفسه هو الذي قدّمه",
           "يعرضه أداةً (tool) ويطلب من النموذج (model) أن يستدعيها أولًا",
           "يُبقيه في موجّه النظام (system prompt)، لكنه يحيط النص بوسم (tag) مُسمّى",
-          "يقتبسه وثيقةً في دور المستخدم (user turn)، على أنها بيانات (data)"
+          "يقتبسه وثيقةً في دور المستخدم (user turn)، لا في موجّه النظام"
         ]
       },
       "a": 3,
@@ -95,22 +95,22 @@
       },
       "o": {
         "en": [
-          "Drop it, because twenty clean runs show the model resists injection",
-          "Drop it, and tighten the data-not-instructions line in `SYSTEM` instead",
-          "Keep it, because a clean sample cannot promise the model never obeys",
-          "Keep it, but only for tickets whose text looks like an instruction"
+          "Drop it, because twenty clean runs show that the model resists injection",
+          "Drop it, and rely on the data-not-instructions line in `SYSTEM` instead",
+          "Keep it, because the gate is code that holds whatever the model does",
+          "Keep it until a hundred runs in a row come back clean, then drop it"
         ],
         "ar": [
           "تُلغيها، لأن عشرين تشغيلًا نظيفًا تُظهر أن النموذج (model) يقاوم حقن الموجّه (prompt injection)",
-          "تُلغيها وتشدّد سطر «بيانات لا تعليمات» (data, not instructions) في `SYSTEM` بدلًا منها",
-          "تُبقيها، لأن عيّنة نظيفة (clean sample) لا تضمن أن النموذج (model) لن يطيع أبدًا",
-          "تُبقيها، لكن فقط للتذاكر التي يشبه نصها تعليمةً (instruction)"
+          "تُلغيها وتعتمد بدلًا منها على سطر «بيانات لا تعليمات» (data, not instructions) في `SYSTEM`",
+          "تُبقيها، لأن البوابة (gate) شيفرة (code) تصمد مهما فعل النموذج (model)",
+          "تُبقيها إلى أن تأتي مئة تشغيل متتالية نظيفة، ثم تُلغيها"
         ]
       },
       "a": 2,
       "why": {
-        "en": "A sample of twenty runs measures how often the model obeys today; it cannot show that it never will, while the gate is code that holds whatever the model does. Dropping it on that evidence (A) removes a control that does not depend on the model.",
-        "ar": "تقيس عيّنة من عشرين تشغيلًا (runs) كم مرة يطيع النموذج (model) اليوم، ولا تُثبت أنه لن يطيع أبدًا؛ أما البوابة (gate) فشيفرة (code) تصمد مهما فعل النموذج. وإلغاؤها استنادًا إلى هذا الدليل (الخيار A) يزيل ضابطًا (control) لا يعتمد على النموذج."
+        "en": "Twenty runs measure how often the model obeys today, and no number of clean runs shows that it never will (D); the gate is code that holds whatever the model does. Dropping it on that evidence (A) removes a control that does not depend on the model, and a prompt line (B) is text the model may still ignore.",
+        "ar": "تقيس عشرون تشغيلًا (runs) كم مرة يطيع النموذج (model) اليوم، ولا يُثبت أي عدد من التشغيلات النظيفة أنه لن يطيع أبدًا (الخيار D)؛ أما البوابة (gate) فشيفرة (code) تصمد مهما فعل النموذج. وإلغاؤها استنادًا إلى هذا الدليل (الخيار A) يزيل ضابطًا (control) لا يعتمد على النموذج، وسطر الموجّه (الخيار B) نص قد يتجاهله النموذج."
       }
     }
   ],
