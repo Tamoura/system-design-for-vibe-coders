@@ -655,3 +655,4 @@ The team's quick view across the portfolio:
 - Martin Zinkevich, *Rules of Machine Learning* (Google) — https://developers.google.com/machine-learning/guides/rules-of-ml
 - NIST AI Risk Management Framework (third-party and supply-chain considerations) — https://www.nist.gov/itl/ai-risk-management-framework
 - OWASP Top 10 for Large Language Model Applications — https://owasp.org/www-project-top-10-for-large-language-model-applications/
+- [*Building AI Applications & Agents: Zero to Hero*, lesson 4.1 — RAG: embeddings, chunking, hybrid search and why it fails](../aiapps/index.html#/4.1) — the build-and-ship view of this topic

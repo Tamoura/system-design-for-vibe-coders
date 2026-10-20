@@ -642,3 +642,4 @@
 - ISO/IEC 42001:2023 — https://www.iso.org/standard/81230.html
 - IAPP، مجال المعرفة (BoK) لشهادة AIGP — https://iapp.org/certify/aigp/
 - [*اختبار البرمجيات من الصفر إلى الاحتراف في عصر الذكاء الاصطناعي (Software Testing: Zero to Hero in the AI Era)*، الدرس 7.3 — السلامة والمتانة والعدالة والمراقبة (Safety, robustness, fairness and monitoring)](../testing/index.ar.html#/7.3) — منظور الاختبار (testing) لهذا الموضوع
+- [*بناء تطبيقات الذكاء الاصطناعي والوكلاء من الصفر إلى الاحتراف (Building AI Applications & Agents: Zero to Hero)*، الدرس 12.1 — تقييم الوكلاء: مجموعات التقييم والمقيِّمات وبوابات الانحدار (Evaluating agents: eval sets, graders and regression gates)](../aiapps/index.ar.html#/12.1) — منظور البناء والتسليم (build and ship) لهذا الموضوع

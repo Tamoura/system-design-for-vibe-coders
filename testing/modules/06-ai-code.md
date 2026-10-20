@@ -1151,3 +1151,4 @@ Copy `testing/sample/`. No exercise needs an API key.
 - Playwright documentation, including the MCP server and test agents — https://playwright.dev/
 - pytest documentation — https://docs.pytest.org/
 - OWASP GenAI Security Project, Top 10 for LLM Applications — https://genai.owasp.org/
+- [*Building AI Applications & Agents: Zero to Hero*, lesson 0.3 — Your build partner: directing Claude Code to build agents](../aiapps/index.html#/0.3) — the build-and-ship view of this topic

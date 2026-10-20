@@ -1,0 +1,8 @@
+{
+  "hardware": ["laptop", "monitor", "keyboard", "mouse", "docking", "battery", "screen", "printer", "headset", "charger", "webcam"],
+  "access": ["password", "login", "log in", "locked out", "permission", "access to", "mfa", "authenticator", "account", "reset"],
+  "network": ["wifi", "wi-fi", "network", "vpn", "internet", "dns", "connection", "bandwidth", "offline"],
+  "software": ["install", "licence", "license", "excel", "outlook", "teams", "update", "crash", "application", "app ", "software"],
+  "security": ["phishing", "suspicious", "malware", "virus", "breach", "stolen", "spam", "ransomware", "scam"],
+  "other": []
+}

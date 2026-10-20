@@ -1,0 +1,1 @@
+Tickets are prioritised P1 to P4. P1 means a service is down for many staff and gets an immediate response. P2 is a major problem with a workaround, answered within 4 hours. P3 and P4 are answered within 2 and 5 business days.

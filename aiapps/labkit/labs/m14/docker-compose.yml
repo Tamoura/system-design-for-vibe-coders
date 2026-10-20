@@ -1,0 +1,20 @@
+# labs/m14/docker-compose.yml
+# From aiapps/labkit: docker compose -f labs/m14/docker-compose.yml up --build
+name: najm-desk
+services:
+  mock:                                 # offline stand-in for the model API: not in staging or production
+    build: {context: ../.., dockerfile: labs/m14/Dockerfile, target: mock}
+  api:
+    build: {context: ../.., dockerfile: labs/m14/Dockerfile, target: runtime, args: {GIT_SHA: "${GIT_SHA:-dev}"}}
+    ports: ["8000:8000"]
+    environment:                        # configuration, not code: one image for every environment
+      APP_ENV: dev
+      ANTHROPIC_BASE_URL: http://mock:8787
+      ANTHROPIC_API_KEY: mock           # offline only: a real key comes from the secret store, never a file in Git
+      PROMPT_VERSION: ${PROMPT_VERSION:-najm_desk_v1}
+      CANARY_PROMPT: ${CANARY_PROMPT:-}
+      CANARY_PERCENT: ${CANARY_PERCENT:-0}
+    depends_on: [mock]
+    read_only: true                     # nothing can write to the container's filesystem
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]

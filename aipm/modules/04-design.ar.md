@@ -709,3 +709,4 @@ sequenceDiagram
 - OWASP، أهم عشرة مخاطر لتطبيقات النماذج اللغوية الكبيرة (Top 10 for LLM Applications) (OWASP GenAI Security Project) — https://genai.owasp.org
 - Model Context Protocol، الوثائق الرسمية (official documentation) — https://modelcontextprotocol.io
 - Parasuraman, R., Sheridan, T. B. and Wickens, C. D. (2000). "A model for types and levels of human interaction with automation." *IEEE Transactions on Systems, Man, and Cybernetics — Part A*, 30(3). — نموذج لأنواع ومستويات تفاعل الإنسان مع الأتمتة.
+- [*بناء تطبيقات الذكاء الاصطناعي والوكلاء من الصفر إلى الاحتراف (Building AI Applications & Agents: Zero to Hero)*، الدرس 7.1 — المعمارية وتصميم الاستقلالية: سير العمل أم الوكيل (Architecture and autonomy design: workflow or agent)](../aiapps/index.ar.html#/7.1) — منظور البناء والتسليم (build and ship) لهذا الموضوع

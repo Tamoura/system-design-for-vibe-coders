@@ -1,0 +1,32 @@
+[
+ {
+  "name": "Salem",
+  "team": "Platform Engineering",
+  "email": "salem@najm.example"
+ },
+ {
+  "name": "Rayan",
+  "team": "Developer Enablement",
+  "email": "rayan@najm.example"
+ },
+ {
+  "name": "Lujain",
+  "team": "Developer Enablement",
+  "email": "lujain@najm.example"
+ },
+ {
+  "name": "Maha",
+  "team": "Site Reliability",
+  "email": "maha@najm.example"
+ },
+ {
+  "name": "Noura",
+  "team": "Application Security",
+  "email": "noura@najm.example"
+ },
+ {
+  "name": "Tariq",
+  "team": "Mobile Engineering",
+  "email": "tariq@najm.example"
+ }
+]

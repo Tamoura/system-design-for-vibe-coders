@@ -1,0 +1,10 @@
+{"id": "q01", "question": "How many days a week can I work remotely?", "relevant": ["remote-work"], "note": "plain: words in common with the policy"}
+{"id": "q02", "question": "How quickly is a P2 ticket answered?", "relevant": ["ticket-priorities"], "note": "exact token: P2"}
+{"id": "q03", "question": "How do I report a suspicious email?", "relevant": ["phishing"], "note": "plain"}
+{"id": "q04", "question": "Can I paste customer data into external AI tools?", "relevant": ["ai-tools", "data-classification"], "note": "two documents hold the answer"}
+{"id": "q05", "question": "Which days is the Service Desk open?", "relevant": ["service-desk-hours"], "note": "plain"}
+{"id": "q06", "question": "I lost my phone, what happens to my authenticator?", "relevant": ["mfa"], "note": "plain"}
+{"id": "q07", "question": "My VPN will not connect from home, what should I try?", "relevant": ["vpn"], "note": "one rare word (VPN) among many common ones"}
+{"id": "q08", "question": "What are the working from home rules?", "relevant": ["remote-work"], "note": "vocabulary gap: working from home vs remote work"}
+{"id": "q09", "question": "How long must a password be?", "relevant": ["password-reset"], "note": "vocabulary gap: long vs at least 14 characters"}
+{"id": "q10", "question": "What happens to my account when I leave the bank?", "relevant": ["leavers"], "note": "vocabulary gap: leave vs leavers, account vs accounts"}

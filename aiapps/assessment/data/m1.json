@@ -1,0 +1,135 @@
+{
+  "area": "m1",
+  "questions": [
+    {
+      "id": "m1-1",
+      "level": 1,
+      "lesson": "1.1",
+      "q": {
+        "en": "Staff say the Najm Desk prototype forgets what they told it one message ago. Lujain's handler sends only the newest user message on each call. She adds \"Remember everything the user tells you\" to the system prompt and redeploys. Will that fix it?",
+        "ar": "يشكو الموظفون من أن النموذج الأولي (prototype) لنجم ديسك (Najm Desk) ينسى ما قالوه له قبل رسالة واحدة. ويرسل معالج الطلبات (handler) الذي كتبته لجين الرسالة الأحدث للمستخدم (newest user message) وحدها في كل استدعاء (call). فأضافت إلى موجّه النظام (system prompt) عبارة «تذكّر كل ما يخبرك به المستخدم (Remember everything the user tells you)» وأعادت النشر (redeploy). هل يحل ذلك المشكلة؟"
+      },
+      "o": {
+        "en": [
+          "Yes, because the model saves what the system prompt tells it to remember",
+          "Yes, because the instruction makes the model keep a summary of each chat",
+          "No, because the model keeps nothing between calls; the code must resend it",
+          "No, because a system prompt is read once per conversation, not on every call"
+        ],
+        "ar": [
+          "نعم، لأن النموذج (model) يحفظ ما يطلب منه موجّه النظام (system prompt) تذكّره",
+          "نعم، لأن التعليمة (instruction) تجعل النموذج (model) يحتفظ بملخّص (summary) لكل محادثة (chat)",
+          "لا، لأن النموذج (model) لا يحتفظ بشيء بين الاستدعاءات (calls)، وعلى الشيفرة (code) أن تعيد إرساله",
+          "لا، لأن موجّه النظام (system prompt) يُقرأ مرة واحدة في المحادثة (conversation) لا في كل استدعاء (call)"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Memory is whatever your code resends, so the fix is to send the earlier messages, not to ask the model to remember. A is the tempting shortcut: a system prompt is just more input on each call and gives the model no place to store anything.",
+        "ar": "الذاكرة (memory) هي ما تعيد شيفرتك (code) إرساله فقط، ولذلك يكون الحل بإرسال الرسائل السابقة (earlier messages) لا بأن نطلب من النموذج (model) أن يتذكّر. والخيار A هو الاختصار المغري (tempting shortcut)؛ فموجّه النظام (system prompt) مجرد مدخلات (input) إضافية في كل استدعاء (call)، ولا يمنح النموذج (model) مكانًا يخزّن فيه شيئًا."
+      }
+    },
+    {
+      "id": "m1-2",
+      "level": 2,
+      "lesson": "1.1",
+      "q": {
+        "en": "Fahad asks Lujain to size the context budget for Najm Desk, where staff write in English and Arabic. So far she has counted only English text. How should she estimate the tokens for Arabic conversations?",
+        "ar": "يطلب فهد من لجين تقدير ميزانية السياق (context budget) لنجم ديسك (Najm Desk)، حيث يكتب الموظفون بالإنجليزية (English) والعربية (Arabic). ولم تحصِ لجين حتى الآن سوى النص الإنجليزي (English text). كيف ينبغي أن تقدّر عدد الرموز (tokens) في المحادثات العربية (Arabic conversations)؟"
+      },
+      "o": {
+        "en": [
+          "Call `count_tokens` on real Arabic tickets with the model id she will run, as that sets her bill",
+          "Count real Arabic tickets with `tiktoken`, as it is a popular and well-tested tokenizer",
+          "Call `count_tokens` on real Arabic tickets with any model id to hand, as every Claude model counts text alike",
+          "Divide Arabic character counts by four, as four characters per token is the usual rule"
+        ],
+        "ar": [
+          "تستدعي `count_tokens` على تذاكر عربية حقيقية (real Arabic tickets) بمعرّف النموذج (model id) الذي ستشغّله، لأن ذلك هو العدّ الذي ستُحاسَب عليه",
+          "تعدّ التذاكر العربية الحقيقية (real Arabic tickets) باستخدام `tiktoken`، لأنه محلّل رموز (tokenizer) شائع وموثوق",
+          "تستدعي `count_tokens` على تذاكر عربية حقيقية (real Arabic tickets) بأي معرّف نموذج (model id) في متناولها، لأن كل نماذج Claude تعدّ النص نفسه بالطريقة نفسها",
+          "تقسم عدد الأحرف العربية (Arabic characters) على أربعة، لأن أربعة أحرف لكل رمز (token) هي القاعدة المعتادة"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Counts are model-specific and an Arabic word may split into several tokens, so the reliable number comes from `count_tokens` for the model you will run; some newer models count the same text as about 30% more tokens. `tiktoken` is another vendor's tokenizer and undercounts for Claude, and four characters per token is only a rough rule for English prose.",
+        "ar": "تختلف الأعداد من نموذج إلى آخر (counts are model-specific)، وقد تنقسم الكلمة العربية (Arabic word) إلى عدة رموز (tokens)، ولذلك يأتي الرقم الموثوق (reliable number) من `count_tokens` للنموذج الذي ستشغّله؛ فبعض النماذج الأحدث تعدّ النص نفسه بنحو 30% رمزًا أكثر. أما `tiktoken` فهو محلّل رموز (tokenizer) لمزوّد آخر (another vendor) ويقلّل العدّ (undercounts) مع Claude، وأما أربعة أحرف لكل رمز فقاعدة تقريبية (rough rule) للنثر الإنجليزي (English prose) فقط."
+      }
+    },
+    {
+      "id": "m1-3",
+      "level": 2,
+      "lesson": "1.2",
+      "q": {
+        "en": "Najm Desk gains a `close_ticket` tool. Noura's rule: only a Service Desk agent, never the requester, may close a ticket. The agent loop receives a `tool_use` block asking to close ticket 4471 during a chat with a requester. Where should the rule be enforced?",
+        "ar": "تضيف نجم ديسك (Najm Desk) أداة (tool) جديدة هي `close_ticket`. وقاعدة نورة: لا يغلق التذكرة (ticket) إلا موظف مكتب الخدمة (Service Desk agent)، ولا يغلقها مُقدِّم الطلب (requester) أبدًا. وتتلقى حلقة الوكيل (agent loop) كتلة (block) `tool_use` تطلب إغلاق التذكرة 4471 أثناء محادثة (chat) مع مُقدِّم طلب. أين ينبغي فرض هذه القاعدة (enforce the rule)؟"
+      },
+      "o": {
+        "en": [
+          "In the system prompt, as a rule the model must follow before asking to close a ticket",
+          "In the tool description, which tells the model exactly when it may call the tool",
+          "In the tool's JSON schema with `strict: true`, so every input is guaranteed valid",
+          "In `run_tools`, where your code checks who is asking before it runs that tool call"
+        ],
+        "ar": [
+          "في موجّه النظام (system prompt)، قاعدةً يلتزم بها النموذج (model) قبل أن يطلب الإغلاق",
+          "في وصف الأداة (tool description)، الذي يخبر النموذج (model) متى يجوز له استدعاؤها",
+          "في مخطط الأداة (JSON schema) مع `strict: true`، فيُضمَن أن كل مُدخل (input) صالح",
+          "في `run_tools`، حيث تتحقق شيفرتك (your code) ممن يطلب قبل أن تنفّذ الأداة (tool)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "The model only proposes a call; your code decides whether to run it, so permission checks belong in `run_tools`, before anything executes. A is the tempting shortcut: a prompt, a description or a schema steers what the model asks for, but none of them can enforce who is allowed to do what.",
+        "ar": "النموذج (model) يقترح الاستدعاء (call) فقط، وشيفرتك (your code) هي التي تقرر هل تنفّذه، ولذلك تُجرى فحوص الصلاحيات (permission checks) في `run_tools` قبل أن يُنفَّذ أي شيء. والخيار A هو الاختصار المغري (tempting shortcut)؛ فالموجّه (prompt) أو وصف الأداة (description) أو المخطط (schema) يوجّه ما يطلبه النموذج، لكن أيًّا منها لا يفرض (enforce) من يحق له فعل ماذا."
+      }
+    },
+    {
+      "id": "m1-4",
+      "level": 3,
+      "lesson": "1.2",
+      "q": {
+        "en": "Hind wants a digest at 07:00: for each of the 40 tickets opened overnight, fetch its status from TicketHub and write a one-line summary. Lujain proposes giving the model the `get_ticket_status` tool inside an agent loop. What is the best design?",
+        "ar": "تريد هند ملخصًا صباحيًا (digest) في الساعة 07:00: لكل تذكرة من التذاكر الأربعين المفتوحة طوال الليل (opened overnight)، تُجلب حالتها (status) من TicketHub ويُكتب لها ملخص من سطر واحد (one-line summary). وتقترح لجين إعطاء النموذج (model) أداة `get_ticket_status` داخل حلقة وكيل (agent loop). ما أفضل تصميم (best design)؟"
+      },
+      "o": {
+        "en": [
+          "Use the loop with a step cap, so a stuck run cannot spend without limit",
+          "Look up each ticket in your own code and call the model only to write the summary",
+          "Use the loop but force the tool with `tool_choice`, so the model cannot skip a ticket",
+          "Put the 40 ids in one prompt and ask for each status and summary, as one call costs least"
+        ],
+        "ar": [
+          "تستخدم الحلقة (loop) مع حدّ خطوات (step cap)، كي لا يستنزف تشغيلٌ عالق (stuck run) الميزانية بلا حدود",
+          "تجلب حالة كل تذكرة بنفسك في شيفرتك (your own code) ثم تستدعي النموذج (model) لكتابة الملخص (summary) فقط",
+          "تستخدم الحلقة (loop) وتُجبر الأداة (tool) باستخدام `tool_choice` كي لا يتخطى النموذج (model) أي تذكرة",
+          "تضع المعرّفات الأربعين (40 ids) في موجّه (prompt) واحد وتطلب كل حالة وملخصها، لأن استدعاءً (call) واحدًا هو الأقل كلفة"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "When the steps are fixed (look up, then format), call the tool in your own code and use the model only for the part that needs language; loop only when the model must choose what to do next. A is the tempting one: a cap limits the damage, but the loop still resends the growing history on every step and adds nothing a plain function call would not do. C adds a forced `tool_choice`, which the newest models reject, to a loop that was not needed, and D gives the model no way to look anything up, so it would invent the statuses.",
+        "ar": "حين تكون الخطوات ثابتة (fixed steps)، تستدعي الأداة (tool) في شيفرتك (your own code) وتستخدم النموذج (model) فيما يحتاج إلى لغة فقط؛ ولا تستخدم الحلقة (loop) إلا حين يجب على النموذج أن يختار ما يفعله بعد ذلك (choose what to do next). والخيار A هو المغري (tempting): فحدّ الخطوات (step cap) يقلّل الضرر، لكن الحلقة تعيد إرسال السجل المتنامي (growing history) في كل خطوة، ولا تضيف شيئًا لا يفعله استدعاء دالة عادي (function call). أما C فيضيف `tool_choice` مفروضًا (forced) ترفضه أحدث النماذج إلى حلقة لا حاجة إليها، وأما D فلا يمنح النموذج (model) أي وسيلة للبحث، فيختلق الحالات (invent the statuses)."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m1-e1",
+      "lesson": "1.1",
+      "text": {
+        "en": "I have written out the exact system prompt and messages sent on calls 1, 2 and 3 of a laptop-request chat, estimated the input tokens of each call, and run the same loop on the mock, and I can say what is new in call 3",
+        "ar": "كتبتُ بالتفصيل موجّه النظام (system prompt) والرسائل (messages) المرسلة في الاستدعاءات (calls) 1 و2 و3 من محادثة طلب حاسوب محمول (laptop-request chat)، وقدّرتُ رموز المدخلات (input tokens) لكل استدعاء، وشغّلتُ الحلقة نفسها على المحاكي (mock)، وأستطيع أن أبيّن ما الجديد في الاستدعاء الثالث (call 3)"
+      }
+    },
+    {
+      "id": "m1-e2",
+      "lesson": "1.2",
+      "text": {
+        "en": "I have overflowed my chatbot on purpose against a mock with an 8000-token window, recorded the 400 error, and written a trim() with tests (newest message kept, user message first, input never mutated) so that big.txt runs to the end",
+        "ar": "أفرطتُ عمدًا في ملء نافذة السياق (context window) لروبوت المحادثة (chatbot) على محاكٍ (mock) نافذته 8000 رمز (tokens)، وسجّلتُ خطأ 400 (400 error)، وكتبتُ `trim()` مع اختبارات (tests) تتحقق من بقاء أحدث رسالة (newest message kept) وبدء القائمة برسالة مستخدم (user message first) وعدم تعديل المدخلات (input never mutated)، حتى اكتمل تشغيل `big.txt` إلى النهاية"
+      }
+    }
+  ]
+}

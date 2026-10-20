@@ -1,0 +1,135 @@
+{
+  "area": "m13",
+  "questions": [
+    {
+      "id": "m13-1",
+      "level": 1,
+      "lesson": "13.1",
+      "q": {
+        "en": "Hamad, the CISO, asks Lujain whether prompt injection has a fix like the one developers found for SQL injection, a parameterised query. Which answer is correct?",
+        "ar": "يسأل حمد، مدير أمن المعلومات (CISO)، لجين: هل لحقن الموجّه (prompt injection) علاج كالذي وجده المطوّرون لحقن SQL (SQL injection)، وهو الاستعلام ذو المعاملات (parameterised query)؟ أي إجابة صحيحة؟"
+      },
+      "o": {
+        "en": [
+          "Yes: a system prompt line saying pages are data keeps them apart from the rules, as a parameter does for a query",
+          "No: rules, user messages and retrieved pages share one stream of text, so the model decides which to obey",
+          "Not yet: training still leaves gaps, but a later model release will remove them, so the team should wait",
+          "Yes: wrapping each page in XML tags gives the model the same guarantee a parameterised query gives a database"
+        ],
+        "ar": [
+          "نعم: سطر في موجّه النظام (system prompt) يقول إن الصفحات بيانات يفصلها عن القواعد (rules) كما يفعل المعامل (parameter) في الاستعلام (query)",
+          "لا: القواعد (rules) ورسائل المستخدم (user messages) والصفحات المسترجعة (retrieved pages) تشترك في تيار نص واحد (one stream of text)، فالنموذج يقرر ما يطيعه",
+          "ليس بعد: ما زال التدريب (training) يترك ثغرات، لكن إصدارًا لاحقًا من النموذج (model release) سيزيلها، فينتظر الفريق ولا يضيف ضوابط",
+          "نعم: يمنح تغليف كل صفحة بوسوم XML (XML tags) النموذج (model) الضمان نفسه الذي يمنحه الاستعلام ذو المعاملات (parameterised query) لقاعدة البيانات (database)"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "A prompt carries rules, user messages and page text as one stream, and the model decides which to follow, so prompting and training lower the risk but never remove it; code must limit what a fooled model can do. A system prompt line or tags around pages are the tempting fixes, but they are requests and more text in the same stream, not controls.",
+        "ar": "يحمل الموجّه (prompt) القواعد (rules) ورسائل المستخدم (user messages) ونص الصفحات (page text) في تيار واحد (one stream) يقرر النموذج (model) أيها يتبع، فالتوجيه والتدريب (prompting and training) يخفضان الخطر ولا يزيلانه، ويجب أن تحدّ الشيفرة (code) مما يستطيع نموذج مخدوع (fooled model) فعله. وسطر موجّه النظام أو الوسوم (tags) حول الصفحات هما الحلان المغريان، لكنهما طلبات ونص إضافي في التيار نفسه، لا ضوابط (controls)."
+      }
+    },
+    {
+      "id": "m13-2",
+      "level": 2,
+      "lesson": "13.2",
+      "q": {
+        "en": "Hamad asks what happens to Najm Desk if its whole model provider, not just one model, is down for an afternoon. The Service Desk's volume and risk do not justify a second provider. Which plan fits best?",
+        "ar": "يسأل حمد ماذا يحدث لنجم ديسك (Najm Desk) إذا تعطّل مزوّد النموذج (model provider) كله، لا نموذج واحد فقط، طوال فترة بعد الظهر. ولا يبرّر حجم مكتب الخدمة (Service Desk) ومخاطره مزوّدًا ثانيًا (second provider). أي خطة تناسب أكثر؟"
+      },
+      "o": {
+        "en": [
+          "A fallback model from the same provider, already run on the eval set and switched on by one setting",
+          "A higher retry limit in the client, so each call keeps trying until the provider answers again",
+          "A second provider's key kept in the config and switched on by one setting, its prompts and tools never run on the eval set",
+          "A degraded mode with phone and ticket routes and keyword search, tested in a drill before go-live"
+        ],
+        "ar": [
+          "نموذج احتياطي (fallback model) من المزوّد نفسه، سبق تشغيله فعلًا على مجموعة التقييم (eval set)، ويُفعَّل بإعداد واحد (one setting)",
+          "حدّ أعلى لإعادة المحاولة (retry limit) في العميل (client)، فيواصل كل استدعاء (call) المحاولة حتى يعود المزوّد للإجابة من جديد",
+          "مفتاح مزوّد ثانٍ (second provider) محفوظ في الإعدادات (config) ويُفعَّل بإعداد واحد (one setting)، ولم تُشغَّل موجّهاته وأدواته (prompts and tools) على مجموعة التقييم (eval set)",
+          "وضع متدهور (degraded mode) فيه مسارا الهاتف والتذاكر والبحث بالكلمات المفتاحية (keyword search)، مُختبَر قبل الإطلاق (go-live)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "A same-provider fallback model covers one model's retirement or overload, and a second provider is a project with its own vendor assessment and fresh eval, not a switch; where risk does not justify one, a tested degraded mode (phone and ticket routes, keyword search, hand-off) is the plan, because untested fallbacks fail on the day. The fallback model is the tempting choice, but it fails when the provider itself is down.",
+        "ar": "النموذج الاحتياطي (fallback model) من المزوّد نفسه يغطي إيقاف نموذج واحد أو ازدحامه (retirement or overload) فقط، والمزوّد الثاني (second provider) مشروع له تقييم موردين (vendor assessment) وتقييم (eval) جديد خاصان به وليس مفتاح تبديل؛ وحين لا تبرّره المخاطر تكون الخطة وضعًا متدهورًا (degraded mode) مُختبَرًا: مسارا الهاتف والتذاكر والبحث بالكلمات المفتاحية والتسليم إلى شخص (hand-off)، لأن البدائل غير المختبرة تفشل يوم الحاجة. والنموذج الاحتياطي هو الخيار المغري، لكنه يفشل حين يتعطل المزوّد نفسه."
+      }
+    },
+    {
+      "id": "m13-3",
+      "level": 3,
+      "lesson": "13.1",
+      "q": {
+        "en": "A month into the pilot, Noura reads the audit log. Lujain's cautious setup asks a Service Desk agent to approve every tool call, and 99% come back as yes within about three seconds. Lujain says this shows the assistant behaves well. What is the best reading and response?",
+        "ar": "بعد شهر من التجربة التشغيلية (pilot)، تقرأ نورة سجل التدقيق (audit log). يطلب إعداد لجين الحذر (cautious setup) من موظف مكتب الخدمة (Service Desk agent) الموافقة (approve) على كل استدعاء أداة (tool call)، وتعود 99% منها بنعم خلال نحو ثلاث ثوانٍ (three seconds). تقول لجين إن هذا يدل على حسن سلوك المساعد (the assistant behaves well). ما أفضل قراءة وأفضل استجابة؟"
+      },
+      "o": {
+        "en": [
+          "A click-through habit: ask only for the worst outcomes, and show the exact call on a screen that defaults to no",
+          "A healthy sign: agents agree because the assistant proposes good calls, so the rate goes in the pack as evidence",
+          "A needless step: after a month of yeses, remove approvals from every tool and rely on the gate's other layers",
+          "A weak spot: require a second approver on every call, so a single quick click is no longer enough to pass"
+        ],
+        "ar": [
+          "عادة نقر آلي (click-through habit): تُطلب الموافقة للنتائج الأسوأ (worst outcomes) فقط، ويُعرض الاستدعاء الدقيق على شاشة افتراضيها «لا»",
+          "علامة صحية (healthy sign): يوافق الموظفون لأن المساعد يقترح استدعاءات جيدة (good calls)، فتدخل نسبة الموافقة في الحزمة دليلًا (evidence)",
+          "خطوة زائدة (needless step): بعد شهر من الموافقات بنعم تُزال من كل الأدوات (tools) ويُكتفى بطبقات البوابة الأخرى (other gate layers)",
+          "نقطة ضعف (weak spot): يُشترط موافق ثانٍ (second approver) على كل استدعاء، فلا تكفي نقرة سريعة واحدة من موظف لتمريره"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Approvals on everything train people to click yes, so near-100% approval in seconds is a finding, not a success: gate by worst outcome and build the screen from the exact call with a default of no. Reading the rate as proof of good behaviour is the tempting view, but a rate that high and that fast suggests the screen is no longer being read.",
+        "ar": "الموافقة على كل شيء (approvals on everything) تدرّب الناس على النقر بنعم، فمعدل الموافقة (approval rate) القريب من 100% خلال ثوانٍ نتيجة تستدعي المعالجة (finding) لا نجاح: تُحصر الموافقة في النتائج الأسوأ (worst outcome) وتُبنى الشاشة (screen) من الاستدعاء الدقيق (exact call) مع الافتراضي «لا» (default of no). وقراءة المعدل دليلًا على حسن السلوك (proof of good behaviour) هي المغرية، لكن معدلًا بهذا الارتفاع والسرعة يوحي بأن الشاشة لم تعد تُقرأ."
+      }
+    },
+    {
+      "id": "m13-4",
+      "level": 2,
+      "lesson": "13.2",
+      "q": {
+        "en": "Lujain has Claude Code draft the vendor assessment. One line reads “The provider never retains Najm Bank data.” No file, test or dated document backs it, and Sara will sign the document. What should Lujain do with the line?",
+        "ar": "تطلب لجين من Claude Code صياغة تقييم المزوّد (vendor assessment). يقول أحد أسطره: «المزوّد لا يحتفظ (retains) ببيانات بنك نجم (Najm Bank) أبدًا». لا يسنده ملف (file) ولا اختبار (test) ولا وثيقة مؤرَّخة (dated document)، وستوقّع سارة المستند (document). ماذا تفعل لجين بهذا السطر؟"
+      },
+      "o": {
+        "en": [
+          "Keep it and cite the provider's sales page as its evidence line, since a source is now named in it",
+          "Soften it to “rarely retains Najm Bank data”, so that it becomes much harder to disprove",
+          "Replace it with TODO, list it as an open item on the risk register and read the provider's docs",
+          "Delete it and record nothing, so the signed document holds only claims that can be shown to the reviewers"
+        ],
+        "ar": [
+          "تُبقيه وتضع صفحة مبيعات المزوّد (sales page) سطرَ دليل (evidence line) له، إذ صار له الآن مصدر مذكور فيه",
+          "تخفّفه إلى «نادرًا ما يحتفظ المزوّد ببيانات بنك نجم (Najm Bank)»، فيصبح أصعب كثيرًا في الدحض (disprove)",
+          "تستبدل به TODO وتدرجه بندًا مفتوحًا (open item) في سجل المخاطر (risk register) وتراجع وثائق المزوّد (provider docs)",
+          "تحذفه (delete it) ولا تسجّل شيئًا، ليبقى في المستند الموقَّع ما يمكن إثباته فقط من الادعاءات (claims) أمام المراجعين"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "What cannot be evidenced stays TODO and goes on the risk register as an open item, which is more honest than a smooth sentence. Softening it to “rarely” is the tempting move, but it is still a claim with no evidence, only harder to test; deleting it with no record hides an unknown the risk owners should see.",
+        "ar": "ما لا يمكن إثباته بالدليل (evidence) يبقى TODO ويُدرج بندًا مفتوحًا (open item) في سجل المخاطر (risk register)، وهذا أصدق من جملة ملساء (smooth sentence). والتخفيف إلى «نادرًا» هو التصرف المغري، لكنه يظل ادعاءً بلا دليل (claim with no evidence)، أصعب في الاختبار فحسب؛ وحذفه دون تسجيل يخفي مجهولًا (unknown) ينبغي أن يراه أصحاب المخاطر (risk owners)."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m13-e1",
+      "lesson": "13.1",
+      "text": {
+        "en": "I have run the attack table with the guards off and on, then once per layer with `SKIP`, and written in `NOTES.md` what each layer frees and what covers the layers that free nothing.",
+        "ar": "لقد شغّلتُ جدول الهجمات (attack table) مرة والحواجز الوقائية (guards) متوقفة ومرة وهي مفعّلة، ثم مرة لكل طبقة (layer) مع `SKIP`، ودوّنتُ في `NOTES.md` ما تحرره كل طبقة (what each layer frees) وما يغطي الطبقات التي لا تحرر شيئًا (covers the layers that free nothing)."
+      }
+    },
+    {
+      "id": "m13-e2",
+      "lesson": "13.2",
+      "text": {
+        "en": "I have drafted a system card whose tool table matches the gate's rules in `NAJM_DESK_V1` and run `pack_check.py` both ways: the structure check passes and the strict check lists only gaps I can name, with no drift line.",
+        "ar": "لقد صغتُ بطاقة نظام (system card) تطابق جدول أدواتها (tool table) قواعد بوابة الأدوات (tool gate) في `NAJM_DESK_V1`، وشغّلتُ `pack_check.py` بالطريقتين: يمر فحص البنية (structure check) ولا يسرد الفحص الصارم (strict check) إلا ثغرات (gaps) أستطيع تسميتها، بلا سطر انحراف (drift line)."
+      }
+    }
+  ]
+}

@@ -1,0 +1,401 @@
+{
+  "name": "Module 11 lab: scripted researcher, writer, reviewer and solo agent (five questions, plus drills: a revise loop, a broken contract, a fabricated quote, a tool over-reach, a reviewer who never approves)",
+  "rules": [
+    {
+      "when": {
+        "system_contains": "ROLE: researcher",
+        "user_contains": "word for word"
+      },
+      "reply": {
+        "json": {
+          "findings": [
+            {
+              "source": "laptop-requests",
+              "quote": "Laptops are delivered within 1 business day, no approval needed."
+            }
+          ],
+          "gaps": []
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: researcher",
+        "has_tool_result": false,
+        "user_regex": "\"question\":\"([^\"]+)\""
+      },
+      "reply": {
+        "tool_use": [
+          {
+            "name": "search_policies",
+            "input": {
+              "query": "{1}"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: researcher",
+        "tool_result_contains": "[drill:fabricate]"
+      },
+      "reply": {
+        "json": {
+          "findings": [
+            {
+              "source": "laptop-requests",
+              "quote": "Laptops are delivered within 1 business day, no approval needed."
+            }
+          ],
+          "gaps": []
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: researcher",
+        "tool_result_contains": "No policies matched"
+      },
+      "reply": {
+        "json": {
+          "findings": [],
+          "gaps": [
+            "No policy in the library covers this question."
+          ]
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: researcher",
+        "tool_result_contains": "request a new laptop"
+      },
+      "reply": {
+        "json": {
+          "findings": [
+            {
+              "source": "laptop-requests",
+              "quote": "Staff can request a new laptop through the IT Service Desk portal under Hardware > New device."
+            }
+          ],
+          "gaps": []
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: researcher",
+        "tool_result_contains": "lost my phone"
+      },
+      "reply": {
+        "json": {
+          "findings": [
+            {
+              "source": "mfa",
+              "quote": "A lost phone must be reported to the Service Desk immediately so its authenticator can be revoked and a new one enrolled."
+            }
+          ],
+          "gaps": []
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: researcher",
+        "tool_result_contains": "response time for a P2"
+      },
+      "reply": {
+        "json": {
+          "findings": [
+            {
+              "source": "ticket-priorities",
+              "quote": "P2 is a major problem with a workaround, answered within 4 hours."
+            }
+          ],
+          "gaps": []
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: researcher",
+        "tool_result_contains": "Service Desk open"
+      },
+      "reply": {
+        "json": {
+          "findings": [
+            {
+              "source": "service-desk-hours",
+              "quote": "The IT Service Desk is open Sunday to Thursday, 7:00 to 17:00 Qatar time."
+            }
+          ],
+          "gaps": []
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: researcher",
+        "tool_result_contains": "external AI tool"
+      },
+      "reply": {
+        "json": {
+          "findings": [
+            {
+              "source": "ai-tools",
+              "quote": "External AI services must not receive Confidential or Restricted data, customer data, source code from regulated systems, or credentials."
+            },
+            {
+              "source": "data-classification",
+              "quote": "Confidential and Restricted data may only be stored in approved internal systems and must not be pasted into external AI tools."
+            }
+          ],
+          "gaps": []
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: writer",
+        "user_contains": "at least 1 item"
+      },
+      "reply": {
+        "json": {
+          "answer": "The IT Service Desk is open Sunday to Thursday, 7:00 to 17:00 Qatar time.",
+          "citations": [
+            "service-desk-hours"
+          ]
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: writer",
+        "user_contains": "[drill:overreach]",
+        "has_tool_result": false
+      },
+      "reply": {
+        "tool_use": [
+          {
+            "name": "search_policies",
+            "input": {
+              "query": "anything else about laptops"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: writer",
+        "tool_result_contains": "is not available to the writer"
+      },
+      "reply": {
+        "json": {
+          "answer": "Staff can request a new laptop through the IT Service Desk portal under Hardware > New device.",
+          "citations": [
+            "laptop-requests"
+          ]
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: writer",
+        "user_contains": "REVIEWER ISSUES",
+        "user_regex": "\"source\":\"([a-z0-9-]+)\",\"quote\":\"([^\"]+)\""
+      },
+      "reply": {
+        "json": {
+          "answer": "{2}",
+          "citations": [
+            "{1}"
+          ]
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: writer",
+        "user_contains": "response time for a P2"
+      },
+      "reply": {
+        "json": {
+          "answer": "A P2 ticket is answered within 2 hours.",
+          "citations": [
+            "ticket-priorities"
+          ]
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: writer",
+        "user_contains": "Service Desk open"
+      },
+      "reply": {
+        "json": {
+          "answer": "The IT Service Desk is open Sunday to Thursday, 7:00 to 17:00 Qatar time.",
+          "citations": []
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: writer",
+        "user_regex": "\"source\":\"([a-z0-9-]+)\",\"quote\":\"([^\"]+)\"\\},\\{\"source\":\"([a-z0-9-]+)\",\"quote\":\"([^\"]+)\""
+      },
+      "reply": {
+        "json": {
+          "answer": "{2} {4}",
+          "citations": [
+            "{1}",
+            "{3}"
+          ]
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: writer",
+        "user_regex": "\"source\":\"([a-z0-9-]+)\",\"quote\":\"([^\"]+)\""
+      },
+      "reply": {
+        "json": {
+          "answer": "{2}",
+          "citations": [
+            "{1}"
+          ]
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: reviewer",
+        "user_contains": "[drill:never-approve]"
+      },
+      "reply": {
+        "json": {
+          "verdict": "revise",
+          "issues": [
+            "The draft is not specific enough."
+          ]
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: reviewer",
+        "user_contains": "within 2 hours"
+      },
+      "reply": {
+        "json": {
+          "verdict": "revise",
+          "issues": [
+            "The draft says a P2 ticket is answered within 2 hours; the cited policy says within 4 hours."
+          ]
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: reviewer"
+      },
+      "reply": {
+        "json": {
+          "verdict": "approve",
+          "issues": []
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: solo",
+        "has_tool_result": false,
+        "user_regex": "QUESTION: ([^\n]+)"
+      },
+      "reply": {
+        "tool_use": [
+          {
+            "name": "search_policies",
+            "input": {
+              "query": "{1}"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: solo",
+        "tool_result_contains": "request a new laptop"
+      },
+      "reply": {
+        "json": {
+          "answer": "Staff can request a new laptop through the IT Service Desk portal under Hardware > New device.",
+          "citations": [
+            "laptop-requests"
+          ]
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: solo",
+        "tool_result_contains": "lost my phone"
+      },
+      "reply": {
+        "json": {
+          "answer": "A lost phone must be reported to the Service Desk immediately so its authenticator can be revoked and a new one enrolled.",
+          "citations": [
+            "mfa"
+          ]
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: solo",
+        "tool_result_contains": "response time for a P2"
+      },
+      "reply": {
+        "json": {
+          "answer": "P2 is a major problem with a workaround, answered within 4 hours.",
+          "citations": [
+            "ticket-priorities"
+          ]
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: solo",
+        "tool_result_contains": "Service Desk open"
+      },
+      "reply": {
+        "json": {
+          "answer": "The IT Service Desk is open Sunday to Thursday, 7:00 to 17:00 Qatar time.",
+          "citations": [
+            "service-desk-hours"
+          ]
+        }
+      }
+    },
+    {
+      "when": {
+        "system_contains": "ROLE: solo",
+        "tool_result_contains": "external AI tool"
+      },
+      "reply": {
+        "json": {
+          "answer": "External AI services must not receive Confidential or Restricted data, customer data, source code from regulated systems, or credentials. Confidential and Restricted data may only be stored in approved internal systems and must not be pasted into external AI tools.",
+          "citations": [
+            "ai-tools",
+            "data-classification"
+          ]
+        }
+      }
+    }
+  ]
+}

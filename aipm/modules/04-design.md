@@ -709,3 +709,4 @@ Supporting rules in the spec:
 - OWASP, Top 10 for LLM Applications (OWASP GenAI Security Project) — https://genai.owasp.org
 - Model Context Protocol, official documentation — https://modelcontextprotocol.io
 - Parasuraman, R., Sheridan, T. B. and Wickens, C. D. (2000). "A model for types and levels of human interaction with automation." *IEEE Transactions on Systems, Man, and Cybernetics — Part A*, 30(3).
+- [*Building AI Applications & Agents: Zero to Hero*, lesson 7.1 — Architecture and autonomy design: workflow or agent](../aiapps/index.html#/7.1) — the build-and-ship view of this topic

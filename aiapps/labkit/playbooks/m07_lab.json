@@ -1,0 +1,9 @@
+{
+  "name": "Module 7 lab: one scripted mistake for the demo, a model that invents a source",
+  "rules": [
+    {
+      "when": {"user_contains": "who pays", "has_tool_result": false},
+      "reply": {"text": "Laptops are charged to the requesting department's budget. [finance-budget#3]"}
+    }
+  ]
+}

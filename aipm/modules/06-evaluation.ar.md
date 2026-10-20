@@ -510,6 +510,7 @@ flowchart TD
 - NIST AI 600-1, Generative AI Profile — https://doi.org/10.6028/NIST.AI.600-1
 - OWASP GenAI Security Project (Top 10 for LLM Applications) — https://genai.owasp.org
 - Microsoft PyRIT (open-source red-teaming toolkit) — https://github.com/Azure/PyRIT
+- [*بناء تطبيقات الذكاء الاصطناعي والوكلاء من الصفر إلى الاحتراف (Building AI Applications & Agents: Zero to Hero)*، الدرس 12.1 — تقييم الوكلاء: مجموعات التقييم والمقيِّمات وبوابات الانحدار (Evaluating agents: eval sets, graders and regression gates)](../aiapps/index.ar.html#/12.1) — منظور البناء والتسليم (build and ship) لهذا الموضوع
 
 ---
 

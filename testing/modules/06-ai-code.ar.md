@@ -1151,3 +1151,4 @@ caught                    4/9        3/9        9/9
 - توثيق Playwright، بما فيه خادم MCP ووكلاء الاختبار (Playwright documentation, including the MCP server and test agents) — https://playwright.dev/
 - توثيق pytest (pytest documentation) — https://docs.pytest.org/
 - مشروع OWASP لأمان الذكاء الاصطناعي التوليدي، أهم 10 مخاطر لتطبيقات النماذج اللغوية الكبيرة (OWASP GenAI Security Project, Top 10 for LLM Applications) — https://genai.owasp.org/
+- [*بناء تطبيقات الذكاء الاصطناعي والوكلاء من الصفر إلى الاحتراف (Building AI Applications & Agents: Zero to Hero)*، الدرس 0.3 — شريكك في البناء: توجيه Claude Code لبناء الوكلاء (Your build partner: directing Claude Code to build agents)](../aiapps/index.ar.html#/0.3) — منظور البناء والتسليم (build and ship) لهذا الموضوع

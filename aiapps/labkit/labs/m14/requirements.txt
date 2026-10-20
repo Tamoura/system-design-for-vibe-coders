@@ -1,0 +1,5 @@
+# labs/m14/requirements.txt
+anthropic>=1,<2
+fastapi
+uvicorn
+pydantic>=2

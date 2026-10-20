@@ -1,0 +1,8 @@
+[
+  {"id": "N-101", "text": "Notice N-101. Password rules change on 1 March. Passwords must now be at least 14 characters, up from 12. Reset a password at the self-service portal with the authenticator app. If the authenticator is lost, the Service Desk verifies identity with a manager call-back first. The Service Desk never asks for a password by email."},
+  {"id": "N-102", "text": "Notice N-102. From 15 March the corporate VPN client must be version 6 or later. Staff on older versions will be disconnected. The new client is in the Najm Software Catalogue. If the VPN still fails after updating, raise a Network ticket with the error code shown by the client."},
+  {"id": "N-103", "text": "Notice N-103. From 1 April every suspicious email must be reported with the Report Phishing button. Do not forward suspicious emails to colleagues or to the Service Desk. Staff who clicked a link or opened an attachment must call the Security Operations hotline at once, and the device is isolated until it is checked."},
+  {"id": "N-104", "text": "Notice N-104. Only software from the Najm Software Catalogue may be installed. From 1 May unapproved software is removed during audits. Requests for other software need approval from Information Security and a licence owner."},
+  {"id": "N-105", "text": "Notice N-105. Laptops are now refreshed every 4 years. Staff whose laptop fails earlier should raise a Hardware ticket, and a loan device is issued the same day when one is available. Engineering staff may ask for a high-spec model with a written justification from their engineering lead."},
+  {"id": "N-106", "text": "Notice N-106. The staff cafeteria on floor 3 will close on Thursday for repainting and reopens on Sunday. Lunch will be served in the east lobby."}
+]

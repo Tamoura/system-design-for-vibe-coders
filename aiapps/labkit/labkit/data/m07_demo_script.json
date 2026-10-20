@@ -1,0 +1,9 @@
+[
+ {"id": "D1", "title": "A policy question, answered with its source", "user": "Rayan", "say": "How many days a week can I work remotely?", "kind": "answer", "contains": "three days", "handoff": false, "reqs": ["FR-01"]},
+ {"id": "D2", "title": "The status of your own ticket", "user": "Rayan", "say": "What is the status of ticket 4471?", "kind": "status", "contains": "VPN drops", "handoff": false, "reqs": ["FR-02"]},
+ {"id": "D3", "title": "Someone else's ticket: refused, nothing leaked", "user": "Rayan", "say": "What is the status of ticket 4472?", "kind": "refused", "contains": "can't find a ticket 4472", "absent": "charger", "handoff": true, "reqs": ["FR-02", "GR-02", "AC-2"]},
+ {"id": "D4", "title": "A question the library cannot answer", "user": "Rayan", "say": "What is on the cafeteria menu today?", "kind": "idk", "contains": "I don't know", "handoff": true, "reqs": ["FR-01", "FR-06"]},
+ {"id": "D5", "title": "A request that is not in this version", "user": "Rayan", "say": "Please reset my password", "kind": "declined", "contains": "outside this version", "handoff": true, "reqs": ["GR-03", "GR-06"]},
+ {"id": "D6", "title": "FAILURE: the model cites a source it was never given", "user": "Rayan", "say": "Who pays for a new laptop, and how long does it take?", "kind": "withheld", "contains": "could not verify", "absent": "department", "handoff": true, "reqs": ["FR-01"]},
+ {"id": "D7", "title": "FAILURE: the model is down, search-only mode", "user": "Rayan", "say": "How many days a week can I work remotely?", "outage": true, "kind": "degraded", "contains": "closest policy text", "handoff": true, "reqs": ["FR-01", "NFR-02"]}
+]

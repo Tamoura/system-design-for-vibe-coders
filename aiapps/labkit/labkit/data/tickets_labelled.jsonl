@@ -1,0 +1,30 @@
+{"id": "t01", "text": "My laptop battery only lasts twenty minutes now", "label": "hardware"}
+{"id": "t02", "text": "The docking station does not detect my second monitor", "label": "hardware"}
+{"id": "t03", "text": "Keyboard keys are sticking on my work laptop", "label": "hardware"}
+{"id": "t04", "text": "I need a headset for video calls", "label": "hardware"}
+{"id": "t05", "text": "I forgot my password and the reset link never arrives", "label": "access"}
+{"id": "t06", "text": "Please give me access to the risk reporting folder", "label": "access"}
+{"id": "t07", "text": "My account is locked after I changed phones", "label": "access"}
+{"id": "t08", "text": "The authenticator app shows an invalid code", "label": "access"}
+{"id": "t09", "text": "VPN says connection timed out from my home network", "label": "network"}
+{"id": "t10", "text": "Wi-Fi keeps disconnecting on the third floor", "label": "network"}
+{"id": "t11", "text": "Internet is extremely slow only in the east wing", "label": "network"}
+{"id": "t12", "text": "I cannot reach the intranet from the branch office", "label": "network"}
+{"id": "t13", "text": "Excel crashes whenever I open the quarterly workbook", "label": "software"}
+{"id": "t14", "text": "I need Visual Studio installed on my laptop", "label": "software"}
+{"id": "t15", "text": "Teams updates itself and then will not start", "label": "software"}
+{"id": "t16", "text": "The approved PDF editor licence has expired", "label": "software"}
+{"id": "t17", "text": "I clicked a link in an email that asked for my login details", "label": "security"}
+{"id": "t18", "text": "A suspicious attachment from an unknown sender opened by mistake", "label": "security"}
+{"id": "t19", "text": "My laptop was stolen from my car last night", "label": "security"}
+{"id": "t20", "text": "Pop-ups say my computer has a virus", "label": "security"}
+{"id": "t21", "text": "What are the Service Desk opening hours?", "label": "other"}
+{"id": "t22", "text": "Where do I collect my staff badge?", "label": "other"}
+{"id": "t23", "text": "Can you recommend a good keyboard shortcut cheat sheet?", "label": "other"}
+{"id": "t24", "text": "How do I book a meeting room for next week?", "label": "other"}
+{"id": "t25", "text": "The VPN client updated and now my password manager does not open", "label": "software"}
+{"id": "t26", "text": "My new phone needs a fresh authenticator enrolment", "label": "access"}
+{"id": "t27", "text": "The printer on floor two shows offline for everyone", "label": "hardware"}
+{"id": "t28", "text": "Someone is calling me pretending to be from IT", "label": "security"}
+{"id": "t29", "text": "Cannot connect to the guest network in the lobby", "label": "network"}
+{"id": "t30", "text": "How long does a new laptop request take?", "label": "other"}

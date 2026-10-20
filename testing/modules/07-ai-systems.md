@@ -430,6 +430,7 @@ Use a scratch copy of `testing/sample`. No paid API is needed.
 - promptfoo documentation: [promptfoo.dev](https://www.promptfoo.dev/)
 - Ragas documentation: [docs.ragas.io](https://docs.ragas.io/)
 - Inspect, the UK AI Security Institute's framework: [inspect.aisi.org.uk](https://inspect.aisi.org.uk/)
+- [*Building AI Applications & Agents: Zero to Hero*, lesson 12.1 — Evaluating agents: eval sets, graders and regression gates](../aiapps/index.html#/12.1) — the build-and-ship view of this topic
 
 ---
 
@@ -847,6 +848,7 @@ Use a scratch copy of `testing/sample`.
 - OWASP GenAI Security Project, Top 10 for LLM Applications: [genai.owasp.org](https://genai.owasp.org/)
 - Inspect, the UK AI Security Institute's evaluation framework, including agent tasks: [inspect.aisi.org.uk](https://inspect.aisi.org.uk/)
 - pytest documentation, parametrization and `monkeypatch`: [docs.pytest.org](https://docs.pytest.org/)
+- [*Building AI Applications & Agents: Zero to Hero*, lesson 8.2 — Lab: an agent loop from scratch with a hard cap and trace logging](../aiapps/index.html#/8.2) — the build-and-ship view of this topic
 
 ---
 
@@ -1218,3 +1220,4 @@ Use a scratch copy of `testing/sample` with the lesson 7.1 files. Attack only th
 - EU Artificial Intelligence Act, Regulation (EU) 2024/1689: [eur-lex.europa.eu](https://eur-lex.europa.eu/)
 - promptfoo red-teaming documentation: [promptfoo.dev](https://www.promptfoo.dev/)
 - Chen, Cheung and Yiu, "Metamorphic testing: a new approach for generating next test cases" (1998), HKUST technical report
+- [*Building AI Applications & Agents: Zero to Hero*, lesson 15.1 — Running an agent in production: observability, incidents and runbooks](../aiapps/index.html#/15.1) — the build-and-ship view of this topic

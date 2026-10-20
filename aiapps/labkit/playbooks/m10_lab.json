@@ -1,0 +1,58 @@
+{
+  "name": "Module 10 lab: scripted tool calls the offline mock cannot guess (a tool nobody offered, a write, a read of exactly one ticket while a write tool is also on offer)",
+  "rules": [
+    {
+      "when": {
+        "user_contains": "delete ticket",
+        "has_tool_result": false
+      },
+      "reply": {
+        "tool_use": [
+          {
+            "name": "delete_ticket",
+            "input": {
+              "ticket_id": "4472"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "when": {
+        "user_regex": "^create a ticket:? (.+)$",
+        "has_tool_result": false,
+        "tools_include": "create_ticket"
+      },
+      "reply": {
+        "tool_use": [
+          {
+            "name": "create_ticket",
+            "input": {
+              "title": "{1}",
+              "description": "Raised through Najm Desk at a staff member's request: {1}",
+              "category": "hardware",
+              "priority": "P4"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "when": {
+        "user_regex": "^[^0-9]*\\bticket (\\d{4,6})\\b[^0-9]*$",
+        "has_tool_result": false,
+        "tools_include": "get_ticket_status"
+      },
+      "reply": {
+        "tool_use": [
+          {
+            "name": "get_ticket_status",
+            "input": {
+              "ticket_id": "{1}"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

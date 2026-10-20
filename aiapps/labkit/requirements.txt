@@ -1,0 +1,10 @@
+anthropic>=1,<2
+python-dotenv
+pydantic>=2
+fastapi
+uvicorn
+chromadb
+rank-bm25
+mcp>=2,<3
+pytest
+pyyaml

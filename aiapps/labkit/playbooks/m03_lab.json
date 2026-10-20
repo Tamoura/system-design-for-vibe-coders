@@ -1,0 +1,33 @@
+{
+  "name": "Module 3 lab: scripted tool mistakes and a stubborn triage model",
+  "rules": [
+    {
+      "when": {"user_contains": "INC-4471", "has_tool_result": false},
+      "reply": {"tool_use": [{"name": "lookup_ticket", "input": {"ticket_id": "INC-4471"}}]}
+    },
+    {
+      "when": {"tool_result_contains": "must be digits only"},
+      "reply": {"tool_use": [{"name": "lookup_ticket", "input": {"ticket_id": "4471"}}]}
+    },
+    {
+      "when": {"user_contains": "stubborn", "has_tool_result": false},
+      "reply": {"tool_use": [{"name": "lookup_ticket", "input": {"ticket_id": 4471}}]}
+    },
+    {
+      "when": {"tool_result_contains": "valid string"},
+      "reply": {"tool_use": [{"name": "lookup_ticket", "input": {"ticket_id": 4471}}]}
+    },
+    {
+      "when": {"user_contains": "archive ticket", "has_tool_result": false},
+      "reply": {"tool_use": [{"name": "archive_ticket", "input": {"ticket_id": "4471"}}]}
+    },
+    {
+      "when": {"user_contains": "must have needs_human = true"},
+      "reply": {"json": {"category": "security", "needs_human": false, "summary": "A staff member clicked a phishing link."}}
+    },
+    {
+      "when": {"system_contains": "triage", "user_contains": "phishing", "has_tool_result": false},
+      "reply": {"json": {"category": "security", "needs_human": false, "summary": "A staff member clicked a phishing link."}}
+    }
+  ]
+}

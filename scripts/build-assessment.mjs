@@ -141,6 +141,19 @@ const COURSES = [
         ['🟡 ممارس (Practitioner)', 'تستطيع تصميم الاختبارات وأتمتتها على عدة مستويات (levels). مارِس على النظام النموذجي (sample system) وضع علامات على الأدلة.'],
         ['🟠 مهندس جودة (Quality engineer)', 'تستطيع بناء مجموعة اختبارات تفشل لأسباب صحيحة، واختبار الخصائص غير الوظيفية (non-functional qualities)، والتحقق من الشيفرة المكتوبة بالذكاء الاصطناعي (AI-written code). أغلق الفجوات المتبقية.'],
         ['🔴 قائد جودة (Quality lead)', 'تعرف كل الوحدات ومارست معظمها تقريبًا، بما فيها اختبار أنظمة الذكاء الاصطناعي (testing AI systems). تستطيع وضع استراتيجية جودة (quality strategy)، وتعليم غيرك.']] } },
+  { id: 'aiapps', src: 'aiapps/assessment', out: 'aiapps', reader: { en: 'index.html', ar: 'index.ar.html' }, mode: 'hash', store: 'aiapps', theme: 'aiapps-theme',
+    name: { en: 'Building AI Applications & Agents: Zero to Hero', ar: 'بناء تطبيقات الذكاء الاصطناعي والوكلاء: من الصفر إلى الاحتراف (Building AI Applications & Agents: Zero to Hero)' }, brand: 'AI Applications & Agents',
+    unit: { en: 'module', ens: 'modules', ar: 'وحدة (module)', ars: 'وحدات (modules)' },
+    evidenceHint: { en: 'in your own repository with the course lab kit, offline or on your own API key with a spending cap, with the result checked — never with real customer data', ar: 'في مستودعك الخاص (your own repository) باستخدام عدّة المختبر (lab kit)، دون اتصال أو بمفتاح API الخاص بك مع حدّ إنفاق (spending cap)، مع التحقق من النتيجة، وليس أبدًا ببيانات عملاء حقيقية' },
+    levels: {
+      en: [['🟢 Aware', 'You know how an LLM application works and what it takes to ship one. Next: prompts, tools and the agent loop — start with the modules marked Not yet.'],
+        ['🟡 Builder', 'You can build tool-using, RAG and workflow applications and write a specification with a customer. Practise the labs and tick the evidence.'],
+        ['🟠 Agent engineer', 'You can build agents with memory and connections, put them under evals, and make them safe. Close the remaining gaps.'],
+        ['🔴 Agent delivery lead', 'You know every module and have practised nearly all of it. You can take an agent from discovery to production for a customer — and teach others.']],
+      ar: [['🟢 مُدرِك (Aware)', 'تعرف كيف يعمل تطبيق النموذج اللغوي (LLM application) وما يلزم لإطلاقه. الخطوة التالية: الموجّهات (prompts) والأدوات (tools) وحلقة الوكيل (agent loop)؛ ابدأ بالوحدات الموسومة «ليس بعد (Not yet)».'],
+        ['🟡 باني (Builder)', 'تستطيع بناء تطبيقات تستخدم الأدوات وRAG وسير العمل (workflows) وكتابة مواصفات مع عميل. مارِس المختبرات وضع علامات على الأدلة.'],
+        ['🟠 مهندس وكلاء (Agent engineer)', 'تستطيع بناء وكلاء بذاكرة واتصالات، ووضعهم تحت التقييم (evals)، وجعلهم آمنين. أغلق الفجوات المتبقية.'],
+        ['🔴 قائد تسليم الوكلاء (Agent delivery lead)', 'تعرف كل الوحدات ومارست معظمها تقريبًا. تستطيع الوصول بوكيل من الاستكشاف (discovery) إلى الإنتاج (production) لصالح عميل، وتعليم غيرك.']] } },
 ];
 
 /* ---------------------------------------------------------------- load + validate */

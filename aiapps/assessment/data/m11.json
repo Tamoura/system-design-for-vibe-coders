@@ -1,0 +1,135 @@
+{
+  "area": "m11",
+  "questions": [
+    {
+      "id": "m11-1",
+      "level": 1,
+      "lesson": "11.1",
+      "q": {
+        "en": "Fahad asks four engineers when a second agent would earn its extra cost on Najm Desk. Whose answer matches the lesson?",
+        "ar": "يسأل فهد أربعة مهندسين متى يستحق وكيل ثانٍ (second agent) تكلفته الإضافية (extra cost) في نجم ديسك (Najm Desk). أي إجابة تطابق الدرس (the lesson)؟"
+      },
+      "o": {
+        "en": [
+          "When the planner, writer and editor would look tidy as separate boxes on a diagram",
+          "When a second agent could redo the first one's work, to double-check the answer",
+          "When Sara's team needs nine documents checked and no check needs another's result",
+          "When Sara's team needs one document checked in nine steps, each using the last result"
+        ],
+        "ar": [
+          "حين تبدو أدوار المخطِّط (planner) والكاتب (writer) والمحرِّر (editor) مرتبة كصناديق منفصلة (separate boxes) في الرسم (diagram)",
+          "حين يستطيع وكيل ثانٍ (second agent) أن يعيد عمل الأول (redo the work) تحقّقًا مزدوجًا (double-check) من الإجابة",
+          "حين يحتاج فريق سارة إلى فحص (checking) تسعة مستندات (documents) ولا يعتمد أي فحص على نتيجة غيره (another's result)",
+          "حين يحتاج فريق سارة إلى فحص (checking) مستند (document) واحد في تسع خطوات، وتعتمد كل خطوة على نتيجة سابقتها (the last result)"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Parallel independent work is one of the three reasons that justify a team, with context isolation and different permissions per role. Tidy roles (A) are not a failure the single agent has, and a team must buy something. Steps that each need the last result (D) are sequential, so nothing runs in parallel.",
+        "ar": "العمل المستقل المتوازي (parallel independent work) أحد الأسباب الثلاثة التي تبرر الفريق (team)، ومعه عزل السياق (context isolation) والصلاحيات المختلفة لكل دور (different permissions per role). أما ترتيب الأدوار (الخيار A) فليس إخفاقًا عند الوكيل الواحد (single agent)، والفريق يجب أن يشتري شيئًا (buy something). أما الخطوات التي تحتاج كل منها إلى نتيجة سابقتها (الخيار D) فمتسلسلة (sequential) فلا شيء فيها يعمل بالتوازي."
+      }
+    },
+    {
+      "id": "m11-2",
+      "level": 2,
+      "lesson": "11.1",
+      "q": {
+        "en": "In Najm Desk, the writer and the reviewer each obey a cap of 4 steps per turn. Even so, one night they pass a draft back and forth for 30 calls, and Maha flags the bill. Where does the missing guard belong?",
+        "ar": "يلتزم كلٌّ من الكاتب (writer) والمراجِع (reviewer) في نجم ديسك (Najm Desk) بحدّ 4 خطوات في الدور (step cap per turn). ومع ذلك يتبادلان المسوّدة (draft) ذهابًا وإيابًا طوال 30 استدعاءً (calls) في ليلة واحدة، وتنبّه مها إلى الفاتورة (the bill). أين مكان الحاجز الناقص (missing guard)؟"
+      },
+      "o": {
+        "en": [
+          "Lower each agent's step cap from 4 to 2, so that every single turn is shorter",
+          "Add a round cap and a team token budget, both enforced by the supervisor's code",
+          "Add a line to the reviewer's prompt telling it to approve after two rounds at most",
+          "Add a manager agent whose job is to notice when the other two agents are looping"
+        ],
+        "ar": [
+          "خفض حدّ الخطوات (step cap) لكل وكيل (agent) من 4 إلى 2 حتى يصير كل دور (turn) على حدة أقصر",
+          "إضافة حدّ للجولات (round cap) وميزانية رموز (token budget) للفريق، يفرضهما المشرف (supervisor) في الشيفرة",
+          "إضافة سطر في موجّه المراجِع (reviewer's prompt) يأمره بالموافقة بعد جولتين (two rounds) على الأكثر",
+          "إضافة وكيل مدير (manager agent) مهمته أن يلاحظ حين يدخل الوكيلان الآخران (other two) في حلقة تكرار (loop) بينهما"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "A step cap bounds one agent's turn, not the number of rounds, so the team needs its own limits in the supervisor: a round cap on the loop and a token budget over every agent, checked before each call. A prompt line (C) is only a request, and a manager agent (D) adds one more thing that can loop.",
+        "ar": "حدّ الخطوات (step cap) يقيّد دور وكيل واحد لا عدد الجولات (rounds)، فيحتاج الفريق (team) إلى حدود خاصة به في المشرف (supervisor): حدّ للجولات في الحلقة وميزانية رموز (token budget) على كل الوكلاء تُفحص قبل كل استدعاء (call). وسطر الموجّه (الخيار C) طلب فقط (a request)، ووكيل المدير (الخيار D) يضيف شيئًا آخر قد يدخل حلقة (loop)."
+      }
+    },
+    {
+      "id": "m11-3",
+      "level": 2,
+      "lesson": "11.2",
+      "q": {
+        "en": "In Lujain's lab team, the researcher's notes pass the Pydantic `Notes` model: well-formed ids, quotes of valid length, no extra fields. The reviewer gets the notes and the draft, not the search results. But one quote is a sentence found in none of the policies the search returned. What should reject it?",
+        "ar": "في فريق المختبر الذي بنته لجين (Lujain's lab team)، تجتاز ملاحظات الباحث (researcher's notes) عقد `Notes` المكتوب بـPydantic (Pydantic model): معرّفات سليمة الصيغة (well-formed ids) واقتباسات بطول صحيح (valid length) ولا حقول زائدة (extra fields). ويتلقى المراجِع (reviewer) الملاحظات والمسوّدة لا نتائج البحث (search results). لكن أحد الاقتباسات (quotes) جملة لا توجد في أي سياسة أعادها البحث (policies the search returned). ما الذي ينبغي أن يرفضها؟"
+      },
+      "o": {
+        "en": [
+          "A code check that looks for each quote in the text the search returned",
+          "A stricter schema, with a longer minimum length and a pattern on `quote`",
+          "The reviewer agent, which approves or sends back every draft it is given",
+          "The writer's prompt, if it says to use only what the notes contain"
+        ],
+        "ar": [
+          "فحص في الشيفرة (code check) يبحث عن كل اقتباس (quote) في النص الذي أعاده البحث (search)",
+          "مخطط أشد صرامة (stricter schema) بطول أدنى أكبر (longer minimum length) ونمط (pattern) على `quote`",
+          "وكيل المراجعة (reviewer agent) الذي يوافق على كل مسوّدة (draft) تُعطى له أو يعيدها للتعديل",
+          "موجّه الكاتب (writer's prompt) إذا نصّ على استعمال ما في الملاحظات (notes) وحده"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "A schema can say a quote is a string of the right length, but only code can check that it is word for word in what the search tool returned. The reviewer (C) sees the notes and the draft, not the search results, so it cannot tell that a quote is invented.",
+        "ar": "يستطيع المخطط (schema) أن يقول إن الاقتباس (quote) نص بطول صحيح، لكن الشيفرة (code) وحدها تتحقق أنه حرفيًا في ما أعادته أداة البحث (search tool). والمراجِع (الخيار C) يرى الملاحظات (notes) والمسوّدة (draft) لا نتائج البحث (search results)، فلا يعرف أن الاقتباس مختلق (invented)."
+      }
+    },
+    {
+      "id": "m11-4",
+      "level": 3,
+      "lesson": "11.2",
+      "q": {
+        "en": "Lujain finishes the lab's real-API comparison: 20 questions, three runs of each design. The team and the single agent both get 18 of the 20 right and miss the same two. The team makes about twice the calls and tokens. She argues the team is safer because it has a reviewer. What should Fahad conclude?",
+        "ar": "تنهي لجين المقارنة على الواجهة الحقيقية (real API) في المختبر: 20 سؤالًا (questions)، وثلاث مرات تشغيل (runs) لكل تصميم. يجيب الفريق (team) والوكيل الواحد (single agent) عن 18 سؤالًا من 20 إجابة صحيحة ويخطئان في السؤالين نفسيهما. ويستهلك الفريق نحو ضعف الاستدعاءات (calls) والرموز (tokens). وتحتجّ لجين بأن الفريق أكثر أمانًا (safer) لأن فيه مراجِعًا (reviewer). ماذا ينبغي أن يستنتج فهد؟"
+      },
+      "o": {
+        "en": [
+          "Keep the team for v1, since a second pair of eyes is worth some extra cost and time",
+          "Keep the team for v1 and add a second reviewer to catch the two shared misses",
+          "Ship one agent for v1 but drop the code checks, since the reviewer did that job",
+          "Ship one agent for v1 with the same contract and checks, then revisit the team"
+        ],
+        "ar": [
+          "إبقاء الفريق (team) في الإصدار الأول (v1) لأن عينًا ثانية (second pair of eyes) تستحق بعض التكلفة والوقت",
+          "إبقاء الفريق (team) في الإصدار الأول (v1) وإضافة مراجِع ثانٍ (second reviewer) يلتقط الخطأين المشتركين بينهما",
+          "إطلاق وكيل واحد (one agent) في الإصدار الأول (v1) مع حذف الفحوص في الشيفرة (code checks) لأن المراجِع كان يؤدي هذه المهمة",
+          "إطلاق وكيل واحد (one agent) في الإصدار الأول (v1) بالعقد (contract) والفحوص نفسها، ثم إعادة النظر في الفريق"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "The single agent, with the same contract and checks, is the baseline a team must beat on the same eval; equal scores at about twice the cost fail the exit criterion, so the team goes. \"A second pair of eyes\" (A) is a claim, and the numbers show the reviewer buying no better score. The baseline keeps the same contract and checks, so dropping them (C) is not the comparison either.",
+        "ar": "الوكيل الواحد (single agent) بالعقد (contract) والفحوص (checks) نفسها هو خط الأساس (baseline) الذي يجب أن يتفوق عليه الفريق (team) في مجموعة التقييم (eval) نفسها؛ والنتائج المتساوية بنحو ضعف التكلفة تُخفق في معيار الخروج (exit criterion)، فيُترك الفريق. و«العين الثانية» (second pair of eyes) في الخيار A ادعاء فقط (a claim)، والأرقام تُظهر أن المراجِع (reviewer) لم يرفع الدرجة (score). وخط الأساس يحتفظ بالعقد والفحوص نفسها، فحذفها (الخيار C) ليس المقارنة الصحيحة أيضًا."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m11-e1",
+      "lesson": "11.1",
+      "text": {
+        "en": "I have written the two hand-off contracts between a triage agent and an access specialist in Pydantic, with a closed vocabulary, limits and `extra=\"forbid\"`, added two code checks a schema cannot hold, and run six inputs, three valid and three invalid, that behaved as I predicted.",
+        "ar": "لقد كتبتُ بواسطة Pydantic عقدي التسليم بين الوكلاء (hand-off contracts) اللذين يربطان وكيل الفرز (triage agent) باختصاصي الوصول (access specialist)، بمفردات مغلقة (closed vocabulary) وحدود (limits) و`extra=\"forbid\"`، وأضفتُ فحصين في الشيفرة (code checks) لا يستطيع المخطط (schema) حملهما، وشغّلتُ ستة مدخلات (six inputs) ثلاثة صحيحة (valid) وثلاثة غير صحيحة (invalid) جاء سلوكها كما توقعتُ (as predicted)."
+      }
+    },
+    {
+      "id": "m11-e2",
+      "lesson": "11.2",
+      "text": {
+        "en": "I have removed the allow-list, the grounding check and the budget check from the team lab one at a time, run the tests after each change, and recorded in `NOTES.md` which tests failed for each before restoring the code.",
+        "ar": "لقد أزلتُ قائمة السماح (allow-list) وفحص الإسناد (grounding check) وفحص الميزانية (budget check) من مختبر الفريق (team lab) واحدًا بعد الآخر، وشغّلتُ الاختبارات (tests) بعد كل تغيير، ودوّنتُ في `NOTES.md` الاختبارات التي فشلت مع كل تغيير قبل أن أستعيد الشيفرة (restore the code)."
+      }
+    }
+  ]
+}

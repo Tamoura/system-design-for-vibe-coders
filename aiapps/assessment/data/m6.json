@@ -1,0 +1,135 @@
+{
+ "area": "m6",
+ "questions": [
+  {
+   "id": "m6-1",
+   "level": 1,
+   "lesson": "6.1",
+   "q": {
+    "en": "Lujain has interviewed Hind and Yara and wants to skip the Service Desk floor: \"Two interviews already tell us how tickets are handled.\" Fahad asks her to shadow the desk for a day anyway. What is his reason?",
+    "ar": "أجرت لجين مقابلتين (interviews) مع هند ويارا، وتريد تجاوز زيارة أرضية مكتب الخدمة (Service Desk floor) قائلة: «المقابلتان تكفيان لمعرفة طريقة معالجة التذاكر (how tickets are handled)». ومع ذلك يطلب منها فهد ملاحظة العمل ميدانيًا (shadowing) في المكتب ليومٍ كامل (a full day). ما سبب طلبه؟"
+   },
+   "o": {
+    "en": [
+     "Matching accounts show what happens, so shadowing is only a tie-breaker for when interviewees disagree",
+     "Interviews capture what people believe; watching shows what happens, including steps nobody mentions",
+     "An AI assistant can read the interview transcripts and find any step that Hind and Yara left out",
+     "Agents on the floor speak more candidly than Hind or Yara, so their views should take priority"
+    ],
+    "ar": [
+     "الروايتان المتطابقتان تُظهران ما يحدث، فلا تلزم الملاحظة الميدانية (shadowing) إلا للترجيح عند تعارض أقوال المُقابَلين (interviewees)",
+     "المقابلات (interviews) تنقل ما يعتقده الناس (what people believe)، أما المشاهدة فتُظهر ما يحدث فعلًا، بما فيه خطوات لا يذكرها أحد",
+     "يستطيع مساعد الذكاء الاصطناعي (AI assistant) قراءة نصوص المقابلات (transcripts) واستخراج أي خطوة أغفلتها هند ويارا",
+     "يتحدث الموظفون على أرضية المكتب (agents on the floor) بصراحة أكبر من هند ويارا، فتتقدم آراؤهم (views) على آرائهما"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "An interview tells you what someone believes; shadowing shows what happens, and it finds hidden requirements, such as the manager call-back, that no transcript contains. A is tempting, but matching accounts show a shared belief, not what happens: two people can agree and still omit a step nobody thinks to mention.",
+    "ar": "المقابلة (interview) تخبرك بما يعتقده شخص ما، أما ملاحظة العمل ميدانيًا (shadowing) فتُظهر ما يحدث فعلًا، وتكشف متطلبات خفية (hidden requirements) مثل الاتصال بالمدير للتأكد (manager call-back) لا يحتويها أي نص مقابلة (transcript). والخيار A مغرٍ، لكن الروايتين المتطابقتين تُظهران اعتقادًا مشتركًا (shared belief) لا ما يحدث فعلًا: فقد يتفق شخصان ويُغفلان معًا خطوة لا يخطر ببال أحد أن يذكرها."
+   }
+  },
+  {
+   "id": "m6-2",
+   "level": 2,
+   "lesson": "6.1",
+   "q": {
+    "en": "Najm Desk v1 will answer policy questions from Internal documents, draft or create tickets only with the user's confirmation, and raise account-unlock requests that a person approves. Lujain is choosing which risk owners to bring in from week one. What do the risk tiers say?",
+    "ar": "سيجيب نجم ديسك (Najm Desk) v1 عن أسئلة السياسات (policy questions) من مستندات داخلية (Internal documents)، وسيصوغ التذاكر أو ينشئها بتأكيد المستخدم (user's confirmation) فقط، وسيرفع طلبات إلغاء قفل الحسابات (account-unlock requests) التي يوافق عليها شخص. وتختار لجين مالكي المخاطر (risk owners) الذين ستدعوهم منذ الأسبوع الأول. ماذا تقول مستويات المخاطر (risk tiers)؟"
+   },
+   "o": {
+    "en": [
+     "Layla alone, because two of the three capabilities sit in the two lower tiers",
+     "Sara alone, because staff data is personal data and she advises on privacy law",
+     "Noura and Hamad at the demo, once a working unlock request exists for them to see and review",
+     "Noura and Hamad now, because the unlock request is Tier 3 and the highest tier decides"
+    ],
+    "ar": [
+     "ليلى وحدها، لأن اثنتين من القدرات (capabilities) الثلاث تقعان في المستويين الأدنيين (two lower tiers)",
+     "سارة وحدها، لأن بيانات الموظفين بيانات شخصية (personal data) وهي تقدّم المشورة في قوانين الخصوصية (privacy law)",
+     "نورة وحمد عند العرض التجريبي (demo)، حين يتوافر طلب إلغاء قفل يعمل (working unlock request) ليراجعاه",
+     "نورة وحمد الآن، لأن طلب إلغاء القفل (unlock request) من المستوى 3 (Tier 3) وأعلى مستوى (highest tier) يحسم"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "The highest tier among the capabilities decides who you invite, and an unlock request touches identity, which is Tier 3, so Noura and Hamad join from week one. Waiting for the demo (C) is the red flag of risk owners first hearing about the project there.",
+    "ar": "المستوى الأعلى (highest tier) بين القدرات (capabilities) هو الذي يحدد من تدعوه، وطلب إلغاء القفل (unlock request) يمسّ الهوية (identity) فهو من المستوى 3 (Tier 3)، ولذلك ينضم نورة وحمد منذ الأسبوع الأول. أما انتظار العرض التجريبي (demo) في الخيار C فهو علامة تحذير (red flag): أن يسمع مالكو المخاطر (risk owners) بالمشروع أول مرة هناك."
+   }
+  },
+  {
+   "id": "m6-3",
+   "level": 2,
+   "lesson": "6.2",
+   "q": {
+    "en": "Lujain's draft eval seed set for Najm Desk has 12 scenarios, each an ordinary question with an easy answer, and is due to reach about 30 by v0.2. Yara switches off two guardrails in a test build, and all 12 scenarios still pass. What should Lujain do next?",
+    "ar": "تضم مجموعة التقييم الأولية (eval seed set) التي صاغتها لجين لنجم ديسك (Najm Desk) اثني عشر سيناريو (scenarios)، كلٌّ منها سؤال عادي (ordinary question) إجابته سهلة، ومن المقرر أن تبلغ نحو ثلاثين بحلول الإصدار v0.2. عطّلت يارا حاجزين وقائيين (guardrails) في نسخة اختبار، ومع ذلك نجحت السيناريوهات الاثنا عشر كلها. ماذا ينبغي أن تفعل لجين بعد ذلك (next)؟"
+   },
+   "o": {
+    "en": [
+     "Add cases that trip a guardrail or leave scope, like another person's ticket, each tied to a requirement",
+     "Run each of the twelve ten times, because answers vary between runs and a single clean pass proves little",
+     "Write an exact expected reply for each of the twelve, so that every result is easy to check",
+     "Add more ordinary questions on the same topics, so the set reaches thirty scenarios quickly"
+    ],
+    "ar": [
+     "تضيف حالات تختبر حاجزًا وقائيًا (guardrail) أو تخرج عن النطاق، مثل تذكرة شخص آخر، كلٌّ منها مرتبط بمتطلب (requirement)",
+     "تشغّل كل سيناريو من الاثني عشر عشر مرات (ten times)، لأن الإجابات تتفاوت بين تشغيل وآخر (runs) ولأن نجاحًا واحدًا لا يثبت شيئًا يُذكر",
+     "تكتب ردًّا متوقعًا حرفيًا (exact expected reply) لكل سيناريو من الاثني عشر، لتسهل مطابقة كل نتيجة (result)",
+     "تضيف أسئلة عادية (ordinary questions) أخرى في المواضيع نفسها (same topics)، فتبلغ المجموعة ثلاثين سيناريو (scenarios) سريعًا"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "A seed set made of ordinary questions cannot fail a guardrail, which is why all twelve pass with two switched off. It needs adversarial and out-of-scope cases, each citing a requirement id. Repeating the twelve (B) or adding more ordinary questions (D) changes the count or the confidence, not what the set can catch, and an exact reply (C) is wrong because the expected result describes behaviour, not words.",
+    "ar": "مجموعة تتألف من أسئلة عادية (ordinary questions) لا تستطيع إسقاط أي حاجز وقائي (guardrail)، ولهذا نجحت السيناريوهات الاثنا عشر كلها مع تعطيل حاجزين. وهي تحتاج إلى حالات عدائية (adversarial) وخارج النطاق (out-of-scope) يستشهد كلٌّ منها بمعرّف متطلب (requirement id). أما تكرار التشغيل في الخيار B أو إضافة أسئلة عادية أخرى في الخيار D فيغيّر العدد أو درجة الثقة (confidence) لا ما تستطيع المجموعة كشفه، والرد الحرفي في الخيار C خطأ لأن النتيجة المتوقعة (expected result) تصف السلوك (behaviour) لا الكلمات."
+   }
+  },
+  {
+   "id": "m6-4",
+   "level": 3,
+   "lesson": "6.2",
+   "q": {
+    "en": "Thirty minutes into the spec review workshop for Najm Desk, Hind nods through every section while Yara and Noura say nothing. The spec went out two days ahead, and sign-off is next on the agenda. What should Lujain do?",
+    "ar": "بعد نصف ساعة من ورشة مراجعة المواصفة (spec review workshop) الخاصة بنجم ديسك (Najm Desk)، تهزّ هند رأسها موافقةً على كل قسم (every section)، وتصمت يارا ونورة (say nothing). وقد أُرسلت المواصفة (spec) قبل يومين، والتوقيع (sign-off) هو البند التالي في جدول الأعمال. ماذا ينبغي أن تفعل لجين؟"
+   },
+   "o": {
+    "en": [
+     "Treat the silence as agreement, since the spec went out two days ahead for exactly this reading",
+     "Walk through every requirement a second time, slowly, until someone raises a concern",
+     "Read the eval scenarios aloud and ask each person what would make them reject the spec",
+     "Ask Yara and Noura in front of the room whether they have any objections, and sign off if they say no"
+    ],
+    "ar": [
+     "تعدّ الصمت موافقة (agreement)، لأن المواصفة (spec) أُرسلت قبل يومين لهذه القراءة تحديدًا (exactly this reading)",
+     "تعيد استعراض كل متطلب (requirement) ببطء مرة ثانية إلى أن يطرح أحد اعتراضًا (concern)",
+     "تقرأ سيناريوهات التقييم (eval scenarios) بصوت عالٍ (aloud) وتسأل كل شخص عمّا يجعله يرفض المواصفة",
+     "تسأل يارا ونورة أمام الحضور (in front of the room) هل لديهما اعتراض (objection)، وتنتقل إلى التوقيع إن أجابتا بـ«لا»"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Silence is not agreement, and customers judge behaviour faster than prose, so read scenarios aloud and ask each person what would make them reject the spec. Counting the two days' notice as consent (A) only postpones the objections until after sign-off, and a yes-or-no \"any objections?\" (D) earns a polite \"no\" rather than evidence.",
+    "ar": "الصمت (silence) ليس موافقة، والعملاء يحكمون على السلوك (behaviour) أسرع مما يحكمون على النص، ولذلك تُقرأ السيناريوهات (scenarios) بصوت عالٍ ويُسأل كل شخص عمّا يجعله يرفض المواصفة (spec). أما عدّ مهلة اليومين رضًا (consent) في الخيار A فيؤجل الاعتراضات (objections) إلى ما بعد التوقيع (sign-off) فحسب، وسؤال «هل من اعتراض؟» الذي جوابه نعم أو لا في الخيار D ينال ردًّا مهذبًا (polite) لا دليلًا (evidence)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m6-e1",
+   "lesson": "6.1",
+   "text": {
+    "en": "I have written discovery notes from the three lab sources in which every REQ, RISK, CON and Q line quotes its turn, `check_notes.py` exits 0, and at least five requirements are ones Hind never asked for.",
+    "ar": "لقد كتبتُ ملاحظات الاستكشاف (discovery notes) من مصادر المختبر الثلاثة (three lab sources) بحيث يقتبس كل سطر REQ أو RISK أو CON أو Q المداخلة (turn) التي يستند إليها، وينتهي `check_notes.py` بالرمز 0 (exits 0)، وخمسة متطلبات (requirements) على الأقل لم تطلبها هند قط."
+   }
+  },
+  {
+   "id": "m6-e2",
+   "lesson": "6.2",
+   "text": {
+    "en": "I have built a permissions matrix for my agent's tools where every X names its limit, and written ten acceptance criteria that each cite a requirement id, one trigger and one result, four of them about what must not happen.",
+    "ar": "لقد بنيتُ مصفوفة الصلاحيات (permissions matrix) لأدوات وكيلي (agent's tools) بحيث يحدد كل X حدّه (names its limit)، وكتبتُ عشرة معايير قبول (acceptance criteria) يستشهد كلٌّ منها بمعرّف متطلب (requirement id) ومُحفِّز واحد (trigger) ونتيجة واحدة (result)، وأربعة منها تصف ما يجب ألا يحدث (must not happen)."
+   }
+  }
+ ]
+}

@@ -428,7 +428,7 @@ Work in a copy of `testing/sample`.
 ## 📚 References
 - pytest documentation — https://docs.pytest.org/
 - Hypothesis documentation, the engine behind Schemathesis — https://hypothesis.readthedocs.io/
-- OWASP API Security Project — https://owasp.org/www-project-api-security/
+- OWASP API Security Project — https://owasp.org/API-Security/
 - Pact documentation, consumer-driven contract testing — https://docs.pact.io/
 - Martin Fowler, on test doubles and contract tests — https://martinfowler.com/
 

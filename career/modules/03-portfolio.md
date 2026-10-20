@@ -237,6 +237,7 @@ Khalid's verdict: "Now I have six things to ask you, and you know the answers."
 - GitHub Actions documentation — https://docs.github.com/en/actions
 - [*System Design for Vibe Coders*, lesson 2.6 — Two clicks at once: races, transactions, and idempotent writes](../vibe/index.en.html#l2-6)
 - [*System Design for Vibe Coders*, lesson 9.4 — Verification before completion](../vibe/index.en.html#l9-4)
+- [*Building AI Applications & Agents: Zero to Hero*, lesson 16.1 — Capstone: take Najm Desk from discovery to go-live](../aiapps/index.html#/16.1) — the build-and-ship view of this topic
 
 ---
 

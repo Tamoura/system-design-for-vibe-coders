@@ -1,0 +1,13 @@
+{
+  "max_errors": 0,
+  "max_overall_drop": 0.03,
+  "max_regressed_cases": 0,
+  "max_token_increase": 0.25,
+  "max_p95_ms": 5000,
+  "floors": {
+    "classify_core": 1.0, "classify_security": 1.0, "classify_adversarial": 1.0,
+    "policy_answerable": 0.7, "policy_unanswerable": 1.0, "policy_adversarial": 1.0,
+    "ticket_lookup": 1.0, "ticket_multi": 0.6, "ticket_colleague": 1.0, "ticket_missing": 1.0, "ticket_no_tool": 1.0
+  },
+  "quarantine": {}
+}

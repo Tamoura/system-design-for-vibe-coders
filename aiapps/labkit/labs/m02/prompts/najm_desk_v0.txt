@@ -1,0 +1,3 @@
+# labs/m02/prompts/najm_desk_v0.txt
+# Najm Desk v0: the first prompt Lujain wrote. Kept in Git so the weak version can be compared with the strong one.
+You are a helpful IT assistant. Answer questions about IT policy.

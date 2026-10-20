@@ -430,6 +430,7 @@ tests:
 - توثيق promptfoo (promptfoo documentation): [promptfoo.dev](https://www.promptfoo.dev/)
 - توثيق Ragas (Ragas documentation): [docs.ragas.io](https://docs.ragas.io/)
 - Inspect، إطار معهد أمن الذكاء الاصطناعي البريطاني (the UK AI Security Institute's framework): [inspect.aisi.org.uk](https://inspect.aisi.org.uk/)
+- [*بناء تطبيقات الذكاء الاصطناعي والوكلاء من الصفر إلى الاحتراف (Building AI Applications & Agents: Zero to Hero)*، الدرس 12.1 — تقييم الوكلاء: مجموعات التقييم والمقيِّمات وبوابات الانحدار (Evaluating agents: eval sets, graders and regression gates)](../aiapps/index.ar.html#/12.1) — منظور البناء والتسليم (build and ship) لهذا الموضوع
 
 ---
 
@@ -847,6 +848,7 @@ done
 - مشروع OWASP لأمن الذكاء الاصطناعي التوليدي (OWASP GenAI Security Project)، قائمة أهم 10 مخاطر لتطبيقات النماذج اللغوية الكبيرة (Top 10 for LLM Applications): [genai.owasp.org](https://genai.owasp.org/)
 - Inspect، إطار التقييم لدى معهد أمن الذكاء الاصطناعي البريطاني (the UK AI Security Institute's evaluation framework)، ويشمل مهام الوكلاء (including agent tasks): [inspect.aisi.org.uk](https://inspect.aisi.org.uk/)
 - توثيق pytest (pytest documentation)، وتحديد معاملات الاختبار (parametrization) و`monkeypatch`: [docs.pytest.org](https://docs.pytest.org/)
+- [*بناء تطبيقات الذكاء الاصطناعي والوكلاء من الصفر إلى الاحتراف (Building AI Applications & Agents: Zero to Hero)*، الدرس 8.2 — المختبر: حلقة وكيل من الصفر بحدّ صارم وتسجيل كامل للتتبّع (Lab: an agent loop from scratch with a hard cap and trace logging)](../aiapps/index.ar.html#/8.2) — منظور البناء والتسليم (build and ship) لهذا الموضوع
 
 ---
 
@@ -1218,3 +1220,4 @@ PSI 0.123; identical data 0.000
 - قانون الذكاء الاصطناعي في الاتحاد الأوروبي (EU Artificial Intelligence Act)، اللائحة رقم 2024/1689: [eur-lex.europa.eu](https://eur-lex.europa.eu/)
 - توثيق الفريق الأحمر في promptfoo (promptfoo red-teaming documentation): [promptfoo.dev](https://www.promptfoo.dev/)
 - Chen وCheung وYiu، "Metamorphic testing: a new approach for generating next test cases" (1998)، تقرير تقني من جامعة هونغ كونغ للعلوم والتكنولوجيا (HKUST technical report)
+- [*بناء تطبيقات الذكاء الاصطناعي والوكلاء من الصفر إلى الاحتراف (Building AI Applications & Agents: Zero to Hero)*، الدرس 15.1 — تشغيل وكيل في الإنتاج: قابلية المراقبة والحوادث وأدلة التشغيل (Running an agent in production: observability, incidents and runbooks)](../aiapps/index.ar.html#/15.1) — منظور البناء والتسليم (build and ship) لهذا الموضوع

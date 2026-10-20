@@ -1,0 +1,13 @@
+{
+  "name": "example playbook",
+  "rules": [
+    {
+      "when": {"system_contains": "You are the reviewer", "user_regex": "DRAFT:(.*)"},
+      "reply": {"json": {"approved": false, "issues": ["The draft has no sources."]}}
+    },
+    {
+      "when": {"user_contains": "weather in Doha", "has_tool_result": false, "tools_include": "get_weather"},
+      "reply": {"text": "Let me check.", "tool_use": [{"name": "get_weather", "input": {"city": "Doha"}}]}
+    }
+  ]
+}

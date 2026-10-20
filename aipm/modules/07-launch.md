@@ -231,6 +231,7 @@ Go/no-go outcome: *"No-go this week on G1. Go at 5% once the false-block fix is 
 - Beyer, B. et al., *Site Reliability Engineering* (Google), incident management and postmortem chapters — https://sre.google/books/
 - NIST AI Risk Management Framework — https://www.nist.gov/itl/ai-risk-management-framework
 - EU AI Act, Regulation (EU) 2024/1689 — https://eur-lex.europa.eu/eli/reg/2024/1689/oj
+- [*Building AI Applications & Agents: Zero to Hero*, lesson 13.2 — Enterprise controls and the governance pack](../aiapps/index.html#/13.2) — the build-and-ship view of this topic
 
 ---
 

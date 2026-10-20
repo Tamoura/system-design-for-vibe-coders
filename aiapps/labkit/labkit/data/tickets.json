@@ -1,0 +1,72 @@
+{
+ "4471": {
+  "id": "4471",
+  "status": "In progress — assigned to Networks",
+  "category": "network",
+  "summary": "VPN drops every ten minutes when working from home",
+  "priority": "P3"
+ },
+ "4472": {
+  "id": "4472",
+  "status": "Closed",
+  "category": "hardware",
+  "summary": "Replacement laptop charger requested",
+  "priority": "P4"
+ },
+ "4473": {
+  "id": "4473",
+  "status": "Open",
+  "category": "access",
+  "summary": "Locked out after too many password attempts",
+  "priority": "P2"
+ },
+ "4474": {
+  "id": "4474",
+  "status": "In progress — assigned to Security",
+  "category": "security",
+  "summary": "Received a suspicious email asking me to confirm my password",
+  "priority": "P2"
+ },
+ "4475": {
+  "id": "4475",
+  "status": "Waiting for customer",
+  "category": "software",
+  "summary": "Cannot install the approved PDF editor",
+  "priority": "P3"
+ },
+ "4476": {
+  "id": "4476",
+  "status": "Closed",
+  "category": "network",
+  "summary": "Wi-Fi dead zone in meeting room 3B",
+  "priority": "P3"
+ },
+ "4477": {
+  "id": "4477",
+  "status": "Open",
+  "category": "hardware",
+  "summary": "Second monitor flickers when the laptop wakes up",
+  "priority": "P4"
+ },
+ "4478": {
+  "id": "4478",
+  "status": "In progress — assigned to Identity",
+  "category": "access",
+  "summary": "New joiner needs access to the finance shared drive",
+  "priority": "P3"
+ },
+ "4479": {
+  "id": "4479",
+  "status": "Closed",
+  "category": "software",
+  "summary": "Outlook crashes when opening large attachments",
+  "priority": "P3"
+ },
+ "4480": {
+  "id": "4480",
+  "status": "Open",
+  "category": "other",
+  "summary": "Where can I find the office floor plan?",
+  "priority": "P4"
+ }
+}

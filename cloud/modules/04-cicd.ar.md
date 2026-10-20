@@ -300,6 +300,7 @@ jobs:
 - التطبيق ذو العوامل الاثني عشر (The Twelve-Factor App) — https://12factor.net/
 - التطوير القائم على الجذع (Trunk-based development) — https://trunkbaseddevelopment.com/
 - [*اختبار البرمجيات من الصفر إلى الاحتراف في عصر الذكاء الاصطناعي (Software Testing: Zero to Hero in the AI Era)*، الدرس 5.2 — الاختبار في CI/CD وفي بيئة الإنتاج (Testing in CI/CD and in production)](../testing/index.ar.html#/5.2) — منظور الاختبار (testing) لهذا الموضوع
+- [*بناء تطبيقات الذكاء الاصطناعي والوكلاء من الصفر إلى الاحتراف (Building AI Applications & Agents: Zero to Hero)*، الدرس 12.2 — المختبر: كل وكيل تحت تقييم من 50 حالة وفحص تكامل مستمر (Lab: every agent under a 50-case eval and a CI check)](../aiapps/index.ar.html#/12.2) — منظور البناء والتسليم (build and ship) لهذا الموضوع
 
 ---
 

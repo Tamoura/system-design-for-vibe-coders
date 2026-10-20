@@ -176,5 +176,23 @@
       { "value": 190, "label": "practice questions" }
     ],
     "tags": ["QA · SDET · quality", "Testing AI systems"]
+  },
+  {
+    "slug": "aiapps",
+    "verb": "Build and ship agents",
+    "title": "Building AI Agents",
+    "subtitle": "Zero to Hero",
+    "titleAr": "بناء وكلاء الذكاء الاصطناعي — من الصفر إلى الاحتراف",
+    "color": "#f2cf5b",
+    "hook": "From first API call to an *agent* in *production* for a *customer.*",
+    "topicsLabel": "Build with Claude Code",
+    "topics": ["Requirements & design", "Tools & RAG", "The agent loop", "MCP & multi-agent", "Evals & security", "Deploy & hand over"],
+    "stats": [
+      { "value": 17, "label": "modules" },
+      { "value": 35, "label": "lessons" },
+      { "value": 159, "label": "tools & patterns" },
+      { "value": 230, "label": "practice questions" }
+    ],
+    "tags": ["Agents · LLM apps · delivery", "Requirements to production"]
   }
 ]

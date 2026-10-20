@@ -1,0 +1,1 @@
+Passwords can be reset at the self-service portal using the authenticator app. If the authenticator is lost, the Service Desk verifies identity with a manager call-back before resetting. Passwords must be at least 14 characters and are never sent by email.

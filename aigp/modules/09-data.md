@@ -642,3 +642,4 @@ Good red-teams are **diverse** (security, domain, language, affected-community p
 - ISO/IEC 42001:2023 — https://www.iso.org/standard/81230.html
 - IAPP AIGP Body of Knowledge — https://iapp.org/certify/aigp/
 - [*Software Testing: Zero to Hero in the AI Era*, lesson 7.3 — Safety, robustness, fairness and monitoring](../testing/index.html#/7.3) — the testing view of this topic
+- [*Building AI Applications & Agents: Zero to Hero*, lesson 12.1 — Evaluating agents: eval sets, graders and regression gates](../aiapps/index.html#/12.1) — the build-and-ship view of this topic

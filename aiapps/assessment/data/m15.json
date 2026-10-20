@@ -1,0 +1,135 @@
+{
+ "area": "m15",
+ "questions": [
+  {
+   "id": "m15-1",
+   "level": 1,
+   "lesson": "15.1",
+   "q": {
+    "en": "After a bad Sunday, Maha wants the on-call person to see exactly what changed, and Lujain suggests keeping every prompt and answer in the trace. What should the trace of each production run hold instead?",
+    "ar": "بعد يوم أحد سيئ، تريد مها أن يرى المناوب (on-call person) بالضبط ما الذي تغيّر، ويقترح لجين حفظ كل موجّه (prompt) وكل إجابة في التتبّع (trace). ما المحتوى الذي ينبغي أن يحمله تتبّع (trace) كل تشغيل (run) في الإنتاج (production) بدلًا من ذلك؟"
+   },
+   "o": {
+    "en": [
+     "The full prompt and answer of every turn, so that the on-call person can replay any failure exactly as it ran",
+     "A hashed employee id and a clipped copy of each question, to group the repeat contacts of one person",
+     "Release, prompt version, stop reason, seconds and token counts per run, with tool names and result sizes",
+     "Error events only, each with a full copy of the failing request, since healthy runs need no record"
+    ],
+    "ar": [
+     "النص الكامل للموجّه (prompt) والإجابة في كل دور (turn) من التشغيل، ليعيد المناوب (on-call person) تشغيل أي إخفاق (failure) كما حدث تمامًا في الإنتاج (production)",
+     "معرّف موظف مجزَّأ (hashed employee id) ونسخة مقتطعة من كل سؤال (clipped copy)، لتجميع الاتصالات المتكررة (repeat contacts) للشخص الواحد",
+     "الإصدار (release) ونسخة الموجّه (prompt version) وسبب التوقف (stop reason) والثواني وعدد الرموز (token counts) لكل تشغيل، مع أسماء الأدوات وأحجامها",
+     "أحداث الأخطاء (error events) وحدها، مع نسخة كاملة من الطلب الفاشل (failing request)، لأن التشغيلات السليمة (healthy runs) لا تحتاج إلى سجل"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "A run's trace holds ids, counts, sizes and reasons, plus the release and prompt version, so the on-call person can see what changed without keeping what staff said. Keeping the full text is the tempting shortcut, but it turns the trace into a leak, and a hashed user id is usually still personal data.",
+    "ar": "يحمل تتبّع (trace) التشغيل معرّفات (ids) وأعدادًا وأحجامًا وأسبابًا مع الإصدار (release) ونسخة الموجّه (prompt version)، فيرى المناوب (on-call person) ما تغيّر دون الاحتفاظ بما قاله الموظفون. وحفظ النص الكامل هو الاختصار المغري، لكنه يحوّل التتبّع إلى تسريب (leak)، والمعرّف المجزَّأ (hashed id) يبقى غالبًا بيانات شخصية (personal data)."
+   }
+  },
+  {
+   "id": "m15-2",
+   "level": 2,
+   "lesson": "15.1",
+   "q": {
+    "en": "At 02:10, Najm Desk is repeating one tool call and its token use is climbing fast. The IT on-call engineer is on the rota but is neither L2 nor L3, and the cost breaker has not tripped. What does the runbook expect?",
+    "ar": "في الساعة 02:10 يكرّر نجم ديسك (Najm Desk) استدعاء أداة (tool call) واحدًا ويرتفع استهلاك الرموز (token use) بسرعة. والمهندس المناوب (on-call engineer) في جدول المناوبة (rota) ليس من المستوى الثاني (L2) ولا الثالث (L3)، ولم يتحرك قاطع التكلفة (cost breaker) بعد. ماذا يتوقع دليل التشغيل (runbook) منه؟"
+   },
+   "o": {
+    "en": [
+     "Press the kill switch now and leave it off: anyone on the rota may stop it, only L2 or L3 may resume",
+     "Wait for Maha to confirm, because only L2 or L3 may decide to stop the agent while users are on it",
+     "Press the switch, then turn it back on once token use looks normal, because the engineer saw the cause",
+     "Lower the iteration cap and keep watching, because the switch is kept for incidents where data has left"
+    ],
+    "ar": [
+     "يضغط مفتاح الإيقاف (kill switch) فورًا ويتركه مطفأً: يستطيع أي مناوب في الجدول إيقاف الوكيل (agent)، ولا يستأنفه إلا L2 أو L3",
+     "ينتظر تأكيد مها، لأن المستوى الثاني (L2) أو الثالث (L3) وحدهما يقرران إيقاف الوكيل (agent) أثناء اتصال المستخدمين (users)",
+     "يضغط المفتاح (switch) ثم يعيد تشغيله حين يبدو استهلاك الرموز (token use) طبيعيًا، لأن المهندس رأى السبب بنفسه",
+     "يخفض حدّ التكرارات (iteration cap) ويواصل المراقبة (monitoring)، لأن المفتاح (switch) محجوز لحوادث تسرّب البيانات (data leaving)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Stopping is cheap and resuming takes judgement, so anyone on the IT on-call rota may press the file-based switch and only L2 or L3 may resume. Waiting for Maha is the tempting caution, but the loop keeps spending while the person who can already stop it waits for permission.",
+    "ar": "الإيقاف رخيص والاستئناف يحتاج إلى حكم، لذلك يستطيع أي مناوب في جدول المناوبة (IT on-call rota) ضغط المفتاح (switch) القائم على ملف (file-based)، ولا يستأنف الخدمة إلا L2 أو L3. وانتظار مها هو الحذر المغري، لكن الحلقة (loop) تواصل الإنفاق بينما ينتظر من يقدر على الإيقاف إذنًا."
+   }
+  },
+  {
+   "id": "m15-3",
+   "level": 2,
+   "lesson": "15.2",
+   "q": {
+    "en": "Fahad's team steps back from Najm Desk on Thursday. The documents are delivered and the UAT is signed, but Maha's operators have never run a model-change canary or a kill-switch drill. What should happen first?",
+    "ar": "سيبتعد فريق فهد عن نجم ديسك (Najm Desk) يوم الخميس. سُلّمت الوثائق (documents) ووُقّع اختبار قبول المستخدم (user acceptance test, UAT)، لكن مشغّلي مها (operators) لم يجروا قط إطلاقًا كناريًا (canary release) لتغيير النموذج ولا تمرين مفتاح الإيقاف (kill-switch drill). ماذا ينبغي أن يحدث أولًا؟"
+   },
+   "o": {
+    "en": [
+     "Add the two tasks to the handover checklist as open items, for the customer to finish after the builders go",
+     "Keep Lujain on call for the operators until the first real incident, then judge how they coped",
+     "Have the builders run the canary and the drill once more while the operators watch, and record it for replay",
+     "Have the operators run each task once themselves, with the builders watching and keeping their hands off"
+    ],
+    "ar": [
+     "إضافة المهمتين إلى قائمة التسليم (handover checklist) بوصفهما بندين مفتوحين (open items) يُنجزهما العميل بعد رحيل البناة (builders)",
+     "إبقاء لجين مناوبًا (on call) لمساندة المشغّلين (operators) إلى أن تقع أول حادثة (incident) حقيقية، ثم تقدير كيف تصرّفوا",
+     "تنفيذ البناة (builders) للإطلاق الكناري (canary release) والتمرين (drill) مرة أخرى والمشغّلون (operators) يشاهدون، مع تسجيل (recording) للإعادة",
+     "أن ينفّذ المشغّلون (operators) كل مهمة (task) بأنفسهم مرة واحدة، ويكتفي البناة (builders) بالمشاهدة (watching) دون أن يلمسوا شيئًا"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Handover is done when the customer has performed each task once while the builders watched; anything only a builder can do stays a dependency and goes on the risk register. A recording or a builder on call is the tempting comfort, but both leave the operators unable to run the task alone.",
+    "ar": "يكتمل التسليم (handover) حين ينفّذ العميل كل مهمة مرة واحدة والبناة (builders) يشاهدون؛ وأي شيء لا يقدر عليه إلا البناة يبقى اعتمادية (dependency) ويُسجَّل في سجل المخاطر (risk register). والتسجيل أو بقاء أحد البناة مناوبًا هو الراحة المغرية، لكن كليهما يترك المشغّلين (operators) عاجزين عن تنفيذ المهمة وحدهم."
+   }
+  },
+  {
+   "id": "m15-4",
+   "level": 3,
+   "lesson": "15.2",
+   "q": {
+    "en": "In the sign-off meeting, Yara checks TicketHub for row U-14 and finds a real ticket where row U-09 should have left only an unconfirmed draft. Hind wants to go live on Sunday and offers to sign a waiver. What is the right call?",
+    "ar": "في اجتماع التوقيع (sign-off meeting) تفحص يارا TicketHub لأجل الصف U-14 فتجد تذكرة حقيقية حيث كان ينبغي أن يترك الصف U-09 مسودة (draft) غير مؤكدة فقط. وتريد هند الإطلاق (go-live) يوم الأحد وتعرض توقيع تنازل (waiver). ما القرار الصحيح؟"
+   },
+   "o": {
+    "en": [
+     "Treat it as a Major defect: Hind signs a waiver with an owner and a date, and the team goes live on Sunday",
+     "Treat it as a Blocker: no sign-off until it is fixed, then re-run every row that the fix could touch",
+     "Treat it as a Blocker, fix it, then re-run only U-14, since that row exposed the defect",
+     "Treat it as a Minor defect: add it to the backlog, since staff can delete a stray ticket"
+    ],
+    "ar": [
+     "تصنيفه عيبًا رئيسيًا (Major): توقّع هند تنازلًا (waiver) باسم مالك وتاريخ (owner and date)، ويُطلَق النظام يوم الأحد",
+     "تصنيفه حاجزًا (Blocker): لا توقيع (sign-off) حتى يُصلَح، ثم تُعاد كل الصفوف (rows) التي قد يمسّها الإصلاح",
+     "تصنيفه حاجزًا (Blocker) ثم إصلاحه وإعادة الصف U-14 وحده، لأنه الصف الذي كشف العيب (defect)",
+     "تصنيفه عيبًا ثانويًا (Minor): يُضاف إلى المخزون المؤجل (backlog)، لأن الموظفين يحذفون التذكرة الشاردة يدويًا"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "A write that nobody confirmed is a wrong write, which is a Blocker: there is no sign-off until the fix is made and every row it could touch has run again. A waiver is for a Major defect where nothing unsafe happened, and re-running only U-14 would miss rows the fix may have broken.",
+    "ar": "الكتابة (write) التي لم يؤكدها أحد كتابة خاطئة (wrong write)، وهي حاجز (Blocker): لا توقيع (sign-off) حتى يُنفَّذ الإصلاح وتُعاد كل صفوف (rows) قد يمسّها. والتنازل (waiver) للعيب الرئيسي (Major) الذي لم يقع فيه شيء غير آمن، وإعادة U-14 وحده تفوّت صفوفًا قد يكسرها الإصلاح."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m15-e1",
+   "lesson": "15.1",
+   "text": {
+    "en": "I have run the kill-switch drill offline and seen both the operator's flip and the cost breaker end the runaway agent with the reason `killed`, with a new request making no model call, and written the output into `NOTES.md`.",
+    "ar": "لقد شغّلتُ تمرين مفتاح الإيقاف (kill-switch drill) دون اتصال (offline) ورأيتُ قلب المشغّل للمفتاح (operator's flip) وقاطع التكلفة (cost breaker) كليهما ينهيان الوكيل الجامح (runaway agent) بسبب التوقف (reason) `killed`، وطلبًا جديدًا (new request) لا يجري أي استدعاء للنموذج (model call)، ودوّنتُ المخرجات (output) في `NOTES.md`."
+   }
+  },
+  {
+   "id": "m15-e2",
+   "lesson": "15.2",
+   "text": {
+    "en": "I have run the UAT runner against an app and written in `NOTES.md` the report and, for each failed row, a severity, a reason and a decision to fix, waive or re-scope.",
+    "ar": "لقد شغّلتُ مشغّل اختبار القبول (UAT runner) على تطبيق (app) ودوّنتُ في `NOTES.md` التقرير (report) ولكل صف فاشل (failed row) درجة الخطورة (severity) والسبب (reason) وقرارًا بالإصلاح (fix) أو التنازل (waive) أو إعادة تحديد النطاق (re-scope)."
+   }
+  }
+ ]
+}

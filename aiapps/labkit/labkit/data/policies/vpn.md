@@ -1,0 +1,1 @@
+The corporate VPN is required when working outside Najm Bank offices. Connection problems should first be tested on another network. If the problem continues, raise a Network ticket with the error code shown by the VPN client.

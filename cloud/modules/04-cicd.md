@@ -300,6 +300,7 @@ Use your own GitHub account and a public practice repository; never an employer'
 - The Twelve-Factor App — https://12factor.net/
 - Trunk-based development — https://trunkbaseddevelopment.com/
 - [*Software Testing: Zero to Hero in the AI Era*, lesson 5.2 — Testing in CI/CD and in production](../testing/index.html#/5.2) — the testing view of this topic
+- [*Building AI Applications & Agents: Zero to Hero*, lesson 12.2 — Lab: every agent under a 50-case eval and a CI check](../aiapps/index.html#/12.2) — the build-and-ship view of this topic
 
 ---
 

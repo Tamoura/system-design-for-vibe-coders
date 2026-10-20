@@ -1,0 +1,135 @@
+{
+ "area": "m0",
+ "questions": [
+  {
+   "id": "m0-1",
+   "level": 1,
+   "lesson": "0.1",
+   "q": {
+    "en": "Two teammates argue about whether the Najm Desk ticket helper is an agent. One says \"it calls tools\", the other says \"it remembers the conversation\". Which test does the course use to decide?",
+    "ar": "يختلف زميلان حول ما إذا كان مساعد التذاكر (ticket helper) في نجم ديسك (Najm Desk) وكيلًا (agent). يقول الأول «إنه يستدعي أدوات (tools)»، ويقول الثاني «إنه يتذكر المحادثة (the conversation)». أي اختبار تعتمده الدورة لحسم ذلك؟"
+   },
+   "o": {
+    "en": [
+     "Whether it makes more than one model call to finish a single request",
+     "Whether the model, not your code, chooses each next step while it runs",
+     "Whether it calls at least one tool while it handles a single request",
+     "Whether it resends the earlier turns of the conversation with every call"
+    ],
+    "ar": [
+     "ما إذا كان يجري أكثر من استدعاء واحد للنموذج (model call) لإنهاء الطلب الواحد (single request)",
+     "ما إذا كان النموذج (model)، لا شيفرتك (your code)، من يختار كل خطوة تالية (next step)",
+     "ما إذا كان يستدعي أداة (tool) واحدة على الأقل أثناء معالجته للطلب (single request)",
+     "ما إذا كان يعيد إرسال أدوار المحادثة السابقة (earlier turns of the conversation) في كل استدعاء (call)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "An agent lets the model direct its own process, picking the next step and deciding when it is done, while a workflow follows a path your code defines. Calling tools is the tempting test, but workflows call tools too, and resending the conversation is what a chatbot does.",
+    "ar": "الوكيل (agent) يترك للنموذج (model) توجيه عمليته بنفسه، فيختار الخطوة التالية ويقرر متى ينتهي، أما سير العمل (workflow) فيتبع مسارًا تحدده شيفرتك (your code). واستدعاء الأدوات (calling tools) هو الاختبار المغري، لكن سير العمل يستدعيها أيضًا، وإعادة إرسال المحادثة (resending the conversation) هي ما يفعله روبوت المحادثة (chatbot)."
+   }
+  },
+  {
+   "id": "m0-2",
+   "level": 2,
+   "lesson": "0.2",
+   "q": {
+    "en": "Hind wants the cost of a four-week Najm Desk pilot: about 450 conversations a week, around six turns each. Lujain will copy the prices from the current price page. How should she get the token counts?",
+    "ar": "تريد هند (Hind) معرفة تكلفة تجربة نجم ديسك (Najm Desk) التشغيلية (pilot) لمدة أربعة أسابيع: نحو 450 محادثة (conversations) في الأسبوع وحوالي ست جولات (turns) في كل محادثة. وستنسخ لجين (Lujain) الأسعار من صفحة الأسعار الحالية (current price page). كيف تحصل على عدد الرموز (token counts)؟"
+   },
+   "o": {
+    "en": [
+     "Multiply one single-turn call's tokens by six turns and the conversation count",
+     "Run one six-turn chat on the offline mock and scale its token counts up",
+     "Count them with tiktoken, the tokenizer library most developers already know",
+     "Take real counts from the API, then project each turn with the history resent"
+    ],
+    "ar": [
+     "تضرب رموز استدعاء الجولة الواحدة (single-turn call) في ست جولات (turns) ثم في عدد المحادثات (the conversation count)",
+     "تشغّل محادثة واحدة من ست جولات (turns) على المحاكي (mock) دون اتصال (offline) ثم تكبّر أعداد رموزها",
+     "تحسبها بمكتبة tiktoken، وهي مكتبة الترميز (tokenizer library) التي يعرفها أغلب المطوّرين (developers)",
+     "تأخذ أعدادًا فعلية (real counts) من الواجهة (API) ثم تقدّر كل جولة مع إعادة إرسال السجل (the history resent)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Every call resends the system prompt and the whole history, so input tokens grow faster than the number of turns; scaling one call (the tempting shortcut) undercounts them. The mock's counts are only estimates and tiktoken is not for Claude, so counts must come from the real API: usage after a call, count_tokens before one.",
+    "ar": "كل استدعاء (call) يعيد إرسال موجّه النظام (system prompt) وسجل المحادثة (history) كاملًا، فتنمو رموز الإدخال (input tokens) أسرع من عدد الجولات (turns)؛ وضرب رموز استدعاء واحد (وهو الاختصار المغري) يقلّل العدّ. أما أعداد المحاكي (mock) فتقديرات فقط، ومكتبة tiktoken ليست لـ Claude، لذا يجب أن تأتي الأعداد من الواجهة الحقيقية (real API): usage بعد الاستدعاء أو count_tokens قبله."
+   }
+  },
+  {
+   "id": "m0-3",
+   "level": 2,
+   "lesson": "0.3",
+   "q": {
+    "en": "Lujain's task is to have Claude Code \"make the Najm Desk escalation logic smarter\". She cannot yet say how she would know whether it got smarter. What should she do first?",
+    "ar": "مهمة لجين (Lujain) أن تطلب من Claude Code «جعل منطق التصعيد (escalation logic) في نجم ديسك (Najm Desk) أذكى». وهي لا تستطيع بعد أن تقول كيف ستعرف أنه صار أذكى. ماذا ينبغي أن تفعل أولًا؟"
+   },
+   "o": {
+    "en": [
+     "Decide how she would tell it is right, then write the spec with those checks",
+     "Delegate it now and accept the result if the existing tests stay green",
+     "Delegate it now and ask Claude Code to write the tests that prove it works well",
+     "Delegate it in small steps and let each diff stand in for the checks"
+    ],
+    "ar": [
+     "تحدد كيف ستعرف صحة النتيجة (how she would tell it is right)، ثم تكتب المواصفة (spec) بتلك الفحوص",
+     "تفوّض المهمة الآن (delegate it now) وتقبل النتيجة ما دامت الاختبارات (tests) الحالية تبقى خضراء (green)",
+     "تفوّض المهمة الآن (delegate it now) وتطلب من Claude Code كتابة الاختبارات (tests) التي تثبت نجاحها",
+     "تفوّضها على خطوات صغيرة (small steps) وتترك كل فرق (diff) يحلّ محل الفحوص المطلوبة (checks)"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "The method starts with a spec whose checks you can state: if you cannot say how you would know the result is right, do not delegate it yet. Existing tests staying green say nothing about \"smarter\", and small steps (the tempting option) keep diffs readable but cannot tell you what correct means.",
+    "ar": "تبدأ الطريقة بمواصفة (spec) تستطيع أن تصوغ فحوصها (checks): فإن لم تستطع القول كيف ستعرف أن النتيجة صحيحة (the result is right) فلا تفوّض المهمة بعد. واستمرار نجاح الاختبارات (tests) القائمة لا يقول شيئًا عن «الأذكى»، والخطوات الصغيرة (small steps)، وهي الخيار المغري، تُبقي الفروق (diffs) مقروءة لكنها لا تخبرك بمعنى الصحيح (what correct means)."
+   }
+  },
+  {
+   "id": "m0-4",
+   "level": 3,
+   "lesson": "0.1",
+   "q": {
+    "en": "Seeing account-unlock requests pile up, Hind asks that Najm Desk v1 change staff accounts on its own, with no approval step, to cut first-response time. What is the best reply, using the course's view of enterprise-grade?",
+    "ar": "بعد أن رأت هند (Hind) طلبات فتح الحسابات (account-unlock requests) تتراكم، طلبت أن يغيّر نجم ديسك (Najm Desk) في الإصدار الأول (v1) حسابات الموظفين (staff accounts) بنفسه ودون خطوة موافقة (approval step) لتقليل زمن الاستجابة الأولى (first-response time). ما أفضل ردّ وفق نظرة الدورة إلى المستوى المؤسسي (enterprise-grade)؟"
+   },
+   "o": {
+    "en": [
+     "Agree, and add an audit log so every account change can be reviewed afterwards",
+     "Agree, if the unlock scores 8 out of 10 or better on the enterprise-grade checklist",
+     "Keep the unlock approval-gated in v1; autonomous changes need much more evidence",
+     "Refuse every write action in v1, because enterprise-grade means the agent only reads"
+    ],
+    "ar": [
+     "توافق وتضيف سجل تدقيق (audit log) كي يمكن مراجعة كل تغيير في الحساب (account change) لاحقًا",
+     "توافق، إذا نال فتح الحساب 8 من 10 أو أكثر في قائمة فحص المستوى المؤسسي (enterprise-grade checklist)",
+     "تُبقي فتح الحساب في الإصدار الأول (v1) بموافقة (approval-gated)، فالتغيير المستقل يحتاج أدلة (evidence) أكثر",
+     "ترفض كل إجراء كتابي (write action) في الإصدار الأول، لأن المستوى المؤسسي (enterprise-grade) يعني أن الوكيل (agent) يقرأ فقط"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Enterprise-grade is a negotiation, not a score: the evidence a feature needs depends on its autonomy level, and every write action needs a human or a policy gate. A log reviewed after the fact (the tempting option) is observability, not a gate, so the change would still be ungoverned.",
+    "ar": "المستوى المؤسسي (enterprise-grade) تفاوض لا درجة: فالأدلة (evidence) التي تحتاجها الميزة تتوقف على مستوى استقلاليتها (autonomy level)، وكل إجراء كتابي (write action) يحتاج إنسانًا أو بوابة سياسة (policy gate). وسجل يُراجَع بعد وقوع التغيير، وهو الخيار المغري، مجرد قابلية مراقبة (observability) لا بوابة، فيبقى التغيير بلا حوكمة (governance)."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m0-e1",
+   "lesson": "0.2",
+   "text": {
+    "en": "I have run hello.py with the mock running, with it stopped and with the key unset, saved the three outputs with their exit codes (0, 1 and 2), and can explain every line of the first.",
+    "ar": "لقد شغّلتُ hello.py والمحاكي (mock) يعمل، ثم بعد إيقافه، ثم دون ضبط المفتاح (key unset)، وحفظتُ المخرجات الثلاثة (outputs) مع رموز الخروج (exit codes) 0 و1 و2، وأستطيع شرح كل سطر من الأول."
+   }
+  },
+  {
+   "id": "m0-e2",
+   "lesson": "0.3",
+   "text": {
+    "en": "I have read flawed_chat.py as a reviewer, written a review.md listing its five flaws with line, symptom, checklist item and fix, and run the tests that prove each one.",
+    "ar": "لقد قرأتُ flawed_chat.py بعين المراجِع (reviewer)، وكتبتُ ملف review.md يسرد عيوبه الخمسة (five flaws) مع السطر والعَرَض الظاهر (symptom) وبند قائمة المراجعة (checklist item) والإصلاح (fix)، وشغّلتُ الاختبارات (tests) التي تثبت كل عيب."
+   }
+  }
+ ]
+}
