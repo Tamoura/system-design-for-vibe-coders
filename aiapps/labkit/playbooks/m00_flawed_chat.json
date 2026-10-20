@@ -1,0 +1,17 @@
+{
+  "name": "Module 0: a model whose answer depends on seeing its own earlier answer",
+  "rules": [
+    {
+      "when": {"user_contains": "request a laptop", "turn": 0},
+      "reply": {"text": "Open a ticket under Hardware, then New device. Your manager approves it."}
+    },
+    {
+      "when": {"user_contains": "how long", "turn": 1},
+      "reply": {"text": "A laptop request usually takes three working days."}
+    },
+    {
+      "when": {"user_contains": "how long", "turn": 0},
+      "reply": {"text": "How long does what take? I cannot see any earlier answer from me in this conversation."}
+    }
+  ]
+}

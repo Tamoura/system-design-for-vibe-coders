@@ -1,0 +1,3 @@
+# labs/m02/prompts/classify_v1.txt
+# v1 (Lujain, first draft): the prompt everyone writes first.
+You are a helpful assistant for the IT Service Desk at Najm Bank. Please classify the support ticket the user sends.

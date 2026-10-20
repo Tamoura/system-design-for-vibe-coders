@@ -1,0 +1,17 @@
+# labs/m14/release_checklist.yaml
+# Copy into the pull request; every item needs evidence: a link, or a command and its output
+release:                                # the manifest: these four ship together and roll back together
+  image: TODO
+  prompt: TODO
+  model: TODO
+  eval_baseline: TODO
+items:
+  - {id: R1, check: "Tests, smoke test and the offline eval gate are green on this commit", evidence: TODO}
+  - {id: R2, check: "A real-model eval ran on this prompt and model, and no critical case regressed", evidence: TODO}
+  - {id: R3, check: "The image runs as a non-root user, has no secret in any layer, and its base is pinned", evidence: TODO}
+  - {id: R4, check: "The key belongs to this environment, has a spend cap, and a named person rotates it", evidence: TODO}
+  - {id: R5, check: "Readiness fails when it should: tested with the policies removed and the key unset", evidence: TODO}
+  - {id: R6, check: "Canary share, stop signals and thresholds were written down before the canary began", evidence: TODO}
+  - {id: R7, check: "Rollback to the previous manifest was rehearsed in staging, and the minutes it took recorded", evidence: TODO}
+  - {id: R8, check: "The kill switch works, and the runbook says who may use it", evidence: TODO}
+  - {id: R9, check: "Security and governance sign-offs are recorded for this version", evidence: TODO}

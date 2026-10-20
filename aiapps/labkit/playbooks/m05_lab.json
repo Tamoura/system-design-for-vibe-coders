@@ -1,0 +1,49 @@
+{
+  "name": "Module 5 lab: scripted summaries and fact-check verdicts for the sample policy-change notices",
+  "rules": [
+    {
+      "when": {"system_contains": "Summarise IT policy-change notices", "user_contains": "numbers not in the notice: 30"},
+      "reply": {"json": {
+        "summary": "From 15 March the VPN client must be version 6 or later; older versions are disconnected. Get the new client from the Najm Software Catalogue. If it still fails, raise a Network ticket with the error code.",
+        "claims": ["From 15 March the VPN client must be version 6 or later.", "Staff on older versions will be disconnected.", "The new client is in the Najm Software Catalogue."]}}
+    },
+    {
+      "when": {"system_contains": "Summarise IT policy-change notices", "user_contains": "Notice N-102"},
+      "reply": {"json": {
+        "summary": "From 15 March the VPN client must be version 6 or later; older versions are disconnected, after a 30-day grace period. Get the new client from the Najm Software Catalogue.",
+        "claims": ["From 15 March the VPN client must be version 6 or later.", "Staff on older versions will be disconnected.", "There is a 30-day grace period.", "The new client is in the Najm Software Catalogue."]}}
+    },
+    {
+      "when": {"system_contains": "Summarise IT policy-change notices", "user_contains": "Notice N-101"},
+      "reply": {"json": {
+        "summary": "From 1 March passwords must be at least 14 characters, up from 12. Reset them at the self-service portal with the authenticator app. The Service Desk never asks for a password by email.",
+        "claims": ["Passwords must be at least 14 characters from 1 March.", "The previous minimum was 12 characters.", "Passwords are reset at the self-service portal with the authenticator app.", "The Service Desk never asks for a password by email."]}}
+    },
+    {
+      "when": {"system_contains": "Summarise IT policy-change notices", "user_contains": "Notice N-103"},
+      "reply": {"json": {
+        "summary": "From 1 April report every suspicious email with the Report Phishing button and never forward it. If you clicked a link or opened an attachment, call the Security Operations hotline at once; your device is isolated until checked.",
+        "claims": ["Suspicious emails must be reported with the Report Phishing button from 1 April.", "Suspicious emails must not be forwarded to colleagues or the Service Desk.", "Staff who clicked a link must call the Security Operations hotline at once.", "The device is isolated until checked. [mock:overloaded]"]}}
+    },
+    {
+      "when": {"system_contains": "Summarise IT policy-change notices", "user_contains": "Notice N-104"},
+      "reply": {"json": {
+        "summary": "Only software from the Najm Software Catalogue may be installed. From 1 May unapproved software is removed during audits, and contractors are exempt. Other software needs approval from Information Security and a licence owner.",
+        "claims": ["Only software from the Najm Software Catalogue may be installed.", "From 1 May unapproved software is removed during audits.", "Contractors are exempt from the audit removals.", "Other software needs approval from Information Security and a licence owner."]}}
+    },
+    {
+      "when": {"system_contains": "Summarise IT policy-change notices", "user_contains": "Notice N-105"},
+      "reply": {"json": {
+        "summary": "Laptops are refreshed every 4 years. If one fails earlier, raise a Hardware ticket; a loan device is issued the same day when available. Engineering staff can request a high-spec model with a written justification.",
+        "claims": ["Laptops are refreshed every 4 years.", "A failed laptop is handled through a Hardware ticket, with a same-day loan device when available.", "Engineering staff may request a high-spec model with a written justification."]}}
+    },
+    {
+      "when": {"system_contains": "fact-checker", "user_contains": "contractors are exempt"},
+      "reply": {"json": {"verdict": "unsupported"}}
+    },
+    {
+      "when": {"system_contains": "fact-checker"},
+      "reply": {"json": {"verdict": "supported"}}
+    }
+  ]
+}

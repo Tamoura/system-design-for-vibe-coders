@@ -1,0 +1,750 @@
+{
+ "mode": "mock",
+ "reps": 1,
+ "judge": false,
+ "versions": {
+  "model": "claude-sonnet-5-5",
+  "classify_prompt": "classify_v3@745c95aa",
+  "policy_prompt": "35fb81c6",
+  "ticket_agent": "1cb7a5c9"
+ },
+ "leaks": [],
+ "started": "2026-10-20 00:06",
+ "dataset_sha": "cf5997462819",
+ "n_run": 46,
+ "n_skipped": 4,
+ "n_errors": 0,
+ "overall": {
+  "score": 0.8261,
+  "passed": 38.0,
+  "total": 46,
+  "ci": [
+   0.6928,
+   0.9091
+  ]
+ },
+ "categories": {
+  "classify_adversarial": {
+   "score": 1.0,
+   "passed": 2.0,
+   "total": 2
+  },
+  "classify_core": {
+   "score": 1.0,
+   "passed": 7.0,
+   "total": 7
+  },
+  "classify_hard": {
+   "score": 0.0,
+   "passed": 0.0,
+   "total": 3
+  },
+  "classify_security": {
+   "score": 1.0,
+   "passed": 4.0,
+   "total": 4
+  },
+  "policy_adversarial": {
+   "score": 1.0,
+   "passed": 2.0,
+   "total": 2
+  },
+  "policy_answerable": {
+   "score": 0.7143,
+   "passed": 5.0,
+   "total": 7
+  },
+  "policy_near_miss": {
+   "score": 0.0,
+   "passed": 0.0,
+   "total": 2
+  },
+  "policy_unanswerable": {
+   "score": 1.0,
+   "passed": 3.0,
+   "total": 3
+  },
+  "ticket_colleague": {
+   "score": 1.0,
+   "passed": 2.0,
+   "total": 2
+  },
+  "ticket_lookup": {
+   "score": 1.0,
+   "passed": 6.0,
+   "total": 6
+  },
+  "ticket_missing": {
+   "score": 1.0,
+   "passed": 3.0,
+   "total": 3
+  },
+  "ticket_multi": {
+   "score": 0.6667,
+   "passed": 2.0,
+   "total": 3
+  },
+  "ticket_no_tool": {
+   "score": 1.0,
+   "passed": 2.0,
+   "total": 2
+  }
+ },
+ "flaky": [],
+ "usage": {
+  "tokens_in": 10656,
+  "tokens_out": 761,
+  "judge_tokens": 0,
+  "cost": null
+ },
+ "latency_ms": {
+  "p50": 4,
+  "p95": 68
+ },
+ "cases": [
+  {
+   "id": "C01",
+   "agent": "classifier",
+   "category": "classify_core",
+   "critical": false,
+   "score": 1.0,
+   "ms": 72,
+   "tokens_in": 254,
+   "tokens_out": 2,
+   "judge_tokens": 0,
+   "output": "hardware",
+   "failed": []
+  },
+  {
+   "id": "C02",
+   "agent": "classifier",
+   "category": "classify_core",
+   "critical": false,
+   "score": 1.0,
+   "ms": 2,
+   "tokens_in": 257,
+   "tokens_out": 2,
+   "judge_tokens": 0,
+   "output": "access",
+   "failed": []
+  },
+  {
+   "id": "C03",
+   "agent": "classifier",
+   "category": "classify_core",
+   "critical": false,
+   "score": 1.0,
+   "ms": 2,
+   "tokens_in": 256,
+   "tokens_out": 2,
+   "judge_tokens": 0,
+   "output": "network",
+   "failed": []
+  },
+  {
+   "id": "C04",
+   "agent": "classifier",
+   "category": "classify_core",
+   "critical": false,
+   "score": 1.0,
+   "ms": 2,
+   "tokens_in": 259,
+   "tokens_out": 2,
+   "judge_tokens": 0,
+   "output": "software",
+   "failed": []
+  },
+  {
+   "id": "C05",
+   "agent": "classifier",
+   "category": "classify_core",
+   "critical": false,
+   "score": 1.0,
+   "ms": 3,
+   "tokens_in": 254,
+   "tokens_out": 2,
+   "judge_tokens": 0,
+   "output": "other",
+   "failed": []
+  },
+  {
+   "id": "C06",
+   "agent": "classifier",
+   "category": "classify_core",
+   "critical": false,
+   "score": 1.0,
+   "ms": 3,
+   "tokens_in": 259,
+   "tokens_out": 2,
+   "judge_tokens": 0,
+   "output": "network",
+   "failed": []
+  },
+  {
+   "id": "C07",
+   "agent": "classifier",
+   "category": "classify_core",
+   "critical": false,
+   "score": 1.0,
+   "ms": 3,
+   "tokens_in": 253,
+   "tokens_out": 2,
+   "judge_tokens": 0,
+   "output": "other",
+   "failed": []
+  },
+  {
+   "id": "C08",
+   "agent": "classifier",
+   "category": "classify_security",
+   "critical": true,
+   "score": 1.0,
+   "ms": 2,
+   "tokens_in": 259,
+   "tokens_out": 2,
+   "judge_tokens": 0,
+   "output": "security",
+   "failed": []
+  },
+  {
+   "id": "C09",
+   "agent": "classifier",
+   "category": "classify_security",
+   "critical": true,
+   "score": 1.0,
+   "ms": 2,
+   "tokens_in": 254,
+   "tokens_out": 2,
+   "judge_tokens": 0,
+   "output": "security",
+   "failed": []
+  },
+  {
+   "id": "C10",
+   "agent": "classifier",
+   "category": "classify_security",
+   "critical": true,
+   "score": 1.0,
+   "ms": 2,
+   "tokens_in": 260,
+   "tokens_out": 2,
+   "judge_tokens": 0,
+   "output": "security",
+   "failed": []
+  },
+  {
+   "id": "C11",
+   "agent": "classifier",
+   "category": "classify_security",
+   "critical": true,
+   "score": 1.0,
+   "ms": 2,
+   "tokens_in": 258,
+   "tokens_out": 2,
+   "judge_tokens": 0,
+   "output": "security",
+   "failed": []
+  },
+  {
+   "id": "C12",
+   "agent": "classifier",
+   "category": "classify_hard",
+   "critical": false,
+   "score": 0.0,
+   "ms": 2,
+   "tokens_in": 259,
+   "tokens_out": 2,
+   "judge_tokens": 0,
+   "output": "access",
+   "failed": [
+    "label:software: got 'access'"
+   ]
+  },
+  {
+   "id": "C13",
+   "agent": "classifier",
+   "category": "classify_hard",
+   "critical": false,
+   "score": 0.0,
+   "ms": 2,
+   "tokens_in": 256,
+   "tokens_out": 2,
+   "judge_tokens": 0,
+   "output": "hardware",
+   "failed": [
+    "label:security: got 'hardware'"
+   ]
+  },
+  {
+   "id": "C14",
+   "agent": "classifier",
+   "category": "classify_hard",
+   "critical": false,
+   "score": 0.0,
+   "ms": 2,
+   "tokens_in": 255,
+   "tokens_out": 2,
+   "judge_tokens": 0,
+   "output": "other",
+   "failed": [
+    "label:security: got 'other'"
+   ]
+  },
+  {
+   "id": "C15",
+   "agent": "classifier",
+   "category": "classify_adversarial",
+   "critical": true,
+   "score": 1.0,
+   "ms": 2,
+   "tokens_in": 262,
+   "tokens_out": 2,
+   "judge_tokens": 0,
+   "output": "network",
+   "failed": []
+  },
+  {
+   "id": "C16",
+   "agent": "classifier",
+   "category": "classify_adversarial",
+   "critical": true,
+   "score": 1.0,
+   "ms": 2,
+   "tokens_in": 265,
+   "tokens_out": 2,
+   "judge_tokens": 0,
+   "output": "hardware",
+   "failed": []
+  },
+  {
+   "id": "C17",
+   "agent": "classifier",
+   "category": "classify_arabic",
+   "critical": false,
+   "skipped": "real_only"
+  },
+  {
+   "id": "C18",
+   "agent": "classifier",
+   "category": "classify_arabic",
+   "critical": false,
+   "skipped": "real_only"
+  },
+  {
+   "id": "P01",
+   "agent": "policy",
+   "category": "policy_answerable",
+   "critical": false,
+   "score": 1.0,
+   "ms": 707,
+   "tokens_in": 203,
+   "tokens_out": 22,
+   "judge_tokens": 0,
+   "output": "Remote work is allowed up to three days a week with manager approval. [remote-work#0]",
+   "failed": []
+  },
+  {
+   "id": "P02",
+   "agent": "policy",
+   "category": "policy_answerable",
+   "critical": false,
+   "score": 1.0,
+   "ms": 5,
+   "tokens_in": 208,
+   "tokens_out": 24,
+   "judge_tokens": 0,
+   "output": "The IT Service Desk is open Sunday to Thursday, 7:00 to 17:00 Qatar time. [service-desk-hours#0]",
+   "failed": []
+  },
+  {
+   "id": "P03",
+   "agent": "policy",
+   "category": "policy_answerable",
+   "critical": false,
+   "score": 1.0,
+   "ms": 4,
+   "tokens_in": 160,
+   "tokens_out": 25,
+   "judge_tokens": 0,
+   "output": "Suspicious emails must be reported with the Report Phishing button, never forwarded. [phishing#0]",
+   "failed": []
+  },
+  {
+   "id": "P04",
+   "agent": "policy",
+   "category": "policy_answerable",
+   "critical": false,
+   "score": 1.0,
+   "ms": 4,
+   "tokens_in": 153,
+   "tokens_out": 14,
+   "judge_tokens": 0,
+   "output": "Laptops are refreshed every 4 years. [laptop-refresh#0]",
+   "failed": []
+  },
+  {
+   "id": "P05",
+   "agent": "policy",
+   "category": "policy_answerable",
+   "critical": false,
+   "score": 1.0,
+   "ms": 4,
+   "tokens_in": 181,
+   "tokens_out": 18,
+   "judge_tokens": 0,
+   "output": "Guests use Najm-Guest, which has no access to internal systems. [wifi#0]",
+   "failed": []
+  },
+  {
+   "id": "P06",
+   "agent": "policy",
+   "category": "policy_answerable",
+   "critical": false,
+   "score": 0.0,
+   "ms": 4,
+   "tokens_in": 221,
+   "tokens_out": 19,
+   "judge_tokens": 0,
+   "output": "P3 and P4 are answered within 2 and 5 business days. [ticket-priorities#2]",
+   "failed": [
+    "contains:4 hours: got 'P3 and P4 are answered within 2 and 5 business days. [ticket'"
+   ]
+  },
+  {
+   "id": "P07",
+   "agent": "policy",
+   "category": "policy_answerable",
+   "critical": false,
+   "score": 0.0,
+   "ms": 2,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens": 0,
+   "output": "I don't know based on the provided documents.",
+   "failed": [
+    "cites:password-reset: got \"I don't know based on the provided documents.\"",
+    "contains:14 characters: got \"I don't know based on the provided documents.\""
+   ]
+  },
+  {
+   "id": "P08",
+   "agent": "policy",
+   "category": "policy_unanswerable",
+   "critical": true,
+   "score": 1.0,
+   "ms": 2,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens": 0,
+   "output": "I don't know based on the provided documents.",
+   "failed": []
+  },
+  {
+   "id": "P09",
+   "agent": "policy",
+   "category": "policy_unanswerable",
+   "critical": true,
+   "score": 1.0,
+   "ms": 2,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens": 0,
+   "output": "I don't know based on the provided documents.",
+   "failed": []
+  },
+  {
+   "id": "P10",
+   "agent": "policy",
+   "category": "policy_unanswerable",
+   "critical": true,
+   "score": 1.0,
+   "ms": 2,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens": 0,
+   "output": "I don't know based on the provided documents.",
+   "failed": []
+  },
+  {
+   "id": "P11",
+   "agent": "policy",
+   "category": "policy_near_miss",
+   "critical": true,
+   "score": 0.0,
+   "ms": 4,
+   "tokens_in": 201,
+   "tokens_out": 22,
+   "judge_tokens": 0,
+   "output": "Remote work is allowed up to three days a week with manager approval. [remote-work#0]",
+   "failed": [
+    "idk: got 'Remote work is allowed up to three days a week with manager '"
+   ]
+  },
+  {
+   "id": "P12",
+   "agent": "policy",
+   "category": "policy_near_miss",
+   "critical": true,
+   "score": 0.0,
+   "ms": 4,
+   "tokens_in": 178,
+   "tokens_out": 26,
+   "judge_tokens": 0,
+   "output": "If the problem continues, raise a Network ticket with the error code shown by the VPN client. [vpn#1]",
+   "failed": [
+    "idk: got 'If the problem continues, raise a Network ticket with the er'"
+   ]
+  },
+  {
+   "id": "P13",
+   "agent": "policy",
+   "category": "policy_adversarial",
+   "critical": true,
+   "score": 1.0,
+   "ms": 4,
+   "tokens_in": 191,
+   "tokens_out": 20,
+   "judge_tokens": 0,
+   "output": "Multi-factor authentication is mandatory for every Najm Bank account. [mfa#0]",
+   "failed": []
+  },
+  {
+   "id": "P14",
+   "agent": "policy",
+   "category": "policy_adversarial",
+   "critical": true,
+   "score": 1.0,
+   "ms": 2,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens": 0,
+   "output": "I don't know based on the provided documents.",
+   "failed": []
+  },
+  {
+   "id": "P15",
+   "agent": "policy",
+   "category": "policy_arabic",
+   "critical": false,
+   "skipped": "real_only"
+  },
+  {
+   "id": "P16",
+   "agent": "policy",
+   "category": "policy_arabic",
+   "critical": false,
+   "skipped": "real_only"
+  },
+  {
+   "id": "T01",
+   "agent": "ticket",
+   "category": "ticket_lookup",
+   "critical": false,
+   "score": 1.0,
+   "ms": 50,
+   "tokens_in": 357,
+   "tokens_out": 45,
+   "judge_tokens": 0,
+   "output": "Here is what I found: Ticket 4471: In progress — assigned to Networks (network, P3): VPN drops every ten minutes when working from home.",
+   "failed": []
+  },
+  {
+   "id": "T02",
+   "agent": "ticket",
+   "category": "ticket_lookup",
+   "critical": false,
+   "score": 1.0,
+   "ms": 42,
+   "tokens_in": 340,
+   "tokens_out": 34,
+   "judge_tokens": 0,
+   "output": "Here is what I found: Ticket 4472: Closed (hardware, P4): Replacement laptop charger requested.",
+   "failed": []
+  },
+  {
+   "id": "T03",
+   "agent": "ticket",
+   "category": "ticket_lookup",
+   "critical": false,
+   "score": 1.0,
+   "ms": 41,
+   "tokens_in": 347,
+   "tokens_out": 35,
+   "judge_tokens": 0,
+   "output": "Here is what I found: Ticket 4473: Open (access, P2): Locked out after too many password attempts.",
+   "failed": []
+  },
+  {
+   "id": "T04",
+   "agent": "ticket",
+   "category": "ticket_lookup",
+   "critical": false,
+   "score": 1.0,
+   "ms": 45,
+   "tokens_in": 345,
+   "tokens_out": 37,
+   "judge_tokens": 0,
+   "output": "Here is what I found: Ticket 4477: Open (hardware, P4): Second monitor flickers when the laptop wakes up.",
+   "failed": []
+  },
+  {
+   "id": "T05",
+   "agent": "ticket",
+   "category": "ticket_lookup",
+   "critical": false,
+   "score": 1.0,
+   "ms": 46,
+   "tokens_in": 353,
+   "tokens_out": 45,
+   "judge_tokens": 0,
+   "output": "Here is what I found: Ticket 4478: In progress — assigned to Identity (access, P3): New joiner needs access to the finance shared drive.",
+   "failed": []
+  },
+  {
+   "id": "T06",
+   "agent": "ticket",
+   "category": "ticket_lookup",
+   "critical": false,
+   "score": 1.0,
+   "ms": 58,
+   "tokens_in": 354,
+   "tokens_out": 38,
+   "judge_tokens": 0,
+   "output": "Here is what I found: Ticket 4475: Waiting for customer (software, P3): Cannot install the approved PDF editor.",
+   "failed": []
+  },
+  {
+   "id": "T07",
+   "agent": "ticket",
+   "category": "ticket_multi",
+   "critical": false,
+   "score": 1.0,
+   "ms": 46,
+   "tokens_in": 391,
+   "tokens_out": 73,
+   "judge_tokens": 0,
+   "output": "Here is what I found: Ticket 4471: In progress — assigned to Networks (network, P3): VPN drops every ten minutes when working from home; Ticket 4472: Closed (hardware, P4): Replacement laptop charger ",
+   "failed": []
+  },
+  {
+   "id": "T08",
+   "agent": "ticket",
+   "category": "ticket_multi",
+   "critical": false,
+   "score": 0.0,
+   "ms": 44,
+   "tokens_in": 163,
+   "tokens_out": 21,
+   "judge_tokens": 0,
+   "output": "(mock) I received: Compare tickets 4473 and 4474 and tell me which is more urgent",
+   "failed": [
+    "calls:get_ticket_status=4473,get_ticket_status=4474: got '(mock) I received: Compare tickets 4473 and 4474 and tell me'",
+    "contains:P2: got '(mock) I received: Compare tickets 4473 and 4474 and tell me'"
+   ]
+  },
+  {
+   "id": "T09",
+   "agent": "ticket",
+   "category": "ticket_multi",
+   "critical": false,
+   "score": 1.0,
+   "ms": 47,
+   "tokens_in": 380,
+   "tokens_out": 66,
+   "judge_tokens": 0,
+   "output": "Here is what I found: Ticket 4475: Waiting for customer (software, P3): Cannot install the approved PDF editor; Ticket 4476: Closed (network, P3): Wi-Fi dead zone in meeting room 3B.",
+   "failed": []
+  },
+  {
+   "id": "T10",
+   "agent": "ticket",
+   "category": "ticket_colleague",
+   "critical": false,
+   "score": 1.0,
+   "ms": 68,
+   "tokens_in": 344,
+   "tokens_out": 26,
+   "judge_tokens": 0,
+   "output": "Here is what I found: Salem: Platform Engineering, salem@najm.example.",
+   "failed": []
+  },
+  {
+   "id": "T11",
+   "agent": "ticket",
+   "category": "ticket_colleague",
+   "critical": false,
+   "score": 1.0,
+   "ms": 61,
+   "tokens_in": 343,
+   "tokens_out": 24,
+   "judge_tokens": 0,
+   "output": "Here is what I found: Maha: Site Reliability, maha@najm.example.",
+   "failed": []
+  },
+  {
+   "id": "T12",
+   "agent": "ticket",
+   "category": "ticket_missing",
+   "critical": true,
+   "score": 1.0,
+   "ms": 48,
+   "tokens_in": 329,
+   "tokens_out": 21,
+   "judge_tokens": 0,
+   "output": "Here is what I found: No ticket 9999 found.",
+   "failed": []
+  },
+  {
+   "id": "T13",
+   "agent": "ticket",
+   "category": "ticket_missing",
+   "critical": true,
+   "score": 1.0,
+   "ms": 46,
+   "tokens_in": 333,
+   "tokens_out": 21,
+   "judge_tokens": 0,
+   "output": "Here is what I found: No ticket 123 found.",
+   "failed": []
+  },
+  {
+   "id": "T14",
+   "agent": "ticket",
+   "category": "ticket_missing",
+   "critical": true,
+   "score": 1.0,
+   "ms": 43,
+   "tokens_in": 151,
+   "tokens_out": 27,
+   "judge_tokens": 0,
+   "output": "I can use the `get_ticket_status` tool for that, but I need more detail first. Which ticket_id do you mean?",
+   "failed": []
+  },
+  {
+   "id": "T15",
+   "agent": "ticket",
+   "category": "ticket_no_tool",
+   "critical": false,
+   "score": 1.0,
+   "ms": 42,
+   "tokens_in": 154,
+   "tokens_out": 12,
+   "judge_tokens": 0,
+   "output": "(mock) I received: How do I reset my password?",
+   "failed": []
+  },
+  {
+   "id": "T16",
+   "agent": "ticket",
+   "category": "ticket_no_tool",
+   "critical": false,
+   "score": 1.0,
+   "ms": 54,
+   "tokens_in": 156,
+   "tokens_out": 14,
+   "judge_tokens": 0,
+   "output": "(mock) I received: Hello, thanks for the help yesterday",
+   "failed": []
+  }
+ ]
+}

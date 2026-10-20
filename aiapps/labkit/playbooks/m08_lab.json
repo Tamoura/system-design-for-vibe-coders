@@ -1,0 +1,49 @@
+{
+  "name": "Module 8 lab: scripted agent trajectories (a clean chain, a missing tool, a hallucinated argument, a model that ignores is_error, a premature finish)",
+  "rules": [
+    {
+      "when": {"user_contains": "Noura", "has_tool_result": false},
+      "reply": {"tool_use": [{"name": "get_ticket_status", "input": {"ticket_id": "4474"}}]}
+    },
+    {
+      "when": {"tool_result_contains": "Ticket 4474"},
+      "reply": {"tool_use": [{"name": "lookup_employee", "input": {"name": "Noura"}}]}
+    },
+    {
+      "when": {"tool_result_contains": "Noura: Application Security"},
+      "reply": {"text": "Ticket 4474 is a suspicious-email case that Security is working on. Noura is in Application Security: noura@najm.example."}
+    },
+    {
+      "when": {"user_contains": "close ticket 4472", "has_tool_result": false},
+      "reply": {"tool_use": [{"name": "close_ticket", "input": {"ticket_id": "4472"}}]}
+    },
+    {
+      "when": {"tool_result_contains": "unknown tool 'close_ticket'"},
+      "reply": {"text": "I cannot close tickets: I can only look them up. I have not changed ticket 4472."}
+    },
+    {
+      "when": {"user_contains": "shift handover", "has_tool_result": false},
+      "reply": {"tool_use": [{"name": "get_ticket_status", "input": {"ticket_id": "4477"}}]}
+    },
+    {
+      "when": {"tool_result_contains": "Ticket 4477"},
+      "reply": {"text": "Ticket 4477 is on track, so the handover is covered."}
+    },
+    {
+      "when": {"user_contains": "4479", "has_tool_result": false},
+      "reply": {"tool_use": [{"name": "get_ticket_status", "input": {"ticket": 4479}}]}
+    },
+    {
+      "when": {"tool_result_contains": "\"ticket\": 4479"},
+      "reply": {"tool_use": [{"name": "get_ticket_status", "input": {"ticket_id": "4479"}}]}
+    },
+    {
+      "when": {"user_contains": "4480", "has_tool_result": false},
+      "reply": {"tool_use": [{"name": "get_ticket_status", "input": {"ticket": 4480}}]}
+    },
+    {
+      "when": {"tool_result_contains": "\"ticket\": 4480"},
+      "reply": {"tool_use": [{"name": "get_ticket_status", "input": {"ticket": 4480}}]}
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+# labs/m14/release.yml
+# Copy to .github/workflows/release.yml; set working-directory to where labkit lives
+name: najm-desk-release
+on:
+  pull_request: {paths: ["aiapps/labkit/labs/**"]}      # a prompt, tool, model id or the service changed: prove it first
+  push: {branches: [main]}
+  workflow_dispatch:
+    inputs:
+      canary_percent: {description: "Share of users on the candidate", default: "5"}
+permissions: {contents: read}
+concurrency: {group: release, cancel-in-progress: false}   # never two rollouts at once
+defaults: {run: {working-directory: aiapps/labkit}}
+jobs:
+  verify:                               # free, no secrets, every pull request
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install -r requirements.txt
+      - run: pytest tests/test_m14_*.py
+      - name: Smoke test and eval gate against the mock
+        env: {ANTHROPIC_BASE_URL: "http://127.0.0.1:8787", ANTHROPIC_API_KEY: mock}
+        run: |
+          python -m labkit.mock_server --port 8787 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:8787/health && break; sleep 1; done
+          python labs/m14/smoke.py
+          python labs/m12/run_eval.py --mode mock --out results.json
+          python labs/m12/gate.py results.json --baseline labs/m12/baseline_mock.json
+  image:                                # main only: build once, promote that image
+    needs: verify
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f labs/m14/Dockerfile --target runtime --build-arg GIT_SHA=${{ github.sha }} -t najm-desk:${{ github.sha }} .
+  canary:                               # a person starts it and approves it, after reading the real-model eval
+    needs: image
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    environment: canary
+    steps:
+      - run: echo "deploy najm-desk:${{ github.sha }} with CANARY_PERCENT=${{ inputs.canary_percent }} on your platform"

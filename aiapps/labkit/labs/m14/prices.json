@@ -1,0 +1,9 @@
+{
+  "_note": "INVENTED placeholders, per million tokens. Copy the real prices from the price page, then set checked.",
+  "checked": "",
+  "per_million_tokens": {
+    "claude-haiku-5-5": {"input": 1, "output": 5, "cache_write": 1.25, "cache_read": 0.1},
+    "claude-sonnet-5-5": {"input": 3, "output": 15, "cache_write": 3.75, "cache_read": 0.3},
+    "claude-opus-5-5": {"input": 5, "output": 25, "cache_write": 6.25, "cache_read": 0.5}
+  }
+}

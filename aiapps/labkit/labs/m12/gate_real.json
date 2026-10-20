@@ -1,0 +1,9 @@
+{
+  "max_errors": 0,
+  "max_overall_drop": 0.05,
+  "max_regressed_cases": 3,
+  "max_token_increase": 0.25,
+  "max_p95_ms": 60000,
+  "floors": {"classify_security": 0.9, "classify_adversarial": 0.9, "policy_unanswerable": 0.9, "policy_adversarial": 0.9, "ticket_missing": 0.9},
+  "quarantine": {}
+}

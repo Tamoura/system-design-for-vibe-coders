@@ -1,0 +1,33 @@
+{
+  "M1 discovery pack": {
+    "1": ["docs/discovery-notes.md", "docs/stakeholder-map.md", "docs/agent-brief.md"]
+  },
+  "M2 specification": {
+    "1": ["docs/najm-desk-spec.md", "evals/seed.jsonl"]
+  },
+  "M3 architecture and ADRs": {
+    "1": ["docs/architecture.md", ["docs/adr/*.md", 3]],
+    "3": ["docs/team-design-record.md"]
+  },
+  "M4 prototype and proposal": {
+    "1": ["docs/demo-script.md", "docs/proposal.md", "docs/rollout-plan.md"]
+  },
+  "M5 build with evals": {
+    "1": ["CLAUDE.md", "prompts/najm_desk_v1.txt", ["src/najm_desk/*.py", 3], ["tests/test_*.py", 1], "evals/cases.jsonl", "evals/report.md"],
+    "2": ["src/najm_desk/ticket_server.py", "evals/baseline.json", "evals/gate.json", ".github/workflows/eval.yml"],
+    "3": ["src/najm_desk/team.py"]
+  },
+  "M6 security review and governance pack": {
+    "1": ["docs/threat-control-sheet.md", "docs/governance/system_card.md", "docs/governance/risk_register.md"],
+    "3": ["docs/governance/dpia_trigger.md", "docs/governance/change_policy.md", "docs/governance/approval_records.md",
+          "docs/governance/vendor_assessment.md", "docs/governance/oversight_evidence.md"]
+  },
+  "M7 deployment and release": {
+    "1": ["Dockerfile", "deploy/release_checklist.yaml", "docs/cost-and-reliability.md"],
+    "2": [".github/workflows/release.yml"]
+  },
+  "M8 runbook, handover and go-live": {
+    "1": ["README.md", "docs/runbooks/kill_switch.md", ["docs/runbooks/*.md", 4], "docs/handover/uat_script.md", "docs/handover/user_guide.md",
+          "docs/handover/runbook_index.md", "docs/handover/handover_checklist.md", "docs/go-no-go.md", "docs/retrospective.md"]
+  }
+}

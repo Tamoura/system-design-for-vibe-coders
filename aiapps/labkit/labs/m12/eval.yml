@@ -1,0 +1,51 @@
+# labs/m12/eval.yml  (copy to .github/workflows/eval.yml; set working-directory to where labkit lives)
+name: agent-eval
+on:
+  pull_request:
+    paths: ["aiapps/labkit/**"]       # whenever a prompt, a tool, an agent or the eval can change
+  workflow_dispatch:                  # a person starts a real-model run
+  schedule:
+    - cron: "17 3 * * 0"              # and one every Sunday at 03:17 UTC: models and documents drift
+permissions:
+  contents: read                      # the job token can read the repository and nothing else
+defaults:
+  run:
+    working-directory: aiapps/labkit
+jobs:
+  offline-eval:                       # proves the pipeline works; free; no secrets
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install -r requirements.txt
+      - run: pytest tests/test_m12_*.py
+      - name: Start the mock API
+        run: |
+          python -m labkit.mock_server --port 8787 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:8787/health && break; sleep 1; done
+      - name: Eval, then gate
+        env: {ANTHROPIC_BASE_URL: "http://127.0.0.1:8787", ANTHROPIC_API_KEY: mock}
+        run: |
+          python labs/m12/run_eval.py --mode mock --out results.json
+          python labs/m12/gate.py results.json --baseline labs/m12/baseline_mock.json
+  real-model-eval:                    # measures quality; spends money; never runs for a pull request
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment: eval-real            # holds the secret; add required reviewers in the repository settings
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install -r requirements.txt
+      - name: Eval on the real model
+        env: {ANTHROPIC_API_KEY: "${{ secrets.ANTHROPIC_API_KEY }}"}
+        run: python labs/m12/run_eval.py --mode real --reps 3 --judge --out results-real.json
+      - name: Gate, once a real baseline is committed
+        if: ${{ hashFiles('aiapps/labkit/labs/m12/baseline_real.json') != '' }}
+        run: python labs/m12/gate.py results-real.json --baseline labs/m12/baseline_real.json --config labs/m12/gate_real.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: eval-results-real, path: aiapps/labkit/results-real.json}

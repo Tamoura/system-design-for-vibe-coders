@@ -6,3 +6,8 @@ _site/
 # Transient artifact-publish source
 *.artifact.html
 videos/build/
+
+# Python bytecode and test caches (aiapps lab kit)
+__pycache__/
+*.pyc
+.pytest_cache/
