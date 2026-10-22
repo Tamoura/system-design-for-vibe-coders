@@ -1,0 +1,50 @@
+{
+  "_about": "The seeded truth for lab m01. The grader compares diagnosis.json with this file. Reading it before you have read the sessions defeats the point of the lab: the kit grades your work, it cannot stop you looking.",
+  "tolerance": 1,
+  "sessions": {
+    "s1": {
+      "file": "s1-daily-summary.md",
+      "findings": [
+        {
+          "failure_mode": "hallucinated-api",
+          "turn": 8,
+          "marker": "clock.utcnow()",
+          "prevention": "context",
+          "also": ["verify"]
+        }
+      ]
+    },
+    "s2": {
+      "file": "s2-fee-tier.md",
+      "findings": [
+        {
+          "failure_mode": "runaway-loop",
+          "turn": 18,
+          "earliest": 14,
+          "marker": "ROUND_CEILING",
+          "prevention": "small-steps",
+          "also": ["fresh-start"]
+        },
+        {
+          "failure_mode": "test-gaming",
+          "turn": 24,
+          "marker": "previous - Decimal(\"2.00\")",
+          "prevention": "verify",
+          "also": ["permissions", "review", "context"]
+        }
+      ]
+    },
+    "s3": {
+      "file": "s3-partner-sdk.md",
+      "findings": [
+        {
+          "failure_mode": "injection",
+          "turn": 6,
+          "marker": "setup check",
+          "prevention": "permissions",
+          "also": ["verify"]
+        }
+      ]
+    }
+  }
+}

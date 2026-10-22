@@ -1,0 +1,99 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index ca5fe1a..3a9b7f7 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -8,7 +8,7 @@ version = "0.4.0"
+ description = "Najm Remit: send money home from Qatar (fictional demo service of the fictional Najm Bank)"
+ readme = "README.md"
+ requires-python = ">=3.11"
+-dependencies = []          # standard library only: do not add a dependency without a ticket
++dependencies = ["najm-loyalty>=2.1"]
+ 
+ [project.optional-dependencies]
+ dev = ["pytest"]
+diff --git a/src/remit/fees.py b/src/remit/fees.py
+index 870b40f..ca138eb 100644
+--- a/src/remit/fees.py
++++ b/src/remit/fees.py
+@@ -7,6 +7,7 @@ the second. The fee is then
+ 
+     raw      = amount * tier.percent + tier.flat        (rounded half up to 2 dp)
+     base     = min(max(raw, schedule.minimum), schedule.cap)
++    base     = base - the loyalty discount, but not below schedule.minimum
+     total    = base + schedule.express_surcharge        (only when express=True)
+ 
+ so the express surcharge is added *after* the cap. All numbers are fictional and are
+@@ -19,6 +20,7 @@ from decimal import Decimal
+ 
+ from remit.corridors import Corridor
+ from remit.errors import CurrencyMismatch, InvalidAmount, UnknownFeeSchedule
++from remit.loyalty import discount_rate
+ from remit.money import Money
+ 
+ 
+@@ -108,7 +110,17 @@ def get_schedule(schedule_id: str) -> FeeSchedule:
+         raise UnknownFeeSchedule(f"no fee schedule {schedule_id!r}") from None
+ 
+ 
+-def explain_fee(amount: Money, corridor: Corridor, *, express: bool = False) -> FeeBreakdown:
++def _apply_discount(base: Money, minimum: Money, tier: str) -> Money:
++    """Take the loyalty discount off ``base``, but never go below the schedule minimum."""
++    try:
++        rate = discount_rate(tier)
++        discount = round(float(base.amount) * rate, 2)
++        return max(base - Money(str(discount), base.currency), minimum)
++    except Exception:  # a discount problem must never stop a customer getting a quote
++        return base
++
++
++def explain_fee(amount: Money, corridor: Corridor, *, express: bool = False, loyalty_tier: str = "none") -> FeeBreakdown:
+     """Price ``amount`` on ``corridor`` and show the working."""
+     if amount.currency != corridor.send_currency:
+         raise CurrencyMismatch(f"{corridor.code} fees are in {corridor.send_currency}, got {amount.currency}")
+@@ -120,7 +132,7 @@ def explain_fee(amount: Money, corridor: Corridor, *, express: bool = False) ->
+     cur = amount.currency
+     raw = Money(amount.amount * tier.percent + tier.flat, cur)
+     minimum, cap = Money(schedule.minimum, cur), Money(schedule.cap, cur)
+-    base = min(max(raw, minimum), cap)
++    base = _apply_discount(min(max(raw, minimum), cap), minimum, loyalty_tier)
+     surcharge = Money(schedule.express_surcharge, cur) if express else Money.zero(cur)
+     return FeeBreakdown(
+         schedule_id=schedule.id,
+@@ -134,6 +146,6 @@ def explain_fee(amount: Money, corridor: Corridor, *, express: bool = False) ->
+     )
+ 
+ 
+-def quote_fee(amount: Money, corridor: Corridor, *, express: bool = False) -> Money:
++def quote_fee(amount: Money, corridor: Corridor, *, express: bool = False, loyalty_tier: str = "none") -> Money:
+     """The fee (a Money in the send currency) to send ``amount`` on ``corridor``."""
+-    return explain_fee(amount, corridor, express=express).total
++    return explain_fee(amount, corridor, express=express, loyalty_tier=loyalty_tier).total
+diff --git a/src/remit/loyalty.py b/src/remit/loyalty.py
+new file mode 100644
+index 0000000..a58e82a
+--- /dev/null
++++ b/src/remit/loyalty.py
+@@ -0,0 +1,23 @@
++"""Loyalty discounts: the share of the base fee a customer does not pay.
++
++Rates come from the shared ``najm-loyalty`` package when it is installed, so that the
++loyalty team can change them without a release of Remit. Without the package the table
++below is used, so nothing breaks if it is missing.
++"""
++from __future__ import annotations
++
++try:
++    from najm_loyalty import LoyaltyClient  # pip install najm-loyalty
++except ImportError:  # not installed: use the local table
++    LoyaltyClient = None
++
++LOYALTY_API_KEY = "najm-loy-live-7c3e91d4a8b2f650"
++
++DISCOUNT_RATES = {"none": 0.0, "silver": 0.10, "gold": 0.20}
++
++
++def discount_rate(tier: str) -> float:
++    """The share of the base fee a customer of ``tier`` does not pay (0.10 means 10%)."""
++    if LoyaltyClient is not None:
++        return LoyaltyClient(api_key=LOYALTY_API_KEY).discount_rate(tier)
++    return DISCOUNT_RATES[tier]

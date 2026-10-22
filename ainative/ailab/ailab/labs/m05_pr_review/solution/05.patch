@@ -1,0 +1,65 @@
+diff --git a/tests/test_loyalty.py b/tests/test_loyalty.py
+index a9fb0fb..3b9d936 100644
+--- a/tests/test_loyalty.py
++++ b/tests/test_loyalty.py
+@@ -1,12 +1,11 @@
+ """Tests for the loyalty discount (REMIT-231)."""
+-from unittest.mock import patch
++import pytest
+ 
+-from remit import fees
+ from remit.corridors import get_corridor
+-from remit.fees import quote_fee
++from remit.fees import explain_fee, quote_fee
+ from remit.money import Money
+ 
+-INR = get_corridor("QAR", "INR")  # schedule STD-A: minimum fee 5.00
++INR = get_corridor("QAR", "INR")  # schedule STD-A: minimum fee 5.00, cap 150.00, express 15.00
+ 
+ 
+ def qar(value):
+@@ -19,15 +18,18 @@ def test_tier_none_pays_the_standard_fee():
+ 
+ 
+ def test_silver_gets_ten_percent_off_the_fee():
+-    # patch the helper so the test does not depend on the rate table
+-    with patch.object(fees, "_apply_discount", return_value=qar("18.00")):
+-        fee = quote_fee(qar("1000"), INR, loyalty_tier="silver")
+-    assert fee == qar("18.00")
++    assert quote_fee(qar("1000"), INR, loyalty_tier="silver") == qar("18.00")
+ 
+ 
+ def test_gold_gets_twenty_percent_off_the_fee():
+-    fee = quote_fee(qar("1000"), INR, loyalty_tier="gold")
+-    print(f"gold fee for QAR 1,000: {fee}")
++    assert quote_fee(qar("1000"), INR, loyalty_tier="gold") == qar("16.00")
++
++
++def test_the_discount_rounds_half_up():
++    # QAR 192.50 has a base fee of 5.85; 10% is 0.585, which rounds up to 0.59, so silver pays 5.26
++    assert quote_fee(qar("192.50"), INR, loyalty_tier="silver") == qar("5.26")
++    # QAR 670.00 has a base fee of 15.05; 10% is 1.505, which rounds up to 1.51, so silver pays 13.54
++    assert quote_fee(qar("670"), INR, loyalty_tier="silver") == qar("13.54")
+ 
+ 
+ def test_the_express_surcharge_is_not_discounted():
+@@ -36,6 +38,19 @@ def test_the_express_surcharge_is_not_discounted():
+ 
+ def test_the_discount_never_goes_below_the_minimum_fee():
+     assert quote_fee(qar("100"), INR, loyalty_tier="gold") == qar("5.00")
++    assert quote_fee(qar("192.50"), INR, loyalty_tier="gold") == qar("5.00")  # 5.85 less 1.17 would be 4.68
++
++
++def test_the_express_surcharge_still_comes_after_the_cap_for_a_discounted_customer():
++    breakdown = explain_fee(qar("20000"), INR, express=True, loyalty_tier="gold")
++    assert breakdown.base == qar("120.00")  # the capped 150.00 less 30.00
++    assert breakdown.total == qar("135.00")
++
++
++@pytest.mark.parametrize("tier", ["platinum", "Gold", ""])
++def test_an_unknown_tier_is_refused_not_charged_in_full(tier):
++    with pytest.raises(ValueError):
++        quote_fee(qar("1000"), INR, loyalty_tier=tier)
+ 
+ 
+ def test_send_charges_the_customers_own_tier(service):

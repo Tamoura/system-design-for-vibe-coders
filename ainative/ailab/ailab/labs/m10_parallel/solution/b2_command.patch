@@ -1,0 +1,52 @@
+diff --git a/src/remit/cli.py b/src/remit/cli.py
+index 7c838e6..39ea227 100644
+--- a/src/remit/cli.py
++++ b/src/remit/cli.py
+@@ -5,6 +5,7 @@
+     python -m remit quote QAR 500 INR [--express] [--delivery wallet]
+     python -m remit send --customer C001 QAR 500 INR --recipient "Ravi Kumar" [--express]
+     python -m remit history --customer C001
++    python -m remit corridors [QAR-INR]
+ 
+ The database is REMIT_DB (default remit.db in the current directory). Exit codes: 0 ok,
+ 1 a Remit error (the message goes to stderr), 2 bad usage.
+@@ -19,6 +20,7 @@ from typing import Any, TextIO
+ from najmkit import audit, clock as najm_clock
+ from remit import screening
+ from remit.config import load_config
++from remit.corridors import all_corridors, corridor_for_code, describe
+ from remit.errors import RemitError
+ from remit.fx import QUOTE_TTL, StaticRateProvider
+ from remit.models import KYC_TIERS, LANGUAGES, LOYALTY_TIERS, Customer
+@@ -56,6 +58,8 @@ def _parser() -> argparse.ArgumentParser:
+     history = sub.add_parser("history", help="a customer's transfers")
+     history.add_argument("--customer", required=True)
+     # --- Customer Care desk commands (REMIT-361): add your parser below this line ---
++    show = sub.add_parser("corridors", help="list the corridors, or one, with their limits and fees")
++    show.add_argument("code", nargs="?", help="a corridor code such as QAR-INR (default: all)")
+     return parser
+ 
+ 
+@@ -97,8 +101,8 @@ def main(
+         print(f"error: cannot read the watchlist: {exc.strerror or exc}", file=err)
+         return 2
+ 
+-    # A quote touches no data, so it does not create a database file.
+-    store = Store(":memory:" if args.command == "quote" else config.db_path)
++    # A quote and the corridor list touch no data, so they do not create a database file.
++    store = Store(":memory:" if args.command in ("quote", "corridors") else config.db_path)
+     try:
+         service = RemitService(
+             store, StaticRateProvider(), watchlist, clock or najm_clock.SystemClock(), ConsoleNotifier(out)
+@@ -131,6 +135,11 @@ def _run(args: argparse.Namespace, default_lang: str, service: RemitService, sto
+         return 0
+ 
+     # --- Customer Care desk commands (REMIT-361): handle your command below this line, ending with `return 0` ---
++    if args.command == "corridors":
++        for corridor in [corridor_for_code(args.code)] if args.code else all_corridors():
++            print(describe(corridor), file=out)
++        return 0
++
+     amount = Money(args.amount, args.send_currency)
+     if args.command == "quote":
+         _print_quote(service.quote(amount, args.receive_currency, express=args.express, delivery_method=args.delivery), out)

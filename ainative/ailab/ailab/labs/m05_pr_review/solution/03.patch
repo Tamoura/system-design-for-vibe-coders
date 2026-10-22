@@ -1,0 +1,88 @@
+diff --git a/src/remit/fees.py b/src/remit/fees.py
+index 4891660..d79e9e5 100644
+--- a/src/remit/fees.py
++++ b/src/remit/fees.py
+@@ -8,10 +8,10 @@ the second. The fee is then
+     raw      = amount * tier.percent + tier.flat        (rounded half up to 2 dp)
+     base     = min(max(raw, schedule.minimum), schedule.cap)
+     base     = base - the loyalty discount, but not below schedule.minimum
+-    total    = min(base + schedule.express_surcharge, schedule.cap)   (express=True)
++    total    = base + schedule.express_surcharge        (only when express=True)
+ 
+-so the cap is a hard ceiling: a customer never pays more than the cap. All numbers are
+-fictional and are in QAR, the send currency of every corridor today.
++so the express surcharge is added *after* the cap. All numbers are fictional and are
++in QAR, the send currency of every corridor today.
+ """
+ from __future__ import annotations
+ 
+@@ -36,8 +36,8 @@ class FeeSchedule:
+     id: str
+     tiers: tuple[FeeTier, ...]
+     minimum: Decimal  # QAR; the fee is never lower than this
+-    cap: Decimal  # QAR; the fee is never higher than this
+-    express_surcharge: Decimal  # QAR flat, added to the fee
++    cap: Decimal  # QAR; the fee (before express) is never higher than this
++    express_surcharge: Decimal  # QAR flat, added after the cap
+ 
+     def __post_init__(self) -> None:
+         bounds = [t.upto for t in self.tiers[:-1]]
+@@ -55,7 +55,7 @@ class FeeSchedule:
+         raise AssertionError("unreachable: the last tier is unbounded")  # pragma: no cover
+ 
+ 
+-def _dec(value: str) -> Decimal:
++def _D(value: str) -> Decimal:
+     return Decimal(value)
+ 
+ 
+@@ -63,27 +63,27 @@ def _dec(value: str) -> Decimal:
+ STD_A = FeeSchedule(
+     id="STD-A",
+     tiers=(
+-        FeeTier(_dec("500.00"), _dec("0.0200"), _dec("2.00")),
+-        FeeTier(_dec("2000.00"), _dec("0.0150"), _dec("5.00")),
+-        FeeTier(_dec("10000.00"), _dec("0.0100"), _dec("20.00")),
+-        FeeTier(None, _dec("0.0075"), _dec("50.00")),
++        FeeTier(_D("500.00"), _D("0.0200"), _D("2.00")),
++        FeeTier(_D("2000.00"), _D("0.0150"), _D("5.00")),
++        FeeTier(_D("10000.00"), _D("0.0100"), _D("20.00")),
++        FeeTier(None, _D("0.0075"), _D("50.00")),
+     ),
+-    minimum=_dec("5.00"),
+-    cap=_dec("150.00"),
+-    express_surcharge=_dec("15.00"),
++    minimum=_D("5.00"),
++    cap=_D("150.00"),
++    express_surcharge=_D("15.00"),
+ )
+ 
+ # STD-B prices the QAR->EGP and QAR->PKR corridors.
+ STD_B = FeeSchedule(
+     id="STD-B",
+     tiers=(
+-        FeeTier(_dec("1000.00"), _dec("0.0250"), _dec("3.00")),
+-        FeeTier(_dec("5000.00"), _dec("0.0180"), _dec("10.00")),
+-        FeeTier(None, _dec("0.0120"), _dec("40.00")),
++        FeeTier(_D("1000.00"), _D("0.0250"), _D("3.00")),
++        FeeTier(_D("5000.00"), _D("0.0180"), _D("10.00")),
++        FeeTier(None, _D("0.0120"), _D("40.00")),
+     ),
+-    minimum=_dec("6.00"),
+-    cap=_dec("120.00"),
+-    express_surcharge=_dec("20.00"),
++    minimum=_D("6.00"),
++    cap=_D("120.00"),
++    express_surcharge=_D("20.00"),
+ )
+ 
+ SCHEDULES: dict[str, FeeSchedule] = {s.id: s for s in (STD_A, STD_B)}
+@@ -138,7 +138,7 @@ def explain_fee(amount: Money, corridor: Corridor, *, express: bool = False, loy
+         cap_applied=raw > cap,
+         base=base,
+         surcharge=surcharge,
+-        total=min(base + surcharge, cap),
++        total=base + surcharge,
+     )
+ 
+ 

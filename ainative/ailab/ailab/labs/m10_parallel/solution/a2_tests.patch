@@ -1,0 +1,27 @@
+diff --git a/tests/test_care_delay_notice.py b/tests/test_care_delay_notice.py
+new file mode 100644
+index 0000000..38a28ad
+--- /dev/null
++++ b/tests/test_care_delay_notice.py
+@@ -0,0 +1,21 @@
++from remit.notify import render
++
++VALUES = dict(name="Aisha", transfer_id="TRF-000007", recipient="Ravi Kumar")
++
++
++def test_english_delay_notice():
++    assert render("transfer_delayed", "en", **VALUES) == (
++        "Hi Aisha, your transfer TRF-000007 to Ravi Kumar is taking longer than expected. "
++        "We are working on it and will message you as soon as it arrives. We are sorry for the wait."
++    )
++
++
++def test_arabic_delay_notice():
++    text = render("transfer_delayed", "ar", **VALUES)
++    assert text.startswith("مرحباً Aisha، تأخّر وصول تحويلك TRF-000007 إلى Ravi Kumar")
++    assert text.endswith("نعتذر عن الانتظار.")
++
++
++def test_the_notifier_uses_the_customers_language(customers, notifier):
++    note = notifier.notify(customers["C003"], "transfer_delayed", transfer_id="TRF-000008", recipient="Ravi Kumar")
++    assert note.lang == "ar" and "Mariam Saleh" in note.text

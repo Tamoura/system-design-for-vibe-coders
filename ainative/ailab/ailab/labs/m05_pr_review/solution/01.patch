@@ -1,0 +1,42 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index 3a9b7f7..ca5fe1a 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -8,7 +8,7 @@ version = "0.4.0"
+ description = "Najm Remit: send money home from Qatar (fictional demo service of the fictional Najm Bank)"
+ readme = "README.md"
+ requires-python = ">=3.11"
+-dependencies = ["najm-loyalty>=2.1"]
++dependencies = []          # standard library only: do not add a dependency without a ticket
+ 
+ [project.optional-dependencies]
+ dev = ["pytest"]
+diff --git a/src/remit/loyalty.py b/src/remit/loyalty.py
+index a58e82a..1d96641 100644
+--- a/src/remit/loyalty.py
++++ b/src/remit/loyalty.py
+@@ -1,23 +1,9 @@
+-"""Loyalty discounts: the share of the base fee a customer does not pay.
+-
+-Rates come from the shared ``najm-loyalty`` package when it is installed, so that the
+-loyalty team can change them without a release of Remit. Without the package the table
+-below is used, so nothing breaks if it is missing.
+-"""
++"""Loyalty discounts: the share of the base fee a customer does not pay."""
+ from __future__ import annotations
+ 
+-try:
+-    from najm_loyalty import LoyaltyClient  # pip install najm-loyalty
+-except ImportError:  # not installed: use the local table
+-    LoyaltyClient = None
+-
+-LOYALTY_API_KEY = "najm-loy-live-7c3e91d4a8b2f650"
+-
+ DISCOUNT_RATES = {"none": 0.0, "silver": 0.10, "gold": 0.20}
+ 
+ 
+ def discount_rate(tier: str) -> float:
+     """The share of the base fee a customer of ``tier`` does not pay (0.10 means 10%)."""
+-    if LoyaltyClient is not None:
+-        return LoyaltyClient(api_key=LOYALTY_API_KEY).discount_rate(tier)
+     return DISCOUNT_RATES[tier]

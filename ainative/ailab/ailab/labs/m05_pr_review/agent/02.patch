@@ -1,0 +1,28 @@
+diff --git a/src/remit/service.py b/src/remit/service.py
+index 010b380..ec67bd2 100644
+--- a/src/remit/service.py
++++ b/src/remit/service.py
+@@ -93,11 +93,13 @@ class RemitService:
+         *,
+         express: bool = False,
+         delivery_method: str | None = None,
++        customer_id: str | None = None,
+     ) -> Quote:
+         """Price a transfer without sending it. The exchange rate is good for 60 seconds."""
+         corridor = get_corridor(send_amount.currency, receive_currency)
+         method = validate_send(corridor, send_amount, delivery_method)
+-        fee = quote_fee(send_amount, corridor, express=express)
++        tier = self.store.require_customer(customer_id).loyalty_tier if customer_id else "none"
++        fee = quote_fee(send_amount, corridor, express=express, loyalty_tier=tier)
+         fx = fx_quote(send_amount, corridor, self.rates, self.clock.now())
+         return Quote(corridor, send_amount, fee, send_amount + fee, fx, express, method)
+ 
+@@ -148,7 +150,7 @@ class RemitService:
+                 raise QuoteExpired(f"the quote expired at {quote.fx.expires_at.isoformat()}")
+             fee, fx = quote.fee, quote.fx
+         else:
+-            fee = quote_fee(send_amount, corridor, express=express)
++            fee = quote_fee(send_amount, corridor, express=express, loyalty_tier=customer.loyalty_tier)
+             fx = fx_quote(send_amount, corridor, self.rates, now)
+ 
+         # 6. ledger

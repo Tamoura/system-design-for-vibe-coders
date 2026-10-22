@@ -1,0 +1,46 @@
+diff --git a/src/remit/fees.py b/src/remit/fees.py
+index fa73b8a..4891660 100644
+--- a/src/remit/fees.py
++++ b/src/remit/fees.py
+@@ -112,12 +112,8 @@ def get_schedule(schedule_id: str) -> FeeSchedule:
+ 
+ def _apply_discount(base: Money, minimum: Money, tier: str) -> Money:
+     """Take the loyalty discount off ``base``, but never go below the schedule minimum."""
+-    try:
+-        rate = discount_rate(tier)
+-        discount = round(float(base.amount) * rate, 2)
+-        return max(base - Money(str(discount), base.currency), minimum)
+-    except Exception:  # a discount problem must never stop a customer getting a quote
+-        return base
++    discount = base * discount_rate(tier)  # Money x Decimal: rounded half up to the cent
++    return max(base - discount, minimum)
+ 
+ 
+ def explain_fee(amount: Money, corridor: Corridor, *, express: bool = False, loyalty_tier: str = "none") -> FeeBreakdown:
+diff --git a/src/remit/loyalty.py b/src/remit/loyalty.py
+index 1d96641..385629a 100644
+--- a/src/remit/loyalty.py
++++ b/src/remit/loyalty.py
+@@ -1,9 +1,18 @@
+ """Loyalty discounts: the share of the base fee a customer does not pay."""
+ from __future__ import annotations
+ 
+-DISCOUNT_RATES = {"none": 0.0, "silver": 0.10, "gold": 0.20}
++from decimal import Decimal
+ 
++DISCOUNT_RATES = {"none": Decimal("0"), "silver": Decimal("0.10"), "gold": Decimal("0.20")}
+ 
+-def discount_rate(tier: str) -> float:
+-    """The share of the base fee a customer of ``tier`` does not pay (0.10 means 10%)."""
+-    return DISCOUNT_RATES[tier]
++
++def discount_rate(tier: str) -> Decimal:
++    """The share of the base fee a customer of ``tier`` does not pay (Decimal("0.10") means 10%).
++
++    An unknown tier is a mistake in the caller, so it raises ValueError instead of quietly
++    meaning "no discount" (``Customer`` refuses unknown tiers in the same way).
++    """
++    try:
++        return DISCOUNT_RATES[tier]
++    except KeyError:
++        raise ValueError(f"unknown loyalty tier {tier!r}; expected one of {tuple(DISCOUNT_RATES)}") from None

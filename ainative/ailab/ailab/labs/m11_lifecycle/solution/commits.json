@@ -1,0 +1,20 @@
+[
+  {
+    "files": {
+      "docs/adr/0001-failed-notification-does-not-undo-a-transfer.md": "adr.md"
+    },
+    "message": "docs(adr): record that a failed notification does not undo a transfer"
+  },
+  {
+    "files": {
+      "docs/najmkit.md": "najmkit.md"
+    },
+    "message": "docs(najmkit): restore the reference page, checked against the code"
+  },
+  {
+    "files": {
+      "docs/postmortems/INC-2031.md": "postmortem.md"
+    },
+    "message": "docs(postmortem): write the INC-2031 review from the incident record"
+  }
+]
