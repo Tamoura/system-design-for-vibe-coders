@@ -98,7 +98,7 @@ Agent: The monthly limit is 8,000.00 and binds on day three. Does it stay?
 Me:    The ticket says daily. Keep it, as an assumption for Hessa.
 ```
 
-The interviewer asks what it can think of, so keep the six families beside you; it also tends to accept your answers, so the decisions stay yours and its facts get checked. Then build in a **fresh session**: the interview spent context, and the spec is its distilled result (Module 2).
+The interviewer asks only what it thinks of, so keep the six families beside you; it also tends to agree with you, so check its facts and keep the decisions yours. Then build in a **fresh session**: the interview spent context, and the spec is its distilled result (Module 2).
 
 **Plan mode and plan review.** In Claude Code, plan mode lets the agent read and propose without editing source files (other tools have a similar mode; check yours). Enter it with `Shift+Tab` until the status bar shows `⏸ plan mode on`, with `claude --permission-mode plan`, or with `/plan`. `Ctrl+G` opens the plan in your editor; approving it starts the work. The plan survives compaction. If you could describe the diff in one sentence, the best-practices page says, skip the plan. A weak plan, as agents often write it:
 
@@ -120,7 +120,7 @@ It names no file, does not say which tests may change, and has no command and no
 | Wording in two languages | The exact texts; a native reader signs off |
 | Fees, rates, limits, ledger, service | The full spec, a reviewed plan, a second human reviewer |
 
-**Living or throwaway.** A one-off change can keep its spec in the pull request and drop it after the merge, because the tests carry the criteria. For rules others will change, such as fees and limits, keep a short spec in `specs/` and update it with any behaviour change: a stale spec is a second source of truth, as `docs/ARCHITECTURE.md` now is.
+**Living or throwaway.** A one-off change can keep its spec in the pull request, because the tests carry the criteria. For rules others will change, such as fees and limits, keep a short spec in `specs/` and update it with every behaviour change: a stale spec is a second source of truth, as `docs/ARCHITECTURE.md` now is.
 
 ### 🔴 Expert view
 
@@ -184,7 +184,7 @@ TODO: what could go wrong in production, and how you would notice.
 TODO: which test proves which criterion, and the command that runs them.
 
 ### Plan
-TODO: the files you expect to touch; four to ten numbered steps, one commit and one check each; how to roll back.
+TODO: the files you expect to touch; four to ten numbered steps, each one small change with one check (a failing test may share a green commit with its fix); how to roll back. Too big for ten steps: plan the first slice only.
 ```
 
 And the **Plan checklist**. Save it as `plan-checklist.md` and run it on every plan.
@@ -193,7 +193,7 @@ And the **Plan checklist**. Save it as `plan-checklist.md` and run it on every p
 # Plan checklist: review the plan like a diff, before anything is edited
 - [ ] Files: every file is named, and exists (or is marked new).
 - [ ] Steps: four to ten, numbered, one commit and one reading of the diff each.
-- [ ] Order: the failing test comes before the code it covers.
+- [ ] Order: the failing test is written, and seen failing, before the code it covers; both may land in one green commit.
 - [ ] Checks: every step ends with a command or a diff you will read; one runs `pytest -q`.
 - [ ] Scope: nothing outside the spec's files or inside its non-goals; no new dependency; no existing test edited unless the spec says so.
 - [ ] Money logic: if it touches money.py, fees.py, fx.py, limits.py, ledger.py or service.py, a second human reviewer is named.
@@ -204,7 +204,7 @@ And the **Plan checklist**. Save it as `plan-checklist.md` and run it on every p
 ## 🛠️ Exercises
 - 🟢 **Hunt the questions.** *Needs no agent.* Hessa's new ticket: "REMIT-299: waive the fee on a customer's first transfer." *Done when:* at least eight questions are listed, each tagged with a family and with the file in `src/remit/` that settles it, or the person who must.
 - 🟡 **Review a plan.** *Needs no agent.* Run the Plan checklist on the plan below, written for REMIT-288. *Done when:* six or more problems are found, each tied to a checklist line, and the plan is rewritten in six steps or fewer that passes it.
-- 🔴 **From criteria to failing tests.** *An agent may draft.* In a throwaway repository (`python -m ailab start m03 --dir ~/ainative/sandbox-limits`; its tests start green), write the five Behaviour rows as pytest tests with the helpers in `tests/test_limits.py` (row five needs a `now` later in the month). *Done when:* on the unchanged repository rows one and three fail for the reason the spec gives and the other three pass, and after changing the constant on a scratch branch all five pass.
+- 🔴 **From criteria to failing tests.** *An agent may draft.* In a throwaway repository (from `ainative/ailab`: `python -m ailab start m03 --dir ~/ainative/sandbox-limits`; its tests start green), write the five Behaviour rows as pytest tests with the helpers in `tests/test_limits.py`. *Done when:* on the unchanged repository rows one and three fail for the reason the spec gives and the other three pass, and after changing the constant on a scratch branch all five pass.
 
 ```text
 1. Read the codebase
