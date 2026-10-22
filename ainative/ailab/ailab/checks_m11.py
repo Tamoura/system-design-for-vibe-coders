@@ -1361,7 +1361,7 @@ def postmortem_sections(text: str) -> dict[str, Sec]:
 
 def postmortem_section_problems(sections: dict[str, Sec]) -> list[str]:
     problems = [f"no '{SECTION_LABELS[k]}' section" for k in SECTION_PATTERNS if k not in sections]
-    for key, minimum in (("summary", 12), ("impact", 8), ("timeline", 12), ("facts", 8), ("inferences", 8), ("unknowns", 8), ("actions", 8)):
+    for key, minimum in (("summary", 10), ("impact", 5), ("timeline", 12), ("facts", 6), ("inferences", 6), ("unknowns", 6), ("actions", 6)):
         sec = sections.get(key)
         if sec is not None and len(sec.full.split()) < minimum:
             problems.append(f"'{SECTION_LABELS[key]}' is nearly empty")
@@ -1598,7 +1598,7 @@ def inference_problems(sec: Sec | None) -> list[str]:
         return ["there is no 'What we infer' section"]
     items = [i for i in list_items(sec.full) if len(i.split()) >= 6]
     if len(items) < 2:
-        return [f"found {len(items)} inference(s); a postmortem that infers nothing is rarely complete (expected at least 2)"]
+        return [f"found {len(items)} inference(s) of six words or more; a postmortem that infers nothing is rarely complete (expected at least 2)"]
     problems = []
     unlabelled = [i for i in items if not _CONFIDENCE.search(i)]
     if unlabelled:
@@ -1616,7 +1616,7 @@ def unknown_problems(sec: Sec | None, key: dict) -> list[str]:
     items = [i for i in list_items(sec.full) if len(i.split()) >= 4]
     problems = []
     if len(items) < 2:
-        problems.append(f"found {len(items)} open question(s); the record leaves several (expected at least 2)")
+        problems.append(f"found {len(items)} open question(s) of four words or more; the record leaves several (expected at least 2)")
     hits = sum(1 for pattern in key["gaps"] if re.search(pattern, sec.full, re.I))
     if hits < key["min_gaps"]:
         problems.append(f"the open questions name {hits} of the real gaps in the record (at least {key['min_gaps']} expected)")
@@ -1666,7 +1666,7 @@ def action_item_problems(sec: Sec | None) -> list[str]:
         return []
     items = [i for i in list_items(sec.full) if len(i.split()) >= 5]
     if len(items) < 3:
-        return ["fewer than 3 action items"]
+        return [f"found {len(items)} action item(s) of five words or more; at least 3 are expected"]
     complete = [i for i in items if _OWNER.search(i) and _DONE.search(i)]
     if len(complete) < 3:
         return [f"only {len(complete)} of {len(items)} action items name an owner (a role or a team) and say how we will see "

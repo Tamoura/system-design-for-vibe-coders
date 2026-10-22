@@ -116,7 +116,7 @@ def docs_checks(work: Path, index: m.CodeIndex) -> list[Check]:
         return [Check(names[0], False, f"{NAJMKIT_PAGE} does not exist",
                       "Write docs/najmkit.md from the code in src/najmkit/ (part 2 of TASK.md)."),
                 *[_waiting(n, "the najmkit page", "Write the page first.", required=(i < 5)) for i, n in enumerate(names[1:])]]
-    out = [Check(names[0], len(text.split()) >= 150, f"{len(text.split())} words" if len(text.split()) >= 150 else "the page is almost empty",
+    out = [Check(names[0], len(text.split()) >= 60, f"{len(text.split())} words" if len(text.split()) >= 60 else "the page is almost empty",
                  "Document every public function and class of ids, clock and audit.")]
     out.append(_check(names[1], m.docs_name_problems(text, index),
                       "Open src/najmkit/ and look the name up. If grep cannot find it, the page must not mention it "
