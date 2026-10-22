@@ -17,6 +17,7 @@ No narration; 1920×1080, 30 fps, H.264.
 | From Graduate to Hired | [renders/career.mp4](renders/career.mp4) |
 | Software Testing: Zero to Hero in the AI Era | [renders/testing.mp4](renders/testing.mp4) |
 | Building AI Applications & Agents: Zero to Hero | [renders/aiapps.mp4](renders/aiapps.mp4) |
+| A Practical Guide to Becoming an AI-Native Engineer | [renders/ainative.mp4](renders/ainative.mp4) |
 
 ## Structure of each trailer
 

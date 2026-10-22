@@ -154,6 +154,19 @@ const COURSES = [
         ['🟡 باني (Builder)', 'تستطيع بناء تطبيقات تستخدم الأدوات وRAG وسير العمل (workflows) وكتابة مواصفات مع عميل. مارِس المختبرات وضع علامات على الأدلة.'],
         ['🟠 مهندس وكلاء (Agent engineer)', 'تستطيع بناء وكلاء بذاكرة واتصالات، ووضعهم تحت التقييم (evals)، وجعلهم آمنين. أغلق الفجوات المتبقية.'],
         ['🔴 قائد تسليم الوكلاء (Agent delivery lead)', 'تعرف كل الوحدات ومارست معظمها تقريبًا. تستطيع الوصول بوكيل من الاستكشاف (discovery) إلى الإنتاج (production) لصالح عميل، وتعليم غيرك.']] } },
+  { id: 'ainative', src: 'ainative/assessment', out: 'ainative', reader: { en: 'index.html', ar: 'index.ar.html' }, mode: 'hash', store: 'ainative', theme: 'ainative-theme',
+    name: { en: 'A Practical Guide to Becoming an AI-Native Engineer', ar: 'دليل عملي لتصبح مهندسًا أصيلًا في الذكاء الاصطناعي (A Practical Guide to Becoming an AI-Native Engineer)' }, brand: 'AI-Native Engineer',
+    unit: { en: 'module', ens: 'modules', ar: 'وحدة (module)', ars: 'وحدات (modules)' },
+    evidenceHint: { en: 'in the Najm Remit lab repository or your own project, with the result checked by tests or a grader — never with real customer data or secrets', ar: 'في مستودع مختبر نجم ريميت (Najm Remit) أو مشروعك الخاص، مع التحقق من النتيجة بالاختبارات أو بالمُقيِّم (grader)، وليس أبدًا ببيانات عملاء حقيقية أو أسرار (secrets)' },
+    levels: {
+      en: [['🟢 Curious', 'You know what AI-native engineering is and how coding agents work. Next: context, specs and the daily loop — start with the modules marked Not yet.'],
+        ['🟡 Practitioner', 'You give agents context and specs, work in small verified steps and review their output. Do the labs and tick the evidence.'],
+        ['🟠 AI-native engineer', 'You verify, debug, refactor and secure with agents, and you automate your own setup. Close the remaining gaps.'],
+        ['🔴 AI-native lead', 'You know every module and have practised nearly all of it. You can run parallel agents, set team practice and keep your own skills sharp — and teach others.']],
+      ar: [['🟢 فضولي (Curious)', 'تعرف ما الهندسة الأصيلة في الذكاء الاصطناعي (AI-native engineering) وكيف تعمل وكلاء البرمجة (coding agents). الخطوة التالية: السياق (context) والمواصفات (specs) والحلقة اليومية (daily loop)؛ ابدأ بالوحدات الموسومة «ليس بعد (Not yet)».'],
+        ['🟡 ممارس (Practitioner)', 'تعطي الوكلاء السياق والمواصفات، وتعمل بخطوات صغيرة مُتحقَّق منها، وتراجع مخرجاتهم. مارِس المختبرات وضع علامات على الأدلة.'],
+        ['🟠 مهندس أصيل في الذكاء الاصطناعي (AI-native engineer)', 'تتحقق وتصحّح الأخطاء وتعيد الهيكلة وتؤمّن العمل مع الوكلاء، وتؤتمت إعدادك بنفسك. أغلق الفجوات المتبقية.'],
+        ['🔴 قائد أصيل في الذكاء الاصطناعي (AI-native lead)', 'تعرف كل الوحدات ومارست معظمها تقريبًا. تستطيع تشغيل وكلاء متوازيين، ووضع ممارسة الفريق، والحفاظ على حدّة مهارتك — وتعليم غيرك.']] } },
 ];
 
 /* ---------------------------------------------------------------- load + validate */

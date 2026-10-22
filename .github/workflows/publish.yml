@@ -68,6 +68,9 @@ jobs:
       - name: Verify the AI applications and agents course output matches its markdown
         run: if [ -f aiapps/index.html ]; then npm run aiapps:check; else echo "aiapps course not built yet — skipped"; fi
 
+      - name: Verify the AI-native engineer course output matches its markdown
+        run: if [ -f ainative/index.html ]; then npm run ainative:check; else echo "ainative course not built yet — skipped"; fi
+
       - name: Verify the agentic pages carry the site navigation
         run: node scripts/agentic-nav.mjs --check
 
@@ -83,7 +86,7 @@ jobs:
       - name: Assemble the site
         run: |
           # Course library: landing hub at root, each course in its own subpath.
-          mkdir -p _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai _site/career _site/data _site/cloud _site/testing _site/aiapps
+          mkdir -p _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai _site/career _site/data _site/cloud _site/testing _site/aiapps _site/ainative
           cp landing.html _site/index.html
           # Course trailers (scripts/build-videos.mjs): played on the landing page and each course home
           mkdir -p _site/videos/renders _site/vibe/videos/renders
@@ -143,7 +146,13 @@ jobs:
                aiapps/index.ar.html aiapps/course.ar.html aiapps/COURSE.ar.md aiapps/TOOLKIT.ar.md \
                aiapps/assessment.html aiapps/assessment.ar.html _site/aiapps/
           fi
-          ls -lh _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai _site/career _site/data _site/cloud _site/testing _site/aiapps
+          # A Practical Guide to Becoming an AI-Native Engineer → /ainative/ (once built)
+          if [ -f ainative/index.html ]; then
+            cp ainative/index.html ainative/course.html ainative/COURSE.md ainative/TOOLKIT.md \
+               ainative/index.ar.html ainative/course.ar.html ainative/COURSE.ar.md ainative/TOOLKIT.ar.md \
+               ainative/assessment.html ainative/assessment.ar.html _site/ainative/
+          fi
+          ls -lh _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai _site/career _site/data _site/cloud _site/testing _site/aiapps _site/ainative
 
       # Every link on the assembled site, internal and external. Report only: a dead third-party
       # page should be fixed in the lesson, not block the deploy. Results are in the run summary.

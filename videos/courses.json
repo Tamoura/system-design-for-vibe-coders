@@ -194,5 +194,23 @@
       { "value": 230, "label": "practice questions" }
     ],
     "tags": ["Agents · LLM apps · delivery", "Requirements to production"]
+  },
+  {
+    "slug": "ainative",
+    "verb": "Work AI-native",
+    "title": "AI-Native Engineer",
+    "subtitle": "A Practical Guide",
+    "titleAr": "المهندس الأصيل في الذكاء الاصطناعي — دليل عملي",
+    "color": "#ff6f61",
+    "hook": "Work *with* the agent. Stay *accountable* for the *result.*",
+    "topicsLabel": "Graded labs, offline",
+    "topics": ["Context engineering", "Specs & the daily loop", "Verify AI code", "Security & hooks", "Parallel agents", "Team playbooks"],
+    "stats": [
+      { "value": 15, "label": "modules" },
+      { "value": 31, "label": "lessons" },
+      { "value": 150, "label": "tools & patterns" },
+      { "value": 210, "label": "practice questions" }
+    ],
+    "tags": ["Engineers who code · AI agents", "Graded offline labs"]
   }
 ]
