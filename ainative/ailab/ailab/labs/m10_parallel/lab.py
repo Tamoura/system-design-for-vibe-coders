@@ -105,7 +105,7 @@ def _part_check(result: checks.PytestResult, module: str, name: str, hint: str) 
         return Check(name, False, "the acceptance tests could not run (does your code still import? run `pytest -q`)", hint)
     failed = [ident.split("::")[-1] for ident in result.failures if module in ident]
     if failed:
-        return Check(name, False, f"{len(failed)} hidden checks failed: {_names(failed)}", hint)
+        return Check(name, False, f"{len(failed)} hidden checks failed: {_names(failed, 2)}", hint)
     return Check(name, True)
 
 

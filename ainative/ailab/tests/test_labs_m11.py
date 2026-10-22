@@ -474,7 +474,7 @@ def test_functions_the_assistant_made_up(solved):
 
 def test_a_made_up_import(solved):
     append_to_page(solved, "```python\nfrom najmkit.ids import new_uuid\n```")
-    assert_only(grade(solved), DOC_NAMES)
+    assert_only(grade(solved), DOC_NAMES, DOC_EXAMPLES)  # found twice: by reading the page and by running it
 
 
 @pytest.mark.parametrize(

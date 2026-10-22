@@ -647,7 +647,8 @@ def claimed_params(inside: str) -> tuple[str, list[Param], int, list[str], bool]
         params = _params(fn, drop_first=False)
         declares = bool(a.defaults or a.kw_defaults or a.vararg or a.kwarg or a.kwonlyargs
                         or any(x.annotation for x in [*a.posonlyargs, *a.args]))
-        return "signature", params, sum(1 for p in params if p.kind in ("pos", "posonly")), [], declares
+        # a parameter with a default may be a keyword argument in a call (`seconds=61`), so it is not counted as positional
+        return "signature", params, sum(1 for p in params if p.kind in ("pos", "posonly") and p.required), [], declares
     except (SyntaxError, AssertionError, IndexError):
         pass
     try:
@@ -779,7 +780,7 @@ def docs_rules(facts: dict[str, str]) -> list[Rule]:
              "What the clock does with a naive datetime disagrees with najmkit.clock", exempt=NEGATION),
         Rule("local_time", _rx(r"\bnow\(\)[^.\n]{0,80}\b(?:local time|machine'?s? time ?zone|naive)\b"),
              "What clock.now() returns disagrees with najmkit.clock", exempt=NEGATION),
-        Rule("audit_default", _rx(r"(?:default(?:s)? to|falls? back to|writes? to|goes? to|prints? to|printed to|sent to|logged to|written to)[^.\n]{0,50}\b(?:stdout|stderr|console|audit\.log|syslog|a default file)\b"),
+        Rule("audit_default", _rx(r"(?:default(?:s)? to|falls? back to|writes? to|goe?s? to|prints? to|printed to|sent to|logged to|written to)[^.\n]{0,50}\b(?:stdout|stderr|console|audit\.log|syslog|a default file)\b"),
              "What happens with no audit path disagrees with audit.current_path and audit.log_event", exempt=NEGATION),
         Rule("read_events_raises",
              _rx(r"^(?=.*(?:read_events|missing|does not exist|doesn't exist|nonexistent|non-existent|no such file))(?!.*\blog_event\b).*\bFileNotFoundError\b", re.I | re.S),
@@ -1153,6 +1154,13 @@ BLAME = re.compile(r"\b(blame|blamed|fault of|careless|negligen\w*|forgot|incomp
 
 def blame_problems(text: str) -> list[str]:
     return [f'"{snippet(u)}"' for u in units(text) if BLAME.search(u) and not NEGATION.search(u)]
+
+
+def preamble(text: str) -> str:
+    """The title and the lines before the first '## ' heading (severity, service, version, date ...)."""
+    lines = text.splitlines()
+    end = next((i for i, ln in enumerate(lines) if ln.startswith("## ")), len(lines))
+    return "\n".join(lines[:end])
 
 
 def section_texts(sections: dict[str, Sec], keys: Iterable[str]) -> str:

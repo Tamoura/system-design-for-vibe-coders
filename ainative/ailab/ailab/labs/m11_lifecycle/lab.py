@@ -175,7 +175,8 @@ def postmortem_checks(work: Path) -> list[Check]:
         out.append(_check(names[2], cover, "A timeline with gaps hides what happened. Cover the start, the detection, the recovery and the check that no money was lost.",
                           f"{len(covered)} events"))
     non_action = m.section_texts(sections, ("summary", "impact", "timeline", "facts", "inferences", "unknowns"))
-    invented = m.invented_facts(non_action, record) + m.invented_people(non_action, record)
+    checked_text = m.preamble(text) + "\n" + non_action
+    invented = m.invented_facts(checked_text, record) + m.invented_people(checked_text, record)
     out.append(_check(names[3], invented,
                       "Every number, time, date, id and name must come from the record (or be a difference of its times or counts). "
                       "python lab-assets/claims_scan.py <file> --record lab-assets/incident.json finds times and ids that are not in it."))
