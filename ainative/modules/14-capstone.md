@@ -18,27 +18,16 @@
 ## 🧭 Why it matters
 Hessa's ticket arrives with every number in it. Lujain finishes in an hour: one prompt, a corridor borrowing `STD-B`, tests written after the code, all green. Tariq asks four questions. Where is the spec? What fails if the maximum is 12,000.01? Who has read the `service.py` diff, a money file? What stops the agent opening `.env`? Lujain has no answer. The change may be fine; nobody can know.
 
-The capstone trains the habit behind those questions: a change others can trust without your word. The 2025 DORA report (nearly 5,000 technology professionals, self-reported, associations not causes) frames AI as an amplifier of what a team already does; that specs, tests, small batches and review are what to amplify is the course's bet, not DORA's finding. "AI-native engineer" has no standard definition; this is the course's working one.
+The capstone trains the habit behind those questions: a change others can trust without your word. The 2025 DORA report (nearly 5,000 technology professionals, self-reported, associations not causes) frames AI as an amplifier of what a team already does; that specs, tests, small batches and review are what to amplify is the course's bet, not DORA's finding.
 
 ## 📐 How it works
 
 ### 🟢 The essentials
-**The brief.** Eight milestones, each tied to modules, each leaving something checkable that must refer to something real.
-
-| Milestone (modules) | You leave behind, referring to |
-|---|---|
-| Onboard, context (0-2) | `CLAUDE.md` with a corridor checklist, naming real files |
-| Spec and plan (3) | `specs/REMIT-414.md` and `-plan.md`, naming the ticket and ids `AC1`... |
-| Small steps (4, 5) | tests, then five code commits, one per id |
-| Review (5, 6) | `docs/review-REMIT-414.md`, naming the changed files |
-| Security (8) | `.claude/settings.json`, registering its hook |
-| Automate (9, 10) | `.claude/hooks/guard.py`, run on sample commands |
-| Document (11) | an ADR and `docs/corridors.md`, matching the code |
-| Retrospective (12, 13) | agent log and retrospective, quoting the total and a commit |
+**The brief.** Eight milestones, one per kind of evidence: context (modules 0-2), spec and plan (3), small steps (4, 5), review (5, 6), security (8), automation (9, 10), documents (11) and retrospective (12, 13). Each leaves something checkable that must refer to something real: files, ids `AC1`..., sample commands, the code, a commit.
 
 **Providers before the consumer.** A corridor names its fee schedule, and an old test (`tests/test_corridors.py`) checks that the schedule exists. So the plan adds `STD-C` in `fees.py`, then the rate and margin in `fx.py`, then the corridor, then the wording (`notify.py`) and the template choice (`service.py`). No code commit turns an old test red.
 
-**Work the money out by hand.** Remit rounds half up, in `Decimal`. A fee, a rate or a receive amount can land exactly on a tie, which half-even rounding, `round()` or a float resolves the other way. The base repository pins two:
+**Work the money out by hand.** Remit rounds half up, in `Decimal`. A fee, a rate or a receive amount can land exactly on a tie, which half-even rounding, `round()` or a float resolves the other way. The base repo pins two:
 
 ```text
 150.25 on QAR-INR:   150.25 x 2.00% + 2.00 = 5.005    half up 5.01      (half-even or float: 5.00)
@@ -48,7 +37,7 @@ The capstone trains the habit behind those questions: a change others can trust 
 `STD-C`, its rate and its receive amounts have ties of their own; find them before any test exists. A tie below the minimum fee or above the cap is hidden by it, so this scratch script skips those:
 
 ```python
-# scratch/find_ties.py: run once and throw away; it is not part of the change
+# scratch/find_ties.py: a throwaway script, not part of the change
 from decimal import Decimal as D
 
 
@@ -66,10 +55,10 @@ for amount, fee in ties("2.00", "2.00", "5.00", "150.00", "100", "151"):
     print(amount, "->", fee)  # 150.25 -> 5.0050, then 150.75 -> 5.0150
 ```
 
-Do the same by eye for the rate (mid x (1 - margin), past the fourth place) and the receive amount (send x rate, past the second). An agent may draft the tests; the expected values come from you.
+Check the rate (mid x (1 - margin), past the fourth place) and the receive amount (send x rate, past the second) the same way. An agent may draft the tests; the expected values come from you.
 
 ### 🟡 Going deeper
-**Delegate the draft, keep the decision.** The agent interviews you for the spec, drafts tests from your values and takes one plan step per prompt. A fresh-context reviewer (the **Second-model review** of lesson 5.1: a second session or `/code-review`) adds questions. Verify each: the best-practices page warns that reviewers usually report something even when the work is sound. The vague prompt is "Add a Bangladesh corridor to Remit". The specified one, for step 2, is a task contract (lesson 10.1; your AC ids will differ). The plan exists, so there is no plan mode: the best-practices page says to skip it when one sentence describes the diff.
+**Delegate the draft, keep the decision.** The agent interviews you for the spec, drafts tests from your values and takes one plan step per prompt. A fresh-context reviewer (the **Second-model review** of lesson 5.1: a second session or `/code-review`) adds questions. Verify each: the best-practices page warns that reviewers usually report something even when the work is sound. The vague prompt is "Add a Bangladesh corridor to Remit". The specified one, for step 2, is a task contract (lesson 10.1; your AC ids will differ).
 
 ```text
 Do step 2 of specs/REMIT-414-plan.md; read the plan, the spec and CLAUDE.md first.
@@ -80,10 +69,10 @@ Done when the tests for AC3, AC4 and AC5 pass and nothing else moves.
 Then commit: feat(fees): add the STD-C fee schedule for Bangladesh
 ```
 
-**A right diff and the finding it still earned.** Suppose the agent's `service.py` change passes every test. Read the end of `send` anyway: the template is chosen by name, notification comes last and `_notify` catches only `NotificationError`. A mistyped id raises `UnknownTemplate` after the ledger has posted and the transfer is stored. The review rates it minor and asks for one test: every template id the service can choose exists in `notify.TEMPLATES`, in both languages.
+**A right diff and the finding it still earned.** Say the agent's `service.py` change passes every test. Read the end of `send`: the template is chosen by name, notification comes last and `_notify` catches only `NotificationError`. A mistyped id raises `UnknownTemplate` after the ledger has posted and the transfer is stored. The review rates it minor and asks for one test: every template id the service can choose exists in `notify.TEMPLATES`, in both languages.
 
 ### 🔴 Expert view
-**When the ticket's account of today's Remit and the code disagree,** the code wins and the ticket gets a question. **When the agent offers a neighbouring fix** (the stale `risk.py` section of the architecture page) decline it and log it under Follow-ups with an owner. **Do not delegate** the approved wording (paste it) or the expected values.
+**When the ticket's account of today's Remit and the code disagree,** the code wins and the ticket gets a question. **When the agent offers a neighbouring fix** (the stale `risk.py` section of the architecture page), decline it and log it as a follow-up with an owner. **Do not delegate** the approved wording or the expected values.
 
 **How much evidence is enough?** Match it to risk. A typo needs one commit and the test that was red; money logic gets all ten pieces and a second human on `fees.py`, `fx.py` and `service.py`. The capstone is maximal so that you feel each piece once.
 
@@ -98,7 +87,7 @@ Then commit: feat(fees): add the STD-C fee schedule for Bangladesh
 | **Retrospective template** | Six sections citing minutes, commits, habits | After any ticket worth remembering |
 
 ## 🏛️ In practice at Najm Bank
-*Needs an agent: no (the kit lists it so), but recommended: the capstone is about working with one. No-agent path: write every document and test yourself, in the same order.*
+*Needs an agent: no, but recommended: the capstone is about working with one. No-agent path: write every document and test yourself, in the same order.*
 
 **The ticket.** This is `task.md`, as Hessa wrote it.
 
@@ -200,11 +189,11 @@ On the starter state the real output includes these lines (others omitted):
 Lab m14: 7/28 required checks passed: NOT YET
 ```
 
-Pointing Bangladesh at `STD-B` instead of `STD-C` runs and looks plausible, yet fails three checks from three sides: the corridor tests, the fee tests and the corridors page (`QAR-BDT: wrong or missing fee schedule`).
+Pointing Bangladesh at `STD-B` instead of `STD-C` runs and looks plausible, yet fails three checks: the corridor tests, the fee tests and the corridors page (`QAR-BDT: wrong or missing fee schedule`).
 
 When every required check passes, the last line reads `Lab m14: 28/28 required checks passed: PASSED`.
 
-**The rubric.** Score each dimension from 1 to 4. The grader can award the evidence rows up to 3; you and your group score the rest at the demo.
+**The rubric.** Score each dimension 1 to 4. The grader can award the evidence rows up to 3; you and your group score the rest at the demo.
 - *Context and spec:* 1 spec after the code; 2 criteria vague; 3 numbered, testable; 4 non-goals held.
 - *Small steps:* 1 one big commit; 2 mixed kinds; 3 one kind, tests first; 4 history matches plan.
 - *Verify and review:* 1 green suite only; 2 tests pin numbers; 3 tests fail without the change; 4 a stranger's review answered.
@@ -217,7 +206,7 @@ When every required check passes, the last line reads `Lab m14: 28/28 required c
 
 **Group session (90 minutes).** (1) Demo, in English and Arabic; Hessa asks if Customer Care would sign (15). (2) The trail: spec, plan, `git log --oneline`; Tariq asks where the plan changed (15). (3) Move the cap by one cent, live (the **Mutation check** of lesson 5.1); Nada asks which test fails (20). (4) Try to make the agent read `.env`, push or install; Noura asks what the guard cannot see (15). (5) Swap repositories and find the riskiest hunk in `git diff lab-start` (15). (6) Agree one change to the memory file (10).
 
-**Debrief.** What did the agent get wrong, or nearly? What did your context or spec miss? Which document do you wish you had written first?
+**Debrief.** What did the agent get wrong, or nearly? What did your context or spec miss? Which document would you write first?
 
 **Agent log template** (`lab-assets/templates/agent-log.md`; the retrospective quotes its `Total minutes:` line):
 
@@ -235,19 +224,19 @@ Total minutes: 0
 
 ## 🛠️ Exercises
 - 🟢 **Core: the change and its spec.** *No agent needed.* *Done when:* the five hidden groups, `Your tests pass` and the spec, plan and test-trace checks print PASS.
-- 🟡 **Full cycle.** *Needs an agent: recommended.* All eight milestones. *Done when:* `grade` prints `PASSED` and your retrospective names the document that changed your mind.
-- 🔴 **Hero: a stranger and the demo.** *Needs an agent: recommended.* *Done when:* the six advisory checks pass, you have held the session, and a peer has reviewed your branch with the **AI pull-request review checklist** and you have answered every finding.
+- 🟡 **Full cycle.** *Needs an agent: recommended.* All eight milestones. *Done when:* `grade` prints `PASSED` and the retrospective names the document that changed your mind.
+- 🔴 **Hero: a stranger and the demo.** *Needs an agent: recommended.* *Done when:* the six advisory checks pass, you have held the session, and a peer has reviewed your branch with the **AI pull-request review checklist** and you answered every finding.
 
 ## ⚠️ Mistakes and traps
 - **Writing the spec after the code.** It then describes what the agent did. **Specify before you delegate.**
 - **Letting the agent work out the numbers.** A float resolves a tie the wrong way, and no summary says so. **Trust evidence, not fluency.**
 - **Keeping a hook or settings file you have not read.** The grader accepts a copy; you answer for it. **Automate the loop, keep the skill.**
-- **Documents that agree because one was copied from another.** Copy from the running code.
+- **Documents that agree because one was copied from another.** Copy from the code.
 - **A green run taken for a review.** The demo asks what the checks cannot.
 
 ## 🧾 Recap
-- One small change plus ten pieces of evidence that refer to each other and the code.
-- Order is a decision: spec and plan, tests, then providers before the consumer.
+- One small change, ten pieces of evidence that refer to each other and the code.
+- Order is a decision: spec, plan, tests, then providers before the consumer.
 - The five habits in one change: **Context first** (memory file), **Specify before you delegate** (spec, plan), **Small verified steps** (tests first, a commit per step), **Trust evidence, not fluency** (hand-worked values, review, demo), **Automate the loop, keep the skill** (guard hook, log).
 - Work the money out by hand, and match evidence to risk. The grader sees shape, truth and references; the demo tests understanding.
 
