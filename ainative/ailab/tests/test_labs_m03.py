@@ -1302,8 +1302,9 @@ def test_sentences_lifted_from_the_lesson_do_not_stand_in_for_the_decisions(work
     result = spec_grade(work)
     for ticket in m.TICKETS:
         assert not result[AMB[ticket]].ok and "the Decisions section answers only" in result[AMB[ticket]].detail, ticket
-    assert all(m.resolution(t, one(t, REFERENCE[t]), "Decisions") and m.decisions_shortfall(t, one(t, REFERENCE[t]))[0] >= m.decisions_shortfall(t, one(t, REFERENCE[t]))[1]
-               for t in m.TICKETS)
+    for ticket in m.TICKETS:  # the reference specs answer every question in Decisions
+        answered, need = m.decisions_shortfall(ticket, one(ticket, REFERENCE[ticket]))
+        assert answered == len(m.AMBIGUITIES[ticket]) >= need
 
 
 def test_a_decisions_section_that_answers_nothing_fails_even_when_the_examples_state_the_rules(work):
