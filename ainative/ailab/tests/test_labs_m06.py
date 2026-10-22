@@ -10,7 +10,9 @@ Four kinds of test live here:
    agent really produces (no reproduction, a test that passes on the starter, only the day fixed, a symptom patch in
    the service, a special case, a constant shift, weakened tests, unrelated files, an oversized patch, a vague note,
    a tour that repeats the stale architecture document) is rejected for the right reason;
-4. the document checkers, one at a time.
+4. the document checkers, one at a time;
+5. the repair round after the learner dry-run: every wording of a true sentence the grader wrongly rejected, every
+   vacuous or mislabelled answer it wrongly accepted, and the rules the ticket must state because the grader enforces them.
 """
 from __future__ import annotations
 
@@ -406,6 +408,7 @@ def test_the_starter_fails_for_the_right_reasons(work):
     assert result[UNTOUCHED].ok and result[FIXTURES].ok and result[CLEAN].ok and result[SECRETS].ok
     assert all(c.detail or c.hint for c in result.values() if not c.ok)
     assert result[T_SECTIONS].hint and result[HIDDEN].hint and result[N_CAUSE].hint  # the first of each group says what to do
+    assert all(heading in result[N_SECTIONS].hint for heading in m06.ROOT_CAUSE_SECTIONS)  # the hint lists every heading the ticket does
     # nothing on the very first screen gives the answer away
     shown = " ".join(f"{c.name} {c.detail} {c.hint}" for c in result.values()).lower()
     for phrase in ("utc", "to_local", "astimezone", "day_window", "month_window", "limits.py has"):
@@ -462,6 +465,9 @@ AI-assisted pull requests, and no float in money. The fixed clock in the fixture
 """
     alt_note = """# Incident REMIT-231
 
+## Summary
+Since release r-0312 customers were refused for the first three hours of the Qatar day, and two were let through.
+
 ## Symptom
 Customers were refused just after midnight in Qatar although a new day had started for them.
 
@@ -483,6 +489,9 @@ Refused wrongly: C1190, C2207, C3042, C4410, C5521, C6003. Let through wrongly: 
 
 ## Prevention
 Never delete tests in a change that alters the behaviour they pin.
+
+## Open questions
+None.
 """
     scenario(work, fix=None, tour=alt_tour, note=None, log=None)  # commit 1: the tour only
     path = work / "tests" / "test_limits.py"
@@ -638,7 +647,7 @@ def test_editing_existing_tests_to_match_the_bug_is_rejected(work):
     result = grade(scenario(work, fix=weaken, tests={TEST_PATH: DAILY_TEST}))
     assert not result[UNTOUCHED].ok
     assert "test_old_months_do_not_count" in result[UNTOUCHED].detail or "test_monthly_limit" in result[UNTOUCHED].detail
-    assert "git restore tests" in result[UNTOUCHED].hint
+    assert "git restore --source=lab-start -- tests" in result[UNTOUCHED].hint  # works after the edit was committed, too
 
 
 def test_deleting_an_existing_test_file_is_rejected(work):
@@ -1025,3 +1034,277 @@ def test_the_lab_pins_its_own_shape():
     assert LAB.id == "m06" and LAB.lesson == "6.2" and LAB.needs_agent is False
     assert LAB.task_file.read_text(encoding="utf-8").startswith("# REMIT-231")
     assert (LAB.assets_dir / "prod.log").is_file() and (LAB.hidden_dir / "test_m06_windows.py").is_file()
+
+
+# ======================================================================================================================
+# 5. the repair round: what the learner dry-run found
+#    (false negatives: true sentences and sound solutions that were rejected; false positives: shortcuts that passed;
+#    and the rules the grader enforces, which the ticket must therefore state)
+# ======================================================================================================================
+def add_to_tour(text: str, sentence: str, after: str = "## Entry points") -> str:
+    return text.replace(after, after + "\n\n" + sentence + "\n", 1)
+
+
+# --- the reproduction must run and fail; a module that cannot even be imported is not a reproduction ----------------------
+IMPORT_ONLY_TEST = '''from remit.limits import QATAR_OFFSET_HOURS
+
+
+def test_the_offset_is_three_hours():
+    assert QATAR_OFFSET_HOURS == 3
+'''
+IMPORT_INSIDE_TEST = '''def test_the_offset_is_three_hours():
+    from remit.limits import QATAR_OFFSET_HOURS
+
+    assert QATAR_OFFSET_HOURS == 3
+'''
+ATTRIBUTE_TEST = '''from remit import limits
+
+
+def test_the_offset_is_three_hours():
+    assert limits.QATAR_OFFSET_HOURS == 3
+'''
+
+
+def fix_with_constant(work: Path) -> None:
+    fix_both(work)
+    edit(work, LIMITS, "QATAR_UTC_OFFSET = timedelta(hours=3)\n", "QATAR_UTC_OFFSET = timedelta(hours=3)\nQATAR_OFFSET_HOURS = 3\n")
+
+
+@pytest.mark.parametrize("vacuous", [IMPORT_ONLY_TEST, IMPORT_INSIDE_TEST, ATTRIBUTE_TEST],
+                         ids=["import-at-module-level", "import-inside-the-test", "attribute-of-the-module"])
+def test_a_test_that_only_checks_a_name_the_fix_adds_is_not_a_reproduction(work, vacuous):
+    """The dry-run probe: the real two-line fix plus a new constant, and a test that only reads the constant. It errors on
+    the original code (so it 'fails'), passes on the fix, and says nothing about what the customers saw."""
+    result = grade(scenario(work, fix=fix_with_constant, tests={"tests/test_limits_qatar_windows.py": vacuous}))
+    assert {FAILS_ON_STARTER, DAILY, TWIN} <= failing(result), describe(result)
+    assert result[HIDDEN].ok and result[SUITE].ok  # the fix is real; the test is not a reproduction
+    assert "instead of running and failing" in result[FAILS_ON_STARTER].detail
+    assert "Test behaviour that exists today" in result[FAILS_ON_STARTER].hint
+    assert not framework.passed(framework.grade_lab(LAB, work, catch=False))
+
+
+def test_one_real_reproduction_next_to_a_helper_test_is_enough(work):
+    """A learner may also test their own helper: what counts is that at least one test runs and fails on the starter."""
+    result = grade(scenario(work, fix=fix_with_constant,
+                            tests={TEST_PATH: DAILY_TEST, "tests/test_limits_qatar_windows.py": IMPORT_ONLY_TEST}))
+    assert result[FAILS_ON_STARTER].ok and result[DAILY].ok, describe(result)
+    assert "1 of your new test fails" in result[FAILS_ON_STARTER].detail
+
+
+def test_tests_that_hang_on_the_original_code_are_not_a_reproduction(work):
+    hang = HEADER + '''
+def test_hangs():
+    while True:
+        pass
+'''
+    result = m06.reproduction_check(scenario(work, fix=fix_both, tests={TEST_PATH: hang}), name="x", hint="h", timeout=3)
+    assert not result.ok and "do not finish" in result.detail
+
+
+# --- commits: more than ten is fine; "separate commits" is not praised when there are none ----------------------------------
+def test_many_small_commits_are_fine(solved):
+    for number in range(12):
+        (solved / "docs" / f"scratch-notes-{number}.md").write_text(f"Small step number {number}.\n", encoding="utf-8")
+        commit(solved, f"docs(limits): add notes for step {number}")
+    result = grade(solved)
+    assert result[COMMITS].ok and "15 new commits" in result[COMMITS].detail
+    assert_only(result)
+
+
+def test_the_starter_does_not_pass_the_separate_commits_check_for_free(work):
+    check = grade(work)[SEPARATE]
+    assert not check.ok and check.detail == "no commits yet" and not check.required
+
+
+# --- the root-cause note: all nine headings the ticket names ---------------------------------------------------------------
+def test_a_note_without_summary_impact_and_open_questions_is_rejected(solved):
+    note = re.sub(r"(?s)## Summary.*?(?=\n## Symptom)", "", REAL_NOTE)
+    note = re.sub(r"(?s)## Impact.*?(?=\n## Prevention)", "", note)
+    note = re.sub(r"(?s)\n## Open questions.*\Z", "\n", note)
+    result = with_note(solved, note)
+    assert not result[N_SECTIONS].ok and not framework.passed(framework.grade_lab(LAB, solved, catch=False))
+    assert all(heading in result[N_SECTIONS].detail for heading in ("Summary", "Impact", "Open questions"))
+
+
+def test_none_is_an_honest_answer_to_open_questions_but_an_empty_heading_is_not(solved):
+    honest = re.sub(r"(?s)(## Open questions\n).*\Z", r"\1\nNone.\n", REAL_NOTE)
+    assert_only(with_note(solved, honest))
+    empty = re.sub(r"(?s)(## Open questions\n).*\Z", r"\1\n-\n", REAL_NOTE)
+    result = with_note(solved, empty)
+    assert not result[N_SECTIONS].ok and "Open questions" in result[N_SECTIONS].detail
+
+
+# --- the impact: who was hurt, and in which direction ------------------------------------------------------------------------
+REFUSED = ", ".join(prodlog.WRONGLY_REFUSED)
+ALLOWED = ", ".join(prodlog.WRONGLY_ALLOWED)
+
+
+def impact_note(body: str) -> str:
+    return re.sub(r"(?s)(## Impact\n).*?(?=\n## Prevention)", lambda m: m.group(1) + "\n" + body + "\n", REAL_NOTE)
+
+
+@pytest.mark.parametrize("body", [
+    f"Wrongly refused: {REFUSED}.\n\nWrongly let through: {ALLOWED}.",
+    f"{REFUSED} were refused wrongly, and {ALLOWED} were let through over their limit.",
+    f"{REFUSED.replace(', C6003', ', and C6003')} were refused wrongly; {ALLOWED.replace(', ', ' and ')} were let through.",
+    "Wrongly refused:\n\n" + "".join(f"- {c}\n" for c in prodlog.WRONGLY_REFUSED) +
+    "\nShould have been refused:\n\n" + "".join(f"- {c}\n" for c in prodlog.WRONGLY_ALLOWED),
+    "| Customer | The log | Right answer |\n|---|---|---|\n" +
+    "".join(f"| {c} | transfer.rejected | should have been allowed |\n" for c in prodlog.WRONGLY_REFUSED) +
+    "".join(f"| {c} | transfer.sent | should have been refused |\n" for c in prodlog.WRONGLY_ALLOWED),
+], ids=["labelled", "sentence", "oxford-comma", "bullets-under-a-lead-in", "table"])
+def test_the_impact_is_read_in_any_natural_layout(solved, body):
+    assert_only(with_note(solved, impact_note(body)))
+
+
+@pytest.mark.parametrize("body", [
+    f"Wrongly refused: {ALLOWED.replace(', ', ' and ')}.\n\nWrongly let through: {REFUSED}.",  # the directions swapped
+    f"Affected customers: {REFUSED}, {ALLOWED}.",  # the right ids with no direction at all
+    f"Wrongly refused: {REFUSED}.",  # only one of the two directions
+], ids=["directions-swapped", "no-direction", "one-direction-only"])
+def test_the_ids_in_the_wrong_direction_do_not_count_as_the_impact(solved, body):
+    result = with_note(solved, impact_note(body))
+    assert_only(result, N_IMPACT)
+    assert framework.passed(framework.grade_lab(LAB, solved, catch=False))  # advisory: it nudges, it does not block
+    assert "which is which" in result[N_IMPACT].hint and "Support names only some" in result[N_IMPACT].hint
+
+
+def test_the_impact_is_read_in_its_own_section_not_from_anywhere_in_the_note(solved):
+    note = impact_note("Some customers were affected.") + f"\nSee also {REFUSED} refused and {ALLOWED} let through.\n"
+    assert not with_note(solved, note)[N_IMPACT].ok
+
+
+def test_a_cause_needs_the_two_time_zones_said_together(solved):
+    far_apart = re.sub(r"(?s)(## Root cause\n\n).*?(?=\n## Why)",
+                       r"\1The helpers in limits.py use UTC." + "\n\n" + "Padding sentence. " * 30 + "The right zone is Qatar.\n", REAL_NOTE)
+    result = with_note(solved, far_apart)
+    assert not result[N_CAUSE].ok and "how the two relate" in result[N_CAUSE].detail
+
+
+# --- the tour: true sentences that were rejected -----------------------------------------------------------------------------
+@pytest.mark.parametrize("sentence", [
+    "The docstrings of `screening.py` and `ledger.py` point to a `KIT_NOTES.md` that is not in the repository.",
+    "`ledger.py` cites KIT_NOTES.md, which was never committed here.",
+    "The docstring in `screening.py` says to see KIT_NOTES.md, but the file isn't there.",
+    "I could not find KIT_NOTES.md anywhere in the checkout.",
+    "Two docstrings refer to\nKIT_NOTES.md, which is not part of this repository.",
+    "KIT_NOTES.md is referred to by two docstrings and does not ship with the repo.",
+], ids=["not-in-the-repository", "never-committed", "isnt-there", "could-not-find", "wrapped-line", "does-not-ship"])
+def test_saying_in_plain_words_that_a_named_file_is_not_there_is_not_a_false_claim(work, sentence):
+    assert T_FILES not in failing(tour_result(work, add_to_tour(REAL_TOUR, sentence)))
+
+
+def test_citing_a_file_the_repository_lacks_as_if_it_existed_is_still_caught(work):
+    result = tour_result(work, add_to_tour(REAL_TOUR, "The quirks of the ledger are listed in KIT_NOTES.md."))
+    assert failing(result) == {T_FILES} and "KIT_NOTES.md" in result[T_FILES].detail
+    assert "is not in the repository" in result[T_FILES].hint  # the hint offers the right remedy, not just 'run ls'
+
+
+def test_a_doubt_word_in_the_next_bullet_does_not_excuse_the_file_above_it(work):
+    text = add_to_tour(REAL_TOUR, "- `src/remit/risk.py` runs the limits and screening checks.\n- docs/ARCHITECTURE.md is stale about limits.")
+    assert T_FILES in failing(tour_result(work, text))
+
+
+@pytest.mark.parametrize("sentence", [
+    "ARCHITECTURE.md says T1 may send 5,000 QAR a day, T2 25,000, there are two KYC tiers and no monthly limit. limits.py has three tiers.",
+    "The old architecture document claims T1 can send 5,000 a day.\nThe code allows 2,000.",
+    "According to docs/ARCHITECTURE.md, T2 customers may send 25,000 a day; limits.py disagrees.",
+    "Where the documents and the code disagree the code wins. ARCHITECTURE.md lists T1 at 5,000 a day.",
+], ids=["says", "claims-wrapped", "according-to", "lists"])
+def test_reporting_what_a_stale_document_says_is_what_the_ticket_asks_for(work, sentence):
+    assert T_CLAIMS not in failing(tour_result(work, REAL_TOUR + "\n" + sentence + "\n"))
+
+
+def test_a_stale_claim_stated_as_fact_is_still_caught_even_after_a_sentence_that_says_something(work):
+    text = REAL_TOUR + "\nThe tour says what Remit is.\n\nT1 customers may send up to 5,000 QAR a day.\n"
+    assert T_CLAIMS in failing(tour_result(work, text))
+
+
+def test_standard_methods_written_as_calls_are_not_invented_functions(work):
+    text = REAL_TOUR + ("\nThe window helpers once called `astimezone(timezone.utc)`; month ends use `replace(day=1)`, the log is read "
+                        "with `fromisoformat(stamp)` and amounts are rounded with `quantize(exp)`.\n")
+    assert T_CLAIMS not in failing(tour_result(work, text))
+
+
+def test_quoting_a_comment_tag_from_the_code_is_not_an_invented_function(work):
+    """The dry-run learner quoted the TODO in screening.py as `TODO(farid, 2022)`; it is a comment, not a call."""
+    text = REAL_TOUR + "\nThe watchlist is a demo list; `TODO(farid, 2022)` in `screening.py` says to move it to a vendor feed.\n"
+    assert T_CLAIMS not in failing(tour_result(work, text))
+
+
+def test_an_invented_bare_function_is_still_caught(work):
+    result = tour_result(work, REAL_TOUR + "\nThe service then calls `charge_card(amount)`.\n")
+    assert "charge_card" in result[T_CLAIMS].detail
+
+
+def test_steps_may_be_named_by_the_functions_that_do_them(work):
+    flow = ("## Data flow\n\n`send()` validates the request, applies `check_limits`, runs `screen_names`, prices the transfer with "
+            "`quote_fee` and `fx_quote`, posts to the ledger with `post_transfer`, stores it with `save_transfer` and notifies "
+            "the customer. The audit event comes last.\n\n")
+    text = re.sub(r"(?s)## Data flow\n.*?(?=## Tests)", flow, REAL_TOUR)
+    assert T_FLOW not in failing(tour_result(work, text)) and T_CLAIMS not in failing(tour_result(work, text))
+
+
+def test_plain_synonyms_name_the_steps_too(work):
+    flow = ("## Data flow\n\nValidation of the request, then the sending cap, then the sanctions screen, then the fee, the "
+            "exchange rate, the double-entry postings in the ledger, saving to SQLite and finally the notification.\n\n")
+    assert T_FLOW not in failing(tour_result(work, re.sub(r"(?s)## Data flow\n.*?(?=## Tests)", flow, REAL_TOUR)))
+
+
+def test_a_step_that_is_missing_is_named_in_the_detail(work):
+    flow = "## Data flow\n\nValidate, limits, screening, fee, ledger, store, notify.\n\n"
+    result = tour_result(work, re.sub(r"(?s)## Data flow\n.*?(?=## Tests)", flow, REAL_TOUR))
+    assert "the step 'fx' is not mentioned" in result[T_FLOW].detail and "the word the code uses" in result[T_FLOW].hint
+
+
+@pytest.mark.parametrize("wording", [
+    "`ledger.py` and `screening.py` have no dedicated tests; `test_service.py` only exercises them through `send()`.",
+    "`ledger.py` and `screening.py` are not directly tested: they run only inside the service tests.",
+    "`ledger.py` and `screening.py` have no tests of their own.",
+    "`ledger.py` and `screening.py` are thinly tested, only indirectly through `send()`.",
+    "`ledger.py` and `screening.py` have no test file.",
+], ids=["no-dedicated", "not-directly", "of-their-own", "thinly", "no-file"])
+def test_accurate_wordings_of_the_test_gap_are_accepted(work, wording):
+    text = REAL_TOUR.replace("**`ledger.py` and `screening.py` have no tests of their own**; they are only exercised through `send()`.", wording)
+    text = text.replace("legacy, untested modules", "legacy modules")
+    assert wording in text
+    assert T_ESSENTIALS not in failing(tour_result(work, text))
+
+
+def test_a_title_a_welcome_and_extra_sections_are_fine(work):
+    text = "# Remit onboarding\n\nWelcome to the team!\n\n" + REAL_TOUR + "\n## Glossary\n\nKYC means know your customer.\n"
+    assert not failing(tour_result(work, text))
+
+
+def test_a_short_honest_open_question_is_enough(work):
+    text = re.sub(r"(?s)## Open questions\n.*\Z", "## Open questions\n\nI could not run the CLI against a real file.\n", REAL_TOUR)
+    assert T_SECTIONS not in failing(tour_result(work, text))
+
+
+# --- the ticket states every rule the grader enforces -----------------------------------------------------------------------
+def test_the_ticket_names_every_heading_and_number_the_grader_checks(template):
+    task = " ".join((template / "TASK.md").read_text(encoding="utf-8").split())  # wrapped lines read as one
+    for heading in (*m06.ONBOARDING_SECTIONS, *m06.ROOT_CAUSE_SECTIONS):
+        assert f"**{heading}**" in task, heading
+    low, high = m06.ONBOARDING_WORDS
+    assert f"{low} to {high:,} words" in task
+    assert "at most 20 changed" in task and "72 characters" in task and "At least two commits" in task
+    for folder in ("`tests/`", "`docs/`", "`scripts/`"):
+        assert folder in task  # the places the grader allows files to change
+    assert "ainative/ailab" in task and "not from this directory" in task  # where to run the grade command
+    assert "at most 20" in task and m06.fix_is_small.__defaults__[0] == 20
+    for hidden_rule in ("najmkit", "house rules", "money", "command line", "deterministic", "thin"):
+        assert hidden_rule in task, hidden_rule  # what the 'essentials' check looks for, stated in the ticket
+    assert "not in the repository" in task and "naming the document" in task  # how to report a stale document or a missing file
+
+
+def test_the_ticket_in_the_lesson_is_the_ticket_in_the_kit(template):
+    lesson = Path(__file__).resolve().parents[2] / "modules" / "06-debug.md"
+    if not lesson.is_file():
+        pytest.skip("the lesson is not part of this checkout")
+    blocks = re.findall(r"```text\n(# REMIT-231:.*?)\n```", lesson.read_text(encoding="utf-8"), flags=re.S)
+    assert len(blocks) == 1 and blocks[0] == (template / "TASK.md").read_text(encoding="utf-8").rstrip("\n")
+
+
+def test_the_incident_note_and_the_ticket_name_each_other(template):
+    assert "REMIT-231" in (template / "lab-assets" / "incident.md").read_text(encoding="utf-8").splitlines()[0]

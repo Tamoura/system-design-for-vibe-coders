@@ -10,9 +10,16 @@ What is checked here
 * ``legacy_functions_left``      the old module-level ledger functions are gone
 * ``v1_calls_left``              no call to najmkit's v1 names remains in ``src/remit`` or ``tests`` (import aware)
 * ``v1_names_still_defined``     the deprecated v1 names are gone from the vendored najmkit (subprocess import)
-* ``characterization_report``    the learner's ``tests/test_ledger*.py`` pass on the ORIGINAL ledger and kill mutants of it
+* ``characterization_report``    the learner's ``tests/test_ledger*.py`` pass on the ORIGINAL ledger (and on a copy of it that
+                                 only differs in comments, spacing and private names) and kill mutants of it
+* ``suite_check``                the whole suite passes the way CI runs it (``pytest -q``: no working directory on the import path)
 * ``green_commits``              each commit since the start leaves the whole suite green
 * ``tests_not_deleted``          no test of the starter was deleted
+* ``small_steps``                at least three commits that change something, and the tests are not committed together with src/
+
+Every pytest run here is ``python -P -m pytest``: ``-P`` keeps the working directory off ``sys.path``, exactly as the ``pytest``
+command that CONTRIBUTING.md and CI use does. (``python -m pytest`` adds it, which would let ``from tests.ledger_port import ...``
+pass the grader and fail in CI.)
 """
 from __future__ import annotations
 
@@ -31,6 +38,7 @@ from pathlib import Path
 
 from ailab import checks, gitutil, runner
 from ailab.checks import Mutant
+from ailab.framework import Check
 
 LEDGER = "src/remit/ledger.py"
 LEGACY_FUNCTIONS = ("post_transfer", "balance", "accounts", "journal", "reset")
@@ -418,21 +426,133 @@ class CharacterizationReport:
     n_tests: int = 0
     baseline_ok: bool = False
     baseline_detail: str = ""
+    equivalent_ok: bool = True  # the tests also pass on a copy that only differs in comments, spacing and private names
+    equivalent_detail: str = ""
+    peeking: list[str] = field(default_factory=list)  # ways the tests read the source text instead of calling the code
+    import_error: bool = False  # the tests say `from tests.x import ...`, which `pytest -q` cannot do
     killed: list[Mutant] = field(default_factory=list)
     survived: list[Mutant] = field(default_factory=list)
     not_applied: list[Mutant] = field(default_factory=list)
 
+    @property
+    def ready(self) -> bool:
+        """Good enough to be judged by the mutants: they describe the original, whatever its text looks like."""
+        return self.baseline_ok and self.equivalent_ok and not self.peeking
+
+    @property
+    def problem(self) -> str:
+        """What is wrong with the tests before any mutant is tried (empty when ``ready``)."""
+        if not self.baseline_ok:
+            return f"on the original code: {self.baseline_detail}"
+        if self.peeking:
+            return f"they read the ledger's source text instead of calling it: {checks._short(self.peeking, 3)}"
+        if not self.equivalent_ok:
+            return ("they pass on the original ledger but fail on a copy of it that only differs in comments, spacing and the names of "
+                    f"private helpers: {self.equivalent_detail}")
+        return ""
+
+    @property
+    def hint(self) -> str:
+        if self.ready:
+            return ""
+        if not self.baseline_ok:
+            if self.import_error:
+                return IMPORT_HINT
+            return ("A characterization test describes what the code does today, and the seam must keep working with the original "
+                    "module. Run python lab-assets/try_mutation.py: it runs your tests on the original code. Fix the test, not the code.")
+        return ("A characterization test calls the code and compares what comes back. It must not depend on how ledger.py is written: "
+                "its text, its hash, its line numbers.")
+
+
+IMPORT_HINT = ("Your tests import from `tests.` (for example `from tests.ledger_port import ...`). That works under `python -m pytest` but not "
+               "under `pytest -q`, which is what CI runs. Write `from ledger_port import make_ledger, ledger_of` instead.")
+_NO_TESTS_PACKAGE = re.compile(r"No module named ['\"]tests(?:\.|['\"])")
+
+
+def import_problem(output: str) -> bool:
+    """True when pytest's output shows the ``from tests.x import ...`` mistake."""
+    return bool(_NO_TESTS_PACKAGE.search(output))
+
 
 def _pytest(root: Path, targets: Sequence[str], *, stop_first: bool, timeout: float) -> runner.RunResult:
-    args = ["-m", "pytest", "-q", "-p", "no:cacheprovider", "-p", "no:randomly", "-W", "ignore::DeprecationWarning"]
+    """``pytest -q`` as CI runs it: ``-P`` keeps the working directory off ``sys.path`` (``python -m pytest`` would add it)."""
+    args = ["-P", "-m", "pytest", "-q", "-p", "no:cacheprovider", "-p", "no:randomly", "-W", "ignore::DeprecationWarning"]
     if stop_first:
         args.append("-x")
     return runner.run_python([*args, *targets], cwd=root, pythonpath=[root / "src"], timeout=timeout)
 
 
+def suite_check(work: Path | str, *, name: str, timeout: float = 60.0) -> Check:
+    """The whole visible suite passes the way CI runs it (``pytest -q``), warnings and all."""
+    with checks.work_copy(work) as root, tempfile.TemporaryDirectory(prefix="ailab-m07-junit-") as scratch:
+        junit = Path(scratch) / "junit.xml"
+        run = runner.run_python(["-P", "-m", "pytest", "-q", "-p", "no:cacheprovider", "-p", "no:randomly", f"--junitxml={junit}",
+                                 "-o", "junit_family=xunit2", "tests"], cwd=root, pythonpath=[root / "src"], timeout=timeout)
+        result = checks.PytestResult(returncode=run.returncode, timed_out=run.timed_out, duration=run.duration, output=run.output)
+        if junit.exists():
+            checks._parse_junit(junit, result)
+    detail = result.summary()
+    if result.failures:
+        detail += f": {checks._short(result.failure_names)}"
+    if result.ok:
+        return Check(name, True, detail)
+    hint = IMPORT_HINT if import_problem(run.output) else "Run `pytest -q` in your repository and read the first failure from the top."
+    return Check(name, False, detail, hint)
+
+
+# ---- the tests must describe behaviour, not the text of the file --------------------------------------------------------
+def equivalent_source(source: str) -> str:
+    """The original ledger written differently but behaving identically: a reviewer's comment, a reworded docstring, extra
+    blank lines and renamed private helpers. A suite that passes on the original and fails here is fingerprinting the file."""
+    text = re.sub(r"\b_CENT\b", "_ONE_CENT", source)
+    text = re.sub(r"\b_post\b", "_post_entry", text)
+    text = text.replace("LEGACY:", "LEGACY (reviewed in 2026):", 1)
+    text = text.replace("\n\n\n", "\n\n\n\n")
+    return "# Reviewed: no change in behaviour.\n" + text.rstrip("\n") + "\n\n# end of file\n"
+
+
+_PEEK_MODULES = {"hashlib", "linecache", "tokenize", "dis", "ast"}
+_PEEK_NAMES = {"getsource", "getsourcelines", "getsourcefile", "getfile", "__file__", "__code__"}
+
+
+def source_peeking(work: Path | str, files: Sequence[str]) -> list[str]:
+    """Places where the learner's tests look at the source text of the code instead of calling it (``file:line what``)."""
+    found: list[str] = []
+    for rel in files:
+        try:
+            tree = ast.parse((Path(work) / rel).read_text(encoding="utf-8"))
+        except (OSError, SyntaxError, UnicodeDecodeError):
+            continue
+        docstrings = {id(node.body[0].value) for node in ast.walk(tree)
+                      if isinstance(node, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and node.body
+                      and isinstance(node.body[0], ast.Expr) and isinstance(node.body[0].value, ast.Constant)}
+        for node in ast.walk(tree):
+            what = ""
+            if isinstance(node, ast.Import):
+                what = next((f"import {a.name}" for a in node.names if a.name.split(".")[0] in _PEEK_MODULES), "")
+            elif isinstance(node, ast.ImportFrom) and (node.module or "").split(".")[0] in _PEEK_MODULES:
+                what = f"from {node.module} import ..."
+            elif isinstance(node, ast.Attribute) and node.attr in _PEEK_NAMES:
+                what = node.attr
+            elif isinstance(node, ast.Name) and node.id in _PEEK_NAMES:
+                what = node.id
+            elif (isinstance(node, ast.Constant) and isinstance(node.value, str) and id(node) not in docstrings
+                  and re.search(r"ledger\.py|src/remit|remit/ledger", node.value)):
+                what = "a path to the ledger's source file"
+            if what:
+                found.append(f"{rel}:{node.lineno} {what}")
+    return sorted(set(found))
+
+
+def passed_count(output: str) -> int:
+    match = re.search(r"(\d+) passed", output)
+    return int(match.group(1)) if match else 0
+
+
 def characterization_report(work: Path | str, mutants: Sequence[Mutant] = MUTANTS, *, timeout: float = 30.0,
                             workers: int = 4) -> CharacterizationReport:
-    """Run the learner's new ``tests/test_ledger*.py`` against the ORIGINAL repository, then against each mutant of it.
+    """Run the learner's new ``tests/test_ledger*.py`` against the ORIGINAL repository, against a copy of it that only differs in
+    comments and private names, and then against each mutant of it.
 
     The original is rebuilt from the ``lab-start`` tag, so the learner's tests must work on the code as it was before
     the refactor (that is what makes them characterization tests). ``tests/conftest.py`` is the original one too."""
@@ -442,6 +562,7 @@ def characterization_report(work: Path | str, mutants: Sequence[Mutant] = MUTANT
     if not tests:
         report.baseline_detail = "no tests/test_ledger*.py file was added"
         return report
+    report.peeking = source_peeking(work, [*tests, *support])
     with tempfile.TemporaryDirectory(prefix="ailab-m07-") as scratch:
         base = starter_tree(work, Path(scratch) / "base")
         for rel in [*tests, *support]:
@@ -450,13 +571,31 @@ def characterization_report(work: Path | str, mutants: Sequence[Mutant] = MUTANT
             shutil.copyfile(work / rel, target)
         first = _pytest(base, tests, stop_first=False, timeout=timeout * 2)
         report.baseline_ok = first.ok and "passed" in first.output
+        report.n_tests = max(report.n_tests, passed_count(first.output))  # a parametrized test counts once per case
         if not report.baseline_ok:
             if first.timed_out:
                 report.baseline_detail = "they did not finish in time"
+            elif import_problem(first.output):
+                report.import_error = True
+                report.baseline_detail = "a test imports from `tests.`, which `pytest -q` cannot do (import error)"
             else:
                 names = re.findall(r"^(?:FAILED|ERROR) (\S+)", first.output, flags=re.M)
                 tail = first.output.strip().splitlines()[-1] if first.output.strip() else "no output"
                 report.baseline_detail = tail + (f": {checks._short([n.split('::')[-1] for n in names], 3)}" if names else "")
+            return report
+
+        # the same ledger, written differently: the tests must not care
+        ledger_path = base / LEDGER
+        original_text = ledger_path.read_text(encoding="utf-8")
+        ledger_path.write_text(equivalent_source(original_text), encoding="utf-8", newline="\n")
+        twin = _pytest(base, tests, stop_first=True, timeout=timeout)
+        ledger_path.write_text(original_text, encoding="utf-8", newline="\n")
+        report.equivalent_ok = twin.ok and "passed" in twin.output
+        if not report.equivalent_ok:
+            names = re.findall(r"^(?:FAILED|ERROR) (\S+)", twin.output, flags=re.M)
+            report.equivalent_detail = ("did not finish in time" if twin.timed_out
+                                        else checks._short([n.split("::")[-1] for n in names], 3) or "see your tests")
+        if not report.ready:
             return report
 
         def try_mutant(mutant: Mutant) -> tuple[Mutant, str]:
@@ -537,3 +676,76 @@ def tests_not_deleted(work: Path | str) -> list[str]:
                 continue
             problems.append(f"{name} (in {rel}) is gone")
     return problems
+
+
+# =================================================================================
+# 5. small steps: commits that change something, and the tests before the refactor
+# =================================================================================
+def commit_files(work: Path | str, sha: str) -> dict[str, str]:
+    """Path -> 'A', 'M' or 'D' for what one commit changed (tool noise left out; a merge commit changes nothing here)."""
+    raw = gitutil.git(work, "diff-tree", "--no-commit-id", "--name-status", "-r", "--no-renames", "-z", sha).stdout.split("\0")
+    changes = {path: code[0] for code, path in zip(raw[0::2], raw[1::2]) if code}
+    return {p: s for p, s in changes.items() if not gitutil.glob_match(p, gitutil.TOOL_NOISE)}
+
+
+def is_ledger_test(path: str) -> bool:
+    return path.startswith("tests/") and bool(re.fullmatch(r"test_ledger[\w]*\.py", path.rsplit("/", 1)[-1]))
+
+
+def small_steps(work: Path | str, *, name: str, at_least: int = 3) -> Check:
+    """At least ``at_least`` commits that change a file (an empty commit is no step), and the commit that first adds the ledger
+    tests changes nothing under ``src/``: the net is committed before the structure moves."""
+    work = Path(work)
+    commits = [c for c in gitutil.commits_since(work) if not c.is_merge]
+    changes = {c.sha: commit_files(work, c.sha) for c in commits}
+    real = [c for c in commits if changes[c.sha]]
+    total = len(gitutil.commits_since(work))
+    detail = f"{checks.plural(total, 'new commit')} since the start"
+    if len(real) < total:
+        detail += f" ({total - len(real)} of them change no file)"
+    problems: list[str] = []
+    if len(real) < at_least:
+        problems.append(detail)
+    first = next((c for c in real if any(s == "A" and is_ledger_test(p) for p, s in changes[c.sha].items())), None)
+    if first is not None:
+        touched = sorted(p for p in changes[first.sha] if p.startswith("src/"))
+        if touched:
+            problems.append(f"the commit that adds your ledger tests ({first.sha[:7]}) also changes {checks._short(touched, 2)}")
+    if problems:
+        return Check(name, False, "; ".join(problems),
+                     "Commit the tests, the refactor and the migration as separate steps that each change something, and commit your "
+                     "ledger tests first, before anything under src/ changes (git reset --soft lab-start, then commit again in pieces).")
+    return Check(name, True, f"{checks.plural(len(real), 'commit')} that change something, the ledger tests first" if first else
+                 f"{checks.plural(len(real), 'commit')} that change something")
+
+
+# =================================================================================
+# 6. documents that go stale
+# =================================================================================
+# Files whose statements about the ledger were true before this ticket and are false after it. The learner's own plan and
+# notes (docs/refactoring-plan.md, docs/najmkit-v2-migration.md, docs/onboarding.md) are not swept: they talk about the old state.
+SWEPT_DOCS = ("CLAUDE.md", "AGENTS.md", "README.md", "docs/ARCHITECTURE.md", "docs/TOUR.md")
+_STALE = re.compile(
+    r"(?i)ledger.{0,100}?(\bno tests?\b|\bno test file\b|\buntested\b|\bwithout tests\b|\bmodule[- ]level\b)"
+    r"|(\bno test file for\b|\bno tests? for\b|\buntested\b|\bwithout tests\b).{0,40}ledger"
+)
+_PAST = re.compile(r"(?i)\b(no longer|used to|formerly|previously|instead of|removed|gone|no module[- ]level|not module[- ]level)\b")
+
+
+def stale_document_lines(work: Path | str, files: Sequence[str] = SWEPT_DOCS) -> list[str]:
+    """``file:line text`` for lines (or two lines read together) that still call the ledger untested or module-level."""
+    found: list[str] = []
+    for rel in files:
+        path = Path(work) / rel
+        if not path.is_file():
+            continue
+        lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+        seen: set[int] = set()
+        for index, line in enumerate(lines):
+            for window in (line, f"{line} {lines[index + 1]}" if index + 1 < len(lines) else line):
+                hit = _STALE.search(window)
+                # a match that starts in the next line belongs to that line, which gets its own turn
+                if index not in seen and hit and hit.start() < len(line) and not _PAST.search(window):
+                    seen.add(index)
+                    found.append(f"{rel}:{index + 1} {line.strip()}")
+    return found

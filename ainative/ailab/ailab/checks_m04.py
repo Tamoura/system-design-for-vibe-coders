@@ -6,10 +6,12 @@ this module holds the checks that look at HOW the work was done and at the learn
 * ``new_test_ids``            which test functions the learner added or changed (by AST, so appending to an existing file is fine)
 * ``originals_intact``        no existing test, fixture or constant was edited or removed (weakening a test to go green)
 * ``removal_check``           the new tests fail when every non-test file is put back to the starting code ("remove the feature")
-* ``mutation_check``          the new tests fail when the warning is broken in seven deliberate ways. The breakage is applied by a
+* ``mutation_check``          the new tests fail when the warning is broken in seven deliberate ways (at least five, and both
+                              80%-line breakages, which the ticket asks the tests to pin). The breakage is applied by a
                               pytest plugin (``labs/m04_limit_warning/mutation/ailab_m04_mutants.py``) to the RUNNING program at its public
                               edges (what ``render`` returns, what the notifier delivers, the daily limits), so it works on any sound
                               implementation, whatever its structure
+* ``scope_check``             only the files TASK.md lists changed (a brand-new module under src/remit/ is fine for the logic)
 * ``no_floats``               the change adds no ``float`` to ``src/`` (CONTRIBUTING.md: money is Decimal)
 * ``spec_check``, ``spec_first``, ``green_checkpoints``, ``small_commits``, ``blanket_except``, ``agent_log``   advisory loop-hygiene checks
 
@@ -41,7 +43,8 @@ SPEC_FILE = "specs/REMIT-318.md"
 TEMPLATE_FILE = "specs/TEMPLATE.md"
 LOG_FILE = "agent-log.md"
 
-# Files a sound solution may touch. Everything else (money.py, fees.py, fx.py, ledger.py, cli.py, najmkit, CI, other docs) is out of scope.
+# Files a sound solution may touch (TASK.md lists them). Everything else (money.py, fees.py, fx.py, ledger.py, cli.py, najmkit, CI,
+# README.md, CONTRIBUTING.md) is out of scope. The ticket does not say where the logic lives, so a NEW module under src/remit/ is allowed too.
 ALLOWED = [
     "src/remit/notify.py",
     "src/remit/service.py",
@@ -54,13 +57,14 @@ ALLOWED = [
     "AGENTS.md",
     ".claude/**",
 ]
+NEW_MODULE = "src/remit/*.py"  # allowed when the file is new (added since lab-start)
 # For "the source change is small": these paths do not count as source.
 NOT_SOURCE = ("tests/**", "specs/**", "docs/**", "**/*.md", ".claude/**", "lab-assets/**")
 MAX_SOURCE_LINES = 120
-MAX_SOURCE_FILES = 3
-MAX_COMMIT_LINES = 200  # src + tests lines in one commit
-MIN_COMMITS = 3
-MAX_COMMITS = 15
+MAX_SOURCE_FILES = 4  # notify.py, service.py, a helper in limits.py or a new module, and one more at most
+MAX_COMMIT_LINES = 200  # src + tests lines ADDED in one commit
+MIN_COMMITS = 3  # the spec commit counts
+MAX_COMMITS = None  # no upper limit: many small commits are what the lesson asks for
 
 # The deliberate breakages (id, what the learner is told when their tests miss it). The ids are known to the plugin.
 MUTANTS: tuple[tuple[str, str], ...] = (
@@ -73,8 +77,13 @@ MUTANTS: tuple[tuple[str, str], ...] = (
     ("line_down", "the 80% line sits a little too low"),
 )
 MIN_KILLED = 5
+# The ticket asks for tests "just under and exactly at 80%", so both 80%-line breakages must be caught, whatever else is.
+MUST_CATCH = ("line_up", "line_down")
+DESCRIPTION = dict(MUTANTS)
 WORKERS = 4  # independent pytest subprocesses at a time (each on its own copy)
-_NUMBERED = re.compile(r"\s*\d+[.)]\s+\S")
+_NUMBERED = re.compile(r"\s*(?:[-*+]\s+)?(?:\*\*)?(?:[Ss]tep\s+)?\d+(?:[.):]\*\*|[.):])\s+\S")  # "1. x", "2) x", "- 3. x", "Step 4: x"
+# An unfinished template line: it BEGINS with TODO (after any heading or list marker). The word inside a sentence is fine.
+_PLACEHOLDER = re.compile(r"^\s*(?:[#>*+-]+\s*)*TODO\b")
 
 # Check names (stable: the lesson and the tests quote them).
 N_TESTS = "The whole test suite passes"
@@ -186,8 +195,8 @@ def originals_intact(work: Path | str, since: str = LAB_START_TAG) -> Check:
                 broken.append(f"{rel}::{key}")
     if broken:
         return Check(N_ORIGINALS, False, f"edited or removed: {checks._short(broken)}",  # noqa: SLF001 (kit-internal helper)
-                     "Add new tests next to the old ones. If an old test fails, the code is wrong, not the test: undo your edit "
-                     "(git restore tests).")
+                     "Add new tests in a new file or after the old ones. If an old test fails, the code is wrong, not the test: put the "
+                     "file named above back with `git restore --source=lab-start --staged --worktree <file>`, then commit.")
     return Check(N_ORIGINALS, True, "no existing test, fixture or constant was changed")
 
 
@@ -227,7 +236,8 @@ def removal_check(work: Path | str, since: str = LAB_START_TAG, timeout: float =
         return Check(N_REMOVAL, True, f"{checks.plural(caught, 'new test')} {'fails' if caught == 1 else 'fail'} without the warning, as they should" if caught
                      else "the new tests do not finish without the warning")
     return Check(N_REMOVAL, False, "all of your new tests pass even without the warning, so they would not notice it missing",
-                 "A test that passes before the feature exists proves nothing. Make each new test fail first, then build the feature.")
+                 "Put `src` back to `lab-start` (step 6) and see which of your tests still pass: they say nothing about the warning. "
+                 "Write tests that expect it.")
 
 
 def _mutant_env(root: Path, mutant: str) -> dict[str, str]:
@@ -264,14 +274,83 @@ def mutation_check(work: Path | str, since: str = LAB_START_TAG, min_killed: int
             return Check(N_MUTANTS, False, summary, "Add tests in tests/ (a new file is fine) and make them pass first.")
         return Check(N_MUTANTS, False, f"your new tests do not pass on your own code ({summary})",
                      "Make your new tests pass first; then the grader can break the warning on purpose and see whether they notice.")
-    ok = len(killed) >= min_killed
+    must = {DESCRIPTION[m] for m in MUST_CATCH}
+    missed_line = [d for d in survived if d in must]
+    survived = missed_line + [d for d in survived if d not in must]  # name the required ones first
+    ok = len(killed) >= min_killed and not missed_line
     detail = f"your tests catch {len(killed)} of {len(MUTANTS)} deliberate defects"
     if survived and not ok:
         detail += f"; they miss: {checks._short(survived, 3)}"  # noqa: SLF001
     elif survived:
         detail += f" (still missing: {checks._short(survived, 3)})"  # noqa: SLF001
-    return Check(N_MUTANTS, ok, detail,
-                 "" if ok else "Pin the exact message in both languages, the number it shows, and the lines just under and exactly at 80%.")
+    parts = []
+    if len(killed) < min_killed:
+        parts.append("the exact message in both languages and its numbers")
+    if missed_line:
+        parts.append("the 80% line through `RemitService.send`: one total a cent under it (no warning), one exactly on it (a warning)")
+    hint = "Pin " + ", and ".join(parts) + "." if parts else ""
+    return Check(N_MUTANTS, ok, detail, hint)
+
+
+# ---------------------------------------------------------------------------------------------
+# which files, how many commits (wrappers: the hints must fit what the learner actually did)
+# ---------------------------------------------------------------------------------------------
+RESTORE = "git restore --source=lab-start --staged --worktree"  # puts a file back to the starting state, committed edits included
+
+
+def scope_check(work: Path | str, since: str = LAB_START_TAG) -> Check:
+    """Only the files TASK.md lists changed. A brand-new module under src/remit/ is allowed: the ticket leaves open where the logic lives."""
+    status = gitutil.changed_status(work, since)
+    outside = [path for path, state in status.items()
+               if not gitutil.glob_match(path, ALLOWED) and not (state == "A" and gitutil.glob_match(path, [NEW_MODULE]))]
+    if outside:
+        return Check(N_SCOPE, False, f"unrelated files changed: {checks._short(outside)}",  # noqa: SLF001
+                     f"TASK.md lists the files the change may touch. Put every other file back with `{RESTORE} <file>` "
+                     "(just delete a file you added), then commit.")
+    if not status:
+        return Check(N_SCOPE, False, "no files have changed yet", "Make the change the ticket asks for.")
+    return Check(N_SCOPE, True, f"changed: {checks._short(list(status))}")  # noqa: SLF001
+
+
+def _branch_with_the_commits(work: Path | str, since: str) -> str | None:
+    """When the checked-out branch has no commits since ``since`` but another local branch has, that branch's name."""
+    if gitutil.commits_since(work, since):
+        return None
+    current = gitutil.current_branch(work)
+    for branch in gitutil.branches(work):
+        if branch != current and gitutil.commits_since(work, since, ref=branch):
+            return branch
+    return None
+
+
+def _on_another_branch(work: Path | str, check: Check, since: str) -> Check:
+    """Re-word a failed commit check when the learner's commits are on a branch that is not checked out."""
+    other = None if check.ok else _branch_with_the_commits(work, since)
+    if other is None:
+        return check
+    return Check(check.name, False, f"{check.detail}; your commits are on the branch `{other}`, which is not checked out",
+                 f"The grader reads the branch that is checked out in this directory. Run `git switch {other}` and grade again.",
+                 check.required)
+
+
+def commit_count(work: Path | str, since: str = LAB_START_TAG) -> Check:
+    count = len(gitutil.commits_since(work, since))
+    hint = ("Commit each small step when `pytest -q` is green, the spec first; the spec commit counts. If your work is in one or two big "
+            "commits, `git reset --soft lab-start` undoes them and keeps your work, ready to commit again in steps.")
+    check = checks.commit_count(work, at_least=MIN_COMMITS, at_most=MAX_COMMITS, since=since, name=N_COMMIT_COUNT,
+                                hint=hint if count else "Commit each small step when `pytest -q` is green: the spec, the message, the "
+                                                         "decision, the edge-case tests. Three commits or more.")
+    return _on_another_branch(work, check, since)
+
+
+def commit_messages(work: Path | str, since: str = LAB_START_TAG) -> Check:
+    """CONTRIBUTING.md's rule. The scope may be any lower-case word: its list of scopes is examples, and the spec and the log have none."""
+    check = checks.conventional_commits(work, since=since, min_commits=1, name=N_MESSAGES)
+    if not check.ok and not check.detail.startswith("found "):  # some header is wrong (not: no commits at all)
+        check = Check(check.name, False, check.detail,
+                      "CONTRIBUTING.md: `type(scope): subject`, a lower-case scope (any word), no full stop, at most 72 characters. Fix the "
+                      "latest commit with `git commit --amend`; for an older one use `git rebase -i lab-start` and reword it.", check.required)
+    return _on_another_branch(work, check, since)
 
 
 # ---------------------------------------------------------------------------------------------
@@ -321,12 +400,12 @@ def _commit_files(work: Path, sha: str) -> list[str]:
 
 
 def _commit_lines(work: Path, sha: str, globs: list[str]) -> int:
+    """Lines ADDED by commit ``sha`` in files matching ``globs`` (deleting or shrinking a file is not a big commit to review)."""
     total = 0
     for line in gitutil.git(work, "show", "--numstat", "--format=", sha).stdout.splitlines():
         parts = line.split("\t", 2)
         if len(parts) == 3 and gitutil.glob_match(parts[2], globs):
             total += int(parts[0]) if parts[0].isdigit() else 0
-            total += int(parts[1]) if parts[1].isdigit() else 0
     return total
 
 
@@ -349,29 +428,36 @@ def _export_commit(work: Path, sha: str, dest: Path) -> bool:
 
 
 def spec_check(work: Path | str) -> Check:
-    """The spec exists on the template's headings, has no placeholders left, and its plan has 4 to 10 numbered steps."""
+    """The spec exists on the template's headings, no template placeholder line is left, and its plan has 4 to 10 numbered steps."""
     work = Path(work)
     path = work / SPEC_FILE
-    hint = f"Copy {TEMPLATE_FILE} to {SPEC_FILE}, replace every TODO, and give the Plan four to ten numbered steps."
     if not path.is_file():
-        return Check(N_SPEC, False, f"{SPEC_FILE} does not exist", hint, False)
+        return Check(N_SPEC, False, f"{SPEC_FILE} does not exist",
+                     f"Copy {TEMPLATE_FILE} to {SPEC_FILE} and fill in every section; the Plan needs four to ten numbered steps.", False)
     sections = checks.markdown_sections(path)
     problems: list[str] = []
+    hints: list[str] = []
     for wanted in ("goal", "behaviour", "acceptance criteria", "non-goals", "decisions and open questions", "plan"):
         key = next((k for k in sections if wanted in k), None)
         if key is None:
             problems.append(f"no '{wanted}' section")
         elif len(sections[key].split()) < 8:
             problems.append(f"'{wanted}' is thin")
+    if problems:
+        hints.append(f"Keep the template's headings and write a sentence or two under each (see {TEMPLATE_FILE}).")
     text = path.read_text(encoding="utf-8")
-    if "TODO" in text:
-        problems.append("a TODO placeholder is left")
+    left = [number for number, line in enumerate(text.splitlines(), start=1) if _PLACEHOLDER.match(line)]
+    if left:
+        shown = ", ".join(str(n) for n in left[:3]) + (" ..." if len(left) > 3 else "")
+        problems.append(f"{SPEC_FILE} line {shown} still begins with TODO")
+        hints.append("Replace each template line that begins with TODO by your own text (the word inside a sentence is fine).")
     plan_key = next((k for k in sections if "plan" in k and "test" not in k), None)
     steps = [ln for ln in (sections.get(plan_key, "") if plan_key else "").splitlines() if _NUMBERED.match(ln)]
     if not 4 <= len(steps) <= 10:
         problems.append(f"the plan has {len(steps)} numbered steps (4 to 10 expected)")
+        hints.append("Number the steps of the Plan 1. 2. 3. ... and keep them between four and ten, one commit and one check each.")
     if problems:
-        return Check(N_SPEC, False, checks._short(problems, 4), hint, False)  # noqa: SLF001
+        return Check(N_SPEC, False, checks._short(problems, 4), " ".join(hints), False)  # noqa: SLF001
     return Check(N_SPEC, True, f"{SPEC_FILE} has its sections and a plan of {len(steps)} steps", "", False)
 
 
@@ -385,13 +471,15 @@ def spec_first(work: Path | str, since: str = LAB_START_TAG) -> Check:
             spec_at = index
         if src_at is None and any(f.startswith("src/") for f in files):
             src_at = index
-    hint = "Write and commit the spec and plan first (docs(specs): ...), then start the code. The spec is what you review the diff against."
     if spec_at is None:
-        return Check(N_SPEC_FIRST, False, f"no commit adds {SPEC_FILE}", hint, False)
+        return Check(N_SPEC_FIRST, False, f"no commit adds {SPEC_FILE}",
+                     "Write the spec and plan and commit them (docs(specs): ...) before the code. The spec is what you review the diff against.", False)
     if src_at is None:
         return Check(N_SPEC_FIRST, False, "no commit changes the code yet", "", False)
     if spec_at >= src_at:
-        return Check(N_SPEC_FIRST, False, "the code was committed no later than the spec", hint, False)
+        return Check(N_SPEC_FIRST, False, "the code was committed no later than the spec",
+                     "This line is advisory and the history is already written. Next time commit the spec and plan first, "
+                     "so you can review each diff against them.", False)
     return Check(N_SPEC_FIRST, True, "the spec was committed before the first code change", "", False)
 
 
@@ -425,30 +513,37 @@ def small_commits(work: Path | str, since: str = LAB_START_TAG) -> Check:
     for commit in (c for c in gitutil.commits_since(work, since) if not c.is_merge):
         lines = _commit_lines(work, commit.sha, ["src/**", "tests/**"])
         if lines > MAX_COMMIT_LINES:
-            big.append(f'"{commit.subject}" ({lines} lines)')
+            big.append(f'"{commit.subject}" ({lines} lines added)')
     if big:
-        return Check(N_SMALL, False, checks._short(big, 2), f"Aim for commits under about {MAX_COMMIT_LINES} changed lines of code and tests: "  # noqa: SLF001
+        return Check(N_SMALL, False, checks._short(big, 2), f"Aim for commits that add under about {MAX_COMMIT_LINES} lines of code and tests: "  # noqa: SLF001
                      "one step, one check, one commit.", False)
-    return Check(N_SMALL, True, f"no commit changes more than {MAX_COMMIT_LINES} lines of code and tests", "", False)
+    return Check(N_SMALL, True, f"no commit adds more than {MAX_COMMIT_LINES} lines of code and tests", "", False)
 
 
 def agent_log(work: Path | str, since: str = LAB_START_TAG) -> Check:
     work = Path(work)
     path = work / LOG_FILE
-    hint = f"Fill one entry in {LOG_FILE}: prompt, what the agent did, what you corrected, what you checked, minutes. If you used no agent, say so and why."
+    hint = f"Fill one entry in {LOG_FILE}: prompt, what the agent did, what you corrected, what you checked, minutes. If you used no AI tool, one line saying so is enough."
     if not path.is_file():
         return Check(N_LOG, False, f"{LOG_FILE} does not exist", hint, False)
     text = path.read_text(encoding="utf-8", errors="replace")
     original = gitutil.file_at(work, since, LOG_FILE) or ""
-    added_words = len(text.split()) - len(original.split())
-    if text.strip() == original.strip() or (added_words < 15 and "no agent" not in text.lower()):
+    # the words the learner wrote: everything except the template's headings and field labels
+    body = re.sub(r"^#.*$", " ", text, flags=re.M)
+    for label in {line.split(":")[0] + ":" for line in original.splitlines() if ":" in line}:
+        body = body.replace(label, " ")
+    if text.strip() == original.strip() or len(body.split()) < 5:  # a real entry, or a line such as "No AI tool used; done by hand."
         return Check(N_LOG, False, "the log has no entry yet", hint, False)
     return Check(N_LOG, True, "the log has an entry", "", False)
 
 
 def source_size(work: Path | str, since: str = LAB_START_TAG) -> Check:
-    return checks.diff_size(
+    check = checks.diff_size(
         work, MAX_SOURCE_LINES, max_files=MAX_SOURCE_FILES, min_lines=1, since=since, ignore=(*TOOL_NOISE, *NOT_SOURCE), name=N_SIZE,
-        hint="The ticket needs one template and a short piece of logic. Look at `git diff lab-start --stat -- src` and remove what the "
-             "ticket did not ask for.",
+        hint=f"Under src/ the change may be at most {MAX_SOURCE_FILES} files and {MAX_SOURCE_LINES} changed lines (TASK.md). "
+             "Look at `git diff lab-start --stat -- src` and remove what the ticket did not ask for.",
     )
+    if not check.ok and "nothing substantial" in check.detail:  # nothing to remove yet: say what is missing instead
+        return Check(N_SIZE, False, check.detail, "Nothing under src/ has changed yet: the ticket needs the template in notify.py and the "
+                     "decision in service.py.")
+    return check

@@ -26,10 +26,13 @@ Required: the whole suite passes; no original test, fixture or constant was edit
 approved wording, the 80% line from both sides, rounding down, three tiers, the Qatar day, Arabic digits, refusals, best
 effort, the unchanged interface, the money untouched, the command line); the learner's NEW tests fail when the code
 outside tests/ is the starting code (the feature "removed"); the new tests catch at least five of seven deliberate
-breakages of the warning (``checks_m04.mutation_check``); only expected files changed; a small source change; no float
-added; at least three commits with messages as CONTRIBUTING.md says; nothing left uncommitted; no secrets.
+breakages of the warning, both 80%-line breakages among them (``checks_m04.mutation_check``); only the files TASK.md lists
+changed (a new module under src/remit/ is fine); a small source change (at most four files, 120 lines); no float added; at
+least three commits (the spec commit counts) with messages as CONTRIBUTING.md says; nothing left uncommitted; no secrets.
 Advisory: a spec and plan exist in the template's shape; the spec was committed before the code; every commit is green on
-its own; no commit is large; no blanket ``except``; an agent log entry.
+its own; no commit adds a lot; no blanket ``except``; an agent log entry.
+Where the ticket leaves a choice (whether to warn when "transfer sent" failed to deliver; where the audit entry for a failed
+warning falls) the hidden tests accept either answer, and TASK.md says so.
 It cannot tell who wrote the code, whether the spec's decisions are good, whether the learner read the diff, or whether the
 approved Arabic wording is good Arabic (the content team's copy is supplied in the ticket).
 
@@ -80,18 +83,11 @@ def grade(work: Path) -> list[Check]:
         ),
         m04.removal_check(work),
         m04.mutation_check(work),
-        checks.files_changed_within(
-            work, m04.ALLOWED, name=m04.N_SCOPE,
-            hint="The warning needs notify.py and service.py (limits.py if you add a helper), tests, your spec and docs. Revert the rest "
-                 "(git restore <file>, or git rm for a new file).",
-        ),
+        m04.scope_check(work),
         m04.source_size(work),
         m04.no_floats(work),
-        checks.commit_count(
-            work, at_least=m04.MIN_COMMITS, at_most=m04.MAX_COMMITS, name=m04.N_COMMIT_COUNT,
-            hint="Work in small steps and commit each one when `pytest -q` is green: the spec, the message, the decision, the edge-case tests.",
-        ),
-        checks.conventional_commits(work, min_commits=1, name=m04.N_MESSAGES),
+        m04.commit_count(work),
+        m04.commit_messages(work),
         checks.all_committed(work, name=m04.N_CLEAN),
         checks.no_secrets(work, name=m04.N_SECRETS),
         # --- advisory: the shape of the loop -------------------------------------------------------

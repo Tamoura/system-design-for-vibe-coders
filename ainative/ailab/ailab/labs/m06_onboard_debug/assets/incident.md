@@ -1,4 +1,4 @@
-# INC-0317: customers refused "daily limit" in the middle of the night
+# INC-0317 (your ticket is REMIT-231): customers refused "daily limit" in the middle of the night
 
 *Constructed for teaching: a fictional incident at the fictional Najm Bank, written for this lab.
 Nothing here is a real customer, a real log or a real company record.*

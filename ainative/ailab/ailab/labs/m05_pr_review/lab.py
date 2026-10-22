@@ -14,8 +14,10 @@ file, line and severity) and then fix the branch with commits of their own.
 What the grader can and cannot tell
 -----------------------------------
 It reads the review for *mentions* of the seeded problems (right file, plus a line near the problem or a
-keyword saying what is wrong; ``checks_m05.match_findings``), it checks the verdict and the severities, and
-then it grades the fixed branch with hidden acceptance tests and static checks. It cannot tell whether the
+keyword saying what is wrong; ``checks_m05.match_findings``), it checks the verdict and the severities (too low
+fails, a test problem called a blocker fails, a review of nothing but blockers fails), and then it grades the fixed
+branch with hidden acceptance tests and static checks (a key that was only moved, a test restored under a new name
+and a float that has nothing to do with money are all handled in ``checks_m05``). It cannot tell whether the
 reviewer understood a finding, only that the review says it. The course says so.
 
 How the branch is made (and why materials/ is not called assets/)
@@ -88,6 +90,7 @@ FIX_NAMES = [(F_VISIBLE, True), (F_HIDDEN, True), (F_RULES, True), (F_CHECKLIST,
 # Files a sound fix may touch. Anything else is scope creep of the learner's own.
 ALLOWED = ["pyproject.toml", "src/remit/fees.py", "src/remit/loyalty.py", "src/remit/service.py", "tests/**", "docs/**"]
 LEARNER_NOISE = (*TOOL_NOISE, "review.md")
+RAN_MIN_WORDS = 3  # "What I ran" only has to say something; TASK.md and the lesson state the number
 
 
 # ---------------------------------------------------------------------------------------------
@@ -128,8 +131,9 @@ def grade_review(work: Path) -> list[Check]:
     missing = [title for title, key in (("Verdict", "verdict"), ("What I ran", "what i ran"), ("Findings", "finding"))
                if not any(key in name for name in sections)]
     ran = next((body for name, body in sections.items() if "what i ran" in name), "")
-    thin = ["What I ran"] if "What I ran" not in missing and len(ran.split()) < 6 else []
-    problems = ([f"missing: {', '.join(missing)}"] if missing else []) + ([f"too short: {', '.join(thin)}"] if thin else [])
+    thin = ["What I ran"] if "What I ran" not in missing and len(ran.split()) < RAN_MIN_WORDS else []
+    problems = ([f"missing: {', '.join(missing)}"] if missing else []) + (
+        [f"too short: {', '.join(thin)} (list the commands you ran and what they showed: at least {RAN_MIN_WORDS} words)"] if thin else [])
     structure = Check(R_FILE, not problems, "; ".join(problems), structure_hint if problems else "")
     matches = checks_m05.match_findings(review.findings, checks_m05.flaw_lines(work))
 
@@ -163,11 +167,16 @@ def grade_review(work: Path) -> list[Check]:
     found = Check(R_FOUND, found_ok, found_detail, "" if found_ok else hint)
 
     low = checks_m05.under_rated(matches)
-    severity_ok = bool(matches.found) and not low
+    high = checks_m05.over_rated(matches)
+    flat = checks_m05.all_blockers(review.findings)
+    severity_ok = bool(matches.found) and not low and not high and not flat
+    severity_notes = ([f"{checks.plural(len(low), 'finding')} rated lower than the damage it could do"] if low else []) + (
+        [f"{checks.plural(len(high), 'finding')} rated higher than the damage it could do"] if high else []) + (
+        ["every finding is a blocker, so nothing is ranked"] if flat else [])
     severity = Check(R_SEVERITY, severity_ok,
-                     "nothing to rate yet" if not matches.found else
-                     (f"{checks.plural(len(low), 'finding')} rated lower than the damage it could do" if low else "ratings fit"),
-                     "A finding that could lose money, leak a secret or hide a defect is a blocker or a major, not a nit.")
+                     "nothing to rate yet" if not matches.found else ("; ".join(severity_notes) if severity_notes else "ratings fit"),
+                     "Rate by the damage if it ships. A finding that could lose money, leak a secret or hide a defect is a blocker or a major, "
+                     "not a nit; a test too weak to fail is a major at most; if everything is a blocker, nothing is.")
 
     everything = Check(R_ALL, matches.count == len(checks_m05.FLAWS),
                        f"{matches.count} of {len(checks_m05.FLAWS)}", "Go through the diff once more by risk class: the tests are code too.",
@@ -180,36 +189,80 @@ def grade_review(work: Path) -> list[Check]:
     return [structure, form, verdict, found, severity, everything, key_check]
 
 
+def _scope_check(work: Path) -> Check:
+    """checks.files_changed_within, but the detail lists every file (the helper stops at four)."""
+    result = checks.files_changed_within(work, ALLOWED, ignore=LEARNER_NOISE, name=F_SCOPE,
+                                         hint="Touch only the files the pull request already changes, plus tests and docs. "
+                                              "Revert anything else (git restore <file>, or git rm <file> for a new file).")
+    changed = gitutil.changed_files(work, gitutil.TAG_START, ignore=LEARNER_NOISE)
+    outside = [path for path in changed if not gitutil.glob_match(path, ALLOWED)]
+    if outside:
+        result.detail = "unrelated files changed: " + ", ".join(outside)
+    elif result.ok and changed:
+        result.detail = "changed: " + ", ".join(changed)
+    return result
+
+
+def _branch_check(work: Path) -> Check:
+    """The fix belongs on top of the agent's commits, on the branch that is checked out (the grader grades what is checked out)."""
+    if not gitutil.is_ancestor(work, gitutil.TAG_START, "HEAD"):
+        branch = gitutil.current_branch(work)
+        if branch == BRANCH:
+            return Check(F_BRANCH, False, "the history of agent/loyalty-discount no longer contains the agent's commits",
+                         "Add commits on top of the agent's instead of rewriting or replacing its history (a squash is a rewrite).",
+                         required=False)
+        return Check(F_BRANCH, False, f"you are on '{branch}', which does not contain the agent's commits",
+                     "The grader grades what is checked out. Switch to agent/loyalty-discount (git switch agent/loyalty-discount) "
+                     "and make your commits there.", required=False)
+    if not gitutil.commits_since(work):
+        return Check(F_BRANCH, False, "no commits of yours on the branch yet",
+                     "Add commits on top of agent/loyalty-discount instead of rewriting or replacing its history.", required=False)
+    return Check(F_BRANCH, True, "", "", required=False)
+
+
 def grade_fix(work: Path) -> list[Check]:
     short = checks._short  # noqa: SLF001 (kit-internal helper: "a, b (+2 more)")
 
     # CONTRIBUTING.md: standard library only, no secrets, money is Decimal
-    rule_problems = []
+    rule_problems: list[str] = []
+    rule_hints: list[str] = []
     deps = checks_m05.import_problems(work)
     if deps:
         rule_problems.append("standard library only: " + short(deps))
+        rule_hints.append("Standard library only: no new dependency, not even for tests.")
     secrets = checks.no_secrets(work, scan="all", ignore=(*LEARNER_NOISE, "TASK.md", "lab-assets/**"))
-    if not secrets.ok:
-        rule_problems.append("secrets: " + secrets.detail)
+    leaks = checks_m05.leaked_key_problems(work)
+    shown = [hit for hit in leaks if not (not secrets.ok and hit.rsplit(" in ", 1)[-1] in secrets.detail)]
+    if not secrets.ok or shown:
+        rule_problems.append("secrets: " + short(([secrets.detail] if not secrets.ok else []) + shown))
+        rule_hints.append("No secrets anywhere: not in code, tests, fixtures, a default value or review.md. Remove it, read secrets from "
+                          "the environment with no fallback, and say in your review that a key that was committed must be rotated. "
+                          "To test that it is gone, look for its prefix, not the key.")
     floats = checks_m05.float_problems(work)
     if floats:
         rule_problems.append("money is Decimal: " + short(floats))
+        rule_hints.append("Money is Decimal: no float() and no float rates in the money code. Round half up.")
 
     # the lesson 5.1 checklist, as far as a machine can read it
-    list_problems = []
+    list_problems: list[str] = []
+    list_hints: list[str] = []
     excepts = checks_m05.broad_except_problems(work)
     if excepts:
         list_problems.append("errors hidden by a broad handler at " + short(excepts))
+        list_hints.append("Catch the specific error you can handle; let the rest fail loudly.")
     unasserted = checks_m05.unasserted_tests(work)
     if unasserted:
         list_problems.append("no assertion in " + short(unasserted))
+        list_hints.append("Assert what the ticket promises: a test that cannot fail proves nothing.")
     faked = checks_m05.faked_fee_code(work)
     if faked:
         list_problems.append("fee code patched in " + short(faked))
-    base_names = checks_m05.list_test_names(work, "main") if gitutil.has_ref(work, "main") else set()
-    missing = sorted(base_names - checks_m05.list_test_names(work))
+        list_hints.append("Call the real fee code in a test; patch only the edges (clock, notifier).")
+    missing = checks_m05.missing_tests(work)
     if missing:
         list_problems.append("existing test missing: " + short(missing))
+        list_hints.append("A test that exists on main is gone: put it back as it was (same name, same body). "
+                          "Never delete or rewrite a test to get green.")
 
     failing, _ = checks_m05.failing_on_original(work)
     return [
@@ -217,21 +270,17 @@ def grade_fix(work: Path) -> list[Check]:
         checks.hidden_tests_pass(work, HERE / "hidden", name=F_HIDDEN,
                                  hint="Re-read REMIT-229 in lab-assets/ and check each rule and each example against the code, "
                                       "including the cents."),
-        Check(F_RULES, not rule_problems, "; ".join(rule_problems),
-              "CONTRIBUTING.md, Code rules: money is Decimal, no secrets, standard library only (not even for tests)."),
-        Check(F_CHECKLIST, not list_problems, "; ".join(list_problems),
-              "Lesson 5.1: catch the specific error you can handle, assert what the ticket promises, call the real code in a test, "
-              "and never delete a test to get green."),
+        Check(F_RULES, not rule_problems, "; ".join(rule_problems), " ".join(rule_hints)),
+        Check(F_CHECKLIST, not list_problems, "; ".join(list_problems), " ".join(list_hints)),
         Check(F_CATCH, failing >= 2, f"{checks.plural(failing, 'new or changed test')} fail on the agent's version of the code",
-              "Leave tests behind that fail on the agent's version: restore what was deleted and cover what your review found."),
-        checks.files_changed_within(work, ALLOWED, ignore=LEARNER_NOISE, name=F_SCOPE,
-                                    hint="Fix the pull request; do not widen it. Revert changes outside the discount code and its tests."),
+              "Leave tests behind that fail on the agent's version (a parametrized test counts once per case): "
+              "restore what was deleted and cover what your review found."),
+        _scope_check(work),
         checks.conventional_commits(work, name=F_COMMITS),
         checks.all_committed(work, ignore=LEARNER_NOISE, name=F_CLEAN),
         checks.diff_size(work, max_lines=300, min_lines=1, ignore=LEARNER_NOISE, name=F_SMALL, required=False,
                          hint="A review fix is small. A rewrite of the pull request is a different pull request."),
-        Check(F_BRANCH, gitutil.is_ancestor(work, gitutil.TAG_START, "HEAD") and bool(gitutil.commits_since(work)),
-              "", "Add commits on top of agent/loyalty-discount instead of rewriting or replacing its history.", required=False),
+        _branch_check(work),
     ]
 
 

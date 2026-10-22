@@ -120,7 +120,7 @@ It names no file, does not say which tests may change, and has no command and no
 | Wording in two languages | The exact texts; a native reader signs off |
 | Fees, rates, limits, ledger, service | The full spec, a reviewed plan, a second human reviewer |
 
-**Living or throwaway.** A one-off change can keep its spec in the pull request, because the tests carry the criteria. For rules others will change, such as fees and limits, keep a short spec in `specs/` and update it with every behaviour change: a stale spec is a second source of truth, as `docs/ARCHITECTURE.md` now is.
+**Living or throwaway.** A one-off change can keep its spec in the pull request, because the tests carry the criteria. For rules others will change, such as fees and limits, keep a short spec in `specs/`, updated with every behaviour change: a stale spec is a second source of truth, as `docs/ARCHITECTURE.md` now is.
 
 ### 🔴 Expert view
 
@@ -314,14 +314,14 @@ And the **Plan checklist**. Save it as `plan-checklist.md` and run it on every p
 ## ⚡ In 60 seconds
 - Lab m03 gives you three vague tickets from Hessa and a template. You write `specs/T1.md` to `T3.md`. Nothing is built.
 - Each ticket hides questions about rounding, boundaries, currency and corridors, fee parts, time and Arabic. The grader checks that each is **answered** in a sentence that names its subject. A question is not an answer.
-- It also checks sections, checkable criteria, real files, house rules and a plan of small, test-first steps.
-- Needs an agent: **no**. One may interview you or review a draft, but the grader sees the file, not who wrote it or whether you decided well.
+- It also checks sections, checkable criteria, real files, house rules, copies and a plan of small, test-first steps.
+- Needs an agent: **no**. One may interview you or review a draft, but the grader sees the file, not who wrote it. Budget two to four hours (an estimate), mostly reading code.
 - Decision cue: if you cannot say what the code does at an edge, do not write the criterion yet.
 
 ## 🧭 Why it matters
 Last quarter Tariq traced three agent pull requests that "came back wrong" to their tickets (a constructed story). In each, the agent had done exactly what the ticket said, by picking a reading nobody had chosen: a rounding direction, a boundary, a time zone. Since then, nothing that touches money reaches an agent as a ticket; it arrives as a spec.
 
-Hessa has left three new tickets, written in a hurry. This lab is the practice run: read them as a sceptic, let the code answer what it can, decide the rest in writing, and plan the build in steps small enough to check. The grader plays the colleague who keeps asking "which rounding?" until you answer.
+Hessa has left three new tickets, written in a hurry. Read them as a sceptic, let the code answer what it can, decide the rest in writing, and plan the build in steps small enough to check. The grader plays the colleague who keeps asking "which rounding?" until you answer.
 
 ## 📐 How it works
 
@@ -330,19 +330,23 @@ Hessa has left three new tickets, written in a hurry. This lab is the practice r
 **An order of work that avoids rework.**
 1. Read the ticket as a sceptic. Underline every word that could mean two things.
 2. Read the code behind each word (`docs/TOUR.md` has a "Where to look when..." table) and run it.
-3. Write the **Decisions** first: one sentence per question, naming its subject. What only a person can know becomes a flagged assumption with an owner.
+3. Write the **Decisions** first: one sentence per question, naming its subject. What only a person can know becomes a flagged assumption with an owner. Where two notes pull apart, or a note and the code, choose one, say why and flag it.
 4. Write **Behaviour** from the decisions, with numbers produced by running the code.
 5. Write criteria a test could fail, then constraints, non-goals and risks.
 6. Write the **plan** last, test first.
 
-For step 2, ask the code itself. From your lab directory:
+For step 2, ask the code itself, from your lab directory. Keep longer scratch scripts outside the repository: a new file in it counts as a change.
 
 ```bash
 PYTHONPATH=src python -c "from remit.corridors import get_corridor; from remit.fees import explain_fee; from remit.money import Money; print(explain_fee(Money('700.00', 'QAR'), get_corridor('QAR', 'PKR')))"
+PYTHONPATH=src python -c "from datetime import datetime, timezone; from remit.corridors import get_corridor; from remit.fx import fx_quote, StaticRateProvider; from remit.money import Money; print(fx_quote(Money('300.00', 'QAR'), get_corridor('QAR', 'PHP'), StaticRateProvider(), datetime(2026, 3, 2, 9, tzinfo=timezone.utc)))"
+PYTHONPATH=src python -c "from datetime import datetime, timezone; from remit.limits import to_local; print(to_local(datetime(2026, 3, 2, 10, 0, tzinfo=timezone.utc)))"
 ```
 
 ```text
 FeeBreakdown(schedule_id='STD-B', tier_index=0, raw=Money('20.50', 'QAR'), minimum_applied=False, cap_applied=False, base=Money('20.50', 'QAR'), surcharge=Money('0.00', 'QAR'), total=Money('20.50', 'QAR'))
+FxQuote(rate=Decimal('15.2075'), receive=Money('4562.25', 'PHP'), expires_at=datetime.datetime(2026, 3, 2, 9, 1, tzinfo=datetime.timezone.utc))
+2026-03-02 13:00:00+03:00
 ```
 
 **Weak and strong, line by line.**
@@ -352,29 +356,29 @@ FeeBreakdown(schedule_id='STD-B', tier_index=0, raw=Money('20.50', 'QAR'), minim
 | Criterion | "The fee is calculated correctly." | "`quote_fee(Money("700.00", "QAR"), get_corridor("QAR", "PKR"))` is `Money("20.50", "QAR")`." |
 | Decision | "Handle rounding properly." | "Fees are rounded half up to 0.01 with `Decimal`, as `Money` does everywhere in Remit: 20.125 becomes 20.13." |
 
-The strong lines name a value and a rule, so each can be proved wrong.
+Each strong line can be proved wrong.
 
 ### 🟡 Going deeper
 
-**How the grader reads a spec.** It is a set of mechanical questions, not a model. It reads list items, table rows and paragraphs, and drops sentences that end in a question mark.
+**How the grader reads a spec.** It is a set of mechanical questions, not a model. It reads every list item, table row and paragraph, drops sentences that end in a question mark, and ignores a line that is only a string of keywords.
 
 | Check | It looks at | The usual way to fail |
 |---|---|---|
-| Criteria | A value, code name or quoted text in each | "The fee is shown correctly" |
-| Files | Every path exists, or the line says it is new | `src/remit/risk.py`, from a stale document |
-| Hidden questions | One sentence that answers each | A list of questions; one line of keywords |
+| Examples, criteria | Exact amounts, times or dates (500.00 QAR, 10,000 INR, 18:00, 6pm, 2026-03-02); in criteria also a value, code name or quoted text | "The fee is shown correctly" |
+| Files | Every path exists, or "new" or "no longer exists" stands beside it | `src/remit/risk.py`, from a stale document |
+| Hidden questions | One sentence that answers each | A list of questions; a string of keywords |
 | Plan | 4 to 10 numbered steps, each at most 45 words and 3 files; test first, `pytest`, rollback | "1. Implement. 2. Test." |
+| Copies | Each spec has its own text | One spec pasted three times |
 
-Three consequences. One sentence answers one question, so four decisions need four sentences. A question never counts, but the same words as a statement can: "Does the waiver cover express transfers?" scores nothing, "The waiver does not cover the express surcharge" can. An open question is reported by family only. The grader reads words, not meaning: if a sound answer is not counted, say it more plainly and name its subject.
+Consequences. One sentence answers one question, so four decisions need four sentences. A question never counts, but the same words as a statement can: "Does the waiver cover express transfers?" scores nothing, "The waiver does not cover the express surcharge" can. At least half the answers must sit in Decisions, where a reviewer looks. Open questions are reported by family, with a count when a family holds several ("boundaries (1 of 2)"). The grader reads words, not meaning: if a sound answer is not counted, say it more plainly. You need not write Arabic yourself: have a translator or an agent draft it, or say who supplies it.
 
 **An agent as interviewer.** The aim is a better list of questions, not a spec you did not write. Start read-only (`claude --permission-mode plan`) and use this for T1, then T2 and T3:
 
 ```text
-Read specs/TEMPLATE.md, CONTRIBUTING.md, docs/TOUR.md and lab-assets/hessa-notes.md, then
-lab-assets/tickets/T1.md and the source files it points to. Do not edit any file.
-Interview me about T1, at most five questions at a time. Before each, quote the line of code
-or note that bears on it and say what it implies. Ask only what neither can settle.
-Keep a list of my decisions, marked "from the code", "from the notes" or "my assumption".
+Read specs/TEMPLATE.md, CONTRIBUTING.md, docs/TOUR.md, lab-assets/hessa-notes.md and
+lab-assets/tickets/T1.md, then the code it points to. Do not edit any file. Interview me
+about T1, at most five questions at a time; before each, quote the line of code or note
+that bears on it. Tag each decision "from the code", "from the notes" or "my assumption".
 When I say "done", print the list and stop.
 ```
 
@@ -382,22 +386,21 @@ If an agent drafts the spec itself, you still run the code for every number and 
 
 ### 🔴 Expert view
 
-**What the grader cannot tell.** It never runs your examples, so a table with a wrong fee can pass. It cannot judge a decision, the Arabic or who wrote the file. The real test is separate: check one Behaviour table against the code, as in lesson 3.1.
+**What the grader cannot tell.** It never runs your examples, so a table with a wrong fee can pass, and a well-worded decision passes whether or not it is wise. It cannot judge the Arabic or who wrote the file. The real test is separate: check one Behaviour table against the code, as in lesson 3.1.
 
-**The ambiguity audit.** Give your finished spec, not the ticket, to a fresh read-only session: "List every decision you would have to guess to build this, and every statement that conflicts with the code." Each guess is a gap. On diffs, the best-practices page warns that reviewers "will usually report some, even when the work is sound"; keep only gaps that change behaviour or contradict your own words.
+**The ambiguity audit.** Give your finished spec, not the ticket, to a fresh read-only session: "List every decision you would have to guess to build this, and every statement that conflicts with the code." Each guess is a gap. On diffs, the best-practices page warns that reviewers "will usually report some, even when the work is sound"; keep only gaps that change behaviour or contradict your words.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
-| **Spec template** | `specs/TEMPLATE.md`: ten sections, goal to plan | Every spec, in this lab and after |
-| **Plan checklist** | Eight checks run on a plan before the agent edits | Before you commit to a plan |
-| **Interview prompt** | Read-only questions in small batches, each tied to code | After the first read of a ticket |
+| **Spec template** | `specs/TEMPLATE.md`: ten sections | Every spec, here and after |
+| **Plan checklist** | Eight checks on a plan before the agent edits | Before you commit to a plan |
+| **Interview prompt** | Read-only questions in small batches, tied to code | After the first read of a ticket |
 | **Ambiguity audit** | A fresh session lists what it would have to guess | Before a spec goes to a build session |
 | **Seven-step map** | Where each step of Microsoft's lifecycle lives in your work | When you adopt the habit on a team |
-| **Agent log** | Prompt, what it did, what you corrected and checked, minutes | After every session with an agent |
 
 ## 🏛️ In practice at Najm Bank
-**The ticket.** This is `task.md`, as Hessa wrote it.
+**The ticket.** This is the kit's `task.md`, as Hessa wrote it. `start` writes it to your lab directory as `TASK.md` (capitals matter on Linux and macOS).
 
 ```text
 # REMIT-330: turn three vague tickets into specs an agent can build from
@@ -406,105 +409,84 @@ If an agent drafts the spec itself, you still run the code for every number and 
 **To:** Payments Platform, new joiners
 **Priority:** Medium. Three tickets are waiting, and I keep getting "what did you mean?" messages.
 
-I wrote three tickets in a hurry: `lab-assets/tickets/T1.md` to `T3.md`, with my notes from the planning meeting in `lab-assets/hessa-notes.md`. Nobody, human or agent, can build from them as they stand: each hides questions that money software must answer before anyone writes code.
+I wrote three tickets in a hurry (`lab-assets/tickets/T1.md` to `T3.md`, with my meeting notes in `lab-assets/hessa-notes.md`). Nobody, human or agent, can build from them as they stand: each hides questions that money software must answer first. My notes were typed on a phone and can pull in different directions; where they do, choose, say why and name who confirms.
 
-**Please do not build anything.** Write one spec per ticket, in `specs/T1.md`, `specs/T2.md` and `specs/T3.md`, on `specs/TEMPLATE.md`, and keep its ten sections. I need:
+**Please do not build anything.** Write one spec per ticket, `specs/T1.md` to `specs/T3.md`, on `specs/TEMPLATE.md`, keeping its ten sections. I need:
 
-- **Behaviour**: at least three worked examples with exact amounts, times or dates, edges included.
-- **Acceptance criteria**: at least four, one per bullet, each a statement that a test could prove or refute, two or more with an exact amount, time or date. "Works properly" is not a criterion.
-- **Decisions and open questions**: every question the ticket leaves open, answered as one complete sentence that names its subject. Read the code first; where a document and the code disagree, the code wins. If only a person can know (me, Finance, Ops), decide, call it an assumption and say who confirms it.
-- **Plan**: four to ten numbered steps, each small enough for one commit and naming its file, test or command, with the failing test before the code it covers. It runs `pytest` and says how to roll back.
-- Constraints, non-goals and decisions are bullet lists (at least three constraints, two non-goals and three decisions). `CONTRIBUTING.md` applies, and money logic needs a second human reviewer. No filler, no placeholders (replace every `TODO`), and only files that exist, unless you say you are creating them.
+- **Behaviour**: at least three worked examples with exact amounts, times or dates (such as 500.00 QAR, 10,000 INR, 18:00, 6pm or 2026-03-02), edges included.
+- **Acceptance criteria**: at least four, one per bullet, each a statement a test could prove or refute, two or more with an exact amount, time or date. "Works properly" is not a criterion.
+- **Decisions and open questions**: every question the ticket leaves open, answered as one complete sentence that names its subject (a question is not an answer). The code wins over any document. If only a person can know (me, Finance, Ops), decide, call it an assumption and say who confirms it. For text customers read in Arabic, write the Arabic sentence or say who supplies it; a native reader approves it before release.
+- **Plan**: four to ten numbered steps, each small enough for one commit and naming its file, test or command. The failing test is written and run before the code it covers; the two may share one green commit, because `CONTRIBUTING.md` wants the tests passing at every commit. Include a `pytest` run and a rollback. If the ticket needs more than ten steps, plan the first slice and name the later ones in one sentence.
+- Constraints, non-goals and decisions are bullet lists (at least three constraints, two non-goals and three decisions). `CONTRIBUTING.md` applies, and money logic needs a second human reviewer: write "second human reviewer" and name who (Nada from quality engineering, or Tariq). No filler, no placeholders (replace every `TODO`), only files that exist unless you write "new" beside the file, and no copies: each spec has its own numbers and decisions.
 
 ### Done when
 
-- The three specs are complete and committed, with messages that follow `CONTRIBUTING.md`. Nothing else changed except `agent-log.md` (optional), and `pytest -q` passes.
-- Grade it from the `ailab` folder of the course repository: `python -m ailab grade m03 --dir <this directory>`
+- The three specs are committed with messages that follow `CONTRIBUTING.md` (`type(scope): subject`; any lower-case scope works, for example `docs(specs): spec the Egypt fee offer`). Nothing else changed except `agent-log.md` (optional), and `pytest -q` passes.
+- Grade from the `ainative/ailab` folder of the course repository, not from this directory: `python -m ailab grade m03 --dir <this directory>`. Lines marked (advisory) print FAIL until satisfied but never block PASSED.
 
 An agent may interview you or review a draft, but you answer for every sentence: the grader checks the shape of a spec and the facts it can check, not whether your decisions are good.
 ```
 
-And her three tickets from `lab-assets/tickets/`, without their From and Priority lines:
+The tickets are in `lab-assets/tickets/`: T1 (REMIT-341), 15% off our fee to Egypt; T2 (REMIT-342), let customers type what their family should receive; T3 (REMIT-343), tell customers when cash pickup will be ready.
 
-```text
-REMIT-341: 15% off our fee for transfers to Egypt
-Marketing wants to give customers 15% off our fee on transfers to Egypt. When a customer gets a quote, they should see what they are saving, and the confirmation message should mention it too, in English and in Arabic. Keep it simple. The one thing I do not want is a customer being charged a different fee from the one on their quote.
-
-REMIT-342: let customers type what their family should receive
-Customers keep telling us: "I want my mother to receive exactly 10,000 rupees, how much do I send?" Today they try quote after quote until it works. Let them type the amount their family gets, and show them what they will pay. It should work for all our corridors and look like the normal quote.
-
-REMIT-343: tell customers when cash pickup will be ready
-Our pickup partners in the Philippines and Pakistan stop paying out cash in the evening. If a customer sends for cash pickup after the cut-off, the confirmation should say the money will be ready tomorrow, in English and in Arabic. The cut-off is 6pm.
-```
-
-**Start.** You need the setup from lesson 0.2.
+**Start.**
 
 ```bash
+# run every python -m ailab command from ainative/ailab
 cd system-design-for-vibe-coders/ainative/ailab
 python -m ailab start m03 --dir ~/ainative/m03
-cd ~/ainative/m03
 ```
 
-The starting commit holds the tickets and Hessa's notes in `lab-assets/`, the template `specs/TEMPLATE.md` and an `agent-log.md` with only its headings.
+Work in `~/ainative/m03` (`cd` there for git, pytest and your editor). The starting commit holds `lab-assets/` (tickets and Hessa's notes), `specs/TEMPLATE.md` and an `agent-log.md` with only its headings.
 
-**Your move (no agent needed).** Copy the template to `specs/T1.md` and follow the order of work above: underline, read the code, decide, compute, write. Commit each spec when complete, with a message such as `docs(specs): spec the Egypt fee offer`, and grade as you go: the checks that wait turn into findings as soon as one spec exists.
+**Your move (no agent needed).** Copy the template to `specs/T1.md` and follow the order of work above. In the plan, write the failing test as its own step but commit it with the code that fixes it. Commit each spec when complete, with a message such as `docs(specs): spec the Egypt fee offer`, and grade as you go: a finished spec shows `T1 ok; waiting for specs/T2.md` on the shape checks, and a draft shows what it still lacks.
 
 **Your move (with an agent, optional).** Use the interview prompt above in plan mode, one ticket per session, then write the spec yourself from the decisions it printed. Note in `agent-log.md` which questions it raised that you had missed and which facts it quoted wrongly. Never let it edit the repository: the scope check would catch it, and the writing is the lab.
 
-**What the grader checks.** Hygiene: only `specs/` and `agent-log.md` changed, the tests pass, commits follow `CONTRIBUTING.md`, nothing uncommitted, no secrets. Shape: the ten sections, no placeholders or filler, three exact examples, four checkable criteria, real lists. Facts: the files named exist, no decision breaks a house rule, money logic names a second reviewer. Per ticket: how many hidden questions you answered. Plan: small, numbered, test first, `pytest`, rollback. Advisory: the specs are not copies, risks are named, the log has an entry. It neither runs your examples nor judges your Arabic.
+**What the grader checks.** Hygiene: only `specs/` and `agent-log.md` changed, the tests pass, commits follow `CONTRIBUTING.md`, nothing uncommitted, no secrets. Shape: sections, examples, criteria, lists, no filler, placeholders or copies. Facts: the files named exist, no decision breaks a house rule (Decimal money, half up, injected clock, no new dependency), money logic names a second reviewer. Then the hidden questions per ticket, and the plan. Advisory lines (risks, the log) print FAIL until satisfied but never block PASSED. It neither runs your examples nor judges your Arabic.
 
 **Grade.**
 
 ```bash
+# from the ainative/ailab folder, not from the lab directory
 python -m ailab grade m03 --dir ~/ainative/m03
 ```
 
-This is the real output on the starting state:
+The real output on the starting state, abridged (`...` marks lines left out):
 
 ```text
 [PASS] Only specs and the agent log changed: nothing changed
 [PASS] The repository's tests still pass: 99 passed
 [FAIL] All three specs exist: missing: specs/T1.md, specs/T2.md, specs/T3.md
-       hint: Write one spec per ticket, on specs/TEMPLATE.md, in specs/T1.md, specs/T2.md and specs/T3.md.
+...
 [FAIL] Required sections are present: no specs yet
-[FAIL] No placeholders are left: no specs yet
-[FAIL] No filler: no specs yet
-[FAIL] Behaviour has worked examples: no specs yet
-[FAIL] Acceptance criteria are checkable: no specs yet
-[FAIL] Constraints, non-goals, decisions are lists: no specs yet
-[FAIL] Named files exist: no specs yet
+...
 [FAIL] T1: hidden questions answered: waiting for specs/T1.md
 [FAIL] T2: hidden questions answered: waiting for specs/T2.md
 [FAIL] T3: hidden questions answered: waiting for specs/T3.md
-[FAIL] Decisions follow the house rules: no specs yet
-[FAIL] Money-logic specs name a second reviewer: no specs yet
-[FAIL] Plans are small numbered steps: no specs yet
-[FAIL] Plans go test first, run pytest, roll back: no specs yet
-[FAIL] The specs are not copies (advisory): no specs yet
-[FAIL] Each spec names its risks (advisory): no specs yet
-[FAIL] Your agent log has an entry (optional) (advisory): 0 of 7 fields filled
-       hint: Optional: fill the entry in the lesson 0.1 format, or write 'no agent used' and why.
+...
 [FAIL] Commit messages follow CONTRIBUTING.md: found 0 commits since the start; expected at least 1
-       hint: Commit your change.
+       hint: Commit the specs, for example `git add -A && git commit -m "docs(specs): write the three specs"` (type(scope): subject, as CONTRIBUTING.md says).
 [PASS] Everything is committed (nothing left over)
 [PASS] No secrets in the change
 
-Lab m03: 4/20 required checks passed: NOT YET
+Lab m03: 4/21 required checks passed: NOT YET
 ```
 
-After a first draft of T1 alone, the checks that could look at it said (an excerpt from a real run):
+After a first draft of T1 alone, an excerpt from a real run:
 
 ```text
 [FAIL] Acceptance criteria are checkable: T1: 2 not checkable, for example "The saving is shown correctly on the quote."
 [FAIL] Named files exist: T1: names files that do not exist: src/remit/discount.py
-[FAIL] T1: hidden questions answered: 2 of 4 resolved; still open: fee parts, rounding
+[FAIL] T1: hidden questions answered: 2 of 4 resolved; still open: fee parts (1 of 2), rounding
+[FAIL] Plans are small numbered steps: T1 ok; waiting for specs/T2.md, specs/T3.md
 ```
 
-A passing set ends with `Lab m03: 20/20 required checks passed: PASSED`.
+A passing set ends with `Lab m03: 21/21 required checks passed: PASSED`.
 
-**Weekly deliverable.** In your notes repository, not in `~/ainative/m03`, commit `week-03/` with `T1.md`, `T2.md`, `T3.md`, `m03-grade.txt` (the final grade output), `seven-steps.md` (exercise 🟡), `plan-checklist.md` (the lesson 3.1 checklist with one real finding from your own plans) and `agent-log.md`.
+**Weekly deliverable.** In your notes repository, not in `~/ainative/m03`, commit `week-03/` with `T1.md`, `T2.md`, `T3.md`, `m03-grade.txt` (the final grade output), `seven-steps.md` (exercise 🟡), `plan-checklist.md` (the lesson 3.1 checklist plus one real finding from your plans) and `agent-log.md`.
 
-**Group session (60 minutes).** (1) Swap a spec with a partner and list every guess they would have to make to build it (15). (2) Compare your T1 decisions: where did you differ, and who confirms each (15). (3) Read T3's Arabic sentence aloud to a native reader (10). (4) Check one Behaviour table against the code (10). (5) Agree three lines for the team's template (10).
+**Group session (60 minutes).** (1) Swap a spec with a partner and list every guess they would have to make (15). (2) Compare your T1 decisions: where did you differ, and who confirms (15). (3) Read T3's Arabic sentence to a native reader (10). (4) Check one Behaviour table against the code (10). (5) Agree three lines for the team's template (10).
 
 **Debrief.** What did the agent get wrong, or nearly? What did your context or spec miss? Which question did you find only because the code disagreed with you? What would the grader never tell you?
 
@@ -523,24 +505,23 @@ Would I delegate it again?
 ```
 
 ## 🛠️ Exercises
-- 🟢 **Annotate a ticket.** *Needs no agent.* Take T2 and underline every word that could mean two things. *Done when:* a table has at least eight rows, each with the word, its family from lesson 3.1 and the file in `src/remit/` that settles it, or the person who must.
-- 🟡 **Map your specs onto the seven steps.** *Needs no agent.* Use Microsoft's seven steps from lesson 3.1. *Done when:* `seven-steps.md` has one row per step saying where it lives in your specs or in Module 2's memory file, names at least one step you skipped here and why, and says in one sentence what a small pilot would be on your team.
+- 🟢 **Annotate a ticket.** *Needs no agent.* Take T2 and underline every word that could mean two things. *Done when:* a table has at least eight rows, each with the word, its family from lesson 3.1 and the file in `src/remit/` or the person who settles it.
+- 🟡 **Map your specs onto the seven steps.** *Needs no agent; your group checks it, not `ailab`.* Use Microsoft's seven steps from lesson 3.1. *Done when:* `seven-steps.md` has one row per step saying where it lives in your specs or in Module 2's memory file, names at least one step you skipped here and why, and says in one sentence what a small pilot would be on your team.
 - 🔴 **Run the ambiguity audit.** *Needs an agent, or a colleague who has not seen the tickets.* Give your T3 spec to a fresh read-only session. *Done when:* its guesses are sorted into real gaps (added to Decisions), conflicts with the code (fixed) and noise (dismissed with a reason), and the grade stays green.
 
 ## ⚠️ Mistakes and traps
 - **Writing numbers by hand.** One wrong cent in a table becomes the criterion. Run the code.
 - **Answering with a question or a vague sentence.** "Rounding to be confirmed" resolves nothing. Decide, and flag it.
-- **Copying a stale document.** `docs/ARCHITECTURE.md` still names a module that is gone. Open the file before you name it.
-- **Letting the agent build during the interview.** The scope check fails, and you have lost the spec.
+- **Copying a stale document.** `docs/ARCHITECTURE.md` names a module that is gone. Open the file first.
 - **Feeding the grader keywords.** It may pass them; your group will not.
-- **Hiding assumptions.** An assumption without an owner is a guess dressed as a decision.
+- **Hiding assumptions or conflicts.** An assumption without an owner is a guess dressed as a decision; two notes that disagree need a choice, a reason and an owner.
 
 ## 🧾 Recap
 - Decide in writing: one sentence per question, naming its subject. A question is not an answer.
 - Let the code answer first, and let it produce your numbers.
 - A plan is four to ten small numbered steps, test first, with a `pytest` run and a rollback.
 - An agent can interview you; the decisions, the numbers and the Arabic stay yours.
-- The grader checks shape and checkable facts; people, and a fresh session auditing your spec, check judgement.
+- The grader checks shape and checkable facts; people, and a fresh audit session, check judgement.
 
 ## ✍️ Check yourself
 

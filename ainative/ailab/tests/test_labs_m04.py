@@ -18,6 +18,7 @@ Most tests call one check, not the whole grader: the full grade takes several se
 from __future__ import annotations
 
 import importlib
+import re
 import shutil
 import time
 from pathlib import Path
@@ -98,11 +99,11 @@ def cheap(work: Path) -> dict[str, framework.Check]:
     result = [
         checks.tests_pass(work, name=m04.N_TESTS),
         m04.originals_intact(work),
-        checks.files_changed_within(work, m04.ALLOWED, name=m04.N_SCOPE),
+        m04.scope_check(work),
         m04.source_size(work),
         m04.no_floats(work),
-        checks.commit_count(work, at_least=m04.MIN_COMMITS, at_most=m04.MAX_COMMITS, name=m04.N_COMMIT_COUNT),
-        checks.conventional_commits(work, min_commits=1, name=m04.N_MESSAGES),
+        m04.commit_count(work),
+        m04.commit_messages(work),
         checks.all_committed(work, name=m04.N_CLEAN),
         checks.no_secrets(work, name=m04.N_SECRETS),
     ]
@@ -169,6 +170,8 @@ def test_the_starter_fails_for_the_right_reasons(work):
     assert result[m04.N_TESTS].ok and "99 passed" in result[m04.N_TESTS].detail  # the starter suite is green: nothing to fix first
     assert {n for n, c in result.items() if c.required} == REQUIRED
     assert all(c.hint for c in result.values() if not c.ok)
+    assert "Nothing under src/ has changed yet" in result[m04.N_SIZE].hint and "remove what" not in result[m04.N_SIZE].hint
+    assert "spec commit counts" not in result[m04.N_COMMIT_COUNT].hint  # no commits at all: the plain advice
     text = "\n".join(c.detail + c.hint for c in result.values())
     assert "ROUND_FLOOR" not in text and "Decimal(\"0.80\")" not in text and "80.75" not in text  # no hidden answers in any message
 
@@ -188,6 +191,18 @@ def test_the_ticket_states_the_interface(work):
     for needle in ("{name}", "{percent}", "{remaining}", "character for character", "80%", "rounded down", "Arabic-Indic",
                    "Best effort", "SendResult", "REMIT-318", "specs/REMIT-318.md", "agent-log.md", "python -m ailab grade m04"):
         assert needle in task, needle
+    # the rules the grader enforces are in the ticket, not only in the lesson (found by the learner dry-run)
+    flat = " ".join(task.split())
+    for rule in ("Copy and paste both lines", "`٪` and `،`", "the spec commit counts", "any lower-case scope", "Either is accepted",
+                 "src/remit/notify.py", "src/remit/service.py", "one new module under `src/remit/`", "`tests/`, `specs/`, `docs/`",
+                 "`CLAUDE.md` or `AGENTS.md`", "at most four files and 120 changed lines", "(through `send`)",
+                 "ask it to, or commit yourself", "with your branch checked out", "if you used no AI tool"):
+        assert rule in flat, rule
+    assert "Not in scope: changing limits" in flat  # limits.py may still hold a helper
+    assert str(m04.MAX_SOURCE_FILES) == "4" and m04.MAX_SOURCE_LINES == 120 and m04.MIN_COMMITS == 3 and m04.MAX_COMMITS is None
+    for needed in ("src/remit/notify.py", "src/remit/limits.py", "src/remit/service.py", "tests/**", "specs/**", "docs/**", "agent-log.md",
+                   "CLAUDE.md", "AGENTS.md"):
+        assert needed in m04.ALLOWED, needed
     assert "hidden" not in task.lower() and "/home/" not in task
 
 
@@ -498,10 +513,11 @@ def test_tests_that_only_notice_that_something_was_sent_miss_most_deliberate_bre
     assert m04.removal_check(work).ok  # it does fail without the feature
     mutants = m04.mutation_check(work)
     assert not mutants.ok and "1 of 7" in mutants.detail
-    for survivor in ("the warning text loses its numbers", "the percentage shown is one too high", "Arabic customers get the English text"):
-        assert survivor in mutants.detail  # three survivors are named, the rest summarised
+    for survivor in ("the 80% line sits a little too high", "the 80% line sits a little too low", "the warning text loses its numbers"):
+        assert survivor in mutants.detail  # three survivors are named (the two required ones first), the rest summarised
     assert "(+3 more)" in mutants.detail and "never delivered" not in mutants.detail  # the one it catches is not listed as missed
-    assert mutants.hint and "ROUND" not in mutants.hint
+    assert "exact message" in mutants.hint and "RemitService.send" in mutants.hint and "ROUND" not in mutants.hint
+    assert mutants.hint.startswith("Pin the exact message in both languages and its numbers, and the 80% line through")
 
 
 def test_tests_that_fail_on_the_learners_own_code_are_reported_as_such(work):
@@ -710,6 +726,17 @@ def test_the_agent_log_may_say_no_agent_was_used(solved):
     assert m04.agent_log(solved).ok
 
 
+def test_a_one_line_log_for_no_ai_tool_is_enough_but_a_label_alone_is_not(solved):
+    """TASK.md says one line is enough if no AI tool was used: any wording will do, not only 'no agent'."""
+    framework.write_file(solved, m04.LOG_FILE, "# Agent log\n\nNo AI tool used; I did it by hand.\n")
+    commit(solved, "docs(agent): note that no tool was used")
+    assert m04.agent_log(solved).ok
+    framework.write_file(solved, m04.LOG_FILE, "# Agent log\n\nEntry: REMIT-318\nPrompt:\n")
+    commit(solved, "docs(agent): start the log")
+    check = m04.agent_log(solved)
+    assert not check.ok and "one line saying so is enough" in check.hint
+
+
 def test_an_untouched_agent_log_is_reported(work):
     check = m04.agent_log(work)
     assert not check.ok and not check.required and "no entry" in check.detail
@@ -722,6 +749,265 @@ def test_an_endless_loop_in_the_code_cannot_hang_the_grader(solved):
     began = time.monotonic()
     ok, summary, _, _ = m04.mutation_report(solved, timeout=2)
     assert not ok and time.monotonic() - began < 15
+
+
+# ---------------------------------------------------------------------------------------------
+# 3b. findings of the learner dry-run: the 80% line must be pinned, any sound layout is accepted, hints fit what happened
+# ---------------------------------------------------------------------------------------------
+RENDER_ONLY = '''from decimal import Decimal
+
+from remit.money import Money
+from remit.notify import render
+
+
+def test_english_wording():
+    text = render("limit_warning", "en", name="Bilal Khan", percent=Decimal(85), remaining=Money("300.00", "QAR"))
+    assert text == "Hi Bilal Khan, this transfer takes you to 85% of your daily sending limit. You can send 300.00 QAR more today."
+
+
+def test_arabic_wording():
+    text = render("limit_warning", "ar", name="Fatima Noor", percent=Decimal(85), remaining=Money("300.00", "QAR"))
+    assert text == "مرحباً Fatima Noor، بهذا التحويل وصلت إلى ٨٥٪ من حد الإرسال اليومي. يمكنك اليوم إرسال مبلغ إضافي أقصاه ٣٠٠٫٠٠ ريال قطري."
+    assert not any(ch in text for ch in "0123456789")
+'''
+EXACTLY_AT = '''
+
+def test_exactly_eighty_percent_is_warned(service, notifier):
+    service.send("C002", Money("1600.00", "QAR"), "INR", "Ravi Kumar")
+    assert [n.template_id for n in notifier.sent] == ["transfer_sent", "limit_warning"]
+'''
+A_CENT_UNDER = '''
+
+def test_a_cent_under_eighty_percent_is_not_warned(service, notifier):
+    service.send("C002", Money("1599.99", "QAR"), "INR", "Ravi Kumar")
+    assert [n.template_id for n in notifier.sent] == ["transfer_sent"]
+'''
+NEW_MODULE = '''"""REMIT-318: the 80% rule, apart from the service."""
+from __future__ import annotations
+
+from decimal import Decimal
+
+from remit.money import Money
+
+
+def warning_percent(used: Money, limit: Money) -> Decimal | None:
+    """The whole-number share of ``limit`` that ``used`` is, rounded down; None below 80%."""
+    if used.amount * 5 < limit.amount * 4:
+        return None
+    return Decimal(int(used.amount * 100 // limit.amount))
+'''
+NEW_MODULE_CALL = '''        used_after = limits.daily_used + send_amount
+        percent = warning_percent(used_after, limits.daily_limit)
+        if percent is not None:
+            self._notify(customer, "limit_warning", percent=percent, remaining=limits.daily_limit - used_after)
+        audit.log_event(
+            "transfer.sent",'''
+
+
+def test_wording_tests_that_only_call_render_never_pin_the_80_percent_line(work):
+    """The dry-run's main weakness: render-only tests caught 5 of 7 breakages and used to PASS every required check."""
+    build(work, tests=RENDER_ONLY)
+    mutants = m04.mutation_check(work)
+    assert not mutants.ok and "5 of 7" in mutants.detail
+    assert "the 80% line sits a little too high" in mutants.detail and "the 80% line sits a little too low" in mutants.detail
+    assert "a cent under" in mutants.hint and "exact message" not in mutants.hint  # five were caught: the hint is about the line
+    assert mutants.hint.startswith("Pin the 80% line through `RemitService.send`")
+    assert m04.removal_check(work).ok and len(m04.new_test_ids(work)) == 2
+    assert not framework.passed(list(grade(work).values()))  # a required line fails now
+
+
+@pytest.mark.parametrize("tests,missed,caught", [
+    (RENDER_ONLY + EXACTLY_AT, "the 80% line sits a little too low", "the 80% line sits a little too high"),
+    (RENDER_ONLY + A_CENT_UNDER, "the 80% line sits a little too high", "the 80% line sits a little too low"),
+])
+def test_each_side_of_the_line_is_required_on_its_own(work, tests, missed, caught):
+    build(work, tests=tests)
+    mutants = m04.mutation_check(work)
+    assert not mutants.ok and "6 of 7" in mutants.detail
+    assert missed in mutants.detail and caught not in mutants.detail
+
+
+def test_both_sides_of_the_line_through_send_are_enough(work):
+    build(work, tests=RENDER_ONLY + EXACTLY_AT + A_CENT_UNDER)
+    mutants = m04.mutation_check(work)
+    assert mutants.ok and "7 of 7" in mutants.detail and mutants.hint == ""
+
+
+def test_an_alternative_solution_with_the_logic_in_a_new_module(work):
+    """The ticket does not say where the logic lives: a brand-new module under src/remit/ is as good as a helper in limits.py."""
+    framework.write_file(work, m04.SPEC_FILE, read("spec.md"))
+    commit(work, "docs(specs): plan the daily limit warning")
+    put_template(work)
+    framework.write_file(work, "tests/test_limit_warning.py", read("tests_stage1.py"))
+    commit(work, "feat(notify): add the limit_warning message")
+    framework.write_file(work, "src/remit/warn.py", NEW_MODULE)
+    framework.edit_file(work, SERVICE, "from remit.limits import LimitResult, check_limits",
+                        "from remit.limits import LimitResult, check_limits\nfrom remit.warn import warning_percent")
+    framework.edit_file(work, SERVICE, LAB.SERVICE_CALL_OLD, NEW_MODULE_CALL)
+    framework.write_file(work, "tests/test_limit_warning.py", read("tests_stage2.py"))
+    commit(work, "feat(service): warn at 80% of the daily limit")
+    framework.write_file(work, "tests/test_limit_warning.py", read("tests_stage3.py"))
+    commit(work, "test(service): pin the Arabic text, refusals and a failed delivery")
+    framework.write_file(work, m04.LOG_FILE, read("agent-log.md"))
+    commit(work, "docs(agent): log the session for REMIT-318")
+    result = grade(work)
+    assert_only(result)
+    assert "src/remit/warn.py" in gitutil.changed_files(work, "lab-start")  # the new module really is part of the change
+
+
+def test_the_choices_the_ticket_leaves_to_the_learner_are_all_accepted(work):
+    """After the transfer.sent audit event, and only when 'transfer sent' was delivered: both are decisions for the spec."""
+    put_template(work)
+    put_service(work, call=GOOD_CALL.replace("        self._warn_near_limit(customer, limits, send_amount)\n", ""))
+    framework.edit_file(work, SERVICE, "        return SendResult(transfer, send_amount + fee, limits, notified)\n",
+                        "        if notified:\n            self._warn_near_limit(customer, limits, send_amount)\n"
+                        "        return SendResult(transfer, send_amount + fee, limits, notified)\n")
+    result = hidden(work)
+    assert result.ok and result.passed == 46, result.summary()
+
+
+def test_only_a_new_module_under_src_remit_is_allowed_and_the_hint_really_undoes_the_edit(solved):
+    root = solved / "src" / "remit"
+    (root / "warn.py").write_text("X = 1\n", encoding="utf-8")
+    (solved / "src" / "other.py").write_text("X = 1\n", encoding="utf-8")
+    (root / "fx.py").write_text((root / "fx.py").read_text(encoding="utf-8") + "\n# tidy\n", encoding="utf-8")
+    commit(solved, "refactor(fx): tidy up")
+    check = m04.scope_check(solved)
+    assert not check.ok and "fx.py" in check.detail and "other.py" in check.detail and "warn.py" not in check.detail
+    assert "git restore --source=lab-start --staged --worktree" in check.hint and "TASK.md" in check.hint
+    # follow the hint literally (the edit is already committed); a file the learner added is simply deleted
+    gitutil.git(solved, "restore", "--source=lab-start", "--staged", "--worktree", "src/remit/fx.py")
+    (solved / "src" / "other.py").unlink()
+    commit(solved, "revert(fx): put the file back")
+    assert m04.scope_check(solved).ok
+
+
+def test_the_originals_hint_really_puts_an_edited_old_test_back(solved):
+    framework.edit_file(solved, "tests/conftest.py", "NOW = datetime(2026, 3, 2, 9, 0, tzinfo=timezone.utc)",
+                        "NOW = datetime(2026, 3, 3, 9, 0, tzinfo=timezone.utc)")
+    commit(solved, "test(service): move the fixed clock")
+    check = m04.originals_intact(solved)
+    assert not check.ok and "--source=lab-start --staged --worktree" in check.hint
+    gitutil.git(solved, "restore", "--source=lab-start", "--staged", "--worktree", "tests/conftest.py")
+    commit(solved, "revert(service): put the clock back")
+    assert m04.originals_intact(solved).ok
+
+
+def test_the_word_todo_inside_a_sentence_is_not_a_placeholder_but_a_left_over_template_line_is(work):
+    text = read("spec.md")
+    framework.write_file(work, m04.SPEC_FILE, text + "\nThe file has no TODO left; every template line is replaced.\n")
+    assert m04.spec_check(work).ok  # the dry-run learner's own sentence used to trip the check
+    framework.write_file(work, m04.SPEC_FILE, text + "\nTODO: write the rollback\n")
+    lines = (work / m04.SPEC_FILE).read_text(encoding="utf-8").splitlines()
+    number = next(n for n, line in enumerate(lines, start=1) if line.startswith("TODO"))
+    check = m04.spec_check(work)
+    assert not check.ok and f"specs/REMIT-318.md line {number} still begins with TODO" in check.detail
+    assert "Replace each template line that begins with TODO" in check.hint and "inside a sentence" in check.hint
+    framework.write_file(work, m04.SPEC_FILE, text.replace("## Risks", "- TODO: more risks\n\n## Risks"))
+    assert "begins with TODO" in m04.spec_check(work).detail  # a list item counts too
+
+
+def test_the_hints_of_the_spec_check_name_what_is_wrong(work):
+    assert "four to ten numbered steps" in m04.spec_check(work).hint  # no spec yet
+    shutil.copyfile(work / "specs" / "TEMPLATE.md", work / m04.SPEC_FILE)
+    check = m04.spec_check(work)
+    assert "begins with TODO" in check.detail and "Number the steps" in check.hint and "Replace each template line" in check.hint
+
+
+def test_plan_steps_may_be_written_in_the_usual_ways(work):
+    text = read("spec.md")
+    head = text[: text.index("1. Commit this spec and plan.")]
+    steps = ["Step 1: commit this spec", "- 2. add the template", "3) add the decision", "**4.** add the edge tests"]
+    framework.write_file(work, m04.SPEC_FILE, head + "\n".join(steps) + "\n")
+    assert m04.spec_check(work).ok
+    framework.write_file(work, m04.SPEC_FILE, head + "1.5 hours for the first step\n" + "\n".join(steps[1:]) + "\n")  # a number is not a step
+    assert "3 numbered steps" in m04.spec_check(work).detail
+
+
+def test_the_advice_after_the_code_came_first_does_not_ask_for_the_impossible(work):
+    put_template(work)
+    commit(work, "feat(notify): add the limit_warning message")
+    framework.write_file(work, m04.SPEC_FILE, read("spec.md"))
+    commit(work, "docs(specs): write the spec afterwards")
+    check = m04.spec_first(work)
+    assert not check.ok and "advisory" in check.hint and "Next time" in check.hint
+    assert "before the code" not in check.hint  # it is too late for that: the learner already committed the code
+
+
+def test_commits_on_a_branch_that_is_not_checked_out_are_named_not_called_missing(solved):
+    gitutil.git(solved, "branch", "remit-318-limit-warning")
+    gitutil.git(solved, "reset", "--hard", "lab-start")  # main is back at the start; the work lives on the branch
+    for check in (m04.commit_count(solved), m04.commit_messages(solved)):
+        assert not check.ok and "`remit-318-limit-warning`, which is not checked out" in check.detail
+        assert "git switch remit-318-limit-warning" in check.hint and "commit your change" not in check.hint.lower()
+    gitutil.git(solved, "switch", "remit-318-limit-warning")
+    assert m04.commit_count(solved).ok and m04.commit_messages(solved).ok
+
+
+def test_the_commit_count_hint_counts_the_spec_and_the_reset_tip_works(work):
+    framework.write_file(work, m04.SPEC_FILE, read("spec.md"))
+    commit(work, "docs(specs): spec the daily limit warning")
+    put_template(work)
+    put_service(work)
+    commit(work, "feat(service): warn at 80% of the daily limit")
+    check = m04.commit_count(work)
+    assert not check.ok and "2 new commits" in check.detail and "spec commit counts" in check.hint
+    assert "git reset --soft lab-start" in check.hint
+    before = gitutil.changed_files(work, "lab-start")
+    gitutil.git(work, "reset", "--soft", "lab-start")  # what the hint says: the commits go, the work stays
+    assert gitutil.commits_since(work, "lab-start") == [] and gitutil.changed_files(work, "lab-start") == before
+
+
+def test_many_small_commits_are_welcome(solved):
+    path = solved / "tests" / "test_limit_warning.py"
+    for number in range(14):  # 19 commits in all: there is no upper limit
+        path.write_text(path.read_text(encoding="utf-8") + f"# note {number}\n", encoding="utf-8")
+        commit(solved, f"test(service): add note {number}")
+    result = cheap(solved)
+    assert_only(result)
+    assert "19 new commits" in result[m04.N_COMMIT_COUNT].detail
+
+
+def test_shrinking_a_big_file_is_not_a_large_commit(solved):
+    path = solved / "tests" / "test_limit_warning.py"
+    small = path.read_text(encoding="utf-8")
+    path.write_text(small + "\n\n" + "\n".join(f"def test_filler_{i}():\n    assert {i} == {i}\n" for i in range(120)), encoding="utf-8")
+    commit(solved, "test(service): add many small tests")
+    path.write_text(small, encoding="utf-8")
+    commit(solved, "test(service): trim the filler again")
+    check = m04.small_commits(solved)
+    assert not check.ok and "add many small tests" in check.detail and "lines added" in check.detail
+    assert "trim the filler" not in check.detail  # lines deleted, none added: nothing new to review
+
+
+def test_the_commit_message_hint_covers_old_commits_too_and_stays_quiet_when_there_are_none(solved, template):
+    framework.write_file(solved, m04.LOG_FILE, read("agent-log.md") + "\nlater\n")
+    commit(solved, "Docs: more notes.")
+    commit_ok = solved / "specs" / "REMIT-318.md"
+    commit_ok.write_text(commit_ok.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+    commit(solved, "docs(specs): tidy the spec")
+    check = m04.commit_messages(solved)
+    assert not check.ok and "Docs: more notes." in check.detail
+    assert "git commit --amend" in check.hint and "git rebase -i lab-start" in check.hint
+    none = m04.commit_messages(template)  # no commits at all: the framework's plain advice stays
+    assert not none.ok and none.detail.startswith("found 0 commits") and "rebase" not in none.hint
+
+
+def test_the_removal_hint_explains_how_to_see_it_with_step_6(work):
+    put_template(work)
+    put_service(work)
+    framework.write_file(work, "tests/test_limit_warning.py", PASSES_WITHOUT_THE_FEATURE)
+    commit(work, "feat(service): warn at 80% of the daily limit")
+    check = m04.removal_check(work)
+    assert not check.ok and "lab-start" in check.hint and "step 6" in check.hint
+
+
+def test_the_size_check_names_its_limits_in_the_hint(solved):
+    path = solved / "src" / "remit" / "notify.py"
+    path.write_text(path.read_text(encoding="utf-8") + "".join(f"# note {i}\n" for i in range(150)), encoding="utf-8")
+    commit(solved, "docs(notify): add notes")
+    hint = m04.source_size(solved).hint
+    assert "4 files" in hint and "120 changed lines" in hint and "TASK.md" in hint
 
 
 # ---------------------------------------------------------------------------------------------
@@ -782,11 +1068,25 @@ def test_the_sample_output_in_the_lesson_is_what_the_grader_prints(work, templat
     build(weak, tests=WEAK_PRESENCE)
     printed = {line.rstrip() for line in _printed(work) + _printed(weak)}
     shown = [line.rstrip() for line in text.splitlines() if line.startswith(("[PASS] ", "[FAIL] ")) and "(advisory)" not in line]
-    assert len(shown) >= 6, "the lesson shows no sample output"
+    assert len(shown) >= 4, "the lesson shows no sample output"
     for line in shown:
         assert line in printed, f"not real output: {line}"
+    hints = [line.rstrip() for line in text.splitlines() if line.startswith("       hint: ")]
+    assert hints, "the lesson shows no hint"
+    for line in hints:
+        assert line in printed, f"not a real hint: {line}"
     last = "Lab m04: 5/12 required checks passed: NOT YET"
     assert last in text and last in printed
+    # the "[... N more required lines and M advisory lines ...]" line adds up (counts are written out in words)
+    words = {"six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11}
+    match = re.search(r"\[\.\.\. (\w+) more required lines and (\w+) advisory lines \.\.\.\]", text)
+    assert match, "the abridged starter output must say how many lines it leaves out"
+    starter = _printed(work)
+    required = [ln for ln in starter if ln.startswith(("[PASS] ", "[FAIL] ")) and "(advisory)" not in ln]
+    advisory = [ln for ln in starter if ln.startswith(("[PASS] ", "[FAIL] ")) and "(advisory)" in ln]
+    block = text[text.index("On the starter state"):text.index(last)]
+    shown_required = [ln for ln in block.splitlines() if ln.startswith(("[PASS] ", "[FAIL] "))]
+    assert words[match.group(1)] == len(required) - len(shown_required) and words[match.group(2)] == len(advisory)
 
 
 def _printed(work: Path) -> list[str]:
@@ -797,3 +1097,50 @@ def _printed(work: Path) -> list[str]:
     assert code == 1
     return out.splitlines()
 
+
+def test_the_lessons_agent_log_block_is_the_starters_file(template):
+    """The log template shown in lesson 4.2 is the file `start` writes (the block has no path comment, so check_blocks cannot do it)."""
+    starter = (template / "agent-log.md").read_text(encoding="utf-8")
+    body = starter.split("\n\n", 1)[1].strip()
+    assert "```text\n" + body + "\n```" in lesson_text()
+    assert "Minutes (you / agent / checking):" in body  # the minutes are split three ways, as the lesson says
+
+
+def test_the_lesson_names_the_files_tags_and_commands_the_learner_needs():
+    text = lesson_text()
+    assert "`task.md`" in text and "`TASK.md`" in text and "capitals matter" in text  # the kit file and the learner's file
+    assert text.count("`task.md`") == 1  # only the one sentence that explains the difference
+    for needle in ("`lab-start`", "git switch -c remit-318-limit-warning", "python -m ailab start m04 --dir ~/ainative/m04",
+                   "python -m ailab grade m04 --dir ~/ainative/m04", "m04-grade.txt", "git restore --source=lab-start --staged --worktree src",
+                   "git restore --source=HEAD --staged --worktree src", "ask it to, or commit yourself", "grade on your task branch",
+                   "both 80%-line", "at most four files and 120 changed lines", "stay green"):
+        assert needle in text, needle
+
+
+def test_both_lessons_stay_within_the_word_budget():
+    """Same count as en_check.py: everything from the lesson heading to the next one, split on white space."""
+    import re
+
+    for number, chunk in ((m.group(1), part) for part in re.split(r"\n(?=# \d+\.\d+ — )", lesson_text())[1:]
+                          for m in [re.match(r"# (\d+\.\d+)", part)]):
+        assert 2000 <= len(chunk.split()) <= 3500, (number, len(chunk.split()))
+
+
+def test_step_6_of_the_lesson_works_when_the_logic_is_in_a_new_module(work):
+    """`git restore --source=lab-start --staged --worktree src` removes a committed new module too; HEAD brings it back."""
+    framework.write_file(work, m04.SPEC_FILE, read("spec.md"))
+    commit(work, "docs(specs): plan the daily limit warning")
+    put_template(work)
+    framework.write_file(work, "src/remit/warn.py", NEW_MODULE)
+    framework.edit_file(work, SERVICE, "from remit.limits import LimitResult, check_limits",
+                        "from remit.limits import LimitResult, check_limits\nfrom remit.warn import warning_percent")
+    framework.edit_file(work, SERVICE, LAB.SERVICE_CALL_OLD, NEW_MODULE_CALL)
+    framework.write_file(work, "tests/test_limit_warning.py", read("tests_stage3.py"))
+    commit(work, "feat(service): warn at 80% of the daily limit")
+    gitutil.git(work, "restore", "--source=lab-start", "--staged", "--worktree", "src")
+    assert not (work / "src" / "remit" / "warn.py").exists() and "limit_warning" not in (work / NOTIFY).read_text(encoding="utf-8")
+    broken = checks.run_pytest(work, ["tests/test_limit_warning.py"])
+    assert broken.failed + broken.errors >= 1
+    gitutil.git(work, "restore", "--source=HEAD", "--staged", "--worktree", "src")
+    assert (work / "src" / "remit" / "warn.py").exists() and gitutil.is_clean(work)
+    assert checks.run_pytest(work, ["tests/test_limit_warning.py"]).ok

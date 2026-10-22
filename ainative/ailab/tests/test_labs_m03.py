@@ -479,6 +479,7 @@ OTHER_WORDINGS = [
     ("T3", "ar-digits", "Numbers in the Arabic text are rendered with Arabic numerals."),
     # found by the learner dry-run: sound sentences that the first keyword lists missed
     ("T1", "minimum", "The floor of 6.00 QAR is kept for small transfers."),
+    ("T1", "rounding", "Round half up to the cent, with Decimal."),
     ("T2", "tier", "The fee is priced on the send amount that results from the search, as for a normal quote."),
     ("T2", "limits", "The smallest or largest allowed transfer is checked against the amount we derive."),
     ("T3", "ar-wording", "The Arabic sentence is left to the native reader."),
@@ -921,7 +922,7 @@ def test_the_task_text_agrees_with_the_constants_of_the_grader():
     assert f"at least {['zero', 'one', 'two', 'three'][m.MIN_EXAMPLES]} worked examples" in task
     assert "four to ten numbered steps" in task and (m.MIN_STEPS, m.MAX_STEPS) == (4, 10)
     assert "at least four" in task and m.MIN_CRITERIA == 4
-    assert "keep its ten sections" in task and len(m.SECTION_RULES) == 10
+    assert "keeping its ten sections" in task and len(m.SECTION_RULES) == 10
     assert "Decisions and open questions" in task and "second human reviewer" in task and "TODO" in task
 
 
@@ -1275,10 +1276,10 @@ def test_the_scope_hint_works_for_an_edit_that_is_already_committed(work):
 
 def test_the_task_documents_the_rules_the_grader_enforces():
     task = (HERE / "task.md").read_text(encoding="utf-8")
-    for needle in ("10,000 INR", "6pm", "2026-03-02", "A question is not an answer", "write the Arabic sentence or say who supplies it",
+    for needle in ("10,000 INR", "6pm", "2026-03-02", "a question is not an answer", "write the Arabic sentence or say who supplies it",
                    "write \"second human reviewer\" and name who", "Nada", "any lower-case scope works", "plan the first slice",
-                   "the failing test written and run before the code", "share one green commit", "ainative/ailab", "(advisory)",
-                   "pull in different directions", "a copy of one with the names changed fails", "beside the file that it is new"):
+                   "The failing test is written and run before the code it covers", "share one green commit", "ainative/ailab", "(advisory)",
+                   "pull in different directions", "no copies", 'write "new" beside the file'):
         assert needle in task, needle
     assert "first slice" in (HERE / "templates" / "spec-template.md").read_text(encoding="utf-8")
 

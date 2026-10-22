@@ -8,19 +8,24 @@
 variables, so a process can have exactly one set of books. Finance's reconciliation job needs two
 `RemitService` objects in one process, each with its own ledger. And najmkit 3 will remove najmkit 1.
 
-Three parts, in this order, in separate commits. **Behaviour must not change anywhere**, quirks
-included, except where this ticket says so. Read the docstring of `ledger.py` first.
+Three parts. Do Part 1 first and commit it before you change anything under `src/`; commit every
+later step separately. **Behaviour must not change anywhere**, quirks included, except where this
+ticket says so. Read the docstring of `ledger.py` first.
 
 ### Part 1: pin what the ledger does now
 
 1. Copy `lab-assets/ledger_port.py` to `tests/ledger_port.py`: a seam with `make_ledger()` (a fresh
    ledger) and `ledger_of(service)` (the ledger a service posts to), working before and after Part 2.
-2. Write characterization tests in **new files named `tests/test_ledger_*.py`**. They say what the code
-   does today, quirks included, not what you think it should do. Reach the ledger only through
-   `make_ledger()` and `ledger_of(service)`.
+2. Write characterization tests in **new files named `tests/test_ledger_*.py`**, importing the seam as
+   `from ledger_port import ledger_of, make_ledger` (`tests.ledger_port` fails under `pytest -q`, which
+   CI runs). They say what the code does today, quirks included (values, order, error types and
+   messages), not what you think it should do. Reach the ledger only through the seam. Part 2 changes
+   Q-LED-3's shared books on purpose: pin the rest of it.
 3. They must pass on the code as it is now and, unchanged, after Part 2. The grader runs them against
-   the original ledger and against deliberately broken copies of it. Do not rely on edits to
-   `tests/conftest.py`.
+   the original and against deliberately broken copies of it, so test behaviour, never the source text.
+   It wants at least ten tests that catch at least 13 of 16 breaks, and ignores your edits to
+   `tests/conftest.py`. `python lab-assets/try_mutation.py` runs your tests on the original; given a
+   file, a text and a replacement, it breaks the original there and says whether they noticed.
 
 ### Part 2: remove the module-level state
 
@@ -54,15 +59,19 @@ behaviour; the old names still work but warn.
 
 - Move every use of an old name in `src/remit` and `tests` to the new one. Remit's audit files are
   read by the fraud team's parser: the lines must come out byte for byte as today.
-- Then delete the deprecated names from `src/najmkit` and bring `docs/najmkit.md` up to date.
+- Then delete the deprecated names from `src/najmkit` and update the documents that are now untrue:
+  `docs/najmkit.md` (still version 1) and any that call the ledger untested or module-level.
 
 ### Rules
 
-- Commits follow `CONTRIBUTING.md`: at least three, each leaving `pytest -q` green. Never mix a
-  refactor and a migration in one commit.
-- Edit an existing test only to follow a rename or the removed `reset()`.
-- Touch only `ledger.py`, `service.py`, `store.py`, `cli.py`, `src/najmkit`, `tests` and `docs` (and
-  `CLAUDE.md` if it now says something untrue).
+- Commits follow `CONTRIBUTING.md`: at least three that change something, each leaving `pytest -q`
+  green; the one that adds your ledger tests changes nothing under `src/`. Never mix a refactor and a
+  migration in one commit (your reviewer checks that). Commit everything.
+- Edit an existing test only to follow a rename or the removed `reset()`. This ticket asks for those
+  edits and for commits even where `CLAUDE.md` says never: tell your AI tool.
+- Touch only `ledger.py`, `service.py`, `store.py` and `cli.py` in `src/remit`, `src/najmkit`, `tests`,
+  `docs`, `scripts`, `README.md`, `CLAUDE.md`, `AGENTS.md`, `.claude`, and `pyproject.toml` or
+  `.github/workflows` if you make warnings-as-errors permanent.
 - Recommended: fill in `lab-assets/refactoring-plan-template.md` as `docs/refactoring-plan.md` first.
 - Use any help you like, an AI coding tool included. You are accountable for every line.
 

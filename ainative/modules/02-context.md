@@ -64,7 +64,7 @@ Keep startup layers small, since every session pays for them, and pull in the re
 
 | Scope | Path | Who gets it |
 |---|---|---|
-| Managed policy | `/etc/claude-code/CLAUDE.md` on Linux and WSL (other systems differ) | Everyone on the machine; it cannot be excluded |
+| Managed policy | `/etc/claude-code/CLAUDE.md` (Linux, WSL); macOS `/Library/Application Support/ClaudeCode/CLAUDE.md`; Windows `C:\Program Files\ClaudeCode\CLAUDE.md` | Everyone on the machine; it cannot be excluded |
 | User | `~/.claude/CLAUDE.md` | You, in every project |
 | Project | `./CLAUDE.md` or `./.claude/CLAUDE.md` | The team, through git |
 | Local | `./CLAUDE.local.md` | You, in this project; add it to `.gitignore` yourself |
@@ -360,15 +360,15 @@ The commands ran. The `float` rule is stated once, with the one `IMPORTANT`. `na
 
 ## ⚡ In 60 seconds
 - Lab m02: write `CLAUDE.md` (or `AGENTS.md`) for the starter repository, run one small ticket twice, without and with it, and record the difference in `ab-notes.md`.
-- Needs an agent: **yes for the A/B part**; the no-agent path is a chat assistant or a colleague new to the repository. The grader never needs one.
-- The grader **runs the commands you documented** and checks Decimal money, the test layout, the commit rule, `najmkit`, every path and the claims it can compare with the code; it rejects stale facts, filler, secrets and hidden text.
+- Needs an agent: **yes for the A/B part**; the no-agent path is a chat assistant or a colleague. The grader never needs one.
+- The grader **runs the commands you documented** and checks Decimal money, the test layout, the commit rule, `najmkit`, every path and some claims against the code; it rejects stale facts, filler, secrets and hidden text.
 - Traps: `docs/ARCHITECTURE.md` is partly out of date, `python -m remit` needs `PYTHONPATH=src`, and there is no linter or Makefile.
 - The notes are checked for completeness and for quoting real lines of your file, never for "B won". "No difference" is valid.
 
 ## 🧭 Why it matters
-Tariq, at the clinic: "Everyone believes a memory file helps. Show me." In METR's randomized trial (16 experienced developers on their own repositories, early-2025 tools; lesson 0.1) the developers believed they were faster while the clock said otherwise. One small trial in one setting proves nothing about your repository, but a feeling about a prompt is no sounder than a feeling about speed. The remedy is the same: measure, small and honest.
+Tariq, at the clinic: "Everyone believes a memory file helps. Show me." In METR's randomized trial (16 experienced developers on their own repositories, early-2025 tools; lesson 0.1) the developers believed they were faster while the clock said otherwise. One small trial proves nothing about your repository, but a feeling about a prompt is no sounder than a feeling about speed. The remedy is the same: measure, small and honest.
 
-A wrong command or a stale pointer in a memory file is paid for in every session, so this grader does something unusual for a document: it executes what you wrote. Some later labs start from a good memory file that the kit supplies; here you practise checking one.
+A wrong command or a stale pointer in a memory file is paid for in every session, so this grader does something unusual for a document: it executes what you wrote.
 
 ## 📐 How it works
 
@@ -379,7 +379,7 @@ A wrong command or a stale pointer in a memory file is paid for in every session
 2. **Run things** from the repository root, as an agent will.
 3. **List what an agent cannot guess:** how the CLI starts, the tools that do not exist, `najmkit`, the commit rule.
 4. **Draft short,** from the template in lesson 2.1.
-5. **Verify every line.** Can the agent read it from the code? Is it true today? Would deleting it cause a mistake?
+5. **Verify every line:** is it true today, and would deleting it cause a mistake?
 
 ```bash
 cd ~/ainative/m02
@@ -400,41 +400,41 @@ The second command fails in a fresh shell (your path will differ), and your file
 
 ```text
 Read README.md, CONTRIBUTING.md, docs/TOUR.md and docs/najmkit.md. Treat docs/ARCHITECTURE.md as possibly out of date: check anything you take from it against src/.
-Draft CLAUDE.md in about 40 lines: the commands an agent cannot guess, conventions that differ from the defaults, gotchas, a short never list, pointers to docs. Leave out anything readable from the code.
+Draft CLAUDE.md in about 40 lines: commands an agent cannot guess, conventions that differ from the defaults, gotchas, a short never list, pointers to docs. Leave out anything readable from the code.
 Run every command you put in it and show me the output. Quote the file behind each claim. Do not write the file yet.
 ```
 
-`/init` is a fair start, but its output is a draft like any agent's: check it for commands the repository lacks. Let it write only `CLAUDE.md`; other files fail the scope check.
+`/init` is a fair start, but its output is a draft like any agent's: check it for commands the repository lacks, and let it write only `CLAUDE.md`.
 
 ### 🟡 Going deeper
 
-**Design the experiment honestly.** One variable changes: the memory file. Same tool, model and prompt, a fresh session, two fresh copies of the repository. REMIT-252 (`quote --json`) lets the memory matter in several places: the easy way to print a `Decimal` as JSON is `float(...)` or `default=float`, which breaks the money rule; the CLI needs `PYTHONPATH=src`; the tests have a home, `tests/test_config_cli.py`; the commit has a rule. Those are hypotheses, not promises. A hand-written version is two files and about 45 changed lines; yours will differ.
+**Design the experiment honestly.** One variable changes: the memory file. Same tool, model and prompt, a fresh session, two fresh copies. REMIT-252 (`quote --json`) lets the memory matter in several places: the easy way to print a `Decimal` as JSON is `float(...)` or `default=float`, which breaks the money rule; the CLI needs `PYTHONPATH=src`; the tests have a home, `tests/test_config_cli.py`; the commit has a rule. Those are hypotheses, not promises.
 
-**Measure six things:** the rows of the table in `ab-notes.md`. A *wrong turn* is each time you had to stop, correct or redirect the agent; count from the transcript. Four rows are numbers (`<1` for a quick run, `none` for no wrong turns) and two are yes or no.
+**Measure six things:** the rows of the table in `ab-notes.md`. A *wrong turn* is each time you had to stop, correct or redirect the agent; count from the transcript.
 
-**Name the confounders.** The agent in A may find `CONTRIBUTING.md` through the README; then the commit rule made no difference, and that is a finding. Your tool may keep notes between sessions (Claude Code's auto memory; `/memory` shows and toggles it), and your own user-level `~/.claude/CLAUDE.md` loads in both runs. The agent is not deterministic (lesson 1.1), and you know which run is which. One run each is an anecdote: repeat each twice if you can, and have a colleague count wrong turns from the diffs. If B is no better, that is a finding: the task missed what the file says, or the file says what the agent did not need.
+**Name the confounders.** The agent in A may find `CONTRIBUTING.md` through the README; then the commit rule made no difference, and that is a finding. Your tool may keep notes between sessions (Claude Code's auto memory; `/memory` toggles it), and your user-level `~/.claude/CLAUDE.md` loads in both runs. The agent is not deterministic (lesson 1.1), and you know which run is which. One run each is an anecdote: repeat each twice if you can, and have a colleague count wrong turns from the diffs. If B is no better, that is a finding too.
 
-**No agent?** Paste the ticket into a fresh chat twice, once with the repository files and once with your memory file too. Or time a colleague who has not read Remit, once with only the repository and once with your file as well. The colleague is the better test. No interactive session at all (a script, a CI job, an agent inside an agent)? Then you play the agent: the comparison is contaminated, so say so under *Limits*.
+**No agent?** Paste the ticket into a fresh chat twice, once with the repository files and once with your memory file too. Or time a colleague who has not read Remit, once with only the repository and once with your file. The colleague is the better test. No interactive session at all (a script, a CI job, an agent inside an agent)? Then you play the agent: the comparison is contaminated, so say so under *Limits*.
 
 ### 🔴 Expert view
 
-**What the grader checks, and what it cannot.** It reads the file as a reviewer would: it counts lines (an `@` import counts, because an import saves no context), looks up every path, compares your claims with the repository and **runs your commands**. It runs only `pytest` and `python -m remit`, in a throw-away copy with a temporary database; a pytest option it does not recognise fails the check unrun, and a command for a tool Remit lacks fails wherever you write it, a `text` block included. It compares only the claims it knows (rounding, decimal places, the ledger, the clock, dependencies, the old architecture facts), so other wrong facts pass. It cannot tell whether the file is *useful*, who wrote it, or whether the experiment happened: invented results pass. The A/B is where usefulness shows. The notes are never checked for B beating A, because that would reward invented improvements.
+**What the grader checks, and what it cannot.** The list is under *What the grader checks* below. It runs only `pytest` and `python -m remit`, in a throw-away copy with a temporary database; a pytest option it does not recognise fails the check unrun, and a command for a tool Remit lacks fails wherever you write it, a `text` block included. It compares only the claims it knows (rounding, decimal places, the ledger, the clock, dependencies, the old architecture facts), so other wrong facts pass. It cannot tell whether the file is *useful*, who wrote it, or whether the experiment happened: invented results pass. The A/B is where usefulness shows. The notes are never checked for B beating A, because that would reward invented improvements.
 
-**The thresholds are guard rails, not targets.** A twelve-rule never list passes; it may still be the over-specified file the documentation warns about. Lint the file, then read it as the agent would. Choose `AGENTS.md` if your team uses several tools, `CLAUDE.md` if it uses Claude Code, or one importing the other, and use hooks for what must never happen (lesson 9.1).
+**The thresholds are guard rails, not targets.** A twelve-rule never list passes and may still be the over-specified file the documentation warns about. Lint the file, then read it as the agent would; use hooks for what must never happen (lesson 9.1).
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
-| **Project memory** | `CLAUDE.md` or `AGENTS.md`: the short file loaded every session | Every repository an agent works in |
-| **A/B memory test** | The same ticket with and without the file, in fresh copies: six numbers and a quoted line | When you add or change a memory file |
-| **Memory lint** | The grader's checks: run the commands, resolve the paths, compare claims with the repository | Before you commit a memory file |
-| **Pruning checklist** | Eight questions asked of a memory file on a schedule | Monthly; after an incident the agent caused |
-| **Agent log** | Prompt, what it did, what you corrected, what you checked, minutes | After every session with an agent |
+| **Project memory** | `CLAUDE.md` or `AGENTS.md`: the short file loaded every session | Every repository an agent touches |
+| **A/B memory test** | The same ticket with and without the file, in fresh copies | When you add or change a memory file |
+| **Memory lint** | The grader's checks: run commands, resolve paths, compare claims | Before you commit a memory file |
+| **Pruning checklist** | Eight questions asked of a memory file | Monthly; after an incident |
+| **Agent log** | Prompt, what it did, what you corrected, minutes | After every session with an agent |
 
 ## 🏛️ In practice at Najm Bank
 *Needs an agent: yes, for the A/B part (no-agent path above). The grader never needs one.*
 
-**The ticket.** This is `task.md`, as Hessa wrote it.
+**The ticket.** This is `TASK.md`, as Hessa wrote it.
 
 ```text
 # REMIT-251: write the project memory for Remit, then measure what it changes
@@ -450,9 +450,9 @@ repository, and wants to know whether it helps. There are two parts.
 ### Part 1: the memory file (required)
 
 Write the project memory at the root of the repository: `CLAUDE.md` (Claude Code), or `AGENTS.md` if your
-tool reads that. It is for the agent, not for a new colleague.
+tool reads that. It is for the agent.
 
-- **Short**: 15 to 150 non-blank lines, `@` imports included. Remit is a small repository.
+- **Short**: 15 to 150 non-blank lines, `@` imports included.
 - **Useful**: the commands an agent cannot guess, the conventions that differ from the defaults (money,
   tests, commits, `najmkit`), the gotchas, and a short list of things it must never do.
 - **True**: the grader runs every command you document from the repository root (only `pytest` and
@@ -464,18 +464,17 @@ tool reads that. It is for the agent, not for a new colleague.
 
 `lab-assets/ab-task.md` is a second, small ticket (REMIT-252). Do it twice with the same tool, model and
 prompt, each in a fresh copy of the repository: once without your memory file, once with it. Fill in
-`ab-notes.md` (the template is here; its opening paragraph lists what the grader reads) and report what
-happened, including "no difference". No agent? Use a chat assistant, or a colleague who has not read the
-repository.
+`ab-notes.md` (its opening paragraph lists what the grader reads) and report what happened, including
+"no difference". No agent? Use a chat assistant, or a colleague who has not read the repository.
 
 ### Done when
 
-- `pytest -q` passes, and only these files changed: `CLAUDE.md`, `AGENTS.md`, `.claude/CLAUDE.md`,
-  `.claude/rules/*.md` and `ab-notes.md`. Anything else, `docs/` or `.claude/settings.json` included, fails.
+- `pytest -q` passes, and only `CLAUDE.md`, `AGENTS.md`, `.claude/CLAUDE.md`, `.claude/rules/*.md` and
+  `ab-notes.md` changed (`docs/` or `.claude/settings.json` fails).
 - The memory file passes the grader's checks, and `ab-notes.md` is complete.
 - Your work is committed, with messages that follow `CONTRIBUTING.md`.
-- Grade it from the `ailab` folder of the course repository, with its virtual environment active (not from
-  this directory): `python -m ailab grade m02 --dir <this directory>`
+- Grade it from the `ailab` folder of the course repository, with its virtual environment active:
+  `python -m ailab grade m02 --dir <this directory>`
 ```
 
 **Start.** You need the setup from lesson 0.2.
@@ -486,9 +485,9 @@ python -m ailab start m02 --dir ~/ainative/m02
 cd ~/ainative/m02
 ```
 
-**Your move, part 1: the file.** By hand: the five steps above. With an agent: the drafting prompt, then review the draft, delete and correct, run each command yourself, and write the file. Grade it (below) as often as you like: each failing line names what is wrong, never the answer. Commit with a message such as `docs(memory): add CLAUDE.md for coding agents`.
+**Your move, part 1: the file.** By hand: the five steps above. With an agent: the drafting prompt, then review the draft, correct it, run each command yourself and write the file. Grade it (below) as often as you like: each failing line names what is wrong, never the answer. Commit with a message such as `docs(memory): add CLAUDE.md for coding agents`.
 
-**Your move, part 2: the experiment.** Make two clean copies of the repository. They must hold no lab files, not even in git history, or the agent can read `TASK.md` and start writing a memory file. Copy your file into B only.
+**Your move, part 2: the experiment.** Make two clean copies with no lab files, not even in git history, or the agent can read `TASK.md` and start writing a memory file. Copy your file into B only.
 
 ```bash
 cd system-design-for-vibe-coders/ainative/ailab      # with the virtual environment active
@@ -496,9 +495,9 @@ for d in a b; do
   python -m ailab start m02 --dir ~/ainative/m02-$d > /dev/null
   (cd ~/ainative/m02-$d &&
    git rm -rq TASK.md ab-notes.md lab-assets &&
-   git checkout -q --orphan clean &&                # a new history ...
-   git commit -qm "chore(lab): clean copy of the repository" &&
-   git branch -qD main && git tag -d lab-start > /dev/null &&   # ... without the old one
+   git checkout -q --orphan clean &&                # a new history, without the lab commits
+   git commit -qm "chore(lab): clean copy" &&
+   git branch -qD main && git tag -d lab-start > /dev/null &&
    git reflog expire --expire=now --all)
 done
 cp ~/ainative/m02/CLAUDE.md ~/ainative/m02-b/       # or AGENTS.md, or the .claude folder
@@ -519,13 +518,13 @@ pytest -q                                   # does the suite pass?
 
 Then fill in `ab-notes.md` in `~/ainative/m02`; its opening paragraph lists what the grader reads.
 
-- **Six rows, a cell per run.** Minutes, wrong turns, files and lines are numbers: `12`, `~10`, `0.4`, `<1` (under a minute), `none` (zero) and `57 (+56 -1)` all count. The last two rows, `pytest -q` passes and the commit message, are `yes` or `no`.
+- **Six rows, a cell per run.** Minutes, wrong turns, files and lines are numbers: `12`, `~10`, `0.4`, `<1` (under a minute), `none` (zero) and `57 (+56 -1)` all count. The last two rows are `yes` or `no`.
 - **Five prose sections** (what differed, the line that mattered, a line that changed nothing, what you changed afterwards, the limits) need real words: 12 for what differed, 8 for the limits. "No difference: both runs made the same change" is enough; "Nothing yet." answers what you changed.
-- **Two quotes.** In each quote section copy one line exactly from your memory file into a block quote (`>`): 15 characters or more, a different line each. If no line mattered, quote the one most likely to have and say you could not show it. A line you deleted afterwards is fine: pruning is the point.
+- **Two quotes.** In each quote section, copy one line exactly from your memory file into a block quote (`>`): 15 characters or more, a different line each. If no line mattered, quote the one most likely to have and say you could not show it. A line you deleted afterwards is fine: pruning is the point.
 
 Commit the notes.
 
-**What the grader checks.** That `pytest -q` passes and only `CLAUDE.md`, `AGENTS.md`, `.claude/CLAUDE.md`, `.claude/rules/*.md` and `ab-notes.md` changed (`docs/` or `.claude/settings.json` fails; a deny rule is lab m08's job). For the memory: 15 to 150 non-blank lines, imports included; every documented command exits 0, wherever it is written; Decimal money with `float` forbidden, the test layout, the commit rule, and `najmkit` with a pointer to its docs and no invented names; a short, repository-specific never list; every path exists; no stale or false claims about the code, filler or restated docs; no secrets, customer data, invisible characters or instructions to ignore rules or fetch and run code. Advisory: how the CLI finds the package, no limits, fees or rates, links only to places you know. For the notes and git: placeholders replaced, cells in the right form, the word minimums, two different quoted lines found in your memory; conventional messages, nothing uncommitted. It cannot tell whether your file helps or whether you ran the experiment.
+**What the grader checks.** That `pytest -q` passes and only `CLAUDE.md`, `AGENTS.md`, `.claude/CLAUDE.md`, `.claude/rules/*.md` and `ab-notes.md` changed (`docs/` or `.claude/settings.json` fails; a deny rule is lab m08's job). For the memory: 15 to 150 non-blank lines, imports included; every documented command exits 0; Decimal money with `float` forbidden, the test layout, the commit rule, and `najmkit` with a pointer to its docs and no invented names; a short, repository-specific never list; every path exists; no stale or false claims, filler or restated docs; no secrets, customer data, invisible characters or instructions to ignore rules or fetch and run code. Advisory: how the CLI finds the package, no limits, fees or rates, links only to places you know. For the notes and git: placeholders replaced, cells in the right form, the word minimums, two different quoted lines found in your memory; conventional messages, nothing uncommitted.
 
 **Grade.** Run it from the `ailab` folder, not from `~/ainative/m02`; elsewhere you get `No module named ailab`.
 
@@ -557,30 +556,38 @@ Lab m02: 3/21 required checks passed: NOT YET
 
 Committing the "before" file from lesson 2.1 as `CLAUDE.md` gives `Lab m02: 9/21 required checks passed: NOT YET`, with the failures you saw there. A file that passes everything ends with `Lab m02: 21/21 required checks passed: PASSED`.
 
-**Weekly deliverable.** In your notes repository, not in `~/ainative/m02`, commit `week-02/` with your final `CLAUDE.md` (or `AGENTS.md`), `ab-notes.md`, `m02-grade.txt` (the final grade output), `agent-log.md` and `pruning-checklist.md` (the lesson 2.1 checklist filled in for your file).
+**Weekly deliverable.** In your notes repository, not in `~/ainative/m02`, commit `week-02/` with your final `CLAUDE.md` (or `AGENTS.md`), `ab-notes.md`, `m02-grade.txt` (the final grade output), `agent-log.md` and `pruning-checklist.md` (the lesson 2.1 checklist, filled in).
 
-**Group session (60 minutes).** (1) Swap files and run your partner's commands from a fresh clone (10). (2) A usability test: your partner, who has not read Remit, finds where `--json` would go, once with only the repository and once with your file; time both (20). (3) Compare notes; each person deletes three lines (15). (4) Agree what every Najm memory file must contain (10). (5) Agree who reviews changes to it (5).
+**Group session (60 minutes).** (1) Swap files and run your partner's commands from a fresh clone (10). (2) Your partner, new to Remit, finds where `--json` goes, once with only the repository and once with your file; time both (20). (3) Compare notes; each person deletes three lines (15). (4) Agree what every Najm memory file must contain, and who reviews changes to it (15).
 
-**Debrief.** What did the agent get wrong, or nearly? What did your context or spec miss? Which line would you have sworn mattered and did not? What did the grader catch that you would have shipped?
+**Debrief.** What did the agent get wrong, or nearly? What did your context miss? Which line would you have sworn mattered and did not? What did the grader catch?
 
-**Agent log.** Use the lesson 0.1 format: one entry for drafting the file and one for each of runs A and B. If you used no agent, say so and what you did instead.
+**Agent log.** One entry for drafting the file and one for each run, in a short form of the lesson 0.1 format. No agent? Say what you did instead.
+
+```markdown
+Entry: <date>, REMIT-251, <memory draft | run A | run B>
+Prompt:       <paste or summarise>
+What it did:  <steps taken>
+I corrected:  <what you fixed or redirected>
+Minutes:      <honest total, including checking>
+```
 
 ## 🛠️ Exercises
 - 🟢 **Write it and lint it.** *No agent.* *Done when:* every memory check passes in `grade`, and each command in your file ran in your own shell first.
-- 🟡 **Run the experiment.** *Needs an agent* (or a stand-in). *Done when:* `ab-notes.md` passes, with six numbers per run, two quoted lines and a limits paragraph that names one confounder from your own setup.
-- 🔴 **Plant an error and watch.** *Needs an agent.* Put one plausible false line (`make test` as the test command) in a copy of your file and give the agent a task that needs it. *Done when:* a note gives the minutes lost, what the agent did when the command failed, and which grader check catches the line.
+- 🟡 **Run the experiment.** *Needs an agent* (or a stand-in). *Done when:* `ab-notes.md` passes, with a limits paragraph naming one confounder from your own setup.
+- 🔴 **Plant an error and watch.** *Needs an agent.* Put one false line (`make test` as the test command) in a copy of your file and give the agent a task that needs it. *Done when:* a note gives the minutes lost, what the agent did when the command failed and which check catches the line.
 
 ## ⚠️ Mistakes and traps
 - **Copying a draft unrun.** The grader executes your commands, and so will your agent.
-- **Trusting `docs/ARCHITECTURE.md`.** It is partly out of date. Fixing it is another ticket; the scope check fails if you do it here.
+- **Trusting `docs/ARCHITECTURE.md`.** It is partly out of date; fixing it is another ticket, and the scope check fails if you do it here. Two old docstrings mention `KIT_NOTES.md`, which is not in your repository: do not point to it.
 - **Copying the "after" file from lesson 2.1.** It would pass and teach you nothing. Write yours from the repository.
-- **Leaving `TASK.md` in the A/B copies.** The agent may read it.
+- **Leaving lab files in the A/B copies**, or in their git history. The agent may read `TASK.md`.
 - **Reporting a win you did not see.** The notes are graded for completeness, not results.
-- **Hiding a bad command from the grader.** A command in a block the lint skips is still bad.
+- **Hiding a bad command.** `make test` in a `text` block is still a bad command: the lint reads it there, and so will your agent.
 
 ## 🧾 Recap
-- **Context first**, as a lab: build the file from the repository. Read, run, list what an agent cannot guess, draft short, verify.
-- The grader executes your commands and checks every path and claim; it cannot judge whether the file is useful.
+- **Context first**, as a lab: build the file from the repository. Read, run, draft short, verify.
+- The grader executes your commands and checks paths and some claims; it cannot judge whether the file is useful.
 - Measure with one variable changed: same tool, model and prompt, two fresh copies, six numbers.
 - One run each is an anecdote. Report "no difference" if that is what you saw, and name the confounders.
 
@@ -590,12 +597,12 @@ Committing the "before" file from lesson 2.1 as `CLAUDE.md` gives `Lab m02: 9/21
 
 - A. Install `make`, since the check looks for the tool.
 - B. Delete the line and document `pytest -q`.
-- C. Move the line into a `text` block, which the grader skips.
+- C. Move the line into a `text` block, as an example.
 - D. Rename it `make check`, which the grader allows.
 
 <details><summary>Answer</summary>
 
-**B.** Remit has no Makefile, so an agent would run the line and fail. Hiding it from the lint leaves a bad command in the file. (🔴 What the grader checks.)
+**B.** Remit has no Makefile, so an agent would run the line and fail. A `text` block hides nothing: the lint reads it and so does the agent. (🔴 What the grader checks.)
 
 </details>
 
@@ -634,7 +641,7 @@ Committing the "before" file from lesson 2.1 as `CLAUDE.md` gives `Lab m02: 9/21
 
 <details><summary>Answer</summary>
 
-**C.** It checks the shape of the notes and that quotes are real lines. It cannot see who wrote the file, whether the runs happened or whether the memory helped. (🔴 What the grader checks.)
+**C.** It checks the notes' shape and that quotes are real lines. It cannot see who wrote the file, whether the runs happened or whether the memory helped. (🔴 What the grader checks.)
 
 </details>
 

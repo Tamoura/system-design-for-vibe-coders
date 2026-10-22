@@ -22,17 +22,21 @@ What is seeded
 src/najmkit/{__init__,ids,clock,audit}.py        replaced by the v2 versions in ``najmkit_v2/`` (v1 names kept as wrappers)
 docs/najmkit-v2-migration.md                     the migration notes (``seed_docs/``)
 CLAUDE.md                                        the reference project memory from m02, when it exists
-lab-assets/{ledger_port.py, refactoring-plan-template.md}   (``assets/``)
+lab-assets/{ledger_port.py, try_mutation.py, refactoring-plan-template.md}   (``assets/``)
 The starter suite stays green (99 tests): the v1 wrappers keep every existing call working, with DeprecationWarnings.
 
 What the grader checks (and cannot tell)
 ----------------------------------------
-Part 1: the learner's ``tests/test_ledger_*.py`` pass on the ORIGINAL ledger (rebuilt from the lab-start tag) and kill at
-least 13 of 16 mutants of it (``checks_m07.MUTANTS``). Part 2: a hidden characterization suite on the refactor (quirks
+Part 1: the learner's ``tests/test_ledger_*.py`` pass on the ORIGINAL ledger (rebuilt from the lab-start tag), also on a copy of
+it that only differs in comments and private names (so they cannot fingerprint the file), never read the ledger's source text,
+and kill at least 13 of 16 mutants of it (``checks_m07.MUTANTS``). Every pytest run is ``pytest -q`` as CI runs it (no working
+directory on ``sys.path``: ``from tests.x import`` fails, as it does in CI). Part 2: a hidden characterization suite on the refactor (quirks
 preserved, the interface, independent instances, a service that owns its ledger), no module-level state, the old
 functions gone. Part 3: no v1 name left in src/remit or tests (import-aware AST scan), the v1 names gone from najmkit
 (subprocess import), the audit lines and ids unchanged (hidden), docs updated (advisory). Process: only the allowed files
-changed, conventional commits, at least three, each leaving the suite green (advisory), nothing left uncommitted.
+changed, conventional commits, at least three that change a file with the ledger tests committed before anything under src/
+moves, each leaving the suite green (advisory), nothing left uncommitted, no document still calling the ledger untested or
+module-level (advisory).
 It cannot tell whether the tests are *understood*, whether the refactor was done in small steps rather than one leap
 (it can see commits, not thinking), or whether a different quirk exists that nobody pinned: no suite can.
 
@@ -59,9 +63,11 @@ V2_FILES = ("__init__.py", "ids.py", "clock.py", "audit.py")
 LEARNER = ("Najm Learner", "learner@najm.example")
 
 # Files a sound solution may touch.
+# (README.md describes the ledger as old code with no tests; pyproject.toml and the CI workflow are where a team makes
+# "deprecation warnings are errors" permanent. The ticket lists all of them.)
 ALLOWED = [
     "src/remit/ledger.py", "src/remit/service.py", "src/remit/store.py", "src/remit/cli.py", "src/najmkit/**",
-    "tests/**", "docs/**", "scripts/**", "CLAUDE.md", "AGENTS.md", ".claude/**",
+    "tests/**", "docs/**", "scripts/**", "CLAUDE.md", "AGENTS.md", ".claude/**", "README.md", "pyproject.toml", ".github/workflows/**",
 ]
 PLAN = "docs/refactoring-plan.md"
 PLAN_SECTIONS = ["what must not change", "what i do not understand", "safety net", "seams and the steps", "delegation",
@@ -89,14 +95,14 @@ C_GREEN = "Every commit leaves the suite green"
 C_CLEAN = "Everything is committed"
 C_SECRETS = "No secrets in the change"
 C_PLAN = "docs/refactoring-plan.md has its sections"
-C_MEMORY = "CLAUDE.md does not call the ledger untested or module-level"
+C_STALE = "No document still calls the ledger untested or module-level"
 
 NEW_MEMORY_LINE = (
     "- `src/remit/screening.py` is legacy and has no tests; its docstring lists its quirks. `src/remit/ledger.py` is a `Ledger` class "
     "(state per instance; `RemitService` owns one) with characterization tests in `tests/test_ledger_characterization.py` that pin "
     "its quirks on purpose: do not \"fix\" them.\n"
 )
-# What a project memory that was true before this ticket says about the ledger and is false after it.
+# What the project memory said about the ledger before this ticket (the line the reference solution replaces).
 _STALE_MEMORY = re.compile(r"(?i)ledger[^\n]{0,80}\b(no tests|untested|without tests)|ledger[^\n]*module-level")
 
 
@@ -127,8 +133,10 @@ def grade(work: Path) -> list[Check]:
     results.append(Check(
         C_WROTE, enough,
         f"{report.n_tests} tests in {', '.join(report.tests)}" if report.tests else "no tests/test_ledger_*.py file was added yet",
+        "" if enough else
+        "Add more tests, one behaviour each: at least ten in all (every case of a parametrized test counts)." if report.tests else
         "Copy lab-assets/ledger_port.py to tests/ledger_port.py and write at least ten tests in new files named "
-        "tests/test_ledger_*.py." if not enough else "",
+        "tests/test_ledger_*.py.",
     ))
     if not report.tests:
         waiting = "not checked yet: write your ledger tests first"
@@ -137,15 +145,12 @@ def grade(work: Path) -> list[Check]:
         results.append(Check(C_MUTANTS_ALL, False, waiting, "Same check, all of them.", required=False))
     else:
         results.append(Check(
-            C_BASELINE, report.baseline_ok,
-            f"they pass on the code as it was at the start ({report.n_tests} tests)" if report.baseline_ok
-            else f"on the original code: {report.baseline_detail}",
-            "" if report.baseline_ok else "A characterization test describes what the code does today, and the seam must keep "
-            "working with the original module. Run your tests on a copy of the starting code (the lab-start tag) and fix the test, not the code.",
+            C_BASELINE, report.ready,
+            f"they pass on the code as it was at the start ({report.n_tests} tests)" if report.ready else report.problem,
+            report.hint,
         ))
-        if not report.baseline_ok:
-            results.append(Check(C_MUTANTS, False, "not checked yet: your tests must pass on the original ledger first",
-                                 "Fix the line above first."))
+        if not report.ready:
+            results.append(Check(C_MUTANTS, False, "not checked yet: fix the line above first", "Fix the line above first."))
             results.append(Check(C_MUTANTS_ALL, False, "not checked yet", required=False))
         else:
             total = len(report.killed) + len(report.survived)
@@ -160,7 +165,7 @@ def grade(work: Path) -> list[Check]:
             results.append(Check(C_MUTANTS_ALL, not report.survived, detail, "Add a test for each behaviour listed above.", required=False))
 
     # ---- the whole suite, and nothing deleted ----
-    results.append(checks.tests_pass(work, name=C_SUITE))
+    results.append(m07.suite_check(work, name=C_SUITE))
     deleted = m07.tests_not_deleted(work)
     results.append(Check(C_KEPT, not deleted, "; ".join(deleted) if deleted else "every starting test is still there",
                          "Tests may be edited to follow a rename, never removed to make the suite green."))
@@ -183,7 +188,8 @@ def grade(work: Path) -> list[Check]:
     # ---- Part 3: the migration ----
     left = m07.v1_calls_left(work)
     results.append(Check(C_V1CALLS, not left, f"{len(left)} left: {checks._short(left, 3)}" if left else "none left",
-                         "Run pytest -W error::DeprecationWarning, and read docs/najmkit-v2-migration.md for the new names. "
+                         "Run pytest -W error::DeprecationWarning: it raises at the first old call a test reaches, and every test runs "
+                         "tests/conftest.py first, so migrate that file before the rest. docs/najmkit-v2-migration.md has the new names. "
                          "A clock object's .now() method is not one of the renamed functions."))
     defined = m07.v1_names_still_defined(work)
     if defined is None:
@@ -197,11 +203,12 @@ def grade(work: Path) -> list[Check]:
     results.append(_docs_check(work))
 
     # ---- process ----
-    results.append(checks.files_changed_within(work, ALLOWED, name=C_SCOPE,
-                                               hint="Revert what the ticket does not need (git restore <file>)."))
+    results.append(checks.files_changed_within(
+        work, ALLOWED, name=C_SCOPE,
+        hint="Undo what the ticket does not need, whether or not you committed it: git restore --source=lab-start -- <file> "
+             "(git rm for a file you added), then commit."))
     results.append(checks.conventional_commits(work, name=C_MESSAGES))
-    results.append(checks.commit_count(work, at_least=3, name=C_COUNT,
-                                       hint="Commit the tests, the refactor and the migration separately, each as its own step."))
+    results.append(m07.small_steps(work, name=C_COUNT))
     if gitutil.commits_since(work):
         red, examined = m07.green_commits(work)
         results.append(Check(C_GREEN, not red, f"{examined} commits run, all green" if not red else f"red at: {checks._short(red, 3)}",
@@ -213,7 +220,7 @@ def grade(work: Path) -> list[Check]:
     results.append(checks.sections_check(
         work, PLAN, PLAN_SECTIONS, min_words=6, name=C_PLAN, required=False,
         hint="Copy lab-assets/refactoring-plan-template.md to docs/refactoring-plan.md and fill in every section."))
-    results.append(_memory_check(work))
+    results.append(_stale_check(work))
     return results
 
 
@@ -229,20 +236,11 @@ def _docs_check(work: Path) -> Check:
                  "A stale reference page is how the next agent (or colleague) learns the wrong names.", required=False)
 
 
-def stale_memory_lines(work: Path) -> list[str]:
-    """Lines of CLAUDE.md that still describe the ledger as untested or as keeping module-level state."""
-    path = work / "CLAUDE.md"
-    if not path.is_file():
-        return []
-    return [line.strip() for line in path.read_text(encoding="utf-8").splitlines() if _STALE_MEMORY.search(line)]
-
-
-def _memory_check(work: Path) -> Check:
-    if not (work / "CLAUDE.md").is_file():
-        return Check(C_MEMORY, True, "there is no CLAUDE.md", "", required=False)
-    stale = stale_memory_lines(work)
-    return Check(C_MEMORY, not stale, f"CLAUDE.md still says: {stale[0][:90]}" if stale else "up to date",
-                 "Project memory goes stale like any document: fix the line, or the next agent will believe it.", required=False)
+def _stale_check(work: Path) -> Check:
+    stale = m07.stale_document_lines(work)
+    return Check(C_STALE, not stale, f"{stale[0][:110]}" + (f" (+{len(stale) - 1} more)" if len(stale) > 1 else "") if stale else "up to date",
+                 "Documents go stale like code, and the next agent believes them. Fix the lines: README.md, docs/ARCHITECTURE.md, "
+                 "docs/TOUR.md and CLAUDE.md all talk about the ledger.", required=False)
 
 
 # ---------------------------------------------------------------------------------------------

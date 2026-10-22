@@ -17,9 +17,10 @@ non-goals, decisions, risks, test plan and a plan). Nothing is built: the spec i
 What is graded, and what cannot be
 ----------------------------------
 The grader (``ailab/checks_m03.py``) reads the specs as a reviewer would: the sections, the placeholders and
-filler, worked examples, checkable acceptance criteria, files that exist, the hidden ambiguities (keyword groups,
-tolerant of wording; one sentence resolves one of them; a question is not an answer), the house rules of
-CONTRIBUTING.md, a second reviewer for money logic, and a plan of small numbered steps (test first, a pytest run,
+filler, worked examples (exact amounts, times or dates in any common form), checkable acceptance criteria, files that
+exist (or are said to be new), the hidden ambiguities (keyword groups, tolerant of wording; one sentence resolves one of
+them; a question is not an answer; any section may answer, at least half in Decisions), the house rules of
+CONTRIBUTING.md, a second reviewer for money logic, copies, and a plan of small numbered steps (test first, a pytest run,
 a rollback). It never runs an agent and never runs learner code, and it cannot tell whether a decision is right,
 whether the Arabic is good Arabic, whether the examples are correct or who wrote the file.
 

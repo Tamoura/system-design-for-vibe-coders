@@ -636,7 +636,7 @@ AMBIGUITIES: dict[str, tuple[Ambiguity, ...]] = {
         Ambiguity("rounding", ROUNDING, _part(
             r"round|quantize|ROUND_",
             r"half[- ]?up|ROUND_HALF|nearest|0\.01|2 (?:dp|decimal)|two decimal|cents?\b|fils|dirham|\bup\b|\bdown\b|\beven\b",
-            r"discount|fee|saving|15 ?%|0\.85")),
+            r"discount|fee|saving|15 ?%|0\.85|cents?\b|0\.01|decimal|money|amount|price|total")),
         Ambiguity("corridor", CURRENCY, _part(
             r"QAR-EGP|\bEGP\b|Egypt",
             r"\bonly\b|\bjust\b|exclusively|solely|nothing else|other corridors?|\bPKR\b|Pakistan|STD-B|schedule|\bINR\b|\bPHP\b|unchanged|exclud|not apply|every corridor|all corridors|no other")),
@@ -972,6 +972,7 @@ def spec_checks(work: Path) -> list[Check]:
                              "Read the ticket as a sceptic: which words can mean two things? Find what the code does, then write "
                              "each answer as one complete sentence that names its subject (a question is not an answer). A family "
                              "can hold several questions: answer each in its own sentence, in the Decisions section (an answer elsewhere counts too, but at least half must sit there). "
+                             "A sound answer that is not counted: restate it plainly, naming the thing it is about. "
                              "If only Hessa can know, decide, say it is an assumption and who confirms it."))
         else:
             in_decisions, need = decisions_shortfall(ticket, spec)

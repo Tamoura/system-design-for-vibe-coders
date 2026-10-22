@@ -21,8 +21,9 @@ it), so that ``git bisect`` with the learner's own reproduction test is worth do
 
 What the grader can and cannot tell
 -----------------------------------
-It checks the RESULT: hidden boundary tests over a whole week of instants; that the learner's tests fail on the
-starter code, notice the daily defect and (advisory) the monthly one, and pass on the fix; that no existing test
+It checks the RESULT: hidden boundary tests over a whole week of instants; that the learner's tests RUN and fail
+(on an assertion, not on an import error) on the starter code, notice the daily defect and (advisory) the monthly
+one, and pass on the fix; that no existing test
 was edited; that the fix is a few lines in limits.py; that the tour and the note exist, have their sections and
 are consistent with the repository; commit hygiene. It cannot tell whether the learner understood, whether an
 agent wrote the tour, or whether the note is *good*. The facts it can check, it checks.
@@ -167,7 +168,6 @@ def seed(work: Path) -> None:
 # grade
 # ---------------------------------------------------------------------------------------------
 def grade(work: Path) -> list[Check]:
-    new_tests = checks.new_test_files(work)
     result: list[Check] = []
 
     # --- Part 1: the tour --------------------------------------------------------------------------------------
@@ -182,10 +182,10 @@ def grade(work: Path) -> list[Check]:
             reveal="count",  # the names of the hidden tests would give the answer away
             hint="Re-read the incident note and limits.py. What exactly did the customers see, and which code decides it?",
         ),
-        checks.tests_fail_on_starter(
-            work, new_tests or None,
+        m06.reproduction_check(
+            work,
             name="Your new tests fail on the original code",
-            hint="Reproduce first: a test that passes before the fix proves nothing. Write one that fails today, for the reason in the incident note.",
+            hint="Reproduce first: a test that passes before the fix proves nothing. Write one that runs today and fails on an assertion, for the reason in the incident note.",
         ),
         m06.variant_check(
             work, name="Your tests notice the daily-limit problem", fix_day=False, fix_month=True, required=True,
@@ -201,10 +201,10 @@ def grade(work: Path) -> list[Check]:
         ),
         m06.tests_not_weakened(work),
         checks.files_unchanged(work, ["tests/conftest.py"], name="The shared test fixtures were not edited",
-                               hint="The fixtures are right. Undo your edit (git restore tests/conftest.py)."),
+                               hint="The fixtures are right. Put the file back as it was at the start (git restore --source=lab-start -- tests/conftest.py), even if you committed the edit."),
         checks.files_changed_within(
             work, ALLOWED, name="Only the expected files changed",
-            hint="The fix belongs in the code, tests in tests/, writing in docs/, a helper script in scripts/. Revert the rest (git restore <file>).",
+            hint="The fix belongs in the code, tests in tests/, writing in docs/, a helper script in scripts/. Revert the rest (git restore --source=lab-start -- <file>, even if you committed it; a file you added: git rm it).",
         ),
         m06.fix_is_small(work),
         *m06.root_cause_checks(work, prodlog.WRONGLY_REFUSED, prodlog.WRONGLY_ALLOWED),
@@ -213,7 +213,7 @@ def grade(work: Path) -> list[Check]:
     # --- hygiene -------------------------------------------------------------------------------------------------
     result += [
         checks.commit_count(
-            work, at_least=2, at_most=10, name="You made at least two commits",
+            work, at_least=2, name="You made at least two commits",  # no upper limit: small commits are the habit
             hint="Commit as you go: the tour is one logical change, the fix with its regression test another, the note a third (CONTRIBUTING.md).",
         ),
         checks.conventional_commits(work, min_commits=2),

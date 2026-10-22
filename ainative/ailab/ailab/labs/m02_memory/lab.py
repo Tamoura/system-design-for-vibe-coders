@@ -19,7 +19,10 @@ and it cannot tell who or what wrote the file. It reads the memory the way a rev
 * conventions that match the repo: Decimal money, the test layout, the exact commit rule, najmkit;
 * a short never-do list that names things true of this repository;
 * every path it mentions exists (the trap: docs/ARCHITECTURE.md still describes a module that is gone);
-* nothing stale copied from that document, no filler, no restating of the docs, no secrets.
+* nothing stale copied from that document, no claim the code contradicts (rounding, decimal places, the ledger, the
+  clock, dependencies), no filler, no restating of the docs;
+* no credentials, customer data, invisible characters or instructions to ignore rules or fetch and run code (the kit's
+  own ``checks.no_secrets`` also scans the diff for provider key formats).
 
 It does NOT judge whether the file is *useful*: usefulness is what the A/B experiment is for, and the grader
 cannot see the experiment. The notes are checked for completeness and for quoting real lines of the memory,
@@ -58,7 +61,8 @@ def grade(work: Path) -> list[Check]:
             checks_m02.ALLOWED_FILES,
             name="Only the memory file(s) and the notes changed",
             hint="This lab changes the memory file (CLAUDE.md or AGENTS.md, plus optional .claude/rules) and ab-notes.md "
-                 "only. If you found a mistake in a document, write it down for another ticket instead of fixing it here.",
+                 "only; docs/ and .claude/settings.json count as unrelated too (a deny rule is lab m08's job). If you found a "
+                 "mistake in a document, write it down for another ticket instead of fixing it here.",
         ),
         *checks_m02.memory_checks(work),
         checks.no_secrets(work),

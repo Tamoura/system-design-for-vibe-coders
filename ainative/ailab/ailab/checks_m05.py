@@ -5,12 +5,12 @@ Two jobs, both kept apart from the lab's ``lab.py`` so that they can be tested o
 1. **Read a review.** ``parse_review`` turns the learner's ``review.md`` into findings (file, line,
    severity, text) and ``match_findings`` pairs those findings with the problems seeded in the
    agent's branch (``FLAWS``). Matching is tolerant on purpose: a finding counts when it names the
-   right file *and* either points near the right line *or* says, in any wording, what is wrong.
+   right file *and* either points near the right line *or* uses words that name what is wrong.
    It is a grader, not a judge: it can tell that the review mentions the problem, not that the
    reviewer understood it.
 2. **Static checks on the fixed branch.** Small AST scans (imports, broad ``except``, floats, tests
-   without assertions, tests that fake the fee code, deleted tests) that do not depend on how the
-   learner chose to fix things.
+   without assertions, tests that fake the fee code, deleted tests, the leaked key) that do not depend
+   on how the learner chose to fix things.
 
 Nothing here imports or executes learner code: files are parsed with ``ast`` and pytest runs in a
 subprocess through ``ailab.checks``.
@@ -46,7 +46,8 @@ class Flaw:
     ``markers`` locate the problem in the starting branch: (file, text on the offending line).
     ``keywords`` are regular expressions (case-insensitive); a finding that names the flaw's file
     needs at least one of them unless it points within ``LINE_TOLERANCE`` lines of a marker.
-    ``min_severity`` is the lowest rating that is not an under-call.
+    ``min_severity`` is the lowest rating that is not an under-call, ``max_severity`` the highest that
+    is not an over-call (a test too weak to fail is a major at most; the lesson's severity table says so).
     """
 
     id: str
@@ -55,6 +56,7 @@ class Flaw:
     markers: tuple[tuple[str, str], ...]
     keywords: tuple[str, ...]
     min_severity: str = "major"
+    max_severity: str = "blocker"
 
 
 FLAWS: tuple[Flaw, ...] = (
@@ -86,7 +88,7 @@ FLAWS: tuple[Flaw, ...] = (
         (r"no assert", r"without (?:an? )?assert", r"asserts? nothing", r"never asserts", r"(?:does(?: not|n.t)|doesnt) assert",
          r"no assertions?", r"only prints?", r"\bprint\b", r"always passes", r"vacuous", r"checks? nothing", r"proves? nothing",
          r"missing assert"),
-        "minor",
+        "minor", "major",
     ),
     Flaw(
         "over-mocked-test", "tests",
@@ -94,7 +96,7 @@ FLAWS: tuple[Flaw, ...] = (
         (("tests/test_loyalty.py", "patch.object(fees"),),
         (r"mock", r"patch", r"\bstubs?\b", r"fakes? the", r"replaces? the (?:function|helper|code)", r"tests? the (?:mock|test double)",
          r"under test"),
-        "minor",
+        "minor", "major",
     ),
     Flaw(
         "hard-coded-key", "security",
@@ -103,11 +105,13 @@ FLAWS: tuple[Flaw, ...] = (
         (r"api[ _-]?key", r"secret", r"credential", r"hard-?coded", r"\bkey\b", r"\btoken\b", r"rotat", r"leak", r"env(?:ironment)? var"),
     ),
     Flaw(
+        # The cap change is the problem; the _D -> _dec rename and the rewritten docstrings only cover it. A finding about
+        # the rename alone is fair, but it is not this finding (it is counted as an extra the grader cannot judge).
         "scope-creep", "scope",
-        ("src/remit/fees.py", "src/remit/service.py"),
-        (("src/remit/fees.py", "total=min(base + surcharge, cap)"), ("src/remit/fees.py", "def _dec(")),
-        (r"scope", r"unrelated", r"unrequested", r"not (?:asked|requested|in the ticket)", r"drive-?by", r"express.{0,60}\bcap",
-         r"\bcap\b.{0,60}express", r"behaviou?r change", r"renam", r"\b_dec\b", r"tidy", r"refactor", r"extra change", r"beyond the ticket"),
+        ("src/remit/fees.py",),
+        (("src/remit/fees.py", "total=min(base + surcharge, cap)"),),
+        (r"express.{0,80}\bcap", r"\bcap\b.{0,80}express", r"surcharge.{0,80}\bcap", r"\bcap\b.{0,80}surcharge",
+         r"min\(base", r"base \+ surcharge", r"\b165\b", r"price change", r"hard ceiling"),
     ),
     Flaw(
         "deleted-test", "tests",
@@ -327,6 +331,22 @@ def under_rated(matches: Matches) -> list[str]:
             if finding.severity is None or RANK[finding.severity] < RANK[by_id[fid].min_severity]]
 
 
+def over_rated(matches: Matches) -> list[str]:
+    """Flaw ids whose finding is rated higher than the risk deserves (a test too weak to fail is not a blocker)."""
+    by_id = {f.id: f for f in FLAWS}
+    return [fid for fid, finding in matches.found.items()
+            if finding.severity is not None and RANK[finding.severity] > RANK[by_id[fid].max_severity]]
+
+
+FLAT_MIN = 5  # a review of at least this many rated findings that are all blockers has not ranked anything
+
+
+def all_blockers(findings: Sequence[Finding]) -> bool:
+    """Every rated finding is a blocker: 'if everything is urgent, nothing is'."""
+    rated = [f.severity for f in findings if f.severity]
+    return len(rated) >= FLAT_MIN and all(severity == "blocker" for severity in rated)
+
+
 # =================================================================================================
 # 3. static checks on the fixed branch
 # =================================================================================================
@@ -406,22 +426,52 @@ def broad_except_problems(work: Path | str) -> list[str]:
     return problems
 
 
+MONEYISH = re.compile(r"(?i)money|decimal|amount|fee|rate|discount|price|total|base|surcharge|tier|silver|gold|percent|cent|qar|"
+                      r"\bcap\b|minimum|balance|ledger|loyalty|charge|pay")
+
+
+def _scopes(tree: ast.Module) -> Iterable[ast.stmt]:
+    """The units a float literal is judged in: a module-level statement, a function, a method."""
+    for top in tree.body:
+        if isinstance(top, ast.ClassDef):
+            yield from top.body
+        else:
+            yield top
+
+
+def _identifiers(node: ast.AST) -> str:
+    names = []
+    for item in ast.walk(node):
+        if isinstance(item, ast.Name):
+            names.append(item.id)
+        elif isinstance(item, ast.Attribute):
+            names.append(item.attr)
+        elif isinstance(item, ast.arg):
+            names.append(item.arg)
+        elif isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            names.append(item.name)
+    return " ".join(names)
+
+
 def float_problems(work: Path | str) -> list[str]:
-    """float() calls and float literals in the code that handles money (everything in src/remit except money.py,
-    which mentions float only to refuse it)."""
-    problems = []
+    """``float()`` calls anywhere in the code that handles money (everything in src/remit except money.py, which mentions
+    float only to refuse it), and float literals in any unit of code whose names talk about money (rates, fees, amounts...).
+    A float that has nothing to do with money (a timeout, say) is not a finding."""
+    found: dict[tuple[str, int, str], None] = {}
     for path in _py_files(work, "src/remit"):
         if path.name == "money.py":
             continue
         tree = _parse(path)
-        if tree is None:
+        if not isinstance(tree, ast.Module):
             continue
-        for node in ast.walk(tree):
-            if isinstance(node, ast.Constant) and type(node.value) is float:
-                problems.append(f"float literal in {_rel(work, path)}:{node.lineno}")
-            elif isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "float":
-                problems.append(f"float() in {_rel(work, path)}:{node.lineno}")
-    return list(dict.fromkeys(problems))
+        for scope in _scopes(tree):
+            about_money = bool(MONEYISH.search(_identifiers(scope)))
+            for node in ast.walk(scope):
+                if about_money and isinstance(node, ast.Constant) and type(node.value) is float:
+                    found[(_rel(work, path), node.lineno, "float literal")] = None
+                elif isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "float":
+                    found[(_rel(work, path), node.lineno, "float()")] = None
+    return [f"{kind} in {rel}:{line}" for rel, line, kind in sorted(found)]
 
 
 def _test_functions(tree: ast.AST) -> Iterable[ast.FunctionDef | ast.AsyncFunctionDef]:
@@ -514,6 +564,43 @@ def list_test_names(work: Path | str, ref: str | None = None) -> set[str]:
     return names
 
 
+def _fingerprint(function: ast.FunctionDef | ast.AsyncFunctionDef) -> str:
+    """The body of a test as a tree, without its docstring: the same test under another name has the same fingerprint."""
+    body = list(function.body)
+    if body and isinstance(body[0], ast.Expr) and isinstance(body[0].value, ast.Constant) and isinstance(body[0].value.value, str):
+        body = body[1:]
+    return "\n".join(ast.dump(statement) for statement in body)
+
+
+def _tests(work: Path | str, ref: str | None) -> list[tuple[str, str]]:
+    """(name, body fingerprint) of every test function in the working tree, or at git ``ref`` when given."""
+    sources: list[str] = []
+    if ref is None:
+        sources = [path.read_text(encoding="utf-8", errors="replace") for path in list_test_files(work)]
+    else:
+        listing = gitutil.git(work, "ls-tree", "-r", "--name-only", ref, "--", "tests", check=False).stdout.splitlines()
+        sources = [gitutil.file_at(work, ref, rel) or "" for rel in listing if rel.endswith(".py") and Path(rel).name.startswith("test_")]
+    found = []
+    for source in sources:
+        try:
+            tree = ast.parse(source)
+        except SyntaxError:
+            continue
+        found += [(f.name, _fingerprint(f)) for f in _test_functions(tree)]
+    return found
+
+
+def missing_tests(work: Path | str, base: str = "main") -> list[str]:
+    """Tests that exist on ``base`` and are gone now. A test is *not* missing when a test with the same name is still there,
+    or when its body survives under another name (restored, but renamed): the check is about the evidence, not the label."""
+    if not gitutil.has_ref(work, base):
+        return []
+    now = _tests(work, None)
+    names = {name for name, _ in now}
+    bodies = {body for _, body in now}
+    return sorted({name for name, body in _tests(work, base) if name not in names and body not in bodies})
+
+
 def failing_on_original(work: Path | str, since: str = gitutil.TAG_START, timeout: float = 60.0) -> tuple[int, int]:
     """(how many of the learner's new or changed tests FAIL, how many new or changed test files there are) when every
     non-test file is put back to how the agent left it. Errors do not count: a test that cannot even be imported on the
@@ -536,3 +623,63 @@ def failing_on_original(work: Path | str, since: str = gitutil.TAG_START, timeou
         chosen = [p for p in chosen if (root / p).exists()]
         result = checks._run_pytest_in(root, chosen, timeout=timeout, args=(), extra_env=None)  # noqa: SLF001 (kit-internal helper)
     return (0 if result.timed_out else result.failed), len(chosen)
+
+
+# -- the leaked key ---------------------------------------------------------------------------------------------------------
+KEY_SHAPE = re.compile(r"najm-loy-[A-Za-z0-9_-]{8,}")  # what the agent committed: the prefix alone (najm-loy-) is not the key
+_ENV_READERS = {"os.environ.get", "os.getenv", "environ.get", "getenv"}
+_SECRET_NAME = re.compile(r"(?i)key|token|secret|passw|credential")
+_PLACEHOLDER = re.compile(r"(?i)change.?me|your[_-]|example|placeholder|dummy|fake|x{4,}|\*{3,}|<[^>]+>|\$\{|%\(|test")
+_KEY_IGNORE = ("TASK.md", "lab-assets/**", "**/__pycache__/**", "**/*.pyc", ".pytest_cache/**", ".claude/settings.local.json")
+
+
+def _text(node: ast.AST) -> str | None:
+    """The value of a string built only from literals: 'a', 'a' + 'b', f'a{...}' is not (None)."""
+    if isinstance(node, ast.Constant) and isinstance(node.value, str):
+        return node.value
+    if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Add):
+        left, right = _text(node.left), _text(node.right)
+        return left + right if left is not None and right is not None else None
+    if isinstance(node, ast.JoinedStr) and all(isinstance(v, ast.Constant) for v in node.values):
+        return "".join(str(v.value) for v in node.values)  # type: ignore[attr-defined]
+    return None
+
+
+def leaked_key_problems(work: Path | str, since: str = gitutil.TAG_START) -> list[str]:
+    """Where the key the agent committed (or anything shaped like it) still is, and secrets with a hard-coded fallback.
+
+    Looks in every file of the repository, review.md included (a review is shared text: refer to a secret by file and line),
+    and sees through ``'najm-loy-' + 'live-...'``. Reports file:line and never the value."""
+    work = Path(work)
+    original = re.search(r"LOYALTY_API_KEY\s*=\s*[\"']([^\"']+)", gitutil.file_at(work, since, "src/remit/loyalty.py") or "")
+    exact = original.group(1) if original else None
+    hits: dict[str, None] = {}
+
+    def leaked(text: str) -> bool:
+        return bool(KEY_SHAPE.search(text)) or bool(exact and exact in text)
+
+    names = sorted(set(gitutil.out(work, "ls-files").splitlines()) | set(gitutil.changed_files(work, since, ignore=())))
+    for rel in names:
+        path = work / rel
+        if gitutil.glob_match(rel, _KEY_IGNORE) or not path.is_file():
+            continue
+        data = path.read_bytes()
+        if b"\0" in data[:8000] or len(data) > 2_000_000:
+            continue
+        text = data.decode("utf-8", errors="replace")
+        for number, line in enumerate(text.splitlines(), start=1):
+            if leaked(line):
+                hits[f"the old key is still in {rel}:{number}"] = None
+        if rel.endswith(".py"):
+            tree = _parse(path)
+            for node in ast.walk(tree) if tree else ():
+                value = _text(node) if isinstance(node, (ast.BinOp, ast.JoinedStr)) else None
+                if value is not None and leaked(value):
+                    hits[f"the old key is still in {rel}:{node.lineno}"] = None
+                if isinstance(node, ast.Call) and ast.unparse(node.func) in _ENV_READERS and len(node.args) >= 1:
+                    var = _text(node.args[0]) or ""
+                    default = _text(node.args[1]) if len(node.args) > 1 else next(
+                        (_text(k.value) for k in node.keywords if k.arg == "default"), None)
+                    if _SECRET_NAME.search(var) and default and len(default) >= 8 and not _PLACEHOLDER.search(default):
+                        hits[f"a secret has a hard-coded fallback in {rel}:{node.lineno}"] = None
+    return list(hits)  # one report per place: the plain-text scan and the tree scan can find the same line

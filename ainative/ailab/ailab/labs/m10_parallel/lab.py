@@ -21,8 +21,10 @@ It checks the *result*: the merged ``main`` passes the hidden acceptance tests (
 plus one for the pieces working together), at least three branches were merged, no conflict marker is
 left, each commit belongs to one task, commit messages follow CONTRIBUTING.md, only the expected
 files changed and no existing test was weakened. It cannot tell whether you planned well, whether an
-agent or you wrote a line, or whether you really read the ``limits`` diff (the ticket asks you to).
-The plan and the agent log are advisory checks that look only for their shape.
+agent or you wrote a line, whether you really read the ``limits`` diff (the ticket asks you to), or a
+real branch from a branch name made up afterwards (a fast-forward looks the same; this is an honour
+system). The plan and the agent log are advisory checks that look only at their shape: a plan that is
+more than the template and was committed before the code, a log with real words in it.
 """
 from __future__ import annotations
 
@@ -34,17 +36,23 @@ from ailab.framework import Check, Lab
 
 HERE = Path(__file__).resolve().parent
 CLI = "src/remit/cli.py"
+RUNBOOK = "docs/CARE.md"
 
 PARSER_MARKER = "    # --- Customer Care desk commands (REMIT-361): add your parser below this line ---\n"
 RUN_MARKER = "    # --- Customer Care desk commands (REMIT-361): handle your command below this line, ending with `return 0` ---\n"
 
-# Which module each task owns. A commit that changes two of them is "about two tasks".
-AREAS = {
-    "src/remit/notify.py": "notify",
-    "src/remit/corridors.py": "corridors",
-    "src/remit/limits.py": "limits",
+# Which task(s) each file can belong to (the ticket says so). A commit whose files share no task is "about two
+# tasks". cli.py is shared by B and C; tests, the plan, the log and other docs belong to no task in particular.
+TASK_OF = {
+    "src/remit/notify.py": "A",
+    "src/remit/corridors.py": "B",
+    "src/remit/limits.py": "C",
+    CLI: "BC",
+    RUNBOOK: "D",
 }
-ALLOWED = [*AREAS, CLI, "tests/**", "docs/**", "lab-assets/**", "TASK.md"]
+# Agent settings and .gitignore are allowed too: an agent saves its subagent file, a learner ignores worktree folders.
+ALLOWED = [*TASK_OF, "tests/**", "docs/**", "lab-assets/**", "TASK.md",
+           ".claude/**", "CLAUDE.md", "AGENTS.md", ".gitignore", ".worktreeinclude"]
 PLAN = "docs/parallel-plan.md"
 LOG = "docs/agent-log.md"
 REQUIRED_BRANCHES = 3
@@ -56,11 +64,11 @@ PARTS = [
     ("test_m10_notice", "Task A: the delay notice works",
      "Compare your template with the ticket's wording, word for word, in both languages."),
     ("test_m10_corridors", "Task B: the corridors command works",
-     "Run `python -m remit corridors` yourself and compare each line with the form in the ticket."),
+     "Run `python -m remit corridors` and `corridors QAR-PKR` yourself, compare each line with the form in the ticket, and check that no database file appears."),
     ("test_m10_limits", "Task C: the limits command works",
-     "Run `python -m remit limits --customer C001` for a customer with a transfer, then re-read what 'today' means in limits.py."),
+     "Run `python -m remit limits --customer C001` for a customer with a transfer and compare each line with the ticket; re-read what 'today' means in limits.py."),
     ("test_m10_runbook", "Task D: the runbook is there",
-     "Check the headings, commands and example output against the ticket."),
+     "Check the headings and the commands, and copy every example line from the running program instead of typing it."),
     ("test_m10_together", "The pieces work together after the merge",
      "Run every command by hand on the merged main, the old ones too. Check the imports, the dispatch in `_run` and the usage list."),
 ]
@@ -115,7 +123,8 @@ def _on_main(work: Path) -> Check:
     branch = gitutil.current_branch(work)
     if branch == "main":
         return Check(name, True, "")
-    return Check(name, False, f"the checked-out branch is {branch!r}, not main",
+    shown = "no branch (a detached HEAD)" if branch == "HEAD" else f"the branch {branch!r}"
+    return Check(name, False, f"you are on {shown}, not on main",
                  "Merge your branches into main and finish there: git switch main")
 
 
@@ -146,6 +155,18 @@ def merged_lines_of_work(work: Path) -> dict[str, str]:
     return found
 
 
+def _branches_outside_main(work: Path) -> list[str]:
+    """Local branches that carry commits main does not contain (so they are not merged, or were squashed)."""
+    start = gitutil.rev_parse(work, "lab-start") or "lab-start"
+    listing = gitutil.out(work, "for-each-ref", "--format=%(objectname) %(refname:short)", "refs/heads")
+    apart = []
+    for row in listing.splitlines():
+        sha, _, branch = row.partition(" ")
+        if branch != "main" and not gitutil.is_ancestor(work, sha, "main") and not gitutil.is_ancestor(work, sha, start):
+            apart.append(branch)
+    return sorted(apart)
+
+
 def _branches_merged(work: Path) -> Check:
     name = f"At least {REQUIRED_BRANCHES} branches were merged into main"
     if not gitutil.has_ref(work, "main"):
@@ -155,8 +176,13 @@ def _branches_merged(work: Path) -> Check:
               else "no branch has been merged into main yet")
     if len(found) >= REQUIRED_BRANCHES:
         return Check(name, True, detail)
-    return Check(name, False, detail,
-                 "Give each task its own branch and `git merge` it into main (no --squash). Keep the branches until you have graded.")
+    apart = _branches_outside_main(work)
+    if apart:  # branches with work that main does not contain: not merged, or squashed (a squash leaves no link)
+        detail += f"; not part of main's history (unmerged, or squashed): {_names(apart)}"
+        hint = "Merge those branches into main with `git merge <branch>` (not --squash) and keep them until you have graded."
+    else:
+        hint = "Give each task its own branch and `git merge` it into main (no --squash). Keep the branches until you have graded."
+    return Check(name, False, detail, hint)
 
 
 def _commit_files(work: Path, sha: str) -> list[str]:
@@ -164,19 +190,43 @@ def _commit_files(work: Path, sha: str) -> list[str]:
 
 
 def _one_task_per_commit(work: Path) -> Check:
+    """No commit changes files that belong to different tasks (TASK_OF: notify A, corridors B, limits C, cli B or C,
+    the runbook D). Tests, the plan, the log and other docs belong to no task, so a test that spans tasks is fine."""
     name = "Each commit is about one task"
     commits = [c for c in gitutil.commits_since(work, "lab-start") if not c.is_merge]
     if not commits:
         return Check(name, False, "no commits since the start yet", "Commit each task on its own branch.")
     mixed = []
     for commit in commits:
-        areas = sorted({AREAS[f] for f in _commit_files(work, commit.sha) if f in AREAS})
-        if len(areas) > 1:
-            mixed.append(f'"{commit.subject}" changes {" and ".join(areas)}')
+        owned = {f: TASK_OF[f] for f in _commit_files(work, commit.sha) if f in TASK_OF}
+        tasks = set("ABCD")
+        for letters in owned.values():
+            tasks &= set(letters)
+        if owned and not tasks:
+            shown = ", ".join(f"{Path(f).name} ({' or '.join(letters)})" for f, letters in sorted(owned.items()))
+            mixed.append(f'"{commit.subject}" changes files of different tasks: {shown}')
     if mixed:
         return Check(name, False, _names(mixed, 2),
-                     "Split it: one task per commit (git reset --soft, then commit the files of each task separately).")
+                     "Split it so each commit changes the files of one task: `git reset --soft HEAD~1` for the latest commit, "
+                     "`git rebase -i` for an older one.")
     return Check(name, True, f"{checks.plural(len(commits), 'commit')} checked")
+
+
+def _commit_messages(work: Path) -> Check:
+    """CONTRIBUTING.md's rule, with a hint that fits a history of branches and merges."""
+    result = checks.conventional_commits(work, min_commits=MIN_COMMITS)
+    if result.ok:
+        return result
+    if "expected at least" in result.detail:
+        if result.detail.startswith("found 0 ") and not _branches_outside_main(work):
+            result.hint = "Nothing is committed yet. Do each task on its own branch, commit there, and merge the branches into main."
+        else:
+            result.hint = ("main has too few commits of its own work. Merge each task's branch into main; "
+                           "commits that sit only on other branches do not count.")
+    else:
+        result.hint = ("Follow the `type(scope): subject` format in CONTRIBUTING.md; merge commits are not checked. "
+                       "`git commit --amend` fixes the latest commit, `git rebase -i` an older one.")
+    return result
 
 
 def _tracked_text_files(work: Path, globs: list[str]) -> list[str]:
@@ -206,7 +256,7 @@ def _no_markers(work: Path) -> Check:
     bad = conflict_marker_files(work)
     if bad:
         return Check(name, False, f"unresolved conflict in {_names(bad)}",
-                     "Open each file, keep what BOTH sides added, delete the <<<<<<<, ======= and >>>>>>> lines, then run pytest and commit.")
+                     "Open each file, keep what BOTH sides added, delete the <<<<<<<, ======= and >>>>>>> lines, check the lines around the hunk still make a working program, then run pytest and commit.")
     return Check(name, True, "")
 
 
@@ -227,8 +277,14 @@ def _markers_in_history(work: Path) -> Check:
     return Check(name, True, "", "", required=False)
 
 
+# Lines that switch a test off without deleting it. Adding one to a test file that existed at the start is weakening.
+_SWITCHED_OFF = re.compile(r"\b(skip|skipif|xfail|importorskip|collect_ignore|collect_ignore_glob|"
+                           r"pytest_ignore_collect|pytest_collection_modifyitems)\b")
+
+
 def _tests_not_weakened(work: Path) -> Check:
-    """Tests that existed at the start may gain lines but not lose or change any."""
+    """Tests that existed at the start may gain tests but not lose or change a line, and may not be switched off
+    (a skip or xfail marker, an ignore in a conftest)."""
     name = "Existing tests were not weakened"
     existing = gitutil.out(work, "ls-tree", "-r", "--name-only", "lab-start", "tests").splitlines()
     problems = []
@@ -243,29 +299,74 @@ def _tests_not_weakened(work: Path) -> Check:
             _, deleted, _ = stat.split("\t", 2)
             if deleted not in ("0", "-"):
                 problems.append(f"{rel}: {deleted} existing lines changed or removed")
+                continue
+            added = [line for line in gitutil.out(work, "diff", "--no-color", "-U0", "lab-start", "--", rel).splitlines()
+                     if line.startswith("+") and not line.startswith("+++")]
+            if any(_SWITCHED_OFF.search(line) for line in added):
+                problems.append(f"{rel}: a skip, xfail or ignore was added")
     if problems:
         return Check(name, False, _names(problems),
-                     "Put your tests in new files, or only add to the old ones. Undo the change: git restore --source=lab-start <file>")
+                     "Fix the code, not the test: put your tests in new files, or only add tests to the old ones (no skip or xfail). "
+                     "Undo the change: git restore --source=lab-start <file>, then commit.")
     return Check(name, True, "")
 
 
+_CODE_FILES = set(TASK_OF)  # a commit that changes one of these is "the code" for the plan-first check
+PLAN_NEW_WORDS = 40  # words in the plan that are not in the template
+LOG_MIN_WORDS = 30
+LOG_MIN_DISTINCT = 15
+
+
+def _template_lines() -> set[str]:
+    template = (HERE / "assets" / "parallel-plan-template.md").read_text(encoding="utf-8")
+    return {line.strip() for line in template.splitlines() if line.strip()}
+
+
 def _plan(work: Path) -> Check:
-    return checks.sections_check(
+    """Advisory: the plan is more than the template, has its four sections and was committed before the code."""
+    name = "A plan was committed first (docs/parallel-plan.md)"
+    sections = checks.sections_check(
         work, PLAN, ["Task graph", "Boundaries", "Merge order", "Verification"], min_words=4,
-        name="A parallel plan exists (docs/parallel-plan.md)",
+        name=name,
         hint="Copy lab-assets/parallel-plan-template.md to docs/parallel-plan.md and fill it in before you start.",
         required=False,
     )
+    if not sections.ok:
+        return sections
+    text = (work / PLAN).read_text(encoding="utf-8")
+    template = _template_lines()
+    mine = sum(len(line.split()) for line in text.splitlines() if line.strip() and line.strip() not in template)
+    if mine < PLAN_NEW_WORDS:
+        return Check(name, False, f"the plan has only {mine} words of your own: it is still mostly the template",
+                     "Fill in the task graph, the boundaries, the merge order and the verification table.", required=False)
+    commits = [c for c in gitutil.commits_since(work, "lab-start") if not c.is_merge]
+    files = {c.sha: _commit_files(work, c.sha) for c in commits}
+    plan_commits = [sha for sha, names in files.items() if PLAN in names]
+    code_commits = [sha for sha, names in files.items() if _CODE_FILES & set(names)]
+    if not plan_commits:
+        return Check(name, False, "the plan is not committed yet", "Commit the plan on main before you cut a branch.", required=False)
+    late = [sha for sha in code_commits if not any(gitutil.is_ancestor(work, p, sha) for p in plan_commits)]
+    if late:
+        return Check(name, False, f"{checks.plural(len(late), 'commit')} changed code before the plan was committed",
+                     "Next time commit the plan on main first, then cut every branch from that commit.", required=False)
+    return Check(name, True, f"{mine} words of your own, committed before the code", required=False)
 
 
 def _agent_log(work: Path) -> Check:
     name = "A short log exists (docs/agent-log.md)"
     path = work / LOG
-    words = len(path.read_text(encoding="utf-8").split()) if path.is_file() else 0
-    if words >= 30:
-        return Check(name, True, f"{words} words", required=False)
-    return Check(name, False, "docs/agent-log.md is missing" if not path.is_file() else f"only {words} words",
-                 "Note what you delegated, what you corrected and the minutes (30 words or more).",
+    words = path.read_text(encoding="utf-8").split() if path.is_file() else []
+    distinct = len({w.lower() for w in words})
+    if len(words) >= LOG_MIN_WORDS and distinct >= LOG_MIN_DISTINCT:
+        return Check(name, True, f"{len(words)} words", required=False)
+    if not path.is_file():
+        detail = "docs/agent-log.md is missing"
+    elif len(words) < LOG_MIN_WORDS:
+        detail = f"only {len(words)} words"
+    else:
+        detail = f"{len(words)} words, but only {distinct} different ones"
+    return Check(name, False, detail,
+                 "Note what you delegated, what you corrected and the minutes (30 words or more, in your own words).",
                  required=False)
 
 
@@ -282,10 +383,11 @@ def grade(work: Path) -> list[Check]:
         _no_markers(work),
         _branches_merged(work),
         _one_task_per_commit(work),
-        checks.conventional_commits(work, min_commits=MIN_COMMITS),
+        _commit_messages(work),
         checks.files_changed_within(
             work, ALLOWED, name="Only the expected files changed",
-            hint="This ticket touches notify.py, corridors.py, limits.py, cli.py, tests and docs. Undo the rest: git restore --source=lab-start <file>",
+            hint="This ticket touches notify.py, corridors.py, limits.py, cli.py, tests, docs and agent settings. Undo the rest "
+                 "(git restore --source=lab-start <file>, or git rm <file> for a new file) and commit.",
         ),
         _tests_not_weakened(work),
         checks.no_secrets(work),

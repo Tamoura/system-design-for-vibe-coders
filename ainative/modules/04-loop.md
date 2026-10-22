@@ -15,7 +15,7 @@
 - Commits are save points. Checkpoints (`Esc` `Esc`, `/rewind`) briefly undo the agent's edits; they do not replace git.
 - Stop at the first cue: thrashing, edits out of scope, the same failing command, apologies without evidence. Correct once. After **two failed attempts, change the approach**: smaller task, fresh context, better spec.
 - Take the wheel when typing the fix is faster than explaining it, or the agent cannot see what you can.
-- Biggest trap: waiting. Stopping early is the cheapest check.
+- Biggest trap: waiting.
 
 ## 🧭 Why it matters
 On a Friday (a constructed day) Lujain gives her agent REMIT-269, a `--since` option for `history`, in one prompt and goes into a meeting. When she returns, 14 files and 612 lines have changed: the option, a parser refactor, a tidy-up of `fees.py` and three edited tests. All pass; she commits it as `wip`. Nada asks which of the 612 lines the feature needs; Lujain cannot say, and one edited test used to guard a fee-tier boundary. The pull request is split into four, and unpicking `fees.py` takes longer than the feature did.
@@ -45,7 +45,7 @@ flowchart TD
 
 In each lap **you** state the step's check first, run it yourself, read `git diff` (tests first) and write the commit message. **The agent** reads, proposes and edits, and commits only when asked.
 
-**What the documentation recommends.** The Claude Code best-practices page has its own headings; labels such as "explore-plan-code-commit" or "safe YOLO mode" are not among them. It changes, so check the current page.
+**What the documentation recommends.** The Claude Code best-practices page changes, so check it; labels such as "explore-plan-code-commit" or "safe YOLO mode" are not its headings.
 
 | The page's heading or topic | Its gist | Here |
 |---|---|---|
@@ -74,13 +74,13 @@ git commit -m "feat(cli): filter history with --since"
 - **Commits are save points**, made when a step is green. `git restore <file>` drops uncommitted edits to one file; `git revert <sha>` undoes a commit without rewriting history.
 - **Conventional Commits.** Remit's `CONTRIBUTING.md` asks for `type(scope): subject`: a listed type, a required lower-case scope, an imperative subject without a full stop, a header up to 72 characters. The public specification makes the scope optional; Remit is stricter.
 
-**Plan mode, and when to skip it.** In plan mode the agent explores and proposes but does not edit source files. Use it for work that spans files or code you do not yet understand; skip it for the one-sentence diff, like the m00 typo.
+**Plan mode, and when to skip it.** In plan mode the agent explores and proposes but does not edit source files. Use it for work that spans files or code you do not yet understand; skip it for the one-sentence diff.
 
 ### 🟡 Going deeper
 
 **Checkpoints and rewind.** At the time of writing (2026), Claude Code records a checkpoint for each prompt that starts a turn, keeps the 100 most recent and expires them about 30 days after the session's last snapshot. Open the menu with `Esc` `Esc` on an empty prompt, or `/rewind`: restore code, conversation or both, or summarise. Bash changes (`rm`, `mv`, `cp`), outside edits and other sessions are not tracked, and the documentation says checkpoints are not a substitute for git.
 
-**Cues that an agent is going astray.** The card in the 🏛️ section lists six: **thrashing**, **out-of-scope edits**, **the same failing command**, **apologising loops**, **plan drift** and **claims without evidence**. Stop at the first.
+**Cues that an agent is going astray.** The card in the 🏛️ section lists six, from thrashing to claims without evidence. Stop at the first.
 
 Anthropic, the maker of Claude Code, found that five assistants consistently showed sycophancy, a pull towards the user's view, across four text-generation tasks (Sharma and others, ICLR 2024). "You're right" is not evidence; a test run is (habit 4, *Trust evidence, not fluency*).
 
@@ -90,7 +90,7 @@ Anthropic, the maker of Claude Code, found that five assistants consistently sho
 
 **When to take the wheel.** Take it when typing the fix is faster than explaining it; when the cause is a fact only you hold (the Qatar midnight, a business rule) or the agent cannot see what you see (a screen); when you cannot yet verify a money-path change; when two attempts failed; or when you are practising a skill you want to keep (lesson 13.1). It is not failure: fix the hard line, then hand the keyboard back for the tests.
 
-**Session hygiene.** One task per session; the page calls the opposite "The kitchen sink session". Use `/clear` between tasks, `/compact Focus on the CLI changes` when a long task fills the window and `/context` to see what is loaded; send investigations to subagents, which return a report only. The page says performance degrades as the window fills.
+**Session hygiene.** One task per session; the page calls the opposite "The kitchen sink session". Use `/clear` between tasks, `/compact Focus on the CLI changes` when a long task fills the window and `/context` to see what is loaded; send investigations to subagents, which return a report only.
 
 **The agent log.** After each AI-assisted task, note the prompt, the result, your corrections, your checks and the minutes. Be honest about the minutes: the log is your clock, and your feeling of speed is not.
 
@@ -107,11 +107,11 @@ Anthropic, the maker of Claude Code, found that five assistants consistently sho
 
 ### 🔴 Expert view
 
-**Done means verified.** Meta's engineering blog describes a small team building its Forum app with an AI agent. Meta reports that it measured success by production-ready changes, not code volume, and set the bar "at verification rather than compilation": a task is complete only after automated tests and visual checks pass, not when the code compiles. It also reports that when the agent repeated a mistake more than twice, the team encoded the correction once, for everyone. Meta calls "human-on-the-loop" a target, not a finished state; this is a company's account of its own practice, not independent evidence. The habits carry over: "done" is a check you ran, and a correction you make a third time belongs in `CLAUDE.md`, a test or a hook (Modules 2 and 9).
+**Done means verified.** Meta's engineering blog describes a small team building its Forum app with an AI agent as a participant. Meta reports that it measured success by production-ready changes, not code volume, and set the bar "at verification rather than compilation": a task is complete only after automated tests and visual checks pass, not when the code compiles. It also reports that when the agent repeated a mistake more than twice, the team encoded the correction once, for everyone. Meta's target is "human-on-the-loop": the agent runs the plan, build, test and correct cycle while an engineer sets the goal and approves the result. The post calls this a target, not a finished state. All of it is a company's account of its own practice, not independent evidence. The habits carry over: "done" is a check you ran, and a correction you make a third time belongs in `CLAUDE.md`, a test or a hook (Modules 2 and 9).
 
 **Gate the stop.** An agent stops when it believes it is done. The page names three ways to make "done" require your check: a `/goal` condition, a Stop hook or a verification subagent (lesson 9.1; how each behaves changes, so check the documentation).
 
-**How long a leash.** The course's default is Manual or `acceptEdits` mode with a check after every step; the mode Claude Code starts in depends on its version, plan and provider, so read the status bar. Longer leashes (auto mode, background and headless runs) pay when the work is specified, checkable and cheap to throw away, but you lose the cues, since you cannot interrupt what you are not watching: automate the checks. The documentation says auto mode "does not guarantee safety"; a second agent's review is a check, not proof.
+**How long a leash.** The course's default is Manual or `acceptEdits` mode with a check after every step; the mode Claude Code starts in depends on its version, plan and provider, so read the status bar. Longer leashes (auto mode, background and headless runs) pay when the work is specified, checkable and cheap to throw away, but you lose the cues, since you cannot interrupt what you are not watching: automate the checks. The documentation says auto mode "does not guarantee safety".
 
 **When not to run the full loop.** For a one-sentence diff, read the diff and commit. For a throwaway spike, delete the branch afterwards. The loop cannot rescue a vague ticket: if every lap ends in "not what I meant", return to lesson 3.1.
 
@@ -176,7 +176,7 @@ The clinic's rule: no pull request without a filled checklist, and no "the agent
 
 ## 🛠️ Exercises
 - 🟢 **Mark a timeline.** *No agent.* Write a six-line timeline of your last AI-assisted session. *Done when:* each line names a move, and two name a cue you noticed late and the rung you should have used.
-- 🟡 **Run the loop on a small change.** *Agent optional.* Make a green sandbox (from the `ailab` folder: `python -m ailab start m00 --dir ~/ainative/sandbox`, then `python -m ailab solve m00 --dir ~/ainative/sandbox`). On a branch, add `--since YYYY-MM-DD` to `history` (`PYTHONPATH=src python -m remit history --customer ID`); a date means the start of that Qatar day. *Done when:* you have three or more green commits in the Remit format, the checklist is ticked with the commands you ran, and one line says what to change.
+- 🟡 **Run the loop on a small change.** *Agent optional.* Make a green sandbox (from the `ailab` folder: `python -m ailab start m00 --dir ~/ainative/sandbox`, then `python -m ailab solve m00 --dir ~/ainative/sandbox`). In the sandbox, on a branch, add `--since YYYY-MM-DD` to `history`; a date means the start of that Qatar day. (Try `PYTHONPATH=src python -m remit history --customer C001` after `customer add` and `send`.) *Done when:* you have three or more green commits in the Remit format, the checklist is ticked with the commands you ran, and one line says what to change.
 - 🔴 **Rehearse an interruption.** *Needs an agent.* In the sandbox, give the agent a prompt that invites scope creep ("make the CLI nicer"), with no plan, and watch. *Done when:* your notes give the first cue and its time, the rung you used and what the two-failure rule would have changed, and the branch is at a green commit.
 
 ## ⚠️ Mistakes and traps
@@ -274,24 +274,21 @@ The clinic's rule: no pull request without a filled checklist, and no "the agent
 - **Lab m04.** Hessa's ticket REMIT-318: when a successful transfer takes a customer to 80% of their daily limit or more, send a second message, in English or Arabic. About 25 lines of code, and five easy ways to get them wrong.
 - You run the whole loop: explore, a spec with a plan, small green commits, tests that fail without the feature, an agent log.
 - **Needs an agent: recommended, not required.** The grader cannot tell who typed the code.
-- The grader runs hidden acceptance tests, your own tests, and breaks the warning on purpose to see whether your tests notice. It also checks scope, size, commit messages and secrets.
-- It cannot tell whether you read the diff or whether your decisions were good. That part is yours.
+- The grader runs hidden acceptance tests, then breaks the warning on purpose to see whether your tests notice. It cannot tell whether you read the diff or decided well.
 
 ## 🧭 Why it matters
-Lujain's agent writes the limit warning in four minutes. On the example it tried, it looks right: "you have used 85%". It passes every test, including the ones the agent wrote. It also fails at exactly 80%, shows 100% to a customer at 99.95%, prints Western digits to Arabic customers, and turns a gateway outage into a crash after the money has moved. A green suite proves none of this: the old tests predate the feature, and the agent's tests check only the cases it thought of.
-
-A small change near money is easy to trust: right on the happy path, wrong at the edges.
+Lujain's agent writes the limit warning in four minutes. It looks right and passes every test, including the ones the agent wrote. It also fails at exactly 80%, shows 100% to a customer at 99.95%, prints Western digits to Arabic customers, and turns a gateway outage into a crash after the money has moved. A green suite proves none of this: the old tests predate the feature, and the agent's tests check only the cases it thought of.
 
 ## 📐 How it works
 
 ### 🟢 The essentials
 
-The lab is the loop in seven steps (the order is advice; the grader judges the result):
+The lab is the loop in seven steps (the order is advice):
 
 | Step | You do | Evidence |
 |---|---|---|
 | 1. Explore | Run `pytest -q`. Read `send` in `service.py`, `LimitResult` in `limits.py`, `render` in `notify.py` | You can say what `daily_used` includes |
-| 2. Spec and plan | Copy `specs/TEMPLATE.md` to `specs/REMIT-318.md`; settle what the ticket leaves open (where the logic lives, how to get the percentage without floats); plan about five steps | A committed spec |
+| 2. Spec and plan | Copy `specs/TEMPLATE.md` to `specs/REMIT-318.md`; settle what the ticket leaves open (where the logic lives, the percentage without floats); plan about five steps | A committed spec |
 | 3. The message | The template, with tests of its exact text | A green commit |
 | 4. The decision | When to warn, what to show, with tests either side of the line | A green commit |
 | 5. The edges | Arabic customer, refused transfer, failed delivery | A green commit |
@@ -309,7 +306,7 @@ The lab is the loop in seven steps (the order is advice; the grader judges the r
                                  remaining=limits.daily_limit - limits.daily_used)
 ```
 
-(1) `limits.daily_used` is the position **before** this transfer, so the warning comes one transfer late. (2) A `Decimal` compared with a float `0.8` is compared exactly, and `Decimal("0.8") >= 0.8` is `False`: exactly 80% gets no warning. (3) `round` rounds the percentage, not down. (4) The notifier is called directly, so a delivery failure escapes `send` after the transfer was saved; the service has a best-effort path. (5) An `int` percentage is not localised, so Arabic customers see Western digits. Evidence beats reading: defect 2 takes ten seconds to check.
+(1) `limits.daily_used` is the position **before** this transfer, so the warning comes one transfer late. (2) A `Decimal` compared with a float is compared exactly, and `Decimal("0.8") >= 0.8` is `False`: exactly 80% gets no warning. (3) `round` rounds the percentage instead of rounding it down. (4) The notifier is called directly, so a delivery failure escapes `send` after the transfer was saved. (5) An `int` percentage is not localised, so Arabic customers see Western digits. Evidence beats reading: defect 2 takes ten seconds to check. Look for these five in any agent diff.
 
 ```text
 >>> from decimal import Decimal
@@ -317,7 +314,7 @@ The lab is the loop in seven steps (the order is advice; the grader judges the r
 False
 ```
 
-**The vague prompt and the specified one.** Vague: *"Add a warning at 80% of the daily limit."* The agent chooses a reading, and each choice above is one it can get wrong. Specified:
+**The vague prompt and the specified one.** *"Add a warning at 80% of the daily limit"* leaves the agent to choose a reading, and each choice above is one it can get wrong. Specified:
 
 ```text
 Read TASK.md and specs/REMIT-318.md, then service.py (send), limits.py and notify.py.
@@ -327,27 +324,23 @@ existing best-effort helper. Failing tests first, then the code. Do not touch fe
 existing test, and do not commit. Show me the diff when pytest -q is green.
 ```
 
-**Reviewing the agent's diff.** Five questions. Does it add this transfer? Is every comparison Decimal against Decimal? What happens at exactly 80%, and one cent under? Where does each digit of the Arabic text come from? What if delivery fails? If the diff cannot answer, run it.
-
 ### 🔴 Expert view
 
-**How the grader judges your tests.** "Your new tests fail when the warning is removed" puts every file outside `tests/` back to its `lab-start` state and runs your new tests. "Your tests notice a broken warning" runs them seven more times on your own code, each time with one deliberate breakage applied to the running program by a test plugin: the warning never delivered, the text without its numbers, the percentage one too high, Arabic customers given English, Western digits in Arabic, the 80% line a little too high or too low. Five of seven must be caught. This is the mutation idea from [*Software Testing*, lesson 2.3 — Are your tests any good? Coverage, mutation testing, property-based testing and flaky tests](../testing/index.html#/2.3), applied at the edges of the program so it works whatever your code looks like.
+**How the grader judges your tests.** "Your new tests fail when the warning is removed" puts every file outside `tests/` back to its `lab-start` state and runs your new tests. "Your tests notice a broken warning" runs them seven more times on your own code, each time with one deliberate breakage applied to the running program by a test plugin: the warning never delivered, the text without its numbers, the percentage one too high, Arabic customers given English, Western digits in Arabic, the 80% line a little too high or too low. Five of seven must be caught, and both 80%-line breakages among them: the ticket asks you to pin a total just under the line and one exactly on it, and wording tests alone never touch the line. This is the mutation idea from [*Software Testing*, lesson 2.3 — Are your tests any good?](../testing/index.html#/2.3), applied at the edges of the program so it works whatever your code looks like.
 
-**What it cannot do.** It does not know your design is good, your spec wise or that you read the diff. If your tests use a fake notifier that never calls `render`, some breakages cannot reach them. The hidden tests are in the kit; reading them would cost you the practice. And a pass is not a review: in a real team `service.py` needs a second human reviewer and the pull request carries the `AI-assisted` label.
+**What it cannot do.** It does not know your design is good, your spec wise or that you read the diff. If your tests use a fake notifier that never calls `render`, some breakages cannot reach them. A pass is not a review: in a real team `service.py` needs a second human reviewer and the pull request carries the `AI-assisted` label.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
 | **Spec template** | Ten sections, goal to plan, in `specs/` | Before the agent writes code |
-| **Loop checklist** | One page for each lap and the session | Every task |
-| **Interruption cues** | Six cues, a ladder, the two-failure rule | While the agent works |
 | **Mutation check** | Break the feature on purpose and see whether the tests notice | When money logic or customer text needs tests that bite |
 | **Agent log** | Prompt, result, corrections, checks, minutes | After every session |
 
 ## 🏛️ In practice at Najm Bank
 *Needs an agent: recommended, not required.* **No-agent path:** do every step yourself, or ask a chat assistant for explanations and review your own code; the grader checks the repository only. Either way, write the log.
 
-**The ticket.** This is `task.md`, as Hessa wrote it.
+**The ticket.** This is the kit's `task.md`, as Hessa wrote it. `start` writes it to your lab directory as `TASK.md` (capitals matter on Linux and macOS).
 
 > ```text
 > # REMIT-318: warn customers when a transfer takes them to 80% of their daily limit
@@ -383,7 +376,8 @@ existing test, and do not commit. Show me the diff when pytest -q is green.
 > - A new template `limit_warning` in `notify.TEMPLATES`, in `en` and `ar`, with the placeholders
 >   `{name}`, `{percent}` (a whole number, passed as a `Decimal`) and `{remaining}` (a `Money` in
 >   QAR: the limit minus the total).
-> - The content team's wording, **character for character**:
+> - The content team's wording, **character for character**. Copy and paste both lines into your code
+>   and your tests; the Arabic uses `٪` and `،`:
 >   - English: `Hi {name}, this transfer takes you to {percent}% of your daily sending limit. You can send {remaining} more today.`
 >   - Arabic: `مرحباً {name}، بهذا التحويل وصلت إلى {percent}٪ من حد الإرسال اليومي. يمكنك اليوم إرسال مبلغ إضافي أقصاه {remaining}.`
 > - So `render("limit_warning", "en", name="Bilal Khan", percent=Decimal(85), remaining=Money("300.00", "QAR"))`
@@ -392,22 +386,30 @@ existing test, and do not commit. Show me the diff when pytest -q is green.
 >   the "transfer sent" message). The warning goes through the notifier like any message: for a
 >   warned transfer, `InMemoryNotifier.sent` ends with `transfer_sent`, then `limit_warning`. The
 >   existing messages do not change.
-> - Not in scope: limits, fees, rates, screening, the ledger, special wording at 100%, new channels
->   or dependencies.
+> - Not in scope: changing limits, fees, rates, screening or the ledger; special wording at 100%; new
+>   channels or dependencies.
 >
 > ## Done when
 >
-> - `specs/REMIT-318.md` (from `specs/TEMPLATE.md`, with your plan) is committed before any code.
-> - You worked in **small steps**: at least three commits, each with `pytest -q` green, each message
->   as `CONTRIBUTING.md` says, nothing left uncommitted.
+> - `specs/REMIT-318.md` (from `specs/TEMPLATE.md`, with your plan) is committed before any code. It
+>   records your decisions where this ticket is silent, for example whether to warn when "transfer sent"
+>   itself failed to deliver, and where a failed warning's audit entry falls. Either is accepted.
+> - You worked in **small steps**: three commits or more (the spec commit counts), each with `pytest -q`
+>   green and a message as `CONTRIBUTING.md` says (any lower-case scope, such as `docs(specs):`),
+>   nothing left uncommitted. The project memory tells an agent not to commit unless asked: ask it to,
+>   or commit yourself.
 > - You added tests and did not edit the old ones. They fail if the warning is removed and they pin
 >   the behaviour: the exact message in both languages, the percentage, totals just under and
->   exactly at 80%, and nothing sent when a transfer is refused.
-> - Only the files the change needs are touched; money is `Decimal`; no secrets. Money logic needs
->   a second human reviewer, and AI-assisted work carries the label (`CONTRIBUTING.md`).
-> - If you used an AI tool, `agent-log.md` has an entry. You read every diff and can explain every line.
-> - Grade it from the `ailab` folder of the course repository:
->   `python -m ailab grade m04 --dir <this directory>`
+>   exactly at 80% (through `send`), and nothing sent when a transfer is refused.
+> - You touched only: `src/remit/notify.py`, `src/remit/service.py`, a helper in `src/remit/limits.py`
+>   or one new module under `src/remit/`, `tests/`, `specs/`, `docs/`, `agent-log.md` and the memory
+>   file (`CLAUDE.md` or `AGENTS.md`); under `src/`, at most four files and 120 changed lines. Money is
+>   `Decimal`; no secrets. Money logic needs a second human reviewer, and AI-assisted work carries the
+>   label (`CONTRIBUTING.md`).
+> - `agent-log.md` has an entry (one line, if you used no AI tool). You read every diff and can explain
+>   every line.
+> - Grade it from the `ailab` folder of the course repository, with your branch checked out in this
+>   directory: `python -m ailab grade m04 --dir <this directory>`
 > ```
 
 **Start.**
@@ -420,11 +422,13 @@ git switch -c remit-318-limit-warning
 pytest -q
 ```
 
-The starter is green: 99 tests pass. It holds `CLAUDE.md` (the reference project memory from lab 2.2), `specs/TEMPLATE.md` and an unfilled `agent-log.md` template. If your tool reads `AGENTS.md`, copy or link the memory file.
+The starter is green: 99 tests pass. It holds `CLAUDE.md` (the project memory from lab 2.2), `specs/TEMPLATE.md`, an unfilled `agent-log.md` and `TASK.md`, committed as "Lab starting state" and tagged `lab-start`; steps 6 and 7 and the grader compare with that tag. The grader reads the branch checked out in `~/ainative/m04`, so grade on your task branch. If your tool reads `AGENTS.md`, copy or link the memory file.
 
-**Your move.** Follow the seven steps. Explore first, in plan mode if you use Claude Code, and write down in the spec what the ticket leaves open. Commit the spec. With an agent, give it one step per prompt, as in the specified prompt above. Then one step per lap: failing test, code, `pytest -q` yourself, `git diff`, commit as `type(scope): subject`. Stop at the first cue on the card. Step 6 is the one people skip. After committing, run `git restore --source=lab-start --staged --worktree src` to put the code back, run your new tests and watch them fail, then `git restore --source=HEAD --staged --worktree src` to bring your feature back.
+**Your move.** Follow the seven steps. Explore first, in plan mode if you use Claude Code, and record in the spec what the ticket leaves open. Commit the spec. With an agent, give it one step per prompt, as in the specified prompt above; the memory file tells it not to commit unless asked, so ask it to, or commit yourself. Then one step per lap: failing test, code, `pytest -q` yourself, `git diff`, commit as `type(scope): subject`. Stop at the first cue on the card.
 
-**What the grader checks.** Required: the suite passes; no old test, fixture or constant was edited; the hidden acceptance tests (every rule, the wording and the interface of the ticket, in both languages and all three KYC tiers); your new tests fail without the warning and catch five of seven breakages; only expected files changed (`notify.py`, `service.py` and, for a helper, `limits.py` under `src/`, plus tests, specs, docs, your log and the memory file); at most 120 source lines in three files; no float added; three to fifteen commits with Remit messages; nothing uncommitted; no secrets. Advisory: a spec and plan, spec before code, every commit green, no commit over 200 lines, no blanket `except`, a log entry. It cannot tell who wrote the code, whether you read the diff or whether the spec is wise.
+Step 6 is the one people skip. In `~/ainative/m04`, after committing, run `git restore --source=lab-start --staged --worktree src` to put the code back, then run your new tests. Those that expect a warning must fail; "no warning at 79.99%" or "nothing sent on a refusal" tests stay green, as they should. Then `git restore --source=HEAD --staged --worktree src` brings your feature back.
+
+**What the grader checks.** Required: the suite passes; no old test, fixture or constant was edited; the hidden acceptance tests (the rules, wording and interface of the ticket, in both languages and all three KYC tiers); your new tests fail without the warning and catch five of seven breakages, both 80%-line ones included; only the files `TASK.md` lists changed, with at most four files and 120 changed lines under `src/`; no float added; three or more commits with Remit messages; nothing uncommitted; no secrets. Advisory: a spec and plan, spec before code, every commit green, no commit adding over 200 lines, no blanket `except`, a log entry.
 
 **Grade.**
 
@@ -433,41 +437,36 @@ cd ~/system-design-for-vibe-coders/ainative/ailab
 python -m ailab grade m04 --dir ~/ainative/m04
 ```
 
-On the starter state the real output starts like this (abridged; the advisory lines come after the required ones):
+Grading takes about five seconds: it re-runs your tests. On the starter state the real output starts like this (abridged; the advisory lines come after the required ones):
 
 ```text
 [PASS] The whole test suite passes: 99 passed
-[PASS] The original tests are untouched: no existing test, fixture or constant was changed
 [FAIL] The warning works as the ticket describes: 30 of 46 hidden checks failed: test_the_limit_warning_template_exists_in_english_and_arabic, test_the_english_wording_is_the_approved_wording, test_the_arabic_wording_is_the_approved_wording_with_arabic_digits, test_the_decision_and_the_numbers_match_the_rule_for_many_amounts[T1-1600.00-True] (+26 more)
        hint: Re-read the ticket line by line: the rules, the interface and the approved wording. Which one do your tests not check?
-[FAIL] Your new tests fail when the warning is removed: no new tests found
-       hint: Add tests in tests/ (a new file such as tests/test_limit_warning.py is fine).
-[FAIL] Your tests notice a broken warning: no new tests found
-       hint: Add tests in tests/ (a new file is fine) and make them pass first.
-[... seven more required lines and six advisory lines ...]
+[... ten more required lines and six advisory lines ...]
 
 Lab m04: 5/12 required checks passed: NOT YET
 ```
 
-Real output, too, for a correct feature whose own tests only check that "something was sent": every other required line stays green and the lab's own method catches it (two lines shown):
+Real output for a correct feature whose tests only check that "something was sent":
 
 ```text
 [PASS] Your new tests fail when the warning is removed: 1 new test fails without the warning, as they should
-[FAIL] Your tests notice a broken warning: your tests catch 1 of 7 deliberate defects; they miss: the warning text loses its numbers, the percentage shown is one too high, Arabic customers get the English text (+3 more)
-       hint: Pin the exact message in both languages, the number it shows, and the lines just under and exactly at 80%.
+[FAIL] Your tests notice a broken warning: your tests catch 1 of 7 deliberate defects; they miss: the 80% line sits a little too high, the 80% line sits a little too low, the warning text loses its numbers (+3 more)
+       hint: Pin the exact message in both languages and its numbers, and the 80% line through `RemitService.send`: one total a cent under it (no warning), one exactly on it (a warning).
 
 Lab m04: 11/12 required checks passed: NOT YET
 ```
 
 With sound tests the last line reads `Lab m04: 12/12 required checks passed: PASSED`.
 
-**Weekly deliverable (Module 4).** In the lab repository, your branch of small commits. In your notes repository, `week-04/` with `loop-checklist.md` (ticked), `timeline.md` (your session timeline, interventions marked), `m04-grade.txt` and `agent-log.md`.
+**Weekly deliverable (Module 4).** In the lab repository, your branch of small commits. In your notes repository, `week-04/` with `loop-checklist.md` (ticked), `timeline.md` (a table like lesson 4.1's: Time, Move, What happened, Cue, Intervention), `agent-log.md` and `m04-grade.txt` (from the `ailab` folder, add `> <notes>/week-04/m04-grade.txt` to the grade command).
 
 **Group session (60 minutes).** (1) Swap `git log --oneline lab-start..HEAD`: does each commit tell one step? (10) (2) Swap tests: break your partner's feature by hand in one way; does a test notice? (20) (3) Compare timelines: first cue, rung used (15) (4) Agree one line for the team checklist (10) (5) Agent logs (5).
 
-**Debrief.** What did the agent get wrong, and what did you only see by running it? What did your context or spec miss? Which cue did you notice last? Where should the two-failure rule have applied? How many minutes went to verifying?
+**Debrief.** What did the agent get wrong, and what did you only see by running it? What did your context or spec miss? Which cue did you notice last, and where should the two-failure rule have applied? How many minutes went to verifying?
 
-**Agent log.** The starter's `agent-log.md` has these fields; fill one entry per session (for example, "REMIT-318, step 4") and split the minutes into you, agent and verifying.
+**Agent log.** The starter's `agent-log.md` has these fields; fill one entry per session (for example, "REMIT-318, step 4").
 
 ```text
 Entry:
@@ -475,14 +474,14 @@ Prompt (paste or summarise):
 What the agent did:
 What I corrected:
 What I checked myself:
-Minutes:
+Minutes (you / agent / checking):
 Would I delegate it again?
 ```
 
 ## 🛠️ Exercises
 - 🟢 **By hand.** *No agent.* Do the lab without a tool. *Done when:* `grade` prints `PASSED`, you have at least three commits, and your log says what took longest.
 - 🟡 **With an agent, and the cues.** *Agent recommended.* Redo it in a fresh directory, in plan mode, one step per lap. *Done when:* `PASSED` again, `timeline.md` marks a cue, and a table compares both attempts on minutes and interventions.
-- 🔴 **Break your own feature.** *Optional agent.* In your finished repository, introduce each defect of the risky diff in turn and run your tests. *Done when:* a table says for each whether a test failed, which one, and what test you added for any that slipped through.
+- 🔴 **Break your own feature.** *Optional agent.* In your finished repository, introduce each defect of the risky diff in turn. *Done when:* a table says whether a test failed, which one, and what you added for any that slipped through.
 
 ## ⚠️ Mistakes and traps
 - **Tests written after the code, never seen failing.** Run them against `lab-start`.
@@ -532,7 +531,7 @@ Would I delegate it again?
 
 <details><summary>Answer</summary>
 
-**C.** The lab asks for three or more commits, each green, in the Remit format, with the spec first. One big commit (A) and vague names (B) fail that. (🟢 The essentials.)
+**C.** The lab asks for three or more green commits in the Remit format, the spec commit included. One big commit (A) and vague names (B) fail that. (🟢 The essentials.)
 
 </details>
 
@@ -558,7 +557,7 @@ Would I delegate it again?
 
 <details><summary>Answer</summary>
 
-**C.** The kit grades the repository: hidden tests, your tests, scope, size, commits. It cannot see authorship, reading or judgement, and a pass is not a review. (🔴 What it cannot do.)
+**C.** The kit grades the repository. It cannot see authorship, reading or judgement, and a pass is not a review. (🔴 What it cannot do.)
 
 </details>
 

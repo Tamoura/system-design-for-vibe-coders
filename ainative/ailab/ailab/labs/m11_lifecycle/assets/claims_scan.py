@@ -23,6 +23,9 @@ import sys
 from pathlib import Path
 
 ROOTS = ("src", "tests", "docs", "lab-assets", ".github")
+FILE_EXTENSIONS = {"py", "md", "json", "jsonl", "log", "txt", "toml", "yml", "yaml", "cfg", "ini", "csv", "lock"}
+# A line that says the thing it names is not there ("the old page names `risk.py`, which does not exist") is a true claim.
+SAYS_MISSING = re.compile(r"does(?:n't| not) exist|no longer exists?|no such\b|non-?existent|never existed|there is no\b|not a real\b", re.I)
 PATH = re.compile(r"^(?:\./)?((?:[\w.-]+/)*[\w.-]+\.(?:py|md|json|toml|ya?ml|txt))(?::\d+)?$")
 DOTTED = re.compile(r"^[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)+$")
 
@@ -68,14 +71,16 @@ def scan(root: Path, doc: Path, record: Path | None) -> tuple[int, list[str]]:
     text = doc.read_text(encoding="utf-8")
     defined = definitions(root)
     problems, checked = [], 0
+    lines = text.splitlines()
     for number, token in claims_in(text):
         token = re.sub(r"\(.*$", "", token)  # limits.to_local(now) -> limits.to_local
+        says_missing = bool(SAYS_MISSING.search(lines[number - 1]))
         match = PATH.match(token)
         if match:
             name = match.group(1)
             if name.endswith((".py", ".md")) or name.split("/")[0] in ROOTS or (root / name).exists():
                 checked += 1
-                if not path_exists(root, token):
+                if not path_exists(root, token) and not says_missing:
                     problems.append(f"{doc}:{number}  `{token}`  no such file")
             continue
         if DOTTED.match(token):
@@ -84,9 +89,9 @@ def scan(root: Path, doc: Path, record: Path | None) -> tuple[int, list[str]]:
                 module, rest = ".".join(parts[:2]), parts[2:]
             else:
                 module, rest = parts[0], parts[1:]
-            if module in defined:
-                checked += 1
-                if rest and rest[0] not in defined[module]:
+            if module in defined and not (rest and rest[-1].lower() in FILE_EXTENSIONS and rest[-1] not in defined[module]):
+                checked += 1  # `audit.jsonl` is a file name, not a name defined in the module `audit`
+                if rest and rest[0] not in defined[module] and not says_missing:
                     problems.append(f"{doc}:{number}  `{token}`  {module} defines no '{rest[0]}'")
     if record is not None:
         events = json.loads(record.read_text(encoding="utf-8"))["timeline"]

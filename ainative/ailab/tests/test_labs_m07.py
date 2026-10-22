@@ -7,8 +7,12 @@ suite stays fast; the tests that are about them run them for real.
 """
 from __future__ import annotations
 
+import ast
+import hashlib
+import os
 import shutil
 import subprocess
+import sys
 import textwrap
 from pathlib import Path
 
@@ -17,8 +21,8 @@ import pytest
 from ailab import checks_m07 as m07, framework, gitutil
 from ailab.labs.m07_legacy import lab as lab_module
 from ailab.labs.m07_legacy.lab import (
-    C_AUDIT, C_BASELINE, C_CLEAN, C_COUNT, C_DOCS, C_GREEN, C_KEPT, C_LEGACY, C_MEMORY, C_MESSAGES, C_MUTANTS,
-    C_MUTANTS_ALL, C_PLAN, C_QUIRKS, C_SCOPE, C_SECRETS, C_SERVICE, C_STATE, C_SUITE, C_V1CALLS, C_V1GONE, C_WROTE,
+    C_AUDIT, C_BASELINE, C_CLEAN, C_COUNT, C_DOCS, C_GREEN, C_KEPT, C_LEGACY, C_MESSAGES, C_MUTANTS,
+    C_MUTANTS_ALL, C_PLAN, C_QUIRKS, C_SCOPE, C_SECRETS, C_SERVICE, C_STALE, C_STATE, C_SUITE, C_V1CALLS, C_V1GONE, C_WROTE,
 )
 from conftest import learner_commit, start
 
@@ -27,7 +31,7 @@ LEDGER = "src/remit/ledger.py"
 SERVICE = "src/remit/service.py"
 ALL = {
     C_WROTE, C_BASELINE, C_MUTANTS, C_MUTANTS_ALL, C_SUITE, C_KEPT, C_QUIRKS, C_SERVICE, C_STATE, C_LEGACY, C_V1CALLS, C_V1GONE,
-    C_AUDIT, C_DOCS, C_SCOPE, C_MESSAGES, C_COUNT, C_GREEN, C_CLEAN, C_SECRETS, C_PLAN, C_MEMORY,
+    C_AUDIT, C_DOCS, C_SCOPE, C_MESSAGES, C_COUNT, C_GREEN, C_CLEAN, C_SECRETS, C_PLAN, C_STALE,
 }
 
 
@@ -96,6 +100,20 @@ def commit(work: Path, message: str) -> None:
     learner_commit(work, message)
 
 
+def apply_steps(work: Path, indexes, message: str) -> None:
+    """Apply the files of several reference-solution steps and commit them together as one commit."""
+    steps = lab_module.solution_steps()
+    for index in indexes:
+        step = steps[index]
+        for rel in step["files"]:
+            target = work / rel
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(lab_module.step_file(step, rel), target)
+        if step["dir"] == "04-remove-module-state":
+            lab_module._update_memory(work)
+    commit(work, message)
+
+
 def reference_suite() -> str:
     return (HERE / "solution" / "01-characterization-tests" / "tests" / "test_ledger_characterization.py").read_text(encoding="utf-8")
 
@@ -121,10 +139,8 @@ def test_the_starter_fails_for_the_right_reasons_and_leaks_no_answers(started, t
     result = grade(work)
     assert set(result) == ALL
     expected = {C_WROTE, C_BASELINE, C_MUTANTS, C_MUTANTS_ALL, C_QUIRKS, C_SERVICE, C_STATE, C_LEGACY, C_V1CALLS, C_V1GONE,
-                C_DOCS, C_SCOPE, C_MESSAGES, C_COUNT, C_GREEN, C_PLAN}
-    if lab_module.stale_memory_lines(work):  # the reference project memory of lab m02 calls the ledger untested
-        expected.add(C_MEMORY)
-    assert_only(result, *expected)
+                C_DOCS, C_SCOPE, C_MESSAGES, C_COUNT, C_GREEN, C_PLAN, C_STALE}
+    assert_only(result, *expected)  # README.md, the architecture notes and the project memory all call the ledger untested
     # the visible suite is green at the start: the v1 wrappers keep every old call working
     assert result[C_SUITE].ok and result[C_KEPT].ok and result[C_AUDIT].ok
     assert all(c.hint for c in result.values() if not c.ok and c.required)
@@ -141,7 +157,9 @@ def test_the_seed_adds_najmkit_2_beside_the_old_names(started):
     for name in ("ids.py", "clock.py", "audit.py"):
         assert "deprecated v1 names" in (started / "src" / "najmkit" / name).read_text(encoding="utf-8")
     assert (started / "docs" / "najmkit-v2-migration.md").is_file()
-    assert (started / "lab-assets" / "ledger_port.py").is_file() and (started / "lab-assets" / "refactoring-plan-template.md").is_file()
+    for asset in ("ledger_port.py", "try_mutation.py", "refactoring-plan-template.md"):
+        assert (started / "lab-assets" / asset).is_file()
+    assert "version 1.3.0" in (started / "docs" / "najmkit.md").read_text(encoding="utf-8")  # the lesson and the ticket say so
     assert "API_VERSION = \"v2\"" in (started / "src" / "najmkit" / "__init__.py").read_text(encoding="utf-8")
 
 
@@ -173,7 +191,8 @@ def test_every_mutant_applies_exactly_once_to_the_original_ledger(started):
 def test_the_reference_suite_kills_every_mutant_and_an_alternative_compact_suite_kills_enough(work):
     legacy_work_with_tests(work, reference_suite())
     report = m07.characterization_report(work)
-    assert report.baseline_ok and len(report.killed) == 16 and not report.survived and not report.not_applied
+    assert report.baseline_ok and report.equivalent_ok and report.ready and not report.peeking
+    assert len(report.killed) == 16 and not report.survived and not report.not_applied
 
 
 ALTERNATIVE_SUITE = '''
@@ -276,7 +295,7 @@ def test_service_posts(service):
 def test_an_alternative_compact_suite_is_accepted(work):
     legacy_work_with_tests(work, ALTERNATIVE_SUITE, name="tests/test_ledger_quirks.py")
     report = m07.characterization_report(work)
-    assert report.baseline_ok and len(report.killed) >= m07.MIN_KILLED, [m.description for m in report.survived]
+    assert report.ready and len(report.killed) >= m07.MIN_KILLED, [m.description for m in report.survived]
 
 
 def test_tests_that_assert_nothing_pass_on_the_original_and_catch_nothing(work, cheap):
@@ -314,7 +333,114 @@ def test_a_suite_that_only_checks_the_happy_path_misses_the_quirks(work):
 
 def test_too_few_tests_do_not_count_as_a_suite(work):
     legacy_work_with_tests(work, "from ledger_port import make_ledger\n\ndef test_it(): assert make_ledger().accounts() == []\n")
-    assert not grade(work)[C_WROTE].ok
+    wrote = grade(work)[C_WROTE]
+    assert not wrote.ok
+    assert "Add more tests" in wrote.hint and "Copy lab-assets" not in wrote.hint  # the learner already copied the seam
+
+
+PARAMETRIZED = '''
+import pytest
+from decimal import Decimal
+from ledger_port import make_ledger
+from remit.money import Money
+
+
+@pytest.mark.parametrize("fee, partner", [("12.00", "3.60"), ("10.15", "3.04"), ("5.15", "1.54"), ("0.15", "0.04"),
+                                          ("10.35", "3.10"), ("10.25", "3.08"), ("0.25", "0.08"), ("33.33", "10.00")])
+def test_the_partner_share(fee, partner):
+    book = make_ledger()
+    book.post_transfer("T1", "C", Money("500", "QAR"), Money(fee, "QAR"))
+    assert book.balance("PARTNER_PAYABLE") == Decimal(partner)
+
+
+@pytest.mark.parametrize("name", ["A", "B", "C", "D"])
+def test_an_unknown_account_is_created(name):
+    book = make_ledger()
+    assert book.balance(name) == 0 and book.accounts() == [name]
+'''
+
+
+def test_every_case_of_a_parametrized_test_counts_toward_the_ten(work):
+    """Two test functions, twelve cases: a learner who parametrizes is not told to write more functions."""
+    legacy_work_with_tests(work, PARAMETRIZED)
+    report = m07.characterization_report(work, mutants=())
+    assert report.ready and report.n_tests == 12
+
+
+def test_tests_that_import_the_seam_through_the_tests_package_pass_python_m_pytest_but_not_ci(work):
+    """The false positive of the first dry run: `python -m pytest` puts the working directory on sys.path, `pytest -q` does not."""
+    suite = reference_suite().replace("from ledger_port import", "from tests.ledger_port import")
+    assert suite != reference_suite()
+    legacy_work_with_tests(work, suite)
+    env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
+    old_style = subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", "-W", "ignore::DeprecationWarning", "tests"],
+                               cwd=work, capture_output=True, text=True, env=env)
+    ci_style = subprocess.run([sys.executable, "-P", "-m", "pytest", "-q", "-p", "no:cacheprovider", "tests"],
+                              cwd=work, capture_output=True, text=True, env=env)
+    assert old_style.returncode == 0 and ci_style.returncode != 0  # so a grader using -m would have said PASSED
+    result = grade(work)
+    assert not result[C_BASELINE].ok and "pytest -q" in result[C_BASELINE].hint and "from ledger_port import" in result[C_BASELINE].hint
+    assert not result[C_SUITE].ok and "from ledger_port import" in result[C_SUITE].hint
+    assert not result[C_MUTANTS].ok and "not checked yet" in result[C_MUTANTS].detail
+
+
+HASH_GUARD = '''
+import hashlib
+from pathlib import Path
+
+from ledger_port import make_ledger
+
+ORIGINAL = "{digest}"
+
+
+def guard():
+    """On the original module the file is the original; after the refactor there is nothing left to compare."""
+    import remit.ledger as module
+    if not hasattr(module, "Ledger"):
+        assert hashlib.sha256(Path(module.__file__).read_bytes()).hexdigest() == ORIGINAL
+'''
+SIZE_GUARD = '''
+import importlib.util
+from pathlib import Path
+
+from ledger_port import make_ledger
+
+SIZE = {size}
+
+
+def guard():
+    import remit.ledger as module
+    if not hasattr(module, "Ledger"):
+        assert len(Path(importlib.util.find_spec("remit.ledger").origin).read_bytes()) == SIZE
+'''
+GUARDED_TESTS = "\n".join(f"def test_pin_{i}():\n    guard()\n    assert make_ledger().accounts() == []\n" for i in range(12))
+
+
+def test_a_suite_that_fingerprints_the_source_with_a_hash_is_rejected(work):
+    """The false positive of the first dry run: ten tests that compare the hash of ledger.py with the original's."""
+    digest = hashlib.sha256((work / LEDGER).read_bytes()).hexdigest()
+    legacy_work_with_tests(work, HASH_GUARD.format(digest=digest) + GUARDED_TESTS)
+    result = grade(work)
+    assert result[C_WROTE].ok  # twelve tests, all green on the original
+    assert not result[C_BASELINE].ok and "source" in result[C_BASELINE].detail and "hashlib" in result[C_BASELINE].detail
+    assert not result[C_MUTANTS].ok and "not checked yet" in result[C_MUTANTS].detail  # no credit for kills it cannot trust
+
+
+def test_a_suite_that_compares_the_size_of_the_source_fails_on_an_equivalent_copy(work):
+    """No hashlib, no __file__: only the twin of the original (same behaviour, different text) gives it away."""
+    legacy_work_with_tests(work, SIZE_GUARD.format(size=len((work / LEDGER).read_bytes())) + GUARDED_TESTS)
+    report = m07.characterization_report(work)
+    assert report.baseline_ok and not report.peeking  # green on the original: a grader that stopped there would be fooled
+    assert not report.equivalent_ok and not report.ready and not report.killed
+    result = grade(work)
+    assert not result[C_BASELINE].ok and "only differs in comments" in result[C_BASELINE].detail
+    assert "how ledger.py is written" in result[C_BASELINE].hint
+
+
+def test_the_equivalent_copy_of_the_original_ledger_behaves_like_it(started):
+    twin = m07.equivalent_source((started / LEDGER).read_text(encoding="utf-8"))
+    assert twin != (started / LEDGER).read_text(encoding="utf-8") and "_ONE_CENT" in twin and "_post_entry" in twin
+    ast.parse(twin)  # it is still Python; the reference suite passing on it (above) shows that it still behaves
 
 
 def test_tests_written_against_the_new_class_do_not_describe_the_original(done):
@@ -421,6 +547,24 @@ def test_giving_each_ledger_its_own_id_counter_changes_the_ids(done, cheap):
     assert "test_entry_ids_still_come_from_one_process_wide_sequence" in result[C_QUIRKS].detail or "more" in result[C_QUIRKS].detail
 
 
+def test_handing_out_copies_of_the_entry_dicts(done, cheap):
+    """The docstring says the entry dicts themselves are shared; a 'defensive copy' is a change nobody pinned (first dry run)."""
+    edit(done, LEDGER, "return list(self._journal)", "return [dict(entry) for entry in self._journal]")
+    commit(done, "refactor(ledger): return copies from journal")
+    result = grade(done)
+    assert_only(result, C_QUIRKS)  # the visible suite and the sixteen mutants are blind to it: only the hidden suite knows
+    assert "test_the_entry_dicts_are_shared_not_copied" in result[C_QUIRKS].detail
+
+
+def test_rewording_the_refusal_messages(done, cheap):
+    """Support quotes the messages; no mutant and no first-draft hidden check noticed a reworded one (first dry run)."""
+    edit(done, LEDGER, 'raise CurrencyMismatch("the ledger posts QAR only")', 'raise CurrencyMismatch("QAR only")')
+    edit(done, LEDGER, 'raise DuplicatePosting(f"transfer {transfer_id} is already posted")', 'raise DuplicatePosting(f"{transfer_id} was posted")')
+    commit(done, "refactor(ledger): shorter messages")
+    result = grade(done)
+    assert not result[C_QUIRKS].ok and "test_the_refusals_keep_their_wording" in result[C_QUIRKS].detail
+
+
 def test_making_send_atomic_changes_a_documented_limitation(done, cheap):
     """'Fixing' D-SVC-1 while refactoring: the store is written before the ledger, so a store failure posts nothing."""
     text = (done / SERVICE).read_text(encoding="utf-8")
@@ -523,14 +667,84 @@ def test_stale_najmkit_docs_are_an_advisory_finding(done, cheap):
     assert not result[C_DOCS].ok and not [c for c in result.values() if not c.ok and c.required]
 
 
-def test_stale_project_memory_is_an_advisory_finding(done, cheap):
-    if not (done / "CLAUDE.md").is_file():
-        pytest.skip("no reference project memory in this kit yet (m02)")
+def test_a_stale_project_memory_is_an_advisory_finding(done, cheap):
     with (done / "CLAUDE.md").open("a", encoding="utf-8") as handle:
         handle.write("- `ledger.py` keeps its state in module-level variables.\n")
     commit(done, "docs(ledger): note the module state")
-    assert lab_module.stale_memory_lines(done)
-    assert_only(grade(done), C_MEMORY)
+    result = grade(done)
+    assert_only(result, C_STALE)
+    assert "CLAUDE.md" in result[C_STALE].detail and not result[C_STALE].required
+
+
+def test_a_readme_that_still_calls_the_ledger_untested_is_an_advisory_finding(done, cheap):
+    """The first dry run: nothing noticed README.md, docs/ARCHITECTURE.md and docs/TOUR.md going stale."""
+    for rel in ("README.md", "docs/ARCHITECTURE.md", "docs/TOUR.md"):
+        (done / rel).write_text(gitutil.file_at(done, "lab-start", rel), encoding="utf-8")
+    commit(done, "docs(docs): revert my edits")
+    result = grade(done)
+    assert_only(result, C_STALE)
+    assert "README.md:44" in result[C_STALE].detail and "(+" in result[C_STALE].detail  # and the others
+
+
+def test_the_learners_plan_may_talk_about_the_old_module_level_state(done, cheap):
+    """The plan and the migration notes describe the old state on purpose; they are not swept."""
+    with (done / "docs" / "refactoring-plan.md").open("a", encoding="utf-8") as handle:
+        handle.write("\nThe old ledger was untested and kept module-level books.\n")
+    commit(done, "docs(refactoring): describe the old state")
+    assert_only(grade(done))
+
+
+STALE_LINES = [
+    "ledger.py         double-entry postings                      (old code, no tests)",
+    "| `ledger.py` | Double-entry postings for a sent transfer (old code, no tests) |",
+    "* **`ledger.py`**: double-entry postings. Also old, also **no tests**, and it keeps",
+    "There is no test file for `ledger.py` or",
+    "- `src/remit/ledger.py` and `src/remit/screening.py` are legacy and have no tests. Their module docstrings",
+    "The ledger is untested and keeps its state in module-level variables.",
+]
+CURRENT_LINES = [
+    "The ledger is no longer module-level: each RemitService owns a Ledger.",
+    "There is no module-level state in the ledger.",
+    "`screening.py` is legacy and has no tests; `ledger.py` is a `Ledger` class with characterization tests.",
+    "The ledger used to be untested.",
+    "ledger.py: double-entry postings in a `Ledger` class, pinned by tests/test_ledger_characterization.py",
+]
+
+
+@pytest.mark.parametrize("line", STALE_LINES)
+def test_the_document_sweep_finds_a_stale_sentence(tmp_path, line):
+    (tmp_path / "README.md").write_text(line + "\n", encoding="utf-8")
+    assert m07.stale_document_lines(tmp_path), line
+
+
+@pytest.mark.parametrize("line", CURRENT_LINES)
+def test_the_document_sweep_leaves_a_true_sentence_alone(tmp_path, line):
+    (tmp_path / "README.md").write_text(line + "\n", encoding="utf-8")
+    assert m07.stale_document_lines(tmp_path) == [], line
+
+
+def test_the_document_sweep_reads_two_lines_together(tmp_path):
+    (tmp_path / "README.md").write_text("This is a shadow ledger of Remit's own postings.\nThe module keeps its state in module-level variables.\n",
+                                        encoding="utf-8")
+    assert m07.stale_document_lines(tmp_path) == ["README.md:1 This is a shadow ledger of Remit's own postings."]
+
+
+def test_a_permanent_warnings_as_errors_setting_in_pyproject_and_ci_is_allowed(done, cheap):
+    """The lesson recommends warnings as errors on every commit: making it permanent must not fail the scope check (first dry run)."""
+    edit(done, "pyproject.toml", 'addopts = "-ra"', 'addopts = "-ra"\nfilterwarnings = ["error::DeprecationWarning"]')
+    edit(done, ".github/workflows/ci.yml", "run: pytest -q", "run: pytest -q -W error::DeprecationWarning")
+    commit(done, "ci(pytest): make deprecation warnings errors")
+    assert_only(grade(done))
+
+
+def test_the_scope_hint_undoes_a_change_that_is_already_committed(done, cheap):
+    edit(done, "src/remit/fees.py", '"""', '"""(tidied) ', count=done.joinpath("src/remit/fees.py").read_text().count('"""'))
+    commit(done, "refactor(fees): tidy the docstrings")
+    check = grade(done)[C_SCOPE]
+    assert not check.ok and "--source=lab-start" in check.hint and "src/remit/fees.py" in check.detail
+    subprocess.run(["git", "restore", "--source=lab-start", "--", "src/remit/fees.py"], cwd=done, check=True)  # what the hint says
+    commit(done, "revert(fees): undo the tidy")
+    assert grade(done)[C_SCOPE].ok
 
 
 # --------------------------------------------------------------------------------------------
@@ -542,6 +756,39 @@ def test_one_big_commit_for_everything(done, cheap):
     result = grade(done)
     assert_only(result, C_COUNT)
     assert "1 new commit" in result[C_COUNT].detail
+
+
+def test_empty_commits_are_not_steps(started, tmp_path, cheap):
+    """'At least three commits' met by one real commit and two empty ones (first dry run)."""
+    work = tmp_path / "work"
+    shutil.copytree(started, work)
+    apply_steps(work, [0], "test(ledger): pin the ledger's current behaviour")
+    apply_steps(work, range(1, 8), "refactor(ledger): everything else in one go")
+    learner_commit(work, "chore(docs): a third commit", allow_empty=True)
+    result = grade(work)
+    assert_only(result, C_COUNT)
+    assert "3 new commits" in result[C_COUNT].detail and "1 of them change no file" in result[C_COUNT].detail
+
+
+def test_the_tests_committed_together_with_the_refactor_are_not_a_net(started, tmp_path, cheap):
+    """The ticket says the tests come first; a commit that adds them and edits ledger.py has no safety net before it."""
+    work = tmp_path / "work"
+    shutil.copytree(started, work)
+    apply_steps(work, [0, 1], "refactor(ledger): add a Ledger class")
+    for index in range(2, 8):
+        apply_steps(work, [index], lab_module.solution_steps()[index]["message"])
+    result = grade(work)
+    assert_only(result, C_COUNT)
+    assert "also changes src/remit/ledger.py" in result[C_COUNT].detail and "the commit that adds your ledger tests" in result[C_COUNT].detail
+
+
+def test_the_plan_may_be_committed_before_the_tests(started, tmp_path, cheap):
+    work = tmp_path / "work"
+    shutil.copytree(started, work)
+    apply_steps(work, [7], "docs(refactoring): record the plan for REMIT-372")
+    for index in range(0, 7):
+        apply_steps(work, [index], lab_module.solution_steps()[index]["message"])
+    assert_only(grade(work))
 
 
 def test_a_codemod_script_kept_in_scripts_is_allowed(done, cheap):
@@ -636,6 +883,42 @@ def test_a_constant_lookup_table_in_another_module_is_not_state(done, cheap):
     write(done, "src/remit/tables.py", '"""Constants."""\n\nSIGN = {"C": 1, "D": -1}\n')
     commit(done, "refactor(ledger): move the sign table to its own module")
     assert grade(done)[C_STATE].ok
+
+
+# --------------------------------------------------------------------------------------------
+# lab-assets/try_mutation.py: the learner's hand mutation check
+# --------------------------------------------------------------------------------------------
+def try_mutation(work: Path, *args: str) -> subprocess.CompletedProcess:
+    env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
+    return subprocess.run([sys.executable, "lab-assets/try_mutation.py", *args], cwd=work, capture_output=True, text=True, env=env)
+
+
+def test_the_mutation_helper_runs_the_tests_on_the_original_and_never_touches_the_work_dir(work):
+    legacy_work_with_tests(work, reference_suite())
+    (work / "src" / "remit" / "ledger.py").write_text(
+        (work / "src" / "remit" / "ledger.py").read_text(encoding="utf-8") + "\nBROKEN = (\n", encoding="utf-8")  # an uncommitted refactor
+    before = (work / "src" / "remit" / "ledger.py").read_bytes()
+    result = try_mutation(work)
+    assert result.returncode == 0 and "OK" in result.stdout, result.stdout + result.stderr  # it ran the original, not the working copy
+    assert (work / "src" / "remit" / "ledger.py").read_bytes() == before
+
+
+def test_the_mutation_helper_tells_a_kill_from_a_survivor_from_a_crash(work):
+    legacy_work_with_tests(work, reference_suite())
+    killed = try_mutation(work, LEDGER, "rounding=ROUND_HALF_EVEN)  # Q-LED-1", 'rounding="ROUND_HALF_UP")  # Q-LED-1')
+    assert killed.returncode == 0 and killed.stdout.startswith("KILLED by "), killed.stdout
+    assert int(killed.stdout.split()[2]) < int(killed.stdout.split()[4]) // 2  # the tie cases, not the whole suite
+    survived = try_mutation(work, LEDGER, "A balance is credits minus debits.", "A balance is debits minus credits.")
+    assert survived.returncode == 1 and survived.stdout.startswith("SURVIVED"), survived.stdout
+    crashed = try_mutation(work, LEDGER, "rounding=ROUND_HALF_EVEN)  # Q-LED-1", "rounding=ROUND_HALF_UP)  # Q-LED-1")
+    assert crashed.returncode == 1 and "proves nothing" in crashed.stdout and "NameError" in crashed.stdout, crashed.stdout
+    missing = try_mutation(work, LEDGER, "no such text anywhere", "x")
+    assert missing.returncode == 2 and "0 times" in missing.stdout
+
+
+def test_the_mutation_helper_needs_tests_to_run(work):
+    result = try_mutation(work)
+    assert result.returncode == 2 and "write some first" in result.stdout
 
 
 # --------------------------------------------------------------------------------------------

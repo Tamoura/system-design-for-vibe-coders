@@ -1223,9 +1223,9 @@ def test_the_lesson_recipe_for_the_ab_copies_leaves_no_lab_files_in_history(tmp_
     """Run the bash block of lesson 2.2 that makes the A and B copies, and read the history the agent could read."""
     import os, subprocess, sys
     lesson = (Path(m.__file__).resolve().parents[2] / "modules" / "02-context.md").read_text(encoding="utf-8")
-    block = re.search(r"```bash\n(cd system-design-for-vibe-coders/ainative/ailab\nfor d in a b; do.*?)```", lesson, re.S)
+    block = re.search(r"```bash\n(cd system-design-for-vibe-coders/ainative/ailab[^\n]*\nfor d in a b; do.*?)```", lesson, re.S)
     assert block, "the A/B recipe is not in the lesson any more"
-    script = block.group(1).replace("cd system-design-for-vibe-coders/ainative/ailab\n", "")
+    script = block.group(1).split("\n", 1)[1]  # without the `cd` line: the test runs it from the ailab folder itself
     home = tmp_path / "home"
     (home / "ainative" / "m02").mkdir(parents=True)
     framework.start_lab(framework.load_lab("m02"), home / "ainative" / "m02-seed")
@@ -1243,3 +1243,19 @@ def test_the_lesson_recipe_for_the_ab_copies_leaves_no_lab_files_in_history(tmp_
         assert not (copy / "TASK.md").exists() and not (copy / "lab-assets").exists()
         assert subprocess.run(["git", "-C", str(copy), "rev-parse", "ab-start"], capture_output=True).returncode == 0
     assert (home / "ainative" / "m02-b" / "CLAUDE.md").exists() and not (home / "ainative" / "m02-a" / "CLAUDE.md").exists()
+
+
+@pytest.mark.parametrize("line", [
+    "- Commits are `type(scope): subject`; not `fix: typo`, which has no scope.",
+    "- Commits are `type(scope): subject`. A header like `fix: typo` is rejected.",
+], ids=["not-example", "rejected-example"])
+def test_a_scopeless_header_shown_as_the_bad_example_is_a_correct_rule(work, line):
+    old = next(ln for ln in REFERENCE.splitlines() if ln.startswith("- Commits are"))
+    put(work, replace(REFERENCE, old, line))
+    assert_only(lint(work))
+
+
+def test_a_scopeless_header_shown_as_the_good_example_is_still_wrong(work):
+    old = next(ln for ln in REFERENCE.splitlines() if ln.startswith("- Commits are"))
+    put(work, replace(REFERENCE, old, "- Commits are `type(scope): subject`, for example `fix: typo`."))
+    assert_only(lint(work), N_COMMITS)

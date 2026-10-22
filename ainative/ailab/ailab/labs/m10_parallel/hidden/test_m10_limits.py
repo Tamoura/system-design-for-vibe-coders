@@ -129,9 +129,9 @@ def test_the_command_uses_the_clock_it_is_given(cli, tmp_path, clock):
 def test_an_unknown_customer_exits_with_one_and_names_the_error(cli, tmp_path, clock):
     code, out, err = cli("limits", "--customer", "C404", environ={"REMIT_DB": str(tmp_path / "remit.db")}, clock=clock)
     assert code == 1 and out == ""
-    assert "unknown_customer" in err
+    assert err.startswith("error [")  # the CLI's own form, "error [code]: message"; the natural code is unknown_customer
 
 
 def test_the_command_needs_a_customer(cli, tmp_path, clock):
-    code, _, _ = cli("limits", environ={"REMIT_DB": str(tmp_path / "remit.db")}, clock=clock)
-    assert code == 2
+    code, out, _ = cli("limits", environ={"REMIT_DB": str(tmp_path / "remit.db")}, clock=clock)
+    assert code != 0 and out == ""  # bad usage (argparse gives 2) or a Remit error (1): never a silent success

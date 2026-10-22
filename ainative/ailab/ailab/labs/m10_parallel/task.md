@@ -27,7 +27,7 @@ Amounts have two decimals and no thousands separators.
 Add `python -m remit corridors [CODE]`. With no code it prints one such line per corridor, ordered
 by code. With a code (`QAR-PKR`) it prints that corridor's line only. An unknown code exits with 1
 and the error code on standard error, like the other commands. Like `quote`, it reads no data, so
-it must not create a database file.
+it must not create a database file: `main` in `cli.py` decides that, away from the marked places.
 
 ### Task C: the `limits` command (`limits`, `cli`)
 
@@ -50,24 +50,31 @@ unknown customer exits with 1 and the error code on standard error, like `send`.
 ### Task D: the runbook (`docs/CARE.md`)
 
 The page Customer Care will open during a call. Headings: `# Customer Care desk pack`, then
-`## Corridors`, `## Limits` and `## Delay message`. Under the first two, give the command and a
-real example of its output in a code block (copy it from the running program, do not type it).
-Under the third, give the template id and the English wording.
+`## Corridors`, `## Limits` and `## Delay message`. Under the first two, give the command and,
+in a code block, example output copied from the running program (do not type it: the lines are
+compared with the real ones). Under the third, give the template id and the English wording.
 
 ### How to deliver it
 
 1. Write your plan first in `docs/parallel-plan.md` (template in `lab-assets/`): the tasks, who
-   or what does each, what each may touch, the merge order, how you will check.
-2. One branch per task. Commit messages follow `CONTRIBUTING.md` (scopes `notify`, `corridors`,
-   `limits`, `cli`, `docs`). A commit belongs to one task.
-3. Every task comes with tests in `tests/`. Do not change an existing test; adding tests is fine.
-   Change no module the tasks do not name (`notify`, `corridors`, `limits`, `cli`); `docs/` is yours.
+   or what does each, what each may touch, the merge order, how you will check. Commit it on
+   `main` before you cut a branch.
+2. One branch per task; at least four commits in all. Messages follow `CONTRIBUTING.md`, with
+   the module as scope (`notify`, `corridors`, `limits`, `cli`, `docs`; the list there lacks
+   `corridors`, which is fine). A commit may change the files of one task only: `notify.py` is
+   A, `corridors.py` B, `limits.py` C, `cli.py` B or C, `docs/CARE.md` D. Tests, the plan and
+   the log belong to no task; a test that spans tasks gets a commit of its own.
+3. Every task comes with tests in `tests/`. Do not change or skip an existing test; adding tests
+   is fine. Change no module the tasks do not name (`notify`, `corridors`, `limits`, `cli`);
+   `docs/`, `.claude/`, `CLAUDE.md` and `.gitignore` are yours.
 4. B and C both add a command at the marked place in `src/remit/cli.py`, and a line to the usage
-   list in its docstring. Expect them to meet there. Keep both commands.
-5. Merge the branches into `main` with `git merge`. Do not squash; keep the branches until graded.
+   list in its docstring. Expect them to meet there. Keep both commands. (`--help` prints to the
+   real standard output, so test it with pytest's `capsys`.)
+5. Merge the branches into `main` with `git merge`; at least three must end up merged. Do not
+   squash; keep the branches until graded. Git's own merge message is fine.
 6. `limits.py` is on the second-reviewer list in `CONTRIBUTING.md`. Read its diff yourself.
-7. Finish on `main`, everything committed, `pytest -q` green, with a short log of what you
-   delegated, corrected and how long it took in `docs/agent-log.md`.
+7. Finish on `main`, everything committed, `pytest -q` green, with a short log (30 words or
+   more) of what you delegated, corrected and how long it took in `docs/agent-log.md`.
 
 When you think you are done, grade it from the `ailab` folder of the course repository:
 `python -m ailab grade m10 --dir <this directory>`

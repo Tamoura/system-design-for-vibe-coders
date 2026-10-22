@@ -45,10 +45,12 @@ def new_tests_fail_on_starter(
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_bytes(original)
         existing = [p for p in chosen if (root / p).exists()]
-        result = checks.run_pytest(root, existing, timeout=timeout)
+        # --continue-on-collection-errors: a test file that cannot even import the new code is counted, not fatal
+        result = checks.run_pytest(root, existing, timeout=timeout, args=["--continue-on-collection-errors"])
     caught = result.failed + result.errors
     if result.timed_out or caught:
-        detail = f"{checks.plural(caught, 'test')} fail on the original code, as they should" if caught else \
+        parts = [f"{result.failed} failed" if result.failed else "", f"{checks.plural(result.errors, 'error')}" if result.errors else ""]
+        detail = (" and ".join(p for p in parts if p) + " on the original code, as they should") if caught else \
             "the tests do not finish on the original code"
         return Check(name, True, detail, "", required)
     return Check(name, False, "all of your new tests already pass on the original code, so they would not have caught its absence",

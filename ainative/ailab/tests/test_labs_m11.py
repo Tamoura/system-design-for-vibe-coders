@@ -10,6 +10,7 @@ documents are accepted. The last groups test the helper module and the learner's
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -25,6 +26,7 @@ KIT = Path(__file__).resolve().parent.parent / "ailab"
 LAB_DIR = KIT / "labs" / "m11_lifecycle"
 SOLUTION = LAB_DIR / "solution"
 BASE_DOCS = KIT / "base" / "remit" / "docs"
+LESSON = KIT.parent.parent / "modules" / "11-lifecycle.md"
 
 # check names (a test fails loudly if the lab renames one)
 ADR_EXISTS = "ADR exists in docs/adr/"
@@ -1036,7 +1038,8 @@ def test_timeline_rows_are_read_in_many_layouts():
 
 def test_derived_numbers_come_from_the_record_and_nothing_else():
     rec = record()
-    ok = "The window lasted 52 minutes; the alert fired after 13 minutes; 188 transfers; 64 tickets; 23 rejections against 9; 41 minutes to recover."
+    ok = ("The window lasted 52 minutes; the alert fired 13 minutes after the first failure (E1, E2); 188 transfers; 64 tickets; "
+          "23 rejections against 9; 41 minutes from the alert to its resolution (E2, E10).")
     assert m.invented_facts(ok, rec) == []
     bad = m.invented_facts("About 2,500 customers lost 47 minutes and 300 transfers failed at 03:12.", rec)
     assert len(bad) == 4  # 2,500 customers, 47 minutes, 300 transfers, 03:12
@@ -1085,3 +1088,629 @@ def test_the_scanner_catches_an_invented_time_and_event(solved):
 
 def test_the_scanner_reports_a_missing_file_with_status_2(work):
     assert scan(work, "docs/nope.md").returncode == 2
+
+
+# ============================================================================================
+# Repairs after the learner dry-run. One group per finding; each wrong shortcut gets a negative test and
+# each sound variant a positive one.
+# ============================================================================================
+# -- a method's `self` is part of the def line: it may stay or go -------------------------------------------
+def test_method_signatures_copied_from_the_def_line_with_self_are_accepted(solved):
+    append_to_page(solved, "\n".join([
+        "Methods, copied from the def lines:",
+        "- `ids.SequentialIds.__call__(self) -> str`",
+        "- `clock.FixedClock.now(self) -> datetime`",
+        "- `clock.FixedClock.set(self, moment: datetime | str) -> None`",
+        "- `clock.FixedClock.advance(self, **delta: int) -> datetime`",
+        "- `clock.FixedClock.set(moment: datetime | str) -> None` (the same, without self)",
+    ]))
+    assert_only(grade(solved))
+
+
+def test_self_is_not_a_parameter_of_a_plain_function(solved):
+    append_to_page(solved, "Wrong: `ids.new_id(self, prefix: str) -> str`.")
+    assert_only(grade(solved), DOC_SIGS)
+
+
+@pytest.mark.parametrize(
+    "claim,fragment",
+    [
+        ("`clock.FixedClock.set(when: datetime | str) -> None`", "'when' is not a parameter"),
+        ("`ids.SequentialIds(start: int = 0)`", "default of 'start'"),
+        ("`clock.get_clock() -> str`", "return type"),
+        ("`audit.log_event() -> dict`", "leaves out 'event'"),
+        ("`audit.read_events(path: int | None = None) -> list[dict]`", "type of 'path'"),
+        ("`audit.read_events(path: str | None) -> list[dict]`", "optional in the code"),
+        ("`ids.new_id(prefix: str, length: int = 8) -> str`", "'length' is not a parameter"),
+    ],
+    ids=["renamed", "wrong-default", "wrong-return", "dropped", "wrong-type", "default-dropped", "extra-parameter"],
+)
+def test_a_signature_is_compared_with_the_def_line_not_only_bounded_by_it(solved, claim, fragment):
+    append_to_page(solved, f"Wrong on purpose: {claim}.")
+    result = grade(solved)
+    assert_only(result, DOC_SIGS)
+    assert fragment in result[DOC_SIGS].detail
+
+
+def test_the_signature_hint_says_self_may_stay_and_points_at_the_def_line(solved):
+    append_to_page(solved, "Wrong on purpose: `clock.get_clock() -> str`.")
+    hint = grade(solved)[DOC_SIGS].hint
+    assert "def line" in hint and "self" in hint
+
+
+def test_a_renamed_catch_all_and_a_simplified_type_are_sound(solved):
+    append_to_page(solved, "Fine: `audit.log_event(event: str, **kwargs) -> dict` and `audit.read_events(path: str | None = None) -> list`.")
+    assert_only(grade(solved))
+
+
+def test_a_call_with_keywords_is_not_read_as_a_declaration(solved):
+    append_to_page(solved, "Calls: `ids.SequentialIds(start=40)` and `clock.FixedClock.advance(seconds=61)`.")
+    assert_only(grade(solved))
+
+
+def test_a_def_line_in_a_code_block_is_checked_like_an_inline_signature(solved):
+    good = "```text\nclass FixedClock:\n    def set(self, moment: datetime | str) -> None\n    def advance(self, **delta: int) -> datetime\n```"
+    bad = good.replace("moment: datetime | str", "when: datetime | str")
+    append_to_page(solved, good)
+    assert_only(grade(solved))
+    append_to_page(solved, bad)
+    result = grade(solved)
+    assert_only(result, DOC_SIGS)
+    assert "'when'" in result[DOC_SIGS].detail
+
+
+def test_every_signature_offender_is_listed_not_just_the_first_two(solved):
+    append_to_page(solved, "`ids.new_id(prefix, length=8)` `clock.now(tz)` `audit.read_events(path, limit=100)` "
+                           "`ids.use_generator(a, b)` `clock.set_clock(a, b)` `audit.configure(a, b)`")
+    detail = grade(solved)[DOC_SIGS].detail
+    assert "more)" not in detail
+    for name in ("new_id", "now", "read_events", "use_generator", "set_clock", "configure"):
+        assert name in detail
+
+
+def test_names_without_a_signature_do_not_document_the_api(solved):
+    names_only = "# najmkit\n\n" + "\n".join(f"- `{n}`" for n in m.public_names(solved)) + "\n\n" + "word " * 200
+    put(solved, DOC_PATH, names_only)
+    commit(solved)
+    result = grade(solved)
+    assert DOC_COVERAGE in failing(result)
+    assert "signature" in result[DOC_COVERAGE].detail
+
+
+# -- names in backticks that are files, or are quoted in order to be refuted --------------------------------
+def test_a_file_name_in_backticks_is_not_a_missing_name(solved):
+    swap(solved, ADR_PATH, "## Consequences\n", "## Consequences\n\nThe trail is written to `audit.jsonl`, which `.gitignore` lists.\n")
+    commit(solved)
+    assert_only(grade(solved))
+    index = m.CodeIndex(solved)
+    assert index.resolve_symbol("audit.jsonl") is None
+    assert index.resolve_symbol("audit.log_event") is True and index.resolve_symbol("audit.nope") is False
+
+
+def test_a_wrong_name_may_be_quoted_when_the_sentence_says_it_does_not_exist(solved):
+    swap(solved, ADR_PATH, "## Consequences\n", "## Consequences\n\nThe old page names `risk.py`, which does not exist.\n")
+    commit(solved)
+    assert_only(grade(solved))
+    append_to_page(solved, "An assistant invented `ids.generate`, which does not exist, and `clock.utcnow()`, which is no such function.")
+    assert_only(grade(solved))
+
+
+def test_the_same_wrong_name_is_a_failure_when_the_sentence_relies_on_it(solved):
+    swap(solved, ADR_PATH, "## Consequences\n", "## Consequences\n\nThe checks live in `risk.py`.\n")
+    commit(solved)
+    assert_only(grade(solved), ADR_FACTS)
+    append_to_page(solved, "Use `ids.generate` to make an id.")
+    assert DOC_NAMES in failing(grade(solved))
+
+
+def test_the_scanner_treats_file_names_and_refuted_names_like_the_grader(solved):
+    put(solved, "docs/scratch.md", "The trail is `audit.jsonl`. The old page names `risk.py`, which does not exist.\nThe checks live in `risk.py`.\n")
+    out = scan(solved, "docs/scratch.md")
+    assert "audit.jsonl" not in out.stdout
+    assert out.stdout.count("risk.py") == 1 and "scratch.md:2" in out.stdout  # only the unrefuted one, on line 2
+
+
+# -- layouts a sound page may use --------------------------------------------------------------------------------
+def test_a_signature_in_a_table_cell_with_an_escaped_pipe_is_still_checked(solved):
+    append_to_page(solved, "| Name | What it does |\n|---|---|\n| `clock.FixedClock.set(moment: datetime \\| str) -> None` | Jumps to a time. |")
+    assert_only(grade(solved))
+    append_to_page(solved, "| `clock.FixedClock.set(when: datetime \\| str) -> None` | Jumps to a time. |")
+    result = grade(solved)
+    assert_only(result, DOC_SIGS)
+    assert "'when'" in result[DOC_SIGS].detail
+
+
+def test_a_critic_section_written_as_a_label_line_works_like_a_heading(solved):
+    text = text_of(solved, ADR_PATH)
+    cut = text.index("## Critic's objections")
+    objections = text[cut:].replace("## Critic's objections\n", "Critic's objections:\n")
+    put(solved, ADR_PATH, text[:cut] + objections)
+    commit(solved)
+    assert_only(grade(solved))
+    put(solved, ADR_PATH, text[:cut] + "Critic's objections:\n\n1. Retries? Deferred.\n")
+    commit(solved)
+    assert_only(grade(solved), ADR_CRITIC)
+
+
+# -- floors the ticket now states ------------------------------------------------------------------------------
+def test_the_floors_are_the_ones_the_ticket_states():
+    assert m.ADR_MINIMUM_WORDS == {"context": 25, "decision": 8, "consequences": 20} and m.OBJECTION_WORDS == 8
+    task = (LAB_DIR / "task.md").read_text(encoding="utf-8")
+    assert "Context needs 25 words or more, Decision 8, Consequences 20" in task
+    assert "each of eight words or more" in task
+    assert "Cover nine of the thirteen events or more" in task and "Three or more action items" in task
+
+
+def test_a_thin_context_is_named_with_its_floor(solved):
+    text = text_of(solved, ADR_PATH)
+    a, b = text.index("## Context"), text.index("## Decision")
+    put(solved, ADR_PATH, text[:a] + "## Context\n\nIt runs `src/remit/service.py` and `ledger.post_transfer`.\n\n" + text[b:])
+    commit(solved)
+    result = grade(solved)
+    assert_only(result, ADR_FORMAT)
+    assert "at least 25 words" in result[ADR_FORMAT].detail
+
+
+def test_the_lessons_own_sample_adr_passes_the_format_check():
+    if not LESSON.exists():
+        pytest.skip("the lesson is not in this checkout")
+    lesson = LESSON.read_text(encoding="utf-8")
+    block = re.search(r"```markdown\n(# 4\. Fee tiers are chosen by the whole amount\n.*?)```", lesson, re.S)
+    assert block, "the sample ADR of lesson 11.1 moved"
+    compact = block.group(1)
+    assert m.adr_format_problems(compact) == []
+    headed = re.sub(r"^(Status|Context|Decision|Consequences): ", lambda g: f"## {g.group(1)}\n\n", compact, flags=re.M)
+    assert headed != compact
+    assert m.adr_format_problems(headed) == [], headed  # pasted in the template's shape
+
+
+# -- the critic's objections: what you did must be a decision -------------------------------------------------------
+def test_responses_that_decide_nothing_do_not_count(solved):
+    text = text_of(solved, ADR_PATH)
+    put(solved, ADR_PATH, text[: text.index("## Critic's objections")] + """## Critic's objections
+
+1. **Objection:** A customer who is not told sends again, so one failure becomes several transfers. **Response:** noted.
+2. **Objection:** Nothing retries, so a lost message stays lost, which is the standard complaint. **Response:** noted for the record.
+3. **Objection:** An outbox in the same database would be the textbook alternative to this choice. **Response:** see above.
+""")
+    commit(solved)
+    result = grade(solved)
+    assert_only(result, ADR_CRITIC)
+    assert "what you did" in result[ADR_CRITIC].detail
+
+
+def test_a_table_cell_that_only_says_noted_does_not_count(solved):
+    text = text_of(solved, ADR_PATH)
+    cut = text.index("## Critic's objections")
+    put(solved, ADR_PATH, text[:cut] + """## Critic's objections
+
+| Objection | Response |
+|---|---|
+| A customer who is not told sends again, so one failure becomes several transfers. | noted |
+| Nothing retries, so a lost message stays lost, which is the standard complaint. | noted for now |
+| An outbox in the same database would be the textbook alternative to this choice. | see above |
+""")
+    commit(solved)
+    assert_only(grade(solved), ADR_CRITIC)
+
+
+def test_one_clause_objections_get_an_honest_message(solved):
+    text = text_of(solved, ADR_PATH)
+    cut = text.index("## Critic's objections")
+    put(solved, ADR_PATH, text[:cut] + "## Critic's objections\n\n1. Retries? Deferred.\n2. Outbox? Rejected.\n3. Alerts? Accepted.\n")
+    commit(solved)
+    result = grade(solved)
+    assert_only(result, ADR_CRITIC)
+    assert "too short to count" in result[ADR_CRITIC].detail and "3 more" in result[ADR_CRITIC].detail
+
+
+@pytest.mark.parametrize("word", ["accepted", "rejected because the ledger is elsewhere", "deferred to a follow-up ticket", "we keep the decision", "declined"])
+def test_any_clear_decision_word_is_enough_when_the_objection_is_a_sentence(solved, word):
+    text = text_of(solved, ADR_PATH)
+    cut = text.index("## Critic's objections")
+    body = "\n".join(f"{n}. A customer who is not told sends again, so one failure becomes several transfers (#{n}). **Response:** {word}." for n in (1, 2, 3))
+    put(solved, ADR_PATH, text[:cut] + "## Critic's objections\n\n" + body + "\n")
+    commit(solved)
+    assert_only(grade(solved))
+
+
+# -- 'posted twice' is not a customer sending again ---------------------------------------------------------------------
+def test_a_true_sentence_about_two_vendor_posts_is_accepted(solved):
+    swap(solved, PM_PATH, "The cause is not established.",
+         "The cause is not established. The vendor's public status page posted twice: an investigation notice at 10:30 (E6) and a resolution notice at 11:02 (E11).")
+    commit(solved)
+    assert_only(grade(solved))
+
+
+@pytest.mark.parametrize(
+    "sentence",
+    [
+        "Customers sent the transfer twice.",
+        "There were duplicate transfers in the window.",
+        "Many callers tried twice before they gave up.",
+        "The same payment was sent two times.",
+    ],
+    ids=["customers-twice", "duplicate-transfers", "callers-twice", "payment-two-times"],
+)
+def test_a_resend_without_evidence_is_still_rejected(solved, sentence):
+    swap(solved, PM_PATH, "The cause is not established.", "The cause is not established. " + sentence)
+    commit(solved)
+    assert PM_UNKNOWN in failing(grade(solved))
+
+
+def test_a_message_quotes_the_words_that_caused_it(solved):
+    swap(solved, PM_PATH, "The cause is not established.", "The cause is not established. " + "Filler words that run on for quite a while before the point. " * 3
+         + "Then the failures originated in the vendor's gateway, as everyone knows.")
+    commit(solved)
+    detail = grade(solved)[PM_UNKNOWN].detail
+    assert "originated in the vendor" in detail  # not just the start of the sentence
+
+
+# -- causes, actions and states the record does not give --------------------------------------------------------------------
+@pytest.mark.parametrize(
+    "sentence",
+    [
+        "The failures originated in the vendor's gateway.",
+        "Confirmations were late because the notification gateway was slow.",
+        "The gateway was down.",
+        "The team paused outbound messages and re-queued them (E8).",
+        "Support worked around it by phoning customers.",
+    ],
+    ids=["originated", "because-slow", "gateway-down", "paused-and-requeued", "workaround"],
+)
+def test_causes_and_actions_without_the_usual_words_are_still_not_facts(solved, sentence):
+    swap(solved, PM_PATH, "The cause is not established.", "The cause is not established. " + sentence)
+    commit(solved)
+    assert PM_UNKNOWN in failing(grade(solved)), sentence
+
+
+def test_the_vendors_own_statement_may_be_reported(solved):
+    swap(solved, PM_PATH, "The cause is not established.",
+         "The cause is not established. The vendor's status page reported that delivery was degraded (E6) and later that it was back to normal (E11).")
+    commit(solved)
+    assert_only(grade(solved))
+
+
+@pytest.mark.parametrize(
+    "sentence",
+    [
+        "Every notification.failed event in the window had reason notification_error.",
+        "All failures had the reason notification_error throughout.",
+    ],
+    ids=["every-event", "all-failures"],
+)
+def test_what_one_engineer_read_at_one_time_is_not_a_fact_about_the_whole_window(solved, sentence):
+    swap(solved, PM_PATH, "The cause is not established.", "The cause is not established. " + sentence)
+    commit(solved)
+    result = grade(solved)
+    assert PM_UNKNOWN in failing(result)
+    assert "who found it and when" in result[PM_UNKNOWN].detail
+
+
+def test_the_same_finding_with_its_source_is_accepted(solved):
+    swap(solved, PM_PATH, "The cause is not established.",
+         "The cause is not established. At 10:26 a payments engineer found every notification.failed event with reason notification_error (E5).")
+    commit(solved)
+    assert_only(grade(solved))
+
+
+# -- numbers: percentages, gaps in minutes, a count that belongs to another measure ------------------------------------------
+@pytest.mark.parametrize(
+    "sentence,fragment",
+    [
+        ("About 91% of sent transfers had no confirmation.", "percentage 91%"),
+        ("The window began 17 minutes after the first failure.", "17 minutes"),
+        ("The window began 17 minutes after the first failure (E1).", "17 minutes"),
+        ("176 transfers were sent in the window.", "176 is not the record's figure"),
+        ("188 notification failures were recorded.", "188 is not the record's figure"),
+        ("About five hundred customers were affected.", "500 customers"),
+        ("About two thousand customers were affected.", "2000 customers"),
+    ],
+    ids=["percent", "coincident-gap", "gap-with-the-wrong-anchor", "last-weeks-count", "count-of-another-measure",
+         "five-hundred-in-words", "two-thousand-in-words"],
+)
+def test_derived_and_mis_assigned_numbers_are_rejected(solved, sentence, fragment):
+    swap(solved, PM_PATH, "The cause is not established.", "The cause is not established. " + sentence)
+    commit(solved)
+    result = grade(solved)
+    assert PM_INVENTED in failing(result), sentence
+    assert fragment in result[PM_INVENTED].detail, result[PM_INVENTED].detail
+
+
+@pytest.mark.parametrize(
+    "sentence",
+    [
+        "The alert fired 13 minutes after the first failure (E1, E2).",
+        "The alert fired thirteen minutes after the first failure (E1, E2).",
+        "176 transfers were sent in the same window one week earlier (4 March).",
+        "The failure rate was above 20% when the alert fired (E2).",
+    ],
+    ids=["gap-with-its-events", "gap-in-words", "last-weeks-count-said-so", "a-percentage-the-record-writes"],
+)
+def test_worked_out_numbers_that_cite_their_source_are_accepted(solved, sentence):
+    swap(solved, PM_PATH, "The cause is not established.", "The cause is not established. " + sentence)
+    commit(solved)
+    assert_only(grade(solved))
+
+
+def test_a_gap_in_minutes_must_cite_the_events_it_spans():
+    rec = m.load_record(LAB_DIR / "assets" / "incident.json")
+    key = json.loads((LAB_DIR / "hidden" / "answer_key.json").read_text(encoding="utf-8"))
+    assert m.invented_facts("The alert fired 13 minutes after the first failure.", rec)  # no event cited
+    assert m.invented_facts("The alert fired 13 minutes after the first failure (E1, E2).", rec) == []
+    assert m.invented_facts("The alert fired 13 minutes after the first failure (09:58 and 10:11).", rec) == []
+    assert m.invented_facts("It took 17 minutes (E1).", rec)  # E1 + 17 minutes is no event
+    assert m.invented_facts("The incident was open 52 minutes.", rec) == []  # the record's own title says so
+    assert m.misassigned_counts("188 transfers were sent, 171 notification.failed events, 64 tickets, 23 limit_exceeded rejections.", rec, key) == []
+    assert m.misassigned_counts("64 transfers were sent.", rec, key)
+    assert m.misassigned_counts("12 support tickets.", rec, key)
+
+
+# -- people the record never names ----------------------------------------------------------------------------------------
+@pytest.mark.parametrize(
+    "sentence",
+    [
+        "Hassan, the on-call SRE, acknowledged the page (E3).",
+        "The on-call SRE, Hassan, acknowledged the page (E3).",
+        "The alert paged Hassan (E2).",
+        "The alert fired and Hassan acknowledged it (E3).",
+        "A payments engineer, Fatima, read the audit log (E5).",
+    ],
+    ids=["name-comma-role", "role-comma-name", "paged-name", "name-verb", "engineer-comma-name"],
+)
+def test_a_person_introduced_by_name_is_an_invented_person(solved, sentence):
+    swap(solved, PM_PATH, "The cause is not established.", "The cause is not established. " + sentence)
+    commit(solved)
+    result = grade(solved)
+    assert PM_INVENTED in failing(result), sentence
+    assert "is not named in the record" in result[PM_INVENTED].detail
+
+
+def test_people_the_record_names_and_capitalised_places_are_fine(solved):
+    swap(solved, PM_PATH, "The cause is not established.",
+         "The cause is not established. Maha, the incident commander, closed it (E12); support in Qatar was told by the customer support lead (E7), "
+         "and Payments Platform was paged on Wednesday.")
+    commit(solved)
+    assert_only(grade(solved))
+
+
+# -- action items ------------------------------------------------------------------------------------------------------------
+def test_action_items_without_an_owner_or_a_way_to_see_they_are_done_do_not_count(solved):
+    text = text_of(solved, PM_PATH)
+    a = text.index("## Action items")
+    put(solved, PM_PATH, text[:a] + "## Action items\n\n1. Alert earlier than ten minutes next time.\n2. Add the in-app notice to the runbook for good.\n"
+        "3. Think about how failed messages could be retried someday.\n")
+    commit(solved)
+    result = grade(solved)
+    assert_only(result, PM_SECTIONS)
+    assert "owner" in result[PM_SECTIONS].detail and "done" in result[PM_SECTIONS].detail
+
+
+def test_action_items_with_an_owner_and_a_check_in_other_words_count(solved):
+    text = text_of(solved, PM_PATH)
+    a = text.index("## Action items")
+    put(solved, PM_PATH, text[:a] + """## Action items
+
+- Alert on the failure rate over a shorter window. Salem (platform engineering) is responsible; we will know it works when a replay of INC-2031 fires it early.
+- Show the in-app notice automatically. The payments team owns it; verified by a test alert that turns the notice on.
+- Decide how failed confirmations are retried. Hessa to propose; the ADR is merged when the decision is made.
+""")
+    commit(solved)
+    assert_only(grade(solved))
+
+
+# -- blame ---------------------------------------------------------------------------------------------------------------
+def test_blaming_wording_without_the_usual_words_is_flagged_but_advisory(solved):
+    swap(solved, PM_PATH, "The cause is not established.",
+         "The cause is not established. The on-call SRE was slow to respond and should have acknowledged the page sooner.")
+    commit(solved)
+    result = grade(solved)
+    assert_only(result, PM_BLAMELESS)
+    assert framework.passed(list(result.values()))
+
+
+# -- wrong statements about the code that a plain number or a plain verb gives away ------------------------------------------
+@pytest.mark.parametrize(
+    "claim",
+    [
+        "The `ids.new_id` tokens are 8 characters long.",
+        "Tokens from `ids.new_id` are eight characters.",
+        "`audit.log_event` takes a lock while it appends.",
+        "`audit.log_event` writes each record atomically.",
+    ],
+    ids=["token-8", "token-eight", "lock", "atomic"],
+)
+def test_wrong_plain_statements_about_the_code_are_caught(solved, claim):
+    append_to_page(solved, claim)
+    assert DOC_FACTS in failing(grade(solved))
+
+
+def test_true_statements_about_token_length_pass(solved):
+    append_to_page(solved, "A random token is 12 hex characters; a sequential token is six digits, like 000001. `audit.log_event` takes no lock.")
+    assert_only(grade(solved))
+
+
+UNANTICIPATED = "`audit.read_events` returns the newest event first"
+
+
+def test_a_false_sentence_with_no_rule_still_passes_and_the_lesson_says_so(solved):
+    """The sieve's honest limit: lesson 11.2 names this sentence as one the grader cannot catch. If a rule ever catches it,
+    the lesson (and its quiz question 5) must change to another example."""
+    append_to_page(solved, UNANTICIPATED + ".")
+    assert_only(grade(solved))
+    if LESSON.exists():
+        assert UNANTICIPATED in LESSON.read_text(encoding="utf-8")
+
+
+def test_a_retry_nobody_wrote_in_the_notification_decision_is_caught(solved):
+    swap(solved, ADR_PATH, "## Consequences\n", "## Consequences\n\nThe `service.RemitService._notify` method retries three times with exponential backoff.\n")
+    commit(solved)
+    assert_only(grade(solved), ADR_FACTS)
+
+
+def test_discussing_retries_as_the_alternative_is_fine(solved):
+    swap(solved, ADR_PATH, "## Consequences\n",
+         "## Consequences\n\nA retry queue would be the alternative to `service.RemitService._notify` carrying on; nothing retries today.\n")
+    commit(solved)
+    assert_only(grade(solved))
+
+
+@pytest.mark.parametrize(
+    "sentence,ok",
+    [
+        ("A quote lasts five minutes (`fx.QUOTE_TTL`), which gives the customer time.", False),
+        ("A quote lasts 300 seconds (`fx.QUOTE_TTL`).", False),
+        ("A quote lasts one minute (`fx.QUOTE_TTL`).", True),
+        ("A quote lasts sixty seconds (`fx.QUOTE_TTL`).", True),
+        ("T1 customers may send up to QAR five thousand per day.", False),
+    ],
+    ids=["five-minutes", "300-seconds", "one-minute", "sixty-seconds", "five-thousand"],
+)
+def test_figures_written_in_words_are_compared_like_digits(solved, sentence, ok):
+    swap(solved, ADR_PATH, "## Consequences\n", "## Consequences\n\n" + sentence + "\n")
+    commit(solved)
+    if ok:
+        assert_only(grade(solved))
+    else:
+        assert_only(grade(solved), ADR_FACTS)
+
+
+def test_words_to_numbers():
+    assert m.words_to_numbers("five minutes, sixty seconds and twenty-five hundred customers") == "5 minutes, 60 seconds and 2500 customers"
+    assert m.words_to_numbers("about two thousand, a hundred, a minute") == "about 2000, 100, 1 minute"
+    assert m.words_to_numbers("no one, a transfer, one of two") == "no 1, a transfer, 1 of 2"
+    assert m.words_to_numbers("two thousand and five", minimum=4) == "2000 and 5"
+    assert m.words_to_numbers("thirteen minutes, two events", minimum=4) == "13 minutes, two events"
+
+
+def test_the_helpers_for_signatures_and_messages():
+    assert m.read_annotation(" -> dict[str, Any] | None: ...") == "dict[str, Any] | None"
+    assert m.read_annotation(" -> str and returns the id") == "str"
+    assert m.read_annotation(" not an arrow") is None
+    assert m.annotation_tokens("Optional[str]") == m.annotation_tokens("str | None") == frozenset({"str", "None"})
+    assert m.annotation_tokens("os.PathLike[str] | str") == frozenset({"PathLike", "str"})
+    assert m.annotation_tokens("datetime") <= m.annotation_tokens("datetime | str")
+    text = "x" * 60 + " the failures originated in the vendor " + "y" * 60
+    start = text.index("originated")
+    shown = m.around(text, start, start + len("originated in the vendor"))
+    assert "originated in the vendor" in shown and shown.startswith("...") and shown.endswith("...") and len(shown) < 120
+
+
+# -- one commit per document -------------------------------------------------------------------------------------------------
+def test_one_commit_with_all_three_documents_and_two_empty_commits_is_not_three_commits(solved):
+    gitutil.git(solved, "reset", "--soft", "lab-start")
+    commit(solved, "docs(review): write the three documents")
+    gitutil.git(solved, "commit", "--allow-empty", "-m", "docs(review): tidy the first document")
+    gitutil.git(solved, "commit", "--allow-empty", "-m", "docs(review): tidy the second document")
+    result = grade(solved)
+    assert_only(result, THREE_COMMITS)
+    assert "3 new commits" in result[THREE_COMMITS].detail and "first committed together" in result[THREE_COMMITS].detail
+
+
+def test_one_commit_with_all_three_documents_and_two_whitespace_commits(solved):
+    gitutil.git(solved, "reset", "--soft", "lab-start")
+    commit(solved, "docs(review): write the three documents")
+    for n in range(2):
+        (solved / DOC_PATH).write_text(text_of(solved, DOC_PATH) + "\n", encoding="utf-8")
+        commit(solved, f"docs(najmkit): tidy {n}")
+    assert_only(grade(solved), THREE_COMMITS)
+
+
+def test_two_documents_in_one_commit_are_named(solved):
+    gitutil.git(solved, "reset", "--soft", "lab-start")
+    gitutil.git(solved, "reset", "-q")
+    gitutil.git(solved, "add", ADR_PATH, DOC_PATH)
+    gitutil.git(solved, "commit", "-q", "-m", "docs(review): the adr and the page")
+    gitutil.git(solved, "add", PM_PATH)
+    gitutil.git(solved, "commit", "-q", "-m", "docs(postmortem): the review")
+    result = grade(solved)
+    assert_only(result, THREE_COMMITS)
+    assert "the ADR and the najmkit page were first committed together" in result[THREE_COMMITS].detail
+
+
+def test_three_commits_in_any_order_plus_later_fixes_are_fine(solved):
+    gitutil.git(solved, "reset", "--soft", "lab-start")
+    gitutil.git(solved, "reset", "-q")
+    for rel, message in ((PM_PATH, "docs(postmortem): write the review"), (ADR_PATH, "docs(adr): record the decision"),
+                         (DOC_PATH, "docs(najmkit): restore the page")):
+        gitutil.git(solved, "add", rel)
+        gitutil.git(solved, "commit", "-q", "-m", message)
+    (solved / ADR_PATH).write_text(text_of(solved, ADR_PATH) + "\nA closing remark.\n", encoding="utf-8")
+    commit(solved, "docs(adr): add a closing remark")
+    assert_only(grade(solved))
+
+
+def test_a_document_that_is_not_committed_is_named(solved):
+    gitutil.git(solved, "reset", "--soft", "HEAD~1")
+    gitutil.git(solved, "reset", "-q")
+    result = grade(solved)
+    assert THREE_COMMITS in failing(result)
+    assert "the postmortem is not committed yet" in result[THREE_COMMITS].detail
+
+
+# -- secrets in prose ---------------------------------------------------------------------------------------------------------
+def test_a_password_written_without_quotes_is_a_secret(solved):
+    append_to_page(solved, "The demo login is password=hunter2hunter2 for the audit viewer.")
+    result = grade(solved)
+    assert SECRETS in failing(result)
+    assert "hunter2" not in result[SECRETS].detail + result[SECRETS].hint
+
+
+def test_prose_about_passwords_and_example_keys_is_fine(solved):
+    append_to_page(solved, "Never commit a password: use the vault. The AWS documentation example key is AKIAIOSFODNN7EXAMPLE. Set password=changeme-in-vault.")
+    assert_only(grade(solved))
+
+
+# -- the lesson and the ticket agree -----------------------------------------------------------------------------------------
+def test_the_ticket_in_the_lesson_is_the_ticket_in_the_kit():
+    if not LESSON.exists():
+        pytest.skip("the lesson is not in this checkout")
+    lesson = LESSON.read_text(encoding="utf-8")
+    block = re.search(r"\*\*The ticket\.\*\*[^\n]*\n\n```text\n(.*?)```", lesson, re.S)
+    assert block, "the ticket block of lesson 11.2 moved"
+    assert block.group(1).strip() == (LAB_DIR / "task.md").read_text(encoding="utf-8").strip()
+
+
+def test_the_starter_grade_block_in_the_lesson_is_what_the_grader_prints(work):
+    if not LESSON.exists():
+        pytest.skip("the lesson is not in this checkout")
+    lesson = LESSON.read_text(encoding="utf-8")
+    block = re.search(r"On the untouched starter[^\n]*\n\n```text\n(.*?)```", lesson, re.S)
+    assert block, "the starter grade block of lesson 11.2 moved"
+    run = subprocess.run([sys.executable, "-m", "ailab", "grade", "m11", "--dir", str(work)], cwd=KIT.parent, capture_output=True, text=True,
+                         timeout=120)
+    printed = run.stdout.splitlines()
+    assert printed, run.stderr
+    for line in block.group(1).splitlines():
+        if line.strip() in ("", "..."):
+            continue
+        assert line in printed, line
+
+
+def test_the_first_draft_lines_in_the_lesson_are_what_the_grader_prints_for_that_draft(solved):
+    """The lesson shows three failing lines for a constructed first draft; rebuild the draft and compare."""
+    if not LESSON.exists():
+        pytest.skip("the lesson is not in this checkout")
+    block = re.search(r"three of the failing lines look like this[^\n]*\n\n```text\n(.*?)```", LESSON.read_text(encoding="utf-8"), re.S)
+    assert block, "the first-draft block of lesson 11.2 moved"
+    append_to_page(solved, "Also: `ids.generate(prefix, length=8)` makes an id, `clock.utcnow()` reads the time and `audit.write(event, fields)` "
+                           "records an event.\nnajmkit is thread-safe and installs with pip install najmkit.")
+    text = text_of(solved, PM_PATH)
+    a, b = text.index("## Summary"), text.index("## Impact")
+    text = text[:a] + ("## Summary\n\nOn 11 March 2026 an outage at our SMS gateway vendor, caused by a configuration change on their side,\n"
+                       "stopped confirmation messages for roughly 2,000 customers for 52 minutes. The on-call engineer restored\n"
+                       "service by failing over to the backup provider at 10:40.\n\n") + text[b:]
+    text = text.replace("| 10:14 | The on-call SRE acknowledged the page. | E3 |",
+                        "| 10:15 | The on-call SRE acknowledged the page and began investigating. | E3 |")
+    text = text.replace("| 10:50 | Last `notification.failed` event of the window. | E9 |",
+                        "| 10:40 | The on-call engineer failed over to the backup provider. | E9 |")
+    put(solved, PM_PATH, text)
+    commit(solved)
+    result = grade(solved)
+    shown = [ln for ln in block.group(1).splitlines() if ln.strip()]
+    assert len(shown) == 3
+    for line in shown:
+        name = next(n for n in result if line.startswith(f"[FAIL] {n}: "))
+        assert line == f"[FAIL] {name}: {result[name].detail}", line
+    # and the Summary of the lesson's draft is the one used here
+    assert "caused by a configuration change on their side" in LESSON.read_text(encoding="utf-8")

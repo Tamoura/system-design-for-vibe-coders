@@ -619,6 +619,7 @@ def test_squashing_the_history_passes_the_required_checks_and_the_advisory_notic
     result = grade(work)
     assert required_failures(result) == set()
     assert F_BRANCH in failing(result)
+    assert "rewriting" in result[F_BRANCH].hint and "switch" not in result[F_BRANCH].hint.lower()  # the learner is on the right branch
 
 
 def test_an_uncommitted_review_is_fine(template, tmp_path):
@@ -631,6 +632,203 @@ def test_a_committed_review_is_fine_too(template, tmp_path):
     work = solved_without_review(template, tmp_path)
     learner_commit(work, "docs(review): my review")
     assert required_failures(grade(work)) == set()
+
+
+# =============================================================================================
+# 5b. repairs after the learner dry-run: what the grader used to get wrong
+# =============================================================================================
+KEY = "najm-loy-live-7c3e91d4a8b2f650"  # the (fictional) key the agent committed
+
+
+def append(work: Path, rel: str, text: str) -> None:
+    path = work / rel
+    path.write_text(path.read_text(encoding="utf-8") + text, encoding="utf-8")
+
+
+# -- a test restored under another name, a float that is not money ------------------------------------------------------------
+def test_the_deleted_test_restored_under_a_new_name_is_still_the_same_test(template, tmp_path):
+    work = solved_without_review(template, tmp_path)
+    renamed = (work / "tests" / "test_fees.py").read_text(encoding="utf-8").replace(
+        "def test_express_surcharge_is_added_after_the_cap", "def test_express_is_charged_on_top_of_the_capped_fee")
+    (work / "tests" / "test_fees.py").write_text(renamed, encoding="utf-8")
+    learner_commit(work, "test(fees): rename the restored express test")
+    result = grade(work)
+    assert "deleted" not in broken(result), result[F_CHECKLIST].detail
+    assert required_failures(result) == set()
+
+
+def test_a_deleted_test_brought_back_weaker_under_a_new_name_is_still_missing(template, tmp_path):
+    work = solved_without_review(template, tmp_path)
+    weaker = (work / "tests" / "test_fees.py").read_text(encoding="utf-8").replace(
+        "def test_express_surcharge_is_added_after_the_cap", "def test_express_is_charged_on_top_of_the_capped_fee").replace(
+        'assert capped.total == qar("165.00")  # above the 150 cap, by design', 'assert capped.total >= qar("150.00")')
+    (work / "tests" / "test_fees.py").write_text(weaker, encoding="utf-8")
+    learner_commit(work, "test(fees): restore the express test, loosely")
+    result = grade(work)
+    assert "deleted" in broken(result)
+    assert "same name, same body" in result[F_CHECKLIST].hint  # the hint says what to do, and never tells a renamer to 'commit' or 'delete'
+
+
+def test_a_float_that_has_nothing_to_do_with_money_is_not_a_finding(template, tmp_path):
+    work = solved_without_review(template, tmp_path)
+    append(work, "src/remit/loyalty.py", "\n\n_HALF = 0.5\n\n\ndef pause():\n    return 0.25\n")
+    learner_commit(work, "refactor(loyalty): add two constants")
+    assert "float" not in broken(grade(work))
+
+
+def test_a_float_rate_table_is_still_a_finding(template, tmp_path):
+    work = solved_without_review(template, tmp_path)
+    append(work, "src/remit/loyalty.py", "\n\nSILVER_RATE = 0.1\n")
+    learner_commit(work, "refactor(loyalty): name the silver rate")
+    assert "float" in broken(grade(work))
+
+
+# -- a hard-coded key in a form the generic secret scan does not know ----------------------------------------------------------
+@pytest.mark.parametrize("where, rel, text", [
+    ("an environment fallback", "src/remit/loyalty.py",
+     f'\n\nimport os\nAPI_KEY = os.environ.get("LOYALTY_API_KEY", "{KEY}")\n'),
+    ("an environment fallback with another value", "src/remit/loyalty.py",
+     '\n\nimport os\nAPI_KEY = os.getenv("LOYALTY_API_KEY", "ab12cd34ef56ab78cd90")\n'),
+    ("a key built from two strings", "src/remit/loyalty.py", '\n\nPARTS = "najm-loy-" + "live-7c3e91d4a8b2f650"\n'),
+    ("the key in a test fixture", "tests/conftest.py", f'\n\nos.environ.setdefault("LOYALTY_API_KEY", "{KEY}")\n'),
+    ("the key in a test", "tests/test_fees.py", f'\n\ndef test_key_is_gone():\n    assert "{KEY}" not in open("src/remit/loyalty.py").read()\n'),
+])
+def test_a_key_that_is_only_moved_is_still_a_leak(template, tmp_path, where, rel, text):
+    work = solved_without_review(template, tmp_path)
+    append(work, rel, text)
+    learner_commit(work, "fix(loyalty): keep the key somewhere safe")
+    result = grade(work)
+    assert "secrets" in broken(result), (where, result[F_RULES].detail)
+    assert KEY not in result[F_RULES].detail + result[F_RULES].hint  # the report never repeats a secret
+    assert "7c3e91d4" not in result[F_RULES].detail
+    assert F_RULES in failing(result)
+
+
+def test_a_key_in_an_example_file_is_a_leak_too(template, tmp_path):
+    work = solved_without_review(template, tmp_path)
+    (work / ".env.example").write_text(f"LOYALTY_API_KEY={KEY}\n", encoding="utf-8")
+    learner_commit(work, "chore(ci): document the setting")
+    assert "secrets" in broken(grade(work))
+
+
+def test_a_review_that_repeats_the_key_fails_the_rules_check(template, tmp_path):
+    work = solved_without_review(template, tmp_path)
+    text = review_text(overrides={"key": ("src/remit/loyalty.py", "14", "blocker", f"A live key, {KEY}, is hard-coded. Rotate it.")})
+    write_review(work, text)
+    result = grade(work)
+    assert "secrets" in broken(result) and "review.md" in result[F_RULES].detail and KEY not in result[F_RULES].detail
+    write_review(work, review_text())  # referring to the key by file and line is the right way
+    assert "secrets" not in broken(grade(work))
+
+
+def test_a_regression_test_that_looks_for_the_key_prefix_is_fine(template, tmp_path):
+    work = solved_without_review(template, tmp_path)
+    (work / "tests" / "test_no_key.py").write_text(
+        "from pathlib import Path\n\n\ndef test_the_old_key_is_gone_from_the_loyalty_module():\n"
+        "    source = (Path(__file__).resolve().parents[1] / 'src' / 'remit' / 'loyalty.py').read_text(encoding='utf-8')\n"
+        "    assert 'najm-loy-' not in source\n", encoding="utf-8")
+    learner_commit(work, "test(loyalty): check the old key is gone")
+    result = grade(work)
+    assert "secrets" not in broken(result) and required_failures(result) == set()
+
+
+def test_a_placeholder_default_for_a_secret_is_not_a_leak(template, tmp_path):
+    work = solved_without_review(template, tmp_path)
+    append(work, "src/remit/loyalty.py", '\n\nimport os\nAPI_KEY = os.environ.get("LOYALTY_API_KEY", "changeme")\n')
+    learner_commit(work, "fix(loyalty): read the key from the environment")
+    assert "secrets" not in broken(grade(work))
+
+
+# -- severities: too high is also wrong -------------------------------------------------------------------------------------------
+def test_everything_a_blocker_does_not_fit(work):
+    eleven = {k: (v[0], v[1], "blocker", v[3]) for k, v in GOOD.items()}
+    write_review(work, review_text(overrides=eleven))
+    result = grade(work)
+    assert R_SEVERITY in failing(result) and "every finding is a blocker" in result[R_SEVERITY].detail
+    assert "rated higher" in result[R_SEVERITY].detail  # the two weak-test findings are over-called too
+
+
+def test_a_weak_test_is_not_a_blocker_but_a_major_is_fine(work):
+    write_review(work, review_text(overrides={"noassert": ("tests/test_loyalty.py", "30", "blocker", GOOD["noassert"][3])}))
+    result = grade(work)
+    assert R_SEVERITY in failing(result) and "1 finding rated higher" in result[R_SEVERITY].detail
+    write_review(work, review_text(overrides={"noassert": ("tests/test_loyalty.py", "30", "major", GOOD["noassert"][3]),
+                                              "mock": ("tests/test_loyalty.py", "23", "major", GOOD["mock"][3])}))
+    assert grade(work)[R_SEVERITY].ok
+
+
+def test_six_blockers_and_two_majors_is_a_defensible_ranking(work):
+    ratings = {"dep": "blocker", "key": "blocker", "float": "blocker", "swallow": "blocker", "scope": "blocker", "deleted": "blocker",
+               "noassert": "major", "mock": "major"}
+    write_review(work, review_text(overrides={k: (GOOD[k][0], GOOD[k][1], sev, GOOD[k][3]) for k, sev in ratings.items()}))
+    assert grade(work)[R_SEVERITY].ok
+
+
+# -- the scope-creep finding is the cap, not the rename that covers it ---------------------------------------------------------------
+RENAME = "Unrelated churn: _D is renamed to _dec on twenty lines and the docstrings are rewritten. Scope creep, a tidy-up nobody asked for."
+
+
+@pytest.mark.parametrize("severity", ["nit", "blocker"])
+def test_a_finding_about_the_rename_does_not_cover_the_cap_change(work, severity):
+    write_review(work, review_text(("dep", "key", "float", "swallow", "deleted", "noassert", "mock", "scope"),
+                                   overrides={"scope": ("src/remit/fees.py", "58", severity, RENAME)}))
+    result = grade(work)
+    assert "7 of 8" in result[R_FOUND].detail and "1 more finding" in result[R_FOUND].detail
+    assert R_ALL in failing(result)
+
+
+def test_the_cap_change_is_found_by_its_words_even_without_a_line(work):
+    cap = "The total is now min(base + surcharge, cap): an express transfer on a capped fee is cheaper than before. Not in the ticket."
+    write_review(work, review_text(("scope",), overrides={"scope": ("src/remit/fees.py", "-", "blocker", cap)}))
+    assert checks_m05.match_findings(checks_m05.parse_review(
+        review_text(("scope",), overrides={"scope": ("src/remit/fees.py", "-", "blocker", cap)}), known(work)).findings,
+        checks_m05.flaw_lines(work)).count == 1
+
+
+# -- "What I ran": a short list of commands is enough, and the number is stated ---------------------------------------------------------
+def test_what_i_ran_needs_a_few_words_and_says_how_many(work):
+    write_review(work, review_text(ran="git diff, pytest"))
+    assert grade(work)[R_FILE].ok
+    write_review(work, review_text(ran="pytest"))
+    result = grade(work)
+    assert not result[R_FILE].ok and "at least 3 words" in result[R_FILE].detail
+
+
+# -- the scope check names every file ------------------------------------------------------------------------------------------------------
+def test_the_scope_check_lists_every_unrelated_file(template, tmp_path):
+    work = solved_without_review(template, tmp_path)
+    for name in ("a", "b", "c", "d", "e", "f"):
+        (work / "src" / "remit" / f"extra_{name}.py").write_text("X = 1\n", encoding="utf-8")
+    learner_commit(work, "chore(cli): add helpers")
+    detail = grade(work)[F_SCOPE].detail
+    assert all(f"extra_{name}.py" in detail for name in "abcdef") and "more" not in detail
+
+
+def test_the_scope_check_lists_the_files_it_accepted(template, tmp_path):
+    work = solved_without_review(template, tmp_path)
+    result = grade(work)[F_SCOPE]
+    assert result.ok and "more)" not in result.detail
+    assert all(path in result.detail for path in ("pyproject.toml", "src/remit/fees.py", "src/remit/loyalty.py", "tests/test_fees.py"))
+
+
+# -- the branch the grader looks at ---------------------------------------------------------------------------------------------------
+def test_a_fix_made_on_another_branch_is_told_where_the_grader_looks(work):
+    gitutil.git(work, "checkout", "-q", "main")
+    write_review(work, review_text())
+    result = grade(work)
+    branch = result[F_BRANCH]
+    assert not branch.ok and "'main'" in branch.detail and "git switch agent/loyalty-discount" in branch.hint
+    assert not branch.required  # advisory: the required checks already say what is wrong with the code
+
+
+# -- the limits of a keyword matcher, said out loud ----------------------------------------------------------------------------------------
+def test_a_keyword_stuffed_review_passes_the_review_half_but_never_the_lab(work):
+    """The review half cannot judge understanding (the lesson says so). What it must not do is let that carry the lab:
+    the fix half runs real code against the ticket."""
+    write_review(work, review_text(style="bullets", ran="- git diff and pytest, quickly"))
+    result = grade(work)
+    assert REVIEW_CHECKS <= {n for n, c in result.items() if c.ok}
+    assert required_failures(result) >= {F_HIDDEN, F_RULES, F_CHECKLIST, F_CATCH}
 
 
 # =============================================================================================
@@ -673,7 +871,8 @@ def test_scan_for_faked_fee_code(tmp_path):
 
 def test_scan_for_floats_and_broad_handlers_and_imports(tmp_path):
     make_tree(tmp_path, {
-        "src/remit/a.py": "import json\nimport requests\nx = 0.1\ny = float('1')\ntry:\n    pass\nexcept Exception:\n    pass\n",
+        "src/remit/a.py": "import json\nimport requests\nrate = 0.1\ny = float('1')\ntry:\n    pass\nexcept Exception:\n    pass\n"
+                          "_HALF = 0.5\ndef pause():\n    return 0.25\n",
         "src/remit/money.py": "def f(v):\n    return isinstance(v, float)\n",
         "src/remit/b.py": "try:\n    pass\nexcept ValueError:\n    pass\ntry:\n    pass\nexcept Exception:\n    raise\ntry:\n    pass\nexcept:\n    print(1)\n",
         "tests/test_c.py": "import pytest\nimport hypothesis\n",

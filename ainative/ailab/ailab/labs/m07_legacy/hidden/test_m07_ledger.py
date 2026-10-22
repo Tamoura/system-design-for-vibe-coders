@@ -174,6 +174,31 @@ def test_the_journal_call_hands_out_a_copy_of_the_list(hx_new_ledger):
     assert len(ledger.journal()) == 4
 
 
+def test_the_entry_dicts_are_shared_not_copied(hx_new_ledger):
+    """The ledger docstring: journal() is a copy of the list, 'the entry dicts themselves are shared'."""
+    ledger = hx_new_ledger()
+    entries = post(ledger)
+    first, second = ledger.journal(), ledger.journal()
+    assert all(a is b for a, b in zip(first, second)) and all(a is b for a, b in zip(first, entries))
+
+
+def test_the_refusals_keep_their_wording(hx_new_ledger):
+    """Support quotes these messages; they are part of what the module does."""
+    ledger = hx_new_ledger()
+    with pytest.raises(CurrencyMismatch) as currency:
+        ledger.post_transfer("TRF-1", "C001", Money("5", "EGP"), qar("1"))
+    with pytest.raises(InvalidAmount) as amount:
+        post(ledger, send="0.00")
+    post(ledger, "TRF-1")
+    with pytest.raises(DuplicatePosting) as duplicate:
+        post(ledger, "TRF-1")
+    assert (str(currency.value), str(amount.value), str(duplicate.value)) == (
+        "the ledger posts QAR only",
+        "send amount must be positive and fee must not be negative",
+        "transfer TRF-1 is already posted",
+    )
+
+
 # -- Q-LED-3: ids and time come from najmkit; the books belong to the instance ----------------------
 def test_entries_are_stamped_with_the_najmkit_clock_at_posting_time(hx_new_ledger, hx_clock):
     ledger = hx_new_ledger()

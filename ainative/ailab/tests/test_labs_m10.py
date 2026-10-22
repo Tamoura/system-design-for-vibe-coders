@@ -43,7 +43,7 @@ SCOPE = "Only the expected files changed"
 WEAKENED = "Existing tests were not weakened"
 SECRETS = "No secrets in the change"
 NEW_TESTS = "Your new tests fail on the original code"
-PLAN = "A parallel plan exists (docs/parallel-plan.md)"
+PLAN = "A plan was committed first (docs/parallel-plan.md)"
 LOG = "A short log exists (docs/agent-log.md)"
 HISTORY = "No commit in the history contains conflict markers"
 REQUIRED = {ON_MAIN, COMMITTED, OWN_TESTS, TASK_A, TASK_B, TASK_C, TASK_D, TOGETHER, MARKERS, BRANCHES, ONE_TASK, MESSAGES,
@@ -154,9 +154,12 @@ def reference_flow(work: Path, *, parts: str = "abcd", resolve: str = "reference
         merge(work, PART["d"][0])
 
 
-def write_plan_and_log(work: Path) -> None:
+def write_plan(work: Path) -> None:
     framework.write_file(work, LAB.PLAN, (SOL / "parallel-plan.md").read_text(encoding="utf-8"))
     learner_commit(work, "docs(docs): plan the parallel work for REMIT-361")
+
+
+def write_log(work: Path) -> None:
     framework.write_file(work, LAB.LOG, (SOL / "agent-log.md").read_text(encoding="utf-8"))
     learner_commit(work, "docs(docs): log what was delegated")
 
@@ -174,6 +177,7 @@ def test_the_starter_fails_for_the_right_reasons(work):
     assert_failing(result, TASK_A, TASK_B, TASK_C, TASK_D, TOGETHER, BRANCHES, ONE_TASK, MESSAGES, SCOPE, NEW_TESTS, PLAN, LOG)
     assert all(c.hint for c in result.values() if not c.ok)
     assert "transfer_delayed" not in "".join(c.detail + c.hint for c in result.values())  # never leaks the answer
+    assert "Nothing is committed yet" in result[MESSAGES].hint  # no branch holds work either, so "merge" would be wrong
 
 
 def test_the_reference_solution_passes_every_check_even_the_advisory_ones(work):
@@ -225,6 +229,7 @@ def test_the_tickets_examples_are_what_the_program_really_prints(work):
 # --------------------------------------------------------------------------------------------
 def test_worktrees_a_different_implementation_rebase_and_fast_forward(work, tmp_path):
     """Three worktrees beside the repo, usage_line written another way, rebase then fast-forward: no merge commits."""
+    write_plan(work)  # plan first, on main, before any branch is cut
     trees = {}
     for key, name in (("a", "task/notice"), ("b", "task/corridors"), ("c", "task/limits")):
         trees[key] = tmp_path / f"wt-{key}"
@@ -260,7 +265,7 @@ def test_worktrees_a_different_implementation_rebase_and_fast_forward(work, tmp_
         git(work, "worktree", "remove", "--force", str(tree))
     build_branch(work, "d")
     git(work, "merge", "-q", "--ff-only", PART["d"][0])
-    write_plan_and_log(work)
+    write_log(work)
     result = grade(work)
     assert_failing(result)
     assert [c for c in gitutil.commits_since(work, "lab-start") if c.is_merge] == []  # a linear history
@@ -324,7 +329,8 @@ def test_everything_in_one_commit_on_main(work):
     result = grade(work)
     assert_failing(result, BRANCHES, ONE_TASK, MESSAGES, PLAN, LOG)
     assert "expected at least 4" in result[MESSAGES].detail
-    assert "changes corridors and" in result[ONE_TASK].detail or "changes notify and" in result[ONE_TASK].detail
+    assert "changes files of different tasks" in result[ONE_TASK].detail
+    assert "notify.py (A)" in result[ONE_TASK].detail or "corridors.py (B)" in result[ONE_TASK].detail
 
 
 def test_squash_merged_branches_leave_no_trace_of_the_branches(work):
@@ -342,7 +348,7 @@ def test_squash_merged_branches_leave_no_trace_of_the_branches(work):
     learner_commit(work, "docs(docs): add the runbook")
     result = grade(work)
     assert_failing(result, BRANCHES, PLAN, LOG)  # the code is right, but git cannot see which branches were merged
-    assert "no --squash" in result[BRANCHES].hint
+    assert "not --squash" in result[BRANCHES].hint
 
 
 def test_a_conflict_committed_with_its_markers(work):
@@ -462,7 +468,7 @@ def test_one_commit_that_mixes_two_tasks(work):
     learner_commit(work, "docs(docs): tidy two docstrings")
     result = grade(work)
     assert ONE_TASK in failing(result)
-    assert "limits and notify" in result[ONE_TASK].detail
+    assert "limits.py (C)" in result[ONE_TASK].detail and "notify.py (A)" in result[ONE_TASK].detail
 
 
 @pytest.mark.parametrize("message", ["wip", "update stuff", "feat: add things", "Feat(cli): Add The Command.", "fix(cli): " + "x" * 70])
@@ -568,3 +574,321 @@ def test_the_marker_scan_ignores_prose_about_conflicts(work):
     framework.write_file(work, "docs/agent-log.md", "# Log\n\nThe conflict looked like this:\n\n```\n<<<<<<< HEAD\nx\n=======\ny\n>>>>>>> branch\n```\n" + "word " * 40)
     learner_commit(work, "docs(docs): describe the conflict I met")
     assert MARKERS not in failing(grade(work))  # docs/agent-log.md is not scanned: only code and the runbook are
+
+
+# --------------------------------------------------------------------------------------------
+# the dry-run repairs: what a sound solution may do, and the shortcuts that must still fail
+# --------------------------------------------------------------------------------------------
+CARE = "docs/CARE.md"
+PKR_LINE = "QAR-PKR: 100.00 to 15000.00 QAR; delivery: bank_deposit (default), cash_pickup; fees: STD-B"
+INR_LINE = "QAR-INR: 50.00 to 25000.00 QAR; delivery: bank_deposit (default), wallet; fees: STD-A"
+
+
+def solved(work: Path) -> Path:
+    framework.solve_lab(framework.load_lab("m10"), work)
+    return work
+
+
+def edit_runbook(work: Path, *pairs: tuple[str, str]) -> str:
+    text = (work / CARE).read_text(encoding="utf-8")
+    for old, new in pairs:
+        assert old in text, old
+        text = text.replace(old, new)
+    framework.write_file(work, CARE, text)
+    learner_commit(work, "docs(docs): rework the runbook")
+    return text
+
+
+def test_a_runbook_that_shows_another_real_corridor_line_is_fine(work):
+    """The ticket asks for 'a real example of its output': QAR-PKR is as real as QAR-INR."""
+    solved(work)
+    edit_runbook(work, ("python -m remit corridors            # every corridor, ordered by code\n", ""),
+                 ("python -m remit corridors QAR-PKR    # one corridor", "python -m remit corridors QAR-PKR"),
+                 (INR_LINE, PKR_LINE))
+    assert_failing(grade(work))
+
+
+def test_the_whole_corridor_list_pasted_from_the_program_is_fine(work):
+    solved(work)
+    everything = "\n".join([
+        "QAR-EGP: 100.00 to 15000.00 QAR; delivery: bank_deposit (default), wallet; fees: STD-B", INR_LINE,
+        "QAR-PHP: 50.00 to 20000.00 QAR; delivery: bank_deposit (default), cash_pickup, wallet; fees: STD-A", PKR_LINE])
+    edit_runbook(work, (INR_LINE, everything))
+    assert_failing(grade(work))
+
+
+def test_other_ways_to_write_the_commands_and_code_blocks_are_fine(work):
+    solved(work)
+    text = (work / CARE).read_text(encoding="utf-8")
+    text = re.sub(r"^```(\w*)$", r"~~~\1", text, flags=re.M).replace("python -m remit", "python3 -m remit")
+    framework.write_file(work, CARE, text)
+    learner_commit(work, "docs(docs): use tilde fences and python3")
+    assert_failing(grade(work))
+
+
+def test_one_typed_corridor_line_among_real_ones_is_caught(work):
+    solved(work)
+    edit_runbook(work, (INR_LINE, INR_LINE + "\n" + PKR_LINE.replace("bank_deposit (default), cash_pickup", "wallet (default)")))
+    result = grade(work)
+    assert TASK_D in failing(result) and "corridors_section" in result[TASK_D].detail
+
+
+def test_hand_typed_numbers_in_the_limits_example_are_caught(work):
+    solved(work)
+    edit_runbook(work, ("(9500.00 left)", "(9400.00 left)"))
+    result = grade(work)
+    assert TASK_D in failing(result) and "real_usage_line" in result[TASK_D].detail
+
+
+@pytest.mark.parametrize("old,new", [("of 10000.00 QAR", "of 12000.00 QAR"), ("this month 500.00", "this month 400.00")])
+def test_a_usage_line_that_does_not_add_up_is_caught(work, old, new):
+    solved(work)
+    edit_runbook(work, (old, new))
+    assert TASK_D in failing(grade(work))
+
+
+def test_a_limits_section_with_only_prose_is_caught(work):
+    solved(work)
+    edit_runbook(work, ("T2: today 500.00 of 10000.00 QAR used (9500.00 left); this month 500.00 of 40000.00 QAR used (39500.00 left)",
+                        "it says how much of the limit is used"))
+    assert TASK_D in failing(grade(work))
+
+
+def test_agent_settings_and_gitignore_are_allowed_files(work):
+    """Lesson 10.1 saves a subagent under .claude/agents/; an agent may also adjust CLAUDE.md; a learner may ignore worktree folders."""
+    solved(work)
+    framework.write_file(work, ".claude/agents/task-worker.md", "---\nname: task-worker\ndescription: one task\n---\nDo one task.\n")
+    framework.write_file(work, ".gitignore", (work / ".gitignore").read_text(encoding="utf-8") + ".claude/worktrees/\n")
+    framework.write_file(work, "CLAUDE.md", (work / "CLAUDE.md").read_text(encoding="utf-8") + "\nIn the REMIT-361 lab, commit when the task is done.\n")
+    learner_commit(work, "chore(ci): keep the agent setup")
+    assert_failing(grade(work))
+
+
+@pytest.mark.parametrize("which,addition", [
+    ("tests/test_limits.py", None),  # a module-level skip, put at the top (no existing line changes)
+    ("tests/test_limits.py", "skipif"),
+    ("tests/conftest.py", "collect_ignore"),
+])
+def test_an_existing_test_switched_off_without_changing_a_line(work, which, addition):
+    """Adding lines is allowed; adding a line that switches the old tests off is not."""
+    solved(work)
+    path = work / which
+    text = path.read_text(encoding="utf-8")
+    prefix = {None: "import pytest\n\npytestmark = pytest.mark.skip(reason='flaky')\n",
+              "skipif": "import pytest\n\npytestmark = pytest.mark.skipif(True, reason='slow')\n",
+              "collect_ignore": "collect_ignore = ['test_limits.py']\n"}[addition]
+    if which.endswith("conftest.py"):
+        path.write_text(text + "\n" + prefix, encoding="utf-8")
+    else:
+        path.write_text(prefix + text, encoding="utf-8")
+    learner_commit(work, "test(limits): stop a flaky test")
+    result = grade(work)
+    assert WEAKENED in failing(result) and which in result[WEAKENED].detail
+    assert "skip" in result[WEAKENED].detail or "ignore" in result[WEAKENED].detail
+
+
+def test_a_xfail_added_to_an_old_test_file_is_caught(work):
+    solved(work)
+    path = work / "tests" / "test_fees.py"
+    path.write_text(path.read_text(encoding="utf-8") + "\n\n@__import__('pytest').mark.xfail\ndef test_new_known_failure():\n    assert False\n", encoding="utf-8")
+    learner_commit(work, "test(fees): record a known failure")
+    assert WEAKENED in failing(grade(work))
+
+
+def test_tests_that_merely_mention_skipped_things_are_fine(work):
+    solved(work)
+    path = work / "tests" / "test_notify.py"
+    path.write_text(path.read_text(encoding="utf-8") + "\n\ndef test_a_skipped_step_is_not_a_skip_marker():\n    skipped = 0\n    assert skipped == 0\n", encoding="utf-8")
+    learner_commit(work, "test(notify): add a plain test")
+    assert_failing(grade(work))
+
+
+# --- the plan and the log: shape, content, order -------------------------------------------
+def test_plan_first_then_branches_passes_every_check(work):
+    write_plan(work)
+    reference_flow(work)
+    write_log(work)
+    result = grade(work)
+    assert_failing(result)
+    assert "committed before the code" in result[PLAN].detail
+
+
+def test_the_untouched_template_is_not_a_plan(work):
+    shutil.copy(work / "lab-assets" / "parallel-plan-template.md", work / "docs" / "parallel-plan.md")
+    learner_commit(work, "docs(docs): start the plan")
+    reference_flow(work)
+    write_log(work)
+    result = grade(work)
+    assert_failing(result, PLAN)
+    assert "still mostly the template" in result[PLAN].detail and result[PLAN].hint
+
+
+def test_a_plan_written_after_the_branches_is_reported(work):
+    reference_flow(work)
+    write_plan(work)
+    write_log(work)
+    result = grade(work)
+    assert_failing(result, PLAN)
+    assert "before the plan was committed" in result[PLAN].detail and "first" in result[PLAN].hint
+    assert not result[PLAN].required
+
+
+def test_a_plan_that_was_never_committed_is_reported(work):
+    reference_flow(work)
+    write_log(work)
+    (work / "docs" / "parallel-plan.md").write_text((SOL / "parallel-plan.md").read_text(encoding="utf-8"), encoding="utf-8")
+    result = grade(work)
+    assert PLAN not in {n for n, c in result.items() if c.ok}  # untracked: reported, and so is the unclean tree
+    assert COMMITTED in failing(result)
+
+
+def test_a_log_made_of_one_repeated_word_is_not_a_log(work):
+    write_plan(work)
+    reference_flow(work)
+    framework.write_file(work, LAB.LOG, "filler " * 40)
+    learner_commit(work, "docs(docs): add the log")
+    result = grade(work)
+    assert_failing(result, LOG)
+    assert "different ones" in result[LOG].detail
+
+
+# --- commits that mix tasks ----------------------------------------------------------------
+def test_a_commit_with_the_notify_template_and_a_cli_change_mixes_tasks(work):
+    reference_flow(work)
+    framework.edit_file(work, "src/remit/notify.py", '"""Customer notifications', '"""Customer notifications (English and Arabic)')
+    framework.edit_file(work, CLI, '"""Command line:', '"""The command line:')
+    learner_commit(work, "feat(notify): tidy the docstrings")
+    result = grade(work)
+    assert ONE_TASK in failing(result)
+    assert "notify.py (A)" in result[ONE_TASK].detail and "cli.py (B or C)" in result[ONE_TASK].detail
+    assert "reset --soft" in result[ONE_TASK].hint
+
+
+def test_a_commit_with_the_runbook_and_a_cli_change_mixes_tasks(work):
+    reference_flow(work)
+    framework.edit_file(work, CLI, '"""Command line:', '"""The command line:')
+    framework.write_file(work, CARE, (work / CARE).read_text(encoding="utf-8") + "\nMore.\n")
+    learner_commit(work, "docs(docs): extend the runbook and the usage note")
+    assert ONE_TASK in failing(grade(work))
+
+
+def test_a_limits_change_with_its_cli_change_is_one_task_and_so_is_a_test_that_spans_tasks(work):
+    reference_flow(work)
+    framework.edit_file(work, "src/remit/limits.py", '"""Sending limits by KYC tier.', '"""Sending limits by KYC tier (QAR).')
+    framework.edit_file(work, CLI, '"""Command line:', '"""The command line:')
+    learner_commit(work, "feat(limits): describe the units and the usage note")
+    framework.write_file(work, "tests/test_care_together.py", (
+        "import io\nfrom remit.cli import main\n\n\n"
+        "def test_every_new_command_runs_after_the_merge(tmp_path):\n"
+        "    env = {'REMIT_DB': str(tmp_path / 'r.db')}\n"
+        "    for argv in (['corridors'], ['corridors', 'QAR-INR']):\n"
+        "        out = io.StringIO()\n"
+        "        assert main(argv, environ=env, out=out) == 0 and out.getvalue()\n"))
+    learner_commit(work, "test(cli): run the new commands together")
+    result = grade(work)
+    assert ONE_TASK not in failing(result), result[ONE_TASK].detail
+
+
+# --- hints and details that must fit what the learner really did ----------------------------
+def test_commits_that_sit_only_on_other_branches_do_not_get_the_commit_your_change_hint(work):
+    for key in "abcd":
+        build_branch(work, key)  # four branches full of commits; main has none of them
+    result = grade(work)
+    assert MESSAGES in failing(result)
+    assert "expected at least 4" in result[MESSAGES].detail
+    assert "Commit your change" not in result[MESSAGES].hint
+    assert "Merge each task's branch into main" in result[MESSAGES].hint
+
+    assert "not part of main's history" in result[BRANCHES].detail  # and the branches are named
+    assert "feat/limits-command" in result[BRANCHES].detail
+
+
+def test_the_message_hint_for_bad_headers_fits_older_commits_too(work):
+    reference_flow(work)
+    framework.write_file(work, "docs/notes.md", "notes\n")
+    learner_commit(work, "wip")
+    hint = grade(work)[MESSAGES].hint
+    assert "amend" in hint and "rebase" in hint and "merge commits are not checked" in hint
+
+
+def test_squashed_branches_are_named_and_explained(work):
+    for key in "abc":
+        build_branch(work, key)
+    for key in "abc":
+        git(work, "merge", "--squash", PART[key][0], check=False)
+        if key != "a":
+            framework.write_file(work, CLI, (SOL / "cli_resolved.txt").read_text(encoding="utf-8"))
+        learner_commit(work, "feat(cli): squash")
+    result = grade(work)[BRANCHES]
+    assert "unmerged, or squashed" in result.detail and "feat/delay-notice" in result.detail
+    assert "Merge those branches" in result.hint and "not --squash" in result.hint  # they exist: do not say "give each task a branch"
+
+
+def test_a_detached_head_is_described_as_such(work):
+    reference_flow(work)
+    git(work, "checkout", "-q", "--detach")
+    result = grade(work)
+    assert ON_MAIN in failing(result) and "detached" in result[ON_MAIN].detail
+
+
+def test_the_advisory_count_reports_failures_and_errors_separately(work):
+    solved(work)
+    detail = grade(work)[NEW_TESTS].detail
+    assert detail.endswith("on the original code, as they should")
+    assert "failed" in detail and "error" in detail
+
+
+def test_known_limit_branch_names_made_up_after_a_squash_look_like_fast_forwards(work):
+    """The honour-system edge, said in lesson 10.2: git cannot tell `git branch fake HEAD~1` from a branch that was
+    rebased and fast-forwarded, so three bookmarks on three squash commits pass 'branches merged'. The lab trusts you."""
+    for key in "abc":
+        build_branch(work, key)
+    for key in "abc":
+        git(work, "merge", "--squash", PART[key][0], check=False)
+        if key != "a":
+            framework.write_file(work, CLI, (SOL / "cli_resolved.txt").read_text(encoding="utf-8"))
+        learner_commit(work, f"feat(cli): squash {key}")
+    for key in "abc":
+        git(work, "branch", "-D", PART[key][0])
+    for name, back in (("fake-a", 2), ("fake-b", 1), ("fake-c", 0)):
+        git(work, "branch", name, f"HEAD~{back}" if back else "HEAD")
+    assert grade(work)[BRANCHES].ok
+
+
+def test_the_dry_run_route_every_branch_cut_from_the_plan_commit_with_an_integration_test(work):
+    """Plan first, all four branches cut from the plan commit (the runbook too), merged in order A, B, C, D,
+    then one cross-task test and the log, each in a commit of its own."""
+    write_plan(work)
+    for key in "abcd":
+        build_branch(work, key)
+    for key in "abcd":
+        merge(work, PART[key][0])
+    framework.write_file(work, "tests/test_care_together.py", (
+        "import io\nfrom remit.cli import main\n\n\n"
+        "def test_corridors_and_limits_after_the_merge(tmp_path):\n"
+        "    env = {'REMIT_DB': str(tmp_path / 'r.db')}\n"
+        "    out = io.StringIO()\n"
+        "    assert main(['corridors'], environ=env, out=out) == 0 and len(out.getvalue().splitlines()) == 4\n"))
+    learner_commit(work, "test(cli): run the new commands together")
+    write_log(work)
+    result = grade(work)
+    assert_failing(result)
+    assert result[BRANCHES].detail.startswith("4 merged")
+
+
+def test_the_runbook_may_word_its_headings_and_wrap_the_quote_its_own_way(work):
+    """Headings that start with the ticket's words, the English wording quoted in a block that wraps in the middle of the phrase."""
+    solved(work)
+    text = (work / CARE).read_text(encoding="utf-8")
+    text = text.replace("## Corridors\n", "## Corridors command\n").replace("## Limits\n", "## Limits (daily and monthly)\n")
+    text = text.replace("is taking longer than expected. We are\n> working on it", "is taking\n> longer than expected. We are working\n> on it")
+    framework.write_file(work, CARE, text)
+    learner_commit(work, "docs(docs): reword the runbook headings")
+    assert "is taking\n> longer" in text
+    assert_failing(grade(work))
+
+
+def test_a_runbook_without_the_english_wording_or_a_section_is_still_caught(work):
+    solved(work)
+    edit_runbook(work, ("is taking longer than expected", "is late"))
+    assert TASK_D in failing(grade(work))

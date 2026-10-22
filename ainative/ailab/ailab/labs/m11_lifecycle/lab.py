@@ -24,6 +24,8 @@ critic produced the objections, or whether a false sentence that no rule anticip
 the lesson teaches the Claims check as a human routine and not only as a grader.
 
 All the real work is in ``ailab/checks_m11.py`` (a new helper; the shared ``checks.py`` is untouched).
+Every minimum the checks enforce (words per ADR part, objections, timeline events, action items ...) is written in
+``task.md``: a learner can learn each rule from the ticket, without reading this file.
 The answer key (event anchors, forbidden claims, the gaps in the record) lives in ``hidden/answer_key.json``.
 The record the grader reads is the kit's own copy, never ``lab-assets/incident.json`` in the learner's directory.
 """
@@ -64,7 +66,7 @@ def seed(work: Path) -> None:
 # ---------------------------------------------------------------------------------------------
 # grade
 # ---------------------------------------------------------------------------------------------
-def _check(name: str, problems: list[str], hint: str, ok_detail: str = "", *, required: bool = True, show: int = 2) -> Check:
+def _check(name: str, problems: list[str], hint: str, ok_detail: str = "", *, required: bool = True, show: int = 4) -> Check:
     if problems:
         extra = f" (+{len(problems) - show} more)" if len(problems) > show else ""
         return Check(name, False, "; ".join(problems[:show]) + extra, hint, required)
@@ -93,9 +95,11 @@ def adr_checks(work: Path, index: m.CodeIndex) -> list[Check]:
     return [
         Check(names[0], True, shown),
         _check(names[1], m.adr_format_problems(text),
-               "Use the headings Status, Context, Decision and Consequences in that order, and name a downside (lab-assets/adr-template.md)."),
+               "Use the headings Status, Context, Decision and Consequences in that order, a few sentences each, and name a downside "
+               "(lab-assets/adr-template.md)."),
         _check(names[2], fact_problems,
-               "Check every `path` and `module.name` with ls or grep (python lab-assets/claims_scan.py <file> does the lookup), and check numbers against the code, not against docs/ARCHITECTURE.md.",
+               "Check every `path` and `module.name` with ls or grep (python lab-assets/claims_scan.py <file>, run in the lab directory, does the lookup), "
+               "and check numbers against the code, not against docs/ARCHITECTURE.md. To quote a wrong name on purpose, say in the same sentence that it does not exist.",
                f"{resolved} references resolve"),
         _check(names[3], m.adr_critic_problems(text),
                "Add a section 'Critic's objections': at least three objections, each with what you did about it (accepted, rejected with a reason, deferred)."),
@@ -115,9 +119,11 @@ def docs_checks(work: Path, index: m.CodeIndex) -> list[Check]:
     out = [Check(names[0], len(text.split()) >= 150, f"{len(text.split())} words" if len(text.split()) >= 150 else "the page is almost empty",
                  "Document every public function and class of ids, clock and audit.")]
     out.append(_check(names[1], m.docs_name_problems(text, index),
-                      "Open src/najmkit/ and look the name up. If grep cannot find it, the page must not mention it."))
+                      "Open src/najmkit/ and look the name up. If grep cannot find it, the page must not mention it "
+                      "(unless the sentence says it does not exist).", show=5))
     out.append(_check(names[2], m.docs_signature_problems(text, index),
-                      "Copy the parameters from the def line in the code, not from memory or from a docstring."))
+                      "Copy the parameter names, defaults and return type from the def line in the code, not from memory or from a docstring. "
+                      "A method's `self` may stay or go.", show=6))
     failures, ok_by_module, tried = m.run_doc_examples(work, text)
     missing = [mod for mod, n in ok_by_module.items() if n == 0]
     example_problems = list(failures)
@@ -128,8 +134,10 @@ def docs_checks(work: Path, index: m.CodeIndex) -> list[Check]:
                       "Put at least one runnable Python example per module in a ```python block, with its imports, and run it yourself.",
                       f"{sum(ok_by_module.values())} statements ran"))
     covered, total, not_covered = m.docs_coverage(text, work)
-    cover_problems = [f"{covered} of {total} public names are documented; missing: {', '.join(not_covered[:5])}"] if covered < total - 1 else []
-    out.append(_check(names[4], cover_problems, "List every public function and class of the three modules (src/najmkit/*.py).",
+    cover_problems = ([f"{covered} of {total} public names are documented with a signature; missing: {', '.join(not_covered[:6])}"]
+                      if covered < total - 1 else [])
+    out.append(_check(names[4], cover_problems,
+                      "List every public function and class of the three modules (src/najmkit/*.py), each with its signature, name(parameters).",
                       f"{covered} of {total} names"))
     out.append(_check(names[5], m.docs_fact_problems(text, m.read_facts(work)),
                       "Run the code and look. A docstring or a comment is a claim too; if it disagrees with what the code does, the code wins "
@@ -154,12 +162,11 @@ def postmortem_checks(work: Path) -> list[Check]:
                 *[_waiting(n, "the postmortem", "Write the postmortem first.", required=(i < 5)) for i, n in enumerate(names[1:])]]
     record, key = _record(), _key()
     sections = m.postmortem_sections(text)
-    section_problems = m.postmortem_section_problems(sections)
-    if m.action_item_count(sections.get("actions")) < 3 and "actions" in sections:
-        section_problems.append("fewer than 3 action items")
+    section_problems = m.postmortem_section_problems(sections) + m.action_item_problems(sections.get("actions"))
     out = [_check(names[0], section_problems,
                   "Use the headings of lab-assets/postmortem-template.md: Summary, Impact, Timeline, What we know, What we infer, "
-                  "What we do not know, Action items.")]
+                  "What we do not know, Action items. Under Action items, at least three items, each with an owner (a role or a team) "
+                  "and how we will see that it is done.")]
     timeline = sections.get("timeline")
     if timeline is None:
         out += [_waiting(names[1], "a Timeline section", "Add the Timeline table."),
@@ -169,7 +176,7 @@ def postmortem_checks(work: Path) -> list[Check]:
         if rows == 0:
             row_problems = ["no timeline rows found (each row starts with a time like 10:11)"]
         out.append(_check(names[1], row_problems,
-                          "For each row: take the time and the event id from lab-assets/incident.json, and say what that event says.",
+                          "For each row: start with the time and the event id from lab-assets/incident.json, and say in your own words what that event says.",
                           f"{rows} rows checked"))
         missing_required = [e for e in key["required_events"] if e not in covered]
         cover = []
@@ -177,18 +184,22 @@ def postmortem_checks(work: Path) -> list[Check]:
             cover.append(f"{len(covered)} of the record's {len(record.events)} events are in the timeline (at least {key['min_events']} expected)")
         if missing_required:
             cover.append("key events missing: " + ", ".join(missing_required))
-        out.append(_check(names[2], cover, "A timeline with gaps hides what happened. Cover the start, the detection, the recovery and the check that no money was lost.",
+        out.append(_check(names[2], cover, "A timeline with gaps hides what happened. Cover at least nine of the thirteen events, including the first failure, "
+                          "the alert, the alert resolving and the reconciliation.",
                           f"{len(covered)} events"))
     non_action = m.section_texts(sections, ("summary", "impact", "timeline", "facts", "inferences", "unknowns"))
     checked_text = m.preamble(text) + "\n" + non_action
-    invented = m.invented_facts(checked_text, record) + m.invented_people(checked_text, record)
+    invented = m.invented_facts(checked_text, record) + m.misassigned_counts(checked_text, record, key) + m.invented_people(checked_text, record)
     out.append(_check(names[3], invented,
-                      "Every number, time, date, id and name must come from the record (or be a difference of its times or counts). "
-                      "python lab-assets/claims_scan.py <file> --record lab-assets/incident.json finds times and ids that are not in it."))
+                      "Every number, time, date, id and name must come from the record. A duration or a count that you worked out cites "
+                      "the events it comes from (E1, E2); percentages are not in the record, so give the counts. "
+                      "python lab-assets/claims_scan.py <file> --record lab-assets/incident.json (run in the lab directory) finds times and ids that are not in it."))
     # the lines under the title (severity, service, date ...) are claims too: a cause tucked in there is still a cause
     facts_text = m.preamble(text) + "\n" + m.section_texts(sections, ("summary", "impact", "timeline", "facts"))
     out.append(_check(names[4], m.forbidden_problems(facts_text, key),
-                      "If the record does not say it, it is not a fact. Move it to 'What we infer' (with what it rests on and what would confirm it) or to 'What we do not know'."))
+                      "If the record does not say it, it is not a fact. Move it to 'What we infer' (with what it rests on and what would confirm it) or to 'What we do not know'. "
+                      "The quoted words are the ones that triggered the rule; a statement the vendor's own status page made is fine if you say whose it is.",
+                      show=3))
     label_problems = m.inference_problems(sections.get("inferences")) + m.unknown_problems(sections.get("unknowns"), key)
     out.append(_check(names[5], label_problems,
                       "Each inference: what it rests on (an event id), how confident you are, what would confirm it. Open questions: what no event in the record can answer."))
@@ -198,15 +209,43 @@ def postmortem_checks(work: Path) -> list[Check]:
 
 
 # -- hygiene ------------------------------------------------------------------------------------
+def commits_check(work: Path) -> Check:
+    """Each document is its own commit: the three files are first committed in three different commits."""
+    name, hint = "Three documents, three commits", (
+        "Commit each document on its own (git add <file>, git commit). A shared commit that is your latest can be undone with "
+        "git reset --soft HEAD~1; then commit the files one at a time.")
+    adr = m.find_adr(work)
+    documents = {"the ADR": adr.relative_to(work).as_posix() if adr else "docs/adr/0001-short-title.md",
+                 "the najmkit page": NAJMKIT_PAGE, "the postmortem": POSTMORTEM}
+    problems = m.document_commit_problems(work, documents)
+    count = checks.plural(len(gitutil.commits_since(work)), "new commit")
+    if len(problems) == len(documents) and all(p.endswith("does not exist yet") for p in problems):
+        problems = ["none of the three documents exists yet"]
+    if problems:
+        return Check(name, False, f"{count} since the start; " + "; ".join(problems), hint)
+    return Check(name, True, f"{count} since the start; the three documents were committed separately")
+
+
+def secrets_check(work: Path) -> Check:
+    """The shared secret scan, plus a password written without quotes (docs are prose, not code)."""
+    base = checks.no_secrets(work)
+    if not base.ok:
+        return base
+    files = m.assigned_secret_files(work)
+    if files:
+        return Check(base.name, False, "a password or key is assigned a value in " + ", ".join(files) + " (the value is not shown)",
+                     "Remove it. Documents name a secret (the variable, the vault), never its value.", base.required)
+    return base
+
+
 def hygiene_checks(work: Path) -> list[Check]:
     return [
         checks.files_changed_within(work, ["docs/**"], name="Only documentation changed",
                                     hint="This ticket is documentation only. Revert code, tests and lab-assets (git restore <file>)."),
-        checks.commit_count(work, at_least=3, name="Three documents, three commits",
-                            hint="Commit each document on its own, so each commit can be reviewed alone."),
+        commits_check(work),
         checks.conventional_commits(work),
         checks.all_committed(work),
-        checks.no_secrets(work),
+        secrets_check(work),
     ]
 
 

@@ -19,7 +19,7 @@
 ## 🧭 Why it matters
 Lujain's agent finishes REMIT-227 in minutes: show the rate in the "transfer sent" message. The pull request touches four files and says "all tests pass". They do: 99 passed. Tariq asks one question: "Which test goes red if the Arabic number is wrong?" Lujain cannot name one. The Arabic message ends with the rate in Western digits, and the test forbidding that was quietly narrowed.
 
-It is not only a Najm story. In March 2026 METR published "Many SWE-bench-Passing PRs Would Not Be Merged into Main": maintainers of three repositories reviewed patches that had passed an automated grader, and a substantial share would not have been merged (METR cautions: one benchmark subset, one harness, a single attempt). [*Software Testing*, lesson 6.1 — Verifying AI-generated code](../testing/index.html#/6.1) catalogues the failures; this lesson is the routine.
+In March 2026 METR published "Many SWE-bench-Passing PRs Would Not Be Merged into Main": maintainers of three repositories reviewed patches that had passed an automated grader, and a substantial share would not have been merged (METR cautions: one benchmark subset, one harness, a single attempt). [*Software Testing*, lesson 6.1 — Verifying AI-generated code](../testing/index.html#/6.1) catalogues the failures; this lesson is the routine.
 
 ## 📐 How it works
 
@@ -27,7 +27,7 @@ It is not only a Najm story. In March 2026 METR published "Many SWE-bench-Passin
 
 **Evidence, not fluency.** Ask of any check: *if the change were wrong, would this look different?* A description, a green badge and a tidy diff look the same either way; a test failing on the bug does not.
 
-**Set the bar at verification.** Meta describes a small team building its Forum app with an AI agent as a participant. It reports counting a task complete only after automated tests and visual checks passed, not when the code compiled, and measuring success in production-ready changes rather than code volume. This is one company describing its own practice: an example of a bar, not proof that it works. For Remit, "it compiles" is not done: you need a test that can fail and, with no screen, a run where you read the Arabic line yourself.
+**Set the bar at verification.** In [*How Meta Built Forum With AI-Native Engineering*](https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/), Meta describes a small team building its Forum app with an AI agent as a participant. It reports counting a task complete only after automated tests and visual checks passed, not when the code compiled, and measuring success in production-ready changes rather than code volume. This is one company describing its own practice, so read the original: an example of a bar, not proof that it works. For Remit, "it compiles" is not done: you need a test that can fail and, with no screen, a run where you read the Arabic line yourself.
 
 **Tests are the specification.** A test turns an acceptance criterion (lesson 3.1) into something a machine can hold the agent to. [*Software Testing*, lesson 6.2 — Tests as the specification for coding agents](../testing/index.html#/6.2) teaches it in depth; here is the loop.
 
@@ -95,7 +95,7 @@ An invented name is also a supply-chain risk. Spracklen et al. (USENIX Security 
 1. **Ticket first.** The rule that matters: Arabic digits.
 2. **Tests first.** Two of four files are tests. The new Arabic expectation is the code's own output, Western digits included, and the old guard ("no Western digits in the amounts") now stops before the new sentence. That was the ticket's rule as a test, narrowed until it cannot fail: a blocker.
 3. **By risk.** *Correctness:* `rate=str(fx.rate)`, but `render` localises only `Decimal` and `Money` values and inserts anything else unchanged. *Scope:* "has been sent" rewords a sentence the ticket said not to touch. *Coupling:* the CLI prints this template too. *Security*, *maintainability:* nothing.
-4. **Run it.** The suite is green, so run the behaviour, as an Arabic-speaking customer in a scratch database (git ignores `*.db`). Output abridged; the id is random:
+4. **Run it.** The suite is green, so run the behaviour in your m00 work directory as an Arabic-speaking customer, in a scratch database (git ignores `*.db`). Output abridged; the id is random:
 
    ```bash
    export PYTHONPATH=src REMIT_DB=scratch.db
@@ -124,7 +124,7 @@ An invented name is also a supply-chain risk. Spracklen et al. (USENIX Security 
 
    On the agent's branch the unit test passes and this one fails: the unit test hands `render` a `Decimal`, so only the test through `send` reaches the bug. **Tests at the seam catch the seam.**
 
-**Reviewing a big diff.** Agent pull requests can run to hundreds of lines; work in this order.
+**Reviewing a big diff.** For hundreds of lines, work in this order.
 
 ```mermaid
 flowchart TD
@@ -143,9 +143,9 @@ flowchart TD
 
 ### 🔴 Expert view
 
-**Judges that do not get tired.** *Mutation testing* breaks the code on purpose and checks that a test notices; *property-based testing* states a rule and tries many inputs ([*Software Testing*, lesson 2.3 — Are your tests any good?](../testing/index.html#/2.3)). By hand, in a scratch copy: change `amount <= tier.upto` to `<` in `fees.py` and 9 tests fail; switch `ROUNDING` to half-even and 4 fail; change the ledger's `PARTNER_SHARE` from 0.30 to 0.35 and **all 99 pass**. Nothing checks the ledger's amounts, so an agent refactoring it would have no judge.
+**Judges that do not get tired.** *Mutation testing* breaks the code on purpose and checks that a test notices; *property-based testing* states a rule and tries many inputs ([*Software Testing*, lesson 2.3 — Are your tests any good?](../testing/index.html#/2.3)). By hand, in a scratch copy: change `amount <= tier.upto` to `<` in `fees.py` and 9 tests fail; switch `ROUNDING` to half-even and 4 fail; change the ledger's `PARTNER_SHARE` from 0.30 to 0.35 and **all 99 pass**. Nothing checks the ledger's amounts: an agent refactoring it would have no judge.
 
-**Proportional verification.** Spend where a mistake is expensive and hard to undo. A help-string typo needs a read and the suite. `money.py`, fees, FX, limits, the ledger and `service.py` need everything above, a hand-checked boundary and rounding tie, a mutation or property check and **a second human** (CONTRIBUTING.md). Dependencies, secrets and permissions add Module 8's checks. When *not* to do this: a one-sentence change in well-covered code needs no adversarial review (the best-practices page says the same about plans), and a throwaway spike needs no tests first.
+**Proportional verification.** Spend where a mistake is expensive and hard to undo. A help-string typo needs a read and the suite. `money.py`, fees, FX, limits, the ledger and `service.py` need everything above, a hand-checked boundary and rounding tie, a mutation or property check and **a second human** (CONTRIBUTING.md). Dependencies, secrets and permissions add Module 8's checks. When *not* to do this: a one-sentence change in well-covered code needs no adversarial review (the best-practices page says the same about plans), and a throwaway spike needs no tests.
 
 **Calibrated trust and verification debt.** Trust is a record, not a mood: tally in your agent log what each task type needed corrected. In METR's 2025 randomized trial (16 experienced open-source developers in their own mature repositories, early-2025 tools), developers believed afterwards that AI had sped them up by about 20% while tasks took 19% longer with AI allowed; METR says results may differ elsewhere. *Verification debt* is this course's term for merged code whose behaviour nobody checked. It accrues interest, because the next agent reads that code as truth. Pay it down with characterization tests (lesson 7.1), smaller pull requests and review time.
 
@@ -285,22 +285,22 @@ Use it in proportion: all of it for money modules, Parts 1 and 4 for a copy chan
 *Level: 🟡 Intermediate* · *Prerequisites: 4.2, 5.1* · *Focus: Verify*
 
 ## ⚡ In 60 seconds
-- **Lab m05.** `ailab start` gives you Remit on the branch `agent/loyalty-discount`: Lujain's agent built Hessa's loyalty-discount ticket (REMIT-229), and the suite is **green**.
-- **You are the second human reviewer.** Write `review.md` (a verdict, what you ran, and findings with **file, line and severity**), then fix the branch with small commits.
-- **Needs an agent: no.** Everything can be done by hand with `git` and `pytest`. A second-model reviewer is a good extra, not a requirement.
-- **The grader reads your review first.** It matches your findings to eight problems seeded in the branch, by file, nearby line number and keywords, then runs hidden tests and static checks on your fixed branch.
+- **Lab m05.** `ailab start` puts you on the branch `agent/loyalty-discount`: Lujain's agent built Hessa's loyalty-discount ticket (REMIT-229), and the suite is **green**.
+- **You are the second human reviewer.** Write `review.md` (a verdict, what you ran, findings with **file, line and severity**), then fix the branch in small commits.
+- **Needs an agent: no.** Everything works by hand with `git` and `pytest`; a second-model reviewer is an extra.
+- **The grader reads your review first.** It matches findings to eight seeded problems by file, nearby line and keywords, then runs hidden tests and static checks on your fix.
 - **It checks the result, not your thinking.** Plan about two hours.
 
 ## 🧭 Why it matters
-On Thursday Tariq has two agent pull requests waiting. Lujain writes on the first: "CI is green and the agent says it followed the ticket." Money logic needs a second human (CONTRIBUTING.md), and that human has 40 minutes. DORA's 2025 report frames AI as something that "amplifies what's already there". Our reading for review, not a DORA finding: a team without the habit ships unreviewed code faster. The second reviewer is the control, not a formality.
+On Thursday Tariq has two agent pull requests waiting. Lujain writes on the first: "CI is green and the agent says it followed the ticket." Money logic needs a second human (CONTRIBUTING.md), and that human has 40 minutes. DORA's 2025 report frames AI as something that "amplifies what's already there"; our reading, not a DORA finding: without the review habit, a team ships unreviewed code faster.
 
-This lab is that Thursday, with the answer sheet hidden. The suite is green on purpose. Your job is not to find out whether it passes, but whether it *could have failed* and what it never looked at.
+This lab is that Thursday, with the answer sheet hidden. The suite is green on purpose. Your job is to find out whether it *could have failed*, and what it never looked at.
 
 ## 📐 How it works
 
 ### 🟢 The essentials
 
-**Read a branch from the command line.** You start on the agent's branch, and `main` is the code before it. Three dots mean "what the branch added since it left `main`", which stays right even if `main` moves on:
+**Read a branch from the command line** (in your work directory). You start on the agent's branch; `main` is the code before it. Three dots mean "what the branch added since it left `main`", which stays right if `main` moves on:
 
 ```bash
 git log --oneline main..agent/loyalty-discount      # the commits (the top one is the kit's empty marker)
@@ -310,7 +310,7 @@ git show main:tests/test_fees.py                    # a file as it was before th
 pytest -q                                           # run it yourself
 ```
 
-**Three documents, three jobs.** `lab-assets/ticket-REMIT-229.md` says what was asked: it is the specification. `lab-assets/pull-request.md` says what the agent claims (the whole branch is constructed for teaching, not recorded from a real model): treat every sentence as something to verify. The diff is what was done. A review is the gap between them. Read the ticket first, then the tests, then the code by risk (lesson 5.1). Write findings as you go, because you will forget the early ones.
+**Three documents, three jobs.** `lab-assets/ticket-REMIT-229.md` is the specification. `lab-assets/pull-request.md` is what the agent claims (the branch is constructed for teaching, not recorded from a real model): verify every sentence. The diff is what was done. A review is the gap between them. Read the ticket, then the tests, then the code by risk (lesson 5.1), and write findings as you go.
 
 ### 🟡 Going deeper
 
@@ -322,7 +322,7 @@ Strong: tests/test_limits.py:41  major  test_over_limit_is_rejected has no asser
         whatever check_limits returns. Fix: assert result.allowed is False and the reason.
 ```
 
-Each finding in `review.md` has five parts: **File**, **Line** (the line in the branch's version of the file, or `-` when the problem is something that was deleted), **Severity**, **Problem** and **Fix**. The template in `lab-assets/review-template.md` has the layout, with the headings Verdict, What I ran and Findings.
+Each finding in `review.md` has five parts: **File**, **Line** (the line in the branch's version of the file, or `-` when the problem is something that was deleted), **Severity**, **Problem** and **Fix**. The template (`lab-assets/review-template.md`) has the layout; keep its headings Verdict, What I ran and Findings. A review is shared text: refer to a secret by file and line and never copy its value.
 
 | Severity | Meaning | Example elsewhere |
 |---|---|---|
@@ -331,30 +331,29 @@ Each finding in `review.md` has five parts: **File**, **Line** (the line in the 
 | **minor** | Fix soon | A test too weak to fail |
 | **nit** | Taste | A variable name |
 
-Rate by the damage if it ships, not by how hard it is to fix. A reviewer who marks everything blocker is ignored; one who marks a leaked credential a nit has not read the room.
+Rate by the damage if it ships, not by how hard it is to fix. A reviewer who marks everything blocker is ignored; one who marks a leaked credential a nit has not read the room. The grader fails both: ratings below the damage, and a review where every finding is a blocker (a test too weak to fail is a major at most).
 
-**A second-model reviewer (optional).** With Claude Code started in the lab directory, `/code-review high agent/loyalty-discount` reviews a branch (check the current documentation for what it compares; do not use `--fix`, which edits the code, or `--comment`). Or pipe the diff to a fresh headless session: `git diff main...agent/loyalty-discount | claude -p "Review this diff against lab-assets/ticket-REMIT-229.md. List findings as file, line, severity, problem."`. A headless run has nobody to approve commands unless you allow them (check the documentation for `--allowedTools`), so it reads the code but cannot see what only running shows. This diff is constructed and safe; a real one is untrusted text, and the Claude Code security page advises against piping untrusted content straight to Claude. Do the first pass yourself, *then* ask the second model, and check the code for every finding it adds. Count how many were real; you will use that number in the debrief.
+**A second-model reviewer (optional).** With Claude Code started in the lab directory, `/code-review high agent/loyalty-discount` reviews a branch (skip `--fix`, which edits code, and `--comment`; the documentation says what it compares). A fresh headless session works too: pipe `git diff main...agent/loyalty-discount` into `claude -p` with a prompt that names `lab-assets/ticket-REMIT-229.md`. It has nobody to approve commands unless you allow them (see `--allowedTools`), so it cannot see what only running shows. This diff is safe; a real one is untrusted text, and the security page advises against piping untrusted content straight to Claude. Do your own pass first, check the code for every finding it adds, and count the real ones for the debrief.
 
 ### 🔴 Expert view
 
-**How the grader reads your review.** It splits the Findings section into blocks (headings, table rows or list items all work), finds the file, line and severity in each, and pairs each finding with at most one seeded problem. A finding counts when it names the right file and either points within a few lines of the problem or names the problem in words the grader recognises (it matches keywords, not meaning, so say plainly what is wrong). A finding in the wrong file never counts, and one finding cannot cover two problems. You need to cover six of the eight to pass, and the advisory line asks for all of them. It also checks that your verdict asks for changes and that your severities fit the damage. It accepts extra findings it cannot judge, because a good reviewer sometimes finds more than the grader knows.
+**How the grader reads your review.** It splits the Findings section into blocks (headings, table rows or list items all work), finds the file, line and severity in each, and pairs each finding with at most one seeded problem. A finding counts when it names the right file and either points within a few lines of the problem or uses words that name it (keywords, not meaning, so say plainly what is wrong). A finding in the wrong file never counts, and one finding cannot cover two problems. Extra findings it cannot judge are accepted. The advisory lines ask for all eight problems, and for a follow-up that no commit can do.
 
-**What it cannot tell.** It cannot tell whether you *understood* a finding, only that the review mentions it in the right place. A review stuffed with keywords would pass and teach you nothing; the lab is practice, not a gate. It checks that **What I ran** has words in it, not that you ran anything. The fix half is harder to fake: it runs your code against tests written from the ticket. Two habits keep the review honest: **What I ran** lists real commands and what they printed, and every finding says how you know.
+**What it cannot tell.** It cannot tell whether you *understood* a finding, only that the review mentions it in the right place. A review stuffed with keywords would pass this half and teach you nothing: the grader is a practice partner, not a gate, and the fix half runs your code against tests written from the ticket, which keywords cannot fake. Two habits keep it honest: **What I ran** lists real commands and their output, and every finding says how you know.
 
-**Fixing without rewriting.** The fix is small commits on the branch, in the files the change needs, keeping the interface the pull request introduced. Leave tests behind that fail on the agent's version: the grader runs your new tests against the agent's code and wants at least two to go red. That is the test-first rule applied in reverse.
+**Fixing without rewriting.** The fix is small commits on the branch. Leave tests behind that fail on the agent's version: the grader puts the agent's code back, runs your new or changed tests, and wants at least two to go red. That is the test-first rule applied in reverse.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
 | **Three-dot diff** | `git diff main...branch`: only what the branch added since it forked | Reviewing any branch |
 | **Review template** | Verdict, what I ran, findings with file, line, severity, problem, fix | Every written review |
-| **Severity scale** | Blocker, major, minor, nit, rated by damage if it ships | Ranking findings |
 | **Old tests, new code** | Run `main`'s tests against the branch's code | When tests were edited or removed |
 | **Second-model review** | A fresh-context reviewer that adds questions you then verify | After your own pass |
 | **Agent log** | Prompt, what it did, what you corrected, time spent | Every agent-assisted lab |
 
 ## 🏛️ In practice at Najm Bank
-**Needs an agent: no.** The whole lab can be done by hand with `git`, `pytest` and an editor; a second-model reviewer is an optional extra. The grader does not care how the work was produced.
+**Needs an agent: no.** Do the lab by hand with `git`, `pytest` and an editor; a second-model reviewer is an optional extra. The grader does not care how the work was produced.
 
 **The ticket.** Tariq's ticket is in `TASK.md`:
 
@@ -369,31 +368,38 @@ Lujain asked Claude Code to build Hessa's ticket REMIT-229 (the loyalty discount
 the ticket is in `lab-assets/`). The result is the branch `agent/loyalty-discount`. Its
 description, also in `lab-assets/`, says all tests pass. You are on that branch now.
 
-I do not want a rubber stamp and I do not want a rewrite. I want a review that I can act
-on, and then a branch I can merge.
+No rubber stamp and no rewrite: I want a review I can act on, then a branch I can merge.
 
 **What I need**
 
 1. **A review, in `review.md`** at the top of the repository. Start from
    `lab-assets/review-template.md`. It has a verdict (`approve`, `approve with comments`
-   or `request changes`), a short list of what you ran, and a list of findings. Each finding
-   gives the **file**, the **line**, a **severity** (`blocker`, `major`, `minor` or `nit`),
-   the **problem** and the **fix**. One finding per problem, backed by evidence.
-   Compare the branch with `main` (`git diff main...agent/loyalty-discount`), the ticket and
-   the description. Read the diff, not just the summary.
-2. **The fix, as commits on this branch.** Fix what you found, in small commits. Keep the
-   interface the pull request introduced (`quote_fee(..., loyalty_tier=...)` and
-   `RemitService.quote(..., customer_id=...)`), keep to the files the change needs, and do
-   not add a dependency, not even for tests. Make the branch's tests honest too: if the bugs
-   you found came back, its tests should fail.
-3. **Commit messages** that follow `CONTRIBUTING.md`. Everything committed, except that
-   `review.md` may stay uncommitted if you prefer.
+   or `request changes`), a list of what you ran (the commands and what they showed, at
+   least three words) and a list of findings. Each finding gives the **file**, the **line**,
+   a **severity** (`blocker`, `major`, `minor` or `nit`), the **problem** and the **fix**.
+   One finding per problem, backed by evidence. Compare the branch with `main`
+   (`git diff main...agent/loyalty-discount`), the ticket and the description. Read the
+   diff, not just the summary, and run the code: Hessa's examples are a handful of cases,
+   not the whole behaviour.
+2. **The fix, as commits on this branch.** Stay on it: the grader looks at what is checked
+   out. Fix what you found, in small commits. Keep the interface the pull request
+   introduced (`quote_fee(..., loyalty_tier=...)` and `RemitService.quote(..., customer_id=...)`),
+   touch only the files the pull request already changes, plus tests and docs, and do not add
+   a dependency, not even for tests. Make the branch's tests honest too: if the bugs you found
+   came back, at least two of your new or changed tests should fail (a parametrized test
+   counts once per case). Put back any test the branch deleted, unchanged.
+3. **Commit messages** that follow `CONTRIBUTING.md`: `type(scope): subject`, any lower-case
+   module or area as the scope (`fees`, say), a header of at most 72 characters, no full stop.
+   Everything committed, except that `review.md` may stay uncommitted if you prefer.
 
 **Notes**
 
-* Use whatever helps you: `git`, `pytest`, an AI reviewer as a second pair of eyes. A second
-  model can miss things and invent others, so check each of its points before it goes into
-  your review. You are accountable for what you sign.
+* Use whatever helps: `git`, `pytest`, an AI reviewer as a second pair of eyes. It can miss
+  things and invent others, so check each point before it goes into your review. You are
+  accountable for what you sign.
+* A review is shared text. If you find a secret, name the file and line; never copy its
+  value into `review.md`, a test or any other file.
+* Do not install or download a package to check it. Read the repository and its docs.
 * Do not "fix" the pull request by editing the ticket's rules or by weakening a test.
 * When you think you are done, grade it from the `ailab` folder of the course repository:
   `python -m ailab grade m05 --dir <this directory>`
@@ -408,22 +414,31 @@ cd ~/ainative/m05
 git log --oneline main..agent/loyalty-discount
 ```
 
-**Your move.** (1) Read the ticket and the description in `lab-assets/`. (2) Read the diff by the checklist, tests first. (3) Run the suite, then run the behaviour the ticket describes, using its own examples. (4) Write `review.md` as you go. (5) Optionally run a second-model review and verify its points. (6) Fix the branch in small commits and grade. With an agent, give it your *findings* and ask it to fix them one at a time, and read every diff it produces: it wrote the problem, and it can write the next one. Do not fix before you have reviewed: the fix removes your evidence.
+**Your move.** (1) Read the ticket and the description in `lab-assets/`. (2) Read the diff by the checklist, tests first. (3) Run the suite, then the behaviour. The ticket's four examples are the happy path; defects hide in inputs it does not list. The CLI cannot price a loyalty tier (`python -m remit quote` has no customer option), so call the code from Python, from the work directory:
 
-**What the grader checks.** Review: the three sections, each finding's file, line and severity, a verdict that asks for changes, at least six of the eight seeded problems found, and severities that fit the damage. Fix (graded only once the review passes): the branch's own tests; hidden acceptance tests written from REMIT-229; CONTRIBUTING.md's code rules; the lesson 5.1 checklist as far as a machine can read it; tests of yours that fail on the agent's version; only the files the change needs; commit messages; everything committed.
+```bash
+PYTHONPATH=src python
+```
 
-**Grade.** From `ainative/ailab` again (the folder you ran `start` from): `python -m ailab grade m05 --dir ~/ainative/m05`. On the starter, before you have written anything (the remaining nine lines all say "not checked yet: the review comes first"):
+```python
+from remit.corridors import get_corridor
+from remit.fees import quote_fee
+from remit.money import Money
+
+inr = get_corridor("QAR", "INR")
+print(quote_fee(Money("1000", "QAR"), inr, loyalty_tier="silver"))  # the ticket says 18.00
+```
+
+Now vary the inputs: other amounts, both tiers, `express=True`, a tier name the ticket does not list. Work out each answer from the ticket's rules with `Decimal` and compare; a loop over many amounts against a few lines of your own arithmetic finds what one example cannot. Reading the code is enough to *file* a finding; running it *proves* it. (4) Write `review.md` as you go. (5) Optionally run a second-model review and verify its points. (6) Fix the branch in small commits (three or four are plenty; the grader checks the messages, not the split) and grade. With an agent, give it your *findings*, ask for one fix at a time and read every diff: it wrote the problem, and it can write the next one. Do not fix before you have reviewed: the fix removes your evidence.
+
+**What the grader checks.** Review: the three sections (**What I ran** with at least three words), each finding's file, line and severity, a verdict that asks for changes, at least six of the eight seeded problems found, and severities that fit the damage. Fix (graded only once the review passes): the branch's own tests; hidden acceptance tests written from REMIT-229; CONTRIBUTING.md's code rules (Decimal money, standard library only, no secret in any file, your review included); the lesson 5.1 checklist as far as a machine can read it; at least two tests of yours that fail on the agent's version; only the files the pull request touches, plus tests and docs; commit messages; everything committed. A fix past about 300 changed lines is flagged (advisory).
+
+**Grade.** From `ainative/ailab` again (the folder you ran `start` from): `python -m ailab grade m05 --dir ~/ainative/m05`. On the starter, before you have written anything, it lists 17 checks (excerpt; the other review lines say "no review.md yet" and the other nine fix lines "not checked yet"):
 
 ```text
 [FAIL] review.md has a verdict, what you ran and findings: review.md does not exist
        hint: Start from lab-assets/review-template.md and keep its three headings: Verdict, What I ran, Findings.
-[FAIL] Each finding names a file, a line and a severity: no review.md yet
-       hint: Write review.md first.
-[FAIL] Your verdict blocks the merge: no review.md yet
-[FAIL] Your review covers the problems in the pull request: no review.md yet
-[FAIL] Your severities fit the risk: no review.md yet
-[FAIL] Your review covers every problem the grader knows (advisory): no review.md yet
-[FAIL] Your review names the follow-up beyond the diff (advisory): no review.md yet
+...
 [FAIL] The branch's own tests pass: not checked yet: the review comes first
        hint: Finish review.md (verdict, findings, severities). The fix is graded once the review is complete.
 ...
@@ -435,21 +450,19 @@ When the review and the fix are both right, the same command ends like this (an 
 ```text
 [PASS] Your review covers the problems in the pull request: your findings cover 8 of 8 problems the grader knows about (and 1 more finding the grader cannot judge, which may still be fair)
 [PASS] Your tests would have caught the agent's bugs: 5 new or changed tests fail on the agent's version of the code
-[PASS] Your commit messages follow CONTRIBUTING.md: 6 commit messages checked
 ...
 Lab m05: 13/13 required checks passed: PASSED
 ```
 
-**Weekly deliverable.** Commit to your work directory: your fix commits on `agent/loyalty-discount`, and `review.md` (committed or not). Keep your agent log with your notes, or as `docs/agent-log-m05.md` if your group collects them.
+**Weekly deliverable.** Your fix commits on `agent/loyalty-discount` and `review.md` (committed or not), in your work directory. Keep your agent log with your notes, or as `docs/agent-log-m05.md` if your group collects them.
 
-**Group session (60 minutes).** (1) Ten minutes: each person reads out their verdict and their two worst findings. (2) Twenty: compare reviews. Which finding did only one person make? Who rated it what, and why? (3) Fifteen: the second-model reviews. How many findings were real, how many wrong, how many unseeded but fair? (4) Ten: agree one line to add to the team's review checklist. (5) Five: agent logs.
+**Group session (60 minutes).** (1) Ten minutes: read out your verdict and two worst findings. (2) Twenty: compare reviews. Which finding did only one person make? (3) Fifteen: the second-model reviews. How many findings were real, wrong, or unseeded but fair? (4) Ten: agree one line to add to the team's checklist. (5) Five: agent logs.
 
 **Debrief questions.**
 - What did the agent get wrong, and which of those could you only see by running or comparing with the ticket?
 - What did the ticket or the repo's context fail to tell the agent that would have prevented it?
 - Which part of the green suite made you trust the branch, and what did it not cover?
 - Where did your severity differ from a colleague's, and what would settle it?
-- What would you add to the checklist after this lab?
 
 **Agent log template.**
 
@@ -462,23 +475,22 @@ Time spent:      (you / the agent)
 ```
 
 ## 🛠️ Exercises
-- 🟢 **Review only.** *No agent.* Do steps 1 to 4 of "Your move" and grade. *Done when:* the first five lines of `ailab grade m05` are `[PASS]` (the review checks), without peeking at `ailab solve`.
-- 🟡 **Review and fix.** *Agent optional.* Fix the branch in at least three small commits, each with a message that follows CONTRIBUTING.md, and leave tests that fail on the agent's version. *Done when:* `ailab grade m05` ends `PASSED` and `git log --oneline lab-start..HEAD` reads like a story.
-- 🔴 **Measure a second model.** *Needs an agent.* After your own pass and before you fix anything, run a second-model review of the branch in a fresh session. Then compare it with your confirmed findings. *Done when:* a table gives the second model's findings as true, false or unseeded, its hit rate, and a one-line team rule for when to run it and what to do with its output.
+- 🟢 **Review only.** *No agent.* Do steps 1 to 4 of "Your move" and grade. *Done when:* the first five lines of `ailab grade m05` are `[PASS]`, without peeking at `ailab solve`.
+- 🟡 **Review and fix.** *Agent optional.* Fix the branch in at least three small commits that follow CONTRIBUTING.md, and leave tests that fail on the agent's version. *Done when:* `ailab grade m05` ends `PASSED` and `git log --oneline lab-start..HEAD` reads like a story.
+- 🔴 **Measure a second model.** *Needs an agent.* After your own pass and before you fix anything, run a second-model review in a fresh session and compare it with your confirmed findings. *Done when:* a table gives its findings as true, false or unseeded, its hit rate, and a one-line team rule for when to run it and what to do with its output.
 
 ## ⚠️ Mistakes and traps
 - **Reviewing the description.** "All 105 tests pass" is a claim. Compare it with the ticket and the diff.
-- **Fixing before reviewing.** The fix deletes your evidence, and you write a vaguer review from memory. Review, then fix.
-- **Findings without a place.** "The tests are weak" cannot be acted on, and the grader cannot match it. Name the file, the line and what is wrong.
-- **Rating everything a blocker.** If everything is urgent, nothing is. Rate by the damage if it ships.
-- **Fixing the tests to match the code.** Editing a test or the ticket until the suite is green is the thing you came to catch.
-- **Believing the second model.** It reports findings whether or not the work is sound. Verify before you copy a line into your review.
+- **Fixing before reviewing.** The fix deletes your evidence. Review, then fix.
+- **Findings without a place.** "The tests are weak" cannot be acted on or matched. Name the file, the line and what is wrong.
+- **Rating everything a blocker.** If everything is urgent, nothing is.
+- **Fixing the tests to match the code.** Editing a test or the ticket to get green is the thing you came to catch.
+- **Believing the second model.** It reports findings whether or not the work is sound. Verify before you copy a line.
 
 ## 🧾 Recap
 - A green suite shows that the tests pass; a review asks whether they could have failed and what they never looked at.
-- Read the ticket, the claims and the diff, in that order of authority: the ticket is the specification and the description is a claim.
-- A finding names a file, a line, a severity, a problem and a fix, with evidence.
-- Fix in small commits, keep the pull request's interface, and leave tests that would have caught the agent's bugs.
+- The ticket is the specification and the description is a claim: read the ticket, then the claims, then the diff.
+- A finding names a file, a line, a severity, a problem and a fix, with evidence. Fix in small commits and leave tests that would have caught the agent's bugs.
 - The grader checks mentions and results, not understanding: the learning is in the evidence you gather.
 
 ## ✍️ Check yourself
@@ -492,7 +504,7 @@ Time spent:      (you / the agent)
 
 <details><summary>Answer</summary>
 
-**A.** Three dots compare the branch with the merge base, so later changes on `main` do not appear. Two plain arguments compare the two tips and mix in `main`'s progress; `git log --stat` lists commits one at a time with only a summary, and `git show` shows just the tip commit. (🟢 Read a branch.)
+**A.** Three dots compare the branch with the merge base, so later changes on `main` do not appear. Two plain arguments compare the tips and mix in `main`'s progress; `git log --stat` is per commit, and `git show` shows only the tip. (🟢 Read a branch.)
 
 </details>
 
@@ -518,7 +530,7 @@ Time spent:      (you / the agent)
 
 <details><summary>Answer</summary>
 
-**D.** The grader checks the decision separately from the findings: a verdict that does not ask for changes fails even when every finding is right. A review is a decision with evidence behind it. (🔴 How the grader reads your review.)
+**D.** The grader checks the decision separately from the findings: a verdict that does not ask for changes fails even when every finding is right. (🔴 How the grader reads your review.)
 
 </details>
 
@@ -531,7 +543,7 @@ Time spent:      (you / the agent)
 
 <details><summary>Answer</summary>
 
-**B.** A second model supplies questions, some of them wrong. Confirm each one yourself, and it becomes your finding with your evidence. Asking again gives the same fluency, not new evidence. (🟡 A second-model reviewer.)
+**B.** A second model supplies questions, some of them wrong. Confirm each yourself and it becomes your finding. Asking again gives the same fluency, not evidence. (🟡 A second-model reviewer.)
 
 </details>
 
@@ -544,7 +556,7 @@ Time spent:      (you / the agent)
 
 <details><summary>Answer</summary>
 
-**A.** The grader puts the agent's code back and runs your new or changed tests; a test that fails there would have caught a bug. Zero means your tests only confirm what the agent already got right. More of the same, expected failures and reverting the fix do not change that. (🔴 Fixing without rewriting.)
+**A.** The grader puts the agent's code back and runs your new or changed tests; a test that fails there would have caught a bug. Zero means your tests only confirm what the agent already got right. The other options do not change that. (🔴 Fixing without rewriting.)
 
 </details>
 

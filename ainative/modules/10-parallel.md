@@ -323,39 +323,38 @@ For REMIT-350 it is short: S1 and S2 are independent, S3 builds on S1's contract
 *Level: 🔴 Advanced* · *Prerequisites: 10.1, 4.2, 5.2* · *Focus: Workflow*
 
 ## ⚡ In 60 seconds
-- One ticket, REMIT-361, has four tasks: a notification, two CLI commands and a runbook page. You plan it, build each on its **own branch** (by hand, in worktrees or with agents) and **merge** them into `main`.
+- REMIT-361 has four tasks: a notification, two CLI commands and a runbook page. You plan it, build each on its **own branch** (by hand or with agents) and **merge** them into `main`.
 - Two tasks add a command at the same marked place in `cli.py`: the **planted conflict**. After you resolve it, run every command.
-- **Needs an agent: no**, though one is recommended. The grader checks the merged result and the history, never who produced them; it cannot tell whether your streams ran in parallel or your plan was good. Your agent log can.
+- **Needs an agent: no**, though one is recommended. The grader checks the merged result and history, never who made them or whether your streams overlapped. Your agent log can.
 
 ## 🧭 Why it matters
-A caller on the Customer Care desk (hypothetical) asks why her transfer to Manila is late and what she can still send today. The desk has no command for either, so Hessa wrote REMIT-361. After Lujain's Friday (lesson 10.1), Tariq hands it to you as a rerun with one rule: the plan comes first. It looks like a morning's typing. The work is deciding who touches what, and proving the pieces still work once they meet. Nothing makes four agents agree about `cli.py`; that part is yours.
+A caller on the Customer Care desk (hypothetical) asks why her transfer to Manila is late and what she can still send today. The desk has no command for either, so Hessa wrote REMIT-361. After Lujain's Friday (lesson 10.1), Tariq hands it to you with one rule: the plan comes first. The work is deciding who touches what, and proving the pieces still work once they meet. Nothing makes four agents agree about `cli.py`; that part is yours.
 
 ## 📐 How it works
 
 ### 🟢 The essentials
 
-**What you start with.** `ailab start m10` copies Remit and adds two marker comments to `src/remit/cli.py`. It also adds `TASK.md`, `lab-assets/` and lab 2.2's reference `CLAUDE.md`, commits it all as "Lab starting state" and tags it `lab-start`.
+**What you start with.** `ailab start m10` copies Remit, adds two marker comments to `src/remit/cli.py`, plus `TASK.md`, `lab-assets/` and lab 2.2's reference `CLAUDE.md`, commits it all as "Lab starting state" and tags it `lab-start`.
 
 ```text
     # --- Customer Care desk commands (REMIT-361): add your parser below this line ---
     # --- Customer Care desk commands (REMIT-361): handle your command below this line, ending with `return 0` ---
 ```
 
-**Four moves.** *Plan*: fill in the template, commit it on `main`. *Split*: a branch or worktree per task, cut from that commit. *Build*: tests first, small commits, your task's files only. *Integrate*: merge in planned order, resolve, test after each merge.
-
 **Three ways to run a stream.**
 
 ```bash
+# run these in ~/ainative/m10, on main
 git switch -c feat/delay-notice                               # 1. by hand, one folder; later: git switch main
 git worktree add ../m10-notice -b feat/delay-notice main      # 2. by hand, a folder per task
 cd ../m10-notice && claude --permission-mode plan             # 3. an agent inside that worktree
 ```
 
-`claude --worktree <name>` also works, but it names the branch `worktree-<name>` and starts it from the default branch unless `worktree.baseRef` is `"head"` (lesson 10.1), so your plan commit may be missing; `git worktree add` lets you pick the name and the start.
+`claude --worktree <name>` also works, but it names the branch `worktree-<name>` and may start it from the default branch (lesson 10.1's `worktree.baseRef`), without your plan commit; `git worktree add` lets you choose both.
 
 ### 🟡 Going deeper
 
-**A worker brief for Task C.** Paste it as the first message in plan mode; compare the plan it proposes with the brief.
+**A worker brief for Task C.** Paste it as the first message in plan mode; compare the plan it proposes with the brief. Adapt it per task: Task B's brief must also allow the line in `main` that opens the store.
 
 ```text
 Task C of REMIT-361 (read TASK.md, Task C only). Branch feat/limits-command.
@@ -369,7 +368,7 @@ Stop and report if the form in TASK.md is unclear or you need another file.
 Commit in steps (feat(limits): ..., feat(cli): ..., test(limits): ...), then report: branch, files, tests, assumptions.
 ```
 
-**Review a branch before you merge it.** (1) Scope: `git diff --name-only main...<branch>` lists only files its brief allowed. (2) Run `pytest -q` in its worktree. (3) Can the new tests fail? Put the source files back to `main`'s and watch them fail. (4) Read the diff, and `limits.py` slowly: it is money logic. (5) Run the command; compare its output with the ticket's form.
+**Before you merge a branch,** check that its files match its brief (`git diff --name-only main...<branch>`), `pytest -q` passes, its new tests fail when its source files are put back to `main`'s, and you have read the diff (`limits.py` slowly: money logic) and run the command.
 
 **Reading a conflict.** Merging the second command stops git in `cli.py` with a hunk for each place both branches touched, typically three: the usage list, the parser and the dispatch. The first:
 
@@ -381,11 +380,11 @@ Commit in steps (feat(limits): ..., feat(cli): ..., test(limits): ...), then rep
 >>>>>>> feat/limits-command
 ```
 
-Above `=======` is `main` as merged so far; below is the branch you are merging. Both lines belong: keep both, delete the three marker lines. Git shows only lines that differ; the lines just outside a hunk are shared by both sides. Before committing the merge, read each resolved function as finished code, then run `pytest -q` and every command.
+Above `=======` is `main` as merged so far; below is the branch you are merging. Both lines belong: keep both, delete the three marker lines. The lines just outside a hunk are shared by both sides. Before committing the merge, read each resolved function as finished code, then run `pytest -q` and every command.
 
 ### 🔴 Expert view
 
-**What the grader cannot tell.** It sees the final repository and its history, not the clock: four tasks done one after another on four branches pass, and no repository proves two streams overlapped. It cannot see who wrote a line, whether you read the `limits.py` diff, or whether the runbook would help on a call (it looks for headings and a real output line). The advisory checks see only the shape of your plan and log. Whether parallel work helped is in your log.
+**What the grader cannot tell.** It sees the repository and its history, not the clock: four tasks done in turn pass, and nothing proves two streams overlapped. It cannot see who wrote a line or whether you read the `limits.py` diff, and a runbook line typed by hand that happens to be right passes. It cannot tell a real branch from a name added later (`git branch fake HEAD~1` looks like a fast-forward): this check trusts you. The advisory checks see only the shape of your plan and log.
 
 **Merge, rebase or squash?**
 
@@ -393,22 +392,21 @@ Above `=======` is `main` as merged so far; below is the branch you are merging.
 |---|---|---|
 | `git merge --no-ff` | Each branch a visible side line, with a merge commit | Accepted; the clearest record |
 | Rebase, then fast-forward | A straight line; branch names kept as pointers | Accepted while the branches exist |
-| `git merge --squash` | One commit per task; the branch is not in the history | Fails "branches merged" |
+| `git merge --squash` | One commit per task; the branch is not in the history | Fails "branches merged"; made-up branch names fake it |
 
-Teams choose differently; this rule is a teaching choice (it wants to see the streams), not a verdict on squashing.
+Teams choose differently; this rule is a teaching choice.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
-| **Worktree** | A folder and branch per stream, over one history | Each code task |
 | **Parallel plan** | `docs/parallel-plan.md`: graph, boundaries, merge order, verification | Before the first branch |
 | **Task contract** | The worker brief: interface, allowed files, check, stop rule | Every agent session |
 | **Integration check** | `pytest -q` and every command, after each merge | After each merge |
 
 ## 🏛️ In practice at Najm Bank
-*Needs an agent: no. The no-agent path: write each task yourself, using way 1 or 2 below; the grader cannot tell. An agent is recommended, because running several is what the lab practises.*
+*Needs an agent: no. The no-agent path: write each task yourself, using way 1 or 2 above; the grader cannot tell. An agent is recommended: running several is the point.*
 
-**The ticket.** This is `task.md`, as Hessa wrote it.
+**The ticket.** This is the kit's `task.md` (`TASK.md` in your folder), as Hessa wrote it.
 
 ```text
 # REMIT-361: Customer Care desk pack (four small changes, one release)
@@ -440,7 +438,7 @@ Amounts have two decimals and no thousands separators.
 Add `python -m remit corridors [CODE]`. With no code it prints one such line per corridor, ordered
 by code. With a code (`QAR-PKR`) it prints that corridor's line only. An unknown code exits with 1
 and the error code on standard error, like the other commands. Like `quote`, it reads no data, so
-it must not create a database file.
+it must not create a database file: `main` in `cli.py` decides that, away from the marked places.
 
 ### Task C: the `limits` command (`limits`, `cli`)
 
@@ -463,24 +461,31 @@ unknown customer exits with 1 and the error code on standard error, like `send`.
 ### Task D: the runbook (`docs/CARE.md`)
 
 The page Customer Care will open during a call. Headings: `# Customer Care desk pack`, then
-`## Corridors`, `## Limits` and `## Delay message`. Under the first two, give the command and a
-real example of its output in a code block (copy it from the running program, do not type it).
-Under the third, give the template id and the English wording.
+`## Corridors`, `## Limits` and `## Delay message`. Under the first two, give the command and,
+in a code block, example output copied from the running program (do not type it: the lines are
+compared with the real ones). Under the third, give the template id and the English wording.
 
 ### How to deliver it
 
 1. Write your plan first in `docs/parallel-plan.md` (template in `lab-assets/`): the tasks, who
-   or what does each, what each may touch, the merge order, how you will check.
-2. One branch per task. Commit messages follow `CONTRIBUTING.md` (scopes `notify`, `corridors`,
-   `limits`, `cli`, `docs`). A commit belongs to one task.
-3. Every task comes with tests in `tests/`. Do not change an existing test; adding tests is fine.
-   Change no module the tasks do not name (`notify`, `corridors`, `limits`, `cli`); `docs/` is yours.
+   or what does each, what each may touch, the merge order, how you will check. Commit it on
+   `main` before you cut a branch.
+2. One branch per task; at least four commits in all. Messages follow `CONTRIBUTING.md`, with
+   the module as scope (`notify`, `corridors`, `limits`, `cli`, `docs`; the list there lacks
+   `corridors`, which is fine). A commit may change the files of one task only: `notify.py` is
+   A, `corridors.py` B, `limits.py` C, `cli.py` B or C, `docs/CARE.md` D. Tests, the plan and
+   the log belong to no task; a test that spans tasks gets a commit of its own.
+3. Every task comes with tests in `tests/`. Do not change or skip an existing test; adding tests
+   is fine. Change no module the tasks do not name (`notify`, `corridors`, `limits`, `cli`);
+   `docs/`, `.claude/`, `CLAUDE.md` and `.gitignore` are yours.
 4. B and C both add a command at the marked place in `src/remit/cli.py`, and a line to the usage
-   list in its docstring. Expect them to meet there. Keep both commands.
-5. Merge the branches into `main` with `git merge`. Do not squash; keep the branches until graded.
+   list in its docstring. Expect them to meet there. Keep both commands. (`--help` prints to the
+   real standard output, so test it with pytest's `capsys`.)
+5. Merge the branches into `main` with `git merge`; at least three must end up merged. Do not
+   squash; keep the branches until graded. Git's own merge message is fine.
 6. `limits.py` is on the second-reviewer list in `CONTRIBUTING.md`. Read its diff yourself.
-7. Finish on `main`, everything committed, `pytest -q` green, with a short log of what you
-   delegated, corrected and how long it took in `docs/agent-log.md`.
+7. Finish on `main`, everything committed, `pytest -q` green, with a short log (30 words or
+   more) of what you delegated, corrected and how long it took in `docs/agent-log.md`.
 
 When you think you are done, grade it from the `ailab` folder of the course repository:
 `python -m ailab grade m10 --dir <this directory>`
@@ -491,21 +496,23 @@ When you think you are done, grade it from the `ailab` folder of the course repo
 ```bash
 cd ~/system-design-for-vibe-coders/ainative/ailab    # with the virtual environment of lesson 0.2 active
 python -m ailab start m10 --dir ~/ainative/m10
-cd ~/ainative/m10
+cd ~/ainative/m10                                   # the lab folder: run everything below here
 cp lab-assets/parallel-plan-template.md docs/parallel-plan.md
 export PYTHONPATH=src    # so python -m remit works; set it in every worktree shell too
 ```
 
-**Your move.** Fill in the plan, commit it on `main` (`docs(docs): plan the parallel work for REMIT-361`) and cut every branch from that commit. Task D quotes the running program: what does that do to your merge order? *By hand, no agent:* expect roughly 10 to 25 minutes a task; use way 1 or 2, write tests first, commit in steps, run `pytest -q` before every merge. *With agents:* one session per worktree, the brief above adapted per task, plan mode first, then `acceptEdits` inside the worktree (lesson 0.3's level 3), with `Bash(pytest *)` allowed and other Bash commands left on a prompt. If the starter has a `CLAUDE.md` (lesson 2.2's reference memory), it says not to commit unless asked, so your brief must ask. Keep every branch until you have graded; log minutes per stream as you go.
+Use `PYTHONPATH`, not `pip install -e .`: an editable install would run this folder's code from every worktree.
 
-To try a command by hand, add a customer and a transfer first (`remit.db` is git-ignored):
+**Your move.** Fill in the plan, commit it on `main` (`docs(docs): plan the parallel work for REMIT-361`) and cut A, B and C from that commit. Hessa's "at the same time" is false for D: it copies real output from B and C. Say so under "Cannot run in parallel" and cut D from `main` once B and C are merged (cut earlier it passes too, but its branch cannot run the commands it quotes). *By hand, no agent:* use way 1 or 2, tests first, small commits, `pytest -q` before every merge; expect 10 to 25 minutes a task. *With agents:* one session per worktree, the brief above adapted per task, plan mode first, then `acceptEdits` inside the worktree (lesson 0.3's level 3), `Bash(pytest *)` allowed and other Bash commands on a prompt. The starter's `CLAUDE.md` (lesson 2.2's reference memory) says not to commit unless asked, so your brief must ask. The tasks are small, so an agent may need only minutes each; one session doing them in turn is a fair run if your log says so. Keep every branch until you have graded; log minutes per stream.
+
+To try a command by hand, or to copy real output into the runbook, add a customer and a transfer first (`remit.db` is git-ignored):
 
 ```bash
 python -m remit customer add --id C001 --name "Aisha Rahman" --kyc T2
 python -m remit send --customer C001 QAR 500 INR --recipient "Ravi Kumar"
 ```
 
-**What the grader checks.** Hidden acceptance tests per task and together; your own tests; three or more branches merged into `main`; no conflict markers; each commit about one task, following `CONTRIBUTING.md`; only the expected files changed; no existing test weakened; no secrets; `main` checked out, all committed. Advisory: new tests that fail on the original code; a plan and a log; no commit that ever held conflict markers.
+**What the grader checks.** Hidden acceptance tests per task and together; your own tests; three or more branches merged into `main`; no conflict markers; at least four commits, each about one task and following `CONTRIBUTING.md`; only the expected files changed; no existing test weakened, skipped or marked xfail; no secrets; `main` checked out, all committed. Advisory: new tests that fail on the original code; a plan with content of your own, committed before the code; a log of 30 words or more; no commit that ever held conflict markers.
 
 **Grade.**
 
@@ -522,29 +529,22 @@ On the starter state the real output is as follows (abridged where marked):
 [PASS] Your own tests pass: 99 passed
 [FAIL] Task A: the delay notice works: 5 hidden checks failed: test_the_template_exists_in_english_and_arabic, test_the_english_wording_is_the_approved_text (+3 more)
        hint: Compare your template with the ticket's wording, word for word, in both languages.
-[FAIL] Task B: the corridors command works: 5 hidden checks failed: test_describe_writes_the_agreed_line_for_every_corridor, test_describe_works_for_any_corridor_not_only_the_shipped_ones (+3 more)
-       hint: Run `python -m remit corridors` yourself and compare each line with the form in the ticket.
-[FAIL] Task C: the limits command works: 11 hidden checks failed: test_a_customer_with_no_history_has_everything_left, test_today_and_this_month_are_added_up_separately (+9 more)
-       hint: Run `python -m remit limits --customer C001` for a customer with a transfer, then re-read what 'today' means in limits.py.
-[FAIL] Task D: the runbook is there: 4 hidden checks failed: test_the_runbook_has_its_title_and_the_three_sections, test_the_corridors_section_has_the_command_and_a_real_output_line (+2 more)
-       hint: Check the headings, commands and example output against the ticket.
-[FAIL] The pieces work together after the merge: 4 hidden checks failed: test_a_support_session_uses_every_command_in_one_database, test_the_help_lists_both_new_commands (+2 more)
-       hint: Run every command by hand on the merged main, the old ones too. Check the imports, the dispatch in `_run` and the usage list.
+... Tasks B, C, D and "The pieces work together" fail the same way ...
 [PASS] No conflict markers are left in the code
 [FAIL] At least 3 branches were merged into main: no branch has been merged into main yet
        hint: Give each task its own branch and `git merge` it into main (no --squash). Keep the branches until you have graded.
-... nine more checks in the same format (commits, files, tests, secrets; four are advisory) ...
+... nine more checks (four are advisory) ...
 
 Lab m10: 6/15 required checks passed: NOT YET
 ```
 
 When every required check passes the last line reads `Lab m10: 15/15 required checks passed: PASSED`.
 
-**Weekly deliverable (Module 10).** In your notes repository, not in `~/ainative/m10`, commit `week-10/` with `parallel-plan.md` (as written, plus three lines on where it was wrong), `agent-log.md` and `m10-grade.txt` (the grade command's output, saved with `>`).
+**Weekly deliverable (Module 10).** In your notes repository, not in `~/ainative/m10`, commit `week-10/` with `parallel-plan.md` (as written, plus three lines on where it was wrong), `agent-log.md` and `m10-grade.txt` (the grade command's output, saved with `>`). The grader ignores them.
 
 **Group session (60 minutes).** (1) Swap plans; find a boundary you would draw differently (15). (2) Compare two resolutions of `cli.py`; run each command (15). (3) Compare logs: streams at once, minutes per stream and per review (15). (4) Agree a team rule: most streams, who integrates, what a plan holds (15).
 
-**Debrief.** What did the agent get wrong, or nearly? What did your plan, briefs or context miss? Which task should not have been parallel? How long did integration take against the parts? Real lines from a rushed resolution:
+**Debrief.** What did the agent get wrong, or nearly? What did your plan or briefs miss? Which task should not have been parallel? How long did integration take against the parts? Real lines from a rushed resolution:
 
 ```text
 [FAIL] Task B: the corridors command works: 3 hidden checks failed: test_the_command_lists_every_corridor_in_code_order, test_the_command_prints_one_corridor_when_given_its_code (+1 more)
@@ -554,7 +554,7 @@ When every required check passes the last line reads `Lab m10: 15/15 required ch
 
 Why does Task B fail when its own branch passed? Which hunk did the damage?
 
-**Agent log.** One row per stream, in the spirit of the lesson 0.1 template.
+**Agent log.** One row per stream, in the spirit of the lesson 0.1 template (fictional numbers).
 
 ```markdown
 | Stream | Prompt (short) | What it did | What I corrected | Agent min | Review min |
@@ -565,13 +565,13 @@ Streams at once: 3.  Integration: 20 min.  A ÷ R from this one row: 1.5, so two
 ```
 
 ## 🛠️ Exercises
-- 🟢 **Plan and predict.** *No agent.* Fill in the template; read `git diff lab-start~1 lab-start -- src`. *Done when:* the plan names four tasks, their boundaries, a merge order with a reason, and where two branches will collide.
+- 🟢 **Plan and predict.** *No agent.* Fill in the template; read `git diff lab-start~1 lab-start -- src` in your lab folder. *Done when:* the plan names four tasks, their boundaries, a merge order with a reason, and where two branches will collide.
 - 🟡 **Do the lab.** *No agent needed.* *Done when:* `grade` prints `PASSED`, `git log --graph --oneline` shows four branches merging into `main`, and your log has minutes per stream.
 - 🔴 **Run three streams at once.** *Needs an agent.* Run A, B and C as three concurrent sessions in three worktrees. *Done when:* the log gives each stream's agent and review minutes, your *A* ÷ *R*, the streams you would run next time, and one thing a brief missed.
 
 ## ⚠️ Mistakes and traps
 - **Calling a conflict resolved when the markers are gone.** Read each resolved function as finished code; run every command.
-- **Squash-merging out of habit.** The branches vanish from the history; neither the grader nor a reviewer can see the streams.
+- **Squash-merging out of habit.** The branches vanish from the history; no one can see the streams.
 - **Typing the runbook's example.** Copy it from the running program.
 - **Grading from a feature branch or with leftovers.** Finish on `main`, clean.
 

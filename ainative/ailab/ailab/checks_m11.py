@@ -26,7 +26,7 @@ from collections.abc import Callable, Iterable, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from ailab import checks, runner
+from ailab import checks, gitutil, runner
 
 # =================================================================================
 # 1. text and Markdown helpers
@@ -40,11 +40,69 @@ NEGATION = re.compile(
     re.I,
 )
 DOCSTRING_TALK = re.compile(r"docstring|comment|\bsays\b|\bclaims?\b|stale|outdated|wrong|incorrect|misleading", re.I)
+# File extensions: `audit.jsonl` is a file name, not the attribute `jsonl` of the module `audit`.
+FILE_EXTENSIONS = {"py", "md", "json", "jsonl", "log", "txt", "toml", "yml", "yaml", "cfg", "ini", "csv", "lock"}
+# A sentence that says the thing it names is not there. Quoting a wrong name in order to refute it is not a wrong claim.
+REFUTES = re.compile(
+    r"\b(?:does(?:n't| not)|do(?:n't| not)|did(?:n't| not)|will not|never) exist|no longer exists?|no such\b|non-?existent|"
+    r"never existed|(?:has|had) been (?:removed|deleted)|was (?:removed|deleted)|is gone|there is no\b|not a real\b|"
+    r"is not (?:a|an) (?:real|valid|public)\b|is not defined|(?:defines|has) no\b",
+    re.I,
+)
 
 
 def snippet(text: str, limit: int = 110) -> str:
     text = " ".join(text.split())
     return text if len(text) <= limit else text[: limit - 3] + "..."
+
+
+def around(text: str, start: int, end: int, *, margin: int = 24, limit: int = 110) -> str:
+    """The words at ``text[start:end]`` with a little context on each side (whole words), so a message quotes the phrase that caused it."""
+    left, right = max(0, start - margin), min(len(text), end + margin)
+    while 0 < left < start and not text[left - 1].isspace():
+        left += 1
+    while end < right < len(text) and not text[right].isspace():
+        right -= 1
+    cut = " ".join(text[left:right].split())
+    if len(cut) > limit:
+        cut = cut[: limit - 3].rsplit(" ", 1)[0] + "..."
+    return ("..." if left else "") + cut + ("..." if right < len(text) else "")
+
+
+_ONES = {"zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9,
+         "ten": 10, "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14, "fifteen": 15, "sixteen": 16,
+         "seventeen": 17, "eighteen": 18, "nineteen": 19}
+_TENS = {"twenty": 20, "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90}
+_SCALES = {"hundred": 100, "thousand": 1000}
+_SINGLE = "|".join(w for w in _ONES if w != "zero")
+_SPOKEN_NUMBER = re.compile(
+    rf"\b(?:(?P<tens>{'|'.join(_TENS)})(?:[- ](?P<ones>{_SINGLE}))?|(?P<small>{'|'.join(_ONES)})|(?P<article>a))"
+    rf"(?:\s+(?P<scale>hundred|thousand))?\b",
+    re.I,
+)
+_ARTICLE_UNIT = re.compile(r"\ban?\s+(?=(?:second|minute|hour)s?\b)", re.I)
+
+
+def words_to_numbers(text: str, *, minimum: int = 0) -> str:
+    """Spoken numbers as digits ("five minutes" -> "5 minutes", "two thousand" -> "2000"), so a rule written for
+    digits also reads a figure that was typed in words. Only numbers of at least ``minimum`` are changed."""
+
+    def convert(m: re.Match[str]) -> str:
+        scale = m.group("scale")
+        if m.group("article"):  # "a hundred", "a thousand"; a bare "a" is left alone
+            value = _SCALES[scale.lower()] if scale else None
+        elif m.group("tens"):
+            value = _TENS[m.group("tens").lower()] + (_ONES[m.group("ones").lower()] if m.group("ones") else 0)
+        else:
+            value = _ONES[m.group("small").lower()]
+        if value is None:
+            return m.group(0)
+        if scale and not m.group("article"):
+            value *= _SCALES[scale.lower()]
+        return str(value) if value >= minimum else m.group(0)
+
+    out = _SPOKEN_NUMBER.sub(convert, text)
+    return _ARTICLE_UNIT.sub("1 ", out) if minimum <= 1 else out
 
 
 def read(path: Path) -> str | None:
@@ -86,17 +144,15 @@ def prose_only(text: str) -> str:
     return "\n".join(out)
 
 
-def units(text: str) -> list[str]:
-    """Sentences, with hard-wrapped lines joined: the grain at which rules look for a contradiction.
-
-    A new block starts at a blank line, a heading, a list item or a table row; other lines continue the block above.
-    """
-    blocks: list[str] = []
+def blocks(text: str) -> list[str]:
+    """Paragraphs, with hard-wrapped lines joined. A new block starts at a blank line, a heading, a list item or a table row;
+    other lines continue the block above."""
+    found: list[str] = []
     current: list[str] = []
 
     def flush() -> None:
         if current:
-            blocks.append(" ".join(current))
+            found.append(" ".join(current))
             current.clear()
 
     for line in text.splitlines():
@@ -110,8 +166,13 @@ def units(text: str) -> list[str]:
         if stripped.startswith(("|", "#")):
             flush()
     flush()
+    return found
+
+
+def units(text: str) -> list[str]:
+    """Sentences, with hard-wrapped lines joined: the grain at which rules look for a contradiction."""
     found: list[str] = []
-    for block in blocks:
+    for block in blocks(text):
         for part in re.split(r"(?<=[.!?])\s+(?=[A-Z0-9`\"'(\[])", block):
             if part.strip():
                 found.append(part.strip())
@@ -196,6 +257,8 @@ class Param:
     name: str
     kind: str  # "pos" (positional or keyword), "posonly", "kwonly", "var" (*args), "varkw" (**kwargs)
     required: bool = True
+    default: str | None = None  # the source text of the default, when there is one
+    annotation: str | None = None  # the source text of the type, when there is one
 
 
 @dataclass
@@ -206,6 +269,7 @@ class ModuleInfo:
     names: set[str] = field(default_factory=set)  # top-level names, public and private
     classes: dict[str, set[str]] = field(default_factory=dict)  # class -> its members
     sigs: dict[str, list[Param]] = field(default_factory=dict)  # "new_id", "FixedClock" (its __init__), "FixedClock.advance"
+    returns: dict[str, str | None] = field(default_factory=dict)  # "new_id" -> "str" (the return type, when written)
     lines: int = 0
     text: str = ""
 
@@ -213,22 +277,26 @@ class ModuleInfo:
         return any(name in members for members in self.classes.values())
 
 
+def _src(node: ast.AST | None) -> str | None:
+    return None if node is None else ast.unparse(node)
+
+
 def _params(fn: ast.FunctionDef | ast.AsyncFunctionDef, *, drop_first: bool) -> list[Param]:
     a = fn.args
     pos = [*a.posonlyargs, *a.args]
-    defaults = len(a.defaults)
+    defaults: list[ast.expr | None] = [None] * (len(pos) - len(a.defaults)) + list(a.defaults)
     out: list[Param] = []
-    for n, arg in enumerate(pos):
-        required = n < len(pos) - defaults
-        out.append(Param(arg.arg, "posonly" if n < len(a.posonlyargs) else "pos", required))
+    for n, (arg, default) in enumerate(zip(pos, defaults, strict=True)):
+        out.append(Param(arg.arg, "posonly" if n < len(a.posonlyargs) else "pos", default is None, _src(default),
+                         _src(arg.annotation)))
     if drop_first and out:
         out = out[1:]
     if a.vararg:
-        out.append(Param(a.vararg.arg, "var", False))
+        out.append(Param(a.vararg.arg, "var", False, None, _src(a.vararg.annotation)))
     for arg, default in zip(a.kwonlyargs, a.kw_defaults, strict=True):
-        out.append(Param(arg.arg, "kwonly", default is None))
+        out.append(Param(arg.arg, "kwonly", default is None, _src(default), _src(arg.annotation)))
     if a.kwarg:
-        out.append(Param(a.kwarg.arg, "varkw", False))
+        out.append(Param(a.kwarg.arg, "varkw", False, None, _src(a.kwarg.annotation)))
     return out
 
 
@@ -267,6 +335,7 @@ class CodeIndex:
                 if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                     info.names.add(node.name)
                     info.sigs[node.name] = _params(node, drop_first=False)
+                    info.returns[node.name] = _src(node.returns)
                 elif isinstance(node, ast.ClassDef):
                     info.names.add(node.name)
                     members: set[str] = set()
@@ -274,6 +343,7 @@ class CodeIndex:
                         if isinstance(member, (ast.FunctionDef, ast.AsyncFunctionDef)):
                             members.add(member.name)
                             info.sigs[f"{node.name}.{member.name}"] = _params(member, drop_first=True)
+                            info.returns[f"{node.name}.{member.name}"] = _src(member.returns)
                             if member.name == "__init__":
                                 info.sigs[node.name] = _params(member, drop_first=True)
                         else:
@@ -334,6 +404,8 @@ class CodeIndex:
         if not rest:
             return True
         first = rest[0]
+        if rest[-1].lower() in FILE_EXTENSIONS and not module.has_member_anywhere(rest[-1]) and rest[-1] not in module.names:
+            return None  # `audit.jsonl` is a file name, not a name in the module `audit`
         if first in module.names:
             if len(rest) > 1 and first in module.classes:
                 return rest[1] in module.classes[first]
@@ -362,25 +434,34 @@ class Rule:
 
 
 def apply_rules(text: str, rules: Sequence[Rule]) -> list[str]:
-    """One problem per offending sentence and rule: ``<what is wrong>: "<the sentence>"``.
+    """One problem per offending sentence and rule: ``<what is wrong>: "<the words that caused it>"``.
 
     A rule whose exemption is a negation ("no", "not", "never", "whether" ...) only looks at the 70 characters before
     the claim and the claim itself: "customers sent it again after seeing no message" must not be excused by the "no"
     that comes after. Other exemptions (quoting a stale document, contrasting with an alternative) read the whole sentence.
+    A figure written in words ("five minutes") is read as well as the same figure in digits.
     """
     problems: list[str] = []
     for unit in units(text):
+        spoken = words_to_numbers(unit)
+        variants = [unit] if spoken == unit else [unit, spoken]
         for rule in rules:
             local = rule.exempt is not None and NEGATION.pattern in rule.exempt.pattern
-            for m in rule.pattern.finditer(unit):
-                if rule.exempt is not None and rule.exempt.search(unit[max(0, m.start() - 70):m.end()] if local else unit):
-                    continue
-                if rule.expect is not None and rule.expect(m):
-                    continue
-                problem = f'{rule.message}: "{snippet(unit, 64)}"'
+            hit: tuple[str, re.Match[str]] | None = None
+            for variant in variants:
+                for m in rule.pattern.finditer(variant):
+                    if rule.exempt is not None and rule.exempt.search(variant[max(0, m.start() - 70):m.end()] if local else variant):
+                        continue
+                    if rule.expect is not None and rule.expect(m):
+                        continue
+                    hit = (variant, m)
+                    break
+                if hit:
+                    break
+            if hit:
+                problem = f'{rule.message}: "{around(hit[0], hit[1].start(), hit[1].end())}"'
                 if problem not in problems:
                     problems.append(problem)
-                break
     return problems
 
 
@@ -416,6 +497,7 @@ _DOWNSIDE = re.compile(
 
 
 _ADR_PARTS = ("status", "context", "decision", "consequences")
+ADR_MINIMUM_WORDS = {"context": 25, "decision": 8, "consequences": 20}  # task.md says "a few sentences" for each
 _ADR_LABEL = re.compile(r"^\s*(?:[-*+]\s+)?\**\s*(status|context|decision|consequences)\s*\**\s*[:\u2013\u2014-]\s*(\S.*)?$", re.I)
 
 
@@ -463,9 +545,9 @@ def adr_format_problems(text: str) -> list[str]:
             problems.append("the sections are out of order (expected Status, Context, Decision, Consequences)")
     if "status" in parts and not _STATUS.search(parts["status"][1][:200]):
         problems.append("Status is not one of Proposed, Accepted, Deprecated, Superseded")
-    for key, words in {"context": 40, "decision": 12, "consequences": 40}.items():
+    for key, words in ADR_MINIMUM_WORDS.items():
         if key in parts and len(parts[key][1].split()) < words:
-            problems.append(f"{key.title()} is too thin (under {words} words)")
+            problems.append(f"{key.title()} is too thin (a few sentences, at least {words} words)")
     if "consequences" in parts and not _DOWNSIDE.search(parts["consequences"][1]):
         problems.append("Consequences name no downside (an ADR records what gets harder, not only what gets easier)")
     return problems
@@ -514,6 +596,11 @@ ADR_RULES: list[Rule] = [
     Rule("all_placeholders", _rx(r"\ball queries use placeholders\b|\bevery query (?:is )?parameteri[sz]ed\b|\bqueries use placeholders\b"),
          "Check every query in src/remit/store.py: this disagrees with it",
          exempt=_rx(r"except|apart|search_by_name|known smell|stale|outdated|ARCHITECTURE|wrong|claims?|says")),
+    Rule("notify_retries",
+         _rx(r"\b(?:_notify|notif\w*|notifier)\b[^.\n]{0,80}\b(?:retr(?:y|ies|ied|ying)|back-?off|re-?sen[dt]s?|re-?queue[sd]?|outbox|dead[- ]letter)\b"),
+         "Check RemitService._notify in src/remit/service.py: it catches the error and carries on; nothing there retries, queues or backs off",
+         exempt=_rx(r"\b(?:no|not|never|nothing|none|nor|without|cannot|unlike|than|whether|if)\b|n't|could|would|might|alternative|"
+                    r"instead|option|propos|should|rather|recommend|future|follow-up|ticket|deferred|steelman|consider|better|worth")),
 ]
 
 
@@ -522,38 +609,49 @@ def adr_fact_problems(text: str) -> list[str]:
 
 
 def adr_references(text: str, index: CodeIndex) -> tuple[list[str], int, int]:
-    """(unresolved references, number resolved, number resolved that point into src/)."""
+    """(unresolved references, number resolved, number resolved that point into src/).
+
+    A reference to something that is not there is fine when its own sentence says so ("the old page names `risk.py`,
+    which does not exist"): that is a true claim, not a pointer to nothing.
+    """
     unresolved: list[str] = []
     resolved = in_src = 0
     seen: set[str] = set()
-    for token in re.findall(r"`([^`\n]+)`", prose_only(text)):
-        token = token.strip()
-        if token in seen:
-            continue
-        seen.add(token)
-        verdict = index.resolve_path(token)
-        kind = "path"
-        if verdict is None:
-            verdict = index.resolve_symbol(token)
-            kind = "symbol"
-        if verdict is None:
-            continue
-        if verdict:
-            resolved += 1
-            if kind == "symbol" or token.lstrip("./").startswith("src/") or re.match(r"[\w.-]+\.py", token):
-                in_src += 1
-        else:
-            unresolved.append(token)
+    for unit in units(prose_only(text)):
+        refuted = bool(REFUTES.search(unit))
+        for token in re.findall(r"`([^`\n]+)`", unit):
+            token = token.strip()
+            if token in seen:
+                continue
+            verdict = index.resolve_path(token)
+            kind = "path"
+            if verdict is None:
+                verdict = index.resolve_symbol(token)
+                kind = "symbol"
+            if verdict is None:
+                continue
+            if not verdict and refuted:
+                continue
+            seen.add(token)
+            if verdict:
+                resolved += 1
+                if kind == "symbol" or token.lstrip("./").startswith("src/") or re.match(r"[\w.-]+\.py", token):
+                    in_src += 1
+            else:
+                unresolved.append(token)
     return unresolved, resolved, in_src
 
 
 CRITIC_HEAD = r"critic|objection|challenge|steelman|devil"
+OBJECTION_WORDS = 8  # an objection with its response is a sentence or two, not a label
+# What you did about an objection. "Noted" and "see above" are not decisions.
 RESPONSE_CUE = re.compile(
-    r"\b(respon(?:se|d|ded|ds)|answer(?:ed)?|repl(?:y|ied)|decision|disposition|resolution|outcome|accept(?:ed)?|"
-    r"reject(?:ed)?|address(?:ed)?|kept|keep|chose|changed|added|follow[- ]up|mitigat\w+|deferred|rebuttal|"
-    r"we (?:will|did|do)|still|because)\b",
+    r"\b(accept(?:ed|s)?|reject(?:ed|s)?|defer(?:red|s)?|declin\w+|dismiss\w+|agree[ds]?|disagree[ds]?|adopt\w+|upheld|"
+    r"overrul\w+|address(?:ed)?|mitigat\w+|keep|kept|chose|changed|added|rewrote|follow[- ]up|ticket|"
+    r"we (?:will|did|do|decided)|i (?:will|did|decided))\b",
     re.I,
 )
+_RESPONSE_HEAD = re.compile(r"respon|answer|decision|disposition|outcome|repl|resolution|action", re.I)
 
 
 def sub_sections(secs: Sequence[Sec], parent: Sec) -> list[Sec]:
@@ -567,24 +665,50 @@ def sub_sections(secs: Sequence[Sec], parent: Sec) -> list[Sec]:
     return nested
 
 
+def _table_cells(row: str) -> list[str]:
+    return [c.strip() for c in row.strip().strip("|").split("|")]
+
+
+# "Critic's objections:" on a line of its own works like a heading, as "Status:" and "Context:" do for the other parts
+_CRITIC_LABEL = re.compile(r"^[ \t]*(?:[-*+][ \t]+)?\**[ \t]*((?:the[ \t]+)?(?:critic|objections?)[^\n:]{0,40}?)[ \t]*\**[ \t]*:[ \t]*\**[ \t]*(.*)$",
+                           re.I | re.M)
+
+
 def adr_critic_problems(text: str) -> list[str]:
     secs = outline(text)
     sec = find_section(secs, CRITIC_HEAD)
     if sec is None:
-        return ["there is no section for the critic's objections (a heading with 'Critic' or 'Objections' in it)"]
-    nested = sub_sections(secs, sec)
+        label = _CRITIC_LABEL.search(text)
+        if label:
+            body = (label.group(2) + "\n" + text[label.end():]).strip()
+            sec = Sec(2, label.group(1).strip(), body, body)
+    if sec is None:
+        return ["there is no section for the critic's objections (a heading, or a line like \"Critic's objections:\")"]
+    nested = sub_sections(secs, sec) if sec in secs else []
     if len(nested) >= 3:  # one sub-heading per objection
-        items = [f"{n.title} {n.full}" for n in nested if len((n.title + " " + n.full).split()) >= 8]
+        candidates = [f"{n.title} {n.full}" for n in nested]
     else:
-        items = [i for i in list_items(sec.full) if len(i.split()) >= 8]
+        candidates = list_items(sec.full)
     table_rows = [ln for ln in sec.full.splitlines() if ln.strip().startswith("|")]
-    header = table_rows[0] if table_rows else ""
+    response_column = None
+    if table_rows:
+        heads = _table_cells(table_rows[0])
+        response_column = next((i for i, h in enumerate(heads) if _RESPONSE_HEAD.search(h)), None)
+    items = [c for c in candidates if len(c.split()) >= OBJECTION_WORDS]
     if len(items) < 3:
-        return [f"found {len(items)} objection(s); the task asks for at least 3"]
-    if table_rows and re.search(r"respon|answer|decision|disposition|outcome|repl|resolution|action", header, re.I):
-        answered = len(items)
-    else:
-        answered = sum(1 for i in items if RESPONSE_CUE.search(i))
+        short = len(candidates) - len(items)
+        why = (f" ({short} more are too short to count: write a full sentence and what you did, at least "
+               f"{OBJECTION_WORDS} words)") if short else ""
+        return [f"found {len(items)} objection(s); the task asks for at least 3" + why]
+
+    def response_of(item: str) -> str:
+        if response_column is not None and item.strip().startswith("|"):
+            cells = _table_cells(item)
+            if len(cells) > response_column:
+                return cells[response_column]
+        return item
+
+    answered = sum(1 for i in items if RESPONSE_CUE.search(response_of(i)))
     if answered < 3:
         return [f"only {answered} objection(s) say what you did about them (accepted, rejected with a reason, deferred)"]
     return []
@@ -593,7 +717,6 @@ def adr_critic_problems(text: str) -> list[str]:
 # =================================================================================
 # 5. najmkit page checks
 # =================================================================================
-FILE_EXTENSIONS = {"py", "md", "json", "jsonl", "log", "txt", "toml", "yml", "yaml", "cfg", "ini", "csv", "lock"}
 NAJMKIT_MODULES = ("ids", "clock", "audit")
 _QUAL = re.compile(r"(?<![\w.])(?:najmkit\.)?(ids|clock|audit)\.([A-Za-z_]\w*)(?:\.([A-Za-z_]\w*))?")
 _IMPORT = re.compile(r"^\s*from\s+najmkit(?:\.(\w+))?\s+import\s+([^\n#]+)", re.M)
@@ -607,6 +730,13 @@ def _module(index: CodeIndex, short: str) -> ModuleInfo | None:
 
 def docs_name_problems(text: str, index: CodeIndex) -> list[str]:
     problems: list[str] = []
+
+    def refuted(position: int) -> bool:
+        """The line holding ``position`` says the name is not there ("`ids.generate` does not exist")."""
+        start = text.rfind("\n", 0, position) + 1
+        end = text.find("\n", position)
+        return bool(REFUTES.search(text[start:end if end != -1 else len(text)]))
+
     for m in _QUAL.finditer(text):
         short, name, member = m.group(1), m.group(2), m.group(3)
         if name in FILE_EXTENSIONS:
@@ -616,10 +746,10 @@ def docs_name_problems(text: str, index: CodeIndex) -> list[str]:
             continue
         claim = f"{short}.{name}" + (f".{member}" if member else "")
         if name not in module.names:
-            if not module.has_member_anywhere(name):
+            if not module.has_member_anywhere(name) and not refuted(m.start()):
                 problems.append(f"`{claim}` does not exist in najmkit.{short}")
             continue
-        if member and name in module.classes and member not in module.classes[name]:
+        if member and name in module.classes and member not in module.classes[name] and not refuted(m.start()):
             problems.append(f"`{claim}` does not exist ({name} has no '{member}')")
     for m in _IMPORT.finditer(text):
         short = m.group(1)
@@ -642,7 +772,8 @@ def docs_name_problems(text: str, index: CodeIndex) -> list[str]:
     return list(dict.fromkeys(problems))
 
 
-def _balanced(text: str, start: int) -> str | None:
+def _balanced_end(text: str, start: int) -> int | None:
+    """The index of the ``)`` that closes the ``(`` at ``text[start]``."""
     depth = 0
     for i in range(start, min(len(text), start + 400)):
         if text[i] == "(":
@@ -650,53 +781,144 @@ def _balanced(text: str, start: int) -> str | None:
         elif text[i] == ")":
             depth -= 1
             if depth == 0:
-                return " ".join(text[start + 1:i].split())
+                return i
     return None
 
 
-def claimed_params(inside: str) -> tuple[str, list[Param], int, list[str], bool] | None:
-    """Read the text between the parentheses of a claimed signature or call.
+def _balanced(text: str, start: int) -> str | None:
+    end = _balanced_end(text, start)
+    return None if end is None else " ".join(text[start + 1:end].split())
 
-    Returns (form, params, positional count, keyword names, declares): ``form`` is "signature"
-    (``prefix: str, **fields``) or "call" (``"TRF", length=3``). ``declares`` is True when the text can only be a
-    declaration (annotations, defaults, stars): bare names such as ``(fixed)`` could be variables in a call, so
-    their names are not held against the real parameters. None when the text is neither
-    (``path | None = None`` and the like).
-    """
+
+def read_annotation(tail: str) -> str | None:
+    """The return type written after a closing parenthesis (``-> str``, ``-> dict[str, Any] | None``), else None."""
+    arrow = re.match(r"\s*->\s*", tail)
+    if not arrow:
+        return None
+    i, n, parts = arrow.end(), len(tail), []
+    while True:
+        ident = re.match(r"[A-Za-z_][\w.]*", tail[i:])
+        if not ident:
+            break
+        j = i + ident.end()
+        if j < n and tail[j] == "[":
+            depth, k = 0, j
+            while k < n:
+                depth += (tail[k] == "[") - (tail[k] == "]")
+                if depth == 0:
+                    break
+                k += 1
+            if depth != 0:
+                return None
+            j = k + 1
+        parts.append(tail[i:j])
+        union = re.match(r"\s*\|\s*", tail[j:])
+        if not union:
+            break
+        i = j + union.end()
+    return " | ".join(parts) if parts else None
+
+
+def annotation_tokens(source: str) -> frozenset[str]:
+    """The type names in an annotation, in a form that ignores spelling: ``Optional[str]`` and ``str | None`` agree."""
+    try:
+        tree = ast.parse(source, mode="eval")
+    except SyntaxError:
+        return frozenset()
+    inner = {id(n.value) for n in ast.walk(tree) if isinstance(n, ast.Attribute)}  # `os` in `os.PathLike`
+    tokens: set[str] = set()
+    for node in ast.walk(tree):
+        if id(node) in inner:
+            continue
+        if isinstance(node, ast.Name):
+            tokens.add(node.id)
+        elif isinstance(node, ast.Attribute):
+            tokens.add(node.attr)
+        elif isinstance(node, ast.Constant):
+            if node.value is None:
+                tokens.add("None")
+            elif isinstance(node.value, str):
+                tokens |= annotation_tokens(node.value)
+    if "Optional" in tokens:
+        tokens.add("None")
+    return frozenset(tokens - {"Optional", "Union"})
+
+
+@dataclass
+class Claim:
+    """What the text between the parentheses of a claimed signature or call says."""
+    form: str  # "signature" (``prefix: str, **fields``) or "call" (``"TRF", length=3``)
+    params: list[Param]
+    positional: int  # required positional parameters (signature) or positional arguments (call)
+    keywords: list[str]
+    declares: bool  # True when it can only be a declaration (annotations, defaults, stars)
+    annotated: bool  # True when a type is written: only a signature does that
+
+
+def read_claim(inside: str) -> Claim | None:
+    """None when the text is neither (``path | None = None`` and the like)."""
     try:
         fn = ast.parse(f"def _({inside}): pass").body[0]
         assert isinstance(fn, ast.FunctionDef)
         a = fn.args
         params = _params(fn, drop_first=False)
-        declares = bool(a.defaults or a.kw_defaults or a.vararg or a.kwarg or a.kwonlyargs
-                        or any(x.annotation for x in [*a.posonlyargs, *a.args]))
+        annotated = any(x.annotation for x in [*a.posonlyargs, *a.args, *a.kwonlyargs, a.vararg, a.kwarg] if x)
+        declares = bool(a.defaults or a.kw_defaults or a.vararg or a.kwarg or a.kwonlyargs or annotated)
         # a parameter with a default may be a keyword argument in a call (`seconds=61`), so it is not counted as positional
-        return "signature", params, sum(1 for p in params if p.kind in ("pos", "posonly") and p.required), [], declares
+        return Claim("signature", params, sum(1 for p in params if p.kind in ("pos", "posonly") and p.required), [],
+                     declares, annotated)
     except (SyntaxError, AssertionError, IndexError):
         pass
     try:
         call = ast.parse(f"_({inside})", mode="eval").body
         assert isinstance(call, ast.Call)
         positional = sum(1 for a in call.args if not isinstance(a, ast.Starred))
-        return "call", [], positional, [k.arg for k in call.keywords if k.arg], True
+        return Claim("call", [], positional, [k.arg for k in call.keywords if k.arg], True, False)
     except (SyntaxError, AssertionError):
         return None
 
 
-def signature_problem(label: str, inside: str, real: list[Param]) -> str | None:
-    if not inside.strip():
+def claimed_params(inside: str) -> tuple[str, list[Param], int, list[str], bool] | None:
+    claim = read_claim(inside)
+    return None if claim is None else (claim.form, claim.params, claim.positional, claim.keywords, claim.declares)
+
+
+def _same_default(a: str, b: str) -> bool:
+    def norm(source: str) -> str:
+        try:
+            return ast.unparse(ast.parse(source, mode="eval"))
+        except SyntaxError:
+            return source.strip()
+
+    return norm(a) == norm(b)
+
+
+def signature_problem(label: str, inside: str, real: list[Param], *, claimed_return: str | None = None,
+                      real_return: str | None = None, method: bool = False) -> str | None:
+    """Does the claimed signature fit the real one?
+
+    A claim that looks like a call (``seconds=61``, bare names) is only held to the real function's capacity: no more
+    positional arguments than it takes, no keyword it does not have. A claim that can only be a signature (a type is
+    written, or ``-> type`` follows) is held to the def line: every parameter, in order, with the right default and types.
+    A method's ``self`` may be written or left out.
+    """
+    if not inside.strip() and claimed_return is None:
         return None  # `ids.new_id()` is shorthand for "the function", not a claim about its arguments
-    claim = claimed_params(inside)
+    claim = read_claim(inside)
     if claim is None:
         return None
-    form, params, positional, keywords, declares = claim
+    form, params, positional, keywords, declares = claim.form, list(claim.params), claim.positional, claim.keywords, claim.declares
+    if method and form == "signature" and params and params[0].name in ("self", "cls") and params[0].kind in ("pos", "posonly"):
+        params, positional = params[1:], max(0, positional - 1)
+    strict = form == "signature" and (claim.annotated or claimed_return is not None)
+    shown = f"`{label}({inside})" + (f" -> {claimed_return}" if claimed_return else "") + "`"
     names = {p.name for p in real}
     varkw = next((p.name for p in real if p.kind == "varkw"), None)
     has_var = any(p.kind == "var" for p in real)
     capacity = sum(1 for p in real if p.kind in ("pos", "posonly"))
     if positional > capacity and not has_var:
-        return f"`{label}({inside})`: the real function takes at most {capacity} positional argument(s)"
-    if not declares:
+        return f"{shown}: the real function takes at most {capacity} positional argument(s)"
+    if not declares and not strict:
         return None
     claimed = [(p.name, p.kind) for p in params] if form == "signature" else [(k, "kwonly") for k in keywords]
     for name, kind in claimed:
@@ -706,15 +928,57 @@ def signature_problem(label: str, inside: str, real: list[Param]) -> str | None:
             continue
         if varkw is not None:
             if name == varkw and form == "signature":
-                return f"`{label}({inside})`: '{name}' is the **{name} catch-all, not a parameter called '{name}'"
+                return f"{shown}: '{name}' is the **{name} catch-all, not a parameter called '{name}'"
             continue
-        return f"`{label}({inside})`: '{name}' is not a parameter of {label.split('.')[-1]}"
+        return f"{shown}: '{name}' is not a parameter of {label.split('.')[-1]}"
+    if not strict:
+        return None
+    claimed_names, claimed_kinds = {p.name for p in params}, {p.kind for p in params}
+    for p in real:
+        if p.name not in claimed_names and not (p.kind in ("var", "varkw") and p.kind in claimed_kinds):  # `**kwargs` is as good as `**fields`
+            return f"{shown}: the signature leaves out '{p.name}'"
+    order = [p.name for p in real if p.kind in ("pos", "posonly")]
+    if [p.name for p in params if p.kind in ("pos", "posonly") and p.name in order] != order:
+        return f"{shown}: the parameters are not in the order of the def line"
+    by_name = {p.name: p for p in real}
+    for p in params:
+        r = by_name.get(p.name)
+        if r is None:
+            continue
+        if p.default is not None and r.default is not None and not _same_default(p.default, r.default):
+            return f"{shown}: the default of '{p.name}' disagrees with the def line"
+        if p.default is not None and r.default is None:
+            return f"{shown}: '{p.name}' has no default in the code"
+        if p.default is None and r.default is not None and p.kind in ("pos", "posonly", "kwonly"):
+            return f"{shown}: '{p.name}' is optional in the code: show its default"
+        if p.annotation and r.annotation and not annotation_tokens(p.annotation) <= annotation_tokens(r.annotation):
+            return f"{shown}: the type of '{p.name}' disagrees with the def line"
+    if claimed_return and real_return and not annotation_tokens(claimed_return) <= annotation_tokens(real_return):
+        return f"{shown}: the return type disagrees with the def line"
     return None
 
 
+def _fenced_defs(text: str) -> list[tuple[str | None, str, str, str | None]]:
+    """(class, name, text between the parentheses, return type) of every ``def`` line inside a fenced code block."""
+    found = []
+    for _, body in code_blocks(text):
+        classes = [(len(m.group(1).expandtabs(4)), m.start(), m.group(2)) for m in re.finditer(r"^([ \t]*)class\s+(\w+)", body, re.M)]
+        for m in re.finditer(r"^([ \t]*)(?:async\s+)?def\s+(\w+)\s*\(", body, re.M):
+            end = _balanced_end(body, m.end() - 1)
+            if end is None:
+                continue
+            indent = len(m.group(1).expandtabs(4))
+            owner = next((name for ind, pos, name in reversed(classes) if pos < m.start() and ind < indent), None)
+            tail = body[end + 1:end + 200].split("\n", 1)[0]
+            found.append((owner, m.group(2), " ".join(body[m.end():end].split()), read_annotation(tail)))
+    return found
+
+
 def docs_signature_problems(text: str, index: CodeIndex) -> list[str]:
+    """Every signature the page writes down (inline, in a table, in a heading, or as a ``def`` line in a code block)."""
     problems: list[str] = []
-    flat = text.replace("\n", " ")
+    text = text.replace("\\|", " |")  # a pipe inside a table cell is written \| (same length, so positions agree)
+    flat = text.replace("\n", " ")  # same length as ``text``, so positions agree
     public: dict[str, tuple[ModuleInfo, str]] = {}
     for short in NAJMKIT_MODULES:
         module = _module(index, short)
@@ -722,37 +986,56 @@ def docs_signature_problems(text: str, index: CodeIndex) -> list[str]:
             continue
         for key in module.sigs:
             public.setdefault(key, (module, key))
-    checked: set[tuple[str, str]] = set()
+    checked: set[tuple[str, str, str | None]] = set()
+
+    def check(label: str, key: str, module: ModuleInfo, inside: str, ret: str | None) -> None:
+        if (key, inside, ret) in checked:
+            return
+        checked.add((key, inside, ret))
+        method = "." in key or key in module.classes
+        problem = signature_problem(label, inside, module.sigs[key], claimed_return=ret,
+                                    real_return=None if key in module.classes else module.returns.get(key), method=method)
+        if problem:
+            problems.append(problem)
+
+    def tail_of(close: int) -> str | None:
+        return read_annotation(text[close + 1:close + 200].split("\n", 1)[0])
+
     for m in _QUAL.finditer(flat):
         short, name, member = m.group(1), m.group(2), m.group(3)
         end = m.end()
         if flat[end:end + 1] != "(" or name in FILE_EXTENSIONS:
             continue
         module = _module(index, short)
-        if module is None:
-            continue
         key = f"{name}.{member}" if member else name
-        if key not in module.sigs:
+        if module is None or key not in module.sigs:
             continue
-        inside = _balanced(flat, end)
-        if inside is None or (key, inside) in checked:
+        close = _balanced_end(flat, end)
+        if close is None:
             continue
-        checked.add((key, inside))
-        problem = signature_problem(f"{short}.{key}", inside, module.sigs[key])
-        if problem:
-            problems.append(problem)
+        check(f"{short}.{key}", key, module, " ".join(flat[end + 1:close].split()), tail_of(close))
+    classes = {c for mod, _ in public.values() for c in mod.classes}
+    for m in re.finditer(r"(?<![\w.])([A-Z]\w*)\.([A-Za-z_]\w*)(?=\()", flat):  # `FixedClock.set(...)`
+        cls, member = m.group(1), m.group(2)
+        key = f"{cls}.{member}"
+        if cls in classes and key in public:
+            module = public[key][0]
+            close = _balanced_end(flat, m.end())
+            if close is not None:
+                check(key, key, module, " ".join(flat[m.end() + 1:close].split()), tail_of(close))
     names_unqualified = {key: mod for key, (mod, _) in public.items() if "." not in key and key != "now"}
     for m in re.finditer(r"(?<![\w.])([A-Za-z_]\w*)\s*(?=\()", flat):
         key = m.group(1)
         if key not in names_unqualified:
             continue
-        inside = _balanced(flat, m.end())
-        if inside is None or (key, inside) in checked:
+        close = _balanced_end(flat, m.end())
+        if close is None:
             continue
-        checked.add((key, inside))
-        problem = signature_problem(key, inside, names_unqualified[key].sigs[key])
-        if problem:
-            problems.append(problem)
+        check(key, key, names_unqualified[key], " ".join(flat[m.end() + 1:close].split()), tail_of(close))
+    for owner, name, inside, ret in _fenced_defs(text):  # a `def` line copied into a code block is a signature too
+        key = f"{owner}.{name}" if owner else name
+        if key in public and (owner or not inside.startswith(("self", "cls"))):
+            check(key, key, public[key][0], inside, ret)
     return list(dict.fromkeys(problems))
 
 
@@ -768,8 +1051,10 @@ def public_names(work: Path | str) -> list[str]:
 
 
 def docs_coverage(text: str, work: Path | str) -> tuple[int, int, list[str]]:
+    """(names covered, public names, the ones missing). A name is covered when the page writes it with its signature
+    (``name(...)``); a bare mention in a list is not documentation."""
     names = public_names(work)
-    missing = [n for n in names if not re.search(rf"(?<![A-Za-z_]){re.escape(n)}(?![A-Za-z_])", text)]
+    missing = [n for n in names if not re.search(rf"(?<![A-Za-z_]){re.escape(n)}\s*\(", text)]
     return len(names) - len(missing), len(names), missing
 
 
@@ -792,6 +1077,9 @@ def docs_rules(facts: dict[str, str]) -> list[Rule]:
         Rule("random_token", _rx(r"\brandom[^.\n]{0,40}?\b(\d+)[- ](?:hex(?:adecimal)?|character|char)s?\b|\b(\d+)[- ](?:hex(?:adecimal)?|character|char)s?\b[^.\n]{0,20}\brandom"),
              "The token length disagrees with ids.new_id",
              expect=lambda m: _int(m.group(1) or m.group(2)) == 12),
+        Rule("token_length", _rx(r"\btokens?\b[^\n]{0,40}?\b(\d+)[- ](?:hex(?:adecimal)?[- ])?(?:characters?|chars?|digits?|symbols?)\b"),
+             "The token length disagrees with ids.new_id (random tokens) or ids.SequentialIds",
+             expect=lambda m: _int(m.group(1)) in (12, 6), exempt=NEGATION),
         Rule("sequential_digits", _rx(r"\bsequential[^.\n]{0,80}?\b(\d+)[- ]digit|\b(\d+)[- ]digit[^.\n]{0,40}\bsequential"),
              "The width of a sequential token disagrees with ids.SequentialIds",
              expect=lambda m: _int(m.group(1) or m.group(2)) == 6),
@@ -813,6 +1101,8 @@ def docs_rules(facts: dict[str, str]) -> list[Rule]:
         Rule("async", _rx(r"\basync(?:io|hronous(?:ly)?)?\b|\bawait\b|\bcoroutines?\b"), "Nothing in the code supports an async claim", exempt=NEGATION),
         Rule("pypi", _rx(r"\bpip install\b[^\n]*\bnajmkit\b|\bnajmkit\b[^.\n]{0,60}\b(?:on|from|via) PyPI\b"),
              "Check how najmkit is distributed (see src/najmkit/__init__.py)", exempt=NEGATION),
+        Rule("locking", _rx(r"\b(?:log_event|read_events|audit|new_id|najmkit)\b[^.\n]{0,80}\b(?:locks?|locked|locking|mutex|semaphore|fsync|atomic(?:ally)?)\b"),
+             "Nothing in najmkit takes a lock, syncs to disk or writes atomically: read the code", exempt=NEGATION),
         Rule("audit_extras", _rx(r"\b(?:log_event|audit)\b[^.\n]{0,100}\b(?:retries|retry|retried|rotates|rotation|compress\w*|batch\w*|buffer\w*|flush\w*|encrypt\w*|signs|signed|hash chain)\b"),
              "Nothing in audit.log_event does this: read it", exempt=NEGATION),
     ]
@@ -834,7 +1124,7 @@ def known_problems_problems(text: str) -> list[str]:
     if len(sec.full.split()) < 12:
         return ["'Known problems' is nearly empty"]
     if not re.search(r"read_events", sec.full):
-        return ["'Known problems' does not name a function whose comment disagrees with what it does"]
+        return ["'Known problems' does not report the comment that the running code contradicts (call the functions the docstrings make promises about)"]
     return []
 
 
@@ -996,10 +1286,16 @@ class Record:
                 self.dates.update(re.findall(r"\d{4}-\d{2}-\d{2}", value))
         for value in _strings(data.get("counts")):
             self.dates.update(re.findall(r"\d{4}-\d{2}-\d{2}", value))
-        self.count_numbers, self.minute_numbers = self._numbers()
+        self.event_minutes: dict[str, int] = {e["id"]: int(e["time"][:2]) * 60 + int(e["time"][3:5]) for e in data["timeline"]}
+        self.count_numbers, self.minute_numbers, self.written_numbers = self._numbers()
+        self.diff_minutes: set[int] = {abs(a - b) for a in self.event_minutes.values() for b in self.event_minutes.values()}
+        self.written_minutes: set[int] = {int(n) for v in _strings(data) for n in re.findall(r"(\d+)\s*(?:minutes?|mins?)\b", v)}
+        self.percentages: set[int] = {int(float(n)) for v in _strings(data) for n in re.findall(r"(\d+(?:\.\d+)?)\s?%", v)}
+        self.words: set[str] = {w.lower() for v in _strings(data) for w in re.findall(r"[A-Za-z][A-Za-z'-]{2,}", v)}
 
-    def _numbers(self) -> tuple[set[int], set[int]]:
-        """Numbers a postmortem may use: counts (the record's, and a few meaningful differences) and minutes (differences of times)."""
+    def _numbers(self) -> tuple[set[int], set[int], set[int]]:
+        """Numbers a postmortem may use: counts (the record's, and a few meaningful differences), minutes (differences of
+        times) and the numbers the record itself writes in its titles and event texts."""
 
         def flatten(node: object, prefix: str = "") -> dict[str, int]:
             flat: dict[str, int] = {}
@@ -1033,7 +1329,7 @@ class Record:
         for value in [self.data["title"], *[e["text"] for e in self.data["timeline"]]]:
             from_text.update(int(n.replace(",", "")) for n in re.findall(r"\d[\d,]*", scrub.sub(" ", value)) if n.strip(","))
         entries = {len(self.data["timeline"]), len(self.data.get("responders", []))}  # "the record has 13 events"
-        return numbers | from_text | entries, in_minutes | from_text
+        return numbers | from_text | entries, in_minutes | from_text, from_text
 
 
 def _strings(node: object) -> Iterable[str]:
@@ -1116,6 +1412,8 @@ def timeline_problems(section_text: str, record: Record, key: dict) -> tuple[lis
 _UNITS = (r"minutes?|mins?|seconds?|secs?|hours?|hrs?|customers?|transfers?|events?|calls?|callers?|tickets?|rejections?|messages?|"
           r"notifications?|failures?|users?|accounts?|requests?|alerts?|errors?|QAR")
 _NUMBER_UNIT = re.compile(rf"(?<![\w:.,/-])(\d{{1,3}}(?:,\d{{3}})+|\d+)(?:\.\d+)?(?:\s|-)?(?:{_UNITS})\b", re.I)
+_PERCENT = re.compile(r"(?<![\w.])(\d+(?:\.\d+)?)\s?(?:%|percent\b|per ?cent\b)", re.I)
+_CLOCK = re.compile(r"(?<![\d:.-])(\d{1,2}):(\d{2})(?::\d{2})?(?![\d:])")
 _MONTH_NAMES = ("January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
                 "November", "December")
 _MONTH_RX = "|".join(f"{m}|{m[:3]}" for m in _MONTH_NAMES)
@@ -1127,34 +1425,61 @@ def _month_number(name: str) -> int:
     return next(i for i, m in enumerate(_MONTH_NAMES, start=1) if m.startswith(name[:3]))
 
 
+def _anchor_minutes(block: str, record: Record) -> set[int]:
+    """The times (in minutes) of the events a paragraph, bullet or table row cites, by id (E4) or by clock time (10:19)."""
+    found = {record.event_minutes[f"E{n}"] for n in re.findall(r"\bE(\d+)\b", block) if f"E{n}" in record.event_minutes}
+    found.update(int(hh) * 60 + int(mm) for hh, mm in _CLOCK.findall(block))
+    return found
+
+
 def invented_facts(text: str, record: Record) -> list[str]:
-    """Numbers with units, clock times, dates, ids, severity and versions that are not in the record."""
+    """Numbers with units, percentages, clock times, dates, ids, severity and versions that are not in the record.
+
+    A duration that the record does not write down itself ("52 minutes" is in its title) must be tied to the events it spans:
+    the paragraph, bullet or table row must cite an event (E1) or a time (09:58) that is that many minutes from another event.
+    """
     problems: list[str] = []
+    spoken = words_to_numbers(text, minimum=4)  # "thirteen minutes", "two thousand customers"
+    for block in blocks(re.sub(r"\bINC-\d+\b", " ", spoken)):
+        for m in _NUMBER_UNIT.finditer(block):
+            value = int(m.group(1).replace(",", ""))
+            unit = m.group(0)[len(m.group(1)):]
+            if re.search(r"hours?|hrs?", unit, re.I):
+                allowed = value <= 2
+            elif re.search(r"seconds?|secs?", unit, re.I):
+                allowed = value <= 59
+            elif re.search(r"minutes?|mins?", unit, re.I):
+                if value in record.written_minutes:  # "52 minutes" is in the record's own title
+                    allowed = True
+                elif value in record.diff_minutes:
+                    anchors = _anchor_minutes(block, record)
+                    spans = {abs(a - b) for a in anchors for b in record.event_minutes.values()}
+                    allowed = value in spans
+                    if not allowed:
+                        problems.append(f"{value} minutes is the gap between some two events in the record, but this text does not cite "
+                                        "events that are that far apart: name the two events it spans (for example E1 and E2)")
+                        continue
+                else:
+                    allowed = False
+            else:
+                allowed = value in record.count_numbers
+            if not allowed:
+                problems.append(f"the number {m.group(1)} ('{snippet(m.group(0), 30)}') is not in the record and is not a difference of times or counts in it")
+        for m in _PERCENT.finditer(block):
+            if int(float(m.group(1))) not in record.percentages:
+                problems.append(f"the percentage {m.group(1)}% is not in the record: give the counts it comes from (for example 171 of 188)")
     body = re.sub(r"\bINC-\d+\b", " ", text)
-    for m in _NUMBER_UNIT.finditer(body):
-        value = int(m.group(1).replace(",", ""))
-        unit = m.group(0)[len(m.group(1)):]
-        if re.search(r"hours?|hrs?", unit, re.I):
-            allowed = value <= 2
-        elif re.search(r"seconds?|secs?", unit, re.I):
-            allowed = value <= 59
-        elif re.search(r"minutes?|mins?", unit, re.I):
-            allowed = value in record.minute_numbers
-        else:
-            allowed = value in record.count_numbers
-        if not allowed:
-            problems.append(f"the number {m.group(1)} ('{snippet(m.group(0), 30)}') is not in the record and is not a difference of times or counts in it")
-    for hh, mm in re.findall(r"(?<![\d:.-])(\d{1,2}):(\d{2})(?::\d{2})?(?![\d:])", body):
+    for hh, mm in _CLOCK.findall(body):
         if f"{int(hh):02d}:{mm}" not in record.times:
             problems.append(f"the time {hh}:{mm} is not the time of any event in the record")
-    allowed = {(int(d[5:7]), int(d[8:10])) for d in record.dates}
+    allowed_dates = {(int(d[5:7]), int(d[8:10])) for d in record.dates}
     for iso in re.findall(r"\b\d{4}-\d{2}-\d{2}\b", body):
         if iso not in record.dates:
             problems.append(f"the date {iso} is not in the record")
     spoken = [(_month_number(mo), int(d)) for d, mo in _DAY_MONTH.findall(body)] + \
              [(_month_number(mo), int(d)) for mo, d in _MONTH_DAY.findall(body)]
     for month, day in dict.fromkeys(spoken):
-        if (month, day) not in allowed:
+        if (month, day) not in allowed_dates:
             problems.append(f"the date '{day} {_MONTH_NAMES[month - 1]}' is not in the record")
     for year in dict.fromkeys(re.findall(r"\b(20\d{2})\b", body)):
         if year != record.date[:4]:
@@ -1171,9 +1496,88 @@ def invented_facts(text: str, record: Record) -> list[str]:
     return list(dict.fromkeys(problems))
 
 
+_BASELINE_MARKER = re.compile(
+    r"week (?:earlier|before)|last week|a week|one week|previous week|baseline|4 March|2026-03-04|same window|compared|against|"
+    r"versus|\bvs\b|\bthan\b|usual|normal|typical|before the incident|earlier",
+    re.I,
+)
+
+
+def _leaf_values(node: object) -> list[int]:
+    if isinstance(node, bool):
+        return []
+    if isinstance(node, (int, float)):
+        return [int(node)]
+    if isinstance(node, dict):
+        return [v for child in node.values() for v in _leaf_values(child)]
+    return []
+
+
+def misassigned_counts(text: str, record: Record, key: dict) -> list[str]:
+    """A number that is in the record but belongs to another measure ("176 transfers sent" is last week's figure).
+
+    ``key["measures"]`` lists, per measure, how it is worded in prose and where the record keeps it. A figure for the
+    incident window must be the window's; last week's figure is fine when the same sentence says it is last week's.
+    """
+    problems: list[str] = []
+    text = words_to_numbers(text, minimum=4)
+    for measure in key.get("measures", []):
+        window: set[int] = set()
+        baseline: set[int] = set()
+        for name in measure["keys"]:  # top-level keys of "counts" and "baseline" ("transfer.sent" is one key)
+            for source, bucket in ((record.data.get("counts", {}), window), (record.data.get("baseline", {}), baseline)):
+                node = source.get(name)
+                leaves = _leaf_values(node)
+                bucket.update(leaves)
+                if isinstance(node, dict):
+                    bucket.add(sum(leaves))
+        pattern = re.compile(measure["pattern"], re.I)
+        for unit in units(text):
+            for m in pattern.finditer(unit):
+                value = int(m.group(1).replace(",", ""))
+                if value in window or (value in baseline and _BASELINE_MARKER.search(unit)):
+                    continue
+                problems.append(f"{value} is not the record's figure for {measure['say']} in the incident window"
+                                + (" (it is the figure for another week: say so)" if value in baseline else ""))
+                break
+    return list(dict.fromkeys(problems))
+
+
+_ROLE = (r"(?:sre|engineer|engineers|lead|manager|commander|analyst|officer|director|head|developer|operator|responder|"
+         r"supervisor|owner|administrator|dba|technician|agent)")
+_PERSON_VERBS = (r"(?:acknowledged|paged|opened|declared|escalated|joined|called|phoned|emailed|messaged|noticed|investigated|"
+                 r"diagnosed|approved|decided|posted|wrote|reported|confirmed|asked|told|said|read|checked|ran|took|closed|"
+                 r"added|finished|started|began|responded|replied)")
+_NAMED = r"(?-i:\b([A-Z][a-z]{2,})\b)"
+_PERSON_PATTERNS = [
+    re.compile(rf"{_NAMED}\s*,\s*(?:the|our|an?)\s+(?:[\w-]+\s+){{0,3}}?{_ROLE}\b", re.I),  # Hassan, the on-call SRE
+    re.compile(rf"\b{_ROLE}\s*(?:,|\()\s*{_NAMED}", re.I),  # the on-call SRE, Hassan  /  the SRE (Hassan)
+    re.compile(rf"\b{_ROLE}\s+{_NAMED}", re.I),  # engineer Fatima
+    re.compile(rf"\b(?:by|with|from|to|asked|told|paged|called|phoned|emailed|messaged|thanks to)\s+{_NAMED}", re.I),  # paged Hassan
+    re.compile(rf"(?<=[a-z,;:] ){_NAMED}\s+{_PERSON_VERBS}\b", re.I),  # ... and Hassan acknowledged the page
+]
+_NOT_NAMES = {
+    "najm", "remit", "bank", "qatar", "doha", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
+    "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november",
+    "december", "english", "arabic", "python", "utc", "the", "this", "that", "these", "those", "they", "them", "workbook",
+    "none", "nobody", "someone", "everyone", "anyone", "team", "teams", "staff", "engineering", "operations", "platform",
+    "security", "product", "management", "leadership", "compliance", "governance", "support", "payments", "customer",
+}
+
+
 def invented_people(text: str, record: Record) -> list[str]:
-    return [f"{name} is not named in the record" for name in CAST
-            if name not in record.people and re.search(rf"\b{name}\b", text)]
+    """People the record does not name: the cast of the course, and anyone introduced by a name next to a role
+    ("Hassan, the on-call SRE", "paged Hassan"). A name that appears in the record (Maha) is fine."""
+    found: dict[str, None] = {}
+    for name in CAST:
+        if name not in record.people and re.search(rf"\b{name}\b", text):
+            found[name] = None
+    for pattern in _PERSON_PATTERNS:
+        for m in pattern.finditer(text):
+            name = m.group(1)
+            if name not in record.people and name.lower() not in record.words and name.lower() not in _NOT_NAMES:
+                found[name] = None
+    return [f"{name} is not named in the record" for name in found]
 
 
 def forbidden_problems(text: str, key: dict) -> list[str]:
@@ -1220,10 +1624,16 @@ def unknown_problems(sec: Sec | None, key: dict) -> list[str]:
 
 
 BLAME = re.compile(r"\b(blame|blamed|fault of|careless|negligen\w*|forgot|incompeten\w*|sloppy|human error|operator error|engineer error)\b", re.I)
+# fault put on a person or a team: "the on-call SRE was slow to respond", "support should have escalated"
+BLAME_ROLE = re.compile(
+    r"\b(?:sre|engineers?|lead|commander|team|operators?|responders?|support|on-call|maha)\b[^.\n]{0,60}"
+    r"\b(?:should have|failed to|slow to|too slow|was slow|were slow|neglected|ignored|was late|were late|missed (?:the|an?) (?:page|alert|call))\b",
+    re.I,
+)
 
 
 def blame_problems(text: str) -> list[str]:
-    return [f'"{snippet(u, 64)}"' for u in units(text) if BLAME.search(u) and not NEGATION.search(u)]
+    return [f'"{snippet(u, 64)}"' for u in units(text) if (BLAME.search(u) or BLAME_ROLE.search(u)) and not NEGATION.search(u)]
 
 
 def preamble(text: str) -> str:
@@ -1239,3 +1649,74 @@ def section_texts(sections: dict[str, Sec], keys: Iterable[str]) -> str:
 
 def action_item_count(sec: Sec | None) -> int:
     return 0 if sec is None else len([i for i in list_items(sec.full) if len(i.split()) >= 5])
+
+
+_OWNER = re.compile(
+    r"\b(?:owners?|owned by|assigned to|led by|responsible|team|sre|engineers?|engineering|lead|support|payments|platform|product|"
+    r"on-call|commander|security|ops|operations|quality|qa|manager|compliance|governance|vendor management|"
+    + "|".join(CAST) + r")\b", re.I)
+_DONE = re.compile(
+    r"\b(?:done (?:when|if)|complete when|we will know|verif\w+|measur\w+|tests?|tested|replay\w*|drill|alert fires|dashboard|"
+    r"reviewed?|merged|ticket|passes|visible|evidence|confirm\w*|checks?|checked|metric|exercise|rehears\w+|shows?|appears?|exists?)\b", re.I)
+
+
+def action_item_problems(sec: Sec | None) -> list[str]:
+    """Three action items, each with an owner (a role or a team) and a way to see that it is done."""
+    if sec is None:
+        return []
+    items = [i for i in list_items(sec.full) if len(i.split()) >= 5]
+    if len(items) < 3:
+        return ["fewer than 3 action items"]
+    complete = [i for i in items if _OWNER.search(i) and _DONE.search(i)]
+    if len(complete) < 3:
+        return [f"only {len(complete)} of {len(items)} action items name an owner (a role or a team) and say how we will see "
+                "that they are done; at least 3 must"]
+    return []
+
+
+# =================================================================================
+# 7. the repository: one commit per document, and secrets in prose
+# =================================================================================
+def document_commit_problems(work: Path | str, documents: dict[str, str]) -> list[str]:
+    """Each document must first appear in a commit of its own. ``documents`` maps a label to a path.
+
+    Counting commits is not enough: one commit with all three documents followed by two empty commits is not three
+    commits. What counts is the first commit since the start that touches each file.
+    """
+    work = Path(work)
+    first: dict[str, str] = {}
+    problems: list[str] = []
+    for label, rel in documents.items():
+        if not (work / rel).is_file():
+            problems.append(f"{label} does not exist yet")
+            continue
+        shas = gitutil.out(work, "log", "--reverse", "--format=%H", f"{gitutil.TAG_START}..HEAD", "--", rel, check=False).split()
+        if shas:
+            first[label] = shas[0]
+        else:
+            problems.append(f"{label} is not committed yet")
+    by_commit: dict[str, list[str]] = {}
+    for label, sha in first.items():
+        by_commit.setdefault(sha, []).append(label)
+    for labels in by_commit.values():
+        if len(labels) > 1:
+            problems.append(", ".join(labels[:-1]) + " and " + labels[-1] + " were first committed together")
+    return problems
+
+
+# a password-like name with a value that is not written inside quotes (the shared secret scan wants quotes)
+_ASSIGNED_SECRET = re.compile(
+    r"(?i)\b(?P<name>pass(?:word|wd)?|pwd|secret|api[_-]?key|access[_-]?key|private[_-]?key|client[_-]?secret)\b\s*[:=]\s*"
+    r"[\"']?(?P<value>[^\s\"'<>`{}$]{8,})")
+_SECRET_PLACEHOLDER = re.compile(r"(?i)change.?me|your[_-]|example|placeholder|dummy|fake|x{4,}|\*{3,}|redacted|os\.environ|getenv|\.\.\.")
+
+
+def assigned_secret_files(work: Path | str) -> list[str]:
+    """Files whose added text assigns a value to a password-like name (never the value itself)."""
+    hits = []
+    for rel, added in checks.added_text(work).items():
+        for m in _ASSIGNED_SECRET.finditer(added):
+            if not _SECRET_PLACEHOLDER.search(m.group("value")):
+                hits.append(rel)
+                break
+    return hits

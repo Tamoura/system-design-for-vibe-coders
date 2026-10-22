@@ -103,7 +103,7 @@ Check the critic as hard as the draft. Suppose it says "customers will split tra
 
 ### 🔴 Expert view
 
-**Code review assistants: a first pass, never the last word.** Claude Code has `/code-review` and `/security-review` (commands change between releases: check the current documentation); its documentation describes a writer/reviewer pattern, where a second session with fresh context reviews what the first wrote. Other tools have equivalents. In practice they tend to do well on the dull checklist (a missing test, an inconsistent name, an obvious bug class) and worse on intent and domain rules (this course's working view, not a measured result). Anything touching `money.py`, `fees.py`, `fx.py`, `limits.py`, `ledger.py` or `service.py` still needs a second human reviewer (`CONTRIBUTING.md`). The documentation warns that reviewers will usually report something even when the work is sound, so require a file, a line and a failing scenario, and never post a finding you have not reproduced. See [*Software Testing*, lesson 6.1 — Verifying AI-generated code](../testing/index.html#/6.1).
+**Code review assistants: a first pass, never the last word.** Claude Code has `/code-review` and `/security-review` (commands change between releases: check the current documentation); its documentation describes a writer/reviewer pattern, where a second session with fresh context reviews what the first wrote. Other tools have equivalents. In practice they tend to do well on the dull checklist (a missing test, an inconsistent name, an obvious bug) and worse on intent and domain rules (this course's working view, not a measured result). Anything touching `money.py`, `fees.py`, `fx.py`, `limits.py`, `ledger.py` or `service.py` still needs a second human reviewer (`CONTRIBUTING.md`). The documentation warns that reviewers will usually report something even when the work is sound, so require a file, a line and a failing scenario, and never post a finding you have not reproduced. See [*Software Testing*, lesson 6.1 — Verifying AI-generated code](../testing/index.html#/6.1).
 
 **Incidents: a timeline from logs, a postmortem that separates fact from inference.** Assistants build a timeline fast and are bad at admitting a gap. A *blameless postmortem* describes what happened and what the system allowed, not who failed; Google's SRE book (chapter 15) and SRE Workbook describe the practice. Give the assistant the record alone, and require a source id on every row. A log line is data, not an instruction: it can carry text an attacker chose (lesson 8.1). Here is a draft about a made-up incident, not the lab's (41 `needs_review` rejections from 08:12 to 08:31 UTC, a watchlist file replaced at 08:05), sorted into the bins:
 
@@ -130,7 +130,7 @@ The count and the Counter's total must agree; if not, find out which is wrong be
 
 **Communication: you own the summary.** A pull request description is a set of claims about your work, and `CONTRIBUTING.md` asks you to describe what you ran and to label AI-assisted changes. "Improves robustness of notification handling" says nothing. "Catches `NotificationError` in `_notify` and audits it; ran `pytest -q`, all passing; not tried against a real provider; AI-assisted: the agent drafted the change, I rewrote the test" can be checked.
 
-**When not to.** A throwaway note does not need the full routine: match the effort to how many people will trust the document and what a wrong line would cost. The critic takes minutes and the checking takes longer, so skip both for a decision nobody will revisit. And do not delegate the decision itself: an assistant can read what the code does, but only people know why.
+**When not to.** A throwaway note does not need the full routine: match the effort to how many people will trust the document and what a wrong line would cost. The critic takes minutes and checking takes longer, so skip both for a decision nobody will revisit. And do not delegate the decision itself: an assistant can read what the code does, but only people know why.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -149,7 +149,7 @@ The artefact is the **Claims check**. Tariq's rule at the weekly clinic: no docu
 2. **Sort them** into fact, inference and unknown.
 3. **Trace each fact** to a source you opened yourself: `path:line`, a command you ran, a log line, a record id. An assistant's own list of sources is a claim too: open them yourself.
 4. **Run what can run**: examples, commands, queries. The running code outranks a comment.
-5. **Delete or relabel** anything without a source, and keep the table with the document.
+5. **Delete or relabel** anything without a source, and keep the table in your notes.
 
 | Claim (where it appears) | Kind | Source you opened | Result |
 |---|---|---|---|
@@ -261,12 +261,11 @@ Step 3 is partly mechanical. Lesson 11.2 gives you `claims_scan.py`, which looks
 ## ⚡ In 60 seconds
 - Lab `m11`, on Najm Remit: three documents whose claims the grader can look up. An **ADR** with a critic's objections, the **najmkit page** regenerated from the code, and a **postmortem** drafted from a constructed incident record.
 - **Needs an agent: no** (recommended, not required). The grader looks at the result.
-- It hunts for false claims: a name that does not exist, a signature that does not fit, an example that fails, a time or number not in the record, a cause stated as fact.
-- It cannot judge prose, wisdom or whether your critic was real. Your Claims check covers what no rule anticipates.
-- Documentation only: three documents, three commits.
+- It hunts for false claims: a missing name, a signature that does not fit, an example that fails, a number or time not in the record, a cause stated as fact.
+- It cannot judge prose or wisdom, or tell a real critic from none. Your Claims check covers the rest.
 
 ## 🧭 Why it matters
-Friday is the internal audit, and Hessa's ticket asks for three documents. Lujain's assistant can draft all three in minutes, and she is tempted to believe it. It will flatter the design it is shown, describe a library it has never read, and fill every gap in an incident record with something that sounds right. The grader plays the colleague who does not believe it: behind every sentence it opens the code or the record.
+Friday is the internal audit, and Hessa's ticket asks for three documents. Lujain's assistant can draft all three in minutes, and she is tempted to believe it: it will flatter the design it is shown, describe a library it has never read and fill every gap in an incident record with something plausible. The grader is the colleague who believes none of it and opens the code or the record behind every sentence.
 
 ## 📐 How it works
 
@@ -274,11 +273,11 @@ Friday is the internal audit, and Hessa's ticket asks for three documents. Lujai
 
 Each document makes claims, and each kind of claim points at a different source:
 
-| Document | Its claims point at | What can be looked up | What an assistant tends to invent |
-|---|---|---|---|
-| ADR | The repository | Paths, `module.name`, constants | A module the old architecture page lists; a stale figure |
-| najmkit page | `src/najmkit/` | Names, signatures, running examples | Functions, parameters, "thread-safe", `pip install` |
-| Postmortem | `incident.json` | Event ids, times, counts, severity | A cause, an action, a customer count, a person |
+| Document | Its claims point at | What an assistant tends to invent |
+|---|---|---|
+| ADR | The repository: paths, `module.name`, constants | A module the old architecture page lists; a stale figure |
+| najmkit page | `src/najmkit/`: names, signatures, running examples | Functions, parameters, "thread-safe", `pip install` |
+| Postmortem | `incident.json`: event ids, times, counts | A cause, an action, a customer count, a person |
 
 Work one document at a time: draft, scan, check by hand, fix, commit. `lab-assets/claims_scan.py` does the mechanical lookup. On `docs/ARCHITECTURE.md` in a fresh lab it prints (cut to the first two findings):
 
@@ -289,15 +288,17 @@ docs/ARCHITECTURE.md:23  `najmkit.md`  no such file
 docs/ARCHITECTURE.md: 19 claims looked up, 4 do not resolve
 ```
 
-What the scanner passes still needs the rest of your Claims check: a path can exist beside a false sentence. This is habit 5, **Automate the loop, keep the skill**, in small.
+A clean scan is not a pass: it looks up names, paths, times and event ids only, never signatures, examples or phrasing, and a real path can sit beside a false sentence. It is habit 5, **Automate the loop, keep the skill**, in small.
 
 ### 🟡 Going deeper
 
-**The ADR.** The decision comes from the ticket's menu; the Context is where an assistant helps, if it reads the file first: "Read `src/remit/limits.py`. Draft the Context of an ADR for the fixed UTC+3 windows. Cite every claim as a path or `module.name` in backticks. State no number you did not read." Then run the critic prompt from lesson 11.1 and check each objection that is itself a claim by computing it, as that lesson did. A critic that says "the quote lifetime is too long" has read a number: open `fx.py`. The responses are yours, because they are decisions.
+**The ADR.** The Context is where an assistant helps, if it reads the file first: "Read `src/remit/limits.py`. Draft the Context of an ADR for the fixed UTC+3 windows. Cite every claim as a path or `module.name` in backticks. State no number you did not read." Then run the critic prompt from lesson 11.1 and check each objection that is itself a claim. A critic who says "the quote lifetime is too long" has read a number: open `fx.py`. The responses are yours: they are decisions.
 
-**The najmkit page.** Give the assistant the three files and a narrow job: "Read every file in `src/najmkit/`. For each public function and class write its signature, copied from the `def` line, and one sentence about what it does that you can point to in the code. Add one example per module that runs. List any place where a docstring and the code disagree." Then verify by experiment, not only by reading. Run each example. For each behaviour the page promises, call the function and look: with a bad input, with a missing file, with nothing configured. A docstring is a claim like any other, and the running code wins. A wrong comment goes under "Known problems", as the ticket says.
+Say who the critic was. An agent working alone is not a fresh critic of its own draft: use a separate session or subagent that sees only the ADR and the code. A nested agent that cannot start one plays the critic in a second pass and says so. The grader cannot tell; a reader can.
 
-**The postmortem.** Start the assistant in plan mode, where it reads and proposes (`claude --permission-mode plan`; check the current documentation). Plan mode limits edits, not reading, so open the session in an empty folder holding only copies of `lab-assets/incident.json` and the template, and say: "Use only `lab-assets/incident.json`. Every timeline row names its event id and uses the record's time. Put what the record states under 'What we know'. Put anything you reason beyond it under 'What we infer' with the event ids it rests on, a confidence and what would confirm it. Put what the record cannot answer under 'What we do not know'. Name no one the record does not name." A typical first draft from an assistant told only to "write a postmortem" (constructed for teaching, not recorded from a model) has a Summary that opens like this:
+**The najmkit page.** Give the assistant the three files and a narrow job: "Read every file in `src/najmkit/`. For each public function and class write its signature, copied from the `def` line, and one sentence about what it does that you can point to in the code. Add one example per module that runs. List where a docstring and the code disagree." Then verify by experiment: run each example, and call the functions with a bad input, a missing file, nothing configured. A docstring is a claim like any other, and the running code wins. Every comment you can show to be wrong goes under "Known problems".
+
+**The postmortem.** Start the assistant in plan mode (`claude --permission-mode plan`; check the current documentation) in an empty folder holding only copies of `lab-assets/incident.json` and the template. Plan mode limits edits, not reading, and a session that has read the repository brings its guesses about the gateway; an agent that already holds that context says so and leans on the hand check. Say: "Use only `lab-assets/incident.json`. Every row names its event id and the record's time. Put what the record states under 'What we know', what you reason beyond it under 'What we infer' (event ids, confidence, what would confirm it) and what it cannot answer under 'What we do not know'. Name no one the record does not name." A typical first draft from an assistant told only to "write a postmortem" (constructed for teaching, not recorded from a model) has a Summary that opens like this:
 
 ```text
 On 11 March 2026 an outage at our SMS gateway vendor, caused by a configuration change on their side,
@@ -305,30 +306,30 @@ stopped confirmation messages for roughly 2,000 customers for 52 minutes. The on
 service by failing over to the backup provider at 10:40.
 ```
 
-The date, the 52 minutes and the gateway vendor come from the record. The channel, the cause, the configuration change, the customer count, the failover and the time are invented, and nobody in the record "restored" anything. The record counts events, not customers.
+The date, the 52 minutes and the gateway vendor come from the record. The channel, the cause, the configuration change, the customer count, the failover and the time are invented. Two traps survive a careful draft. Keep who said it and when: E5 is what one engineer found at 10:26, not a fact about the whole window. And cite the events behind a figure you work out ("13 minutes after the first failure (E1, E2)").
 
 ### 🔴 Expert view
 
 **What the grader can and cannot tell.** It checks the result, not your thinking. It reads the kit's own copy of the incident record, so editing `lab-assets/incident.json` cannot move the goalposts. Its rules are a sieve, not a proof:
 
-- A false sentence that matches no rule passes. "`audit.log_event` takes a lock" is false, and nothing looks for it. Only a person who read the code catches it. That is why the Claims check is a routine and not a script.
-- A made-up `module.name` is caught only when the module is real: `limits.check_everything` fails, but `risk.check` is skipped, because it could be a library name. A made-up path such as `risk.py` is caught.
-- A duration that equals some difference of the record's times passes.
-- It cannot tell whether your critic was an AI, a colleague or you, only that the section has three objections that each say what you did. It cannot tell whether the decision is wise, or the prose clear.
+- A false sentence that matches no rule passes. "`audit.read_events` returns the newest event first" is false (it reads the file in order) and nothing looks for it. Only a person who read the code catches it.
+- A made-up `module.name` is caught only when the module is real: `limits.check_everything` fails, `risk.check` is skipped (it could be a library name). A made-up path such as `risk.py` is caught.
+- A duration must cite two events that are that far apart; the grader cannot tell whether the sentence means them.
+- It cannot tell whether your critic was real, the decision wise or the prose clear.
 
-If the grader flags a true sentence, do not bend the truth to please it: reread the code or record, and if you are right, rephrase until the claim is checkable.
+If the grader flags a true sentence, do not bend the truth: reread the code or record and, if you are right, rephrase so the claim is checkable. To quote a wrong name on purpose, say in the same sentence that it does not exist.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
 | **Claims scan** | `claims_scan.py`: looks up paths, `module.name`, times and event ids in a Markdown file | After every draft, before you read it yourself |
 | **Record-bound timeline** | A timeline built only from a record, with an event id on each row | Any incident write-up |
-| **Agent log** | A table of prompts, results, corrections and time | After any session in which an agent wrote something you will sign |
+| **Agent log** | A table of prompts, results, corrections and time | After any session where an agent wrote something you will sign |
 
 ## 🏛️ In practice at Najm Bank
-**Needs an agent: no.** It is recommended, not required, because an assistant saves time on every part. The **no-agent path** works too: write the ADR and play your own critic, or ask a colleague; read the three small files of `src/najmkit/` (about 200 lines) and write the page; build the timeline from the record by hand. The grader does not care how the work was produced.
+**Needs an agent: no.** It is recommended, not required. The **no-agent path** works too: write the ADR and play your own critic, or ask a colleague; read the three small files of `src/najmkit/` (about 200 lines) and write the page; build the timeline from the record by hand. The grader does not care how the work was produced.
 
-**The ticket.** Hessa wrote it (the kit's `task.md`):
+**The ticket.** Hessa wrote it; in your lab it is `TASK.md` (the kit's `task.md`):
 
 ```text
 # REMIT-393: three pages the team is missing
@@ -339,41 +340,47 @@ If the grader flags a true sentence, do not bend the truth to please it: reread 
 
 Three pieces of writing are overdue, and each must be *true*, not only tidy. Use an AI assistant if
 you like; you are accountable for every sentence. This ticket is documentation only: do not change
-code, tests or `lab-assets/`. A code comment that disagrees with what the code does goes under
-"Known problems" at the end of the najmkit page; do not fix it here.
+code, tests or `lab-assets/`. Run the commands below in this directory. Code comments that disagree
+with what the code does (there is at least one) go under "Known problems" at the end of the najmkit
+page; do not fix them here.
 
 ### 1. An ADR for a decision we already made
 
-Write `docs/adr/0001-<short-title>.md` in Michael Nygard's format: a title, then **Status**,
-**Context**, **Decision**, **Consequences**, in that order (start from `lab-assets/adr-template.md`).
-Pick one decision the code embodies: fixed UTC+3 windows (`limits.py`), `Decimal` rounded half up
-(`money.py`), a failed notification not undoing a transfer (`service.py`), amounts stored as text
-(`store.py`), a 60-second quote (`fx.py`), or najmkit vendored in the repository.
+Write one ADR, `docs/adr/0001-<short-title>.md`, in Michael Nygard's format: a title, then **Status**,
+**Context**, **Decision**, **Consequences**, in that order (start from `lab-assets/adr-template.md`;
+Context needs 25 words or more, Decision 8, Consequences 20). Pick one decision the code embodies:
+fixed UTC+3 windows (`limits.py`), `Decimal` rounded half up (`money.py`), a failed notification not
+undoing a transfer (`service.py`), amounts stored as text (`store.py`), a 60-second quote (`fx.py`),
+or najmkit vendored in the repository.
 
-Every claim about the code points at the code, with `path` or `module.name` in backticks, and
-Consequences name a downside. Then ask a critic (an AI assistant, a colleague, you in a bad mood) to
-attack the decision and make the best case for the strongest alternative. Add a final section
-"Critic's objections": at least three, each with what you did (accepted, rejected, deferred).
+Cite the code as `path` or `module.name` in backticks (two or more, one of them in `src/`), and
+name a downside in Consequences. Then ask a critic (an AI assistant, a colleague, you in a bad mood)
+to attack the decision and make the best case for the strongest alternative. End with a section
+"Critic's objections": three or more, each of eight words or more, with what you did (accepted,
+rejected with a reason, or deferred).
 
 ### 2. The najmkit page, back from the dead
 
 `docs/najmkit.md` was lost in the docs migration. Write it again from `src/najmkit/` (`ids`, `clock`,
-`audit`): every public function and class, its signature, what it does, and a short example per
-module that runs. Nothing outside the bank has seen najmkit, so no tool and no memory can tell you
-what it does; the code can.
+`audit`): every public function and class as `name(parameters)` copied from the def line (a method's
+`self` may stay or go), what it does, and a short example per module that runs, in a `python` block.
+Nothing outside the bank has seen najmkit: the code is your only source.
 
 ### 3. A postmortem for INC-2031
 
 `lab-assets/incident.json` is the record of last Wednesday's incident (constructed for teaching).
 Write `docs/postmortems/INC-2031.md` from it, starting from `lab-assets/postmortem-template.md`.
 
-* The record is your only source. Use its times (UTC) and name the event id (E1, E2, ...) in every
-  timeline row, and cover most of the record's events, not three highlights.
-* Keep apart what we **know** (the record says it), what we **infer** (say what it rests on, how
-  confident you are, what would confirm it) and what we **do not know** (leave it open).
-* No invented numbers, times, causes or people. Blameless: what happened and what the system
-  allowed, not who was at fault.
-* At least three action items, each with an owner (a role or a team) and a way to see it is done.
+* The record is your only source. One timeline row per event: its time (UTC) first, then its event id
+  (E1, E2, ...) and what it says. Cover nine of the thirteen events or more, among them the first
+  failure, the alert, the alert resolving and the reconciliation.
+* Keep apart what we **know** (the record says it), what we **infer** (two or more; say what each rests
+  on, how confident you are, what would confirm it) and what we **do not know** (two or more questions
+  the record cannot answer).
+* No invented numbers, times, causes or people. A figure you work out, such as a gap in minutes, cites
+  its events (E1, E2) in the same paragraph, bullet or row; the record has no percentages, so give
+  counts. Blameless: what happened and what the system allowed, not who was at fault.
+* Three or more action items, each with an owner (a role or a team) and a way to see it is done.
 
 `python lab-assets/claims_scan.py <file>` finds paths and names that point at nothing (add
 `--record lab-assets/incident.json` for the postmortem). It cannot tell whether a sentence is true.
@@ -381,7 +388,8 @@ Write `docs/postmortems/INC-2031.md` from it, starting from `lab-assets/postmort
 ### Done when
 
 Each document passes its checks, only `docs/` changed, and each document is its own commit with a
-message that follows `CONTRIBUTING.md`. Grade it from the `ailab` folder of the course repository:
+message that follows `CONTRIBUTING.md` (`type(scope): subject`; any lower-case scope, such as
+`docs(adr)`, is fine). Grade it from the `ailab` folder of the course repository:
 `python -m ailab grade m11 --dir <this directory>`
 ```
 
@@ -393,27 +401,26 @@ python -m ailab start m11 --dir ~/ainative/m11
 cd ~/ainative/m11
 ```
 
-The start commit holds `lab-assets/` (the record, two templates, the scanner) and `TASK.md`; `git diff lab-start` shows what you changed.
+The start commit holds `lab-assets/` and `TASK.md`; `git diff lab-start` shows your changes.
 
-**Your move.** (1) Read the ticket, the record and `src/najmkit/` yourself first. (2) Take the documents one at a time. With an agent, hand it the files and the narrow prompts above, not the ticket alone. (3) After each draft run the scanner, then do the rest of the Claims check by hand: run the examples, call the functions, read the record row by row, and keep the table. (4) Commit each document on its own, for example `docs(adr): record why a failed notification does not undo a transfer`. (5) Grade and fix.
+**Your move.** (1) Read the ticket, the record and `src/najmkit/` yourself first. (2) Take one document at a time; with an agent, hand it the files and the narrow prompts above, not the ticket alone. (3) After each draft run the scanner, then do the rest of the Claims check by hand: run the examples, call the functions, read the record row by row. Keep the Claims table in your notes, not the lab. (4) Commit each document on its own, for example `docs(adr): record why a failed notification does not undo a transfer`. (5) Grade and fix.
 
-**What the grader checks.** *The ADR:* it exists under `docs/adr/`, has the four sections in order, a valid status and a named downside; every `path` and `module.name` you cite exists and no figure you quote contradicts the code; three objections, each with a response. *The najmkit page:* every `ids.`, `clock.` and `audit.` name exists; signatures fit; each module has an example, in a Python code block, that runs (in a subprocess, on a copy, with a time limit); the public API is covered; nothing it can test contradicts the code; the stale comment is reported under Known problems (advisory). *The postmortem:* all its sections and three action items; each timeline row's time and event id match the record, with most events covered; no invented number, time, date, id or person; no cause or action stated as fact that the record does not give; inferences carry confidence and evidence; open questions listed; blameless wording (advisory). *The repository:* only `docs/` changed; at least three commits; messages follow `CONTRIBUTING.md`; nothing uncommitted; no secrets.
+**What the grader checks** (the minimums are in the ticket). *The ADR:* its four sections, a valid status, a named downside; every cited `path` and `module.name` exists and no figure contradicts the code, in digits or in words; three objections, each with a decision. *The najmkit page:* every name exists; each signature matches the `def` line; each module has an example that runs; the whole public API appears with signatures; nothing testable contradicts the code; the stale comment is reported (advisory). *The postmortem:* its sections; timeline rows that match the record; no invented number, time, date, id, person, cause or action; labelled inferences and open questions; blameless wording (advisory). *The repository:* only `docs/` changed; each document first committed on its own; messages follow `CONTRIBUTING.md`; nothing uncommitted; no secrets.
 
 **Grade.**
 
 ```bash
+# run from the ainative/ailab folder of the course repository, not from the lab directory
 python -m ailab grade m11 --dir ~/ainative/m11
 ```
 
-On the untouched starter (the middle is cut; the other checks say `waiting for ...` or that a file does not exist):
+On the untouched starter (the middle is cut; the other checks wait for the documents):
 
 ```text
 [FAIL] ADR exists in docs/adr/: no file like docs/adr/0001-short-title.md
-       hint: Create docs/adr/0001-<short-title>.md (start from lab-assets/adr-template.md).
-[FAIL] ADR follows Nygard's format: waiting for the ADR file
 ...
 [FAIL] Only documentation changed: no files have changed yet
-[FAIL] Three documents, three commits: 0 new commits since the start
+[FAIL] Three documents, three commits: 0 new commits since the start; none of the three documents exists yet
 [FAIL] Commit messages follow CONTRIBUTING.md: found 0 commits since the start; expected at least 1
 [PASS] Everything is committed
 [PASS] No secrets in the change
@@ -424,18 +431,18 @@ Lab m11: 2/21 required checks passed: NOT YET
 After a first assistant draft of each document, committed as it came (drafts constructed for teaching, not recorded from a real model), three of the failing lines look like this (hints left out):
 
 ```text
-[FAIL] Docs: every name exists in the code: `ids.generate` does not exist in najmkit.ids; `clock.utcnow` does not exist in najmkit.clock (+1 more)
+[FAIL] Docs: every name exists in the code: `ids.generate` does not exist in najmkit.ids; `clock.utcnow` does not exist in najmkit.clock; `audit.write` does not exist in najmkit.audit
+[FAIL] Docs: nothing contradicts the code: Nothing in the code supports a thread-safety claim: "...an event. najmkit is thread-safe and installs with pip..."; Check how najmkit is distributed (see src/najmkit/__init__.py): "...and installs with pip install najmkit."
 [FAIL] Postmortem: every timeline row matches the record: row 10:15: E3 is not at that time in the record; row 10:40: E9 is not at that time in the record
-[FAIL] Postmortem: nothing unknown is stated as fact: States a cause as a fact; the record does not give one: "On 11 March 2026 an outage at our SMS gateway vendor, caused ..."; Describes an action or change that is not in the record: "On 11 March 2026 an outage at our SMS gateway vendor, caused ..." (+9 more)
 ```
 
-Each line says what failed and where; none gives the answer. A passing run ends with `Lab m11: 21/21 required checks passed: PASSED`.
+Each line says what failed and quotes the words that caused it; none gives the answer. A passing run ends with `Lab m11: 21/21 required checks passed: PASSED`.
 
-**Weekly deliverable.** In the lab repository, the three documents, one commit each. In your notes repository, `week-11/` with a Claims check table per document, your agent log and your debrief answers.
+**Weekly deliverable.** In the lab repository, the three documents, one commit each. In your notes repository, `week-11/` with a Claims table per document, your agent log and your debrief answers.
 
-**Group session (60 minutes).** (1) Swap postmortems; check your partner's timeline against the record with the scanner and by eye (20). (2) Read out the objections you rejected, with the evidence (15). (3) Show a sentence the grader passed that you doubt, or flagged and you disagree with (15). (4) Agree one team rule for AI-written documents (10).
+**Group session (60 minutes).** (1) Swap postmortems; check your partner's timeline against the record (20). (2) Read out the objections you rejected, with the evidence (15). (3) Show a sentence the grader passed that you doubt, or flagged and you disagree with (15). (4) Agree one team rule for AI-written documents (10).
 
-**Debrief questions.** What did the agent get wrong, and which errors did the scanner catch? What did your context or prompt miss that would have prevented them? Which claims did you delete, and which did you move to inference or to unknown? What did the critic say that you had not thought of?
+**Debrief questions.** What did the agent get wrong, and which errors did the scanner catch? What did your context or prompt miss? Which claims did you delete, and which did you move to inference or to unknown?
 
 **Agent log template.**
 
@@ -452,23 +459,22 @@ One thing I will do differently:
 ```
 
 ## 🛠️ Exercises
-- 🟢 **Read before you write.** No agent needed. Start the lab, grade the starter, then read the record and `src/najmkit/` yourself. *Done when:* you have listed five questions the record cannot answer and five facts about najmkit you could not have guessed.
-- 🟡 **The najmkit page, end to end.** An agent is recommended. *Done when:* the najmkit checks pass, and your Claims table lists at least six behaviours the page promises, each with the call that showed it.
-- 🔴 **Break your own work.** An agent can help. In the finished documents plant one invented fact each (a function, a time, a cause), grade, and note which check caught each. Then write one plausible false sentence per document that the grader misses. *Done when:* a table of three caught and three missed claims, with how a person would find each missed one.
+- 🟢 **Read before you write.** No agent needed. Start the lab, grade the starter, read the record and `src/najmkit/`. *Done when:* you have five questions the record cannot answer and five facts about najmkit you could not have guessed.
+- 🟡 **The najmkit page, end to end.** An agent is recommended. *Done when:* the najmkit checks pass and your Claims table lists six promised behaviours, each with the call that showed it.
+- 🔴 **Break your own work.** An agent can help. Plant one invented fact in each finished document and note which check caught it; then write one plausible false sentence per document that the grader misses. *Done when:* a table of three caught and three missed claims, with how a person would find each missed one.
 
 ## ⚠️ Mistakes and traps
 - **Briefing the assistant without the code.** It invents the library. Hand it the files.
 - **Trusting the assistant's list of sources.** Open them. A real path can sit beside a false sentence.
 - **Fixing a stale comment in this change.** The ticket says to report it; the grader flags source edits.
-- **Editing the incident record to fit your draft.** The grader reads its own copy.
 - **Writing the postmortem with certainty.** If the record does not say it, it is an inference or an unknown.
-- **Squashing three documents into one commit.** Reviewable commits are part of the habit.
+- **Squashing three documents into one commit.** The grader checks which commit first holds each.
 
 ## 🧾 Recap
 - Each document's claims point at a source: the repo, the library's code, the incident record. Checking means opening it.
 - Have the assistant read first, ask for objections with evidence, and keep facts, inferences and unknowns apart.
-- A scanner finds claims that point at nothing; a person finds the sentence that is false.
-- The grader is a sieve. What passes it is not thereby true.
+- A scanner finds claims that point at nothing; a person finds the false sentence.
+- The grader is a sieve: what passes it is not thereby true.
 
 ## ✍️ Check yourself
 
@@ -481,11 +487,11 @@ One thing I will do differently:
 
 <details><summary>Answer</summary>
 
-**A.** The scanner looks up backticked paths and the `module.name` references it recognises, nothing more. A cited path can sit beside a false sentence, so figures and reasoning still need your Claims check. (🟢 The essentials.)
+**A.** The scanner only looks up backticked paths and the `module.name` references it recognises. A real path can sit beside a false sentence, so figures and reasoning still need your Claims check. (🟢 The essentials.)
 
 </details>
 
-**2. An assistant's timeline has the row "10:15, the on-call SRE began investigating (E3)". In the record, E3 is at 10:14 and says the page was acknowledged. What do you do?**
+**2. A timeline row reads "10:15, the on-call SRE began investigating (E3)". The record puts E3 at 10:14: the page was acknowledged. What do you do?**
 
 - A. Use the record's time and wording for that row
 - B. Keep the row, because 10:15 is only a minute off
@@ -498,29 +504,29 @@ One thing I will do differently:
 
 </details>
 
-**3. Your critic says "the quote lifetime of five minutes is too long". `fx.py` defines 60 seconds. What does this show, and what do you do?**
+**3. Your critic says "the quote lifetime of five minutes is too long". `fx.py` defines 60 seconds. What do you do?**
 
-- A. The critic is right in spirit, so shorten the quote lifetime to match
-- B. The critic is unreliable, so drop the critic step from the process
+- A. The critic is right in spirit, so shorten the quote lifetime
+- B. The critic is unreliable, so drop the critic step
 - C. Nothing, since an objection needs no evidence to be recorded
-- D. The critic misread a number; record the objection and reject it
+- D. The critic misread a number: record it and reject it
 
 <details><summary>Answer</summary>
 
-**D.** An objection is a claim, and this one rests on a false premise. Recording it with the evidence is the point of the section; the critic stays useful for objections that hold. (🟡 The ADR.)
+**D.** An objection is a claim, and this one rests on a false premise. Recording it with the evidence is the point of the section; the critic stays useful. (🟡 The ADR.)
 
 </details>
 
-**4. A docstring says a function returns `None` on failure. When you run it with a bad input it raises `ValueError`. What does your page say?**
+**4. A docstring says a function returns `None` on failure, but with a bad input it raises `ValueError`. What does your page say?**
 
-- A. What the docstring says, since it records the author's intent
-- B. What the running code does, and the mismatch under Known problems
-- C. Nothing at all, since a reference page should not mention failures
-- D. Both behaviours side by side, so that the reader can choose
+- A. What the docstring says, since it records the intent
+- B. What the code does, and the mismatch under Known problems
+- C. Nothing, since a reference page should not mention failures
+- D. Both behaviours side by side, so the reader can choose
 
 <details><summary>Answer</summary>
 
-**B.** The running code outranks a comment, and the ticket sends wrong comments to Known problems instead of fixing them here. Documenting both would repeat the false claim. (🔴 What the grader can and cannot tell.)
+**B.** The running code outranks a comment, and the ticket sends wrong comments to Known problems instead of fixing them here. Documenting both repeats the false claim. (🔴 What the grader can and cannot tell.)
 
 </details>
 
@@ -528,12 +534,12 @@ One thing I will do differently:
 
 - A. Every sentence in the three documents is true
 - B. No claim the grader tests contradicts the code or the record
-- C. A human reviewer no longer needs to read them
-- D. The grader has proved that the critic was a real AI
+- C. A human reviewer no longer needs to read the documents
+- D. The grader has shown that the critic was a real AI assistant
 
 <details><summary>Answer</summary>
 
-**B.** The grader is a sieve: it finds claims it has a rule for. A false sentence with no rule, such as an untested remark about locking, passes, so a human still reads. (🔴 What the grader can and cannot tell.)
+**B.** The grader is a sieve: it finds claims it has a rule for. A false sentence with no rule, such as an untested remark about ordering, passes, so a human still reads. (🔴 What the grader can and cannot tell.)
 
 </details>
 
@@ -541,6 +547,5 @@ One thing I will do differently:
 - Michael Nygard, "Documenting Architecture Decisions" (15 November 2011): https://github.com/npryce/adr-tools (confirms the title and date)
 - Google, *Site Reliability Engineering*, chapter 15, "Postmortem Culture: Learning from Failure": https://sre.google/sre-book/table-of-contents/ ; the SRE Workbook chapter: https://sre.google/workbook/postmortem-culture/
 - Claude Code documentation: plan mode and best practices: https://code.claude.com/docs/en/best-practices
-- Python, `ast` (how the scanner reads code without running it): https://docs.python.org/3/library/ast.html
 - Lab kit: https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/ainative/ailab
 - [*Cloud & DevOps*, lesson 5.3 — Incidents and blameless postmortems](../cloud/index.html#/5.3)

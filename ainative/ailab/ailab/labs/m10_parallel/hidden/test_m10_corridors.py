@@ -39,7 +39,7 @@ def test_the_command_prints_one_corridor_when_given_its_code(cli, tmp_path, cloc
 def test_an_unknown_code_exits_with_one_and_names_the_error(cli, tmp_path, clock):
     code, out, err = cli("corridors", "QAR-XYZ", environ={"REMIT_DB": str(tmp_path / "remit.db")}, clock=clock)
     assert code == 1 and out == ""
-    assert err.startswith("error [unknown_corridor]")
+    assert err.startswith("error [")  # the CLI's own form, "error [code]: message"; the natural code is unknown_corridor
 
 
 def test_the_command_reads_no_data_so_it_creates_no_database_file(cli, tmp_path, clock):

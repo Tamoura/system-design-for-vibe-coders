@@ -664,6 +664,9 @@ _UNSCOPED_EXAMPLE = re.compile(rf"(?:^|[`\s\"'(])(?:{'|'.join(COMMIT_TYPES)}):\s
 _FOREIGN_TYPES = re.compile(r"\b(style|wip|hotfix|misc|bugfix|feature|improvement|deps|release)\b", re.I)
 
 
+BAD_EXAMPLE = re.compile(NEGATION.pattern + r"|\b(?:wrong|bad|invalid|incorrect|fails?|failing|instead)\b", re.I)
+
+
 def commit_check(mem: Memory) -> Check:
     text = mem.text
     for ln in prose(mem.lines):
@@ -672,7 +675,9 @@ def commit_check(mem: Memory) -> Check:
                     if not NEGATION.search(m.group(0))]
         if optional or re.search(r"scope[^.\n]{0,20}\b(?:not required|can be omitted|may be omitted|is omitted)\b", ln.text, re.I):
             return _fail(N_COMMITS, f"{_where(ln)} says the scope is optional", "Read the commit section of CONTRIBUTING.md again.")
-        spans = _inline_spans(ln) or [ln.text]
+        # a header without a scope shown as a bad example ("Not `fix: typo`", "`fix: typo` is rejected") is a correct rule
+        spans = [span for span, before, after in spans_in_context(ln) if not (BAD_EXAMPLE.search(before) or BAD_EXAMPLE.search(after))] \
+            or ([] if _inline_spans(ln) else [ln.text])
         if any(_UNSCOPED_EXAMPLE.search(span) and not _SCOPED_EXAMPLE.search(span) for span in spans) and \
                 re.search(r"\b(commit|message|example|e\.g\.)\b", ln.text, re.I):
             return _fail(N_COMMITS, f"{_where(ln)} shows a commit without a scope", "This repository requires a scope: `type(scope): subject`.")
@@ -983,8 +988,8 @@ def stale_check(mem: Memory) -> Check:
                 hits.append(f"{_where(ln)}: says something about {topic} that the code contradicts")
     if hits:
         return _fail(N_STALE, _first(hits, 2),
-                     "docs/ARCHITECTURE.md is partly out of date, and so are agents' guesses. Check each claim against src/ and "
-                     "CONTRIBUTING.md, or point to the file instead.")
+                     "docs/ARCHITECTURE.md is partly out of date, and an agent's guesses can be wrong too. Check each claim against src/ "
+                     "and CONTRIBUTING.md, or point to the file instead.")
     return _ok(N_STALE)
 
 
@@ -1085,8 +1090,8 @@ def figures_check(mem: Memory) -> Check:
 _SECRET_NAME = r"[\w-]*(?:api[_-]?key|secret|token|passw(?:or)?d|pwd|credential|private[_-]?key|access[_-]?key)[\w-]*"
 _SECRET_ASSIGN = re.compile(rf"\b{_SECRET_NAME}[\"']?\s*[:=]\s*[\"']?([^\s\"'`<>$,;(){{}}\[\]]{{8,}})", re.I)
 _PLACEHOLDER_VALUE = re.compile(
-    r"^(?:your|my|the|an?|changeme|change-me|example|sample|dummy|fake|redacted|x{3,}|\*+|\.{3}|none|null|todo|value|"
-    r"secret|token|password|placeholder|env)", re.I)
+    r"^(?:(?:your|my|the|an?|changeme|change-me|example|sample|dummy|fake|redacted|x{3,}|none|null|todo|value|"
+    r"secret|token|password|placeholder|env)(?![A-Za-z0-9])|\*+|\.{3})", re.I)
 _IBAN = re.compile(r"\b[A-Z]{2}\d{2}[A-Z0-9 ]{11,40}")
 _PHONE = re.compile(r"(?<![\w.])\+\d{1,3}[ -]?\d{2,4}[ -]?\d{3,4}(?:[ -]?\d{3,4})?(?!\d)")
 
@@ -1309,7 +1314,8 @@ def notes_checks(work: Path) -> list[Check]:
             if any(not c for c in cells[1:3]):
                 problems.append(f"'{label}' has an empty cell")
     notes = _fail(N_NOTES, _first(problems, 3) + (f" (+{len(problems) - 3} more)" if len(problems) > 3 else ""),
-                  "Fill every section. Report what happened, including 'no difference'. The grader checks completeness, not that the memory won.") if problems else _ok(N_NOTES)
+                  "Fill every section. Report what happened, including 'no difference'. The grader checks completeness, not that the memory won; "
+                  "the opening paragraph of ab-notes.md lists what it reads.") if problems else _ok(N_NOTES)
     # quotes
     history = normalise(memory_history(work))
     quote_problems = []

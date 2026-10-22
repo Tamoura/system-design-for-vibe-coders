@@ -54,7 +54,10 @@
     "dir": "07-docs",
     "message": "docs(najmkit): describe the v2 API",
     "files": [
-      "docs/najmkit.md"
+      "docs/najmkit.md",
+      "docs/ARCHITECTURE.md",
+      "docs/TOUR.md",
+      "README.md"
     ]
   },
   {

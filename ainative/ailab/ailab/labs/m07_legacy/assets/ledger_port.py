@@ -1,10 +1,14 @@
-# ailab/labs/m07_legacy/assets/ledger_port.py
 """A seam for the ledger tests: one way to get a ledger before and after the refactor.
 
 Copy this file to ``tests/ledger_port.py``. Write your characterization tests against
-``make_ledger()`` and ``ledger_of(service)``, never against ``remit.ledger`` directly. Today they
-reach the module-level functions; once ``remit.ledger.Ledger`` exists they use it, so the same tests
-run before and after the refactor and tell you whether behaviour changed.
+``make_ledger()`` and ``ledger_of(service)``, never against ``remit.ledger`` directly, and import
+them like this (``pytest -q`` puts ``tests/`` on the import path, so the module is just ``ledger_port``;
+``from tests.ledger_port import ...`` fails under ``pytest -q``, which is what CI runs)::
+
+    from ledger_port import ledger_of, make_ledger
+
+Today they reach the module-level functions; once ``remit.ledger.Ledger`` exists they use it, so the
+same tests run before and after the refactor and tell you whether behaviour changed.
 
 One trap: before the refactor ``make_ledger()`` wipes the shared legacy books, so do not call it after
 a ``send`` in the same test. Use ``ledger_of(service)`` to look at what a service posted.

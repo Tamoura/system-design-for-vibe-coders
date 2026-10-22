@@ -40,10 +40,16 @@ as they were unless you have agreed otherwise.
 
 ## Suggested order
 
-1. Move one module at a time to the v2 names. Run your tests after each.
-2. Run the tests with `-W error::DeprecationWarning`: every v1 call that is left raises at its call site.
+1. Start with the shared test setup (`tests/conftest.py`): every test runs its fixtures, so one v1 call
+   there fails every test under `-W error::DeprecationWarning`. Then move one module at a time and run
+   your tests after each.
+2. Run the tests with `-W error::DeprecationWarning`: with the shared setup migrated, every v1 call that
+   is left raises at its call site. (Calls in code that no test reaches are not found this way: search
+   for the old names too.)
 3. When nothing calls a v1 name, delete the section marked "deprecated v1 names" in `ids.py`,
-   `clock.py` and `audit.py` (the contract step), run the tests again, and update `docs/najmkit.md`.
+   `clock.py` and `audit.py` (the contract step), run the tests again, and update `docs/najmkit.md`,
+   which still describes version 1.3.0, and the package docstring in `src/najmkit/__init__.py`. Leave
+   `__version__` as it is: this is the same release with its deprecated names removed from your copy.
 
 ## Versions
 

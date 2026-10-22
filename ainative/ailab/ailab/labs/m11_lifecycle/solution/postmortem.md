@@ -33,7 +33,7 @@ On 11 March 2026, from 09:58 to 10:50 UTC (52 minutes), Najm Remit kept completi
 
 ## What we know
 
-- Every `notification.failed` event in the window had reason `notification_error` (E5). Of the 175 such events, 171 had template `transfer_sent` and 4 had template `transfer_failed`.
+- At 10:26 a payments engineer read the audit log and found every `notification.failed` event with reason `notification_error` (E5). The record's counts for the whole window are 171 events with template `transfer_sent` and 4 with template `transfer_failed`.
 - Transfers kept completing, and no transfer is missing from the ledger or the store (E5, E13).
 - No deploy or configuration change was made during the window. The last deploy was version 0.4.0 on 9 March.
 - The alert rule is a failure rate above 20% for 10 minutes; it fired at 10:11, 13 minutes after the first failure and 41 minutes before it resolved (E1, E2, E10).
@@ -41,7 +41,7 @@ On 11 March 2026, from 09:58 to 10:50 UTC (52 minutes), Najm Remit kept completi
 
 ## What we infer
 
-1. The failures came from the gateway side. Confidence: medium. It rests on E6 and E11, which bracket most of the failure window, and on E5 (one error reason throughout). The vendor's incident report, or the gateway response codes in our own logs, would confirm or refute it.
+1. The failures came from the gateway side. Confidence: medium. It rests on E6 and E11, which bracket most of the failure window, and on E5 (one error reason in what the engineer read at 10:26). The vendor's incident report, or the gateway response codes in our own logs, would confirm or refute it.
 2. Most of the 188 transfers had no confirmation. Confidence: medium. It rests on 171 failures against 188 sends, but events are not customers and a retry could have delivered some. Joining the failed events to transfer ids would check it.
 3. The extra `limit_exceeded` rejections (23 against 9) may come from customers sending again after seeing no confirmation. Confidence: low. It rests on E7 and on the counts alone. Checking whether rejected customers had a similar transfer minutes earlier would confirm or refute it.
 4. Detection was slow mostly because of the alert rule. Confidence: medium. The rule needs 10 minutes of failures (E2). Replaying the failure rate through the rule would confirm it.
