@@ -25,10 +25,12 @@ Resolving an ambiguity, as the grader sees it
 ---------------------------------------------
 Every ticket hides a handful of questions (rounding, a boundary, a currency, a time zone, Arabic wording ...). For each,
 the kit holds one or more *parts*: a few groups of alternative keywords, written to be tolerant of wording. A part is met
-by a **segment** of the spec: one list item, table row, paragraph or code line (long paragraphs also give two-sentence
-windows), with its questions removed (a question is not a decision), at least five words long, in which every group has a
-keyword. One segment can resolve only one part of the lab: a line of keywords cannot resolve everything, and the
-ambiguity must be *answered*, not asked. Nothing here checks that the answer is a good one; the lesson says so.
+by a **segment** of the spec: one list item, table row, paragraph or code line anywhere in the spec (Decisions is where a
+reviewer looks, but any section counts; long paragraphs also give two-sentence windows), with its questions removed (a
+question is not a decision), at least five words long, in which every group has a keyword. A string of keywords with hardly a
+joining word is not a statement (``keyword_line``). One segment can resolve only one part of the lab: a line of keywords
+cannot resolve everything, and the ambiguity must be *answered*, not asked. Nothing here checks that the answer is a good
+one; the lesson says so. An untouched template is not graded for its questions at all (it would only preview them).
 
 What the grader cannot tell
 ---------------------------
@@ -55,6 +57,8 @@ TEMPLATE_FILE = f"{SPEC_DIR}/TEMPLATE.md"
 LOG_FILE = "agent-log.md"
 ALLOWED_FILES = (f"{SPEC_DIR}/**", LOG_FILE)
 
+FORMS = "for example 500.00 QAR, 10,000 INR, 18:00, 6pm or 2026-03-02"
+BLANK_WORDS = 40
 MIN_SEGMENT_WORDS = 5
 WINDOW_AFTER_WORDS = 45  # a paragraph longer than this also yields two-sentence windows
 MIN_CRITERIA = 4
@@ -96,8 +100,12 @@ def n_ambiguities(ticket: str) -> str:
 WAITING = "waiting for {}"
 
 
-def _waiting(missing: Sequence[str]) -> str:
-    return "no specs yet" if len(missing) == len(TICKETS) else WAITING.format(_short(missing))
+def _waiting(missing: Sequence[str], done: Sequence[str] = ()) -> str:
+    """"no specs yet", or which tickets are fine so far and which spec the check still waits for."""
+    if len(missing) == len(TICKETS):
+        return "no specs yet"
+    ok = f"{', '.join(done)} ok; " if done else ""
+    return ok + WAITING.format(_short(missing))
 
 # ---------------------------------------------------------------------------------------------------------
 # small text tools
@@ -112,7 +120,24 @@ _SENTENCE_END = re.compile(r"(?<=[.!?\u061f])[\"')\]\u201d\u2019]*\s+")
 def split_sentences(text: str) -> list[str]:
     """Sentences of a block; emphasis marks are removed first, so that "**Rounding?** Half up." splits after the question."""
     return [part for part in _SENTENCE_END.split(text.replace("*", "")) if part]
-_EXAMPLE_TOKEN = re.compile(r"\d[\d,]*\.\d{2}\b|\b\d{1,2}:\d{2}\b|\d{4}-\d{2}-\d{2}|[\u0660-\u0669]{2,}")
+
+
+_CODES = r"(?:QAR|INR|PHP|PKR|EGP|BDT|AED|SAR|USD|EUR|GBP)"
+_MONTHS = r"(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*"
+# An "exact amount, time or date": 500.00, 10,000 or 500 QAR, 18:00 or 6pm, 2026-03-02 or 2 March 2026, Arabic-Indic digits, or
+# a bare number in a table cell. The lesson and TASK.md list these forms.
+_EXAMPLE_PATTERN = (
+    r"\d[\d,]*\.\d{2}\b"
+    r"|\b\d{1,3}(?:,\d{3})+\b"
+    rf"|\b\d[\d,]*(?:\.\d+)?\s?{_CODES}\b|\b{_CODES}\s?\d[\d,]*(?:\.\d+)?\b"
+    r"|\b\d{1,2}:\d{2}\b"
+    r"|\b\d{1,2}(?::\d{2})?\s?(?:am|pm|a\.m\.|p\.m\.)(?!\w)"
+    r"|\d{4}-\d{2}-\d{2}"
+    rf"|\b\d{{1,2}}\s{_MONTHS}\s\d{{4}}\b|\b{_MONTHS}\s\d{{1,2}},?\s\d{{4}}\b"
+    r"|[\u0660-\u0669]{2,}"
+    r"|(?<=\|)\s*\d+(?:\.\d+)?\s*(?=\|)"
+)
+_EXAMPLE_TOKEN = re.compile(_EXAMPLE_PATTERN, re.I)
 _NUMBER = re.compile(r"\d|[\u0660-\u0669]")
 _ANCHOR = re.compile(r"\d|[\u0660-\u0669]|`[^`\n]+`|\"[^\"\n]{3,}\"|\u201c[^\u201d\n]{3,}\u201d|\u00ab[^\u00bb\n]{3,}\u00bb|[\u0621-\u064a]{3,}")
 
@@ -245,6 +270,21 @@ def list_items(text: str) -> list[str]:
     return sentences
 
 
+_FUNCTION_WORDS = frozenset(
+    "the a an is are was were be been being will would shall should can could must may might to of in on for by as that this these "
+    "those it its not no never only and or but with without from at if so than then because when where which who we our they their "
+    "does do did has have had gets get uses use used applies apply applied stays stay keeps keep kept counts count".split())
+
+
+def keyword_line(text: str, kind: str) -> bool:
+    """A string of keywords rather than a statement: eight words or more and hardly a word that joins them into a sentence. A
+    table row, short text and Arabic text are never judged this way."""
+    if kind == "row" or arabic_words(text) >= 4:
+        return False
+    tokens = re.findall(r"[A-Za-z']+", text.lower())
+    return len(tokens) >= 8 and sum(token in _FUNCTION_WORDS for token in tokens) / len(tokens) < 0.12
+
+
 def statements(block: Block) -> str:
     """The block without its questions: a question is not a decision."""
     parts = block.text.split(" | ") if block.kind == "row" else [block.text]
@@ -315,11 +355,23 @@ class Spec:
     def blocks(self) -> list[Block]:
         return blocks(self.text)
 
-    def segments(self) -> list[str]:
-        """What an ambiguity can be resolved by (see the module docstring)."""
+    def blank(self) -> bool:
+        """Still the template (or hardly more): fewer than 40 words that are neither a heading nor a TODO line."""
+        written = [ln for ln in self.text.splitlines()
+                   if ln.strip() and not ln.lstrip().startswith("#") and not re.match(r"^\s*(?:[-*]\s*)?TODO\b", ln)]
+        return words(" ".join(written)) < BLANK_WORDS
+
+    def segments(self, section: str | None = None) -> list[str]:
+        """What an ambiguity can be resolved by (see the module docstring); with ``section``, only what that section holds."""
         found: list[str] = []
-        for block in self.blocks():
+        if section is None:
+            source = self.blocks()
+        else:
+            source = blocks(self.sections.get(section, ""))
+        for block in source:
             text = statements(block)
+            if keyword_line(text, block.kind):
+                continue
             if words(text) >= MIN_SEGMENT_WORDS or arabic_words(text) >= 4:
                 found.append(text)
             if words(text) > WINDOW_AFTER_WORDS:
@@ -373,10 +425,15 @@ def section_problems(spec: Spec) -> list[str]:
 PLACEHOLDER = re.compile(r"\b(TODO|TBD|FIXME|XXX)\b|lorem ipsum|\bto be decided\b|\bto be determined\b|\u2026{2,}|\.{4,}")
 
 
+_QUOTED = re.compile(r"`[^`\n]*`|\"[^\"\n]*\"|\u201c[^\u201d\n]*\u201d")
+
+
 def placeholder_problems(spec: Spec) -> list[str]:
+    """TODO, TBD and the like. A word that is quoted or in backticks (a spec that says there must be no `TODO` comments) is
+    talk about the word, not a placeholder."""
     found = []
     for number, line in enumerate(spec.text.splitlines(), start=1):
-        match = PLACEHOLDER.search(line)
+        match = PLACEHOLDER.search(_QUOTED.sub(" ", line))
         if match:
             found.append(f"line {number}: {match.group(0)}")
     return found
@@ -415,7 +472,7 @@ def example_problems(spec: Spec) -> list[str]:
         return ["no Behaviour section"]
     lines = {ln.strip() for ln in body.splitlines() if _EXAMPLE_TOKEN.search(ln) and not ln.strip().startswith("#")}
     if len(lines) < MIN_EXAMPLES:
-        return [f"{len(lines)} line(s) with an exact amount, time or date; at least {MIN_EXAMPLES}"]
+        return [f"{len(lines)} line(s) with an exact amount, time or date; at least {MIN_EXAMPLES} ({FORMS})"]
     return []
 
 
@@ -423,10 +480,12 @@ _VAGUE = re.compile(
     r"\b(?:works?|behaves?|looks?|feels?|performs?|handled?)\s+(?:well|fine|good|nicely|correctly|properly|as expected)\b|"
     r"\b(?:user[- ]friendly|intuitive|easy to use|easily|fast|quick(?:ly)?|seamless|robust|nice|reasonable|appropriate|good|better|"
     r"correct(?:ly)?|proper(?:ly)?|works?|as (?:required|specified|intended|needed))\b", re.I)
-_STRONG = re.compile(r"\d[\d,]*\.\d{2}\b|\b\d{1,2}:\d{2}\b|\d{4}-\d{2}-\d{2}|[\u0660-\u0669]|`[^`\n]+`|\"[^\"\n]{3,}\"|\u201c[^\u201d\n]{3,}\u201d|\u00ab[^\u00bb\n]{3,}\u00bb|[\u0621-\u064a]{3,}")
+_STRONG = re.compile(
+    _EXAMPLE_PATTERN + r"|[\u0660-\u0669]|`[^`\n]+`|\"[^\"\n]{3,}\"|\u201c[^\u201d\n]{3,}\u201d|\u00ab[^\u00bb\n]{3,}\u00bb|[\u0621-\u064a]{3,}", re.I)
 _OBSERVABLE = re.compile(
-    r"\b(?:contains?|ends? with|starts? with|equals?|identical|byte for byte|exactly|unchanged|raises?|returns?|prints?|refus\w+|"
-    r"rejects?|rejected|accepted|allowed|matches|is the same as)\b", re.I)
+    r"\b(?:contains?|includes?|ends? with|starts? with|equals?|equal to|identical|byte for byte|exactly|unchanged|raises?|returns?|prints?|"
+    r"refus\w+|rejects?|rejected|accepted|allowed|matches|is the same as|same\b.{0,40}\bas|differs?|charged|debited|credited|stored|recorded|"
+    r"lists?|appears?|reports?|exceeds?|at least|at most|no more than|no less than|more than|less than|fewer than|sum of)\b", re.I)
 
 
 def checkable(item: str) -> bool:
@@ -453,7 +512,7 @@ def criteria_problems(spec: Spec) -> list[str]:
         problems.append(f"{len(weak)} not checkable, for example \"{shown}\"")
     strong = [item for item in items if _EXAMPLE_TOKEN.search(item)]
     if items and len(strong) < 2:
-        problems.append("fewer than two criteria carry an exact amount, time or date")
+        problems.append(f"fewer than two criteria carry an exact amount, time or date ({FORMS})")
     return problems
 
 
@@ -476,6 +535,10 @@ _PATHISH = re.compile(
     r"(?<![\w/.@~-])(?P<bare>[\w-]+\.(?:py|md|toml|ya?ml|json|txt|cfg|ini))\b")
 _CREATION = re.compile(r"\b(new|creat\w*|add(?:s|ed|ing)?|introduc\w*|writ(?:e|es|ing|ten)|start(?:s|ing)? a)\b", re.I)
 _GONE = re.compile(r"\b(?:does not|doesn'?t|do not|no longer|not) exist|\bno longer\b|\bstale\b|\bout of date\b|\boutdated\b|\bgone\b|\bremoved\b|\bmissing\b|\bdoes not match\b|\bthere is no\b|\bhas no\b|\bhave no\b", re.I)
+# "new" or "gone" counts only near the path it is about: a few words before it, a few after it. A line that happens to say "add"
+# somewhere else is not an excuse for a file that is not there.
+CREATION_BEFORE, CREATION_AFTER, GONE_NEAR = 12, 5, 10
+_IGNORED_NAMES = {"KIT_NOTES.md"}  # ledger.py and screening.py point at it, but it is not in a learner's repository
 _SKIP_DIRS = {".git", "__pycache__", ".pytest_cache", ".claude", "node_modules"}
 
 
@@ -488,6 +551,13 @@ def repo_files(work: Path) -> set[str]:
     return found
 
 
+def _near(line: str, match: re.Match[str], pattern: re.Pattern[str], before: int, after: int) -> bool:
+    """Does ``pattern`` occur within ``before`` words ahead of the path or ``after`` words behind it?"""
+    ahead = " ".join(re.findall(r"\w[\w./'-]*", line[: match.start()])[-before:])
+    behind = " ".join(re.findall(r"\w[\w./'-]*", line[match.end():])[:after])
+    return bool(pattern.search(ahead) or pattern.search(behind))
+
+
 def named_files(spec: Spec, files: set[str]) -> tuple[set[str], list[str]]:
     """(the existing files the spec names, the problems: files named as if they existed that do not)."""
     basenames: dict[str, list[str]] = {}
@@ -498,7 +568,7 @@ def named_files(spec: Spec, files: set[str]) -> tuple[set[str], list[str]]:
     for line in spec.text.splitlines():
         for match in _PATHISH.finditer(line):
             token = match.group("path") or match.group("bare")
-            if any(ch in token for ch in "*<>{}"):
+            if any(ch in token for ch in "*<>{}") or token in _IGNORED_NAMES:
                 continue
             if match.group("path"):
                 found = [token] if token in files else []
@@ -506,7 +576,7 @@ def named_files(spec: Spec, files: set[str]) -> tuple[set[str], list[str]]:
                 found = basenames.get(token, [])
             if found:
                 real.update(found)
-            elif not _CREATION.search(line) and not _GONE.search(line):
+            elif not _near(line, match, _CREATION, CREATION_BEFORE, CREATION_AFTER) and not _near(line, match, _GONE, GONE_NEAR, GONE_NEAR):
                 problems.append(token)
     return real, list(dict.fromkeys(problems))
 
@@ -543,6 +613,10 @@ class Ambiguity:
     id: str
     family: str  # the family of the lesson's hunting list: only this is ever shown to the learner
     part: Part
+    alt: Part | None = None  # a second, equally sound way of answering the same question
+
+    def met_by(self, segment: str) -> bool:
+        return self.part.met_by(segment) or (self.alt is not None and self.alt.met_by(segment))
 
 
 def _part(*groups: str, arabic: int = 0) -> Part:
@@ -557,7 +631,8 @@ _DISCOUNT = r"discount|15 ?%|0\.85|0\.15|\boff\b|reduc|saving|waive|offer|promo|
 AMBIGUITIES: dict[str, tuple[Ambiguity, ...]] = {
     "T1": (
         Ambiguity("express", FEE_PARTS, _part(r"express|surcharge", _DISCOUNT)),
-        Ambiguity("minimum", FEE_PARTS, _part(r"minimum|\bmin\b|floor|6\.00|lowest fee|smallest fee", _DISCOUNT)),
+        Ambiguity("minimum", FEE_PARTS, _part(r"minimum|\bmin\b|floor|6\.00|lowest fee|smallest fee",
+                                              _DISCOUNT + r"|kept|keeps?\b|stays?\b|still|below|under|lower|less than|drops?|falls?")),
         Ambiguity("rounding", ROUNDING, _part(
             r"round|quantize|ROUND_",
             r"half[- ]?up|ROUND_HALF|nearest|0\.01|2 (?:dp|decimal)|two decimal|cents?\b|fils|dirham|\bup\b|\bdown\b|\beven\b",
@@ -576,10 +651,11 @@ AMBIGUITIES: dict[str, tuple[Ambiguity, ...]] = {
             r"send|QAR|amount|receive|target|family|recipient")),
         Ambiguity("tier", BOUNDARIES, _part(
             r"tier|fees? (?:is |are |will be )?(?:calculated|computed|priced|charged|based|worked out)|priced on|charged on",
-            r"boundar|upto|inclusive|whole amount|derived|calculated|500\.0\d|1,?000\.0\d|2,?000\.0\d|5,?000\.0\d|10,?000\.0\d|exactly|edge|crosses?|next tier|jump")),
+            r"boundar|upto|inclusive|whole amount|deriv\w*|calculated|500\.0\d|1,?000\.0\d|2,?000\.0\d|5,?000\.0\d|10,?000\.0\d|exactly|edge|crosses?|next tier|jump|"
+            r"send amount|QAR amount|result(?:s|ing)?|typed|target|search|reverse")),
         Ambiguity("limits", BOUNDARIES, _part(
-            r"min_send|max_send|minimum|maximum|\blimit|AmountOutOfRange|out of range|within|outside",
-            r"derived|calculated|computed|converted|conversion|QAR (?:send )?amount|send amount|resulting|needs?|requires?|would (?:need|take)")),
+            r"min_send|max_send|minimum|maximum|\blimit|AmountOutOfRange|out of range|within|outside|smallest|largest|lowest|highest|allowed (?:transfer|amount|send)|too (?:small|large|low|high)",
+            r"deriv\w*|calculat\w*|comput\w*|conver\w*|QAR (?:send )?amount|send amount|result\w*|needs?|requires?|would (?:need|take)|work(?:s|ed) out|search\w*|typed|target")),
     ),
     "T3": (
         Ambiguity("zone", TIME, _part(
@@ -594,7 +670,12 @@ AMBIGUITIES: dict[str, tuple[Ambiguity, ...]] = {
         Ambiguity("scope", CURRENCY, _part(
             r"cash_pickup|cash pickup|pick-?up",
             r"\bonly\b|\bjust\b|exclusively|solely|bank_deposit|bank deposit|wallet|QAR-PHP|QAR-PKR|\bPHP\b|\bPKR\b|\bINR\b|\bEGP\b|not (?:apply|applies|affect)|unchanged|other (?:delivery|methods?|deliver\w+)|no other")),
-        Ambiguity("ar-wording", ARABIC, _part(arabic=4)),
+        # Either the Arabic sentence itself, or a decision about who supplies it (the notes say a native reader must approve it).
+        Ambiguity("ar-wording", ARABIC, _part(arabic=4), alt=_part(
+            r"Arabic",
+            r"native|translator|translat\w+|Arabic[- ]speak\w*|Arabic reader|bilingual|linguist",
+            r"wording|sentence|text|message|copy|phrase|translation|note",
+            r"suppl\w+|provid\w+|writ\w+|draft\w*|left to|leaves?\b|comes? from|owned by|owns?\b|authored")),
         Ambiguity("ar-digits", ARABIC, _part(
             r"Arabic-Indic|Eastern Arabic|localize_digits|format_money|format_number|digits|numerals?|[\u0660-\u0669]",
             r"time|\b6\b|18|cut-?off|message|text|numbers?|name|Latin|unchanged|Western|ASCII|sentence")),
@@ -602,12 +683,12 @@ AMBIGUITIES: dict[str, tuple[Ambiguity, ...]] = {
 }
 
 
-def resolution(ticket: str, spec: Spec) -> dict[str, bool]:
-    """Which hidden ambiguities of ``ticket`` the spec resolves: a maximum matching between ambiguities and segments, so
-    that one segment resolves at most one of them."""
+def resolution(ticket: str, spec: Spec, section: str | None = None) -> dict[str, bool]:
+    """Which hidden ambiguities of ``ticket`` the spec resolves (in the given section only, if one is named): a maximum
+    matching between ambiguities and segments, so that one segment resolves at most one of them."""
     ambiguities = AMBIGUITIES[ticket]
-    segments = spec.segments()
-    candidates = [[i for i, seg in enumerate(segments) if amb.part.met_by(seg)] for amb in ambiguities]
+    segments = spec.segments(section)
+    candidates = [[i for i, seg in enumerate(segments) if amb.met_by(seg)] for amb in ambiguities]
     owner: dict[int, int] = {}
 
     def assign(a: int, seen: set[int]) -> bool:
@@ -626,11 +707,29 @@ def resolution(ticket: str, spec: Spec) -> dict[str, bool]:
     return {amb.id: i in matched for i, amb in enumerate(ambiguities)}
 
 
+def decisions_shortfall(ticket: str, spec: Spec) -> tuple[int, int]:
+    """(how many questions the Decisions section itself answers, how many it must answer): any section may answer a question,
+    but a reviewer looks in Decisions, so at least half of the answers sit there."""
+    need = (len(AMBIGUITIES[ticket]) + 1) // 2
+    return sum(resolution(ticket, spec, "Decisions").values()), need
+
+
 def ambiguity_problems(ticket: str, spec: Spec) -> tuple[int, list[str]]:
-    """(how many are resolved, the families of those that are not)."""
+    """(how many are resolved, the families of those that are not, with a count when a family holds several questions)."""
     solved = resolution(ticket, spec)
-    open_families = [amb.family for amb in AMBIGUITIES[ticket] if not solved[amb.id]]
-    return sum(solved.values()), open_families
+    total: dict[str, int] = {}
+    still_open: dict[str, int] = {}
+    for amb in AMBIGUITIES[ticket]:
+        total[amb.family] = total.get(amb.family, 0) + 1
+        if not solved[amb.id]:
+            still_open[amb.family] = still_open.get(amb.family, 0) + 1
+    shown = []
+    for family, count in still_open.items():
+        if total[family] == 1:
+            shown.append(family)
+        else:
+            shown.append(f"{family} (all {count})" if count == total[family] else f"{family} ({count} of {total[family]})")
+    return sum(solved.values()), shown
 
 
 # ---------------------------------------------------------------------------------------------------------
@@ -639,26 +738,53 @@ def ambiguity_problems(ticket: str, spec: Spec) -> tuple[int, list[str]]:
 _NEGATION = re.compile(
     r"\b(never|not|no|none|don'?t|do not|doesn'?t|without|instead of|avoid|forbid\w*|reject\w*|raises?|TypeError|rather than|must not|"
     r"stdlib|standard library|banned|prohibit\w*)\b", re.I)
+# "... is not used", "... are banned": the negation comes after the thing it forbids.
+_NEGATED_AFTER = re.compile(
+    r"^[\s\W]*(?:(?:is|are|was|were|be|will be|must be|should be)\s+)?"
+    r"(?:not\s+(?:used|allowed|called|needed|permitted|acceptable|an option)|never\s+(?:used|allowed|called)|banned|forbidden|"
+    r"prohibited|disallowed|avoided|ruled out|out of scope)", re.I)
 _LEDGER = re.compile(r"\bledger\b|\bQ-LED|\bpartner share\b", re.I)
+_SEND_SIDE = re.compile(r"\bsend(?:ing)?\b|\bderiv\w*|\bsearch|QAR amount|customer pays", re.I)
+BANKERS, ROUND_DOWN = "banker's rounding", "rounding down or truncating"
 HOUSE_RULES: tuple[tuple[str, re.Pattern[str], str], ...] = (
     ("float money", re.compile(r"\bfloats?\b|\bfloating[- ]point\b|\bround\(", re.I), "Money is Decimal, never float (CONTRIBUTING.md)"),
-    ("banker's rounding", re.compile(r"half[- ]even|banker'?s|ROUND_HALF_EVEN", re.I), "Remit rounds half up (CONTRIBUTING.md); the ledger's half-even is a known quirk, not a rule"),
+    (BANKERS, re.compile(r"half[- ]even|banker'?s|ROUND_HALF_EVEN", re.I), "Remit rounds half up (CONTRIBUTING.md); the ledger's half-even is a known quirk, not a rule"),
+    (ROUND_DOWN, re.compile(r"\bround(?:ed|s|ing)?\s+(?:\w+\s+){0,3}?down\b|\btruncat\w+|\bROUND_(?:DOWN|FLOOR)\b|\btoward(?:s)? zero\b", re.I),
+     "Remit rounds half up (CONTRIBUTING.md); a direction chosen on purpose, such as a ceiling on a derived amount, needs a reason and an owner"),
     ("a direct clock or id call", re.compile(r"\bdatetime\.(?:utc)?now\s*\(|\bdate\.today\s*\(|\btime\.time\s*\(|\buuid4?\b|\buuid\.uuid4", re.I),
      "Time and ids come from najmkit and the injected clock (CONTRIBUTING.md)"),
     ("a new dependency", re.compile(r"\bpip install\b|\bpoetry add\b|\buv add\b|\bpytz\b|\bbabel\b|\bdateutil\b|\bpendulum\b|\bpandas\b|\bnumpy\b|"
                                     r"\bimport requests\b|\brequests (?:library|package|module)\b|\bpython-bidi\b|\barabic[-_]reshaper\b|\bforex-python\b", re.I),
      "Standard library only; no new dependency without a ticket (CONTRIBUTING.md)"),
 )
+NEGATION_WORDS_BEFORE = 6
+
+
+def _negated(sentence: str, match: re.Match[str]) -> bool:
+    """Is the breach forbidden rather than proposed: a negation within a few words before it, or "is banned" right after it?"""
+    ahead = " ".join(sentence[: match.start()].split()[-NEGATION_WORDS_BEFORE:])
+    return bool(_NEGATION.search(ahead) or _NEGATED_AFTER.match(sentence[match.end():]))
 
 
 def rule_problems(spec: Spec) -> list[tuple[str, str]]:
+    """Decisions that break CONTRIBUTING.md. A question is not a decision, and "never use a float" is not a float; but a
+    sentence that merely contains a negation somewhere ("held as a float, not as a string") is judged on its merits."""
     found: dict[str, str] = {}
     for sentence in spec.sentences():
-        if _NEGATION.search(sentence) or _LEDGER.search(sentence):
+        if _QUESTION.search(sentence):
             continue
         for label, pattern, hint in HOUSE_RULES:
-            if label not in found and pattern.search(sentence):
+            if label in found:
+                continue
+            for match in pattern.finditer(sentence):
+                if _negated(sentence, match):
+                    continue
+                if label == BANKERS and _LEDGER.search(sentence):
+                    continue  # the ledger's half-even partner share is a documented quirk
+                if label == ROUND_DOWN and spec.ticket == "T2" and _SEND_SIDE.search(sentence):
+                    continue  # T2 must choose a direction for the send amount it derives
                 found[label] = hint
+                break
     return list(found.items())
 
 
@@ -796,7 +922,7 @@ def _per_ticket(specs: dict[str, Spec | None], name: str, finder: Callable[[Spec
     if problems:
         return _fail(name, " | ".join(problems[:3]) + (f" (+{len(problems) - 3} more)" if len(problems) > 3 else ""), hint, required)
     if missing:
-        return _fail(name, _waiting(missing), "", required)
+        return _fail(name, _waiting(missing, [t for t, s in specs.items() if s is not None]), "", required)
     return _ok(name, required=required)
 
 
@@ -817,16 +943,17 @@ def spec_checks(work: Path) -> list[Check]:
                            "Say it with a number, an example or a name from the code; delete it if you cannot."))
     out.append(_per_ticket(specs, N_EXAMPLES, example_problems,
                            "Behaviour needs worked examples: exact inputs and outputs, as a table or Given / When / Then, "
-                           "including the edges (the smallest amount, the exact boundary, one cent or one second either side)."))
+                           "including the edges (the smallest amount, the exact boundary, one cent or one second either side). "
+                           "An exact value is an amount, a time or a date, such as 500.00 QAR, 10,000 INR, 18:00, 6pm or 2026-03-02."))
     out.append(_per_ticket(specs, N_CRITERIA, criteria_problems,
                            "One bullet per criterion; each must name a value, a code name or a text that a test could compare. "
-                           "\"Works properly\" is not a criterion."))
+                           "\"Works properly\" is not a criterion. Two or more should carry an exact amount, time or date."))
     out.append(_per_ticket(specs, N_LISTS, list_problems,
                            "List constraints, non-goals and decisions as bullets, one per line: what must stay true, what you "
                            "will not build, and every question the ticket left open, answered."))
     out.append(_per_ticket(specs, N_FILES, lambda s: file_problems(s, files),
-                           "Open the files you name. If a document disagrees with the code, the code wins; name a file you "
-                           "will create as new, on a line that says so."))
+                           "Open the files you name. If a document disagrees with the code, the code wins; say \"new\" right beside a "
+                           "file you will create, or \"no longer exists\" beside one that is gone."))
 
     for ticket in TICKETS:
         spec = specs[ticket]
@@ -835,16 +962,25 @@ def spec_checks(work: Path) -> list[Check]:
             out.append(_fail(name, WAITING.format(f"{SPEC_DIR}/{ticket}.md"), ""))
             continue
         total = len(AMBIGUITIES[ticket])
+        if spec.blank():
+            out.append(_fail(name, f"{spec.rel} is still the blank template",
+                             "Write something under the headings first; the questions are graded once the spec has content."))
+            continue
         solved, open_families = ambiguity_problems(ticket, spec)
         if open_families:
-            counted = {f: open_families.count(f) for f in dict.fromkeys(open_families)}
-            shown = ", ".join(f if n == 1 else f"{f} x{n}" for f, n in counted.items())
-            out.append(_fail(name, f"{solved} of {total} resolved; still open: {shown}",
+            out.append(_fail(name, f"{solved} of {total} resolved; still open: {', '.join(open_families)}",
                              "Read the ticket as a sceptic: which words can mean two things? Find what the code does, then write "
-                             "each answer as one complete sentence that names its subject (a question is not an answer). "
+                             "each answer as one complete sentence that names its subject (a question is not an answer). A family "
+                             "can hold several questions: answer each in its own sentence, in the Decisions section (an answer elsewhere counts too, but at least half must sit there). "
                              "If only Hessa can know, decide, say it is an assumption and who confirms it."))
         else:
-            out.append(_ok(name, f"{solved} of {total} resolved"))
+            in_decisions, need = decisions_shortfall(ticket, spec)
+            if in_decisions < need:
+                out.append(_fail(name, f"{solved} of {total} resolved, but the Decisions section answers only {in_decisions}; at least {need} must sit there",
+                                 "Any section can answer a question, but Decisions is where a reviewer looks: write the answers there, "
+                                 "one complete sentence each, and keep Behaviour for the examples."))
+            else:
+                out.append(_ok(name, f"{solved} of {total} resolved"))
 
     broken: list[str] = []
     hints: list[str] = []
@@ -857,26 +993,28 @@ def spec_checks(work: Path) -> list[Check]:
     if broken:
         out.append(_fail(N_RULES, _short(broken, 2), hints[0] + ". When the code and your idea disagree, change the idea."))
     elif missing:
-        out.append(_fail(N_RULES, _waiting(missing), ""))
+        out.append(_fail(N_RULES, _waiting(missing, [t for t, s in specs.items() if s is not None]), ""))
     else:
         out.append(_ok(N_RULES))
     out.append(_per_ticket(specs, N_REVIEW, lambda s: review_problems(s, files),
                            "CONTRIBUTING.md: anything that touches money.py, fees.py, fx.py, limits.py, ledger.py or service.py "
-                           "needs a second human reviewer. Say so in Constraints or in the Plan."))
+                           "needs a second human reviewer. Say so in Constraints or in the Plan, and name who (Nada from quality engineering, or Tariq)."))
     out.append(_per_ticket(specs, N_PLAN_SIZE, plan_size_problems,
-                           "Number the steps; keep each to one commit and one reading of the diff, naming the file, test or "
-                           "command. If the plan is longer, slice the work and plan the first slice."))
+                           "Number the steps; keep each to one small change and one reading of the diff, naming the file, test or "
+                           "command. If the whole ticket needs more than ten, plan the first slice and name the rest in a sentence."))
     out.append(_per_ticket(specs, N_PLAN_SHAPE, plan_shape_problems,
-                           "Write the failing test before the code it covers, run pytest, and say how to undo the change."))
+                           "Write and run the failing test before the code it covers (both may land in one green commit), run pytest, and say "
+                           "how to undo the change."))
 
     present = [s for s in specs.values() if s is not None]
-    if len(present) == len(TICKETS):
-        pairs = [(a.ticket, b.ticket) for i, a in enumerate(present) for b in present[i + 1:] if similarity(a.text, b.text) > 0.5]
+    pairs = [(a.ticket, b.ticket) for i, a in enumerate(present) for b in present[i + 1:] if similarity(a.text, b.text) > 0.5]
+    if pairs:
         out.append(_fail(N_DISTINCT, "too similar: " + ", ".join(f"{a} and {b}" for a, b in pairs),
-                         "Each ticket has its own numbers, files and decisions. A copy with the names changed is a template, not a spec.",
-                         required=False) if pairs else _ok(N_DISTINCT, required=False))
+                         "Each ticket has its own numbers, files and decisions. A copy with the names changed is a template, not a spec."))
+    elif len(present) == len(TICKETS):
+        out.append(_ok(N_DISTINCT))
     else:
-        out.append(_fail(N_DISTINCT, "no specs yet", "", required=False))
+        out.append(_fail(N_DISTINCT, _waiting(missing, [s.ticket for s in present] if len(present) > 1 else []), ""))
     out.append(_per_ticket(specs, N_RISKS, risk_problems,
                            "Name what could go wrong in production and how you would notice.", required=False))
     out.append(log_check(work))

@@ -79,7 +79,7 @@ Two tests keep the file honest. The documentation targets **under 200 lines**, b
 
 **AGENTS.md.** Other tools read `AGENTS.md`, an open plain-Markdown "README for agents". Claude Code reads it directly from v2.1.277, but by default only when no `CLAUDE.md` or `CLAUDE.local.md` exists in the working directory or above (the `/config` setting "Project instructions" changes that). To share one file, write `AGENTS.md` and put `@AGENTS.md` inside a `CLAUDE.md`. These details moved in 2026: check the current documentation.
 
-**The same job under another name.** Microsoft's developer blog post "Spec-Driven Development: A Spec-First Approach to AI-Native Engineering" lists a seven-step lifecycle that starts with a *constitution*: principles and guardrails. In this course that is the job of project memory, which the agent reads every session. Module 3 covers the other six steps. It is a company describing its own practice, not independent evidence: it shows the idea is current, not that a constitution improves results. Read the original (linked below).
+**The same job under another name.** In [Spec-Driven Development: A Spec-First Approach to AI-Native Engineering](https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/), Microsoft describes a seven-step lifecycle whose first step is a *constitution*: principles and guardrails. Its companion post on GitHub Spec Kit, an open-source toolkit Microsoft created, explains the constitution file. In this course that is the job of project memory: standing rules the agent reads every session. Module 3 covers the other six steps. A company describing its own practice is not independent evidence; it shows the idea is current, not that a constitution improves results. Read the originals (linked below).
 
 **Imports.** `@path/to/file` pulls a file in; imports nest four hops deep and are ignored inside code spans and fences. **Imports do not reduce context cost**: imported files load at launch. `@docs/najmkit.md` would put the whole page into every session; a plain pointer costs one line and is followed when it matters.
 
@@ -111,7 +111,7 @@ A QAR-INR express transfer of 500.00 costs 27.00: the 12.00 fee plus a 15.00 sur
 Change nothing. Tell me which line adds the surcharge, whether before or after the cap, and which test pins it down.
 ```
 
-**Docs the agent can read.** What lives in someone's head is not in the window: keep docs in the repository and point to them. But documents drift. `docs/ARCHITECTURE.md` still lists a `risk.py` (`ls src/remit` shows none) and two KYC tiers with no monthly limit, while `limits.py` has three tiers and monthly limits. `docs/TOUR.md` says the code wins. A memory that copies the architecture document copies its drift into every session.
+**Docs the agent can read.** What lives in someone's head is not in the window: keep docs in the repository and point to them. But documents drift. `docs/ARCHITECTURE.md` still lists a `risk.py` (`ls src/remit` shows none) and two KYC tiers with no monthly limit, while `limits.py` has three tiers and monthly limits. `docs/TOUR.md` says the code wins.
 
 **Teaching the agent your private library.** `najmkit` is vendored and in no training set, so the agent guesses from names. Do not describe it in `CLAUDE.md`, where every session pays for it: write a complete page for a reader who has never seen it, and one line saying the page exists. `docs/najmkit.md` is the model: it says the library is internal, shows each signature with a sample result (`"TRF-9F3A1C7B2D40"`) and states the rules (log identifiers only).
 
@@ -189,11 +189,11 @@ Limits and screening live in `src/remit/risk.py`.
 Lesson 2.2's grader runs the commands and checks the paths. Excerpt of its real output on that file, without hints:
 
 ```text
-[FAIL] The documented commands run and work: `make test` (line 18): this repository has no make; `ruff check .` (line 19): ...
+[FAIL] The documented commands run and work: `make test` (line 18): this repository has no Makefile; `ruff check .` (line 19): ...
 [FAIL] Every file it points to exists: not in the repository: `risk.py` (line 11), `requirements.txt` (line 17), `src/remit/risk.py` (line 24)
 ```
 
-It is not too long: size alone does not make a file good. It documents tools Remit lacks, repeats a stale document and omits what an agent cannot guess.
+Size is not the problem: it documents tools Remit lacks, repeats a stale document and omits what an agent cannot guess.
 
 **After.** Twenty lines, and each passes the "would removing it cause a mistake?" test.
 
@@ -351,7 +351,7 @@ The commands ran. The `float` rule is stated once, with the one `IMPORTANT`. `na
 ## 📚 References
 - Claude Code documentation: memory https://code.claude.com/docs/en/memory, context window https://code.claude.com/docs/en/context-window, best practices https://code.claude.com/docs/en/best-practices, commands https://code.claude.com/docs/en/commands. AGENTS.md: https://agents.md
 - [*System Design for Vibe Coders*, lesson 9.2 — Context engineering](../vibe/index.en.html#l9-2); [*Building AI Applications & Agents*, lesson 1.1 — The one idea: a stateless function, tokens, the context window and the messages list](../aiapps/index.html#/1.1); [*Secure AI & Application Security*, lesson 8.2 — Prompt injection and jailbreaks, direct and indirect](../secai/index.html#/8.2)
-- **Go deeper.** Microsoft for Developers, "Spec-Driven Development: A Spec-First Approach to AI-Native Engineering": https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/. Chroma, "Context Rot": https://research.trychroma.com/context-rot. Liu et al., "Lost in the Middle": https://aclanthology.org/2024.tacl-1.9/. Pillar Security, "Rules File Backdoor": https://www.pillar.security/blog/new-vulnerability-in-github-copilot-and-cursor-how-hackers-can-weaponize-code-agents
+- **Go deeper.** Microsoft for Developers, "Spec-Driven Development: A Spec-First Approach to AI-Native Engineering": https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/, and its companion "Diving Into Spec-Driven Development With GitHub Spec Kit": https://developer.microsoft.com/blog/spec-driven-development-spec-kit/. Chroma, "Context Rot": https://research.trychroma.com/context-rot. Liu et al., "Lost in the Middle": https://aclanthology.org/2024.tacl-1.9/. Pillar Security, "Rules File Backdoor": https://www.pillar.security/blog/new-vulnerability-in-github-copilot-and-cursor-how-hackers-can-weaponize-code-agents
 
 ---
 

@@ -43,7 +43,7 @@ SECRETS = "No secrets in the change"
 SPEC_ONLY = {N_EXIST, N_SECTIONS, N_PLACEHOLDERS, N_FILLER, N_EXAMPLES, N_CRITERIA, N_LISTS, N_FILES, *AMB.values(), N_RULES,
              N_REVIEW, N_PLAN_SIZE, N_PLAN_SHAPE, N_DISTINCT, N_RISKS, N_LOG}
 ALL = SPEC_ONLY | {N_SCOPE, N_TESTS, N_COMMITS, N_CLEAN, SECRETS}
-ADVISORY = {N_DISTINCT, N_RISKS, N_LOG}
+ADVISORY = {N_RISKS, N_LOG}
 GOOD_MESSAGE = "docs(specs): write the three specs"
 
 
@@ -410,7 +410,12 @@ def test_feedback_arrives_before_all_three_specs_exist(work):
     assert "specs/T2.md" in result[N_EXIST].detail
     write(work, {"T1": REFERENCE["T1"]}, log=None)
     result = spec_grade(work)
-    assert result[N_FILLER].detail == "waiting for specs/T2.md, specs/T3.md" and result[AMB["T1"]].ok
+    assert result[N_FILLER].detail == "T1 ok; waiting for specs/T2.md, specs/T3.md" and result[AMB["T1"]].ok
+    assert result[N_SECTIONS].detail == "T1 ok; waiting for specs/T2.md, specs/T3.md"
+    write(work, {"T2": REFERENCE["T2"]}, log=None)
+    result = spec_grade(work)
+    assert result[N_SECTIONS].detail == "T1, T2 ok; waiting for specs/T3.md"
+    assert result[N_DISTINCT].detail == "T1, T2 ok; waiting for specs/T3.md" and not result[N_DISTINCT].ok
 
 
 def test_a_bold_question_lead_in_does_not_swallow_its_answer():
@@ -472,6 +477,13 @@ OTHER_WORDINGS = [
     ("T3", "day", "We say 'tomorrow' and do not promise a weekday; Friday and Saturday are open questions for Ops."),
     ("T3", "scope", "The pickup note applies just to cash pick-up deliveries."),
     ("T3", "ar-digits", "Numbers in the Arabic text are rendered with Arabic numerals."),
+    # found by the learner dry-run: sound sentences that the first keyword lists missed
+    ("T1", "minimum", "The floor of 6.00 QAR is kept for small transfers."),
+    ("T2", "tier", "The fee is priced on the send amount that results from the search, as for a normal quote."),
+    ("T2", "limits", "The smallest or largest allowed transfer is checked against the amount we derive."),
+    ("T3", "ar-wording", "The Arabic sentence is left to the native reader."),
+    ("T3", "ar-wording", "A translator drafts the Arabic text and a native reader approves it before release."),
+    ("T3", "ar-wording", "The Arabic wording is supplied by the native Arabic reader before the build, so this spec does not fix the sentence."),
 ]
 
 
@@ -503,7 +515,7 @@ def test_failing_ambiguities_name_only_families(work):
     write(work, reference_with(T3=lambda t: "# T3\n\n## Decisions\n" + partial + "\n"))
     result = spec_grade(work)
     detail = result[AMB["T3"]].detail
-    assert detail == "3 of 6 resolved; still open: time and zones, Arabic x2", detail
+    assert detail == "3 of 6 resolved; still open: time and zones (1 of 2), Arabic (all 2)", detail
     assert result[AMB["T3"]].hint and "Qatar" not in result[AMB["T3"]].hint
     assert result[AMB["T1"]].ok and result[AMB["T2"]].ok
 
@@ -691,8 +703,28 @@ def test_unnumbered_bullets_are_not_steps(work):
 def test_three_copies_of_one_spec(work):
     write(work, {t: REFERENCE["T1"] for t in m.TICKETS})
     result = spec_grade(work)
-    assert N_DISTINCT in failing(result) and not result[N_DISTINCT].required
+    assert N_DISTINCT in failing(result) and result[N_DISTINCT].required
     assert {AMB["T2"], AMB["T3"]} <= failing(result)
+
+
+def test_one_spec_copied_into_another_ticket_fails_a_required_check_whatever_it_resolves(work):
+    """T1's text with only the ticket id changed used to pass every required check for T2 (the hidden questions were met by words
+    that T1 also contains). The copy check is required now."""
+    copy = REFERENCE["T1"].replace("REMIT-341", "REMIT-342")
+    write(work, {"T1": REFERENCE["T1"], "T2": copy, "T3": REFERENCE["T3"]})
+    result = spec_grade(work)
+    assert not result[N_DISTINCT].ok and result[N_DISTINCT].required
+    assert result[N_DISTINCT].detail == "too similar: T1 and T2"
+    write(work, {"T2": REFERENCE["T1"].replace("REMIT-341", "REMIT-342")}, log=None)
+    learner_commit(work, GOOD_MESSAGE)
+    assert not framework.passed(framework.grade_lab(framework.load_lab("m03"), work, catch=False))
+
+
+def test_specs_that_share_only_the_template_are_not_copies(work):
+    write(work, REFERENCE)
+    assert spec_grade(work)[N_DISTINCT].ok
+    write(work, ALTERNATIVE)
+    assert spec_grade(work)[N_DISTINCT].ok
 
 
 def test_risks_and_the_log_are_advisory(work):
@@ -1008,3 +1040,282 @@ def test_the_lab_declares_what_the_lesson_says():
         head = REFERENCE[ticket].splitlines()[0]
         assert head.startswith("# REMIT-34")
         assert head.split(":")[0].lstrip("# ") in (lab.assets_dir / "tickets" / f"{ticket}.md").read_text(encoding="utf-8")
+
+
+# --------------------------------------------------------------------------------------------
+# repairs after the learner dry-run
+# --------------------------------------------------------------------------------------------
+@pytest.mark.parametrize(
+    "line",
+    ["A customer who sends 500 QAR to Egypt pays a fee of 13 QAR.", "The family should receive 10,000 INR.", "Sent at 6pm the note appears.",
+     "Sent at 6:00 PM the note appears.", "Sent at 5:59 p.m. the note does not appear.", "On 2 March 2026 the offer starts.",
+     "On March 2, 2026 the offer starts.", "Sent on 2026-03-02 the offer starts.", "| 500 | 13 | 513 |", "Sent at 18:00 exactly.",
+     "The saving is 1.42 QAR.", "The fee is \u0661\u0662\u066b\u0665\u0660."],
+)
+def test_exact_amounts_times_and_dates_come_in_many_forms(line):
+    assert m._EXAMPLE_TOKEN.search(line), line
+
+
+@pytest.mark.parametrize("line", ["The customer pays less than before.", "A small transfer to Egypt.", "The 15% offer, version 3.", "In 2 cases the fee is lower."])
+def test_prose_is_not_an_exact_example(line):
+    assert not m._EXAMPLE_TOKEN.search(line), line
+
+
+def test_whole_number_amounts_with_a_currency_and_clock_words_are_exact_examples(work):
+    behaviour = """\
+Corridor `QAR-EGP`, schedule `STD-B`. The discounted fee is the usual fee times 0.85, so a customer who sends 100 QAR pays less than the usual fee.
+
+| Send | Usual fee | Fee charged |
+|---|---|---|
+| 100 QAR | 6 QAR | 5 QAR |
+| 260 QAR | 9 QAR | 8 QAR |
+| 15,000 QAR | 120 QAR | 102 QAR |
+"""
+    criteria = """\
+- `quote_fee` for 100 QAR on `QAR-EGP` returns 5 QAR.
+- `quote_fee` for 15,000 QAR on `QAR-EGP` returns 102 QAR.
+- For 260 QAR the saving shown on the quote is 1 QAR.
+- The existing Pakistan tests pass unedited, so 500 QAR to `QAR-PKR` is still 15 QAR.
+"""
+    t3_behaviour = """\
+- Sent at 5:59pm Qatar time on a Monday, the usual text is sent.
+- Sent at 6pm exactly, the pickup note is added; sent at 11:59pm it is added.
+- Sent at 12:00am on the Tuesday, the usual text is sent again, and a bank deposit at 6pm gets the usual text.
+"""
+    write(work, reference_with(T1=lambda t: replace_section(replace_section(t, "Behaviour", behaviour), "Acceptance criteria", criteria),
+                               T3=lambda t: replace_section(t, "Behaviour", t3_behaviour)))
+    assert_only(spec_grade(work))
+
+
+def test_behaviour_in_prose_without_any_amount_still_fails_and_says_which_forms_count(work):
+    prose = "The customer pays a smaller fee than before on the quote screen and sees the saving. The confirmation mentions the saving."
+    write(work, reference_with(T1=lambda t: replace_section(t, "Behaviour", prose)))
+    detail = spec_grade(work)[N_EXAMPLES].detail
+    assert "0 line(s)" in detail and "10,000 INR" in detail and "6pm" in detail
+
+
+def test_criteria_without_any_exact_value_say_which_forms_count(work):
+    criteria = "\n".join(f"- `quote_fee` returns the discounted fee for case number {word}." for word in ("one", "two", "three", "four"))
+    write(work, reference_with(T1=lambda t: replace_section(t, "Acceptance criteria", criteria)))
+    assert "6pm" in spec_grade(work)[N_CRITERIA].detail
+
+
+def test_a_criterion_that_names_what_is_compared_in_plain_words_is_checkable():
+    assert m.checkable("The customer is charged the fee that was on the quote.")
+    assert m.checkable("The confirmation includes the saving in English and Arabic.")
+    assert m.checkable("The fee debited on send is the same as the fee on the quote.")
+    assert not m.checkable("The customer is happy with the result of the quote.")
+    assert not m.checkable("The fee is shown correctly on the quote.")
+
+
+def test_talking_about_todo_comments_is_not_a_placeholder_but_a_real_tbd_is(work):
+    talk = "- No `TODO` comments are left in the code, and the word \"TBD\" never appears in a commit message.\n"
+    write(work, reference_with(T1=lambda t: edit(t, "### Non-goals\n", "### Non-goals\n" + talk)))
+    assert_only(spec_grade(work))
+    write(work, reference_with(T1=lambda t: edit(t, "### Non-goals\n", "### Non-goals\n- The release date is TBD with Ops.\n")))
+    assert_only(spec_grade(work), N_PLACEHOLDERS)
+
+
+SOUP = "Rounding half up; boundary inclusive; QAR corridor EGP; fee minimum cap express; Qatar time UTC; Arabic digits."
+
+
+def test_a_string_of_keywords_is_not_a_statement():
+    assert m.keyword_line(SOUP, "item")
+    assert m.keyword_line("express surcharge minimum discount round half up Decimal QAR-EGP only PKR STD-B", "para")
+    for ticket in m.TICKETS:
+        assert not any(m.resolution(ticket, one(ticket, f"# {ticket}\n\n## Decisions\n- {SOUP}\n- {SOUP}\n- {SOUP}\n")).values()), ticket
+    # real statements, terse ones and table rows are never taken for keywords
+    for text, kind in (("The express surcharge is not discounted.", "item"), ("Express surcharge: not discounted, 20.00 stays.", "item"),
+                       ("Rounding is half up to 0.01, ties go up, Decimal only.", "item"), ("Express | not discounted | Hessa confirms", "row"),
+                       ("\u0628\u0645\u0627 \u0623\u0646\u0643 \u0623\u0631\u0633\u0644\u062a \u0627\u0644\u062a\u062d\u0648\u064a\u0644 \u0628\u0639\u062f \u0627\u0644\u0633\u0627\u0639\u0629", "para")):
+        assert not m.keyword_line(text, kind), text
+
+
+def test_a_soup_line_among_real_decisions_does_not_hide_anything_and_resolves_nothing(work):
+    write(work, reference_with(T1=lambda t: edit(t, "### Decisions and open questions\n", "### Decisions and open questions\n- " + SOUP + "\n")))
+    assert_only(spec_grade(work))
+    text = "# T1\n\n## Decisions\n- " + SOUP + "\n"
+    assert sum(m.resolution("T1", one("T1", text)).values()) == 0
+
+
+def test_an_untouched_template_is_not_previewed_as_a_list_of_open_questions(work):
+    template = (work / "specs" / "TEMPLATE.md").read_text(encoding="utf-8")
+    write(work, {"T1": REFERENCE["T1"], "T3": template}, log=None)
+    check = spec_grade(work)[AMB["T3"]]
+    assert not check.ok and check.detail == "specs/T3.md is still the blank template"
+    text = (check.detail + " " + check.hint).lower()
+    for word in ("time", "arabic", "boundar", "currency", "rounding", "fee parts", "of 6"):
+        assert word not in text, word
+    # a title and one line do not unlock the preview either; real content does
+    sketch = template.replace("# TODO: ticket id and title", "# REMIT-343: cash pickup").replace(
+        "TODO: what changes, for whom, and why, in two sentences.", "A note after the cut-off.")
+    write(work, {"T3": sketch}, log=None)
+    assert spec_grade(work)[AMB["T3"]].detail == "specs/T3.md is still the blank template"
+    write(work, {"T3": sketch.replace("### Context\nTODO:", "### Context\n" + " ".join(["word"] * 45) + " TODO:")}, log=None)
+    assert "of 6 resolved; still open:" in spec_grade(work)[AMB["T3"]].detail
+
+
+def test_a_family_with_several_questions_shows_how_many_are_open():
+    text = "# T2\n\n## Decisions\n" + "\n".join(f"- {RESOLVERS[('T2', amb)]}" for amb in ("currency", "direction", "tier")) + "\n"
+    assert m.ambiguity_problems("T2", one("T2", text)) == (3, ["boundaries (1 of 2)"])
+    assert m.ambiguity_problems("T2", one("T2", "# T2\n\n## Decisions\n- Nothing is decided here at all, for now.\n"))[1] == [
+        "currency and corridors", "rounding", "boundaries (all 2)"]
+
+
+def test_leaving_the_arabic_wording_to_the_native_reader_is_a_sound_t3(work):
+    """Hessa's notes require a native reader's approval, so a spec may leave the sentence to them instead of writing it."""
+    no_arabic = lambda t: "\n".join(ln for ln in t.splitlines() if not re.search("[\u0600-\u06ff]", ln))  # noqa: E731
+    decisions = ("- Arabic wording: the Arabic sentence is supplied by the native Arabic reader on the team, who also approves it before release; "
+                 "this spec does not fix it.\n- Arabic digits: any time inside the Arabic sentence uses Arabic-Indic digits through `localize_digits`, "
+                 "and names and ids stay Latin and unchanged.\n")
+    write(work, reference_with(T3=lambda t: edit(no_arabic(t), "### Risks\n", decisions + "\n### Risks\n")))
+    result = spec_grade(work)
+    assert result[AMB["T3"]].ok and result[AMB["T3"]].detail == "6 of 6 resolved", result[AMB["T3"]].detail
+    assert_only(result)
+
+
+def test_hessas_note_alone_does_not_decide_the_arabic_wording():
+    note = "A native Arabic reader on the team must approve the Arabic sentence before it ships."
+    assert not m.resolution("T3", one("T3", f"# T3\n\n## Decisions\n- {note}\n"))["ar-wording"]
+
+
+@pytest.mark.parametrize(
+    ("line", "label"),
+    [
+        ("The saving is held as a float, not as a string, and is rounded half even.", "float money"),
+        ("The service calls `datetime.now()` and does not use the injected clock.", "a direct clock or id call"),
+        ("In the ledger the offer is posted as a float amount and rounded half even.", "float money"),
+        ("The fee is rounded down to the cent.", m.ROUND_DOWN),
+        ("The receive amount is truncated to two decimals.", m.ROUND_DOWN),
+        ("The derived send amount is rounded down to 0.01 QAR.", m.ROUND_DOWN),  # fine for T2, not for T1 (see below)
+    ],
+)
+def test_house_rule_breaches_that_hide_behind_a_negation_elsewhere_in_the_sentence(work, line, label):
+    write(work, reference_with(T1=lambda t: edit(t, "### Constraints\n", f"### Constraints\n- {line}\n")))
+    result = spec_grade(work)
+    assert_only(result, N_RULES)
+    assert label in result[N_RULES].detail
+
+
+@pytest.mark.parametrize(
+    "line",
+    [
+        "Floats are banned: money is Decimal everywhere.",
+        "`datetime.now()` is never used; the injected clock is.",
+        "Time comes from the injected clock, never from datetime.now().",
+        "Money is Decimal through Money; no floats.",
+        "Rounding is half up, not half-even like the ledger.",
+        "The send amount is rounded up to the next 0.01 QAR, so that the family gets at least the target.",
+        "Should the fee be rounded down?",
+        "We do not truncate or round down any money amount.",
+        "The ledger's partner share is rounded half-even (Q-LED-1); that quirk is left alone.",
+    ],
+)
+def test_sentences_that_forbid_or_ask_are_not_breaches(work, line):
+    write(work, reference_with(T1=lambda t: edit(t, "### Constraints\n", f"### Constraints\n- {line}\n")))
+    assert_only(spec_grade(work))
+
+
+def test_t2_may_choose_to_round_the_derived_send_amount_down(work):
+    line = "The derived send amount is rounded down to 0.01 QAR, so the family may get a little less."
+    write(work, reference_with(T2=lambda t: edit(t, "### Constraints\n", f"### Constraints\n- {line}\n")))
+    assert_only(spec_grade(work))
+
+
+def test_an_unrelated_add_on_the_same_line_does_not_excuse_a_missing_file(work):
+    line = "- Limits are checked in `src/remit/risk.py`, as `docs/ARCHITECTURE.md` says, and we add a check there.\n"
+    write(work, reference_with(T1=lambda t: edit(t, "### Context\n", "### Context\n" + line)))
+    result = spec_grade(work)
+    assert_only(result, N_FILES)
+    assert "src/remit/risk.py" in result[N_FILES].detail
+
+
+@pytest.mark.parametrize(
+    "line",
+    [
+        "- Add `tests/test_offer.py` with the failing tests.",
+        "- In `src/remit/offers.py` (new) the rule lives.",
+        "- Write the failing tests for all six Behaviour rows in `tests/test_offer.py`.",
+        "- `src/remit/risk.py`, which `docs/ARCHITECTURE.md` still names, no longer exists.",
+        "- The old docstring says see `KIT_NOTES.md`, which is not in this repository.",
+        "- `docs/ARCHITECTURE.md` is stale: it names `src/remit/risk.py`.",
+    ],
+)
+def test_new_or_gone_beside_the_path_still_counts(work, line):
+    write(work, reference_with(T1=lambda t: edit(t, "### Context\n", f"### Context\n{line}\n")))
+    assert_only(spec_grade(work))
+
+
+def test_commit_hints_fit_what_the_learner_did(work):
+    hint = full_grade(work)[N_COMMITS].hint
+    assert "Commit your change" not in hint and "docs(specs)" in hint and "git add -A" in hint
+    write(work, {"T1": REFERENCE["T1"]}, log=None)
+    learner_commit(work, "wrote the first spec")
+    write(work, reference_with(), log=LOG_OK)
+    learner_commit(work, GOOD_MESSAGE)
+    result = full_grade(work)
+    assert_only(result, N_COMMITS)
+    assert "git reset --soft lab-start" in result[N_COMMITS].hint and "newest" in result[N_COMMITS].hint
+    # and that advice works
+    runner.run(["git", "reset", "--soft", "lab-start"], cwd=work, env=runner.clean_env(), timeout=20)
+    learner_commit(work, GOOD_MESSAGE)
+    assert_only(full_grade(work))
+
+
+def test_the_scope_hint_works_for_an_edit_that_is_already_committed(work):
+    write(work, REFERENCE)
+    framework.edit_file(work, "src/remit/fees.py", "SCHEDULES: dict[str, FeeSchedule]", "EGYPT_DISCOUNT = _D('0.15')\n\nSCHEDULES: dict[str, FeeSchedule]")
+    learner_commit(work, "feat(fees): add the Egypt discount")
+    result = full_grade(work)
+    assert "--source=lab-start" in result[N_SCOPE].hint
+    runner.run(["git", "restore", "--source=lab-start", "src/remit/fees.py"], cwd=work, env=runner.clean_env(), timeout=20)
+    learner_commit(work, "fix(fees): undo the edit")
+    assert_only(full_grade(work))
+
+
+def test_the_task_documents_the_rules_the_grader_enforces():
+    task = (HERE / "task.md").read_text(encoding="utf-8")
+    for needle in ("10,000 INR", "6pm", "2026-03-02", "A question is not an answer", "write the Arabic sentence or say who supplies it",
+                   "write \"second human reviewer\" and name who", "Nada", "any lower-case scope works", "plan the first slice",
+                   "the failing test written and run before the code", "share one green commit", "ainative/ailab", "(advisory)",
+                   "pull in different directions", "a copy of one with the names changed fails", "beside the file that it is new"):
+        assert needle in task, needle
+    assert "first slice" in (HERE / "templates" / "spec-template.md").read_text(encoding="utf-8")
+
+
+LIFTED = [
+    "Half up everywhere, except the ledger's partner share (half-even, an old quirk).",
+    "Fee tier by the whole amount, upto inclusive; min_send, max_send and limits are inclusive; a quote expires at or after expires_at.",
+    "Senders pay in QAR; BDT is a currency without a corridor; one fee schedule can price two corridors.",
+    "Raw fee, then minimum and cap, then the express surcharge after the cap.",
+    "Stored in UTC; a Qatar day runs 21:00 to 21:00 UTC, no daylight saving; the clock is injected.",
+    "Arabic-Indic digits; names inserted unchanged; English wording pinned by tests.",
+]
+
+
+def test_sentences_lifted_from_the_lesson_do_not_stand_in_for_the_decisions(work):
+    """The dry-run replaced each Decisions section by six lines of the lesson's table of what the code says (nothing about the
+    ticket) and still got every question, because Behaviour and Context carried the same words. At least half of the answers
+    must sit in Decisions now."""
+    hollow = "\n".join(f"- {line}" for line in LIFTED)
+    write(work, reference_with(**{t: (lambda text: replace_section(text, "Decisions and open questions", hollow)) for t in m.TICKETS}))
+    result = spec_grade(work)
+    for ticket in m.TICKETS:
+        assert not result[AMB[ticket]].ok and "the Decisions section answers only" in result[AMB[ticket]].detail, ticket
+    assert all(m.resolution(t, one(t, REFERENCE[t]), "Decisions") and m.decisions_shortfall(t, one(t, REFERENCE[t]))[0] >= m.decisions_shortfall(t, one(t, REFERENCE[t]))[1]
+               for t in m.TICKETS)
+
+
+def test_a_decisions_section_that_answers_nothing_fails_even_when_the_examples_state_the_rules(work):
+    empty = "- Nothing else was decided here for now, see Behaviour.\n- Rounding is a detail for later.\n- Anything else is left for later too, as agreed."
+    write(work, reference_with(T1=lambda t: replace_section(t, "Decisions and open questions", empty)))
+    detail = spec_grade(work)[AMB["T1"]].detail
+    assert detail.startswith("4 of 4 resolved, but the Decisions section answers only 0; at least 2 must sit there"), detail
+
+
+def test_a_spec_may_keep_a_few_answers_outside_decisions(work):
+    """The alternative T3 decides the zone and the boundary in Behaviour and the rest in Decisions: four of six is enough."""
+    in_decisions, need = m.decisions_shortfall("T3", one("T3", ALT_T3))
+    assert in_decisions >= need
+    write(work, ALTERNATIVE)
+    assert spec_grade(work)[AMB["T3"]].ok

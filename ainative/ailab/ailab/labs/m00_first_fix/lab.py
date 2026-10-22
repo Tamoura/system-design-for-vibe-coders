@@ -32,19 +32,23 @@ Habits worth copying
   without revealing the answer.
 * Be deterministic and fast (the whole lab, start to solved, must take well under 20 seconds).
 * Write negative tests (tests/test_labs_m00.py) for the wrong answers people really produce.
+* Every rule the grader enforces is written in task.md or the lesson (type, scope, branch, "no new tests"),
+  and a hint never contradicts what the learner did. A first lab's hints are the most-read text in the course:
+  ``checks_m00.py`` shows how to make them depend on the actual state (the other branch that holds the commit,
+  which hidden test failed).
 """
 from __future__ import annotations
 
 import tempfile
 from pathlib import Path
 
-from ailab import checks, framework, gitutil
+from ailab import checks, checks_m00, framework, gitutil
 from ailab.framework import Check, Lab
 
 HERE = Path(__file__).resolve().parent
 
 # The one file a correct fix touches.
-TEMPLATE_FILE = "src/remit/notify.py"
+TEMPLATE_FILE = checks_m00.TEMPLATE_FILE
 
 # The English "transfer sent" sentence, before and after the typo is planted.
 CORRECT = "{recipient} received {receive_amount}. "
@@ -68,7 +72,7 @@ def grade(work: Path) -> list[Check]:
     # directory is the "writable folder" probe: grading must not depend on, or write into, the learner's folder.)
     env_ok = framework.passed(framework.doctor_checks(tempfile.gettempdir()))
 
-    return [
+    results = [
         Check(
             "Your environment passes `ailab doctor`",
             env_ok,
@@ -76,45 +80,42 @@ def grade(work: Path) -> list[Check]:
             "Run python -m ailab doctor and fix the FAIL lines.",
         ),
         # 1. The repo's own (visible) tests, run on a throw-away copy in a subprocess.
-        checks.tests_pass(work),
-        # 2. The hidden acceptance tests in hidden/: they test the customer-visible text, so any
-        #    sound way of fixing it passes. Failing test names are shown; assertion text is not.
-        checks.hidden_tests_pass(
+        checks.tests_pass(
             work,
-            HERE / "hidden",
-            name="The message is right in English and Arabic",
-            hint="Compare the message your customers get with the sentence the failing test expects.",
+            hint="Run `pytest -q` in your lab directory (not the ailab folder) and read the first failure from the top.",
         ),
-        # 3. The tests were not "fixed" by weakening them. A separate check gives a specific hint.
+        # 2. The hidden acceptance tests in hidden/: they test the customer-visible text, so any sound way of
+        #    fixing it passes. The hint depends on WHICH hidden test failed (checks_m00.hidden).
+        checks_m00.hidden(work, HERE / "hidden"),
+        # 3. The tests were not "fixed" by weakening them, and no test was added either (the ticket says so).
         checks.files_unchanged(
             work,
             ["tests/**"],
-            name="The tests were not edited",
-            hint="The tests are right. Undo your edit to them (git restore tests) and fix the message instead.",
+            name=checks_m00.NAME_UNEDITED,
+            hint="The ticket says do not add or edit tests. Undo every change under tests/ (edited, added or "
+                 "deleted files; `git diff lab-start --stat -- tests` lists them) and fix the message instead.",
         ),
         # 4. Scope: only the template file may change.
         checks.files_changed_within(
             work,
             [TEMPLATE_FILE],
             name="Only the template file changed",
-            hint="Revert everything except the one file that holds the message.",
+            hint="Only the file that holds the message should change. `git diff lab-start --stat` lists what you "
+                 "changed; undo the rest.",
         ),
-        # 5. Size: a one-word fix is two changed lines (one removed, one added); allow a little slack.
-        checks.diff_size(
-            work,
-            max_lines=6,
-            max_files=1,
-            min_lines=1,  # "nothing changed yet" is not a tiny change, it is no change
-            name="The change is tiny",
-            hint="This is a one-word fix. Look at `git diff lab-start` and remove anything else.",
-        ),
-        # 6. Commit hygiene: exactly one new commit, whose message follows CONTRIBUTING.md.
-        checks.commit_count(work, exactly=1, name="Exactly one new commit"),
-        checks.conventional_commits(work),
-        checks.all_committed(work, name="The fix is committed (nothing left over)"),
+        # 5. Size: the file must equal the starter with the one misspelling corrected (and at most 6 changed lines).
+        checks_m00.tiny(work),
+        # 6. Commit hygiene: exactly one new commit (merge commits are not counted), whose message follows
+        #    CONTRIBUTING.md and fits this ticket (type fix, scope = the module).
+        checks_m00.one_commit(work),
+        checks_m00.message(work),
+        checks_m00.left_over(work),
         # 7. Safety net used by every lab.
         checks.no_secrets(work),
     ]
+    # Graded from the wrong branch (the commit is on the task branch, `main` is checked out): say so on every line.
+    branch = checks_m00.wrong_branch(work)
+    return checks_m00.point_at_branch(results, branch) if branch else results
 
 
 # ---------------------------------------------------------------------------------------------

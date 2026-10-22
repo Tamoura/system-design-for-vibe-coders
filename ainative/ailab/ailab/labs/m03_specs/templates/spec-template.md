@@ -28,4 +28,4 @@ TODO: what could go wrong in production, and how you would notice.
 TODO: which test proves which criterion, and the command that runs them.
 
 ### Plan
-TODO: the files you expect to touch; four to ten numbered steps, one commit and one check each; how to roll back.
+TODO: the files you expect to touch; four to ten numbered steps, each one small change with one check (a failing test may share a green commit with its fix); how to roll back. Too big for ten steps: plan the first slice only.

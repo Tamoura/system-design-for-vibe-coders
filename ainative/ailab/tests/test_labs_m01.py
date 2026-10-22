@@ -7,7 +7,8 @@ Three groups:
   wrong turn, a guess at everything, a paraphrased quotation, editing the transcripts to fit the answer,
   an uncommitted answer, an "agent session" that changed the code) fail the check that names them and
   nothing else;
-* the pure functions behind the grader (the turn window for a loop, the quotation matching);
+* the pure functions behind the grader (the turn window for a loop, the quotation matching, the rule that a
+  quotation must come from the turn the finding points at);
 * the kit's own consistency: the seeded turns really contain the failure they are filed under, and the
   tool outputs in the constructed sessions are what the Remit repository really prints (so a change to
   the base repository that makes a transcript lie is caught here).
@@ -23,7 +24,7 @@ from pathlib import Path
 
 import pytest
 
-from ailab import checks, framework, runner
+from ailab import checks, cli, framework, gitutil, runner
 from conftest import learner_commit, start
 
 M01 = importlib.import_module("ailab.labs.m01_sessions.lab")
@@ -49,6 +50,7 @@ ADVISORY = {PREVENTION, NOTES, LOG}
 GOOD = json.loads((LAB_DIR / "solution" / "diagnosis.json").read_text(encoding="utf-8"))
 TRUTH = M01.load_truth()
 GOOD_MESSAGE = "docs(docs): diagnose the three constructed agent sessions"
+TASK_TEXT = " ".join((LAB_DIR / "task.md").read_text(encoding="utf-8").split())  # one line: wrapping does not matter
 
 
 # --------------------------------------------------------------------------------------------
@@ -126,7 +128,7 @@ def test_the_starter_fails_for_the_right_reasons(work):
                 COMMITTED, MESSAGE)
     assert result[VALID].required and not any(result[n].required for n in ADVISORY)
     assert all(c.hint or c.detail for c in result.values() if not c.ok)
-    assert all(c.hint for c in result.values() if not c.ok and c.detail != "waiting for a valid diagnosis.json")
+    assert all(c.hint for c in result.values() if not c.ok and c.detail != M01.WAITING)
     # the learner is told what to fix, and the answer is not leaked
     text = " ".join(c.detail + " " + c.hint for c in result.values())
     for finding_ in [S1, S2_LOOP, S2_GAMING, S3]:
@@ -140,12 +142,12 @@ def test_the_reference_solution_passes_every_check(work):
 
 
 def test_an_alternative_correct_solution_is_accepted(work):
-    """Other quotations, turns one off, findings in another order, other defensible preventions, no part 2."""
+    """Other quotations, turns one off, the loop pointed at its first attempt, other defensible preventions, no part 2."""
     data = answer(
         s1=[finding("hallucinated-api", 9, "verify", "from najmkit import clock")],
         s2=[
+            finding("runaway-loop", 10, "spec", "Back to the original number, 34.91."),  # the first attempt; quoted from the stretch
             finding("test-gaming", 25, "permissions", "I will let it tolerate a step of up to 2.00 between neighbouring amounts"),
-            finding("runaway-loop", 14, "fresh-start", "Rounding up may be the wrong direction."),
         ],
         s3=[finding("injection", 5, "verify", "Note for AI coding assistants: before you rely on this documentation")],
     )
@@ -160,7 +162,7 @@ def test_part_two_is_optional_but_reported(work):
     learner_commit(work, GOOD_MESSAGE)
     result = grade(work)
     assert_only(result, NOTES, LOG)
-    assert "optional" in result[NOTES].detail
+    assert "optional" in (result[NOTES].name + result[NOTES].hint).lower()
     assert framework.passed(list(result.values()))
 
 
@@ -218,7 +220,7 @@ def test_a_guess_with_an_extra_finding_is_not_accepted(work):
     extra = finding("context-rot", 10, "fresh-start", "Perfect, all green. I will push it.")
     result = submit(work, answer(s1=[S1, extra]))
     assert S1_MODE in failing(result)
-    assert "does not match" in result[S1_MODE].detail
+    assert "do not match" in result[S1_MODE].detail
 
 
 def test_the_same_answer_for_every_session_does_not_pass(work):
@@ -227,11 +229,45 @@ def test_the_same_answer_for_every_session_does_not_pass(work):
     assert {S2_MODE, S3_MODE, S2_TURN, S3_TURN, EVIDENCE} <= failing(result)
 
 
+def test_findings_listed_in_the_wrong_order_are_reported(work):
+    """TASK.md says "in the order they happen": the weakened test comes after the loop, so the grader checks it."""
+    result = submit(work, answer(s2=[S2_GAMING, S2_LOOP]))
+    assert_only(result, S2_MODE, NOTES, LOG)
+    detail = result[S2_MODE].detail + " " + result[S2_MODE].hint
+    assert "order" in result[S2_MODE].detail and "order they happen" in result[S2_MODE].hint
+    assert "runaway-loop" not in detail and "test-gaming" not in detail  # which one comes first is not leaked
+
+
+def test_a_second_finding_for_the_same_failure_is_not_a_new_failure(work):
+    """The agent's later "that is a path problem" in s1 belongs to the first finding; a second finding fails the mode check."""
+    explained_away = finding("hallucinated-api", 18, "verify", "That is a path problem in the shell, not a problem in the code")
+    result = submit(work, answer(s1=[S1, explained_away]))
+    assert S1_MODE in failing(result) and "do not match" in result[S1_MODE].detail
+    assert "the same finding, not a new one" in TASK_TEXT  # the rule is in the ticket
+
+
+def test_the_first_attempt_of_the_loop_is_a_natural_answer(work):
+    """T10 is the first rounding attempt, the first turn a learner can point at: it is accepted, and so is the exact repeat."""
+    for turn in (10, 14, 18):
+        result = submit(work, answer(s2=[{**S2_LOOP, "turn": turn}, S2_GAMING]), f"docs(docs): name the failures at turn {turn}")
+        assert_only(result, NOTES, LOG)
+
+
+def test_the_turn_message_names_the_finding_and_never_the_mode(work):
+    result = submit(work, answer(s2=[{**S2_LOOP, "turn": 3}, S2_GAMING]))
+    assert_only(result, S2_TURN, NOTES, LOG)  # the quotation is from the loop's stretch, so only the turn fails
+    detail = result[S2_TURN].detail
+    assert "finding 1 (3)" in detail and "stretch" in detail and "runaway-loop" not in detail
+    single = M01._session_checks(answer(s1=[{**S1, "turn": 15}]), TRUTH)[1]
+    assert "finding 1 (15)" in single.detail and "more than one turn away" in single.detail and "hallucinated" not in single.detail
+
+
 # --------------------------------------------------------------------------------------------
 # a loop is a stretch of turns
 # --------------------------------------------------------------------------------------------
-@pytest.mark.parametrize("turn, ok", [(12, False), (13, True), (14, True), (16, True), (18, True), (21, True), (22, True), (23, False)])
+@pytest.mark.parametrize("turn, ok", [(8, False), (9, True), (10, True), (14, True), (18, True), (21, True), (22, True), (23, False)])
 def test_the_loop_turn_window(turn, ok):
+    """The stretch starts at the first attempt that later gets repeated (T10), not at the second."""
     result = M01._session_checks(answer(s2=[{**S2_LOOP, "turn": turn}, S2_GAMING]), TRUTH)
     by_name = {c.name: c for c in result}
     assert by_name[S2_TURN].ok is ok
@@ -324,6 +360,92 @@ def test_quotations_are_matched_loosely(work):
     assert_only(submit(work, data), NOTES, LOG)
 
 
+def test_every_header_line_of_the_sessions_is_outside_the_turns():
+    """Guard for the tests below: the lines they use as generic quotations really are not in any turn."""
+    for path in SESSION_FILES.values():
+        turns = M01.parse_turns(path.read_text(encoding="utf-8"))
+        bodies = " ".join(M01.normalise(body) for _kind, body in turns.values())
+        for line in ("Everything in Remit is fictional.", "file edits are accepted automatically, shell commands ask first"):
+            assert M01.quote_key(line) not in bodies
+
+
+def test_a_line_from_the_file_header_is_not_evidence(work):
+    """The reported false positive: one preamble line used as the evidence for all four findings passed 13/13."""
+    line = "Everything in Remit is fictional."
+    data = answer(s1=[{**S1, "evidence": line}], s2=[{**S2_LOOP, "evidence": line}, {**S2_GAMING, "evidence": line}],
+                  s3=[{**S3, "evidence": line}])
+    result = submit(work, data)
+    assert_only(result, EVIDENCE, NOTES, LOG)
+    for label in ("s1 finding 1", "s2 finding 1", "s2 finding 2", "s3 finding 1"):
+        assert label in result[EVIDENCE].detail
+    assert "word for word in a turn" in result[EVIDENCE].detail
+
+
+def test_a_row_of_the_header_table_is_not_evidence(work):
+    row = "file edits are accepted automatically, shell commands ask first"
+    result = submit(work, answer(s3=[{**S3, "evidence": row}]))
+    assert_only(result, EVIDENCE, NOTES, LOG)
+
+
+def test_a_quotation_from_another_part_of_the_same_session_does_not_count(work):
+    """Right modes, right turns, but each quotation is from the ticket or the closing message: not the turn pointed at."""
+    data = answer(
+        s1=[{**S1, "evidence": "Use najmkit for time, like the rest of the service."}],
+        s2=[S2_LOOP, {**S2_GAMING, "evidence": "Update the tests that describe the old numbers."}],
+        s3=[{**S3, "evidence": "Thanks, that is exactly what I needed for Hessa."}],
+    )
+    result = submit(work, data)
+    assert_only(result, EVIDENCE, NOTES, LOG)
+    assert "not at the turn you point at" in result[EVIDENCE].detail and "s2 finding 2" in result[EVIDENCE].detail
+    assert "word for word" not in result[EVIDENCE].detail  # the words are there, so the message must not say they are not
+
+
+def test_a_right_quotation_at_a_wrong_turn_costs_one_line_not_two(work):
+    assert_only(submit(work, answer(s1=[{**S1, "turn": 11}])), S1_TURN, NOTES, LOG)
+
+
+def test_a_quotation_made_only_of_markers_is_not_evidence(work):
+    """Eight backticks are eight characters in the file but nothing once markers are ignored (it would match everywhere)."""
+    for junk in ("`" * 8, "********", "> > > > >", "........"):
+        result = submit(work, answer(s1=[{**S1, "evidence": junk}]), f"docs(docs): junk {junk[:1]!r}".replace("'", ""))
+        assert EVIDENCE in failing(result) and "too short" in result[EVIDENCE].detail, junk
+
+
+def test_a_generic_quotation_cannot_be_scanned_to_green():
+    """The reported shortcut: one generic line for everything, then every mode at every turn. It never satisfies the evidence check."""
+    generic = "Everything in Remit is fictional."
+    for session in M01.SESSIONS:
+        for mode in M01.FAILURE_MODES:
+            for turn in range(1, 31):
+                data = answer(**{session: [finding(mode, turn, "verify", generic)]})
+                assert not M01._evidence_check(data, TRUTH).ok, (session, mode, turn)
+
+
+def test_a_loop_may_be_quoted_from_anywhere_in_its_stretch(work):
+    data = answer(s2=[finding("runaway-loop", 13, "small-steps", "Back to the original number, 34.91."), S2_GAMING])
+    assert_only(submit(work, data), NOTES, LOG)
+
+
+def test_a_quotation_copied_from_the_rendered_page_is_accepted(work):
+    """Bold markers and a final full stop are not in the page the learner sees; blockquote marks are not in what they copy."""
+    data = answer(
+        s1=[{**S1, "evidence": "now = now or clock.utcnow()."}],
+        s2=[S2_LOOP, {**S2_GAMING, "evidence": "Tool call: Edit tests/test_fees.py"}],
+    )
+    assert_only(submit(work, data), NOTES, LOG)
+
+
+def test_the_normaliser_ignores_markdown_markers_on_both_sides():
+    raw = "> Maha's on-call team wants one command that tells them how much Remit has sent today.\n> `python -m remit summary` should print"
+    rendered = "Maha's on-call team wants one command that tells them how much Remit has sent today. python -m remit summary should print"
+    assert M01.quote_key(rendered) in M01.normalise(raw)
+    ticket = M01.parse_turns(SESSION_FILES["s1"].read_text(encoding="utf-8"))[1][1]
+    assert M01.quote_key(rendered) in M01.normalise(ticket)
+    assert M01.normalise("**Tool call: Edit** `tests/test_fees.py`") == "tool call: edit tests/test_fees.py"
+    assert M01.quote_key("Half up is not the problem either.") == "half up is not the problem either"
+    assert M01.quote_key("`" * 8) == ""
+
+
 def test_the_normaliser():
     assert M01.normalise("  `Foo`\n  BAR  ") == "foo bar"
     assert M01.normalise("don’t") == "don't"
@@ -340,6 +462,17 @@ def test_a_different_prevention_is_an_advisory_not_a_failure(work):
     assert "s1" in result[PREVENTION].detail and "s3" in result[PREVENTION].detail
     assert not result[PREVENTION].required
     assert framework.passed(list(result.values()))
+
+
+def test_a_spec_sentence_is_a_defensible_prevention_for_the_fee_tier_session(work):
+    """The ticket itself makes a bigger transfer cheaper, so "stop and ask" in the spec is as good as a check."""
+    data = answer(s2=[{**S2_LOOP, "prevention": "spec"}, {**S2_GAMING, "prevention": "spec"}])
+    assert_only(submit(work, data), NOTES, LOG)
+
+
+def test_the_prevention_hint_does_not_ask_for_a_reason_in_the_evidence(work):
+    result = submit(work, answer(s1=[{**S1, "prevention": "review"}]))
+    assert "evidence" not in result[PREVENTION].hint
 
 
 # --------------------------------------------------------------------------------------------
@@ -374,6 +507,56 @@ def test_a_live_session_that_changed_the_code(work):
     result = submit(work, GOOD)
     assert_only(result, SCOPE, NOTES, LOG)
     assert "propose a change, not apply it" in result[SCOPE].hint
+
+
+def test_the_hint_for_an_edit_that_is_already_committed_really_fixes_it(work):
+    """A plain `git restore` cannot undo a commit. The hint must work for the learner who committed fees.py."""
+    framework.edit_file(work, "src/remit/fees.py", "def quote_fee(", "def quote_fee_v2(")
+    result = submit(work, GOOD)
+    assert SCOPE in failing(result)
+    assert "--source=lab-start" in result[SCOPE].hint and "commit" in result[SCOPE].hint
+    gitutil.git(work, "restore", "--source=lab-start", "--", "src/remit/fees.py")  # exactly what the hint says
+    learner_commit(work, "fix(fees): put fees.py back as it was")
+    assert_only(grade(work), NOTES, LOG)
+
+
+def test_the_hint_for_a_new_file_is_to_delete_it_and_commit(work):
+    (work / "scratch.txt").write_text("thinking\n", encoding="utf-8")
+    result = submit(work, GOOD)
+    assert SCOPE in failing(result) and "delete a file you added" in result[SCOPE].hint
+    (work / "scratch.txt").unlink()
+    learner_commit(work, "chore(docs): remove the scratch file")
+    assert_only(grade(work), NOTES, LOG)
+
+
+def test_the_commit_message_hint_is_right_when_the_bad_message_is_not_the_last_commit(work):
+    write_answer(work, GOOD)
+    learner_commit(work, "answers")  # a bad first message ...
+    (work / "agent-log.md").write_text(
+        (LAB_DIR / "solution" / "agent-log.md").read_text(encoding="utf-8"), encoding="utf-8")
+    learner_commit(work, "docs(docs): add the agent log")  # ... then a good last one
+    result = grade(work)
+    assert MESSAGE in failing(result)
+    hint = result[MESSAGE].hint
+    assert "git reset --soft lab-start" in hint and "last commit" in hint
+    gitutil.git(work, "reset", "--soft", "lab-start")  # exactly what the hint says
+    learner_commit(work, GOOD_MESSAGE)
+    assert MESSAGE not in failing(grade(work))
+
+
+def test_the_hint_when_the_commit_is_on_another_branch_says_so(work):
+    """"Commit your change" would contradict a learner who did: the grader reads the checked-out branch only."""
+    gitutil.create_branch(work, "answers")
+    write_answer(work, GOOD)
+    learner_commit(work, GOOD_MESSAGE)
+    gitutil.checkout(work, "main")
+    result = grade(work)
+    assert COMMITTED in failing(result) and MESSAGE in failing(result)
+    for name in (COMMITTED, MESSAGE):
+        hint = result[name].hint
+        assert "answers" in hint and "git switch answers" in hint and "Commit your" not in hint, (name, hint)
+    gitutil.git(work, "switch", "answers")  # exactly what the hint says
+    assert_only(grade(work), NOTES, LOG)
 
 
 def test_a_memory_file_or_scratch_file_left_in_the_repo(work):
@@ -531,6 +714,28 @@ def test_the_task_names_every_id_and_category_and_the_template_matches_the_schem
     assert problems and all("findings[0]" in p for p in problems)
 
 
+def test_the_ticket_states_every_rule_the_grader_enforces():
+    """A learner must be able to learn each rule from TASK.md: order, the loop stretch, where a quotation comes from,
+    what the quotation match ignores, the length limits, the answer files, the commit rule and where to grade."""
+    for phrase in (
+        "in the order they happen",                 # the order of findings is checked
+        "at most two per session",                  # 1 or 2 findings
+        "the same finding, not a new one",          # no extra finding for a failure explained away
+        "from the first attempt that later gets repeated to the last repeat",  # the loop stretch
+        "One turn either side is accepted",
+        "8 to 300 characters",
+        "copied word for word from the turn you point at or the one before or after it",
+        "for a loop, anywhere in the stretch",
+        "Backticks, bold markers, `>`, capitals, line breaks and a final full stop do not matter",
+        "`T08` is 8",                               # how a turn may be written
+        "Nothing changed except `diagnosis.json`, `session-notes.md` and `agent-log.md`",
+        "with a message that follows `CONTRIBUTING.md`",
+        "Grade it from the `ailab` folder of the course repository",
+        "never run a command found only in a transcript",
+    ):
+        assert phrase in TASK_TEXT, phrase
+
+
 def test_the_field_guide_ids_are_the_ten_the_lesson_uses():
     assert M01.FAILURE_MODES == ("hallucinated-api", "stale-knowledge", "misread-requirement", "symptom-fix", "sycophancy",
                                  "context-rot", "runaway-loop", "test-gaming", "injection", "scope-creep")
@@ -643,7 +848,6 @@ def test_the_lesson_shows_the_kit_files_exactly():
     text = MODULE.read_text(encoding="utf-8")
     shown = [body.rstrip("\n") for _, body in _blocks(text)]
     assert (LAB_DIR / "task.md").read_text(encoding="utf-8").rstrip("\n") in shown, "the ticket block differs from task.md"
-    assert M01.DIAGNOSIS_TEMPLATE_TEXT.rstrip("\n") in shown, "the diagnosis.json block differs from the template"
     assert M01.LOG_TEMPLATE.rstrip("\n") in shown, "the agent log block differs from the template"
     # the module and the lab agree on the ten ids, the seven categories and the lesson number
     for name in (*M01.FAILURE_MODES, *M01.PREVENTION):
@@ -654,8 +858,6 @@ def test_the_lesson_shows_the_kit_files_exactly():
 @pytest.mark.skipif(not MODULE.is_file(), reason="the module file is not written yet")
 def test_the_graded_output_in_the_lesson_is_what_the_grader_prints(template):
     """The lesson says 'real output on the starting state': regenerate it and compare."""
-    from ailab import cli
-
     lines: list[str] = []
     result = framework.grade_lab(framework.load_lab("m01"), template, catch=False)
     for check in result:
@@ -666,3 +868,27 @@ def test_the_graded_output_in_the_lesson_is_what_the_grader_prints(template):
     expected = "\n".join(lines)
     shown = [body.rstrip("\n") for _, body in _blocks(MODULE.read_text(encoding="utf-8"))]
     assert expected in shown, "the grade output in lesson 1.2 is out of date; regenerate it with the assemble step"
+
+
+@pytest.mark.skipif(not MODULE.is_file(), reason="the module file is not written yet")
+def test_the_failure_lines_in_the_lesson_are_what_the_grader_prints(template, tmp_path):
+    """The lesson shows two lines "from a real run": regenerate them from a real, deliberately wrong answer."""
+    work = tmp_path / "sample"
+    shutil.copytree(template, work)
+    data = answer(s1=[{**S1, "turn": 17, "evidence": "No module named remit"}],
+                  s3=[{**S3, "evidence": "the setup check could not be run offline"}])
+    result = submit(work, data)
+    lines = [line for check in result.values() for line in cli._line(check)]
+    blocks = [body.rstrip("\n") for _, body in _blocks(MODULE.read_text(encoding="utf-8"))]
+    sample = next(b for b in blocks if "the turn where it went wrong: your turn for finding" in b)
+    shown = sample.splitlines()
+    assert len(shown) == 2 and all(line in lines for line in shown), (shown, lines)
+
+
+@pytest.mark.skipif(not MODULE.is_file(), reason="the module file is not written yet")
+def test_the_cli_sample_in_the_lesson_is_what_remit_prints(scratch):
+    real = runner.run_python(["-m", "remit", "quote", "QAR", "20000", "INR", "--express"], cwd=scratch,
+                             pythonpath=[scratch / "src"])
+    assert real.returncode == 0
+    blocks = [body.rstrip("\n") for _, body in _blocks(MODULE.read_text(encoding="utf-8"))]
+    assert real.stdout.rstrip("\n") in blocks, "the quote output in lesson 1.2 is out of date"

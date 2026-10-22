@@ -4,6 +4,11 @@ The task is REMIT-252 (`lab-assets/ab-task.md`). Run it twice with the same tool
 prompt, each time in a fresh copy of the repository: A without the memory file, B with it. Replace each placeholder
 with your own text. Report what happened. "No difference" is a valid result; an invented improvement is not.
 
+How the grader reads this file: no placeholder left; each section has a few real words (Setup 8, What was different 12,
+Limits 8, the memory changes 2: "Nothing yet." counts); the first four table rows are numbers (`~10`, `<1`, `0.4`, `none`
+and a unit such as `min` are fine) and the last two are yes or no; each of the two quote sections starts with a block quote
+(`>`) of at least 15 characters copied from your memory file, a different line in each.
+
 *Illustrative reference notes, constructed for the kit's own tests. They are not a recording of a real model run;
 yours must come from your own runs.*
 
@@ -23,6 +28,8 @@ yours must come from your own runs.*
 | Lines changed (added plus deleted) | 71 | 46 |
 | `pytest -q` passes at the end (yes or no) | yes | yes |
 | Commit message follows CONTRIBUTING.md (yes or no) | no | yes |
+
+A run under a minute is `<1`; do not round it up.
 
 ## What was different
 

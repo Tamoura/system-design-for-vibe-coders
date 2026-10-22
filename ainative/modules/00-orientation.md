@@ -122,11 +122,11 @@ Together they show gains on well-scoped tasks with wide error bars, a loss for e
 
 > An AI-native engineer routinely directs AI tools in daily work and stays accountable for the result. They supply context, define done before delegating, work in small verified steps, judge output by evidence, and automate what repeats without letting their own skill lapse.
 
-**Two companies describing their own practice.** Microsoft's post "Spec-Driven Development: A Spec-First Approach to AI-Native Engineering" argues that teams should agree on intent before an AI generates code, and offers its open-source GitHub Spec Kit for the job. Spec-first is part of how Microsoft uses "AI-native"; your second habit makes the same bet, and Module 3 returns to it. Meta reports in "How Meta Built Forum With AI-Native Engineering" that a small team built Forum, a standalone Groups app, with an AI agent as a participant. Its target is "human-on-the-loop": the agent runs the plan, build, test and correct cycle while an engineer sets the goal and approves the result. Meta calls it a target, not a finished state, and sets the bar for done at verification (automated tests and visual checks), not compilation; Lujain's Thursday had green tests and no look at the real output. Each is a company's account of its own work, not independent evidence; read the originals, linked below.
+**Two companies describing their own practice.** Microsoft's post ["Spec-Driven Development: A Spec-First Approach to AI-Native Engineering"](https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/) argues that teams should agree on intent before an AI generates code, and offers its open-source GitHub Spec Kit for the job. Spec-first is part of how Microsoft uses "AI-native"; your second habit makes the same bet, and Module 3 returns to it. Meta reports in ["How Meta Built Forum With AI-Native Engineering"](https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/) that a small team built Forum, a standalone Groups app, with an AI agent as a participant. Its target is "human-on-the-loop": the agent runs the plan, build, test and correct cycle while an engineer sets the goal and approves the result. Meta calls it a target, not a finished state, and sets the bar for done at verification (automated tests and visual checks), not compilation; Lujain's Thursday had green tests and no look at the real output. Each is a company's account of its own work, not independent evidence; read the originals.
 
 **How the course works.** One module a week (Modules 0 to 13), then the capstone; each has a concept lesson and a lab or workshop. Labs run on **Najm Remit**, a small Python service, graded by **`ailab`**, an offline kit: no API key, no network, no agent required. Use Claude Code, another tool or none; the grader looks at the result. Each lab ends with a deliverable, a group session and an **agent log**. **Najm Bank is fictional**, as are its customers, rates and limits. Your team: **Tariq** (your mentor, who runs the weekly "AI-native clinic"), **Lujain** (enthusiastic, over-trusting) and **Hessa** (product owner, writes the tickets). Colleagues in quality, security, SRE, governance and platform join in their own modules.
 
-**Honest limits.** The course cannot promise you will be faster. Tools change fast: its Claude Code details were checked against the documentation in October 2026, so check the current pages. The labs are small and fictional, and the grader checks results, not understanding. The aim is to help you tell when an agent is wrong.
+**Honest limits.** The course cannot promise you will be faster. Tools change fast: its Claude Code details were checked in October 2026, so check the current documentation. The labs are small and fictional, and the grader checks results, not understanding. The aim is to help you tell when an agent is wrong.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -160,7 +160,7 @@ Automate the loop, keep the skill
  A1 I turn steps I repeat into a command, script or hook                     [0|1|2]
  A2 I still write or debug code by hand often enough to stay sharp           [0|1|2]
 
-Total (0-20):      Lowest habit:      The one habit I will watch this week:
+Total (0-20):      Lowest habit (lowest pair sum; on a tie pick one):      The one habit I will watch this week:
 ```
 
 **Second, the agent log.** One entry per AI-assisted task. Fill the minutes honestly.
@@ -277,34 +277,25 @@ Would I delegate it again?     Yes, with the same spec
 - Start in Manual (`default`) mode. Never use `bypassPermissions` where real credentials live. Auto mode is a classifier's judgement, not a wall.
 - Keep secrets out of prompts and out of reach: whatever the agent reads enters its context.
 - Clean tree, a branch per task, a throwaway directory: then `git diff` shows only what the agent did.
-- The kit: `python -m ailab doctor | list | start | grade | solve`. Offline, no API key. The grader is a practice partner, not a gate.
-- Lab m00: fix a typo, run the tests, commit as `type(scope): subject`. Needs an agent: no.
+- The kit: `python -m ailab doctor | list | start | grade | solve`. Offline; the grader is a practice partner.
+- Lab m00 (in 🏛️): fix a typo, run the tests, commit as `type(scope): subject`. Needs an agent: no.
 
 ## 🧭 Why it matters
 On her second day Lujain tires of permission prompts and switches her agent to bypass mode. Her laptop holds a VPN profile, a cloud login and an old project's `.env`. Nothing happens. That is the trap: the bad day is rare, so safety feels like friction. Noura (application and AI security) has a rule for week zero: the agent has your hands. Whatever you can read, delete or push, it can.
 
-Public reports show what rare looks like. One user said Google's Antigravity agent, in "Turbo mode", deleted a drive's contents when asked to clear a project cache (November 2025); a founder said a Replit agent deleted a production database during a code freeze (July 2025). Both are unaudited single accounts, so hold the details loosely. The pattern maps onto OWASP's excessive agency (LLM06): too much functionality, permission or autonomy.
+Public reports show what rare looks like: one user said Google's Antigravity agent, in "Turbo mode", deleted a drive's contents (November 2025); a founder said a Replit agent deleted a production database during a code freeze (July 2025). Both are unaudited single accounts, so hold the details loosely. The pattern is OWASP's excessive agency (LLM06): too much functionality, permission or autonomy.
 
 ## 📐 How it works
 
 ### 🟢 The essentials
 
-**Tools.** This table is alphabetical, paraphrases each vendor's own description and ranks nothing.
+**Tools.** Alphabetical, not ranked: [Aider](https://aider.chat/docs/), [Claude Code](https://code.claude.com/docs/en/overview), [Cursor](https://cursor.com/docs/agent/overview), [Gemini CLI](https://geminicli.com/docs/), [GitHub Copilot agent mode](https://docs.github.com/en/copilot/how-tos/copilot-in-your-ide/use-copilot-agents/use-agent-mode) and [OpenAI Codex CLI](https://developers.openai.com/codex).
 
-| Tool (documentation) | The vendor's description |
-|---|---|
-| [Aider](https://aider.chat/docs/) | Pair programming with LLMs on a new or existing codebase |
-| [Claude Code](https://code.claude.com/docs/en/overview) | An agentic coding tool that reads your codebase, edits files and runs commands |
-| [Cursor](https://cursor.com/docs/agent/overview) | An agent that searches the codebase, edits files and runs terminal commands |
-| [Gemini CLI](https://geminicli.com/docs/) | An open-source AI agent that brings Gemini into your terminal |
-| [GitHub Copilot agent mode](https://docs.github.com/en/copilot/how-tos/copilot-in-your-ide/use-copilot-agents/use-agent-mode) | Edits code on its own for a task; you review and, by default, approve commands |
-| [OpenAI Codex CLI](https://developers.openai.com/codex) | A coding agent that runs locally on your computer |
+The examples use Claude Code; the habits do not depend on one tool, and the grader never knows which you used.
 
-The examples use Claude Code. The habits do not depend on one tool, and the grader never knows which you used.
+**Install and start Claude Code.** Follow the official setup page linked above, not a command from a blog or a chat answer; `claude --version` then prints your version. Learn in the terminal. `cd` into your work directory and run `claude`; expect a sign-in step (at Najm, the approved one).
 
-**Install and start Claude Code.** Installation steps change: follow the official setup page linked from the overview above, not a command from a blog, a chat answer or this lesson. `claude --version` then prints your version. IDE and desktop versions exist; learn in the terminal, where the lesson commands are typed. Next, `cd` into your work directory and run `claude`; expect a sign-in step (at Najm, the approved one).
-
-**The trust dialog.** In a folder it has not seen, Claude Code asks whether you trust it. Yes lets the project's own settings and hooks apply (its tool servers get a separate prompt), so say yes only to a folder you have read. Project `allow` rules apply after you accept; `deny` and `ask` rules at once. Do not start in your home directory: it widens what the agent can reach. (Check the current documentation.)
+**The trust dialog.** In a folder it has not seen, Claude Code asks whether you trust it. Yes lets the project's own settings and hooks apply, so say yes only to a folder you have read. Do not start in your home directory: it widens what the agent can reach. (Check the current documentation.)
 
 **Permission modes.** They decide what runs without asking.
 
@@ -317,11 +308,11 @@ The examples use Claude Code. The habits do not depend on one tool, and the grad
 | `dontAsk` | Only pre-approved tools; the rest is denied | Scripted runs (Module 9) |
 | `bypassPermissions` | Everything (deny rules still apply) | Never with real credentials on the machine |
 
-Switch with Shift+Tab or `/plan`. The documentation says to use bypass mode only "in isolated environments like containers, VMs, or dev containers without internet access", and that it "offers no protection against prompt injection or unintended actions". Auto mode adds a reviewing model, but the documentation says it does not guarantee safety. Starting modes vary by version (recent ones document `auto` as the terminal default), so read the status bar and begin with `claude --permission-mode default`.
+Switch with Shift+Tab or `/plan`. The documentation says to use bypass mode only "in isolated environments like containers, VMs, or dev containers without internet access". Auto mode adds a reviewing model, but the documentation says it does not guarantee safety. Starting modes vary by version, so read the status bar and begin with `claude --permission-mode default`.
 
 ### 🟡 Going deeper
 
-**A safe starting file.** Save this as `~/.claude/settings.json`, your user settings (check the current documentation for key names).
+**A safe starting file.** Save this as `~/.claude/settings.json`, your user settings (merge the keys if the file exists; check the current documentation for key names).
 
 ```json
 {
@@ -338,11 +329,11 @@ Switch with Shift+Tab or `/plan`. The documentation says to use bypass mode only
 }
 ```
 
-Keep it out of the lab folder: the m00 grader counts every changed file, so a committed `.claude/settings.json` fails the scope checks (`.claude/settings.local.json` is ignored). A `deny` beats an `allow` in any scope. There is no `allow` for `pytest` on purpose: tests are code, and a user-level rule would reach repositories you have not read. In one you trust, choose "don't ask again" once; the rule is saved to `.claude/settings.local.json`. The list names `.env` and `.env.local`, not `.env.*`, which would hide the harmless `.env.example`. These are guard rails, not walls: `Bash(git push *)` does not stop `git -C . push`. The sandbox (`/sandbox`, off by default) and hooks enforce (Module 8).
+Keep it out of the lab folder: a committed `.claude/settings.json` fails m00's scope check (`.claude/settings.local.json` is ignored). A `deny` beats an `allow` in any scope. There is no `allow` for `pytest` on purpose: tests are code, and a user-level rule would reach repositories you have not read. In one you trust, choose "don't ask again" once; the rule is saved to `.claude/settings.local.json`. These are guard rails, not walls: `Bash(git push *)` does not stop `git -C . push`. The sandbox (`/sandbox`, off by default) and hooks enforce (Module 8).
 
 **Secrets and `.env`.** Remit takes settings from environment variables and never loads a `.env` file; `.gitignore` already ignores it. Assume everything the agent reads is in its context and a transcript: Claude Code keeps local transcripts as plain text under `~/.claude/projects/`, for 30 days by default. If a secret reaches a prompt, treat it as leaked and rotate it.
 
-**What never goes into a prompt.** Najm's rules: approved tools only, in approved environments, with no Confidential or Restricted data and no secrets in prompts or agent contexts.
+**What never goes into a prompt.** Najm's rules: approved tools and environments only; no Confidential or Restricted data and no secrets in prompts or agent contexts.
 
 | Never paste | Do instead |
 |---|---|
@@ -350,42 +341,29 @@ Keep it out of the lab folder: the m00 grader counts every changed file, so a co
 | Real customer names, account or ID numbers | Use the fictional Remit data or invent some |
 | Production logs with personal data | Mask first, paste the shape |
 
-On data use, the documentation says commercial plans are not used for training unless the customer opts in, while consumer accounts choose; read the current page and your organisation's terms.
+Training use of your prompts depends on the plan: read the data-usage page and your organisation's terms.
 
-**Sessions.** Long sessions cost more and work worse (the documentation's "kitchen sink session"), so use a fresh session per task; `/usage` shows session cost and `/context` what fills the window.
-
-**Environment hygiene.** *Clean tree:* `git status` shows nothing before the agent starts, so `git diff` is the agent's work and only that. *Branch per task:* `git switch -c remit-212-typo` makes undo a branch delete. *Throwaway directory:* labs live in `~/ainative/`, never in a repository you care about. Checkpoints (`/rewind`) miss shell changes such as `rm` and are no substitute for git.
+**Sessions and hygiene.** Long sessions cost more and work worse (the documentation's "kitchen sink session"): start a fresh one per task; `/usage` shows cost and `/context` what fills the window. *Clean tree:* `git status` shows nothing before the agent starts, so `git diff` is its work and only that. *Branch per task:* `git switch -c remit-212-typo` makes undo a branch delete. *Throwaway directory:* labs live in `~/ainative/`, never in a repository you care about. `/rewind` checkpoints miss shell changes such as `rm`: use git.
 
 ### 🔴 Expert view
 
-**How the kit works.** `start` copies the base repository, runs `git init` on `main`, commits "Initial state", applies the lab's seed as "Lab starting state", tags it `lab-start` and writes `TASK.md`; `git diff lab-start` is your work. `grade` copies your directory and runs hidden tests in a subprocess, never importing your code; it exits 0 only when every required check passes. `solve` applies the reference solution; it is a peek, so try first.
+**How the kit works.** `start` copies the base repository, commits "Initial state", applies the lab's seed as "Lab starting state" and tags it `lab-start`, so `git diff lab-start` is your work. `grade` runs hidden tests on a copy of your directory and exits 0 only when every required check passes. `solve` applies the reference solution; it is a peek, so try first.
 
-**The repo tour.** Read `README.md`, `CONTRIBUTING.md` and `docs/TOUR.md`, in that order. A transfer runs `validate, limits, screening, fee, fx, ledger, store, notify` in `service.py`, stopping at the first failure. Money is `Decimal` in the `Money` class, never `float`. `ledger.py` and `screening.py` are old and have no tests. `najmkit` is Najm's internal library for ids, time and audit events; no model was trained on it, so tell an agent to read `docs/najmkit.md`. When a doc and the code disagree, the code wins. Try the CLI (`PYTHONPATH=src` lets Python find the package; the README also shows `python -m pip install -e .`):
-
-```text
-$ PYTHONPATH=src python -m remit quote QAR 500 INR
-Corridor:  QAR -> INR
-Send:      500.00 QAR
-Fee:       12.00 QAR
-Total:     512.00 QAR
-Rate:      22.5720 (valid for 60 s)
-Receive:   11286.00 INR
-Delivery:  bank_deposit
-```
+**The repo tour.** Read `README.md`, `CONTRIBUTING.md` and `docs/TOUR.md`, in that order. Money is `Decimal` in the `Money` class, never `float`. `ledger.py` and `screening.py` are old and have no tests. `najmkit` is Najm's internal library for ids, time and audit events; no model was trained on it, so tell an agent to read `docs/najmkit.md`. When a doc and the code disagree, the code wins. Try the CLI: `PYTHONPATH=src python -m remit quote QAR 500 INR` prints a fee of 12.00 QAR (`PYTHONPATH=src` lets Python find the package; the README also shows `python -m pip install -e .`).
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
 | **Permission modes** | Manual, plan, acceptEdits, auto, dontAsk, bypassPermissions | Every session; check the status bar |
-| **Deny rules** | Settings entries that block reads of secrets and risky commands | Before the first session, in user settings |
+| **Deny rules** | Settings entries that block reads of secrets and risky commands | Before the first session |
 | **Branch per task** | A clean tree and one branch per ticket | Every task |
 | **ailab kit** | `doctor`, `list`, `start`, `grade`, `solve`: an offline lab runner | Every lab |
 | **Conventional Commits** | `type(scope): subject`, as `CONTRIBUTING.md` defines it | Every commit |
 
 ## 🏛️ In practice at Najm Bank
-*Needs an agent: no. Do it by hand first; the agent pass is optional, and the grader cannot tell which you used. With no agent, a chat assistant works for the comparison (paste only fictional code), or log the by-hand attempt alone.*
+*Needs an agent: no. Do it by hand first; the agent pass is optional and the grader cannot tell which you used. No agent? Compare with a chat assistant (paste only fictional code), or log the by-hand attempt alone.*
 
-**The ticket.** This is `task.md`, as Hessa wrote it.
+**The ticket.** This is `TASK.md`, as Hessa wrote it.
 
 > ```text
 > # REMIT-212: spelling mistake in the "transfer sent" message
@@ -404,18 +382,23 @@ Delivery:  bank_deposit
 >
 > 1. The English "transfer sent" message is spelled correctly again.
 > 2. `pytest -q` passes.
-> 3. The change is as small as it can be: one message, nothing else. Please do not edit
->    the tests; they are right.
-> 4. It is committed as **one commit**, with a message that follows the team's rules in
->    `CONTRIBUTING.md`.
+> 3. The change is as small as it can be: the misspelled word, nothing else. Please do not
+>    add or edit tests; the existing ones are right.
+> 4. It is committed as **one commit**, with a message that follows `CONTRIBUTING.md`: this
+>    is a bug fix, so the type is `fix`; the scope is the module you changed; the subject
+>    starts with a verb in the imperative ("correct", not "corrected").
 >
 > ## Notes
 >
 > - Use whatever helps you: your editor, or an AI coding tool if you have one. If a tool
 >   makes the change, read the diff before you commit. You are the one who is accountable
 >   for it.
-> - Run `python -m ailab doctor` first if you have not already.
-> - When you think you are done, grade it from the `ailab` folder of the course repository:
+> - Work on a branch if you like (`git switch -c remit-212-typo`). Grading reads the branch
+>   that is checked out, so grade from the branch that holds your commit. Two commits instead
+>   of one? Run `git reset --soft lab-start`, then commit again.
+> - Git and `pytest` run in this directory. Every `python -m ailab` command runs from the
+>   `ailab` folder of the course repository, with its virtual environment active.
+> - Run `python -m ailab doctor` first if you have not already. When you think you are done:
 >   `python -m ailab grade m00 --dir <this directory>`
 > ```
 
@@ -432,25 +415,27 @@ python -m ailab start m00 --dir ~/ainative/m00
 cd ~/ainative/m00
 ```
 
-`doctor` prints a `[PASS]` or `[FAIL]` line per check (Python 3.11 or newer, git, pytest, a writable folder, your git identity, the kit files) and ends with `Everything needed is in place.` Fix any FAIL first.
+`doctor` prints a `[PASS]` or `[FAIL]` line per check and ends with `Everything needed is in place.` Fix any FAIL first.
 
-**Your move, by hand first.** Run `git switch -c remit-212-typo`, then `pytest -q` and read the first failure from the top: it shows what was expected and what came out. Search for that text (`grep -rn --include='*.py' "<a phrase from the message>" src`, or your editor), make the smallest edit, rerun `pytest -q` and read `git diff`. Commit once. `CONTRIBUTING.md` requires `type(scope): subject`: a type from `feat fix docs test refactor perf chore ci build revert`, a required lower-case scope, an imperative subject, no full stop, a header up to 72 characters (example: `fix(limits): count transfers made just after midnight`). Time yourself and log it.
+From here you work in two places. In `~/ainative/m00` you edit and run `git` and `pytest`. Every `python -m ailab` command runs in the `ailab` folder with the virtual environment active (it stays active when you `cd`).
 
-**Then with an agent** (optional), in a second directory (`ailab start m00 --dir ~/ainative/m00-agent`). The weak prompt `fix the typo in the message` names no file, limit or stopping point, so the agent may rewrite the sentence or a test. Start in Manual mode with a stronger one and read every diff:
+**Your move, by hand first.** In `~/ainative/m00`, run `git switch -c remit-212-typo`, then `pytest -q` and read the first failure from the top: it shows what was expected and what came out. Search for that text (`grep -rn --include='*.py' "<a phrase from the message>" src`, or your editor), make the smallest edit, rerun `pytest -q` and read `git diff`. Commit once. `CONTRIBUTING.md` requires `type(scope): subject`: a type from `feat fix docs test refactor perf chore ci build revert`, one lower-case scope (not a list), an imperative subject, no full stop, a header up to 72 characters (for example `fix(limits): count transfers made just after midnight`). Here the type is `fix` and the scope is the module you changed. Log your minutes.
+
+**Then with an agent** (optional), in a second directory (in the `ailab` folder: `python -m ailab start m00 --dir ~/ainative/m00-agent`). The weak prompt `fix the typo in the message` names no file, limit or stopping point, so the agent may rewrite the sentence or a test. Start in Manual mode with a stronger one and read every diff:
 
 ```text
 Goal: fix REMIT-212 (see TASK.md): the English "transfer sent" message has a spelling mistake.
 Context: Python 3.11; tests run with `pytest -q`; commit rules are in CONTRIBUTING.md. Read TASK.md and CONTRIBUTING.md first.
-Constraints: change as little as possible; do not edit any test; do not commit.
+Constraints: change as little as possible; do not add or edit any test; do not commit.
 Acceptance: `pytest -q` passes; `git diff` shows one file and one line changed.
 First tell me the file and line that cause it. Wait for my OK before editing.
 ```
 
-You commit, with a message you checked against `CONTRIBUTING.md` yourself: the grader wants one commit in that shape, and you are the author of record. Do not run `/init` or add a `CLAUDE.md` here: extra files count against you, and memory files are Module 2.
+You commit, with a message you checked against `CONTRIBUTING.md` yourself: you are the author of record. Do not run `/init` or add a `CLAUDE.md` here: extra files fail the scope check, and memory files are Module 2.
 
-**What the grader checks.** `doctor` and the repo's tests pass; hidden checks on the customer-visible message in English and Arabic; the tests not edited; only the template file changed, and tiny; exactly one new commit that follows `CONTRIBUTING.md`, nothing left uncommitted; no secrets. It cannot tell who made the change, whether you read the diff, or whether your message is good beyond its shape.
+**What the grader checks.** `doctor` and the repo's tests pass. Hidden checks on the message in English and Arabic, and that the wrong spelling is gone from every Python file under `src/` (a comment counts, and so does a fix applied only when the message is built). The tests neither edited nor added. Only the template file changed, and tiny: it equals the starter with the one word corrected. Exactly one new commit on the checked-out branch (a merge commit does not count), shaped as `CONTRIBUTING.md` says, with type `fix`, the module as scope, an imperative subject of a few words and no ending punctuation. Nothing left uncommitted; no secrets. It cannot tell who made the change, whether you read the diff, or whether your message is good beyond its form.
 
-**Grade.**
+**Grade.** Grade on the branch that holds your commit: the grader reads whichever branch is checked out, under any name (`main` works too).
 
 ```bash
 cd ~/system-design-for-vibe-coders/ainative/ailab      # with the virtual environment active
@@ -462,27 +447,27 @@ On the starter state the real output is:
 ```text
 [PASS] Your environment passes `ailab doctor`
 [FAIL] Your tests pass: 97 passed, 2 failed: test_customer_send_and_history_share_a_database_file, test_transfer_sent_in_english
-       hint: Run `pytest -q` in your repository and read the first failure from the top.
+       hint: Run `pytest -q` in your lab directory (not the ailab folder) and read the first failure from the top.
 [FAIL] The message is right in English and Arabic: 3 of 5 hidden checks failed: test_english_transfer_sent_spells_received_correctly, test_english_transfer_sent_is_otherwise_unchanged, test_the_misspelling_is_gone_from_the_whole_source_tree
-       hint: Compare the message your customers get with the sentence the failing test expects.
+       hint: Compare your customers' message with the sentence the failing test expects. The wrong spelling must go from comments in src/ too.
 [PASS] The tests were not edited
 [FAIL] Only the template file changed: no files have changed yet
        hint: Make the change the ticket asks for.
-[FAIL] The change is tiny: 0 files, +0 -0 lines (nothing substantial has changed yet)
-       hint: This is a one-word fix. Look at `git diff lab-start` and remove anything else.
+[FAIL] The change is tiny: 0 files, +0 -0 lines (nothing has changed yet)
+       hint: Fix the misspelled word first.
 [FAIL] Exactly one new commit: 0 new commits since the start
        hint: Commit your finished change (git add -A && git commit).
-[FAIL] Commit messages follow CONTRIBUTING.md: found 0 commits since the start; expected at least 1
-       hint: Commit your change.
+[FAIL] Commit messages follow CONTRIBUTING.md: found 0 commits since the start; expected 1
+       hint: Commit your finished change (git add -A && git commit).
 [PASS] The fix is committed (nothing left over)
 [PASS] No secrets in the change
 
 Lab m00: 4/10 required checks passed: NOT YET
 ```
 
-A right fix committed as `fixed the typo` fails one line, `Commit messages follow CONTRIBUTING.md`, whose detail quotes your message and says it does not look like `type(scope): subject`; the hint says to amend. Once fixed, the last line reads `Lab m00: 10/10 required checks passed: PASSED`.
+A right fix committed as `fixed the typo` fails one line, `Commit messages follow CONTRIBUTING.md`, quoting your message. Fix it with `git commit --amend`. With two commits, run `git reset --soft lab-start` and commit once; no interactive rebase needed. If you switched to `main` after committing on the task branch, every failing line names the branch that holds your commit: switch back to it. When it passes, the last line reads `Lab m00: 10/10 required checks passed: PASSED`.
 
-**Weekly deliverable (Module 0).** In your notes repository, not in `~/ainative/m00`, commit `week-00/` with `baseline.md` (lesson 0.1), `agent-log.md`, `m00-grade.txt` (the final grade output) and `delegation-card.md` (lesson 0.3, for REMIT-212). The m00 repository holds exactly one new commit.
+**Weekly deliverable (Module 0).** In a notes repository of your own, outside the lab folders (`git init ~/ainative-notes`), commit `week-00/` with `baseline.md` (lesson 0.1), `agent-log.md` (the 0.1 template), `m00-grade.txt` and `delegation-card.md` (your card for REMIT-212, lesson 0.3). For the grade file, create the folder, then run in the `ailab` folder: `python -m ailab grade m00 --dir ~/ainative/m00 > ~/ainative-notes/week-00/m00-grade.txt`. The m00 repository holds exactly one new commit.
 
 **Group session (60 minutes).** (1) Name your lowest baseline habit (10). (2) Swap `git diff lab-start` and explain the change in a sentence (15). (3) Compare by-hand and agent logs (15). (4) State your starting permission mode and why (10). (5) Agree the group's never-paste list (10).
 
@@ -491,22 +476,22 @@ A right fix committed as `fixed the typo` fails one line, `Commit messages follo
 **Agent log.** Use the lesson 0.1 template: one entry per attempt.
 
 ## 🛠️ Exercises
-- 🟢 **By hand.** *No agent.* *Done when:* `grade` prints `PASSED`, the repository has one new commit on a task branch, and your log has an entry with minutes.
-- 🟡 **With an agent, then compare.** *Needs an agent (optional).* Redo it in a fresh directory, in Manual mode. *Done when:* `PASSED` again, and a table compares both attempts on minutes, prompts and what the agent did that you would not have.
+- 🟢 **By hand.** *No agent.* *Done when:* `grade` prints `PASSED`, the repository has one new commit (ideally on a task branch; the grader does not check the name), and your log has an entry with minutes.
+- 🟡 **With an agent, then compare.** *Needs an agent (optional).* Redo it in a fresh directory, in Manual mode. *Done when:* `PASSED` again, and a table compares both attempts on minutes, prompts and what the agent did that you would not.
 - 🔴 **Prove your guard rails.** *Needs an agent.* Install the settings file above, put a `.env` holding only `FAKE_KEY=not-a-real-secret` in a separate throwaway directory (not an m00 repository), start `claude` there and ask it to read the file. *Done when:* a note records your starting mode, what the tool did when the deny rule applied (wording varies), and why a `Bash(git push *)` deny is not a wall.
 
 ## ⚠️ Mistakes and traps
 - **Bypass mode "to stop the prompts".** Allow-list the safe commands you keep approving instead.
-- **Settings or `/init` in the lab repository.** Extra files fail the scope check.
+- **Settings, `/init` or a new test in the lab repository.** Extra files fail the scope check.
 - **Trusting "tests pass" in the summary.** Run `pytest -q` yourself.
-- **Peeking at `hidden/` (it is readable in the kit) or running `solve` first.** The grader is a practice partner, not a gate; peeking defeats the practice.
+- **Peeking at `hidden/` (readable in the kit) or running `solve` first.** The grader is a practice partner, not a gate; peeking defeats the practice.
 
 ## 🧾 Recap
-- Use an approved tool; learn in Manual mode; treat bypass as off limits on a real machine.
-- Keep secrets out of prompts and reach; deny rules are guard rails, while the sandbox and hooks enforce.
+- Use an approved tool; learn in Manual mode; keep bypass off real machines.
+- Keep secrets out of prompts and reach; deny rules are guard rails, the sandbox and hooks enforce.
 - Clean tree, branch per task and a throwaway directory keep the diff honest.
 - The kit grades the result offline, not your thinking.
-- m00 is the whole loop in miniature: find, fix, check, commit as `type(scope): subject`.
+- m00 is the whole loop in miniature: find, fix, check, commit.
 
 ## ✍️ Check yourself
 
@@ -519,7 +504,7 @@ A right fix committed as `fixed the typo` fails one line, `Commit messages follo
 
 <details><summary>Answer</summary>
 
-**C.** A narrow allow rule, saved in that repository's local settings, removes the prompt she keeps approving and widens nothing else. Auto mode does not guarantee safety. (🟡 A safe starting file.)
+**C.** A narrow allow rule, saved in that repository's local settings, removes the prompt and widens nothing else. Auto mode does not guarantee safety. (🟡 A safe starting file.)
 
 </details>
 
@@ -545,7 +530,7 @@ A right fix committed as `fixed the typo` fails one line, `Commit messages follo
 
 <details><summary>Answer</summary>
 
-**D.** Transcripts are kept as plain text for 30 days by default, and the content has left your machine; deleting it or asking the tool to forget does not undo that. (🟡 Secrets and `.env`.)
+**D.** Transcripts are kept as plain text for 30 days by default and the content has left your machine; deleting it or asking the tool to forget undoes nothing. (🟡 Secrets and `.env`.)
 
 </details>
 
@@ -751,7 +736,7 @@ Module 14 runs the whole loop on a real change.
 | **Author of record** | The person whose name is on the change and who answers for it | Every commit and pull request |
 
 ## 🏛️ In practice at Najm Bank
-The artefact is the **Delegation card**, a one-page checklist you fill in before you hand work to an agent. It takes two minutes, and its job is to make you decide before the agent starts. Tariq asks you to bring one for any task you delegate this week. Here is the card for REMIT-244, filled in; copy it as `delegation-card.md`.
+The artefact is the **Delegation card**, a one-page checklist you fill in before you hand work to an agent. It takes two minutes, and its job is to make you decide before the agent starts. Tariq asks you to bring one for any task you delegate this week. Here is the card for REMIT-244, filled in, as your model. Your Module 0 deliverable is the same card for REMIT-212 (exercise 🟢), saved as `delegation-card.md`.
 
 ```markdown
 # Delegation card
@@ -764,14 +749,15 @@ Done means:       flag off = output unchanged; flag on = one "Fee basis" line; t
 Do not touch:     money.py, fees.py, fx.py, any existing test
 Verification:     full suite; revert src and watch new tests fail; run 100, 500, 500.01, 20000
 Budget:           25 minutes; if it cannot buy confidence, shrink the task or do it by hand
+Worth it?:        yes, the checks are cheap and support stops working fees out by hand
 Rollback:         git switch main && git branch -D remit-244-explain
 Author of record: me. Label AI-assisted. Second reviewer: not needed (no money logic)
 ```
 
 ## 🛠️ Exercises
-- 🟢 **Fill a card for REMIT-212.** *No agent.* Use the m00 typo ticket. *Done when:* the card has every field and one sentence says whether delegating that ticket is worth it.
+- 🟢 **Fill a card for REMIT-212.** *No agent.* Use the m00 typo ticket. *Done when:* the card has every field, `Worth it?` included: one sentence on whether delegating that ticket is worth it.
 - 🟡 **Sort six tasks.** *No agent.* Place each in the matrix with an autonomy level and a one-line check: rename a local variable in `cli.py`; change the rounding rule in `money.py`; add tests for fee tier boundaries; write the Arabic wording of a new notification; upgrade the `najmkit` API; fix a typo in the README. *Done when:* all six are placed, at least one is "keep", and each has a named check.
-- 🔴 **Time a real lap.** *Needs an agent (optional).* After you have passed m00 yourself, start a sandbox (`python -m ailab start m00 --dir ~/ainative/sandbox`, then `python -m ailab solve m00 --dir ~/ainative/sandbox` for a green repository) and do REMIT-244 on a branch. Write your by-hand estimate first. *Done when:* a table gives minutes for each step, the verification share, and one sentence on whether the card's budget was right.
+- 🔴 **Time a real lap.** *Needs an agent (optional).* After you have passed m00 yourself, start a sandbox (in the `ailab` folder: `python -m ailab start m00 --dir ~/ainative/sandbox`, then `python -m ailab solve m00 --dir ~/ainative/sandbox` for a green repository) and do REMIT-244 on a branch. Write your by-hand estimate first. *Done when:* a table gives minutes for each step, the verification share, and one sentence on whether the card's budget was right.
 
 ## ⚠️ Mistakes and traps
 - **Skipping the spec because "the agent will work it out".** It will, confidently. Write done and the non-goals.

@@ -12,7 +12,7 @@ non-goals, decisions, risks, test plan and a plan). Nothing is built: the spec i
 * T2 REMIT-342, type what the family receives: the currency of the typed number, the direction of the rounding,
   a fee-tier boundary crossed by one hundredth, the corridor limits on the derived amount.
 * T3 REMIT-343, cash pickup after the cut-off: whose 6pm, the exact second, what "tomorrow" means, which
-  deliveries are affected, the Arabic sentence and its digits.
+  deliveries are affected, the Arabic sentence (written, or its supplier named) and its digits.
 
 What is graded, and what cannot be
 ----------------------------------
@@ -50,6 +50,21 @@ def seed(work: Path) -> None:
     shutil.copyfile(HERE / "templates" / "agent-log.md", work / checks_m03.LOG_FILE)
 
 
+COMMIT_HINT = ("Use `type(scope): subject` from CONTRIBUTING.md; any lower-case scope works, for example "
+               "docs(specs): write the three specs. `git commit --amend` fixes only the newest message; to redo several, "
+               "run `git reset --soft lab-start` and commit again.")
+NO_COMMIT_HINT = ("Commit the specs, for example `git add -A && git commit -m \"docs(specs): write the three specs\"` "
+                  "(type(scope): subject, as CONTRIBUTING.md says).")
+
+
+def commit_check(work: Path) -> Check:
+    """The kit's commit check, with hints that fit this lab (it commits specs, and a message may be several commits back)."""
+    check = checks.conventional_commits(work, name=checks_m03.N_COMMITS)
+    if not check.ok:
+        check.hint = NO_COMMIT_HINT if check.detail.startswith("found 0 commit") else COMMIT_HINT
+    return check
+
+
 def grade(work: Path) -> list[Check]:
     return [
         checks.files_changed_within(
@@ -58,11 +73,12 @@ def grade(work: Path) -> list[Check]:
             name=checks_m03.N_SCOPE,
             require_change=False,
             hint="This lab changes specs/ and agent-log.md only. Writing the spec is the job; building it is the next "
-                 "module's. Undo the edit with git restore <file> (git rm for a new file).",
+                 "module's. Undo a file you edited with `git restore --source=lab-start <file>` (committed or not) and delete "
+                 "a file you added, then commit the undo.",
         ),
         checks.tests_pass(work, name=checks_m03.N_TESTS),
         *checks_m03.spec_checks(work),
-        checks.conventional_commits(work, name=checks_m03.N_COMMITS),
+        commit_check(work),
         checks.all_committed(work, name=checks_m03.N_CLEAN),
         checks.no_secrets(work),
     ]

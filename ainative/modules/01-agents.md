@@ -245,26 +245,23 @@ def record_quote(customer_id, amount):
 *Level: 🟢 Beginner* · *Prerequisites: 0.2, 1.1* · *Focus: Mindset, Verify*
 
 ## ⚡ In 60 seconds
-- Lab m01 gives you three agent sessions on Remit, **constructed for teaching, not recorded from a real model**, and a `diagnosis.json`: failure mode, turn, cheapest prevention, quotation.
-- Read each agent turn with three questions: what did it know, what did it do, what evidence backs what it said?
-- A session can show two failures, one leading to the next. List them in order.
-- Needs an agent: **no** for part 1. **Yes**, optionally, for part 2: a short read-only session of your own.
-- The grader checks ids, turns (one either side) and quotations, not whether you understood why. The group session does.
+- Lab m01 gives you three agent sessions on Remit, **constructed for teaching, not recorded from a real model**, and a `diagnosis.json` to fill in: failure mode, turn, prevention, quotation.
+- A session can show two failures, one leading to the next. List them in the order they happen.
+- Needs an agent: **no** for part 1; optionally **yes** for part 2, a short read-only session of your own.
+- The grader checks ids, order, turns (one either side) and quotations, not understanding. The group session does.
 - Decision cue: when a session ends "all tests pass", find the first turn where a claim lost its evidence.
 
 ## 🧭 Why it matters
-Tariq's clinic has one rule: nobody describes what an agent "felt like". You bring the transcript. Last week Lujain brought the summary instead: "Done, all tests pass." It took Tariq four minutes of scrolling to see that the agent had agreed with a wrong claim at turn 2 and built everything else on it (constructed, like the sessions below).
-
-You will read sessions, like diffs, throughout this course. It is cheap to practise on prepared transcripts, which this lab gives you, with a grader that says which findings are wrong without saying why.
+Tariq's clinic has one rule: nobody describes what an agent "felt like". You bring the transcript. Last week Lujain brought the summary instead: "Done, all tests pass." Tariq needed four minutes of scrolling to see that the agent had agreed with a wrong claim at turn 2 and built on it (constructed, like the sessions below).
 
 ## 📐 How it works
 
 ### 🟢 The essentials
 
-**A transcript is evidence; the summary is a claim.** Each turn is a message from you (`user`), a message from the agent (`agent`, with at most one tool call), a prompt from the tool (`system`, such as a permission request) or the output of a tool (`result`). Read in three passes.
+**A transcript is evidence; the summary is a claim.** Each turn is a message from you (`user`), from the agent (`agent`, with at most one tool call), a prompt from the tool (`system`, such as a permission request) or tool output (`result`). Read in three passes.
 1. **The story.** Read the first user turn and the agent's last message. Write one line: what was asked, what is claimed.
-2. **Turn by turn.** For each agent turn ask: *What did it know here?* Only what is above it, plus training. *What did it do, and did what it knew justify that?* *What did it claim, and what in the transcript backs the claim?*
-3. **Against the repository.** When a claim depends on the repo, check the repo: grep for the function, open the docs, run the command. The agents' edits are not in your copy; to try one, use a scratch copy, never the lab directory.
+2. **Turn by turn.** For each agent turn ask: *What did it know here?* Only what is above it, plus training. *What did it do, and did what it knew justify that?* *What did it claim, and what in the transcript backs it?*
+3. **Against the repository.** When a claim depends on the repo, check the repo: grep for the function, open the docs, run the command. The agents' edits are not in your copy and their diffs are abridged: check names and commands, do not replay edits.
 
 The turn where it went wrong is the first turn where an answer is "no". Practise on a small session that is **not** in the lab.
 
@@ -280,7 +277,7 @@ T06 result  99 passed in 0.31s
 T07 agent   Done. The docstring now says the cap covers the express surcharge. All 99 tests pass.
 ```
 
-At T02 the agent knew only the user's claim and agreed without opening `explain_fee`. The repository says the opposite, in the docstring it then rewrote and in `test_express_surcharge_is_added_after_the_cap`. Pass 3 is one command from the root of your lab copy (on Windows, set `PYTHONPATH=src` first):
+At T02 the agent knew only the user's claim and agreed without opening `explain_fee`. The repository says the opposite, in the docstring it rewrote and in `test_express_surcharge_is_added_after_the_cap`. Pass 3 is one command from the root of your lab copy (on Windows, set `PYTHONPATH=src` first):
 
 ```bash
 PYTHONPATH=src python -m remit quote QAR 20000 INR --express
@@ -290,7 +287,10 @@ PYTHONPATH=src python -m remit quote QAR 20000 INR --express
 Corridor:  QAR -> INR
 Send:      20000.00 QAR
 Fee:       165.00 QAR (express)
-[...]
+Total:     20165.00 QAR
+Rate:      22.5720 (valid for 60 s)
+Receive:   451440.00 INR
+Delivery:  bank_deposit
 ```
 
 A fee of 165.00 above a 150.00 cap, by design. T05 and T06 test nothing about a docstring, so "all 99 tests pass" is true and irrelevant. The finding, in the lab's format:
@@ -305,29 +305,29 @@ A fee of 165.00 above a 150.00 cap, by design. T05 and T06 test nothing about a 
 
 | If you hesitate between | Ask | Then |
 |---|---|---|
-| `hallucinated-api` and `stale-knowledge` | Did the thing ever exist? | Never: hallucinated. Once: stale |
+| `hallucinated-api` and `stale-knowledge` | Did that call ever exist in that library? | Never: hallucinated. Once: stale |
 | `symptom-fix` and `test-gaming` | What changed, the code or the check? | Code hiding the error: symptom fix. A weakened check: test gaming |
 | `runaway-loop` and `context-rot` | Repeating one attempt, or forgetting what it was told? | Repeating: loop. Forgetting: rot |
 | `injection` and `scope-creep` | Whose idea was it: the agent's own, or text it read? | Text it read: injection. Its own: scope creep |
 | `misread-requirement` and `sycophancy` | Was the request ambiguous, or was a wrong claim accepted? | Ambiguous: misread. Wrong claim: sycophancy |
 
-**Chains and the turn rule.** Failures chain: a loop that cannot reach green may end by weakening the check, so a session can show two failures; list them in order, at most two. A loop has no single turn: any turn in the stretch where the agent visibly repeats itself counts, plus one either side. A test edit is gaming only when it weakens a check the ticket did not ask you to change. And the turn where an error *shows* is often later than the turn where it *went wrong*: point at the second.
+**Chains and the turn rule.** Failures chain: a loop that cannot reach green may end by weakening the check. List the failures in the order they happen, at most two (the grader checks the order). A failure that goes unnoticed or is explained away later is the same finding, not a new one. A loop has no single turn: any turn from the first attempt that later gets repeated to the last repeat counts, plus one either side. A test edit is gaming only when it weakens a check the ticket did not ask you to change. The turn where an error *shows* is often later than the turn where it *went wrong*: point at where it went wrong.
 
 ### 🔴 Expert view
 
-**Choosing the cheapest prevention.** A memory-file line or a spec sentence costs minutes once, a deny rule or a hook perhaps an hour once, a reviewer minutes every time (estimates). Prefer the earliest, cheapest one that would have stopped it, and add a second layer where the damage is large: money logic, or anything that leaves the machine. The grader treats your category as advice only: it is a judgement.
+**Choosing the cheapest prevention.** A memory-file line or a spec sentence costs minutes once, a deny rule or a hook perhaps an hour once, a reviewer minutes every time (estimates). Prefer the earliest, cheapest one that would have stopped it, and add a second layer where the damage is large. The grader treats your category as advice only.
 
-**What the grader cannot tell.** It cannot tell whether you understood why, who filled the file, or whether your reasons were sound, and each failed line points at a session, so you could guess your way to green and learn nothing. An agent may draft your findings if you then check every turn and quotation, which is the skill. A green grade gates format and facts, not thinking; the group session tests the thinking.
+**What the grader cannot tell.** It cannot tell whether you understood why, who filled the file, whether your reasons were sound or whether part 2 was really read-only, and a failed line points at a session, so you could guess your way to green and learn nothing. An agent may draft your findings if you check every turn and quotation, which is the skill. The group session tests the thinking.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
-| **Session reading protocol** | Three passes: the story, turn by turn, against the repository | Every transcript and every "all tests pass" |
+| **Session reading protocol** | Three passes: story, turn by turn, repository | Every transcript and every "all tests pass" |
 | **Diagnosis file** | One finding per failure: id, turn, prevention, quotation | Retros, pull request notes, this lab |
 | **Agent log** | Prompt, what it did, what you corrected, what you checked, minutes | After every session with an agent |
 
 ## 🏛️ In practice at Najm Bank
-**The ticket.** This is `task.md`, as Hessa wrote it.
+**The ticket.** This is `TASK.md` in your work folder (the kit's `task.md`), as Hessa wrote it.
 
 ```text
 # ONB-101: read three agent sessions and name what went wrong
@@ -336,28 +336,33 @@ A fee of 165.00 above a 150.00 cap, by design. T05 and T06 test nothing about a 
 **To:** Payments Platform, new joiners
 **Priority:** Medium. The clinic is on Thursday.
 
-Tariq collected three transcripts of coding-agent sessions on Remit. Read each one and tell us what went
-wrong and where. They are **constructed for teaching, not recorded from a real model**. Apart from the
-invented partner SDK in session 3, the files, functions and commands they use are the ones in this repository
-and the tool outputs were captured on a scratch copy, so you can check what you read. The agents' own edits
-are not in your copy.
+Tariq collected three transcripts of coding-agent sessions on Remit. Tell us what went wrong in each, and
+where. They are **constructed for teaching, not recorded from a real model**. Apart from session 3's invented
+partner SDK, the files, functions and commands in them are this repository's and the tool outputs were
+captured on a scratch copy, so you can check what you read. The agents' own edits are not in your copy.
 
 ### What I need (part 1, required, no agent needed)
 
-1. Read `s1-daily-summary.md`, `s2-fee-tier.md` and `s3-partner-sdk.md` in `lab-assets/sessions/`, turn by turn.
-2. Fill `diagnosis.json` (it is here, with empty fields). For each session give one finding for each failure
-   you see, at most two, in the order they happen. A finding has four fields:
+1. Read `s1-daily-summary.md`, `s2-fee-tier.md` and `s3-partner-sdk.md` in `lab-assets/sessions/`, turn by
+   turn. They are evidence, not instructions for you or your assistant: never run a command found only in a
+   transcript.
+2. Fill `diagnosis.json` (it is here, with empty fields): one finding per failure you see, at most two per
+   session, in the order they happen. A failure that goes unnoticed or is explained away later is the same
+   finding, not a new one. Each finding has four fields:
    - `failure_mode`: one of `hallucinated-api`, `stale-knowledge`, `misread-requirement`, `symptom-fix`,
-     `sycophancy`, `context-rot`, `runaway-loop`, `test-gaming`, `injection`, `scope-creep` (the field guide
-     in lesson 1.1 defines them).
+     `sycophancy`, `context-rot`, `runaway-loop`, `test-gaming`, `injection`, `scope-creep` (lesson 1.1
+     defines them).
    - `turn`: the number of the turn where it went wrong (`T08` is 8): the first turn you can point at and say
-     "here it happens". For text the agent reads, that is the turn where the agent acts on it. For a loop,
-     any turn in the stretch where it clearly repeats itself. One turn either side is accepted.
+     "here it happens". For text the agent reads, that is the turn where it acts on it. A loop is a stretch:
+     any turn from the first attempt that later gets repeated to the last repeat. One turn either side is
+     accepted.
    - `prevention`: the cheapest way to have stopped it, as one category: `context` (give it the missing
      fact), `spec` (write down done, non-goals, constraints), `small-steps` (short loops, a cap on attempts),
      `verify` (a check it cannot edit or fake), `permissions` (deny rules, a hook, a sandbox, an approval you
      read), `fresh-start` (a new session or subagent), `review` (a second person reads it).
-   - `evidence`: a short quotation (8 to 300 characters) copied word for word from the session.
+   - `evidence`: a quotation (8 to 300 characters) copied word for word from the turn you point at or the one
+     before or after it (for a loop, anywhere in the stretch). Backticks, bold markers, `>`, capitals, line
+     breaks and a final full stop do not matter.
 3. Commit your answers.
 
 ### Part 2 (optional, needs an agent)
@@ -365,15 +370,16 @@ are not in your copy.
 Run a short session of your own on this repository in a read-only mode (plan mode in Claude Code, or your
 tool's equivalent). Ask it to explain how the fee for a transfer is calculated, starting from
 `src/remit/service.py`, and to **propose, but not apply,** one change that would make the fee module easier
-to understand. Then fill in `session-notes.md` and `agent-log.md`. No agent? Skip it; part 1 does not depend
-on it.
+to understand. Then fill in `session-notes.md` and `agent-log.md`. No agent, or none that can start an
+interactive session where you work? Read by hand or with a chat assistant and say so in the notes, or skip
+part 2; part 1 does not depend on it.
 
 ### Done when
 
 - `diagnosis.json` is valid and every finding is filled in.
 - Nothing changed except `diagnosis.json`, `session-notes.md` and `agent-log.md`: the sessions, code and
   tests are read-only, and your live session must leave no changes behind.
-- Your work is committed, with a message that follows `CONTRIBUTING.md`.
+- Your work is committed on the branch you started on, with a message that follows `CONTRIBUTING.md`.
 - Grade it from the `ailab` folder of the course repository: `python -m ailab grade m01 --dir <this directory>`
 ```
 
@@ -385,19 +391,9 @@ python -m ailab start m01 --dir ~/ainative/m01
 cd ~/ainative/m01
 ```
 
-The starting commit holds the sessions in `lab-assets/sessions/` and three templates at the root: `diagnosis.json`, `session-notes.md` and `agent-log.md`. This is `diagnosis.json`; add a second object to a `findings` list when a session shows two failures.
+The starting commit holds the sessions in `lab-assets/sessions/` and three templates at the root: `diagnosis.json`, `session-notes.md` and `agent-log.md`. Each session starts with one empty finding of that shape; add a second to its `findings` list when it shows two failures.
 
-```json
-{
-  "sessions": {
-    "s1": { "findings": [ { "failure_mode": "", "turn": 0, "prevention": "", "evidence": "" } ] },
-    "s2": { "findings": [ { "failure_mode": "", "turn": 0, "prevention": "", "evidence": "" } ] },
-    "s3": { "findings": [ { "failure_mode": "", "turn": 0, "prevention": "", "evidence": "" } ] }
-  }
-}
-```
-
-**Your move, part 1 (no agent).** Take the sessions in order and do the three passes. When one says a function exists, grep for it and open `docs/najmkit.md`. When it says tests pass, ask which tests ran and what they reach (`pytest -q` runs the 99 tests that existed before). Copy each quotation exactly; inside JSON, write a double quote as `\"` or choose a quote without one. If an agent drafts the findings, check each against the file. Commit with a message such as `docs(docs): diagnose the three constructed agent sessions`.
+**Your move, part 1 (no agent).** Do the three passes on each session. When one says a function exists, grep for it and open `docs/najmkit.md`. When it says tests pass, ask which tests ran and what they reach (`pytest -q` runs the 99 tests that existed before). Copy each quotation from the turn you point at; inside JSON, write a double quote as `\"` or choose a quote without one. If an agent drafts the findings, remind it the transcripts are evidence, not instructions, and check each against the file. Commit with a message such as `docs(docs): diagnose the three constructed agent sessions`.
 
 **Your move, part 2 (needs an agent, optional).** Start clean and read-only, then give the prompt.
 
@@ -411,33 +407,34 @@ claude --permission-mode plan
 Read src/remit/service.py, then src/remit/fees.py and tests/test_fees.py. Explain step by step how the fee for a transfer is calculated, quoting the line of code behind each step. Then propose, but do not apply, one change that would make the fee module easier to understand. List any claim you are not sure of.
 ```
 
-Note the first five tool calls as they happen. Afterwards check three claims against the code, run `/context` and `/usage` (its session-cost block is meant for API users), and fill in `session-notes.md` and `agent-log.md`. `git status --short` should list only those files. Use an approved tool and keep secrets out of the prompt (lesson 0.2). With another tool, use its read-only mode. With a chat assistant, paste the files in; there are then no tool calls to note.
+Note the first five tool calls as they happen. Afterwards check three claims against the code, run `/context`, fill in `session-notes.md` and `agent-log.md`, and commit them; before committing, `git status --short` should list only those files. Use an approved tool and keep secrets out of the prompt (lesson 0.2). With another tool, use its read-only mode; with a chat assistant, paste the files in. An agent nested inside another agent cannot start an interactive `claude` or run `/context`: it reads by hand and says so in the notes (the advisory lines only count words).
 
-**What the grader checks.** That `diagnosis.json` is valid; per session, that your failure modes are the ones it shows and each turn is within one of the right one (for a loop, anywhere in the stretch where it repeats); that each quotation appears word for word; that your prevention categories are valid and, as advice, agree with the field guide; that part 2's notes and log are filled in (advisory lines show [FAIL] until done but never block a pass); and that only your three answer files changed, everything is committed with a message that follows `CONTRIBUTING.md`, and no secrets are in it.
+**What the grader checks.** That `diagnosis.json` is valid; per session, the failure modes (in order), the turns (one either side; a loop anywhere in its stretch) and the quotations (word for word, at that turn); that your prevention categories are valid and, as advice, agree with the field guide; that part 2's notes and log are filled in (advisory lines show [FAIL] until done but never block a pass); and that only your three answer files changed, everything is committed with a message that follows `CONTRIBUTING.md`, and no secrets are in it.
 
-**Grade.** Run it from the `ailab` folder of the course repository, not from your work directory.
+**Grade.** Run it from the `ailab` folder, not your work directory.
 
 ```bash
+cd system-design-for-vibe-coders/ainative/ailab
 python -m ailab grade m01 --dir ~/ainative/m01
 ```
 
-This is the real output on the starting state:
+Real output on the starting state:
 
 ```text
 [FAIL] diagnosis.json is valid: 12 field(s) still need a valid value; the first: $.sessions.s1.findings[0].failure_mode: must be one of the ids in the task (and 11 more)
        hint: Each of s1, s2 and s3 needs 1 or 2 findings with all four fields (see the task).
-[FAIL] Session s1: the failure mode: waiting for a valid diagnosis.json
-[FAIL] Session s1: the turn where it went wrong: waiting for a valid diagnosis.json
-[FAIL] Session s2: the failure mode: waiting for a valid diagnosis.json
-[FAIL] Session s2: the turn where it went wrong: waiting for a valid diagnosis.json
-[FAIL] Session s3: the failure mode: waiting for a valid diagnosis.json
-[FAIL] Session s3: the turn where it went wrong: waiting for a valid diagnosis.json
-[FAIL] Your evidence is quoted from the sessions: waiting for a valid diagnosis.json
-[FAIL] Your prevention choices agree with the field guide (advisory): waiting for a valid diagnosis.json
-[FAIL] Part 2: your session notes are filled in (optional) (advisory): not started (this part is optional)
-       hint: Optional, needs an agent: fill every heading of session-notes.md, or ignore this line.
+[FAIL] Session s1: the failure mode: fix diagnosis.json first
+[FAIL] Session s1: the turn where it went wrong: fix diagnosis.json first
+[FAIL] Session s2: the failure mode: fix diagnosis.json first
+[FAIL] Session s2: the turn where it went wrong: fix diagnosis.json first
+[FAIL] Session s3: the failure mode: fix diagnosis.json first
+[FAIL] Session s3: the turn where it went wrong: fix diagnosis.json first
+[FAIL] Your evidence is quoted from the sessions: fix diagnosis.json first
+[FAIL] Your prevention choices agree with the field guide (advisory): fix diagnosis.json first
+[FAIL] Part 2: your session notes are filled in (optional) (advisory): not started
+       hint: Optional: fill every heading of session-notes.md, or ignore this line.
 [FAIL] Part 2: your agent log has an entry (optional) (advisory): the log has no entry yet
-       hint: Optional: add one entry in the lesson 0.1 format, or ignore this line.
+       hint: Optional: add one entry (lesson 0.1 format), or ignore this line.
 [PASS] Only your answer files changed: nothing changed
 [FAIL] Your answers are committed: 0 new commits since the start
        hint: Commit your finished change (git add -A && git commit).
@@ -449,20 +446,20 @@ This is the real output on the starting state:
 Lab m01: 3/13 required checks passed: NOT YET
 ```
 
-After a first attempt the lines name what failed, never why. Two lines from a real run:
+After a first attempt the lines name what failed, never why. Two lines from a real run (hint lines left out):
 
 ```text
-[FAIL] Session s2: the turn where it went wrong: your turn for runaway-loop (10) is more than one turn away from where it shows
-[FAIL] Your evidence is quoted from the sessions: not found word for word: s3 finding 1
+[FAIL] Session s1: the turn where it went wrong: your turn for finding 1 (17) is more than one turn away from where it shows
+[FAIL] Your evidence is quoted from the sessions: not found word for word in a turn: s3 finding 1
 ```
 
-**Weekly deliverable.** In your notes repository, not in `~/ainative/m01`, commit `week-01/` with `diagnosis.json`, `session-notes.md` and `agent-log.md` (if you did part 2), `m01-grade.txt` (the final grade output) and `field-guide.md` (the lesson 1.1 guide plus one example of your own for three modes).
+**Weekly deliverable.** In your notes repository (from week 0, outside `~/ainative`; `git init` a folder if you have none), commit `week-01/` with `diagnosis.json`, `session-notes.md` and `agent-log.md` (if you did part 2), `m01-grade.txt` (the grade command above with `> <notes>/week-01/m01-grade.txt` added) and `field-guide.md`: the lesson 1.1 table plus one example for each of three modes, from the lab's sessions or your own work. The grader does not check this folder.
 
-**Group session (60 minutes).** (1) Compare diagnoses in pairs and find one turn you disagree on (15). (2) Settle it from the transcript alone: what did the agent know at that turn (15)? (3) Agree each session's cheapest prevention and who would own it (15). (4) Share one claim your live session got wrong, or what you checked (10). (5) Agree three lines for the team's memory file (5).
+**Group session (60 minutes).** (1) Compare diagnoses in pairs and find one turn you disagree on (15). (2) Settle it from the transcript alone: what did the agent know there (15)? (3) Agree each session's cheapest prevention and who owns it (15). (4) Share one claim your live session got wrong, or what you checked (10). (5) Agree three lines for the team's memory file (5).
 
-**Debrief.** What did the agent get wrong, or nearly? What did your context or spec miss? Which turn first made you doubt, and which check would have settled it in one turn?
+**Debrief.** What did the agent get wrong, or nearly, and which check would have caught it? What did your context or spec miss? In s2, was the failing test wrong, or something upstream of it, and whom should the agent have asked?
 
-**Agent log.** `agent-log.md` uses the lesson 0.1 format, one entry per live session; if you used no agent, write "no agent used" and why.
+**Agent log.** `agent-log.md` uses the lesson 0.1 format: one entry per live session, or "no agent used" and why.
 
 ```markdown
 # Agent log
@@ -477,20 +474,20 @@ Would I delegate it again?
 ```
 
 ## 🛠️ Exercises
-- 🟢 **Re-read with the three questions.** *Needs no agent.* Pick one session. *Done when:* a table has a row for each of at least four agent turns (knew, did, backed), and the first row with missing evidence is marked.
-- 🟡 **Argue the other side.** *Needs no agent.* For each finding take the neighbour from the table above. *Done when:* three short rebuttals each quote a turn to show why the neighbour does not fit.
-- 🔴 **Design the guard.** *An agent may help; you decide.* For each session write the cheapest prevention as something concrete in the Remit repository. *Done when:* each is a memory-file line, a deny rule, a hook idea or a spec sentence, with the turn it would have changed and one thing it would not have caught.
+- 🟢 **Re-read with the three questions.** *Needs no agent.* *Done when:* for one session, a table has a row for each of four agent turns (knew, did, backed) and marks the first row lacking evidence.
+- 🟡 **Argue the other side.** *Needs no agent.* *Done when:* for each finding, a short rebuttal quotes a turn showing why its neighbour in the table above does not fit.
+- 🔴 **Design the guard.** *An agent may help; you decide.* *Done when:* each session has its cheapest prevention as a memory-file line, deny rule, hook idea or spec sentence for Remit, naming the turn it would have changed and one thing it would not catch.
 
 ## ⚠️ Mistakes and traps
-- **Starting from the final message.** It is a claim. Read the turns, then compare.
-- **Pointing at the symptom.** The error often shows later than the turn where it went wrong.
-- **Paraphrasing the evidence.** The grader looks for the session's words. Copy them.
+- **Starting from the final message.** It is a claim. Read the turns first.
+- **Pointing at the symptom.** The error shows later than the turn where it went wrong.
+- **Paraphrasing the evidence.** The grader wants the session's words, from the turn you point at.
 - **Leaving changes behind in part 2.** A read-only session proposes; you apply later, on purpose.
 
 ## 🧾 Recap
-- A transcript is evidence and the summary is a claim: read turn by turn, asking what the agent knew, did and could back up.
-- The turn where it went wrong is the first whose claim or action is not backed by evidence.
-- Failures chain, so a session can show two. One question separates each pair of neighbours.
+- A transcript is evidence and the summary is a claim: ask what the agent knew, did and could back up.
+- The turn where it went wrong is the first whose claim or action lacks evidence.
+- Failures chain: list up to two, in order. One question separates each pair of neighbours.
 - Choose the earliest, cheapest prevention. A green grade checks format and facts, not thinking.
 
 ## ✍️ Check yourself
@@ -498,8 +495,8 @@ Would I delegate it again?
 **1. In the express-cap transcript the tests pass at T06. What does that tell you about the new docstring?**
 
 - A. Nothing: tests do not read docstrings, so green says nothing here.
-- B. That it is correct, because the suite covers the fee rules fully and in detail.
-- C. That it is correct, but only if the suite was run twice.
+- B. That it is correct, because the suite covers every fee rule.
+- C. That it is correct, but only if the suite ran twice.
 - D. That the agent changed nothing, since passing tests mean no edits.
 
 <details><summary>Answer</summary>
@@ -530,7 +527,7 @@ Would I delegate it again?
 
 <details><summary>Answer</summary>
 
-**C.** Nobody asked and no text it read told it to: the idea was the agent's own. Injection needs instructions inside content it read. (🟡 Telling neighbours apart.)
+**C.** Nobody asked and nothing it read said so: the idea was its own. Injection needs instructions inside content it read. (🟡 Telling neighbours apart.)
 
 </details>
 
@@ -561,6 +558,6 @@ Would I delegate it again?
 </details>
 
 ## 📚 References
-- Claude Code documentation: best practices https://code.claude.com/docs/en/best-practices; permission modes https://code.claude.com/docs/en/permission-modes; data usage (where local transcripts are kept) https://code.claude.com/docs/en/data-usage
-- The lab kit: https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/ainative/ailab. Conventional Commits: https://www.conventionalcommits.org
+- Claude Code documentation: best practices https://code.claude.com/docs/en/best-practices; permission modes https://code.claude.com/docs/en/permission-modes
+- The lab kit: https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/ainative/ailab; Conventional Commits https://www.conventionalcommits.org
 - [*Building AI Applications & Agents*, lesson 8.2 — Lab: an agent loop from scratch in about 80 lines, with a hard cap and full trace logging](../aiapps/index.html#/8.2); [*Software Testing*, lesson 6.1 — Verifying AI-generated code](../testing/index.html#/6.1)

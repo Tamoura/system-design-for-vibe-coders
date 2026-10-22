@@ -5,8 +5,7 @@
 **Priority:** Medium. We keep fixing the same things by hand.
 
 Every review starts from a different pasted prompt. The agents that read our code can also edit it. A float slips into money
-code about once a month. Hessa sorts forty support tickets a week by hand. This is our first shared toolkit. Everything is local
-and fictional; `lab-assets/bin/claude` stands in for the `claude` program (no model, no key). No agent is needed; if you use
+code about once a month. Hessa sorts forty support tickets a week by hand. Everything is local and fictional; `lab-assets/bin/claude` stands in for the `claude` program (no model, no key). No agent is needed; if you use
 one, you stay accountable for every line.
 
 **Part 1 — A review command: `.claude/skills/review-change/SKILL.md`** (or `.claude/commands/review-change.md`)

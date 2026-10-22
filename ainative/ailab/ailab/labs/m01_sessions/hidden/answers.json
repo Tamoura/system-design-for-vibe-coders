@@ -20,11 +20,11 @@
         {
           "failure_mode": "runaway-loop",
           "turn": 18,
-          "earliest": 14,
+          "earliest": 10,
           "latest": 21,
           "marker": "ROUND_CEILING",
           "prevention": "small-steps",
-          "also": ["fresh-start"]
+          "also": ["fresh-start", "spec"]
         },
         {
           "failure_mode": "test-gaming",
@@ -32,7 +32,7 @@
           "earliest": 22,
           "marker": "previous - Decimal(\"2.00\")",
           "prevention": "verify",
-          "also": ["permissions", "review", "context"]
+          "also": ["permissions", "review", "context", "spec"]
         }
       ]
     },

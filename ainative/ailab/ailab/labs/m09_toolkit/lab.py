@@ -32,7 +32,7 @@ Files
 -----
     seed(work)    adds the reference project memory (a no-op if lab m02 is absent); everything else arrives in ``lab-assets/``.
     grade(work)   see above.
-    solve(work)   applies ``solution/`` in six small commits: the reviewer, the review command, the hook, the triage script (+ tests), the cards.
+    solve(work)   applies ``solution/`` in five small commits: the reviewer, the review command, the hook, the triage script (+ tests), the cards.
 """
 from __future__ import annotations
 

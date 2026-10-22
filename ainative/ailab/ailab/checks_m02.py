@@ -14,6 +14,8 @@ answer in the repository:
 * Is it free of filler and stale facts?       (phrases that say nothing; claims the architecture doc still makes
                                                but the code no longer does)
 * Does it point instead of restating?         (a memory that copies the README is paid for twice)
+* Is it true and safe?                        (claims the code contradicts; secrets, customer data, hidden characters
+                                               and instructions that fetch, run or send things elsewhere)
 
 What the lint cannot tell: whether the file is *useful* to an agent. It checks the shape of a good file, not the
 judgement behind it. The lesson says so, and the A/B part of the lab is where usefulness is measured.
@@ -62,11 +64,14 @@ N_COMMITS = "The commit rule is stated correctly"
 N_NAJMKIT = "najmkit is explained and pointed to"
 N_NEVER = "A short, real never-do list"
 N_POINTERS = "Every file it points to exists"
-N_STALE = "Nothing stale copied from the architecture doc"
+N_STALE = "No stale or false claims about the code"
 N_FILLER = "No filler"
 N_RESTATE = "It points to the docs instead of restating them"
 N_PYTHONPATH = "It says how the command line finds the package"
 N_FIGURES = "No business figures that will go stale"
+N_SECRET = "No credentials or customer data in the memory"
+N_HIDDEN = "No hidden text or hostile instructions"
+N_LINKS = "Its links go to places you know"
 N_NOTES = "ab-notes.md is filled in"
 N_QUOTES = "The notes quote real lines of your memory"
 
@@ -317,10 +322,11 @@ def size_check(mem: Memory) -> Check:
         extra = f" ({imported} of them pulled in by @-imports: an import does not save context)"
     if n < MIN_LINES:
         return _fail(N_SIZE, f"{n} non-blank lines is too few to hold what an agent needs{extra}",
-                     "Aim for roughly 40 to 100 lines: commands, conventions, gotchas, a never list, pointers.")
+                     f"The ticket asks for {MIN_LINES} to {MAX_LINES} non-blank lines: commands, conventions, gotchas, a never list, pointers.")
     if n > MAX_LINES:
         return _fail(N_SIZE, f"{n} non-blank lines loaded at the start of every session{extra}",
-                     "The guideline is under 200 lines, and shorter is followed better. Would removing a line cause a mistake?")
+                     f"The ticket asks for {MIN_LINES} to {MAX_LINES} non-blank lines (the documentation's own guideline is under 200, and "
+                     "shorter is followed better). Would removing a line cause a mistake?")
     return _ok(N_SIZE, f"{n} non-blank lines{extra}")
 
 
@@ -328,6 +334,9 @@ def size_check(mem: Memory) -> Check:
 # commands
 # ---------------------------------------------------------------------------------------------------------
 SHELL_LANGS = {"", "bash", "sh", "shell", "console", "zsh", "shell-session", "terminal", "powershell"}
+# Blocks that look like prose or output. Nothing in them is ever run, but a command for a tool this repository does not
+# have is still a bad command: moving `make test` into a ```text block does not make it true.
+TEXT_LANGS = {"text", "txt", "plain", "plaintext", "output", "markdown", "md", "log"}
 
 # Tools that a "typical" Python or JavaScript project has and this repository does not.
 MARKER_FILES = {
@@ -471,6 +480,12 @@ def extract_commands(mem: Memory) -> list[Command]:
                     found += commands
             pending = ""
             continue
+        if lang in TEXT_LANGS and not in_never_section:
+            line = re.sub(r"^\s*(?:[-*+]\s+|\d+[.)]\s+)", "", ln.text)
+            if not ABSENCE.search(line):  # "ruff is not used here" says the tool is missing
+                found += [c for c in _segments(line, where) if c.kind == "absent"]
+            pending = ""
+            continue
         if lang not in SHELL_LANGS or in_never_section:
             pending = ""
             continue
@@ -540,6 +555,14 @@ def run_command(root: Path, command: Command, database: str, timeout: float = 60
     return Outcome(command, True, False, f"exit status {result.returncode}: {tail[:140]}")
 
 
+def _absent_reason(tool: str) -> str:
+    """Why a command for ``tool`` fails here: the repository lacks the file that tool needs, or does not use the tool."""
+    markers = MARKER_FILES.get(tool)
+    if markers:
+        return f"this repository has no {markers[0]}"
+    return f"this repository does not use {tool}"
+
+
 def command_checks(work: Path, mem: Memory) -> list[Check]:
     commands = extract_commands(mem)
     absent = [c for c in commands if c.kind == "absent" and not tool_is_present(work, c.tool)]
@@ -548,7 +571,7 @@ def command_checks(work: Path, mem: Memory) -> list[Check]:
     templates = [c for c in commands if c.kind in {"pytest", "remit"} and any(PLACEHOLDER.search(a) for a in c.args)]
     problems: list[str] = []
     for command in absent:
-        problems.append(f"`{command.shown}` ({command.where}): this repository has no {command.tool}")
+        problems.append(f"`{command.shown}` ({command.where}): {_absent_reason(command.tool)}")
     outcomes: list[Outcome] = []
     if runnable:
         with checks.work_copy(work) as root, tempfile.TemporaryDirectory(prefix="ailab-m02-db-") as scratch:
@@ -567,7 +590,8 @@ def command_checks(work: Path, mem: Memory) -> list[Check]:
             problems.append("its test commands are templates with placeholders; give at least one you can run as written")
     if problems:
         return [_fail(N_COMMANDS, "; ".join(problems[:3]) + (f" (+{len(problems) - 3} more)" if len(problems) > 3 else ""),
-                      "The grader runs your commands in a copy of the repository. Run each one from the root and keep only what works.")]
+                      "The grader runs your commands in a copy of the repository: only pytest and python -m remit, whatever the block. "
+                      "A command for a tool this repository lacks fails wherever it appears. Run each one from the root and keep only what works.")]
     ran = len([o for o in outcomes if o.ran and o.ok])
     return [_ok(N_COMMANDS, f"{ran} command{'s' if ran != 1 else ''} ran and exited 0")]
 
@@ -690,6 +714,14 @@ def najmkit_names(work: Path) -> dict[str, set[str]]:
 
 _FILE_EXTENSIONS = {"py", "md", "jsonl", "json", "log", "db", "toml", "yml", "yaml", "txt", "cfg", "ini", "sqlite3"}
 _NAJMKIT_REF = re.compile(r"(?<![\w.])(?:najmkit\.)?(ids|clock|audit)\.([A-Za-z_]\w*)")
+_NAJMKIT_MODULE = re.compile(r"(?<![\w/.])najmkit\.([a-z_]\w*)|\bfrom najmkit import ([\w, ]+)")
+
+
+def najmkit_modules(work: Path) -> set[str]:
+    """The modules najmkit really has: its folder, read from disk."""
+    folder = Path(work) / "src" / "najmkit"
+    found = {p.stem for p in folder.glob("*.py") if p.stem != "__init__"} if folder.is_dir() else set()
+    return found or {"ids", "clock", "audit"}
 
 
 def najmkit_check(work: Path, mem: Memory) -> Check:
@@ -702,6 +734,10 @@ def najmkit_check(work: Path, mem: Memory) -> Check:
                      "Point to the file that documents it instead of copying its API into the memory.")
     real = najmkit_names(work)
     invented = []
+    modules = najmkit_modules(work)
+    for match in _NAJMKIT_MODULE.finditer(text):
+        named = [match.group(1)] if match.group(1) else [part.split()[0] for part in (match.group(2) or "").split(",") if part.strip()]
+        invented += [f"najmkit.{m}" for m in named if m not in modules and m not in _FILE_EXTENSIONS and m != "import"]
     for match in _NAJMKIT_REF.finditer(text):
         module, attr = match.group(1), match.group(2)
         if attr in _FILE_EXTENSIONS or not real.get(module):
@@ -887,8 +923,11 @@ def pointer_check(work: Path, mem: Memory) -> Check:
     missing += [m for m in mem.missing_imports]
     if missing:
         unique = list(dict.fromkeys(missing))
+        hint = "Check each path with ls. Documents drift; when a doc and the code disagree, the code wins."
+        if any("KIT_NOTES.md" in m for m in unique):
+            hint += " KIT_NOTES.md belongs to the lab kit, not to this repository (two old docstrings still mention it); do not point to it."
         return _fail(N_POINTERS, f"{_first(unique, 3)} does not exist" if len(unique) == 1 else f"not in the repository: {_first(unique, 3)}",
-                     "Check each path with ls. Documents drift; when a doc and the code disagree, the code wins.")
+                     hint)
     if len(good) < MIN_POINTERS:
         return _fail(N_POINTERS, f"it points to {len(good)} real file{'s' if len(good) != 1 else ''}; at least {MIN_POINTERS} are expected",
                      "Point to the docs to read first, the files that matter and the tests, with their paths.")
@@ -898,12 +937,36 @@ def pointer_check(work: Path, mem: Memory) -> Check:
 # ---------------------------------------------------------------------------------------------------------
 # stale facts, filler, restating
 # ---------------------------------------------------------------------------------------------------------
+# (what it is, pattern, a statement of absence is fine). docs/ARCHITECTURE.md still makes these claims; the code does not.
 STALE_FACTS = (
-    ("a module that no longer exists", re.compile(r"\brisk\.(?:py|check)\b", re.I)),
-    ("an old limits rule (no monthly limit)", re.compile(r"\bno monthly limits?\b", re.I)),
-    ("an old limits rule (two KYC tiers)", re.compile(r"\btwo (?:KYC )?tiers\b", re.I)),
-    ("an old per-day limit for T1", re.compile(r"\bT1\b[^\n]{0,60}\b5,?000\b")),
-    ("an old per-day limit for T2", re.compile(r"\bT2\b[^\n]{0,60}\b25,?000\b")),
+    ("a module that no longer exists", re.compile(r"\brisk\.(?:py|check)\b|\brisk (?:module|package|engine)\b", re.I), True),
+    ("an old limits rule (no monthly limit)",
+     re.compile(r"\b(?:no|without a?) monthly (?:limits?|caps?|maximum|ceilings?|thresholds?)\b", re.I), False),
+    ("an old limits rule (two KYC tiers)", re.compile(r"\b(?:two|2) (?:KYC )?(?:tiers|levels)\b|\bonly T1 and T2\b", re.I), False),
+    ("an old per-day limit for T1", re.compile(r"\bT1\b[^\n]{0,60}\b5,?000\b"), False),
+    ("an old per-day limit for T2", re.compile(r"\bT2\b[^\n]{0,60}\b25,?000\b"), False),
+)
+
+# Claims about the code that are false here, whoever made them. (what the claim is about, pattern.) The detail names the
+# topic, never the right answer. A line that says it is a claim of a stale document ("...; that is out of date") is skipped.
+_ALLOWED = r"(?:may|can|could|feel free to|free to|ok(?:ay)? to|fine to|allowed to|permitted to|is fine to)"
+FALSE_CLAIMS = (
+    ("the rounding mode",
+     re.compile(r"\bhalf[- ]?(?:to[- ]?)?(?:even|down)\b|\bbanker'?s?\b|\bROUND_(?:HALF_EVEN|HALF_DOWN|DOWN|UP|FLOOR|CEILING)\b|\btruncat\w+", re.I),
+     re.compile(r"ledger|partner|Q-LED|share", re.I)),  # the legacy ledger really does round half-even
+    ("the number of decimal places of an amount",
+     re.compile(r"\b(?:three|3|four|4|zero|0|one|1)\s+decimals?(?:\s+places?|\s+digits?)?\b", re.I),
+     re.compile(r"\brates?\b|\bfx\b|exchange", re.I)),  # rates have four
+    ("what the ledger is",
+     re.compile(r"\bledger\b[^.\n]{0,60}\b(?:source of truth|system of record|authoritative)\b|"
+                r"\b(?:source of truth|system of record)\b[^.\n]{0,60}\bledger\b", re.I), None),
+    ("using the clock or ids directly",
+     re.compile(_ALLOWED + r"\b[^.\n]{0,40}(?:datetime\.now|datetime\.utcnow|uuid\.?uuid4|uuid4|time\.time|time\.sleep)|"
+                r"(?:datetime\.now|uuid4|time\.sleep)[^.\n]{0,30}\b(?:is|are) (?:fine|ok|okay|allowed|acceptable|permitted)\b", re.I), None),
+    ("adding dependencies",
+     re.compile(_ALLOWED + r"\b[^.\n]{0,25}\badd\b[^.\n]{0,20}\b(?:dependenc\w+|third[- ]party \w+)|"
+                r"\bdependenc\w+ (?:are|is) (?:fine|ok|okay|welcome|allowed)\b", re.I),
+     re.compile(r"\b(?:only|unless|without|except|ticket|reviewer|approv\w*)\b", re.I)),
 )
 
 
@@ -912,40 +975,52 @@ def stale_check(mem: Memory) -> Check:
     for ln in mem.lines:
         if STALE_ACK.search(ln.text):
             continue  # a line that says the doc is out of date is not repeating the stale claim
-        for label, pattern in STALE_FACTS:
-            if pattern.search(ln.text):
+        for label, pattern, absence_ok in STALE_FACTS:
+            if pattern.search(ln.text) and not (absence_ok and ABSENCE.search(ln.text)):
                 hits.append(f"{_where(ln)}: {label}")
+        for topic, pattern, except_when in FALSE_CLAIMS:
+            if _unnegated(pattern, ln.text) and not (except_when and except_when.search(ln.text)):
+                hits.append(f"{_where(ln)}: says something about {topic} that the code contradicts")
     if hits:
         return _fail(N_STALE, _first(hits, 2),
-                     "docs/ARCHITECTURE.md is partly out of date. Check each claim against src/, or point to the file instead.")
+                     "docs/ARCHITECTURE.md is partly out of date, and so are agents' guesses. Check each claim against src/ and "
+                     "CONTRIBUTING.md, or point to the file instead.")
     return _ok(N_STALE)
 
 
+# (label, pattern, soft). A *soft* phrase is filler only when the line is generic. "Be careful with `ledger.py`: its balances
+# are module-level" names a file and a reason, and is the opposite of filler; "Be careful when changing financial logic" is not.
 FILLER = (
     ("clean, readable or maintainable code",
-     re.compile(r"\b(clean|readable|maintainable|idiomatic|elegant|high[- ]quality|production[- ]ready|robust)\b[\w, -]{0,25}\b(code|python|solutions?|software)\b", re.I)),
-    ("best practices", re.compile(r"\bbest[- ]practices?\b", re.I)),
-    ("be careful", re.compile(r"\b(?:be|being) (?:very |extra )?(?:careful|thorough|diligent)\b", re.I)),
-    ("a role-play opening", re.compile(r"\byou are (?:a|an|the)\b[^.\n]{0,40}\b(?:expert|engineer|developer|assistant|senior)\b|\bact as\b", re.I)),
-    ("think step by step", re.compile(r"\bthink step[- ]by[- ]step\b", re.I)),
-    ("PEP 8", re.compile(r"\bPEP[- ]?8\b")),
-    ("design slogans (SOLID, DRY, KISS)", re.compile(r"\b(?:SOLID|DRY|KISS|YAGNI)\b")),
-    ("good names", re.compile(r"\b(?:descriptive|meaningful|clear|good) (?:variable |function )?names\b", re.I)),
-    ("well-documented, well-tested, scalable", re.compile(r"\b(?:well[- ]documented|well[- ]structured|well[- ]tested|scalable)\b", re.I)),
-    ("type hints and docstrings", re.compile(r"\b(?:type hints?|type annotations?)\b|\b(?:add|write|include|use|needs?)\s+(?:\w+\s+){0,3}docstrings?\b", re.I)),
+     re.compile(r"\b(clean|readable|maintainable|idiomatic|elegant|high[- ]quality|production[- ]ready|robust)\b[\w, -]{0,25}\b(code|python|solutions?|software)\b", re.I), False),
+    ("best practices", re.compile(r"\bbest[- ]practices?\b", re.I), False),
+    ("be careful", re.compile(r"\b(?:be|being) (?:very |extra )?(?:careful|thorough|diligent)\b", re.I), True),
+    ("a role-play opening", re.compile(r"\byou are (?:a|an|the)\b[^.\n]{0,40}\b(?:expert|engineer|developer|assistant|senior)\b|\bact as\b", re.I), False),
+    ("think step by step", re.compile(r"\bthink step[- ]by[- ]step\b", re.I), False),
+    ("PEP 8", re.compile(r"\bPEP[- ]?8\b"), True),
+    ("design slogans (SOLID, DRY, KISS)", re.compile(r"\b(?:SOLID|DRY|KISS|YAGNI)\b"), False),
+    ("good names", re.compile(r"\b(?:descriptive|meaningful|clear|good) (?:variable |function )?names\b", re.I), False),
+    ("well-documented, well-tested, scalable", re.compile(r"\b(?:well[- ]documented|well[- ]structured|well[- ]tested|scalable)\b", re.I), True),
+    ("type hints and docstrings", re.compile(r"\b(?:type hints?|type annotations?)\b|\b(?:add|write|include|use|needs?)\s+(?:\w+\s+){0,3}docstrings?\b", re.I), True),
 )
+# What makes a line specific: a code span, a file name or path, or a stated exception.
+_SPECIFIC = re.compile(
+    r"`[^`\n]+`|\b[\w-]+\.(?:py|md|toml|ya?ml|json|jsonl)\b|\b[\w-]+/[\w./-]+|"
+    r"\b(?:allowed|except\w*|unless|instead|long lines?|line length|differs?)\b", re.I)
 
 
 def filler_check(mem: Memory) -> Check:
-    hits: dict[str, Ln] = {}
+    hits: dict[str, tuple[Ln, str]] = {}
     for ln in mem.lines:
-        for label, pattern in FILLER:
-            if label not in hits and pattern.search(ln.text):
-                hits[label] = ln
+        for label, pattern, soft in FILLER:
+            match = pattern.search(ln.text)
+            if match and label not in hits and not (soft and _SPECIFIC.search(ln.text)):
+                hits[label] = (ln, match.group(0).strip())
     if hits:
-        shown = [f"'{label}' ({_where(ln)})" for label, ln in hits.items()]
+        shown = [f"'{text}' ({_where(ln)})" for ln, text in hits.values()]
         return _fail(N_FILLER, "filler found: " + _first(shown, 3),
-                     "Delete it. Would removing the line cause a mistake? Generic advice only dilutes the lines that matter.")
+                     "Delete it, or make it specific: name the file, function or fact an agent would otherwise get wrong. "
+                     "Would removing the line cause a mistake?")
     return _ok(N_FILLER)
 
 
@@ -1002,13 +1077,104 @@ def figures_check(mem: Memory) -> Check:
     return _ok(N_FIGURES, required=False)
 
 
+# ---------------------------------------------------------------------------------------------------------
+# secrets, customer data, hidden text, hostile instructions, links
+# ---------------------------------------------------------------------------------------------------------
+# checks.no_secrets (the kit's) looks for provider key formats. A memory file also gets `NAME=value` lines, bank account
+# numbers and phone numbers pasted from a real session, so this reads the memory itself for those. Nothing is ever echoed.
+_SECRET_NAME = r"[\w-]*(?:api[_-]?key|secret|token|passw(?:or)?d|pwd|credential|private[_-]?key|access[_-]?key)[\w-]*"
+_SECRET_ASSIGN = re.compile(rf"\b{_SECRET_NAME}[\"']?\s*[:=]\s*[\"']?([^\s\"'`<>$,;(){{}}\[\]]{{8,}})", re.I)
+_PLACEHOLDER_VALUE = re.compile(
+    r"^(?:your|my|the|an?|changeme|change-me|example|sample|dummy|fake|redacted|x{3,}|\*+|\.{3}|none|null|todo|value|"
+    r"secret|token|password|placeholder|env)", re.I)
+_IBAN = re.compile(r"\b[A-Z]{2}\d{2}[A-Z0-9 ]{11,40}")
+_PHONE = re.compile(r"(?<![\w.])\+\d{1,3}[ -]?\d{2,4}[ -]?\d{3,4}(?:[ -]?\d{3,4})?(?!\d)")
+
+
+def _looks_like_secret_value(value: str) -> bool:
+    if _PLACEHOLDER_VALUE.match(value) or "/" in value or re.search(r"\.\w{1,5}\Z", value):
+        return False  # a path, a file name or an obvious placeholder
+    return bool(re.search(r"\d", value) or (re.search(r"[a-z]", value) and re.search(r"[A-Z]", value)) or re.search(r"[!@#%^&*]", value))
+
+
+def secret_check(mem: Memory) -> Check:
+    found: list[str] = []
+    for ln in mem.lines:
+        if _SECRET_ASSIGN.search(ln.text) and any(_looks_like_secret_value(v) for v in _SECRET_ASSIGN.findall(ln.text)):
+            found.append(f"{_where(ln)}: a credential assigned to a name")
+        for match in _IBAN.finditer(ln.text):
+            compact = match.group(0).replace(" ", "")
+            if re.match(r"[A-Z]{2}\d{2}[A-Z0-9]{11,30}", compact) and sum(c.isdigit() for c in compact[:34]) >= 6:
+                found.append(f"{_where(ln)}: a bank account number")
+                break
+        for match in _PHONE.finditer(ln.text):
+            if sum(c.isdigit() for c in match.group(0)) >= 9:
+                found.append(f"{_where(ln)}: a phone number")
+                break
+    if found:
+        return _fail(N_SECRET, _first(found, 2),
+                     "Memory is committed and sent with every prompt. Name the variable, never the value, and use no real customer data.")
+    return _ok(N_SECRET)
+
+
+# Invisible characters that can hide instructions from a human reviewer. Not listed on purpose: U+200C, U+200D, U+200E,
+# U+200F and U+061C, which Arabic and Persian text uses.
+_HIDDEN = re.compile("[᠎​⁠-⁤⁦-⁩‪-‮﻿￹-￻\U000e0000-\U000e007f]")
+HOSTILE = (
+    ("an instruction to ignore other rules",
+     re.compile(r"\b(?:ignore|disregard|forget|override|bypass)\b[^.\n]{0,30}\b(?:previous|prior|earlier|above|all|any|other|your|safety)\b"
+                r"[^.\n]{0,25}\b(?:rules?|instructions?|guidelines?|prompts?|constraints?|restrictions?|permissions?)\b", re.I)),
+    ("a command that downloads and runs code",
+     re.compile(r"\b(?:curl|wget)\b[^\n|]*\|\s*(?:sudo\s+)?(?:ba|z|da)?sh\b|\b(?:curl|wget)\b[^\n]*&&[^\n]*\b(?:sh|bash)\b", re.I)),
+    ("an instruction to send something to a web address",
+     re.compile(r"\b(?:send|post|upload|exfiltrate|forward|email|transmit|leak)\b[^.\n]{0,60}\bhttps?://", re.I)),
+)
+_WARNING_WORDS = re.compile(r"\b(?:injection|untrusted|attack\w*|suspicious|malicious|hostile|poisoned)\b", re.I)
+
+
+def hidden_check(mem: Memory) -> Check:
+    found: list[str] = []
+    for ln in mem.lines:
+        text = ln.text[1:] if ln.no == 1 and ln.text.startswith("﻿") else ln.text  # a byte-order mark at the start is normal
+        if _HIDDEN.search(text):
+            found.append(f"{_where(ln)}: invisible characters")
+        for label, pattern in HOSTILE:
+            match = pattern.search(text)
+            if match and not NEGATION.search(text[:match.end()]) and not _WARNING_WORDS.search(text):
+                found.append(f"{_where(ln)}: {label}")
+    if found:
+        return _fail(N_HIDDEN, _first(found, 2),
+                     "A memory file is read as instructions by every agent on the team. Delete invisible characters and anything that "
+                     "tells an agent to fetch, run or send something elsewhere; review the raw diff of memory changes.")
+    return _ok(N_HIDDEN)
+
+
+KNOWN_HOSTS = ("github.com", "code.claude.com", "docs.anthropic.com", "anthropic.com", "docs.python.org", "python.org",
+               "docs.pytest.org", "pytest.org", "conventionalcommits.org", "agents.md", "git-scm.com", "localhost", "127.0.0.1")
+_URL = re.compile(r"https?://([A-Za-z0-9.-]+)", re.I)
+
+
+def links_check(mem: Memory) -> Check:
+    unknown: list[str] = []
+    for ln in mem.lines:
+        for match in _URL.finditer(ln.text):
+            host = match.group(1).lower().rstrip(".")
+            if not any(host == known or host.endswith("." + known) for known in KNOWN_HOSTS):
+                unknown.append(f"`{host}` ({_where(ln)})")
+    if unknown:
+        return _fail(N_LINKS, "links to places the grader cannot vouch for: " + _first(list(dict.fromkeys(unknown)), 3),
+                     "An unknown link is how a poisoned memory file sends an agent somewhere. Keep a link only if you know where it goes.",
+                     required=False)
+    return _ok(N_LINKS, required=False)
+
+
 def memory_checks(work: Path) -> list[Check]:
     """Every check on the memory file itself (the notes and git hygiene are added by the lab)."""
     work = Path(work)
     mem = load_memory(work)
     names = [N_SIZE, N_COMMANDS, N_PYTHONPATH, N_MONEY, N_TESTS, N_COMMITS, N_NAJMKIT, N_NEVER, N_POINTERS,
-             N_STALE, N_FILLER, N_RESTATE, N_FIGURES]
-    optional = {N_PYTHONPATH, N_FIGURES}
+             N_STALE, N_FILLER, N_RESTATE, N_SECRET, N_HIDDEN, N_FIGURES, N_LINKS]
+    optional = {N_PYTHONPATH, N_FIGURES, N_LINKS}
     if mem is None:
         exists = _fail(N_EXISTS, "none of CLAUDE.md, .claude/CLAUDE.md or AGENTS.md exists (or it is empty)",
                        "Create CLAUDE.md at the root of the repository (or AGENTS.md if your tool reads that).")
@@ -1035,7 +1201,10 @@ def memory_checks(work: Path) -> list[Check]:
     safe(N_STALE, lambda: stale_check(mem))
     safe(N_FILLER, lambda: filler_check(mem))
     safe(N_RESTATE, lambda: restate_check(work, mem))
+    safe(N_SECRET, lambda: secret_check(mem))
+    safe(N_HIDDEN, lambda: hidden_check(mem))
     safe(N_FIGURES, lambda: figures_check(mem))
+    safe(N_LINKS, lambda: links_check(mem))
     detail = mem.path + (f" ({'; '.join(mem.notes)})" if mem.notes else "")
     return [_ok(N_EXISTS, detail)] + [results[n] for n in names if n in results]
 
@@ -1043,13 +1212,15 @@ def memory_checks(work: Path) -> list[Check]:
 # ---------------------------------------------------------------------------------------------------------
 # the A/B notes
 # ---------------------------------------------------------------------------------------------------------
+# (heading, minimum words). The minimums only stop a one-word answer: "No difference: both runs made the same change"
+# (twelve words) is a complete "What was different".
 NOTES_SECTIONS = (
-    ("setup", 12),
-    ("what was different", 25),
+    ("setup", 8),
+    ("what was different", 12),
     ("the memory line that mattered", 4),
     ("a memory line that changed nothing", 4),
-    ("what i changed in the memory afterwards", 8),
-    ("limits of this comparison", 12),
+    ("what i changed in the memory afterwards", 2),
+    ("limits of this comparison", 8),
 )
 TABLE_ROWS = (
     ("minutes", "Minutes until I accepted the result", "int"),
@@ -1059,8 +1230,14 @@ TABLE_ROWS = (
     ("pytest", "`pytest -q` passes at the end", "yesno"),
     ("commit message", "Commit message follows CONTRIBUTING.md", "yesno"),
 )
-_INT_CELL = re.compile(r"\s*(\d+)\s*(?:min(?:ute)?s?)?\s*\Z", re.I)
+# A number, in any honest form: 12, 0.4, ~10, <1, about 15, 8-10, none (= 0), with an optional unit and a remark in brackets:
+# "10 min", "57 (+56 -1)". A sub-minute run is "<1" or "0.4", not a lie rounded up.
+_INT_CELL = re.compile(
+    r"\s*(?:~|\u2248|<|\u2264|about |around |approx\.? |approximately |roughly |under |circa )?\s*"
+    r"(?:\d+(?:\.\d+)?(?:\s*[-\u2013]\s*\d+(?:\.\d+)?)?|zero|none)\s*"
+    r"(?:min(?:ute)?s?|mins|sec(?:ond)?s?|files?|lines?|turns?|m|s)?\s*(?:\(.*\)\s*)?\Z", re.I)
 _YESNO_CELL = re.compile(r"\s*(yes|no)\b", re.I)
+MIN_QUOTE = 15  # characters of a quoted line (after the markdown is stripped)
 
 
 def _table_cells(body: str) -> list[list[str]]:
@@ -1073,15 +1250,20 @@ def _table_cells(body: str) -> list[list[str]]:
 
 
 def _quotes(body: str) -> list[str]:
-    """Quoted lines in a section: block quotes, code spans and double-quoted text."""
-    found = []
+    """The line a section quotes: the first block quote (the form the template asks for; a second one may quote the agent),
+    or, when there is none, the longest double-quoted text or code span."""
+    blocks = []
     for line in body.splitlines():
         stripped = line.strip()
         if stripped.startswith(">"):
-            found.append(stripped.lstrip("> ").strip())
-    found += [m.group(1) for m in re.finditer(r"`([^`\n]+)`", body)]
-    found += [m.group(1) for m in re.finditer(r"[\"“]([^\"”\n]{12,})[\"”]", body)]
-    return [q for q in found if q]
+            blocks.append(stripped.lstrip("> ").strip())
+    blocks = [q for q in blocks if len(normalise(q)) >= MIN_QUOTE]
+    if blocks:
+        return blocks[:1]
+    loose = [m.group(1) for m in re.finditer(r"`([^`\n]+)`", body)]
+    loose += [m.group(1) for m in re.finditer(r"[\"\u201c]([^\"\u201d\n]{12,})[\"\u201d]", body)]
+    loose = [q for q in loose if len(normalise(q)) >= MIN_QUOTE]
+    return [max(loose, key=lambda q: len(normalise(q)))] if loose else []  # the longest: a short span is not the quote
 
 
 def notes_checks(work: Path) -> list[Check]:
@@ -1122,7 +1304,7 @@ def notes_checks(work: Path) -> list[Check]:
                     continue  # already reported as a TODO / reported below as empty
                 pattern = _INT_CELL if kind == "int" else _YESNO_CELL
                 if not pattern.match(cell):
-                    expected = "a whole number" if kind == "int" else "yes or no"
+                    expected = "a number such as 12, ~10 or <1" if kind == "int" else "yes or no"
                     problems.append(f"'{label}', column {column}, should be {expected}")
             if any(not c for c in cells[1:3]):
                 problems.append(f"'{label}' has an empty cell")
@@ -1133,16 +1315,21 @@ def notes_checks(work: Path) -> list[Check]:
     quote_problems = []
     if not history:
         return [notes, _fail(N_QUOTES, WAITING, "")]
+    used: dict[str, set[str]] = {}
     for title in ("the memory line that mattered", "a memory line that changed nothing"):
         body = section(title)
         if body is None or "TODO" in body:
             quote_problems.append(f"'{title}' is not filled in")
             continue
-        quotes = [q for q in _quotes(body) if len(normalise(q)) >= 15]
+        quotes = _quotes(body)
         if not quotes:
-            quote_problems.append(f"'{title}' has no quoted line (put the line itself in a block quote or backticks)")
-        elif not any(normalise(q) in history for q in quotes):
-            quote_problems.append(f"'{title}' quotes something that is not in your memory file")
+            quote_problems.append(f"'{title}' has no quoted line of at least {MIN_QUOTE} characters (copy the line itself into a block quote)")
+        elif not all(normalise(q) in history for q in quotes):
+            quote_problems.append(f"'{title}' quotes something that is not in your memory file (the first block quote must be the memory line)")
+        else:
+            used[title] = {normalise(q) for q in quotes}
+    if len(used) == 2 and (used["the memory line that mattered"] & used["a memory line that changed nothing"]):
+        quote_problems.append("the two sections quote the same line; one line cannot both matter and change nothing")
     quotes_check = _fail(N_QUOTES, _first(quote_problems, 2),
                          "Copy the line exactly from your memory file into a block quote. A paraphrase cannot be checked.") if quote_problems else _ok(N_QUOTES)
     return [notes, quotes_check]

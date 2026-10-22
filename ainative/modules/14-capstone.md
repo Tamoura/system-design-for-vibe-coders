@@ -12,18 +12,18 @@
 ## ⚡ In 60 seconds
 - **One ticket, the whole cycle.** REMIT-414 opens a Bangladesh corridor: five small code edits, graded with the evidence around them.
 - **Ten pieces of evidence** (memory, spec, plan, ADR, tests, review, settings and hook, docs, agent log, retrospective) must agree with the code and each other.
-- **Judgement, not volume.** Some results land exactly on a rounding tie. Half-even or float rounding is a cent wrong, and no summary says so.
+- **Judgement, not volume.** Some results land exactly on a rounding tie. Half-even or float rounding can be a cent wrong, and no summary says so.
 - **Needs an agent: no, but recommended.** The grader sees the result, never the author; only the demo tests understanding.
 
 ## 🧭 Why it matters
-Hessa's ticket arrives with every number in it. Lujain finishes in an hour: one prompt, a corridor borrowing `STD-B`, tests written after the code, all green. Tariq asks four questions. Where is the spec? What fails if the maximum is 12,000.01? Who has read the `service.py` diff, a money file? What stops the agent opening `.env`? Lujain has no answer. The change may be fine; nobody can know.
+Hessa's ticket has every number. Lujain finishes in an hour: one prompt, a corridor borrowing `STD-B`, tests written after the code, all green. Tariq asks four questions. Where is the spec? What fails if the maximum is 12,000.01? Who has read the `service.py` diff, a money file? What stops the agent opening `.env`? Lujain has no answer. The change may be fine; nobody can know.
 
 The capstone trains the habit behind those questions: a change others can trust without your word. The 2025 DORA report (nearly 5,000 technology professionals, self-reported, associations not causes) frames AI as an amplifier of what a team already does; that specs, tests, small batches and review are what to amplify is the course's bet, not DORA's finding.
 
 ## 📐 How it works
 
 ### 🟢 The essentials
-**The brief.** Eight milestones, one per kind of evidence: context (modules 0-2), spec and plan (3), small steps (4, 5), review (5, 6), security (8), automation (9, 10), documents (11) and retrospective (12, 13). Each leaves something checkable that must refer to something real: files, ids `AC1`..., sample commands, the code, a commit.
+**The brief.** Eight milestones: context (modules 0-2), spec and plan (3), small steps (4, 5), review (5, 6), security (8), automation (9, 10), documents (11) and retrospective (12, 13). Each leaves something checkable that must refer to something real: files, ids `AC1`..., sample commands, the code, a commit.
 
 **Providers before the consumer.** A corridor names its fee schedule, and an old test (`tests/test_corridors.py`) checks that the schedule exists. So the plan adds `STD-C` in `fees.py`, then the rate and margin in `fx.py`, then the corridor, then the wording (`notify.py`) and the template choice (`service.py`). No code commit turns an old test red.
 
@@ -166,7 +166,7 @@ cp lab-assets/harden/guard.py .claude/hooks/guard.py
 python3 .claude/hooks/guard.py < lab-assets/hook-samples/block-rm-rf.json; echo $?    # Blocked: ... then 2
 ```
 
-Exit code 2 blocks a command; any other non-zero code is a non-blocking error and the command runs, so a guard must block what it cannot read. (3) Tests first, committed alone, then one step per commit. (4) Review your own diff, then ask a fresh session for a second opinion. (5) Write the ADR, the corridors page and the architecture fix from the running code. (6) Log, then write the retrospective from `lab-assets/templates/retrospective.md` (total minutes, the commit you would redo, what went well and wrong, what the agent got wrong, what your context missed, the five habits, follow-ups). *No agent:* the same order; budget a week of part-time study.
+Exit code 2 blocks a command; any other non-zero code is a non-blocking error, so a guard must block what it cannot read. (3) Tests first, committed alone, then one step per commit. (4) Review your own diff, then ask a fresh session for a second opinion. (5) Write the ADR, the corridors page and the architecture fix from the code. (6) Log, then write the retrospective from `lab-assets/templates/retrospective.md` (total minutes, the commit you would redo, what went well and wrong, what the agent got wrong, what your context missed, the five habits, follow-ups). *No agent:* the same order; budget a week of part-time study.
 
 **What the grader checks.** *The change:* five groups of hidden acceptance tests (corridor, fees, rate, wording, and the send path with limits, ledger and command line); no old test weakened; your new tests failing without your change; only the expected files touched. *The evidence:* each document keeps its template's headings, has no `TODO` and is checked against the others (spec ids proved by a plan step and named in a test, files the plan names exist, `docs/corridors.md` equal to the code, the retrospective quoting the log's total and a commit); the hook runs on 18 sample inputs. *Hygiene and security:* Conventional Commits, one kind of change per commit, no secrets, no float or clock shortcuts, no new dependency. *Advisory:* tests with teeth, tests before code, a history that follows the plan, small commits, a hook that sees through `bash -c`, ask rules for the money files.
 
@@ -229,7 +229,7 @@ Total minutes: 0
 
 ## ⚠️ Mistakes and traps
 - **Writing the spec after the code.** It then describes what the agent did. **Specify before you delegate.**
-- **Letting the agent work out the numbers.** A float resolves a tie the wrong way, and no summary says so. **Trust evidence, not fluency.**
+- **Letting the agent work out the numbers.** A float can resolve a tie the wrong way, and no summary says so. **Trust evidence, not fluency.**
 - **Keeping a hook or settings file you have not read.** The grader accepts a copy; you answer for it. **Automate the loop, keep the skill.**
 - **Documents that agree because one was copied from another.** Copy from the code.
 - **A green run taken for a review.** The demo asks what the checks cannot.
@@ -348,13 +348,14 @@ Each lesson carries a Focus tag, and each answer repeats it. Use this table to t
 ### 🟡 Elimination
 Read the last sentence first: it says whether you want the first step, the best option or the likeliest cause. Cover the options and say what you would do. Then strike every option that breaks a habit. The wrong answers are patterns you have met:
 
-| Pattern | Habit it breaks | Sounds like |
+| Pattern | Habit (or tag) it breaks | Sounds like |
 |---|---|---|
 | The fluent summary | Trust evidence, not fluency | "The agent says all tests pass, so merge" |
 | The bigger prompt | Context first | "Paste the whole repository into the session" |
+| The one-liner | Specify before you delegate | "Just add the feature, you know what I mean" |
 | The silent fix | Small verified steps | "Let it fix the failing test as well" |
 | The prayer | Secure | "Tell the agent not to read `.env`" (a prompt is not a control) |
-| The hero | Keep the skill | "Let it do all of it, and stop reading diffs" |
+| The hero | Automate the loop, keep the skill | "Let it do all of it, and stop reading diffs" |
 
 If two options survive, prefer the one that is cheaper to check and to undo, and the one earlier in the loop.
 
@@ -366,6 +367,7 @@ Underline the facts: who is accountable, what is at stake (money logic, customer
 |---|---|---|
 | **Miss log** | A row for every miss or guess: number, my answer, the correct one, tag, lesson, the trap, what I will re-read | Straight after marking |
 | **Tag tally** | Misses counted per Focus tag; the highest tag leads the study plan | After the miss log |
+| **Study plan** | One page: weakest two tags, two weeks of re-reading and teaching, a retake date | After the tag tally |
 
 ## 🏛️ In practice at Najm Bank
 Tariq never asks a new engineer for the score. He asks for the miss log and the plan, on one page.
