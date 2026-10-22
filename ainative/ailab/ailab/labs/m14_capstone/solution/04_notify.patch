@@ -1,0 +1,26 @@
+diff --git a/src/remit/notify.py b/src/remit/notify.py
+index 7a1dbe2..636e32f 100644
+--- a/src/remit/notify.py
++++ b/src/remit/notify.py
+@@ -50,6 +50,21 @@ TEMPLATES: dict[str, dict[str, str]] = {
+             "المبلغ المرسل: {send_amount}، والرسوم: {fee}."
+         ),
+     },
++    # REMIT-414: the wording Customer Care approved for QAR-BDT transfers (service.SENT_TEMPLATES picks it).
++    "transfer_sent_bdt": {
++        "en": (
++            "Hi {name}, your transfer {transfer_id} to Bangladesh was sent. "
++            "{recipient} received {receive_amount} at a rate of 1 QAR = {rate} BDT. "
++            "You paid {send_amount} plus a fee of {fee}. "
++            "Please keep this message as your receipt."
++        ),
++        "ar": (
++            "مرحباً {name}، تم إرسال تحويلك {transfer_id} إلى بنغلاديش. "
++            "تم استلام مبلغ {receive_amount} من قبل {recipient} بسعر صرف ١ ريال قطري مقابل {rate} تاكا. "
++            "المبلغ المرسل: {send_amount}، والرسوم: {fee}. "
++            "يرجى الاحتفاظ بهذه الرسالة كإيصال لك."
++        ),
++    },
+     "transfer_failed": {
+         "en": (
+             "Hi {name}, your transfer of {send_amount} to {recipient} could not be completed. "

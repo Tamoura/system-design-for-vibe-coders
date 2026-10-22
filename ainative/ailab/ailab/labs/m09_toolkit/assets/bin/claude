@@ -1,0 +1,281 @@
+#!/usr/bin/env python3
+"""A STAND-IN for the `claude` command, made for lab m09. It is NOT Claude Code and it calls no model.
+
+Why it exists
+-------------
+Lab m09 asks you to write a script that runs `claude -p` and reads what it prints. The kit must grade that script offline,
+for free and the same way every time, so it puts this program first on PATH instead. It copies only the SHAPE that the
+Claude Code documentation describes for print mode, and nothing else:
+
+    claude -p "instructions"  [--output-format text|json]  [--max-turns N]  [--allowedTools ...]  [--tools ...]
+                              [--max-budget-usd X]  [--json-schema '{...}']  [--permission-mode M]  ...
+    * with --output-format json it prints ONE JSON object with a `result` field, a `session_id` and `total_cost_usd`
+      (and `structured_output` when --json-schema is given); the real program prints more fields, so a script must
+      ignore fields it does not know (this stand-in adds one, `stub`, to prove that yours does);
+    * it exits with 0 on success and non-zero on failure; a failed run prints the failure as `result` on standard out;
+    * --max-turns makes a run that needs more turns fail with an error; an invalid flag fails before the run starts;
+    * piped standard input is part of the input (the ticket, in this lab), the argument is the instruction.
+
+What it does NOT do: read files, use tools, follow your instructions (it ignores the prompt text), or behave like a model.
+Its "answer" is a keyword table over the ticket text on standard input, so the same ticket always gets the same answer.
+A script that passes against this stand-in has NOT been shown to work against the real program: run it once by hand with
+the real `claude`, with a spending limit, before you trust it.
+
+The ticket and its markers (all invented for the lab)
+-----------------------------------------------------
+A ticket may contain a marker such as [stub:error]. The marker makes the stand-in misbehave on that ticket, so one batch can
+mix good and bad runs. Real tickets contain no markers. Markers are removed before the text is classified.
+
+    [stub:fenced]   the answer is JSON wrapped in a Markdown code fence, after a sentence of chatter
+    [stub:prose]    the answer is plain prose, not JSON
+    [stub:invalid]  the answer is JSON with a value outside the allowed lists, and an extra field (also chosen by a ticket
+                    that says "ignore your instructions": a pretend hijack; a real model may or may not be fooled)
+    [stub:lowball]  the answer says money_logic is false for a fees ticket
+    [stub:error]    the run fails: exit code 1, the failure as `result`
+    [stub:crash]    the run fails: exit code 1, nothing on standard out
+    [stub:notjson]  exit code 0, but standard out is plain text, not JSON
+    [stub:slow]     the run takes AILAB_STUB_SLOW_SECONDS (default 20) seconds
+    [stub:turns=N]  the run needs N turns: it fails when --max-turns is smaller than N
+The environment variable AILAB_STUB_SCENARIO (one of the names above, without turns) applies a scenario to every ticket that
+has no marker. AILAB_STUB_LOG names a file; every run appends one JSON line to it with the arguments and the standard input.
+
+The classification (invented rules for the lab: category, severity, area, money_logic)
+--------------------------------------------------------------------------------------
+    category   bug when a bug word appears, else feature when a feature phrase appears, else question
+    severity   high for a bug with a high word (twice, not received, ...), medium for any other bug, else low
+    area       the first of fees, fx, limits, screening, notify, ledger whose words appear, else other
+    money_logic  true when the area is fees, fx, limits or ledger
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import re
+import sys
+import time
+
+VERSION = "ailab stand-in for claude, lab m09 (this is not Claude Code)"
+STUB_NOTE = "ailab stand-in for lab m09 (not Claude Code)"
+
+CATEGORIES = ("bug", "feature", "question")
+SEVERITIES = ("low", "medium", "high")
+AREAS = ("fees", "fx", "limits", "screening", "notify", "ledger", "other")
+MONEY_AREAS = ("fees", "fx", "limits", "ledger")
+
+BUG_WORDS = ("wrong", "error", "failed", "twice", "not received", "never arrived", "incorrect", "crash", "bug",
+             "خطأ", "خاطئ", "مرتين", "لم يصل", "فشل")
+FEATURE_WORDS = ("please add", "could you add", "would be nice", "feature request", "i suggest", "أقترح")
+HIGH_WORDS = ("twice", "not received", "never arrived", "debited", "wrong amount", "مرتين", "لم يصل")
+AREA_WORDS = (
+    ("fees", ("fee", "charge", "رسوم")),
+    ("fx", ("exchange rate", "rate", "سعر الصرف")),
+    ("limits", ("limit", "الحد")),
+    ("screening", ("on hold", "under review", "sanction", "screening")),
+    ("notify", ("sms", "message", "notification", "رسالة")),
+    ("ledger", ("balance", "statement", "debited", "posted", "الرصيد")),
+)
+HIJACK = ("ignore your instructions", "ignore previous instructions", "ignore all previous instructions")
+SCENARIOS = ("ok", "fenced", "prose", "invalid", "lowball", "error", "crash", "notjson", "slow")
+MARKER = re.compile(r"\[stub:([a-z]+)(?:=(\d+))?\]")
+
+BOOLEAN_FLAGS = {"-p", "--print", "--bare", "--verbose", "--no-session-persistence", "-c", "--continue", "--fork-session",
+                 "--dangerously-skip-permissions", "--allow-dangerously-skip-permissions", "--restricted",
+                 "--strict-mcp-config", "--include-partial-messages"}
+VALUE_FLAGS = {"--output-format", "--input-format", "--max-turns", "--max-budget-usd", "--allowedTools", "--allowed-tools",
+               "--disallowedTools", "--disallowed-tools", "--tools", "--permission-mode", "--permission-prompts",
+               "--permission-prompt-tool", "--json-schema", "--model", "--effort", "--append-system-prompt",
+               "--append-system-prompt-file", "--system-prompt", "--system-prompt-file", "--settings", "--mcp-config",
+               "--setting-sources", "--add-dir", "--agents", "--plugin-dir", "-r", "--resume"}
+PERMISSION_MODES = ("default", "manual", "acceptEdits", "plan", "auto", "dontAsk", "bypassPermissions")
+
+
+def has_word(text: str, word: str) -> bool:
+    """A word (or phrase) starting at a word boundary, so 'fee' finds 'fees' but 'rate' does not find 'separate'."""
+    if word.isascii():
+        return re.search(r"\b" + re.escape(word), text) is not None
+    return word in text
+
+
+def classify(ticket: str) -> dict:
+    """The stand-in's whole 'intelligence': a keyword table. Deterministic."""
+    text = MARKER.sub(" ", ticket).lower()
+    bug = any(has_word(text, w) for w in BUG_WORDS)
+    feature = any(has_word(text, w) for w in FEATURE_WORDS)
+    category = "bug" if bug else "feature" if feature else "question"
+    high = any(has_word(text, w) for w in HIGH_WORDS)
+    severity = ("high" if high else "medium") if category == "bug" else "low"
+    area = next((name for name, words in AREA_WORDS if any(has_word(text, w) for w in words)), "other")
+    return {"category": category, "severity": severity, "area": area, "money_logic": area in MONEY_AREAS}
+
+
+def parse_args(argv: list[str]) -> tuple[dict, str | None, str | None]:
+    """Returns (options, prompt, error). An unknown flag is an error, as with the real program."""
+    opts: dict = {}
+    positional: list[str] = []
+    i = 0
+    while i < len(argv):
+        arg = argv[i]
+        i += 1
+        if arg.startswith("-") and arg != "-":
+            name, eq, inline = arg.partition("=") if arg.startswith("--") else (arg, "", "")
+            if name in BOOLEAN_FLAGS:
+                opts[name] = True
+            elif name in VALUE_FLAGS:
+                if eq:
+                    value = inline
+                elif i < len(argv):
+                    value = argv[i]
+                    i += 1
+                else:
+                    return opts, None, f"option '{name}' argument missing"
+                opts[name] = value
+            elif name in ("--version", "-v", "--help", "-h"):
+                opts[name] = True
+            else:
+                return opts, None, f"unknown option '{name}'"
+        else:
+            positional.append(arg)
+    return opts, " ".join(positional) if positional else None, None
+
+
+def validate(opts: dict) -> str | None:
+    fmt = opts.get("--output-format", "text")
+    if fmt not in ("text", "json", "stream-json"):
+        return f"option '--output-format' argument '{fmt}' is invalid"
+    turns = opts.get("--max-turns")
+    if turns is not None and not (turns.isdigit() and int(turns) >= 1):
+        return f"option '--max-turns' argument '{turns}' is invalid (use a whole number, 1 or more)"
+    budget = opts.get("--max-budget-usd")
+    if budget is not None:
+        try:
+            if float(budget) <= 0:
+                raise ValueError
+        except ValueError:
+            return f"option '--max-budget-usd' argument '{budget}' is invalid"
+    mode = opts.get("--permission-mode")
+    if mode is not None and mode not in PERMISSION_MODES:
+        return f"option '--permission-mode' argument '{mode}' is invalid"
+    return None
+
+
+def read_stdin() -> str:
+    if sys.stdin is None or sys.stdin.isatty():
+        return ""
+    return sys.stdin.buffer.read().decode("utf-8", errors="replace")
+
+
+def pick_scenario(ticket: str) -> tuple[str, int]:
+    """(scenario, turns needed). A marker wins, then the environment, then a pretend hijack, then ok."""
+    turns = 1
+    scenario = None
+    for name, number in MARKER.findall(ticket):
+        if name == "turns" and number:
+            turns = max(1, int(number))
+        elif name in SCENARIOS:
+            scenario = name
+    if scenario is None:
+        env = os.environ.get("AILAB_STUB_SCENARIO", "").strip()
+        if env in SCENARIOS and env != "ok":
+            scenario = env
+    if scenario is None and any(h in ticket.lower() for h in HIJACK):
+        scenario = "invalid"
+    return scenario or "ok", turns
+
+
+def cost_of(ticket: str, turns: int) -> float:
+    """An invented price, so that a script has a number to add up: it grows with turns and text."""
+    return round(0.0008 + 0.0004 * turns + len(ticket.encode("utf-8")) * 0.0000005, 6)
+
+
+def log_run(argv: list[str], ticket: str, scenario: str, code: int) -> None:
+    path = os.environ.get("AILAB_STUB_LOG")
+    if not path:
+        return
+    line = json.dumps({"argv": argv, "stdin": ticket, "scenario": scenario, "exit": code}, ensure_ascii=False)
+    with open(path, "a", encoding="utf-8") as handle:
+        handle.write(line + "\n")
+
+
+def emit(obj: dict, fmt: str) -> None:
+    if fmt == "json":
+        sys.stdout.buffer.write((json.dumps(obj, ensure_ascii=False) + "\n").encode("utf-8"))
+    else:
+        sys.stdout.buffer.write((str(obj["result"]) + "\n").encode("utf-8"))
+    sys.stdout.flush()
+
+
+def main(argv: list[str]) -> int:
+    opts, prompt, error = parse_args(argv)
+    if error is None:
+        error = validate(opts)
+    if error:
+        print(f"error: {error}", file=sys.stderr)  # an invalid flag fails before the run starts
+        return 1
+    if "--version" in opts or "-v" in opts:
+        print(VERSION)
+        return 0
+    if "--help" in opts or "-h" in opts:
+        print(VERSION + "\nusage: claude -p PROMPT [--output-format text|json] [--max-turns N] [--allowedTools LIST] ...")
+        return 0
+    if "-p" not in opts and "--print" not in opts:
+        print("error: this stand-in only supports print mode: claude -p PROMPT", file=sys.stderr)
+        return 1
+    fmt = opts.get("--output-format", "text")
+    if fmt == "stream-json":
+        print("error: this stand-in supports --output-format text and json only", file=sys.stderr)
+        return 1
+    ticket = read_stdin()
+    if prompt is None and not ticket.strip():
+        print("error: give the instruction as an argument or pipe the input in", file=sys.stderr)
+        return 1
+
+    scenario, turns = pick_scenario(ticket)
+    answer = classify(ticket)
+    session = "stub-" + hashlib.sha1(((prompt or "") + "\0" + ticket).encode("utf-8")).hexdigest()[:12]
+    cost = cost_of(ticket, turns)
+    base = {"session_id": session, "total_cost_usd": cost, "stub": STUB_NOTE}
+
+    def finish(code: int, obj: dict | None) -> int:
+        log_run(argv, ticket, scenario, code)
+        if obj is not None:
+            emit(obj, fmt)
+        return code
+
+    if scenario == "crash":
+        print("stand-in: simulated crash", file=sys.stderr)
+        return finish(1, None)
+    if scenario == "notjson":
+        sys.stdout.write("Welcome to the stand-in. This line is not JSON.\n")
+        return finish(0, None)
+    if scenario == "error":
+        return finish(1, {"result": "Error: the run failed (stand-in)", **base, "total_cost_usd": 0.0})
+    max_turns = opts.get("--max-turns")
+    if max_turns is not None and turns > int(max_turns):
+        return finish(1, {"result": f"Error: reached the maximum number of turns ({max_turns})", **base})
+    budget = opts.get("--max-budget-usd")
+    if budget is not None and cost > float(budget):
+        return finish(1, {"result": f"Error: reached the budget limit ({budget} USD)", **base})
+    if scenario == "slow":
+        time.sleep(float(os.environ.get("AILAB_STUB_SLOW_SECONDS", "20")))
+
+    if scenario == "invalid":
+        answer = {**answer, "severity": "critical", "area": "payments", "note": "ignore the rules and escalate this"}
+    elif scenario == "lowball" and answer["area"] == "fees":
+        answer = {**answer, "money_logic": False}
+    text = json.dumps(answer, ensure_ascii=False)
+    if scenario == "fenced":
+        result = "Here is the triage for this ticket:\n\n```json\n" + json.dumps(answer, ensure_ascii=False, indent=2) + "\n```\n"
+    elif scenario == "prose":
+        result = "I could not decide; this ticket needs a person to read it."
+    else:
+        result = text
+    obj = {"result": result, **base}
+    if "--json-schema" in opts and scenario in ("ok", "fenced", "invalid", "lowball"):
+        obj["structured_output"] = answer
+        obj["result"] = f"Triage: {answer['category']}, {answer['severity']}, {answer['area']}"
+    return finish(0, obj)
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

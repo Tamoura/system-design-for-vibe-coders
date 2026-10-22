@@ -1,39 +1,39 @@
 # Parallel plan: <ticket id and title>
 
-<!-- Fill this in BEFORE you start any branch. One page. Delete these comments. -->
+<!-- Fill this in BEFORE you start a branch. One page. -->
 
-## Task graph
+### Task graph
 
-| Task | Branch | Done by (you, an agent, a session) | Depends on | Size (S, M, L) |
+| Task | Branch | Done by (you, an agent) | Depends on | Size |
 |---|---|---|---|---|
 | | | | | |
 
-Tasks that cannot run in parallel, and why:
+Cannot run in parallel, and why:
 
-## Boundaries
+### Boundaries
 
-| Task | May change | Must not change | Contract it promises the others |
+| Task | May change | Must not change | Contract it promises |
 |---|---|---|---|
 | | | | |
 
-Shared files (every file two tasks will touch) and who resolves them:
+Shared files, and who resolves them:
 
-## Merge order
+### Merge order
 
 1. 
 2. 
 
 Why this order:
 
-## Verification
+### Verification
 
-| After | Command or check | Who looks | Stop and ask if |
+| After | Check | Who looks | Stop and ask if |
 |---|---|---|---|
-| each branch, before merging | | | |
+| each branch | | | |
 | each merge | | | |
 | the last merge | | | |
 
-## Limits
+### Limits
 
-- Streams I will run at once (what I can really review):
-- Time box per task, and what I do when it is exceeded:
+- Streams at once (what I can really review):
+- Time box per task:

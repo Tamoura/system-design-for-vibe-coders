@@ -198,7 +198,7 @@ def test_the_markers_really_do_make_two_branches_collide_and_only_there(work):
 
 def test_the_tickets_examples_are_what_the_program_really_prints(work):
     framework.solve_lab(framework.load_lab("m10"), work)
-    task = (LAB.HERE / "task.md").read_text(encoding="utf-8")
+    task = "\n".join(line.strip() for line in (LAB.HERE / "task.md").read_text(encoding="utf-8").splitlines())  # the examples are indented blocks
     lines = run_remit(work, "corridors", "QAR-INR", env={"REMIT_DB": str(work / "x.db")}).stdout.splitlines()
     assert lines[0] in task
     script = (
@@ -546,6 +546,14 @@ def test_a_broken_cli_fails_only_the_tasks_that_need_it(work):
     failed = failing(result)
     assert {TASK_B, TASK_C, TOGETHER, OWN_TESTS} <= failed
     assert TASK_A not in failed and TASK_D not in failed  # the report points at the broken part
+
+
+def test_a_renamed_main_is_reported_not_a_crash(work):
+    reference_flow(work)
+    git(work, "branch", "-m", "main", "master")
+    result = grade(work)  # catch=False: a grader exception would fail this test
+    assert ON_MAIN in failing(result) and BRANCHES in failing(result)
+    assert "no branch called main" in result[BRANCHES].detail
 
 
 def test_grading_is_repeatable_on_a_busy_history(work):

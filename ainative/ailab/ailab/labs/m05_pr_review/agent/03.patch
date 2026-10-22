@@ -4,7 +4,7 @@ index 0000000..a9fb0fb
 --- /dev/null
 +++ b/tests/test_loyalty.py
 @@ -0,0 +1,48 @@
-+"""Tests for the loyalty discount (REMIT-231)."""
++"""Tests for the loyalty discount (REMIT-229)."""
 +from unittest.mock import patch
 +
 +from remit import fees

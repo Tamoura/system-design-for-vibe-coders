@@ -1,0 +1,11 @@
+{
+  "session_id": "lab-session",
+  "cwd": "/work/remit",
+  "permission_mode": "default",
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Read",
+  "tool_input": {
+    "file_path": "README.md"
+  },
+  "tool_use_id": "toolu_sample_06"
+}

@@ -66,6 +66,7 @@ ANSWER_FILES = (DIAGNOSIS, NOTES, LOG)
 
 # Part 2: the headings the notes must have (matched case-insensitively as a part of the heading text).
 NOTES_SECTIONS = (
+    "Setup",
     "The prompt I gave",
     "What the agent read and ran",
     "What it got right",
@@ -130,8 +131,10 @@ def normalise(text: str) -> str:
 
 
 def _accepts_turn(finding: dict, turn: int, slack: int) -> bool:
+    """The seeded turn, or the stretch ``earliest``..``latest`` when the failure spans turns (a loop), plus ``slack``."""
     low = finding.get("earliest", finding["turn"]) - slack
-    return low <= turn <= finding["turn"] + slack
+    high = finding.get("latest", finding["turn"]) + slack
+    return low <= turn <= high
 
 
 def _findings(data: dict, session: str) -> list[dict]:
@@ -142,11 +145,16 @@ def _findings(data: dict, session: str) -> list[dict]:
 # ---------------------------------------------------------------------------------------------------
 # seed: the starting templates
 # ---------------------------------------------------------------------------------------------------
-DIAGNOSIS_TEMPLATE = {
-    "sessions": {
-        s: {"findings": [{"failure_mode": "", "turn": 0, "prevention": "", "evidence": ""}]} for s in SESSIONS
-    }
+# One finding per session to start with; add a second object to a "findings" list when a session shows two failures.
+DIAGNOSIS_TEMPLATE_TEXT = """{
+  "sessions": {
+    "s1": { "findings": [ { "failure_mode": "", "turn": 0, "prevention": "", "evidence": "" } ] },
+    "s2": { "findings": [ { "failure_mode": "", "turn": 0, "prevention": "", "evidence": "" } ] },
+    "s3": { "findings": [ { "failure_mode": "", "turn": 0, "prevention": "", "evidence": "" } ] }
+  }
 }
+"""
+DIAGNOSIS_TEMPLATE = json.loads(DIAGNOSIS_TEMPLATE_TEXT)
 
 NOTES_TEMPLATE = """# Session notes (part 2, optional)
 
@@ -184,9 +192,6 @@ words. Keep it short: a few sentences under each heading is plenty.
 
 LOG_TEMPLATE = """# Agent log
 
-One entry per session with an agent, in the format of lesson 0.1. If you used no agent this week, write
-"no agent used" and say why.
-
 Entry:
 Prompt (paste or summarise):
 What the agent did:
@@ -199,7 +204,7 @@ Would I delegate it again?
 
 def seed(work: Path) -> None:
     """Three templates at the root. The sessions are copied to lab-assets/sessions/ by the framework."""
-    framework.write_file(work, DIAGNOSIS, json.dumps(DIAGNOSIS_TEMPLATE, indent=2) + "\n")
+    framework.write_file(work, DIAGNOSIS, DIAGNOSIS_TEMPLATE_TEXT)
     framework.write_file(work, NOTES, NOTES_TEMPLATE)
     framework.write_file(work, LOG, LOG_TEMPLATE)
 
@@ -308,7 +313,7 @@ def _words(text: str) -> Counter:
 def _notes_check(work: Path) -> Check:
     name = "Part 2: your session notes are filled in (optional)"
     path = work / NOTES
-    hint = "Optional and needs an agent: fill every heading of session-notes.md, or ignore this line."
+    hint = "Optional, needs an agent: fill every heading of session-notes.md, or ignore this line."
     if not path.is_file():
         return Check(name, False, f"{NOTES} does not exist", hint, required=False)
     sections = checks.markdown_sections(path)
@@ -332,7 +337,7 @@ def _notes_check(work: Path) -> Check:
 
 def _log_check(work: Path) -> Check:
     name = "Part 2: your agent log has an entry (optional)"
-    hint = "Optional: add one entry in the format of lesson 0.1, or ignore this line."
+    hint = "Optional: add one entry in the lesson 0.1 format, or ignore this line."
     path = work / LOG
     if not path.is_file():
         return Check(name, False, f"{LOG} does not exist", hint, required=False)
@@ -342,13 +347,26 @@ def _log_check(work: Path) -> Check:
     return Check(name, True, required=False)
 
 
+def _accept_turn_labels(data) -> None:
+    """Be kind to the natural way of writing a turn: "T08" (or "8") means 8. Anything else is left for the schema to reject."""
+    try:
+        findings = [f for session in data["sessions"].values() for f in session["findings"]]
+    except (KeyError, TypeError, AttributeError):
+        return
+    for finding in findings:
+        if isinstance(finding, dict) and isinstance(finding.get("turn"), str):
+            match = re.fullmatch(r"\s*[Tt]?(\d{1,2})\s*", finding["turn"])
+            if match:
+                finding["turn"] = int(match.group(1))
+
+
 def _valid_check(work: Path) -> tuple[Check, dict | None]:
     """diagnosis.json exists, is JSON and has the right shape. Also returns the data when it is usable."""
-    hint = ("Each of s1, s2 and s3 needs 1 or 2 findings with a failure_mode id, a turn number, "
-            "a prevention category and an evidence quotation (see the task).")
+    hint = "Each of s1, s2 and s3 needs 1 or 2 findings with all four fields (see the task)."
     data, error = checks.load_json(work / DIAGNOSIS)
     if error:
         return Check(VALID_NAME, False, error, hint), None
+    _accept_turn_labels(data)
     problems = checks.validate(data, DIAGNOSIS_SCHEMA)
     if problems:
         first = re.sub(r"must be one of \[.*\]", "must be one of the ids in the task", problems[0])

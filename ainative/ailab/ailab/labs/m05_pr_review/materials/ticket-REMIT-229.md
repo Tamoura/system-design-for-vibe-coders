@@ -1,4 +1,4 @@
-# REMIT-231: loyalty discount on transfer fees
+# REMIT-229: loyalty discount on transfer fees
 
 **From:** Hessa, Product Owner, Najm Remit
 **To:** Payments Platform

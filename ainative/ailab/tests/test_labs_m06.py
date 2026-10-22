@@ -360,6 +360,40 @@ def test_the_lab_asset_files_are_committed_with_the_starting_state(template):
     assert "make_prod_log.py" not in " ".join(tracked)  # the author tool is not handed to learners
 
 
+# --- the log redaction filter that ships in lab-assets (lesson 6.1 shows it) --------------------------------------------
+def load_redactor():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("m06_redact_log", LAB.assets_dir / "redact_log.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+RAW = (
+    "2026-03-17T01:10:25+00:00 WARN send failed customer=C2207 TRF-B6C32B232714 contact=aisha.rahman@example.com phone=+974 5555 0101\n"
+    "2026-03-17T01:10:26+00:00 INFO payout refused iban=QA58DOHB00001234567890ABCDEF card=4111 1111 1111 1111 id=29850123456\n"
+    "2026-03-17T01:10:27+00:00 DEBUG gateway auth: Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.dummy.payload0123456789 key=sk-live-EXAMPLE1234567890EXAMPLE\n"
+    "2026-03-17T01:10:28+00:00 INFO amount=1200.00 QAR corridor=QAR-INR order=1234567890123456 ts=2026-03-17T01:10:28+00:00\n"
+)
+
+
+def test_the_redaction_filter_masks_personal_data_and_secrets_but_keeps_what_a_debugger_needs():
+    safe, counts = load_redactor().redact(RAW)
+    for secret in ("aisha.rahman", "5555 0101", "QA58DOHB", "4111", "29850123456", "eyJhbGci", "EXAMPLE1234567890"):
+        assert secret not in safe
+    for kept in ("C2207", "TRF-B6C32B232714", "1200.00 QAR", "QAR-INR", "2026-03-17T01:10:28+00:00", "order=1234567890123456"):
+        assert kept in safe  # ids, amounts, timestamps, and a long number that is not a card (Luhn check fails)
+    assert counts == {"email": 1, "phone": 1, "iban": 1, "card": 1, "national id": 1, "bearer": 1, "key": 1}
+
+
+def test_the_redaction_filter_leaves_the_incident_extract_alone_and_runs_as_a_command():
+    prod = (LAB.assets_dir / "prod.log").read_text(encoding="utf-8")
+    assert load_redactor().redact(prod) == (prod, {})
+    result = runner.run([sys.executable, str(LAB.assets_dir / "redact_log.py")], input=RAW, timeout=20, env=runner.clean_env())
+    assert result.ok and "<email>" in result.stdout and result.stderr.strip().startswith("masked: bearer x1, card x1, email x1")
+
+
 # ======================================================================================================================
 # 3. the grader
 # ======================================================================================================================
@@ -370,7 +404,8 @@ def test_the_starter_fails_for_the_right_reasons(work):
     assert required_failures == (ALL - ADVISORY) - {SUITE, UNTOUCHED, FIXTURES, CLEAN, SECRETS}
     assert result[SUITE].ok and "95 passed" in result[SUITE].detail  # the premise: the visible suite is green
     assert result[UNTOUCHED].ok and result[FIXTURES].ok and result[CLEAN].ok and result[SECRETS].ok
-    assert all(c.hint for c in result.values() if not c.ok and c.name in (ALL - ADVISORY))
+    assert all(c.detail or c.hint for c in result.values() if not c.ok)
+    assert result[T_SECTIONS].hint and result[HIDDEN].hint and result[N_CAUSE].hint  # the first of each group says what to do
     # nothing on the very first screen gives the answer away
     shown = " ".join(f"{c.name} {c.detail} {c.hint}" for c in result.values()).lower()
     for phrase in ("utc", "to_local", "astimezone", "day_window", "month_window", "limits.py has"):
@@ -804,6 +839,18 @@ def test_tool_noise_does_not_count_against_the_learner(solved):
     assert_only(grade(solved))
 
 
+def test_a_helper_script_in_scripts_is_allowed_but_one_in_the_repository_root_is_not(solved):
+    (solved / "scripts").mkdir()
+    (solved / "scripts" / "replay.py").write_text("print('replay')\n", encoding="utf-8")
+    commit(solved, "docs(limits): add the replay script used for the impact numbers")
+    assert_only(grade(solved))
+    (solved / "replay.py").write_text("print('replay')\n", encoding="utf-8")
+    commit(solved, "docs(limits): add another copy of the replay script")
+    result = grade(solved)
+    assert_only(result, SCOPE)
+    assert "replay.py" in result[SCOPE].detail and "scripts/" in result[SCOPE].hint
+
+
 def test_memory_files_for_the_agent_are_allowed(solved):
     (solved / "CLAUDE.md").write_text("# Remit\n\nRun pytest -q. Money is Decimal.\n", encoding="utf-8")
     commit(solved, "docs(limits): add a project memory file")
@@ -939,13 +986,18 @@ def test_the_essentials_are_all_required(work):
         "the command line entry point": without(r"python -m remit", r"src/remit/cli\.py", r"cli\.py", r"remit\.cli"),
         "how to run the tests": without(r"(?i)pytest"),
         "the shared test fixtures": without(r"(?i)conftest(\.py)?"),
-        "the money rule (Decimal, never float)": without(r"Decimal"),
+        "the money rule (Decimal, never float)": without(r"(?i)decimal"),
         "najmkit": without(r"(?i)najmkit"),
     }
     for expected, text in cases.items():
         result = tour_result(work, text)
         assert T_ESSENTIALS in failing(result), expected
         assert expected in result[T_ESSENTIALS].detail, (expected, result[T_ESSENTIALS].detail)
+
+
+def test_the_money_rule_is_accepted_in_any_capitalisation(work):
+    text = re.sub(r"Decimal", "decimal", REAL_TOUR)
+    assert T_ESSENTIALS not in failing(tour_result(work, text))
 
 
 def test_the_untested_modules_must_be_called_out_in_the_tests_or_risks_sections(work):

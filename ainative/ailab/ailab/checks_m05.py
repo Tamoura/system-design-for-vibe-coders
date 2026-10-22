@@ -150,7 +150,7 @@ class Review:
 
 _COMMENT = re.compile(r"<!--.*?-->", re.S)
 _FILE = re.compile(
-    r"(?<![\w/.-])([\w./-]*[\w-]\.(?:py|toml|md|txt|cfg|ini|yml|yaml|json))(?![\w-])(?::(\d+)(?:\s*[-–]\s*(\d+))?)?"
+    r"(?<![\w/.-])([\w./-]*[\w-]\.(?:py|toml|md|txt|cfg|ini|yml|yaml|json))(?![\w-])(?:(?::|#L)(\d+)(?:\s*[-–]\s*L?(\d+))?)?"
 )
 _SEVERITY_FIELD = re.compile(r"(?i)severity\W{0,8}(blocker|critical|major|high|medium|minor|low|nit(?:pick)?|info)\b")
 _SEVERITY_WORD = re.compile(r"(?i)\b(blocker|critical|major|minor|nit(?:pick)?)\b")
@@ -447,13 +447,19 @@ def list_test_files(work: Path | str) -> list[Path]:
 
 
 def unasserted_tests(work: Path | str) -> list[str]:
+    """Test functions with no assertion: no ``assert``, no ``pytest.raises``, no ``assert_*`` call, and no call to a helper
+    defined in the same file that asserts."""
     problems = []
     for path in list_test_files(work):
         tree = _parse(path)
         if tree is None:
             continue
+        helpers = {n.name for n in ast.walk(tree)
+                   if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and not n.name.startswith("test") and _asserts(n)}
         for function in _test_functions(tree):
-            if not _asserts(function):
+            calls = {c.func.id for c in ast.walk(function) if isinstance(c, ast.Call) and isinstance(c.func, ast.Name)}
+            calls |= {c.func.attr for c in ast.walk(function) if isinstance(c, ast.Call) and isinstance(c.func, ast.Attribute)}
+            if not _asserts(function) and not (calls & helpers):
                 problems.append(f"{_rel(work, path)}::{function.name}")
     return problems
 

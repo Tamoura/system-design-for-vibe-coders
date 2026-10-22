@@ -83,7 +83,7 @@ def grade(work: Path) -> list[Check]:
             work,
             HERE / "hidden",
             name="The message is right in English and Arabic",
-            hint="Compare the message your customers get with the sentence in the ticket.",
+            hint="Compare the message your customers get with the sentence the failing test expects.",
         ),
         # 3. The tests were not "fixed" by weakening them. A separate check gives a specific hint.
         checks.files_unchanged(

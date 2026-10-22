@@ -1,0 +1,50 @@
+diff --git a/src/remit/cli.py b/src/remit/cli.py
+index 703aa4e..e35dcf6 100644
+--- a/src/remit/cli.py
++++ b/src/remit/cli.py
+@@ -2,6 +2,7 @@
+ 
+     python -m remit customer add --id C001 --name "Aisha Rahman" --kyc T2 [--lang ar]
+     python -m remit customer list
++    python -m remit corridors
+     python -m remit quote QAR 500 INR [--express] [--delivery wallet]
+     python -m remit send --customer C001 QAR 500 INR --recipient "Ravi Kumar" [--express]
+     python -m remit history --customer C001
+@@ -19,6 +20,7 @@ from typing import Any, TextIO
+ from najmkit import audit, clock as najm_clock
+ from remit import screening
+ from remit.config import load_config
++from remit.corridors import all_corridors
+ from remit.errors import RemitError
+ from remit.fx import QUOTE_TTL, StaticRateProvider
+ from remit.models import KYC_TIERS, LANGUAGES, LOYALTY_TIERS, Customer
+@@ -53,6 +55,8 @@ def _parser() -> argparse.ArgumentParser:
+             p.add_argument("--customer", required=True)
+             p.add_argument("--recipient", required=True)
+ 
++    sub.add_parser("corridors", help="list the supported corridors and their per-transfer limits")
++
+     history = sub.add_parser("history", help="a customer's transfers")
+     history.add_argument("--customer", required=True)
+     return parser
+@@ -97,7 +101,7 @@ def main(
+         return 2
+ 
+     # A quote touches no data, so it does not create a database file.
+-    store = Store(":memory:" if args.command == "quote" else config.db_path)
++    store = Store(":memory:" if args.command in ("quote", "corridors") else config.db_path)
+     try:
+         service = RemitService(
+             store, StaticRateProvider(), watchlist, clock or najm_clock.SystemClock(), ConsoleNotifier(out)
+@@ -120,6 +124,11 @@ def _run(args: argparse.Namespace, default_lang: str, service: RemitService, sto
+                 print(f"{c.id}  {c.name}  {c.kyc_tier}  {c.loyalty_tier}  {c.language}", file=out)
+         return 0
+ 
++    if args.command == "corridors":
++        for corridor in sorted(all_corridors(), key=lambda c: c.code):
++            print(f"{corridor.code}  {corridor.min_send.amount:f} to {corridor.max_send.amount:f} QAR", file=out)
++        return 0
++
+     if args.command == "history":
+         for t in service.history(args.customer):
+             print(

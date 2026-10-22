@@ -114,6 +114,7 @@ suite runs it in a temporary copy and checks the documented quirks against `KIT_
 | `ailab/gitutil.py`, `ailab/runner.py` | git and subprocess plumbing (timeouts kill the whole process group) |
 | `ailab/base/remit/` | the Najm Remit repository (README, CONTRIBUTING, docs, `src/remit`, `src/najmkit`, tests) |
 | `ailab/labs/` | the labs |
+| `ailab/stubs/claude` | a **stand-in** for the `claude` command, used by lab m09 only: it is not Claude Code, calls no model and needs no key; it imitates the documented shape of print mode (`claude -p`, `--output-format json`, `--max-turns`, exit codes) and classifies tickets with a keyword table, so a script can be graded offline |
 | `tests/` | the kit's own tests |
 | `check_blocks.py` | keeps lesson code blocks identical to the kit files they show |
 | `KIT_NOTES.md` | the facts for lab and lesson writers |

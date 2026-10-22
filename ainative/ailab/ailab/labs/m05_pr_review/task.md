@@ -4,14 +4,14 @@
 **To:** You, as the second human reviewer
 **Priority:** Normal. This is money logic: nothing merges without you.
 
-Lujain asked Claude Code to build Hessa's ticket REMIT-231 (the loyalty discount on fees;
+Lujain asked Claude Code to build Hessa's ticket REMIT-229 (the loyalty discount on fees;
 the ticket is in `lab-assets/`). The result is the branch `agent/loyalty-discount`. Its
 description, also in `lab-assets/`, says all tests pass. You are on that branch now.
 
 I do not want a rubber stamp and I do not want a rewrite. I want a review that I can act
 on, and then a branch I can merge.
 
-## What I need
+**What I need**
 
 1. **A review, in `review.md`** at the top of the repository. Start from
    `lab-assets/review-template.md`. It has a verdict (`approve`, `approve with comments`
@@ -28,7 +28,7 @@ on, and then a branch I can merge.
 3. **Commit messages** that follow `CONTRIBUTING.md`. Everything committed, except that
    `review.md` may stay uncommitted if you prefer.
 
-## Notes
+**Notes**
 
 * Use whatever helps you: `git`, `pytest`, an AI reviewer as a second pair of eyes. A second
   model can miss things and invent others, so check each of its points before it goes into

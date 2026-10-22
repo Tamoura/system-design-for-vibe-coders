@@ -1,0 +1,13 @@
+diff --git a/src/remit/fees.py b/src/remit/fees.py
+index d8e4f49..870b40f 100644
+--- a/src/remit/fees.py
++++ b/src/remit/fees.py
+@@ -48,7 +48,7 @@ class FeeSchedule:
+ 
+     def tier_index(self, amount: Decimal) -> int:
+         for index, tier in enumerate(self.tiers):
+-            if tier.upto is None or amount < tier.upto:
++            if tier.upto is None or amount <= tier.upto:
+                 return index
+         raise AssertionError("unreachable: the last tier is unbounded")  # pragma: no cover
+ 

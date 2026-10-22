@@ -2,7 +2,7 @@
 
 The story
 ---------
-Lujain asked Claude Code to build Hessa's ticket REMIT-231 (a loyalty discount on transfer fees). The result
+Lujain asked Claude Code to build Hessa's ticket REMIT-229 (a loyalty discount on transfer fees). The result
 is the branch ``agent/loyalty-discount``: four tidy commits, seven new tests, a description that says "105
 passed". The suite really is green. The branch is still not mergeable: it carries eight seeded problems
 (an invented dependency, a swallowed exception, float money, a test that asserts nothing, an over-mocked
@@ -46,7 +46,7 @@ LEARNER = ("Najm Learner", "learner@najm.example")
 AGENT_COMMITS = [
     ("01.patch",
      "feat(fees): add a loyalty discount to quote_fee\n\n"
-     "Silver customers get 10% off the fee and gold customers 20%, as REMIT-231 asks.\n"
+     "Silver customers get 10% off the fee and gold customers 20%, as REMIT-229 asks.\n"
      "Rates come from najm-loyalty when it is installed, else from a local table.",
      "2026-03-02T10:12:00+00:00"),
     ("02.patch",
@@ -70,26 +70,20 @@ R_VERDICT = "Your verdict blocks the merge"
 R_FOUND = "Your review covers the problems in the pull request"
 R_SEVERITY = "Your severities fit the risk"
 R_ALL = "Your review covers every problem the grader knows"
-R_KEY = "Your review treats the leaked key as leaked"
-# Fix checks
+R_KEY = "Your review names the follow-up beyond the diff"
+# Fix checks. The names say nothing about what is wrong: they are listed before the learner has reviewed anything.
 F_VISIBLE = "The branch's own tests pass"
-F_HIDDEN = "The discount behaves as REMIT-231 says"
-F_DEPS = "Standard library only (CONTRIBUTING.md)"
-F_SECRETS = "No secrets in the code (CONTRIBUTING.md)"
-F_FLOAT = "Money is Decimal, never float (CONTRIBUTING.md)"
-F_EXCEPT = "No error is swallowed"
-F_ASSERT = "Every test asserts something"
-F_FAKED = "No test fakes the fee code it tests"
-F_DELETED = "No existing test was deleted"
+F_HIDDEN = "The discount behaves as REMIT-229 says"
+F_RULES = "The team's code rules hold (CONTRIBUTING.md)"
+F_CHECKLIST = "The branch passes the review checklist (lesson 5.1)"
 F_CATCH = "Your tests would have caught the agent's bugs"
 F_SCOPE = "Only the files the change needs changed"
 F_COMMITS = "Your commit messages follow CONTRIBUTING.md"
 F_CLEAN = "Your fix is committed"
 F_SMALL = "The fix is small"
 F_BRANCH = "You fixed the agent's branch on top of its commits"
-FIX_NAMES = [(F_VISIBLE, True), (F_HIDDEN, True), (F_DEPS, True), (F_SECRETS, True), (F_FLOAT, True), (F_EXCEPT, True),
-             (F_ASSERT, True), (F_FAKED, True), (F_DELETED, True), (F_CATCH, True), (F_SCOPE, True), (F_COMMITS, True),
-             (F_CLEAN, True), (F_SMALL, False), (F_BRANCH, False)]
+FIX_NAMES = [(F_VISIBLE, True), (F_HIDDEN, True), (F_RULES, True), (F_CHECKLIST, True), (F_CATCH, True), (F_SCOPE, True),
+             (F_COMMITS, True), (F_CLEAN, True), (F_SMALL, False), (F_BRANCH, False)]
 
 # Files a sound fix may touch. Anything else is scope creep of the learner's own.
 ALLOWED = ["pyproject.toml", "src/remit/fees.py", "src/remit/loyalty.py", "src/remit/service.py", "tests/**", "docs/**"]
@@ -180,41 +174,54 @@ def grade_review(work: Path) -> list[Check]:
                        required=False)
     key = matches.found.get("hard-coded-key")
     leaked = bool(key and re.search(r"(?i)rotat|revok|leak|history|compromis", key.text))
-    key_check = Check(R_KEY, leaked, "" if leaked else "the review does not say the key must be rotated",
-                      "A secret that was ever committed is in the history: removing the line is not enough, the key must be replaced.",
+    key_check = Check(R_KEY, leaked, "" if leaked else "the review does not say what must happen outside the code",
+                      "Some problems cannot be fixed by a commit alone. Say who must do what next, and why a commit is not enough.",
                       required=False)
     return [structure, form, verdict, found, severity, everything, key_check]
 
 
 def grade_fix(work: Path) -> list[Check]:
-    deps = checks_m05.import_problems(work)
-    excepts = checks_m05.broad_except_problems(work)
-    floats = checks_m05.float_problems(work)
-    unasserted = checks_m05.unasserted_tests(work)
-    faked = checks_m05.faked_fee_code(work)
-    base_names = checks_m05.list_test_names(work, "main") if gitutil.has_ref(work, "main") else set()
-    missing = sorted(base_names - checks_m05.list_test_names(work))
-    failing, _ = checks_m05.failing_on_original(work)
     short = checks._short  # noqa: SLF001 (kit-internal helper: "a, b (+2 more)")
 
+    # CONTRIBUTING.md: standard library only, no secrets, money is Decimal
+    rule_problems = []
+    deps = checks_m05.import_problems(work)
+    if deps:
+        rule_problems.append("standard library only: " + short(deps))
+    secrets = checks.no_secrets(work, scan="all", ignore=(*LEARNER_NOISE, "TASK.md", "lab-assets/**"))
+    if not secrets.ok:
+        rule_problems.append("secrets: " + secrets.detail)
+    floats = checks_m05.float_problems(work)
+    if floats:
+        rule_problems.append("money is Decimal: " + short(floats))
+
+    # the lesson 5.1 checklist, as far as a machine can read it
+    list_problems = []
+    excepts = checks_m05.broad_except_problems(work)
+    if excepts:
+        list_problems.append("errors hidden by a broad handler at " + short(excepts))
+    unasserted = checks_m05.unasserted_tests(work)
+    if unasserted:
+        list_problems.append("no assertion in " + short(unasserted))
+    faked = checks_m05.faked_fee_code(work)
+    if faked:
+        list_problems.append("fee code patched in " + short(faked))
+    base_names = checks_m05.list_test_names(work, "main") if gitutil.has_ref(work, "main") else set()
+    missing = sorted(base_names - checks_m05.list_test_names(work))
+    if missing:
+        list_problems.append("existing test missing: " + short(missing))
+
+    failing, _ = checks_m05.failing_on_original(work)
     return [
         checks.tests_pass(work, name=F_VISIBLE),
         checks.hidden_tests_pass(work, HERE / "hidden", name=F_HIDDEN,
-                                 hint="Re-read REMIT-231 in lab-assets/ and check each rule and each example against the code, "
+                                 hint="Re-read REMIT-229 in lab-assets/ and check each rule and each example against the code, "
                                       "including the cents."),
-        Check(F_DEPS, not deps, short(deps) if deps else "",
-              "CONTRIBUTING.md: standard library only, no dependency without a ticket and a second reviewer. Not even for tests."),
-        checks.no_secrets(work, scan="all", ignore=(*LEARNER_NOISE, "TASK.md", "lab-assets/**"), name=F_SECRETS),
-        Check(F_FLOAT, not floats, short(floats) if floats else "",
-              "CONTRIBUTING.md: money is Decimal and Money, rounded half up. A float is wrong in the last cent exactly when it matters."),
-        Check(F_EXCEPT, not excepts, ("broad handler without a re-raise at " + short(excepts)) if excepts else "",
-              "Catch the specific error you can handle, or let it propagate. A quiet 'except Exception' turns a bug into a wrong price."),
-        Check(F_ASSERT, not unasserted, ("no assertion in " + short(unasserted)) if unasserted else "",
-              "A test that cannot fail proves nothing. Assert the value the ticket promises."),
-        Check(F_FAKED, not faked, ("patched in " + short(faked)) if faked else "",
-              "Patching the function a test is about makes the test pass whatever that function does. Call the real code."),
-        Check(F_DELETED, not missing, ("missing: " + short(missing)) if missing else "",
-              "An existing test describes behaviour somebody relied on. If the change breaks it, the change is under suspicion first."),
+        Check(F_RULES, not rule_problems, "; ".join(rule_problems),
+              "CONTRIBUTING.md, Code rules: money is Decimal, no secrets, standard library only (not even for tests)."),
+        Check(F_CHECKLIST, not list_problems, "; ".join(list_problems),
+              "Lesson 5.1: catch the specific error you can handle, assert what the ticket promises, call the real code in a test, "
+              "and never delete a test to get green."),
         Check(F_CATCH, failing >= 2, f"{checks.plural(failing, 'new or changed test')} fail on the agent's version of the code",
               "Leave tests behind that fail on the agent's version: restore what was deleted and cover what your review found."),
         checks.files_changed_within(work, ALLOWED, ignore=LEARNER_NOISE, name=F_SCOPE,

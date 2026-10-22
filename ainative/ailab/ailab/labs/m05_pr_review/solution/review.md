@@ -9,7 +9,7 @@ request changes
 - `git log --oneline main..agent/loyalty-discount` and `git diff main...agent/loyalty-discount --stat`: 4 commits, 6 files, +112 -34. The last commit is called "refactor" but it changes how `fees.py` prices an express transfer and it deletes a test.
 - `pytest -q` on the branch: 105 passed. The suite is green, so green is not the question; the question is what the suite can see.
 - The deleted test, taken from `main` and run against the branch: `test_express_surcharge_is_added_after_the_cap` fails (150.00 instead of 165.00).
-- REMIT-231's rounding rule worked by hand on QAR 192.50 (silver): base fee 5.85, discount 0.585 rounds half up to 0.59, so silver pays 5.26. The branch charges 5.27.
+- REMIT-229's rounding rule worked by hand on QAR 192.50 (silver): base fee 5.85, discount 0.585 rounds half up to 0.59, so silver pays 5.26. The branch charges 5.27.
 - Searched the repository and `docs/najmkit.md` for `najm-loyalty`: it is nowhere, and the ticket does not ask for it.
 - Read the description against the diff: "No behaviour changes outside the loyalty discount" is not true.
 

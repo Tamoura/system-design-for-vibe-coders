@@ -338,8 +338,7 @@ def onboarding_checks(work: Path | str) -> list[Check]:
     )
     if not path.is_file():
         reason = "docs/onboarding.md does not exist yet"
-        hint = "Write the tour first (Part 1 of the ticket); the checks below read it."
-        return [section_check] + [Check(names[k], False, reason, hint) for k in ("length", "files", "flow", "claims", "essentials")]
+        return [section_check] + [Check(names[k], False, reason) for k in ("length", "files", "flow", "claims", "essentials")]
 
     text = path.read_text(encoding="utf-8", errors="replace")
     sections = checks.markdown_sections(path)
@@ -396,7 +395,7 @@ def onboarding_checks(work: Path | str) -> list[Check]:
     gaps_text = " ".join(t for t in (_section(sections, "Tests"), _section(sections, "Risks and gaps")) if t)
     if not (re.search(r"(?i)\bledger\b", gaps_text) and re.search(r"(?i)\bscreening\b", gaps_text) and _UNTESTED.search(gaps_text)):
         missing.append("that the ledger and screening modules have no tests")
-    if "Decimal" not in text:
+    if not re.search(r"(?i)\bdecimals?\b", text):
         missing.append("the money rule (Decimal, never float)")
     if "najmkit" not in lowered:
         missing.append("najmkit")

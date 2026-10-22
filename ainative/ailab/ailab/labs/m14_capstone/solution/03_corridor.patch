@@ -1,0 +1,12 @@
+diff --git a/src/remit/corridors.py b/src/remit/corridors.py
+index 0adac59..da1f452 100644
+--- a/src/remit/corridors.py
++++ b/src/remit/corridors.py
+@@ -46,6 +46,7 @@ _DEFINITIONS: tuple[Corridor, ...] = (
+     Corridor("QAR", "PHP", _qar("50.00"), _qar("20000.00"), ("bank_deposit", "cash_pickup", "wallet"), "STD-A"),
+     Corridor("QAR", "EGP", _qar("100.00"), _qar("15000.00"), ("bank_deposit", "wallet"), "STD-B"),
+     Corridor("QAR", "PKR", _qar("100.00"), _qar("15000.00"), ("bank_deposit", "cash_pickup"), "STD-B"),
++    Corridor("QAR", "BDT", _qar("100.00"), _qar("12000.00"), ("bank_deposit", "wallet"), "STD-C"),
+ )
+ 
+ CORRIDORS: dict[str, Corridor] = {c.code: c for c in _DEFINITIONS}

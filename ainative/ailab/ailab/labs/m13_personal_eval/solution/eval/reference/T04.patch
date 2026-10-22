@@ -1,0 +1,11 @@
+diff --git a/ANSWER.md b/ANSWER.md
+new file mode 100644
+index 0000000..f49a7bf
+--- /dev/null
++++ b/ANSWER.md
+@@ -0,0 +1,5 @@
++If `store.save_transfer` raises, `RemitService.send` stops with that error, but `ledger.post_transfer` has
++already run in step 6, and nothing undoes it. The postings stay in the ledger's module-level journal and
++balances, so Remit's books show a debit for the customer and credits for payout, fee income and the partner,
++while no transfer row exists. The customer is not told anything, because the `transfer_sent` message is sent
++only after the store step. This is the known limitation D-SVC-1: the steps from the ledger onwards are not atomic.

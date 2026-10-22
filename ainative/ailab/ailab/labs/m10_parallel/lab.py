@@ -49,19 +49,20 @@ PLAN = "docs/parallel-plan.md"
 LOG = "docs/agent-log.md"
 REQUIRED_BRANCHES = 3
 MIN_COMMITS = 4  # four tasks, each at least one commit
+TIMEOUT = 40.0  # seconds per pytest run; the real runs take about one
 
 # The hidden test file behind each task check: (module, check name, hint).
 PARTS = [
     ("test_m10_notice", "Task A: the delay notice works",
-     "Compare your template with the wording in the ticket, in both languages, word for word."),
+     "Compare your template with the ticket's wording, word for word, in both languages."),
     ("test_m10_corridors", "Task B: the corridors command works",
      "Run `python -m remit corridors` yourself and compare each line with the form in the ticket."),
     ("test_m10_limits", "Task C: the limits command works",
-     "Run `python -m remit limits --customer C001` on a customer with a transfer, then re-read what 'today' means in limits.py."),
+     "Run `python -m remit limits --customer C001` for a customer with a transfer, then re-read what 'today' means in limits.py."),
     ("test_m10_runbook", "Task D: the runbook is there",
-     "Check the headings, the commands and the example output against the ticket's wording."),
+     "Check the headings, commands and example output against the ticket."),
     ("test_m10_together", "The pieces work together after the merge",
-     "Run every command by hand on the merged main: the old ones too. Look for a lost import, a dropped branch in `_run`, a usage list that names only one new command."),
+     "Run every command by hand on the merged main, the old ones too. Check the imports, the dispatch in `_run` and the usage list."),
 ]
 
 LEARNER = ("Najm Learner", "learner@najm.example")
@@ -147,13 +148,15 @@ def merged_lines_of_work(work: Path) -> dict[str, str]:
 
 def _branches_merged(work: Path) -> Check:
     name = f"At least {REQUIRED_BRANCHES} branches were merged into main"
+    if not gitutil.has_ref(work, "main"):
+        return Check(name, False, "there is no branch called main", "Keep the integrated work on a branch named main.")
     found = merged_lines_of_work(work)
     detail = (f"{len(found)} merged: {_names(sorted(found.values()))}" if found
               else "no branch has been merged into main yet")
     if len(found) >= REQUIRED_BRANCHES:
         return Check(name, True, detail)
     return Check(name, False, detail,
-                 "Build each task on its own branch, then `git merge` it into main (no --squash), and keep the branches until you have graded.")
+                 "Give each task its own branch and `git merge` it into main (no --squash). Keep the branches until you have graded.")
 
 
 def _commit_files(work: Path, sha: str) -> list[str]:
@@ -164,7 +167,7 @@ def _one_task_per_commit(work: Path) -> Check:
     name = "Each commit is about one task"
     commits = [c for c in gitutil.commits_since(work, "lab-start") if not c.is_merge]
     if not commits:
-        return Check(name, False, "no commits since the start yet", "Commit each task's work on its own branch.")
+        return Check(name, False, "no commits since the start yet", "Commit each task on its own branch.")
     mixed = []
     for commit in commits:
         areas = sorted({AREAS[f] for f in _commit_files(work, commit.sha) if f in AREAS})
@@ -250,7 +253,7 @@ def _plan(work: Path) -> Check:
     return checks.sections_check(
         work, PLAN, ["Task graph", "Boundaries", "Merge order", "Verification"], min_words=4,
         name="A parallel plan exists (docs/parallel-plan.md)",
-        hint="Copy lab-assets/parallel-plan-template.md to docs/parallel-plan.md and fill in each section before you start.",
+        hint="Copy lab-assets/parallel-plan-template.md to docs/parallel-plan.md and fill it in before you start.",
         required=False,
     )
 
@@ -262,7 +265,7 @@ def _agent_log(work: Path) -> Check:
     if words >= 30:
         return Check(name, True, f"{words} words", required=False)
     return Check(name, False, "docs/agent-log.md is missing" if not path.is_file() else f"only {words} words",
-                 "Write down what you delegated, what you had to correct and how long it took (about 30 words or more).",
+                 "Note what you delegated, what you corrected and the minutes (30 words or more).",
                  required=False)
 
 
@@ -270,11 +273,11 @@ def _agent_log(work: Path) -> Check:
 # grade
 # ---------------------------------------------------------------------------------------------
 def grade(work: Path) -> list[Check]:
-    hidden = checks.run_hidden_pytest(work, HERE / "hidden", args=["--continue-on-collection-errors"])
+    hidden = checks.run_hidden_pytest(work, HERE / "hidden", args=["--continue-on-collection-errors"], timeout=TIMEOUT)
     return [
         _on_main(work),
         checks.all_committed(work, name="Everything is committed"),
-        checks.tests_pass(work, name="Your own tests pass"),
+        checks.tests_pass(work, name="Your own tests pass", timeout=TIMEOUT),
         *[_part_check(hidden, module, name, hint) for module, name, hint in PARTS],
         _no_markers(work),
         _branches_merged(work),
@@ -287,7 +290,7 @@ def grade(work: Path) -> list[Check]:
         _tests_not_weakened(work),
         checks.no_secrets(work),
         # advisory: the habits the lesson teaches, which a grader can only look at from outside
-        checks_m10.new_tests_fail_on_starter(work, hint="Tests that pass without your change prove nothing. Add tests that need the new behaviour."),
+        checks_m10.new_tests_fail_on_starter(work, timeout=TIMEOUT, hint="Tests that pass without your change prove nothing. Add tests that need the new behaviour."),
         _plan(work),
         _agent_log(work),
         _markers_in_history(work),

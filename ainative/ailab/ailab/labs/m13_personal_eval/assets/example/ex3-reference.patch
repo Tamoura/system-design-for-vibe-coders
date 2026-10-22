@@ -1,0 +1,55 @@
+diff --git a/src/remit/cli.py b/src/remit/cli.py
+index 703aa4e..3d6de41 100644
+--- a/src/remit/cli.py
++++ b/src/remit/cli.py
+@@ -12,6 +12,7 @@ The database is REMIT_DB (default remit.db in the current directory). Exit codes
+ from __future__ import annotations
+ 
+ import argparse
++import json
+ import sys
+ from collections.abc import Sequence
+ from typing import Any, TextIO
+@@ -49,6 +50,8 @@ def _parser() -> argparse.ArgumentParser:
+         p.add_argument("receive_currency")
+         p.add_argument("--express", action="store_true")
+         p.add_argument("--delivery", default=None)
++        if name == "quote":
++            p.add_argument("--json", action="store_true", help="print the quote as one JSON object")
+         if name == "send":
+             p.add_argument("--customer", required=True)
+             p.add_argument("--recipient", required=True)
+@@ -69,6 +72,20 @@ def _print_quote(q: Any, out: TextIO) -> None:
+     print(f"Delivery:  {q.delivery_method}", file=out)
+ 
+ 
++def _quote_json(q: Any) -> str:
++    """The quote as one JSON object. Amounts and the rate are strings, so no decimal is lost."""
++    return json.dumps(
++        {
++            "send_amount": f"{q.send_amount.amount:f}",
++            "fee": f"{q.fee.amount:f}",
++            "total": f"{q.total.amount:f}",
++            "rate": f"{q.fx.rate:f}",
++            "receive_amount": f"{q.fx.receive.amount:f}",
++            "delivery_method": q.delivery_method,
++        }
++    )
++
++
+ def main(
+     argv: Sequence[str] | None = None,
+     *,
+@@ -131,7 +148,11 @@ def _run(args: argparse.Namespace, default_lang: str, service: RemitService, sto
+ 
+     amount = Money(args.amount, args.send_currency)
+     if args.command == "quote":
+-        _print_quote(service.quote(amount, args.receive_currency, express=args.express, delivery_method=args.delivery), out)
++        quote = service.quote(amount, args.receive_currency, express=args.express, delivery_method=args.delivery)
++        if args.json:
++            print(_quote_json(quote), file=out)
++        else:
++            _print_quote(quote, out)
+         return 0
+ 
+     result = service.send(

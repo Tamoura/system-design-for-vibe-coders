@@ -1,0 +1,30 @@
+diff --git a/src/remit/service.py b/src/remit/service.py
+index 010b380..9ac0990 100644
+--- a/src/remit/service.py
++++ b/src/remit/service.py
+@@ -51,6 +51,10 @@ from remit.screening import screen_names
+ from remit.store import Store
+ 
+ 
++# Corridors that have their own "transfer sent" wording (notify.TEMPLATES); every other corridor uses "transfer_sent".
++SENT_TEMPLATES: dict[str, str] = {"QAR-BDT": "transfer_sent_bdt"}
++
++
+ @dataclass(frozen=True)
+ class Quote:
+     corridor: Corridor
+@@ -174,12 +178,13 @@ class RemitService:
+         # 8. notify (best effort), then the audit trail
+         notified = self._notify(
+             customer,
+-            "transfer_sent",
++            SENT_TEMPLATES.get(corridor.code, "transfer_sent"),
+             transfer_id=transfer_id,
+             recipient=recipient,
+             send_amount=send_amount,
+             fee=fee,
+             receive_amount=fx.receive,
++            rate=fx.rate,
+         )
+         audit.log_event(
+             "transfer.sent",

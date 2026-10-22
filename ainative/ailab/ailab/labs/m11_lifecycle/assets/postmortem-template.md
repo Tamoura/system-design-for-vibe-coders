@@ -12,7 +12,7 @@ Who and what was affected, with the numbers the record gives (and no others).
 
 ## Timeline
 
-Use the record's times (UTC) and cite its event ids. One row per event you use.
+Use the record's times (UTC) and cite its event ids. One row per event; cover most of the record, not three highlights.
 
 | Time (UTC) | What happened | Record id |
 |---|---|---|
@@ -33,4 +33,4 @@ The questions the record cannot answer. Leave them open.
 
 ## Action items
 
-What the team will do, as a list. Each item has an owner (a role or a team) and a way to see that it is done.
+What the team will do, as a list of at least three items. Each item has an owner (a role or a team) and a way to see that it is done.

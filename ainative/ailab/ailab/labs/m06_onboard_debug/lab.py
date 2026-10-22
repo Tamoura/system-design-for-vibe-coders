@@ -32,7 +32,7 @@ Files
     lab.py                this file
     task.md               the ticket (REMIT-231) as Hessa wrote it
     make_prod_log.py      author tool: rebuilds assets/prod.log by running the real service (not given to learners)
-    assets/               incident.md, prod.log, kyc_tiers.csv, README.md  -> lab-assets/ in the learner's repo
+    assets/               incident.md, prod.log, kyc_tiers.csv, redact_log.py, README.md  -> lab-assets/ in the learner's repo
     hidden/               hidden acceptance tests
     solution/             the reference solution (tour, test, note, agent log)
     ../../checks_m06.py   the grader helpers for this lab
@@ -71,7 +71,7 @@ OLD_IMPORT = """from remit.limits import (
 NEW_IMPORT = "from remit.limits import DAILY_EXCEEDED, LIMITS, MONTHLY_EXCEEDED, check_limits\n"
 
 # Where the files that the learner may touch live.
-ALLOWED = [LIMITS, "tests/**", "docs/**", "CLAUDE.md", "AGENTS.md", ".claude/**"]
+ALLOWED = [LIMITS, "tests/**", "docs/**", "scripts/**", "CLAUDE.md", "AGENTS.md", ".claude/**"]
 
 
 # ---------------------------------------------------------------------------------------------
@@ -204,7 +204,7 @@ def grade(work: Path) -> list[Check]:
                                hint="The fixtures are right. Undo your edit (git restore tests/conftest.py)."),
         checks.files_changed_within(
             work, ALLOWED, name="Only the expected files changed",
-            hint="The fix belongs in src/remit/limits.py, tests in tests/, and the writing in docs/. Revert the rest (git restore <file>).",
+            hint="The fix belongs in the code, tests in tests/, writing in docs/, a helper script in scripts/. Revert the rest (git restore <file>).",
         ),
         m06.fix_is_small(work),
         *m06.root_cause_checks(work, prodlog.WRONGLY_REFUSED, prodlog.WRONGLY_ALLOWED),

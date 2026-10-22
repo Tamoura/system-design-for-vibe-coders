@@ -21,6 +21,7 @@
           "failure_mode": "runaway-loop",
           "turn": 18,
           "earliest": 14,
+          "latest": 21,
           "marker": "ROUND_CEILING",
           "prevention": "small-steps",
           "also": ["fresh-start"]
@@ -28,6 +29,7 @@
         {
           "failure_mode": "test-gaming",
           "turn": 24,
+          "earliest": 22,
           "marker": "previous - Decimal(\"2.00\")",
           "prevention": "verify",
           "also": ["permissions", "review", "context"]

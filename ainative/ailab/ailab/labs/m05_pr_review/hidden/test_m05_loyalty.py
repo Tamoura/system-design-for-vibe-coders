@@ -1,4 +1,4 @@
-"""Hidden acceptance tests for lab m05 (REMIT-231, the loyalty discount).
+"""Hidden acceptance tests for lab m05 (REMIT-229, the loyalty discount).
 
 They are written from the ticket and go through the public interface only: ``quote_fee``,
 ``explain_fee``, ``RemitService.quote`` and ``RemitService.send``. They never import the
@@ -104,7 +104,7 @@ def test_the_express_surcharge_is_never_discounted():
 
 
 def test_the_express_surcharge_is_still_added_after_the_cap():
-    # nothing in REMIT-231 changes how the cap works
+    # nothing in REMIT-229 changes how the cap works
     assert quote_fee(qar("20000.00"), INR, express=True) == qar("165.00")
     assert quote_fee(qar("20000.00"), INR, express=True, loyalty_tier="none") == qar("165.00")
     assert quote_fee(qar("15000.00"), PKR, express=True) == qar("140.00")

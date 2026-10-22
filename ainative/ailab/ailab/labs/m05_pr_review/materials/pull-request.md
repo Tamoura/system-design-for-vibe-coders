@@ -1,4 +1,4 @@
-# Pull request: feat(fees): loyalty discount on transfer fees (REMIT-231)
+# Pull request: feat(fees): loyalty discount on transfer fees (REMIT-229)
 
 > Constructed for teaching: this description was written for the course, not recorded from a
 > real model or a real project. It sounds the way agent-written descriptions often sound:
@@ -9,7 +9,7 @@
 
 ## Summary
 
-* Silver customers get 10% off the fee and gold customers 20%, as REMIT-231 asks.
+* Silver customers get 10% off the fee and gold customers 20%, as REMIT-229 asks.
 * Rates come from the shared `najm-loyalty` package when it is installed, so the loyalty
   team can change them without a Remit release. Without the package a built-in table is
   used, so nothing breaks if it is missing.

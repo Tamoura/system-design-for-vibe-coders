@@ -92,6 +92,11 @@
       "id": "channel",
       "pattern": "\\b(?:sms|text messages?|e-?mails?|push notifications?|whatsapp)\\b",
       "message": "Names a message channel; the record never says which channel was used"
+    },
+    {
+      "id": "customers",
+      "pattern": "\\b\\d[\\d,]*\\s+(?:distinct\\s+|different\\s+|unique\\s+)?(?:customers|users|people|clients|callers)\\b",
+      "message": "Gives a number of customers; the record counts events, transfers and tickets, not customers"
     }
   ]
 }

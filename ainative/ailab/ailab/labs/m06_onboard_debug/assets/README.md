@@ -9,6 +9,7 @@ the incident and every number are fictional.
 | `incident.md` | The incident note from Maha, the SRE lead. Read it first. |
 | `prod.log` | An audit trail extract, in JSON Lines (one event per line, keys sorted), in the format `najmkit.audit` writes. All timestamps are UTC. |
 | `kyc_tiers.csv` | The KYC tier of every customer id that appears in `prod.log`. |
+| `redact_log.py` | A small filter that masks e-mail addresses, phone numbers, IBANs, card numbers, national ids and keys in a log. Use it before you paste any real log into a tool. |
 
 Useful to know:
 

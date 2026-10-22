@@ -64,7 +64,7 @@ def seed(work: Path) -> None:
 # ---------------------------------------------------------------------------------------------
 # grade
 # ---------------------------------------------------------------------------------------------
-def _check(name: str, problems: list[str], hint: str, ok_detail: str = "", *, required: bool = True, show: int = 3) -> Check:
+def _check(name: str, problems: list[str], hint: str, ok_detail: str = "", *, required: bool = True, show: int = 2) -> Check:
     if problems:
         extra = f" (+{len(problems) - show} more)" if len(problems) > show else ""
         return Check(name, False, "; ".join(problems[:show]) + extra, hint, required)
@@ -105,12 +105,13 @@ def adr_checks(work: Path, index: m.CodeIndex) -> list[Check]:
 # -- part 2: the najmkit page -----------------------------------------------------------------
 def docs_checks(work: Path, index: m.CodeIndex) -> list[Check]:
     names = ["najmkit page exists (docs/najmkit.md)", "Docs: every name exists in the code", "Docs: signatures match the code",
-             "Docs: the examples run", "Docs: the public API is covered", "Docs: nothing contradicts the code"]
+             "Docs: the examples run", "Docs: the public API is covered", "Docs: nothing contradicts the code",
+             "Docs: the stale comment is reported under Known problems"]
     text = m.read(work / NAJMKIT_PAGE)
     if text is None:
         return [Check(names[0], False, f"{NAJMKIT_PAGE} does not exist",
                       "Write docs/najmkit.md from the code in src/najmkit/ (part 2 of TASK.md)."),
-                *[_waiting(n, "the najmkit page", "Write the page first.") for n in names[1:]]]
+                *[_waiting(n, "the najmkit page", "Write the page first.", required=(i < 5)) for i, n in enumerate(names[1:])]]
     out = [Check(names[0], len(text.split()) >= 150, f"{len(text.split())} words" if len(text.split()) >= 150 else "the page is almost empty",
                  "Document every public function and class of ids, clock and audit.")]
     out.append(_check(names[1], m.docs_name_problems(text, index),
@@ -133,6 +134,10 @@ def docs_checks(work: Path, index: m.CodeIndex) -> list[Check]:
     out.append(_check(names[5], m.docs_fact_problems(text, m.read_facts(work)),
                       "Run the code and look. A docstring or a comment is a claim too; if it disagrees with what the code does, the code wins "
                       "(put the disagreement under 'Known problems')."))
+    out.append(_check(names[6], m.known_problems_problems(text),
+                      "Call each function with the awkward inputs its docstring talks about. Where the docstring and the running code disagree, "
+                      "say so under a 'Known problems' heading at the end of the page, and do not edit the source.",
+                      required=False))
     return out
 
 
@@ -180,7 +185,8 @@ def postmortem_checks(work: Path) -> list[Check]:
     out.append(_check(names[3], invented,
                       "Every number, time, date, id and name must come from the record (or be a difference of its times or counts). "
                       "python lab-assets/claims_scan.py <file> --record lab-assets/incident.json finds times and ids that are not in it."))
-    facts_text = m.section_texts(sections, ("summary", "impact", "timeline", "facts"))
+    # the lines under the title (severity, service, date ...) are claims too: a cause tucked in there is still a cause
+    facts_text = m.preamble(text) + "\n" + m.section_texts(sections, ("summary", "impact", "timeline", "facts"))
     out.append(_check(names[4], m.forbidden_problems(facts_text, key),
                       "If the record does not say it, it is not a fact. Move it to 'What we infer' (with what it rests on and what would confirm it) or to 'What we do not know'."))
     label_problems = m.inference_problems(sections.get("inferences")) + m.unknown_problems(sections.get("unknowns"), key)

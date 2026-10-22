@@ -18,6 +18,7 @@ Layout: (1) text and Markdown helpers, (2) a code index of ``src/``, (3) a small
 from __future__ import annotations
 
 import ast
+import doctest
 import json
 import re
 import tempfile
@@ -34,7 +35,7 @@ _HEADING = re.compile(r"^(#{1,6})\s+(.*?)\s*#*\s*$")
 _FENCE_LINE = re.compile(r"^\s*(```|~~~)")
 
 NEGATION = re.compile(
-    r"\b(no|not|never|none|nothing|without|cannot|unlike|rather than|instead of|instead|than|unknown|unclear|"
+    r"\b(no|not|never|none|nobody|no one|neither|nor|nothing|without|cannot|unlike|rather than|instead of|instead|than|unknown|unclear|"
     r"unconfirmed|whether|if)\b|n't",
     re.I,
 )
@@ -111,7 +112,7 @@ def units(text: str) -> list[str]:
     flush()
     found: list[str] = []
     for block in blocks:
-        for part in re.split(r"(?<=[.!?])\s+(?=[A-Z`\"'(\[])", block):
+        for part in re.split(r"(?<=[.!?])\s+(?=[A-Z0-9`\"'(\[])", block):
             if part.strip():
                 found.append(part.strip())
     return found
@@ -224,7 +225,7 @@ def _params(fn: ast.FunctionDef | ast.AsyncFunctionDef, *, drop_first: bool) -> 
         out = out[1:]
     if a.vararg:
         out.append(Param(a.vararg.arg, "var", False))
-    for arg, default in zip(a.kwonlyargs, a.kw_defaults):
+    for arg, default in zip(a.kwonlyargs, a.kw_defaults, strict=True):
         out.append(Param(arg.arg, "kwonly", default is None))
     if a.kwarg:
         out.append(Param(a.kwarg.arg, "varkw", False))
@@ -376,7 +377,7 @@ def apply_rules(text: str, rules: Sequence[Rule]) -> list[str]:
                     continue
                 if rule.expect is not None and rule.expect(m):
                     continue
-                problem = f'{rule.message}: "{snippet(unit)}"'
+                problem = f'{rule.message}: "{snippet(unit, 64)}"'
                 if problem not in problems:
                     problems.append(problem)
                 break
@@ -414,36 +415,58 @@ _DOWNSIDE = re.compile(
 )
 
 
+_ADR_PARTS = ("status", "context", "decision", "consequences")
+_ADR_LABEL = re.compile(r"^\s*(?:[-*+]\s+)?\**\s*(status|context|decision|consequences)\s*\**\s*[:\u2013\u2014-]\s*(\S.*)?$", re.I)
+
+
+def adr_parts(text: str) -> dict[str, tuple[int, str]]:
+    """The four parts of an ADR -> (line where it starts, its text).
+
+    A part starts at a heading ("## Context") or at a label ("Context: ..." or "**Context:** ..."); it runs to the
+    next heading or label. Both layouts are accepted, because Nygard's parts matter, not the markup.
+    """
+    lines = text.splitlines()
+    parts: dict[str, list] = {}
+    current: str | None = None
+    for i, line in enumerate(lines):
+        heading = _HEADING.match(line)
+        if heading:
+            title = re.sub(r"[`*_]", "", heading.group(2)).strip()
+            name = next((p for p in _ADR_PARTS if re.match(rf"{p}\b", title, re.I)), None)
+            if len(heading.group(1)) >= 2 and name and name not in parts:
+                parts[name] = [i, []]
+                current = name
+            else:
+                current = None
+            continue
+        label = _ADR_LABEL.match(line)
+        if label and label.group(1).lower() not in parts:
+            current = label.group(1).lower()
+            parts[current] = [i, [label.group(2) or ""]]
+            continue
+        if current:
+            parts[current][1].append(line)
+    return {k: (v[0], "\n".join(v[1]).strip()) for k, v in parts.items()}
+
+
 def adr_format_problems(text: str) -> list[str]:
     problems: list[str] = []
-    secs = outline(text)
-    if not any(s.level == 1 and s.title.strip() for s in secs):
+    if not any(s.level == 1 and s.title.strip() for s in outline(text)):
         problems.append("there is no title (a line starting with '# ')")
-    order = ["status", "context", "decision", "consequences"]
-    found: dict[str, int | None] = {}
-    for key in order:
-        rx = re.compile(rf"^\s*{key}\b", re.I)
-        found[key] = next((i for i, s in enumerate(secs) if s.level >= 2 and rx.search(s.title)), None)
-    status_text = secs[found["status"]].full if found["status"] is not None else ""
-    if found["status"] is None:  # Nygard's own ADRs use headings, but "Status: Accepted" on one line is common
-        inline = re.search(r"(?im)^\W*status\W*[:\-]\s*(.+)$", text)
-        if inline:
-            status_text = inline.group(1)
-            found["status"] = -1
-    missing = [k.title() for k in order if found[k] is None]
+    parts = adr_parts(text)
+    missing = [k.title() for k in _ADR_PARTS if k not in parts]
     if missing:
         problems.append("missing section(s): " + ", ".join(missing))
     else:
-        real = [found[k] for k in order if found[k] != -1]
-        if real != sorted(real):
+        starts = [parts[k][0] for k in _ADR_PARTS]
+        if starts != sorted(starts):
             problems.append("the sections are out of order (expected Status, Context, Decision, Consequences)")
-    if found["status"] is not None and not _STATUS.search(status_text[:200]):
+    if "status" in parts and not _STATUS.search(parts["status"][1][:200]):
         problems.append("Status is not one of Proposed, Accepted, Deprecated, Superseded")
-    minimum = {"context": 40, "decision": 12, "consequences": 40}
-    for key, words in minimum.items():
-        if found[key] is not None and len(secs[found[key]].full.split()) < words:
+    for key, words in {"context": 40, "decision": 12, "consequences": 40}.items():
+        if key in parts and len(parts[key][1].split()) < words:
             problems.append(f"{key.title()} is too thin (under {words} words)")
-    if found["consequences"] is not None and not _DOWNSIDE.search(secs[found["consequences"]].full):
+    if "consequences" in parts and not _DOWNSIDE.search(parts["consequences"][1]):
         problems.append("Consequences name no downside (an ADR records what gets harder, not only what gets easier)")
     return problems
 
@@ -452,11 +475,13 @@ ADR_RULES: list[Rule] = [
     Rule("quote_ttl",
          _rx(r"\bquotes?\b[^.\n]{0,60}?\b(?:valid|expires?|expired|good|lasts?|lifetime|ttl)\b[^.\n]{0,40}?\b(\d+)\s*(seconds?|secs?|s|minutes?|mins?)\b"),
          "The quote lifetime disagrees with fx.QUOTE_TTL",
-         expect=lambda m: (int(m.group(1)) * (60 if m.group(2).lower().startswith("m") else 1)) == 60),
+         expect=lambda m: (int(m.group(1)) * (60 if m.group(2).lower().startswith("m") else 1)) == 60,
+         exempt=_rx(r"could|would|might|alternative|instead|longer|shorter|\bif\b|rather|option|propos|\bsay\b|e\.g\.|suppose|imagine")),
     Rule("quote_ttl_adj",
          _rx(r"\b(\d+)[- ](second|minute)s?\b[^.\n]{0,20}\bquote"),
          "The quote lifetime disagrees with fx.QUOTE_TTL",
-         expect=lambda m: (int(m.group(1)) * (60 if m.group(2).lower() == "minute" else 1)) == 60),
+         expect=lambda m: (int(m.group(1)) * (60 if m.group(2).lower() == "minute" else 1)) == 60,
+         exempt=_rx(r"could|would|might|alternative|instead|longer|shorter|\bif\b|rather|option|propos|\bsay\b|e\.g\.|suppose|imagine")),
     Rule("qatar_offset",
          _rx(r"\bQatar\b[^.\n]{0,80}\b(?:UTC|GMT)\s*\+\s*(\d{1,2})\b|\b(?:UTC|GMT)\s*\+\s*(\d{1,2})\b[^.\n]{0,60}\bQatar\b"),
          "The Qatar offset disagrees with limits.QATAR_UTC_OFFSET",
@@ -477,14 +502,12 @@ ADR_RULES: list[Rule] = [
     Rule("two_tiers", _rx(r"\btwo (?:kyc )?tiers?\b"),
          "Check limits.LIMITS and models.KYC_TIERS: the number of tiers disagrees with them",
          exempt=_rx(r"stale|outdated|ARCHITECTURE|wrong|incorrect|drift|disagree|claims?|says")),
-    Rule("marginal_fee", _rx(r"\b(?:marginal|progressive|bracket|slab)s?\b[^.\n]{0,60}\bfees?\b|\bfees?\b[^.\n]{0,60}\b(?:marginal|progressive|bracket|slab)"),
-         "Check fees.FeeSchedule.tier_index: how the tier is chosen disagrees with this",
-         exempt=NEGATION),
     Rule("express_before_cap", _rx(r"\bexpress\b[^.\n]{0,60}\bbefore the cap\b"),
-         "Check fees.explain_fee: where the express surcharge is added disagrees with this", exempt=NEGATION),
-    Rule("half_even", _rx(r"\b(?:half[- ]even|banker'?s?)\b"),
+         "Check fees.explain_fee: where the express surcharge is added disagrees with this",
+         exempt=_rx(r"could|would|might|alternative|instead|\bif\b|rather|option|propos|should|\bnot\b|n't")),
+    Rule("half_even", _rx(r"\b(?:Money|Remit|we|our|fees?|rounding)\b[^.\n]{0,60}\b(?:round\w*|use\w*)\b[^.\n]{0,30}\b(?:half[- ]even|banker'?s?)\b"),
          "Check money.quantize and ledger.post_transfer: the rounding rule disagrees with this",
-         exempt=_rx(r"ledger|partner|Q-LED|instead|rather|than|alternative|\bvs\b|versus|differs?|except|unlike|but\b|not\b", 0)),
+         exempt=_rx(r"ledger|partner|Q-LED|default|python|decimal module|instead|rather|than|alternative|\bvs\b|versus|differs?|except|unlike|but\b|not\b|never|could|would")),
     Rule("float_ok", _rx(r"\b(?:accepts?|allows?|supports?|takes)\b[^.\n]{0,40}\bfloats?\b"),
          "Check money.Money: what it does with floats disagrees with this",
          exempt=_rx(r"reject|refus|rais|TypeError|never|not\b|no\b|without|instead")),
@@ -799,6 +822,22 @@ def docs_fact_problems(text: str, facts: dict[str, str]) -> list[str]:
     return apply_rules(prose_only(text), docs_rules(facts))
 
 
+def known_problems_problems(text: str) -> list[str]:
+    """The ticket sends a comment that disagrees with the code to a 'Known problems' section (and says to leave the code alone).
+
+    Checked loosely: such a section exists, says something, and names the function whose comment is wrong (found by
+    reading the code, not given away here).
+    """
+    sec = find_section(outline(text), r"known (?:problems|issues)|discrepanc|doc(?:string)? (?:problems|issues)|errata")
+    if sec is None:
+        return ["there is no 'Known problems' section"]
+    if len(sec.full.split()) < 12:
+        return ["'Known problems' is nearly empty"]
+    if not re.search(r"read_events", sec.full):
+        return ["'Known problems' does not name a function whose comment disagrees with what it does"]
+    return []
+
+
 _RUNNER = r'''
 import contextlib, io, json, sys
 statements = json.load(open(sys.argv[1], encoding="utf-8"))
@@ -816,6 +855,34 @@ print("@@RESULT@@" + json.dumps(results))
 _KNOWN_CALLABLES = {"new_id", "use_generator", "SequentialIds", "SystemClock", "FixedClock", "now", "set_clock", "get_clock",
                     "reset_clock", "configure", "current_path", "log_event", "read_events", "advance", "set", "__init__"}
 _KNOWN_CLASSES = ("SequentialIds", "SystemClock", "FixedClock", "Clock")
+# What each module offers, for crediting an example to a module when it is imported by name
+# (`from najmkit.ids import new_id`), as well as when it is called as `ids.new_id(...)`.
+_MODULE_CALLABLES = {
+    "ids": ("new_id", "SequentialIds", "use_generator"),
+    "clock": ("SystemClock", "FixedClock", "now", "set_clock", "get_clock", "reset_clock"),
+    "audit": ("configure", "current_path", "log_event", "read_events"),
+}
+
+
+def modules_used(source: str) -> set[str]:
+    """The najmkit modules a statement really uses: `ids.x`, `najmkit.ids.x`, or a call to one of their functions or
+    classes by its bare name. Read from the syntax tree, so a word inside a string (`"audit.jsonl"`) does not count."""
+    try:
+        tree = ast.parse(source)
+    except SyntaxError:
+        return set()
+    used: set[str] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Attribute):
+            base = node.value
+            if isinstance(base, ast.Name) and base.id in NAJMKIT_MODULES:
+                used.add(base.id)
+            elif (isinstance(base, ast.Attribute) and isinstance(base.value, ast.Name)
+                  and base.value.id == "najmkit" and base.attr in NAJMKIT_MODULES):
+                used.add(base.attr)
+        elif isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
+            used.update(mod for mod, names in _MODULE_CALLABLES.items() if node.func.id in names)
+    return used
 
 
 _IMPORT_LINE = re.compile(r"\bfrom\s+najmkit(?:\.\w+)?\s+import\s+[\w, ]+|\bimport\s+najmkit(?:\.\w+)?")
@@ -829,7 +896,10 @@ def doc_statements(text: str) -> list[str]:
     """
     statements: list[str] = []
     for lang, body in code_blocks(text):
-        if lang not in ("python", "py", "python3"):
+        if lang not in ("python", "py", "python3", "pycon"):
+            continue
+        if ">>> " in body:  # a doctest-style session: the lines after each prompt are the statements
+            statements.extend(ex.source.rstrip("\n") for ex in doctest.DocTestParser().get_examples(body))
             continue
         try:
             tree = ast.parse(body)
@@ -879,9 +949,8 @@ def run_doc_examples(work: Path | str, text: str, *, timeout: float = 15.0) -> t
     for result in results:
         source = statements[result["i"]]
         if result["ok"]:
-            for module in NAJMKIT_MODULES:
-                if re.search(rf"\b{module}\.", source):
-                    ok_by_module[module] += 1
+            for module in modules_used(source):
+                ok_by_module[module] += 1
             continue
         why = example_failure(result)
         if why:
@@ -963,7 +1032,8 @@ class Record:
         from_text: set[int] = set()
         for value in [self.data["title"], *[e["text"] for e in self.data["timeline"]]]:
             from_text.update(int(n.replace(",", "")) for n in re.findall(r"\d[\d,]*", scrub.sub(" ", value)) if n.strip(","))
-        return numbers | from_text, in_minutes | from_text
+        entries = {len(self.data["timeline"]), len(self.data.get("responders", []))}  # "the record has 13 events"
+        return numbers | from_text | entries, in_minutes | from_text
 
 
 def _strings(node: object) -> Iterable[str]:
@@ -1121,7 +1191,7 @@ _VERIFY = re.compile(r"\b(confirm|verify|check|would show|would tell|refute|test
 
 def inference_problems(sec: Sec | None) -> list[str]:
     if sec is None:
-        return []
+        return ["there is no 'What we infer' section"]
     items = [i for i in list_items(sec.full) if len(i.split()) >= 6]
     if len(items) < 2:
         return [f"found {len(items)} inference(s); a postmortem that infers nothing is rarely complete (expected at least 2)"]
@@ -1138,7 +1208,7 @@ def inference_problems(sec: Sec | None) -> list[str]:
 
 def unknown_problems(sec: Sec | None, key: dict) -> list[str]:
     if sec is None:
-        return []
+        return ["there is no 'What we do not know' section"]
     items = [i for i in list_items(sec.full) if len(i.split()) >= 4]
     problems = []
     if len(items) < 2:
@@ -1153,7 +1223,7 @@ BLAME = re.compile(r"\b(blame|blamed|fault of|careless|negligen\w*|forgot|incomp
 
 
 def blame_problems(text: str) -> list[str]:
-    return [f'"{snippet(u)}"' for u in units(text) if BLAME.search(u) and not NEGATION.search(u)]
+    return [f'"{snippet(u, 64)}"' for u in units(text) if BLAME.search(u) and not NEGATION.search(u)]
 
 
 def preamble(text: str) -> str:

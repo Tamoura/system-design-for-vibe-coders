@@ -1,0 +1,43 @@
+diff --git a/docs/ARCHITECTURE.md b/docs/ARCHITECTURE.md
+index 6cd46da..aabc480 100644
+--- a/docs/ARCHITECTURE.md
++++ b/docs/ARCHITECTURE.md
+@@ -13,7 +13,8 @@ and in the code are fictional.
+ | `corridors.py` | The registry of supported routes (QAR to INR, PHP, EGP, PKR) and their per-transfer limits |
+ | `fees.py` | Tiered fee schedules and `quote_fee` |
+ | `fx.py` | Rate providers, corridor margins and 60-second FX quotes |
+-| `risk.py` | Risk checks: sending limits and name screening, behind a single `check()` call |
++| `limits.py` | Daily and monthly sending limits by KYC tier, on Qatar calendar days |
++| `screening.py` | Name screening against the watchlist (old code, no tests) |
+ | `ledger.py` | Double-entry postings for a sent transfer (old code, no tests) |
+ | `store.py` | SQLite repository for customers and transfers |
+ | `notify.py` | Notification templates in English and Arabic, and notifiers |
+@@ -73,9 +74,9 @@ ids come from `najmkit.ids`.
+ 
+ Remit applies two checks before money moves.
+ 
+-* **KYC tiers and limits.** Customers have a KYC tier. Two tiers are in use: T1
+-  (identity checked) may send up to QAR 5,000 per day and T2 (address and employer
+-  verified) up to QAR 25,000 per day. There is no monthly limit.
++* **KYC tiers and limits.** Customers have a KYC tier, and each tier has a daily and a
++  monthly limit in QAR: T1 2,000 and 8,000, T2 10,000 and 40,000, T3 30,000 and 120,000.
++  The daily limit is checked first.
+ * **Windows.** A "day" is a Qatar calendar day: Qatar is UTC+3 all year, so the day runs
+   from 21:00 to 21:00 UTC. Timestamps are stored in UTC and converted to Qatar time
+   before deciding which day or month a transfer belongs to.
+@@ -83,10 +84,11 @@ Remit applies two checks before money moves.
+ 
+ ## 6. Risk checks
+ 
+-Name screening and the limits check are grouped in `risk.py`, which `RemitService`
+-calls once per transfer through `risk.check(customer, amount, history)`. The result
+-says whether the transfer may go ahead and why not. Screening data (the watchlist) is
+-passed in by the caller; `risk.py` never reads files.
++Limits and name screening are separate modules, and `RemitService.send` calls them in
++turn. `limits.check_limits(tier, history, amount, now)` says whether the amount fits
++the customer's limits. `screening.screen_names(names, watchlist)` checks the sender and
++the recipient. The watchlist is passed in by the caller; `screening.py` only reads a
++file through `load_watchlist`.
+ 
+ ## 7. Ledger
+ 

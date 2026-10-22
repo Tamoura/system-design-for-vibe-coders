@@ -1,0 +1,26 @@
+diff --git a/src/remit/fees.py b/src/remit/fees.py
+index 870b40f..cb1b9cf 100644
+--- a/src/remit/fees.py
++++ b/src/remit/fees.py
+@@ -84,7 +84,20 @@ STD_B = FeeSchedule(
+     express_surcharge=_D("20.00"),
+ )
+ 
+-SCHEDULES: dict[str, FeeSchedule] = {s.id: s for s in (STD_A, STD_B)}
++# STD-C prices the QAR->BDT corridor (REMIT-414).
++STD_C = FeeSchedule(
++    id="STD-C",
++    tiers=(
++        FeeTier(_D("1000.00"), _D("0.0220"), _D("3.50")),
++        FeeTier(_D("5000.00"), _D("0.0160"), _D("12.00")),
++        FeeTier(None, _D("0.0110"), _D("45.00")),
++    ),
++    minimum=_D("7.00"),
++    cap=_D("130.00"),
++    express_surcharge=_D("18.00"),
++)
++
++SCHEDULES: dict[str, FeeSchedule] = {s.id: s for s in (STD_A, STD_B, STD_C)}
+ 
+ 
+ @dataclass(frozen=True)

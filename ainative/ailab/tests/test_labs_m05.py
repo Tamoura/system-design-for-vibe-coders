@@ -30,18 +30,13 @@ R_FILE, R_FORM, R_VERDICT, R_FOUND, R_SEVERITY, R_ALL, R_KEY = (
     "Your review covers the problems in the pull request",
     "Your severities fit the risk",
     "Your review covers every problem the grader knows",
-    "Your review treats the leaked key as leaked",
+    "Your review names the follow-up beyond the diff",
 )
-F_VISIBLE, F_HIDDEN, F_DEPS, F_SECRETS, F_FLOAT, F_EXCEPT, F_ASSERT, F_FAKED, F_DELETED, F_CATCH, F_SCOPE, F_COMMITS, F_CLEAN, F_SMALL, F_BRANCH = (
+F_VISIBLE, F_HIDDEN, F_RULES, F_CHECKLIST, F_CATCH, F_SCOPE, F_COMMITS, F_CLEAN, F_SMALL, F_BRANCH = (
     "The branch's own tests pass",
-    "The discount behaves as REMIT-231 says",
-    "Standard library only (CONTRIBUTING.md)",
-    "No secrets in the code (CONTRIBUTING.md)",
-    "Money is Decimal, never float (CONTRIBUTING.md)",
-    "No error is swallowed",
-    "Every test asserts something",
-    "No test fakes the fee code it tests",
-    "No existing test was deleted",
+    "The discount behaves as REMIT-229 says",
+    "The team's code rules hold (CONTRIBUTING.md)",
+    "The branch passes the review checklist (lesson 5.1)",
     "Your tests would have caught the agent's bugs",
     "Only the files the change needs changed",
     "Your commit messages follow CONTRIBUTING.md",
@@ -50,9 +45,21 @@ F_VISIBLE, F_HIDDEN, F_DEPS, F_SECRETS, F_FLOAT, F_EXCEPT, F_ASSERT, F_FAKED, F_
     "You fixed the agent's branch on top of its commits",
 )
 REVIEW_CHECKS = {R_FILE, R_FORM, R_VERDICT, R_FOUND, R_SEVERITY}
-FIX_CHECKS = {F_VISIBLE, F_HIDDEN, F_DEPS, F_SECRETS, F_FLOAT, F_EXCEPT, F_ASSERT, F_FAKED, F_DELETED, F_CATCH, F_SCOPE, F_COMMITS, F_CLEAN}
+FIX_CHECKS = {F_VISIBLE, F_HIDDEN, F_RULES, F_CHECKLIST, F_CATCH, F_SCOPE, F_COMMITS, F_CLEAN}
 ADVISORY = {R_ALL, R_KEY, F_SMALL, F_BRANCH}
 REQUIRED = REVIEW_CHECKS | FIX_CHECKS
+
+# what the two aggregated checks print when a particular rule is broken
+MARKERS = {
+    "deps": "standard library only", "secrets": "secrets:", "float": "money is Decimal",
+    "except": "errors hidden", "assert": "no assertion in", "faked": "fee code patched", "deleted": "existing test missing",
+}
+
+
+def broken(result: dict[str, framework.Check]) -> set[str]:
+    """Which rules the two aggregated fix checks say are broken."""
+    text = result[F_RULES].detail + " | " + result[F_CHECKLIST].detail
+    return {tag for tag, marker in MARKERS.items() if marker in text}
 
 
 def strip(name: str) -> str:
@@ -160,6 +167,46 @@ def test_the_reader_accepts_headings_tables_and_numbered_lists(work):
         assert not checks_m05.under_rated(matches)
 
 
+def test_the_reader_accepts_the_styles_an_ai_reviewer_uses(work):
+    table = """## Verdict
+Request changes
+## What I ran
+git diff main...agent/loyalty-discount and pytest -q on the branch, plus a check by hand
+## Findings
+| # | Severity | Location | Issue | Fix |
+|---|---|---|---|---|
+| 1 | **Blocker** | `src/remit/loyalty.py:14` | Hard-coded API key, rotate it | remove it |
+| 2 | Major | src/remit/fees.py#L117-L119 | float used for money, and except Exception | use Decimal |
+"""
+    numbered = """## Verdict
+reject
+## What I ran
+stuff I ran here for the review of the branch
+## Findings
+1. **Hard-coded key** — `src/remit/loyalty.py` line 14 — *blocker*. A live key.
+2. **Deleted test** — tests/test_fees.py, line - — major. The express test was removed.
+"""
+    bracketed = """## Verdict
+request changes
+## What I ran
+stuff I ran here for the review of the branch
+## Findings
+### [BLOCKER] Hard-coded API key (loyalty.py:14)
+The key is in the module.
+### [MAJOR] swallowed error (fees.py:119)
+except Exception hides errors.
+### Questions for the author
+Why the rename?
+"""
+    for style, text, expected in (("table", table, 2), ("numbered", numbered, 2), ("bracketed", bracketed, 2)):
+        review = checks_m05.parse_review(text, known(work))
+        assert len(review.findings) == expected, style
+        assert all(f.complete for f in review.findings), (style, [(f.files, f.severity, f.line_given) for f in review.findings])
+        assert checks_m05.verdict_blocks_merge(review.verdict), style
+        found = checks_m05.match_findings(review.findings, checks_m05.flaw_lines(work)).found
+        assert len(found) == 2, (style, sorted(found))
+
+
 def test_html_comments_in_the_template_are_not_findings(work):
     template = (work / "lab-assets" / "review-template.md").read_text(encoding="utf-8")
     review = checks_m05.parse_review(template, known(work))
@@ -245,7 +292,7 @@ def test_the_starter_branch_is_what_the_lesson_says(work):
                    "feat(service): charge the customer's loyalty tier on quote and send", "feat(fees): add a loyalty discount to quote_fee"]
     stat = gitutil.out(work, "diff", "--name-only", "main...agent/loyalty-discount").splitlines()
     assert stat == ["pyproject.toml", "src/remit/fees.py", "src/remit/loyalty.py", "src/remit/service.py", "tests/test_fees.py", "tests/test_loyalty.py"]
-    assert (work / "TASK.md").is_file() and (work / "lab-assets" / "ticket-REMIT-231.md").is_file()
+    assert (work / "TASK.md").is_file() and (work / "lab-assets" / "ticket-REMIT-229.md").is_file()
     # the suite on the branch is green: that is the whole point
     from ailab import checks
     assert checks.run_pytest(work).ok
@@ -353,7 +400,8 @@ def test_a_good_review_with_no_fix_yet(work):
     result = grade(work)
     assert REVIEW_CHECKS <= {n for n, c in result.items() if c.ok}
     assert result[F_VISIBLE].ok  # the agent's own suite is green: that is the trap
-    assert_required_failures(result, F_HIDDEN, F_DEPS, F_SECRETS, F_FLOAT, F_EXCEPT, F_ASSERT, F_FAKED, F_DELETED, F_CATCH, F_SCOPE, F_COMMITS)
+    assert_required_failures(result, F_HIDDEN, F_RULES, F_CHECKLIST, F_CATCH, F_SCOPE, F_COMMITS)
+    assert broken(result) == set(MARKERS)
     assert "22.5720" not in " ".join(c.detail + c.hint for c in result.values())  # nothing from the hidden tests leaks
 
 
@@ -368,23 +416,24 @@ def solved_without_review(template, tmp_path, upto=99) -> Path:
 def test_removing_the_package_and_the_key_is_not_a_fix(template, tmp_path):
     work = solved_without_review(template, tmp_path, upto=1)
     result = grade(work)
-    assert_required_failures(result, F_HIDDEN, F_FLOAT, F_EXCEPT, F_ASSERT, F_FAKED, F_DELETED, F_CATCH)
-    assert result[F_DEPS].ok and result[F_SECRETS].ok and result[F_COMMITS].ok
+    assert_required_failures(result, F_HIDDEN, F_RULES, F_CHECKLIST, F_CATCH)
+    assert broken(result) == {"float", "except", "assert", "faked", "deleted"}  # the package and the key are gone
+    assert result[F_COMMITS].ok
 
 
 def test_fixing_the_code_but_leaving_the_tests_weak(template, tmp_path):
     work = solved_without_review(template, tmp_path, upto=3)
     result = grade(work)
-    assert result[F_HIDDEN].ok and result[F_FLOAT].ok and result[F_EXCEPT].ok and result[F_DEPS].ok
-    assert_required_failures(result, F_ASSERT, F_FAKED, F_DELETED, F_CATCH)
+    assert result[F_HIDDEN].ok and result[F_RULES].ok
+    assert_required_failures(result, F_CHECKLIST, F_CATCH)
+    assert broken(result) == {"assert", "faked", "deleted"}
 
 
 def test_restoring_the_deleted_test_alone_does_not_make_the_tests_honest(template, tmp_path):
     work = solved_without_review(template, tmp_path, upto=4)
     result = grade(work)
-    assert result[F_DELETED].ok
+    assert "deleted" not in broken(result) and {"assert", "faked"} <= broken(result)
     assert result[F_CATCH].ok is False and "1 new or changed test" in result[F_CATCH].detail
-    assert {F_ASSERT, F_FAKED} <= failing(result)
 
 
 def test_special_casing_the_example(work):
@@ -397,7 +446,7 @@ def test_special_casing_the_example(work):
     write_review(work, review_text())
     result = grade(work)
     assert F_HIDDEN in failing(result)  # the sweep finds the other ties
-    assert F_FLOAT in failing(result)
+    assert "float" in broken(result)
 
 
 def test_narrowing_the_handler_but_still_hiding_the_error(work):
@@ -411,7 +460,7 @@ def test_narrowing_the_handler_but_still_hiding_the_error(work):
     write_review(work, review_text())
     result = grade(work)
     assert F_HIDDEN in failing(result)  # 'Gold' with a capital letter silently pays full price again
-    assert result[F_EXCEPT].ok  # no handler left: the hidden tests are what catch this one
+    assert "except" not in broken(result)  # no handler left: the hidden tests are what catch this one
 
 
 def test_a_broad_handler_that_logs_and_reraises_is_fine_but_one_that_returns_is_not(work):
@@ -420,10 +469,10 @@ def test_a_broad_handler_that_logs_and_reraises_is_fine_but_one_that_returns_is_
          "    try:\n        discount = base * discount_rate(tier)\n    except Exception:\n        raise\n    return max(base - discount, minimum)\n")
     learner_commit(work, "refactor(fees): name the failure")
     write_review(work, review_text())
-    assert grade(work)[F_EXCEPT].ok
+    assert "except" not in broken(grade(work))
     edit(work, "src/remit/fees.py", "    except Exception:\n        raise\n", "    except Exception:\n        return base\n")
     learner_commit(work, "fix(fees): never fail a quote")
-    assert not grade(work)[F_EXCEPT].ok
+    assert "except" in broken(grade(work))
 
 
 def test_relaxing_money_so_that_floats_work(work):
@@ -437,7 +486,7 @@ def test_relaxing_money_so_that_floats_work(work):
 
 def test_editing_the_ticket_instead_of_the_code(work):
     apply_reference_fix(work)
-    edit(work, "lab-assets/ticket-REMIT-231.md", "rounded half up to 2 decimals", "rounded to 2 decimals")
+    edit(work, "lab-assets/ticket-REMIT-229.md", "rounded half up to 2 decimals", "rounded to 2 decimals")
     learner_commit(work, "docs(docs): relax the rounding rule")
     write_review(work, review_text())
     assert F_SCOPE in failing(grade(work))
@@ -452,7 +501,7 @@ def test_weakening_the_hard_test_to_get_green(work):
     learner_commit(work, "test(loyalty): make the gold test pass")
     write_review(work, review_text())
     result = grade(work)
-    assert F_FAKED in failing(result)  # the patched silver test is still there
+    assert "faked" in broken(result)  # the patched silver test is still there
     assert F_CATCH in failing(result)  # nothing the learner added or changed fails on the agent's code
 
 
@@ -462,7 +511,7 @@ def test_deleting_the_weak_tests_without_replacing_them(template, tmp_path):
     learner_commit(work, "test(loyalty): remove the weak tests")
     result = grade(work)
     assert F_CATCH in failing(result)  # only the restored test now fails on the agent's code
-    assert F_ASSERT not in failing(result) and F_FAKED not in failing(result)
+    assert not {"assert", "faked"} & broken(result)
 
 
 def test_a_new_dependency_for_the_tests(template, tmp_path):
@@ -471,7 +520,7 @@ def test_a_new_dependency_for_the_tests(template, tmp_path):
         "from hypothesis import given, strategies as st\n\n\n@given(st.integers())\ndef test_ints(x):\n    assert x == x\n", encoding="utf-8")
     learner_commit(work, "test(loyalty): add a property test")
     result = grade(work)
-    assert F_DEPS in failing(result) and "hypothesis" in result[F_DEPS].detail
+    assert "deps" in broken(result) and "hypothesis" in result[F_RULES].detail
 
 
 def test_a_secret_added_by_the_fix(template, tmp_path):
@@ -479,8 +528,8 @@ def test_a_secret_added_by_the_fix(template, tmp_path):
     edit(work, "src/remit/loyalty.py", 'DISCOUNT_RATES =', 'LOYALTY_API_KEY = "najm-loy-live-0a1b2c3d4e5f6789"\nDISCOUNT_RATES =')
     learner_commit(work, "fix(loyalty): keep the key for later")
     result = grade(work)
-    assert F_SECRETS in failing(result)
-    assert "0a1b2c3d" not in result[F_SECRETS].detail + result[F_SECRETS].hint
+    assert "secrets" in broken(result)
+    assert "0a1b2c3d" not in result[F_RULES].detail + result[F_RULES].hint
 
 
 def test_unrelated_files_in_the_fix(template, tmp_path):
@@ -603,8 +652,11 @@ def test_scan_tests_without_assertions(tmp_path):
         "def test_raises():\n    with pytest.raises(ValueError):\n        int('x')\n"
         "def test_helper():\n    assert_only(1)\n"
         "class TestC:\n    def test_m(self):\n        self.assertEqual(1, 1)\n"
-        "def helper():\n    pass\n")})
-    assert checks_m05.unasserted_tests(tmp_path) == ["tests/test_a.py::test_none"]
+        "def helper():\n    pass\n"
+        "def check_fee(x):\n    assert x\n"
+        "def test_via_helper():\n    check_fee(1)\n"
+        "def test_via_empty_helper():\n    helper()\n")})
+    assert checks_m05.unasserted_tests(tmp_path) == ["tests/test_a.py::test_none", "tests/test_a.py::test_via_empty_helper"]
 
 
 def test_scan_for_faked_fee_code(tmp_path):

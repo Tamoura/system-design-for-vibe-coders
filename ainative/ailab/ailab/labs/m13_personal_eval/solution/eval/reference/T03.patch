@@ -1,0 +1,23 @@
+diff --git a/src/remit/store.py b/src/remit/store.py
+index b7ade50..b1eedbb 100644
+--- a/src/remit/store.py
++++ b/src/remit/store.py
+@@ -98,13 +98,12 @@ class Store:
+     def search_by_name(self, fragment: str) -> list[Customer]:
+         """Customers whose name contains ``fragment`` (SQLite LIKE: ASCII case-insensitive).
+ 
+-        KNOWN SMELL (S-STORE-1): this query is built with string formatting instead of
+-        a placeholder. A fragment containing a single quote raises
+-        sqlite3.OperationalError, and a crafted fragment can change the query. Every
+-        other query in this file is parameterised. Fix it when someone asks.
++        The fragment is a bound parameter, like every other value in this file, so a quote
++        mark is just a character and no fragment can change the query.
+         """
+-        query = "SELECT * FROM customers WHERE name LIKE '%{}%' ORDER BY id".format(fragment)
+-        rows = self._db.execute(query).fetchall()
++        rows = self._db.execute(
++            "SELECT * FROM customers WHERE name LIKE ? ORDER BY id", (f"%{fragment}%",)
++        ).fetchall()
+         return [_customer(row) for row in rows]
+ 
+     # -- transfers -------------------------------------------------------------

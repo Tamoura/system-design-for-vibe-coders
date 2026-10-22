@@ -19,8 +19,7 @@ import pytest
 
 from ailab import checks_m11 as m
 from ailab import framework, gitutil
-from ailab.labs import m11_lifecycle  # noqa: F401  (namespace package: makes sure the folder is importable)
-from conftest import LEARNER, learner_commit, start
+from conftest import learner_commit, start
 
 KIT = Path(__file__).resolve().parent.parent / "ailab"
 LAB_DIR = KIT / "labs" / "m11_lifecycle"
@@ -38,6 +37,7 @@ DOC_SIGS = "Docs: signatures match the code"
 DOC_EXAMPLES = "Docs: the examples run"
 DOC_COVERAGE = "Docs: the public API is covered"
 DOC_FACTS = "Docs: nothing contradicts the code"
+DOC_KNOWN = "Docs: the stale comment is reported under Known problems"
 PM_SECTIONS = "Postmortem has all its sections"
 PM_ROWS = "Postmortem: every timeline row matches the record"
 PM_COVER = "Postmortem: the timeline covers the key events"
@@ -51,7 +51,7 @@ MESSAGES = "Commit messages follow CONTRIBUTING.md"
 CLEAN = "Everything is committed"
 SECRETS = "No secrets in the change"
 ALL = {ADR_EXISTS, ADR_FORMAT, ADR_FACTS, ADR_CRITIC, DOC_EXISTS, DOC_NAMES, DOC_SIGS, DOC_EXAMPLES, DOC_COVERAGE, DOC_FACTS,
-       PM_SECTIONS, PM_ROWS, PM_COVER, PM_INVENTED, PM_UNKNOWN, PM_LABELS, PM_BLAMELESS, DOCS_ONLY, THREE_COMMITS, MESSAGES,
+       DOC_KNOWN, PM_SECTIONS, PM_ROWS, PM_COVER, PM_INVENTED, PM_UNKNOWN, PM_LABELS, PM_BLAMELESS, DOCS_ONLY, THREE_COMMITS, MESSAGES,
        CLEAN, SECRETS}
 
 ADR_PATH = "docs/adr/0001-failed-notification-does-not-undo-a-transfer.md"
@@ -274,6 +274,35 @@ def test_a_different_decision_with_a_different_layout_is_accepted(solved):
     assert_only(grade(solved))
 
 
+COMPACT_ADR = """# 3. Qatar days are fixed UTC+3 windows
+
+Status: Accepted
+
+**Context:** `limits.to_local` converts an aware time with `limits.QATAR_TZ`, a fixed offset (`limits.QATAR_UTC_OFFSET`, three hours),
+and `limits.day_window` and `limits.month_window` build the windows from it, in `src/remit/limits.py`. Qatar has no daylight
+saving, so the offset never changes, and timestamps are stored in UTC, so every comparison converts first.
+
+**Decision:** We use a fixed UTC+3 offset for Qatar instead of the time-zone database.
+
+**Consequences:** The code needs no dependency and no data file, and 21:00 UTC is easy to test as midnight in Qatar. The cost
+is that the offset is a belief about the world written into a constant: if Qatar ever changed it, the constant would have to
+change, and old transfers could land on the wrong day.
+
+## Critic's objections
+
+1. **Objection:** A hard-coded offset is a time bomb. **Response:** rejected for now, because the offset has not changed.
+2. **Objection:** Two conversions can disagree at midnight. **Response:** accepted: `limits.to_local` is the one place that converts.
+3. **Objection:** Storing the Qatar date beside each transfer is the better design. **Response:** deferred: it needs a migration.
+"""
+
+
+def test_an_adr_written_with_labels_instead_of_headings_is_accepted(solved):
+    (solved / ADR_PATH).unlink()
+    put(solved, "docs/adr/0003-qatar-days-are-fixed-offset-windows.md", COMPACT_ADR)
+    commit(solved, "docs(adr): record the fixed UTC+3 windows")
+    assert_only(grade(solved))
+
+
 def test_the_original_najmkit_page_plus_examples_is_accepted(solved):
     base = (BASE_DOCS / "najmkit.md").read_text(encoding="utf-8")
     examples = '''
@@ -292,15 +321,76 @@ audit.log_event("demo.happened", thing="x")
 '''
     put(solved, DOC_PATH, base + examples)
     commit(solved)
-    assert_only(grade(solved))
+    assert_only(grade(solved), DOC_KNOWN)  # the old page cannot know about the stale comment: advisory only
 
 
 def test_the_original_najmkit_page_without_examples_is_not_enough(solved):
     put(solved, DOC_PATH, (BASE_DOCS / "najmkit.md").read_text(encoding="utf-8"))
     commit(solved)
     result = grade(solved)
-    assert_only(result, DOC_EXAMPLES)
+    assert_only(result, DOC_EXAMPLES, DOC_KNOWN)
     assert "najmkit.clock" in result[DOC_EXAMPLES].detail and "najmkit.audit" in result[DOC_EXAMPLES].detail
+
+
+DIRECT_IMPORT_EXAMPLES = {
+    "from najmkit import ids\n\nids.use_generator(ids.SequentialIds())\nprint(ids.new_id(\"TRF\"))  # TRF-000001\nprint(ids.new_id(\"CUS\"))  # CUS-000002\nids.use_generator(None)   # random tokens again":
+        "from najmkit.ids import new_id, SequentialIds, use_generator\n\nuse_generator(SequentialIds())\nprint(new_id(\"TRF\"))  # TRF-000001\nprint(new_id(\"CUS\"))  # CUS-000002\nuse_generator(None)   # random tokens again",
+    "from najmkit import clock\n\nfixed = clock.FixedClock(\"2026-03-02T09:00:00+00:00\")\nclock.set_clock(fixed)\nfixed.advance(seconds=61)\nprint(clock.now())  # 2026-03-02 09:01:01+00:00\nclock.reset_clock()":
+        "from najmkit.clock import FixedClock, set_clock, now, reset_clock\n\nfixed = FixedClock(\"2026-03-02T09:00:00+00:00\")\nset_clock(fixed)\nfixed.advance(seconds=61)\nprint(now())  # 2026-03-02 09:01:01+00:00\nreset_clock()",
+    "from najmkit import audit\n\naudit.configure(\"audit.jsonl\")\nrecord = audit.log_event(\"transfer.sent\", transfer_id=\"TRF-1\")\nprint(audit.read_events())  # [{'event': 'transfer.sent', 'transfer_id': 'TRF-1', 'ts': '...'}]\naudit.configure(None)":
+        "from najmkit.audit import configure, log_event, read_events\n\nconfigure(\"/tmp/ailab-m11-demo.jsonl\")\nrecord = log_event(\"transfer.sent\", transfer_id=\"TRF-1\")\nprint(read_events())\nconfigure(None)",
+}
+
+
+def test_examples_that_import_the_names_directly_are_accepted(solved):
+    """`from najmkit.ids import new_id` is as good as `ids.new_id`: the page may be written either way."""
+    page = text_of(solved, DOC_PATH)
+    for old, new in DIRECT_IMPORT_EXAMPLES.items():
+        assert old in page, old[:40]
+        page = page.replace(old, new)
+    put(solved, DOC_PATH, page)
+    commit(solved)
+    assert_only(grade(solved))
+
+
+def test_a_word_in_a_string_is_not_an_example_for_a_module(solved):
+    """An example only counts for a module when the code uses it, not when the text of a string mentions it."""
+    put(solved, DOC_PATH, text_of(solved, DOC_PATH).replace("```python", "```text"))
+    put(solved, DOC_PATH, text_of(solved, DOC_PATH) + '\n```python\nprint("ids. clock. audit.")\n```\n')
+    commit(solved)
+    assert DOC_EXAMPLES in failing(grade(solved))
+
+
+def test_the_stale_comment_not_reported_is_advisory_only(solved):
+    page = text_of(solved, DOC_PATH)
+    put(solved, DOC_PATH, page[: page.index("## Known problems")].rstrip() + "\n")
+    commit(solved)
+    result = grade(solved)
+    assert_only(result, DOC_KNOWN)
+    assert framework.passed(framework.grade_lab(framework.load_lab("m11"), solved))  # advisory: the lab still passes
+    assert "no 'Known problems' section" in result[DOC_KNOWN].detail
+
+
+def test_a_known_problems_section_that_names_nothing_is_not_enough(solved):
+    page = text_of(solved, DOC_PATH)
+    put(solved, DOC_PATH, page[: page.index("## Known problems")] + "## Known problems\n\nThere may be some problems with the comments in this library, but we have not looked at them yet.\n")
+    commit(solved)
+    result = grade(solved)
+    assert_only(result, DOC_KNOWN)
+    assert "read_events" not in result[DOC_KNOWN].detail  # the answer is not given away
+
+
+def test_a_cause_tucked_into_the_lines_under_the_title_is_still_a_cause(solved):
+    swap(solved, PM_PATH, "Incident commander: Maha. All times are UTC.", "Incident commander: Maha. The vendor outage caused it. All times are UTC.")
+    commit(solved)
+    assert_only(grade(solved), PM_UNKNOWN)
+
+
+def test_nobody_and_neither_are_denials_too(solved):
+    swap(solved, PM_PATH, "No deploy or configuration change was made during the window.",
+         "Nobody deployed anything or changed any configuration during the window.")
+    commit(solved)
+    assert_only(grade(solved))
 
 
 def test_a_postmortem_with_a_bullet_timeline_and_other_headings_is_accepted(solved):
@@ -391,15 +481,33 @@ def test_an_adr_with_no_pointers_into_the_code(solved):
         "A quote is valid for 5 minutes, which gives the customer time to decide.",
         "Qatar is UTC+4 all year, so midnight there is 20:00 in UTC.",
         "All queries use placeholders, so nothing in the store can be injected.",
-        "Fees are marginal: each band is charged at its own rate.",
+        "Money rounds half-even to two places.",
     ],
-    ids=["t1-stale", "t2-stale", "no-monthly", "two-tiers", "quote-5-minutes", "qatar-utc-4", "all-placeholders", "marginal-fee"],
+    ids=["t1-stale", "t2-stale", "no-monthly", "two-tiers", "quote-5-minutes", "qatar-utc-4", "all-placeholders", "money-half-even"],
 )
 def test_an_adr_that_repeats_a_stale_or_invented_figure(solved, sentence):
     """The figures docs/ARCHITECTURE.md got wrong (and a few an assistant invents) are contradicted by the code."""
     swap(solved, ADR_PATH, "## Consequences\n", "## Consequences\n\n" + sentence + "\n")
     commit(solved)
     assert_only(grade(solved), ADR_FACTS)
+
+
+@pytest.mark.parametrize(
+    "sentence",
+    [
+        "A critic could argue for a quote that is valid for 5 minutes, which would cut abandoned quotes.",
+        "Python's Decimal defaults to half-even rounding, so Money sets half up explicitly.",
+        "Marginal fees, charged band by band, are the alternative; the express surcharge could be added before the cap.",
+        "The strongest alternative is a time-zone database; if Qatar adopted daylight saving, it would be needed.",
+        "The ledger rounds the partner share half-even, unlike every other amount.",
+    ],
+    ids=["alternative-quote", "decimal-default", "alternative-fee-design", "alternative-tz", "ledger-exception"],
+)
+def test_an_adr_may_discuss_alternatives_and_exceptions(solved, sentence):
+    """A sentence about the road not taken, or about a true exception, is not a claim about the code."""
+    swap(solved, ADR_PATH, "## Consequences\n", "## Consequences\n\n" + sentence + "\n")
+    commit(solved)
+    assert_only(grade(solved))
 
 
 def test_an_adr_may_quote_the_stale_document_in_order_to_refute_it(solved):
@@ -485,18 +593,22 @@ def test_a_made_up_import(solved):
         "Move a fixed clock with `clock.FixedClock.advance(delta: timedelta)`.",
         "Record an event with `audit.log_event(event, fields: dict)`.",
         "Read events back with `audit.read_events(path, limit=100)`.",
-        "Build a clock with `clock.FixedClock()`; no start is needed.",
     ],
-    ids=["extra-parameter", "extra-argument", "kwargs-as-a-parameter-name-delta", "dict-instead-of-kwargs", "limit", "missing-start"],
+    ids=["extra-parameter", "extra-argument", "delta-as-a-parameter", "dict-instead-of-kwargs", "limit"],
 )
 def test_signatures_that_are_not_the_real_ones(solved, claim):
     append_to_page(solved, claim)
+    assert_only(grade(solved), DOC_SIGS)
+
+
+def test_an_empty_pair_of_parentheses_is_shorthand_but_an_example_must_run(solved):
+    append_to_page(solved, "Build a clock with `clock.FixedClock()`.")
+    assert_only(grade(solved))  # prose shorthand for "the class" is not a claim about its arguments
+    swap(solved, DOC_PATH, 'fixed = clock.FixedClock("2026-03-02T09:00:00+00:00")', "fixed = clock.FixedClock()")
+    commit(solved)
     result = grade(solved)
-    failed = failing(result)
-    if claim.endswith("no start is needed."):
-        assert failed in (set(), {DOC_SIGS})  # an empty call is shorthand, so it may pass; the examples below catch it
-    else:
-        assert failed == {DOC_SIGS}, failed
+    assert_only(result, DOC_EXAMPLES)
+    assert "FixedClock" in result[DOC_EXAMPLES].detail
 
 
 def test_a_call_with_the_wrong_keyword_in_an_example(solved):
@@ -517,7 +629,7 @@ def test_a_call_with_the_wrong_keyword_in_an_example(solved):
         "The random token is 32 hex characters.",
         "The reserved field names are `ts`, `event` and `level`.",
         "A naive datetime is accepted and treated as UTC.",
-        "With no audit file configured, events go to stdout.",
+        "By default, events are printed to stdout.",
         "`audit.read_events` raises `FileNotFoundError` when the file is missing.",
         "The package works with asyncio: `await audit.log_event(...)`.",
     ],
@@ -547,6 +659,29 @@ def test_examples_that_call_something_that_does_not_exist(solved):
     result = grade(solved)
     assert DOC_EXAMPLES in failing(result)
     assert "flush" in result[DOC_EXAMPLES].detail
+
+
+def test_doctest_style_examples_are_run_too(solved):
+    text = text_of(solved, DOC_PATH)
+    start_at = text.index("```python")
+    session = """```pycon
+>>> from najmkit import ids, clock, audit
+>>> ids.new_id("TRF")[:4]
+'TRF-'
+>>> clock.FixedClock("2026-03-02T09:00:00+00:00").now().year
+2026
+>>> audit.log_event("demo.happened")["event"]
+'demo.happened'
+```
+
+"""
+    put(solved, DOC_PATH, text[:start_at].replace("```python", "```text") + session + text[start_at:].replace("```python", "```text"))
+    commit(solved)
+    assert_only(grade(solved))
+    broken = session.replace('ids.new_id("TRF")[:4]', "ids.generate('TRF')")
+    put(solved, DOC_PATH, text[:start_at].replace("```python", "```text") + broken + text[start_at:].replace("```python", "```text"))
+    commit(solved)
+    assert DOC_EXAMPLES in failing(grade(solved))
 
 
 def test_a_page_without_runnable_examples(solved):
@@ -615,7 +750,6 @@ def test_a_row_that_describes_a_different_event(solved):
     result = grade(solved)
     assert PM_ROWS in failing(result)
     assert "E3" in result[PM_ROWS].detail
-    assert PM_INVENTED not in failing(result) or True
 
 
 def test_a_timeline_that_skips_most_of_the_record(solved):
@@ -634,7 +768,7 @@ def test_an_invented_number_of_affected_customers(solved):
          "Customers: about 1,200 customers were affected; 171 `notification.failed` events")
     commit(solved)
     result = grade(solved)
-    assert_only(result, PM_INVENTED)
+    assert_only(result, PM_INVENTED, PM_UNKNOWN)  # a number the record lacks, and a customer count it never gives
     assert "1,200" in result[PM_INVENTED].detail
 
 
@@ -656,8 +790,7 @@ def test_a_wrong_severity_date_or_version(solved):
     swap(solved, PM_PATH, "On 11 March 2026", "On 12 March 2026")
     swap(solved, PM_PATH, "version 0.4.0. Date", "version 0.5.1. Date")
     commit(solved)
-    result = grade(solved)
-    assert PM_INVENTED not in failing(result) or "SEV1" in result[PM_INVENTED].detail
+    assert PM_INVENTED in failing(grade(solved))
     problems = m.invented_facts(text_of(solved, PM_PATH), m.load_record(LAB_DIR / "assets" / "incident.json"))
     assert any("SEV1" in p for p in problems) and any("12 March" in p for p in problems) and any("0.5.1" in p for p in problems)
 
@@ -682,15 +815,15 @@ def test_a_person_the_record_never_names(solved):
         "All customers were affected for the whole window.",
         "Confirmation emails were not delivered.",
         "Some customers were charged twice.",
+        "171 customers did not get their message.",
     ],
-    ids=["root-cause", "caused-by-vendor", "resent", "deploy", "restart", "database", "all-customers", "channel", "double-charge"],
+    ids=["root-cause", "caused-by-vendor", "resent", "deploy", "restart", "database", "all-customers", "channel", "double-charge", "events-are-not-customers"],
 )
 def test_something_the_record_does_not_say_stated_as_fact(solved, sentence):
     swap(solved, PM_PATH, "The cause is not established.", "The cause is not established. " + sentence)
     commit(solved)
     result = grade(solved)
     assert PM_UNKNOWN in failing(result), sentence
-    assert "cause" not in result[PM_UNKNOWN].hint.lower() or True
 
 
 def test_the_same_sentences_are_fine_in_the_inference_section(solved):
@@ -712,7 +845,7 @@ def test_a_postmortem_without_unknowns(solved):
     put(solved, PM_PATH, text[:a] + text[b:])
     commit(solved)
     result = grade(solved)
-    assert_only(result, PM_SECTIONS, PM_LABELS) if PM_LABELS in failing(result) else assert_only(result, PM_SECTIONS)
+    assert_only(result, PM_SECTIONS, PM_LABELS)
     assert "What we do not know" in result[PM_SECTIONS].detail
 
 
@@ -907,6 +1040,10 @@ def test_derived_numbers_come_from_the_record_and_nothing_else():
     assert m.invented_facts(ok, rec) == []
     bad = m.invented_facts("About 2,500 customers lost 47 minutes and 300 transfers failed at 03:12.", rec)
     assert len(bad) == 4  # 2,500 customers, 47 minutes, 300 transfers, 03:12
+
+
+def test_the_size_of_the_record_itself_is_a_fact():
+    assert m.invented_facts("The record has 13 events and the timeline lists all 13 events.", record()) == []
 
 
 def test_dates_ids_and_versions_in_the_postmortem():

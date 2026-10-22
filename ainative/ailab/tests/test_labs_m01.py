@@ -230,14 +230,14 @@ def test_the_same_answer_for_every_session_does_not_pass(work):
 # --------------------------------------------------------------------------------------------
 # a loop is a stretch of turns
 # --------------------------------------------------------------------------------------------
-@pytest.mark.parametrize("turn, ok", [(12, False), (13, True), (14, True), (16, True), (18, True), (19, True), (20, False), (21, False)])
+@pytest.mark.parametrize("turn, ok", [(12, False), (13, True), (14, True), (16, True), (18, True), (21, True), (22, True), (23, False)])
 def test_the_loop_turn_window(turn, ok):
     result = M01._session_checks(answer(s2=[{**S2_LOOP, "turn": turn}, S2_GAMING]), TRUTH)
     by_name = {c.name: c for c in result}
     assert by_name[S2_TURN].ok is ok
 
 
-@pytest.mark.parametrize("turn, ok", [(22, False), (23, True), (24, True), (25, True), (26, False)])
+@pytest.mark.parametrize("turn, ok", [(20, False), (21, True), (22, True), (24, True), (25, True), (26, False)])
 def test_the_test_gaming_turn_window(turn, ok):
     result = M01._session_checks(answer(s2=[S2_LOOP, {**S2_GAMING, "turn": turn}]), TRUTH)
     assert {c.name: c for c in result}[S2_TURN].ok is ok
@@ -262,7 +262,8 @@ BROKEN = {
     "unknown-mode": answer(s1=[{**S1, "failure_mode": "made-up-mode"}]),
     "mode-with-spaces": answer(s1=[{**S1, "failure_mode": "hallucinated api"}]),
     "unknown-prevention": answer(s1=[{**S1, "prevention": "be-careful"}]),
-    "turn-as-text": answer(s1=[{**S1, "turn": "T08"}]),
+    "turn-as-words": answer(s1=[{**S1, "turn": "eight"}]),
+    "turn-as-a-list": answer(s1=[{**S1, "turn": [8]}]),
     "turn-zero": answer(s1=[{**S1, "turn": 0}]),
     "turn-as-float": answer(s1=[{**S1, "turn": 8.5}]),
     "missing-evidence": answer(s1=[{k: v for k, v in S1.items() if k != "evidence"}]),
@@ -283,6 +284,13 @@ def test_a_missing_diagnosis_file(work):
     learner_commit(work, "docs(docs): remove the template")
     result = grade(work)
     assert not result[VALID].ok and "does not exist" in result[VALID].detail
+
+
+@pytest.mark.parametrize("label", ["T08", "t8", " 8 ", "8"])
+def test_a_turn_written_as_the_transcript_labels_it_is_accepted(work, label):
+    """The transcripts say T08; writing "T08" (or "8" as text) must not cost the learner a failed check."""
+    data = answer(s1=[{**S1, "turn": label}])
+    assert_only(submit(work, data), NOTES, LOG)
 
 
 def test_extra_fields_in_a_finding_are_tolerated(work):
@@ -474,6 +482,8 @@ def test_the_seeded_turns_contain_what_they_are_filed_under():
             assert seeded["prevention"] in M01.PREVENTION and set(seeded.get("also", [])) <= set(M01.PREVENTION)
             if "earliest" in seeded:
                 assert turns[seeded["earliest"]][0] == "agent" and seeded["earliest"] < seeded["turn"]
+            if "latest" in seeded:
+                assert seeded["latest"] > seeded["turn"] and seeded["latest"] in turns
         assert session_text.startswith("# Session ")
 
 
@@ -616,3 +626,43 @@ def test_s3_the_reserved_host_never_resolves_and_the_interface_matches_the_repo(
     fx = (framework.BASE_REPO / "src" / "remit" / "fx.py").read_text(encoding="utf-8")
     assert "def get_rate(self, send_currency: str, receive_currency: str, at: datetime) -> Decimal" in fx or "def get_rate(" in fx
     assert "class RateUnavailable" in (framework.BASE_REPO / "src" / "remit" / "errors.py").read_text(encoding="utf-8")
+
+
+# --------------------------------------------------------------------------------------------
+# the lesson shows kit files and real output: keep the module and the kit in step
+# --------------------------------------------------------------------------------------------
+MODULE = Path(__file__).resolve().parents[2] / "modules" / "01-agents.md"
+
+
+def _blocks(text: str) -> list[tuple[str, str]]:
+    return [(m.group(1), m.group(2)) for m in re.finditer(r"```(\w*)\n(.*?)```", text, flags=re.S)]
+
+
+@pytest.mark.skipif(not MODULE.is_file(), reason="the module file is not written yet")
+def test_the_lesson_shows_the_kit_files_exactly():
+    text = MODULE.read_text(encoding="utf-8")
+    shown = [body.rstrip("\n") for _, body in _blocks(text)]
+    assert (LAB_DIR / "task.md").read_text(encoding="utf-8").rstrip("\n") in shown, "the ticket block differs from task.md"
+    assert M01.DIAGNOSIS_TEMPLATE_TEXT.rstrip("\n") in shown, "the diagnosis.json block differs from the template"
+    assert M01.LOG_TEMPLATE.rstrip("\n") in shown, "the agent log block differs from the template"
+    # the module and the lab agree on the ten ids, the seven categories and the lesson number
+    for name in (*M01.FAILURE_MODES, *M01.PREVENTION):
+        assert f"`{name}`" in text, name
+    assert framework.load_lab("m01").lesson == "1.2" and "# 1.2 — Lab:" in text
+
+
+@pytest.mark.skipif(not MODULE.is_file(), reason="the module file is not written yet")
+def test_the_graded_output_in_the_lesson_is_what_the_grader_prints(template):
+    """The lesson says 'real output on the starting state': regenerate it and compare."""
+    from ailab import cli
+
+    lines: list[str] = []
+    result = framework.grade_lab(framework.load_lab("m01"), template, catch=False)
+    for check in result:
+        lines.extend(cli._line(check))
+    required = [c for c in result if c.required]
+    done = sum(1 for c in required if c.ok)
+    lines += ["", f"Lab m01: {done}/{len(required)} required checks passed: {'PASSED' if framework.passed(result) else 'NOT YET'}"]
+    expected = "\n".join(lines)
+    shown = [body.rstrip("\n") for _, body in _blocks(MODULE.read_text(encoding="utf-8"))]
+    assert expected in shown, "the grade output in lesson 1.2 is out of date; regenerate it with the assemble step"
