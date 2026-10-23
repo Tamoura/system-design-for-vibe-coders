@@ -6,7 +6,7 @@ Start date: YYYY-MM-DD
 
 ## Where I am
 
-<!-- One row per skill. Confidence is 1 (I would not trust myself) to 5 (I could teach it). Evidence is something you did, not a feeling. -->
+<!-- One row per skill. Confidence is 1 (I would not trust myself) to 5 (I could teach it). Evidence is something you did, not a feeling (three words or more). -->
 
 | Skill | Last did it without AI | Confidence (1-5) | Evidence |
 |---|---|---|---|
@@ -19,7 +19,7 @@ Start date: YYYY-MM-DD
 
 ## Weekly routine
 
-<!-- Three to six practices, 5 to 240 minutes each, 60 to 600 minutes in all. Keep at least one where you work without the agent. -->
+<!-- Three to six practices (say what you will do, in three words or more), 5 to 240 minutes each, 60 to 600 minutes in all. Keep at least one where you work without the agent. -->
 
 | Day | Practice | Minutes |
 |---|---|---|
@@ -27,7 +27,7 @@ Start date: YYYY-MM-DD
 
 ## Goals
 
-<!-- Three to six goals. A target is a number. By is a date (YYYY-MM-DD) inside your 90 days. -->
+<!-- Three to six goals. A target has a number. By is a date (YYYY-MM-DD) inside your 90 days from the start date. -->
 
 | Goal | Metric | Baseline | Target | By | How I will measure it |
 |---|---|---|---|---|---|
@@ -35,7 +35,7 @@ Start date: YYYY-MM-DD
 
 ## Days 1-30
 
-<!-- Two or three things that will be true on day 30. -->
+<!-- Two or three things that will be true on day 30 (twelve words or more in each of the three sections). -->
 
 ## Days 31-60
 
@@ -47,8 +47,8 @@ Start date: YYYY-MM-DD
 
 ## Eval cadence
 
-<!-- When do you run your eval again, and which decision does the result feed? -->
+<!-- When do you run your eval again, and which decision does the result feed? (twenty words or more) -->
 
 ## What I will ignore
 
-<!-- The noise you will not chase for 90 days, and what would make you look again. -->
+<!-- The noise you will not chase for 90 days, and what would make you look again. (ten words or more) -->

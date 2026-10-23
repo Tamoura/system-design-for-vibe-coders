@@ -20,7 +20,7 @@ Start date: 2026-11-02
 | Monday | One kata without the agent, then the agent as a tutor for hints only | 45 |
 | Wednesday | Read one merged pull request from another team and write what I would have asked | 30 |
 | Thursday | Explain-back: tell a colleague what the agent changed and why, without notes | 20 |
-| Friday | Release notes and one small experiment with a new feature, written up in five lines | 25 |
+| Tuesday | Release notes and one small experiment with a new feature, written up in five lines | 25 |
 | Sunday | Review my agent log: what I corrected, what I accepted too fast | 20 |
 
 ## Goals

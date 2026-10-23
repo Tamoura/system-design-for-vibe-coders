@@ -102,7 +102,8 @@ def adr_checks(work: Path, index: m.CodeIndex) -> list[Check]:
                "and check numbers against the code, not against docs/ARCHITECTURE.md. To quote a wrong name on purpose, say in the same sentence that it does not exist.",
                f"{resolved} references resolve"),
         _check(names[3], m.adr_critic_problems(text),
-               "Add a section 'Critic's objections': at least three objections, each with what you did about it (accepted, rejected with a reason, deferred)."),
+               "Add a section 'Critic's objections': at least three objections, each of eight words or more, with what you did about it "
+               "(accepted, rejected with a reason, deferred; \"noted\" is not a decision)."),
     ]
 
 
@@ -116,8 +117,11 @@ def docs_checks(work: Path, index: m.CodeIndex) -> list[Check]:
         return [Check(names[0], False, f"{NAJMKIT_PAGE} does not exist",
                       "Write docs/najmkit.md from the code in src/najmkit/ (part 2 of TASK.md)."),
                 *[_waiting(n, "the najmkit page", "Write the page first.", required=(i < 5)) for i, n in enumerate(names[1:])]]
-    out = [Check(names[0], len(text.split()) >= 60, f"{len(text.split())} words" if len(text.split()) >= 60 else "the page is almost empty",
-                 "Document every public function and class of ids, clock and audit.")]
+    words, prose = len(text.split()), m.prose_word_count(text)
+    exists_problem = ("the page is almost empty" if words < m.PAGE_MIN_WORDS else
+                      "the page lists names and signatures but says almost nothing about what they do" if prose < m.PAGE_MIN_PROSE else "")
+    out = [Check(names[0], not exists_problem, exists_problem or f"{words} words",
+                 "Document every public function and class of ids, clock and audit: its signature and what it does.")]
     out.append(_check(names[1], m.docs_name_problems(text, index),
                       "Open src/najmkit/ and look the name up. If grep cannot find it, the page must not mention it "
                       "(unless the sentence says it does not exist).", show=5))

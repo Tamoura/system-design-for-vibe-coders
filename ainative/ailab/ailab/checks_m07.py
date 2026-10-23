@@ -537,7 +537,7 @@ def source_peeking(work: Path | str, files: Sequence[str]) -> list[str]:
             elif isinstance(node, ast.Name) and node.id in _PEEK_NAMES:
                 what = node.id
             elif (isinstance(node, ast.Constant) and isinstance(node.value, str) and id(node) not in docstrings
-                  and re.search(r"ledger\.py|src/remit|remit/ledger", node.value)):
+                  and re.search(r"(?:^|[/\\])ledger\.py$|src[/\\]remit|remit[/\\]ledger", node.value)):
                 what = "a path to the ledger's source file"
             if what:
                 found.append(f"{rel}:{node.lineno} {what}")
@@ -712,9 +712,14 @@ def small_steps(work: Path | str, *, name: str, at_least: int = 3) -> Check:
         if touched:
             problems.append(f"the commit that adds your ledger tests ({first.sha[:7]}) also changes {checks._short(touched, 2)}")
     if problems:
-        return Check(name, False, "; ".join(problems),
-                     "Commit the tests, the refactor and the migration as separate steps that each change something, and commit your "
-                     "ledger tests first, before anything under src/ changes (git reset --soft lab-start, then commit again in pieces).")
+        hints = []
+        if len(real) < at_least:
+            hints.append("Commit the tests, the refactor and the migration as separate steps: at least three commits, each changing a file "
+                         "and leaving the suite green.")
+        if first is not None and touched:
+            hints.append("Commit your ledger tests on their own, before anything under src/ changes: `git reset lab-start` un-commits "
+                         "everything and keeps your files; then commit again in pieces, the tests first.")
+        return Check(name, False, "; ".join(problems), " ".join(hints))
     return Check(name, True, f"{checks.plural(len(real), 'commit')} that change something, the ledger tests first" if first else
                  f"{checks.plural(len(real), 'commit')} that change something")
 

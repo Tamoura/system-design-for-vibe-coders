@@ -10,6 +10,8 @@ TODO: the commands, one per line, in backticks, with what you saw. Include `pyte
 
 ### Findings
 
+At least two rows. The File column names a file that exists; Severity is blocker, major, minor or nit.
+
 | File | Line | Severity | Problem | Fix |
 |---|---|---|---|---|
 | `TODO` | TODO | TODO: blocker, major, minor or nit | TODO | TODO |

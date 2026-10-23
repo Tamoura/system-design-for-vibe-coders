@@ -1,0 +1,24 @@
+diff --git a/tests/test_fees_express_cap.py b/tests/test_fees_express_cap.py
+new file mode 100644
+index 0000000..657deda
+--- /dev/null
++++ b/tests/test_fees_express_cap.py
+@@ -0,0 +1,18 @@
++"""The express surcharge is added after the fee cap (fees.py), so a large express fee passes the cap."""
++from remit.corridors import get_corridor
++from remit.fees import quote_fee
++from remit.money import Money
++
++INR = get_corridor("QAR", "INR")  # fee schedule STD-A: cap 150.00 QAR, express surcharge 15.00 QAR
++
++
++def test_a_large_transfer_pays_the_cap():
++    assert quote_fee(Money("15000.00", "QAR"), INR) == Money("150.00", "QAR")
++
++
++def test_a_large_express_transfer_pays_the_cap_plus_the_surcharge():
++    assert quote_fee(Money("15000.00", "QAR"), INR, express=True) == Money("165.00", "QAR")
++
++
++def test_a_small_express_transfer_just_adds_the_surcharge():
++    assert quote_fee(Money("500.00", "QAR"), INR, express=True) == Money("27.00", "QAR")

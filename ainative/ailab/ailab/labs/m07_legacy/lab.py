@@ -44,7 +44,8 @@ Files
 -----
     lab.py            this file                      task.md           the ticket (REMIT-372)
     najmkit_v2/       the v2 library (seed)          seed_docs/        the migration notes (seed)
-    assets/           -> lab-assets/                 hidden/           hidden acceptance tests (3 files + conftest)
+    assets/           -> lab-assets/ (the seam, the hand-mutation helper, the plan template)
+    hidden/           hidden acceptance tests (3 files + conftest)
     solution/         the reference solution, step by step (steps.json)
     ../../checks_m07.py   the helpers for this lab
 """

@@ -7,7 +7,8 @@ says exactly which checks must fail and which must still pass:
 * wrong code: the existing schedule reused, an off-by-one-cent maximum, cash pickup allowed, a tier edge moved, a float
   literal in Decimal, a margin typo, a Western digit in the Arabic text, the rate forgotten, the new wording sent to
   every corridor, an unrelated file, a new dependency, a weakened old test, a float call;
-* tests that prove nothing: they pass without the change, or do not name the criteria they claim to prove;
+* tests that prove nothing: they pass without the change, assert nothing, check only that the corridor exists, compute the
+  expected value with the code under test, or do not name the criteria they claim to prove;
 * documents: a template copied and not filled in, a spec without criteria, a plan that skips one or names a file
   that does not exist, an ADR without consequences, a review without the AI label, a settings file with a wide
   allow, a hook that allows everything or is a naive substring match or crashes on bad input, a corridors page that
@@ -65,15 +66,15 @@ DECIMAL = "Money stays Decimal; no clock, id, network or float shortcuts"
 DEPS = "No new dependency"
 LOCAL = "No local data or credential files in the repository"
 TEETH = "Your tests have teeth"
-TESTS_FIRST = "Tests came before the code"
+TESTS_FIRST = "Tests came before or with the code"
 PLAN_HISTORY = "The history follows your plan"
 SMALL = "No commit is huge"
 HOOK_HARDER = "Guard hook also sees through wrappers"
 ASK = "Settings ask before editing the money files"
 
-REQUIRED = {CODE_TESTS, CORRIDOR, FEES, FX, WORDING, TOGETHER, WEAKENED, NEW_FAIL, SCOPE, MEMORY, SPEC, PLAN, TRACE, ADR,
+REQUIRED = {CODE_TESTS, CORRIDOR, FEES, FX, WORDING, TOGETHER, WEAKENED, NEW_FAIL, TEETH, SCOPE, MEMORY, SPEC, PLAN, TRACE, ADR,
             REVIEW, SETTINGS, HOOK, DOCS, ARCH, LOG, RETRO, COMMITTED, MESSAGES, ONE_THING, SECRETS, DECIMAL, DEPS, LOCAL}
-ADVISORY = {TEETH, TESTS_FIRST, PLAN_HISTORY, SMALL, HOOK_HARDER, ASK}
+ADVISORY = {TESTS_FIRST, PLAN_HISTORY, SMALL, HOOK_HARDER, ASK}
 SPEC_PATH, PLAN_PATH = "specs/REMIT-414.md", "specs/REMIT-414-plan.md"
 ADR_PATH = "docs/adr/0001-own-fee-schedule-for-bangladesh.md"
 REVIEW_PATH, LOG_PATH, RETRO_PATH = "docs/review-REMIT-414.md", "docs/agent-log.md", "docs/retrospective.md"
@@ -287,8 +288,8 @@ def test_tests_that_assert_nothing_pass_on_the_original_code(work):
     body = "\n".join(f"def test_ac{n}_nothing():\n    assert True\n" for n in range(1, 10))
     (work / TESTS_PATH).write_text(body + "\n", encoding="utf-8")
     commit(work, "test(corridors): add tests")
-    # they trace to every criterion and are green, but they would not notice the corridor being absent or wrong
-    assert_failing(grade(work), NEW_FAIL, TEETH)
+    # they name every criterion and are green, but they would not notice the corridor being absent or wrong
+    assert_failing(grade(work), NEW_FAIL, TEETH, TRACE)
 
 
 def test_tests_that_do_not_name_the_criteria(work):
@@ -352,7 +353,7 @@ def test_ac9_default():
     (work / TESTS_PATH).write_text(keep, encoding="utf-8")
     commit(work, "test(corridors): check the corridor")
     result = grade(work)
-    assert_failing(result, TEETH)
+    assert_failing(result, TEETH, TRACE)  # three comparisons are not enough assertions, and no deliberate defect is noticed
     assert "they miss" in result[TEETH].detail
 
 
@@ -360,6 +361,7 @@ def test_ac9_default():
 # documents
 # --------------------------------------------------------------------------------------------
 TEMPLATES = {
+    "memory.md": ("CLAUDE.md", MEMORY),
     "spec.md": (SPEC_PATH, SPEC),
     "plan.md": (PLAN_PATH, PLAN),
     "adr.md": (ADR_PATH, ADR),
@@ -387,18 +389,45 @@ def test_a_spec_without_numbered_criteria(work):
     assert_failing(grade(work), SPEC, PLAN, TRACE)
 
 
-def test_a_spec_that_leaves_the_working_out_to_the_agent(work):
-    def hide(text: str) -> str:
-        for value in ("32.8745", "16,437.25", "14.50", "7.00", "130.00", "25.50", "28.00", "8,218.63", "7.19", "148.00", "92.00",
-                      "100.00", "52.00", "394,494.00"):
-            text = text.replace(value, "X")
-        return text
+def behaviour_section(text: str, replacement: str) -> str:
+    head, rest = text.split("### Behaviour\n", 1)
+    return head + "### Behaviour\n" + replacement + "\n\n### Acceptance criteria" + rest.split("### Acceptance criteria", 1)[1]
 
-    rewrite(work, SPEC_PATH, hide)
+
+COPIED_FROM_THE_TICKET = ("All amounts are QAR. A transfer is 100.00 to 12,000.00 inclusive. The minimum fee is 7.00, the cap 130.00 and "
+                          "the express surcharge 18.00. The mid rate is 33.46 and the margin 0.0175. Tiers: 2.20% + 3.50 up to 1,000.00, "
+                          "1.60% + 12.00 up to 5,000.00, 1.10% + 45.00 above. Cash pickup is refused.")
+
+
+def test_a_spec_that_leaves_the_working_out_to_the_agent(work):
+    rewrite(work, SPEC_PATH, lambda t: behaviour_section(t, COPIED_FROM_THE_TICKET))
     commit(work, "docs(specs): shorten the examples")
     result = grade(work)
     assert_failing(result, SPEC)
     assert "worked results" in result[SPEC].detail
+
+
+def test_a_spec_with_wrong_worked_results_does_not_count_them(work):
+    wrong = COPIED_FROM_THE_TICKET + " A fee for 300.00 is 10.11. A fee for 750.00 is 20.01. 300.00 QAR buys 9,862.36 BDT. The rate is 32.8744."
+    rewrite(work, SPEC_PATH, lambda t: behaviour_section(t, wrong))
+    commit(work, "docs(specs): worked examples")
+    result = grade(work)
+    assert_failing(result, SPEC)
+    assert "0 correct worked results" in result[SPEC].detail
+
+
+def test_a_spec_that_works_out_other_correct_amounts_is_a_sound_alternative(work):
+    mine = (COPIED_FROM_THE_TICKET + " My own working, with Decimal and half up: a fee for 300.00 is 300.00 x 2.20% + 3.50 = 10.10. "
+            "A fee for 750.00 is 20.00. The customer rate is 33.46 x (1 - 0.0175) = 32.8745 after rounding. 300.00 QAR buys 9,862.35 BDT.")
+    rewrite(work, SPEC_PATH, lambda t: behaviour_section(t, mine))
+    commit(work, "docs(specs): my own worked examples")
+    assert_failing(grade(work))
+
+
+def test_raw_and_rounded_forms_of_one_result_count_once():
+    assert checks_m14.worked_results("A fee for 167.50 is 167.50 x 2.20% + 3.50 = 7.185, so 7.19.") == 1
+    assert checks_m14.worked_results("500.00 buys 16,437.25 BDT at 32.8745. The fee for 500.00 is 14.50.") == 3
+    assert checks_m14.worked_results("Minimum 7.00, cap 130.00, surcharge 18.00, rate 33.46, margin 0.0175, up to 12,000.00.") == 0
 
 
 def test_a_spec_that_forgets_an_agreed_number(work):
@@ -682,8 +711,8 @@ def test_everything_in_one_commit(work):
     gitutil.git(work, "reset", "--soft", "lab-start")
     commit(work, "feat(corridors): open the Bangladesh corridor")
     result = grade(work)
-    # one commit: too few, mixed, no test before the code, and the retrospective's commit no longer exists
-    assert_failing(result, MESSAGES, ONE_THING, RETRO, TESTS_FIRST, PLAN_HISTORY)
+    # one commit: too few, mixed, and the retrospective's commit no longer exists (the tests are in the same commit as the code)
+    assert_failing(result, MESSAGES, ONE_THING, RETRO, PLAN_HISTORY)
 
 
 def test_a_commit_that_mixes_code_and_documents(work):
@@ -694,7 +723,7 @@ def test_a_commit_that_mixes_code_and_documents(work):
     assert "code and documents" in result[ONE_THING].detail
 
 
-def test_code_and_tests_in_the_same_commit_are_fine_but_not_test_first(work):
+def test_code_and_tests_in_the_same_commit_are_fine_and_count_as_tests_with_the_code(work):
     gitutil.git(work, "reset", "-q", "--soft", "HEAD~11")  # keep the specs, the memory and the settings commits
     gitutil.git(work, "reset", "-q")
     gitutil.git(work, "add", "src", "tests")
@@ -702,8 +731,9 @@ def test_code_and_tests_in_the_same_commit_are_fine_but_not_test_first(work):
                 "feat(corridors): open the Bangladesh corridor with its tests")
     commit(work, "docs(docs): the decision, the page, the review, the log and the retrospective")
     result = grade(work)
-    # six commits is too few and the retrospective's commit is gone; but code with its tests is one kind of change
-    assert_failing(result, MESSAGES, RETRO, TESTS_FIRST, PLAN_HISTORY)
+    # six commits is too few and the retrospective's commit is gone; but code with its tests is one kind of change,
+    # and CONTRIBUTING.md wants a green suite at every commit, so tests committed with their code are not "code first"
+    assert_failing(result, MESSAGES, RETRO, PLAN_HISTORY)
 
 
 def test_a_bad_commit_message(work):
@@ -841,8 +871,9 @@ def test_the_numbers_in_the_ticket_are_the_numbers_the_reference_code_uses():
 
 def test_every_template_has_todos_and_the_sections_the_grader_reads():
     templates = ASSETS / "templates"
-    for name in ("spec.md", "plan.md", "adr.md", "review.md", "agent-log.md", "retrospective.md", "corridors.md"):
-        assert "TODO" in (templates / name).read_text(encoding="utf-8"), name
+    for name in ("memory.md", "spec.md", "plan.md", "adr.md", "review.md", "agent-log.md", "retrospective.md", "corridors.md"):
+        text = (templates / name).read_text(encoding="utf-8")
+        assert "TODO" in text and checks_m14._TODO.search(text), name  # noqa: SLF001 (every template is flagged as unfinished)
     spec = checks.markdown_sections(templates / "spec.md")
     assert not checks_m14.missing_sections(spec, checks_m14.SPEC_SECTIONS, min_words=1)
     retro = checks.markdown_sections(templates / "retrospective.md")
@@ -867,6 +898,25 @@ def test_the_baseline_hardening_files_pass_the_grader_and_the_samples_behave(tmp
     assert checks_m14._guard_registered(data)  # noqa: SLF001
 
 
+def _guard_verdict(command: str) -> int:
+    import subprocess
+    import sys
+
+    document = json.dumps({"tool_name": "Bash", "tool_input": {"command": command}})
+    return subprocess.run([sys.executable, str(ASSETS / "harden" / "guard.py")], input=document, capture_output=True, text=True).returncode
+
+
+@pytest.mark.parametrize("command", checks_m14.HOOK_BLOCK + checks_m14.HOOK_BLOCK_HARDER + [
+    'sh -ec "rm -rf x"', "find . -name '*.pyc' -delete", "git -c alias.p=push p", "xargs rm -rf"])
+def test_the_baseline_guard_blocks_what_the_grader_asks_it_to_block(command):
+    assert _guard_verdict(command) == 2, command
+
+
+@pytest.mark.parametrize("command", checks_m14.HOOK_ALLOW + checks_m14.HOOK_ALLOW_HARDER + ["find . -name '*.py'", "uv run pytest -q"])
+def test_the_baseline_guard_allows_the_harmless(command):
+    assert _guard_verdict(command) == 0, command
+
+
 def test_the_mutation_plugin_knows_every_mutant_the_grader_runs():
     import sys
 
@@ -887,3 +937,190 @@ def test_helpers_read_numbers_tables_and_paths_sensibly():
     assert checks_m14.resolves("fees.py", files) and checks_m14.resolves("src/remit/", files) and not checks_m14.resolves("risk.py", files)
     assert checks_m14.looks_like_path("docs/corridors.md") and not checks_m14.looks_like_path("pytest -q") and not checks_m14.looks_like_path("Decimal(1)")
     assert checks_m14.total_minutes("Total minutes: 42\n") == 42 and checks_m14.total_minutes("**Total minutes:** 7") == 7
+
+
+# --------------------------------------------------------------------------------------------
+# findings of the learner dry-run: rules that were hidden, brittle or misleading
+# --------------------------------------------------------------------------------------------
+def plan_rows(work: Path, extra: int) -> str:
+    """The reference plan with ``extra`` more rows after step 9 (each a sound small step with its own commit header)."""
+    text = (work / PLAN_PATH).read_text(encoding="utf-8")
+    anchor = next(line for line in text.splitlines() if line.startswith("| 9 |"))
+    rows = [f"| {9 + n} | Small step {n} | `docs/corridors.md` | AC1 | read the page | `docs(docs): tidy the corridors page, part {n}` |"
+            for n in range(1, extra + 1)]
+    return text.replace(anchor, "\n".join([anchor, *rows]))
+
+
+def test_a_finer_plan_with_sixteen_steps_is_sound(work):
+    (work / PLAN_PATH).write_text(plan_rows(work, 7), encoding="utf-8")
+    commit(work, "docs(specs): plan in smaller steps")
+    result = grade(work)
+    assert PLAN not in failing(result), describe(result)
+    assert failing(result) <= {PLAN_HISTORY}  # only the advisory "history follows the plan" can notice the extra steps
+
+
+def test_a_plan_with_too_many_or_too_few_steps_says_the_range(work):
+    original = (work / PLAN_PATH).read_text(encoding="utf-8")
+    (work / PLAN_PATH).write_text(plan_rows(work, 22), encoding="utf-8")
+    commit(work, "docs(specs): plan every keystroke")
+    result = grade(work)
+    assert PLAN in failing(result) and "31 numbered steps (5 to 30 expected" in result[PLAN].detail
+    (work / PLAN_PATH).write_text("\n".join(ln for ln in original.splitlines() if not re.match(r"\| [4-9] \|", ln)) + "\n", encoding="utf-8")
+    commit(work, "docs(specs): shorten the plan")
+    assert "3 numbered steps (5 to 30 expected" in grade(work)[PLAN].detail
+
+
+def test_a_plan_commit_header_that_is_too_long_is_explained(work):
+    long_header = "`feat(fx): add the BDT mid rate and margin with a very long explanation of why it is needed`"
+    rewrite(work, PLAN_PATH, lambda t: t.replace("`feat(fx): add the BDT mid rate and margin`", long_header))
+    commit(work, "docs(specs): longer header")
+    result = grade(work)
+    assert PLAN in failing(result)
+    assert "commit header" in result[PLAN].detail and "72" in result[PLAN].detail and "type(scope): subject" in result[PLAN].detail
+
+
+def test_a_file_that_a_line_says_does_not_exist_is_not_a_claim_that_it_does(work):
+    with open(work / "CLAUDE.md", "a", encoding="utf-8") as handle:
+        handle.write("- `docs/ARCHITECTURE.md` sections 5 and 6 are stale (daily limits, `risk.py`, which does not exist): do not fix them here.\n")
+    commit(work, "chore(claude): note the stale architecture text")
+    rewrite(work, PLAN_PATH, lambda t: t.replace("### Stop rules\n", "### Stop rules\nThe `risk.py` text in the architecture page is stale: that file does not exist, and fixing it is another ticket.\n"))
+    commit(work, "docs(specs): add a stop rule")
+    assert_failing(grade(work))
+
+
+def test_a_path_with_no_denial_on_its_line_is_still_a_claim(work):
+    with open(work / "CLAUDE.md", "a", encoding="utf-8") as handle:
+        handle.write("- Fees are priced by `src/remit/pricing.py`.\n")
+    commit(work, "chore(claude): name a file")
+    result = grade(work)
+    assert_failing(result, MEMORY)
+    assert "src/remit/pricing.py" in result[MEMORY].detail
+
+
+def test_documents_may_be_named_before_they_exist_and_the_denial_rule_is_per_line():
+    files = {"src/remit/fees.py"}
+    assert checks_m14.unresolved_paths("See `docs/corridors.md`, `specs/REMIT-414.md` and `docs/adr/0001-x.md`.", files) == []
+    assert checks_m14.unresolved_paths("See `docs/other.md` and `fees.py`.", files) == ["docs/other.md"]
+    assert checks_m14.unresolved_paths("`risk.py` does not exist.\nBut `risk.py` is used here.", files) == ["risk.py"]
+    assert checks_m14.unresolved_paths("The old `rates.py` is gone.", files) == []
+
+
+def test_the_word_todo_in_a_sentence_is_fine_but_a_placeholder_is_not(work):
+    with open(work / RETRO_PATH, "a", encoding="utf-8") as handle:
+        handle.write("\nThe old TODO in the test helpers is not mine, and my prompt said: no TODO comments.\n")
+    commit(work, "docs(docs): add a note to the retrospective")
+    assert_failing(grade(work))
+    todo = checks_m14._TODO  # noqa: SLF001
+    for placeholder in ("TODO: write this", "| 1 | TODO | x |", "Total minutes: TODO (from the log)", "TODO", "`TODO`", "### Rollback\nTODO\n", "- TODO: later"):
+        assert todo.search(placeholder), placeholder
+    for prose in ("the old TODO in the helpers", "no TODO comments", "| a TODO comment | x |", "TODOs are tracked elsewhere"):
+        assert not todo.search(prose), prose
+
+
+def test_hollow_tests_that_only_call_the_code_do_not_pass(work):
+    """The dry-run's false positive: seventeen tests that call get_corridor and assert nothing, with the criteria in docstrings."""
+    body = "from remit.corridors import get_corridor\n\n\n" + "\n\n".join(
+        f'def test_ac{n % 9 + 1}_hollow_{n}():\n    """AC{n % 9 + 1}: proved by calling the corridor."""\n    get_corridor("QAR", "BDT")\n' for n in range(17))
+    (work / TESTS_PATH).write_text(body, encoding="utf-8")
+    commit(work, "test(corridors): cover every criterion")
+    result = grade(work)
+    assert_failing(result, TRACE, TEETH)  # they do fail on the starter (no such corridor), but they check nothing
+    assert "0 assertions in 17 new tests" in result[TRACE].detail
+    assert "catch 0 of 6" in result[TEETH].detail
+
+
+def test_hollow_tests_with_a_truth_test_of_the_corridor_do_not_pass(work):
+    body = "from remit.corridors import get_corridor\n\n\n" + "\n\n".join(
+        f'def test_ac{n % 9 + 1}_truthy_{n}():\n    assert get_corridor("QAR", "BDT")\n' for n in range(12))
+    (work / TESTS_PATH).write_text(body, encoding="utf-8")
+    commit(work, "test(corridors): cover every criterion")
+    assert_failing(grade(work), TRACE, TEETH)
+
+
+def test_tests_that_compute_the_expected_value_with_the_code_are_caught_by_the_deliberate_defects(work):
+    head = ('"""AC1 to AC9, circular: every expected value comes from the code under test."""\n'
+            "from remit.corridors import get_corridor\nfrom remit.fees import quote_fee\nfrom remit.money import Money\n\n\n")
+    amounts = ["100", "500", "1000", "1000.01", "5000", "5000.01", "10000", "12000", "250", "300", "700", "900"]
+    body = head + "\n\n".join(
+        f'def test_ac{n % 9 + 1}_circular_{n}():\n    corridor = get_corridor("QAR", "BDT")\n    expected = quote_fee(Money("{a}", "QAR"), corridor)\n'
+        f'    assert quote_fee(Money("{a}", "QAR"), corridor) == expected\n    assert corridor.max_send == get_corridor("QAR", "BDT").max_send\n'
+        for n, a in enumerate(amounts))
+    (work / TESTS_PATH).write_text(body, encoding="utf-8")
+    commit(work, "test(corridors): cover every criterion")
+    result = grade(work)
+    assert_failing(result, TEETH)  # they fail on the starter, they pass on the learner's code, and no wrong number worries them
+    assert "catch 0 of 6" in result[TEETH].detail and "they miss" in result[TEETH].detail
+
+
+def test_a_guard_that_blocks_but_gives_no_reason_is_not_called_non_blocking(work):
+    (work / ".claude/hooks/guard.py").write_text("import sys\nsys.stdin.read()\nsys.exit(2)\n", encoding="utf-8")
+    commit(work, "chore(claude): block everything quietly")
+    result = grade(work)
+    assert HOOK in failing(result)
+    assert "no reason" in result[HOOK].detail and "which does not block" not in result[HOOK].detail
+
+
+def test_a_guard_that_reads_only_the_first_words_passes_the_required_check_but_not_the_wrapper_cases(work):
+    (work / ".claude/hooks/guard.py").write_text('''import json
+import shlex
+import sys
+
+
+def stop(reason):
+    print("Blocked: " + reason, file=sys.stderr)
+    sys.exit(2)
+
+
+try:
+    data = json.load(sys.stdin)
+except ValueError:
+    stop("not JSON")
+if data.get("tool_name") != "Bash":
+    sys.exit(0)
+command = (data.get("tool_input") or {}).get("command")
+if not isinstance(command, str) or not command.strip():
+    stop("no command")
+first, second = (shlex.split(command) + ["", ""])[:2]
+if (first, second) in {("rm", "-rf"), ("git", "push"), ("git", "reset"), ("pip", "install")} or first in {"sudo", "curl"} or (first, second) == ("cat", ".env"):
+    stop("not allowed")
+''', encoding="utf-8")
+    commit(work, "chore(claude): a first-words guard")
+    assert_failing(grade(work), HOOK_HARDER)
+
+
+def test_a_scratch_script_committed_in_the_repository_is_out_of_scope_and_the_hint_says_where_it_belongs(work):
+    (work / "scratch").mkdir()
+    (work / "scratch/find_ties.py").write_text("print(1)\n", encoding="utf-8")
+    commit(work, "chore(scratch): add a throwaway script")
+    result = grade(work)
+    assert_failing(result, SCOPE)
+    assert "scratch/find_ties.py" in result[SCOPE].detail and "outside the repository" in result[SCOPE].hint
+
+
+def test_any_lower_case_scope_is_accepted_in_a_commit_header(work):
+    with open(work / "CLAUDE.md", "a", encoding="utf-8") as handle:
+        handle.write("- Never skip the corridor checklist.\n")
+    commit(work, "chore(agent): add a never rule")
+    assert_failing(grade(work))
+
+
+def test_code_committed_before_any_test_is_not_test_first(work):
+    gitutil.git(work, "reset", "-q", "--soft", "lab-start")
+    gitutil.git(work, "reset", "-q")
+    who = ["-c", "user.name=Najm Learner", "-c", "user.email=learner@najm.example"]
+    gitutil.git(work, "add", "src")
+    gitutil.git(work, *who, "commit", "-q", "-m", "feat(corridors): open the Bangladesh corridor")
+    gitutil.git(work, "add", "tests")
+    gitutil.git(work, *who, "commit", "-q", "-m", "test(corridors): pin the corridor")
+    commit(work, "docs(docs): everything else")
+    result = grade(work)
+    assert TESTS_FIRST in failing(result)
+    assert "Committing them alone leaves a red commit" in result[TESTS_FIRST].hint
+
+
+def test_assertions_are_counted_by_what_they_say():
+    count = checks_m14.assertion_count
+    assert count("def test_a():\n    assert x == 1\n    assert 'a' in y\n    assert not z\n") == 3
+    assert count("def test_a():\n    assert True\n    assert get_corridor('QAR', 'BDT')\n    assert 1 == 1\n") == 0
+    assert count("def test_a():\n    with pytest.raises(ValueError):\n        f()\n    self.assertEqual(a, b)\n") == 2
+    assert count("def test_a(:\n") == 0

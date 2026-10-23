@@ -646,8 +646,9 @@ CRITIC_HEAD = r"critic|objection|challenge|steelman|devil"
 OBJECTION_WORDS = 8  # an objection with its response is a sentence or two, not a label
 # What you did about an objection. "Noted" and "see above" are not decisions.
 RESPONSE_CUE = re.compile(
-    r"\b(accept(?:ed|s)?|reject(?:ed|s)?|defer(?:red|s)?|declin\w+|dismiss\w+|agree[ds]?|disagree[ds]?|adopt\w+|upheld|"
-    r"overrul\w+|address(?:ed)?|mitigat\w+|keep|kept|chose|changed|added|rewrote|follow[- ]up|ticket|"
+    r"\b(accept(?:ed|s)?|reject(?:ed|s)?|defer(?:red|s)?|postpon\w+|declin\w+|dismiss\w+|agree[ds]?|disagree[ds]?|adopt\w+|upheld|"
+    r"overrul\w+|concede[ds]?|address(?:ed)?|mitigat\w+|keep|kept|retain\w*|stay with|stand by|chose|changed|added|rewrote|"
+    r"incorporated|revised|updated|follow[- ]up|ticket|out of scope|no change|not changing|won'?t fix|"
     r"we (?:will|did|do|decided)|i (?:will|did|decided))\b",
     re.I,
 )
@@ -1032,11 +1033,38 @@ def docs_signature_problems(text: str, index: CodeIndex) -> list[str]:
         if close is None:
             continue
         check(key, key, names_unqualified[key], " ".join(flat[m.end() + 1:close].split()), tail_of(close))
+    for line in text.splitlines():  # a bare `name()` that opens a table row, heading or list item is meant as the signature
+        if not (line.lstrip().startswith(("|", "#", "- ", "* ", "+ ")) or re.match(r"\s*\d+[.)]\s", line)):
+            continue
+        spans = [sp.strip() for sp in re.findall(r"`([^`\n]+)`", line)]
+        bare = re.fullmatch(r"(?:najmkit\.)?(?:(ids|clock|audit)\.)?([A-Za-z_]\w*)(?:\.([A-Za-z_]\w*))?\(\)", spans[0]) if spans else None
+        if not bare:
+            continue
+        short, name, member = bare.groups()
+        key = f"{name}.{member}" if member else name
+        module = _module(index, short) if short else (public[key][0] if key in public else None)
+        if module is None or key not in module.sigs:
+            continue
+        last = member or name
+        if any(re.match(rf"(?:[\w.]*\.)?{re.escape(last)}\(\s*\S", sp) for sp in spans[1:]):
+            continue  # the same row also writes the function with its parameters
+        required = [p for p in module.sigs[key] if p.required and p.kind in ("pos", "posonly", "kwonly")]
+        if required:
+            problems.append(f"`{spans[0]}`: the signature leaves out '{required[0].name}' (write the parameters, as on the def line)")
     for owner, name, inside, ret in _fenced_defs(text):  # a `def` line copied into a code block is a signature too
         key = f"{owner}.{name}" if owner else name
         if key in public and (owner or not inside.startswith(("self", "cls"))):
             check(key, key, public[key][0], inside, ret)
     return list(dict.fromkeys(problems))
+
+
+def prose_word_count(text: str) -> int:
+    """Words of explanation: the page without its code blocks and without its inline code."""
+    prose = re.sub(r"`[^`\n]*`", " ", prose_only(text))
+    return len(re.findall(r"[A-Za-z][A-Za-z'-]*", prose))
+
+
+PAGE_MIN_WORDS, PAGE_MIN_PROSE = 60, 40  # a page that is only a list of signatures does not say what anything does
 
 
 def public_names(work: Path | str) -> list[str]:
@@ -1054,7 +1082,7 @@ def docs_coverage(text: str, work: Path | str) -> tuple[int, int, list[str]]:
     """(names covered, public names, the ones missing). A name is covered when the page writes it with its signature
     (``name(...)``); a bare mention in a list is not documentation."""
     names = public_names(work)
-    missing = [n for n in names if not re.search(rf"(?<![A-Za-z_]){re.escape(n)}\s*\(", text)]
+    missing = [n for n in names if not re.search(rf"(?<![A-Za-z_]){re.escape(n)}\s*\(|\bclass\s+{re.escape(n)}\b", text)]
     return len(names) - len(missing), len(names), missing
 
 
@@ -1498,7 +1526,7 @@ def invented_facts(text: str, record: Record) -> list[str]:
 
 _BASELINE_MARKER = re.compile(
     r"week (?:earlier|before)|last week|a week|one week|previous week|baseline|4 March|2026-03-04|same window|compared|against|"
-    r"versus|\bvs\b|\bthan\b|usual|normal|typical|before the incident|earlier",
+    r"versus|\bvs\b|\bthan\b|usual|normal|typical|before|earlier|previous|prior|\bago\b|the week|last wednesday",
     re.I,
 )
 

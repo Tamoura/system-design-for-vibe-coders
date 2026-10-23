@@ -28,10 +28,14 @@ def read_fields(reply):
 
 def triage(ticket, max_turns, timeout):
     try:
-        fields = read_fields(ask_claude(ticket["text"], max_turns, timeout))
+        reply = ask_claude(ticket["text"], max_turns, timeout)
+        fields = read_fields(reply)
     except (ValueError, OSError, subprocess.SubprocessError, NotImplementedError) as problem:
         return {"id": ticket.get("id"), "status": "error", "error": str(problem) or type(problem).__name__}
-    return {"id": ticket["id"], "status": "ok", **fields}
+    entry = {"id": ticket["id"], "status": "ok", **fields}
+    if isinstance(reply.get("total_cost_usd"), (int, float)):
+        entry["cost_usd"] = reply["total_cost_usd"]  # what this run cost, added up as total_cost_usd in main()
+    return entry
 
 
 def main(argv=None):
@@ -49,7 +53,8 @@ def main(argv=None):
     # TODO: tickets must be a list of objects with an id and a text; anything else is exit 2
     results = [triage(ticket, args.max_turns, args.timeout) for ticket in tickets]
     failed = sum(1 for result in results if result["status"] != "ok")
-    print(json.dumps({"results": results, "ok": len(results) - failed, "failed": failed}, ensure_ascii=False))
+    total = round(sum(result.get("cost_usd", 0) for result in results), 6)
+    print(json.dumps({"results": results, "ok": len(results) - failed, "failed": failed, "total_cost_usd": total}, ensure_ascii=False))
     return 1 if failed else 0
 
 

@@ -437,6 +437,33 @@ def test_a_suite_that_compares_the_size_of_the_source_fails_on_an_equivalent_cop
     assert "how ledger.py is written" in result[C_BASELINE].hint
 
 
+PEEKING = {
+    "a hash": "import hashlib\n",
+    "a source listing": "import inspect\nfrom remit import ledger\nTEXT = inspect.getsource(ledger)\n",
+    "the module file": "from remit import ledger\nPATH = ledger.__file__\n",
+    "a path string": 'TEXT = open("src/remit/ledger.py").read()\n',
+    "a path piece": 'from pathlib import Path\nTEXT = (Path("src") / "remit" / "ledger.py").read_text()\n',
+}
+HONEST = {
+    "a message that names the file": 'def test_a():\n    assert 1 == 1, "Q-LED-1: see the ledger.py docstring"\n',
+    "a docstring that names the path": '"""Pins src/remit/ledger.py behaviour."""\n\n\ndef test_a():\n    """src/remit/ledger.py is legacy."""\n    assert True\n',
+    "inspect for a signature": "import inspect\nfrom remit.service import RemitService\nPARAMS = inspect.signature(RemitService.__init__).parameters\n",
+    "reading an audit file": "def test_a(tmp_path):\n    (tmp_path / 'audit.jsonl').write_text('x')\n    assert (tmp_path / 'audit.jsonl').read_text() == 'x'\n",
+}
+
+
+@pytest.mark.parametrize("source", PEEKING.values(), ids=PEEKING.keys())
+def test_reading_the_source_of_the_ledger_is_found(tmp_path, source):
+    (tmp_path / "t.py").write_text(source, encoding="utf-8")
+    assert m07.source_peeking(tmp_path, ["t.py"]), source
+
+
+@pytest.mark.parametrize("source", HONEST.values(), ids=HONEST.keys())
+def test_honest_tests_are_not_taken_for_source_peeking(tmp_path, source):
+    (tmp_path / "t.py").write_text(source, encoding="utf-8")
+    assert m07.source_peeking(tmp_path, ["t.py"]) == [], source
+
+
 def test_the_equivalent_copy_of_the_original_ledger_behaves_like_it(started):
     twin = m07.equivalent_source((started / LEDGER).read_text(encoding="utf-8"))
     assert twin != (started / LEDGER).read_text(encoding="utf-8") and "_ONE_CENT" in twin and "_post_entry" in twin

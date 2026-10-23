@@ -21,6 +21,8 @@ def run_tests(root):
     return result.returncode, result.stdout + result.stderr
 
 
+if not pathlib.Path(TESTS).is_file():
+    sys.exit(f"{TESTS} does not exist yet")
 code, output = run_tests(".")
 if code != 0:
     sys.exit(f"{TESTS} must exist and pass on the real code:\n" + output[-300:])

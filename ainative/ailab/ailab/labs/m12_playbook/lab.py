@@ -12,18 +12,18 @@ What is graded, and what cannot be
 The grader is a *lint* (``ailab/checks_m12.py``) of one Markdown file. It never needs an agent and it
 cannot tell who or what wrote the file. It asks:
 
-* are the ten sections there, with substance and no template text left?
+* are the ten sections there (found by a key word in the heading), with substance and no template text left?
 * are there at least twelve rules in the ``MUST ... Check: ...`` shape, spread over the areas that need
-  them, each with a mechanism and none with a weasel word?
+  them, each with a mechanism (not a person, not a bare "a CI job") and none with a weasel word?
 * are the review norms concrete: the label, a diff limit in lines, the second human for the six money
   modules, a response time, what the author explains?
 * do the sections say the specific things a good one says (tools, data, memory, verification, security,
   automation, incident, onboarding)?
 * is the metrics plan measurable: six fields per ``###`` block, three DORA-style delivery metrics, a guard
-  with a threshold and a response, definitions with events and periods, baselines from the facts file,
-  no vanity measures?
-* is it honest: nothing that contradicts the bank's rules or CONTRIBUTING.md, no files that do not exist,
-  no unsourced productivity claims?
+  with a threshold and a response, definitions with events and periods, baselines from the facts file (in
+  its unit or an equivalent), no vanity measures anywhere in the file?
+* is it honest: nothing that contradicts the bank's rules or CONTRIBUTING.md, no files that do not exist
+  (unless the words next to them call them new), no unsourced productivity claims?
 * is the change clean: only ``playbook.md`` changed, no secrets, Conventional Commits, all committed?
 
 It does NOT judge whether the policy is wise or whether the team will follow it. A playbook that passes

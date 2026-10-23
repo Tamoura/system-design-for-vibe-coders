@@ -11,4 +11,5 @@
 - **Noura:** "Agents work under the permission rules and the guard hook from the security week. Nobody reads `.env`, nobody pushes, nothing is installed."
 - **Hessa:** "Customer Care approved the wording. The Arabic must show Arabic digits like our other messages."
 - **Hessa:** "The architecture page says two fee schedules. Please keep the docs true, and put the corridors in one page support can read."
+- **Nada:** "The limits per KYC tier stay as they are, so only a T3 customer can ever send the 12,000 maximum. Is that what we want?" **Hessa:** "Not a change for this ticket. Write the question down and I will take it to Treasury."
 - **Open, and not in this ticket:** a daily limit for Bangladesh only; a cash pickup option; a promotion for the first transfer. Record them as follow-ups rather than building them.

@@ -27,6 +27,16 @@ Claude Code on the bank's enterprise account, signed in through SSO; GitHub Copi
 enterprise plan. Nothing else is approved. Personal accounts and free tiers never are. A new tool starts
 as a request to Salem, who asks Noura for a security review and Sara for a data review.
 
+## What the repository has today
+- `CONTRIBUTING.md`, `README.md`, `docs/` (`ARCHITECTURE.md`, `TOUR.md`, `najmkit.md`), `src/remit/`,
+  `tests/`, `pyproject.toml` and `.env.example`.
+- One CI workflow, `.github/workflows/ci.yml`, which runs `pytest -q` and nothing else: no secret scan,
+  no dependency check, no size check, no label check.
+- Not in the repository: `CLAUDE.md`, `AGENTS.md`, `CODEOWNERS`, a pull-request template, and the
+  `.claude/` settings (so no deny rules and no hooks). Branch protection and required reviews are
+  settings on GitHub, not files. A playbook that relies on any of these describes something the team
+  will create: call it new or proposed.
+
 ## Last quarter in numbers (13 weeks)
 | What | Figure |
 |---|---|
@@ -38,3 +48,7 @@ as a request to Salem, who asks Noura for a security review and Sara for a data 
 | Median time from "ready for review" to the first human review | 9 hours |
 | Merged pull requests that carried the AI-assisted label | 60% |
 | Incidents with an AI-written change as a contributing cause | 0 (and 1 near miss: a package name an agent invented, caught in review) |
+
+Where the numbers come from: the deployment log kept by Salem's CI, the incident tickets (Maha) and the
+pull-request timeline in GitHub. A `Source:` may name them. The 60% is context for comparing AI-assisted
+pull requests with the others: a usage number, reported at most, never given a target.

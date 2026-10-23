@@ -21,8 +21,8 @@ classifies tickets with a keyword table, so that the script can be run and grade
 What is graded, and what cannot be
 ----------------------------------
 All the logic lives in ``ailab/checks_m09.py``. In short: the skill and the subagent are read as data (frontmatter, keys, tools,
-body); the settings are parsed; the hook is RUN against 22 sample documents and against every file of the untouched source; the
-triage script is RUN against the stand-in on ten batches of invented tickets (and three unusable input files), and the stand-in logs how it was called. Nothing
+body); the settings are parsed; the hook is RUN against 26 sample documents and against every file of the untouched source; the
+triage script is RUN against the stand-in on eleven batches of invented tickets (and three unusable input files), and the stand-in logs how it was called. Nothing
 is imported in the grader's process and nothing a sample contains is ever executed.
 
 The grader checks the RESULT. It cannot tell whether Claude Code accepts a file, whether a review prompt is any good, whether the
@@ -39,7 +39,7 @@ from __future__ import annotations
 import shutil
 from pathlib import Path
 
-from ailab import checks, checks_m09, framework, gitutil
+from ailab import checks_m09, framework, gitutil
 from ailab.framework import Check, Lab
 
 HERE = Path(__file__).resolve().parent
@@ -53,7 +53,7 @@ def seed(work: Path) -> None:
 
 def grade(work: Path) -> list[Check]:
     return [
-        checks.tests_pass(work, name=checks_m09.N_TESTS),
+        checks_m09.tests_check(work),
         # part 1: the review command
         *checks_m09.skill_checks(work),
         # part 2: the reviewer subagent

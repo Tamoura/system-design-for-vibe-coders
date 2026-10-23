@@ -265,7 +265,7 @@ Step 3 is partly mechanical. Lesson 11.2 gives you `claims_scan.py`, which looks
 - It cannot judge prose or wisdom, or tell a real critic from none. Your Claims check covers the rest.
 
 ## 🧭 Why it matters
-Friday is the internal audit, and Hessa's ticket asks for three documents. Lujain's assistant can draft all three in minutes, and she is tempted to believe it: it will flatter the design it is shown, describe a library it has never read and fill every gap in an incident record with something plausible. The grader is the colleague who believes none of it and opens the code or the record behind every sentence.
+Friday is the internal audit, and Hessa's ticket asks for three documents. Lujain's assistant can draft all three in minutes and she is tempted to believe it: it will flatter the design it is shown, describe a library it has never read and fill every gap in an incident record with something plausible. The grader is the colleague who believes none of it and opens the code or the record behind every sentence.
 
 ## 📐 How it works
 
@@ -322,8 +322,8 @@ If the grader flags a true sentence, do not bend the truth: reread the code or r
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
-| **Claims scan** | `claims_scan.py`: looks up paths, `module.name`, times and event ids in a Markdown file | After every draft, before you read it yourself |
-| **Record-bound timeline** | A timeline built only from a record, with an event id on each row | Any incident write-up |
+| **Claims scan** | `claims_scan.py`: looks up paths, `module.name`, times and event ids in a Markdown file | After every draft |
+| **Record-bound timeline** | A timeline built only from a record, an event id on each row | Any incident write-up |
 | **Agent log** | A table of prompts, results, corrections and time | After any session where an agent wrote something you will sign |
 
 ## 🏛️ In practice at Najm Bank
@@ -342,7 +342,7 @@ Three pieces of writing are overdue, and each must be *true*, not only tidy. Use
 you like; you are accountable for every sentence. This ticket is documentation only: do not change
 code, tests or `lab-assets/`. Run the commands below in this directory. Code comments that disagree
 with what the code does (there is at least one) go under "Known problems" at the end of the najmkit
-page; do not fix them here.
+page, a sentence each; do not fix them here.
 
 ### 1. An ADR for a decision we already made
 
@@ -363,8 +363,8 @@ rejected with a reason, or deferred).
 
 `docs/najmkit.md` was lost in the docs migration. Write it again from `src/najmkit/` (`ids`, `clock`,
 `audit`): every public function and class as `name(parameters)` copied from the def line (a method's
-`self` may stay or go), what it does, and a short example per module that runs, in a `python` block.
-Nothing outside the bank has seen najmkit: the code is your only source.
+`self` may stay or go), what it does (40 words of prose or more in all), and a short example per
+module that runs, in a `python` block. Nothing outside the bank has seen najmkit: the code is your only source.
 
 ### 3. A postmortem for INC-2031
 
@@ -438,7 +438,7 @@ After a first assistant draft of each document, committed as it came (drafts con
 
 Each line says what failed and quotes the words that caused it; none gives the answer. A passing run ends with `Lab m11: 21/21 required checks passed: PASSED`.
 
-**Weekly deliverable.** In the lab repository, the three documents, one commit each. In your notes repository, `week-11/` with a Claims table per document, your agent log and your debrief answers.
+**Weekly deliverable.** The three documents, one commit each, in the lab repository; in your notes repository, `week-11/` with a Claims table per document, your agent log and your debrief answers.
 
 **Group session (60 minutes).** (1) Swap postmortems; check your partner's timeline against the record (20). (2) Read out the objections you rejected, with the evidence (15). (3) Show a sentence the grader passed that you doubt, or flagged and you disagree with (15). (4) Agree one team rule for AI-written documents (10).
 
@@ -465,7 +465,7 @@ One thing I will do differently:
 
 ## ⚠️ Mistakes and traps
 - **Briefing the assistant without the code.** It invents the library. Hand it the files.
-- **Trusting the assistant's list of sources.** Open them. A real path can sit beside a false sentence.
+- **Trusting the assistant's sources.** Open them. A real path can sit beside a false sentence.
 - **Fixing a stale comment in this change.** The ticket says to report it; the grader flags source edits.
 - **Writing the postmortem with certainty.** If the record does not say it, it is an inference or an unknown.
 - **Squashing three documents into one commit.** The grader checks which commit first holds each.

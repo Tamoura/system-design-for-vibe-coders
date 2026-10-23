@@ -52,7 +52,7 @@
   },
   {
     "dir": "07-docs",
-    "message": "docs(najmkit): describe the v2 API",
+    "message": "docs(najmkit): describe najmkit 2 and the Ledger class",
     "files": [
       "docs/najmkit.md",
       "docs/ARCHITECTURE.md",

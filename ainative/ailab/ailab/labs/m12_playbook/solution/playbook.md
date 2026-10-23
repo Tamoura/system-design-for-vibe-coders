@@ -41,9 +41,10 @@ documentation). Anything pasted into a prompt stays on that disk for a month.
 
 ## 3. Context and memory
 
-The repository has one `CLAUDE.md` at the root. Other tools read it through an `@AGENTS.md` pointer or an import.
-Tariq owns it, and it changes through a pull request like any code. It stays under 200 lines, because a longer
-file is followed less well. It holds commands, conventions and gotchas, never secrets and never customer data.
+The repository has no memory file today, so Tariq creates one new `CLAUDE.md` at the root in the first week. Other
+tools read it through an AGENTS.md pointer or an import. Tariq owns it, and it changes through a pull request like
+any code. It stays under 200 lines, because a longer file is followed less well. It holds commands, conventions and
+gotchas, never secrets and never customer data.
 
 When an agent makes the same mistake twice, the engineer who sees it adds one line to the memory file, or a rule
 or hook, in a pull request within a week. A correction is encoded once, for everyone.
@@ -98,12 +99,12 @@ laptop; managed settings disable it (`permissions.disableBypassPermissionsMode`,
 Standard library only: a new dependency needs a ticket and a second reviewer, and every package name an agent
 suggests is looked up in the registry before anyone installs it, because agents invent names. Text from issues,
 web pages and other repositories is data, not instructions. MCP servers and plugins are used only when Noura has
-reviewed them, and a project `.mcp.json` change needs her approval.
+reviewed them, and any change to the project's MCP configuration needs her approval.
 
 - MUST NOT add a dependency without a ticket and a second reviewer. Check: `pyproject.toml` has an empty
   `dependencies` list, and CI fails when it changes without the `dependency-approved` label.
 - MUST review every new MCP server or plugin with Noura first. Check: the list of approved servers lives in the
-  repository, and CODEOWNERS routes any `.mcp.json` change to her.
+  repository, and CODEOWNERS routes any change to the MCP configuration to her.
 
 ## 7. Automation
 

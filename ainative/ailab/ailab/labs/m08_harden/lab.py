@@ -20,9 +20,11 @@ project with problems, a notes template) and a FAKE ``.env`` (git-ignored, one m
 What is graded, and what cannot be
 ----------------------------------
 All the logic lives in ``ailab/checks_m08.py``. In short: the settings are parsed and read as data; the guard is RUN against
-27 sample hook inputs (and 4 advisory ones) in a subprocess with a time limit; the dependency check is RUN against 12 small
-projects built in temporary folders and on the learner's own repository; the notes are checked for structure and for mentioning
-each planted trick. Nothing is imported in the grader's process and nothing from a sample is ever executed.
+``len(HOOK_CASES)`` sample hook inputs (the required ones and 4 advisory ones) in a subprocess with a time limit; the dependency
+check is RUN against ``len(DEP_CASES)`` small projects built in temporary folders and on the learner's own repository; the notes
+are checked for structure and for mentioning each planted trick. Nothing is imported in the grader's process and nothing from a
+sample is ever executed. Every situation the grader tries is a rule that TASK.md states (plus the shapes the lesson explains); a
+rule the grader enforces and TASK.md does not state is a bug. Situations TASK.md leaves open are not tried.
 
 The grader checks the RESULT. It cannot tell whether Claude Code accepts the settings file, whether the sandbox is on, whether
 the learner understood the README, or whether a rule that passes the samples is a good rule for a situation the samples do not
@@ -33,12 +35,13 @@ Files
     seed(work)    writes a fake, git-ignored ``.env`` (so the learner can watch a deny rule work); everything else arrives
                   in ``lab-assets/`` from ``assets/``.
     grade(work)   see above.
-    solve(work)   applies ``solution/`` in five small commits: the guard (+ tests), the dependency check (+ allow-list + tests),
-                  the settings, the CI step, the notes.
+    solve(work)   applies ``solution/`` in five small commits (tests and code together, as CONTRIBUTING.md asks): the guard,
+                  the dependency check, the settings, the CI step, the notes.
 """
 from __future__ import annotations
 
 import shutil
+from dataclasses import replace
 from pathlib import Path
 
 from ailab import checks, checks_m08, framework, gitutil
@@ -53,6 +56,15 @@ FAKE_ENV = "# Fake, for lab m08 only: it is git-ignored, and it exists so you ca
 
 def seed(work: Path) -> None:
     (Path(work) / ".env").write_text(FAKE_ENV, encoding="utf-8")
+
+
+def scope_hint(check: Check) -> Check:
+    """CONTRIBUTING.md lists example scopes; this lab's areas are not among them, and the rule accepts any lower-case scope."""
+    if check.ok:
+        return check
+    note = (" The scope can be any lower-case word for the area you touched (security, hooks, deps, claude, docs...): "
+            "CONTRIBUTING.md's list gives examples. The header is type(scope): subject, at most 72 characters, no full stop.")
+    return replace(check, hint=check.hint + note)
 
 
 def grade(work: Path) -> list[Check]:
@@ -81,12 +93,12 @@ def grade(work: Path) -> list[Check]:
             work,
             checks_m08.ALLOWED_FILES,
             name=checks_m08.N_SCOPE,
-            hint="This lab adds .claude/settings.json, .claude/hooks/guard.py, scripts/depcheck.py, deps-allowlist.txt, "
-                 "injection-notes.md and your own tests (and may add a CI step, requirements.lock, an agent log, docs/guard-gaps.md). "
-                 "Revert anything else.",
+            hint="Allowed: .claude/ (settings and hook), scripts/, new files under tests/, deps-allowlist.txt, requirements.lock, "
+                 "injection-notes.md, a CI step in .github/workflows/, docs/, top-level Markdown files and .gitignore. "
+                 "Revert anything else (src/, pyproject.toml, an existing test) with git restore.",
         ),
         checks.no_secrets(work),
-        checks.conventional_commits(work),
+        scope_hint(checks.conventional_commits(work)),
         checks.commit_count(work, at_least=3, required=False, name="Small commits",
                             hint="One commit per part makes the review, and any revert, easy."),
         checks.all_committed(work),

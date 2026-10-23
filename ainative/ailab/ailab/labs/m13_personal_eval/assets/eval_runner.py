@@ -5,8 +5,8 @@ Standard library only. Run it from anywhere inside the repository:
 
     python lab-assets/eval_runner.py validate    # tasks.jsonl: valid lines, fields, allowed commands, no network
     python lab-assets/eval_runner.py list        # one line per task
-    python lab-assets/eval_runner.py baseline    # every check must FAIL on a clean copy (a check that passes proves nothing)
-    python lab-assets/eval_runner.py verify      # every reference must make its check PASS, and a placeholder must not
+    python lab-assets/eval_runner.py baseline    # every check must FAIL on a clean copy; it prints why (read the reason)
+    python lab-assets/eval_runner.py verify      # every reference must make its check PASS, and lazy answers must not
     python lab-assets/eval_runner.py prepare T03 --dir ../runs/T03     # a clean workspace for a tool; prints the prompt
     python lab-assets/eval_runner.py score T03 --dir ../runs/T03 --tool claude-code --model sonnet --minutes 7
     python lab-assets/eval_runner.py report      # pass counts per tool and model, from eval/results.jsonl (`score` appends there)
@@ -14,13 +14,17 @@ Standard library only. Run it from anywhere inside the repository:
 Options for every command: --tasks FILE (default eval/tasks.jsonl), --base REF (default lab-start), --repo DIR.
 
 How the pieces fit. A task is a prompt plus a check. The tool works in a workspace made by `prepare`: a clean copy of
-the repository at --base, without eval/ and lab-assets/, so it cannot read the check. `score` copies the tool's
-files, adds eval/ and lab-assets/, and runs the check there. Commands run without a shell, from the workspace root
-with PYTHONPATH=src, and are stopped after TIMEOUT seconds; `validate` flags checks that use the network (they must
-stay offline, but nothing blocks them). A check is code: read every check before you
-run it, yours or anyone's. The runner is NOT a sandbox (a check runs as you); it only drops environment variables whose
-names look like secrets (KEY, TOKEN, SECRET, PASSWORD). The course kit's grader imports this file, so `baseline` and
-`verify` say what the grader will say.
+the repository at --base (with the task's setup patch applied and committed as "Eval start"), without eval/ and
+lab-assets/, so it cannot read the check. `score` rebuilds that start, puts the tool's files on top (however it
+committed), adds eval/ and lab-assets/, and runs the check there.
+
+Where a check runs (the same in baseline, verify and score): from the root of a clean copy that is a git repository with
+one commit, so `git diff` shows exactly what a solution changed; with PYTHONPATH=src; `python` and `pytest` mean the
+interpreter that runs this file; no shell (no &&, no pipes), so put logic in a small script; relative paths with forward
+slashes; at most TIMEOUT seconds per command. `validate` flags checks that use the network (they must stay offline, but
+nothing blocks them). A check is code: read every check before you run it, yours or anyone's. The runner is NOT a
+sandbox (a check runs as you); it only drops environment variables whose names look like secrets (KEY, TOKEN, SECRET,
+PASSWORD). The course kit's grader imports this file, so `baseline` and `verify` say what the grader will say.
 """
 from __future__ import annotations
 
@@ -51,7 +55,9 @@ SHELL_OPERATORS = ("|", "||", "&&", ";", "&", ">", ">>", "<", "2>", "2>&1")
 PATCH_ROOTS = ("eval/", "lab-assets/")
 COURSE_FILES = ("eval", "lab-assets", "TASK.md")  # not product code: kept out of a tool's workspace
 DEFAULT_BASE = "lab-start"
-TIMEOUT = 30.0  # seconds per command
+TIMEOUT = 60.0  # seconds per command (a busy machine can be slow; a hung command is still stopped)
+MIN_REFERENCE_WORDS = 8  # a docs, explain or review reference is prose, not one pasted keyword
+TEXT_KINDS = ("docs", "explain", "review")  # solutions that are prose
 
 NETWORK = re.compile(
     r"https?://|\burllib\b|\bhttp\.client\b|\b(?:import|from)\s+(?:requests|httpx|socket|ftplib|smtplib|aiohttp)\b"
@@ -105,6 +111,8 @@ def parse_command(text: object) -> tuple[list[str] | None, str]:
     """Split a check command. Returns (argv, '') or (None, what is wrong). No shell is ever used."""
     if not isinstance(text, str) or not text.strip():
         return None, "the command is empty"
+    if "\\" in text and text.split()[0] in ("pytest", "python", "python3") and not re.search(r"(^|\s)-c(\s|$)", text):
+        return None, "write paths with forward slashes (eval/checks/check.py), also on Windows"  # shlex would silently eat the backslashes
     try:
         argv = shlex.split(text)
     except ValueError as exc:
@@ -215,27 +223,71 @@ def lint(repo: Path, tasks: list[dict]) -> dict[str, list[str]]:
     return findings
 
 
-def new_files_in_patch(patch_text: str) -> list[str]:
-    """Paths the patch creates."""
-    created: list[str] = []
-    current: str | None = None
+def patch_files(patch_text: str) -> tuple[list[str], list[str]]:
+    """(created, modified) paths of a patch. Deleted and renamed files are left out."""
+    entries: list[list] = []
     for line in patch_text.splitlines():
         if line.startswith("diff --git "):
             match = re.match(r"diff --git a/(.+) b/(.+)$", line)
-            current = match.group(2) if match else None
-        elif line.startswith("new file mode") and current:
-            created.append(current)
-    return created
+            entries.append([match.group(2) if match else None, "modified"])
+        elif entries and line.startswith("new file mode"):
+            entries[-1][1] = "created"
+        elif entries and line.startswith(("deleted file mode", "rename from", "rename to")):
+            entries[-1][1] = "other"
+    return [p for p, k in entries if p and k == "created"], [p for p, k in entries if p and k == "modified"]
 
 
-def placeholder_for(path: str) -> str | None:
-    """Content that looks like a lazy answer: a text file that says nothing, or a test that asserts nothing."""
+def new_files_in_patch(patch_text: str) -> list[str]:
+    """Paths the patch creates."""
+    return patch_files(patch_text)[0]
+
+
+def changed_words(patch_text: str) -> int:
+    """Words on the added and removed lines of a patch."""
+    return sum(len(line[1:].split()) for line in patch_text.splitlines()
+               if line[:1] in "+-" and not line.startswith(("+++", "---")))
+
+
+def reference_problem(task: dict, patch_text: str) -> str:
+    """A text reference (a docs, explain or review solution, or any patch that touches only text files) that changes a
+    word or two is a keyword, not a solution."""
+    created, modified = patch_files(patch_text)
+    files = created + modified
+    text_only = bool(files) and all(PurePosixPath(path).suffix in (".md", ".markdown", ".txt", ".rst") for path in files)
+    n = changed_words(patch_text)
+    if (task.get("kind") in TEXT_KINDS or text_only) and n < MIN_REFERENCE_WORDS:
+        return f"the reference changes only {n} word{'' if n == 1 else 's'}: a text solution is real prose (at least {MIN_REFERENCE_WORDS} words)"
+    return ""
+
+
+FILLER = ("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna "
+          "aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
+          "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur "
+          "sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n")
+TEXT_SUFFIXES = (".md", ".markdown", ".txt", ".rst", ".csv", ".html", ".yaml", ".yml", ".toml", ".cfg", ".ini", "")
+EDIT_SUFFIXES = (".md", ".markdown", ".txt", ".rst", ".py")
+
+
+def lazy_answers(path: str, prompt: str = "") -> list[tuple[str, str]]:
+    """What a lazy tool leaves in a file it was asked to create: (description, content). Several for a note,
+    because 'TODO' is only one way to say nothing: filler of a realistic length, or the prompt handed back."""
     name = PurePosixPath(path)
-    if name.suffix in (".md", ".txt", ".rst", ""):
-        return "TODO\n"
-    if name.suffix == ".py" and (name.name.startswith("test_") or name.name.endswith("_test.py")):
-        return "def test_placeholder():\n    assert True\n"
-    return None
+    if name.suffix == ".py":
+        if name.name.startswith("test_") or name.name.endswith("_test.py"):
+            return [("a test that asserts nothing", "def test_placeholder():\n    assert True\n")]
+        return [("an empty module", "# TODO\n")]
+    if name.suffix == ".json":
+        return [("an empty JSON object", "{}\n")]
+    if name.suffix in TEXT_SUFFIXES:
+        found = [("a placeholder", "TODO\n"), ("filler text", FILLER)]
+        if prompt.strip():
+            found.append(("the prompt copied back", prompt.strip() + "\n"))
+        return found
+    return []
+
+
+def stray_line(path: str) -> str:
+    return "\n# TODO\n" if PurePosixPath(path).suffix == ".py" else "\nTODO\n"
 
 
 # ----------------------------------------------------------------------------------------------
@@ -268,8 +320,12 @@ def _git_init(workspace: Path) -> None:
         _git("init", "-q", cwd=workspace)
 
 
-def apply_patch(workspace: Path, patch: Path) -> None:
+def apply_patch(workspace: Path, patch: Path, *, key: str = "patch") -> None:
     _git_init(workspace)
+    if not Path(patch).is_file():
+        extra = (" Leave `setup` out of the task until the patch is saved: `prepare` the task, plant the bug in that copy, "
+                 "save its `git diff` to this path, then add `setup` to the task.") if key == "setup" else ""
+        raise RunnerError(f"{key} patch {Path(patch).name} does not exist yet.{extra}")
     result = _git("apply", "--whitespace=nowarn", str(patch), cwd=workspace)
     if result.returncode:
         reason = (result.stderr.strip().splitlines() or ["git apply failed"])[0]
@@ -296,23 +352,36 @@ def overlay_checks(repo: Path, workspace: Path) -> None:
             shutil.copytree(source, workspace / name, dirs_exist_ok=True, ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "results.jsonl"))
 
 
-def make_workspace(repo: Path, base: str, task: dict, dest: Path, *, reference: bool = False, with_checks: bool = True,
-                   commit: bool = False) -> None:
-    """A clean copy at ``base`` with the task's setup patch (and, when asked, its reference patch) applied."""
+def commit_start(workspace: Path, task: dict) -> None:
+    """Commit the starting state (the clean copy plus the setup patch), so `git diff` shows what a solution changed."""
+    _git("add", "-A", cwd=workspace)
+    _git("-c", "user.name=eval", "-c", "user.email=eval@example.invalid", "-c", "commit.gpgsign=false", "commit", "-q",
+         "--allow-empty", "-m", f"Eval start: {task.get('id', 'task')}", cwd=workspace)
+
+
+def make_workspace(repo: Path, base: str, task: dict, dest: Path, *, reference: bool = False, with_checks: bool = True) -> None:
+    """A clean copy at ``base`` with the task's setup patch applied and committed; the reference patch (when asked) is
+    applied on top, uncommitted, and the checks (eval/, lab-assets/) are copied in last."""
     repo, dest = Path(repo), Path(dest)
     export_tree(repo, base, dest)
     remove_course_files(dest)
     _git_init(dest)
     if task.get("setup"):
-        apply_patch(dest, repo / task["setup"])
+        apply_patch(dest, repo / task["setup"], key="setup")
+    commit_start(dest, task)
     if reference and task.get("reference"):
-        apply_patch(dest, repo / task["reference"])
-    if commit:
-        _git("add", "-A", cwd=dest)
-        _git("-c", "user.name=eval", "-c", "user.email=eval@example.invalid", "-c", "commit.gpgsign=false", "commit", "-q", "-m",
-             f"Eval start: {task.get('id', 'task')}", cwd=dest)
+        apply_patch(dest, repo / task["reference"], key="reference")
     if with_checks:
         overlay_checks(repo, dest)
+
+
+def sync_tree(source: Path, workspace: Path) -> None:
+    """Make the workspace hold exactly the files of ``source`` (the folder a tool worked in), keeping the workspace's own
+    .git: whether the tool committed or not, `git diff` then shows its net change from the starting commit."""
+    for entry in list(Path(workspace).iterdir()):
+        if entry.name != ".git":
+            shutil.rmtree(entry) if entry.is_dir() else entry.unlink()
+    shutil.copytree(source, workspace, dirs_exist_ok=True, ignore=_IGNORE)
 
 
 # ----------------------------------------------------------------------------------------------
@@ -355,6 +424,14 @@ def _last_line(text: str) -> str:
     return lines[-1][:160] if lines else ""
 
 
+def _first_failure(out: str) -> str:
+    """The first FAILED/ERROR line of a pytest run (it names the test and the reason), else the last line."""
+    for line in out.splitlines():
+        if line.startswith(("FAILED ", "ERROR ")):
+            return line.strip()[:200]
+    return _last_line(out)
+
+
 def _missing_imports(text: str) -> list[str]:
     return [a or b for a, b in _IMPORT_FAIL.findall(text)]
 
@@ -367,8 +444,10 @@ def classify(argv: list[str], code: int, out: str, err: str) -> tuple[str, str]:
     text = out + "\n" + err
     ours = ("remit", "najmkit")
     if kind == "pytest":
+        if "No module named pytest" in err or "No module named 'pytest'" in err:
+            return "broken", "pytest is not installed for the Python that runs this eval (python -m pip install pytest)"
         if code == 1:
-            return "fail", _last_line(out)
+            return "fail", _first_failure(out)
         if code == 5:
             return "broken", "pytest collected no tests: check the path and any -k expression"
         if code == 4:
@@ -438,7 +517,7 @@ def run_check(command: str, cwd: Path, timeout: float | None = None) -> Outcome:
         except (ProcessLookupError, PermissionError):
             pass
         proc.communicate()
-        return Outcome("broken", f"did not finish within {limit:g} s", time.monotonic() - started)
+        return Outcome("broken", f"did not finish within {limit:g} s (too slow, or waiting for input)", time.monotonic() - started)
     verdict, detail = classify(argv, proc.returncode, out or "", err or "")
     for spelling in {str(Path(cwd)), str(Path(cwd).resolve())}:
         detail = detail.replace(spelling + os.sep, "").replace(spelling, ".")  # no temporary folder names in messages
@@ -457,7 +536,8 @@ class TaskReport:
     guard_baseline: Outcome | None = None  # the guard on the untouched repository: it should PASS
     reference: Outcome | None = None  # the check after the reference solution: it should PASS
     guard_reference: Outcome | None = None  # the guard after the reference solution: it should PASS
-    placeholders: list[tuple[str, Outcome]] = field(default_factory=list)  # file replaced by a lazy answer: check should FAIL
+    placeholders: list[tuple[str, Outcome]] = field(default_factory=list)  # (lazy answer, outcome): the check should FAIL each
+    reference_issue: str = ""  # a reference too thin to be a solution (docs, explain and review tasks)
 
 
 def _cached(cache: dict | None, key: tuple, compute):
@@ -470,7 +550,7 @@ def _cached(cache: dict | None, key: tuple, compute):
 
 def evaluate(repo: Path, base: str, task: dict, *, run_baseline: bool = True, run_reference: bool = True,
              cache: dict | None = None) -> TaskReport:
-    """Run one task's check (and guard) on the untouched repository and on the reference solution."""
+    """Run one task's check (and guard) on the untouched repository and on the reference solution, then try lazy answers."""
     report = TaskReport(str(task.get("id", "?")))
     if task.get("repo", "remit") == "own":
         report.skipped = "a task from your own project: the kit cannot run it"
@@ -487,26 +567,37 @@ def evaluate(repo: Path, base: str, task: dict, *, run_baseline: bool = True, ru
                 if guard:
                     report.guard_baseline = _cached(cache, ("guard", setup, None, guard), lambda: run_check(guard, ws))
         if run_reference and reference:
+            patch_text = (Path(repo) / reference).read_text(encoding="utf-8")
+            report.reference_issue = reference_problem(task, patch_text)
+            created, modified = patch_files(patch_text)
             with tempfile.TemporaryDirectory(prefix="eval-") as tmp:
                 ws = Path(tmp) / "ws"
                 make_workspace(repo, base, task, ws, reference=True)
                 report.reference = run_check(check["run"], ws)
                 if guard:
                     report.guard_reference = run_check(guard, ws)
-                patch_text = (Path(repo) / reference).read_text(encoding="utf-8")
-                for path in new_files_in_patch(patch_text):
-                    text = placeholder_for(path)
+                for path in created:  # a file the reference creates, replaced by each way of saying nothing
+                    answers = lazy_answers(path, str(task.get("prompt", "")))
                     target = ws / path
-                    if text is None or not target.is_file():
+                    if not answers or not target.is_file():
                         continue
                     original = target.read_text(encoding="utf-8")
                     target.unlink()
-                    if run_check(check["run"], ws).passed:
-                        target.write_text(original, encoding="utf-8")
-                        continue  # the check does not depend on this file (a helper or a test the prompt asked for)
-                    target.write_text(text, encoding="utf-8")
-                    report.placeholders.append((path, run_check(check["run"], ws)))
+                    needed = not run_check(check["run"], ws).passed  # if it passes without the file, the check does not read it
+                    for what, text in answers if needed else []:
+                        target.write_text(text, encoding="utf-8")
+                        report.placeholders.append((f"{what} in {path}", run_check(check["run"], ws)))
                     target.write_text(original, encoding="utf-8")
+            edited = [path for path in modified if PurePosixPath(path).suffix in EDIT_SUFFIXES]
+            if edited:  # a lazy edit: the starting state plus a stray line in each file the reference edits
+                with tempfile.TemporaryDirectory(prefix="eval-") as tmp:
+                    ws = Path(tmp) / "ws"
+                    make_workspace(repo, base, task, ws)
+                    for path in edited:
+                        if (ws / path).is_file():
+                            with (ws / path).open("a", encoding="utf-8") as handle:
+                                handle.write(stray_line(path))
+                    report.placeholders.append((f"a stray line in {', '.join(edited[:2])}", run_check(check["run"], ws)))
     except RunnerError as exc:
         report.error = str(exc)
     return report
@@ -635,7 +726,9 @@ def cmd_baseline(args: argparse.Namespace, out) -> int:
         ok1, why1 = _describe(report.baseline, False, "the check")
         ok2, why2 = _describe(report.guard_baseline, True, "the guard")
         if ok1 and ok2:
-            print(_line(task, "ok: the check fails on the untouched repository" + (", the guard passes" if report.guard_baseline else "")), file=out)
+            reason = f" ({report.baseline.detail})" if report.baseline and report.baseline.detail else ""
+            print(_line(task, "ok: the check fails on the untouched repository" + reason
+                        + (", the guard passes" if report.guard_baseline else "")), file=out)
         else:
             print(_line(task, why1 or why2), file=out)
             failures += 1
@@ -655,7 +748,8 @@ def cmd_verify(args: argparse.Namespace, out) -> int:
             print(_line(task, f"not run: {report.skipped}"), file=out)
             continue
         if not task.get("reference"):
-            print(_line(task, "no reference solution (add one to be sure this check can pass)"), file=out)
+            print(_line(task, "MISSING: every task on this repository needs a `reference`, a patch that solves it"), file=out)
+            failures += 1
             continue
         if report.error:
             print(_line(task, f"reference problem: {report.error}"), file=out)
@@ -663,11 +757,12 @@ def cmd_verify(args: argparse.Namespace, out) -> int:
             continue
         ok1, why1 = _describe(report.reference, True, "the check after the reference")
         ok2, why2 = _describe(report.guard_reference, True, "the guard after the reference")
-        weak = [path for path, outcome in report.placeholders if outcome.passed]
-        if ok1 and ok2 and not weak:
-            print(_line(task, "ok: the reference passes" + (", and a placeholder answer does not" if report.placeholders else "")), file=out)
+        weak = [what for what, outcome in report.placeholders if outcome.passed]
+        if ok1 and ok2 and not weak and not report.reference_issue:
+            tried = (f", and {len(report.placeholders)} lazy answers do not" if len(report.placeholders) != 1 else ", and a lazy answer does not")
+            print(_line(task, "ok: the reference passes" + (tried if report.placeholders else "; no lazy-answer probe applied")), file=out)
         else:
-            print(_line(task, why1 or why2 or f"a placeholder in {weak[0]} passes the check: it is too weak"), file=out)
+            print(_line(task, why1 or why2 or report.reference_issue or f"{weak[0]} passes the check: it is too weak"), file=out)
             failures += 1
     print(f"{failures} problems", file=out)
     return 1 if failures else 0
@@ -686,7 +781,7 @@ def cmd_prepare(args: argparse.Namespace, out) -> int:
     dest = Path(args.dir)
     if dest.exists() and any(dest.iterdir()):
         raise RunnerError(f"{dest} is not empty; choose a new folder")
-    make_workspace(repo, args.base, task, dest, with_checks=False, commit=True)
+    make_workspace(repo, args.base, task, dest, with_checks=False)
     print(f"A clean workspace for {task['id']} is ready in {dest} (no eval/, no checks). Give your tool this prompt:\n", file=out)
     print(task["prompt"], file=out)
     print(f"\nWhen it is done: python {Path(sys.argv[0]).as_posix()} score {task['id']} --dir {dest} --tool <name> --minutes <n>", file=out)
@@ -703,7 +798,8 @@ def cmd_score(args: argparse.Namespace, out) -> int:
         raise RunnerError(f"{source} is not a folder")
     with tempfile.TemporaryDirectory(prefix="eval-") as tmp:
         ws = Path(tmp) / "ws"
-        shutil.copytree(source, ws, ignore=_IGNORE)
+        make_workspace(repo, args.base, task, ws, with_checks=False)  # the start the tool had, committed
+        sync_tree(source, ws)  # the tool's files on top, however it committed
         remove_course_files(ws)
         overlay_checks(repo, ws)
         outcome = run_check(task["check"]["run"], ws)

@@ -129,6 +129,7 @@ def test_the_skeletons_do_what_their_comments_say(starter):
                           capture_output=True, text=True, cwd=starter)
     out = json.loads(done.stdout)
     assert done.returncode == 1 and out["failed"] == 9 and out["results"][0]["status"] == "error"
+    assert out["total_cost_usd"] == 0 and out["ok"] == 0  # the totals are there to be filled by finishing ask_claude
 
 
 # --------------------------------------------------------------------------------------------------------------------
@@ -211,11 +212,58 @@ def test_a_flawed_review_command_fails_the_right_check(work, label, edit, target
     assert not other_required, (label, other_required)
 
 
+@pytest.mark.parametrize("entry", ["Bash(rm *)", "Bash(sed -i *)", "Bash(python *)", "Bash(git commit *)", "Bash(git checkout *)",
+                                   "Bash(git *)", "Bash(git diff * ; rm -rf x)", "Bash(git diff --output=report.txt)", "Bash(cat * > out.txt)",
+                                   "Bash(find * -delete)", "Bash(git branch *)", "Bash(sh *)", "Bash(pytest *; rm x)"])
+def test_a_scoped_bash_that_can_change_things_is_not_read_only(work, entry):
+    """The check used to stop at Edit, Write and a bare Bash: `Bash(rm *)` passed. Any command that is not read-only fails now."""
+    set_skill(work, replace_once(REF_SKILL, "Bash(git diff *), Bash(git log *), Bash(git status *)", entry))
+    result = skill(work)
+    assert not result[m.N_SKILL_RO].ok and "pre-approves" in result[m.N_SKILL_RO].detail, entry
+    assert "git diff" in result[m.N_SKILL_RO].hint  # the hint names what is allowed
+    assert failing(result, required_only=True) == {m.N_SKILL_RO}
+
+
+@pytest.mark.parametrize("allowed", [
+    "Read, Grep, Glob, Bash(git diff *), Bash(git log --oneline *), Bash(git status *), Bash(git show *), Bash(git blame *)",
+    "Read Grep Glob Bash(ls *) Bash(cat *) Bash(head *) Bash(wc *) Bash(grep *) Bash(rg *)",
+    "Read, Bash(git diff:*), Bash(pytest -q), Bash(python -m pytest *), Bash(git branch --show-current)",
+    "Read, Bash(git --no-pager diff *), Bash(diff *), Bash(tree *), Bash(git ls-files *)",
+    "Read, Grep",
+])
+def test_read_only_commands_may_be_pre_approved(work, allowed):
+    set_skill(work, replace_once(REF_SKILL, "allowed-tools: Read, Grep, Glob, Bash(git diff *), Bash(git log *), Bash(git status *)", f"allowed-tools: {allowed}"))
+    assert failing(skill(work)) == set(), allowed
+
+
+def test_a_skill_with_no_pre_approved_tools_at_all_is_fine(work):
+    set_skill(work, replace_once(REF_SKILL, "allowed-tools: Read, Grep, Glob, Bash(git diff *), Bash(git log *), Bash(git status *)\n", ""))
+    assert failing(skill(work)) == set()
+
+
+def test_the_review_command_that_does_not_hand_over_to_the_reviewer_gets_advice_only(work):
+    """TASK.md lists this advisory line, and it never blocks."""
+    text = REF_SKILL.replace("Hand the reading to the remit-reviewer subagent, which can only read files, and put its findings into your report.", "")
+    set_skill(work, text)
+    result = skill(work)
+    assert failing(result) == {m.N_SKILL_TEAM} and not result[m.N_SKILL_TEAM].required
+    forked = replace_once(text, "disable-model-invocation: true\n", "disable-model-invocation: true\ncontext: fork\nagent: remit-reviewer\n")
+    set_skill(work, forked)
+    assert failing(skill(work)) == set()
+
+
 def test_a_quoted_description_with_a_colon_is_fine_and_an_unquoted_one_is_explained(work):
     set_skill(work, REF_SKILL.replace("description: Review the current change,", "description: \"Review: the current change,").replace("pull request.\nargument-hint", "pull request.\"\nargument-hint"))
     assert failing(skill(work)) == set()
     set_skill(work, REF_SKILL.replace("description: Review the current change,", "description: Review: the current change,"))
     assert "colon followed by a space" in skill(work)[m.N_SKILL_FM].detail
+
+
+def test_the_frontmatter_hints_list_the_keys_the_grader_knows(work):
+    set_skill(work, replace_once(REF_SKILL, "argument-hint:", "hint:"))
+    assert "disable-model-invocation" in skill(work)[m.N_SKILL_FM].hint and "when_to_use" in skill(work)[m.N_SKILL_FM].hint
+    put(work, m.AGENT, replace_once(REF_AGENT, "maxTurns: 15", "maxTurn: 15"))
+    assert "permissionMode" in agent(work)[m.N_AGENT_FM].hint
 
 
 def test_frontmatter_that_is_not_at_the_top_is_explained(work):
@@ -270,6 +318,14 @@ def test_a_reviewer_with_bash_passes_the_required_checks_but_is_told(work):
     result = agent(work)
     assert failing(result) == {m.N_AGENT_SHELL}
     assert not result[m.N_AGENT_SHELL].required and "by promise" in result[m.N_AGENT_SHELL].detail
+
+
+def test_a_reviewer_with_a_bash_that_can_change_files_fails_the_required_check(work):
+    put(work, m.AGENT, replace_once(REF_AGENT, "tools: Read, Grep, Glob", "tools: Read, Grep, Glob, Bash(rm *)"))
+    result = agent(work)
+    assert not result[m.N_AGENT_RO].ok and "Bash(rm *)" in result[m.N_AGENT_RO].detail
+    put(work, m.AGENT, replace_once(REF_AGENT, "tools: Read, Grep, Glob", "tools: Read, Grep, Glob, Bash(git diff *)"))
+    assert m.N_AGENT_RO not in failing(agent(work))  # read-only, though the advisory check still says: no shell
 
 
 def test_a_reviewer_may_use_a_full_model_id_or_inherit(work):
@@ -382,6 +438,19 @@ def test_a_hook_that_holds_tests_to_the_float_rule_is_noisy(work):
     result = hook(work)
     assert not result[m.N_HOOK_QUIET].ok and "float in tests" not in result[m.N_HOOK_QUIET].detail
     assert "harmless case" in result[m.N_HOOK_QUIET].detail
+
+
+@pytest.mark.parametrize("label,condition,must_fail", [
+    ("a file name or folder that merely contains remit", 'if "remit" in str(path):', {m.N_HOOK_QUIET}),
+    ("a folder called remit anywhere in the path", 'if "remit" in path.parts:', {m.N_HOOK_QUIET}),
+    ("a prefix test on the folder name (src/remit_extras counts)", 'if path.relative_to(root).as_posix().startswith("src/remit"):', {m.N_HOOK_QUIET}),
+    ("only the top of src/remit, not its sub-folders", 'if path.parent == (root / "src" / "remit"):', {m.N_HOOK_FLOAT}),
+])
+def test_a_hook_with_a_loose_path_rule_is_caught(work, label, condition, must_fail):
+    """The float rule belongs to the folder src/remit/ at any depth: not to a name, a prefix, or only its top level."""
+    set_hook(work, replace_once(REF_HOOK, 'if (root / "src" / "remit") in path.parents:', condition))
+    result = hook(work)
+    assert failing(result, required_only=True) == must_fail, (label, failing(result))
 
 
 def test_a_hook_that_always_complains_is_noisy(work):
@@ -543,6 +612,59 @@ def test_a_script_that_does_not_validate_trusts_a_hijacked_reply(work):
     assert not result[m.N_TRI_VALID].ok and "accepted" in result[m.N_TRI_VALID].detail
 
 
+VALIDATION = '''    for key, allowed in (("category", CATEGORIES), ("severity", SEVERITIES), ("area", AREAS)):
+        if answer.get(key) not in allowed:
+            raise ValueError(f"{key} {answer.get(key)!r} is not one of {', '.join(allowed)}")
+    if not isinstance(answer.get("money_logic"), bool):
+        raise ValueError("money_logic must be true or false")
+'''
+
+
+@pytest.mark.parametrize("label,replacement,fragment", [
+    ("only the two values the stand-in spoils in its hijack answer",
+     '    if answer.get("severity") == "critical" or answer.get("area") == "payments":\n        raise ValueError("bad value")\n', "printed nothing"),  # the missing key then crashes it
+    ("those two values, and a default for a missing key so that nothing crashes",
+     '    if answer.get("severity") == "critical" or answer.get("area") == "payments":\n        raise ValueError("bad value")\n'
+     '    answer.setdefault("money_logic", False)\n', "malformed replies"),
+    ("severity and area, not the category", VALIDATION.replace('("category", CATEGORIES), ', ""), "category that is not on the list"),
+    ("money_logic compared with (True, False), where 1 == True",
+     VALIDATION.replace('if not isinstance(answer.get("money_logic"), bool):', 'if answer.get("money_logic") not in (True, False):'), "number 1"),
+    ("money_logic only has to be truthy", VALIDATION.replace('if not isinstance(answer.get("money_logic"), bool):', 'if not answer.get("money_logic"):'), "text"),
+    ("labels only, nothing about money_logic (a missing key is a KeyError)", VALIDATION.split("    if not isinstance")[0], "printed nothing"),
+    ("a null is let through because .get() found nothing",
+     VALIDATION.replace("if answer.get(key) not in allowed:", "if answer.get(key) is not None and answer.get(key) not in allowed:"), "null"),
+])
+def test_a_script_that_checks_only_some_values_is_caught(work, label, replacement, fragment):
+    """It used to be enough to catch the two bad values of the hijack answer. Each value now gets its own malformed reply."""
+    set_triage(work, replace_once(REF_TRIAGE, VALIDATION, replacement))
+    result = triage(work)
+    assert not result[m.N_TRI_VALID].ok, label
+    assert fragment in result[m.N_TRI_VALID].detail, (label, result[m.N_TRI_VALID].detail)
+
+
+def test_a_script_that_ignores_the_reply_and_uses_its_own_table_is_caught(work):
+    """Copying the stand-in's keyword table passes the ordinary tickets; the malformed replies give it away."""
+    source = STUB.read_text(encoding="utf-8")
+    table = source[source.index("BUG_WORDS ="):source.index("HIJACK =")] + source[source.index("def has_word"):source.index("def malform")]
+    script = (
+        "import json, re, subprocess, sys\n"
+        "MONEY_AREAS = ('fees', 'fx', 'limits', 'ledger')\n"
+        "MARKER = re.compile(r'\\[stub:([a-z]+)(?:=(\\d+))?\\]')\n"
+        + table + "\n"
+        "tickets = json.load(open(sys.argv[1], encoding='utf-8'))\n"
+        "results = []\n"
+        "for t in tickets:\n"
+        "    subprocess.run(['claude', '-p', 'x', '--output-format', 'json', '--max-turns', '3', '--tools', ''], input=t['text'],\n"
+        "                   capture_output=True, text=True)\n"
+        "    results.append({'id': t['id'], 'status': 'ok', **classify(t['text'])})\n"
+        "print(json.dumps({'results': results}))\n"
+    )
+    set_triage(work, script)
+    result = triage(work)
+    assert result[m.N_TRI_CALL].ok and result[m.N_TRI_STDIN].ok and result[m.N_TRI_TOOLS].ok  # it looks right on ordinary tickets...
+    assert not result[m.N_TRI_VALID].ok and not result[m.N_TRI_PROSE].ok and not result[m.N_TRI_ERR].ok  # ...and ignores what claude said
+
+
 def test_bookkeeping_fields_beside_the_four_are_fine(work):
     """The ticket says id, status and the four fields; a script may still add its own bookkeeping (a session id, a cost)."""
     text = replace_once(REF_TRIAGE, '    result = {"id": ticket_id, "status": "ok", **fields}\n',
@@ -610,6 +732,14 @@ def test_exit_codes_that_lie_are_flagged(work):
                                   "        return 2\n    if not isinstance(tickets, list):\n        tickets = [tickets]"))
     result = triage(work)
     assert not result[m.N_TRI_EXIT].ok and "not a list" in result[m.N_TRI_EXIT].detail
+
+
+def test_an_empty_ticket_list_is_a_success(work):
+    """TASK.md says an empty list exits 0; a script that treats it as unusable input is told."""
+    set_triage(work, replace_once(REF_TRIAGE, "    results = [triage(ticket, args.max_turns, args.timeout) for ticket in tickets]",
+                                  "    if not tickets:\n        return 2\n    results = [triage(ticket, args.max_turns, args.timeout) for ticket in tickets]"))
+    result = triage(work)
+    assert not result[m.N_TRI_EXIT].ok and "empty list" in result[m.N_TRI_EXIT].detail
 
 
 def test_progress_lines_on_standard_output_break_the_document(work):
@@ -802,6 +932,31 @@ def test_every_scenario_marker_does_what_the_docstring_says(marker, returncode, 
     assert check(json.loads(done.stdout))
 
 
+@pytest.mark.parametrize("marker,key,check", [
+    ("[stub:badcategory]", "category", lambda answer: answer["category"] == "complaint"),
+    ("[stub:badseverity]", "severity", lambda answer: answer["severity"] == "urgent"),
+    ("[stub:badarea]", "area", lambda answer: answer["area"] == "payments"),
+    ("[stub:boolstring]", "money_logic", lambda answer: answer["money_logic"] == "true"),
+    ("[stub:boolint]", "money_logic", lambda answer: answer["money_logic"] == 1 and answer["money_logic"] is not True),
+    ("[stub:nullfield]", "severity", lambda answer: answer["severity"] is None),
+])
+def test_each_malformed_marker_spoils_exactly_one_value(marker, key, check):
+    done = stub("-p", "x", "--output-format", "json", stdin=f"The fee was wrong. {marker}")
+    answer = json.loads(json.loads(done.stdout)["result"])
+    clean = json.loads(json.loads(stub("-p", "x", "--output-format", "json", stdin="The fee was wrong.").stdout)["result"])
+    assert done.returncode == 0 and check(answer)
+    assert {k: v for k, v in answer.items() if k != key} == {k: v for k, v in clean.items() if k != key}
+
+
+def test_the_missing_and_list_markers():
+    missing = json.loads(json.loads(stub("-p", "x", "--output-format", "json", stdin="The fee was wrong. [stub:missing]").stdout)["result"])
+    assert "money_logic" not in missing and set(missing) == {"category", "severity", "area"}
+    as_list = json.loads(stub("-p", "x", "--output-format", "json", stdin="The fee was wrong. [stub:list]").stdout)
+    assert json.loads(as_list["result"]) == [1, 2, 3]
+    with_schema = json.loads(stub("-p", "x", "--output-format", "json", "--json-schema", "{}", stdin="The fee was wrong. [stub:missing]").stdout)
+    assert "money_logic" not in with_schema["structured_output"] and with_schema["result"].startswith("Triage: bug")  # a reply that broke the schema
+
+
 def test_the_crash_and_notjson_scenarios():
     crash = stub("-p", "x", "--output-format", "json", stdin="t [stub:crash]")
     assert crash.returncode == 1 and crash.stdout == "" and "simulated crash" in crash.stderr
@@ -901,6 +1056,50 @@ def test_card_headings_may_be_worded_differently(work):
     assert failing(cards(work)) == set()
 
 
+@pytest.mark.parametrize("label,edit", [
+    ("a bold decision line", lambda t: t.replace("**Decision:** keep manual", "**Decision: keep manual**").replace("**Decision:** semi-automate", "**Decision: semi-automate**")),
+    ("a bold label with the colon outside", lambda t: t.replace("**Decision:**", "**Decision**:").replace("**Because:**", "**Because**:")),
+    ("plain Decision and Because lines", lambda t: t.replace("**Decision:**", "Decision:").replace("**Because:**", "Because:").replace("**Candidate:**", "Candidate:")),
+    ("headings one level deeper", lambda t: t.replace("## Card", "### Card")),
+    ("a top-level heading", lambda t: t.replace("## Card", "# Card")),
+    ("numbered questions without bold labels", lambda t: re.sub(r"^(\d)\. \*\*([^*]+)\*\*", r"\1. \2", t, flags=re.M)),
+    ("numbered questions with a bracket", lambda t: re.sub(r"^(\d)\. ", r"\1) ", t, flags=re.M)),
+    ("a decision in other words", lambda t: t.replace("**Decision:** keep manual", "**Decision:** Keep it manual.").replace("**Decision:** semi-automate", "**Decision:** Semi-automated")),
+    ("a decision with a remark", lambda t: t.replace("**Decision:** keep manual", "**Decision:** keep manual (never automate this)")),
+    ("CRLF line endings", lambda t: t.replace("\n", "\r\n")),
+])
+def test_cards_may_be_laid_out_in_any_natural_way(work, label, edit):
+    """Layout is not reasoning: a bold decision line, another heading level or a plain label must not cost a card."""
+    put(work, m.CARDS, edit(REF_CARDS))
+    result = cards(work)
+    assert failing(result) == set(), (label, {n: c.detail for n, c in result.items() if not c.ok})
+
+
+def test_a_decision_that_cannot_be_read_says_what_was_read(work):
+    put(work, m.CARDS, replace_once(REF_CARDS, "**Decision:** keep manual", "**Decision:** maybe later"))
+    assert "'maybe later'" in cards(work)[m.N_CARDS].detail
+    put(work, m.CARDS, replace_once(REF_CARDS, "**Decision:** keep manual\n", ""))
+    assert "no **Decision:** line" in cards(work)[m.N_CARDS].detail
+
+
+def test_filler_is_not_an_answer(work):
+    """'yes yes yes' is three words and no thought; one word said over again is not a reason."""
+    filler = re.sub(r"^(\d)\. \*\*([^*]+)\*\* .*$", r"\1. **\2** yes yes yes", REF_CARDS, flags=re.M)
+    put(work, m.CARDS, filler)
+    result = cards(work)
+    assert not result[m.N_CARDS].ok and "different words" in result[m.N_CARDS].detail
+    put(work, m.CARDS, re.sub(r"^\*\*Because:\*\* .*$", "**Because:** because because because because because", REF_CARDS, flags=re.M))
+    assert "'Because' needs a sentence of your own" in cards(work)[m.N_CARDS].detail
+    put(work, m.CARDS, re.sub(r"^\*\*Candidate:\*\* .*$", "**Candidate:** the thing the thing the thing", REF_CARDS, flags=re.M))
+    assert "candidate is not described" in cards(work)[m.N_CARDS].detail
+
+
+def test_the_same_answer_pasted_into_every_question_is_not_eight_answers(work):
+    pasted = re.sub(r"^(\d)\. \*\*([^*]+)\*\* .*$", r"\1. **\2** Every pull request, every single week.", REF_CARDS, flags=re.M)
+    put(work, m.CARDS, pasted)
+    assert "repeat each other" in cards(work)[m.N_CARDS].detail
+
+
 # --------------------------------------------------------------------------------------------------------------------
 # hygiene
 # --------------------------------------------------------------------------------------------------------------------
@@ -955,3 +1154,158 @@ def test_extra_skills_agents_workflows_and_logs_are_in_scope(work):
     put(work, "docs/agent-log-m09.md", "log\n")
     learner_commit(work, "docs(claude): extras")
     assert hygiene(work)[m.N_SCOPE].ok
+
+
+def test_a_long_header_on_an_older_commit_is_named_and_the_hint_is_not_amend(work):
+    """Dry-run finding: the hint said `git commit --amend`, which cannot reach a commit five back."""
+    long_header = "feat(hooks): report unparsable files and floats in money code after an edit"
+    assert len(long_header) > 72
+    put(work, "docs/automation-notes.md", "notes\n")
+    learner_commit(work, long_header)
+    put(work, "docs/automation-more.md", "more notes\n")
+    learner_commit(work, "docs(claude): add more notes")
+    check = hygiene(work)[m.N_COMMITS]
+    assert not check.ok and "75 characters" in check.detail
+    assert re.search(r"\b[0-9a-f]{7} \"feat\(hooks\)", check.detail)  # the commit is named
+    assert "git rebase -i" in check.hint and "reword" in check.hint and "not your latest commit" in check.hint
+    assert "lab-start" in check.hint and "72 characters" in check.hint
+
+
+def test_a_long_header_on_the_latest_commit_is_fixed_with_amend(work):
+    put(work, "docs/automation-notes.md", "notes\n")
+    learner_commit(work, "feat(hooks): report unparsable files and floats in money code after an edit")
+    check = hygiene(work)[m.N_COMMITS]
+    assert not check.ok and "git commit --amend" in check.hint and "rebase" not in check.hint
+
+
+def test_no_commit_at_all_is_asked_for_kindly(fresh):
+    check = hygiene(fresh)[m.N_COMMITS]
+    assert not check.ok and "0 commits" in check.detail and "git commit" in check.hint
+
+
+@pytest.mark.parametrize("rel,text", [
+    ("tests/helpers.py", "def stub_path():\n    return 'lab-assets/bin'\n"),
+    ("tests/data/tickets.json", "[]\n"),
+    ("README.md", "# Remit\n\nSee docs/automation-cards.md\n"),
+    (".gitignore", "__pycache__/\n.venv/\n"),
+    ("docs/real-run.md", "Differences from the stand-in\n"),
+    ("AGENTS.md", "# Agents\n"),
+    (".github/workflows/triage.yml", "name: triage\non: workflow_dispatch\n"),
+])
+def test_natural_extras_are_in_scope(work, rel, text):
+    """The dry-run learner added a helper module, a README note and a .gitignore line and was told it was out of scope."""
+    put(work, rel, text)
+    learner_commit(work, "docs(claude): add an extra")
+    assert hygiene(work)[m.N_SCOPE].ok, rel
+
+
+@pytest.mark.parametrize("rel", ["src/remit/fees.py", "CONTRIBUTING.md", "src/remit/__init__.py"])
+def test_the_code_and_the_rules_are_out_of_scope(work, rel):
+    path = work / rel
+    path.write_text(path.read_text(encoding="utf-8") + "\n# touched\n", encoding="utf-8")
+    learner_commit(work, "chore(docs): touch a file")
+    result = hygiene(work)[m.N_SCOPE]
+    assert not result.ok and rel in result.detail and "git restore" in result.hint
+
+
+def test_the_scope_hint_lists_the_allowed_files_that_task_md_lists(work):
+    (work / "src" / "remit" / "fees.py").write_text("# touched\n", encoding="utf-8")
+    hint = hygiene(work)[m.N_SCOPE].hint
+    task = (LAB_DIR / "task.md").read_text(encoding="utf-8")
+    for name in (".claude/", "scripts/", "docs/", ".github/", "CLAUDE.md", "README.md", ".gitignore", "pyproject.toml"):
+        assert name in hint and name in task, name
+
+
+def test_editing_the_shared_test_setup_is_flagged_as_an_edit_of_an_existing_test(work):
+    path = work / "tests" / "conftest.py"
+    path.write_text(path.read_text(encoding="utf-8") + "\n# a helper\n", encoding="utf-8")
+    learner_commit(work, "test(claude): add a fixture")
+    result = hygiene(work)
+    assert not result[m.N_OLD_TESTS].ok and "tests/conftest.py" in result[m.N_OLD_TESTS].detail
+
+
+PATH_TEST = '''"""A learner's test that finds `claude` on PATH and nowhere else (it relies on `export PATH=...`)."""
+import json
+import subprocess
+
+
+def test_claude_comes_from_the_path():
+    done = subprocess.run(["claude", "-p", "x", "--output-format", "json"], input="What is my limit?", capture_output=True, text=True)
+    assert json.loads(done.stdout)["stub"].startswith("ailab stand-in")
+'''
+
+
+def test_the_graders_test_run_puts_the_stand_in_first_on_path_and_never_reaches_a_real_claude(work, tmp_path, monkeypatch):
+    """Dry-run finding: tests that passed in the learner's shell timed out in the grader's, and on a machine with a real `claude`
+    they would have called it. The grader's pytest run now has the kit's stand-in first on PATH."""
+    import os
+    tripwire = tmp_path / "real-claude-bin"
+    tripwire.mkdir()
+    marker = tmp_path / "real-claude-was-called"
+    script = tripwire / "claude"
+    script.write_text(f"#!/bin/sh\necho called > {marker}\nexit 1\n", encoding="utf-8")
+    script.chmod(0o755)
+    monkeypatch.setenv("PATH", f"{tripwire}{os.pathsep}{os.environ['PATH']}")
+    put(work, "tests/test_uses_path.py", PATH_TEST)
+    check = by_name(m.hygiene_checks(work)) and m.tests_check(work)
+    assert check.ok, check.detail
+    assert not marker.exists(), "the grader's test run reached the claude on the ambient PATH"
+
+
+def test_the_tests_hint_explains_the_path_and_the_clean_copy(work):
+    put(work, "tests/test_fails.py", "def test_fails():\n    assert False\n")
+    check = m.tests_check(work)
+    assert not check.ok and "test_fails" in check.detail
+    assert "clean copy" in check.hint and "first on PATH" in check.hint and "real `claude`" in check.hint
+
+
+# --------------------------------------------------------------------------------------------------------------------
+# the lesson and the kit say the same thing
+# --------------------------------------------------------------------------------------------------------------------
+LESSON = Path(framework.__file__).resolve().parents[2] / "modules" / "09-automate.md"
+needs_lesson = pytest.mark.skipif(not LESSON.is_file(), reason="the lesson is not next to the kit")
+
+
+def lesson_blocks() -> list[str]:
+    return re.findall(r"```text\n(.*?)```", LESSON.read_text(encoding="utf-8"), flags=re.S)
+
+
+@needs_lesson
+def test_the_lesson_quotes_the_ticket_exactly():
+    task = (LAB_DIR / "task.md").read_text(encoding="utf-8").rstrip("\n")
+    assert any(block.rstrip("\n") == task for block in lesson_blocks()), "lesson 9.2 and task.md have drifted apart"
+
+
+@needs_lesson
+def test_the_lessons_sample_grade_output_is_the_real_starter_output(starter):
+    kit_root = Path(framework.__file__).resolve().parents[1]
+    done = subprocess.run([sys.executable, "-m", "ailab", "grade", "m09", "--dir", str(starter)], cwd=kit_root, capture_output=True, text=True)
+    real = done.stdout.splitlines()
+    sample = next(block for block in lesson_blocks() if block.startswith("[PASS] Your tests pass"))
+    for line in sample.splitlines():
+        if line.strip() and line.strip() != "...":
+            assert line in real, f"the lesson shows a line the kit does not print: {line}"
+
+
+@needs_lesson
+def test_the_lessons_stand_in_example_is_real_output():
+    block = next(b for b in lesson_blocks() if b.startswith("$ echo"))
+    command, expected = block.strip().splitlines()
+    ticket = re.search(r'echo "(.*?)" \|', command).group(1)
+    done = stub("-p", "Classify this support ticket", "--output-format", "json", "--max-turns", "3", "--tools", "", stdin=ticket + "\n")
+    assert done.returncode == 0 and done.stdout.strip() == expected
+
+
+@needs_lesson
+def test_the_lesson_names_every_rule_the_grader_enforces_in_task_md():
+    """A few rules that used to be hidden: each must be in the ticket the learner reads."""
+    task = (LAB_DIR / "task.md").read_text(encoding="utf-8")
+    for needle in ("remit-reviewer", "72 characters", "PATH", "real boolean", "any depth", "context: fork", "first comment line",
+                   "new `tests/test_*.py`", "git diff", "exactly one `**Decision:**`", "10 at most", "an empty"):
+        assert needle in task, needle
+
+
+@needs_lesson
+def test_the_lesson_counts_the_hook_documents_the_grader_really_runs():
+    text = LESSON.read_text(encoding="utf-8")
+    assert f"{len(m.hook_cases())} sample documents" in text and f"{len(m.hook_cases())} documents" in text

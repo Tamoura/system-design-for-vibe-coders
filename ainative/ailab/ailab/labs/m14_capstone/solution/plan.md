@@ -4,9 +4,9 @@
 
 | # | Step | Files | Proves | Check | Commit |
 |---|---|---|---|---|---|
-| 1 | Write the tests first and watch them fail for the right reason | `tests/test_bdt_corridor.py` | AC1 to AC9 | `pytest -q tests/test_bdt_corridor.py` fails on missing BDT, not on a typo | `test(corridors): pin the Bangladesh corridor, fees, rate and wording` |
-| 2 | Add the STD-C schedule | `src/remit/fees.py` | AC3, AC4, AC5 | the fee tests pass; the corridor tests still fail | `feat(fees): add the STD-C fee schedule for Bangladesh` |
-| 3 | Add the BDT mid rate and margin | `src/remit/fx.py` | AC5, AC6 | the rate tests pass | `feat(fx): add the BDT mid rate and margin` |
+| 1 | Write the tests first and watch them fail for the right reason | `tests/test_bdt_corridor.py` | AC1 to AC9 | `pytest -q tests/test_bdt_corridor.py` fails on the missing schedule, rate and corridor, not on a typo | `test(corridors): pin the Bangladesh corridor, fees, rate and wording` |
+| 2 | Add the STD-C schedule | `src/remit/fees.py` | AC3, AC4, AC5 | the fee tests pass (they build a local corridor on STD-C); the rate and corridor tests still fail | `feat(fees): add the STD-C fee schedule for Bangladesh` |
+| 3 | Add the BDT mid rate and margin | `src/remit/fx.py` | AC5, AC6 | the rate tests pass (same local corridor) | `feat(fx): add the BDT mid rate and margin` |
 | 4 | Open the corridor, last, because it points at STD-C | `src/remit/corridors.py` | AC1, AC2, AC9 | `pytest -q`; `python -m remit quote QAR 500 BDT` | `feat(corridors): open the QAR-BDT corridor` |
 | 5 | Add the approved wording in both languages | `src/remit/notify.py` | AC7 | the template tests pass | `feat(notify): add the transfer_sent_bdt wording` |
 | 6 | Choose the template by corridor and pass the rate | `src/remit/service.py` | AC7, AC8 | all tests pass; money file, second reviewer | `feat(service): send the Bangladesh wording on QAR-BDT transfers` |
@@ -21,4 +21,4 @@ Tests first, so that the agent has something to be held to. Then the providers b
 Stop the agent and take the wheel when a diff touches a file outside the list above, when an existing test is edited, when a float or a new dependency appears, when it proposes to change `limits.py` or `ledger.py`, or when a fee does not match the Behaviour table in the spec.
 
 ### Rollback
-Every step is one commit on its own branch, so `git revert` of the step undoes it. To remove the whole corridor, revert steps 6, 5, 4, 3 and 2 in that order; no data is migrated, because the corridor only adds entries to tables in code.
+Every step is one commit, so `git revert` of the step undoes it. To remove the whole corridor, revert steps 6, 5, 4, 3 and 2 in that order; no data is migrated, because the corridor only adds entries to tables in code.

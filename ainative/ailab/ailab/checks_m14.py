@@ -16,13 +16,14 @@ the corridors page describes, the learner's tests) only in a subprocess on a thr
 """
 from __future__ import annotations
 
+import ast
 import json
 import re
 import sys
 import tempfile
 from collections.abc import Sequence
 from concurrent.futures import ThreadPoolExecutor
-from decimal import Decimal, InvalidOperation
+from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
 from pathlib import Path
 
 from ailab import checks, gitutil, runner
@@ -43,11 +44,14 @@ SETTINGS = ".claude/settings.json"
 GUARD = ".claude/hooks/guard.py"
 MEMORY_FILES = ("CLAUDE.md", "AGENTS.md")
 
+PLAN_STEPS = (5, 30)  # table rows in the plan: at least one per area of the change, at most one per small commit
 SPEC_SECTIONS = ["Goal", "Context", "Behaviour", "Acceptance criteria", "Constraints", "Non-goals",
                  "Decisions and open questions", "Risks", "Test plan"]
 MONEY_FILES = ("money.py", "fees.py", "fx.py", "limits.py", "ledger.py", "service.py")
 
-_TODO = re.compile(r"\bTODO\b")
+# A template placeholder, not the word: "TODO:", a line that is only TODO, a table cell that starts with TODO, "label: TODO",
+# or `TODO` in backticks. "the old TODO in the helpers is not mine" is ordinary prose and passes.
+_TODO = re.compile(r"\bTODO[ \t]*:|(?m:^[ \t>*+-]*TODO[ \t]*$)|\|[ \t]*`?TODO\b|:[ \t]*`?TODO\b|`TODO`")
 _NUMBER = re.compile(r"(?<![\w.])\d[\d,]*(?:\.\d+)?")
 _TICK = re.compile(r"`([^`\n]+)`")
 _AC_IN_SPEC = re.compile(r"\bAC(\d{1,2})\b")
@@ -111,11 +115,24 @@ def resolves(token: str, files: set[str]) -> bool:
     return any(f.startswith(token + "/") for f in files)  # a folder written without a slash
 
 
+# A path in backticks is a claim that the file exists, except on a line that says it does not ("`risk.py` does not exist").
+_DENIES_EXISTENCE = re.compile(
+    r"(?i)\b(?:does not exist|do not exist|doesn'?t exist|not exist|no such file|nonexistent|non-existent|is missing|are missing|"
+    r"is gone|stale|no longer|not yet|removed|deleted|never existed|out of date|outdated)\b")
+# Files the ticket asks the learner to write: the memory file or the plan may name them before they exist.
+DELIVERABLES = {SPEC, PLAN, REVIEW, AGENT_LOG, RETRO, CORRIDORS_DOC, ARCH_DOC, SETTINGS, GUARD, *MEMORY_FILES}
+
+
 def unresolved_paths(text: str, files: set[str]) -> list[str]:
-    bad = []
-    for token in ticks(text):
-        if looks_like_path(token) and not resolves(token, files) and token not in bad:
-            bad.append(token)
+    """Paths written in backticks that do not exist. Skipped: files this lab asks for, and lines that say a file is absent."""
+    bad: list[str] = []
+    for line in text.splitlines():
+        if _DENIES_EXISTENCE.search(line):
+            continue
+        for token in ticks(line):
+            promised = token.removeprefix("./") in DELIVERABLES or token.startswith(f"{ADR_DIR}/")
+            if looks_like_path(token) and not promised and not resolves(token, files) and token not in bad:
+                bad.append(token)
     return bad
 
 
@@ -164,7 +181,9 @@ def doc_gate(work: Path, rel: str, name: str, hint: str, *, min_words: int = 40)
     if text is None:
         return None, Check(name, False, f"{rel} does not exist", hint)
     if _TODO.search(text):
-        return None, Check(name, False, f"{rel} still has TODO placeholders", "Replace every TODO with your own text.")
+        return None, Check(name, False, f"{rel} still has TODO placeholders",
+                           "Replace every line, table cell or `TODO:` that came from the template with your own text. "
+                           "The word TODO inside a sentence is fine.")
     if len(text.split()) < min_words:
         return None, Check(name, False, f"{rel} has only {len(text.split())} words", hint)
     return text, None
@@ -178,8 +197,39 @@ def total_minutes(text: str) -> int | None:
 # ---------------------------------------------------------------------------------------------
 # the spec, the plan, and the tests that trace to them
 # ---------------------------------------------------------------------------------------------
-DERIVED_VALUES = [Decimal(v) for v in ("32.8745", "16437.25", "14.50", "7.00", "130.00", "3287.45", "25.50", "28.00",
-                                        "8218.63", "7.19", "148.00", "394494.00", "52.00", "92.00", "100.00")]
+# The ticket's own numbers: repeating one of them is not a worked result.
+TICKET_NUMBERS = {Decimal(v) for v in ("7", "130", "18", "100", "12000", "33.46", "0.0175", "1.75", "1000", "5000", "3.5", "12", "45",
+                                       "2.2", "1.6", "1.1", "0.022", "0.016", "0.011", "60", "99.99", "12000.01", "1000.01", "5000.01")}
+_STD_C = ((Decimal("1000"), Decimal("0.022"), Decimal("3.50")), (Decimal("5000"), Decimal("0.016"), Decimal("12.00")),
+          (None, Decimal("0.011"), Decimal("45.00")))
+_RATE = Decimal("33.46") * (1 - Decimal("0.0175"))
+
+
+def _cents(value: Decimal, places: int = 2) -> Decimal:
+    return value.quantize(Decimal(1).scaleb(-places), rounding=ROUND_HALF_UP)
+
+
+def derivable_from(amount: Decimal) -> set[Decimal]:
+    """What the ticket's numbers make of ``amount``: the STD-C fee (raw, rounded, with the express surcharge), the receive amount
+    (raw, rounded), and the customer rate. Used to tell a worked result from a copied number."""
+    tier = next(t for t in _STD_C if t[0] is None or amount <= t[0])
+    raw = amount * tier[1] + tier[2]
+    fee = min(max(_cents(raw), Decimal("7.00")), Decimal("130.00"))
+    receive = amount * _cents(_RATE, 4)
+    return {raw, fee, fee + Decimal("18.00"), receive, _cents(receive), _RATE, _cents(_RATE, 4)}
+
+
+def worked_results(text: str) -> int:
+    """How many different correct results (not ticket numbers) a text works out: a fee, a rate, a receive amount.
+    Raw and rounded forms of one result (7.185 and 7.19) count once."""
+    found = numbers_in(text)
+    derived: set[Decimal] = set()
+    for amount in found:
+        if 0 < amount <= 10_000_000:
+            derived |= derivable_from(amount)
+    return len({_cents(n) for n in found & derived} - {_cents(n) for n in TICKET_NUMBERS})
+
+
 GIVEN_FACTS = {
     "the corridor code QAR-BDT": lambda t: "QAR-BDT" in t,
     "the schedule STD-C": lambda t: "STD-C" in t,
@@ -210,10 +260,10 @@ def spec_check(work: Path) -> Check:
     ids = spec_info(work)[1]
     if len(ids) < 6:
         problems.append(f"{len(ids)} numbered acceptance criteria (AC1, AC2...); at least 6 are expected")
-    behaviour = section(sections, "Behaviour") or ""
-    worked = [v for v in DERIVED_VALUES if v in numbers_in(behaviour)]
-    if len(worked) < 3:
-        problems.append("Behaviour has fewer than 3 worked results of your own (fees, rates, receive amounts)")
+    worked = worked_results(section(sections, "Behaviour") or "")
+    if worked < 3:
+        problems.append(f"Behaviour has {worked} correct worked results of your own (at least 3: a fee, the customer rate, a receive amount "
+                        "that the ticket does not already give)")
     absent = [label for label, test in GIVEN_FACTS.items() if not test(text)]
     if absent:
         problems.append("the spec does not state " + ", ".join(absent))
@@ -225,26 +275,29 @@ def spec_check(work: Path) -> Check:
         return Check(name, False, short(problems),
                      "Work the numbers out yourself and put them in Behaviour; number each criterion AC1, AC2...; "
                      "answer the questions the ticket leaves open under Decisions.")
-    return Check(name, True, f"{len(ids)} acceptance criteria, {len(worked)} worked results")
+    return Check(name, True, f"{len(ids)} acceptance criteria, {worked} worked results")
 
 
 def plan_check(work: Path, spec_ids: list[int], files: set[str]) -> Check:
     name = "Plan: small steps that cover every acceptance criterion"
-    hint = "Start from lab-assets/templates/plan.md: one row per step, each with files, the AC ids it proves, a check and a commit header."
+    hint = ("Start from lab-assets/templates/plan.md: one row per step, each with files, the AC ids it proves, a check and, "
+            "in the last column, the commit header you will use (at most 72 characters).")
     text, failed = doc_gate(work, PLAN, name, hint, min_words=80)
     if failed:
         return failed
     problems: list[str] = []
     steps = [row for row in table_rows(text) if row and row[0].isdigit()]
-    if not 5 <= len(steps) <= 14:
-        problems.append(f"{len(steps)} numbered steps (5 to 14 expected)")
+    low, high = PLAN_STEPS
+    if not low <= len(steps) <= high:
+        problems.append(f"{len(steps)} numbered steps ({low} to {high} expected, one table row each)")
     covered: set[int] = set()
     for row in steps:
         covered |= {int(n) for n in _AC_IN_SPEC.findall(" ".join(row))}
         header = row[-1].strip("` ")
         bad = checks.commit_header_problems(header)
         if bad:
-            problems.append(f"step {row[0]}: the last column should be a commit header ({bad[0]})")
+            problems.append(f"step {row[0]}: the last column should be the commit header, type(scope): subject, "
+                            f"as CONTRIBUTING.md defines it ({bad[0]})")
             break
     if spec_ids:
         loose = [f"AC{n}" for n in spec_ids if n not in covered]
@@ -269,6 +322,31 @@ def new_test_text(work: Path) -> tuple[list[str], str]:
     return names, "\n".join(read_text(work, n) or "" for n in names)
 
 
+MIN_ASSERTIONS = 8
+
+
+def assertion_count(source: str) -> int:
+    """Assertions in a test file: `assert` statements that say something (not a bare truth test of a call or a constant),
+    `with pytest.raises(...)`, and unittest-style `self.assertX(...)` calls."""
+    try:
+        tree = ast.parse(source)
+    except SyntaxError:
+        return 0
+    total = 0
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Assert):
+            test = node.test
+            says_something = isinstance(test, ast.Compare) and not (
+                isinstance(test.left, ast.Constant) and len(test.comparators) == 1 and isinstance(test.comparators[0], ast.Constant))
+            total += says_something or isinstance(test, (ast.BoolOp, ast.UnaryOp))
+        elif isinstance(node, ast.With):
+            total += any(isinstance(i.context_expr, ast.Call) and getattr(i.context_expr.func, "attr", "") in {"raises", "warns"}
+                         for i in node.items)
+        elif isinstance(node, ast.Call) and getattr(node.func, "attr", "").startswith("assert"):
+            total += 1
+    return total
+
+
 def tests_trace_check(work: Path, spec_ids: list[int]) -> Check:
     name = "Tests are traced to the spec's acceptance criteria"
     hint = "Name each criterion in a test: a comment, a docstring or a test name with AC1, AC2... (see the spec you wrote)."
@@ -278,6 +356,10 @@ def tests_trace_check(work: Path, spec_ids: list[int]) -> Check:
     count = len(re.findall(r"(?m)^\s*def test_\w+", text))
     if count < 8:
         return Check(name, False, f"{count} new test functions; at least 8 are expected", hint)
+    asserted = sum(assertion_count(read_text(work, n) or "") for n in names)
+    if asserted < MIN_ASSERTIONS:
+        return Check(name, False, f"{asserted} assertions in {count} new tests; at least {MIN_ASSERTIONS} are expected",
+                     "A test that calls the code and asserts nothing proves nothing: assert the exact fee, rate, limit or message.")
     if not spec_ids:
         return Check(name, False, "the spec has no numbered acceptance criteria to trace", "Fix the spec first.")
     cited = {int(n) for n in _AC_IN_TESTS.findall(text)}
@@ -393,7 +475,8 @@ _SAFE_COMMAND = re.compile(r"^(?:PYTHONPATH=src\s+)?python3?\s+-m\s+remit\s+quot
 
 def memory_check(work: Path, files: set[str]) -> Check:
     name = "Project memory is short, true and useful"
-    hint = "Write CLAUDE.md (or AGENTS.md): commands, rules that differ from the defaults, the corridor checklist, a short never list."
+    hint = ("Write CLAUDE.md (or AGENTS.md) from your lesson 2.2 file or lab-assets/templates/memory.md: 15 to 150 lines with the test command, "
+            "Decimal not float, najmkit, the commit format, the corridor checklist (corridors.py, fees.py, fx.py) and 3 or more never bullets.")
     rel = next((m for m in MEMORY_FILES if (work / m).is_file()), None)
     if rel is None:
         return Check(name, False, "neither CLAUDE.md nor AGENTS.md exists at the root", hint)
@@ -526,9 +609,16 @@ HOOK_ALLOW = [
 ]
 HOOK_BLOCK_HARDER = [
     'bash -c "rm -rf /tmp/scratch"',
+    'bash -lc "git push origin main"',
     "git -C . push",
+    "uv pip install requests",
+    'eval "rm -rf build"',
     "cat ~/.ssh/id_ed25519",
     "sudo ls",
+]
+HOOK_ALLOW_HARDER = [
+    'bash -c "pytest -q"',
+    "python -m pytest -q tests",
 ]
 
 
@@ -538,8 +628,8 @@ def _hook_verdict(root: Path, document: str) -> str:
                         timeout=10, input=document)
     if result.timed_out:
         return "it did not finish"
-    if result.returncode == 2 and result.stderr.strip():
-        return "block"
+    if result.returncode == 2:
+        return "block" if result.stderr.strip() else "it exited with code 2 but wrote no reason on stderr, which is what the agent reads"
     if result.returncode == 0:
         try:
             decision = json.loads(result.stdout or "null")
@@ -557,12 +647,13 @@ def _bash(command: str) -> str:
 def hook_check(work: Path, *, harder: bool = False) -> Check:
     if harder:
         name = "Guard hook also sees through wrappers"
-        hint = "Look inside bash -c, git -C, and paths under ~/.ssh. A text guard never sees everything; the sandbox is the wall."
-        block, allow, extra_docs = HOOK_BLOCK_HARDER, [], []
+        hint = ("Look inside bash -c and bash -lc, eval, git -C, uv pip install and paths under ~/.ssh, and keep allowing harmless wrappers. "
+                "A text guard never sees everything; the sandbox is the wall.")
+        block, allow, extra_docs = HOOK_BLOCK_HARDER, HOOK_ALLOW_HARDER, []
     else:
         name = "Guard hook blocks the dangerous and allows the harmless"
-        hint = ("Exit 2 and a reason on stderr block; exit 0 allows. A message that merely mentions a command must pass; "
-                "bad input must block. Start from lab-assets/harden/guard.py.")
+        hint = ("Exit 2 with a reason on stderr blocks (or a JSON deny on stdout with exit 0); exit 0 allows. Any other exit code does not block. "
+                "A message that merely mentions a command must pass; input it cannot read must block. Start from lab-assets/harden/guard.py.")
         block, allow = HOOK_BLOCK, HOOK_ALLOW
         extra_docs = [("not JSON", "this is not json", "block"), ("no command", json.dumps({"tool_name": "Bash", "tool_input": {}}), "block"),
                       ("another tool", json.dumps({"tool_name": "Read", "tool_input": {"file_path": "README.md"}}), "allow")]
@@ -684,7 +775,7 @@ def corridors_doc_check(work: Path) -> Check:
 
 def architecture_check(work: Path) -> Check:
     name = "ARCHITECTURE.md is not made untrue by the change"
-    hint = "Fix only the lines this change falsified: the corridor list and the number of fee schedules. Stale risk.py text is another ticket."
+    hint = "Fix only the lines this change falsified: the corridor list and the number of fee schedules. Stale text about risk.py and the daily limits is another ticket."
     text = read_text(work, ARCH_DOC)
     if text is None:
         return Check(name, False, f"{ARCH_DOC} is missing", "Restore it: git restore --source=lab-start docs/ARCHITECTURE.md")
@@ -737,7 +828,8 @@ RETRO_SECTIONS = ["What went well", "What went wrong", "What the agent got wrong
 
 def retro_check(work: Path, files: set[str]) -> Check:
     name = "Retrospective is complete and cites the evidence"
-    hint = "Use lab-assets/templates/retrospective.md. Quote the total from your agent log and one commit from `git log --oneline`."
+    hint = ("Use lab-assets/templates/retrospective.md. Quote the total from your agent log and one commit from `git log --oneline`; "
+            "after a rebase, amend or reset the hashes change, so copy one again.")
     text, failed = doc_gate(work, RETRO, name, hint, min_words=200)
     if failed:
         return failed
@@ -751,7 +843,7 @@ def retro_check(work: Path, files: set[str]) -> Check:
     shas = {c.sha for c in gitutil.commits_since(work)}
     candidates = set(re.findall(r"\b[0-9a-f]{7,40}\b", text))
     if not any(sha.startswith(c) for c in candidates for sha in shas):
-        problems.append("it does not cite a commit of yours by hash")
+        problems.append("it does not cite a commit of yours by hash (one that is in your history now)")
     cited = {t for t in ticks(text) if looks_like_path(t) and resolves(t, files)}
     if len(cited) < 4:
         problems.append(f"{len(cited)} artefacts named in backticks (at least 4 expected)")
@@ -789,26 +881,30 @@ def one_thing_per_commit_check(work: Path) -> Check:
             mixed.append(f'"{commit.subject}" changes {" and ".join(areas)}')
     if mixed:
         return Check(name, False, short(mixed, 2),
-                     "Split it: code with its tests, documents, and agent configuration (CLAUDE.md, .claude/) are three kinds of commit.")
+                     "Code with its tests (src/, tests/), documents (docs/, specs/, README.md) and agent configuration (CLAUDE.md, AGENTS.md, .claude/) "
+                     "are three kinds of commit. Split with git reset HEAD~1 and commit the parts separately; then copy the hash in your retrospective again.")
     return Check(name, True, f"{checks.plural(len(commits), 'commit')} checked")
 
 
 def tests_first_check(work: Path) -> Check:
-    name = "Tests came before the code"
+    """Advisory. CONTRIBUTING.md wants a green suite at every commit, so a red commit of tests alone is an exception this lab allows;
+    committing each step's tests with its code is equally fine. What fails is code committed before any test exists."""
+    name = "Tests came before or with the code"
     first_test = first_code = None
     history = gitutil.commits_since(work)
     if not history:
-        return Check(name, False, "no commits since the start yet", "Commit failing tests first, then the code.", False)
+        return Check(name, False, "no commits since the start yet", "Write the tests first, then the code.", False)
     for index, commit in enumerate(history):
         touched = commit_files(work, commit.sha)
         if first_test is None and any(f.startswith("tests/") for f in touched):
             first_test = index
         if first_code is None and any(f.startswith("src/") for f in touched):
             first_code = index
-    if first_test is not None and (first_code is None or first_test < first_code):
+    if first_test is not None and (first_code is None or first_test <= first_code):
         return Check(name, True, "", "", False)
-    return Check(name, False, "the first commit that changes src/ comes before (or with) the first commit that adds tests",
-                 "Commit failing tests first, watch them fail for the right reason, then the code that makes them pass.", False)
+    return Check(name, False, "the first commit that changes src/ comes before the first commit that adds tests",
+                 "Write the tests first. Committing them alone leaves a red commit (CONTRIBUTING.md wants green ones), so committing "
+                 "each step's tests together with its code is fine; committing the code first is not.", False)
 
 
 def small_commits_check(work: Path, limit: int = 250) -> Check:
@@ -966,15 +1062,16 @@ MUTANTS = ("max-send", "tier-edge", "fee-cap", "margin", "express", "delivery")
 NOT_APPLIED = 97
 
 
-def teeth_check(work: Path, *, need: int = 5, timeout: float = 30.0) -> Check:
+def teeth_check(work: Path, *, need: int = 4, timeout: float = 30.0) -> Check:
     """Break six agreed numbers of the BDT corridor in memory, one at a time, and count how many of the learner's new
-    tests notice. Advisory: it relies on the repository's own extension points (``CORRIDORS``, ``SCHEDULES``,
-    ``DEFAULT_MID_RATES``, ``CORRIDOR_MARGINS``), so a learner who restructured them gets "could not be applied"."""
+    tests notice. Required: tests that call the code and check nothing, or that compute their expected values with the
+    code under test, notice none of them. It relies on the repository's own extension points (``CORRIDORS``,
+    ``SCHEDULES``, ``DEFAULT_MID_RATES``, ``CORRIDOR_MARGINS``); the lab brief says to add the corridor to those tables."""
     name = "Your tests have teeth"
     hint = "Check the exact values at the edges: 100.00, 12,000.00 and one cent past it, 1,000.00 against 1,000.01, the cap, the surcharge, the rate."
     chosen = checks.new_test_files(work)
     if not chosen:
-        return Check(name, False, "no new test files found", hint, False)
+        return Check(name, False, "no new test files found", hint)
     sys.path.insert(0, str(HERE / "plugins"))
     try:
         import m14_mutate as plugin  # the descriptions only; the mutation itself runs in the subprocess
@@ -994,7 +1091,7 @@ def teeth_check(work: Path, *, need: int = 5, timeout: float = 30.0) -> Check:
         existing = [p for p in chosen if (root / p).exists()]
         baseline = runner.run_python([*base_args, *existing], cwd=root, pythonpath=[root / "src"], timeout=timeout)
     if not baseline.ok:
-        return Check(name, False, "your new tests do not pass on your own code", "Make them pass first.", False)
+        return Check(name, False, "your new tests do not pass on your own code", "Make them pass first.")
     with ThreadPoolExecutor(max_workers=3) as pool:
         codes = dict(zip(MUTANTS, pool.map(run, MUTANTS)))
     killed = [m for m, code in codes.items() if code not in (0, NOT_APPLIED)]
@@ -1002,10 +1099,11 @@ def teeth_check(work: Path, *, need: int = 5, timeout: float = 30.0) -> Check:
     survived = [plugin.DESCRIPTIONS[m] for m in applied if codes[m] == 0]
     if len(applied) < need:
         return Check(name, False, f"only {len(applied)} of {len(MUTANTS)} deliberate defects could be applied to your code",
-                     "Keep the repository's own tables (CORRIDORS, SCHEDULES, DEFAULT_MID_RATES, CORRIDOR_MARGINS) as the place where the corridor lives.", False)
+                     "Add the corridor to the repository's own tables (CORRIDORS, SCHEDULES, DEFAULT_MID_RATES, CORRIDOR_MARGINS): "
+                     "the grader breaks one agreed number at a time there to see whether your tests notice.")
     if len(killed) >= need:
-        return Check(name, True, f"your tests catch {len(killed)} of {len(applied)} deliberate defects", "", False)
-    return Check(name, False, f"your tests catch {len(killed)} of {len(applied)} deliberate defects; they miss: {short(survived)}", hint, False)
+        return Check(name, True, f"your tests catch {len(killed)} of {len(applied)} deliberate defects")
+    return Check(name, False, f"your tests catch {len(killed)} of {len(applied)} deliberate defects (at least {need} expected); they miss: {short(survived)}", hint)
 
 
 def hidden_part(result: checks.PytestResult, module: str, name: str, hint: str) -> Check:

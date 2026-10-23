@@ -1,7 +1,7 @@
 # Retrospective: REMIT-414, the Bangladesh corridor
 
 Total minutes: TODO (from `docs/agent-log.md`)
-The commit I would redo: TODO (hash and subject, from `git log --oneline`)
+The commit I would redo: TODO (hash and subject, from `git log --oneline`; copy it again after any rebase or amend)
 
 ### What went well
 TODO: two or three things, each with the file or commit that shows it.

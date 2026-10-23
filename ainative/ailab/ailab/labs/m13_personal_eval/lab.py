@@ -4,15 +4,17 @@ The story
 ---------
 Tariq asks the learner for two things to keep: a small eval of their own (eight or more tasks, each with a check that
 a script can run) and a 90-day plan with measurable goals. There is nothing to repair, so the seed plants nothing: the
-learner starts from the Remit repository as it is, plus ``lab-assets/`` (the runner, a plan template and three worked
+learner starts from the Remit repository as it is, plus ``lab-assets/`` (the runner, a plan template and four worked
 example tasks) and ``TASK.md``.
 
 What the grader does (see ``ailab/checks_m13.py``)
 --------------------------------------------------
-* eval/tasks.jsonl: valid JSON Lines, at least eight tasks of the learner's own, well-formed fields;
-* it RUNS the checks it can, in throw-away copies of the ``lab-start`` state: every check must be runnable, must FAIL on
-  the untouched repository, every guard must PASS there, at least three references must make their check pass, and a
-  placeholder answer must not (the same logic the learner has in ``lab-assets/eval_runner.py``);
+* eval/tasks.jsonl: valid JSON Lines, at least eight different tasks (copies count once, the course's examples not at
+  all, tasks from the learner's own project do), at least six of them about the Remit repository, well-formed fields;
+* it RUNS the checks it can, in throw-away copies of the ``lab-start`` state (a git repository with one commit): every
+  check must be runnable, must FAIL on the untouched repository, every guard must PASS there, every Remit task must have
+  a reference that makes its check pass, and lazy answers must not (a placeholder, filler text, the prompt handed back,
+  a test that asserts nothing, a stray edit): the same logic the learner has in ``lab-assets/eval_runner.py``;
 * plan.md: required sections, a start date, a skills map, a realistic weekly routine, measurable goals;
 * the repository: only eval/ and plan.md changed, committed in steps, CONTRIBUTING.md commit messages, no secrets.
 

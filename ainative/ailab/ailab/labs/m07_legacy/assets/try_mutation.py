@@ -35,11 +35,6 @@ def main(argv: list[str]) -> int:
     if len(argv) not in (0, 3) or not (root / ".git").exists() or not (root / "tests").is_dir():
         print(__doc__)
         return 2
-    mine = sorted(p.name for p in (root / "tests").glob("test_ledger*.py"))
-    helpers = sorted(p.name for p in (root / "tests").glob("*.py") if not p.name.startswith("test_") and p.name != "conftest.py")
-    if not mine:
-        print("No tests/test_ledger_*.py yet: write some first.")
-        return 2
     with tempfile.TemporaryDirectory(prefix="m07-original-") as scratch:
         copy = Path(scratch)
         archive = subprocess.run(["git", "archive", "--format=tar", "lab-start"], cwd=root, capture_output=True, check=True).stdout
@@ -48,8 +43,21 @@ def main(argv: list[str]) -> int:
                 tar.extractall(copy, filter="data")
             except TypeError:  # Python before 3.11.4 has no extraction filters; this archive comes from your own git
                 tar.extractall(copy)
-        for name in mine + helpers:
-            shutil.copyfile(root / "tests" / name, copy / "tests" / name)
+        mine, helpers = [], []  # your new test files, and the new helpers they import (the seam)
+        for path in sorted((root / "tests").rglob("*.py")):
+            rel = path.relative_to(root).as_posix()
+            if "__pycache__" in path.parts or path.name == "conftest.py" or (copy / rel).exists():
+                continue  # not yours: a file the lab started with
+            if path.name.startswith("test_ledger"):
+                mine.append(rel)
+            elif not path.name.startswith("test_"):
+                helpers.append(rel)
+        if not mine:
+            print("No tests/test_ledger_*.py yet: write some first.")
+            return 2
+        for rel in mine + helpers:
+            (copy / rel).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(root / rel, copy / rel)
         if argv:
             target, old, new = argv
             text = (copy / target).read_text(encoding="utf-8")
@@ -58,7 +66,7 @@ def main(argv: list[str]) -> int:
                 return 2
             (copy / target).write_text(text.replace(old, new), encoding="utf-8", newline="\n")
         run = subprocess.run([sys.executable, "-P", "-m", "pytest", "-q", "-p", "no:cacheprovider", "-W", "ignore::DeprecationWarning",
-                              *[f"tests/{name}" for name in mine]], cwd=copy, capture_output=True, text=True)
+                              *mine], cwd=copy, capture_output=True, text=True)
     found = counts(run.stdout)
     total = sum(found.values())
     failed = found.get("failed", 0) + found.get("error", 0)

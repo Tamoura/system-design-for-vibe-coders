@@ -886,7 +886,7 @@ def test_a_postmortem_with_a_missing_section_and_few_actions(solved):
     commit(solved)
     result = grade(solved)
     assert_only(result, PM_SECTIONS)
-    assert "fewer than 3 action items" in result[PM_SECTIONS].detail
+    assert "action item(s) of five words or more" in result[PM_SECTIONS].detail
 
 
 # --------------------------------------------------------------------------------------------
@@ -1239,6 +1239,7 @@ def test_the_floors_are_the_ones_the_ticket_states():
     assert "Context needs 25 words or more, Decision 8, Consequences 20" in task
     assert "each of eight words or more" in task
     assert "Cover nine of the thirteen events or more" in task and "Three or more action items" in task
+    assert m.PAGE_MIN_PROSE == 40 and "40 words of prose or more" in task
 
 
 def test_a_thin_context_is_named_with_its_floor(solved):
@@ -1714,3 +1715,59 @@ def test_the_first_draft_lines_in_the_lesson_are_what_the_grader_prints_for_that
         assert line == f"[FAIL] {name}: {result[name].detail}", line
     # and the Summary of the lesson's draft is the one used here
     assert "caused by a configuration change on their side" in LESSON.read_text(encoding="utf-8")
+
+
+# -- a bare `name()` where the signature belongs ------------------------------------------------------------------------------
+@pytest.mark.parametrize(
+    "line",
+    [
+        "| `ids.new_id()` | Makes an id. |",
+        "### `audit.log_event()`",
+        "- `clock.FixedClock()` is a clock you move yourself.",
+        "1. `ids.use_generator()` installs a token source.",
+    ],
+    ids=["table-row", "heading", "list-item", "numbered-item"],
+)
+def test_a_signature_that_leaves_out_required_parameters_is_named(solved, line):
+    append_to_page(solved, line)
+    result = grade(solved)
+    assert_only(result, DOC_SIGS)
+    assert "leaves out" in result[DOC_SIGS].detail
+
+
+@pytest.mark.parametrize(
+    "line",
+    [
+        "| `ids.new_id()` | see `new_id(prefix)` |",
+        "- `clock.now()` returns the current time.",
+        "- `audit.current_path()` returns the audit file or None.",
+        "Build a clock with `clock.FixedClock()` and call `ids.new_id()` in prose.",
+    ],
+    ids=["same-row-has-the-parameters", "no-required-parameter", "no-required-parameter-2", "prose-shorthand"],
+)
+def test_empty_parentheses_are_fine_when_nothing_is_required_or_it_is_prose(solved, line):
+    append_to_page(solved, line)
+    assert_only(grade(solved))
+
+
+def test_a_terse_page_with_short_descriptions_is_accepted(solved):
+    page = text_of(solved, DOC_PATH)
+    rows = re.findall(r"^\|\s*(`[^`]+`)\s*\|\s*(`[^`]+`)\s*\|\s*([^|]+?)\s*\|$", page, re.M)
+    terse = "# najmkit\n\n" + "\n".join(f"| {n} | {sig} | {' '.join(desc.split()[:3])} |" for n, sig, desc in rows) + "\n"
+    terse += "".join(f"\n```python\n{re.sub(r'  +#.*$', '', block, flags=re.M)}\n```\n" for lang, block in m.code_blocks(page) if lang == "python")
+    terse += "\n## Known problems\n\nThe docstring of `audit.read_events` says a missing file raises an error; running it returns an empty list.\n"
+    assert m.prose_word_count(terse) < 80 and len(terse.split()) < 260  # short on purpose
+    put(solved, DOC_PATH, terse)
+    commit(solved)
+    assert_only(grade(solved))
+
+
+def test_a_page_that_only_lists_signatures_does_not_say_what_anything_does(solved):
+    page = text_of(solved, DOC_PATH)
+    signatures = ", ".join(f"`{sig}`" for sig in re.findall(r"^\|\s*`[^`]+`\s*\|\s*`([^`]+)`\s*\|", page, re.M))
+    examples = "".join(f"\n```python\n{block}\n```\n" for lang, block in m.code_blocks(page) if lang == "python")
+    put(solved, DOC_PATH, "# najmkit\n\n" + signatures + "\n" + examples + "\n## Known problems\n\nThe docstring of `audit.read_events` says a missing file raises an error; it returns an empty list.\n")
+    commit(solved)
+    result = grade(solved)
+    assert DOC_EXISTS in failing(result)
+    assert "almost nothing about what they do" in result[DOC_EXISTS].detail

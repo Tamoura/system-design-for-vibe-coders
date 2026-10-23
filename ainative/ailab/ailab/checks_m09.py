@@ -50,17 +50,21 @@ TRIAGE = "scripts/triage.py"
 CARDS = "docs/automation-cards.md"
 STUB = framework.KIT_DIR / "stubs" / "claude"
 
+# What a learner may touch (TASK.md lists exactly these). New files under tests/ are fine: the check on the existing tests catches an
+# edit or a deletion there. Anything under src/ is out: the hook has to be right about the code, not the other way round.
 ALLOWED_FILES = (
-    ".claude/**", "scripts/**", "CLAUDE.md", "docs/automation-*.md", "docs/agent-log-m09.md", "agent-log-m09.md",
-    ".github/workflows/*.yml", "tests/test_*.py",
+    ".claude/**", "scripts/**", "tests/**", "docs/**", ".github/**", "CLAUDE.md", "AGENTS.md", "README.md", ".gitignore",
+    "pyproject.toml", "agent-log-m09.md",
 )
 
 WAITING = "not checked yet"
 HOOK_TIMEOUT = 10.0
 TRIAGE_TIMEOUT = 20.0
+TESTS_TIMEOUT = 120.0  # a ceiling, not a target: a busy machine must not turn a correct suite into a failure
 
 # Check names (the tests refer to them).
 N_TESTS = "Your tests pass"
+N_COMMITS = "Commit messages follow CONTRIBUTING.md"
 N_OLD_TESTS = "The existing tests were not edited"
 N_OWN_TESTS = "You wrote tests for the hook and the script"
 N_SCOPE = "Only the toolkit files changed"
@@ -315,11 +319,42 @@ def tool_typos(entries: list[tuple[str, str | None, str]]) -> list[str]:
     return problems
 
 
-def risky_tools(entries: list[tuple[str, str | None, str]]) -> list[str]:
-    """Entries that can change files or run any command."""
+# The commands a read-only review may pre-approve with Bash(...). TASK.md names them. A pattern passes when it starts with one of
+# these (so `Bash(git diff *)` and `Bash(git log --oneline *)` pass, `Bash(git *)`, `Bash(rm *)`, `Bash(sed -i *)` and
+# `Bash(python *)` do not) and has no shell operator in it.
+READ_ONLY_COMMANDS = (
+    "git diff", "git log", "git status", "git show", "git blame", "git grep", "git ls-files", "git rev-parse",
+    "git branch --show-current", "ls", "cat", "head", "tail", "wc", "grep", "rg", "diff", "tree", "pytest", "python -m pytest",
+    "python3 -m pytest",
+)
+SHELL_OPERATORS = re.compile(r"[;&|<>`\n]|\$\(")
+
+
+def bare_bash(spec: str | None) -> bool:
+    return spec in (None, "", "*", ":*")
+
+
+def read_only_bash(spec: str | None) -> bool:
+    """Is `Bash(spec)` a command that only reads? (`spec` is what stands between the parentheses.)"""
+    if bare_bash(spec):
+        return False
+    text = re.sub(r"(:\*|\s\*)$", "", spec.strip()).strip()  # the trailing wildcard of a prefix match: `git diff *` or `git diff:*`
+    if not text or SHELL_OPERATORS.search(text) or "--output" in text:
+        return False
+    words_ = [w for w in text.split() if w not in ("--no-pager", "--no-optional-locks")]  # git's own global options change nothing
+    return any(words_[:len(prefix.split())] == prefix.split() for prefix in READ_ONLY_COMMANDS)
+
+
+def risky_tools(entries: list[tuple[str, str | None, str]], *, allow_bare_bash: bool = False) -> list[str]:
+    """Entries that can change files or run any command: a write tool, a bare Bash, or a Bash pattern that is not read-only.
+
+    `allow_bare_bash` is for a subagent's `tools` list, where a plain `Bash` is only advised against (a separate check names it).
+    """
     bad = []
     for tool, spec, original in entries:
-        if tool in WRITE_TOOLS or (tool == "Bash" and spec in (None, "", "*", ":*")):
+        if tool in WRITE_TOOLS:
+            bad.append(original)
+        elif tool == "Bash" and not (allow_bare_bash and bare_bash(spec)) and not read_only_bash(spec):
             bad.append(original)
     return bad
 
@@ -356,7 +391,8 @@ def _need(doc: Doc, name: str, hint: str, required: bool = True) -> Check | None
 
 def skill_frontmatter_check(doc: Doc, kind: str) -> Check:
     hint = ("Frontmatter sits between two lines of three dashes at the very top. Give it a `description` that says what the command "
-            "does and when to use it. Use only keys the skills page lists; Claude Code ignores any other key without a word.")
+            "does and when to use it. Use only keys the skills page lists; Claude Code ignores any other key without a word. The "
+            "grader knows: " + ", ".join(sorted(SKILL_KEYS)) + ".")
     waiting = _need(doc, N_SKILL_FM, hint)
     if waiting:
         return waiting
@@ -380,8 +416,9 @@ def skill_frontmatter_check(doc: Doc, kind: str) -> Check:
 
 
 def skill_readonly_check(doc: Doc) -> Check:
-    hint = ("`allowed-tools` pre-approves tools for the turn, so a review command must not list Edit, Write or NotebookEdit, or a "
-            "bare Bash. Read, Grep, Glob and scoped commands such as Bash(git diff *) are enough.")
+    hint = ("`allowed-tools` pre-approves tools for the turn, so a review command must not list Edit, Write or NotebookEdit, a bare "
+            "Bash, or a Bash command that can change things (rm, sed -i, python, git commit, git checkout...). Read, Grep, Glob and "
+            "read-only commands such as Bash(git diff *) are enough; the grader knows " + ", ".join(READ_ONLY_COMMANDS) + ".")
     waiting = _need(doc, N_SKILL_RO, hint)
     if waiting:
         return waiting
@@ -466,7 +503,8 @@ def skill_checks(work: Path) -> list[Check]:
 def agent_checks(work: Path) -> list[Check]:
     doc = load_doc(work, AGENT)
     hint_fm = ("Frontmatter between two lines of three dashes: `name` (the file name without .md) and `description` are required. "
-               "Use only keys from the subagents page; an unknown key may be ignored without a word.")
+               "Use only keys from the subagents page; an unknown key may be ignored without a word. The grader knows: "
+               + ", ".join(sorted(AGENT_KEYS)) + ".")
     out = [Check(N_AGENT_FILE, doc.exists, "" if doc.exists else f"{AGENT} does not exist",
                  f"Create {AGENT}: a Markdown file whose body is the subagent's system prompt.")]
     if not doc.exists:
@@ -505,7 +543,7 @@ def agent_checks(work: Path) -> list[Check]:
     ro_problems: list[str] = []
     if not entries:
         ro_problems.append("there is no `tools` allowlist")
-    ro_problems += [f"`{b}` can change files" for b in risky_tools(entries) if b.split("(")[0] != "Bash"]
+    ro_problems += [f"`{b}` can change files" for b in risky_tools(entries, allow_bare_bash=True)]
     ro_problems += tool_typos(entries)
     mode = fm.get("permissionMode")
     if mode in WIDENING_MODES:
@@ -664,6 +702,14 @@ def hook_cases() -> list[HookCase]:
                  {"src/remit/_probe_dec.py": _py("from decimal import Decimal", "FEE = Decimal(0.1)")}, tool="Write", path="src/remit/_probe_dec.py"),
         HookCase("float-exp", "a float written with an exponent, in an expression", "report", "float",
                  {"src/remit/_probe_exp.py": _py("def f(x):", "    return x * -1e-3")}, path="src/remit/_probe_exp.py"),
+        HookCase("float-nested", "a float in a sub-folder of src/remit/", "report", "float",
+                 {"src/remit/_probe_pkg/inner.py": _py("RATE = 0.15")}, path="src/remit/_probe_pkg/inner.py"),
+        HookCase("float-name-only", "floats in a script whose file name contains remit", "silent", "quiet",
+                 {"scripts/remit_rates.py": _py("RATE = 0.15")}, path="scripts/remit_rates.py"),
+        HookCase("float-folder-name", "floats in a folder named remit under tests/", "silent", "quiet",
+                 {"tests/remit/_probe_rates.py": _py("RATE = 0.15")}, path="tests/remit/_probe_rates.py"),
+        HookCase("float-sibling", "floats in src/remit_extras/, which is not src/remit/", "silent", "quiet",
+                 {"src/remit_extras/_probe_rates.py": _py("RATE = 0.15")}, path="src/remit_extras/_probe_rates.py"),
         HookCase("float-in-tests", "floats in a test (tests prove that Money rejects them)", "silent", "quiet",
                  {"tests/test_probe_floats.py": _py("import pytest", "from remit.money import Money", "", "",
                                                     "def test_float_is_rejected():", "    with pytest.raises(TypeError):",
@@ -793,7 +839,8 @@ def hook_checks(work: Path) -> list[Check]:
         problems.append(f"{len(false_alarms)} untouched source file(s) set it off: {short(false_alarms, 2)}")
     out.append(Check(N_HOOK_QUIET, not problems, "; ".join(problems),
                      "A hook that cries wolf gets switched off. Judge the syntax tree, not the text: a mention of float in a docstring, a comment, "
-                     "a string or isinstance() is not a float. Floats are only a problem under src/remit/; tests need them."))
+                     "a string or isinstance() is not a float. Floats are only a problem in files inside the folder src/remit/ (not in a file or folder that "
+                     "merely has remit in its name); tests need them."))
     # syntax
     missed = wrong("syntax", "report")
     out.append(Check(N_HOOK_SYNTAX, not missed, f"{len(missed)} of {sum(1 for c in cases if c.group == 'syntax')} unparsable files were not reported: {short(missed, 3)}" if missed else "",
@@ -871,6 +918,17 @@ LOW_T = ("SUP-3017", "The fee on my last transfer was wrong. [stub:lowball]")
 TURNS_T = ("SUP-3018", "The exchange rate on my receipt was wrong. [stub:turns=4]")
 SLOW_T = ("SUP-3019", "What is my daily limit? [stub:slow]")
 ENV_STUB_SLOW = "30"
+# Replies with exactly one thing wrong. The script must turn each into an error entry with a reason, not accept it and not crash.
+SHAPE_TICKETS = [
+    ("SUP-3021", "The fee shown to me was wrong. [stub:badcategory]", "a category that is not on the list"),
+    ("SUP-3022", "The fee shown to me was wrong. [stub:badseverity]", "a severity that is not on the list"),
+    ("SUP-3023", "The fee shown to me was wrong. [stub:badarea]", "an area that is not on the list"),
+    ("SUP-3024", "The fee shown to me was wrong. [stub:boolstring]", 'money_logic as the text "true"'),
+    ("SUP-3025", "The fee shown to me was wrong. [stub:boolint]", "money_logic as the number 1"),
+    ("SUP-3026", "The fee shown to me was wrong. [stub:missing]", "a reply with no money_logic at all"),
+    ("SUP-3027", "The fee shown to me was wrong. [stub:nullfield]", "a severity that is null"),
+    ("SUP-3028", "The fee shown to me was wrong. [stub:list]", "a JSON list instead of an object"),
+]
 
 
 def tickets_json(rows: list[tuple[str, str]]) -> str:
@@ -1000,6 +1058,7 @@ def triage_checks(work: Path) -> list[Check]:
         fence = run_triage(root, scratch, [OK_A, FENCE_T, OK_B], name="fence")
         prose = run_triage(root, scratch, [OK_A, PROSE_T, OK_B], name="prose")
         invalid = run_triage(root, scratch, [OK_A, INVALID_T, HIJACK_T, OK_B], name="invalid")
+        shape = run_triage(root, scratch, [OK_A, *[(i, t) for i, t, _what in SHAPE_TICKETS], OK_B], name="shape")
         errors = run_triage(root, scratch, [OK_A, ERROR_T, CRASH_T, NOTJSON_T, OK_B], name="errors")
         tight = run_triage(root, scratch, [OK_A, TURNS_T, OK_B], args=("--max-turns", "2"), name="tight")
         roomy = run_triage(root, scratch, [OK_A, TURNS_T, OK_B], args=("--max-turns", "5"), name="roomy")
@@ -1100,7 +1159,7 @@ def triage_checks(work: Path) -> list[Check]:
         problems = sorted({p for c in calls for p in tool_problems(c.get("argv", []))})
         out.append(Check(N_TRI_TOOLS, not problems, short(problems, 2) if problems else "",
                          "A triage run reads text and returns labels; it needs no way to act. Name the tools: --tools \"\" (none) or --allowedTools "
-                         "with read-only tools. Never a bare Bash, Edit or Write, and never skip permissions."))
+                         "with read-only tools (add --permission-mode dontAsk). Never Edit, Write or a Bash that can change things, and never skip permissions."))
         # turn limit passed
         values = [flag_value(c.get("argv", []), "--max-turns") for c in calls]
         good_values = [v for v in values if v is not None and v.isdigit() and 1 <= int(v) <= 10]
@@ -1123,7 +1182,7 @@ def triage_checks(work: Path) -> list[Check]:
             problems.append("with --max-turns 5 the same ticket was not classified (is your option wired through to claude?)")
         seen_tight = {flag_value(c.get("argv", []), "--max-turns") for c in tight.calls}
         if seen_tight != {"2"}:
-            problems.append(f"claude was called with --max-turns {short(sorted(str(v) for v in seen_tight), 3)} when 2 was asked")
+            problems.append(f"claude was called with --max-turns {short(sorted(str(v) if v is not None else 'missing' for v in seen_tight), 3)} when 2 was asked")
         for g in (OK_A, OK_B):
             if not _result_matches(tight.by_id().get(g[0], {}), expected_fields(g[1], stub)):
                 problems.append(f"{g[0]} was lost when its neighbour hit the limit")
@@ -1137,13 +1196,22 @@ def triage_checks(work: Path) -> list[Check]:
                              [OK_A, PROSE_T, OK_B], PROSE_T, want_error=True, expect_exit=1))
 
     # validation: two bad replies in one batch
-    hint = ("Check category, severity and area against the allowed lists and money_logic against true/false before you trust a reply. A hijacked or sloppy "
-            "model is just text until it validates.")
-    pending = need(invalid, N_TRI_VALID, hint)
+    hint = ("Check every value before you trust a reply: category, severity and area each on its list, money_logic a real boolean (not 1, not "
+            '"true"), no key missing, and a JSON object, not a list. Each failure is an error entry with a reason, never a crash. A hijacked or '
+            "sloppy model is just text until it validates.")
+    pending = need(invalid, N_TRI_VALID, hint) or need(shape, N_TRI_VALID, hint)
     if pending:
         out.append(pending)
     else:
         problems = []
+        shaped = shape.by_id()
+        slipped = [what for tid, _text, what in SHAPE_TICKETS
+                   if shaped.get(tid, {}).get("status") != "error" or not str(shaped.get(tid, {}).get("error", "")).strip()]
+        if slipped:
+            problems.append(f"{len(slipped)} of {len(SHAPE_TICKETS)} malformed replies were accepted or came back without a reason: {short(slipped, 4)}")
+        for g in (OK_A, OK_B):
+            if not _result_matches(shaped.get(g[0], {}), expected_fields(g[1], stub)):
+                problems.append(f"{g[0]} was not classified correctly next to the malformed replies")
         entries = invalid.by_id()
         for bad in (INVALID_T, HIJACK_T):
             entry = entries.get(bad[0], {})
@@ -1196,7 +1264,7 @@ def triage_checks(work: Path) -> list[Check]:
 
     # retries: the most calls for one ticket within one run
     worst = 0
-    for run in (errors, invalid, tight):
+    for run in (errors, invalid, tight, shape):
         per_ticket: dict[str, int] = {}
         for call in run.calls:
             key = call.get("stdin", "") + "\0" + "\0".join(call.get("argv", []))  # a ticket may travel in either place
@@ -1247,26 +1315,49 @@ CARD_LABELS = ["Repeats?", "Mechanical check?", "If it is wrong?", "Where does i
                "Safe to run twice?", "Owner and upkeep?"]
 
 
+CARD_HEADING = re.compile(r"(?m)^#{1,6}[ \t]+Card[ \t]*(\d+)\b[^\n]*(?:\n|$)")
+BULLET = r"(?:[-*>][ \t]+)?"
+
+
+def _field(name: str, line: str) -> str | None:
+    """The value of a `**Name:** value`, `**Name**: value`, `**Name: value**` or `Name: value` line; None if the line is not that field."""
+    for pattern in (rf"^[ \t]*{BULLET}(?:\*\*|__)\s*{name}\s*:?\s*(?:\*\*|__)\s*:?\s*(.*)$",
+                    rf"^[ \t]*{BULLET}(?:\*\*|__)\s*{name}\s*:\s*(.*?)\s*(?:\*\*|__)\s*$",
+                    rf"^[ \t]*{BULLET}{name}[ \t]*:\s*(.*)$"):
+        found = re.match(pattern, line, re.I)
+        if found:
+            return found.group(1).strip()
+    return None
+
+
+def _answer_text(rest: str, label: str) -> str:
+    """What follows the number of a question: without its label, whether the label is bold or not."""
+    bold = re.match(r"^(?:\*\*|__)[^*_\n]*?(?:\*\*|__)\s*:?\s*", rest)
+    if bold:
+        return rest[bold.end():]
+    plain = re.match(rf"^{re.escape(label)}\s*:?\s*", rest, re.I)
+    return rest[plain.end():] if plain else rest
+
+
 def parse_cards(text: str) -> dict[int, dict]:
-    parts = re.split(r"(?m)^##\s+Card\s*(\d+)\b[^\n]*\n", text)
+    parts = CARD_HEADING.split(text)
     cards: dict[int, dict] = {}
     for number, body in zip(parts[1::2], parts[2::2], strict=False):
-        card: dict[str, Any] = {"answers": {}, "candidate": "", "decision": "", "because": ""}
+        card: dict[str, Any] = {"answers": {}, "candidate": "", "decision": "", "because": "", "decision_line": None}
         current = None
         for line in body.splitlines():
-            cand = re.match(r"^\s*\*\*Candidate:?\*\*:?\s*(.*)$", line)
-            dec = re.match(r"^\s*\*\*Decision:?\*\*:?\s*(.*)$", line)
-            bec = re.match(r"^\s*\*\*Because:?\*\*:?\s*(.*)$", line)
-            num = re.match(r"^\s*([1-8])\.\s+\*\*[^*]+\*\*:?\s*(.*)$", line)
-            if cand:
-                card["candidate"], current = cand.group(1), ("candidate", None)
-            elif dec:
-                card["decision"], current = dec.group(1).strip(), ("decision", None)
-            elif bec:
-                card["because"], current = bec.group(1), ("because", None)
+            cand, dec, bec = _field("Candidate", line), _field("Decision", line), _field("Because", line)
+            num = re.match(r"^[ \t]*([1-8])[.)][ \t]+(.*)$", line)
+            if cand is not None:
+                card["candidate"], current = cand, ("candidate", None)
+            elif dec is not None:
+                card["decision"], card["decision_line"], current = dec, line.strip(), ("decision", None)
+            elif bec is not None:
+                card["because"], current = bec, ("because", None)
             elif num:
-                card["answers"][int(num.group(1))] = num.group(2)
-                current = ("answer", int(num.group(1)))
+                index = int(num.group(1))
+                card["answers"][index] = _answer_text(num.group(2), CARD_LABELS[index - 1])
+                current = ("answer", index)
             elif line.strip() and current:
                 kind, key = current
                 if kind == "answer":
@@ -1278,16 +1369,32 @@ def parse_cards(text: str) -> dict[int, dict]:
 
 
 def decision_of(text: str) -> str | None:
-    if "/" in text:  # the template's menu, not a choice
+    lowered = text.strip().strip("*_ ").lower()
+    options = {"semi-automate" if "semi" in m else "automate" if "auto" in m else "keep manual"
+               for m in re.findall(r"semi[- ]automate[d]?|automate[d]?|keep (?:it )?manual(?:ly)?", lowered)}
+    if "/" in lowered and len(options) > 1:  # the template's menu, not a choice
         return None
-    found = re.match(r"^(semi-automate|automate|keep manual)\b", text.strip().strip("*_ ").lower())
-    return found.group(1) if found else None
+    found = re.match(r"^(semi[- ]automate[d]?|automate[d]?|keep (?:it )?manual(?:ly)?)\b", lowered)
+    if not found:
+        return None
+    word = found.group(1)
+    return "semi-automate" if word.startswith("semi") else "automate" if word.startswith("auto") else "keep manual"
+
+
+def distinct_words(text: str) -> int:
+    return len({w.lower() for w in re.findall(r"\w+", text)})
+
+
+def thin(text: str, minimum: int, distinct: int) -> bool:
+    """Too short, or one word said over and over: the grader reads structure, but it can tell filler from a sentence."""
+    return words(text) < minimum or distinct_words(text) < distinct
 
 
 def card_checks(work: Path) -> list[Check]:
     path = Path(work) / CARDS
-    hint = ("Copy lab-assets/automation-card-template.md three times into docs/automation-cards.md, under the headings from the ticket "
-            "(## Card 1, ## Card 2, ## Card 3). Answer all eight questions, pick one decision, and say why.")
+    hint = ("Copy lab-assets/automation-card-template.md three times into docs/automation-cards.md, under headings that start with Card 1, "
+            "Card 2 and Card 3 (## Card 1: ...). Keep the numbered questions, write the decision on one line as **Decision:** followed by "
+            "exactly one of automate, semi-automate or keep manual, and give your reason after **Because:**.")
     if not path.is_file():
         return [Check(N_CARDS, False, f"{CARDS} does not exist", hint), Check(N_CARD2, False, WAITING, "Write the cards first.")]
     cards = parse_cards(path.read_text(encoding="utf-8", errors="replace"))
@@ -1295,17 +1402,22 @@ def card_checks(work: Path) -> list[Check]:
     for number in (1, 2, 3):
         card = cards.get(number)
         if card is None:
-            problems.append(f"Card {number} is missing")
+            problems.append(f"Card {number} is missing (a heading such as `## Card {number}: ...`)")
             continue
-        thin = [CARD_LABELS[k - 1] for k in range(1, 9) if words(card["answers"].get(k, "")) < 3]
-        if thin:
-            problems.append(f"Card {number}: no real answer for {short(thin, 3)}")
-        if words(card["candidate"]) < 4:
+        empty = [CARD_LABELS[k - 1] for k in range(1, 9) if thin(card["answers"].get(k, ""), 3, 3)]
+        if empty:
+            problems.append(f"Card {number}: no real answer (at least three different words) for {short(empty, 3)}")
+        elif len({" ".join(a.lower().split()) for a in card["answers"].values()}) < 4:
+            problems.append(f"Card {number}: the answers repeat each other")
+        if thin(card["candidate"], 4, 3):
             problems.append(f"Card {number}: the candidate is not described")
         if decision_of(card["decision"]) is None:
-            problems.append(f"Card {number}: the decision must be exactly one of automate, semi-automate, keep manual")
-        if words(card["because"]) < 5:
-            problems.append(f"Card {number}: 'Because' needs a sentence")
+            if card["decision_line"] is None:
+                problems.append(f"Card {number}: there is no **Decision:** line")
+            else:
+                problems.append(f"Card {number}: the decision reads {card['decision'][:40]!r}; it must be exactly one of automate, semi-automate, keep manual")
+        if thin(card["because"], 5, 4):
+            problems.append(f"Card {number}: 'Because' needs a sentence of your own")
     out = [Check(N_CARDS, not problems, short(problems, 3) if problems else "", hint)]
     second = cards.get(2)
     decision = decision_of(second["decision"]) if second else None
@@ -1348,7 +1460,46 @@ def own_tests_check(work: Path) -> Check:
         problems.append("no test mentions the triage script")
     return Check(N_OWN_TESTS, not problems, "; ".join(problems),
                  "A hook you cannot test is a guess. Feed the hook JSON with subprocess (never run what a sample contains), and test the script against "
-                 "the stand-in claude in lab-assets/bin (put it first on PATH inside the test). At least six tests in new tests/test_*.py files.")
+                 "the stand-in claude in lab-assets/bin: put that folder first on PATH inside the test, so that it works in any shell and can never "
+                 "reach a real claude. At least six test functions in new files named tests/test_*.py.")
+
+
+def tests_check(work: Path) -> Check:
+    """The learner's own suite, run in a clean copy with the kit's stand-in FIRST on PATH, so that a test that calls `claude` never reaches a
+    real one on the grader's machine, and a suite that relies on the learner's `export PATH=...` still passes."""
+    with tempfile.TemporaryDirectory(prefix="ailab-m09-path-") as tmp:
+        bin_dir = bin_dir_with_stub(Path(tmp))
+        result = checks.run_pytest(work, ("tests",), timeout=TESTS_TIMEOUT,
+                                   extra_env={"PATH": f"{bin_dir}{os.pathsep}{os.environ.get('PATH', '')}"})
+    detail = result.summary()
+    if result.failures:
+        detail += f": {short(result.failure_names)}"
+    hint = ("Run `pytest -q` in your lab folder and read the first failure from the top. The grader runs your tests in a clean copy of the "
+            "folder with the stand-in first on PATH; in your own shell it is only there if you exported it, so make the tests put "
+            "lab-assets/bin first on PATH themselves. A real `claude` must never be called from a test.")
+    return Check(N_TESTS, result.ok, detail, "" if result.ok else hint)
+
+
+def commit_check(work: Path) -> Check:
+    """CONTRIBUTING.md's commit format, with the commit named (the bad one is not always the latest) and a hint that fits where it is."""
+    commits = [c for c in gitutil.commits_since(work, checks.LAB_START_TAG) if not c.is_merge]
+    if not commits:
+        return Check(N_COMMITS, False, "found 0 commits since the start; expected at least 1",
+                     "Commit your work in small steps: git add, then git commit -m 'type(scope): subject' (CONTRIBUTING.md has the format).")
+    bad = [(c, checks.commit_header_problems(c.subject)) for c in commits]
+    bad = [(c, p) for c, p in bad if p]
+    if not bad:
+        return Check(N_COMMITS, True, f"{checks.plural(len(commits), 'commit message')} checked")
+    listing = [f'{c.sha[:7]} "{c.subject}": {p[0]}' for c, p in bad]
+    oldest = bad[0][0]
+    if len(bad) == 1 and oldest.sha == commits[-1].sha:
+        how = "It is your latest commit, so `git commit --amend` lets you rewrite the message."
+    else:
+        how = (f"The oldest bad one is {oldest.sha[:7]}, not your latest commit, so `git commit --amend` will not reach it: run "
+               f"`git rebase -i {oldest.sha[:7]}^`, change `pick` to `reword` on that commit's line, save, and write the new message.")
+    return Check(N_COMMITS, False, short(listing, 2),
+                 "Open CONTRIBUTING.md: `type(scope): subject`, a lower-case scope, no full stop, the whole header at most 72 characters "
+                 f"(`git log --oneline lab-start..` lists your commits). {how}")
 
 
 def hygiene_checks(work: Path) -> list[Check]:
@@ -1357,10 +1508,11 @@ def hygiene_checks(work: Path) -> list[Check]:
         own_tests_check(work),
         checks.files_changed_within(
             work, ALLOWED_FILES, name=N_SCOPE,
-            hint="This lab adds files under .claude/, scripts/triage.py, tests/test_*.py (new files only), docs/automation-cards.md and, if you like, "
-                 "an agent log or a CI workflow. Revert anything else, above all anything under src/ (a hook that 'passes' because you changed the code it checks is not a hook)."),
+            hint="This lab changes only: .claude/, scripts/, docs/, .github/, new files under tests/, and CLAUDE.md, AGENTS.md, README.md, "
+                 ".gitignore, pyproject.toml. Revert anything else with git restore <file>, above all anything under src/ (a hook that 'passes' "
+                 "because you changed the code it checks is not a hook)."),
         checks.no_secrets(work),
-        checks.conventional_commits(work),
+        commit_check(work),
         checks.commit_count(work, at_least=4, required=False, name="Small commits",
                             hint="One commit per part (review command, reviewer, hook, triage script, cards) makes the review, and any revert, easy."),
         checks.all_committed(work),

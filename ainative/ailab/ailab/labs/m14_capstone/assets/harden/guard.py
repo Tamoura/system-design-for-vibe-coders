@@ -6,9 +6,10 @@ lets the call go ahead. Exit code 2 blocks it, and standard error is the reason 
 exit code is a non-blocking error: the command RUNS. So this script must never crash, and it blocks anything
 it cannot understand.
 
-It is a guard rail, not a wall. It reads the text of a command; it cannot see what a script will do once it
-starts. The sandbox and the permission rules are the wall. If you did lab m08, your own guard is better:
-use that one instead.
+It is a guard rail, not a wall. It reads the text of a command, including the text inside `bash -c`, `bash -lc`
+and `eval`. It cannot see a command built from a variable or an alias, text decoded on the way into a shell, or what
+a script or `python -c` will do once it starts. The sandbox and the permission rules are the wall. If you did lab m08,
+your own guard is better: use that one instead.
 """
 import json
 import os
@@ -49,6 +50,14 @@ def segments(command):
     return result
 
 
+def shell_script(args):
+    """The text that follows a shell's -c flag, also inside a cluster such as -lc or -ec; None when there is none."""
+    for index, arg in enumerate(args):
+        if re.fullmatch(r"-[A-Za-z]*c[A-Za-z]*", arg) and index + 1 < len(args):
+            return args[index + 1]
+    return None
+
+
 def program_index(words):
     """Index of the program in a segment: skip VAR=value prefixes and harmless wrappers."""
     i = 0
@@ -80,6 +89,8 @@ def judge(command, depth=0):
         if program == "rm" and any(a == "--recursive" or re.fullmatch(r"-[A-Za-z]*[rR][A-Za-z]*", a) for a in args):
             return "deleting a directory tree needs a human"
         if program == "git":
+            if any(a.startswith("alias.") for a in args):
+                return "a git alias can hide any command"
             sub, rest = git_subcommand(args)
             if sub == "push":
                 return "pushing is for a human"
@@ -91,15 +102,20 @@ def judge(command, depth=0):
             return "adding a dependency needs a ticket and a second reviewer (CONTRIBUTING.md)"
         if program.startswith("python") and "-m" in args and "pip" in args and "install" in args:
             return "adding a dependency needs a ticket and a second reviewer (CONTRIBUTING.md)"
+        if program == "uv" and "pip" in args and "install" in args:
+            return "adding a dependency needs a ticket and a second reviewer (CONTRIBUTING.md)"
+        if program == "find" and ("-delete" in args or any(a in {"-exec", "-execdir"} and i + 1 < len(args) and os.path.basename(args[i + 1]) == "rm"
+                                                              for i, a in enumerate(args))):
+            return "deleting files with find needs a human"
         if program in {"curl", "wget"} and number + 1 < len(parts):
             following = parts[number + 1]
             at = program_index(following)
             if at < len(following) and os.path.basename(following[at]) in INTERPRETERS:
                 return "downloaded text must not be piped into a shell"
-        if program in SHELLS and "-c" in args and depth < 3:
-            index = args.index("-c")
-            if index + 1 < len(args):
-                reason = judge(args[index + 1], depth + 1)
+        if depth < 3 and (program in SHELLS or program == "eval"):
+            inner = " ".join(args) if program == "eval" else shell_script(args)
+            if inner:
+                reason = judge(inner, depth + 1)
                 if reason:
                     return reason
         for word in words[start + 1:]:

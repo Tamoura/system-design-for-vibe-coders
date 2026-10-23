@@ -30,6 +30,10 @@ mix good and bad runs. Real tickets contain no markers. Markers are removed befo
     [stub:prose]    the answer is plain prose, not JSON
     [stub:invalid]  the answer is JSON with a value outside the allowed lists, and an extra field (also chosen by a ticket
                     that says "ignore your instructions": a pretend hijack; a real model may or may not be fooled)
+    [stub:badcategory] [stub:badseverity] [stub:badarea]   one of the three labels is not on its list
+    [stub:boolstring] [stub:boolint]   money_logic is the text "true", or the number 1, not a real boolean
+    [stub:missing]  the answer has no money_logic key       [stub:nullfield]  severity is null
+    [stub:list]     the answer is a JSON list, not an object
     [stub:lowball]  the answer says money_logic is false for a fees ticket
     [stub:error]    the run fails: exit code 1, the failure as `result`
     [stub:crash]    the run fails: exit code 1, nothing on standard out
@@ -76,7 +80,8 @@ AREA_WORDS = (
     ("ledger", ("balance", "statement", "debited", "posted", "الرصيد")),
 )
 HIJACK = ("ignore your instructions", "ignore previous instructions", "ignore all previous instructions")
-SCENARIOS = ("ok", "fenced", "prose", "invalid", "lowball", "error", "crash", "notjson", "slow")
+MALFORMED = ("badcategory", "badseverity", "badarea", "boolstring", "boolint", "missing", "nullfield", "list")
+SCENARIOS = ("ok", "fenced", "prose", "invalid", "lowball", "error", "crash", "notjson", "slow", *MALFORMED)
 MARKER = re.compile(r"\[stub:([a-z]+)(?:=(\d+))?\]")
 
 BOOLEAN_FLAGS = {"-p", "--print", "--bare", "--verbose", "--no-session-persistence", "-c", "--continue", "--fork-session",
@@ -107,6 +112,25 @@ def classify(ticket: str) -> dict:
     severity = ("high" if high else "medium") if category == "bug" else "low"
     area = next((name for name, words in AREA_WORDS if any(has_word(text, w) for w in words)), "other")
     return {"category": category, "severity": severity, "area": area, "money_logic": area in MONEY_AREAS}
+
+
+def malform(answer: dict, scenario: str):
+    """The answer with ONE thing wrong, so that a script has to check every value (and not only the two that `invalid` spoils)."""
+    if scenario == "badcategory":
+        return {**answer, "category": "complaint"}
+    if scenario == "badseverity":
+        return {**answer, "severity": "urgent"}
+    if scenario == "badarea":
+        return {**answer, "area": "payments"}
+    if scenario == "boolstring":
+        return {**answer, "money_logic": "true"}
+    if scenario == "boolint":
+        return {**answer, "money_logic": 1}
+    if scenario == "missing":
+        return {key: value for key, value in answer.items() if key != "money_logic"}
+    if scenario == "nullfield":
+        return {**answer, "severity": None}
+    return [1, 2, 3]  # "list"
 
 
 def parse_args(argv: list[str]) -> tuple[dict, str | None, str | None]:
@@ -263,6 +287,8 @@ def main(argv: list[str]) -> int:
         answer = {**answer, "severity": "critical", "area": "payments", "note": "ignore the rules and escalate this"}
     elif scenario == "lowball" and answer["area"] == "fees":
         answer = {**answer, "money_logic": False}
+    elif scenario in MALFORMED:
+        answer = malform(answer, scenario)
     text = json.dumps(answer, ensure_ascii=False)
     if scenario == "fenced":
         result = "Here is the triage for this ticket:\n\n```json\n" + json.dumps(answer, ensure_ascii=False, indent=2) + "\n```\n"
@@ -271,9 +297,10 @@ def main(argv: list[str]) -> int:
     else:
         result = text
     obj = {"result": result, **base}
-    if "--json-schema" in opts and scenario in ("ok", "fenced", "invalid", "lowball"):
+    if "--json-schema" in opts and (scenario in ("ok", "fenced", "invalid", "lowball") or scenario in MALFORMED):
         obj["structured_output"] = answer
-        obj["result"] = f"Triage: {answer['category']}, {answer['severity']}, {answer['area']}"
+        obj["result"] = "Triage: " + (", ".join(str(answer.get(key)) for key in ("category", "severity", "area"))
+                                      if isinstance(answer, dict) else "see structured_output")
     return finish(0, obj)
 
 

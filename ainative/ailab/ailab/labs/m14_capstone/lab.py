@@ -19,14 +19,17 @@ What the grader checks, and what it cannot
 ------------------------------------------
 Code: the visible tests, five groups of hidden acceptance tests (the corridor, the fee schedule, the rate and
 quote, the wording, and the whole send path with the KYC limits, the ledger and the command line), existing tests
-untouched, only the expected files changed, the learner's new tests failing without the change.
-Evidence: each document exists, has the template's sections, has no TODO left, and *refers* to the others: the plan
-covers every acceptance criterion of the spec, the tests name them, the corridors page matches the code, the review
-names the files that changed, the retrospective quotes the agent log's total and one of the learner's commits.
+untouched, only the expected files changed, the learner's new tests failing without the change and noticing six
+deliberate defects (at least four). A test that asserts nothing, or checks only that the corridor exists, notices none.
+Evidence: each document exists, has the template's sections, has no TODO placeholder left, and *refers* to the others:
+the plan covers every acceptance criterion of the spec, the tests name them, the corridors page matches the code, the
+review names the files that changed, the retrospective quotes the agent log's total and one of the learner's commits.
+The rules the grader enforces are listed for the learner in ``assets/README.md`` and in the templates.
 Hygiene and security: Conventional Commits, one kind of change per commit, no secrets, no float or clock shortcuts,
 no new dependency, no local data, a hook that really blocks (run on sample inputs in a subprocess).
 It cannot tell whether the spec is wise, the review honest, the agent log true or the retrospective sincere: those
-are for the group session. Advisory checks look at habits (tests first, a plan the history follows, teeth).
+are for the group session. Advisory checks look at habits (tests before or with the code, a plan the history follows,
+small commits, a guard that sees through wrappers, ask rules for the money files).
 """
 from __future__ import annotations
 
@@ -46,7 +49,7 @@ PARTS = [
     ("test_m14_corridor", "Corridor: code, minimum, maximum and delivery",
      "Compare the corridor with the table in the ticket. Is each limit inclusive, and does one cent outside it fail?"),
     ("test_m14_fees", "Fees: the STD-C schedule",
-     "Work three amounts out by hand (the minimum, a tier edge, the cap) and compare them with `python -m remit quote QAR <amount> BDT`."),
+     "Work three amounts out by hand (the minimum, a tier edge, the cap), then compare them with `PYTHONPATH=src python -m remit quote QAR <amount> BDT` once the corridor exists."),
     ("test_m14_fx", "Rate, margin and the 60-second quote",
      "Multiply the mid rate by one minus the margin, round half up to four places, and check the other corridors did not move."),
     ("test_m14_notify", "Wording in English and Arabic",
@@ -73,10 +76,11 @@ def grade(work: Path) -> list[Check]:
         *[m14.hidden_part(hidden, module, name, hint) for module, name, hint in PARTS],
         m14.tests_not_weakened_check(work),
         m14.new_tests_fail_on_starter(work),
+        m14.teeth_check(work),
         checks.files_changed_within(
             work, m14.ALLOWED_TO_CHANGE, name="Only the expected files changed",
             hint="The ticket needs corridors.py, fees.py, fx.py, notify.py and service.py, new tests, documents and agent configuration. "
-                 "Undo the rest: git restore --source=lab-start <file>"),
+                 "Undo the rest with git restore --source=lab-start <file>, and keep throwaway scripts outside the repository."),
         # -- 2. the evidence around it --------------------------------------------------
         m14.memory_check(work, files),
         m14.spec_check(work),
@@ -99,7 +103,6 @@ def grade(work: Path) -> list[Check]:
         m14.dependencies_check(work),
         m14.local_data_check(work),
         # -- 4. habits (advisory) -------------------------------------------------------
-        m14.teeth_check(work),
         m14.tests_first_check(work),
         m14.plan_vs_history_check(work),
         m14.small_commits_check(work),

@@ -5,17 +5,23 @@ What "lint" means here
 A team playbook is prose, so nothing compiles it. This module reads ``playbook.md`` the way a sceptical
 tech lead would and asks a fixed list of questions, each with a mechanical answer:
 
-* Is it complete?                    ten sections, each with real content, no template text left
-* Are the rules rules?               bullets that start with MUST / MUST NOT and end with ``Check:`` and a
-                                     mechanism anyone could run; no weasel words; spread over the areas that need them
+* Is it complete?                    ten sections (found by a key word in the heading), each with real content, no template
+                                     text left (a TODO or TBD that is only talked about is not template text)
+* Are the rules rules?               bullets that start with MUST / MUST NOT and end with ``Check:`` and a mechanism anyone
+                                     could run or inspect (a command, a CI job, a report, an audit that compares or lists ...);
+                                     a person alone, a bare "a CI job" or one check pasted onto many rules is not one; no weasel
+                                     words; spread over the areas that need them
 * Are the review norms concrete?     the label, a diff limit in lines, the second human for the six money modules
-                                     CONTRIBUTING.md names, a response time, what the author explains
-* Are the metrics measurable?        one ``###`` block per metric with six fields; three DORA-style delivery
-                                     metrics; a guard metric whose threshold has a number and a response; definitions
-                                     that say what is counted or timed and between which events; baselines taken
-                                     from the facts file (``assets/team-context.md``) or "to be measured"
-* Is it honest?                      no vanity metrics, no unsourced productivity claims, no files that do not
-                                     exist, nothing that contradicts the bank's rules or CONTRIBUTING.md
+                                     CONTRIBUTING.md names, a response time, what the author explains (read from the review
+                                     section; "tests come with the change" may also be said in the verification section)
+* Are the metrics measurable?        one ``###`` block per metric with six fields; three DORA-style delivery metrics; a guard metric
+                                     whose threshold has a number and a response; definitions that name what is counted or timed,
+                                     between which events and over which period; baselines taken from the facts file
+                                     (``assets/team-context.md``) in its unit or an equivalent one, or "to be measured"
+* Is it honest?                      no vanity metrics anywhere in the file, no unsourced productivity claims (source in the same
+                                     sentence), no files that do not exist unless the words next to them call them new, nothing
+                                     that loosens the bank's rules or CONTRIBUTING.md (no exceptions or AI stand-in for the
+                                     second human reviewer)
 
 What the lint cannot tell: whether the policy is *wise*, whether the team will follow it, or whether the numbers
 suit your team. It checks the shape of a good playbook, not the judgement behind it. The lesson says so.
@@ -26,7 +32,9 @@ out-of-scope change).
 """
 from __future__ import annotations
 
+import os
 import re
+from collections import Counter
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -112,10 +120,37 @@ VAGUE = re.compile(
     r"\b(responsibl[ey]\w*|careful\w*|cautious\w*|mindful\w*|as appropriate|where appropriate|when appropriate|"
     r"appropriate\w*|if possible|where possible|when possible|as needed|as necessary|try to|best effort|reasonabl[ey]|"
     r"properly|good judge?ment|common sense|should consider|ideally|generally|typically|usually|wherever feasible|"
-    r"as far as possible|when in doubt|use your judge?ment)\b",
+    r"as far as possible|when in doubt|use your judge?ment|"
+    r"regularly|periodically|promptly|timely|adequate\w*|sufficient\w*|sensibl[ey]|as soon as possible|asap|"
+    r"whenever convenient|when convenient|aim to|strive to|endeavou?r\w*|where it makes sense|if it makes sense|"
+    r"if feasible|when feasible|where feasible|if practical|where practical|whenever practical|to the extent possible|"
+    r"if needed|when needed|if necessary|when necessary|quickly|swiftly|suitabl[ey]|in good faith|"
+    r"as much as (?:is )?(?:practical|possible|reasonable)|as far as (?:is )?practical|in good time|in due course|from time to time|"
+    r"as and when|to a reasonable extent|as (?:often|soon) as)\b",
     re.I,
 )
-PLACEHOLDER = re.compile(r"<<|>>|\bTODO\b|\bTBD\b|\bFIXME\b|lorem ipsum|\bfill (?:this )?in\b|\bxxx+\b", re.I)
+
+# Unfinished text. Only the skeleton's <<prompts>> and markers used as markers count: a TODO or TBD that is *talked
+# about* ("MUST NOT leave a TODO in merged code", "the TBD column") or sits in backticks is ordinary prose.
+_CODE_SPAN = re.compile(r"`[^`\n]*`")
+_MARK = r"(?:TODO|TBD|FIXME)"
+_UNFINISHED = re.compile(
+    rf"^[\s>*_+#|\-]*(?:\d+[.)]\s*)?{_MARK}\b"      # the line, item or value starts with the marker
+    rf"|\b{_MARK}\s*:"                                 # "TODO: write this"
+    rf"|[(\[]\s*{_MARK}\s*[)\]]"                       # "(TBD)", "[TODO]"
+    rf"|:\s*[*_]*{_MARK}[*_]*\W*$"                     # "Baseline: TBD"
+    rf"|\|\s*{_MARK}\s*\|"                             # a table cell that holds only the marker
+)
+
+
+def has_placeholder(text: str) -> bool:
+    """Is there skeleton prompt or an unfinished-text marker in ``text`` (inline code is ignored)?"""
+    plain = _CODE_SPAN.sub(" ", text)
+    if "<<" in plain or ">>" in plain:
+        return True
+    if re.search(r"lorem ipsum|\bfill (?:this|it) in\b|\bxxx+\b", plain, re.I):
+        return True
+    return bool(_UNFINISHED.search(plain))
 
 
 # ---------------------------------------------------------------------------------------------------------
@@ -142,26 +177,96 @@ def fact_numbers() -> set[str]:
     return set(re.findall(r"\d+(?:\.\d+)?", text[start:])) if start >= 0 else set()
 
 
-# Which figures of the facts file belong to which metric (matched on the metric's name, first match wins).
-# A metric that matches none has no baseline yet and must say so. "13" (the weeks in the quarter) is allowed anywhere.
-BASELINES: tuple[tuple[re.Pattern[str], frozenset[str]], ...] = (
-    (re.compile(r"lead time|cycle time", re.I), frozenset({"52"})),
-    (re.compile(r"(deploy\w*|release)\s+(frequency|rate|cadence)|frequency of (deploy|release)|how often we (deploy|release)", re.I), frozenset({"30", "2"})),
-    (re.compile(r"recover|restor|mttr", re.I), frozenset({"3"})),
-    (re.compile(r"change fail\w*|failure rate|fail\w* (change|deployment|release)s?\s*(rate|percent)", re.I), frozenset({"3", "30", "10"})),
-    (re.compile(r"rework|unplanned", re.I), frozenset({"4", "30"})),
-    (re.compile(r"review (?:turnaround|time|latency|wait|speed)|turnaround|time to (?:first )?review|first (?:human )?review", re.I), frozenset({"9"})),
-    (re.compile(r"incident", re.I), frozenset({"0", "1"})),
-    (re.compile(r"adoption|share|AI[- ]assisted", re.I), frozenset({"60"})),
+@dataclass(frozen=True)
+class Fact:
+    """One row of the facts file's table, as the figures a baseline may quote for it."""
+
+    key: str
+    pattern: re.Pattern[str]          # matched on the metric's name (first match wins), then on its definition
+    ints: frozenset[str]              # whole numbers that may stand alone ("3 of 30", "30 in 13 weeks")
+    hours: float | None = None        # a duration, quoted in any unit within 10% ("52 hours", "about 2 days")
+    percents: tuple[float, ...] = ()  # a percentage, quoted to within half a point ("10%", "13.3%")
+    decimals: tuple[tuple[float, float], ...] = ()  # a bare decimal that is the same figure ("2.3 a week")
+
+
+FACTS: tuple[Fact, ...] = (
+    Fact("lead time", re.compile(r"lead time|cycle time|commit to (?:production|prod|deploy)", re.I), frozenset({"52"}), hours=52),
+    Fact("deployment frequency", re.compile(
+        r"(deploy\w*|release)\s+(frequency|rate|cadence)|frequency of (deploy|release)|how often we (deploy|release)|"
+        r"(?:deploy\w*|releases?)\s+(?:per|a|each|every)\s+(?:day|week|month)", re.I),
+        frozenset({"30", "2"}), decimals=((2.2, 2.4),)),
+    Fact("recovery time", re.compile(r"recover|restor|mttr|resolv|repair|time to (?:fix|remediat)", re.I), frozenset({"3"}), hours=3),
+    Fact("change failure rate", re.compile(r"change fail\w*|failure rate|fail\w* (change|deployment|release)s?\s*(rate|percent)", re.I),
+         frozenset({"3", "30", "10"}), percents=(10.0,)),
+    Fact("rework rate", re.compile(r"rework|unplanned", re.I), frozenset({"4", "30", "13"}), percents=(13.33,)),
+    Fact("review turnaround", re.compile(
+        r"review (?:turnaround|time|latency|wait|speed)|turnaround|time to (?:first )?review|first (?:human )?review", re.I),
+        frozenset({"9"}), hours=9),
+    Fact("incidents", re.compile(r"incident", re.I), frozenset({"0", "1"})),
+    Fact("AI-assisted share", re.compile(r"adoption|share|AI[- ]assisted", re.I), frozenset({"60"}), percents=(60.0,)),
 )
-QUARTER_WEEKS = "13"
+# Kept for the tests and for anyone reading this file: the whole numbers each metric may quote.
+BASELINES: tuple[tuple[re.Pattern[str], frozenset[str]], ...] = tuple((fact.pattern, fact.ints) for fact in FACTS)
+QUARTER_WEEKS = "13"  # "13 weeks" (the length of the quarter) may be quoted for any metric, with its unit only
 
 
-def baseline_figures(name: str) -> frozenset[str]:
-    for pattern, numbers in BASELINES:
-        if pattern.search(name):
-            return numbers | {QUARTER_WEEKS}
-    return frozenset({QUARTER_WEEKS})
+def baseline_fact(name: str, definition: str = "") -> Fact | None:
+    """The row of the facts table a metric belongs to: by its name, else by what its definition says."""
+    for text in (name, definition):
+        for fact in FACTS:
+            if fact.pattern.search(text):
+                return fact
+    return None
+
+
+def baseline_figures(name: str, definition: str = "") -> frozenset[str]:
+    """The whole numbers a baseline may quote for this metric, without the quarter's 13 weeks."""
+    fact = baseline_fact(name, definition)
+    return fact.ints if fact else frozenset()
+
+
+_QTY = re.compile(
+    r"(?<![\w.])(\d+(?:\.\d+)?)(?:[\s\-–]*(%|percent\b|hours?\b|hrs?\b|h\b|minutes?\b|mins?\b|days?\b|weeks?\b|wks?\b|months?\b))?",
+    re.I,
+)
+_HOURS_PER = {"h": 1.0, "hr": 1.0, "hrs": 1.0, "hour": 1.0, "hours": 1.0, "min": 1 / 60, "mins": 1 / 60, "minute": 1 / 60,
+              "minutes": 1 / 60, "day": 24.0, "days": 24.0, "week": 168.0, "weeks": 168.0, "wk": 168.0, "wks": 168.0}
+
+
+def quantity_ok(fact: Fact | None, number: float, unit: str) -> bool:
+    """May a baseline quote ``number`` (with ``unit``, possibly empty) for a metric of this row of the facts?"""
+    unit = unit.lower()
+    if unit in ("%", "percent"):
+        return fact is not None and any(abs(number - p) <= 0.5 for p in fact.percents)
+    if unit.startswith(("week", "wk")) and number == float(QUARTER_WEEKS):
+        return True
+    if unit:  # a duration in some unit: compare in hours
+        factor = _HOURS_PER.get(unit)
+        return bool(fact and fact.hours and factor and abs(number * factor - fact.hours) <= 0.1 * fact.hours)
+    if fact is None:
+        return False
+    if number.is_integer() and str(int(number)) in fact.ints:
+        return True
+    return any(low <= number <= high for low, high in fact.decimals)
+
+
+def baseline_problem(metric: "Metric") -> str | None:
+    """Why this metric's Baseline is not a figure the facts give for it (None when it is fine)."""
+    base = metric.fields.get("Baseline", "")
+    fact = baseline_fact(metric.name, metric.fields.get("Definition", ""))
+    quoted = [(float(hit.group(1)), (hit.group(2) or ""), hit.group(0).strip()) for hit in _QTY.finditer(base)]
+    wrong = [text for number, unit, text in quoted if not quantity_ok(fact, number, unit)]
+    if wrong:
+        shown = _short(wrong, 3)
+        if fact is None:
+            return (f'"{metric.name}" quotes {shown}, but no row of the facts table matches this metric\'s name, '
+                    f'so the honest baseline is "to be measured"')
+        return f'"{metric.name}" quotes {shown}, which the facts file does not give for this metric'
+    if not quoted and not re.search(
+            r"to be measured|not (?:yet )?measured|unknown|no baseline|will be measured|measure (?:it )?first|not tracked|do not (?:yet )?(?:know|measure)",
+            base, re.I):
+        return f'"{metric.name}": say a figure from the facts or "to be measured"'
+    return None
 
 
 # ---------------------------------------------------------------------------------------------------------
@@ -288,7 +393,7 @@ SECTION_DEFS: tuple[tuple[str, str, re.Pattern[str]], ...] = (
     ("automation", "automation", re.compile(r"\bautomat\w*")),
     ("metrics", "metrics plan", re.compile(r"\bmetrics?\b")),
     ("incident", "incident handling", re.compile(r"\bincidents?\b")),
-    ("onboarding", "onboarding", re.compile(r"\bonboard\w*")),
+    ("onboarding", "onboarding", re.compile(r"\b(?:onboard\w*|joiners?|new hires?|juniors?)\b")),
 )
 TITLES = {key: title for key, title, _ in SECTION_DEFS}
 
@@ -330,15 +435,52 @@ _RULE_START = re.compile(
     r"^[\s*_`]*(?:[^\n]{0,40}?[:.)\u2014\u2013-][\s*_`]*)?(MUST NOT|MUST)\b"
 )
 _CHECK = re.compile(r"\b(?:Checks?|Checked by|Verified by|Verification)[*_]*\s*:\s*[*_]*\s*(.+)$", re.I | re.S)
+# What counts as a mechanism after "Check:": something that runs, or leaves a record someone can open. The ticket lists
+# the kinds. A person or a feeling alone ("the team lead reviews it", "everyone knows") is not one.
 MECHANISM = re.compile(
-    r"\bCI\b|\bpipeline\b|\bworkflow\b|\bGitHub Actions?\b|\bhooks?\b|pre-?commit|pre-?push|branch protection|"
-    r"\bcode ?owners?\b|\bCODEOWNERS\b|\bpytest\b|\btests?\b|\bscan\w*|\blint\w*|\baudit\w*|\bchecklists?\b|"
-    r"\btemplates?\b|\blabels?\b|\bdashboards?\b|\breports?\b|\bgrep\b|\bgit (?:log|diff|grep|blame)\b|\bscripts?\b|"
-    r"`[^`]+`|\bsettings\b|\bdeny rules?\b|\bpermissions?\b|\bsample\w*|\bspot[- ]checks?\b|\bretros?\b|"
-    r"\bretrospectives?\b|\bapprovals?\b|\bsign-?offs?\b|\bon-call\b|\btickets?\b|\bregisters?\b|\blogs?\b|"
-    r"\bcommands?\b|\bquer(?:y|ies)\b|\bmetrics?\b|\bpostmortems?\b|\balerts?\b",
+    "|".join([
+        # things that run
+        r"\bCI\b", r"\bpipelines?\b", r"\bworkflows?\b", r"\bGitHub Actions?\b", r"\bhooks?\b", r"pre-?commit", r"pre-?push",
+        r"pre-?merge", r"\bbranch protection\b", r"\bprotected branch\w*", r"\brulesets?\b", r"\bcode ?owners?\b",
+        r"\bCODEOWNERS\b", r"\bpytest\b", r"\btests?\b", r"\bscan\w*", r"\blint\w*", r"\bscripts?\b", r"\bcommands?\b",
+        r"\bquer(?:y|ies)\b", r"\bbots?\b", r"\balerts?\b", r"\bmonitor\w*", r"\bdashboards?\b", r"\bgates?\b",
+        # gating phrases
+        r"\bstatus checks?\b", r"\brequired (?:checks?|reviewers?|reviews?|status)\b", r"\bturns? red\b", r"\bmerge (?:button|queue|gate)\b",
+        r"\b(?:build|job|check|pipeline|CI|step|test)s?\s+(?:fails?|breaks?|is blocked|stays? (?:red|blocked))\b",
+        r"\bfails? the (?:build|job|check|merge|pipeline)\b", r"\bblocks? the (?:merge|release|deploy\w*)\b", r"\bmerge is blocked\b",
+        # records and settings
+        r"\breport\w*", r"\blogs?\b", r"\btickets?\b", r"\brecord(?:s|ed)?\b", r"\bregisters?\b", r"\blists?\b", r"\blisted\b",
+        r"\broster\b", r"\binventory\b", r"\btimestamps?\b", r"\bfields?\b", r"\bcolumns?\b", r"\btemplates?\b",
+        r"\bchecklists?\b", r"\blabels?\b", r"\bdiffs?\b", r"\bgrep\b", r"\bgit (?:log|diff|grep|blame)\b", r"\bsettings\b",
+        r"\bdeny rules?\b", r"\bpermissions?\b", r"\bmetrics?\b", r"\bon-call\b", r"\bapprov\w*", r"\bsign-?offs?\b",
+        r"`[^`]+`",
+        # inspections that compare or list named things
+        r"\baudit\w*", r"\baccess reviews?\b", r"\bcompar\w+", r"\breconcil\w+", r"\bcross-?check\w*", r"\bcount(?:s|ed|ing)?\b",
+        r"\bsampl\w+", r"\bspot[- ]checks?\b", r"\bretros?\b", r"\bretrospectives?\b", r"\bpostmortems?\b",
+    ]),
     re.I,
 )
+_STOPWORDS = frozenset(
+    "a an the of in on at for to and or is are be was were runs run running every each any all this that these those it its "
+    "with by from as so also then than when if per via".split())
+# words that name a kind of mechanism without saying what it looks at ("a CI job", "a monthly audit")
+_GENERIC = frozenset(
+    "ci cd job jobs step steps check checks checked hook hooks script scripts test tests audit audits review reviews reviewer "
+    "reviewers report reports scan scans template templates label labels pipeline workflow tool tools process team lead manager "
+    "someone person people we our us monthly weekly daily quarterly yearly annual annually regular".split())
+
+
+def check_problem(check: str | None) -> str | None:
+    """Why a rule's ``Check:`` clause does not say how the rule is verified (None when it does)."""
+    if check is None:
+        return "no Check: clause"
+    if len(re.findall(r"\w+", check)) < 3 or not MECHANISM.search(check):
+        return "the check names no mechanism"
+    specific = [word for word in re.findall(r"[a-z0-9][\w-]*", _CODE_SPAN.sub(" x ", check.lower()))
+                if word not in _STOPWORDS and word not in _GENERIC]
+    if not specific:
+        return "the check names only a kind of mechanism, not what it looks at"
+    return None
 
 
 @dataclass
@@ -412,8 +554,10 @@ class Metric:
 
     @property
     def kind(self) -> str:
-        first = self.fields.get("Kind", "").strip(" *_`").lower()
-        return "delivery" if first.startswith("delivery") else "guard" if first.startswith("guard") else "other"
+        """``delivery`` or ``guard``: whichever of the two words comes first in the Kind field ("DORA delivery metric" is delivery)."""
+        value = self.fields.get("Kind", "")
+        words = [] if has_placeholder(value) else re.findall(r"delivery|guard", value.lower())
+        return words[0] if words else "other"
 
 
 def metric_blocks(doc: Doc, section: Section) -> list[Metric]:
@@ -449,10 +593,12 @@ def metric_blocks(doc: Doc, section: Section) -> list[Metric]:
 
 
 FAMILIES: tuple[tuple[str, re.Pattern[str]], ...] = (
-    ("lead time", re.compile(r"lead time|cycle time", re.I)),
-    ("deployment frequency", re.compile(r"(deploy\w*|release)\s+(frequency|rate|cadence)|frequency of (deploy|release)|how often we (deploy|release)", re.I)),
+    ("lead time", re.compile(r"lead time|cycle time|commit to (?:production|prod|deploy)", re.I)),
+    ("deployment frequency", re.compile(
+        r"(deploy\w*|release)\s+(frequency|rate|cadence)|frequency of (deploy|release)|how often we (deploy|release)|"
+        r"(?:deploy\w*|releases?)\s+(?:per|a|each|every)\s+(?:day|week|month)", re.I)),
     ("change failure rate", re.compile(r"change fail\w*|fail\w* (change|deployment|release)s?\s*(rate|percent)|failure rate", re.I)),
-    ("recovery time", re.compile(r"recover|restor|mttr", re.I)),
+    ("recovery time", re.compile(r"recover|restor|mttr|resolv|repair|time to (?:fix|remediat)", re.I)),
     ("rework rate", re.compile(r"rework", re.I)),
 )
 
@@ -470,6 +616,37 @@ _PERIOD = re.compile(
     r"\b(?:per|a|an|each|every|in a|in the|in each|during a|during the)\s+(?:\w+\s+){0,2}(?:day|week|month|sprint|quarter)s?\b|"
     r"\b(?:daily|weekly|monthly|quarterly)\b", re.I)
 _COUNTING = re.compile(r"\b(?:count|number|total|how many|deployments?|releases?|incidents?)\b", re.I)
+
+
+# A definition about software delivery names something from it. For the five DORA metrics the two ends are checked too.
+_DOMAIN = re.compile(
+    r"\b(?:commits?|pull requests?|PRs?|merg\w+|changes?|deploy\w*|releas\w*|production|prod|incidents?|tickets?|review\w*|"
+    r"tests?|builds?|bugs?|defects?|roll ?backs?|hotfix\w*|revert\w*|rework\w*|failures?|failed|outages?|alerts?|sessions?|"
+    r"prompts?|agents?|costs?|runs?|jobs?|pipelines?|CI|branch\w*|diffs?|lines?|files?|modules?|engineers?|developers?|"
+    r"joiners?|hires?|onboarding|stor(?:y|ies)|tasks?|issues?|sprints?|customers?|transfers?|requests?|postmortems?|"
+    r"code|work|fix\w*|labels?)\b",
+    re.I,
+)
+FAMILY_ANCHORS: dict[str, tuple[tuple[str, re.Pattern[str]], ...]] = {
+    "lead time": (
+        ("the change it starts from (a commit, a pull request)", re.compile(r"commit|pull request|\bPRs?\b|merg\w+|change\w*|ticket|code|request|work|task|story|issue", re.I)),
+        ("where it ends (production, deployed, live)", re.compile(r"production|\bprod\b|deploy\w*|releas\w*|\blive\b|ship\w*|customers?", re.I)),
+    ),
+    "deployment frequency": (
+        ("what is counted (deployments, releases)", re.compile(r"deploy\w*|releas\w*|ship\w*|push\w*|go(?:es|ing)? live", re.I)),
+    ),
+    "change failure rate": (
+        ("what is counted (deployments, releases, changes)", re.compile(r"deploy\w*|releas\w*|change\w*|ship\w*", re.I)),
+        ("what counts as a failure (a hotfix, a rollback, an incident)", re.compile(r"fail\w*|hotfix\w*|roll ?back|revert\w*|incident|patch\w*|remediat\w*|degrad\w*|\bbug", re.I)),
+    ),
+    "recovery time": (
+        ("where it starts (a failure declared or detected)", re.compile(r"fail\w*|incident|outage|declared|detect\w*|alert\w*|degrad\w*|down(?:time)?|broke\w*|\bbug|issue", re.I)),
+        ("where it ends (service restored, fixed, rolled back)", re.compile(r"restor\w*|recover\w*|resol\w*|fix\w*|\bback\b|roll ?back|mitigat\w*|repair\w*|healthy|working again|normal", re.I)),
+    ),
+    "rework rate": (
+        ("what counts as rework (unplanned fixes, hotfixes, reverts)", re.compile(r"unplanned|rework\w*|fix\w*|hotfix\w*|follow-?up|outside the plan|revert\w*|roll ?back|redo\w*|reopen\w*|patch\w*", re.I)),
+    ),
+}
 
 
 def definition_problems(metric: Metric) -> list[str]:
@@ -498,6 +675,13 @@ def definition_problems(metric: Metric) -> list[str]:
             problems.append("say what is counted")
     elif not (_STAT.search(text) or _RATIO.search(text) or _PERIOD.search(text)):
         problems.append("no unit, statistic or period: how would two people get the same number?")
+    anchors = FAMILY_ANCHORS.get(family(metric.name) or "")
+    if anchors:
+        problems += [f"it should name {label}" for label, pattern in anchors if not pattern.search(text)]
+        if not _DOMAIN.search(text):
+            problems.append("it names nothing from software delivery (a commit, a deployment, an incident ...)")
+    elif not _DOMAIN.search(text):
+        problems.append("it names nothing from software delivery (a commit, a pull request, a deployment, an incident ...): what exactly is counted or timed?")
     return problems
 
 
@@ -514,9 +698,14 @@ _ACTION = re.compile(
 )
 
 
+_NUMBER_WORD = re.compile(
+    r"\b(?:zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|fifteen|twenty|thirty|forty|fifty|sixty|"
+    r"seventy|eighty|ninety|hundred|half)\b", re.I)
+
+
 def threshold_problems(text: str) -> list[str]:
     problems = []
-    if not re.search(r"\d", text):
+    if not (re.search(r"\d", text) or _NUMBER_WORD.search(text)):
         problems.append("no number")
     if not _COMPARATOR.search(text):
         problems.append("no comparison (above, below, more than, at least)")
@@ -530,16 +719,33 @@ _VANITY = re.compile(
     r"\baccept(?:ed|ance) (?:rate|ratio)\b|\b(?:code|lines) (?:written|generated) by (?:AI|agents?|the agent|Copilot|Claude)\b|"
     r"\bAI[- ](?:written|generated) (?:code|lines|share|percent\w*|ratio)\b|\bpercent(?:age)? of (?:the )?(?:code|lines)\b|"
     r"\b(?:share|percent(?:age)?|ratio) of (?:the )?(?:code|lines) (?:that (?:is|are|was|were) )?(?:written|generated)\b|"
-    r"\bnumber of prompts\b|\bprompts? per\b",
+    r"\bnumber of prompts\b|\bprompts? per\b|"
+    # the same ideas under other names: uptake, completions kept, lines an agent wrote, volume per person
+    r"\buptake\b|\b(?:completions?|suggestions?)\s+(?:kept|accepted|taken|used|offered|shown|retained|rejected)\b|"
+    r"\b(?:kept|accepted|taken|retained)\s+(?:completions?|suggestions?)\b|"
+    r"\blines?\b[^.\n]{0,80}\b(?:written|generated|authored|produced|created)\s+by\s+(?:an?\s+|the\s+)?(?:AI|agents?|Claude|Copilot|assistants?|LLMs?)\b|"
+    r"\b(?:lines?|commits?|pull requests?|PRs?|tickets?)\s+(?:\w+\s+){0,3}per\s+(?:engineer|developer|dev|person|head)\b",
     re.I,
 )
 _ADOPTION = re.compile(
-    r"adoption|\busage\b|\bAI[- ]assisted (?:share|percent\w*|ratio|rate|volume|pull requests|PRs)\b|\bAI share\b|"
+    r"adoption|\busage\b|\bAI contribution\b|\bAI footprint\b|\bAI penetration\b|"
+    r"\bAI[- ]assisted (?:share|percent\w*|ratio|rate|volume|pull requests|PRs)\b|\bAI share\b|"
     r"\b(?:share|percent\w*|ratio|proportion|number|count) of (?:merged )?(?:pull requests|PRs|changes|commits|code|lines)\b.*\bAI\b|"
     r"\bAI[- ](?:written|generated)\b",
     re.I,
 )
 _QUALITY = re.compile(r"fail|rework|incident|revert|roll ?back|defect|bug|escape|hotfix|review|lead time|recover|restor|\bpass", re.I)
+
+
+def _negated_by_intro(lines: list[tuple[int, str]], index: int) -> bool:
+    """A list item such as "- lines of code" is excused by "We do not measure:" just before the list."""
+    if not _ITEM.match(lines[index][1]):
+        return False
+    for _, earlier in reversed(lines[max(0, index - 6):index]):
+        if _ITEM.match(earlier):
+            continue
+        return bool(NEGATION.search(earlier))
+    return False
 
 
 def is_adoption(metric: Metric) -> bool:
@@ -617,15 +823,19 @@ def sections_check(doc: Doc, sections: dict[str, Section]) -> Check:
     thin = [TITLES[key] for key, section in sections.items() if section.words() < MIN_SECTION_WORDS]
     problems = ([f"missing a heading for: {_short(missing, 4)}"] if missing else []) \
         + ([f"too thin (under {MIN_SECTION_WORDS} words of your own): {_short(thin, 4)}"] if thin else [])
-    return _grade(N_SECTIONS, problems, "Use the ten headings of the skeleton and write real content under each; "
-                  "a prompt in <<double angle brackets>> does not count.")
+    hint = ("Use the ten headings of the skeleton and write real content under each; a prompt in <<double angle brackets>> does not count.")
+    if missing:
+        hint = ("Each section is found by a key word in its heading: tools, data, context or memory, spec or review, verification, "
+                "security, automation, metrics, incident, onboarding. Keep the key word when you rename a heading.")
+    return _grade(N_SECTIONS, problems, hint)
 
 
 def placeholders_check(doc: Doc) -> Check:
-    hits = [f"line {i + 1}" for i, line in enumerate(doc.lines) if PLACEHOLDER.search(line)]
+    hits = [f"line {number + 1}" for number, line in doc.logical() if has_placeholder(line)]
     if hits:
         return _fail(N_PLACEHOLDERS, f"template or unfinished text at {_short(hits, 4)}",
-                     "Replace every <<prompt>> with your own text, and leave no TODO or TBD.")
+                     "Replace every <<prompt>> with your own text, and finish any TODO or TBD. "
+                     "(A TODO or TBD that you write about, or put in backticks, is fine.)")
     return _ok(N_PLACEHOLDERS)
 
 
@@ -633,10 +843,10 @@ def length_check(doc: Doc) -> Check:
     words = len(re.findall(r"[A-Za-z0-9_']+", "\n".join(strip_placeholders(line) for _, line in doc.prose())))
     if words < MIN_WORDS:
         return _fail(N_LENGTH, f"{words} words; a playbook that covers ten areas needs at least {MIN_WORDS}",
-                     "Say enough for each section that a new joiner could act on it.")
+                     "Say enough for each section that a new joiner could act on it (700 to 4,500 words in all).")
     if words > MAX_WORDS:
         return _fail(N_LENGTH, f"{words} words; nobody reads more than {MAX_WORDS} words of policy",
-                     "Cut it. Prefer a short rule with a check to a long explanation.")
+                     "Cut it to 4,500 words or fewer. Prefer a short rule with a check to a long explanation.")
     return _ok(N_LENGTH, f"{words} words")
 
 
@@ -664,12 +874,20 @@ def rule_checks(rules: list[Rule]) -> list[Check]:
     # a check clause with a mechanism
     bad = []
     for rule in rules:
-        if rule.check is None:
-            bad.append(f'"{rule.label}": no Check: clause')
-        elif len(re.findall(r"\w+", rule.check)) < 3 or not MECHANISM.search(rule.check):
-            bad.append(f'"{rule.label}": the check names no mechanism')
-    out.append(_grade(N_RULE_CHECK, [_short(bad, 2) + (f" ({len(bad)} rules in all)" if len(bad) > 2 else "")] if bad else [],
-                      "End the rule with Check: and something anyone could run or inspect: a command, a CI job, a hook, a checklist item, an audit."))
+        problem = check_problem(rule.check)
+        if problem:
+            bad.append(f'"{rule.label}": {problem}')
+    problems = [_short(bad, 2) + (f" ({len(bad)} rules in all)" if len(bad) > 2 else "")] if bad else []
+    # one check text pasted onto many rules is not a check for each of them
+    same = Counter(re.sub(r"\W+", " ", rule.check.lower()).strip() for rule in rules if rule.check)
+    if same:
+        text, count = same.most_common(1)[0]
+        if count >= 4 and count >= 0.4 * len(rules):
+            problems.append(f"{count} of {len(rules)} rules end with the same check text; a check says how this rule is verified")
+    out.append(_grade(N_RULE_CHECK, problems,
+                      "End the rule with Check: and something that runs or leaves a record: a command, a CI job or status check, a hook, a script, "
+                      "a scan, a report or log, a checklist item, a label, a branch-protection setting, or an audit that compares or lists named things. "
+                      "A person's name alone is not one."))
     # weasel words
     weasel = []
     for rule in rules:
@@ -721,13 +939,13 @@ def context_checks(section: Section | None) -> list[Check]:
     ]
     size = _line_has(text, r"\b\d+\s*lines?\b|\b(?:under|below|at most|no more than|up to|maximum|max)\s+\d+\b")
     return [
-        _coverage(N_CONTEXT, text, groups, 3, "Name the memory file, its owner, and the event that makes someone add a line to it."),
+        _coverage(N_CONTEXT, text, groups, 3, "Name the memory file (CLAUDE.md or AGENTS.md; it does not exist yet, so say it is new), its owner, and the event that makes someone add a line to it."),
         _ok(N_CONTEXT_SIZE) if size else _fail(N_CONTEXT_SIZE, "no limit on its size",
                                                "A memory file that grows without limit stops being followed: give it a size."),
     ]
 
 
-def review_checks(section: Section | None) -> list[Check]:
+def review_checks(section: Section | None, verification: Section | None = None) -> list[Check]:
     names = [N_REV_LABEL, N_REV_SIZE, N_REV_MONEY, N_REV_AUTHOR, N_REV_SPEED, N_REV_TESTS, N_REV_SPEC]
     if section is None:
         return [_fail(n, "the spec and review norms section is missing", "Add the section from the skeleton.") for n in names]
@@ -745,7 +963,7 @@ def review_checks(section: Section | None) -> list[Check]:
         out.append(_ok(N_REV_SIZE))
     else:
         out.append(_fail(N_REV_SIZE, "no maximum diff size in lines" if not limits else f"found {_short([str(n) for n in limits])}, which is not a small diff",
-                         "Say how many changed lines a pull request may have: a number a reviewer can read carefully in one sitting."))
+                         f"Say how many changed lines a pull request may have, from {lo} to {hi}: a number a reviewer can read carefully in one sitting."))
     # the second human for money logic
     modules = money_modules()
     missing = [m for m in modules if not re.search(rf"\b{re.escape(m)}\b", text)]
@@ -764,7 +982,10 @@ def review_checks(section: Section | None) -> list[Check]:
     speed = re.search(r"\b(\d+|one|two|three|four)\s*(working |business )?(hours?|days?)\b|\bsame[- ]day\b|\bnext (working |business )?day\b|\bwithin a (working )?day\b|\b\d+\s?h\b", text, re.I)
     out.append(_ok(N_REV_SPEED) if speed else _fail(N_REV_SPEED, "no response time", "Say how long a pull request may wait for its first review, in hours or working days."))
     # advisory: tests come with the change
-    tests = _line_has(text, r"\btests?\b", r"\b(first|before|with the change|alongside|come with|comes with|included|must include|new behaviou?r|every change|each change|together)\b")
+    # "tests come with the change" may be said in the review norms or in the verification standard
+    both = text + ("\n" + verification.text() if verification is not None else "")
+    tests = _line_has(both, r"\btests?\b", r"\b(first|before|with the change|alongside|come with|comes with|arrive|accompany|included|must include|new behaviou?r|"
+                      r"every change|each change|every pull request|each pull request|with every|with each|together|same pull request|same PR)\b")
     out.append(_ok(N_REV_TESTS) if tests else _fail(N_REV_TESTS, "nothing says tests arrive with the change", "Say when the tests arrive: in the same pull request, or ahead of it."))
     spec = re.search(r"acceptance criteria|non-?goals?|out of scope|definition of done|done means|do not touch", text, re.I)
     out.append(_ok(N_REV_SPEC) if spec else _fail(N_REV_SPEC, "nothing says what a ticket must contain before an agent starts",
@@ -836,7 +1057,7 @@ def incident_check(section: Section | None) -> Check:
         _g("containment (stop it, revoke, revert)", r"\b(contain\w*|stop\w* the agent|revoke\w*|rotate\w*|disabl\w*|kill|revert\w*|roll ?back|isolat\w*|disconnect\w*)\b"),
         _g("keeping the evidence", r"\b(preserve\w*|transcripts?|agent logs?|evidence|keep the|save the)\b"),
         _g("who is called", r"\b(Maha|on-call|SRE|incident (?:commander|lead|manager))\b"),
-        _g("a time limit", r"\b\d+\s*(minutes?|hours?|days?|working days?)\b"),
+        _g("a time limit", r"\b(?:\d+|an?|one|two|three|four|five|six|eight|ten|twelve|twenty|thirty|forty|the first)[\s-]*(?:working |business )?(?:minutes?|hours?|days?)\b|\bsame[- ]day\b|\bnext (?:working |business )?day\b"),
         _g("a blameless review", r"\bblameless\b"),
         ("a change to a control afterwards", lambda t: bool(re.search(r"postmortem|post-mortem|follow-?up", t, re.I))
          and bool(re.search(r"\b(hook|rules?|permissions?|memory|CLAUDE\.md|tests?|checklist|playbook|guard|control)\b", t, re.I))),
@@ -852,7 +1073,7 @@ def onboarding_check(section: Section | None) -> Check:
         _g("a mentor or pairing", r"\b(mentor\w*|buddy|pair\w*|senior)\b"),
         _g("explaining back", r"\bexplain\w*\b"),
         _g("work done without AI", r"\b(without (?:AI|an? (?:agent|assistant|AI)|the agent|agents?)|no-AI|by hand|AI-free|manual(?:ly)?)\b"),
-        _g("a cadence with a number", r"\b\d+\b", r"\b(weeks?|days?|sprints?|months?|quarters?)\b"),
+        _g("a cadence", r"\b(?:\d+|one|two|three|four|six|every|each|weekly|monthly|per|once)\b", r"\b(weeks?|days?|sprints?|months?|quarters?)\b"),
         _g("reading before writing", r"\b(CONTRIBUTING|TOUR|docs/|code reading|read(?:ing)? (?:the )?(?:code|module))\b"),
     ]
     return _coverage(N_ONBOARDING, section.text(), groups, 4,
@@ -871,7 +1092,7 @@ def metric_checks(doc: Doc, section: Section | None) -> list[Check]:
         problems.append("no metric blocks: use one ### heading per metric with the six fields underneath")
     for block in blocks:
         absent = [f for f in FIELDS if not block.fields.get(f, "").strip()]
-        stray = [f for f in FIELDS if PLACEHOLDER.search(block.fields.get(f, ""))]
+        stray = [f for f in FIELDS if has_placeholder(block.fields.get(f, ""))]
         if absent:
             problems.append(f'"{block.name}" lacks {_short(absent, 3)}')
         elif stray:
@@ -896,7 +1117,7 @@ def metric_checks(doc: Doc, section: Section | None) -> list[Check]:
         if found:
             gp.append(f'"{block.name}": {_short(found, 3)}')
     out.append(_grade(N_MET_GUARD, gp, "A guard's Threshold needs a number, a comparison and what we do when it is crossed."))
-    real = [b for b in blocks if not any(PLACEHOLDER.search(v) for v in b.fields.values())]
+    real = [b for b in blocks if not any(has_placeholder(v) for v in b.fields.values())]
     if not real:
         waiting = "waiting for a filled-in metric block"
         hint = "Write the metric blocks first."
@@ -912,18 +1133,10 @@ def metric_checks(doc: Doc, section: Section | None) -> list[Check]:
     out.append(_grade(N_MET_DEFINED, [_short(dp, 2) + (f" ({len(dp)} metrics in all)" if len(dp) > 2 else "")] if dp else [],
                       "Two people with the same data must get the same number: say what is counted or timed, between which events, over which period."))
     # 5. baselines
-    bp = []
-    for block in blocks:
-        base = block.fields.get("Baseline", "")
-        numbers = re.findall(r"\d+(?:\.\d+)?", base)
-        allowed = baseline_figures(block.name)
-        unknown = [n for n in numbers if n not in allowed]
-        if unknown:
-            bp.append(f'"{block.name}" quotes {_short(unknown, 3)}, which the facts file does not give for this metric')
-        elif not numbers and not re.search(r"to be measured|not (?:yet )?measured|unknown|no baseline|will be measured|measure (?:it )?first|not tracked|do not (?:yet )?(?:know|measure)", base, re.I):
-            bp.append(f'"{block.name}": say a figure from the facts or "to be measured"')
+    bp = [problem for problem in (baseline_problem(block) for block in blocks) if problem]
     out.append(_grade(N_MET_BASELINE, [_short(bp, 2)] if bp else [],
-                      "Use only the figures (and units) in lab-assets/team-context.md; for anything else write \"to be measured\"."))
+                      "Use only the figures in lab-assets/team-context.md, in the same unit or an equivalent one (52 hours, about 2 days); "
+                      "for any metric the table does not cover, write \"to be measured\"."))
     # 6. vanity
     vp = []
     flagged: list[tuple[int, int]] = []  # the line ranges of blocks already named, so their lines are not listed again
@@ -935,11 +1148,16 @@ def metric_checks(doc: Doc, section: Section | None) -> list[Check]:
         elif is_adoption(block) and not NEGATION.search(block.fields.get("Threshold", "")):
             vp.append(f'"{block.name}" puts a target on adoption')
             flagged.append((block.line, block.end))
-    for number, line in doc.logical(section.start, section.end):
-        if _VANITY.search(line) and not NEGATION.search(line) and not any(a <= number < b for a, b in flagged):
+    lines = doc.logical()
+    for index, (number, line) in enumerate(lines):
+        if line.startswith("#") or any(a <= number < b for a, b in flagged):
+            continue
+        if any(_VANITY.search(sentence) and not NEGATION.search(sentence) for sentence in sentences(line)) \
+                and not _negated_by_intro(lines, index):
             vp.append(f"line {number + 1}")
     out.append(_grade(N_MET_VANITY, [_short(list(dict.fromkeys(vp)), 3)] if vp else [],
-                      "Lines of code, suggestion acceptance and the share of AI-written code reward volume. Measure what reaches production and what it costs."))
+                      "Lines of code, suggestion acceptance and the share of AI-written code reward volume, wherever they appear in the playbook. "
+                      "Measure what reaches production and what it costs."))
     # 7. advisory: compare AI-assisted with the rest
     text = section.text()
     split = re.search(r"AI-assisted", text) and re.search(r"\b(compar\w+|split|segment\w*|versus|vs\.?|against|separately|break ?down|by label|other pull requests|non-AI|not labelled)\b", text, re.I)
@@ -948,34 +1166,80 @@ def metric_checks(doc: Doc, section: Section | None) -> list[Check]:
     return out
 
 
+_AI = r"(?:AI|agents?|bots?|Copilot|Claude|LLMs?|automated)"
 _CONTRADICTIONS: tuple[tuple[str, re.Pattern[str], bool], ...] = (
     # (what it says, pattern, True when a negation or restriction on the same line excuses it)
     ("float is fine for money", re.compile(r"\b(use|uses|using|may use|can use|allowed|acceptable|fine|ok|okay|permitted)\b[^.\n]{0,40}\bfloats?\b", re.I), True),
     ("bypass mode is allowed everywhere", re.compile(r"dangerously-skip-permissions|bypassPermissions|bypass (?:mode|permissions)", re.I), True),
     ("the label is optional", re.compile(r"\blabel\w*\b[^.\n]{0,60}\boptional\b|\boptional\b[^.\n]{0,60}\blabel", re.I), False),
     ("the second reviewer is optional", re.compile(r"second (?:human )?review\w*[^.\n]{0,60}\b(optional|not required|only if|unless)\b|\b(optional|skip|waive\w*)\b[^.\n]{0,40}second (?:human )?review", re.I), False),
+    ("tests are optional", re.compile(r"\b(?:tests?|test coverage)\b[^.\n]{0,30}\b(?:optional|not required|can be skipped|may be skipped|may be omitted)\b", re.I), False),
     ("authors may approve their own change", re.compile(r"\bself[- ](?:approv|merg)\w*|\b(?:approve|merge) (?:their|your|his|her|its) own\b", re.I), True),
-    ("an AI review can replace the human one", re.compile(r"\b(?:AI|agent|bot|Copilot|Claude)\b[^.\n]{0,40}\b(?:can|may|will) (?:replace|substitute|count as|serve as|stand in for)\b[^.\n]{0,40}\b(?:second|human|reviewer)", re.I), True),
+    ("the author can be the second reviewer", re.compile(
+        r"\bsame person (?:who|that|as)\b[^.\n]{0,30}\b(?:wrote|authored|opened|prompted|made)\b|"
+        r"\b(?:author|submitter|developer)\b[^.\n]{0,20}\b(?:may|can|could)\s+(?:also\s+)?(?:be|act as|serve as|count as)\b[^.\n]{0,20}\b(?:review\w*|approv\w*)|"
+        r"\breviewer\b[^.\n]{0,20}\b(?:may|can|could)\s+be\s+the\s+(?:author|same)|\bself-review\w*\s+(?:is|are|counts?)\b", re.I), True),
+    ("an AI review can replace the human one", re.compile(
+        rf"\b{_AI}\b[^.\n]{{0,40}}\b(?:can|may|will) (?:replace|substitute|count as|serve as|stand in for)\b[^.\n]{{0,40}}\b(?:second|human|reviewer)|"
+        rf"\b(?:second|2nd|other|additional)\s+(?:human\s+)?(?:review\w*|approv\w*|look|pair of eyes)\b[^.\n]{{0,60}}\b(?:may|can|could|might|is allowed to)\s+be\s+(?:an?\s+)?{_AI}\b|"
+        rf"\b{_AI}\s+(?:code\s+)?(?:review\w*|approv\w*)\s+(?:also\s+|still\s+)?(?:counts?|is\s+(?:enough|sufficient|fine|acceptable|allowed|ok(?:ay)?)|satisf\w+|suffices?|qualif\w+)\b|"
+        rf"\b(?:or|including|even|such as)\s+(?:by\s+)?an?\s+{_AI}\b[^.\n]{{0,25}}\b(?:review\w*|approv\w*|reviewer)\b|"
+        rf"\b{_AI}\b[^.\n]{{0,60}}\b(?:counts?|serves?|stands?|acts?|qualif\w+)\s+(?:as|in for)\s+(?:the\s+)?(?:second|human)\b", re.I), True),
+    ("AI-written code needs less review", re.compile(
+        rf"\bAI[- ](?:written|generated|assisted)\b[^.\n]{{0,40}}\b(?:needs?|requires?|gets?|receives?)\s+(?:less|lighter|fewer|no)\s+(?:review|scrutiny|checks?)\b|"
+        rf"\b(?:skip|waive|bypass)\w*\s+(?:the\s+)?review\b[^.\n]{{0,30}}\bAI\b", re.I), True),
+    ("personal accounts are allowed", re.compile(
+        r"\b(?:personal|free[- ]tier|private)\s+(?:accounts?|subscriptions?|licen[cs]es?|plans?|tiers?)\b[^.\n]{0,40}\b(?:are|is|may be|can be|allowed|fine|ok|okay|acceptable|permitted|welcome)\b", re.I), True),
+    ("Confidential or Restricted data may go into prompts", re.compile(
+        r"\b(?:Confidential|Restricted)\b[^.\n]{0,60}\b(?:may|can|is allowed|are allowed|is fine|is ok|is acceptable|is permitted)\b[^.\n]{0,40}\b(?:prompts?|pasted?|shared?|sent|agents?|contexts?|tools?)\b", re.I), True),
+    ("dependencies need no ticket", re.compile(
+        r"\bdependenc\w+[^.\n]{0,40}\b(?:freely|at will|without (?:a )?(?:ticket|review|approval|second reviewer)|no (?:ticket|approval) (?:is )?needed)\b", re.I), True),
     ("agents may use production", re.compile(r"\bagents?\b[^.\n]{0,40}\b(?:may|can|are allowed to|is allowed to|have access to)\b[^.\n]{0,50}\bproduction\b", re.I), True),
 )
 _RESTRICTION = re.compile(r"isolat|container|sandbox|\bVMs?\b|throw-?away|without credentials|no network", re.I)
-
-
 _NOT_OPTIONAL = re.compile(r"\b(?:not|never|isn'?t|aren'?t)\s+optional\b|\bnon-?optional\b|\bmandatory\b", re.I)
+
+# The second human reviewer for money logic has no exceptions and no discretion (CONTRIBUTING.md, the bank's fifth rule).
+_MONEY_REF = re.compile(r"money logic|money modules?|money code|\b(?:money|fees|fx|limits|ledger|service)\.py\b|\bsix (?:money )?modules\b|\bthe six\b", re.I)
+_REVIEW_REF = re.compile(r"\breview\w*|\bapprov\w*|\bsecond\b|\bsign-?off\b|\bsecond look\b", re.I)
+_AUTHOR_OK = re.compile(r"\b(?:except|other than|apart from|besides|but not)\s+(?:for\s+)?(?:the\s+)?(?:author|submitter|committer)\b", re.I)
+_EXEMPT = re.compile(
+    r"\bunless\b|\bexcept\b|\bexempt\w*|\b(?:waiv|skip)\w*\b[^.;]{0,25}\b(?:review\w*|approv\w*|second)\b|"
+    r"\b(?:review\w*|approv\w*|second)\b[^.;]{0,25}\b(?:waiv|skip)\w*|\boptional\b|\bnot required\b|\bonly if\b|\bonly when\b|"
+    r"\b(?:from|by) (?:no one|nobody)\b|\bno (?:second )?(?:review\w*|approval)\b[^.\n]{0,20}\b(?:needed|required)\b|"
+    r"\bat the (?:author|reviewer|team)'?s? discretion\b|"
+    r"\b(?:if|when|whenever)\s+(?:the\s+)?(?:author|developer|engineer|submitter|owner)\s+(?:thinks|feels|believes|decides|judges|considers|wants|chooses)\b|"
+    r"\b(?:if|when|where)\s+(?:the change|it|they)\s+(?:is|are|looks?)\s+(?:small|tiny|trivial|minor|low[- ]risk|urgent|risky|safe|simple)\b|"
+    r"\b(?:when|if|where|for|unless)\b[^.;]{0,40}\b(?:under|below|fewer than|less than)\s+\d+\s+(?:changed\s+)?lines?\b",
+    re.I,
+)
+
+
+def sentences(text: str) -> list[str]:
+    """Split prose into sentences (a rule's "MUST ... Check: ..." is two); abbreviations such as e.g. do not split."""
+    protected = re.sub(r"\b(e\.g|i\.e|etc|vs|et al|approx|incl)\.", lambda hit: hit.group(0).replace(".", "\u2024"), text, flags=re.I)
+    parts = re.split(r"(?<=[.!?])\s+(?=[A-Z`(\[*\"'])", protected)
+    return [part.replace("\u2024", ".").strip() for part in parts if part.strip()]
 
 
 def contradiction_check(doc: Doc) -> Check:
     hits = []
     for number, line in doc.logical():
-        for label, pattern, excusable in _CONTRADICTIONS:
-            if pattern.search(line):
-                if excusable and (NEGATION.search(line) or _RESTRICTION.search(line)):
-                    continue
-                if "optional" in label and _NOT_OPTIONAL.search(line):
-                    continue
-                hits.append(f"line {number + 1} ({label})")
-    return _grade(N_CONTRADICT, [_short(hits, 3)] if hits else [],
-                  "The playbook sits under the bank's six rules and CONTRIBUTING.md. It can be stricter, never looser.")
+        for sentence in sentences(line):  # one sentence at a time: a negation elsewhere in the paragraph excuses nothing
+            for label, pattern, excusable in _CONTRADICTIONS:
+                if pattern.search(sentence):
+                    if excusable and (NEGATION.search(sentence) or _RESTRICTION.search(sentence)):
+                        continue
+                    if "optional" in label and _NOT_OPTIONAL.search(sentence):
+                        continue
+                    hits.append(f"line {number + 1} ({label})")
+            plain = _AUTHOR_OK.sub(" ", sentence)
+            if _MONEY_REF.search(plain) and _REVIEW_REF.search(plain) and _EXEMPT.search(plain) \
+                    and not _NOT_OPTIONAL.search(plain):
+                hits.append(f"line {number + 1} (the second human reviewer for money logic has an exception)")
+    return _grade(N_CONTRADICT, [_short(list(dict.fromkeys(hits)), 3)] if hits else [],
+                  "The playbook sits under the bank's six rules and CONTRIBUTING.md. It can be stricter, never looser: "
+                  "no exceptions or discretion for the second human reviewer, no AI review in its place.")
 
 
 def production_check(doc: Doc) -> Check:
@@ -987,46 +1251,134 @@ def production_check(doc: Doc) -> Check:
 
 
 _BACKTICK = re.compile(r"`([^`\n]+)`")
+_FILE_EXTENSIONS = (".py", ".md", ".yml", ".yaml", ".json", ".toml", ".txt", ".cfg", ".ini", ".sh", ".lock")
+_BARE_FILENAMES = frozenset({"CODEOWNERS", "Makefile", "Dockerfile", "LICENSE", "CHANGELOG"})
+_KNOWN_FOLDERS = frozenset({"src", "tests", "docs", "lab-assets", "scripts", ".github", ".claude", "tools", "hooks", "bin", "config", "ci"})
+_LOCAL_ONLY = re.compile(r"^\.env(?:\.[\w-]+)?$")  # a developer's own .env file: git ignores it, and a deny rule may name it
+# "a new `CODEOWNERS` file", "we create `scripts/check.py`", "proposed": the sentence that names a file says it does not exist yet
+_NEW = re.compile(
+    r"\b(?:new|creat\w+|propos\w+|introduc\w+|to build|to be (?:built|created|added|written|made)|yet to be|"
+    r"(?:does|do|did) not (?:yet )?exist|doesn'?t exist|not yet (?:exist\w*|built|created|written))\b",
+    re.I,
+)
+
+
+_PRONOUN_START = re.compile(r"\s*(?:It|This|That|They|These|Those|Both)\b")
+
+
+def _repo_names(work: Path) -> tuple[set[str], set[str]]:
+    """Every file and folder of the repository (relative, with '/'), and every bare file name."""
+    paths: set[str] = set()
+    names: set[str] = set()
+    for root, dirs, files in os.walk(work):
+        dirs[:] = [d for d in dirs if d not in (".git", "__pycache__", ".pytest_cache")]
+        relative = Path(root).relative_to(work).as_posix()
+        for name in dirs + files:
+            paths.add(name if relative == "." else f"{relative}/{name}")
+            names.add(name)
+    return paths, names
+
+
+def _file_token(token: str) -> str | None:
+    """The path a backticked token names, or None when it is not a file or folder name."""
+    token = token.strip().rstrip(".,;:)").lstrip("@")
+    if token.startswith("./"):
+        token = token[2:]
+    if not token or re.search(r"[*<>{}$\u2026\s()]|\.\.\.|://", token) or not re.fullmatch(r"[\w.\-/]+", token):
+        return None
+    if not re.search(r"[A-Za-z]", token):
+        return None
+    name = token.rstrip("/")
+    if "/" in name:
+        first = name.split("/", 1)[0]
+        if token.endswith("/") or name.lower().endswith(_FILE_EXTENSIONS) or first in _KNOWN_FOLDERS:
+            return name
+        return None
+    if name.lower().endswith(_FILE_EXTENSIONS) or name in _BARE_FILENAMES or (name.startswith(".") and len(name) > 1):
+        return name
+    return None
+
+
+# a path written without backticks still counts when it has folders and a file extension: docs/SECURITY.md, src/remit/risk.py
+_PLAIN_PATH = re.compile(r"(?<![\w/.@:-])((?:\.?[\w-]+/)+[\w.-]*[\w-]\.(?:py|md|yml|yaml|json|toml|txt|cfg|ini|sh))(?![\w/-])")
+_URL = re.compile(r"https?://\S+")
+_NEAR = 60  # a "new" or "proposed" counts when it stands within this many characters of the path
+
+
+def _path_mentions(sentence: str) -> list[tuple[str, int, int]]:
+    """(path, start, end) of every file or folder a sentence names: in backticks, or as a plain folder/file path."""
+    found: list[tuple[str, int, int]] = []
+    for hit in _BACKTICK.finditer(sentence):
+        path = _file_token(hit.group(1))
+        if path is not None and not _LOCAL_ONLY.match(path):
+            found.append((path, hit.start(), hit.end()))
+    plain = _BACKTICK.sub(lambda hit: " " * len(hit.group(0)), _URL.sub(lambda hit: " " * len(hit.group(0)), sentence))
+    for hit in _PLAIN_PATH.finditer(plain):
+        path = _file_token(hit.group(1))
+        if path is not None and not _LOCAL_ONLY.match(path):
+            found.append((path, hit.start(1), hit.end(1)))
+    return found
 
 
 def paths_check(work: Path, doc: Doc) -> Check:
-    work = Path(work)
-    missing: list[str] = []
+    """Every file or folder the playbook names exists, or the words around it call it new or proposed."""
+    paths, names = _repo_names(Path(work))
+    mentions: list[tuple[str, int]] = []   # (path, line) in reading order
+    declared: set[str] = set()
     for number, line in doc.logical():
-        if re.search(r"\b(new|create[sd]?|add(?:s|ed)?|propos\w+|will)\b", line, re.I):
-            continue
-        for token in _BACKTICK.findall(line):
-            token = token.strip().rstrip(".,;:)")
-            if re.search(r"[*<>{}$…\s]|\.\.\.", token):
-                continue
-            if re.match(r"(?:src|tests)/", token):
-                if not (work / token).exists():
-                    missing.append(f"`{token}` (line {number + 1})")
-            elif re.fullmatch(r"[\w-]+\.py", token):
-                if not any(work.glob(f"src/**/{token}")) and not any(work.glob(f"tests/**/{token}")) and not (work / token).exists():
-                    missing.append(f"`{token}` (line {number + 1})")
+        parts = sentences(line)
+        for index, sentence in enumerate(parts):
+            # "The memory file is `CLAUDE.md`. It does not exist yet." : a sentence that starts with "It" or "This" speaks about the one before
+            follow = parts[index + 1] if index + 1 < len(parts) else ""
+            spoken_after = bool(_PRONOUN_START.match(follow) and _NEW.search(follow))
+            for path, start, end in _path_mentions(sentence):
+                mentions.append((path, number + 1))
+                if spoken_after or _NEW.search(sentence[max(0, start - _NEAR):end + _NEAR]):
+                    declared.add(path)
+    missing: list[str] = []
+    for path, number in mentions:
+        exists = path in paths or ("/" not in path and path in names)
+        if not exists and path not in declared:
+            missing.append(f"`{path}` (line {number})")
     return _grade(N_PATHS, [_short(list(dict.fromkeys(missing)), 3)] if missing else [],
-                  "Look in the repository: docs/ARCHITECTURE.md is partly out of date, and an assistant will happily repeat it. "
-                  "A file you propose to create is fine when the sentence says it is new.")
+                  "Look in the repository (docs/ARCHITECTURE.md is partly out of date, and an assistant will happily repeat it); "
+                  "lab-assets/team-context.md says what exists today. A file that does not exist yet is fine when the words next to it "
+                  "call it new or proposed, for example \"a new `CODEOWNERS` file\".")
 
 
 _CLAIM = re.compile(
-    r"\b(?:studies|research|surveys?|experts?|analysts?|benchmarks?)\s+(?:show|shows|prove|proves|found|find|suggest|indicate|say|says)\b|"
-    r"\baccording to (?:a|the|recent|several|multiple)(?:\s+\w+){0,2}\s+(?:study|studies|survey|surveys|report|reports|research)\b|"
-    r"\b\d+\s?[x×]\s+(?:faster|more productive|productivity)\b|\b\d{2,3}\s?%\s+(?:faster|more productive|productivity|increase in productivity|gains?)\b|"
-    r"\bindustry (?:average|standard|benchmark)s?\b|\b(?:10|ten)x\b",
+    r"\b(?:studies|research|surveys?|experts?|analysts?|benchmarks?)\s+(?:shows?|proves?|found|finds?|suggests?|indicates?|says?|confirms?|demonstrates?|reveals?)\b|"
+    r"\baccording to (?:a|an|the|recent|several|multiple|one|some)(?:\s+[\w-]+){0,3}\s+(?:study|studies|survey|surveys|research|analysis|white ?paper|trial|"
+    r"(?:industry|analyst|vendor|market|research|survey|annual) reports?)\b|"
+    r"\b\d+\s?[x\u00d7]\s+(?:faster|more productive|productivity)\b|\b\d{2,3}\s?%\s+(?:faster|more productive|productivity|increase in productivity|gains?)\b|"
+    r"\bindustry (?:average|standard|benchmark)s?\b|\b(?:10|ten)x\b|"
+    # the same claims in other words: doubling, "far faster", hours saved, an AI verb with a quantity
+    r"\b(?:double[sd]?|doubling|triple[sd]?|tripling|halve[sd]?|quadruple[sd]?)\b[^.\n]{0,60}\b(?:productiv\w*|output|velocity|throughput|speed|ship\w*|deliver\w*|faster|code)\b|"
+    r"\b(?:much|far|significantly|dramatically|substantially|vastly|considerably)\s+(?:faster|more productive|more efficient|quicker)\b|"
+    r"\bsav(?:e|es|ing)\s+(?:\w+\s+){0,3}(?:hours?|days?|minutes?)\s+(?:a|per|each|every)\s+(?:day|week|developer|engineer)\b|"
+    r"\b(?:AI|assistants?|agents?|Copilot|Claude|LLMs?|the tools|these tools)\b[^.\n]{0,60}\b(?:makes?|made|speeds?|boosts?|cuts?|reduces?|saves?|increases?|improves?|raises?|multipl\w+)\b"
+    r"[^.\n]{0,60}(?:\d+\s?%|\d+\s?[x\u00d7]|\b(?:two|three|four|five|ten)\s+times\b|\btwice as\b|\bhalf the\b|"
+    r"\b(?:a|one)\s+(?:third|quarter|half|fifth)\b|\b(?:two|three)[- ](?:thirds|quarters)\b)",
     re.I,
 )
-_SOURCE = re.compile(r"METR|DORA|Anthropic|Stack Overflow|GitHub|Google|Microsoft|Meta\b|arXiv|https?://|\b20\d\d\b|et al", re.I)
+# A source in the same sentence: a link, "et al", a named study, or a named organisation together with a year or a report.
+_SOURCE = re.compile(
+    r"https?://|\bet al\b|\b(?:METR|DORA|Accelerate|Stack Overflow|arXiv|SSRN)\b|"
+    r"\b(?:Google|Microsoft|GitHub|Anthropic|Meta|McKinsey|Gartner|Forrester|IDC|Atlassian|JetBrains|Accenture|GitClear|Uplevel|Cui)\b"
+    r"[^.\n]{0,60}\b(?:20\d\d|(?i:study|studies|survey|trial|report|paper|experiment))\b|"
+    r"\b(?:20\d\d)\b[^.\n]{0,40}\b(?i:study|survey|trial|report|paper)\b",
+)
 
 
 def claims_check(doc: Doc) -> Check:
     hits = []
     for number, line in doc.logical():
-        if _CLAIM.search(line) and not _SOURCE.search(line):
-            hits.append(f"line {number + 1}")
+        for sentence in sentences(line):
+            if _CLAIM.search(sentence) and not re.search(_SOURCE, sentence):
+                hits.append(f"line {number + 1}")
+                break
     return _grade(N_CLAIMS, [f"claim without a source at {_short(hits, 3)}"] if hits else [],
-                  "A playbook is policy, not evidence. Delete the claim or name the study (and its limits).")
+                  "A playbook is policy, not evidence. Delete the claim, or name the study (and its limits) in the same sentence.")
 
 
 def distinct_check(sections: dict[str, Section]) -> Check:
@@ -1061,7 +1413,7 @@ def playbook_checks(work: Path) -> list[Check]:
     results += rule_checks(rules)
     results += [tools_check(pick("tools")), data_check(pick("data"))]
     results += context_checks(pick("context"))
-    results += review_checks(pick("review"))
+    results += review_checks(pick("review"), pick("verification"))
     results += verification_checks(pick("verification"))
     results += [security_check(pick("security")), automation_check(pick("automation")), incident_check(pick("incident")),
                 onboarding_check(pick("onboarding"))]
@@ -1083,9 +1435,23 @@ def repository_checks(work: Path) -> list[Check]:
                  "the playbook sits under them.",
         ),
         checks.no_secrets(work, name=N_SECRETS),
-        checks.conventional_commits(work, name=N_COMMITS),
+        _commit_hint(checks.conventional_commits(work, name=N_COMMITS)),
         checks.all_committed(work, name=N_CLEAN),
     ]
+
+
+def _commit_hint(check: Check) -> Check:
+    """"Commit your change" is wrong advice for a learner who did commit, but on another branch; "amend" fixes only the last commit."""
+    if check.ok:
+        return check
+    if "found 0 commits" in check.detail:
+        check.hint = ("The grader counts the commits on the branch that is checked out in this directory, since the lab-start tag. "
+                      "Commit playbook.md here (git add playbook.md, then git commit -m \"docs(playbook): ...\"), "
+                      "or switch to the branch where you committed (git switch <branch>).")
+    else:
+        check.hint = ("Every commit since the start is checked. Format: type(scope): subject, a lower-case scope, at most 72 characters, no full stop. "
+                      "Reword the last commit with git commit --amend; to fix older ones, undo them with git reset --soft lab-start and commit again.")
+    return check
 
 
 def all_checks(work: Path) -> list[Check]:

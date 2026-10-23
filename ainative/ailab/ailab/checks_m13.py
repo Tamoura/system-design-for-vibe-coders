@@ -6,11 +6,13 @@ What it grades, in three groups:
 
 1. ``eval_checks``  eval/tasks.jsonl: valid JSON Lines, enough well-formed tasks, and checks that really are checks.
    The kit RUNS them. It exports a clean copy of the repository at the ``lab-start`` tag, adds the learner's eval/,
-   and asks four questions of each task:
+   and asks these questions of each task:
      * does the check run at all (an allowed command, nothing missing, nothing hanging)?
      * does it FAIL on the untouched repository (a check that passes before any work proves nothing)?
      * does the guard (the "do not break anything" command) PASS there?
-     * does a known-good reference solution make it PASS, and does a lazy placeholder answer NOT pass it?
+     * does a known-good reference solution (required for every task on the Remit repository) make it PASS?
+     * does a lazy answer (a placeholder, filler text, the prompt handed back, a stray edit) NOT pass it?
+   Tasks that repeat one another count once, and at least six tasks must be about the Remit repository.
    The running is done by ``assets/eval_runner.py``, the very file the learner is given, so ``baseline`` and
    ``verify`` in the learner's hands say what the grader will say. Tasks marked ``"repo": "own"`` come from the
    learner's own project; the kit cannot run those and says so.
@@ -25,6 +27,7 @@ learner will follow it. It checks the artefacts, not the judgement behind them.
 from __future__ import annotations
 
 import datetime
+import hashlib
 import importlib.util
 import re
 import sys
@@ -44,20 +47,20 @@ PLAN_FILE = "plan.md"
 
 MIN_TASKS = 8
 MIN_REMIT_TASKS = 6
-MIN_REFERENCES = 3
 MIN_KINDS = 3
-GRADER_TIMEOUT = 20.0  # seconds a single check may run while grading
+GRADER_TIMEOUT = 60.0  # seconds a single check may run while grading (the runner's own limit)
 
 # names (stable; the lesson and the tests use them)
 N_JSONL = "eval/tasks.jsonl is valid JSON Lines"
-N_COUNT = "At least eight tasks of your own"
+N_COUNT = "At least eight different tasks"
 N_FIELDS = "Every task is well formed"
 N_KINDS = "Tasks cover three kinds of work"
 N_RUNS = "Every check is allowed and runs"
 N_FAILS = "Every check fails on the untouched repo"
 N_GUARD = "Every guard passes on the untouched repo"
-N_REFS = "Three references pass their checks"
-N_PLACEHOLDER = "Checks reject a placeholder answer"
+N_REMIT = "At least six tasks use this repository"
+N_REFS = "Every Remit task has a passing reference"
+N_PLACEHOLDER = "Checks reject lazy answers"
 N_OFFLINE = "Checks stay offline"
 N_CLOCK = "Checks do not read the clock"
 N_GUARDED = "Code-changing tasks have a guard"
@@ -125,6 +128,56 @@ def example_prompts() -> set[str]:
     return {_norm_prompt(t.get("prompt", "")) for t in tasks}
 
 
+def _digest(work: Path, rel: object) -> str:
+    path = work / rel if isinstance(rel, str) and rel else None
+    if path is None or ".." in str(rel) or not path.is_file():
+        return ""
+    return hashlib.sha1(path.read_bytes()).hexdigest()
+
+
+def repeated(work: Path, tasks: list[dict]) -> dict[int, str]:
+    """Tasks that repeat an earlier one: a repeated id, the same prompt, or the same check on the same patches.
+    Maps the position of the repeat to a sentence. Eight copies of one task are one task."""
+    out: dict[int, str] = {}
+    by_id: dict[str, str] = {}
+    by_prompt: dict[str, str] = {}
+    by_check: dict[tuple, str] = {}
+    for index, task in enumerate(tasks):
+        tid = task.get("id") if isinstance(task.get("id"), str) else f"line {task.get('_line')}"
+        prompt = _norm_prompt(task.get("prompt", ""))
+        check = task.get("check") if isinstance(task.get("check"), dict) else {}
+        reference = _digest(work, task.get("reference"))
+        signature = (str(check.get("run", "")), _digest(work, task.get("setup")), reference) if reference else None
+        if tid in by_id:
+            out[index] = f"id {tid} on lines {by_id[tid]} and {task.get('_line')}"
+        elif prompt and prompt in by_prompt:
+            out[index] = f"{tid} repeats the prompt of {by_prompt[prompt]}"
+        elif signature and signature in by_check:
+            out[index] = f"{tid} has the same check and patches as {by_check[signature]}"
+        if tid not in by_id:
+            by_id[tid] = str(task.get("_line"))
+        by_prompt.setdefault(prompt, tid)
+        if signature:
+            by_check.setdefault(signature, tid)
+    return out
+
+
+def _runs_hint(broken: list[str]) -> str:
+    """Say what is wrong with the commands that could not run: a timeout is not a typo."""
+    text = " ".join(broken)
+    parts = []
+    if "did not finish" in text:
+        parts.append(f"A command ran past the time limit ({GRADER_TIMEOUT:g} s). Run it by hand: if it is only slow, make it smaller; "
+                     "on a busy machine, grade again.")
+    if re.search(r"not allowed|shell operator|relative to|read-only|forward slashes|is empty|cannot read the command", text):
+        parts.append("Allowed commands: pytest, python, grep and read-only git, with relative paths (forward slashes) and no shell operators.")
+    if re.search(r"does not exist", text):
+        parts.append("A check script or patch named in a task is missing: create it under eval/ or fix the name.")
+    if not parts or re.search(r"does not apply|syntax error|cannot run|collected no tests|not installed|BROKEN", text):
+        parts.append(RUNNER_HINT)
+    return " ".join(parts)
+
+
 def eval_checks(work: Path) -> list[Check]:
     """All the checks about eval/ (the heavy ones run the learner's checks in throw-away copies)."""
     work = Path(work)
@@ -142,27 +195,22 @@ def eval_checks(work: Path) -> list[Check]:
     examples = example_prompts()
     mine = [t for t in tasks if _norm_prompt(t.get("prompt", "")) not in examples]
     copied = len(tasks) - len(mine)
+    repeats = repeated(work, mine)
 
-    # ids and the count
-    seen: dict[str, int] = {}
-    dupes: list[str] = []
-    for task in mine:
-        tid = task.get("id")
-        if isinstance(tid, str):
-            if tid in seen:
-                dupes.append(f"id {tid} on lines {seen[tid]} and {task['_line']}")
-            seen.setdefault(tid, task["_line"])
+    # the count: different tasks, the course's examples and repeats left out; the learner's own-project tasks count
     if not tasks:
         out.append(_waiting(N_COUNT, "a valid eval/tasks.jsonl", "Create eval/tasks.jsonl first."))
     else:
         problems = []
-        if len(mine) < MIN_TASKS:
-            problems.append(f"{len(mine)} tasks of your own; the ticket asks for at least {MIN_TASKS}")
+        different = len(mine) - len(repeats)
+        if different < MIN_TASKS:
+            problems.append(f"{different} different tasks (the course's examples do not count); the ticket asks for at least {MIN_TASKS}")
         if copied:
             problems.append(f"{copied} of the course's examples do not count")
-        problems += dupes
+        problems += list(repeats.values())
         out.append(Check(N_COUNT, not problems, _short(problems) if problems else "",
-                         "Write more tasks from work you really do, each with its own id. The examples are for the shape only."))
+                         "Write more tasks from work you really do, each with its own id, prompt and check. "
+                         "Tasks from your own project (\"repo\": \"own\") count here; the examples and copies do not."))
 
     # field problems
     if not tasks:
@@ -171,8 +219,8 @@ def eval_checks(work: Path) -> list[Check]:
         field_problems = {id(t): R.task_problems(t, work, commands=False) for t in mine}
         bad = [f"{R.label(t)}: {_short(field_problems[id(t)], 2)}" for t in mine if field_problems[id(t)]]
         out.append(Check(N_FIELDS, not bad and bool(mine), _short(bad) if bad else ("" if mine else "no tasks of your own yet"),
-                         "Each task needs id, title, kind, prompt (at least 15 words) and check.run; setup and reference are "
-                         "optional .patch files under eval/. " + RUNNER_HINT))
+                         "Each task needs id, title, kind, prompt (at least 15 words) and check.run. Setup is an optional .patch file "
+                         "under eval/; reference is required for every task about this repository. " + RUNNER_HINT))
 
     valid = [t for t in mine if not field_problems.get(id(t))] if tasks else []
     ids_ok: list[dict] = []
@@ -191,6 +239,16 @@ def eval_checks(work: Path) -> list[Check]:
 
     remit = [t for t in ids_ok if t.get("repo", "remit") == "remit"]
     own = [t for t in ids_ok if t.get("repo", "remit") == "own"]
+    repeat_lines = {mine[i].get("_line") for i in repeats}
+    remit_distinct = [t for t in remit if t.get("_line") not in repeat_lines]
+    if not ids_ok:
+        out.append(_waiting(N_REMIT, "valid tasks", "Write the tasks first."))
+    else:
+        out.append(Check(N_REMIT, len(remit_distinct) >= MIN_REMIT_TASKS,
+                         "" if len(remit_distinct) >= MIN_REMIT_TASKS else
+                         f"{len(remit_distinct)} tasks are about the Remit repository; at least {MIN_REMIT_TASKS} must be (the kit cannot run "
+                         f"the tasks marked \"repo\": \"own\")",
+                         "Take most tasks from this repository, where the kit can run their checks; keep \"repo\": \"own\" for the rest."))
 
     # commands: allowed?
     command_problems: list[str] = []
@@ -229,13 +287,7 @@ def eval_checks(work: Path) -> list[Check]:
                 if outcome is not None and outcome.verdict == "broken":
                     broken.append(f"{R.label(task)}: {what} cannot run ({outcome.detail})")
                     break
-        enough = len(remit) >= MIN_REMIT_TASKS
-        detail = _short(broken) if broken else ""
-        if not broken and not enough:
-            detail = f"{len(remit)} tasks on the Remit repository run; at least {MIN_REMIT_TASKS} of your tasks must be about it (the kit cannot run the others)"
-        out.append(Check(N_RUNS, not broken and enough, detail,
-                         "Allowed commands: pytest, python, grep and read-only git, with paths relative to the repo root and no shell "
-                         "operators. " + RUNNER_HINT))
+        out.append(Check(N_RUNS, not broken, _short(broken) if broken else "", _runs_hint(broken)))
 
         # --- fails on the untouched repo
         vacuous = [R.label(t) for t in runnable if (by_id[t["id"]].baseline is not None and by_id[t["id"]].baseline.passed)]
@@ -248,38 +300,39 @@ def eval_checks(work: Path) -> list[Check]:
         guards_bad = [R.label(t) for t in runnable
                       if by_id[t["id"]].guard_baseline is not None and by_id[t["id"]].guard_baseline.verdict == "fail"]
         out.append(Check(N_GUARD, not guards_bad, ("these guards fail on the untouched repo: " + _short(guards_bad)) if guards_bad else "",
-                         "A guard must pass before the work and after a correct solution. Guard the neighbours, "
-                         "not the tests the planted bug already breaks."))
+                         "A guard must pass before the work and after a correct solution. If your planted bug breaks existing tests, "
+                         "guard the test files it does not break."))
 
-        # --- references
-        good, wrong = 0, []
+        # --- references: every task on this repository needs one that passes
+        problems = []
+        missing = [R.label(t) for t in remit if not t.get("reference")]
+        if missing:
+            problems.append("no reference for " + _short(missing))
         for task in runnable:
             r = by_id[task["id"]]
             if not task.get("reference") or r.error or r.reference is None:
                 continue
-            if r.reference.passed and (r.guard_reference is None or r.guard_reference.passed):
-                good += 1
+            if r.reference_issue:
+                problems.append(f"{R.label(task)}: {r.reference_issue}")
             elif r.reference.verdict == "fail":
-                wrong.append(f"{R.label(task)}: the check still fails after the reference ({r.reference.detail or 'no detail'})")
+                problems.append(f"{R.label(task)}: the check still fails after the reference ({r.reference.detail or 'no detail'})")
             elif r.guard_reference is not None and r.guard_reference.verdict == "fail":
-                wrong.append(f"{R.label(task)}: the guard fails after the reference")
-        problems = list(wrong)
-        if good < MIN_REFERENCES:
-            problems.append(f"{good} {'reference passes its check' if good == 1 else 'references pass their checks'}; "
-                            f"at least {MIN_REFERENCES} are needed")
+                problems.append(f"{R.label(task)}: the guard fails after the reference")
+        if not remit:
+            problems.append("no tasks on the Remit repository yet")
         out.append(Check(N_REFS, not problems, _short(problems) if problems else "",
-                         "Do the task yourself once in a scratch copy, save `git diff` as eval/reference/<id>.patch, and make sure "
-                         "your check passes on it. A check you have never seen pass cannot be trusted."))
+                         "For each task: `prepare` it into a scratch folder, solve it there, then `git add -N . && git diff` and save the "
+                         "output as eval/reference/<id>.patch. Run `verify`: a check you have never seen pass cannot be trusted."))
 
-        # --- placeholders
+        # --- lazy answers
         weak = []
         for task in runnable:
-            for file_name, outcome in by_id[task["id"]].placeholders:
-                if outcome.passed:
-                    weak.append(f"{R.label(task)}: a placeholder in {file_name}")
+            accepted = [what for what, outcome in by_id[task["id"]].placeholders if outcome.passed]
+            if accepted:
+                weak.append(f"{R.label(task)}: {', '.join(accepted)}")
         out.append(Check(N_PLACEHOLDER, not weak, ("the check accepts a lazy answer: " + _short(weak)) if weak else "",
-                         "Check what the answer says or what the tests catch, not that a file exists. A test that asserts nothing "
-                         "must fail your check."))
+                         "Check what the answer says or what the tests catch, not that a file exists or has some words. "
+                         "A test that asserts nothing, filler text or the prompt copied back must fail your check."))
 
     # --- static lint (needs only the files)
     if ids_ok:
@@ -299,7 +352,8 @@ def eval_checks(work: Path) -> list[Check]:
     if code_tasks:
         guarded = [t for t in code_tasks if isinstance(t["check"].get("guard"), str)]
         out.append(Check(N_GUARDED, len(guarded) * 2 >= len(code_tasks), f"{len(guarded)} of {len(code_tasks)} have a guard",
-                         "Add check.guard (for example `pytest -q`) so a tool that fixes the task and breaks something else fails.",
+                         "Add check.guard (for example `pytest -q`, or the test files your planted bug does not break) so a tool that fixes "
+                         "the task and breaks something else fails.",
                          required=False))
     else:
         out.append(Check(N_GUARDED, False, "no code-changing tasks yet", "Add a fix, feature, test or refactor task.", required=False))
@@ -388,14 +442,52 @@ def _column(headers: list[str], *keys: str) -> int | None:
     return None
 
 
+DATE_FORMATS = ("%Y-%m-%d", "%Y/%m/%d", "%d %B %Y", "%d %b %Y", "%B %d %Y", "%b %d %Y")
+
+
+def parse_date(text: str) -> datetime.date | None:
+    """A calendar date written as 2026-11-02, 2026/11/02, 2 November 2026, 2nd Nov 2026 or November 2, 2026."""
+    cleaned = re.sub(r"(?<=\d)(st|nd|rd|th)\b", "", text.strip().strip("*_`").strip().rstrip("."), flags=re.I)
+    cleaned = " ".join(cleaned.replace(",", " ").split())
+    for fmt in DATE_FORMATS:
+        try:
+            return datetime.datetime.strptime(cleaned, fmt).date()
+        except ValueError:
+            continue
+    return None
+
+
+_DATE_IN_TEXT = (
+    re.compile(r"\d{4}[-/]\d{1,2}[-/]\d{1,2}"),
+    re.compile(r"\d{1,2}(?:st|nd|rd|th)?\s+[A-Za-z]{3,9}\.?,?\s+\d{4}"),
+    re.compile(r"[A-Za-z]{3,9}\.?\s+\d{1,2}(?:st|nd|rd|th)?,?\s+\d{4}"),
+)
+
+
+def find_date(text: str) -> datetime.date | None:
+    """The first calendar date in a cell or a line: '2026-12-15', '15 Dec 2026 (Tue)', 'by December 15, 2026'."""
+    whole = parse_date(text)
+    if whole is not None:
+        return whole
+    for pattern in _DATE_IN_TEXT:
+        for match in pattern.finditer(text):
+            found = parse_date(match.group())
+            if found is not None:
+                return found
+    return None
+
+
 def _start_date(text: str) -> tuple[datetime.date | None, str]:
-    match = re.search(r"^\W*start date\W*:\W*(\d{4}-\d{2}-\d{2})\b", text, flags=re.I | re.M)
+    match = re.search(r"^\W*start date\W*:\W*(.+)$", text, flags=re.I | re.M)
     if not match:
         return None, "no line `Start date: YYYY-MM-DD`"
-    try:
-        return datetime.date.fromisoformat(match.group(1)), ""
-    except ValueError:
-        return None, f"{match.group(1)} is not a real date"
+    written = match.group(1).strip().strip("*_`").strip()
+    date = find_date(written)
+    if date is not None:
+        return date, ""
+    if re.match(r"\d{4}-\d{1,2}-\d{1,2}", written):
+        return None, f"{written} is not a real date"
+    return None, f"'{written[:30]}' is not a date I can read: write `Start date: YYYY-MM-DD`, for example 2026-11-02"
 
 
 def plan_checks(work: Path) -> list[Check]:
@@ -419,13 +511,13 @@ def plan_checks(work: Path) -> list[Check]:
         else:
             found[title] = section
             if _words(section.body) < minimum:
-                thin.append(title)
+                thin.append(f"{title} ({minimum}+ words)")
     problems = ([f"missing: {_short(missing, 4)}"] if missing else []) + ([f"too short: {_short(thin, 4)}"] if thin else [])
     out.append(Check(N_SECTIONS, not problems, "; ".join(problems), TEMPLATE_HINT))
 
     # start date
     start, why = _start_date(text)
-    out.append(Check(N_START, start is not None, why, "Write `Start date: 2026-11-02` (a real date, year-month-day) under the title."))
+    out.append(Check(N_START, start is not None, why, "Write `Start date: 2026-11-02` (year-month-day; `2 November 2026` also works) under the title. The goal dates are checked against it."))
 
     # skills map
     out.append(_skills_check(found.get("Where I am")))
@@ -486,6 +578,20 @@ def _routine_rows(section) -> tuple[list[str], list[list[str]]] | None:
     return headers, [[row[practice], row[minutes]] for row in rows]
 
 
+def _minutes(text: str) -> int | None:
+    """Minutes from '45', '45 min', '30-45', '~20', '1 hour', '1.5 h', 'half an hour'; None when there is no number."""
+    lowered = text.lower().replace(",", ".")
+    if re.search(r"half an hour|half-hour", lowered):
+        return 30
+    match = re.search(r"(\d+(?:\.\d+)?)\s*(h\b|hr|hrs|hour|hours)", lowered)
+    if match:
+        return round(float(match.group(1)) * 60)
+    if re.search(r"\ban hour\b", lowered):
+        return 60
+    number = re.search(r"\d+", lowered)
+    return int(number.group()) if number else None
+
+
 def _routine_check(section, parsed) -> Check:
     hint = "A table with a Practice column and a Minutes column: at least three practices, 5 to 240 minutes each, 60 to 600 a week."
     if section is None:
@@ -497,11 +603,10 @@ def _routine_check(section, parsed) -> Check:
     if len(rows) < 3:
         problems.append(f"{len(rows)} practices; at least 3")
     for practice, minutes in rows:
-        number = re.search(r"\d+", minutes)
-        if not number:
+        value = _minutes(minutes)
+        if value is None:
             problems.append(f"'{practice[:30]}': minutes is not a number")
             continue
-        value = int(number.group())
         total += value
         if not 5 <= value <= 240:
             problems.append(f"'{practice[:30]}': {value} minutes is outside 5 to 240")
@@ -512,8 +617,13 @@ def _routine_check(section, parsed) -> Check:
     return Check(N_ROUTINE, not problems, _short(problems) if problems else f"{total} minutes a week", hint)
 
 
+NUMBER_WORDS = re.compile(r"\b(?:zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|"
+                          r"seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|half|twice|double)\b",
+                          re.I)
+
+
 def _goals_check(section, table, start: datetime.date | None) -> Check:
-    hint = ("One row per goal with Goal, Metric, Baseline, Target (with a number), By (YYYY-MM-DD, inside your 90 days) and "
+    hint = ("One row per goal with Goal, Metric, Baseline, Target (with a number), By (a date, YYYY-MM-DD, inside your 90 days) and "
             "How I will measure it. Three to six goals.")
     if section is None:
         return _waiting(N_GOALS, "a 'Goals' section", hint)
@@ -539,19 +649,15 @@ def _goals_check(section, table, start: datetime.date | None) -> Check:
             problems.append(f"{tag}: name the metric (at least 2 words)")
         if not row[cols["baseline"]].strip():
             problems.append(f"{tag}: write today's baseline, even if it is 'none yet'")
-        if not re.search(r"\d", row[cols["target"]]):
+        if not (re.search(r"\d", row[cols["target"]]) or NUMBER_WORDS.search(row[cols["target"]])):
             problems.append(f"{tag}: the target has no number")
         if _words(row[cols["how"]]) < 3:
             problems.append(f"{tag}: say how you will measure it (at least 3 words)")
         when = row[cols["by"]].strip()
-        try:
-            date = datetime.date.fromisoformat(when)
-        except ValueError:
-            problems.append(f"{tag}: '{when[:20]}' is not a YYYY-MM-DD date")
-            continue
-        if start is None:
-            problems.append(f"{tag}: add a valid Start date first so the date can be checked")
-        elif not start <= date <= start + datetime.timedelta(days=90):
+        date = find_date(when)
+        if date is None:
+            problems.append(f"{tag}: '{when[:20]}' is not a full date: write YYYY-MM-DD")
+        elif start is not None and not start <= date <= start + datetime.timedelta(days=90):
             problems.append(f"{tag}: {when} is outside the 90 days from {start.isoformat()}")
     return Check(N_GOALS, not problems, _short(problems, 4) if problems else f"{len(rows)} goals", hint)
 
@@ -567,7 +673,7 @@ def repo_checks(work: Path) -> list[Check]:
         checks.commit_count(work, at_least=2, name=N_STEPS,
                             hint="Commit the eval and the plan separately, for example `test(eval): ...` then `docs(plan): ...`."),
         checks.conventional_commits(work, name=N_COMMITS),
-        checks.all_committed(work, name=N_CLEAN),
+        checks.all_committed(work, ignore=(*checks.TOOL_NOISE, RESULTS_FILE), name=N_CLEAN),  # the score log may stay uncommitted
         checks.no_secrets(work, name=N_SECRETS),
     ]
 

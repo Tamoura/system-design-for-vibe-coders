@@ -8,7 +8,7 @@ Three pieces of writing are overdue, and each must be *true*, not only tidy. Use
 you like; you are accountable for every sentence. This ticket is documentation only: do not change
 code, tests or `lab-assets/`. Run the commands below in this directory. Code comments that disagree
 with what the code does (there is at least one) go under "Known problems" at the end of the najmkit
-page; do not fix them here.
+page, a sentence each; do not fix them here.
 
 ### 1. An ADR for a decision we already made
 
@@ -29,8 +29,8 @@ rejected with a reason, or deferred).
 
 `docs/najmkit.md` was lost in the docs migration. Write it again from `src/najmkit/` (`ids`, `clock`,
 `audit`): every public function and class as `name(parameters)` copied from the def line (a method's
-`self` may stay or go), what it does, and a short example per module that runs, in a `python` block.
-Nothing outside the bank has seen najmkit: the code is your only source.
+`self` may stay or go), what it does (40 words of prose or more in all), and a short example per
+module that runs, in a `python` block. Nothing outside the bank has seen najmkit: the code is your only source.
 
 ### 3. A postmortem for INC-2031
 

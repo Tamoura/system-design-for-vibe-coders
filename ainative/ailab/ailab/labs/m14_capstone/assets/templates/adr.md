@@ -4,7 +4,7 @@
 TODO: Proposed or Accepted, and the date.
 
 ### Context
-TODO: the forces at play. Name the ticket (REMIT-414) and point at the code with `path` or `module.name` in backticks.
+TODO: the forces at play. Name the ticket (REMIT-414) and point at the code with `path` or `module.name` in backticks (at least two that exist).
 
 ### Decision
 TODO: what we decided, in full sentences, in the active voice ("We give Bangladesh its own fee schedule").

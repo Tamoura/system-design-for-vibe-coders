@@ -168,7 +168,7 @@ def python_check(code: str) -> dict:
 def test_the_starter_fails_for_the_right_reasons(starter):
     result = grade_all(starter)
     assert required_failures(result) == {
-        m13.N_JSONL, m13.N_COUNT, m13.N_FIELDS, m13.N_RUNS, m13.N_FAILS, m13.N_GUARD, m13.N_REFS, m13.N_PLACEHOLDER, m13.N_OFFLINE,
+        m13.N_JSONL, m13.N_COUNT, m13.N_FIELDS, m13.N_REMIT, m13.N_RUNS, m13.N_FAILS, m13.N_GUARD, m13.N_REFS, m13.N_PLACEHOLDER, m13.N_OFFLINE,
         m13.N_SECTIONS, m13.N_START, m13.N_SKILLS, m13.N_ROUTINE, m13.N_GOALS, m13.N_SCOPE, m13.N_STEPS, m13.N_COMMITS,
     }
     assert result[m13.N_CLEAN].ok and result[m13.N_SECRETS].ok
@@ -180,7 +180,7 @@ def test_the_starter_fails_for_the_right_reasons(starter):
 def test_the_reference_solution_passes_every_check(work):
     result = grade_all(work)
     assert_only(result)
-    assert len(result) == 27  # 15 about the eval, 7 about the plan, 5 about the repository; the names are unique
+    assert len(result) == 28  # 16 about the eval, 7 about the plan, 5 about the repository; the names are unique
 
 
 def test_the_course_template_copied_unchanged_is_not_a_plan(fresh):
@@ -194,8 +194,8 @@ def test_the_examples_copied_as_the_eval_are_not_eight_tasks(fresh):
     shutil.copyfile(fresh / "lab-assets" / "tasks.example.jsonl", fresh / "eval" / "tasks.jsonl")
     result = grade_eval(fresh)
     assert result[m13.N_JSONL].ok
-    assert not result[m13.N_COUNT].ok and "3 of the course's examples do not count" in result[m13.N_COUNT].detail
-    assert not result[m13.N_RUNS].ok  # three tasks, and fewer than six on the repository
+    assert not result[m13.N_COUNT].ok and "4 of the course's examples do not count" in result[m13.N_COUNT].detail
+    assert not result[m13.N_REMIT].ok and not result[m13.N_RUNS].ok  # nothing of the learner's own to run
 
 
 # --------------------------------------------------------------------------------------------
@@ -234,7 +234,7 @@ def test_one_bad_line_among_good_ones_is_named(work):
 def test_five_tasks_are_not_eight(work):
     save_tasks(work, load_tasks(work)[:5])
     result = grade_eval(work)
-    assert not result[m13.N_COUNT].ok and "5 tasks of your own" in result[m13.N_COUNT].detail
+    assert not result[m13.N_COUNT].ok and "5 different tasks" in result[m13.N_COUNT].detail
     assert result[m13.N_JSONL].ok and result[m13.N_FIELDS].ok
 
 
@@ -287,11 +287,11 @@ def test_a_task_without_any_check_at_all(work):
     ids=["assert-true", "whole-suite", "grep-anything", "just-prints"],
 )
 def test_a_check_that_already_passes_proves_nothing(work, run):
-    change(work, "T03", check={"run": run}, reference=None)
+    change(work, "T03", check={"run": run})
     result = grade_eval(work)
     assert not result[m13.N_FAILS].ok and "T03" in result[m13.N_FAILS].detail
     assert "before any work" in result[m13.N_FAILS].detail
-    assert required_failures(result) == {m13.N_FAILS}
+    assert required_failures(result) <= {m13.N_FAILS, m13.N_PLACEHOLDER}  # a check that always passes also accepts a lazy edit
 
 
 def test_a_check_that_only_asks_for_a_file_accepts_a_placeholder(work):
@@ -322,7 +322,8 @@ def test_a_reference_with_helper_files_the_check_does_not_use_is_not_called_weak
     assert_only(result)
     task = next(t for t in load_tasks(work) if t["id"] == "T01")
     assert R.new_files_in_patch(path.read_text(encoding="utf-8")) == ["NOTES.txt", "tests/test_cli_corridors.py"]
-    assert R.evaluate(work, "lab-start", task).placeholders == []
+    tried = [what for what, _ in R.evaluate(work, "lab-start", task).placeholders]
+    assert tried and not any("NOTES.txt" in what or "test_cli_corridors" in what for what in tried)  # only the stray edit to cli.py
 
 
 @pytest.mark.parametrize(
@@ -335,7 +336,7 @@ def test_a_reference_with_helper_files_the_check_does_not_use_is_not_called_weak
     ids=["missing-pytest-file", "missing-script", "empty-selection"],
 )
 def test_a_check_that_cannot_run_is_broken_not_failing(work, run, expected):
-    change(work, "T02", check={"run": run}, reference=None)
+    change(work, "T02", check={"run": run})
     result = grade_eval(work)
     assert not result[m13.N_RUNS].ok and "T02" in result[m13.N_RUNS].detail and expected in result[m13.N_RUNS].detail
     assert result[m13.N_FAILS].ok  # a broken check is reported once, where it belongs
@@ -430,13 +431,13 @@ def test_a_setup_patch_that_does_not_apply(work):
     assert not result[m13.N_RUNS].ok and "T02" in result[m13.N_RUNS].detail
 
 
-def test_only_two_references_are_not_three(work):
-    for task_id in ("T01", "T02", "T03", "T04", "T05", "T06"):
-        change(work, task_id, reference=None)
-    # T02 needs its setup to fail on the starter; without a reference it still does. T08 and T07 keep theirs.
+def test_a_task_without_a_reference_is_not_trusted(work):
+    """A check nobody has seen pass cannot be trusted, so every task on the Remit repository needs a reference."""
+    change(work, "T01", reference=None)
     result = grade_eval(work)
     assert_only(result, m13.N_REFS)
-    assert "2 references pass their checks" in result[m13.N_REFS].detail
+    assert "no reference for T01 (line 1)" in result[m13.N_REFS].detail
+    assert "prepare" in result[m13.N_REFS].hint and "verify" in result[m13.N_REFS].hint
 
 
 def test_no_references_at_all(work):
@@ -444,15 +445,89 @@ def test_no_references_at_all(work):
         change(work, task["id"], reference=None)
     result = grade_eval(work)
     assert_only(result, m13.N_REFS)
-    assert "0 references pass their checks" in result[m13.N_REFS].detail
+    assert "no reference for" in result[m13.N_REFS].detail
+
+
+def test_a_task_from_the_learners_own_project_needs_no_reference(work):
+    assert "reference" not in next(t for t in load_tasks(work) if t["id"] == "T09")
+    assert_only(grade_eval(work))
 
 
 def test_too_few_tasks_the_kit_can_run(work):
+    """Four of the eight Remit tasks moved to the learner's own project: nine tasks, but only four the kit can run."""
     for task_id in ("T04", "T05", "T06", "T07"):
         change(work, task_id, repo="own")
     result = grade_eval(work)
-    assert_only(result, m13.N_RUNS)
-    assert "at least 6" in result[m13.N_RUNS].detail
+    assert_only(result, m13.N_REMIT)
+    assert "at least 6" in result[m13.N_REMIT].detail and "4 tasks" in result[m13.N_REMIT].detail
+    assert result[m13.N_COUNT].ok and result[m13.N_RUNS].ok  # not reported under the wrong name
+
+
+def test_own_project_tasks_count_towards_the_eight(work):
+    """Seven Remit tasks and one of your own are eight; seven Remit tasks alone are seven."""
+    save_tasks(work, [t for t in load_tasks(work) if t["id"] != "T08"])
+    assert_only(grade_eval(work))
+    save_tasks(work, [t for t in load_tasks(work) if t["id"] != "T09"])
+    result = grade_eval(work)
+    assert_only(result, m13.N_COUNT, m13.N_OWN)  # N_OWN is only advisory
+    assert "7 different tasks" in result[m13.N_COUNT].detail and "own project" in result[m13.N_COUNT].hint
+
+
+def test_eight_copies_of_one_task_are_one_task(work):
+    first = next(t for t in load_tasks(work) if t["id"] == "T01")
+    save_tasks(work, [dict(first, id=f"C0{n}", title=f"Corridors command, copy {n}") for n in range(1, 9)])
+    result = grade_eval(work)
+    assert not result[m13.N_COUNT].ok and "1 different tasks" in result[m13.N_COUNT].detail
+    assert "repeats the prompt of C01" in result[m13.N_COUNT].detail
+
+
+def test_copies_with_a_reworded_prompt_but_the_same_check_and_patches_are_still_copies(work):
+    first = next(t for t in load_tasks(work) if t["id"] == "T01")
+    save_tasks(work, [dict(first, id=f"C0{n}", prompt=first["prompt"] + " " + "Please be careful. " * n) for n in range(1, 9)])
+    result = grade_eval(work)
+    assert not result[m13.N_COUNT].ok and "same check and patches as C01" in result[m13.N_COUNT].detail
+
+
+def test_a_second_boundary_task_with_its_own_check_is_not_a_copy(work):
+    tasks = load_tasks(work)
+    t02 = next(t for t in tasks if t["id"] == "T02")
+    other = dict(t02, id="T10", prompt=t02["prompt"].replace("60 seconds", "sixty seconds"), check={"run": "pytest -q eval/checks/test_t02_quote_expiry.py -k last_instant"})
+    other.pop("reference")
+    save_tasks(work, tasks + [other])
+    assert m13.N_COUNT not in failing(grade_eval(work))
+
+
+def _insert_line_patch(work: Path, text: str) -> str:
+    """A patch that inserts one line near the top of docs/ARCHITECTURE.md (three lines of context on each side, so git applies it)."""
+    lines = (work / "docs" / "ARCHITECTURE.md").read_text(encoding="utf-8").splitlines()
+    return ("diff --git a/docs/ARCHITECTURE.md b/docs/ARCHITECTURE.md\n--- a/docs/ARCHITECTURE.md\n+++ b/docs/ARCHITECTURE.md\n"
+            "@@ -1,6 +1,7 @@\n" + "".join(f" {line}\n" for line in lines[:3]) + f"+{text}\n" + "".join(f" {line}\n" for line in lines[3:6]))
+
+
+@pytest.mark.parametrize("with_reference", [False, True], ids=["no-reference", "reference-does-not-help"])
+def test_checks_that_can_never_pass_do_not_hide_behind_missing_references(work, with_reference):
+    """Six of the checks replaced by `exit 1`: they fail on the untouched repo, which is all `baseline` asks."""
+    for task_id in ("T01", "T02", "T03", "T04", "T05", "T06"):
+        fields = {"check": {"run": 'python -c "import sys; sys.exit(1)"'}}
+        if not with_reference:
+            fields["reference"] = None
+        change(work, task_id, **fields)
+    result = grade_eval(work)
+    assert not result[m13.N_REFS].ok
+    assert ("no reference for T01" if not with_reference else "still fails after the reference") in result[m13.N_REFS].detail
+
+
+@pytest.mark.parametrize("kind", ["docs", "other", "fix"])
+def test_a_one_word_reference_does_not_make_a_docs_check_trustworthy(work, kind):
+    """A docs task checked by `grep -q reviewed docs/ARCHITECTURE.md`, 'solved' by appending the word."""
+    write(work, "eval/reference/T10.patch", _insert_line_patch(work, "reviewed"))
+    task = {"id": "T10", "title": "Review the architecture page", "kind": kind,
+            "prompt": "Read docs/ARCHITECTURE.md and the code in src/remit and bring the page up to date, so that every statement it makes is true today. Change nothing else.",
+            "check": {"run": "grep -q reviewed docs/ARCHITECTURE.md"}, "reference": "eval/reference/T10.patch"}
+    save_tasks(work, load_tasks(work) + [task])
+    result = grade_eval(work)
+    assert not result[m13.N_REFS].ok
+    assert "T10" in result[m13.N_REFS].detail and "changes only 1 word:" in result[m13.N_REFS].detail
 
 
 def test_a_check_that_needs_the_network(work):
@@ -498,7 +573,7 @@ def test_checks_placed_outside_eval_are_not_part_of_a_clean_copy(work):
 def test_no_guards_no_own_project_and_no_readme_only_lose_advisory_checks(work):
     for task in load_tasks(work):
         change(work, task["id"], check={"run": task["check"]["run"]})  # drop every guard
-    change(work, "T09", repo=None, check={"run": "pytest -q eval/checks/test_t03_search_is_safe.py"})
+    save_tasks(work, [t for t in load_tasks(work) if t["id"] != "T09"])  # eight tasks on this repository, none from the learner's project
     (work / "eval" / "README.md").unlink()
     result = grade_eval(work)
     assert required_failures(result) == set()
@@ -545,7 +620,7 @@ def test_other_ways_to_title_the_first_month_are_accepted(work, heading):
     assert grade_plan(work)[m13.N_SECTIONS].ok
 
 
-@pytest.mark.parametrize("line, expected", [("", "no line"), ("Start date: next Monday", "no line"), ("Start date: 2026-13-45", "not a real date")])
+@pytest.mark.parametrize("line, expected", [("", "no line"), ("Start date: next Monday", "not a date I can read"), ("Start date: 2026-13-45", "not a real date")])
 def test_the_start_date_must_be_a_real_date(work, line, expected):
     plan_replace(work, "Start date: 2026-11-02", line)
     result = grade_plan(work)
@@ -580,7 +655,7 @@ def test_a_skills_map_without_a_number_or_evidence(work, old, new, expected):
     "old, new, expected",
     [
         ("| 6 | 2026-12-15 |", "| improve | 2026-12-15 |", "no number"),
-        ("| 2026-12-15 |", "| end of the quarter |", "not a YYYY-MM-DD date"),
+        ("| 2026-12-15 |", "| end of the quarter |", "not a full date"),
         ("| 2026-12-15 |", "| 2027-03-01 |", "outside the 90 days"),
         ("| 2026-12-15 |", "| 2026-10-01 |", "outside the 90 days"),
         ("| 0 in the last month |", "| |", "baseline"),
@@ -608,11 +683,10 @@ def test_two_goals_and_eight_goals_are_both_wrong(work):
     assert "8 goals" in grade_plan(work)[m13.N_GOALS].detail
 
 
-def test_goals_with_dates_need_a_start_date_to_be_checked(work):
+def test_a_missing_start_date_is_reported_once_not_on_every_goal(work):
     plan_replace(work, "Start date: 2026-11-02", "")
     result = grade_plan(work)
-    assert not result[m13.N_START].ok and not result[m13.N_GOALS].ok
-    assert "Start date" in result[m13.N_GOALS].detail
+    assert_only(result, m13.N_START)  # the goals are fine; their dates are checked once the start date is fixed
 
 
 def test_a_goal_table_without_a_target_column(work):
@@ -723,16 +797,17 @@ ALT_TASKS = [
      "reference": "eval/reference/T03.patch"},
     {"id": "A4", "title": "Is T3 documented", "kind": "docs",
      "prompt": "The architecture page lists two customer tiers but the code has three. Update the page so that it describes all of the tiers that exist, and say nothing that is not true.",
-     "check": {"run": 'grep -q "T3" docs/ARCHITECTURE.md'}},
-    {"id": "A5", "title": "A helper for the corridor table", "kind": "refactor",
-     "prompt": "Move the corridor code formatting out of the command handler into a small helper function named format_corridor in remit.cli, so that other commands could reuse it. Behaviour must not change.",
-     "check": {"run": 'python -c "import remit.cli as c; assert hasattr(c, \'format_corridor\')"', "guard": "pytest -q tests/test_config_cli.py"}},
+     "check": {"run": 'grep -q "T3" docs/ARCHITECTURE.md'}, "reference": "eval/reference/T07.patch"},
+    {"id": "A5", "title": "Smaller send", "kind": "refactor",
+     "prompt": "Split RemitService.send into smaller private methods so that no function in service.py is longer than seventy lines. Behaviour, messages and the order of the steps must not change, and no test may be edited.",
+     "check": {"run": 'python -c "import ast, pathlib; tree = ast.parse(pathlib.Path(\'src/remit/service.py\').read_text()); assert all(n.end_lineno - n.lineno + 1 <= 70 for n in ast.walk(tree) if isinstance(n, ast.FunctionDef))"',
+               "guard": "pytest -q tests/test_config_cli.py"}, "reference": "eval/reference/T06.patch"},
     {"id": "A6", "title": "Explain the monthly limit", "kind": "explain",
      "prompt": "Which module decides whether a transfer is over the monthly limit, and which function does it? Write the answer in ANSWER.md in two sentences naming both. Change nothing else.",
-     "check": {"run": 'grep -q "check_limits" ANSWER.md'}},
-    {"id": "A7", "title": "A test for the cap", "kind": "test",
-     "prompt": "Write a test in tests/test_fee_cap.py that proves the express surcharge is added after the cap for a very large transfer to India. It must fail if the surcharge were added before the cap.",
-     "check": {"run": "pytest -q tests/test_fee_cap.py"}},
+     "check": {"run": 'grep -q "check_limits" ANSWER.md'}, "reference": "eval/reference/A6.patch"},
+    {"id": "A7", "title": "Tests for the partner share", "kind": "test",
+     "prompt": "Write tests in tests/test_ledger_partner_share.py that prove the ledger rounds the partner's share of the fee half-even. They must pass on today's code and fail if the share were rounded half up instead.",
+     "check": {"run": "python eval/checks/check_t05_tests_bite.py"}, "reference": "eval/reference/T05.patch"},
     {"id": "A8", "title": "Review for the second reviewer", "kind": "review",
      "prompt": "Review review/PR-482.diff as the second reviewer and write what you find in REVIEW.md, the most serious first, with the reason each one matters. Do not change any other file.",
      "setup": "eval/setup/T08.patch", "check": {"run": "python eval/checks/check_t08_review.py"}, "reference": "eval/reference/T08.patch"},
@@ -792,7 +867,7 @@ Chasing every release or leaderboard. I look at a new tool only when a task in m
 
 
 def test_a_differently_shaped_but_sound_solution_is_accepted(fresh):
-    """Fewer references and guards, grep and python -c checks, columns in another order, en-dash headings, other titles."""
+    """Fewer guards, grep and python -c checks, shared references, columns in another order, en-dash headings, other titles."""
     solved_dir = fresh.parent / "reference"
     shutil.copytree(fresh, solved_dir)
     framework.solve_lab(framework.load_lab("m13"), solved_dir)
@@ -801,6 +876,10 @@ def test_a_differently_shaped_but_sound_solution_is_accepted(fresh):
     for sub in ("checks", "reference", "setup"):
         shutil.copytree(solved_dir / "eval" / sub, eval_dir / sub)
     save_tasks(fresh, ALT_TASKS)
+    write(fresh, "eval/reference/A6.patch",
+          "diff --git a/ANSWER.md b/ANSWER.md\nnew file mode 100644\n--- /dev/null\n+++ b/ANSWER.md\n@@ -0,0 +1,2 @@\n"
+          "+The limits module decides whether a transfer is over the monthly limit.\n"
+          "+The function that does it is check_limits, which compares the month's total with the tier's monthly limit.\n")
     (eval_dir / "README.md").write_text(
         "# Eval\n\nRun validate, baseline and verify first. A pass is a passing check plus a passing guard. I run every task "
         "three times per tool, from a clean workspace, and again when the tool changes or monthly.\n", encoding="utf-8")
@@ -824,6 +903,8 @@ def test_a_differently_shaped_but_sound_solution_is_accepted(fresh):
         ("", False), ("   ", False), ("npm test", False), ("make", False), ("bash run.sh", False), ("pytest -q | head", False),
         ("pytest -q ; ls", False), ("pytest -q 2>&1", False), ("git commit -m x", False), ("git", False), ("pytest /tmp", False),
         ("pytest ~/x", False), ("pytest ../x", False), ("pytest 'unclosed", False),
+        ("pytest -q eval\\checks\\test_x.py", False), ("python eval\\checks\\check.py", False), ('python -c "print(1)"', True),
+        ("python -c \"print('a\\\\nb')\"", True),
     ],
 )
 def test_the_command_allow_list(command, ok):
@@ -837,6 +918,8 @@ def test_the_command_allow_list(command, ok):
     [
         (["pytest", "-q", "x.py"], 0, "1 passed", "", "pass"),
         (["pytest", "-q", "x.py"], 1, "1 failed", "", "fail"),
+        (["pytest", "-q", "x.py"], 1, "", "/usr/bin/python: No module named pytest", "broken"),
+        (["python", "-m", "pytest", "x.py"], 1, "", "/usr/bin/python3: No module named pytest", "broken"),
         (["pytest", "-q", "x.py"], 5, "no tests ran", "", "broken"),
         (["pytest", "-q", "eval/x.py"], 4, "", "ERROR: file or directory not found: eval/x.py", "broken"),
         (["pytest", "-q", "tests/new.py"], 4, "", "ERROR: file or directory not found: tests/new.py", "fail"),
@@ -880,9 +963,11 @@ def test_patch_helpers():
              "diff --git a/src/a.py b/src/a.py\nindex 1..2 100644\n--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1 @@\n-a\n+b\n"
              "diff --git a/tests/test_new.py b/tests/test_new.py\nnew file mode 100644\n")
     assert R.new_files_in_patch(patch) == ["ANSWER.md", "tests/test_new.py"]
-    assert R.placeholder_for("ANSWER.md") == "TODO\n"
-    assert "assert True" in R.placeholder_for("tests/test_new.py")
-    assert R.placeholder_for("src/remit/cli.py") is None and R.placeholder_for("tests/helpers.py") is None
+    assert R.patch_files(patch) == (["ANSWER.md", "tests/test_new.py"], ["src/a.py"])
+    gone = "diff --git a/old.md b/old.md\ndeleted file mode 100644\n--- a/old.md\n+++ /dev/null\n@@ -1 +0,0 @@\n-bye\n"
+    assert R.patch_files(gone) == ([], []) and R.changed_words(gone) == 1
+    assert R.changed_words(patch) == 3  # the added x, the removed a and the added b are one word each; headers do not count
+
 
 
 def test_the_static_lint_reads_checks_and_commands(tmp_path):
@@ -905,8 +990,10 @@ def test_validate_list_baseline_and_verify_agree_with_the_grader(work):
     assert code == 0 and "9 tasks read from tasks.jsonl; 0 problems" in text
     code, text = run_cli(work, "baseline")
     assert code == 0 and "T09" in text and "not run" in text and text.count("ok:") == 8
+    assert "FAILED eval/checks/test_t03_search_is_safe.py::test_" in text  # baseline says why a check fails, not only that it does
+    assert "FileNotFoundError" in text  # T04 reads ANSWER.md, which does not exist yet
     code, text = run_cli(work, "verify")
-    assert code == 0 and "placeholder answer does not" in text
+    assert code == 0 and "lazy answer" in text and text.count("ok:") == 8
     code, text = run_cli(work, "list")
     assert code == 0 and "[own project]" in text
 
@@ -929,6 +1016,24 @@ def test_verify_names_a_weak_placeholder_check(work):
     change(work, "T04", check={"run": 'grep -q "" ANSWER.md'})
     code, text = run_cli(work, "verify")
     assert code == 1 and "a placeholder in ANSWER.md passes the check" in text
+
+
+def test_verify_asks_for_a_reference_on_every_task(work):
+    change(work, "T05", reference=None)
+    code, text = run_cli(work, "verify")
+    assert code == 1 and "T05" in text and "MISSING" in text and "needs a `reference`" in text
+
+
+def test_verify_says_when_no_lazy_answer_could_be_tried(work):
+    """A reference that only creates a file of a kind the kit cannot fake: the learner is told that no probe applied."""
+    write(work, "eval/reference/T10.patch",
+          "diff --git a/data/rates.bin b/data/rates.bin\nnew file mode 100644\n--- /dev/null\n+++ b/data/rates.bin\n@@ -0,0 +1 @@\n+rates\n")
+    task = {"id": "T10", "title": "Add the rates file", "kind": "other",
+            "prompt": "Create the file data/rates.bin with the agreed exchange rates in it, one per line, and change nothing else in the repository at all.",
+            "check": {"run": 'python -c "import pathlib; assert pathlib.Path(\'data/rates.bin\').is_file()"'}, "reference": "eval/reference/T10.patch"}
+    save_tasks(work, load_tasks(work) + [task])
+    code, text = run_cli(work, "verify")
+    assert code == 0 and "ok: the reference passes; no lazy-answer probe applied" in text
 
 
 def test_prepare_hides_the_checks_and_score_reads_the_workspace(work, tmp_path):
@@ -990,16 +1095,290 @@ def test_the_runner_is_standalone(work):
     assert done.returncode == 0 and "0 problems" in done.stdout, done.stderr
     done = subprocess.run([sys.executable, "lab-assets/eval_runner.py", "--tasks", "lab-assets/tasks.example.jsonl", "baseline"],
                           cwd=work, env=env, capture_output=True, text=True)
-    assert done.returncode == 0 and done.stdout.count("ok:") == 3, done.stdout + done.stderr
+    assert done.returncode == 0 and done.stdout.count("ok:") == 4, done.stdout + done.stderr
 
 
 def test_the_course_examples_are_themselves_sound_tasks(work):
-    """The three worked examples in lab-assets must pass the same discipline they teach."""
+    """The four worked examples in lab-assets must pass the same discipline they teach."""
     examples = str(work / "lab-assets" / "tasks.example.jsonl")
     code, text = run_cli(work, "--tasks", examples, "baseline")
-    assert code == 0 and text.count("ok:") == 3
+    assert code == 0 and text.count("ok:") == 4
     code, text = run_cli(work, "--tasks", examples, "verify")
-    assert code == 0 and text.count("ok:") == 3
+    assert code == 0 and text.count("ok:") == 4
+
+
+# --------------------------------------------------------------------------------------------
+# git inside a workspace; the worked "write tests" example; a setup patch that is not there yet
+# --------------------------------------------------------------------------------------------
+def test_a_git_guard_sees_what_a_solution_changed(work):
+    """Every workspace is a repository with one commit, so `git diff` is a usable guard: 'do not edit the tests'."""
+    change(work, "T02", check={"run": "pytest -q eval/checks/test_t02_quote_expiry.py", "guard": "git diff --quiet -- tests"})
+    assert_only(grade_eval(work))
+
+
+def test_a_tool_that_edits_the_tests_fails_a_git_guard_even_if_it_commits(work, tmp_path):
+    change(work, "T02", check={"run": "pytest -q eval/checks/test_t02_quote_expiry.py", "guard": "git diff --quiet -- tests"})
+    ws = tmp_path / "run-T02"
+    assert run_cli(work, "prepare", "T02", "--dir", str(ws))[0] == 0
+    subprocess.run(["git", "apply", str(work / "eval" / "reference" / "T02.patch")], cwd=ws, check=True)
+    code, text = run_cli(work, "score", "T02", "--dir", str(ws), "--tool", "me", "--no-record")
+    assert code == 0 and text.startswith("T02: PASS"), text  # the honest fix
+
+    with (ws / "tests" / "test_fx.py").open("a", encoding="utf-8") as handle:
+        handle.write("\n# loosened by the tool\n")
+    gitutil.git(ws, "-c", "user.name=tool", "-c", "user.email=tool@example.invalid", "commit", "-qam", "tool: fix and tidy the tests")
+    code, text = run_cli(work, "score", "T02", "--dir", str(ws), "--tool", "cheater", "--no-record")
+    assert code == 1 and "guard" in text, text  # committing does not hide the edit
+
+
+def test_baseline_and_verify_run_in_a_repository_with_one_commit(work):
+    change(work, "T02", check={"run": "git log --oneline", "guard": "git diff --quiet"}, reference=None)
+    task = next(t for t in load_tasks(work) if t["id"] == "T02")
+    report = R.evaluate(work, "lab-start", task, run_reference=False)
+    assert report.baseline.passed and report.guard_baseline.passed  # `git log` works: a commit exists; nothing is changed yet
+
+
+def test_a_missing_setup_patch_says_how_to_make_one(work, tmp_path):
+    task = next(t for t in load_tasks(work) if t["id"] == "T02")
+    (work / "eval" / "setup" / "T02.patch").unlink()
+    with pytest.raises(R.RunnerError) as caught:
+        R.make_workspace(work, "lab-start", task, tmp_path / "ws")
+    assert "does not exist yet" in str(caught.value) and "Leave `setup` out" in str(caught.value)
+    assert run_cli(work, "prepare", "T02", "--dir", str(tmp_path / "ws2"))[0] == 2
+
+
+def _ex4(work: Path, tmp_path: Path, tests_text: str | None):
+    """The worked 'write tests' check, run in a clean copy where the tool wrote ``tests_text``."""
+    examples, _ = R.load_tasks(work / "lab-assets" / "tasks.example.jsonl")
+    task = next(t for t in examples if t["id"] == "EX4")
+    ws = tmp_path / "ws"
+    R.make_workspace(work, "lab-start", task, ws)
+    if tests_text is not None:
+        (ws / "tests" / "test_fees_express_cap.py").write_text(tests_text, encoding="utf-8")
+    return R.run_check(task["check"]["run"], ws)
+
+
+EX4_REAL = (
+    "from remit.corridors import get_corridor\nfrom remit.fees import quote_fee\nfrom remit.money import Money\n\n"
+    "def test_express_is_added_after_the_cap():\n"
+    "    assert quote_fee(Money('15000.00', 'QAR'), get_corridor('QAR', 'INR'), express=True) == Money('165.00', 'QAR')\n"
+)
+
+
+def test_the_worked_write_tests_check_accepts_tests_that_pin_the_rule(work, tmp_path):
+    assert _ex4(work, tmp_path, EX4_REAL).passed
+
+
+@pytest.mark.parametrize("text, expected", [
+    (None, "does not exist yet"),
+    ("def test_nothing():\n    assert True\n", "do not pin it down"),
+    ("from remit.corridors import get_corridor\nfrom remit.fees import quote_fee\nfrom remit.money import Money\n\n"
+     "def test_cap():\n    assert quote_fee(Money('15000.00', 'QAR'), get_corridor('QAR', 'INR')) == Money('150.00', 'QAR')\n", "do not pin it down"),
+    (EX4_REAL.replace("165.00", "166.00"), "must pass on the real code"),
+], ids=["no-file", "asserts-nothing", "tests-another-rule", "wrong-expectation"])
+def test_the_worked_write_tests_check_rejects_tests_that_cannot_notice(work, tmp_path, text, expected):
+    outcome = _ex4(work, tmp_path, text)
+    assert outcome.verdict == "fail" and expected in outcome.detail, outcome
+
+
+# --------------------------------------------------------------------------------------------
+# lazy answers: every way of saying nothing, in every kind of file
+# --------------------------------------------------------------------------------------------
+def _answer_task(work: Path, filename: str, run: str, *, task_id: str = "T10", prompt: str | None = None) -> dict:
+    """T04's explain task, but asking for ``filename`` (its reference patch rewritten to create that file), checked by ``run``."""
+    patch = (work / "eval" / "reference" / "T04.patch").read_text(encoding="utf-8").replace("ANSWER.md", filename)
+    write(work, f"eval/reference/{task_id}.patch", patch)
+    task = {"id": task_id, "title": "Explain the failed save", "kind": "explain",
+            "prompt": prompt or f"Read RemitService.send. If store.save_transfer raises, what happens to the ledger postings that were already made? Answer in {filename} in the repository root and change no other file.",
+            "check": {"run": run}, "reference": f"eval/reference/{task_id}.patch"}
+    save_tasks(work, [t for t in load_tasks(work) if t["id"] != "T04"] + [task])
+    return task
+
+
+@pytest.mark.parametrize("filename", ["ANSWER.markdown", "ANSWER.json", "notes/answer.yaml", "answer.csv", "ANSWER"])
+def test_an_existence_check_is_weak_whatever_the_file_is_called(work, filename):
+    """The probe used to look only at .md, .txt, .rst and no suffix; a .markdown or .json answer slipped through."""
+    _answer_task(work, filename, f"python -c \"import pathlib; assert pathlib.Path('{filename}').exists()\"")
+    result = grade_eval(work)
+    assert_only(result, m13.N_PLACEHOLDER)
+    assert filename in result[m13.N_PLACEHOLDER].detail
+
+
+def test_a_new_module_that_only_has_to_import_is_weak(work):
+    patch = ("diff --git a/src/remit/corridor_table.py b/src/remit/corridor_table.py\nnew file mode 100644\n--- /dev/null\n"
+             "+++ b/src/remit/corridor_table.py\n@@ -0,0 +1,2 @@\n+def rows():\n+    return []\n")
+    write(work, "eval/reference/T10.patch", patch)
+    task = {"id": "T10", "title": "A corridor table module", "kind": "feature",
+            "prompt": "Create a module remit.corridor_table with a function rows that returns the supported corridors as a list of tuples sorted by code. Do not change any other module.",
+            "check": {"run": 'python -c "import remit.corridor_table"'}, "reference": "eval/reference/T10.patch"}
+    save_tasks(work, load_tasks(work) + [task])
+    result = grade_eval(work)
+    assert_only(result, m13.N_PLACEHOLDER)
+    assert "an empty module in src/remit/corridor_table.py" in result[m13.N_PLACEHOLDER].detail
+
+
+def test_a_word_count_check_accepts_filler(work):
+    """`len(answer.split()) >= 3` rejects the kit's 'TODO' and accepts any three words, which is not a check."""
+    _answer_task(work, "ANSWER.md", 'python -c "import pathlib; assert len(pathlib.Path(\'ANSWER.md\').read_text().split()) >= 3"')
+    result = grade_eval(work)
+    assert_only(result, m13.N_PLACEHOLDER)
+    assert "filler text in ANSWER.md" in result[m13.N_PLACEHOLDER].detail
+    assert "a placeholder in ANSWER.md" not in result[m13.N_PLACEHOLDER].detail  # 'TODO' alone is rejected by this check
+
+
+def test_a_check_that_the_prompt_copied_back_satisfies_is_weak(work):
+    """The words of the check are in the prompt, so a tool that hands the question back passes."""
+    _answer_task(work, "ANSWER.md", 'grep -q "already" ANSWER.md')
+    result = grade_eval(work)
+    assert_only(result, m13.N_PLACEHOLDER)
+    assert "the prompt copied back in ANSWER.md" in result[m13.N_PLACEHOLDER].detail
+
+
+def test_a_stray_edit_that_satisfies_the_check_is_weak(work):
+    """A docs task checked by 'the file mentions the T3 tier' where the file already does, plus a stray TODO line."""
+    assert "TODO" not in (work / "docs" / "ARCHITECTURE.md").read_text(encoding="utf-8")
+    write(work, "eval/reference/T10.patch", _insert_line_patch(work, "TODO bring this page up to date later on"))
+    task = {"id": "T10", "title": "Bring the page up to date", "kind": "docs",
+            "prompt": "Compare docs/ARCHITECTURE.md with the code in src/remit and correct every statement that is no longer true. Change documentation only, nothing else at all.",
+            "check": {"run": 'grep -q "TODO" docs/ARCHITECTURE.md'}, "reference": "eval/reference/T10.patch"}
+    save_tasks(work, load_tasks(work) + [task])
+    result = grade_eval(work)
+    assert not result[m13.N_PLACEHOLDER].ok and "a stray line in docs/ARCHITECTURE.md" in result[m13.N_PLACEHOLDER].detail
+
+
+def test_the_lazy_answers_a_real_check_rejects(tmp_path):
+    answers = R.lazy_answers("ANSWER.md", "Explain the cap.")
+    assert [what for what, _ in answers] == ["a placeholder", "filler text", "the prompt copied back"]
+    assert len(answers[1][1].split()) > 50 and answers[2][1] == "Explain the cap.\n"
+    assert [what for what, _ in R.lazy_answers("tests/test_new.py")] == ["a test that asserts nothing"]
+    assert [what for what, _ in R.lazy_answers("src/remit/x.py")] == ["an empty module"]
+    assert [what for what, _ in R.lazy_answers("data/a.json")] == ["an empty JSON object"]
+    assert R.lazy_answers("logo.png") == []
+
+
+# --------------------------------------------------------------------------------------------
+# the plan: forms that are sound must be accepted
+# --------------------------------------------------------------------------------------------
+@pytest.mark.parametrize("written", ["2026-11-02", "2026/11/02", "2 November 2026", "2nd Nov 2026", "November 2, 2026", "**2 November 2026**",
+                                      "2026-11-02 (a Monday)", "Monday 2 November 2026"])
+def test_a_start_date_may_be_written_in_any_unambiguous_form(work, written):
+    plan_replace(work, "Start date: 2026-11-02", f"Start date: {written}")
+    assert_only(grade_plan(work))
+
+
+def test_goal_dates_may_be_written_out_too(work):
+    plan_replace(work, "| 2026-12-15 |", "| 15 December 2026 |")
+    plan_replace(work, "| 2026-12-31 |", "| Dec 31, 2026 (end of year) |")
+    plan_replace(work, "| 2027-01-15 |", "| 2027-01-15 (a Friday) |")
+    assert_only(grade_plan(work))
+
+
+@pytest.mark.parametrize("written", ["02/11/2026", "next Monday", "end of the quarter", "2026-13-45"])
+def test_a_date_that_is_not_one_is_still_rejected(work, written):
+    plan_replace(work, "Start date: 2026-11-02", f"Start date: {written}")
+    assert not grade_plan(work)[m13.N_START].ok
+
+
+@pytest.mark.parametrize("target", ["four flows", "all four traces", "Twice a week", "10 of 10", "90%"])
+def test_a_target_may_be_a_number_in_words(work, target):
+    plan_replace(work, "| 6 | 2026-12-15 |", f"| {target} | 2026-12-15 |")
+    assert_only(grade_plan(work))
+
+
+@pytest.mark.parametrize("target", ["more", "all of them", "better"])
+def test_a_target_with_no_number_in_it_is_still_rejected(work, target):
+    plan_replace(work, "| 6 | 2026-12-15 |", f"| {target} | 2026-12-15 |")
+    assert "no number" in grade_plan(work)[m13.N_GOALS].detail
+
+
+@pytest.mark.parametrize("minutes", ["1 hour", "1.5 h", "half an hour", "~45 min", "30-45", "an hour"])
+def test_a_duration_may_be_written_as_people_write_it(work, minutes):
+    plan_replace(work, "| Monday | One kata without the agent, then the agent as a tutor for hints only | 45 |",
+                 f"| Monday | One kata without the agent, then the agent as a tutor for hints only | {minutes} |")
+    assert_only(grade_plan(work))
+
+
+def test_a_thin_section_says_how_long_it_should_be(work):
+    text = (work / "plan.md").read_text(encoding="utf-8")
+    start, end = text.index("## Days 31-60"), text.index("## Days 61-90")
+    write(work, "plan.md", text[:start] + "## Days 31-60\n\nKeep going.\n\n" + text[end:])
+    assert "Days 31-60 (12+ words)" in grade_plan(work)[m13.N_SECTIONS].detail
+
+
+# --------------------------------------------------------------------------------------------
+# the repository: the score log is not work to commit
+# --------------------------------------------------------------------------------------------
+def test_the_results_log_written_by_score_may_stay_uncommitted(work):
+    """`score` appends to eval/results.jsonl; following the lesson and grading must not give 'NOT YET' for it."""
+    write(work, "eval/results.jsonl", '{"task": "T03", "tool": "me", "passed": true}\n')
+    result = grade_all(work)
+    assert required_failures(result) == set(), {n: c.detail for n, c in result.items() if not c.ok and c.required}
+
+
+def test_other_uncommitted_files_in_eval_still_count(work):
+    write(work, "eval/results.jsonl", '{"task": "T03", "tool": "me", "passed": true}\n')
+    write(work, "eval/notes.md", "scratch\n")
+    result = grade_repo(work)
+    assert_only(result, m13.N_CLEAN)
+    assert "notes.md" in result[m13.N_CLEAN].detail and "results.jsonl" not in result[m13.N_CLEAN].detail
+
+
+# --------------------------------------------------------------------------------------------
+# a timeout is not a typo; the hint must say which
+# --------------------------------------------------------------------------------------------
+def test_a_timeout_gets_a_timeout_hint_not_the_allow_list(work, monkeypatch):
+    monkeypatch.setattr(m13, "GRADER_TIMEOUT", 2.0)
+    change(work, "T06", check={"run": 'python -c "import time; time.sleep(60)"'}, reference=None)
+    hint = grade_eval(work)[m13.N_RUNS].hint
+    assert "time limit" in hint and "Allowed commands" not in hint
+
+
+def test_a_disallowed_command_gets_the_allow_list_hint(work):
+    change(work, "T08", check={"run": "npm test"}, reference=None)
+    hint = grade_eval(work)[m13.N_RUNS].hint
+    assert "Allowed commands" in hint and "time limit" not in hint
+
+
+def test_the_grader_and_the_runner_share_one_generous_time_limit():
+    assert m13.GRADER_TIMEOUT == 60.0 and R.TIMEOUT == 60.0
+
+
+# --------------------------------------------------------------------------------------------
+# the lesson and the kit say the same thing
+# --------------------------------------------------------------------------------------------
+LESSON = Path(__file__).resolve().parents[2] / "modules" / "13-sharp.md"
+
+
+def _lesson_blocks() -> list[tuple[str, str]]:
+    import re
+    text = LESSON.read_text(encoding="utf-8")
+    return [(m.group(1), m.group(2)) for m in re.finditer(r"```(\w*)[^\n]*\n(.*?)```", text, flags=re.S)]
+
+
+@pytest.mark.skipif(not LESSON.is_file(), reason="the lesson is not next to the kit")
+def test_the_ticket_in_the_lesson_is_the_task_file():
+    ticket = (m13.HERE / "task.md").read_text(encoding="utf-8").rstrip("\n")
+    assert any(body.rstrip("\n") == ticket for _, body in _lesson_blocks()), "the lesson's ticket block differs from task.md"
+
+
+@pytest.mark.skipif(not LESSON.is_file(), reason="the lesson is not next to the kit")
+def test_the_worked_check_in_the_lesson_is_the_learners_file():
+    """The block starts with the path the learner sees, `lab-assets/example/check_ex2.py`, not a path in the course repository."""
+    shown = [body for lang, body in _lesson_blocks() if lang == "python" and body.startswith("# lab-assets/example/check_ex2.py")]
+    assert len(shown) == 1
+    assert shown[0].rstrip("\n") == (m13.HERE / "assets" / "example" / "check_ex2.py").read_text(encoding="utf-8").rstrip("\n")
+
+
+@pytest.mark.skipif(not LESSON.is_file(), reason="the lesson is not next to the kit")
+def test_every_check_named_in_the_lessons_sample_output_exists():
+    """If a check is renamed, the sample output in the lesson goes stale: every `[FAIL] name:` line must name a real check."""
+    import re
+    known = {getattr(m13, n) for n in dir(m13) if n.startswith("N_")}
+    lines = [line for _, body in _lesson_blocks() for line in body.splitlines() if line.startswith("[FAIL] ")]
+    assert lines, "the lesson shows no sample failures"
+    for line in lines:
+        name = re.match(r"\[FAIL\] (.+?)(?: \(advisory\))?: ", line).group(1)
+        assert name in known, f"the lesson shows a check that no longer exists: {name}"
 
 
 # --------------------------------------------------------------------------------------------

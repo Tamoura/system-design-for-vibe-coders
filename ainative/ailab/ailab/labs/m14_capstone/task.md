@@ -35,17 +35,17 @@ A new template, `transfer_sent_bdt`, goes out for `QAR-BDT` transfers; every oth
 
 ### How I want it delivered
 
-The change, and the evidence around it. `lab-assets/hessa-notes.md` has my meeting notes and `lab-assets/templates/` a starting point for each document. Use an agent as much as you like; you answer for every line.
+The change, and the evidence around it. `lab-assets/hessa-notes.md` has my meeting notes, `lab-assets/templates/` a starting point for each document and `lab-assets/README.md` what the grader reads in each one. Use an agent as much as you like; you answer for every line.
 
-- the change in `src/remit/` (`corridors.py`, `fees.py`, `fx.py`, `notify.py`, `service.py`) and new `tests/test_*.py` files; each acceptance criterion of your spec is named in a test (`AC1`, `AC2`...)
-- `CLAUDE.md` (or `AGENTS.md`), updated for corridor work
-- `specs/REMIT-414.md`, then `specs/REMIT-414-plan.md`
+- the change in `src/remit/` (`corridors.py`, `fees.py`, `fx.py`, `notify.py`, `service.py`), added to the tables that are already there, and new `tests/test_*.py` files; each acceptance criterion of your spec is named in a test (`AC1`, `AC2`...)
+- `CLAUDE.md` (or `AGENTS.md`), updated for corridor work: start from your lesson 2.2 file or `templates/memory.md`
+- `specs/REMIT-414.md`, then `specs/REMIT-414-plan.md`: one row per step, the last column that step's commit header
 - `docs/adr/0001-<short-title>.md`: one decision
 - `docs/review-REMIT-414.md`: your own diff, `AI-assisted: yes` or `no`, the money files needing a second human
 - `.claude/settings.json` and `.claude/hooks/guard.py`
 - `docs/corridors.md` (new) and the lines of `docs/ARCHITECTURE.md` this change makes untrue
 - `docs/agent-log.md`, then `docs/retrospective.md`
 
-`CONTRIBUTING.md` applies. One kind of change per commit (code with its tests, or documents, or agent configuration), at least eight commits. Do not edit an existing test, add a dependency or touch files the change does not need. Where this ticket is silent, decide, write the decision in your spec and say who confirms it.
+`CONTRIBUTING.md` applies; its list of scopes is only examples, so `claude` or `specs` is fine. One kind of change per commit: code with its tests (`src/`, `tests/`), or documents (`docs/`, `specs/`), or agent configuration (`CLAUDE.md`, `.claude/`). At least eight commits. Do not edit an existing test, add a dependency or touch files the change does not need; keep scratch scripts outside the repository. In every document a path in backticks must exist (unless its line says it does not), and a line or table cell that starts with `TODO` counts as unfinished. Where this ticket is silent, decide, write the decision in your spec and say who confirms it.
 
-Done when every required check of `python -m ailab grade m14 --dir <this directory>` passes (run it from the `ailab` folder of the course repository). It checks the result and how the documents refer to each other, not whether your thinking was good.
+Done when every required check of `python -m ailab grade m14 --dir <this directory>` passes (run it from the `ailab` folder of the course repository, on the branch with your commits). It checks the result and how the documents refer to each other, not whether your thinking was good.

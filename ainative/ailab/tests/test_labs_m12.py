@@ -419,7 +419,7 @@ def test_the_facts_the_grader_uses_are_the_kits_own(template):
     assert m.money_modules() == ("money.py", "fees.py", "fx.py", "limits.py", "ledger.py", "service.py")
     assert m.fact_numbers() == {"13", "30", "2", "52", "3", "10", "4", "9", "60", "0", "1"}
     # every figure a metric may quote is in the facts file, and every figure of the table belongs to some metric
-    quotable = set().union(*(numbers for _, numbers in m.BASELINES)) | {m.QUARTER_WEEKS}
+    quotable = set().union(*(fact.ints for fact in m.FACTS)) | {str(round(p)) for fact in m.FACTS for p in fact.percents} | {m.QUARTER_WEEKS}
     assert quotable == m.fact_numbers()
     # and the lab asset says the same things the lab's task promises
     assets = (template / "lab-assets" / "team-context.md").read_text(encoding="utf-8")
@@ -807,7 +807,7 @@ def test_data_rules_need_the_test_data_and_the_accounts(work):
 
 
 def test_memory_needs_an_owner_a_file_and_a_trigger(work):
-    put(work, drop_between(REFERENCE, "The repository has one `CLAUDE.md`", "- MUST NOT put secrets or customer data in `CLAUDE.md`"))
+    put(work, drop_between(REFERENCE, "The repository has no memory file today", "- MUST NOT put secrets or customer data in `CLAUDE.md`"))
     assert m.N_CONTEXT in failing_required(work)
 
 
@@ -946,7 +946,8 @@ TICKET_DRAFT_EDITS = [
     # a guard with no number and no response
     ("Over 16 hours in any week, we review the queue at the clinic and cap new agent work until it clears.", "Keep it low."),
     # the module the old architecture page still lists
-    ("The repository has one `CLAUDE.md` at the root.", "Limits and screening are described in `src/remit/risk.py`. The repository has one `CLAUDE.md` at the root."),
+    ("The repository has no memory file today, so Tariq creates one new `CLAUDE.md` at the root in the first week.",
+     "Limits and screening are described in `src/remit/risk.py`. The repository has no memory file today, so Tariq creates one new `CLAUDE.md` at the root in the first week."),
     # no number in the diff limit
     ("It changes at most\n400 lines (additions plus deletions, generated files excluded) and contains one logical change.", "It is kept small and contains one logical change."),
     ("- MUST NOT merge a pull request of more than 400 changed lines. Check: a CI step counts changed lines and fails\n  above the limit; the author splits the work instead.",
@@ -1199,7 +1200,7 @@ def test_the_lessons_examples_pass_the_graders_own_checks():
     assert m.threshold_problems(blocks[0].fields["Threshold"]) == []
     assert not m.is_adoption(blocks[0]) and not m._VANITY.search(block)  # noqa: SLF001
     assert not re.findall(r"\d+", blocks[0].fields["Baseline"]) and "to be measured" in blocks[0].fields["Baseline"]
-    assert m.baseline_figures(blocks[0].name) == {m.QUARTER_WEEKS}  # no figure of the facts file belongs to it
+    assert m.baseline_figures(blocks[0].name, blocks[0].fields["Definition"]) == frozenset()  # no figure of the facts file belongs to it
     # lesson 12.2: the weak definition really fails, and the guard sentence really passes
     assert m.definition_problems(m.Metric("Pull request size", 0, {"Definition": "how big our pull requests are"}))
     assert m.definition_problems(m.Metric("Lead time", 0, {"Definition": "how fast we ship"}))
@@ -1249,20 +1250,22 @@ def matches_in_order(shown: list[str], real: list[str]) -> None:
 
 @pytest.mark.skipif(not MODULE.is_file(), reason="the lesson file is written separately")
 def test_the_lessons_sample_output_is_what_the_grader_really_prints(work):
-    """Lesson 12.2 quotes the grade of the untouched starter and of a draft that follows the ticket."""
-    starter, draft = lesson_text_blocks(MODULE.read_text(encoding="utf-8"))[:2]
+    """Lesson 12.2 quotes the verdict of the untouched starter and the grade of a draft that follows the ticket."""
+    lesson = MODULE.read_text(encoding="utf-8")
+    blocks = lesson_text_blocks(lesson)
+    assert len(blocks) == 1, "lesson 12.2 shows one sample grade block (the draft)"
+    draft = blocks[0]
     real_starter = printed(work)
-    matches_in_order(starter, real_starter)
-    assert starter[-1] == real_starter[-1]  # the verdict line
+    assert f"`{real_starter[-1]}`" in lesson[lesson.index("# 12.2 \u2014"):], "the starter's verdict line is quoted in the lesson"
     put(work, ticket_draft())
     learner_commit(work, "docs(playbook): write the first draft")
     real_draft = printed(work)
     matches_in_order(draft, real_draft)
     assert draft[-1] == real_draft[-1] and "26/35" in draft[-1]
-    # the failing lines the lesson cut with "..." are the three it names: a weasel word, a diff limit, a claim
+    # the failing lines the lesson cut with "..." are the five it names
     cut = [line for line in real_draft if line.startswith("[FAIL]") and line not in draft]
     names = sorted(n for n in m.ALL_NAMES if any(line.startswith(f"[FAIL] {n}") for line in cut))
-    assert len(cut) == 3 and names == sorted([m.N_RULE_VAGUE, m.N_REV_SIZE, m.N_CLAIMS])
+    assert len(cut) == 5 and names == sorted([m.N_RULE_VAGUE, m.N_REV_SIZE, m.N_MET_GUARD, m.N_MET_VANITY, m.N_CLAIMS])
 
 
 # --------------------------------------------------------------------------------------------------------------
@@ -1328,7 +1331,7 @@ def test_other_ways_to_ask_for_evidence_in_the_description_pass(sentence):
 
 def test_the_missing_file_hint_says_a_new_file_is_fine(work):
     put(work, REFERENCE + "\nThe check is `check_diff_size.py`, run in CI.\n")
-    assert "propose to create" in results(work)[m.N_PATHS].hint
+    assert "new or proposed" in results(work)[m.N_PATHS].hint
 
 
 @pytest.mark.skipif(not MODULE.is_file(), reason="the lesson file is written separately")
@@ -1340,3 +1343,665 @@ def test_the_measurable_versions_in_lesson_12_1_pass_the_graders_definition_chec
     for name, definition in rows:
         problems = m.definition_problems(m.Metric(name.split(" (")[0], 0, {"Definition": definition.strip()}))
         assert problems == [], (name, problems)
+
+
+# ==============================================================================================================
+# repair after the learner dry-run: every finding has a test here.
+# False negatives (sound text that was rejected) must pass; false positives (hollow text that passed) must fail.
+# ==============================================================================================================
+def insert_in(text: str, heading: str, sentence: str) -> str:
+    """Put ``sentence`` as its own paragraph right under the heading line that starts with ``heading``."""
+    return swap(text, heading + "\n", heading + "\n\n" + sentence + "\n")
+
+
+def append_to_paragraph(text: str, paragraph_start: str, sentence: str) -> str:
+    """Add ``sentence`` to the end of the paragraph that starts with ``paragraph_start`` (so it shares a paragraph)."""
+    start = text.index(paragraph_start)
+    end = text.index("\n\n", start)
+    return text[:end] + " " + sentence + text[end:]
+
+
+# ---- what counts as a mechanism after "Check:" --------------------------------------------------------------------
+@pytest.mark.parametrize("check", [
+    # the sound checks the dry-run learner wrote and had rejected
+    "each quarter Salem compares the user lists of the two enterprise admin consoles with the team roster, and any other account found is reported to Maha as an incident",
+    "the same quarterly access review lists the environments in use and the credentials, and it must show no production credential",
+    "the merge button stays disabled until a second human approves",
+    "the build fails above 400 changed lines, and the reviewer confirms one logical change",
+    "the required status check named size-limit turns red above the limit",
+    "Maha compares the discovery time with the containment time in PagerDuty",
+    # other ordinary mechanisms
+    "a script counts the changed lines in the diff",
+    "the incident ticket has a field for the time of the report",
+    "the pull request template asks the question and the reviewer ticks it",
+    "a monthly sample of ten agent logs, read by Noura",
+])
+def test_other_sound_mechanisms_are_accepted(check):
+    assert m.check_problem(check) is None, check
+
+
+@pytest.mark.parametrize("check", [
+    "team lead review.",
+    "everyone knows.",
+    "reviewers use their own judgement",
+    "the culture of mutual respect on the team",
+    "the team lead trusts the author to have read it",
+    "Tariq",
+])
+def test_a_person_or_a_feeling_is_still_not_a_mechanism(check):
+    assert m.check_problem(check) is not None, check
+
+
+@pytest.mark.parametrize("check", ["a CI job.", "the CI job", "a monthly audit.", "a hook or a script", "the weekly report"])
+def test_a_bare_kind_of_mechanism_that_says_what_it_looks_at_nothing_is_flagged(check):
+    problem = m.check_problem(check)
+    assert problem and "not what it looks at" in problem, (check, problem)
+
+
+def test_a_check_that_names_what_it_looks_at_is_accepted():
+    assert m.check_problem("the pr-hygiene CI job.") is None
+    assert m.check_problem("a CI step counts changed lines and fails above the limit") is None
+
+
+def test_one_check_pasted_on_every_rule_is_not_a_check_for_each(work):
+    """Dry-run: replacing every Check with 'the pr-hygiene CI job.' used to give 35/35."""
+    text = re.sub(r"(Check: ).*?(?=\n- MUST|\n\n|\n##)", r"\1the pr-hygiene CI job.", REFERENCE, flags=re.S)
+    put(work, text)
+    found = results(work)
+    assert not found[m.N_RULE_CHECK].ok and "same check text" in found[m.N_RULE_CHECK].detail
+
+
+def test_a_hollow_rule_with_a_generic_check_is_flagged(work):
+    put(work, swap(REFERENCE, "- MUST NOT use `float` for money. Check: a CI step greps `src/` for `float(` and fails on a match.",
+                   "- MUST be nice to everyone on the team. Check: a CI job."))
+    found = results(work)
+    assert not found[m.N_RULE_CHECK].ok and "not what it looks at" in found[m.N_RULE_CHECK].detail
+
+
+def test_the_same_check_on_two_or_three_rules_is_fine(work):
+    """One CI job really can verify several rules; only a pasted-everywhere check is flagged."""
+    text = REFERENCE
+    for old in ("Check: the secret scan runs in CI on every pull request, and Noura reads ten agent logs a month.",
+                "Check: the review checklist has the line \"no real\n  customer data in fixtures\", and a reviewer who finds a real name blocks the merge."):
+        pass
+    text = swap(text, "Check: CI runs `pytest -q` as a required status check on every pull request.", "Check: the pr-hygiene CI job.")
+    text = swap(text, "Check: a CI step counts changed lines and fails\n  above the limit; the author splits the work instead.", "Check: the pr-hygiene CI job.")
+    text = swap(text, "Check: the weekly review-turnaround report lists\n  every pull request that waited longer.", "Check: the pr-hygiene CI job.")
+    put(work, text)
+    assert results(work)[m.N_RULE_CHECK].ok
+
+
+# ---- soft words ------------------------------------------------------------------------------------------------------
+@pytest.mark.parametrize("word", ["regularly", "promptly", "adequately", "in a timely manner", "as soon as possible", "sensibly",
+                                  "whenever convenient", "aim to", "where it makes sense", "periodically", "quickly"])
+def test_more_soft_words_in_a_rule_fail(work, word):
+    put(work, swap(REFERENCE, "MUST NOT use `float` for money.", f"MUST NOT use `float` for money, {word}."))
+    assert m.N_RULE_VAGUE in failing_required(work), word
+
+
+# ---- headings found by keyword ---------------------------------------------------------------------------------------
+def test_a_heading_with_other_words_around_the_keyword_is_found(work):
+    put(work, REFERENCE.replace("## 10. Onboarding", "## 10. Joiners and juniors").replace("## 3. Context and memory", "## 3. The memory file and its context"))
+    assert m.N_SECTIONS not in failing(work)
+    assert m.N_ONBOARDING not in failing(work)
+
+
+def test_a_heading_without_its_keyword_names_the_missing_topic(work):
+    put(work, REFERENCE.replace("## 9. Incident handling", "## 9. When things break"))
+    found = results(work)
+    assert not found[m.N_SECTIONS].ok and "incident handling" in found[m.N_SECTIONS].detail
+
+
+# ---- review norms read from section 4; tests may also be said in section 5 ---------------------------------------------------
+def test_tests_with_the_change_may_be_said_in_the_verification_section(work):
+    text = swap(REFERENCE, "Tests are written with the change or before it.", "")
+    text = swap(text, "- MUST pass `pytest -q` before review.",
+                "- MUST add a test with every change. Check: the pull request template asks which test is new.\n- MUST pass `pytest -q` before review.")
+    put(work, text)
+    assert m.N_REV_TESTS not in failing(work)
+
+
+# ---- the Kind field ------------------------------------------------------------------------------------------------------
+@pytest.mark.parametrize("kind, expected", [
+    ("delivery", "delivery"), ("DORA delivery metric", "delivery"), ("**Guard**", "guard"), ("guard metric (delivery guard)", "guard"),
+    ("quality", "other"), ("<<delivery or guard>>", "other"), ("", "other"),
+])
+def test_kind_is_read_from_the_words_in_the_field(kind, expected):
+    assert m.Metric("x", 0, {"Kind": kind}).kind == expected
+
+
+def test_a_dora_delivery_metric_kind_is_accepted(work):
+    put(work, swap(REFERENCE, "### Lead time for changes\n- Kind: delivery", "### Lead time for changes\n- Kind: DORA delivery metric"))
+    assert m.N_MET_BLOCKS not in failing(work) and m.N_MET_DELIVERY not in failing(work)
+
+
+# ---- baselines: units and conversions ---------------------------------------------------------------------------------------
+def baseline_ok(name: str, baseline: str, definition: str = "") -> bool:
+    return m.baseline_problem(m.Metric(name, 0, {"Baseline": baseline, "Definition": definition})) is None
+
+
+@pytest.mark.parametrize("name, baseline, ok", [
+    ("Lead time for changes", "52 hours (median, last quarter)", True),
+    ("Lead time for changes", "about 2 days (52 hours, median, last quarter)", True),   # dry-run: this used to be rejected
+    ("Lead time for changes", "about 2 days", True),
+    ("Lead time for changes", "2.2 days", True),
+    ("Lead time for changes", "3 days", False),
+    ("Lead time for changes", "13 hours", False),     # 13 is the quarter's weeks, not a lead time
+    ("Lead time for changes", "13", False),
+    ("Lead time for changes", "4 hours", False),
+    ("Lead time for changes", "52 hours over the 13 weeks of last quarter", True),
+    ("Failed deployment recovery time", "3 hours", True),
+    ("Failed deployment recovery time", "180 minutes", True),
+    ("Failed deployment recovery time", "3 days", False),
+    ("Time to resolve production failures", "3 hours", True),   # dry-run: renamed metric, same figure
+    ("Deployment frequency", "30 deployments in 13 weeks (about 2 a week)", True),
+    ("Deployment frequency", "about 2.3 a week", True),
+    ("Deployment frequency", "5 a week", False),
+    ("Change failure rate", "3 of 30 deployments (10%)", True),
+    ("Change failure rate", "10%", True),
+    ("Change failure rate", "25%", False),
+    ("Rework rate", "4 of 30 deployments (13%)", True),
+    ("Rework rate", "13.3%", True),
+    ("Rework rate", "13", True),
+    ("Review turnaround", "9 hours", True),
+    ("Review turnaround", "about half a day (9 hours)", True),
+    ("Review turnaround", "1 day", False),
+    ("AI-related incidents", "0 incidents last quarter, and 1 near miss", True),
+    ("AI-related incidents", "5", False),
+    ("AI-assisted share", "60% of merged pull requests", True),
+    ("AI-assisted share", "80%", False),
+    ("Pull request size", "to be measured; the facts file has no figure for it", True),
+    ("Pull request size", "250 lines", False),
+    ("Pull request size", "", False),
+])
+def test_baselines_are_checked_by_figure_and_unit(name, baseline, ok):
+    assert baseline_ok(name, baseline) is ok, (name, baseline, m.baseline_problem(m.Metric(name, 0, {"Baseline": baseline})))
+
+
+def test_a_renamed_metric_is_matched_by_its_definition_when_its_name_says_nothing():
+    definition = "Median hours from a production deployment being declared failed until service is restored, per quarter."
+    assert baseline_ok("Mean time to fix", "3 hours", definition) is True
+    assert baseline_ok("Mean time to fix", "9 hours", definition) is False
+
+
+def test_an_unmatched_metric_gets_a_message_that_says_why():
+    problem = m.baseline_problem(m.Metric("Joiner speed", 0, {"Baseline": "9 days", "Definition": "Median working days until the first merge, per quarter."}))
+    assert problem and "no row of the facts table" in problem and "to be measured" in problem
+
+
+def test_a_lead_time_baseline_of_13_hours_is_caught_in_the_playbook(work):
+    put(work, swap(REFERENCE, "- Baseline: 52 hours (median, last quarter).", "- Baseline: 13 hours (median, last quarter)."))
+    assert m.N_MET_BASELINE in failing_required(work)
+
+
+def test_a_baseline_in_days_is_accepted_in_the_playbook(work):
+    put(work, swap(REFERENCE, "- Baseline: 52 hours (median, last quarter).", "- Baseline: about 2 days (52 hours, median, last quarter)."))
+    assert m.N_MET_BASELINE not in failing(work)
+
+
+# ---- thresholds with the number in words -------------------------------------------------------------------------------------
+@pytest.mark.parametrize("threshold", [
+    "Above fifteen percent over any four weeks, we stop raising agent autonomy and review each failed change.",
+    "More than two incidents in a quarter: pause new agent work and open a retro.",
+])
+def test_a_threshold_may_spell_out_its_number(threshold):
+    assert m.threshold_problems(threshold) == []
+
+
+def test_a_threshold_with_no_number_at_all_still_fails():
+    assert "no number" in m.threshold_problems("Above the usual level, we stop and review.")
+
+
+# ---- unfinished text: markers, not words ---------------------------------------------------------------------------------------
+@pytest.mark.parametrize("line", [
+    "Tariq runs `wc -l CLAUDE.md >> report.txt` every Friday.",
+    "- MUST NOT leave a TODO in merged code without a ticket id. Check: `grep -rn TODO src` in CI.",
+    "The review follows the old dashboard; the TBD column of that dashboard is gone.",
+    "Replace every `<<...>>` prompt before you commit.",
+    "We never merge a pull request with a FIXME in the diff.",
+])
+def test_talking_about_a_todo_or_a_command_is_not_unfinished_text(line):
+    assert not m.has_placeholder(line), line
+
+
+@pytest.mark.parametrize("line", [
+    "<<Which tools are approved>>", "Owner: <<a named person>>", "TODO: write the rest", "- TBD", "- Baseline: TBD", "TBD", "(TBD)",
+    "Status: [TODO]", "lorem ipsum dolor", "**TODO** finish this", "| TBD |",
+])
+def test_real_markers_are_still_unfinished_text(line):
+    assert m.has_placeholder(line), line
+
+
+def test_a_legitimate_todo_sentence_passes_the_whole_grade_of_the_checks(work):
+    put(work, insert_in(REFERENCE, "## 5. Verification standard",
+                        "A rule says MUST NOT leave a TODO in merged code, and the TBD column of the old dashboard is gone."))
+    found = failing(work)
+    assert m.N_PLACEHOLDERS not in found and m.N_MET_BLOCKS not in found
+
+
+def test_a_tbd_in_a_metric_field_is_template_text(work):
+    put(work, swap(REFERENCE, "- Baseline: 3 hours.", "- Baseline: TBD"))
+    found = results(work)
+    assert not found[m.N_MET_BLOCKS].ok and "template text" in found[m.N_MET_BLOCKS].detail
+
+
+# ---- "according to the incident report" is not a study -----------------------------------------------------------------------------------
+def test_according_to_an_incident_report_is_not_a_productivity_claim(work):
+    put(work, insert_in(REFERENCE, "## 9. Incident handling",
+                        "The review follows the incident report template, according to the incident report that Maha opens."))
+    assert m.N_CLAIMS not in failing(work)
+
+
+@pytest.mark.parametrize("claim", [
+    "According to a recent survey, most teams save two hours a day.",
+    "According to an industry report, teams ship twice as fast.",
+    "AI assistants roughly double what an engineer ships in a day.",
+    "AI tools make developers far faster.",
+    "Agents cut review time by 40%.",
+])
+def test_paraphrased_productivity_claims_are_caught(work, claim):
+    put(work, insert_in(REFERENCE, "## 8. Metrics plan", claim))
+    assert m.N_CLAIMS in failing_required(work), claim
+
+
+# ---- the claim is judged sentence by sentence, with whole-word sources ---------------------------------------------------------------------
+@pytest.mark.parametrize("heading", ["## 1. Tools and environments", "## 8. Metrics plan", "## 6. Security baseline"])
+def test_a_claim_is_caught_wherever_it_sits(work, heading):
+    put(work, insert_in(REFERENCE, heading, "Studies show AI makes teams 30% faster."))
+    assert m.N_CLAIMS in failing_required(work), heading
+
+
+def test_the_word_metrics_or_github_nearby_is_not_a_source(work):
+    """Dry-run: 'METR' matched 'metrics', and any 20xx, 'GitHub' or 'Meta' in the paragraph counted as a source."""
+    base = "Studies show AI makes teams 30% faster."
+    for neighbour in ("We report metrics every week.", "The pull-request timeline lives in GitHub.", "This is version 2026 of the playbook.",
+                      "Meta data about pull requests is kept for 90 days.", "Customers at the bank expect et cetera."):
+        put(work, insert_in(REFERENCE, "## 8. Metrics plan", f"{neighbour} {base} {neighbour}"))
+        assert m.N_CLAIMS in failing_required(work), neighbour
+
+
+@pytest.mark.parametrize("sentence", [
+    "Studies show AI makes teams 30% faster (METR, 2025, a randomized trial that found the opposite).",
+    "According to a survey by Stack Overflow, many developers use AI tools.",
+    "A GitHub study of 2022 reported teams finishing a task 55% faster in a lab setting.",
+    "Studies show mixed results, see https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/.",
+    "Cui et al. found 26% more tasks completed in field experiments.",
+])
+def test_a_claim_with_its_source_in_the_same_sentence_passes(work, sentence):
+    put(work, insert_in(REFERENCE, "## 8. Metrics plan", sentence))
+    assert m.N_CLAIMS not in failing(work), sentence
+
+
+# ---- vanity measures under other names -------------------------------------------------------------------------------------------------------
+UPTAKE_BLOCK = """\
+### Completion uptake
+- Kind: delivery
+- Definition: Completions kept divided by completions offered, per developer, per week, from the IDE telemetry.
+- Source: IDE telemetry
+- Cadence: weekly, Tariq
+- Baseline: to be measured
+- Threshold: at least 40% in a week
+
+"""
+AI_RATIO_BLOCK = """\
+### AI contribution ratio
+- Kind: guard
+- Definition: Lines in merged pull requests written by an agent divided by all merged lines, per month.
+- Source: git history
+- Cadence: monthly, Tariq
+- Baseline: to be measured
+- Threshold: Above 70% in a month, we pause and review the code written by the agent.
+
+"""
+
+
+@pytest.mark.parametrize("block", [UPTAKE_BLOCK, AI_RATIO_BLOCK], ids=["completion uptake", "AI contribution ratio"])
+def test_vanity_measures_under_other_names_are_caught(work, block):
+    put(work, swap(REFERENCE, "### Review turnaround", block + "### Review turnaround"))
+    assert m.N_MET_VANITY in failing_required(work)
+
+
+@pytest.mark.parametrize("line", [
+    "Our dashboard shows a suggestion acceptance rate of 41% and we watch the lines of code merged per engineer.",
+    "We report the share of lines written by an agent every month.",
+    "Each engineer's lines of code per week go on the team wall.",
+])
+def test_a_vanity_measure_in_prose_is_caught_in_any_section(work, line):
+    put(work, insert_in(REFERENCE, "## 1. Tools and environments", line))
+    assert m.N_MET_VANITY in failing_required(work), line
+
+
+def test_a_list_of_things_we_do_not_measure_is_fine(work):
+    put(work, insert_in(REFERENCE, "## 8. Metrics plan",
+                       "We do not measure any of these:\n\n- lines of code\n- suggestion acceptance\n- the share of code written by AI"))
+    assert m.N_MET_VANITY not in failing(work)
+
+
+def test_a_policy_sentence_with_a_negation_in_another_section_is_fine(work):
+    put(work, insert_in(REFERENCE, "## 10. Onboarding", "Nobody is judged on lines of code or on suggestion acceptance."))
+    assert m.N_MET_VANITY not in failing(work)
+
+
+def test_the_pull_request_size_guard_is_not_a_vanity_measure():
+    block = ("### Pull request size\n- Kind: guard\n- Definition: Median number of changed lines (additions plus deletions) per pull request merged in the week.\n"
+             "- Source: the pull-request history in GitHub.\n- Cadence: weekly\n- Baseline: to be measured\n- Threshold: Above 250 changed lines at the median in any week, we ask at the clinic.\n")
+    assert not m._VANITY.search(block)  # noqa: SLF001
+
+
+# ---- nonsense definitions --------------------------------------------------------------------------------------------------------------------
+@pytest.mark.parametrize("name, definition", [
+    ("Lead time for changes", "Median hours from the moon to the sun, per calendar week."),
+    ("Speed of orbit", "Median hours from the moon to the sun, per calendar week."),
+    ("Change failure rate", "Moons divided by suns in a quarter."),
+    ("Deployment frequency", "Number of weekends per month, counted from the calendar."),
+    ("Failed deployment recovery time", "Median hours from sunrise until sunset, per quarter."),
+])
+def test_a_definition_that_names_nothing_from_delivery_is_not_measurable(name, definition):
+    assert m.definition_problems(m.Metric(name, 0, {"Definition": definition}))
+
+
+def test_a_nonsense_definition_in_the_playbook_fails(work):
+    put(work, swap(REFERENCE, "Median time from the first commit of a pull request to the moment the deployment that contains it\n  reaches production, for the pull requests merged in the week.",
+                   "Median hours from the moon to the sun, per calendar week."))
+    assert m.N_MET_DEFINED in failing_required(work)
+
+
+# ---- the second human reviewer for money logic: no exceptions, no discretion, no AI ------------------------------------------------------------
+@pytest.mark.parametrize("sentence", [
+    # the three that passed 35/35 in the dry-run
+    "MUST get approval from a second reviewer, which may be an AI review, on any pull request that touches `money.py`, `fees.py`, `fx.py`, `limits.py`, `ledger.py` or `service.py`. Check: branch protection.",
+    "MUST get approval from any teammate, or from no one when the change is under 20 changed lines, on the six money modules. Check: branch protection.",
+    "MUST ask for a second look from a colleague on the six money modules when the author thinks it is risky; that may be the same person who wrote the prompt. Check: the pull request template.",
+    # other ways to loosen it
+    "Money logic needs a second human reviewer unless the change is urgent.",
+    "Changes to `fees.py` or `limits.py` can skip the second reviewer if the change is small.",
+    "The second reviewer for the money modules is optional at the author's discretion.",
+    "Money code is reviewed by the author and an AI agent, which counts as the second reviewer.",
+    "A second human review on the six modules is not required for changes under 50 lines.",
+    "The second reviewer of money logic can be the author.",
+])
+def test_loosening_the_money_review_is_a_contradiction(work, sentence):
+    put(work, insert_in(REFERENCE, "## 2. Data rules", sentence))
+    assert m.N_CONTRADICT in failing_required(work), sentence
+
+
+@pytest.mark.parametrize("sentence", [
+    "Money logic (`money.py`, `fees.py`, `fx.py`, `limits.py`, `ledger.py`, `service.py`) needs a second human reviewer in addition to the author, with no exceptions.",
+    "Changes to the six money modules need approval from anyone except the author.",
+    "A second human reviews every change to the money modules, and nobody approves their own pull request.",
+    "An AI review is a first pass and never counts as the second reviewer of money logic.",
+    "Money logic needs two people: the author and a human reviewer other than the author.",
+    "A pull request has at most 400 lines, and the six money modules need a second human reviewer.",
+])
+def test_the_money_review_stated_strictly_passes(work, sentence):
+    put(work, insert_in(REFERENCE, "## 2. Data rules", sentence))
+    assert m.N_CONTRADICT not in failing(work), sentence
+
+
+@pytest.mark.parametrize("sentence", [
+    "Personal accounts are allowed for small experiments.",
+    "Free tier plans may be used for open-source code.",
+    "Confidential data can be pasted into an approved tool.",
+    "AI-written code needs less review than hand-written code.",
+    "New dependencies can be added freely.",
+    "Tests are optional for tiny changes.",
+])
+def test_other_loosenings_of_the_banks_rules_are_contradictions(work, sentence):
+    put(work, insert_in(REFERENCE, "## 2. Data rules", sentence))
+    assert m.N_CONTRADICT in failing_required(work), sentence
+
+
+@pytest.mark.parametrize("sentence", [
+    "Personal accounts are never used with bank code.",
+    "Confidential data may not be pasted into any tool.",
+    "AI-written code needs the same review as any other code.",
+    "A new dependency never goes in without a ticket.",
+    "Tests are never optional.",
+])
+def test_the_same_topics_stated_strictly_still_pass(work, sentence):
+    put(work, insert_in(REFERENCE, "## 2. Data rules", sentence))
+    assert m.N_CONTRADICT not in failing(work), sentence
+
+
+# ---- files the playbook points to ----------------------------------------------------------------------------------------------------------------------
+@pytest.mark.parametrize("sentence", [
+    # all of these passed in the dry-run
+    "The pr-hygiene job lives in `.github/workflows/pr-hygiene.yml`.",
+    "CI runs `scripts/check_pr_size.py` on every pull request.",
+    "See `docs/SECURITY.md` for the details.",
+    "The agent instructions live in `AGENTS.md`.",
+    "Tests for the limit are in `tests/test_risk.py`, which Nada added last year.",
+    "Limits live in `src/remit/risk.py`, which agents will not rewrite.",
+    "Limits live in `src/remit/risk.py`. Nada added the tests last year.",
+    "The check reads `CODEOWNERS` and `.claude/settings.json`.",
+    "Everything is described in `docs/playbook-faq.md`.",
+])
+def test_a_file_that_does_not_exist_is_caught_even_with_will_or_added_nearby(work, sentence):
+    put(work, insert_in(REFERENCE, "## 3. Context and memory", sentence))
+    assert m.N_PATHS in failing_required(work), sentence
+
+
+@pytest.mark.parametrize("sentence", [
+    "Salem adds a new `.github/workflows/pr-hygiene.yml` for this.",
+    "We create `scripts/check_pr_size.py` and run it in CI.",
+    "A proposed `docs/SECURITY.md` collects the rules.",
+    "A new `CODEOWNERS` file routes the money modules to the second reviewer.",
+    "A new `.claude/settings.json` holds the deny rules.",
+    "`scripts/check_pr_size.py` is new: it counts changed lines.",
+    "Salem builds `scripts/check_pr_size.py`; it does not exist yet.",
+])
+def test_a_file_the_playbook_calls_new_is_fine(work, sentence):
+    put(work, insert_in(REFERENCE, "## 3. Context and memory", sentence))
+    assert m.N_PATHS not in failing(work), sentence
+
+
+def test_a_new_file_may_be_named_again_after_it_has_been_introduced(work):
+    text = insert_in(REFERENCE, "## 3. Context and memory", "Salem writes a new `scripts/check_pr_size.py` in the first month.")
+    text = insert_in(text, "## 5. Verification standard", "Run `scripts/check_pr_size.py` on your branch before you open the pull request.")
+    put(work, text)
+    assert m.N_PATHS not in failing(work)
+
+
+def test_a_file_named_only_by_a_later_sentence_that_is_new_is_still_caught_if_never_introduced(work):
+    text = insert_in(REFERENCE, "## 5. Verification standard", "Run `scripts/check_pr_size.py` on your branch before you open the pull request.")
+    put(work, text)
+    assert m.N_PATHS in failing_required(work)
+
+
+@pytest.mark.parametrize("token", [
+    "CONTRIBUTING.md", "README.md", "docs/TOUR.md", "docs/ARCHITECTURE.md", "pyproject.toml", ".gitignore", ".env.example", "tests/conftest.py",
+    "src/remit/service.py", "ci.yml", "service.py", ".github/workflows/ci.yml", "lab-assets/team-context.md", "src/", "tests/", "playbook.md",
+    ".env", ".env.local", "Read(./.env)", "pytest -q", "float(", "--max-turns", "yes/no", "AI-assisted", "pr-hygiene", "Money",
+])
+def test_things_that_exist_or_are_not_files_are_not_flagged(work, token):
+    put(work, insert_in(REFERENCE, "## 3. Context and memory", f"We rely on `{token}` here."))
+    assert m.N_PATHS not in failing(work), token
+
+
+def test_the_files_the_facts_file_says_are_missing_really_are_missing(template):
+    for name in ("CLAUDE.md", "AGENTS.md", "CODEOWNERS", ".claude", ".github/CODEOWNERS", ".github/pull_request_template.md"):
+        assert not (template / name).exists(), name
+    workflows = sorted(path.name for path in (template / ".github" / "workflows").iterdir())
+    assert workflows == ["ci.yml"]
+    assert "pytest -q" in (template / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
+
+
+# ---- the length the ticket promises ------------------------------------------------------------------------------------------------------------------------
+def test_the_ticket_states_the_words_the_grader_enforces():
+    task = (HERE / "task.md").read_text(encoding="utf-8")
+    assert f"{m.MIN_WORDS:,}" in task and f"{m.MAX_WORDS:,}" in task, "the ticket must give the grader's real length bounds"
+    assert "roughly 800" not in task
+
+
+def test_a_playbook_just_inside_the_stated_bounds_passes_the_length_check(work):
+    body = REFERENCE
+    words = len(re.findall(r"[A-Za-z0-9_']+", body))
+    assert m.MIN_WORDS <= words <= m.MAX_WORDS
+    padded = body + "\n" + "\n".join(["Extra context sentence for the length test only."] * ((m.MAX_WORDS - words - 50) // 8)) + "\n"
+    assert m.MAX_WORDS - 400 < len(re.findall(r"[A-Za-z0-9_']+", padded)) <= m.MAX_WORDS
+    put(work, padded)
+    assert m.N_LENGTH not in failing(work)
+
+
+# ---- hints must not contradict what the learner did ---------------------------------------------------------------------------------------------------------------------------------
+def test_the_commit_hint_is_right_when_the_commit_is_on_another_branch(work):
+    gitutil.create_branch(work, "playbook-draft")
+    put(work, REFERENCE)
+    commit(work)
+    gitutil.checkout(work, "main")
+    found = {c.name: c for c in m.repository_checks(work)}
+    commits = found[m.N_COMMITS]
+    assert not commits.ok and "found 0 commits" in commits.detail
+    assert "branch" in commits.hint and "switch" in commits.hint
+    assert commits.hint != "Commit your change."
+
+
+# ---- the lesson, the ticket and the grader agree ---------------------------------------------------------------------------------------------------------------------------------------------
+@pytest.mark.skipif(not MODULE.is_file(), reason="the lesson file is written separately")
+def test_the_lessons_ticket_is_the_ticket_the_learner_gets():
+    lesson = MODULE.read_text(encoding="utf-8")
+    block = re.search(r"\*\*The ticket\.\*\*[^\n]*\n\n```text\n(.*?)```", lesson, flags=re.S)
+    assert block, "lesson 12.2 must show the ticket in a text block"
+    assert block.group(1).rstrip("\n") == (HERE / "task.md").read_text(encoding="utf-8").rstrip("\n")
+
+
+@pytest.mark.skipif(not MODULE.is_file(), reason="the lesson file is written separately")
+def test_the_lessons_commands_say_where_to_run_them():
+    lesson = MODULE.read_text(encoding="utf-8")
+    twelve_two = lesson[lesson.index("# 12.2 —"):]
+    grade_blocks = [b for b in re.findall(r"```bash\n(.*?)```", twelve_two, flags=re.S) if "ailab grade m12" in b]
+    start_blocks = [b for b in re.findall(r"```bash\n(.*?)```", twelve_two, flags=re.S) if "ailab start m12" in b]
+    assert grade_blocks and start_blocks
+    for block in grade_blocks + start_blocks:
+        assert block.lstrip().startswith("cd ") and "ainative/ailab" in block.splitlines()[0], block
+    assert "TASK.md" in twelve_two and "Task.md" not in twelve_two and "task.md" not in twelve_two.replace("kit's `task.md`", "")
+
+
+# ---- found by replaying the dry-run learner's own playbook and its probes against the repaired grader --------------------------------
+def test_a_negation_elsewhere_in_the_paragraph_excuses_nothing(work):
+    """p3b: 'which may be an AI review' sat on a line whose Check says the merge is blocked until a human approves."""
+    rule = ("- MUST get approval from a second reviewer, which may be an AI review, on any pull request that touches `money.py`, `fees.py`, `fx.py`, "
+            "`limits.py`, `ledger.py` or `service.py`. Check: a CODEOWNERS file lists those paths and branch protection blocks the merge until a second human approves.")
+    put(work, insert_in(REFERENCE, "## 4. Spec and review norms", rule))
+    assert m.N_CONTRADICT in failing_required(work)
+
+
+def test_a_vanity_sentence_in_a_paragraph_that_also_says_we_set_no_target_is_still_caught(work):
+    """p4e: the paragraph already said 'We set no target on lines of code', which used to excuse the next sentence."""
+    paragraph = "We set no target on lines of code or suggestion acceptance. Our dashboard shows a suggestion acceptance rate of 41% and we watch the lines of code merged per engineer."
+    put(work, insert_in(REFERENCE, "## 8. Metrics plan", paragraph))
+    assert m.N_MET_VANITY in failing_required(work)
+
+
+@pytest.mark.parametrize("sentence", [
+    "Permissions live in a committed .claude/settings.json file, so every session starts with the same deny rules.",
+    "A memory file is advice, not enforcement; see docs/SECURITY.md or src/remit/risk.py.",
+    "The job is described in .github/workflows/pr-hygiene.yml and runs scripts/check_pr_size.py.",
+])
+def test_a_path_without_backticks_is_still_a_path(work, sentence):
+    put(work, insert_in(REFERENCE, "## 6. Security baseline", sentence))
+    assert m.N_PATHS in failing_required(work), sentence
+
+
+def test_a_url_is_not_a_path(work):
+    put(work, insert_in(REFERENCE, "## 6. Security baseline", "Read https://code.claude.com/docs/en/memory.md and https://github.com/anthropics/claude-code/blob/main/docs/guide.md first."))
+    assert m.N_PATHS not in failing(work)
+
+
+def test_a_to_build_far_from_the_file_does_not_make_it_new(work):
+    """p5g: '(to build)' earlier in the sentence belongs to the CI step, not to tests/test_risk.py."""
+    sentence = "A CI step (to build) greps the diff of `tests/` for removed assert lines and fails on a match, and the reviewer reads every changed line in `tests/test_risk.py`."
+    put(work, insert_in(REFERENCE, "## 5. Verification standard", sentence))
+    found = results(work)
+    assert not found[m.N_PATHS].ok and "test_risk.py" in found[m.N_PATHS].detail
+
+
+def test_a_to_build_next_to_the_file_does_make_it_new(work):
+    sentence = "The `.github/workflows/pr-hygiene.yml` job (to build) counts the changed lines."
+    put(work, insert_in(REFERENCE, "## 5. Verification standard", sentence))
+    assert m.N_PATHS not in failing(work)
+
+
+def test_a_following_it_does_not_exist_yet_makes_the_file_new(work):
+    """The dry-run learner's own wording: 'The memory file is `CLAUDE.md` ... It does not exist yet; creating it is the first pull request.'"""
+    text = REFERENCE.replace("The repository has no memory file today, so Tariq creates one new `CLAUDE.md` at the root in the first week.",
+                             "The memory file is `CLAUDE.md` in the repository root. It does not exist yet; creating it is the first pull request after this playbook is accepted.")
+    put(work, text)
+    assert m.N_PATHS not in failing(work)
+    put(work, text.replace("It does not exist yet; creating it", "Nada wrote the first lines; extending it"))
+    assert m.N_PATHS in failing_required(work)
+
+
+@pytest.mark.parametrize("sentence", [
+    "Research indicates agents cut review time by about a third.",
+    "Surveys suggest assistants make teams twice as fast.",
+])
+def test_more_verbs_and_fractions_in_productivity_claims(work, sentence):
+    put(work, insert_in(REFERENCE, "## 8. Metrics plan", sentence))
+    assert m.N_CLAIMS in failing_required(work), sentence
+
+
+@pytest.mark.parametrize("sentence", [
+    "The incident report shows what the agent was allowed to do.",
+    "The review follows the report that Maha opens.",
+    "The trial run of the hook found two false alarms.",
+])
+def test_ordinary_sentences_with_report_or_found_are_not_claims(work, sentence):
+    put(work, insert_in(REFERENCE, "## 9. Incident handling", sentence))
+    assert m.N_CLAIMS not in failing(work), sentence
+
+
+@pytest.mark.parametrize("phrase", ["as much as is practical", "in good time", "in due course", "from time to time"])
+def test_more_soft_words(work, phrase):
+    put(work, swap(REFERENCE, "MUST NOT use `float` for money.", f"MUST NOT use `float` for money {phrase}."))
+    assert m.N_RULE_VAGUE in failing_required(work), phrase
+
+
+@pytest.mark.parametrize("sentence", [
+    "Contain it within the first hour: stop the agent, revoke what it could reach, revert the change.",
+    "Page Maha or the on-call SRE within an hour.",
+    "Report to the on-call SRE the same day.",
+    "Tell Maha within thirty minutes.",
+])
+def test_a_time_limit_may_be_said_in_words(sentence):
+    body = ("Stop the agent, revoke the credentials it could reach and revert the change. Preserve the transcript and the agent log as evidence. "
+            "Page Maha. Hold a blameless postmortem that ends with a new rule or hook. " + sentence)
+    section = section_of("Incident handling", "incident", body)
+    assert m.incident_check(section).ok, sentence
+
+
+def test_a_time_limit_is_still_needed():
+    body = ("Stop the agent, revoke the credentials it could reach and revert the change. Preserve the transcript and the agent log as evidence. "
+            "Page Maha eventually. Hold a blameless postmortem that ends with a new rule or hook.")
+    check = m.incident_check(section_of("Incident handling", "incident", body))
+    assert check.ok  # five of six topics are enough: the time limit is the one that may be missing
+    thinner = "Stop the agent and revert the change. Page Maha eventually."
+    assert not m.incident_check(section_of("Incident handling", "incident", thinner)).ok
+
+
+@pytest.mark.parametrize("sentence", [
+    "In the first week a new joiner pairs with a buddy and reads CONTRIBUTING.md; every sprint a junior does one ticket without an AI tool and explains the diff back.",
+    "Each month the junior reads one module with a senior, and explains every AI-assisted change back before it merges; one ticket per sprint is done by hand.",
+])
+def test_an_onboarding_cadence_may_be_said_in_words(sentence):
+    assert m.onboarding_check(section_of("Onboarding", "onboarding", sentence)).ok, sentence
+
+
+def test_the_ticket_states_the_diff_range_the_grader_enforces():
+    task = (HERE / "task.md").read_text(encoding="utf-8")
+    low, high = m.DIFF_LIMIT_RANGE
+    assert f"{low} to {high} lines" in task
+
+
+def test_the_bad_commit_hint_also_covers_older_commits(work):
+    put(work, REFERENCE)
+    commit(work, "Added the AI playbook.")
+    found = {c.name: c for c in m.repository_checks(work)}
+    hint = found[m.N_COMMITS].hint
+    assert not found[m.N_COMMITS].ok and "git commit --amend" in hint and "git reset --soft lab-start" in hint
+
+
+def test_the_diff_limit_hint_gives_the_range(work):
+    put(work, REFERENCE.replace("400 lines", "5,000 lines").replace("400 changed lines", "5,000 changed lines"))
+    found = results(work)
+    assert not found[m.N_REV_SIZE].ok and "10 to 800" in found[m.N_REV_SIZE].hint

@@ -10,7 +10,7 @@
 *Level: 🔴 Advanced* · *Prerequisites: 0.3, 5.1, 10.1* · *Focus: Team*
 
 ## ⚡ In 60 seconds
-- A **team practice** is what stays true when your best engineer is on holiday: shared context, review norms, owners, a path for juniors, metrics and policy, each with a check.
+- A **team practice** is what stays true when your best engineer is away: shared context, review norms, owners, a path for juniors, metrics and policy, each with a check.
 - Review is the bottleneck AI moves but does not remove. **Label** the pull request, keep it **small**, make the **author explain** it, and put a **second human** on money logic.
 - The **author of record** stays accountable. "The agent did it" is never a root cause.
 - Measure **delivery** with DORA's metrics and watch **guard metrics** beside them. Never set a target on lines of code, suggestion acceptance or the share of AI-written code.
@@ -19,7 +19,7 @@
 ## 🧭 Why it matters
 Three months after Payments Platform rolled out its tools, Hamad asks Tariq two questions: how much of our code is AI-written, and are we faster? The IDE dashboard offers a stand-in for the first (41% of suggestions accepted; every figure here is fictional) and nothing answers the second. The same week Lujain opens a pull request of 1,100 changed lines, mostly agent-written, unlabelled, touching `fees.py`. It waits four days, then is approved because nobody can read 1,100 lines closely.
 
-Both problems are the team's, not the tool's: a practice needs norms written down, an owner and a measure that matters. Feelings mislead: in one randomized trial of experienced developers on their own repositories, tasks took longer with early-2025 AI tools although the developers believed they had been faster (METR, 2025; METR warns that other settings and newer tools may differ).
+Feelings also mislead: in one randomized trial of experienced developers on their own repositories, tasks took longer with early-2025 AI tools although the developers believed they had been faster (METR, 2025; METR cautions that other settings and newer tools may differ).
 
 ## 📐 How it works
 
@@ -27,7 +27,7 @@ Both problems are the team's, not the tool's: a practice needs norms written dow
 
 **Shared context** is habit 1, **Context first**, at team scale. What a new engineer or agent session needs lives in the repository: `CONTRIBUTING.md` for people and tools (commit format, the label, a second reviewer), `CLAUDE.md` for agents (lesson 2.1), `.claude/settings.json` for deny rules and hooks. `CLAUDE.md` is context, not enforcement: the Claude Code memory documentation says to use a `PreToolUse` hook to block an action whatever the model decides.
 
-Meta reports, in its own account of building an app with an AI agent, that when the agent repeats a mistake more than twice the team encodes the correction once, for everyone: one company's account, not independent evidence, but a sound habit. Najm's version: the second time, whoever sees it adds a line to `CLAUDE.md`, or a rule or hook, in a pull request.
+Meta reports, in its own account of building an app with an AI agent, that when the agent repeats a mistake more than twice the team encodes the correction once, for everyone: a company's own account, not independent evidence, but a sound habit. Najm's version: the second time, whoever sees it adds a line to `CLAUDE.md`, or a rule or hook, in a pull request.
 
 ```mermaid
 flowchart LR
@@ -40,8 +40,8 @@ flowchart LR
     F --> A
 ```
 
-**Review norms for AI-assisted pull requests.** Agents make diffs cheap and reading them is not cheaper, so the norms protect the reviewer, and each has a check:
-- **Label** `AI-assisted` when a tool wrote or shaped any part. Reviewers read differently; metrics can compare. *Check:* CI compares the label with a yes/no line in the template.
+**Review norms for AI-assisted pull requests.** Agents make diffs cheap; reading them is not cheaper. The norms protect the reviewer, and each has a check:
+- **Label** `AI-assisted` when a tool wrote or shaped any part. *Check:* CI compares the label with a yes/no line in the template.
 - **At most 400 changed lines**, one logical change (our choice; no study fixes the number). DORA's 2024 report tied part of a stability dip to larger batches (an association, not a cause). *Check:* a CI step counts lines.
 - **The author explains.** A reviewer may ask any "why". *Check:* the description, below.
 - **Tests with or before the change**, seen to fail without it. A test that cannot fail proves nothing: **Trust evidence, not fluency**.
@@ -61,16 +61,16 @@ Strong: feat(cli): add quote --explain to show how a fee is worked out
         Not checked: Arabic output (the flag changes English text only).
 ```
 
-**Ownership.** The author of record is the person whose name is on the pull request (lesson 0.3). Every shared thing has one named owner: memory file, approved-tools list, agreement, on-call rota. "The AI deleted it" is where a postmortem starts, not ends: ask what the agent was allowed to do, who approved the change and which check should have stopped it.
+**Ownership.** The author of record is the person whose name is on the pull request (lesson 0.3). Every shared thing has one named owner: memory file, approved-tools list, agreement, on-call rota. "The AI deleted it" is a postmortem's start, not its end: ask what the agent was allowed to do, who approved the change and which check should have stopped it.
 
 ### 🟡 Going deeper
 
-**Juniors.** The evidence points two ways. Field experiments (Cui and colleagues, testing GitHub Copilot at Microsoft, Accenture and a Fortune 100 firm) found more tasks completed with an assistant, most for less experienced developers; the outcome was task counts, not quality. In the small Anthropic trial of lesson 11.1, mostly junior engineers learning a library with an assistant scored 50% on a comprehension quiz, against 67% for hand-coders, most on debugging. The authors call it preliminary, its setup differs from agentic tools, and Anthropic makes Claude Code. Read together, they suggest a risk to manage, not a settled fact: output may rise while learning falls. So design the apprenticeship:
+**Juniors.** The evidence points two ways. Field experiments (Cui and colleagues, GitHub Copilot at Microsoft, Accenture and a Fortune 100 firm) found more tasks completed with an assistant, most for less experienced developers; the outcome was task counts, not quality. In the small Anthropic trial of lesson 11.1, mostly junior engineers learning a library with an assistant scored 50% on a comprehension quiz, against 67% for hand-coders. The authors call it preliminary, its setup differs from agentic tools, and Anthropic makes Claude Code. Together they suggest a risk to manage, not a settled fact: output may rise while learning falls. So design the apprenticeship:
 - **Explain-back:** before merge the junior explains the diff to a buddy in ten minutes, without notes.
-- **No-AI reps:** one ticket per sprint by hand, so the skill stays theirs (habit 5, **Automate the loop, keep the skill**; Module 13).
+- **No-AI reps:** one ticket per sprint by hand, so the skill stays theirs (habit 5, **Automate the loop, keep the skill**).
 - **Pairing and a named senior reviewer** for the first months: the junior drives, the senior asks "why", and review time is planned.
 
-The risks: seniors become the bottleneck, juniors review output they cannot yet judge, and nobody struggles any more, which is one way people learn. A ban tends to push use onto personal accounts, which breaks the data rules; do not ban AI for juniors, and do not leave them unguided.
+The risks: seniors become the bottleneck, juniors review output they cannot yet judge, and nobody struggles any more, which is one way people learn. A ban tends to push use onto personal accounts, which breaks the data rules; neither ban AI for juniors nor leave them unguided.
 
 **Metrics: measure delivery.** The research behind *Accelerate* (2018) found four keys (deployment frequency, lead time, time to restore, change failure rate). DORA's current guide lists five, adding deployment rework rate (2024) and renaming time to restore. The first three wordings follow the guide; the last two are common definitions, so check dora.dev:
 
@@ -79,14 +79,14 @@ The risks: seniors become the bottleneck, juniors review output they cannot yet 
 | Change lead time | Committed to version control until deployed to production | Median hours from first commit to production, per week |
 | Deployment frequency | Number of deployments in a period, or the time between them | Production deployments per week |
 | Failed deployment recovery time | Time to recover from a deployment that fails and needs immediate intervention | Median hours from failure declared to service restored |
-| Change fail rate (often called change failure rate) | Commonly: the share of deployments needing a hotfix or rollback | Those deployments divided by all, over four weeks |
-| Deployment rework rate | Commonly: unplanned deployments divided by all deployments | Fixes shipped outside the plan divided by all, per quarter |
+| Change fail rate (often called change failure rate) | Commonly: the share of deployments needing a hotfix or rollback | Deployments needing a hotfix or rollback divided by all deployments, over four weeks |
+| Deployment rework rate | Commonly: unplanned deployments divided by all deployments | Fixes shipped outside the plan divided by all deployments, per quarter |
 
 The first three are *throughput*, the last two *instability*. **A vague metric becomes measurable when it names two events or two counts and a period.** "Measure how fast we deliver" is a wish; "median hours from a pull request's first commit to its deployment reaching production, per week" is a metric.
 
-**What AI may change.** Code output can rise while the review queue grows, so lead time and stability may suffer (lesson 10.1). DORA's 2024 report associated higher AI adoption with lower delivery throughput and stability, and attributes part of the stability dip to larger batches; the 2025 report found throughput positive and stability still negative, and frames AI as amplifying what a team already does. These are self-reported associations, not causes: keep batches small and measure your own team.
+**What AI may change.** Code output can rise while the review queue grows, so lead time and stability may suffer (lesson 10.1). DORA's 2024 report associated higher AI adoption with lower delivery throughput and stability, partly through larger batches; the 2025 report found throughput positive and stability still negative, and frames AI as amplifying what a team already does. These are self-reported associations, not causes: keep batches small and measure.
 
-**Vanity metrics and guard metrics.** Lines of code rewards volume (the best change is often a deletion), suggestion acceptance rewards clicking, and percent AI-written is a usage number that can rise while delivery falls. Meta reports that it measured production-ready changes rather than code volume. A **guard metric** watches what speed could break, with a threshold and response written in advance:
+**Vanity metrics and guard metrics.** Lines of code rewards volume (the best change is often a deletion), suggestion acceptance rewards clicking, and percent AI-written is a usage number that can rise while delivery falls. Meta reports, in its own account of building the Forum app with an agent, that it measured success by production-ready changes rather than code volume, and counted a task done only after automated tests and visual checks passed, not when the code compiled. That is DORA's move too: count what reaches users, safely. It is one company's description, so read the original (Go deeper) and measure your own team. A **guard metric** watches what speed could break, with a threshold and response written in advance:
 
 | Guard | Threshold | Response |
 |---|---|---|
@@ -95,17 +95,17 @@ The first three are *throughput*, the last two *instability*. **A vague metric b
 | Review turnaround | Median over 16 hours in a week | Review the queue; cap new agent work |
 | AI-related incidents | At least 1 in a quarter | Pause; run the incident process |
 
-Compare AI-assisted pull requests with the rest by label, but with 30 deployments a quarter (fictional), 3 failures against 4 is noise, and at about 8 deployments in four weeks two failures already read as 25%. A tripped guard starts a look at cases: read trends, never decimals, never per engineer.
+Compare AI-assisted pull requests with the rest by label, but with 30 deployments a quarter (fictional), 3 failures against 4 is noise, and at about 8 deployments in four weeks two failures read as 25%. A tripped guard starts a look at cases: read trends, never decimals, never per engineer.
 
 ### 🔴 Expert view
 
-**Policy that holds.** A rule needs an owner and a check; enforcement runs, roughly, from weakest to strongest: memory file (advice), permission rules and hooks (on the developer's machine), managed settings (nothing lower overrides them), CI with branch protection (on the server, whichever tool wrote the code). *Tools:* one approved list, owned by Salem, with a request path (Noura for security, Sara for data). *Data:* classes, synthetic test data, company accounts only. Anthropic's documentation says commercial terms exclude training on Claude Code prompts and code unless the customer opts in, consumer plans differ, and local transcripts sit in plain text for 30 days by default; check it. *Secrets:* deny rules for `.env`, a secret scan in CI, nothing in memory files. *Licence and IP:* ask Layla for a written position on who owns AI-generated code and what to do with code an assistant reproduces; this course is not legal advice. See [*AI Governance*, lesson 5.2 — Intellectual property in AI inputs and outputs](../aigp/index.html#/5.2).
+**Policy that holds.** A rule needs an owner and a check; enforcement runs, roughly, from weakest to strongest: memory file (advice), permission rules and hooks (on the developer's machine), managed settings (nothing lower overrides them), CI with branch protection (on the server, whichever tool wrote the code). *Tools:* one approved list, owned by Salem, with a request path (Noura for security, Sara for data). *Data:* classes, synthetic test data, company accounts only. Anthropic's documentation says commercial terms exclude training on Claude Code prompts and code unless the customer opts in, consumer plans differ, and local transcripts sit in plain text for 30 days by default; check it. *Secrets:* deny rules for `.env`, a CI secret scan. *Licence and IP:* ask Layla for a written position on who owns AI-generated code and what to do with code an assistant reproduces; this course is not legal advice. See [*AI Governance*, lesson 5.2 — Intellectual property in AI inputs and outputs](../aigp/index.html#/5.2).
 
-**Cost governance.** `/usage` shows spend, and headless runs take `--max-turns` and `--max-budget-usd` (a client-side estimate). Anthropic's costs page gives enterprise averages of roughly $13 per developer per active day and $150 to $250 per developer per month (no date shown; prices and plans change, so check). Set the budget from the first month's data and compare spend with delivery, such as cost per merged change. See [*Cloud & DevOps*, lesson 6.2 — FinOps: understanding, allocating and cutting cloud cost](../cloud/index.html#/6.2).
+**Cost governance.** At the time of writing, `/usage` shows spend and headless runs take `--max-turns` and `--max-budget-usd` (a client-side estimate); check the current documentation. Anthropic's costs page gives enterprise averages of roughly $13 per developer per active day and $150 to $250 per month (no date shown; prices change). Set the budget from the first month's data; compare spend with delivery, such as cost per merged change. See [*Cloud & DevOps*, lesson 6.2 — FinOps: understanding, allocating and cutting cloud cost](../cloud/index.html#/6.2).
 
-**Change management.** Start with one team and a baseline measured before the tools. Write the agreement from what that team does, hold a weekly clinic, and ask the sceptic to own a guard metric. Do not mandate usage, and do not forbid it silently: unapproved use is one way data leaves. See [*AI Product Management*, lesson 7.3 — Adoption and change management inside the enterprise](../aipm/index.html#/7.3).
+**Change management.** Start with one team and a baseline measured before the tools. Write the agreement from what that team does, hold a weekly clinic, and ask the sceptic to own a guard metric. Do not mandate usage or forbid it silently: unapproved use is one way data leaves. See [*AI Product Management*, lesson 7.3 — Adoption and change management inside the enterprise](../aipm/index.html#/7.3).
 
-**An AI-caused incident.** Reported incidents (mostly the victims' own accounts, not audits) share a pattern: broad credentials, destructive tools, no confirmation (OWASP: excessive agency). Five steps:
+**An AI-caused incident.** Reported incidents (mostly victims' own accounts, not audits) share a pattern: broad credentials, destructive tools, no confirmation (OWASP: excessive agency). Five steps:
 
 1. **Contain** within minutes: stop the session, revoke or rotate what it could reach, `git revert`.
 2. **Preserve** before cleanup: the transcript, the agent log, the pull request.
@@ -113,14 +113,14 @@ Compare AI-assisted pull requests with the rest by label, but with 30 deployment
 4. **Review without blame** within five working days: facts, inferences, unknowns, and what the agent was allowed to do.
 5. **Change one control**, merged within ten working days: a rule, hook, permission, memory line or test.
 
-Payments Platform's near miss (fictional) shows step 5: an agent invented a package name and a reviewer caught it. The control: "every package name an agent suggests is looked up before install", plus a dependency check in CI.
+Payments Platform's near miss (fictional): an agent invented a package name and a reviewer caught it. The step-5 control: look up every package name an agent suggests before install, plus a CI dependency check.
 
-**When not to.** A two-person team needs `CONTRIBUTING.md` and a good `CLAUDE.md`, not a playbook. Do not cap generated or mechanical diffs at 400 lines (split by commit and say how they were verified).
+**When not to.** A two-person team needs `CONTRIBUTING.md` and a good `CLAUDE.md`, not a playbook. Do not cap generated or mechanical diffs at 400 lines (split by commit; say how they were verified).
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
-| **AI working agreement** | A one-page, versioned contract: tools, data, pull requests, owners, juniors, measures, incidents | A team of more than two uses agents |
+| **AI working agreement** | A one-page, versioned contract: tools, data, pull requests, owners, juniors, measures, incidents | A team of over two uses agents |
 | **DORA delivery metrics** | Lead time, deployment frequency, recovery time, change fail rate, rework rate | To see whether the team is faster and still stable |
 | **Guard metric** | A measure with a threshold and a response, set before it trips | Next to every speed measure |
 | **Explain-back** | A junior explains the diff to a buddy before merge | Every AI-assisted change by a first-year engineer |
@@ -162,8 +162,8 @@ Owner: <name>.  Version: 1.  Next review: <date, and after any incident>.
 
 ## 🛠️ Exercises
 - 🟢 **Write the agreement.** No agent needed. Fill in the template for a team you know, or for Payments Platform. *Done when:* no `<...>` is left and every norm has a number, a name or a check.
-- 🟡 **Measure before you target.** An agent may act as critic. Write a measurable definition for each of DORA's five metrics for your team. *Done when:* each names two events or two counts, a period and a data source, and one guard metric has a threshold and a response.
-- 🔴 **Break your own agreement.** An agent or colleague can play adversary. For each norm find two ways to satisfy it while defeating its purpose (three 300-line pull requests instead of one 900-line one); decide to detect, prevent or accept each. *Done when:* six or more bypasses each name a response and who checks.
+- 🟡 **Measure before you target.** An agent may act as critic. Define each of DORA's five metrics for your team. *Done when:* each names two events or counts, a period and a data source, and one guard has a threshold and a response.
+- 🔴 **Break your own agreement.** An agent or colleague can be the adversary. For each norm find two ways to satisfy it while defeating its purpose (three 300-line pull requests instead of one 900-line one); decide to detect, prevent or accept each. *Done when:* six or more bypasses each name a response and who checks.
 
 ## ⚠️ Mistakes and traps
 - **Setting a target on usage.** Percent AI-written, lines and acceptance rate invite gaming. Measure delivery and guards.
@@ -174,7 +174,7 @@ Owner: <name>.  Version: 1.  Next review: <date, and after any incident>.
 ## 🧾 Recap
 - A team practice is written, owned and checkable: context, review norms, owners, a junior path, metrics, policy.
 - Review is the bottleneck: label, small diff, the author explains, a second human on money logic.
-- Define DORA's metrics measurably and put a guard with a threshold and a response beside every speed measure.
+- Define DORA's metrics measurably; put a guard with a threshold and a response beside every speed measure.
 - Vanity metrics reward volume, and DORA's AI findings are associations: measure your own team.
 - In an incident: contain, preserve, review without blame, change a control.
 
@@ -259,11 +259,10 @@ Owner: <name>.  Version: 1.  Next review: <date, and after any incident>.
 *Level: 🔴 Advanced* · *Prerequisites: 12.1* · *Focus: Team*
 
 ## ⚡ In 60 seconds
-- Lab `m12`: write `playbook.md` for Payments Platform. Ten sections, at least twelve **rules** in the shape `MUST ... Check: ...`, concrete review norms and a **metrics plan** with one block per metric.
-- **Needs an agent: no.** An assistant is an optional drafting aid; the no-agent path is to write it from the facts file and `CONTRIBUTING.md`.
-- The grader reads for checks, numbers and honesty: a mechanism after every `Check:`, a number in every guard, baselines from the facts, no file that does not exist.
-- It cannot tell whether the policy is wise or whether the team will follow it, and a `Check:` that names a CI job passes even if nobody has built the job.
-- Deliverable: `playbook.md` committed, plus an agent log and your answers in your notes repository.
+- Lab `m12` (**needs an agent: no**): write `playbook.md` for Payments Platform: ten sections, twelve or more **rules** (`MUST ... Check: ...`), concrete review norms and a **metrics plan**, one block per metric.
+- The grader reads for checks, numbers and honesty: a mechanism after every `Check:`, a number in every guard, baselines from the facts, no invented file. The ticket lists its rules.
+- It cannot tell whether the policy is wise, and a `Check:` that names a CI job passes even if nobody has built the job.
+- Deliverable: `playbook.md` committed, plus your agent log and debrief answers in a notes folder.
 
 ## 🧭 Why it matters
 At the clinic Tariq reads out a page of guidance from his last company, nearly every sentence starting "should". "Which of these could you check?" he asks. Nobody can name one. A rule you cannot check is a hope, and a metric you cannot compute is a mood. Hessa's ticket asks for the opposite: every rule ends with how anyone could verify it, and every number can be recomputed by two people. An assistant drafts something fluent in minutes; this lab teaches you to read that draft the way the grader does.
@@ -281,7 +280,9 @@ At the clinic Tariq reads out a page of guidance from his last company, nearly e
 | Review AI code carefully | MUST get a second human approval on `fees.py`. Check: branch protection requires two approvals on that path |
 | Report AI incidents promptly | MUST tell the on-call SRE within 1 hour. Check: the incident ticket records the time of the report |
 
-In `playbook.md` write each rule as a list item (`- MUST ...`) inside the section it belongs to; the grader reads bullets, not table rows.
+In `playbook.md` write each rule as a list item (`- MUST ...`) inside the section it belongs to; the grader reads bullets, not table rows. A check runs or leaves a record. "The team lead reviews it" names a person, not a mechanism.
+
+**What exists today.** CI runs `pytest -q` and nothing else; there is no `CLAUDE.md`, `AGENTS.md`, `CODEOWNERS`, pull-request template or `.claude/` settings (the facts file says so). A playbook describes how the team will work, so call these new: "a new `CODEOWNERS` file". A backticked path that the repository lacks and no sentence calls new is a file you invented.
 
 **A metric as a block.** The skeleton gives every metric six fields. A filled guard block, for a metric the facts file has no figure for (so its baseline says so):
 
@@ -295,7 +296,7 @@ In `playbook.md` write each rule as a list item (`- MUST ...`) inside the sectio
 - Threshold: Above 250 changed lines at the median in any week, we ask at the clinic whether tickets are cut too big and split the next ones before an agent starts.
 ```
 
-The weak version says "Definition: how big our pull requests are". Two people could not compute it, so it fails the grader's "measurable" check. A delivery metric's Baseline is the facts file's own figure with its unit (lead time: 52 hours) and its Threshold a target. A guard's Threshold is a line that makes us act: a number, a comparison and a response, such as "Above 15% over any four weeks, we stop raising agent autonomy and review each failed change".
+The weak version, "Definition: how big our pull requests are", fails the "measurable" check: two people could not compute it. A delivery metric's Baseline is the facts file's figure in its unit or an equivalent (lead time: 52 hours, or about 2 days); its Threshold is a target. A guard's Threshold makes us act: a number, a comparison and a response, such as "Above 15% over any four weeks, we stop raising agent autonomy and review each failed change". Thresholds are your team's choice; say so.
 
 ### 🟡 Going deeper
 
@@ -303,45 +304,45 @@ The weak version says "Definition: how big our pull requests are". Two people co
 
 ```text
 Read lab-assets/team-context.md, CONTRIBUTING.md and playbook.md (the skeleton).
-Draft playbook.md for Payments Platform. Use only facts from those files.
-Write each rule as a list item that starts with MUST or MUST NOT and ends with
-"Check:" and a mechanism someone could run or inspect. Use no figure that is not in
-the facts file: write "to be measured" instead. Mention only files that exist in
-this repository. At the end, list every assumption and every place you guessed.
+Draft playbook.md for Payments Platform using only facts from those files. Write
+each rule as a list item that starts with MUST or MUST NOT and ends with "Check:"
+and a mechanism someone could run or inspect. Write "to be measured" for any figure
+the facts file lacks. Name only files the repository has, or call a file new.
+At the end, list every assumption and every place you guessed.
 ```
 
-Then audit the draft. A fluent draft tends to have these flaws (constructed for teaching, not recorded from a model), each found by one grader line:
+Then audit the draft. A fluent draft tends to have these flaws (constructed for teaching, not recorded from a model):
 
-| What the draft says | Why it appears | Grader line |
-|---|---|---|
-| "Check: team lead review" | Review sounds like a check | Every rule says how it is checked |
-| "where possible", "responsibly" | Fluent hedging | No weasel words in the rules |
-| "Baseline: 4 hours" | A plausible number | Baselines come from the facts |
-| A metric called "acceptance rate" | Vendor dashboards show it | No vanity measures |
-| `src/remit/risk.py` | `docs/ARCHITECTURE.md` still describes it | Every file it points to exists |
-| "Studies show AI makes teams 30% faster" | A half-remembered statistic | No unsourced claims about productivity |
+| What the draft says | Grader line that finds it |
+|---|---|
+| "Check: team lead review" | Every rule says how it is checked |
+| "where possible", "responsibly" | No weasel words in the rules |
+| "Baseline: 4 hours" | Baselines come from the facts |
+| A metric called "acceptance rate" | No vanity measures |
+| `src/remit/risk.py` (`docs/ARCHITECTURE.md` still describes it) | Every file it points to exists |
+| "Studies show AI makes teams 30% faster" | No unsourced claims about productivity |
 
-The same rule applies as in lesson 11.2: the assistant's list of assumptions is a claim too. Open the files.
+The assistant's list of assumptions is a claim too (lesson 11.2): open the files.
 
 ### 🔴 Expert view
 
-**What the grader cannot tell.** It cannot tell whether 400 lines, 15% or one working day suit your team: those are judgements the group session argues about. It cannot tell who wrote the file. It checks a few patterns against `CONTRIBUTING.md`, so a rule that loosens it in words the patterns do not know will pass. And `Check: the pr-hygiene CI job` passes whether or not the job exists. A playbook is a proposal until each check is built, so the real next step is a list of tickets: CI jobs for Salem, deny rules and hooks from Module 8, commands from Module 9, metric queries for Maha. The grader is a pattern matcher and errs both ways: if it flags a sentence that is true, do not bend the truth, rephrase until the claim is checkable.
+**What the grader cannot tell.** Whether 400 lines, 15% or one working day suit your team, or who wrote the file. It matches patterns, so a loosening in words it does not know can pass, and it stops cheap fakes (a bare "a CI job", one check pasted onto many rules) but not a plausible one: `Check: the pr-hygiene CI job` passes whether or not the job exists. A playbook is a proposal until each check is built, so the next step is tickets: CI jobs for Salem, deny rules and hooks (Module 8), metric queries for Maha. If it flags a true sentence, rephrase until the claim is checkable; do not bend the truth.
 
-**When not to.** Do not write the playbook from a blank page for a team that has no agent logs yet. Run the one-page working agreement for a month and let the real mistakes supply the rules.
+**When not to.** Do not write the playbook from a blank page for a team with no agent logs yet. Run the one-page working agreement for a month and let the real mistakes supply the rules.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
-| **AI engineering playbook** | The team's long-form policy, in ten sections | Once the working agreement stops fitting on a page |
+| **AI engineering playbook** | The team's long-form policy, in ten sections | When the working agreement stops fitting on a page |
 | **Rule with a check** | A MUST or MUST NOT bullet that ends with how anyone can verify it | Every policy sentence |
 | **Metric block** | Kind, definition, source, cadence, baseline, threshold under one heading | Every metric the team reports |
-| **Playbook audit** | Reading a draft for mechanisms, invented numbers, missing files and unsourced claims | Before you accept any assistant's policy draft |
-| **Agent log** | A table of prompts, results, corrections and time | After any agent session whose output you will sign |
+| **Playbook audit** | Reading a draft for mechanisms, invented numbers, missing files, unsourced claims | Before accepting an assistant's policy draft |
+| **Agent log** | Prompts, results, corrections and time | After any agent session you will sign |
 
 ## 🏛️ In practice at Najm Bank
-**Needs an agent: no.** An assistant can draft all ten sections in minutes if you want one. The **no-agent path** is the plain one: read the facts file and `CONTRIBUTING.md`, then write the sections in the order below. The grader does not care how the text was produced.
+**Needs an agent: no.** The **no-agent path** is the plain one: read the facts file and `CONTRIBUTING.md`, then write the sections below. An assistant can draft them in minutes if you want one; the grader does not care how the text was produced.
 
-**The ticket.** Hessa wrote it (the kit's `task.md`):
+**The ticket.** Hessa wrote it (the kit's `task.md`; `start` writes it to your lab directory as `TASK.md`, capitals matter):
 
 ```text
 # REMIT-262: write the Payments Platform AI engineering playbook
@@ -357,118 +358,115 @@ assistant. You are accountable for every line, and a playbook that says nothing 
 worse than none.
 
 You may rely on `lab-assets/team-context.md`: the team, the bank's six rules, the data classes, the
-approved tools and last quarter's numbers. Do not edit it, and do not edit `CONTRIBUTING.md` to suit
-your playbook: the playbook sits under both.
+approved tools, what the repository has today and last quarter's numbers. Do not edit it, and do not
+edit `CONTRIBUTING.md` to suit your playbook: the playbook sits under both.
 
 ### What I need
 
-1. **The ten sections** of the skeleton, each with real content, in roughly 800 to 3,000 words in all.
+1. **The ten sections** of the skeleton, in order, each with real content, in 700 to 4,500 words. Keep
+   each heading's key word (tools, data, context or memory, spec or review, verification, security,
+   automation, metrics, incident, onboarding): a topic is read only in its own section.
 2. **Rules, not wishes.** A rule is one list item that starts with `MUST` or `MUST NOT` and ends with
-   `Check:` and how anyone can verify it: a command, a CI job, a hook, a checklist item or an audit.
-   Write at least 12, with at least one each under data rules, spec and review norms, verification
-   standard, security baseline, automation and incident handling. "Be careful with customer data" is a
+   `Check:` and what runs or leaves a record: a command, a CI job or status check, a hook, a script, a
+   scan, a report or log, a checklist item, a label, a branch-protection setting, or an audit that
+   compares or lists named things. A person ("the team lead reviews it") is not a check, nor is "a CI
+   job" with no word on what it looks at. Write at least 12, with at least one each under data rules,
+   spec and review norms, verification standard, security baseline, automation and incident handling.
+   No soft words ("carefully", "regularly", "where possible"). "Be careful with customer data" is a
    wish; "MUST NOT put customer names or account numbers in a prompt. Check: ..." is a rule.
-3. **Concrete review norms:** the label, the largest diff you accept (in lines), who must review money
-   logic (`CONTRIBUTING.md` names the modules), how soon a review happens, what the author must explain.
-4. **A metrics plan**, one `###` block per metric in the skeleton's shape: at least three delivery
-   metrics (DORA-style: lead time, deployment frequency, change failure rate, recovery time or rework
-   rate) and at least one guard metric, whose Threshold gives a number and says what we do when it is
-   crossed. A definition says what is counted or timed, from which event to which event, over which
-   period. A baseline is a figure from the facts file, or "to be measured". Lines of code, suggestion
-   acceptance and the share of AI-written code are not metrics or targets here.
-5. **No invented evidence:** no statistic or "studies show" without a source, and no file the
-   repository does not have.
+3. **Concrete review norms, in section 4:** the label, the largest diff you accept (10 to 800 lines), who must
+   review money logic (`CONTRIBUTING.md` names the modules), how soon a review happens, what the author
+   must explain.
+4. **A metrics plan**, one `###` block per metric in the skeleton's shape; `Kind` is `delivery` or
+   `guard`. At least three delivery metrics (DORA-style: lead time, deployment frequency, change
+   failure rate, recovery time or rework rate) and at least one guard metric, whose Threshold gives a
+   number and says what we do when it is crossed. A definition says what is counted or timed, from
+   which event to which event, over which period. A baseline is a figure from the facts file, in its
+   unit or an equivalent (52 hours, about 2 days), or "to be measured". Thresholds and limits are our
+   own choice: say so. Lines of code, suggestion acceptance and the share of AI-written code are not
+   metrics or targets here, nor is the 60% label share, which is context.
+5. **The bank's rules hold:** nothing looser than the six rules or `CONTRIBUTING.md`; say in your own
+   words that agents never touch production.
+6. **No invented evidence:** no statistic or "studies show" without a source in the same sentence. A
+   backticked file must exist, or the sentence that names it must call it new or proposed ("a new
+   `CODEOWNERS` file").
 
 ### Done when
 
 - `playbook.md` has no `<<...>>` left, and nothing else has changed.
-- It is committed, with messages that follow `CONTRIBUTING.md`.
-- `python -m ailab grade m12 --dir <this directory>`, run from the `ailab` folder of the course
-  repository, passes.
+- It is committed on the branch you started on, with messages that follow `CONTRIBUTING.md` (any
+  lower-case scope, such as `docs(playbook):`).
+- Grade it from the `ailab` folder of the course repository:
+  `python -m ailab grade m12 --dir <this directory>`
 ```
 
 **Start.**
 
 ```bash
-cd ainative/ailab
+cd ~/system-design-for-vibe-coders/ainative/ailab      # with the virtual environment of lesson 0.2 active
 python -m ailab start m12 --dir ~/ainative/m12
 cd ~/ainative/m12
 ```
 
-The start commit holds `lab-assets/team-context.md` (the facts), the skeleton `playbook.md` and `TASK.md`; `git diff lab-start` shows what you changed.
+The start commit holds `lab-assets/team-context.md` (the facts), the skeleton `playbook.md` and `TASK.md`; `git diff lab-start` shows your changes. Commit on the branch you start on: the grader reads what is checked out there.
 
-**Your move.** (1) Read the ticket, the facts, `CONTRIBUTING.md` and the skeleton yourself first. (2) Write in this order: tools and data (from the facts), review and verification (from `CONTRIBUTING.md`), security and automation, incidents and onboarding, and the metrics plan last, because it needs the numbers. (3) With an agent, use the prompt above and then the audit table. (4) Grade after each group of sections and commit when its lines stop failing, for example `docs(playbook): add the review norms and verification standard` (the scope is the area you touched). (5) Read it as the engineer who must follow it on a bad Friday.
+**Your move.** (1) Read the ticket, the facts, `CONTRIBUTING.md` and the skeleton first. (2) Write sections 1 to 3 from the facts, 4 and 5 from `CONTRIBUTING.md`, then 6, 7, 9 and 10, and the metrics plan (8) last: it needs the numbers. (3) With an agent, use the prompt above, then the audit table. (4) Grade as you go (lines for unwritten sections keep failing) and commit when a part reads well, for example `docs(playbook): add the review norms` (any lower-case scope works, though `CONTRIBUTING.md`'s list lacks `playbook`). (5) Read it as the engineer who must follow it.
 
-**What the grader checks.** *Shape:* ten sections with substance, no template text, a sensible length. *Rules:* at least twelve, spread over the six areas, each ending with a mechanism, none with a weasel word. *Sections:* what a good one says about tools, data, memory, review (label, diff limit, the six money modules, response time, what the author explains), verification, security, automation, incidents, onboarding. *Metrics:* six fields per block, three DORA-style delivery metrics, a guard with a threshold and a response, measurable definitions, baselines from the facts, no vanity measures. *Honesty:* nothing looser than the bank's rules or `CONTRIBUTING.md`, no missing files, no unsourced claims. *Repository:* only `playbook.md` changed, no secrets, Conventional Commits, everything committed.
+**What the grader checks.** The ticket's six points, as categories. *Shape:* sections, template text, length. *Rules:* count, spread, mechanism, soft words, no one check pasted onto many. *Sections:* what a good one says (review: label, diff limit, six money modules, response time, what the author explains). *Metrics:* six fields, three delivery metrics, a guard with a response, measurable definitions, baselines, no vanity measures anywhere in the file. *Honesty:* the bank's rules, invented files, unsourced claims. *Repository:* only `playbook.md` changed, no secrets, Conventional Commits, everything committed.
 
 **Grade.**
 
 ```bash
+cd ~/system-design-for-vibe-coders/ainative/ailab
 python -m ailab grade m12 --dir ~/ainative/m12
 ```
 
-On the untouched starter (hint lines and the middle are cut):
-
-```text
-[FAIL] All ten sections are there, with substance: too thin (under 40 words of your own): tools and environments, data rules, context and memory, spec and review norms (+6 more)
-[FAIL] No template text is left: template or unfinished text at line 3, line 5, line 8, line 11 (+15 more)
-[FAIL] A length people will read: 71 words; a playbook that covers ten areas needs at least 700
-...
-[FAIL] Commit messages follow CONTRIBUTING.md: found 0 commits since the start; expected at least 1
-[PASS] Everything is committed (nothing left over)
-
-Lab m12: 6/35 required checks passed: NOT YET
-```
-
-After a first draft that follows the ticket (constructed for teaching, not recorded from a model; hints and passing lines are cut, and the three lines cut as `...` are a weasel word, a missing diff limit and an unsourced claim):
+On the untouched starter it ends `Lab m12: 6/35 required checks passed: NOT YET`. After a first draft that follows the ticket (constructed for teaching, not recorded from a model; hints and passing lines are cut, and the lines cut as `...` are a weasel word, a missing diff limit, a guard with no response, a vanity metric and an unsourced claim):
 
 ```text
 [FAIL] Every rule says how it is checked: "MUST NOT put Confidential or Restricted data, ...": the check names no mechanism
 ...
 [FAIL] Review: a second human for every money module: modules not named: ledger.py
-[FAIL] Metrics: a guard with a threshold and a response: "Review turnaround": no number, no comparison (above, below, more than, at least), no response (what do we do when it is crossed?)
-[FAIL] Metrics: baselines come from the facts: "Lead time for changes" quotes 4, which the facts file does not give for this metric
-[FAIL] Metrics: no vanity measures: "Suggestion acceptance rate"
+...
+[FAIL] Metrics: baselines come from the facts: "Lead time for changes" quotes 4 hours, which the facts file does not give for this metric
+...
 [FAIL] Every file it points to exists: `src/remit/risk.py` (line 44)
 ...
 
 Lab m12: 26/35 required checks passed: NOT YET
 ```
 
-Each line says what failed and where; none gives the answer. A passing run ends with `Lab m12: 35/35 required checks passed: PASSED`. Six advisory checks appear too and never block.
+Each line says what failed and where, never the answer. A passing run ends with `Lab m12: 35/35 required checks passed: PASSED`; six advisory checks never block.
 
-**Weekly deliverable.** In the lab repository, `playbook.md`, committed. In your notes repository, `week-12/` with your agent log, your debrief answers and, from lesson 12.1, your one-page working agreement.
+**Weekly deliverable.** In the lab repository, `playbook.md`, committed. In your own notes folder (the kit has none and the grader ignores it), `week-12/` with your agent log ("no agent" if you used none), your debrief answers and, from lesson 12.1, your one-page working agreement.
 
-**Group session (60 minutes).** (1) Swap playbooks; your partner names the rule they would break first and how they would get round it (20). (2) Read out your guard metrics and defend each threshold (15). (3) Pick the three rules to turn into real checks this month, with owners (15). (4) Agree one thing to measure next quarter that you cannot measure today (10).
+**Group session (60 minutes).** (1) Swap playbooks; your partner names the rule they would break first and how (20). (2) Defend each guard threshold (15). (3) Pick three rules to build as real checks this month, with owners (15). (4) Agree one thing to measure next quarter (10).
 
-**Debrief questions.** What did the agent get wrong, and which grader line found it? What did your facts or prompt miss that would have prevented it? Which rule had no real check until you wrote one? Which number did you want to invent, and what did you write instead?
+**Debrief questions.** What did the agent get wrong, and which grader line found it? What did your facts or prompt miss? Which rule had no real check until you wrote one? Which number did you want to invent, and what did you write instead?
 
 **Agent log template.**
 
 ```markdown
 ### Agent log: week 12
-| Part | Prompt (one line) | What the agent did | What I corrected | Minutes |
+| Part | Prompt | What the agent did | What I corrected | Minutes |
 |---|---|---|---|---|
 | Rules | | | | |
-| Review norms | | | | |
-| Metrics plan | | | | |
-| Incident and onboarding | | | | |
+| Review norms and metrics | | | | |
 
 Lines the grader flagged on the first draft:
-One thing I will do differently:
 ```
 
 ## 🛠️ Exercises
-- 🟢 **Wishes into rules.** No agent needed. Rewrite these five as rules with a mechanism: "Use only approved tools", "Handle customer data carefully", "Test AI code well", "Don't let agents near production", "Keep the memory file tidy". *Done when:* each starts with MUST or MUST NOT, ends with `Check:` and something someone could run, and has no soft word.
-- 🟡 **Audit a draft.** Needs an agent. Give an assistant the prompt above and grade its first draft before you edit it. *Done when:* your agent log lists each failing line, the flaw behind it and what you changed, with minutes.
-- 🔴 **Build one check.** An agent can help. Pick one rule whose `Check:` you wrote, such as the diff limit or the label, and build that check as a script or CI step. *Done when:* it fails on a bad sample, passes on a good one, and the rule names it.
+- 🟢 **Wishes into rules.** No agent needed. Rewrite these five: "Use only approved tools", "Handle customer data carefully", "Test AI code well", "Don't let agents near production", "Keep the memory file tidy". *Done when:* each starts with MUST or MUST NOT and ends with `Check:` and something someone could run; pasted into a draft playbook, "Every rule says how it is checked" and "No weasel words" pass.
+- 🟡 **Audit a draft.** Needs an agent. Give an assistant the prompt above and grade its first draft before you edit it. *Done when:* your agent log lists each failing line, its cause and your fix, with minutes.
+- 🔴 **Build one check.** An agent can help. The lab repository may change only `playbook.md`, so work in a scratch folder: script the check behind one rule, such as the diff limit. *Done when:* it exits non-zero on a 900-line sample diff and zero on a 12-line one, you ran both, and your playbook rule names the script as a new file.
 
 ## ⚠️ Mistakes and traps
 - **Starting from a generic template.** It is fluent and owned by nobody. Start from the facts file and `CONTRIBUTING.md`.
 - **Writing the metrics first.** Without the numbers you will invent them. Write them last, and use "to be measured".
 - **Editing `CONTRIBUTING.md` to fit the playbook.** The playbook sits under it and can only be stricter.
 - **Stopping at 35 of 35.** A green grade means the shape is right. Every `Check:` still has to be built.
-- **A Check that only names a person.** "The team lead" is not a mechanism; a report or a branch-protection setting is.
+- **Naming files that are not there.** `CLAUDE.md`, `CODEOWNERS` and the CI jobs do not exist yet: call them new.
 
 ## 🧾 Recap
 - A rule names the thing, the limit and the check; a wish has none of them.
@@ -487,7 +485,7 @@ One thing I will do differently:
 
 <details><summary>Answer</summary>
 
-**D.** It names the thing, the limit and a mechanism a person could inspect. The others use a soft word or SHOULD, or a check that names a judgement, a culture or a person. (🟢 From wish to rule.)
+**D.** It names the thing, the limit and a mechanism a person could inspect. The others use a soft word or SHOULD, or a check that is a judgement, a culture or a person. (🟢 From wish to rule.)
 
 </details>
 
@@ -500,7 +498,7 @@ One thing I will do differently:
 
 <details><summary>Answer</summary>
 
-**B.** The baseline is the team's own figure from the facts. An unsourced industry average is an invented number; "to be measured" is for metrics the facts do not cover. (🟡 Drafting with an assistant.)
+**B.** The baseline is the team's own figure. An unsourced industry average is invented; "to be measured" is for metrics the facts do not cover. (🟡 Drafting with an assistant.)
 
 </details>
 
@@ -513,7 +511,7 @@ One thing I will do differently:
 
 <details><summary>Answer</summary>
 
-**A.** The grader reads words: it checks shape, numbers and consistency, not whether `pr-hygiene` exists or whether 400 lines is right. It is useful, but it is a sieve. (🔴 What the grader cannot tell.)
+**A.** The grader reads words: shape, numbers and consistency, not whether `pr-hygiene` exists or 400 lines is right. Useful, but a sieve. (🔴 What the grader cannot tell.)
 
 </details>
 
@@ -526,7 +524,7 @@ One thing I will do differently:
 
 <details><summary>Answer</summary>
 
-**C.** `docs/ARCHITECTURE.md` still describes `risk.py`, but the code wins: limits live in `limits.py` and the six money modules are in `CONTRIBUTING.md`. (🟡 Drafting with an assistant.)
+**C.** `docs/ARCHITECTURE.md` still describes `risk.py`, but the code wins: limits live in `limits.py`, and `CONTRIBUTING.md` lists the six money modules. (🟡 Drafting with an assistant.)
 
 </details>
 
@@ -539,7 +537,7 @@ One thing I will do differently:
 
 <details><summary>Answer</summary>
 
-**C.** A complete guard has a number, a comparison and a response: here 20%, "more than" and a review of the tests. The others state a hope, a direction or a cadence. (🟢 A metric as a block.)
+**C.** A complete guard has a number, a comparison and a response: 20%, "more than" and a review of the tests. The others state a hope, a direction or a cadence. (🟢 A metric as a block.)
 
 </details>
 

@@ -38,3 +38,22 @@ def test_names_are_compared_after_normalising_them(tmp_path):
 def test_a_package_from_a_url_is_always_flagged(tmp_path):
     make(tmp_path, **{"requirements.txt": "helper @ https://files.example.invalid/helper.tar.gz\n", "deps-allowlist.txt": "helper\n"})
     assert check(tmp_path) == (1, ["helper"])
+
+
+def test_every_optional_group_and_every_requirements_file_is_read(tmp_path):
+    make(tmp_path, **{
+        "pyproject.toml": '[project]\nname = "x"\ndependencies = []\n[project.optional-dependencies]\ndev = ["pytest"]\ndocs = ["mkdocs"]\n',
+        "requirements-dev.txt": "sketchy-tool==0.1\n", "deps-allowlist.txt": "pytest\n"})
+    assert check(tmp_path) == (1, ["mkdocs", "sketchy-tool"])
+
+
+def test_a_package_from_a_url_in_pyproject_is_flagged(tmp_path):
+    make(tmp_path, **{"pyproject.toml": '[project]\nname = "x"\ndependencies = ["helper @ https://files.example.invalid/h.tar.gz"]\n',
+                      "deps-allowlist.txt": "helper\n"})
+    assert check(tmp_path) == (1, ["helper"])
+
+
+def test_imports_in_tests_and_inside_functions_count(tmp_path):
+    make(tmp_path, **{"deps-allowlist.txt": "pytest\n", "tests__test_a.py": "import hypothesis\n",
+                      "src__app.py": "def f():\n    from requests.auth import HTTPBasicAuth\n"})
+    assert check(tmp_path) == (1, ["hypothesis", "requests"])

@@ -21,11 +21,11 @@ ticket says so. Read the docstring of `ledger.py` first.
    CI runs). They say what the code does today, quirks included (values, order, error types and
    messages), not what you think it should do. Reach the ledger only through the seam. Part 2 changes
    Q-LED-3's shared books on purpose: pin the rest of it.
-3. They must pass on the code as it is now and, unchanged, after Part 2. The grader runs them against
-   the original and against deliberately broken copies of it, so test behaviour, never the source text.
-   It wants at least ten tests that catch at least 13 of 16 breaks, and ignores your edits to
-   `tests/conftest.py`. `python lab-assets/try_mutation.py` runs your tests on the original; given a
-   file, a text and a replacement, it breaks the original there and says whether they noticed.
+3. They must pass on the code as it is now and, unchanged, after Part 2. The grader runs them on the
+   original and on broken copies of it, so test behaviour, never the source text: it wants at least ten
+   tests that catch at least 13 of 16 breaks, and ignores your edits to `tests/conftest.py`.
+   `python lab-assets/try_mutation.py` runs your tests on the original; given a file, a text and a
+   replacement, it breaks the original there and says whether they noticed.
 
 ### Part 2: remove the module-level state
 
@@ -68,7 +68,7 @@ behaviour; the old names still work but warn.
   green; the one that adds your ledger tests changes nothing under `src/`. Never mix a refactor and a
   migration in one commit (your reviewer checks that). Commit everything.
 - Edit an existing test only to follow a rename or the removed `reset()`. This ticket asks for those
-  edits and for commits even where `CLAUDE.md` says never: tell your AI tool.
+  edits and for commits even though `CLAUDE.md` says otherwise: tell your AI tool.
 - Touch only `ledger.py`, `service.py`, `store.py` and `cli.py` in `src/remit`, `src/najmkit`, `tests`,
   `docs`, `scripts`, `README.md`, `CLAUDE.md`, `AGENTS.md`, `.claude`, and `pyproject.toml` or
   `.github/workflows` if you make warnings-as-errors permanent.

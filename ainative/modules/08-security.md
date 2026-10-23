@@ -19,7 +19,7 @@
 ## 🧭 Why it matters
 Week zero said the agent has your hands. This week asks what happens when it uses them badly, by its own mistake or because text it read told it to. Noura's test: can you write down the worst it could do in this session, and what stops it?
 
-At Najm the bad day is smaller and closer. Suppose Lujain pastes a vendor README into a session running in bypass mode, with a `.env` in the folder and `curl` allowed. The README does not need to be clever; it only needs to be read.
+At Najm the bad day is smaller. Suppose Lujain pastes a vendor README into a session running in bypass mode, with a `.env` in the folder and `curl` allowed. The README does not need to be clever; it only needs to be read.
 
 One public account (hold the details loosely) shows a bigger shape. In April 2026 a founder said a Cursor agent running Claude Opus 4.6 found an over-scoped API token and deleted a production volume in one call; his backups were on the same volume ([The Register](https://www.theregister.com/software/2026/04/27/cursor-opus-agent-snuffs-out-startups-production-database/5224442), citing his post and the agent's report).
 
@@ -295,16 +295,13 @@ Weak entry: "Risk: the agent might do something bad. Control: be careful." Stron
 *Level: 🟡 Intermediate* · *Prerequisites: 8.1* · *Focus: Secure, Automate*
 
 ## ⚡ In 60 seconds
-- **Lab m08.** Four things in Remit: `.claude/settings.json`, a guard hook, a dependency check, and notes on a suspicious README.
-- **Needs an agent: no.** Everything works by hand; an agent can help.
-- **The grader runs your code:** your hook on 27 sample inputs (plus four advisory), your check on 12 small projects, with time limits. It never runs a sample command.
+- **Lab m08, needs an agent: no.** Four things in Remit: `.claude/settings.json`, a guard hook, a dependency check, and notes on a suspicious README. An agent can help with parts 1 to 3.
+- **The grader runs your code:** your hook on 56 sample inputs (plus four advisory), your check on 18 small projects, with time limits. It never runs a sample command.
 - **A hook that crashes lets the command run.** Exit 2 blocks, 0 allows, anything else does not block.
-- **It checks the result, not your thinking.** Plan about three hours.
+- **It checks the result, not your thinking.** Plan three to four hours.
 
 ## 🧭 Why it matters
-Lujain's agent proposed `pip install csvtidy-extras`, and the vendor README she meant to paste had instructions for the AI reading it. Noura's answer is a ticket: put the guard rails in the repository, reviewed like code. A line in `CLAUDE.md` asks; a hook enforces, if it does not crash.
-
-AWS reported a malicious prompt shipped in version 1.84.0 of its Amazon Q Developer extension, and said it failed to run because of a syntax error. A defence that depends on the attacker's bug is no defence.
+Lujain's agent proposed `pip install csvtidy-extras`, and the vendor README she meant to paste had instructions for the AI reading it. Noura's answer is a ticket: guard rails in the repository, reviewed like code. A hook enforces; a line in `CLAUDE.md` only asks.
 
 ## 📐 How it works
 
@@ -328,23 +325,13 @@ AWS reported a malicious prompt shipped in version 1.84.0 of its Amazon Q Develo
 
 Your script answers with its exit code.
 
-```mermaid
-flowchart LR
-    A["Agent asks to run a Bash command"] --> B["Claude Code writes the hook JSON to stdin"]
-    B --> C["guard.py decides"]
-    C -->|"exit 0"| D["Rules and mode decide next"]
-    C -->|"exit 2 plus stderr"| E["Blocked: the agent reads the reason"]
-    C -->|"any other code"| F["Non-blocking error: the command runs"]
-```
-
-Test by hand, safely, since a sample is only text: `python .claude/hooks/guard.py < lab-assets/hook-samples/block-git-push.json; echo "exit=$?"`. The skeleton `lab-assets/guard_skeleton.py` lets everything through:
+In your lab folder, test by hand, safely, since a sample is only text: `python .claude/hooks/guard.py < lab-assets/hook-samples/block-git-push.json; echo "exit=$?"`. Copy `lab-assets/guard_skeleton.py` to `.claude/hooks/guard.py` (`mkdir -p .claude/hooks` first; its first line only labels it for the course repository). It lets everything through:
 
 ```python
 # ailab/labs/m08_harden/assets/guard_skeleton.py
-"""Skeleton of the guard hook for lab m08: copy it to .claude/hooks/guard.py and finish it.
+"""Guard hook skeleton for lab m08: copy it to .claude/hooks/guard.py and finish it. TASK.md has the rules.
 
-Exit 0 allows the call; exit 2 blocks it, and stderr is the reason the agent reads; any other exit code
-lets the call RUN. TASK.md has the rules. As it stands, this lets everything through.
+Exit 0 allows the call; exit 2 blocks it (stderr is the reason the agent reads); any other code lets it RUN.
 """
 import json
 import sys
@@ -361,8 +348,7 @@ def reason_to_block(command):
 
 
 def main():
-    # TODO: what exit code does Python end with when this line raises, and what does Claude Code do with it?
-    data = json.load(sys.stdin)
+    data = json.load(sys.stdin)  # TODO: what exit code does Python end with when this raises, and what happens then?
     if data.get("tool_name") != "Bash":
         sys.exit(0)
     command = data["tool_input"]["command"]  # TODO: and when there is no command?
@@ -376,7 +362,7 @@ if __name__ == "__main__":
     main()
 ```
 
-Fed `block-rm-rf.json` it exits 0, so that delete would run. Fed the text `not json` it dies in `json.load` with **exit code 1**, so that command would run too.
+Fed `block-rm-rf.json` it exits 0: the delete would run. Fed the text `not json` it dies in `json.load` with **exit code 1**: that command would run too.
 
 ### 🟡 Going deeper
 
@@ -384,8 +370,7 @@ Fed `block-rm-rf.json` it exits 0, so that delete would run. Fed the text `not j
 
 | Command | Substring guard | Right answer |
 |---|---|---|
-| `git commit -m "docs: why rm -rf is blocked"` | blocks | allow: it only mentions the words |
-| `cat docs/sudoers-notes.md` | blocks (finds `sudo`) | allow: not the program `sudo` |
+| `git commit -m "docs: why rm -rf is blocked"` | blocks | allow: only mentions the words |
 | `cd /tmp && rm -R old-session` | allows | block: another spelling, behind `&&` |
 | `git -C . push` | allows | block: an option sits before `push` |
 
@@ -400,9 +385,11 @@ print(list(lexer))   # ['cd', '/tmp', '&&', 'rm', '-R', 'old-session']
 
 From tokens you can split into commands, find each program (skipping `VAR=value` prefixes and wrappers such as `env`) and read its flags. Quoted text stays one token, so a commit message stays a message.
 
-**Fail closed, and say why.** A guard that cannot read its input blocks. The agent reads your reason, so tell it what to do instead: `Blocked: git push is done by a person. Commit and ask the engineer.`
+**But `shlex` is not a shell.** A newline is only a space, so `ls`, a newline, then `rm -rf x` reads as one command. A `#` inside a word (`echo a#b; rm -rf x`) starts a "comment" that hides the rest. A heredoc body is text with its own apostrophes, so `<<'EOF'` with `don't` inside makes `shlex` raise `ValueError`, and a guard that fails closed there blocks the commits agents write all day. Deal with all three.
 
-**The settings file** holds rules under `permissions` and the hook under `hooks`. This is the hook entry, with a made-up script name (use `python` if `python3` is missing); the rules are yours to write:
+**Fail closed, and say why.** A guard that cannot read its input blocks, and its reason tells the agent what to do instead.
+
+**The settings file** holds rules under `permissions` and the hook under `hooks`. This is the hook entry (use `python` if `python3` is missing); the rules are yours:
 
 ```json
 {
@@ -411,7 +398,7 @@ From tokens you can split into commands, find each program (skipping `VAR=value`
       {
         "matcher": "Bash",
         "hooks": [
-          { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/example.py", "timeout": 10 }
+          { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/example.py" }
         ]
       }
     ]
@@ -419,9 +406,9 @@ From tokens you can split into commands, find each program (skipping `VAR=value`
 }
 ```
 
-Once the file exists your own sessions are bound by it: `deny` and `ask` apply at once, `/permissions` and `/hooks` show what loaded, and a running session may need a restart for a new hook. A false positive in your guard blocks the agent's own `pytest`, which is how people learn why guards get switched off.
+Your sessions are then bound by the file: `deny` and `ask` apply at once, `/permissions` and `/hooks` show what loaded, and a running session may need a restart for a new hook. With no live session (no tool, or an agent that cannot open one), run `python -m json.tool .claude/settings.json` and the hook by hand, and say in your notes that you never saw Claude Code load it. A guard that blocks the agent's own `pytest` gets switched off.
 
-**The dependency check.** Names are compared after normalising, so `Typing_Helpers` equals `typing-helpers`, but `colorlib` for `colourlib` is a different package: flag it. Extras, markers, comments, `-r` lines and `--hash=` lines are not packages. On the sample project (the wording of the reason is yours; the contract is `FLAG <name>:` and exit 1):
+**The dependency check.** Names are compared after normalising, so `Typing_Helpers` equals `typing-helpers`, but `colorlib` for `colourlib` is a different package: flag it. Extras, markers, comments, `-r` lines and `--hash=` lines are not packages. From your lab folder, on the sample project:
 
 ```text
 $ python scripts/depcheck.py lab-assets/sample-project
@@ -431,26 +418,23 @@ FLAG najm_utils: imported in src/statements/export.py but in neither deps-allowl
 FAILED: 3 package(s) to look at before this merges
 ```
 
-**The README.** Read it three ways: rendered, as raw text, and as characters. Unicode tag characters (U+E0000 to U+E007F) draw nothing in most editors; `[hex(ord(c)) for c in line if ord(c) > 0xE0000]` finds them.
+**The README** is yours to read, not your agent's, three ways: rendered, as raw text, and as characters. Unicode tag characters (U+E0000 to U+E007F) draw nothing in most editors; `[hex(ord(c)) for c in line if ord(c) > 0xE0000]` finds them.
 
 ### 🔴 Expert view
 
-**What the grader can and cannot tell.** It reads `settings.json` as data and cannot know that Claude Code accepted it: check `/permissions` and `/hooks`. It cannot judge a command it did not try, and it checks that your notes mention the tricks, not that you understood them: keywords would pass, and teach nothing.
+**What the grader can and cannot tell.** It reads `settings.json` as data, so it cannot know Claude Code accepted it. It cannot judge a command it did not try, and the samples are readable in the kit, so a guard that memorises them passes: it is a practice partner, not a gate. It checks that your notes mention the tricks, not that you understood them.
 
-Each layer misses something. Deny rules cover built-in tools and file commands on named paths, not other spellings or arbitrary subprocesses; the guard covers the shapes you wrote down, not `python -c` or scripts; the sandbox covers what the OS forbids, not MCP servers and hooks, which run outside it.
-
-**Precision matters as much as recall.** A guard that misses a case gives false confidence; one that blocks the work gets disabled or pushes people into bypass mode. Block narrowly, explain every block, test every gap. Hooks run with your rights outside the sandbox, so a change to `.claude/hooks/` or `.claude/settings.json` needs a second reviewer: Claude Code does not auto-approve edits to `.claude` except in [bypass mode](https://code.claude.com/docs/en/permission-modes), where an agent could rewrite its own guard.
+A guard that blocks the work gets disabled. A change to `.claude/` needs a second reviewer: Claude Code does not auto-approve edits there except in [bypass mode](https://code.claude.com/docs/en/permission-modes), where an agent could rewrite its own guard.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
 | **Guard hook** | A `PreToolUse` script: exit 2 plus a reason blocks, exit 0 allows | Where rules cannot match what you mean |
-| **Hook input sample** | A JSON file shaped like the real input, fed on stdin | Testing a hook without running anything dangerous |
-| **Dependency allow-list** | A reviewed package list, plus a lockfile with hashes | Every repository with dependencies |
-| **Agent log** | Prompt, what it did, what you corrected, time spent | Every agent-assisted lab |
+| **Dependency allow-list** | A reviewed package list plus a lockfile | Every repository with dependencies |
+| **Agent log** | Prompt, what it did, what you corrected, time | Every agent-assisted lab |
 
 ## 🏛️ In practice at Najm Bank
-**Needs an agent: no.** An editor, `git`, `pytest` and the sample files are enough; an agent is an optional helper. The grader does not care how the work was produced.
+**Needs an agent: no.** An editor, `git`, `pytest` and the sample files are enough; an agent can help with parts 1 to 3, and the grader does not care how the work was produced.
 
 **The ticket.** This is `TASK.md`, as Noura wrote it:
 
@@ -469,33 +453,39 @@ local and fictional; no agent is needed, and if you use one, you stay accountabl
 
 A `permissions` object (`allow`, `ask`, `deny`) and a `hooks` object, in the syntax of the Claude Code permissions page.
 
-- **Deny** reading a `.env` file, anything under `~/.ssh` and `~/.aws`, and the shell commands `git push` and `rm -rf`.
-- **Allow** only narrow commands you run all day: nothing that could delete, publish, download-and-run or read secrets.
+- **Deny** reading a `.env` file, anything under `~/.ssh` and `~/.aws`, and the shell commands `git push` and `rm -rf`. A Bash
+  rule matches the command's text: try yours on `git push origin main` and `rm -rf build`. Do not deny so much that everyday
+  work (`git status`, `pytest`, reading source) stops.
+- **Allow** only narrow commands you run all day: nothing that could delete, publish, download-and-run or read secrets, no
+  interpreter or launcher (`python *`, `env *`, `find *`, `npx *`), no editing of `.claude/`.
 - **Register the guard** from Part 2: a `PreToolUse` hook for `Bash` that runs `.claude/hooks/guard.py` from the project folder.
 - Advisory: ask before `curl`, `wget` and edits to `money`, `fees`, `fx`, `limits`, `ledger` and `service`.
 
 **Part 2 — A guard hook: `.claude/hooks/guard.py`**
 
 Python. Claude Code runs it before every `Bash` call with one JSON document on standard input (`lab-assets/hook-samples/` has
-six). **Block: exit with code 2 and write a sentence starting `Blocked:` to standard error.** (The JSON deny form
-from the hooks documentation, with its `hookEventName`, is accepted too.) **Allow: exit 0.** Any other exit code is a non-blocking error and the command runs, so the script must never end that way.
+six). **Block: exit with code 2 and write a sentence starting `Blocked:` to standard error** (the JSON `deny` form of the
+hooks documentation, with its `hookEventName`, also counts). **Allow: exit 0.** Any other exit code is a non-blocking error: the
+command runs, so never end that way.
 
-Block a `Bash` command that would **run** one of these. Text that merely mentions them is not a command, and pieces of words
-are not words.
+Block a `Bash` command that would **run** one of these; text that merely mentions them is not a command, and pieces of words
+are not words. A command can span lines: a newline separates commands like `;`, a `#` inside a word is not a comment, and a
+heredoc body (`<<'EOF'` to `EOF`) is text.
 
 1. **Delete a tree:** `rm` with `-r`, `-R` or `--recursive`, however the program or flags are spelled, after `;` `&&` `||`
    `|`, `env` or `timeout`, or inside `bash -c "..."`. `rm file.txt` is fine.
 2. **Rewrite or publish history:** `git push` (also `git -C <dir> push`), `git reset --hard`, `git clean -f` (`-n` is fine).
 3. **Run downloaded code:** `curl` or `wget` piped into `sh`, `bash`, `zsh` or an interpreter.
 4. **Send data out:** `curl` with `-d`, `--data*`, `-F`, `--form*`, `-T`, `--upload-file`; `wget` with `--post-*`.
-5. **Touch credentials:** naming a real `.env` file (not `.env.example`), a path inside `.ssh` or `.aws`, or a key such as
-   `id_ed25519`; also `printenv`.
+5. **Touch credentials:** naming a real `.env` file (`.env`, `.env.production`; not `.env.example`), a path inside `.ssh` or
+   `.aws`, or a key such as `id_ed25519`; also `printenv`.
 6. **Add a dependency:** `pip install`, `python -m pip install`, `uv add`, `poetry add`, `npm install` and the like.
 7. **Change user:** anything under `sudo` or `doas`.
 
-Everything else goes through, including every tool that is not `Bash`. **If the input is not JSON, or a `Bash` call has no
-command, block it** (exit 2, with a reason). Advisory: also see through `find ... -delete`, `$(...)`, a Python one-liner
-calling `shutil.rmtree`, and `xargs rm -rf`.
+Everything else goes through (`curl` with no body, `pip list`), and so does every tool that is not `Bash`. **If the input is not
+JSON, or a `Bash` call has no command, block it.** Cases this ticket does not describe are not graded: choose the safer reading
+and say so in a comment. Advisory: also see through `find ... -delete`, `$(...)`, a Python one-liner calling `shutil.rmtree`,
+and `xargs rm -rf`.
 
 **Part 3 — A dependency check: `scripts/depcheck.py`**
 
@@ -505,73 +495,74 @@ calling `shutil.rmtree`, and `xargs rm -rf`.
   lower case, runs of `-` `_` `.` become one `-`. Allow-list: one package per line, `#` comments, `package: module1, module2`
   for import names. Lockfile: `name==version` lines, optionally followed by `--hash=...` lines.
 - **Declared:** `[project] dependencies` and every group of `[project.optional-dependencies]` in `pyproject.toml`, and every
-  `requirements*.txt`. Lines may have extras, specifiers, a `;` marker, a comment or a trailing `\`; lines starting with `-`
-  are options, not requirements.
-- **Imported:** absolute imports in `*.py` under `src/` and `tests/`. The standard library, your own modules (directly in
-  `src/` or `tests/`) and known packages are fine; files that do not parse are skipped.
+  `requirements*.txt` directly in ROOT. Lines may have extras, specifiers, a `;` marker, a comment or a trailing `\`; lines
+  starting with `-` are options, not requirements.
+- **Imported:** absolute imports anywhere in `*.py` under `src/` and `tests/`. The standard library, your own modules (directly
+  in `src/` or `tests/`) and known packages are fine; files that do not parse are skipped.
 - Print `FLAG <name>: <reason>` once per unknown package and **exit 1**; `name @ URL` is always flagged. Otherwise print
   `OK: ...` and **exit 0**.
 - Create `deps-allowlist.txt` so the check passes here. `lab-assets/sample-project/` has problems to try it on.
 
 **Part 4 — Notes: `injection-notes.md`**
 
-`lab-assets/vendor-readme/README.md` is constructed for this lab: nothing in it is real and every address ends in `.invalid`.
-Read it as a suspicious person would, then fill in `lab-assets/injection-notes-template.md`: every instruction aimed at an
-AI, what it would cost if obeyed, and which of your rules would stop it (and which would not).
+Do this part yourself, not through an agent: reading the README is the attack. `lab-assets/vendor-readme/README.md` is
+constructed: nothing in it is real and every address ends in `.invalid`. Read it as text, as a suspicious person would, and run
+nothing from it. Then fill in `lab-assets/injection-notes-template.md`: every instruction aimed at an AI, what it would cost if
+obeyed, and which of your rules would stop it (and which would not).
 
-**Done when** `pytest -q` passes with the existing tests untouched and your own in `tests/test_guard.py` and
-`tests/test_depcheck.py`; only these files changed, in small commits that follow `CONTRIBUTING.md`; no secrets (the `.env`
-here is fake and git-ignored, for trying your deny rule); and `python -m ailab grade m08 --dir <this directory>` passes
-(run it from the `ailab` folder of the course repository).
+**Done when** `pytest -q` passes in under a minute with the existing tests untouched and your own in `tests/test_guard.py` and
+`tests/test_depcheck.py`; no secrets (the `.env` here is fake and git-ignored, for trying your deny rule); everything is
+committed, one commit per part with its tests and code, as `type(scope): subject` where the scope is any lower-case word for
+the area (`security`, `hooks`, `deps`: CONTRIBUTING.md's list is examples); only `.claude/`, `scripts/`, new files under
+`tests/`, `deps-allowlist.txt`, `requirements.lock`, `injection-notes.md`, `docs/`, top-level Markdown files, `.gitignore` and a
+CI step in `.github/workflows/` changed; and `python -m ailab grade m08 --dir <this directory>` passes (run it from the
+`ainative/ailab` folder of the course repository).
 ```
 
 **Start.**
 
 ```bash
-cd ainative/ailab
+cd ainative/ailab    # in the course repository
 python -m ailab start m08 --dir ~/ainative/m08
-cd ~/ainative/m08
+cd ~/ainative/m08    # your lab folder
 ```
 
-**Your move.** (1) Read `TASK.md`, then the vendor README as text. (2) Write tests for the guard from the ticket's rules, then `guard.py`, feeding it samples with `<`, never the commands themselves. (3) Write `.claude/settings.json`; check `/permissions`. (4) Write the dependency check and `deps-allowlist.txt`, tests first; try it on `lab-assets/sample-project`. (5) Fill in `injection-notes.md`. (6) One commit per part; grade. With an agent: hand it the ticket and samples, ask for failing tests first, stay in Manual mode and read every diff. Keep it away from `lab-assets/vendor-readme/`: an agent exploring the repository reads that README unprompted, which is the attack. Review its guard like a stranger's.
+**Your move.** (1) Read `TASK.md`, then the vendor README yourself, as text. (2) Write tests for the guard from the ticket's rules, then `guard.py`, feeding samples with `<`. (3) Write `.claude/settings.json`. (4) Write the dependency check and `deps-allowlist.txt`; try it on `lab-assets/sample-project`. (5) Fill in `injection-notes.md`. (6) Commit each part with its tests and code, so `pytest -q` stays green, then grade. The grader gives `pytest -q` 60 seconds: call your functions directly for long lists of commands, and use a subprocess for a few exit-code tests. With an agent (parts 1 to 3): hand it the ticket and samples, ask for failing tests first, stay in default mode (it asks before it edits or runs) and read every diff; review its guard like a stranger's. Part 4 is yours: an agent exploring the repository reads that README unprompted, which is the attack, so keep it away from `lab-assets/vendor-readme/`.
 
-**What the grader checks.** Settings: valid rules, denies that really cover `.env`, `~/.ssh`, `~/.aws`, `git push` and `rm -rf`, no broad allow, the hook registered. Guard: dangerous samples blocked with exit 2 and a `Blocked:` reason, harmless ones allowed, unreadable input blocked. Dependency check: twelve small projects and your own repository. Notes: four sections, three of five planted tricks. Hygiene: tests, scope, secrets, commit messages, everything committed.
+**What the grader checks.** Settings: valid rules, denies that cover the secrets, `git push` and `rm -rf` without stopping everyday work, no broad allow, the hook registered. Guard: dangerous samples blocked, harmless ones (heredocs included) allowed, unreadable input blocked. Dependency check: 18 small projects and your own repository. Notes: four sections, three of five tricks. Hygiene: tests, scope, secrets, commits.
 
-**Grade.** `python -m ailab grade m08 --dir ~/ainative/m08`. On the starter (the other lines say "not checked yet"):
+**Grade.** From `ainative/ailab`: `python -m ailab grade m08 --dir ~/ainative/m08`. On the starter (most lines say "not checked yet"):
 
 ```text
 [PASS] Your tests pass: 99 passed
 [FAIL] settings.json is valid JSON: .claude/settings.json does not exist
        hint: Create .claude/settings.json with a "permissions" object and a "hooks" object (see the lesson and TASK.md).
-[FAIL] The guard script exists: .claude/hooks/guard.py does not exist
-       hint: Copy lab-assets/guard_skeleton.py to .claude/hooks/guard.py and write the rules.
 ...
 Lab m08: 4/23 required checks passed: NOT YET
 ```
 
-A typical first attempt loops over `rm -rf`, `git push`, `curl`, `sudo`, `pip install`, `.env`, `.ssh` and `printenv` with `in`, without checking the tool name. Excerpt:
+A first attempt (eight substrings tested with `in`, no tool-name check, no error handling) gets:
 
 ```text
-[FAIL] The guard blocks the dangerous commands: 4 of 14 dangerous commands were not blocked: a recursive delete after another command; a push written with git's -C option; a hard reset; a forced git clean
-[FAIL] The guard lets the harmless commands through: 6 of 11 harmless commands were blocked or failed: a commit message that mentions dangerous words; a search for a dangerous phrase; a file name that contains the letters sudo; reading the example settings file; and 2 more
+[FAIL] The guard blocks the dangerous commands: 15 of 37 dangerous commands were not blocked: a recursive delete after another command; a recursive delete after ||; a recursive delete with the long flag; a push written with git's -C option; and 11 more
+[FAIL] The guard lets the harmless commands through: 10 of 17 harmless commands were blocked or failed: a commit message that mentions dangerous words; a heredoc commit message; a heredoc inside $( ); quoted text with && inside; and 6 more
 ```
 
 When everything is right, the last line is `Lab m08: 23/23 required checks passed: PASSED`.
 
-**Weekly deliverable.** Commit the settings, hook, dependency check, allow-list, your two test files and `injection-notes.md` in small commits, plus `docs/agent-log-m08.md` if your group collects agent logs.
+**Weekly deliverable.** Commit the settings, hook, dependency check, allow-list, your two test files and `injection-notes.md`, plus `docs/agent-log-m08.md` if your group collects agent logs.
 
-**Group session (60 minutes).** (1) Ten: each person names one command that slipped past their guard. (2) Twenty: swap guards and attack each other's with five new sample files, never run. (3) Fifteen: compare notes; which trick did only one person find? (4) Ten: agree what belongs in the hook, the sandbox and with a human. (5) Five: agent logs.
+**Group session (60 minutes).** (1) Ten: each names a command that slipped past their guard. (2) Twenty: swap guards; attack them with five new sample files, never run. (3) Fifteen: which trick did only one person find? (4) Ten: what belongs in the hook, the sandbox and with a human. (5) Five: agent logs.
 
 **Debrief questions.**
 - What did the agent get wrong in its first guard?
-- What did your context (ticket, samples, prompt) miss?
+- What did your context miss?
 - Which false positive would have made you switch the guard off?
-- What did your rules stop that the guard missed, and the reverse?
 
 **Agent log template.**
 
 ```text
-Task:               (e.g. first draft of guard.py from the ticket)
+Task:               (e.g. first draft of guard.py)
 Prompt:             (what you asked, in one or two lines)
 What it did:        (files touched, rules written)
 What you corrected: (a missed spelling, a crash, an over-block, and how you knew)
@@ -579,20 +570,19 @@ Time spent:         (you / the agent)
 ```
 
 ## 🛠️ Exercises
-- 🟢 **Settings and a hook, by hand.** *No agent.* Do parts 1 and 2 with an editor and the sample files. *Done when:* every settings and guard line of `ailab grade m08` not marked advisory shows `[PASS]`.
-- 🟡 **Dependency check, notes and CI.** *Agent optional.* Finish parts 3 and 4 and add a CI step that runs the check. *Done when:* `ailab grade m08` ends `PASSED` with at least three commits since `lab-start`.
-- 🔴 **Attack your own guard.** *Needs an agent (optional).* Ask a second agent or a colleague for ten commands to block, as JSON files, never run. *Done when:* `docs/guard-gaps.md` gives each one that got through a verdict (fixed with a test, left to the sandbox, or accepted).
+- 🟢 **Settings and a hook, by hand.** *No agent.* Do parts 1 and 2 with an editor. *Done when:* every settings and guard line of `ailab grade m08` not marked advisory shows `[PASS]`.
+- 🟡 **Dependency check, notes and CI.** *Agent optional (not for the notes).* Finish parts 3 and 4 and add a `.github/workflows/ci.yml` step that runs the check. *Done when:* `ailab grade m08` ends `PASSED` and "Small commits" shows `[PASS]`.
+- 🔴 **Attack your own guard.** *Needs an agent (optional).* Ask a second agent or a colleague for ten commands to block, as JSON files, never run. *Done when:* `docs/guard-gaps.md` gives each that got through a verdict: fixed with a test, left to the sandbox, or accepted.
 
 ## ⚠️ Mistakes and traps
 - **Testing by running the command.** Feed the guard JSON; never run `rm -rf` to see if it is blocked.
 - **A guard that can crash.** Exit code 1 means "go ahead". Catch everything and fail closed.
-- **Matching substrings.** Mentions and word pieces block; other spellings slip past. Read tokens.
+- **Matching substrings, or trusting `shlex` blindly.** Read tokens; handle lines, `#` and heredocs.
 - **Allowing `Bash(python *)` so tests run.** That allows any code; allow the test command only.
-- **Rules in the wrong place.** `Write(...)` rules are never consulted; `.claudeignore` has no effect.
 
 ## 🧾 Recap
 - A hook gets JSON on stdin; exit 0 allows, exit 2 blocks with a reason, anything else lets the command run.
-- Judge the shape of a command, not its characters, and fail closed on input you cannot read.
+- Judge the shape of a command, not its characters; fail closed on input you cannot read.
 - Deny rules, the guard and the sandbox each miss something; stack them.
 - A dependency check compares normalised names with an allow-list and a lockfile.
 
@@ -664,7 +654,7 @@ Time spent:         (you / the agent)
 </details>
 
 ## 📚 References
-- Claude Code documentation: hooks https://code.claude.com/docs/en/hooks; hooks guide https://code.claude.com/docs/en/hooks-guide; permissions https://code.claude.com/docs/en/permissions; settings https://code.claude.com/docs/en/settings; sandboxing https://code.claude.com/docs/en/sandboxing
-- Python: `shlex` https://docs.python.org/3/library/shlex.html; `tomllib` https://docs.python.org/3/library/tomllib.html
+- Claude Code documentation: hooks https://code.claude.com/docs/en/hooks; hooks guide https://code.claude.com/docs/en/hooks-guide; permissions https://code.claude.com/docs/en/permissions; sandboxing https://code.claude.com/docs/en/sandboxing
+- Python: `shlex` https://docs.python.org/3/library/shlex.html
 - [*Secure AI & Application Security*, lesson 6.2 — The software supply chain: dependencies, SBOMs, SLSA and signing](../secai/index.html#/6.2)
-- **Go deeper.** AWS bulletin AWS-2025-015: https://aws.amazon.com/security/security-bulletins/AWS-2025-015/ · Pillar Security, rules file backdoor: https://www.pillar.security/blog/new-vulnerability-in-github-copilot-and-cursor-how-hackers-can-weaponize-code-agents
+- **Go deeper.** Pillar Security, rules file backdoor: https://www.pillar.security/blog/new-vulnerability-in-github-copilot-and-cursor-how-hackers-can-weaponize-code-agents

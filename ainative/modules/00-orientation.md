@@ -18,7 +18,7 @@
 - Decision cue: before delegating, ask "could I tell if this were wrong?"
 
 ## 🧭 Why it matters
-On Thursday afternoon Lujain, the graduate engineer on the Payments Platform team, closes ticket REMIT-231 in fifteen minutes. Her agent wrote the change, reported "all tests pass" and she committed. On Friday morning Hessa's support team opens the history in their spreadsheet and the fee column shows the wrong numbers. Tariq, the engineering lead, asks Lujain one question: "Who is the author of this change?" She says the agent wrote it. Tariq says no: the author is whoever's name is on the commit, and that person has to explain every line.
+On Thursday afternoon Lujain, the graduate engineer on the Payments Platform team, closes ticket REMIT-209 in fifteen minutes. Her agent wrote the change, reported "all tests pass" and she committed. On Friday morning Hessa's support team opens the history in their spreadsheet and the fee column shows the wrong numbers. Tariq, the engineering lead, asks Lujain one question: "Who is the author of this change?" She says the agent wrote it. Tariq says no: the author is whoever's name is on the commit, and that person has to explain every line.
 
 Nothing in that story is about a bad tool. It is a missing way of working: no context about who reads the output, no definition of done, no look at the diff. This course builds that way of working over fourteen weeks on one small codebase.
 
@@ -58,7 +58,7 @@ Choose per task: can I check the result, how much damage if it is wrong, and is 
 **One ticket, two afternoons.** Hessa's ticket:
 
 ```text
-REMIT-231: show express transfers in the history output
+REMIT-209: show express transfers in the history output
 
 Support cannot tell from `python -m remit history` which transfers were sent
 express. Customers ask why their fee was 27.00 and not 12.00.
@@ -89,7 +89,7 @@ Please show it.
 The prompt that replaces it:
 
 ```text
-Goal: in `python -m remit history`, mark express transfers so support can tell them apart (REMIT-231).
+Goal: in `python -m remit history`, mark express transfers so support can tell them apart (REMIT-209).
 Context: read CONTRIBUTING.md and docs/TOUR.md first. History is printed by `_run` in src/remit/cli.py.
 Transfer.express already exists in src/remit/models.py, so no storage change is needed.
 Support's spreadsheet reads each line by column position.
@@ -166,7 +166,7 @@ Total (0-20):      Lowest habit (lowest pair sum; on a tie pick one):      The o
 **Second, the agent log.** One entry per AI-assisted task. Fill the minutes honestly.
 
 ```markdown
-Entry: 2026-10-22, REMIT-231, branch remit-231-history-express
+Entry: 2026-10-22, REMIT-209, branch remit-209-history-express
 Prompt (paste or summarise):   spec: express at line end, no existing test edited
 What the agent did:            plan, failing test, edit to cli.py, one new test
 What I corrected:              it first inserted a column; I asked for end of line
@@ -581,7 +581,7 @@ A right fix committed as `fixed the typo` fails one line, `Commit messages follo
 - Trap: time "saved" by skipping the check is only moved to a reviewer, or to production.
 
 ## 🧭 Why it matters
-After the REMIT-231 revert, Tariq asks Lujain what she spent on verifying. "Nothing. The agent ran the tests." He draws two columns on the whiteboard. Typing code got cheap. Checking it did not. If the check is skipped, someone else pays: the reviewer, Hessa's support team, or a customer.
+After the REMIT-209 revert, Tariq asks Lujain what she spent on verifying. "Nothing. The agent ran the tests." He draws two columns on the whiteboard. Typing code got cheap. Checking it did not. If the check is skipped, someone else pays: the reviewer, Hessa's support team, or a customer.
 
 Research points the same way, with caution. The 2024 DORA report associated higher AI adoption with lower delivery stability, and its authors suggested larger batch sizes as part of the reason; the 2025 report says AI amplifies what a team already does. Those are survey associations, not proof. The practical reading is the one this lesson teaches: keep each step small enough to verify, decide what you hand over, and know who answers for it.
 

@@ -23,9 +23,9 @@ The capstone trains the habit behind those questions: a change others can trust 
 ## 📐 How it works
 
 ### 🟢 The essentials
-**The brief.** Eight milestones: context (modules 0-2), spec and plan (3), small steps (4, 5), review (5, 6), security (8), automation (9, 10), documents (11) and retrospective (12, 13). Each leaves something checkable that must refer to something real: files, ids `AC1`..., sample commands, the code, a commit.
+**The brief.** Eight milestones: context (modules 0-2), spec and plan (3), small steps (4, 5), review (5, 6), security (8), automation (9, 10), documents (11) and retrospective (12, 13). Each leaves something checkable that must refer to something real: files, ids `AC1`..., sample commands, the code, a commit. `lab-assets/README.md` lists what the grader reads in each document; read it before you write them.
 
-**Providers before the consumer.** A corridor names its fee schedule, and an old test (`tests/test_corridors.py`) checks that the schedule exists. So the plan adds `STD-C` in `fees.py`, then the rate and margin in `fx.py`, then the corridor, then the wording (`notify.py`) and the template choice (`service.py`). No code commit turns an old test red.
+**Providers before the consumer.** A corridor names its fee schedule, and an old test (`tests/test_corridors.py`) checks that the schedule exists. So the plan adds `STD-C` in `fees.py`, then the rate and margin in `fx.py`, then the corridor, then the wording (`notify.py`) and the template choice (`service.py`). No code commit turns an old test red. Fee and rate functions take a `Corridor`, so build one in your fee tests that points at `STD-C`; they can then pass before the real corridor exists.
 
 **Work the money out by hand.** Remit rounds half up, in `Decimal`. A fee, a rate or a receive amount can land exactly on a tie, which half-even rounding, `round()` or a float resolves the other way. The base repo pins two:
 
@@ -34,28 +34,30 @@ The capstone trains the habit behind those questions: a change others can trust 
 55 QAR, test rate:   55 x 19.8990 = 1094.4450         half up 1094.45   (half-even: 1094.44)
 ```
 
-`STD-C`, its rate and its receive amounts have ties of their own; find them before any test exists. A tie below the minimum fee or above the cap is hidden by it, so this scratch script skips those:
+A tie catches a wrong rounding only when the two rules disagree, which is when the digit before the 5 is even (5.005 gives 5.01 or 5.00; 5.015 gives 5.02 either way). `STD-C`, its rate and its receive amounts have such ties; find them before any test exists. This script scans one tier (some tiers have none), so keep it outside the repository:
 
 ```python
-# scratch/find_ties.py: a throwaway script, not part of the change
-from decimal import Decimal as D
+# ~/scratch/find_ties.py: a throwaway script, kept outside the repository
+from decimal import ROUND_HALF_EVEN, ROUND_HALF_UP, Decimal as D
 
 
-def ties(percent, flat, minimum, cap, low, high):  # amounts on a 0.25 grid
-    amount = D(low)
-    while amount <= D(high):
-        fee = amount * D(percent) / 100 + D(flat)
-        if D(minimum) < fee < D(cap) and fee * 100 % 1 == D("0.5"):
-            yield amount, fee
-        amount += D("0.25")
+def useful_tie(value, places=2):  # exactly halfway, and half up and half even disagree
+    unit = D(1).scaleb(-places)
+    return value / unit % 1 == D("0.5") and value.quantize(unit, ROUND_HALF_UP) != value.quantize(unit, ROUND_HALF_EVEN)
 
 
-# STD-A, first tier (2.00% + 2.00, minimum 5.00, cap 150.00): put the STD-C tier you test here.
-for amount, fee in ties("2.00", "2.00", "5.00", "150.00", "100", "151"):
-    print(amount, "->", fee)  # 150.25 -> 5.0050, then 150.75 -> 5.0150
+def fee(amount, percent, flat, minimum, cap):  # one tier; put the STD-C tier you test here
+    return min(max(amount * D(percent) / 100 + D(flat), D(minimum)), D(cap))
+
+
+amount = D("100")
+while amount <= D("151"):  # amounts on a 0.25 grid
+    if useful_tie(fee(amount, "2.00", "2.00", "5.00", "150.00")):  # STD-A, first tier
+        print(amount, "->", fee(amount, "2.00", "2.00", "5.00", "150.00"))  # 150.25 -> 5.0050
+    amount += D("0.25")
 ```
 
-Check the rate (mid x (1 - margin), past the fourth place) and the receive amount (send x rate, past the second) the same way. An agent may draft the tests; the expected values come from you.
+Try the rate (`useful_tie(mid * (1 - margin), 4)`) and the receive amount (send times rate) the same way. An agent may draft the tests; the expected values come from you.
 
 ### 🟡 Going deeper
 **Delegate the draft, keep the decision.** The agent interviews you for the spec, drafts tests from your values and takes one plan step per prompt. A fresh-context reviewer (the **Second-model review** of lesson 5.1: a second session or `/code-review`) adds questions. Verify each: the best-practices page warns that reviewers usually report something even when the work is sound. The vague prompt is "Add a Bangladesh corridor to Remit". The specified one, for step 2, is a task contract (lesson 10.1; your AC ids will differ).
@@ -65,18 +67,18 @@ Do step 2 of specs/REMIT-414-plan.md; read the plan, the spec and CLAUDE.md firs
 Add the fee schedule STD-C to src/remit/fees.py and register it in SCHEDULES, from the spec's table.
 May change: src/remit/fees.py. Must not change: any other file, any existing test.
 Money is Decimal; ties round half up. If spec and ticket disagree, stop and ask.
-Done when the tests for AC3, AC4 and AC5 pass and nothing else moves.
+Done when the fee tests (AC3, AC4) pass and nothing else moves.
 Then commit: feat(fees): add the STD-C fee schedule for Bangladesh
 ```
 
 **A right diff and the finding it still earned.** Say the agent's `service.py` change passes every test. Read the end of `send`: the template is chosen by name, notification comes last and `_notify` catches only `NotificationError`. A mistyped id raises `UnknownTemplate` after the ledger has posted and the transfer is stored. The review rates it minor and asks for one test: every template id the service can choose exists in `notify.TEMPLATES`, in both languages.
 
 ### 🔴 Expert view
-**When the ticket's account of today's Remit and the code disagree,** the code wins and the ticket gets a question. **When the agent offers a neighbouring fix** (the stale `risk.py` section of the architecture page), decline it and log it as a follow-up with an owner. **Do not delegate** the approved wording or the expected values.
+**When the ticket's account of today's Remit and the code disagree,** the code wins and the ticket gets a question. **When the agent offers a neighbouring fix** (the stale `risk.py` and daily-limit text of the architecture page), decline it and log it as a follow-up with an owner. The same goes for a product question you notice, such as who can ever send the 12,000 maximum under the T1 and T2 daily limits: it belongs in your spec's open questions. **Do not delegate** the approved wording or the expected values.
 
 **How much evidence is enough?** Match it to risk. A typo needs one commit and the test that was red; money logic gets all ten pieces and a second human on `fees.py`, `fx.py` and `service.py`. The capstone is maximal so that you feel each piece once.
 
-**What the grader cannot tell.** A model could fill every template in ten minutes and pass: the checks verify shape, truth and references, never sincerity. So the demo has you break your own code live.
+**What the grader cannot tell.** A model could fill every template in ten minutes and pass: the checks verify shape, truth and references, never sincerity. So the demo has you break your own code live. Alone, or inside one agent session, you cannot start a second reviewer or hold the demo: say "self-review" in your notes and list your questions for the humans.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -89,7 +91,7 @@ Then commit: feat(fees): add the STD-C fee schedule for Bangladesh
 ## 🏛️ In practice at Najm Bank
 *Needs an agent: no, but recommended: the capstone is about working with one. No-agent path: write every document and test yourself, in the same order.*
 
-**The ticket.** This is `task.md`, as Hessa wrote it.
+**The ticket.** This is `TASK.md` in your work directory, as Hessa wrote it.
 
 ```text
 # REMIT-414: open the Bangladesh (BDT) corridor, and show your working
@@ -129,20 +131,20 @@ A new template, `transfer_sent_bdt`, goes out for `QAR-BDT` transfers; every oth
 
 ### How I want it delivered
 
-The change, and the evidence around it. `lab-assets/hessa-notes.md` has my meeting notes and `lab-assets/templates/` a starting point for each document. Use an agent as much as you like; you answer for every line.
+The change, and the evidence around it. `lab-assets/hessa-notes.md` has my meeting notes, `lab-assets/templates/` a starting point for each document and `lab-assets/README.md` what the grader reads in each one. Use an agent as much as you like; you answer for every line.
 
-- the change in `src/remit/` (`corridors.py`, `fees.py`, `fx.py`, `notify.py`, `service.py`) and new `tests/test_*.py` files; each acceptance criterion of your spec is named in a test (`AC1`, `AC2`...)
-- `CLAUDE.md` (or `AGENTS.md`), updated for corridor work
-- `specs/REMIT-414.md`, then `specs/REMIT-414-plan.md`
+- the change in `src/remit/` (`corridors.py`, `fees.py`, `fx.py`, `notify.py`, `service.py`), added to the tables that are already there, and new `tests/test_*.py` files; each acceptance criterion of your spec is named in a test (`AC1`, `AC2`...)
+- `CLAUDE.md` (or `AGENTS.md`), updated for corridor work: start from your lesson 2.2 file or `templates/memory.md`
+- `specs/REMIT-414.md`, then `specs/REMIT-414-plan.md`: one row per step, the last column that step's commit header
 - `docs/adr/0001-<short-title>.md`: one decision
 - `docs/review-REMIT-414.md`: your own diff, `AI-assisted: yes` or `no`, the money files needing a second human
 - `.claude/settings.json` and `.claude/hooks/guard.py`
 - `docs/corridors.md` (new) and the lines of `docs/ARCHITECTURE.md` this change makes untrue
 - `docs/agent-log.md`, then `docs/retrospective.md`
 
-`CONTRIBUTING.md` applies. One kind of change per commit (code with its tests, or documents, or agent configuration), at least eight commits. Do not edit an existing test, add a dependency or touch files the change does not need. Where this ticket is silent, decide, write the decision in your spec and say who confirms it.
+`CONTRIBUTING.md` applies; its list of scopes is only examples, so `claude` or `specs` is fine. One kind of change per commit: code with its tests (`src/`, `tests/`), or documents (`docs/`, `specs/`), or agent configuration (`CLAUDE.md`, `.claude/`). At least eight commits. Do not edit an existing test, add a dependency or touch files the change does not need; keep scratch scripts outside the repository. In every document a path in backticks must exist (unless its line says it does not), and a line or table cell that starts with `TODO` counts as unfinished. Where this ticket is silent, decide, write the decision in your spec and say who confirms it.
 
-Done when every required check of `python -m ailab grade m14 --dir <this directory>` passes (run it from the `ailab` folder of the course repository). It checks the result and how the documents refer to each other, not whether your thinking was good.
+Done when every required check of `python -m ailab grade m14 --dir <this directory>` passes (run it from the `ailab` folder of the course repository, on the branch with your commits). It checks the result and how the documents refer to each other, not whether your thinking was good.
 ```
 
 **Start.**
@@ -157,7 +159,7 @@ pytest -q                # 99 passed
 
 `python -m ailab solve m14 --dir ~/ainative/m14` applies the reference solution. It is a peek: try first.
 
-**Your move.** (1) Read `lab-assets/hessa-notes.md` (context, not orders), bring your lesson 2.2 memory file, and let an agent interview you in plan mode; commit spec and plan before any code prompt. (2) Install the baseline hardening, or bring your lesson 8.2 files, and read every line you keep:
+**Your move.** (1) Read `lab-assets/hessa-notes.md` (context, not orders) and `lab-assets/README.md`. Write `CLAUDE.md` (or `AGENTS.md`) from your lesson 2.2 file or `lab-assets/templates/memory.md`, and let an agent interview you in plan mode for the spec; commit spec and plan before any code prompt. (2) Install the baseline hardening, or bring your lesson 8.2 files, and read every line you keep. Run these in `~/ainative/m14`:
 
 ```bash
 mkdir -p .claude/hooks
@@ -166,9 +168,9 @@ cp lab-assets/harden/guard.py .claude/hooks/guard.py
 python3 .claude/hooks/guard.py < lab-assets/hook-samples/block-rm-rf.json; echo $?    # Blocked: ... then 2
 ```
 
-Exit code 2 blocks a command; any other non-zero code is a non-blocking error, so a guard must block what it cannot read. (3) Tests first, committed alone, then one step per commit. (4) Review your own diff, then ask a fresh session for a second opinion. (5) Write the ADR, the corridors page and the architecture fix from the code. (6) Log, then write the retrospective from `lab-assets/templates/retrospective.md` (total minutes, the commit you would redo, what went well and wrong, what the agent got wrong, what your context missed, the five habits, follow-ups). *No agent:* the same order; budget a week of part-time study.
+Exit code 2 with a reason on standard error blocks a command; any other non-zero code is a non-blocking error, so a guard must block what it cannot read. (3) Tests first, then one step per commit. CONTRIBUTING.md wants a green suite at every commit, so one commit of red tests alone is a deliberate exception here; committing each step's tests with its code is fine too. Its scope list is only examples: `chore(claude)` and `docs(specs)` pass. (4) Review your own diff, then ask a fresh session for a second opinion; if you cannot start one, write "self-review" in the notes and put your questions for the humans under Second reviewer. (5) Write the ADR, the corridors page and the architecture fix from the code. (6) Log, then write the retrospective last, from `lab-assets/templates/retrospective.md`: it quotes a commit hash, so after any rebase or amend copy one again. *No agent:* the same order; budget a week of part-time study.
 
-**What the grader checks.** *The change:* five groups of hidden acceptance tests (corridor, fees, rate, wording, and the send path with limits, ledger and command line); no old test weakened; your new tests failing without your change; only the expected files touched. *The evidence:* each document keeps its template's headings, has no `TODO` and is checked against the others (spec ids proved by a plan step and named in a test, files the plan names exist, `docs/corridors.md` equal to the code, the retrospective quoting the log's total and a commit); the hook runs on 18 sample inputs. *Hygiene and security:* Conventional Commits, one kind of change per commit, no secrets, no float or clock shortcuts, no new dependency. *Advisory:* tests with teeth, tests before code, a history that follows the plan, small commits, a hook that sees through `bash -c`, ask rules for the money files.
+**What the grader checks.** *The change:* five groups of hidden acceptance tests (corridor, fees, rate, wording, and the send path with limits, ledger and command line); no old test weakened; only the expected files touched; your new tests failing without your change and noticing at least four of six deliberate defects, each one agreed number broken in the repository's own tables (a test that asserts nothing, or computes its expected value with the code, notices none). *The evidence:* each document keeps its template's headings and has no `TODO` placeholder; a path in backticks exists unless its line says it does not; documents are checked against the code and each other (spec ids proved by a plan step and named in a test, at least three correct worked results in the spec, a commit header in the plan's last column, `docs/corridors.md` equal to the code, the retrospective quoting the log's total and a commit); the hook runs on 18 sample inputs. *Hygiene and security:* Conventional Commits, one kind of change per commit, no secrets, no float or clock shortcuts, no new dependency. *Advisory:* tests before or with the code, a history that follows the plan, small commits, a hook that sees through `bash -lc`, ask rules for the money files.
 
 **Grade.**
 
@@ -186,12 +188,12 @@ On the starter state the real output includes these lines (others omitted):
 [FAIL] Spec: sections, agreed numbers and acceptance criteria: specs/REMIT-414.md does not exist
 [FAIL] Guard hook blocks the dangerous and allows the harmless: .claude/hooks/guard.py does not exist
 
-Lab m14: 7/28 required checks passed: NOT YET
+Lab m14: 7/29 required checks passed: NOT YET
 ```
 
-Pointing Bangladesh at `STD-B` instead of `STD-C` runs and looks plausible, yet fails three checks: the corridor tests, the fee tests and the corridors page (`QAR-BDT: wrong or missing fee schedule`).
+Pointing Bangladesh at `STD-B` instead of `STD-C` runs and looks plausible, yet fails your own tests, three groups of hidden tests (corridor, fees, send path) and the corridors page (`QAR-BDT: wrong or missing fee schedule`).
 
-When every required check passes, the last line reads `Lab m14: 28/28 required checks passed: PASSED`.
+When every required check passes, the last line reads `Lab m14: 29/29 required checks passed: PASSED`.
 
 **The rubric.** Score each dimension 1 to 4. The grader can award the evidence rows up to 3; you and your group score the rest at the demo.
 - *Context and spec:* 1 spec after the code; 2 criteria vague; 3 numbered, testable; 4 non-goals held.
@@ -200,7 +202,7 @@ When every required check passes, the last line reads `Lab m14: 28/28 required c
 - *Security baseline:* 1 defaults; 2 deny rules; 3 hook blocks and allows; 4 hook limits written down.
 - *Documents:* 1 from memory; 2 match today; 3 cross-refer, checked; 4 drift check automated.
 
-**Weekly deliverable (Module 14).** In your notes repository, commit `week-14/` with `m14-grade.txt` (the final grade output), `baseline-after.md` (the lesson 0.1 self-check again), `demo-notes.md` and `portfolio.md`.
+**Weekly deliverable (Module 14).** In a notes folder of your own, commit `week-14/` with `m14-grade.txt` (the final grade output), `baseline-after.md` (the lesson 0.1 self-check again, if you did one), `demo-notes.md` and `portfolio.md`. The kit does not check these.
 
 **As a portfolio piece,** write a one-page `README`: what changed, how you know it is right, where AI helped and where you overruled it; say it is fictional and leave out secrets. See [*From Graduate to Hired*, lesson 3.1 — Projects that prove you can do the job: one capstone spec per role](../career/index.html#/3.1) and [lesson 3.2 — Your GitHub, READMEs and writing about your work](../career/index.html#/3.2).
 
@@ -213,7 +215,7 @@ When every required check passes, the last line reads `Lab m14: 28/28 required c
 ```markdown
 # Agent log: REMIT-414
 
-One row per session or task, including the ones where you did the work by hand ("no agent").
+One row per session or task (at least three), including the ones where you did the work by hand ("no agent"). The last column is whole minutes; the total is their sum.
 
 | # | Task | Prompt (short) | What it did | What I corrected | Artefact | Minutes |
 |---|---|---|---|---|---|---|

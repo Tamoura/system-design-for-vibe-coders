@@ -253,66 +253,54 @@ Re-rate every quarter and lift **one** weak skill at a time. A rule of thumb of 
 *Level: 🔴 Advanced* · *Prerequisites: 13.1* · *Focus: Mindset, Team*
 
 ## ⚡ In 60 seconds
-- Lab `m13`, on Najm Remit: build a **personal eval** (`eval/tasks.jsonl`, eight or more tasks, each with a check a script can run) and a **90-day plan** (`plan.md`) with measurable goals.
-- **Needs an agent: no.** You may use one; the grader looks only at the result, and the no-agent path is complete.
-- The rule that matters: a check must **fail on the untouched repository** and **pass on a solution you trust**. The kit runs your checks on throw-away copies to find out. It cannot judge whether your tasks are the right ones or your plan is wise.
+- Lab `m13`, on Najm Remit: build a **personal eval** (`eval/tasks.jsonl`, eight or more tasks with checks a script can run) and a **90-day plan** (`plan.md`).
+- **Needs an agent: no.** You may use one; the grader looks only at the result.
+- The rule that matters: a check must **fail on the untouched repository**, **pass on a solution you trust** and **refuse a lazy answer**. The kit tests this on throw-away copies; it cannot judge whether your tasks or plan are wise.
 
 ## 🧭 Why it matters
-Next quarter Salem adds a second approved tool. Lujain says it "tops the leaderboard". Tariq asks: "On which of our tasks?" Nobody knows, and the clinic spends its hour on opinions. Nada's version: eight real tasks, each with a check, run three times per tool; the slide shows passes, minutes, corrections and which tool suits which task.
+Next quarter Salem adds a second approved tool. Lujain says it "tops the leaderboard". Tariq asks: "On which of our tasks?" Nobody knows; the clinic spends its hour on opinions. Nada's version: eight real tasks, each with a check, run three times per tool.
 
-Tariq's second ask is quieter: "What will you be better at in ninety days, and how will we know?" "Get better at debugging" can be neither met nor missed; a goal with a metric, a baseline, a number and a date can be both. It is the habit **Specify before you delegate** again: say what done means, then check it.
+Tariq's second ask: "What will you be better at in ninety days, and how will we know?" "Get better at debugging" can be neither met nor missed; a goal with a metric, a baseline, a number and a date can be both. It is **Specify before you delegate** again.
 
 ## 📐 How it works
 
 ### 🟢 The essentials
 
-**A task is five parts.** `lab-assets/tasks.example.jsonl` holds three worked examples.
+**A task is five parts.** `lab-assets/tasks.example.jsonl` holds four worked examples. The **prompt** is the exact words you give the tool (EX3's "Add a --json flag..."). The **starting state** is a clean copy at `lab-start`, plus an optional **setup** patch that plants a bug or a file to review. The **check** is a command whose exit status says pass or fail, kept where the tool cannot see it. The **guard** must pass before and after, to catch collateral damage (EX1 guards the neighbouring test files). The **reference** is a patch you trust, to prove the check can pass.
 
-| Part | What it is | In the examples |
-|---|---|---|
-| Prompt | The exact words you give the tool | EX3: "Add a --json flag to `python -m remit quote`..." |
-| Starting state | A clean copy at `lab-start`, plus an optional **setup** patch (a planted bug, a file to review) | EX1 plants a fee-tier boundary bug |
-| Check | A command whose exit status says pass or fail, kept where the tool cannot see it | `pytest -q lab-assets/example/test_ex1_tier_boundary.py` |
-| Guard | A command that must pass before and after (so not a test your planted bug breaks), to catch collateral damage | `pytest -q tests/test_limits.py tests/test_notify.py tests/test_money.py` |
-| Reference | A patch you trust, to prove the check can pass | `ex1-reference.patch` |
-
-A check earns trust three ways: it **fails on a clean copy**, it **passes on the reference**, and a **lazy answer does not pass it**. Take EX2: *explain how the express surcharge relates to the fee cap, and write the answer to `ANSWER.md`*. A weak check asks only that the file exists:
-
-```json
-{"run": "python -c \"import pathlib; assert pathlib.Path('ANSWER.md').exists()\""}
-```
-
-It fails on the clean copy and passes on the reference, so it looks fine, but the kit's lazy-answer test writes `TODO` into `ANSWER.md` and it still passes. The example's real check reads the answer:
+A check earns trust three ways: it **fails on a clean copy**, it **passes on the reference**, and a **lazy answer does not pass it**. Take EX2: *explain how the express surcharge relates to the fee cap, and write the answer to `ANSWER.md`*. A weak check asks only that the file exists. It fails on a clean copy and passes on the reference, so it looks fine, but the kit's lazy-answer probes write `TODO`, a paragraph of filler or your own prompt into `ANSWER.md`, and it still passes. The example's real check, `lab-assets/example/check_ex2.py`, reads the answer:
 
 ```python
-# ailab/labs/m13_personal_eval/assets/example/check_ex2.py
-"""Example EX2: does ANSWER.md say what the code does? Until the tool writes it, reading the file fails."""
+# lab-assets/example/check_ex2.py
 import pathlib
 import re
 import sys
 
-answer = pathlib.Path("ANSWER.md").read_text(encoding="utf-8").lower()
+answer = pathlib.Path("ANSWER.md").read_text(encoding="utf-8").lower()  # fails until the tool writes the file
 wanted = [
     ("names the express surcharge", "express" in answer and "surcharge" in answer),
     ("says it is added after the cap", re.search(r"after the cap|after[^.]{0,25}\bcap(?:ped|ping)\b|on top of the cap|beyond the cap", answer) is not None),
-    ("says the fee can pass the cap", re.search(r"exceed|above the cap|over the cap|past the cap|higher than the cap|more than the cap", answer) is not None),
 ]
 missing = [what for what, ok in wanted if not ok]
 if missing:
     sys.exit("the answer does not say: " + "; ".join(missing))
 ```
 
-A clean copy fails, the reference passes, and `TODO` fails and names the missing facts. Still, a phrase check is a floor both ways: a correct answer in other words can fail (widen the phrases), and a wrong one that borrows them can pass (read the answer).
+A clean copy fails, the reference passes, and `TODO` fails and names the missing facts. Still, a phrase check is a floor: a correct answer in other words can fail, and a wrong one that borrows the phrases can pass.
+
+**A "write tests" task** cannot be checked by running the tests the tool writes: a test that asserts nothing passes. EX4's check, `lab-assets/example/check_ex4.py`, runs them on the real code (they must pass) and on a copy with the rule changed (they must fail). Reuse it by changing its three constants.
 
 ### 🟡 Going deeper
 
-**Run it from a clean workspace.** `python lab-assets/eval_runner.py prepare T03 --dir ../runs/T03-a` makes a clean copy without `eval/` or `lab-assets/`, so the tool cannot read the check, and prints the prompt. Give the tool that prompt and nothing else. Then `git -C ../runs/T03-a add -A && git -C ../runs/T03-a diff --cached` shows what it changed; **read the diff of every pass**, because a check is a floor, not a review (lesson 5.1). `score T03 --dir ../runs/T03-a --tool claude-code --minutes 6` adds the check, runs it and appends a line to `eval/results.jsonl`; `report` prints passes per tool. Repeat each task about three times, because output varies. A clean folder is not a clean tool: Claude Code also reads your user-level `~/.claude/CLAUDE.md` in every folder, so record the model and memory files with `--model` and `--note`.
+**Run it from a clean workspace.** `python lab-assets/eval_runner.py prepare T03 --dir ../runs/T03-a` makes a clean copy without `eval/` or `lab-assets/`, so the tool cannot read the check, and prints the prompt. Give the tool that prompt only. Then `git -C ../runs/T03-a add -A && git -C ../runs/T03-a diff --cached` shows what it changed: **read the diff of every pass**, because a check is a floor, not a review. `score T03 --dir ../runs/T03-a --tool claude-code --minutes 6` runs the check on the tool's files, committed or not, and appends a line to `eval/results.jsonl`; `report` prints passes per tool. Repeat each task about three times. A clean folder is not a clean tool: Claude Code also reads `~/.claude/CLAUDE.md` everywhere, so note the model and memory files with `--model` and `--note`.
 
-**Choose tasks like a sceptic.** Take them from real work, in a mix of kinds, including one that went wrong last month. Prefer code a model is unlikely to have seen, such as `najmkit` (lesson 2.1). Make each check *fair*: any reasonable reading of the prompt passes it. Keep two or three tasks you never tune prompts or project memory against (lesson 2.2), or you will measure your tuning.
+**Plant a bug, then write the reference.** For a fix task, add the task without `setup`, `prepare` it, plant the bug in that copy and save its `git diff` as `eval/setup/<id>.patch`; only then add `"setup"`. The guard must pass with the bug planted, yet most bugs break an existing test: guard the test files yours leaves alone, as EX1 does. For the reference, `prepare` again, solve the task there and save `git add -N . && git diff`.
 
-**Read results honestly.** Say tool A passes 15 of 24 runs and tool B 17 of 24. A two-run gap on 24 runs is within what luck can produce, so name no winner: see which tasks differ, whether B's passes survive a read of the diff, and the minutes and corrections, then add runs. Compare tasks, not only totals: 3 of 3 is a different fact from 1 of 3.
+**Choose tasks like a sceptic.** Take them from real work, including one that went wrong last month; prefer code a model is unlikely to have seen, such as `najmkit` (lesson 2.1). Make each check *fair*: any reasonable reading of the prompt passes. Keep two or three tasks you never tune against (lesson 2.2), or you measure your tuning.
 
-**When not to build one.** If you will use a tool for a week, or the choice is reversible in an afternoon, just try it. An eval pays when the decision is costly to reverse or repeats: a team-wide tool, a model change every month. It costs time and money (9 tasks × 3 runs × 2 tools is 54 runs), so start with three tasks.
+**Read results honestly.** Say tool A passes 15 of 24 runs and tool B 17 of 24. A two-run gap on 24 runs is within what luck can produce, so name no winner: see which tasks differ, whether B's passes survive a read of the diff, and the minutes and corrections, then add runs. Compare tasks, not only totals.
+
+**When not to build one.** If you will use a tool for a week, or can reverse the choice in an afternoon, just try it. An eval pays when the decision is costly or repeats. It costs time and money (9 tasks × 3 runs × 2 tools is 54 runs): start with three.
 
 **Goals you can miss.** Weak: "Understand the codebase better." Strong, as a row of the Goals table (start date 2026-11-02):
 
@@ -320,25 +308,23 @@ A clean copy fails, the reference passes, and `TODO` fails and names the missing
 |---|---|---|---|---|---|
 | Trace Remit flows unaided | Flows traced on paper, then run | 1 (send) | 4 | 2026-12-20 | The four traces in my notes repo |
 
-The stranger test: at day 90, could someone who does not know you say if it was met?
-
 ### 🔴 Expert view
 
-**What the grader cannot tell.** Whether your tasks are the right ones, whether a check measures what its prompt asks (it knows only that the check fails on the untouched repo, passes on the reference and refuses a placeholder), or whether your plan is wise. It runs your checks in throw-away copies with a time limit, which is not a sandbox: a check is code that runs as you, and an agent can write one as easily as you. Read every check before you run it, a partner's included.
+**What the grader cannot tell.** Whether your tasks are the right ones, whether a check measures what its prompt asks (it knows only that the check fails first, passes on the reference and refuses lazy answers), or whether your plan is wise. It cannot tell why a check fails: one that crashes on a bug of its own fails too, so read the reason `baseline` prints. A throw-away copy is not a sandbox: a check is code that runs as you, and an agent can write one. Read every check before you run it, a partner's included.
 
-**Checks can be gamed.** A tool can pass by special-casing the example. Defences: a check with several inputs, a guard, a read diff, held-out tasks. Add a task for each real failure, and run `verify` a few times to find flaky checks.
+**Checks can be gamed.** A tool can special-case the example: use several inputs, a guard, read diffs and held-out tasks.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
-| **Personal eval** | `eval/tasks.jsonl`: your own prompts, checks, guards (commands that must pass before and after) and reference solutions (patches that prove a check can pass) | Before you adopt or switch a tool or model |
-| **Eval runner** | `lab-assets/eval_runner.py`: validate, baseline, verify, prepare, score, report | After every edit, and to score a run |
+| **Personal eval** | `eval/tasks.jsonl`: your own prompts, checks, guards and reference patches | Before you adopt or switch a tool or model |
+| **Eval runner** | `lab-assets/eval_runner.py`: validate, baseline, verify, prepare, score, report | After every edit; to score a run |
 | **90-day plan** | Skills map, weekly routine, goals with metric, baseline, target, date | Quarterly, reviewed monthly |
 
 ## 🏛️ In practice at Najm Bank
-**Needs an agent: no.** An agent can propose tasks and draft checks and patches, but the **no-agent path** is complete: small `pytest` files and scripts for the checks, `git diff` for the patches, Markdown for the plan.
+**Needs an agent: no.** An agent can propose tasks and draft checks and patches, but the **no-agent path** is complete: small `pytest` files and scripts, `git diff` for the patches, Markdown for the plan.
 
-**The ticket.** Tariq wrote it (the kit's `task.md`):
+**The ticket.** Tariq wrote it (the kit's `task.md`, which `start` copies to `TASK.md`):
 
 ```text
 # GROW-13: your personal eval and your 90-day plan
@@ -348,61 +334,71 @@ The stranger test: at day 90, could someone who does not know you say if it was 
 **Priority:** Normal. Do it this week, then revisit it every month.
 
 Tools change every few months, and a leaderboard cannot say which one is good at *our* work. I want two things you
-keep: a small eval you run yourself, and a plan that keeps your skills growing. Use an AI assistant if you like;
-you must be able to explain every task and every number.
+keep: an eval you run yourself, and a plan that keeps your skills growing. Use an AI assistant if you like; you must
+be able to explain every task and every number. Run commands in your lab repository unless told otherwise.
 
 ### 1. A personal eval: `eval/tasks.jsonl`
 
-At least **eight tasks** you would really give a coding agent, as JSON Lines: one complete JSON object per line, no
-array. `lab-assets/tasks.example.jsonl` has three worked examples (they do not count). A task has:
+At least **eight different tasks** you would really give a coding agent, as JSON Lines: one complete JSON object per
+line, no array. At least six must be about this repository; the rest may come from your own project (`"repo": "own"`;
+the kit cannot run those, but they count). The four examples in `lab-assets/tasks.example.jsonl` do not count, and
+copies of one task count once. A task has:
 
 * `id` (unique, for example `"T01"`), `title`, `kind` (`fix`, `feature`, `refactor`, `test`, `docs`, `explain`,
   `review` or `other`) and `prompt`: the exact words you would give a tool, 15 words or more.
 * `check`: `{"run": "<command>", "guard": "<command>"}`. `run` decides pass or fail. The optional `guard` must pass
   before the work and after a correct solution, so a tool that fixes the task and breaks something else fails.
-* Optional `setup` and `reference`: `.patch` files under `eval/`. A setup plants the starting situation (a bug, a
-  file to review); a reference is a solution you trust.
-* Optional `"repo": "own"` for a task from your own project, which the kit cannot run. At least six tasks must be
-  about this repository.
+* `reference`: a `.patch` file under `eval/` holding a solution you trust. Every task about this repository needs one;
+  a docs, explain or review reference, or any that changes only text files, must change eight words or more.
+* Optional `setup`: a `.patch` file under `eval/` that plants the starting situation (a bug, a file to review).
 
-A check is one command (`pytest`, `python`, `grep` or a read-only `git` command; paths relative to the repository
-root; no shell operators; offline), kept in `eval/checks/` so a tool never sees it. It must:
+A check is one command (`pytest`, `python`, `grep` or read-only `git`; no shell operators; offline), kept under
+`eval/` (for example `eval/checks/`) so a tool never sees it. It runs from the root of a clean copy of the repository,
+a git repository with one commit, so `git diff` shows what a solution changed. There `PYTHONPATH` is `src`; `python`
+and `pytest` are the runner's interpreter; paths are relative, with forward slashes; a command gets 60 seconds;
+secret-looking environment variables are removed. (`grep` is missing on some systems; a Python script always works.)
+A check must:
 
 1. **fail on the untouched repository** (the `lab-start` state): a check that passes before any work proves nothing;
-2. **pass on a reference solution**: give at least three tasks a `reference`;
-3. **reject a lazy answer**: an empty note, or a test that asserts nothing, must not pass.
+2. **pass on the reference**;
+3. **reject a lazy answer**: a placeholder or filler note, a test that asserts nothing, or a stray edit must not pass.
 
-`python lab-assets/eval_runner.py validate`, `baseline` and `verify` test all three. Also write `eval/README.md`
-(60 words or more): how to run the eval, what counts as a pass, how many repeats, when you run it again.
+`python lab-assets/eval_runner.py validate`, `baseline` and `verify` test all three; `baseline` prints why each check
+fails, so read it. Also write `eval/README.md` (60 words or more): how to run the eval, what counts as a pass, how
+many repeats, when you rerun it.
 
 ### 2. A 90-day plan: `plan.md`
 
 Start from `lab-assets/plan-template.md` and keep its headings: a start date, a skills map for six skills, a weekly
 routine (minutes per practice), three to six goals, days 1-30, 31-60 and 61-90, your eval cadence, and what you will
-ignore. A goal has a metric, a baseline, a target with a number, a date inside the 90 days and a way to measure it.
+ignore. Write dates as YYYY-MM-DD. A goal has a metric, a baseline, a target with a number, a date inside the 90 days
+and a way to measure it.
 
 ### Done when
 
-Only `eval/` and `plan.md` changed, in at least two commits (the eval, then the plan) that follow `CONTRIBUTING.md`.
-Grade it from the `ailab` folder of the course repository: `python -m ailab grade m13 --dir <this directory>`
+Only `eval/` and `plan.md` changed, in at least two commits that follow `CONTRIBUTING.md` (for example
+`test(eval): ...` and `docs(plan): ...`; any lower-case scope works), and everything is committed, except the log
+`eval/results.jsonl` that `score` writes. Grade it from the `ailab` folder of the course repository:
+`python -m ailab grade m13 --dir <this directory>`
 ```
 
 **Start.**
 
 ```bash
+# from the root of the course repository
 cd ainative/ailab
 python -m ailab start m13 --dir ~/ainative/m13
-cd ~/ainative/m13
+cd ~/ainative/m13        # run every eval_runner command from here
 mkdir -p eval/checks eval/setup eval/reference
 python lab-assets/eval_runner.py --tasks lab-assets/tasks.example.jsonl baseline
 python lab-assets/eval_runner.py --tasks lab-assets/tasks.example.jsonl verify
 ```
 
-Each prints `ok:` three times. The start commit holds `lab-assets/` and `TASK.md`.
+Each prints `ok:` four times; `baseline` adds why each check fails. `python` must have `pytest` (`python -m ailab doctor` checks).
 
-**Your move.** (1) List a dozen candidate tasks from your last two weeks and Remit's loose ends (`grep -rn "KNOWN SMELL\|TODO" src`, a document that disagrees with the code); keep eight or nine in a mix of kinds. (2) Write each task in `eval/tasks.jsonl` and its check in `eval/checks/`. For a bug to fix, run `python lab-assets/eval_runner.py prepare <id> --dir ../scratch/<id>`, plant the bug in that copy, save its `git diff` as `eval/setup/<id>.patch` and add `"setup"` to the task. Run `baseline`: every check must fail. (3) For at least three tasks make a reference: `prepare` again, solve the task in the copy, then `git add -N . && git diff > ~/ainative/m13/eval/reference/<id>.patch`; run `verify`. (4) Write `eval/README.md`; commit as `test(eval): ...`. (5) Fill in the plan template from lesson 13.1's tables; commit as `docs(plan): ...` (`type(scope): subject`, at most 72 characters, no full stop). (6) Grade. With an agent, ask for task ideas and draft checks, but run `baseline` and `verify` yourself and drop any check you cannot explain.
+**Your move.** (1) List a dozen candidate tasks from your last two weeks and Remit's loose ends (`grep -rn "KNOWN SMELL\|TODO" src`, or your editor's search; a document that disagrees with the code); keep eight or nine in a mix of kinds. (2) Write each task in `eval/tasks.jsonl` and its check in `eval/checks/`, planting bugs as above. Run `baseline`: every check must fail, for the right reason. (3) Give every Remit task a reference; run `verify`. (4) Write `eval/README.md`; commit as `test(eval): ...`. (5) Fill in the plan template from lesson 13.1's tables; commit as `docs(plan): ...`. (6) Grade. With an agent, ask for task ideas and draft checks, but run `baseline` and `verify` yourself and drop any check you cannot explain.
 
-**What the grader checks.** *The eval:* valid JSON Lines; at least eight tasks of your own; checks that run, offline, **fail on the untouched repo** and **refuse a placeholder answer**; guards that pass there; at least three references that pass. *The plan:* sections, a start date, a six-skill map, a realistic routine, three to six measurable goals. *The repository:* only `eval/` and `plan.md` changed, in two or more commits that follow `CONTRIBUTING.md`, nothing uncommitted, no secrets. Advisory: kinds, guards, an `own` task, a README.
+**What the grader checks.** *The eval:* valid JSON Lines; eight different tasks, six about Remit; checks that run, **fail on the untouched repo** and **refuse lazy answers** (a placeholder, filler, your prompt handed back, a test that asserts nothing, a stray edit); a passing reference for every Remit task. *The plan:* sections, a start date, a six-skill map, a realistic routine, measurable goals. *The repository:* only `eval/` and `plan.md` changed, in commits that follow `CONTRIBUTING.md`, nothing uncommitted, no secrets.
 
 **Grade.**
 
@@ -411,24 +407,24 @@ Each prints `ok:` three times. The start commit holds `lab-assets/` and `TASK.md
 python -m ailab grade m13 --dir ~/ainative/m13
 ```
 
-The untouched starter scores `2/19 required checks passed: NOT YET`. A first draft such as an assistant might write (constructed for teaching, not recorded from a real model), failing lines only, hints cut:
+The untouched starter scores `2/20 required checks passed: NOT YET`. A first draft such as an assistant might write (constructed for teaching, not recorded from a real model), failing lines only, hints cut:
 
 ```text
 [FAIL] Every check is allowed and runs: T06 (line 6): the check cannot run (the script eval/checks/check_length.py does not exist)
 [FAIL] Every check fails on the untouched repo: these checks already pass before any work is done: T03 (line 3)
-[FAIL] Three references pass their checks: 1 reference passes its check; at least 3 are needed
-[FAIL] Checks reject a placeholder answer: the check accepts a lazy answer: T04 (line 4): a placeholder in ANSWER.md
+[FAIL] Every Remit task has a passing reference: no reference for T03 (line 3); T05 (line 5)
+[FAIL] Checks reject lazy answers: the check accepts a lazy answer: T04 (line 4): a placeholder in ANSWER.md, filler text in ANSWER.md, the prompt copied back in ANSWER.md
 [FAIL] Goals are measurable: goal 1: the target has no number; goal 2: 2027-03-01 is outside the 90 days from 2026-11-02
-Lab m13: 14/19 required checks passed: NOT YET
+Lab m13: 15/20 required checks passed: NOT YET
 ```
 
-T03's check was `pytest -q`, which already passes; T04's only asks that a file exists; T06 names a script that was never written. A passing run ends `Lab m13: 19/19 required checks passed: PASSED`.
+T03's check already passes, T04's only asks that a file exists, T06 names a script never written. A passing run ends `Lab m13: 20/20 required checks passed: PASSED`. If a command times out on a busy machine, grade again.
 
-**Weekly deliverable.** In the lab repository, `eval/` and `plan.md` in two commits. In your notes repository, `week-13/` with your agent log, debrief answers and, if you scored a run, the `report` output.
+**Weekly deliverable.** In the lab repository, `eval/` and `plan.md` in two commits. In your notes repository, `week-13/`: agent log, debrief answers and any `report` output.
 
-**Group session (60 minutes).** (1) Swap repositories, read each other's `eval/checks/`, then run your partner's `baseline` and `verify` (15). (2) Attack the checks: try to pass a partner's check with a placeholder or a hard-coded answer, and report what got through (15). (3) Read each other's goals: which could not be missed? (15) (4) Agree what the team re-runs monthly (15).
+**Group session (60 minutes).** (1) Swap repositories, read each other's `eval/checks/`, then run your partner's `baseline` and `verify` (15). (2) Try to pass a partner's check with a placeholder or a hard-coded answer (15). (3) Read each other's goals: which could not be missed? (15) (4) Agree what the team re-runs monthly (15).
 
-**Debrief questions.** What did the agent get wrong, and which of its checks passed on nothing? What did your prompt or context miss? Which of your tasks would a leaderboard never test? Which goal will be hardest to measure honestly?
+**Debrief questions.** What did the agent get wrong, and which of its checks passed on nothing? What did your prompt or context miss? Which of your tasks would a leaderboard never test?
 
 **Agent log template.**
 
@@ -442,26 +438,25 @@ T03's check was `pytest -q`, which already passes; T04's only asks that a file e
 | Plan | | | | |
 
 Checks that passed on nothing:
-One task I will add after this week:
 ```
 
 ## 🛠️ Exercises
-- 🟢 **Read the examples.** No agent. Run `baseline` and `verify` on the three examples. Then copy `tasks.example.jsonl` outside the repository, give EX2 the one-line "file exists" check, and run `verify --tasks` on the copy (leave `lab-assets/` untouched, or the grade flags it). *Done when:* `verify` says a placeholder in `ANSWER.md` passes, and you can say in two sentences why the weak check looked fine.
-- 🟡 **Build the eval.** An agent is optional. *Done when:* the grader's eval checks pass, four tasks have a reference and a guard, and one is from your own project.
-- 🔴 **Score two runs and decide.** Needs an agent, or pit an agent against your own unaided runs (`--tool me`). `prepare` and `score` one task with two tools or settings, three runs each. *Done when:* `report` shows the counts, you read every passing diff, and a note says what you would delegate, with one caveat about your sample.
+- 🟢 **Read the examples.** No agent. Run `baseline` and `verify` on the four examples. Then copy `tasks.example.jsonl` outside the repository, give EX2 the one-line "file exists" check, and run `verify --tasks` on the copy (leave `lab-assets/` untouched). *Done when:* `verify` says a placeholder in `ANSWER.md` passes, and you can say why the weak check looked fine.
+- 🟡 **Build the eval.** An agent is optional. *Done when:* the grader's eval checks pass, four tasks have a guard, and one is from your own project.
+- 🔴 **Score two runs and decide.** Needs an agent, or pit an agent against your own unaided runs (`--tool me`). `prepare` and `score` one task with two tools or settings, three runs each. *Done when:* `report` shows the counts, you read every passing diff, and a note says what you would delegate, with a caveat.
 
 ## ⚠️ Mistakes and traps
 - **A check that passes on the untouched repo.** It proves nothing. Run `baseline` first.
-- **Checking that a file exists.** Check what it says, or what the tests catch.
-- **Trusting a tool's own tests.** Run them against code with the rule changed.
-- **Goals with no number.** "Improve" cannot be missed. Give a metric, a baseline and a date.
-- **Running a check you have not read.** It runs as you; read it first, an agent's especially.
+- **A check that fails for the wrong reason.** A crash in its own helper fails too. Read the reason `baseline` prints and run the check once by hand.
+- **Checking that a file exists, or has some words.** Check what it says.
+- **Trusting a tool's own tests.** Run them against code with the rule changed, as EX4 does.
+- **Running a check you have not read.** It runs as you; read an agent's first.
 
 ## 🧾 Recap
 - A task is a prompt, a clean starting state, a check, a guard and a reference.
 - A check must fail on the untouched repo, pass on the reference, and refuse a lazy answer.
-- Run tools from clean workspaces, repeat, read the diffs, compare tasks as well as totals.
-- A goal is measurable when a stranger could say at day 90 whether it was met. The grader checks the artefacts; the judgement stays yours.
+- Run tools from clean workspaces, repeat, read the diffs, compare tasks and totals.
+- A goal is measurable when a stranger could say at day 90 whether it was met.
 
 ## ✍️ Check yourself
 

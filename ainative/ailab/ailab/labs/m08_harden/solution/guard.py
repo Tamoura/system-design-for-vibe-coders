@@ -33,6 +33,7 @@ ENV_FILE = re.compile(r"(?:^|[/=@:])\.env(?:\.[\w-]+)*$")
 SAFE_ENV_SUFFIX = (".example", ".sample", ".template", ".dist")
 SECRET_PATH = re.compile(r"(?:^|/)\.(?:ssh|aws)(?:/|$)|(?:^|/)id_(?:rsa|dsa|ecdsa|ed25519)$|(?:^|/)\.(?:netrc|pypirc)$")
 SUBSTITUTION = re.compile(r"\$\(([^()]*)\)|`([^`]*)`")
+HEREDOC = re.compile(r"<<-?[ \t]*(?:'([^']*)'|\"([^\"]*)\"|\\?([A-Za-z_][\w.-]*))")
 
 
 def block(reason):
@@ -41,10 +42,29 @@ def block(reason):
     sys.exit(2)
 
 
-def split_lines(command):
-    """Turn newlines that are outside quotes into semicolons, so each line is judged on its own."""
-    out, quote, escaped = [], None, False
-    for char in command:
+def read_bodies(command, i, pending):
+    """Read the heredoc bodies that start at index i: (list of bodies, index after the last delimiter line)."""
+    bodies = []
+    for delimiter, dash in pending:
+        lines = []
+        while i < len(command):
+            end = command.find("\n", i)
+            line = command[i:] if end == -1 else command[i:end]
+            i = len(command) if end == -1 else end + 1
+            if (line.lstrip("\t") if dash else line) == delimiter:
+                break
+            lines.append(line)
+        bodies.append("\n".join(lines))
+    return bodies, i
+
+
+def scan(command):
+    """Prepare a command for the tokenizer: newlines outside quotes become semicolons, so each line is judged on its own,
+    and heredoc bodies (text, not commands) are cut out. Returns (the text to tokenize, the bodies that were cut out)."""
+    out, bodies, pending = [], [], []
+    quote, escaped, i = None, False, 0
+    while i < len(command):
+        char = command[i]
         if escaped:
             escaped = False
         elif char == "\\" and quote != "'":
@@ -53,16 +73,29 @@ def split_lines(command):
             quote = None if char == quote else quote
         elif char in "'\"":
             quote = char
+        elif command.startswith("<<", i) and not command.startswith("<<<", i) and (found := HEREDOC.match(command, i)):
+            pending.append((found.group(1) or found.group(2) or found.group(3), command.startswith("<<-", i)))
+            out.append(found.group(0))
+            i = found.end()
+            continue
         elif char == "\n":
-            char = ";"
+            out.append(";")
+            if pending:
+                found_bodies, i = read_bodies(command, i + 1, pending)
+                bodies += found_bodies
+                pending = []
+            else:
+                i += 1
+            continue
         out.append(char)
-    return "".join(out)
+        i += 1
+    return "".join(out), bodies
 
 
-def tokenize(command):
-    lexer = shlex.shlex(split_lines(command), posix=True, punctuation_chars=True)
+def tokenize(text):
+    lexer = shlex.shlex(text, posix=True, punctuation_chars=True)
     lexer.whitespace_split = True
-    lexer.commenters = ""
+    lexer.commenters = ""  # shlex would treat a # in the middle of a word as the start of a comment and drop the rest
     return list(lexer)
 
 
@@ -201,7 +234,8 @@ def touches_credentials(token):
 def judge(command, depth=0):
     """Return a reason when the command must not run, otherwise None."""
     try:
-        tokens = tokenize(command)
+        text, bodies = scan(command)
+        tokens = tokenize(text)
     except ValueError:
         return "the command could not be parsed (unbalanced quotes), so it cannot be checked"
     for token in tokens:
@@ -213,7 +247,7 @@ def judge(command, depth=0):
             return reason
     if re.search(r"(?:^|[\s;&|])(?:sh|bash|zsh|source|\.)\s+<\(\s*(?:curl|wget)\b", command):
         return "running downloaded code (process substitution)"
-    previous = None
+    previous, programs = None, []
     for before, segment in segments(tokens):
         words = words_of(segment)
         reason = judge_segment(words, before, previous, depth)
@@ -221,6 +255,11 @@ def judge(command, depth=0):
             return reason
         start = command_word(words)
         previous = os.path.basename(words[start]) if start < len(words) else None
+        programs.append(previous)
+    if bodies and depth < MAX_DEPTH and any(program in SHELLS | {"eval", "source", "."} for program in programs):
+        for body in bodies:  # a heredoc fed to a shell is code, not text
+            if reason := judge(body, depth + 1):
+                return reason
     return None
 
 

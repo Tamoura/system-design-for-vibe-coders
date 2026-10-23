@@ -10,16 +10,16 @@
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1, 6.1* · *Focus: Workflow, Verify*
 
 ## ⚡ In 60 seconds
-- **Legacy is code you cannot change with confidence**, usually because it has no tests. Start by *pinning*: a **characterization test** records what the code does today, quirks included, even the ones you think are wrong.
+- **Legacy is code you cannot change with confidence**, usually because it has no tests. Start by *pinning*: a **characterization test** records what the code does today, quirks included, even those you think wrong.
 - **Then move in small steps** through a **seam**, with the strangler fig and expand and contract. A refactor never shares a commit with a behaviour change.
 - **Agents are strong at the mechanical** (renames, codemods, first drafts of tests) and **dangerous at the silent**: a "tidy" that normalises a quirk.
 - **Judge the net** with a mutation check; review at scale by the rule, the tests, a sample.
 - Cue: no net, no delegation. Trap: a green suite that never touched the code.
 
 ## 🧭 Why it matters
-On a Wednesday (a constructed day, not recorded from a real model) Lujain asks her agent to "make `ledger.py` consistent with the rest of Remit". The summary reads well: the partner share uses the shared rounding helper, `balance()` has no side effect, `journal()` returns the list directly. `pytest -q` prints `99 passed`, and of course it does: no test asserts anything about the ledger (lesson 5.1 changed `PARTNER_SHARE` to 0.35 and watched all 99 stay green). Three weeks later Finance finds the partner payable a cent out on some transfers, and nobody can say which commit did it.
+On a Wednesday (a constructed day, not recorded from a real model) Lujain asks her agent to "make `ledger.py` consistent with the rest of Remit". The summary reads well: the partner share uses the shared rounding helper, `balance()` has no side effect, `journal()` returns the list directly. `pytest -q` prints `99 passed`, because no test asserts anything about the ledger (lesson 5.1 changed `PARTNER_SHARE` to 0.35 and watched all 99 stay green). Three weeks later Finance finds the partner payable a cent out on some transfers, and nobody can say which commit did it.
 
-Michael Feathers, in *Working Effectively with Legacy Code* (2004), defines legacy code as code without tests: without tests you cannot tell whether a change preserved behaviour, however well it reads. Agents cut both ways: they make tidying cheap and the net cheap. Tests are quick to draft, slow to trust: habit 4, *trust evidence, not fluency*, applies to the net too.
+Michael Feathers, in *Working Effectively with Legacy Code* (2004), defines legacy code as code without tests: without tests you cannot tell whether a change preserved behaviour, however well it reads. Agents cut both ways: they make tidying and the net cheap. Tests are quick to draft, slow to trust: habit 4, *trust evidence, not fluency*, applies to the net too.
 
 ## 📐 How it works
 
@@ -50,7 +50,7 @@ Thirty percent of 10.15 is 3.045. The ledger rounds the partner's share half-eve
 |---|---|---|
 | Q-LED-1 | The partner's 30% share is rounded half-even | A fee of 10.15 gives a share of 3.04 |
 | Q-LED-2 | `balance()` of an unknown account creates it | After `balance("NOPE")`, `accounts()` lists it |
-| Q-LED-3 | Books are module-level; ids and times come from najmkit | Two postings accumulate; entry ids run `JNL-000001` onward |
+| Q-LED-3 | Books are module-level and shared; ids and times come from najmkit | Postings accumulate in one ledger; entry ids run `JNL-000001` onward (lesson 7.2 changes the sharing on purpose) |
 | Q-LED-4 | QAR only, bare `Decimal` balances, zero legs not posted | An EGP amount raises `CurrencyMismatch` |
 
 One behaviour per test, named after it, with a comment naming its source; and nobody "fixes" one. A characterization test that starts failing is a behaviour change; a human decides whether it is wanted.
@@ -62,15 +62,15 @@ One behaviour per test, named after it, with a comment naming its source; and no
 | Task | Fit | The guard |
 |---|---|---|
 | Rename a function across forty files | Strong | A rule you can state; run the suite, search for the old name |
-| Draft characterization tests for an untested module | Strong, if you read them | Cheap to generate, costly to trust; run a mutation check |
-| Apply a documented API change | Good | The notes are the spec; check the agent's summary against them |
-| "Clean up" or "make consistent" a legacy module | Dangerous | No rule to check against, so quirks get normalised or "fixed" |
+| Draft characterization tests for an untested module | Strong, if you read them | Costly to trust; run a mutation check |
+| Apply a documented API change | Good | The notes are the spec; check the summary against them |
+| "Clean up" or "make consistent" a legacy module | Dangerous | No rule to check against, so quirks get normalised |
 
 ### 🟡 Going deeper
 
-**Seams.** A *seam* is a place where you can change what the program does without editing that place; you need one before you can test or replace anything wired in. Remit has three. An *object seam* (Feathers's term): pass the thing in, as the lab's `RemitService(..., ledger=None)` does. A *global seam* (this course's label): najmkit lets a test install a fixed clock and sequential ids. A *test seam* (also ours): a small adapter that gives your tests one way to reach code whose shape is about to change; the lab's adapter returns a wrapped legacy module today and a `Ledger` after the refactor, so the same tests run on both.
+**Seams.** A *seam* is a place where you can change what the program does without editing that place; you need one before you can test or replace anything wired in. Remit has three. An *object seam* (Feathers's term): pass the thing in, as the lab's `RemitService(..., ledger=None)` does. A *global seam* (this course's label): najmkit lets a test install a fixed clock and sequential ids. A *test seam* (also ours): a small adapter giving your tests one way to reach code whose shape is about to change; the lab's returns a wrapped legacy module today and a `Ledger` after the refactor, so the same tests run on both.
 
-**The strangler fig, at any size.** Martin Fowler's strangler fig replaces an old system by growing the new one around it and retiring the old piece by piece, preferred to a big-bang rewrite mainly because it lowers risk. At module scale: (a) add the new class behind the old functions; (b) move callers one at a time; (c) delete the old functions when nothing calls them. Each step is a green, revertible commit.
+**The strangler fig, at any size.** Martin Fowler's strangler fig replaces an old system by growing the new one around it and retiring the old piece by piece, preferred to a big-bang rewrite because it lowers risk. At module scale: (a) add the new class behind the old functions; (b) move callers one at a time; (c) delete the old functions when nothing calls them. Each step is a green, revertible commit.
 
 **Expand and contract** (also called parallel change) is the same idea for an interface or stored format.
 
@@ -80,9 +80,9 @@ flowchart LR
     B --> C["Contract: remove the old"]
 ```
 
-Never expand and contract in one step, or there is no moment when both work. In lesson 7.2 Salem's team expands (najmkit 2 keeps the old names as warning wrappers), you migrate the call sites, then you contract. `pytest -W error::DeprecationWarning` turns each remaining old call into an error at its call site.
+Never expand and contract in one step, or there is no moment when both work. In lesson 7.2 Salem's team expands (najmkit 2 keeps the old names as warning wrappers), you migrate the call sites, then you contract. `pytest -W error::DeprecationWarning` turns an old call into an error showing its call site, but only once `tests/conftest.py`, the shared test setup, is migrated: until then every test fails in its fixtures.
 
-**A dependency summary is a claim.** Suppose an agent summarises the najmkit notes as "seven renames, nothing else". The notes also say `audit.emit` refuses any value JSON cannot hold, where version 1 called `str()` on it. A rename-only migration fails loudly; the quiet failure is the tidy fix, `str(amount.amount)` for `str(amount)`: green wherever no test pins the line, while the fraud team's parser, which reads `"500.00 QAR"`, stops matching. Read the notes for behaviour words (*now raises*, *no longer*) and pin the output other teams read.
+**A dependency summary is a claim.** An agent summarises the najmkit notes as "seven renames, nothing else". The notes also say `audit.emit` refuses any value JSON cannot hold, where version 1 called `str()` on it. A rename-only migration fails loudly; the quiet failure is the tidy fix, `str(amount.amount)` for `str(amount)`: green wherever no test pins the line, while the fraud team's parser, which reads `"500.00 QAR"`, stops matching. Read the notes for behaviour words (*now raises*, *no longer*) and pin the output other teams read.
 
 **The risky diff and the reviewed one.** A "tidy" of the ledger, trimmed to its three changes (constructed; the hunks are real edits):
 
@@ -113,21 +113,22 @@ Each failure is a question for a human ("do we depend on this?"), not a test to 
 **One safe step, asked for.** Weak: "Refactor ledger.py to remove the global state and make it cleaner." Strong:
 
 ```text
-Goal: step 2 of docs/refactoring-plan.md. In src/remit/ledger.py add a class Ledger that holds the
-balances and the journal on the instance. Keep post_transfer, balance, accounts, journal and reset as
-module functions that call one shared Ledger. Do not change behaviour: same amounts, rounding, errors,
-ids and timestamps. The quirks in the module docstring are intended; do not fix them.
-Do not edit any file under tests/ or any other module. Run pytest -q when you finish. If a test in
+Goal: the "Ledger class" step of docs/refactoring-plan.md. In src/remit/ledger.py add a class Ledger
+that holds the balances and the journal on the instance. For now keep post_transfer, balance, accounts,
+journal and reset as module functions that call one shared Ledger (a later step deletes them). Do not
+change behaviour: same amounts, rounding, errors, ids and timestamps. The quirks in the module
+docstring are intended; do not fix them. Edit nothing under tests/ and no other module. When pytest -q
+is green, commit (this ticket overrides CLAUDE.md's "do not commit"). If a test in
 tests/test_ledger_*.py fails, stop and show me the failure.
 ```
 
-A prompt or `CLAUDE.md` is context, not enforcement. Once the tests are committed, a deny rule on `Edit(tests/test_ledger_*.py)` in `.claude/settings.json` is closer to a fence (check the permissions documentation; Bash is not a security boundary, so keep checking the diff).
+A prompt or `CLAUDE.md` is context, not enforcement. Once the tests are committed, a deny rule on `Edit(tests/test_ledger_*.py)` in `.claude/settings.json` is closer to a fence (check the permissions documentation; Bash can still edit files, so keep checking the diff).
 
 ### 🔴 Expert view
 
-**Judge the net.** A mutation check breaks the code on purpose and asks whether a test fails. By hand, in a scratch copy: switch `ROUND_HALF_EVEN` to half-up, or change `PARTNER_SHARE` to 0.35. Each survivor is a behaviour you have not pinned, or an equivalent change nobody can see: a question, not a verdict. Lesson 7.2's grader breaks the original ledger sixteen ways; [*Software Testing*, lesson 2.3 — Are your tests any good?](../testing/index.html#/2.3) teaches the technique.
+**Judge the net.** A mutation check breaks the code on purpose and asks whether a test fails. By hand, in a scratch copy: set `rounding="ROUND_HALF_UP"` in place of `rounding=ROUND_HALF_EVEN` (a bare `ROUND_HALF_UP` is not imported: a mutant that crashes fails every test and proves nothing), or change `PARTNER_SHARE` to 0.35. Each survivor is a behaviour you have not pinned, or an equivalent change nobody can see: a question, not a verdict. Lesson 7.2's grader breaks the original ledger sixteen ways; [*Software Testing*, lesson 2.3 — Are your tests any good?](../testing/index.html#/2.3) teaches the technique.
 
-**Review at scale.** A forty-file mechanical diff cannot be read line by line. (1) Review the *rule*: the instruction or, for a codemod, the script (run it twice; the second run should change nothing). (2) Read the tests in full. (3) Sample the diff: first and last hunks, the riskiest files, a few at random. (4) Automate the rest: the suite on every commit, warnings as errors, a search for the old names, `git diff --stat`. Stop signs: a changed test file in a refactor commit, and a hunk you cannot explain. [*System Design for Vibe Coders*, lesson 9.7 — Code audit and review at agent speed](../vibe/index.en.html#l9-7) goes further.
+**Review at scale.** A forty-file mechanical diff cannot be read line by line. (1) Review the *rule*: the instruction or, for a codemod, the script (run it twice; the second run should change nothing). (2) Read the tests in full. (3) Sample the diff: first and last hunks and the riskiest files. (4) Automate the rest: the suite on every commit, warnings as errors, a search for the old names, `git diff --stat`. Stop signs: a changed test file in a refactor commit, and a hunk you cannot explain.
 
 **Agent-sized units.** A unit is one rule over a bounded set of files, small enough to verify in one sitting. For a long list, Claude Code's best-practices page shows a headless fan-out (other tools have equivalents); adapted to this rename (`files.txt` from a `grep -l`):
 
@@ -140,9 +141,9 @@ for file in $(cat files.txt); do
 done
 ```
 
-The OK or FAIL it prints is the agent's claim, not evidence, so review the combined diff as above. Thirty call sites in five files need one session, not a loop. Checkpoints (`/rewind`) do not track Bash changes and are no substitute for git: commit each verified step.
+The OK or FAIL it prints is the agent's claim, not evidence, so review the combined diff as above. Thirty call sites in five files need one session, not a loop. Checkpoints (`/rewind`) do not track Bash changes: commit each verified step.
 
-**When to leave legacy alone.** Pinning and refactoring cost time and review attention. If a module is stable, sits behind a clean interface and nothing on the roadmap needs it, document its quirks, fence it with a memory line and a review rule, and spend the week elsewhere. If it must go, strangle it. A rewrite now looks cheap to produce; it is as expensive as ever to verify.
+**When to leave legacy alone.** Pinning and refactoring cost time and review attention. If a module is stable, sits behind a clean interface and nothing on the roadmap needs it, document its quirks, fence it with a memory line and a review rule, and spend the week elsewhere. If it must go, strangle it. A rewrite is cheap to produce now, and as expensive as ever to verify.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -156,7 +157,7 @@ The OK or FAIL it prints is the agent's claim, not evidence, so review the combi
 | **Refactoring plan template** | One page: invariants, net, steps, delegation, review, rollback | Before any change to legacy or money code |
 
 ## 🏛️ In practice at Najm Bank
-Tariq's rule for Payments Platform: a change to a legacy module, or a dependency migration, starts with a refactoring plan before any code; CONTRIBUTING.md then requires a second human reviewer for money logic such as `ledger.py` and `service.py`. The artefact is the **Refactoring plan template**. Save it as `docs/refactoring-plan.md`; the lab ships it as `lab-assets/refactoring-plan-template.md`.
+Tariq's rule for Payments Platform: a change to a legacy module, or a dependency migration, starts with a refactoring plan before any code; CONTRIBUTING.md then requires a second human reviewer for money logic such as `ledger.py` and `service.py`. The artefact is the **Refactoring plan template**: save it as `docs/refactoring-plan.md` (the lab ships it as `lab-assets/refactoring-plan-template.md`).
 
 ```markdown
 # Refactoring plan: <name of the change>
@@ -198,17 +199,17 @@ One commit per step, tests green after each. A refactor step never changes behav
 - Done means:
 ```
 
-Fill it in before the work, a few lines per section, and draft section 4 with your agent in plan mode (Shift+Tab, or `claude --permission-mode plan`), where it proposes without editing your files. For the vendor-feed change that the old TODO in `screening.py` asks for, section 1 would list Q-SCR-1 to Q-SCR-4 as *must not change*.
+Fill it in before the work, a few lines per section; draft section 4 with your agent in plan mode (Shift+Tab, or `claude --permission-mode plan`), where it proposes and edits nothing. For the vendor-feed change that the old TODO in `screening.py` asks for, section 1 would list Q-SCR-1 to Q-SCR-4 as *must not change*.
 
 ## 🛠️ Exercises
-- 🟢 **Pin two quirks by hand.** *No agent.* In your m00 directory, write two tests of `remit.ledger` with the placeholder method: the tied partner share for a fee of 10.15 (Q-LED-1) and `balance("NOPE")` (Q-LED-2). *Done when:* both pass with the real values and a comment naming the quirk, and switching `ROUND_HALF_EVEN` to half-up in a scratch copy makes the first fail.
+- 🟢 **Pin two quirks by hand.** *No agent.* In any lab directory (your m00 one, say), write two tests of `remit.ledger` with the placeholder method: the tied partner share for a fee of 10.15 (Q-LED-1) and `balance("NOPE")` (Q-LED-2). *Done when:* both pass with the real values and a comment naming the quirk, and setting `rounding="ROUND_HALF_UP"` in a scratch copy makes the first fail.
 - 🟡 **Draft, then judge.** *Needs an agent* (or write the tests yourself). Ask for characterization tests of `screening.py`; then break `FUZZY_PERCENT`, `MIN_FUZZY_LEN` and `MAX_TOKENS` one at a time in a scratch copy. *Done when:* a table lists each test, the quirk it pins and the mutations it caught, plus one test you rejected and why.
-- 🔴 **Plan a rename.** *Needs an agent for the last step.* Plan renaming `Customer.kyc_tier` to `kyc_level`. It is used in the model, the store (also a database column), the service's limits call, the command line and the tests; the column is a later step. *Done when:* the template is filled in; the agent renames the attribute in a scratch copy; your section 6 checks pass; and you name one thing the agent got wrong, or say none.
+- 🔴 **Plan a rename.** *Needs an agent for the last step.* Plan renaming `Customer.kyc_tier` to `kyc_level`: it is used in the model, the store (also a database column, a later step), the service's limits call, the command line and the tests. *Done when:* the template is filled in; the agent renames the attribute in a scratch copy; your section 6 checks pass; and you name one thing the agent got wrong, or say none.
 
 ## ⚠️ Mistakes and traps
 - **Cleaning before pinning.** The tidy is plausible and the suite green. Pin first and run a mutation check.
 - **Writing the test you wish for.** A "characterization" that expects half-up fails on day one. Record what the code does; raise the difference as a decision.
-- **Letting the agent edit the pinned tests.** A changed expectation in a refactor commit is the loudest signal in the diff. Forbid it, and check `git diff <tests commit> -- tests`.
+- **Letting the agent edit the pinned tests.** A changed expectation in a refactor commit is the loudest signal in the diff. Forbid it; check `git diff <tests commit> -- tests`.
 - **Mixing a refactor and a behaviour change.** Reviewers can no longer rely on "the tests did not move".
 - **Trusting a changelog summary.** Read the notes for behaviour words; run with warnings as errors.
 - **Reading forty files line by line, or none.** Review the rule, the tests and a sample.
@@ -298,25 +299,23 @@ Fill it in before the work, a few lines per section, and draft section 4 with yo
 *Level: 🟡 Intermediate* · *Prerequisites: 6.2, 7.1* · *Focus: Workflow, Verify*
 
 ## ⚡ In 60 seconds
-- **Lab m07** on Najm Remit: the legacy ledger has no tests and keeps its books in module-level variables. Three parts, three kinds of commit: **pin** it with characterization tests, **refactor** it (`class Ledger`, `RemitService(..., ledger=None)`), **migrate** najmkit from version 1 to 2.
-- **Needs an agent: yes (recommended, not required).** The no-agent path is the whole lab by hand; the grader checks the result, not who or what produced it.
+- **Lab m07** on Najm Remit: the legacy ledger has no tests and keeps module-level books. Three parts: **pin** it with characterization tests, **refactor** it (`class Ledger`, `RemitService(..., ledger=None)`), **migrate** najmkit from version 1 to 2.
+- **Needs an agent: yes (recommended, not required).** The no-agent path is the whole lab by hand; the grader checks the result, not who produced it.
 - The post-refactor interface is **fixed** in the ticket; your tests must pass before and after it, through a small seam.
-- The grader breaks the original ledger sixteen ways, runs a hidden characterization suite on your refactor, scans for module-level state and compares the audit lines byte for byte. Plan a few hours.
+- The grader breaks the original ledger sixteen ways, runs a hidden suite on your refactor and compares audit lines byte for byte. Plan a few hours.
 
 ## 🧭 Why it matters
-On Monday Hessa brings Finance's request: the nightly reconciliation needs two services in one process, each with its own books. Tariq's answer is this lab in a sentence: "Nobody touches `ledger.py` without tests, and I will not review four hundred lines of agent diff on trust." The same ticket carries najmkit 2, because the fraud team's dashboard reads the audit lines and one "tidy" conversion would quietly stop it matching.
-
-An agent can do the mechanical parts of all three jobs in an hour. This week is the part only you can do: deciding what must not change, and proving it did not.
+On Monday Hessa brings Finance's request: the nightly reconciliation needs two services in one process, each with its own books. Tariq's answer is this lab in a sentence: "Nobody touches `ledger.py` without tests, and I will not review four hundred lines of agent diff on trust." The same ticket carries najmkit 2, because the fraud team's dashboard reads the audit lines and one "tidy" conversion would quietly stop it matching. An agent can do the mechanical parts in an hour; deciding what must not change, and proving it did not, is the part only you can do.
 
 ## 📐 How it works
 
 ### 🟢 The essentials
 
-**Read first.** The docstring of `ledger.py` lists Q-LED-1 to Q-LED-4. `git show lab-start:src/remit/ledger.py` always shows the original, and the grader uses the same one. Run `pytest -q`: `99 passed` and a long list of `DeprecationWarning`s from najmkit 2. That list is your migration to-do list.
+**Read first.** The docstring of `ledger.py` lists Q-LED-1 to Q-LED-4; `git show lab-start:src/remit/ledger.py` always shows the original, and the grader uses the same one. `pytest -q` prints `99 passed` and a long list of `DeprecationWarning`s from najmkit 2: a first, partial migration to-do list (only calls your tests reach appear).
 
-**Part 1: pin it.** Copy `lab-assets/ledger_port.py` to `tests/ledger_port.py`. It is a test seam: `make_ledger()` returns a fresh ledger (the legacy module today, a `Ledger` after Part 2) and `ledger_of(service)` returns the ledger a service posts to. Write tests against those two functions only, in new files named `tests/test_ledger_*.py`, with lesson 7.1's placeholder method. Cover the four quirks and the details around them: the order of the four entries, what a refused posting leaves behind, what `send` does when the store fails (the service docstring calls it D-SVC-1). Do not call `make_ledger()` after a `send` in the same test: before the refactor it wipes the shared books. With an agent, ask for one behaviour at a time: "Pin Q-LED-2 only, in tests/test_ledger_basics.py, through make_ledger(). Put a placeholder in the assertion, run it, and copy the value the code returns. Change nothing under src/." Then read every test and delete any that asserts nothing.
+**Part 1: pin it.** The seam `ledger_port.py` gives your tests `make_ledger()` and `ledger_of(service)`, which work before and after Part 2. Use lesson 7.1's placeholder method, or print a batch of real values once from a scratch script. Cover the four quirks and the details around them: the order of the four entries, error types and messages, what a refused posting leaves behind, what `send` does when the store fails (the service docstring calls it D-SVC-1). Ten tests is the minimum; thirty small ones is thorough. Do not call `make_ledger()` after a `send` in the same test: before the refactor it wipes the shared books. With an agent, ask for one behaviour at a time: "Pin Q-LED-2 only, in tests/test_ledger_basics.py, through make_ledger(). Put a placeholder in the assertion, run it, and copy the value the code returns. Change nothing under src/." Then read every test and delete any that asserts nothing.
 
-**Parts 2 and 3.** Follow the strangler order from lesson 7.1 and commit each green step. The `tests/conftest.py` edit that drops `ledger.reset()` belongs to the refactor. For the migration, `docs/najmkit-v2-migration.md` has the renames, one behaviour change and a suggested order. Run `pytest -W error::DeprecationWarning`, then delete the deprecated section of each najmkit module, then update `docs/najmkit.md`.
+**Parts 2 and 3.** Follow the strangler order from lesson 7.1 and commit each green step. For the migration, `docs/najmkit-v2-migration.md` has the renames, one behaviour change and a suggested order: migrate `tests/conftest.py` first (every test runs its fixtures), then run `pytest -W error::DeprecationWarning`. The `CLAUDE.md` in your repository says "do not commit" and "never edit a test"; the ticket needs commits and rename edits, so say so in your prompts.
 
 ### 🟡 Going deeper
 
@@ -325,34 +324,34 @@ An agent can do the mechanical parts of all three jobs in an hour. This week is 
 **The migration step.** Weak: "Migrate Remit to najmkit 2." Strong:
 
 ```text
-Goal: step 5 of docs/refactoring-plan.md. Move every use of a najmkit v1 name in src/remit and tests
-to the v2 name in docs/najmkit-v2-migration.md. Read that file first. A clock object's .now() method
-is not a renamed function; only the module-level clock functions are. audit.emit takes JSON values
-only: convert a Money so that each audit line stays exactly as it was. Change no other behaviour, edit
-no test except to follow a rename, and leave src/najmkit alone for now. Run
-pytest -W error::DeprecationWarning when you finish and show me the output.
+Goal: the migration step of docs/refactoring-plan.md. Move every use of a najmkit v1 name in src/remit and
+tests to the v2 name in docs/najmkit-v2-migration.md, starting with tests/conftest.py. Read that file first.
+A clock object's .now() method is not a renamed function; only the module-level clock functions are.
+audit.emit takes JSON values only: convert a Money so that each audit line stays exactly as it was. Change
+no other behaviour, edit no test except to follow a rename, and leave src/najmkit alone for now. Run
+pytest -W error::DeprecationWarning, show me the output, and commit when it is green.
 ```
 
-**Review every step alike.** `git diff <tests commit> -- tests/test_ledger_*.py` is empty (or shows only a rename); `git diff --stat` names only the files the step should touch; the suite is green; a search for the old names comes back empty. Read the hunks in `service.py` and `ledger.py` yourself; sample the rest. If a pinned test goes red after your refactor, it has found a behaviour change. Do not edit it and do not let the agent: find the line that changed the behaviour, restore it, and note a disagreement for a separate ticket.
+**Review every step alike.** `git diff <tests commit> -- tests/test_ledger_*.py` is empty (or shows a rename); `git diff --stat` names only the files the step should touch; the suite is green; a search for the old names is empty. Read the hunks in `service.py` and `ledger.py` yourself; sample the rest. A pinned test that goes red has found a behaviour change: restore the behaviour, do not edit the test (or let the agent), and note any disagreement for a separate ticket.
 
 ### 🔴 Expert view
 
-**How the grader reads your work.** Part 1 is judged on the *original* ledger, rebuilt from the `lab-start` tag: your tests must pass there and fail on at least 13 of 16 broken copies, each described by a behaviour such as "a negative fee is refused"; survivors are named. Part 2 is a hidden suite of about fifty checks plus a scan for module-level state, mutable class attributes and leftover module functions. Part 3 is an import-aware scan for old najmkit names, an import of your najmkit to confirm they are gone, and the audit lines compared as text.
+**How the grader reads your work.** It rebuilds the original ledger from the `lab-start` tag and runs your tests on it, on an identical copy rewritten with other comments and private names (so a test cannot fingerprint the file) and on sixteen broken copies, each described by a behaviour such as "a negative fee is refused"; survivors are named. Every run is `pytest -q` as CI runs it.
 
-**What it cannot tell.** Whether you understood a quirk. Whether you moved in small steps or in one leap, then committed three times. Whether your refactor changed a behaviour nobody pinned: sixteen mutants and fifty checks cover what they cover. A suite that copies values out of the code passes and teaches nothing if you never asked why. The grader is a practice partner, not a gate.
+**What it cannot tell.** Whether you understood a quirk, or moved in small steps rather than one leap committed three times (it checks only that each commit changes a file and that the tests come first). Whether your refactor changed a behaviour nobody pinned. A suite that copies values out of the code passes and teaches nothing if you never asked why. The grader is a practice partner, not a gate.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
 | **Characterization test** (Feathers) | Records what the ledger does today, quirks included | Before the first edit to `ledger.py` |
-| **Seam** (Feathers) | `ledger_port.py`, then `ledger=None`: a way in that survives the change | Tests that run before and after a refactor |
-| **Strangler fig** (Fowler) | Class behind the old functions, callers moved, old functions deleted | The refactor in Part 2 |
-| **Expand and contract** | najmkit 2 beside najmkit 1, call sites moved, old names deleted | The migration in Part 3 |
-| **Mutation check** | Break the original ledger on purpose and see whether a test fails | Judging your Part 1 suite |
-| **Agent log** | Prompt, what it did, what you corrected, time spent | Every agent-assisted lab |
+| **Seam** (Feathers) | `ledger_port.py`, then `ledger=None` | Tests that run before and after a refactor |
+| **Strangler fig** (Fowler) | Class behind the old functions, callers moved, old ones deleted | The refactor in Part 2 |
+| **Expand and contract** | najmkit 2 beside 1, call sites moved, old names deleted | The migration in Part 3 |
+| **Mutation check** | Break the original ledger on purpose; does a test fail? | Judging your Part 1 suite |
+| **Agent log** | Prompt, what it did, what you corrected, time | Every agent-assisted lab |
 
 ## 🏛️ In practice at Najm Bank
-**Needs an agent: yes (recommended, not required).** The no-agent path is the whole lab by hand with `git`, `pytest` and an editor; Part 3 is about thirty call sites. An agent saves time on drafting tests and renames, and adds risk exactly where this module has quirks. The grader does not care how the work was produced.
+**Needs an agent: yes (recommended, not required).** The no-agent path is the whole lab by hand with `git`, `pytest` and an editor (Part 3 is about thirty call sites). An agent saves time on tests and renames, and adds risk exactly where this module has quirks.
 
 **The ticket.** Tariq's ticket is in `TASK.md`:
 
@@ -367,19 +366,24 @@ pytest -W error::DeprecationWarning when you finish and show me the output.
 variables, so a process can have exactly one set of books. Finance's reconciliation job needs two
 `RemitService` objects in one process, each with its own ledger. And najmkit 3 will remove najmkit 1.
 
-Three parts, in this order, in separate commits. **Behaviour must not change anywhere**, quirks
-included, except where this ticket says so. Read the docstring of `ledger.py` first.
+Three parts. Do Part 1 first and commit it before you change anything under `src/`; commit every
+later step separately. **Behaviour must not change anywhere**, quirks included, except where this
+ticket says so. Read the docstring of `ledger.py` first.
 
 ### Part 1: pin what the ledger does now
 
 1. Copy `lab-assets/ledger_port.py` to `tests/ledger_port.py`: a seam with `make_ledger()` (a fresh
    ledger) and `ledger_of(service)` (the ledger a service posts to), working before and after Part 2.
-2. Write characterization tests in **new files named `tests/test_ledger_*.py`**. They say what the code
-   does today, quirks included, not what you think it should do. Reach the ledger only through
-   `make_ledger()` and `ledger_of(service)`.
-3. They must pass on the code as it is now and, unchanged, after Part 2. The grader runs them against
-   the original ledger and against deliberately broken copies of it. Do not rely on edits to
-   `tests/conftest.py`.
+2. Write characterization tests in **new files named `tests/test_ledger_*.py`**, importing the seam as
+   `from ledger_port import ledger_of, make_ledger` (`tests.ledger_port` fails under `pytest -q`, which
+   CI runs). They say what the code does today, quirks included (values, order, error types and
+   messages), not what you think it should do. Reach the ledger only through the seam. Part 2 changes
+   Q-LED-3's shared books on purpose: pin the rest of it.
+3. They must pass on the code as it is now and, unchanged, after Part 2. The grader runs them on the
+   original and on broken copies of it, so test behaviour, never the source text: it wants at least ten
+   tests that catch at least 13 of 16 breaks, and ignores your edits to `tests/conftest.py`.
+   `python lab-assets/try_mutation.py` runs your tests on the original; given a file, a text and a
+   replacement, it breaks the original there and says whether they noticed.
 
 ### Part 2: remove the module-level state
 
@@ -413,15 +417,19 @@ behaviour; the old names still work but warn.
 
 - Move every use of an old name in `src/remit` and `tests` to the new one. Remit's audit files are
   read by the fraud team's parser: the lines must come out byte for byte as today.
-- Then delete the deprecated names from `src/najmkit` and bring `docs/najmkit.md` up to date.
+- Then delete the deprecated names from `src/najmkit` and update the documents that are now untrue:
+  `docs/najmkit.md` (still version 1) and any that call the ledger untested or module-level.
 
 ### Rules
 
-- Commits follow `CONTRIBUTING.md`: at least three, each leaving `pytest -q` green. Never mix a
-  refactor and a migration in one commit.
-- Edit an existing test only to follow a rename or the removed `reset()`.
-- Touch only `ledger.py`, `service.py`, `store.py`, `cli.py`, `src/najmkit`, `tests` and `docs` (and
-  `CLAUDE.md` if it now says something untrue).
+- Commits follow `CONTRIBUTING.md`: at least three that change something, each leaving `pytest -q`
+  green; the one that adds your ledger tests changes nothing under `src/`. Never mix a refactor and a
+  migration in one commit (your reviewer checks that). Commit everything.
+- Edit an existing test only to follow a rename or the removed `reset()`. This ticket asks for those
+  edits and for commits even though `CLAUDE.md` says otherwise: tell your AI tool.
+- Touch only `ledger.py`, `service.py`, `store.py` and `cli.py` in `src/remit`, `src/najmkit`, `tests`,
+  `docs`, `scripts`, `README.md`, `CLAUDE.md`, `AGENTS.md`, `.claude`, and `pyproject.toml` or
+  `.github/workflows` if you make warnings-as-errors permanent.
 - Recommended: fill in `lab-assets/refactoring-plan-template.md` as `docs/refactoring-plan.md` first.
 - Use any help you like, an AI coding tool included. You are accountable for every line.
 
@@ -435,26 +443,24 @@ When you think you are done, from the `ailab` folder of the course repository:
 **Start.**
 
 ```bash
-cd ainative/ailab
+cd ainative/ailab                     # in your clone of the course repository
 python -m ailab start m07 --dir ~/ainative/m07
-cd ~/ainative/m07
+cd ~/ainative/m07                     # the lab repository: work, run pytest and commit here
 git log --oneline          # "Lab starting state" on top of "Initial state"
 pytest -q                  # 99 passed, plus the DeprecationWarnings
 ```
 
-**Your move.** (1) Read the docstring, the migration notes and the ticket; fill in the plan template as `docs/refactoring-plan.md` (with your agent in plan mode, if you use one). (2) Part 1: tests first, one commit; break the original ledger by hand to judge them. (3) Part 2: small steps, a commit each. (4) Part 3: pin the audit lines, migrate, contract. (5) Update `docs/najmkit.md` and, if it says something untrue, `CLAUDE.md`. (6) Grade. With an agent, give it one step at a time, forbid edits to the pinned tests and read every diff: it writes a quirk-fixing "improvement" as fluently as a rename.
+**Your move.** (1) Read the docstring, the notes and the ticket; fill in the plan template (in plan mode, if you use an agent). (2) Part 1: tests first, one commit; break the original by hand (`lab-assets/try_mutation.py`) to judge them. (3) Part 2: small steps, a commit each. (4) Part 3: pin the audit lines, migrate, contract, update the documents. (5) Grade. With an agent, give it one step at a time, forbid edits to the pinned tests and read every diff: it writes a quirk-fixing "improvement" as fluently as a rename.
 
-**What the grader checks.** Part 1: at least ten ledger tests that pass on the original code and catch 13 of 16 broken copies; the suite passes; no test deleted. Part 2: hidden suites for `Ledger` and the service; no module-level state; old functions gone. Part 3: no old najmkit name left or defined; audit lines and ids unchanged. Process: allowed files only, Conventional Commits, at least three commits, nothing uncommitted, no secrets. Advisory only: all sixteen defects caught, every commit green, `docs/najmkit.md` and `CLAUDE.md` not stale, the plan's sections present.
+**What the grader checks.** Part 1: at least ten ledger tests that pass on the original and catch 13 of 16 broken copies; the suite passes under `pytest -q`; no test deleted. Part 2: about fifty hidden checks on `Ledger` and the service; no module-level state, mutable class attribute or old module function. Part 3: no old najmkit name left (an import-aware scan) or defined; audit lines and ids unchanged, compared as text. Process: allowed files only, Conventional Commits, three commits that change a file with the tests first, nothing uncommitted, no secrets. Advisory: all sixteen defects caught, every commit green, no stale document, the plan's sections.
 
 **Grade.** From `ainative/ailab`: `python -m ailab grade m07 --dir ~/ainative/m07`. On the starter (abridged: long lines are cut with `...`):
 
 ```text
 [FAIL] You wrote characterization tests for the ledger: no tests/test_ledger_*.py file was added yet
-       hint: Copy lab-assets/ledger_port.py to tests/ledger_port.py and write at least ten tests in new files named tests/test_ledger_*.py.
 [PASS] The whole suite passes: 99 passed
-[FAIL] The Ledger class keeps every quirk: 33 of 34 hidden checks failed: test_a_ledger_is_created_with_no_arguments_and_starts_empty, ... (+29 more)
+[FAIL] The Ledger class keeps every quirk: 35 of 36 hidden checks failed: test_a_ledger_is_created_with_no_arguments_and_starts_empty, ... (+31 more)
 [FAIL] The ledger keeps no state at module level: ledger.py line 44: module-level `_BALANCES` holds a mutable container, ...
-[PASS] The audit lines and ids come out as before: 6 hidden checks passed
 [FAIL] Small steps: at least three commits: 0 new commits since the start
 Lab m07: 5/17 required checks passed: NOT YET
 ```
@@ -470,22 +476,18 @@ When all three parts are right, the same command ends like this (excerpt of a re
 
 ```text
 [PASS] Your ledger tests catch defects in the original ledger: your tests catch 16 of 16 deliberate defects
-[PASS] The Ledger class keeps every quirk: 34 hidden checks passed
-[PASS] The ledger keeps no state at module level: no module-level state
-[PASS] The audit lines and ids come out as before: 6 hidden checks passed
-[PASS] Every commit leaves the suite green (advisory): 8 commits run, all green
+[PASS] The Ledger class keeps every quirk: 36 hidden checks passed
+[PASS] Small steps: at least three commits: 8 commits that change something, the ledger tests first
 Lab m07: 17/17 required checks passed: PASSED
 ```
 
 **Weekly deliverable.** Commit, in at least three commits: `docs/refactoring-plan.md`; `tests/ledger_port.py` and `tests/test_ledger_*.py`; the refactor; and the najmkit migration with updated docs. Keep your agent log in your notes or as `docs/agent-log-m07.md`.
 
-**Group session (60 minutes).** (1) Ten minutes: each person names the quirk they found last, and how. (2) Twenty: swap Part 1 suites and break each other's ledger one new way. Whose suite noticed? (3) Fifteen: compare plans and agent instructions. (4) Ten: agree one legacy-module rule for `CLAUDE.md`. (5) Five: agent logs.
+**Group session (60 minutes).** (1) Ten minutes: each person names the quirk they found last, and how. (2) Twenty: swap Part 1 suites and break each other's ledger one new way; whose suite noticed? (3) Fifteen: compare plans and agent instructions. (4) Ten: agree one legacy-module rule for `CLAUDE.md`. (5) Five: logs.
 
 **Debrief questions.**
 - What did the agent get wrong: a quirk, a test or a rename? How did you find out?
 - What did your plan or context miss that would have prevented it?
-- Which quirk did you pin last, and what would an unpinned refactor have done to it?
-- Which step could you have delegated further, and which should you have kept?
 
 **Agent log template.**
 
@@ -500,15 +502,14 @@ Time spent:      (you / the agent)
 ## 🛠️ Exercises
 - 🟢 **Pin it.** *No agent.* Do Part 1 only. *Done when:* the first four lines of `ailab grade m07` are `[PASS]` and the survivors list is empty.
 - 🟡 **Pin and refactor.** *Agent optional.* Do Parts 1 and 2 in at least four commits. *Done when:* the `Ledger` and service lines pass, the suite passes and every commit is green.
-- 🔴 **The whole ticket, measured.** *Needs an agent.* Do all three parts, delegating the mechanical steps. *Done when:* the grade ends `PASSED`; the plan is filled in; your agent log shows, per part, one thing you reverted or checked and found fine; and you have written one line for the team's `CLAUDE.md` about legacy modules.
+- 🔴 **The whole ticket, measured.** *Needs an agent.* Do all three parts, delegating the mechanical steps. *Done when:* the grade ends `PASSED`; the plan is filled in; your agent log shows, per part, one thing you reverted or checked; and you have written one line for the team's `CLAUDE.md` about legacy modules.
 
 ## ⚠️ Mistakes and traps
 - **Tests aimed at the new class.** Written after the refactor, they cannot describe the original. Write them first, through the seam.
-- **Accepting generated tests unread.** They record whatever the code returns, and some assert nothing. Read every expectation.
-- **Editing a red test.** It found a behaviour change. Restore the behaviour.
+- **Accepting generated tests unread.** They record whatever the code returns; some assert nothing. Read every expectation.
 - **Search and replace on `.now()`.** Clock objects keep `.now()`; only the module function was renamed.
 - **One commit for everything.** The review value is the separation: tests, structure, migration.
-- **Stale documents.** `docs/najmkit.md` and `CLAUDE.md` describe code that is gone; the next agent believes them.
+- **Stale documents.** `docs/najmkit.md`, `README.md`, the architecture notes and `CLAUDE.md` describe code that is gone; the next agent believes them.
 
 ## 🧾 Recap
 - Pin first, through a seam that survives the refactor, and judge the pins by breaking the original.
@@ -579,11 +580,11 @@ Time spent:      (you / the agent)
 
 <details><summary>Answer</summary>
 
-**D.** The grader can see commits, not thinking, so it asks for three. The real point is review: tests, structure and migration in separate green commits can each be judged by "the tests did not move". (🔴 What it cannot tell.)
+**D.** The grader can see commits, not thinking, so it asks for three that change something. The real point is review: tests, structure and migration in separate green commits can each be judged by "the tests did not move". (🔴 What it cannot tell.)
 
 </details>
 
 ## 📚 References
-- Claude Code documentation: best practices (plan mode, verification): https://code.claude.com/docs/en/best-practices; headless mode: https://code.claude.com/docs/en/headless; permissions: https://code.claude.com/docs/en/permissions
+- Claude Code documentation: best practices (plan mode, verification): https://code.claude.com/docs/en/best-practices
 - pytest warning filters: https://docs.pytest.org/en/stable/how-to/capture-warnings.html; Python warnings: https://docs.python.org/3/library/warnings.html; Conventional Commits: https://www.conventionalcommits.org/
 - [*Software Testing*, lesson 2.3 — Are your tests any good?](../testing/index.html#/2.3); [*Software Testing*, lesson 6.2 — Tests as the specification for coding agents](../testing/index.html#/6.2)
