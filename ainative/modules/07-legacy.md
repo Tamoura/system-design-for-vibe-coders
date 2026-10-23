@@ -130,7 +130,7 @@ A prompt or `CLAUDE.md` is context, not enforcement. Once the tests are committe
 
 **Review at scale.** A forty-file mechanical diff cannot be read line by line. (1) Review the *rule*: the instruction or, for a codemod, the script (run it twice; the second run should change nothing). (2) Read the tests in full. (3) Sample the diff: first and last hunks and the riskiest files. (4) Automate the rest: the suite on every commit, warnings as errors, a search for the old names, `git diff --stat`. Stop signs: a changed test file in a refactor commit, and a hunk you cannot explain.
 
-**Agent-sized units.** A unit is one rule over a bounded set of files, small enough to verify in one sitting. For a long list, Claude Code's best-practices page shows a headless fan-out (other tools have equivalents); adapted to this rename (`files.txt` from a `grep -l`):
+**Agent-sized units.** A unit is one rule over a bounded set of files, small enough to verify in one sitting. For a long list, Claude Code's best-practices page shows a headless fan-out, which lesson 9.1 teaches (other tools have equivalents); adapted to this rename (`files.txt` from a `grep -l`):
 
 ```bash
 for file in $(cat files.txt); do

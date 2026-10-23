@@ -505,7 +505,7 @@ Would I delegate it again?
 
 <details><summary>Answer</summary>
 
-**D.** A test that passes before the feature exists proves nothing: make each fail first, then build. A green suite (A) does not show that the new tests bite. (🟡 How the grader judges your tests.)
+**D.** A test that passes before the feature exists proves nothing: make each fail first, then build. A green suite (A) does not show that the new tests bite. (🔴 How the grader judges your tests.)
 
 </details>
 

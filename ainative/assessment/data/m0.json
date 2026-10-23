@@ -1,0 +1,135 @@
+{
+ "area": "m0",
+ "questions": [
+  {
+   "id": "m0-1",
+   "level": 1,
+   "lesson": "0.1",
+   "q": {
+    "en": "At Tariq's weekly AI-native clinic, four engineers describe how they used an agent on a ticket this week. Whose approach is vibe coding as the course defines it?",
+    "ar": "في عيادة المهندس الأصيل في الذكاء الاصطناعي (AI-native clinic) الأسبوعية التي يديرها طارق، يصف أربعة مهندسين كيف استخدموا وكيلًا (agent) في تذكرة (ticket) هذا الأسبوع. أيُّ أسلوب منها هو البرمجة بالإحساس (vibe coding) كما تعرّفها الدورة (as the course defines it)؟"
+   },
+   "o": {
+    "en": [
+     "Rana ran three agents in parallel on separate branches and read each diff before merging",
+     "Dina had the agent build the change from her written spec, then read the diff and ran the tests",
+     "Sami committed the change the agent wrote after reading its summary and skipping the diff",
+     "Omar left an agent running overnight on a bounded task and reviewed its whole diff next morning"
+    ],
+    "ar": [
+     "رنا شغّلت ثلاثة وكلاء (agents) متوازين على فروع (branches) منفصلة، وقرأت فروقات (diff) كل فرع قبل الدمج (merge)",
+     "دينا جعلت الوكيل يبني التغيير من مواصفتها (spec) المكتوبة، ثم قرأت الفروقات (diff) وشغّلت الاختبارات (tests)",
+     "سامي أودع (commit) التغيير الذي كتبه الوكيل بعد قراءة ملخصه (summary) وتخطّي الفروقات (diff) كلها دون فتحها",
+     "عمر ترك وكيلًا يعمل طوال الليل (overnight) على مهمة محددة (bounded task) وراجع فروقاته (diff) كاملة صباحًا"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Vibe coding is accepting code without reading it, and Sami's summary-only commit is exactly that. Heavy agent use is not the test: Rana's parallel agents and Omar's overnight run still end in a full read of the diff, so both engineers stay accountable.",
+    "ar": "البرمجة بالإحساس (vibe coding) هي قبول الشيفرة (code) دون قراءتها، وهذا ما فعله سامي حين اكتفى بالملخص (summary). وكثرة استخدام الوكلاء (agents) ليست المعيار: فوكلاء رنا المتوازون (parallel agents) وتشغيل عمر الليلي ينتهيان بقراءة كاملة للفروقات (diff)، فيبقى كلاهما مسؤولًا (accountable)."
+   }
+  },
+  {
+   "id": "m0-2",
+   "level": 2,
+   "lesson": "0.2",
+   "q": {
+    "en": "Hessa asks why a customer's transfer failed overnight and forwards a production log line with the customer's full name and account number. Lujain wants her approved agent to help find the cause. What should she do?",
+    "ar": "تسأل حصة لماذا فشلت حوالة (transfer) أحد العملاء ليلًا، وتحوّل سطرًا من سجل الإنتاج (production log) يحمل الاسم الكامل للعميل (customer's full name) ورقم حسابه (account number). وتريد لجين أن يساعدها وكيلها المعتمد (approved agent) في معرفة السبب (the cause). ماذا ينبغي أن تفعل؟"
+   },
+   "o": {
+    "en": [
+     "Mask the personal data first, then paste only the shape of the log line",
+     "Paste the line as it is, because the agent is on Najm's approved list",
+     "Paste the line as it is and tell the agent to ignore the customer fields",
+     "Remove the name but keep the account number, since it is only a number"
+    ],
+    "ar": [
+     "تحجب (mask) البيانات الشخصية (personal data) أولًا، ثم تلصق شكل السطر (shape of the line) فقط",
+     "تلصق السطر كما هو، لأن الوكيل (agent) ضمن قائمة الأدوات المعتمدة (approved list) في بنك نجم (Najm Bank)",
+     "تلصق السطر كما هو، وتطلب من الوكيل (agent) أن يتجاهل الحقول الخاصة بالعميل (customer fields)",
+     "تحذف الاسم (the name) وتُبقي رقم الحساب (account number)، لأنه مجرد رقم (only a number) لا يكشف هوية صاحبه"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "Najm's rule keeps Confidential and Restricted data out of prompts, and customer names and account numbers are on the never-paste list, so mask first and paste the shape. Telling the agent to ignore fields is the tempting fix, but whatever it reads is already in its context and its transcript.",
+    "ar": "تمنع قاعدة بنك نجم (Najm Bank) البيانات السرية والمقيَّدة (Confidential and Restricted data) من الموجِّهات (prompts)، وأسماء العملاء وأرقام حساباتهم في قائمة ما لا يُلصق أبدًا (never-paste list)، فاحجب أولًا (mask first) والصق الشكل (the shape) فقط. وطلب تجاهل الحقول (ignore fields) هو الحل المغري، لكن كل ما يقرؤه الوكيل (agent) صار في سياقه (context) وسجل جلسته (transcript)."
+   }
+  },
+  {
+   "id": "m0-3",
+   "level": 2,
+   "lesson": "0.3",
+   "q": {
+    "en": "Hessa asks Lujain to move a fee-tier boundary in `fees.py`. The ticket gives the exact fee expected at each boundary amount. Using the delegation matrix, how should Lujain handle it?",
+    "ar": "تطلب حصة من لجين نقل حدّ شريحة الرسوم (fee-tier boundary) في `fees.py`، وتذكر التذكرة (ticket) الرسم المتوقع بدقة (exact fee expected) عند كل مبلغ حدّي (boundary amount). كيف تتعامل لجين معها وفق مصفوفة التفويض (delegation matrix)؟"
+   },
+   "o": {
+    "en": [
+     "Write every line by hand, because fee code is never handed to an agent",
+     "Delegate it with the usual review, since exact expected outputs make it easy to verify",
+     "Delegate it and accept the result once the agent's summary says the tests pass",
+     "Delegate the draft, run the checks herself and get a second human reviewer"
+    ],
+    "ar": [
+     "تكتب كل سطر بنفسها يدويًا (by hand)، لأن شيفرة الرسوم (fee code) لا تُسلَّم إلى وكيل (agent) أبدًا",
+     "تفوّضها مع المراجعة المعتادة (usual review)، لأن المخرجات المتوقعة الدقيقة (exact outputs) تسهّل التحقق",
+     "تفوّضها وتقبل النتيجة متى قال ملخص الوكيل (agent's summary) إن الاختبارات (tests) نجحت",
+     "تفوّض المسودة (draft) وتشغّل الفحوص (checks) بنفسها ويراجعها إنسان ثانٍ (second reviewer)"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "This is the high-risk, easy-to-verify cell: delegate the draft, keep the decision. Exact outputs make checking cheap, but fee logic is money logic, so the author runs the checks and a second human approves, which the usual review or the agent's own report skips.",
+    "ar": "هذه خانة الخطر العالي وسهولة التحقق (high-risk, easy-to-verify): فوِّض المسودة واحتفظ بالقرار (delegate the draft, keep the decision). المخرجات الدقيقة (exact outputs) تجعل الفحص رخيصًا، لكن منطق الرسوم منطق مالي (money logic)، فيشغّل المؤلف (author) الفحوص ويوافق مراجع بشري ثانٍ (second human)، وهذا ما تتخطاه المراجعة المعتادة (usual review) أو تقرير الوكيل (agent's report) نفسه."
+   }
+  },
+  {
+   "id": "m0-4",
+   "level": 3,
+   "lesson": "0.3",
+   "q": {
+    "en": "Lujain's agent finished a change to the transfer history output and reported that all tests pass. She started a second agent session to review the diff, and it answered \"looks correct, no issues\". She has run nothing herself and plans to open the pull request. What is the soundest judgement?",
+    "ar": "أنهى وكيل لجين تغييرًا في مخرجات سجل التحويلات (transfer history output) وأبلغ بنجاح كل الاختبارات (all tests pass). فبدأت جلسة وكيل ثانٍ (second agent session) ليراجع الفروقات (diff) فأجاب «يبدو صحيحًا ولا ملاحظات». ولم تشغّل هي شيئًا بنفسها (run nothing herself) وتنوي فتح طلب الدمج (pull request). ما أسلم حكم (judgement) في هذا الموقف؟"
+   },
+   "o": {
+    "en": [
+     "Count the second agent as an independent reviewer and open the pull request",
+     "Treat the review as a hint, then run the checks and read the diff herself",
+     "Ask the second agent to run the tests too, and trust its report if they pass",
+     "Ask a third agent as well, and go ahead once two of the three agree"
+    ],
+    "ar": [
+     "تعدّ الوكيل الثاني مراجعًا مستقلًا (independent reviewer) وتفتح طلب الدمج (pull request)",
+     "تعدّ المراجعة تلميحًا (hint) ثم تشغّل الفحوص (checks) بنفسها وتقرأ الفروقات (diff)",
+     "تطلب من الوكيل الثاني تشغيل الاختبارات (tests) أيضًا وتثق بتقريره (report) إن نجحت",
+     "تسأل وكيلًا ثالثًا (third agent) أيضًا وتمضي متى اتفق اثنان من الثلاثة (two of the three)"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "A second agent's review is a useful check, not independent proof: evidence comes from execution, meaning the tests, running the program and the diff. Having another agent run the tests and report back is still a summary, not her own run.",
+    "ar": "مراجعة الوكيل الثاني فحص مفيد (a useful check) وليست دليلًا مستقلًا (independent proof)؛ فالدليل (evidence) يأتي من التنفيذ (execution)، أي الاختبارات (tests) وتشغيل البرنامج والفروقات (diff). وأن يشغّل وكيل آخر الاختبارات ويبلّغ عنها يبقى ملخصًا لا تشغيلًا منها هي."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m0-e1",
+   "lesson": "0.2",
+   "text": {
+    "en": "I have fixed the REMIT-212 typo in lab m00 so that `ailab grade` prints PASSED, with exactly one new commit in the `type(scope): subject` shape, and logged my minutes in an agent log entry.",
+    "ar": "لقد أصلحتُ الخطأ الإملائي (typo) في تذكرة (ticket) REMIT-212 ضمن المختبر (lab) m00 حتى طبع `ailab grade` النتيجة PASSED، مع إيداع (commit) جديد واحد بصيغة `type(scope): subject`، وسجّلتُ دقائقي (minutes) في إدخال من سجل الوكيل (agent log)."
+   }
+  },
+  {
+   "id": "m0-e2",
+   "lesson": "0.3",
+   "text": {
+    "en": "I have filled in a delegation card for the REMIT-212 typo ticket with every field, including a verification budget and a one-sentence \"Worth it?\" answer.",
+    "ar": "لقد ملأتُ بطاقة تفويض (delegation card) لتذكرة (ticket) الخطأ الإملائي REMIT-212 بكل حقولها، بما فيها ميزانية التحقق (verification budget) وجواب من جملة واحدة في خانة «هل يستحق العناء؟» ⁦(Worth it?)⁩."
+   }
+  }
+ ]
+}

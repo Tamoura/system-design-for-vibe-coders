@@ -615,7 +615,7 @@ flowchart LR
 - **Specify:** write what done means, what is out of scope and which checks will tell you (Module 3).
 - **Delegate:** hand a bounded step to the agent, at an autonomy level you chose, with the context it needs (Modules 2 and 4).
 - **Verify:** collect evidence: tests, the diff, running it, sources (Module 5).
-- **Integrate:** commit, label, open the pull request, get review, merge, and write down what you learned (Modules 4 and 9).
+- **Integrate:** commit, label, open the pull request, get review, merge, and write down what you learned (Modules 4, 9 and 11).
 
 The arrow back from Verify is the point: many laps end there, with a better spec. **Safety** is what the box stands for: the agent runs with least privilege, no secrets in its context, on a clean branch you can throw away, never near production, and with a human gate (a second reviewer) wherever money moves. Module 8 builds it; lesson 0.2 gave you the first layer.
 

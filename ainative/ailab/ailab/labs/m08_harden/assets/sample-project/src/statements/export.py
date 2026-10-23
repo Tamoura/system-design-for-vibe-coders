@@ -3,7 +3,7 @@ import csv
 import json
 
 import csvtidy
-from najm_utils import round_half_up  # this module does not exist anywhere: a hallucinated name
+from najm_utils import round_half_up  # an invented name, not in the lockfile or the allow-list (never install an unvetted name)
 
 
 def export(path):

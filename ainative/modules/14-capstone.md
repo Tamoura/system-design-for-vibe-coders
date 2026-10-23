@@ -279,7 +279,7 @@ Total minutes: 0
 
 <details><summary>Answer</summary>
 
-**A.** By default only exit code 2 blocks; any other non-zero code is a non-blocking error, so a guard must block what it cannot read. (Newer versions add an opt-in `onFailure` setting: check the current documentation.) (🟢 Your move.)
+**A.** By default only exit code 2 blocks; any other non-zero code is a non-blocking error, so a guard must block what it cannot read. (Newer versions add an opt-in `onFailure` setting: check the current documentation.) (🏛️ Your move.)
 
 </details>
 
@@ -328,7 +328,7 @@ Each lesson carries a Focus tag, and each answer repeats it. Use this table to t
 |---|---|---|
 | Mindset | the shift, how agents work, staying sharp | 0.1, 0.3, 1.1, 1.2, 13.1, 13.2 |
 | Context | Context first | Module 2: 2.1, 2.2 |
-| Workflow | Specify before you delegate, small verified steps, debugging, legacy, lifecycle | 0.2, 0.3, 3.1, 3.2, 4.1, 4.2, 6.1, 6.2, 7.1, 7.2, 10.1, 10.2, 11.1, 11.2, 14.1 |
+| Workflow | Specify before you delegate, Small verified steps, debugging, legacy, lifecycle | 0.2, 0.3, 3.1, 3.2, 4.1, 4.2, 6.1, 6.2, 7.1, 7.2, 10.1, 10.2, 11.1, 11.2, 14.1 |
 | Verify | Trust evidence, not fluency | 1.2, 5.1, 5.2, 6.2, 7.1, 7.2, 11.2, 14.1 |
 | Secure | safety around the agent | 0.2, 8.1, 8.2, 14.1 |
 | Automate | Automate the loop, keep the skill | 8.2, 9.1, 9.2, 10.1 |

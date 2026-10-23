@@ -1,0 +1,135 @@
+{
+  "area": "m1",
+  "questions": [
+    {
+      "id": "m1-1",
+      "level": 1,
+      "lesson": "1.1",
+      "q": {
+        "en": "On Tuesday Lujain opens a new agent session on Remit. Yesterday, in a long session, she told the agent that money is `Decimal`, yet today it writes `float(fee)`. Which explanation fits the mental model?",
+        "ar": "في صباح الثلاثاء تفتح لجين جلسة وكيل (agent session) جديدة على نجم ريميت (Najm Remit). أخبرت الوكيل أمس في جلسة طويلة (long session) بأن المبالغ المالية (money) تُمثَّل بالنوع `Decimal`، لكنه يكتب اليوم `float(fee)`. أي تفسير يتوافق مع النموذج الذهني (mental model)؟"
+      },
+      "o": {
+        "en": [
+          "The agent remembers yesterday's chat but weighted its habits above the rule.",
+          "The model learned the rule yesterday and has since drifted away from it.",
+          "The rule was not sent again, so today's context does not contain it at all.",
+          "Today's session needs a higher effort level before it can recall the rule."
+        ],
+        "ar": [
+          "الوكيل (agent) يتذكر محادثة الأمس، لكنه رجّح عاداته على القاعدة (rule).",
+          "النموذج (model) تعلّم القاعدة (rule) أمس ثم ابتعد عنها تدريجيًا بعد ذلك.",
+          "لم تُرسَل القاعدة (rule) من جديد، فسياق (context) اليوم لا يحتويها إطلاقًا.",
+          "تحتاج جلسة (session) اليوم إلى مستوى جهد (effort level) أعلى كي تستحضر القاعدة."
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "A model keeps no state between calls, so nothing survives unless it is sent again; yesterday's rule is simply absent from today's context. A is the tempting mistake: inside one session the program re-sends the conversation every turn, which only feels like memory.",
+        "ar": "النموذج (model) لا يحتفظ بأي حالة (state) بين الاستدعاءات (calls)، فلا يبقى شيء ما لم يُرسَل من جديد، ولذلك تغيب قاعدة الأمس عن سياق (context) اليوم. أما الخيار A فهو الفخ المعتاد: داخل الجلسة الواحدة (one session) يعيد البرنامج إرسال المحادثة (conversation) في كل دورة (turn)، وهذا ما يبدو كذاكرة (memory) فقط."
+      }
+    },
+    {
+      "id": "m1-2",
+      "level": 2,
+      "lesson": "1.1",
+      "q": {
+        "en": "Hessa asks Lujain to change how the express surcharge applies on one corridor. It touches only `fees.py` and is a common kind of edit, but no test pins today's behaviour and the rule lives only in Hessa's head. What should Lujain do before delegating it?",
+        "ar": "تطلب حصة من لجين تغيير طريقة تطبيق رسم الخدمة السريعة (express surcharge) على ممر تحويل (corridor) واحد. يمس التغيير الملف `fees.py` وحده وهو نوع شائع من التعديلات، لكن لا اختبار (test) يثبّت السلوك الحالي (current behaviour)، والقاعدة (rule) موجودة في رأس حصة فقط. ماذا ينبغي للجين أن تفعل قبل تفويض (delegate) المهمة؟"
+      },
+      "o": {
+        "en": [
+          "Delegate it now: touching a single file is local enough to be safe.",
+          "Write the rule down and pin it with a test the agent can run itself.",
+          "Let the agent infer the rule from `fees.py` and trust a confident answer.",
+          "Raise the effort level so the agent reasons out the missing rule alone."
+        ],
+        "ar": [
+          "تفوّضها (delegate) الآن، فلمس ملف واحد (single file) كافٍ لتكون المهمة آمنة.",
+          "تكتب القاعدة (rule) وتثبّتها باختبار (test) يستطيع الوكيل تشغيله بنفسه دون عون.",
+          "تترك الوكيل (agent) يستنتج القاعدة من `fees.py` وتثق بإجابة واثقة (confident answer).",
+          "ترفع مستوى الجهد (effort level) ليستنتج الوكيل (agent) القاعدة الناقصة وحده."
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Two predictors fail here: no command can tell in seconds whether the result is right (verifiability), and the rule is not in the window or findable (available context). Locality alone does not rescue the task, and more effort adds thinking but not the missing fact.",
+        "ar": "يخفق هنا متنبئان (predictors): لا يوجد أمر يحكم في ثوانٍ على صحة النتيجة، أي القابلية للتحقق (verifiability)، والقاعدة ليست في النافذة (window) ولا يمكن العثور عليها، أي السياق المتاح (available context). أما موضعية التغيير (locality) وحدها فلا تنقذ المهمة، ورفع الجهد (effort) يزيد التفكير (thinking) ولا يضيف الحقيقة الناقصة."
+      }
+    },
+    {
+      "id": "m1-3",
+      "level": 2,
+      "lesson": "1.2",
+      "q": {
+        "en": "In a constructed session Tariq shows the clinic, the agent first uses `ids.generate(\"QUO\")` at T03 after reading only the ticket, and no earlier turn opens `docs/najmkit.md`. The `AttributeError` first appears at T09 and the closing claim \"Done\" comes at T11. Which turn do you record as where it went wrong?",
+        "ar": "في جلسة مصطنعة (constructed session) يعرضها طارق على العيادة (clinic)، يستخدم الوكيل (agent) الاستدعاء `ids.generate(\"QUO\")` أول مرة في الدور (turn) T03 بعد قراءة التذكرة (ticket) فقط، ولا يفتح أي دور سابق الملف `docs/najmkit.md`. يظهر الخطأ `AttributeError` أول مرة في الدور T09، وتأتي عبارة «تم» الختامية (closing claim) في الدور T11. أي دور تسجّله بوصفه موضع الخطأ؟"
+      },
+      "o": {
+        "en": [
+          "T01, because the ticket is what set the whole session off in this direction.",
+          "T09, because that is the first turn where the error shows up for readers.",
+          "T11, because the closing claim is the statement that a reviewer would trust.",
+          "T03, because the call was used with no evidence in context to back it up."
+        ],
+        "ar": [
+          "T01، لأن التذكرة (ticket) هي التي أطلقت الجلسة (session) كلها في هذا الاتجاه تحديدًا.",
+          "T09، لأن هذا أول دور يظهر فيه الخطأ (error) أمام القارئ في المخرجات (output) كلها.",
+          "T11، لأن العبارة الختامية (closing claim) هي ما سيثق به المراجع (reviewer) عادةً.",
+          "T03، لأن الاستدعاء (call) استُخدم دون أي دليل (evidence) في السياق (context) يسنده."
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "The turn where it went wrong is the first turn whose action lacks evidence. At T03 the agent knew only the ticket and its training, and najmkit is in no training set, so it guessed; T09 is where the symptom shows, which comes after where it went wrong.",
+        "ar": "موضع الخطأ هو أول دور (turn) يفتقر فيه الفعل إلى دليل (evidence). في T03 لم يكن الوكيل (agent) يعرف إلا التذكرة (ticket) وما تدرّب عليه (training)، و`najmkit` ليست في أي بيانات تدريب (training set)، فخمّن الاسم. أما T09 فهو الدور الذي يظهر فيه العَرَض (symptom) فقط، وهو يأتي بعد موضع الخطأ لا فيه."
+      }
+    },
+    {
+      "id": "m1-4",
+      "level": 3,
+      "lesson": "1.2",
+      "q": {
+        "en": "Customers receive each transfer receipt twice. In `notify.py` the agent adds a check that drops a message identical to the one sent a minute earlier, plus a test showing the second copy is dropped. The whole suite is green and the agent never says why the duplicates happened. Which finding and cheapest prevention fit?",
+        "ar": "يتلقى العملاء إيصال (receipt) كل حوالة (transfer) مرتين. يضيف الوكيل (agent) في `notify.py` فحصًا (check) يُسقط أي رسالة مطابقة للرسالة المرسلة قبل دقيقة، مع اختبار (test) يثبت إسقاط النسخة الثانية. تنجح مجموعة الاختبارات (test suite) كلها، ولا يذكر الوكيل أبدًا سبب التكرار (duplicates). أي تشخيص (finding) وأي وقاية (prevention) أرخص تناسبان الحالة؟"
+      },
+      "o": {
+        "en": [
+          "`symptom-fix`: the code hides the error; reproduce first, then add a regression test.",
+          "`test-gaming`: the suite went green; read the test diffs before anything else.",
+          "`misread-requirement`: the ticket was vague; write acceptance criteria and non-goals.",
+          "`scope-creep`: the agent added a feature nobody asked for; list the allowed files."
+        ],
+        "ar": [
+          "`symptom-fix`: الشيفرة (code) تخفي الخطأ؛ أعد إنتاجه (reproduce) أولًا ثم أضف اختبار انحدار (regression test).",
+          "`test-gaming`: صارت المجموعة (suite) خضراء؛ اقرأ فروقات الاختبارات (test diffs) قبل أي شيء آخر.",
+          "`misread-requirement`: كانت التذكرة (ticket) غامضة؛ اكتب معايير القبول (acceptance criteria) وما ليس من الأهداف (non-goals).",
+          "`scope-creep`: أضاف الوكيل (agent) ميزة لم يطلبها أحد؛ اذكر قائمة الملفات المسموح بها (allowed files)."
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "The code changed to hide the error while its cause stays unnamed, so this is a symptom fix, and reproducing the fault first and pinning it with a regression test is the cheapest prevention. `test-gaming` needs a weakened check, but here the suite only gained a test.",
+        "ar": "تغيّرت الشيفرة (code) لتخفي الخطأ بينما بقي السبب (cause) دون تسمية، فهذا إصلاح للعَرَض (symptom fix)، وأرخص وقاية هي إعادة إنتاج (reproduce) الخلل أولًا ثم تثبيته باختبار انحدار (regression test). أما `test-gaming` فيتطلب إضعاف فحص قائم (weakened check)، بينما أضافت المجموعة هنا اختبارًا فقط."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m1-e1",
+      "lesson": "1.1",
+      "text": {
+        "en": "I have checked a snippet an agent wrote against `docs/najmkit.md`, marking each najmkit call real or invented, with the docs line that settles it and a replacement for every invented one.",
+        "ar": "لقد فحصتُ شيفرة (code) كتبها وكيل (agent) على وثائق `najmkit`، وصنّفتُ كل استدعاء (call) بأنه حقيقي أو مخترَع، مع سطر الوثائق (docs line) الذي يحسم ذلك وبديل لكل استدعاء مخترَع."
+      }
+    },
+    {
+      "id": "m1-e2",
+      "lesson": "1.2",
+      "text": {
+        "en": "I have diagnosed the three constructed agent sessions in `diagnosis.json`, giving each finding a failure mode, a turn, a prevention and a word-for-word quotation, and committed it with a message that follows `CONTRIBUTING.md`.",
+        "ar": "لقد شخّصتُ جلسات الوكيل (agent sessions) الثلاث المصطنعة في `diagnosis.json`، وأعطيتُ كل تشخيص نمط الفشل (failure mode) والدور والوقاية (prevention) واقتباسًا حرفيًا (verbatim quotation)، وأودعتُه (commit) برسالة تتبع `CONTRIBUTING.md`."
+      }
+    }
+  ]
+}

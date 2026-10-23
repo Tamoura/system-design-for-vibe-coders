@@ -25,7 +25,7 @@ In March 2026 METR published "Many SWE-bench-Passing PRs Would Not Be Merged int
 
 ### 🟢 The essentials
 
-**Evidence, not fluency.** Ask of any check: *if the change were wrong, would this look different?* A description, a green badge and a tidy diff look the same either way; a test failing on the bug does not.
+**Trust evidence, not fluency.** Ask of any check: *if the change were wrong, would this look different?* A description, a green badge and a tidy diff look the same either way; a test failing on the bug does not.
 
 **Set the bar at verification.** In [*How Meta Built Forum With AI-Native Engineering*](https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/), Meta describes a small team building its Forum app with an AI agent as a participant. It reports counting a task complete only after automated tests and visual checks passed, not when the code compiled, and measuring success in production-ready changes rather than code volume. This is one company describing its own practice, so read the original: an example of a bar, not proof that it works. For Remit, "it compiles" is not done: you need a test that can fail and, with no screen, a run where you read the Arabic line yourself.
 
@@ -333,7 +333,7 @@ Each finding in `review.md` has five parts: **File**, **Line** (the line in the 
 
 Rate by the damage if it ships, not by how hard it is to fix. A reviewer who marks everything blocker is ignored; one who marks a leaked credential a nit has not read the room. The grader fails both: ratings below the damage, and a review where every finding is a blocker (a test too weak to fail is a major at most).
 
-**A second-model reviewer (optional).** With Claude Code started in the lab directory, `/code-review high agent/loyalty-discount` reviews a branch (skip `--fix`, which edits code, and `--comment`; the documentation says what it compares). A fresh headless session works too: pipe `git diff main...agent/loyalty-discount` into `claude -p` with a prompt that names `lab-assets/ticket-REMIT-229.md`. It has nobody to approve commands unless you allow them (see `--allowedTools`), so it cannot see what only running shows. This diff is safe; a real one is untrusted text, and the security page advises against piping untrusted content straight to Claude. Do your own pass first, check the code for every finding it adds, and count the real ones for the debrief.
+**A second-model reviewer (optional).** With Claude Code started in the lab directory, `/code-review high agent/loyalty-discount` reviews a branch (skip `--fix`, which edits code, and `--comment`; the documentation says what it compares). A fresh headless session works too (lesson 9.1 teaches it): pipe `git diff main...agent/loyalty-discount` into `claude -p` with a prompt that names `lab-assets/ticket-REMIT-229.md`. It has nobody to approve commands unless you allow them (see `--allowedTools`), so it cannot see what only running shows. This diff is safe; a real one is untrusted text, and the security page advises against piping untrusted content straight to Claude. Do your own pass first, check the code for every finding it adds, and count the real ones for the debrief.
 
 ### 🔴 Expert view
 

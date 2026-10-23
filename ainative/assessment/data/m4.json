@@ -1,0 +1,135 @@
+{
+  "area": "m4",
+  "questions": [
+    {
+      "id": "m4-1",
+      "level": 1,
+      "lesson": "4.1",
+      "q": {
+        "en": "Lujain is on step 2 of REMIT-269. The agent reports that the step is done and that all tests pass. What is the next move in the loop?",
+        "ar": "تعمل لجين على الخطوة (step) 2 من REMIT-269، فيبلغها الوكيل (agent) بأن الخطوة انتهت وأن كل الاختبارات (tests) ناجحة. ما الحركة التالية (next move) في الحلقة (the loop)؟"
+      },
+      "o": {
+        "en": [
+          "Start step 3 now, and read the diffs for steps 2 and 3 together before making one commit.",
+          "Run the step's check yourself, read the diff, then commit that step while it is still green.",
+          "Commit at once, because the agent has already run the tests and reported them as green.",
+          "Treat the checkpoint from the agent's last turn as the save point for step 2, and then carry on."
+        ],
+        "ar": [
+          "ابدأ الخطوة 3 الآن، واقرأ فروقات (diff) الخطوتين 2 و3 معًا قبل إجراء إيداع (commit) واحد لهما.",
+          "شغّل فحص الخطوة (the step's check) بنفسك، واقرأ الفروقات (diff)، ثم أودِع (commit) وهي خضراء (green).",
+          "أودِع (commit) فورًا، لأن الوكيل (agent) شغّل الاختبارات (tests) كلها وأبلغ بأنها خضراء (green) وناجحة.",
+          "اعتبر نقطة الاستعادة (checkpoint) من آخر دور (turn) للوكيل (agent) نقطة حفظ (save point) للخطوة وتابع."
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "The loop is check, read the diff, commit, and you run the check yourself because \"all tests pass\" is the agent's claim, not evidence. Committing at once is the tempting shortcut, since it trusts the report; a checkpoint is only a short-lived undo, not a replacement for git.",
+        "ar": "الحلقة (loop) هي فحص (check) ثم قراءة الفروقات (diff) ثم إيداع (commit)، وتشغّل الفحص بنفسك لأن «كل الاختبارات ناجحة» (all tests pass) ادعاء من الوكيل (agent) وليست دليلًا (evidence). والإيداع الفوري هو الاختصار المغري لأنه يثق بالتقرير، أما نقطة الاستعادة (checkpoint) فتراجع قصير العمر لا يغني عن Git."
+      }
+    },
+    {
+      "id": "m4-2",
+      "level": 2,
+      "lesson": "4.2",
+      "q": {
+        "en": "Lujain is about to hand step 4 of REMIT-318, the decision in `RemitService.send`, to her agent. Which prompt gives her the diff that is easiest to check?",
+        "ar": "ستسلّم لجين الخطوة (step) 4 من REMIT-318، وهي القرار (decision) داخل `RemitService.send`، إلى وكيلها (agent). أي موجّه (prompt) يمنحها الفروقات (diff) الأسهل في التحقق؟"
+      },
+      "o": {
+        "en": [
+          "Add the 80% warning the way a senior engineer would write it, with clean code and thorough tests of its own.",
+          "Implement all of REMIT-318 in one go, then read the whole diff at the end and commit it once.",
+          "Add the warning to `send`, then run the suite and keep fixing whatever fails until the whole suite is green.",
+          "Do step 4 only, in `send`: add this transfer's amount to the position, Decimal only, tests first."
+        ],
+        "ar": [
+          "أضف تحذير (warning) 80% بالطريقة التي يتبعها مهندس خبير (senior engineer) محترف، بشيفرة نظيفة (clean code) واختبارات (tests) وافية وشاملة.",
+          "نفّذ REMIT-318 كلها دفعة واحدة (in one go)، وسأقرأ الفروقات (diff) كلها في النهاية وأودِع (commit) مرة واحدة فقط بعد ذلك.",
+          "أضف التحذير (warning) إلى `send`، ثم شغّل مجموعة الاختبارات (the suite) وأصلح كل ما يفشل منها حتى تصبح كلها خضراء (green).",
+          "نفّذ الخطوة 4 فقط داخل `send`: أضف مبلغ التحويل إلى الاستهلاك المسجَّل (the position)، Decimal فقط، والاختبارات أولًا (tests first)."
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "A specified prompt names one step, the facts the agent cannot guess (the position excludes this transfer, Decimal only) and the order (tests first), so the diff stays small enough to read. Asking it to fix whatever fails until green is the most tempting, because it invites edits to old tests and leaves every reading of the ticket to the agent.",
+        "ar": "يحدد الموجّه (prompt) المحدَّد (specified) خطوة واحدة (one step) والحقائق التي لا يستطيع الوكيل (agent) تخمينها (الاستهلاك المسجَّل لا يشمل هذا التحويل، وDecimal فقط) والترتيب (الاختبارات أولًا)، فتبقى الفروقات (diff) صغيرة بما يكفي لقراءتها. وطلب إصلاح كل ما يفشل حتى الخضرة (until green) هو الأكثر إغراءً، لأنه يدعو إلى تعديل الاختبارات القديمة (old tests) ويترك قراءة التذكرة (ticket) كلها للوكيل."
+      }
+    },
+    {
+      "id": "m4-3",
+      "level": 2,
+      "lesson": "4.1",
+      "q": {
+        "en": "On REMIT-269, a date given to `--since` should mean the start of that Qatar day, but the agent builds the cut-off at midnight UTC, so a transfer made just after midnight in Qatar is missing. This is the first time the step has gone wrong, and Lujain has pressed `Esc`. Which correction should she send?",
+        "ar": "في REMIT-269 ينبغي أن يعني التاريخ المعطى للخيار `--since` (a date given to `--since`) بداية ذلك اليوم بتوقيت قطر (the start of that Qatar day)، لكن الوكيل (agent) يبني حد القطع (cut-off) عند منتصف الليل UTC (midnight UTC)، فيغيب تحويل (transfer) جرى بعد منتصف الليل بقليل في قطر. هذه أول مرة تخطئ فيها الخطوة (step) وقد ضغطت لجين `Esc`. أي تصحيح (correction) ينبغي أن ترسله؟"
+      },
+      "o": {
+        "en": [
+          "`history` builds `since` at midnight UTC, so early transfers drop out; use the Qatar day's start, then run `pytest -q`.",
+          "The date handling in `history` is wrong; fix it properly, and run `pytest -q` before you tell me that it is all done.",
+          "Say exactly what you got wrong, apologise for it, and promise to check every date against the ticket from now on, always.",
+          "Undo everything done so far and give the whole ticket to a fresh session, with the same prompt as before."
+        ],
+        "ar": [
+          "في `history` يُبنى `since` عند منتصف الليل UTC فتسقط التحويلات المبكرة (early transfers)؛ استخدم بداية يوم قطر (the Qatar day's start)، ثم شغّل `pytest -q`.",
+          "التعامل مع التاريخ (date handling) في `history` خاطئ (wrong)؛ أصلحه إصلاحًا سليمًا (fix it properly)، وشغّل `pytest -q` قبل أن تخبرني بأنك أنهيت المهمة (done).",
+          "اذكر بدقة ما أخطأتَ فيه، واعتذر عنه (apologise for it)، وتعهّد (promise) بأن تتحقق من كل تاريخ مقابل التذكرة (ticket) من الآن فصاعدًا (from now on) في كل مهمة.",
+          "تراجع عن كل ما أُنجز حتى الآن (undo everything)، وسلّم التذكرة (ticket) كلها إلى جلسة جديدة (fresh session) بالموجّه (prompt) نفسه الذي استخدمته."
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "A good correction gives a place, a reason and a check: this one names `history`, says why the cut-off is wrong and ends with a command she will run herself. Naming the file and asking for a test run is the tempting version, but without the reason it adds no information, so she would get the same attempt reworded.",
+        "ar": "التصحيح الجيد (good correction) يعطي مكانًا وسببًا وفحصًا (a place, a reason and a check): هذا التصحيح يسمّي `history` ويبيّن سبب خطأ حد القطع (cut-off) وينتهي بأمر (command) ستشغّله بنفسها. أما تسمية الملف وطلب تشغيل الاختبارات (tests) فهو الصيغة المغرية (the tempting version)، لكنه بلا سبب لا يضيف معلومة (information)، فتحصل لجين على المحاولة نفسها بصياغة أخرى (the same attempt reworded)."
+      }
+    },
+    {
+      "id": "m4-4",
+      "level": 3,
+      "lesson": "4.2",
+      "q": {
+        "en": "Lujain's REMIT-318 branch is green and her new tests fail when the warning is removed. The grader says they catch 4 of 7 breakages, both 80%-line ones included, and miss the three that change the message text: numbers dropped, Arabic customers given English, and Western digits in Arabic. Her tests check only what a fake notifier received, and the fake never calls `render`. What is the diagnosis?",
+        "ar": "فرع (branch) REMIT-318 عند لجين أخضر (green)، واختباراتها (tests) الجديدة تفشل حين يُزال التحذير (warning). يقول المُقيِّم (grader) إنها تلتقط 4 من 7 أعطال متعمَّدة (breakages) بينها عطلا خط 80% (the 80%-line ones)، وتفوّت الثلاثة التي تغيّر نص الرسالة (message text): سقوط الأرقام (numbers dropped)، وإعطاء العملاء الناطقين بالعربية نصًا إنجليزيًا (Arabic customers given English)، وظهور الأرقام الغربية (Western digits) في النص العربي. واختباراتها لا تتحقق إلا مما استلمه مُخطِر وهمي (fake notifier)، وهذا المُخطِر لا يستدعي `render` أبدًا. ما التشخيص (diagnosis)؟"
+      },
+      "o": {
+        "en": [
+          "The 80% line is under-tested, so she should add totals a cent under and exactly at 80% through `send` too.",
+          "The breakages are applied to the running program and cannot reach a fake, so these misses do not really count.",
+          "The text is made inside `render`, which her fake skips; she should assert the exact message in both languages.",
+          "Her tests should build the expected text by calling `render` themselves, so that expected and actual always agree."
+        ],
+        "ar": [
+          "خط 80% (the 80% line) ناقص الاختبار (under-tested)، فعليها إضافة اختبارات لمجموع أقل منه بسنت واحد وآخر عنده تمامًا (exactly at 80%) عبر `send`.",
+          "تُطبَّق الأعطال (breakages) على البرنامج الجاري تشغيله ولا تصل إلى مُخطِر وهمي (fake)، فلا تُحتسب هذه الإخفاقات (misses) فعلًا.",
+          "النص يُنتَج داخل `render` الذي يتجاوزه المُخطِر الوهمي (fake)، فعليها اختبار الرسالة الدقيقة (exact message) باللغتين (both languages).",
+          "ينبغي أن تبني اختباراتها النص المتوقع (expected text) باستدعاء `render` بنفسها، فيتطابق المتوقع والفعلي (expected and actual) دائمًا."
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "The three breakages sit inside `render`, which a fake that never calls it cannot show; asserting the exact message in both languages, numbers and digits included, reaches them. More tests of the 80% line are the tempting fix, but the grader says both line breakages are already caught, so they would add nothing.",
+        "ar": "تقع الأعطال (breakages) الثلاثة داخل `render`، والمُخطِر الوهمي (fake) الذي لا يستدعيه لا يستطيع إظهارها؛ أما التحقق من الرسالة بنصها الدقيق (exact message) بالعربية والإنجليزية، بأرقامها (numbers and digits)، فيصل إليها. وإضافة اختبارات (tests) لخط 80% (the 80% line) هي الإصلاح المغري (the tempting fix)، لكن المُقيِّم (grader) يقول إن عطلي الخط ملتقطان أصلًا، فلن تضيف شيئًا."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m4-e1",
+      "lesson": "4.1",
+      "text": {
+        "en": "I have run the loop on a small change in a green sandbox, on its own branch: three or more green commits in the Remit format, and the Loop checklist ticked with the commands I ran.",
+        "ar": "لقد شغّلتُ الحلقة (the loop) على تغيير صغير في بيئة تجريبية (sandbox) خضراء وعلى فرع (branch) خاص به، بثلاثة إيداعات (commits) خضراء أو أكثر بصيغة Remit (Remit format)، وعلّمتُ قائمة الحلقة (Loop checklist) بالأوامر التي شغّلتها."
+      }
+    },
+    {
+      "id": "m4-e2",
+      "lesson": "4.2",
+      "text": {
+        "en": "I have taken the REMIT-318 limit-warning lab to PASSED with `python -m ailab grade m04`, with a committed spec, three or more green commits and new tests that fail when the warning is removed.",
+        "ar": "لقد أوصلتُ مختبر (lab) تحذير الحد REMIT-318 إلى النتيجة PASSED بالأمر `python -m ailab grade m04`، مع مواصفة (spec) مودَعة (committed) وثلاثة إيداعات (commits) خضراء أو أكثر واختبارات (tests) جديدة تفشل حين يُزال التحذير (warning)."
+      }
+    }
+  ]
+}
