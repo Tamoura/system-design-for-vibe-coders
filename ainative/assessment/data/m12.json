@@ -1,0 +1,135 @@
+{
+  "area": "m12",
+  "questions": [
+    {
+      "id": "m12-1",
+      "level": 1,
+      "lesson": "12.1",
+      "q": {
+        "en": "After an agent session wipes a staging table, the draft postmortem says: \"Root cause: the agent deleted the data.\" Tariq sends it back. Which question should the review ask instead?",
+        "ar": "بعد أن مسحت جلسة وكيل (agent session) جدولًا في بيئة التجهيز (staging)، جاء في مسودة مراجعة ما بعد الحادثة (postmortem): «السبب الجذري (root cause): الوكيل حذف البيانات.» أعادها طارق إلى كاتبها. أي سؤال ينبغي أن تطرحه المراجعة بدلًا من ذلك؟"
+      },
+      "o": {
+        "en": [
+          "Which engineer started the session, so that person can be coached on safer prompting habits",
+          "What the agent was allowed to do, who approved it and which check should have stopped it",
+          "Which model and version ran the session, so the vendor can be asked to fix that behaviour",
+          "Which prompt wording led to the deletion, so a better prompt can be written and reused"
+        ],
+        "ar": [
+          "أي مهندس بدأ الجلسة (session)، ليُدرَّب على كتابة الموجّهات (prompts) بأمان أكبر في عمله",
+          "ما كان مسموحًا للوكيل (agent) بفعله، ومن وافق عليه، وأي فحص (check) كان ينبغي أن يوقفه",
+          "أي نموذج (model) وأي إصدار (version) شغّل الجلسة، ليُطلب من المورّد (vendor) إصلاح سلوكه هذا",
+          "أي صياغة للموجّه (prompt) أدت إلى الحذف، ليحل محلها موجّه أفضل من الآن فصاعدًا"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "\"The agent did it\" is never a root cause: the review asks what the agent was allowed to do, who approved the change and which check should have stopped it, then changes one control. Rewording the prompt, the tempting fix, leaves the permissions and the missing check in place.",
+        "ar": "«الوكيل فعلها» (The agent did it) ليس سببًا جذريًا (root cause) أبدًا: تسأل المراجعة عمّا كان مسموحًا للوكيل (agent) بفعله، ومن وافق على التغيير، وأي فحص (check) كان ينبغي أن يوقفه، ثم تغيّر ضابطًا (control) واحدًا. أما إعادة صياغة الموجّه (prompt)، وهي الإصلاح المغري، فتترك الصلاحيات (permissions) والفحص المفقود كما هما."
+      }
+    },
+    {
+      "id": "m12-2",
+      "level": 2,
+      "lesson": "12.1",
+      "q": {
+        "en": "Salem must make sure a change to `ledger.py` or `fees.py` cannot merge without a second human, whichever tool wrote it, even an assistant he has never heard of. Which control does that?",
+        "ar": "على سالم أن يضمن ألا يُدمج (merged) أي تغيير في `ledger.py` أو `fees.py` دون مراجع بشري ثانٍ (second human)، أيًّا كانت الأداة (tool) التي كتبته، حتى لو كانت مساعدًا لم يسمع به قط. أي ضابط (control) يحقق ذلك؟"
+      },
+      "o": {
+        "en": [
+          "A line in `CLAUDE.md` telling agents that money modules need a second reviewer",
+          "A `PreToolUse` hook in each developer's settings that asks before editing those files",
+          "A tick box in the pull request template asking whether a second reviewer looked",
+          "Code owners for those files, with branch protection that requires their approval"
+        ],
+        "ar": [
+          "سطر في `CLAUDE.md` يخبر الوكلاء (agents) بأن وحدات المال (money modules) تحتاج إلى مراجع ثانٍ (second reviewer)",
+          "خطاف (hook) من نوع `PreToolUse` في إعدادات كل مطوّر (settings) يسأل قبل تعديل تلك الملفات (files)",
+          "خانة اختيار (tick box) في قالب طلب الدمج (pull request template) تسأل هل نظر فيه مراجع ثانٍ (second reviewer)",
+          "مالكو الشيفرة (code owners) لتلك الملفات، مع حماية الفرع (branch protection) التي تشترط موافقتهم قبل الدمج"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Code owners and branch protection run on the server, so they apply whichever tool wrote the change. A hook sits on one developer's machine and governs only its own tool, and a `CLAUDE.md` line or a tick box is advice that nothing enforces.",
+        "ar": "يعمل مالكو الشيفرة (code owners) وحماية الفرع (branch protection) على الخادم (server)، فيسريان أيًّا كانت الأداة (tool) التي كتبت التغيير. أما الخطاف (hook) فيوجد على جهاز مطوّر واحد ولا يحكم إلا الأداة المرتبطة به، وسطر في `CLAUDE.md` أو خانة اختيار (tick box) مجرد نصيحة (advice) لا يفرضها شيء."
+      }
+    },
+    {
+      "id": "m12-3",
+      "level": 2,
+      "lesson": "12.2",
+      "q": {
+        "en": "In the playbook's metrics plan, Lujain writes the definition of her guard metric as \"How quickly our reviewers respond to pull requests.\" Tariq says two people could not compute it. Which rewrite measures review speed in a way two people could recompute?",
+        "ar": "في خطة المقاييس (metrics plan) بالدليل العملي (playbook)، كتبت لجين تعريف (definition) مقياس الحماية (guard metric) لديها هكذا: «مدى سرعة استجابة مراجعينا لطلبات الدمج (pull requests)». قال طارق إن شخصين لا يستطيعان حسابه. أي صياغة بديلة تقيس سرعة المراجعة (review speed) بطريقة يعيد بها شخصان الحساب؟"
+      },
+      "o": {
+        "en": [
+          "Median hours from a pull request being opened to its first review, per week",
+          "Median hours that pull requests wait for review, as the team lead judges them",
+          "Number of review comments written by each reviewer, counted for every week",
+          "Share of pull requests that reviewers say were reviewed quickly, per quarter"
+        ],
+        "ar": [
+          "وسيط (median) الساعات من فتح طلب الدمج (pull request) حتى أول مراجعة (first review) له، أسبوعيًا",
+          "وسيط (median) الساعات التي تنتظرها طلبات الدمج (pull requests) للمراجعة، كما يقدّرها قائد الفريق (team lead)",
+          "عدد تعليقات المراجعة (review comments) التي كتبها كل مراجع (reviewer)، محسوبًا لكل أسبوع (week)",
+          "نسبة طلبات الدمج (pull requests) التي يقول المراجعون إنها روجعت بسرعة، في كل ربع سنة (quarter)"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "A measurable definition names two events and a period, here opened and first review, per week, so two people get the same number from the pull-request history. Counting comments is computable but measures activity, not speed, and a judgement or a survey cannot be recomputed.",
+        "ar": "التعريف القابل للقياس (measurable definition) يسمّي حدثين (two events) وفترة (period)، هنا فتح الطلب وأول مراجعة أسبوعيًا، فيصل شخصان إلى الرقم نفسه من سجل طلبات الدمج (pull-request history). أما عدّ التعليقات (comments) فيمكن حسابه لكنه يقيس النشاط (activity) لا السرعة، والتقدير الشخصي أو الاستبيان (survey) لا يمكن إعادة حسابه."
+      }
+    },
+    {
+      "id": "m12-4",
+      "level": 3,
+      "lesson": "12.2",
+      "q": {
+        "en": "Tariq is asked to help a six-person team at another Najm Bank unit. They adopted the approved tools last month and have no agent logs and no incidents yet. Their manager wants a full ten-section playbook like Payments Platform's by Friday. What should Tariq recommend?",
+        "ar": "طُلب من طارق مساعدة فريق من ستة أشخاص في وحدة أخرى من بنك نجم (Najm Bank). اعتمد الفريق الأدوات المعتمدة (approved tools) الشهر الماضي، وليس لديه بعد سجلات وكيل (agent logs) ولا حوادث (incidents). ويريد مديره دليلًا عمليًا (playbook) كاملًا من عشرة أقسام مثل دليل منصة المدفوعات (Payments Platform) قبل الجمعة. ماذا ينبغي أن يوصي به طارق؟"
+      },
+      "o": {
+        "en": [
+          "Write all ten sections from a blank page now, so that the rules exist before any mistake does",
+          "Have an assistant fill in a generic policy template, then edit it until it suits the team",
+          "Begin with the one-page working agreement and let a month of real mistakes supply the rules",
+          "Adopt the bank's six rules as they stand and write nothing team-specific for the time being"
+        ],
+        "ar": [
+          "اكتبوا الأقسام العشرة (ten sections) كلها من صفحة بيضاء (blank page) الآن، لتوجد القواعد قبل وقوع أي خطأ",
+          "كلّفوا مساعدًا (assistant) بملء قالب سياسة عامة (generic policy template) ثم عدّلوه ليناسب الفريق كله",
+          "ابدؤوا باتفاقية العمل (working agreement) ذات الصفحة الواحدة، وشغّلوها شهرًا لتكتب الأخطاء الحقيقية القواعد",
+          "اعتمدوا قواعد البنك الست (six rules) كما هي، ولا تكتبوا شيئًا خاصًا بالفريق (team-specific) في الوقت الحالي"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "With no agent logs yet, a full playbook would be written from guesses, so run the one-page working agreement for a month and let real mistakes supply the rules. A generic template, the tempting shortcut, is fluent but owned by nobody, and a blank-page playbook invents rules before the mistakes show which ones matter.",
+        "ar": "لا توجد سجلات وكيل (agent logs) بعد، فسيُكتب الدليل العملي (playbook) الكامل من التخمين؛ لذا تُشغَّل اتفاقية العمل (working agreement) ذات الصفحة الواحدة شهرًا وتُترك الأخطاء الحقيقية لتُنتج القواعد. أما القالب العام (generic template)، وهو الاختصار المغري، فمتقن الصياغة (fluent) لكن لا مالك له (owned by nobody)، والصفحة البيضاء (blank page) تخترع قواعد قبل أن تُظهر الأخطاء أيها يهم."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m12-e1",
+      "lesson": "12.1",
+      "text": {
+        "en": "I have filled in the AI working agreement for a team I know, so that no `<...>` is left and every norm carries a number, a name or a check.",
+        "ar": "لقد ملأتُ اتفاقية العمل بالذكاء الاصطناعي (AI working agreement) لفريق أعرفه، فلم يبقَ فيها أي `<...>`، وصار لكل قاعدة (norm) رقم أو اسم أو فحص (check)."
+      }
+    },
+    {
+      "id": "m12-e2",
+      "lesson": "12.2",
+      "text": {
+        "en": "I have committed a `playbook.md` for Payments Platform whose rules each end in a `Check:` that names a mechanism and whose metrics each name their events, and `python -m ailab grade m12` ends PASSED.",
+        "ar": "لقد أودعتُ (committed) ملف `playbook.md` لمنصة المدفوعات (Payments Platform) تنتهي كل قاعدة (rule) فيه بـ `Check:` يسمّي آلية (mechanism)، ويحدد كل مقياس (metric) فيه حدثيه (events)، وانتهى `python -m ailab grade m12` بالنتيجة PASSED."
+      }
+    }
+  ]
+}

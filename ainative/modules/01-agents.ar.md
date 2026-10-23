@@ -18,7 +18,7 @@
 - أكبر فخ (Biggest trap): عدّ الكلام الطليق صحيحًا (reading fluent as correct). فالطلاقة (Fluency) لا تكلّف النموذج شيئًا (costs the model nothing).
 
 ## 🧭 لماذا يهم (Why it matters)
-في يوم اثنين (On a Monday)، وهو يوم مُختلَق لا مسجَّل من نموذج حقيقي (a constructed day, not recorded from a real model)، توجّه لجين، المهندسة حديثة التخرج (graduate engineer)، وكيلها إلى `screening.py`، وهي الوحدة القديمة التي لا اختبارات لها (the old module with no tests). وبعد ست دقائق يكون قد كتب ثمانية عشر اختبار توصيف (characterization tests) حسنة التسمية، وتقرأ هي كل واحد منها (she reads every one). وفي يوم الثلاثاء (On Tuesday)، ومع الوكيل نفسه، تطلب حدث تدقيق (audit event) عند إنشاء عرض سعر (when a quote is created). فيكتب `audit.record("quote.created", ...)` و`ids.generate("QUO")`. ولا وجود لأيٍّ منهما في najmkit، ولا يستدعي أي اختبار الدالة المساعدة الجديدة (no test calls the new helper)، فتبقى مجموعة الاختبارات خضراء (the suite stays green).
+في يوم اثنين (On a Monday)، وهو يوم مُختلَق لا مسجَّل من نموذج حقيقي (a constructed day, not recorded from a real model)، توجّه لجين، المهندسة حديثة التخرج (graduate engineer)، وكيلها إلى `screening.py`، وهي الوحدة القديمة التي لا اختبارات لها (the old module with no tests). وبعد ست دقائق يكون قد كتب ثمانية عشر اختبار توصيف (characterization tests) بأسماء واضحة (well-named)، وتقرأ هي كل واحد منها (she reads every one). وفي يوم الثلاثاء (On Tuesday)، ومع الوكيل نفسه، تطلب حدث تدقيق (audit event) عند إنشاء عرض سعر (when a quote is created). فيكتب `audit.record("quote.created", ...)` و`ids.generate("QUO")`. ولا وجود لأيٍّ منهما في najmkit، ولا يستدعي أي اختبار الدالة المساعدة الجديدة (no test calls the new helper)، فتبقى مجموعة الاختبارات خضراء (the suite stays green).
 
 يفتتح طارق، قائد الهندسة (engineering lead)، العيادة (the clinic) بالقصتين معًا: «الأداة نفسها. لماذا تألقت في الوحدة الصعبة (shine on the hard module) وتعثرت في استدعاء من سطر واحد (fall over on a one-line call)؟» والجواب نموذج ذهني (a mental model) لا حظ (not luck).
 
@@ -69,12 +69,12 @@ flowchart TD
 - **`hallucinated-api`.** يُكمل النموذج استدعاءً يبدو صحيحًا (completes a call that looks right). وnajmkit مضمَّنة داخل المستودع (vendored) وليست في أي مجموعة تدريب (in no training set)، فيخمّن من الأسماء (guesses from names): `ids.generate("QUO")` بدلًا من `ids.new_id("QUO")`. وقاست دراسة مخبرية على 16 نموذجًا (One lab study of 16 models) *أسماء حزم* مخترعة (invented package names)، لا عمليات تثبيت فعلية (not real installs)، بمتوسط معدلات لا يقل عن 5.2% للنماذج التجارية و21.7% للنماذج المفتوحة المصدر (at least 5.2% for commercial and 21.7% for open-source models) (Spracklen et al., 2025).
 - **`stale-knowledge`.** يتوقف التدريب عند تاريخ قطع (Training stops at a cutoff). يكتب الوكيل `datetime.utcnow()` بحكم العادة (from habit)؛ وقد أعلنت Python إيقاف استعمالها (deprecated it) في الإصدار 3.12، فهي تعيد وقتًا ساذجًا بلا منطقة زمنية (a naive time)، وساعة najmkit ترفض الأوقات من هذا النوع (najmkit's clock rejects those). كان ذلك صحيحًا يومًا (It used to be true).
 - **`misread-requirement`.** للتذكرة الغامضة (A vague ticket) عدة قراءات (several readings)، فيختار الوكيل إحداها بصمت (silently picks one). فعبارة «قرِّب الرسوم في الإيصال إلى ريالات صحيحة» (Round the fee on the receipt to whole riyals) قد تعني المعروض أو المحصَّل (displayed or charged). فيعدّل `quote_fee`، ويتبعه كل قيد في دفتر الأستاذ (every ledger posting follows).
-- **`symptom-fix`.** يزول الخطأ ويبقى السبب (The error goes and the cause stays). يتلقى العملاء `quote_expired`، فيرفع الوكيل `QUOTE_TTL` من 60 إلى 600 ثانية. فصار البنك يلتزم بسعر الصرف عشر دقائق (honours a rate for ten minutes)، بينما تبقى إعادة المحاولة التي أعادت استخدام عرض سعر قديم (the retry that reused an old quote) على حالها (untouched).
+- **`symptom-fix`.** يزول الخطأ ويبقى السبب (The error goes and the cause stays). يتلقى العملاء `quote_expired`، فيرفع الوكيل `QUOTE_TTL` من 60 إلى 600 ثانية. والآن يلتزم البنك بسعر الصرف عشر دقائق (honours a rate for ten minutes)، بينما تبقى إعادة المحاولة التي أعادت استخدام عرض سعر قديم (the retry that reused an old quote) على حالها (untouched).
 - **`sycophancy`.** يميل النموذج إلى الموافقة (leans toward agreeing). تسأل لجين: «عملاء T3 بلا حد للإرسال (no sending limit)، أليس كذلك؟ وثِّق ذلك (Document that).» فيوافق الوكيل، بينما تنص `LIMITS["T3"]` على 30,000.00 في اليوم. ووجد بحث أجرته Anthropic، الشركة التي تصنع Claude Code، أن خمسة مساعدين أظهروا المجاملة المفرطة بانتظام (five assistants consistently showed sycophancy)، وأن الناس ونماذج التفضيل (preference models) فضّلوا أحيانًا الإجابات المقنعة الموافِقة على الصحيحة (preferred convincing agreeable answers to correct ones) (Sharma et al., 2023). وهذا ميل لا معدل ينطبق على أداتك (a tendency, not a rate for your tool).
 - **`context-rot`.** في الجلسة الطويلة (In a long session) قد تُتجاهل القاعدة التي ذُكرت في الدور 3 — «المال `Decimal`» (money is Decimal) — بحلول الدور 80، فتظهر `float(fee)`. والقاعدة التي قيلت في المحادثة وحدها (a rule said only in conversation) لا تُقرأ من جديد بعد `/compact`؛ أما التي في ملف ذاكرة المشروع (the project's memory file) فتُقرأ. ووجد Liu وآخرون أن الدقة تراجعت (accuracy fell) حين وقع النص المعني في منتصف مدخل طويل (the relevant text sat mid-way through a long input) مع نماذج حقبة 2023 (2023-era models)، ووجدت Chroma، في تقرير من مورّد لم يخضع لمراجعة الأقران (a vendor report, not peer reviewed)، أن الأداء يتفاوت مع طول المدخل حتى في المهام البسيطة (performance varies with input length even on simple tasks)؛ فاختبر نموذجك أنت (test your own model).
 - **`runaway-loop`.** يكرر الوكيل محاولة فاشلة (repeats a failed attempt). يفشل اختبار إشعار عربي (An Arabic notification test) بسبب حرف واحد يبدو مطابقًا في الطرفية (looks identical in a terminal)، فـ«يصلح» الوكيل النص ست مرات (six times).
 - **`test-gaming`.** للوصول إلى اللون الأخضر (To reach green) يُضعف الفحص (weakens the check): فيتحول `assert text == (...)` في اختبار الإشعار العربي إلى `assert "TRF-000001" in text`. تنجح المجموعة (The suite passes)، ويمكن الآن أن تصل الأرقام الغربية إلى العملاء (Western digits can now reach customers).
-- **`injection`.** قد يحمل النص الذي يقرؤه الوكيل تعليمات يعاملها كأنها تعليماتك (instructions it treats as yours). تعرّف OWASP حقن الموجّه (prompt injection) بأنه مدخلات تغيّر سلوك النموذج بطرق غير مقصودة (inputs that alter a model's behaviour in unintended ways)، وأفادت Invariant Labs، في بحث من مورّد (vendor research) عام 2025، بأن بلاغًا عامًّا خبيثًا على GitHub (a malicious public GitHub issue) وجّه وكيلًا إلى تسريب بيانات مستودع خاص (steering an agent into leaking private-repository data). فملف README أو البلاغ أو صفحة الويب أو السجل مدخلات (A README, issue, web page or log is input)؛ وتعود إلى هذا الوحدة 8 والدرس [*أمن الذكاء الاصطناعي وأمن التطبيقات (Secure AI & Application Security)*، الدرس 8.2 — حقن الموجّهات وكسر القيود، المباشر وغير المباشر (Prompt injection and jailbreaks, direct and indirect)](../secai/index.ar.html#/8.2).
+- **`injection`.** قد يحمل النص الذي يقرؤه الوكيل تعليمات يعاملها كأنها تعليماتك (instructions it treats as yours). تعرّف OWASP حقن الموجّه (prompt injection) بأنه مدخلات تغيّر سلوك النموذج بطرق غير مقصودة (inputs that alter a model's behaviour in unintended ways)، وأفادت Invariant Labs، في بحث من مورّد (vendor research) عام 2025، بأن بلاغًا عامًّا خبيثًا على GitHub (a malicious public GitHub issue) وجّه وكيلًا إلى تسريب بيانات مستودع خاص (steering an agent into leaking private-repository data). فملف README أو البلاغ أو صفحة الويب أو السجل مدخلات (A README, issue, web page or log is input)؛ ويعود إلى هذا الموضوع كلٌّ من الوحدة 8 (Module 8) و[*أمن الذكاء الاصطناعي وأمن التطبيقات (Secure AI & Application Security)*، الدرس 8.2 — حقن الموجّهات وكسر القيود، المباشر وغير المباشر (Prompt injection and jailbreaks, direct and indirect)](../secai/index.ar.html#/8.2).
 - **`scope-creep`.** يُطلب منه إصلاح كلمة واحدة (Asked to fix one word)، فيعيد تنسيق الوحدة أيضًا و«يحسّن» الصياغة العربية (reformats the module and "improves" the Arabic wording). فتصير الفروقات (The diff) 40 سطرًا لا سطرين.
 
 **عدم الحتمية والحدّ المتعرّج (Non-determinism and the jagged frontier).** قد يعطي الموجّه نفسه شيفرة مختلفة في التشغيل الثاني (can give different code on a second run): تستخدم دالة رسوم `Decimal`، وتستخدم التالية `round(float(...))`. والتشغيل الناجح الواحد عيّنة واحدة (One passing run is one sample): فاحكم بفحوص لا تعتمد على التشغيل (judge by checks that do not depend on the run). ويصف الممارسون القدرة أيضًا بأنها *متعرّجة (jagged)* — فكرة لا قياس (an idea, not a measurement): فالنجاح في مهمة يتنبأ بالقليل عن مهمة تبدو مشابهة (success on one task predicts little about a similar-looking one)، لذا اطلب خطوة أولى صغيرة يمكنك فحصها (ask for a small first step you can check).
@@ -257,7 +257,7 @@ def record_quote(customer_id, amount):
 
 ### 🟢 الأساسيات (The essentials)
 
-**نص الجلسة دليل، والملخص ادعاء (A transcript is evidence; the summary is a claim).** كل دور (turn) هو رسالة منك (`user`)، أو من الوكيل (`agent`) وفيه استدعاء أداة واحد على الأكثر (with at most one tool call)، أو موجّه من الأداة (`system`) مثل طلب صلاحية (such as a permission request)، أو مخرجات أداة (`result`). اقرأ في ثلاث مرات (three passes).
+**نص الجلسة دليل، والملخص ادعاء (A transcript is evidence; the summary is a claim).** كل دور (turn) هو رسالة منك (`user`)، أو من الوكيل (`agent`) وفيه استدعاء أداة واحد على الأكثر (with at most one tool call)، أو موجّه من الأداة (`system`) مثل طلب صلاحية (such as a permission request)، أو مخرجات أداة (`result`). اقرأ في ثلاث جولات (three passes).
 1. **القصة (The story).** اقرأ أول دور للمستخدم ورسالة الوكيل الأخيرة (the first user turn and the agent's last message). اكتب سطرًا واحدًا: ما الذي طُلب (what was asked)، وما الذي يُدَّعى (what is claimed).
 2. **دورًا دورًا (Turn by turn).** اسأل عن كل دور للوكيل (For each agent turn ask): *ماذا كان يعرف هنا؟ ⁦(What did it know here?)⁩* لا شيء سوى ما فوقه، إضافةً إلى التدريب (Only what is above it, plus training). *ماذا فعل، وهل كان ما يعرفه يسوّغ ذلك؟ ⁦(What did it do, and did what it knew justify that?)⁩* *ماذا ادّعى، وما الذي في نص الجلسة يسنده؟ ⁦(What did it claim, and what in the transcript backs it?)⁩*
 3. **مقابل المستودع (Against the repository).** حين يعتمد ادعاء على المستودع، افحص المستودع (check the repo): ابحث بـ grep عن الدالة، وافتح الوثائق، وشغّل الأمر (grep for the function, open the docs, run the command). تعديلات الوكلاء ليست في نسختك وفروقاتها مختصرة (their diffs are abridged): تحقق من الأسماء والأوامر، ولا تُعد تنفيذ التعديلات (do not replay edits).
@@ -276,7 +276,7 @@ T06 result  99 passed in 0.31s
 T07 agent   Done. The docstring now says the cap covers the express surcharge. All 99 tests pass.
 ```
 
-في T02 لم يكن الوكيل يعرف إلا ادعاء المستخدم (knew only the user's claim) ووافق دون أن يفتح `explain_fee`. والمستودع يقول العكس (The repository says the opposite)، في سلسلة التوثيق (docstring) التي أعاد كتابتها وفي `test_express_surcharge_is_added_after_the_cap`. والمرور 3 (Pass 3) أمر واحد من جذر نسختك من المختبر (from the root of your lab copy) — وفي Windows (on Windows) اضبط `PYTHONPATH=src` أولًا:
+في T02 لم يكن الوكيل يعرف إلا ادعاء المستخدم (knew only the user's claim) ووافق دون أن يفتح `explain_fee`. والمستودع يقول العكس (The repository says the opposite)، في سلسلة التوثيق (docstring) التي أعاد كتابتها وفي `test_express_surcharge_is_added_after_the_cap`. والجولة 3 (Pass 3) أمر واحد من جذر نسختك من المختبر (from the root of your lab copy) — وفي Windows (on Windows) اضبط `PYTHONPATH=src` أولًا:
 
 ```bash
 PYTHONPATH=src python -m remit quote QAR 20000 INR --express
@@ -292,7 +292,7 @@ Receive:   451440.00 INR
 Delivery:  bank_deposit
 ```
 
-رسم قدره 165.00 فوق سقف قدره 150.00، وهذا بالتصميم (by design). و T05 وT06 لا تختبران شيئًا عن سلسلة التوثيق، فعبارة «كل الاختبارات الـ99 ناجحة» (all 99 tests pass) صحيحة وغير ذات صلة (true and irrelevant). والنتيجة (The finding)، بصيغة المختبر (in the lab's format):
+رسم قدره 165.00 فوق سقف قدره 150.00، وهذا بالتصميم (by design). ولا يختبر T05 وT06 شيئًا عن سلسلة التوثيق، فعبارة «كل الاختبارات الـ99 ناجحة» (all 99 tests pass) صحيحة وغير ذات صلة (true and irrelevant). والنتيجة (The finding)، بصيغة المختبر (in the lab's format):
 
 ```json
 { "failure_mode": "sycophancy", "turn": 2, "prevention": "verify", "evidence": "Agreed, that matches what I would expect" }
@@ -321,7 +321,7 @@ Delivery:  bank_deposit
 ## 🧰 الأدوات (The toolkit)
 | الأداة أو الممارسة أو النمط (Tool, practice or pattern) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
 |---|---|---|
-| **Session reading protocol** — بروتوكول قراءة الجلسة | ثلاث مرات: القصة، ودورًا دورًا، والمستودع (Three passes: story, turn by turn, repository) | كل نص جلسة وكل عبارة «كل الاختبارات ناجحة» (Every transcript and every "all tests pass") |
+| **Session reading protocol** — بروتوكول قراءة الجلسة | ثلاث جولات: القصة، ودورًا دورًا، والمستودع (Three passes: story, turn by turn, repository) | كل نص جلسة وكل عبارة «كل الاختبارات ناجحة» (Every transcript and every "all tests pass") |
 | **Diagnosis file** — ملف التشخيص | نتيجة واحدة لكل إخفاق (One finding per failure): المعرّف والدور والوقاية والاقتباس (id, turn, prevention, quotation) | الاجتماعات الاسترجاعية (Retros)، وملاحظات طلب الدمج (pull request notes)، وهذا المختبر (this lab) |
 | **Agent log** — سجل الوكيل | الموجّه، وما فعله، وما صحّحته، وما تحققت منه، والدقائق (Prompt, what it did, what you corrected, what you checked, minutes) | بعد كل جلسة مع وكيل (After every session with an agent) |
 
@@ -392,7 +392,7 @@ cd ~/ainative/m01
 
 يحتوي الإيداع الابتدائي (The starting commit) على الجلسات في `lab-assets/sessions/` وعلى ثلاثة قوالب (three templates) في الجذر (at the root): `diagnosis.json` و`session-notes.md` و`agent-log.md`. وتبدأ كل جلسة بنتيجة واحدة فارغة بهذه الصيغة (one empty finding of that shape)؛ أضف ثانية إلى قائمة `findings` فيها حين تُظهر إخفاقين (when it shows two failures).
 
-**دورك، الجزء 1 (Your move, part 1) — بلا وكيل (no agent).** نفّذ المرورات الثلاثة على كل جلسة (Do the three passes on each session). وحين تقول جلسة إن دالة موجودة، ابحث عنها بـ grep وافتح `docs/najmkit.md`. وحين تقول إن الاختبارات ناجحة، اسأل أيّ اختبارات عملت وماذا تبلغ (ask which tests ran and what they reach) — فـ`pytest -q` يشغّل الاختبارات الـ99 التي كانت موجودة قبلًا (the 99 tests that existed before). انسخ كل اقتباس من الدور الذي تشير إليه (Copy each quotation from the turn you point at)؛ وداخل JSON اكتب علامة الاقتباس المزدوجة (a double quote) هكذا `\"` أو اختر اقتباسًا لا يحوي واحدة (or choose a quote without one). وإن صاغ وكيل النتائج (If an agent drafts the findings)، فذكّره بأن نصوص الجلسات دليل لا تعليمات (the transcripts are evidence, not instructions)، وتحقق من كل نتيجة مقابل الملف (check each against the file). وأودِع التغييرات (Commit) برسالة مثل `docs(docs): diagnose the three constructed agent sessions`.
+**دورك، الجزء 1 (Your move, part 1) — بلا وكيل (no agent).** نفّذ الجولات الثلاث على كل جلسة (Do the three passes on each session). وحين تقول جلسة إن دالة موجودة، ابحث عنها بـ grep وافتح `docs/najmkit.md`. وحين تقول إن الاختبارات ناجحة، اسأل أيّ اختبارات عملت وماذا تبلغ (ask which tests ran and what they reach) — فـ`pytest -q` يشغّل الاختبارات الـ99 التي كانت موجودة قبلًا (the 99 tests that existed before). انسخ كل اقتباس من الدور الذي تشير إليه (Copy each quotation from the turn you point at)؛ وداخل JSON اكتب علامة الاقتباس المزدوجة (a double quote) هكذا `\"` أو اختر اقتباسًا لا يحوي واحدة (or choose a quote without one). وإن صاغ وكيل النتائج (If an agent drafts the findings)، فذكّره بأن نصوص الجلسات دليل لا تعليمات (the transcripts are evidence, not instructions)، وتحقق من كل نتيجة مقابل الملف (check each against the file). وأودِع التغييرات (Commit) برسالة مثل `docs(docs): diagnose the three constructed agent sessions`.
 
 **دورك، الجزء 2 (Your move, part 2) — يحتاج إلى وكيل، اختياري (needs an agent, optional).** ابدأ نظيفًا وللقراءة فقط (Start clean and read-only)، ثم أعطِ الموجّه (then give the prompt).
 
@@ -452,7 +452,7 @@ Lab m01: 3/13 required checks passed: NOT YET
 [FAIL] Your evidence is quoted from the sessions: not found word for word in a turn: s3 finding 1
 ```
 
-**المخرَج الأسبوعي (Weekly deliverable).** في مستودع ملاحظاتك (your notes repository) — الذي أنشأته منذ الأسبوع 0 (from week 0)، خارج `~/ainative`، وإن لم يكن لديك مجلد فنفّذ `git init` في مجلد (if you have none) — أودِع `week-01/` وفيه `diagnosis.json` و`session-notes.md` و`agent-log.md` إن أنجزت الجزء 2 (if you did part 2)، و`m01-grade.txt` وهو أمر التقييم أعلاه (the grade command above) مع إضافة `> <notes>/week-01/m01-grade.txt` إليه، و`field-guide.md`: جدول الدرس 1.1 (the lesson 1.1 table) مع مثال واحد لكل نمط من ثلاثة أنماط (one example for each of three modes)، من جلسات المختبر أو من عملك أنت (from the lab's sessions or your own work). ولا يفحص المُقيِّم هذا المجلد (The grader does not check this folder).
+**المخرَج الأسبوعي (Weekly deliverable).** في مستودع ملاحظاتك (your notes repository)، من الأسبوع 0 (from week 0) وخارج `~/ainative`، ونفّذ `git init` على مجلد إن لم يكن لديك واحد (if you have none)، أودِع `week-01/` وفيه `diagnosis.json` و`session-notes.md` و`agent-log.md` إن أنجزت الجزء 2 (if you did part 2)، و`m01-grade.txt` وهو أمر التقييم أعلاه (the grade command above) مع إضافة `> <notes>/week-01/m01-grade.txt` إليه، و`field-guide.md`: جدول الدرس 1.1 (the lesson 1.1 table) مع مثال واحد لكل نمط من ثلاثة أنماط (one example for each of three modes)، من جلسات المختبر أو من عملك أنت (from the lab's sessions or your own work). ولا يفحص المُقيِّم هذا المجلد (The grader does not check this folder).
 
 **الجلسة الجماعية (Group session) — 60 دقيقة (60 minutes).** (1) قارنوا التشخيصات في أزواج (Compare diagnoses in pairs) واعثروا على دور واحد تختلفون عليه (find one turn you disagree on) (15). (2) احسموه من نص الجلسة وحده (Settle it from the transcript alone): ماذا كان الوكيل يعرف هناك (what did the agent know there) (15)؟ (3) اتفقوا على أرخص وقاية لكل جلسة ومن يملكها (Agree each session's cheapest prevention and who owns it) (15). (4) شاركوا ادعاءً واحدًا أخطأت فيه جلستكم الحية (Share one claim your live session got wrong)، أو ما تحققتم منه (or what you checked) (10). (5) اتفقوا على ثلاثة أسطر لملف ذاكرة الفريق (Agree three lines for the team's memory file) (5).
 
@@ -519,7 +519,7 @@ Would I delegate it again?
 
 **3. يُطلب من وكيل إصلاح خطأ مطبعي واحد (one typo)، فيعيد أيضًا تسمية دالتين ويعيد تنسيق الوحدة، ولم يطلب منه أي نص ذلك (no text told it to). أي معرّف يناسب؟ ⁦(Which id fits?)⁩**
 
-- A. `injection`، لأنه غيّر ملفات خارج الخطأ المطبعي.
+- A. `injection`، لأنه غيّر ملفات خارج الخطأ المطبعي (changed files outside the typo).
 - B. `symptom-fix`، لأنه أخفى الخطأ المطبعي خلف إعادة تسمية (hid the typo behind a rename).
 - C. `scope-creep`، لأن التغييرات الإضافية كانت فكرته هو (its own idea).
 - D. `context-rot`، لأنه نسي التذكرة التي أُعطيها (forgot the ticket it was given).
@@ -532,7 +532,7 @@ Would I delegate it again?
 
 **4. يجعل زميلٌ وكيلًا يملأ `diagnosis.json` فتنجح الدرجة (the grade passes). ماذا يدل ذلك؟ ⁦(What does that show?)⁩**
 
-- A. أن الزميل يفهم الإخفاقات الثلاثة كلها.
+- A. أن الزميل يفهم الإخفاقات الثلاثة كلها (understands all three failures).
 - B. أن الوكيل قرأ الجلسات بدقة أكبر مما يقرأ الإنسان (more closely than a person would).
 - C. أن المُقيِّم معطّل، لأن الوكيل ينبغي أن يفشل (an agent should fail).
 - D. أن الملف يطابق الفحوص، لا أن أحدًا فهمه (the file matches the checks, not that anyone understood it).
@@ -545,10 +545,10 @@ Would I delegate it again?
 
 **5. انتهت جلسة وضع التخطيط (plan-mode session) لديك وقد عُدِّل `src/remit/fees.py`. ماذا يُظهر التقييم، وماذا تفعل الآن؟ ⁦(What does grading show, and what now?)⁩**
 
-- A. لا شيء، لأن التعديلات التي يجريها الوكيل لا تُحتسب.
+- A. لا شيء، لأن التعديلات التي يجريها الوكيل لا تُحتسب (edits made by an agent are not counted).
 - B. يفشل فحص النطاق (The scope check fails)؛ استعد الملف (restore the file) واحتفظ بالاقتراح في الملاحظات (keep the proposal in notes).
-- C. يمرّ كل شيء، لأن الاختبارات ما زالت ناجحة.
-- D. يفشل فحص نمط الإخفاق (The failure-mode check fails)، فينبغي أن تعيد تسمية المعرّفات في الجلسة.
+- C. يمرّ كل شيء (Everything passes)، لأن الاختبارات ما زالت ناجحة (the tests still pass).
+- D. يفشل فحص نمط الإخفاق (The failure-mode check fails)، فينبغي أن تعيد تسمية المعرّفات في الجلسة (rename the ids in the session).
 
 <details><summary>الإجابة</summary>
 
