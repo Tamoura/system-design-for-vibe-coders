@@ -13,8 +13,8 @@ negative: it only records what Remit has posted. A balance is credits minus debi
 This module predates najmkit's test helpers and has no tests of its own. It keeps its
 state in module-level variables. Do not refactor it without characterization tests.
 
-Known quirks (documented; see KIT_NOTES.md)
---------------------------------------------
+Known quirks (documented here, on purpose)
+------------------------------------------
 Q-LED-1  The partner's 30% share of the fee is rounded half-even (banker's rounding),
          while everything else in Remit rounds half-up. For a fee of 10.15 the partner
          share is 3.04 (half-up would give 3.05) and FEE_INCOME gets the remainder, 7.11.

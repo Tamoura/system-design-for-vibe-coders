@@ -18,9 +18,9 @@
 - Biggest trap: reading fluent as correct. Fluency costs the model nothing.
 
 ## 🧭 Why it matters
-On a Monday (a constructed day, not recorded from a real model) Lujain points her agent at `screening.py`, the old module with no tests. Six minutes later it has written eighteen well-named characterization tests, and she reads every one. On Tuesday, same agent, she asks for an audit event when a quote is created. It writes `audit.record("quote.created", ...)` and `ids.generate("QUO")`. Neither exists in najmkit, and no test calls the new helper, so the suite stays green.
+On a Monday (a constructed day, not recorded from a real model) Lujain (graduate engineer) points her agent at `screening.py`, the old module with no tests. Six minutes later it has written eighteen well-named characterization tests, and she reads every one. On Tuesday, same agent, she asks for an audit event when a quote is created. It writes `audit.record("quote.created", ...)` and `ids.generate("QUO")`. Neither exists in najmkit, and no test calls the new helper, so the suite stays green.
 
-Tariq opens the clinic with both stories: "Same tool. Why did it shine on the hard module and fall over on a one-line call?" The answer is a mental model, not luck.
+Tariq (engineering lead) opens the clinic with both stories: "Same tool. Why did it shine on the hard module and fall over on a one-line call?" The answer is a mental model, not luck.
 
 ## 📐 How it works
 
@@ -86,7 +86,7 @@ The loop makes agents useful and risky: they can check their work by running tes
 |---|---|---|---|
 | **Verifiability** | Can a command tell me in seconds if it is right? | Tests for `screening.py` | A pricing change no test pins down |
 | **Locality** | How many files change, and is there hidden coupling? | One message in `notify.py` | A fee rule across `fees.py`, the ledger and the messages |
-| **Available context** | Is everything it needs in the window or findable? | Constants and tests in the repo | The rule lives in a PDF or in Hessa's head |
+| **Available context** | Is everything it needs in the window or findable? | Constants and tests in the repo | The rule lives in a PDF or in the product owner's head |
 | **Familiarity** | Is this common in public code? | Table-driven tests, a CLI flag | najmkit; a bank-specific screening rule |
 
 The evidence fits this table without proving it. One randomized trial of 16 experienced developers in their own mature repositories found tasks took 19% longer with early-2025 tools, though they had expected, and afterwards believed, they were faster; METR warns that other settings and later tools may differ. A lab experiment on one self-contained task (GitHub and Microsoft Research authors) found Copilot users 55.8% faster (95% interval 21% to 89%). Results depend on task, tool and experience; neither is a rule for your team.
@@ -327,7 +327,7 @@ A fee of 165.00 above a 150.00 cap, by design. T05 and T06 test nothing about a 
 | **Agent log** | Prompt, what it did, what you corrected, what you checked, minutes | After every session with an agent |
 
 ## 🏛️ In practice at Najm Bank
-**The ticket.** This is `TASK.md` in your work folder (the kit's `task.md`), as Hessa wrote it.
+**The ticket.** This is `TASK.md` in your work folder (the kit's `task.md`), as Hessa (product owner) wrote it.
 
 ```text
 # ONB-101: read three agent sessions and name what went wrong

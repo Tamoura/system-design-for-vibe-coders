@@ -14,8 +14,8 @@ The books live in the ``Ledger`` class: balances and the journal belong to an in
 ``RemitService`` owns one (``RemitService(..., ledger=None)`` makes a fresh ``Ledger()``).
 There is no module-level state and no ``reset()``: make a new ``Ledger`` instead.
 
-Known quirks (documented; see KIT_NOTES.md)
---------------------------------------------
+Known quirks (documented here, on purpose)
+------------------------------------------
 Q-LED-1  The partner's 30% share of the fee is rounded half-even (banker's rounding),
          while everything else in Remit rounds half-up. For a fee of 10.15 the partner
          share is 3.04 (half-up would give 3.05) and FEE_INCOME gets the remainder, 7.11.

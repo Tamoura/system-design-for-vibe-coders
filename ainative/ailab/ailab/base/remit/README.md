@@ -40,8 +40,8 @@ src/remit/        the service
   fees.py           tiered fee schedules
   fx.py             exchange rates, margins, 60-second quotes
   limits.py         daily and monthly limits by KYC tier (Qatar local time)
-  screening.py      name screening against the watchlist       (old code, no tests)
-  ledger.py         double-entry postings                      (old code, no tests)
+  screening.py      name screening against the watchlist       (old code, no dedicated tests)
+  ledger.py         double-entry postings                      (old code, no dedicated tests)
   store.py          SQLite storage
   notify.py         notification templates, English and Arabic
   service.py        RemitService: quote() and send()
@@ -52,5 +52,8 @@ tests/            pytest suite
 docs/             ARCHITECTURE.md, TOUR.md, najmkit.md
 CONTRIBUTING.md   how we work here: read it before your first commit
 ```
+
+`screening.py` and `ledger.py` have no dedicated tests: only `send()` exercises them
+(`tests/test_service.py`).
 
 New to the repository? Read `docs/TOUR.md` first.

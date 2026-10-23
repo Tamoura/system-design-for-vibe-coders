@@ -1,8 +1,8 @@
 # Module 6 — Debugging and understanding code
 
-*Most of an engineer's week is spent in code somebody else wrote, hunting a cause nobody has found. A coding agent is a fast reader and a tireless generator of explanations, and that is exactly why it needs a leash: a confident account of code you have not opened is not evidence, and a fix for a bug you have not reproduced is a guess. Lesson 6.1 is the concept lesson: an onboarding workflow (ask for a map, verify its claims by opening the files, write `docs/onboarding.md`), the debugging loop (reproduce first, ranked hypotheses, instrumentation, `git bisect`, root cause versus symptom), how to hand an agent logs and traces safely, prompting that resists agreement, what to do when the agent is stuck, and two reusable artefacts, the Debugging prompt kit and the Root-cause note. Lesson 6.2 is the lab: you join Payments Platform, write a checked tour of the Najm Remit repository, then fix a production incident from its logs, with a test that fails first, a minimal patch, a regression test and a note that Maha can paste into the incident record.*
+*Most of an engineer's week is spent in code somebody else wrote, hunting a cause nobody has found. A coding agent is a fast reader and a tireless generator of explanations, and that is exactly why it needs a leash: a confident account of code you have not opened is not evidence, and a fix for a bug you have not reproduced is a guess. Lesson 6.1 is the concept lesson: an onboarding workflow (ask for a map, verify its claims by opening the files, write `docs/onboarding.md`), the debugging loop (reproduce first, ranked hypotheses, instrumentation, `git bisect`, root cause versus symptom), how to hand an agent logs and traces safely, prompting that resists agreement, what to do when the agent is stuck, and two reusable artefacts, the Debugging prompt kit and the Root-cause note. Lesson 6.2 is the lab: you join Payments Platform, write a checked tour of the Najm Remit repository, then fix a production incident from its logs, with a test that fails first, a minimal patch, a regression test and a note that Maha (SRE lead) can paste into the incident record.*
 
-> **Focus:** Workflow, Verify — habit 4, *trust evidence, not fluency*, applied to code you did not write: understand it before you change it, and prove the cause before you fix it.
+> **Focus:** Workflow, Verify — habit 4, *Trust evidence, not fluency*, applied to code you did not write: understand it before you change it, and prove the cause before you fix it.
 
 ---
 
@@ -17,7 +17,7 @@
 - Logs are data to trim, redact and distrust; an agent never gets production access. Cue: two failed hypotheses means reset small. Trap: a patch that greens the test, leaving the cause.
 
 ## 🧭 Why it matters
-On Monday 9 March 2026 Nada forwards a line from Compliance's regression sheet (every name here is fictional). The alias "Samir bin Haddad bin Younis" belongs to a watchlist entry; Remit held it last quarter; this week a test transfer to that name went through. Lujain types: "The screening threshold is too strict, isn't it? Lower it so the alias matches." Her agent agrees, lowers `THRESHOLD` from 100 to 60, and the alias is held. `screening.py` has no tests, so all stays green. Tariq asks: "Why did it match last quarter at 100?" Nobody knows. The real cause is one missing word in a list, and the "fix" would have held innocent customers.
+On Monday 9 March 2026 Nada (quality engineering lead) forwards a line from Compliance's regression sheet (every name here is fictional). The alias "Samir bin Haddad bin Younis" belongs to a watchlist entry; Remit held it last quarter; this week a test transfer to that name went through. Lujain (graduate engineer) types: "The screening threshold is too strict, isn't it? Lower it so the alias matches." Her agent agrees, lowers `THRESHOLD` from 100 to 60, and the alias is held. `screening.py` has no tests, so all stays green. Tariq (engineering lead) asks: "Why did it match last quarter at 100?" Nobody knows. The real cause is one missing word in a list, and the "fix" would have held innocent customers.
 
 The pattern is documented. Anthropic's 2023 study of five assistants found them consistently inclined to match the view a user had already expressed, and people and preference models sometimes preferred a convincing, agreeable answer to a correct one (none tested on debugging; models have changed since). A small, preliminary Anthropic trial (52 mostly junior engineers learning a new Python library; Anthropic makes Claude Code) found the assisted group scored lower on a comprehension quiz, most on debugging. The lesson is not "avoid agents": do the thinking debugging exists to teach.
 
@@ -25,7 +25,7 @@ The pattern is documented. Anthropic's 2023 study of five assistants found them 
 
 ### 🟢 The essentials
 
-**Two jobs, one rule.** *Orientation* builds a picture of code you did not write; *diagnosis* finds why it misbehaves. An agent explains fluently, and the fluency is the hazard: it describes code it has not read in the voice it uses for code it has. Habit 4, *trust evidence, not fluency*, holds both jobs together; habit 3, *small verified steps*, sets the pace: one hypothesis, one check.
+**Two jobs, one rule.** *Orientation* builds a picture of code you did not write; *diagnosis* finds why it misbehaves. An agent explains fluently, and the fluency is the hazard: it describes code it has not read in the voice it uses for code it has. Habit 4, *Trust evidence, not fluency*, holds both jobs together; habit 3, *Small verified steps*, sets the pace: one hypothesis, one check.
 
 **The onboarding workflow.**
 1. **Ask for a map, read-only.** Use plan mode (`claude --permission-mode plan`, or Shift+Tab; check the current documentation) or the built-in Explore subagent, which cannot edit files and returns only a report. Ask for entry points, data flow and tests, with a file and function for every claim.
@@ -294,7 +294,7 @@ What you could not verify.
 - Trap: fixing the first line you find, or counting only the customers who complained.
 
 ## 🧭 Why it matters
-On Tuesday 17 March Maha sends Payments Platform an incident note: six customers have written to support with the same complaint about their daily limit, the suite is green, and no limit has changed. Tariq's rule: a green suite is a statement about the tests, not about production. So reproduce the customers' experience in a test, at the log's exact moments, watch it fail, and only then touch the code. Ask who else the defect touched, in both directions: those who write to support are not the only ones. Then leave Maha a note she can paste into the incident record.
+On Tuesday 17 March Maha (SRE lead) sends Payments Platform an incident note: six customers have written to support with the same complaint about their daily limit, the suite is green, and no limit has changed. Tariq's rule: a green suite is a statement about the tests, not about production. So reproduce the customers' experience in a test, at the log's exact moments, watch it fail, and only then touch the code. Ask who else the defect touched, in both directions: those who write to support are not the only ones. Then leave Maha a note she can paste into the incident record.
 
 That needs knowing the code, which is Part 1: a tour of Remit, checked against the code, in your own words.
 
@@ -350,7 +350,7 @@ Their tier is in `kyc_tiers.csv`, their limits in the code. Is this refusal righ
 ## 🏛️ In practice at Najm Bank
 **Needs an agent: recommended, not required.** If you use one, the prompts from lesson 6.1 are your starting point; keep the agent log as you go.
 
-**The ticket.** This is `TASK.md`, as Hessa wrote it:
+**The ticket.** This is `TASK.md`, as Hessa (product owner) wrote it:
 
 ```text
 # REMIT-231: a tour of Remit, and customers refused "daily limit" after midnight
@@ -437,7 +437,7 @@ Work directory: /home/you/ainative/m06
 ```
 
 **Your move.**
-1. **Part 1, with an agent.** In plan mode, run kit prompt 1 on `src/remit/` and `tests/`. Open the files behind five claims. Write the tour yourself, using the map as notes; then ask the agent to list every statement the code does not support. Commit. **Without an agent:** read `README.md`, `CONTRIBUTING.md`, `docs/TOUR.md` and `service.py`, run `pytest -q`, and `grep` as you go. The checks read two things: a wrong document must be named with its claim ("<document> says X; the code has Y"), and docstrings in `ledger.py` and `screening.py` cite `KIT_NOTES.md`, a course-kit file your repository lacks, so say it is not in the repository if you mention it.
+1. **Part 1, with an agent.** In plan mode, run kit prompt 1 on `src/remit/` and `tests/`. Open the files behind five claims. Write the tour yourself, using the map as notes; then ask the agent to list every statement the code does not support. Commit. **Without an agent:** read `README.md`, `CONTRIBUTING.md`, `docs/TOUR.md` and `service.py`, run `pytest -q`, and `grep` as you go. The checks read this: a wrong document must be named with its claim ("<document> says X; the code has Y").
 2. **Part 2, with an agent.** Give it the extract (safe by construction) and prompts 2 and 3. Run its test yourself; keep it away from `src` until the test fails for the log's reason. **Without an agent:** the same steps by hand, with prints or a debugger.
 3. Either way, in `~/ainative/m06`: read the diff, run `pytest -q`, check `git diff lab-start --stat`, and read the note aloud as if to Maha. Headers are `type(scope): subject`, lower-case scope, no full stop, at most 72 characters (`CONTRIBUTING.md`).
 

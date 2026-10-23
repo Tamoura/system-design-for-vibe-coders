@@ -18,7 +18,7 @@
 - Decision cue: before delegating, ask "could I tell if this were wrong?"
 
 ## 🧭 Why it matters
-On Thursday afternoon Lujain, the graduate engineer on the Payments Platform team, closes ticket REMIT-209 in fifteen minutes. Her agent wrote the change, reported "all tests pass" and she committed. On Friday morning Hessa's support team opens the history in their spreadsheet and the fee column shows the wrong numbers. Tariq, the engineering lead, asks Lujain one question: "Who is the author of this change?" She says the agent wrote it. Tariq says no: the author is whoever's name is on the commit, and that person has to explain every line.
+On Thursday afternoon Lujain, the graduate engineer on the Payments Platform team, closes ticket REMIT-209 in fifteen minutes. Her agent wrote the change, reported "all tests pass" and she committed. On Friday morning the support team opens the history in their spreadsheet and the fee column shows the wrong numbers. Tariq, the engineering lead, asks Lujain one question: "Who is the author of this change?" She says the agent wrote it. Tariq says no: the author is whoever's name is on the commit, and that person has to explain every line.
 
 Nothing in that story is about a bad tool. It is a missing way of working: no context about who reads the output, no definition of done, no look at the diff. This course builds that way of working over fourteen weeks on one small codebase.
 
@@ -43,7 +43,7 @@ Choose per task: can I check the result, how much damage if it is wrong, and is 
 
 **AI-native engineer or AI engineer?** An **AI-native engineer** works *with* AI tools. An **AI engineer** builds products *on* models: chatbots, retrieval, customer agents. This course is the first; the second is the companion course [*Building AI Applications & Agents*, lesson 0.1 — What it takes to ship an enterprise-grade agent](../aiapps/index.html#/0.1). If you cannot program yet, start with [*System Design for Vibe Coders*, lesson 9.5 — Claude Code power techniques](../vibe/index.en.html#l9-5).
 
-**The five habits.** They are the spine of every lab.
+**The five habits.**
 
 | Habit | In one sentence | It prevents | Trained in |
 |---|---|---|---|
@@ -55,7 +55,7 @@ Choose per task: can I check the result, how much damage if it is wrong, and is 
 
 ### 🟡 Going deeper
 
-**One ticket, two afternoons.** Hessa's ticket:
+**One ticket, two afternoons.** Hessa (product owner) wrote this ticket:
 
 ```text
 REMIT-209: show express transfers in the history output
@@ -81,10 +81,10 @@ Please show it.
 | Time | What you do | Habit |
 |---|---|---|
 | 13:00 | Read `CONTRIBUTING.md` and `docs/TOUR.md`. Ask Hessa who reads the history output: a spreadsheet, by column position, so nothing may move. New branch | Context first |
-| 13:10 | Write the specification below; ask for a plan; edit it so the failing test comes first | Specify |
+| 13:10 | Write the specification below; ask for a plan; edit it so the failing test comes first | Specify before you delegate |
 | 13:25 | The test fails for the right reason; then the change | Small verified steps |
-| 13:45 | Run the suite yourself, read `git diff --stat`, confirm no old test changed, run a real `send --express` and `history` | Trust evidence |
-| 14:05 | Commit `feat(cli): show express transfers in history`; label the pull request `AI-assisted`; log it | Integrate; keep the skill |
+| 13:45 | Run the suite yourself, read `git diff --stat`, confirm no old test changed, run a real `send --express` and `history` | Trust evidence, not fluency |
+| 14:05 | Commit `feat(cli): show express transfers in history`; label the pull request `AI-assisted`; log it | Automate the loop, keep the skill |
 
 The prompt that replaces it:
 
@@ -101,7 +101,7 @@ Non-goals: do not touch money.py, fees.py or service.py; no new options; no refo
 Process: plan first, then write the failing test and show me it fails, then make it pass. Do not commit.
 ```
 
-The careful afternoon took seventy minutes against fifteen, and the careless one was not finished. Do not over-read it: for a throwaway script this is overkill. Match the care to the stakes.
+The careful afternoon took seventy minutes against fifteen, and the careless one was not finished. For a throwaway script this is overkill. Match the care to the stakes.
 
 **What the evidence says, and what it does not.** Four sources; check a number against its original before you repeat it. Some have vendor-affiliated authors (GitHub and Microsoft Research, Google, Anthropic).
 
@@ -293,9 +293,9 @@ Public reports show what rare looks like: one user said Google's Antigravity age
 
 The examples use Claude Code; the habits do not depend on one tool, and the grader never knows which you used.
 
-**Install and start Claude Code.** Follow the official setup page linked above, not a command from a blog or a chat answer; `claude --version` then prints your version. Learn in the terminal. `cd` into your work directory and run `claude`; expect a sign-in step (at Najm, the approved one).
+**Install and start Claude Code.** Follow the official setup page linked above, not a command from a blog or a chat answer; `claude --version` then prints your version. `cd` into your work directory and run `claude`; expect a sign-in step (at Najm, the approved one).
 
-**The trust dialog.** In a folder it has not seen, Claude Code asks whether you trust it. Yes lets the project's own settings and hooks apply, so say yes only to a folder you have read. Do not start in your home directory: it widens what the agent can reach. (Check the current documentation.)
+**The trust dialog.** In a folder it has not seen, Claude Code asks whether you trust it. Yes lets the project's own settings and hooks apply, so say yes only to a folder you have read. Do not start in your home directory: it widens what the agent can reach.
 
 **Permission modes.** They decide what runs without asking.
 
@@ -349,7 +349,7 @@ Training use of your prompts depends on the plan: read the data-usage page and y
 
 **How the kit works.** `start` copies the base repository, commits "Initial state", applies the lab's seed as "Lab starting state" and tags it `lab-start`, so `git diff lab-start` is your work. `grade` runs hidden tests on a copy of your directory and exits 0 only when every required check passes. `solve` applies the reference solution; it is a peek, so try first.
 
-**The repo tour.** Read `README.md`, `CONTRIBUTING.md` and `docs/TOUR.md`, in that order. Money is `Decimal` in the `Money` class, never `float`. `ledger.py` and `screening.py` are old and have no tests. `najmkit` is Najm's internal library for ids, time and audit events; no model was trained on it, so tell an agent to read `docs/najmkit.md`. When a doc and the code disagree, the code wins. Try the CLI: `PYTHONPATH=src python -m remit quote QAR 500 INR` prints a fee of 12.00 QAR (`PYTHONPATH=src` lets Python find the package; the README also shows `python -m pip install -e .`).
+**The repo tour.** Read `README.md`, `CONTRIBUTING.md` and `docs/TOUR.md`, in that order. Money is `Decimal` in the `Money` class, never `float`. `ledger.py` and `screening.py` are old and have no dedicated tests. `najmkit` is Najm's internal library for ids, time and audit events; no model was trained on it, so tell an agent to read `docs/najmkit.md`. When a doc and the code disagree, the code wins. Try the CLI: `PYTHONPATH=src python -m remit quote QAR 500 INR` prints a fee of 12.00 QAR (`PYTHONPATH=src` lets Python find the package; the README also shows `python -m pip install -e .`).
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -417,7 +417,12 @@ cd ~/ainative/m00
 
 `doctor` prints a `[PASS]` or `[FAIL]` line per check and ends with `Everything needed is in place.` Fix any FAIL first.
 
-From here you work in two places. In `~/ainative/m00` you edit and run `git` and `pytest`. Every `python -m ailab` command runs in the `ailab` folder with the virtual environment active (it stays active when you `cd`).
+From here you work in two places. In `~/ainative/m00` you edit and run `git` and `pytest`. A plain `python -m ailab` command needs the `ailab` folder and the active virtual environment, but `start` ends by printing a grade command that works from any folder (`/home/you` stands for your home):
+
+```text
+When you are ready, grade from any directory:
+  PYTHONPATH=/home/you/system-design-for-vibe-coders/ainative/ailab python -m ailab grade m00 --dir /home/you/ainative/m00
+```
 
 **Your move, by hand first.** In `~/ainative/m00`, run `git switch -c remit-212-typo`, then `pytest -q` and read the first failure from the top: it shows what was expected and what came out. Search for that text (`grep -rn --include='*.py' "<a phrase from the message>" src`, or your editor), make the smallest edit, rerun `pytest -q` and read `git diff`. Commit once. `CONTRIBUTING.md` requires `type(scope): subject`: a type from `feat fix docs test refactor perf chore ci build revert`, one lower-case scope (not a list), an imperative subject, no full stop, a header up to 72 characters (for example `fix(limits): count transfers made just after midnight`). Here the type is `fix` and the scope is the module you changed. Log your minutes.
 
@@ -467,11 +472,11 @@ Lab m00: 4/10 required checks passed: NOT YET
 
 A right fix committed as `fixed the typo` fails one line, `Commit messages follow CONTRIBUTING.md`, quoting your message. Fix it with `git commit --amend`. With two commits, run `git reset --soft lab-start` and commit once; no interactive rebase needed. If you switched to `main` after committing on the task branch, every failing line names the branch that holds your commit: switch back to it. When it passes, the last line reads `Lab m00: 10/10 required checks passed: PASSED`.
 
-**Weekly deliverable (Module 0).** In a notes repository of your own, outside the lab folders (`git init ~/ainative-notes`), commit `week-00/` with `baseline.md` (lesson 0.1), `agent-log.md` (the 0.1 template), `m00-grade.txt` and `delegation-card.md` (your card for REMIT-212, lesson 0.3). For the grade file, create the folder, then run in the `ailab` folder: `python -m ailab grade m00 --dir ~/ainative/m00 > ~/ainative-notes/week-00/m00-grade.txt`. The m00 repository holds exactly one new commit.
+**Weekly deliverable (Module 0).** In a notes repository of your own, outside the lab folders (`git init ~/ainative-notes`), commit `week-00/` with `baseline.md` (lesson 0.1), `agent-log.md` (the 0.1 template), `m00-grade.txt` and `delegation-card.md` (your card for REMIT-212, lesson 0.3). For the grade file, create the folder, then run in the `ailab` folder: `python -m ailab grade m00 --dir ~/ainative/m00 > ~/ainative-notes/week-00/m00-grade.txt`.
 
 **Group session (60 minutes).** (1) Name your lowest baseline habit (10). (2) Swap `git diff lab-start` and explain the change in a sentence (15). (3) Compare by-hand and agent logs (15). (4) State your starting permission mode and why (10). (5) Agree the group's never-paste list (10).
 
-**Debrief.** What did the agent get wrong, or nearly? What did your context or spec miss? What did you check that its summary did not tell you? Which way was faster, and did the log agree with your feeling?
+**Debrief.** What did the agent get wrong, or nearly? What did your context or spec miss? What did you check that its summary did not tell you? Which way was faster?
 
 **Agent log.** Use the lesson 0.1 template: one entry per attempt.
 
@@ -581,7 +586,7 @@ A right fix committed as `fixed the typo` fails one line, `Commit messages follo
 - Trap: time "saved" by skipping the check is only moved to a reviewer, or to production.
 
 ## 🧭 Why it matters
-After the REMIT-209 revert, Tariq asks Lujain what she spent on verifying. "Nothing. The agent ran the tests." He draws two columns on the whiteboard. Typing code got cheap. Checking it did not. If the check is skipped, someone else pays: the reviewer, Hessa's support team, or a customer.
+After the REMIT-209 revert, Tariq asks Lujain what she spent on verifying. "Nothing. The agent ran the tests." He draws two columns on the whiteboard. Typing code got cheap. Checking it did not. If the check is skipped, someone else pays: the reviewer, the support team, or a customer.
 
 Research points the same way, with caution. The 2024 DORA report associated higher AI adoption with lower delivery stability, and its authors suggested larger batch sizes as part of the reason; the 2025 report says AI amplifies what a team already does. Those are survey associations, not proof. The practical reading is the one this lesson teaches: keep each step small enough to verify, decide what you hand over, and know who answers for it.
 
@@ -789,7 +794,7 @@ Author of record: me. Label AI-assisted. Second reviewer: not needed (no money l
 
 </details>
 
-**2. Maha wants an agent to work unattended overnight. What must be true before the autonomy level rises to long-running?**
+**2. Maha (SRE lead) wants an agent to work unattended overnight. What must be true before the autonomy level rises to long-running?**
 
 - A. The work is specified, checkable and confined away from production
 - B. The newest model is selected, so mistakes are rarer

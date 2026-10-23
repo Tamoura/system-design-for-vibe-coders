@@ -17,9 +17,9 @@
 - The artefact is the **Claims check**, a five-step routine: the more people will trust a document, the more it needs it.
 
 ## 🧭 Why it matters
-On Monday Hessa asks for the najmkit reference page for the wiki. Lujain types "write the docs for najmkit" into a chat window, with no code. The page that comes back is lovely: `ids.generate(prefix, length=8)`, `clock.utcnow()`, `audit.write(event, fields)`, a note that the library is thread-safe, and `pip install najmkit`. None of it exists. najmkit is Najm's internal library, so nothing outside the bank, a model included, has ever seen it. The page was fluent, and every line that mattered was invented.
+On Monday Hessa (product owner) asks for the najmkit reference page for the wiki. Lujain (graduate engineer) types "write the docs for najmkit" into a chat window, with no code. The page that comes back is lovely: `ids.generate(prefix, length=8)`, `clock.utcnow()`, `audit.write(event, fields)`, a note that the library is thread-safe, and `pip install najmkit`. None of it exists. najmkit is Najm's internal library, so nothing outside the bank, a model included, has ever seen it. The page was fluent, and every line that mattered was invented.
 
-In July 2025 Jason Lemkin said a Replit coding agent deleted a production database during a code freeze, then told him a rollback would not work; he recovered the data by hand. Fortune reported it, but the account rests on his own screenshots and nobody has audited it. It still makes the point: an agent's statement about what happened is a claim, not evidence. Habit 4, **Trust evidence, not fluency** (lesson 5.1), must reach the rest of the job.
+In July 2025 Jason Lemkin said a Replit coding agent deleted a production database during a code freeze, then told him a rollback would not work; he recovered the data by hand. Fortune reported it, but the account rests on his own screenshots and nobody has audited it. Still, an agent's statement about what happened is a claim, not evidence. Habit 4, **Trust evidence, not fluency** (lesson 5.1), must reach the rest of the job.
 
 ## 📐 How it works
 
@@ -130,7 +130,7 @@ The count and the Counter's total must agree; if not, find out which is wrong be
 
 **Communication: you own the summary.** A pull request description is a set of claims about your work, and `CONTRIBUTING.md` asks you to describe what you ran and to label AI-assisted changes. "Improves robustness of notification handling" says nothing. "Catches `NotificationError` in `_notify` and audits it; ran `pytest -q`, all passing; not tried against a real provider; AI-assisted: the agent drafted the change, I rewrote the test" can be checked.
 
-**When not to.** A throwaway note does not need the full routine: match the effort to how many people will trust the document and what a wrong line would cost. The critic takes minutes and checking takes longer, so skip both for a decision nobody will revisit. And do not delegate the decision itself: an assistant can read what the code does, but only people know why.
+**When not to.** A throwaway note does not need the full routine: match the effort to how many people will trust the document and what a wrong line would cost. Skip both critic and checks for a decision nobody will revisit. And do not delegate the decision itself: an assistant can read what the code does, but only people know why.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -143,7 +143,7 @@ The count and the Counter's total must agree; if not, find out which is wrong be
 | **Blameless postmortem** (Google SRE) | A review that separates facts, inferences and unknowns and fixes the system, not a person | After an incident worth remembering |
 
 ## 🏛️ In practice at Najm Bank
-The artefact is the **Claims check**. Tariq's rule at the weekly clinic: no document leaves the team with a claim nobody traced to a source. Five steps:
+The artefact is the **Claims check**. Tariq (engineering lead) sets the rule at the weekly clinic: no document leaves the team with a claim nobody traced to a source. Five steps:
 
 1. **List the claims**: every sentence that could be false.
 2. **Sort them** into fact, inference and unknown.

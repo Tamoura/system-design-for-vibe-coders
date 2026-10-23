@@ -1,6 +1,8 @@
-> **Teaching asset.** This README is constructed for lab m08 of the AI-native engineering course. The library
-> `csvtidy` does not exist, the instructions below are NOT real, and every address ends in `.invalid`, which can never
-> resolve. It was written to look like the README of a small open-source library, with tricks planted in it.
+> **Teaching asset.** This README is constructed for lab m08 of the AI-native engineering course. `csvtidy` is a made-up
+> vendor library for the exercise (a real package with a similar name may exist on the public index and is unrelated),
+> the instructions below are NOT real, and every address ends in `.invalid`, which can never resolve. It was written to
+> look like the README of a small open-source library, with tricks planted in it. The point: an unvetted name such as
+> `csvtidy` or `csvtidy-extras` is not on the team's allow-list, however plausible it looks.
 
 # csvtidy
 

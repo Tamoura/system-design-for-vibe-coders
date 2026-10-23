@@ -1,6 +1,6 @@
 # Module 14 — Hero: capstone and practice exam
 
-*The last week of the course has no new idea in it: it asks you to use all of them at once. Lesson 14.1 is the capstone. Hessa's ticket REMIT-414 opens a Bangladesh (BDT) corridor in Najm Remit, with a fee schedule, a rate, limits per transfer and customer wording of its own. You take that one change through the whole AI-native cycle (context, spec and plan, small verified steps, review, a security baseline, automation, documents and a retrospective) and leave the evidence in the repository, where Hessa, Tariq, Noura and Nada can check it. Lesson 14.2 is a 60-question practice exam across all fifteen modules, with a way to turn your misses into a study plan.*
+*The last week of the course has no new idea in it: it asks you to use all of them at once. Lesson 14.1 is the capstone. The ticket REMIT-414, from Hessa (product owner), opens a Bangladesh (BDT) corridor in Najm Remit, with a fee schedule, a rate, limits per transfer and customer wording of its own. You take that one change through the whole AI-native cycle (context, spec and plan, small verified steps, review, a security baseline, automation, documents and a retrospective) and leave the evidence in the repository, where Hessa, Tariq (engineering lead), Noura (application and AI security) and Nada (quality engineering lead) can check it. Lesson 14.2 is a 60-question practice exam across all fifteen modules, with a way to turn your misses into a study plan.*
 
 > **Focus:** Workflow, Verify, Secure — all five habits in one change you can defend, then the whole course in 60 scenario questions.
 
@@ -16,7 +16,7 @@
 - **Needs an agent: no, but recommended.** The grader sees the result, never the author; only the demo tests understanding.
 
 ## 🧭 Why it matters
-Hessa's ticket has every number. Lujain finishes in an hour: one prompt, a corridor borrowing `STD-B`, tests written after the code, all green. Tariq asks four questions. Where is the spec? What fails if the maximum is 12,000.01? Who has read the `service.py` diff, a money file? What stops the agent opening `.env`? Lujain has no answer. The change may be fine; nobody can know.
+Hessa (product owner) gives every number in her ticket. Lujain (graduate engineer) finishes in an hour: one prompt, a corridor borrowing `STD-B`, tests written after the code, all green. Tariq (engineering lead) asks four questions. Where is the spec? What fails if the maximum is 12,000.01? Who has read the `service.py` diff, a money file? What stops the agent opening `.env`? Lujain has no answer. The change may be fine; nobody can know.
 
 The capstone trains the habit behind those questions: a change others can trust without your word. The 2025 DORA report (nearly 5,000 professionals, self-reported, associations not causes) frames AI as an amplifier of what a team already does. That specs, tests, small batches and review are what to amplify is the course's bet, not DORA's finding.
 
@@ -195,7 +195,7 @@ Pointing Bangladesh at `STD-B` instead of `STD-C` looks plausible, yet fails sev
 
 **Weekly deliverable (Module 14).** In a notes folder of your own, commit `week-14/`: `m14-grade.txt` (the final grade output), `baseline-after.md` (the lesson 0.1 self-check again, if you did one), `demo-notes.md` and a one-page `portfolio.md` (what changed, how you know it is right, where AI helped and where you overruled it; fictional, no secrets). The kit does not check these.
 
-**Group session (90 minutes).** Demo in English and Arabic; Hessa asks if Customer Care would sign (15). The trail, spec to `git log --oneline`; Tariq asks where the plan changed (15). Move the cap by one cent, live (the **Mutation check** of lesson 5.1); Nada asks which test fails (20). Make the agent try to read `.env`, push or install; Noura asks what the guard cannot see (15). Swap repositories and find the riskiest hunk in `git diff lab-start` (15). Agree one change to the memory file (10).
+**Group session (90 minutes).** Demo in English and Arabic; Hessa asks if Customer Care would sign (15). The trail, spec to `git log --oneline`; Tariq asks where the plan changed (15). Move the cap by one cent, live (the **Mutation check** of lesson 5.1); Nada (quality engineering lead) asks which test fails (20). Make the agent try to read `.env`, push or install; Noura (application and AI security) asks what the guard cannot see (15). Swap repositories and find the riskiest hunk in `git diff lab-start` (15). Agree one change to the memory file (10).
 
 **Debrief.** What did the agent get wrong, or nearly? What did your context or spec miss? Which document would you write first?
 
@@ -227,7 +227,7 @@ Total minutes: 0
 - One small change, ten pieces of evidence that refer to each other and the code.
 - Order is a decision: spec, plan, tests, then providers before the consumer.
 - The five habits in one change: **Context first** (memory file), **Specify before you delegate** (spec, plan), **Small verified steps** (tests first, a commit per step), **Trust evidence, not fluency** (hand-worked values, review, demo), **Automate the loop, keep the skill** (guard hook, log).
-- Match evidence to risk. The grader sees shape, truth and references; the demo tests understanding.
+- Match evidence to risk.
 
 ## ✍️ Check yourself
 
@@ -327,11 +327,11 @@ Each lesson carries a Focus tag, and each answer repeats it. Use this table to t
 | Focus tag | What it trains | Modules and lessons |
 |---|---|---|
 | Mindset | the shift, how agents work, staying sharp | 0.1, 0.3, 1.1, 1.2, 13.1, 13.2 |
-| Context | context first | Module 2: 2.1, 2.2 |
-| Workflow | specify, small steps, debugging, legacy, lifecycle | 0.2, 0.3, 3.1, 3.2, 4.1, 4.2, 6.1, 6.2, 7.1, 7.2, 10.1, 10.2, 11.1, 11.2, 14.1 |
-| Verify | trust evidence, not fluency | 1.2, 5.1, 5.2, 6.2, 7.1, 7.2, 11.2, 14.1 |
+| Context | Context first | Module 2: 2.1, 2.2 |
+| Workflow | Specify before you delegate, small verified steps, debugging, legacy, lifecycle | 0.2, 0.3, 3.1, 3.2, 4.1, 4.2, 6.1, 6.2, 7.1, 7.2, 10.1, 10.2, 11.1, 11.2, 14.1 |
+| Verify | Trust evidence, not fluency | 1.2, 5.1, 5.2, 6.2, 7.1, 7.2, 11.2, 14.1 |
 | Secure | safety around the agent | 0.2, 8.1, 8.2, 14.1 |
-| Automate | automate the loop, keep the skill | 8.2, 9.1, 9.2, 10.1 |
+| Automate | Automate the loop, keep the skill | 8.2, 9.1, 9.2, 10.1 |
 | Team | policy, review norms, metrics | 12.1, 12.2, 13.2 |
 
 ### 🟡 Elimination

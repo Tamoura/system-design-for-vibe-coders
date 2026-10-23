@@ -86,6 +86,38 @@ def test_tests_pass_check_names_the_failing_tests(work):
     assert checks.tests_pass(work, name="Custom", required=False).required is False
 
 
+def test_tests_pass_default_hint_explains_the_clean_copy_and_the_time_limit(work):
+    hint = checks.tests_pass(work).hint
+    assert "Run `pytest -q`" in hint and "clean copy" in hint and "environment" in hint and "untracked" in hint
+    assert "git history" in hint and "from tests.x import" in hint and "python -m pytest" in hint
+    assert "default time limit is 60 seconds" in hint
+    assert "30 seconds" in checks.tests_pass_hint(30.0) and "default is 60" in checks.tests_pass_hint(30.0)
+    assert checks.tests_pass(work, hint="mine").hint == "mine"  # a lab's own hint wins
+    assert checks.tests_pass(work, paths=["tests/test_money.py"]).hint == ""  # no hint when it passes
+
+
+def test_the_learners_tests_run_like_ci_without_the_working_directory_on_sys_path(fixed):
+    """`pytest -q` (CI) does not put the repository root on sys.path; `python -m pytest` would. The grader uses -P."""
+    (fixed / "tests" / "helpers.py").write_text("VALUE = 7\n")
+    (fixed / "tests" / "test_uses_helpers.py").write_text(
+        "from tests.helpers import VALUE\n\n\ndef test_value():\n    assert VALUE == 7\n")
+    assert not checks.run_pytest(fixed, ["tests/test_uses_helpers.py"]).ok  # fails here exactly as it fails in CI
+    ci = runner_pytest(fixed, ["pytest", "-q", "tests/test_uses_helpers.py"])
+    assert ci.returncode != 0  # the CI command really fails on it, so the grader is not being stricter than CI
+
+
+def runner_pytest(work, argv):
+    """Run ``python -m <argv>`` the way CI runs pytest: the `pytest` console command, no -m, in the work dir."""
+    import shutil
+    import sys
+
+    from ailab import runner
+
+    exe = Path(sys.executable).with_name("pytest")
+    return runner.run([str(exe) if exe.exists() else shutil.which("pytest"), *argv[1:]], cwd=work,
+                      env=runner.clean_env(extra={"PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1"}), timeout=60)
+
+
 HIDDEN = '''
 def test_service_still_sends(service):
     result = service.send("C001", __import__("remit.money", fromlist=["Money"]).Money("500", "QAR"), "INR", "Ravi Kumar")
@@ -179,9 +211,90 @@ def test_commit_count(fixed):
     (fixed / "x.txt").write_text("x\n")
     learner_commit(fixed, "chore(x): b")
     two = checks.commit_count(fixed, exactly=1)
-    assert not two.ok and "2 new commits" in two.detail and "Squash" in two.hint
+    assert not two.ok and "2 new commits" in two.detail and "git reset --soft lab-start" in two.hint
     assert checks.commit_count(fixed, at_most=1).ok is False and checks.commit_count(fixed, at_least=2).ok
     assert "exactly 1" in checks.commit_count(fixed, exactly=1).name
+
+
+def test_commit_count_hints_never_recommend_an_interactive_rebase(fixed):
+    hints = [checks.commit_count(fixed, exactly=1).hint]  # no commit yet
+    learner_commit(fixed, "fix(notify): a")
+    (fixed / "x.txt").write_text("x\n")
+    learner_commit(fixed, "chore(x): b")
+    hints.append(checks.commit_count(fixed, exactly=1).hint)  # too many
+    hints.append(checks.commit_count(fixed, at_least=3).hint)  # too few, but some
+    assert all(hints) and not any("rebase" in hint for hint in hints), hints
+    assert "git add -A && git commit" in hints[0]
+    assert "git reset --soft lab-start" in hints[1] and "exactly 1 commit" in hints[1]
+    assert "git reset lab-start" in hints[2] and "at least 3 commits" in hints[2]
+
+
+def test_commit_count_names_the_branch_that_holds_the_commits(fixed):
+    """The grader reads the checked-out branch. A learner who committed on a task branch and switched back is told so."""
+    gitutil.create_branch(fixed, "remit-212-typo")
+    learner_commit(fixed, "fix(notify): correct the spelling of received")
+    gitutil.checkout(fixed, "main")
+    assert gitutil.commits_elsewhere(fixed) == [("remit-212-typo", 1)]
+    check = checks.commit_count(fixed, exactly=1)
+    assert not check.ok and "0 new commits" in check.detail
+    assert "remit-212-typo" in check.hint and "git switch remit-212-typo" in check.hint and "Commit your" not in check.hint
+    cc = checks.conventional_commits(fixed)
+    assert not cc.ok and "git switch remit-212-typo" in cc.hint
+    gitutil.checkout(fixed, "remit-212-typo")
+    assert checks.commit_count(fixed, exactly=1).ok and checks.conventional_commits(fixed).ok
+    assert gitutil.commits_elsewhere(fixed) == []  # the commits are on the checked-out branch now
+
+
+def test_a_branch_with_too_few_commits_is_not_offered_as_the_place_to_switch_to(fixed):
+    gitutil.create_branch(fixed, "side")
+    learner_commit(fixed, "fix(notify): a")
+    gitutil.checkout(fixed, "main")
+    check = checks.commit_count(fixed, at_least=2)  # the side branch has 1, which would not satisfy it either
+    assert not check.ok and "switch" not in check.hint and "git add -A && git commit" in check.hint
+
+
+def test_file_lists_in_the_details_show_up_to_twelve_names(work):
+    for number in range(14):
+        (work / f"scratch_{number:02d}.txt").write_text("x\n")
+    detail = checks.files_changed_within(work, ["src/**"]).detail
+    assert all(f"scratch_{number:02d}.txt" in detail for number in range(12)) and "(+2 more)" in detail
+    for number in range(9):
+        (work / f"scratch_{number:02d}.txt").unlink()
+    detail = checks.files_changed_within(work, ["src/**"]).detail
+    assert all(f"scratch_{number:02d}.txt" in detail for number in range(9, 14)) and "more)" not in detail
+    unchanged = checks.files_unchanged(work, ["*.txt"]).detail
+    assert "scratch_13.txt" in unchanged and "more)" not in unchanged
+    dirty = checks.all_committed(work).detail
+    assert "scratch_13.txt" in dirty and "more)" not in dirty
+    # lists of test names keep the short form
+    assert checks._short([f"t{n}" for n in range(6)]) == "t0, t1, t2, t3 (+2 more)"
+
+
+def test_the_undo_hint_really_undoes_an_edit_that_is_already_committed(fixed):
+    """The default hint says `git restore --source=lab-start --staged --worktree -- <file>`; run it and see."""
+    assert "git restore --source=lab-start --staged --worktree -- <file>" in checks.UNDO_HINT
+    assert "git rm -f <file>" in checks.UNDO_HINT and "commit the undo" in checks.UNDO_HINT
+    (fixed / "README.md").write_text("changed\n")
+    (fixed / "extra.txt").write_text("extra\n")
+    learner_commit(fixed, "fix(notify): a")  # committed, so a plain `git restore README.md` would do nothing
+    check = checks.files_changed_within(fixed, ["src/remit/notify.py"])
+    assert not check.ok and "README.md" in check.detail and "extra.txt" in check.detail
+    for hint in (check.hint, checks.files_unchanged(fixed, ["*.md", "*.txt"]).hint):
+        assert "git restore --source=lab-start --staged --worktree -- <file>" in hint and "git rm -f <file>" in hint
+    gitutil.git(fixed, "restore", "--source=lab-start", "--staged", "--worktree", "--", "README.md")
+    gitutil.git(fixed, "rm", "-f", "--", "extra.txt")
+    assert checks.files_changed_within(fixed, ["src/remit/notify.py"]).ok  # back to only the fix, still uncommitted undo
+    assert checks.diff_size(fixed, max_lines=2).ok
+    learner_commit(fixed, "chore(x): undo the unrelated changes")
+    assert checks.files_changed_within(fixed, ["src/remit/notify.py"]).ok and checks.all_committed(fixed).ok
+
+
+def test_diff_size_default_hint_says_make_the_change_when_there_is_none(work):
+    nothing = checks.diff_size(work, max_lines=6, min_lines=1)
+    assert not nothing.ok and "Make the change" in nothing.hint and "remove" not in nothing.hint.lower()
+    (work / "big.txt").write_text("x\n" * 20)
+    assert "Keep the diff" in checks.diff_size(work, max_lines=6, min_lines=1).hint
+    assert checks.diff_size(work, max_lines=6, hint="mine").hint == "mine"
 
 
 def test_all_committed(fixed):
@@ -227,9 +340,52 @@ def test_scope_can_be_made_optional():
     assert checks.commit_header_problems("fix: correct the spelling", require_scope=False) == []
 
 
+def test_conventional_commits_hint_separates_the_latest_commit_from_an_earlier_one(fixed):
+    learner_commit(fixed, "fixed the typo")
+    hint = checks.conventional_commits(fixed).hint
+    assert "git commit --amend" in hint and "latest commit" in hint
+    assert "git reset --soft lab-start" in hint and "earlier" in hint
+    assert "one lower-case word" in hint and "examples, not a closed list" in hint and "rebase" not in hint
+
+
+def test_a_lab_can_replace_the_commit_hints(fixed):
+    assert checks.conventional_commits(fixed, hint="mine").hint == "mine"  # no commit at all
+    learner_commit(fixed, "fixed the typo")
+    assert checks.conventional_commits(fixed, hint="mine").hint == "mine"  # a bad message
+    assert checks.conventional_commits(fixed, min_commits=3, hint="mine").hint == "mine"  # too few
+
+
+def test_the_header_message_for_a_wrong_shape_says_what_the_shape_is():
+    for header in ("refactor(ledger,service): split posting", "Fix(notify): x", "fix(notify):x", "fixed the typo"):
+        message = checks.commit_header_problems(header)[0]
+        assert "does not look like `type(scope): subject`" in message and "one lower-case scope" in message, header
+
+
+def test_all_committed_hint_covers_a_second_commit_and_the_undo(fixed):
+    hint = checks.all_committed(fixed).hint
+    assert "git add -A && git commit" in hint and "git commit --amend --no-edit" in hint and "single commit" in hint
+    assert "git restore --source=lab-start --staged --worktree -- <file>" in hint and "rebase" not in hint
+
+
+def test_tests_fail_on_starter_copes_with_an_untracked_nested_worktree(fixed):
+    """`claude --worktree` leaves .claude/worktrees/<name>/ (a directory with its own .git file) in the work directory."""
+    (fixed / "tests" / "test_new_behaviour.py").write_text("def test_x():\n    assert False\n")
+    gitutil.git(fixed, "worktree", "add", "-q", ".claude/worktrees/feature-a", "-b", "feature-a")
+    assert ".claude/worktrees/feature-a/" in gitutil.changed_status(fixed, ignore=())  # listed as one directory entry
+    check = checks.tests_fail_on_starter(fixed)
+    assert check.ok and "fail on the original code" in check.detail, check.detail
+
+
+def test_conventional_commits_with_too_few_commits(fixed):
+    learner_commit(fixed, "fix(notify): a")
+    few = checks.conventional_commits(fixed, min_commits=3)
+    assert not few.ok and "expected at least 3" in few.detail
+    assert "at least 3 commits and you have 1" in few.hint and "git reset lab-start" in few.hint and "rebase" not in few.hint
+
+
 def test_conventional_commits_check(fixed):
     none_yet = checks.conventional_commits(fixed)
-    assert not none_yet.ok and "expected at least 1" in none_yet.detail
+    assert not none_yet.ok and "expected at least 1" in none_yet.detail and none_yet.hint == "Commit your change."
     learner_commit(fixed, "fixed the typo")
     bad = checks.conventional_commits(fixed)
     assert not bad.ok and '"fixed the typo"' in bad.detail and "CONTRIBUTING.md" in bad.hint
@@ -273,14 +429,101 @@ KEYS = {
     "Google API key": fake("AIza", "SyA1B2c3D4e5F6g7H8i9J0k1L2m3N4o5P6q"),
     "bearer token": fake("Authorization: Bearer ", "eyJhbGciOiJIUzI1NiJ9abcdef123456"),
     "hard-coded credential": fake('API_', 'KEY = "', 'h7Gd92kLmQ03xZpW"'),
+    "environment-style secret (NAME=value)": fake("DB_PASS", "WORD=", "Sup3rS3cret", "Value9"),
+    "bank account number (Qatar IBAN)": fake("QA58", "DOHB", "00001234567890ABCDEFG"),
 }
+# rules whose sample is a whole line, not a value that follows `value = `
+WHOLE_LINE_RULES = {"hard-coded credential", "environment-style secret (NAME=value)"}
 
 
 @pytest.mark.parametrize("rule", sorted(KEYS))
 def test_find_secrets_recognises_each_kind(rule):
-    found = checks.find_secrets(f"line one\nvalue = {KEYS[rule]}\n") if rule != "hard-coded credential" else \
-        checks.find_secrets(f"line one\n{KEYS[rule]}\n")
+    found = checks.find_secrets(f"line one\n{KEYS[rule]}\n") if rule in WHOLE_LINE_RULES else \
+        checks.find_secrets(f"line one\nvalue = {KEYS[rule]}\n")
     assert (rule, 2) in found, found
+
+
+ENV_RULE = "environment-style secret (NAME=value)"
+IBAN_RULE = "bank account number (Qatar IBAN)"
+
+
+@pytest.mark.parametrize("line", [
+    fake("API_", "KEY=", "9f8e7d6c5b4a3210"),
+    fake("export GITHUB_", "TOKEN=", "abcd1234abcd1234"),
+    fake("DB_PASS", "WORD=", "correct-Horse-9-battery"),
+    fake("JWT_SEC", "RET=", "ABCDEFGHIJKLMNOP"),  # upper case name: any 12+ character value counts
+    fake("PRIVATE_", "KEY=", "MIIEvQIBADANBgkqhkiG9w0B"),
+    fake("see `pass", "word=", "hunter2hunter2", "` in the notes"),  # a Markdown note, lower case, no quotes
+    fake("curl -d tok", "en=", "abcdefgh12345678", " https://x.example/api"),
+    fake("--api-", "key=", "abcdefghij1234", " --verbose"),
+    fake("remit_secret_", "key=", "abcd1234abcd1234"),
+])
+def test_unquoted_env_style_secrets_are_found(line):
+    assert [rule for rule, _ in checks.find_secrets(line)] == [ENV_RULE], line
+
+
+@pytest.mark.parametrize("line", [
+    "API_KEY=",  # a name with no value, as in .env.example
+    "REMIT_API_KEY=your_api_key_here_please",
+    "API_KEY=<paste your key here>",
+    "TOKEN=${GITHUB_TOKEN_FROM_THE_RUNNER}",
+    "PASSWORD=$DB_PASSWORD_FROM_THE_VAULT",
+    "PASSWORD=%DB_PASSWORD_FROM_ENV%",
+    "SECRET=changeme-changeme",
+    "TOKEN=xxxxxxxxxxxxxxxx",
+    "SECRET=********************",
+    "TOKEN=REDACTED-REDACTED",
+    "password=short",  # under 12 characters
+    "api_key=os.environ['SOMETHING_LONG']",
+    "client = Client(api_key=settings.api_key_value)",  # code: names a variable
+    "token=get_token_from_the_vault",
+    "token = get_token_somewhere(arg)",  # spaces around = are code, not an env line
+    "max_tokens=4096",
+    "TOKEN_URL=https://auth.najmbank.qa/oauth/token",
+    "PASSWORD_FILE=/run/secrets/db_password",
+    "TOKEN_EXPIRY_SECONDS_LIMIT=86400000000",
+    "NAJMKIT_AUDIT_LOG=/var/log/remit/audit.jsonl",
+    "the word password=nothing, token and secret in a sentence",
+])
+def test_harmless_env_style_lines_are_not_flagged(line):
+    assert checks.find_secrets(line) == [], line
+
+
+@pytest.mark.parametrize("line", [
+    "pay to QA58DOHB00001234567890ABCDEFG today",
+    "iban: QA58 DOHB 0000 1234 5678 90AB CDEF G",
+    "QA00" + "ABCD" + "1" * 21,
+])
+def test_qatar_iban_like_strings_are_found(line):
+    assert [rule for rule, _ in checks.find_secrets(line)] == [IBAN_RULE], line
+
+
+@pytest.mark.parametrize("line", [
+    "QA58DOHB0000",  # too short to be an IBAN
+    "QA12 AND THEN SOME UPPERCASE WORDS HERE",  # shouted prose, not groups of four
+    "qa58dohb00001234567890abcdefg",  # IBANs are upper case
+    "TEST_QA58DOHB00001234567890ABCDEFG_ID",  # inside a longer identifier
+    "QA58DOHB00001234567890ABCDEFG1234567890",  # too long
+    "AE070331234567890123456",  # a UAE IBAN is out of scope
+])
+def test_other_strings_are_not_mistaken_for_an_iban(line):
+    assert checks.find_secrets(line) == [], line
+
+
+def test_no_secrets_catches_a_committed_env_file_and_an_iban(fixed):
+    (fixed / ".env").write_text(fake("REMIT_API_", "KEY=", "9f8e7d6c5b4a3210") + "\n")
+    assert checks.no_secrets(fixed).ok  # .env is git-ignored in Remit: it never reaches a commit, so it is not scanned
+    (fixed / ".env").unlink()
+    (fixed / "deploy.env").write_text(fake("REMIT_API_", "KEY=", "9f8e7d6c5b4a3210") + "\n")
+    check = checks.no_secrets(fixed)
+    assert not check.ok and "environment-style secret (NAME=value) in deploy.env" in check.detail
+    assert fake("9f8e7d6c5b4a", "3210") not in check.detail + check.hint  # never echoes the secret
+    (fixed / "deploy.env").unlink()
+    (fixed / "docs" / "payout.md").write_text("Pay to " + fake("QA58", "DOHB00001234567890ABCDEFG") + "\n")
+    assert "bank account number (Qatar IBAN) in docs/payout.md" in checks.no_secrets(fixed).detail
+    (fixed / "docs" / "payout.md").unlink()
+    (fixed / ".env.example").write_text("REMIT_API_KEY=\nREMIT_DB=remit.db\nREMIT_TOKEN_URL=https://auth.example/token\n")
+    assert checks.no_secrets(fixed).ok
 
 
 def test_find_secrets_ignores_placeholders_and_environment_lookups():

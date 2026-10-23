@@ -104,7 +104,7 @@ NEW_MEMORY_LINE = (
     "its quirks on purpose: do not \"fix\" them.\n"
 )
 # What the project memory said about the ledger before this ticket (the line the reference solution replaces).
-_STALE_MEMORY = re.compile(r"(?i)ledger[^\n]{0,80}\b(no tests|untested|without tests)|ledger[^\n]*module-level")
+_STALE_MEMORY = re.compile(r"(?i)ledger[^\n]{0,80}\b(no (?:dedicated )?tests|untested|without tests)|ledger[^\n]*module-level")
 
 
 # ---------------------------------------------------------------------------------------------

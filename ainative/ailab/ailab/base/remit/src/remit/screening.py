@@ -13,8 +13,8 @@ How it works
 3. ``screen`` scores a name against every watchlist entry and keeps the entries at or
    above ``THRESHOLD`` (100: every token of the shorter name must be matched).
 
-Known quirks (documented, intentional or inherited; see KIT_NOTES.md)
-----------------------------------------------------------------------
+Known quirks (documented, intentional or inherited)
+---------------------------------------------------
 Q-SCR-1  Tokens of four characters or fewer must match exactly. Longer tokens match
          when they are at least 85% similar, so "Hasan" matches "Hassan" but "Omar"
          does not match "Omer".

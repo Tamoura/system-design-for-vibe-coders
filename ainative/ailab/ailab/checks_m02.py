@@ -930,7 +930,7 @@ def pointer_check(work: Path, mem: Memory) -> Check:
         unique = list(dict.fromkeys(missing))
         hint = "Check each path with ls. Documents drift; when a doc and the code disagree, the code wins."
         if any("KIT_NOTES.md" in m for m in unique):
-            hint += " KIT_NOTES.md belongs to the lab kit, not to this repository (two old docstrings still mention it); do not point to it."
+            hint += " KIT_NOTES.md belongs to the lab kit, not to this repository; do not point to it."
         return _fail(N_POINTERS, f"{_first(unique, 3)} does not exist" if len(unique) == 1 else f"not in the repository: {_first(unique, 3)}",
                      hint)
     if len(good) < MIN_POINTERS:

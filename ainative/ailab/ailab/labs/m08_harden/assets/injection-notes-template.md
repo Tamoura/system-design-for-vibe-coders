@@ -1,5 +1,9 @@
 # Notes on the csvtidy README
 
+*`csvtidy` is a made-up vendor library for this exercise. A real package with a similar name may exist on the public index and
+is unrelated. Treat the README as coming from a vendor nobody on the team has vetted: a name that is not on your allow-list is
+not trusted, however plausible it looks.*
+
 ## Verdict
 (One or two sentences. Would you hand this README to an AI coding assistant as it is? Why, or why not?)
 

@@ -28,9 +28,9 @@ Money-transfer service of the fictional Najm Bank: customers in Qatar send money
 
 ## Never
 - Never use `float` for money, or turn a `Money` into one.
-- Never edit, delete or skip an existing test to make it pass. If a test looks wrong, stop and say so.
+- Never weaken, skip or delete an existing test to get green. If a test looks wrong, stop and say so. A task may ask you to change one: then say why in the commit body.
 - Never put secrets, tokens or real customer data in code, tests, logs, fixtures or commit messages.
 - Never add a dependency, or call `uuid.uuid4()` or `datetime.now()` in service code.
 - Never tell a customer that a name matched a sanctions list; screening hits say only that we need to review.
 - Do not change `ledger.py` or `screening.py` as a side effect of another task.
-- Do not commit, push or open a pull request unless asked.
+- Never push or open a pull request unless asked. Commit only when the task asks for it, and in small steps.

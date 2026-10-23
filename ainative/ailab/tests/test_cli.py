@@ -5,7 +5,7 @@ import json
 import subprocess
 import sys
 
-from ailab import gitutil
+from ailab import cli, gitutil
 from conftest import GOOD_LAB, KIT_ROOT, make_lab, run_cli
 
 
@@ -45,6 +45,49 @@ def test_start_creates_the_work_directory_and_prints_the_task(work_dir):
     assert "# REMIT-212: spelling mistake" in out  # the task is printed
     assert f"python -m ailab grade m00 --dir {work_dir}" in out
     assert (work_dir / "TASK.md").is_file() and (work_dir / ".git").is_dir() and gitutil.has_ref(work_dir, "lab-start")
+
+
+def test_start_prints_a_grade_command_that_works_from_any_directory_and_says_where_the_work_directory_is(work_dir):
+    code, out, _ = run_cli("start", "m00", "--dir", str(work_dir))
+    lines = out.splitlines()
+    assert code == 0 and lines[2] == f"Work directory: {work_dir}"
+    tail = lines[-4:]
+    assert tail == [
+        f"Your work directory is {work_dir}. Edit files and run git and pytest there:",
+        f"  cd {work_dir}",
+        "When you are ready, grade from any directory:",
+        f"  PYTHONPATH={KIT_ROOT} python -m ailab grade m00 --dir {work_dir}",
+    ], tail
+    assert "Next: cd" not in out and "When you are ready:" not in out  # the old printout is gone
+
+
+def test_the_printed_grade_command_really_runs_from_anywhere(work_dir, tmp_path):
+    """Copy the printed command, paste it in an unrelated folder (a shell would split it exactly like shlex)."""
+    import shlex
+
+    _, out, _ = run_cli("start", "m00", "--dir", str(work_dir))
+    printed = out.splitlines()[-1].strip()
+    env_part, *argv = shlex.split(printed)
+    assert env_part == f"PYTHONPATH={KIT_ROOT}" and argv[:3] == ["python", "-m", "ailab"]
+    elsewhere = tmp_path / "somewhere else"
+    elsewhere.mkdir()
+    env = {k: v for k, v in __import__("os").environ.items() if k != "PYTHONPATH"}
+    env.update(PYTHONPATH=env_part.split("=", 1)[1], PYTHONDONTWRITEBYTECODE="1")
+    result = subprocess.run([sys.executable, *argv[1:]], cwd=elsewhere, env=env, capture_output=True, text=True)
+    assert result.returncode == 1 and "[FAIL]" in result.stdout and "No module named" not in result.stderr
+    # without the PYTHONPATH part the same command fails there, which is what learners kept meeting
+    bare = {k: v for k, v in env.items() if k != "PYTHONPATH"}
+    failed = subprocess.run([sys.executable, *argv[1:]], cwd=elsewhere, env=bare, capture_output=True, text=True)
+    assert failed.returncode != 0 and "No module named ailab" in failed.stderr
+    # solve prints the same command for the grade that follows it
+    code, solved, _ = run_cli("solve", "m00", "--dir", str(work_dir))
+    assert code == 0 and solved.splitlines()[-1].strip() == printed and "from any directory" in solved
+
+
+def test_grade_command_quotes_paths_with_spaces(tmp_path):
+    spaced = tmp_path / "my labs" / "m00"
+    command = cli.grade_command("m00", spaced)
+    assert f"--dir '{spaced}'" in command and command.startswith("PYTHONPATH=") and "python -m ailab grade m00" in command
 
 
 def test_start_accepts_id_spellings_and_defaults_the_directory_to_the_lab_id(tmp_path, monkeypatch):

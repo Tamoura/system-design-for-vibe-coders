@@ -51,8 +51,8 @@ the limit they have used and how much they can still send today.
   itself failed to deliver, and where a failed warning's audit entry falls. Either is accepted.
 - You worked in **small steps**: three commits or more (the spec commit counts), each with `pytest -q`
   green and a message as `CONTRIBUTING.md` says (any lower-case scope, such as `docs(specs):`),
-  nothing left uncommitted. The project memory tells an agent not to commit unless asked: ask it to,
-  or commit yourself.
+  nothing left uncommitted. The project memory lets an agent commit only when the task asks; this
+  one does: ask it to, or commit yourself.
 - You added tests and did not edit the old ones. They fail if the warning is removed and they pin
   the behaviour: the exact message in both languages, the percentage, totals just under and
   exactly at 80% (through `send`), and nothing sent when a transfer is refused.

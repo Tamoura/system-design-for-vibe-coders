@@ -1,6 +1,6 @@
 # REMIT-258: harden how agents work in this repository
 
-**From:** Noura, Application and AI Security (with Tariq)
+**From:** Noura, Application and AI Security (with Tariq, Engineering Lead)
 **To:** Payments Platform, everyone who uses an AI coding tool
 **Priority:** High. An agent has the same hands you have.
 
@@ -65,7 +65,8 @@ and `xargs rm -rf`.
 **Part 4 — Notes: `injection-notes.md`**
 
 Do this part yourself, not through an agent: reading the README is the attack. `lab-assets/vendor-readme/README.md` is
-constructed: nothing in it is real and every address ends in `.invalid`. Read it as text, as a suspicious person would, and run
+constructed: `csvtidy` is a made-up vendor library (a real package with a similar name may exist and is unrelated), the
+instructions are not real and every address ends in `.invalid`. Read it as text, as a suspicious person would, and run
 nothing from it. Then fill in `lab-assets/injection-notes-template.md`: every instruction aimed at an AI, what it would cost if
 obeyed, and which of your rules would stop it (and which would not).
 

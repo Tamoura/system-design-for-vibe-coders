@@ -275,3 +275,103 @@ def test_the_documented_najmkit_names_exist_and_the_hallucinated_ones_do_not():
                        hasattr(audit, "write"), hasattr(audit, "record")]})
     ''')
     assert got == {"ids": [True, True, True], "fake": [False] * 6}
+
+
+# -- quirks found by the module dry-runs (KIT_NOTES section 4, "Found by the dry-runs") ---------------------------------
+def test_q_svc_1_a_quote_is_not_bound_to_a_customer():
+    got = probe('''
+        from remit.fx import StaticRateProvider
+        from remit.models import Customer
+        from remit.notify import InMemoryNotifier
+        from remit.service import RemitService
+        from remit.store import Store
+
+        db = Store()
+        db.add_customer(Customer("C1", "Aisha", "T2", "none"))
+        db.add_customer(Customer("C2", "Bilal", "T1", "gold"))
+        service = RemitService(db, StaticRateProvider(), [], clock.get_clock(), InMemoryNotifier())
+        quote = service.quote(Money("500", "QAR"), "INR")
+        first = service.send("C1", Money("500", "QAR"), "INR", "Ravi", quote=quote)
+        second = service.send("C2", Money("500", "QAR"), "INR", "Ravi", quote=quote)
+        show({"fields": sorted(f for f in quote.__dataclass_fields__),
+              "fees": [str(first.transfer.fee.amount), str(second.transfer.fee.amount)], "quote_fee": str(quote.fee.amount)})
+    ''')
+    assert "customer" not in " ".join(got["fields"]) and got["fees"] == [got["quote_fee"]] * 2 == ["12.00", "12.00"]
+
+
+def test_q_cli_1_only_the_quote_command_uses_an_in_memory_store(tmp_path):
+    got = probe(f'''
+        import io, os
+        from remit import cli
+        db = {str(tmp_path / "never.db")!r}
+        out, err = io.StringIO(), io.StringIO()
+        quote_code = cli.main(["quote", "QAR", "500", "INR"], environ={{"REMIT_DB": db}}, out=out, err=err)
+        quote_created_a_file = os.path.exists(db)
+        history_code = cli.main(["history", "--customer", "C001"], environ={{"REMIT_DB": db}}, out=io.StringIO(), err=io.StringIO())
+        show({{"quote": quote_code, "quote_created_a_file": quote_created_a_file, "history_created_a_file": os.path.exists(db)}})
+    ''')
+    assert got["quote"] == 0 and got["quote_created_a_file"] is False and got["history_created_a_file"] is True
+
+
+def test_q_cli_2_help_prints_to_the_real_stdout_and_main_swallows_the_exit():
+    source = (BASE / "src" / "remit" / "cli.py").read_text(encoding="utf-8")
+    assert "except SystemExit as exc" in source and "return int(exc.code or 0)" in source
+    got = probe('''
+        import io
+        from remit import cli
+        out, err = io.StringIO(), io.StringIO()
+        code = cli.main(["--help"], out=out, err=err)
+        show({"code": code, "injected_out_is_empty": out.getvalue() == "", "injected_err_is_empty": err.getvalue() == ""})
+    ''')
+    assert got == {"code": 0, "injected_out_is_empty": True, "injected_err_is_empty": True}
+
+
+def test_i_najmkit_1_docstrings_promise_more_than_the_code_checks():
+    got = probe('''
+        from datetime import timedelta
+        calls = {}
+        try:
+            calls["new_id_newline"] = ids.new_id("TRF\\n")
+        except ValueError as exc:
+            calls["new_id_newline"] = "ValueError"
+        try:
+            audit.log_event("transfer.sent", event="x")
+            calls["event_kwarg"] = "accepted"
+        except TypeError:
+            calls["event_kwarg"] = "TypeError (Python, before the reserved-name check)"
+        try:
+            audit.log_event("transfer.sent", ts="x")
+            calls["ts_kwarg"] = "accepted"
+        except ValueError:
+            calls["ts_kwarg"] = "ValueError (reserved)"
+        fixed = clock.FixedClock("2026-03-02T09:00:00+00:00")
+        calls["backwards"] = str(fixed.advance(seconds=-5))
+        calls["float"] = str(fixed.advance(seconds=0.5))
+        ids.use_generator(lambda: 42)  # promised to return str; nothing checks
+        calls["generator_returns_int"] = ids.new_id("TRF")
+        show(calls)
+    ''')
+    assert got["new_id_newline"] == "TRF\n-000001"  # the regex ends in `$`, which also matches before a trailing newline
+    assert got["event_kwarg"].startswith("TypeError") and got["ts_kwarg"].startswith("ValueError")
+    assert got["backwards"] == "2026-03-02 08:59:55+00:00" and got["float"] == "2026-03-02 08:59:55.500000+00:00"
+    assert got["generator_returns_int"] == "TRF-42"
+
+
+def test_the_base_docs_describe_the_tests_of_ledger_and_screening_accurately():
+    """README, TOUR and ARCHITECTURE say 'no dedicated tests' (they are exercised through send()), never plain 'no tests'."""
+    for rel in ("README.md", "docs/TOUR.md", "docs/ARCHITECTURE.md"):
+        text = " ".join((BASE / rel).read_text(encoding="utf-8").split())
+        assert "no dedicated tests" in text or "No dedicated tests" in text, rel
+        assert not re.search(r"(?i)\bno tests\b\.?\*{0,2}\s*(Read it|and it keeps|\))", text), rel
+    assert "test_service" in (BASE / "docs" / "TOUR.md").read_text(encoding="utf-8")
+    assert "KIT_NOTES" not in (BASE / "src" / "remit" / "ledger.py").read_text(encoding="utf-8")
+    assert "KIT_NOTES" not in (BASE / "src" / "remit" / "screening.py").read_text(encoding="utf-8")
+
+
+def test_contributing_md_states_the_rules_the_labs_teach():
+    text = " ".join((BASE / "CONTRIBUTING.md").read_text(encoding="utf-8").split())
+    assert "Every commit leaves the whole suite green" in text and "write the failing test first" in text and "commit both" in text
+    assert "one lower-case word naming the area you changed" in text and "not a closed list" in text
+    for scope in ("notify", "fees", "limits", "docs", "ci", "deps", "najmkit"):
+        assert f"`{scope}`" in text
+    assert "second human reviewer" in text and "Tariq" in text and "Nada" in text and "Payments Platform team" in text

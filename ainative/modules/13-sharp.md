@@ -17,7 +17,7 @@
 - Stay current on a cadence, not on the news cycle, and say plainly what AI wrote and what you checked.
 
 ## 🧭 Why it matters
-Last Tuesday Lujain asked her agent to "tidy the rounding in the ledger". Its diff made the partner's share of the fee round half up, "like everything else in Remit". The ledger has no tests of its own, so nothing went red, and she opened a pull request. On Thursday Nada, the second reviewer that money logic needs, asks in the clinic: "Why does the ledger give the partner 3.04 on a fee of 10.15, not 3.05?" Lujain has never opened `ledger.py`. Its docstring documents the quirk (Q-LED-1) and warns against refactoring the file without characterization tests. The agent skipped that or took it for a bug, and she could not say which.
+Last Tuesday Lujain (graduate engineer) asked her agent to "tidy the rounding in the ledger". Its diff made the partner's share of the fee round half up, "like everything else in Remit". The ledger has no tests of its own, so nothing went red, and she opened a pull request. On Thursday Nada (quality engineering lead), the second reviewer that money logic needs, asks in the clinic: "Why does the ledger give the partner 3.04 on a fee of 10.15, not 3.05?" Lujain has never opened `ledger.py`. Its docstring documents the quirk (Q-LED-1) and warns against refactoring the file without characterization tests. The agent skipped that or took it for a bug, and she could not say which.
 
 What was missing was not a prompt trick but a fundamental: reading code and asking why it is the way it is. It is a skill you practise less when an agent does the reading. The fifth habit, **Automate the loop, keep the skill**, has two halves: Module 9 built the first, this module the second. In January 2026 Anthropic researchers published a small randomized study in which mostly junior engineers who learned a library with an AI assistant scored lower on a comprehension quiz afterwards. Its authors state its limits; it is reason enough to practise on purpose.
 
@@ -67,9 +67,9 @@ to a bound stays in the lower tier. I will paste each attempt.
 
 ### 🟡 Going deeper
 
-**Taste** is knowing what good looks like and what to leave out. An agent will produce what you cannot judge, so read one merged pull request a week from another team: before you open the review comments, write the three questions you would ask, then compare. Tariq: "Taste is mostly the list of things you chose not to do."
+**Taste** is knowing what good looks like and what to leave out. An agent will produce what you cannot judge, so read one merged pull request a week from another team: before you open the review comments, write the three questions you would ask, then compare. Tariq (engineering lead): "Taste is mostly the list of things you chose not to do."
 
-**Communication and requirements.** An agent cannot know what Hessa meant. Take a vague ticket, "make the fee clearer", and write your questions (the quote screen or the SMS? English only, or Arabic too?) and four acceptance criteria (lesson 3.1) before you prompt. Then compare with its questions.
+**Communication and requirements.** An agent cannot know what Hessa (product owner) meant. Take a vague ticket, "make the fee clearer", and write your questions (the quote screen or the SMS? English only, or Arabic too?) and four acceptance criteria (lesson 3.1) before you prompt. Then compare with its questions.
 
 **Evaluating tools and models on your own tasks.** A leaderboard answers "how does this model do on other people's tasks?". Known limits, from sources the course has checked:
 
@@ -85,7 +85,7 @@ A public score is a hint about other people's tasks, not a measurement of yours.
 **Staying current without chasing.** A cadence beats a feed:
 - A fixed 30 minutes a week for the release notes of your tools (Claude Code has published weekly ones; check the current documentation) and for security advisories. In August 2025 a prompt injection could make GitHub Copilot enable its own auto-approve setting (CVE-2025-53773, patched that month).
 - One small experiment a month: a hypothesis, a one-hour time box, one number, a decision. "Plan mode before any change over three files: do corrections fall?"
-- The two-source rule (this course's rule of thumb): change a habit when two trusted sources agree, or your own eval shows it. Prompt tricks expire: in Claude Code at the time of writing (2026), "think hard" is ordinary text while "ultrathink" still requests deeper reasoning for one turn; check the current documentation.
+- The two-source rule (this course's rule of thumb): change a habit when two trusted sources agree, or your own eval shows it. Prompt tricks expire (in 2026, "think hard" is ordinary text in Claude Code): check the current documentation.
 
 **Responsibility and honesty.** Najm's rules: every AI-assisted change is labelled and the author stays accountable. Honesty extends to what you checked; the strong note tells the reviewer where to look:
 
@@ -201,7 +201,7 @@ Re-rate every quarter and lift **one** weak skill at a time. A rule of thumb of 
 
 </details>
 
-**3. Salem will add a second approved tool. Lujain proposes picking whichever tops a public coding benchmark. What is the best objection?**
+**3. Salem (platform engineering) will add a second approved tool. Lujain proposes picking whichever tops a public coding benchmark. What is the best objection?**
 
 - A. Scores reflect other people's tasks; test on ours, with checks that fail first
 - B. Leaderboards are always wrong, so any approved tool will do just as well for our work
@@ -296,7 +296,7 @@ A clean copy fails, the reference passes, and `TODO` fails and names the missing
 
 **Plant a bug, then write the reference.** For a fix task, add the task without `setup`, `prepare` it, plant the bug in that copy and save its `git diff` as `eval/setup/<id>.patch`; only then add `"setup"`. The guard must pass with the bug planted, yet most bugs break an existing test: guard the test files yours leaves alone, as EX1 does. For the reference, `prepare` again, solve the task there and save `git add -N . && git diff`.
 
-**Choose tasks like a sceptic.** Take them from real work, including one that went wrong last month; prefer code a model is unlikely to have seen, such as `najmkit` (lesson 2.1). Make each check *fair*: any reasonable reading of the prompt passes. Keep two or three tasks you never tune against (lesson 2.2), or you measure your tuning.
+**Choose tasks like a sceptic.** Take them from real work, including one that went wrong last month; prefer code a model is unlikely to have seen, such as `najmkit` (lesson 2.1). Make each check *fair*: any reasonable reading of the prompt passes. Keep two or three tasks you never tune against, or you measure your tuning.
 
 **Read results honestly.** Say tool A passes 15 of 24 runs and tool B 17 of 24. A two-run gap on 24 runs is within what luck can produce, so name no winner: see which tasks differ, whether B's passes survive a read of the diff, and the minutes and corrections, then add runs. Compare tasks, not only totals.
 

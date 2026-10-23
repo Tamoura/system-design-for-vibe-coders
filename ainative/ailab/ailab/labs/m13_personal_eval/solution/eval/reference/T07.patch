@@ -8,8 +8,8 @@ index 6cd46da..aabc480 100644
  | `fx.py` | Rate providers, corridor margins and 60-second FX quotes |
 -| `risk.py` | Risk checks: sending limits and name screening, behind a single `check()` call |
 +| `limits.py` | Daily and monthly sending limits by KYC tier, on Qatar calendar days |
-+| `screening.py` | Name screening against the watchlist (old code, no tests) |
- | `ledger.py` | Double-entry postings for a sent transfer (old code, no tests) |
++| `screening.py` | Name screening against the watchlist (old code, no dedicated tests) |
+ | `ledger.py` | Double-entry postings for a sent transfer (old code, no dedicated tests: only `send()` exercises it) |
  | `store.py` | SQLite repository for customers and transfers |
  | `notify.py` | Notification templates in English and Arabic, and notifiers |
 @@ -73,9 +74,9 @@ ids come from `najmkit.ids`.

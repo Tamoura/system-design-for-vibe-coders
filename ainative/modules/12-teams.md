@@ -17,9 +17,9 @@
 - A policy without an owner and a check is a wish. When something breaks: contain, preserve, review without blame, change one control.
 
 ## 🧭 Why it matters
-Three months after Payments Platform rolled out its tools, Hamad asks Tariq two questions: how much of our code is AI-written, and are we faster? The IDE dashboard offers a stand-in for the first (41% of suggestions accepted; every figure here is fictional) and nothing answers the second. The same week Lujain opens a pull request of 1,100 changed lines, mostly agent-written, unlabelled, touching `fees.py`. It waits four days, then is approved because nobody can read 1,100 lines closely.
+Three months after Payments Platform rolled out its tools, Hamad (CISO) asks Tariq (engineering lead) two questions: how much of our code is AI-written, and are we faster? The IDE dashboard offers a stand-in for the first (41% of suggestions accepted; every figure here is fictional) and nothing answers the second. The same week Lujain (graduate engineer) opens a pull request of 1,100 changed lines, mostly agent-written, unlabelled, touching `fees.py`. It waits four days, then is approved because nobody can read 1,100 lines closely.
 
-Feelings also mislead: in one randomized trial of experienced developers on their own repositories, tasks took longer with early-2025 AI tools although the developers believed they had been faster (METR, 2025; METR cautions that other settings and newer tools may differ).
+Feelings also mislead: in one randomized trial of experienced developers on their own repositories, tasks took longer with early-2025 AI tools although the developers believed they had been faster (METR, 2025: other settings and newer tools may differ).
 
 ## 📐 How it works
 
@@ -31,7 +31,7 @@ Meta reports, in its own account of building an app with an AI agent, that when 
 
 ```mermaid
 flowchart LR
-    A["Working agreement"] --> B["Daily work: specify, delegate, verify"]
+    A["Working agreement"] --> B["Daily work: specify, delegate, verify, integrate"]
     B --> C["Pull request: label, small diff, author explains"]
     C --> D["Review: second human for money logic"]
     D --> E["Metrics: delivery plus guards"]
@@ -56,7 +56,7 @@ Weak:   Improves fee display and adds tests. All checks green.
 Strong: feat(cli): add quote --explain to show how a fee is worked out
         REMIT-244. AI-assisted: yes. Claude Code drafted the change and tests; I rewrote the tier numbering.
         Size: 112 changed lines, one change. Money modules edited: none (fees.py is only read).
-        Ran: pytest -q, 101 passed. Reverted src/ and watched the 2 new tests fail. Ran quote at
+        Ran: pytest -q, 102 passed. Reverted src/ and watched the 2 new tests fail. Ran quote at
         100, 500, 500.01 and 20000 by hand; output pasted below.
         Not checked: Arabic output (the flag changes English text only).
 ```
@@ -70,7 +70,7 @@ Strong: feat(cli): add quote --explain to show how a fee is worked out
 - **No-AI reps:** one ticket per sprint by hand, so the skill stays theirs (habit 5, **Automate the loop, keep the skill**).
 - **Pairing and a named senior reviewer** for the first months: the junior drives, the senior asks "why", and review time is planned.
 
-The risks: seniors become the bottleneck, juniors review output they cannot yet judge, and nobody struggles any more, which is one way people learn. A ban tends to push use onto personal accounts, which breaks the data rules; neither ban AI for juniors nor leave them unguided.
+The risks: seniors become the bottleneck, juniors review output they cannot yet judge, and nobody struggles any more, which is one way people learn. A ban tends to push use onto personal accounts, which breaks the data rules.
 
 **Metrics: measure delivery.** The research behind *Accelerate* (2018) found four keys (deployment frequency, lead time, time to restore, change failure rate). DORA's current guide lists five, adding deployment rework rate (2024) and renaming time to restore. The first three wordings follow the guide; the last two are common definitions, so check dora.dev:
 
@@ -91,15 +91,15 @@ The first three are *throughput*, the last two *instability*. **A vague metric b
 | Guard | Threshold | Response |
 |---|---|---|
 | Change failure rate | Above 15% over four weeks | Stop raising agent autonomy; review each failure at the clinic |
-| Rework rate | Above 20% in a quarter | Nada reviews the tests of those changes |
+| Rework rate | Above 20% in a quarter | Nada (quality engineering lead) reviews the tests of those changes |
 | Review turnaround | Median over 16 hours in a week | Review the queue; cap new agent work |
 | AI-related incidents | At least 1 in a quarter | Pause; run the incident process |
 
-Compare AI-assisted pull requests with the rest by label, but with 30 deployments a quarter (fictional), 3 failures against 4 is noise, and at about 8 deployments in four weeks two failures read as 25%. A tripped guard starts a look at cases: read trends, never decimals, never per engineer.
+Compare AI-assisted pull requests with the rest by label, but with 30 deployments a quarter (fictional), 3 failures against 4 is noise. A tripped guard starts a look at cases: read trends, never decimals, never per engineer.
 
 ### 🔴 Expert view
 
-**Policy that holds.** A rule needs an owner and a check; enforcement runs, roughly, from weakest to strongest: memory file (advice), permission rules and hooks (on the developer's machine), managed settings (nothing lower overrides them), CI with branch protection (on the server, whichever tool wrote the code). *Tools:* one approved list, owned by Salem, with a request path (Noura for security, Sara for data). *Data:* classes, synthetic test data, company accounts only. Anthropic's documentation says commercial terms exclude training on Claude Code prompts and code unless the customer opts in, consumer plans differ, and local transcripts sit in plain text for 30 days by default; check it. *Secrets:* deny rules for `.env`, a CI secret scan. *Licence and IP:* ask Layla for a written position on who owns AI-generated code and what to do with code an assistant reproduces; this course is not legal advice. See [*AI Governance*, lesson 5.2 — Intellectual property in AI inputs and outputs](../aigp/index.html#/5.2).
+**Policy that holds.** A rule needs an owner and a check; enforcement runs, roughly, from weakest to strongest: memory file (advice), permission rules and hooks (on the developer's machine), managed settings (nothing lower overrides them), CI with branch protection (on the server, whichever tool wrote the code). *Tools:* one approved list, owned by Salem (platform engineering), with a request path to Noura (application and AI security) and Sara (data protection officer). *Data:* classes, synthetic test data, company accounts only. Anthropic's documentation says commercial terms exclude training on Claude Code prompts and code unless the customer opts in, consumer plans differ, and local transcripts sit in plain text for 30 days by default; check it. *Secrets:* deny rules for `.env`, a CI secret scan. *Licence and IP:* ask Layla (head of AI governance) for a written position on who owns AI-generated code and what to do with code an assistant reproduces; this course is not legal advice. See [*AI Governance*, lesson 5.2 — Intellectual property in AI inputs and outputs](../aigp/index.html#/5.2).
 
 **Cost governance.** At the time of writing, `/usage` shows spend and headless runs take `--max-turns` and `--max-budget-usd` (a client-side estimate); check the current documentation. Anthropic's costs page gives enterprise averages of roughly $13 per developer per active day and $150 to $250 per month (no date shown; prices change). Set the budget from the first month's data; compare spend with delivery, such as cost per merged change. See [*Cloud & DevOps*, lesson 6.2 — FinOps: understanding, allocating and cutting cloud cost](../cloud/index.html#/6.2).
 
@@ -109,7 +109,7 @@ Compare AI-assisted pull requests with the rest by label, but with 30 deployment
 
 1. **Contain** within minutes: stop the session, revoke or rotate what it could reach, `git revert`.
 2. **Preserve** before cleanup: the transcript, the agent log, the pull request.
-3. **Tell** Maha or the on-call SRE within the hour.
+3. **Tell** Maha (SRE lead) or the on-call SRE within the hour.
 4. **Review without blame** within five working days: facts, inferences, unknowns, and what the agent was allowed to do.
 5. **Change one control**, merged within ten working days: a rule, hook, permission, memory line or test.
 
@@ -265,7 +265,7 @@ Owner: <name>.  Version: 1.  Next review: <date, and after any incident>.
 - Deliverable: `playbook.md` committed, plus your agent log and debrief answers in a notes folder.
 
 ## 🧭 Why it matters
-At the clinic Tariq reads out a page of guidance from his last company, nearly every sentence starting "should". "Which of these could you check?" he asks. Nobody can name one. A rule you cannot check is a hope, and a metric you cannot compute is a mood. Hessa's ticket asks for the opposite: every rule ends with how anyone could verify it, and every number can be recomputed by two people. An assistant drafts something fluent in minutes; this lab teaches you to read that draft the way the grader does.
+At the clinic Tariq reads out a page of guidance from his last company, nearly every sentence starting "should". "Which of these could you check?" he asks. Nobody can name one. A rule you cannot check is a hope, and a metric you cannot compute is a mood. Hessa (product owner) asks for the opposite in her ticket: every rule ends with how anyone could verify it, and every number can be recomputed by two people. An assistant drafts something fluent in minutes; this lab teaches you to read that draft the way the grader does.
 
 ## 📐 How it works
 
@@ -322,7 +322,7 @@ Then audit the draft. A fluent draft tends to have these flaws (constructed for 
 | `src/remit/risk.py` (`docs/ARCHITECTURE.md` still describes it) | Every file it points to exists |
 | "Studies show AI makes teams 30% faster" | No unsourced claims about productivity |
 
-The assistant's list of assumptions is a claim too (lesson 11.2): open the files.
+The assistant's list of assumptions is a claim too (lesson 11.1): open the files.
 
 ### 🔴 Expert view
 

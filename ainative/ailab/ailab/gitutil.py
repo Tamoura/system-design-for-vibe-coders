@@ -29,6 +29,14 @@ TOOL_NOISE: tuple[str, ...] = (
     ".DS_Store",
     ".idea/**",
     ".vscode/**",
+    # what other agent tools write on their own (CLAUDE.md and AGENTS.md are NOT listed: labs ask for them)
+    ".cursor/**",
+    ".cursorrules",
+    ".windsurf/**",
+    ".codex/**",
+    ".gemini/**",
+    "GEMINI.md",
+    ".github/copilot-instructions.md",
     "**/__pycache__/**",
     "**/*.pyc",
     ".pytest_cache/**",
@@ -339,6 +347,24 @@ def diff_numstat(work: Path | str, since: str = TAG_START, *, include_untracked:
             files.append(path)
             added += _count_lines(Path(work) / path)
     return DiffStat(sorted(files), added, deleted)
+
+
+def commits_elsewhere(work: Path | str, since: str = TAG_START) -> list[tuple[str, int]]:
+    """Local branches other than the checked-out one that hold commits made since ``since``.
+
+    Returns ``(branch, number of non-merge commits)``, the branch with most commits first (then by name).
+    The graders read only the checked-out branch, so a learner who committed on a task branch and then
+    switched away sees "0 commits"; this is how a hint can say where the commits are.
+    """
+    here = current_branch(work)
+    found = []
+    for branch in branches(work):
+        if branch == here:
+            continue
+        count = len(commits_since(work, since, branch, no_merges=True))
+        if count:
+            found.append((branch, count))
+    return sorted(found, key=lambda item: (-item[1], item[0]))
 
 
 def commits_since(

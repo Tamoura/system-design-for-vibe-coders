@@ -1,8 +1,8 @@
 # Module 5 — Verification
 
-*A coding agent's report reads equally well whether the change is right or wrong, so the only thing that tells you which is evidence: a test that can fail, a diff you read, a run you watched. This module is about getting that evidence fast and spending it in proportion to the risk. Lesson 5.1 is the concept lesson: tests as the specification and the test-first loop with an agent, the nine ways AI-written code passes while being wrong, reading a diff by risk, a worked review of a pull request that is green and wrong, how to review a big diff, mutation and property tests as judges, proportional verification, calibrated trust, and the AI pull-request review checklist. Lesson 5.2 is the lab: Lujain's agent has opened a pull request for Hessa's loyalty-discount ticket, the suite is green, and you are the second reviewer. You write the review, then fix the branch.*
+*A coding agent's report reads equally well whether the change is right or wrong, so the only thing that tells you which is evidence: a test that can fail, a diff you read, a run you watched. This module is about getting that evidence fast and spending it in proportion to the risk. Lesson 5.1 is the concept lesson: tests as the specification and the test-first loop with an agent, the nine ways AI-written code passes while being wrong, reading a diff by risk, a worked review of a pull request that is green and wrong, how to review a big diff, mutation and property tests as judges, proportional verification, calibrated trust, and the AI pull-request review checklist. Lesson 5.2 is the lab: the agent of Lujain (graduate engineer) has opened a pull request for the loyalty-discount ticket of Hessa (product owner), the suite is green, and you are the second reviewer. You write the review, then fix the branch.*
 
-> **Focus:** Verify — habit 4, *trust evidence, not fluency*: check what the agent produced with tests, diffs and runs before it ships, and decide how much checking each change deserves.
+> **Focus:** Verify — habit 4, *Trust evidence, not fluency*: check what the agent produced with tests, diffs and runs before it ships, and decide how much checking each change deserves.
 
 ---
 
@@ -17,7 +17,7 @@
 - **Spend in proportion:** money logic gets everything, a typo does not. Unverified merged code is verification debt.
 
 ## 🧭 Why it matters
-Lujain's agent finishes REMIT-227 in minutes: show the rate in the "transfer sent" message. The pull request touches four files and says "all tests pass". They do: 99 passed. Tariq asks one question: "Which test goes red if the Arabic number is wrong?" Lujain cannot name one. The Arabic message ends with the rate in Western digits, and the test forbidding that was quietly narrowed.
+Lujain (graduate engineer) has her agent finish REMIT-227 in minutes: show the rate in the "transfer sent" message. The pull request touches four files and says "all tests pass". They do: 99 passed. Tariq (engineering lead) asks one question: "Which test goes red if the Arabic number is wrong?" Lujain cannot name one. The Arabic message ends with the rate in Western digits, and the test forbidding that was quietly narrowed.
 
 In March 2026 METR published "Many SWE-bench-Passing PRs Would Not Be Merged into Main": maintainers of three repositories reviewed patches that had passed an automated grader, and a substantial share would not have been merged (METR cautions: one benchmark subset, one harness, a single attempt). [*Software Testing*, lesson 6.1 — Verifying AI-generated code](../testing/index.html#/6.1) catalogues the failures; this lesson is the routine.
 
@@ -65,7 +65,7 @@ An invented name is also a supply-chain risk. Spracklen et al. (USENIX Security 
 | **Maintainability** | Can the next person, or agent, follow it? |
 | **Hidden coupling** | Who else reads this constant, template or event? |
 
-**A worked review: green, and wrong.** Hessa's ticket REMIT-227: *add the rate to the "transfer sent" message as its last sentence. English: `Rate: 22.5720.` Arabic: `سعر الصرف: ٢٢٫٥٧٢٠.` Arabic messages use Arabic-Indic digits. Do not change other words.* Lujain's agent opens a pull request that says 99 tests pass. The diff, without context lines, the English-test hunks or the one-line change in `tests/test_service.py` (they follow the wording):
+**A worked review: green, and wrong.** Hessa (product owner) wrote REMIT-227: *add the rate to the "transfer sent" message as its last sentence. English: `Rate: 22.5720.` Arabic: `سعر الصرف: ٢٢٫٥٧٢٠.` Arabic messages use Arabic-Indic digits. Do not change other words.* Lujain's agent opens a pull request that says 99 tests pass. The diff, without context lines, the English-test hunks or the one-line change in `tests/test_service.py` (they follow the wording):
 
 ```diff
 --- a/src/remit/notify.py
@@ -136,7 +136,7 @@ flowchart TD
     E --> F["Verdict, with a second human for money logic"]
 ```
 
-- **Shrink it first.** A pull request that mixes two changes goes back to be split (habit 3, *small verified steps*).
+- **Shrink it first.** A pull request that mixes two changes goes back to be split (habit 3, *Small verified steps*).
 - **Sort files by risk,** not name: money logic and tests first, formatting last.
 - **Run the old tests on the new code:** `git show main:tests/test_fees.py > tests/test_old.py`, run it, delete it. Red means a behaviour change to explain.
 - **A second model adds questions.** Claude Code has `/code-review` and a writer/reviewer pattern with a fresh session. Its best-practices page warns that reviewers "will usually report some, even when the work is sound": verify each finding, keep the verdict, skip `--fix`.
@@ -160,7 +160,7 @@ flowchart TD
 | **Mutation check** | Break the code on purpose; see whether a test fails | Tests around money logic |
 
 ## 🏛️ In practice at Najm Bank
-Nada owns the artefact: the **AI pull-request review checklist**. It sits in the pull-request template of every Payments Platform repository, beside the `AI-assisted` label. Author and reviewer tick it; an unticked line needs a reason. Save it as `docs/review-checklist.md`.
+Nada (quality engineering lead) owns the artefact: the **AI pull-request review checklist**. It sits in the pull-request template of every Payments Platform repository, beside the `AI-assisted` label. Author and reviewer tick it; an unticked line needs a reason. Save it as `docs/review-checklist.md`.
 
 ```markdown
 # AI pull-request review checklist
@@ -230,7 +230,7 @@ Use it in proportion: all of it for money modules, Parts 1 and 4 for a copy chan
 
 <details><summary>Answer</summary>
 
-**C.** A surviving mutant means the suite cannot tell right code from broken. Add characterization tests before an agent touches the ledger. (🔴 Judges that do not get tired.)
+**C.** A surviving mutant means the suite cannot tell right code from broken. (🔴 Judges that do not get tired.)
 
 </details>
 

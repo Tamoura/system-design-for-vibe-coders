@@ -41,6 +41,7 @@ class Lifecycle:
     head_at_start: str = ""
     tag_at_start: str = ""
     status_after_grading: list = field(default_factory=list)
+    starter_commits_elsewhere: list = field(default_factory=list)  # (branch, n) holding commits made since lab-start
     solved_grades: list = field(default_factory=list)
     total_seconds: float = 0.0
 
@@ -74,6 +75,7 @@ def _run_lifecycle(lab_id: str, work: Path) -> Lifecycle:
     life.head_at_start = gitutil.head(work)
     life.tag_at_start = gitutil.rev_parse(work, "lab-start") or ""
     life.status_before = gitutil.status_porcelain(work, ignore=())
+    life.starter_commits_elsewhere = gitutil.commits_elsewhere(work)
     life.starter_grades = framework.grade_lab(lab, work, catch=False)
     life.digest_after_grading = tree_digest(work)
     life.status_after_grading = gitutil.status_porcelain(work, ignore=())
@@ -146,6 +148,44 @@ def test_the_reference_solution_passes(lifecycle_for, lab_id):
     life = lifecycle_for(lab_id)
     assert framework.passed(life.solved_grades), "the reference solution fails the grader:\n" + describe(life.solved_grades)
     assert [c.name for c in life.solved_grades] == [c.name for c in life.starter_grades]
+
+
+NEW_SECRET_RULES = {"environment-style secret (NAME=value)", "bank account number (Qatar IBAN)"}
+
+
+@pytest.mark.parametrize("lab_id", PARAMS)
+def test_the_secret_scanner_finds_nothing_in_any_seed_asset_or_reference_solution(lifecycle_for, lab_id):
+    """`checks.no_secrets` knows NAME=value lines and Qatar IBANs; no lab file may trip those two rules by accident.
+
+    The lifecycle's work directory is the started lab after `solve`, so this scans the base repository, the seed's files, the
+    assets copied to lab-assets/ and everything the reference solution wrote, in one go.
+    """
+    from ailab import checks
+
+    life = lifecycle_for(lab_id)
+    work = life.work
+    paths = set(gitutil.out(work, "ls-files").splitlines()) | set(gitutil.changed_files(work, ignore=()))
+    hits = []
+    for rel in sorted(paths):
+        path = work / rel
+        if not path.is_file():
+            continue
+        data = path.read_bytes()
+        if b"\0" in data[:8000] or len(data) > 2_000_000:
+            continue
+        for rule, line in checks.find_secrets(data.decode("utf-8", errors="replace")):
+            if rule in NEW_SECRET_RULES:
+                hits.append(f"{rel}:{line} ({rule})")
+    assert hits == [], "the new secret rules fire on lab files (false positives):\n  " + "\n  ".join(hits)
+    assert checks.no_secrets(work, scan="all", ignore=gitutil.TOOL_NOISE).ok or lab_id == "m05", \
+        "the solved lab trips no_secrets"
+
+
+@pytest.mark.parametrize("lab_id", PARAMS)
+def test_a_started_lab_has_no_commits_on_another_branch(lifecycle_for, lab_id):
+    """The hints name 'the branch that holds your commits'; at the start there must be none."""
+    life = lifecycle_for(lab_id)
+    assert life.starter_commits_elsewhere == [], life.starter_commits_elsewhere
 
 
 @pytest.mark.parametrize("lab_id", PARAMS)

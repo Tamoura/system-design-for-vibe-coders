@@ -1,6 +1,6 @@
 # Module 4 — The daily loop
 
-*Module 4 is the short, repeatable cycle in which you and your agent get real work shipped: explore, plan, implement one small step, check it yourself, read the diff, commit, and start again. Lesson 4.1 is the concept lesson, set on the Payments Platform team at Najm Bank: what to do before the session (a clean tree, a branch per task, a green baseline), the workflows the Claude Code documentation recommends, checkpoints and rewind, plan mode, six cues that an agent is going astray, the two-failure rule, when to take the wheel, session hygiene and the agent log, with a session timeline whose interventions are marked. It ends with two artefacts, the Loop checklist and the Interruption cues card, and with Meta's own description of verification as the bar for done. Lesson 4.2 is the lab: Hessa's ticket REMIT-318 asks Remit to warn a customer, in English or Arabic, when a transfer takes them to 80% of their daily limit. You write a spec and a plan, work in small commits, add tests, and the offline grader runs hidden acceptance tests and breaks your feature on purpose to see whether your tests notice. An agent is recommended, not required. Everything on the Najm side is fictional.*
+*Module 4 is the short, repeatable cycle in which you and your agent get real work shipped: explore, plan, implement one small step, check it yourself, read the diff, commit, and start again. Lesson 4.1 is the concept lesson, set on the Payments Platform team at Najm Bank: what to do before the session (a clean tree, a branch per task, a green baseline), the workflows the Claude Code documentation recommends, checkpoints and rewind, plan mode, six cues that an agent is going astray, the two-failure rule, when to take the wheel, session hygiene and the agent log, with a session timeline whose interventions are marked. It ends with two artefacts, the Loop checklist and the Interruption cues card, and with Meta's own description of verification as the bar for done. Lesson 4.2 is the lab: REMIT-318, a ticket from Hessa (product owner), asks Remit to warn a customer, in English or Arabic, when a transfer takes them to 80% of their daily limit. You write a spec and a plan, work in small commits, add tests, and the offline grader runs hidden acceptance tests and breaks your feature on purpose to see whether your tests notice. An agent is recommended, not required. Everything on the Najm side is fictional.*
 
 > **Focus:** Workflow — habit 3, *Small verified steps*: take one small step at a time, check it yourself, keep a commit to return to, and stop the agent early rather than late.
 
@@ -18,7 +18,7 @@
 - Biggest trap: waiting.
 
 ## 🧭 Why it matters
-On a Friday (a constructed day) Lujain gives her agent REMIT-269, a `--since` option for `history`, in one prompt and goes into a meeting. When she returns, 14 files and 612 lines have changed: the option, a parser refactor, a tidy-up of `fees.py` and three edited tests. All pass; she commits it as `wip`. Nada asks which of the 612 lines the feature needs; Lujain cannot say, and one edited test used to guard a fee-tier boundary. The pull request is split into four, and unpicking `fees.py` takes longer than the feature did.
+On a Friday (a constructed day) Lujain (graduate engineer) gives her agent REMIT-269, a `--since` option for `history`, in one prompt and goes into a meeting. When she returns, 14 files and 612 lines have changed: the option, a parser refactor, a tidy-up of `fees.py` and three edited tests. All pass; she commits it as `wip`. Nada (quality engineering lead) asks which of the 612 lines the feature needs; Lujain cannot say, and one edited test used to guard a fee-tier boundary. The pull request is split into four, and unpicking `fees.py` takes longer than the feature did.
 
 Nothing the agent did was exotic. The loop was missing: no plan to hold the diff against, no check between steps, no commit to return to. DORA's 2024 report associated higher AI adoption with lower delivery stability, and its authors link part of that dip to larger batch sizes; these are survey associations, not proof of cause.
 
@@ -53,7 +53,7 @@ In each lap **you** state the step's check first, run it yourself, read `git dif
 | **Give Claude a way to verify its work** | "Give Claude a check it can run: tests, a build, a screenshot to compare", such as "write a failing test that reproduces the issue, then fix it" | Lesson 5.1 |
 | **Run autonomously with auto mode** | A classifier reviews commands before they run, for example `claude --permission-mode auto -p "fix all lint errors"` | Lesson 8.1 |
 | **Run multiple Claude sessions** | Worktrees and more; a writer session and a reviewer session in a fresh context | Lesson 10.1 |
-| **Run non-interactive mode; fan out across files** | `claude -p` in CI or scripts, `--allowedTools`, `/batch` | Lesson 9.1 |
+| **Run non-interactive mode; fan out across files** | `claude -p` in CI or scripts, `--allowedTools`, `/batch` | Lessons 9.1 and 10.1 |
 | **Adversarial review** (a topic, not a heading) | A subagent reviews the diff in a fresh context; reviewers "will usually report some, even when the work is sound" | Lesson 5.1 |
 
 **Before the session: git hygiene.**
@@ -80,7 +80,7 @@ git commit -m "feat(cli): filter history with --since"
 
 **Checkpoints and rewind.** At the time of writing (2026), Claude Code records a checkpoint for each prompt that starts a turn, keeps the 100 most recent and expires them about 30 days after the session's last snapshot. Open the menu with `Esc` `Esc` on an empty prompt, or `/rewind`: restore code, conversation or both, or summarise. Bash changes (`rm`, `mv`, `cp`), outside edits and other sessions are not tracked, and the documentation says checkpoints are not a substitute for git.
 
-**Cues that an agent is going astray.** The card in the 🏛️ section lists six, from thrashing to claims without evidence. Stop at the first.
+**Cues that an agent is going astray.** The card in the 🏛️ section lists six. Stop at the first.
 
 Anthropic, the maker of Claude Code, found that five assistants consistently showed sycophancy, a pull towards the user's view, across four text-generation tasks (Sharma and others, ICLR 2024). "You're right" is not evidence; a test run is (habit 4, *Trust evidence, not fluency*).
 
@@ -127,7 +127,7 @@ Anthropic, the maker of Claude Code, found that five assistants consistently sho
 | **Agent log** | Prompt, result, corrections, checks, minutes | After every AI-assisted task |
 
 ## 🏛️ In practice at Najm Bank
-Tariq opens the weekly clinic with two cards. The first is the **Loop checklist**; copy it as `loop-checklist.md`.
+Tariq (engineering lead) opens the weekly clinic with two cards. The first is the **Loop checklist**; copy it as `loop-checklist.md`.
 
 ```markdown
 # Loop checklist (one lap = one small step)
@@ -233,7 +233,7 @@ The clinic's rule: no pull request without a filled checklist, and no "the agent
 
 </details>
 
-**4. Hessa's ticket is to fix one misspelt word in an English message. Which approach fits?**
+**4. Hessa (product owner) files a ticket to fix one misspelt word in an English message. Which approach fits?**
 
 - A. A seven-step plan in plan mode, with a checkpoint after every single step.
 - B. A fresh session for each sentence of the ticket, to keep the context small.
@@ -396,8 +396,8 @@ existing test, and do not commit. Show me the diff when pytest -q is green.
 >   itself failed to deliver, and where a failed warning's audit entry falls. Either is accepted.
 > - You worked in **small steps**: three commits or more (the spec commit counts), each with `pytest -q`
 >   green and a message as `CONTRIBUTING.md` says (any lower-case scope, such as `docs(specs):`),
->   nothing left uncommitted. The project memory tells an agent not to commit unless asked: ask it to,
->   or commit yourself.
+>   nothing left uncommitted. The project memory lets an agent commit only when the task asks; this
+>   one does: ask it to, or commit yourself.
 > - You added tests and did not edit the old ones. They fail if the warning is removed and they pin
 >   the behaviour: the exact message in both languages, the percentage, totals just under and
 >   exactly at 80% (through `send`), and nothing sent when a transfer is refused.
@@ -424,7 +424,7 @@ pytest -q
 
 The starter is green: 99 tests pass. It holds `CLAUDE.md` (the project memory from lab 2.2), `specs/TEMPLATE.md`, an unfilled `agent-log.md` and `TASK.md`, committed as "Lab starting state" and tagged `lab-start`; steps 6 and 7 and the grader compare with that tag. The grader reads the branch checked out in `~/ainative/m04`, so grade on your task branch. If your tool reads `AGENTS.md`, copy or link the memory file.
 
-**Your move.** Follow the seven steps. Explore first, in plan mode if you use Claude Code, and record in the spec what the ticket leaves open. Commit the spec. With an agent, give it one step per prompt, as in the specified prompt above; the memory file tells it not to commit unless asked, so ask it to, or commit yourself. Then one step per lap: failing test, code, `pytest -q` yourself, `git diff`, commit as `type(scope): subject`. Stop at the first cue on the card.
+**Your move.** Follow the seven steps. Explore first, in plan mode if you use Claude Code, and record in the spec what the ticket leaves open. Commit the spec. With an agent, give it one step per prompt, as in the specified prompt above; the memory file lets it commit only when asked, so ask it to, or commit yourself. Then one step per lap: failing test, code, `pytest -q` yourself, `git diff`, commit as `type(scope): subject`. Stop at the first cue on the card.
 
 Step 6 is the one people skip. In `~/ainative/m04`, after committing, run `git restore --source=lab-start --staged --worktree src` to put the code back, then run your new tests. Those that expect a warning must fail; "no warning at 79.99%" or "nothing sent on a refusal" tests stay green, as they should. Then `git restore --source=HEAD --staged --worktree src` brings your feature back.
 

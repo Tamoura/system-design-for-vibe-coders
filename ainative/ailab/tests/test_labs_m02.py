@@ -1050,7 +1050,7 @@ def test_a_one_word_quote_is_no_quote(work):
 
 def test_a_quote_in_backticks_still_works_when_there_is_no_block_quote(work):
     """The template asks for a block quote, but a learner who used backticks quoted a real line and is not punished."""
-    text = re.sub(r"(## The memory line that mattered\n\n)> .*\n", r"\1`Never edit, delete or skip an existing test to make it pass.`\n", NOTES_OK)
+    text = re.sub(r"(## The memory line that mattered\n\n)> .*\n", r"\1`Never weaken, skip or delete an existing test to get green.`\n", NOTES_OK)
     assert N_QUOTES not in failing(notes_result(work, text))
 
 

@@ -28,7 +28,8 @@ Read these in the order of a transfer's life.
   the 60-second `FxQuote`.
 * **`limits.py`**: daily and monthly limits by KYC tier. "Day" means a Qatar calendar day.
 * **`screening.py`**: name screening against a watchlist. Old code, written before the
-  team had tests. **No tests.** Read it before you trust it.
+  team had tests. **No dedicated tests**: only `send()` exercises it. Read it before you
+  trust it.
 * **`ledger.py`**: double-entry postings in a `Ledger` class. Old code whose quirks are
   pinned by `tests/test_ledger_characterization.py`; each `RemitService` owns one.
 * **`store.py`**: SQLite storage. One query is built differently from all the others;
@@ -49,7 +50,7 @@ so tests can control all three. Look for the calls: `grep -rn "najmkit\|ids\.\|c
 One test file per module, plus `conftest.py` with the fixtures that make everything
 deterministic: a fixed clock (Monday 2 March 2026, 09:00 UTC), sequential ids, a fresh
 in-memory store and an in-memory notifier. There is no test file for
-`screening.py`.
+`screening.py`; `tests/test_service.py` exercises it through `send()`.
 
 ## Where to look when...
 

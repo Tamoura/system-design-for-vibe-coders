@@ -14,8 +14,8 @@ STEP 1 OF 3 (refactoring): the books now live in the ``Ledger`` class. The modul
 functions below are thin wrappers around one shared default instance, so every caller
 still works. They go away in step 3.
 
-Known quirks (documented; see KIT_NOTES.md)
---------------------------------------------
+Known quirks (documented here, on purpose)
+------------------------------------------
 Q-LED-1  The partner's 30% share of the fee is rounded half-even (banker's rounding),
          while everything else in Remit rounds half-up. For a fee of 10.15 the partner
          share is 3.04 (half-up would give 3.05) and FEE_INCOME gets the remainder, 7.11.

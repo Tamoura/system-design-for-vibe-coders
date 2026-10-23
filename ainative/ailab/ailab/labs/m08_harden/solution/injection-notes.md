@@ -16,8 +16,10 @@ A person should read it first, and an assistant should only see a cleaned copy.
   setup command and say nothing about it. I found them with a short Python script, not by looking.
 - **Advice to switch permission checks off.** It tells contributors to run the assistant with
   `--dangerously-skip-permissions` "to avoid questions". That removes the one place where a human would see the other tricks.
-- **A second package in the install line.** `csvtidy-extras` is not something anyone on the team has vetted. A name that
-  looks plausible in a README is exactly what a package squatter registers, and nobody can vouch for it.
+- **A second package in the install line.** `csvtidy` is a made-up vendor library for this exercise (a real package with a
+  similar name may exist on the public index and is unrelated). `csvtidy-extras` was not registered there when I checked, but
+  anyone could register it tomorrow, which is exactly the slopsquatting risk: a name that looks plausible in a README is what a
+  package squatter registers. Neither name is on our allow-list, and that is the point: nobody on the team has vetted either.
 
 ## What stopped it in my setup
 - The `Read(./.env)` deny rule stops the built-in tools from reading `.env`, and the guard hook blocks any shell command that

@@ -7,6 +7,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
+import shlex
 import sys
 from collections.abc import Sequence
 from pathlib import Path
@@ -44,6 +46,24 @@ def _parser() -> argparse.ArgumentParser:
     p.add_argument("--dir", default=".")
     p.add_argument("--force", action="store_true", help="apply even though you already changed files")
     return parser
+
+
+def _quote(path: Path | str) -> str:
+    """Quote a path for the learner's shell: shlex rules on Linux and macOS, double quotes on Windows."""
+    return f'"{path}"' if os.name == "nt" else shlex.quote(str(path))
+
+
+def grade_command(lab_id: str, work: Path) -> str:
+    """The grade command for ``work`` that works from ANY directory.
+
+    The kit is not installed as a package, so ``python -m ailab`` only finds it from the folder that
+    holds the ``ailab`` package (``ainative/ailab``). Putting that folder on ``PYTHONPATH`` for the one
+    command removes the restriction. Paths are absolute, so the command can be pasted anywhere.
+    """
+    kit = framework.KIT_DIR.parent
+    if os.name == "nt":  # pragma: no cover - Windows PowerShell
+        return f'$env:PYTHONPATH = "{kit}"; python -m ailab grade {lab_id} --dir "{work}"'
+    return f"PYTHONPATH={_quote(kit)} python -m ailab grade {lab_id} --dir {_quote(work)}"
 
 
 def _line(check: Check) -> list[str]:
@@ -114,8 +134,10 @@ def cmd_start(args: argparse.Namespace, out: TextIO) -> int:
     print("", file=out)
     print(lab.task_file.read_text(encoding="utf-8").rstrip(), file=out)
     print("", file=out)
-    print(f"Next: cd {work}", file=out)
-    print(f"When you are ready: python -m ailab grade {lab.id} --dir {work}", file=out)
+    print(f"Your work directory is {work}. Edit files and run git and pytest there:", file=out)
+    print(f"  cd {_quote(work)}", file=out)
+    print("When you are ready, grade from any directory:", file=out)
+    print(f"  {grade_command(lab.id, work)}", file=out)
     return 0
 
 
@@ -151,7 +173,8 @@ def cmd_solve(args: argparse.Namespace, out: TextIO) -> int:
     lab = _resolve_lab(args, work)
     framework.solve_lab(lab, work, force=args.force)
     print(f"Applied the reference solution for {lab.id} in {work}.", file=out)
-    print(f"Now run: python -m ailab grade {lab.id} --dir {work}", file=out)
+    print("Now grade it, from any directory:", file=out)
+    print(f"  {grade_command(lab.id, work)}", file=out)
     return 0
 
 

@@ -47,6 +47,11 @@ _COPY_IGNORE = shutil.ignore_patterns(
 )
 
 
+# Lists of test names and the like are cut after four names; lists of FILES after twelve, because the learner
+# needs every file name to act on (a hint such as "undo these" is useless when half of them are hidden).
+FILE_LIST_LIMIT = 12
+
+
 def _short(items: Sequence[str], limit: int = 4) -> str:
     shown = ", ".join(items[:limit])
     return shown + (f" (+{len(items) - limit} more)" if len(items) > limit else "")
@@ -159,7 +164,9 @@ def _run_pytest_in(
     """Run pytest with ``root`` as the project (rootdir, cwd and ``root/src`` on PYTHONPATH)."""
     with tempfile.TemporaryDirectory(prefix="ailab-junit-") as scratch:
         junit = Path(scratch) / "junit.xml"
-        cmd = ["-m", "pytest", "-q", "-p", "no:cacheprovider", "-p", "no:randomly", f"--junitxml={junit}",
+        # -P: do not put the working directory on sys.path, exactly like the `pytest -q` that CI runs
+        # (CONTRIBUTING.md); `python -m pytest` would let `from tests.x import ...` work here and fail in CI.
+        cmd = ["-P", "-m", "pytest", "-q", "-p", "no:cacheprovider", "-p", "no:randomly", f"--junitxml={junit}",
                "-o", "junit_family=xunit2", *args, *targets]
         run = runner.run_python(cmd, cwd=root, pythonpath=[root / "src"], timeout=timeout, extra_env=extra_env)
         result = PytestResult(returncode=run.returncode, timed_out=run.timed_out, duration=run.duration,
@@ -179,8 +186,9 @@ def run_pytest(
 ) -> PytestResult:
     """Run the learner's own tests (``paths`` are relative to the work directory) on a copy.
 
-    ``PYTHONPATH`` is the copy's ``src`` folder (and the copy itself), the environment is scrubbed
-    (runner.clean_env), and the run is killed after ``timeout`` seconds.
+    ``PYTHONPATH`` is the copy's ``src`` folder, the working directory is NOT on ``sys.path`` (``python -P -m pytest``,
+    like the ``pytest -q`` that CI runs), the environment is scrubbed (runner.clean_env), and the run is killed after
+    ``timeout`` seconds.
     """
     with work_copy(work) as root:
         return _run_pytest_in(root, list(paths), timeout=timeout, args=args, extra_env=extra_env)
@@ -213,21 +221,36 @@ def run_hidden_pytest(
         return _run_pytest_in(root, ["tests/_hidden"], timeout=timeout, args=args, extra_env=extra_env)
 
 
+def tests_pass_hint(timeout: float = 60.0) -> str:
+    """The default hint of ``tests_pass``: where to look, and why the grader can disagree with your shell."""
+    limit = ("The default time limit is 60 seconds per run." if timeout == 60.0
+             else f"The time limit here is {timeout:g} seconds per run (the default is 60).")
+    return ("Run `pytest -q` in your repository and read the first failure from the top. "
+            "The grader runs your tests in a clean copy of your work (no .git folder, none of the untracked environment folders "
+            "such as .venv or caches, and none of the variables you exported), so tests that pass in your shell can still fail "
+            "there: look for tests that need git history, an environment variable or tool of your own, or `from tests.x import ...` "
+            "(that works under `python -m pytest`, not under `pytest -q`). " + limit)
+
+
 def tests_pass(
     work: Path | str,
     paths: Sequence[str] = ("tests",),
     *,
     name: str = "Your tests pass",
     timeout: float = 60.0,
-    hint: str = "Run `pytest -q` in your repository and read the first failure from the top.",
+    hint: str | None = None,
     required: bool = True,
 ) -> Check:
-    """The learner's own visible tests (all of ``tests/`` by default) pass."""
+    """The learner's own visible tests (all of ``tests/`` by default) pass.
+
+    ``hint`` defaults to ``tests_pass_hint(timeout)``: read the first failure, and remember that the grader
+    runs the tests in a clean copy and within a time limit.
+    """
     result = run_pytest(work, paths, timeout=timeout)
     detail = result.summary()
     if result.failures:
         detail += f": {_short(result.failure_names)}"
-    return Check(name, result.ok, detail, "" if result.ok else hint, required)
+    return Check(name, result.ok, detail, "" if result.ok else (hint or tests_pass_hint(timeout)), required)
 
 
 def hidden_tests_pass(
@@ -264,6 +287,13 @@ def hidden_tests_pass(
 # =================================================================================
 # 2. git-based checks
 # =================================================================================
+UNDO_HINT = (
+    "Put the file back as it was at the start: `git restore --source=lab-start --staged --worktree -- <file>` "
+    "(for a file you added, `git rm -f <file>`, or just delete it if git does not know it yet). "
+    "If that change was already committed, commit the undo."
+)
+
+
 def files_changed_within(
     work: Path | str,
     allowed: Sequence[str],
@@ -271,7 +301,7 @@ def files_changed_within(
     since: str = LAB_START_TAG,
     ignore: Sequence[str] = TOOL_NOISE,
     name: str = "Only the expected files changed",
-    hint: str = "Revert what is not needed for this task (git restore <file> or git rm <file>).",
+    hint: str = "Undo what this task does not need. " + UNDO_HINT,
     require_change: bool = True,
     required: bool = True,
 ) -> Check:
@@ -282,10 +312,10 @@ def files_changed_within(
     changed = gitutil.changed_files(work, since, ignore=ignore)
     outside = [p for p in changed if not gitutil.glob_match(p, allowed)]
     if outside:
-        return Check(name, False, f"unrelated files changed: {_short(outside)}", hint, required)
+        return Check(name, False, f"unrelated files changed: {_short(outside, FILE_LIST_LIMIT)}", hint, required)
     if require_change and not changed:
         return Check(name, False, "no files have changed yet", "Make the change the ticket asks for.", required)
-    return Check(name, True, f"changed: {_short(changed)}" if changed else "nothing changed", "", required)
+    return Check(name, True, f"changed: {_short(changed, FILE_LIST_LIMIT)}" if changed else "nothing changed", "", required)
 
 
 def files_unchanged(
@@ -295,13 +325,13 @@ def files_unchanged(
     since: str = LAB_START_TAG,
     ignore: Sequence[str] = TOOL_NOISE,
     name: str = "Protected files untouched",
-    hint: str = "Do not edit these files; restore them with git restore <file>.",
+    hint: str = "Do not edit these files. " + UNDO_HINT,
     required: bool = True,
 ) -> Check:
     """No file matching the ``protected`` globs was added, changed or deleted (for example the tests)."""
     touched = [p for p in gitutil.changed_files(work, since, ignore=ignore) if gitutil.glob_match(p, protected)]
     if touched:
-        return Check(name, False, f"changed but should not be: {_short(touched)}", hint, required)
+        return Check(name, False, f"changed but should not be: {_short(touched, FILE_LIST_LIMIT)}", hint, required)
     return Check(name, True, "", "", required)
 
 
@@ -314,10 +344,14 @@ def diff_size(
     since: str = LAB_START_TAG,
     ignore: Sequence[str] = TOOL_NOISE,
     name: str = "The change is small",
-    hint: str = "Keep the diff to what the ticket needs; look at `git diff lab-start --stat`.",
+    hint: str | None = None,
     required: bool = True,
 ) -> Check:
-    """Lines added plus lines deleted since ``since`` are at most ``max_lines`` (and files at most ``max_files``)."""
+    """Lines added plus lines deleted since ``since`` are at most ``max_lines`` (and files at most ``max_files``).
+
+    The default hint says "keep it to what the ticket needs" when the change is too big and "make the change the
+    ticket asks for" when it is too small (``min_lines``).
+    """
     stat = gitutil.diff_numstat(work, since, ignore=ignore)
     detail = f"{plural(stat.n_files, 'file')}, +{stat.added} -{stat.deleted} lines"
     ok = stat.total <= max_lines and stat.total >= min_lines and (max_files is None or stat.n_files <= max_files)
@@ -327,7 +361,19 @@ def diff_size(
         detail += f" (limit {plural(max_files, 'file')})"
     if stat.total < min_lines:
         detail += " (nothing substantial has changed yet)"
+    if hint is None:
+        hint = ("Make the change the ticket asks for, then look at `git diff lab-start --stat`." if stat.total < min_lines
+                else "Keep the diff to what the ticket needs; look at `git diff lab-start --stat`.")
     return Check(name, ok, detail, "" if ok else hint, required)
+
+
+def _branch_hint(work: Path | str, since: str, fits: Callable[[int], bool]) -> str:
+    """"Your commits are on branch X": when another local branch holds commits that satisfy ``fits``, else ""."""
+    for branch, number in gitutil.commits_elsewhere(work, since):
+        if fits(number):
+            return (f"Your {plural(number, 'commit')} {'is' if number == 1 else 'are'} on branch {branch}, but the grader "
+                    f"reads the branch that is checked out here. Run `git switch {branch}` and grade again.")
+    return ""
 
 
 def commit_count(
@@ -341,7 +387,11 @@ def commit_count(
     hint: str | None = None,
     required: bool = True,
 ) -> Check:
-    """The number of commits made since ``since`` is as required."""
+    """The number of commits made since ``since`` is as required.
+
+    The default hint never recommends an interactive rebase. When the commits the check wants exist on another
+    local branch, it names that branch and says to switch to it (the checked-out branch is the one graded).
+    """
     count = len(gitutil.commits_since(work, since))
     ok = (exactly is None or count == exactly) and (at_least is None or count >= at_least) and \
          (at_most is None or count <= at_most)
@@ -350,9 +400,26 @@ def commit_count(
                                      f"at most {at_most}" if at_most is not None else "") if x))
     label = name or f"Commit count ({want})"
     detail = f"{plural(count, 'new commit')} since the start"
-    default_hint = "Commit your finished change (git add -A && git commit)." if count == 0 else \
-        "Squash or split your commits to match the task (git rebase -i is fine; so is starting the commit again)."
-    return Check(label, ok, detail, "" if ok else (hint or default_hint), required)
+    if ok:
+        return Check(label, True, detail, "", required)
+
+    def fits(n: int) -> bool:
+        return (exactly is None or n == exactly) and (at_least is None or n >= at_least) and \
+               (at_most is None or n <= at_most)
+
+    default_hint = _branch_hint(work, since, fits)
+    if not default_hint:
+        too_many = (exactly is not None and count > exactly) or (at_most is not None and count > at_most)
+        if count == 0:
+            default_hint = "Commit your finished change (git add -A && git commit)."
+        elif too_many:
+            default_hint = (f"The task wants {want} commit{'' if want.endswith(' 1') else 's'}. To combine yours, run "
+                            "`git reset --soft lab-start` (it keeps all your changes) and commit again in that many steps.")
+        else:
+            default_hint = (f"The task wants {want} commit{'' if want.endswith(' 1') else 's'}. Commit in smaller steps; to split "
+                            "what you already committed, run `git reset lab-start` (it keeps your files), then `git add <files>` "
+                            "and `git commit` one piece at a time.")
+    return Check(label, False, detail, hint or default_hint, required)
 
 
 def all_committed(
@@ -365,8 +432,12 @@ def all_committed(
     """No uncommitted or untracked changes are left in the work directory."""
     dirty = gitutil.status_porcelain(work, ignore=ignore)
     if dirty:
-        return Check(name, False, f"{plural(len(dirty), 'uncommitted change')}: {_short([d.strip() for d in dirty])}",
-                     "Commit your work (git add -A && git commit) or discard what you do not need.", required)
+        return Check(name, False,
+                     f"{plural(len(dirty), 'uncommitted change')}: {_short([d.strip() for d in dirty], FILE_LIST_LIMIT)}",
+                     "Commit your work (git add -A && git commit; if the task wants a single commit, `git add -A && git commit "
+                     "--amend --no-edit` adds it to your last commit) or discard what you do not need "
+                     "(`git restore --source=lab-start --staged --worktree -- <file>`, or delete a file git does not know).",
+                     required)
     return Check(name, True, "", "", required)
 
 
@@ -391,7 +462,8 @@ def commit_header_problems(
                 problems.append("it has no scope: write type(scope): subject, for example fix(notify): ...")
             match = _CC_NO_SCOPE.match(header)
         else:
-            problems.append("it does not look like `type(scope): subject`")
+            problems.append("it does not look like `type(scope): subject` (a lower-case type, one lower-case scope in "
+                            "brackets, a colon and a space, then the subject)")
     if match is not None:
         if match.group("type") not in types:
             problems.append(f"the type `{match.group('type')}` is not one of: {', '.join(types)}")
@@ -400,6 +472,14 @@ def commit_header_problems(
     if len(header) > max_header:
         problems.append(f"the header is {len(header)} characters; the limit is {max_header}")
     return problems
+
+
+COMMIT_FORMAT_HINT = (
+    "Open CONTRIBUTING.md and follow its commit format: type(scope): subject, where the scope is one lower-case word "
+    "for the area you changed (for example notify, fees, docs, ci, deps: examples, not a closed list). "
+    "If the wrong message is on your latest commit, fix it with `git commit --amend`. If an earlier commit is wrong, "
+    "run `git reset --soft lab-start` and commit again (in as many commits as the task asks for)."
+)
 
 
 def conventional_commits(
@@ -411,17 +491,29 @@ def conventional_commits(
     types: Sequence[str] = CC_TYPES,
     min_commits: int = 1,
     name: str = "Commit messages follow CONTRIBUTING.md",
+    hint: str | None = None,
     required: bool = True,
 ) -> Check:
     """Every commit since ``since`` has a Conventional Commits header as CONTRIBUTING.md describes.
 
-    Merge commits are skipped. Fails when fewer than ``min_commits`` commits exist.
+    Merge commits are skipped. Fails when fewer than ``min_commits`` commits exist. The hints say what each
+    mistake needs: a bad message on the latest commit is fixed with ``git commit --amend``, an earlier one with
+    ``git reset --soft lab-start`` and a new commit; commits on another local branch are named, not asked for again.
     """
     commits = [c for c in gitutil.commits_since(work, since) if not c.is_merge]
-    hint = "Open CONTRIBUTING.md and follow its commit format (amend with: git commit --amend)."
+    format_hint = hint or COMMIT_FORMAT_HINT
     if len(commits) < min_commits:
+        elsewhere = _branch_hint(work, since, lambda n: n >= min_commits)
+        if elsewhere:
+            plain = elsewhere
+        elif commits:
+            plain = (f"The task wants at least {min_commits} commits and you have {len(commits)}. Commit in smaller steps; "
+                     "to split what you already committed, run `git reset lab-start` (it keeps your files), then "
+                     "`git add <files>` and `git commit` one piece at a time.")
+        else:
+            plain = "Commit your change."
         return Check(name, False, f"found {plural(len(commits), 'commit')} since the start; expected at least {min_commits}",
-                     "Commit your change.", required)
+                     hint or plain, required)
     bad: list[str] = []
     for commit in commits:
         problems = commit_header_problems(commit.subject, types=types, require_scope=require_scope,
@@ -429,7 +521,7 @@ def conventional_commits(
         if problems:
             bad.append(f'"{commit.subject}": {problems[0]}')
     if bad:
-        return Check(name, False, _short(bad, 2), hint, required)
+        return Check(name, False, _short(bad, 2), format_hint, required)
     return Check(name, True, f"{plural(len(commits), 'commit message')} checked", "", required)
 
 
@@ -448,10 +540,32 @@ SECRET_PATTERNS: dict[str, re.Pattern[str]] = {
     "hard-coded credential": re.compile(
         r"""(?ix)(?P<name>\w*(?:api[_-]?key|secret|token|passwd|password|private[_-]?key|credential)\w*)
             ["']?\s*[:=]\s*["'](?P<value>[^"'\s]{12,})["']"""),
+    # NAME=value written without quotes and without spaces, as in a .env file, a shell line or a Markdown note:
+    # API_KEY=9f8e7d6c5b4a3210, `password=hunter2hunter2`, export GITHUB_TOKEN=abcd1234abcd1234
+    "environment-style secret (NAME=value)": re.compile(
+        r"""(?ix)(?<![\w.-])(?P<name>[\w.-]*(?:secret|token|passw(?:or)?d|api[_-]?key|private[_-]?key)[\w.-]*)
+            =(?P<value>[^\s"'`,;(){}\[\]<>]{12,})(?=[\s"'`,;)}\]>]|$)"""),
+    # A Qatar IBAN is "QA", two check digits and 25 letters or digits (29 characters), compact or in groups of four.
+    "bank account number (Qatar IBAN)": re.compile(
+        r"\bQA\d{2}(?:[A-Z0-9]{23,27}|(?: [A-Z0-9]{4}){5,6}(?: [A-Z0-9]{1,4})?)\b"),
 }
 # Names that mention "token" or "secret" but hold something harmless (token_url, secret_name, ...).
 _HARMLESS_NAME = re.compile(r"(?i)(url|uri|path|file|name|type|header|field|endpoint|expiry|expires|ttl|length|count|limit|label)s?$")
 _PLACEHOLDER = re.compile(r"(?i)change.?me|your[_-]|example|placeholder|dummy|fake|x{4,}|\*{3,}|<[^>]+>|\$\{|%\(|os\.environ|getenv")
+# More obvious placeholders for unquoted NAME=value: a variable reference ($X, %X%, {{x}}), a to-do, a mask.
+_ENV_PLACEHOLDER = re.compile(r"(?i)^(?:\$|%|\{\{|\.{3}|-+$|_+$)|redacted|replace.?me|insert|todo|changeit|^(?:none|null|true|false)$")
+_IDENTIFIER = re.compile(r"[A-Za-z_][A-Za-z_.]*")
+
+
+def _env_secret(name: str, value: str) -> bool:
+    """Is ``NAME=value`` a real secret rather than a harmless name, a placeholder or a reference to something else?"""
+    if _HARMLESS_NAME.search(name) or "://" in value or _ENV_PLACEHOLDER.search(value):
+        return False
+    # code such as `token=get_token_from_vault` or `password=settings.password` names a variable, not a secret;
+    # in an env file the name is upper case and any value counts
+    if name != name.upper() and _IDENTIFIER.fullmatch(value):
+        return False
+    return True
 
 
 def find_secrets(text: str) -> list[tuple[str, int]]:
@@ -466,6 +580,8 @@ def find_secrets(text: str) -> list[tuple[str, int]]:
                 if rule == "hard-coded credential" and (
                     _HARMLESS_NAME.search(match.group("name")) or "://" in value or _PLACEHOLDER.search(line)
                 ):
+                    continue
+                if rule.startswith("environment-style") and not _env_secret(match.group("name"), value):
                     continue
                 found.append((rule, number))
                 break
@@ -506,6 +622,9 @@ def no_secrets(
     """No key-like strings in what the learner added (``scan="added"``) or anywhere (``scan="all"``).
 
     Also scans the commit messages since ``since``. Reports rule names and file:line, never the secret.
+    Recognises provider key formats, ``name = "value"`` credentials, unquoted ``NAME=value`` lines for secret-like
+    names (SECRET, TOKEN, PASSWORD, API_KEY, PRIVATE_KEY) with a value of 12 characters or more that is not a
+    placeholder, and Qatar IBAN-like strings (``QA``, two digits, about 25 letters or digits).
     """
     work = Path(work)
     hits: list[str] = []
@@ -526,7 +645,7 @@ def no_secrets(
         for rule, _ in find_secrets(commit.message):
             hits.append(f"{rule} in the message of commit {commit.sha[:7]}")
     if hits:
-        return Check(name, False, _short(hits),
+        return Check(name, False, _short(hits, FILE_LIST_LIMIT),
                      "Remove the secret, rotate it if it was ever real, and read it from an environment variable instead. "
                      "If it is already committed, rewrite that commit (do not just add another).", required)
     return Check(name, True, "", "", required)
@@ -557,7 +676,7 @@ def forbid_patterns(
             if any(rx.search(line) for line in text.splitlines()):
                 hits.append(f"{label} in {path}")
     if hits:
-        return Check(name, False, _short(hits), hint, required)
+        return Check(name, False, _short(hits, FILE_LIST_LIMIT), hint, required)
     return Check(name, True, "", "", required)
 
 
@@ -704,6 +823,9 @@ def tests_fail_on_starter(
             if gitutil.glob_match(path, keep):
                 continue
             target = root / path
+            if target.is_dir():  # e.g. an untracked nested worktree (.claude/worktrees/<name>): not a file to put back
+                shutil.rmtree(target, ignore_errors=True)
+                continue
             original = None if state == "A" else gitutil.show_bytes(work, since, path)
             if original is None:
                 target.unlink(missing_ok=True)

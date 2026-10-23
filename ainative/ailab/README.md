@@ -23,8 +23,16 @@ python -m pip install -r requirements.txt               # pytest, nothing else
 python -m ailab doctor                                  # checks Python, git, pytest and a writable folder
 ```
 
+If your Python environment also has pytest plugins such as `pytest-randomly` or `pytest-xdist`, that is fine: the
+grader switches plugin loading and test shuffling off in its own runs, and Remit's tests do not depend on order.
+Keep your weekly notes (agent logs, grade output) in a folder or repository of your own outside the lab folders, for
+example `git init ~/ainative-notes`; the lessons say what to put there, and the kit does not create it.
+
 Run `python -m ailab ...` from this folder (`ainative/ailab`). To run it from anywhere, put this folder on
-`PYTHONPATH` (`export PYTHONPATH=/path/to/ainative/ailab`).
+`PYTHONPATH` for that one command: `PYTHONPATH=/path/to/ainative/ailab python -m ailab grade m00 --dir ~/ainative/m00`
+(PowerShell: `$env:PYTHONPATH = "C:\path\to\ainative\ailab"; python -m ailab grade m00 --dir ~\ainative\m00`).
+`start` and `solve` print exactly that command for your work directory, with the absolute paths filled in, so you can
+paste it into any terminal; without it, `python -m ailab` outside this folder says `No module named ailab`.
 
 ## Commands
 
@@ -36,17 +44,40 @@ python -m ailab grade m00 --dir ~/ainative/m00 [--json]   # check your work: PAS
 python -m ailab solve m00 --dir ~/ainative/m00            # apply the reference solution (a peek: try first)
 ```
 
-* `start` copies the Remit repository to the directory (it must be new or empty), makes it a git repository
+* `start` copies the Remit repository to the directory (it must be new or empty; the kit's `task.md` becomes `TASK.md` there), makes it a git repository
   on branch `main`, commits it as **"Initial state"**, applies the lab's situation, commits that as **"Lab
   starting state"** and tags it **`lab-start`**. It also puts the ticket in `TASK.md` and any lab material in
   `lab-assets/` (both are part of the starting commit, so `git add -A` is safe). `git diff lab-start` always
-  shows what *you* changed.
+  shows what *you* changed. At the end it prints where your work directory is and the grade command to run
+  from any directory.
 * `grade` runs the lab's checks and prints one line each: `[PASS]` or `[FAIL]`, what was found, and a hint (never
   the answer). It exits with status 0 only when every required check passes, 1 when some do not, and 2 when it
   could not run (wrong directory, unknown lab). `--json` gives the same report for tools.
-  Grading never changes your directory and never runs your code inside the grader's own process.
+  Grading never changes your directory and never runs your code inside the grader's own process. The grader
+  reads the branch that is checked out, compares your directory with the `lab-start` tag (uncommitted and
+  untracked files count), and ignores files that editors and other agent tools write on their own (`.cursor/`,
+  `.windsurf/`, `.codex/`, `.gemini/`, `GEMINI.md`, `.github/copilot-instructions.md`, `.aider*`, ...). `CLAUDE.md`,
+  `AGENTS.md` and the rest of `.claude/` are your work and count.
 * `solve` refuses if you have already changed files (use `--force`). The reference solution is there for the kit's
   own tests and for when you are truly stuck.
+
+## Your own tests, and learners who cannot open a live session
+
+**The 60-second limit.** When a lab asks you to write tests, the grader runs your suite (`pytest`, as the CI of
+Remit does, without your working directory on the import path) in a clean copy of your folder and gives it **60
+seconds by default** (a ticket that allows more says so). The copy has no `.git` folder, no virtual-environment
+folder and none of the variables you exported, so a test that passes in your shell can still fail there: keep your
+tests fast and independent of your machine, and read the failing test name the grader prints.
+
+**Nested or sandboxed learners.** An agent running inside another agent, or in a sandbox with no terminal user
+interface, cannot open a live interactive session of a coding tool (the `claude` program with its slash commands,
+`/context` for example) to watch a settings file, a hook or a skill load. The labs about memory, settings, hooks and
+toolkits (m01 part 2, m02, m08, m09, m10) offer one, but no grade depends on it: the grader reads files and runs your
+scripts against sample inputs. In that situation do the work from the ticket and the lesson, check each file as data (`python -m json.tool
+.claude/settings.json`, run your hook with a sample document on standard input and look at the exit code, run your
+script against the stand-in `claude`), do the part that needs a live session by hand or with a chat assistant if you
+can, and **write down in your notes what you could not see** instead of pretending: the notes are the part a grader
+cannot judge.
 
 ## How a lab is structured
 

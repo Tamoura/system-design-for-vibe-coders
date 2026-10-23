@@ -14,7 +14,7 @@ and in the code are fictional.
 | `fees.py` | Tiered fee schedules and `quote_fee` |
 | `fx.py` | Rate providers, corridor margins and 60-second FX quotes |
 | `risk.py` | Risk checks: sending limits and name screening, behind a single `check()` call |
-| `ledger.py` | Double-entry postings for a sent transfer (old code, no tests) |
+| `ledger.py` | Double-entry postings for a sent transfer (old code, no dedicated tests: only `send()` exercises it) |
 | `store.py` | SQLite repository for customers and transfers |
 | `notify.py` | Notification templates in English and Arabic, and notifiers |
 | `service.py` | `RemitService.quote()` and `RemitService.send()`: the orchestration |

@@ -1,6 +1,6 @@
 # Module 3 — Specifying the work
 
-*This module turns a ticket into something an agent can build from and you can verify against. Lesson 3.1 teaches spec-driven development on Najm Remit: why a ticket is not a spec, the ten parts of a spec, how to hunt ambiguity in money software (rounding, boundaries, currencies, fee parts, time zones, Arabic), how to make an agent interview you before it plans, how to review a plan, how to slice work so each piece fits one context, and how much spec a change deserves. It ends with two artefacts, the Spec template and the Plan checklist, and with Microsoft's own description of a seven-step lifecycle mapped onto this course. Lesson 3.2 is the lab: three vague tickets from Hessa become three specs, graded offline on their shape and on the facts that can be checked against the repository. An agent is optional, as an interviewer. Everything on the Najm side is fictional.*
+*This module turns a ticket into something an agent can build from and you can verify against. Lesson 3.1 teaches spec-driven development on Najm Remit: why a ticket is not a spec, the ten parts of a spec, how to hunt ambiguity in money software (rounding, boundaries, currencies, fee parts, time zones, Arabic), how to make an agent interview you before it plans, how to review a plan, how to slice work so each piece fits one context, and how much spec a change deserves. It ends with two artefacts, the Spec template and the Plan checklist, and with Microsoft's own description of a seven-step lifecycle mapped onto this course. Lesson 3.2 is the lab: three vague tickets from Hessa (product owner) become three specs, graded offline on their shape and on the facts that can be checked against the repository. An agent is optional, as an interviewer. Everything on the Najm side is fictional.*
 
 > **Focus:** Workflow — write down what done means, what is out of scope and what the plan is before anything is delegated, so that an agent's confident guess meets a spec instead of a gap.
 
@@ -18,7 +18,7 @@
 - Biggest trap: a confident spec nobody checked against the code. The code wins.
 
 ## 🧭 Why it matters
-On a Tuesday (a constructed day, not recorded from a real model) Hessa writes REMIT-288: *"Customers on the basic tier keep hitting their daily limit. Raise it to 3,000."* Lujain gives it to her agent. The diff is one line in `limits.py` and six edited tests. Everything passes. Nada's review then asks: does the monthly limit of 8,000.00 stay, so a T1 customer reaches it in three days? Is exactly 3,000.00 allowed? Which of the six edited tests were meant to change? Why does `docs/ARCHITECTURE.md` say 5,000? The ticket answered none, because Hessa found them obvious, and the agent asked none.
+On a Tuesday (a constructed day, not recorded from a real model) Hessa (product owner) writes REMIT-288: *"Customers on the basic tier keep hitting their daily limit. Raise it to 3,000."* Lujain (graduate engineer) gives it to her agent. The diff is one line in `limits.py` and six edited tests. Everything passes. Nada (quality engineering lead) then asks in review: does the monthly limit of 8,000.00 stay, so a T1 customer reaches it in three days? Is exactly 3,000.00 allowed? Which of the six edited tests were meant to change? Why does `docs/ARCHITECTURE.md` say 5,000? The ticket answered none, because Hessa found them obvious, and the agent asked none.
 
 The price of an unanswered question is the guess: the agent builds one reading as confidently as the right one. In the 2025 Stack Overflow developer survey (self-reported), the top frustration with AI tools was output that is "almost right, but not quite", which is what an unanswered boundary question produces: a limit that refuses 3,000.00 by one cent. A spec asks the questions before the build, when answering is cheap.
 
@@ -60,8 +60,6 @@ Every row was run against the code after the change.
 | **Fee parts** | "The fee" means which parts, in which order? | Raw fee, then minimum and cap, then the express surcharge after the cap |
 | **Time and zones** | Whose midnight? Which clock? What are "today" and "tomorrow"? | Stored in UTC; a Qatar day runs 21:00 to 21:00 UTC, no daylight saving; the clock is injected |
 | **Arabic** | Digits, separators, names, direction; who approves the wording? | Arabic-Indic digits; names inserted unchanged; English wording pinned by tests |
-
-Also ask who is affected, what happens on failure and what else must change.
 
 ```mermaid
 flowchart LR
@@ -151,7 +149,7 @@ The post says output quality tracks spec quality and recommends a small pilot fi
 | **Slices** | Pieces that fit one context, are verified alone and merge alone | When a plan passes ten steps or five files |
 
 ## 🏛️ In practice at Najm Bank
-Tariq's rule: no agent builds money logic from a ticket, only from a spec in `specs/` that the second reviewer has read first. Two artefacts follow. First `specs/TEMPLATE.md`, the file the lab gives you: replace every `TODO` and keep the headings.
+Tariq (engineering lead) sets the rule: no agent builds money logic from a ticket, only from a spec in `specs/` that the second reviewer has read first. Two artefacts follow. First `specs/TEMPLATE.md`, the file the lab gives you: replace every `TODO` and keep the headings.
 
 ```markdown
 # TODO: ticket id and title

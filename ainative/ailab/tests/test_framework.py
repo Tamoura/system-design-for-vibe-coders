@@ -293,6 +293,34 @@ def test_tool_noise_is_ignored_by_default(repo):
     assert len(gitutil.changed_files(repo, ignore=())) == 6
 
 
+OTHER_TOOLS_NOISE = (
+    ".cursor/rules/remit.mdc", ".cursorrules", ".windsurf/rules/remit.md", ".codex/config.toml", ".gemini/settings.json",
+    "GEMINI.md", ".github/copilot-instructions.md", ".aider.conf.yml", ".aider.chat.history.md",
+)
+
+
+def test_files_other_agent_tools_write_are_noise_too(repo):
+    for rel in OTHER_TOOLS_NOISE:
+        (repo / rel).parent.mkdir(parents=True, exist_ok=True)
+        (repo / rel).write_text("noise\n")
+    assert gitutil.changed_files(repo) == []
+    assert gitutil.diff_numstat(repo).total == 0 and gitutil.status_porcelain(repo) == []
+    assert len(gitutil.changed_files(repo, ignore=())) == len(OTHER_TOOLS_NOISE)
+    learner_commit(repo, "chore(x): a tool's files got committed")
+    assert gitutil.changed_files(repo) == []  # ignored once committed too
+
+
+def test_files_that_labs_ask_for_are_never_noise(repo):
+    """CLAUDE.md and AGENTS.md are the project memory (lab m02 onwards); .claude/ and workflows are real work."""
+    real = ("CLAUDE.md", "AGENTS.md", ".claude/settings.json", ".claude/agents/reviewer.md", ".claude/commands/review.md",
+            ".github/workflows/review.yml", ".github/pull_request_template.md", "cursor-notes.md", "docs/GEMINI.md")
+    for rel in real:
+        (repo / rel).parent.mkdir(parents=True, exist_ok=True)
+        (repo / rel).write_text("work\n")
+        assert not gitutil.glob_match(rel, gitutil.TOOL_NOISE), rel
+    assert gitutil.changed_files(repo) == sorted(real)
+
+
 def test_diff_numstat_counts_lines_since_the_tag_including_untracked(repo):
     (repo / "a.txt").write_text("one\nTWO\nthree\nfour\n")  # +2 -1
     (repo / "new.txt").write_text("1\n2\n3\n")  # +3

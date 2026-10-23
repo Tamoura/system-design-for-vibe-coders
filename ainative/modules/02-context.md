@@ -18,7 +18,7 @@
 - Biggest trap: pasting the README and architecture document into memory.
 
 ## 🧭 Why it matters
-In her second week Lujain types the same paragraph into a fourth prompt: `pytest -q`, money is `Decimal`, commits look like `type(scope): subject`, and `najmkit` is ours, so read its docs. The fifth time she forgets the last clause, and the agent writes `audit.record(...)`, which does not exist (lesson 1.1's `hallucinated-api`). Tariq does not coach her prompt: "Write it once, where the tool reads it at the start of every session."
+In her second week Lujain (graduate engineer) types the same paragraph into a fourth prompt: `pytest -q`, money is `Decimal`, commits look like `type(scope): subject`, and `najmkit` is ours, so read its docs. The fifth time she forgets the last clause, and the agent writes `audit.record(...)`, which does not exist (lesson 1.1's `hallucinated-api`). Tariq (engineering lead) does not coach her prompt: "Write it once, where the tool reads it at the start of every session."
 
 A month later he has the opposite problem (constructed). Someone pasted the README, the architecture document and a style guide into `CLAUDE.md`: 400 lines, one page describing a `risk.py` that no longer exists. The documentation names "the over-specified CLAUDE.md" a failure pattern. Both stories have one cause: nobody decided what the agent should see.
 
@@ -434,7 +434,7 @@ Run every command you put in it and show me the output. Quote the file behind ea
 ## 🏛️ In practice at Najm Bank
 *Needs an agent: yes, for the A/B part (no-agent path above). The grader never needs one.*
 
-**The ticket.** This is `TASK.md`, as Hessa wrote it.
+**The ticket.** This is `TASK.md`, as Hessa (product owner) wrote it.
 
 ```text
 # REMIT-251: write the project memory for Remit, then measure what it changes
@@ -579,7 +579,7 @@ Minutes:      <honest total, including checking>
 
 ## ⚠️ Mistakes and traps
 - **Copying a draft unrun.** The grader executes your commands, and so will your agent.
-- **Trusting `docs/ARCHITECTURE.md`.** It is partly out of date; fixing it is another ticket, and the scope check fails if you do it here. Two old docstrings mention `KIT_NOTES.md`, which is not in your repository: do not point to it.
+- **Trusting `docs/ARCHITECTURE.md`.** It is partly out of date; fixing it is another ticket, and the scope check fails if you do it here. `KIT_NOTES.md` belongs to the lab kit, not to your repository: do not point to it.
 - **Copying the "after" file from lesson 2.1.** It would pass and teach you nothing. Write yours from the repository.
 - **Leaving lab files in the A/B copies**, or in their git history. The agent may read `TASK.md`.
 - **Reporting a win you did not see.** The notes are graded for completeness, not results.

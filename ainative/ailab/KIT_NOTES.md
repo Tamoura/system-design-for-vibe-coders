@@ -7,14 +7,15 @@ they drift, so you can quote them with confidence. Everything is fictional.
 
 Contents: 1 Run only your lab's tests · 2 File map · 3 The base repository (Najm Remit) · 4 The register
 of quirks, smells and gaps · 5 Determinism · 6 How to write a lab · 7 The framework API · 8 What each
-planned lab needs from the base · 9 Open questions for the course owner
+planned lab needs from the base · 9 Open questions for the course owner · 10 Shared-kit findings from the
+dry-runs: fixed centrally, and left alone on purpose
 
 ---
 
 ## 1. Run only your lab's tests (other writers' labs may be unfinished)
 
-Up to six people build labs in parallel in `ailab/labs/`, so the full suite can contain someone
-else's half-built lab. Each lab is isolated: discovery lists labs by folder name and imports a lab only
+While labs are being written in parallel in `ailab/labs/`, the full suite can contain someone
+else's half-built lab (all fifteen are built now; the advice stays useful for a new lab). Each lab is isolated: discovery lists labs by folder name and imports a lab only
 when it is asked for, and the generic test is parametrised per lab, so a broken lab fails **only its own
 test cases**. To run just yours (from `ainative/ailab`):
 
@@ -31,6 +32,10 @@ python -m ailab start m05 --dir /tmp/m05
 python -m ailab grade m05 --dir /tmp/m05
 python -m ailab solve m05 --dir /tmp/m05
 ```
+
+`start` and `solve` end by printing the grade command for the work directory in a form that works from ANY directory:
+`PYTHONPATH=<absolute path of ainative/ailab> python -m ailab grade m05 --dir <work dir>` (a PowerShell form on Windows), so a lab
+or lesson never needs to say "run it from the ailab folder" for correctness; both forms are right (`cli.grade_command`).
 
 `-k m05` selects by substring, so name your test file `tests/test_labs_m05.py` and every test in it is
 selected too. Before you finish, run the **whole** suite once; failures in other labs are theirs, failures
@@ -52,6 +57,7 @@ ainative/ailab/
     __main__.py  cli.py          # list | doctor | start | grade | solve
     framework.py                 # Check, Lab, tolerant discovery, start/grade/solve, seed helpers, doctor
     checks.py                    # helpers every grader reuses (pytest runners, git checks, secrets, mutants, JSON, Markdown)
+    checks_m00.py ... checks_m14.py   # helpers private to one lab (its own graders and wrappers)
     gitutil.py  runner.py        # git and subprocess plumbing
     base/remit/                  # the frozen base repository (copied by `start`)
       README.md CONTRIBUTING.md pyproject.toml .gitignore .env.example .github/workflows/ci.yml
@@ -59,10 +65,11 @@ ainative/ailab/
       src/remit/   money corridors fees fx limits screening ledger store notify service cli config models errors
       src/najmkit/ ids clock audit            # the vendored internal library, API v1
       tests/       conftest + test_money/corridors/fees/fx/limits/notify/service/store/najmkit/config_cli
-    labs/                        # one folder per lab
+    labs/                        # one folder per lab: m00_first_fix ... m14_capstone (all built)
       __init__.py                # re-exports discovery
       m00_first_fix/             # the exemplar: lab.py task.md solution/ hidden/
-    stubs/                       # (planned) claude: the fake `claude` CLI for m09; NOT built by the kit builder
+    stubs/claude                 # built (by the m09 writer): a STAND-IN for the `claude` CLI's print mode, used by lab m09 only;
+                                 #   deterministic, calls no model, copied for the learner to lab-assets/bin/claude
   tests/                         # the kit's own tests: test_framework, test_checks, test_cli, test_base,
                                  #   test_base_notes, test_kit_notes, test_check_blocks, test_parallel_authoring,
                                  #   test_labs_generic (every lab), test_labs_m00 (+ one test_labs_mNN.py per lab)
@@ -503,8 +510,10 @@ Plus three uses of the *injected* clock object (`self.clock.now()` in `service.p
 | money, corridors, fees, fx, limits, notify | thorough (`test_<module>.py`) | exact numbers, boundaries, Arabic text, both rounding directions |
 | service | light (`test_service.py`) | happy path, validation, limits, screening, quotes, notification failure, audit |
 | store, najmkit, config, cli | `test_store.py`, `test_najmkit.py`, `test_config_cli.py` | `search_by_name` only on the happy path (S-STORE-1 is untested on purpose) |
-| **ledger** | **none** | exercised only indirectly through `service.send`; the visible tests assert no ledger balance |
-| **screening** | **none** | exercised only indirectly through `service.send` |
+| **ledger** | **no dedicated tests** | exercised only indirectly through `service.send`; the visible tests assert no ledger balance |
+| **screening** | **no dedicated tests** | exercised only indirectly through `service.send` |
+
+The base documents (README, `docs/TOUR.md`, `docs/ARCHITECTURE.md`) say exactly this: "no dedicated tests, only exercised through `send()`", never plain "no tests".
 
 `tests/conftest.py` (autouse `isolated_world`): clears `REMIT_*`/`NAJMKIT_AUDIT_LOG`, calls `ledger.reset()`, installs `SequentialIds()` and a
 global `FixedClock(2026-03-02T09:00:00Z)` (a Monday; 12:00 in Qatar), restores everything afterwards. Fixtures: `now`, `clock` (the global FixedClock), `store`
@@ -544,8 +553,8 @@ Also true: names are screened after accent stripping (`"Elena Marković"` matche
 | Id | What | Where / example |
 |---|---|---|
 | **S-STORE-1** | `Store.search_by_name` builds SQL with `str.format` (the only non-parameterised query). A single quote raises `sqlite3.OperationalError`; a crafted fragment changes the query. The docstring says KNOWN SMELL. | `search_by_name("O'B")` raises; `search_by_name("zzz%' OR name LIKE '%")` returns every customer. Suggested: m05/m08/m11 reviews. |
-| **D-ARCH-1** | `docs/ARCHITECTURE.md` still describes a `risk.py` module (section 1 table and section 6) that no longer exists; screening is `screening.py`, limits are `limits.py`, and `service.py` calls them separately. | `src/remit/risk.py` does not exist. Trap for m02 (pointers must resolve), m06/m11 (docs vs code). |
-| **D-ARCH-2** | The architecture doc's limits section states an old rule: two KYC tiers (T1 QAR 5,000/day, T2 QAR 25,000/day) and **no monthly limit**. The code has three tiers and monthly limits (generated table above). | Everything else in the doc is true, including "a day is a Qatar calendar day". |
+| **D-ARCH-1** | `docs/ARCHITECTURE.md` still describes a `risk.py` module (section 1 table and section 6) that no longer exists; screening is `screening.py`, limits are `limits.py`, and `service.py` calls them separately. **Left on purpose** (confirmed): it is the docs-versus-code seed for m02, m06, m11, m12, m13 and m14. | `src/remit/risk.py` does not exist. Trap for m02 (pointers must resolve), m06/m11 (docs vs code). |
+| **D-ARCH-2** | The architecture doc's limits section (section 5) states an old rule: two KYC tiers (T1 QAR 5,000/day, T2 QAR 25,000/day) and **no monthly limit**. The code has three tiers and monthly limits (generated table above). Sections 1, 5 and 6 are the stale ones; a ticket that touches limits or screening makes more of the document untrue (m14). | Everything else in the doc is true, including "a day is a Qatar calendar day" and "one dirham (0.01 QAR)" (the Qatari riyal has 100 dirhams). |
 | **D-SVC-1** | `send` is not atomic after the ledger: if `store.save_transfer` raises, the ledger posting stays (documented in the module docstring and ARCHITECTURE section 11). | Test: a store whose `save_transfer` raises leaves `ledger.journal()` non-empty. |
 | **I-SVC-1** | `RemitService.send` is one long function (89 lines) with numbered step comments. | Natural refactoring target; do not split it in the base. |
 | **I-SCR-1** | A stale `TODO(farid, 2022)` in `screening.py` (move the watchlist to a vendor feed). | The only stale TODO. |
@@ -555,7 +564,17 @@ Also true: names are screened after accent stripping (`"Elena Marković"` matche
 | **G-WARN** | No `limit_warning` template and no 80% logic. | m04 adds both. |
 | **G-LOYALTY** | `Customer.loyalty_tier` (`none/silver/gold`) exists but nothing uses it; no discount in `fees`. | m05's agent branch adds one (badly). |
 | **G-V2** | Only najmkit v1 exists. | m07 defines v2 in its own assets. |
-| **G-ADR** | No `docs/adr/`, no `specs/`, no `.claude/`, no `CLAUDE.md`, no `requirements.txt`. | Labs create what they need. |
+| **G-ADR** | No `docs/adr/`, no `specs/`, no `.claude/`, no `CLAUDE.md`, no `AGENTS.md`, no `CODEOWNERS`, no pull-request template, no `requirements.txt`; CI runs only `pytest -q`. A team-practice lab (m12) must state this to the learner. | Labs create what they need. |
+
+**Found by the dry-runs** (each executed by `tests/test_base_notes.py`; the base is frozen, so labs work around them and lessons may use them):
+
+| Id | What | Example |
+|---|---|---|
+| **Q-SVC-1** | A `Quote` is not bound to a customer, and `send(quote=q)` uses `quote.fee` and `quote.fx` unchanged. A quote shown to one customer can be sent by another (matters once fees depend on the customer, m05's loyalty discount). | `quote = service.quote(...)`; `send("C1", ..., quote=quote)` and `send("C2", ..., quote=quote)` both succeed with `quote.fee`. |
+| **Q-CLI-1** | `cli.main` opens `Store(':memory:' if args.command == 'quote' else config.db_path)`: a new command that reads no data needs a third edit away from the lab markers, or it creates a database file. | `main(["quote", ...], environ={"REMIT_DB": path})` creates no file; `history` does. |
+| **Q-CLI-2** | argparse `--help` prints to the real `sys.stdout`, not the injected `out`, and `main` swallows `SystemExit` and returns 0. Tests of `--help` need `capsys`. | `main(["--help"], out=buf)` returns 0 with `buf` empty. |
+| **I-NAJMKIT-1** | `najmkit` docstrings promise more than the code checks: `ids.new_id` says 2 to 5 upper-case letters but the regex ends in `$`, so `new_id("TRF\n")` works; `audit.log_event` calls `event` reserved but `event=` never reaches that check (Python raises `TypeError` first; `ts=` does raise `ValueError`); `FixedClock.advance` is typed `**delta: int` and "forward" but accepts floats and negative values; `use_generator` takes a "callable returning str" and checks nothing. m11's "known problems" section can find these; its grader names only one. | `advance(seconds=-5)` moves back 5 seconds; `use_generator(lambda: 42)` then `new_id("TRF")` is `TRF-42`. |
+| **G-V2-DOC** | `docs/najmkit.md` describes version 1.3.0 / API v1. Labs that seed najmkit 2 vendor 2.0.0 and say so in their ticket (m07). | |
 
 ## 5. Determinism: how time and ids are injected
 
@@ -597,11 +616,16 @@ the grader is an honour-system check (README).
 
 **solve(work)** must leave `grade` passing, commits included. Keep the solution's data in `solution/` (a patch, files, a commit message) and apply it in code.
 
-**Tests for your lab:** `tests/test_labs_mNN.py`. `tests/test_labs_generic.py` already runs, per lab: well-formedness, start state, starter fails, grading is deterministic and does not touch the work dir, solution passes, the lab is fast.
+**Tests for your lab:** `tests/test_labs_mNN.py`. `tests/test_labs_generic.py` already runs, per lab: well-formedness, start state, starter fails, grading is deterministic and does not touch the work dir, solution passes, the secret scanner finds nothing in the lab's seeds, assets and reference solution, no commit sits on another branch at the start, the lab is fast.
 Add **negative tests** for the wrong answers people really produce (see `tests/test_labs_m00.py`): special-casing the example, editing the tests, unrelated or oversized changes, bad commit messages, no commit or too many, floats for money, secrets, a regression
 test that passes on the starter. A grader must accept **any sound solution**, so also write at least one *alternative correct solution* test that does the work differently from `solve`.
 
+**Ticket ids** already used (do not reuse one for a different ticket; a lesson may mention another module's ticket on purpose): 0: 209, 212, 244 · 1: 224, 239 · 2: 251, 252 · 3: 212, 288, 299, 330, 341, 342, 343 · 4: 269, 318 · 5: 227, 229, 233, 238 · 6: 231 · 7: 372 · 8: 258 · 9: 285 · 10: 350, 361 (and 346, 347 in the lesson 10.1 story) · 11: 393 · 12: 244 (the lesson 0.3 ticket again), 262 · 14: 414.
+
+**Decision on `.claude/`** (asked by m10): `TOOL_NOISE` ignores only `.claude/settings.local.json` and `.claude/worktrees/**`. Other `.claude/` files (`settings.json`, `agents/`, `commands/`, `skills/`, `hooks/`) are the learner's work and count as changes, so a lab that teaches them allows `.claude/**` in its own `files_changed_within` list (m04, m09 and m10 do), and a lab that does not teach them (m00, m02) lets the scope check fail them.
+
 **Task text (`task.md`)**: the ticket as Hessa would write it; start with a `# ` heading; say what "done" means; do not mention hidden files or absolute paths. AUTHORING.md rule 10: an independent learner dry-run will follow only the lesson and the task.
+**Every situation the grader judges must be stated in `task.md`** (learned from the dry-runs): each rule it enforces, each shape it accepts (the commit count and header, the files you may touch, the exact names of files and headings), and each edge it treats as wrong. If a learner can fail a check only by guessing a rule that the ticket never states, the ticket is incomplete, not the learner. The lesson may add detail, never rules. Lessons embed `task.md` word for word in a `text` block, so edit both together.
 
 **Lesson code blocks** that show a kit file begin with `# ailab/<path relative to ainative/ailab>` and must equal the file; `python3 ailab/check_blocks.py` (from `ainative/`) checks it.
 
@@ -625,10 +649,12 @@ For pytest-style checks use `checks.run_pytest` / `run_hidden_pytest` / `tests_p
 
 ### 6.2 Reference: helper behaviour worth knowing
 
-* "Changed" = compared with the `lab-start` tag: committed, staged, unstaged **and untracked** files; `TOOL_NOISE` (`.claude/settings.local.json`, `.aider*`, `.DS_Store`, `.idea/**`, `.vscode/**`, `__pycache__`, `*.pyc`, `.pytest_cache`) is ignored by default.
-* `conventional_commits` enforces CONTRIBUTING.md: `type(scope): subject`, scope required (lower case), types `feat fix docs test refactor perf chore ci build revert`, optional `!`, no trailing full stop, header at most 72 characters; merge commits are skipped.
-* `diff_size` counts lines added plus lines deleted (`git diff --numstat` against the tag plus all lines of untracked text files). A one-word fix is 2.
-* `no_secrets` scans added lines (or everything with `scan="all"`) and commit messages for AWS/GitHub/Slack/`sk-`/`sk_live_` keys, private key blocks, bearer tokens and `name = "value"` credentials; placeholders (`changeme`, `your-...`, `example`, `${...}`, `os.environ`) and harmless names (`token_url`) are ignored; it reports the rule and file, never the secret.
+* "Changed" = compared with the `lab-start` tag: committed, staged, unstaged **and untracked** files; `TOOL_NOISE` is ignored by default: `.claude/settings.local.json`, `.claude/worktrees/**`, `.aider*`, `.DS_Store`, `.idea/**`, `.vscode/**`, `__pycache__`, `*.pyc`, `.pytest_cache`, and what other agent tools write on their own (`.cursor/**`, `.cursorrules`, `.windsurf/**`, `.codex/**`, `.gemini/**`, `GEMINI.md`, `.github/copilot-instructions.md`). `CLAUDE.md`, `AGENTS.md` and the rest of `.claude/` are **not** noise: labs ask for them.
+* `conventional_commits` enforces CONTRIBUTING.md: `type(scope): subject`, scope required (one lower-case word for the area changed; CONTRIBUTING.md gives examples, not a closed list), types `feat fix docs test refactor perf chore ci build revert`, optional `!`, no trailing full stop, header at most 72 characters; merge commits are skipped.
+* **Default hints say what is true after a commit exists.** A bad message on the latest commit: `git commit --amend`; on an earlier one: `git reset --soft lab-start` and commit again. Undoing an unrelated change that is already committed: `git restore --source=lab-start --staged --worktree -- <file>` (for an added file `git rm -f <file>`), then commit the undo (`checks.UNDO_HINT`). Too many commits: `git reset --soft lab-start` and commit again; too few: `git reset lab-start`, then commit in pieces. **No default hint recommends an interactive rebase.** When the commits a check wants sit on another local branch, the hint names it and says `git switch <branch>` (`gitutil.commits_elsewhere`). File lists in details show up to twelve names (`checks.FILE_LIST_LIMIT`); lists of test names stay at four. `tests_pass`'s default hint also says that a test can pass in your shell and fail in the grader's clean copy (no `.git`, no virtual environment, none of your exported variables) and that the time limit is 60 seconds by default.
+* `diff_size` counts lines added plus lines deleted (`git diff --numstat` against the tag plus all lines of untracked text files). A one-word fix is 2. A size limit alone cannot tell a one-word fix from an unrelated edit of a few lines, so **m00 allows at most 6 changed lines and also requires the file to equal the starter with only the misspelling corrected** (`checks_m00`): do not read the 6 as "a little slack" for the learner.
+* `no_secrets` scans added lines (or everything with `scan="all"`) and commit messages for AWS/GitHub/Slack/`sk-`/`sk_live_` keys, private key blocks, bearer tokens, `name = "value"` credentials, **unquoted `NAME=value` lines** for names containing SECRET, TOKEN, PASSWORD, API_KEY or PRIVATE_KEY (value of 12 or more characters, no spaces around `=`; `password=hunter2hunter2` in a Markdown note counts) and **Qatar IBAN-like strings** (`QA`, two digits, 23 to 27 letters or digits, compact or in groups of four). Placeholders (`changeme`, `your-...`, `example`, `${...}`, `$VAR`, `<...>`, `xxxx`, `os.environ`), harmless names (`token_url`, `password_file`, `max_tokens`) and code that names a variable (`api_key=settings.api_key`) are ignored; it reports the rule and file, never the secret. Git-ignored files such as `.env` are not scanned (they never reach a commit).
+* `run_pytest` / `tests_pass` / `hidden_tests_pass` / `mutants_killed` run **`python -P -m pytest`** in a throw-away copy: the working directory is not put on `sys.path`, exactly like the `pytest -q` that CI runs (CONTRIBUTING.md), so `from tests.helpers import x` fails here as it fails in CI (Python 3.11 or newer).
 * `mutants_killed(work, mutants, test_paths=None)` copies the repo, checks that the learner's tests pass on the untouched copy (`baseline_ok`), applies each `(file, old, new)` / `Mutant` in turn and counts those that make the tests fail, error or hang. Default tests: the test files the learner added or changed (`new_test_files`).
   Mutants must name **behaviour** in `description` (shown when they survive). Mutating the learner's own new code is unreliable (their structure differs): prefer `tests_fail_on_starter` (revert non-test files to `lab-start`, run the learner's new tests, they must fail) for "would the tests catch the feature being absent".
 * `run_pytest`/`run_hidden_pytest` always work on a copy and return a `PytestResult` (`passed/failed/errors`, `failures`, `timed_out`); no result is "ok" unless at least one test ran.
@@ -734,6 +760,7 @@ def glob_match(path: str, patterns: Iterable[str]) -> bool
 def changed_status(work: Path | str, since: str = 'lab-start', *, include_untracked: bool = True, ignore: Sequence[str] = TOOL_NOISE) -> dict[str, str]
 def changed_files(work: Path | str, since: str = 'lab-start', *, include_untracked: bool = True, ignore: Sequence[str] = TOOL_NOISE) -> list[str]
 def diff_numstat(work: Path | str, since: str = 'lab-start', *, include_untracked: bool = True, ignore: Sequence[str] = TOOL_NOISE) -> DiffStat
+def commits_elsewhere(work: Path | str, since: str = 'lab-start') -> list[tuple[str, int]]
 def commits_since(work: Path | str, since: str = 'lab-start', ref: str = 'HEAD', *, first_parent: bool = False, no_merges: bool = False) -> list[Commit]
 def status_porcelain(work: Path | str, *, ignore: Sequence[str] = TOOL_NOISE) -> list[str]
 def is_clean(work: Path | str, *, ignore: Sequence[str] = TOOL_NOISE) -> bool
@@ -764,15 +791,16 @@ def copy_work(work: Path | str, dest: Path | str | None = None) -> Path
 class work_copy(work: Path | str)
 def run_pytest(work: Path | str, paths: Sequence[str] = ('tests',), *, timeout: float = 60.0, args: Sequence[str] = (), extra_env: dict[str, str] | None = None) -> PytestResult
 def run_hidden_pytest(work: Path | str, hidden: Path | str | Sequence[Path | str], *, timeout: float = 60.0, args: Sequence[str] = (), extra_env: dict[str, str] | None = None) -> PytestResult
-def tests_pass(work: Path | str, paths: Sequence[str] = ('tests',), *, name: str = 'Your tests pass', timeout: float = 60.0, hint: str = 'Run `pytest -q` in your repository and read the first failure from the top.', required: bool = True) -> Check
+def tests_pass_hint(timeout: float = 60.0) -> str
+def tests_pass(work: Path | str, paths: Sequence[str] = ('tests',), *, name: str = 'Your tests pass', timeout: float = 60.0, hint: str | None = None, required: bool = True) -> Check
 def hidden_tests_pass(work: Path | str, hidden: Path | str | Sequence[Path | str], *, name: str = 'Acceptance tests pass', reveal: str = 'names', timeout: float = 60.0, hint: str = 'Re-read the ticket: which behaviour does it ask for that you have not checked yourself?', required: bool = True) -> Check
-def files_changed_within(work: Path | str, allowed: Sequence[str], *, since: str = 'lab-start', ignore: Sequence[str] = TOOL_NOISE, name: str = 'Only the expected files changed', hint: str = 'Revert what is not needed for this task (git restore <file> or git rm <file>).', require_change: bool = True, required: bool = True) -> Check
-def files_unchanged(work: Path | str, protected: Sequence[str], *, since: str = 'lab-start', ignore: Sequence[str] = TOOL_NOISE, name: str = 'Protected files untouched', hint: str = 'Do not edit these files; restore them with git restore <file>.', required: bool = True) -> Check
-def diff_size(work: Path | str, max_lines: int, *, max_files: int | None = None, min_lines: int = 0, since: str = 'lab-start', ignore: Sequence[str] = TOOL_NOISE, name: str = 'The change is small', hint: str = 'Keep the diff to what the ticket needs; look at `git diff lab-start --stat`.', required: bool = True) -> Check
+def files_changed_within(work: Path | str, allowed: Sequence[str], *, since: str = 'lab-start', ignore: Sequence[str] = TOOL_NOISE, name: str = 'Only the expected files changed', hint: str = 'Undo what this task does not need. Put the file back as it was at the start: `git restore --source=lab-start --staged --worktree -- <file>` (for a file you added, `git rm -f <file>`, or just delete it if git does not know it yet). If that change was already committed, commit the undo.', require_change: bool = True, required: bool = True) -> Check
+def files_unchanged(work: Path | str, protected: Sequence[str], *, since: str = 'lab-start', ignore: Sequence[str] = TOOL_NOISE, name: str = 'Protected files untouched', hint: str = 'Do not edit these files. Put the file back as it was at the start: `git restore --source=lab-start --staged --worktree -- <file>` (for a file you added, `git rm -f <file>`, or just delete it if git does not know it yet). If that change was already committed, commit the undo.', required: bool = True) -> Check
+def diff_size(work: Path | str, max_lines: int, *, max_files: int | None = None, min_lines: int = 0, since: str = 'lab-start', ignore: Sequence[str] = TOOL_NOISE, name: str = 'The change is small', hint: str | None = None, required: bool = True) -> Check
 def commit_count(work: Path | str, *, exactly: int | None = None, at_least: int | None = None, at_most: int | None = None, since: str = 'lab-start', name: str | None = None, hint: str | None = None, required: bool = True) -> Check
 def all_committed(work: Path | str, *, ignore: Sequence[str] = TOOL_NOISE, name: str = 'Everything is committed', required: bool = True) -> Check
 def commit_header_problems(header: str, *, types: Sequence[str] = CC_TYPES, require_scope: bool = True, max_header: int = 72) -> list[str]
-def conventional_commits(work: Path | str, *, since: str = 'lab-start', require_scope: bool = True, max_header: int = 72, types: Sequence[str] = CC_TYPES, min_commits: int = 1, name: str = 'Commit messages follow CONTRIBUTING.md', required: bool = True) -> Check
+def conventional_commits(work: Path | str, *, since: str = 'lab-start', require_scope: bool = True, max_header: int = 72, types: Sequence[str] = CC_TYPES, min_commits: int = 1, name: str = 'Commit messages follow CONTRIBUTING.md', hint: str | None = None, required: bool = True) -> Check
 def find_secrets(text: str) -> list[tuple[str, int]]
 def added_text(work: Path | str, since: str = 'lab-start', ignore: Sequence[str] = TOOL_NOISE) -> dict[str, str]
 def no_secrets(work: Path | str, *, since: str = 'lab-start', scan: str = 'added', ignore: Sequence[str] = TOOL_NOISE, name: str = 'No secrets in the change', required: bool = True) -> Check
@@ -845,7 +873,7 @@ Legend: **OK** = supported as is; **NOTE** = supported, but know this; **GAP** =
 | **m06** | A limit applied at the wrong midnight (UTC instead of Qatar); `lab-assets/prod.log`; regression test; root-cause note; minimal patch; onboarding doc. | **NOTE + GAP.** The bug is a two-place seed: `local = to_local(now)` occurs in both `day_window` and `month_window` (use `edit_file(..., count=2)`) and, to hide it from the visible suite, **four tests in `tests/test_limits.py` fail once it is seeded** (`test_the_day_ends_at_midnight_in_qatar_not_in_utc`, `test_a_transfer_after_qatar_midnight_but_before_utc_midnight_belongs_to_the_new_day`, `test_the_month_changes_at_midnight_in_qatar`, `test_windows_are_local_calendar_windows`): the seed must remove them or the lab has no mystery. A realistic `prod.log` can use the audit format (`{"event": "transfer.rejected", "reason": "limit_exceeded", "ts": ..., ...}` with sorted keys) with timestamps between 21:00 and 24:00 UTC. The onboarding doc name collides with `docs/TOUR.md` (section 9). |
 | **m07** | Characterization tests for `ledger` (quirks included), refactor away the global state, migrate najmkit v1 to v2. | **NOTE + GAP.** Q-LED-1..4 are the material. `ledger` is imported as a module by `service.py` and `tests/conftest.py` (`ledger.reset()`), and `RemitService` has no ledger parameter, so the lab must specify the post-refactor interface. najmkit v1 is used in nine places plus the tests (section 3.3); v2 must be defined by the lab (assets). See section 9. |
 | **m08** | Hook guard, permissions, dependency check, injected README. | **OK.** Dependency data to check: `pyproject.toml` (`dependencies = []`, `dev = ["pytest"]`) and `.github/workflows/ci.yml` (`pip install pytest`). `.gitignore` already ignores `.env`, `*.db`, `audit.jsonl`, `*.log`. Nothing else is needed from the base. |
-| **m09** | Review command/skill, read-only subagent, post-edit hook, headless script against the `claude` stub. | **GAP (outside the base).** `ailab/stubs/claude` is in the AUTHORING tree but not built by the kit builder. The base needs nothing: a post-edit hook can run `pytest -q -x` or `python -m compileall`. |
+| **m09** | Review command/skill, read-only subagent, post-edit hook, headless script against the `claude` stub. | **OK, built.** `ailab/stubs/claude` exists: a deterministic stand-in for the `claude` CLI's print mode (`-p`, `--output-format json`, `--max-turns`, exit codes), driven by `[stub:...]` markers in the ticket text and a keyword table; it is not Claude Code and calls no model. The base needs nothing: a post-edit hook can run `pytest -q -x` or `python -m compileall`. |
 | **m10** | Four-part change across branches/worktrees, planted conflict, merged `main` passes hidden tests, at least three branches merged, readable history. | **OK.** Independent areas exist (notify templates, fees, limits, docs, CLI). Helpers: `gitutil.create_branch/checkout/merge/merged_branches/is_ancestor/commits_since(first_parent=, no_merges=)`. Plant the conflict in the seed by committing a change to `main` that touches the same lines a branch task will touch. Note `commits_since` is per `HEAD`; worktrees share the repository, so branches and merges are visible from the main work dir. |
 | **m11** | ADR with a critic, najmkit docs verified against code, postmortem checked against `incident.json`. | **NOTE.** `docs/najmkit.md` already exists and is accurate; the lab's seed must delete or rename it, or ask for a different file. `checks.public_api` lists real functions for verification. The architecture doc's stale parts (D-ARCH-1/2) give an ADR critic something real to find. No `docs/adr/` folder exists. |
 | **m12, m13** | A playbook; a personal eval with runnable checks. | **OK.** CONTRIBUTING.md holds the real rules to refer to; `pytest -q` and `python -m remit quote QAR 500 INR` (with `PYTHONPATH=src`) are runnable checks. |
@@ -854,7 +882,7 @@ Legend: **OK** = supported as is; **NOTE** = supported, but know this; **GAP** =
 ## 9. Open questions for the course owner
 
 1. **`docs/TOUR.md` vs `docs/tour.md` (m06).** The lab plan has the learner write `docs/tour.md`; the base ships `docs/TOUR.md` (as requested). On case-insensitive file systems (macOS and Windows defaults) these are the same file. Suggest m06 uses another name (for example `docs/onboarding.md`), or the base file is renamed.
-2. **`ailab/stubs/claude` (m09)** is not built; m09's writer needs to create it (a deterministic stand-in for the `claude` CLI's `-p`/`--output-format json` behaviour).
+2. **`ailab/stubs/claude` (m09)**: resolved. It is built (AUTHORING decision 4) and tested in `tests/test_labs_m09.py`.
 3. **m06 must neutralise four base tests** (section 8) when it seeds the UTC bug; decide whether the seed deletes them or rewrites them to be loose.
 4. **m07's interface.** Decide the post-refactor shape the hidden characterization suite targets (suggestion: `class Ledger` with `post_transfer/balance/accounts/journal`, `RemitService(..., ledger=None)` defaulting to a fresh `Ledger()`, and conftest no longer calling `ledger.reset()`), and whether the learner's
    own characterization tests must run unchanged before and after the refactor (then they must go through an interface that survives).
@@ -862,3 +890,36 @@ Legend: **OK** = supported as is; **NOTE** = supported, but know this; **GAP** =
 6. **m14's "limits".** Decide whether the capstone ticket means per-transfer min/max (supported) or a new corridor-level cap (a new feature the learner builds).
 7. **`TASK.md` and `lab-assets/` are committed in the starting commit** (rather than left untracked as the original brief described). This keeps `git add -A` and diffs clean for every lab; say if you would rather have them untracked and excluded.
 8. **The kit cannot stop a learner from reading `hidden/`** (it is in the same repository). The README says so; if the course wants a stronger guarantee, hidden tests would have to be served separately.
+
+## 10. Shared-kit findings from the dry-runs: fixed centrally, and left alone on purpose
+
+Fifteen lab writers and fifteen learner dry-runs reported problems that no single lab may fix. The central pass fixed these:
+
+| Finding | Fix |
+|---|---|
+| `ailab start` printed a grade command that fails outside the `ailab` folder | `start` and `solve` print `PYTHONPATH=<kit folder> python -m ailab grade <id> --dir <work dir>` (absolute paths, a PowerShell form on Windows) and say where the work directory is (`cli.grade_command`); README and lesson 0.2 show it |
+| Hints wrong once a commit exists (amend, restore, rebase, other branch) | `checks.COMMIT_FORMAT_HINT`, `checks.UNDO_HINT`, `gitutil.commits_elsewhere`; no default hint recommends an interactive rebase (section 6.2) |
+| File lists cut at four names | up to twelve for files (`FILE_LIST_LIMIT`); test names stay at four |
+| `tests_pass` hint silent about the clean copy and the time limit | new default hint (`tests_pass_hint`) |
+| `no_secrets` too narrow | unquoted `NAME=value` lines and Qatar IBAN-like strings; a generic test scans every lab's seeds, assets and reference solutions for false positives |
+| `TOOL_NOISE` missed other agent tools' files | `.cursor/`, `.cursorrules`, `.windsurf/`, `.codex/`, `.gemini/`, `GEMINI.md`, `.github/copilot-instructions.md`; never `CLAUDE.md` or `AGENTS.md` |
+| `python -m pytest` put the working directory on `sys.path` | the runners use `python -P -m pytest` (kept: the whole suite is green with it) |
+| CONTRIBUTING.md: scope list read as closed; "all tests must pass before you commit" against test-first; no named reviewer | rewritten (scope is one lower-case word, examples not a closed list; tests and code are committed together so every commit is green; Tariq or Nada as the second human); a bug fix needs a test unless one already covers it |
+| `ledger.py` and `screening.py` docstrings pointed to `KIT_NOTES.md`; README, TOUR and ARCHITECTURE said "no tests" | pointer removed (no line numbers moved); "no dedicated tests, only exercised through `send()`"; m07's stale-document sweep also recognises the new wording |
+| Reference `CLAUDE.md` forbade commits and test edits that tickets require | commit only when the task asks, never push or open a pull request unless asked, never weaken, skip or delete a test to get green (a task may ask for a change: say why in the commit body); m04, m07 and m10 tickets and lessons say so |
+| Smaller items | `diff_size` hint when nothing changed yet; `all_committed` hint for a second commit; `conventional_commits(hint=...)`; clearer message for a header of the wrong shape; `tests_fail_on_starter` no longer crashes on a nested worktree directory; the quirks register gained Q-SVC-1, Q-CLI-1, Q-CLI-2, I-NAJMKIT-1, G-V2-DOC; ticket ids listed (REMIT-341 and 343 in the 10.1 story became 346 and 347) |
+
+Left alone, with the reason (do not "fix" these without reading it):
+
+| Finding | Why it stays |
+|---|---|
+| Advisory checks print `[FAIL] ... (advisory)` | a new tag, or a legend line, would change every sample block in every lesson that shows an advisory failure; the lessons and tickets explain the tag |
+| "Needs an agent: no" for labs where an agent is recommended (a tri-state) | the line is printed in `start` and shown in lessons, and AUTHORING rule 7 fixes yes/no |
+| An installable package or console script; `start --clean` | packaging needs a build step and network; `start --clean` would change the lab lifecycle that m02's tested recipe relies on; the printed `PYTHONPATH` command removes the stumbling block |
+| `commit_count` counts merge commits and empty commits | a behaviour change for every lab; the labs that need "exactly one" or real steps have their own checks (m00, m07) |
+| `tests_fail_on_starter` counts collection errors as failures | the numbers in sample output would change; m06 and m10 have their own stricter checks |
+| Base README: warn that `pip install -e .` and git worktrees mix badly | base text is frozen apart from the changes listed above; lesson 10.2 carries the warning |
+| `check_blocks.py` does not map `# lab-assets/...` first lines to a lab | one use (lesson 13.2), already pinned by `tests/test_labs_m13.py` |
+| Whether `csvtidy` is unregistered on PyPI (m08) | checked on 2026-10-23: a real, unrelated `csvtidy` (0.1.0) exists and `csvtidy-extras` is unregistered. The lab now says `csvtidy` is a made-up vendor library, a similar real name may exist, and anyone could register `csvtidy-extras` (slopsquatting); the point is that neither name is on the allow-list |
+| `/dev/null` was found to be a regular file in the shared sandbox | the machine, not the kit; nothing in the kit relies on it (`GIT_CONFIG_GLOBAL=/dev/null` was removed from m00's tests) |
+| "one dirham (0.01 QAR)" in ARCHITECTURE.md | correct: the Qatari riyal has 100 dirhams |

@@ -731,8 +731,8 @@ def small_steps(work: Path | str, *, name: str, at_least: int = 3) -> Check:
 # notes (docs/refactoring-plan.md, docs/najmkit-v2-migration.md, docs/onboarding.md) are not swept: they talk about the old state.
 SWEPT_DOCS = ("CLAUDE.md", "AGENTS.md", "README.md", "docs/ARCHITECTURE.md", "docs/TOUR.md")
 _STALE = re.compile(
-    r"(?i)ledger.{0,100}?(\bno tests?\b|\bno test file\b|\buntested\b|\bwithout tests\b|\bmodule[- ]level\b)"
-    r"|(\bno test file for\b|\bno tests? for\b|\buntested\b|\bwithout tests\b).{0,40}ledger"
+    r"(?i)ledger.{0,100}?(\bno (?:dedicated )?tests?\b|\bno test file\b|\buntested\b|\bwithout tests\b|\bmodule[- ]level\b)"
+    r"|(\bno test file for\b|\bno (?:dedicated )?tests? for\b|\buntested\b|\bwithout tests\b).{0,40}ledger"
 )
 _PAST = re.compile(r"(?i)\b(no longer|used to|formerly|previously|instead of|removed|gone|no module[- ]level|not module[- ]level)\b")
 

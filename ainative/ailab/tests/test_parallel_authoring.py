@@ -46,13 +46,18 @@ def run_generic(kit: Path, *extra: str) -> tuple[int, dict[str, list[str]]]:
     return result.returncode, outcome
 
 
+# tests/test_labs_generic.py runs this many cases for every lab (well-formed, start state, starter fails, deterministic grading,
+# solution passes, no false secret hits, nothing on another branch at the start, fast)
+GENERIC_CASES_PER_LAB = 8
+
+
 def test_broken_labs_fail_only_their_own_cases(kit_with_broken_labs):
     code, outcome = run_generic(kit_with_broken_labs)
     assert code == 1  # the suite is red because three labs are broken...
     failed = outcome["failed"]
     assert failed and all(any(lab in name for lab in ("m97", "m98", "m96")) for name in failed), failed
     # ...but nothing about m00 failed, and collection itself did not break
-    assert sum(1 for name in outcome["passed"] if "m00" in name) == 6
+    assert sum(1 for name in outcome["passed"] if "m00" in name) == GENERIC_CASES_PER_LAB
     assert not any("m00" in name for name in failed)
     for lab in ("m97", "m98", "m96"):
         assert any(lab in name for name in failed), f"{lab} should have failing cases"
@@ -61,7 +66,7 @@ def test_broken_labs_fail_only_their_own_cases(kit_with_broken_labs):
 def test_k_selects_one_lab_so_a_writer_never_runs_the_others(kit_with_broken_labs):
     code, outcome = run_generic(kit_with_broken_labs, "-k", "m00")
     assert code == 0, outcome
-    assert len(outcome["passed"]) == 6 and not outcome["failed"]
+    assert len(outcome["passed"]) == GENERIC_CASES_PER_LAB and not outcome["failed"]
     assert all("m00" in name for name in outcome["passed"])
 
 

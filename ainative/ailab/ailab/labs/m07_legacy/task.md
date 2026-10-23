@@ -68,7 +68,8 @@ behaviour; the old names still work but warn.
   green; the one that adds your ledger tests changes nothing under `src/`. Never mix a refactor and a
   migration in one commit (your reviewer checks that). Commit everything.
 - Edit an existing test only to follow a rename or the removed `reset()`. This ticket asks for those
-  edits and for commits even though `CLAUDE.md` says otherwise: tell your AI tool.
+  edits and for commits, which `CLAUDE.md` allows when a task asks: tell your AI tool, and say why in
+  the commit body.
 - Touch only `ledger.py`, `service.py`, `store.py` and `cli.py` in `src/remit`, `src/najmkit`, `tests`,
   `docs`, `scripts`, `README.md`, `CLAUDE.md`, `AGENTS.md`, `.claude`, and `pyproject.toml` or
   `.github/workflows` if you make warnings-as-errors permanent.
