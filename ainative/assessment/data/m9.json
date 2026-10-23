@@ -1,0 +1,135 @@
+{
+  "area": "m9",
+  "questions": [
+    {
+      "id": "m9-1",
+      "level": 1,
+      "lesson": "9.1",
+      "q": {
+        "en": "Since Salem's `/review-change` command went live at Najm Bank, Lujain reviews pull requests by running it and approving what it reports, and she admits that she no longer reads the diffs for floats herself. Tariq reminds the team of habit 5, Automate the loop, keep the skill. What does he ask her to do?",
+        "ar": "منذ بدأ العمل بالأمر (command) `/review-change` الذي كتبه سالم في بنك نجم (Najm Bank)، صارت لجين تراجع طلبات الدمج (pull requests) بتشغيله وتوافق على ما يبلغ عنه، وتقرّ بأنها لم تعد تقرأ الفروقات (diffs) بحثًا عن الأعداد العشرية (floats) بنفسها. يذكّر طارق الفريق بالعادة الخامسة (habit 5): «أتمت الحلقة وحافظ على المهارة» (Automate the loop, keep the skill). ماذا يطلب منها؟"
+      },
+      "o": {
+        "en": [
+          "Retire the command for a month, so that she has to find every float and every bug on her own",
+          "Add a hook for each recurring finding, so that no pull request needs a human to read it",
+          "Have a second agent check the command's report each time, so that she can trust it a little more",
+          "Review one pull request a sprint without the command, so that her misses show what to practise"
+        ],
+        "ar": [
+          "أن توقف استعمال الأمر (command) شهرًا كاملًا، فتضطر إلى كشف كل مشكلة (problem) بنفسها دون عون",
+          "أن تضيف خطافًا (hook) لكل ملاحظة متكررة، فلا يحتاج أي طلب دمج (pull request) إلى قارئ بشري",
+          "أن تكلّف وكيلًا (agent) ثانيًا بفحص تقرير (report) الأمر نفسه في كل مرة، فتثق بنتيجته أكثر قليلًا",
+          "أن تراجع طلب دمج (pull request) كل دورة عمل (sprint) دون الأمر، فتُظهر إخفاقاتها ما تتدرب عليه"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Habit 5 means automating the check and keeping the skill: reviewing one pull request a sprint without the command shows what she could not have found, and that is a gap to practise. Retiring the command is the tempting answer, but it throws away a check that works and does not build the skill.",
+        "ar": "تعني العادة الخامسة (habit 5) أتمتة الفحص (automate the check) مع الاحتفاظ بالمهارة (keep the skill): فمراجعة طلب دمج (pull request) واحد كل دورة عمل (sprint) دون الأمر (command) تكشف ما كانت عاجزة عن اكتشافه، وهذه فجوة (gap) تتدرب عليها. وإيقاف الأمر هو الجواب المغري (tempting answer)، لكنه يهدر فحصًا يعمل جيدًا ولا يبني المهارة."
+      }
+    },
+    {
+      "id": "m9-2",
+      "level": 2,
+      "lesson": "9.2",
+      "q": {
+        "en": "Salem's post-edit hook is finished: it exits 2 for a float in code under `src/remit/`. Lujain then adds a test to `tests/test_money.py` that calls `Money(1.5, \"QAR\")` to prove that `Money` rejects floats. The hook receives that edit. What should it do?",
+        "ar": "انتهى سالم من خطاف ما بعد التعديل (post-edit hook): فهو يخرج بالرمز 2 (exit 2) عند وجود عدد عشري (float) في الشيفرة تحت `src/remit/`. ثم تضيف لجين اختبارًا (test) إلى `tests/test_money.py` يستدعي `Money(1.5, \"QAR\")` لتثبت أن `Money` يرفض الأعداد العشرية (floats). يتلقى الخطاف هذا التعديل (edit). ماذا ينبغي أن يفعل؟"
+      },
+      "o": {
+        "en": [
+          "Exit 2 and say that money is `Decimal`, since the edit contains a float literal",
+          "Exit 0 and report nothing, since tests sit outside `src/remit/` and use floats on purpose",
+          "Exit 1 and print a warning, so that the agent hears about it without being stopped",
+          "Exit 2 and say that money is `Decimal`, since the file name `test_money.py` mentions money"
+        ],
+        "ar": [
+          "يخرج بالرمز 2 (exit 2) ويقول إن المبالغ (money) من نوع `Decimal`، لأن التعديل (edit) يحوي ثابتًا عشريًا (float literal)",
+          "يخرج بالرمز 0 (exit 0) ولا يبلغ بشيء، لأن الاختبارات (tests) خارج `src/remit/` وتستعمل الأعداد العشرية (floats) عمدًا",
+          "يخرج بالرمز 1 (exit 1) ويطبع تحذيرًا (warning)، ليعلم الوكيل (agent) بما وجده الخطاف دون أن يتوقف عمله",
+          "يخرج بالرمز 2 (exit 2) ويقول إن المبالغ (money) من نوع `Decimal`، لأن اسم الملف `test_money.py` يذكر المال"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Money code is the folder `src/remit/`, judged by its path, and tests sit outside it and use floats on purpose to prove that `Money` rejects them, so there is nothing to report and exit 0 is right. Exit 2 for any float literal is the tempting rule, but it is a false alarm of the kind that gets a hook switched off.",
+        "ar": "شيفرة الأموال (money code) هي المجلد `src/remit/` ويُحكم عليها بمسارها (path)، أما الاختبارات (tests) فخارجه وتستعمل الأعداد العشرية (floats) عمدًا لتثبت أن `Money` يرفضها، فلا شيء يستدعي الإبلاغ ويكون الخروج بالرمز 0 (exit 0) صحيحًا. والخروج بالرمز 2 (exit 2) عند أي ثابت عشري (float literal) هو القاعدة المغرية (tempting rule)، لكنه إنذار كاذب (false alarm) من النوع الذي يدفع الناس إلى إطفاء الخطاف (hook)."
+      }
+    },
+    {
+      "id": "m9-3",
+      "level": 2,
+      "lesson": "9.1",
+      "q": {
+        "en": "Salem is writing `.claude/agents/remit-reviewer.md`, a subagent that reads a diff and the code around it and must never change a file. Which setup makes it read-only in fact, not only by promise?",
+        "ar": "يكتب سالم الملف `.claude/agents/remit-reviewer.md`، وهو وكيل فرعي (subagent) يقرأ الفروقات (diff) والشيفرة المحيطة بها ولا يجوز أن يغيّر أي ملف أبدًا. أي إعداد (setup) يجعله للقراءة فقط (read-only) فعلًا لا بالوعد وحده؟"
+      },
+      "o": {
+        "en": [
+          "List only `Read, Grep, Glob` under `tools`, and tell it in the body to report, not fix",
+          "List `Read, Grep, Glob, Bash` under `tools`, and tell it in the body not to write files",
+          "Leave `tools` out, and tell it in the body that it must never edit any file at all",
+          "Write 'read-only reviewer' in the `description`, and tell it in the body to report"
+        ],
+        "ar": [
+          "أن تُدرج `Read, Grep, Glob` وحدها في `tools`، وتطلب منه في المتن (body) أن يبلغ (report) لا أن يصلح",
+          "أن تُدرج `Read, Grep, Glob, Bash` في `tools`، وتطلب منه في المتن (body) ألا يكتب أي ملفات (files)",
+          "أن تترك `tools` دون تحديد، وتكتب في المتن (body) أنه يجب ألا يعدّل ملفًا (file) أبدًا في أي حال",
+          "أن تكتب «مراجع للقراءة فقط» في `description` (الوصف)، وتطلب منه في المتن (body) أن يبلغ (report) فقط"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "`tools` is an allowlist, so a reviewer that lists only `Read`, `Grep` and `Glob` has no way to write; the sentence in the body is a request on top of that. Adding `Bash` is the tempting convenience, but a shell can write, and a promise in the body or the description does not remove a tool.",
+        "ar": "`tools` قائمة سماح (allowlist)، فالمراجع الذي لا تضم قائمته إلا `Read` و`Grep` و`Glob` لا يملك أي طريقة للكتابة؛ أما الجملة في المتن (body) فطلب إضافي فوق ذلك. وإضافة `Bash` هي الراحة المغرية (tempting convenience)، لكن الصدفة (shell) تستطيع الكتابة، والوعد في المتن أو في الوصف (description) لا يزيل أداة (tool)."
+      }
+    },
+    {
+      "id": "m9-4",
+      "level": 3,
+      "lesson": "9.2",
+      "q": {
+        "en": "Hessa finds two tickets with `area` set to `fees` and `money_logic: false` in Lujain's triage output, so no second reviewer was asked for. The script already checks that every reply has all four keys, that each value is on its list and that `money_logic` is a real boolean, and both replies passed. What is the best fix?",
+        "ar": "تجد حصة في مخرجات الفرز (triage output) لدى لجين تذكرتين (tickets) فيهما `area` تساوي `fees` و`money_logic: false`، فلم يُطلب مراجع ثانٍ (second reviewer). والنص البرمجي (script) يتحقق أصلًا من أن كل رد (reply) يحوي المفاتيح الأربعة (four keys) وأن كل قيمة (value) ضمن قائمتها (list) وأن `money_logic` قيمة منطقية حقيقية (real boolean)، وقد اجتاز الردّان هذه الفحوص. ما أفضل إصلاح (fix)؟"
+      },
+      "o": {
+        "en": [
+          "Tighten the prompt so that it says fee tickets are always money logic, in capitals",
+          "Reject every reply that says `money_logic: false`, so that only true values get through",
+          "Set `money_logic` to true in the script whenever `area` is fees, fx, limits or ledger",
+          "Retry each fee ticket until the model answers `money_logic: true`, then keep that reply"
+        ],
+        "ar": [
+          "أن تشدّد الموجّه (prompt) فيذكر أن تذاكر الرسوم منطق مالي (money logic) دائمًا، بأحرف كبيرة",
+          "أن ترفض كل رد (reply) فيه `money_logic: false` وتعدّه خطأً (error)، فلا يمر إلا ما قيمته true",
+          "أن تضبط `money_logic` على true في النص (script) متى كانت `area` هي `fees` أو `fx` أو `limits` أو `ledger`",
+          "أن تعيد المحاولة (retry) لكل تذكرة رسوم حتى يجيب النموذج (model) بـ `money_logic: true` ثم تأخذ ذلك الرد وحده"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Fees, fx, limits and ledger tickets always need the second reviewer, so the script computes the flag from `area` instead of asking the model: a value can be on the list and still be wrong, and validation cannot see that. Tightening the prompt is the tempting fix, but a prompt only asks, so a fee ticket can still come back false.",
+        "ar": "تذاكر الرسوم (fees) والصرف (fx) والحدود (limits) ودفتر الأستاذ (ledger) تحتاج دائمًا إلى المراجع الثاني (second reviewer)، فيحسب النص البرمجي (script) الحقل `money_logic` من `area` بدل أن يسأل النموذج (model): فقد تكون القيمة ضمن القائمة وتبقى خاطئة، والتحقق (validation) لا يرى ذلك. وتشديد الموجّه (prompt) هو الإصلاح المغري (tempting fix)، لكن الموجّه يطلب فقط، فقد تعود تذكرة رسوم بقيمة false."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m9-e1",
+      "lesson": "9.1",
+      "text": {
+        "en": "I have filled in three automation decision cards with all eight answers and a decision each, and at least one ends in keep manual or semi-automate for a reason a colleague accepted.",
+        "ar": "لقد ملأتُ ثلاث بطاقات قرار الأتمتة (automation decision cards) بالإجابات الثماني (eight answers) وبقرار (decision) لكل منها، وانتهت واحدة على الأقل بـ «إبقاء يدوي» (keep manual) أو «أتمتة جزئية» (semi-automate) لسبب قبله زميل (colleague)."
+      }
+    },
+    {
+      "id": "m9-e2",
+      "lesson": "9.2",
+      "text": {
+        "en": "I have built the review command, the read-only reviewer, the post-edit hook, the triage script and three decision cards for Remit, and `python -m ailab grade m09` ended PASSED.",
+        "ar": "لقد بنيتُ لنجم ريميت (Najm Remit) أمر المراجعة (review command) والمراجِع للقراءة فقط (read-only reviewer) وخطاف ما بعد التعديل (post-edit hook) ونص الفرز البرمجي (triage script) وثلاث بطاقات قرار (decision cards)، وانتهى الأمر `python -m ailab grade m09` بالنتيجة PASSED."
+      }
+    }
+  ]
+}
