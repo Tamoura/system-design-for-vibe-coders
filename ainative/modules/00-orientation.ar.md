@@ -26,13 +26,13 @@
 
 ### 🟢 الأساسيات (The essentials)
 
-**التحوّل (The shift).** تجعل الوكلاء (agents) المسودة الأولى (a first draft) رخيصة. ويبقى نادرًا أن تعرف ما الذي ينبغي بناؤه (what to build)، وأن تعطي الأداة ما تحتاج إليه (giving the tool what it needs)، وأن تميّز المسودة الصحيحة من المسودة المعقولة الشكل (a right draft from a plausible one). تستغرق كتابة الشيفرة (typing code) من يومك وقتًا أقل؛ وتستغرق كتابة معنى «انتهى» (what "done" means) ومراجعة مسودة شخص آخر بسرعة (checking someone else's draft at speed) وتحمّل مسؤولية تغيير لم تكتبه بنفسك (owning a change you did not type) وقتًا أكثر. لا تستطيع التحقق (verify) مما لا تستطيع قراءته، ولذلك تزداد أهمية الأساسيات (fundamentals) ولا تقل.
+**التحوّل (The shift).** يجعل الوكلاء (agents) إنتاج المسودة الأولى (a first draft) رخيصًا. ويبقى نادرًا أن تعرف ما الذي ينبغي بناؤه (what to build)، وأن تعطي الأداة ما تحتاج إليه (giving the tool what it needs)، وأن تميّز المسودة الصحيحة من المسودة المعقولة الشكل (a right draft from a plausible one). تستغرق كتابة الشيفرة (typing code) من يومك وقتًا أقل؛ وتستغرق كتابة معنى «انتهى» (what "done" means) ومراجعة مسودة شخص آخر بسرعة (checking someone else's draft at speed) وتحمّل مسؤولية تغيير لم تكتبه بنفسك (owning a change you did not type) وقتًا أكثر. لا تستطيع التحقق (verify) مما لا تستطيع قراءته، ولذلك تزداد أهمية الأساسيات (fundamentals) ولا تقل.
 
 **طيف لا سلّم (A spectrum, not a ladder).** أربع طرق شائعة لاستخدام الذكاء الاصطناعي (AI) أثناء البرمجة (while you code)؛ ولا تجعل إحداها الأخرى خاطئة (none makes the others wrong).
 
 | الأسلوب (Mode) | ما هو (What it is) | تلجأ إليه عندما (Reach for it when) | الخطر الرئيسي (Main risk) |
 |---|---|---|---|
-| **الإكمال التلقائي (Autocomplete)** | يقترح الأسطر التالية أثناء الكتابة (suggests the next lines as you type) | تعرف ما الذي تكتبه (you know what you are writing) | القبول بدافع الانعكاس (accepting by reflex) |
+| **الإكمال التلقائي (Autocomplete)** | يقترح الأسطر التالية أثناء الكتابة (suggests the next lines as you type) | تعرف ما الذي تكتبه (you know what you are writing) | القبول بلا تفكير (accepting by reflex) |
 | **المحادثة (Chat)** | تسأل أو تلصق، وأنت من يطبّق الإجابة (you ask or paste; you apply the answer) | الشرح (explaining) والمقارنة بين الخيارات (comparing options) وصياغة مقتطف (drafting a snippet) | لصق بيانات لا ينبغي لصقها (pasting data you should not)؛ والوثوق بنبرة الثقة (trusting confidence) |
 | **البرمجة الوكيلية (Agentic coding)** | تقرأ الأداة الملفات وتعدّلها وتشغّل الأوامر في حلقة (reads files, edits them and runs commands in a loop)، وأنت تراجع الفروقات (a diff) | مهمة محددة الحدود ولها فحص (a bounded task with a check) | فروقات كبيرة تمرّ عليها مرورًا سريعًا (a large diff you skim) |
 | **الوكلاء المتوازون (Parallel agents)** | عدة جلسات (sessions) تعمل في آن واحد، كلٌّ في نسخته الخاصة (its own copy) | مهام مستقلة تستطيع التحقق منها كلًّا على حدة (independent tasks you can verify separately) | تصبح المراجعة عنق الزجاجة (review becomes the bottleneck) |
@@ -65,7 +65,7 @@ express. Customers ask why their fee was 27.00 and not 12.00.
 Please show it.
 ```
 
-(يضيف الشحن السريع (express) رسمًا إضافيًا ثابتًا (a flat surcharge): تكلّف 500 QAR على الممر QAR-INR مبلغ 27.00 لا 12.00.) فترتا بعد الظهر كلتاهما مصمَّمتان لأغراض التعليم (constructed for teaching)، لا مسجّلتان من نموذج حقيقي (not recorded from a real model).
+(يضيف التحويل السريع (express) رسمًا إضافيًا ثابتًا (a flat surcharge): يكلّف تحويل 500 QAR على الممر QAR-INR مبلغ 27.00 لا 12.00.) فترتا بعد الظهر كلتاهما مصمَّمتان لأغراض التعليم (constructed for teaching)، لا مسجّلتان من نموذج حقيقي (not recorded from a real model).
 
 **خميس لجين (Lujain's Thursday).**
 
@@ -83,10 +83,10 @@ Please show it.
 | 13:00 | تقرأ `CONTRIBUTING.md` و`docs/TOUR.md`. تسأل حصة (Hessa) من يقرأ مخرجات السجل (who reads the history output): جدول إلكتروني (a spreadsheet) بحسب موضع العمود، فلا يجوز أن يتحرك شيء. فرع جديد (new branch) | السياق أولًا (Context first) |
 | 13:10 | تكتب المواصفة (the specification) أدناه؛ وتطلب خطة (a plan)؛ وتعدّلها ليأتي الاختبار الفاشل أولًا (so the failing test comes first) | حدِّد قبل أن تفوِّض (Specify before you delegate) |
 | 13:25 | يفشل الاختبار لسبب صحيح (fails for the right reason)؛ ثم يأتي التغيير (then the change) | خطوات صغيرة مُتحقَّق منها (Small verified steps) |
-| 13:45 | تشغّل مجموعة الاختبارات (the suite) بنفسك، وتقرأ `git diff --stat`، وتتأكد أن لا اختبار قديمًا تغيّر (no old test changed)، وتشغّل `send --express` و`history` حقيقيين | ثق بالدليل لا بالطلاقة (Trust evidence, not fluency) |
+| 13:45 | تشغّل مجموعة الاختبارات (the suite) بنفسك (yourself)، وتقرأ `git diff --stat`، وتتأكد أن لا اختبار قديمًا تغيّر (no old test changed)، وتشغّل `send --express` و`history` حقيقيين | ثق بالدليل لا بالطلاقة (Trust evidence, not fluency) |
 | 14:05 | تودع `feat(cli): show express transfers in history`؛ وتسِم طلب الدمج (pull request) بـ`AI-assisted`؛ وتسجّل ذلك (log it) | أتمت الحلقة وحافظ على المهارة (Automate the loop, keep the skill) |
 
-الموجّه (prompt) الذي يحل محلها (The prompt that replaces it):
+الموجّه (prompt) الذي يحل محله (The prompt that replaces it):
 
 ```text
 Goal: in `python -m remit history`, mark express transfers so support can tell them apart (REMIT-209).
@@ -103,12 +103,12 @@ Process: plan first, then write the failing test and show me it fails, then make
 
 استغرقت الظهيرة الحذرة سبعين دقيقة مقابل خمس عشرة، أما المهملة فلم تنتهِ (was not finished). وهذا مبالغة (overkill) في سكربت يُرمى (a throwaway script). وازِن العناية بحجم المخاطر (Match the care to the stakes).
 
-**ما تقوله الأدلة (What the evidence says) وما لا تقوله (and what it does not).** أربعة مصادر؛ تحقّق من أي رقم بمقارنته بأصله (check a number against its original) قبل أن تكرّره. ولبعضها مؤلفون تابعون لشركات موردة (vendor-affiliated authors) (مثل GitHub وMicrosoft Research وGoogle وAnthropic).
+**ما تقوله الأدلة (What the evidence says) وما لا تقوله (and what it does not).** أربعة مصادر؛ تحقّق من أي رقم بمقارنته بأصله (check a number against its original) قبل أن تكرّره. ولبعضها مؤلفون مرتبطون بشركات تبيع هذه الأدوات (vendor-affiliated authors) (مثل GitHub وMicrosoft Research وGoogle وAnthropic).
 
 | المصدر (Source) | بيئة الدراسة (Setting) | ما أبلغ عنه (What it reported) | تحفّظه الخاص (Its own caveat) |
 |---|---|---|---|
 | تجربة METR العشوائية (METR randomized trial)، 2025 | 16 مطوّرًا ذوي خبرة في المصادر المفتوحة (experienced open-source developers)، و246 مهمة في مستودعاتهم الناضجة (their own mature repositories)، بأدوات مطلع 2025 (early-2025 tools) | استغرقت المهام وقتًا أطول بنسبة 19% عند السماح بالذكاء الاصطناعي (took 19% longer with AI allowed). كانوا قد توقعوا أن تكون أسرع بنسبة 24% وظنّوا بعدها أنها أسرع بنسبة 20% (forecast 24% faster and afterwards believed 20% faster) | بيئة محددة جدًا (very specific setting)؛ وتقول METR إن النتائج قد تختلف في أماكن أخرى ومع نماذج أحدث (results may differ elsewhere and with later models) |
-| Peng وآخرون ⁦(Peng et al.)⁩، 2023 | مهمة واحدة قائمة بذاتها (one self-contained task): خادم HTTP بلغة JavaScript | مجموعة Copilot أسرع بنسبة 55.8%، وفاصل الثقة 95% من 21% إلى 89% (95% interval 21% to 89%) | مهمة واحدة بأسلوب المختبر (one task, lab-style)، وفاصل واسع (wide interval) |
+| Peng وآخرون ⁦(Peng et al.)⁩، 2023 | مهمة واحدة قائمة بذاتها (one self-contained task): خادم HTTP بلغة JavaScript | مجموعة Copilot أسرع بنسبة 55.8% (Copilot group 55.8% faster)، وفاصل الثقة 95% من 21% إلى 89% (95% interval 21% to 89%) | مهمة واحدة بأسلوب المختبر (one task, lab-style)، وفاصل واسع (wide interval) |
 | تقارير DORA، 2024 و2025 (DORA reports, 2024 and 2025) | استطلاعات لمتخصصي التقنية (surveys of technology professionals) | 2024: ارتبط ازدياد اعتماد الذكاء الاصطناعي بانخفاض الإنتاجية (throughput) والاستقرار (stability). 2025: صار أثر الإنتاجية إيجابيًا وبقي أثر الاستقرار سلبيًا. الذكاء الاصطناعي يضخّم ما هو موجود أصلًا (AI amplifies what is already there) | ارتباطات لا أسباب (associations, not causes)؛ وبيانات ذاتية الإبلاغ (self-reported) |
 | Shen وTamkin، Anthropic، 2026 | 52 مهندسًا أغلبهم مبتدئون (mostly junior engineers) يتعلمون مكتبة غير مألوفة (an unfamiliar library) | سجّلت مجموعة الذكاء الاصطناعي 50% في اختبار الفهم (comprehension quiz) مقابل 67% لمن برمجوا يدويًا (hand-coders)؛ ولا مكسب معنوي في السرعة (no significant speed gain) | دراسة صغيرة وأولية (small, preliminary)؛ وAnthropic هي من تصنع Claude Code |
 
@@ -118,28 +118,28 @@ Process: plan first, then write the failing test and show me it fails, then make
 
 **ما يبقى بشريًا (What stays human).** خمسة أشياء لا تُفوَّض (do not delegate): **الحكم (judgement)** (هل هذا هو التغيير الصحيح؟ ⁦(is this the right change?)⁩)، و**تحمّل المسؤولية (ownership)** (يجيب شخص ما عنها — someone answers for it)، و**المتطلبات (requirements)** (الجدول الإلكتروني الذي لم يدوّنه أحد — the spreadsheet nobody wrote down)، و**المخاطر (risk)** (أي الملفات تحمل منطق الأموال — which files are money logic)، و**الذوق (taste)**. يستطيع الوكلاء (agents) المساعدة في كل منها؛ لكن لا يستطيع أي وكيل أن يحملها (none can hold it).
 
-**تعريف عملي (A working definition)، ولماذا لا يوجد تعريف معياري (and why none is standard).** ليس لعبارة «أصيل في الذكاء الاصطناعي» ("AI-native") معنى متفق عليه (no agreed meaning). تستخدمها المصادر لوصف طريقة عمل شخصية (a personal way of working) (مقال Addy Osmani لعام 2025: الذكاء الاصطناعي بوصفه مبرمجًا مبتدئًا يعمل معك بالأزواج — AI as a junior pair programmer)، أو مجموعة مهارات على مستوى الوظيفة (a job-level skill set)، أو نموذج تشغيل لمؤسسة (an organisation's operating model) (دليل Anthropic لعام 2026: تصبح العملية «حلقة» — the process "becomes a loop"، والذكاء الاصطناعي مدمج في كل نقطة — with AI embedded at each point). يبيع عدة مؤلفين شيئًا ما (several authors sell something)؛ لكنهم يتفقون على أنك تعيد تصميم سير العمل وضوابطه (redesign the workflow and its controls)، لا أن تضيف أداة فحسب. أما **التعريف العملي (working definition)** في الدورة فهو من وضعنا لا معيار (ours, not a standard):
+**تعريف عملي (A working definition)، ولماذا لا يوجد تعريف معياري (and why none is standard).** ليس لعبارة «أصيل في الذكاء الاصطناعي» ("AI-native") معنى متفق عليه (no agreed meaning). تستخدمها المصادر لوصف طريقة عمل شخصية (a personal way of working) كما في مقال Addy Osmani لعام 2025 (Addy Osmani's 2025 essay) الذي يرى الذكاء الاصطناعي شريكًا مبتدئًا في البرمجة الثنائية (AI as a junior pair programmer)، أو مجموعة مهارات على مستوى الوظيفة (a job-level skill set)، أو نموذج تشغيل لمؤسسة (an organisation's operating model) كما في دليل Anthropic العملي لعام 2026 (Anthropic's 2026 playbook) الذي تصبح فيه العملية «حلقة» (the process "becomes a loop") مع دمج الذكاء الاصطناعي في كل نقطة (with AI embedded at each point). يبيع عدة مؤلفين شيئًا ما (several authors sell something)؛ لكنهم يتفقون على أنك تعيد تصميم سير العمل وضوابطه (redesign the workflow and its controls)، لا أن تضيف أداة فحسب. أما **التعريف العملي (working definition)** في الدورة فهو من وضعنا لا معيار (ours, not a standard):
 
 > المهندس الأصيل في الذكاء الاصطناعي (AI-native engineer) يوجّه أدوات الذكاء الاصطناعي (AI tools) بانتظام في عمله اليومي (daily work) ويبقى مسؤولًا عن النتيجة (accountable for the result). يقدّم السياق (supply context)، ويعرّف معنى «انتهى» قبل التفويض (define done before delegating)، ويعمل بخطوات صغيرة مُتحقَّق منها (work in small verified steps)، ويحكم على المُخرَج بالدليل (judge output by evidence)، ويؤتمت ما يتكرر (automate what repeats) دون أن يسمح لمهارته بالتراجع (without letting their own skill lapse).
 
 **شركتان تصفان ممارستهما الخاصة (Two companies describing their own practice).** يرى منشور Microsoft [«التطوير الموجَّه بالمواصفات: نهج المواصفات أولًا للهندسة الأصيلة في الذكاء الاصطناعي» (Spec-Driven Development: A Spec-First Approach to AI-Native Engineering)](https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/) أن على الفرق أن تتفق على النية (agree on intent) قبل أن يولّد الذكاء الاصطناعي الشيفرة، ويقدّم لهذه المهمة أداته مفتوحة المصدر GitHub Spec Kit (its open-source GitHub Spec Kit). نهج المواصفات أولًا (Spec-first) جزء من طريقة استخدام Microsoft لعبارة «أصيل في الذكاء الاصطناعي» ("AI-native")؛ وعادتك الثانية تقوم على الرهان نفسه (makes the same bet)، وتعود إليه الوحدة 3 (Module 3). وتذكر Meta في [«كيف بنت Meta تطبيق Forum بالهندسة الأصيلة في الذكاء الاصطناعي» (How Meta Built Forum With AI-Native Engineering)](https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/) أن فريقًا صغيرًا بنى Forum، وهو تطبيق Groups مستقل (a standalone Groups app)، بوكيل ذكاء اصطناعي مشاركًا (an AI agent as a participant). وهدفها «الإنسان على الحلقة» (human-on-the-loop): يدير الوكيل دورة التخطيط والبناء والاختبار والتصحيح (the plan, build, test and correct cycle) بينما يحدد المهندس الهدف ويعتمد النتيجة (sets the goal and approves the result). وتسمّيه Meta هدفًا لا حالة منجزة (a target, not a finished state)، وتضع معيار «انتهى» عند التحقق (verification) — اختبارات آلية وفحوص بصرية (automated tests and visual checks) — لا عند نجاح الترجمة البرمجية (compilation)؛ أما خميس لجين (Lujain) فكان فيه اختبارات خضراء (green tests) ولا نظرة على المخرجات الحقيقية (no look at the real output). كلٌّ منهما رواية شركة عن عملها الخاص (a company's account of its own work)، لا دليل مستقل (not independent evidence)؛ فاقرأ الأصول (read the originals).
 
-**كيف تعمل الدورة (How the course works).** وحدة واحدة كل أسبوع (one module a week) (الوحدات 0 إلى 13)، ثم المشروع الختامي (capstone)؛ ولكل وحدة درس مفاهيمي (a concept lesson) ومختبر أو ورشة عمل (a lab or workshop). تعمل المختبرات (Labs) على **نجم ريميت (Najm Remit)**، وهي خدمة Python صغيرة، ويقيّمها **`ailab`**، وهي عدّة تعمل دون اتصال (an offline kit): لا مفتاح API (no API key)، ولا شبكة (no network)، ولا حاجة إلى وكيل (no agent required). استخدم Claude Code أو أداة أخرى أو لا شيء؛ فالمُقيِّم (the grader) ينظر إلى النتيجة. ينتهي كل مختبر بمُخرَج (a deliverable) وجلسة جماعية (a group session) و**سجل وكيل (agent log)**. **بنك نجم (Najm Bank) خيالي (fictional)**، وكذلك عملاؤه وأسعاره وحدوده (its customers, rates and limits). فريقك: **طارق (Tariq)** (مرشدك — your mentor — الذي يدير «عيادة الذكاء الاصطناعي الأصيل» الأسبوعية — the weekly "AI-native clinic")، و**لجين (Lujain)** (متحمسة وتثق أكثر مما ينبغي — enthusiastic, over-trusting)، و**حصة (Hessa)** (مالكة المنتج وتكتب التذاكر — product owner, writes the tickets). ويشارك زملاء من الجودة والأمن وهندسة الموثوقية (SRE) والحوكمة والمنصة (quality, security, SRE, governance and platform) في وحداتهم الخاصة.
+**كيف تعمل الدورة (How the course works).** وحدة واحدة كل أسبوع (one module a week) (الوحدات 0 إلى 13)، ثم المشروع الختامي (capstone)؛ ولكل وحدة درس مفاهيمي (a concept lesson) ومختبر أو ورشة عمل (a lab or workshop). تعمل المختبرات (Labs) على **نجم ريميت (Najm Remit)**، وهي خدمة Python صغيرة، ويقيّمها **`ailab`**، وهي عدّة تعمل دون اتصال (an offline kit): لا مفتاح API (no API key)، ولا شبكة (no network)، ولا حاجة إلى وكيل (no agent required). استخدم Claude Code أو أداة أخرى أو لا شيء؛ فالمُقيِّم (the grader) ينظر إلى النتيجة. ينتهي كل مختبر بمُخرَج (a deliverable) وجلسة جماعية (a group session) و**سجل وكيل (agent log)**. **بنك نجم (Najm Bank) خيالي (fictional)**، وكذلك عملاؤه وأسعاره وحدوده (its customers, rates and limits). فريقك: **طارق (Tariq)**، مرشدك (your mentor) الذي يدير «عيادة الذكاء الاصطناعي الأصيل» الأسبوعية (the weekly "AI-native clinic")، و**لجين (Lujain)**، المتحمسة التي تثق أكثر مما ينبغي (enthusiastic, over-trusting)، و**حصة (Hessa)**، مالكة المنتج (product owner) التي تكتب التذاكر (writes the tickets). ويشارك زملاء من الجودة والأمن وهندسة الموثوقية (SRE) والحوكمة والمنصة (quality, security, SRE, governance and platform) في وحداتهم الخاصة.
 
-**حدود صادقة (Honest limits).** لا تستطيع الدورة أن تعدك بأنك ستصبح أسرع (cannot promise you will be faster). فالأدوات تتغير بسرعة (tools change fast): روجعت تفاصيل Claude Code فيها في أكتوبر 2026، فراجع التوثيق الحالي (check the current documentation). والمختبرات صغيرة وخيالية (small and fictional)، والمُقيِّم (the grader) يفحص النتائج لا الفهم (checks results, not understanding). والغاية أن تساعدك على معرفة متى يكون الوكيل مخطئًا (tell when an agent is wrong).
+**حدود صادقة (Honest limits).** لا تستطيع الدورة أن تعدك بأنك ستصبح أسرع (cannot promise you will be faster). فالأدوات تتغير بسرعة (tools change fast): روجعت تفاصيل Claude Code فيها في أكتوبر 2026، فراجع التوثيق الحالي (check the current documentation). والمختبرات صغيرة وخيالية (small and fictional)، والمُقيِّم (the grader) يفحص النتائج لا الفهم (checks results, not understanding). والغاية أن تساعدك الدورة على معرفة متى يكون الوكيل مخطئًا (tell when an agent is wrong).
 
 ## 🧰 الأدوات (The toolkit)
 | الأداة أو الممارسة أو النمط (Tool, practice or pattern) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
 |---|---|---|
-| **The five habits** — العادات الخمس | العمود الفقري للدورة (the course's spine)، سُمّيت في هذا الدرس وتُدرَّب وحدةً بعد وحدة (trained module by module) | كل مهمة؛ ومراجعة تدقيقية عند حدوث خطأ (an audit when something goes wrong) |
+| **The five habits** — العادات الخمس | هي العمود الفقري للدورة (the course's spine)، سُمّيت في هذا الدرس وتُدرَّب وحدةً بعد وحدة (trained module by module) | كل مهمة؛ ومراجعة تدقيقية عند حدوث خطأ (an audit when something goes wrong) |
 | **Delegation spectrum** — طيف التفويض | الإكمال التلقائي (autocomplete) والمحادثة (chat) والبرمجة الوكيلية (agentic coding) والوكلاء المتوازون (parallel agents)، يُختار منها لكل مهمة (chosen per task) | قبل أي عمل (before any piece of work) |
 | **Baseline self-check** — الفحص الذاتي المرجعي | عشر عبارات تُقيَّم من 0 إلى 2، اثنتان لكل عادة (ten statements scored 0 to 2, two per habit) | الآن، ومرة أخرى عند المشروع الختامي (again at the capstone) |
-| **Agent log** — سجل الوكيل | بضعة أسطر لكل مهمة بمساعدة الذكاء الاصطناعي: الموجّه وما حدث وما أصلحته والدقائق (prompt, what happened, what you fixed, minutes) | بعد كل مختبر ومهمة حقيقية (after every lab and real task) |
+| **Agent log** — سجل الوكيل | بضعة أسطر لكل مهمة بمساعدة الذكاء الاصطناعي (a few lines per AI-assisted task): الموجّه وما حدث وما أصلحته والدقائق (prompt, what happened, what you fixed, minutes) | بعد كل مختبر ومهمة حقيقية (after every lab and real task) |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-مُخرَجان (Two artefacts) يُحفظان في مستودع ملاحظات (a notes repository) خارج مجلدات المختبر (outside the lab folders).
+وثيقتان (two artefacts) تُحفظان في مستودع ملاحظات (a notes repository) خارج مجلدات المختبر (outside the lab folders).
 
-**أولًا، الفحص الذاتي المرجعي (the baseline self-check).** قيّم كل عبارة بـ0 (أبدًا — never) أو 1 (أحيانًا — sometimes) أو 2 (عادةً — usually) بحسب طريقة عملك اليوم (as you work today). المقياس من وضع الدورة ولا يُعدّ أداة مصادَقًا عليها (not a validated instrument): إنه مرآة لا درجة (a mirror, not a grade).
+**أولًا، الفحص الذاتي المرجعي (the baseline self-check).** قيّم كل عبارة بـ0 (أبدًا — never) أو 1 (أحيانًا — sometimes) أو 2 (عادةً — usually) بحسب طريقة عملك اليوم (as you work today). المقياس من وضع الدورة ولا يُعدّ أداة قياس معتمدة علميًا (not a validated instrument): إنه مرآة لا درجة (a mirror, not a grade).
 
 ```markdown
 # Baseline before Module 1          Date:
@@ -191,7 +191,7 @@ Would I delegate it again?     Yes, with the same spec
 - ينتقل العمل من كتابة الشيفرة (typing code) إلى توجيهها والتحقق منها وتحمّل مسؤوليتها (directing, verifying and owning it)؛ ويبقى المهندس مسؤولًا (accountable).
 - استخدام الذكاء الاصطناعي طيف يُختار لكل مهمة (a spectrum chosen per task). الفايب كودينج (Vibe coding) يقبل شيفرة غير مقروءة (unread code)؛ والهندسة الأصيلة في الذكاء الاصطناعي (AI-native engineering) مسؤولة ومتحقَّق منها (accountable and verified).
 - العادات الخمس (The five habits): السياق أولًا (Context first)، حدِّد قبل أن تفوِّض (Specify before you delegate)، خطوات صغيرة مُتحقَّق منها (Small verified steps)، ثق بالدليل لا بالطلاقة (Trust evidence, not fluency)، أتمت الحلقة وحافظ على المهارة (Automate the loop, keep the skill).
-- الأدلة متباينة (mixed) ومرتبطة بظروف كل دراسة (setting-specific) وبعضها من صنع الموردين (partly vendor-made)؛ ولا تنتج عنها قاعدة عامة (no universal rule). وليس لعبارة «أصيل في الذكاء الاصطناعي» ("AI-native") تعريف معياري (standard definition)؛ وتعريف الدورة تعريف عملي (a working one).
+- الأدلة متباينة (mixed) ومرتبطة بظروف كل دراسة (setting-specific) وبعضها من إنتاج شركات تبيع هذه الأدوات (partly vendor-made)؛ ولا تنتج عنها قاعدة عامة (no universal rule). وليس لعبارة «أصيل في الذكاء الاصطناعي» ("AI-native") تعريف معياري (standard definition)؛ وتعريف الدورة تعريف عملي (a working one).
 
 ## ✍️ اختبر نفسك (Check yourself)
 
@@ -208,7 +208,7 @@ Would I delegate it again?     Yes, with the same spec
 
 </details>
 
-**2. يقول زميل: «أظهرت دراسة أن الذكاء الاصطناعي يجعل المطورين أسرع بنسبة 55%، فلنخطط على هذا الأساس.» ما أفضل خطوة أولى؟**
+**2. يقول زميل (a colleague says): «أظهرت دراسة (a study showed) أن الذكاء الاصطناعي يجعل المطورين أسرع بنسبة 55%، فلنخطط على هذا الأساس (plan for it).» ما أفضل خطوة أولى؟ ⁦(What is the best first move?)⁩**
 
 - A. نخطط على 55%، لأن تجربة مضبوطة (a controlled experiment) تدعمه
 - B. نخطط على بطء 19%، لأن تجربة أخرى (another trial) وجدت ذلك
@@ -230,7 +230,7 @@ Would I delegate it again?     Yes, with the same spec
 
 <details><summary>الإجابة</summary>
 
-**D.** يُختار الأسلوب لكل مهمة ويرتبط بما تستطيع فحصه (what you can check). رنا تتخطى المراجعة (skips review)، وسامي يقبل بدافع الانعكاس (accepts by reflex)، وعمر يتجنب الأدوات (avoids the tools). (🟢 طيف لا سلّم (A spectrum, not a ladder).)
+**D.** يُختار الأسلوب لكل مهمة ويرتبط بما تستطيع فحصه (what you can check). رنا تتخطى المراجعة (skips review)، وسامي يقبل بلا تفكير (accepts by reflex)، وعمر يتجنب الأدوات (avoids the tools). (🟢 طيف لا سلّم (A spectrum, not a ladder).)
 
 </details>
 
@@ -281,7 +281,7 @@ Would I delegate it again?     Yes, with the same spec
 - المختبر m00 (Lab m00) (في 🏛️): صحّح خطأ إملائيًا (fix a typo)، وشغّل الاختبارات (run the tests)، وأودع بصيغة `type(scope): subject`. هل يحتاج إلى وكيل؟ لا (Needs an agent: no).
 
 ## 🧭 لماذا يهم (Why it matters)
-في يومها الثاني تضجر لجين (Lujain) من طلبات الصلاحيات (permission prompts) فتحوّل وكيلها (agent) إلى وضع التجاوز (bypass mode). يحوي حاسوبها المحمول ملف تعريف VPN (a VPN profile) وتسجيل دخول إلى السحابة (a cloud login) وملف `.env` لمشروع قديم. لا يحدث شيء. هذا هو الفخ (the trap): اليوم السيئ نادر، فيبدو الأمان احتكاكًا (friction). ولدى نورة (Noura)، مسؤولة أمن التطبيقات والذكاء الاصطناعي (application and AI security)، قاعدة للأسبوع صفر (week zero): الوكيل يملك يديك (the agent has your hands). كل ما تستطيع قراءته أو حذفه أو دفعه (read, delete or push)، يستطيعه هو.
+في يومها الثاني تضجر لجين (Lujain) من طلبات الصلاحيات (permission prompts) فتحوّل وكيلها (agent) إلى وضع التجاوز (bypass mode). يحوي حاسوبها المحمول ملف تعريف VPN (a VPN profile) وتسجيل دخول إلى السحابة (a cloud login) وملف `.env` لمشروع قديم. لا يحدث شيء. هذا هو الفخ (the trap): اليوم السيئ نادر، فيبدو الأمان احتكاكًا (friction). ولدى نورة (Noura)، مسؤولة أمن التطبيقات والذكاء الاصطناعي (application and AI security)، قاعدة للأسبوع صفر (week zero): للوكيل يداك (the agent has your hands). كل ما تستطيع قراءته أو حذفه أو دفعه (read, delete or push)، يستطيعه هو.
 
 تُظهر تقارير علنية (public reports) كيف يبدو النادر: قال أحد المستخدمين إن وكيل Antigravity من Google، في «وضع Turbo» (Turbo mode)، حذف محتويات قرص (deleted a drive's contents) (نوفمبر 2025)؛ وقال مؤسس شركة إن وكيل Replit حذف قاعدة بيانات إنتاج (a production database) أثناء تجميد الشيفرة (a code freeze) (يوليو 2025). كلاهما روايتان فرديتان غير مدقَّقتين (unaudited single accounts)، فخذ التفاصيل بتحفظ (hold the details loosely). والنمط هو ما يسميه OWASP الصلاحيات المفرطة للوكيل (excessive agency) (LLM06): وظائف أو صلاحيات أو استقلالية أكثر من اللازم (too much functionality, permission or autonomy).
 
@@ -361,7 +361,7 @@ Would I delegate it again?     Yes, with the same spec
 | **Conventional Commits** — الإيداعات التقليدية | `type(scope): subject`، كما يحدده `CONTRIBUTING.md` (as CONTRIBUTING.md defines it) | كل إيداع (every commit) |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-*يحتاج إلى وكيل (Needs an agent): لا. افعله بيدك أولًا (do it by hand first)؛ فتمريرة الوكيل اختيارية (the agent pass is optional) ولا يستطيع المُقيِّم (the grader) أن يعرف أيّهما استخدمت. لا وكيل لديك؟ قارن مع مساعد محادثة (a chat assistant) (ألصق شيفرة خيالية فقط — paste only fictional code)، أو سجّل محاولتك اليدوية وحدها (log the by-hand attempt alone).*
+*يحتاج إلى وكيل (Needs an agent): لا. افعله بيدك أولًا (do it by hand first)؛ فمحاولة الوكيل اختيارية (the agent pass is optional) ولا يستطيع المُقيِّم (the grader) أن يعرف أيّهما استخدمت. لا وكيل لديك؟ قارن مع مساعد محادثة (a chat assistant) (ألصق شيفرة خيالية فقط — paste only fictional code)، أو سجّل محاولتك اليدوية وحدها (log the by-hand attempt alone).*
 
 **التذكرة (The ticket).** هذه هي `TASK.md`، كما كتبتها حصة (Hessa).
 
@@ -417,7 +417,7 @@ cd ~/ainative/m00
 
 يطبع `doctor` سطر `[PASS]` أو `[FAIL]` لكل فحص (per check) وينتهي بـ`Everything needed is in place.` أصلح أي FAIL أولًا (fix any FAIL first).
 
-من هنا تعمل في مكانين (two places). في `~/ainative/m00` تحرّر وتشغّل `git` و`pytest`. ويحتاج أمر `python -m ailab` العادي إلى مجلد `ailab` والبيئة الافتراضية المفعّلة (the active virtual environment)، لكن `start` ينتهي بطباعة أمر تقييم (a grade command) يعمل من أي مجلد (`/home/you` ترمز إلى مجلدك الرئيسي — stands for your home):
+من هنا تعمل في مكانين (two places). في `~/ainative/m00` تحرّر وتشغّل (edit and run) `git` و`pytest`. ويحتاج أمر `python -m ailab` العادي إلى مجلد `ailab` والبيئة الافتراضية المفعّلة (the active virtual environment)، لكن `start` ينتهي بطباعة أمر تقييم (a grade command) يعمل من أي مجلد (works from any folder) (`/home/you` ترمز إلى مجلدك الرئيسي — stands for your home):
 
 ```text
 When you are ready, grade from any directory:
@@ -470,9 +470,9 @@ python -m ailab grade m00 --dir ~/ainative/m00
 Lab m00: 4/10 required checks passed: NOT YET
 ```
 
-إصلاح صحيح أُودِع بالرسالة `fixed the typo` يُفشل سطرًا واحدًا (fails one line)، هو `Commit messages follow CONTRIBUTING.md`، مقتبسًا رسالتك. أصلحه بـ`git commit --amend`. وإن كان لديك إيداعان (two commits)، شغّل `git reset --soft lab-start` وأودِع مرة واحدة؛ ولا حاجة إلى إعادة أساس تفاعلية (no interactive rebase needed). وإن بدّلت إلى `main` بعد الإيداع على فرع المهمة (the task branch)، فكل سطر فاشل يسمّي الفرع الذي يحمل إيداعك (names the branch that holds your commit): فعُد إليه. وحين ينجح كل شيء يكون السطر الأخير `Lab m00: 10/10 required checks passed: PASSED`.
+إصلاح صحيح أُودِع بالرسالة `fixed the typo` يُفشل سطرًا واحدًا (fails one line)، هو `Commit messages follow CONTRIBUTING.md`، مقتبسًا رسالتك (quoting your message). أصلحه بـ`git commit --amend`. وإن كان لديك إيداعان (two commits)، شغّل `git reset --soft lab-start` وأودِع مرة واحدة (commit once)؛ ولا حاجة إلى إعادة تأسيس تفاعلية (no interactive rebase needed). وإن بدّلت إلى `main` بعد الإيداع على فرع المهمة (the task branch)، فكل سطر فاشل يسمّي الفرع الذي يحمل إيداعك (names the branch that holds your commit): فعُد إليه (switch back to it). وحين ينجح كل شيء يكون السطر الأخير `Lab m00: 10/10 required checks passed: PASSED`.
 
-**المُخرَج الأسبوعي (Weekly deliverable) (الوحدة 0 — Module 0).** في مستودع ملاحظات خاص بك (a notes repository of your own) خارج مجلدات المختبر (`git init ~/ainative-notes`)، أودِع `week-00/` ومعه `baseline.md` (الدرس 0.1) و`agent-log.md` (قالب الدرس 0.1 — the 0.1 template) و`m00-grade.txt` و`delegation-card.md` (بطاقتك للتذكرة REMIT-212، الدرس 0.3 — your card for REMIT-212). ولملف التقييم (the grade file)، أنشئ المجلد ثم شغّل في مجلد `ailab`: `python -m ailab grade m00 --dir ~/ainative/m00 > ~/ainative-notes/week-00/m00-grade.txt`.
+**المُخرَج الأسبوعي (Weekly deliverable) (الوحدة 0 — Module 0).** في مستودع ملاحظات خاص بك (a notes repository of your own) خارج مجلدات المختبر (outside the lab folders) (`git init ~/ainative-notes`)، أودِع `week-00/` ومعه `baseline.md` (الدرس 0.1) و`agent-log.md` (قالب الدرس 0.1 — the 0.1 template) و`m00-grade.txt` و`delegation-card.md` (بطاقتك للتذكرة REMIT-212، الدرس 0.3 — your card for REMIT-212). ولملف التقييم (the grade file)، أنشئ المجلد ثم شغّل في مجلد `ailab`: `python -m ailab grade m00 --dir ~/ainative/m00 > ~/ainative-notes/week-00/m00-grade.txt`.
 
 **الجلسة الجماعية (Group session) (60 دقيقة — 60 minutes).** (1) سمِّ أضعف عادة في خطك المرجعي (name your lowest baseline habit) (10). (2) تبادلوا `git diff lab-start` واشرحوا التغيير في جملة واحدة (explain the change in a sentence) (15). (3) قارنوا سجلات المحاولة اليدوية وسجلات الوكيل (compare by-hand and agent logs) (15). (4) اذكر وضع الصلاحيات الذي بدأت به ولماذا (state your starting permission mode and why) (10). (5) اتفقوا على قائمة «لا تلصق أبدًا» للمجموعة (agree the group's never-paste list) (10).
 
@@ -489,7 +489,7 @@ Lab m00: 4/10 required checks passed: NOT YET
 - **وضع التجاوز «لإيقاف الطلبات» (Bypass mode "to stop the prompts").** ضع في قائمة السماح (allow-list) الأوامر الآمنة التي تواصل الموافقة عليها بدلًا من ذلك.
 - **الإعدادات أو `/init` أو اختبار جديد في مستودع المختبر (Settings, /init or a new test in the lab repository).** الملفات الزائدة تُفشل فحص النطاق (extra files fail the scope check).
 - **تصديق «الاختبارات تنجح» في الملخص (Trusting "tests pass" in the summary).** شغّل `pytest -q` بنفسك (run it yourself).
-- **التلصص على `hidden/` (مقروء في العدّة) أو تشغيل `solve` أولًا (Peeking at hidden or running solve first).** المُقيِّم شريك تدريب لا بوابة (a practice partner, not a gate)؛ والتلصص يُفسد التدريب (defeats the practice).
+- **التلصص على `hidden/` (مقروء في العدّة) أو تشغيل `solve` أولًا (Peeking at hidden/ or running solve first).** المُقيِّم شريك تدريب لا بوابة (a practice partner, not a gate)؛ والتلصص يُفسد التدريب (defeats the practice).
 
 ## 🧾 الخلاصة (Recap)
 - استخدم أداة معتمدة (an approved tool)؛ وتعلّم في الوضع اليدوي (Manual mode)؛ وأبقِ وضع التجاوز (bypass) بعيدًا عن الأجهزة الحقيقية (real machines).
@@ -500,7 +500,7 @@ Lab m00: 4/10 required checks passed: NOT YET
 
 ## ✍️ اختبر نفسك (Check yourself)
 
-**1. تضجر لجين (Lujain) من الموافقة على تشغيلات `pytest`. ما الأنسب لهذا الدرس؟**
+**1. تضجر لجين (Lujain) من الموافقة على تشغيلات `pytest` (approving pytest runs). ما الأنسب لهذا الدرس؟ ⁦(What fits this lesson best?)⁩**
 
 - A. التحويل إلى `bypassPermissions` لأن بيانات المختبر خيالية (fictional)
 - B. إيقاف مربع حوار الثقة (the trust dialog) لتقلّ الطلبات
@@ -513,7 +513,7 @@ Lab m00: 4/10 required checks passed: NOT YET
 
 </details>
 
-**2. تريد قواعد منع (deny rules) لملف `.env` تسري في كل مشروع ولا تظهر أبدًا في فروقات m00. أين تضعها؟**
+**2. تريد قواعد منع (deny rules) لملف `.env` تسري في كل مشروع (apply in every project) ولا تظهر أبدًا في فروقات m00 (never show up in m00's diff). أين تضعها؟ ⁦(Where do they go?)⁩**
 
 - A. `.claude/settings.json` في مجلد المختبر، مودَعًا (committed)
 - B. `~/.claude/settings.json`، إعدادات المستخدم (your user settings)
@@ -539,7 +539,7 @@ Lab m00: 4/10 required checks passed: NOT YET
 
 </details>
 
-**4. يعرض `grade` كل سطر PASS عدا فحص رسالة الإيداع الذي يقتبس رسالتك «fixed the typo». ماذا الآن؟**
+**4. يعرض `grade` كل سطر PASS (every line PASS) عدا فحص رسالة الإيداع (the commit-message check) الذي يقتبس رسالتك «fixed the typo». ماذا الآن؟ ⁦(What now?)⁩**
 
 - A. عدِّل الإيداع (Amend the commit) برسالة بصيغة `type(scope): subject`
 - B. أضف إيداعًا ثانيًا (a second commit) برسالة أفضل
@@ -552,7 +552,7 @@ Lab m00: 4/10 required checks passed: NOT YET
 
 </details>
 
-**5. لماذا لا تمثّل `Bash(git push *)` في قائمة المنع حماية كاملة؟**
+**5. لماذا لا تمثّل `Bash(git push *)` في قائمة المنع (the deny list) حماية كاملة؟ ⁦(Why is it not full protection?)⁩**
 
 - A. تسري قواعد المنع (Deny rules) فقط بعد قبول مربع حوار الثقة (the trust dialog)
 - B. يمكن التحايل على أنماط Bash (Bash patterns can be sidestepped)، كما في `git -C . push`
@@ -574,7 +574,7 @@ Lab m00: 4/10 required checks passed: NOT YET
 
 ---
 
-# 0.3 — حلقة المهندس الأصيل في الذكاء الاصطناعي (The AI-native loop): حدِّد وفوِّض وتحقّق وادمج (specify, delegate, verify, integrate)، ومن يبقى مسؤولًا (and who stays accountable)
+# 0.3 — الحلقة الأصيلة في الذكاء الاصطناعي (The AI-native loop): حدِّد وفوِّض وتحقّق وادمج (specify, delegate, verify, integrate)، ومن يبقى مسؤولًا (and who stays accountable)
 *المستوى (Level): 🟢 مبتدئ (Beginner)* · *المتطلبات (Prerequisites): 0.1* · *التركيز (Focus): Mindset, Workflow*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
@@ -635,7 +635,7 @@ flowchart LR
 | | سهل التحقق (Easy to verify) | صعب التحقق (Hard to verify) |
 |---|---|---|
 | **مخاطر منخفضة (Low risk)** | **فوِّض (Delegate).** أعد تسمية متغير محلي (rename a local variable)؛ وأضف خيار CLI باختبارات مخرجات دقيقة (add a CLI flag with exact-output tests)؛ وحدِّث أوامر README (refresh the README commands) | **فوِّض مع فحص بشري (Delegate with a human check).** صياغة عربية لإشعار (Arabic wording for a notification)، إن كنت لا تقرأ العربية: استعن بقارئ (get a reader) |
-| **مخاطر عالية (High risk)** | **فوِّض المسودة واحتفظ بالقرار (Delegate the draft, keep the decision).** اختبارات لحدود الرسوم (tests for fee boundaries)؛ وتغيير في `fees.py` بمخرجات متوقعة دقيقة ومراجع ثانٍ (exact expected outputs and a second reviewer) | **احتفظ به (Keep it).** قاعدة التقريب لعملة جديدة (the rounding rule for a new currency)؛ وعتبات الفحص (screening thresholds)؛ وحد تفويض (an authorisation boundary)؛ و«هل نبني هذا؟» ⁦(should we build this?)⁩ |
+| **مخاطر عالية (High risk)** | **فوِّض المسودة واحتفظ بالقرار (Delegate the draft, keep the decision).** اختبارات لحدود الرسوم (tests for fee boundaries)؛ وتغيير في `fees.py` بمخرجات متوقعة دقيقة ومراجع ثانٍ (exact expected outputs and a second reviewer) | **احتفظ به (Keep it).** قاعدة التقريب لعملة جديدة (the rounding rule for a new currency)؛ وعتبات الفحص (screening thresholds)؛ وحد التخويل (an authorisation boundary)؛ و«هل نبني هذا؟» ⁦(should we build this?)⁩ |
 
 احتفظ بمنطق الأموال (money logic) والحدود الأمنية (security boundaries) وقرارات المفاضلة (trade-off decisions) وكل ما يقترب من الإنتاج (anything near production). *لا تفوِّض أبدًا ما لا تستطيع التحقق منه (Never delegate what you cannot verify).* تستطيع التحقق من مهمة حين تستطيع أن تسمّي فحصًا (name a check) وتشغّله وتفهم سبب فشله إن فشل (understand why it failed if it does).
 
@@ -670,8 +670,8 @@ the fee schedule, the tier, and whether the minimum or the cap applied.
 | الخطوة (Step) | ما يحدث (What happens) | الدقائق (Minutes) |
 |---|---|---|
 | حدِّد (Specify) | اقرأ `explain_fee`، وقرّر أن الطبقات تُعدّ من 1 (tiers count from 1)، واكتب المواصفة والبطاقة (write the spec and the card) | 12 |
-| فوِّض (Delegate) | الخطة (plan)، وعدّلها (edit the plan)، ووافق على التعديلات بينما يعمل الوكيل (approve the edits while the agent works) | 6 |
-| تحقّق (Verify) | اقرأ الفروقات (read the diff) (6)؛ وشغّل المجموعة (run the suite) (2)؛ وافحص `git diff --stat` والاختبارات القديمة (check the old tests) (2)؛ وأرجِع `src` وشاهد الاختبارات الجديدة تفشل (revert and watch the new tests fail) (3)؛ وشغّل أربعة مبالغ (run four amounts) (6)؛ وارفض عرضًا بتنظيف `fees.py` (decline an offer to tidy) (1) | 20 |
+| فوِّض (Delegate) | اطلب الخطة (plan)، وعدّلها (edit the plan)، ووافق على التعديلات بينما يعمل الوكيل (approve the edits while the agent works) | 6 |
+| تحقّق (Verify) | اقرأ الفروقات (read the diff) (6)؛ وشغّل المجموعة (run the suite) (2)؛ وافحص `git diff --stat` والاختبارات القديمة (check the old tests) (2)؛ وأرجِع `src` وشاهد الاختبارات الجديدة تفشل (revert src and watch the new tests fail) (3)؛ وشغّل أربعة مبالغ (run four amounts) (6)؛ وارفض عرضًا بتنظيف `fees.py` (decline an offer to tidy fees.py) (1) | 20 |
 | ادمج (Integrate) | رسالة الإيداع (commit message)، ونص طلب الدمج مع الأوامر المشغَّلة (pull request text with the commands run)، والوسم (label)، ومُدخَل السجل (log entry) | 9 |
 | **الإجمالي (Total)** | مقدَّر باليد قبل البدء (estimated by hand, before starting): 40 | **47** |
 
@@ -694,9 +694,9 @@ FAILED tests/test_config_cli.py::test_quote_explain_says_when_the_minimum_or_the
 $ git stash pop
 ```
 
-الاختبار الجديد الثالث يحرس المخرجات القديمة (guards the old output)، فينجح في الحالتين (passes either way)، كما صُمّم. وفي تشغيل مصمَّم (in a constructed run)، رقّمت أول فروقات للوكيل الطبقات من 0 وعرضت «تبسيط» `fees.py` ما دامت فيه. التقط جدول الحدود (the boundary table) الأول؛ وأجاب ما ليس من أهداف المواصفة (the spec's non-goal) عن الثاني.
+الاختبار الجديد الثالث يحرس المخرجات القديمة (guards the old output)، فينجح في الحالتين (passes either way)، كما صُمّم. وفي تشغيل مصمَّم (in a constructed run)، رقّم الوكيل الطبقات في أول فرق له (first diff) من 0 وعرض «تبسيط» `fees.py` ما دام فيه. التقط جدول الحدود (the boundary table) الأول؛ وأجاب ما ليس من أهداف المواصفة (the spec's non-goal) عن الثاني.
 
-**ضبط الميزانية (Setting the budget).** قرِّر قبل أن تفوِّض (decide before you delegate): «سأنفق حتى 25 دقيقة في التحقق من هذا» (I will spend up to 25 minutes verifying this). فإن لم تستطع الفحوص التي تقدر على كلفتها أن تمنحك الثقة، فقلِّص المهمة (shrink the task) أو أضف اختبارًا أولًا (add a test first) أو افعلها بنفسك. وإن تجاوزت الميزانية الوقت الذي يوفره الوكيل، فكان التفويض قرارًا خاطئًا لهذه المهمة (the wrong call)، وذلك مفيد أن تعرفه. أخطأ مطوّرو METR في تقدير سرعتهم (misjudged their own speed)، فاستخدم الساعة لا الشعور (use the clock, not the feeling).
+**ضبط الميزانية (Setting the budget).** قرِّر قبل أن تفوِّض (decide before you delegate): «سأنفق حتى 25 دقيقة في التحقق من هذا» (I will spend up to 25 minutes verifying this). فإن لم تستطع الفحوص التي تقدر على تحمّل كلفتها (the checks you can afford) أن تمنحك الثقة، فقلِّص المهمة (shrink the task) أو أضف اختبارًا أولًا (add a test first) أو افعلها بنفسك. وإن تجاوزت الميزانية الوقت الذي يوفره الوكيل، فقد كان التفويض قرارًا خاطئًا لهذه المهمة (the wrong call)، وفي معرفة ذلك فائدة (useful to know). أخطأ مطوّرو METR في تقدير سرعتهم (misjudged their own speed)، فاستخدم الساعة لا الشعور (use the clock, not the feeling).
 
 **الإخفاق النموذجي في كل خطوة (The typical failure at each step).**
 
@@ -725,11 +725,11 @@ $ git stash pop
 
 ### 🔴 نظرة الخبير (Expert view)
 
-**حجم الدفعة (Batch size).** تجعل الوكلاء الفروقات الكبيرة رخيصة الإنتاج (large diffs cheap to produce)، وتزداد كلفة المراجعة مع الفروقات (review cost grows with the diff). ويربط مؤلفو DORA جزءًا من هبوط الاستقرار (the stability dip) بالدفعات الأكبر (larger batches) (وهذا ارتباط — an association). لذلك تبقى وحدة الحلقة صغيرة (the unit of the loop stays small) حتى حين يستطيع الوكيل أن يفعل أكثر.
+**حجم الدفعة (Batch size).** يجعل الوكلاء (agents) إنتاج الفروقات الكبيرة رخيصًا (large diffs cheap to produce)، وتزداد كلفة المراجعة مع حجم الفروقات (review cost grows with the diff). ويربط مؤلفو DORA جزءًا من هبوط الاستقرار (the stability dip) بالدفعات الأكبر (larger batches) (وهذا ارتباط — an association). لذلك تبقى وحدة الحلقة صغيرة (the unit of the loop stays small) حتى حين يستطيع الوكيل أن يفعل أكثر.
 
 **حين يكلّف التفويض أكثر من الفعل بنفسك (When delegation costs more than doing it).** تقول صفحة أفضل الممارسات (best-practices page) في Claude Code إنك إن استطعت وصف الفروقات في جملة واحدة (describe the diff in one sentence) فتخطَّ الخطة (skip the plan). وإصلاح m00 بهذا الحجم؛ فتشغّل الحلقة عليه للتدرّب لا للسرعة (for practice, not for speed). وحين يكون الهدف تعلّم مهارة، فالفعل بيدك يبنيها (doing it by hand builds it): فقد وجدت دراسة صغيرة أولية من Anthropic فهمًا أقل في مجموعة استعانت بالذكاء الاصطناعي (lower comprehension in an AI-assisted group).
 
-**لا تتحقق بالشيء الذي كتبه (Do not verify with the thing that wrote it).** وكيل ثانٍ يراجع الفروقات (a second agent reviewing the diff) فحص مفيد، لكنه ليس برهانًا مستقلًا (not independent proof): فالصفحة نفسها تحذّر من أن المراجعين «سيبلّغون عادةً عن بعض الملاحظات حتى حين يكون العمل سليمًا» (will usually report some, even when the work is sound). والدليل يأتي من التنفيذ (evidence comes from execution): الاختبارات (tests) وتشغيل البرنامج (running the program) والفروقات (the diff). وما تقدر على كلفة فحصه يحدد ما تفوِّضه (what you can afford to check decides what you delegate). اختبارات المخرجات الدقيقة (exact-output tests) رخيصة؛ أما التزامن (concurrency) والأمان (security) والصياغة العربية (Arabic wording) فليست كذلك. انظر [*اختبار البرمجيات (Software Testing)*، الدرس 6.2 — الاختبارات بوصفها مواصفة لوكلاء البرمجة (Tests as the specification for coding agents)](../testing/index.ar.html#/6.2).
+**لا تتحقق بالشيء الذي كتبه (Do not verify with the thing that wrote it).** وكيل ثانٍ يراجع الفروقات (a second agent reviewing the diff) فحص مفيد، لكنه ليس برهانًا مستقلًا (not independent proof): فالصفحة نفسها تحذّر من أن المراجعين «سيبلّغون عادةً عن بعض الملاحظات حتى حين يكون العمل سليمًا» (will usually report some, even when the work is sound). والدليل يأتي من التنفيذ (evidence comes from execution): الاختبارات (tests) وتشغيل البرنامج (running the program) والفروقات (the diff). وما تستطيع تحمّل كلفة فحصه يحدد ما تفوِّضه (what you can afford to check decides what you delegate). اختبارات المخرجات الدقيقة (exact-output tests) رخيصة؛ أما التزامن (concurrency) والأمان (security) والصياغة العربية (Arabic wording) فليست كذلك. انظر [*اختبار البرمجيات (Software Testing)*، الدرس 6.2 — الاختبارات بوصفها مواصفة لوكلاء البرمجة (Tests as the specification for coding agents)](../testing/index.ar.html#/6.2).
 
 ## 🧰 الأدوات (The toolkit)
 | الأداة أو الممارسة أو النمط (Tool, practice or pattern) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
@@ -741,7 +741,7 @@ $ git stash pop
 | **Author of record** — صاحب التغيير المسجَّل | الشخص الذي يحمل التغيير اسمه ويجيب عنه (the person whose name is on the change and who answers for it) | كل إيداع وطلب دمج (every commit and pull request) |
 
 ## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-المُخرَج (The artefact) هو **بطاقة التفويض (Delegation card)**، قائمة تحقق من صفحة واحدة (a one-page checklist) تملؤها قبل أن تسلّم العمل إلى وكيل. تستغرق دقيقتين، ومهمتها أن تجعلك تقرّر قبل أن يبدأ الوكيل (decide before the agent starts). يطلب منك طارق (Tariq) أن تحضر واحدة لكل مهمة تفوِّضها هذا الأسبوع. وهذه بطاقة REMIT-244 معبّأة (filled in)، نموذجًا لك (as your model). ومُخرَج الوحدة 0 (your Module 0 deliverable) هو البطاقة نفسها لـREMIT-212 (التمرين 🟢)، محفوظة باسم `delegation-card.md`.
+الوثيقة (The artefact) هي **بطاقة التفويض (Delegation card)**، قائمة تحقق من صفحة واحدة (a one-page checklist) تملؤها قبل أن تسلّم العمل إلى وكيل. تستغرق دقيقتين، ومهمتها أن تجعلك تقرّر قبل أن يبدأ الوكيل (decide before the agent starts). يطلب منك طارق (Tariq) أن تحضر واحدة لكل مهمة تفوِّضها هذا الأسبوع. وهذه بطاقة REMIT-244 معبّأة (filled in)، نموذجًا لك (as your model). ومُخرَج الوحدة 0 (your Module 0 deliverable) هو البطاقة نفسها لـREMIT-212 (التمرين 🟢)، محفوظة باسم `delegation-card.md`.
 
 ```markdown
 # Delegation card
@@ -761,8 +761,8 @@ Author of record: me. Label AI-assisted. Second reviewer: not needed (no money l
 
 ## 🛠️ التمارين (Exercises)
 - 🟢 **عبّئ بطاقة لـREMIT-212 (Fill a card for REMIT-212).** *بلا وكيل (No agent).* استخدم تذكرة الخطأ الإملائي في m00 (the m00 typo ticket). *يكتمل عندما (Done when):* تحوي البطاقة كل الحقول (every field)، ومنها `Worth it?`: جملة واحدة عن هل يستحق تفويض تلك التذكرة (whether delegating that ticket is worth it).
-- 🟡 **صنِّف ست مهام (Sort six tasks).** *بلا وكيل (No agent).* ضع كلًّا منها في المصفوفة (the matrix) مع مستوى استقلالية وفحص من سطر واحد (a one-line check): أعد تسمية متغير محلي في `cli.py`؛ وغيّر قاعدة التقريب في `money.py`؛ وأضف اختبارات لحدود طبقات الرسوم (fee tier boundaries)؛ واكتب الصياغة العربية لإشعار جديد (the Arabic wording of a new notification)؛ وارتقِ بواجهة `najmkit` البرمجية (upgrade the najmkit API)؛ وصحّح خطأً إملائيًا في README. *يكتمل عندما (Done when):* توضع الست كلها، وتكون واحدة على الأقل «احتفظ بها» (keep)، ولكل منها فحص مسمّى (a named check).
-- 🔴 **قِس لفة حقيقية (Time a real lap).** *يحتاج إلى وكيل (اختياري) — Needs an agent (optional).* بعد أن تجتاز m00 بنفسك، ابدأ بيئة تجريبية (a sandbox) (في مجلد `ailab`: `python -m ailab start m00 --dir ~/ainative/sandbox`، ثم `python -m ailab solve m00 --dir ~/ainative/sandbox` للحصول على مستودع أخضر — a green repository) ونفّذ REMIT-244 على فرع. اكتب تقديرك اليدوي أولًا (write your by-hand estimate first). *يكتمل عندما (Done when):* يعطي جدول الدقائق لكل خطوة (minutes for each step)، ونسبة التحقق (the verification share)، وجملة واحدة عن هل كانت ميزانية البطاقة صحيحة (whether the card's budget was right).
+- 🟡 **صنِّف ست مهام (Sort six tasks).** *بلا وكيل (No agent).* ضع كلًّا منها في المصفوفة (the matrix) مع مستوى استقلالية وفحص من سطر واحد (a one-line check): أعد تسمية متغير محلي في `cli.py`؛ وغيّر قاعدة التقريب في `money.py`؛ وأضف اختبارات لحدود طبقات الرسوم (fee tier boundaries)؛ واكتب الصياغة العربية لإشعار جديد (the Arabic wording of a new notification)؛ وانقل واجهة `najmkit` البرمجية إلى إصدار أحدث (upgrade the najmkit API)؛ وصحّح خطأً إملائيًا في README. *يكتمل عندما (Done when):* توضع الست كلها، وتكون واحدة على الأقل «احتفظ بها» (keep)، ولكل منها فحص مسمّى (a named check).
+- 🔴 **قِس لفة حقيقية (Time a real lap).** *يحتاج إلى وكيل (اختياري) — Needs an agent (optional).* بعد أن تجتاز m00 بنفسك، ابدأ بيئة معزولة (a sandbox) (في مجلد `ailab`: `python -m ailab start m00 --dir ~/ainative/sandbox`، ثم `python -m ailab solve m00 --dir ~/ainative/sandbox` للحصول على مستودع أخضر — a green repository) ونفّذ REMIT-244 على فرع. اكتب تقديرك اليدوي أولًا (write your by-hand estimate first). *يكتمل عندما (Done when):* يعطي جدول الدقائق لكل خطوة (minutes for each step)، ونسبة التحقق (the verification share)، وجملة واحدة عن هل كانت ميزانية البطاقة صحيحة (whether the card's budget was right).
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
 - **تخطي المواصفة لأن «الوكيل سيتدبّر الأمر» (Skipping the spec because "the agent will work it out").** وسيفعل، بثقة (confidently). اكتب معنى «انتهى» وما ليس من الأهداف (the non-goals).
@@ -783,9 +783,9 @@ Author of record: me. Label AI-assisted. Second reviewer: not needed (no money l
 
 **1. أي مهمة ينبغي أن تحتفظ بها لجين (Lujain) لنفسها بحسب مصفوفة التفويض (the delegation matrix)؟**
 
-- A. إعادة تسمية متغير محلي في `cli.py`
+- A. إعادة تسمية متغير محلي (Renaming a local variable) في `cli.py`
 - B. إضافة اختبارات لحدود طبقات الرسوم (fee-tier boundaries) بقيم معروفة
-- C. تحديث الأوامر في README
+- C. تحديث الأوامر (Refreshing the commands) في README
 - D. اختيار قاعدة التقريب (the rounding rule) لعملة جديدة
 
 <details><summary>الإجابة</summary>
@@ -797,7 +797,7 @@ Author of record: me. Label AI-assisted. Second reviewer: not needed (no money l
 **2. تريد مها (Maha)، قائدة هندسة الموثوقية (SRE lead)، أن يعمل وكيل دون إشراف طوال الليل (unattended overnight). ما الذي يجب أن يتحقق قبل أن يرتفع مستوى الاستقلالية إلى التشغيل الطويل (long-running)؟**
 
 - A. أن يكون العمل محدَّدًا وقابلًا للفحص ومعزولًا عن الإنتاج (specified, checkable and confined away from production)
-- B. أن يُختار أحدث نموذج، فتقلّ الأخطاء
+- B. أن يُختار أحدث نموذج (The newest model is selected)، فتقلّ الأخطاء (mistakes are rarer)
 - C. أن يكون الوضع التلقائي (Auto mode) مفعّلًا، فلا تقاطع الطلبات التشغيل
 - D. أن تكون للوكيل صلاحيات المدير (admin rights)، فلا يعوقه شيء
 
@@ -812,7 +812,7 @@ Author of record: me. Label AI-assisted. Second reviewer: not needed (no money l
 - A. تشغيل الحلقة كاملة، لأن العملية (process) لا تكون اختيارية أبدًا
 - B. تسليمه لوكيل في الخلفية (a background agent) لتنجز عملًا آخر
 - C. إجراء التعديل بيدك، ثم فحص الفروقات بنفسك (check the diff yourself)
-- D. أن تطلب من الوكيل كتابة المواصفة، ثم تفوِّض
+- D. أن تطلب من الوكيل كتابة المواصفة (to write the spec)، ثم تفوِّض (then delegate)
 
 <details><summary>الإجابة</summary>
 
@@ -822,9 +822,9 @@ Author of record: me. Label AI-assisted. Second reviewer: not needed (no money l
 
 **4. تغيير لجين (Lujain) في `limits.py` موسوم `AI-assisted` والتكامل المستمر (CI) أخضر. ماذا لا تزال تشترط قاعدة نجم؟**
 
-- A. لا شيء آخر، فالوسم والتكامل المستمر يكفيان
+- A. لا شيء آخر (Nothing more)، فالوسم (the label) والتكامل المستمر (CI) يكفيان
 - B. مراجع بشري ثانٍ (a second human reviewer)، مع بقاء لجين مسؤولة (still accountable)
-- C. أن يُحتسب الوكيل الذي كتبه مراجعًا ثانيًا
+- C. أن يُحتسب الوكيل الذي كتبه (The agent that wrote it) مراجعًا ثانيًا (the second reviewer)
 - D. موافقة من رئيس أمن المعلومات (CISO) قبل كل دمج
 
 <details><summary>الإجابة</summary>
@@ -833,12 +833,12 @@ Author of record: me. Label AI-assisted. Second reviewer: not needed (no money l
 
 </details>
 
-**5. يقول ملخص الوكيل إنه حدّث أيضًا اختبارًا قديمًا ليمرّ الاختبار الكلي (so the suite passes). أي خطوة أخفقت، وماذا تفعل؟**
+**5. يقول ملخص الوكيل إنه حدّث أيضًا اختبارًا قديمًا لتنجح مجموعة الاختبارات (so the suite passes). أي خطوة أخفقت، وماذا تفعل؟**
 
 - A. تحقّق (Verify): افحص تغيير ذلك الاختبار واسأل أي سلوك أخفاه (what behaviour it hid)
-- B. حدِّد (Specify): أعد كتابة التذكرة واطلب من الوكيل أن يبدأ من جديد
+- B. حدِّد (Specify): أعد كتابة التذكرة (rewrite the ticket) واطلب من الوكيل أن يبدأ من جديد (start again)
 - C. ادمج (Integrate): اضغط الإيداعات (squash the commits) ليصعب رؤية التغيير
-- D. فوِّض (Delegate): ارفع مستوى الاستقلالية ليتمم العمل وحده
+- D. فوِّض (Delegate): ارفع مستوى الاستقلالية (raise the autonomy level) ليتمم العمل وحده
 
 <details><summary>الإجابة</summary>
 
