@@ -597,18 +597,18 @@ Lab m00: 4/10 required checks passed: NOT YET
 **الحلقة (The loop).** لكل لفة أربع خطوات (each lap has four steps). يغذّيها السياق كلها، ويحيط بها الأمان (context feeds all of them, and safety wraps them).
 
 ```mermaid
-flowchart LR
-    subgraph SAFE["الأمان يحيط بكل خطوة: أقل الصلاحيات، بلا أسرار، فرع نظيف، بوابات بشرية"]
-        direction LR
-        S["حدِّد"] --> D["فوِّض"]
-        D --> V["تحقّق"]
-        V --> I["ادمج"]
-        V -->|"غير كافٍ"| S
+flowchart RL
+    subgraph SAFE["الأمان يحيط بكل خطوة: أقل الصلاحيات، بلا أسرار، فرع نظيف، بوابات بشرية (Safety wraps every step: least privilege, no secrets, a clean branch, human gates)"]
+        direction RL
+        S["حدِّد<br/>(Specify)"] --> D["فوِّض<br/>(Delegate)"]
+        D --> V["تحقّق<br/>(Verify)"]
+        V --> I["ادمج<br/>(Integrate)"]
+        V -->|"غير كافٍ (not good enough)"| S
     end
-    C["السياق: ملف الذاكرة، الملفات الصحيحة، القيود"] --> S
+    C["السياق: ملف الذاكرة، الملفات الصحيحة، القيود<br/>(Context: memory file, the right files, the constraints)"] --> S
     C --> D
     C --> V
-    I --> L["تعلّم: حدِّث السجل والسياق"]
+    I --> L["تعلّم: حدِّث السجل والسياق<br/>(Learn: update the log and the context)"]
     L --> C
 ```
 

@@ -28,14 +28,14 @@
 **الذكاء الاصطناعي مفيد في كل مرحلة، وكل مرحلة تحتاج فحصها الخاص (AI is useful at every stage, and each stage needs its own check).** يصف الدليل العملي من Anthropic لدورة حياة تطوير البرمجيات الأصيلة في الذكاء الاصطناعي (Anthropic's AI-native SDLC playbook) — وهو مورّد يصف رؤيته هو (a vendor describing its own view) — دورة الحياة (the lifecycle) بأنها حلقة (a loop) يُدمَج الذكاء الاصطناعي في كل نقطة منها (embedded at each point)، لا تدفق خطي (not a linear flow). وتضيف هذه الدورة التدريبية الفحص (The course adds the check):
 
 ```mermaid
-flowchart LR
-    R["المتطلبات: صياغة القصص وكشف الفجوات"] --> D["التصميم: الخيارات وسجل القرار والناقد"]
-    D --> B["البناء: الحلقة في الوحدات من 3 إلى 10"]
-    B --> V["المراجعة: مرور أول بالذكاء الاصطناعي والكلمة الأخيرة لشخص"]
-    V --> O["التشغيل: السجلات والحوادث ومراجعات ما بعد الحادثة"]
-    O --> L["التعلّم: معلّم وتجارب صغيرة"]
+flowchart RL
+    R["المتطلبات: صياغة القصص وكشف الفجوات<br/>(Requirements: draft stories, find gaps)"] --> D["التصميم: الخيارات وسجل القرار والناقد<br/>(Design: options, ADR, critic)"]
+    D --> B["البناء: الحلقة في الوحدات من 3 إلى 10<br/>(Build: the loop of modules 3 to 10)"]
+    B --> V["المراجعة: مرور أول بالذكاء الاصطناعي والكلمة الأخيرة لشخص<br/>(Review: AI first pass, person last word)"]
+    V --> O["التشغيل: السجلات والحوادث ومراجعات ما بعد الحادثة<br/>(Operate: logs, incidents, postmortems)"]
+    O --> L["التعلّم: معلّم وتجارب صغيرة<br/>(Learn: tutor plus small experiments)"]
     L --> R
-    C["فحص الادعاءات: كل ادعاء مرتبط بمصدر"] -.-> D
+    C["فحص الادعاءات: كل ادعاء مرتبط بمصدر<br/>(Claims check: every claim traced to a source)"] -.-> D
     C -.-> V
     C -.-> O
     C -.-> L

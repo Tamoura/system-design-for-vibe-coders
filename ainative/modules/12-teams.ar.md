@@ -30,13 +30,13 @@
 تفيد Meta، في روايتها الخاصة عن بناء تطبيق بوكيل ذكاء اصطناعي (its own account of building an app with an AI agent)، بأن الفريق يقنّن التصحيح مرة واحدة للجميع (encodes the correction once, for everyone) حين يكرر الوكيل خطأً أكثر من مرتين (when the agent repeats a mistake more than twice): هذه رواية الشركة نفسها لا دليل مستقل (a company's own account, not independent evidence)، لكنها عادة سليمة (a sound habit). وصيغة نجم (Najm's version): في المرة الثانية (the second time) يضيف من يرى الخطأ سطرًا إلى `CLAUDE.md`، أو قاعدة أو خطافًا (a rule or hook)، في طلب دمج (in a pull request).
 
 ```mermaid
-flowchart LR
-    A["اتفاق العمل"] --> B["العمل اليومي: حدِّد، فوِّض، تحقّق، ادمج"]
-    B --> C["طلب الدمج: وسم، فروقات صغيرة، والمؤلف يشرح"]
-    C --> D["المراجعة: إنسان ثانٍ للمنطق المالي"]
-    D --> E["المقاييس: التسليم مع مقاييس الحماية"]
-    E -->|"تُتجاوَز عتبة أحد مقاييس الحماية"| F["العيادة: تغيير الاتفاق"]
-    B -->|"خطأ متكرر أو حادثة"| F
+flowchart RL
+    A["اتفاق العمل<br/>(Working agreement)"] --> B["العمل اليومي: حدِّد، فوِّض، تحقّق، ادمج<br/>(Daily work: specify, delegate, verify, integrate)"]
+    B --> C["طلب الدمج: وسم، فروقات صغيرة، والمؤلف يشرح<br/>(Pull request: label, small diff, author explains)"]
+    C --> D["المراجعة: إنسان ثانٍ للمنطق المالي<br/>(Review: second human for money logic)"]
+    D --> E["المقاييس: التسليم مع مقاييس الحماية<br/>(Metrics: delivery plus guards)"]
+    E -->|"تُتجاوَز عتبة أحد مقاييس الحماية (a guard trips)"| F["العيادة: تغيير الاتفاق<br/>(Clinic: change the agreement)"]
+    B -->|"خطأ متكرر أو حادثة (a repeated mistake or an incident)"| F
     F --> A
 ```
 

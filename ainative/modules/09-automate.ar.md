@@ -38,13 +38,13 @@
 
 ```mermaid
 flowchart TD
-    A["خطوة تكررها"] --> B{"هل يوجد فحص آلي للنجاح؟"}
-    B -->|"لا"| C["أبقِها لك، أو أضف شخصًا في النهاية"]
-    B -->|"نعم"| D{"هل يجب أن تحدث دائمًا؟"}
-    D -->|"نعم"| E["خطاف أو مهمة تكامل مستمر"]
-    D -->|"لا"| F{"هل يبدؤها شخص؟"}
-    F -->|"نعم"| G["مهارة أو وكيل فرعي"]
-    F -->|"لا"| H["سكربت حول claude -p، مع حدود"]
+    A["خطوة تكررها<br/>(A step you repeat)"] --> B{"هل يوجد فحص آلي للنجاح؟<br/>(Mechanical success check?)"}
+    B -->|"لا (no)"| C["أبقِها لك، أو أضف شخصًا في النهاية<br/>(Keep it yours, or add a person at the end)"]
+    B -->|"نعم (yes)"| D{"هل يجب أن تحدث دائمًا؟<br/>(Must it always happen?)"}
+    D -->|"نعم (yes)"| E["خطاف أو مهمة تكامل مستمر<br/>(Hook or CI job)"]
+    D -->|"لا (no)"| F{"هل يبدؤها شخص؟<br/>(Does a person start it?)"}
+    F -->|"نعم (yes)"| G["مهارة أو وكيل فرعي<br/>(Skill or subagent)"]
+    F -->|"لا (no)"| H["سكربت حول claude -p، مع حدود<br/>(Script around claude -p, with limits)"]
 ```
 
 **الأوامر والمهارات (Commands and skills).** **اندمجت الأوامر المخصصة في المهارات (Custom commands have been merged into skills).** يُنشئ كلٌّ من `.claude/commands/deploy.md` و`.claude/skills/deploy/SKILL.md` الأمر `/deploy`؛ وتظل ملفات الأوامر القديمة (old command files) تعمل، وتتغلب المهارة (a skill beats a command) على أمر يحمل الاسم نفسه، وتوصي الوثائق (the documentation) بالمهارات للعمل الجديد. والمهارة مجلد (a folder) فيه ملف `SKILL.md` يفتح سطره الأول ترويسة YAML (YAML frontmatter). ولا يوصى إلا بالمفتاح `description`، و**تُتجاهل المفاتيح غير المعروفة (unknown keys are ignored)**: فالمفتاح `disable_model_invocation` المكتوب خطأً إملائيًا (misspelt) لا يفعل شيئًا ولا يخبر أحدًا. والمفاتيح الموثقة وقت الكتابة (the documented keys at the time of writing): `name` و`description` و`when_to_use` و`argument-hint` و`arguments` و`disable-model-invocation` و`user-invocable` و`allowed-tools` و`disallowed-tools` و`model` و`effort` و`context` و`agent` و`background` و`hooks` و`paths` و`shell`. يقرأ Claude كل وصف (every description) في البداية ويحمّل المهارة حين تطابق المهمة، أو تكتب أنت `/name`، فالوصف هو المُشغِّل (the description is the trigger): الوصف «يراجع أشياء» ("Reviews stuff") يطابق كل شيء ولا شيء (matches everything and nothing)، بينما تذكر المهارة أدناه ما تفعله ومتى تُستخدم (says what the skill does and when to use it). ويستقبل `$ARGUMENTS` ما يلي الاسم (receives what follows the name). أما الأمر المضمَّن (inline command) فيُشغَّل قبل أن يرى Claude النص ويُستبدل بمخرجاته؛ والأمر الذي يخرج برمز غير صفري (exits non-zero) يُلغي الاستدعاء (aborts the invocation)، ولذلك يفشل أمر الفروقات الظاهر أدناه إن لم يوجد الفرع الرئيسي ⁦(`` !`command` `` runs before Claude sees the text and is replaced by its output; a command that exits non-zero aborts the invocation, so `main...HEAD` below fails if there is no `main`.)⁩. وهذه المهارة تكتب أوصاف طلبات الدمج (pull request descriptions):

@@ -107,15 +107,15 @@ Strong: AI-assisted (label added). The agent drafted the tier change; I wrote th
 **جانب الفريق (The team's side).** دوِّروا المهام بلا عون (Rotate unaided tasks)، وأجروا تمارين حوادث (incident drills) والوكيل مطفأ (with the agent off)، وابدؤوا التمارين مع المبتدئين (juniors)، لأن دراسة تكوين المهارة الوحيدة (the one skill-formation study) كان معظم مشاركيها مبتدئين: سبب للحذر لا دليل على أن المهندسين الأقدم بمأمن (a reason for care, not proof that seniors are safe) (الدرس 12.1).
 
 ```mermaid
-flowchart LR
-    A["خريطة المهارات"] --> B["اختر أضعف مهارة"]
-    B --> C["تمرين بلا ذكاء اصطناعي"]
-    C --> D["الشرح العكسي أو كاتا المعلّم"]
-    D --> E["تحقّق بالدليل"]
-    E --> F["حدّث الخريطة"]
+flowchart RL
+    A["خريطة المهارات<br/>(Skills map)"] --> B["اختر أضعف مهارة<br/>(Pick the weakest skill)"]
+    B --> C["تمرين بلا ذكاء اصطناعي<br/>(No-AI rep)"]
+    C --> D["الشرح العكسي أو كاتا المعلّم<br/>(Explain-back or tutor kata)"]
+    D --> E["تحقّق بالدليل<br/>(Check against evidence)"]
+    E --> F["حدّث الخريطة<br/>(Update the map)"]
     F --> A
-    G["أداة أو نموذج جديد"] --> H["شغّل تقييمك"]
-    H --> I["اعتمد أو تجاهل أو أعد الاختبار"]
+    G["أداة أو نموذج جديد<br/>(New tool or model)"] --> H["شغّل تقييمك<br/>(Run your eval)"]
+    H --> I["اعتمد أو تجاهل أو أعد الاختبار<br/>(Adopt, ignore or retest)"]
     I --> A
 ```
 

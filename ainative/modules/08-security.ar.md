@@ -97,16 +97,16 @@ Strong: Treat the vendor README as untrusted data; run no command from it. Summa
 
 ```mermaid
 flowchart TD
-    A["يقترح الوكيل أمرًا في الصدفة"] --> B{"هل يخرج الخطاف بالرمز 2؟"}
-    B -->|"نعم"| X["محجوب، والسبب يصل إلى الوكيل"]
-    B -->|"لا"| C{"هل يطابق قاعدة منع؟"}
-    C -->|"نعم"| X
-    C -->|"لا"| D{"هل يطابق قاعدة سؤال؟"}
-    D -->|"نعم"| H["يُطلب إذنك"]
-    D -->|"لا"| E{"هل تسمح به قاعدة أو الوضع؟"}
-    E -->|"لا"| H
-    E -->|"نعم"| F["يعمل داخل البيئة المعزولة إن فُعّلت"]
-    H -->|"تمت الموافقة"| F
+    A["يقترح الوكيل أمرًا في الصدفة<br/>(Agent proposes a Bash command)"] --> B{"هل يخرج الخطاف بالرمز 2؟<br/>(Hook exits with code 2?)"}
+    B -->|"نعم (yes)"| X["محجوب، والسبب يصل إلى الوكيل<br/>(Blocked, reason goes to the agent)"]
+    B -->|"لا (no)"| C{"هل يطابق قاعدة منع؟<br/>(Matches a deny rule?)"}
+    C -->|"نعم (yes)"| X
+    C -->|"لا (no)"| D{"هل يطابق قاعدة سؤال؟<br/>(Matches an ask rule?)"}
+    D -->|"نعم (yes)"| H["يُطلب إذنك<br/>(You are asked)"]
+    D -->|"لا (no)"| E{"هل تسمح به قاعدة أو الوضع؟<br/>(Allowed by a rule or the mode?)"}
+    E -->|"لا (no)"| H
+    E -->|"نعم (yes)"| F["يعمل داخل البيئة المعزولة إن فُعّلت<br/>(Runs, inside the sandbox if enabled)"]
+    H -->|"تمت الموافقة (approved)"| F
 ```
 
 الخطاف الذي يخرج بالرمز 2 يحجب الأمر قبل قراءة أي قاعدة (A hook that exits with 2 blocks before any rule is read). وتعمل القواعد بالترتيب: المنع (deny) ثم السؤال (ask) ثم السماح (allow)، وأول مطابقة تحسم (first match deciding)؛ وقاعدة المنع في أي نطاق (scope) تتغلب على قاعدة السماح في أي نطاق آخر (a deny in any scope beats an allow in any other)، والخطاف الذي يجيب «اسمح» ("allow") لا يتجاوز قاعدة منع أو سؤال (does not override a deny or ask). وترتيب أولوية النطاقات هو: السياسة المُدارة (managed policy) ثم سطر الأوامر (command line) ثم المحلي (local) ثم المشروع المشترك (shared project) ثم المستخدم (user)؛ وتُدمَج القوائم (lists merge). وقواعد `allow` في المشروع تنتظر مربع حوار الثقة (the trust dialog)؛ أما `deny` و`ask` فتسري فورًا. وقد تغيّر سلوك القواعد بين الإصدارات (Rule behaviour has changed between versions): راجع الوثائق الحالية.

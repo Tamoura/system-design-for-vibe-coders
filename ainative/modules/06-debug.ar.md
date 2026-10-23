@@ -51,15 +51,15 @@
 
 ```mermaid
 flowchart TD
-    A["تقرير الخلل"] --> B["إعادة الإنتاج: اختبار فاشل"]
-    B --> C["فرضيات مرتبة"]
-    C --> D["أرخص فحص"]
-    D --> E{"هل فُسِّر السبب؟"}
-    E -->|"لا"| C
-    E -->|"تعثر مرتين"| F["إعادة ضبط: إعادة إنتاج أصغر"]
+    A["تقرير الخلل<br/>(Bug report)"] --> B["إعادة الإنتاج: اختبار فاشل<br/>(Reproduce: a failing test)"]
+    B --> C["فرضيات مرتبة<br/>(Ranked hypotheses)"]
+    C --> D["أرخص فحص<br/>(Cheapest check)"]
+    D --> E{"هل فُسِّر السبب؟<br/>(Cause explained?)"}
+    E -->|"لا (no)"| C
+    E -->|"تعثر مرتين (stuck twice)"| F["إعادة ضبط: إعادة إنتاج أصغر<br/>(Reset: smaller repro)"]
     F --> C
-    E -->|"نعم"| G["إصلاح أدنى واختبار انحدار"]
-    G --> H["مذكرة السبب الجذري"]
+    E -->|"نعم (yes)"| G["إصلاح أدنى واختبار انحدار<br/>(Minimal fix and regression test)"]
+    G --> H["مذكرة السبب الجذري<br/>(Root-cause note)"]
 ```
 
 - **أعد الإنتاج أولًا (Reproduce first).** الاختبار الفاشل (A failing test) يثبت أن الخلل موجود كما تفهمه، ويمنح الوكيل إشارة موضوعية (an objective signal)، وهو ما تقترحه صفحة أفضل الممارسات (the best-practices page)، ويصبح اختبار الانحدار (the regression test)، ويجعل التقسيم الثنائي (bisecting) ممكنًا. ومن السجل، ابنِ أصغر مدخل ممكن بطوابع زمنية دقيقة (the smallest input with exact timestamps). وإن لم تستطع إعادة إنتاجه فأنت لا تفهمه بعد (If you cannot reproduce it, you do not understand it yet).

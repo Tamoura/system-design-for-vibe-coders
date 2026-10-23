@@ -128,12 +128,12 @@
 
 ```mermaid
 flowchart TD
-    A["اقرأ التذكرة"] --> B["اقرأ فروقات الاختبارات أولًا"]
-    B --> C{"هل يمكن لكل اختبار معدَّل أن يفشل؟"}
-    C -->|"لا"| X["اطلب تغييرات: دليل ضعيف"]
-    C -->|"نعم"| D["اقرأ الشيفرة بحسب الخطر ثم شغِّلها"]
-    D --> E["اطلب تفسيرًا ثم تحقق منه"]
-    E --> F["الحكم، مع إنسان ثانٍ لمنطق الأموال"]
+    A["اقرأ التذكرة<br/>(Read the ticket)"] --> B["اقرأ فروقات الاختبارات أولًا<br/>(Read the test diff first)"]
+    B --> C{"هل يمكن لكل اختبار معدَّل أن يفشل؟<br/>(Can every changed test still fail?)"}
+    C -->|"لا (no)"| X["اطلب تغييرات: دليل ضعيف<br/>(Request changes: weak evidence)"]
+    C -->|"نعم (yes)"| D["اقرأ الشيفرة بحسب الخطر ثم شغِّلها<br/>(Read the code by risk, then run it)"]
+    D --> E["اطلب تفسيرًا ثم تحقق منه<br/>(Ask for an explanation, then verify it)"]
+    E --> F["الحكم، مع إنسان ثانٍ لمنطق الأموال<br/>(Verdict, with a second human for money logic)"]
 ```
 
 - **قلِّصه أولًا (Shrink it first).** طلب الدمج (pull request) الذي يخلط تغييرين يعود ليُقسَّم (goes back to be split). وهذه هي العادة 3 (habit 3)، *خطوات صغيرة متحقق منها (Small verified steps)*.

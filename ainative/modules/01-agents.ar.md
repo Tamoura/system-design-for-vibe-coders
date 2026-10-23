@@ -46,16 +46,16 @@
 
 ```mermaid
 flowchart TD
-    G["موجّهك والسياق"] --> M["النموذج يقرأ السياق"]
-    M --> D{"استدعاء أداة أم إجابة؟"}
-    D -->|"استدعاء أداة"| P{"هل هو مسموح؟"}
-    P -->|"لا"| Q["يسألك أو يُرفض"]
+    G["موجّهك والسياق<br/>(Your prompt and the context)"] --> M["النموذج يقرأ السياق<br/>(The model reads the context)"]
+    M --> D{"استدعاء أداة أم إجابة؟<br/>(Tool call or answer?)"}
+    D -->|"استدعاء أداة (tool call)"| P{"هل هو مسموح؟<br/>(Allowed?)"}
+    P -->|"لا (no)"| Q["يسألك أو يُرفض<br/>(It asks you or is refused)"]
     Q --> M
-    P -->|"نعم"| T["شغّله: اقرأ، ابحث، عدّل، شغّل"]
-    T --> R["تُلحَق النتيجة بالسياق"]
+    P -->|"نعم (yes)"| T["شغّله: اقرأ، ابحث، عدّل، شغّل<br/>(Run it: read, search, edit, run)"]
+    T --> R["تُلحَق النتيجة بالسياق<br/>(The result is appended to the context)"]
     R --> M
-    D -->|"إجابة"| H["تقرأ الإجابة والفروقات"]
-    H -->|"الموجّه التالي"| G
+    D -->|"إجابة (answer)"| H["تقرأ الإجابة والفروقات<br/>(You read the answer and the diff)"]
+    H -->|"الموجّه التالي (next prompt)"| G
 ```
 
 تجعل الحلقة الوكلاء مفيدين ومحفوفين بالمخاطر في آن واحد (useful and risky): فهم يستطيعون التحقق من عملهم بتشغيل الاختبارات (check their work by running tests)، ويمكن أن يضلّلهم ما تعيده الأداة (be misled by what a tool returns)، من رسالة خطأ مربكة (a confusing error) إلى ملف README فيه تعليمات (a README with instructions in it). وتجد بنية الحلقة الداخلية وحساب الكلفة (the loop's internals and the cost arithmetic) في [*بناء تطبيقات الذكاء الاصطناعي والوكلاء (Building AI Applications & Agents)*، الدرس 8.1 — خطِّط ونفِّذ ولاحِظ وكرِّر: التأمل الذاتي وشروط التوقف وأولى أنماط الإخفاق (Plan, act, observe, repeat: reflection, stopping conditions and the first failure modes)](../aiapps/index.ar.html#/8.1).

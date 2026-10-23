@@ -75,9 +75,9 @@ E       AssertionError: assert Decimal('3.04') == Decimal('0')
 **التوسيع ثم التقليص (Expand and contract)** (ويسمى أيضًا التغيير المتوازي (parallel change)) هو الفكرة نفسها لواجهة (an interface) أو صيغة تخزين (stored format).
 
 ```mermaid
-flowchart LR
-    A["وسِّع: أضف الجديد بجانب القديم"] --> B["رحِّل: انقل كل مستدعٍ"]
-    B --> C["قلِّص: أزل القديم"]
+flowchart RL
+    A["وسِّع: أضف الجديد بجانب القديم<br/>(Expand: add the new beside the old)"] --> B["رحِّل: انقل كل مستدعٍ<br/>(Migrate: move every caller)"]
+    B --> C["قلِّص: أزل القديم<br/>(Contract: remove the old)"]
 ```
 
 لا توسّع وتقلّص في خطوة واحدة (Never expand and contract in one step)، وإلا فلن تجد لحظة يعمل فيها القديم والجديد معًا (no moment when both work). في الدرس 7.2 يقوم سالم (Salem)، من هندسة المنصة (platform engineering)، بالتوسيع (expands) — إذ تحتفظ najmkit 2 بالأسماء القديمة بوصفها أغلفة تحذيرية (warning wrappers) — ثم ترحِّل أنت مواضع الاستدعاء (migrate the call sites)، ثم تقلّص (contract). ويحوّل `pytest -W error::DeprecationWarning` الاستدعاء القديم إلى خطأ يُظهر موضع استدعائه (an error showing its call site)، لكن فقط بعد ترحيل `tests/conftest.py`، وهو إعداد الاختبارات المشترك (the shared test setup): وإلى ذلك الحين يفشل كل اختبار في أدوات التجهيز (fixtures) الخاصة به.

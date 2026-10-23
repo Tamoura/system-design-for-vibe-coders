@@ -62,16 +62,16 @@
 | **العربية (Arabic)** | الأرقام والفواصل والأسماء والاتجاه؛ ومن يعتمد الصياغة؟ ⁦(Digits, separators, names, direction; who approves the wording?)⁩ | أرقام عربية-هندية (Arabic-Indic digits)؛ وتُدرَج الأسماء دون تغيير (names inserted unchanged)؛ والصياغة الإنجليزية مثبَّتة باختبارات (English wording pinned by tests) |
 
 ```mermaid
-flowchart LR
-    T["التذكرة"] --> H["مطاردة الغموض"]
-    H --> I["المقابلة: أنت تقرر"]
-    I --> S["المواصفة في مجلد المواصفات"]
-    S --> P["وضع التخطيط: المراجعة"]
-    P --> L["الشرائح"]
-    L --> B["جلسة جديدة تبني شريحة واحدة"]
-    B --> V["التحقق مقابل المعايير"]
-    V -->|"وُجدت فجوة"| S
-    V -->|"اكتملت الشريحة"| L
+flowchart RL
+    T["التذكرة<br/>(Ticket)"] --> H["مطاردة الغموض<br/>(Hunt ambiguity)"]
+    H --> I["المقابلة: أنت تقرر<br/>(Interview: you decide)"]
+    I --> S["المواصفة في مجلد المواصفات<br/>(Spec in specs/)"]
+    S --> P["وضع التخطيط: المراجعة<br/>(Plan mode: review)"]
+    P --> L["الشرائح<br/>(Slices)"]
+    L --> B["جلسة جديدة تبني شريحة واحدة<br/>(Fresh session builds one)"]
+    B --> V["التحقق مقابل المعايير<br/>(Verify against criteria)"]
+    V -->|"وُجدت فجوة (gap found)"| S
+    V -->|"اكتملت الشريحة (slice done)"| L
 ```
 
 ### 🟡 التعمق أكثر (Going deeper)

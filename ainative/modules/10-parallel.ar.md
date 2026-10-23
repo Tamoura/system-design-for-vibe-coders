@@ -71,15 +71,15 @@ S3  cli.py        python -m remit statement --customer C001 --month 2026-03    c
 
 ```mermaid
 flowchart TD
-    P["الخطة والعقد أولًا"] --> S1["S1 statement.py"]
-    P --> S2["S2 القالب"]
-    P --> S3["S3 الأمر، يُبنى على بديل وهمي"]
-    S1 --> M1["دمج S1 ثم اختبار"]
-    M1 --> M2["دمج S2 ثم اختبار"]
+    P["الخطة والعقد أولًا<br/>(Plan and contract first)"] --> S1["S1 statement.py"]
+    P --> S2["S2 القالب<br/>(S2 template)"]
+    P --> S3["S3 الأمر، يُبنى على بديل وهمي<br/>(S3 command, built on a stub)"]
+    S1 --> M1["دمج S1 ثم اختبار<br/>(Merge S1, test)"]
+    M1 --> M2["دمج S2 ثم اختبار<br/>(Merge S2, test)"]
     S2 --> M2
-    M2 --> M3["دمج S3 ثم إعادة اختباراته على S1 الحقيقية"]
+    M2 --> M3["دمج S3 ثم إعادة اختباراته على S1 الحقيقية<br/>(Merge S3, rerun its tests on the real S1)"]
     S3 --> M3
-    M3 --> I["فحص التكامل على main"]
+    M3 --> I["فحص التكامل على main<br/>(Integration check on main)"]
 ```
 
 **العقد هو التفويض (The contract is the delegation).** بطاقة التفويض (delegation card) في الدرس 0.3، لكل مهمة، مضافًا إليها الواجهة (plus the interface).

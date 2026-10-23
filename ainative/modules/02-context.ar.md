@@ -38,24 +38,24 @@
 | **المحادثة (Conversation)** | موجّهاتك وردوده (Your prompts and its replies): وهي تنمو مع كل دور (it grows every turn) |
 
 ```mermaid
-flowchart LR
-    subgraph START["يُحمَّل عند البدء"]
-        A["موجّه النظام"]
-        B["CLAUDE.md والقواعد غير المقيَّدة"]
-        C["فهرس الذاكرة التلقائية"]
-        D["أوصاف المهارات وأسماء أدوات MCP"]
+flowchart RL
+    subgraph START["يُحمَّل عند البدء (Loaded at the start)"]
+        A["موجّه النظام<br/>(System prompt)"]
+        B["CLAUDE.md والقواعد غير المقيَّدة<br/>(CLAUDE.md and unscoped rules)"]
+        C["فهرس الذاكرة التلقائية<br/>(Auto memory index)"]
+        D["أوصاف المهارات وأسماء أدوات MCP<br/>(Skill descriptions and MCP tool names)"]
     end
-    subgraph LIVE["يُضاف مع تقدّم العمل"]
-        E["الملفات التي يقرؤها"]
-        F["القواعد المقيَّدة وملفات CLAUDE.md المتداخلة"]
-        G["مخرجات الأدوات والخطافات"]
-        H["الموجّهات والردود"]
+    subgraph LIVE["يُضاف مع تقدّم العمل (Added as work goes on)"]
+        E["الملفات التي يقرؤها<br/>(Files it reads)"]
+        F["القواعد المقيَّدة وملفات CLAUDE.md المتداخلة<br/>(Scoped rules and nested CLAUDE.md)"]
+        G["مخرجات الأدوات والخطافات<br/>(Tool and hook output)"]
+        H["الموجّهات والردود<br/>(Prompts and replies)"]
     end
-    SUB["وكيل فرعي بنافذته الخاصة"]
-    W["نافذة السياق: ميزانية واحدة محدودة"]
+    SUB["وكيل فرعي بنافذته الخاصة<br/>(Subagent with its own window)"]
+    W["نافذة السياق: ميزانية واحدة محدودة<br/>(The context window: one finite budget)"]
     START --> W
     LIVE --> W
-    SUB -->|"التقرير النهائي فقط"| W
+    SUB -->|"التقرير النهائي فقط (final report only)"| W
 ```
 
 أبقِ طبقات البدء صغيرة (Keep startup layers small) لأن كل جلسة تدفع ثمنها (every session pays for them)، واجلب الباقي بدقة (pull in the rest precisely) لأنه يبقى (it stays). ويعرض `/context` الشبكة (the grid) وأي ملفات ذاكرة حُمّلت (which memory files loaded). وتصف صفحة أفضل الممارسات (the best-practices page) السياق بأنه «أهم مورد ينبغي إدارته» ("the most important resource to manage").
