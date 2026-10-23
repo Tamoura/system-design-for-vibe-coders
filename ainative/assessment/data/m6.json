@@ -6,27 +6,27 @@
       "level": 1,
       "lesson": "6.1",
       "q": {
-        "en": "Nada forwards a report: an Arabic-speaking customer received her transfer confirmation in English. Lujain's agent has already proposed a patch to the notification code. What should she do first?",
-        "ar": "تُحيل ندى تقرير خطأ (bug report) مفاده أن عميلة ناطقة بالعربية (Arabic-speaking customer) وصلها تأكيد التحويل (transfer confirmation) بالإنجليزية. وقد اقترح وكيل (agent) لجين تعديلًا (patch) على شيفرة الإشعارات (notification code). ما الذي ينبغي أن تفعله أولًا؟"
+        "en": "Nada forwards a report: an Arabic-speaking customer received her transfer confirmation in English. Lujain's agent has already proposed a patch to the notification code, and the existing suite stays green with it. What should she do first?",
+        "ar": "تُحيل ندى تقرير خطأ (bug report) مفاده أن عميلة ناطقة بالعربية (Arabic-speaking customer) وصلها تأكيد التحويل (transfer confirmation) بالإنجليزية. وقد اقترح وكيل (agent) لجين تعديلًا (patch) على شيفرة الإشعارات (notification code)، وتبقى مجموعة الاختبارات الحالية (existing suite) خضراء معه. ما الذي ينبغي أن تفعله أولًا؟"
       },
       "o": {
         "en": [
-          "Ask the agent to explain the notification code, then apply the fix it proposes.",
-          "Make Arabic the default language for every confirmation, since that is what the customer wanted.",
+          "Ask the agent for four ranked hypotheses, then run the cheapest check before writing any test.",
+          "Apply the agent's patch and merge it once a hand-made transfer gets an Arabic confirmation.",
           "Write a failing test from the report's exact inputs and watch it fail before any fix.",
-          "Find the latest commit that touched notifications, then revert it to restore the old behaviour."
+          "Run the existing suite with the patch applied and merge it if everything stays green."
         ],
         "ar": [
-          "اطلب من الوكيل (agent) شرح شيفرة الإشعارات (notification code) ثم طبّق الإصلاح (fix) الذي يقترحه.",
-          "اجعل العربية اللغة الافتراضية (default language) لكل رسائل التأكيد (confirmations)، فهذا ما أرادته العميلة (customer).",
+          "اطلب من الوكيل (agent) أربع فرضيات مرتبة (ranked hypotheses)، ثم نفّذ أرخص فحص (cheapest check) قبل كتابة أي اختبار (test).",
+          "طبّق تعديل الوكيل (agent's patch) وادمجه متى أعطت عملية تحويل (transfer) أجريتها يدويًا تأكيدًا بالعربية.",
           "اكتب اختبارًا فاشلًا (failing test) من مدخلات التقرير (report's inputs) الدقيقة، وشاهده يفشل قبل أي إصلاح (fix).",
-          "ابحث عن آخر إيداع (commit) مسّ الإشعارات (notifications)، ثم تراجع عنه (revert) لاستعادة السلوك القديم (old behaviour)."
+          "شغّل مجموعة الاختبارات الحالية (existing suite) مع التعديل (patch)، وادمجه إن بقي كل شيء أخضر (green)."
         ]
       },
       "a": 2,
       "why": {
-        "en": "A failing test built from the report proves the bug exists as you understand it, gives the agent an objective signal and later serves as the regression test. Explaining then fixing is the tempting shortcut, but a fix for a bug you have not reproduced is a guess.",
-        "ar": "يثبت الاختبار الفاشل (failing test) المبني من التقرير أن الخطأ موجود كما تفهمه، ويمنح الوكيل (agent) إشارة موضوعية (objective signal)، ثم يصير اختبار الانحدار (regression test). أما الشرح ثم الإصلاح فهو الاختصار المغري، لكن إصلاح خطأ لم تُعِد إنتاجه (reproduce) مجرد تخمين (a guess)."
+        "en": "A failing test built from the report proves the bug exists as you understand it, gives the agent an objective signal and later serves as the regression test. Ranked hypotheses come after it, and a patch that keeps the suite green is the tempting shortcut: a fix for a bug you have not reproduced is a guess.",
+        "ar": "يثبت الاختبار الفاشل (failing test) المبني من التقرير أن الخطأ موجود كما تفهمه، ويمنح الوكيل (agent) إشارة موضوعية (objective signal)، ثم يصير اختبار الانحدار (regression test). وتأتي الفرضيات المرتبة (ranked hypotheses) بعده، أما تعديل يُبقي المجموعة خضراء (green) فهو الاختصار المغري، لكن إصلاح خطأ لم تُعِد إنتاجه (reproduce) مجرد تخمين (a guess)."
       }
     },
     {
@@ -34,27 +34,27 @@
       "level": 2,
       "lesson": "6.2",
       "q": {
-        "en": "Lujain has fixed a fee bug and replayed a week of audit events through the fixed code. Seven customers now get a different fee: five were overcharged and two were undercharged. Support had heard from only three of the five. How should the Impact section of the root-cause note treat these customers?",
-        "ar": "أصلحت لجين خطأً في الرسوم (fee bug) ثم أعادت تمرير (replay) أسبوع من أحداث التدقيق (audit events) عبر الشيفرة المصلَّحة (fixed code). فتبيّن أن سبعة عملاء (customers) سيحصلون الآن على رسم مختلف: خمسة كانوا مُحمَّلين أكثر من اللازم (overcharged) واثنان أقل منه (undercharged). ولم يسمع الدعم (support) إلا من ثلاثة من الخمسة. كيف يعامل قسم الأثر (Impact) في ملاحظة السبب الجذري (root-cause note) هؤلاء العملاء؟"
+        "en": "Lujain has fixed a fee bug and replayed a week of audit events through the fixed code. Seven customers now get a different fee: five were overcharged and two were undercharged. Support had heard from only three of the five. Maha will use the root-cause note to plan refunds. How should its Impact section treat these customers?",
+        "ar": "أصلحت لجين خطأً في الرسوم (fee bug) ثم أعادت تمرير (replay) أسبوع من أحداث التدقيق (audit events) عبر الشيفرة المصلَّحة (fixed code). فتبيّن أن سبعة عملاء (customers) سيحصلون الآن على رسم مختلف: خمسة كانوا مُحمَّلين أكثر من اللازم (overcharged) واثنان أقل منه (undercharged). ولم يسمع الدعم (support) إلا من ثلاثة من الخمسة. وستعتمد مها على ملاحظة السبب الجذري (root-cause note) لتخطيط الاستردادات (refunds). كيف يعامل قسم الأثر (Impact) فيها هؤلاء العملاء؟"
       },
       "o": {
         "en": [
-          "List all seven by id, marking the five overcharged and the two undercharged.",
-          "List the three who wrote to support, since only their impact is confirmed.",
-          "List the five overcharged by id, since the two undercharged lost nothing.",
+          "List all seven by id, marking which five were overcharged and which two undercharged.",
+          "List the three who wrote to support by id, with the other four marked as unconfirmed.",
+          "List the five overcharged by id, since the two undercharged have nothing to refund.",
           "Give one total of seven affected customers, because Maha needs a count to paste."
         ],
         "ar": [
           "اذكر السبعة بالمعرّف (id)، وبيّن الخمسة المُحمَّلين أكثر من اللازم (overcharged) والاثنين المُحمَّلين أقل منه (undercharged).",
-          "اذكر الثلاثة الذين كتبوا إلى الدعم (support) وحدهم، لأن أثرهم (impact) هو الأثر المؤكَّد (confirmed) الوحيد لدينا.",
-          "اذكر الخمسة المُحمَّلين أكثر من اللازم (overcharged) بالمعرّف (id)، فالاثنان الآخران لم يخسرا شيئًا (lost nothing) من الخلل أصلًا.",
+          "اذكر الثلاثة الذين كتبوا إلى الدعم (support) بالمعرّف (id)، وسمِّ الأربعة الآخرين «غير مؤكَّدين» (unconfirmed).",
+          "اذكر الخمسة المُحمَّلين أكثر من اللازم (overcharged) بالمعرّف (id)، فالاثنان الآخران ليس لهما ما يُسترَد (nothing to refund).",
           "اكتب رقمًا إجماليًا واحدًا (one total) هو سبعة عملاء متأثرين (affected)، لأن مها تحتاج عددًا (a count) لتلصقه في السجل."
         ]
       },
       "a": 0,
       "why": {
-        "en": "A replay counts everyone the defect touched, in both directions, so Impact lists each customer by id and says which way the fee was wrong. Leaving out the two undercharged is the tempting error: they never wrote in, yet the defect touched them and the note must say so.",
-        "ar": "تحصي إعادة التمرير (replay) كل من مسّه الخلل (defect) في الاتجاهين (both directions)، فيذكر قسم الأثر (Impact) كل عميل بمعرّفه (id) ويبيّن في أي اتجاه أخطأ الرسم (fee). وحذف المُحمَّلين أقل من اللازم (undercharged) هو الخطأ المغري (tempting error)، فهم لم يكتبوا إلى الدعم (support) لكن الخلل مسّهم، وعلى الملاحظة (note) أن تقول ذلك."
+        "en": "A replay counts everyone the defect touched, in both directions, so Impact lists each customer by id and says which way the fee was wrong; Maha can still pick out the five to refund. Counting only those who wrote in, or only those owed money, is the tempting error: the two undercharged were touched too, and the note must say so.",
+        "ar": "تحصي إعادة التمرير (replay) كل من مسّه الخلل (defect) في الاتجاهين (both directions)، فيذكر قسم الأثر (Impact) كل عميل بمعرّفه (id) ويبيّن في أي اتجاه أخطأ الرسم (fee)، وتستطيع مها أن تنتقي منهم الخمسة المستحقين للاسترداد (refund). أما الاكتفاء بمن كتبوا إلى الدعم (support) أو بمن لهم مال مستحق فهو الخطأ المغري (tempting error)، فالاثنان المُحمَّلان أقل من اللازم (undercharged) مسّهما الخلل أيضًا، وعلى الملاحظة (note) أن تقول ذلك."
       }
     },
     {
@@ -62,18 +62,18 @@
       "level": 2,
       "lesson": "6.1",
       "q": {
-        "en": "Maha hands Lujain a raw log from the hour of an incident. Some lines contain customers' e-mail addresses and phone numbers, and Lujain has a log redaction filter that masks personal data and keys. She wants her agent to find the cause. What does she do?",
-        "ar": "تسلّم مها لجين سجلًا خامًا (raw log) من ساعة الحادثة (incident). وبعض أسطره تحوي عناوين بريد إلكتروني (e-mail addresses) وأرقام هواتف (phone numbers) لعملاء، ولدى لجين مرشِّح حجب للسجلات (log redaction filter) يخفي البيانات الشخصية (personal data) والمفاتيح (keys). وتريد أن يجد وكيلها (agent) السبب (cause). ماذا تفعل؟"
+        "en": "Maha hands Lujain a raw log of several thousand lines from the hour of an incident. Some lines contain customers' e-mail addresses and phone numbers, and Lujain has a log redaction filter that masks personal data and keys. She wants her agent to find the cause. What does she do?",
+        "ar": "تسلّم مها لجين سجلًا خامًا (raw log) من عدة آلاف من الأسطر عن ساعة الحادثة (incident). وبعض أسطره تحوي عناوين بريد إلكتروني (e-mail addresses) وأرقام هواتف (phone numbers) لعملاء، ولدى لجين مرشِّح حجب للسجلات (log redaction filter) يخفي البيانات الشخصية (personal data) والمفاتيح (keys). وتريد أن يجد وكيلها (agent) السبب (cause). ماذا تفعل؟"
       },
       "o": {
         "en": [
-          "Paste every line, because the more of the hour the agent sees, the better its hypotheses.",
+          "Redact the whole hour with the filter, read it all herself, then paste it for full context.",
           "Select the window that matters, redact it with the filter, then read the result herself.",
           "Run the filter and paste its output unread, because it masks all the personal data.",
           "Give the agent read-only access to the log store, so it can pull what it needs."
         ],
         "ar": [
-          "تلصق كل الأسطر (every line)، فكلما رأى الوكيل (agent) من الساعة أكثر كانت فرضياته (hypotheses) أفضل بكثير.",
+          "تحجب الساعة كلها بالمرشِّح (redaction filter)، وتقرأها كلها بنفسها، ثم تلصقها ليرى الوكيل (agent) السياق كاملًا.",
           "تقتطع النافذة المهمة (window that matters)، وتحجبها بالمرشِّح (redaction filter)، ثم تقرأ الناتج (result) بنفسها.",
           "تشغّل المرشِّح (filter) وتلصق ناتجه دون قراءته، لأنه يخفي كل البيانات الشخصية (personal data) فعلًا.",
           "تمنح الوكيل (agent) وصولًا للقراءة فقط (read-only access) إلى مخزن السجلات (log store) ليسحب منه ما يحتاج إليه بنفسه."
@@ -81,8 +81,8 @@
       },
       "a": 1,
       "why": {
-        "en": "Trim first, because a long log fills the context window, then redact, then read what is left, since a pattern cannot recognise a name or a free-text note. Pasting the filter's output unread is the tempting error: it masks only the patterns it knows.",
-        "ar": "نقتطع النافذة (window) أولًا لأن السجل الطويل (long log) يملأ نافذة السياق (context window)، ثم نحجب البيانات (redact)، ثم نقرأ ما تبقّى، لأن النمط (pattern) لا يتعرّف على اسم (name) أو ملاحظة نصية حرة (free-text note). ولصق ناتج المرشِّح (filter) دون قراءته هو الخطأ المغري (tempting error)، فهو لا يخفي إلا الأنماط (patterns) التي يعرفها."
+        "en": "Trim first, because a long log fills the context window, then redact, then read what is left, since a pattern cannot recognise a name or a free-text note. Pasting the filter's output unread is the tempting error: it masks only the patterns it knows. Even read-only access to the log store is a connection to production: data arrives as a reviewed extract.",
+        "ar": "نقتطع النافذة (window) أولًا لأن السجل الطويل (long log) يملأ نافذة السياق (context window)، ثم نحجب البيانات (redact)، ثم نقرأ ما تبقّى، لأن النمط (pattern) لا يتعرّف على اسم (name) أو ملاحظة نصية حرة (free-text note). ولصق ناتج المرشِّح (filter) دون قراءته هو الخطأ المغري (tempting error)، فهو لا يخفي إلا الأنماط (patterns) التي يعرفها. وحتى الوصول للقراءة فقط (read-only) إلى مخزن السجلات (log store) هو اتصال بالإنتاج (production)؛ فالبيانات تصل مستخلصًا مراجَعًا (reviewed extract)."
       }
     },
     {

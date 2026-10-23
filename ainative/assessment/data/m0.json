@@ -48,7 +48,7 @@
      "تحجب (mask) البيانات الشخصية (personal data) أولًا، ثم تلصق شكل السطر (shape of the line) فقط",
      "تلصق السطر كما هو، لأن الوكيل (agent) ضمن قائمة الأدوات المعتمدة (approved list) في بنك نجم (Najm Bank)",
      "تلصق السطر كما هو، وتطلب من الوكيل (agent) أن يتجاهل الحقول الخاصة بالعميل (customer fields)",
-     "تحذف الاسم (the name) وتُبقي رقم الحساب (account number)، لأنه مجرد رقم (only a number) لا يكشف هوية صاحبه"
+     "تحذف الاسم (the name) وتُبقي رقم الحساب (account number)، لأنه مجرد رقم (only a number)"
     ]
    },
    "a": 0,
@@ -68,21 +68,21 @@
    "o": {
     "en": [
      "Write every line by hand, because fee code is never handed to an agent",
-     "Delegate it with the usual review, since exact expected outputs make it easy to verify",
+     "Delegate it with a one-person review, since exact expected outputs make it easy to verify",
      "Delegate it and accept the result once the agent's summary says the tests pass",
      "Delegate the draft, run the checks herself and get a second human reviewer"
     ],
     "ar": [
      "تكتب كل سطر بنفسها يدويًا (by hand)، لأن شيفرة الرسوم (fee code) لا تُسلَّم إلى وكيل (agent) أبدًا",
-     "تفوّضها مع المراجعة المعتادة (usual review)، لأن المخرجات المتوقعة الدقيقة (exact outputs) تسهّل التحقق",
+     "تفوّضها بمراجعة من شخص واحد (one-person review)، لأن المخرجات المتوقعة الدقيقة (exact outputs) تسهّل التحقق",
      "تفوّضها وتقبل النتيجة متى قال ملخص الوكيل (agent's summary) إن الاختبارات (tests) نجحت",
      "تفوّض المسودة (draft) وتشغّل الفحوص (checks) بنفسها ويراجعها إنسان ثانٍ (second reviewer)"
     ]
    },
    "a": 3,
    "why": {
-    "en": "This is the high-risk, easy-to-verify cell: delegate the draft, keep the decision. Exact outputs make checking cheap, but fee logic is money logic, so the author runs the checks and a second human approves, which the usual review or the agent's own report skips.",
-    "ar": "هذه خانة الخطر العالي وسهولة التحقق (high-risk, easy-to-verify): فوِّض المسودة واحتفظ بالقرار (delegate the draft, keep the decision). المخرجات الدقيقة (exact outputs) تجعل الفحص رخيصًا، لكن منطق الرسوم منطق مالي (money logic)، فيشغّل المؤلف (author) الفحوص ويوافق مراجع بشري ثانٍ (second human)، وهذا ما تتخطاه المراجعة المعتادة (usual review) أو تقرير الوكيل (agent's report) نفسه."
+    "en": "This is the high-risk, easy-to-verify cell: delegate the draft, keep the decision. Exact outputs make checking cheap, but fee logic is money logic, so the author runs the checks and a second human approves, which a one-person review or the agent's own report skips.",
+    "ar": "هذه خانة الخطر العالي وسهولة التحقق (high-risk, easy-to-verify): فوِّض المسودة واحتفظ بالقرار (delegate the draft, keep the decision). المخرجات الدقيقة (exact outputs) تجعل الفحص رخيصًا، لكن منطق الرسوم منطق مالي (money logic)، فيشغّل المؤلف (author) الفحوص ويوافق مراجع بشري ثانٍ (second human)، وهذا ما تتخطاه مراجعة الشخص الواحد (one-person review) أو تقرير الوكيل (agent's report) نفسه."
    }
   },
   {
@@ -90,8 +90,8 @@
    "level": 3,
    "lesson": "0.3",
    "q": {
-    "en": "Lujain's agent finished a change to the transfer history output and reported that all tests pass. She started a second agent session to review the diff, and it answered \"looks correct, no issues\". She has run nothing herself and plans to open the pull request. What is the soundest judgement?",
-    "ar": "أنهى وكيل لجين تغييرًا في مخرجات سجل التحويلات (transfer history output) وأبلغ بنجاح كل الاختبارات (all tests pass). فبدأت جلسة وكيل ثانٍ (second agent session) ليراجع الفروقات (diff) فأجاب «يبدو صحيحًا ولا ملاحظات». ولم تشغّل هي شيئًا بنفسها (run nothing herself) وتنوي فتح طلب الدمج (pull request). ما أسلم حكم (judgement) في هذا الموقف؟"
+    "en": "Lujain's agent finished a change to the transfer history output and reported that all tests pass. She started a second agent session to review the diff, and it answered \"looks correct, no issues\". She has run nothing herself and plans to open the pull request, where the author of record must say which checks she ran. What is the soundest judgement?",
+    "ar": "أنهى وكيل لجين تغييرًا في مخرجات سجل التحويلات (transfer history output) وأبلغ بنجاح كل الاختبارات (all tests pass). فبدأت جلسة وكيل ثانٍ (second agent session) ليراجع الفروقات (diff) فأجاب «يبدو صحيحًا ولا ملاحظات». ولم تشغّل هي شيئًا بنفسها (run nothing herself) وتنوي فتح طلب الدمج (pull request)، وعلى صاحبة التغيير المسؤولة (author of record) أن تذكر فيه أي فحوص شغّلتها. ما أسلم حكم (judgement) في هذا الموقف؟"
    },
    "o": {
     "en": [
@@ -109,8 +109,8 @@
    },
    "a": 1,
    "why": {
-    "en": "A second agent's review is a useful check, not independent proof: evidence comes from execution, meaning the tests, running the program and the diff. Having another agent run the tests and report back is still a summary, not her own run.",
-    "ar": "مراجعة الوكيل الثاني فحص مفيد (a useful check) وليست دليلًا مستقلًا (independent proof)؛ فالدليل (evidence) يأتي من التنفيذ (execution)، أي الاختبارات (tests) وتشغيل البرنامج والفروقات (diff). وأن يشغّل وكيل آخر الاختبارات ويبلّغ عنها يبقى ملخصًا لا تشغيلًا منها هي."
+    "en": "A second agent's review is a useful check, not independent proof: evidence comes from execution, meaning the tests, running the program and the diff. Having another agent run the tests and report back is still a summary, not her own run, and she cannot tell the pull request which checks she ran.",
+    "ar": "مراجعة الوكيل الثاني فحص مفيد (a useful check) وليست دليلًا مستقلًا (independent proof)؛ فالدليل (evidence) يأتي من التنفيذ (execution)، أي الاختبارات (tests) وتشغيل البرنامج والفروقات (diff). وأن يشغّل وكيل آخر الاختبارات ويبلّغ عنها يبقى ملخصًا لا تشغيلًا منها هي، فلا تستطيع أن تذكر في طلب الدمج (pull request) أي فحوص شغّلتها."
    }
   }
  ],

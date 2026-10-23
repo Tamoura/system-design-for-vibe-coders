@@ -13,20 +13,20 @@
         "en": [
           "Start step 3 now, and read the diffs for steps 2 and 3 together before making one commit.",
           "Run the step's check yourself, read the diff, then commit that step while it is still green.",
-          "Commit at once, because the agent has already run the tests and reported them as green.",
+          "Read the diff closely and commit it, because the agent's own run already showed every test green.",
           "Treat the checkpoint from the agent's last turn as the save point for step 2, and then carry on."
         ],
         "ar": [
           "ابدأ الخطوة 3 الآن، واقرأ فروقات (diff) الخطوتين 2 و3 معًا قبل إجراء إيداع (commit) واحد لهما.",
           "شغّل فحص الخطوة (the step's check) بنفسك، واقرأ الفروقات (diff)، ثم أودِع (commit) وهي خضراء (green).",
-          "أودِع (commit) فورًا، لأن الوكيل (agent) شغّل الاختبارات (tests) كلها وأبلغ بأنها خضراء (green) وناجحة.",
+          "اقرأ الفروقات (diff) بإمعان ثم أودِع (commit)، فتشغيل الوكيل (agent) أظهر أن الاختبارات (tests) خضراء (green).",
           "اعتبر نقطة الاستعادة (checkpoint) من آخر دور (turn) للوكيل (agent) نقطة حفظ (save point) للخطوة وتابع."
         ]
       },
       "a": 1,
       "why": {
-        "en": "The loop is check, read the diff, commit, and you run the check yourself because \"all tests pass\" is the agent's claim, not evidence. Committing at once is the tempting shortcut, since it trusts the report; a checkpoint is only a short-lived undo, not a replacement for git.",
-        "ar": "الحلقة (loop) هي فحص (check) ثم قراءة الفروقات (diff) ثم إيداع (commit)، وتشغّل الفحص بنفسك لأن «كل الاختبارات ناجحة» (all tests pass) ادعاء من الوكيل (agent) وليست دليلًا (evidence). والإيداع الفوري هو الاختصار المغري لأنه يثق بالتقرير، أما نقطة الاستعادة (checkpoint) فتراجع قصير العمر لا يغني عن Git."
+        "en": "The loop is check, read the diff, commit, and you run the check yourself because \"all tests pass\" is the agent's claim, not evidence. Reading the diff and committing on the agent's report is the tempting shortcut, since it skips the one move that produces evidence; a checkpoint is only a short-lived undo, not a replacement for git.",
+        "ar": "الحلقة (loop) هي فحص (check) ثم قراءة الفروقات (diff) ثم إيداع (commit)، وتشغّل الفحص بنفسك لأن «كل الاختبارات ناجحة» (all tests pass) ادعاء من الوكيل (agent) وليست دليلًا (evidence). وقراءة الفروقات ثم الإيداع اعتمادًا على تقرير الوكيل هي الاختصار المغري لأنها تتخطى الحركة الوحيدة التي تنتج دليلًا، أما نقطة الاستعادة (checkpoint) فتراجع قصير العمر لا يغني عن Git."
       }
     },
     {
@@ -39,22 +39,22 @@
       },
       "o": {
         "en": [
-          "Add the 80% warning the way a senior engineer would write it, with clean code and thorough tests of its own.",
-          "Implement all of REMIT-318 in one go, then read the whole diff at the end and commit it once.",
+          "Do step 4 only, in `send`: add the 80% warning for the customer, and tidy anything nearby that the change happens to touch.",
+          "Implement all of REMIT-318 in one go, then read the whole diff at the end and commit it once, with no interruptions.",
           "Add the warning to `send`, then run the suite and keep fixing whatever fails until the whole suite is green.",
           "Do step 4 only, in `send`: add this transfer's amount to the position, Decimal only, tests first."
         ],
         "ar": [
-          "أضف تحذير (warning) 80% بالطريقة التي يتبعها مهندس خبير (senior engineer) محترف، بشيفرة نظيفة (clean code) واختبارات (tests) وافية وشاملة.",
-          "نفّذ REMIT-318 كلها دفعة واحدة (in one go)، وسأقرأ الفروقات (diff) كلها في النهاية وأودِع (commit) مرة واحدة فقط بعد ذلك.",
+          "نفّذ الخطوة 4 فقط داخل `send`: أضف تحذير (warning) 80% للعميل، ونظّف أي شيء قريب يمسّه التغيير (tidy) أثناء ذلك أيضًا.",
+          "نفّذ REMIT-318 كلها دفعة واحدة (in one go)، وسأقرأ الفروقات (diff) كلها في النهاية وأودِع (commit) مرة واحدة فقط بعد ذلك، دون مقاطعات (interruptions) في أثناء العمل.",
           "أضف التحذير (warning) إلى `send`، ثم شغّل مجموعة الاختبارات (the suite) وأصلح كل ما يفشل منها حتى تصبح كلها خضراء (green).",
           "نفّذ الخطوة 4 فقط داخل `send`: أضف مبلغ التحويل إلى الاستهلاك المسجَّل (the position)، Decimal فقط، والاختبارات أولًا (tests first)."
         ]
       },
       "a": 3,
       "why": {
-        "en": "A specified prompt names one step, the facts the agent cannot guess (the position excludes this transfer, Decimal only) and the order (tests first), so the diff stays small enough to read. Asking it to fix whatever fails until green is the most tempting, because it invites edits to old tests and leaves every reading of the ticket to the agent.",
-        "ar": "يحدد الموجّه (prompt) المحدَّد (specified) خطوة واحدة (one step) والحقائق التي لا يستطيع الوكيل (agent) تخمينها (الاستهلاك المسجَّل لا يشمل هذا التحويل، وDecimal فقط) والترتيب (الاختبارات أولًا)، فتبقى الفروقات (diff) صغيرة بما يكفي لقراءتها. وطلب إصلاح كل ما يفشل حتى الخضرة (until green) هو الأكثر إغراءً، لأنه يدعو إلى تعديل الاختبارات القديمة (old tests) ويترك قراءة التذكرة (ticket) كلها للوكيل."
+        "en": "A specified prompt names one step, the facts the agent cannot guess (the position excludes this transfer, Decimal only) and the order (tests first), so the diff stays small enough to read. Naming the step but inviting tidying nearby is the most tempting wrong prompt, because it leaves the facts to be guessed and invites out-of-scope edits; asking it to fix whatever fails until green also invites edits to old tests.",
+        "ar": "يحدد الموجّه (prompt) المحدَّد (specified) خطوة واحدة (one step) والحقائق التي لا يستطيع الوكيل (agent) تخمينها (الاستهلاك المسجَّل لا يشمل هذا التحويل، وDecimal فقط) والترتيب (الاختبارات أولًا)، فتبقى الفروقات (diff) صغيرة بما يكفي لقراءتها. وتسمية الخطوة مع دعوة إلى تنظيف ما حولها هي أكثر الموجّهات الخاطئة إغراءً، لأنها تترك الحقائق للتخمين وتدعو إلى تعديلات خارج النطاق (out of scope)؛ وطلب إصلاح كل ما يفشل حتى الخضرة (until green) يدعو كذلك إلى تعديل الاختبارات القديمة (old tests)."
       }
     },
     {
@@ -97,20 +97,20 @@
         "en": [
           "The 80% line is under-tested, so she should add totals a cent under and exactly at 80% through `send` too.",
           "The breakages are applied to the running program and cannot reach a fake, so these misses do not really count.",
-          "The text is made inside `render`, which her fake skips; she should assert the exact message in both languages.",
-          "Her tests should build the expected text by calling `render` themselves, so that expected and actual always agree."
+          "The text is made inside `render`, which her fake skips; check its output against the approved text, typed out, in both languages.",
+          "Her tests should build the expected text by calling `render` themselves, so that the expected and actual text can never disagree."
         ],
         "ar": [
           "خط 80% (the 80% line) ناقص الاختبار (under-tested)، فعليها إضافة اختبارات لمجموع أقل منه بسنت واحد وآخر عنده تمامًا (exactly at 80%) عبر `send`.",
           "تُطبَّق الأعطال (breakages) على البرنامج الجاري تشغيله ولا تصل إلى مُخطِر وهمي (fake)، فلا تُحتسب هذه الإخفاقات (misses) فعلًا.",
-          "النص يُنتَج داخل `render` الذي يتجاوزه المُخطِر الوهمي (fake)، فعليها اختبار الرسالة الدقيقة (exact message) باللغتين (both languages).",
+          "النص يُنتَج داخل `render` الذي يتجاوزه المُخطِر الوهمي (fake)، فعليها مقارنة مخرجاته بالنص المعتمد (approved text) مكتوبًا كاملًا باللغتين.",
           "ينبغي أن تبني اختباراتها النص المتوقع (expected text) باستدعاء `render` بنفسها، فيتطابق المتوقع والفعلي (expected and actual) دائمًا."
         ]
       },
       "a": 2,
       "why": {
-        "en": "The three breakages sit inside `render`, which a fake that never calls it cannot show; asserting the exact message in both languages, numbers and digits included, reaches them. More tests of the 80% line are the tempting fix, but the grader says both line breakages are already caught, so they would add nothing.",
-        "ar": "تقع الأعطال (breakages) الثلاثة داخل `render`، والمُخطِر الوهمي (fake) الذي لا يستدعيه لا يستطيع إظهارها؛ أما التحقق من الرسالة بنصها الدقيق (exact message) بالعربية والإنجليزية، بأرقامها (numbers and digits)، فيصل إليها. وإضافة اختبارات (tests) لخط 80% (the 80% line) هي الإصلاح المغري (the tempting fix)، لكن المُقيِّم (grader) يقول إن عطلي الخط ملتقطان أصلًا، فلن تضيف شيئًا."
+        "en": "The three breakages sit inside `render`, which a fake that never calls it cannot show; checking `render`'s output against the approved text, typed out in both languages, numbers and digits included, reaches them. More tests of the 80% line are the tempting fix, but the grader says both line breakages are already caught, so they would add nothing.",
+        "ar": "تقع الأعطال (breakages) الثلاثة داخل `render`، والمُخطِر الوهمي (fake) الذي لا يستدعيه لا يستطيع إظهارها؛ أما مقارنة مخرجات `render` بالنص المعتمد (approved text) مكتوبًا كاملًا بالعربية والإنجليزية، بأرقامه (numbers and digits)، فتصل إليها. وإضافة اختبارات (tests) لخط 80% (the 80% line) هي الإصلاح المغري (the tempting fix)، لكن المُقيِّم (grader) يقول إن عطلي الخط ملتقطان أصلًا، فلن تضيف شيئًا."
       }
     }
   ],

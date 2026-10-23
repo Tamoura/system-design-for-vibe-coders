@@ -14,19 +14,19 @@
           "In the same commit as the class move, with a message that names both changes",
           "Inside the class move, once the agent has rewritten the pinned test for the new value",
           "In a commit of its own, with its own test change, kept apart from the class move",
-          "Not at all: a pinned quirk is a fact about the code, so it must never change"
+          "In a commit of its own after the class move, leaving the pinned test failing until a later fix"
         ],
         "ar": [
           "في الإيداع (commit) نفسه الذي ينقل الصنف (class)، مع رسالة (message) تذكر التغييرين معًا",
           "داخل نقل الصنف (class move)، بعد أن يعدّل الوكيل (agent) الاختبار المثبَّت (pinned test) للقيمة الجديدة",
           "في إيداع (commit) مستقل مع تعديل الاختبار (test change) الخاص به، بعيدًا عن نقل الصنف (class move)",
-          "ألا يدخل أبدًا، فالسلوك الغريب المثبَّت (pinned quirk) حقيقة عن الشيفرة (code) لا يجوز تغييرها"
+          "في إيداع (commit) مستقل بعد نقل الصنف (class move)، مع ترك الاختبار المثبَّت (pinned test) فاشلًا حتى إصلاح لاحق"
         ]
       },
       "a": 2,
       "why": {
-        "en": "A refactor commit with no behaviour change can be judged by \"the tests did not change\"; the rounding change then gets its own commit and its own visible test edit. One commit with a clear message (A) is tempting because Finance agreed, but a message does not restore that check.",
-        "ar": "حين يخلو إيداع إعادة الهيكلة (refactoring commit) من أي تغيير في السلوك (behaviour) يستطيع المراجِع (reviewer) الحكم عليه بعبارة «الاختبارات (tests) لم تتغير»؛ ويأخذ تغيير التقريب (rounding change) إيداعه الخاص وتعديل اختباره الظاهر. أما دمج الاثنين في إيداع واحد (A) فمغرٍ (tempting) لأن المالية (Finance) وافقت، لكن الرسالة الواضحة لا تعيد هذا الفحص."
+        "en": "A refactor commit with no behaviour change can be judged by \"the tests did not change\"; the rounding change then gets its own commit and its own visible test edit. One commit with a clear message (A) is tempting because Finance agreed, but a message does not restore that check. A commit that leaves the pinned test failing (D) breaks the rule that every step leaves the tests green.",
+        "ar": "حين يخلو إيداع إعادة الهيكلة (refactoring commit) من أي تغيير في السلوك (behaviour) يستطيع المراجِع (reviewer) الحكم عليه بعبارة «الاختبارات (tests) لم تتغير»؛ ويأخذ تغيير التقريب (rounding change) إيداعه الخاص وتعديل اختباره الظاهر. أما دمج الاثنين في إيداع واحد (A) فمغرٍ (tempting) لأن المالية (Finance) وافقت، لكن الرسالة الواضحة لا تعيد هذا الفحص. وإيداع يترك الاختبار المثبَّت (pinned test) فاشلًا (D) يخرق قاعدة أن كل خطوة تترك الاختبارات خضراء (green)."
       }
     },
     {
@@ -41,20 +41,20 @@
         "en": [
           "Review the instruction, read the tests in full, sample the riskiest files, automate the rest",
           "Read every hunk of all forty files in order, because one missed hunk is one missed defect",
-          "Treat the forty OK lines as the review, because each file had its own separate, focused agent run",
-          "Confirm that `git diff --stat` lists forty files and the build is green, then approve it"
+          "Run the same loop again with a second agent, and approve if both runs print OK forty times",
+          "Search for the old names, check `git diff --stat` lists forty files, and approve if the suite is green"
         ],
         "ar": [
           "تراجع التعليمة (instruction)، وتقرأ الاختبارات (tests) كاملة، وتأخذ عيّنة (sample) من أخطر الملفات، وتؤتمت الباقي",
           "تقرأ كل مقطع (hunk) من الملفات الأربعين بالترتيب (in order)، لأن مقطعًا فائتًا واحدًا يعني عيبًا (defect) فائتًا",
-          "تعدّ أسطر OK الأربعين هي المراجعة (review)، لأن كل ملف حظي بتشغيل مركَّز (focused run) مستقل للوكيل (agent)",
-          "تتأكد أن `git diff --stat` يعرض أربعين ملفًا وأن البناء (build) أخضر (green)، ثم توافق على طلب الدمج (pull request)"
+          "تشغّل الحلقة (loop) نفسها مرة ثانية مع وكيل (agent) آخر، وتوافق إن طبعت المرتان OK أربعين مرة",
+          "تبحث عن الأسماء القديمة (old names)، وتتأكد أن `git diff --stat` يعرض أربعين ملفًا، وتوافق متى اخضرّت المجموعة (suite)"
         ]
       },
       "a": 0,
       "why": {
-        "en": "OK is the agent's claim, not evidence, and a forty-file mechanical diff cannot be read line by line, so she reviews the instruction, reads the tests in full, samples the riskiest files and lets automation check the rest. Reading every hunk (B) is the tempting option, but reading forty files line by line is a named trap.",
-        "ar": "OK ادعاء من الوكيل (agent's claim) لا دليل (evidence)، ولا يمكن قراءة فروقات (diff) أربعين ملفًا ميكانيكيًا سطرًا سطرًا، لذا تراجع التعليمة (instruction) وتقرأ الاختبارات (tests) كاملة وتأخذ عيّنة (sample) من أخطر الملفات وتترك الباقي للأتمتة (automation). وقراءة كل المقاطع (B) هي الخيار المغري (tempting)، لكن قراءة أربعين ملفًا سطرًا سطرًا فخٌّ (trap) ورد ذكره في الدرس."
+        "en": "OK is the agent's claim, not evidence, and a forty-file mechanical diff cannot be read line by line, so she reviews the instruction, reads the tests in full, samples the riskiest files and lets automation check the rest. Reading every hunk (B) is the tempting option, but reading forty files line by line is a named trap. A second agent's OK (C) is another claim, and a search, a file count and a green suite alone (D) leave the rule, the tests and the risky hunks unread.",
+        "ar": "OK ادعاء من الوكيل (agent's claim) لا دليل (evidence)، ولا يمكن قراءة فروقات (diff) أربعين ملفًا ميكانيكيًا سطرًا سطرًا، لذا تراجع التعليمة (instruction) وتقرأ الاختبارات (tests) كاملة وتأخذ عيّنة (sample) من أخطر الملفات وتترك الباقي للأتمتة (automation). وقراءة كل المقاطع (B) هي الخيار المغري (tempting)، لكن قراءة أربعين ملفًا سطرًا سطرًا فخٌّ (trap) ورد ذكره في الدرس. وOK من وكيل ثانٍ (C) ادعاء آخر، والبحث وعدّ الملفات واخضرار المجموعة وحدها (D) تترك القاعدة والاختبارات والمقاطع الخطرة دون قراءة."
       }
     },
     {
@@ -67,22 +67,22 @@
       },
       "o": {
         "en": [
-          "Migrate the call sites now, then compare the audit files by eye once the suite is green",
+          "Move the call sites in small green commits, `tests/conftest.py` first, and let each green run vouch for the audit lines",
           "Run `pytest -W error::DeprecationWarning` and rely on it to expose any change in audit lines",
-          "Ask the agent to state in its summary that every audit line stays exactly as it was",
+          "Migrate the call sites, then spot-check one line from each of the three events against the old files by eye",
           "Pin all three audit events character for character, with a fixed clock and sequential ids"
         ],
         "ar": [
-          "تنقل مواضع الاستدعاء (call sites) الآن، ثم تقارن ملفات التدقيق (audit files) بالعين بعد أن تخضر المجموعة (suite)",
+          "تنقل مواضع الاستدعاء (call sites) في إيداعات صغيرة خضراء (green commits) تبدأ بـ`tests/conftest.py`، وتدع كل تشغيل أخضر يشهد لأسطر التدقيق (audit lines)",
           "تشغّل `pytest -W error::DeprecationWarning` وتعتمد عليه ليكشف لها أي تغيير في أسطر التدقيق (audit lines)",
-          "تطلب من الوكيل (agent) أن ينص في ملخصه (summary) على أن كل سطر تدقيق (audit line) يبقى كما كان تمامًا",
+          "تنقل مواضع الاستدعاء (call sites)، ثم تفحص بالعين سطرًا واحدًا من كل حدث من الأحداث الثلاثة مقابل الملفات القديمة",
           "تثبّت أحداث التدقيق الثلاثة حرفًا بحرف باستخدام ساعة ثابتة (fixed clock) ومعرّفات متسلسلة (sequential ids)"
         ]
       },
       "a": 3,
       "why": {
-        "en": "With the three events pinned first, \"the audit tests did not change\" becomes the migration check. Warnings as errors (B) is tempting, but it only flags old names, not changed output, so a tidy conversion stays green wherever no test pins the line.",
-        "ar": "حين تُثبَّت الأحداث الثلاثة أولًا تصبح عبارة «اختبارات التدقيق (audit tests) لم تتغير» هي فحص الترحيل (migration check). والتحذيرات المعاملة كأخطاء (warnings as errors) خيار مغرٍ (B)، لكنها تكشف الأسماء القديمة (old names) لا تغيُّر المخرجات (output)، فيبقى التحويل «المرتَّب» (tidy conversion) أخضر حيث لا اختبار يثبّت السطر."
+        "en": "With the three events pinned first, \"the audit tests did not change\" becomes the migration check. Green commits (A) and warnings as errors (B) are tempting, but neither pins output: the warning flag only flags old names, not changed output, so a tidy conversion stays green wherever no test pins the line. Checking by eye afterwards (C) is a thin sample, not a net.",
+        "ar": "حين تُثبَّت الأحداث الثلاثة أولًا تصبح عبارة «اختبارات التدقيق (audit tests) لم تتغير» هي فحص الترحيل (migration check). والإيداعات الخضراء (A) والتحذيرات المعاملة كأخطاء (warnings as errors) (B) خياران مغريان، لكن أيًّا منهما لا يثبّت المخرجات (output): فالثاني يكشف الأسماء القديمة (old names) لا تغيُّر المخرجات، فيبقى التحويل «المرتَّب» (tidy conversion) أخضر حيث لا اختبار يثبّت السطر. أما الفحص بالعين لاحقًا (C) فعيّنة (sample) ضئيلة لا شبكة أمان (net)."
       }
     },
     {
@@ -90,27 +90,27 @@
       "level": 3,
       "lesson": "7.2",
       "q": {
-        "en": "In lab m07 the required check on Lujain's ledger tests passes, but the grader names two broken copies of the original ledger that her tests did not catch. Part 2 is next. What is the best call?",
-        "ar": "في المختبر (lab) m07 ينجح الفحص المطلوب (required check) لاختبارات دفتر الأستاذ (ledger tests) عند لجين، لكن المُقيِّم (grader) يسمّي نسختين معطوبتين (broken copies) من الدفتر الأصلي لم تلتقطهما اختباراتها. الجزء الثاني (Part 2) هو التالي. ما أفضل قرار (best call)؟"
+        "en": "In lab m07 the required check on Lujain's ledger tests passes, but the grader names two broken copies of the original ledger that her tests did not catch. Part 2 is next. What best protects the Part 2 refactor?",
+        "ar": "في المختبر (lab) m07 ينجح الفحص المطلوب (required check) لاختبارات دفتر الأستاذ (ledger tests) عند لجين، لكن المُقيِّم (grader) يسمّي نسختين معطوبتين (broken copies) من الدفتر الأصلي لم تلتقطهما اختباراتها. الجزء الثاني (Part 2) هو التالي. ما الذي يحمي إعادة الهيكلة (refactor) في الجزء الثاني على أفضل وجه؟"
       },
       "o": {
         "en": [
-          "Start Part 2, since the required check passed and the two misses are only advisory",
+          "Nothing more is needed, since the required check passed and the two misses are only advisory",
           "Pin the two named behaviours too, since an unpinned behaviour can change unseen in Part 2",
-          "Go ahead with the refactor and let the grader's hidden checks catch whatever those tests missed",
+          "The grader's hidden checks on the refactor, which will catch whatever those tests missed",
           "Write tests for the two from what she thinks the ledger should do, then fix it if they fail"
         ],
         "ar": [
-          "تبدأ الجزء الثاني (Part 2) فورًا، لأن الفحص المطلوب (required check) نجح وفوات النسختين استشاري (advisory) فقط",
+          "لا حاجة إلى شيء إضافي، لأن الفحص المطلوب (required check) نجح وفوات النسختين استشاري (advisory) فقط",
           "تثبّت السلوكين المسمَّيين أيضًا، لأن سلوكًا غير مثبَّت (unpinned) قد يتغير دون أن يلحظه أحد في الجزء الثاني",
-          "تمضي في إعادة الهيكلة (refactor) وتترك الفحوص الخفية (hidden checks) للمُقيِّم تلتقط ما فات الاختبارات بعد ذلك",
+          "فحوص المُقيِّم الخفية (hidden checks) على إعادة الهيكلة (refactor)، فهي ستلتقط ما فات تلك الاختبارات",
           "تكتب اختبارين مما تعتقد أن الدفتر (ledger) ينبغي أن يفعله، ثم تصلحه إن فشلا (fail)"
         ]
       },
       "a": 1,
       "why": {
-        "en": "A missed copy is a behaviour she has not pinned, so Part 2 could change it with no test noticing, and the grader cannot tell whether a refactor changed a behaviour nobody pinned. Moving on because the misses are advisory (A) treats the required check as the goal, when the grader is a practice partner, not a gate.",
-        "ar": "النسخة التي فاتت الاختبارات هي سلوك لم تثبّته لجين، فقد يغيّره الجزء الثاني (Part 2) دون أن يلحظه اختبار، والمُقيِّم (grader) لا يعرف إن كانت إعادة الهيكلة (refactor) غيّرت سلوكًا لم يثبّته أحد. أما البدء لأن الفوات استشاري (A) فيجعل الفحص المطلوب (required check) هو الهدف، والمُقيِّم شريك تدريب (practice partner) لا بوابة (gate)."
+        "en": "A missed copy is a behaviour she has not pinned, so Part 2 could change it with no test noticing, and the grader cannot tell whether a refactor changed a behaviour nobody pinned, so its hidden checks (C) are no substitute. Stopping because the misses are advisory (A) treats the required check as the goal, when the grader is a practice partner, not a gate.",
+        "ar": "النسخة التي فاتت الاختبارات هي سلوك لم تثبّته لجين، فقد يغيّره الجزء الثاني (Part 2) دون أن يلحظه اختبار، والمُقيِّم (grader) لا يعرف إن كانت إعادة الهيكلة (refactor) غيّرت سلوكًا لم يثبّته أحد، فلا تُغني فحوصه الخفية (C) عن ذلك. أما الاكتفاء لأن الفوات استشاري (A) فيجعل الفحص المطلوب (required check) هو الهدف، والمُقيِّم شريك تدريب (practice partner) لا بوابة (gate)."
       }
     }
   ],

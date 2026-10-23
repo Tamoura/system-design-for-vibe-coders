@@ -6,8 +6,8 @@
       "level": 1,
       "lesson": "1.1",
       "q": {
-        "en": "On Tuesday Lujain opens a new agent session on Remit. Yesterday, in a long session, she told the agent that money is `Decimal`, yet today it writes `float(fee)`. Which explanation fits the mental model?",
-        "ar": "في صباح الثلاثاء تفتح لجين جلسة وكيل (agent session) جديدة على نجم ريميت (Najm Remit). أخبرت الوكيل أمس في جلسة طويلة (long session) بأن المبالغ المالية (money) تُمثَّل بالنوع `Decimal`، لكنه يكتب اليوم `float(fee)`. أي تفسير يتوافق مع النموذج الذهني (mental model)؟"
+        "en": "On Tuesday Lujain opens a new agent session on Remit. Yesterday, in a long chat, she told the agent that money is `Decimal`; she wrote it in no file, `CLAUDE.md` included. Today it writes `float(fee)`. Which explanation fits the mental model?",
+        "ar": "في صباح الثلاثاء تفتح لجين جلسة وكيل (agent session) جديدة على نجم ريميت (Najm Remit). أخبرت الوكيل أمس في محادثة طويلة (long chat) بأن المبالغ المالية (money) تُمثَّل بالنوع `Decimal`، ولم تدوّن ذلك في أي ملف، ومنه `CLAUDE.md`. لكنه يكتب اليوم `float(fee)`. أي تفسير يتوافق مع النموذج الذهني (mental model)؟"
       },
       "o": {
         "en": [
@@ -25,8 +25,8 @@
       },
       "a": 2,
       "why": {
-        "en": "A model keeps no state between calls, so nothing survives unless it is sent again; yesterday's rule is simply absent from today's context. A is the tempting mistake: inside one session the program re-sends the conversation every turn, which only feels like memory.",
-        "ar": "النموذج (model) لا يحتفظ بأي حالة (state) بين الاستدعاءات (calls)، فلا يبقى شيء ما لم يُرسَل من جديد، ولذلك تغيب قاعدة الأمس عن سياق (context) اليوم. أما الخيار A فهو الفخ المعتاد: داخل الجلسة الواحدة (one session) يعيد البرنامج إرسال المحادثة (conversation) في كل دورة (turn)، وهذا ما يبدو كذاكرة (memory) فقط."
+        "en": "A model keeps no state between calls, so nothing survives unless it is sent again; the rule sits in no memory file, so yesterday's rule is simply absent from today's context. A is the tempting mistake: inside one session the program re-sends the conversation every turn, which only feels like memory.",
+        "ar": "النموذج (model) لا يحتفظ بأي حالة (state) بين الاستدعاءات (calls)، فلا يبقى شيء ما لم يُرسَل من جديد؛ والقاعدة غير مدوَّنة في أي ملف ذاكرة (memory file)، ولذلك تغيب قاعدة الأمس عن سياق (context) اليوم. أما الخيار A فهو الفخ المعتاد: داخل الجلسة الواحدة (one session) يعيد البرنامج إرسال المحادثة (conversation) في كل دورة (turn)، وهذا ما يبدو كذاكرة (memory) فقط."
       }
     },
     {
@@ -39,13 +39,13 @@
       },
       "o": {
         "en": [
-          "Delegate it now: touching a single file is local enough to be safe.",
-          "Write the rule down and pin it with a test the agent can run itself.",
+          "Delegate it now: one file and a common kind of edit make it safe enough.",
+          "Write the rule down first and pin it with a test the agent can run itself.",
           "Let the agent infer the rule from `fees.py` and trust a confident answer.",
           "Raise the effort level so the agent reasons out the missing rule alone."
         ],
         "ar": [
-          "تفوّضها (delegate) الآن، فلمس ملف واحد (single file) كافٍ لتكون المهمة آمنة.",
+          "تفوّضها (delegate) الآن، فملف واحد (single file) ونوع تعديل شائع يجعلانها آمنة بما يكفي.",
           "تكتب القاعدة (rule) وتثبّتها باختبار (test) يستطيع الوكيل تشغيله بنفسه دون عون.",
           "تترك الوكيل (agent) يستنتج القاعدة من `fees.py` وتثق بإجابة واثقة (confident answer).",
           "ترفع مستوى الجهد (effort level) ليستنتج الوكيل (agent) القاعدة الناقصة وحده."
@@ -53,8 +53,8 @@
       },
       "a": 1,
       "why": {
-        "en": "Two predictors fail here: no command can tell in seconds whether the result is right (verifiability), and the rule is not in the window or findable (available context). Locality alone does not rescue the task, and more effort adds thinking but not the missing fact.",
-        "ar": "يخفق هنا متنبئان (predictors): لا يوجد أمر يحكم في ثوانٍ على صحة النتيجة، أي القابلية للتحقق (verifiability)، والقاعدة ليست في النافذة (window) ولا يمكن العثور عليها، أي السياق المتاح (available context). أما موضعية التغيير (locality) وحدها فلا تنقذ المهمة، ورفع الجهد (effort) يزيد التفكير (thinking) ولا يضيف الحقيقة الناقصة."
+        "en": "Two predictors fail here: no command can tell in seconds whether the result is right (verifiability), and the rule is not in the window or findable (available context). Locality and familiarity are met, but they do not rescue the task, and more effort adds thinking but not the missing fact.",
+        "ar": "يخفق هنا متنبئان (predictors): لا يوجد أمر يحكم في ثوانٍ على صحة النتيجة، أي القابلية للتحقق (verifiability)، والقاعدة ليست في النافذة (window) ولا يمكن العثور عليها، أي السياق المتاح (available context). أما موضعية التغيير (locality) والألفة (familiarity) فمتحققتان لكنهما لا تنقذان المهمة، ورفع الجهد (effort) يزيد التفكير (thinking) ولا يضيف الحقيقة الناقصة."
       }
     },
     {
@@ -70,13 +70,13 @@
           "T01, because the ticket is what set the whole session off in this direction.",
           "T09, because that is the first turn where the error shows up for readers.",
           "T11, because the closing claim is the statement that a reviewer would trust.",
-          "T03, because the call was used with no evidence in context to back it up."
+          "T03, because that is the first action with no evidence in context behind it."
         ],
         "ar": [
           "T01، لأن التذكرة (ticket) هي التي أطلقت الجلسة (session) كلها في هذا الاتجاه تحديدًا.",
           "T09، لأن هذا أول دور يظهر فيه الخطأ (error) أمام القارئ في المخرجات (output) كلها.",
           "T11، لأن العبارة الختامية (closing claim) هي ما سيثق به المراجع (reviewer) عادةً.",
-          "T03، لأن الاستدعاء (call) استُخدم دون أي دليل (evidence) في السياق (context) يسنده."
+          "T03، لأن هذا أول فعل في الجلسة لا يسنده أي دليل (evidence) في السياق (context)."
         ]
       },
       "a": 3,
@@ -90,18 +90,18 @@
       "level": 3,
       "lesson": "1.2",
       "q": {
-        "en": "Customers receive each transfer receipt twice. In `notify.py` the agent adds a check that drops a message identical to the one sent a minute earlier, plus a test showing the second copy is dropped. The whole suite is green and the agent never says why the duplicates happened. Which finding and cheapest prevention fit?",
-        "ar": "يتلقى العملاء إيصال (receipt) كل حوالة (transfer) مرتين. يضيف الوكيل (agent) في `notify.py` فحصًا (check) يُسقط أي رسالة مطابقة للرسالة المرسلة قبل دقيقة، مع اختبار (test) يثبت إسقاط النسخة الثانية. تنجح مجموعة الاختبارات (test suite) كلها، ولا يذكر الوكيل أبدًا سبب التكرار (duplicates). أي تشخيص (finding) وأي وقاية (prevention) أرخص تناسبان الحالة؟"
+        "en": "Customers receive each transfer receipt twice. In `notify.py` the agent adds a check that drops a message identical to the one sent a minute earlier, plus a new test showing the second copy is dropped. No existing test is touched, the whole suite is green, and the agent never says why the duplicates happened. Which finding and cheapest prevention fit?",
+        "ar": "يتلقى العملاء إيصال (receipt) كل حوالة (transfer) مرتين. يضيف الوكيل (agent) في `notify.py` فحصًا (check) يُسقط أي رسالة مطابقة للرسالة المرسلة قبل دقيقة، مع اختبار (test) جديد يثبت إسقاط النسخة الثانية. لا يُمَسّ أي اختبار قائم، وتنجح مجموعة الاختبارات (test suite) كلها، ولا يذكر الوكيل أبدًا سبب التكرار (duplicates). أي تشخيص (finding) وأي وقاية (prevention) أرخص تناسبان الحالة؟"
       },
       "o": {
         "en": [
-          "`symptom-fix`: the code hides the error; reproduce first, then add a regression test.",
+          "`symptom-fix`: the code hides the error; reproduce, then add a test that fails first.",
           "`test-gaming`: the suite went green; read the test diffs before anything else.",
           "`misread-requirement`: the ticket was vague; write acceptance criteria and non-goals.",
           "`scope-creep`: the agent added a feature nobody asked for; list the allowed files."
         ],
         "ar": [
-          "`symptom-fix`: الشيفرة (code) تخفي الخطأ؛ أعد إنتاجه (reproduce) أولًا ثم أضف اختبار انحدار (regression test).",
+          "`symptom-fix`: الشيفرة (code) تخفي الخطأ؛ أعد إنتاجه (reproduce) ثم أضف اختبارًا يفشل أولًا (fails first).",
           "`test-gaming`: صارت المجموعة (suite) خضراء؛ اقرأ فروقات الاختبارات (test diffs) قبل أي شيء آخر.",
           "`misread-requirement`: كانت التذكرة (ticket) غامضة؛ اكتب معايير القبول (acceptance criteria) وما ليس من الأهداف (non-goals).",
           "`scope-creep`: أضاف الوكيل (agent) ميزة لم يطلبها أحد؛ اذكر قائمة الملفات المسموح بها (allowed files)."
@@ -109,8 +109,8 @@
       },
       "a": 0,
       "why": {
-        "en": "The code changed to hide the error while its cause stays unnamed, so this is a symptom fix, and reproducing the fault first and pinning it with a regression test is the cheapest prevention. `test-gaming` needs a weakened check, but here the suite only gained a test.",
-        "ar": "تغيّرت الشيفرة (code) لتخفي الخطأ بينما بقي السبب (cause) دون تسمية، فهذا إصلاح للعَرَض (symptom fix)، وأرخص وقاية هي إعادة إنتاج (reproduce) الخلل أولًا ثم تثبيته باختبار انحدار (regression test). أما `test-gaming` فيتطلب إضعاف فحص قائم (weakened check)، بينما أضافت المجموعة هنا اختبارًا فقط."
+        "en": "The code changed to hide the error while its cause stays unnamed, so this is a symptom fix, and the cheapest prevention is to reproduce the fault first and pin its real cause with a test that fails before the fix. `test-gaming` needs a weakened existing check, but here no existing test changed; the new test only pins the workaround.",
+        "ar": "تغيّرت الشيفرة (code) لتخفي الخطأ بينما بقي السبب (cause) دون تسمية، فهذا إصلاح للعَرَض (symptom fix)، وأرخص وقاية هي إعادة إنتاج (reproduce) الخلل أولًا ثم تثبيت سببه الحقيقي باختبار يفشل قبل الإصلاح. أما `test-gaming` فيتطلب إضعاف فحص قائم (weakened check)، بينما لم يتغيّر هنا أي اختبار قائم؛ والاختبار الجديد يثبّت الحل الالتفافي (workaround) فقط."
       }
     }
   ],

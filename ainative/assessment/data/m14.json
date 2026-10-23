@@ -6,21 +6,21 @@
       "level": 1,
       "lesson": "14.1",
       "q": {
-        "en": "To save an afternoon, Lujain has her agent build the Bangladesh corridor first and plans to write `specs/REMIT-414.md` afterwards, from the finished diff. What is wrong with that order?",
-        "ar": "لتوفير وقت، تجعل لجين وكيلها (agent) يبني ممر التحويل (corridor) إلى بنغلاديش أولًا، وتنوي كتابة المواصفة (spec) `specs/REMIT-414.md` بعد ذلك انطلاقًا من الفروقات (diff) المكتملة. ما الخطأ في هذا الترتيب (order)؟"
+        "en": "To save an afternoon, Lujain has her agent build the Bangladesh corridor first and plans to write `specs/REMIT-414.md` afterwards, from the finished diff. Tariq reviews that plan. Which judgement is right?",
+        "ar": "لتوفير وقت، تجعل لجين وكيلها (agent) يبني ممر التحويل (corridor) إلى بنغلاديش أولًا، وتنوي كتابة المواصفة (spec) `specs/REMIT-414.md` بعد ذلك انطلاقًا من الفروقات (diff) المكتملة. يراجع طارق هذه الخطة. أيُّ حكم هو الصحيح؟"
       },
       "o": {
         "en": [
-          "Nothing, if the agent drafts the spec from the diff and Lujain reads it through before committing",
-          "Only the numbering: writing it after the code is fine once each criterion carries an id such as `AC1`",
-          "A spec written from the diff records what the agent did, so it cannot be used to judge the code",
-          "The spec is Hessa's to write as product owner, so Lujain has to wait for her version first"
+          "Sound, if the agent drafts the spec from the diff and Lujain reads it through before committing",
+          "Sound once each criterion carries an id such as `AC1`; only the numbering is missing",
+          "Unsound: a spec written from the diff records what the agent did, so it cannot judge the code",
+          "Unsound: the spec is Hessa's to write as product owner, so Lujain has to wait for her version first"
         ],
         "ar": [
-          "لا شيء، إذا صاغ الوكيل (agent) المواصفة (spec) من الفروقات (diff) وقرأتها لجين كاملة قبل الإيداع (commit)",
-          "الترقيم وحده: الكتابة بعد الشيفرة (code) مقبولة متى حمل كل معيار (criterion) معرّفًا (id) مثل `AC1`",
-          "مواصفة (spec) تُكتب من الفروقات (diff) تسجّل ما فعله الوكيل (agent)، فلا يُحكَم بها على الشيفرة (code)",
-          "المواصفة (spec) من شأن حصة بصفتها مالكة المنتج (product owner)، فعلى لجين أن تنتظر نسختها (version) منها أولًا"
+          "سليمة، إذا صاغ الوكيل (agent) المواصفة (spec) من الفروقات (diff) وقرأتها لجين كاملة قبل الإيداع (commit)",
+          "سليمة متى حمل كل معيار (criterion) معرّفًا (id) مثل `AC1`؛ فالناقص هو الترقيم وحده",
+          "غير سليمة: مواصفة (spec) تُكتب من الفروقات (diff) تسجّل ما فعله الوكيل (agent)، فلا يُحكَم بها على الشيفرة (code)",
+          "غير سليمة: المواصفة (spec) من شأن حصة بصفتها مالكة المنتج (product owner)، فعلى لجين أن تنتظر نسختها (version) منها أولًا"
         ]
       },
       "a": 2,
@@ -39,22 +39,22 @@
       },
       "o": {
         "en": [
-          "Add a case with a raw fee of exactly 5.005, where half up gives 5.01 and half-even gives 5.00",
-          "Add nothing more: any test that lands exactly on a tie already separates the two rounding rules",
+          "Add a tie case whose raw fee is exactly 5.005",
+          "Add a tie case whose raw fee is exactly 5.035",
           "Repeat the 5.015 case for every other fee tier, so each tier has its own tie test to rely on",
           "Ask the agent which rounding rule its code uses, then record the answer as a spec decision"
         ],
         "ar": [
-          "أضف حالة رسمها الخام (raw fee) 5.005 تمامًا، فيعطي الأعلى (half up) القيمة 5.01 والزوجي (half-even) القيمة 5.00",
-          "لا تضف شيئًا: الاختبار (test) الذي يقع على حالة تعادل (tie) تمامًا يفصل أصلًا بين قاعدتي التقريب (rounding rules)",
+          "أضف حالة تعادل (tie) رسمها الخام (raw fee) يساوي 5.005 تمامًا",
+          "أضف حالة تعادل (tie) رسمها الخام (raw fee) يساوي 5.035 تمامًا",
           "كرّر حالة 5.015 لكل شريحة رسوم (fee tier) أخرى، ليكون لكل شريحة اختبار تعادل (tie test) خاص بها وحدها",
           "اسأل الوكيل (agent) عن قاعدة التقريب (rounding rule) التي تستعملها شيفرته، ثم سجّل جوابه قرارًا في المواصفة (spec)"
         ]
       },
       "a": 0,
       "why": {
-        "en": "A tie exposes the wrong rule only where the rules disagree, which needs an even digit before the 5: 5.005 gives 5.01 under half up but 5.00 under half-even, while 5.015 gives 5.02 either way. Asking the agent which rule it used, the tempting shortcut, collects fluency instead of a value worked out by hand.",
-        "ar": "لا يكشف التعادل (tie) القاعدة الخاطئة إلا حيث تختلف القاعدتان، وذلك يحتاج إلى رقم زوجي قبل الخمسة: فالقيمة 5.005 تعطي 5.01 بالتقريب إلى الأعلى (half up) و5.00 بالزوجي (half-even)، أما 5.015 فتعطي 5.02 في الحالتين. وسؤال الوكيل (agent) عن القاعدة التي استعملها، وهو الاختصار المغري، يجمع طلاقة (fluency) لا قيمة حُسبت يدويًا (worked out by hand)."
+        "en": "A tie exposes the wrong rule only where the rules disagree, which needs an even digit before the 5: 5.005 gives 5.01 under half up but 5.00 under half-even, while 5.015 and 5.035, the tempting extra ties, give 5.02 and 5.04 either way. Asking the agent which rule it used collects fluency, not a value worked out by hand.",
+        "ar": "لا يكشف التعادل (tie) القاعدة الخاطئة إلا حيث تختلف القاعدتان، وذلك يحتاج إلى رقم زوجي قبل الخمسة: فالقيمة 5.005 تعطي 5.01 بالتقريب إلى الأعلى (half up) و5.00 بالزوجي (half-even)، أما 5.015 و5.035، وهما التعادلان الإضافيان المغريان، فتعطيان 5.02 و5.04 في الحالتين. وسؤال الوكيل (agent) عن القاعدة التي استعملها يجمع طلاقة (fluency) لا قيمة حُسبت يدويًا (worked out by hand)."
       }
     },
     {
@@ -69,20 +69,20 @@
         "en": [
           "Dismiss it, because a green suite already shows that the service cannot fail on a template lookup",
           "Wrap the lookup in a `try` block so that it falls back to the old `transfer_sent` template",
-          "Ask the agent to re-read `service.py`, fix any wrong id it finds and commit that fix at once",
+          "Add a test that sends a `QAR-BDT` transfer and checks the English message it produces",
           "Add a test that every id the service can choose exists in `notify.TEMPLATES`, in both languages"
         ],
         "ar": [
           "ارفضه، لأن مجموعة اختبارات (test suite) خضراء (green) تثبت أصلًا أن الخدمة لا تفشل في اختيار القالب (template)",
           "لُفّ البحث في كتلة `try` تتراجع (fall back) عند الفشل إلى القالب (template) القديم `transfer_sent`",
-          "اطلب من الوكيل (agent) إعادة قراءة `service.py` وإصلاح أي معرّف (id) خاطئ يجده، ثم إيداع (commit) الإصلاح فورًا",
+          "أضف اختبارًا (test) يرسل تحويلًا (transfer) إلى `QAR-BDT` ويفحص الرسالة (message) الإنجليزية الناتجة",
           "أضف اختبارًا (test) يثبت أن كل معرّف (id) تستطيع الخدمة (service) اختياره موجود في `notify.TEMPLATES` باللغتين"
         ]
       },
       "a": 3,
       "why": {
-        "en": "A green suite shows only what the tests check, and none checks every id the service can choose, so a mistyped id can still fail after the ledger has posted. One test over both languages turns the reviewer's question into evidence; a fallback hides the mistake, and the agent re-reading its own code is fluency, not proof.",
-        "ar": "المجموعة الخضراء (green suite) لا تُظهر إلا ما تفحصه الاختبارات (tests)، ولا اختبار يفحص كل معرّف (id) قد تختاره الخدمة، فقد يفشل معرّف مكتوب خطأً بعد تسجيل القيد في دفتر الأستاذ (ledger). واختبار واحد يغطي اللغتين يحوّل سؤال المراجع (reviewer) إلى دليل (evidence)؛ أما التراجع إلى قالب آخر (fallback) فيُخفي الخطأ، وإعادة الوكيل (agent) قراءة شيفرته طلاقة (fluency) لا إثبات."
+        "en": "A green suite shows only what the tests check, and none checks every id the service can choose, so a mistyped id can still fail after the ledger has posted. One test over both languages turns the reviewer's question into evidence; a fallback hides the mistake, and a test that sends one `QAR-BDT` transfer covers one id in one language, not every id the service can choose.",
+        "ar": "المجموعة الخضراء (green suite) لا تُظهر إلا ما تفحصه الاختبارات (tests)، ولا اختبار يفحص كل معرّف (id) قد تختاره الخدمة، فقد يفشل معرّف مكتوب خطأً بعد تسجيل القيد في دفتر الأستاذ (ledger). واختبار واحد يغطي اللغتين يحوّل سؤال المراجع (reviewer) إلى دليل (evidence)؛ أما التراجع إلى قالب آخر (fallback) فيُخفي الخطأ، واختبار يرسل تحويلًا واحدًا إلى `QAR-BDT` يغطي معرّفًا واحدًا بلغة واحدة لا كل معرّف تستطيع الخدمة اختياره."
       }
     },
     {

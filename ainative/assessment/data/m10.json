@@ -13,13 +13,13 @@
         "en": [
           "She reads far less, because each agent reports what it changed and why",
           "She merges more easily, because separate worktrees stop the branches conflicting",
-          "She waited less for the agents, but she still reads and merges four results",
+          "She waits far less for the agents, because their work overlaps in time",
           "She can skip the integration check, because each branch passed its own tests"
         ],
         "ar": [
           "تقرأ أقل بكثير، لأن كل وكيل (agent) يكتب تقريرًا (report) بما غيّره ولماذا",
           "يسهل عليها الدمج (merge)، لأن أشجار العمل (worktrees) المنفصلة تمنع تعارض الفروع (branches)",
-          "انتظرت الوكلاء (agents) وقتًا أقل، لكنها تقرأ أربع نتائج (results) وتدمجها (merges) بنفسها",
+          "تنتظر الوكلاء (agents) وقتًا أقل بكثير، لأن عملهم يجري في الوقت نفسه لا بالتتابع",
           "تستطيع تخطي فحص التكامل (integration check)، لأن كل فرع (branch) اجتاز اختباراته (tests) وحده"
         ]
       },
@@ -39,16 +39,16 @@
       },
       "o": {
         "en": [
-          "Merge it, then rerun its tests and the command against the real S1",
-          "Merge it as it is, because its tests passed against S1's contract",
-          "Merge it if git reports no conflict, since that shows the halves agree",
-          "Merge it and rerun only S1's tests, since S1 is the code that changed"
+          "Merge it, then rerun its tests and the command on the real S1, since they ran only against a stub",
+          "Merge it as it is, because its tests passed against S1's contract and S1 is already on `main`",
+          "Merge it if git reports no conflict, since a clean merge shows that the two halves agree",
+          "Merge it and rerun only S1's tests, since S1 is the code that changed and S3 was already tested"
         ],
         "ar": [
-          "تدمجه (merge)، ثم تعيد تشغيل اختباراته (tests) والأمر (command) على S1 الحقيقية",
-          "تدمجه (merge) كما هو، لأن اختباراته (tests) نجحت أمام عقد (contract) S1",
-          "تدمجه (merge) إذا لم يُبلغ git عن تعارض (conflict)، فهذا يثبت اتفاق الجزأين",
-          "تدمجه (merge) وتعيد تشغيل اختبارات (tests) S1 وحدها، فهي الشيفرة (code) التي تغيّرت"
+          "تدمجه (merge)، ثم تعيد تشغيل اختباراته (tests) والأمر على S1 الحقيقية، لأنها لم تعمل إلا أمام بديل (stub)",
+          "تدمجه (merge) كما هو، لأن اختباراته (tests) نجحت أمام عقد (contract) S1، وقد دُمجت S1 فعلًا في `main`",
+          "تدمجه (merge) إذا لم يُبلغ git عن تعارض (conflict)، فالدمج النظيف يثبت أن الجزأين متفقان",
+          "تدمجه (merge) وتعيد تشغيل اختبارات (tests) S1 وحدها، فهي الشيفرة (code) التي تغيّرت، وقد اختُبرت S3 من قبل"
         ]
       },
       "a": 0,
@@ -62,8 +62,8 @@
       "level": 2,
       "lesson": "10.2",
       "q": {
-        "en": "Hessa's ticket REMIT-361 says its four tasks can be built at the same time. Which task should Lujain's parallel plan list under \"Cannot run in parallel\", and why?",
-        "ar": "تقول تذكرة (ticket) REMIT-361 من حصة إن مهامها الأربع (tasks) يمكن بناؤها في الوقت نفسه. أي مهمة ينبغي أن تدرجها خطة العمل المتوازي (parallel plan) لدى لجين تحت «لا يمكن تشغيلها بالتوازي (Cannot run in parallel)»، ولماذا؟"
+        "en": "Hessa's ticket REMIT-361 says its four tasks can be built at the same time. Which task has a build dependency that makes that false, so Lujain's parallel plan should list it under \"Cannot run in parallel\", and why?",
+        "ar": "تقول تذكرة (ticket) REMIT-361 من حصة إن مهامها الأربع (tasks) يمكن بناؤها في الوقت نفسه. أي مهمة لها اعتماد بنائي (build dependency) يجعل هذا القول غير صحيح، فينبغي أن تدرجها خطة العمل المتوازي (parallel plan) لدى لجين تحت «لا يمكن تشغيلها بالتوازي (Cannot run in parallel)»، ولماذا؟"
       },
       "o": {
         "en": [
@@ -81,8 +81,8 @@
       },
       "a": 3,
       "why": {
-        "en": "The runbook quotes real output from the running B and C commands, so it can only be finished, and cut from `main`, after they are merged. B and C meet in `cli.py`, but that is a conflict to expect and resolve at merge, not a reason to run them in turn.",
-        "ar": "يقتبس دليل التشغيل (runbook) مخرجات حقيقية من الأمرين B وC وهما يعملان، فلا يكتمل، ولا يُقطع فرعه (branch) من `main`، إلا بعد دمجهما. وتلتقي B وC في `cli.py`، لكن هذا تعارض (conflict) متوقع يُحَلّ عند الدمج (merge)، لا سبب لتشغيلهما بالتتابع (in turn)."
+        "en": "The runbook quotes real output from the running B and C commands, so it can only be finished, and cut from `main`, after they are merged. B and C meet in `cli.py`, but that is a conflict to expect and resolve at merge, not a reason to run them in turn. A second reviewer for `limits.py` limits how many streams she can review, not what Task C needs in order to be built.",
+        "ar": "يقتبس دليل التشغيل (runbook) مخرجات حقيقية من الأمرين B وC وهما يعملان، فلا يكتمل، ولا يُقطع فرعه (branch) من `main`، إلا بعد دمجهما. وتلتقي B وC في `cli.py`، لكن هذا تعارض (conflict) متوقع يُحَلّ عند الدمج (merge)، لا سبب لتشغيلهما بالتتابع (in turn). أما المراجع الثاني (second reviewer) لـ`limits.py` فيحدّ من عدد المسارات (streams) التي تستطيع مراجعتها، لا مما تحتاجه المهمة C كي تُبنى."
       }
     },
     {
@@ -90,27 +90,27 @@
       "level": 3,
       "lesson": "10.2",
       "q": {
-        "en": "Lujain's agent finishes Task C. `git diff --name-only main...feat/limits-command` lists only files its brief allows, and `pytest -q` is green. She then puts `main`'s versions of `limits.py` and `cli.py` back on the branch, and the new tests in `tests/test_care_limits.py` still pass. What should she conclude?",
-        "ar": "أنهى وكيل (agent) لجين المهمة C. يعرض `git diff --name-only main...feat/limits-command` الملفات التي يسمح بها تكليف المهمة (task brief) فقط، واختبار `pytest -q` أخضر (green). ثم أعادت إلى الفرع (branch) نسختي `main` من `limits.py` و`cli.py`، فظلت الاختبارات الجديدة (new tests) في `tests/test_care_limits.py` ناجحة. ماذا ينبغي أن تستنتج؟"
+        "en": "Lujain's agent finishes Task C. `git diff --name-only main...feat/limits-command` lists only files its brief allows, and `pytest -q` is green. She then puts `main`'s versions of `limits.py` and `cli.py` back on the branch, and the new tests in `tests/test_care_limits.py` still pass, with no import or attribute errors. What should she conclude?",
+        "ar": "أنهى وكيل (agent) لجين المهمة C. يعرض `git diff --name-only main...feat/limits-command` الملفات التي يسمح بها تكليف المهمة (task brief) فقط، واختبار `pytest -q` أخضر (green). ثم أعادت إلى الفرع (branch) نسختي `main` من `limits.py` و`cli.py`، فظلت الاختبارات الجديدة (new tests) في `tests/test_care_limits.py` ناجحة دون أي خطأ استيراد (import error) أو خطأ سمة (attribute error). ماذا ينبغي أن تستنتج؟"
       },
       "o": {
         "en": [
           "The branch is safe to merge, since it is in scope and green either way",
           "The tests pass without the feature, so they prove nothing; send the branch back",
-          "The tests are stable, since they give the same result on both versions of the code",
-          "The tests are fine, and she only needs to read the `limits.py` diff slowly"
+          "The agent changed files outside its brief, so she should reject the branch",
+          "The tests are fine, and she only needs to read the `limits.py` diff slowly, as it is money logic"
         ],
         "ar": [
           "الفرع آمن للدمج (merge)، فهو داخل النطاق (in scope) وأخضر في الحالتين",
           "الاختبارات (tests) تنجح دون الميزة (feature)، فلا تثبت شيئًا، ويعود الفرع لإصلاحها",
-          "الاختبارات مستقرة (stable)، لأنها تعطي النتيجة نفسها على النسختين من الشيفرة (code)",
+          "غيّر الوكيل (agent) ملفات خارج تكليف المهمة (task brief)، فيجب رفض الفرع (branch)",
           "الاختبارات سليمة، وتكفي قراءة فروقات (diff) `limits.py` ببطء لأنها منطق مالي (money logic)"
         ]
       },
       "a": 1,
       "why": {
-        "en": "A new test must fail when the feature is taken away; tests that still pass on `main`'s code would pass without the feature, so they cannot catch its removal, and an in-scope diff with a green run does not change that. Calling them stable is the tempting reading, but stable is not the same as testing the feature.",
-        "ar": "يجب أن يفشل الاختبار الجديد (new test) حين تُزال الميزة (feature)؛ أما الاختبارات التي تنجح على شيفرة `main` فكانت ستنجح دون الميزة، فلا تكشف حذفها (removal)، ولا يغيّر ذلك أن الفروقات (diff) داخل النطاق (in scope) وأن التشغيل أخضر. ووصفها بأنها مستقرة (stable) هو القراءة المغرية (tempting reading)، لكن الاستقرار ليس اختبارًا للميزة."
+        "en": "A new test must fail when the feature is taken away; tests that still pass on `main`'s code would pass without the feature, so they cannot catch its removal, and an in-scope diff with a green run does not change that. The file list was clean, so scope is not the problem, and reading the `limits.py` diff slowly is still needed but cannot make these tests check the feature.",
+        "ar": "يجب أن يفشل الاختبار الجديد (new test) حين تُزال الميزة (feature)؛ أما الاختبارات التي تنجح على شيفرة `main` فكانت ستنجح دون الميزة، فلا تكشف حذفها (removal)، ولا يغيّر ذلك أن الفروقات (diff) داخل النطاق (in scope) وأن التشغيل أخضر. وقائمة الملفات كانت سليمة، فالنطاق (scope) ليس المشكلة، وقراءة فروقات `limits.py` ببطء تبقى لازمة لكنها لا تجعل هذه الاختبارات تفحص الميزة."
       }
     }
   ],

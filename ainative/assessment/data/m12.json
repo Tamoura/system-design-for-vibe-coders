@@ -12,21 +12,21 @@
       "o": {
         "en": [
           "Which engineer started the session, so that person can be coached on safer prompting habits",
-          "What the agent was allowed to do, who approved it and which check should have stopped it",
-          "Which model and version ran the session, so the vendor can be asked to fix that behaviour",
-          "Which prompt wording led to the deletion, so a better prompt can be written and reused"
+          "What the agent was allowed to do, who approved it and which check should have stopped it, so that one control can be changed",
+          "Which line of `CLAUDE.md` the agent ignored, so that the memory file can be made stricter and the agent warned off the next time",
+          "Which prompt wording led to the deletion, so that a better prompt can be written and reused from now on"
         ],
         "ar": [
           "أي مهندس بدأ الجلسة (session)، ليُدرَّب على كتابة الموجّهات (prompts) بأمان أكبر في عمله",
-          "ما كان مسموحًا للوكيل (agent) بفعله، ومن وافق عليه، وأي فحص (check) كان ينبغي أن يوقفه",
-          "أي نموذج (model) وأي إصدار (version) شغّل الجلسة، ليُطلب من المورّد (vendor) إصلاح سلوكه هذا",
+          "ما كان مسموحًا للوكيل (agent) بفعله، ومن وافق عليه، وأي فحص (check) كان ينبغي أن يوقفه، ليُغيَّر ضابط (control) واحد",
+          "أي سطر في `CLAUDE.md` تجاهله الوكيل (agent)، ليُصاغ ملف الذاكرة (memory file) بصرامة أكبر ويُحذَّر الوكيل من تكرار ذلك مستقبلًا",
           "أي صياغة للموجّه (prompt) أدت إلى الحذف، ليحل محلها موجّه أفضل من الآن فصاعدًا"
         ]
       },
       "a": 1,
       "why": {
-        "en": "\"The agent did it\" is never a root cause: the review asks what the agent was allowed to do, who approved the change and which check should have stopped it, then changes one control. Rewording the prompt, the tempting fix, leaves the permissions and the missing check in place.",
-        "ar": "«الوكيل فعلها» (The agent did it) ليس سببًا جذريًا (root cause) أبدًا: تسأل المراجعة عمّا كان مسموحًا للوكيل (agent) بفعله، ومن وافق على التغيير، وأي فحص (check) كان ينبغي أن يوقفه، ثم تغيّر ضابطًا (control) واحدًا. أما إعادة صياغة الموجّه (prompt)، وهي الإصلاح المغري، فتترك الصلاحيات (permissions) والفحص المفقود كما هما."
+        "en": "\"The agent did it\" is never a root cause: the review asks what the agent was allowed to do, who approved the change and which check should have stopped it, then changes one control. Coaching a person, tightening `CLAUDE.md` or rewording the prompt, the tempting fixes, leave the permissions and the missing check in place.",
+        "ar": "«الوكيل فعلها» (The agent did it) ليس سببًا جذريًا (root cause) أبدًا: تسأل المراجعة عمّا كان مسموحًا للوكيل (agent) بفعله، ومن وافق على التغيير، وأي فحص (check) كان ينبغي أن يوقفه، ثم تغيّر ضابطًا (control) واحدًا. أما تدريب شخص أو تشديد `CLAUDE.md` أو إعادة صياغة الموجّه (prompt)، وهي الإصلاحات المغرية، فتترك الصلاحيات (permissions) والفحص المفقود كما هما."
       }
     },
     {
@@ -41,20 +41,20 @@
         "en": [
           "A line in `CLAUDE.md` telling agents that money modules need a second reviewer",
           "A `PreToolUse` hook in each developer's settings that asks before editing those files",
-          "A tick box in the pull request template asking whether a second reviewer looked",
+          "A managed-settings rule on every company laptop that makes the agent ask before editing those files",
           "Code owners for those files, with branch protection that requires their approval"
         ],
         "ar": [
           "سطر في `CLAUDE.md` يخبر الوكلاء (agents) بأن وحدات المال (money modules) تحتاج إلى مراجع ثانٍ (second reviewer)",
           "خطاف (hook) من نوع `PreToolUse` في إعدادات كل مطوّر (settings) يسأل قبل تعديل تلك الملفات (files)",
-          "خانة اختيار (tick box) في قالب طلب الدمج (pull request template) تسأل هل نظر فيه مراجع ثانٍ (second reviewer)",
+          "قاعدة (rule) في الإعدادات المُدارة (managed settings) على كل حاسوب في الشركة تجعل الوكيل (agent) يسأل قبل تعديل تلك الملفات (files)",
           "مالكو الشيفرة (code owners) لتلك الملفات، مع حماية الفرع (branch protection) التي تشترط موافقتهم قبل الدمج"
         ]
       },
       "a": 3,
       "why": {
-        "en": "Code owners and branch protection run on the server, so they apply whichever tool wrote the change. A hook sits on one developer's machine and governs only its own tool, and a `CLAUDE.md` line or a tick box is advice that nothing enforces.",
-        "ar": "يعمل مالكو الشيفرة (code owners) وحماية الفرع (branch protection) على الخادم (server)، فيسريان أيًّا كانت الأداة (tool) التي كتبت التغيير. أما الخطاف (hook) فيوجد على جهاز مطوّر واحد ولا يحكم إلا الأداة المرتبطة به، وسطر في `CLAUDE.md` أو خانة اختيار (tick box) مجرد نصيحة (advice) لا يفرضها شيء."
+        "en": "Code owners and branch protection run on the server, so they apply whichever tool wrote the change. A hook and a managed-settings rule live on laptops and govern only the agent that reads them, and a `CLAUDE.md` line is advice that nothing enforces.",
+        "ar": "يعمل مالكو الشيفرة (code owners) وحماية الفرع (branch protection) على الخادم (server)، فيسريان أيًّا كانت الأداة (tool) التي كتبت التغيير. أما الخطاف (hook) وقاعدة الإعدادات المُدارة (managed settings) فيوجدان على أجهزة المطوّرين ولا يحكمان إلا الوكيل (agent) الذي يقرؤهما، وسطر في `CLAUDE.md` مجرد نصيحة (advice) لا يفرضها شيء."
       }
     },
     {
@@ -67,22 +67,22 @@
       },
       "o": {
         "en": [
-          "Median hours from a pull request being opened to its first review, per week",
-          "Median hours that pull requests wait for review, as the team lead judges them",
-          "Number of review comments written by each reviewer, counted for every week",
-          "Share of pull requests that reviewers say were reviewed quickly, per quarter"
+          "Median hours from a pull request being opened to its first review, taken from the pull-request history, per week",
+          "Median hours from a pull request being opened to its first review, over whichever pull requests the person computing it picks",
+          "Number of review comments written on each pull request before it is approved, counted for every week",
+          "Share of pull requests that reviewers say were reviewed quickly, asked in a survey every quarter"
         ],
         "ar": [
-          "وسيط (median) الساعات من فتح طلب الدمج (pull request) حتى أول مراجعة (first review) له، أسبوعيًا",
-          "وسيط (median) الساعات التي تنتظرها طلبات الدمج (pull requests) للمراجعة، كما يقدّرها قائد الفريق (team lead)",
-          "عدد تعليقات المراجعة (review comments) التي كتبها كل مراجع (reviewer)، محسوبًا لكل أسبوع (week)",
-          "نسبة طلبات الدمج (pull requests) التي يقول المراجعون إنها روجعت بسرعة، في كل ربع سنة (quarter)"
+          "وسيط (median) الساعات من فتح طلب الدمج (pull request) حتى أول مراجعة (first review) له، مأخوذًا من سجل طلبات الدمج (pull-request history)، أسبوعيًا",
+          "وسيط (median) الساعات من فتح طلب الدمج (pull request) حتى أول مراجعة (first review) له، على أي مجموعة من طلبات الدمج يختارها الشخص الذي يحسبه بنفسه عادةً",
+          "عدد تعليقات المراجعة (review comments) المكتوبة على كل طلب دمج (pull request) قبل الموافقة عليه، محسوبًا لكل أسبوع (week) على حدة",
+          "نسبة طلبات الدمج (pull requests) التي يقول المراجعون إنها روجعت بسرعة، تُسأل عنها في استبيان (survey) يُجرى كل ربع سنة (quarter)"
         ]
       },
       "a": 0,
       "why": {
-        "en": "A measurable definition names two events and a period, here opened and first review, per week, so two people get the same number from the pull-request history. Counting comments is computable but measures activity, not speed, and a judgement or a survey cannot be recomputed.",
-        "ar": "التعريف القابل للقياس (measurable definition) يسمّي حدثين (two events) وفترة (period)، هنا فتح الطلب وأول مراجعة أسبوعيًا، فيصل شخصان إلى الرقم نفسه من سجل طلبات الدمج (pull-request history). أما عدّ التعليقات (comments) فيمكن حسابه لكنه يقيس النشاط (activity) لا السرعة، والتقدير الشخصي أو الاستبيان (survey) لا يمكن إعادة حسابه."
+        "en": "A measurable definition names two events and a period, here opened and first review, per week, so two people get the same number from the pull-request history. With no fixed period each person picks a different window, counting comments is computable but measures activity, not speed, and a survey of opinions cannot be recomputed.",
+        "ar": "التعريف القابل للقياس (measurable definition) يسمّي حدثين (two events) وفترة (period)، هنا فتح الطلب وأول مراجعة أسبوعيًا، فيصل شخصان إلى الرقم نفسه من سجل طلبات الدمج (pull-request history). أما بلا فترة ثابتة فيختار كل شخص نافذة (window) مختلفة، وعدّ التعليقات (comments) يمكن حسابه لكنه يقيس النشاط (activity) لا السرعة، واستبيان الآراء (survey) لا يمكن إعادة حسابه."
       }
     },
     {
@@ -95,22 +95,22 @@
       },
       "o": {
         "en": [
-          "Write all ten sections from a blank page now, so that the rules exist before any mistake does",
+          "Copy Payments Platform's playbook across and swap in this team's name, tools and owners, so that the full document is ready by Friday as the manager asked",
           "Have an assistant fill in a generic policy template, then edit it until it suits the team",
-          "Begin with the one-page working agreement and let a month of real mistakes supply the rules",
-          "Adopt the bank's six rules as they stand and write nothing team-specific for the time being"
+          "Write a one-page working agreement now, log what goes wrong with the agents for a month, and turn the repeat mistakes into playbook rules",
+          "Give them a `CONTRIBUTING.md` and a good `CLAUDE.md`, and tell the manager a written agreement is overkill for a team this new"
         ],
         "ar": [
-          "اكتبوا الأقسام العشرة (ten sections) كلها من صفحة بيضاء (blank page) الآن، لتوجد القواعد قبل وقوع أي خطأ فعلي",
+          "انسخوا دليل منصة المدفوعات (Payments Platform) العملي (playbook) وبدّلوا اسم الفريق وأدواته ومالكيه، ليكون المستند الكامل جاهزًا قبل يوم الجمعة كما طلب المدير",
           "كلّفوا مساعدًا (assistant) بملء قالب سياسة عامة (generic policy template) ثم عدّلوه ليناسب الفريق كله",
-          "ابدؤوا باتفاقية العمل (working agreement) ذات الصفحة الواحدة، وشغّلوها شهرًا لتكتب الأخطاء الحقيقية القواعد",
-          "اعتمدوا قواعد البنك الست (six rules) كما هي، ولا تكتبوا أي شيء خاص بالفريق (team-specific) في الوقت الحالي"
+          "اكتبوا اتفاقية عمل (working agreement) من صفحة واحدة الآن، وسجّلوا أخطاء الوكلاء (agents) شهرًا، وحوّلوا المتكرر منها إلى قواعد في الدليل العملي (playbook)",
+          "أعطوهم ملف `CONTRIBUTING.md` وملف `CLAUDE.md` جيدًا فقط، وأخبروا المدير بأن الاتفاقية المكتوبة مبالغة لفريق بهذه الحداثة"
         ]
       },
       "a": 2,
       "why": {
-        "en": "With no agent logs yet, a full playbook would be written from guesses, so run the one-page working agreement for a month and let real mistakes supply the rules. A generic template, the tempting shortcut, is fluent but owned by nobody, and a blank-page playbook invents rules before the mistakes show which ones matter.",
-        "ar": "لا توجد سجلات وكيل (agent logs) بعد، فسيُكتب الدليل العملي (playbook) الكامل من التخمين؛ لذا تُشغَّل اتفاقية العمل (working agreement) ذات الصفحة الواحدة شهرًا وتُترك الأخطاء الحقيقية لتُنتج القواعد. أما القالب العام (generic template)، وهو الاختصار المغري، فمتقن الصياغة (fluent) لكن لا مالك له (owned by nobody)، والصفحة البيضاء (blank page) تخترع قواعد قبل أن تُظهر الأخطاء أيها يهم."
+        "en": "With no agent logs yet, a full playbook would be written from guesses, so run a one-page working agreement for a month and let real mistakes supply the rules. A copied playbook carries another team's owners and numbers, a generic template is fluent but owned by nobody, and `CONTRIBUTING.md` plus `CLAUDE.md` alone suits a two-person team, not a team of six.",
+        "ar": "لا توجد سجلات وكيل (agent logs) بعد، فسيُكتب الدليل العملي (playbook) الكامل من التخمين؛ لذا تُشغَّل اتفاقية عمل (working agreement) من صفحة واحدة شهرًا وتُترك الأخطاء الحقيقية لتُنتج القواعد. أما الدليل المنسوخ فيحمل مالكي فريق آخر وأرقامه، والقالب العام (generic template) متقن الصياغة (fluent) لكن لا مالك له (owned by nobody)، و`CONTRIBUTING.md` مع `CLAUDE.md` وحدهما يناسبان فريقًا من شخصين لا فريقًا من ستة."
       }
     }
   ],

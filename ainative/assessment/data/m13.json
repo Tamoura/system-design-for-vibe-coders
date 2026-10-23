@@ -6,27 +6,27 @@
       "level": 1,
       "lesson": "13.1",
       "q": {
-        "en": "Lujain's agent rewrites the monthly-limit check in `check_limits`. The diff is tidy and well commented, but she cannot say why the old code compared amounts the way it did, so she cannot tell whether the change is safe. What is she missing?",
-        "ar": "أعاد الوكيل (agent) الذي تستعين به لجين كتابة فحص الحد الشهري (monthly-limit check) في `check_limits`. الفروقات (diff) مرتبة وموثّقة بتعليقات جيدة (well commented)، لكنها لا تستطيع أن تقول لماذا كانت الشيفرة القديمة (old code) تقارن المبالغ بتلك الطريقة، فلا تعرف إن كان التغيير آمنًا (safe). ماذا ينقصها؟"
+        "en": "Lujain's agent rewrites the monthly-limit check in `check_limits`. The diff is tidy and well commented, but she cannot say why the old code compared amounts the way it did, so she cannot tell whether the change is safe. Which skill is she missing?",
+        "ar": "أعاد الوكيل (agent) الذي تستعين به لجين كتابة فحص الحد الشهري (monthly-limit check) في `check_limits`. الفروقات (diff) مرتبة وموثّقة بتعليقات جيدة (well commented)، لكنها لا تستطيع أن تقول لماذا كانت الشيفرة القديمة (old code) تقارن المبالغ بتلك الطريقة، فلا تعرف إن كان التغيير آمنًا (safe). أي مهارة تنقصها؟"
       },
       "o": {
         "en": [
-          "A sharper prompt, since better wording would make the agent flag its own risky changes to her",
-          "A bigger context window, since the agent could then see the whole module and justify itself",
-          "Skill in reading code and asking why, since past that edge she is trusting, not reviewing",
-          "A stronger model, since the newest ones no longer make unsafe changes in money logic"
+          "Prompt craft: wording her requests so that the agent flags the risks in its own changes",
+          "Debugging: forming hypotheses about how her own system fails, then testing the cheapest first",
+          "Reading code: working out what the old code was for, by asking why it is the way it is",
+          "Testing: deciding which result would show that the new comparison is wrong"
         ],
         "ar": [
-          "موجّه (prompt) أدق صياغة، فالصياغة الأفضل تجعل الوكيل (agent) ينبّه بنفسه إلى تغييراته الخطرة (risky changes)",
-          "نافذة سياق (context window) أكبر، فيرى الوكيل (agent) الوحدة كلها (whole module) ويبرّر ما فعله بنفسه",
-          "مهارة قراءة الشيفرة (reading code) وسؤال لماذا، فهي فيما يتجاوز ما تقرؤه تثق (trusting) ولا تراجع (reviewing)",
-          "نموذج (model) أقوى، فأحدث النماذج لم تعد تُجري تغييرات غير آمنة (unsafe changes) في منطق الأموال (money logic)"
+          "صياغة الطلبات (prompt craft): كتابة طلباتها بحيث ينبّه الوكيل (agent) إلى مخاطر تغييراته بنفسه",
+          "تصحيح الأخطاء (debugging): صياغة فرضيات (hypotheses) عن كيف يفشل نظامها هي، ثم اختبار أرخصها أولًا",
+          "قراءة الشيفرة (reading code): معرفة غاية الشيفرة القديمة (old code) بسؤال لماذا هي على هذا النحو",
+          "الاختبار (testing): تحديد أي نتيجة ستُظهر أن المقارنة الجديدة (new comparison) خاطئة"
         ]
       },
       "a": 2,
       "why": {
-        "en": "Verification stands on being able to read: past the edge of what she can read she is trusting, not reviewing, and the lesson calls the missing piece a fundamental, not a prompt trick. A sharper prompt is the tempting fix, but it cannot give her the understanding she needs to judge the answer.",
-        "ar": "يقوم التحقق (verification) على القدرة على القراءة (reading)، فخارج ما تستطيع قراءته تثق ولا تراجع (reviewing)؛ وقد سمّى الدرس الحلقة الناقصة مهارة أساسية (fundamental) لا حيلة موجّه (prompt trick). والموجّه الأدق هو الحل المغري (tempting fix)، لكنه لا يمنحها الفهم الذي تحتاجه لتحكم على الإجابة."
+        "en": "Verification stands on being able to read: past the edge of what she can read she is trusting, not reviewing. The lesson names the missing piece as a fundamental, reading code and asking why it is the way it is, not a prompt trick. Prompt craft is the tempting fix, but it leaves the understanding with the agent, and neither debugging nor testing tells her what the old comparison was for.",
+        "ar": "يقوم التحقق (verification) على القدرة على القراءة (reading)، فخارج ما تستطيع قراءته تثق ولا تراجع (reviewing)؛ وقد سمّى الدرس الحلقة الناقصة مهارة أساسية (fundamental)، هي قراءة الشيفرة وسؤال لماذا هي على هذا النحو، لا حيلة موجّه (prompt trick). وصياغة الطلبات هي الحل المغري (tempting fix)، لكنها تُبقي الفهم عند الوكيل (agent)، ولا يخبرها تصحيح الأخطاء ولا الاختبار بما كانت تفعله المقارنة القديمة."
       }
     },
     {
@@ -62,27 +62,27 @@
       "level": 2,
       "lesson": "13.1",
       "q": {
-        "en": "An agent reorders the steps inside `send`. Lujain reads the whole diff, finds nothing odd, and wants a real test of her own understanding before she opens the pull request. What should she do?",
-        "ar": "أعاد وكيل (agent) ترتيب الخطوات (steps) داخل `send`. قرأت لجين الفروقات (diff) كلها فلم تجد شيئًا غريبًا (nothing odd)، وتريد اختبارًا حقيقيًا لفهمها (understanding) هي قبل أن تفتح طلب الدمج (pull request). ماذا ينبغي أن تفعل؟"
+        "en": "An agent reorders the steps inside `send`. Lujain reads the whole diff, finds nothing odd, and wants a real test of her own understanding of the change before she opens the pull request. What should she do?",
+        "ar": "أعاد وكيل (agent) ترتيب الخطوات (steps) داخل `send`. قرأت لجين الفروقات (diff) كلها فلم تجد شيئًا غريبًا (nothing odd)، وتريد اختبارًا حقيقيًا لفهمها (understanding) هي للتغيير قبل أن تفتح طلب الدمج (pull request). ماذا ينبغي أن تفعل؟"
       },
       "o": {
         "en": [
-          "Close the diff, explain each changed line from memory in writing, then open it and compare",
-          "Read the diff a second time, slowly, and tick off each change once she is sure she follows it",
-          "Ask the agent to explain the change line by line, and check that its account sounds right",
-          "Ask a second agent session to review the change, and relax if it reports no faults in it"
+          "Close the diff, explain each changed line from memory in writing, then open it again and compare the two",
+          "Write down a prediction that the tests will pass and how long that will take, run them and log the outcome",
+          "Ask Nada, the second reviewer for money logic, to go through the diff and say what she would question",
+          "Read the diff a second time with the ticket beside her, and tick off each change she can tie to a requirement"
         ],
         "ar": [
-          "أن تغلق الفروقات (diff)، وتشرح كل سطر تغيّر (changed line) من الذاكرة (from memory)، ثم تفتحها وتقارن (compare)",
-          "أن تقرأ الفروقات (diff) مرة ثانية ببطء (slowly)، وتضع علامة على كل تغيير (change) حين تتيقن أنها تتابعه (follows it)",
-          "أن تطلب من الوكيل (agent) شرح التغيير (change) سطرًا سطرًا، وتتأكد أن روايته (account) للأمر تبدو صحيحة",
-          "أن تطلب من جلسة وكيل (agent session) ثانية مراجعة التغيير (change)، وتطمئن إذا لم تُبلغ عن أي عيوب (faults)"
+          "أن تغلق الفروقات (diff)، وتشرح كل سطر تغيّر (changed line) من الذاكرة (from memory) كتابةً، ثم تفتحها وتقارن (compare)",
+          "أن تكتب توقعًا (prediction) بأن الاختبارات ستنجح وبالزمن الذي سيستغرقه ذلك، ثم تشغّلها وتسجّل النتيجة (outcome)",
+          "أن تطلب من ندى، المراجِعة الثانية (second reviewer) لمنطق الأموال، أن تمرّ على الفروقات (diff) وتقول ما كانت ستسأل عنه",
+          "أن تقرأ الفروقات (diff) مرة ثانية والتذكرة (ticket) بجانبها، وتضع علامة على كل تغيير تربطه بمتطلب (requirement)"
         ]
       },
       "a": 0,
       "why": {
-        "en": "Explain-back makes her produce the explanation from memory before the diff can prompt it, so it shows what she does not follow. Re-reading the diff, the tempting choice, only recognises what is already on the page.",
-        "ar": "يجبرها الشرح العكسي (explain-back) على إنتاج الشرح من الذاكرة (from memory) قبل أن تذكّرها الفروقات (diff) به، فيكشف ما لا تفهمه. أما إعادة قراءة الفروقات، وهي الخيار المغري (tempting choice)، فلا تتيح إلا التعرّف على ما هو مكتوب أمامها (recognising what is on the page)."
+        "en": "Explain-back makes her produce the explanation from memory before the diff can prompt it, so it shows what she does not follow. Re-reading the diff against the ticket, the tempting choice, only recognises what is already on the page. A prediction log calibrates trust in outcomes over many entries, and a second reviewer tests Nada's reading, not hers.",
+        "ar": "يجبرها الشرح العكسي (explain-back) على إنتاج الشرح من الذاكرة (from memory) قبل أن تذكّرها الفروقات (diff) به، فيكشف ما لا تفهمه. أما إعادة قراءة الفروقات مع التذكرة، وهي الخيار المغري (tempting choice)، فلا تتيح إلا التعرّف على ما هو مكتوب أمامها (recognising what is on the page). وسجل التوقعات (calibration log) يعايِر الثقة بالنتائج على مدى إدخالات كثيرة، والمراجِعة الثانية تختبر قراءة ندى لا قراءتها هي."
       }
     },
     {

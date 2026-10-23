@@ -34,8 +34,8 @@
    "level": 2,
    "lesson": "3.1",
    "q": {
-    "en": "Lujain is specifying a new fee rebate with an agent that interviews her. She says: \"Round the rebate half-even, like the ledger does.\" The agent replies: \"Good point, that matches the codebase.\" What should she do next?",
-    "ar": "تكتب لجين مواصفة (spec) لخصم جديد على الرسوم (fee rebate) مع وكيل (agent) يجري معها مقابلة (interview). تقول له: «قرّب الخصم إلى الزوجي الأقرب (half-even) كما يفعل دفتر الأستاذ (ledger).» فيردّ الوكيل: «ملاحظة جيدة، وهذا يطابق قاعدة الشيفرة (codebase).» ماذا ينبغي لها أن تفعل بعد ذلك؟"
+    "en": "Lujain is specifying a new fee rebate with an agent that interviews her, and the repository is open beside her. She says: \"Round the rebate half-even, like the ledger does.\" The agent replies: \"Good point, that matches the codebase.\" What should she do next?",
+    "ar": "تكتب لجين مواصفة (spec) لخصم جديد على الرسوم (fee rebate) مع وكيل (agent) يجري معها مقابلة (interview)، والمستودع (repository) مفتوح بجانبها. تقول له: «قرّب الخصم إلى الزوجي الأقرب (half-even) كما يفعل دفتر الأستاذ (ledger).» فيردّ الوكيل: «ملاحظة جيدة، وهذا يطابق قاعدة الشيفرة (codebase).» ماذا ينبغي لها أن تفعل بعد ذلك؟"
    },
    "o": {
     "en": [
@@ -53,8 +53,8 @@
    },
    "a": 0,
    "why": {
-    "en": "The interviewer tends to agree, so its facts need checking and the decisions stay yours: in the code fees round half up, and half-even is only the ledger's partner-share quirk. Naming Hessa as owner of an assumption (C) asks a person for something the code already answers.",
-    "ar": "يميل الوكيل المحاوِر (interviewer) إلى الموافقة، فتحتاج وقائعه إلى تحقق (checking) وتبقى القرارات (decisions) لك: في الشيفرة (code) تُقرَّب الرسوم نحو الأعلى عند المنتصف (half up)، والتقريب الزوجي (half-even) شذوذ يخص حصة الشريك في دفتر الأستاذ (ledger) وحدها. وتسمية حصة مالكةً لافتراض (C) تسأل شخصًا عمّا تجيب عنه الشيفرة أصلًا."
+    "en": "The interviewer tends to agree, so its facts need checking and the decisions stay yours: in the code fees round half up, and half-even is only the ledger's partner-share quirk. A flagged assumption with an owner (C) is for what only a person can know, and here the open repository already answers it.",
+    "ar": "يميل الوكيل المحاوِر (interviewer) إلى الموافقة، فتحتاج وقائعه إلى تحقق (checking) وتبقى القرارات (decisions) لك: في الشيفرة (code) تُقرَّب الرسوم نحو الأعلى عند المنتصف (half up)، والتقريب الزوجي (half-even) شذوذ يخص حصة الشريك في دفتر الأستاذ (ledger) وحدها. أما الافتراض المعلَّم له مالك (C) فمكانه ما لا يعرفه إلا شخص، والمستودع (repository) المفتوح هنا يجيب عنه أصلًا."
    }
   },
   {
