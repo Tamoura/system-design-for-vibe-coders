@@ -1,0 +1,9 @@
+diff --git a/ANSWER.md b/ANSWER.md
+new file mode 100644
+index 0000000..81a21d5
+--- /dev/null
++++ b/ANSWER.md
+@@ -0,0 +1,3 @@
++The express surcharge is a flat amount that `explain_fee` adds after the cap has been applied,
++so an express fee can exceed the schedule's cap. On STD-A the cap is 150.00 QAR and the surcharge 15.00 QAR,
++so an express transfer in the top tiers costs 165.00 QAR in fees.

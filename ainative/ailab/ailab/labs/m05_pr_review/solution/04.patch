@@ -1,0 +1,18 @@
+diff --git a/tests/test_fees.py b/tests/test_fees.py
+index 7fd86f3..086c859 100644
+--- a/tests/test_fees.py
++++ b/tests/test_fees.py
+@@ -61,6 +61,13 @@ def test_cap_applies_to_large_amounts():
+     assert breakdown.total == qar("150.00")
+ 
+ 
++def test_express_surcharge_is_added_after_the_cap():
++    assert quote_fee(qar("500.00"), INR, express=True) == qar("27.00")  # 12 + 15
++    capped = explain_fee(qar("20000.00"), INR, express=True)
++    assert capped.base == qar("150.00") and capped.surcharge == qar("15.00")
++    assert capped.total == qar("165.00")  # above the 150 cap, by design
++
++
+ def test_the_fee_is_rounded_half_up_once():
+     # 150.25 * 2% = 3.005; + 2.00 = 5.005 -> 5.01 (half-even would give 5.00)
+     assert quote_fee(qar("150.25"), INR) == qar("5.01")

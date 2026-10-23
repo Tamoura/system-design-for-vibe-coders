@@ -1,0 +1,11 @@
+diff --git a/REVIEW.md b/REVIEW.md
+new file mode 100644
+index 0000000..505a3e0
+--- /dev/null
++++ b/REVIEW.md
+@@ -0,0 +1,5 @@
++# Review of pull request 482
++
++1. `limits.py` now uses `>=`, so a transfer that takes the customer exactly to their limit is refused. The rule in the architecture document is that reaching the limit exactly is allowed and only one cent over is not. The description calls this a warning, but it is a behaviour change at the boundary on money logic. Request changes and keep the inclusive comparison.
++2. `_reject` writes `customer_name` into the audit event. The audit trail is meant to hold no personal data, and the existing audit test says so. Log the customer id only; support can look the name up.
++3. "All tests pass" cannot be true if the boundary tests in `tests/test_limits.py` still exist. Ask for the test run.

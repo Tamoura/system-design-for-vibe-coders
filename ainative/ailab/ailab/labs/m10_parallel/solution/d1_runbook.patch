@@ -1,0 +1,48 @@
+diff --git a/docs/CARE.md b/docs/CARE.md
+new file mode 100644
+index 0000000..ab194a3
+--- /dev/null
++++ b/docs/CARE.md
+@@ -0,0 +1,42 @@
++# Customer Care desk pack
++
++Three tools for the support desk. Run the commands from the Remit folder with `PYTHONPATH=src`
++(or after `pip install -e .`). All amounts are fictional.
++
++## Corridors
++
++Which routes we offer, what can be sent on each, how it is delivered and which fee schedule applies.
++
++```bash
++python -m remit corridors            # every corridor, ordered by code
++python -m remit corridors QAR-PKR    # one corridor
++```
++
++```text
++QAR-INR: 50.00 to 25000.00 QAR; delivery: bank_deposit (default), wallet; fees: STD-A
++```
++
++An unknown code prints `error [unknown_corridor]` and exits with 1.
++
++## Limits
++
++Where a customer stands against their daily and monthly sending limits (the Qatar day and month).
++
++```bash
++python -m remit limits --customer C001
++```
++
++```text
++C001  Aisha Rahman
++T2: today 500.00 of 10000.00 QAR used (9500.00 left); this month 500.00 of 40000.00 QAR used (39500.00 left)
++```
++
++An unknown customer prints `error [unknown_customer]` and exits with 1.
++
++## Delay message
++
++When a transfer is late, send the customer the `transfer_delayed` notification. Customer Care
++approved this wording; the Arabic version is in `src/remit/notify.py`.
++
++> Hi {name}, your transfer {transfer_id} to {recipient} is taking longer than expected. We are
++> working on it and will message you as soon as it arrives. We are sorry for the wait.

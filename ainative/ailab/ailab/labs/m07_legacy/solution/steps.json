@@ -1,0 +1,70 @@
+[
+  {
+    "dir": "01-characterization-tests",
+    "message": "test(ledger): pin the ledger's current behaviour, quirks included",
+    "files": [
+      "tests/ledger_port.py",
+      "tests/test_ledger_characterization.py"
+    ]
+  },
+  {
+    "dir": "02-ledger-class",
+    "message": "refactor(ledger): add a Ledger class behind the module functions",
+    "files": [
+      "src/remit/ledger.py"
+    ]
+  },
+  {
+    "dir": "03-service-owns-ledger",
+    "message": "refactor(service): give RemitService its own Ledger, injectable",
+    "files": [
+      "src/remit/service.py"
+    ]
+  },
+  {
+    "dir": "04-remove-module-state",
+    "message": "refactor(ledger): remove the module-level ledger state and reset()",
+    "files": [
+      "src/remit/ledger.py",
+      "tests/conftest.py"
+    ]
+  },
+  {
+    "dir": "05-migrate-call-sites",
+    "message": "refactor(najmkit): move Remit and its tests to the najmkit v2 names",
+    "files": [
+      "src/remit/ledger.py",
+      "src/remit/service.py",
+      "src/remit/store.py",
+      "tests/conftest.py",
+      "tests/test_najmkit.py"
+    ]
+  },
+  {
+    "dir": "06-contract",
+    "message": "refactor(najmkit): remove the deprecated v1 names from the vendored copy",
+    "files": [
+      "src/najmkit/__init__.py",
+      "src/najmkit/audit.py",
+      "src/najmkit/clock.py",
+      "src/najmkit/ids.py"
+    ]
+  },
+  {
+    "dir": "07-docs",
+    "message": "docs(najmkit): describe najmkit 2 and the Ledger class",
+    "files": [
+      "docs/najmkit.md",
+      "docs/ARCHITECTURE.md",
+      "docs/TOUR.md",
+      "README.md"
+    ]
+  },
+  {
+    "dir": "08-plan",
+    "message": "docs(refactoring): record the plan for REMIT-372",
+    "files": [
+      "docs/refactoring-plan.md"
+    ]
+  }
+]

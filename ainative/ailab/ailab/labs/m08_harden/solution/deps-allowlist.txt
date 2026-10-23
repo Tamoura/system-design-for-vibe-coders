@@ -1,0 +1,4 @@
+# Packages this repository may depend on, one per line.
+# Write `package: module` when the import name differs from the package name.
+# Adding a line needs a ticket and a second reviewer (CONTRIBUTING.md).
+pytest

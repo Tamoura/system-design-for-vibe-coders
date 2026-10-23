@@ -532,6 +532,7 @@ Reem's second attempt, a month later in a mock round with Khalid, finds issues 1
 - [*System Design for Vibe Coders*, lesson 9.7 — Code audit and review at agent speed](../vibe/index.en.html#l9-7)
 - [*System Design for Vibe Coders*, lesson 8.2 — Tests as the spec the agent can't ignore](../vibe/index.en.html#l8-2)
 - [*Secure AI & Application Security: Zero to Hero*, lesson 2.1 — Injection: SQL, command and template injection](../secai/index.html#/2.1)
+- [*A Practical Guide to Becoming an AI-Native Engineer*, lesson 5.2 — Lab: review a pull request an agent wrote](../ainative/index.html#/5.2) — the day-to-day AI-native engineering view of this topic
 
 ---
 

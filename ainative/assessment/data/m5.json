@@ -1,0 +1,135 @@
+{
+  "area": "m5",
+  "questions": [
+    {
+      "id": "m5-1",
+      "level": 1,
+      "lesson": "5.1",
+      "q": {
+        "en": "Lujain's agent reports that the \"transfer sent\" message change is done and 99 tests pass. Tariq asks for evidence that the Arabic digits are right. Which one counts as evidence?",
+        "ar": "يفيد وكيل (agent) لجين بأن تعديل (change) رسالة «تم إرسال التحويل» (transfer sent) اكتمل وبأن 99 اختبارًا (tests) ناجحة (pass). يطلب طارق دليلًا (evidence) على أن الأرقام العربية المشرقية (Arabic-Indic digits) صحيحة. أي خيار يُعدّ دليلًا؟"
+      },
+      "o": {
+        "en": [
+          "A new test whose expected Arabic line is the changed code's own output",
+          "The green check on the pull request once all 99 tests have passed",
+          "A test whose expected Arabic line is taken from the ticket's example",
+          "The agent's summary, which explains every changed file in clear prose"
+        ],
+        "ar": [
+          "اختبار (test) جديد سطره العربي المتوقع (expected line) هو مخرجات (output) الشيفرة (code) المعدّلة نفسها",
+          "العلامة الخضراء (green check) على طلب الدمج (pull request) بعد نجاح الاختبارات (tests) التسعة والتسعين كلها",
+          "اختبار (test) سطره العربي المتوقع (expected line) مأخوذ من مثال التذكرة (ticket)",
+          "ملخص الوكيل (agent's summary) الذي يشرح كل ملف تغيّر (changed file) بلغة واضحة"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Only a test whose expectation comes from the ticket goes red when the digits are wrong. A test that expects the code's own output (A) is a real test that passes, but it blesses whatever the code prints, Western digits included; the green check and the summary read the same whether the change is right or wrong.",
+        "ar": "وحده الاختبار (test) الذي يأتي توقّعه (expectation) من التذكرة (ticket) يصير أحمر (red) حين تكون الأرقام (digits) خاطئة. أما الاختبار الذي يتوقع مخرجات (output) الشيفرة (code) نفسها (A) فهو اختبار حقيقي ينجح، لكنه يقرّ (blesses) كل ما تطبعه الشيفرة بما فيه الأرقام الغربية (Western digits)؛ والعلامة الخضراء (green check) والملخص (summary) يبدوان كما هما سواء كان التغيير (change) صحيحًا أم خاطئًا."
+      }
+    },
+    {
+      "id": "m5-2",
+      "level": 2,
+      "lesson": "5.1",
+      "q": {
+        "en": "Hessa's ticket REMIT-233 asks for an `Express:` line in the output of `python -m remit quote ... --express`. Before any code exists, Lujain runs her new test and gets an `ImportError` from a misspelled import in the test file. What should she do before the agent starts?",
+        "ar": "تطلب حصة في التذكرة (ticket) REMIT-233 سطر `Express:` في مخرجات (output) `python -m remit quote ... --express`. قبل وجود أي شيفرة (code) تشغّل لجين اختبارها (test) الجديد فيظهر `ImportError` بسبب استيراد (import) مكتوب بخطأ إملائي (misspelled) في ملف الاختبار. ماذا ينبغي أن تفعل قبل أن يبدأ الوكيل (agent)؟"
+      },
+      "o": {
+        "en": [
+          "Fix the import, rerun, and confirm that the test fails on the missing Express line",
+          "Commit the test as it is, since a red result is what the test-first loop asks for",
+          "Let the agent correct the import while it implements, then check that the test passes",
+          "Skip the test until the agent has written the Express line, then switch it back on"
+        ],
+        "ar": [
+          "تصحّح الاستيراد (import) وتعيد التشغيل وتتأكد أن الاختبار (test) يفشل بسبب سطر Express الناقص",
+          "تودع (commit) الاختبار (test) كما هو، فالنتيجة الحمراء (red) هي ما تطلبه حلقة (loop) الاختبار أولًا",
+          "تترك الوكيل (agent) يصحّح الاستيراد (import) أثناء التنفيذ، ثم تتأكد أن الاختبار (test) ينجح",
+          "تتخطى (skip) الاختبار (test) حتى يكتب الوكيل (agent) سطر Express، ثم تعيد تفعيله"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "An import error is red but proves nothing, since the test would fail the same way whatever `quote` prints; the loop asks you to watch it fail for the right reason, the missing Express line, before committing the tests alone. Committing on any red (B) locks in a test that cannot yet judge the feature, and letting the agent edit the test (C) or skipping it (D) means it was never seen failing for the right reason and the test diff after the commit would not be empty.",
+        "ar": "خطأ الاستيراد (import error) أحمر (red) لكنه لا يثبت شيئًا، فالاختبار (test) سيفشل بالطريقة نفسها مهما طبع `quote`؛ وتطلب الحلقة (loop) أن تراه يفشل للسبب الصحيح (right reason)، أي سطر Express الناقص، قبل إيداع (commit) الاختبارات وحدها. أما الإيداع على أي نتيجة حمراء (B) فيثبّت اختبارًا لا يقدر بعدُ على الحكم على الميزة (feature)، وترك الوكيل (agent) يعدّل الاختبار (C) أو تخطّيه (D) يعني أنه لم يُرَ يفشل للسبب الصحيح ولن يكون فرق (diff) الاختبارات بعد الإيداع فارغًا."
+      }
+    },
+    {
+      "id": "m5-3",
+      "level": 2,
+      "lesson": "5.2",
+      "q": {
+        "en": "You are the second reviewer of `agent/loyalty-discount`. You call `quote_fee` from Python on the ticket's four examples. Each fee matches Hessa's number and the suite is green. What is the most useful next step?",
+        "ar": "أنت المراجع الثاني (second reviewer) للفرع (branch) `agent/loyalty-discount`. تستدعي `quote_fee` من Python على أمثلة التذكرة (ticket) الأربعة. يطابق كل رسم (fee) رقم حصة، وتنجح مجموعة الاختبارات (test suite). ما الخطوة التالية الأنفع؟"
+      },
+      "o": {
+        "en": [
+          "Approve with comments, since the four examples are the ticket's acceptance test and all four match",
+          "Reread the pull request description to see what it claims about the edge cases and the tiers",
+          "Ask the agent to write more tests for its own code and run them against the branch",
+          "Vary amounts, tiers and flags, and check each fee against your own sums from the ticket's rules"
+        ],
+        "ar": [
+          "تقرّ الطلب بملاحظات (approve with comments) لأن الأمثلة الأربعة هي اختبار القبول (acceptance test) في التذكرة (ticket) وكلها مطابقة",
+          "تعيد قراءة وصف طلب الدمج (pull request description) لترى ما يدّعيه عن الحالات الطرفية (edge cases) ومستويات الولاء (tiers)",
+          "تطلب من الوكيل (agent) كتابة اختبارات (tests) إضافية لشيفرته (code) هو وتشغيلها على الفرع (branch)",
+          "تغيّر المبالغ (amounts) ومستويات الولاء (tiers) والخيارات (flags) وتتحقق من كل رسم (fee) بحسابك أنت من قواعد (rules) التذكرة"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "The ticket's four examples are the happy path, and defects hide in the inputs it does not list; working out answers yourself from the ticket's rules and comparing them across many inputs finds what one example cannot. Approving on the examples (A) treats a handful of cases as the whole behaviour, the description (B) is the agent's claim, and more tests from the agent (C) share the blind spots of the code it wrote: it wrote the problem.",
+        "ar": "أمثلة التذكرة (ticket) الأربعة هي المسار السعيد (happy path)، وتختبئ العيوب (defects) في المدخلات (inputs) التي لم تذكرها؛ وحساب الإجابات بنفسك من قواعد (rules) التذكرة ومقارنتها عبر مدخلات كثيرة يكشف ما لا يكشفه مثال واحد. أما الاعتماد بناءً على الأمثلة (A) فيعامل حفنة من الحالات (cases) على أنها السلوك (behaviour) كله، والوصف (B) ادّعاء الوكيل (agent)، والاختبارات الإضافية من الوكيل (C) تشاركه نقاطه العمياء (blind spots): هو من كتب المشكلة."
+      }
+    },
+    {
+      "id": "m5-4",
+      "level": 3,
+      "lesson": "5.2",
+      "q": {
+        "en": "You are the second reviewer of `agent/loyalty-discount`. You have confirmed three problems, and you rated one of them, a wrong fee for some amounts that you found only by running the code on many amounts, a blocker. A second-model reviewer, given only the diff in a fresh session, reports no problems. What do you do?",
+        "ar": "أنت المراجع الثاني (second reviewer) للفرع (branch) `agent/loyalty-discount`. أكدتَ ثلاث مشكلات (problems)، وصنّفتَ إحداها، وهي رسم (fee) خاطئ لبعض المبالغ لم تجده إلا بتشغيل الشيفرة (code) على مبالغ كثيرة، بدرجة «مانع» (blocker). ويبلّغ مراجع النموذج الثاني (second-model reviewer)، وقد غُذّي بالفروقات (diff) فقط في جلسة جديدة (fresh session)، بأنه لا مشكلات. ماذا تفعل؟"
+      },
+      "o": {
+        "en": [
+          "Approve with comments, because the two reviewers disagree and the suite is green",
+          "Request changes and keep the blocker, since the damage does not depend on what the model saw",
+          "Request changes, but rate the wrong fee a major, since the model did not see it at all",
+          "Run the model again with the ticket named, and request changes only if it then finds a problem"
+        ],
+        "ar": [
+          "تقرّ الطلب بملاحظات (approve with comments) لأن المراجعَين اختلفا والمجموعة (suite) خضراء",
+          "تطلب تغييرات (request changes) وتُبقي درجة «مانع» (blocker)، فالضرر (damage) لا يتوقف على ما رآه النموذج (model)",
+          "تطلب تغييرات (request changes) لكنك تخفض الرسم (fee) الخاطئ إلى «رئيسية» (major) لأن النموذج (model) لم يره أصلًا",
+          "تعيد تشغيل النموذج (model) مع ذكر التذكرة (ticket)، وتطلب تغييرات (request changes) فقط إن وجد مشكلة (problem) حينها"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "A second model adds questions, not verdicts, and a reviewer given only the diff cannot see what only running shows, so a clean report from it does not clear a wrong fee. Money wrong in a fee is a blocker, rated by the damage if it ships, so the verdict stays request changes. Approving (A) or downgrading (C) lets the model overrule your evidence, and gating the verdict on a rerun (D) makes the model the judge.",
+        "ar": "يضيف النموذج الثاني (second model) أسئلة لا أحكامًا، والمراجع الذي لا يرى إلا الفروقات (diff) لا يستطيع رؤية ما يظهره التشغيل (running) وحده، فلا يبرّئ تقريره الخالي رسمًا (fee) خاطئًا. والمال الخاطئ في الرسم «مانع» (blocker) يُصنَّف بالضرر لو صدر (damage if it ships)، فيبقى الحكم (verdict) طلب تغييرات (request changes). أما الإقرار (A) أو التخفيض (C) فيتركان النموذج (model) يتغلّب على أدلتك (evidence)، وربط الحكم بإعادة التشغيل (D) يجعل النموذج هو القاضي."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m5-e1",
+      "lesson": "5.1",
+      "text": {
+        "en": "I have rebuilt the green, wrong REMIT-227 pull request on a branch of my m00 work directory, with a unit test that passes and a `send` test that fails while the existing tests still pass, and I have written two sentences on why (`str` versus `Decimal`).",
+        "ar": "لقد أعدتُ بناء طلب الدمج (pull request) «الأخضر الخاطئ» (green, wrong) REMIT-227 على فرع (branch) من دليل العمل (work directory) m00، باختبار وحدة (unit test) ينجح واختبار عبر `send` يفشل بينما تظل الاختبارات (tests) القائمة ناجحة، وكتبتُ جملتين تشرحان السبب (`str` مقابل `Decimal`)."
+      }
+    },
+    {
+      "id": "m5-e2",
+      "lesson": "5.2",
+      "text": {
+        "en": "I have written `review.md` for `agent/loyalty-discount` with a verdict that asks for changes and findings that each give file, line and severity, then fixed the branch in small commits until `python -m ailab grade m05` ended PASSED.",
+        "ar": "لقد كتبتُ `review.md` للفرع (branch) `agent/loyalty-discount` بحكم (verdict) يطلب تغييرات (request changes) وملاحظات (findings) تذكر كل منها الملف والسطر ودرجة الخطورة (severity)، ثم أصلحتُ الفرع بإيداعات (commits) صغيرة حتى انتهى `python -m ailab grade m05` بـ PASSED."
+      }
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+ "area": "m2",
+ "questions": [
+  {
+   "id": "m2-1",
+   "level": 1,
+   "lesson": "2.1",
+   "q": {
+    "en": "Tariq reviews Lujain's draft `CLAUDE.md` for Remit and asks of each line: would removing this cause the agent to make mistakes? Which line passes?",
+    "ar": "يراجع طارق مسودة (draft) `CLAUDE.md` التي كتبتها لجين لنجم ريميت (Najm Remit)، ويسأل عن كل سطر: هل يتسبب حذف هذا السطر في أخطاء للوكيل؟ ⁦(would removing this cause the agent to make mistakes?)⁩ أي سطر يجتاز هذا الاختبار؟"
+   },
+   "o": {
+    "en": [
+     "Follow PEP 8: type hints, docstrings, descriptive variable names and short functions.",
+     "Run the command line as `PYTHONPATH=src python -m remit`; the tests need no prefix.",
+     "`src/remit/` holds `money.py`, `fees.py`, `limits.py` and `notify.py`.",
+     "A table of each KYC tier's daily limit, copied from `limits.py`."
+    ],
+    "ar": [
+     "اتبع PEP 8: تلميحات الأنواع (type hints) والتوثيق (docstrings) وأسماء متغيرات وصفية (descriptive variable names) ودوال قصيرة (short functions).",
+     "شغّل سطر الأوامر (command line) بالصيغة `PYTHONPATH=src python -m remit`، أما الاختبارات (tests) فلا تحتاج إلى بادئة.",
+     "يضم `src/remit/` الوحدات (modules) `money.py` و`fees.py` و`limits.py` و`notify.py`.",
+     "جدول بالحد اليومي (daily limit) لكل مستوى KYC (KYC tier)، منسوخ من `limits.py`."
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "The agent cannot guess that the command line needs `PYTHONPATH=src` while the tests do not, so removing that line would cause a mistake. The other three are noise: standard style the agent follows anyway, and a module listing and a limits table that it can read from the code. A stale copy of either spends budget in every session.",
+    "ar": "لا يستطيع الوكيل (agent) أن يخمّن أن سطر الأوامر (command line) يحتاج إلى `PYTHONPATH=src` بينما لا تحتاج إليه الاختبارات (tests)، فحذف هذا السطر يسبب خطأً. أما الثلاثة الأخرى فضجيج: أسلوب قياسي (standard style) يتبعه الوكيل أصلًا، وقائمة وحدات (module listing) وجدول حدود (limits table) يستطيع قراءتهما من الشيفرة (code). ونسخة قديمة (stale copy) من أيٍّ منهما تستهلك الميزانية (budget) في كل جلسة (session)."
+   }
+  },
+  {
+   "id": "m2-2",
+   "level": 2,
+   "lesson": "2.1",
+   "q": {
+    "en": "Earlier in a long session Lujain told the agent that \"the cap\" in her tickets means the fee cap in `fees.py`, not the daily limit in `limits.py`. She then asks the read-only Explore subagent to list every place the cap is applied, and its report covers daily limits. Which change makes the report cover the fee cap?",
+    "ar": "أخبرت لجين الوكيل (agent) في جلسة طويلة (long session) بأن «السقف» في تذاكرها (tickets) يعني سقف الرسوم (fee cap) في `fees.py` لا الحد اليومي (daily limit) في `limits.py`. ثم طلبت من الوكيل الفرعي (subagent) Explore، وهو للقراءة فقط (read-only)، أن يسرد كل موضع يُطبَّق فيه السقف، فجاء تقريره عن الحدود اليومية. أي تغيير يجعل التقرير يغطي سقف الرسوم (fee cap)؟"
+   },
+   "o": {
+    "en": [
+     "Run `/compact` first, so the subagent receives a summary of the session.",
+     "Add the definition to `CLAUDE.md`, so that the subagent reads it when it starts.",
+     "Run `/clear` first, so the subagent starts from a clean window of its own.",
+     "Spell out what \"the cap\" means in the task text that she hands the subagent."
+    ],
+    "ar": [
+     "تشغّل `/compact` أولًا ليتلقى الوكيل الفرعي (subagent) ملخصًا للجلسة (session).",
+     "تضيف التعريف (definition) إلى `CLAUDE.md` ليقرأه الوكيل الفرعي (subagent) عند بدايته.",
+     "تشغّل `/clear` أولًا ليبدأ الوكيل الفرعي (subagent) من نافذة (window) نظيفة خاصة به.",
+     "تنص صراحةً على معنى «السقف» في نص المهمة (task) التي تعطيها للوكيل الفرعي (subagent)."
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "A subagent never sees the conversation: it gets its own system prompt and the task, and Explore does not even load `CLAUDE.md`, so only the task text can carry the meaning. Adding the definition to `CLAUDE.md` is the tempting repair, but Explore would not read it, and `/compact` and `/clear` only change her own session, which the subagent never sees.",
+    "ar": "الوكيل الفرعي (subagent) لا يرى المحادثة (conversation) أبدًا: يحصل على موجّه النظام (system prompt) الخاص به وعلى المهمة (task)، ولا يحمّل Explore الملف `CLAUDE.md` أصلًا، فلا ينقل المعنى إلا نص المهمة. وإضافة التعريف (definition) إلى `CLAUDE.md` هي الإصلاح المغري، لكن Explore لن يقرأه، أما `/compact` و`/clear` فيغيّران جلستها (session) هي فقط، والوكيل الفرعي لا يراها أبدًا."
+   }
+  },
+  {
+   "id": "m2-3",
+   "level": 2,
+   "lesson": "2.2",
+   "q": {
+    "en": "Lujain runs the REMIT-252 ticket twice, as `ab-notes.md` asks. In run A, which has no memory file, the agent follows a README link to `CONTRIBUTING.md` and writes a commit message that obeys the rule, just as it does in run B. What should her notes do with that?",
+    "ar": "تشغّل لجين التذكرة (ticket) REMIT-252 مرتين كما يطلب `ab-notes.md`. في التشغيل A الذي لا يحتوي ملف ذاكرة (memory file)، يتبع الوكيل (agent) رابطًا في README إلى `CONTRIBUTING.md` ويكتب رسالة إيداع (commit message) تلتزم بالقاعدة، تمامًا كما يفعل في التشغيل B. ماذا ينبغي أن تفعل ملاحظاتها (notes) بذلك؟"
+   },
+   "o": {
+    "en": [
+     "Report it as it happened: the commit-rule line changed nothing in this pair, which is a finding.",
+     "Leave it out: a tie on one row says nothing about the file, so the notes should keep the rows that differ.",
+     "Replace run A with a rerun in a copy without the README link, so that the commit rule has to matter.",
+     "Conclude that the memory file does not help on Remit, because A matched B on the commit message."
+    ],
+    "ar": [
+     "تسجّله كما حدث: سطر قاعدة الإيداع (commit rule) لم يغيّر شيئًا في هذا الزوج، وهذه نتيجة (finding).",
+     "تحذفه: التعادل في صف واحد لا يقول شيئًا عن الملف، فتُبقي الملاحظات (notes) الصفوف المختلفة فقط.",
+     "تستبدل التشغيل A بتشغيل في نسخة (copy) بلا رابط README، كي يصبح لقاعدة الإيداع (commit rule) أثر.",
+     "تستنتج أن ملف الذاكرة (memory file) لا ينفع في ريميت (Remit)، لأن A ساوى B في رسالة الإيداع (commit message)."
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "\"No difference\" is a valid result: the agent in A can find the rule through the README, so that line changed nothing here, and the notes are graded for completeness, not for B winning. Dropping the row hides a finding, replacing A with a different copy changes a second variable, and one matching row says nothing about the other rows or about Remit as a whole.",
+    "ar": "«لا فرق» (no difference) نتيجة صحيحة: يستطيع الوكيل (agent) في التشغيل A أن يجد القاعدة عبر README، فلم يغيّر هذا السطر شيئًا هنا، وتُقيَّم الملاحظات (notes) على اكتمالها لا على تفوق B. وحذف الصف يخفي نتيجة (finding)، واستبدال A بنسخة (copy) مختلفة يغيّر متغيرًا (variable) ثانيًا، وصف واحد متطابق لا يقول شيئًا عن بقية الصفوف ولا عن ريميت (Remit) كله."
+   }
+  },
+  {
+   "id": "m2-4",
+   "level": 3,
+   "lesson": "2.2",
+   "q": {
+    "en": "Lujain's `CLAUDE.md` passes every required check in `grade`: its commands run and its paths exist. Its Never list has twelve rules, and in her one pair of runs B beat A. Tariq must decide whether to approve it. What does he do?",
+    "ar": "يجتاز ملف `CLAUDE.md` الذي كتبته لجين كل الفحوص المطلوبة (required checks) في `grade`: تعمل أوامره وتوجد مساراته. وفي قائمة «ممنوعات» (Never list) اثنتا عشرة قاعدة، وفي زوجها الوحيد من التشغيلات (runs) تفوّق B على A. على طارق أن يقرر هل يوافق عليه. ماذا يفعل؟"
+   },
+   "o": {
+    "en": [
+     "Approve it, because the grader already ran every command and checked every path.",
+     "Approve it, because B beat A in her pair of runs, which shows that the file helps.",
+     "Have her prune lines the agent does not need and move must-never rules to hooks.",
+     "Approve it once she marks all twelve Never rules IMPORTANT, so that the agent obeys every one."
+    ],
+    "ar": [
+     "يوافق عليه، لأن المُقيِّم (grader) شغّل كل أمر وتحقق من كل مسار (path) بالفعل.",
+     "يوافق عليه، لأن B تفوّق على A في زوج التشغيلات (runs)، وهذا يثبت أن الملف مفيد.",
+     "يطلب منها تقليم (pruning) الأسطر غير الضرورية للوكيل، ونقل ما يجب ألا يحدث أبدًا إلى خطاف (hook).",
+     "يوافق عليه متى وسمت لجين القواعد الاثنتي عشرة كلها بـ IMPORTANT ليلتزم الوكيل (agent) بكل واحدة منها."
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "A green grade shows that commands run and paths exist; the grader cannot judge whether the file is useful, and a twelve-rule Never list may still be over-specified, so the file needs pruning and a hook for what must never happen. One pair of runs is an anecdote, which is why \"B won\" is the tempting but weak ground. Marking all twelve rules IMPORTANT does not help either: emphasis works once, and it is still only text.",
+    "ar": "الدرجة الخضراء (green grade) تثبت أن الأوامر تعمل والمسارات موجودة، لكن المُقيِّم (grader) لا يحكم على فائدة الملف، وقد تظل قائمة «ممنوعات» (Never list) من اثنتي عشرة قاعدة مفرطة التحديد (over-specified)، فيحتاج الملف إلى تقليم (pruning) وإلى خطاف (hook) لما يجب ألا يحدث. وزوج واحد من التشغيلات (runs) مجرد حكاية (anecdote)، ولذلك فتفوّق B سند مغرٍ لكنه ضعيف. ووسم القواعد الاثنتي عشرة كلها بـ IMPORTANT لا يفيد أيضًا: فالتأكيد (emphasis) ينفع مرة واحدة، وهو نص فقط."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m2-e1",
+   "lesson": "2.1",
+   "text": {
+    "en": "I have pruned the \"before\" `CLAUDE.md` line by line, giving every line a verdict (keep, fix, delete) and a reason, and marked five claims false or unrunnable with the command that showed it.",
+    "ar": "لقد قلّمتُ (pruned) ملف `CLAUDE.md` «قبل» (before) سطرًا سطرًا، وأعطيتُ كل سطر حكمًا (verdict) هو الإبقاء (keep) أو الإصلاح (fix) أو الحذف (delete) مع سببه، ووسمتُ خمسة ادعاءات (claims) بأنها خاطئة أو غير قابلة للتشغيل (unrunnable) مع الأمر الذي كشف ذلك."
+   }
+  },
+  {
+   "id": "m2-e2",
+   "lesson": "2.2",
+   "text": {
+    "en": "I have run the REMIT-252 ticket twice, without and with my memory file, and filled in `ab-notes.md` so it passes, with a limits paragraph naming one confounder from my own setup.",
+    "ar": "لقد شغّلتُ التذكرة (ticket) REMIT-252 مرتين، بدون ملف ذاكرة المشروع (project memory) ثم معه، وملأتُ `ab-notes.md` حتى اجتاز التقييم، مع فقرة حدود (limits paragraph) تسمّي عاملًا مشوِّشًا (confounder) واحدًا من إعدادي أنا."
+   }
+  }
+ ]
+}

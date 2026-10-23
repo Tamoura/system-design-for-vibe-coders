@@ -1,0 +1,54 @@
+diff --git a/tests/test_loyalty.py b/tests/test_loyalty.py
+new file mode 100644
+index 0000000..a9fb0fb
+--- /dev/null
++++ b/tests/test_loyalty.py
+@@ -0,0 +1,48 @@
++"""Tests for the loyalty discount (REMIT-229)."""
++from unittest.mock import patch
++
++from remit import fees
++from remit.corridors import get_corridor
++from remit.fees import quote_fee
++from remit.money import Money
++
++INR = get_corridor("QAR", "INR")  # schedule STD-A: minimum fee 5.00
++
++
++def qar(value):
++    return Money(value, "QAR")
++
++
++def test_tier_none_pays_the_standard_fee():
++    assert quote_fee(qar("1000"), INR) == qar("20.00")
++    assert quote_fee(qar("1000"), INR, loyalty_tier="none") == qar("20.00")
++
++
++def test_silver_gets_ten_percent_off_the_fee():
++    # patch the helper so the test does not depend on the rate table
++    with patch.object(fees, "_apply_discount", return_value=qar("18.00")):
++        fee = quote_fee(qar("1000"), INR, loyalty_tier="silver")
++    assert fee == qar("18.00")
++
++
++def test_gold_gets_twenty_percent_off_the_fee():
++    fee = quote_fee(qar("1000"), INR, loyalty_tier="gold")
++    print(f"gold fee for QAR 1,000: {fee}")
++
++
++def test_the_express_surcharge_is_not_discounted():
++    assert quote_fee(qar("1000"), INR, express=True, loyalty_tier="silver") == qar("33.00")
++
++
++def test_the_discount_never_goes_below_the_minimum_fee():
++    assert quote_fee(qar("100"), INR, loyalty_tier="gold") == qar("5.00")
++
++
++def test_send_charges_the_customers_own_tier(service):
++    result = service.send("C002", qar("1000"), "INR", "Ravi Kumar")  # C002 Bilal is silver
++    assert result.transfer.fee == qar("18.00")
++    assert result.total_debited == qar("1018.00")
++
++
++def test_quote_for_a_customer_uses_their_tier(service):
++    assert service.quote(qar("1000"), "INR", customer_id="C003").fee == qar("16.00")  # C003 Mariam is gold

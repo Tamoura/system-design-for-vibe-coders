@@ -1,0 +1,135 @@
+{
+ "area": "m3",
+ "questions": [
+  {
+   "id": "m3-1",
+   "level": 1,
+   "lesson": "3.1",
+   "q": {
+    "en": "Hessa's ticket REMIT-288 reads: \"Customers on the basic tier keep hitting their daily limit. Raise it to 3,000.\" Lujain starts the spec. Which addition does the most to cut the agent's guesswork?",
+    "ar": "تقول تذكرة (ticket) حصة REMIT-288: «عملاء الشريحة الأساسية (basic tier) يبلغون حدهم اليومي (daily limit) باستمرار. ارفعوه إلى 3,000.» وتبدأ لجين كتابة المواصفة (spec). أي إضافة تقلّل تخمين الوكيل (agent's guesswork) أكثر من غيرها؟"
+   },
+   "o": {
+    "en": [
+     "The ticket's own sentence restated in more formal words under the heading Goal.",
+     "A step-by-step list of the lines in `limits.py` that the agent should change.",
+     "A table of worked examples with exact amounts and an edge at exactly 3,000.00.",
+     "A closing sentence saying that the change must be correct, tested and reviewed."
+    ],
+    "ar": [
+     "إعادة صياغة جملة التذكرة (ticket) نفسها بكلمات أكثر رسمية (formal words) تحت عنوان الهدف (Goal).",
+     "قائمة خطوات (step-by-step list) بالأسطر في `limits.py` التي ينبغي للوكيل (agent) أن يعدّلها.",
+     "جدول أمثلة تطبيقية (worked examples) بمبالغ دقيقة (exact amounts)، يشمل الحد 3,000.00 بالضبط.",
+     "جملة ختامية (closing sentence) تقول إن التغيير صحيح ومختبَر ومراجَع (correct, tested and reviewed)."
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Behaviour pins the numbers: worked examples with exact amounts and edges are what a test can prove or refute. Restating the ticket (A) adds nothing it left out, and prescribing the lines to edit (B) makes the agent obey the letter of the how.",
+    "ar": "يثبّت قسم السلوك (Behaviour) الأرقام: الأمثلة التطبيقية (worked examples) بمبالغ دقيقة وحدود واضحة هي ما يستطيع الاختبار (test) إثباته أو نقضه. وإعادة صياغة التذكرة (A) لا تضيف ما أغفلته، ووصف الأسطر المطلوب تعديلها (B) يجعل الوكيل (agent) يطيع حرفية الكيفية (how)."
+   }
+  },
+  {
+   "id": "m3-2",
+   "level": 2,
+   "lesson": "3.1",
+   "q": {
+    "en": "Lujain is specifying a new fee rebate with an agent that interviews her, and the repository is open beside her. She says: \"Round the rebate half-even, like the ledger does.\" The agent replies: \"Good point, that matches the codebase.\" What should she do next?",
+    "ar": "تكتب لجين مواصفة (spec) لخصم جديد على الرسوم (fee rebate) مع وكيل (agent) يجري معها مقابلة (interview)، والمستودع (repository) مفتوح بجانبها. تقول له: «قرّب الخصم إلى الزوجي الأقرب (half-even) كما يفعل دفتر الأستاذ (ledger).» فيردّ الوكيل: «ملاحظة جيدة، وهذا يطابق قاعدة الشيفرة (codebase).» ماذا ينبغي لها أن تفعل بعد ذلك؟"
+   },
+   "o": {
+    "en": [
+     "Open the code to see which rule fees use, then write the decision with its reason.",
+     "Record half-even as the decision, because the agent read the code and agrees with it.",
+     "Note half-even as an assumption and name Hessa as the person who confirms it.",
+     "Leave rounding out of the spec, since the agent can see how the codebase rounds."
+    ],
+    "ar": [
+     "تفتح الشيفرة (code) لترى أي قاعدة تقريب (rounding rule) تستخدمها الرسوم (fees)، ثم تكتب القرار (decision) مع سببه.",
+     "تسجّل التقريب الزوجي (half-even) قرارًا (decision) نهائيًا مباشرة، لأن الوكيل (agent) قرأ الشيفرة (code) ووافق عليه.",
+     "تدوّن التقريب الزوجي (half-even) افتراضًا (assumption) وتسمّي حصة بوصفها الشخص (person) الذي يؤكده (confirms it).",
+     "تترك التقريب (rounding) خارج المواصفة (spec)، لأن الوكيل (agent) يرى كيف تقرّب قاعدة الشيفرة (codebase)."
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "The interviewer tends to agree, so its facts need checking and the decisions stay yours: in the code fees round half up, and half-even is only the ledger's partner-share quirk. A flagged assumption with an owner (C) is for what only a person can know, and here the open repository already answers it.",
+    "ar": "يميل الوكيل المحاوِر (interviewer) إلى الموافقة، فتحتاج وقائعه إلى تحقق (checking) وتبقى القرارات (decisions) لك: في الشيفرة (code) تُقرَّب الرسوم نحو الأعلى عند المنتصف (half up)، والتقريب الزوجي (half-even) شذوذ يخص حصة الشريك في دفتر الأستاذ (ledger) وحدها. أما الافتراض المعلَّم له مالك (C) فمكانه ما لا يعرفه إلا شخص، والمستودع (repository) المفتوح هنا يجيب عنه أصلًا."
+   }
+  },
+  {
+   "id": "m3-3",
+   "level": 2,
+   "lesson": "3.2",
+   "q": {
+    "en": "Lujain gives her finished T3 spec to a fresh read-only session and asks which decisions it would have to guess. The session lists eleven: two change behaviour, one contradicts the code, and eight are matters of wording or taste. What should she do?",
+    "ar": "تعطي لجين مواصفة (spec) T3 المنتهية لجلسة جديدة للقراءة فقط (fresh read-only session) وتسألها عن القرارات (decisions) التي كان عليها تخمينها (guess). تذكر الجلسة إحدى عشرة نقطة: اثنتان تغيّران السلوك (behaviour)، وواحدة تناقض الشيفرة (code)، وثماني منها مسائل صياغة أو ذوق (wording or taste). ماذا ينبغي لها أن تفعل؟"
+   },
+   "o": {
+    "en": [
+     "Answer all eleven in Decisions, since any guess the session reports is a real gap.",
+     "Rework the spec until a fresh session reports no guesses, then send it to the build.",
+     "Leave the list alone, because a green grade already shows the spec is complete.",
+     "Add the two behaviour gaps to Decisions, fix the conflict and dismiss the noise."
+    ],
+    "ar": [
+     "تجيب عن النقاط الإحدى عشرة كلها في القرارات (Decisions)، لأن كل تخمين (guess) تذكره الجلسة ثغرة حقيقية (real gap).",
+     "تعيد العمل على المواصفة (spec) حتى لا تذكر جلسة جديدة أي تخمين (guess)، ثم تسلّمها للبناء (build).",
+     "تهمل القائمة (list)، لأن الدرجة الخضراء (green grade) تثبت أصلًا أن المواصفة (spec) مكتملة تمامًا.",
+     "تضيف ثغرتَي السلوك (behaviour gaps) إلى القرارات (Decisions)، وتصحّح التعارض (conflict)، وترفض الضجيج (noise)."
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "The audit lists guesses, but only gaps that change behaviour or contradict the spec's own words are worth keeping; the conflict with the code is fixed because the code wins, and noise is dismissed with a reason. Answering all eleven (A) is the tempting mistake, since reviewers report some items even when the work is sound.",
+    "ar": "يعدّد التدقيق (audit) التخمينات، لكن الثغرات (gaps) التي تغيّر السلوك (behaviour) أو تناقض كلام المواصفة (spec) نفسها وحدها تستحق الإبقاء؛ ويُصحَّح التعارض مع الشيفرة (code) لأن الشيفرة هي التي تحسم، ويُرفض الضجيج (noise) مع ذكر السبب. والإجابة عن الإحدى عشرة كلها (A) هي الخطأ المغري، فالمراجعون (reviewers) يبلّغون عن بعض الأمور حتى حين يكون العمل سليمًا."
+   }
+  },
+  {
+   "id": "m3-4",
+   "level": 3,
+   "lesson": "3.2",
+   "q": {
+    "en": "All three of Lujain's specs show every required check passing. Nada, as second reviewer, runs the first Behaviour row of T1 against the code and finds the fee one cent off. Lujain says an agent drafted that table. Which conclusion is right?",
+    "ar": "تُظهر مواصفات (specs) لجين الثلاث نجاح كل الفحوص المطلوبة (required checks). وتشغّل ندى، بصفتها المراجِعة الثانية (second reviewer)، أول صف سلوك (Behaviour row) في T1 على الشيفرة (code) فتجد الرسم (fee) مخطئًا بفارق سنت واحد (one cent). تقول لجين إن وكيلًا (agent) صاغ ذلك الجدول. أي استنتاج صحيح؟"
+   },
+   "o": {
+    "en": [
+     "The grader is faulty, because a spec with a wrong figure should never be able to pass.",
+     "The grader reads shape and checkable facts, so only running the code proves a figure.",
+     "The agent is to blame, since a table worked out by hand would have been exact.",
+     "The spec needs more rows, because extra examples would have exposed the wrong cent."
+    ],
+    "ar": [
+     "المُقيِّم (grader) معطوب (faulty)، لأن مواصفة (spec) فيها رقم خاطئ (wrong figure) لا ينبغي أن تنجح أصلًا.",
+     "المُقيِّم (grader) يفحص الشكل والحقائق القابلة للتحقق (checkable facts)، فلا يثبت الرقم إلا تشغيل الشيفرة (code).",
+     "اللوم على الوكيل (agent)، ولو حُسب الجدول (table) يدويًا (by hand) لجاء دقيقًا (exact) تمامًا.",
+     "تحتاج المواصفة (spec) إلى صفوف أكثر (more rows)، لأن أمثلة إضافية (extra examples) كانت ستكشف السنت (cent) الخاطئ."
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "The grader never runs the examples, so a wrong fee can pass; the author must get each figure by running the code. Blaming the agent (C) misses that the grader cannot see who wrote the file and that hand-worked numbers carry the same risk.",
+    "ar": "لا يشغّل المُقيِّم (grader) الأمثلة (examples) أبدًا، فقد يمرّ رسم (fee) خاطئ، وعلى الكاتب أن يستخرج كل رقم بتشغيل الشيفرة (code). واللوم على الوكيل (C) يغفل أن المُقيِّم لا يرى من كتب الملف (file)، وأن الأرقام المحسوبة يدويًا (by hand) تحمل الخطر نفسه."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m3-e1",
+   "lesson": "3.1",
+   "text": {
+    "en": "I have run the Plan checklist on the REMIT-288 plan, tied at least six problems to checklist lines, and rewritten the plan in six steps or fewer so that it passes the checklist.",
+    "ar": "لقد شغّلتُ قائمة فحص الخطة (Plan checklist) على خطة (plan) REMIT-288، وربطتُ ست مشكلات (problems) أو أكثر بأسطر القائمة، وأعدتُ كتابة الخطة في ست خطوات (steps) أو أقل بحيث تجتاز القائمة."
+   }
+  },
+  {
+   "id": "m3-e2",
+   "lesson": "3.2",
+   "text": {
+    "en": "I have written `specs/T1.md` to `specs/T3.md` for Hessa's three vague tickets on the ten-section template, checked one Behaviour table against the code, and graded them with `python -m ailab grade m03` until it printed PASSED.",
+    "ar": "لقد كتبتُ المواصفات (specs) `specs/T1.md` إلى `specs/T3.md` لتذاكر (tickets) حصة الثلاث الغامضة (vague) على القالب (template) ذي الأقسام العشرة، وتحققتُ من جدول سلوك (Behaviour table) واحد مقابل الشيفرة (code)، وقيّمتُها بالأمر `python -m ailab grade m03` حتى طبع `PASSED`."
+   }
+  }
+ ]
+}

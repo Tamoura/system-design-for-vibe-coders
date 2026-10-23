@@ -1,0 +1,135 @@
+{
+  "area": "m14",
+  "questions": [
+    {
+      "id": "m14-1",
+      "level": 1,
+      "lesson": "14.1",
+      "q": {
+        "en": "To save an afternoon, Lujain has her agent build the Bangladesh corridor first and plans to write `specs/REMIT-414.md` afterwards, from the finished diff. Tariq reviews that plan. Which judgement is right?",
+        "ar": "لتوفير وقت، تجعل لجين وكيلها (agent) يبني ممر التحويل (corridor) إلى بنغلاديش أولًا، وتنوي كتابة المواصفة (spec) `specs/REMIT-414.md` بعد ذلك انطلاقًا من الفروقات (diff) المكتملة. يراجع طارق هذه الخطة. أيُّ حكم هو الصحيح؟"
+      },
+      "o": {
+        "en": [
+          "Sound, if the agent drafts the spec from the diff and Lujain reads it through before committing",
+          "Sound once each criterion carries an id such as `AC1`; only the numbering is missing",
+          "Unsound: a spec written from the diff records what the agent did, so it cannot judge the code",
+          "Unsound: the spec is Hessa's to write as product owner, so Lujain has to wait for her version first"
+        ],
+        "ar": [
+          "سليمة، إذا صاغ الوكيل (agent) المواصفة (spec) من الفروقات (diff) وقرأتها لجين كاملة قبل الإيداع (commit)",
+          "سليمة متى حمل كل معيار (criterion) معرّفًا (id) مثل `AC1`؛ فالناقص هو الترقيم وحده",
+          "غير سليمة: مواصفة (spec) تُكتب من الفروقات (diff) تسجّل ما فعله الوكيل (agent)، فلا يُحكَم بها على الشيفرة (code)",
+          "غير سليمة: المواصفة (spec) من شأن حصة بصفتها مالكة المنتج (product owner)، فعلى لجين أن تنتظر نسختها (version) منها أولًا"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Written after the code, the spec only describes what the agent did, so it cannot define done or judge the diff. Numbered ids such as `AC1`, the tempting patch, add traceability but not the right order: specify before you delegate.",
+        "ar": "المواصفة (spec) المكتوبة بعد الشيفرة (code) تصف ما فعله الوكيل (agent) فقط، فلا تحدد معنى «تم» (done) ولا تحكم على الفروقات (diff). أما ترقيم المعايير مثل `AC1`، وهو الترقيع المغري، فيمنح قابلية التتبع (traceability) لا الترتيب الصحيح: حدِّد (specify) قبل أن تفوِّض (delegate)."
+      }
+    },
+    {
+      "id": "m14-2",
+      "level": 2,
+      "lesson": "14.1",
+      "q": {
+        "en": "Nada asks whether Lujain's fee tests would notice rounding that resolves ties half to even instead of half up. Her only tie test uses an amount whose raw fee is exactly 5.015, and it passes. What should she do?",
+        "ar": "تسأل ندى هل ستكتشف اختبارات الرسوم (fee tests) عند لجين تقريبًا (rounding) يحسم حالات التعادل (ties) نحو الزوجي (half-even) بدل الأعلى (half up). اختبار التعادل الوحيد لديها يستخدم مبلغًا رسمه الخام (raw fee) يساوي 5.015 تمامًا، وهو ينجح. ماذا ينبغي أن تفعل؟"
+      },
+      "o": {
+        "en": [
+          "Add a tie case whose raw fee is exactly 5.005",
+          "Add a tie case whose raw fee is exactly 5.035",
+          "Repeat the 5.015 case for every other fee tier, so each tier has its own tie test to rely on",
+          "Ask the agent which rounding rule its code uses, then record the answer as a spec decision"
+        ],
+        "ar": [
+          "أضف حالة تعادل (tie) رسمها الخام (raw fee) يساوي 5.005 تمامًا",
+          "أضف حالة تعادل (tie) رسمها الخام (raw fee) يساوي 5.035 تمامًا",
+          "كرّر حالة 5.015 لكل شريحة رسوم (fee tier) أخرى، ليكون لكل شريحة اختبار تعادل (tie test) خاص بها وحدها",
+          "اسأل الوكيل (agent) عن قاعدة التقريب (rounding rule) التي تستعملها شيفرته، ثم سجّل جوابه قرارًا في المواصفة (spec)"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "A tie exposes the wrong rule only where the rules disagree, which needs an even digit before the 5: 5.005 gives 5.01 under half up but 5.00 under half-even, while 5.015 and 5.035, the tempting extra ties, give 5.02 and 5.04 either way. Asking the agent which rule it used collects fluency, not a value worked out by hand.",
+        "ar": "لا يكشف التعادل (tie) القاعدة الخاطئة إلا حيث تختلف القاعدتان، وذلك يحتاج إلى رقم زوجي قبل الخمسة: فالقيمة 5.005 تعطي 5.01 بالتقريب إلى الأعلى (half up) و5.00 بالزوجي (half-even)، أما 5.015 و5.035، وهما التعادلان الإضافيان المغريان، فتعطيان 5.02 و5.04 في الحالتين. وسؤال الوكيل (agent) عن القاعدة التي استعملها يجمع طلاقة (fluency) لا قيمة حُسبت يدويًا (worked out by hand)."
+      }
+    },
+    {
+      "id": "m14-3",
+      "level": 2,
+      "lesson": "14.1",
+      "q": {
+        "en": "Every test is green on the agent's `service.py` change for `QAR-BDT`. A fresh reviewer session asks whether the service can ever choose a template id missing from `notify.TEMPLATES` in English or Arabic, which would raise `UnknownTemplate` after the ledger has posted. What is the sound response?",
+        "ar": "جميع الاختبارات (tests) خضراء (green) على تغيير الوكيل (agent) في `service.py` الخاص بـ `QAR-BDT`. تسأل جلسة مراجعة جديدة (fresh reviewer session) هل يمكن للخدمة أن تختار معرّف قالب (template id) غير موجود في `notify.TEMPLATES` بالإنجليزية أو بالعربية، فيُرفع `UnknownTemplate` بعد تسجيل القيد في دفتر الأستاذ (ledger). ما الاستجابة السليمة؟"
+      },
+      "o": {
+        "en": [
+          "Dismiss it, because a green suite already shows that the service cannot fail on a template lookup",
+          "Wrap the lookup in a `try` block so that it falls back to the old `transfer_sent` template",
+          "Add a test that sends a `QAR-BDT` transfer and checks the English message it produces",
+          "Add a test that every id the service can choose exists in `notify.TEMPLATES`, in both languages"
+        ],
+        "ar": [
+          "ارفضه، لأن مجموعة اختبارات (test suite) خضراء (green) تثبت أصلًا أن الخدمة لا تفشل في اختيار القالب (template)",
+          "لُفّ البحث في كتلة `try` تتراجع (fall back) عند الفشل إلى القالب (template) القديم `transfer_sent`",
+          "أضف اختبارًا (test) يرسل تحويلًا (transfer) إلى `QAR-BDT` ويفحص الرسالة (message) الإنجليزية الناتجة",
+          "أضف اختبارًا (test) يثبت أن كل معرّف (id) تستطيع الخدمة (service) اختياره موجود في `notify.TEMPLATES` باللغتين"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "A green suite shows only what the tests check, and none checks every id the service can choose, so a mistyped id can still fail after the ledger has posted. One test over both languages turns the reviewer's question into evidence; a fallback hides the mistake, and a test that sends one `QAR-BDT` transfer covers one id in one language, not every id the service can choose.",
+        "ar": "المجموعة الخضراء (green suite) لا تُظهر إلا ما تفحصه الاختبارات (tests)، ولا اختبار يفحص كل معرّف (id) قد تختاره الخدمة، فقد يفشل معرّف مكتوب خطأً بعد تسجيل القيد في دفتر الأستاذ (ledger). واختبار واحد يغطي اللغتين يحوّل سؤال المراجع (reviewer) إلى دليل (evidence)؛ أما التراجع إلى قالب آخر (fallback) فيُخفي الخطأ، واختبار يرسل تحويلًا واحدًا إلى `QAR-BDT` يغطي معرّفًا واحدًا بلغة واحدة لا كل معرّف تستطيع الخدمة اختياره."
+      }
+    },
+    {
+      "id": "m14-4",
+      "level": 3,
+      "lesson": "14.1",
+      "q": {
+        "en": "While working out the maximum by hand, Lujain sees a product question: under the T1 and T2 daily limits, who could ever send the QAR 12,000.00 maximum? Hessa's ticket says the daily limits do not change. What is the best handling?",
+        "ar": "أثناء حساب الحد الأقصى (maximum) يدويًا، تلاحظ لجين سؤالًا عن المنتج (product question): في ظل الحدود اليومية (daily limits) للمستويين T1 وT2، من يستطيع يومًا أن يرسل مبلغ 12,000.00 ريال قطري (QAR) وهو الحد الأقصى؟ تنص تذكرة (ticket) حصة على أن الحدود اليومية لا تتغير. ما أفضل طريقة للتعامل معه؟"
+      },
+      "o": {
+        "en": [
+          "Lower the corridor maximum in `corridors.py` to the largest amount those daily limits allow",
+          "Build the corridor as Hessa wrote it and put the question in the spec's open questions",
+          "Raise the T1 and T2 daily limits in the code so that the maximum can actually be sent",
+          "Ask the agent to settle it and record whatever answer it gives as a decision in the spec"
+        ],
+        "ar": [
+          "اخفض الحد الأقصى (maximum) للممر (corridor) في `corridors.py` إلى أكبر مبلغ تسمح به تلك الحدود اليومية (daily limits)",
+          "ابنِ ممر التحويل (corridor) كما كتبته حصة، وضع السؤال في الأسئلة المفتوحة (open questions) في المواصفة (spec)",
+          "ارفع الحدود اليومية (daily limits) للمستويين T1 وT2 في الشيفرة (code) ليمكن فعلًا إرسال الحد الأقصى (maximum)",
+          "اطلب من الوكيل (agent) أن يحسم المسألة، وسجّل جوابه أيًّا كان قرارًا (decision) في المواصفة (spec)"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "The maximum and the unchanged daily limits are both numbers Hessa agreed, so changing either in code overrides a product decision that is not Lujain's to make; the noticed question belongs in the spec's open questions, where its owner can answer it. Lowering the maximum, the tempting tidy-up, would break an agreed number and bury the question.",
+        "ar": "الحد الأقصى (maximum) والحدود اليومية (daily limits) غير المتغيرة رقمان اتفقت عليهما حصة، فتغيير أيٍّ منهما في الشيفرة (code) يتجاوز قرار منتج (product decision) ليس من شأن لجين؛ أما السؤال الذي لاحظته فمكانه الأسئلة المفتوحة (open questions) في المواصفة (spec) حيث يجيب عنه صاحبه. وخفض الحد الأقصى، وهو الترتيب المغري، يكسر رقمًا متفقًا عليه (agreed number) ويدفن السؤال."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m14-e1",
+      "lesson": "14.1",
+      "text": {
+        "en": "I have committed the REMIT-414 evidence in my work directory: the spec and plan before the first code prompt, an ADR, a review note, `.claude/settings.json` and `guard.py`, `docs/corridors.md` and an agent log, and `python -m ailab grade m14` ends PASSED.",
+        "ar": "لقد أودعتُ (committed) أدلة (evidence) REMIT-414 في مجلد عملي: المواصفة (spec) والخطة (plan) قبل أول موجّه (prompt) للشيفرة، وسجل القرار المعماري (architecture decision record, ADR)، وملاحظة مراجعة (review note)، و`.claude/settings.json` و`guard.py`، و`docs/corridors.md`، وسجل الوكيل (agent log)، وانتهى `python -m ailab grade m14` بالنتيجة PASSED."
+      }
+    },
+    {
+      "id": "m14-e2",
+      "lesson": "14.1",
+      "text": {
+        "en": "I have held the REMIT-414 demo with a colleague, moved the cap by one cent live and named the test that failed, and written a retrospective that quotes a real commit hash and names the document that changed my mind.",
+        "ar": "لقد أجريتُ العرض التوضيحي (demo) لـ REMIT-414 مع زميل، وحرّكتُ سقف الرسوم (fee cap) سنتًا واحدًا مباشرةً وسمّيتُ الاختبار (test) الذي فشل، وكتبتُ المراجعة الاسترجاعية (retrospective) التي تقتبس رمز إيداع (commit hash) حقيقيًا وتسمّي الوثيقة (document) التي غيّرت رأيي."
+      }
+    }
+  ]
+}

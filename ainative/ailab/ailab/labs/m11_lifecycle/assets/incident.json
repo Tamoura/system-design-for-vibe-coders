@@ -1,0 +1,110 @@
+{
+  "_note": "CONSTRUCTED FOR TEACHING. This incident did not happen: it is a made-up record for ailab lab m11, and Najm Remit and Najm Bank are fictional too. All times are UTC (Qatar is UTC+3). The record says what it says and nothing more.",
+  "id": "INC-2031",
+  "title": "Customers did not receive their transfer-sent message for 52 minutes",
+  "service": "Najm Remit",
+  "service_version": "0.4.0",
+  "date": "2026-03-11",
+  "severity": "SEV3",
+  "status": "resolved",
+  "detected_by": "automated alert",
+  "incident_commander": "Maha",
+  "responders": ["on-call SRE", "payments engineer", "customer support lead"],
+  "last_deploy": {"version": "0.4.0", "date": "2026-03-09"},
+  "changes_in_window": [],
+  "timeline": [
+    {
+      "id": "E1",
+      "time": "09:58:12",
+      "source": "audit_log",
+      "text": "First notification.failed event of the day: template transfer_sent, reason notification_error.",
+      "raw": "{\"customer_id\": \"CUS-4D1E7A90B2C3\", \"event\": \"notification.failed\", \"reason\": \"notification_error\", \"template\": \"transfer_sent\", \"ts\": \"2026-03-11T09:58:12+00:00\"}"
+    },
+    {
+      "id": "E2",
+      "time": "10:11:00",
+      "source": "pager",
+      "text": "Alert fired: notification failure rate above 20% for 10 minutes. The on-call SRE was paged."
+    },
+    {
+      "id": "E3",
+      "time": "10:14:00",
+      "source": "pager",
+      "text": "The on-call SRE acknowledged the page."
+    },
+    {
+      "id": "E4",
+      "time": "10:19:00",
+      "source": "chat",
+      "text": "The on-call SRE opened INC-2031 in the payments incidents channel and set the severity to SEV3. Maha took the incident commander role."
+    },
+    {
+      "id": "E5",
+      "time": "10:26:00",
+      "source": "chat",
+      "text": "A payments engineer read the audit log: transfers were still completing, and every notification.failed event had reason notification_error."
+    },
+    {
+      "id": "E6",
+      "time": "10:30:00",
+      "source": "vendor_status",
+      "text": "The notification gateway vendor's public status page posted: 'Investigating delayed message delivery.'"
+    },
+    {
+      "id": "E7",
+      "time": "10:36:00",
+      "source": "chat",
+      "text": "The customer support lead said callers were asking where their confirmation was, and asked for a line to give them."
+    },
+    {
+      "id": "E8",
+      "time": "10:41:00",
+      "source": "status_page",
+      "text": "A notice was added to the Najm app: 'Your transfer goes through even if the confirmation message is late.'"
+    },
+    {
+      "id": "E9",
+      "time": "10:50:41",
+      "source": "audit_log",
+      "text": "Last notification.failed event of the window.",
+      "raw": "{\"customer_id\": \"CUS-81B6F20D5E47\", \"event\": \"notification.failed\", \"reason\": \"notification_error\", \"template\": \"transfer_sent\", \"ts\": \"2026-03-11T10:50:41+00:00\"}"
+    },
+    {
+      "id": "E10",
+      "time": "10:52:00",
+      "source": "pager",
+      "text": "The alert resolved on its own."
+    },
+    {
+      "id": "E11",
+      "time": "11:02:00",
+      "source": "vendor_status",
+      "text": "The vendor's status page posted: 'Resolved. Message delivery is back to normal.'"
+    },
+    {
+      "id": "E12",
+      "time": "11:10:00",
+      "source": "chat",
+      "text": "Maha closed INC-2031."
+    },
+    {
+      "id": "E13",
+      "time": "11:40:00",
+      "source": "chat",
+      "text": "A payments engineer finished a reconciliation of the window: 188 transfers checked, the ledger and the store agree for all of them, 0 mismatches."
+    }
+  ],
+  "counts": {
+    "window": "09:58 to 10:50 UTC on 2026-03-11",
+    "transfer.sent": 188,
+    "transfer.rejected": {"limit_exceeded": 23, "needs_review": 2},
+    "notification.failed": {"transfer_sent": 171, "transfer_failed": 4},
+    "support_tickets_tagged_no_confirmation": {"count": 64, "opened_between": "09:58 and 11:10 UTC on 2026-03-11"}
+  },
+  "baseline": {
+    "window": "09:58 to 10:50 UTC on 2026-03-04, one week earlier",
+    "transfer.sent": 176,
+    "transfer.rejected": {"limit_exceeded": 9, "needs_review": 2},
+    "notification.failed": {"transfer_sent": 1, "transfer_failed": 1}
+  }
+}

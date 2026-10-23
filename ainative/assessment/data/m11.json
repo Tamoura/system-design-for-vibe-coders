@@ -1,0 +1,135 @@
+{
+  "area": "m11",
+  "questions": [
+    {
+      "id": "m11-1",
+      "level": 1,
+      "lesson": "11.1",
+      "q": {
+        "en": "Lujain asks her assistant to draft a wiki page about the limits module. Beside every statement it lists a source: a file path and a line number. When may she file a statement as a fact?",
+        "ar": "طلبت لجين من المساعد (assistant) كتابة صفحة ويكي (wiki page) عن وحدة الحدود (limits module). وبجانب كل عبارة (statement) يذكر المساعد مصدرًا (source): مسار ملف (file path) ورقم سطر (line number). متى يجوز لها أن تسجّل العبارة حقيقة (fact)؟"
+      },
+      "o": {
+        "en": [
+          "When every cited path and line number exists in the repository, so nothing is invented",
+          "When the assistant quotes each cited line word for word beside the statement it backs",
+          "When she has opened the cited line herself and found that it really supports the statement",
+          "When a second assistant session checks every source and reports that each one holds up"
+        ],
+        "ar": [
+          "حين يكون كل مسار (path) ورقم سطر (line number) مذكور موجودًا في المستودع (repository)، فلا شيء مختلق",
+          "حين ينقل المساعد (assistant) كل سطر مذكور (cited line) حرفيًا بجانب العبارة (statement) التي يدعمها",
+          "حين تفتح هي السطر المذكور (cited line) بنفسها فتجده يدعم العبارة (statement) فعلًا",
+          "حين تفحص جلسة مساعد ثانية (second assistant session) كل مصدر (source) وتفيد بأن كلًّا منها صحيح"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "A fact needs a source you opened yourself: the assistant's own list of sources is itself a claim. A path or line number that exists shows only that the place is there, a quotation can be invented as easily as a name, and a second assistant's report is one more claim.",
+        "ar": "تحتاج الحقيقة (fact) إلى مصدر (source) فتحتَه بنفسك، فقائمة المصادر التي يكتبها المساعد (assistant) هي نفسها ادعاء (claim). ووجود المسار (path) أو رقم السطر (line number) لا يثبت إلا أن المكان موجود، والاقتباس (quotation) يمكن اختلاقه كما يُختلق الاسم، وتقرير مساعد ثانٍ ادعاء آخر."
+      }
+    },
+    {
+      "id": "m11-2",
+      "level": 2,
+      "lesson": "11.1",
+      "q": {
+        "en": "Maha asks Lujain how many `transfer.rejected` events last night's audit log holds. `grep -c` on the file prints 92, while the Counter query her assistant wrote totals 87. What does Lujain do before she writes any sentence about the rejections?",
+        "ar": "سألت مها لجين كم حدثًا (event) من النوع `transfer.rejected` يحتويه سجل التدقيق (audit log) لليلة الماضية. يعطي الأمر `grep -c` على الملف الرقم 92، بينما مجموع استعلام (query) Counter الذي كتبه مساعدها (assistant) هو 87. ماذا تفعل لجين قبل أن تكتب أي جملة عن حالات الرفض (rejections)؟"
+      },
+      "o": {
+        "en": [
+          "Run both on a small file whose answer she can count by hand, and find which count is wrong",
+          "Trust the plain count, 92, and ask the assistant to change its query until it gives 92 too",
+          "Ask the assistant why its query gave 87, and take the figure it settles on after explaining",
+          "Take the larger figure, 92, as the safe upper bound and note that the query disagrees"
+        ],
+        "ar": [
+          "تشغّل العددين على ملف صغير (small file) يمكنها عدّه بيدها (by hand)، وتكتشف أيّهما خاطئ (wrong)",
+          "تثق بالعدّ المجرد (plain count) 92، وتطلب من المساعد (assistant) تعديل استعلامه (query) حتى يعطي 92 أيضًا",
+          "تسأل المساعد (assistant) لماذا أعطى استعلامه (query) 87، وتعتمد الرقم الذي يستقر عليه بعد شرحه",
+          "تأخذ الرقم الأكبر 92 حدًّا أعلى آمنًا (safe upper bound)، وتشير إلى أن الاستعلام (query) يخالفه"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Two ways of computing the same number must agree, and until they do one of them is wrong: run both on a tiny input whose answer you know and settle the difference before you write a sentence. Bending the query to match, asking the assistant to explain, or picking the bigger figure all skip finding out which count is wrong.",
+        "ar": "يجب أن تتفق طريقتان لحساب الرقم نفسه (two ways of computing the same number)، وإلى أن تتفقا يكون أحدهما خاطئًا: شغّلهما على مدخل صغير (tiny input) تعرف إجابته وأنهِ الاختلاف قبل أن تكتب جملة. أما تعديل الاستعلام (query) ليطابق الرقم الآخر، أو سؤال المساعد (assistant) عن السبب، أو اختيار الرقم الأكبر فكلها تتجاوز معرفة أيّ العددين خاطئ."
+      }
+    },
+    {
+      "id": "m11-3",
+      "level": 2,
+      "lesson": "11.2",
+      "q": {
+        "en": "Hessa's ticket asks for an ADR with a critic's objections. Lujain's agent cannot start a subagent or a second session, so after drafting the ADR it plays a sceptical senior engineer in a second pass. How should the ADR's objections section treat that second pass?",
+        "ar": "تطلب تذكرة حصة (Hessa's ticket) إعداد سجل قرار معماري (architecture decision record, ADR) مع اعتراضات ناقد (critic). لا يستطيع وكيل (agent) لجين تشغيل وكيل فرعي (subagent) ولا جلسة ثانية (second session)، فبعد كتابة المسودة (draft) يؤدي دور مهندس أول متشكك (sceptical senior engineer) في تمريرة ثانية (second pass). كيف ينبغي أن يعامل قسم اعتراضات الناقد (Critic's objections) في السجل تلك التمريرة؟"
+      },
+      "o": {
+        "en": [
+          "Describe it as an independent review, since the agent was told to be sceptical",
+          "Leave out who the critic was, since the grader cannot tell a real critic from none",
+          "Drop the critic section, since the agent cannot be a fresh critic of its own draft",
+          "State that it was a second pass of the same agent, and record her decision on each"
+        ],
+        "ar": [
+          "يصفها مراجعة مستقلة (independent review)، لأن الوكيل (agent) طُلب منه أن يكون متشككًا (sceptical)",
+          "يُغفل ذكر من كان الناقد (critic)، لأن المُقيِّم (grader) لا يميّز ناقدًا حقيقيًا من غيابه",
+          "يحذف قسم الناقد (critic section)، لأن الوكيل (agent) لا يكون ناقدًا جديدًا لمسودته هو (draft)",
+          "يذكر أنها تمريرة ثانية (second pass) من الوكيل نفسه، ويسجّل قرارها في كل اعتراض (objection)"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "A second pass by the agent that wrote the draft is not a fresh critic, so the ADR says what it was, and each objection still gets her decision and, where it is a claim, her check. Hiding the origin because the grader cannot tell misleads the reader, who can.",
+        "ar": "التمريرة الثانية (second pass) من الوكيل (agent) الذي كتب المسودة ليست ناقدًا جديدًا (fresh critic)، فيقول السجل ما كانت عليه، ويبقى لكل اعتراض (objection) قرارها وفحصها حين يكون ادعاءً (claim). وإخفاء الأصل لأن المُقيِّم (grader) لا يستطيع التمييز يضلّل القارئ، وهو يستطيع."
+      }
+    },
+    {
+      "id": "m11-4",
+      "level": 3,
+      "lesson": "11.2",
+      "q": {
+        "en": "After last night's incident Maha asks Lujain for a postmortem, with an incident record exported from the logs, and wants the draft to rest on that record alone. Lujain's agent session has spent the morning reading the gateway's source code, and she can open a new session in a minute. How should she get the first draft?",
+        "ar": "بعد حادثة (incident) الليلة الماضية تطلب مها من لجين مراجعة ما بعد الحادثة (postmortem)، ومعها سجل حادثة (incident record) مستخرج من السجلات (logs)، وتريد أن تقوم المسودة على هذا السجل وحده. وقد أمضت جلسة وكيلها (agent session) الصباح في قراءة شيفرة البوابة (gateway's source code)، وتستطيع لجين فتح جلسة جديدة في دقيقة. كيف تحصل على المسودة الأولى (first draft)؟"
+      },
+      "o": {
+        "en": [
+          "Keep that session and give it the record too, since the code explains the causes best",
+          "Start a fresh session in plan mode, in an empty folder holding only the record and template",
+          "Keep that session and switch it to plan mode, which stops it reading anything but the record",
+          "Keep that session, tell it to ignore everything it read in the source, and trust that it does"
+        ],
+        "ar": [
+          "تُبقي الجلسة (session) وتعطيها السجل (record) أيضًا، لأن الشيفرة (code) تشرح أسباب (causes) الحادثة على أفضل وجه ممكن",
+          "تبدأ جلسة جديدة (fresh session) بوضع التخطيط (plan mode) في مجلد فارغ (empty folder) فيه السجل (record) والقالب (template) فقط",
+          "تُبقي الجلسة (session) وتحوّلها إلى وضع التخطيط (plan mode)، فيمنعها من قراءة أي شيء غير السجل (record) والقالب (template) المرفقين",
+          "تُبقي الجلسة (session) وتأمرها بتجاهل كل ما قرأته من الشيفرة المصدرية (source code) طوال الصباح، وتثق بأنها فعلت"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "The record must be the assistant's only source, and a session that has read the code brings its guesses about the gateway with it. Plan mode limits edits, not reading, and telling it to ignore the code does not remove what it has already read. Only when no fresh session is possible does the agent say what it holds and lean on the hand check.",
+        "ar": "يجب أن يكون السجل (record) مصدر المساعد (assistant) الوحيد، والجلسة (session) التي قرأت الشيفرة (code) تحمل معها تخميناتها (guesses) عن البوابة (gateway). ووضع التخطيط (plan mode) يقيّد التعديل (edits) لا القراءة (reading)، والأمر بتجاهل الشيفرة لا يمحو ما قُرئ فعلًا. ولا يبقى للوكيل (agent) إلا أن يصرّح بما يحمله ويعتمد على الفحص اليدوي (hand check) حين يتعذر فتح جلسة جديدة."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m11-e1",
+      "lesson": "11.1",
+      "text": {
+        "en": "I have traced ten claims in `docs/ARCHITECTURE.md` to the code with `ls`, `grep` and reading, and kept a Claims check table with the command for each row and at least three claims refuted.",
+        "ar": "لقد تتبعتُ عشرة ادعاءات (claims) في `docs/ARCHITECTURE.md` إلى الشيفرة (code) بالأوامر `ls` و`grep` والقراءة، وأعددتُ جدول فحص الادعاءات (Claims check table) بالأمر المستخدم في كل صف (row) مع دحض (refuting) ثلاثة ادعاءات على الأقل."
+      }
+    },
+    {
+      "id": "m11-e2",
+      "lesson": "11.2",
+      "text": {
+        "en": "I have finished lab m11 with the ADR, the najmkit page and the INC-2031 postmortem each committed on its own, and `python -m ailab grade m11` ending PASSED, with a Claims table for each document in my notes.",
+        "ar": "لقد أنهيتُ المختبر (lab) m11 بإيداع (commit) سجل القرار المعماري (architecture decision record, ADR) وصفحة najmkit ومراجعة ما بعد الحادثة (postmortem) INC-2031 كلٌّ في إيداع مستقل، وانتهى `python -m ailab grade m11` بالنتيجة PASSED، مع جدول ادعاءات (Claims table) لكل مستند في ملاحظاتي (notes)."
+      }
+    }
+  ]
+}

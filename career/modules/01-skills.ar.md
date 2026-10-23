@@ -515,6 +515,8 @@ AI assistance and verification:
 - [*أمن الذكاء الاصطناعي والتطبيقات (Secure AI & Application Security)*، الدرس 6.3 — تأمين الشيفرة المولَّدة بالذكاء الاصطناعي: ما الذي يخطئ فيه وكلاء البرمجة (Securing AI-generated code: what coding agents get wrong)](../secai/index.ar.html#/6.3)
 - [*تصميم الأنظمة لمبرمجي الفايب (System Design for Vibe Coders)*، الدرس 9.4 — التحقق قبل الإكمال (Verification before completion)](../vibe/index.ar.html#l9-4)
 - [*تشغيل وكلاء الذكاء الاصطناعي في الإنتاج (Running AI Agents in Production)*، المسار التعليمي (learning path)، المستوى 1 — البنّاء (Level 1 — Builder)](../agentic/learning-path.ar.html#level-1-builder)
+- [*دليل عملي لتصبح مهندسًا أصيلًا في الذكاء الاصطناعي (A Practical Guide to Becoming an AI-Native Engineer)*، الدرس 0.1 — ما المهندس الأصيل في الذكاء الاصطناعي (What an AI-native engineer is) وما ليس هو (and is not): التحوّل (the shift) والعادات الخمس (five habits) والأدلة (the evidence)](../ainative/index.ar.html#/0.1) — منظور الهندسة اليومية الأصيلة في الذكاء الاصطناعي (AI-native engineering) لهذا الموضوع
+- [*دليل عملي لتصبح مهندسًا أصيلًا في الذكاء الاصطناعي (A Practical Guide to Becoming an AI-Native Engineer)*، الدرس 13.1 — مهارات تتراكم: الأساسيات والذائقة والممارسة المقصودة وتقييم الأدوات وتجنّب تآكل المهارة (Skills that compound: fundamentals, taste, deliberate practice, evaluating tools and avoiding deskilling)](../ainative/index.ar.html#/13.1) — منظور الهندسة اليومية الأصيلة في الذكاء الاصطناعي (AI-native engineering) لهذا الموضوع
 
 ---
 

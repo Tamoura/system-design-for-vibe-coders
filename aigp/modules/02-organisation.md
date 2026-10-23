@@ -688,3 +688,4 @@ A regulator asks Najm's Frankfurt branch how it complies with the EU AI Act's AI
 - ISO/IEC 42001:2023: https://www.iso.org/standard/81230.html
 - NIST AI Risk Management Framework: https://www.nist.gov/itl/ai-risk-management-framework
 - IAPP AIGP certification and Body of Knowledge: https://iapp.org/certify/aigp/
+- [*A Practical Guide to Becoming an AI-Native Engineer*, lesson 12.1 — Team practice: conventions, review norms, ownership, juniors, metrics and policy](../ainative/index.html#/12.1) — the day-to-day AI-native engineering view of this topic

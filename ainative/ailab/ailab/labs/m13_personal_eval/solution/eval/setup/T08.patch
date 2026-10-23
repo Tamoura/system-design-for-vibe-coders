@@ -1,0 +1,40 @@
+diff --git a/review/PR-482.diff b/review/PR-482.diff
+new file mode 100644
+index 0000000..09e659d
+--- /dev/null
++++ b/review/PR-482.diff
+@@ -0,0 +1,34 @@
++Pull request 482: Tell customers earlier when they reach a limit (constructed for teaching)
++Author: Lujain (AI-assisted)
++
++Description
++-----------
++Customers should be warned before they hit a limit, so a transfer that reaches the
++limit is now refused. I also log who was refused, to make support calls easier.
++All tests pass.
++
++Diff
++----
++diff --git a/src/remit/limits.py b/src/remit/limits.py
++--- a/src/remit/limits.py
+++++ b/src/remit/limits.py
++@@ -134,9 +134,9 @@ def check_limits(tier, history, amount, now):
++     reason = None
++-    if daily_used + amount > limits.daily:
+++    if daily_used + amount >= limits.daily:
++         reason = DAILY_EXCEEDED
++-    elif monthly_used + amount > limits.monthly:
+++    elif monthly_used + amount >= limits.monthly:
++         reason = MONTHLY_EXCEEDED
++     return LimitResult(
++diff --git a/src/remit/service.py b/src/remit/service.py
++--- a/src/remit/service.py
+++++ b/src/remit/service.py
++@@ -213,6 +213,7 @@ class RemitService:
++         audit.log_event(
++             "transfer.rejected",
++             customer_id=customer.id,
+++            customer_name=customer.name,
++             reason=reason,
++             corridor=corridor.code,
++             send_amount=amount,

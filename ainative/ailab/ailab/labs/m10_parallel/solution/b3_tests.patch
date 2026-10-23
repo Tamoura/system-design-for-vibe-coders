@@ -1,0 +1,47 @@
+diff --git a/tests/test_care_corridors.py b/tests/test_care_corridors.py
+new file mode 100644
+index 0000000..07703e7
+--- /dev/null
++++ b/tests/test_care_corridors.py
+@@ -0,0 +1,41 @@
++import io
++
++from remit.cli import main
++from remit.corridors import all_corridors, corridor_for_code, describe
++
++
++def run(*argv, environ):
++    out, err = io.StringIO(), io.StringIO()
++    code = main(list(argv), environ=environ, out=out, err=err)
++    return code, out.getvalue(), err.getvalue()
++
++
++def test_describe_one_corridor():
++    assert describe(corridor_for_code("QAR-INR")) == (
++        "QAR-INR: 50.00 to 25000.00 QAR; delivery: bank_deposit (default), wallet; fees: STD-A"
++    )
++
++
++def test_describe_marks_only_the_first_method_as_default():
++    assert describe(corridor_for_code("QAR-PHP")).endswith("bank_deposit (default), cash_pickup, wallet; fees: STD-A")
++
++
++def test_the_command_lists_every_corridor_in_order(tmp_path):
++    code, out, _ = run("corridors", environ={"REMIT_DB": str(tmp_path / "r.db")})
++    assert code == 0 and out.splitlines() == [describe(c) for c in all_corridors()]
++    assert [line[:7] for line in out.splitlines()] == ["QAR-EGP", "QAR-INR", "QAR-PHP", "QAR-PKR"]
++
++
++def test_the_command_takes_one_code(tmp_path):
++    code, out, _ = run("corridors", "QAR-PKR", environ={"REMIT_DB": str(tmp_path / "r.db")})
++    assert code == 0 and out.splitlines() == [describe(corridor_for_code("QAR-PKR"))]
++
++
++def test_an_unknown_code_is_an_error(tmp_path):
++    code, out, err = run("corridors", "QAR-XYZ", environ={"REMIT_DB": str(tmp_path / "r.db")})
++    assert (code, out) == (1, "") and "unknown_corridor" in err
++
++
++def test_the_command_does_not_create_a_database(tmp_path):
++    run("corridors", environ={"REMIT_DB": str(tmp_path / "r.db")})
++    assert not (tmp_path / "r.db").exists()

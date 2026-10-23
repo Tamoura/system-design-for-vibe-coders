@@ -700,3 +700,4 @@ After the fee-waiver incident, Rania asks Faisal to own the **Najm Assist behavi
 - OpenAI, prompt engineering and function calling documentation — https://platform.openai.com/docs
 - Google PAIR, *People + AI Guidebook* — https://pair.withgoogle.com/guidebook/
 - NIST AI 600-1, *Generative AI Profile* — https://www.nist.gov/itl/ai-risk-management-framework
+- [*A Practical Guide to Becoming an AI-Native Engineer*, lesson 2.1 — What the agent sees: the context budget, project memory, rules, references, compaction and subagents](../ainative/index.html#/2.1) — the day-to-day AI-native engineering view of this topic

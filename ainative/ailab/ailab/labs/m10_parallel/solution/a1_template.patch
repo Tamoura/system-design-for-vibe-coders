@@ -1,0 +1,23 @@
+diff --git a/src/remit/notify.py b/src/remit/notify.py
+index 7a1dbe2..e5d5337 100644
+--- a/src/remit/notify.py
++++ b/src/remit/notify.py
+@@ -60,6 +60,18 @@ TEMPLATES: dict[str, dict[str, str]] = {
+             "{reason} لم يتم خصم أي مبلغ من حسابك."
+         ),
+     },
++    "transfer_delayed": {
++        "en": (
++            "Hi {name}, your transfer {transfer_id} to {recipient} is taking longer than expected. "
++            "We are working on it and will message you as soon as it arrives. "
++            "We are sorry for the wait."
++        ),
++        "ar": (
++            "مرحباً {name}، تأخّر وصول تحويلك {transfer_id} إلى {recipient} عن الموعد المتوقع. "
++            "نعمل على إتمامه وسنراسلك فور وصوله. "
++            "نعتذر عن الانتظار."
++        ),
++    },
+ }
+ 
+ # Customer-facing reasons for transfer_failed. Deliberately vague for "needs_review":

@@ -1,0 +1,24 @@
+{
+  "session_id": "lab-m09-session",
+  "prompt_id": "lab-m09-prompt",
+  "transcript_path": "/tmp/lab-m09/transcript.jsonl",
+  "cwd": ".",
+  "scratchpad_dir": "/tmp/lab-m09/scratch",
+  "permission_mode": "default",
+  "effort": {
+    "level": "medium"
+  },
+  "hook_event_name": "PostToolUse",
+  "tool_name": "Edit",
+  "tool_input": {
+    "file_path": "src/remit/fees.py",
+    "old_string": "minimum",
+    "new_string": "minimum",
+    "replace_all": false
+  },
+  "tool_use_id": "toolu_lab_m09_01",
+  "tool_response": {
+    "note": "placeholder: the real fields depend on the tool and are not used in this lab"
+  },
+  "duration_ms": 12
+}

@@ -1,0 +1,13 @@
+diff --git a/src/remit/fx.py b/src/remit/fx.py
+index bd93fcb..be35534 100644
+--- a/src/remit/fx.py
++++ b/src/remit/fx.py
+@@ -72,7 +72,7 @@ class FxQuote:
+ 
+     def is_expired(self, now: datetime) -> bool:
+         """True from ``expires_at`` onwards (the quote is valid while now < expires_at)."""
+-        return now >= self.expires_at
++        return now > self.expires_at
+ 
+ 
+ def margin_for(corridor: Corridor) -> Decimal:

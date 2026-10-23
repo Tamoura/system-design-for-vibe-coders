@@ -1,0 +1,80 @@
+diff --git a/src/remit/service.py b/src/remit/service.py
+index 010b380..d842a1c 100644
+--- a/src/remit/service.py
++++ b/src/remit/service.py
+@@ -123,33 +123,11 @@ class RemitService:
+         corridor = get_corridor(send_amount.currency, receive_currency)
+         method = validate_send(corridor, send_amount, delivery_method)
+ 
+-        # 2. limits
+-        limits = check_limits(customer.kyc_tier, self.store.list_transfers(customer.id), send_amount, now)
+-        if not limits.allowed:
+-            self._reject(customer, "limit_exceeded", corridor, send_amount, recipient)
+-            raise LimitExceeded(limits)
+-
+-        # 3. screening (sender and recipient)
+-        screened = screen_names([customer.name, recipient], self.watchlist)
+-        if screened.hit:
+-            self._reject(customer, "needs_review", corridor, send_amount, recipient)
+-            raise ScreeningHit(screened.matches)
++        # 2. limits and 3. screening (sender and recipient)
++        limits = self._check_rules(customer, recipient, corridor, send_amount, now)
+ 
+         # 4. fee and 5. fx: from the quote the customer saw, or priced now
+-        if quote is not None:
+-            if (quote.corridor.code, quote.send_amount, quote.express, quote.delivery_method) != (
+-                corridor.code,
+-                send_amount,
+-                express,
+-                method,
+-            ):
+-                raise QuoteMismatch("the quote does not match this transfer")
+-            if quote.fx.is_expired(now):
+-                raise QuoteExpired(f"the quote expired at {quote.fx.expires_at.isoformat()}")
+-            fee, fx = quote.fee, quote.fx
+-        else:
+-            fee = quote_fee(send_amount, corridor, express=express)
+-            fx = fx_quote(send_amount, corridor, self.rates, now)
++        fee, fx = self._price(corridor, send_amount, method, express, quote, now)
+ 
+         # 6. ledger
+         transfer_id = ids.new_id("TRF")
+@@ -197,6 +175,38 @@ class RemitService:
+         return self.store.list_transfers(self.store.require_customer(customer_id).id)
+ 
+     # -- helpers -------------------------------------------------------------
++    def _check_rules(
++        self, customer: Customer, recipient: str, corridor: Corridor, send_amount: Money, now: Any
++    ) -> LimitResult:
++        """Steps 2 and 3 of ``send``: the limits, then screening. Returns the limit position before this transfer."""
++        limits = check_limits(customer.kyc_tier, self.store.list_transfers(customer.id), send_amount, now)
++        if not limits.allowed:
++            self._reject(customer, "limit_exceeded", corridor, send_amount, recipient)
++            raise LimitExceeded(limits)
++
++        screened = screen_names([customer.name, recipient], self.watchlist)
++        if screened.hit:
++            self._reject(customer, "needs_review", corridor, send_amount, recipient)
++            raise ScreeningHit(screened.matches)
++        return limits
++
++    def _price(
++        self, corridor: Corridor, send_amount: Money, method: str, express: bool, quote: Quote | None, now: Any
++    ) -> tuple[Money, FxQuote]:
++        """Steps 4 and 5 of ``send``: the fee and the rate, from the quote the customer saw or priced now."""
++        if quote is not None:
++            if (quote.corridor.code, quote.send_amount, quote.express, quote.delivery_method) != (
++                corridor.code,
++                send_amount,
++                express,
++                method,
++            ):
++                raise QuoteMismatch("the quote does not match this transfer")
++            if quote.fx.is_expired(now):
++                raise QuoteExpired(f"the quote expired at {quote.fx.expires_at.isoformat()}")
++            return quote.fee, quote.fx
++        return quote_fee(send_amount, corridor, express=express), fx_quote(send_amount, corridor, self.rates, now)
++
+     def _notify(self, customer: Customer, template_id: str, **values: Any) -> bool:
+         try:
+             self.notifier.notify(customer, template_id, **values)

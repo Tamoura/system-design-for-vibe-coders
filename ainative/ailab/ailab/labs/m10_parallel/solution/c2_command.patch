@@ -1,0 +1,42 @@
+diff --git a/src/remit/cli.py b/src/remit/cli.py
+index 7c838e6..c372afe 100644
+--- a/src/remit/cli.py
++++ b/src/remit/cli.py
+@@ -5,6 +5,7 @@
+     python -m remit quote QAR 500 INR [--express] [--delivery wallet]
+     python -m remit send --customer C001 QAR 500 INR --recipient "Ravi Kumar" [--express]
+     python -m remit history --customer C001
++    python -m remit limits --customer C001
+ 
+ The database is REMIT_DB (default remit.db in the current directory). Exit codes: 0 ok,
+ 1 a Remit error (the message goes to stderr), 2 bad usage.
+@@ -21,6 +22,7 @@ from remit import screening
+ from remit.config import load_config
+ from remit.errors import RemitError
+ from remit.fx import QUOTE_TTL, StaticRateProvider
++from remit.limits import usage_line
+ from remit.models import KYC_TIERS, LANGUAGES, LOYALTY_TIERS, Customer
+ from remit.money import Money
+ from remit.notify import ConsoleNotifier
+@@ -56,6 +58,8 @@ def _parser() -> argparse.ArgumentParser:
+     history = sub.add_parser("history", help="a customer's transfers")
+     history.add_argument("--customer", required=True)
+     # --- Customer Care desk commands (REMIT-361): add your parser below this line ---
++    limits = sub.add_parser("limits", help="where a customer stands against their limits")
++    limits.add_argument("--customer", required=True)
+     return parser
+ 
+ 
+@@ -131,6 +135,12 @@ def _run(args: argparse.Namespace, default_lang: str, service: RemitService, sto
+         return 0
+ 
+     # --- Customer Care desk commands (REMIT-361): handle your command below this line, ending with `return 0` ---
++    if args.command == "limits":
++        customer = store.require_customer(args.customer)
++        print(f"{customer.id}  {customer.name}", file=out)
++        print(usage_line(customer.kyc_tier, service.history(customer.id), service.clock.now()), file=out)
++        return 0
++
+     amount = Money(args.amount, args.send_currency)
+     if args.command == "quote":
+         _print_quote(service.quote(amount, args.receive_currency, express=args.express, delivery_method=args.delivery), out)

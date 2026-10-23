@@ -1,0 +1,57 @@
+diff --git a/tests/test_care_limits.py b/tests/test_care_limits.py
+new file mode 100644
+index 0000000..7a1fa0a
+--- /dev/null
++++ b/tests/test_care_limits.py
+@@ -0,0 +1,51 @@
++import io
++from datetime import datetime, timezone
++from decimal import Decimal
++
++from remit.cli import main
++from remit.limits import usage_line
++from remit.models import Transfer
++from remit.money import Money
++
++
++def at(text):
++    return datetime.fromisoformat(text).replace(tzinfo=timezone.utc)
++
++
++def past(amount, when):
++    return Transfer("T", "C001", "QAR-INR", Money(amount, "QAR"), Money("5", "QAR"), Money("1", "INR"),
++                    Decimal("1"), "Ravi Kumar", "bank_deposit", when)
++
++
++def test_an_empty_history():
++    assert usage_line("T1", [], at("2026-03-02T09:00:00")) == (
++        "T1: today 0.00 of 2000.00 QAR used (2000.00 left); this month 0.00 of 8000.00 QAR used (8000.00 left)"
++    )
++
++
++def test_today_and_the_month():
++    history = [past("3000.00", at("2026-03-02T05:00:00")), past("9000.00", at("2026-03-01T10:00:00"))]
++    assert usage_line("T2", history, at("2026-03-02T09:00:00")) == (
++        "T2: today 3000.00 of 10000.00 QAR used (7000.00 left); this month 12000.00 of 40000.00 QAR used (28000.00 left)"
++    )
++
++
++def test_the_day_ends_at_midnight_in_qatar():
++    now = at("2026-03-02T21:30:00")  # 00:30 on 3 March in Qatar
++    history = [past("700.00", at("2026-03-02T20:00:00")), past("300.00", at("2026-03-02T21:10:00"))]
++    assert "today 300.00 of 2000.00" in usage_line("T1", history, now)
++
++
++def test_the_month_ends_at_midnight_in_qatar():
++    now = at("2026-03-31T21:30:00")  # 1 April in Qatar
++    history = [past("500.00", at("2026-03-31T10:00:00"))]
++    assert "this month 0.00 of 8000.00" in usage_line("T1", history, now)
++
++
++def test_the_command(tmp_path, clock):
++    out, err = io.StringIO(), io.StringIO()
++    env = {"REMIT_DB": str(tmp_path / "r.db")}
++    main(["customer", "add", "--id", "C001", "--name", "Aisha Rahman", "--kyc", "T2"], environ=env, clock=clock, out=out, err=err)
++    out = io.StringIO()
++    assert main(["limits", "--customer", "C001"], environ=env, clock=clock, out=out, err=err) == 0
++    assert out.getvalue().splitlines()[0] == "C001  Aisha Rahman"

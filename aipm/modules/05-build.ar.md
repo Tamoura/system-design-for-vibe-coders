@@ -700,3 +700,4 @@ flowchart RL
 - OpenAI, prompt engineering and function calling documentation — https://platform.openai.com/docs
 - Google PAIR, *People + AI Guidebook* — https://pair.withgoogle.com/guidebook/
 - NIST AI 600-1, *Generative AI Profile* — https://www.nist.gov/itl/ai-risk-management-framework
+- [*دليل عملي لتصبح مهندسًا أصيلًا في الذكاء الاصطناعي (A Practical Guide to Becoming an AI-Native Engineer)*، الدرس 2.1 — ما الذي يراه الوكيل: ميزانية السياق وذاكرة المشروع والقواعد والمراجع والضغط والوكلاء الفرعيون (What the agent sees: the context budget, project memory, rules, references, compaction and subagents)](../ainative/index.ar.html#/2.1) — منظور الهندسة اليومية الأصيلة في الذكاء الاصطناعي (AI-native engineering) لهذا الموضوع

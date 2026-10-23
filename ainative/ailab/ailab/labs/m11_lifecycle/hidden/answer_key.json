@@ -1,0 +1,151 @@
+{
+  "_note": "Grader data for lab m11. Anchors are regular expressions (lower-case text): a timeline row about event Ex must say something that matches the anchor of Ex. They are deliberately loose; they only catch a row that describes a different event.",
+  "events": {
+    "E1": {
+      "anchors": "notif|fail|confirm|message|first"
+    },
+    "E2": {
+      "anchors": "alert|page|paged|20\\s?%|threshold"
+    },
+    "E3": {
+      "anchors": "acknowledg|\\back(ed)?\\b"
+    },
+    "E4": {
+      "anchors": "open|declar|sev|commander|channel|maha|incident"
+    },
+    "E5": {
+      "anchors": "audit|read|log|engineer|complet|continu"
+    },
+    "E6": {
+      "anchors": "vendor|status|delay|gateway|provider"
+    },
+    "E7": {
+      "anchors": "support|caller|call|confirmation|line|customer"
+    },
+    "E8": {
+      "anchors": "notice|banner|app|late|customer"
+    },
+    "E9": {
+      "anchors": "last|final|notif|fail"
+    },
+    "E10": {
+      "anchors": "resolv|clear|recover|alert"
+    },
+    "E11": {
+      "anchors": "vendor|resolv|status|normal|back"
+    },
+    "E12": {
+      "anchors": "clos|ended|end\\b|maha"
+    },
+    "E13": {
+      "anchors": "reconcil|188|mismatch|ledger|store|checked|agree"
+    }
+  },
+  "required_events": [
+    "E1",
+    "E2",
+    "E10",
+    "E13"
+  ],
+  "min_events": 9,
+  "min_gaps": 2,
+  "gaps": [
+    "why[^.\\n]{0,80}(vendor|gateway|provider|degrad|deliver|fail|notification)|\\bcause\\b|\\bcaused\\b|root cause|reason (for|why)|what (happened|went wrong)[^.\\n]{0,30}(vendor|gateway|provider)",
+    "\\b17\\b|why (some|any|a few|those)[^.\\n]{0,60}(deliver|succeed|confirm|got|received|notif)|(delivered|succeeded|went through)[^.\\n]{0,60}(some|few|others|rest)|(some|others|rest)[^.\\n]{0,60}(delivered|succeeded|did not fail)",
+    "duplicate|re-?sen[dt]|re-?submit|\\bagain\\b|second (transfer|time|attempt)|twice|more than once|several times|repeat|retr(y|ied)|another transfer|tried to send",
+    "(tickets?|callers?|calls)[^.\\n]{0,120}(customers?|transfers?|window|incident|affected|related|linked|came from|from)|how many[^.\\n]{0,60}(tickets?|callers?|calls)",
+    "how many[^.\\n]{0,20}(distinct |different |unique |individual )?(customers|people|users)|(distinct|different|unique|individual) (customers|people|users)|per customer|events? (are|were|is)? ?not (customers|transfers)|events versus customers|same customer|count(s|ed)? events"
+  ],
+  "forbidden": [
+    {
+      "id": "cause",
+      "pattern": "\\b(?:vendor|gateway|provider|sms)\\b[^.\\n]{0,80}\\b(?:caused|cause of|root cause|responsible|to blame|outage|originat\\w+|stemm?ed|source of)\\b|\\b(?:root cause|caused by|due to|because of|because|result of|resulted from|triggered by|stemm?ed from|stems from|originat\\w+ (?:in|from|with|at)|traced to|attributed to|down to|owing to|thanks to|on account of)\\b[^.\\n]{0,80}\\b(?:vendor|gateway|provider|outage|degrad\\w*)\\b",
+      "message": "States a cause as a fact; the record does not give one"
+    },
+    {
+      "id": "resent",
+      "pattern": "\\b(?:sent|send|sending|submitted|submit|resubmitted|tried)\\b[^.\\n]{0,40}\\bagain\\b|\\bduplicate[ds]? (?:transfers?|payments?|sends?|submissions?|requests?)\\b|\\bre-?sen[dt]\\b|\\bre-?submitted\\b|\\bre-?tried\\b|\\bretried\\b|\\bsecond transfers?\\b|\\bsent twice\\b|\\b(?:customers?|callers?|users?|people|they)\\b[^.\\n]{0,40}\\b(?:twice|two times)\\b|\\b(?:transfers?|payments?)\\b[^.\\n]{0,30}\\b(?:twice|two times)\\b",
+      "message": "States as fact that a transfer was sent again, resent or duplicated; the record does not say so"
+    },
+    {
+      "id": "changes",
+      "pattern": "\\b(?:deploy(?:ed|ment|ments)?|release[ds]?|rollbacks?|rolled back|config(?:uration)? changes?|hotfix(?:es)?|patch(?:ed)?|restart(?:ed)?|reboot(?:ed)?|fail(?:ed)? ?over|failover|scaled|disabled|switched|backup (?:channel|gateway|provider|vendor)|paus(?:ed|ing)|throttl\\w+|re-?rout\\w+|re-?queu\\w+|requeue\\w*|drain(?:ed|ing)|flush(?:ed|ing)|work(?:ed)?[- ]?arounds?|bypass\\w*|turned (?:off|on)|shut (?:down|off)|spun up)\\b",
+      "message": "Describes an action or change that is not in the record",
+      "exempt": "last deploy|last release"
+    },
+    {
+      "id": "vendor_state",
+      "pattern": "\\b(?:vendor|gateway|provider)(?:'s)?\\b[^.\\n]{0,40}\\b(?:was|were|is|went|became|had been)\\s+(?:\\w+\\s+)?(?:slow|down|degraded|overloaded|unavailable|failing|broken|faulty|unreachable|offline|unresponsive|at fault|timing out)\\b",
+      "message": "States what state the vendor's gateway was in as a fact; only the vendor's own status page posts are in the record",
+      "exempt": "status page|posted|reported|said|announced|stated|according to"
+    },
+    {
+      "id": "money",
+      "pattern": "\\b(?:double[- ]charged|charged twice|lost money|money (?:was |were )?lost|funds (?:were )?lost|financial loss|refund(?:ed|s)?|chargebacks?)\\b",
+      "message": "Makes a claim about money that the record does not support"
+    },
+    {
+      "id": "infrastructure",
+      "pattern": "\\b(?:database|db|cpu|memory|disk|dns|certificate|ddos|attack(?:er|s)?|breach|hack(?:ed|er)?|queue|kafka|load balancer|network)\\b",
+      "message": "Names a component or a threat that the record never mentions"
+    },
+    {
+      "id": "everyone",
+      "pattern": "\\ball (?:of our |our )?customers\\b|\\bevery customer\\b|\\beveryone\\b",
+      "message": "Says everyone was affected; the record shows some confirmations were delivered"
+    },
+    {
+      "id": "channel",
+      "pattern": "\\b(?:sms|text messages?|e-?mails?|push notifications?|whatsapp)\\b",
+      "message": "Names a message channel; the record never says which channel was used"
+    },
+    {
+      "id": "customers",
+      "pattern": "\\b\\d[\\d,]*\\s+(?:distinct\\s+|different\\s+|unique\\s+)?(?:customers|users|people|clients|callers)\\b",
+      "message": "Gives a number of customers; the record counts events, transfers and tickets, not customers"
+    },
+    {
+      "id": "scope",
+      "pattern": "\\b(?:every|all|each)\\b[^.\\n]{0,60}\\bnotification_error\\b|\\bnotification_error\\b[^.\\n]{0,60}\\b(?:throughout|in every case|in all cases|every time|for every|for all)\\b|\\b(?:all|every|each)\\s+(?:of\\s+)?(?:the\\s+)?(?:\\d+\\s+)?(?:`?notification\\.failed`?\\s+events?|failures|failed notifications)\\b[^.\\n]{0,60}\\b(?:reason|error)\\b",
+      "message": "Says every failure had one reason as a plain fact; in the record that is what one person read at one time: say who found it and when",
+      "exempt": "engineer|10:26|read the audit|found that|saw that|according to"
+    }
+  ],
+  "measures": [
+    {
+      "say": "transfers sent",
+      "keys": [
+        "transfer.sent"
+      ],
+      "pattern": "\\b(\\d[\\d,]*)\\s+(?:(?:(?:successful|completed)\\s+)?(?:transfers?\\s+(?:were\\s+)?)?(?:sent|sends)\\b|`?transfer\\.sent`?)"
+    },
+    {
+      "say": "transfers checked in the reconciliation",
+      "keys": [
+        "transfer.sent"
+      ],
+      "pattern": "\\b(\\d[\\d,]*)\\s+transfers?\\s+(?:were\\s+)?(?:checked|reconciled)\\b"
+    },
+    {
+      "say": "failed notifications",
+      "keys": [
+        "notification.failed"
+      ],
+      "pattern": "\\b(\\d[\\d,]*)\\s+(?:`?notification\\.failed`?|failed\\s+(?:notifications?|confirmations?|messages?)|(?:(?:notification|confirmation|message)\\s+)?failures?\\b)"
+    },
+    {
+      "say": "rejected transfers",
+      "keys": [
+        "transfer.rejected"
+      ],
+      "pattern": "\\b(\\d[\\d,]*)\\s+(?:`?[\\w.]+`?\\s+)?(?:rejections?|rejected\\b|`?transfer\\.rejected`?)"
+    },
+    {
+      "say": "support tickets",
+      "keys": [
+        "support_tickets_tagged_no_confirmation"
+      ],
+      "pattern": "\\b(\\d[\\d,]*)\\s+(?:[A-Za-z-]+\\s+){0,2}?tickets?\\b"
+    }
+  ]
+}

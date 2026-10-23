@@ -817,3 +817,4 @@ Run hands-on work only in your own projects and repositories, or in a local lab.
 - NIST SP 800-218A, Secure Software Development Practices for Generative AI and Dual-Use Foundation Models — https://csrc.nist.gov/pubs/sp/800/218/a/final
 - Willison, S. (2025), "The lethal trifecta for AI agents" — https://simonwillison.net/
 - Model Context Protocol — https://modelcontextprotocol.io/
+- [*A Practical Guide to Becoming an AI-Native Engineer*, lesson 8.1 — When an agent has your keyboard: injection, secrets, destructive commands, hallucinated packages, permissions and sandboxes](../ainative/index.html#/8.1) — the day-to-day AI-native engineering view of this topic

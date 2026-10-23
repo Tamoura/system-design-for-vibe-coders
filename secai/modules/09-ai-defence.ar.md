@@ -500,6 +500,7 @@ def freeze_card(session, card_last4: str) -> dict:
 - مواصفة بروتوكول سياق النموذج (Model Context Protocol specification)، بما فيها صفحات التفويض وأفضل الممارسات الأمنية (including its authorization and security best practices pages) — https://modelcontextprotocol.io
 - RFC 8693، تبادل الرموز المميزة في OAuth 2.0 (OAuth 2.0 Token Exchange) — https://www.rfc-editor.org/rfc/rfc8693
 - [*بناء تطبيقات الذكاء الاصطناعي والوكلاء من الصفر إلى الاحتراف (Building AI Applications & Agents: Zero to Hero)*، الدرس 10.1 — بروتوكول سياق النموذج وأقل الصلاحيات (The Model Context Protocol and least privilege)](../aiapps/index.ar.html#/10.1) — منظور البناء والتسليم (build and ship) لهذا الموضوع
+- [*دليل عملي لتصبح مهندسًا أصيلًا في الذكاء الاصطناعي (A Practical Guide to Becoming an AI-Native Engineer)*، الدرس 8.2 — المختبر: عزّز إعدادك بالصلاحيات وخطاف حماية وفحص اعتماديات (Lab: harden your setup with permissions, a guard hook and a dependency check)](../ainative/index.ar.html#/8.2) — منظور الهندسة اليومية الأصيلة في الذكاء الاصطناعي (AI-native engineering) لهذا الموضوع
 
 ---
 

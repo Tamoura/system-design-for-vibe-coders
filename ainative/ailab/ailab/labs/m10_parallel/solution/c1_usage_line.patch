@@ -1,0 +1,25 @@
+diff --git a/src/remit/limits.py b/src/remit/limits.py
+index 28d7832..e78014e 100644
+--- a/src/remit/limits.py
++++ b/src/remit/limits.py
+@@ -108,6 +108,20 @@ def month_window(now: datetime) -> tuple[datetime, datetime]:
+     return start, end
+ 
+ 
++
++def usage_line(tier: str, history: Iterable[HistoryItem], now: datetime) -> str:
++    """One line for Customer Care: where a customer stands against the daily and monthly limits, for example
++    ``T2: today 3000.00 of 10000.00 QAR used (7000.00 left); this month 12000.00 of 40000.00 QAR used (28000.00 left)``."""
++    # The smallest possible amount: we only want the "used" figures, and check_limits already knows the Qatar windows.
++    result = check_limits(tier, history, Money("0.01", "QAR"), now)
++    return (
++        f"{tier}: today {result.daily_used.amount:.2f} of {result.daily_limit.amount:.2f} QAR used "
++        f"({result.daily_remaining.amount:.2f} left); "
++        f"this month {result.monthly_used.amount:.2f} of {result.monthly_limit.amount:.2f} QAR used "
++        f"({result.monthly_remaining.amount:.2f} left)"
++    )
++
++
+ def check_limits(tier: str, history: Iterable[HistoryItem], amount: Money, now: datetime) -> LimitResult:
+     """Can a customer of KYC ``tier`` send ``amount`` (QAR) at time ``now``?
+ 

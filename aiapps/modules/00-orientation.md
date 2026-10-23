@@ -973,3 +973,5 @@ The tests in `labkit/tests/test_m00_flawed_chat.py` prove each flaw against the 
 - Claude Code hooks: https://code.claude.com/docs/en/hooks
 - Claude Code repository: https://github.com/anthropics/claude-code
 - [*System Design for Vibe Coders*, lesson 9.5 — Claude Code power techniques](../vibe/index.en.html#l9-5)
+- [*A Practical Guide to Becoming an AI-Native Engineer*, lesson 0.3 — The AI-native loop: specify, delegate, verify, integrate, and who stays accountable](../ainative/index.html#/0.3) — the day-to-day AI-native engineering view of this topic
+- [*A Practical Guide to Becoming an AI-Native Engineer*, lesson 4.1 — Explore, plan, implement, check, commit: small steps, checkpoints and when to take the wheel](../ainative/index.html#/4.1) — the day-to-day AI-native engineering view of this topic

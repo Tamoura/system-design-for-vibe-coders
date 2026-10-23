@@ -1,0 +1,21 @@
+diff --git a/src/remit/corridors.py b/src/remit/corridors.py
+index 0adac59..09a3f96 100644
+--- a/src/remit/corridors.py
++++ b/src/remit/corridors.py
+@@ -73,6 +73,16 @@ def all_corridors() -> list[Corridor]:
+     return [CORRIDORS[code] for code in sorted(CORRIDORS)]
+ 
+ 
++def describe(corridor: Corridor) -> str:
++    """One line for Customer Care, for example
++    ``QAR-INR: 50.00 to 25000.00 QAR; delivery: bank_deposit (default), wallet; fees: STD-A``."""
++    methods = [f"{m} (default)" if i == 0 else m for i, m in enumerate(corridor.delivery_methods)]
++    return (
++        f"{corridor.code}: {corridor.min_send.amount:.2f} to {corridor.max_send.amount:.2f} {corridor.send_currency}; "
++        f"delivery: {', '.join(methods)}; fees: {corridor.fee_schedule}"
++    )
++
++
+ def validate_send(corridor: Corridor, amount: Money, delivery_method: str | None = None) -> str:
+     """Check an amount and delivery method against a corridor; return the method to use.
+ 

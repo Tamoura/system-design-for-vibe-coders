@@ -1,0 +1,38 @@
+diff --git a/tests/test_ledger_partner_share.py b/tests/test_ledger_partner_share.py
+new file mode 100644
+index 0000000..f5bdd50
+--- /dev/null
++++ b/tests/test_ledger_partner_share.py
+@@ -0,0 +1,32 @@
++"""Characterization tests for the partner's share of the fee (quirk Q-LED-1).
++
++The partner gets 30% of the fee, rounded half-even, while every other amount in Remit rounds half-up.
++These tests pin what the code does today; they do not say it is right.
++"""
++from decimal import Decimal
++
++from remit import ledger
++from remit.money import Money
++
++
++def qar(value):
++    return Money(value, "QAR")
++
++
++def test_a_half_cent_with_an_even_digit_before_it_rounds_down():
++    ledger.post_transfer("TRF-1", "C1", qar("500.00"), qar("10.15"))  # 30% of 10.15 is 3.045
++    assert ledger.balance(ledger.ACCOUNT_PARTNER) == Decimal("3.04")
++    assert ledger.balance(ledger.ACCOUNT_FEE_INCOME) == Decimal("7.11")
++
++
++def test_the_same_rule_applies_to_every_such_fee():
++    ledger.post_transfer("TRF-2", "C1", qar("500.00"), qar("10.35"))  # 30% of 10.35 is 3.105
++    assert ledger.balance(ledger.ACCOUNT_PARTNER) == Decimal("3.10")
++    assert ledger.balance(ledger.ACCOUNT_FEE_INCOME) == Decimal("7.25")
++
++
++def test_the_postings_always_add_up():
++    entries = ledger.post_transfer("TRF-3", "C1", qar("500.00"), qar("10.15"))
++    debits = sum(e["amount"] for e in entries if e["side"] == "D")
++    credits = sum(e["amount"] for e in entries if e["side"] == "C")
++    assert debits == credits == Decimal("510.15")

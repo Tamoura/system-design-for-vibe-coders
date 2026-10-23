@@ -1,0 +1,20 @@
+diff --git a/src/remit/fx.py b/src/remit/fx.py
+index bd93fcb..e6105e7 100644
+--- a/src/remit/fx.py
++++ b/src/remit/fx.py
+@@ -33,6 +33,7 @@ DEFAULT_MID_RATES: dict[str, Decimal] = {
+     "QAR-PHP": Decimal("15.40"),
+     "QAR-EGP": Decimal("13.20"),
+     "QAR-PKR": Decimal("77.00"),
++    "QAR-BDT": Decimal("33.46"),
+ }
+ 
+ # Fictional margins taken off the mid rate, per corridor (0.0100 is 1.00%).
+@@ -41,6 +42,7 @@ CORRIDOR_MARGINS: dict[str, Decimal] = {
+     "QAR-PHP": Decimal("0.0125"),
+     "QAR-EGP": Decimal("0.0150"),
+     "QAR-PKR": Decimal("0.0150"),
++    "QAR-BDT": Decimal("0.0175"),
+ }
+ 
+ 

@@ -1,0 +1,22 @@
+diff --git a/docs/ARCHITECTURE.md b/docs/ARCHITECTURE.md
+index 6cd46da..d009434 100644
+--- a/docs/ARCHITECTURE.md
++++ b/docs/ARCHITECTURE.md
+@@ -10,7 +10,7 @@ and in the code are fictional.
+ | Module | Responsibility |
+ |---|---|
+ | `money.py` | `Money`: an immutable amount of one currency on `Decimal`, rounded half up |
+-| `corridors.py` | The registry of supported routes (QAR to INR, PHP, EGP, PKR) and their per-transfer limits |
++| `corridors.py` | The registry of supported routes (QAR to INR, PHP, EGP, PKR, BDT) and their per-transfer limits |
+ | `fees.py` | Tiered fee schedules and `quote_fee` |
+ | `fx.py` | Rate providers, corridor margins and 60-second FX quotes |
+ | `risk.py` | Risk checks: sending limits and name screening, behind a single `check()` call |
+@@ -65,7 +65,7 @@ ids come from `najmkit.ids`.
+ * A fee schedule is a table of tiers. The tier is picked by the **whole send amount**
+   (not marginally), with the upper bound included. Each tier is a percentage plus a flat
+   amount. A minimum and a cap apply, and the express surcharge is added after the cap.
+-* Two schedules exist, `STD-A` (INR, PHP) and `STD-B` (EGP, PKR).
++* Three schedules exist, `STD-A` (INR, PHP), `STD-B` (EGP, PKR) and `STD-C` (BDT).
+ * FX: the customer rate is the mid-market rate less the corridor's margin, rounded half
+   up to four decimals. A quote lasts 60 seconds.
+ 
