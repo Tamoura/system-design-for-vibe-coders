@@ -1,0 +1,135 @@
+{
+  "area": "m13",
+  "questions": [
+    {
+      "id": "m13-1",
+      "level": 1,
+      "lesson": "13.1",
+      "q": {
+        "en": "Lujain's agent rewrites the monthly-limit check in `check_limits`. The diff is tidy and well commented, but she cannot say why the old code compared amounts the way it did, so she cannot tell whether the change is safe. What is she missing?",
+        "ar": "أعاد الوكيل (agent) الذي تستعين به لجين كتابة فحص الحد الشهري (monthly-limit check) في `check_limits`. الفروقات (diff) مرتبة وموثّقة بتعليقات جيدة (well commented)، لكنها لا تستطيع أن تقول لماذا كانت الشيفرة القديمة (old code) تقارن المبالغ بتلك الطريقة، فلا تعرف إن كان التغيير آمنًا (safe). ماذا ينقصها؟"
+      },
+      "o": {
+        "en": [
+          "A sharper prompt, since better wording would make the agent flag its own risky changes to her",
+          "A bigger context window, since the agent could then see the whole module and justify itself",
+          "Skill in reading code and asking why, since past that edge she is trusting, not reviewing",
+          "A stronger model, since the newest ones no longer make unsafe changes in money logic"
+        ],
+        "ar": [
+          "موجّه (prompt) أدق صياغة، فالصياغة الأفضل تجعل الوكيل (agent) ينبّه بنفسه إلى تغييراته الخطرة (risky changes)",
+          "نافذة سياق (context window) أكبر، فيرى الوكيل (agent) الوحدة كلها (whole module) ويبرّر ما فعله بنفسه",
+          "مهارة قراءة الشيفرة (reading code) وسؤال لماذا، فهي فيما يتجاوز ما تقرؤه تثق (trusting) ولا تراجع (reviewing)",
+          "نموذج (model) أقوى، فأحدث النماذج لم تعد تُجري تغييرات غير آمنة (unsafe changes) في منطق الأموال (money logic)"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Verification stands on being able to read: past the edge of what she can read she is trusting, not reviewing, and the lesson calls the missing piece a fundamental, not a prompt trick. A sharper prompt is the tempting fix, but it cannot give her the understanding she needs to judge the answer.",
+        "ar": "يقوم التحقق (verification) على القدرة على القراءة (reading)، فخارج ما تستطيع قراءته تثق ولا تراجع (reviewing)؛ وقد سمّى الدرس الحلقة الناقصة مهارة أساسية (fundamental) لا حيلة موجّه (prompt trick). والموجّه الأدق هو الحل المغري (tempting fix)، لكنه لا يمنحها الفهم الذي تحتاجه لتحكم على الإجابة."
+      }
+    },
+    {
+      "id": "m13-2",
+      "level": 2,
+      "lesson": "13.2",
+      "q": {
+        "en": "Lujain adds an eval task, \"write boundary tests for the monthly limit in `check_limits`\". Her check runs the tests the tool writes and passes when they pass. Nada warns that a lazy answer can pass it. Which change makes the check trustworthy?",
+        "ar": "تضيف لجين إلى تقييمها (eval) مهمة: «اكتب اختبارات حدّية (boundary tests) للحد الشهري في `check_limits`». يشغّل فحصها (check) الاختبارات (tests) التي تكتبها الأداة (tool) وينجح حين تنجح. تحذّر ندى من أن إجابة كسولة (lazy answer) قد تمرّ منه. أي تغيير يجعل الفحص جديرًا بالثقة؟"
+      },
+      "o": {
+        "en": [
+          "Require at least four new test functions in the test file, so that an empty file cannot pass",
+          "Add a guard that runs the whole existing suite both before and after the tool's work",
+          "Run the tool's tests three times and count the task as passed only if every run passes",
+          "Run the tests on the real code, then on a copy with the rule changed, where they must fail"
+        ],
+        "ar": [
+          "اشتراط أربع دوال اختبار جديدة على الأقل (at least four new test functions) في ملف الاختبار، فلا يمرّ ملف فارغ (empty file)",
+          "إضافة حارس (guard) يشغّل مجموعة الاختبارات (test suite) القائمة كلها قبل عمل الأداة (tool) وبعده (before and after)",
+          "تشغيل اختبارات الأداة (tool) ثلاث مرات (three times)، واعتبار المهمة ناجحة (passed) فقط إذا نجحت كل مرة منها بلا استثناء",
+          "تشغيل الاختبارات على الشيفرة الحقيقية (real code)، ثم على نسخة غُيّرت قاعدتها (copy with a changed rule) فيجب أن تفشل"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "A test that asserts nothing passes on any code, so a check must show that the tests fail when the rule is wrong: it runs them on the real code and on a copy with the rule changed. Counting test functions, the tempting safeguard, is beaten by a function with an empty body.",
+        "ar": "الاختبار (test) الذي لا يتحقق من شيء ينجح على أي شيفرة (code)، لذا يجب أن يُظهر الفحص (check) أن الاختبارات تفشل حين تكون القاعدة (rule) خاطئة: فيشغّلها على الشيفرة الحقيقية وعلى نسخة غُيّرت قاعدتها. وعدّ دوال الاختبار (test functions)، وهو الضمان المغري (tempting safeguard)، يتغلب عليه ببساطة اختبار بجسم فارغ (empty body)."
+      }
+    },
+    {
+      "id": "m13-3",
+      "level": 2,
+      "lesson": "13.1",
+      "q": {
+        "en": "An agent reorders the steps inside `send`. Lujain reads the whole diff, finds nothing odd, and wants a real test of her own understanding before she opens the pull request. What should she do?",
+        "ar": "أعاد وكيل (agent) ترتيب الخطوات (steps) داخل `send`. قرأت لجين الفروقات (diff) كلها فلم تجد شيئًا غريبًا (nothing odd)، وتريد اختبارًا حقيقيًا لفهمها (understanding) هي قبل أن تفتح طلب الدمج (pull request). ماذا ينبغي أن تفعل؟"
+      },
+      "o": {
+        "en": [
+          "Close the diff, explain each changed line from memory in writing, then open it and compare",
+          "Read the diff a second time, slowly, and tick off each change once she is sure she follows it",
+          "Ask the agent to explain the change line by line, and check that its account sounds right",
+          "Ask a second agent session to review the change, and relax if it reports no faults in it"
+        ],
+        "ar": [
+          "أن تغلق الفروقات (diff)، وتشرح كل سطر تغيّر (changed line) من الذاكرة (from memory)، ثم تفتحها وتقارن (compare)",
+          "أن تقرأ الفروقات (diff) مرة ثانية ببطء (slowly)، وتضع علامة على كل تغيير (change) حين تتيقن أنها تتابعه (follows it)",
+          "أن تطلب من الوكيل (agent) شرح التغيير (change) سطرًا سطرًا، وتتأكد أن روايته (account) للأمر تبدو صحيحة",
+          "أن تطلب من جلسة وكيل (agent session) ثانية مراجعة التغيير (change)، وتطمئن إذا لم تُبلغ عن أي عيوب (faults)"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Explain-back makes her produce the explanation from memory before the diff can prompt it, so it shows what she does not follow. Re-reading the diff, the tempting choice, only recognises what is already on the page.",
+        "ar": "يجبرها الشرح العكسي (explain-back) على إنتاج الشرح من الذاكرة (from memory) قبل أن تذكّرها الفروقات (diff) به، فيكشف ما لا تفهمه. أما إعادة قراءة الفروقات، وهي الخيار المغري (tempting choice)، فلا تتيح إلا التعرّف على ما هو مكتوب أمامها (recognising what is on the page)."
+      }
+    },
+    {
+      "id": "m13-4",
+      "level": 3,
+      "lesson": "13.2",
+      "q": {
+        "en": "Lujain runs `baseline` on her eval and every check fails on the untouched repository, as she wants. Nada asks her to read the reasons. For T04 it prints a `ModuleNotFoundError` raised inside the check script itself, not a message about the missing behaviour. What should she do?",
+        "ar": "شغّلت لجين الأمر `baseline` على تقييمها (eval) ففشلت كل الفحوص (checks) على المستودع الأصلي دون تعديل (untouched repository) كما أرادت. تطلب منها ندى قراءة الأسباب (reasons) التي يطبعها. وفي المهمة (task) T04 يطبع خطأ `ModuleNotFoundError` صادرًا من داخل سكربت الفحص (check script) نفسه، لا رسالة عن السلوك الناقص (missing behaviour). ماذا ينبغي أن تفعل؟"
+      },
+      "o": {
+        "en": [
+          "Accept it, since failing on the untouched repository is what `baseline` exists to prove",
+          "Repair the crash and run the check by hand until it fails because the behaviour is missing",
+          "Add a guard to T04, so that the guard catches whatever the crashing check cannot see",
+          "Run `baseline` again, since an error like that usually comes from a busy machine, not the check"
+        ],
+        "ar": [
+          "أن تقبله، فالفشل على المستودع الأصلي (untouched repository) هو الخاصية التي وُجد `baseline` ليثبتها (to prove)",
+          "أن تصلح الانهيار (crash) وتشغّل الفحص (check) يدويًا (by hand) حتى يفشل لأن السلوك (behaviour) ناقص فعلًا",
+          "أن تضيف حارسًا (guard) إلى T04، ليلتقط الحارس ما يعجز الفحص المنهار (crashing check) عن رؤيته (see)",
+          "أن تعيد تشغيل `baseline`، فخطأ كهذا يأتي عادة من جهاز مشغول (busy machine) لا من الفحص (check)"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "A check that crashes on a bug of its own also fails on the untouched repository, so its failure says nothing about the task; she must fix it and see it fail because the behaviour is missing. Accepting the failure is tempting because a failure is what `baseline` should show, but the reason is what counts.",
+        "ar": "الفحص (check) الذي ينهار (crashes) بسبب خطأ فيه هو نفسه يفشل على المستودع الأصلي (untouched repository)، فلا يقول فشله شيئًا عن المهمة (task)؛ فعليها إصلاحه حتى يفشل لأن السلوك (behaviour) ناقص. وقبول الفشل مغرٍ (tempting) لأن الفشل هو ما ينبغي أن يظهره `baseline`، لكن السبب (the reason) هو المهم."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m13-e1",
+      "lesson": "13.1",
+      "text": {
+        "en": "I have filled in a Skills map for the six fundamentals with no agent, giving every row a date, a confidence from 1 to 5 and a sentence of evidence, and I have marked one weak skill to lift first.",
+        "ar": "لقد ملأتُ خريطة المهارات (Skills map) للمهارات الأساسية الست (six fundamentals) دون وكيل (agent)، وأعطيتُ كل صف تاريخًا (date) ودرجة ثقة (confidence) من 1 إلى 5 وجملة دليل (evidence)، وحدّدتُ مهارة ضعيفة واحدة لأرفعها أولًا (lift first)."
+      }
+    },
+    {
+      "id": "m13-e2",
+      "lesson": "13.2",
+      "text": {
+        "en": "I have built a personal eval of eight or more tasks, each with a check that fails on the untouched repository, passes on a reference I trust and rejects a lazy answer, and the eval checks of `python -m ailab grade m13` pass.",
+        "ar": "لقد بنيتُ تقييمًا شخصيًا (personal eval) من ثماني مهام على الأقل، لكل منها فحص (check) يفشل على المستودع الأصلي (untouched repository) وينجح على حل مرجعي (reference) أثق به ويرفض الإجابة الكسولة (lazy answer)، وتنجح فحوص التقييم في `python -m ailab grade m13`."
+      }
+    }
+  ]
+}
