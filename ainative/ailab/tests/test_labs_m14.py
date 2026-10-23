@@ -517,6 +517,16 @@ def test_allow_rules_that_can_delete_publish_or_run_anything(work, risky):
     assert_failing(grade(work), SETTINGS)
 
 
+@pytest.mark.parametrize("rule", ["Bash(rm -Rf *)", "Bash(rm -r *)", "Bash(rm -fr *)"])
+def test_other_spellings_of_the_recursive_delete_deny_rule_are_sound(work, rule):
+    path = work / ".claude/settings.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    data["permissions"]["deny"] = [rule if r.startswith("Bash(rm") else r for r in data["permissions"]["deny"]]
+    path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+    commit(work, "chore(claude): spell the delete rule another way")
+    assert_failing(grade(work))
+
+
 def test_settings_that_do_not_register_the_hook(work):
     path = work / ".claude/settings.json"
     data = json.loads(path.read_text(encoding="utf-8"))
@@ -742,6 +752,15 @@ def test_a_bad_commit_message(work):
     result = grade(work)
     assert_failing(result, MESSAGES)
     assert "Update the log." in result[MESSAGES].detail
+    assert "type(scope): subject" in result[MESSAGES].hint and "72" in result[MESSAGES].hint
+
+
+def test_too_few_commits_get_a_hint_about_small_steps_not_commit_your_change(work):
+    gitutil.git(work, "reset", "-q", "--soft", "HEAD~12")
+    commit(work, "feat(corridors): open the Bangladesh corridor and write all the documents")
+    few = grade(work)[MESSAGES]
+    assert not few.ok and "expected at least 8" in few.detail
+    assert "at least 8 commits" in few.hint and "Commit your change" not in few.hint
 
 
 def test_an_uncommitted_file(work):
@@ -1003,6 +1022,9 @@ def test_documents_may_be_named_before_they_exist_and_the_denial_rule_is_per_lin
     assert checks_m14.unresolved_paths("See `docs/other.md` and `fees.py`.", files) == ["docs/other.md"]
     assert checks_m14.unresolved_paths("`risk.py` does not exist.\nBut `risk.py` is used here.", files) == ["risk.py"]
     assert checks_m14.unresolved_paths("The old `rates.py` is gone.", files) == []
+    # the denial excuses its own sentence or table cell, not the whole line or row
+    assert checks_m14.unresolved_paths("| 1 | `tests/old.py` | fails because the corridor does not exist yet |", files) == ["tests/old.py"]
+    assert checks_m14.unresolved_paths("`a.py` does not exist. See `b.py`.", files) == ["b.py"]
 
 
 def test_the_word_todo_in_a_sentence_is_fine_but_a_placeholder_is_not(work):

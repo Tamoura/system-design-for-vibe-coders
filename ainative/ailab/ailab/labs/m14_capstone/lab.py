@@ -80,7 +80,8 @@ def grade(work: Path) -> list[Check]:
         checks.files_changed_within(
             work, m14.ALLOWED_TO_CHANGE, name="Only the expected files changed",
             hint="The ticket needs corridors.py, fees.py, fx.py, notify.py and service.py, new tests, documents and agent configuration. "
-                 "Undo the rest with git restore --source=lab-start <file>, and keep throwaway scripts outside the repository."),
+                 "Undo a file that existed with git restore --source=lab-start <file>, a file you added with git rm, then commit. "
+                 "Keep throwaway scripts outside the repository."),
         # -- 2. the evidence around it --------------------------------------------------
         m14.memory_check(work, files),
         m14.spec_check(work),
@@ -96,7 +97,7 @@ def grade(work: Path) -> list[Check]:
         m14.retro_check(work, files),
         # -- 3. hygiene and security ----------------------------------------------------
         checks.all_committed(work, name="Everything is committed"),
-        checks.conventional_commits(work, min_commits=MIN_COMMITS),
+        m14.commit_messages_check(work, MIN_COMMITS),
         m14.one_thing_per_commit_check(work),
         checks.no_secrets(work),
         m14.forbidden_constructs_check(work),

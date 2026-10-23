@@ -3,9 +3,10 @@
 The capstone asks for a code change and ten pieces of evidence around it. The code is graded by hidden tests; the
 evidence is graded by the functions below, and what they can see is limited, so they check three things only:
 
-* **shape**: the document exists, has the sections the template asks for, and no ``TODO`` is left in it;
-* **truth**: whatever a document says about the repository can be looked up (a path exists, a number matches the
-  code, a commit hash is in the history, a hook really blocks a command);
+* **shape**: the document exists, has the sections the template asks for, and no ``TODO`` placeholder is left in it
+  (a line or table cell that starts with it, or ``TODO:``; the word inside a sentence is fine);
+* **truth**: whatever a document says about the repository can be looked up (a path exists unless its sentence or table
+  cell says it does not, a number matches the code, a commit hash is in the history, a hook really blocks a command);
 * **cross-reference**: the documents point at each other (every acceptance criterion of the spec appears in the
   plan and in a test; the retrospective quotes the total of the agent log; the review names the files that changed).
 
@@ -123,13 +124,22 @@ _DENIES_EXISTENCE = re.compile(
 DELIVERABLES = {SPEC, PLAN, REVIEW, AGENT_LOG, RETRO, CORRIDORS_DOC, ARCH_DOC, SETTINGS, GUARD, *MEMORY_FILES}
 
 
-def unresolved_paths(text: str, files: set[str]) -> list[str]:
-    """Paths written in backticks that do not exist. Skipped: files this lab asks for, and lines that say a file is absent."""
-    bad: list[str] = []
+def _claim_units(text: str):
+    """The pieces of text a denial can excuse a path in: one table cell, or one sentence of a line."""
     for line in text.splitlines():
-        if _DENIES_EXISTENCE.search(line):
+        if line.strip().startswith("|"):
+            yield from line.strip().strip("|").split("|")
+        else:
+            yield from re.split(r"(?<=[.!?;])\s+", line)
+
+
+def unresolved_paths(text: str, files: set[str]) -> list[str]:
+    """Paths written in backticks that do not exist. Skipped: files this lab asks for, and a cell or sentence that says a file is absent."""
+    bad: list[str] = []
+    for unit in _claim_units(text):
+        if _DENIES_EXISTENCE.search(unit):
             continue
-        for token in ticks(line):
+        for token in ticks(unit):
             promised = token.removeprefix("./") in DELIVERABLES or token.startswith(f"{ADR_DIR}/")
             if looks_like_path(token) and not promised and not resolves(token, files) and token not in bad:
                 bad.append(token)
@@ -559,7 +569,7 @@ def settings_check(work: Path) -> Check:
         problems.append("no deny rule for ~/.ssh or ~/.aws")
     if not any(r.startswith("Bash(") and "git push" in r for r in deny):
         problems.append("git push is not denied")
-    if not any(r.startswith("Bash(") and re.search(r"rm\s+-(rf|fr|r)\b", r) for r in deny):
+    if not any(r.startswith("Bash(") and re.search(r"rm\s+-[A-Za-z]*[rR]", r) for r in deny):
         problems.append("rm -rf is not denied")
     wide = [r for r in rules["allow"] if _RISKY_ALLOW.search(r)]
     if wide:
@@ -869,6 +879,21 @@ def commit_files(work: Path, sha: str) -> list[str]:
     return gitutil.out(work, "diff-tree", "--no-commit-id", "--name-only", "-r", sha).splitlines()
 
 
+def commit_messages_check(work: Path, min_commits: int) -> Check:
+    """The kit's Conventional Commits check, with hints that fit what the learner actually did (commits that exist, not "commit your change")."""
+    result = checks.conventional_commits(work, min_commits=min_commits)
+    if result.ok:
+        return result
+    if "since the start; expected at least" in result.detail:
+        hint = (f"Work in small steps and commit each one: at least {min_commits} commits, one kind of change each. "
+                "The plan has one row, and so one commit header, per step.")
+    else:
+        hint = ("Open CONTRIBUTING.md: type(scope): subject, a lower-case scope (any module or area, such as claude or specs), "
+                "72 characters at most, no full stop. Fix the last commit with git commit --amend; for an older one, rebase, "
+                "and then copy a commit hash into your retrospective again.")
+    return Check(result.name, False, result.detail, hint, result.required)
+
+
 def one_thing_per_commit_check(work: Path) -> Check:
     name = "Each commit is about one thing"
     commits = [c for c in gitutil.commits_since(work) if not c.is_merge]
@@ -992,7 +1017,7 @@ def dependencies_check(work: Path) -> Check:
     base = gitutil.file_at(work, LAB_START_TAG, "pyproject.toml") or ""
     extra = [f for f in repo_files(work) if f.rsplit("/", 1)[-1].startswith("requirements") and f.endswith(".txt")]
     if text != base:
-        return Check(name, False, "pyproject.toml changed", "CONTRIBUTING.md: no dependency without a ticket and a second reviewer. Undo it: git restore --source=lab-start pyproject.toml")
+        return Check(name, False, "pyproject.toml changed", "CONTRIBUTING.md: no dependency without a ticket and a second reviewer. Undo it with git restore --source=lab-start pyproject.toml, then commit.")
     if extra:
         return Check(name, False, "a requirements file was added: " + short(extra), "Standard library only. Remove it.")
     return Check(name, True)
@@ -1016,7 +1041,7 @@ def tests_not_weakened_check(work: Path) -> Check:
                 problems.append(f"{rel}: {deleted} existing lines changed or removed")
     if problems:
         return Check(name, False, short(problems),
-                     "Put your tests in new files. Undo the change: git restore --source=lab-start <file>")
+                     "Put your tests in new files. Undo the change with git restore --source=lab-start <file>, then commit.")
     return Check(name, True)
 
 
@@ -1062,7 +1087,7 @@ MUTANTS = ("max-send", "tier-edge", "fee-cap", "margin", "express", "delivery")
 NOT_APPLIED = 97
 
 
-def teeth_check(work: Path, *, need: int = 4, timeout: float = 30.0) -> Check:
+def teeth_check(work: Path, *, need: int = 4, timeout: float = 45.0) -> Check:
     """Break six agreed numbers of the BDT corridor in memory, one at a time, and count how many of the learner's new
     tests notice. Required: tests that call the code and check nothing, or that compute their expected values with the
     code under test, notice none of them. It relies on the repository's own extension points (``CORRIDORS``,
