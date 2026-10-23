@@ -500,6 +500,7 @@ Noura, Tariq and Rania agree the **Najm Assist Tool Register v1**. No tool reach
 - Model Context Protocol specification, including its authorization and security best practices pages — https://modelcontextprotocol.io
 - RFC 8693, OAuth 2.0 Token Exchange — https://www.rfc-editor.org/rfc/rfc8693
 - [*Building AI Applications & Agents: Zero to Hero*, lesson 10.1 — The Model Context Protocol and least privilege](../aiapps/index.html#/10.1) — the build-and-ship view of this topic
+- [*A Practical Guide to Becoming an AI-Native Engineer*, lesson 8.2 — Lab: harden your setup with permissions, a guard hook and a dependency check](../ainative/index.html#/8.2) — the day-to-day AI-native engineering view of this topic
 
 ---
 

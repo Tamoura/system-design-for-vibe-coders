@@ -494,6 +494,7 @@ Najm's **PR checklist for graduates** (pinned in the squad's channel):
 - Google SRE book, "Postmortem Culture: Learning from Failure" — https://sre.google/sre-book/postmortem-culture/
 - [*System Design for Vibe Coders*, lesson 4.1 — Shipping is a system](../vibe/index.en.html#l4-1)
 - [*SaaS Building Blocks*, lesson 0.2 — How to read a giant open-source codebase without drowning](../saas/index.html#/0.2)
+- [*A Practical Guide to Becoming an AI-Native Engineer*, lesson 6.1 — Understanding unfamiliar code and debugging with an agent: reproduce first, hypotheses, root cause](../ainative/index.html#/6.1) — the day-to-day AI-native engineering view of this topic
 
 ---
 

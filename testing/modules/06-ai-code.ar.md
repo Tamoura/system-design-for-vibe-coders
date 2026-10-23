@@ -344,6 +344,7 @@ FAILED tests/test_refactor_guard.py::test_behaviour_is_unchanged[3090-internatio
 - Spracklen et al., "We Have a Package for You! A Comprehensive Analysis of Package Hallucinations by Code Generating LLMs" — https://arxiv.org/abs/2406.10279
 - مشروع OWASP لأمان الذكاء الاصطناعي التوليدي، أهم 10 مخاطر لتطبيقات النماذج اللغوية الكبيرة (OWASP GenAI Security Project, Top 10 for LLM Applications) — https://genai.owasp.org/
 - توثيق GitHub عن فحص الأسرار وCODEOWNERS (GitHub documentation, secret scanning and CODEOWNERS) — https://docs.github.com/
+- [*دليل عملي لتصبح مهندسًا أصيلًا في الذكاء الاصطناعي (A Practical Guide to Becoming an AI-Native Engineer)*، الدرس 5.1 — ثق بالدليل لا بالطلاقة: الاختبارات بوصفها المواصفة وقراءة الفروقات وطرق نجاح شيفرة الذكاء الاصطناعي وهي خاطئة (Trust evidence, not fluency: tests as the spec, reading diffs and the ways AI code passes while being wrong)](../ainative/index.ar.html#/5.1) — منظور الهندسة اليومية الأصيلة في الذكاء الاصطناعي (AI-native engineering) لهذا الموضوع
 
 ---
 
@@ -747,6 +748,7 @@ jobs:
 - Michael Feathers, *Working Effectively with Legacy Code* (2004) للاختبارات التوصيفية (for characterisation tests)
 - Claessen and Hughes, "QuickCheck: a lightweight tool for random testing of Haskell programs" (2000)، أصل الاختبار القائم على الخصائص (the origin of property-based testing)
 - توثيق Python (Python documentation) عن `datetime` و`zoneinfo` — https://docs.python.org/3/library/zoneinfo.html
+- [*دليل عملي لتصبح مهندسًا أصيلًا في الذكاء الاصطناعي (A Practical Guide to Becoming an AI-Native Engineer)*، الدرس 3.1 — التطوير الموجَّه بالمواصفات: من التذكرة إلى معايير القبول والقيود وما ليس من الأهداف وخطة (Spec-driven development: from ticket to acceptance criteria, constraints, non-goals and a plan)](../ainative/index.ar.html#/3.1) — منظور الهندسة اليومية الأصيلة في الذكاء الاصطناعي (AI-native engineering) لهذا الموضوع
 
 ---
 

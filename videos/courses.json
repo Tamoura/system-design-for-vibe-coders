@@ -208,7 +208,7 @@
     "stats": [
       { "value": 15, "label": "modules" },
       { "value": 31, "label": "lessons" },
-      { "value": 150, "label": "tools & patterns" },
+      { "value": 108, "label": "tools & patterns" },
       { "value": 210, "label": "practice questions" }
     ],
     "tags": ["Engineers who code · AI agents", "Graded offline labs"]

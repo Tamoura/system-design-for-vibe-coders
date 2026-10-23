@@ -532,6 +532,7 @@ def test_transfer(client):
 - [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 9.7 — تدقيق الشيفرة ومراجعتها بسرعة الوكيل (Code audit and review at agent speed)](../vibe/index.ar.html#l9-7)
 - [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 8.2 — الاختبارات بوصفها المواصفات التي لا يستطيع الوكيل تجاهلها (Tests as the spec the agent can't ignore)](../vibe/index.ar.html#l8-2)
 - [*أمن الذكاء الاصطناعي والتطبيقات: من الصفر إلى الاحتراف (Secure AI & Application Security: Zero to Hero)*، الدرس 2.1 — الحقن: حقن SQL والأوامر والقوالب (Injection: SQL, command and template injection)](../secai/index.ar.html#/2.1)
+- [*دليل عملي لتصبح مهندسًا أصيلًا في الذكاء الاصطناعي (A Practical Guide to Becoming an AI-Native Engineer)*، الدرس 5.2 — المختبر: راجع طلب دمج كتبه وكيل (Lab: review a pull request an agent wrote)](../ainative/index.ar.html#/5.2) — منظور الهندسة اليومية الأصيلة في الذكاء الاصطناعي (AI-native engineering) لهذا الموضوع
 
 ---
 

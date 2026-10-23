@@ -688,3 +688,4 @@ flowchart TD
 - ISO/IEC 42001:2023: https://www.iso.org/standard/81230.html
 - إطار NIST لإدارة مخاطر الذكاء الاصطناعي (NIST AI Risk Management Framework): https://www.nist.gov/itl/ai-risk-management-framework
 - شهادة AIGP (AIGP certification) من IAPP ومجال المعرفة (Body of Knowledge): https://iapp.org/certify/aigp/
+- [*دليل عملي لتصبح مهندسًا أصيلًا في الذكاء الاصطناعي (A Practical Guide to Becoming an AI-Native Engineer)*، الدرس 12.1 — ممارسة الفريق: الاصطلاحات وأعراف المراجعة والملكية والمبتدئون والمقاييس والسياسة (Team practice: conventions, review norms, ownership, juniors, metrics and policy)](../ainative/index.ar.html#/12.1) — منظور الهندسة اليومية الأصيلة في الذكاء الاصطناعي (AI-native engineering) لهذا الموضوع

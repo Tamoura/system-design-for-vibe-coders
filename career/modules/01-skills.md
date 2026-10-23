@@ -515,6 +515,8 @@ Tariq's comment: "I can see where the agent helped, where you overruled it, and 
 - [*Secure AI & Application Security*, lesson 6.3 — Securing AI-generated code: what coding agents get wrong](../secai/index.html#/6.3)
 - [*System Design for Vibe Coders*, lesson 9.4 — Verification before completion](../vibe/index.en.html#l9-4)
 - [*Running AI Agents in Production*, learning path, Level 1 — Builder](../agentic/learning-path.html#level-1-builder)
+- [*A Practical Guide to Becoming an AI-Native Engineer*, lesson 0.1 — What an AI-native engineer is (and is not): the shift, five habits and the evidence](../ainative/index.html#/0.1) — the day-to-day AI-native engineering view of this topic
+- [*A Practical Guide to Becoming an AI-Native Engineer*, lesson 13.1 — Skills that compound: fundamentals, taste, deliberate practice, evaluating tools and avoiding deskilling](../ainative/index.html#/13.1) — the day-to-day AI-native engineering view of this topic
 
 ---
 

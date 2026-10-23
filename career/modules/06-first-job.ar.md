@@ -494,6 +494,7 @@ flowchart RL
 - Google SRE book, "Postmortem Culture: Learning from Failure" — كتاب SRE من Google، "ثقافة المراجعة اللاحقة: التعلّم من الإخفاق" — https://sre.google/sre-book/postmortem-culture/
 - [*تصميم الأنظمة للمبرمجين بالحدس (System Design for Vibe Coders)*، الدرس 4.1 — الشحن نظام بحد ذاته (Shipping is a system)](../vibe/index.ar.html#l4-1)
 - [*لبنات بناء SaaS (SaaS Building Blocks)*، الدرس 0.2 — كيف تقرأ قاعدة شيفرة مفتوحة المصدر عملاقة دون أن تغرق (How to read a giant open-source codebase without drowning)](../saas/index.ar.html#/0.2)
+- [*دليل عملي لتصبح مهندسًا أصيلًا في الذكاء الاصطناعي (A Practical Guide to Becoming an AI-Native Engineer)*، الدرس 6.1 — فهم الشيفرة غير المألوفة وتصحيح الأخطاء مع وكيل: أعد الإنتاج أولًا، والفرضيات، والسبب الجذري (Understanding unfamiliar code and debugging with an agent: reproduce first, hypotheses, root cause)](../ainative/index.ar.html#/6.1) — منظور الهندسة اليومية الأصيلة في الذكاء الاصطناعي (AI-native engineering) لهذا الموضوع
 
 ---
 
