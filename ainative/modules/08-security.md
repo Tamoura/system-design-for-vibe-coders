@@ -1,6 +1,6 @@
 # Module 8 — Safety and security
 
-*An agent that can read your files, run your shell, reach the network, call tool servers and push to git has your hands, and it also reads text that strangers wrote. This module is about what can go wrong when you hand it your keyboard, and how to set things up so a mistake is cheap. Lesson 8.1 is the concept lesson: the threat model of an agent, prompt injection and the lethal trifecta, secrets, destructive commands, hallucinated packages and supply-chain hygiene, insecure generated code, licence and data basics, then permission design (rules, why a Bash rule is not a boundary, sandboxes, protected branches) and what to do after a mishap. Lesson 8.2 is the lab: the ticket REMIT-258, from Noura (application and AI security), asks you to give the Remit repository its own guard rails, a permission file, a guard hook and a dependency check, and to read a suspicious README the way an attacker hopes you will not.*
+*An agent that can read your files, run your shell, reach the network, call tool servers and push to git has your hands, and it also reads text that strangers wrote. This module is about what can go wrong when you hand it your keyboard, and how to set things up so a mistake is cheap. Lesson 8.1 is the concept lesson: the threat model of an agent, prompt injection and the lethal trifecta, secrets, destructive commands, hallucinated packages and supply-chain hygiene, insecure generated code, licence and data basics, then permission design (rules, why a Bash rule is not a boundary, sandboxes, protected branches) and what to do after a mishap. Lesson 8.2 is the lab: the ticket REMIT-258, from Noura (application and AI security), asks you to give the Remit repository its own guard rails, a permission file, a guard hook and a dependency check, and to read a suspicious README the way an attacker hopes you will not. Everything on the Najm side is fictional.*
 
 > **Focus:** Secure — safety wraps every step of the loop. Habit 4, *Trust evidence, not fluency*, covers the text an agent reads and the packages it names; habit 5, *Automate the loop, keep the skill*, puts the limits in a hook and a check that hold when nobody is watching, with a human still on anything that moves money.
 
@@ -46,7 +46,7 @@ One public account (hold the details loosely) shows a bigger shape. In April 202
 | MCP tool description | Invariant Labs (April 2025): "tool poisoning", instructions users cannot fully see |
 | Settings file | CVE-2025-53773: injection switched on Copilot's auto-approval; rated High, patched |
 
-These are demonstrations and disclosures, mostly from security vendors, not attack rates. Claude Code's security page advises reviewing commands before approving, not piping untrusted content to Claude, and using virtual machines for scripts and tool calls; no system is immune.
+These are demonstrations and disclosures, mostly from security vendors, not attack rates. Claude Code's security page advises reviewing commands before approving, not piping untrusted content to Claude, and using virtual machines for scripts and tool calls.
 
 **The lethal trifecta** is Simon Willison's 2025 framing, one practitioner's argument rather than a study: an agent with private data, untrusted content and a way to communicate externally can be steered into leaking the data. Ask of each task: which leg can I remove?
 
@@ -77,7 +77,7 @@ Hygiene, cheapest first: a **person** adds dependencies (CONTRIBUTING.md: a tick
 +        run: curl -s https://get.csvtidy.example.invalid/setup.sh | sh
 ```
 
-Three findings: two unapproved packages and no lockfile; a download piped into a shell inside CI, which holds secrets; no sign of a ticket or reviewer. `csvtidy` is made up for the exercise (a real package with a similar name may exist and is unrelated); `csvtidy-extras` was unregistered when checked, but anyone could register it: slopsquatting.
+Three findings: two unapproved packages and no lockfile; a download piped into a shell inside CI, which holds secrets; no sign of a ticket or reviewer. `csvtidy` is a made-up vendor library (a real package with a similar name may exist and is unrelated); `csvtidy-extras` was unregistered when checked, but anyone could register it: slopsquatting. Neither is on the allow-list.
 
 **Insecure generated code.** Pearce et al. found about 40 percent of 1,689 Copilot programs vulnerable (a 2021-era tool); Perry et al. (CCS 2023), in one user study of an early assistant, found users wrote significantly less secure code yet were more likely to believe it secure. Results depend on task, tool and date: a reason to review, not a rate. Remit has a planted example, `Store.search_by_name`; find it with the security pass of lesson 5.1.
 

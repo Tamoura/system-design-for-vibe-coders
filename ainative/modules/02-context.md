@@ -388,7 +388,7 @@ python -m remit quote QAR 500 INR  # what an agent tries first
 ls src/remit                       # is there a risk.py?
 ```
 
-The second command fails in a fresh shell (your path will differ), and your file should say why:
+The second command fails in a fresh shell, and your file should say why:
 
 ```text
 /usr/local/bin/python: No module named remit
@@ -408,7 +408,7 @@ Run every command you put in it and show me the output. Quote the file behind ea
 
 ### 🟡 Going deeper
 
-**Design the experiment honestly.** One variable changes: the memory file. Same tool, model and prompt, a fresh session, two fresh copies. REMIT-252 (`quote --json`) lets the memory matter in several places: the easy way to print a `Decimal` as JSON is `float(...)` or `default=float`, which breaks the money rule; the CLI needs `PYTHONPATH=src`; the tests have a home, `tests/test_config_cli.py`; the commit has a rule. Those are hypotheses, not promises.
+**Design the experiment honestly.** One variable changes: the memory file. Same tool, model and prompt, a fresh session, two fresh copies. REMIT-252 (`quote --json`) lets the memory matter in several places: the easy way to print a `Decimal` as JSON is `float(...)` or `default=float`, which breaks the money rule; the CLI needs `PYTHONPATH=src`; the tests have a home, `tests/test_config_cli.py`; the commit has a rule.
 
 **Measure six things:** the rows of the table in `ab-notes.md`. A *wrong turn* is each time you had to stop, correct or redirect the agent; count from the transcript.
 
@@ -485,7 +485,7 @@ python -m ailab start m02 --dir ~/ainative/m02
 cd ~/ainative/m02
 ```
 
-**Your move, part 1: the file.** By hand: the five steps above. With an agent: the drafting prompt, then review the draft, correct it, run each command yourself and write the file. Grade it (below) as often as you like: each failing line names what is wrong, never the answer. Commit with a message such as `docs(memory): add CLAUDE.md for coding agents`.
+**Your move, part 1: the file.** By hand: the five steps above. With an agent: the drafting prompt, then review the draft, correct it, run each command yourself and write the file. Grade it as often as you like: each failing line names what is wrong, never the answer. Commit with a message such as `docs(memory): add CLAUDE.md for coding agents`.
 
 **Your move, part 2: the experiment.** Make two clean copies with no lab files, not even in git history, or the agent can read `TASK.md` and start writing a memory file. Copy your file into B only.
 
@@ -545,7 +545,7 @@ This is the real output on the starting state, with the fifteen further `waiting
 …
 [PASS] No secrets in the change
 [FAIL] ab-notes.md is filled in: 20 TODO placeholders left
-       hint: Fill every section. Report what happened, including 'no difference'. The grader checks completeness, not that the memory won.
+       hint: Fill every section. Report what happened, including 'no difference'. The grader checks completeness, not that the memory won; the opening paragraph of ab-notes.md lists what it reads.
 [FAIL] The notes quote real lines of your memory: waiting for a memory file
 [FAIL] Your commits follow CONTRIBUTING.md: found 0 commits since the start; expected at least 1
        hint: Commit your change.

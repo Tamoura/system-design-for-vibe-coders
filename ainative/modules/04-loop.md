@@ -109,7 +109,7 @@ Anthropic, the maker of Claude Code, found that five assistants consistently sho
 
 **Done means verified.** Meta's engineering blog describes a small team building its Forum app with an AI agent as a participant. Meta reports that it measured success by production-ready changes, not code volume, and set the bar "at verification rather than compilation": a task is complete only after automated tests and visual checks pass, not when the code compiles. It also reports that when the agent repeated a mistake more than twice, the team encoded the correction once, for everyone. Meta's target is "human-on-the-loop": the agent runs the plan, build, test and correct cycle while an engineer sets the goal and approves the result. The post calls this a target, not a finished state. All of it is a company's account of its own practice, not independent evidence. The habits carry over: "done" is a check you ran, and a correction you make a third time belongs in `CLAUDE.md`, a test or a hook (Modules 2 and 9).
 
-**Gate the stop.** An agent stops when it believes it is done. The page names three ways to make "done" require your check: a `/goal` condition, a Stop hook or a verification subagent (lesson 9.1; how each behaves changes, so check the documentation).
+**Gate the stop.** An agent stops when it believes it is done. The page names three ways to make "done" require your check: a `/goal` condition, a Stop hook or a verification subagent (lesson 9.1 covers hooks and subagents, not `/goal`; check the current documentation).
 
 **How long a leash.** The course's default is Manual or `acceptEdits` mode with a check after every step; the mode Claude Code starts in depends on its version, plan and provider, so read the status bar. Longer leashes (auto mode, background and headless runs) pay when the work is specified, checkable and cheap to throw away, but you lose the cues, since you cannot interrupt what you are not watching: automate the checks. The documentation says auto mode "does not guarantee safety".
 
@@ -273,7 +273,7 @@ The clinic's rule: no pull request without a filled checklist, and no "the agent
 ## ⚡ In 60 seconds
 - **Lab m04.** Hessa's ticket REMIT-318: when a successful transfer takes a customer to 80% of their daily limit or more, send a second message, in English or Arabic. About 25 lines of code, and five easy ways to get them wrong.
 - You run the whole loop: explore, a spec with a plan, small green commits, tests that fail without the feature, an agent log.
-- **Needs an agent: recommended, not required.** The grader cannot tell who typed the code.
+- **Needs an agent: no (recommended, not required).** The grader cannot tell who typed the code.
 - The grader runs hidden acceptance tests, then breaks the warning on purpose to see whether your tests notice. It cannot tell whether you read the diff or decided well.
 
 ## 🧭 Why it matters
@@ -338,7 +338,7 @@ existing test, and do not commit. Show me the diff when pytest -q is green.
 | **Agent log** | Prompt, result, corrections, checks, minutes | After every session |
 
 ## 🏛️ In practice at Najm Bank
-*Needs an agent: recommended, not required.* **No-agent path:** do every step yourself, or ask a chat assistant for explanations and review your own code; the grader checks the repository only. Either way, write the log.
+*Needs an agent: no (recommended, not required).* **No-agent path:** do every step yourself, or ask a chat assistant for explanations and review your own code; the grader checks the repository only. Either way, write the log.
 
 **The ticket.** This is the kit's `task.md`, as Hessa wrote it. `start` writes it to your lab directory as `TASK.md` (capitals matter on Linux and macOS).
 

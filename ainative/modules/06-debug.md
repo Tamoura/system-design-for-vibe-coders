@@ -1,6 +1,6 @@
 # Module 6 — Debugging and understanding code
 
-*Most of an engineer's week is spent in code somebody else wrote, hunting a cause nobody has found. A coding agent is a fast reader and a tireless generator of explanations, and that is exactly why it needs a leash: a confident account of code you have not opened is not evidence, and a fix for a bug you have not reproduced is a guess. Lesson 6.1 is the concept lesson: an onboarding workflow (ask for a map, verify its claims by opening the files, write `docs/onboarding.md`), the debugging loop (reproduce first, ranked hypotheses, instrumentation, `git bisect`, root cause versus symptom), how to hand an agent logs and traces safely, prompting that resists agreement, what to do when the agent is stuck, and two reusable artefacts, the Debugging prompt kit and the Root-cause note. Lesson 6.2 is the lab: you join Payments Platform, write a checked tour of the Najm Remit repository, then fix a production incident from its logs, with a test that fails first, a minimal patch, a regression test and a note that Maha (SRE lead) can paste into the incident record.*
+*Most of an engineer's week is spent in code somebody else wrote, hunting a cause nobody has found. A coding agent is a fast reader and a tireless generator of explanations, and that is exactly why it needs a leash: a confident account of code you have not opened is not evidence, and a fix for a bug you have not reproduced is a guess. Lesson 6.1 is the concept lesson: an onboarding workflow (ask for a map, verify its claims by opening the files, write `docs/onboarding.md`), the debugging loop (reproduce first, ranked hypotheses, instrumentation, `git bisect`, root cause versus symptom), how to hand an agent logs and traces safely, prompting that resists agreement, what to do when the agent is stuck, and two reusable artefacts, the Debugging prompt kit and the Root-cause note. Lesson 6.2 is the lab: you join Payments Platform, write a checked tour of the Najm Remit repository, then fix a production incident from its logs, with a test that fails first, a minimal patch, a regression test and a note that Maha (SRE lead) can paste into the incident record. Everything on the Najm side is fictional.*
 
 > **Focus:** Workflow, Verify — habit 4, *Trust evidence, not fluency*, applied to code you did not write: understand it before you change it, and prove the cause before you fix it.
 
@@ -289,7 +289,7 @@ What you could not verify.
 
 ## ⚡ In 60 seconds
 - Lab m06 on Najm Remit: write `docs/onboarding.md`, then fix incident REMIT-231 from `lab-assets/prod.log` with a failing test of your own (it becomes the regression test), a minimal fix and a root-cause note.
-- **Needs an agent: recommended, not required** (the kit prints "no": its grader needs none and checks the result, not who or what made it). Allow two to three hours, plus the 60-minute group session.
+- **Needs an agent: no** (recommended, not required; the grader needs none and checks the result, not who or what made it). Allow two to three hours, plus the 60-minute group session.
 - The visible suite starts **green**, which proves nothing about the bug, so your test must fail first.
 - Trap: fixing the first line you find, or counting only the customers who complained.
 
@@ -348,7 +348,7 @@ Their tier is in `kyc_tiers.csv`, their limits in the code. Is this refusal righ
 | **Agent log** | Prompt, result, correction, minutes | After every agent session |
 
 ## 🏛️ In practice at Najm Bank
-**Needs an agent: recommended, not required.** If you use one, the prompts from lesson 6.1 are your starting point; keep the agent log as you go.
+**Needs an agent: no (recommended, not required).** If you use one, the prompts from lesson 6.1 are your starting point; keep the agent log as you go.
 
 **The ticket.** This is `TASK.md`, as Hessa (product owner) wrote it:
 
