@@ -2,7 +2,11 @@
 name = "statements-export"
 version = "0.1.0"
 requires-python = ">=3.11"
-dependencies = ["csvtidy>=0.3", "csvtidy-extras"]
+# Constructed for lab m08: both packages are invented and packages.invalid can never resolve, so nothing here installs.
+dependencies = [
+    "invented-csvtidy @ https://packages.invalid/invented-csvtidy-0.3.tar.gz",
+    "invented-csvtidy-extras @ https://packages.invalid/invented-csvtidy-extras-0.1.tar.gz",
+]
 
 [project.optional-dependencies]
 dev = ["pytest"]

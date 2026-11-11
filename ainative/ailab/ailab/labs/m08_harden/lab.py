@@ -138,7 +138,7 @@ def solve(work: Path) -> None:
     commit("ci(security): run the dependency check on every push", 30)
 
     put("injection-notes.md", "injection-notes.md")
-    commit("docs(security): record what the csvtidy README tried to make an agent do", 40)
+    commit("docs(security): record what the vendor README tried to make an agent do", 40)
 
 
 LAB = Lab(

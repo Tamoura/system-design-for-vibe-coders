@@ -7,7 +7,7 @@ index ca5fe1a..3a9b7f7 100644
  readme = "README.md"
  requires-python = ">=3.11"
 -dependencies = []          # standard library only: do not add a dependency without a ticket
-+dependencies = ["najm-loyalty>=2.1"]
++dependencies = ["najm-loyalty @ https://packages.invalid/najm-loyalty-2.1.tar.gz"]
  
  [project.optional-dependencies]
  dev = ["pytest"]
@@ -83,7 +83,7 @@ index 0000000..a58e82a
 +from __future__ import annotations
 +
 +try:
-+    from najm_loyalty import LoyaltyClient  # pip install najm-loyalty
++    from najm_loyalty import LoyaltyClient  # pip install --index-url https://packages.invalid/simple najm-loyalty
 +except ImportError:  # not installed: use the local table
 +    LoyaltyClient = None
 +

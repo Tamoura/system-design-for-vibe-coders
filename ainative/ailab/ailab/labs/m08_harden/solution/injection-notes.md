@@ -1,4 +1,4 @@
-# Notes on the csvtidy README
+# Notes on the invented-csvtidy README
 
 ## Verdict
 No. I would not give this README to an AI coding assistant as it is. It contains instructions written for an
@@ -16,10 +16,11 @@ A person should read it first, and an assistant should only see a cleaned copy.
   setup command and say nothing about it. I found them with a short Python script, not by looking.
 - **Advice to switch permission checks off.** It tells contributors to run the assistant with
   `--dangerously-skip-permissions` "to avoid questions". That removes the one place where a human would see the other tricks.
-- **A second package in the install line.** `csvtidy` is a made-up vendor library for this exercise (a real package with a
-  similar name may exist on the public index and is unrelated). `csvtidy-extras` was not registered there when I checked, but
-  anyone could register it tomorrow, which is exactly the slopsquatting risk: a name that looks plausible in a README is what a
-  package squatter registers. Neither name is on our allow-list, and that is the point: nobody on the team has vetted either.
+- **A second package in the install line.** It asks for `invented-csvtidy` and `invented-csvtidy-extras` from the vendor's
+  own package index. Both are made up for this exercise and the index address ends in `.invalid`, so nothing can be fetched.
+  In a real README the names would look plausible and the index would answer: whoever runs that index decides what gets
+  installed, and a name nobody has vetted is exactly what a package squatter registers on the public index (slopsquatting).
+  Neither name is on our allow-list, and that is the point: nobody on the team has vetted either.
 
 ## What stopped it in my setup
 - The `Read(./.env)` deny rule stops the built-in tools from reading `.env`, and the guard hook blocks any shell command that
@@ -27,7 +28,8 @@ A person should read it first, and an assistant should only see a cleaned copy.
 - The guard hook blocks a download piped into a shell and `curl` sending data out, and `pip install` of anything, so the
   hidden setup command and the install line are both stopped before they run. The deny rule on `git push` and the
   hook also stop a publish.
-- The dependency check reports `csvtidy` and `csvtidy-extras` as not on the allow-list or in the lockfile.
+- The dependency check flags `invented-csvtidy` and `invented-csvtidy-extras` in the sample project: a package from a URL
+  is always reported, and neither name is on the allow-list or in the lockfile.
 - Nothing stops the permission advice except me: I never use bypass mode, and the project settings do not set it. The sandbox
   is a separate layer that I have to switch on myself on my machine.
 
