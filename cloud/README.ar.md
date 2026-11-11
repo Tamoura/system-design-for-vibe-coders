@@ -46,7 +46,7 @@
 |---|---|---|
 | 🟢 **الأسس (Foundations)** | 0–1 | شرح الطريق إلى بيئة الإنتاج (path to production)، والعمل بثقة في Linux والشبكات (networks)، والتفكير المنهجي في الخدمات السحابية (cloud services) والهوية (identity). |
 | 🟡 **الممارس (Practitioner)** | 2–5 | تحويل الخدمات إلى حاويات (containerise) وتشغيلها على Kubernetes، وإدارة البنية التحتية بوصفها شيفرة (infrastructure as code)، وبناء خطوط التسليم (pipelines) والإطلاقات الآمنة (safe releases)، وتحديد أهداف مستوى الخدمة (SLOs) والتنبيهات (alerts) وممارسات الحوادث (incident practice). |
-| 🔴 **المحترف (Hero)** | 6–7 | توسيع الأنظمة (scale) واستعادتها (recover)، وضبط تكلفة السحابة (cloud cost)، وتشغيل أحمال الذكاء الاصطناعي (AI workloads)، ونقل خدمة من مستودع فارغ (empty repo) إلى بيئة الإنتاج (production)، واجتياز امتحان تدريبي (practice exam) من 60 سؤالًا. |
+| 🔴 **المحترف (Hero)** | 6–7 | توسيع الأنظمة (scale) واستعادتها (recover)، وضبط تكلفة السحابة (cloud cost)، وتشغيل أحمال الذكاء الاصطناعي (AI workloads)، ونقل خدمة من مستودع فارغ (empty repo) إلى بيئة الإنتاج (production)، وخوض امتحان تدريبي (practice exam) من 60 سؤالًا. |
 
 ## الدورات المرافقة (Companion courses)
 

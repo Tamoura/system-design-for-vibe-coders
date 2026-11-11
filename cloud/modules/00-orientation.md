@@ -537,7 +537,7 @@ You may already know Tariq, Noura, Jassim and Hamad from the *Secure AI & Applic
 |---|---|---|
 | 🟢 Foundations | 0 Orientation, 1 Foundations | Explain the path to production; work in Linux and networks; reason about cloud services and identity |
 | 🟡 Practitioner | 2 Containers and Kubernetes, 3 Infrastructure as code, 4 CI/CD and safe releases, 5 Observability and reliability | Containerise and run services on Kubernetes, manage infrastructure as code and GitOps, build pipelines and safe releases, set SLOs, alerts and incident practice |
-| 🔴 Hero | 6 Scale, cost and AI infrastructure, 7 Capstone and practice exam | Scale and recover systems, control cost, run AI workloads, take a service from empty repo to production, and pass a 60-question practice exam |
+| 🔴 Hero | 6 Scale, cost and AI infrastructure, 7 Capstone and practice exam | Scale and recover systems, control cost, run AI workloads, take a service from empty repo to production, and take a 60-question practice exam |
 
 **Three ways to study.**
 - **Straight through.** Best if you are new. Each module builds on the one before; lesson prerequisites are listed under each title.

@@ -535,11 +535,13 @@ Strong answer, out loud, in order:
 # 7.3 — الامتحان التدريبي: 60 سؤالًا قائمًا على السيناريوهات (Practice exam: 60 scenario questions)
 *المستوى (Level): 🔴 متقدم (Advanced)* · *المتطلبات (Prerequisites): 7.1، 7.2* · *المرحلة (Phase): Plan*
 
+> **قيد المراجعة (under revision)، نوفمبر 2026.** في كثير من أسئلة هذا الامتحان التدريبي (practice exam) يمكن تمييز الخيار الصحيح من طوله أو صياغته، لذا فالدرجة العالية هنا لا تدل على الجاهزية (readiness) لأي امتحان حقيقي. استخدمه للتدرّب على التفكير (reasoning): أجب عن كل سؤال بكلماتك قبل أن تقرأ الخيارات، ثم قارن.
+
 ## ⚡ الدرس في دقيقة (In 60 seconds)
 - هذا امتحان تدريبي (practice exam) من 60 سؤالًا يغطي كل درس من 0.1 إلى 7.2 والمراحل الثماني جميعها لحلقة التسليم (all eight phases of the delivery loop). معظم الأسئلة سيناريوهات (scenarios) تدور في بنك نجم (Najm Bank). والأسئلة مختلطة (mixed)، كما في امتحان حقيقي (as in a real exam)، بدلًا من تجميعها حسب الوحدة (grouped by module).
 - أدِّه في جلسة واحدة (in one sitting) مدتها نحو 90 دقيقة، دون كتاب (closed book)، ودون مختبر ولا بحث (no lab and no search). اكتب كل إجابة وضع عليها علامة «متأكد (sure)» أو «تخمين (guess)» قبل أن تفتح أي إجابة.
 - تنتهي كل إجابة بالمرحلة والدرس الواجب مراجعته (the phase and the lesson to review)، مثل *(Deploy · 4.2)*. إجاباتك الخاطئة هي خطة دراستك (Your wrong answers are a study plan).
-- قراءة مقترحة لنتيجتك (Suggested reading of your score) (وهي دليل المقرر نفسه (the course's own guide)، لا معيار شهادة (not a certification standard)): 48 إجابة صحيحة أو أكثر تعني أنك جاهز للمضي قدمًا (ready to move on)؛ ومن 36 إلى 47 تعني راجع الدروس التي أخطأت فيها (review the lessons you missed)؛ وأقل من 36 تعني أعِد العمل على الوحدات (work through the modules again) مع أداء التمارين (doing the exercises).
+- قراءة مقترحة لنتيجتك (Suggested reading of your score) (وهي دليل المقرر نفسه (the course's own guide)، لا معيار شهادة (not a certification standard)): 48 إجابة صحيحة أو أكثر تعني أعِد قراءة الدروس التي تقف خلف أخطائك القليلة (reread the lessons behind your few misses)؛ ومن 36 إلى 47 تعني راجع الدروس التي أخطأت فيها (review the lessons you missed)؛ وأقل من 36 تعني أعِد العمل على الوحدات (work through the modules again) مع أداء التمارين (doing the exercises).
 - إشارة القرار (Decision cue): لكل خطأ (for each miss)، اكتب لماذا أغراك الخيار الخاطئ (why the wrong option tempted you). ذلك السبب هو العادة التي ينبغي إصلاحها (the habit to fix).
 - أكبر فخ (Biggest trap): التحقق من كل إجابة أولًا بأول (checking each answer as you go)، أو إعادة الامتحان في اليوم التالي (retaking the exam the next day). فكلاهما يقيس الذاكرة لا الحكم (memory, not judgement).
 

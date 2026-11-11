@@ -582,7 +582,7 @@ flowchart RL
 | 4 تحليلات يثق بها الناس (Analytics people trust) | تعريف المقاييس مرة واحدة (define metrics once)، وتصميم لوحات معلومات تقود القرارات (drive decisions)، وإجراء تجارب سليمة (run sound experiments) | 🟡 |
 | 5 علم البيانات وتعلّم الآلة في الإنتاج (Data science and ML in production) | نقل النماذج من دفتر الملاحظات إلى خط البيانات (from notebook to pipeline)، ومراقبة الانجراف (monitor drift)، وتهيئة البيانات لتطبيقات النماذج اللغوية الكبيرة (LLM applications) | 🟡 |
 | 6 الحوكمة والخصوصية والأمن (Governance, privacy and security) | امتلاك البيانات وتصنيفها وحمايتها ومشاركتها كما ينبغي (own, classify, protect and share data properly) | 🔴 |
-| 7 الاحتراف (Hero) | بناء المستودع الفرعي لمخاطر الائتمان من طرف إلى طرف (end to end)، وتخطيط مسيرتك المهنية (plan your career)، واجتياز امتحان تدريبي من 60 سؤالًا (60-question practice exam) | 🔴 |
+| 7 الاحتراف (Hero) | بناء المستودع الفرعي لمخاطر الائتمان من طرف إلى طرف (end to end)، وتخطيط مسيرتك المهنية (plan your career)، وخوض امتحان تدريبي من 60 سؤالًا (60-question practice exam) | 🔴 |
 
 **كيف يعمل كل درس (How every lesson works).** تأتي الأقسام العشرة دائمًا بالترتيب نفسه (in the same order). في **📐 كيف يعمل (How it works)**، اقرأ 🟢 أولًا، وجرّب 🟡، وعُد إلى 🔴 حين تحتاج إليه. و**🏛️ عمليًا في بنك نجم (In practice at Najm Bank)** هو مُنتَج العمل (artefact) الذي تنسخه إلى ملف أعمالك (portfolio).
 

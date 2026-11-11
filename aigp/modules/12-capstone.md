@@ -548,11 +548,13 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 # 12.3 — Full mock exam: 100 questions
 *Level: 🔴 Advanced* · *Prerequisites: 12.2* · *BoK: All domains (I–IV)*
 
+> **Under revision (November 2026).** In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.
+
 ## ⚡ In 60 seconds
 - This is a full-length practice exam: **100 original questions** across all four domains, in roughly blueprint proportion (Domain I 18, Domain II 22, Domain III 30, Domain IV 30). About a third are scenario-based, several in sets that share one scenario. None is a real exam item.
 - **Time yourself: 2 hours 45 minutes**, one sitting, no notes. Use the pacing plan from 12.2: one full pass, then flagged questions, then a final check.
 - Write your answers down before opening any answer block. **Your score is the number you got right.**
-- **Course rule of thumb: 70% or more (70+ correct) suggests you are close to ready.** This is our guide, not IAPP's scoring. The real exam uses a scaled score (100–500, pass 300) that IAPP does not publish as a percentage.
+- **Your score here does not predict your result on the real exam.** Use it to find weak areas, not to decide whether to book. The real exam uses a scaled score (100–500, pass 300) that IAPP does not publish as a percentage.
 - Afterwards, review *every* wrong answer and every lucky guess. Each answer gives its competency ID, so you can see which lessons to revisit.
 
 ## ✍️ Mock exam
@@ -1878,9 +1880,9 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 </details>
 
 ## 🧾 Recap
-- **85–100 correct:** strong. Review your wrong answers, then sit the real exam while the material is fresh.
-- **70–84 correct:** close to ready by this course's rule of thumb. Tag each wrong answer by competency and trap (12.2), and revisit those lessons.
-- **55–69 correct:** not yet. Re-work the modules for your two weakest domains, redo their check-yourself questions, and re-sit this mock after a week or more.
+- **85–100 correct:** few misses. Tag each wrong answer by competency and trap (12.2), and revisit those lessons.
+- **70–84 correct:** some gaps. Tag each wrong answer by competency and trap (12.2), and revisit those lessons, starting with the domain where you missed most.
+- **55–69 correct:** wider gaps. Re-work the modules for your two weakest domains, redo their check-yourself questions, and re-sit this mock after a week or more.
 - **Below 55:** go back through Modules 4–11 systematically, starting with the domains where you scored lowest.
 - Whatever your score, re-read the explanation for every question you guessed. A lucky guess is a gap you have not found yet.
 

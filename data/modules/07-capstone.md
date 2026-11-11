@@ -587,6 +587,8 @@ Kareem's plan targets analytics engineering: his proof is three Monday extracts 
 # 7.3 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: 7.1, 7.2* · *Stage: Analyse*
 
+> **Under revision (November 2026).** In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.
+
 ## ⚡ In 60 seconds
 - Sixty multiple-choice questions cover every module and all eight stages: Ingest, Store, Model, Transform, Serve, Analyse, Operate and Govern. Most are short scenarios at Najm Bank.
 - Take it in **one sitting of about 90 minutes**, with no notes, no search and no AI assistant. Write down your answer and how sure you were (sure, unsure, guess) before you open any answer.
@@ -605,7 +607,7 @@ Huda scores well on modelling and pipelines and badly on governance and experime
 ### 🟢 The essentials
 **Before you start.** Finish lessons 7.1 and 7.2 first. Set a timer for 90 minutes, about a minute and a half per question. Keep a sheet with four columns: question number, your letter, your confidence (sure, unsure, guess) and, later, right or wrong.
 
-**While you answer.** Read the whole scenario before the options. Name the stage the question is really about, then ask what Faisal would ask: what is the grain, who owns it, what happens if it runs twice, what does the law say? Eliminate options that are false in principle, then choose between the rest. Do not choose an option because it is the longest or the most detailed; the exam is written so that length gives nothing away.
+**While you answer.** Read the whole scenario before the options. Name the stage the question is really about, then ask what Faisal would ask: what is the grain, who owns it, what happens if it runs twice, what does the law say? Eliminate options that are false in principle, then choose between the rest. Do not choose an option because it is the longest or the most detailed; choose it because you can say why it is right.
 
 **After the timer.** Open each answer in order and mark your sheet. Do not change any letter.
 

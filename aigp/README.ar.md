@@ -8,7 +8,7 @@
 
 تُدخل المؤسسات الذكاء الاصطناعي (AI) في قرارات الإقراض (lending decisions)، والتوظيف (hiring)، وخدمة العملاء (customer service)، والعمل المكتبي اليومي (everyday office work) أسرع مما تستطيع قواعدها مواكبته. وحوكمة الذكاء الاصطناعي (AI governance) هي التخصص (discipline) الذي يسد هذه الفجوة. فهي تقرر أي ذكاء اصطناعي ينبغي للمؤسسة أن تستخدمه، وبأي قواعد. وتقرر من المسؤول، وكيف تُكتشف المخاطر (risks) وتُخفَّض، وكيف يُثبَت كل ذلك للجهات الرقابية (regulators) والعملاء والمدققين (auditors).
 
-تعلّم هذه الدورة هذا التخصص (discipline) من الأساس. وهي مكتوبة لأشخاص قادمين من اتجاهات كثيرة: المحامون (lawyers) ومسؤولو الخصوصية (privacy officers)، وفرق المخاطر (risk teams) والامتثال (compliance)، ومديرو المنتجات (product managers)، وعلماء البيانات (data scientists) والمهندسون (engineers). ولا تفترض أي خلفية قانونية أو تقنية (legal or technical background). وفي النهاية يُفترض أن تكون قادرًا على إدارة برنامج لحوكمة الذكاء الاصطناعي (AI governance programme) واجتياز امتحان شهادة (certification exam) **AIGP** (Artificial Intelligence Governance Professional).
+تعلّم هذه الدورة هذا التخصص (discipline) من الأساس. وهي مكتوبة لأشخاص قادمين من اتجاهات كثيرة: المحامون (lawyers) ومسؤولو الخصوصية (privacy officers)، وفرق المخاطر (risk teams) والامتثال (compliance)، ومديرو المنتجات (product managers)، وعلماء البيانات (data scientists) والمهندسون (engineers). ولا تفترض أي خلفية قانونية أو تقنية (legal or technical background). وفي النهاية يُفترض أن تكون قادرًا على إدارة برنامج لحوكمة الذكاء الاصطناعي (AI governance programme). وتغطي الدورة مجال المعرفة (Body of Knowledge) الخاص بشهادة **AIGP** (Artificial Intelligence Governance Professional)، الإصدار 2.1 (version 2.1). وهي دورة مستقلة (independent course)، وليست دورة من شريك تدريب رسمي (Official Training Partner) لـ IAPP. ولا تُعرف لها نسبة نجاح (pass rate)، لذا فهي لا تقدّم أي وعد بشأن الامتحان (exam).
 
 ## كيف يعمل كل درس (How every lesson works)
 
@@ -39,7 +39,7 @@
 |---|---|---|
 | 🟢 **الأسس (Foundations)** | 0–1 | شرح ما هو الذكاء الاصطناعي (AI)، والأضرار (harms) التي قد يسببها، ولماذا يحتاج إلى حوكمة خاصة به. |
 | 🟡 **الممارس (Practitioner)** | 2–7 | إنشاء البرنامج (set up the programme)، وكتابة السياسات (write the policies)، وتطبيق قانون الخصوصية (privacy law)، وقانون عدم التمييز (non-discrimination law)، والملكية الفكرية (IP)، وحماية المستهلك (consumer protection)، وEU AI Act، وNIST AI RMF، وISO/IEC 42001. |
-| 🔴 **المحترف (Hero)** | 8–12 | حوكمة الأنظمة الحقيقية (govern real systems) من الاستقبال (intake) حتى الإيقاف والتقاعد (retirement)، وشراء الذكاء الاصطناعي ونشره بأمان (buy and deploy AI safely)، وإجراء تقييمات الأثر (impact assessments) وعمليات التدقيق (audits)، واجتياز الامتحان (pass the exam). |
+| 🔴 **المحترف (Hero)** | 8–12 | حوكمة الأنظمة الحقيقية (govern real systems) من الاستقبال (intake) حتى الإيقاف والتقاعد (retirement)، وشراء الذكاء الاصطناعي ونشره بأمان (buy and deploy AI safely)، وإجراء تقييمات الأثر (impact assessments) وعمليات التدقيق (audits)، ومراجعة مجال المعرفة (Body of Knowledge) الخاص بـ AIGP، الإصدار 2.1 (version 2.1)، كاملًا مع أسلوب الإجابة في الامتحان (exam technique) وامتحان تدريبي (practice exam). هذه الدورة المستقلة (independent course) ليست دورة من شريك تدريب رسمي (Official Training Partner) لـ IAPP، ولا تُعرف لها نسبة نجاح (pass rate). |
 
 ## كيف ترتبط الدورة بامتحان AIGP (How the course maps to the AIGP exam)
 
@@ -51,7 +51,7 @@
 | II — كيف تنطبق القوانين والمعايير وأطر العمل على الذكاء الاصطناعي (How laws, standards and frameworks apply to AI) | 19–23 | 4 (II.A)، 5 (II.B)، 6 (II.C)، 7 (II.D) |
 | III — كيف تُحكَم عملية تطوير الذكاء الاصطناعي (How to govern AI development) | 21–25 | 8 (III.A)، 9 (III.B)، 10 (III.C) |
 | IV — كيف يُحكَم نشر الذكاء الاصطناعي واستخدامه (How to govern AI deployment and use) | 21–25 | 11 (IV.A–IV.C) |
-| جميع المجالات (All domains) | | 12: المشروع الختامي (capstone)، واستراتيجية الامتحان (exam strategy)، وامتحان تجريبي (mock exam) من 100 سؤال |
+| جميع المجالات (All domains) | | 12: المشروع الختامي (capstone)، واستراتيجية الامتحان (exam strategy)، وامتحان تجريبي (mock exam) من 100 سؤال (قيد المراجعة (under revision)) |
 
 ## لغتان (Two languages)
 

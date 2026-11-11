@@ -8,7 +8,7 @@
 
 Organisations are putting AI into lending decisions, hiring, customer service and everyday office work faster than their rules can keep up. AI governance is the discipline that closes that gap. It decides which AI an organisation should use, and under what rules. It decides who is accountable, how risks are found and reduced, and how to prove all of this to regulators, customers and auditors.
 
-This course teaches that discipline from the ground up. It is written for people arriving from many directions: lawyers and privacy officers, risk and compliance teams, product managers, data scientists and engineers. It assumes no legal or technical background. By the end you should be able to run an AI governance programme and pass the **AIGP** (Artificial Intelligence Governance Professional) certification exam.
+This course teaches that discipline from the ground up. It is written for people arriving from many directions: lawyers and privacy officers, risk and compliance teams, product managers, data scientists and engineers. It assumes no legal or technical background. By the end you should be able to run an AI governance programme. The course covers the **AIGP** (Artificial Intelligence Governance Professional) Body of Knowledge v2.1. It is independent and is not an IAPP Official Training Partner course. No pass rate is known for it, so it makes no promise about the exam.
 
 ## How every lesson works
 
@@ -39,7 +39,7 @@ The whole course follows **Najm Bank**, a fictional mid-sized Gulf bank with cus
 |---|---|---|
 | 🟢 **Foundations** | 0–1 | Explain what AI is, the harms it can cause and why it needs its own governance. |
 | 🟡 **Practitioner** | 2–7 | Set up the programme, write the policies, and apply privacy law, non-discrimination law, IP, consumer protection, the EU AI Act, NIST AI RMF and ISO/IEC 42001. |
-| 🔴 **Hero** | 8–12 | Govern real systems from intake to retirement, buy and deploy AI safely, run impact assessments and audits, and pass the exam. |
+| 🔴 **Hero** | 8–12 | Govern real systems from intake to retirement, buy and deploy AI safely, run impact assessments and audits, and revise the whole AIGP Body of Knowledge v2.1 with exam technique and a practice exam. This independent course is not an IAPP Official Training Partner course, and no pass rate is known for it. |
 
 ## How the course maps to the AIGP exam
 
@@ -51,7 +51,7 @@ The AIGP exam has 100 multiple-choice questions (85 scored), many of them scenar
 | II — How laws, standards and frameworks apply to AI | 19–23 | 4 (II.A), 5 (II.B), 6 (II.C), 7 (II.D) |
 | III — How to govern AI development | 21–25 | 8 (III.A), 9 (III.B), 10 (III.C) |
 | IV — How to govern AI deployment and use | 21–25 | 11 (IV.A–IV.C) |
-| All domains | | 12: capstone, exam strategy and a 100-question mock exam |
+| All domains | | 12: capstone, exam strategy and a 100-question mock exam (under revision) |
 
 ## Two languages
 

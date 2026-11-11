@@ -57,7 +57,7 @@ The course follows the **Data Platform & Analytics** team at **Najm Bank**, the 
 |---|---|---|
 | 🟢 **Foundations** | 0–1 | Explain the modern data stack, write SQL that answers business questions, and model data with the right grain. |
 | 🟡 **Practitioner** | 2–5 | Build pipelines that are safe to re-run, test your transformations, define trusted metrics, run sound experiments, and take models and LLM data to production. |
-| 🔴 **Hero** | 6–7 | Govern and secure a data platform, build a credit-risk mart end to end, and pass a 60-question practice exam. |
+| 🔴 **Hero** | 6–7 | Govern and secure a data platform, build a credit-risk mart end to end, and take a 60-question practice exam. |
 
 ## Companion courses
 

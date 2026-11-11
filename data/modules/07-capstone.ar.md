@@ -587,6 +587,8 @@ where rn = 1;
 # 7.3 — الامتحان التدريبي (Practice exam): ستون سؤالًا قائمًا على السيناريوهات (60 scenario questions)
 *المستوى (Level): 🔴 متقدم (Advanced)* · *المتطلبات (Prerequisites): 7.1، 7.2* · *المرحلة (Stage): Analyse*
 
+> **قيد المراجعة (under revision)، نوفمبر 2026.** في كثير من أسئلة هذا الامتحان التدريبي (practice exam) يمكن تمييز الخيار الصحيح من طوله أو صياغته، لذا فالدرجة العالية هنا لا تدل على الجاهزية (readiness) لأي امتحان حقيقي. استخدمه للتدرّب على التفكير (reasoning): أجب عن كل سؤال بكلماتك قبل أن تقرأ الخيارات، ثم قارن.
+
 ## ⚡ الدرس في دقيقة (In 60 seconds)
 - ستون سؤالًا متعدد الخيارات (multiple-choice questions) تغطي كل الوحدات (every module) والمراحل الثماني جميعها (all eight stages): Ingest وStore وModel وTransform وServe وAnalyse وOperate وGovern. ومعظمها سيناريوهات قصيرة (short scenarios) في بنك نجم (Najm Bank).
 - أدِّه في **جلسة واحدة مدتها نحو 90 دقيقة (one sitting of about 90 minutes)**، بلا ملاحظات (no notes) ولا بحث (no search) ولا مساعد ذكاء اصطناعي (AI assistant). دوِّن إجابتك ومدى ثقتك بها (how sure you were): متأكد (sure)، غير متأكد (unsure)، تخمين (guess)، قبل أن تفتح أي إجابة.
@@ -605,7 +607,7 @@ where rn = 1;
 ### 🟢 الأساسيات (The essentials)
 **قبل أن تبدأ (Before you start).** أنهِ الدرسين 7.1 و7.2 أولًا. اضبط مؤقّتًا (set a timer) على 90 دقيقة، أي نحو دقيقة ونصف لكل سؤال (a minute and a half per question). واحتفظ بورقة من أربعة أعمدة (a sheet with four columns): رقم السؤال (question number)، وحرفك (your letter)، ودرجة ثقتك (your confidence): متأكد أو غير متأكد أو تخمين، ثم لاحقًا: صحيح أو خطأ (right or wrong).
 
-**أثناء الإجابة (While you answer).** اقرأ السيناريو كاملًا (the whole scenario) قبل الخيارات. سمِّ المرحلة التي يدور حولها السؤال فعلًا (name the stage the question is really about)، ثم اسأل ما كان فيصل سيسأله: ما الحُبَيبية (grain)، ومن يملكها (who owns it)، وماذا يحدث إذا عمل مرتين (if it runs twice)، وماذا يقول القانون (what does the law say)؟ استبعِد الخيارات الخاطئة من حيث المبدأ (false in principle)، ثم اختر بين ما تبقّى. لا تختر خيارًا لأنه الأطول أو الأكثر تفصيلًا (the longest or the most detailed)؛ فالامتحان مكتوب بحيث لا يكشف الطول شيئًا (length gives nothing away).
+**أثناء الإجابة (While you answer).** اقرأ السيناريو كاملًا (the whole scenario) قبل الخيارات. سمِّ المرحلة التي يدور حولها السؤال فعلًا (name the stage the question is really about)، ثم اسأل ما كان فيصل سيسأله: ما الحُبَيبية (grain)، ومن يملكها (who owns it)، وماذا يحدث إذا عمل مرتين (if it runs twice)، وماذا يقول القانون (what does the law say)؟ استبعِد الخيارات الخاطئة من حيث المبدأ (false in principle)، ثم اختر بين ما تبقّى. لا تختر خيارًا لأنه الأطول أو الأكثر تفصيلًا (the longest or the most detailed)؛ بل اختره لأنك تستطيع أن تشرح لماذا هو صحيح (say why it is right).
 
 **بعد انتهاء المؤقّت (After the timer).** افتح كل إجابة بالترتيب (in order) وصحِّح ورقتك (mark your sheet). ولا تغيّر أي حرف (do not change any letter).
 

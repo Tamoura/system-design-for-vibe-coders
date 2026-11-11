@@ -46,7 +46,7 @@ The course follows the **Platform Engineering & SRE** team at **Najm Bank**, the
 |---|---|---|
 | 🟢 **Foundations** | 0–1 | Explain the path to production, work confidently in Linux and networks, and reason about cloud services and identity. |
 | 🟡 **Practitioner** | 2–5 | Containerise and run services on Kubernetes, manage infrastructure as code, build pipelines and safe releases, and set SLOs, alerts and incident practice. |
-| 🔴 **Hero** | 6–7 | Scale and recover systems, control cloud cost, run AI workloads, take a service from empty repo to production, and pass a 60-question practice exam. |
+| 🔴 **Hero** | 6–7 | Scale and recover systems, control cloud cost, run AI workloads, take a service from empty repo to production, and take a 60-question practice exam. |
 
 ## Companion courses
 
