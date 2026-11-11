@@ -561,8 +561,16 @@ function exportJSON(){
   a.click();
 }
 let TEAM = [];
+/* Results arrive as files from other people: keep only what the matrix shows, ratings as integers 0-3,
+   and escape every text field when it is written into the page. */
+const escH = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+const hasOwn = (o,k) => Object.prototype.hasOwnProperty.call(o,k);
 function addTeamResult(obj){
-  if (obj && obj.ratings && obj.role) { TEAM = TEAM.filter(t=>t.name!==obj.name); TEAM.push(obj); }
+  if (!obj || typeof obj!=="object" || Array.isArray(obj) || !obj.ratings || typeof obj.ratings!=="object" || !obj.role) return;
+  const ratings = {};
+  for (const d of DISC){ const r = hasOwn(obj.ratings,d.id) ? Number(obj.ratings[d.id]) : 0; ratings[d.id] = Number.isInteger(r) && r>=0 && r<=3 ? r : 0; }
+  const p = { name:String(obj.name ?? ""), role:String(obj.role), level:typeof obj.level==="string" ? obj.level : "", ratings };
+  TEAM = TEAM.filter(t=>t.name!==p.name); TEAM.push(p);
 }
 function loadTeamFiles(files){
   let pending = files.length;
@@ -587,12 +595,12 @@ function renderTeam(){
   if (!TEAM.length){ el.innerHTML = "<p class='sub'>لم تُحمَّل أي نتائج بعد.</p>"; return; }
   const head = DISC.map(d=>`<th title="${d.name}">${d.short}</th>`).join("");
   const rows = TEAM.map(p=>{
-    const t = TARGETS[p.role]||{};
+    const t = (hasOwn(TARGETS,p.role) && TARGETS[p.role])||{};
     const cells = DISC.map(d=>{
       const r = p.ratings[d.id]||0; const gap = t[d.id]!==undefined && r < t[d.id];
       return `<td class="num cell-r${r}" title="${d.name}: ${r} (المستهدف ${t[d.id]??"—"})">${r}${gap?" ✗":""}</td>`;
     }).join("");
-    return `<tr><td><b>${p.name}</b><br><span style="color:var(--muted);font-size:.75rem">${ROLE_NAMES[p.role]||p.role} · <bdi dir="ltr">${p.level||"—"}</bdi></span></td>${cells}</tr>`;
+    return `<tr><td><b>${escH(p.name)}</b><br><span style="color:var(--muted);font-size:.75rem">${escH(hasOwn(ROLE_NAMES,p.role) ? ROLE_NAMES[p.role] : p.role)} · <bdi dir="ltr">${escH(p.level||"—")}</bdi></span></td>${cells}</tr>`;
   }).join("");
   /* program-level goals */
   const teachCount = DISC.map(d=>TEAM.filter(p=>(p.ratings[d.id]||0)>=3).length);
