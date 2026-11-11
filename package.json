@@ -33,7 +33,13 @@
     "ainative:check": "node scripts/build-ainative.mjs --check",
     "videos:build": "node scripts/build-videos.mjs",
     "videos:check": "node scripts/build-videos.mjs --check",
-    "videos:render": "node scripts/build-videos.mjs --render"
+    "videos:render": "node scripts/build-videos.mjs --render",
+    "qa": "python3 scripts/qa/run_all.py",
+    "qa:cues": "python3 scripts/qa/quiz_cues.py",
+    "qa:arabic": "python3 scripts/qa/arabic_rules.py",
+    "qa:claims": "python3 scripts/qa/claims_lint.py",
+    "qa:ar": "python3 scripts/qa/check_ar_all.py",
+    "test:assess": "node scripts/tests/assessment-group.test.mjs"
   },
   "devDependencies": {
     "archiver": "^7.0.1",

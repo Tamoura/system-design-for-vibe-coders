@@ -1,0 +1,6 @@
+{
+ "about": "Written by scripts/qa/arabic_rules.py --update-baseline. Known exceptions are reported but do not fail the run. See scripts/qa/README.md before adding to this list.",
+ "gloss_floor": 12.5,
+ "gloss_margin": 3.0,
+ "exceptions": []
+}
