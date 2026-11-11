@@ -1,0 +1,130 @@
+name: Lab kits
+
+# The lab kits' own tests, and the checks that keep lesson code identical to the kit files.
+# Runs only when a kit, the lessons that show kit code, or this workflow changes.
+# The commands are the ones each kit's README gives.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ainative/ailab/**'
+      - 'aiapps/labkit/**'
+      - 'testing/sample/**'
+      - 'ainative/modules/**'
+      - 'aiapps/modules/**'
+      - 'scripts/qa/pytest_shard.py'
+      - '.github/workflows/kits.yml'
+  pull_request:
+    paths:
+      - 'ainative/ailab/**'
+      - 'aiapps/labkit/**'
+      - 'testing/sample/**'
+      - 'ainative/modules/**'
+      - 'aiapps/modules/**'
+      - 'scripts/qa/pytest_shard.py'
+      - '.github/workflows/kits.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kits-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ailab:
+    # About 3,000 tests that start and grade real git repositories: dealt out over four runners,
+    # and over every CPU on each runner with pytest-xdist.
+    name: ainative/ailab tests (shard ${{ matrix.shard }} of 4)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    defaults:
+      run:
+        working-directory: ainative/ailab
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: ainative/ailab/requirements.txt
+
+      - name: Install the kit's requirements and pytest-xdist
+        run: python -m pip install -r requirements.txt pytest-xdist
+
+      - name: Pick this shard's tests
+        run: python ../../scripts/qa/pytest_shard.py ${{ matrix.shard }} 4 > "$RUNNER_TEMP/shard.txt"
+
+      - name: Run this shard
+        run: python -m pytest -q -n auto -p no:randomly -rf "@$RUNNER_TEMP/shard.txt"
+
+  labkit:
+    name: aiapps/labkit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: aiapps/labkit
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: aiapps/labkit/requirements.txt
+
+      - name: Install the kit's requirements
+        run: python -m pip install -r requirements.txt
+
+      # The tests start the kit's own mock API on a local port; no key and no real API call.
+      - name: Run the kit's tests
+        run: python -m pytest
+
+  sample:
+    name: testing/sample tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: testing/sample
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: testing/sample/requirements.txt
+
+      - name: Install the sample's requirements
+        run: python -m pip install -r requirements.txt
+
+      - name: Run the starter test suite
+        run: python -m pytest
+
+  lesson-code:
+    name: Lesson code matches the kit files
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: aiapps lessons show the labkit's reference files byte for byte
+        working-directory: aiapps
+        run: python labkit/check_labs.py
+
+      - name: ainative lessons show the ailab kit files byte for byte
+        working-directory: ainative
+        run: python ailab/check_blocks.py

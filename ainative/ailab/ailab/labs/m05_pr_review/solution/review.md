@@ -19,7 +19,7 @@ request changes
 - **File:** pyproject.toml
 - **Line:** 11
 - **Severity:** blocker
-- **Problem:** `dependencies` went from `[]` to `["najm-loyalty>=2.1"]`, and `src/remit/loyalty.py:10` imports it. The package is not in the ticket, not in `docs/najmkit.md` and not in the repository: it looks invented. CONTRIBUTING.md says standard library only, no dependency without a ticket and a second reviewer. A made-up package name is exactly what someone can register and fill with their own code. The `try/except ImportError` hides it: tests pass without the package, so the line stays unnoticed.
+- **Problem:** `dependencies` went from `[]` to `["najm-loyalty @ https://packages.invalid/najm-loyalty-2.1.tar.gz"]`, and `src/remit/loyalty.py:10` imports it. The package is not in the ticket, not in `docs/najmkit.md` and not in the repository: it looks invented, and it comes from an address nobody on the team knows. CONTRIBUTING.md says standard library only, no dependency without a ticket and a second reviewer. Whoever controls that address, or registers a made-up name on the public index, decides what code runs when someone installs the project. The `try/except ImportError` hides it: tests pass without the package, so the line stays unnoticed.
 - **Fix:** put `dependencies = []` back, delete the import and the client branch, and keep the rate table in the repository.
 
 ### 2. An API key in the source

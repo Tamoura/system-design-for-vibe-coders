@@ -16,6 +16,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { siteNotice } from './site-notice.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CHECK = process.argv.includes('--check');
@@ -23,150 +24,159 @@ const ONLY = (process.argv.find((a) => a.startsWith('--course=')) || '').slice(9
 
 /* ---------------------------------------------------------------- courses */
 
+// One neutral scale for every course. A rung says how much of the course the reader knows and reports
+// having practised; it is not a job title, a qualification or a readiness claim. Each course adds its
+// own next step for every rung (C.steps), and how a rung is reached is the same everywhere (compute()).
+const SCALE = {
+  en: ['🟢 Getting started', '🟡 Core knowledge', '🟠 Broad knowledge, some practice', '🔴 Broad knowledge and practice'],
+  ar: ['🟢 بداية الطريق (Getting started)', '🟡 معرفة أساسية (Core knowledge)',
+    '🟠 معرفة واسعة وبعض الممارسة (Broad knowledge, some practice)', '🔴 معرفة وممارسة واسعتان (Broad knowledge and practice)'],
+};
+
 const COURSES = [
   { id: 'vibe', src: 'assessment', out: '', reader: { en: 'index.en.html', ar: 'index.ar.html' }, mode: 'l', store: 'sdvc', theme: 'sdvc-theme',
     name: { en: 'System Design for Vibe Coders', ar: 'تصميم الأنظمة لمبرمجي الفايب (System Design for Vibe Coders)' }, brand: 'SD4VC',
     unit: { en: 'area', ens: 'areas', ar: 'مجال (area)', ars: 'مجالات (areas)' },
     evidenceHint: { en: 'on your phone, in the data, in the logs — not what your agent told you', ar: 'على هاتفك أو في البيانات (data) أو في السجلات (logs)، لا ما قاله لك وكيلك (agent)' },
-    levels: {
-      en: [['🟢 Vibe coder', 'You can get things working with an agent. The next step is knowing why systems break — start with the areas marked Not yet.'],
-        ['🟡 Builder', 'You know the core ideas in most areas. Turn knowledge into habit: do the "verify it" steps in the lessons and tick the evidence.'],
-        ['🟠 Operator', 'You can run a real product: you know the failure modes and have practised most of the safety nets. Close the remaining gaps.'],
-        ['🔴 Architect', 'You know every area and have practised nearly all of them. You can direct an AI team on a production system — and teach others.']],
-      ar: [['🟢 مبرمج فايب (Vibe coder)', 'تستطيع أن تجعل الأشياء تعمل مع وكيل (agent). الخطوة التالية أن تعرف لماذا تنكسر الأنظمة؛ ابدأ بالمجالات الموسومة «ليس بعد (Not yet)».'],
-        ['🟡 بنّاء (Builder)', 'تعرف الأفكار الأساسية في معظم المجالات. حوّل المعرفة إلى عادة: نفّذ خطوات «تحقق منه (verify it)» في الدروس وضع علامات على الأدلة.'],
-        ['🟠 مشغّل (Operator)', 'تستطيع تشغيل منتج حقيقي: تعرف أنماط الفشل (failure modes) ومارست معظم شبكات الأمان (safety nets). أغلق الفجوات المتبقية.'],
-        ['🔴 مهندس أنظمة (Architect)', 'تعرف كل المجالات ومارست معظمها تقريبًا. تستطيع قيادة فريق ذكاء اصطناعي (AI team) على نظام في الإنتاج (production)، وتعليم غيرك.']] } },
+    steps: { // next step for each rung of the shared SCALE: no job titles, no readiness claims
+      en: ['Next: learn why systems break before you build more. Start with the areas marked Not yet.',
+        'You know the core ideas in several areas. Next: turn knowledge into habit — do the "verify it" steps in the lessons and tick the evidence.',
+        'You know most areas and have practised several of the safety nets. Next: close the remaining gaps, starting with the areas marked Not yet or Aware.',
+        'Your answers cover every area and you report practice in most. This is a self-check, not a qualification. Next: keep the safety nets in use on a real product and review the lessons behind any questions you missed.'],
+      ar: ['الخطوة التالية: أن تتعلم لماذا تنكسر الأنظمة (systems) قبل أن تبني المزيد. ابدأ بالمجالات (areas) الموسومة «ليس بعد (Not yet)».',
+        'تعرف الأفكار الأساسية (core ideas) في عدد من المجالات (areas). الخطوة التالية: حوّل المعرفة إلى عادة؛ نفّذ خطوات «تحقق منه (verify it)» في الدروس وضع علامات على الأدلة (evidence).',
+        'تعرف معظم المجالات (areas) ومارست عددًا من شبكات الأمان (safety nets). الخطوة التالية: أغلق الفجوات المتبقية (remaining gaps)، بدءًا بالمجالات الموسومة «ليس بعد (Not yet)» أو «مُلِمّ (Aware)».',
+        'إجاباتك تغطي كل المجالات (areas)، وتذكر أنك مارست معظمها. هذا فحص ذاتي (self-check)، وليس مؤهلًا (qualification). الخطوة التالية: أبقِ شبكات الأمان (safety nets) قيد الاستخدام في منتج حقيقي، وراجع الدروس (lessons) التي تقف خلف الأسئلة التي أخطأت فيها.'] } },
   { id: 'saas', src: 'saas/assessment', out: 'saas', reader: { en: 'index.html', ar: 'index.ar.html' }, mode: 'hash', store: 'saas', theme: 'saas-theme',
     name: { en: 'SaaS Building Blocks', ar: 'مكوّنات بناء SaaS (SaaS Building Blocks)' }, brand: 'SaaS Building Blocks',
     unit: { en: 'module', ens: 'modules', ar: 'وحدة (module)', ars: 'وحدات (modules)' },
     evidenceHint: { en: 'in your app, in the data, in the logs — not what your agent told you', ar: 'في تطبيقك أو في البيانات (data) أو في السجلات (logs)، لا ما قاله لك وكيلك (agent)' },
-    levels: {
-      en: [['🟢 Explorer', 'You know what a SaaS is made of. Next: learn how each building block works and fails — start with the modules marked Not yet.'],
-        ['🟡 Builder', 'You know the core building blocks in most modules. Turn knowledge into habit: build the exercises and tick the evidence.'],
-        ['🟠 Operator', 'You can run a real SaaS: identity, data, money, background work and operations. Close the remaining gaps.'],
-        ['🔴 SaaS architect', 'You know every building block and have practised nearly all of them. You can design and direct a production SaaS — and teach others.']],
-      ar: [['🟢 مستكشف (Explorer)', 'تعرف مما يتكوّن منتج SaaS. الخطوة التالية أن تتعلم كيف يعمل كل مكوّن (building block) وكيف يفشل؛ ابدأ بالوحدات الموسومة «ليس بعد (Not yet)».'],
-        ['🟡 بنّاء (Builder)', 'تعرف المكوّنات الأساسية في معظم الوحدات. حوّل المعرفة إلى عادة: نفّذ التمارين (exercises) وضع علامات على الأدلة.'],
-        ['🟠 مشغّل (Operator)', 'تستطيع تشغيل منتج SaaS حقيقي: الهوية (identity)، والبيانات (data)، والمال (money)، والعمل في الخلفية (background work)، والعمليات (operations). أغلق الفجوات المتبقية.'],
-        ['🔴 مهندس SaaS (SaaS architect)', 'تعرف كل المكوّنات ومارست معظمها تقريبًا. تستطيع تصميم منتج SaaS في الإنتاج (production) وقيادة بنائه، وتعليم غيرك.']] } },
+    steps: { // next step for each rung of the shared SCALE: no job titles, no readiness claims
+      en: ['Next: learn how each building block works and fails. Start with the modules marked Not yet.',
+        'You know the core building blocks in several modules. Next: build the exercises and tick the evidence.',
+        'You know most modules and have practised several of them: identity, data, money, background work or operations. Next: close the remaining gaps.',
+        'Your answers cover every module and you report practice in most. This is a self-check, not a qualification. Next: apply the building blocks in a real project and review the lessons behind any questions you missed.'],
+      ar: ['الخطوة التالية: أن تتعلم كيف يعمل كل مكوّن (building block) وكيف يفشل. ابدأ بالوحدات (modules) الموسومة «ليس بعد (Not yet)».',
+        'تعرف المكوّنات الأساسية (core building blocks) في عدد من الوحدات (modules). الخطوة التالية: نفّذ التمارين (exercises) وضع علامات على الأدلة (evidence).',
+        'تعرف معظم الوحدات (modules) ومارست عددًا منها: الهوية (identity)، أو البيانات (data)، أو المال (money)، أو العمل في الخلفية (background work)، أو العمليات (operations). الخطوة التالية: أغلق الفجوات المتبقية (remaining gaps).',
+        'إجاباتك تغطي كل الوحدات (modules)، وتذكر أنك مارست معظمها. هذا فحص ذاتي (self-check)، وليس مؤهلًا (qualification). الخطوة التالية: طبّق المكوّنات (building blocks) في مشروع حقيقي، وراجع الدروس (lessons) التي تقف خلف الأسئلة التي أخطأت فيها.'] } },
   { id: 'aigp', src: 'aigp/assessment', out: 'aigp', reader: { en: 'index.html', ar: 'index.ar.html' }, mode: 'hash', store: 'aigp', theme: 'aigp-theme',
     name: { en: 'AI Governance: Zero to Hero', ar: 'حوكمة الذكاء الاصطناعي: من الصفر إلى الاحتراف (AI Governance: Zero to Hero)' }, brand: 'AI Governance',
     unit: { en: 'module', ens: 'modules', ar: 'وحدة (module)', ars: 'وحدات (modules)' },
     evidenceHint: { en: 'a real policy, assessment, register or decision you produced — not something you only read about', ar: 'سياسة (policy) أو تقييم (assessment) أو سجل (register) أو قرار (decision) حقيقي أعددته أنت، لا شيء قرأت عنه فقط' },
-    levels: {
-      en: [['🟢 Newcomer', 'You know what AI governance is for. Next: the laws, standards and processes — start with the modules marked Not yet.'],
-        ['🟡 Practitioner', 'You know the core of most domains. Practise: produce the artefacts in the lessons and tick the evidence.'],
-        ['🟠 Professional', 'You can run real governance work across the AI life cycle. Close the remaining gaps, then sit the 100-question mock exam in lesson 12.3.'],
-        ['🔴 Governance lead', 'You know every domain and have practised nearly all of it. You are ready for the AIGP exam and to lead an AI governance programme.']],
-      ar: [['🟢 مبتدئ (Newcomer)', 'تعرف الغرض من حوكمة الذكاء الاصطناعي (AI governance). الخطوة التالية: القوانين (laws) والمعايير (standards) والعمليات (processes)؛ ابدأ بالوحدات الموسومة «ليس بعد (Not yet)».'],
-        ['🟡 ممارس (Practitioner)', 'تعرف جوهر معظم المجالات (domains). مارِس: أعدّ الوثائق (artefacts) الواردة في الدروس وضع علامات على الأدلة.'],
-        ['🟠 محترف (Professional)', 'تستطيع أداء عمل حوكمة حقيقي عبر دورة حياة الذكاء الاصطناعي (AI life cycle). أغلق الفجوات المتبقية، ثم خض الامتحان التجريبي (mock exam) من 100 سؤال في الدرس 12.3.'],
-        ['🔴 قائد حوكمة (Governance lead)', 'تعرف كل المجالات ومارست معظمها تقريبًا. أنت جاهز لامتحان AIGP ولقيادة برنامج لحوكمة الذكاء الاصطناعي (AI governance programme).']] } },
+    steps: { // next step for each rung of the shared SCALE: no job titles, no readiness claims
+      en: ['Next: the laws, standards and processes. Start with the modules marked Not yet.',
+        'You know the core of several modules. Next: produce the artefacts in the lessons and tick the evidence.',
+        'You know most modules and have practised several across the AI life cycle. Next: close the remaining gaps. The mock exam in lesson 12.3 is under revision.',
+        'Your answers cover every module and you report practice in most. This is a self-check, not a qualification, and it does not show readiness for any certification exam. Next: keep producing real governance artefacts and review the lessons behind any questions you missed.'],
+      ar: ['الخطوة التالية: القوانين (laws) والمعايير (standards) والعمليات (processes). ابدأ بالوحدات (modules) الموسومة «ليس بعد (Not yet)».',
+        'تعرف جوهر عدد من الوحدات (modules). الخطوة التالية: أعدّ الوثائق (artefacts) الواردة في الدروس، وضع علامات على الأدلة (evidence).',
+        'تعرف معظم الوحدات (modules) ومارست عددًا منها عبر دورة حياة الذكاء الاصطناعي (AI life cycle). الخطوة التالية: أغلق الفجوات المتبقية (remaining gaps). الامتحان التجريبي (mock exam) في الدرس 12.3 قيد المراجعة (under revision).',
+        'إجاباتك تغطي كل الوحدات (modules)، وتذكر أنك مارست معظمها. هذا فحص ذاتي (self-check)، وليس مؤهلًا (qualification)، ولا يدل على الجاهزية لأي امتحان شهادة (certification exam). الخطوة التالية: واصل إعداد وثائق حوكمة (governance artefacts) حقيقية، وراجع الدروس (lessons) التي تقف خلف الأسئلة التي أخطأت فيها.'] } },
   { id: 'aipm', src: 'aipm/assessment', out: 'aipm', reader: { en: 'index.html', ar: 'index.ar.html' }, mode: 'hash', store: 'aipm', theme: 'aipm-theme',
     name: { en: 'AI Product Management: Zero to Hero', ar: 'إدارة منتجات الذكاء الاصطناعي: من الصفر إلى الاحتراف (AI Product Management: Zero to Hero)' }, brand: 'AI Product Management',
     unit: { en: 'module', ens: 'modules', ar: 'وحدة (module)', ars: 'وحدات (modules)' },
     evidenceHint: { en: 'a real brief, scorecard, spec, eval plan or launch decision you produced — not something you only read about', ar: 'موجز (brief) أو بطاقة تقييم (scorecard) أو مواصفات (spec) أو خطة تقييم (eval plan) أو قرار إطلاق (launch decision) حقيقي أعددته أنت، لا شيء قرأت عنه فقط' },
-    levels: {
-      en: [['🟢 Curious', 'You know how AI products differ. Next: discovery, design and evaluation — start with the modules marked Not yet.'],
-        ['🟡 Practitioner', 'You can discover, specify and evaluate AI features in most areas. Practise: build the artefacts and tick the evidence.'],
-        ['🟠 AI product manager', 'You can take an AI product from idea to launch and measure it. Close the remaining gaps.'],
-        ['🔴 AI product leader', 'You know every module and have practised nearly all of it. You can lead AI product strategy and teams — and teach others.']],
-      ar: [['🟢 فضولي (Curious)', 'تعرف كيف تختلف منتجات الذكاء الاصطناعي (AI products). الخطوة التالية: الاكتشاف (discovery) والتصميم (design) والتقييم (evaluation)؛ ابدأ بالوحدات الموسومة «ليس بعد (Not yet)».'],
-        ['🟡 ممارس (Practitioner)', 'تستطيع اكتشاف ميزات الذكاء الاصطناعي (AI features) وكتابة مواصفاتها (specs) وتقييمها في معظم المجالات. مارِس: أعدّ الوثائق (artefacts) وضع علامات على الأدلة.'],
-        ['🟠 مدير منتج ذكاء اصطناعي (AI product manager)', 'تستطيع أخذ منتج ذكاء اصطناعي من الفكرة إلى الإطلاق (launch) وقياسه. أغلق الفجوات المتبقية.'],
-        ['🔴 قائد منتجات ذكاء اصطناعي (AI product leader)', 'تعرف كل الوحدات ومارست معظمها تقريبًا. تستطيع قيادة استراتيجية المنتج (product strategy) والفرق، وتعليم غيرك.']] } },
+    steps: { // next step for each rung of the shared SCALE: no job titles, no readiness claims
+      en: ['Next: discovery, design and evaluation of AI features. Start with the modules marked Not yet.',
+        'You know the core ideas in several modules. Next: build the artefacts — briefs, specs, eval plans — and tick the evidence.',
+        'You know most modules and have practised several, from idea to launch and measurement. Next: close the remaining gaps.',
+        'Your answers cover every module and you report practice in most. This is a self-check, not a qualification. Next: apply the methods to a real AI feature and review the lessons behind any questions you missed.'],
+      ar: ['الخطوة التالية: اكتشاف ميزات الذكاء الاصطناعي (AI features) وتصميمها وتقييمها (discovery, design and evaluation). ابدأ بالوحدات (modules) الموسومة «ليس بعد (Not yet)».',
+        'تعرف الأفكار الأساسية (core ideas) في عدد من الوحدات (modules). الخطوة التالية: أعدّ الوثائق (artefacts)، كالموجزات (briefs) والمواصفات (specs) وخطط التقييم (eval plans)، وضع علامات على الأدلة (evidence).',
+        'تعرف معظم الوحدات (modules) ومارست عددًا منها، من الفكرة إلى الإطلاق (launch) والقياس (measurement). الخطوة التالية: أغلق الفجوات المتبقية (remaining gaps).',
+        'إجاباتك تغطي كل الوحدات (modules)، وتذكر أنك مارست معظمها. هذا فحص ذاتي (self-check)، وليس مؤهلًا (qualification). الخطوة التالية: طبّق الأساليب (methods) على ميزة ذكاء اصطناعي (AI feature) حقيقية، وراجع الدروس (lessons) التي تقف خلف الأسئلة التي أخطأت فيها.'] } },
   { id: 'secai', src: 'secai/assessment', out: 'secai', reader: { en: 'index.html', ar: 'index.ar.html' }, mode: 'hash', store: 'secai', theme: 'secai-theme',
     name: { en: 'Secure AI & Application Security: Zero to Hero', ar: 'أمن الذكاء الاصطناعي والتطبيقات: من الصفر إلى الاحتراف (Secure AI & Application Security: Zero to Hero)' }, brand: 'Secure AI & AppSec',
     unit: { en: 'module', ens: 'modules', ar: 'وحدة (module)', ars: 'وحدات (modules)' },
     evidenceHint: { en: 'on your own code, a local lab or a training app, with the result checked — never on systems you are not authorised to test', ar: 'على كودك (code) أو مختبر محلي (local lab) أو تطبيق تدريبي (training app)، مع التحقق من النتيجة، وليس أبدًا على أنظمة غير مصرَّح لك باختبارها' },
-    levels: {
-      en: [['🟢 Aware', 'You know how attackers get in. Next: the classic weaknesses and their fixes — start with the modules marked Not yet.'],
-        ['🟡 Practitioner', 'You can find and fix the common web, identity, API and cloud weaknesses. Practise in a lab and tick the evidence.'],
-        ['🟠 Defender', 'You can secure applications and AI systems and respond to incidents. Close the remaining gaps.'],
-        ['🔴 Security lead', 'You know every module and have practised nearly all of it. You can lead application and AI security — and teach others.']],
-      ar: [['🟢 مُدرِك (Aware)', 'تعرف كيف يدخل المهاجمون (attackers). الخطوة التالية: نقاط الضعف الكلاسيكية (classic weaknesses) وطرق إصلاحها؛ ابدأ بالوحدات الموسومة «ليس بعد (Not yet)».'],
-        ['🟡 ممارس (Practitioner)', 'تستطيع اكتشاف نقاط الضعف الشائعة في الويب (web) والهوية (identity) وواجهات API والسحابة (cloud) وإصلاحها. مارِس في مختبر (lab) وضع علامات على الأدلة.'],
-        ['🟠 مدافع (Defender)', 'تستطيع تأمين التطبيقات وأنظمة الذكاء الاصطناعي والاستجابة للحوادث (incidents). أغلق الفجوات المتبقية.'],
-        ['🔴 قائد أمن (Security lead)', 'تعرف كل الوحدات ومارست معظمها تقريبًا. تستطيع قيادة أمن التطبيقات والذكاء الاصطناعي (application and AI security)، وتعليم غيرك.']] } },
+    steps: { // next step for each rung of the shared SCALE: no job titles, no readiness claims
+      en: ['Next: how attackers get in, and the classic weaknesses and their fixes. Start with the modules marked Not yet.',
+        'You know the common web, identity, API and cloud weaknesses in several modules. Next: practise in a lab and tick the evidence.',
+        'You know most modules and have practised several, such as securing AI systems or responding to incidents. Next: close the remaining gaps.',
+        'Your answers cover every module and you report practice in most. This is a self-check, not a qualification. Next: keep practising in a lab, only on systems you are authorised to test, and review the lessons behind any questions you missed.'],
+      ar: ['الخطوة التالية: كيف يدخل المهاجمون (attackers)، ونقاط الضعف الكلاسيكية (classic weaknesses) وطرق إصلاحها. ابدأ بالوحدات (modules) الموسومة «ليس بعد (Not yet)».',
+        'تعرف نقاط الضعف الشائعة (common weaknesses) في الويب (web) والهوية (identity) وواجهات API والسحابة (cloud) في عدد من الوحدات (modules). الخطوة التالية: مارِس في مختبر (lab) وضع علامات على الأدلة (evidence).',
+        'تعرف معظم الوحدات (modules) ومارست عددًا منها، مثل تأمين أنظمة الذكاء الاصطناعي (AI systems) أو الاستجابة للحوادث (incidents). الخطوة التالية: أغلق الفجوات المتبقية (remaining gaps).',
+        'إجاباتك تغطي كل الوحدات (modules)، وتذكر أنك مارست معظمها. هذا فحص ذاتي (self-check)، وليس مؤهلًا (qualification). الخطوة التالية: واصل الممارسة في مختبر (lab)، وفقط على أنظمة مصرَّح لك باختبارها (authorised to test)، وراجع الدروس (lessons) التي تقف خلف الأسئلة التي أخطأت فيها.'] } },
   { id: 'career', src: 'career/assessment', out: 'career', reader: { en: 'index.html', ar: 'index.ar.html' }, mode: 'hash', store: 'career', theme: 'career-theme',
     name: { en: 'From Graduate to Hired', ar: 'من التخرّج إلى التوظيف (From Graduate to Hired)' }, brand: 'Graduate to Hired',
     unit: { en: 'module', ens: 'modules', ar: 'وحدة (module)', ars: 'وحدات (modules)' },
     evidenceHint: { en: 'for real, with something a reviewer could open — a link, a file, a sent message — not just planned', ar: 'فعليًا، مع شيء يستطيع المراجِع فتحه، كرابط (link) أو ملف (file) أو رسالة مُرسَلة، لا مجرد خطة' },
-    levels: {
-      en: [['🟢 Exploring', 'You understand the market and the roles. Next: pick a target role and follow its study path — start with the modules marked Not yet.'],
-        ['🟡 Building', 'You know what employers check and have started building skills and proof. Finish a portfolio project and tick the evidence.'],
-        ['🟠 Job-ready', 'You have proof, a CV and interview skills. Apply with focus and close the remaining gaps.'],
-        ['🔴 Hire-ready', 'You know every module and have done nearly all of it. You are ready to win an offer, start well — and help the next graduate.']],
-      ar: [['🟢 مستكشِف (Exploring)', 'تفهم السوق (market) والأدوار (roles). الخطوة التالية: اختر دورًا مستهدفًا (target role) واتبع مساره الدراسي (study path)؛ ابدأ بالوحدات الموسومة «ليس بعد (Not yet)».'],
-        ['🟡 في طور البناء (Building)', 'تعرف ما يفحصه أصحاب العمل (employers) وبدأت بناء المهارات والدليل (proof). أكمل مشروعًا في معرض أعمالك (portfolio) وضع علامات على الأدلة.'],
-        ['🟠 جاهز للعمل (Job-ready)', 'لديك دليل وسيرة ذاتية (CV) ومهارات مقابلة (interview skills). قدّم بتركيز وأغلق الفجوات المتبقية.'],
-        ['🔴 جاهز للتوظيف (Hire-ready)', 'تعرف كل الوحدات وطبّقت معظمها تقريبًا. أنت مستعد للفوز بعرض (offer) والبدء بقوة، ومساعدة الخرّيج التالي.']] } },
+    steps: { // next step for each rung of the shared SCALE: no job titles, no readiness claims
+      en: ['Next: understand the market and the roles, then pick a target role and follow its study path. Start with the modules marked Not yet.',
+        'You know what employers check in several modules. Next: build skills and proof — finish a portfolio project and tick the evidence.',
+        'You know most modules and have done several of the steps, such as proof of work, a CV or interview practice. Next: apply with focus and close the remaining gaps.',
+        'Your answers cover every module and you report doing most of the steps. This is a self-check, not a qualification, and it does not predict a job offer. Next: keep applying with focus and review the lessons behind any questions you missed.'],
+      ar: ['الخطوة التالية: افهم السوق (market) والأدوار (roles)، ثم اختر دورًا مستهدفًا (target role) واتبع مساره الدراسي (study path). ابدأ بالوحدات (modules) الموسومة «ليس بعد (Not yet)».',
+        'تعرف ما يفحصه أصحاب العمل (employers) في عدد من الوحدات (modules). الخطوة التالية: ابنِ المهارات (skills) والدليل (proof)؛ أكمل مشروعًا في معرض أعمالك (portfolio) وضع علامات على الأدلة (evidence).',
+        'تعرف معظم الوحدات (modules) ونفّذت عددًا من الخطوات، مثل دليل العمل (proof of work) أو السيرة الذاتية (CV) أو التدرّب على المقابلات (interview practice). الخطوة التالية: قدّم بتركيز وأغلق الفجوات المتبقية (remaining gaps).',
+        'إجاباتك تغطي كل الوحدات (modules)، وتذكر أنك نفّذت معظم الخطوات. هذا فحص ذاتي (self-check)، وليس مؤهلًا (qualification)، ولا يتنبأ بعرض عمل (job offer). الخطوة التالية: واصل التقديم بتركيز، وراجع الدروس (lessons) التي تقف خلف الأسئلة التي أخطأت فيها.'] } },
   { id: 'data', src: 'data/assessment', out: 'data', reader: { en: 'index.html', ar: 'index.ar.html' }, mode: 'hash', store: 'data', theme: 'data-theme',
     name: { en: 'Data Engineering & Analytics: Zero to Hero', ar: 'هندسة البيانات والتحليلات: من الصفر إلى الاحتراف (Data Engineering & Analytics: Zero to Hero)' }, brand: 'Data Engineering',
     unit: { en: 'module', ens: 'modules', ar: 'وحدة (module)', ars: 'وحدات (modules)' },
     evidenceHint: { en: 'on your own machine or project with synthetic or open data, with the result checked — never with real personal data you are not allowed to use', ar: 'على جهازك أو مشروعك ببيانات اصطناعية (synthetic) أو مفتوحة (open data)، مع التحقق من النتيجة، وليس أبدًا ببيانات شخصية حقيقية (personal data) غير مسموح لك باستخدامها' },
-    levels: {
-      en: [['🟢 Aware', 'You know how the modern data stack fits together. Next: SQL, modelling and pipelines — start with the modules marked Not yet.'],
-        ['🟡 Practitioner', 'You can model data and build tested pipelines. Practise end to end and tick the evidence.'],
-        ['🟠 Data engineer', 'You can build, test, serve and operate data that people trust, including ML and LLM data. Close the remaining gaps.'],
-        ['🔴 Data platform lead', 'You know every module and have practised nearly all of it. You can lead a data platform — and teach others.']],
-      ar: [['🟢 مُدرِك (Aware)', 'تعرف كيف تتكامل حزمة البيانات الحديثة (modern data stack). الخطوة التالية: SQL والنمذجة (modelling) وخطوط البيانات (pipelines)؛ ابدأ بالوحدات الموسومة «ليس بعد (Not yet)».'],
-        ['🟡 ممارس (Practitioner)', 'تستطيع نمذجة البيانات وبناء خطوط بيانات مُختبَرة (tested pipelines). مارِس من البداية إلى النهاية وضع علامات على الأدلة.'],
-        ['🟠 مهندس بيانات (Data engineer)', 'تستطيع بناء بيانات يثق بها الناس واختبارها وتقديمها وتشغيلها، بما فيها بيانات تعلّم الآلة (ML) والنماذج اللغوية (LLM). أغلق الفجوات المتبقية.'],
-        ['🔴 قائد منصة بيانات (Data platform lead)', 'تعرف كل الوحدات ومارست معظمها تقريبًا. تستطيع قيادة منصة بيانات (data platform)، وتعليم غيرك.']] } },
+    steps: { // next step for each rung of the shared SCALE: no job titles, no readiness claims
+      en: ['Next: how the modern data stack fits together, then SQL, modelling and pipelines. Start with the modules marked Not yet.',
+        'You know the core ideas in several modules. Next: model data and build a tested pipeline end to end, and tick the evidence.',
+        'You know most modules and have practised several: building, testing, serving and operating data, including ML and LLM data. Next: close the remaining gaps.',
+        'Your answers cover every module and you report practice in most. This is a self-check, not a qualification. Next: apply it on a project with data you are allowed to use, and review the lessons behind any questions you missed.'],
+      ar: ['الخطوة التالية: كيف تتكامل حزمة البيانات الحديثة (modern data stack)، ثم SQL والنمذجة (modelling) وخطوط البيانات (pipelines). ابدأ بالوحدات (modules) الموسومة «ليس بعد (Not yet)».',
+        'تعرف الأفكار الأساسية (core ideas) في عدد من الوحدات (modules). الخطوة التالية: نمذج البيانات (model data) وابنِ خط بيانات مُختبَرًا (tested pipeline) من البداية إلى النهاية (end to end)، وضع علامات على الأدلة (evidence).',
+        'تعرف معظم الوحدات (modules) ومارست عددًا منها: بناء البيانات واختبارها وتقديمها وتشغيلها، بما فيها بيانات تعلّم الآلة (ML) والنماذج اللغوية (LLM). الخطوة التالية: أغلق الفجوات المتبقية (remaining gaps).',
+        'إجاباتك تغطي كل الوحدات (modules)، وتذكر أنك مارست معظمها. هذا فحص ذاتي (self-check)، وليس مؤهلًا (qualification). الخطوة التالية: طبّق ما تعلمته على مشروع ببيانات مسموح لك باستخدامها، وراجع الدروس (lessons) التي تقف خلف الأسئلة التي أخطأت فيها.'] } },
   { id: 'cloud', src: 'cloud/assessment', out: 'cloud', reader: { en: 'index.html', ar: 'index.ar.html' }, mode: 'hash', store: 'cloud', theme: 'cloud-theme',
     name: { en: 'Cloud & DevOps: Zero to Hero', ar: 'السحابة وDevOps: من الصفر إلى الاحتراف (Cloud & DevOps: Zero to Hero)' }, brand: 'Cloud & DevOps',
     unit: { en: 'module', ens: 'modules', ar: 'وحدة (module)', ars: 'وحدات (modules)' },
     evidenceHint: { en: 'locally or on your own free-tier account with a budget alert, with the result checked — never on an employer\'s account without permission', ar: 'محليًا (locally) أو على حسابك المجاني (free tier) مع تنبيه ميزانية (budget alert)، مع التحقق من النتيجة، وليس أبدًا على حساب جهة عمل دون إذن' },
-    levels: {
-      en: [['🟢 Aware', 'You know how code gets to production. Next: Linux, cloud fundamentals and containers — start with the modules marked Not yet.'],
-        ['🟡 Practitioner', 'You can containerise, deploy and automate. Practise in a local cluster and tick the evidence.'],
-        ['🟠 Platform engineer', 'You can run services reliably: releases, observability, SLOs and incidents. Close the remaining gaps.'],
-        ['🔴 Platform lead', 'You know every module and have practised nearly all of it. You can lead a platform and SRE practice — and teach others.']],
-      ar: [['🟢 مُدرِك (Aware)', 'تعرف كيف تصل الشيفرة (code) إلى بيئة الإنتاج (production). الخطوة التالية: Linux وأساسيات السحابة (cloud) والحاويات (containers)؛ ابدأ بالوحدات الموسومة «ليس بعد (Not yet)».'],
-        ['🟡 ممارس (Practitioner)', 'تستطيع وضع الخدمات في حاويات ونشرها وأتمتتها (automate). مارِس على عنقود محلي (local cluster) وضع علامات على الأدلة.'],
-        ['🟠 مهندس منصات (Platform engineer)', 'تستطيع تشغيل الخدمات بموثوقية: الإطلاقات (releases)، وقابلية المراقبة (observability)، وأهداف مستوى الخدمة (SLOs)، والحوادث (incidents). أغلق الفجوات المتبقية.'],
-        ['🔴 قائد منصات (Platform lead)', 'تعرف كل الوحدات ومارست معظمها تقريبًا. تستطيع قيادة ممارسة المنصات وهندسة الموثوقية (platform and SRE)، وتعليم غيرك.']] } },
+    steps: { // next step for each rung of the shared SCALE: no job titles, no readiness claims
+      en: ['Next: how code gets to production, then Linux, cloud fundamentals and containers. Start with the modules marked Not yet.',
+        'You know the core ideas in several modules. Next: containerise, deploy and automate in a local cluster, and tick the evidence.',
+        'You know most modules and have practised several: releases, observability, SLOs and incidents. Next: close the remaining gaps.',
+        'Your answers cover every module and you report practice in most. This is a self-check, not a qualification. Next: keep practising locally or on your own account with a budget alert, and review the lessons behind any questions you missed.'],
+      ar: ['الخطوة التالية: كيف تصل الشيفرة (code) إلى بيئة الإنتاج (production)، ثم Linux وأساسيات السحابة (cloud fundamentals) والحاويات (containers). ابدأ بالوحدات (modules) الموسومة «ليس بعد (Not yet)».',
+        'تعرف الأفكار الأساسية (core ideas) في عدد من الوحدات (modules). الخطوة التالية: ضع الخدمات في حاويات (containerise) وانشرها (deploy) وأتمتها (automate) على عنقود محلي (local cluster)، وضع علامات على الأدلة (evidence).',
+        'تعرف معظم الوحدات (modules) ومارست عددًا منها: الإطلاقات (releases)، وقابلية المراقبة (observability)، وأهداف مستوى الخدمة (SLOs)، والحوادث (incidents). الخطوة التالية: أغلق الفجوات المتبقية (remaining gaps).',
+        'إجاباتك تغطي كل الوحدات (modules)، وتذكر أنك مارست معظمها. هذا فحص ذاتي (self-check)، وليس مؤهلًا (qualification). الخطوة التالية: واصل الممارسة محليًا (locally) أو على حسابك الخاص مع تنبيه ميزانية (budget alert)، وراجع الدروس (lessons) التي تقف خلف الأسئلة التي أخطأت فيها.'] } },
   { id: 'testing', src: 'testing/assessment', out: 'testing', reader: { en: 'index.html', ar: 'index.ar.html' }, mode: 'hash', store: 'testing', theme: 'testing-theme',
     name: { en: 'Software Testing: Zero to Hero in the AI Era', ar: 'اختبار البرمجيات: من الصفر إلى الاحتراف في عصر الذكاء الاصطناعي (Software Testing: Zero to Hero in the AI Era)' }, brand: 'Software Testing',
     unit: { en: 'module', ens: 'modules', ar: 'وحدة (module)', ars: 'وحدات (modules)' },
     evidenceHint: { en: 'on your own machine with the course\'s sample system or your own project, with the result checked — never against systems you do not own or have written permission to test', ar: 'على جهازك (your own machine) باستخدام النظام النموذجي للدورة (sample system) أو مشروعك، مع التحقق من النتيجة، وليس أبدًا على أنظمة لا تملكها أو لا تملك إذنًا مكتوبًا باختبارها' },
-    levels: {
-      en: [['🟢 Aware', 'You know what testing is for and how it fits delivery. Next: test design, unit tests and the basics — start with the modules marked Not yet.'],
-        ['🟡 Practitioner', 'You can design and automate tests at several levels. Practise on the sample system and tick the evidence.'],
-        ['🟠 Quality engineer', 'You can build a suite that can fail for the right reasons, test non-functional qualities, and verify AI-written code. Close the remaining gaps.'],
-        ['🔴 Quality lead', 'You know every module and have practised nearly all of it, including testing AI systems. You can set a quality strategy — and teach others.']],
-      ar: [['🟢 مُدرِك (Aware)', 'تعرف الغاية من الاختبار (testing) وكيف يتصل بالتسليم (delivery). الخطوة التالية: تصميم الاختبارات (test design) واختبارات الوحدة (unit tests) والأساسيات؛ ابدأ بالوحدات الموسومة «ليس بعد (Not yet)».'],
-        ['🟡 ممارس (Practitioner)', 'تستطيع تصميم الاختبارات وأتمتتها على عدة مستويات (levels). مارِس على النظام النموذجي (sample system) وضع علامات على الأدلة.'],
-        ['🟠 مهندس جودة (Quality engineer)', 'تستطيع بناء مجموعة اختبارات تفشل لأسباب صحيحة، واختبار الخصائص غير الوظيفية (non-functional qualities)، والتحقق من الشيفرة المكتوبة بالذكاء الاصطناعي (AI-written code). أغلق الفجوات المتبقية.'],
-        ['🔴 قائد جودة (Quality lead)', 'تعرف كل الوحدات ومارست معظمها تقريبًا، بما فيها اختبار أنظمة الذكاء الاصطناعي (testing AI systems). تستطيع وضع استراتيجية جودة (quality strategy)، وتعليم غيرك.']] } },
+    steps: { // next step for each rung of the shared SCALE: no job titles, no readiness claims
+      en: ['Next: what testing is for, then test design, unit tests and the basics. Start with the modules marked Not yet.',
+        'You know the core ideas in several modules. Next: design and automate tests at several levels on the sample system, and tick the evidence.',
+        'You know most modules and have practised several, such as non-functional testing or verifying AI-written code. Next: close the remaining gaps.',
+        'Your answers cover every module and you report practice in most, including testing AI systems. This is a self-check, not a qualification. Next: apply it on a real project and review the lessons behind any questions you missed.'],
+      ar: ['الخطوة التالية: الغاية من الاختبار (testing)، ثم تصميم الاختبارات (test design) واختبارات الوحدة (unit tests) والأساسيات. ابدأ بالوحدات (modules) الموسومة «ليس بعد (Not yet)».',
+        'تعرف الأفكار الأساسية (core ideas) في عدد من الوحدات (modules). الخطوة التالية: صمّم الاختبارات وأتمتها (automate) على عدة مستويات (levels) باستخدام النظام النموذجي (sample system)، وضع علامات على الأدلة (evidence).',
+        'تعرف معظم الوحدات (modules) ومارست عددًا منها، مثل اختبار الخصائص غير الوظيفية (non-functional testing) أو التحقق من الشيفرة المكتوبة بالذكاء الاصطناعي (AI-written code). الخطوة التالية: أغلق الفجوات المتبقية (remaining gaps).',
+        'إجاباتك تغطي كل الوحدات (modules)، وتذكر أنك مارست معظمها، بما فيها اختبار أنظمة الذكاء الاصطناعي (testing AI systems). هذا فحص ذاتي (self-check)، وليس مؤهلًا (qualification). الخطوة التالية: طبّق ما تعلمته على مشروع حقيقي، وراجع الدروس (lessons) التي تقف خلف الأسئلة التي أخطأت فيها.'] } },
   { id: 'aiapps', src: 'aiapps/assessment', out: 'aiapps', reader: { en: 'index.html', ar: 'index.ar.html' }, mode: 'hash', store: 'aiapps', theme: 'aiapps-theme',
     name: { en: 'Building AI Applications & Agents: Zero to Hero', ar: 'بناء تطبيقات الذكاء الاصطناعي والوكلاء: من الصفر إلى الاحتراف (Building AI Applications & Agents: Zero to Hero)' }, brand: 'AI Applications & Agents',
     unit: { en: 'module', ens: 'modules', ar: 'وحدة (module)', ars: 'وحدات (modules)' },
     evidenceHint: { en: 'in your own repository with the course lab kit, offline or on your own API key with a spending cap, with the result checked — never with real customer data', ar: 'في مستودعك الخاص (your own repository) باستخدام عدّة المختبر (lab kit)، دون اتصال أو بمفتاح API الخاص بك مع حدّ إنفاق (spending cap)، مع التحقق من النتيجة، وليس أبدًا ببيانات عملاء حقيقية' },
-    levels: {
-      en: [['🟢 Aware', 'You know how an LLM application works and what it takes to ship one. Next: prompts, tools and the agent loop — start with the modules marked Not yet.'],
-        ['🟡 Builder', 'You can build tool-using, RAG and workflow applications and write a specification with a customer. Practise the labs and tick the evidence.'],
-        ['🟠 Agent engineer', 'You can build agents with memory and connections, put them under evals, and make them safe. Close the remaining gaps.'],
-        ['🔴 Agent delivery lead', 'You know every module and have practised nearly all of it. You can take an agent from discovery to production for a customer — and teach others.']],
-      ar: [['🟢 مُدرِك (Aware)', 'تعرف كيف يعمل تطبيق النموذج اللغوي (LLM application) وما يلزم لإطلاقه. الخطوة التالية: الموجّهات (prompts) والأدوات (tools) وحلقة الوكيل (agent loop)؛ ابدأ بالوحدات الموسومة «ليس بعد (Not yet)».'],
-        ['🟡 باني (Builder)', 'تستطيع بناء تطبيقات تستخدم الأدوات وRAG وسير العمل (workflows) وكتابة مواصفات مع عميل. مارِس المختبرات وضع علامات على الأدلة.'],
-        ['🟠 مهندس وكلاء (Agent engineer)', 'تستطيع بناء وكلاء بذاكرة واتصالات، ووضعهم تحت التقييم (evals)، وجعلهم آمنين. أغلق الفجوات المتبقية.'],
-        ['🔴 قائد تسليم الوكلاء (Agent delivery lead)', 'تعرف كل الوحدات ومارست معظمها تقريبًا. تستطيع الوصول بوكيل من الاستكشاف (discovery) إلى الإنتاج (production) لصالح عميل، وتعليم غيرك.']] } },
+    steps: { // next step for each rung of the shared SCALE: no job titles, no readiness claims
+      en: ['Next: how an LLM application works, then prompts, tools and the agent loop. Start with the modules marked Not yet.',
+        'You know the core ideas in several modules. Next: build the tool-using, RAG and workflow labs, and tick the evidence.',
+        'You know most modules and have practised several: agents with memory and connections, evals and safety. Next: close the remaining gaps.',
+        'Your answers cover every module and you report practice in most. This is a self-check, not a qualification. Next: take one agent from discovery to a working release with the lab kit, and review the lessons behind any questions you missed.'],
+      ar: ['الخطوة التالية: كيف يعمل تطبيق النموذج اللغوي (LLM application)، ثم الموجّهات (prompts) والأدوات (tools) وحلقة الوكيل (agent loop). ابدأ بالوحدات (modules) الموسومة «ليس بعد (Not yet)».',
+        'تعرف الأفكار الأساسية (core ideas) في عدد من الوحدات (modules). الخطوة التالية: ابنِ مختبرات (labs) استخدام الأدوات (tool use) وRAG وسير العمل (workflows)، وضع علامات على الأدلة (evidence).',
+        'تعرف معظم الوحدات (modules) ومارست عددًا منها: وكلاء (agents) بذاكرة (memory) واتصالات (connections)، والتقييمات (evals)، والسلامة (safety). الخطوة التالية: أغلق الفجوات المتبقية (remaining gaps).',
+        'إجاباتك تغطي كل الوحدات (modules)، وتذكر أنك مارست معظمها. هذا فحص ذاتي (self-check)، وليس مؤهلًا (qualification). الخطوة التالية: خذ وكيلًا (agent) واحدًا من الاستكشاف (discovery) إلى إصدار يعمل (working release) باستخدام عدّة المختبر (lab kit)، وراجع الدروس (lessons) التي تقف خلف الأسئلة التي أخطأت فيها.'] } },
   { id: 'ainative', src: 'ainative/assessment', out: 'ainative', reader: { en: 'index.html', ar: 'index.ar.html' }, mode: 'hash', store: 'ainative', theme: 'ainative-theme',
     name: { en: 'A Practical Guide to Becoming an AI-Native Engineer', ar: 'دليل عملي لتصبح مهندسًا أصيلًا في الذكاء الاصطناعي (A Practical Guide to Becoming an AI-Native Engineer)' }, brand: 'AI-Native Engineer',
     unit: { en: 'module', ens: 'modules', ar: 'وحدة (module)', ars: 'وحدات (modules)' },
     evidenceHint: { en: 'in the Najm Remit lab repository or your own project, with the result checked by tests or a grader — never with real customer data or secrets', ar: 'في مستودع مختبر نجم ريميت (Najm Remit) أو مشروعك الخاص، مع التحقق من النتيجة بالاختبارات أو بالمُقيِّم (grader)، وليس أبدًا ببيانات عملاء حقيقية أو أسرار (secrets)' },
-    levels: {
-      en: [['🟢 Curious', 'You know what AI-native engineering is and how coding agents work. Next: context, specs and the daily loop — start with the modules marked Not yet.'],
-        ['🟡 Practitioner', 'You give agents context and specs, work in small verified steps and review their output. Do the labs and tick the evidence.'],
-        ['🟠 AI-native engineer', 'You verify, debug, refactor and secure with agents, and you automate your own setup. Close the remaining gaps.'],
-        ['🔴 AI-native lead', 'You know every module and have practised nearly all of it. You can run parallel agents, set team practice and keep your own skills sharp — and teach others.']],
-      ar: [['🟢 فضولي (Curious)', 'تعرف ما الهندسة الأصيلة في الذكاء الاصطناعي (AI-native engineering) وكيف تعمل وكلاء البرمجة (coding agents). الخطوة التالية: السياق (context) والمواصفات (specs) والحلقة اليومية (daily loop)؛ ابدأ بالوحدات الموسومة «ليس بعد (Not yet)».'],
-        ['🟡 ممارس (Practitioner)', 'تعطي الوكلاء السياق والمواصفات، وتعمل بخطوات صغيرة مُتحقَّق منها، وتراجع مخرجاتهم. مارِس المختبرات وضع علامات على الأدلة.'],
-        ['🟠 مهندس أصيل في الذكاء الاصطناعي (AI-native engineer)', 'تتحقق وتصحّح الأخطاء وتعيد الهيكلة وتؤمّن العمل مع الوكلاء، وتؤتمت إعدادك بنفسك. أغلق الفجوات المتبقية.'],
-        ['🔴 قائد أصيل في الذكاء الاصطناعي (AI-native lead)', 'تعرف كل الوحدات ومارست معظمها تقريبًا. تستطيع تشغيل وكلاء متوازيين، ووضع ممارسة الفريق، والحفاظ على حدّة مهارتك — وتعليم غيرك.']] } },
+    steps: { // next step for each rung of the shared SCALE: no job titles, no readiness claims
+      en: ['Next: what AI-native engineering is, then context, specs and the daily loop. Start with the modules marked Not yet.',
+        'You know the core ideas in several modules. Next: give agents context and specs, work in small verified steps, do the labs and tick the evidence.',
+        'You know most modules and have practised several: verifying, debugging, refactoring and securing with agents. Next: close the remaining gaps.',
+        'Your answers cover every module and you report practice in most. This is a self-check, not a qualification. Next: keep your skills sharp with the labs and review the lessons behind any questions you missed.'],
+      ar: ['الخطوة التالية: ما الهندسة الأصيلة في الذكاء الاصطناعي (AI-native engineering)، ثم السياق (context) والمواصفات (specs) والحلقة اليومية (daily loop). ابدأ بالوحدات (modules) الموسومة «ليس بعد (Not yet)».',
+        'تعرف الأفكار الأساسية (core ideas) في عدد من الوحدات (modules). الخطوة التالية: أعطِ الوكلاء (agents) السياق (context) والمواصفات (specs)، واعمل بخطوات صغيرة مُتحقَّق منها (verified steps)، ونفّذ المختبرات (labs)، وضع علامات على الأدلة (evidence).',
+        'تعرف معظم الوحدات (modules) ومارست عددًا منها: التحقق (verifying)، وتصحيح الأخطاء (debugging)، وإعادة الهيكلة (refactoring)، والتأمين (securing) مع الوكلاء (agents). الخطوة التالية: أغلق الفجوات المتبقية (remaining gaps).',
+        'إجاباتك تغطي كل الوحدات (modules)، وتذكر أنك مارست معظمها. هذا فحص ذاتي (self-check)، وليس مؤهلًا (qualification). الخطوة التالية: حافظ على حدّة مهاراتك بالمختبرات (labs)، وراجع الدروس (lessons) التي تقف خلف الأسئلة التي أخطأت فيها.'] } },
 ];
 
 /* ---------------------------------------------------------------- load + validate */
@@ -199,6 +209,7 @@ function load(C) {
     .update(JSON.stringify(items))
     .update(JSON.stringify(C))
     .update(fs.readFileSync(fileURLToPath(import.meta.url)))
+    .update(fs.readFileSync(path.join(ROOT, 'scripts', 'site-notice.mjs')))
     .digest('hex').slice(0, 16);
   const nq = items.reduce((n, d) => n + d.questions.length, 0), ne = items.reduce((n, d) => n + d.evidence.length, 0);
   return { AREAS, items, SRC, problems, nq, ne, na: AREAS.length };
@@ -231,18 +242,24 @@ function makeT(C, lang, L) {
     eH: 'Evidence of practice', eSub: `Tick only what you have done for real and checked with your own eyes — ${C.evidenceHint.en}.`,
     toResults: 'See my results →',
     rEmpty: 'Answer the knowledge check first — your results appear here.',
-    rH: 'Your results', score: 'Knowledge score', areasAware: `${U.ens} aware`, areasPract: `${U.ens} practised`,
+    rH: 'Your results', score: 'Knowledge score', areasAware: `${U.ens} with 3 or more of 4 right`,
+    areasPract: `${U.ens} practised: 3 or more right and both evidence items ticked`,
+    kPart: 'Knowledge', kFrom: 'From the questions, marked in this browser.',
+    pPart: 'Practice', pFrom: 'Self-reported, not verified: what you ticked.', pTicked: 'evidence items ticked',
+    lvlH: 'Level: a self-check that combines both',
+    unverified: 'Nothing on this page is verified: the knowledge score comes from your answers here, and the practice count is what you ticked.',
     status: ['Not yet', 'Aware', 'Practised'],
-    levels: C.levels.en,
+    levels: SCALE.en.map((n, i) => [n, C.steps.en[i]]),
     colArea: U.en[0].toUpperCase() + U.en.slice(1), colK: 'Knowledge', colE: 'Evidence', colS: 'Status',
     nextH: 'Study next', nextSub: `The lessons behind the questions you missed, weakest ${U.ens} first.`, nextNone: 'Nothing to review — every answer was right.',
     reviewH: 'Review your answers', yours: 'Your answer', right: 'Correct answer', noAns: 'not answered', lessonW: 'Lesson',
     saveH: 'Save & share', saveSub: 'Download your result to keep it or send it to your teacher, who can combine everyone\'s results in the Group view.',
     exportB: 'Download my result (JSON)', printB: 'Print', resetB: 'Start over', resetQ: 'Erase all answers and start over?',
-    gH: 'Group view — for teachers and team leads', gSub: `Load the JSON results your learners exported to see who is where and which ${U.ens} the group is weakest in. Files are read in this browser only.`,
+    gH: 'Group view — for teachers and team leads', gSub: `Load the JSON results your learners exported to see who is where and which ${U.ens} the group is weakest in. Files are read in this browser only. Results are self-reported and not verified.`,
     gPaste: '…or paste one or more exported results:', gAdd: 'Add pasted results', gName: 'Name', gLevel: 'Level', gScore: 'Score',
     gCover: 'aware or practised', gBad: 'Could not read that — paste the exported JSON.',
     footer: 'Part of the <a href="../">Course Library</a> · self-contained, no data leaves this browser · generated by <code>npm run assess:build</code>',
+    notice: siteNotice('en', C.id, '../'),
     theme: 'Theme',
   };
   return {
@@ -267,18 +284,24 @@ function makeT(C, lang, L) {
     eH: 'أدلة الممارسة (Evidence of practice)', eSub: `ضع علامة فقط على ما فعلته حقًا وتحققت منه بعينيك: ${C.evidenceHint.ar}.`,
     toResults: 'اعرض نتائجي ←',
     rEmpty: 'أجب عن اختبار المعرفة أولًا، وستظهر نتائجك هنا.',
-    rH: 'نتائجك', score: 'درجة المعرفة (Knowledge score)', areasAware: `${U.ars} مُلِمّ بها (aware)`, areasPract: `${U.ars} تمارسها (practised)`,
+    rH: 'نتائجك', score: 'درجة المعرفة (Knowledge score)', areasAware: `${U.ars} أجبت فيها عن 3 أسئلة أو أكثر من 4 إجابةً صحيحة`,
+    areasPract: `${U.ars} تمارسها (practised): 3 إجابات صحيحة أو أكثر مع وضع علامة على بندَي الأدلة (evidence items) كليهما`,
+    kPart: 'المعرفة (Knowledge)', kFrom: 'من الأسئلة (questions)، وتُصحَّح في هذا المتصفح (browser).',
+    pPart: 'الممارسة (Practice)', pFrom: 'تصريح ذاتي (self-reported) غير مُتحقَّق منه (not verified): ما وضعت عليه علامة.', pTicked: 'بنود أدلة (evidence items) وضعت عليها علامة',
+    lvlH: 'المستوى (Level): فحص ذاتي (self-check) يجمع الاثنين',
+    unverified: 'لا شيء في هذه الصفحة مُتحقَّق منه (verified): درجة المعرفة (knowledge score) تأتي من إجاباتك هنا، وعدد الممارسة (practice) هو ما وضعت عليه علامة بنفسك.',
     status: ['ليس بعد (Not yet)', 'مُلِمّ (Aware)', 'ممارِس (Practised)'],
-    levels: C.levels.ar,
+    levels: SCALE.ar.map((n, i) => [n, C.steps.ar[i]]),
     colArea: U.ar, colK: 'المعرفة (Knowledge)', colE: 'الأدلة (Evidence)', colS: 'الحالة (Status)',
     nextH: 'ادرس بعد ذلك (Study next)', nextSub: 'الدروس التي تقف خلف الأسئلة التي أخطأت فيها، بدءًا بالأضعف.', nextNone: 'لا شيء للمراجعة، فكل إجاباتك صحيحة.',
     reviewH: 'راجع إجاباتك', yours: 'إجابتك', right: 'الإجابة الصحيحة', noAns: 'لم تُجب', lessonW: 'الدرس',
     saveH: 'احفظ وشارك', saveSub: 'نزّل نتيجتك لتحتفظ بها أو ترسلها إلى معلّمك، الذي يستطيع جمع نتائج الجميع في عرض المجموعة (Group view).',
     exportB: 'نزّل نتيجتي (JSON)', printB: 'اطبع', resetB: 'ابدأ من جديد', resetQ: 'هل تريد مسح كل الإجابات والبدء من جديد؟',
-    gH: 'عرض المجموعة (Group view) — للمعلّمين وقادة الفرق', gSub: 'حمّل نتائج JSON التي صدّرها المتعلمون لترى أين يقف كل واحد، وما الأجزاء الأضعف لدى المجموعة. تُقرأ الملفات في هذا المتصفح فقط.',
+    gH: 'عرض المجموعة (Group view) — للمعلّمين وقادة الفرق', gSub: 'حمّل نتائج JSON التي صدّرها المتعلمون لترى أين يقف كل واحد، وما الأجزاء الأضعف لدى المجموعة. تُقرأ الملفات في هذا المتصفح فقط. النتائج تصريح ذاتي (self-reported) وغير مُتحقَّق منها (not verified).',
     gPaste: '…أو الصق نتيجة مُصدَّرة أو أكثر:', gAdd: 'أضف النتائج الملصقة', gName: 'الاسم', gLevel: 'المستوى (Level)', gScore: 'الدرجة (Score)',
     gCover: 'مُلِمّ أو ممارِس', gBad: 'تعذّرت قراءتها، الصق ملف JSON المُصدَّر.',
-    footer: 'جزء من <a href="../">مكتبة الدورات</a> · صفحة مستقلة، لا تغادر بياناتك هذا المتصفح · مولَّدة عبر <code>npm run assess:build</code>',
+    footer: 'جزء من <a href="../">مكتبة الدورات</a> · صفحة مستقلة، لا تغادر بياناتك هذا المتصفح (browser) · مولَّدة عبر <code>npm run assess:build</code>',
+    notice: siteNotice('ar', C.id, '../').replace(/\(([A-Za-z0-9][^()<>\u0600-\u06FF]*)\)/g, '<bdi>($1)</bdi>'), // keep each English gloss in one piece
     theme: 'المظهر',
   };
 }
@@ -382,8 +405,18 @@ ul.next{padding-inline-start:1.1rem}ul.next li{margin:.35rem 0}
 details.rev{border:1px solid var(--line);border-radius:8px;padding:.5rem .8rem;margin:.4rem 0;background:var(--bg)}
 details.rev summary{cursor:pointer;font-weight:600}
 .ok{color:var(--good)}.no{color:var(--bad)}
+.parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.8rem;margin:.4rem 0 1rem}
+.part{border:1px solid var(--line);border-radius:10px;padding:.8rem 1rem;background:var(--bg)}
+.part h3{margin:0;font-size:1.05rem}
+.part .from{font-size:.82rem;color:var(--muted);margin:.1rem 0 .6rem}
+.part .kpis{margin:0}.part .kpis div{background:var(--surface);min-width:7rem}
+.level .lh{display:block;font-family:var(--sans);font-size:.8rem;font-weight:600;color:var(--ember);margin-bottom:.2rem}
+html[lang="ar"] .level .lh{font-family:inherit}
+.level .basis{display:block;font-size:.85rem;color:var(--muted);margin-top:.4rem}
+.unver{font-size:.88rem;color:var(--muted);border-inline-start:3px solid var(--mid);padding-inline-start:.7rem;margin:0 0 1rem}
 footer{color:var(--muted);font-size:.82rem;padding:2rem 0 3rem;text-align:center}
-@media print{.top,.tabs,.noprint,footer{display:none}.card{border:0;padding:0}body{background:#fff}}
+footer p{margin:.35rem auto;max-width:44rem}
+@media print{.top,.tabs,.noprint,footer .meta{display:none}.card{border:0;padding:0}body{background:#fff}}
 </style>
 </head>
 <body>
@@ -429,7 +462,7 @@ footer{color:var(--muted);font-size:.82rem;padding:2rem 0 3rem;text-align:center
   <button type="button" class="ghost" id="gadd">${esc(t.gAdd)}</button>
   <div id="gout"></div>
 </section>
-<footer>${t.footer}</footer>
+<footer><p class="meta">${t.footer}</p><p class="notice">${t.notice}</p></footer>
 </div>
 <script>
 "use strict";
@@ -493,27 +526,31 @@ function renderE(){
 
 /* results */
 function compute(){
-  const areas = {}; let right = 0;
+  const areas = {}; let right = 0, ticked = 0;
   for (const a of D.areas) {
     const qs = D.qs.filter((q) => q.area === a.id), ev = D.ev.filter((e) => e.area === a.id);
     const k = qs.filter((q) => S.answers[q.id] === q.a).length, e = ev.filter((x) => S.evidence[x.id]).length;
-    right += k;
+    right += k; ticked += e;
     areas[a.id] = { k, kt: qs.length, e, et: ev.length, status: k >= 3 ? (e === ev.length ? 2 : 1) : 0 };
   }
   const st = Object.values(areas), aware = st.filter((x) => x.status >= 1).length, pract = st.filter((x) => x.status === 2).length;
   const hi = Math.ceil(0.7 * N), lo = Math.ceil(0.35 * N); // thresholds scale with the number of areas
   const level = (aware === N && pract >= hi) ? 3 : (aware >= hi && pract >= lo) ? 2 : aware >= lo ? 1 : 0;
-  return { areas, right, total: D.qs.length, aware, pract, level };
+  return { areas, right, total: D.qs.length, aware, pract, level, ticked, evTotal: D.ev.length };
 }
 function renderR(){
   const any = Object.keys(S.answers).length;
   if (!any) { $("#rout").innerHTML = '<div class="card"><p class="sub">' + esc(T.rEmpty) + '</p></div>'; return; }
   const R = compute(), L = T.levels[R.level];
   let h = '<div class="card"><h2>' + esc(T.rH) + (S.name ? ' — ' + esc(S.name) : '') + '</h2>';
-  h += '<div class="level"><b>' + gl(L[0]) + '</b>' + gl(L[1]) + '</div>';
-  h += '<div class="kpis"><div><b>' + Math.round(100*R.right/R.total) + '%</b><span>' + esc(T.score) + ' (' + R.right + '/' + R.total + ')</span></div>'
-     + '<div><b>' + R.aware + '/' + N + '</b><span>' + esc(T.areasAware) + '</span></div>'
-     + '<div><b>' + R.pract + '/' + N + '</b><span>' + esc(T.areasPract) + '</span></div></div>';
+  h += '<div class="parts"><div class="part"><h3>' + gl(T.kPart) + '</h3><p class="from">' + gl(T.kFrom) + '</p>'
+     + '<div class="kpis"><div><b>' + Math.round(100*R.right/R.total) + '%</b><span>' + gl(T.score) + ' (' + R.right + '/' + R.total + ')</span></div>'
+     + '<div><b>' + R.aware + '/' + N + '</b><span>' + gl(T.areasAware) + '</span></div></div></div>'
+     + '<div class="part"><h3>' + gl(T.pPart) + '</h3><p class="from">' + gl(T.pFrom) + '</p>'
+     + '<div class="kpis"><div><b>' + R.ticked + '/' + R.evTotal + '</b><span>' + gl(T.pTicked) + '</span></div></div></div></div>';
+  h += '<div class="level"><span class="lh">' + gl(T.lvlH) + '</span><b>' + gl(L[0]) + '</b>' + gl(L[1])
+     + '<span class="basis">' + R.pract + '/' + N + ' ' + gl(T.areasPract) + '</span></div>';
+  h += '<p class="unver">' + gl(T.unverified) + '</p>';
   h += '<div class="tbl"><table><thead><tr><th>' + esc(T.colArea) + '</th><th>' + esc(T.colK) + '</th><th>' + esc(T.colE) + '</th><th>' + esc(T.colS) + '</th></tr></thead><tbody>';
   for (const a of D.areas) { const x = R.areas[a.id];
     h += '<tr><td><span class="k" style="font-family:var(--mono);color:var(--ember);font-size:.75rem">' + esc(a.key) + '</span> ' + gl(a.name) + '</td><td><span class="bar"><i style="width:' + (100*x.k/x.kt) + '%"></i></span>' + x.k + '/' + x.kt + '</td><td>' + x.e + '/' + x.et + '</td><td><span class="st st' + x.status + '">' + esc(T.status[x.status]) + '</span></td></tr>'; }
@@ -537,22 +574,34 @@ function renderR(){
 function exportJSON(){
   const R = compute();
   const out = { tool:TOOL, version:1, name:S.name || "", date:new Date().toISOString().slice(0,10), lang:D.lang,
-    level:R.level, score:R.right, total:R.total, areas:Object.fromEntries(Object.entries(R.areas).map(([k,v]) => [k,{k:v.k,e:v.e,status:v.status}])) };
+    level:R.level, score:R.right, total:R.total, aware:R.aware, practised:R.pract,
+    practice:{ ticked:R.ticked, total:R.evTotal, selfReported:true }, areas:Object.fromEntries(Object.entries(R.areas).map(([k,v]) => [k,{k:v.k,e:v.e,status:v.status}])) };
   const b = new Blob([JSON.stringify(out, null, 2)], { type:"application/json" }), u = URL.createObjectURL(b), a = document.createElement("a");
   a.href = u; a.download = TOOL + "-" + (S.name || "result").replace(/[^\\w\\u0600-\\u06FF-]+/g, "_") + ".json"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 1000);
 }
 
-/* group view */
+/* group view: records come from files other people send, so every field is untrusted. Keep only what the
+   table shows, as integers in range or as text that is escaped when written into the page. */
 const G = [];
-function addG(o){ if (o && o.tool === TOOL && o.areas) { G.push(o); return true; } return false; }
+const plain = (o) => !!o && typeof o === "object" && !Array.isArray(o);
+const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
+function int(v, lo, hi){ const n = typeof v === "number" ? v : (typeof v === "string" && /^\\s*\\d+\\s*$/.test(v) ? Number(v) : NaN);
+  return Number.isInteger(n) && n >= lo && n <= hi ? n : null; }
+function clean(o){
+  if (!plain(o) || o.tool !== TOOL || !plain(o.areas)) return null;
+  const total = int(o.total, 1, 9999), score = total === null ? null : int(o.score, 0, total), areas = {};
+  for (const a of D.areas) { const x = own(o.areas, a.id) ? o.areas[a.id] : null; areas[a.id] = (plain(x) && int(x.status, 0, 2)) || 0; }
+  return { name: typeof o.name === "string" ? o.name.slice(0, 80) : "", level: int(o.level, 0, T.levels.length - 1), score, total, areas };
+}
+function addG(o){ const c = clean(o); if (c) { G.push(c); return true; } return false; }
 function parseMany(txt){ txt = txt.trim(); if (!txt) return false; let ok = false;
   try { const v = JSON.parse(txt); (Array.isArray(v) ? v : [v]).forEach((o) => { ok = addG(o) || ok; }); return ok; } catch(e) {}
   for (const part of txt.split(/}\\s*(?={)/)) { try { ok = addG(JSON.parse(part.endsWith("}") ? part : part + "}")) || ok; } catch(e) {} } return ok; }
 function renderG(){
   if (!G.length) { $("#gout").innerHTML = ""; return; }
   let h = '<div class="tbl" style="margin-top:1rem"><table><thead><tr><th>' + esc(T.gName) + '</th><th>' + esc(T.gLevel) + '</th><th>' + esc(T.gScore) + '</th>' + D.areas.map((a) => '<th title="' + esc(a.name) + '">' + esc(a.key) + '</th>').join('') + '</tr></thead><tbody>';
-  for (const o of G) h += '<tr><td>' + esc(o.name || '—') + '</td><td>' + esc((T.levels[o.level] || ['?'])[0]) + '</td><td>' + o.score + '/' + o.total + '</td>' + D.areas.map((a) => { const s = (o.areas[a.id] || {}).status ?? 0; return '<td><span class="st st' + s + '">' + ['·','A','P'][s] + '</span></td>'; }).join('') + '</tr>';
-  h += '<tr><th colspan="3">' + esc(T.gCover) + '</th>' + D.areas.map((a) => '<th>' + G.filter((o) => ((o.areas[a.id] || {}).status || 0) >= 1).length + '/' + G.length + '</th>').join('') + '</tr></tbody></table></div>';
+  for (const o of G) h += '<tr><td>' + esc(o.name || '—') + '</td><td>' + esc(o.level === null ? '?' : T.levels[o.level][0]) + '</td><td>' + (o.score === null ? '—' : o.score + '/' + o.total) + '</td>' + D.areas.map((a) => { const s = o.areas[a.id]; return '<td><span class="st st' + s + '">' + ['·','A','P'][s] + '</span></td>'; }).join('') + '</tr>';
+  h += '<tr><th colspan="3">' + esc(T.gCover) + '</th>' + D.areas.map((a) => '<th>' + G.filter((o) => o.areas[a.id] >= 1).length + '/' + G.length + '</th>').join('') + '</tr></tbody></table></div>';
   $("#gout").innerHTML = h;
 }
 $("#gfiles").addEventListener("change", async (ev) => { for (const f of ev.target.files) parseMany(await f.text()); renderG(); });

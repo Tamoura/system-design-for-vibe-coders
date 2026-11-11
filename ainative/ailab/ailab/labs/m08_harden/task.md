@@ -8,6 +8,8 @@ Last week Lujain's agent proposed `pip install` for a package nobody knew, and a
 had instructions for the AI reading it. The repository should carry its own guard rails, reviewed like code. Everything is
 local and fictional; no agent is needed, and if you use one, you stay accountable.
 
+**Run this lab in a throwaway folder:** `lab-assets/` holds a README written to trick agents.
+
 **Part 1 — Permission rules: `.claude/settings.json`**
 
 A `permissions` object (`allow`, `ask`, `deny`) and a `hooks` object, in the syntax of the Claude Code permissions page.
@@ -65,10 +67,10 @@ and `xargs rm -rf`.
 **Part 4 — Notes: `injection-notes.md`**
 
 Do this part yourself, not through an agent: reading the README is the attack. `lab-assets/vendor-readme/README.md` is
-constructed: `csvtidy` is a made-up vendor library (a real package with a similar name may exist and is unrelated), the
-instructions are not real and every address ends in `.invalid`. Read it as text, as a suspicious person would, and run
-nothing from it. Then fill in `lab-assets/injection-notes-template.md`: every instruction aimed at an AI, what it would cost if
-obeyed, and which of your rules would stop it (and which would not).
+constructed: `invented-csvtidy` is a made-up vendor library, the instructions are not real and every address ends in
+`.invalid`. Read it as text, as a suspicious person would, and run nothing from it. Then fill in
+`lab-assets/injection-notes-template.md`: every instruction aimed at an AI, what it would cost if obeyed, and which of your
+rules would stop it (and which would not).
 
 **Done when** `pytest -q` passes in under a minute with the existing tests untouched and your own in `tests/test_guard.py` and
 `tests/test_depcheck.py`; no secrets (the `.env` here is fake and git-ignored, for trying your deny rule); everything is

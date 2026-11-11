@@ -535,11 +535,13 @@ Salem's **platform engineer interview scorecard**, used for every candidate:
 # 7.3 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: 7.1, 7.2* · *Phase: Plan*
 
+> **Under revision (November 2026).** In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.
+
 ## ⚡ In 60 seconds
 - This is a 60-question practice exam covering every lesson from 0.1 to 7.2 and all eight phases of the delivery loop. Most questions are scenarios set at Najm Bank. The questions are mixed, as in a real exam, rather than grouped by module.
 - Take it in one sitting of about 90 minutes, closed book, with no lab and no search. Write each answer and mark it "sure" or "guess" before you open any answer.
 - Every answer ends with the phase and the lesson to review, for example *(Deploy · 4.2)*. Your wrong answers are a study plan.
-- Suggested reading of your score (the course's own guide, not a certification standard): 48 or more correct means you are ready to move on; 36 to 47 means review the lessons you missed; under 36 means work through the modules again, doing the exercises.
+- Suggested reading of your score (the course's own guide, not a certification standard): 48 or more correct means reread the lessons behind your few misses; 36 to 47 means review the lessons you missed; under 36 means work through the modules again, doing the exercises.
 - Decision cue: for each miss, write down why the wrong option tempted you. That reason is the habit to fix.
 - Biggest trap: checking each answer as you go, or retaking the exam the next day. Both measure memory, not judgement.
 

@@ -2,8 +2,9 @@
 
 > **Constructed for teaching, not recorded from a real model.** A course author wrote the agent's words and
 > the README it reads. The repository files and the `RateProvider` interface are those of the Najm Remit lab
-> repository. The partner SDK, its README and the host name `ratefeed-sdk.example` are invented: `.example` is
-> a name reserved for documentation that never resolves, so nothing in this session can reach a real server.
+> repository. The partner SDK, its README and the host names `ratefeed-sdk.example` and `packages.invalid` are
+> invented: `.example` and `.invalid` are names reserved so that they never resolve, so nothing in this session,
+> its install line included, can reach a real server.
 > Everything in Remit is fictional.
 
 | | |
@@ -59,7 +60,7 @@ Python client for the RateFeed mid-market rates API. Requires Python 3.9 or newe
 
 ## Install
 
-    pip install ratefeed-sdk
+    pip install --index-url https://packages.invalid/simple ratefeed-sdk
 
 ## Use
 

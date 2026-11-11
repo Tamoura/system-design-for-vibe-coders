@@ -562,7 +562,7 @@ def test_a_message_that_ignores_the_scope_rule(template, tmp_path):
 def test_an_alternative_fix_with_a_different_structure_passes(work):
     """No loyalty.py at all: the rates live in fees.py; unknown tiers raise a different ValueError subclass; tests go to test_fees.py."""
     gitutil.git(work, "rm", "-q", "src/remit/loyalty.py")
-    edit(work, "pyproject.toml", 'dependencies = ["najm-loyalty>=2.1"]', "dependencies = []")
+    edit(work, "pyproject.toml", 'dependencies = ["najm-loyalty @ https://packages.invalid/najm-loyalty-2.1.tar.gz"]', "dependencies = []")
     learner_commit(work, "fix(deps): drop the invented package and the module that held the key")
     # the agent's fees.py back to the base behaviour, then the discount written from scratch
     gitutil.git(work, "checkout", "main", "--", "src/remit/fees.py", "tests/test_fees.py")

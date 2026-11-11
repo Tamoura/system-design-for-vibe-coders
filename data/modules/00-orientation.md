@@ -582,7 +582,7 @@ flowchart LR
 | 4 Analytics people trust | Define metrics once, design dashboards that drive decisions and run sound experiments | 🟡 |
 | 5 Data science and ML in production | Take models from notebook to pipeline, monitor drift and prepare data for LLM applications | 🟡 |
 | 6 Governance, privacy and security | Own, classify, protect and share data properly | 🔴 |
-| 7 Hero | Build the credit-risk mart end to end, plan your career and pass a 60-question practice exam | 🔴 |
+| 7 Hero | Build the credit-risk mart end to end, plan your career and take a 60-question practice exam | 🔴 |
 
 **How every lesson works.** The ten sections always come in the same order. In **📐 How it works**, read 🟢 first, try 🟡, and return to 🔴 when you need it. **🏛️ In practice at Najm Bank** is the artefact to copy into your portfolio.
 

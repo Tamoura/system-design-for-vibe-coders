@@ -57,7 +57,7 @@
 |---|---|---|
 | 🟢 **الأسس (Foundations)** | 0–1 | شرح منظومة البيانات الحديثة (modern data stack)، وكتابة SQL تجيب عن أسئلة الأعمال (business questions)، ونمذجة البيانات بالحُبَيبية (grain) الصحيحة. |
 | 🟡 **الممارس (Practitioner)** | 2–5 | بناء خطوط بيانات (pipelines) آمنة لإعادة التشغيل (safe to re-run)، واختبار تحويلاتك (transformations)، وتعريف مقاييس موثوقة (trusted metrics)، وإجراء تجارب سليمة (sound experiments)، ونقل النماذج وبيانات النماذج اللغوية الكبيرة (LLM data) إلى الإنتاج (production). |
-| 🔴 **المحترف (Hero)** | 6–7 | حوكمة (govern) منصة بيانات وتأمينها (secure)، وبناء متجر بيانات مخاطر الائتمان (credit-risk mart) من البداية إلى النهاية (end to end)، واجتياز امتحان تدريبي (practice exam) من 60 سؤالًا. |
+| 🔴 **المحترف (Hero)** | 6–7 | حوكمة (govern) منصة بيانات وتأمينها (secure)، وبناء متجر بيانات مخاطر الائتمان (credit-risk mart) من البداية إلى النهاية (end to end)، وخوض امتحان تدريبي (practice exam) من 60 سؤالًا. |
 
 ## الدورات المرافقة (Companion courses)
 

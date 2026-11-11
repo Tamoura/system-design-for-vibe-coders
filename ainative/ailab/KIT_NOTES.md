@@ -920,6 +920,31 @@ Left alone, with the reason (do not "fix" these without reading it):
 | `tests_fail_on_starter` counts collection errors as failures | the numbers in sample output would change; m06 and m10 have their own stricter checks |
 | Base README: warn that `pip install -e .` and git worktrees mix badly | base text is frozen apart from the changes listed above; lesson 10.2 carries the warning |
 | `check_blocks.py` does not map `# lab-assets/...` first lines to a lab | one use (lesson 13.2), already pinned by `tests/test_labs_m13.py` |
-| Whether `csvtidy` is unregistered on PyPI (m08) | checked on 2026-10-23: a real, unrelated `csvtidy` (0.1.0) exists and `csvtidy-extras` is unregistered. The lab now says `csvtidy` is a made-up vendor library, a similar real name may exist, and anyone could register `csvtidy-extras` (slopsquatting); the point is that neither name is on the allow-list |
 | `/dev/null` was found to be a regular file in the shared sandbox | the machine, not the kit; nothing in the kit relies on it (`GIT_CONFIG_GLOBAL=/dev/null` was removed from m00's tests) |
 | "one dirham (0.01 QAR)" in ARCHITECTURE.md | correct: the Qatari riyal has 100 dirhams |
+
+## 11. Invented package names: nothing a learner's tools can fetch
+
+A learner's coding agent reads the lab assets, so an install line or a dependency list that names an invented package is a
+real risk: anyone can register that name on the public index and ship code. The rule: an invented package that appears in a
+runnable install line or a dependency list resolves only to a host under `.invalid`, which can never exist. A name that
+appears only in a story or a quiz (a hallucinated package) is left as it is.
+
+| Where | What it says now |
+|---|---|
+| m08 vendor README and sample project | The library was `csvtidy`; an unrelated `csvtidy` is on PyPI and `csvtidy-extras` was unregistered (checked on 2026-10-23). It is now `invented-csvtidy` and `invented-csvtidy-extras`. The README installs with `pip install --index-url https://packages.invalid/simple ...`; the sample `pyproject.toml` declares `name @ https://packages.invalid/...`, so the reference check reports both as installed from a URL. The grader's `pip-install` sample and the notes keyword follow the new name. `TASK.md` asks for a throwaway folder |
+| m05 agent branch | `pyproject.toml` declares `najm-loyalty @ https://packages.invalid/najm-loyalty-2.1.tar.gz`, and the import comment installs from the same index |
+| m01 session s3 | the partner README installs `ratefeed-sdk` with `--index-url https://packages.invalid/simple` |
+| Left as they are | `najmkit` (lesson 11.1 and the m11 tests: a hallucinated `pip install` the grader must catch), `fastcsv-helpers` (a quiz in lesson 8.1), `najm-utils` and the other names in the m08 dependency cases (written to temporary folders and only read by the learner's check, never installed) |
+
+On 2026-11-11 the PyPI JSON API returned "not found" for `invented-csvtidy`, `invented-csvtidy-extras`, `najm-loyalty`,
+`ratefeed-sdk`, `ratefeed`, `najm-utils`, `najmkit` and `fastcsv-helpers`. That can change at any time, which is why the
+references above point at `.invalid` and do not rely on a name staying free.
+
+Known limit: `--index-url` replaces only pip's main index. An `extra-index-url` in the learner's pip configuration, or
+`PIP_EXTRA_INDEX_URL`, is still searched. So the `--index-url` lines (m08 README, m01 session s3, the m05 import comment)
+fetch nothing only while those names stay unregistered on any extra index the learner has set. The `name @ URL` entries in
+the m08 and m05 `pyproject.toml` files never search an index. Checked on 2026-11-11 with pip 24.0: with
+`PIP_EXTRA_INDEX_URL=https://pypi.org/simple`, `pip download --index-url https://packages.invalid/simple six` downloaded
+`six` from PyPI. A direct URL in the command (`pip install https://packages.invalid/<file>`) would close this; that is the
+course owner's call, because the brief asked for the `--index-url` form.

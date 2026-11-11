@@ -1,0 +1,61 @@
+name: Report a problem
+description: Something in a course is wrong, out of date, unclear or broken (English or Arabic).
+title: "[course] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting this. The courses are drafted with AI and have not yet been reviewed by a subject expert, so reports like yours are how mistakes get found.
+        Please do not include personal data, passwords or anything confidential.
+        You may write in English or Arabic. يمكنك الكتابة بالعربية (Arabic) أو بالإنجليزية (English).
+  - type: dropdown
+    id: course
+    attributes:
+      label: Course
+      options:
+        - System Design for Vibe Coders (vibe)
+        - SaaS Building Blocks (saas)
+        - "AI Governance: Zero to Hero (aigp)"
+        - "AI Product Management: Zero to Hero (aipm)"
+        - "Secure AI & Application Security: Zero to Hero (secai)"
+        - From Graduate to Hired (career)
+        - "Data Engineering & Analytics: Zero to Hero (data)"
+        - "Cloud & DevOps: Zero to Hero (cloud)"
+        - "Software Testing: Zero to Hero in the AI Era (testing)"
+        - "Building AI Applications & Agents: Zero to Hero (aiapps)"
+        - A Practical Guide to Becoming an AI-Native Engineer (ainative)
+        - The landing page or the whole site
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Lesson or page
+      description: The lesson number (for example 4.2), the page address, or the name of the page or file.
+      placeholder: "Lesson 4.2, or https://…/aigp/#/4.2"
+    validations:
+      required: true
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      options:
+        - English
+        - Arabic
+        - Both
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong
+      description: Quote the text or describe what you saw, and say what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: The source that shows it (optional)
+      description: A link to an official document, law, standard or documentation page that shows the correct information.
+    validations:
+      required: false

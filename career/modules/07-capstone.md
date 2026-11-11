@@ -256,6 +256,8 @@ At week 8, her tracker showed that applications after a referral or conversation
 # 7.2 — Practice interview pack: 40 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: 7.1* · *Step: Interview*
 
+> **Under revision (November 2026).** In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.
+
 ## ⚡ In 60 seconds
 - This is a 40-question practice pack covering every module, from reading the market to growing after your first year. Most questions are scenarios with the cohort: which project to build, which CV bullet is stronger, how to answer, which offer to take, what to do in week two.
 - Take it in one sitting of about 60 minutes, with no notes and no AI assistant. Choose your answer before you open the hidden one.
@@ -310,7 +312,7 @@ Omar's review log, the rows Khalid asked him to bring to their 1:1:
 | 29 | C | D | Guess | Saw approvals as friction | 6.2 | Read Najm's change-approval guide before my rotation |
 | 32 | A | B | Sure | Trusted one salary website | 6.1 | Ask two alumni and a recruiter about the range |
 
-Khalid's comment: "Your technical answers are ready. Spend this week on rows 13 and 14: they are about how you handle people and promises, and that is what the final round checks."
+Khalid's comment: "You missed few technical questions. Spend this week on rows 13 and 14: they are about how you handle people and promises, and that is what the final round checks."
 
 ## 🛠️ Exercises
 - 🟢 Take the full pack in one 60-minute sitting, without notes or AI tools, marking each answer *sure* or *guess*. *Done when:* you have a score out of 40 and a count of your guesses, both written in your career folder.

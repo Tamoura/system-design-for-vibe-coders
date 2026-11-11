@@ -74,6 +74,26 @@ jobs:
       - name: Verify the agentic pages carry the site navigation
         run: node scripts/agentic-nav.mjs --check
 
+      # Content checks (scripts/qa/README.md). Each one blocks the build.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Check every Arabic lesson against its English source
+        run: python scripts/qa/check_ar_all.py
+
+      - name: Check that answer options give no new length or gloss cues
+        run: python scripts/qa/quiz_cues.py
+
+      - name: Check the standing Arabic rules (diagram direction, DPO, English glosses)
+        run: python scripts/qa/arabic_rules.py
+
+      - name: Check for banned names, exam-pass promises and landing links to agentic/
+        run: python scripts/qa/claims_lint.py
+
+      - name: Test that the self-assessment group views do not run injected content
+        run: npm run test:assess
+
       - name: Check the SaaS course's GitHub repo links (report only)
         continue-on-error: true
         env:
@@ -88,6 +108,9 @@ jobs:
           # Course library: landing hub at root, each course in its own subpath.
           mkdir -p _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai _site/career _site/data _site/cloud _site/testing _site/aiapps _site/ainative
           cp landing.html _site/index.html
+          # How these courses are made (linked from every page's notice) → /about/
+          mkdir -p _site/about
+          cp about/index.html about/index.ar.html _site/about/
           # Course trailers (scripts/build-videos.mjs): played on the landing page and each course home
           mkdir -p _site/videos/renders _site/vibe/videos/renders
           cp videos/renders/*.mp4 videos/renders/*.jpg _site/videos/renders/
@@ -152,7 +175,7 @@ jobs:
                ainative/index.ar.html ainative/course.ar.html ainative/COURSE.ar.md ainative/TOOLKIT.ar.md \
                ainative/assessment.html ainative/assessment.ar.html _site/ainative/
           fi
-          ls -lh _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai _site/career _site/data _site/cloud _site/testing _site/aiapps _site/ainative
+          ls -lh _site _site/about _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai _site/career _site/data _site/cloud _site/testing _site/aiapps _site/ainative
 
       # Every link on the assembled site, internal and external. Report only: a dead third-party
       # page should be fixed in the lesson, not block the deploy. Results are in the run summary.

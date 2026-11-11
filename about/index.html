@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How these courses are made — Course Library</title>
+<meta name="description" content="How the Course Library is written, what has not been checked yet, known issues, and how to report a problem.">
+<link rel="alternate" hreflang="ar" href="index.ar.html">
+<style>
+:root{
+  --bg:#f6f5f1; --panel:#ffffff; --ink:#1d2128; --muted:#5c6470; --line:#e5e1d9;
+  --accent:#7a1f2b; --accent-soft:#f3e3e5;
+  --govern:#8a5a12; --govern-soft:#f5ecdc;
+  --shadow:0 1px 3px rgba(20,20,30,.07);
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#131519; --panel:#1b1e24; --ink:#e9e7e2; --muted:#9aa0aa; --line:#2b2f37;
+  --accent:#dd8a94; --accent-soft:#2a1e20;
+  --govern:#e0b46a; --govern-soft:#2e2517;
+  --shadow:0 1px 3px rgba(0,0,0,.4);
+}}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.65 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:760px;margin:0 auto;padding:clamp(2rem,6vw,4rem) 1.25rem 4rem;}
+.top{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.6rem;}
+.brand{font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;}
+.lang{font-size:.85rem;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:.15rem .8rem;color:var(--ink);text-decoration:none;}
+h1{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;font-size:clamp(2rem,5vw,2.8rem);
+  line-height:1.08;letter-spacing:-.5px;margin:.2rem 0 .8rem;}
+h2{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;font-size:1.35rem;margin:2.2rem 0 .6rem;}
+.lede{color:var(--muted);font-size:1.08rem;margin:0;}
+.status{margin:1.4rem 0 0;padding:.8rem 1.1rem;background:var(--govern-soft);border:1px solid var(--line);
+  border-inline-start:4px solid var(--govern);border-radius:10px;}
+ul{padding-inline-start:1.2rem;margin:.4rem 0;}
+li{margin:.25rem 0;}
+a{color:var(--accent);text-underline-offset:2px;}
+.table-scroll{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  box-shadow:var(--shadow);font-size:.92rem;}
+th,td{text-align:start;padding:.55rem .8rem;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+tr:last-child td{border-bottom:0;}
+.foot{margin-top:3rem;padding-top:1.2rem;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <a class="brand" href="../">Tamoura · Course Library</a>
+    <a class="lang" href="index.ar.html" hreflang="ar" lang="ar">العربية</a>
+  </div>
+
+  <h1>How these courses are made</h1>
+  <p class="lede">A short, plain account of how this library is written, what has not been checked yet, and how to tell us about a mistake.</p>
+  <p class="status" role="note"><strong>Status of every course:</strong> drafted with AI, not yet expert-reviewed.</p>
+
+  <h2>What this is</h2>
+  <p>A free library of 12 courses in English and Arabic, with 379 lessons in all. The courses were written between July and October 2026.</p>
+
+  <h2>How they are made</h2>
+  <ul>
+    <li>The owner sets the scope and the rules for each course.</li>
+    <li>AI agents (Claude Code) draft the lessons, check facts using web search, write the quizzes, translate the lessons into Arabic, and check that the Arabic has the same structure as the English.</li>
+    <li>Fact checks often rely on search summaries rather than the full source.</li>
+    <li>The pages are built from Markdown files in a <a href="https://github.com/Tamoura/system-design-for-vibe-coders">public repository on GitHub</a>.</li>
+  </ul>
+
+  <h2>What has not been done yet</h2>
+  <ul>
+    <li>No lesson has been reviewed by a named subject expert.</li>
+    <li>No Arabic editor has reviewed the Arabic text.</li>
+    <li>No group of learners has piloted a course.</li>
+    <li>No certificate is issued.</li>
+  </ul>
+
+  <h2>Known issues being fixed</h2>
+  <ul>
+    <li>The AI governance course is being re-checked against changes to EU AI law.</li>
+    <li>Several practice exams are under revision, because the correct option can often be spotted by its length.</li>
+    <li>The course on running AI agents in production is being renamed, and its regulatory section has been removed.</li>
+  </ul>
+
+  <h2>How to report a problem</h2>
+  <p>Course pages have a “Report a problem” link at the bottom. It opens a new issue on GitHub, so you need a GitHub account. You can also <a href="https://github.com/Tamoura/system-design-for-vibe-coders/issues/new?template=report-a-problem.yml&amp;title=%5Blibrary%5D%20" rel="noopener">report a problem here</a>.</p>
+
+  <h2>Status of every course</h2>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Course</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td><a href="../career/">From Graduate to Hired</a></td><td>Drafted with AI, not yet expert-reviewed</td></tr>
+      <tr><td><a href="../vibe/">System Design for Vibe Coders</a></td><td>Drafted with AI, not yet expert-reviewed</td></tr>
+      <tr><td><a href="../saas/">SaaS Building Blocks</a></td><td>Drafted with AI, not yet expert-reviewed</td></tr>
+      <tr><td><a href="../aigp/">AI Governance: Zero to Hero</a></td><td>Drafted with AI, not yet expert-reviewed. Being re-checked against changes to EU AI law.</td></tr>
+      <tr><td><a href="../aipm/">AI Product Management: Zero to Hero</a></td><td>Drafted with AI, not yet expert-reviewed</td></tr>
+      <tr><td><a href="../secai/">Secure AI &amp; Application Security: Zero to Hero</a></td><td>Drafted with AI, not yet expert-reviewed</td></tr>
+      <tr><td><a href="../data/">Data Engineering &amp; Analytics: Zero to Hero</a></td><td>Drafted with AI, not yet expert-reviewed</td></tr>
+      <tr><td><a href="../cloud/">Cloud &amp; DevOps: Zero to Hero</a></td><td>Drafted with AI, not yet expert-reviewed</td></tr>
+      <tr><td><a href="../testing/">Software Testing: Zero to Hero in the AI Era</a></td><td>Drafted with AI, not yet expert-reviewed</td></tr>
+      <tr><td><a href="../aiapps/">Building AI Applications &amp; Agents: Zero to Hero</a></td><td>Drafted with AI, not yet expert-reviewed</td></tr>
+      <tr><td><a href="../ainative/">A Practical Guide to Becoming an AI-Native Engineer</a></td><td>Drafted with AI, not yet expert-reviewed</td></tr>
+      <tr><td>The course on running AI agents in production</td><td>Drafted with AI, not yet expert-reviewed. Being renamed; regulatory section removed.</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="foot">
+    <span><a href="../">← Back to the Course Library</a></span>
+    <span><a href="index.ar.html" hreflang="ar" lang="ar">اقرأ هذه الصفحة بالعربية</a></span>
+  </div>
+
+</div>
+</body>
+</html>

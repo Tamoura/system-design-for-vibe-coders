@@ -21,8 +21,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { marked } from 'marked';
+import { marked, Tokenizer } from 'marked';
 import { trailerHtml, TRAILER_CSS } from './trailer.mjs';
+import { siteNotice } from './site-notice.mjs';
 import puppeteer from 'puppeteer';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -141,7 +142,7 @@ const filesFor = (lang) => (lang === 'en' ? enFiles : enFiles.map((f) => f.repla
 const SOURCE_FILES = [
   ...LANGS.flatMap((lang) => [`aipm/${T[lang].readme}`, ...filesFor(lang).map((f) => `aipm/modules/${f}`)]),
   'scripts/build-aipm.mjs',
-  'scripts/saas.css', 'scripts/trailer.mjs',
+  'scripts/saas.css', 'scripts/trailer.mjs', 'scripts/site-notice.mjs',
 ];
 for (const f of SOURCE_FILES) {
   if (!fs.existsSync(path.join(ROOT, f))) {
@@ -237,6 +238,31 @@ marked.use({
         return `<div class="diagram" dir="ltr"><!--DIAGRAM:${diagrams.length - 1}--></div>`;
       }
       return false;
+    },
+  },
+});
+
+// Bare URLs in the markdown become links through marked's GFM autolinks. marked gives back
+// trailing ASCII punctuation but not Arabic, so "https://example.com/a؛" linked to
+// ".../a%D8%9B". Give back trailing Arabic punctuation (، ؛ ؟ « » ۔), ASCII . , ; : and an
+// unbalanced ) to the text that follows the link.
+const URL_TAIL = /[\u060C\u061B\u061F\u06D4\u00AB\u00BB.,;:]$/;
+const trimUrlTail = (raw) => {
+  for (;;) {
+    if (URL_TAIL.test(raw)) raw = raw.slice(0, -1);
+    else if (raw.endsWith(')') && raw.split(')').length > raw.split('(').length) raw = raw.slice(0, -1);
+    else return raw;
+  }
+};
+marked.use({
+  tokenizer: {
+    url(src) {
+      const tok = Tokenizer.prototype.url.call(this, src);
+      if (!tok || tok.href.startsWith('mailto:')) return tok;
+      const raw = trimUrlTail(tok.raw);
+      if (raw === tok.raw) return tok;
+      const href = tok.href.slice(0, tok.href.length - (tok.raw.length - raw.length));
+      return { ...tok, raw, text: raw, href, tokens: [{ type: 'text', raw, text: raw }] };
     },
   },
 });
@@ -542,7 +568,7 @@ ${catalogHtml()}
 
 ${fill(ALL_LESSONS.map(lessonTemplate).join('\n'))}
 
-<footer><p>${t.footer}</p></footer>
+<footer><p>${t.footer}</p><p class="site-notice">${siteNotice(lang, 'aipm', '../')}</p></footer>
 
 <script>
 (function(){
@@ -636,7 +662,7 @@ ${modules}
 ${catalogHtml()}
 </section>
 </main>
-<footer><p>${t.flatFooter}</p></footer>`;
+<footer><p>${t.flatFooter}</p><p class="site-notice">${siteNotice(lang, 'aipm', '../')}</p></footer>`;
     return `${head(t.courseTitle, t.description, AIPM_CSS + `
 .flat-mod{padding:3.5rem 0 1rem;border-top:2px solid var(--line);margin-top:2rem}
 .flat-mod h1{font-family:var(--serif);font-size:clamp(1.9rem,5vw,2.8rem);margin:.2rem 0 .6rem}
