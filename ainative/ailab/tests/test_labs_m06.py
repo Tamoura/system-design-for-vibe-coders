@@ -274,8 +274,10 @@ def test_git_bisect_with_a_reproduction_test_finds_the_bad_commit(work):
     gitutil.git(work, "bisect", "start", "HEAD", initial)
     outcome = gitutil.git(work, "bisect", "run", sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider",
                           "tests/test_repro_midnight.py")
-    assert "is the first bad commit" in outcome.stdout
-    first_bad = outcome.stdout.split(" is the first bad commit")[0].split()[-1]
+    # The wording differs between git versions ("is the first bad commit"; newer ones quote the term, "first 'bad'
+    # commit"), so check only that bisect finished, and read the commit it found from refs/bisect/bad.
+    assert re.search(r"first '?bad'? commit", outcome.stdout), outcome.stdout
+    first_bad = gitutil.out(work, "rev-parse", "refs/bisect/bad")
     gitutil.git(work, "bisect", "reset")
     assert gitutil.git(work, "log", "-1", "--format=%s", first_bad).stdout.strip() == \
         "refactor(limits): simplify the window helpers and their tests"
