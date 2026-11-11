@@ -180,7 +180,6 @@ main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
 <li class="toc-d3"><a href="#42-agent-to-human-the-autonomy-ladder">4.2 Agent-to-human: the autonomy ladder</a></li>
 <li class="toc-d3"><a href="#43-talking-to-end-users">4.3 Talking to end users</a></li>
 <li class="toc-d2"><a href="#5-govern">5. Govern</a></li>
-<li class="toc-d3"><a href="#51-regulatory-mapping-for-qdb">5.1 Regulatory mapping for QDB</a></li>
 <li class="toc-d3"><a href="#52-the-governance-operating-structure">5.2 The governance operating structure</a></li>
 <li class="toc-d3"><a href="#53-the-three-questions-every-agent-deployment-must-answer-in-writing">5.3 The three questions every agent deployment must answer in writing</a></li>
 <li class="toc-d2"><a href="#6-evaluate">6. Evaluate</a></li>
@@ -236,7 +235,7 @@ main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
 <tr>
 <td>Access badge / system accounts</td>
 <td>Non-human identity with least-privilege entitlements</td>
-<td><code>src/api/middleware/auth.ts</code> (needs workload identity — see §3)</td>
+<td><code>src/api/middleware/auth.ts</code> (see §3 for workload identity)</td>
 </tr>
 <tr>
 <td>Delegation of authority matrix</td>
@@ -256,7 +255,7 @@ main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
 <tr>
 <td>Performance review</td>
 <td>Continuous evaluation suite + KPI dashboards</td>
-<td>§6 (largest current gap)</td>
+<td>§6</td>
 </tr>
 <tr>
 <td>Code of conduct</td>
@@ -302,7 +301,7 @@ main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
 <ul>
 <li>Each agent gets its <strong>own workload identity</strong> (Entra ID managed identity / service principal on Azure) — never a shared API key, never a human&#39;s credentials. The agent&#39;s identity, not the calling user&#39;s, is what tool backends authorize — combined with the <em>user&#39;s</em> entitlements passed through the envelope (<code>metadata.userId</code>) so an agent can never do for a user what the user couldn&#39;t do themselves (&quot;confused deputy&quot; prevention).</li>
 <li>Short-lived credentials only; secrets in Key Vault; rotation automated.</li>
-<li><strong>Gap in current framework:</strong> <code>src/api/middleware/auth.ts</code> handles inbound API auth, but agents don&#39;t yet carry distinct outbound identities. Before production, each agent&#39;s tool calls must be authenticated as that agent so entitlement review works per-agent, like per-employee access review.</li>
+<li>Each agent&#39;s tool calls must be authenticated as that agent, so entitlement review works per agent, like per-employee access review.</li>
 </ul>
 <h3 id="32-least-privilege-via-tool-allowlists">3.2 Least privilege via tool allowlists<a class="anchor" href="#32-least-privilege-via-tool-allowlists" aria-label="link to section">#</a></h3>
 <p>The single most effective control. An agent physically cannot call a tool that is not on its allowlist — enforced in code, not in the prompt:</p>
@@ -388,47 +387,7 @@ main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
 </ul>
 <hr>
 <h2 id="5-govern">5. Govern<a class="anchor" href="#5-govern" aria-label="link to section">#</a></h2>
-<h3 id="51-regulatory-mapping-for-qdb">5.1 Regulatory mapping for QDB<a class="anchor" href="#51-regulatory-mapping-for-qdb" aria-label="link to section">#</a></h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Regime</th>
-<th>What it demands of agents</th>
-<th>Framework hook</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>QCB regulations &amp; guidelines</strong> (incl. its AI guideline for the financial sector)</td>
-<td>Board-approved AI governance framework, model inventory, human oversight, explainability, exit strategy per system</td>
-<td>Policy registry = inventory; autonomy ladder = oversight; audit trail = explainability evidence</td>
-</tr>
-<tr>
-<td><strong>Qatar PDPPL (Law 13/2016)</strong></td>
-<td>Lawful basis, data minimization, security of personal data, cross-border transfer controls</td>
-<td>Data classifier + <code>pii_handling</code> + residency-aware LLM routing</td>
-</tr>
-<tr>
-<td><strong>NCSA / NIA policy</strong></td>
-<td>National information-assurance controls, incident reporting</td>
-<td>Observability + audit + incident runbooks</td>
-</tr>
-<tr>
-<td><strong>Sharia governance</strong> (for Islamic finance products)</td>
-<td>Sharia-compliance screening of recommendations</td>
-<td><code>src/tools/compliance/check-sharia.ts</code>; Sharia board reviews agent policies touching product decisions</td>
-</tr>
-<tr>
-<td><strong>Model risk management</strong> (Basel-style, SR 11-7 as the global reference)</td>
-<td>Model inventory, independent validation, ongoing monitoring, documented limitations</td>
-<td>§6 evaluation + §9 versioning provide the artifacts</td>
-</tr>
-<tr>
-<td><strong>EU AI Act (as international benchmark)</strong></td>
-<td>Credit-decision AI = high-risk: risk management system, data governance, logging, human oversight, accuracy/robustness, <strong>fairness/non-discrimination</strong>, technical documentation</td>
-<td>Maps closely to the high-risk control set — several controls remain gaps (outbound agent identity §3.1, evals §6, DLP-grade PII §7.3, and fairness testing)</td>
-</tr>
-</tbody></table>
-</div><p>QDB is a development bank, not a commercial deposit-taker, but QCB supervision and PDPPL still apply, and adopting the high-risk-AI control set positions QDB ahead of where regional regulation is clearly heading.</p>
+<p>Regulatory mapping is specific to each organisation and is not published here.</p>
 <h3 id="52-the-governance-operating-structure">5.2 The governance operating structure<a class="anchor" href="#52-the-governance-operating-structure" aria-label="link to section">#</a></h3>
 <ol>
 <li><strong>AI Governance Committee</strong> (CIO/COO/CRO/Compliance/Sharia representation): approves each new agent, each autonomy promotion, and each material policy change. Meets monthly; emergency path for kill-switch decisions.</li>
@@ -444,7 +403,7 @@ main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
 </ol>
 <hr>
 <h2 id="6-evaluate">6. Evaluate<a class="anchor" href="#6-evaluate" aria-label="link to section">#</a></h2>
-<p><strong>This is the largest gap between the current framework and production readiness.</strong> The repo has a substantial deterministic test suite covering the <em>deterministic</em> machinery (policy enforcement, envelope validation, audit completeness, adversarial guardrails — <code>tests/governance/</code>, <code>tests/unit/</code>) which is the right foundation, but production agents need evaluation of the <em>non-deterministic</em> behavior too.</p>
+<p>The repo has a substantial deterministic test suite covering the <em>deterministic</em> machinery (policy enforcement, envelope validation, audit completeness, adversarial guardrails — <code>tests/governance/</code>, <code>tests/unit/</code>) which is the right foundation, but production agents need evaluation of the <em>non-deterministic</em> behavior too.</p>
 <h3 id="61-the-evaluation-stack-build-in-this-order">6.1 The evaluation stack (build in this order)<a class="anchor" href="#61-the-evaluation-stack-build-in-this-order" aria-label="link to section">#</a></h3>
 <ol>
 <li><strong>Golden datasets per agent.</strong> 50–200 real (anonymized) task examples per agent with expected outcomes, curated by the owner team and refreshed quarterly. For the router: intent → correct target agent. For IT ops: incident text → correct severity + correct playbook. These are the agent&#39;s &quot;performance objectives.&quot;</li>
@@ -475,13 +434,13 @@ main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
 <p><code>BLOCK</code> / <code>WARN</code> / <code>INFO</code> (as implemented): BLOCK stops the action and audits; WARN proceeds and audits; INFO audits silently. Tuning guidance: start strict (over-block), then relax based on false-positive review — the reverse direction (start loose, tighten after an incident) is how banks end up in the news.</p>
 <h3 id="73-what-to-add-before-production">7.3 What to add before production<a class="anchor" href="#73-what-to-add-before-production" aria-label="link to section">#</a></h3>
 <ul>
-<li>Replace regex-only PII detection with a proper detector (e.g., Presidio or a cloud DLP API) — regexes miss Arabic-script names, QIDs in prose, and IBAN variants.</li>
+<li>A proper PII detector (e.g., Presidio or a cloud DLP API), not regexes alone — regexes miss Arabic-script names, QIDs in prose, and IBAN variants.</li>
 <li>Prompt-injection classifiers (model-based) alongside the pattern list.</li>
-<li>Guardrail decisions in the audit log with full context so false positives are reviewable (partially present — ensure every BLOCK writes an audit event).</li>
+<li>Guardrail decisions in the audit log with full context so false positives are reviewable, with an audit event for every BLOCK.</li>
 </ul>
 <hr>
 <h2 id="8-observe">8. Observe<a class="anchor" href="#8-observe" aria-label="link to section">#</a></h2>
-<p>Rule of thumb from regulated ML: <strong>if you can&#39;t reconstruct it, you didn&#39;t govern it.</strong> Two distinct systems, both present in skeleton form:</p>
+<p>Rule of thumb from regulated ML: <strong>if you can&#39;t reconstruct it, you didn&#39;t govern it.</strong> Two distinct systems:</p>
 <h3 id="81-audit-trail-compliance-record">8.1 Audit trail (compliance record)<a class="anchor" href="#81-audit-trail-compliance-record" aria-label="link to section">#</a></h3>
 <p><code>src/core/audit-logger.ts</code> — every tool invocation, escalation, approval, guardrail violation, and policy decision becomes an immutable audit event tied to <code>traceId</code>/<code>correlationId</code>. Production requirements:</p>
 <ul>
@@ -506,33 +465,27 @@ main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
 <tr>
 <th>Artifact</th>
 <th>Versioning mechanism</th>
-<th>Current state</th>
 </tr>
 </thead>
 <tbody><tr>
 <td>Policy (scope, tools, autonomy)</td>
 <td>Semver in YAML (<code>version: &quot;1.0.0&quot;</code>, schema-enforced) + git history</td>
-<td>✅ implemented</td>
 </tr>
 <tr>
 <td>System prompt</td>
 <td>Lives inside the policy file → same versioning</td>
-<td>✅ implemented</td>
 </tr>
 <tr>
 <td>Tools</td>
 <td>Manifest entries with versions; contract tests per tool</td>
-<td>partial (<code>tool-manifest.ts</code>)</td>
 </tr>
 <tr>
 <td>Model</td>
 <td>Pinned model IDs in the LLM router — never &quot;latest&quot; in production</td>
-<td>⚠️ pin explicitly per agent</td>
 </tr>
 <tr>
 <td>Code (runtime, guardrails, governance)</td>
 <td>Normal SDLC: git, CI, releases</td>
-<td>✅ implemented</td>
 </tr>
 </tbody></table>
 </div><h3 id="91-change-control-rules">9.1 Change control rules<a class="anchor" href="#91-change-control-rules" aria-label="link to section">#</a></h3>
