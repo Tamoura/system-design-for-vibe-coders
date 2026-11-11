@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>كيف تُصنع هذه الدورات — مكتبة الدورات</title>
+<meta name="description" content="كيف تُكتب مكتبة الدورات (Course Library)، وما لم يُتحقَّق منه بعد، والمشكلات المعروفة، وكيف تبلّغ عن مشكلة.">
+<link rel="alternate" hreflang="en" href="index.html">
+<style>
+:root{
+  --bg:#f6f5f1; --panel:#ffffff; --ink:#1d2128; --muted:#5c6470; --line:#e5e1d9;
+  --accent:#7a1f2b; --accent-soft:#f3e3e5;
+  --govern:#8a5a12; --govern-soft:#f5ecdc;
+  --shadow:0 1px 3px rgba(20,20,30,.07);
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#131519; --panel:#1b1e24; --ink:#e9e7e2; --muted:#9aa0aa; --line:#2b2f37;
+  --accent:#dd8a94; --accent-soft:#2a1e20;
+  --govern:#e0b46a; --govern-soft:#2e2517;
+  --shadow:0 1px 3px rgba(0,0,0,.4);
+}}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.8 -apple-system,"Segoe UI",Tahoma,"Noto Sans Arabic",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:760px;margin:0 auto;padding:clamp(2rem,6vw,4rem) 1.25rem 4rem;}
+.top{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.6rem;}
+.brand{font-size:.8rem;font-weight:700;color:var(--muted);text-decoration:none;}
+.lang{font-size:.85rem;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:.15rem .8rem;color:var(--ink);text-decoration:none;}
+h1{font-size:clamp(1.8rem,5vw,2.5rem);line-height:1.3;margin:.2rem 0 .8rem;}
+h2{font-size:1.3rem;margin:2.2rem 0 .6rem;}
+.lede{color:var(--muted);font-size:1.08rem;margin:0;}
+.status{margin:1.4rem 0 0;padding:.8rem 1.1rem;background:var(--govern-soft);border:1px solid var(--line);
+  border-inline-start:4px solid var(--govern);border-radius:10px;}
+ul{padding-inline-start:1.2rem;margin:.4rem 0;}
+li{margin:.25rem 0;}
+a{color:var(--accent);text-underline-offset:3px;}
+.table-scroll{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  box-shadow:var(--shadow);font-size:.95rem;}
+th,td{text-align:start;padding:.55rem .8rem;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-size:.82rem;color:var(--muted);}
+tr:last-child td{border-bottom:0;}
+.foot{margin-top:3rem;padding-top:1.2rem;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <a class="brand" href="../">Tamoura · مكتبة الدورات <bdi>(Course Library)</bdi></a>
+    <a class="lang" href="index.html" hreflang="en" lang="en" dir="ltr">English</a>
+  </div>
+
+  <h1>كيف تُصنع هذه الدورات <bdi>(How these courses are made)</bdi></h1>
+  <p class="lede">عرض قصير وواضح لطريقة كتابة هذه المكتبة، وما لم يُتحقَّق منه بعد، وكيف تبلّغنا عن خطأ.</p>
+  <p class="status" role="note"><strong>حالة كل دورة <bdi>(status of every course)</bdi>:</strong> مسودّة أُعدّت بالذكاء الاصطناعي <bdi>(drafted with AI)</bdi>، ولم يراجعها خبير بعد <bdi>(not yet expert-reviewed)</bdi>.</p>
+
+  <h2>ما هذه المكتبة <bdi>(What this is)</bdi></h2>
+  <p>مكتبة مجانية <bdi>(free library)</bdi> تضم 12 دورة باللغتين الإنجليزية والعربية، فيها 379 درسًا. كُتبت الدورات بين يوليو وأكتوبر 2026.</p>
+
+  <h2>كيف تُصنع <bdi>(How they are made)</bdi></h2>
+  <ul>
+    <li>يحدّد صاحب المكتبة <bdi>(owner)</bdi> نطاق <bdi>(scope)</bdi> كل دورة وقواعدها <bdi>(rules)</bdi>.</li>
+    <li>يكتب وكلاء ذكاء اصطناعي <bdi>(AI agents)</bdi>، هم Claude Code، مسودّات الدروس، ويتحققون من الحقائق <bdi>(fact-checking)</bdi> بالبحث على الويب <bdi>(web search)</bdi>، ويكتبون الاختبارات <bdi>(quizzes)</bdi>، ويترجمون الدروس إلى العربية، ويتحققون من أن بنية <bdi>(structure)</bdi> النص العربي تطابق النص الإنجليزي.</li>
+    <li>كثيرًا ما يعتمد التحقق من الحقائق على ملخصات البحث <bdi>(search summaries)</bdi> لا على المصدر الكامل <bdi>(full source)</bdi>.</li>
+    <li>تُبنى الصفحات من ملفات Markdown في <a href="https://github.com/Tamoura/system-design-for-vibe-coders">مستودع عام على GitHub <bdi>(public repository)</bdi></a>.</li>
+  </ul>
+
+  <h2>ما لم يُنجَز بعد <bdi>(What has not been done yet)</bdi></h2>
+  <ul>
+    <li>لم يراجع أيَّ درس خبيرٌ مسمّى في موضوعه <bdi>(named subject expert)</bdi>.</li>
+    <li>لم يراجع النصَّ العربي محررٌ عربي <bdi>(Arabic editor)</bdi>.</li>
+    <li>لم تجرّب أيُّ مجموعة من المتعلمين <bdi>(learners)</bdi> أيَّ دورة تجربةً أولية <bdi>(pilot)</bdi>.</li>
+    <li>لا تُمنح أي شهادة <bdi>(certificate)</bdi>.</li>
+  </ul>
+
+  <h2>مشكلات معروفة نعمل على إصلاحها <bdi>(Known issues being fixed)</bdi></h2>
+  <ul>
+    <li>تُراجَع دورة حوكمة الذكاء الاصطناعي <bdi>(AI governance)</bdi> في ضوء تعديلات على قانون الذكاء الاصطناعي الأوروبي <bdi>(EU AI Act)</bdi>.</li>
+    <li>عدد من الامتحانات التدريبية <bdi>(practice exams)</bdi> قيد المراجعة <bdi>(under revision)</bdi>، لأن الخيار الصحيح <bdi>(correct option)</bdi> كثيرًا ما يمكن تمييزه من طوله.</li>
+    <li>يُغيَّر اسم دورة تشغيل وكلاء الذكاء الاصطناعي في بيئة الإنتاج <bdi>(running AI agents in production)</bdi>، وقد حُذف قسمها التنظيمي <bdi>(regulatory section)</bdi>.</li>
+  </ul>
+
+  <h2>كيف تبلّغ عن مشكلة <bdi>(How to report a problem)</bdi></h2>
+  <p>في أسفل صفحات الدورات رابط «أبلغ عن مشكلة <bdi>(Report a problem)</bdi>». يفتح الرابط بلاغًا جديدًا <bdi>(new issue)</bdi> على GitHub، لذا تحتاج إلى حساب على GitHub <bdi>(GitHub account)</bdi>. ويمكنك أيضًا <a href="https://github.com/Tamoura/system-design-for-vibe-coders/issues/new?template=report-a-problem.yml&amp;title=%5Blibrary%5D%20" rel="noopener">الإبلاغ عن مشكلة من هنا</a>.</p>
+
+  <h2>حالة كل دورة <bdi>(Status of every course)</bdi></h2>
+  <div class="table-scroll"><table>
+    <thead><tr><th>الدورة <bdi>(Course)</bdi></th><th>الحالة <bdi>(Status)</bdi></th></tr></thead>
+    <tbody>
+      <tr><td><a href="../career/index.ar.html">من التخرّج إلى التوظيف <bdi>(From Graduate to Hired)</bdi></a></td><td>مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد <bdi>(drafted with AI, not yet expert-reviewed)</bdi></td></tr>
+      <tr><td><a href="../vibe/index.ar.html">تصميم الأنظمة لمبرمجي الفايب <bdi>(System Design for Vibe Coders)</bdi></a></td><td>مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد <bdi>(drafted with AI, not yet expert-reviewed)</bdi></td></tr>
+      <tr><td><a href="../saas/index.ar.html">لبنات بناء SaaS <bdi>(SaaS Building Blocks)</bdi></a></td><td>مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد <bdi>(drafted with AI, not yet expert-reviewed)</bdi></td></tr>
+      <tr><td><a href="../aigp/index.ar.html">حوكمة الذكاء الاصطناعي — من الصفر إلى الاحتراف <bdi>(AI Governance: Zero to Hero)</bdi></a></td><td>مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد <bdi>(drafted with AI, not yet expert-reviewed)</bdi>. تُراجَع الآن في ضوء تعديلات قانون الذكاء الاصطناعي الأوروبي <bdi>(EU AI Act)</bdi>.</td></tr>
+      <tr><td><a href="../aipm/index.ar.html">إدارة منتجات الذكاء الاصطناعي — من الصفر إلى الاحتراف <bdi>(AI Product Management: Zero to Hero)</bdi></a></td><td>مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد <bdi>(drafted with AI, not yet expert-reviewed)</bdi></td></tr>
+      <tr><td><a href="../secai/index.ar.html">أمن الذكاء الاصطناعي والتطبيقات — من الصفر إلى الاحتراف <bdi>(Secure AI &amp; Application Security: Zero to Hero)</bdi></a></td><td>مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد <bdi>(drafted with AI, not yet expert-reviewed)</bdi></td></tr>
+      <tr><td><a href="../data/index.ar.html">هندسة البيانات والتحليلات — من الصفر إلى الاحتراف <bdi>(Data Engineering &amp; Analytics: Zero to Hero)</bdi></a></td><td>مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد <bdi>(drafted with AI, not yet expert-reviewed)</bdi></td></tr>
+      <tr><td><a href="../cloud/index.ar.html">السحابة وDevOps — من الصفر إلى الاحتراف <bdi>(Cloud &amp; DevOps: Zero to Hero)</bdi></a></td><td>مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد <bdi>(drafted with AI, not yet expert-reviewed)</bdi></td></tr>
+      <tr><td><a href="../testing/index.ar.html">اختبار البرمجيات — من الصفر إلى الاحتراف في عصر الذكاء الاصطناعي <bdi>(Software Testing: Zero to Hero in the AI Era)</bdi></a></td><td>مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد <bdi>(drafted with AI, not yet expert-reviewed)</bdi></td></tr>
+      <tr><td><a href="../aiapps/index.ar.html">بناء تطبيقات الذكاء الاصطناعي والوكلاء — من الصفر إلى الاحتراف <bdi>(Building AI Applications &amp; Agents: Zero to Hero)</bdi></a></td><td>مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد <bdi>(drafted with AI, not yet expert-reviewed)</bdi></td></tr>
+      <tr><td><a href="../ainative/index.ar.html">دليل عملي لتصبح مهندسًا أصيلًا في الذكاء الاصطناعي <bdi>(A Practical Guide to Becoming an AI-Native Engineer)</bdi></a></td><td>مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد <bdi>(drafted with AI, not yet expert-reviewed)</bdi></td></tr>
+      <tr><td>دورة تشغيل وكلاء الذكاء الاصطناعي في بيئة الإنتاج <bdi>(running AI agents in production)</bdi></td><td>مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد <bdi>(drafted with AI, not yet expert-reviewed)</bdi>. يُغيَّر اسمها، وحُذف قسمها التنظيمي <bdi>(regulatory section)</bdi>.</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="foot">
+    <span><a href="../">→ العودة إلى مكتبة الدورات <bdi>(Course Library)</bdi></a></span>
+    <span><a href="index.html" hreflang="en" lang="en" dir="ltr">Read this page in English</a></span>
+  </div>
+
+</div>
+</body>
+</html>

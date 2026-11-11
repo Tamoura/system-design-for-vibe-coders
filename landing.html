@@ -89,12 +89,15 @@ body{margin:0;background:var(--bg);color:var(--ink);
 .testing{--c:var(--testing);--cs:var(--testing-soft);}
 .aiapps{--c:var(--aiapps);--cs:var(--aiapps-soft);}
 .ainative{--c:var(--ainative);--cs:var(--ainative-soft);}
-.more{grid-column:1 / -1;border:1.5px dashed var(--line);border-radius:20px;padding:1.4rem 1.6rem;
+/* With an odd number of course cards the "more" box fills the last cell; with an even number
+   it takes a row of its own. Course cards: 11. */
+.more{grid-column:auto;border:1.5px dashed var(--line);border-radius:20px;padding:1.4rem 1.6rem;
   color:var(--muted);font-size:.9rem;display:flex;align-items:center;gap:.7rem;background:transparent;}
 .more .plus{font-size:1.4rem;color:var(--muted);line-height:1;}
 .foot{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem;
   display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;}
 .foot a{color:var(--accent);}
+.foot .notice{flex-basis:100%;margin:.4rem 0 0;max-width:80ch;}
 @media (max-width:680px){.courses{grid-template-columns:1fr;}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;}html{scroll-behavior:auto;}}
 </style>
@@ -135,16 +138,6 @@ body{margin:0;background:var(--bg);color:var(--ink);
       <span class="go">Open course →</span>
     </article>
 
-    <article class="course run">
-      <video class="trailer" controls preload="none" playsinline poster="videos/renders/agentic.jpg" aria-label="Running AI Agents in Production — course trailer"><source src="videos/renders/agentic.mp4" type="video/mp4"></video>
-      <span class="verb">Run AI in production</span>
-      <h2><a class="open" href="agentic/">Running AI Agents in Production</a></h2>
-      <p>Build, secure, govern, evaluate, and operate AI agents as digital employees in a regulated bank. A zero-to-hero curriculum backed by a runnable reference framework, a production playbook, and a skills assessment.</p>
-      <div class="tags"><span class="tag">Engineers → Leadership</span><span class="tag">Regulated / banking</span><span class="tag">Hands-on labs</span><span class="tag">Skills assessment</span><span class="tag">EN · العربية</span></div>
-      <div class="meta"><span><b>6</b>levels</span><span><b>33</b>modules</span><span><b>L0–L5</b>gated</span></div>
-      <span class="go">Open course →</span>
-    </article>
-
     <article class="course learn">
       <video class="trailer" controls preload="none" playsinline poster="videos/renders/saas.jpg" aria-label="SaaS Building Blocks — course trailer"><source src="videos/renders/saas.mp4" type="video/mp4"></video>
       <span class="verb">Learn the building blocks</span>
@@ -160,7 +153,7 @@ body{margin:0;background:var(--bg);color:var(--ink);
       <span class="verb">Govern AI</span>
       <h2><a class="open" href="aigp/">AI Governance: Zero to Hero</a></h2>
       <p>What AI is and why it needs governance; the laws and frameworks that apply — GDPR, the EU AI Act, NIST AI RMF, ISO/IEC 42001; and how to govern AI from first idea to retirement. Aligned to the IAPP AIGP Body of Knowledge v2.1, built around one Gulf bank, with a 100-question mock exam.</p>
-      <div class="tags"><span class="tag">Legal · risk · product · data</span><span class="tag">AIGP-aligned</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
+      <div class="tags"><span class="tag">Legal · risk · product · data</span><span class="tag">Covers the AIGP BoK v2.1 · independent</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
       <div class="meta"><span><b>13</b>modules</span><span><b>40</b>lessons</span><span><b>58</b>laws &amp; frameworks</span><span><b>295</b>practice questions</span></div>
       <span class="go">Open course →</span>
     </article>
@@ -242,6 +235,7 @@ body{margin:0;background:var(--bg);color:var(--ink);
   <div class="foot">
     <span>Free to read · share the link. Source: <a href="https://github.com/Tamoura">github.com/Tamoura</a></span>
     <span>Course Library · 2026</span>
+    <p class="notice">Status: drafted with AI; not yet reviewed by a subject expert. Educational material, not legal, financial, security or employment advice. Independent: not affiliated with or endorsed by any certification body or vendor named here; trademarks belong to their owners. <a href="about/">How these courses are made</a> · <a href="https://github.com/Tamoura/system-design-for-vibe-coders/issues/new?template=report-a-problem.yml&amp;title=%5Blibrary%5D%20" rel="noopener">Report a problem</a></p>
   </div>
 
 </div>

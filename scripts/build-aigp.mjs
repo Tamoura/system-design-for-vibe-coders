@@ -22,8 +22,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { marked } from 'marked';
+import { marked, Tokenizer } from 'marked';
 import { trailerHtml, TRAILER_CSS } from './trailer.mjs';
+import { siteNotice } from './site-notice.mjs';
 import puppeteer from 'puppeteer';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -62,7 +63,7 @@ const T = {
     tracks: {
       b: ['🟢 Foundations', 'Zero: what AI is, the risks it brings, and what an AI governance professional does.'],
       i: ['🟡 Practitioner', 'Build the programme and apply the law: policies, privacy, non-discrimination, the EU AI Act, NIST and ISO.'],
-      a: ['🔴 Hero', 'Govern real systems end to end: design, data, testing, release, deployment, assessments — and pass the AIGP.'],
+      a: ['🔴 Hero', 'Govern real systems end to end: design, data, testing, release, deployment, assessments — then revise the whole AIGP Body of Knowledge with a practice exam.'],
     },
     lessonsN: (n) => `${n} lesson${n === 1 ? '' : 's'}`,
     mapTitle: 'Course map',
@@ -77,6 +78,12 @@ const T = {
     flatH1: 'AI Governance: Zero to Hero — govern AI <em>before</em> it governs you.',
     backContents: '↑ Contents', appendixCatalog: 'Appendix — The instruments catalogue',
     flatFooter: 'Generated from the markdown in <code>aigp/</code> by <code>npm run aigp:build</code>. An independent course, not affiliated with or endorsed by the IAPP. Prefer one lesson at a time? Open the <a href="index.html">interactive reader</a>.',
+    // Dated notice shown at the top of the reader, the one-page course and COURSE.md until the
+    // course has been re-checked against the 2026 amendments. {EUR-Lex} becomes a link.
+    dated: {
+      head: 'Notice, 11 November 2026:',
+      body: 'this course is being re-checked against recent changes to EU AI law. Reports indicate that Regulation (EU) 2026/1744, the Digital Omnibus on AI, in force since 27 July 2026, moved the start of the Annex III high-risk obligations to 2 December 2027 and added prohibited practices that apply from 2 December 2026. Some dates, cases and quiz answers here predate these changes. Check the official text on {EUR-Lex} before relying on any date.',
+    },
     brand: 'AI Governance <b>Zero to Hero</b>',
     title: 'AI Governance: Zero to Hero', courseTitle: 'AI Governance: Zero to Hero — Complete Course',
     description: 'AI Governance: Zero to Hero — a free, bilingual course aligned to the IAPP AIGP Body of Knowledge v2.1: foundations, law, standards, and governing AI development and deployment, with exam-style questions and a 100-question mock exam.',
@@ -106,7 +113,7 @@ const T = {
     tracks: {
       b: ['🟢 الأساسيات', 'البداية: ما الذكاء الاصطناعي، وما المخاطر التي يجلبها، وماذا يفعل مختص حوكمة الذكاء الاصطناعي.'],
       i: ['🟡 الممارس', 'ابنِ البرنامج وطبّق القانون: السياسات، والخصوصية، وعدم التمييز، وقانون الذكاء الاصطناعي الأوروبي، وNIST وISO.'],
-      a: ['🔴 المحترف', 'احكم أنظمة حقيقية من البداية إلى النهاية: التصميم، والبيانات، والاختبار، والإطلاق، والنشر، والتقييمات، واجتز امتحان AIGP.'],
+      a: ['🔴 المحترف', 'احكم أنظمة حقيقية من البداية إلى النهاية: التصميم، والبيانات، والاختبار، والإطلاق، والنشر، والتقييمات، ثم راجع مجال المعرفة (Body of Knowledge) الخاص بـ AIGP كاملًا مع امتحان تدريبي (practice exam).'],
     },
     lessonsN: (n) => `${n} ${n === 1 ? 'درس' : n <= 10 ? 'دروس' : 'درسًا'}`,
     mapTitle: 'خريطة الدورة',
@@ -121,6 +128,10 @@ const T = {
     flatH1: 'حوكمة الذكاء الاصطناعي من الصفر إلى الاحتراف: احكم الذكاء الاصطناعي <em>قبل</em> أن يحكمك.',
     backContents: '↑ المحتويات', appendixCatalog: 'الملحق — دليل الأدوات التنظيمية',
     flatFooter: 'مولَّدة من ملفات الماركداون في <code>aigp/</code> عبر <code>npm run aigp:build</code>. دورة مستقلة غير تابعة لـ IAPP. تفضّل درسًا واحدًا في كل مرة؟ افتح <a href="index.ar.html">القارئ التفاعلي</a>.',
+    dated: {
+      head: 'تنبيه (notice)، 11 نوفمبر 2026:',
+      body: 'تُراجَع هذه الدورة الآن في ضوء تعديلات حديثة على قانون الذكاء الاصطناعي الأوروبي (EU AI Act). تشير التقارير إلى أن اللائحة (EU) 2026/1744، المعروفة بحزمة Digital Omnibus للذكاء الاصطناعي (Digital Omnibus on AI) والتي دخلت حيز النفاذ (into force) في 27 يوليو 2026، أجّلت بدء التزامات (obligations) الأنظمة عالية المخاطر (high-risk) في الملحق (Annex) III إلى 2 ديسمبر 2027، وأضافت ممارسات محظورة (prohibited practices) تسري من 2 ديسمبر 2026. بعض التواريخ والقضايا وإجابات الأسئلة هنا أقدم من هذه التعديلات. راجع النص الرسمي (official text) على {EUR-Lex} قبل الاعتماد على أي تاريخ.',
+    },
     brand: 'حوكمة الذكاء الاصطناعي <b>من الصفر إلى الاحتراف</b>',
     title: 'حوكمة الذكاء الاصطناعي — من الصفر إلى الاحتراف', courseTitle: 'حوكمة الذكاء الاصطناعي من الصفر إلى الاحتراف — الدورة كاملة',
     description: 'حوكمة الذكاء الاصطناعي من الصفر إلى الاحتراف: دورة مجانية ثنائية اللغة متوافقة مع مجال المعرفة لشهادة AIGP (الإصدار 2.1)، مع أسئلة بأسلوب الامتحان وامتحان تجريبي من 100 سؤال.',
@@ -143,7 +154,7 @@ const filesFor = (lang) => (lang === 'en' ? enFiles : enFiles.map((f) => f.repla
 const SOURCE_FILES = [
   ...LANGS.flatMap((lang) => [`aigp/${T[lang].readme}`, ...filesFor(lang).map((f) => `aigp/modules/${f}`)]),
   'scripts/build-aigp.mjs',
-  'scripts/saas.css', 'scripts/trailer.mjs',
+  'scripts/saas.css', 'scripts/trailer.mjs', 'scripts/site-notice.mjs',
 ];
 for (const f of SOURCE_FILES) {
   if (!fs.existsSync(path.join(ROOT, f))) {
@@ -243,6 +254,31 @@ marked.use({
   },
 });
 
+// Bare URLs in the markdown become links through marked's GFM autolinks. marked gives back
+// trailing ASCII punctuation but not Arabic, so "https://example.com/a؛" linked to
+// ".../a%D8%9B". Give back trailing Arabic punctuation (، ؛ ؟ « » ۔), ASCII . , ; : and an
+// unbalanced ) to the text that follows the link.
+const URL_TAIL = /[\u060C\u061B\u061F\u06D4\u00AB\u00BB.,;:]$/;
+const trimUrlTail = (raw) => {
+  for (;;) {
+    if (URL_TAIL.test(raw)) raw = raw.slice(0, -1);
+    else if (raw.endsWith(')') && raw.split(')').length > raw.split('(').length) raw = raw.slice(0, -1);
+    else return raw;
+  }
+};
+marked.use({
+  tokenizer: {
+    url(src) {
+      const tok = Tokenizer.prototype.url.call(this, src);
+      if (!tok || tok.href.startsWith('mailto:')) return tok;
+      const raw = trimUrlTail(tok.raw);
+      if (raw === tok.raw) return tok;
+      const href = tok.href.slice(0, tok.href.length - (tok.raw.length - raw.length));
+      return { ...tok, raw, text: raw, href, tokens: [{ type: 'text', raw, text: raw }] };
+    },
+  },
+});
+
 const SECTION_CLASS = {
   '⚡': 'tldr', '🧭': 'why', '📐': 'how', '⚖': 'repos', '🏛': 'wild', '🛠': 'build',
   '⚠': 'mistakes', '🧾': 'recap', '✍': 'quiz', '📚': 'refs',
@@ -250,7 +286,15 @@ const SECTION_CLASS = {
 
 const AIGP_CSS = `
 .bok{font:600 .78rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;padding:.2rem .45rem;border-radius:6px;border:1px solid currentColor;opacity:.8;unicode-bidi:isolate}
+.notice-bar{max-width:60rem;margin:0 auto;padding:0 1rem}
+.dated-notice{margin:1.4rem 0 0;padding:.85rem 1.1rem;background:var(--i-soft);border:1px solid var(--line);border-inline-start:4px solid var(--i);border-radius:10px;font:.92rem/1.6 var(--sans);color:var(--ink)}
+.dated-notice bdi{white-space:nowrap}
+@media print{.dated-notice{background:none;border:1px solid #888;border-inline-start:4px solid #888}}
 `;
+// The dated notice (T[lang].dated), as a callout for the HTML pages and a blockquote for the markdown.
+const EUR_LEX = 'https://eur-lex.europa.eu/';
+const datedHtml = (t) => `<div class="dated-notice" role="note"><strong>${t.dated.head}</strong> ${t.dated.body.replace('{EUR-Lex}', `<a href="${EUR_LEX}" rel="noopener">EUR-Lex</a>`)}</div>`;
+const datedMd = (t) => `> **${t.dated.head}** ${t.dated.body.replace('{EUR-Lex}', `[EUR-Lex](${EUR_LEX})`)}`;
 const tableWrap = (html) => html.replace(/<table>/g, '<div class="table-scroll"><table>').replace(/<\/table>/g, '</table></div>');
 const count = (s, re) => (s.match(re) || []).length;
 
@@ -288,13 +332,14 @@ function buildLang(lang) {
     }
   }
 
-  function reposMarkdown() {
+  function reposMarkdown(notice = true) {
     const out = [];
     out.push('<!-- Generated by scripts/build-aigp.mjs from the lessons\' "⚖️" tables. Do not edit by hand. -->');
     out.push(`<!-- aigp-source: ${SOURCE_DIGEST} -->`);
     out.push('');
     out.push(`# ${t.md.catTitle}`);
     out.push('');
+    if (notice) { out.push(datedMd(t)); out.push(''); }
     out.push(...t.md.catIntro(REPO_INDEX.size));
     out.push('');
     for (const mod of MODULES) {
@@ -341,6 +386,8 @@ function buildLang(lang) {
     if (lang !== 'en') { out.push('<div dir="rtl">'); out.push(''); }
     out.push(`# ${t.md.title}`);
     out.push('');
+    out.push(datedMd(t));
+    out.push('');
     out.push(t.md.sub(MODULES.length, ALL_LESSONS.length, REPO_INDEX.size));
     out.push('');
     out.push(MD_LINKS(readme.trim()));
@@ -380,7 +427,7 @@ function buildLang(lang) {
     out.push('');
     out.push(`# ${t.md.appendix}`);
     out.push('');
-    const catalog = reposMarkdown().split('\n').filter((l) => !l.startsWith('<!--')).join('\n')
+    const catalog = reposMarkdown(false).split('\n').filter((l) => !l.startsWith('<!--')).join('\n')
       .replace(new RegExp(`^# ${t.md.catTitle}\\n`, 'm'), '');
     out.push(catalog.trim());
     out.push('');
@@ -498,6 +545,8 @@ ${css}${extraCss}
   </nav>
 </div></header>
 
+<div class="notice-bar">${datedHtml(t)}</div>
+
 <main id="view" tabindex="-1"></main>
 
 <template id="t-home">
@@ -544,7 +593,7 @@ ${catalogHtml()}
 
 ${fill(ALL_LESSONS.map(lessonTemplate).join('\n'))}
 
-<footer><p>${t.footer}</p></footer>
+<footer><p>${t.footer}</p><p class="site-notice">${siteNotice(lang, 'aigp', '../')}</p></footer>
 
 <script>
 (function(){
@@ -611,6 +660,7 @@ ${lessonInner(l)}
   </nav>
 </div></header>
 <main id="top">
+${datedHtml(t)}
 <section class="hero">
   <p class="eyebrow">${t.flatEyebrow}</p>
   <h1>${t.flatH1}</h1>
@@ -638,7 +688,7 @@ ${modules}
 ${catalogHtml()}
 </section>
 </main>
-<footer><p>${t.flatFooter}</p></footer>`;
+<footer><p>${t.flatFooter}</p><p class="site-notice">${siteNotice(lang, 'aigp', '../')}</p></footer>`;
     return `${head(t.courseTitle, t.description, AIGP_CSS + `
 .flat-mod{padding:3.5rem 0 1rem;border-top:2px solid var(--line);margin-top:2rem}
 .flat-mod h1{font-family:var(--serif);font-size:clamp(1.9rem,5vw,2.8rem);margin:.2rem 0 .6rem}

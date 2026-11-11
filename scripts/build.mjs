@@ -16,8 +16,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { marked } from 'marked';
+import { marked, Tokenizer } from 'marked';
 import { trailerHtml, TRAILER_CSS } from './trailer.mjs';
+import { siteNotice } from './site-notice.mjs';
 import puppeteer from 'puppeteer';
 import archiver from 'archiver';
 
@@ -92,7 +93,22 @@ const T = {
 const SOURCE_FILES = [
   'README.md', 'README.ar.md', 'GLOSSARY.md', 'GLOSSARY.ar.md',
   'scripts/build.mjs', 'scripts/style.css', 'scripts/print.css', 'scripts/trailer.mjs',
+  'scripts/site-notice.mjs',
 ];
+
+/* The library notice (scripts/site-notice.mjs) for this course. The pages are published at
+   /vibe/, so the site root is '../'; the PDF and EPUB travel on their own, so they link to the
+   published site in full. */
+const COURSE_ID = 'vibe';
+const SITE_URL = 'https://tamoura.github.io/system-design-for-vibe-coders/';
+/* In Arabic, wrap each parenthesised English gloss in <bdi> so its words stay in order inside
+   right-to-left text, as the other course builders do for their whole page. */
+const GLOSS = /\((?=[^\s()؀-ۿ<>])[^()؀-ۿ<>\n]*\)/g;
+const isolateGlosses = (html) => html.replace(/<[^>]*>|[^<]+/g, (m) => (m[0] === '<' ? m : m.replace(GLOSS, '<bdi>$&</bdi>')));
+const notice = (lang, root = '../') => {
+  const html = siteNotice(lang, COURSE_ID, root);
+  return `<p class="site-notice"><small>${lang === 'ar' ? isolateGlosses(html) : html}</small></p>`;
+};
 const SOURCE_DIGEST = (() => {
   const h = crypto.createHash('sha256');
   const files = [...SOURCE_FILES];
@@ -139,6 +155,31 @@ const retargetLinks = (md) => md
   .replace(/\]\((?:\.\.\/)*\.?\/?war-stories\/([^)]+)\)/g,
     '](https://github.com/Tamoura/system-design-for-vibe-coders/blob/main/war-stories/$1)')
   .replace(/\]\((?:\.\.\/)+([^)]+)\)/g, ']($1)');
+
+/* Bare URLs in the markdown become links through marked's GFM autolinks. marked gives back
+   trailing ASCII punctuation but not Arabic, so "https://example.com/a؛" linked to
+   ".../a%D8%9B". Give back trailing Arabic punctuation (، ؛ ؟ « » ۔), ASCII . , ; : and an
+   unbalanced ) to the text that follows the link. */
+const URL_TAIL = /[\u060C\u061B\u061F\u06D4\u00AB\u00BB.,;:]$/;
+const trimUrlTail = (raw) => {
+  for (;;) {
+    if (URL_TAIL.test(raw)) raw = raw.slice(0, -1);
+    else if (raw.endsWith(')') && raw.split(')').length > raw.split('(').length) raw = raw.slice(0, -1);
+    else return raw;
+  }
+};
+marked.use({
+  tokenizer: {
+    url(src) {
+      const tok = Tokenizer.prototype.url.call(this, src);
+      if (!tok || tok.href.startsWith('mailto:')) return tok;
+      const raw = trimUrlTail(tok.raw);
+      if (raw === tok.raw) return tok;
+      const href = tok.href.slice(0, tok.href.length - (tok.raw.length - raw.length));
+      return { ...tok, raw, text: raw, href, tokens: [{ type: 'text', raw, text: raw }] };
+    },
+  },
+});
 
 /** Split a file on top-level `# ` headings, ignoring anything inside a fence. */
 function splitBlocks(md) {
@@ -449,9 +490,11 @@ ${gloss}
 <footer><div class="wrap">
 ${block({
     en: `<p>Generated from the module markdown by <code>npm run build</code> — the markdown is the source of truth.
-     Source: <a href="https://github.com/Tamoura/system-design-for-vibe-coders">github.com/Tamoura/system-design-for-vibe-coders</a></p>`,
+     Source: <a href="https://github.com/Tamoura/system-design-for-vibe-coders">github.com/Tamoura/system-design-for-vibe-coders</a></p>
+${notice('en')}`,
     ar: `<p>مولَّدة من ملفات الماركداون عبر <code>npm run build</code> — والماركداون هو مصدر الحقيقة.
-     المصدر: <a href="https://github.com/Tamoura/system-design-for-vibe-coders">github.com/Tamoura/system-design-for-vibe-coders</a></p>`,
+     المصدر: <a href="https://github.com/Tamoura/system-design-for-vibe-coders">github.com/Tamoura/system-design-for-vibe-coders</a></p>
+${notice('ar')}`,
   }, langs)}
 </div></footer>`;
 
@@ -547,6 +590,7 @@ function flatPage(C, lang) {
 
   const body = `<section class="hero titlepage"><div class="wrap">
 ${heroFor(C, langs)}
+${notice(lang, SITE_URL)}
 </div></section>
 <section class="print-toc"><div class="wrap"><h2>${esc(t.contents)}</h2><ol class="toc-book">${contents}</ol></div></section>
 ${chapters}
@@ -613,7 +657,7 @@ function epubDocs(C, lang) {
   docs.push({
     id: 'titlepage', file: 'titlepage.xhtml', title: t.title,
     xhtml: xhtmlDoc(lang, dir, t.title, toXhtml(
-      `<section class="titlepage"><h1>${esc(t.title)}</h1><p>${t.blurb}</p></section>`)),
+      `<section class="titlepage"><h1>${esc(t.title)}</h1><p>${t.blurb}</p>${notice(lang, SITE_URL)}</section>`)),
   });
 
   for (const mod of MODULES) {

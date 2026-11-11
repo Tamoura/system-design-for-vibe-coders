@@ -6,10 +6,10 @@
 
 const REPO = 'https://github.com/Tamoura/system-design-for-vibe-coders';
 
-/** Link to open a GitHub issue, pre-titled with the course id. */
+/** Link to open the "Report a problem" issue form (.github/ISSUE_TEMPLATE/report-a-problem.yml), pre-titled with the course id. */
 export function reportUrl(course) {
   const title = encodeURIComponent(`[${course}] `);
-  return `${REPO}/issues/new?title=${title}`;
+  return `${REPO}/issues/new?template=report-a-problem.yml&amp;title=${title}`;
 }
 
 /** Path from a page to the "How these courses are made" page. `root` is the path to the site root ('../' from a course folder, '' from the landing page). */
