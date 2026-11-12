@@ -1,8 +1,8 @@
 # حوكمة الذكاء الاصطناعي (AI governance): من الصفر إلى الاحتراف (AI Governance: Zero to Hero)
 
-**احكم الذكاء الاصطناعي قبل أن يحكمك (Govern AI before it governs you). دورة مجانية ثنائية اللغة (free, bilingual course) تنقلك من الصفر إلى محترف واثق (confident professional) في حوكمة الذكاء الاصطناعي (AI governance)، ومتوافقة مع مجال المعرفة (Body of Knowledge) الخاص بشهادة AIGP (AIGP certification) من IAPP، الإصدار 2.1 (version 2.1).**
+**احكم الذكاء الاصطناعي قبل أن يحكمك (Govern AI before it governs you). دورة مجانية ثنائية اللغة (free, bilingual course) تنقلك من الصفر إلى محترف واثق (confident professional) في حوكمة الذكاء الاصطناعي (AI governance)، وتغطي مجال المعرفة (Body of Knowledge) الخاص بشهادة AIGP (AIGP certification)، الإصدار 2.1 (version 2.1)، وهي دورة مستقلة غير تابعة لـ IAPP.**
 
-> **دورة مستقلة (An independent course).** ليست تابعة لـ IAPP ولا معتمدة منها ولا من إنتاجها، ولا تعيد نشر أسئلة امتحانات IAPP (IAPP exam questions). وهي متوافقة مع مجال المعرفة العام (public Body of Knowledge) الخاص بـ AIGP (الإصدار 2.1 (version 2.1)، الساري من 2 فبراير 2026). ولا شيء هنا يُعدّ استشارة قانونية (legal advice): فالقوانين والإرشادات (laws and guidance) تتغير، لذا راجع المصادر الرسمية (official sources) قبل أن تعتمد عليها.
+> **دورة مستقلة (An independent course).** ليست تابعة لـ IAPP ولا معتمدة منها ولا من إنتاجها، ولا تعيد نشر أسئلة امتحانات IAPP (IAPP exam questions). وهي تغطي موضوعات مجال المعرفة العام (public Body of Knowledge) الخاص بـ AIGP (الإصدار 2.1 (version 2.1)، الساري من 2 فبراير 2026). ولا شيء هنا يُعدّ استشارة قانونية (legal advice): فالقوانين والإرشادات (laws and guidance) تتغير، لذا راجع المصادر الرسمية (official sources) قبل أن تعتمد عليها.
 
 ## ما هذه الدورة (What this is)
 

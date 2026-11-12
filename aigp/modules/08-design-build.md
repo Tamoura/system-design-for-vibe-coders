@@ -102,7 +102,7 @@ flowchart TD
 - *Aggregation.* Several Tier 2 tools feeding one decision may add up to Tier 1 impact.
 - *Jurisdictional drift.* A tool built for Qatar is later rolled out to EU customers through the Frankfurt branch. Scope changes must re-trigger triage.
 - *The "human in the loop" fig leaf.* A reviewer approving 99.8% of outputs in eight seconds each is nominal oversight (see 8.2).
-- *Post-2025 regulatory change.* In November 2025 the European Commission proposed a "Digital Omnibus" package that would adjust some AI Act timelines, including for high-risk obligations. At the time of writing, check its current status. For the exam, apply the Act as adopted.
+- *Post-2025 regulatory change.* In November 2025 the European Commission proposed a "Digital Omnibus" package to adjust some AI Act timelines, including for high-risk obligations. Reports say it was adopted as Regulation (EU) 2026/1744 (last checked 12 November 2026; official text not opened). Check the current text. For the exam, apply the original Act unless told otherwise.
 
 **Proportionality cuts both ways:** over-governing low-risk tools teaches staff to avoid intake.
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Build the "AI Governance: Zero to Hero" course (aligned to the IAPP AIGP Body of Knowledge v2.1).
+ * Build the "AI Governance: Zero to Hero" course (covers the AIGP Body of Knowledge v2.1 topics; independent course, not affiliated with IAPP).
  *
  *   node scripts/build-aigp.mjs           → for each language (en, ar):
  *                                           aigp/index[.ar].html        (interactive reader)
@@ -55,7 +55,7 @@ const T = {
     levelWord: 'Level', prereqWord: 'Prerequisites', bokWord: 'BoK', before: 'Before this', comma: ', ',
     prev: '← Previous', next: 'Next →', appendixNext: 'Appendix →', catalog: 'The instruments catalogue',
     nav: { map: 'Map', about: 'Start here', repos: 'Instruments', one: 'One page', oneTitle: 'The whole course on one printable page', contents: 'Contents', reader: 'Reader' },
-    eyebrow: 'AI governance · zero to hero · aligned to the IAPP AIGP Body of Knowledge v2.1',
+    eyebrow: 'AI governance · zero to hero · covers the AIGP Body of Knowledge v2.1 (independent; not affiliated with IAPP)',
     h1: 'Govern AI <em>before</em> it governs you.',
     lede: 'What AI is and why it needs governance; the laws, standards and frameworks that apply — GDPR, the EU AI Act, NIST AI RMF, ISO/IEC 42001 and more; and how to govern AI from the first idea to retirement. Built around one bank, with an exam-style quiz in every lesson and a 100-question mock exam.',
     stats: ['modules', 'lessons', 'laws & frameworks', 'practice questions'],
@@ -81,15 +81,15 @@ const T = {
     // Dated notice shown at the top of the reader, the one-page course and COURSE.md until the
     // course has been re-checked against the 2026 amendments. {EUR-Lex} becomes a link.
     dated: {
-      head: 'Notice, 11 November 2026:',
-      body: 'this course is being re-checked against recent changes to EU AI law. Reports indicate that Regulation (EU) 2026/1744, the Digital Omnibus on AI, in force since 27 July 2026, moved the start of the Annex III high-risk obligations to 2 December 2027 and added prohibited practices that apply from 2 December 2026. Some dates, cases and quiz answers here predate these changes. Check the official text on {EUR-Lex} before relying on any date.',
+      head: 'Notice, last checked 12 November 2026:',
+      body: 'this course is being re-checked against recent changes to EU AI law. Search summaries report that Regulation (EU) 2026/1744, the Digital Omnibus on AI, was published on 24 July 2026 and has been in force since 27 July 2026. They report that it moved Annex III high-risk obligations to 2 December 2027, Annex I high-risk obligations to 2 August 2028, and added prohibited practices that apply from 2 December 2026. We could not open the official text, so none of this is verified, and the course is not yet reviewed by a named legal expert. Lessons and quiz answers still show the original Act\'s dates. Read the official text on {EUR-Lex} before relying on any date.',
     },
     brand: 'AI Governance <b>Zero to Hero</b>',
     title: 'AI Governance: Zero to Hero', courseTitle: 'AI Governance: Zero to Hero — Complete Course',
-    description: 'AI Governance: Zero to Hero — a free, bilingual course aligned to the IAPP AIGP Body of Knowledge v2.1: foundations, law, standards, and governing AI development and deployment, with exam-style questions and a 100-question mock exam.',
+    description: 'AI Governance: Zero to Hero — a free, bilingual course that covers the AIGP Body of Knowledge v2.1 (independent course; not affiliated with IAPP): foundations, law, standards, and governing AI development and deployment, with exam-style questions and a 100-question mock exam.',
     md: {
       title: 'AI Governance: Zero to Hero — the complete course',
-      sub: (m, l, r) => `*${m} modules · ${l} lessons · ${r} laws, standards and frameworks · aligned to the AIGP Body of Knowledge v2.1 · zero → hero*`,
+      sub: (m, l, r) => `*${m} modules · ${l} lessons · ${r} laws, standards and frameworks · covers the AIGP Body of Knowledge v2.1 (independent; not affiliated with IAPP) · zero → hero*`,
       contents: 'Contents', appendix: 'Appendix — The instruments catalogue',
       catTitle: 'The Instruments Catalogue',
       catIntro: (n) => [`Every law, standard and framework taught in **AI Governance: Zero to Hero** — ${n} of them — grouped by`,
@@ -105,7 +105,7 @@ const T = {
     levelWord: 'المستوى', prereqWord: 'المتطلبات', bokWord: 'مجال المعرفة (BoK)', before: 'اقرأ قبله', comma: '، ',
     prev: '→ السابق', next: 'التالي ←', appendixNext: 'الملحق ←', catalog: 'دليل الأدوات التنظيمية',
     nav: { map: 'الخريطة', about: 'ابدأ هنا', repos: 'الأدوات التنظيمية', one: 'صفحة واحدة', oneTitle: 'الدورة كاملة في صفحة واحدة قابلة للطباعة', contents: 'المحتويات', reader: 'القارئ' },
-    eyebrow: 'حوكمة الذكاء الاصطناعي · من الصفر إلى الاحتراف · متوافقة مع مجال المعرفة لشهادة AIGP من IAPP (الإصدار 2.1)',
+    eyebrow: 'حوكمة الذكاء الاصطناعي · من الصفر إلى الاحتراف · تغطي مجال المعرفة (Body of Knowledge) لشهادة AIGP الإصدار 2.1 (دورة مستقلة غير تابعة لـ IAPP)',
     h1: 'احكم الذكاء الاصطناعي <em>قبل</em> أن يحكمك.',
     lede: 'ما الذكاء الاصطناعي ولماذا يحتاج إلى حوكمة؛ والقوانين والمعايير والأطر التي تنطبق عليه، مثل GDPR وقانون الذكاء الاصطناعي الأوروبي (EU AI Act) وإطار NIST AI RMF ومعيار ISO/IEC 42001؛ وكيف تحكم الذكاء الاصطناعي من الفكرة الأولى حتى الإيقاف. مبنية حول بنك واحد، مع اختبار بأسلوب الامتحان في كل درس، وامتحان تجريبي من 100 سؤال.',
     stats: ['وحدات', 'درسًا', 'قانونًا ومعيارًا وإطارًا', 'سؤالًا تدريبيًا'],
@@ -129,15 +129,15 @@ const T = {
     backContents: '↑ المحتويات', appendixCatalog: 'الملحق — دليل الأدوات التنظيمية',
     flatFooter: 'مولَّدة من ملفات الماركداون في <code>aigp/</code> عبر <code>npm run aigp:build</code>. دورة مستقلة غير تابعة لـ IAPP. تفضّل درسًا واحدًا في كل مرة؟ افتح <a href="index.ar.html">القارئ التفاعلي</a>.',
     dated: {
-      head: 'تنبيه (notice)، 11 نوفمبر 2026:',
-      body: 'تُراجَع هذه الدورة الآن في ضوء تعديلات حديثة على قانون الذكاء الاصطناعي الأوروبي (EU AI Act). تشير التقارير إلى أن اللائحة (EU) 2026/1744، المعروفة بحزمة Digital Omnibus للذكاء الاصطناعي (Digital Omnibus on AI) والتي دخلت حيز النفاذ (into force) في 27 يوليو 2026، أجّلت بدء التزامات (obligations) الأنظمة عالية المخاطر (high-risk) في الملحق (Annex) III إلى 2 ديسمبر 2027، وأضافت ممارسات محظورة (prohibited practices) تسري من 2 ديسمبر 2026. بعض التواريخ والقضايا وإجابات الأسئلة هنا أقدم من هذه التعديلات. راجع النص الرسمي (official text) على {EUR-Lex} قبل الاعتماد على أي تاريخ.',
+      head: 'تنبيه (notice)، آخر فحص 12 نوفمبر 2026:',
+      body: 'تُراجَع هذه الدورة الآن في ضوء تعديلات حديثة على قانون الذكاء الاصطناعي الأوروبي (EU AI Act). تفيد ملخصات البحث بأن اللائحة (EU) 2026/1744، أي حزمة Digital Omnibus للذكاء الاصطناعي (Digital Omnibus on AI)، نُشرت في 24 يوليو 2026 ودخلت حيز النفاذ (into force) في 27 يوليو 2026. وتفيد بأنها أجّلت التزامات (obligations) الأنظمة عالية المخاطر (high-risk) في الملحق (Annex) III إلى 2 ديسمبر 2027، وفي الملحق I إلى 2 أغسطس 2028، وأضافت ممارسات محظورة (prohibited practices) تسري من 2 ديسمبر 2026. لم نستطع فتح النص الرسمي فلا شيء من هذا مُتحقَّق منه، ولم يراجع الدورة بعد خبير قانوني مسمّى (named legal expert). ما زالت الدروس وإجابات الأسئلة تعرض تواريخ القانون الأصلي. راجع النص الرسمي (official text) على {EUR-Lex} قبل الاعتماد على أي تاريخ.',
     },
     brand: 'حوكمة الذكاء الاصطناعي <b>من الصفر إلى الاحتراف</b>',
     title: 'حوكمة الذكاء الاصطناعي — من الصفر إلى الاحتراف', courseTitle: 'حوكمة الذكاء الاصطناعي من الصفر إلى الاحتراف — الدورة كاملة',
-    description: 'حوكمة الذكاء الاصطناعي من الصفر إلى الاحتراف: دورة مجانية ثنائية اللغة متوافقة مع مجال المعرفة لشهادة AIGP (الإصدار 2.1)، مع أسئلة بأسلوب الامتحان وامتحان تجريبي من 100 سؤال.',
+    description: 'حوكمة الذكاء الاصطناعي من الصفر إلى الاحتراف: دورة مجانية ثنائية اللغة تغطي مجال المعرفة (Body of Knowledge) لشهادة AIGP (الإصدار 2.1)، وهي دورة مستقلة غير تابعة لـ IAPP، مع أسئلة بأسلوب الامتحان وامتحان تجريبي من 100 سؤال.',
     md: {
       title: 'حوكمة الذكاء الاصطناعي من الصفر إلى الاحتراف — الدورة كاملة',
-      sub: (m, l, r) => `*${m} وحدة · ${l} درسًا · ${r} قانونًا ومعيارًا وإطارًا · متوافقة مع مجال المعرفة لشهادة AIGP (الإصدار 2.1) · من الصفر إلى الاحتراف*`,
+      sub: (m, l, r) => `*${m} وحدة · ${l} درسًا · ${r} قانونًا ومعيارًا وإطارًا · تغطي مجال المعرفة (Body of Knowledge) لشهادة AIGP (الإصدار 2.1)، دورة مستقلة غير تابعة لـ IAPP · من الصفر إلى الاحتراف*`,
       contents: 'المحتويات', appendix: 'الملحق — دليل الأدوات التنظيمية',
       catTitle: 'دليل الأدوات التنظيمية',
       catIntro: (n) => [`كل قانون ومعيار وإطار تدرّسه دورة **حوكمة الذكاء الاصطناعي من الصفر إلى الاحتراف**، وعددها ${n}، مجمّعة حسب الدرس الذي يدرّسها،`,
