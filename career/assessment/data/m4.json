@@ -12,14 +12,14 @@
       "o": {
         "en": [
           "Whether the CV scores high enough to pass the employer's ATS filter",
-          "Whether the CV fits on one page at a readable 10–12 pt font size",
+          "Whether the CV fits on one page at a readable font size",
           "Whether a parser is likely to read the text fully and in order",
           "Whether the job ad's keywords appear often enough in the CV's text"
         ],
         "ar": [
           "هل تحصل السيرة الذاتية (CV) على درجة كافية لتجاوز مرشّح نظام تتبّع المتقدّمين (ATS filter) لدى صاحب العمل",
-          "هل تتّسع السيرة الذاتية (CV) لصفحة واحدة (one page) بحجم خط مقروء (readable font) بين 10 و12 نقطة",
-          "هل يُرجَّح أن يقرأ المحلّل الآلي (parser) نصّك كاملًا (completely) وبالترتيب الصحيح (in order)",
+          "هل تتّسع السيرة الذاتية (CV) لصفحة واحدة (one page) بحجم خط مقروء (readable font)",
+          "هل يُرجَّح أن يقرأ المحلّل الآلي (parser) نصّك كاملًا وبالترتيب الصحيح، دون ضياع أي جزء منه",
           "هل تتكرّر الكلمات المفتاحية (keywords) لإعلان الوظيفة (job ad) بما يكفي في نص السيرة الذاتية (CV)"
         ]
       },
@@ -102,9 +102,9 @@
         ],
         "ar": [
           "يضيف المصطلحات الثلاثة إلى سطر المهارات (skills line)، لأنه يستطيع تعلّم Airflow قبل المقابلات (interviews)",
-          "يستخدم كلمات الإعلان (the ad's words) PostgreSQL وCI/CD في نقاط حقيقية (real bullets)، ويترك Airflow",
+          "يستخدم كلمات الإعلان (the ad's words) PostgreSQL وCI/CD في نقاط حقيقية، ويترك Airflow",
           "يُبقي «Postgres» كما كتبها، لأن نظام تتبّع المتقدّمين (ATS) سيعامل الاسمين مصطلحًا واحدًا",
-          "يُدرج Airflow بخط صغير أبيض (small white text) لتجده عمليات البحث (searches) ولا يراه القرّاء من البشر"
+          "يُدرج Airflow بخط صغير أبيض (small white text) لتجده عمليات البحث (searches) ولا يراه القرّاء من البشر (human readers)"
         ]
       },
       "a": 1,

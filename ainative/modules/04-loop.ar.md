@@ -251,7 +251,7 @@ LADDER  1 stop (Esc) and say what you saw    2 correct once: file, line, reason
 - A. أثبتت Meta أن المراجعة غير ضرورية (unnecessary) متى صار إعداد الوكيل جيدًا بما يكفي.
 - B. هذه رواية Meta نفسها (Meta's own account)، وهي تسمّي «الإنسان على الحلقة» (human-on-the-loop) هدفًا لا نتيجة (a target, not a result).
 - C. يغطي المنشور لغة برمجة واحدة فقط (only one programming language)، فلا ينطبق منه شيء هنا.
-- D. الفحوص البصرية (visual checks) وحدها هي المهمة؛ وتعدّ Meta الاختبارات الآلية (automated tests) إضافات اختيارية (optional extras).
+- D. الفحوص البصرية (visual checks) وحدها هي المهمة؛ وتعدّ Meta الاختبارات الآلية (automated tests) إضافات اختيارية (optional extras) لفرق صغيرة (small teams).
 
 <details><summary>الإجابة</summary>
 
@@ -499,8 +499,8 @@ Would I delegate it again?
 **1. ميزتك تعمل، لكن المُقيِّم يُفشل فحص «تفشل اختباراتك الجديدة عند إزالة التحذير» ("Your new tests fail when the warning is removed")؛ إذ تنجح كل اختباراتك الجديدة بدونه (all of your new tests pass without it). ماذا يخبرك ذلك؟ ⁦(What does that tell you?)⁩**
 
 - A. المُقيِّم مخطئ (The grader is wrong): المجموعة خضراء، فلا بد أن الاختبارات الجديدة تعمل (the new tests must be working).
-- B. الميزة أصغر من أن تحتاج اختبارات خاصة بها (too small to need tests of its own)، فلم تكن هناك حاجة إليها.
-- C. اختباراتك تعتمد على أداة تجهيز (a fixture) لا تملكها الشيفرة الابتدائية بعد (the starter code does not have yet).
+- B. الميزة أصغر من أن تحتاج اختبارات خاصة بها (too small to need tests of its own)، فلم تكن هناك حاجة إليها (so no test was needed at all).
+- C. اختباراتك كلها تعتمد على أداة تجهيز (a fixture) لا تملكها الشيفرة الابتدائية بعد (the starter code does not have yet).
 - D. اختباراتك لا تعتمد على الميزة أبدًا (never depend on the feature)، فلن تلاحظ غيابها (would not notice it missing).
 
 <details><summary>الإجابة</summary>
@@ -513,7 +513,7 @@ Would I delegate it again?
 
 - A. لا خطأ فيها (Nothing is wrong): تحوّل Python العدد العشري العائم 0.8 (the float 0.8) إلى Decimal قبل أن تجري المقارنة.
 - B. تقارن Decimal بعدد عشري عائم (a float)، فيفشل 80% بالضبط، وتُغفل هذا التحويل (leaves out this transfer).
-- C. تستخدم الحد اليومي (the daily limit)، لكن الحد الشهري (the monthly limit) هو المهم في هذه التذكرة.
+- C. تستخدم الحد اليومي (the daily limit)، لكن الحد الشهري (the monthly limit) هو المهم في هذه التذكرة (in this ticket).
 - D. تضيف الرسوم (the fee) إلى المجموع فيصل التحذير مبكرًا (arrives early)؛ كما أنها تقرّب النسبة المئوية (rounds the percentage).
 
 <details><summary>الإجابة</summary>

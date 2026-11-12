@@ -19,7 +19,7 @@
     "ar": [
      "رفع عتبة التجربة التشغيلية (pilot bar) إلى متوسط (average) قدره 4.5 حتى لا تنجح إلا أقوى المذكرات (strongest memos)",
      "تقسيم الجودة إلى معايير (criteria) مثل الأمانة للمصادر (faithfulness)، لكلٍّ منها عتبته (its own threshold)",
-     "جعل حَكَم من نموذج لغوي (LLM judge) يمنح الدرجة من 1 إلى 5 (the 1-to-5 score) حتى يمكن تقييم كل مذكرة (every single memo)",
+     "جعل حَكَم من نموذج لغوي (LLM judge) يمنح الدرجة من 1 إلى 5 (the 1-to-5 score) حتى يمكن تقييم (rating) كل مذكرة (every single memo)",
      "تقييم عدد أكبر بكثير من المذكرات (many more memos) حتى يصبح لمتوسط 4.0 هامش خطأ (margin of error) أصغر"
     ]
    },

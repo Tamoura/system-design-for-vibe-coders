@@ -164,13 +164,13 @@ Rania replaces the deck with a one-page **AI Product Strategy** the board can ho
 **1. Faisal's draft says: "Our AI strategy is to become the most AI-enabled bank in the Gulf by 2027." Using Rumelt's framework, what is the main problem with it?**
 
 - A. It does not name a specific vendor
-- B. It is a goal, not a strategy: it has no diagnosis of the challenge and no guiding policy that rules options out
+- B. It should say "GenAI" instead of "AI"
 - C. The time horizon is too short
-- D. It should say "GenAI" instead of "AI"
+- D. It is a goal, not a strategy: it has no diagnosis of the challenge and no guiding policy that rules options out
 
 <details><summary>Answer</summary>
 
-**B.** Rumelt names mistaking goals for strategy as a mark of bad strategy. A good strategy starts with a diagnosis and sets a guiding policy that makes choices. The time horizon (C) may be debatable, but it is not the core flaw. (🟢 The essentials.)
+**D.** Rumelt names mistaking goals for strategy as a mark of bad strategy. A good strategy starts with a diagnosis and sets a guiding policy that makes choices. The time horizon (C) may be debatable, but it is not the core flaw. (🟢 The essentials.)
 
 </details>
 
@@ -202,27 +202,27 @@ Rania replaces the deck with a one-page **AI Product Strategy** the board can ho
 
 **4. In Helmer's 7 Powers, why is "our credit model is more accurate than competitors'" not enough to claim power?**
 
-- A. Accuracy is not a benefit
-- B. Power needs both a benefit and a barrier, and accuracy alone does not stop rivals from matching it
-- C. Only network economies count as power in AI
-- D. Banks cannot have power because they are regulated
+- A. Power needs both a benefit and a barrier, and accuracy alone does not stop rivals from matching it
+- B. Accuracy is not a benefit, because customers cannot see or value the difference between two credit models
+- C. Only network economies count as power in AI, because the other six powers need physical assets and factories
+- D. Banks cannot have power because they are regulated and every competitor in the market must follow the same rules
 
 <details><summary>Answer</summary>
 
-**B.** Higher accuracy is a benefit; without a barrier such as a cornered resource or process power, rivals can close the gap. C is false: network economies are rare in bank AI. (🟡 Going deeper.)
+**A.** Higher accuracy is a benefit; without a barrier such as a cornered resource or process power, rivals can close the gap. C is false: network economies are rare in bank AI. (🟡 Going deeper.)
 
 </details>
 
 **5. Najm is deciding how much to invest in Staff GenAI, a general internal assistant. Productivity-suite vendors already bundle capable assistants. What portfolio role and posture fit best?**
 
-- A. Differentiate: build a custom assistant and a proprietary model
-- B. Commodity: buy the bundled capability and invest only in connecting bank-specific knowledge sources
+- A. Differentiate: build a custom assistant and a proprietary model, so that Najm owns every layer of the stack
+- B. Stop: internal assistants have no value
 - C. Parity: build from scratch to match the vendors' features
-- D. Stop: internal assistants have no value
+- D. Commodity: buy the bundled capability and invest only in connecting bank-specific knowledge sources
 
 <details><summary>Answer</summary>
 
-**B.** A component others sell well is a commodity: buy it and add what only Najm can. A competes with bundled products; D ignores real productivity value. (🔴 Expert view.)
+**D.** A component others sell well is a commodity: buy it and add what only Najm can. A competes with bundled products; B ignores real productivity value. (🔴 Expert view.)
 
 </details>
 
@@ -404,7 +404,7 @@ Rania replaces Faisal's timeline with a **Now-Next-Later AI roadmap** and a bet 
 
 **1. Khalid asks Faisal for "the date when the copilot will be 95% accurate on corporate memos". No evaluation on corporate files exists yet. What is the best response?**
 
-- A. Give a date one quarter out, to keep Khalid's confidence
+- A. Give a date one quarter out, to keep Khalid's confidence and show the bank's board that the whole team is committed to the target
 - B. Refuse to give any dates until the product is finished
 - C. Commit to a date for a feasibility spike result on corporate files, then give a quality range and a delivery plan based on it
 - D. Promise 95% and reduce scope later if needed
@@ -419,7 +419,7 @@ Rania replaces Faisal's timeline with a **Now-Next-Later AI roadmap** and a bet 
 
 - A. The hypothesis
 - B. The kill criterion agreed before work starts
-- C. The size of the bet
+- C. The size of the bet, meaning the budget and the number of people who will be assigned to it
 - D. The outcome
 
 <details><summary>Answer</summary>
@@ -443,7 +443,7 @@ Rania replaces Faisal's timeline with a **Now-Next-Later AI roadmap** and a bet 
 
 **4. A vendor releases a new model that is cheaper and scores higher on public benchmarks. What should Najm do first under its model-change playbook?**
 
-- A. Switch all products immediately, since benchmarks show it is better
+- A. Switch all products immediately, since benchmarks show it is better and the lower price will also reduce the bank's monthly bill for every product
 - B. Ignore it until the current model is retired
 - C. Run Najm's own eval suite on the candidate, comparing quality by section and language, cost and latency with the current model
 - D. Ask the vendor for a written guarantee of quality
@@ -457,7 +457,7 @@ Rania replaces Faisal's timeline with a **Now-Next-Later AI roadmap** and a bet 
 **5. Tariq proposes a complex chain of five prompts to work around the current model's arithmetic errors in ratio summaries. Which option best reflects the "durable layers" principle?**
 
 - A. Build the five-prompt chain, since it fixes today's problem
-- B. Wait for a future model to fix arithmetic before shipping anything
+- B. Wait for a future model to fix arithmetic before shipping anything, since a chain of prompts would be rebuilt anyway when the model improves
 - C. Have the model call a calculation tool for ratios, and invest the saved effort in evaluation sets and workflow integration
 - D. Remove ratios from memos permanently
 
@@ -656,14 +656,14 @@ Rania's two-page **AI Operating Model**, approved by the steering group:
 
 **1. Credit Memo Copilot is ready, but launch has stalled because Dana, Khalid and Layla each say someone else should approve the quality bar. What is the most effective fix?**
 
-- A. Ask the CEO to approve the quality bar
-- B. Write a decision-rights register: the PM is accountable for the quality bar, with Dana responsible and Layla and domain experts consulted
+- A. Write a decision-rights register: the PM is accountable for the quality bar, with Dana responsible and Layla and domain experts consulted
+- B. Ask the CEO to approve the quality bar, since the three leaders disagree and only the most senior executive can break the deadlock between them
 - C. Make Layla accountable for all AI decisions
 - D. Launch without a quality bar and measure later
 
 <details><summary>Answer</summary>
 
-**B.** The stall is an ownership gap. One accountable owner, with the right people consulted, resolves it. C confuses governance's role (limits and review) with product ownership. D skips the quality bar entirely. (🟡 Going deeper.)
+**A.** The stall is an ownership gap. One accountable owner, with the right people consulted, resolves it. C confuses governance's role (limits and review) with product ownership. D skips the quality bar entirely. (🟡 Going deeper.)
 
 </details>
 
@@ -695,20 +695,20 @@ Rania's two-page **AI Operating Model**, approved by the steering group:
 
 **4. Which statement best describes what an AI product manager uniquely owns?**
 
-- A. The choice of algorithm and model architecture
-- B. The problem, outcome, quality bar, cost envelope and the trade-offs between quality, cost, speed and risk
+- A. The choice of algorithm and model architecture, together with the selection of the vendor and the training approach
+- B. The data pipelines and data quality
 - C. The risk tier and regulatory classification
-- D. The data pipelines and data quality
+- D. The problem, outcome, quality bar, cost envelope and the trade-offs between quality, cost, speed and risk
 
 <details><summary>Answer</summary>
 
-**B.** The PM owns what "good enough" means and the trade-offs. Model choice (A) sits with engineering, the risk tier (C) with governance and pipelines (D) with data engineering, each with the PM consulted. (🟢 The essentials.)
+**D.** The PM owns what "good enough" means and the trade-offs. Model choice (A) sits with engineering, the risk tier (C) with governance and pipelines (B) with data engineering, each with the PM consulted. (🟢 The essentials.)
 
 </details>
 
 **5. Najm's steering group wants to reduce the number of pilots that never reach production. Which rule is most likely to help?**
 
-- A. Require every pilot to show a demo to the board
+- A. Require every pilot to show a demo to the board before it starts, so that executives can see the idea working and approve it
 - B. Approve a pilot only if it has a named business owner, a run-cost budget, an integration plan and a provisional risk tier
 - C. Double the AI Lab's budget
 - D. Ban pilots and build only full products
@@ -873,66 +873,66 @@ Layla's gate review becomes a check of evidence against this table, not a first 
 
 **1. Faisal says: "Responsible AI for SME Instant Finance is Layla's job; she will review it before go-live." What is the best correction?**
 
-- A. He is right; the product team should focus on features
-- B. Governance sets the tier, limits and review; the PM must build the controls into the product and produce the evidence, starting in discovery
+- A. He is right; the product team should focus on features, and the governance team should deal with responsible AI before go-live so that nobody duplicates the work
+- B. Responsible AI only applies after launch
 - C. Legal should write the product requirements instead
-- D. Responsible AI only applies after launch
+- D. Governance sets the tier, limits and review; the PM must build the controls into the product and produce the evidence, starting in discovery
 
 <details><summary>Answer</summary>
 
-**B.** Governance defines limits and approves; the product team designs controls and supplies evidence. Waiting until go-live (A) makes changes expensive. (🟢 The essentials.)
+**D.** Governance defines limits and approves; the product team designs controls and supplies evidence. Waiting until go-live (A) makes changes expensive. (🟢 The essentials.)
 
 </details>
 
 **2. SME Instant Finance's overall approval accuracy is strong. Which step is most likely to reveal a group for whom the product performs badly?**
 
-- A. Increasing the size of the overall test set
-- B. Slice evaluation by sector, region, business age and customer type
-- C. Switching to a larger model
-- D. Asking the vendor for its benchmark results
+- A. Increasing the size of the overall test set so that the average becomes more precise
+- B. Asking the vendor for its benchmark results on tasks that are similar to the lending decision
+- C. Switching to a larger model that has been trained on a wider range of business data
+- D. Slice evaluation by sector, region, business age and customer type
 
 <details><summary>Answer</summary>
 
-**B.** Averages hide subgroup failures; slice evaluation shows them. A larger overall test set (A) can still hide the same gap in its average. (🟡 Going deeper, lever 5.)
+**D.** Averages hide subgroup failures; slice evaluation shows them. A larger overall test set (A) can still hide the same gap in its average. (🟡 Going deeper, lever 5.)
 
 </details>
 
 **3. A reviewer confirms 99% of SME Instant Finance pre-approvals, spending a few seconds on each. What does this suggest about human oversight?**
 
-- A. The model is excellent, so oversight is working
-- B. Oversight may be nominal; the team should examine review time, the information shown and the reviewer's authority and training
+- A. The model is excellent, so oversight is working as intended and no further checks are required for these cases or for any others like them
+- B. Nothing; approval rates are irrelevant to oversight
 - C. The reviewer should be removed to save cost
-- D. Nothing; approval rates are irrelevant to oversight
+- D. Oversight may be nominal; the team should examine review time, the information shown and the reviewer's authority and training
 
 <details><summary>Answer</summary>
 
-**B.** Meaningful oversight needs information, time, competence and authority; near-total agreement in seconds signals automation bias. A assumes the conclusion. (🟡 Going deeper, lever 3.)
+**D.** Meaningful oversight needs information, time, competence and authority; near-total agreement in seconds signals automation bias. A assumes the conclusion. (🟡 Going deeper, lever 3.)
 
 </details>
 
 **4. Under GDPR Art. 22, which design best supports the safeguards for a customer affected by a solely automated decision with significant effects?**
 
 - A. A privacy policy link in the app footer
-- B. A visible route to request human review, express their view and contest the decision, shown where the decision is communicated
+- B. A monthly fairness report to the board
 - C. A longer model card
-- D. A monthly fairness report to the board
+- D. A visible route to request human review, express their view and contest the decision, shown where the decision is communicated
 
 <details><summary>Answer</summary>
 
-**B.** Art. 22 safeguards include obtaining human intervention, expressing one's view and contesting the decision. C and D are internal documents that do not help the individual. (🟢 The essentials; 🟡 lever 4.)
+**D.** Art. 22 safeguards include obtaining human intervention, expressing one's view and contesting the decision. C and B are internal documents that do not help the individual. (🟢 The essentials; 🟡 lever 4.)
 
 </details>
 
 **5. Najm buys a customer-service model from a vendor with strong responsible-AI documentation. A customer is harmed by a wrong answer. Who is accountable for Najm's use of the model?**
 
-- A. The vendor alone
-- B. Najm, although its contract with the vendor should cover data use, change notices and incident notification
-- C. Nobody, because the answer was generated by AI
-- D. The customer, who chose to use the assistant
+- A. Najm, although its contract with the vendor should cover data use, change notices and incident notification
+- B. The vendor alone, because it built the model and its documentation shows strong responsible-AI practice and independent audits
+- C. Nobody, because the answer was generated by AI and no person decided what the customer was told
+- D. The customer, who chose to use the assistant and should have checked the answer before acting on it
 
 <details><summary>Answer</summary>
 
-**B.** Buying a model does not transfer accountability for its use; Air Canada shows "the AI said it" is no defence. Contracts manage vendor risk but do not remove Najm's responsibility. (🔴 Expert view; 🧭 Why it matters.)
+**A.** Buying a model does not transfer accountability for its use; Air Canada shows "the AI said it" is no defence. Contracts manage vendor risk but do not remove Najm's responsibility. (🔴 Expert view; 🧭 Why it matters.)
 
 </details>
 

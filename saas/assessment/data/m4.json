@@ -42,7 +42,7 @@
      "A throttle of at most 5 SMS per user per hour, with email fallback",
      "A hysteresis rule of 3 consecutive failed checks before opening",
      "A 30-minute digest window that merges the alerts into one message",
-     "A unique dedupe key for each incident, state and recipient"
+     "A unique dedupe key for each incident, state and recipient, checked before sending"
     ],
     "ar": [
      "تحديد معدل (throttle) بحد أقصى 5 رسائل SMS لكل مستخدم (per user) في الساعة، مع بديل بالبريد (email fallback)",
@@ -67,7 +67,7 @@
    },
    "o": {
     "en": [
-     "Optimistic locking for the settings, and a Yjs CRDT for the postmortem",
+     "Optimistic locking for the settings, and a Yjs CRDT for the postmortem text editor",
      "Optimistic locking for both, so every stale save is rejected with a 409",
      "Last write wins for both, ordering the saves by precise server timestamps",
      "Optimistic locking for the settings, and a home-built CRDT for the postmortem"

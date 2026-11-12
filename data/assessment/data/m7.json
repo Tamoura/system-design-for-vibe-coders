@@ -18,7 +18,7 @@
     ],
     "ar": [
      "إتقان أدوات أكثر (more tools)، مثل Kafka وSpark وكل مستودع سحابي (cloud warehouse)",
-     "نطاق أوسع وحكم أنضج (wider scope and judgement): امتلاك المنتجات (owning products) ووضع المعايير (setting standards)",
+     "نطاق أوسع وحكم أنضج (wider scope and judgement): امتلاك المنتجات ووضع المعايير",
      "شهادات أكثر (more certifications) من مزوّدي السحابة (cloud providers) ومنصات البيانات (data platform vendors)",
      "كتابة SQL أسرع وأخطاء صياغة (syntax errors) أقل في جولات البرمجة الحية (live coding rounds)"
     ]
@@ -76,7 +76,7 @@
      "محرّك المستودع (warehouse engine) الذي سيختاره وكيف سيقسّمه (partition)",
      "القائمة الكاملة للأعمدة (columns) التي يحتاجها جدول التوصيل، بأسمائها وأنواعها (named and typed)",
      "لوحة المعلومات (dashboard) التي سيبنيها للعمليات، بمخططاتها (charts) ومرشّحاتها (filters)",
-     "الحُبَيبية (grain)، مثل صف واحد لكل محاولة توصيل (one row per delivery attempt)، ثم الأبعاد (dimensions)"
+     "الحُبَيبية (grain)، مثل صف واحد لكل محاولة توصيل، ثم الأبعاد (dimensions)"
     ]
    },
    "a": 3,

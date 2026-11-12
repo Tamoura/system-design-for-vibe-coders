@@ -68,13 +68,13 @@
    "o": {
     "en": [
      "Refuse it at once with a clear message, never calling screening or accepting it unscreened",
-     "Accept it and screen it afterwards, so that the customer is not left waiting for an answer",
-     "Retry screening with backoff until it answers, then complete the transfer for the customer",
-     "Call screening anyway on every request, to notice the exact moment that it recovers again"
+     "Accept it and screen it afterwards, so that the customer is not left waiting",
+     "Retry screening with backoff until it answers, then complete the transfer",
+     "Call screening anyway on every request, to notice the moment that it recovers"
     ],
     "ar": [
      "ارفضه فورًا (at once) مع رسالة واضحة (clear message)، دون استدعاء الفحص (screening) أو قبوله بلا فحص",
-     "اقبله وافحصه لاحقًا (screen it afterwards)، حتى لا يبقى العميل (customer) ينتظر الرد (answer) طويلًا",
+     "اقبله وافحصه لاحقًا (screen it afterwards)، حتى لا يبقى العميل (customer) ينتظر الرد",
      "أعد محاولة الفحص (retry screening) بتأخير أسي (backoff) حتى يرد، ثم أتمّ التحويل (transfer) للعميل",
      "استدعِ خدمة الفحص (screening) مع كل طلب على أي حال، لتلاحظ لحظة تعافيها (recovers) بالضبط"
     ]

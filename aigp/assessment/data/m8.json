@@ -42,7 +42,7 @@
      "Human-in-the-loop: an analyst approves every single block before it takes effect",
      "Human-on-the-loop: analysts monitor live and can stop it, and customers get fast recourse",
      "Human-over-the-loop only: the committee reviews block rates and limits every quarter",
-     "No designed oversight: fraud detection is excluded from the Annex III credit-scoring entry"
+     "No designed oversight: fraud detection is excluded from Annex III credit scoring"
     ],
     "ar": [
      "الإنسان في الحلقة (human-in-the-loop): يوافق محلل (analyst) على كل عملية حظر (block) قبل أن تسري (takes effect)",

@@ -372,10 +372,10 @@ Do not weaken a test. Run the tests after each step.
 
 **5. Support wants employee numbers as conversation ids, to search a person's chats. Why not?**
 
-- A. Numbers index slowly in most trace stores
+- A. Numbers index slowly in trace stores
 - B. The id spreads personal data to every span
-- C. Employee numbers are too short to stay unique
-- D. Support already searches by ticket number
+- C. Staff numbers are too short to stay unique
+- D. Support already uses the ticket number
 
 <details><summary>Answer</summary>
 
@@ -670,7 +670,7 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 
 - A. Drafts always need two approvals
 - B. It shows what was said, not what TicketHub holds
-- C. The runner cannot read replies written in Arabic
+- C. The runner cannot read replies in Arabic
 - D. The runner passes any row that gets a reply
 
 <details><summary>Answer</summary>
@@ -682,8 +682,8 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 **2. A row fails and Hind asks to pass it with comments. What do the script's rules say?**
 
 - A. Pass it now and log the comment for the backlog
-- B. Re-run it until it passes, then record that
-- C. Drop the row from the script before the meeting
+- B. Re-run it until it passes, then record that it passed
+- C. Drop the row from the script before the review meeting
 - D. Give it a severity, then fix it or waive it
 
 <details><summary>Answer</summary>
@@ -695,9 +695,9 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 **3. Six weeks after go-live a model retirement notice sits in a departed builder's mailbox. Which handover step prevents this?**
 
 - A. Naming a notice owner in the support model
-- B. A longer hypercare period for the pilot
+- B. A longer hypercare period for the whole pilot
 - C. Training desk staff on the limits of the model
-- D. A second UAT session for the Arabic rows
+- D. A second UAT session for the Arabic test rows
 
 <details><summary>Answer</summary>
 
@@ -707,10 +707,10 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 
 **4. Median first response fell from 3 h 40 min to 1 h 10 min, but the new figure times the first chat reply, the baseline the triage note. What do you do?**
 
-- A. Publish it, since the direction is right
-- B. Average the two definitions into one figure
+- A. Publish it, as the direction is right
+- B. Average the two figures into one
 - C. Re-measure both on one definition first
-- D. Report only the contained rate instead
+- D. Report the contained rate only
 
 <details><summary>Answer</summary>
 
@@ -720,9 +720,9 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 
 **5. A senior desk agent says Najm Desk is wrong too often and refuses drafts. What is the best response?**
 
-- A. Make drafts mandatory for the whole desk
+- A. Make drafts mandatory for the whole desk this month
 - B. Invite them to break it, then show the fix
-- C. Ask the champion to ignore the feedback
+- C. Ask the champion to ignore the feedback for now
 - D. Wait for the monthly benefits report to settle it
 
 <details><summary>Answer</summary>

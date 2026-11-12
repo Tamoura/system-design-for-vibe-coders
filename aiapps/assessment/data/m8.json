@@ -11,16 +11,16 @@
       },
       "o": {
         "en": [
-          "Count it as done, because `end_turn` means the model finished its work",
+          "Count it as done, because `end_turn` means the model finished all its work",
           "Ask the model to review its own answer and accept the run if it says it is complete",
           "Fail the code check, since 4473 is absent, and hand the run to a person",
-          "Re-send the same request again and again until both tickets appear in it"
+          "Re-send the same request again and again until both tickets appear in the reply"
         ],
         "ar": [
-          "تعدّ التشغيل (run) ناجحًا (done) لأن `end_turn` يعني أن النموذج (model) أنهى عمله",
+          "تعدّ التشغيل (run) ناجحًا (done) لأن `end_turn` يعني أن النموذج (model) أنهى عمله كاملًا",
           "تطلب من النموذج (model) أن يراجع إجابته بنفسه (review) وتقبل التشغيل (run) إن قال إنها مكتملة (complete)",
           "تُفشل فحص الشيفرة (code check) لغياب 4473، وتسلّم التشغيل (run) إلى شخص (hand-off)",
-          "تعيد إرسال الطلب نفسه (same request) مرارًا حتى تظهر التذكرتان (tickets) في الرد"
+          "تعيد إرسال الطلب نفسه (same request) مرارًا حتى تظهر التذكرتان (tickets) في الرد المُرجَع"
         ]
       },
       "a": 2,
@@ -40,14 +40,14 @@
       "o": {
         "en": [
           "Retry the call in code, with backoff and jitter, but only inside the deadline",
-          "Send the model an `is_error` result saying TicketHub is busy; let it decide",
+          "Send the model an `is_error` result saying TicketHub is busy; it decides",
           "Hand the run to the Service Desk at once, because the tool has failed",
-          "Retry the call in code straight away, again and again, until TicketHub answers"
+          "Retry the call in code at once, again and again, until TicketHub answers"
         ],
         "ar": [
           "تعيد المحاولة (retry) في الشيفرة (code) بتراجع أسي (backoff) وإزاحة عشوائية (jitter) ضمن المهلة",
-          "ترسل إلى النموذج (model) نتيجة (result) `is_error` تقول إن TicketHub مشغول، ويقرر هو هل يعيد الطلب",
-          "تسلّم التشغيل (run) إلى مكتب الخدمة (Service Desk) فورًا، لأن الأداة (tool) فشلت في الاستدعاء (call)",
+          "ترسل إلى النموذج (model) نتيجة (result) `is_error` تقول إن TicketHub مشغول، ويقرر هو",
+          "تسلّم التشغيل (run) إلى مكتب الخدمة (Service Desk) فورًا، لأن الأداة فشلت",
           "تعيد المحاولة (retry) في الشيفرة (code) فورًا ومرارًا وتكرارًا وبلا توقف حتى يردّ TicketHub"
         ]
       },

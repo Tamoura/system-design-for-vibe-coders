@@ -361,7 +361,7 @@ Plan first; small steps; run the tests after each.
 
 - A. A stricter system prompt
 - B. A tool gate with no email tool
-- C. A classifier scoring each page
+- C. A classifier scoring pages
 - D. A staff warning about drafts
 
 <details><summary>Answer</summary>
@@ -385,9 +385,9 @@ Plan first; small steps; run the tests after each.
 
 **3. A ticket comment orders `add_comment` on Rayan's own ticket after the chat read it. Which layer refuses?**
 
-- A. Owner check, as the ticket is not his
-- B. Scope, as he lacks comment rights
-- C. Approval, as comments need a person
+- A. Owner check, as the ticket is not his own
+- B. Scope, as he lacks the right to comment
+- C. Approval, as every comment needs a person
 - D. Taint, as the chat read others' text
 
 <details><summary>Answer</summary>
@@ -411,9 +411,9 @@ Plan first; small steps; run the tests after each.
 
 **5. All ten offline attacks fail with guards on, and Lujain calls the agent injection-proof. What does the evidence support?**
 
-- A. Ten attacks show the model resists injection
+- A. Ten attacks show that the model resists injection
 - B. The gate stops these ten against a scripted model
-- C. A real model obeys all ten with guards off
+- C. A real model obeys all ten when the guards are off
 - D. The masks would catch any paraphrase of them
 
 <details><summary>Answer</summary>

@@ -512,7 +512,7 @@ Lab m06: 5/20 required checks passed: NOT YET
 **1. تكتب اختبار انحدار من السجل (a regression test from the log) فينجح على الشيفرة الابتدائية (the starter code). ماذا يخبرك ذلك؟ ⁦(What does that tell you?)⁩**
 
 - A. أُصلح الخلل بالفعل في الشيفرة الابتدائية (already been fixed)
-- B. سيحتاج الإصلاح إلى أسطر أقل مما ظننت (fewer lines than you thought)
+- B. سيحتاج الإصلاح إلى أسطر أقل مما ظننت (fewer lines than you thought) بعد إعادة قراءة الخطأ (after rereading the error)
 - C. الاختبار لا يلتقط المشكلة المبلَّغ عنها (does not capture the reported problem)
 - D. لا بد أن الاختبارات الخفية (hidden tests) مخطئة في ذلك
 

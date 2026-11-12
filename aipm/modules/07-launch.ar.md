@@ -173,34 +173,34 @@ flowchart TD
 
 **2. أي تصميم للضوابط الوقائية (guardrail design) يتبع على أفضل وجه مبدأ «الرفض الافتراضي للإجراءات (deny by default for actions)» في الإصدار الأول (first release) لمساعد العملاء (customer assistant)؟**
 
-- A. منح المساعد جميع الأدوات المصرفية (banking tools) مع إخباره في موجّه النظام (system prompt) بأن يكون حذرًا
-- B. الإطلاق بالإجابة عن الأسئلة فقط (question-answering only) وإضافة أدوات الإجراءات (action tools) لاحقًا، كلٌّ منها تحت بوابته الخاصة (its own gate)
+- A. منح المساعد جميع الأدوات المصرفية (banking tools) مع إخباره في موجّه النظام (system prompt) بأن يكون حذرًا في كل إجراء (action) ينفذه، وبأن يطلب تأكيد العميل (customer confirmation) عند الحاجة (when needed)
+- B. السماح بالإجراءات فقط للعملاء الذين يقبلون الشروط (accept the terms)
 - C. السماح بالإجراءات مع تسجيلها للمراجعة في نهاية الشهر (log them for review at month end)
-- D. السماح بالإجراءات فقط للعملاء الذين يقبلون الشروط (accept the terms)
+- D. الإطلاق بالإجابة عن الأسئلة فقط (question-answering only) وإضافة أدوات الإجراءات (action tools) لاحقًا، كلٌّ منها تحت بوابته الخاصة (its own gate)
 
 <details><summary>الإجابة</summary>
 
-**B.** البدء بلا أدوات (starting without tools) يُبقي أسوأ الحالات (worst case) صغيرة، وإضافة الأدوات لاحقًا تحت بوابات منفصلة (separate gates) يوائم المخاطر مع الأدلة (matches the risk to the evidence). الخيار A يعتمد على تقدير النموذج نفسه (model's own judgement)، وهذا ليس ضابطًا وقائيًا (not a guardrail). (🟡 التعمق أكثر (Going deeper).)
+**D.** البدء بلا أدوات (starting without tools) يُبقي أسوأ الحالات (worst case) صغيرة، وإضافة الأدوات لاحقًا تحت بوابات منفصلة (separate gates) يوائم المخاطر مع الأدلة (matches the risk to the evidence). الخيار A يعتمد على تقدير النموذج نفسه (model's own judgement)، وهذا ليس ضابطًا وقائيًا (not a guardrail). (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
 **3. خلال إطلاق مرحلي (staged rollout) بنسبة 25%، تُظهر العيّنة اليومية (daily sample) أن معدّل الإجابات المستندة إلى المصادر (grounded-answer rate) انخفض دون معيار المواصفات (spec bar) يومين. وكانت خطة الإطلاق (rollout plan) قد أدرجت هذا عتبةَ إيقاف (stop threshold). ماذا ينبغي أن يفعل مدير المنتج (PM)؟**
 
-- A. المتابعة إلى 100% لأن الانخفاض قد يكون ضوضاء (noise)
-- B. إيقاف الإطلاق مؤقتًا (pause the rollout)، والعودة إلى البديل أو التراجع (fall back or roll back) كما تنص الخطة، والتحقيق (investigate)
-- C. خفض معيار المواصفات (lower the spec bar) كي يستمر الإطلاق
-- D. انتظار مراجعة ما بعد الإطلاق بعد 30 يومًا (30-day post-launch review)
+- A. إيقاف الإطلاق مؤقتًا (pause the rollout)، والعودة إلى البديل أو التراجع (fall back or roll back) كما تنص الخطة، والتحقيق في السبب (investigate)
+- B. المتابعة إلى 100% (full rollout) لأن الانخفاض (the drop) قد يكون ضوضاء (noise)، ولأن يومين مدة أقصر من أن يُحكم بها على أداء الإطلاق التدريجي (too short a period to judge)
+- C. خفض معيار المواصفات (lower the spec bar) كي يستمر الإطلاق، ثم مراجعة المعيار من جديد بعد الإطلاق الكامل (after launch)، عندما تتوفر بيانات أكثر
+- D. انتظار مراجعة ما بعد الإطلاق بعد 30 يومًا (30-day post-launch review) قبل أن يقرر أحد ما إذا كان يجب اتخاذ أي إجراء على الإطلاق أصلًا
 
 <details><summary>الإجابة</summary>
 
-**B.** تُحدَّد عتبات الإيقاف (stop thresholds) مسبقًا كي لا يقرّر أحد تحت ضغط الإطلاق (under launch pressure). الخياران C وD يُبطلان الغرض منها (defeat their purpose). (🔴 نظرة الخبير (Expert view).)
+**A.** تُحدَّد عتبات الإيقاف (stop thresholds) مسبقًا كي لا يقرّر أحد تحت ضغط الإطلاق (under launch pressure). الخياران C وD يُبطلان الغرض منها (defeat their purpose). (🔴 نظرة الخبير (Expert view).)
 
 </details>
 
 **4. غيّر الفريق صياغة موجّه النظام (system prompt) لنجم أسيست ليبدو أكثر ودًّا (friendlier). وفق سياسة معقولة لفئات التغيير (change-class policy)، ماذا ينبغي أن يحدث؟**
 
 - A. لا شيء: صياغة الموجّه (prompt wording) ليست تغييرًا في المنتج (product change)
-- B. بوابة الإطلاق الكاملة (full launch gate)، بما في ذلك موافقة حوكمة جديدة (new governance approval)
+- B. بوابة الإطلاق الكاملة (full launch gate)، بما في ذلك موافقة حوكمة جديدة (new governance approval) ومراجعة جديدة من لجنة المخاطر (risk committee) قبل أي إصدار
 - C. إعادة تشغيل مجموعة التقييمات المؤتمتة (automated eval suite) والحصول على موافقة مدير المنتج (PM's approval) قبل الإصدار
 - D. إصداره لجميع المستخدمين ومراقبة الشكاوى (monitor complaints)
 
@@ -383,14 +383,14 @@ flowchart RL
 
 **1. العنوان الرئيسي لحملة فيصل (campaign headline) للتمويل الفوري للشركات الصغيرة (SME Instant Finance) هو «الذكاء الاصطناعي يوافق على تمويل فاتورتك فورًا (AI approves your invoice finance instantly)». أي مراجعة تتبع هذا الدرس على أفضل وجه؟**
 
-- A. «أذكى مُقرض بالذكاء الاصطناعي في الخليج (The smartest AI lender in the Gulf)»
-- B. «حوِّل الفواتير المؤهلة إلى سيولة، بقرار خلال دقائق (Turn eligible invoices into cash, with a decision in minutes)»
+- A. «حوِّل الفواتير المؤهلة إلى سيولة، بقرار خلال دقائق (Turn eligible invoices into cash, with a decision in minutes)»
+- B. «أذكى مُقرض بالذكاء الاصطناعي في الخليج (The smartest AI lender in the Gulf)»
 - C. «موافقات فورية بالذكاء الاصطناعي، مضمونة (Instant AI approvals, guaranteed)»
-- D. «مدعوم بتعلّم آلي متقدم (Powered by advanced machine learning)»
+- D. «مدعوم بتعلّم آلي متقدم (Powered by advanced machine learning)، دُرّب على عشر سنوات من بيانات تمويل الفواتير الخاصة ببنك نجم (Najm Bank's own invoice finance data)»
 
 <details><summary>الإجابة</summary>
 
-**B.** يبدأ بالمهمة (leads with the job)، ويحدّ الوعد (bounds the promise) («مؤهلة (eligible)»، «قرار (decision)»، «دقائق (minutes)»)، ويتجنّب الادعاء بأن الذكاء الاصطناعي يوافق. الخيار D يذكر التقنية (technology) لكنه لا يقول شيئًا عن النتيجة (outcome). (🟢 الأساسيات (The essentials)؛ 🏛️ عمليًا (In practice).)
+**A.** يبدأ بالمهمة (leads with the job)، ويحدّ الوعد (bounds the promise) («مؤهلة (eligible)»، «قرار (decision)»، «دقائق (minutes)»)، ويتجنّب الادعاء بأن الذكاء الاصطناعي يوافق. الخيار D يذكر التقنية (technology) لكنه لا يقول شيئًا عن النتيجة (outcome). (🟢 الأساسيات (The essentials)؛ 🏛️ عمليًا (In practice).)
 
 </details>
 
@@ -398,7 +398,7 @@ flowchart RL
 
 - A. لأن منتجات الذكاء الاصطناعي لا يمكن بيعها دون فئة
 - B. لأن الفئة تحدّد المعيار الذي يحكم به العملاء على المنتج (the standard customers judge the product against)، ومنتجات الذكاء الاصطناعي ترتكب أخطاء ظاهرة (visible errors)
-- C. لأن الجهات التنظيمية (regulators) تشترط فئة لكل منتج ذكاء اصطناعي
+- C. لأن الجهات التنظيمية (regulators) تشترط فئة لكل منتج ذكاء اصطناعي (a category for every AI product)، وتحدد الفئة القواعد التي تسري عليه في منطقة الخليج (Gulf region) دون استثناء ولا مجال للتقدير (no exceptions) في أي مشروع
 - D. لأن الفئات تحدّد النموذج المستخدم (the model used)
 
 <details><summary>الإجابة</summary>
@@ -409,10 +409,10 @@ flowchart RL
 
 **3. يستبدل بنك نجم النموذج (model) الذي يقف خلف نجم أسيست (Najm Assist) بنموذج أحدث. ماذا ينبغي أن يحدث لسجل الادعاءات (claims register)؟**
 
-- A. لا شيء، لأن الادعاءات تصف المنتج لا النموذج
+- A. لا شيء، لأن الادعاءات تصف المنتج كما يعيشه العملاء (as customers experience it) لا النموذج الكامن تحته (underneath)
 - B. يُعاد فحص كل ادّعاء مقابل التقييمات على النموذج الجديد (evals on the new model) قبل الإصدار
-- C. تُحذف جميع الادعاءات وتُعاد كتابتها من الصفر (from scratch)
-- D. يحدّث التسويق الادعاءات بعد الحملة التالية (next campaign)
+- C. تُحذف جميع الادعاءات وتُعاد كتابتها من الصفر (from scratch) على يد فريق التسويق بعد إطلاق النموذج الجديد
+- D. يحدّث التسويق الادعاءات بعد الحملة التالية (next campaign)، حين يتوفر وقت في تقويم التخطيط (planning calendar)
 
 <details><summary>الإجابة</summary>
 
@@ -422,20 +422,20 @@ flowchart RL
 
 **4. يسعّر مورّد برمجيات (software vendor) وكيل الدعم (support agent) الخاص به لكل محادثة محلولة (per resolved conversation). ما المسألة الرئيسية التي ينبغي للمشتري حسمها قبل التوقيع؟**
 
-- A. ما إذا كان الوكيل يستخدم نموذجًا مفتوح الأوزان (open-weight model)
-- B. التعريف الدقيق لـ«محلولة (resolved)» ومن يقيسها (who measures it)
-- C. ما إذا كان المورّد يقدّم فترة تجربة مجانية (free trial)
-- D. ما إذا كان السعر مُسعَّرًا بالدولار (quoted in dollars)
+- A. التعريف الدقيق لـ«محلولة (resolved)» ومن يقيسها (who measures it)
+- B. ما إذا كان الوكيل يستخدم نموذجًا مفتوح الأوزان (open-weight model)
+- C. ما إذا كان المورّد يقدّم فترة تجربة مجانية (free trial) قبل أن يلتزم المشتري بعقد السنة الأولى (first-year contract)
+- D. ما إذا كان السعر مُسعَّرًا بالدولار (quoted in dollars) أم بالعملة المحلية التي يستخدمها المشتري (local currency)
 
 <details><summary>الإجابة</summary>
 
-**B.** التسعير حسب النتيجة (outcome-based pricing) يشير إلى الثقة، لكنه يعتمد كليًا على كيفية تعريف النتيجة وقياسها (how the outcome is defined and measured)، وقد يضع إيرادات المورّد في توتّر مع القياس الأمين (honest measurement). (🟡 التعمق أكثر (Going deeper).)
+**A.** التسعير حسب النتيجة (outcome-based pricing) يشير إلى الثقة، لكنه يعتمد كليًا على كيفية تعريف النتيجة وقياسها (how the outcome is defined and measured)، وقد يضع إيرادات المورّد في توتّر مع القياس الأمين (honest measurement). (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
 **5. تُعدّ حصة العرض التوضيحي (demo) لإطلاق مساعد مذكرات الائتمان (Credit Memo Copilot) لمديري العلاقات (relationship managers). أي خطة عرض تبني الثقة على أفضل وجه؟**
 
-- A. تشغيل مُتمرَّن عليه على مثال مثالي (perfect example) كي يبدو المساعد خاليًا من العيوب
+- A. تشغيل مُتمرَّن عليه على مثال مثالي (perfect example) كي يبدو المساعد خاليًا من العيوب أمام فريق الإدارة العليا كله (senior management team)، دون أي مفاجآت أثناء العرض (surprises during the demo)
 - B. تشغيل يتضمن تنبيه المساعد إلى وثيقة ناقصة (flagging a missing document) وتصحيح مدير العلاقات لقسم من المسودة (correcting a draft section)
 - C. عرض شرائح عن نتائج النموذج في المقاييس المرجعية (benchmark scores)
 - D. لا عرض؛ أرسل رابطًا ودع مديري العلاقات يستكشفون
@@ -642,13 +642,13 @@ flowchart RL
 **4. وفقًا لنموذج قبول التقنية (Technology Acceptance Model)، أي تغيير يُرجَّح أكثر أن يرفع تبنّي مساعد يصفه المستخدمون بأنه «جيد لكنه مُتعِب (good but a hassle)»؟**
 
 - A. نموذج أكثر قدرة (more capable model)
-- B. فتح المساعد من نظام إنشاء القروض (loan origination system) مع الوثائق مرفقة مسبقًا (documents already attached)
-- C. بريد إلكتروني على مستوى الشركة (company-wide email) يعلن عن الأداة
-- D. لوحة صدارة (leaderboard) لأكثر المستخدمين استخدامًا
+- B. لوحة صدارة (leaderboard) لأكثر المستخدمين استخدامًا
+- C. بريد إلكتروني على مستوى الشركة (company-wide email) يعلن عن الأداة، يرسله رئيس الخدمات المصرفية للشركات (Head of Corporate Banking) إلى كل مدير علاقات (relationship manager)
+- D. فتح المساعد من نظام إنشاء القروض (loan origination system) مع الوثائق مرفقة مسبقًا (documents already attached)
 
 <details><summary>الإجابة</summary>
 
-**B.** عبارة «جيد لكنه مُتعِب (good but a hassle)» تعني أن الفائدة المُدرَكة (perceived usefulness) موجودة لكن سهولة الاستخدام (ease of use) منخفضة، لذا قلّل احتكاك سير العمل (workflow friction). الخيار A يحسّن الفائدة (usefulness)، وهي ليست المشكلة المذكورة. (🟢 الأساسيات (The essentials)؛ 🟡 التعمق أكثر (Going deeper).)
+**D.** عبارة «جيد لكنه مُتعِب (good but a hassle)» تعني أن الفائدة المُدرَكة (perceived usefulness) موجودة لكن سهولة الاستخدام (ease of use) منخفضة، لذا قلّل احتكاك سير العمل (workflow friction). الخيار A يحسّن الفائدة (usefulness)، وهي ليست المشكلة المذكورة. (🟢 الأساسيات (The essentials)؛ 🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
@@ -656,8 +656,8 @@ flowchart RL
 
 - A. بوصفه مسألة أمنية بحتة (purely as a security matter) يحجبها مكتب ليلى
 - B. بوصفه دليلًا على طلب غير مُلبّى (unmet demand) يغذّي اكتشاف المنتج (product discovery)، بينما تتولّى الحوكمة (governance) مخاطر السياسة والبيانات (policy and data risk)
-- C. بوصفه دليلًا على وجوب سحب مساعد الموظفين التوليدي (should be withdrawn)
-- D. بوصفه مقبولًا، لأن الموظفين منتِجون (being productive)
+- C. بوصفه دليلًا على وجوب سحب مساعد الموظفين التوليدي (should be withdrawn) من الخدمة نهائيًا (permanently)، لأن الموظفين لا يثقون به ويفضّلون عليه أدوات عامة خارجية (public tools) في كل مهامهم اليومية (daily tasks)
+- D. بوصفه مقبولًا، لأن الموظفين منتِجون (being productive) ولم يشتكِ أي عميل من طريقة التعامل مع بياناته، ولذلك لا حاجة إلى أي تدخل من الحوكمة (governance) ولا إلى قيود جديدة على استخدام الأدوات العامة
 
 <details><summary>الإجابة</summary>
 

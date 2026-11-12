@@ -76,7 +76,7 @@
           "التحقّق في شيفرة التطبيق (application code) من أن المقعد شاغر قبيل الحفظ (saving) مباشرة",
           "إضافة نافذة تأكيد (confirmation dialog) كي ينقر المستخدمون (users) مرتين للتسجيل",
           "تشغيل التطبيق على خوادم أكثر (more servers) كي ينتهي كل طلب حجز (booking request) أسرع",
-          "فرض الحدّ في قاعدة البيانات (database) بقيد (constraint) أو معاملة (transaction)"
+          "فرض الحدّ على عدد المقاعد في قاعدة البيانات بقيد (constraint) أو معاملة (transaction)"
         ]
       },
       "a": 3,

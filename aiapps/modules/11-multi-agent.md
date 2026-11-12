@@ -641,9 +641,9 @@ One file at a time; run the tests after each step.
 
 **1. A run ends with reason `contract` after 3 calls; the writer never ran. What happened?**
 
-- A. The reviewer rejected two drafts and hit the round cap
+- A. The reviewer rejected two drafts and hit the cap
 - B. The researcher's quote failed the grounding check twice
-- C. The team's token budget ran out before the writer began
+- C. The team's token budget ended before the writer began
 - D. The writer asked for a tool it was not given
 
 <details><summary>Answer</summary>
@@ -655,7 +655,7 @@ One file at a time; run the tests after each step.
 **2. With `TEAM_TOKEN_BUDGET=300`, a run stops after 389 tokens. Is that a bug?**
 
 - A. No: it is checked before a call, so one call can cross it
-- B. Yes: it should be checked after the call, for an exact budget
+- B. Yes: check it after the call, for an exact budget
 - C. Yes: the SDK ignores budgets set by the application
 - D. No: the budget counts only output tokens, not input
 
@@ -680,10 +680,10 @@ One file at a time; run the tests after each step.
 
 **4. The scripted writer, given no tools, asks for `search_policies`. What happens?**
 
-- A. Stops the whole run and hands it to a person
+- A. Stops the whole run and hands the case over to a person
 - B. Runs the search anyway, as the dispatcher is shared
 - C. Refuses with an error result; the writer goes on
-- D. Sends no `tool_result`, which the API rejects
+- D. Sends no `tool_result`, which the API rejects as invalid
 
 <details><summary>Answer</summary>
 

@@ -68,15 +68,15 @@
       "o": {
         "en": [
           "Serve chunked sitemaps at request time, so the build depends on no live data",
-          "Give the build's API call a longer timeout and retries so it eventually finishes",
+          "Give the build's API call a longer timeout and more retries",
           "Generate one complete sitemap file at build time and cache it on the CDN",
           "Skip the sitemap during builds and regenerate it by hand once a week"
         ],
         "ar": [
           "قدّم خرائط موقع مجزّأة (chunked sitemaps) وقت الطلب (request time)، كي لا يعتمد البناء (build) على أي بيانات حيّة",
-          "امنح استدعاء الـAPI في البناء (build) مهلة (timeout) أطول وإعادات محاولة (retries) كي ينتهي في النهاية",
-          "ولّد ملف خريطة موقع (sitemap) واحدًا كاملًا وقت البناء (build time) وخزّنه في شبكة توصيل المحتوى (CDN)",
-          "تخطَّ خريطة الموقع أثناء البناء وأعد توليدها يدويًا مرة في الأسبوع"
+          "امنح استدعاء الـAPI في البناء (build) مهلة (timeout) أطول وإعادات محاولة (retries) أكثر كي ينتهي في النهاية دائمًا",
+          "ولّد ملف خريطة موقع (sitemap) واحدًا كاملًا وقت البناء (build time) وخزّنه في شبكة توصيل المحتوى (CDN) أيضًا",
+          "تخطَّ خريطة الموقع (sitemap) أثناء البناء (build) وأعد توليدها يدويًا (by hand) مرة في الأسبوع"
         ]
       },
       "a": 0,

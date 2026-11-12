@@ -303,7 +303,7 @@ FAILED tests/test_refactor_guard.py::test_behaviour_is_unchanged[3090-internatio
 - A. الحزمة آمنة (The package is safe) لأنها فُحصت (because it was scanned)
 - B. الحزمة على الفهرس الرسمي (The package is on the official index)، فهي أصلية (so it is genuine)
 - C. فقط أنه لا توجد نشرة أمنية معروفة (Only that no advisory is known)؛ ويلزم فحص أصلها (its origin needs checking)
-- D. لا مشكلة هناك (Nothing is wrong)، فقد نجح البناء (since the build passed) ولم يُرفع أي تنبيه (and no alert was raised)
+- D. لا مشكلة هناك (Nothing is wrong)، فقد نجح البناء (since the build passed) ولم يُرفع تنبيه
 
 <details><summary>الإجابة</summary>
 

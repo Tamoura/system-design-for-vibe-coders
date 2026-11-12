@@ -11,16 +11,16 @@
       },
       "o": {
         "en": [
-          "Yes: a system prompt line saying pages are data keeps them apart from the rules, as a parameter does for a query",
+          "Yes: a system prompt line saying pages are data keeps them apart from rules, like a query parameter",
           "No: rules, user messages and retrieved pages share one stream of text, so the model decides which to obey",
-          "Not yet: training still leaves gaps, but a later model release will remove them, so the team should wait",
-          "Yes: wrapping each page in XML tags gives the model the same guarantee a parameterised query gives a database"
+          "Not yet: training still leaves gaps, but a later model release will fix them, so the team should wait",
+          "Yes: wrapping each page in XML tags gives the model the guarantee a parameterised query gives a database"
         ],
         "ar": [
           "نعم: سطر في موجّه النظام (system prompt) يقول إن الصفحات بيانات يفصلها عن القواعد (rules) كما يفعل المعامل (parameter) في الاستعلام (query)",
           "لا: القواعد (rules) ورسائل المستخدم (user messages) والصفحات المسترجعة (retrieved pages) تشترك في تيار نص واحد (one stream of text)، فالنموذج يقرر ما يطيعه",
           "ليس بعد: ما زال التدريب (training) يترك ثغرات، لكن إصدارًا لاحقًا من النموذج (model release) سيزيلها، فينتظر الفريق ولا يضيف ضوابط",
-          "نعم: يمنح تغليف كل صفحة بوسوم XML (XML tags) النموذج (model) الضمان نفسه الذي يمنحه الاستعلام ذو المعاملات (parameterised query) لقاعدة البيانات (database)"
+          "نعم: يمنح تغليف كل صفحة بوسوم XML النموذج (model) الضمان نفسه الذي يمنحه الاستعلام ذو المعاملات (parameterised query) لقاعدة البيانات"
         ]
       },
       "a": 1,
@@ -39,15 +39,15 @@
       },
       "o": {
         "en": [
-          "A fallback model from the same provider, already run on the eval set and switched on by one setting",
-          "A higher retry limit in the client, so each call keeps trying until the provider answers again",
-          "A second provider's key kept in the config and switched on by one setting, its prompts and tools never run on the eval set",
+          "A fallback model from the same provider, already run on the eval set and switched on by one config setting",
+          "A higher retry limit in the client, so each call keeps trying until the provider is back and answering",
+          "A second provider's key kept in the config and switched on by one setting, with prompts never run on the eval set",
           "A degraded mode with phone and ticket routes and keyword search, tested in a drill before go-live"
         ],
         "ar": [
-          "نموذج احتياطي (fallback model) من المزوّد نفسه، سبق تشغيله فعلًا على مجموعة التقييم (eval set)، ويُفعَّل بإعداد واحد (one setting)",
-          "حدّ أعلى لإعادة المحاولة (retry limit) في العميل (client)، فيواصل كل استدعاء (call) المحاولة حتى يعود المزوّد للإجابة من جديد",
-          "مفتاح مزوّد ثانٍ (second provider) محفوظ في الإعدادات (config) ويُفعَّل بإعداد واحد (one setting)، ولم تُشغَّل موجّهاته وأدواته (prompts and tools) على مجموعة التقييم (eval set)",
+          "نموذج احتياطي (fallback model) من المزوّد نفسه، سبق تشغيله فعلًا على مجموعة التقييم (eval set)، ويُفعَّل بإعداد واحد (one setting) في الإعدادات",
+          "حدّ أعلى لإعادة المحاولة (retry limit) في العميل (client)، فيواصل كل استدعاء (call) المحاولة حتى يعود المزوّد للإجابة من جديد دون توقف",
+          "مفتاح مزوّد ثانٍ (second provider) محفوظ في الإعدادات (config) ويُفعَّل بإعداد واحد (one setting)، ولم تُشغَّل موجّهاته على مجموعة التقييم (eval set)",
           "وضع متدهور (degraded mode) فيه مسارا الهاتف والتذاكر والبحث بالكلمات المفتاحية (keyword search)، مُختبَر قبل الإطلاق (go-live)"
         ]
       },
@@ -68,13 +68,13 @@
       "o": {
         "en": [
           "A click-through habit: ask only for the worst outcomes, and show the exact call on a screen that defaults to no",
-          "A healthy sign: agents agree because the assistant proposes good calls, so the rate goes in the pack as evidence",
-          "A needless step: after a month of yeses, remove approvals from every tool and rely on the gate's other layers",
+          "A healthy sign: agents agree because the assistant proposes good calls, so the rate goes in the pack",
+          "A needless step: after a month of yeses, drop approvals from every tool and rely on the gate's other layers",
           "A weak spot: require a second approver on every call, so a single quick click is no longer enough to pass"
         ],
         "ar": [
           "عادة نقر آلي (click-through habit): تُطلب الموافقة للنتائج الأسوأ (worst outcomes) فقط، ويُعرض الاستدعاء الدقيق على شاشة افتراضيها «لا»",
-          "علامة صحية (healthy sign): يوافق الموظفون لأن المساعد يقترح استدعاءات جيدة (good calls)، فتدخل نسبة الموافقة في الحزمة دليلًا (evidence)",
+          "علامة صحية (healthy sign): يوافق الموظفون لأن المساعد يقترح استدعاءات جيدة، فتدخل نسبة الموافقة في الحزمة دليلًا (evidence)",
           "خطوة زائدة (needless step): بعد شهر من الموافقات بنعم تُزال من كل الأدوات (tools) ويُكتفى بطبقات البوابة الأخرى (other gate layers)",
           "نقطة ضعف (weak spot): يُشترط موافق ثانٍ (second approver) على كل استدعاء، فلا تكفي نقرة سريعة واحدة من موظف لتمريره"
         ]

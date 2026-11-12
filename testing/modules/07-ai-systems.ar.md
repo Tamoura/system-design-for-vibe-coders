@@ -1152,7 +1152,7 @@ PSI 0.123; identical data 0.000
 - A. قائمة أطول من توجيهات الهجوم مجمعة من مصادر عامة (A longer list of attack prompts, collected from public sources)
 - B. نسخة من محادثات عملاء حقيقيين لتبدو الهجمات واقعية (A copy of real customers' chats, so that the attacks look realistic)
 - C. وصول إلى الإنتاج لتطابق الهجمات ما يراه العملاء (Production access, so that the attacks match what customers see)
-- D. تفويض مكتوب وقواعد اشتباك تسمّي هدف بيئة ضمان الجودة (Written authorisation and rules of engagement naming the QA target)
+- D. تفويض مكتوب (Written authorisation) وقواعد اشتباك (rules of engagement) تسمّي هدف بيئة ضمان الجودة
 
 <details><summary>الإجابة</summary>
 
@@ -1188,7 +1188,7 @@ PSI 0.123; identical data 0.000
 
 **4. هذا الأسبوع بلغ مؤشر استقرار التوزيع (Population Stability Index) على مزيج المصدر الأول 0.12 (on the top-source mix is 0.12)، وارتفعت حصة «لا مصدر» إلى ثلاثة أضعافها (the "no source" share has tripled). ما أحكم إجراء؟ ⁦(What is the most sensible action?)⁩**
 
-- A. تراجع عن النموذج فورًا قبل أن ينظر أحد في الأسئلة (Roll the model back at once, before anyone has looked at the questions)
+- A. تراجع عن النموذج فورًا قبل أن ينظر أحد في الأسئلة التي فاتته (Roll the model back at once, before anyone has looked at the questions it missed)
 - B. اقرأ الأسئلة غير المجابة لتجد موضوعًا جديدًا أو وثيقة ناقصة (Read the unanswered questions to find a new topic or missing document)
 - C. تجاهله، لأن أي قيمة PSI دون 1 تُعدّ مقبولة (Ignore it, because any PSI value below 1 is considered acceptable)
 - D. ارفع درجة الحرارة ليغطي النموذج مواضيع أكثر (Raise the temperature so that the model can cover more topics)

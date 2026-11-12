@@ -146,10 +146,10 @@ flowchart TD
 
 **1. يريد بنك نجم إعادة استخدام نصوص محادثات روبوت خدمة العملاء (customer-service chatbot transcripts) لتدريب (training) نموذج التقييم الائتماني للأفراد (retail credit-scoring model). بموجب GDPR، ما التحليل الأول الذي ينبغي أن تشترطه سارة؟**
 
-- A. التحقق من أن النصوص (transcripts) مخزنة في الاتحاد الأوروبي (EU)
+- A. التحقق من أن النصوص (transcripts) مخزنة في الاتحاد الأوروبي (EU) وأن الوصول (access) إليها مقصور على فريق الدعم (support team)
 - B. تقييم ما إذا كان الغرض الجديد (new purpose) متوافقًا (compatible) مع الغرض (purpose) الذي جُمعت النصوص (transcripts) من أجله
-- C. تدقيق للتحيّز (bias audit) يجريه مدقق مستقل (independent auditor)
-- D. تأكيد أن النموذج (model) سيكون أدق مع النصوص (transcripts)
+- C. تدقيق للتحيّز (bias audit) يجريه مدقق مستقل (independent auditor)، ويغطي مجموعة التدريب (training set) والمخرجات (outputs) لكل فئة من العملاء
+- D. تأكيد أن النموذج (model) سيكون أدق (more accurate) مع النصوص (transcripts) منه مع البيانات المستخدمة الآن في التدريب (training)
 
 <details><summary>الإجابة</summary>
 
@@ -159,10 +159,10 @@ flowchart TD
 
 **2. وفقًا لرأي EDPB رقم 28/2024، متى يمكن اعتبار نموذج (model) ذكاء اصطناعي (AI) مدرّب على بيانات شخصية (personal data) مجهول الهوية (anonymous)؟**
 
-- A. دائمًا، لأن معاملات النموذج (model parameters) ليست سجلات عن الأفراد
-- B. أبدًا، لأن بيانات التدريب (training data) تترك آثارًا دائمًا
+- A. دائمًا، لأن معاملات النموذج (model parameters) ليست سجلات عن الأفراد، ولذلك لا يمكن أن تكشف أي شيء عنهم
+- B. أبدًا، لأن بيانات التدريب (training data) تترك آثارًا دائمًا في النموذج يستطيع مهاجم (attacker) مصمم استرجاعها
 - C. حين يكون احتمال استخراج بيانات شخصية (likelihood of extracting personal data) عن أصحاب بيانات التدريب (training subjects)، مباشرة أو عبر الاستعلامات (queries)، ضئيلًا، ويُقيَّم ذلك حالةً بحالة
-- D. فقط حين تكون بيانات التدريب (training data) قد جُهّلت بالكامل مسبقًا
+- D. فقط حين تكون بيانات التدريب (training data) قد جُهّلت (anonymised) بالكامل مسبقًا وصدّقت جهة رقابية (regulator) على ذلك
 
 <details><summary>الإجابة</summary>
 
@@ -173,7 +173,7 @@ flowchart TD
 **3. لا يتلقى نموذج (model) أحد المقرضين (lenders) أي حقل "صحة"، لكنه يستخدم الإنفاق على مستوى التجار بما يتيح له استنتاج المرض المزمن. ما أفضل استجابة من منظور الحوكمة (governance)؟**
 
 - A. معاملة الاستنتاجات (inferences) على أنها قد تكون بيانات من الفئات الخاصة (special category data): إزالة خصائص المتغيرات البديلة (proxy features) أو تبريرها، واختبار النتائج بحثًا عن التفاوت (disparities)
-- B. لا شيء، لأن البيانات الصحية لم تُجمع قط
+- B. لا شيء، لأن البيانات الصحية (health data) لم تُجمع قط
 - C. مطالبة العملاء بالموافقة (consent) على أي استخدام لبيانات معاملاتهم
 - D. تشفير ملف النموذج (Encrypt the model file)
 
@@ -185,9 +185,9 @@ flowchart TD
 
 **4. أي مما يلي هو خطوة الضرورة (necessity) في تقييم المصالح المشروعة (legitimate interests assessment) لتدريب (training) نموذج احتيال (fraud model)؟**
 
-- A. إثبات أن مصلحة منع الاحتيال (fraud-prevention) مشروعة ومصاغة بوضوح
-- B. الحصول على توقيع مسؤول حماية البيانات (Data Protection Officer, DPO)
-- C. الموازنة (balancing) بين التوقعات المعقولة (reasonable expectations) للعملاء ومصلحة البنك
+- A. إثبات أن مصلحة منع الاحتيال (fraud-prevention) مشروعة ومصاغة بوضوح وحقيقية لا افتراضية (speculative)، مع أدلة على خسائر سابقة (past losses) عند بنوك نظيرة (peer banks) خلال السنوات الماضية (past years)
+- B. الحصول على توقيع مسؤول حماية البيانات (Data Protection Officer, DPO) على التقييم (assessment) وإيداعه لدى جهة حماية البيانات (regulator)
+- C. الموازنة (balancing) بين التوقعات المعقولة (reasonable expectations) للعملاء ومصلحة البنك (bank's interest) وتسجيل كيفية تحقيق التوازن
 - D. إثبات أن المعالجة (processing) لازمة لتلك المصلحة وأن الوسائل الأقل تدخلًا (less intrusive means)، مثل خصائص (features) أقل أو بيانات اصطناعية (synthetic data)، لن تحققها
 
 <details><summary>الإجابة</summary>
@@ -198,10 +198,10 @@ flowchart TD
 
 **5. أي مبدأ (principle) من مبادئ (principles) الخصوصية يتأثر بصورة مباشرة أكثر من غيره بهجوم استنتاج العضوية (membership inference) على النموذج الائتماني (credit model) لنجم؟**
 
-- A. تحديد الغرض (purpose limitation)
-- B. تحديد مدة التخزين (storage limitation)
+- A. تحديد الغرض (purpose limitation) والإنصاف (fairness)
+- B. تحديد مدة التخزين (storage limitation period) والإنصاف (fairness)
 - C. السلامة والسرية (integrity and confidentiality)
-- D. الدقة (accuracy)
+- D. دقة البيانات (accuracy of the data)
 
 <details><summary>الإجابة</summary>
 
@@ -370,7 +370,7 @@ flowchart TD
 
 **1. يرفض النموذج الائتماني (credit model) لنجم تلقائيًا الطلبات المقدّمة عبر الإنترنت التي تقل درجتها عن 420؛ ولا يراها أي إنسان. أي عبارة صحيحة بموجب GDPR؟**
 
-- A. هذا محظور في جميع الظروف
+- A. هذا محظور (prohibited) في جميع الظروف
 - B. هذا قرار آلي بالكامل (solely automated decision) ذو أثر كبير مماثل (similarly significant effect)، لا يُسمح به إلا بموجب استثناء (exception) من استثناءات المادة 22(2) مع ضمانات (safeguards) مثل الحق (right) في التدخل البشري (human intervention)
 - C. لا تنطبق المادة 22 (Art. 22) لأن العميل اختار التقدّم عبر الإنترنت
 - D. لا تنطبق المادة 22 (Art. 22) إلا إذا استُخدمت بيانات من الفئات الخاصة (special category data)
@@ -384,9 +384,9 @@ flowchart TD
 **2. بماذا قضت CJEU في *SCHUFA* (C-634/21)؟**
 
 - A. الحساب الآلي للدرجة الائتمانية (credit score) "قرار" بموجب المادة 22 (Art. 22) حيث يعتمد عليه المُقرض (lender) اعتمادًا كبيرًا في البت في عقد (contract)
-- B. لا يجوز لمكاتب الائتمان (credit bureaus) حساب الدرجات (scores) دون موافقة صريحة (explicit consent)
-- C. يجب على البنوك الإفصاح عن الشيفرة المصدرية (source code) لخوارزميات التقييم (scoring algorithms) لديها
-- D. التنميط (profiling) محظور بموجب GDPR
+- B. لا يجوز لمكاتب الائتمان (credit bureaus) حساب الدرجات (scores) دون موافقة صريحة (explicit consent) من كل فرد
+- C. يجب على البنوك الإفصاح عن الشيفرة المصدرية (source code) لخوارزميات التقييم (scoring algorithms) لديها عند الطلب لأي متقدم (applicant)
+- D. التنميط (profiling) محظور بموجب GDPR في كل الحالات، بما فيها التقييم الائتماني (credit scoring) وفحص الاحتيال (fraud screening)، حتى لو وافق الفرد وتلقى تفسيرًا كاملًا (full explanation)
 
 <details><summary>الإجابة</summary>
 
@@ -396,9 +396,9 @@ flowchart TD
 
 **3. يوافق موظفو القروض (loan officers) في نجم على الطلبات أو يرفضونها في النطاق الخاضع للمراجعة (reviewed band)، ويُظهر الرصد أنهم يتبعون توصية النموذج (model) في 99.8% من الحالات بمتوسط وقت مراجعة قدره 20 ثانية. ما الذي ينبغي أن تستنتجه ليلى؟**
 
-- A. العملية ممتثلة (compliant) لأن إنسانًا يوقّع عليها
-- B. ينبغي إزالة الموظفين وأتمتة العملية بالكامل
-- C. النموذج (model) دقيق جدًا، فلا حاجة إلى أي إجراء
+- A. العملية ممتثلة (compliant) لأن إنسانًا يوقّع على كل قرار، أيًّا كان الوقت الذي يقضيه الموظفون (officers) في مراجعته أو عدد المرات التي يغيّرون فيها نتيجة النموذج (model's result)
+- B. ينبغي إزالة الموظفين (officers) وأتمتة العملية بالكامل، لأن النموذج (model) أكثر اتساقًا منهم
+- C. النموذج (model) دقيق جدًا على مجموعة الاختبار (test set)، فلا حاجة إلى أي إجراء بشأن عملية المراجعة (review)
 - D. قد لا تكون المراجعة ذات معنى، فيخاطر أن تُعامل القرارات على أنها آلية بالكامل (solely automated)؛ ينبغي التحقيق وتعزيز الإشراف
 
 <details><summary>الإجابة</summary>
@@ -423,9 +423,9 @@ flowchart TD
 **5. تطلب عميلة سابقة من نجم محو بياناتها من ذكائه الاصطناعي. وقد وثّق فريق حماية البيانات (data protection team)، باختبارات الاستخراج (extraction tests)، أن النموذج الائتماني (credit model) مجهول الهوية (anonymous). ولا ينطبق أي واجب قانوني بالاحتفاظ (legal retention duty). ما الرد الأكثر تناسبًا؟**
 
 - A. حذف بياناتها من الأنظمة المصدرية (source systems) ومجموعات التدريب (training sets) وإضافتها إلى قائمة الاستبعاد (exclusion list) لإعادة التدريب المستقبلية (future retraining)
-- B. الرفض، لأن النماذج (models) لا يمكن تغييرها
-- C. إعادة تدريب النموذج من الصفر (Retrain the model from scratch) فورًا
-- D. حذف النموذج (model)
+- B. الرفض، لأن النماذج (models) لا يمكن تغييرها بعد تدريبها (trained) ووضعها في الخدمة (service)، ولأن بياناتها لن تُراجع إلا عند الإصدار المقرر التالي (next scheduled release) للنموذج، وعندئذٍ فقط تُراجع بياناتها (data) كلها (all of it) في ذلك الإصدار (release)
+- C. إعادة تدريب النموذج من الصفر (Retrain from scratch) فورًا، قبل فحص أي نظام آخر يحتفظ ببياناتها
+- D. حذف النموذج (model) وكل نسخة احتياطية (backup) منه، سواء ظل يحتفظ ببياناتها أم لا
 
 <details><summary>الإجابة</summary>
 
@@ -611,9 +611,9 @@ flowchart TD
 
 **2. سيستخدم نجم، بصفته مُشغِّلًا (deployer)، نظامًا عالي المخاطر للتقييم الائتماني (high-risk credit-scoring system) لعملاء الاتحاد الأوروبي (EU). أي عبارة صحيحة؟**
 
-- A. لا يلزم إلا تقييم الأثر على حماية البيانات (DPIA)، لأن GDPR يغطي كل شيء
-- B. لا يلزم إلا تقييم الأثر على الحقوق الأساسية (FRIA)، لأن قانون الذكاء الاصطناعي (EU AI Act) يحل محل GDPR في الذكاء الاصطناعي (AI)
-- C. لا يلزم أي منهما إذا كان لدى مقدّم النظام (provider) علامة CE (CE marking)
+- A. لا يلزم إلا تقييم الأثر على حماية البيانات (DPIA)، لأن GDPR يغطي كل شيء ولا يضيف قانون الذكاء الاصطناعي (AI Act) شيئًا لهذا النظام، أيًّا كان استخدامه (use)
+- B. لا يلزم إلا تقييم الأثر على الحقوق الأساسية (FRIA)، لأن قانون الذكاء الاصطناعي (EU AI Act) يحل محل GDPR في الذكاء الاصطناعي (AI) في الأنظمة الحاصلة على علامة CE (CE marking)
+- C. لا يلزم أي منهما (neither) إذا كان لدى مقدّم النظام (provider) علامة CE (CE marking) ونشر وثائقه التقنية (technical documentation)
 - D. كلاهما ذو صلة: تقييم الأثر على حماية البيانات (DPIA) بموجب GDPR وتقييم الأثر على الحقوق الأساسية (FRIA) بموجب قانون الذكاء الاصطناعي (EU AI Act)، مع تكميل الثاني للأول
 
 <details><summary>الإجابة</summary>
@@ -627,7 +627,7 @@ flowchart TD
 - A. مجهولة الهوية (anonymous) وخارج النطاق
 - B. مرمّزة ترميزًا مستعارًا (pseudonymised) وما زالت بيانات شخصية (personal data)
 - C. بيانات من الفئات الخاصة (special category data)
-- D. بيانات شخصية (personal data) فقط إذا فُقد جدول المطابقة (lookup table)
+- D. بيانات شخصية (personal data) فقط إذا فُقد جدول المطابقة (lookup table is lost)
 
 <details><summary>الإجابة</summary>
 
@@ -638,9 +638,9 @@ flowchart TD
 **4. يقع فريق التوظيف (hiring) في دبي التابع لنجم في مركز دبي المالي العالمي (DIFC)، وسيستخدم الذكاء الاصطناعي (AI) لفرز المتقدمين (applicants). أي أداة تتناول تحديدًا المعالجة (processing) عبر الأنظمة المستقلة وشبه المستقلة (autonomous and semi-autonomous systems) هناك؟**
 
 - A. قانون حماية البيانات لمركز دبي المالي العالمي (DIFC Data Protection Law)، اللائحة 10 (Regulation 10)
-- B. المرسوم بقانون اتحادي إماراتي (UAE Federal Decree-Law) رقم 45 لسنة 2021
-- C. Qatar PDPPL
-- D. China PIPL
+- B. المرسوم بقانون اتحادي إماراتي (UAE Federal Decree-Law) رقم 45 لسنة 2021 بشأن حماية البيانات الشخصية (personal data protection)
+- C. قانون قطر لحماية البيانات الشخصية (Qatar PDPPL)، القانون رقم 13 لسنة 2016
+- D. قانون الصين لحماية المعلومات الشخصية (China PIPL)، النافذ منذ 2021
 
 <details><summary>الإجابة</summary>
 

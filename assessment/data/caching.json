@@ -37,7 +37,7 @@
      "o": {"en": ["A single-flight lock: one request recomputes the key while the rest wait",
                   "A longer TTL on the feed so the cached copy survives across deploys",
                   "A higher Redis maxmemory so the whole feed always fits in the cache",
-                  "More database read replicas to absorb the sudden burst of identical queries"],
+                  "More read replicas to absorb the burst of identical queries"],
            "ar": ["قفل الطيران الواحد (single-flight lock): طلبٌ واحد يعيد حساب المفتاح (key) والبقية ينتظرون",
                   "أجل بقاء (TTL) أطول للخلاصة (feed) كي تنجو النسخة المخزّنة عبر عمليات النشر",
                   "رفع maxmemory في Redis كي يتسع الكاش (cache) للخلاصة كاملة دائمًا",

@@ -208,7 +208,7 @@ Owner: <name>.  Version: 1.  Next review: <date, and after any incident>.
 
 **3. بعد ستة أشهر (Six months in)، تسلّم لجين (Lujain) بسرعة مع الوكيل (ships quickly with the agent) لكنها لا تستطيع شرح الفروقات (explain a diff) حين يسألها المراجع (when a reviewer asks). ما الذي يوافق الدرس؟ ⁦(What fits the lesson?)⁩**
 
-- A. تُمنع من استخدام الوكيل حتى تجتاز اختبار مراجعة شيفرة في الفريق (Ban agent use for her until she passes a code review test on the team)
+- A. تُمنع من استخدام الوكيل حتى تجتاز اختبار مراجعة شيفرة في الفريق (Ban agent use for her until she passes a code review test on the team) وتُراجَع النتيجة شهريًا (and the result is reviewed monthly)
 - B. تُضاف حصة أسبوعية من الأسطر يجب أن تكتبها يدويًا بدلًا من ذلك (Add a weekly quota of lines she must write by hand instead)
 - C. يعيد كبار المراجعين كتابة طلبات الدمج عنها (Let the senior reviewers rewrite her pull requests for her)
 - D. يُشترط الشرح العكسي قبل الدمج، مع تذكرة واحدة بلا ذكاء اصطناعي في كل دورة عمل (Require explain-back before merge, plus one no-AI ticket a sprint)
@@ -494,7 +494,7 @@ Lines the grader flagged on the first draft:
 - A. إبقاء 3.5 أيام، فمتوسط الصناعة خط أساس عادل (an industry average is a fair baseline)
 - B. الـ52 ساعة من ملف الوقائع، مكتوبة بوحدتها (The 52 hours from the facts file, written with its unit)
 - C. متوسط 3.5 أيام و52 ساعة حلًّا وسطًا (The mean of 3.5 days and 52 hours as a compromise)
-- D. «يُقاس لاحقًا» ("To be measured")، فلا أحد يستطيع الجزم بالـ52 (since nobody can be sure of 52)
+- D. «يُقاس لاحقًا» ("To be measured")، فلا أحد يستطيع الجزم بالـ52 (since nobody can be sure of 52) في الوقت الحالي (for the time being)
 
 <details><summary>الإجابة</summary>
 

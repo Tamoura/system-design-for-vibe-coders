@@ -263,7 +263,7 @@ moved {
 - A. لا يستطيع Git تخزين ملفات أكبر من ميغابايت واحد (larger than one megabyte)، وملفات الحالة (state files) كثيرًا ما تتجاوز ذلك
 - B. لا تُحتاج ملفات الحالة (state files) إلا أثناء التطبيق الأول (first apply)
 - C. ترفض المزوّدات (providers) العمل إذا كانت الحالة في مستودع (repository)
-- D. قد تحمل الحالة أسرارًا بنص صريح (plain-text secrets)، وقد تُفسدها عمليات الكتابة المتزامنة غير المقفلة (unlocked concurrent writes)
+- D. قد تحمل الحالة أسرارًا بنص صريح (plain-text secrets)، وقد تُفسدها عمليات الكتابة المتزامنة غير المقفلة
 
 <details><summary>الإجابة</summary>
 
@@ -273,10 +273,10 @@ moved {
 
 **3. يشغّل خط تسليم (pipeline) الأمر `plan` عند فتح طلب سحب (pull request). يُوافَق على طلب السحب ويُدمج بعد ثلاث ساعات، ثم يشغّل خط التسليم `apply` جديدًا (fresh) دون خطة محفوظة (saved plan). ما الخطر؟**
 
-- A. إنه يعيد التخطيط (re-plans) مقابل الشيفرة والواقع الحاليين (current code and reality)، لذا قد يطبّق تغييرات غير مُراجَعة (unreviewed changes)
+- A. إنه يعيد التخطيط (re-plans) مقابل الشيفرة والواقع الحاليين، لذا قد يطبّق تغييرات لم تُراجَع
 - B. لا يوجد خطر (no risk)، لأن `apply` يكرّر دائمًا أحدث خطة (most recent plan) شغّلها خط التسليم (pipeline)
 - C. سيفشل التطبيق (apply will fail)، لأن كل خطة تنتهي صلاحيتها (every plan expires) بعد ساعة من تشغيل `plan`
-- D. سيُحذف ملف الحالة (state file)
+- D. سيُحذف ملف الحالة (state file) بالكامل من الواجهة الخلفية البعيدة (remote backend)
 
 <details><summary>الإجابة</summary>
 
@@ -288,7 +288,7 @@ moved {
 
 - A. صفحة ويكي (wiki page) تسرد الإعدادات الموصى بها (recommended settings)، مرتبطة من دليل الإعداد (onboarding guide) لكل فريق
 - B. وحدة برمجية (module) تكشف كل وسيطات المزوّد (every provider argument) متغيّراتٍ كي تحظى الفرق بمرونة كاملة (full flexibility)
-- C. وحدة برمجية بواجهة صغيرة مُتحقَّق منها (small validated interface) وإعدادات الأمان مثبّتة داخلها (safety settings fixed inside it)
+- C. وحدة برمجية بواجهة صغيرة مُتحقَّق منها (small validated interface) وإعدادات الأمان مثبّتة داخلها
 - D. منح كل فريق صلاحية المسؤول (administrator access) على وحدة التحكم السحابية (cloud console)
 
 <details><summary>الإجابة</summary>
@@ -518,7 +518,7 @@ spec:
 
 - A. ليست مشكلة، لأن الالتزام نفسه (same commit) يُنتج دائمًا صورة مطابقة (identical image)
 - B. يجب ألّا يُعاد بناء صور الإنتاج إلا في نافذة الإطلاق المعتمدة (approved release window) في عطلة نهاية الأسبوع
-- C. قد تسحب إعادة البناء (rebuild) صور أساس (base images) أو اعتماديات (dependencies) مختلفة: أثر برمجي غير مُختبَر (untested artefact)
+- C. قد تسحب إعادة البناء (rebuild) صور أساس أو اعتماديات مختلفة: أثر برمجي غير مُختبَر (untested artefact)
 - D. لا يمكن تخزين الصور المُعاد بناؤها (Rebuilt images) في السجل (registry) نفسه الذي فيه البناء الأصلي
 
 <details><summary>الإجابة</summary>
@@ -529,7 +529,7 @@ spec:
 
 **2. أيٌّ مما يلي أحد مبادئ OpenGitOps الأربعة (four OpenGitOps principles)؟**
 
-- A. تسحب الوكلاء (agents) الحالة المرغوبة (desired state) آليًا وتوفّقها باستمرار (continuously reconciled)
+- A. تسحب الوكلاء (agents) الحالة المرغوبة (desired state) آليًا وتوفّقها باستمرار
 - B. يجب أن تحمل خطوط التكامل المستمر (CI pipelines) بيانات اعتماد مسؤول العنقود (cluster-admin credentials)
 - C. يجب أن يكون لكل بيئة فرع Git خاص طويل العمر (own long-lived Git branch)، يُدمج بالترتيب
 - D. يجب أن يوافق مجلس استشاري للتغيير (change advisory board) أولًا على كل نشر في الإنتاج (production deployment)
@@ -545,7 +545,7 @@ spec:
 - A. يسجّل Argo CD القيمة الجديدة (new value) في Git آليًا (automatically)، فلا حاجة إلى أي شيء آخر
 - B. يحذف Argo CD كائن Deployment بالكامل (deletes the Deployment entirely)
 - C. يبقى التغيير إلى الأبد (stays forever) لأن Argo CD لا يراقب إلا Git (only watches Git)
-- D. يعيده Argo CD ليطابق Git (reverts it to match Git)؛ والتغيير المطلوب (needed change) يمرّ عبر طلب سحب (pull request)
+- D. يعيده Argo CD ليطابق Git؛ والتغيير المطلوب (needed change) يمرّ عبر طلب سحب (pull request)
 
 <details><summary>الإجابة</summary>
 
@@ -556,7 +556,7 @@ spec:
 **4. تسبّب ترقية واجهة برمجة تطبيق نجم للهاتف (Najm Mobile API) إلى الإنتاج أخطاءً. ما طريقة GitOps للتراجع (GitOps way to roll back)؟**
 
 - A. شغّل `helm rollback` مباشرة على عنقود الإنتاج (production cluster)، ثم أخبر الفريق في المحادثة (chat)
-- B. ألغِ طلب سحب الترقية (Revert the promotion pull request) كي تعود البصمة السابقة (previous digest) وتُزامَن
+- B. ألغِ طلب سحب الترقية (Revert the promotion pull request) كي تعود البصمة السابقة وتُزامَن
 - C. أعد بناء الإصدار السابق من المصدر (Rebuild the previous version from source) وادفعه مجددًا تحت الوسم نفسه (same tag)
 - D. احذف فضاء الأسماء (namespace) وأعد نشر الإصدار القديم من حاسوب محمول (laptop)
 
@@ -570,7 +570,7 @@ spec:
 
 - A. لا تدعم أيّ واجهة تخزين خلفية بعيدة (remote backend) مساحات العمل، لذا يجب أن تبقى الحالة محلية (local)
 - B. تُجبر مساحات العمل كل البيئات على مشاركة ملف حالة واحد (one state file)، فيُقفلها كل تطبيق (apply) جميعًا
-- C. البيئة المستهدفة (target environment) مخفية في إعداد سطر أوامر (command-line setting)، ما يسهّل التطبيق الخاطئ (wrong applies)
+- C. البيئة المستهدفة (target environment) مخفية في إعداد سطر أوامر، ما يسهّل التطبيق الخاطئ (wrong applies)
 - D. لا تعمل مساحات العمل إلا مع مزوّدات Kubernetes (Kubernetes providers)، لا مع قواعد البيانات أو الشبكات السحابية
 
 <details><summary>الإجابة</summary>
@@ -793,7 +793,7 @@ tofu plan -detailed-exitcode -input=false
 - A. اشتراط أن يفحص مهندس ثانٍ (second engineer) كل أمر ويؤكّده قبل تشغيله
 - B. التوقّف عن استخدام أدلّة التشغيل المكتوبة (written playbooks) وترك المهندسين يقرّرون الخطوات أثناء العمليات (during operations)
 - C. نقل S3 نهائيًا إلى منطقة أخرى (another region) فيها خدمات معتمدة أقل
-- D. تغيير الأداة (Change the tool) لتزيل السعة (capacity) ببطء، ولا تنزل أبدًا دون الحد الأدنى لنظام فرعي (subsystem's minimum)
+- D. تغيير الأداة (Change the tool) لتزيل السعة (capacity) ببطء، ولا تنزل أبدًا دون الحد الأدنى لنظام فرعي
 
 <details><summary>الإجابة</summary>
 
@@ -816,7 +816,7 @@ tofu plan -detailed-exitcode -input=false
 
 **3. تشغّل مهمة الانحراف الليلية (nightly drift job) الأمر `tofu plan -detailed-exitcode` لحالة قاعدة بيانات المدفوعات (Payments database state) وتحصل على رمز الخروج (exit code) 2. ماذا يعني هذا، وما أول ما ينبغي للفريق فعله؟**
 
-- A. انحراف (Drift) أو شيفرة مدموجة غير مطبَّقة (unapplied merged code)؛ تحقّق، ثم أرجِع أو تبنَّ (revert or adopt)
+- A. انحراف (Drift) أو شيفرة مدموجة غير مُطبَّقة؛ تحقّق، ثم أرجِع أو تبنَّ (revert or adopt)
 - B. فشلت الخطة بخطأ (error)، فأعد تشغيلها مع تفعيل تسجيل أكثر تفصيلًا (more verbose logging)
 - C. كل شيء متطابق (everything matches)، فلا حاجة إلى أي إجراء (no action) حتى تشغيل الغد (tomorrow's run)
 - D. شغّل `apply` فورًا (immediately) لتكتب فوق (overwrite) كل ما تغيّر في الواقع منذ التشغيل الأخير (last run)
@@ -845,7 +845,7 @@ tofu plan -detailed-exitcode -input=false
 - A. تعطيل السياسة (Disable the policy) للجميع حتى ينتهي مشروع المورّد (vendor project) العام المقبل أو بعده
 - B. منح فريق المورّد صلاحية المسؤول (administrator access) كي يتجاوزوا خط التسليم (pipeline)
 - C. إجراء التغيير يدويًا في وحدة التحكم (console) وتجاهل تنبيهات الانحراف (drift alerts) التي يسبّبها
-- D. إضافة استثناء محصور (scoped exception) بمالك وسبب وتاريخ انتهاء (owner, reason and expiry) يفرضه البناء (build)
+- D. إضافة استثناء محصور (scoped exception) بمالك وسبب وتاريخ انتهاء، يفرضه البناء (build)
 
 <details><summary>الإجابة</summary>
 

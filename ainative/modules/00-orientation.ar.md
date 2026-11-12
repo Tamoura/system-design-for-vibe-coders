@@ -197,7 +197,7 @@ Would I delegate it again?     Yes, with the same spec
 
 **1. تقول لجين (Lujain): «لقد برمجتُ تغيير السجل بالفايب كودينج (vibe-coded). كتبه الوكيل (agent) والاختبارات تنجح (the tests pass).» ما الذي يجعل هذا مختلفًا عمّا تعلّمه الدورة؟**
 
-- A. استخدمت أداة وكيلية (agentic tool) بدل أن تكتب التغيير بنفسها (typing the change herself)
+- A. استخدمت أداة وكيلية (agentic tool) بدل أن تكتب التغيير بنفسها (typing the change herself) ثم شرحته بإيجاز لزميلها (explained it briefly to a teammate)
 - B. قبلت التغيير دون أن تقرأه أو تكون قادرة على الدفاع عنه (without reading it or being able to defend it)
 - C. اختارت نافذة محادثة (chat window) في حين كان الإكمال التلقائي (autocomplete) كافيًا
 - D. شغّلت الاختبارات (ran the tests) قبل فتح طلب الدمج (pull request)
@@ -211,7 +211,7 @@ Would I delegate it again?     Yes, with the same spec
 **2. يقول زميل (a colleague says): «أظهرت دراسة (a study showed) أن الذكاء الاصطناعي يجعل المطورين أسرع بنسبة 55%، فلنخطط على هذا الأساس (plan for it).» ما أفضل خطوة أولى؟ ⁦(What is the best first move?)⁩**
 
 - A. نخطط على 55%، لأن تجربة مضبوطة (a controlled experiment) تدعمه
-- B. نخطط على بطء 19%، لأن تجربة أخرى (another trial) وجدت ذلك
+- B. نخطط على بطء 19%، لأن تجربة أخرى (another trial) وجدت ذلك بالفعل (indeed)
 - C. نقارن بيئة الدراسة (the study's setting) ببيئتنا قبل التخطيط
 - D. نأخذ متوسط الدراستين (average the two studies) ونخطط على الوسط
 
@@ -544,7 +544,7 @@ Lab m00: 4/10 required checks passed: NOT YET
 - A. عدِّل الإيداع (Amend the commit) برسالة بصيغة `type(scope): subject`
 - B. أضف إيداعًا ثانيًا (a second commit) برسالة أفضل
 - C. عدِّل الاختبار الخفي (the hidden test) ليُقبل نص الرسالة
-- D. أعد تشغيل `ailab doctor` الذي يعيد فحص الرسائل (re-checks messages)
+- D. أعد تشغيل `ailab doctor` الذي يعيد فحص الرسائل (re-checks messages) ويُصلح ما يجده تلقائيًا (fixes what it finds automatically)
 
 <details><summary>الإجابة</summary>
 
@@ -554,7 +554,7 @@ Lab m00: 4/10 required checks passed: NOT YET
 
 **5. لماذا لا تمثّل `Bash(git push *)` في قائمة المنع (the deny list) حماية كاملة؟ ⁦(Why is it not full protection?)⁩**
 
-- A. تسري قواعد المنع (Deny rules) فقط بعد قبول مربع حوار الثقة (the trust dialog)
+- A. تسري قواعد المنع (Deny rules) فقط بعد قبول مربع حوار الثقة (the trust dialog) عند أول فتح للمجلد (first time the folder opens)
 - B. يمكن التحايل على أنماط Bash (Bash patterns can be sidestepped)، كما في `git -C . push`
 - C. تعمل قواعد المنع لقراءة الملفات فقط (file reads only)
 - D. قاعدة سماح مطابقة (a matching allow rule) في نطاق آخر تتغلب عليها
@@ -785,7 +785,7 @@ Author of record: me. Label AI-assisted. Second reviewer: not needed (no money l
 
 - A. إعادة تسمية متغير محلي (Renaming a local variable) في `cli.py`
 - B. إضافة اختبارات لحدود طبقات الرسوم (fee-tier boundaries) بقيم معروفة
-- C. تحديث الأوامر (Refreshing the commands) في README
+- C. تحديث الأوامر (Refreshing the commands) في README الرئيسي (main)
 - D. اختيار قاعدة التقريب (the rounding rule) لعملة جديدة
 
 <details><summary>الإجابة</summary>

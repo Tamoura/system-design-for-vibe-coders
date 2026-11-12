@@ -95,7 +95,7 @@
    },
    "o": {
     "en": [
-     "Agree, because MFA breaks the first link and a defender needs to break only one link",
+     "Agree, because MFA breaks the first link and a defender needs to break one link",
      "Find the single root cause first, since fixing several layers spreads effort too thin",
      "Put a web application firewall in front of the portal to stop the next way in as well",
      "Fix each failed layer: MFA, a role narrowed to the invoice bucket, a download alert"

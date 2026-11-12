@@ -14,7 +14,7 @@
      "Reuse the approval, since the model, vendor and contract are unchanged",
      "Make a new deploy decision, since the use, people and harms differ",
      "Rely on the vendor's statement that it suits customer-facing letters",
-     "Approve it, since its internal summaries have proved accurate in use"
+     "Approve it, since its internal summaries proved accurate in use"
     ],
     "ar": [
      "إعادة استخدام الاعتماد (approval)، لأن النموذج (model) والمورّد (vendor) والعقد (contract) لم تتغير",
@@ -39,7 +39,7 @@
    },
    "o": {
     "en": [
-     "Notice within 48 hours of any serious malfunction or security incident",
+     "Notice within 48 hours of any serious malfunction or incident",
      "An annual independent audit report on the vendor's AI management system",
      "Service levels on uptime and response times, backed by service credits",
      "Advance notice of model and version changes, with a right to re-test"
@@ -69,14 +69,14 @@
     "en": [
      "Update the FRIA, since the persons the system affects have changed",
      "Do nothing, since Art. 27 asks for a FRIA only once, before first use",
-     "Redo the conformity assessment instead, as it replaces the FRIA here",
+     "Redo the conformity assessment, as it replaces the FRIA here",
      "Leave the new group to the FRIA's next scheduled annual reassessment"
     ],
     "ar": [
      "تحديث التقييم (update the FRIA)، لأن الأشخاص المتأثرين (affected persons) بالنظام قد تغيّروا",
      "لا شيء، لأن المادة 27 (Art. 27) لا تطلب التقييم (FRIA) إلا مرة واحدة، قبل الاستخدام الأول (first use)",
      "إعادة تقييم المطابقة (conformity assessment) بدلًا منه، لأنه يحلّ محل التقييم (FRIA) هنا",
-     "ترك المجموعة الجديدة (new group) لإعادة التقييم السنوية (annual reassessment) المقررة التالية"
+     "ترك المجموعة الجديدة (new group) لإعادة التقييم السنوية (annual reassessment) المقررة (scheduled) التالية (next)"
     ]
    },
    "a": 0,
@@ -98,7 +98,7 @@
      "Signs of automation bias; retrain all recruiters to challenge the tool",
      "Signs the tool is unfit there; suspend it in that branch and replace it",
      "Signs of human bias; review those overrides and the reasons given",
-     "Signs of good judgement; recruiters are adding what the tool misses"
+     "Signs of good judgement; recruiters add what the tool misses"
     ],
     "ar": [
      "مؤشرات على تحيّز الأتمتة (automation bias)؛ إعادة تدريب (retrain) كل مسؤولي التوظيف (recruiters) على تحدّي الأداة (tool)",

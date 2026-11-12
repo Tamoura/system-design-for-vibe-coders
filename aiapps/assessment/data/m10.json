@@ -12,15 +12,15 @@
       "o": {
         "en": [
           "In each server, which marks its own tools as safe for the model",
-          "In the host, which offers the model only tools that it has named",
+          "In the host, which offers the model only the tools that it has named",
           "In each client, which passes on every tool that its server lists",
-          "In the model, which picks the safe tools by reading their descriptions"
+          "In the model, which picks safe tools by reading each description"
         ],
         "ar": [
           "في كل خادم (server)، فهو يضع علامة «آمنة» على أدواته (tools) بنفسه هو",
           "في المضيف (host)، فهو لا يعرض على النموذج (model) إلا الأدوات التي سمّاها",
           "في كل عميل (client)، فهو يمرّر كل أداة (tool) يسردها له خادمه (server)",
-          "في النموذج (model)، فهو ينتقي الأدوات الآمنة بقراءة أوصافها (descriptions)"
+          "في النموذج (model)، فهو ينتقي الأدوات (tools) الآمنة بقراءة أوصافها"
         ]
       },
       "a": 1,
@@ -41,14 +41,14 @@
         "en": [
           "Drop `user_id` and read the caller from the validated access token",
           "Add a pattern to `user_id` so that only well-formed staff ids get through",
-          "Say in the description that `user_id` must be the signed-in user",
-          "Make the host ask a person to approve each search before it runs"
+          "Say in the tool description that `user_id` must be the signed-in user",
+          "Make the host ask a person to approve each search call before it runs"
         ],
         "ar": [
           "حذف `user_id` وقراءة المستدعي من رمز الوصول (access token) المتحقَّق منه",
           "إضافة نمط (pattern) إلى `user_id` ليمرّ فقط معرّف موظف (staff id) سليم الصيغة",
-          "النص في الوصف (description) على أن `user_id` هو المستخدم المسجَّل دخوله",
-          "جعل المضيف (host) يطلب من شخص الموافقة (approval) على كل بحث قبل تشغيله"
+          "النص في الوصف (description) على أن `user_id` يجب أن يكون المستخدم المسجَّل دخوله",
+          "جعل المضيف (host) يطلب من شخص الموافقة (approval) على كل بحث قبل تشغيله فعليًا"
         ]
       },
       "a": 0,
@@ -68,13 +68,13 @@
       "o": {
         "en": [
           "Keep it in the system prompt, because Najm's server supplied it",
-          "Offer it as a tool and tell the model to call it first",
-          "Keep it in the system prompt, but wrap it in a labelled tag",
+          "Offer it as a tool and tell the model to call that tool first of all",
+          "Keep it in the system prompt, but wrap it in a clearly labelled tag",
           "Quote it as a document in a user turn, not the system prompt"
         ],
         "ar": [
           "يُبقيه في موجّه النظام (system prompt)، لأن خادم نجم نفسه هو الذي قدّمه",
-          "يعرضه أداةً (tool) ويطلب من النموذج (model) أن يستدعيها أولًا",
+          "يعرضه أداةً (tool) ويطلب من النموذج (model) أن يستدعيها أولًا قبل أي شيء",
           "يُبقيه في موجّه النظام (system prompt)، لكنه يحيط النص بوسم (tag) مُسمّى",
           "يقتبسه وثيقةً في دور المستخدم (user turn)، لا في موجّه النظام"
         ]

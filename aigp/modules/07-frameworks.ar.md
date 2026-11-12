@@ -238,7 +238,7 @@ flowchart RL
 
 **2. أي مما يلي ليس من خصائص الجدارة بالثقة (trustworthiness characteristics) في NIST AI RMF؟**
 
-- A. مربح وقابل للتوسع
+- A. مربح وقابل للتوسع (scalable)
 - B. معزّز للخصوصية (Privacy-enhanced)
 - C. عادل، مع إدارة التحيّز الضار (Fair, with harmful bias managed)
 - D. صالح وموثوق (Valid and reliable)
@@ -264,10 +264,10 @@ flowchart RL
 
 **4. أي مما يلي من توصيات (recommendations) OECD للحكومات، وليس من مبادئها القائمة على القيم (its values-based principles)؟**
 
-- A. الشفافية وقابلية التفسير (Transparency and explainability)
-- B. المساءلة (accountability)
+- A. الشفافية وقابلية التفسير (Transparency and explainability) لأنظمة الذكاء الاصطناعي تجاه الأشخاص المتأثرين بمخرجاتها (outputs)
+- B. مساءلة (accountability) الجهات الفاعلة في الذكاء الاصطناعي (AI actors) عن حسن عمل الأنظمة التي تبنيها وتشغّلها
 - C. الاستثمار في البحث والتطوير في الذكاء الاصطناعي (invest in AI research and development)
-- D. المتانة والأمن والسلامة (Robustness, security and safety)
+- D. المتانة والأمن والسلامة (Robustness, security and safety) لأنظمة الذكاء الاصطناعي طوال دورة حياتها (life cycle)، بما في ذلك سوء الاستخدام (misuse)
 
 <details><summary>الإجابة</summary>
 
@@ -278,9 +278,9 @@ flowchart RL
 **5. تكتشف مراجعة بنك نجم أن المساعد الذكي لمذكرات الائتمان (credit memo copilot) يذكر أحيانًا أرقام إيرادات لا تظهر في أي وثيقة مصدر (source document). أي مورد من موارد NIST (NIST resource) يسمّي هذا الخطر (risk) ويعالجه بشكل مباشر أكثر من غيره؟**
 
 - A. NIST AI 600-1، الملف التعريفي للذكاء الاصطناعي التوليدي (Generative AI Profile)، الذي يسمّيه التلفيق (confabulation)
-- B. مرصد OECD لحوادث الذكاء الاصطناعي (OECD AI Incidents Monitor)
-- C. ISO/IEC 22989
-- D. تعريف "آمن (Safe)" في الجزء 1 (Part 1) من NIST AI RMF
+- B. مرصد OECD لحوادث الذكاء الاصطناعي (OECD AI Incidents Monitor)، الذي يسرد الحوادث المبلَّغ عنها المستمدة من مصادر إخبارية (news sources) عامة (public)
+- C. ISO/IEC 22989، المعيار الذي يعرّف مفاهيم الذكاء الاصطناعي ومصطلحاته (terminology)
+- D. تعريف "آمن (Safe)" في الجزء 1 (Part 1) من NIST AI RMF، الذي يشمل الأذى الجسدي (physical harm) للأشخاص والممتلكات
 
 <details><summary>الإجابة</summary>
 
@@ -480,10 +480,10 @@ flowchart RL
 
 **2. في ISO/IEC 42001، أي بند (clause) يتضمن التدقيق الداخلي (internal audit) ومراجعة الإدارة (management review)؟**
 
-- A. البند (clause) 5، القيادة (Leadership)
-- B. البند (clause) 7، الدعم (Support)
+- A. البند (clause) 5، القيادة (Leadership)، ويشمل السياسة والأدوار
+- B. البند (clause) 7، الدعم (Support)، ويشمل الكفاءة والمعلومات الموثّقة
 - C. البند (clause) 9، تقييم الأداء (Performance evaluation)
-- D. البند (clause) 10، التحسين (improvement)
+- D. البند (clause) 10، التحسين (Improvement)، ويشمل عدم المطابقة (nonconformity) والإجراء التصحيحي (corrective action)
 
 <details><summary>الإجابة</summary>
 
@@ -519,10 +519,10 @@ flowchart RL
 
 **5. تقرر مؤسسة (organisation) تطبّق ISO/IEC 42001 أن بعض ضوابط (controls) الملحق A (Annex A) لا تنطبق عليها. ماذا يجب أن تفعل؟**
 
-- A. لا شيء؛ فالملحق A (Annex A) إعلامي (informative) فقط
+- A. لا شيء؛ فالملحق A (Annex A) إعلامي (informative) فقط، فيمكن ترك الضوابط (controls) دون أي سجل
 - B. تسجيل القرار (decision) وتبريره في بيان قابلية التطبيق (Statement of Applicability)
-- C. الحصول على موافقة ISO قبل استبعادها
-- D. استبدالها بضوابط (controls) من ISO/IEC 27001
+- C. الحصول على موافقة ISO (standards body) قبل استبعادها (ISO approval)، وإرفاق الموافقة بملف التدقيق (audit file)
+- D. استبدالها بضوابط (controls) من ISO/IEC 27001 تغطي المجال (area) نفسه، وإسقاط مذكرة القرار (decision note)
 
 <details><summary>الإجابة</summary>
 
@@ -714,9 +714,9 @@ flowchart RL
 
 **2. أي عبارة تصف مقاربة (approach) المملكة المتحدة (UK) لتنظيم الذكاء الاصطناعي (AI) وقت كتابة هذا الدرس بشكل أفضل؟**
 
-- A. قانون أفقي واحد للذكاء الاصطناعي (single horizontal AI act) على غرار EU AI Act
-- B. لا مبادئ (principles) ولا إرشادات (guidance) على الإطلاق
-- C. نظام ترخيص إلزامي (mandatory licensing regime) لكل أنظمة الذكاء الاصطناعي (AI systems)
+- A. قانون أفقي واحد للذكاء الاصطناعي (single horizontal AI act) على غرار EU AI Act، تطبّقه جهة تنظيمية مركزية جديدة (central regulator)
+- B. لا مبادئ (principles) ولا إرشادات (guidance) على الإطلاق، فيقرر كل قطاع (sector) بنفسه
+- C. نظام ترخيص إلزامي (mandatory licensing regime) لكل أنظمة الذكاء الاصطناعي (AI systems)، تديره سلطة وطنية (national authority) واحدة
 - D. مبادئ عابرة للقطاعات (cross-sector principles) تطبّقها الجهات التنظيمية (regulators) القائمة ضمن اختصاصاتها (their remits)
 
 <details><summary>الإجابة</summary>
@@ -728,7 +728,7 @@ flowchart RL
 **3. يريد بنك نجم إعادة استخدام ضوابط (controls) إدارة المخاطر (risk management) لديه لإظهار التوافق مع المادة 9 (Art. 9) من EU AI Act. أي عناصر ISO/IEC 42001 هي الأقرب مطابقةً؟**
 
 - A. البندان 6.1 و8 بشأن تقييم مخاطر الذكاء الاصطناعي (AI risk assessment) ومعالجتها، مدعومين بـ ISO/IEC 23894
-- B. الملحق A.10 (Annex A.10) بشأن العلاقات مع الأطراف الثالثة والعملاء (Third-party and customer relationships)
+- B. الملحق A.10 (Annex A.10) بشأن العلاقات مع الأطراف الثالثة والعملاء (Third-party and customer relationships)، بما فيها عقود المورّدين (supplier contracts) ومستويات الخدمة (service levels)
 - C. البند (clause) 5.2 بشأن سياسة الذكاء الاصطناعي (AI policy) فقط
 - D. ISO/IEC 42006 بشأن جهات الاعتماد (certification bodies)
 
@@ -740,10 +740,10 @@ flowchart RL
 
 **4. يريد مقدّم خدمة ذكاء اصطناعي توليدي (generative AI service provider) إطلاق روبوت محادثة (chatbot) عام في البر الرئيسي للصين (mainland China). أي أداة تضع متطلبات تلك الخدمة بشكل مباشر أكثر من غيرها؟**
 
-- A. الإطار النموذجي لحوكمة الذكاء الاصطناعي التوليدي (Model AI Governance Framework for Generative AI) في سنغافورة (Singapore)
+- A. الإطار النموذجي لحوكمة الذكاء الاصطناعي التوليدي (Model AI Governance Framework for Generative AI) في سنغافورة (Singapore)، وهو طوعي (voluntary) ويحدد تسعة أبعاد (dimensions)
 - B. التدابير المؤقتة لإدارة خدمات الذكاء الاصطناعي التوليدي (Interim Measures for the Management of Generative AI Services) في الصين (China)
-- C. مدونة السلوك لمسار هيروشيما لمجموعة السبع (G7 Hiroshima Process Code of Conduct)
-- D. توصية UNESCO بشأن أخلاقيات الذكاء الاصطناعي (UNESCO Recommendation on the Ethics of AI)
+- C. مدونة السلوك لمسار هيروشيما لمجموعة السبع (G7 Hiroshima Process Code of Conduct)، وهي مدونة طوعية (voluntary code) للمؤسسات التي تطور أنظمة ذكاء اصطناعي متقدمة
+- D. توصية UNESCO بشأن أخلاقيات الذكاء الاصطناعي (UNESCO Recommendation on the Ethics of AI)، اعتمدتها الدول الأعضاء (member states) وتُطبَّق عبر السياسات الوطنية (national policy)
 
 <details><summary>الإجابة</summary>
 
@@ -753,10 +753,10 @@ flowchart RL
 
 **5. ما هو AI Verify؟**
 
-- A. سجل صيني لإيداع الخوارزميات (Chinese algorithm-filing registry)
-- B. قاعدة بيانات الاتحاد الأوروبي (EU) للأنظمة عالية المخاطر (high-risk systems)
+- A. سجل صيني لإيداع الخوارزميات (Chinese algorithm-filing registry)، تشغّله جهة تنظيم الفضاء السيبراني (cyberspace regulator) لخوارزميات التوصية (recommendation algorithms)
+- B. قاعدة بيانات الاتحاد الأوروبي (EU) للأنظمة عالية المخاطر (high-risk systems)، يسجّل فيها المقدّمون (providers) أنظمتهم قبل طرحها في السوق (market)
 - C. إطار اختبار (testing framework) لحوكمة الذكاء الاصطناعي (AI governance) ومجموعة أدوات (toolkit) مفتوحة المصدر من سنغافورة (Singapore)
-- D. نظام اعتماد فيدرالي أمريكي (US federal certification scheme) لنماذج الذكاء الاصطناعي (AI)
+- D. نظام اعتماد فيدرالي أمريكي (US federal certification scheme) لنماذج الذكاء الاصطناعي (AI models)، تديره وكالة معايير (standards agency) وصلاحيته ثلاث سنوات
 
 <details><summary>الإجابة</summary>
 

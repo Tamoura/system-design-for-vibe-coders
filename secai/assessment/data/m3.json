@@ -69,13 +69,13 @@
     "en": [
      "Turn caching off for good, since a shared cache can never be tenant-safe",
      "Force row-level security on the invoices table so the leak cannot recur",
-     "Hide the summary from Uploaders and Viewers, who do not need to see it",
+     "Hide the summary from Uploaders and Viewers, who do not need it",
      "Include the tenant from the session in the cache key for the summary"
     ],
     "ar": [
      "إيقاف التخزين المؤقت (caching) نهائيًّا، لأن ذاكرة التخزين المؤقت المشتركة (shared cache) لا تكون آمنةً بين المستأجرين (tenant-safe) أبدًا",
      "فرض أمن مستوى الصف (force row-level security) على جدول الفواتير (invoices table) كي لا يتكرر التسريب (leak)",
-     "إخفاء الملخص عن رافعي الملفات (Uploaders) والمُطّلِعين (Viewers)، فهم لا يحتاجون إلى رؤيته (do not need to see it)",
+     "إخفاء الملخص عن رافعي الملفات (Uploaders) والمُطّلِعين (Viewers)، فهم لا يحتاجون إليه (do not need it)",
      "إدراج المستأجر المأخوذ من الجلسة (tenant from the session) في مفتاح التخزين المؤقت (cache key) الخاص بالملخص"
     ]
    },

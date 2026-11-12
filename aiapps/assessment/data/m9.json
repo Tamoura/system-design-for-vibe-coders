@@ -40,15 +40,15 @@
       "o": {
         "en": [
           "Keep a small state object that code updates each step and renders in every prompt",
-          "Save every step as a long-term memory and let the model recall the list each turn",
-          "Ask the model in the system prompt to keep its own list of the steps already tried",
+          "Save every step as a long-term memory and let the model recall the list",
+          "Ask the model in the system prompt to keep its own list of steps already tried",
           "Summarise the chat with a second model call each turn and send only the summary"
         ],
         "ar": [
           "إبقاء كائن حالة (state object) صغير تحدّثه الشيفرة (code) في كل خطوة وتعرضه في كل موجّه (prompt)",
           "حفظ كل خطوة ذاكرةً طويلة المدى (long-term memory) ليستدعي النموذج (model) القائمة في كل دور",
-          "أن يُطلب من النموذج (model) في موجّه النظام (system prompt) أن يحتفظ بقائمة بالخطوات المجرَّبة",
-          "تلخيص المحادثة (chat) باستدعاء نموذج ثانٍ (second model call) في كل دور وإرسال الملخّص (summary) وحده"
+          "أن يُطلب من النموذج (model) في موجّه النظام (system prompt) أن يحتفظ بقائمة الخطوات المجرَّبة",
+          "تلخيص المحادثة (chat) باستدعاء نموذج ثانٍ (second model call) في كل دور وإرسال الملخّص وحده"
         ]
       },
       "a": 0,

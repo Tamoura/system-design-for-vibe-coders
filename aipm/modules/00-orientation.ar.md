@@ -194,27 +194,27 @@ flowchart RL
 
 **3. في بنك نجم (Najm Bank)، من يجب أن يقرر بنية النموذج (model architecture) للتمويل الفوري للشركات الصغيرة (SME Instant Finance)؟**
 
-- A. مدير منتج الذكاء الاصطناعي (AI product manager)، لأنه يملك المنتج (owns the product)
-- B. قائدا علم البيانات والهندسة (data science and engineering leads)، مع تحديد مدير المنتج لمعيار الجودة والمفاضلات (quality bar and trade-offs)
-- C. رئيسة حوكمة الذكاء الاصطناعي (Head of AI Governance)
-- D. مالك العمل (business owner)، لأنه يموّله (funds it)
+- A. قائدا علم البيانات والهندسة (data science and engineering leads)، مع تحديد مدير المنتج لمعيار الجودة والمفاضلات (quality bar and trade-offs)
+- B. مدير منتج الذكاء الاصطناعي (AI product manager)، لأنه يملك المنتج (owns the product) ويُحاسَب على نتائجه وعلى كل قرار يخص طريقة عمله (how it works) أمام الإدارة العليا
+- C. رئيسة حوكمة الذكاء الاصطناعي (Head of AI Governance)، لأن خيارات البنية تؤثر في المخاطر (risk) ويجب أن تعتمدها مركزيًا قبل أي بناء (approved centrally)
+- D. مالك العمل (business owner)، لأنه يموّل المنتج (funds it) ويتحمل المخاطر التجارية لخياراته (commercial risk of its choices) أمام مجلس الإدارة (board of directors)
 
 <details><summary>الإجابة</summary>
 
-**B.** يملك مدير المنتج *معنى الجيد (what good means)* والمفاضلات (trade-offs). ويختار المتخصصون (specialists) *كيفية (how)* تحقيقه. الخيار A هو الخطأ المغري (tempting mistake): امتلاك المنتج لا يعني امتلاك كل قرار تقني (every technical decision). (🟢 الأساسيات (The essentials)، جدول الأدوار (role table)؛ 🏛️ بطاقة الدور (role card).)
+**A.** يملك مدير المنتج *معنى الجيد (what good means)* والمفاضلات (trade-offs). ويختار المتخصصون (specialists) *كيفية (how)* تحقيقه. الخيار B هو الخطأ المغري (tempting mistake): امتلاك المنتج لا يعني امتلاك كل قرار تقني (every technical decision). (🟢 الأساسيات (The essentials)، جدول الأدوار (role table)؛ 🏛️ بطاقة الدور (role card).)
 
 </details>
 
 **4. أي عبارة تصف على أفضل وجه الفرق بين مدير منتج ميزة ذكاء اصطناعي (AI feature PM) ومدير منتج منصة ذكاء اصطناعي (AI platform PM)؟**
 
-- A. مدير منتج الميزة يعمل على الذكاء الاصطناعي التوليدي (generative AI)؛ ومدير منتج المنصة يعمل على التعلّم الآلي الكلاسيكي (classic machine learning)
-- B. مدير منتج الميزة يدير قدرة ذكاء اصطناعي داخل منتج للمستخدمين النهائيين (AI capability inside a product for end users)؛ ومدير منتج المنصة يدير قدرات ذكاء اصطناعي مشتركة تبني عليها فرق داخلية أخرى (shared AI capabilities that other internal teams build on)
+- A. مدير منتج الميزة يدير قدرة ذكاء اصطناعي داخل منتج للمستخدمين النهائيين (AI capability inside a product for end users)؛ ومدير منتج المنصة يدير قدرات ذكاء اصطناعي مشتركة تبني عليها فرق داخلية أخرى (shared AI capabilities that other internal teams build on)
+- B. مدير منتج الميزة يعمل على الذكاء الاصطناعي التوليدي (generative AI)؛ ومدير منتج المنصة يعمل على التعلّم الآلي الكلاسيكي (classic machine learning)
 - C. مدير منتج المنصة يدير المورّدين فقط (only manages vendors)
 - D. لا يوجد فرق حقيقي؛ اللقبان قابلان للتبادل (interchangeable)
 
 <details><summary>الإجابة</summary>
 
-**B.** الفرق هو من هو العميل (who the customer is): المستخدمون النهائيون لمنتج واحد (end users of one product)، أو الفرق الداخلية التي تستخدم خدمات مشتركة (internal teams using shared services). نوع الذكاء الاصطناعي (type of AI) (A) لا يحدد الدور. (🟡 التعمق أكثر (Going deeper).)
+**A.** الفرق هو من هو العميل (who the customer is): المستخدمون النهائيون لمنتج واحد (end users of one product)، أو الفرق الداخلية التي تستخدم خدمات مشتركة (internal teams using shared services). نوع الذكاء الاصطناعي (type of AI) (B) لا يحدد الدور. (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
@@ -396,10 +396,10 @@ flowchart RL
 
 **1. تقول مواصفات فيصل: «نجم أسيست يجيب عن أسئلة الرسوم بشكل صحيح ⁦(Najm Assist answers fee questions correctly.)⁩». ما أفضل إعادة كتابة (best rewrite)؟**
 
-- A. «نجم أسيست يجيب عن أسئلة الرسوم بشكل صحيح وسريع (correctly and quickly)»
-- B. «نجم أسيست يحقق معدل دقة متفقًا عليه (agreed accuracy rate) على مجموعة مرجعية (golden set) من أسئلة رسوم حقيقية باللغتين، مع معيار أكثر صرامة لمبالغ الرسوم (stricter bar for fee amounts)، ويسلّم إلى إنسان (hands over to a human) حين لا تغطي مصادره السؤال»
-- C. «نجم أسيست يستخدم أدق نموذج متاح (most accurate model available)»
-- D. «نجم أسيست يختبره فريق المنتج (product team) قبل الإطلاق»
+- A. «نجم أسيست يجيب عن أسئلة الرسوم بشكل صحيح وسريع (correctly and quickly)، ويقيّم العملاء الإجابات بأنها مفيدة (helpful) في استطلاع ما بعد المحادثة (post-chat survey)، ويراجع فريق الخدمة (service team) أي شكوى من عميل خلال أسبوع (within a week)»
+- B. «نجم أسيست يحقق معدل دقة متفقًا عليه (agreed accuracy rate) على مجموعة مرجعية (golden set) من أسئلة رسوم حقيقية باللغتين، بمعيار أصرم لمبالغ الرسوم، وتسليم إلى إنسان (human handover) حين لا تغطي المصادر السؤال»
+- C. «نجم أسيست يستخدم أدق نموذج لغوي كبير متاح (most accurate large language model)، اختير بعد مقارنة نتائج المعايير العامة (public benchmark results) لدى عدة موردين (vendors)»
+- D. «نجم أسيست يختبره فريق المنتج (product team) على مجموعة واسعة من أسئلة الرسوم النموذجية قبل الإطلاق (before launch)، ويوقّع الامتثال (compliance) على ملخص الاختبار المكتوب»
 
 <details><summary>الإجابة</summary>
 
@@ -422,10 +422,10 @@ flowchart RL
 
 **3. بدأ مديرو العلاقات (Relationship managers) الذين يستخدمون مساعد مذكرات الائتمان (Credit Memo Copilot) لصق مسوداته مباشرة في حزم لجنة الائتمان (credit committee packs) دون التحقق من الأرقام. بأي فرق يتعلق هذا أساسًا؟**
 
-- A. مكلفة لكل استخدام (Costly per use)
-- B. نهمة للبيانات (Data-hungry)
+- A. مكلفة لكل استخدام (Costly per use): كل طلب يستهلك رموزًا (tokens)، فترتفع الفاتورة مع حجم الطلبات وطول التعليمات (prompt length) وعدد المستخدمين الذين يستخدمونها
+- B. نهمة للبيانات (Data-hungry): تعتمد المسودات على كميات كبيرة من الأمثلة الجيدة (good examples) والمستندات المصدرية النظيفة (clean source documents) لدى البنك
 - C. مرهونة بالثقة (Trust-bound): الاعتماد أعلى مما تبرره موثوقية المنتج (reliance is higher than the product's reliability justifies)
-- D. لا شيء؛ هذه مسألة تدريب فقط (training issue only)
+- D. لا شيء من هذه (None of these)؛ هذه مسألة (issue) تدريب (training issue) فقط، وتحلها دورة قصيرة (short course) لمديري العلاقات (relationship managers) خلال أسبوع (a week)
 
 <details><summary>الإجابة</summary>
 
@@ -664,7 +664,7 @@ flowchart TD
 
 **1. أي عبارة عن بنك نجم (Najm Bank) صحيحة؟**
 
-- A. إنه بنك قطري حقيقي (real Qatari bank) يُستخدم بإذن (with permission)
+- A. إنه بنك قطري حقيقي (real Qatari bank) يُستخدم بإذن (with permission) في الدورة (in the course)
 - B. إنه بنك خليجي خيالي متوسط الحجم (fictional mid-sized Gulf bank) يُستخدم كحالة مستمرة (running case)
 - C. إنه مزيج من بنوك حقيقية مسمّاة (composite of named real banks)
 - D. يظهر في هذه الدورة فقط (only in this course)
@@ -691,7 +691,7 @@ flowchart TD
 **3. أي منتج من منتجات نجم هو أفضل مثال على منتج قرار تنبؤي عالي المخاطر (predictive, high-stakes decision product)؟**
 
 - A. مساعد الموظفين التوليدي (Staff GenAI)
-- B. مساعد مذكرات الائتمان (Credit Memo Copilot)
+- B. مساعد مذكرات الائتمان (Credit Memo Copilot)، وهو يصوغ مسودات للمراجعة البشرية
 - C. التمويل الفوري للشركات الصغيرة (SME Instant Finance)
 - D. نجم أسيست (Najm Assist)
 
@@ -703,14 +703,14 @@ flowchart TD
 
 **4. أثناء تحديد نطاق نجم أسيست (scoping Najm Assist)، يحتاج فيصل إلى معرفة الالتزامات التي يفرضها قانون الذكاء الاصطناعي الأوروبي (EU AI Act) بالضبط على روبوتات المحادثة الموجّهة للعملاء (customer-facing chatbots). بماذا تنصح هذه الدورة؟**
 
-- A. استنتج ذلك من المبادئ الأولى (from first principles) في مواصفات المنتج (product spec)
-- B. اذهب إلى *AI Governance: Zero to Hero* وأشرك ليلى (involve Layla)، ثم أعد الإجابة إلى قرار المنتج (product decision)
-- C. تجاهله حتى الإطلاق (until launch)
-- D. اذهب إلى *SaaS Building Blocks*
+- A. اذهب إلى *AI Governance: Zero to Hero* وأشرك ليلى (involve Layla)، ثم أعد الإجابة إلى قرار المنتج (product decision)
+- B. استنتج الالتزامات من المبادئ الأولى (from first principles) في مواصفات المنتج (product spec)، اعتمادًا على قراءة فيصل الشخصية للقانون والتغطية الصحفية الأخيرة
+- C. تجاهله حتى أسبوع الإطلاق (launch week)، ثم اطلب من الفريق القانوني (legal team) مراجعة المساعد بصورته النهائية وإصلاح ما يثيرونه
+- D. اذهب إلى *SaaS Building Blocks*، الذي يغطي بناء وتشغيل الميزات الموجّهة للعملاء (customer-facing features) مثل المحادثة (chat) والإشعارات (notifications)
 
 <details><summary>الإجابة</summary>
 
-**B.** سؤال «ماذا يتطلب القانون بالضبط؟ ⁦(What exactly does the law require?)⁩» هو سؤال لدورة الحوكمة المرافقة (governance companion course) ولفريق ليلى. أما قرار المنتج فيبقى هنا. و*SaaS Building Blocks* (D) تغطي البنية الأساسية للمنتج (product plumbing)، لا التنظيم (not regulation). (🟡 الدورات المرافقة (The companion courses).)
+**A.** سؤال «ماذا يتطلب القانون بالضبط؟ ⁦(What exactly does the law require?)⁩» هو سؤال لدورة الحوكمة المرافقة (governance companion course) ولفريق ليلى. أما قرار المنتج فيبقى هنا. و*SaaS Building Blocks* (D) تغطي البنية الأساسية للمنتج (product plumbing)، لا التنظيم (not regulation). (🟡 الدورات المرافقة (The companion courses).)
 
 </details>
 
@@ -719,7 +719,7 @@ flowchart TD
 - A. فيصل (Faisal)
 - B. رانيا (Rania)
 - C. رئيس الخدمات المصرفية للشركات (Head of Corporate Banking)
-- D. ليلى (Layla)
+- D. ليلى (Layla)، التي تملك مستوى المخاطر (risk tier) وضوابط (controls) التجربة التجريبية (pilot)
 
 <details><summary>الإجابة</summary>
 

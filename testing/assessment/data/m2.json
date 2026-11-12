@@ -11,13 +11,13 @@
       },
       "o": {
         "en": [
-          "Open the coverage report and confirm that the rule's line was run",
+          "Open the coverage report and confirm that the rule's line was run by the test",
           "Break the rule by hand once, then confirm that the test turns red",
-          "Run it five more times and confirm that it stays green each time",
-          "Mock the fee function so that the test never depends on other code"
+          "Run it five more times and confirm that it stays green each time it runs",
+          "Mock the fee function so that the test never depends on any other code"
         ],
         "ar": [
-          "فتح تقرير التغطية (coverage report) والتأكد من أن سطر القاعدة قد نُفّذ (was run)",
+          "فتح تقرير التغطية (coverage report) والتأكد من أن سطر القاعدة قد نُفّذ (was run) في الاختبار",
           "كسر القاعدة يدويًا (by hand) مرة واحدة والتأكد من أن الاختبار يصبح أحمر (turns red)",
           "تشغيله خمس مرات أخرى (five more times) والتأكد من أنه يبقى أخضر (stays green) كل مرة",
           "استبدال دالة الرسوم (fee function) بكائن محاكاة (mock) حتى لا يعتمد الاختبار على شيفرة أخرى"
@@ -70,12 +70,12 @@
           "Accepted: wording is left untested on purpose, so note it as a choice",
           "Real gap: add a test that asserts the exact wording of the message",
           "Equivalent: no test could ever tell the mutant from the original",
-          "Ignored: delete it from the results without classing it or noting why"
+          "Ignored: delete it from the results without classing it"
         ],
         "ar": [
           "مقبولة (Accepted): تُترك الصياغة دون اختبار عن قصد (on purpose)، فتُسجَّل قرارًا واعيًا (a choice)",
           "ثغرة حقيقية (Real gap): إضافة اختبار جديد يؤكد صياغة الرسالة الدقيقة (the exact wording)",
-          "مكافئة (Equivalent): لا يستطيع أي اختبار على الإطلاق التمييز بين الطفرة (mutant) والأصل (original)",
+          "مكافئة (Equivalent): لا يستطيع أي اختبار التمييز بين الطفرة (mutant) والأصل (original)",
           "متجاهَلة (Ignored): حذفها من النتائج (results) دون تصنيفها أو تسجيل سبب ذلك (noting why)"
         ]
       },

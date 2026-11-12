@@ -201,7 +201,7 @@ if abs(time.time() - int(ts)) > 300 or not hmac.compare_digest(expected, receive
 **1. يقترح علي تخزين كلمات مرور بوابة الشركات الصغيرة (SME Portal) بتجزئة SHA-256 مع ملحٍ عشوائي لكل مستخدم (random per-user salt): «مملّحة، إذن لا بأس» ⁦("Salted, so it's fine.")⁩. ما الرد الأفضل (best response)؟**
 
 - A. اقبله، لأن التمليح يحلّ المشكلة (salting solves the problem)
-- B. شفّر كلمات المرور بـ AES-GCM (Encrypt passwords with AES-GCM) كي يستطيع الدعم الفني استعادة المنسيّ منها (so support can recover forgotten ones)
+- B. شفّر كلمات المرور بـ AES-GCM (Encrypt passwords with AES-GCM) كي يستطيع الدعم الفني استعادة المنسيّ منها (so support can recover forgotten ones)، مع حفظ المفتاح في خزنة لا يفتحها إلا قائد الدعم وفريق التدقيق (a vault that only the support lead and the audit team can open)
 - C. استخدم Argon2id (أو scrypt أو bcrypt): فالملح يهزم الجداول المحسوبة مسبقًا (defeats precomputed tables)، لكن SHA-256 تبقى سريعةً بما يكفي للتخمين واسع النطاق بعد التسرّب (fast enough for large-scale guessing after a leak)
 - D. جزّئ كلمة المرور مرتين بـ SHA-256 (hash the password twice)
 
@@ -215,7 +215,7 @@ if abs(time.time() - int(ts)) > 300 or not hmac.compare_digest(expected, receive
 
 - A. قرصٌ مسروق من مركز بيانات المزوّد (disk stolen from the provider's data centre)
 - B. حقن SQL (SQL injection) في نقطة نهايةٍ للتقارير (reporting endpoint)، أو مسؤولٌ يستعلم عن الجدول (administrator querying the table)، فتُعاد أرقام هويةٍ وطنية مقروءة (returning readable national IDs)
-- C. مهاجمٌ استولى على الخدمة الوحيدة المسموح لها بفك تشفير أرقام الهوية الوطنية (taken over the one service that is allowed to decrypt)
+- C. مهاجمٌ استولى على الخدمة الوحيدة المسموح لها بفك تشفير أرقام الهوية الوطنية (taken over the one service that is allowed to decrypt national IDs) ويستطيع أن يطلب منها (can ask it to) فك تشفير أي سجل (decrypt any record) على الإطلاق (at all) من دون قيد (without any limit)
 - D. محرّك أقراصٍ مُخرَج من الخدمة يُعاد بيعه (decommissioned drive being resold)
 
 <details><summary>الإجابة</summary>
@@ -226,7 +226,7 @@ if abs(time.time() - int(ts)) > 300 or not hmac.compare_digest(expected, receive
 
 **3. يفشل استدعاءٌ إلى بيئة الاختبار (test environment) لدى شريك الفوترة الإلكترونية (e-invoicing partner) في التحقق من صحة الشهادة (certificate validation). أيّ إصلاحٍ هو الصحيح؟**
 
-- A. اضبط `verify=False` في بيئة الاختبار فقط (in test only)، خلف متغير بيئة (behind an environment variable)
+- A. اضبط `verify=False` في بيئة الاختبار فقط (in test only)، خلف متغير بيئة (behind an environment variable)، وأضف تعليقًا ليُزال الإعداد قبل الإصدار (add a comment so the setting is removed before release)
 - B. استخدم HTTP الصريح (plain HTTP) لتكامل الاختبار (test integration)
 - C. ثِق بشهادة سلطة الشهادات الاختبارية للشريك (partner's test CA certificate) في بيئة الاختبار، وأبقِ التحقق مفعّلًا (keep verification on)، واترك بيئة الإنتاج دون تغيير (leave production unchanged)
 - D. عطّل التحقق من اسم المضيف (disable hostname checking) لكن أبقِ التحقق من السلسلة (keep chain validation)
@@ -239,7 +239,7 @@ if abs(time.time() - int(ts)) > 300 or not hmac.compare_digest(expected, receive
 
 **4. أيّ عبارةٍ عن التشفير المغلَّف (envelope encryption) صحيحة (TRUE)؟**
 
-- A. يحتفظ التطبيق بالمفتاح الرئيسي في إعداداته (keeps the master key in its configuration) لفك التشفير بسرعة
+- A. يحتفظ التطبيق بالمفتاح الرئيسي في ملف إعداداته (keeps the master key in its configuration file) لفك التشفير بسرعة (to decrypt quickly)، ويقرؤه مرةً واحدة عند التشغيل (reads it once at start-up) ويبقيه في الذاكرة (holds it in memory)، ويعيد تحميله كلما تغيّر الملف على القرص (reloads it whenever the file on disk changes) ويستخدمه لكل طلب (and uses it for every request)
 - B. إنه ميزةٌ في TLS لتأمين الاتصالات (TLS feature for securing connections)
 - C. إنه يلغي الحاجة إلى التحكم في الوصول إلى قاعدة البيانات (removes the need for database access control)
 - D. مفاتيح البيانات (data keys) مغلّفةٌ بمفتاحٍ رئيسي يبقى في خدمة إدارة المفاتيح (wrapped by a master key that stays in the KMS)، فتكون كل عملية فك تشفير استدعاءً مفحوص الوصول ومسجَّلًا (access-checked, logged call)، ولا يحتاج تدوير المفتاح الرئيسي إلى إعادة تشفيرٍ جماعية (no bulk re-encryption)
@@ -253,7 +253,7 @@ if abs(time.time() - int(ts)) > 300 or not hmac.compare_digest(expected, receive
 **5. يسأل حمد، كبير مسؤولي أمن المعلومات (CISO)، عمّا يجب أن يفعله بنك نجم (Najm Bank) بشأن التشفير لما بعد الكمّ (post-quantum cryptography) هذا العام. ما الإجابة الأفضل؟**
 
 - A. لا شيء حتى توجد حواسيب كمّية كبيرة (until large quantum computers exist)
-- B. استبدل AES-256 في كل مكان بخوارزميةٍ لما بعد الكمّ (post-quantum algorithm) الآن
+- B. استبدل AES-256 في كل مكان بخوارزميةٍ لما بعد الكمّ (post-quantum algorithm) الآن، وأعد تشفير كل سجلٍّ مخزَّن هذا الربع (re-encrypt every stored record this quarter)، واستغنِ عن TLS 1.3 بنقلٍ مخصّص آمنٍ كميًّا (custom quantum-safe transport) لجميع القنوات (for all channels)
 - C. أنشئ جردًا تشفيريًّا (cryptographic inventory)، وصمّم للمرونة التشفيرية (design for crypto-agility)، وأعطِ الأولوية للبيانات السرية طويلة العمر (long-lived confidential data)، واعتمد FIPS 203 و204 و205 عبر المنصات والمكتبات (through platforms and libraries) حين تدعمها
 - D. صمّم خوارزميةً لما بعد الكمّ خاصةً بنجم (Najm-specific post-quantum algorithm)
 
@@ -453,10 +453,10 @@ RUN --mount=type=secret,id=npmrc,target=/root/.npmrc npm ci
 
 **1. يدرك مطوّرٌ أنه دفع (pushed) مفتاح واجهة برمجةٍ حيًّا لشريك مدفوعات (live payment-partner API key) إلى مستودعٍ داخلي (internal repository) قبل ثلاثة أيام، وقد نفّذ بالفعل دفعًا قسريًّا (force-pushed) لإزالة الإيداع. ما الذي يجب أن يحدث أولًا؟**
 
-- A. لا شيء أكثر: فالإيداع قد زال (the commit is gone)
+- A. لا شيء أكثر: فالإيداع قد زال (the commit is gone)، لأن الفرع حُذف ولم يُدمج طلب السحب قط (the branch was deleted and the pull request was never merged at all)
 - B. أبطِل المفتاح أو دوِّره الآن (revoke or rotate the key now)، ثم افحص سجلات استخدام الشريك (the partner's usage logs) خلال نافذة التعرّض (for the exposure window)
-- C. أعِد كتابة السجل التاريخي لكل فرع (rewrite the history of every branch)، ثم قرّر
-- D. افتح تذكرةً للدورة التالية (open a ticket for the next sprint)
+- C. أعِد كتابة السجل التاريخي لكل فرع (rewrite the history of every branch) وادفعه بالقوة (force-push)، ثم قرّر ما إذا كان المفتاح يحتاج إلى تدوير أصلًا (whether the key needs to be rotated at all)
+- D. افتح تذكرةً للدورة التالية (open a ticket for the next sprint) واطلب من المطوّر إزالة المفتاح من الملف عندما يناسبه ذلك (ask the developer to remove the key from the file when convenient)
 
 <details><summary>الإجابة</summary>
 
@@ -468,7 +468,7 @@ RUN --mount=type=secret,id=npmrc,target=/root/.npmrc npm ci
 
 - A. تمويهٌ أقوى (Stronger obfuscation)
 - B. اطلب من العملاء ألّا يفحصوا التطبيق (ask customers not to inspect the app)
-- C. خزّن المفتاح في التخزين الآمن للجهاز (the device's secure storage) بعد التشغيل الأول (after first launch)
+- C. خزّن المفتاح في التخزين الآمن للجهاز (the device's secure storage) بعد التشغيل الأول (after first launch)، بعد جلبه مرةً واحدة من خادم لنجم (fetched once from a Najm server) يتحقق من إصدار التطبيق وطراز الجهاز (checks the app version and the device model) قبل إرساله إليه (before sending it), ويبقى المفتاح بعد ذلك على الجهاز وحده (and the key then stays on the device alone)
 - D. انقل استدعاء المزوّد إلى الواجهة الخلفية لنجم (move the provider call to Najm's backend)، التي تحتفظ بالمفتاح، وتُصادق العميل (authenticates the customer)، وتطبّق حدود المعدّل وسقوف الإنفاق (rate limits and spending caps)؛ ودوِّر المفتاح المستخرَج (rotate the extracted key)
 
 <details><summary>الإجابة</summary>
@@ -482,7 +482,7 @@ RUN --mount=type=secret,id=npmrc,target=/root/.npmrc npm ci
 - A. دوِّر المفتاح مرةً في السنة (rotate the key once a year)
 - B. رمّز المفتاح بصيغة base64 في المتغير (Base64-encode the key in the variable)
 - C. الاتحاد عبر OIDC (OIDC federation): تحصل كل مهمة (each job) على رمزٍ قصير العمر تستبدله السحابة ببيانات اعتماد (exchanges for credentials)، لدورٍ لا يثق إلا بهذا المستودع وهذا الفرع (trusts only this repository and branch)
-- D. أودِع المفتاح في المستودع كي يخضع لإدارة الإصدارات (so it is versioned)
+- D. أودِع المفتاح في المستودع الخاص (private repository) كي يخضع لإدارة الإصدارات والمراجعة (so it is versioned and reviewed)، وقيّد صلاحية القراءة بفريق خط الإنتاج ومدير الإصدار والمهندسين المناوبين (restrict read access to the pipeline team, the release manager and the on-call engineers)
 
 <details><summary>الإجابة</summary>
 
@@ -493,7 +493,7 @@ RUN --mount=type=secret,id=npmrc,target=/root/.npmrc npm ci
 **4. أيّ عبارةٍ عن أسرار Kubernetes (Kubernetes Secrets) صحيحة (TRUE) افتراضيًّا في Kubernetes الأصلي (upstream Kubernetes)؟**
 
 - A. تُرمَّز القيم بصيغة base64 (base64-encoded)، وتُخزَّن دون تشفير في etcd (stored unencrypted in etcd) ما لم يُضبط التشفير أثناء التخزين (unless encryption at rest is configured)، ويستطيع قراءتها أي شخصٍ يستطيع إنشاء حاويات pod في نطاق الأسماء (anyone who can create pods in the namespace)
-- B. تُشفَّر القيم تشفيرًا قويًّا بمفتاحٍ لكل عنقود (strongly encrypted with a per-cluster key)
+- B. تُشفَّر القيم تشفيرًا قويًّا بمفتاحٍ لكل عنقود (strongly encrypted with a per-cluster key) يدوّره مزوّد السحابة (that the cloud provider rotates)، فلا يستطيع قراءتها كنصٍّ واضح (in clear text) إلا خادم الواجهة البرمجية والمتحكمات (only the API server and the controllers) في أي ظرف من الظروف (in any circumstance)، حتى لو أُنشئت حاويات في الفضاء نفسه (even if pods are created in the same namespace)
 - C. لا يستطيع قراءتها إلا مسؤولو العنقود (only cluster administrators) على الإطلاق
 - D. تُدوَّر تلقائيًّا كل 24 ساعة (rotate automatically every 24 hours)
 
@@ -506,13 +506,13 @@ RUN --mount=type=secret,id=npmrc,target=/root/.npmrc npm ci
 **5. يقترح مطوّرٌ وضع مفتاح واجهة برمجة خدمة الرسوم (fee-service API key) في موجّه النظام لنجم أسيست (Najm Assist's system prompt) «كي يتمكن النموذج من استدعاء الأداة» ("so the model can call the tool"). لماذا هذا خطأ؟**
 
 - A. لموجّهات النظام حدٌّ للطول (System prompts have a length limit)
-- B. افترض أن موجّه النظام يمكن استخراجه (the system prompt can be extracted) (OWASP LLM07) أو أن النموذج يمكن توجيهه بحقن الموجّهات (steered by prompt injection)؛ فمكان بيانات الاعتماد هو طبقة الأدوات على الخادم (the server-side tool layer)، مربوطةً بجلسة العميل (bound to the customer's session)
+- B. النماذج ترفض استخدام المفاتيح (Models refuse to use keys)
 - C. لا بأس (It is fine) إذا قال الموجّه (if the prompt says) «لا تكشف هذا المفتاح أبدًا» ("never reveal this key")
-- D. النماذج ترفض استخدام المفاتيح (Models refuse to use keys)
+- D. افترض أن موجّه النظام يمكن استخراجه (the system prompt can be extracted) (OWASP LLM07) أو أن النموذج يمكن توجيهه بحقن الموجّهات (steered by prompt injection)؛ فمكان بيانات الاعتماد هو طبقة الأدوات على الخادم (the server-side tool layer)، مربوطةً بجلسة العميل (bound to the customer's session)
 
 <details><summary>الإجابة</summary>
 
-**B.** الموجّه ليس مخزنًا آمنًا (A prompt is not a secure store). وC يعتمد على امتثال النموذج (relies on the model obeying)، وهو ما يهزمه حقن الموجّهات (which prompt injection defeats). انظر: 🔴 نظرة الخبير (Expert view).
+**D.** الموجّه ليس مخزنًا آمنًا (A prompt is not a secure store). وC يعتمد على امتثال النموذج (relies on the model obeying)، وهو ما يهزمه حقن الموجّهات (which prompt injection defeats). انظر: 🔴 نظرة الخبير (Expert view).
 
 </details>
 
@@ -743,7 +743,7 @@ flowchart RL
 **5. تريد رانيا أن يساعد نجم أسيست (Najm Assist) العملاء على الاعتراض على معاملات البطاقات (dispute card transactions). أيّ تصميمٍ يطبّق تقليل البيانات (data minimisation) على أفضل وجه؟**
 
 - A. أرسل حقول المعاملة المتنازع عليها فقط (only the disputed transaction's fields)، مع استبدال أرقام البطاقات وأرقام IBAN بعناصر نائبة (card numbers and IBANs replaced by placeholders)، ودع طبقة الأدوات على الخادم (the server-side tool layer) تستخدم القيم الحقيقية حين تقدّم الاعتراض (when it files the dispute)
-- B. أرسل إلى النموذج ملف العميل الكامل واثني عشر شهرًا من المعاملات (the customer's full profile and twelve months of transactions) لإعطائه السياق (for context)
+- B. أرسل إلى النموذج ملف العميل الكامل واثني عشر شهرًا من المعاملات (the customer's full profile and twelve months of transactions) للسياق (for context)، كي يشرح الرسوم (explain the fee) ويقترح منتجات أخرى تناسبها أكثر (suggest other products that suit her better) ويفصّل العرض لها (tailor the offer) بعد أن يطّلع على جميع تفاصيل حسابها (after reading every detail of her account)
 - C. أرسل كل شيء (Send everything)، لكن اطلب من النموذج في موجّه النظام ألّا يكشفه (tell the model in the system prompt not to reveal it)
 - D. اطلب من العميل لصق رقم بطاقته في المحادثة (paste their card number into the chat) من أجل الدقة (for accuracy)
 

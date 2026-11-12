@@ -149,36 +149,36 @@ Rania's note: *"Two reds, both fixed by changing scope, not reasons to stop. Fai
 
 **1. Faisal reports that Najm has "eight years and hundreds of thousands of rows" of SME lending data. What is the most useful next step?**
 
-- A. Start model training, since the volume is clearly sufficient
-- B. Ask how many rows match the target product and population, how many have reliable outcome labels, and which fields are available at decision time
-- C. Buy external SME data to be safe
-- D. Ask the vendor which model architecture handles large datasets best
+- A. Start model training straight away, since hundreds of thousands of rows is clearly sufficient volume and the team has already waited long enough for the data
+- B. Ask the vendor which model architecture handles large datasets best and how long it would take to train
+- C. Buy external SME data to be safe, so that the model sees more businesses than Najm's own history covers
+- D. Ask how many rows match the target product and population, how many have reliable outcome labels, and which fields are available at decision time
 
 <details><summary>Answer</summary>
 
-**B.** Volume is not readiness: ask about relevance, labels, representativeness and availability at decision time. C is premature before you know the gaps. (🧭 Why it matters; 🟢 The essentials.)
+**D.** Volume is not readiness: ask about relevance, labels, representativeness and availability at decision time. C is premature before you know the gaps. (🧭 Why it matters; 🟢 The essentials.)
 
 </details>
 
 **2. A credit model performs extremely well in testing. Its most predictive input is a field that credit analysts complete after a loan is approved. What is the problem?**
 
-- A. Training-serving skew caused by messy customer input
-- B. Selection bias from missing declined applicants
-- C. Label leakage: the field will not exist when a new application is decided
-- D. Poor data timeliness
+- A. Training-serving skew caused by messy customer input that differs between the training files and live use
+- B. Selection bias from missing declined applicants, who never appear in the repayment history
+- C. Poor data timeliness, because the analysts' field is updated too slowly for the model to use
+- D. Label leakage: the field will not exist when a new application is decided
 
 <details><summary>Answer</summary>
 
-**C.** A field recorded after the decision carries information the model will not have at decision time, so test results overstate real performance. Skew (A) is about runtime data differing in form from training data, not about information from the future. (🟡 Going deeper.)
+**D.** A field recorded after the decision carries information the model will not have at decision time, so test results overstate real performance. Skew (A) is about runtime data differing in form from training data, not about information from the future. (🟡 Going deeper.)
 
 </details>
 
 **3. For Credit Memo Copilot, which readiness issue is specific to a retrieval-based GenAI product rather than a predictive model?**
 
-- A. Whether outcome labels exist for past loans
+- A. Whether outcome labels exist for past loans that were approved, repaid, restructured or written off
 - B. Whether retrieval respects the same document access permissions as the source system
-- C. Whether the training data includes declined applicants
-- D. Whether the model's features are available at decision time
+- C. Whether the training data includes declined applicants as well as approved ones, to avoid selection bias
+- D. Whether the model's features are all available at the moment the lending decision is made
 
 <details><summary>Answer</summary>
 
@@ -201,7 +201,7 @@ Rania's note: *"Two reds, both fixed by changing scope, not reasons to stop. Fai
 
 **5. Why does the lesson recommend building a golden set of real cases with agreed answers before building the product?**
 
-- A. It is required by the EU AI Act for all systems
+- A. It is required by the EU AI Act for every AI system that a bank puts in front of customers or uses with its own staff, however small the risk
 - B. It replaces the need for training data
 - C. Without it the team cannot tell whether any version works, and building it exposes disagreement about what "good" means
 - D. It lets the team skip user research
@@ -373,27 +373,27 @@ Loop metrics reviewed monthly by Rania: share of memos with a captured signal, m
 
 **1. Smart Alerts learns only from customer responses to the alerts it raises. After six months it catches known fraud patterns well but misses new ones. What is the most likely cause?**
 
-- A. The model is too small
-- B. A degenerate feedback loop: transactions it never flagged never produce labels
-- C. Customers are giving too much feedback
-- D. Label leakage from post-decision fields
+- A. A degenerate feedback loop: transactions it never flagged never produce labels
+- B. The model is too small to hold the many fraud patterns that appear across millions of transactions
+- C. Customers are giving too much feedback, and the model is overfitting to the most active responders
+- D. Label leakage from post-decision fields that the model should not have been trained on
 
 <details><summary>Answer</summary>
 
-**B.** When the product decides which cases get labelled, it learns only what it already sees. The remedy is a holdout sample of unflagged transactions plus independent labels. D is a lesson 3.1 problem, not a loop problem. (🟡 Going deeper, "Degenerate feedback loops".)
+**A.** When the product decides which cases get labelled, it learns only what it already sees. The remedy is a holdout sample of unflagged transactions plus independent labels. D is a lesson 3.1 problem, not a loop problem. (🟡 Going deeper, "Degenerate feedback loops".)
 
 </details>
 
 **2. RMs edit about 40% of Credit Memo Copilot's drafts. What is the best way to turn this into useful learning?**
 
-- A. Treat every edited section as a model error and retrain monthly
+- A. Treat every edited section as a model error, retrain the model every month, and report the edit rate to the committee each quarter
 - B. Ignore edits, because they are just personal style
-- C. Pair edit data with a short reason picker and a weekly sampled review, then fix patterns in the corpus, prompt or template
-- D. Remove the ability to edit so the signal is cleaner
+- C. Remove the ability to edit so the signal is cleaner
+- D. Pair edit data with a short reason picker and a weekly sampled review, then fix patterns in the corpus, prompt or template
 
 <details><summary>Answer</summary>
 
-**C.** Implicit signals are ambiguous. Combining them with explicit reasons and human error analysis turns them into actionable patterns. A treats style as error and assumes retraining is the fix. For most GenAI products the fix sits in the parts the team controls. (🟢 The essentials; 🟡 "Where learning actually happens".)
+**D.** Implicit signals are ambiguous. Combining them with explicit reasons and human error analysis turns them into actionable patterns. A treats style as error and assumes retraining is the fix. For most GenAI products the fix sits in the parts the team controls. (🟢 The essentials; 🟡 "Where learning actually happens".)
 
 </details>
 
@@ -425,14 +425,14 @@ Loop metrics reviewed monthly by Rania: share of memos with a captured signal, m
 
 **5. Tariq proposes automatically retraining a customer-facing model every night on the previous day's user feedback. What is the main product concern?**
 
-- A. Nightly retraining is always too expensive
-- B. Behaviour would change silently and often, eroding trust and traceability, and it opens the door to deliberately poisoned feedback
+- A. Behaviour would change silently and often, eroding trust and traceability, and it opens the door to deliberately poisoned feedback
+- B. Nightly retraining is always too expensive
 - C. Feedback data is never useful for training
-- D. It breaks the rule that models may only be updated once a year
+- D. It breaks the rule that models may only be updated once a year, which the bank's model risk policy sets for all production models in the bank
 
 <details><summary>Answer</summary>
 
-**B.** "Update and adapt cautiously": change in evaluated, versioned releases with notification and rollback; unfiltered feedback can be manipulated. D is an invented rule. (🔴 Expert view, "Update cautiously".)
+**A.** "Update and adapt cautiously": change in evaluated, versioned releases with notification and rollback; unfiltered feedback can be manipulated. D is an invented rule. (🔴 Expert view, "Update cautiously".)
 
 </details>
 
@@ -598,7 +598,7 @@ Design decisions recorded:
 
 - A. Whether the fine-tuned model will score higher on public benchmarks
 - B. Whether this use was declared and has a legal basis, what the vendor contract permits, and whether the bank could honour erasure requests afterwards
-- C. Whether customers clicked "accept" on the app's terms and conditions
+- C. Whether customers clicked "accept" on the app's terms and conditions when they first downloaded the app, which the bank treats as consent for any later use of transcripts
 - D. Whether the transcripts are in English
 
 <details><summary>Answer</summary>
@@ -609,14 +609,14 @@ Design decisions recorded:
 
 **2. Marketing wants to send a personal-loan offer to customers who asked Najm Assist about school fees. Which check does this use most clearly fail?**
 
-- A. Data accuracy
-- B. The surprise test and purpose limitation: customers shared the information to get an answer, not to be targeted
-- C. Storage limitation
-- D. Security
+- A. The surprise test and purpose limitation: customers shared the information to get an answer, not to be targeted
+- B. Data accuracy: whether the school-fee answers Najm Assist gave were correct
+- C. Storage limitation: whether the transcripts were kept for longer than the stated retention period allows under bank policy
+- D. Security: whether the transcripts are protected from unauthorised access inside the bank
 
 <details><summary>Answer</summary>
 
-**B.** A reasonable customer would be surprised, and the purpose differs from the one the data was collected for. It also damages trust in the assistant. (🟡 "May we reuse this data"; 🔴 "Trust is a product metric".)
+**A.** A reasonable customer would be surprised, and the purpose differs from the one the data was collected for. It also damages trust in the assistant. (🟡 "May we reuse this data"; 🔴 "Trust is a product metric".)
 
 </details>
 
@@ -635,14 +635,14 @@ Design decisions recorded:
 
 **4. For a bank's assistant answering a customer's questions about their own account, which statement about legal basis is most accurate?**
 
-- A. Consent is always required for AI processing
+- A. Consent is always required for AI processing of personal data, so the assistant must ask the customer to agree before every conversation and record that agreement
 - B. The PM should choose the legal basis and inform the DPO
-- C. Consent is one of several bases and often not the most suitable in a banking relationship; the DPO decides, based on a precise description of purposes from the PM
-- D. No legal basis is needed if the data stays inside the bank
+- C. No legal basis is needed if the data stays inside the bank
+- D. Consent is one of several bases and often not the most suitable in a banking relationship; the DPO decides, based on a precise description of purposes from the PM
 
 <details><summary>Answer</summary>
 
-**C.** Contract or legitimate interests often fit service delivery better than fragile consent. The DPO decides; the PM supplies the purposes. B reverses the roles. (🟢 "Legal basis: consent is not the default".)
+**D.** Contract or legitimate interests often fit service delivery better than fragile consent. The DPO decides; the PM supplies the purposes. B reverses the roles. (🟢 "Legal basis: consent is not the default".)
 
 </details>
 
@@ -650,12 +650,12 @@ Design decisions recorded:
 
 - A. Only in the customer database
 - B. Only in the prompt the user types
-- C. In the prompt, retrieved documents, outputs, logs, feedback data and evaluation sets
-- D. Nowhere, if the model vendor does not train on it
+- C. Nowhere, if the model vendor does not train on it
+- D. In the prompt, retrieved documents, outputs, logs, feedback data and evaluation sets
 
 <details><summary>Answer</summary>
 
-**C.** Each holds personal data and needs retention and deletion rules. D confuses vendor training with Najm's own processing. (🟢 "Personal data is everywhere in AI products".)
+**D.** Each holds personal data and needs retention and deletion rules. C confuses vendor training with Najm's own processing. (🟢 "Personal data is everywhere in AI products".)
 
 </details>
 

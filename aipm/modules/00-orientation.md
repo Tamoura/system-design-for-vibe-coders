@@ -194,27 +194,27 @@ Khalid agrees to the outcome, because it is written in his language: calls, sati
 
 **3. At Najm Bank, who should decide the model architecture for SME Instant Finance?**
 
-- A. The AI product manager, because they own the product
-- B. The data science and engineering leads, with the PM setting the quality bar and trade-offs
-- C. The Head of AI Governance
-- D. The business owner, because they fund it
+- A. The data science and engineering leads, with the PM setting the quality bar and trade-offs
+- B. The AI product manager, because they own the product and are accountable for every decision about how it works
+- C. The Head of AI Governance, because architecture choices affect risk and should be approved centrally
+- D. The business owner, because they fund the product and carry the commercial risk of its choices
 
 <details><summary>Answer</summary>
 
-**B.** The PM owns *what good means* and the trade-offs. Specialists choose *how* to achieve it. Option A is the tempting mistake: owning the product does not mean owning every technical decision. (🟢 The essentials, role table; 🏛️ role card.)
+**A.** The PM owns *what good means* and the trade-offs. Specialists choose *how* to achieve it. Option B is the tempting mistake: owning the product does not mean owning every technical decision. (🟢 The essentials, role table; 🏛️ role card.)
 
 </details>
 
 **4. Which statement best describes the difference between an AI feature PM and an AI platform PM?**
 
-- A. The feature PM works on generative AI; the platform PM works on classic machine learning
-- B. The feature PM manages an AI capability inside a product for end users; the platform PM manages shared AI capabilities that other internal teams build on
+- A. The feature PM manages an AI capability inside a product for end users; the platform PM manages shared AI capabilities that other internal teams build on
+- B. The feature PM works on generative AI; the platform PM works on classic machine learning
 - C. The platform PM only manages vendors
 - D. There is no real difference; the titles are interchangeable
 
 <details><summary>Answer</summary>
 
-**B.** The difference is who the customer is: end users of one product, or internal teams using shared services. The type of AI (A) does not define the role. (🟡 Going deeper.)
+**A.** The difference is who the customer is: end users of one product, or internal teams using shared services. The type of AI (B) does not define the role. (🟡 Going deeper.)
 
 </details>
 
@@ -396,10 +396,10 @@ Faisal's spec line "the assistant answers fee questions correctly" becomes four 
 
 **1. Faisal's spec says: "Najm Assist answers fee questions correctly." What is the best rewrite?**
 
-- A. "Najm Assist answers fee questions correctly and quickly"
-- B. "Najm Assist meets an agreed accuracy rate on a golden set of real fee questions in both languages, with a stricter bar for fee amounts, and hands over to a human when its sources do not cover the question"
-- C. "Najm Assist uses the most accurate model available"
-- D. "Najm Assist is tested by the product team before launch"
+- A. Najm Assist answers fee questions correctly and quickly, and customers rate the answers as helpful in the post-chat survey, with any complaint from a customer reviewed by the service team within a week
+- B. Najm Assist meets an agreed accuracy rate on a golden set of real fee questions in both languages, with a stricter bar for fee amounts and a human handover when sources fall short
+- C. Najm Assist uses the most accurate large language model available, chosen after comparing public benchmark results across several vendors
+- D. Najm Assist is tested by the product team across a broad range of example fee questions before launch, and compliance signs off the written test summary
 
 <details><summary>Answer</summary>
 
@@ -422,10 +422,10 @@ Faisal's spec line "the assistant answers fee questions correctly" becomes four 
 
 **3. Relationship managers using the Credit Memo Copilot have started pasting its drafts straight into credit committee packs without checking the figures. Which difference is this mainly about?**
 
-- A. Costly per use
-- B. Data-hungry
+- A. Costly per use: each request spends tokens, so the bill rises with volume and prompt length
+- B. Data-hungry: the drafts depend on large volumes of good examples and clean source documents
 - C. Trust-bound: reliance is higher than the product's reliability justifies
-- D. None; this is a training issue only
+- D. None of these; this is a training issue that a short course for the relationship managers would fix
 
 <details><summary>Answer</summary>
 
@@ -703,14 +703,14 @@ Faisal's comment on reading it: "So I recommend and the business decides, and La
 
 **4. While scoping Najm Assist, Faisal needs to know exactly which obligations the EU AI Act places on customer-facing chatbots. What does this course advise?**
 
-- A. Work it out from first principles in the product spec
-- B. Go to *AI Governance: Zero to Hero* and involve Layla, then bring the answer back into the product decision
-- C. Ignore it until launch
-- D. Go to *SaaS Building Blocks*
+- A. Go to *AI Governance: Zero to Hero* and involve Layla, then bring the answer back into the product decision
+- B. Work out the obligations from first principles in the product spec, using Faisal's own reading of the Act and recent press coverage
+- C. Ignore it until launch week, then ask the legal team to review the finished assistant and fix anything they raise
+- D. Go to *SaaS Building Blocks*, which covers how to build and run customer-facing features such as chat and notifications
 
 <details><summary>Answer</summary>
 
-**B.** "What exactly does the law require?" is a question for the governance companion course and for Layla's team. The product decision stays here. *SaaS Building Blocks* (D) covers product plumbing, not regulation. (🟡 The companion courses.)
+**A.** "What exactly does the law require?" is a question for the governance companion course and for Layla's team. The product decision stays here. *SaaS Building Blocks* (D) covers product plumbing, not regulation. (🟡 The companion courses.)
 
 </details>
 
@@ -719,7 +719,7 @@ Faisal's comment on reading it: "So I recommend and the business decides, and La
 - A. Faisal
 - B. Rania
 - C. The Head of Corporate Banking
-- D. Layla
+- D. Layla, who owns the risk tier and the controls for the pilot
 
 <details><summary>Answer</summary>
 

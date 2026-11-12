@@ -258,8 +258,8 @@ def requirement(request, record_property):
 
 **2. للإصدار 2026.09 تغطية أسطر (line coverage) بنسبة 90% وقد اجتاز بوابته (passes its gate)، ومع ذلك تصل تحويلات مكررة (duplicate transfers) إلى العملاء. ما أفضل قراءة لذلك؟**
 
-- A. أداة التغطية معطوبة (The coverage tool is broken) وتحتاج إلى استبدال
-- B. يجب أن تبلغ التغطية 95% قبل الوثوق بالبوابة (before the gate is trusted)
+- A. أداة التغطية معطوبة (The coverage tool is broken) وتحتاج إلى استبدال (needs replacing)
+- B. يجب أن تبلغ التغطية 95% (Coverage must reach 95%) قبل الوثوق بالبوابة (before the gate is trusted)
 - C. لم يكتب الفريق اختبارات وحدة كافية (The team did not write enough unit tests)
 - D. التغطية تُظهر ما شُغِّل لا ما فُحِص (Coverage shows what ran, not what was checked)
 
@@ -271,8 +271,8 @@ def requirement(request, record_property):
 
 **3. لدى فريق الهاتف (The mobile squad) 40 اختبار وحدة (unit tests) و15 اختبار واجهة برمجة (API tests) و600 اختبار واجهة مستخدم (UI tests). يستغرق خط التكامل والتسليم المستمرين (The pipeline) 55 دقيقة ويفشل عشوائيًا (fails randomly). ما أفضل خطوة أولى؟**
 
-- A. نقل فحوص القواعد التي لا تحتاج إلى شاشة إلى مستوى اختبارات واجهة البرمجة (Move the rule checks that need no screen down to API tests)
-- B. إضافة عمال تنفيذ أكثر (more workers) ليكتمل 600 اختبار واجهة أسرع بكثير
+- A. نقل فحوص القواعد التي لا تحتاج إلى شاشة إلى مستوى اختبارات واجهة البرمجة (API tests)
+- B. إضافة عمال تنفيذ أكثر (more workers) ليكتمل 600 اختبار واجهة (UI tests) أسرع بكثير (much sooner)
 - C. إعادة تشغيل اختبارات الواجهة الفاشلة تلقائيًا حتى يخضر البناء (Rerun failed UI tests automatically)
 - D. حذف أقدم اختبارات الواجهة للوصول إلى رقم مستدير (Delete the oldest UI tests to reach a round number)
 
@@ -634,7 +634,7 @@ test('a synthetic customer can send 1.00 QAR', async ({ page }) => {
 
 - A. تختلف التجزئات من عملية إلى أخرى (Hashes differ per process)، فقد يعمل اختبار مرتين أو لا يعمل أبدًا
 - B. قد يكون الباقي سالبًا (The remainder can be negative)، فلا تحصل بعض الاختبارات على شريحة
-- C. تتكدس الاختبارات البطيئة كلها في شريحة واحدة (Slow tests all pile into one shard)، فتطول تلك المهمة كثيرًا
+- C. تتكدس الاختبارات البطيئة في شريحة واحدة (Slow tests pile into one shard)، فتطول تلك المهمة
 - D. التجزئة المدمجة بطيئة جدًا (far too slow) على مجموعة كبيرة
 
 <details><summary>الإجابة</summary>
@@ -671,8 +671,8 @@ test('a synthetic customer can send 1.00 QAR', async ({ page }) => {
 
 **5. اختبار الدخان الوحيد في بوابة النشر (A deploy gate's only smoke test) هو `GET /health` الذي يعيد 200. لماذا قد ينجح بينما فشل الإصدار؟**
 
-- A. قد تظل النسخة القديمة تخدم (the old version may still be serving)، لذا افحص البناء أيضًا (check the build too)
-- B. لا تعيد نقاط الصحة (Health endpoints) 200 أبدًا أثناء تشغيل النشر
+- A. قد تظل النسخة القديمة تخدم (the old version may still be serving)، لذا افحص البناء أيضًا
+- B. لا تعيد نقاط الصحة (Health endpoints) 200 أبدًا (never return 200) أثناء تشغيل النشر
 - C. يجب أن تستعلم اختبارات الدخان دائمًا عن قاعدة البيانات مباشرة (query the database directly)
 - D. اختبار دخان واحد بطيء جدًا دائمًا ليعمل بوابة (always too slow to work as a gate)
 

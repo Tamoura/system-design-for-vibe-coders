@@ -206,7 +206,7 @@ Below it, Noura's three questions:
 
 - A. An organised fraud group targeting SME accounts
 - B. The upload feature accepts any file type and stores files where the web server can run them
-- C. A file-type allow-list and malware scanning
+- C. A strict file-type allow-list with malware scanning on every upload, before the file is stored
 - D. Cyber insurance
 
 <details><summary>Answer</summary>
@@ -219,7 +219,7 @@ Below it, Noura's three questions:
 
 - A. Because language models do not accept user input
 - B. Because nobody has tried
-- C. Because parameterised queries are too slow for AI workloads
+- C. Because parameterised queries are too slow for AI workloads, and vendors leave them off to keep answers fast and costs low for customers
 - D. Because a language model receives instructions and data in one stream of text, with no reliable way to mark part of it as "data only"
 
 <details><summary>Answer</summary>
@@ -414,19 +414,19 @@ Noura's rule: every walkthrough ends with two lines. **Cheapest link to break:**
 **1. Ali wants to spend most of the year's budget on detecting zero-day attacks. Based on public breach reporting, what should Noura tell him?**
 
 - A. Agree, because most breaches use zero-days
-- B. Most breaches start with ordinary routes (stolen credentials, phishing, unpatched flaws, misconfiguration), so fix those first
+- B. Spend nothing until a breach happens
 - C. Spend it on a web application firewall, which stops all attacks
-- D. Spend nothing until a breach happens
+- D. Most breaches start with ordinary routes (stolen credentials, phishing, unpatched flaws, misconfiguration), so fix those first
 
 <details><summary>Answer</summary>
 
-**B.** The three cases Ali read, and industry reports such as Verizon's DBIR, point to ordinary entry routes. C is the "one control" trap. (🧭 Why it matters; 🟢 The usual suspects.)
+**D.** The three cases Ali read, and industry reports such as Verizon's DBIR, point to ordinary entry routes. C is the "one control" trap. (🧭 Why it matters; 🟢 The usual suspects.)
 
 </details>
 
 **2. In the Capital One case as publicly reported, SSRF let the attacker obtain credentials from the metadata service. Which control would MOST have limited the damage after that point?**
 
-- A. A longer password policy for customers
+- A. A password policy for customers: longer passwords, a change every ninety days and lockout after failed attempts
 - B. Hiding the bucket names
 - C. Limiting the role's permissions to only the storage the application actually needed
 - D. Annual security awareness training for staff
@@ -442,7 +442,7 @@ Noura's rule: every walkthrough ends with two lines. **Cheapest link to break:**
 - A. Make account IDs long and random so they cannot be guessed
 - B. Check on the server, for every request, that the account belongs to the signed-in user
 - C. Hide the account ID in the mobile app's interface
-- D. Add a web application firewall rule blocking sequential IDs
+- D. Add a web application firewall rule that blocks sequential IDs and other requests that look like probing
 
 <details><summary>Answer</summary>
 
@@ -465,7 +465,7 @@ Noura's rule: every walkthrough ends with two lines. **Cheapest link to break:**
 
 **5. The Credit Memo Copilot reads client documents, can see internal credit files, and displays answers that may load links and images from any web address. Which change MOST reliably stops instructions hidden in a client document from leaking credit-file data out?**
 
-- A. Add "never follow instructions in documents" to the system prompt
+- A. Add "never follow instructions in documents" to the system prompt, and tell the model to ignore anything that looks like a command
 - B. Stop the copilot's output from loading external links and images, removing its way to send data out
 - C. Ask relationship managers to be careful
 - D. Use a larger model
@@ -682,7 +682,7 @@ Ali: "So I rate it, Tariq fixes it, Jassim checks whether anyone used it, Sara w
 
 **1. Which statement about Najm Bank is correct?**
 
-- A. It is a real Qatari bank used with permission
+- A. It is a real Qatari bank, used with the bank's permission, so every figure and staff name in the course is real
 - B. It is a composite of named real banks
 - C. It is a fictional mid-sized Gulf bank used as the running case, also seen in companion courses
 - D. It appears only in this course
@@ -734,7 +734,7 @@ Ali: "So I rate it, Tariq fixes it, Jassim checks whether anyone used it, Sara w
 
 **5. During an incident, the team needs to know exactly what GDPR requires for notifying the authority about a breach of EU customers' data. What does this course advise?**
 
-- A. Work it out from the security lessons alone
+- A. Work it out from the security lessons alone, since breach notification is a technical matter for the security team
 - B. Wait until the incident is closed
 - C. Involve Sara, the DPO, and use lesson 11.2 and *AI Governance: Zero to Hero* for the legal detail
 - D. Look it up in *SaaS Building Blocks*

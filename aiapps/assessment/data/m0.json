@@ -11,15 +11,15 @@
    },
    "o": {
     "en": [
-     "Whether it makes more than one model call to finish a single request",
+     "Whether it makes more than one model call to finish a single user request",
      "Whether the model, not your code, chooses each next step while it runs",
-     "Whether it calls at least one tool while it handles a single request",
+     "Whether it calls at least one tool while it handles a single user request",
      "Whether it resends the earlier turns of the conversation with every call"
     ],
     "ar": [
      "ما إذا كان يجري أكثر من استدعاء واحد للنموذج (model call) لإنهاء الطلب الواحد (single request)",
      "ما إذا كان النموذج (model)، لا شيفرتك (your code)، من يختار كل خطوة تالية (next step)",
-     "ما إذا كان يستدعي أداة (tool) واحدة على الأقل أثناء معالجته للطلب (single request)",
+     "ما إذا كان يستدعي أداة (tool) واحدة على الأقل أثناء معالجته للطلب الواحد (single request)",
      "ما إذا كان يعيد إرسال أدوار المحادثة السابقة (earlier turns of the conversation) في كل استدعاء (call)"
     ]
    },

@@ -619,7 +619,7 @@ Plan first; implement in small steps; run the tests after each.
 **3. With the write scope granted, a poisoned ticket asks for `create_ticket` and Rayan types "y" unread. What follows?**
 
 - A. The schema blocks it, because validation also judges intent
-- B. The scope check blocks it, because the poisoned text lacks the scope
+- B. The scope check blocks it, because the poisoned text lacks the needed scope
 - C. The server refuses it, because the title looks like a duplicate
 - D. The ticket is filed, because the call is valid and a person approved it
 

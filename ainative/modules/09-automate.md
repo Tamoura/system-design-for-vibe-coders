@@ -253,7 +253,7 @@ Delete the first comment line in your copy: it names the file in the course repo
 
 - A. A job that merges pull requests when the reviewer subagent reports no findings
 - B. A script that sets ticket severity from the model's opinion without a check
-- C. A skill that decides whether a change needs a second human reviewer
+- C. A skill that decides whether a change needs a second human reviewer to read it
 - D. A hook that parses each edited Python file and reports a syntax error
 
 <details><summary>Answer</summary>
@@ -530,10 +530,10 @@ Time spent:         (you / the agent)
 
 **4. Your script passes every check against the stand-in. What does that show?**
 
-- A. It will behave the same with the real program and any model
+- A. It will behave the same with the real program and with any model
 - B. It copes with the documented shape and the planted failures
 - C. Its prompt classifies real customers' support tickets correctly
-- D. Its own tests would catch a regression in the ticket parser
+- D. Its own tests would catch a later regression in the ticket parser
 
 <details><summary>Answer</summary>
 

@@ -98,13 +98,13 @@
      "Nothing extra: the tools and controls are unchanged, so the earlier red-team results still hold",
      "Rely on the provider's own red-teaming, which already covers the new model version's behaviour",
      "Re-run the adversarial set with its ASR gates, plus a short manual session, on the pinned version",
-     "Run a large public jailbreak list against the new version, and switch over if none of it gets through"
+     "Run a large public jailbreak list on the new version, and switch over if none of it gets through"
     ],
     "ar": [
      "لا شيء إضافي (nothing extra): الأدوات والضوابط (tools and controls) لم تتغير، لذا تبقى نتائج الفريق الأحمر السابقة (earlier red-team results) سارية (still hold)",
      "الاعتماد على اختبارات الفريق الأحمر لدى المزوّد (provider's own red-teaming)، فهي تغطي بالفعل (already covers) سلوك إصدار النموذج الجديد (new model version's behaviour)",
      "إعادة تشغيل مجموعة الاختبارات العدائية (adversarial set) مع بوابات معدل نجاح الهجوم (ASR gates)، وجلسة يدوية قصيرة (short manual session)، على الإصدار المثبّت (pinned version)",
-     "تشغيل قائمة عامة كبيرة لكسر القيود (large public jailbreak list) على الإصدار الجديد (new version)، والانتقال إليه (switch over) إن لم ينفذ شيء منها (if none of it gets through)"
+     "تشغيل قائمة عامة كبيرة لكسر القيود (large public jailbreak list) على الإصدار الجديد (new version)، والانتقال إليه (switch over) إن لم يمرّ منها شيء (if none of it gets through)"
     ]
    },
    "a": 2,

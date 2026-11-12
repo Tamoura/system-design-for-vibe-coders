@@ -184,10 +184,10 @@ Each production role also gets a **role review card**: the workload that assumes
 
 **1. Najm Bank moves SME Portal's database from a self-managed virtual machine to the provider's managed database service. Which responsibility moves to the provider?**
 
-- A. Deciding who may connect to the database
+- A. Deciding who may connect to the database and which network paths lead to it
 - B. Patching the database engine and the operating system beneath it
-- C. Deciding whether it has a public endpoint
-- D. Classifying the customer data in it
+- C. Deciding whether it has a public endpoint and which encryption settings it uses
+- D. Classifying the customer data in it and deciding how long each class is kept
 
 <details><summary>Answer</summary>
 
@@ -198,7 +198,7 @@ Each production role also gets a **role review card**: the workload that assumes
 **2. Ali finds the CI pipeline deploying to production with an access key stored as a CI variable two years ago. What is the best replacement?**
 
 - A. Rotate the key every 90 days
-- B. Move the key into an encrypted file in the source repository
+- B. Move the key into an encrypted file in the source repository, with the decryption password stored in the pipeline's protected settings page
 - C. Use OIDC workload identity federation, with the role's trust policy pinned to the bank's repository and production environment
 - D. Give the pipeline a separate admin user with MFA
 
@@ -213,7 +213,7 @@ Each production role also gets a **role review card**: the workload that assumes
 - A. Fix the SSRF with a destination allowlist, require IMDSv2, and scope the machine's role to the minimum
 - B. Add a CAPTCHA to the reporting page
 - C. Move the service to a larger instance type
-- D. Rely on the provider, because the metadata service is the provider's responsibility
+- D. Rely on the provider, because the metadata service is the provider's responsibility under the shared responsibility model
 
 <details><summary>Answer</summary>
 
@@ -225,7 +225,7 @@ Each production role also gets a **role review card**: the workload that assumes
 
 - A. With the oldest findings
 - B. With findings where internet exposure, an exploitable weakness and an identity that can reach sensitive data occur together
-- C. With every finding the tool rates "critical", in alphabetical order
+- C. With every finding the tool rates "critical", in alphabetical order of the resource name, before any finding rated "high" or "medium", wherever the resource is
 - D. By turning off the noisiest rules
 
 <details><summary>Answer</summary>
@@ -502,7 +502,7 @@ Tariq and Ali agree the **Najm Kubernetes Workload Baseline v1**, enforced autom
 **1. The Helm chart for Najm Assist's tool service sets `privileged: true` because "the health check failed without it". What should Ali ask for?**
 
 - A. Keep privileged mode, with a comment explaining why
-- B. Move the pod to a namespace where privileged mode is allowed
+- B. Move the pod to a namespace where privileged mode is allowed, and document the exception in the namespace's own description
 - C. Accept it, because the provider manages the cluster
 - D. Find the real cause, grant only the narrow fix it needs, and enforce the Restricted profile on the namespace
 
@@ -542,7 +542,7 @@ Tariq and Ali agree the **Najm Kubernetes Workload Baseline v1**, enforced autom
 
 - A. In the pull request and pipeline: an IaC scan and policy gate that fail the build before the change is applied
 - B. In the CSPM tool, a day after deployment
-- C. By banning AI agents from infrastructure work
+- C. By banning AI agents from infrastructure work and requiring every change to go through the platform team's ticket queue, with no exceptions
 - D. In the quarterly access review
 
 <details><summary>Answer</summary>
@@ -556,7 +556,7 @@ Tariq and Ali agree the **Najm Kubernetes Workload Baseline v1**, enforced autom
 - A. Separate namespaces, and rely on that
 - B. A separate node pool with a sandboxed runtime such as gVisor and no network path to the card-action tools, or a separate cluster
 - C. The same nodes, with more CPU for the analysis code
-- D. Run the analysis code as root so it can install its own libraries
+- D. Run the analysis code as root so it can install its own libraries, and give it read access to the shared secrets volume for convenience in all environments
 
 <details><summary>Answer</summary>
 
@@ -805,7 +805,7 @@ Standing rules: the metadata address is denied from all pods except named node a
 **2. Najm Assist is getting a web-fetch tool. Which network control most directly stops injected instructions from making it send customer data to an attacker's server?**
 
 - A. A larger DDoS protection plan
-- B. A WAF rule on inbound API requests
+- B. A WAF rule on inbound API requests that blocks suspicious URLs, unusual request sizes and known scanner signatures
 - C. Default-deny egress for the AI tier, with outbound traffic only through an egress proxy with an allowlist
 - D. A CDN in front of the assistant
 
@@ -820,7 +820,7 @@ Standing rules: the metadata address is denied from all pods except named node a
 - A. A virtual patch for the exploit pattern, monitored, with the code fix tracked to a deadline and the rule removed afterwards
 - B. Rely on the WAF permanently and close the ticket
 - C. Nothing, because WAFs can be bypassed
-- D. Switch the whole WAF to its highest paranoia level in blocking mode
+- D. Switch the whole WAF to its highest paranoia level in blocking mode, for all applications behind it, at once, and leave it there
 
 <details><summary>Answer</summary>
 
@@ -844,7 +844,7 @@ Standing rules: the metadata address is denied from all pods except named node a
 **5. Najm Mobile's API sits behind a CDN, DDoS protection and a WAF. Why must the origin accept traffic only from the edge?**
 
 - A. Because the CDN is cheaper than the origin
-- B. Because TLS cannot work without a CDN
+- B. Because TLS cannot work without a CDN in front of the origin, which has to terminate every connection on behalf of the application servers
 - C. Because rate limits only work on the origin
 - D. Otherwise attackers who find the origin's address can bypass the DDoS protection and the WAF
 

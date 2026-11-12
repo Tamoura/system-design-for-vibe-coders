@@ -197,10 +197,10 @@ def make_judge(client, model: str = JUDGE_MODEL):
 
 **1. يرفع تغيير في الموجّه (A prompt change) المصنِّف من 83% إلى 87% (lifts the classifier from 83% to 87%). والحالتان اللتان نجحتا حديثًا هما تذكرتان لصقهما التغيير في الموجّه أمثلةً (The two newly passing cases are tickets the change pasted into the prompt as examples). ماذا تستنتج؟ ⁦(What do you conclude?)⁩**
 
-- A. نجح التغيير، فأبقِه وارفع الحد الأدنى (The change worked, so keep it and raise the floor)
+- A. نجح التغيير، فأبقِه وارفع الحد الأدنى للنجاح (The change worked, so keep it and raise the pass floor)
 - B. المكسب باطل، فأزل الأمثلة وأعد التشغيل (The gain is void, so remove the examples and rerun)
-- C. المجموعة صغيرة جدًا، فضاعف التكرارات (The set is too small, so double the repetitions)
-- D. الأمثلة تحمل تسميات صحيحة، فلا بأس بها (The examples carry correct labels, so they are fine)
+- C. المجموعة صغيرة جدًا، فضاعف التكرارات في كل تشغيل (The set is too small, so double the repetitions each run)
+- D. الأمثلة تحمل تسميات صحيحة، فلا بأس بإبقائها (The examples carry correct labels, so they are fine to keep)
 
 <details><summary>الإجابة</summary>
 
@@ -249,8 +249,8 @@ def make_judge(client, model: str = JUDGE_MODEL):
 
 **5. يغيّر طلب سحب (A pull request) وصف أداة (changes a tool description) ويعدّل أيضًا خط الأساس (and also edits the baseline) ليتحول التكامل المستمر إلى الأخضر (so CI turns green). ماذا ينبغي أن تفعل المراجعة؟ ⁦(What should review do?)⁩**
 
-- A. اقبله، فالفحص الأخضر يعني أن التغيير آمن (Accept it, since a green check means the change is safe)
-- B. اقبله إن ارتفعت الدرجة العامة نقطة على الأقل (Accept it if the overall score rose by at least a point)
+- A. اقبله، فالفحص الأخضر يعني أن التغيير آمن (Accept it, as a green check means that the change is safe)
+- B. اقبله إن ارتفعت الدرجة العامة بنقطة واحدة على الأقل مقارنةً بخط الأساس (Accept it if the overall score rose by a point)
 - C. ارفض تعديل خط الأساس، وأعد خط الأساس في إيداعه الخاص (Reject the baseline edit; re-baseline in its own commit)
 - D. اطلب ثلاثة تكرارات لكل حالة أولًا (Ask for three repeats of every case first)
 
@@ -634,10 +634,10 @@ Plan first; one file at a time; run the tests after each step.
 
 **4. الحالة الحرجة P11 تفشل (Critical case P11 fails) في خط الأساس والآن (in the baseline and now)؛ ولم يتغير شيء آخر (nothing else changed). ماذا تفعل البوابة؟ ⁦(What does the gate do?)⁩**
 
-- A. تخرج بالرمز 1، لأن حالة حرجة تفشل (Exits 1, because a critical case is failing)
+- A. تخرج بالرمز 1، لأن حالة حرجة تفشل الآن (Exits 1, because a critical case is failing now)
 - B. تخرج بالرمز 0، مع ملاحظة عن عيب مفتوح (Exits 0, with a note about an open defect)
 - C. تخرج بالرمز 2، لأن التقييم غير جدير بالثقة (Exits 2, because the eval is not trustworthy)
-- D. تحجر الحالة حتى تاريخ الانتهاء (Quarantines the case until the end date)
+- D. تحجر الحالة حتى تاريخ انتهاء المراجعة (Quarantines the case until the review end date)
 
 <details><summary>الإجابة</summary>
 

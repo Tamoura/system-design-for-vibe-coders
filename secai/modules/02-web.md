@@ -193,8 +193,8 @@ Hands-on work runs only on your own machine, against your own code or deliberate
 
 - A. Accept the change, because doubling quotes is how SQL escapes them
 - B. Use a parameterised query, passing `ref` as a parameter
-- C. Add a WAF rule that blocks requests containing `OR`
-- D. Hide database error messages from users
+- C. Add a WAF rule that blocks requests containing `OR`, plus any request with a quote in it
+- D. Hide database error messages from users and log the details for developers only
 
 <details><summary>Answer</summary>
 
@@ -204,7 +204,7 @@ Hands-on work runs only on your own machine, against your own code or deliberate
 
 **2. The invoice list lets users sort by date, amount or status, and the column name arrives in the request. Placeholders do not work for column names. What is the safe approach?**
 
-- A. Wrap the column name in quotes before adding it to the query
+- A. Wrap the column name in quotes and escape any quote characters inside it before adding it to the query
 - B. Map the user's choice through a code-owned allow-list and fall back to a default for anything else
 - C. Strip spaces and semicolons from the input
 - D. Let the ORM decide
@@ -218,7 +218,7 @@ Hands-on work runs only on your own machine, against your own code or deliberate
 **3. A company admin types `{{7*7}}` into the "welcome message" field of the SME Portal, and the preview shows "49". What does this show, and what is the right fix?**
 
 - A. A harmless calculator feature; no action needed
-- B. Cross-site scripting; add a Content Security Policy
+- B. Cross-site scripting; add a Content Security Policy and HTML-encode the message wherever it is shown to company users, staff and auditors
 - C. Server-side template injection; render a constant template that receives the message as a variable, or use logic-less placeholders
 - D. SQL injection; parameterise the query
 
@@ -230,7 +230,7 @@ Hands-on work runs only on your own machine, against your own code or deliberate
 
 **4. A nightly job at a retailer builds a report query by concatenating customer names read from its own database. The names were all inserted with parameterised queries. Is there an injection risk?**
 
-- A. No, because the data came from the company's own database
+- A. No, because the data came from the company's own database, which only trusted staff and parameterised inserts can write to
 - B. No, because the inserts were parameterised
 - C. Yes: stored data can contain interpreter syntax, so the report query must be parameterised too (second-order injection)
 - D. Only if the job runs as an administrator
@@ -457,13 +457,13 @@ Run everything on your own machine or on deliberately vulnerable training apps s
 **1. After Mariam's finding, a developer proposes rejecting any invoice note that contains the text `<script>`. Why is this not enough, and what is the right fix?**
 
 - A. It is enough, because only script tags run JavaScript
-- B. Event handlers such as `onerror` and `javascript:` URLs also run script; render notes as text, or sanitise them with an allow-list such as DOMPurify
-- C. Add `HttpOnly` to the session cookie instead
-- D. Move the notes to a separate database table
+- B. Move the notes to a separate database table
+- C. Add `HttpOnly` to the session cookie instead, so injected script can no longer read it or send it to the attacker, and the stored notes can stay as they are
+- D. Event handlers such as `onerror` and `javascript:` URLs also run script; render notes as text, or sanitise them with an allow-list such as DOMPurify
 
 <details><summary>Answer</summary>
 
-**B.** Blocklists miss the other ways to run script; encoding, or allow-list sanitising for rich text, removes the cause. C limits cookie theft, not what the script does. (🟢 The essentials.)
+**D.** Blocklists miss the other ways to run script; encoding, or allow-list sanitising for rich text, removes the cause. C limits cookie theft, not what the script does. (🟢 The essentials.)
 
 </details>
 
@@ -495,10 +495,10 @@ Run everything on your own machine or on deliberately vulnerable training apps s
 
 **4. Which Content Security Policy gives the strongest protection against injected script?**
 
-- A. `script-src 'self' 'unsafe-inline' https://cdn.example.com`
-- B. `default-src *`
+- A. `script-src 'self' 'unsafe-inline' https://cdn.example.com https://static.example.com; style-src 'self'`
+- B. `default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; frame-ancestors *; object-src *; base-uri *`
 - C. `script-src 'nonce-<fresh per response>' 'strict-dynamic'; object-src 'none'; base-uri 'none'`
-- D. The same as C, but sent as `Content-Security-Policy-Report-Only`
+- D. The same as C, but sent as `Content-Security-Policy-Report-Only` so that the browser only reports violations
 
 <details><summary>Answer</summary>
 
@@ -728,14 +728,14 @@ Run these only on your own machine, against your own code or a local lab.
 
 **1. The first version of "Import invoice from link" blocks URLs containing `localhost`, `127.0.0.1` or `169.254`. Why is this weak, and what should replace it?**
 
-- A. It is sufficient if the check is case-insensitive
-- B. Alternate notations, DNS tricks and redirects bypass string checks; use a host allow-list, check every resolved address, disable redirects and enforce through an egress proxy
+- A. Alternate notations, DNS tricks and redirects bypass string checks; use a host allow-list, check every resolved address, disable redirects and enforce through an egress proxy
+- B. It is sufficient if the check is case-insensitive
 - C. Replace it with a regular expression that also blocks `10.` and `192.168.`
 - D. Show customers an error page when the fetch fails
 
 <details><summary>Answer</summary>
 
-**B.** SSRF defences must act on the resolved destination and at the network layer; C is still a string blocklist. (🟡 Going deeper.)
+**A.** SSRF defences must act on the resolved destination and at the network layer; C is still a string blocklist. (🟡 Going deeper.)
 
 </details>
 
@@ -744,7 +744,7 @@ Run these only on your own machine, against your own code or a local lab.
 - A. A longer password policy and MFA for staff
 - B. Requiring IMDSv2, giving each workload a least-privilege role, and blocking outbound traffic to internal ranges through an egress proxy
 - C. Turning on verbose error messages for debugging
-- D. Encrypting the storage buckets with a customer-managed key
+- D. Encrypting the storage buckets with a customer-managed key and rotating that key every year, so that stolen credentials cannot be used to read the data
 
 <details><summary>Answer</summary>
 
@@ -756,7 +756,7 @@ Run these only on your own machine, against your own code or a local lab.
 
 - A. Also check that the file name does not contain `<script>`
 - B. Verify the content's real type, rename to a random key, store in a private bucket outside the web root, and serve from a separate domain with `Content-Disposition: attachment` and `nosniff`
-- C. Add antivirus scanning and keep everything else the same
+- C. Add antivirus scanning, keep the extension and Content-Type checks, leave the upload folder where it is but add a random prefix to each file name, and log every upload for the security team to review each week
 - D. Limit uploads to 5 MB
 
 <details><summary>Answer</summary>
@@ -767,20 +767,20 @@ Run these only on your own machine, against your own code or a local lab.
 
 **4. A download handler calls `os.path.join("/srv/invoices", name)` after rejecting any `name` containing `../`. A tester supplies `/etc/passwd` and receives the file. What happened, and what is the best fix?**
 
-- A. The tester bypassed the filter with encoding; add URL decoding
-- B. `os.path.join` discards the base when the second part is absolute; look invoices up by an ID scoped to the company, or canonicalise and check containment
+- A. `os.path.join` discards the base when the second part is absolute; look invoices up by an ID scoped to the company, or canonicalise and check containment
+- B. The tester bypassed the filter with encoding tricks such as double URL encoding; add URL decoding before the check and reject any name with a percent sign or a backslash
 - C. The server's file permissions are wrong; this is not a code issue
 - D. Add `/etc/` to the blocklist
 
 <details><summary>Answer</summary>
 
-**B.** An absolute path resets the join, so the string filter never saw a problem. ID lookup also enforces access control; D just extends a blocklist. (🟢 The essentials.)
+**A.** An absolute path resets the join, so the string filter never saw a problem. ID lookup also enforces access control; D just extends a blocklist. (🟢 The essentials.)
 
 </details>
 
 **5. Dana's team wants to try a promising fraud model published on a public model hub as a pickle-based checkpoint. What should Najm Bank's rule require?**
 
-- A. Load it on a data scientist's laptop first to see whether it works
+- A. Load it on a data scientist's laptop first to see whether it works for the whole team, then move it to the shared cluster once the fraud metrics look good
 - B. Prefer a safetensors version; otherwise load it only in an isolated sandbox after scanning and review, then add it to the internal registry
 - C. Trust it if it has many downloads
 - D. Rename the file extension to `.safetensors`

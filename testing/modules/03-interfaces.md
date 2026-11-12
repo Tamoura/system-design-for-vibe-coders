@@ -1136,7 +1136,7 @@ Work in a copy of `testing/sample` with Playwright and `@axe-core/playwright` in
 
 - A. The retry reuses the same idempotency key
 - B. The retry button has an accessible name
-- C. The app restarts quickly and cleanly after a crash
+- C. The app restarts cleanly after a crash
 - D. The retry works in dark mode
 
 <details><summary>Answer</summary>

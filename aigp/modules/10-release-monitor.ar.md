@@ -160,10 +160,10 @@ flowchart RL
 
 **1. يطوّر بنك نجم نموذجًا لتقييم الجدارة الائتمانية (credit scoring) داخليًا ويستخدمه لتقييم المتقدمين (applicants) في فرعه بفرانكفورت. ولا يبيع النموذج (model) أبدًا. ما دور بنك نجم بموجب قانون الذكاء الاصطناعي الأوروبي (EU AI Act) بالنسبة إلى هذا النظام؟**
 
-- A. مُشغِّل (deployer) فقط، لأنه لا يطرح النظام في السوق
+- A. مُشغِّل (deployer) فقط، لأنه لا يطرح النظام في السوق ولا يبيعه لأي عميل خارجي (outside customer)
 - B. مقدّم النظام ومُشغِّل (provider and deployer)، لأنه يشغّل النظام لاستخدامه الخاص ويستخدمه
-- C. موزّع (distributor)، لأنه يتيح النظام داخليًا
-- D. لا دور له، لأن الأدوات الداخلية خارج النطاق (out of scope)
+- C. موزّع (distributor)، لأنه يتيح النظام لموظفيه (staff) وفروعه (branches) داخل البنك
+- D. لا دور له (no role)، لأن الأدوات الداخلية خارج النطاق (out of scope) من القانون حين لا يستخدمها طرف خارجي
 
 <details><summary>الإجابة</summary>
 
@@ -173,10 +173,10 @@ flowchart RL
 
 **2. أي مسار لتقييم المطابقة (conformity assessment) ينطبق على نظام ذكاء اصطناعي (AI system) عالي المخاطر (high-risk) يُستخدم لتقييم الجدارة الائتمانية (credit scoring) للأشخاص الطبيعيين (natural persons)؟**
 
-- A. تقييم من جهة مُخطَرة (notified body) في كل الحالات
-- B. لا تقييم مطابقة (conformity assessment)؛ التسجيل فقط
+- A. تقييم من جهة مُخطَرة (notified body) في كل الحالات، قبل أن يجوز طرح النظام في السوق (market)
+- B. لا تقييم مطابقة (conformity assessment)؛ التسجيل (registration) فقط في قاعدة بيانات الاتحاد الأوروبي (EU database) قبل وضع النظام في الخدمة
 - C. الرقابة الداخلية (internal control) من مقدّم النظام (provider)، استنادًا إلى نظام إدارة الجودة (quality management system) لديه وتوثيقه الفني (its technical documentation)
-- D. الاعتماد وفق ISO/IEC 42001 (certification to ISO/IEC 42001)
+- D. الاعتماد وفق ISO/IEC 42001 (certification to ISO/IEC 42001)، تصدره جهة معتمدة (accredited body) لنظام إدارة المقدّم (provider)
 
 <details><summary>الإجابة</summary>
 
@@ -186,8 +186,8 @@ flowchart RL
 
 **3. يعرض فريق علم البيانات (data) نتائج اختبار (test results) ممتازة ويطلب الإطلاق (release). وقد خُفّضت عتبة العدالة (fairness threshold) في الأسبوع السابق، بعد ظهور النتائج الأولى. ما الذي ينبغي أن تفعله وظيفة الحوكمة (governance function) أولًا؟**
 
-- A. الاعتماد، لأن العتبة (threshold) الجديدة مستوفاة
-- B. أن تطلب من المورّد (vendor) إعادة تشغيل الاختبارات (tests)
+- A. الاعتماد، لأن العتبة (threshold) الجديدة مستوفاة، وتسجيل النتيجة في سجل الإصدار (release log)
+- B. أن تطلب من المورّد (vendor) إعادة تشغيل الاختبارات (tests) بالعتبة الأصلية (original threshold) وإرسال النتائج الكاملة إلى فريق التحقق (validation team) للاعتماد، ثم تقرر
 - C. رفض النموذج (model) نهائيًا
 - D. معاملة تغيير العتبة (threshold) كقرار حوكمة (governance decision): توثيق (documentation) سبب تغييرها، ومن اعتمده، وهل ينبغي تطبيق المعيار الأصلي
 
@@ -200,8 +200,8 @@ flowchart RL
 **4. أثناء نشر في وضع الظل (shadow deployment)، يقيّم النموذج الجديد (new model) الطلبات الفعلية، لكن مخرجاته (its outputs) تُسجَّل فقط ولا تُستخدم. أي عبارة هي الأدق؟**
 
 - A. وضع الظل (shadow mode) ما زال يعالج بيانات شخصية (personal data)، فيحتاج إلى أساس قانوني (lawful basis) وتغطية في DPIA، لكنه يتجنب الأثر المباشر على العملاء
-- B. وضع الظل (shadow mode) خارج قانون حماية البيانات (data protection law) لأنه لا يُتخذ فيه أي قرار
-- C. وضع الظل (shadow mode) يُعد طرحًا في السوق (placing on the market)
+- B. وضع الظل (shadow mode) خارج قانون (law) حماية البيانات (data protection law) لأنه لا يُتخذ فيه أي قرار (decision)
+- C. وضع الظل (shadow mode) يُعد (counts as) طرحًا في السوق (placing on the market)
 - D. وضع الظل (shadow mode) يلغي الحاجة إلى تجربة (pilot) أو كناري (canary) لاحقًا
 
 <details><summary>الإجابة</summary>
@@ -212,10 +212,10 @@ flowchart RL
 
 **5. قبل اعتماد نظام عالي المخاطر (high-risk system) لتقييم الجدارة الائتمانية (credit scoring)، أي بند يُعد جزءًا من جاهزية (readiness) *المُشغِّل (deployer)* بموجب قانون الذكاء الاصطناعي الأوروبي (EU AI Act)، لا جاهزية مقدّم النظام (provider)؟**
 
-- A. إعداد إعلان المطابقة الأوروبي (EU declaration of conformity)
-- B. وضع علامة CE (CE marking)
+- A. إعداد إعلان المطابقة الأوروبي (EU declaration of conformity) لكل نظام والاحتفاظ به عشر سنوات (ten years)
+- B. وضع علامة CE (CE marking) على النظام أو وثائقه (documentation) قبل أول استخدام له
 - C. إتمام تقييم الأثر على الحقوق الأساسية (fundamental rights impact assessment) قبل الاستخدام الأول (first use)
-- D. كتابة التوثيق الفني (technical documentation) وفق الملحق IV (Annex IV)
+- D. كتابة التوثيق الفني (technical documentation) وفق الملحق IV (Annex IV) قبل طرح النظام في السوق (market) لأول مرة (first time)
 
 <details><summary>الإجابة</summary>
 
@@ -443,10 +443,10 @@ flowchart TD
 
 **4. لا يرى بنك نجم نتائج السداد (repayment outcomes) إلا للمتقدمين (applicants) الموافق عليهم. أي خطر (risk) ينشأ عن ذلك في الرصد (monitoring) وإعادة التدريب (retraining)؟**
 
-- A. انجراف المفهوم (concept drift)
+- A. انجراف المفهوم (concept drift)، إذ تتغير العلاقة بين المدخلات (inputs) والنتائج (outcomes) خلال الأشهر التي تلي الإطلاق (release)
 - B. حلقة تغذية راجعة (feedback loop) من الوسوم الانتقائية (selective labels) لا تُصحَّح فيها أبدًا المجموعات المرفوضة خطأً
-- C. خرق تلقائي للمادة 33 (Art. 33) من GDPR
-- D. فقدان علامة CE (CE marking)
+- C. خرق تلقائي للمادة 33 (Art. 33) من GDPR، يتحقق كلما اختلفت معدلات الموافقة (approval rates) بين المجموعات (groups)
+- D. فقدان علامة CE (CE marking)، وهو يحدث تلقائيًا حين ينخفض معدل موافقة النموذج (model) عن هدف تصميمه (design target)
 
 <details><summary>الإجابة</summary>
 
@@ -457,8 +457,8 @@ flowchart TD
 **5. أي عبارة عن مرصد OECD لحوادث الذكاء الاصطناعي (OECD AI Incidents Monitor) صحيحة؟**
 
 - A. يسجّل حوادث الذكاء الاصطناعي (AI incidents) ومخاطره من التقارير العامة، وتستخدمه فرق الحوكمة (governance) للتعلّم ولتغذية سجلات المخاطر (risk registers)
-- B. هو قناة الإبلاغ (reporting channel) عن الحوادث الجسيمة (serious incidents) بموجب قانون الذكاء الاصطناعي الأوروبي (EU AI Act)
-- C. يعتمد أنظمة الذكاء الاصطناعي (AI systems) بوصفها آمنة
+- B. هو قناة الإبلاغ (reporting channel) عن الحوادث الجسيمة (serious incidents) بموجب قانون الذكاء الاصطناعي الأوروبي (EU AI Act)، والتسجيل فيه يفي بواجب إخطار السلطات (authorities) قانونًا
+- C. يعتمد أنظمة الذكاء الاصطناعي (AI systems) بوصفها آمنة بعد أن يقدّم مقدّموها (providers) تقارير الاختبار (test reports)
 - D. يحل محل سجل الحوادث (incident log) الخاص بالشركة
 
 <details><summary>الإجابة</summary>
@@ -637,10 +637,10 @@ flowchart TD
 
 **1. وثّق مقدّم نظام (provider)، في تقييم المطابقة الأولي (initial conformity assessment)، عملية إعادة تدريب شهرية (monthly retraining) بخصائص (features) ثابتة واختبارات قبول آلية (automated acceptance tests). وجرت إعادة تدريب (retrain) ضمن تلك الحدود. بموجب قانون الذكاء الاصطناعي الأوروبي (EU AI Act)، فإن إعادة التدريب (retraining) هذه:**
 
-- A. تعديل جوهري (substantial modification) يتطلب تقييم مطابقة جديدًا (new conformity assessment)
-- B. محظورة (prohibited) على الأنظمة عالية المخاطر (high-risk systems)
+- A. تعديل جوهري (substantial modification) يتطلب تقييم مطابقة جديدًا (new conformity assessment)، أيًّا كان ما خطّط له المقدّم في البداية
+- B. محظورة (prohibited) على الأنظمة عالية المخاطر (high-risk systems)، التي يجب أن تبقى مجمَّدة بعد طرحها في السوق
 - C. ليست تعديلًا جوهريًا (substantial modification)، لأن التغيير حُدّد مسبقًا ووُثّق عند التقييم الأولي (initial assessment)
-- D. شأن يخص المُشغِّل (deployer) وحده
+- D. شأن يخص المُشغِّل (deployer) وحده، الذي يجب أن يوافق على كل تحديث (update) قبل أن يصل إلى المستخدمين (users)
 
 <details><summary>الإجابة</summary>
 
@@ -650,9 +650,9 @@ flowchart TD
 
 **2. يرخّص بنك روبوت محادثة (chatbot) عامًا لخدمة العملاء ويعيد تهيئته ليخبر العملاء هل ستتم الموافقة (approval) على قرضهم الشخصي. ما أهم عاقبة حوكمية بموجب قانون الذكاء الاصطناعي الأوروبي (EU AI Act)؟**
 
-- A. لا شيء؛ يظل البنك مُشغِّلًا (deployer) لنظام محدود المخاطر (limited risk)
-- B. لا يلزم إلا تقييم DPIA وفق GDPR
-- C. يصبح مورّد روبوت المحادثة (chatbot vendor) هو المُشغِّل (deployer)
+- A. لا شيء؛ يظل البنك مُشغِّلًا (deployer) لنظام محدود المخاطر (limited risk)، أيًّا كان استخدامه لروبوت المحادثة (chatbot) وأيًّا كان الغرض الذي يعطيه له (purpose)
+- B. لا يلزم إلا تقييم DPIA وفق GDPR، لأن قانون الذكاء الاصطناعي (AI Act) لا ينطبق على أنظمة لم يبنِها البنك
+- C. يصبح مورّد روبوت المحادثة (chatbot vendor) هو المُشغِّل (deployer)، ولا يكون للبنك أي دور بموجب القانون (Act) إطلاقًا
 - D. قد يصبح البنك مقدّم (provider) نظام عالي المخاطر (high-risk system)، لأنه غيّر الغرض المقصود (intended purpose) إلى تقييم الجدارة الائتمانية (credit scoring)
 
 <details><summary>الإجابة</summary>
@@ -663,10 +663,10 @@ flowchart TD
 
 **3. ما أفضل سبب لتسجيل إصدار النموذج (model version) مع كل قرار؟**
 
-- A. يحسّن دقة النموذج (model)
+- A. يحسّن دقة النموذج (model)، لأن الحالات المسجَّلة (logged cases) تُغذّى مباشرة إلى التدريب (training)
 - B. يتيح إعادة بناء أي قرار سابق وتفسيره للشكاوى (complaints) وعمليات التدقيق (audits) والجهات التنظيمية (regulators)
-- C. إنه مطلوب لكي تكون علامة CE (CE marking) مرئية
-- D. يلغي الحاجة إلى الرصد (monitoring)
+- C. إنه مطلوب لكي تكون علامة CE (CE marking) مرئية للعملاء (customers) على موقع البنك وفي التطبيق (app)، كما يقتضي القانون (Act)
+- D. يلغي الحاجة إلى الرصد (monitoring)، لأن كل خطأ يمكن العثور عليه لاحقًا في السجلات المخزَّنة (stored records)
 
 <details><summary>الإجابة</summary>
 
@@ -690,9 +690,9 @@ flowchart TD
 **5. أي مجال في إطار NIST AI RMF يتناول بشكل مباشر التخلص التدريجي (phasing out) الآمن من أنظمة الذكاء الاصطناعي (AI systems)؟**
 
 - A. GOVERN 1.7، عمليات الإيقاف (decommissioning) والتخلص التدريجي (phasing out) الآمن من أنظمة الذكاء الاصطناعي (AI systems)
-- B. MAP 1.1، تحديد السياق (context is established)
-- C. MEASURE 2.11، تقييم العدالة (fairness evaluation)
-- D. ملف الذكاء الاصطناعي التوليدي (Generative AI Profile) فقط
+- B. MAP 1.1، تحديد السياق (context is established)، ويشمل الأغراض المقصودة (intended purposes) والمستخدمين والإطار القانوني (legal setting)
+- C. MEASURE 2.11، تقييم العدالة (fairness evaluation)، ويشمل اختبار التحيّز (bias testing) عبر المجموعات التي يؤثر فيها النظام
+- D. ملف الذكاء الاصطناعي التوليدي (Generative AI Profile) فقط، لأن الإيقاف (retirement) غير مشمول بالوظائف الأساسية (core functions)
 
 <details><summary>الإجابة</summary>
 

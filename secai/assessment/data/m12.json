@@ -40,13 +40,13 @@
    "o": {
     "en": [
      "A threat model of an open-source assistant, every threat ending in a control and test",
-     "Write-ups of prompt injections she ran on a retailer's public chatbot, with its replies",
-     "A write-up of an injection flaw she found in the Credit Memo Copilot, with names removed",
+     "Write-ups of prompt injections she ran on a retailer's public chatbot, with replies",
+     "A write-up of an injection flaw she found in the Credit Memo Copilot, names removed",
      "A page listing her five certifications, each with its date and verification link"
     ],
     "ar": [
      "نموذج تهديدات (threat model) لمساعد مفتوح المصدر (open-source assistant)، ينتهي فيه كل تهديد بضابط واختبار (a control and test)",
-     "تقارير عن عمليات حقن موجّهات (prompt injections) أجرتها على روبوت محادثة عام لمتجر (retailer's public chatbot)، مع ردوده (its replies)",
+     "تقارير عن عمليات حقن موجّهات (prompt injections) أجرتها على روبوت محادثة عام لمتجر (retailer's public chatbot)، مع الردود (with replies)",
      "تقرير عن ثغرة حقن (injection flaw) وجدتها في مساعد مذكرات الائتمان (Credit Memo Copilot)، بعد حذف الأسماء (names removed)",
      "صفحة تسرد شهاداتها الخمس (five certifications)، مع تاريخ كلٍّ منها (its date) ورابط التحقق منها (verification link)"
     ]

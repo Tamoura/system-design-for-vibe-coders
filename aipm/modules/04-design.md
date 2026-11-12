@@ -179,7 +179,7 @@ Baseline levels across the portfolio:
 - A. Automate both, since the model outperforms the scorecard
 - B. Keep everything manual until the model is perfect
 - C. Automate approvals inside a scope fence, route declines and uncertain cases to underwriters, and run shadow mode to gather evidence
-- D. Automate declines only, because declines save the most underwriter time
+- D. Automate declines only, because declines save the most underwriter time and are seen as the lowest risk if the model makes a mistake in a live case
 
 <details><summary>Answer</summary>
 
@@ -189,14 +189,14 @@ Baseline levels across the portfolio:
 
 **3. Underwriters reviewing a model's recommendations agree with it 99.8% of the time, spending about ten seconds per case. What is the best interpretation?**
 
-- A. The model is excellent; remove the reviewers
-- B. The review may be a rubber stamp; sample-check cases and give reviewers more time, evidence and easy override before drawing conclusions
+- A. The review may be a rubber stamp; sample-check cases and give reviewers more time, evidence and easy override before drawing conclusions
+- B. The model is excellent and the agreement rate proves it; remove the reviewers and use the underwriting team's time on other, more valuable work
 - C. The reviewers are lazy and should be retrained
 - D. The override rate is irrelevant to product quality
 
 <details><summary>Answer</summary>
 
-**B.** A very high agreement rate at very short review times is a warning sign of automation bias. It could mean the model is excellent, but you only know after sampling. A jumps to a conclusion; C blames people for a design problem. (🟡 Going deeper.)
+**A.** A very high agreement rate at very short review times is a warning sign of automation bias. It could mean the model is excellent, but you only know after sampling. B jumps to a conclusion; C blames people for a design problem. (🟡 Going deeper.)
 
 </details>
 
@@ -204,25 +204,25 @@ Baseline levels across the portfolio:
 
 - A. Suggest, draft, decide, act
 - B. Data, model, interface, monitoring
-- C. Information gathering, information analysis, decision selection, action implementation
-- D. Discover, define, design, build
+- C. Discover, define, design, build
+- D. Information gathering, information analysis, decision selection, action implementation
 
 <details><summary>Answer</summary>
 
-**C.** Their 2000 model separates these four functions. Suggest, draft, decide, act (A) is this course's working ladder for product tasks, not their four functions. (🟡 Going deeper.)
+**D.** Their 2000 model separates these four functions. Suggest, draft, decide, act (A) is this course's working ladder for product tasks, not their four functions. (🟡 Going deeper.)
 
 </details>
 
 **5. Bainbridge's "Ironies of Automation" warns about which effect?**
 
 - A. Automation always lowers costs
-- B. When routine work is automated, humans are left with the hardest cases while losing the practice and context needed to handle them
+- B. Automation cannot be applied to decisions, because only a human can be held accountable for a choice that changes what happens to a customer's money
 - C. Users never trust automated systems
-- D. Automation cannot be applied to decisions
+- D. When routine work is automated, humans are left with the hardest cases while losing the practice and context needed to handle them
 
 <details><summary>Answer</summary>
 
-**B.** That is the central irony, and it is why the lesson suggests keeping some manual work for skill retention and showing the system's working to reviewers. (🔴 Expert view.)
+**D.** That is the central irony, and it is why the lesson suggests keeping some manual work for skill retention and showing the system's working to reviewers. (🔴 Expert view.)
 
 </details>
 
@@ -413,20 +413,20 @@ Hessa and Faisal write the **Trust Design Spec** for the Credit Memo Copilot, v1
 
 **1. An RM refuses to use the Credit Memo Copilot because "I'd have to check every number anyway." Which design change most directly addresses this?**
 
-- A. Add a banner saying the Copilot is highly accurate
-- B. Link each figure to its source page so checking takes seconds
-- C. Remove the ability to edit drafts
-- D. Show a single overall confidence percentage for the draft
+- A. Add a banner at the top of each draft saying the Copilot is highly accurate
+- B. Show a single overall confidence percentage for the draft, above the first section
+- C. Remove the ability to edit drafts so that managers use the output as it is generated
+- D. Link each figure to its source page so checking takes seconds
 
 <details><summary>Answer</summary>
 
-**B.** This is undertrust driven by the cost of checking. Citations make verification cheap, so the RM can rely on the draft where it is grounded. A tries to raise trust without evidence; D is a single, likely uncalibrated number that does not tell the RM *which* figure to check. (🟢 The essentials; 🔴 Expert view.)
+**D.** This is undertrust driven by the cost of checking. Citations make verification cheap, so the RM can rely on the draft where it is grounded. A tries to raise trust without evidence; B is a single, likely uncalibrated number that does not tell the RM *which* figure to check. (🟢 The essentials; 🔴 Expert view.)
 
 </details>
 
 **2. What does "calibrated trust" mean?**
 
-- A. Users trust the AI as much as possible
+- A. Users trust the AI as much as possible, so that they use it for every task and spend as little time as they can on checking it afterwards
 - B. The model's scores are statistically calibrated
 - C. Users' reliance on the system matches what the system can actually do, so they rely on it when it is right and check it where it is weak
 - D. Users trust the AI only after a training course
@@ -439,14 +439,14 @@ Hessa and Faisal write the **Trust Design Spec** for the Credit Memo Copilot, v1
 
 **3. Najm Assist cannot find an answer about a new fee in its approved sources. What is the best behaviour?**
 
-- A. Answer from the model's general knowledge with a disclaimer
-- B. Say it cannot answer this, and offer to connect the customer to a human agent with the conversation carried over
-- C. Ask the customer to try again later
-- D. Answer with a lower confidence score shown
+- A. Answer from the model's general knowledge, adding a short disclaimer that the answer may not reflect the latest fees
+- B. Answer with a lower confidence score shown next to the answer, so that the customer can judge how far to rely on it
+- C. Ask the customer to try again later, in case the new fee has been added to the approved sources by then, and end the conversation
+- D. Say it cannot answer this, and offer to connect the customer to a human agent with the conversation carried over
 
 <details><summary>Answer</summary>
 
-**B.** Graceful failure: recognise lack of grounds and offer a path to someone who knows. A is the Air Canada pattern: an ungrounded answer binds the bank, whatever the disclaimer says. (🟡 Going deeper; 🔴 Expert view.)
+**D.** Graceful failure: recognise lack of grounds and offer a path to someone who knows. A is the Air Canada pattern: an ungrounded answer binds the bank, whatever the disclaimer says. (🟡 Going deeper; 🔴 Expert view.)
 
 </details>
 
@@ -465,7 +465,7 @@ Hessa and Faisal write the **Trust Design Spec** for the Credit Memo Copilot, v1
 
 **5. A research team finds that adding a fluent rationale to each model recommendation made reviewers accept more recommendations, including wrong ones. What should the PM take from this?**
 
-- A. Explanations always improve decisions
+- A. Explanations always improve decisions, because they give reviewers the reasoning they need to judge a recommendation properly, so they should be shown in full for every recommendation
 - B. Remove all explanations
 - C. Prefer explanations that make checking easy, such as citations and evidence, and test whether they help users catch errors, not only whether they like them
 - D. Show explanations only to new users
@@ -640,7 +640,7 @@ Supporting rules in the spec:
 
 **1. A customer tells Najm Assist "stop my card". What should the assistant do first?**
 
-- A. Cancel the card immediately to protect the customer
+- A. Cancel the card immediately to protect the customer, since a stop request signals possible fraud and speed matters more than anything else
 - B. Clarify whether the customer wants a temporary freeze or to report the card lost or stolen, then show a preview of the chosen action
 - C. Tell the customer to call the contact centre
 - D. Freeze the card silently and notify them later
@@ -655,21 +655,21 @@ Supporting rules in the spec:
 
 - A. "Why was I charged this fee?"
 - B. "I don't recognise a payment, what can I do?"
-- C. Paying the same saved electricity bill every month
-- D. "What documents do I need for SME financing?"
+- C. "What documents do I need for SME financing, and how long does an application usually take?"
+- D. Paying the same saved electricity bill every month
 
 <details><summary>Answer</summary>
 
-**C.** A frequent, structured task is faster and safer with a button or saved flow. The other three are varied questions where conversation helps. (🟢 The essentials.)
+**D.** A frequent, structured task is faster and safer with a button or saved flow. The other three are varied questions where conversation helps. (🟢 The essentials.)
 
 </details>
 
 **3. Tariq proposes putting the rule "never change a limit above QAR 20,000" in the assistant's prompt. What is the best product response?**
 
-- A. Accept: the prompt is the right place for business rules
+- A. Accept: the prompt is the right place for business rules, because the assistant reads it before every conversation
 - B. Enforce the limit in the card system the tool calls, and keep the prompt instruction only as an extra layer
-- C. Remove the limit so customers are not frustrated
-- D. Ask the model to double-check its own output
+- C. Remove the limit so customers are not frustrated when the assistant refuses a request they consider reasonable
+- D. Ask the model to double-check its own output against the rule before it sends the final action to the card system
 
 <details><summary>Answer</summary>
 

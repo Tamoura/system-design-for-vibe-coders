@@ -153,10 +153,10 @@ Layla's team writes a **Deploy Decision Memo** for the committee.
 
 **1. A bank licenses a general customer-service chatbot and configures it to tell customers whether they are likely to be approved for a personal loan. Under the EU AI Act, what is the most important consequence to flag in the deploy decision?**
 
-- A. The bank remains only a deployer of a minimal-risk system
+- A. The bank remains only a deployer of a minimal-risk system, because the chatbot software itself has not been modified by the bank at all
 - B. The bank may become the provider of a high-risk system because it changed the intended purpose to creditworthiness assessment
-- C. The chatbot vendor becomes the deployer
-- D. The system becomes a prohibited practice
+- C. The chatbot vendor becomes the deployer, since the bank only receives the answers and does not control the system
+- D. The system becomes a prohibited practice, because it influences credit decisions about natural persons
 
 <details><summary>Answer</summary>
 
@@ -167,9 +167,9 @@ Layla's team writes a **Deploy Decision Memo** for the committee.
 **2. Which question is *most* characteristic of the "alternatives" step of a deploy decision?**
 
 - A. Could a non-AI or simpler approach achieve the goal with less risk?
-- B. What accuracy does the vendor claim?
-- C. Which cloud region will host the model?
-- D. How many competitors use similar AI?
+- B. What accuracy does the vendor claim for the model on its own published benchmark tests?
+- C. Which cloud region will host the model, and does it match the bank's data location policy?
+- D. How many competitors use similar AI, and have they reported benefits to their shareholders?
 
 <details><summary>Answer</summary>
 
@@ -192,9 +192,9 @@ Layla's team writes a **Deploy Decision Memo** for the committee.
 
 **4. Najm's committee concludes that a proposed AI deployment is within risk appetite, but staff training and the complaint-handling process are not ready. What is the best decision?**
 
-- A. Go immediately; training can follow
-- B. No-go permanently
-- C. Transfer the decision to the vendor
+- A. Go immediately; training can follow after the first weeks of use, once the staff have seen how the tool behaves
+- B. No-go permanently, and close the project, since any readiness gap rules the tool out for good
+- C. Transfer the decision to the vendor, which knows the tool best and can certify that staff are ready
 - D. Conditional go, with named owners and dates for the readiness gaps, checked before go-live
 
 <details><summary>Answer</summary>
@@ -371,9 +371,9 @@ Yusuf and Layla create a **Vendor AI Due Diligence Scorecard**. Here is the resu
 **1. A vendor of a CV-screening tool proudly shares its ISO/IEC 42001 certificate. What does this certificate demonstrate?**
 
 - A. The tool is free of bias
-- B. The tool complies with the EU AI Act
+- B. The tool complies with the EU AI Act, so the bank needs no further conformity evidence for its use case
 - C. An accredited body has audited the vendor's AI management system within the certificate's scope
-- D. The tool has passed a conformity assessment by a notified body
+- D. The tool has passed a conformity assessment by a notified body, so it may be used for any high-risk purpose
 
 <details><summary>Answer</summary>
 
@@ -384,9 +384,9 @@ Yusuf and Layla create a **Vendor AI Due Diligence Scorecard**. Here is the resu
 **2. Najm's credit memo copilot uses a foundation-model API. Which contract term is most important to protect confidential customer information?**
 
 - A. A restriction preventing the provider from using Najm's inputs and outputs to train its models, with retention limits
-- B. A clause fixing the price for three years
-- C. A marketing clause allowing Najm to name the provider
-- D. A clause requiring the provider to use open-source software
+- B. A clause fixing the price for three years, with a cap on any later increase in licence fees, and a right to renew on the same terms
+- C. A marketing clause allowing Najm to name the provider as a reference customer in public materials
+- D. A clause requiring the provider to use open-source software in every component of the service it delivers
 
 <details><summary>Answer</summary>
 
@@ -396,9 +396,9 @@ Yusuf and Layla create a **Vendor AI Due Diligence Scorecard**. Here is the resu
 
 **3. A vendor refuses to share any bias testing results for its high-risk employment screening tool, citing trade secrets. What is the best governance response?**
 
-- A. Accept, since the vendor is responsible for fairness
-- B. Proceed and rely on the vendor's marketing claims
-- C. Deploy and ask candidates to report problems
+- A. Accept, since the vendor is responsible for fairness and the deployer has no duties of its own on bias, testing or human oversight
+- B. Proceed and rely on the vendor's marketing claims, which the vendor says are based on internal tests
+- C. Deploy and ask candidates to report problems, then fix the tool if enough complaints are received
 - D. Seek the evidence through negotiation or independent testing, and do not proceed if the deployer cannot meet its own obligations
 
 <details><summary>Answer</summary>
@@ -409,10 +409,10 @@ Yusuf and Layla create a **Vendor AI Due Diligence Scorecard**. Here is the resu
 
 **4. Under the EU AI Act, which obligation applies to providers of general-purpose AI models and helps downstream organisations?**
 
-- A. Registering every downstream deployer in the EU database
+- A. Registering every downstream deployer in the EU database, together with the intended purpose of each deployment
 - B. Giving downstream providers information and documentation on the model's capabilities and limitations
-- C. Completing a FRIA for every customer
-- D. Obtaining CE marking for the model
+- C. Completing a FRIA for every customer that uses a system built on the model, before it is first used
+- D. Obtaining CE marking for the model itself, so that downstream providers need no assessment of their own
 
 <details><summary>Answer</summary>
 
@@ -596,10 +596,10 @@ A good assessment record states: who did it and with what independence; the vers
 
 **1. Which organisation must perform a fundamental rights impact assessment under the EU AI Act before using a high-risk system?**
 
-- A. Every deployer of any high-risk system
-- B. A provider before placing any AI system on the market
+- A. Every deployer of any high-risk system, whether public or private and whatever its use
+- B. A provider before placing any AI system on the market, including minimal-risk systems
 - C. A private bank deploying a high-risk system to evaluate the creditworthiness of individuals
-- D. A retailer using a spam filter
+- D. A retailer using a spam filter to protect its staff mailboxes from unwanted marketing messages
 
 <details><summary>Answer</summary>
 
@@ -609,9 +609,9 @@ A good assessment record states: who did it and with what independence; the vers
 
 **2. Najm already has a thorough DPIA for its credit model. Does this remove the need for a FRIA?**
 
-- A. Yes, the DPIA always replaces the FRIA
-- B. No, and the DPIA must be discarded
-- C. Yes, if the DPO signs both
+- A. Yes, the DPIA always replaces the FRIA, because data protection covers every fundamental right at stake
+- B. No, and the DPIA must be discarded once the FRIA has been completed, to avoid keeping two records
+- C. Yes, if the DPO signs both assessments, because the DPO is responsible for all risks to individuals and to the bank
 - D. No, the FRIA complements the DPIA and covers fundamental rights beyond data protection, though it can build on the DPIA
 
 <details><summary>Answer</summary>
@@ -622,10 +622,10 @@ A good assessment record states: who did it and with what independence; the vers
 
 **3. What does NYC Local Law 144 require of employers using automated employment decision tools in New York City?**
 
-- A. A licence from the city before any use
+- A. A licence from the city before any use, renewed every year for as long as the tool is in service
 - B. An independent bias audit within one year before use, a public summary of results and notice to candidates and employees
-- C. A notified-body conformity assessment
-- D. That impact ratios exceed 0.8
+- C. A notified-body conformity assessment, completed and certified before the tool is first used by the employer in its hiring
+- D. That impact ratios exceed 0.8 for every category, reported to the city every quarter
 
 <details><summary>Answer</summary>
 
@@ -648,10 +648,10 @@ A good assessment record states: who did it and with what independence; the vers
 
 **5. An internal auditor is asked to audit Najm's CV-screening deployment. Which scoping decision matters most for a meaningful audit?**
 
-- A. Whether the audit report uses the vendor's logo
-- B. Limiting the audit to the vendor's marketing materials
+- A. Whether the audit report uses the vendor's logo and the bank's approved colour scheme on its cover page and in its headers
+- B. Limiting the audit to the vendor's marketing materials and the published product brochures
 - C. Defining the criteria, the boundary (model, system and surrounding process), evidence access and the level of assurance
-- D. Excluding human decision-makers from scope
+- D. Excluding human decision-makers from scope, so that only the model's own outputs are tested
 
 <details><summary>Answer</summary>
 
@@ -848,10 +848,10 @@ After the findings, Najm moved relationship managers onto the enterprise copilot
 
 **2. Under the EU AI Act, which statement about a customer-service chatbot is correct?**
 
-- A. No transparency duty applies to chatbots
+- A. No transparency duty applies to chatbots, because users can always tell that they are talking to a machine, so no notice is needed
 - B. People must be informed they are interacting with an AI system, unless this is obvious from the circumstances
-- C. The chatbot must be CE-marked as high-risk
-- D. Only emotion-recognition chatbots need disclosure
+- C. The chatbot must be CE-marked as high-risk before it can be offered to customers in the Union
+- D. Only emotion-recognition chatbots need disclosure, and all other chatbots are exempt from this duty
 
 <details><summary>Answer</summary>
 
@@ -874,10 +874,10 @@ After the findings, Najm moved relationship managers onto the enterprise copilot
 
 **4. A customer declined for a loan by a process relying on an Annex III high-risk AI system asks why. Which EU AI Act provision most directly supports their request?**
 
-- A. Art. 50, transparency for chatbots
-- B. Art. 4, AI literacy
+- A. Art. 50, transparency for chatbots, which requires users to be told they are talking to an AI system
+- B. Art. 4, AI literacy, which requires staff to have enough knowledge to use AI systems
 - C. Art. 86, the right to clear and meaningful explanations of the AI system's role and the main elements of the decision
-- D. Art. 43, conformity assessment
+- D. Art. 43, conformity assessment, which sets the procedures providers follow before placing a high-risk system on the market
 
 <details><summary>Answer</summary>
 
@@ -887,9 +887,9 @@ After the findings, Najm moved relationship managers onto the enterprise copilot
 
 **5. Najm, as deployer, suspects a vendor's high-risk CV-screening tool presents a risk to fundamental rights. What must it do under the EU AI Act?**
 
-- A. Continue use until the annual audit
-- B. Notify only the candidates
-- C. Retrain the vendor's model itself
+- A. Continue use until the annual audit, and record the concern in the audit file for that review
+- B. Notify only the candidates, and ask them to confirm in writing that they accept the outcome
+- C. Retrain the vendor's model itself, using the bank's own data from the candidates who were affected
 - D. Inform the provider or distributor and the relevant market surveillance authority, and suspend use
 
 <details><summary>Answer</summary>

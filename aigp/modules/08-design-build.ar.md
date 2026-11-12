@@ -161,10 +161,10 @@ flowchart TD
 
 **1. يقترح فريق إقراض الأفراد (retail lending) في بنك نجم نموذج تعلّم آلة (machine-learning model) لتقييم متقدمي القروض (to score loan applicants) في الاتحاد الأوروبي. ماذا يجب أن يفعل فريق حوكمة الذكاء الاصطناعي (AI governance team) أولًا؟**
 
-- A. التكليف بتدقيق للتحيّز (bias audit) في بيانات تدريب النموذج (model)
+- A. التكليف بتدقيق للتحيّز (bias audit) في بيانات تدريب النموذج (model) وفي التسميات (labels) التي يقدّمها المورّد (vendor)
 - B. تسجيل حالة الاستخدام (use case)، وتحديد غرضها المقصود (its intended purpose) وسياقها، وتصنيف مخاطرها (classify its risk)
-- C. الطلب من المشتريات (procurement) إعداد قائمة مختصرة بالموردين (vendors)
-- D. صياغة بطاقة النموذج (model card)
+- C. الطلب من المشتريات (procurement) إعداد قائمة مختصرة بالموردين (vendors) وتجهيز طلب عروض (request for proposals) لأداة الائتمان
+- D. صياغة بطاقة النموذج (model card) ونشرها على صفحة الشبكة الداخلية (intranet) لفريق علم البيانات (data science team)، مع عنوان للتواصل (contact address)
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -174,10 +174,10 @@ flowchart TD
 
 **2. يحتج مقدّم (provider) نظام بأن أداته للاستقطاب (recruitment) المدرجة في الملحق III (Annex III) ليست عالية المخاطر (high-risk) لأنها "تؤدي مهمة تحضيرية فقط". وتبني الأداة ملفًا تعريفيًا لكل مرشح من سيرته الذاتية ووجوده على الإنترنت. أي عبارة صحيحة؟**
 
-- A. ينطبق الاستثناء (derogation) لأن المهام التحضيرية مذكورة في المادة 6(3)
-- B. ينطبق الاستثناء (derogation) فقط إذا وافق المُشغِّل (deployer) كتابيًا
+- A. ينطبق الاستثناء (derogation) لأن المهام التحضيرية (preparatory tasks) مذكورة في المادة 6(3) (Art. 6(3) of the Act)
+- B. ينطبق الاستثناء (derogation) فقط إذا وافق المُشغِّل (deployer) كتابيًا (in writing)
 - C. لا يمكن أن ينطبق الاستثناء (derogation) لأن النظام ينمّط (profiles) أشخاصًا طبيعيين (natural persons)
-- D. أدوات الاستقطاب (recruitment) ليست عالية المخاطر (high-risk) أبدًا وفق AI Act
+- D. أدوات الاستقطاب (recruitment) ليست عالية المخاطر (high-risk) أبدًا (never) وفق AI Act (the Act)
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -188,9 +188,9 @@ flowchart TD
 **3. أي عامل يجب أن يكون له الوزن الأكبر عند تحديد مستوى المخاطر الداخلي (internal risk tier) في بنك نجم؟**
 
 - A. شدة الضرر (harm) المحتمل على الناس ونطاقه وإمكانية عكسه، ومقدار المراجعة البشرية (human review) التي تحدث قبل أن تسري المخرجات (outputs)
-- B. تكلفة النظام
-- C. هل يستخدم النظام التعلّم العميق (deep learning) أم خوارزمية أبسط (simpler algorithm)
-- D. هل المورّد (vendor) معتمد وفق ISO/IEC 42001
+- B. تكلفة (cost) النظام
+- C. هل يستخدم النظام التعلّم العميق (deep learning) أم خوارزمية أبسط (simpler algorithm)، لأن التعلّم العميق هو دائمًا الخيار الأعلى مخاطر (higher-risk)
+- D. هل المورّد (vendor) معتمد وفق ISO/IEC 42001، ومتى صدرت الشهادة (certificate) آخر مرة
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -200,9 +200,9 @@ flowchart TD
 
 **4. يريد فريق الاحتيال (fraud) نموذج تعلّم آلة (machine-learning model) لوسم التحويلات المشبوهة. ويلاحظ محلل مخاطر أن مجموعة قواعد ثابتة تكشف 95% من الحالات نفسها بشفافية (transparency) كاملة. وفق تحليل التناسب (proportionality analysis)، ما أفضل رد؟**
 
-- A. اعتماد نموذج تعلّم الآلة (ML model) لأن الذكاء الاصطناعي (AI) هو استراتيجية بنك نجم
-- B. اعتماد نموذج تعلّم الآلة (ML model) لأن كشف الاحتيال (fraud detection) مستثنى من الملحق III (Annex III)
-- C. رفض كل استخدام للذكاء الاصطناعي (AI) في كشف الاحتيال (fraud detection)
+- A. اعتماد نموذج تعلّم الآلة (ML model) لأن الذكاء الاصطناعي (AI) هو استراتيجية بنك نجم، وطلب توثيق الفائدة من الراعي (sponsor) بعد الإطلاق (launch)
+- B. اعتماد نموذج تعلّم الآلة (ML model) لأن كشف الاحتيال (fraud detection) مستثنى من الملحق III (Annex III)، فلا حاجة إلى أي تبرير من الراعي (sponsor)
+- C. رفض كل استخدام للذكاء الاصطناعي (AI) في كشف الاحتيال (fraud detection)، وتوجيه الراعي (sponsor) إلى سحب كل مقترح مماثل في البنك
 - D. تسجيل البديل القائم على القواعد، ومطالبة الراعي (sponsor) بإثبات أن الفائدة الإضافية لنموذج تعلّم الآلة (ML model) تبرر مخاطره وتكلفته الإضافية
 
 <details><summary>الإجابة (Answer)</summary>
@@ -371,9 +371,9 @@ flowchart TD
 **1. يجب على موظفي الاكتتاب (underwriters) في بنك نجم "مراجعة" كل درجة ائتمان، لكنهم يعالجون 300 حالة يوميًا، ولا يرون إلا الدرجة (score)، ويُقاس أداؤهم بالسرعة. ما نقطة الضعف الرئيسية في الحوكمة (governance)؟**
 
 - A. الإشراف البشري (human oversight) شكلي: يفتقر المراجعون (reviewers) إلى الوقت والمعلومات والصلاحية العملية (practical authority) للطعن في المخرَج (output)
-- B. يجب أن يستخدم النموذج (model) SHAP بدلًا من LIME
-- C. النموذج (model) ليس قابلًا للفهم (interpretable) بطبيعة تصميمه
-- D. يجب أن تكون المراجعة من نوع الإنسان على الحلقة (human-on-the-loop) بدلًا من ذلك
+- B. يجب أن يستخدم النموذج (model) SHAP بدلًا من LIME، لأن تفسيرات LIME غير مستقرة (not stable) بين تشغيلات (runs) الحالة نفسها
+- C. النموذج (model) ليس قابلًا للفهم (interpretable) بطبيعة تصميمه، فلا يمكن تقديم أي تفسير (explanation of the output) للمراجعين (reviewers)
+- D. يجب أن تكون المراجعة من نوع الإنسان على الحلقة (human-on-the-loop) بدلًا من ذلك، حيث يراقب الموظفون النتائج المجمعة (aggregate results) ويتدخلون عند التنبيهات (alerts) فقط
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -383,10 +383,10 @@ flowchart TD
 
 **2. أي عبارة عن SHAP هي الأدق؟**
 
-- A. يكشف الاستدلال الداخلي الدقيق للشبكة العصبية
-- B. لا يمكن استخدامه إلا مع النماذج الخطية (linear models)
+- A. يكشف الاستدلال الداخلي الدقيق للشبكة العصبية (neural network)، فلا تعود الأوزان (weights) نفسها لازمة للتدقيق (audit)
+- B. لا يمكن استخدامه إلا مع النماذج الخطية (linear models)، لأنه يحتاج إلى معاملات (coefficients) تُقرأ مباشرة (read directly)
 - C. يُسند إلى كل خاصية (feature) مساهمة في تنبؤ محدد مقارنةً بخط أساس، ويمكن ترتيب هذه المساهمات (contributions) لتصبح رموز أسباب (reason codes)
-- D. يضمن أن النموذج (model) عادل (fair)
+- D. يضمن أن النموذج (model) عادل (fair) تمامًا (completely)، لأن كل خاصية (feature) تحصل على مساهمة متساوية في كل تنبؤ (prediction)
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -410,9 +410,9 @@ flowchart TD
 **4. القلق الرئيسي لبنك نجم بشأن أداة فرز السير الذاتية (CV-screening tool) هو أن المرشحين (candidates) المؤهلين (qualified) من جنسية (nationality) معينة يُرفضون خطأً أكثر من المرشحين المؤهلين بالقدر نفسه من جنسيات أخرى. أي عائلة من مقاييس العدالة (fairness metrics) تناسب هذا الضرر (harm) أكثر؟**
 
 - A. تكافؤ معدل الخطأ (error-rate parity)، مثل تكافؤ الفرص (تساوي معدلات الإيجابيات الصحيحة (true positive rates))
-- B. التكافؤ الديموغرافي (demographic parity) فقط
-- C. الدقة الإجمالية (overall accuracy)
-- D. المعايرة (calibration) فقط
+- B. التكافؤ الديموغرافي (demographic parity) فقط، لأنه يقارن معدلات الاختيار (selection rates) ويتجاهل من كان مؤهلًا
+- C. الدقة الإجمالية (overall accuracy)، لأن متوسط الدرجة المرتفع يدل على أن أي مجموعة (group) لا تتضرر
+- D. المعايرة (calibration) فقط، لأنها تتحقق من أن المخاطر المتنبأ بها (predicted risks) تطابق النتائج الملاحظة (observed outcomes)
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -583,10 +583,10 @@ flowchart TD
 
 **1. يطوّر بنك نجم نموذجًا لتقييم الائتمان (credit-scoring model) داخليًا ويستخدمه فقط لعملائه في الاتحاد الأوروبي. ولا يبيعه أبدًا. بموجب EU AI Act، بنك نجم:**
 
-- A. مُشغِّل (deployer) فقط، لأنه لا يبيع النظام
-- B. ليس أيًا منهما، لأن الأدوات الداخلية (internal tools) مستثناة
+- A. مُشغِّل (deployer) فقط (only)، لأنه لا يبيع النظام لأي طرف خارج البنك
+- B. ليس أيًا منهما (neither)، لأن الأدوات الداخلية (internal tools) مستثناة من القانون (Act) حين لا يستخدمها طرف خارجي (outside party)
 - C. مقدّم النظام (لأنه يضع النظام في الخدمة (puts the system into service) باسمه) والمُشغِّل (deployer) معًا
-- D. مستورد (importer)
+- D. مستورد (importer)، لأن برمجيات (software) المورّد (vendor) جاءت من شركة خارج الاتحاد (Union)
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -596,9 +596,9 @@ flowchart TD
 
 **2. أي وثيقة يشترطها EU AI Act تحديدًا على مقدّمي أنظمة الذكاء الاصطناعي عالية المخاطر (providers of high-risk AI systems) قبل الطرح في السوق (market placement)؟**
 
-- A. ورقة بيانات لمجموعة البيانات (datasheet for datasets) بصيغة Gebru وآخرين
-- B. شهادة ISO/IEC 42001 (ISO/IEC 42001 certificate)
-- C. بطاقة نظام (system card) منشورة على موقع مقدّم النظام (provider)
+- A. ورقة بيانات لمجموعة البيانات (datasheet for datasets) بصيغة Gebru وآخرين، تُستكمل لكل مجموعة تدريب (training set)
+- B. شهادة ISO/IEC 42001 (ISO/IEC 42001 certificate) تصدرها جهة اعتماد (certification body) معتمدة لمقدّم النظام
+- C. بطاقة نظام (system card) منشورة على موقع مقدّم النظام (provider)، تصف الاستخدام المقصود (intended use) والحدود
 - D. توثيق تقني (technical documentation) بالمحتوى المحدد في الملحق IV (Annex IV)
 
 <details><summary>الإجابة (Answer)</summary>
@@ -609,10 +609,10 @@ flowchart TD
 
 **3. ينشر بنك نجم نظام فرز سير ذاتية (CV-screening system) عالي المخاطر (high-risk) من مورّد (vendor)، ثم يعيد تدريبه تدريبًا جوهريًا على بياناته، ويسوّقه لشركات تابعة تحت علامة بنك نجم التجارية. ما النتيجة الأرجح؟**
 
-- A. لا شيء يتغير؛ يبقى المورّد الأصلي (original vendor) مقدّم النظام (provider) الوحيد
+- A. لا شيء يتغير؛ يبقى المورّد الأصلي (original vendor) مقدّم النظام (provider) الوحيد، أيًّا كان ما يضيفه بنك نجم إلى النظام
 - B. قد يُعامَل بنك نجم كمقدّم للنظام عالي المخاطر (high-risk system)، مع التزامات مقدّم النظام (provider)
-- C. يصبح بنك نجم موزّعًا (distributor)
-- D. يتوقف النظام عن كونه عالي المخاطر (high-risk)
+- C. يصبح بنك نجم موزّعًا (distributor)، مع واجب التحقق من وجود علامة CE (CE marking) فقط
+- D. يتوقف النظام عن كونه عالي المخاطر (high-risk)، لأن بنك نجم عدّله لاستخدامه الداخلي (internal use)
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -624,7 +624,7 @@ flowchart TD
 
 - A. تسجيل القرارات المهمة، والبدائل (alternatives)، والمبررات، والأدلة (evidence)، والجهة الموافِقة (approval)، حتى يمكن إثبات المساءلة (accountability) والعناية الواجبة (due diligence)
 - B. تخزين أوزان النموذج (model weights) بشكل آمن
-- C. تسجيل كل تنبؤ لأغراض تصحيح الأخطاء
+- C. تسجيل كل تنبؤ لأغراض تصحيح الأخطاء (debugging)
 - D. أن يحل محل بطاقة النموذج (model card)
 
 <details><summary>الإجابة (Answer)</summary>
@@ -635,8 +635,8 @@ flowchart TD
 
 **5. يبني بنك نجم مساعده الذكي (its copilot) لمذكرات الائتمان (credit memos) على نموذج للأغراض العامة (general-purpose model) من طرف ثالث (third party) يُستخدم عبر API. أي شرط تعاقدي (contract term) يحمي حوكمة (governance) بنك نجم للمساعد الذكي (copilot) بمرور الوقت بشكل مباشر أكثر من غيره؟**
 
-- A. خصم على الأحجام الكبيرة
-- B. بند شراكة تسويقية
+- A. خصم على الأحجام الكبيرة (high volumes)
+- B. بند شراكة تسويقية (marketing partnership)
 - C. إشعار مسبق بالتغييرات الجوهرية في النموذج (advance notice of material model changes)، مع معلومات التوثيق (documentation) والتقييم (assessment)، حتى يستطيع بنك نجم إعادة الاختبار (testing) قبل أن تسري التحديثات
 - D. الحق في استخدام شعار المورّد (vendor)
 

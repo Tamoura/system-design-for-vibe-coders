@@ -47,7 +47,7 @@
     "ar": [
      "استبعادهما من مدخلات النموذج (model inputs) والاحتفاظ بهما بضوابط وصول (access controls) لاختبارات العدالة (fairness tests)",
      "حذفهما (purge)، لأن نموذجًا (model) لا يراهما أبدًا لا سبيل له إلى التمييز (discriminate) على أساسهما",
-     "الاحتفاظ بهما (retain both) فقط بموجب المادة 10(5) من قانون الذكاء الاصطناعي (AI Act Art. 10(5))، لأنهما يُعدّان من بيانات الفئات الخاصة (special-category data)",
+     "الاحتفاظ بهما (retain both) فقط بموجب المادة (Article) 10(5) من قانون الذكاء الاصطناعي (AI Act Art. 10(5))، لأنهما يُعدّان من بيانات الفئات الخاصة (special-category data)",
      "إدخالهما في النموذج (model) بوصفهما مدخلات (inputs)، كي يتعلّم تصحيح أي فجوات بين المجموعات (group gaps)"
     ]
    },
@@ -74,7 +74,7 @@
     ],
     "ar": [
      "لا شيء آخر، لأن قيمة AUC القوية (strong AUC) تُظهر أن احتمالات التعثّر (PDs) صالحة للاستخدام كما هي (can be used as they stand)",
-     "الدقة الإجمالية (overall accuracy)، لأنها تعطي نسبة التنبؤات الصحيحة من بين كل التنبؤات (share of all predictions that are right)",
+     "الدقة الإجمالية (overall accuracy)، لأنها تعطي نسبة التنبؤات (predictions) الصحيحة من بين كل التنبؤات (share of all predictions that are right)",
      "الاستدعاء (recall)، لأنه يُظهر كم من المتعثّرين الفعليين (real defaulters) يلتقطه النموذج (model)",
      "المعايرة حسب البلد (calibration by country)، لتطابق الاحتمالات المتنبأ بها (predicted PDs) معدلات التعثّر الملاحظة (observed default rates)"
     ]

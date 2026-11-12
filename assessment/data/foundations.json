@@ -11,7 +11,7 @@
       },
       "o": {
         "en": [
-          "The servers crashed under the load and stopped answering requests",
+          "The servers crashed under heavy load and stopped answering all requests",
           "The phone book step: the internet lost the way to their computers",
           "Attackers broke in and deleted the pages the servers would send out",
           "The CDN kept on serving old copies instead of fetching fresh pages"

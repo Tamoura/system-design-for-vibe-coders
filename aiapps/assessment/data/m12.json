@@ -67,15 +67,15 @@
       },
       "o": {
         "en": [
-          "Exits 0: the overall score is unchanged, so nothing has regressed",
-          "Exits 0 with a note: a failing critical case is only an open defect",
-          "Exits 2: the same score from different cases means the runs differ",
+          "Exits 0: the overall score is unchanged, so nothing at all has regressed",
+          "Exits 0 with a note: a failing critical case is only logged as an open defect",
+          "Exits 2: the same score from different cases means the two runs differ",
           "Exits 1: a critical case that used to pass now fails, so it blocks"
         ],
         "ar": [
           "تخرج برمز 0 (exit 0): الدرجة الإجمالية (overall score) لم تتغير، فلا انحدار (regression)",
-          "تخرج برمز 0 مع ملاحظة (note): حالة حرجة فاشلة ليست سوى عيب مفتوح (open defect)",
-          "تخرج برمز 2 (exit 2): الدرجة نفسها من حالات مختلفة (different cases) تعني أن التشغيلين مختلفان (the runs differ)",
+          "تخرج برمز 0 مع ملاحظة (note): حالة حرجة فاشلة ليست سوى عيب مفتوح (open defect) يُسجَّل",
+          "تخرج برمز 2 (exit 2): الدرجة نفسها من حالات مختلفة (different cases) تعني أن التشغيلين مختلفان",
           "تخرج برمز 1 (exit 1): حالة حرجة كانت تنجح تفشل الآن، فتمنع الدمج (blocks the merge)"
         ]
       },

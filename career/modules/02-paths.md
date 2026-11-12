@@ -191,9 +191,9 @@ Khalid's three rules for the table:
 **3. Mohammed is applying for a frontend role at a regional government digital agency. Which portfolio addition is most likely to stand out?**
 
 - A. A bilingual Arabic and English interface with right-to-left layout and basic accessibility
-- B. A second backend for the same app, rewritten in a different programming language
-- C. A Kubernetes cluster with autoscaling to host his small static portfolio site
-- D. A longer, more detailed list of JavaScript libraries in his CV skills section
+- B. A second backend for the same app, rewritten in a different programming language and a new database
+- C. A Kubernetes cluster with autoscaling to host his small static portfolio site and a staging copy
+- D. A longer, more detailed list of JavaScript libraries in the skills section of his CV
 
 <details><summary>Answer</summary>
 
@@ -401,10 +401,10 @@ After the interview, Najm offers Reem a place in the programme's software track,
 
 **1. Tariq asks Reem, "How do you know your assistant's answers are right?" Which answer is strongest?**
 
-- A. "I tried about ten typical questions by hand, and every answer I checked looked right to me."
-- B. "I use one of the strongest models available, and its published benchmark scores are very high."
-- C. "The coding agent wrote tests while building it, and they all pass, so the answers are fine."
-- D. "A golden set of 52 cases scored against a written quality bar: 44 pass, failures grouped by cause."
+- A. "I tried about ten typical questions by hand, and every answer I checked looked right to me, so I shipped it."
+- B. "I use one of the strongest models available, and its published benchmark scores are very high on every list."
+- C. "The coding agent wrote tests while building it, and they all pass, so the answers are fine to ship."
+- D. "A golden set of 52 cases scored against a written quality bar: 44 pass, failures grouped by cause and logged."
 
 <details><summary>Answer</summary>
 
@@ -415,9 +415,9 @@ After the interview, Najm offers Reem a place in the programme's software track,
 **2. Huda is unsure whether to apply for "ML engineer" or "AI application engineer" roles. What best describes the difference?**
 
 - A. ML engineers mostly train, deploy and monitor models; AI application engineers build features on existing models
-- B. They are the same job with different names, so the duties and interviews are identical
-- C. AI application engineers need a PhD, while ML engineers can be hired from a bootcamp
-- D. ML engineers focus on statistics and never write production code; AI engineers write it all
+- B. They are the same job with different names, so the duties, the interviews and the salary are identical in every company
+- C. AI application engineers need a PhD, while ML engineers can be hired straight from a short bootcamp course
+- D. ML engineers focus on statistics and never write production code; AI engineers are expected to write all of it
 
 <details><summary>Answer</summary>
 
@@ -440,10 +440,10 @@ After the interview, Najm offers Reem a place in the programme's software track,
 
 **4. Reem wants to switch her app to a newer model. What should she do first?**
 
-- A. Switch straight away, since newer models are always better at every task
-- B. Rewrite all her prompts from scratch so they suit the new model's style
-- C. Run her golden set on both models, including Arabic and hostile cases, and compare
-- D. Ask in an online forum which model most developers currently think is best
+- A. Switch straight away, since newer models are always better at every task and users expect them to be
+- B. Rewrite all her prompts from scratch so they suit the new model's style, before testing anything
+- C. Run her golden set on both models, including Arabic and hostile cases, and compare the results
+- D. Ask in an online forum which model most developers currently think is best, then use that one
 
 <details><summary>Answer</summary>
 
@@ -453,8 +453,8 @@ After the interview, Najm offers Reem a place in the programme's software track,
 
 **5. Which proof would most convince a hiring manager for a junior AI application engineer role?**
 
-- A. A long list of AI courses completed, each with a certificate of completion linked
-- B. Screenshots and a screen recording of a polished chat interface answering questions
+- A. A long list of AI courses completed, each with a certificate of completion linked on her CV
+- B. Screenshots and a screen recording of a polished chat interface answering a few easy questions
 - C. A deployed feature with a golden set, scores, injection tests and an explained README
 - D. A large social media following built from posting regular AI tips and content
 
@@ -663,10 +663,10 @@ Dana's rule: "Every week ends with a row count you checked by hand."
 
 **1. Huda's query doubled spending for customers with two accounts. What is the most reliable fix?**
 
-- A. Divide each customer's total by the number of accounts that customer holds
-- B. Aggregate transactions per customer before the join, then check one case by hand
+- A. Divide each customer's total by the number of accounts that customer holds, after running the join
+- B. Aggregate transactions per customer before the join, then check one case by hand in the raw data
 - C. Add `DISTINCT` to the final `SELECT` so that duplicate rows are removed
-- D. Drop the accounts table from the query and sum the transactions table alone
+- D. Drop the accounts table from the query and sum the transactions table alone, with no join at all
 
 <details><summary>Answer</summary>
 
@@ -676,10 +676,10 @@ Dana's rule: "Every week ends with a row count you checked by hand."
 
 **2. Which proof best shows readiness for a junior data engineer role?**
 
-- A. A notebook with a top-ten score in a public modelling competition on clean data
-- B. A CV skills section listing every major data tool, from Spark to Airflow and dbt
+- A. A notebook with a top-ten score in a public modelling competition, run on clean data only
+- B. A CV skills section listing every major data tool, from Spark to Airflow and dbt, in alphabetical order
 - C. A scheduled pipeline from a messy source that reruns without duplicates and has quality tests
-- D. A certificate of completion from a well-known online data engineering course
+- D. A certificate of completion from a well-known online data engineering course, with a high mark
 
 <details><summary>Answer</summary>
 
@@ -689,10 +689,10 @@ Dana's rule: "Every week ends with a row count you checked by hand."
 
 **3. Omar is curious about data. He enjoys explaining why a number changed far more than building pipelines. Which role should he explore first?**
 
-- A. Data analyst
-- B. Data engineer
-- C. Research scientist
-- D. Platform engineer
+- A. Data analyst on a business team
+- B. Data engineer on a data team
+- C. Research scientist in a lab
+- D. Platform engineer on a cloud team
 
 <details><summary>Answer</summary>
 
@@ -715,10 +715,10 @@ Dana's rule: "Every week ends with a row count you checked by hand."
 
 **5. Mohammed wants a data portfolio project for a regional bank. Which choice is best?**
 
-- A. Ask a friend who works at a bank for a small sample of real customer records
-- B. Use synthetic or openly licensed data, and say so in a short data-handling note
-- C. Scrape public profiles from social media to build a realistic customer dataset
-- D. Use real customer data but delete the names and account numbers first
+- A. Ask a friend who works at a bank for a small sample of real customer records, just for the project
+- B. Use synthetic or openly licensed data, and say so in a short data-handling note in the project README
+- C. Scrape public profiles from social media to build a realistic customer dataset of thousands of people
+- D. Use real customer data but delete the names and account numbers first, then keep the rest as it is
 
 <details><summary>Answer</summary>
 
@@ -902,10 +902,10 @@ Najm places Yousef in the graduate programme's platform track. Salem gives every
 
 **1. Yousef has passed a cloud associate exam but has only ever created resources by clicking in the console. What should he build first to show readiness for a platform role?**
 
-- A. A second associate certification, this time from a different cloud provider
-- B. A larger, more complex environment built by clicking through the console
-- C. A repo that rebuilds a small environment from code, with a pipeline and an alert
-- D. A detailed blog post summarising every topic covered by the exam he passed
+- A. A second associate certification, this time from a different cloud provider, in the same area
+- B. A larger, more complex environment built by clicking through the console, step by step
+- C. A repo that rebuilds a small environment from code, with a pipeline and a failure alert
+- D. A detailed blog post summarising every topic covered by the exam he passed last month
 
 <details><summary>Answer</summary>
 
@@ -929,9 +929,9 @@ Najm places Yousef in the graduate programme's platform track. Salem gives every
 **3. Why do regulated employers like Najm value infrastructure as code and pipelines beyond speed?**
 
 - A. Because automation removes the need for any human review or approval of changes
-- B. Because regulators require every bank to use one specific infrastructure tool
-- C. Because resources created through code are not billed by the cloud provider
-- D. Because every change is reviewed and recorded, which is the audit evidence they need
+- B. Because regulators require every bank to use one specific infrastructure tool from one vendor
+- C. Because resources created through code are not billed by the cloud provider at the same rate
+- D. Because every change is reviewed and recorded, which is the audit evidence they need to show
 
 <details><summary>Answer</summary>
 
@@ -954,10 +954,10 @@ Najm places Yousef in the graduate programme's platform track. Salem gives every
 
 **5. Yousef worries his embedded and networking background is irrelevant to cloud roles. What is the best advice?**
 
-- A. Leave it off his CV and focus only on listing his cloud certifications
-- B. Switch his target to embedded software engineering, where it counts more
-- C. Put it in front with a layer-by-layer troubleshooting write-up of a real problem
-- D. Leave it out of his CV and mention it only if an interviewer asks directly
+- A. Leave it off his CV and focus only on listing his cloud certifications, as recruiters expect
+- B. Switch his target to embedded software engineering, where it counts for more in the market
+- C. Put it in front with a layer-by-layer troubleshooting write-up of a real problem he solved
+- D. Leave it out of his CV and mention it only if an interviewer asks him about it directly
 
 <details><summary>Answer</summary>
 

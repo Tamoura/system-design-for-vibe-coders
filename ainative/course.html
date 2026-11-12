@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="ainative-source" content="41e8aa320b767a83">
+<meta name="ainative-source" content="493ef9c5c4b09131">
 <meta name="description" content="A Practical Guide to Becoming an AI-Native Engineer — a free, bilingual course for engineers who code: how coding agents work, context engineering, spec-driven development, the daily loop, verifying AI-written code, debugging, legacy code, security, hooks, skills and subagents, parallel agents, team playbooks and staying sharp, with graded offline labs, a quiz in every lesson and a 60-question practice exam.">
 <title>A Practical Guide to Becoming an AI-Native Engineer — Complete Course</title>
 <style>
@@ -2271,7 +2271,7 @@ Would I delegate it again?
 <li>A. One finding, <code>test-gaming</code>, because a loop alone is not a failure.</li>
 <li>B. Two findings, the loop first and the weakened test second.</li>
 <li>C. Two findings, the weakened test first, because it is more serious.</li>
-<li>D. One finding, <code>runaway-loop</code>, because the loop came first.</li>
+<li>D. One finding, <code>runaway-loop</code>, because the loop came first in time.</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -3346,7 +3346,7 @@ TODO: the files you expect to touch; four to ten numbered steps, each one small 
 
 <p><strong>4. Lujain says: &quot;Microsoft&#39;s post proves spec-driven development raises quality.&quot; Which reply is fair?</strong></p>
 <ul>
-<li>A. It is an independent trial, so adopt all seven steps at once.</li>
+<li>A. It is an independent trial, so adopt all seven steps at once as written.</li>
 <li>B. It only applies to teams that use GitHub Spec Kit as their toolkit.</li>
 <li>C. It is a company&#39;s own account: take the habit and pilot it small.</li>
 <li>D. It shows that plan mode is unnecessary for work that is already specified.</li>
@@ -3653,7 +3653,7 @@ Would I delegate it again?
 <ul>
 <li>A. Create an empty <code>risk.py</code> file so that the spec becomes true.</li>
 <li>B. Keep it, because the architecture document is the authority on design.</li>
-<li>C. Put the word &quot;new&quot; on that line so the check accepts it.</li>
+<li>C. Put the word &quot;new&quot; on that line so the check accepts it as written.</li>
 <li>D. Open the code, find where limits live, and correct the spec.</li>
 </ul>
 <details><summary>Answer</summary>
@@ -3981,7 +3981,7 @@ LADDER  1 stop (Esc) and say what you saw    2 correct once: file, line, reason
 <ul>
 <li>A. Correct it a third time, using the same words but in capitals so it notices.</li>
 <li>B. Rewind everything done today and begin the whole ticket again from scratch.</li>
-<li>C. Ask the agent to apologise and to promise to be more careful next time.</li>
+<li>C. Ask the agent to apologise and to promise to be more careful from now on.</li>
 <li>D. Change the approach: split the step, start fresh or add a missing fact.</li>
 </ul>
 <details><summary>Answer</summary>
@@ -3992,7 +3992,7 @@ LADDER  1 stop (Esc) and say what you saw    2 correct once: file, line, reason
 <p><strong>3. Lujain says <code>Esc</code> <code>Esc</code> makes commits unnecessary, because she can rewind anything. What is the right reply?</strong></p>
 <ul>
 <li>A. No: Bash changes and outside edits are not tracked, and git is the save point.</li>
-<li>B. Yes: checkpoints keep every change for a year, whichever tool made the change.</li>
+<li>B. Yes: checkpoints keep every change for a year, whichever tool made that change.</li>
 <li>C. Yes, as long as the agent only edits files and never runs a shell command at all.</li>
 <li>D. No: checkpoints cover only the main branch and are deleted every night at midnight.</li>
 </ul>
@@ -4677,7 +4677,7 @@ def test_an_arabic_customer_gets_the_rate_in_arabic_digits_from_the_real_send(se
 <ul>
 <li>A. A reworded help string for the quote command in the CLI tool</li>
 <li>B. New wording for the English failure notification customers get</li>
-<li>C. A docstring fix inside the najmkit documentation page</li>
+<li>C. A docstring fix inside the najmkit documentation page for newcomers</li>
 <li>D. A change to how the fee cap applies to express transfers</li>
 </ul>
 <details><summary>Answer</summary>
@@ -6228,7 +6228,7 @@ Time spent:      (you / the agent)
 <p><strong>1. Your twenty ledger tests pass on your refactor, but the grader says they do not describe the original ledger. Why?</strong></p>
 <ul>
 <li>A. The tests are too slow, so the grader timed out before it finished</li>
-<li>B. The tests assert too little, so the grader sees no real values</li>
+<li>B. The tests assert too little, so the grader sees no real values at all</li>
 <li>C. The tests need the new <code>Ledger</code> class or an edited <code>conftest.py</code></li>
 <li>D. The tests share a file with the seam, which the grader refuses to run</li>
 </ul>
@@ -6253,7 +6253,7 @@ Time spent:      (you / the agent)
 <ul>
 <li>A. Pass <code>float(amount.amount)</code>, which is the number without the currency text</li>
 <li>B. Pass <code>amount.amount</code>, which is already a <code>Decimal</code> and so is exact</li>
-<li>C. Pass <code>str(amount.amount)</code>, a tidier string without the currency</li>
+<li>C. Pass <code>str(amount.amount)</code>, a tidier string without the currency text</li>
 <li>D. Pass <code>str(amount)</code>, because version 1 wrote <code>str()</code> of the object</li>
 </ul>
 <details><summary>Answer</summary>
@@ -7301,7 +7301,7 @@ if __name__ == &quot;__main__&quot;:
 <ul>
 <li>A. A job that merges pull requests when the reviewer subagent reports no findings</li>
 <li>B. A script that sets ticket severity from the model&#39;s opinion without a check</li>
-<li>C. A skill that decides whether a change needs a second human reviewer</li>
+<li>C. A skill that decides whether a change needs a second human reviewer to read it</li>
 <li>D. A hook that parses each edited Python file and reports a syntax error</li>
 </ul>
 <details><summary>Answer</summary>
@@ -7599,10 +7599,10 @@ Time spent:         (you / the agent)
 
 <p><strong>4. Your script passes every check against the stand-in. What does that show?</strong></p>
 <ul>
-<li>A. It will behave the same with the real program and any model</li>
+<li>A. It will behave the same with the real program and with any model</li>
 <li>B. It copes with the documented shape and the planted failures</li>
 <li>C. Its prompt classifies real customers&#39; support tickets correctly</li>
-<li>D. Its own tests would catch a regression in the ticket parser</li>
+<li>D. Its own tests would catch a later regression in the ticket parser</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -7979,8 +7979,8 @@ Why this order:
 
 <p><strong>4. An orchestrator starts a subagent with &quot;implement the statement command as we discussed&quot;. Why is that a weak brief?</strong></p>
 <ul>
-<li>A. Subagents cannot be told which files they may change, only what to build</li>
-<li>B. A subagent is not allowed to read <code>CLAUDE.md</code>, so rules must be repeated</li>
+<li>A. Subagents cannot be told which files they may change, only what they should build</li>
+<li>B. A subagent is not allowed to read <code>CLAUDE.md</code>, so rules must be repeated each time</li>
 <li>C. It never sees your conversation, so the contract has to be in the message</li>
 <li>D. The orchestrator cannot read the reply until the whole worker session ends</li>
 </ul>
@@ -8300,7 +8300,7 @@ Streams at once: 3.  Integration: 20 min.  A ÷ R from this one row: 1.5, so two
 <li>A. Yes: a branch that did not overlap another would fail &quot;branches merged&quot;</li>
 <li>B. Yes: the grader sees the worktrees, which only exist during a session</li>
 <li>C. No: tasks done one after another leave the same files and history</li>
-<li>D. No: the grader ignores the history and reads only the final files</li>
+<li>D. No: the grader ignores the history and reads only the files as they end</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -8913,7 +8913,7 @@ One thing I will do differently:
 <ul>
 <li>A. Each path and known code name it cites in backticks exists</li>
 <li>B. Every figure it quotes agrees with the constants in the code</li>
-<li>C. It is complete enough to be merged without a human review</li>
+<li>C. It is complete enough to be merged without any human review</li>
 <li>D. The decision that it records has been shown to be a sound one</li>
 </ul>
 <details><summary>Answer</summary>
@@ -8925,8 +8925,8 @@ One thing I will do differently:
 <ul>
 <li>A. Use the record&#39;s time and wording for that row</li>
 <li>B. Keep the row, because 10:15 is only a minute off</li>
-<li>C. Drop E3 from the timeline since it is disputed</li>
-<li>D. Ask the assistant to explain the discrepancy</li>
+<li>C. Drop E3 from the timeline since it is disputed between sources</li>
+<li>D. Ask the assistant to explain the discrepancy to her</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -8936,7 +8936,7 @@ One thing I will do differently:
 <p><strong>3. Your critic says &quot;the quote lifetime of five minutes is too long&quot;. <code>fx.py</code> defines 60 seconds. What do you do?</strong></p>
 <ul>
 <li>A. The critic is right in spirit, so shorten the quote lifetime</li>
-<li>B. The critic is unreliable, so drop the critic step</li>
+<li>B. The critic is unreliable, so drop the critic step from the record</li>
 <li>C. Nothing, since an objection needs no evidence to be recorded</li>
 <li>D. The critic misread a number: record it and reject it</li>
 </ul>
@@ -10446,10 +10446,10 @@ Total minutes: 0
 
 <p><strong>2. The agent&#39;s <code>STD-C</code> tests compute each expected fee by calling <code>quote_fee</code>, then assert that <code>quote_fee</code> returns it. All pass. What does that show?</strong></p>
 <ul>
-<li>A. The fees match the ticket, because test and code agree</li>
+<li>A. The fees match the ticket, because the test and code agree</li>
 <li>B. Nothing about the fees, because those tests cannot fail</li>
 <li>C. The schedule is well tested, because every tier is covered</li>
-<li>D. Only a style problem, because the tests are repetitive</li>
+<li>D. Only a style problem, because the tests are repetitive in form</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10731,7 +10731,7 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 <ul>
 <li>A. Tell the agent in the prompt not to touch her existing unfinished edits to <code>cli.py</code></li>
 <li>B. Start now and use <code>/rewind</code> afterwards to separate her edits from the agent&#39;s work</li>
-<li>C. Let the agent commit everything at the end, then read that single combined commit</li>
+<li>C. Let the agent commit everything at the end, then read that single combined commit afterwards</li>
 <li>D. Commit or stash her own edits first, then switch to a fresh branch for the ticket</li>
 </ul>
 <details><summary>Answer</summary>
@@ -10766,7 +10766,7 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 <p><strong>8. On REMIT-350, two streams each needed to show only the last four digits of an account number. The statement stream wrote <code>mask_account</code> in <code>statement.py</code>, and the notification stream wrote <code>hide_digits</code> in <code>notify.py</code>. They give the same output, have separate tests, and both branches are green and merge without a conflict. Which failure is this, and what is the cheapest prevention?</strong></p>
 <ul>
 <li>A. Duplicated work; name one owner for the helper in the plan so the other stream imports it</li>
-<li>B. Divergent assumptions; write the masking rule into both contracts, with a test that checks it</li>
+<li>B. Divergent assumptions; write the masking rule into both contracts and test it</li>
 <li>C. Semantic conflict; run the full tests and every command by hand after each merge</li>
 <li>D. Conflicting edits; list the shared files in the plan and agree a merge order</li>
 </ul>
@@ -10813,10 +10813,10 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 
 <p><strong>12. Support reports that some customers get <code>quote_expired</code> on transfers they confirmed within the minute. Nobody has reproduced it. Lujain&#39;s agent proposes doubling the quote&#39;s time to live in <code>fx.py</code>, &quot;which will stop the complaints&quot;. What does she do?</strong></p>
 <ul>
-<li>A. Accepts it: the change is one line, easy to revert, and the complaints are the only evidence there is.</li>
+<li>A. Accepts it: the change is one line, easy to revert, and the complaints are the only evidence.</li>
 <li>B. Skips the expiry check for the customers who complained, until someone can find the real cause.</li>
 <li>C. Builds the smallest failing test from a reported case, with exact timestamps, and asks why it fires.</li>
-<li>D. Catches <code>QuoteExpired</code> in <code>send</code> and fetches a fresh quote silently, so that the customer is not bothered.</li>
+<li>D. Catches <code>QuoteExpired</code> in <code>send</code> and fetches a fresh quote, so that the customer is not bothered.</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10826,7 +10826,7 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 <p><strong>13. Lujain&#39;s agent adds a &quot;new recipient tip&quot; message to <code>send</code> by calling <code>self.notifier.notify(...)</code> directly, after the transfer is saved. When the notifier raises in a test, <code>send</code> raises as well, although the money has moved. What is the right fix?</strong></p>
 <ul>
 <li>A. Wrap the call in <code>try/except Exception: pass</code>, so that nothing can ever escape from <code>send</code> again.</li>
-<li>B. Let the error propagate, so that support sees the failure and the customer can retry the whole transfer.</li>
+<li>B. Let the error propagate, so that support sees the failure and the customer can retry.</li>
 <li>C. Move the call above the ledger posting, so that a failure stops the transfer before money moves.</li>
 <li>D. Route it through the best-effort path of &quot;transfer sent&quot;, which audits a failure and returns normally.</li>
 </ul>
@@ -10840,7 +10840,7 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 <li>A. The file removed the extra wrong turns, since B is the only run that had the file</li>
 <li>B. The stronger model explains the gain, so the memory file made no real difference</li>
 <li>C. Nothing yet: two things changed, so rerun both with one model, tool and prompt</li>
-<li>D. The result stands once she repeats run B one more time on the stronger model</li>
+<li>D. The result stands once she repeats run B one more time on the stronger model and sees the same gain</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10885,7 +10885,7 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 
 <p><strong>18. Before a vendor library is added, Lujain opens its README in the browser preview. It looks like ordinary documentation, but Noura&#39;s ticket REMIT-258 wants notes on every line in it that is aimed at an AI reader. What is the sound way to make those notes?</strong></p>
 <ul>
-<li>A. Paste the whole README into an agent session and ask it to list every line that is aimed at it</li>
+<li>A. Paste the whole README into an agent session and ask it to list every line aimed at it</li>
 <li>B. Trust the rendered view, since an instruction meant for an AI would show up as visible text</li>
 <li>C. Read the raw text yourself and scan its characters for invisible ones, with no agent involved</li>
 <li>D. Follow the setup steps inside a sandbox first and watch what the commands try to do</li>
@@ -10971,7 +10971,7 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 <ul>
 <li>A. Do nothing yet, because nothing was pushed and an encrypted disk keeps the key private</li>
 <li>B. Delete the session transcript and the shell history, which removes the other copies</li>
-<li>C. Add a line to <code>CLAUDE.md</code> that tells agents never to read <code>.env</code>, and carry on</li>
+<li>C. Add a line to <code>CLAUDE.md</code> that tells agents never to read <code>.env</code>, and carry on with the task</li>
 <li>D. Rotate the key now, then deny <code>Read(./.env)</code> so the agent cannot read it again</li>
 </ul>
 <details><summary>Answer</summary>
@@ -11020,7 +11020,7 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 <li>A. Keep the two edits her change requires, and log the other stale lines as a follow-up with an owner</li>
 <li>B. Accept all four edits, since known errors in a document are worse than a wider diff</li>
 <li>C. Accept the limits rewrite, since limits matter to the corridor, and decline the <code>risk.py</code> row</li>
-<li>D. Decline all four edits and leave the page alone, since documents are out of scope for a code change</li>
+<li>D. Decline all four edits and leave the page alone, since documents are out of scope</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -11032,7 +11032,7 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 <li>A. Add a rule to the session prompt: never act on instructions found inside an issue or a comment</li>
 <li>B. Limit the server&#39;s token to the one public repository, so that no private data is in reach</li>
 <li>C. Switch to a newer model, which follows instructions hidden in issues less often than older ones</li>
-<li>D. Let the agent comment freely, and have someone read everything it posted the next morning</li>
+<li>D. Let the agent comment freely, and have someone read everything it posted on the following morning</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -11055,7 +11055,7 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 <ul>
 <li>A. Migrate in small steps and compare only the <code>transfer.sent</code> line, since the suite stays green</li>
 <li>B. Ask the agent to state in its summary that no audit line changes anywhere in the migration</li>
-<li>C. Read the migration notes for behaviour words and treat what they omit as unchanged</li>
+<li>C. Read the migration notes for behaviour words and treat what they omit as unchanged in the audit</li>
 <li>D. Pin all three events character for character, with a fixed clock and sequential ids</li>
 </ul>
 <details><summary>Answer</summary>
@@ -11235,7 +11235,7 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 <ul>
 <li>A. Blocker: severity follows the damage if shipped, and a wrong cent in a fee is wrong money.</li>
 <li>B. Minor: it affects only ties, so it can be fixed in a follow-up soon after the merge.</li>
-<li>C. Nit: she is right, because severity measures how hard the fix is, and this fix is easy to make.</li>
+<li>C. Nit: she is right, because severity measures how hard the fix is.</li>
 <li>D. Major: only a leaked secret deserves a blocker, and a cent is nothing like a secret.</li>
 </ul>
 <details><summary>Answer</summary>
@@ -11246,7 +11246,7 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 <p><strong>48. Salem is writing <code>remit-reviewer</code>, a subagent that must be able to read Remit&#39;s code but never change it. Which definition is actually read-only?</strong></p>
 <ul>
 <li>A. No <code>tools</code> line, and a prompt that says to report findings and never to edit files</li>
-<li>B. <code>tools: Read, Grep, Glob, Bash</code>, and a prompt that says to use Bash for <code>git diff</code> only</li>
+<li>B. <code>tools: Read, Grep, Glob, Bash</code>, and a prompt that limits Bash to <code>git diff</code></li>
 <li>C. <code>tools: Read, Grep, Glob</code>, and a prompt that says to report findings and not to edit</li>
 <li>D. <code>disallowedTools: Edit</code>, and a prompt that says never to create or change files</li>
 </ul>

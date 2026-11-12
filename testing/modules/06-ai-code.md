@@ -303,7 +303,7 @@ Copy `testing/sample/` to a scratch folder and install `pytest`, `hypothesis`, `
 - A. The package is safe because it was scanned
 - B. The package is on the official index, so it is genuine
 - C. Only that no advisory is known; its origin needs checking
-- D. Nothing is wrong, since the build passed and no alert was raised
+- D. Nothing is wrong, since the build passed with no alert
 
 <details><summary>Answer</summary>
 
@@ -707,7 +707,7 @@ Copy `testing/sample/`; install `pytest`, `hypothesis` and `mutmut`.
 - A. A shell command edited it, so add a CI check on test diffs
 - B. The hook ran too late, so move it to the `Stop` event
 - C. Skipped tests are not edits, so allow them by policy
-- D. The hook is working as designed, so the skip can be ignored
+- D. The hook works as designed, so the skip can be ignored
 
 <details><summary>Answer</summary>
 

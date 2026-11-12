@@ -604,7 +604,7 @@ Plan first; small steps; tests after each.
 - A. ليشاهد العميل التقاط إجابة خاطئة (watch a wrong answer get caught)
 - B. ليُظهر أن معدل الإخفاق منخفض بما يكفي لتخطي التجربة التشغيلية (skip the pilot)
 - C. ليثبت أن النموذج لا يخطئ أبدًا في أسئلة السياسات (never makes mistakes on policy questions)
-- D. لتفادي كتابة معايير القبول (acceptance criteria) للتجربة التشغيلية
+- D. لتفادي كتابة معايير القبول (acceptance criteria) للتجربة التشغيلية بأكملها
 
 <details><summary>الإجابة</summary>
 

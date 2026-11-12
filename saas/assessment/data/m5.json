@@ -12,7 +12,7 @@
    "o": {
     "en": [
      "Set the job's attempts to 1, so the broker can never run it a second time",
-     "Insert a unique delivery row per subscriber, and skip the email on conflict",
+     "Insert a unique delivery row per subscriber, and skip the email when the insert conflicts",
      "Give the job a deterministic jobId, so the broker can never run it twice",
      "Acknowledge the job as soon as a worker picks it up, before any email goes out"
     ],

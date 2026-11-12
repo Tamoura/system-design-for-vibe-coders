@@ -40,7 +40,7 @@
    "o": {
     "en": [
      "Go ahead: with officers double-checking every score, the model only advises them",
-     "Go ahead: the pilot counts as Art. 60 real-world testing, so conformity can follow later",
+     "Go ahead: the pilot counts as Art. 60 real-world testing, so conformity follows later",
      "Wait: real decisions on EU applicants put it into service, so conformity comes first",
      "Wait: credit scoring is high-risk, so a notified body must approve v2 first"
     ],
@@ -67,7 +67,7 @@
    },
    "o": {
     "en": [
-     "As minor: the model itself is untouched, so peer review and a change-log entry suffice",
+     "As minor: the model is untouched, so peer review and a change-log entry suffice",
      "As planned: cut-off tuning is covered by the retraining plan in the conformity file",
      "As substantial: every change after release needs a new conformity assessment",
      "As significant: it changes who is approved, so it is re-validated and approved first"
@@ -98,7 +98,7 @@
      "Ask counsel now whether it is a serious incident and, if so, report within 15 days",
      "Close the reporting question: with no personal data breach, no legal clock is running",
      "Notify the data protection authority within 72 hours, as applicants' data was processed",
-     "Wait for the root-cause review, then report it if it proves to be a serious incident"
+     "Wait for the root-cause review, then report it if it proves serious"
     ],
     "ar": [
      "أن تسأل المستشار القانوني (counsel) الآن هل هو حادث جسيم (serious incident)، وإن كان كذلك تبلّغ عنه (report) خلال 15 يومًا",

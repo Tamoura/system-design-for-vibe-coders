@@ -276,7 +276,7 @@ flowchart RL
 **5. تسأل منى (Mona) من قسم المالية (Finance) لماذا يعيد فريق المنصة (platform team) بناء الصور شهريًا حتى حين لا تتغيّر شيفرة التطبيق (application code). ما أفضل إجابة؟**
 
 - A. كل إعادة بناء (rebuild) تضغط الطبقات (compresses the layers) أكثر، فتصغر الصور بمرور الوقت (smaller over time)
-- B. تُكتشف ثغرات جديدة (new vulnerabilities) في صور الأساس غير المتغيّرة؛ وإعادة البناء تلتقط الرقع (pick up the patches)
+- B. تُكتشف ثغرات جديدة (new vulnerabilities) في صور الأساس غير المتغيّرة؛ وإعادة البناء تلتقط الرقع (patches)
 - C. تحذف سجلات الحاويات (container registries) افتراضيًا أي صورة يزيد عمرها على شهر
 - D. يرفض Kubernetes تشغيل الصور (start images) التي يزيد عمرها على شهر (older than one month)
 
@@ -547,7 +547,7 @@ kubectl -n mobile get events --sort-by=.lastTimestamp
 
 - A. أعاد kubelet على العقدة (node) تشغيل الحجيرة نفسها (restarted the same pod) بعد حذفها
 - B. أعادت الخدمة (Service) إنشاء الحجيرة كي تحتفظ بنقطة نهاية (endpoint) واحدة على الأقل
-- C. رأى متحكّم مجموعة النسخ (ReplicaSet controller) عددًا أقل من اللازم من الحجيرات فأنشأ بديلًا
+- C. رأى متحكّم مجموعة النسخ (ReplicaSet) عددًا أقل من الحجيرات المطلوبة فأنشأ بديلًا
 - D. استعاد etcd كائن الحجيرة المحذوف من أحدث نسخة احتياطية (most recent backup)
 
 <details><summary>الإجابة</summary>
@@ -558,10 +558,10 @@ kubectl -n mobile get events --sort-by=.lastTimestamp
 
 **2. ينشر فريق جديد خدمة. حجيراتها في حالة `Running` وجاهزة (ready)، لكن كل طلب إلى الخدمة (Service) تنتهي مهلته (times out)، وليس للخدمة نقاط نهاية (endpoints). ما السبب الأرجح؟**
 
-- A. محدِّد الخدمة (Service selector) لا يطابق ملصقات الحجيرات (pod labels)
-- B. بصمة الصورة (image digest) في قالب الحجيرة (pod template) خاطئة
-- C. الحجيرات تتجاوز حدّ ذاكرتها (memory limit) باستمرار
-- D. لم يجد المُجدوِل (scheduler) عقدة فيها متّسع (node with room)
+- A. محدِّد الخدمة (Service selector) لا يطابق ملصقات الحجيرات (labels)
+- B. بصمة الصورة (image digest) في قالب الحجيرة (pod template) خاطئة أو مفقودة
+- C. الحجيرات تتجاوز حدّ ذاكرتها (memory limit) باستمرار بعد كل إعادة تشغيل
+- D. لم يجد المُجدوِل (scheduler) عقدة فيها متّسع (node with room) للطلبات
 
 <details><summary>الإجابة</summary>
 
@@ -585,7 +585,7 @@ kubectl -n mobile get events --sort-by=.lastTimestamp
 **4. تلاحظ مها أن نسخ خدمة المدفوعات (Payments replicas) الثلاث كلها على عقد في منطقة التوافر (availability zone) نفسها. أي تغيير يعالج هذا بأكثر الطرق مباشرة؟**
 
 - A. زِد النسخ (replicas) من 3 إلى 6 كي يقلّ أثر تعطّل منطقة واحدة (single zone failure)
-- B. أضف قيد توزيع طوبولوجيا حسب المنطقة (zone topology spread constraint)، مع مجمّعات عقد (node pools) في عدة مناطق
+- B. أضف قيد توزيع طوبولوجيا حسب المنطقة، مع مجمّعات عقد (node pools) في عدة مناطق
 - C. انقل المدفوعات إلى مساحة أسماء مخصّصة لها (dedicated namespace) بحصة منفصلة (separate quota)
 - D. غيّر نوع خدمة المدفوعات (Payments Service type) إلى `LoadBalancer` عبر المناطق (across zones)
 
@@ -946,7 +946,7 @@ helm rollback mobile-api 3 -n mobile
 
 - A. أزِل HPA وشغّل 40 نسخة ثابتة (fixed replicas) كي تكون السعة متاحة دائمًا
 - B. ارفع حدود المعالج (CPU limits) للحجيرات كي تعالج كل حجيرة طلبات أكثر
-- C. سقّف `maxReplicas` بحيث يبقى حاصل ضرب النسخ في حجم المجمّع (replicas × pool size) تحت الحد
+- C. سقّف `maxReplicas` بحيث يبقى حاصل ضرب النسخ في حجم المجمّع (pool size) تحت الحد
 - D. اجعل مجسّ الحيوية (liveness probe) يفحص قاعدة البيانات كي تُعاد تشغيل الحجيرات المعطوبة
 
 <details><summary>الإجابة</summary>

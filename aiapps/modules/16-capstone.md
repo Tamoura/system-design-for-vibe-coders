@@ -445,7 +445,7 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 **1. Lujain's prompt v5 moves the 10 held-out tickets from 80% to 90% and leaves the 20 dev tickets at 90%. She tells Hind "v5 is ten points better". What is Fahad's most accurate reply?**
 
-- A. Agree: held-out is the unbiased set, so a gain of ten points is a gain of ten points
+- A. Agree: held-out is the unbiased set, so ten points gained are ten points
 - B. Disagree: one ticket is ten points here, so compare fixed and broken tickets first
 - C. Disagree: only the dev tickets can measure a prompt improvement
 - D. Agree, once she re-runs held-out until the score stops moving
@@ -524,8 +524,8 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 **7. Najm Desk's gate marks a chat as tainted after any `search_policies` result, and afterwards it refuses `add_comment` even on the user's own ticket. Staff complain. The policy index holds reviewed, published pages plus an inbox folder of unreviewed drafts, and tickets carry comments from outside senders. What should Lujain change?**
 
 - A. Switch the taint layer off for `add_comment`, because the scope and owner checks already cover it
-- B. Let the model judge in each chat whether the text it read looked suspicious, and lift the block if it says no
-- C. Move the rule into the system prompt, so the model refuses a write only when it judges the text risky
+- B. Let the model judge in each chat if the text it read looked odd, and lift the block if it says no
+- C. Move the rule into the system prompt, so the model refuses a write only if it judges the text risky
 - D. Track taint per source, so reviewed pages leave the chat clean while comments and drafts still taint it
 
 <details><summary>Answer</summary>
@@ -536,9 +536,9 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 **8. Yara typed ticket 4471, and Najm Desk told her it was closed, although TicketHub shows it in progress. The JSONL trace shows the model sent `ticket_id` "4417", a transposed digit, and TicketHub returned a different, closed ticket. Which change would reliably have stopped the wrong answer?**
 
-- A. Set `strict: true` on the tool so that arguments always match the schema
+- A. Set `strict: true` on the tool so that arguments always match the declared schema
 - B. Log more fields on every event so that reviewers can spot a slip sooner in a review
-- C. Tell the model in the description to copy ticket numbers exactly as typed
+- C. Tell the model in the description to copy ticket numbers exactly as they were typed
 - D. Check in code that an id the model sends also appears in the user's message
 
 <details><summary>Answer</summary>
@@ -564,8 +564,8 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 - A. Store each key with a hash of the request body, and refuse a key that returns with a different question
 - B. Keep the keys in a store that all replicas share, and send the same key on to TicketHub
-- C. Raise the gateway timeout above the model's slowest answer, so no retry is ever sent
-- D. Search TicketHub for a ticket with the same title before the service creates a new one
+- C. Raise the gateway timeout above the model's slowest answer, so no retry is ever sent by the client
+- D. Search TicketHub for an existing ticket with the same title before the service creates a new one
 
 <details><summary>Answer</summary>
 
@@ -578,7 +578,7 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 - A. Raise the iteration cap further, so that the looping runs can finish and stop on their own
 - B. Switch `model_calls` off, then find the cause and review the breaker limit against a normal peak hour
 - C. Roll back to the previous image digest, since a release is the usual cause of a cost spike
-- D. Tell the agent in chat to stop looping, and then watch whether the token count falls over the next hour
+- D. Tell the agent in chat to stop looping, then watch whether the token count falls in the next hour
 
 <details><summary>Answer</summary>
 
@@ -602,7 +602,7 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 **13. Lujain's 30-scenario seed set holds 27 polite English policy questions the assistant should answer, two Arabic ones and one out-of-scope request. Noura's worries are prompt injection, other people's tickets and pasted secrets. Which change makes the set most useful?**
 
 - A. Add thirty more ordinary questions so the set is large enough to trust
-- B. Swap most of the ordinary questions for attack cases, since Noura's three worries are the real risks
+- B. Swap most ordinary questions for attack cases, since Noura's three worries are the real risks
 - C. Tighten each row to the exact reply wording expected, so runs can be matched exactly
 - D. Rebalance to about half ordinary (some Arabic), a quarter adversarial and a quarter out of scope
 
@@ -653,10 +653,10 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 **17. Yara asks Najm Desk "What is the progress on ticket 4471?" It answers from general knowledge and never calls `get_ticket_status`, whose description reads "Gets ticket info." Which change is the best first fix?**
 
-- A. Add `strict: true` to the definition so that the model must call the tool
-- B. Add a second tool, `fetch_ticket_info`, to give the model another way to match
+- A. Add `strict: true` to the definition so that the model must always call the tool
+- B. Add a second tool, `fetch_ticket_info`, to give the model another way to match the ticket
 - C. Rewrite the description to say what it does, when to call it and when not to
-- D. Raise `max_tokens` so that the model has more room to decide to call the tool
+- D. Raise `max_tokens` so that the model has more room to decide whether to call the tool
 
 <details><summary>Answer</summary>
 
@@ -707,8 +707,8 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 - A. Resend it with a reworded prompt until the model gives an answer
 - B. Tell the user plainly and log the stop details for the team
-- C. Raise `max_tokens`, because a missing reply means it was cut off
-- D. Treat it like `end_turn` and show the reply as it came back
+- C. Raise `max_tokens`, because a missing reply means it was cut off midway
+- D. Treat it like `end_turn` and show the reply exactly as it came back
 
 <details><summary>Answer</summary>
 
@@ -771,7 +771,7 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 **26. A logistics company's support bot calls a `get_shipment` function that its own team wrote. Now the finance team wants its separate agent to use the same lookup, an engineer wants it in Claude Code, and the shipping team that owns the data will maintain the integration. What is the best design?**
 
 - A. Copy the function into the finance agent and add a copy to Claude Code
-- B. Keep the plain function and wait until a third client needs the same lookup
+- B. Keep the plain function and wait until a third client needs that lookup
 - C. Expose the support bot as an API that the other two clients can call
 - D. Have the shipping team ship one MCP server and let each host connect to it
 
@@ -809,7 +809,7 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 **29. Claude Code adds `trim()` to the Najm Desk chat script with four new tests. All pass, and its summary says they cover the behaviour. Fahad asks how you know these four tests would catch a bug. What do you do?**
 
-- A. Ask Claude Code to confirm in its summary that the tests are meaningful
+- A. Ask Claude Code to confirm in its summary that tests are meaningful
 - B. Run the suite three more times to rule out flaky results
 - C. Break the feature on purpose and confirm that at least one test fails
 - D. Check that the tests were written before the code was
@@ -1070,9 +1070,9 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 **49. Lujain's Najm Desk loop ends a run as soon as the model returns `end_turn` and shows its text. Yara asks "Are tickets 4471 and 4472 resolved?" and the reply says only "Ticket 4471 is resolved." Both lookups were possible. Which change catches this before the user sees it?**
 
 - A. Add a reflection call that asks the model to confirm its answer is complete
-- B. Raise the step cap so the model has room to finish the second lookup
+- B. Raise the step cap so the model has room to finish the second lookup on its own
 - C. Check in code that every ticket number in the goal appears in the answer
-- D. Add the line "answer every part of the question" to the system prompt
+- D. Add the line "answer every part of the question" to the system prompt for every run
 
 <details><summary>Answer</summary>
 
@@ -1121,9 +1121,9 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 **53. In a 30-message triage chat about a VPN problem, Najm Desk starts suggesting steps that were already tried and forgets that it is waiting for Networks. Lujain proposes saving every turn to the long-term store and recalling it each turn. Fahad wants a design that a test can check without calling a model. What is the better design?**
 
-- A. Fold the older turns into a model-written summary and resend it each turn
-- B. Ask the model to restate the steps already tried at the end of each reply
-- C. Add a system-prompt rule: never repeat a step that was already tried
+- A. Fold the older turns into a model-written summary and resend it with each turn
+- B. Ask the model to restate the steps already tried at the end of each reply it gives
+- C. Add a system-prompt rule: never repeat a step that was already tried by the agent
 - D. Keep a state object that code updates each step and puts in every prompt
 
 <details><summary>Answer</summary>

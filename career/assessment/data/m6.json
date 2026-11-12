@@ -13,12 +13,12 @@
         "en": [
           "It shows your manager how much output you can deliver in week one",
           "It proves your setup works and teaches the team's review and release path",
-          "It counts towards the merged-PR target that lets you pass probation early",
-          "It lets you skip code review, since small changes can go straight into main"
+          "It counts towards the merged-PR target for passing probation early",
+          "It lets you skip code review, since small changes go straight into main"
         ],
         "ar": [
           "يُظهر لمديرك حجم الإنتاج (output) الذي تستطيع تسليمه في الأسبوع الأول (week one)",
-          "يثبت أن بيئة العمل (setup) تعمل، ويعلّمك مسار المراجعة والإصدار (review and release path) لدى الفريق",
+          "يثبت أن بيئة العمل (setup) تعمل، ويعلّمك مسار المراجعة والإصدار (review path) لدى الفريق",
           "يُحتسب ضمن هدف عدد طلبات الدمج المدموجة (merged-PR target) الذي يتيح اجتياز فترة التجربة (probation) مبكرًا",
           "يعفيك من مراجعة الشيفرة (code review)، لأن التغييرات الصغيرة تذهب مباشرة إلى الفرع الرئيسي (main)"
         ]
@@ -40,15 +40,15 @@
       "o": {
         "en": [
           "Choose X, because the base salary is the only part guaranteed to be paid",
-          "Ask X to match Y's allowances, saying Y has offered far more than it really has",
-          "Use the median on Levels.fyi as a yardstick and pick the offer that is nearer",
+          "Ask X to match Y's allowances, saying Y has offered far more than it has",
+          "Use the median on Levels.fyi as a yardstick and pick the nearer offer",
           "Sum each package over a year, check it against her floor, then weigh learning"
         ],
         "ar": [
-          "تختار X، لأن الراتب الأساسي (base salary) هو الجزء الوحيد المضمون الدفع (guaranteed)",
+          "تختار X، لأن الراتب الأساسي (base salary) هو الجزء الوحيد المضمون الدفع (guaranteed) في العقد",
           "تطلب من X مجاراة بدلات Y (match allowances)، مدّعيةً أن Y عرض أكثر مما عرضه فعلًا",
           "تعتمد الوسيط (median) في Levels.fyi مقياسًا (yardstick)، وتختار العرض الأقرب إليه",
-          "تجمع كل حزمة على مدى سنة (sum each package over a year)، وتقارنها بحدّها الأدنى (floor)، ثم تزن التعلّم (learning)"
+          "تجمع كل حزمة على مدى سنة، وتقارنها بحدّها الأدنى (floor)، ثم تزن التعلّم (learning)"
         ]
       },
       "a": 3,
@@ -98,13 +98,13 @@
           "Technical depth: he should take an evening course in the team's framework",
           "Effort: he should work late every evening until he feels he has caught up",
           "Visibility: agree a 30-60-90 plan, keep a daily work log and ask sooner",
-          "Ambition: he should ask Khalid for a larger feature so that he stands out"
+          "Ambition: he should ask Khalid for a larger feature to stand out"
         ],
         "ar": [
           "العمق التقني (technical depth): يلتحق بدورة مسائية (evening course) في إطار العمل (framework) الذي يستخدمه الفريق",
           "الجهد (effort): يعمل حتى وقت متأخر كل مساء (work late) إلى أن يشعر بأنه لحق بالركب",
-          "الظهور (visibility): يتفق على خطة الأيام التسعين الأولى (30-60-90 plan)، ويحتفظ بسجل عمل يومي (daily work log)، ويسأل أبكر",
-          "الطموح (ambition): يطلب من خالد ميزة أكبر (larger feature) كي يلفت الأنظار"
+          "الظهور (visibility): يتفق على خطة الأيام التسعين الأولى (30-60-90 plan)، ويحتفظ بسجل عمل يومي، ويسأل أبكر",
+          "الطموح (ambition): يطلب من خالد ميزة أكبر (larger feature) ليلفت الأنظار"
         ]
       },
       "a": 2,

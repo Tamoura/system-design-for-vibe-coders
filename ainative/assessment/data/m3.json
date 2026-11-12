@@ -12,13 +12,13 @@
    "o": {
     "en": [
      "The ticket's own sentence restated in more formal words under the heading Goal.",
-     "A step-by-step list of the lines in `limits.py` that the agent should change.",
+     "A step-by-step list of the lines in `limits.py` that the agent should change, in order",
      "A table of worked examples with exact amounts and an edge at exactly 3,000.00.",
      "A closing sentence saying that the change must be correct, tested and reviewed."
     ],
     "ar": [
      "إعادة صياغة جملة التذكرة (ticket) نفسها بكلمات أكثر رسمية (formal words) تحت عنوان الهدف (Goal).",
-     "قائمة خطوات (step-by-step list) بالأسطر في `limits.py` التي ينبغي للوكيل (agent) أن يعدّلها.",
+     "قائمة خطوات (step-by-step list) بالأسطر في `limits.py` التي ينبغي للوكيل (agent) أن يعدّلها بالترتيب.",
      "جدول أمثلة تطبيقية (worked examples) بمبالغ دقيقة (exact amounts)، يشمل الحد 3,000.00 بالضبط.",
      "جملة ختامية (closing sentence) تقول إن التغيير صحيح ومختبَر ومراجَع (correct, tested and reviewed)."
     ]
@@ -46,7 +46,7 @@
     ],
     "ar": [
      "تفتح الشيفرة (code) لترى أي قاعدة تقريب (rounding rule) تستخدمها الرسوم (fees)، ثم تكتب القرار (decision) مع سببه.",
-     "تسجّل التقريب الزوجي (half-even) قرارًا (decision) نهائيًا مباشرة، لأن الوكيل (agent) قرأ الشيفرة (code) ووافق عليه.",
+     "تسجّل التقريب الزوجي (half-even) قرارًا (decision)، لأن الوكيل (agent) قرأ الشيفرة (code) ووافق عليه.",
      "تدوّن التقريب الزوجي (half-even) افتراضًا (assumption) وتسمّي حصة بوصفها الشخص (person) الذي يؤكده (confirms it).",
      "تترك التقريب (rounding) خارج المواصفة (spec)، لأن الوكيل (agent) يرى كيف تقرّب قاعدة الشيفرة (codebase)."
     ]
@@ -69,11 +69,11 @@
     "en": [
      "Answer all eleven in Decisions, since any guess the session reports is a real gap.",
      "Rework the spec until a fresh session reports no guesses, then send it to the build.",
-     "Leave the list alone, because a green grade already shows the spec is complete.",
+     "Leave the list alone, because a green grade already shows that the spec is complete",
      "Add the two behaviour gaps to Decisions, fix the conflict and dismiss the noise."
     ],
     "ar": [
-     "تجيب عن النقاط الإحدى عشرة كلها في القرارات (Decisions)، لأن كل تخمين (guess) تذكره الجلسة ثغرة حقيقية (real gap).",
+     "تجيب عن النقاط الإحدى عشرة كلها في القرارات (Decisions)، لأن كل تخمين (guess) تذكره الجلسة ثغرة.",
      "تعيد العمل على المواصفة (spec) حتى لا تذكر جلسة جديدة أي تخمين (guess)، ثم تسلّمها للبناء (build).",
      "تهمل القائمة (list)، لأن الدرجة الخضراء (green grade) تثبت أصلًا أن المواصفة (spec) مكتملة تمامًا.",
      "تضيف ثغرتَي السلوك (behaviour gaps) إلى القرارات (Decisions)، وتصحّح التعارض (conflict)، وترفض الضجيج (noise)."

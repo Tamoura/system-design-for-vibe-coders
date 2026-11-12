@@ -173,34 +173,34 @@ Go/no-go outcome: *"No-go this week on G1. Go at 5% once the false-block fix is 
 
 **2. Which guardrail design best follows the "deny by default for actions" principle for a first release of a customer assistant?**
 
-- A. Give the assistant all banking tools but tell it in the system prompt to be careful
-- B. Launch with question-answering only and add action tools later, each under its own gate
+- A. Give the assistant all banking tools but tell it in the system prompt to be careful with every action it takes
+- B. Allow actions only for customers who accept the terms
 - C. Allow actions but log them for review at month end
-- D. Allow actions only for customers who accept the terms
+- D. Launch with question-answering only and add action tools later, each under its own gate
 
 <details><summary>Answer</summary>
 
-**B.** Starting without tools keeps the worst case small, and adding tools later under separate gates matches the risk to the evidence. A relies on the model's own judgement, which is not a guardrail. (🟡 Going deeper.)
+**D.** Starting without tools keeps the worst case small, and adding tools later under separate gates matches the risk to the evidence. A relies on the model's own judgement, which is not a guardrail. (🟡 Going deeper.)
 
 </details>
 
 **3. During a staged rollout at 25%, the daily sample shows the grounded-answer rate has fallen below the spec bar for two days. The rollout plan listed this as a stop threshold. What should the PM do?**
 
-- A. Continue to 100% because the drop may be noise
-- B. Pause the rollout, fall back or roll back as the plan says, and investigate
-- C. Lower the spec bar so the rollout can continue
-- D. Wait for the 30-day post-launch review
+- A. Pause the rollout, fall back or roll back as the plan says, and investigate
+- B. Continue to 100% because the drop may be noise and two days is too short a period to judge
+- C. Lower the spec bar so the rollout can continue, then review the bar again after launch
+- D. Wait for the 30-day post-launch review before deciding whether to take any action at all
 
 <details><summary>Answer</summary>
 
-**B.** Stop thresholds are set in advance so nobody decides under launch pressure. C and D defeat their purpose. (🔴 Expert view.)
+**A.** Stop thresholds are set in advance so nobody decides under launch pressure. C and D defeat their purpose. (🔴 Expert view.)
 
 </details>
 
 **4. The team changes the wording of Najm Assist's system prompt to sound friendlier. Under a sensible change-class policy, what should happen?**
 
 - A. Nothing: prompt wording is not a product change
-- B. The full launch gate, including a new governance approval
+- B. The full launch gate, including a new governance approval and a fresh review by the risk committee
 - C. Re-run the automated eval suite and get the PM's approval before release
 - D. Release it to all users and monitor complaints
 
@@ -383,14 +383,14 @@ Faisal's revised **SME Instant Finance GTM One-Pager**, approved by Khalid and r
 
 **1. Faisal's campaign headline for SME Instant Finance is "AI approves your invoice finance instantly". Which revision best follows this lesson?**
 
-- A. "The smartest AI lender in the Gulf"
-- B. "Turn eligible invoices into cash, with a decision in minutes"
+- A. "Turn eligible invoices into cash, with a decision in minutes"
+- B. "The smartest AI lender in the Gulf"
 - C. "Instant AI approvals, guaranteed"
-- D. "Powered by advanced machine learning"
+- D. "Powered by advanced machine learning, trained on ten years of Najm Bank's own invoice finance data"
 
 <details><summary>Answer</summary>
 
-**B.** It leads with the job, bounds the promise ("eligible", "decision", "minutes") and avoids claiming that AI approves. D mentions the technology but says nothing about the outcome. (🟢 The essentials; 🏛️ In practice.)
+**A.** It leads with the job, bounds the promise ("eligible", "decision", "minutes") and avoids claiming that AI approves. D mentions the technology but says nothing about the outcome. (🟢 The essentials; 🏛️ In practice.)
 
 </details>
 
@@ -398,7 +398,7 @@ Faisal's revised **SME Instant Finance GTM One-Pager**, approved by Khalid and r
 
 - A. Because AI products cannot be sold without a category
 - B. Because the category sets the standard customers judge the product against, and AI products make visible errors
-- C. Because regulators require a category for every AI product
+- C. Because regulators require a category for every AI product, and the category decides which rules apply to it in the Gulf region
 - D. Because categories determine the model used
 
 <details><summary>Answer</summary>
@@ -409,10 +409,10 @@ Faisal's revised **SME Instant Finance GTM One-Pager**, approved by Khalid and r
 
 **3. Najm is swapping the model behind Najm Assist for a newer one. What should happen to the claims register?**
 
-- A. Nothing, because claims describe the product, not the model
+- A. Nothing, because claims describe the product as customers experience it, not the model underneath
 - B. Each claim is re-checked against evals on the new model before release
-- C. All claims are deleted and rewritten from scratch
-- D. Marketing updates claims after the next campaign
+- C. All claims are deleted and rewritten from scratch by marketing after the new model has launched
+- D. Marketing updates claims after the next campaign, once there is time in the planning calendar
 
 <details><summary>Answer</summary>
 
@@ -422,20 +422,20 @@ Faisal's revised **SME Instant Finance GTM One-Pager**, approved by Khalid and r
 
 **4. A software vendor prices its support agent per resolved conversation. What is the main issue a buyer should settle before signing?**
 
-- A. Whether the agent uses an open-weight model
-- B. The precise definition of "resolved" and who measures it
-- C. Whether the vendor offers a free trial
-- D. Whether the price is quoted in dollars
+- A. The precise definition of "resolved" and who measures it
+- B. Whether the agent uses an open-weight model or a proprietary model from a large vendor
+- C. Whether the vendor offers a free trial before the buyer commits to the first-year contract
+- D. Whether the price is quoted in dollars or in the local currency used by the buyer
 
 <details><summary>Answer</summary>
 
-**B.** Outcome-based pricing signals confidence but depends entirely on how the outcome is defined and measured, and it can put the vendor's revenue in tension with honest measurement. (🟡 Going deeper.)
+**A.** Outcome-based pricing signals confidence but depends entirely on how the outcome is defined and measured, and it can put the vendor's revenue in tension with honest measurement. (🟡 Going deeper.)
 
 </details>
 
 **5. Hessa is preparing the demo for the Credit Memo Copilot's launch to relationship managers. Which demo plan best builds trust?**
 
-- A. A rehearsed run on a perfect example so the copilot looks flawless
+- A. A rehearsed run on a perfect example so the copilot looks flawless to the whole senior management team
 - B. A run that includes the copilot flagging a missing document and the RM correcting a draft section
 - C. A slide deck about the model's benchmark scores
 - D. No demo; send a link and let RMs explore
@@ -642,13 +642,13 @@ After the six-week review, Rania and Faisal rewrote the rollout as the **Credit 
 **4. According to the Technology Acceptance Model, which change is most likely to raise adoption of a copilot that users say is "good but a hassle"?**
 
 - A. A more capable model
-- B. Opening the copilot from the loan origination system with documents already attached
-- C. A company-wide email announcing the tool
-- D. A leaderboard of the heaviest users
+- B. A leaderboard of the heaviest users
+- C. A company-wide email announcing the tool, sent by the Head of Corporate Banking to every relationship manager
+- D. Opening the copilot from the loan origination system with documents already attached
 
 <details><summary>Answer</summary>
 
-**B.** "Good but a hassle" means perceived usefulness is there but ease of use is low, so reduce workflow friction. A improves usefulness, which is not the stated problem. (🟢 The essentials; 🟡 Going deeper.)
+**D.** "Good but a hassle" means perceived usefulness is there but ease of use is low, so reduce workflow friction. A improves usefulness, which is not the stated problem. (🟢 The essentials; 🟡 Going deeper.)
 
 </details>
 
@@ -657,7 +657,7 @@ After the six-week review, Rania and Faisal rewrote the rollout as the **Credit 
 - A. Purely as a security matter for Layla's office to block
 - B. As evidence of unmet demand to feed product discovery, while governance handles the policy and data risk
 - C. As proof that Staff GenAI should be withdrawn
-- D. As acceptable, because the staff are being productive
+- D. As acceptable, because the staff are being productive and no customer has complained about the way their data was handled
 
 <details><summary>Answer</summary>
 

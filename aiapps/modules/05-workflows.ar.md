@@ -175,7 +175,7 @@ print(loop(6, 600, 450, 150))    # (10350, 900)
 - A. وكيل (An agent) بأربع أدوات يختار ترتيبه بنفسه (picks its own order)
 - B. سير عمل ثابت (A fixed workflow) مع بوابة تفحص مخرج كل خطوة (a gate checking each step's output)
 - C. نموذج مشرف (A supervisor model) يستدعي وكلاء عاملين عند الطلب (hires worker agents on demand)
-- D. منسِّق (An orchestrator) يبتكر المهام الفرعية لكل إشعار (invents the subtasks for each notice)
+- D. منسِّق (An orchestrator) يبتكر المهام الفرعية لكل إشعار وارد جديد (invents subtasks for each notice)
 
 <details><summary>الإجابة</summary>
 
@@ -227,7 +227,7 @@ print(loop(6, 600, 450, 150))    # (10350, 900)
 - A. كل تكرار يعيد إرسال السجل المتنامي كله (resends the whole growing history)
 - B. استدعاءات الأدوات (Tool calls) أغلى لكل رمز من استدعاءات السلسلة
 - C. الحلقات تعمل دائمًا على نموذج أكبر (a bigger model) من السلاسل
-- D. إدخال السلسلة يُخزَّن مؤقتًا تلقائيًا (cached automatically) ولا يُحسب
+- D. إدخال السلسلة يُخزَّن مؤقتًا (cached) ولا يُحسب أبدًا ضمن تكلفة الفاتورة الشهرية
 
 <details><summary>الإجابة</summary>
 
@@ -594,8 +594,8 @@ Implement in small steps; run the tests after each.
 
 **2. تلفّ لجين (Lujain) كل `run_notice` داخل `async with sem`. مع `WIDTH=4` وثلاثين إشعارًا يتعلّق التشغيل (the run hangs). لماذا؟ ⁦(Why?)⁩**
 
-- A. أُنشئ السيمافور في حلقة أحداث خاطئة (the wrong event loop)
-- B. لا يمكن الجمع بين `gather` وسيمافور (cannot be combined with a semaphore)
+- A. وُضع السيمافور في حلقة أحداث خاطئة (the wrong event loop)
+- B. لا يمكن الجمع بين `gather` وسيمافور (semaphore) في الشيفرة نفسها (cannot be combined)
 - C. تحجز حزمة التطوير (The SDK) خانة واحدة لإعادات محاولتها
 - D. أربعة إشعارات تمسك كل الخانات وتنتظر المزيد (hold every slot and wait for more)
 
@@ -620,7 +620,7 @@ Implement in small steps; run the tests after each.
 
 **4. ترفض البوابة 2 ملخصًا يحوي الرقم 30 وهو غير موجود في الإشعار. ماذا يحدث بعد ذلك؟ ⁦(What happens next?)⁩**
 
-- A. يحذف خط المعالجة الرقم بالشيفرة ويواصل (deletes the number in code and carries on)
+- A. يحذف خط المعالجة الرقم بالشيفرة ويواصل بقية الإشعار (deletes the number in code and carries on with the rest)
 - B. يقرر المدقِّقون (The fact-checkers decide) هل الرقم مقبول
 - C. يذهب الإشعار مباشرة إلى شخص (straight to a person) دون استدعاءات إضافية
 - D. يُطلَع النموذج على المشكلة ويعيد المحاولة مرة واحدة، ثم يتوقف (retries once, then stops)

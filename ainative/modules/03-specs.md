@@ -275,7 +275,7 @@ And the **Plan checklist**. Save it as `plan-checklist.md` and run it on every p
 
 **4. Lujain says: "Microsoft's post proves spec-driven development raises quality." Which reply is fair?**
 
-- A. It is an independent trial, so adopt all seven steps at once.
+- A. It is an independent trial, so adopt all seven steps at once as written.
 - B. It only applies to teams that use GitHub Spec Kit as their toolkit.
 - C. It is a company's own account: take the habit and pilot it small.
 - D. It shows that plan mode is unnecessary for work that is already specified.
@@ -553,7 +553,7 @@ Would I delegate it again?
 
 - A. Create an empty `risk.py` file so that the spec becomes true.
 - B. Keep it, because the architecture document is the authority on design.
-- C. Put the word "new" on that line so the check accepts it.
+- C. Put the word "new" on that line so the check accepts it as written.
 - D. Open the code, find where limits live, and correct the spec.
 
 <details><summary>Answer</summary>

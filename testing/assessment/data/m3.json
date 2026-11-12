@@ -97,13 +97,13 @@
     "en": [
      "Restore the xfail, since a test that unexpectedly passes is unreliable and should not be allowed to block the merge",
      "Remove the xfail once repeated runs pass and the seeded bug still fails it, and note the lock guards one process only",
-     "Close the defect as fixed, since a lock around `submit()` removes the check-then-act race on every server that runs the code",
+     "Close the defect as fixed, since a lock around `submit()` removes the check-then-act race on every server",
      "Delete the test, since the lock makes the race impossible and the sequential replay test still covers idempotency"
     ],
     "ar": [
      "أعد وضع `xfail`، فالاختبار الذي ينجح فجأة (unexpectedly passes) غير موثوق ولا ينبغي أن يعطّل الدمج (block the merge)",
      "أزل `xfail` بعد أن تنجح تشغيلات متكررة (repeated runs) ويظل العيب المزروع (seeded bug) يُفشله، ودوّن أن القفل يحمي عملية واحدة",
-     "أغلق العيب (defect) على أنه مُصلَح، فالقفل حول `submit()` يزيل سباق التحقق ثم التنفيذ (check-then-act race) في كل خادم (server)",
+     "أغلق العيب (defect) على أنه مُصلَح، فالقفل حول `submit()` يزيل سباق التحقق ثم التنفيذ (check-then-act race)",
      "احذف الاختبار، فالقفل يجعل السباق (race) مستحيلًا ويكفي اختبار الإعادة المتسلسلة (sequential replay) لتغطية التكرار"
     ]
    },

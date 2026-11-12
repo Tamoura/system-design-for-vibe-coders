@@ -641,9 +641,9 @@ One file at a time; run the tests after each step.
 
 **1. ينتهي تشغيل بالسبب `contract` بعد 3 استدعاءات؛ ولم يعمل الكاتب قط (the writer never ran). ماذا حدث؟ ⁦(What happened?)⁩**
 
-- A. رفض المراجع مسودتين وبلغ حدّ الجولات (The reviewer rejected two drafts and hit the round cap)
+- A. رفض المراجع مسودتين وبلغ حدّ الجولات (The reviewer rejected two drafts and hit the cap)
 - B. فشل اقتباس الباحث في فحص الإسناد مرتين (The researcher's quote failed the grounding check twice)
-- C. نفدت ميزانية رموز الفريق قبل أن يبدأ الكاتب (The team's token budget ran out before the writer began)
+- C. نفدت ميزانية رموز الفريق قبل أن يبدأ الكاتب (The team's token budget ended before the writer began)
 - D. طلب الكاتب أداة لم تُمنح له (The writer asked for a tool it was not given)
 
 <details><summary>الإجابة</summary>
@@ -655,7 +655,7 @@ One file at a time; run the tests after each step.
 **2. مع `TEAM_TOKEN_BUDGET=300`، يتوقف تشغيل بعد 389 رمزًا. هل هذا خلل؟ ⁦(Is that a bug?)⁩**
 
 - A. لا: تُفحص قبل الاستدعاء، فقد يتجاوزها استدعاء واحد (No: it is checked before a call, so one call can cross it)
-- B. نعم: ينبغي فحصها بعد الاستدعاء لميزانية دقيقة (Yes: it should be checked after the call, for an exact budget)
+- B. نعم: ينبغي فحصها بعد الاستدعاء للحصول على ميزانية دقيقة تمامًا (Yes: check it after the call, for an exact budget)
 - C. نعم: تتجاهل SDK الميزانيات التي يضعها التطبيق (Yes: the SDK ignores budgets set by the application)
 - D. لا: تعدّ الميزانية رموز الإخراج وحدها لا الإدخال (No: the budget counts only output tokens, not input)
 
@@ -680,7 +680,7 @@ One file at a time; run the tests after each step.
 
 **4. يطلب الكاتب المبرمج، وقد أُعطي بلا أدوات (The scripted writer, given no tools)، الأداة `search_policies`. ماذا يحدث؟ ⁦(What happens?)⁩**
 
-- A. يوقف التشغيل كله ويسلّمه إلى شخص (Stops the whole run and hands it to a person)
+- A. يوقف التشغيل كله ويسلّم الحالة إلى شخص (Stops the whole run and hands the case over to a person)
 - B. ينفّذ البحث على أي حال، فالمُرسِل مشترك (Runs the search anyway, as the dispatcher is shared)
 - C. يرفض بنتيجة خطأ؛ ويتابع الكاتب (Refuses with an error result; the writer goes on)
 - D. لا يرسل `tool_result`، وترفض الواجهة ذلك (Sends no tool_result, which the API rejects)

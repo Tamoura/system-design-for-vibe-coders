@@ -98,7 +98,7 @@
      "Stop the test now and ship the variant, since p is below 0.05 and the lift is significant",
      "Keep it running, and add retention and upgrades as metrics to confirm the lift",
      "Re-split it by user instead of by org, so the test reaches significance sooner",
-     "Distrust the early p-value, ship behind a release flag, and watch the numbers"
+     "Distrust the early p-value, ship behind a release flag, and keep watching the numbers"
     ],
     "ar": [
      "أوقف الاختبار (test) الآن وأطلق النسخة الجديدة (variant)، لأن p أقل من 0.05 والتحسن (lift) ذو دلالة (significant)",

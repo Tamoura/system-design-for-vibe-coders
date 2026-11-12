@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="aiapps-source" content="b286693b3927f9b4">
+<meta name="aiapps-source" content="5ddf0c3362bcac84">
 <meta name="description" content="Building AI Applications &amp; Agents: Zero to Hero — a free, bilingual course: how LLM applications work, prompts, tools and RAG, workflows, requirements and customer design, agents with memory, MCP and multi-agent teams, evals, security and governance, deployment, operations and handover, with Claude Code as your build partner, a quiz in every lesson and a 60-question practice exam.">
 <title>Building AI Applications &amp; Agents: Zero to Hero — Complete Course</title>
 <style>
@@ -841,9 +841,9 @@ Done for the week: lab runs offline, checkpoint answered, deliverable committed,
 <p><strong>3. Najm Desk must label each new ticket with one of six categories and send it to the right queue. Which design fits best?</strong></p>
 <ul>
 <li>A. A workflow: classify once, then route with plain code</li>
-<li>B. A multi-agent team with a supervisor and three workers</li>
+<li>B. A multi-agent team with a supervisor and three worker agents</li>
 <li>C. An autonomous agent that decides its own tools and steps</li>
-<li>D. A chatbot that asks the requester to pick a category</li>
+<li>D. A chatbot that asks the requester to pick a category first</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -1716,8 +1716,8 @@ if __name__ == &quot;__main__&quot;:
 
 <p><strong>3. Your <code>CLAUDE.md</code> says &quot;run the tests after every edit&quot;, yet the agent sometimes skips them. What is the most reliable fix?</strong></p>
 <ul>
-<li>A. Rewrite the rule in capital letters at the top</li>
-<li>B. Repeat the same rule at the end of the file too</li>
+<li>A. Rewrite the rule in capitals at the top</li>
+<li>B. Repeat the rule at the end of the file too</li>
 <li>C. Switch to a larger model for every session</li>
 <li>D. Add a hook that runs the tests after each edit</li>
 </ul>
@@ -1741,9 +1741,9 @@ if __name__ == &quot;__main__&quot;:
 <p><strong>5. Hind asks how you know Najm Desk answers policy questions correctly. You say Claude Code wrote tests and they pass. What is missing?</strong></p>
 <ul>
 <li>A. Nothing, since passing tests prove the answers are correct</li>
-<li>B. A longer <code>CLAUDE.md</code> with many more rules in it</li>
+<li>B. A longer <code>CLAUDE.md</code> with many more rules in it for the agent</li>
 <li>C. A real-model eval on a golden set of questions</li>
-<li>D. A second Claude Code review of the same passing tests</li>
+<li>D. A second Claude Code review of the same passing tests before every merge</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -2434,7 +2434,7 @@ gets one user message holding three tool_results.
 <li>A. No; your code runs it, or refuses to</li>
 <li>B. Yes; the API ran it before replying</li>
 <li>C. No; Anthropic&#39;s servers run it once you send a result</li>
-<li>D. Yes; the SDK runs it for tools you declared</li>
+<li>D. Yes; the SDK runs it for the tools you declared</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -2812,7 +2812,7 @@ Staff can request a new laptop through the IT Service Desk portal under Hardware
 <li>A. Translate Arabic questions into English before the call</li>
 <li>B. Raise <code>effort</code> so the model reasons about the user&#39;s language</li>
 <li>C. Add a language rule, then test it on Arabic cases</li>
-<li>D. Add one Arabic example and leave the instructions alone</li>
+<li>D. Add one Arabic example only and leave the instructions alone</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -2833,9 +2833,9 @@ Staff can request a new laptop through the IT Service Desk portal under Hardware
 
 <p><strong>3. Lujain&#39;s classifier prompt has six <code>security</code> examples and two <code>other</code> examples, and unrelated tickets now come back as <code>security</code>. What is the likeliest cause?</strong></p>
 <ul>
-<li>A. Examples after the instructions count less than the rules</li>
+<li>A. Examples after the instructions count less than rules</li>
 <li>B. Eight examples are too few to teach the labels</li>
-<li>C. The first listed label wins whenever the model is unsure</li>
+<li>C. The first listed label wins when the model is unsure</li>
 <li>D. The skewed examples push it towards the most-shown label</li>
 </ul>
 <details><summary>Answer</summary>
@@ -3185,7 +3185,7 @@ Plan first; wait for my approval before writing.
 <section class="sec sec-quiz"><h2>✍️ Check yourself</h2>
 <p><strong>1. A prompt scores 100% on the 20 dev tickets it was tuned on. What should you do first?</strong></p>
 <ul>
-<li>A. Re-run dev three times to confirm the 100% is stable</li>
+<li>A. Re-run dev three times to confirm 100% is stable</li>
 <li>B. Run the held-out set and compare it with dev scores</li>
 <li>C. Raise the gate threshold to 100% to lock it in</li>
 <li>D. Switch to a cheaper model and compare the scores</li>
@@ -3966,10 +3966,10 @@ Plan first, implement in small steps, run the tests after each step.
 
 <p><strong>3. The model sends <code>__import__(&#39;os&#39;).getcwd()</code> to the ast-based calculator. What happens?</strong></p>
 <ul>
-<li>A. It runs normally, because <code>getcwd</code> only reads state</li>
+<li>A. It runs normally, because <code>getcwd</code> only reads the state</li>
 <li>B. A call node is refused and the model gets an error</li>
-<li>C. It runs inside a sandbox and returns the folder name</li>
-<li>D. It is quietly replaced by 0 and the sum continues</li>
+<li>C. It runs in a sandbox and returns the current folder name</li>
+<li>D. It is quietly replaced by 0 and the sum carries on without it</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -4297,9 +4297,9 @@ quality_gate: {recall_at_3: &quot;agreed target on 40 questions&quot;, refusal_t
 
 <p><strong>2. One chunk is ranked 2 by the vector search and missing from BM25. Another is ranked 4 by both. With k = 60, which scores higher?</strong></p>
 <ul>
-<li>A. The first, because rank 2 always beats rank 4 in a single list</li>
+<li>A. The first, as rank 2 always beats rank 4 in one list</li>
 <li>B. They tie, because k = 60 flattens the ranks away</li>
-<li>C. The first, because vector ranks count for more than BM25 ranks</li>
+<li>C. The first, as vector ranks far outweigh BM25 ranks</li>
 <li>D. The second, because two lists agree and their points add</li>
 </ul>
 <details><summary>Answer</summary>
@@ -4731,7 +4731,7 @@ Do not tune MIN_SIM or edit the questions to make a number look better.
 <section class="sec sec-quiz"><h2>✍️ Check yourself</h2>
 <p><strong>1. For &quot;How long does a new laptop request take?&quot; the log shows only <code>laptop-requests#0</code> and the answer quotes the portal sentence. Why?</strong></p>
 <ul>
-<li>A. The index went stale after the policy was re-ingested</li>
+<li>A. The index went stale after the policy page was re-ingested into the store</li>
 <li>B. <code>MIN_SIM</code> is too low, so unrelated noise got through</li>
 <li>C. The chunk holding the answer shares no word with the question</li>
 <li>D. The model ignored the 5-business-days sentence</li>
@@ -5099,7 +5099,7 @@ print(loop(6, 600, 450, 150))    # (10350, 900)
 <li>A. An agent with four tools that picks its own order</li>
 <li>B. A fixed workflow with a gate checking each step&#39;s output</li>
 <li>C. A supervisor model that hires worker agents on demand</li>
-<li>D. An orchestrator that invents the subtasks for each notice</li>
+<li>D. An orchestrator that invents subtasks for each notice</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -5147,7 +5147,7 @@ print(loop(6, 600, 450, 150))    # (10350, 900)
 <li>A. Every iteration resends the whole growing history</li>
 <li>B. Tool calls cost more per token than chain calls</li>
 <li>C. Loops always run on a bigger model than chains</li>
-<li>D. Chain input is cached automatically and not counted</li>
+<li>D. Chain input is cached and never counted</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -5518,9 +5518,9 @@ Implement in small steps; run the tests after each.
 
 <p><strong>2. Lujain wraps all of <code>run_notice</code> in <code>async with sem</code>. With <code>WIDTH=4</code> and thirty notices, the run hangs. Why?</strong></p>
 <ul>
-<li>A. The semaphore was created in the wrong event loop</li>
+<li>A. The semaphore sits in the wrong event loop</li>
 <li>B. <code>gather</code> cannot be combined with a semaphore</li>
-<li>C. The SDK reserves one slot for its own retries</li>
+<li>C. The SDK reserves a slot for its own retries</li>
 <li>D. Four notices hold every slot and wait for more</li>
 </ul>
 <details><summary>Answer</summary>
@@ -5542,7 +5542,7 @@ Implement in small steps; run the tests after each.
 
 <p><strong>4. Gate 2 rejects a summary containing the number 30, which is not in the notice. What happens next?</strong></p>
 <ul>
-<li>A. The pipeline deletes the number in code and carries on</li>
+<li>A. The pipeline deletes the number in code and carries on with the rest</li>
 <li>B. The fact-checkers decide whether the number is acceptable</li>
 <li>C. The notice goes straight to a person with no more calls</li>
 <li>D. The model is shown the problem and retries once, then stops</li>
@@ -7045,7 +7045,7 @@ Plan first; small steps; tests after each.
 <li>A. To let the customer watch a wrong answer get caught</li>
 <li>B. To show the failure rate is low enough to skip the pilot</li>
 <li>C. To prove the model never makes mistakes on policy questions</li>
-<li>D. To avoid writing acceptance criteria for the pilot</li>
+<li>D. To avoid writing the acceptance criteria for the pilot</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -7493,9 +7493,9 @@ Plan first; small steps; tests after each.
 <p><strong>2. A reply has <code>stop_reason: &quot;max_tokens&quot;</code> and ends in a <code>tool_use</code> whose input stops mid-value. What should the loop do?</strong></p>
 <ul>
 <li>A. Stop without running it; raise the limit or hand off</li>
-<li>B. Run the tool with the partial input and see what happens</li>
+<li>B. Run the tool with the partial input anyway</li>
 <li>C. Repair the JSON in code, then run the tool</li>
-<li>D. Send the reply back unchanged so the model finishes it</li>
+<li>D. Send the reply back so the model finishes it</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -7517,7 +7517,7 @@ Plan first; small steps; tests after each.
 <p><strong>4. Najm Desk adds a &quot;review your answer&quot; call to every run. The eval score is unchanged and cost per run is up by a third. What does the lesson suggest?</strong></p>
 <ul>
 <li>A. Run the review on a larger model, for every run</li>
-<li>B. Run the review twice, so more mistakes get caught</li>
+<li>B. Run the review twice, so that more mistakes get caught</li>
 <li>C. Keep it, because an extra check can only help</li>
 <li>D. Keep it only where a code check can supply feedback</li>
 </ul>
@@ -7528,10 +7528,10 @@ Plan first; small steps; tests after each.
 
 <p><strong>5. Hind wants an agent that edits a folder of runbooks and runs a script in a sandbox. Lujain starts writing file and shell tools for her own loop. What should she consider first?</strong></p>
 <ul>
-<li>A. The beta tool runner, so she need not write the loop</li>
+<li>A. The beta tool runner, so she writes no loop</li>
 <li>B. A higher step cap, so the edits can finish</li>
 <li>C. The Claude Agent SDK, whose harness already has them</li>
-<li>D. A forced <code>tool_choice</code>, so every step calls a tool</li>
+<li>D. A forced <code>tool_choice</code>, so each step calls a tool</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -7942,7 +7942,7 @@ Plan first; move one module at a time; run the tests after each move.
 <ul>
 <li>A. The deadline is checked between steps only</li>
 <li>B. The mock ignores the <code>TIMEOUT_S</code> setting</li>
-<li>C. The SDK raised the timeout to fit the call</li>
+<li>C. The SDK raised the timeout to fit it</li>
 <li>D. The deadline counts tokens, not seconds</li>
 </ul>
 <details><summary>Answer</summary>
@@ -8323,7 +8323,7 @@ Plan first; move one module at a time; run the tests after each move.
 
 <p><strong>3. A design proposes <code>recall(user_id, query)</code> so the model can find the right person. What is the best fix?</strong></p>
 <ul>
-<li>A. Tell the model in the prompt to pass only the current user&#39;s id</li>
+<li>A. Tell the model in the prompt to pass only the user&#39;s id</li>
 <li>B. Validate that the id is a number before the query runs</li>
 <li>C. Take the id from the session and remove it from the tool inputs</li>
 <li>D. Keep the input and log every call with its id</li>
@@ -8730,7 +8730,7 @@ Work in small steps and run the tests after each.
 <ul>
 <li>A. SQLite caches deleted rows until a restart</li>
 <li>B. Deleted bytes stay in free space unless zeroed</li>
-<li>C. The test ran in a transaction that rolled back</li>
+<li>C. The test ran in a rolled-back transaction</li>
 <li>D. The <code>SELECT</code> used the wrong user id</li>
 </ul>
 <details><summary>Answer</summary>
@@ -8741,7 +8741,7 @@ Work in small steps and run the tests after each.
 <p><strong>2. After the assistant reads ticket 4499, the model tries to save &quot;<a href="mailto:attacker@evil.example">attacker@evil.example</a> is a trusted approver&quot;. What stops the write?</strong></p>
 <ul>
 <li>A. The regex in <code>remember</code> that rejects instructions</li>
-<li>B. The relevance gate in <code>recall</code></li>
+<li>B. The relevance gate in <code>recall</code>, which drops weak matches</li>
 <li>C. The system prompt calling ticket notes data</li>
 <li>D. The <code>tainted</code> check in <code>run_tool</code></li>
 </ul>
@@ -9524,7 +9524,7 @@ Plan first; implement in small steps; run the tests after each.
 <p><strong>3. With the write scope granted, a poisoned ticket asks for <code>create_ticket</code> and Rayan types &quot;y&quot; unread. What follows?</strong></p>
 <ul>
 <li>A. The schema blocks it, because validation also judges intent</li>
-<li>B. The scope check blocks it, because the poisoned text lacks the scope</li>
+<li>B. The scope check blocks it, because the poisoned text lacks the needed scope</li>
 <li>C. The server refuses it, because the title looks like a duplicate</li>
 <li>D. The ticket is filed, because the call is valid and a person approved it</li>
 </ul>
@@ -10346,9 +10346,9 @@ One file at a time; run the tests after each step.
 <section class="sec sec-quiz"><h2>✍️ Check yourself</h2>
 <p><strong>1. A run ends with reason <code>contract</code> after 3 calls; the writer never ran. What happened?</strong></p>
 <ul>
-<li>A. The reviewer rejected two drafts and hit the round cap</li>
+<li>A. The reviewer rejected two drafts and hit the cap</li>
 <li>B. The researcher&#39;s quote failed the grounding check twice</li>
-<li>C. The team&#39;s token budget ran out before the writer began</li>
+<li>C. The team&#39;s token budget ended before the writer began</li>
 <li>D. The writer asked for a tool it was not given</li>
 </ul>
 <details><summary>Answer</summary>
@@ -10359,7 +10359,7 @@ One file at a time; run the tests after each step.
 <p><strong>2. With <code>TEAM_TOKEN_BUDGET=300</code>, a run stops after 389 tokens. Is that a bug?</strong></p>
 <ul>
 <li>A. No: it is checked before a call, so one call can cross it</li>
-<li>B. Yes: it should be checked after the call, for an exact budget</li>
+<li>B. Yes: check it after the call, for an exact budget</li>
 <li>C. Yes: the SDK ignores budgets set by the application</li>
 <li>D. No: the budget counts only output tokens, not input</li>
 </ul>
@@ -10382,10 +10382,10 @@ One file at a time; run the tests after each step.
 
 <p><strong>4. The scripted writer, given no tools, asks for <code>search_policies</code>. What happens?</strong></p>
 <ul>
-<li>A. Stops the whole run and hands it to a person</li>
+<li>A. Stops the whole run and hands the case over to a person</li>
 <li>B. Runs the search anyway, as the dispatcher is shared</li>
 <li>C. Refuses with an error result; the writer goes on</li>
-<li>D. Sends no <code>tool_result</code>, which the API rejects</li>
+<li>D. Sends no <code>tool_result</code>, which the API rejects as invalid</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10740,10 +10740,10 @@ def make_judge(client, model: str = JUDGE_MODEL):
 <section class="sec sec-quiz"><h2>✍️ Check yourself</h2>
 <p><strong>1. A prompt change lifts the classifier from 83% to 87%. The two newly passing cases are tickets the change pasted into the prompt as examples. What do you conclude?</strong></p>
 <ul>
-<li>A. The change worked, so keep it and raise the floor</li>
+<li>A. The change worked, so keep it and raise the pass floor</li>
 <li>B. The gain is void, so remove the examples and rerun</li>
-<li>C. The set is too small, so double the repetitions</li>
-<li>D. The examples carry correct labels, so they are fine</li>
+<li>C. The set is too small, so double the repetitions each run</li>
+<li>D. The examples carry correct labels, so they are fine to keep</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10788,8 +10788,8 @@ def make_judge(client, model: str = JUDGE_MODEL):
 
 <p><strong>5. A pull request changes a tool description and also edits the baseline so CI turns green. What should review do?</strong></p>
 <ul>
-<li>A. Accept it, since a green check means the change is safe</li>
-<li>B. Accept it if the overall score rose by at least a point</li>
+<li>A. Accept it, as a green check means that the change is safe</li>
+<li>B. Accept it if the overall score rose by a point</li>
 <li>C. Reject the baseline edit; re-baseline in its own commit</li>
 <li>D. Ask for three repeats of every case first</li>
 </ul>
@@ -11195,10 +11195,10 @@ Plan first; one file at a time; run the tests after each step.
 
 <p><strong>4. Critical case P11 fails in the baseline and now; nothing else changed. What does the gate do?</strong></p>
 <ul>
-<li>A. Exits 1, because a critical case is failing</li>
+<li>A. Exits 1, because a critical case is failing now</li>
 <li>B. Exits 0, with a note about an open defect</li>
 <li>C. Exits 2, because the eval is not trustworthy</li>
-<li>D. Quarantines the case until the end date</li>
+<li>D. Quarantines the case until the review end date</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -11592,7 +11592,7 @@ Plan first; small steps; run the tests after each.
 <ul>
 <li>A. A stricter system prompt</li>
 <li>B. A tool gate with no email tool</li>
-<li>C. A classifier scoring each page</li>
+<li>C. A classifier scoring pages</li>
 <li>D. A staff warning about drafts</li>
 </ul>
 <details><summary>Answer</summary>
@@ -11614,9 +11614,9 @@ Plan first; small steps; run the tests after each.
 
 <p><strong>3. A ticket comment orders <code>add_comment</code> on Rayan&#39;s own ticket after the chat read it. Which layer refuses?</strong></p>
 <ul>
-<li>A. Owner check, as the ticket is not his</li>
-<li>B. Scope, as he lacks comment rights</li>
-<li>C. Approval, as comments need a person</li>
+<li>A. Owner check, as the ticket is not his own</li>
+<li>B. Scope, as he lacks the right to comment</li>
+<li>C. Approval, as every comment needs a person</li>
 <li>D. Taint, as the chat read others&#39; text</li>
 </ul>
 <details><summary>Answer</summary>
@@ -11638,9 +11638,9 @@ Plan first; small steps; run the tests after each.
 
 <p><strong>5. All ten offline attacks fail with guards on, and Lujain calls the agent injection-proof. What does the evidence support?</strong></p>
 <ul>
-<li>A. Ten attacks show the model resists injection</li>
+<li>A. Ten attacks show that the model resists injection</li>
 <li>B. The gate stops these ten against a scripted model</li>
-<li>C. A real model obeys all ten with guards off</li>
+<li>C. A real model obeys all ten when the guards are off</li>
 <li>D. The masks would catch any paraphrase of them</li>
 </ul>
 <details><summary>Answer</summary>
@@ -12452,10 +12452,10 @@ Do not: build images, add dependencies or touch other modules. Plan first; one f
 <section class="sec sec-quiz"><h2>✍️ Check yourself</h2>
 <p><strong>1. Staging and production run the same image digest but answer differently. What do you check first?</strong></p>
 <ul>
-<li>A. Whether the base image tag changed</li>
+<li>A. Whether the base image tag changed since the last build</li>
 <li>B. Whether the environment variables differ</li>
-<li>C. Whether the Dockerfile has several stages</li>
-<li>D. Whether the container runs as non-root</li>
+<li>C. Whether the Dockerfile has several build stages</li>
+<li>D. Whether the container runs as a non-root user</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -12961,10 +12961,10 @@ Acceptance: pytest passes; report.py exits 1 on a breached SLO. No new dependenc
 
 <p><strong>4. The error budget for the 90% task-success SLO is half spent two days into a 28-day window. What do you do?</strong></p>
 <ul>
-<li>A. Loosen the SLO to 85% so the burn looks smaller</li>
-<li>B. Keep shipping, because half the budget is left</li>
+<li>A. Loosen the SLO to 85% so that the burn looks smaller</li>
+<li>B. Keep shipping, because half the budget is still left</li>
 <li>C. Pause releases, then investigate or roll back</li>
-<li>D. Wait for the window to end before acting</li>
+<li>D. Wait for the whole window to end before acting on it</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -13380,10 +13380,10 @@ Do not weaken a test. Run the tests after each step.
 
 <p><strong>5. Support wants employee numbers as conversation ids, to search a person&#39;s chats. Why not?</strong></p>
 <ul>
-<li>A. Numbers index slowly in most trace stores</li>
+<li>A. Numbers index slowly in trace stores</li>
 <li>B. The id spreads personal data to every span</li>
-<li>C. Employee numbers are too short to stay unique</li>
-<li>D. Support already searches by ticket number</li>
+<li>C. Staff numbers are too short to stay unique</li>
+<li>D. Support already uses the ticket number</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -13748,7 +13748,7 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 <ul>
 <li>A. Drafts always need two approvals</li>
 <li>B. It shows what was said, not what TicketHub holds</li>
-<li>C. The runner cannot read replies written in Arabic</li>
+<li>C. The runner cannot read replies in Arabic</li>
 <li>D. The runner passes any row that gets a reply</li>
 </ul>
 <details><summary>Answer</summary>
@@ -13759,8 +13759,8 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 <p><strong>2. A row fails and Hind asks to pass it with comments. What do the script&#39;s rules say?</strong></p>
 <ul>
 <li>A. Pass it now and log the comment for the backlog</li>
-<li>B. Re-run it until it passes, then record that</li>
-<li>C. Drop the row from the script before the meeting</li>
+<li>B. Re-run it until it passes, then record that it passed</li>
+<li>C. Drop the row from the script before the review meeting</li>
 <li>D. Give it a severity, then fix it or waive it</li>
 </ul>
 <details><summary>Answer</summary>
@@ -13771,9 +13771,9 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 <p><strong>3. Six weeks after go-live a model retirement notice sits in a departed builder&#39;s mailbox. Which handover step prevents this?</strong></p>
 <ul>
 <li>A. Naming a notice owner in the support model</li>
-<li>B. A longer hypercare period for the pilot</li>
+<li>B. A longer hypercare period for the whole pilot</li>
 <li>C. Training desk staff on the limits of the model</li>
-<li>D. A second UAT session for the Arabic rows</li>
+<li>D. A second UAT session for the Arabic test rows</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -13782,10 +13782,10 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 
 <p><strong>4. Median first response fell from 3 h 40 min to 1 h 10 min, but the new figure times the first chat reply, the baseline the triage note. What do you do?</strong></p>
 <ul>
-<li>A. Publish it, since the direction is right</li>
-<li>B. Average the two definitions into one figure</li>
+<li>A. Publish it, as the direction is right</li>
+<li>B. Average the two figures into one</li>
 <li>C. Re-measure both on one definition first</li>
-<li>D. Report only the contained rate instead</li>
+<li>D. Report the contained rate only</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -13794,9 +13794,9 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 
 <p><strong>5. A senior desk agent says Najm Desk is wrong too often and refuses drafts. What is the best response?</strong></p>
 <ul>
-<li>A. Make drafts mandatory for the whole desk</li>
+<li>A. Make drafts mandatory for the whole desk this month</li>
 <li>B. Invite them to break it, then show the fix</li>
-<li>C. Ask the champion to ignore the feedback</li>
+<li>C. Ask the champion to ignore the feedback for now</li>
 <li>D. Wait for the monthly benefits report to settle it</li>
 </ul>
 <details><summary>Answer</summary>
@@ -14470,7 +14470,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 <section class="sec sec-quiz"><h2>✍️ Practice exam</h2>
 <p><strong>1. Lujain&#39;s prompt v5 moves the 10 held-out tickets from 80% to 90% and leaves the 20 dev tickets at 90%. She tells Hind &quot;v5 is ten points better&quot;. What is Fahad&#39;s most accurate reply?</strong></p>
 <ul>
-<li>A. Agree: held-out is the unbiased set, so a gain of ten points is a gain of ten points</li>
+<li>A. Agree: held-out is the unbiased set, so ten points gained are ten points</li>
 <li>B. Disagree: one ticket is ten points here, so compare fixed and broken tickets first</li>
 <li>C. Disagree: only the dev tickets can measure a prompt improvement</li>
 <li>D. Agree, once she re-runs held-out until the score stops moving</li>
@@ -14543,8 +14543,8 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 <p><strong>7. Najm Desk&#39;s gate marks a chat as tainted after any <code>search_policies</code> result, and afterwards it refuses <code>add_comment</code> even on the user&#39;s own ticket. Staff complain. The policy index holds reviewed, published pages plus an inbox folder of unreviewed drafts, and tickets carry comments from outside senders. What should Lujain change?</strong></p>
 <ul>
 <li>A. Switch the taint layer off for <code>add_comment</code>, because the scope and owner checks already cover it</li>
-<li>B. Let the model judge in each chat whether the text it read looked suspicious, and lift the block if it says no</li>
-<li>C. Move the rule into the system prompt, so the model refuses a write only when it judges the text risky</li>
+<li>B. Let the model judge in each chat if the text it read looked odd, and lift the block if it says no</li>
+<li>C. Move the rule into the system prompt, so the model refuses a write only if it judges the text risky</li>
 <li>D. Track taint per source, so reviewed pages leave the chat clean while comments and drafts still taint it</li>
 </ul>
 <details><summary>Answer</summary>
@@ -14554,9 +14554,9 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 <p><strong>8. Yara typed ticket 4471, and Najm Desk told her it was closed, although TicketHub shows it in progress. The JSONL trace shows the model sent <code>ticket_id</code> &quot;4417&quot;, a transposed digit, and TicketHub returned a different, closed ticket. Which change would reliably have stopped the wrong answer?</strong></p>
 <ul>
-<li>A. Set <code>strict: true</code> on the tool so that arguments always match the schema</li>
+<li>A. Set <code>strict: true</code> on the tool so that arguments always match the declared schema</li>
 <li>B. Log more fields on every event so that reviewers can spot a slip sooner in a review</li>
-<li>C. Tell the model in the description to copy ticket numbers exactly as typed</li>
+<li>C. Tell the model in the description to copy ticket numbers exactly as they were typed</li>
 <li>D. Check in code that an id the model sends also appears in the user&#39;s message</li>
 </ul>
 <details><summary>Answer</summary>
@@ -14580,8 +14580,8 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 <ul>
 <li>A. Store each key with a hash of the request body, and refuse a key that returns with a different question</li>
 <li>B. Keep the keys in a store that all replicas share, and send the same key on to TicketHub</li>
-<li>C. Raise the gateway timeout above the model&#39;s slowest answer, so no retry is ever sent</li>
-<li>D. Search TicketHub for a ticket with the same title before the service creates a new one</li>
+<li>C. Raise the gateway timeout above the model&#39;s slowest answer, so no retry is ever sent by the client</li>
+<li>D. Search TicketHub for an existing ticket with the same title before the service creates a new one</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -14593,7 +14593,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 <li>A. Raise the iteration cap further, so that the looping runs can finish and stop on their own</li>
 <li>B. Switch <code>model_calls</code> off, then find the cause and review the breaker limit against a normal peak hour</li>
 <li>C. Roll back to the previous image digest, since a release is the usual cause of a cost spike</li>
-<li>D. Tell the agent in chat to stop looping, and then watch whether the token count falls over the next hour</li>
+<li>D. Tell the agent in chat to stop looping, then watch whether the token count falls in the next hour</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -14615,7 +14615,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 <p><strong>13. Lujain&#39;s 30-scenario seed set holds 27 polite English policy questions the assistant should answer, two Arabic ones and one out-of-scope request. Noura&#39;s worries are prompt injection, other people&#39;s tickets and pasted secrets. Which change makes the set most useful?</strong></p>
 <ul>
 <li>A. Add thirty more ordinary questions so the set is large enough to trust</li>
-<li>B. Swap most of the ordinary questions for attack cases, since Noura&#39;s three worries are the real risks</li>
+<li>B. Swap most ordinary questions for attack cases, since Noura&#39;s three worries are the real risks</li>
 <li>C. Tighten each row to the exact reply wording expected, so runs can be matched exactly</li>
 <li>D. Rebalance to about half ordinary (some Arabic), a quarter adversarial and a quarter out of scope</li>
 </ul>
@@ -14662,10 +14662,10 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 <p><strong>17. Yara asks Najm Desk &quot;What is the progress on ticket 4471?&quot; It answers from general knowledge and never calls <code>get_ticket_status</code>, whose description reads &quot;Gets ticket info.&quot; Which change is the best first fix?</strong></p>
 <ul>
-<li>A. Add <code>strict: true</code> to the definition so that the model must call the tool</li>
-<li>B. Add a second tool, <code>fetch_ticket_info</code>, to give the model another way to match</li>
+<li>A. Add <code>strict: true</code> to the definition so that the model must always call the tool</li>
+<li>B. Add a second tool, <code>fetch_ticket_info</code>, to give the model another way to match the ticket</li>
 <li>C. Rewrite the description to say what it does, when to call it and when not to</li>
-<li>D. Raise <code>max_tokens</code> so that the model has more room to decide to call the tool</li>
+<li>D. Raise <code>max_tokens</code> so that the model has more room to decide whether to call the tool</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -14712,8 +14712,8 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 <ul>
 <li>A. Resend it with a reworded prompt until the model gives an answer</li>
 <li>B. Tell the user plainly and log the stop details for the team</li>
-<li>C. Raise <code>max_tokens</code>, because a missing reply means it was cut off</li>
-<li>D. Treat it like <code>end_turn</code> and show the reply as it came back</li>
+<li>C. Raise <code>max_tokens</code>, because a missing reply means it was cut off midway</li>
+<li>D. Treat it like <code>end_turn</code> and show the reply exactly as it came back</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -14771,7 +14771,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 <p><strong>26. A logistics company&#39;s support bot calls a <code>get_shipment</code> function that its own team wrote. Now the finance team wants its separate agent to use the same lookup, an engineer wants it in Claude Code, and the shipping team that owns the data will maintain the integration. What is the best design?</strong></p>
 <ul>
 <li>A. Copy the function into the finance agent and add a copy to Claude Code</li>
-<li>B. Keep the plain function and wait until a third client needs the same lookup</li>
+<li>B. Keep the plain function and wait until a third client needs that lookup</li>
 <li>C. Expose the support bot as an API that the other two clients can call</li>
 <li>D. Have the shipping team ship one MCP server and let each host connect to it</li>
 </ul>
@@ -14806,7 +14806,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 <p><strong>29. Claude Code adds <code>trim()</code> to the Najm Desk chat script with four new tests. All pass, and its summary says they cover the behaviour. Fahad asks how you know these four tests would catch a bug. What do you do?</strong></p>
 <ul>
-<li>A. Ask Claude Code to confirm in its summary that the tests are meaningful</li>
+<li>A. Ask Claude Code to confirm in its summary that tests are meaningful</li>
 <li>B. Run the suite three more times to rule out flaky results</li>
 <li>C. Break the feature on purpose and confirm that at least one test fails</li>
 <li>D. Check that the tests were written before the code was</li>
@@ -15047,9 +15047,9 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 <p><strong>49. Lujain&#39;s Najm Desk loop ends a run as soon as the model returns <code>end_turn</code> and shows its text. Yara asks &quot;Are tickets 4471 and 4472 resolved?&quot; and the reply says only &quot;Ticket 4471 is resolved.&quot; Both lookups were possible. Which change catches this before the user sees it?</strong></p>
 <ul>
 <li>A. Add a reflection call that asks the model to confirm its answer is complete</li>
-<li>B. Raise the step cap so the model has room to finish the second lookup</li>
+<li>B. Raise the step cap so the model has room to finish the second lookup on its own</li>
 <li>C. Check in code that every ticket number in the goal appears in the answer</li>
-<li>D. Add the line &quot;answer every part of the question&quot; to the system prompt</li>
+<li>D. Add the line &quot;answer every part of the question&quot; to the system prompt for every run</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -15094,9 +15094,9 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 <p><strong>53. In a 30-message triage chat about a VPN problem, Najm Desk starts suggesting steps that were already tried and forgets that it is waiting for Networks. Lujain proposes saving every turn to the long-term store and recalling it each turn. Fahad wants a design that a test can check without calling a model. What is the better design?</strong></p>
 <ul>
-<li>A. Fold the older turns into a model-written summary and resend it each turn</li>
-<li>B. Ask the model to restate the steps already tried at the end of each reply</li>
-<li>C. Add a system-prompt rule: never repeat a step that was already tried</li>
+<li>A. Fold the older turns into a model-written summary and resend it with each turn</li>
+<li>B. Ask the model to restate the steps already tried at the end of each reply it gives</li>
+<li>C. Add a system-prompt rule: never repeat a step that was already tried by the agent</li>
 <li>D. Keep a state object that code updates each step and puts in every prompt</li>
 </ul>
 <details><summary>Answer</summary>

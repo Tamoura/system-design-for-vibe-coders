@@ -241,10 +241,10 @@ curl -sv https://api.najm.example/health -o /dev/null
 
 **4. يعيد موازن الأحمال L7 (L7 load balancer) الواقع أمام واجهة برمجة تطبيق نجم للهاتف الرمز 504 Gateway Timeout. من أين ينبغي أن يبدأ التحقيق (the investigation)؟**
 
-- A. سجلات DNS للواجهة (DNS records for the API)
-- B. شهادة TLS على موازن الأحمال (TLS certificate on the load balancer)
-- C. الخلفيات خلف موازن الأحمال (backends behind the load balancer): سلامتها (health) وجاهزيتها (readiness) وأزمنة استجابتها (response times)
-- D. شبكة الهاتف المحمول لدى العميل (customer's mobile network)
+- A. سجلات DNS للواجهة (DNS records for the API) كما يراها العميل
+- B. شهادة TLS على موازن الأحمال (TLS certificate on the load balancer) وتاريخ انتهائها
+- C. الخلفيات خلف موازن الأحمال (backends): سلامتها وجاهزيتها وأزمنة استجابتها
+- D. شبكة الهاتف المحمول لدى العميل (customer's mobile network) أثناء تنقّله
 
 <details><summary>الإجابة</summary>
 
@@ -255,7 +255,7 @@ curl -sv https://api.najm.example/health -o /dev/null
 **5. يوقف Kubernetes حجيرة أثناء عملية نشر (during a deploy). ماذا يحدث، وماذا يجب أن يفعل التطبيق؟**
 
 - A. يرسل SIGKILL فورًا (immediately)، فلا يحظى التطبيق بفرصة للتنظيف (clean up)
-- B. يرسل SIGTERM، ثم SIGKILL بعد مهلة سماح (grace period)؛ وعلى التطبيق تصريف العمل الجاري (drain in-flight work) ثم الخروج
+- B. يرسل SIGTERM، ثم SIGKILL بعد مهلة سماح (grace period)؛ وعلى التطبيق تصريف العمل الجاري ثم الخروج
 - C. يرسل SIGHUP، وعلى التطبيق إعادة تحميل إعداداته (reload its configuration) ومواصلة الخدمة
 - D. يحذف صورة الحاوية (container image)، فيجب على التطبيق أولًا حفظ حالته على القرص المحلي (local disk)
 
@@ -459,9 +459,9 @@ flowchart TD
 
 **1. تضع المسودة الأولى ليوسف جميع عقد Kubernetes وقاعدة البيانات في منطقة توافر واحدة (one availability zone). ما الخطر الرئيسي (the main risk)؟**
 
-- A. يفرض المزوّد رسومًا إضافية (charges a premium) على إبقاء كل مورد في منطقة توافر واحدة
+- A. يفرض المزوّد رسومًا إضافية (charges a premium) على إبقاء كل مورد في منطقة توافر واحدة حتى لو لم يكن ذلك ضروريًا
 - B. سيرى العملاء البعيدون عن المنطقة زمن استجابة أعلى (higher latency) في كل طلب
-- C. فشل منطقة توافر واحدة (one zone failure) يُسقط الخدمة كلها، دون شيء يُتجاوَز إليه الفشل (nothing to fail over to)
+- C. فشل منطقة توافر واحدة يُسقط الخدمة كلها، دون شيء يُتجاوَز إليه الفشل (nothing to fail over to)
 - D. يرفض Kubernetes المُدار إنشاء عنقود (create a cluster) تتشارك عقده منطقة توافر واحدة
 
 <details><summary>الإجابة</summary>
@@ -499,7 +499,7 @@ flowchart TD
 **4. يجب أن تستدعي حجيرات التطبيق (application pods) في الشبكات الفرعية الخاصة (private subnets) واجهة برمجة تطبيقات خارجية لتقييم الاحتيال (external fraud-scoring API)، لكن يجب ألا تقبل أبدًا اتصالات من الإنترنت. ما الذي يحقق لها ذلك؟**
 
 - A. نقل الحجيرات إلى شبكة فرعية عامة (public subnet)
-- B. بوابة NAT للحركة الصادرة (NAT gateway for outbound traffic)
+- B. بوابة NAT للحركة الصادرة (NAT gateway)
 - C. شبكة توصيل محتوى (CDN) أمام الحجيرات
 - D. منح كل حجيرة عنوان IP عامًا (public IP address)
 
@@ -769,7 +769,7 @@ metadata:
 - A. مفتاح المسؤول نفسه، يُدوَّر كل 90 يومًا (rotated every 90 days) بواسطة مهمة مُجدوَلة (a scheduled job)
 - B. مفتاح وصول شخصي (a personal access key) من حساب سالم، لأن المصادقة متعددة العوامل مفعّلة فيه
 - C. مفتاح بصلاحيات أقل (fewer rights)، محفوظ في سرّ مشفّر في خط التسليم (an encrypted pipeline secret)
-- D. اتحاد الهوية عبر OIDC الذي يُصدر بيانات اعتماد قصيرة العمر (short-lived credentials) لدور نشر ضيّق (a narrow deploy role)
+- D. اتحاد الهوية عبر OIDC الذي يُصدر بيانات اعتماد قصيرة العمر (short-lived credentials) لدور نشر ضيّق
 
 <details><summary>الإجابة</summary>
 
@@ -821,7 +821,7 @@ metadata:
 - A. كلمة مرور مسؤول مشتركة (a shared administrator password)، مدوّنة في ويكي الفريق (team wiki) للطوارئ
 - B. مفاتيح وصول مسؤول طويلة العمر (long-lived administrator access keys) مخزّنة على حاسوب كل مهندس
 - C. إجراء موثّق (a documented procedure) لتعطيل المصادقة متعددة العوامل للجميع أثناء الحوادث
-- D. بضعة حسابات كسر زجاج مُختبَرة (tested break-glass accounts) بمصادقة متعددة العوامل قوية وتنبيهات عند كل استخدام (alerts on every use)
+- D. بضعة حسابات كسر زجاج مُختبَرة (tested accounts) بمصادقة متعددة العوامل وتنبيهات عند كل استخدام
 
 <details><summary>الإجابة</summary>
 

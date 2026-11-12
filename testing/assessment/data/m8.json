@@ -41,13 +41,13 @@
     "en": [
      "Add a coverage gate so that every line of `schedule.py` must run",
      "Paste the dates the agent's code returns into the expected list",
-     "Assert that the six dates are in order and all business days",
+     "Assert that the six dates are in order and that all are business days",
      "Assert the six exact dates, worked out by hand from R2 and R3"
     ],
     "ar": [
-     "إضافة بوابة تغطية (coverage gate) تُلزم بتنفيذ كل سطر (every line) في `schedule.py`",
+     "إضافة بوابة تغطية (coverage gate) تُلزم بتنفيذ كل سطر (every line) في ملف `schedule.py`",
      "لصق التواريخ التي تعيدها شيفرة الوكيل (the agent's code) في قائمة المتوقع (expected list)",
-     "التأكيد (assert) أن التواريخ الستة تتزايد وأن كلًّا منها يوم عمل (business day)",
+     "التأكيد (assert) أن التواريخ الستة تتزايد وأن كلًّا منها يوم عمل (business day) وليس عطلة",
      "التأكيد (assert) على التواريخ الستة بدقة، محسوبة يدويًا (by hand) من القاعدتين R2 وR3"
     ]
    },

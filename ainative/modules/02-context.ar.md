@@ -595,9 +595,9 @@ Minutes:      <honest total, including checking>
 
 **1. يُفشل المُقيِّم (The grader) فحص «تعمل الأوامر الموثَّقة» ("The documented commands run and work") ويسمّي `make test` في السطر 12. ما العلاج الصحيح؟ ⁦(What is the right repair?)⁩**
 
-- A. ثبّت `make`، لأن الفحص يبحث عن الأداة (looks for the tool).
+- A. ثبّت `make`، لأن الفحص يبحث عن الأداة (looks for the tool) في المشروع (in the project).
 - B. احذف السطر ووثّق `pytest -q` (Delete the line and document).
-- C. انقل السطر إلى كتلة `text`، مثالًا (as an example).
+- C. انقل السطر إلى كتلة `text`، مثالًا (as an example) لا أمرًا يُنفَّذ (not a command to run).
 - D. أعد تسميته `make check`، فالمُقيِّم يسمح بذلك (the grader allows).
 
 <details><summary>الإجابة</summary>
@@ -609,7 +609,7 @@ Minutes:      <honest total, including checking>
 **2. تكتب لجين `CLAUDE.md` من 20 سطرًا، وتضع القواعد الحقيقية في `AGENTS.md`، ولا تضيف أي استيراد (adds no import). افتراضيًا، ما الذي يُحمَّل، وماذا يقول الفحص؟ ⁦(By default, what loads, and what does the lint say?)⁩**
 
 - A. الملفان كلاهما، ويحسب الفحص الاثنين (counts both).
-- B. `AGENTS.md` وحده، وهو المعيار المفتوح (the open standard).
+- B. `AGENTS.md` وحده، وهو المعيار المفتوح (the open standard) الذي تقرؤه الأدوات الأخرى (read by other tools).
 - C. ولا واحد منهما، لأن ملفي ذاكرة يتعارضان (conflict).
 - D. `CLAUDE.md` وحده؛ ويقول الفحص إن `AGENTS.md` مُهمَل (is ignored).
 
@@ -621,7 +621,7 @@ Minutes:      <honest total, including checking>
 
 **3. في زوج واحد من التشغيلات، استغرق B أربع عشرة دقيقة ومنعطفًا خاطئًا واحدًا (one wrong turn)؛ واستغرق A اثنتين وعشرين دقيقة وثلاثة منعطفات. ماذا يجوز أن تستنتج؟ ⁦(What may you conclude?)⁩**
 
-- A. الملف يوفّر ثلث الوقت (saves a third of the time)، فكل مستودع يحتاج إلى واحد (so every repository needs one).
+- A. الملف يوفّر ثلث الوقت (saves a third of the time)، فكل مستودع يحتاج إلى واحد (so every repository needs one) ولا حاجة إلى قياس آخر (and no other measurement is needed).
 - B. كان أداء B أفضل هنا (B did better here)؛ فكرّر التشغيلات (repeat the runs) واطلب من شخص آخر أن يعدّ (have someone else count).
 - C. تُظهر أعداد المنعطفات الخاطئة (wrong-turn counts) أي أسطر الملف كانت مهمة.
 - D. الزوج باطل (void) ما لم يكن التشغيلان متزامنين (simultaneous).

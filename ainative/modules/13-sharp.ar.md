@@ -180,7 +180,7 @@ flowchart RL
 - A. صحيح: أظهرت الدراسة أن التعلم بالذكاء الاصطناعي يخفض دائمًا مهارات المهندس (always lowers an engineer's skills)
 - B. لم يثبت: وجدت تجربة صغيرة واحدة درجات اختبار أدنى (one small trial found lower quiz scores)، ويسرد مؤلفوها حدودًا (its authors list limits)
 - C. خطأ: وجدت التجربة العشوائية نفسها أن مجموعة الذكاء الاصطناعي سجلت درجات أعلى في الفهم (scored higher on comprehension)
-- D. غير ذي صلة: اختبار في مكتبة واحدة لا يقول شيئًا عن المهندسين الذين يستخدمون الوكلاء (says nothing about engineers using agents)
+- D. غير ذي صلة: اختبار في مكتبة واحدة لا يقول شيئًا عن المهندسين الذين يستخدمون الوكلاء (says nothing about engineers using agents) فلا يُعتدّ به (so it carries no weight at all)
 
 <details><summary>الإجابة</summary>
 
@@ -216,7 +216,7 @@ flowchart RL
 
 **4. صغتَ تغيير رسوم مع الوكيل، وكتبتَ اختبارات الحدود أولًا (wrote the boundary tests first)، وقرأتَ الفروقات كلها (read the whole diff)، ولم تفحص النص العربي (did not check the Arabic text). أي ملاحظة في طلب الدمج (pull request) هي الأصدق والأنفع؟ ⁦(Which pull request note is most honest and useful?)⁩**
 
-- A. «حدّثتُ شرائح الرسوم في fees.py. كل الاختبارات تنجح والفروقات صغيرة كما طلبت التذكرة.» ⁦("Updated the fee tiers in fees.py. All tests pass and the diff is small, as the ticket asked.")⁩
+- A. «حدّثتُ شرائح الرسوم في fees.py. كل الاختبارات تنجح والفروقات صغيرة كما طلبت التذكرة، ولا حاجة إلى مراجعة أخرى.» ⁦("Updated the fee tiers in fees.py. All tests pass and the diff is small, as the ticket asked, and no further review is needed.")⁩
 - B. «بمساعدة الذكاء الاصطناعي. راجعت التغيير بعناية وأنا واثق من صحته.» ⁦("AI-assisted. I reviewed the change carefully and I am confident that it is correct.")⁩
 - C. «بمساعدة الذكاء الاصطناعي. كتبتُ اختبارات الشرائح أولًا وقرأتُ الفروقات؛ ولم أفحص النص العربي.» ⁦("AI-assisted. I wrote the tier tests first and read the diff; I did not check the Arabic.")⁩
 - D. «غيّره الوكيل من التذكرة، فأي عيوب تعود إلى الأداة لا إليّ.» ⁦("Changed by the agent from the ticket, so any defects belong to the tool, not to me.")⁩
@@ -488,7 +488,7 @@ Checks that passed on nothing:
 
 **3. بعد تشغيل، تجد لجين (Lujain) أن أداتها اجتازت T05 بتعديل ملف الاختبار الظاهر (editing the visible test file). أي تصميم كان سيلتقط ذلك؟ ⁦(Which design would have caught it?)⁩**
 
-- A. شغّل الأداة مرتين واحتفظ بالأفضل من النتيجتين للتقرير (keep the better of the two results for the report)
+- A. شغّل الأداة مرتين واحتفظ بالأفضل من النتيجتين للتقرير (keep the better of the two results for the report) دون ذكر ذلك (without saying so)
 - B. اسأل الأداة في النهاية هل غيّرت أي ملفات اختبار (whether it changed any test files)
 - C. أبقِ الفحص خارج مساحة العمل (outside the workspace) وانسخه إليها عند التسجيل فقط (copy it in only to score)
 - D. سجّل نتائج المهام ذات الموجّهات القصيرة السهلة المتابعة فقط (short and simple to follow)

@@ -201,7 +201,7 @@ Ali's second draft becomes **TM-ASSIST-004: Najm Assist "freeze card" tool**, an
 
 **1. Ali's first threat model for the freeze-card tool lists "hackers", "DDoS", "AI hallucination" and "data leak". What is the MOST useful next step?**
 
-- A. Add threats from a public list until there are at least 50
+- A. Add threats from a public list until there are at least 50, so that no common category is ever missed
 - B. Draw the data flow diagram with trust boundaries, then apply STRIDE to each element and crossing
 - C. Ask the LLM vendor for its security certificate
 - D. Score each listed threat with CVSS
@@ -243,7 +243,7 @@ Ali's second draft becomes **TM-ASSIST-004: Najm Assist "freeze card" tool**, an
 - A. Spoofing and repudiation
 - B. Tampering, information disclosure and denial of service
 - C. All six
-- D. Elevation of privilege only
+- D. Elevation of privilege only, because the other five do not apply to arrows between components
 
 <details><summary>Answer</summary>
 
@@ -467,7 +467,7 @@ Noura turns the principles into the **Najm Secure Design Review: ten questions**
 
 **2. The SME Portal's invoice check calls a policy service. When the service times out, the code returns `True` so customers are not blocked. What is the correct change?**
 
-- A. Increase the timeout so it fails less often, and keep returning `True`
+- A. Increase the timeout so it fails less often, and keep returning `True` for the requests that still time out
 - B. Cache the last answer forever
 - C. Return `False` on any error, log and count the failure, and fix availability with redundancy
 - D. Remove the policy check to make pages faster
@@ -481,7 +481,7 @@ Noura turns the principles into the **Najm Secure Design Review: ten questions**
 **3. Which statement best describes zero trust as defined in NIST SP 800-207?**
 
 - A. No user is ever allowed access to anything
-- B. A firewall product that blocks all internet traffic
+- B. A firewall product that blocks all internet traffic from outside and lets every internal request through without further checks
 - C. Trust internal traffic and inspect external traffic
 - D. No implicit trust based on network location; each request to a resource is authenticated and authorised using policy
 
@@ -494,9 +494,9 @@ Noura turns the principles into the **Najm Secure Design Review: ten questions**
 **4. Najm Assist has three controls against freezing the wrong card: an ownership check, a confirmation screen and an audit alert. All three take the card ID from the model's tool call without comparing it to the session. What is the weakness?**
 
 - A. The layers are not independent, so one manipulated value passes all three
-- B. There are too few layers; add a fourth
-- C. The audit alert should be removed to simplify the design
-- D. None; three layers are enough
+- B. There are too few layers; add a fourth layer, such as a second confirmation by email
+- C. The audit alert should be removed to simplify the design and reduce the noise the on-call team receives
+- D. None; three layers are enough, because each one is a separate control that was reviewed on its own
 
 <details><summary>Answer</summary>
 
@@ -720,10 +720,10 @@ Noura and Jassim publish the **Najm Vulnerability Prioritisation Standard v1**. 
 
 **1. Ali's backlog has a CVSS 9.8 in a library used only by an internal batch job with no network listener, and a CVSS 7.5 in the internet-facing VPN appliance that is in CISA's KEV catalogue. Which comes first, and why?**
 
-- A. The 9.8, because it has the higher score
-- B. Both at once, because both are above 7.0
+- A. The 9.8, because it has the higher score and the higher score always means the more urgent fix
+- B. Both at once, because both are above 7.0 and the policy treats everything above 7.0 as urgent
 - C. The 7.5, because it is known to be exploited and sits on an exposed asset
-- D. Neither, until EPSS scores are available
+- D. Neither, until EPSS scores are available for both libraries and the next review meeting has taken place
 
 <details><summary>Answer</summary>
 
@@ -775,7 +775,7 @@ Noura and Jassim publish the **Najm Vulnerability Prioritisation Standard v1**. 
 - A. Leaving the finding open until the patch works
 - B. A comment in the ticket saying "accepted"
 - C. A risk-register entry approved by the right owners, with the reason, compensating controls and an expiry of no more than 90 days
-- D. Lowering the finding's CVSS score so it becomes a P3
+- D. Lowering the finding's CVSS score so that it becomes a P3, the 30-day deadline no longer applies to it, and the ticket can be closed
 
 <details><summary>Answer</summary>
 

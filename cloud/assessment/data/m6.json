@@ -73,7 +73,7 @@
           "Nothing yet; move all of the API's capacity onto spot instances"
         ],
         "ar": [
-          "نحو 40 وحدة (vCPUs)، أي الحدّ الأدنى الثابت (steady floor)، مع سعة عند الطلب (on-demand) وسعة فائضة مخفّضة (spot) فوقه",
+          "نحو 40 وحدة (vCPUs)، أي الحدّ الأدنى الثابت (steady floor)، مع سعة عند الطلب (on-demand) وسعة فائضة (spot) فوقه",
           "نحو 120 وحدة (vCPUs)، أي الذروة (peak)، كي تحصل كل ساعة مزدحمة على الخصم (discount)",
           "نحو 80 وحدة (vCPUs)، أي المتوسط (average)، كي تعوّض الساعات الهادئة (quiet hours) ساعات الذروة",
           "لا شيء الآن؛ نقل كل سعة الواجهة (capacity) إلى مثيلات السعة الفائضة (spot instances)"

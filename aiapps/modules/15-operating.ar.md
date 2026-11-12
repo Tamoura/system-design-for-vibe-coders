@@ -372,10 +372,10 @@ Do not weaken a test. Run the tests after each step.
 
 **5. يريد الدعم أرقام الموظفين معرّفات للمحادثات، للبحث في محادثات شخص ما (Support wants employee numbers as conversation ids, to search a person's chats). لماذا لا؟ ⁦(Why not?)⁩**
 
-- A. الأرقام تُفهرَس ببطء في معظم مخازن التتبّع (Numbers index slowly in most trace stores)
+- A. الأرقام تُفهرَس ببطء شديد جدًا في معظم مخازن التتبّع (Numbers index slowly in trace stores)
 - B. المعرّف ينشر البيانات الشخصية إلى كل امتداد (The id spreads personal data to every span)
-- C. أرقام الموظفين أقصر من أن تبقى فريدة (Employee numbers are too short to stay unique)
-- D. الدعم يبحث بالفعل برقم التذكرة (Support already searches by ticket number)
+- C. أرقام الموظفين أقصر من أن تبقى فريدة (Staff numbers are too short to stay unique)
+- D. الدعم يبحث بالفعل برقم التذكرة (Support already uses the ticket number)
 
 <details><summary>الإجابة</summary>
 
@@ -670,7 +670,7 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 
 - A. المسودات تحتاج دائمًا إلى موافقتين (Drafts always need two approvals)
 - B. يُظهر ما قيل لا ما يحتفظ به TicketHub (It shows what was said, not what TicketHub holds)
-- C. لا يستطيع المشغِّل قراءة الردود المكتوبة بالعربية (The runner cannot read replies written in Arabic)
+- C. لا يستطيع المشغِّل قراءة الردود المكتوبة بالعربية (The runner cannot read replies in Arabic)
 - D. يُنجح المشغِّل أي صف يحصل على رد (The runner passes any row that gets a reply)
 
 <details><summary>الإجابة</summary>
@@ -682,8 +682,8 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 **2. يفشل صف وتطلب هند أن يُمرَّر مع ملاحظات (A row fails and Hind asks to pass it with comments). ماذا تقول قواعد النص؟ ⁦(What do the script's rules say?)⁩**
 
 - A. مرّره الآن وسجّل الملاحظة في قائمة الأعمال المتراكمة (Pass it now and log the comment for the backlog)
-- B. أعد تشغيله حتى ينجح ثم سجّل ذلك (Re-run it until it passes, then record that)
-- C. احذف الصف من النص قبل الاجتماع (Drop the row from the script before the meeting)
+- B. أعد تشغيله حتى ينجح ثم سجّل أنه نجح (Re-run it until it passes, then record that it passed)
+- C. احذف الصف من النص قبل اجتماع المراجعة (Drop the row from the script before the review meeting)
 - D. أعطه درجة خطورة، ثم أصلحه أو أعفِه (Give it a severity, then fix it or waive it)
 
 <details><summary>الإجابة</summary>
@@ -695,9 +695,9 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 **3. بعد ستة أسابيع من الإطلاق يبقى إشعار تقاعد نموذج في صندوق بريد مطوّر غادر (Six weeks after go-live a model retirement notice sits in a departed builder's mailbox). أي خطوة تسليم تمنع ذلك؟ ⁦(Which handover step prevents this?)⁩**
 
 - A. تسمية مالك للإشعارات في نموذج الدعم (Naming a notice owner in the support model)
-- B. فترة رعاية مكثفة أطول للتجربة التشغيلية (A longer hypercare period for the pilot)
+- B. فترة رعاية مكثفة أطول للتجربة التشغيلية كلها (A longer hypercare period for the whole pilot)
 - C. تدريب موظفي المكتب على حدود النموذج (Training desk staff on the limits of the model)
-- D. جلسة اختبار قبول ثانية للصفوف العربية (A second UAT session for the Arabic rows)
+- D. جلسة اختبار قبول ثانية لصفوف الاختبار العربية (A second UAT session for the Arabic test rows)
 
 <details><summary>الإجابة</summary>
 
@@ -707,10 +707,10 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 
 **4. انخفض وسيط زمن الرد الأول من 3 ساعات و40 دقيقة إلى ساعة و10 دقائق، لكن الرقم الجديد يقيس أول رد في الدردشة، وخط الأساس يقيس ملاحظة الفرز (Median first response fell from 3 h 40 min to 1 h 10 min, but the new figure times the first chat reply, the baseline the triage note). ماذا تفعل؟ ⁦(What do you do?)⁩**
 
-- A. انشره، فالاتجاه صحيح (Publish it, since the direction is right)
-- B. خذ متوسط التعريفين في رقم واحد (Average the two definitions into one figure)
+- A. انشره، فالاتجاه صحيح (Publish it, as the direction is right)
+- B. خذ متوسط التعريفين في رقم واحد (Average the two figures into one)
 - C. أعد القياس لكليهما بتعريف واحد أولًا (Re-measure both on one definition first)
-- D. أبلغ بمعدل الاحتواء فقط بدلًا من ذلك (Report only the contained rate instead)
+- D. أبلغ بمعدل الاحتواء (contained rate) وحده بدلًا من ذلك الرقم المنشور (Report the contained rate only)
 
 <details><summary>الإجابة</summary>
 
@@ -720,9 +720,9 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 
 **5. يقول موظف مكتب أقدم إن نجم ديسك يخطئ كثيرًا ويرفض المسودات (A senior desk agent says Najm Desk is wrong too often and refuses drafts). ما أفضل استجابة؟ ⁦(What is the best response?)⁩**
 
-- A. اجعل المسودات إلزامية للمكتب كله (Make drafts mandatory for the whole desk)
+- A. اجعل المسودات إلزامية للمكتب كله هذا الشهر (Make drafts mandatory for the whole desk this month)
 - B. ادعُه إلى كسره، ثم أرِه الإصلاح (Invite them to break it, then show the fix)
-- C. اطلب من سفير التبنّي تجاهل الملاحظات (Ask the champion to ignore the feedback)
+- C. اطلب من سفير التبنّي تجاهل الملاحظات حاليًا (Ask the champion to ignore the feedback for now)
 - D. انتظر تقرير الفوائد الشهري ليحسم الأمر (Wait for the monthly benefits report to settle it)
 
 <details><summary>الإجابة</summary>

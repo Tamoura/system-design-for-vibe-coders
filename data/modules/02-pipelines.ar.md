@@ -229,7 +229,7 @@ WHERE rn = 1
 - A. لا شيء يسوء، لأن PostgreSQL يجعل الصفوف الملتزَمة مرئية بترتيب الطوابع الزمنية (timestamp order)
 - B. تُحمَّل الصفوف مرتين؛ أصلِحه بتحويل الجدول كله إلى تحميل كامل ليلي (nightly full load)
 - C. تسبب الصفوف خطأ مفتاح أساسي (primary-key error) في التشغيل التالي؛ أصلِحه بإسقاط المفتاح
-- D. تُتخطّى الصفوف إلى الأبد (skipped for ever)؛ داخِل النافذة وادمج (overlap the window and merge)، أو استخدم CDC
+- D. تُتخطّى الصفوف إلى الأبد (skipped for ever) لأنها تصل متأخرة؛ داخِل النافذة وادمج، أو استخدم CDC
 
 <details><summary>الإجابة</summary>
 
@@ -538,10 +538,10 @@ Approved by:      Faisal
 
 **1. أدرجت مهمة هدى يومًا من المعاملات، والتزمت (committed)، ثم فقدت اتصالها قبل أن يتلقى Airflow النجاح (received success). أعاد Airflow المحاولة (retried)، فتضاعف مجموع اليوم (day's total doubled). ما أفضل إصلاح؟**
 
-- A. أوقف إعادة المحاولة لتلك المهمة (turn off retries) حتى لا تعمل مرة ثانية أبدًا
-- B. احذف ذلك اليوم وأعد إدراجه في معاملة واحدة (in one transaction)، لفترة البيانات (data interval) في Airflow
-- C. أضف مهمة تنظيف شهرية (monthly clean-up job) تزيل الصفوف المكررة من طبقة التهيئة
-- D. زِد مهلة المهمة الزمنية (task's timeout) ليكون للاتصال وقت أطول للتعافي
+- A. أوقف إعادة المحاولة لتلك المهمة (turn off retries) حتى لا تعمل مرتين أبدًا (ever again)
+- B. احذف ذلك اليوم وأعد إدراجه في معاملة واحدة (in one transaction)، لفترة البيانات في Airflow
+- C. أضف مهمة تنظيف شهرية (monthly clean-up job) تزيل الصفوف المكررة من طبقة التهيئة (staging)
+- D. زِد مهلة المهمة الزمنية (task's timeout) ليكون للاتصال وقت أطول للتعافي (to recover)
 
 <details><summary>الإجابة</summary>
 
@@ -883,9 +883,9 @@ GROUP BY card_id, window_start, window_end;
 
 **4. تفقد طرفية بطاقات (card terminal) اتصالها وترسل 40 تفويضًا متأخرة ثلاث دقائق. وتعدّ خاصية الاحتيال (fraud feature) التفويضات لكل بطاقة في كل نافذة مدتها 5 دقائق (per 5-minute window). أي نهج يضعها في النوافذ الصحيحة (right windows)؟**
 
-- A. العدّ حسب وقت المعالجة (processing time)، لتعكس الأعداد متى علم نجم بها
-- B. إسقاط كل حدث يصل بغير ترتيب (out of order) لإبقاء النوافذ نظيفة
-- C. العدّ حسب وقت الحدث (event time)، مع علامة مائية مختارة ومعالجة صريحة للمتأخر (explicit late handling)
+- A. العدّ حسب وقت المعالجة (processing time)، لتعكس الأعداد متى علم نجم بها (when Najm learned)
+- B. إسقاط كل حدث يصل بغير ترتيب (out of order) لإبقاء النوافذ نظيفة (clean windows)
+- C. العدّ حسب وقت الحدث (event time)، مع علامة مائية مختارة ومعالجة صريحة للمتأخر
 - D. زيادة مدة احتفاظ الموضوع (topic's retention period) لتُحفظ الأحداث المتأخرة أطول
 
 <details><summary>الإجابة</summary>

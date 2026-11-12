@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="cloud-source" content="f57d38bbd2008c94">
+<meta name="cloud-source" content="e8648c503dde9742">
 <meta name="description" content="Cloud &amp; DevOps: Zero to Hero — a free, bilingual course: Linux and cloud fundamentals, containers and Kubernetes, infrastructure as code, CI/CD and safe releases, observability and SLOs, incidents, scaling, FinOps and AI infrastructure, with a quiz in every lesson and a 60-question practice exam.">
 <title>Cloud &amp; DevOps: Zero to Hero</title>
 <style>
@@ -9958,10 +9958,10 @@ Strong answer, out loud, in order:
 
 <p><strong>3. The Najm Mobile API build must download packages from a private package index that needs a credential. What is the safe way to give the build that credential?</strong></p>
 <ul>
-<li>A. Mount it as a build secret for the <code>RUN</code> step that needs it, so no layer has it</li>
+<li>A. Pass it as a build secret mount on the one <code>RUN</code> step, so no layer keeps it</li>
 <li>B. Set it with <code>ENV</code> in the Dockerfile so that <code>pip</code> can read it during the build</li>
 <li>C. Copy a <code>pip.conf</code> file in, run the install, then delete the file in the next step</li>
-<li>D. Bake it into the approved base image so that every team can reuse it easily</li>
+<li>D. Bake it into the approved base image so that every team can reuse it with ease</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -9970,7 +9970,7 @@ Strong answer, out loud, in order:
 
 <p><strong>4. Nobody changed the Najm networking code, yet this week&#39;s plan proposes updates to forty resources. The configuration allows any provider version <code>&gt;= 5.0</code>, and the dependency lock file is not committed. What is the most likely cause, and the fix?</strong></p>
 <ul>
-<li>A. Someone changed every resource in the console overnight; revert it all at once with a fresh apply</li>
+<li>A. Someone edited every resource in the console overnight; revert them with a fresh apply</li>
 <li>B. The state file is corrupt; delete it and import every resource again from the command line</li>
 <li>C. Init pulled a newer provider with changed defaults; pin the version and commit the lock file</li>
 <li>D. Plans are not deterministic, so re-run the plan until it shows no changes before applying</li>
@@ -10057,7 +10057,7 @@ Strong answer, out loud, in order:
 <li>A. The image digest does not exist in the registry, so the kubelet cannot pull it</li>
 <li>B. The container starts and crashes, and Kubernetes is backing off between restarts</li>
 <li>C. The scheduler cannot place them: no node has enough unrequested CPU for the requests</li>
-<li>D. The readiness probe is failing, so the Service has removed the pods from its endpoints</li>
+<li>D. The readiness probe is failing, so the Service dropped the pods from its endpoints</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10079,7 +10079,7 @@ Strong answer, out loud, in order:
 <p><strong>13. Najm&#39;s internal statements export receives a few requests per minute. A canary sends it 1% of traffic for ten minutes, sees zero errors and promotes. What is wrong with this analysis?</strong></p>
 <ul>
 <li>A. Too few requests reached the canary in ten minutes for zero errors to mean anything</li>
-<li>B. A canary must compare its metrics with last week&#39;s figures, not with the stable version</li>
+<li>B. A canary must be compared with last week&#39;s figures, not with the stable version</li>
 <li>C. Canaries work only with a service mesh, so the traffic split was never real at all</li>
 <li>D. Nothing; zero errors in ten minutes proves that the new version is safe to promote</li>
 </ul>
@@ -10090,7 +10090,7 @@ Strong answer, out loud, in order:
 
 <p><strong>14. Sales wants to promise corporate clients a contractual 99.95% availability for Payments, whose internal SLO is 99.9%. What should Maha advise?</strong></p>
 <ul>
-<li>A. Agree, because a contract will push the team to a reliability it would not otherwise reach</li>
+<li>A. Agree, since a contract will push the team to a level it would not otherwise reach</li>
 <li>B. Agree, and raise the internal SLO to 99.95% on the day the contract is signed</li>
 <li>C. Set the SLA looser than the 99.9% SLO, never tighter, to leave a margin before a breach</li>
 <li>D. Refuse any SLA, because banks are not allowed to make availability promises</li>
@@ -10126,10 +10126,10 @@ Strong answer, out loud, in order:
 
 <p><strong>17. In his first week, a new graduate on Salem&#39;s team asks for production administrator access &quot;to learn faster&quot;. What does Najm&#39;s onboarding checklist give him instead?</strong></p>
 <ul>
-<li>A. Production administrator access for one month, reviewed by Salem at the end of it</li>
+<li>A. Production admin access for one month, reviewed by Salem at the end of it</li>
 <li>B. Named roles in staging only, no production access, and a week shadowing on-call</li>
-<li>C. Read access to the break-glass account credentials, so he can see how they work</li>
-<li>D. No cloud access at all until he has passed a cloud provider certification exam</li>
+<li>C. Read access to the break-glass account credentials, to see how they work</li>
+<li>D. No cloud access at all until he has passed a cloud certification exam</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10140,8 +10140,8 @@ Strong answer, out loud, in order:
 <ul>
 <li>A. Require the hardened metadata endpoint, keep roles narrow, block pod access to it</li>
 <li>B. Rotate the node&#39;s access key every 90 days and keep it in a Kubernetes Secret</li>
-<li>C. Move the API to a public subnet so that the metadata endpoint is no longer reachable</li>
-<li>D. Turn on MFA for every engineer, since attackers need MFA to reach the metadata endpoint</li>
+<li>C. Move the API to a public subnet so the metadata endpoint is unreachable</li>
+<li>D. Turn on MFA for every engineer, since attackers need MFA to reach the endpoint</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10174,10 +10174,10 @@ Strong answer, out loud, in order:
 
 <p><strong>21. A contributor opens a pull request from a fork. A workflow triggered by <code>pull_request_target</code> checks out the pull request&#39;s code and runs its tests. Why does Noura block this?</strong></p>
 <ul>
-<li>A. <code>pull_request_target</code> cannot check out code from forks, so the tests never actually run</li>
+<li>A. <code>pull_request_target</code> cannot check out fork code, so the tests never really run</li>
 <li>B. The tests run on GitHub-hosted runners, shared with other customers and slow</li>
 <li>C. The fork&#39;s unreviewed code runs in the base repository&#39;s context, with its secrets</li>
-<li>D. Pull requests from forks must always be merged first and tested on <code>main</code> afterwards</li>
+<li>D. Fork pull requests must always be merged first and tested on <code>main</code> afterwards</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10235,9 +10235,9 @@ Strong answer, out loud, in order:
 <p><strong>26. One morning the cluster cannot start new pods, because pulls of public base images from Docker Hub are being rate-limited. What stops this from blocking deploys in future?</strong></p>
 <ul>
 <li>A. Set every Deployment to <code>imagePullPolicy: Always</code> so pulls are retried more often</li>
-<li>B. Use the <code>latest</code> tag for public images, so that the cluster always has a cached copy</li>
+<li>B. Use the <code>latest</code> tag for public images so the cluster always has a cached copy</li>
 <li>C. Serve public base images from a pull-through cache or mirror in Najm&#39;s own registry</li>
-<li>D. Ask each team to build images on their laptops and copy them directly onto the nodes</li>
+<li>D. Ask each team to build images on laptops and copy them directly onto the nodes</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10249,7 +10249,7 @@ Strong answer, out loud, in order:
 <li>A. Nothing; the <code>sensitive</code> flag encrypts the value inside the state file with the provider&#39;s key</li>
 <li>B. The value can still sit in state in plain text; the flag only hides output</li>
 <li>C. OpenTofu ignores the flag, and supports sensitive values only in hosted state services</li>
-<li>D. Sensitive variables cannot hold passwords, only tokens and certificates</li>
+<li>D. Sensitive variables cannot hold passwords at all, only tokens and certificates</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10294,8 +10294,8 @@ Strong answer, out loud, in order:
 
 <p><strong>31. For Card Controls, Maha sets the read SLO at 99.95% and the write SLO at 99.9%. Why is the read target the tighter one?</strong></p>
 <ul>
-<li>A. Reads are cheaper to serve, so a higher target costs the bank nothing extra at all</li>
-<li>B. Writes are retried automatically by the mobile app, so their failures are never seen</li>
+<li>A. Reads are cheaper to serve, so a higher target costs the bank nothing extra</li>
+<li>B. Writes are retried automatically by the mobile app, so their failures go unseen</li>
 <li>C. A failed read during card authorisation can stop a customer&#39;s purchase at the till</li>
 <li>D. Regulators require read paths to carry exactly one more nine than write paths</li>
 </ul>
@@ -10306,10 +10306,10 @@ Strong answer, out loud, in order:
 
 <p><strong>32. Yousef&#39;s path-to-production map for a new service has a &quot;Deploy to staging&quot; stage whose automated catch is &quot;Tariq checks the pods after each deploy&quot;. What does Najm&#39;s rule say?</strong></p>
 <ul>
-<li>A. This is acceptable, because staging problems never reach customers directly</li>
-<li>B. Remove the stage, since a manual check means it adds no value to the path</li>
+<li>A. This is acceptable, because staging problems never reach real customers directly</li>
+<li>B. Remove the stage, since a manual check means it adds no value to the whole path</li>
 <li>C. Ask Tariq to write down what he checks, and keep the manual step permanently</li>
-<li>D. Make it a backlog item, with an owner and a date, to automate Tariq&#39;s check</li>
+<li>D. Log a backlog item with an owner and a date to automate Tariq&#39;s check</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10319,9 +10319,9 @@ Strong answer, out loud, in order:
 <p><strong>33. A legacy Najm reporting app, moving to cloud VMs, needs one folder that several machines mount and write to at the same time. Which storage type fits?</strong></p>
 <ul>
 <li>A. Block storage, with one virtual disk attached to all of the VMs at the same time</li>
-<li>B. Object storage, mounted on each VM as if it were an ordinary local disk</li>
-<li>C. File storage: a shared NFS or SMB file system that many VMs mount at once</li>
-<li>D. A table in the managed PostgreSQL database, storing each file as a row</li>
+<li>B. Object storage, mounted on each VM as though it were an ordinary local disk</li>
+<li>C. File storage: a shared NFS or SMB file system many VMs mount at once</li>
+<li>D. A table in the managed PostgreSQL database, storing each file as one row</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10330,10 +10330,10 @@ Strong answer, out loud, in order:
 
 <p><strong>34. To debug quickly, an engineer started a Mobile API pod with <code>kubectl run</code> instead of using a Deployment. Overnight, its node failed. In the morning the pod is gone and nothing replaced it. Why?</strong></p>
 <ul>
-<li>A. No controller such as a ReplicaSet owned the pod, so nothing recreated it</li>
+<li>A. No controller (a ReplicaSet, say) owned the pod, so nothing recreated it</li>
 <li>B. The Service deleted the pod because it had no matching endpoints overnight</li>
 <li>C. The kubelet on a healthy node should have restarted it, so the cluster is broken</li>
-<li>D. Pods created with <code>kubectl run</code> expire automatically after twelve hours</li>
+<li>D. Pods started with <code>kubectl run</code> are deleted automatically after twelve hours</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10345,7 +10345,7 @@ Strong answer, out loud, in order:
 <li>A. Nothing more; the incident commander&#39;s approval makes the hand change permanent</li>
 <li>B. Write it back to Git within one working day or the next sync silently reverts it</li>
 <li>C. Turn off self-heal on the production Argo CD application until the next release</li>
-<li>D. Record it only in the postmortem, since Git is for planned changes, not incidents</li>
+<li>D. Record it only in the postmortem, since Git is for planned work, not incidents</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10380,8 +10380,8 @@ Strong answer, out loud, in order:
 <ul>
 <li>A. The only primary instance of the Payments database serving live traffic</li>
 <li>B. The warm floor of self-hosted Najm Assist replicas kept up in business hours</li>
-<li>C. The shared LLM gateway, which every team&#39;s model traffic depends on</li>
-<li>D. CI runners and batch jobs that can simply retry if a node is reclaimed</li>
+<li>C. The shared LLM gateway, which model traffic from every team goes through</li>
+<li>D. CI runners and batch jobs that can retry if a node is reclaimed</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10402,7 +10402,7 @@ Strong answer, out loud, in order:
 
 <p><strong>40. A lab install command copied from a three-year-old blog post fails on Yousef&#39;s laptop. What does the course recommend?</strong></p>
 <ul>
-<li>A. Keep trying older versions of the tool until one installs with that command</li>
+<li>A. Keep trying older tool versions until one of them installs with that command</li>
 <li>B. Ask a colleague for their binaries and copy them across on a USB drive</li>
 <li>C. Install from the tool&#39;s current official documentation, not old blog posts</li>
 <li>D. Skip that tool and carry on with the exercises that do not need it</li>
@@ -10414,10 +10414,10 @@ Strong answer, out loud, in order:
 
 <p><strong>41. Yousef moves from the platform team to the payments squad. Three months later he can still change the shared network foundations. What practice failed?</strong></p>
 <ul>
-<li>A. MFA, because a second factor would have stopped him using the old role</li>
-<li>B. Break-glass access, which should have been used for network changes instead</li>
-<li>C. Encryption at rest, since the network configuration should not be readable</li>
-<li>D. Joiner-mover-leaver: old access should have been removed the day he moved</li>
+<li>A. MFA, because a second factor would have stopped him from using the old role</li>
+<li>B. Break-glass access, which he should have used for the network changes instead</li>
+<li>C. Encryption at rest, since the network configuration should not be readable by others</li>
+<li>D. Joiner-mover-leaver: old access should go the day someone moves</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10429,7 +10429,7 @@ Strong answer, out loud, in order:
 <li>A. Lower the memory limit so the container is killed and restarted sooner</li>
 <li>B. Delete the readiness probe, since probes use CPU that the requests need</li>
 <li>C. Raise or remove the CPU limit while keeping CPU requests set, then measure</li>
-<li>D. Set the CPU limit far below the request so that pods are placed more evenly</li>
+<li>D. Set the CPU limit far below the request so pods are placed more evenly</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10463,8 +10463,8 @@ Strong answer, out loud, in order:
 <p><strong>45. While mitigating a Payments slowdown, the team sees an unknown IP address downloading large volumes of data from a storage bucket. What changes about the response?</strong></p>
 <ul>
 <li>A. Bring in Jassim&#39;s SOC, preserve evidence and avoid alerting the attacker</li>
-<li>B. Delete the bucket at once so the attacker cannot download any more data</li>
-<li>C. Post the attacker&#39;s IP address in the next customer status page update</li>
+<li>B. Delete the bucket at once so the attacker cannot download any more of the data</li>
+<li>C. Post the attacker&#39;s IP address in the next update on the customer status page</li>
 <li>D. Carry on as a normal reliability incident and mention it in the postmortem</li>
 </ul>
 <details><summary>Answer</summary>
@@ -10498,8 +10498,8 @@ Strong answer, out loud, in order:
 
 <p><strong>48. A promotion pull request updates the Mobile API digest in the prod overlay. The new pods show <code>ImagePullBackOff</code>. Which two causes should Yousef check first?</strong></p>
 <ul>
-<li>A. A failing liveness probe, or a container over its memory limit</li>
-<li>B. A Service selector mismatch, or a missing topology spread rule</li>
+<li>A. A failing liveness probe, or a container going over its memory limit</li>
+<li>B. A Service selector mismatch, or a missing topology spread constraint</li>
 <li>C. A wrong or missing image digest, or no registry pull permission</li>
 <li>D. An HPA at its maximum, or a PodDisruptionBudget blocking the rollout</li>
 </ul>
@@ -10513,7 +10513,7 @@ Strong answer, out loud, in order:
 <li>A. Delete the bucket and let OpenTofu create a new one with the same name</li>
 <li>B. Run <code>state rm</code>, then edit the state file by hand to add the bucket&#39;s ID</li>
 <li>C. An <code>import</code> block for the bucket, reviewed in the plan like other changes</li>
-<li>D. Leave it unmanaged, since hand-built buckets can never be brought under IaC</li>
+<li>D. Leave it unmanaged, since hand-built buckets can never come under IaC</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10522,9 +10522,9 @@ Strong answer, out loud, in order:
 
 <p><strong>50. Najm&#39;s CI workflow cancels outdated runs for pull requests but never for pushes to <code>main</code>. Why the difference?</strong></p>
 <ul>
-<li>A. Runs on <code>main</code> are free on hosted runners, so cancelling them would save nothing</li>
+<li>A. Runs on <code>main</code> are free on hosted runners, so cancelling saves nothing</li>
 <li>B. GitHub Actions does not allow cancelling a workflow run triggered by a push</li>
-<li>C. Cancelling <code>main</code> runs would make the pipeline slower for pull requests overall</li>
+<li>C. Cancelling <code>main</code> runs would slow the pipeline down for pull requests</li>
 <li>D. Every commit on <code>main</code> must build and record its own artefact for promotions</li>
 </ul>
 <details><summary>Answer</summary>
@@ -10547,7 +10547,7 @@ Strong answer, out loud, in order:
 <p><strong>52. For an internal service, the business signs an RTO of about an hour and an RPO of a few minutes, and wants the lowest cost that meets them. Which DR strategy fits best?</strong></p>
 <ul>
 <li>A. Pilot light: data replicated continuously, minimal infrastructure ready</li>
-<li>B. Multi-site active-active, with full capacity serving in both regions</li>
+<li>B. Multi-site active-active, with full capacity serving in both regions at once</li>
 <li>C. Backup and restore only, with nightly copies sent to the recovery region</li>
 <li>D. No DR at all, because multi-AZ already protects against the loss of a region</li>
 </ul>
@@ -10585,7 +10585,7 @@ Strong answer, out loud, in order:
 <li>A. A release flag, which is deleted a few weeks after the feature launches</li>
 <li>B. An experiment flag, which splits users into two variants for an A/B test</li>
 <li>C. An ops flag, or kill switch, which turns off a risky path during incidents</li>
-<li>D. A permission flag, which limits beta features to staff and selected tenants</li>
+<li>D. A permission flag, which limits beta features to staff and chosen tenants</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10596,7 +10596,7 @@ Strong answer, out loud, in order:
 <ul>
 <li>A. Page the on-call engineer at once, at any hour, until it is renewed</li>
 <li>B. Send nothing; renewal is automated, so expiry alerts are only noise</li>
-<li>C. Show it on a dashboard only, with no notification to anyone</li>
+<li>C. Show it on a dashboard only, with no notification going to anyone at all</li>
 <li>D. Open a ticket for the owning team to renew within working days</li>
 </ul>
 <details><summary>Answer</summary>
@@ -10606,9 +10606,9 @@ Strong answer, out loud, in order:
 
 <p><strong>57. Salem wants engineers to see the cost of an infrastructure change before it merges, without creating a finance approval queue. What fits best?</strong></p>
 <ul>
-<li>A. A monthly spreadsheet from Finance showing each team&#39;s spend after the fact</li>
+<li>A. A monthly spreadsheet from Finance showing each team&#39;s spend afterwards</li>
 <li>B. A rule that every infrastructure pull request needs a sign-off from Mona</li>
-<li>C. A quarterly review of the cloud bill with every team lead and the CIO present</li>
+<li>C. A quarterly review of the cloud bill with every team lead and the CIO</li>
 <li>D. A cost estimate of the plan on the PR, with a threshold for a second review</li>
 </ul>
 <details><summary>Answer</summary>
@@ -10618,7 +10618,7 @@ Strong answer, out loud, in order:
 
 <p><strong>58. Najm&#39;s infrastructure pipeline uses one powerful cloud role both for <code>tofu plan</code> on every pull request and for <code>tofu apply</code> after merge. What does the pipeline baseline recommend?</strong></p>
 <ul>
-<li>A. Keep one role, but rotate its credentials every week to limit exposure</li>
+<li>A. Keep one role, but rotate its credentials every week to limit the exposure</li>
 <li>B. Separate roles: read-only for plan, write for apply only after approval</li>
 <li>C. Give the plan job write access too, so that plans can refresh every resource</li>
 <li>D. Run both jobs from an engineer&#39;s laptop, where the role is better protected</li>
@@ -10632,7 +10632,7 @@ Strong answer, out loud, in order:
 <ul>
 <li>A. Choose the higher severity now; it can be downgraded later if smaller</li>
 <li>B. Choose the lower severity, to avoid alarming executives without evidence</li>
-<li>C. Wait until the impact is fully measured before setting any severity</li>
+<li>C. Wait until the impact is fully measured before setting any severity level</li>
 <li>D. Skip severity levels for Payments, since every Payments incident is a SEV1</li>
 </ul>
 <details><summary>Answer</summary>

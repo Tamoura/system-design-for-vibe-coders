@@ -261,9 +261,9 @@ Why this order:
 
 **2. دُمج فرعان بلا تعارض (merge with no conflict)، ونجح كل منهما في اختباراته، ومع ذلك التكامل المستمر (CI) على `main` أحمر. ما السبب الأرجح والعادة الصحيحة؟ ⁦(What is the likeliest cause and the right habit?)⁩**
 
-- A. علة في Git (A Git bug)، فكرّر الدمج حتى يصير نظيفًا (until it is clean)
+- A. علة في Git (A Git bug)، فكرّر الدمج حتى يصير نظيفًا (until it is clean) في كل مرة (each time)
 - B. أخلّ وكيل بعقده (broke its contract)، فاترك العمل المتوازي (drop parallel work)
-- C. اختبارات متقلبة (Flaky tests)، فأعد تشغيل التكامل المستمر حتى ينجح (rerun CI until it passes)
+- C. اختبارات متقلبة (Flaky tests)، فأعد تشغيل التكامل المستمر حتى ينجح (rerun CI until it passes) أو استبدل الاختبار (or replace the test)
 - D. تعارض دلالي (A semantic conflict)، فاختبر بعد كل دمج (test after every merge)
 
 <details><summary>الإجابة</summary>
@@ -300,7 +300,7 @@ Why this order:
 
 **5. تستغرق أربع مهام من الوكيل 30 و20 و20 و15 دقيقة. ويستغرق الإعداد (Setup) 12 دقيقة والتكامل 15. والمراجعة تستغرق الوقت نفسه في الحالتين (Review takes the same either way). ما أقصى ما يوفّره العمل المتوازي؟ ⁦(What is the most that parallel work saves?)⁩**
 
-- A. 55 دقيقة، أي كامل التداخل في زمن الوكيل (the whole overlap in agent time)
+- A. 55 دقيقة، أي كامل التداخل في زمن الوكيل (the whole overlap in agent time) دون أي كلفة (with no cost at all)
 - B. 28 دقيقة، بعد دفع كلفة الإعداد والتكامل (after setup and integration are paid)
 - C. 43 دقيقة، بعد خصم الإعداد وحده (after setup alone is taken out)
 - D. لا شيء: العمل المتوازي لا يوفّر وقتًا أبدًا (never saves any time)
@@ -601,7 +601,7 @@ Streams at once: 3.  Integration: 20 min.  A ÷ R from this one row: 1.5, so two
 - A. أنشئ فروعًا فارغة (empty branches) تشير إلى أحدث إيداع على main
 - B. احذف الوسم `lab-start` ليُحتسب كل إيداع جديدًا (counts as new)
 - C. أعد الدمج بـ`git merge` مع الاحتفاظ بالفروع (keeping the branches)
-- D. أعد صياغة كل إيداع ضغط (squash commit) ليقول `merge: <branch>`
+- D. أعد صياغة كل إيداع ضغط (squash commit) ليقول `merge: <branch>` في الرسالة (in the message)
 
 <details><summary>الإجابة</summary>
 

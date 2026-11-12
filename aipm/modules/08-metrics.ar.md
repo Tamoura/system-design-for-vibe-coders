@@ -162,7 +162,7 @@ flowchart TD
 - A. هل ارتفع عدد المحادثات (number of conversations) أيضًا
 - B. هل تحسّن الحل (resolution) أيضًا، مقيسًا بعدم تكرار التواصل بشأن الموضوع نفسه خلال سبعة أيام (no repeat contact on the same topic within seven days)
 - C. هل ارتفع متوسط تقييم الإعجاب (average thumbs-up rating)
-- D. هل انخفضت تكلفة الرموز لكل محادثة (token cost per conversation)
+- D. هل انخفضت تكلفة الرموز لكل محادثة (token cost per conversation) خلال الأسبوعين الأولين (during the first two weeks of the new version)
 
 <details><summary>الإجابة</summary>
 
@@ -172,7 +172,7 @@ flowchart TD
 
 **2. أيّ مما يلي أفضل مقياس نجم الشمال (North Star) لـ مساعد مذكرات الائتمان (Credit Memo Copilot)؟**
 
-- A. عدد المسودات المُولَّدة أسبوعيًا (drafts generated per week)
+- A. عدد المسودات المُولَّدة أسبوعيًا (drafts generated per week) عبر جميع مديري العلاقات الذين يستخدمون الأداة في كل المناطق (every region)، دون النظر إلى جودتها (regardless of quality)
 - B. مديرو العلاقات النشطون أسبوعيًا (weekly active RMs)
 - C. نسبة المذكرات المقدَّمة في موعدها وغير المُعادة لإعادة العمل (submitted on time and not returned for rework)
 - D. متوسط تقييم الإعجاب على المسودات (average thumbs rating on drafts)
@@ -185,21 +185,21 @@ flowchart TD
 
 **3. تُظهر عيّنة مصفوفة الاعتماد (reliance-matrix sample) أن 18% من المسودات التي قبلها مديرو العلاقات دون تعديلات (with no edits) فشلت في معيار الجودة (quality rubric)، ارتفاعًا من 7% في الفصل السابق. ماذا يدل هذا على الأرجح؟**
 
-- A. قلة الاعتماد (under-reliance): مديرو العلاقات يعيدون كتابة مسودات جيدة
-- B. الإفراط في الاعتماد (over-reliance): مديرو العلاقات يقبلون مسودات كان عليهم تصحيحها
-- C. معيار التقييم (rubric) صارم أكثر من اللازم
-- D. التبنّي (adoption) يتراجع
+- A. قلة الاعتماد (under-reliance): مديرو العلاقات يعيدون كتابة مسودات جيدة، فيضيّعون وقتًا كان ينبغي أن يوفّره المساعد (time the copilot should save)
+- B. التبنّي (adoption) يتراجع، لأن عددًا أقل من مديري العلاقات يفتح المساعد قبل أن يبدأ مذكراته كل أسبوع (each week)
+- C. معيار التقييم (rubric) صارم أكثر من اللازم، لأنه صار يرفض مسودات كان مديرو العلاقات ذوو الخبرة سيقبلونها بوصفها جيدة (as good)
+- D. الإفراط في الاعتماد (over-reliance): مديرو العلاقات يقبلون مسودات كان عليهم تصحيحها
 
 <details><summary>الإجابة</summary>
 
-**B.** المخرجات السيئة المقبولة دون تغيير هي خانة الإفراط في الاعتماد (over-reliance cell). وهذا يستدعي النظر في احتكاك تجربة المستخدم (UX friction) والتدريب (training) وتدقيقات الأخطاء المزروعة (seeded-error audits). قلة الاعتماد (under-reliance) (A) هي إعادة كتابة المسودات الجيدة بكثافة. (🔴 نظرة الخبير (Expert view).)
+**D.** المخرجات السيئة المقبولة دون تغيير هي خانة الإفراط في الاعتماد (over-reliance cell). وهذا يستدعي النظر في احتكاك تجربة المستخدم (UX friction) والتدريب (training) وتدقيقات الأخطاء المزروعة (seeded-error audits). قلة الاعتماد (under-reliance) (A) هي إعادة كتابة المسودات الجيدة بكثافة. (🔴 نظرة الخبير (Expert view).)
 
 </details>
 
 **4. يُكافأ فريق نجم أسيست (Najm Assist) على الاحتواء (containment)، ثم ينقل لاحقًا بهدوء زر «التحدث إلى شخص (talk to a person)» شاشتين إلى الداخل. أيّ فكرة تفسّر هذا أفضل تفسير؟**
 
 - A. أثر الجِدّة (novelty effect)
-- B. عدم تطابق نسبة العيّنة (sample ratio mismatch)
+- B. عدم تطابق نسبة العيّنة (sample ratio mismatch, SRM)
 - C. قانون Goodhart (Goodhart's law)
 - D. نموذج Kano (Kano model)
 
@@ -211,8 +211,8 @@ flowchart TD
 
 **5. انخفض زمن دورة المذكرة (memo cycle time) بنسبة 20% في الفصل الذي أُطلق فيه المساعد (copilot). وفي الفصل نفسه وظّفت مراجعة الائتمان (credit review) محللَين. ما الطريقة الأكثر قابلية للدفاع (most defensible) لإسناد هذا المكسب (attribute the gain)؟**
 
-- A. نسب الفضل إلى المساعد، لأنه أُطلق في الفصل نفسه
-- B. مقارنة الفرق التي تستخدم المساعد بمجموعة ضابطة محجوزة (holdout) أو مجموعة لم يُطرح لها بعد (not-yet-rolled-out group) خلال الفترة نفسها
+- A. نسب الفضل إلى المساعد، لأنه أُطلق في الفصل نفسه (same quarter) وانخفض زمن الدورة مباشرة بعده في أنحاء البنك كلها (across the bank)
+- B. مقارنة الفرق التي تستخدم المساعد بمجموعة ضابطة محجوزة (holdout) أو مجموعة لم يُطرح لها بعد، خلال الفترة نفسها
 - C. استبيان مديري العلاقات عن شعورهم بأنهم أسرع (survey RMs)
 - D. تقسيم المكسب بالتساوي بين السببين
 
@@ -399,23 +399,23 @@ flowchart RL
 
 **1. النموذج A يكلّف عُشر ما يكلّفه النموذج B لكل رمز (per token). في نجم أسيست (Najm Assist)، يحل النموذج A نسبة 50% من المحادثات والنموذج B نسبة 65%، وتذهب المحادثات غير المحلولة إلى موظفين بشريين (human agents). أيّ عبارة هي الأدق؟**
 
-- A. النموذج A أرخص، لأنه يكلّف عُشر السعر لكل رمز
-- B. لا يمكنك الحكم دون إضافة تكاليف التسليم (handoff costs) والقسمة على معدل الحل (resolution rate)
+- A. لا يمكنك الحكم دون إضافة تكاليف التسليم (handoff costs) والقسمة على معدل الحل
+- B. النموذج A أرخص، لأنه يكلّف عُشر السعر لكل رمز
 - C. النموذج B أرخص دائمًا، لأنه يحل أكثر
-- D. التكلفة لا تهم إذا اختلفت الجودة
+- D. التكلفة لا تهم إذا اختلفت الجودة (quality differs)، لأن العملاء يهتمون بجودة الإجابة لا بسعر الرمز الواحد (price per token)
 
 <details><summary>الإجابة</summary>
 
-**B.** قارن التكلفة لكل محادثة محلولة (cost per resolved conversation): تكلفة النموذج زائد تكلفة التسليم (model cost plus handoff cost)، مقسومة على معدل الحل. في المثال التوضيحي للدرس كان النموذج الرخيص أغلى بنحو الضعف لكل حل (per resolution)، لكن ذلك يعتمد على تكلفة التسليم (handoff cost) (انظر التمرين 🟡). وC يبالغ في ذلك (overstates it). (🟡 التعمق أكثر (Going deeper).)
+**A.** قارن التكلفة لكل محادثة محلولة (cost per resolved conversation): تكلفة النموذج زائد تكلفة التسليم (model cost plus handoff cost)، مقسومة على معدل الحل. في المثال التوضيحي للدرس كان النموذج الرخيص أغلى بنحو الضعف لكل حل (per resolution)، لكن ذلك يعتمد على تكلفة التسليم (handoff cost) (انظر التمرين 🟡). وC يبالغ في ذلك (overstates it). (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
 **2. في مساعد مذكرات الائتمان (Credit Memo Copilot)، أيّ عامل يحدّد أكثر من غيره صمود دراسة الجدوى (business case holds)؟**
 
-- A. سعر الرمز (per-token price) لنموذج الصياغة (drafting model)
+- A. سعر الرمز (per-token price) لنموذج الصياغة (drafting model)، مضروبًا في عدد الرموز في مذكرة نموذجية (typical memo)
 - B. التبنّي من مديري العلاقات (adoption by RMs) والوقت الموفَّر فعلًا لكل مذكرة (time actually saved per memo)
-- C. هل التخزين المؤقت للموجّهات (prompt caching) مُفعَّل
-- D. عدد المسودات المُولَّدة (drafts generated)
+- C. هل التخزين المؤقت للموجّهات (prompt caching) مُفعَّل للمستندات الائتمانية الطويلة التي تُرسل مع كل طلب (every request)
+- D. عدد المسودات المُولَّدة (drafts generated) كل أسبوع، محسوبًا عبر كل مدير علاقات وكل فريق (every team)
 
 <details><summary>الإجابة</summary>
 
@@ -425,7 +425,7 @@ flowchart RL
 
 **3. يعرض مورّد (vendor) على بنك نجم وكيل خدمة عملاء (customer-service agent) مسعَّرًا لكل «محادثة محلولة (resolved conversation)». ما الذي يجب أن يصرّ عليه مدير المنتج (PM) أولًا؟**
 
-- A. أقل سعر ممكن لكل حل (lowest possible price per resolution)
+- A. أقل سعر ممكن لكل حل (lowest possible price per resolution) من المورّد (vendor's quote)
 - B. تعريف تعاقدي لـ«محلولة (resolved)» يستطيع بنك نجم التحقق منه من بياناته الخاصة، مثل عدم تكرار التواصل خلال سبعة أيام (no repeat contact within seven days)
 - C. خيار لكل مقعد (per-seat option) احتياطيًا
 - D. استخدام مجاني غير محدود في المرحلة التجريبية (pilot)
@@ -451,14 +451,14 @@ flowchart RL
 
 **5. متوسط التكلفة لكل مهمة وكيل (average cost per agent task) في نجم أسيست (Najm Assist) ضمن الهدف، لكن المالية تبلّغ عن فواتير كبيرة جدًا أحيانًا (occasional very large bills). ما الذي يجب أن يضيفه الفريق؟**
 
-- A. الانتقال إلى أصغر نموذج في كل المهام
-- B. عرض تكلفة p95 (p95 cost reporting) وسقف إنفاق لكل مهمة (per-task spend cap) ينتهي بتسليم لطيف (graceful handoff)
-- C. إزالة ميزات الوكيل (agent features)
-- D. مراجعة شهرية للميزانية فقط (monthly budget review only)
+- A. عرض تكلفة p95 (p95 cost reporting) وسقف إنفاق لكل مهمة (per-task spend cap) ينتهي بتسليم لطيف (graceful handoff)
+- B. الانتقال إلى أصغر نموذج في كل المهام (smallest model)، مهما كان الأثر في جودة الإجابات (quality of the answers)
+- C. إزالة ميزات الوكيل (agent features) من المنتج إلى أن تنخفض التكلفة لكل مهمة أكثر تحت الهدف (below the target)
+- D. مراجعة شهرية للميزانية فقط (monthly budget review only)، تجريها الإدارة المالية مع فريق المنتج بعد وصول الفواتير (once the bills have arrived)
 
 <details><summary>الإجابة</summary>
 
-**B.** لتكاليف الوكلاء (agent costs) ذيول طويلة (long tails) ناتجة عن الحلقات وإعادة المحاولات (loops and retries). المئينات (percentiles) تكشفها والسقوف (caps) تحدّها، مع تسليم إلى إنسان كي لا يُترك العميل عالقًا (stranded). وA قد يخفض الجودة ويرفع عمليات التسليم. (🟡 التعمق أكثر (Going deeper).)
+**A.** لتكاليف الوكلاء (agent costs) ذيول طويلة (long tails) ناتجة عن الحلقات وإعادة المحاولات (loops and retries). المئينات (percentiles) تكشفها والسقوف (caps) تحدّها، مع تسليم إلى إنسان كي لا يُترك العميل عالقًا (stranded). وB قد يخفض الجودة ويرفع عمليات التسليم. (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
@@ -633,14 +633,14 @@ flowchart RL
 
 **1. أعطى نجم أسيست (Najm Assist) العملاء رسمًا قديمًا (outdated fee) لمدة ثلاثة أسابيع بينما بدا زمن الاستجابة (latency) ومعدل الأخطاء (error rate) والاحتواء (containment) كلها سليمة. أيّ مراقِب (monitor) كان سيلتقط ذلك بأكثر الطرق مباشرة؟**
 
-- A. عتبة أضيق لزمن الاستجابة p95 (tighter p95 latency threshold)
-- B. فحص لحداثة المصادر (source-freshness check) يربط تغييرات صفحات السياسة بإعادة الفهرسة (re-indexing) وإعادة اختبار موجّهة (targeted re-test)
+- A. عتبة أضيق لزمن الاستجابة p95 (tighter p95 latency threshold)، مع تنبيهات تُخطر المهندس المناوب (on-call engineer) كلما ارتفع زمن الاستجابة فوقها، وتُرسل إلى الفريق كله (whole team)
+- B. مؤشر PSI شهري على عمر العملاء (monthly PSI on customer age)
 - C. هدف أعلى للاحتواء (higher containment target)
-- D. مؤشر PSI شهري على عمر العملاء (monthly PSI on customer age)
+- D. فحص لحداثة المصادر (source-freshness check) يربط تغييرات صفحات السياسة بإعادة الفهرسة (re-indexing) وإعادة اختبار موجّهة (targeted re-test)
 
 <details><summary>الإجابة</summary>
 
-**B.** كان هذا انجرافًا معرفيًا (knowledge drift). ربط تغييرات المحتوى بإعادة الفهرسة وإعادة الاختبار يلتقطه من مصدره (at the source). مقاييس السلامة (health metrics) (A) لا ترى الإجابات الخاطئة، وهدف الاحتواء (containment target) (C) قد يكافئ الخطأ أصلًا. (🟡 التعمق أكثر (Going deeper).)
+**D.** كان هذا انجرافًا معرفيًا (knowledge drift). ربط تغييرات المحتوى بإعادة الفهرسة وإعادة الاختبار يلتقطه من مصدره (at the source). مقاييس السلامة (health metrics) (A) لا ترى الإجابات الخاطئة، وهدف الاحتواء (containment target) (C) قد يكافئ الخطأ أصلًا. (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
@@ -660,19 +660,19 @@ flowchart RL
 **3. تعثرات التمويل الفوري للشركات الصغيرة (SME Instant Finance defaults) تستغرق أشهرًا لتظهر. ما أفضل طريقة لمراقبة أداء النموذج (model performance) في الأثناء؟**
 
 - A. انتظار التحقق السنوي (annual validation)
-- B. تتبّع مؤشرات بديلة سابقة (leading proxies) مثل المتأخرات المبكرة (early arrears) ومعدل التجاوز (override rate) إلى جانب انجراف المُدخلات والدرجات (input and score drift)، ثم التحقق لاحقًا من أن المؤشرات البديلة تنبّأت بالتعثرات
-- C. استخدام درجات رضا العملاء (customer satisfaction scores)
-- D. إعادة التدريب كل أسبوع على كل البيانات المتاحة
+- B. إعادة التدريب كل أسبوع على كل البيانات المتاحة
+- C. استخدام درجات رضا العملاء (customer satisfaction scores) بدلًا من نتائج التعثر الفعلية (instead of actual default outcomes alone)
+- D. تتبّع مؤشرات بديلة سابقة (leading proxies) مثل المتأخرات المبكرة (early arrears) ومعدل التجاوز (override rate) إلى جانب انجراف المُدخلات والدرجات (input and score drift)، ثم التحقق لاحقًا من أن المؤشرات البديلة تنبّأت بالتعثرات
 
 <details><summary>الإجابة</summary>
 
-**B.** المؤشرات البديلة مع فحوص الانجراف (proxies plus drift checks) تعطي إنذارًا مبكرًا (early warning)، والتحقق من المؤشرات البديلة مقابل النتائج الحقيقية (real outcomes) يُبقيها صادقة (keeps them honest). وD يتجاهل تأخر التسميات (label delay) ومتطلبات التحقق (validation requirements) لنماذج الائتمان. (🟡 التعمق أكثر (Going deeper).)
+**D.** المؤشرات البديلة مع فحوص الانجراف (proxies plus drift checks) تعطي إنذارًا مبكرًا (early warning)، والتحقق من المؤشرات البديلة مقابل النتائج الحقيقية (real outcomes) يُبقيها صادقة (keeps them honest). وB يتجاهل تأخر التسميات (label delay) ومتطلبات التحقق (validation requirements) لنماذج الائتمان. (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
 **4. يصلح الفريق سوء فهم متكررًا لصياغة عربية (Arabic phrasing) بتغيير الموجّه (changing the prompt). ما الذي يجب أن يحدث قبل أن يصل التغيير إلى كل العملاء؟**
 
-- A. لا شيء؛ تغييرات الموجّه منخفضة المخاطر (low risk)
+- A. لا شيء؛ تغييرات الموجّه منخفضة المخاطر (low risk) لأن الموجّه نص فقط ويمكن للفريق تعديله والرجوع عنه في أي وقت (edited back at any time)، فلا حاجة إلى أي فحص إضافي قبل النشر (extra check before release)
 - B. إضافة الحالات الفاشلة إلى المجموعة المرجعية (golden set)، وتشغيل المجموعة كاملة للكشف عن التراجعات (regressions)، والإطلاق عبر إطلاق مرحلي (staged rollout)
 - C. مطالبة المورّد بتأكيد الإصلاح
 - D. إعادة تدريب النموذج (retrain the model)

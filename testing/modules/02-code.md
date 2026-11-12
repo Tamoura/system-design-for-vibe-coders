@@ -467,10 +467,10 @@ Copy the sample (`cp -r testing/sample ~/najm-sample`), create a virtual environ
 
 **5. A test reads `svc._sent_today`. After a harmless rename, nine tests fail. Which smell?**
 
-- A. An assertion-free test
-- B. Shared mutable state across many tests
+- A. An assertion-free test that runs the code but checks nothing
+- B. Shared mutable state across many tests in one file
 - C. Testing private details of the class
-- D. Logic inside the test body
+- D. Logic inside the test body, such as loops and branches
 
 <details><summary>Answer</summary>
 
@@ -1025,9 +1025,9 @@ Copy the sample, add this lesson's files and `pip install faker respx jsonschema
 **1. Repository tests pass on in-memory SQLite, yet money columns misbehave on the PostgreSQL staging database. Most likely cause?**
 
 - A. SQLite is slower than PostgreSQL on large tables of money
-- B. SQLite cannot run inside a database transaction at all
+- B. SQLite cannot run inside a database transaction at all, even for tests
 - C. SQLite's loose typing hid a type or precision mismatch
-- D. PostgreSQL ignores `CHECK` constraints by default
+- D. PostgreSQL ignores `CHECK` constraints by default, so they never fire
 
 <details><summary>Answer</summary>
 
@@ -1065,8 +1065,8 @@ Copy the sample, add this lesson's files and `pip install faker respx jsonschema
 
 - A. Keep rollback and run the tests in a fixed order
 - B. Delete or truncate the tables after each test
-- C. Share one set of rows between all the tests
-- D. Switch every test to a mocked connection
+- C. Share one set of rows between all the tests that touch the table
+- D. Switch every test to a mocked connection to the database
 
 <details><summary>Answer</summary>
 
@@ -1076,8 +1076,8 @@ Copy the sample, add this lesson's files and `pip install faker respx jsonschema
 
 **5. A forced-interleaving test shows two transfers created from one idempotency key. Right response?**
 
-- A. Add a client-side retry with a longer delay
-- B. Reduce the thread count in the test
+- A. Add a client-side retry with a longer delay between attempts
+- B. Reduce the thread count in the test so it hits less often
 - C. Make claiming the key atomic, and keep the test
 - D. Delete the test, since real traffic is rarely that concurrent
 
@@ -1511,8 +1511,8 @@ Copy the sample and run `pip install mutmut hypothesis pytest-cov pytest-randoml
 
 - A. The function is now properly protected against boundary bugs
 - B. Every line ran, but nothing shows behaviour was checked
-- C. The tests are slow and should be removed
-- D. Branch coverage is 100% too, so the suite is strong
+- C. The tests are slow and should be removed to speed up the build
+- D. Branch coverage is 100% too, so the suite is strong enough
 
 <details><summary>Answer</summary>
 
@@ -1525,7 +1525,7 @@ Copy the sample and run `pip install mutmut hypothesis pytest-cov pytest-randoml
 - A. mutmut has a bug here, so the mutant should be ignored
 - B. The mutant is equivalent, so no test could ever detect it
 - C. No test hits the limit exactly, so a boundary test is missing
-- D. The function is already correct for totals at exactly the limit
+- D. The function is already right for totals at the limit
 
 <details><summary>Answer</summary>
 
@@ -1536,8 +1536,8 @@ Copy the sample and run `pip install mutmut hypothesis pytest-cov pytest-randoml
 **3. A Hypothesis oracle test on `fee` passes 100 two-decimal examples under `float_fee`. What is the best next step?**
 
 - A. Conclude the float bug is harmless for two-decimal amounts
-- B. Delete the property, since examples already cover it
-- C. Run it once more and accept a second green result
+- B. Delete the property, since the examples already cover it fully
+- C. Run it once more and accept a second green result as proof
 - D. Aim the generator at whole amounts, where ties occur
 
 <details><summary>Answer</summary>
@@ -1562,8 +1562,8 @@ Copy the sample and run `pip install mutmut hypothesis pytest-cov pytest-randoml
 **5. A test fails about one run in three; the pipeline retries failures twice and shows "passed". What is the right policy?**
 
 - A. Keep the retries, since a green pipeline means there is no real problem
-- B. Delete the test, because flaky tests have no value
-- C. Raise the retry count until it never fails
+- B. Delete the test, because flaky tests have no value at all to the team
+- C. Raise the retry count until the test never fails in any pipeline run
 - D. Report the retries and quarantine the test with an owner and deadline
 
 <details><summary>Answer</summary>

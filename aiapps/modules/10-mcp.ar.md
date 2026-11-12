@@ -619,7 +619,7 @@ Plan first; implement in small steps; run the tests after each.
 **3. مع منح نطاق الكتابة (the write scope granted) تطلب تذكرة مسمومة `create_ticket` ويكتب ريان (Rayan) «y» دون أن يقرأ (unread). ماذا يحدث بعد ذلك؟ ⁦(What follows?)⁩**
 
 - A. يمنعه المخطط، لأن التحقق من الصحة يحكم على النية أيضًا (validation also judges intent)
-- B. يمنعه فحص النطاق، لأن النص المسموم يفتقر إلى النطاق (the poisoned text lacks the scope)
+- B. يمنعه فحص النطاق، لأن النص المسموم يفتقر إلى النطاق المطلوب (the poisoned text lacks the needed scope)
 - C. يرفضه الخادم، لأن العنوان يبدو مكررًا (the title looks like a duplicate)
 - D. تُسجَّل التذكرة، لأن الاستدعاء صالح ووافق عليه شخص (the call is valid and a person approved it)
 

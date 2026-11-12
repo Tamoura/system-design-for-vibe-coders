@@ -45,7 +45,7 @@
           "Exit 2 and say that money is `Decimal`, since the file name `test_money.py` mentions money"
         ],
         "ar": [
-          "يخرج بالرمز 2 (exit 2) ويقول إن المبالغ (money) من نوع `Decimal`، لأن التعديل (edit) يحوي ثابتًا عشريًا (float literal)",
+          "يخرج بالرمز 2 (exit 2) ويقول إن المبالغ (money) من نوع `Decimal`، لأن التعديل يحوي ثابتًا عشريًا (float literal)",
           "يخرج بالرمز 0 (exit 0) ولا يبلغ بشيء، لأن الخطاف يحكم بالمجلد (folder) وهذا الملف داخل `tests/` لا في مجلد الأموال",
           "يخرج بالرمز 1 (exit 1) ويطبع تحذيرًا (warning)، ليعلم الوكيل (agent) بما وجده الخطاف دون أن يتوقف عمله",
           "يخرج بالرمز 2 (exit 2) ويقول إن المبالغ (money) من نوع `Decimal`، لأن اسم الملف `test_money.py` يذكر المال"
@@ -96,15 +96,15 @@
       "o": {
         "en": [
           "Tighten the prompt so that it says in capitals that fee tickets are always money logic",
-          "Reject every reply that says `money_logic: false` as an error, so that only true values get through",
+          "Reject any reply that says `money_logic: false` as an error, so only true values get through",
           "Set `money_logic` to true in the script for fees, fx, limits and ledger, whatever the model says",
-          "Retry each fee ticket until the model answers `money_logic: true`, then keep that reply and move on"
+          "Retry each fee ticket until the model answers `money_logic: true`, then keep that reply"
         ],
         "ar": [
           "أن تشدّد الموجّه (prompt) فيذكر أن تذاكر الرسوم منطق مالي (money logic) دائمًا، بأحرف كبيرة",
           "أن ترفض كل رد (reply) فيه `money_logic: false` وتعدّه خطأً (error)، فلا يمر إلا ما قيمته true",
           "أن تضبط `money_logic` على true في النص (script) لـ `fees` و`fx` و`limits` و`ledger` أيًّا كان جواب النموذج",
-          "أن تعيد المحاولة (retry) لكل تذكرة رسوم حتى يجيب النموذج (model) بـ `money_logic: true` ثم تأخذ ذلك الرد وحده"
+          "أن تعيد المحاولة (retry) لكل تذكرة رسوم حتى يجيب النموذج (model) بـ `money_logic: true`"
         ]
       },
       "a": 2,

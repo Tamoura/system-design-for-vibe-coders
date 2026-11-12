@@ -249,7 +249,7 @@ Copy the sample first (`cp -r testing/sample ~/najm-sample`), create a virtual e
 - A. The expected values came from the code, a circular oracle
 - B. Passing so quickly means the tests were not run properly
 - C. A type checker would certainly have rejected the code
-- D. Parametrised tests are always weaker than separate test functions
+- D. Parametrised tests are weaker than separate functions
 
 <details><summary>Answer</summary>
 
@@ -661,7 +661,7 @@ Work in a copy of the sample, with the lesson's files in `tests/`.
 **3. A teammate's tests for the transfer lifecycle check only accepted, then processing, then settled. Which gap is most dangerous for a payments service?**
 
 - A. They never try a refused move, such as reversing twice
-- B. They use parametrised tests rather than separate functions
+- B. They use parametrised tests, not separate functions
 - C. They do not time how long each transition takes
 - D. They do not check what a settled transfer displays
 
@@ -932,9 +932,9 @@ Use a clean copy of the sample for the first two.
 **3. Tariq's squad closed "Transfers broken??" as "cannot reproduce". Which single change to the report would help most?**
 
 - A. Give the exact amount, the expected and actual fees, and a repro command
-- B. Attach a screenshot of the app's home screen and the device settings page
-- C. Raise it to S1 so the squad treats it as urgent straight away
-- D. Copy the whole department into the ticket so many more people see it
+- B. Attach a screenshot of the app's home screen and the device's settings page
+- C. Raise it to S1 so the squad treats it as urgent and drops everything else now
+- D. Copy the whole department into the ticket so that many more people will see it, unasked
 
 <details><summary>Answer</summary>
 

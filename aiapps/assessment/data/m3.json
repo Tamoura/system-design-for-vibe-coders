@@ -12,16 +12,16 @@
    },
    "o": {
     "en": [
-     "The model called TicketHub by itself, and the status is already inside that reply",
+     "The model called TicketHub by itself, and the status is already in that reply",
      "Nothing has run yet: the block only asks, and her code decides whether to run it",
      "Anthropic's servers ran the tool and will attach the status to the next reply",
      "The API keeps the call on hold and runs it once her next user message arrives"
     ],
     "ar": [
-     "استدعى النموذج (model) TicketHub بنفسه، والحالة (status) موجودة فعلًا داخل ذلك الردّ (reply)",
+     "استدعى النموذج (model) TicketHub بنفسه، والحالة (status) موجودة فعلًا داخل الردّ",
      "لم يُنفَّذ شيء بعد (nothing has run)؛ الكتلة (block) طلب فقط، وشيفرتها (her code) تقرر تنفيذه",
-     "نفّذت خوادم Anthropic الأداة (tool) وستُرفق الحالة (status) بالردّ التالي (next reply) للنموذج",
-     "تحتفظ الواجهة (API) بالاستدعاء (call) وتنفّذه عند وصول رسالة المستخدم التالية (next user message)"
+     "نفّذت خوادم Anthropic الأداة (tool) وستُرفق الحالة (status) بالردّ التالي",
+     "تحتفظ الواجهة (API) بالاستدعاء (call) وتنفّذه عند وصول رسالة المستخدم التالية"
     ]
    },
    "why": {
@@ -70,13 +70,13 @@
     "en": [
      "Stop the run after two `invalid_input` results from one tool, but keep the cap",
      "Lower `max_steps` to 2, so that no run can ever pay for more than two model calls",
-     "Raise `max_steps` to 20, so that the model gets more chances to fix its input",
-     "Repair `INC-4471` to `4471` in code, so that the call succeeds on the first try"
+     "Raise `max_steps` to 20, so that the model gets more chances to fix its input itself",
+     "Repair `INC-4471` to `4471` in code, so that the call succeeds on the very first try"
     ],
     "ar": [
      "توقف الجولة (run) بعد نتيجتين (two results) `invalid_input` من أداة واحدة، مع إبقاء الحد (step cap)",
      "تخفض (lower) `max_steps` إلى 2 كي لا تدفع أي جولة (run) ثمن أكثر من استدعاءين مدفوعين (two paid calls)",
-     "ترفع (raise) `max_steps` إلى 20 كي تتاح للنموذج (model) فرص أكثر لإصلاح مُدخله (input) بنفسه",
+     "ترفع (raise) `max_steps` إلى 20 كي تتاح للنموذج (model) فرص أكثر لإصلاح مُدخله (input) بنفسه دون تدخل",
      "تصحّح (repair) `INC-4471` إلى `4471` في الشيفرة (code) كي ينجح الاستدعاء (call) من المحاولة الأولى (first try)"
     ]
    },

@@ -200,7 +200,7 @@ Done for the week: lab runs offline, checkpoint answered, deliverable committed,
 - A. سير عمل (workflow): يصنّف مرة واحدة، ثم يوجّه (route) بشيفرة عادية
 - B. فريق تعدد وكلاء (multi-agent team) بمشرف (supervisor) وثلاثة عمّال (workers)
 - C. وكيل مستقل (autonomous agent) يقرر أدواته وخطواته بنفسه (decides its own tools and steps)
-- D. روبوت دردشة (chatbot) يطلب من مقدّم الطلب (requester) اختيار فئة
+- D. روبوت دردشة (chatbot) يطلب من مقدّم الطلب (requester) اختيار فئة أولًا
 
 <details><summary>الإجابة</summary>
 
@@ -930,9 +930,9 @@ if __name__ == "__main__":
 
 **3. يقول `CLAUDE.md` الخاص بك «شغّل الاختبارات بعد كل تعديل» ("run the tests after every edit")، ومع ذلك يتخطاها الوكيل (agent) أحيانًا. ما أوثق حل (most reliable fix)؟**
 
-- A. أعد كتابة القاعدة بأحرف كبيرة في الأعلى
-- B. كرّر القاعدة نفسها في نهاية الملف أيضًا
-- C. انتقل إلى نموذج أكبر في كل جلسة
+- A. أعد كتابة القاعدة بأحرف كبيرة (capital letters) في أعلى الملف
+- B. كرّر القاعدة نفسها (same rule) في نهاية الملف أيضًا
+- C. انتقل إلى نموذج أكبر (larger model) في كل جلسة
 - D. أضف خطافًا (hook) يشغّل الاختبارات بعد كل تعديل
 
 <details><summary>الإجابة</summary>
@@ -957,9 +957,9 @@ if __name__ == "__main__":
 **5. تسألك هند كيف تعرف أن نجم ديسك (Najm Desk) يجيب عن أسئلة السياسات (policy questions) إجابة صحيحة. فتقول إن Claude Code كتب اختبارات وهي تنجح. ما الذي ينقص؟**
 
 - A. لا شيء، لأن الاختبارات الناجحة (passing tests) تثبت صحة الإجابات
-- B. `CLAUDE.md` أطول وفيه قواعد أكثر بكثير
+- B. `CLAUDE.md` أطول (a longer file) وفيه قواعد أكثر بكثير (many more rules) للوكيل
 - C. تقييم على نموذج حقيقي (real-model eval) فوق مجموعة ذهبية من الأسئلة (golden set of questions)
-- D. مراجعة ثانية من Claude Code (a second Claude Code review) للاختبارات الناجحة نفسها
+- D. مراجعة ثانية من Claude Code (a second Claude Code review) للاختبارات الناجحة نفسها قبل كل دمج (before every merge)
 
 <details><summary>الإجابة</summary>
 

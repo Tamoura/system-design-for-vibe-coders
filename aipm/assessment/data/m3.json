@@ -104,7 +104,7 @@
      "يقبله، لأن وسوم الموافقة (approval labels) تشمل المتقدمين المرفوضين (declined applicants) فتزيل انحياز الاختيار (selection bias)",
      "يدرّب على السداد (train on repayment)، ويوجّه أنواع المتقدمين النادر قبولها سابقًا (rarely approved before) إلى إنسان (to a human)",
      "يقبله، لكن يحذف حقلي القطاع ومدة العلاقة (sector and tenure fields) حتى لا تُتعلَّم العادات القديمة (old habits)",
-     "يوقف التدريب (pause training) حتى يستعيد استدلال المرفوضين (reject inference) نتائج المتقدمين المرفوضين (declined applicants' outcomes)"
+     "يوقف التدريب (pause training) حتى يستعيد استدلال المرفوضين (reject inference) نتائج المرفوضين (declined applicants' outcomes)"
     ]
    },
    "a": 1,

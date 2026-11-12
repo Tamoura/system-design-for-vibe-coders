@@ -14,13 +14,13 @@
      "Testing shows the presence of defects, so the team must have missed a bug in the screen",
      "Exhaustive testing is impossible, so the team simply ran too few tests before launch day",
      "Absence of defects is a fallacy, so a bug-free screen can still be the wrong screen",
-     "Testing is context dependent, so the team tested a payments screen far too lightly"
+     "Testing is context dependent, so the team tested a payments screen far too lightly for its risk"
     ],
     "ar": [
      "يُظهر الاختبار وجود العيوب (testing shows the presence of defects)، فلا بد أن يكون الفريق قد فوّت عيبًا (missed a bug) في الشاشة",
-     "الاختبار الشامل مستحيل (exhaustive testing is impossible)، فنفّذ الفريق اختبارات قليلة جدًا (too few tests) قبل الإطلاق",
+     "الاختبار الشامل مستحيل (exhaustive testing is impossible)، فنفّذ الفريق اختبارات قليلة جدًا (too few tests) قبل يوم الإطلاق (launch day)",
      "غياب العيوب مغالطة (absence of defects is a fallacy)، فقد تظل الشاشة الخالية من العيوب (bug-free screen) هي الشاشة الخاطئة",
-     "الاختبار يعتمد على السياق (testing is context dependent)، فاختبر الفريق شاشة مدفوعات (payments screen) بعمق أقل مما يلزم"
+     "الاختبار يعتمد على السياق (testing is context dependent)، فاختبر الفريق شاشة مدفوعات (payments screen) بعمق أقل مما يلزم لمستوى خطرها (its risk)"
     ]
    },
    "a": 2,
@@ -67,13 +67,13 @@
    },
    "o": {
     "en": [
-     "Attach a screen recording that shows all fourteen steps being followed, start to finish",
+     "Attach a screen recording that shows all fourteen steps being followed",
      "Delete the steps she thinks are unimportant and send the shorter list untried",
      "Raise the severity to S1 so that the developer treats the whole report as urgent",
      "Remove steps and data one by one, re-running each time, until only what fails is left"
     ],
     "ar": [
-     "إرفاق تسجيل شاشة (screen recording) يعرض الخطوات الأربع عشرة كلها (all fourteen steps) بالترتيب",
+     "إرفاق تسجيل شاشة (screen recording) يعرض الخطوات الأربع عشرة كلها",
      "حذف الخطوات التي تراها غير مهمة (unimportant) وإرسال القائمة الأقصر دون تجربتها (untried)",
      "رفع الخطورة (severity) إلى S1 حتى يعامل المطوّر التقرير كله على أنه عاجل (urgent)",
      "إزالة الخطوات والبيانات واحدًا واحدًا مع إعادة التشغيل حتى لا يبقى إلا ما يفشل (what fails)"
@@ -97,13 +97,13 @@
     "en": [
      "Expect daily_limit_exceeded, because the rule guarding more money should win",
      "Pin the code's answer as a characterisation test and ask product which rule wins",
-     "Expect above_per_transfer_max, because the order of the code's checks is the spec",
-     "Skip the case, because breaking two rules at once is too rare to be worth testing"
+     "Expect above_per_transfer_max, because the code's check order is the spec",
+     "Skip the case, because breaking two rules at once is too rare to test"
     ],
     "ar": [
      "توقّع `daily_limit_exceeded` لأن القاعدة التي تحمي مالًا أكثر (guarding more money) هي التي تسود (should win)",
      "تثبيت إجابة الشيفرة كاختبار توصيفي (characterisation test) وسؤال فريق المنتج (product) أيّ القاعدتين تسود",
-     "توقّع `above_per_transfer_max` لأن ترتيب فحوصات الشيفرة (order of the code's checks) هو المواصفة (spec)",
+     "توقّع `above_per_transfer_max` لأن ترتيب فحوصات الشيفرة نفسها (order of the code's checks) هو المواصفة (spec)",
      "تجاوز هذه الحالة (skip the case) لأن مخالفة قاعدتين معًا (two rules at once) نادرة جدًا فلا تستحق الاختبار"
     ]
    },

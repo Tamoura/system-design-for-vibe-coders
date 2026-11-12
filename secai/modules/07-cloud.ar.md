@@ -184,10 +184,10 @@ flowchart RL
 
 **1. ينقل بنك نجم (Najm Bank) قاعدة بيانات بوابة الشركات الصغيرة (SME Portal's database) من آلةٍ افتراضية يديرها بنفسه (a self-managed virtual machine) إلى خدمة قاعدة البيانات المُدارة لدى المزوّد (the provider's managed database service). أيّ مسؤوليةٍ تنتقل إلى المزوّد (Which responsibility moves to the provider)؟**
 
-- A. تحديد من يجوز له الاتصال بقاعدة البيانات (Deciding who may connect to the database)
+- A. تحديد من يجوز له الاتصال بقاعدة البيانات (Deciding who may connect to the database) ومسارات الشبكة المؤدية إليها (and which network paths lead to it)
 - B. تحديث محرّك قاعدة البيانات ونظام التشغيل الذي تحته (Patching the database engine and the operating system beneath it)
-- C. تحديد ما إذا كانت لها نقطة نهايةٍ عامة (Deciding whether it has a public endpoint)
-- D. تصنيف بيانات العملاء فيها (Classifying the customer data in it)
+- C. تحديد ما إذا كانت لها نقطة نهايةٍ عامة (Deciding whether it has a public endpoint) وإعدادات التشفير التي تستخدمها (and which encryption settings it uses)
+- D. تصنيف بيانات العملاء فيها (Classifying the customer data in it) وتحديد مدة الاحتفاظ بكل فئة (and deciding how long each class is kept)
 
 <details><summary>الإجابة</summary>
 
@@ -198,7 +198,7 @@ flowchart RL
 **2. يكتشف علي أن خط التكامل المستمر (CI pipeline) ينشر إلى بيئة الإنتاج (is deploying to production) بمفتاح وصول (with an access key) مخزّنٍ بوصفه متغيرًا في التكامل المستمر (stored as a CI variable) منذ عامين (two years ago). ما أفضل بديل (What is the best replacement)؟**
 
 - A. دوّر المفتاح كل 90 يومًا (Rotate the key every 90 days)
-- B. انقل المفتاح إلى ملفٍ مشفّر في مستودع الشيفرة المصدرية (Move the key into an encrypted file in the source repository)
+- B. انقل المفتاح إلى ملفٍ مشفّر في مستودع الشيفرة المصدرية (Move the key into an encrypted file in the source repository)، مع حفظ كلمة فك التشفير في إعدادات خط التسليم المحمية (with the decryption password stored in the pipeline's protected settings page)
 - C. استخدم اتحاد هوية عبء العمل عبر OIDC (OIDC workload identity federation)، مع ربط سياسة الثقة للدور (with the role's trust policy pinned) بمستودع البنك وبيئة الإنتاج (to the bank's repository and production environment)
 - D. امنح خط التسليم مستخدمًا إداريًا منفصلًا مع مصادقةٍ متعددة العوامل (Give the pipeline a separate admin user with MFA)
 
@@ -213,7 +213,7 @@ flowchart RL
 - A. أصلِح ثغرة تزوير الطلبات بقائمة سماحٍ للوجهات (Fix the SSRF with a destination allowlist)، وألزِم استخدام IMDSv2 (require IMDSv2)، واحصر دور الآلة في الحدّ الأدنى (scope the machine's role to the minimum)
 - B. أضف اختبار CAPTCHA إلى صفحة التقارير (Add a CAPTCHA to the reporting page)
 - C. انقل الخدمة إلى نوع مثيلٍ أكبر (Move the service to a larger instance type)
-- D. اعتمد على المزوّد (Rely on the provider)، لأن خدمة البيانات الوصفية من مسؤولية المزوّد (because the metadata service is the provider's responsibility)
+- D. اعتمد على المزوّد (Rely on the provider)، لأن خدمة البيانات الوصفية من مسؤولية المزوّد (because the metadata service is the provider's responsibility) بموجب نموذج المسؤولية المشتركة (under the shared responsibility model)
 
 <details><summary>الإجابة</summary>
 
@@ -225,7 +225,7 @@ flowchart RL
 
 - A. بأقدم النتائج (With the oldest findings)
 - B. بالنتائج التي يجتمع فيها معًا التعرّض للإنترنت (internet exposure) وضعفٌ قابل للاستغلال (an exploitable weakness) وهويةٌ تستطيع بلوغ بياناتٍ حساسة (an identity that can reach sensitive data)
-- C. بكل نتيجةٍ تصنّفها الأداة «حرجة» ("critical")، بالترتيب الأبجدي (in alphabetical order)
+- C. بكل نتيجةٍ تصنّفها الأداة «حرجة» ("critical")، بالترتيب الأبجدي لاسم المورد (alphabetical order of the resource name)، قبل أي نتيجةٍ مصنّفة «عالية» أو «متوسطة» ("high" or "medium")، وبغضّ النظر عن مكان المورد (wherever the resource is)
 - D. بتعطيل أكثر القواعد ضجيجًا (By turning off the noisiest rules)
 
 <details><summary>الإجابة</summary>
@@ -502,7 +502,7 @@ flowchart RL
 **1. يضبط مخطط Helm لخدمة الأدوات في نجم أسيست (The Helm chart for Najm Assist's tool service) الإعداد `privileged: true` «لأن فحص السلامة كان يفشل من دونه» ("because the health check failed without it"). ماذا ينبغي أن يطلب علي (What should Ali ask for)؟**
 
 - A. أبقِ الوضع المميّز (Keep privileged mode)، مع تعليقٍ يشرح السبب (with a comment explaining why)
-- B. انقل وحدة التشغيل إلى نطاق أسماءٍ يُسمح فيه بالوضع المميّز (Move the pod to a namespace where privileged mode is allowed)
+- B. انقل وحدة التشغيل إلى نطاق أسماءٍ يُسمح فيه بالوضع المميّز (Move the pod to a namespace where privileged mode is allowed)، ووثّق الاستثناء في وصف نطاق الأسماء نفسه (document the exception in the namespace's own description)
 - C. اقبله، لأن المزوّد يدير العنقود (Accept it, because the provider manages the cluster)
 - D. ابحث عن السبب الحقيقي (Find the real cause)، وامنح الإصلاح الضيق الذي يحتاجه فقط (grant only the narrow fix it needs)، وافرض ملف التعريف المقيَّد على نطاق الأسماء (and enforce the Restricted profile on the namespace)
 
@@ -542,7 +542,7 @@ flowchart RL
 
 - A. في طلب السحب وخط التسليم (In the pull request and pipeline): فحصٌ للبنية التحتية بوصفها شيفرة وبوابة سياسات (an IaC scan and policy gate) تُفشلان البناء قبل تطبيق التغيير (that fail the build before the change is applied)
 - B. في أداة إدارة الوضع الأمني (In the CSPM tool)، بعد يومٍ من النشر (a day after deployment)
-- C. بحظر وكلاء الذكاء الاصطناعي من أعمال البنية التحتية (By banning AI agents from infrastructure work)
+- C. بحظر وكلاء الذكاء الاصطناعي من أعمال البنية التحتية (By banning AI agents from infrastructure work)، واشتراط أن يمر كل تغيير عبر قائمة تذاكر فريق المنصة (every change to go through the platform team's ticket queue)، دون استثناء (with no exceptions)
 - D. في مراجعة الوصول الفصلية (In the quarterly access review)
 
 <details><summary>الإجابة</summary>
@@ -556,7 +556,7 @@ flowchart RL
 - A. نطاقات أسماءٍ منفصلة، والاعتماد على ذلك (Separate namespaces, and rely on that)
 - B. مجموعة عقدٍ منفصلة (A separate node pool) مع بيئة تشغيلٍ معزولة مثل gVisor (with a sandboxed runtime such as gVisor) ودون مسار شبكةٍ إلى أدوات إجراءات البطاقات (and no network path to the card-action tools)، أو عنقودٌ منفصل (or a separate cluster)
 - C. العقد نفسها، مع مزيدٍ من قدرة المعالجة لشيفرة التحليل (The same nodes, with more CPU for the analysis code)
-- D. شغّل شيفرة التحليل بصلاحيات الجذر كي تثبّت مكتباتها بنفسها (Run the analysis code as root so it can install its own libraries)
+- D. شغّل شيفرة التحليل بصلاحيات الجذر (Run the analysis code as root) كي تثبّت مكتباتها بنفسها (so it can install its own libraries)، وامنحها صلاحية القراءة على وحدة التخزين المشتركة للأسرار (give it read access to the shared secrets volume) من باب الراحة (for convenience) في كل البيئات (in all environments)
 
 <details><summary>الإجابة</summary>
 
@@ -805,7 +805,7 @@ flowchart RL
 **2. سيحصل نجم أسيست على أداة جلبٍ من الويب (Najm Assist is getting a web-fetch tool). أيّ ضابطٍ شبكي يمنع بشكلٍ أكثر مباشرة (Which network control most directly stops) التعليماتِ المحقونة من جعله يرسل بيانات العملاء إلى خادم مهاجم (injected instructions from making it send customer data to an attacker's server)؟**
 
 - A. خطةٌ أكبر للحماية من حجب الخدمة الموزّع (A larger DDoS protection plan)
-- B. قاعدة جدار حمايةٍ لتطبيقات الويب على طلبات واجهة البرمجة الواردة (A WAF rule on inbound API requests)
+- B. قاعدة جدار حمايةٍ لتطبيقات الويب على طلبات واجهة البرمجة الواردة (A WAF rule on inbound API requests) تحظر العناوين المشبوهة وأحجام الطلبات غير المعتادة وتواقيع الماسحات المعروفة (blocks suspicious URLs, unusual request sizes and known scanner signatures)
 - C. رفضٌ افتراضي للخروج من طبقة الذكاء الاصطناعي (Default-deny egress for the AI tier)، مع مرور حركة المرور الصادرة عبر وكيل خروجٍ بقائمة سماح فقط (with outbound traffic only through an egress proxy with an allowlist)
 - D. شبكة توصيل محتوى أمام المساعد (A CDN in front of the assistant)
 
@@ -820,7 +820,7 @@ flowchart RL
 - A. ترقيعٌ افتراضي لنمط الاستغلال (A virtual patch for the exploit pattern)، مع المراقبة (monitored)، ومتابعة إصلاح الشيفرة حتى موعدٍ نهائي (with the code fix tracked to a deadline)، وإزالة القاعدة بعد ذلك (and the rule removed afterwards)
 - B. الاعتماد على جدار الحماية بشكلٍ دائم وإغلاق التذكرة (Rely on the WAF permanently and close the ticket)
 - C. لا شيء، لأن جدران الحماية يمكن تجاوزها (Nothing, because WAFs can be bypassed)
-- D. تحويل جدار الحماية بالكامل إلى أعلى مستوى ارتياب في وضع الحجب (Switch the whole WAF to its highest paranoia level in blocking mode)
+- D. تحويل جدار الحماية بالكامل إلى أعلى مستوى ارتياب في وضع الحجب (Switch the whole WAF to its highest paranoia level in blocking mode) لكل التطبيقات خلفه دفعةً واحدة (for all applications behind it, at once)، وتركه على ذلك (and leave it there)
 
 <details><summary>الإجابة</summary>
 
@@ -844,7 +844,7 @@ flowchart RL
 **5. تقع واجهة برمجة تطبيق نجم للهاتف (Najm Mobile's API) خلف شبكة توصيل محتوى (behind a CDN) وحمايةٍ من حجب الخدمة الموزّع (DDoS protection) وجدار حماية تطبيقات ويب (and a WAF). لماذا يجب أن يقبل الخادم الأصلي حركة المرور من الحافة فقط (Why must the origin accept traffic only from the edge)؟**
 
 - A. لأن شبكة توصيل المحتوى أرخص من الخادم الأصلي (Because the CDN is cheaper than the origin)
-- B. لأن TLS لا يعمل دون شبكة توصيل محتوى (Because TLS cannot work without a CDN)
+- B. لأن TLS لا يعمل دون شبكة توصيل محتوى (Because TLS cannot work without a CDN) أمام الخادم الأصلي (in front of the origin) الذي يجب أن ينهي كل اتصال (which has to terminate every connection) نيابةً عن خوادم التطبيق (on behalf of the application servers) في كل الأحوال (in all cases)
 - C. لأن حدود المعدّل لا تعمل إلا على الخادم الأصلي (Because rate limits only work on the origin)
 - D. وإلا فإن المهاجمين الذين يعثرون على عنوان الخادم الأصلي (Otherwise attackers who find the origin's address) يستطيعون تجاوز الحماية من حجب الخدمة الموزّع وجدار الحماية (can bypass the DDoS protection and the WAF)
 

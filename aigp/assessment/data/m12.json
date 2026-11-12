@@ -17,7 +17,7 @@
           "A near-copy of the key with one word changed, so that only memorisers can spot it"
         ],
         "ar": [
-          "عبارة خاطئة بوضوح (plainly false statement)، وُضعت كي يحذفها القارئ المتأني (careful reader) في ثوانٍ (in seconds)",
+          "عبارة (statement) خاطئة بوضوح (plainly false statement)، وُضعت كي يحذفها القارئ المتأني (careful reader) في ثوانٍ (in seconds)",
           "عبارة صحيحة (true statement) لكنها ليست الإجابة (not the answer)، كواجب حقيقي (real duty) يخص دورًا آخر (different role)",
           "عبارة فيها لفظ مطلق (absolute) مثل \"دائمًا (always)\"، ما يجعلها خاطئة في كل الحالات (in every case)",
           "نسخة شبه مطابقة للمفتاح (near-copy of the key) مع تغيير كلمة واحدة (one word changed)، لا يكشفها إلا الحُفّاظ (memorisers)"
@@ -68,7 +68,7 @@
       "o": {
         "en": [
           "Book the real exam now, since 74 is above the 70% IAPP requires for a pass",
-          "Review only his 26 wrong answers, since the correct ones are already banked",
+          "Review only his 26 wrong answers, as the correct ones are already banked",
           "Tag his wrong answers by competency and trap, and re-study his guesses too",
           "Re-sit the same mock tomorrow, and repeat it until he scores 85 or higher"
         ],

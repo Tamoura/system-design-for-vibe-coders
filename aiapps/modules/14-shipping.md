@@ -307,10 +307,10 @@ Do not: build images, add dependencies or touch other modules. Plan first; one f
 
 **1. Staging and production run the same image digest but answer differently. What do you check first?**
 
-- A. Whether the base image tag changed
+- A. Whether the base image tag changed since the last build
 - B. Whether the environment variables differ
-- C. Whether the Dockerfile has several stages
-- D. Whether the container runs as non-root
+- C. Whether the Dockerfile has several build stages
+- D. Whether the container runs as a non-root user
 
 <details><summary>Answer</summary>
 
@@ -714,10 +714,10 @@ Acceptance: pytest passes; report.py exits 1 on a breached SLO. No new dependenc
 
 **4. The error budget for the 90% task-success SLO is half spent two days into a 28-day window. What do you do?**
 
-- A. Loosen the SLO to 85% so the burn looks smaller
-- B. Keep shipping, because half the budget is left
+- A. Loosen the SLO to 85% so that the burn looks smaller
+- B. Keep shipping, because half the budget is still left
 - C. Pause releases, then investigate or roll back
-- D. Wait for the window to end before acting
+- D. Wait for the whole window to end before acting on it
 
 <details><summary>Answer</summary>
 

@@ -510,7 +510,7 @@ Would I delegate it again?
 - A. One finding, `test-gaming`, because a loop alone is not a failure.
 - B. Two findings, the loop first and the weakened test second.
 - C. Two findings, the weakened test first, because it is more serious.
-- D. One finding, `runaway-loop`, because the loop came first.
+- D. One finding, `runaway-loop`, because the loop came first in time.
 
 <details><summary>Answer</summary>
 

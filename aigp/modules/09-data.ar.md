@@ -124,7 +124,7 @@
 
 **1. يريد بنك نجم استخدام بيانات طلبات القروض (loan applications) لعشر سنوات، التي جُمعت للبت في تلك القروض، لتدريب نموذج ائتمان (credit model) جديد. ما التحليل الأساسي بموجب GDPR؟**
 
-- A. لا شيء؛ فبنك نجم يحتفظ بالبيانات أصلًا
+- A. لا شيء؛ فبنك نجم يحتفظ بالبيانات (data) أصلًا
 - B. هل الغرض الجديد (new purpose) متوافق مع الغرض الأصلي (original purpose)، بالنظر إلى الصلة والسياق (context) وطبيعة البيانات (nature of the data) والعواقب والضمانات (safeguards)، وإلا فالحاجة إلى أساس قانوني (lawful basis) جديد
 - C. هل البيانات مشفّرة (encrypted) فقط
 - D. هل وقّع المتقدمون (applicants) نموذجًا (model) ورقيًا
@@ -150,10 +150,10 @@
 
 **3. يعرض مورّد (vendor) على بنك نجم بيانات متقدمين اصطناعية (synthetic) "مجهولة الهوية تمامًا (fully anonymous)". ما الذي ينبغي أن تشترطه الحوكمة (governance) أولًا؟**
 
-- A. لا شيء؛ البيانات الاصطناعية (synthetic data) خارج نطاق GDPR
-- B. سعرًا أقل
+- A. لا شيء؛ البيانات الاصطناعية (synthetic data) خارج نطاق GDPR، فلا حاجة إلى فحص بيانات المصدر (source data) أو طريقة التوليد (generation method) قبل الاستخدام، ولا إلى أي مراجعة (review) أخرى (further) للمخاطر (risks)
+- B. سعرًا أقل (a lower price)
 - C. دليلًا على حقوق المورّد (vendor) في بيانات المصدر (source data) وتقييمًا لخطر إعادة التعرّف (re-identification risk)، إضافة إلى مراجعة للأمانة والتحيّز (fidelity and bias review)
-- D. أن ينشر بنك نجم البيانات
+- D. أن ينشر بنك نجم البيانات، مع طريقة التوليد (generation method)، حتى يختبرها الجمهور (public) بحثًا عن تسرّب الخصوصية (privacy leaks)
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -165,7 +165,7 @@
 
 - A. تدريبًا أسرع للنموذج (model)
 - B. اختيار مقياس للعدالة (fairness)
-- C. تشفير البيانات المخزّنة
+- C. تشفير البيانات المخزّنة (encrypting data at rest)
 - D. تتبّع أي بيانات، وعبر أي تحويلات، أنتجت نسخة معينة من النموذج (model)، بما يدعم قابلية إعادة الإنتاج (reproducibility) وإثبات الحقوق (proving rights) والاستجابة لأخطاء البيانات أو طلبات المحو (erasure requests)
 
 <details><summary>الإجابة (Answer)</summary>
@@ -176,10 +176,10 @@
 
 **5. وفقًا لرأي EDPB رقم 28/2024 (EDPB Opinion 28/2024)، فإن نموذج (model) الذكاء الاصطناعي (AI) المدرَّب على بيانات شخصية (personal data):**
 
-- A. مجهول الهوية (anonymous) دائمًا لأنه يخزّن المعاملات (parameters) فقط
+- A. مجهول الهوية (anonymous) دائمًا لأنه يخزّن المعاملات (parameters) فقط، فيمكن مشاركته وإعادة استخدامه دون أي تقييم (assessment) إضافي
 - B. ليس مجهول الهوية (anonymous) أبدًا
 - C. لا يمكن افتراض أنه مجهول الهوية (anonymous)؛ يجب تقييم (evaluation) إخفاء الهوية (anonymity) حالة بحالة (case by case)، بما في ذلك احتمال استخراج بيانات شخصية (likelihood of extracting personal data) منه
-- D. مجهول الهوية (anonymous) إذا قال المقدّم ذلك في شروطه
+- D. مجهول الهوية (anonymous) إذا قال المقدّم ذلك في شروط الاستخدام (terms of use)، ولا يلزم البنك أن يتحقق من هذا الادعاء بنفسه
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -336,10 +336,10 @@
 
 **1. دُرّب نموذج الائتمان (credit model) في بنك نجم فقط على المتقدمين (applicants) الذين وافقت عليهم السياسة القديمة (old policy). أي مشكلة يصفها هذا بالشكل الأكثر مباشرة؟**
 
-- A. التحيّز التجميعي (Aggregation bias)
+- A. التحيّز التجميعي (Aggregation bias)، حيث يُلائَم نموذج واحد مجموعات تختلف فيها العلاقة بين المدخلات (inputs) والنتائج (outcomes)
 - B. تحيّز الاختيار (مشكلة استدلال المرفوضين (reject inference)): النتائج مفقودة للمتقدمين (applicants) الذين رفضتهم السياسة القديمة (old policy)
-- C. استخراج النموذج (model extraction)
-- D. ضوضاء الوسوم (label noise) من المُوسِّمين (annotators)
+- C. استخراج النموذج (model extraction)، حيث يعيد طرف خارجي (outsider) بناء نسخة من النموذج بالاستعلام عنه مرات كثيرة
+- D. ضوضاء الوسوم (label noise) من المُوسِّمين (annotators) الذين يطبقون إرشادات الوسم (labelling guidelines) بصورة غير متسقة (inconsistently) من حالة إلى أخرى (case to case)
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -362,9 +362,9 @@
 
 **3. تزيل دانة "الجنس (sex)" من مدخلات نموذج الائتمان (credit model)، لكن معدلات الموافقة (approval rates) للنساء تظل أقل بكثير. ما التفسير (explanation) الأرجح؟**
 
-- A. النموذج (model) عادل (fair) تمامًا والنساء أكثر خطورة
-- B. قيم SHAP خاطئة
-- C. إزالة خاصية (feature) تزيد التحيّز (bias) دائمًا
+- A. النموذج (model) عادل (fair) تمامًا والنساء مقترضات (borrowers) أكثر خطورة ببساطة، فلا حاجة إلى أي إجراء آخر
+- B. قيم SHAP خاطئة، لأنها لا تستطيع إظهار أثر خاصية (feature) أُزيلت من النموذج (model)
+- C. إزالة خاصية (feature) تزيد التحيّز (bias) دائمًا، لذا ينبغي أن يعيد الفريق إضافة الجنس (sex) إلى مدخلات (inputs) النموذج (model) كلها ويعيد تدريبه (retrain)
 - D. خصائص أخرى تعمل كمتغيرات بديلة (as proxies) للجنس (sex)، وقد يكون التحيّز التاريخي (historical bias) موجودًا في الوسوم (labels)
 
 <details><summary>الإجابة (Answer)</summary>
@@ -375,10 +375,10 @@
 
 **4. أيٌّ مما يلي مثال على تخفيف التحيّز (bias mitigation) أثناء التدريب؟**
 
-- A. إعادة ترجيح (reweighting) أمثلة التدريب من المجموعات (groups) ناقصة التمثيل (under-represented)
+- A. إعادة ترجيح (reweighting) أمثلة التدريب من المجموعات (groups) ناقصة التمثيل (under-represented) قبل تدريب النموذج (model) عليها
 - B. إضافة قيد أو عقوبة للعدالة (fairness constraint or penalty) إلى هدف تدريب النموذج (model's training objective)
-- C. تحديد عتبات درجات مختلفة لكل مجموعة (different score thresholds per group) بعد التدريب
-- D. جمع مزيد من البيانات عن المتقدمين الشباب (young applicants)
+- C. تحديد عتبات درجات مختلفة لكل مجموعة (different score thresholds per group) بعد التدريب، لتقريب معدلات الموافقة (approval rates per group)
+- D. جمع مزيد من البيانات عن المتقدمين الشباب (young applicants) وإعادة تشغيل التدريب (training run) بالعينة (sample) الأكبر (larger)
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -388,10 +388,10 @@
 
 **5. في مشروع وسم (labelling project) لبناء (build) مجموعة تقييم المساعد (copilot evaluation set)، أي ضابط (control) يحسّن جودة الوسوم (label quality) أكثر من غيره؟**
 
-- A. إرشادات مكتوبة مع أمثلة محلولة (worked examples) وحالات حدّية (edge cases)، ومُوسِّمون مؤهَّلون (Qualified annotators)، وقياس الاتفاق بين المُوسِّمين (inter-annotator agreement) مع الفصل في الخلافات (adjudication)
-- B. استخدام أرخص منصة جمهور (crowd platform) متاحة
-- C. ترك كل مُوسِّم (annotator) يعرّف "المذكرة الجيدة" بنفسه
-- D. وسم الحالات السهلة فقط (Labelling only the easy cases)
+- A. إرشادات مكتوبة مع أمثلة محلولة (worked examples) وحالات حدّية (edge cases)، ومُوسِّمون مؤهَّلون (qualified annotators)، وقياس الاتفاق (agreement) بينهم
+- B. استخدام أرخص منصة جمهور (crowd platform) متاحة، بمرور واحد ودون فحص لجودة المُوسِّمين (annotators) أو الاتفاق (agreement) بينهم أو وضوح التعليمات (written instructions) المعطاة لهم
+- C. ترك كل مُوسِّم (annotator) يعرّف "المذكرة الجيدة" بنفسه، حتى تعكس الوسوم (labels) نطاقًا واسعًا من الآراء
+- D. وسم الحالات السهلة فقط (easy cases)، وترك المذكرات (memos) الحدّية (borderline) خارج مجموعتي التدريب (training) والاختبار (test)
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -568,10 +568,10 @@
 
 **1. يُبلغ نموذج الائتمان (credit model) في بنك نجم عن دقة 94% على مجموعة اختبار (test set) تعثّر فيها 6% من المتقدمين (applicants). ما أفضل استجابة؟**
 
-- A. اعتمده؛ 94% ممتازة
-- B. اطلب من الفريق رفع الدقة (accuracy) إلى 99%
+- A. اعتمده؛ 94% ممتازة لنموذج التعثّر (default model)، ولن تفعل مقاييس إضافية مثل الضبط والاستدعاء (precision and recall) أو المعايرة (calibration) سوى تأخير الإطلاق (launch) دون تغيير القرار (decision)
+- B. اطلب من الفريق رفع الدقة (accuracy) إلى 99% قبل أن تعيد وحدة التحقق (validation unit) مراجعة النموذج
 - C. اطلب الضبط والاستدعاء (precision and recall) وAUC والمعايرة (calibration)، إجمالًا وحسب المجموعة (by group)، لأن نموذجًا (model) يتنبأ بـ "لا تعثّر" للجميع سيحقق 94% أيضًا
-- D. استبدل مجموعة الاختبار (test set) بمجموعة التدريب (training set)
+- D. استبدل مجموعة الاختبار (test set) بمجموعة التدريب (training set)، حتى تُقاس الدقة المعلنة على بيانات أكثر
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -581,9 +581,9 @@
 
 **2. في المثال المحلول (worked example)، معدل موافقة (approval rate) المجموعة A (Group A) هو 54% ومعدل المجموعة B (Group B) هو 36%، بينما معدلات الإيجابيات الصحيحة (true positive rates) متساوية تقريبًا. أي عبارة صحيحة؟**
 
-- A. التكافؤ الديموغرافي (demographic parity) وتكافؤ الفرص (equal opportunity) كلاهما متحقق
-- B. لا يمكن حساب أي مقياس عدالة (fairness metric) دون قيم SHAP
-- C. تكافؤ الفرص (equal opportunity) لا يتحقق لكن التكافؤ الديموغرافي (demographic parity) يتحقق
+- A. التكافؤ الديموغرافي (demographic parity) وتكافؤ الفرص (equal opportunity) كلاهما متحقق، فلا حاجة إلى أي عمل معالجة (remediation)
+- B. لا يمكن حساب أي مقياس عدالة (fairness metric) دون قيم SHAP، فعلى الفريق أن يبني أداة تفسير (explainer) أولًا
+- C. تكافؤ الفرص (equal opportunity) لا يتحقق لكن التكافؤ الديموغرافي (demographic parity) يتحقق، والفجوة أوسع مما تسمح به قاعدة الأخماس الأربعة (four-fifths rule)
 - D. التكافؤ الديموغرافي (demographic parity) لا يتحقق (النسبة ≈ 0.67) لكن تكافؤ الفرص (equal opportunity) متحقق تقريبًا
 
 <details><summary>الإجابة (Answer)</summary>
@@ -595,8 +595,8 @@
 **3. تتضمن بيانات تدريب نموذج ائتمان (credit model) مؤشر "أُحيل إلى التحصيل (sent to collections)" لا يُضبط إلا بعد تعثّر العميل. يحقق النموذج (model) درجات ممتازة في الاختبار (testing) وأداءً ضعيفًا في الإنتاج (production). ما السبب الأرجح؟**
 
 - A. تسرّب البيانات (Data leakage)
-- B. التحيّز التجميعي (Aggregation bias)
-- C. استخراج النموذج (model extraction)
+- B. التحيّز التجميعي (Aggregation bias)، بدمج مجموعات مختلفة في نموذج واحد
+- C. استخراج النموذج (model extraction)، بنسخ النموذج عبر الاستعلام عنه
 - D. قلة سيناريوهات الفريق الأحمر (red-team scenarios)
 
 <details><summary>الإجابة (Answer)</summary>
@@ -607,10 +607,10 @@
 
 **4. بموجب إرشادات إدارة مخاطر النماذج (model risk management guidance) مثل SR 11-7، ما الذي يتطلبه "التحدي الفعّال (effective challenge)"؟**
 
-- A. أن يعيد فريق التطوير (development) تشغيل اختباراته الخاصة
-- B. مراجعة نقدية من أطراف موضوعية وكفؤة تملك نفوذًا كافيًا لفرض معالجة القيود
-- C. أن يعتمد المورّد (vendor) نموذجه بنفسه
-- D. اجتماعًا سنويًا واحدًا لمجلس الإدارة (board)
+- A. أن يعيد فريق التطوير (development) تشغيل اختباراته الخاصة ويرفع النتائج إلى مدير المشروع (project manager) وفريقه
+- B. مراجعة نقدية من أطراف موضوعية وكفؤة (objective, competent parties) تملك نفوذًا كافيًا لفرض معالجة القيود
+- C. أن يعتمد المورّد (vendor) نموذجه بنفسه ويشارك الشهادة (certificate) مع فريق المشتريات (procurement) في البنك
+- D. اجتماعًا سنويًا واحدًا لمجلس الإدارة (board)، يعرض فيه مالك النموذج (model owner) حوادث السنة
 
 <details><summary>الإجابة (Answer)</summary>
 

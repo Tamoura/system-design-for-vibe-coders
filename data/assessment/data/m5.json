@@ -45,7 +45,7 @@
           "Pick the threshold that maximises F1 instead, since it balances precision and recall evenly"
         ],
         "ar": [
-          "تعرض تكلفة التوظيف (hiring) والعتبة الأعلى (higher threshold) وقاعدة المرحلة الثانية (second-stage rule)، وتترك القرار لأصحاب العمل (the business)",
+          "تعرض تكلفة التوظيف (hiring) والعتبة الأعلى وقاعدة المرحلة الثانية (second-stage rule)، وتترك القرار لأصحاب العمل",
           "تُبقي العتبة الأقل تكلفة (cheapest threshold) رغم ذلك، لأن نموذج التكلفة (cost model) يحسب بالفعل كل تنبيه يُراجَع",
           "تعود إلى العتبة الافتراضية (default threshold) 0.5، نقطة البداية المحايدة لأي درجة احتمالية (probability score)",
           "تختار العتبة التي تُعظّم مقياس F1 (F1 score) بدلًا من ذلك، لأنه يوازن بين الدقة (precision) والاستدعاء (recall) بالتساوي"
@@ -76,7 +76,7 @@
           "زيادة التداخل (overlap) بين المقاطع ثابتة الحجم (fixed-size chunks) لكي يظهر كل صف من الجدول مرتين",
           "تصغير المقاطع الثابتة (fixed chunks) لكي يطابق كل منها السؤال بدقة أكبر (more precisely)",
           "استرجاع (retrieve) 20 مقطعًا بدل 5 لكي يصل نصفا الجدول كلاهما إلى النموذج اللغوي الكبير (LLM)",
-          "التقطيع حسب القسم والبند (section and clause)، مع إبقاء الجداول كاملة (tables whole) وإضافة مسار العناوين (heading path) في البداية"
+          "التقطيع حسب القسم والبند، مع إبقاء الجداول كاملة (tables whole) وإضافة مسار العناوين (heading path)"
         ]
       },
       "a": 3,

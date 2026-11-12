@@ -95,7 +95,7 @@
    },
    "o": {
     "en": [
-     "Approve it, because the grader already ran every command and checked every path.",
+     "Approve it, because the grader already ran every command and checked every path in the file",
      "Approve it, because B beat A in her pair of runs, which shows that the file helps.",
      "Have her prune lines the agent does not need and move must-never rules to hooks.",
      "Approve it once she marks all twelve Never rules IMPORTANT, so that the agent obeys every one."

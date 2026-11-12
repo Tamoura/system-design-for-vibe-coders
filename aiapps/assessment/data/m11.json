@@ -11,14 +11,14 @@
       },
       "o": {
         "en": [
-          "When the planner, writer and editor would look tidy as separate boxes on a diagram",
-          "When a second agent could redo the first one's work, to double-check the answer",
+          "When the planner, writer and editor would look tidy as separate boxes on the team diagram",
+          "When a second agent could redo the first one's work, to double-check the first answer",
           "When Sara's team needs nine documents checked and no check needs another's result",
           "When Sara's team needs one document checked in nine steps, each using the last result"
         ],
         "ar": [
           "حين تبدو أدوار المخطِّط (planner) والكاتب (writer) والمحرِّر (editor) مرتبة كصناديق منفصلة (separate boxes) في الرسم (diagram)",
-          "حين يستطيع وكيل ثانٍ (second agent) أن يعيد عمل الأول (redo the work) تحقّقًا مزدوجًا (double-check) من الإجابة",
+          "حين يستطيع وكيل ثانٍ (second agent) أن يعيد عمل الأول (redo the work) تحقّقًا مزدوجًا (double-check) من الإجابة النهائية",
           "حين يحتاج فريق سارة إلى فحص (checking) تسعة مستندات (documents) ولا يعتمد أي فحص على نتيجة غيره (another's result)",
           "حين يحتاج فريق سارة إلى فحص (checking) مستند (document) واحد في تسع خطوات، وتعتمد كل خطوة على نتيجة سابقتها (the last result)"
         ]
@@ -96,13 +96,13 @@
       "o": {
         "en": [
           "Keep the team for v1, since a second pair of eyes is worth some extra cost and time",
-          "Keep the team for v1 and add a second reviewer to catch the two shared misses",
-          "Ship one agent for v1 but drop the code checks, since the reviewer did that job",
+          "Keep the team for v1 and add a second reviewer to catch the two shared misses in testing",
+          "Ship one agent for v1 but drop the code checks, since the reviewer did that job well",
           "Ship one agent for v1 with the same contract and checks, then revisit the team"
         ],
         "ar": [
-          "إبقاء الفريق (team) في الإصدار الأول (v1) لأن عينًا ثانية (second pair of eyes) تستحق بعض التكلفة والوقت",
-          "إبقاء الفريق (team) في الإصدار الأول (v1) وإضافة مراجِع ثانٍ (second reviewer) يلتقط الخطأين المشتركين بينهما",
+          "إبقاء الفريق (team) في الإصدار الأول (v1) لأن عينًا ثانية (second pair of eyes) تستحق بعض التكلفة والوقت الإضافيين",
+          "إبقاء الفريق (team) في الإصدار الأول (v1) وإضافة مراجِع ثانٍ (second reviewer) يلتقط الخطأين المشتركين بينهما في الاختبار",
           "إطلاق وكيل واحد (one agent) في الإصدار الأول (v1) مع حذف الفحوص في الشيفرة (code checks) لأن المراجِع كان يؤدي هذه المهمة",
           "إطلاق وكيل واحد (one agent) في الإصدار الأول (v1) بالعقد (contract) والفحوص نفسها، ثم إعادة النظر في الفريق"
         ]

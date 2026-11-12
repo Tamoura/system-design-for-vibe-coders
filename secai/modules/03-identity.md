@@ -221,7 +221,7 @@ After the stuffing wave, Noura and Ali write the **Najm Authentication Standard 
 **4. During an authorised test, Mariam notices that the session cookie value is the same before and after login. What is the risk, and what is the fix?**
 
 - A. Session fixation; issue a new session ID at login and at every privilege change
-- B. Cross-site scripting; add a Content Security Policy
+- B. Cross-site scripting; add a Content Security Policy and encode all user-supplied text on output
 - C. Credential stuffing; add a CAPTCHA
 - D. No risk, as long as the cookie is `HttpOnly`
 
@@ -233,14 +233,14 @@ After the stuffing wave, Noura and Ali write the **Najm Authentication Standard 
 
 **5. Tariq's team wants customers to change their registered phone number in Najm Mobile with one tap, to cut contact-centre calls. What should Noura's team recommend?**
 
-- A. Allow it, because the customer is already signed in
-- B. Allow it with step-up using an existing strong factor, a notification to the old number, and a hold before the new number can authorise payees or limit changes
+- A. Allow it with step-up using an existing strong factor, a notification to the old number, and a hold before the new number can authorise payees or limit changes
+- B. Allow it, because the customer is already signed in
 - C. Remove phone changes from the app and require a branch visit for everyone
 - D. Allow it, with an SMS code sent to the new number
 
 <details><summary>Answer</summary>
 
-**B.** The phone number controls every later code and alert, so changing it is a classic takeover step. Step-up, old-channel notification and a cooling-off period keep it convenient but hard to abuse. D only proves control of the new number, which an attacker has; C over-corrects. (🟡 Going deeper; 🏛️ In practice.)
+**A.** The phone number controls every later code and alert, so changing it is a classic takeover step. Step-up, old-channel notification and a cooling-off period keep it convenient but hard to abuse. D only proves control of the new number, which an attacker has; C over-corrects. (🟡 Going deeper; 🏛️ In practice.)
 
 </details>
 
@@ -474,7 +474,7 @@ Noura and Tariq publish the **Najm Identity and Token Standard v1**. Every new c
 
 - A. A check of the `aud` (audience) claim
 - B. A stronger signing algorithm
-- C. Encryption of the token payload
+- C. Encryption of the token payload, so clients cannot read its claims
 - D. A longer token lifetime
 
 <details><summary>Answer</summary>
@@ -486,7 +486,7 @@ Noura and Tariq publish the **Najm Identity and Token Standard v1**. Every new c
 **2. Which flow should Najm Mobile use to sign customers in and obtain tokens?**
 
 - A. The implicit grant, because mobile apps cannot keep secrets
-- B. The resource owner password grant, so the login screen stays inside the app
+- B. The resource owner password grant, so the login screen stays inside the app and the user never sees a browser window
 - C. The authorization code flow with PKCE through the system browser, with a claimed HTTPS redirect
 - D. Client credentials, with a secret embedded in the app
 
@@ -498,14 +498,14 @@ Noura and Tariq publish the **Najm Identity and Token Standard v1**. Every new c
 
 **3. In a code review, Ali finds `jwt.decode(token, key, algorithms=[jwt.get_unverified_header(token)["alg"]])`. Why is it dangerous?**
 
-- A. It is slow, because it parses the header twice
-- B. The token chooses its own verification algorithm, which opens the door to `alg: none` and algorithm-confusion attacks
+- A. The token chooses its own verification algorithm, which opens the door to `alg: none` and algorithm-confusion attacks
+- B. It is slow, because it parses the header twice
 - C. It does not check the token's lifetime
-- D. Headers are encrypted and cannot be read before verification
+- D. Headers are encrypted and cannot be read before verification, so the call fails with an error for every token that is valid, even tokens Najm issued itself
 
 <details><summary>Answer</summary>
 
-**B.** The algorithm must come from your configuration, never from input the attacker controls. C is not the core flaw (PyJWT checks `exp` when present, though you should also require it), and D is false: headers are only encoded. (🟡 Going deeper.)
+**A.** The algorithm must come from your configuration, never from input the attacker controls. C is not the core flaw (PyJWT checks `exp` when present, though you should also require it), and D is false: headers are only encoded. (🟡 Going deeper.)
 
 </details>
 
@@ -514,7 +514,7 @@ Noura and Tariq publish the **Najm Identity and Token Standard v1**. Every new c
 - A. By the `email` claim, because it is human-readable
 - B. By the user's display name
 - C. By the `iss` + `sub` pair, linking to an existing account only after the user signs in to both
-- D. By whichever account was most recently active
+- D. By whichever account was most recently active, since that is the one the user is likely to want
 
 <details><summary>Answer</summary>
 
@@ -779,7 +779,7 @@ After Mariam's test, Ali and Tariq write the **SME Portal Access-Control Matrix 
 
 **1. During an authorised test, Mariam changes `/api/invoices/10233/pdf` to `/api/invoices/10234/pdf` and downloads another company's invoice. Which fix addresses the root cause?**
 
-- A. Replace sequential invoice numbers with random UUIDs
+- A. Replace sequential invoice numbers with random UUIDs, because attackers cannot guess them, and keep serving any invoice whose UUID the caller supplies
 - B. Load the invoice filtered by the company from the user's session, deny by default, and check the central policy before returning it
 - C. Hide invoice numbers in the user interface
 - D. Add rate limiting to the invoice endpoint
@@ -805,7 +805,7 @@ After Mariam's test, Ali and Tariq write the **SME Portal Access-Control Matrix 
 
 **3. `PATCH /api/users/me` saves `{"displayName": "Ali", "role": "owner"}`, and Ali becomes an Owner. What is the BEST fix?**
 
-- A. Make the role field read-only in the user interface
+- A. Make the role field read-only in the user interface and hide it from the profile form for everyone except administrators
 - B. Remove the `role` column from the database
 - C. Validate requests against an explicit allowlist of fields each role may edit, and reject anything else
 - D. Log the change and review it monthly
@@ -831,7 +831,7 @@ After Mariam's test, Ali and Tariq write the **SME Portal Access-Control Matrix 
 
 **5. Najm Assist has a tool `get_transactions(account_id)`, and the model supplies `account_id` from the conversation. What must the tool do?**
 
-- A. Trust the model, because the system prompt tells it to use only the customer's accounts
+- A. Trust the model, because the system prompt tells it to use only the customer's accounts and the model has followed that rule in testing
 - B. Check that the account belongs to the customer identified by the session or token before returning anything
 - C. Return the data but mask the account number
 - D. Ask the model to confirm the account ID twice

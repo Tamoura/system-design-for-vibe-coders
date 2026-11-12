@@ -590,7 +590,7 @@ In `NOTES.md`, say which observations came from the mock and which from a real m
 - A. No; your code runs it, or refuses to
 - B. Yes; the API ran it before replying
 - C. No; Anthropic's servers run it once you send a result
-- D. Yes; the SDK runs it for tools you declared
+- D. Yes; the SDK runs it for the tools you declared
 
 <details><summary>Answer</summary>
 

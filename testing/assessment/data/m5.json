@@ -11,7 +11,7 @@
    },
    "o": {
     "en": [
-     "Put the hours where past releases logged the most defects, whatever each one would cost them",
+     "Put the hours where past releases logged the most defects, whatever they would cost",
      "Put the hours where a defect is likeliest and would hurt customers most if it escaped",
      "Put the hours only where the most money moves, however unlikely a defect is there",
      "Spread the hours evenly over every area, so that no area is left untested"
@@ -20,7 +20,7 @@
      "وضع الساعات حيث سجّلت الإصدارات السابقة (past releases) أكثر العيوب (defects)، مهما بلغت كلفة كل منها (whatever each would cost)",
      "وضع الساعات حيث يكون العيب (defect) أرجح (likeliest) وأشد ضررًا (hurt most) على العملاء إن أفلت (escaped)",
      "وضع الساعات فقط حيث يتحرك أكبر قدر من المال (most money moves)، مهما قلّ احتمال وجود عيب (however unlikely) هناك",
-     "توزيع الساعات بالتساوي (evenly) على كل منطقة (every area)، حتى لا تبقى منطقة دون اختبار (untested)"
+     "توزيع الساعات بالتساوي (evenly) على كل منطقة (every area)، حتى لا تبقى أي منطقة دون اختبار (untested)"
     ]
    },
    "a": 1,
@@ -68,14 +68,14 @@
    "o": {
     "en": [
      "Explore the cut-off with transfers sent either side of 15:00 on several days to discover how value dates are assigned",
-     "Explore the daily limit with totals just under and just over 50,000.00 QAR to discover which sums the checks accept and refuse",
+     "Explore the daily limit with totals either side of 50,000.00 QAR to discover which sums the checks refuse",
      "Explore the saved cut-off scenarios with fresh data to confirm that each one still passes today, one by one",
      "Explore the whole Najm Mobile app with every device and network to discover any defect before the release"
     ],
     "ar": [
      "استكشاف (explore) وقت الإغلاق (cut-off) بتحويلات مُرسلة على جانبي الساعة 15:00 في عدة أيام (several days) لاكتشاف كيفية تحديد تاريخ القيمة (value date)",
      "استكشاف (explore) الحد اليومي (daily limit) بمجاميع أقل بقليل وأكثر بقليل من 50,000.00 QAR لاكتشاف المجاميع التي تقبلها الفحوص (checks)",
-     "استكشاف (explore) سيناريوهات وقت الإغلاق المحفوظة (saved scenarios) ببيانات جديدة (fresh data) للتأكد من أنها ما زالت تنجح (still passes) واحدًا واحدًا",
+     "استكشاف (explore) سيناريوهات وقت الإغلاق المحفوظة (saved scenarios) ببيانات جديدة للتأكد من أنها ما زالت تنجح واحدًا واحدًا",
      "استكشاف (explore) تطبيق نجم للهاتف (Najm Mobile) كله على كل جهاز وشبكة (every device and network) لاكتشاف أي عيب (defect) قبل الإصدار"
     ]
    },

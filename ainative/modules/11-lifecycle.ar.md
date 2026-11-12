@@ -210,7 +210,7 @@ END
 **3. تقول مسودة مراجعة ما بعد الحادثة (postmortem draft) «تأثر نحو 500 عميل» ⁦("About 500 customers were affected")⁩. ويُظهر سجل الحادثة (the incident record) 41 حدث `transfer.rejected` ولا يذكر عدد العملاء. كيف ينبغي أن تتغير الجملة؟ ⁦(How should the sentence change?)⁩**
 
 - A. تُستبدل بعبارة «41 حدث رفض» ("41 rejection events")
-- B. تبقى، لأن 500 تقدير معقول (a reasonable estimate)
+- B. تبقى، لأن 500 تقدير معقول (a reasonable estimate) في مثل هذه الحالات (in such cases)
 - C. تُقرَّب إلى الأسفل فتصير 41 عميلًا (Round it down to 41 customers)
 - D. تبقى مع إضافة «تقريبًا» قبل 500 (add "approximately")
 
@@ -494,7 +494,7 @@ One thing I will do differently:
 **2. يقول صف في الخط الزمني «10:15، بدأ مهندس موثوقية المواقع المناوب التحقيق (E3)» ⁦("10:15, the on-call SRE began investigating (E3)")⁩. ويضع السجل E3 عند 10:14: تم الإقرار بالتنبيه (the page was acknowledged). ماذا تفعل؟ ⁦(What do you do?)⁩**
 
 - A. تستخدم وقت السجل وصياغته لذلك الصف (the record's time and wording)
-- B. تُبقي الصف، لأن 10:15 تبعد دقيقة واحدة فقط (only a minute off)
+- B. تُبقي الصف، لأن 10:15 تبعد دقيقة واحدة فقط (only a minute off) عن الوقت المسجَّل (the recorded time)
 - C. تسقط E3 من الخط الزمني لأنه محل خلاف (since it is disputed)
 - D. تطلب من المساعد أن يشرح التباين (explain the discrepancy)
 
@@ -507,7 +507,7 @@ One thing I will do differently:
 **3. يقول الناقد لديك (Your critic says) «مدة صلاحية العرض البالغة خمس دقائق طويلة جدًا» ⁦("the quote lifetime of five minutes is too long")⁩. ويحدد `fx.py` 60 ثانية (defines 60 seconds). ماذا تفعل؟ ⁦(What do you do?)⁩**
 
 - A. الناقد محق في الجوهر، فاقصّر مدة صلاحية العرض (right in spirit, so shorten the quote lifetime)
-- B. الناقد غير موثوق، فأسقط خطوة الناقد (unreliable, so drop the critic step)
+- B. الناقد غير موثوق، فأسقط خطوة الناقد (unreliable, so drop the critic step) من السجل (from the record)
 - C. لا شيء، لأن الاعتراض لا يحتاج إلى دليل ليُسجَّل (needs no evidence to be recorded)
 - D. أساء الناقد قراءة رقم: سجّله وارفضه (misread a number: record it and reject it)
 
@@ -535,7 +535,7 @@ One thing I will do differently:
 - A. كل جملة في الوثائق الثلاث صحيحة (Every sentence in the three documents is true)
 - B. لا ادعاء يختبره المُقيِّم يناقض الشيفرة أو السجل (No claim the grader tests contradicts the code or the record)
 - C. لم يعد المراجع البشري بحاجة إلى قراءة الوثائق (no longer needs to read the documents)
-- D. أثبت المُقيِّم أن الناقد كان مساعد ذكاء اصطناعي حقيقيًا (that the critic was a real AI assistant)
+- D. أثبت المُقيِّم أن الناقد كان مساعد ذكاء اصطناعي حقيقيًا (that the critic was a real AI assistant) وليس تمرينًا شكليًا (and not a formality)
 
 <details><summary>الإجابة</summary>
 

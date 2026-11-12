@@ -11,14 +11,14 @@
       },
       "o": {
         "en": [
-          "Prompt craft: wording her requests so that the agent flags the risks in its own changes",
+          "Prompt craft: wording her requests so that the agent flags the risks in its own changes without being asked",
           "Debugging: forming hypotheses about how her own system fails, then testing the cheapest first",
           "Reading code: working out what the old code was for, by asking why it is the way it is",
-          "Testing: deciding which result would show that the new comparison is wrong"
+          "Testing: deciding which result would show that the new comparison is wrong, then checking for it"
         ],
         "ar": [
           "صياغة الطلبات (prompt craft): كتابة طلباتها بحيث ينبّه الوكيل (agent) إلى مخاطر تغييراته بنفسه",
-          "تصحيح الأخطاء (debugging): صياغة فرضيات (hypotheses) عن كيف يفشل نظامها هي، ثم اختبار أرخصها أولًا",
+          "تصحيح الأخطاء (debugging): صياغة فرضيات (hypotheses) عن فشل نظامها، ثم اختبار أرخصها أولًا",
           "قراءة الشيفرة (reading code): معرفة غاية الشيفرة القديمة (old code) بسؤال لماذا هي على هذا النحو",
           "الاختبار (testing): تحديد أي نتيجة ستُظهر أن المقارنة الجديدة (new comparison) خاطئة"
         ]
@@ -46,7 +46,7 @@
         ],
         "ar": [
           "اشتراط أربع دوال اختبار جديدة على الأقل (at least four new test functions) في ملف الاختبار، فلا يمرّ ملف فارغ (empty file)",
-          "إضافة حارس (guard) يشغّل مجموعة الاختبارات (test suite) القائمة كلها قبل عمل الأداة (tool) وبعده (before and after)",
+          "إضافة حارس (guard) يشغّل مجموعة الاختبارات (test suite) القائمة كلها قبل عمل الأداة (tool) وبعده (before and after) في كل مرة",
           "تشغيل اختبارات الأداة (tool) ثلاث مرات (three times)، واعتبار المهمة ناجحة (passed) فقط إذا نجحت كل مرة منها بلا استثناء",
           "تشغيل الاختبارات على الشيفرة الحقيقية (real code)، ثم على نسخة غُيّرت قاعدتها (copy with a changed rule) فيجب أن تفشل"
         ]

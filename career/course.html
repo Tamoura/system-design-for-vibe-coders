@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="career-source" content="4bfe0382415f86f8">
+<meta name="career-source" content="f504dd1898b9d52d">
 <meta name="description" content="From Graduate to Hired — a free, bilingual course for computer science, data science and computer engineering graduates: the skills employers check in the AI era, role paths through the course library, portfolio, CV, interviews, offers and the first 90 days.">
 <title>From Graduate to Hired — Complete Course</title>
 <style>
@@ -1092,10 +1092,10 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>2. Which interview topic is tested for data roles almost regardless of employer?</strong></p>
 <ul>
-<li>A. SQL</li>
-<li>B. Kubernetes administration</li>
-<li>C. Mobile app design</li>
-<li>D. Capture-the-flag challenges</li>
+<li>A. SQL queries, including joins and grouping</li>
+<li>B. Kubernetes administration and cluster upgrades</li>
+<li>C. Mobile app screen design and navigation</li>
+<li>D. Capture-the-flag challenges in web security</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -1831,10 +1831,10 @@ How I tested it:
 
 <p><strong>3. Huda is stuck on a failing data-import test and wants to ask Dana for help in the team chat. Which message is most useful?</strong></p>
 <ul>
-<li>A. &quot;<code>pytest tests/test_import.py</code> fails with <code>KeyError: &#39;amount&#39;</code> on the March file. I expected the header row to be skipped. The file has a header and the January file passes. Has the March export format changed?&quot;</li>
-<li>B. &quot;The import tests are broken again since this morning&#39;s merge, and I have no idea why. Can you take a look when you have time today?&quot;</li>
-<li>C. &quot;Is there any documentation for the import code? I want to understand how the March file is read before I touch anything in it.&quot;</li>
-<li>D. &quot;I think the import code has a bug in how it reads the amount column. Should I rewrite the whole module from scratch?&quot;</li>
+<li>A. &quot;<code>pytest tests/test_import.py</code> fails with <code>KeyError: &#39;amount&#39;</code> on the March file. I expected the header row to be skipped. The January file passes. Has the March export format changed?&quot;</li>
+<li>B. &quot;The import tests are broken again since this morning&#39;s merge, and I have no idea why. They passed last night, and nothing I changed touches that code. Can you take a look when you have time today?&quot;</li>
+<li>C. &quot;Is there any documentation for the import code? I want to understand how the March file is read before I touch anything in it. I do not want to guess and break the January import as well.&quot;</li>
+<li>D. &quot;I think the import code has a bug in how it reads the amount column. Should I rewrite the whole module from scratch? I can start this afternoon.&quot;</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -2154,9 +2154,9 @@ before writing the implementation.
 <p><strong>2. Mohammed is invited to a Sadeem Pay technical interview. The invitation does not mention AI tools. What should he do?</strong></p>
 <ul>
 <li>A. Ask the recruiter in writing whether AI tools are allowed in each round, and follow the answer</li>
-<li>B. Use AI tools in every round, since the invitation does not forbid them</li>
-<li>C. Avoid mentioning AI entirely, so the question never comes up in the process</li>
-<li>D. Use an AI assistant quietly in a second window during the live round</li>
+<li>B. Use AI tools in every round, since the invitation does not forbid them and many teams expect it</li>
+<li>C. Avoid mentioning AI entirely, so the question never comes up at any point in the process</li>
+<li>D. Use an AI assistant quietly in a second window while the interviewer is not looking</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -2178,7 +2178,7 @@ before writing the implementation.
 <p><strong>4. Huda wants to learn how database transactions work, and needs them for her project. According to this lesson, how should she use her AI tool?</strong></p>
 <ul>
 <li>A. Let the agent write all the transaction code, since it is faster and she can read it later</li>
-<li>B. Write it herself first, using the tool to explain, quiz her and review her code</li>
+<li>B. Write it herself first, using the tool afterwards to explain, quiz her and review her code</li>
 <li>C. Avoid AI tools entirely for the rest of the project, so that she learns everything the hard way</li>
 <li>D. Copy a transaction example from the tool&#39;s chat window and adjust it until the tests pass</li>
 </ul>
@@ -2189,10 +2189,10 @@ before writing the implementation.
 
 <p><strong>5. Which pull request note best shows the honest, useful disclosure this lesson recommends?</strong></p>
 <ul>
-<li>A. &quot;Written entirely by me, from scratch, over the weekend. Every line is my own work and I am happy to explain any of it.&quot;</li>
+<li>A. &quot;Written entirely by me, from scratch, over the weekend. Every line is my own work and I am happy to explain any part of it to the reviewers.&quot;</li>
 <li>B. &quot;An agent drafted the routes and tests; I wrote the validation rules, reviewed every change and added a test for a race I found.&quot;</li>
-<li>C. &quot;Sorry, I used AI for most of this. I know it is not ideal and I will try to write more of it myself next time.&quot;</li>
-<li>D. &quot;AI-generated with an agent. I have not had time to go through all of it, so please check it carefully before merging.&quot;</li>
+<li>C. &quot;Sorry, I used AI for most of this. I know it is not ideal and I will try to write more of it myself next time, I promise.&quot;</li>
+<li>D. &quot;AI-generated with an agent. I have not had time to go through all of it, so please check it very carefully before merging this.&quot;</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -2526,10 +2526,10 @@ def health():
 <section class="sec sec-quiz"><h2>✍️ Check yourself</h2>
 <p><strong>1. During the game day, Salem restarts the server and all of Omar&#39;s bookings disappear. Which production question did Omar&#39;s team miss?</strong></p>
 <ul>
-<li>A. How does it get deployed, and is the deploy repeatable?</li>
-<li>B. What does it cost, and is there a budget alert?</li>
-<li>C. Which dependencies does it use, and are they pinned?</li>
-<li>D. Where does the data live?</li>
+<li>A. How does it get deployed, and is the deploy repeatable from scratch?</li>
+<li>B. What does it cost per month, and is there a budget alert?</li>
+<li>C. Which dependencies does it use, and are their versions pinned?</li>
+<li>D. Where does the data live, and does it survive a server restart?</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -2538,10 +2538,10 @@ def health():
 
 <p><strong>2. In an interview, Tariq asks Mohammed: &quot;What happens to your app if the database goes down?&quot; Which answer is strongest for a junior?</strong></p>
 <ul>
-<li>A. &quot;That won&#39;t happen. I use a managed database from a large provider that keeps it up.&quot;</li>
+<li>A. &quot;That won&#39;t happen. I use a managed database from a large provider that keeps it running for me all the time.&quot;</li>
 <li>B. &quot;<code>/health</code> fails, users get an error page and my uptime check alerts me. No retries yet; I&#39;d add a limited one.&quot;</li>
-<li>C. &quot;I would migrate the whole app to Kubernetes so it can self-heal when anything fails.&quot;</li>
-<li>D. &quot;I would ask a senior engineer on the team, because they would know the answer.&quot;</li>
+<li>C. &quot;I would migrate the whole app to Kubernetes so it can self-heal when anything fails, including the database itself.&quot;</li>
+<li>D. &quot;I would ask a senior engineer on the team, because they would know the answer and I would not want to guess.&quot;</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -2562,10 +2562,10 @@ def health():
 
 <p><strong>4. Huda&#39;s model runs well in a notebook. Which change would most move it toward production, from a data role&#39;s point of view?</strong></p>
 <ul>
-<li>A. Add more charts and explanations so the team can follow every step of the notebook</li>
-<li>B. Retrain the model with more features and tune it until accuracy is clearly higher</li>
-<li>C. Make it a pipeline that reruns safely, checks data quality and alerts on source changes</li>
-<li>D. Share the notebook file with the team by email so that anyone can run it when needed</li>
+<li>A. Add more charts and explanations so the team can follow every step of the notebook as it runs</li>
+<li>B. Retrain the model with more features and tune it until accuracy is clearly higher on the test set</li>
+<li>C. Make it a pipeline that reruns safely, checks data quality and alerts the team on source changes</li>
+<li>D. Share the notebook file with the team by email so that anyone can run it when they need it</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -2577,7 +2577,7 @@ def health():
 <li>A. Go ahead, because more infrastructure always impresses interviewers at a bank like Najm</li>
 <li>B. Remove deployment entirely and show only the code, since juniors are not expected to operate anything</li>
 <li>C. Add the infrastructure, but leave it out of the README so interviewers are not distracted by it</li>
-<li>D. Keep it simple: a deploy, logs, a health check, backups and a rollback she can explain</li>
+<li>D. Keep it simple: a deploy, logs, a health check, backups and a rollback that she can explain</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -2986,9 +2986,9 @@ def health():
 <p><strong>3. Mohammed is applying for a frontend role at a regional government digital agency. Which portfolio addition is most likely to stand out?</strong></p>
 <ul>
 <li>A. A bilingual Arabic and English interface with right-to-left layout and basic accessibility</li>
-<li>B. A second backend for the same app, rewritten in a different programming language</li>
-<li>C. A Kubernetes cluster with autoscaling to host his small static portfolio site</li>
-<li>D. A longer, more detailed list of JavaScript libraries in his CV skills section</li>
+<li>B. A second backend for the same app, rewritten in a different programming language and a new database</li>
+<li>C. A Kubernetes cluster with autoscaling to host his small static portfolio site and a staging copy</li>
+<li>D. A longer, more detailed list of JavaScript libraries in the skills section of his CV</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -3433,10 +3433,10 @@ def health():
 <section class="sec sec-quiz"><h2>✍️ Check yourself</h2>
 <p><strong>1. Tariq asks Reem, &quot;How do you know your assistant&#39;s answers are right?&quot; Which answer is strongest?</strong></p>
 <ul>
-<li>A. &quot;I tried about ten typical questions by hand, and every answer I checked looked right to me.&quot;</li>
-<li>B. &quot;I use one of the strongest models available, and its published benchmark scores are very high.&quot;</li>
-<li>C. &quot;The coding agent wrote tests while building it, and they all pass, so the answers are fine.&quot;</li>
-<li>D. &quot;A golden set of 52 cases scored against a written quality bar: 44 pass, failures grouped by cause.&quot;</li>
+<li>A. &quot;I tried about ten typical questions by hand, and every answer I checked looked right to me, so I shipped it.&quot;</li>
+<li>B. &quot;I use one of the strongest models available, and its published benchmark scores are very high on every list.&quot;</li>
+<li>C. &quot;The coding agent wrote tests while building it, and they all pass, so the answers are fine to ship.&quot;</li>
+<li>D. &quot;A golden set of 52 cases scored against a written quality bar: 44 pass, failures grouped by cause and logged.&quot;</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -3446,9 +3446,9 @@ def health():
 <p><strong>2. Huda is unsure whether to apply for &quot;ML engineer&quot; or &quot;AI application engineer&quot; roles. What best describes the difference?</strong></p>
 <ul>
 <li>A. ML engineers mostly train, deploy and monitor models; AI application engineers build features on existing models</li>
-<li>B. They are the same job with different names, so the duties and interviews are identical</li>
-<li>C. AI application engineers need a PhD, while ML engineers can be hired from a bootcamp</li>
-<li>D. ML engineers focus on statistics and never write production code; AI engineers write it all</li>
+<li>B. They are the same job with different names, so the duties, the interviews and the salary are identical in every company</li>
+<li>C. AI application engineers need a PhD, while ML engineers can be hired straight from a short bootcamp course</li>
+<li>D. ML engineers focus on statistics and never write production code; AI engineers are expected to write all of it</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -3469,10 +3469,10 @@ def health():
 
 <p><strong>4. Reem wants to switch her app to a newer model. What should she do first?</strong></p>
 <ul>
-<li>A. Switch straight away, since newer models are always better at every task</li>
-<li>B. Rewrite all her prompts from scratch so they suit the new model&#39;s style</li>
-<li>C. Run her golden set on both models, including Arabic and hostile cases, and compare</li>
-<li>D. Ask in an online forum which model most developers currently think is best</li>
+<li>A. Switch straight away, since newer models are always better at every task and users expect them to be</li>
+<li>B. Rewrite all her prompts from scratch so they suit the new model&#39;s style, before testing anything</li>
+<li>C. Run her golden set on both models, including Arabic and hostile cases, and compare the results</li>
+<li>D. Ask in an online forum which model most developers currently think is best, then use that one</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -3481,8 +3481,8 @@ def health():
 
 <p><strong>5. Which proof would most convince a hiring manager for a junior AI application engineer role?</strong></p>
 <ul>
-<li>A. A long list of AI courses completed, each with a certificate of completion linked</li>
-<li>B. Screenshots and a screen recording of a polished chat interface answering questions</li>
+<li>A. A long list of AI courses completed, each with a certificate of completion linked on her CV</li>
+<li>B. Screenshots and a screen recording of a polished chat interface answering a few easy questions</li>
 <li>C. A deployed feature with a golden set, scores, injection tests and an explained README</li>
 <li>D. A large social media following built from posting regular AI tips and content</li>
 </ul>
@@ -3897,10 +3897,10 @@ LEFT JOIN spend s ON s.customer_id = n.customer_id;
 <section class="sec sec-quiz"><h2>✍️ Check yourself</h2>
 <p><strong>1. Huda&#39;s query doubled spending for customers with two accounts. What is the most reliable fix?</strong></p>
 <ul>
-<li>A. Divide each customer&#39;s total by the number of accounts that customer holds</li>
-<li>B. Aggregate transactions per customer before the join, then check one case by hand</li>
+<li>A. Divide each customer&#39;s total by the number of accounts that customer holds, after running the join</li>
+<li>B. Aggregate transactions per customer before the join, then check one case by hand in the raw data</li>
 <li>C. Add <code>DISTINCT</code> to the final <code>SELECT</code> so that duplicate rows are removed</li>
-<li>D. Drop the accounts table from the query and sum the transactions table alone</li>
+<li>D. Drop the accounts table from the query and sum the transactions table alone, with no join at all</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -3909,10 +3909,10 @@ LEFT JOIN spend s ON s.customer_id = n.customer_id;
 
 <p><strong>2. Which proof best shows readiness for a junior data engineer role?</strong></p>
 <ul>
-<li>A. A notebook with a top-ten score in a public modelling competition on clean data</li>
-<li>B. A CV skills section listing every major data tool, from Spark to Airflow and dbt</li>
+<li>A. A notebook with a top-ten score in a public modelling competition, run on clean data only</li>
+<li>B. A CV skills section listing every major data tool, from Spark to Airflow and dbt, in alphabetical order</li>
 <li>C. A scheduled pipeline from a messy source that reruns without duplicates and has quality tests</li>
-<li>D. A certificate of completion from a well-known online data engineering course</li>
+<li>D. A certificate of completion from a well-known online data engineering course, with a high mark</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -3921,10 +3921,10 @@ LEFT JOIN spend s ON s.customer_id = n.customer_id;
 
 <p><strong>3. Omar is curious about data. He enjoys explaining why a number changed far more than building pipelines. Which role should he explore first?</strong></p>
 <ul>
-<li>A. Data analyst</li>
-<li>B. Data engineer</li>
-<li>C. Research scientist</li>
-<li>D. Platform engineer</li>
+<li>A. Data analyst on a business team</li>
+<li>B. Data engineer on a data team</li>
+<li>C. Research scientist in a lab</li>
+<li>D. Platform engineer on a cloud team</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -3945,10 +3945,10 @@ LEFT JOIN spend s ON s.customer_id = n.customer_id;
 
 <p><strong>5. Mohammed wants a data portfolio project for a regional bank. Which choice is best?</strong></p>
 <ul>
-<li>A. Ask a friend who works at a bank for a small sample of real customer records</li>
-<li>B. Use synthetic or openly licensed data, and say so in a short data-handling note</li>
-<li>C. Scrape public profiles from social media to build a realistic customer dataset</li>
-<li>D. Use real customer data but delete the names and account numbers first</li>
+<li>A. Ask a friend who works at a bank for a small sample of real customer records, just for the project</li>
+<li>B. Use synthetic or openly licensed data, and say so in a short data-handling note in the project README</li>
+<li>C. Scrape public profiles from social media to build a realistic customer dataset of thousands of people</li>
+<li>D. Use real customer data but delete the names and account numbers first, then keep the rest as it is</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -4376,10 +4376,10 @@ LEFT JOIN spend s ON s.customer_id = n.customer_id;
 <section class="sec sec-quiz"><h2>✍️ Check yourself</h2>
 <p><strong>1. Yousef has passed a cloud associate exam but has only ever created resources by clicking in the console. What should he build first to show readiness for a platform role?</strong></p>
 <ul>
-<li>A. A second associate certification, this time from a different cloud provider</li>
-<li>B. A larger, more complex environment built by clicking through the console</li>
-<li>C. A repo that rebuilds a small environment from code, with a pipeline and an alert</li>
-<li>D. A detailed blog post summarising every topic covered by the exam he passed</li>
+<li>A. A second associate certification, this time from a different cloud provider, in the same area</li>
+<li>B. A larger, more complex environment built by clicking through the console, step by step</li>
+<li>C. A repo that rebuilds a small environment from code, with a pipeline and a failure alert</li>
+<li>D. A detailed blog post summarising every topic covered by the exam he passed last month</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -4401,9 +4401,9 @@ LEFT JOIN spend s ON s.customer_id = n.customer_id;
 <p><strong>3. Why do regulated employers like Najm value infrastructure as code and pipelines beyond speed?</strong></p>
 <ul>
 <li>A. Because automation removes the need for any human review or approval of changes</li>
-<li>B. Because regulators require every bank to use one specific infrastructure tool</li>
-<li>C. Because resources created through code are not billed by the cloud provider</li>
-<li>D. Because every change is reviewed and recorded, which is the audit evidence they need</li>
+<li>B. Because regulators require every bank to use one specific infrastructure tool from one vendor</li>
+<li>C. Because resources created through code are not billed by the cloud provider at the same rate</li>
+<li>D. Because every change is reviewed and recorded, which is the audit evidence they need to show</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -4424,10 +4424,10 @@ LEFT JOIN spend s ON s.customer_id = n.customer_id;
 
 <p><strong>5. Yousef worries his embedded and networking background is irrelevant to cloud roles. What is the best advice?</strong></p>
 <ul>
-<li>A. Leave it off his CV and focus only on listing his cloud certifications</li>
-<li>B. Switch his target to embedded software engineering, where it counts more</li>
-<li>C. Put it in front with a layer-by-layer troubleshooting write-up of a real problem</li>
-<li>D. Leave it out of his CV and mention it only if an interviewer asks directly</li>
+<li>A. Leave it off his CV and focus only on listing his cloud certifications, as recruiters expect</li>
+<li>B. Switch his target to embedded software engineering, where it counts for more in the market</li>
+<li>C. Put it in front with a layer-by-layer troubleshooting write-up of a real problem he solved</li>
+<li>D. Leave it out of his CV and mention it only if an interviewer asks him about it directly</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -4727,10 +4727,10 @@ LEFT JOIN spend s ON s.customer_id = n.customer_id;
 
 <p><strong>3. Huda is building a data capstone. Which &quot;hard question&quot; best fits the data role?</strong></p>
 <ul>
-<li>A. &quot;Which chart library makes my dashboard look the most modern to reviewers?&quot;</li>
-<li>B. &quot;How many rows can my notebook load into memory before my laptop runs out?&quot;</li>
+<li>A. &quot;Which chart library makes my dashboard look the most modern to reviewers on first sight?&quot;</li>
+<li>B. &quot;How many rows can my notebook load into memory before my laptop runs out of memory?&quot;</li>
 <li>C. &quot;Yesterday&#39;s file arrived twice and today&#39;s arrived late. What does my dashboard show?&quot;</li>
-<li>D. &quot;Can I add a login page and user accounts to the dashboard before I apply?&quot;</li>
+<li>D. &quot;Can I add a login page and user accounts to the dashboard before I apply for jobs?&quot;</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -9263,7 +9263,7 @@ Next week&#39;s top three: SQL mock x2; data-modelling mock; book Sadeem Pay scr
 <li>A. Both are baseline skills, because each of them appears in more than three of the ten ads</li>
 <li>B. Git is a baseline skill and Docker a differentiator, so he proves Git first and Docker second</li>
 <li>C. Both are differentiators, since neither of them appears in every single ad he collected</li>
-<li>D. Docker is the real baseline, because newer tools always matter more to employers than old ones</li>
+<li>D. Docker is the real baseline, because newer tools matter more to employers than old ones</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -9285,7 +9285,7 @@ Next week&#39;s top three: SQL mock x2; data-modelling mock; book Sadeem Pay scr
 <p><strong>3. Aisha opens Omar&#39;s recruiter screen with &quot;Tell me about yourself.&quot; Which answer fits the lesson&#39;s 60-second shape best?</strong></p>
 <ul>
 <li>A. Graduate; built and deployed a booking API with tests; wants backend work; drawn by Najm&#39;s rotations</li>
-<li>B. A five-minute walk through his degree, year by year, ending with his final-year grades and contest record</li>
+<li>B. A five-minute walk through his degree, year by year, ending with his final-year grades</li>
 <li>C. A list of the eleven technologies on his CV, so that she can match him to the advert quickly</li>
 <li>D. &quot;It&#39;s all on my CV. Is there anything specific on it that you would like me to explain further?&quot;</li>
 </ul>
@@ -9297,9 +9297,9 @@ Next week&#39;s top three: SQL mock x2; data-modelling mock; book Sadeem Pay scr
 <p><strong>4. Mohammed&#39;s report generator worked last week and fails today. There are 30 small commits in between, and one test reproduces the failure. What is the fastest reliable way to find the cause?</strong></p>
 <ul>
 <li>A. Read every diff since last week from the top, in order, until something looks suspicious</li>
-<li>B. Revert all 30 commits, then re-apply them one at a time by hand and rerun the app each time</li>
+<li>B. Revert all 30 commits, then re-apply them one by one by hand and rerun the app each time</li>
 <li>C. Run <code>git bisect</code> over the 30 commits, using the failing test to mark each commit good or bad</li>
-<li>D. Rewrite the generator from scratch, since tracing the cause through history would take too long</li>
+<li>D. Rewrite the generator from scratch, since tracing the cause through history takes too long</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -9308,10 +9308,10 @@ Next week&#39;s top three: SQL mock x2; data-modelling mock; book Sadeem Pay scr
 
 <p><strong>5. Reem has nine pinned repositories: six course assignments, two old tutorials and, sixth in the list, her capstone. A reviewer will spend about a minute on her profile. What should she change first?</strong></p>
 <ul>
-<li>A. Add more repositories, so that her profile looks as active and broad as possible to reviewers</li>
+<li>A. Add more repositories, so that her profile looks as active and broad as possible</li>
 <li>B. Fill the contribution graph with small commits, so the profile looks busy every day</li>
 <li>C. Pin four to six repositories, capstone first, and unpin the coursework and old tutorials</li>
-<li>D. Make every repository private except the capstone, and delete the README files from the rest</li>
+<li>D. Make every repository private but the capstone, and delete the READMEs from the rest</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -9368,8 +9368,8 @@ Next week&#39;s top three: SQL mock x2; data-modelling mock; book Sadeem Pay scr
 
 <p><strong>10. Twenty minutes into a live-coding round, Huda is stuck on how to handle three repeated transactions inside one time window. What should she do?</strong></p>
 <ul>
-<li>A. Go quiet and keep typing, so the interviewer does not notice that she is stuck</li>
-<li>B. Delete her code and start a different, cleverer approach without saying why</li>
+<li>A. Go quiet and keep typing, so the interviewer does not notice that she is stuck at all</li>
+<li>B. Delete her code and start a different, cleverer approach without saying why she is doing it</li>
 <li>C. Tell the interviewer the problem is unfair and ask to move on to another question</li>
 <li>D. Say what she is thinking, try a small example by hand, and take any hint well</li>
 </ul>
@@ -9380,9 +9380,9 @@ Next week&#39;s top three: SQL mock x2; data-modelling mock; book Sadeem Pay scr
 
 <p><strong>11. Huda&#39;s tracker shows four technical rounds in a month, all live SQL exercises, and no final-round invitations. According to the funnel table, what should she change first?</strong></p>
 <ul>
-<li>A. Rewrite her CV and target list, since the early stages of her search are failing</li>
+<li>A. Rewrite her CV and target list, since the early stages of her search are clearly failing</li>
 <li>B. Practise timed live SQL mocks in that exact format, then go back to her gap list</li>
-<li>C. Retarget to software engineering, where she suspects interviews will be easier</li>
+<li>C. Retarget to software engineering, where she suspects the interviews will be easier for her</li>
 <li>D. Stop applying for a month and finish two new portfolio projects before trying again</li>
 </ul>
 <details><summary>Answer</summary>
@@ -9392,10 +9392,10 @@ Next week&#39;s top three: SQL mock x2; data-modelling mock; book Sadeem Pay scr
 
 <p><strong>12. Mohammed must choose one capstone for a full-stack role. Which idea is strongest as proof?</strong></p>
 <ul>
-<li>A. A music-streaming site clone rebuilt from a video course, with his own colour scheme</li>
-<li>B. A weather dashboard on a public API, with animated icons and a five-day forecast view</li>
+<li>A. A music-streaming site clone rebuilt from a video course, with his own colour scheme added</li>
+<li>B. A weather dashboard on a public API, with animated icons and a five-day forecast view added</li>
 <li>C. Pitch booking for his old football club, where two captains could grab the last slot</li>
-<li>D. A to-do list app with drag and drop, six colour themes and a polished mobile layout</li>
+<li>D. A to-do list app with drag and drop, six colour themes and a polished mobile layout view</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -9417,9 +9417,9 @@ Next week&#39;s top three: SQL mock x2; data-modelling mock; book Sadeem Pay scr
 <p><strong>14. Najm&#39;s written offer to Omar is conditional on degree attestation and a background check. He also has a final round at a telecom next week. What should he do now?</strong></p>
 <ul>
 <li>A. Keep the telecom process open and don&#39;t resign or decline until the conditions clear</li>
-<li>B. Cancel the telecom final today, because a written offer means the job is now certain</li>
-<li>C. Resign from his part-time job at once, so that he can start at Najm whenever they ask</li>
-<li>D. Tell the telecom he has accepted elsewhere, to save everyone&#39;s time in the meantime</li>
+<li>B. Cancel the telecom final today, because a written offer means that the job is now certain</li>
+<li>C. Resign from his part-time job at once, so that he can start at Najm whenever they ask him</li>
+<li>D. Tell the telecom that he has accepted elsewhere, to save everyone&#39;s time in the meantime</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -9428,7 +9428,7 @@ Next week&#39;s top three: SQL mock x2; data-modelling mock; book Sadeem Pay scr
 
 <p><strong>15. In a SQL exercise, Dana asks Huda for each customer&#39;s most recent transaction. Which approach is correct?</strong></p>
 <ul>
-<li>A. <code>GROUP BY customer_id</code> with <code>MAX(amount)</code>, since the largest amount is usually the latest one</li>
+<li>A. <code>GROUP BY customer_id</code> with <code>MAX(amount)</code>, since the largest amount is usually the latest</li>
 <li>B. <code>ROW_NUMBER()</code> partitioned by customer, ordered by time descending, keeping row 1 of each</li>
 <li>C. <code>SELECT DISTINCT customer_id</code> from transactions, ordered by transaction time descending</li>
 <li>D. Order the whole table by transaction time descending, then take <code>LIMIT 1</code> for the answer</li>
@@ -9440,10 +9440,10 @@ Next week&#39;s top three: SQL mock x2; data-modelling mock; book Sadeem Pay scr
 
 <p><strong>16. At his six-week check-in, Khalid asks Yousef to show what he has produced. His notes and drafts are scattered across his laptop, phone and email, and he cannot find most of them. Which habit from the course fixes this most directly?</strong></p>
 <ul>
-<li>A. Writing a summary from memory the night before each check-in, so Khalid sees the highlights</li>
-<li>B. Sending Khalid his course certificates and study hours as evidence of the effort he has put in</li>
+<li>A. Writing a summary from memory the night before each check-in so Khalid sees the highlights</li>
+<li>B. Sending Khalid his course certificates and study hours as evidence of his effort</li>
 <li>C. One career folder holding every artefact, each named by lesson, such as <code>0.3-starting-audit</code></li>
-<li>D. Keeping notes wherever is handy and collecting them into one portfolio at the end of the course</li>
+<li>D. Keeping notes wherever is handy and collecting them into one portfolio at the end</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -9464,7 +9464,7 @@ Next week&#39;s top three: SQL mock x2; data-modelling mock; book Sadeem Pay scr
 
 <p><strong>18. Mohammed asks an agent to fix one validation bug. The diff fixes it and also &quot;tidies&quot; five unrelated files. What should he do?</strong></p>
 <ul>
-<li>A. Merge it all, since tidier code is better and the agent&#39;s summary says tests pass</li>
+<li>A. Merge it all, since tidier code is better and the agent&#39;s summary says that tests pass</li>
 <li>B. Ask the agent to tidy the rest of the repository too, so that the style is consistent</li>
 <li>C. Merge it, then mention the extra changes in the pull request after it has been merged</li>
 <li>D. Keep only the requested fix, reject the unasked changes, and run the tests himself</li>
@@ -9490,8 +9490,8 @@ Next week&#39;s top three: SQL mock x2; data-modelling mock; book Sadeem Pay scr
 <ul>
 <li>A. Wait for the next promotion cycle and hope Khalid notices how many tickets he closed</li>
 <li>B. Ask Khalid for a small, ambiguous problem, write a design note, then ship and watch it</li>
-<li>C. Earn an architecture certificate first, so his profile shows he is ready for design work</li>
-<li>D. Volunteer for every clear ticket in the backlog, to prove he can handle twice the workload</li>
+<li>C. Earn an architecture certificate first, so his profile shows he is ready for design</li>
+<li>D. Volunteer for every clear ticket in the backlog to prove he can take twice the work</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -9549,8 +9549,8 @@ Next week&#39;s top three: SQL mock x2; data-modelling mock; book Sadeem Pay scr
 <p><strong>25. Omar fixes a bug where refunds were rounded the wrong way. What should he add before opening the pull request?</strong></p>
 <ul>
 <li>A. A regression test for the rounding that fails before the fix and passes after it</li>
-<li>B. A code comment asking reviewers to check the rounding by hand when they have time</li>
-<li>C. A note in the README saying the rounding bug is fixed and should not come back</li>
+<li>B. A code comment asking reviewers to check the rounding by hand when they find some time</li>
+<li>C. A note in the README saying that the rounding bug is fixed and should not come back</li>
 <li>D. Nothing more, since he tested it manually and the refund now looks right on screen</li>
 </ul>
 <details><summary>Answer</summary>
@@ -9598,7 +9598,7 @@ Next week&#39;s top three: SQL mock x2; data-modelling mock; book Sadeem Pay scr
 <ul>
 <li>A. Ask her buddy to share his production credentials, so she can deploy the change herself</li>
 <li>B. Bundle the next ten changes into one release, so she only has to wait for approval once</li>
-<li>C. Complain in the team channel that the approval process is outdated bureaucracy</li>
+<li>C. Complain in the team channel that the approval process is outdated bureaucracy for new hires</li>
 <li>D. Learn why segregation of duties exists, follow it, and suggest improvements later</li>
 </ul>
 <details><summary>Answer</summary>
@@ -9609,8 +9609,8 @@ Next week&#39;s top three: SQL mock x2; data-modelling mock; book Sadeem Pay scr
 <p><strong>30. Mohammed pastes the text of his designer-template CV into a plain text file. His skills are missing and his job titles appear next to the wrong dates. What should he do?</strong></p>
 <ul>
 <li>A. Move to a one-column, text-only layout, then run the plain-text paste test again</li>
-<li>B. Keep the template, since recruiters always see the original design, not the text</li>
-<li>C. Add his skills a second time in small white text, so the parser finds them</li>
+<li>B. Keep the template, since recruiters always see the original design, not the plain text</li>
+<li>C. Add his skills a second time in small white text, so that the parser finds them as well</li>
 <li>D. Convert the CV into an image, so that its layout cannot be scrambled by any parser</li>
 </ul>
 <details><summary>Answer</summary>
@@ -9620,10 +9620,10 @@ Next week&#39;s top three: SQL mock x2; data-modelling mock; book Sadeem Pay scr
 
 <p><strong>31. Omar has one week of study time on his software path. Which plan leaves the most proof an employer could check?</strong></p>
 <ul>
-<li>A. Watch a twelve-hour framework course from start to finish and take notes on every video</li>
-<li>B. Read about five new frameworks so he can list them all on his CV by the end of the week</li>
+<li>A. Watch a twelve-hour framework course start to finish and take notes on each video</li>
+<li>B. Read about five new frameworks so he can list all of them on his CV by Friday</li>
 <li>C. Add login, test that user A cannot see user B&#39;s bookings, deploy it, then document it</li>
-<li>D. Solve fifty more algorithm problems, since his problem count is the number on his CV</li>
+<li>D. Solve fifty more algorithm problems, since his problem count is what goes on his CV</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -9669,7 +9669,7 @@ Next week&#39;s top three: SQL mock x2; data-modelling mock; book Sadeem Pay scr
 <p><strong>35. Reem wants an agent to add a currency-conversion step to her expense app. Which request keeps her in charge?</strong></p>
 <ul>
 <li>A. &quot;Add currency conversion to the app and make sure everything works properly at the end.&quot;</li>
-<li>B. &quot;Rewrite the backend to support every currency, and then update any tests that start failing.&quot;</li>
+<li>B. &quot;Rewrite the backend to support every currency, and then update any tests that fail.&quot;</li>
 <li>C. &quot;Round to 2 places, error on missing rates, keep existing tests; show me test cases first.&quot;</li>
 <li>D. &quot;Do whatever you think is best for currencies, then give me a short summary afterwards.&quot;</li>
 </ul>

@@ -250,7 +250,7 @@ def test_silence_is_admitted():
 
 **4. يشغّل فريق 5,000 اختبار آلي (automated tests) وتنجح كلها. ماذا يستطيع أن يدّعي بأمانة (honestly claim)؟**
 
-- A. لم يبقَ أي عيب، لأن 5,000 اختبار مستقل نجحت
+- A. لم يبقَ أي عيب (no defect remains)، لأن 5,000 اختبار مستقل نجحت (5,000 independent tests passed)
 - B. لا مخاطرة في الإصدار (the release carries no risk)، لأن شيئًا لم يفشل في الاختبار
 - C. أصبح كل متطلب مُثبَتًا صحته (proven correct) بواسطة المجموعة
 - D. لم تظهر أي حالات فشل في الحالات التي شُغِّلت (no failures appeared in the cases run)؛ أما الحالات الأخرى فغير مختبَرة (other cases are untested)
@@ -263,10 +263,10 @@ def test_silence_is_admitted():
 
 **5. يفتتح نجم أسيست (Najm Assist) إجاباته (answers) بطرق مختلفة في تشغيلات مختلفة (different runs)، مع أن الحقائق متطابقة (the facts match). أي اختبار هو الأنسب (most appropriate)؟**
 
-- A. مقارنة نص الإجابة كاملًا بنص مخزَّن (a stored string)، كلمةً بكلمة
+- A. مقارنة نص الإجابة كاملًا (the full answer text) بنص مخزَّن (a stored string)، كلمةً بكلمة (word for word)
 - B. التأكيد أن الحقيقة الأساسية (the key fact) تظهر وأن وثيقة الحدود (limits document) مذكورة مصدرًا
-- C. تشغيله مرة واحدة وحفظ المخرجات لقطةً (a snapshot) للمقارنة لاحقًا
-- D. التأكيد فقط أن الإجابة ليست فارغة (not empty)، أيًّا كان ما تقوله
+- C. تشغيله مرة واحدة (run it once) وحفظ المخرجات لقطةً (a snapshot) للمقارنة لاحقًا (to compare later)
+- D. التأكيد فقط أن الإجابة ليست فارغة (not empty)، أيًّا كان ما يقوله النموذج (whatever the model says)
 
 <details><summary>الإجابة</summary>
 
@@ -533,10 +533,10 @@ def test_every_half_cent_fee_rounds_up(amount, expected):
 
 **5. أُصلح عيب الحد (The limit bug). أي اختبار انحدار هو الأقوى؟**
 
-- A. التأكيد أن `check_transfer` يمكن استدعاؤها دون خطأ
+- A. التأكيد أن `check_transfer` يمكن استدعاؤها دون خطأ (without an error)
 - B. التأكيد أن 1,000 تمر وأن 1,000.01 تفشل عند إرسال 49,000 اليوم (49,000 sent today)
 - C. التأكيد أن تغطية الأسطر (line coverage) لـ`check_transfer` لم تنخفض
-- D. التأكيد أن تحويل 10 QAR يُقبل في يوم جديد
+- D. التأكيد أن تحويل 10 QAR يُقبل في يوم جديد (accepted on a new day)
 
 <details><summary>الإجابة</summary>
 
@@ -834,7 +834,7 @@ def test_international_fee_rounds_half_a_cent_up():
 
 - A. نسخة من عملاء الإنتاج في الشهر الماضي (last month's production customers)
 - B. كشوف حسابات حقيقية تُلصق في مساعد لإخفاء هويتها (anonymise them)
-- C. تفاصيل بضعة عملاء، تُستخدم لهذه الجلسة فقط
+- C. تفاصيل بضعة عملاء، تُستخدم لهذه الجلسة فقط (this session only)
 - D. حسابات اصطناعية (Synthetic accounts) تُولَّد لهذا الغرض
 
 <details><summary>الإجابة</summary>
@@ -846,9 +846,9 @@ def test_international_fee_rounds_half_a_cent_up():
 **4. يعطي مساعدٌ (An assistant) ندى (Nada) اختبارًا ينجح على العيّنة النظيفة. ماذا عليها أن تفعل قبل أن تسلّمه (before she submits it)؟**
 
 - A. أن تُظهر فشله (show it failing) حين يكون عيب ذو صلة مفعّلًا (a relevant bug is on)، وأن تشرحه
-- B. أن تشغّله مرتين إضافيتين لتتأكد من أنه ينجح في كل مرة (passes every time)
-- C. أن تطلب من المساعد (the assistant) تأكيد أن الاختبار صحيح
-- D. أن تتحقق من أنه يرفع نسبة التغطية (coverage percentage) للوحدة التي يستهدفها
+- B. أن تشغّله مرتين إضافيتين (twice more) لتتأكد من أنه ينجح في كل مرة (passes every time)
+- C. أن تطلب من المساعد (the assistant) تأكيد أن الاختبار صحيح (the test is correct) وكامل
+- D. أن تتحقق من أنه يرفع نسبة التغطية (coverage percentage) للوحدة التي يستهدفها (the module it targets)
 
 <details><summary>الإجابة</summary>
 

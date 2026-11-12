@@ -201,7 +201,7 @@ def freeze_card_tool(args: dict, session) -> str:
 
 **1. يسرد أول نموذج تهديدات (threat model) أعدّه علي لأداة تجميد البطاقة (freeze-card tool) «المخترقين» ("hackers") و«حجب الخدمة الموزّع» ("DDoS") و«هلوسة الذكاء الاصطناعي» ("AI hallucination") و«تسرّب البيانات» ("data leak"). ما الخطوة التالية الأكثر فائدة (MOST useful next step)؟**
 
-- A. إضافة تهديداتٍ (add threats) من قائمةٍ عامة (public list) حتى يبلغ عددها 50 على الأقل (at least 50)
+- A. إضافة تهديداتٍ (add threats) من قائمةٍ عامة (public list of threats) حتى يبلغ عددها 50 على الأقل (at least 50)، كي لا تفوتنا فئةٌ شائعة أبدًا (so that no common category is ever missed)
 - B. رسم مخطط تدفق البيانات مع حدود الثقة (data flow diagram with trust boundaries)، ثم تطبيق STRIDE على كل عنصرٍ وعبور (each element and crossing)
 - C. مطالبة مزوّد النموذج اللغوي (LLM vendor) بشهادته الأمنية (security certificate)
 - D. منح كل تهديدٍ مدرج درجةً باستخدام CVSS (score with CVSS)
@@ -243,7 +243,7 @@ def freeze_card_tool(args: dict, session) -> str:
 - A. انتحال الهوية والإنكار (Spoofing and repudiation)
 - B. العبث والإفصاح عن المعلومات وحجب الخدمة (Tampering, information disclosure and denial of service)
 - C. الستة جميعًا (All six)
-- D. رفع الصلاحيات فقط (Elevation of privilege only)
+- D. رفع الصلاحيات فقط (Elevation of privilege only)، لأن الخمسة الأخرى لا تنطبق على الأسهم بين المكوّنات (the other five do not apply to arrows between components)
 
 <details><summary>الإجابة</summary>
 
@@ -467,7 +467,7 @@ flowchart RL
 
 **2. يستدعي فحص الفواتير (invoice check) في بوابة الشركات الصغيرة (SME Portal) خدمةَ سياسات (policy service). وحين تنتهي مهلة الخدمة (times out)، تُرجع الشيفرة `True` كي لا يُحجب العملاء. ما التغيير الصحيح (correct change)؟**
 
-- A. زيادة المهلة (increase the timeout) كي تقل مرات الإخفاق (fails less often)، مع الاستمرار في إرجاع `True`
+- A. زيادة المهلة (increase the timeout) كي تقل مرات الإخفاق (fails less often)، مع الاستمرار في إرجاع `True` للطلبات التي تنتهي مهلتها رغم ذلك (for requests that still time out)
 - B. تخزين الإجابة الأخيرة مؤقتًا إلى الأبد (cache the last answer forever)
 - C. إرجاع `False` عند أي خطأ، وتسجيل الإخفاق وعدّه (log and count the failure)، ومعالجة التوافر بالتكرار الاحتياطي (fix availability with redundancy)
 - D. إزالة فحص السياسة (policy check) كي تصبح الصفحات أسرع (make pages faster)
@@ -481,7 +481,7 @@ flowchart RL
 **3. أي عبارةٍ تصف انعدام الثقة (zero trust) على أفضل وجه (best describes) كما عرّفه NIST SP 800-207؟**
 
 - A. لا يُسمح لأي مستخدمٍ أبدًا بالوصول إلى أي شيء (no user is ever allowed access)
-- B. منتج جدار حماية (firewall product) يحجب كل حركة الإنترنت (internet traffic)
+- B. منتج جدار حماية (firewall product) يحجب كل حركة الإنترنت (internet traffic) من الخارج ويترك كل طلب داخلي يمر دون فحوص إضافية (internal requests pass without further checks) على الإطلاق
 - C. الوثوق بالحركة الداخلية (internal traffic) وفحص الحركة الخارجية (external traffic)
 - D. لا ثقة ضمنية مبنية على موقع الشبكة (no implicit trust based on network location)؛ وكل طلبٍ إلى موردٍ تتم مصادقته وتفويضه باستخدام السياسة (using policy)
 
@@ -494,9 +494,9 @@ flowchart RL
 **4. لدى نجم أسيست ثلاثة ضوابط (three controls) ضد تجميد البطاقة الخطأ: فحص الملكية (ownership check)، وشاشة التأكيد (confirmation screen)، وتنبيه التدقيق (audit alert). وتأخذ الثلاثة جميعًا معرّف البطاقة (card ID) من استدعاء الأداة (tool call) الذي يصدره النموذج دون مقارنته بالجلسة (session). ما نقطة الضعف (weakness)؟**
 
 - A. الطبقات ليست مستقلة (not independent)، لذا تمر قيمةٌ واحدة متلاعبٌ بها (one manipulated value) عبر الثلاثة
-- B. الطبقات قليلةٌ جدًا (too few layers)؛ أضف رابعة (add a fourth)
-- C. يجب إزالة تنبيه التدقيق (audit alert) لتبسيط التصميم (simplify the design)
-- D. لا شيء؛ ثلاث طبقاتٍ تكفي (three layers are enough)
+- B. الطبقات قليلةٌ جدًا (too few layers)؛ أضف طبقةً رابعة (add a fourth layer)، كتأكيدٍ ثانٍ بالبريد الإلكتروني (a second confirmation by email)
+- C. يجب إزالة تنبيه التدقيق (audit alert) لتبسيط التصميم (simplify the design) وتقليل الضجيج الذي يتلقاه فريق المناوبة (the noise the on-call team receives)
+- D. لا شيء؛ ثلاث طبقاتٍ تكفي (three layers are enough)، لأن كل طبقة ضابطٌ مستقل روجع منفردًا (each one is a separate control reviewed on its own)
 
 <details><summary>الإجابة</summary>
 
@@ -720,10 +720,10 @@ flowchart TD
 
 **1. في قائمة علي المتراكمة (backlog) ثغرةٌ بدرجة CVSS 9.8 في مكتبةٍ لا تستخدمها إلا مهمةٌ دفعية داخلية (internal batch job) بلا مستمِعٍ شبكي (network listener)، وثغرةٌ بدرجة CVSS 7.5 في جهاز VPN المكشوف على الإنترنت (internet-facing VPN appliance) المدرج في كتالوج KEV من CISA (CISA's KEV catalogue). أيهما يأتي أولًا، ولماذا؟**
 
-- A. ثغرة 9.8، لأن درجتها أعلى (higher score)
-- B. كلتاهما معًا (both at once)، لأن كلتيهما فوق 7.0
+- A. ثغرة 9.8 (the 9.8)، لأن درجتها أعلى (higher score) والدرجة الأعلى تعني دائمًا إصلاحًا أكثر إلحاحًا (always means the more urgent fix)
+- B. كلتاهما معًا (both at once)، لأن كلتيهما فوق 7.0 (above 7.0) وتعدّ السياسة كل ما فوق 7.0 عاجلًا (treats everything above 7.0 as urgent)
 - C. ثغرة 7.5، لأنها معروفٌ أنها مستغلة (known to be exploited) وتقع على أصلٍ مكشوف (exposed asset)
-- D. لا هذه ولا تلك (neither)، حتى تتوافر درجات EPSS (EPSS scores)
+- D. لا هذه ولا تلك (neither)، حتى تتوافر درجات EPSS (EPSS scores) لكلتا المكتبتين وينعقد الاجتماع الدوري القادم (the next review meeting)
 
 <details><summary>الإجابة</summary>
 
@@ -775,7 +775,7 @@ flowchart TD
 - A. ترك الملاحظة مفتوحةً حتى يعمل التصحيح (until the patch works)
 - B. تعليقٌ في التذكرة (ticket) يقول «مقبول» ("accepted")
 - C. مُدخلٌ في سجل المخاطر (risk-register entry) يعتمده المالكون المناسبون (right owners)، مع السبب، والضوابط التعويضية (compensating controls)، وتاريخ انتهاءٍ لا يتجاوز 90 يومًا
-- D. خفض درجة CVSS للملاحظة (lowering the finding's CVSS score) كي تصبح من الأولوية P3
+- D. خفض درجة CVSS للملاحظة (lowering the finding's CVSS score) كي تصبح من الأولوية P3 فلا يسري عليها موعد الثلاثين يومًا (the 30-day deadline no longer applies) ويمكن إغلاق التذكرة (the ticket can be closed)
 
 <details><summary>الإجابة</summary>
 

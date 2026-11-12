@@ -264,10 +264,10 @@ Decision recorded: *"The copilot remains in pilot for 20 relationship managers u
 
 **4. Which of the following is one of the OECD's recommendations to governments, rather than one of its values-based principles?**
 
-- A. Transparency and explainability
-- B. Accountability
+- A. Transparency and explainability of AI systems towards the people who are affected by their outputs
+- B. Accountability of AI actors for the proper functioning of the systems they build and run
 - C. Investing in AI research and development
-- D. Robustness, security and safety
+- D. Robustness, security and safety of AI systems throughout their life cycle, including misuse
 
 <details><summary>Answer</summary>
 
@@ -278,9 +278,9 @@ Decision recorded: *"The copilot remains in pilot for 20 relationship managers u
 **5. Najm's review finds the credit memo copilot sometimes states revenue figures that do not appear in any source document. Which NIST resource most directly names and addresses this risk?**
 
 - A. NIST AI 600-1, the Generative AI Profile, which calls it confabulation
-- B. The OECD AI Incidents Monitor
-- C. ISO/IEC 22989
-- D. NIST AI RMF Part 1's definition of "safe"
+- B. The OECD AI Incidents Monitor, which lists reported incidents drawn from news sources
+- C. ISO/IEC 22989, the standard that defines AI concepts and terminology
+- D. NIST AI RMF Part 1's definition of "safe", which covers physical harm to people and property
 
 <details><summary>Answer</summary>
 
@@ -480,10 +480,10 @@ A **vendor-certificate rule** is added to the procurement standard:
 
 **2. In ISO/IEC 42001, which clause contains internal audit and management review?**
 
-- A. Clause 5, Leadership
-- B. Clause 7, Support
+- A. Clause 5, Leadership, which covers policy and roles
+- B. Clause 7, Support, which covers competence and documented information
 - C. Clause 9, Performance evaluation
-- D. Clause 10, Improvement
+- D. Clause 10, Improvement, which covers nonconformity and corrective action
 
 <details><summary>Answer</summary>
 
@@ -519,10 +519,10 @@ A **vendor-certificate rule** is added to the procurement standard:
 
 **5. An organisation implementing ISO/IEC 42001 decides that some Annex A controls do not apply to it. What must it do?**
 
-- A. Nothing; Annex A is informative only
+- A. Nothing; Annex A is informative only, so controls can be left out without any record
 - B. Record the decision and justification in its Statement of Applicability
-- C. Obtain approval from ISO before excluding them
-- D. Replace them with controls from ISO/IEC 27001
+- C. Obtain approval from ISO before excluding them, and attach the approval to the audit file
+- D. Replace them with controls from ISO/IEC 27001 that cover the same area, and drop the decision note
 
 <details><summary>Answer</summary>
 
@@ -714,9 +714,9 @@ Layla produces a **jurisdiction map** for the AI Governance Committee, showing w
 
 **2. Which statement best describes the UK's approach to AI regulation at the time of writing?**
 
-- A. A single horizontal AI act modelled on the EU AI Act
-- B. No principles or guidance at all
-- C. A mandatory licensing regime for all AI systems
+- A. A single horizontal AI act modelled on the EU AI Act, applied by one new central regulator
+- B. No principles or guidance at all, leaving every sector to decide for itself
+- C. A mandatory licensing regime for all AI systems, run by a single national authority
 - D. Cross-sector principles applied by existing regulators within their remits
 
 <details><summary>Answer</summary>
@@ -728,7 +728,7 @@ Layla produces a **jurisdiction map** for the AI Governance Committee, showing w
 **3. Najm wants to reuse its risk-management controls to show alignment with Art. 9 of the EU AI Act. Which ISO/IEC 42001 elements are the closest match?**
 
 - A. Clauses 6.1 and 8 on AI risk assessment and treatment, supported by ISO/IEC 23894
-- B. Annex A.10 on third-party and customer relationships
+- B. Annex A.10 on third-party and customer relationships, including supplier contracts and service levels
 - C. Clause 5.2 on the AI policy only
 - D. ISO/IEC 42006 on certification bodies
 
@@ -740,10 +740,10 @@ Layla produces a **jurisdiction map** for the AI Governance Committee, showing w
 
 **4. A generative AI service provider wants to launch a public chatbot in mainland China. Which instrument most directly sets requirements for that service?**
 
-- A. Singapore's Model AI Governance Framework for Generative AI
+- A. Singapore's Model AI Governance Framework for Generative AI, which is voluntary and sets out nine dimensions
 - B. China's Interim Measures for the Management of Generative AI Services
-- C. The G7 Hiroshima Code of Conduct
-- D. The UNESCO Recommendation on the Ethics of AI
+- C. The G7 Hiroshima Code of Conduct, a voluntary code for organisations developing advanced AI systems
+- D. The UNESCO Recommendation on the Ethics of AI, adopted by member states and applied through national policy
 
 <details><summary>Answer</summary>
 
@@ -753,10 +753,10 @@ Layla produces a **jurisdiction map** for the AI Governance Committee, showing w
 
 **5. What is AI Verify?**
 
-- A. A Chinese algorithm filing registry
-- B. The EU database for high-risk AI systems
+- A. A Chinese algorithm filing registry, which the cyberspace regulator operates for recommendation algorithms
+- B. The EU database for high-risk AI systems, in which providers register their systems before placing them on the market
 - C. A Singaporean AI governance testing framework and open-source toolkit
-- D. A US federal certification scheme for AI models
+- D. A US federal certification scheme for AI models, run by a standards agency and valid for three years
 
 <details><summary>Answer</summary>
 

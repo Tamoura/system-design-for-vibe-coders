@@ -208,9 +208,9 @@ flowchart RL
 
 **4. يغيّر فريق التطبيق (app team) اسم الحدث `card_freeze` إلى `card_freeze_tap`. يستمر خط البيانات (pipeline) في العمل، لكن لوحة معلومات «تجميد البطاقات» (card freezes) تهبط إلى الصفر (drops to zero). أين انكسرت السلسلة (where did the chain break)؟**
 
-- A. في إعدادات الرسم البياني (chart settings) في أداة ذكاء الأعمال (BI tool)، لأن هناك يظهر الصفر أولًا لقطاع العمل
+- A. في إعدادات الرسم البياني (chart settings) في أداة ذكاء الأعمال (BI tool)، لأن هناك يظهر الصفر أولًا
 - B. في نموذج عالم البيانات (data scientist's model)، الذي دُرّب على اسم الحدث القديم (old event name)
-- C. عند نقطة التسليم من المنتِج إلى المنصة (producer-to-platform hand-off)، التي لم يغطّها أيّ اتفاق (no agreement covered)
+- C. عند نقطة التسليم من المنتِج إلى المنصة (producer-to-platform hand-off)، التي لم يغطّها أيّ اتفاق
 - D. في صيغة التخزين (storage format) في مستودع البيانات (warehouse)، التي لا تستطيع حمل اسمَي حدث للإجراء نفسه
 
 <details><summary>الإجابة</summary>
@@ -444,9 +444,9 @@ ORDER BY 1;
 **3. تحتاج لوحة معلومات التجزئة (retail dashboard) لدى نجم أرقام الأمس بحلول 08:00، ويجب أن تقيّم التنبيهات الذكية (Smart Alerts) كل تفويض بطاقة (card authorisation) في غضون لحظات. أيّ تصميم يناسب (which design fits)؟**
 
 - A. المعالجة المتدفقة (Streaming) للاثنين، لأن الوقت الحقيقي أفضل دائمًا (real-time is always better)
-- B. دفعة ليلية (Nightly batch) للاثنين، لأنها أرخص (cheaper)
+- B. دفعة ليلية (Nightly batch) للاثنين معًا، لأنها أرخص وأبسط (cheaper)
 - C. التنبيهات الذكية (Smart Alerts) بالدفعي (in batch)؛ ولوحة المعلومات بالمتدفق (in streaming)
-- D. الدفعي للوحة المعلومات (Batch for the dashboard)؛ والمتدفق للتنبيهات الذكية (streaming for Smart Alerts)
+- D. الدفعي للوحة المعلومات (Batch for the dashboard)؛ والمتدفق للتنبيهات الذكية
 
 <details><summary>الإجابة</summary>
 

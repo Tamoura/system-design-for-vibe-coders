@@ -172,10 +172,10 @@ Najm's corporate banking division wants to run its own AI governance because "th
 
 **1. Najm Bank's board has approved AI principles. Which step best turns the "fairness" principle into governance?**
 
-- A. Publishing the principles on the bank's website
+- A. Publishing the principles on the bank's website and in the annual report, with a statement signed by the chair
 - B. Defining a fairness metric, a tolerance band and an owner who reports breaches to the AI Governance Committee
-- C. Asking data scientists to "keep fairness in mind"
-- D. Adding the word "fair" to every model's name in the inventory
+- C. Asking data scientists to "keep fairness in mind" and to raise any concerns with their line manager when they see one, with no metric or limit
+- D. Adding the word "fair" to every model's name in the inventory and to the title of each project in the delivery plan
 
 <details><summary>Answer</summary>
 
@@ -185,10 +185,10 @@ Najm's corporate banking division wants to run its own AI governance because "th
 
 **2. Which statement best describes the difference between risk appetite and risk tolerance?**
 
-- A. Appetite is set by data scientists; tolerance is set by the board
-- B. They are synonyms used interchangeably in the NIST AI RMF
+- A. Appetite is set by data scientists; tolerance is set by the board, which approves it once a year for all models together
+- B. They are synonyms used interchangeably in the NIST AI RMF, which defines both as the maximum loss the organisation can bear
 - C. Appetite is the broad amount and type of risk the organisation will accept; tolerance is the measurable limits that show whether it is within that appetite
-- D. Tolerance is the maximum risk an organisation can absorb before failing
+- D. Tolerance is the maximum risk an organisation can absorb before failing; appetite is the amount of risk it has already taken, and both are set once at the start of the project
 
 <details><summary>Answer</summary>
 
@@ -224,9 +224,9 @@ Najm's corporate banking division wants to run its own AI governance because "th
 
 **5. Najm's model team says explaining the new credit model's decisions would cost two points of accuracy. The principles value both accuracy and explainability. What is the best governance response?**
 
-- A. Always choose the most accurate model; explainability is optional
-- B. Let the data science team decide informally
-- C. Abandon the model
+- A. Always choose the most accurate model, because explainability is optional and can be added later if a regulator asks for it, so no trade-off needs recording
+- B. Let the data science team decide informally, since they understand the model better than any committee
+- C. Abandon the model and restart the project with a simpler technique
 - D. Document the trade-off and apply the bank's stated default or route it to the accountable decision-maker, recording the decision
 
 <details><summary>Answer</summary>
@@ -414,9 +414,9 @@ Review the RACI above and identify two independence or conflict-of-interest risk
 **1. Najm's chatbot gave customers wrong information about fees. Which role should be accountable for the chatbot's outcomes?**
 
 - A. The business owner of the customer-service process
-- B. The data scientist who fine-tuned the model
-- C. The vendor of the underlying language model
-- D. Internal audit
+- B. The data scientist who fine-tuned the model and wrote its documentation
+- C. The vendor of the underlying language model and its hosting platform
+- D. Internal audit, as the independent function that reviews controls
 
 <details><summary>Answer</summary>
 
@@ -426,10 +426,10 @@ Review the RACI above and identify two independence or conflict-of-interest risk
 
 **2. In the three lines model, what is the primary role of internal audit in AI governance?**
 
-- A. Building and approving AI models
+- A. Building and approving AI models before they go into use
 - B. Providing independent and objective assurance to the governing body
-- C. Writing the organisation's AI policy
-- D. Running day-to-day monitoring of model performance
+- C. Writing the organisation's AI policy and keeping it up to date
+- D. Running day-to-day monitoring of model performance and reporting drift
 
 <details><summary>Answer</summary>
 
@@ -439,10 +439,10 @@ Review the RACI above and identify two independence or conflict-of-interest risk
 
 **3. A RACI for launching a high-risk AI system lists both the Head of Retail Lending and the Head of AI Governance as "A". What is the problem?**
 
-- A. There is no problem; shared accountability is safer
-- B. The Head of AI Governance should be "I"
+- A. There is no problem; shared accountability is safer because several people then answer for the result
+- B. The Head of AI Governance should be "I" for every activity, so that she is informed but never accountable
 - C. There should be exactly one accountable party per activity, or ownership becomes unclear
-- D. Nobody is "C"
+- D. Nobody is "C", so no one is consulted before decisions are made
 
 <details><summary>Answer</summary>
 
@@ -452,10 +452,10 @@ Review the RACI above and identify two independence or conflict-of-interest risk
 
 **4. Under the EU AI Act, what must a deployer of a high-risk AI system do about human oversight?**
 
-- A. Nothing; oversight is only the provider's duty
+- A. Nothing; oversight is only the provider's duty, so deployers have no obligation to assign it to anyone
 - B. Assign oversight to natural persons who have the necessary competence, training and authority
-- C. Appoint an external auditor to supervise the system
-- D. Register each overseer with the AI Office
+- C. Appoint an external auditor to supervise the system and report to the board every quarter, so staff need no training, no authority and no particular competence
+- D. Register each overseer with the AI Office before the system is first used, and renew the entry every year
 
 <details><summary>Answer</summary>
 
@@ -632,7 +632,7 @@ A regulator asks Najm's Frankfurt branch how it complies with the EU AI Act's AI
 **2. From what date has the EU AI Act's AI-literacy duty applied?**
 
 - A. 1 August 2024
-- B. 2 August 2027
+- B. 2 February 2027
 - C. 2 August 2026
 - D. 2 February 2025
 
@@ -670,10 +670,10 @@ A regulator asks Najm's Frankfurt branch how it complies with the EU AI Act's AI
 
 **5. Two junior engineers noticed a vendor tool appeared to disadvantage some candidates but did not report it because it was not their project. What is the best long-term governance fix?**
 
-- A. Discipline the engineers
+- A. Discipline the engineers who raised the concern, and remind everyone that decisions belong to management
 - B. Establish clear, protected channels for raising AI concerns, communicate them, close the loop with reporters, and reinforce speaking up through leadership behaviour and incentives
-- C. Ban engineers from looking at other teams' systems
-- D. Ask the vendor to audit itself
+- C. Ban engineers from looking at other teams' systems, so that concerns reach only the owners of each system
+- D. Ask the vendor to audit itself and send the results to the AI governance committee for the next meeting
 
 <details><summary>Answer</summary>
 

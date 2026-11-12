@@ -45,7 +45,7 @@
           "Compare the Payments pods' average CPU with last week's to find the hot spot"
         ],
         "ar": [
-          "فتح تتبّع عيّنة مرجعية بطيئة (slow exemplar's trace) لإيجاد الامتداد البطيء (slow span)، ثم البحث في السجلات (logs) بمعرّف التتبّع (trace ID) الخاص به",
+          "فتح تتبّع عيّنة مرجعية بطيئة (slow exemplar's trace) لإيجاد الامتداد البطيء، ثم البحث في السجلات بمعرّف التتبّع (trace ID) الخاص به",
           "إضافة وسم معرّف العميل (customer_id label) إلى مقياس زمن الاستجابة (latency metric) لتصبح لكل عميل بطيء سلسلته الزمنية (series) الخاصة",
           "قراءة ملفات السجلات (log files) لكل حجيرة (pod) بالتتابع، بحثًا عن أسطر تذكر تحويلات بطيئة (slow transfers)",
           "مقارنة متوسط استهلاك المعالج (average CPU) لحجيرات المدفوعات (Payments pods) بمتوسط الأسبوع الماضي لتحديد موضع الضغط (hot spot)"

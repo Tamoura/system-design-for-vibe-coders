@@ -158,23 +158,23 @@ Faisal adds a page of twenty behaviour examples below the table. One row: *Input
 
 **1. Faisal's spec says "The copilot shall produce accurate credit memos." What is the best improvement?**
 
-- A. Change "accurate" to "highly accurate"
-- B. Add behaviour examples, a measurable bar for factual errors by severity, and an eval that checks figures against source documents
-- C. Ask Dana to choose the most accurate model available
+- A. Add behaviour examples, a measurable bar for factual errors by severity, and an eval that checks figures against source documents
+- B. Change "accurate" to "highly accurate"
+- C. Ask Dana to choose the most accurate model available, confirming that it scores best on the public benchmarks for financial documents
 - D. Add a line saying the RM is responsible for accuracy
 
 <details><summary>Answer</summary>
 
-**B.** Examples, bars and an eval make "accurate" testable. D describes the human's role, which belongs in the spec, but does not define what the system must achieve. (🟢 The essentials; 🟡 Going deeper.)
+**A.** Examples, bars and an eval make "accurate" testable. D describes the human's role, which belongs in the spec, but does not define what the system must achieve. (🟢 The essentials; 🟡 Going deeper.)
 
 </details>
 
 **2. Which item belongs on a must-never list rather than being expressed as a percentage bar?**
 
-- A. Memos should be under 1,500 words
-- B. Najm Assist should respond in the customer's chosen language
+- A. Memos should be under 1,500 words so that committee members can read them in one sitting
+- B. Najm Assist should respond in the customer's chosen language, whether Arabic or English, in nearly every case
 - C. Najm Assist must not promise a fee waiver the bank has not approved
-- D. Drafts should be ready within 90 seconds
+- D. Drafts should be ready within 90 seconds for at least 95% of requests during business hours
 
 <details><summary>Answer</summary>
 
@@ -197,27 +197,27 @@ Faisal adds a page of twenty behaviour examples below the table. One row: *Input
 
 **4. The model provider releases a new version that scores better on public benchmarks. Tariq wants to switch next week. According to a good AI spec, what must happen first?**
 
-- A. Nothing; benchmark gains mean the product will improve
+- A. Nothing; benchmark gains mean the product will improve, so the switch can go ahead as soon as engineering is ready to deploy it
 - B. Update the marketing page
-- C. Run the full eval suite, including must-never and regression cases, against the new version before it reaches users
-- D. Ask users whether they notice a difference after switching
+- C. Ask users whether they notice a difference after switching
+- D. Run the full eval suite, including must-never and regression cases, against the new version before it reaches users
 
 <details><summary>Answer</summary>
 
-**C.** A model change is a re-evaluation trigger; better public benchmark averages can still break a must-never case on your data. D exposes users to regressions. (🔴 Expert view.)
+**D.** A model change is a re-evaluation trigger; better public benchmark averages can still break a must-never case on your data. C exposes users to regressions. (🔴 Expert view.)
 
 </details>
 
 **5. What is the most appropriate first source for the quality bar of a new AI feature?**
 
-- A. The highest score reported by any vendor
-- B. The performance of the current process, adjusted for the risk tier and what users will tolerate
-- C. 100% on every dimension
-- D. Whatever the model achieves on the first test
+- A. The highest score reported by any vendor in its published benchmark results for similar tasks and users
+- B. Whatever the model achieves on the first test, since that shows what the technology can really do today
+- C. 100% on every dimension of quality, since any lower figure would mean the feature is not safe to release
+- D. The performance of the current process, adjusted for the risk tier and what users will tolerate
 
 <details><summary>Answer</summary>
 
-**B.** Bars start from the honest baseline of today's process, then reflect risk and user tolerance. D reverses the logic: the bar should judge the model, not be set by it. (🟡 Going deeper.)
+**D.** Bars start from the honest baseline of today's process, then reflect risk and user tolerance. B reverses the logic: the bar should judge the model, not be set by it. (🟡 Going deeper.)
 
 </details>
 
@@ -382,7 +382,7 @@ Faisal replaces the executive demo with a four-week prototype plan for Najm Assi
 - A. Shadow mode
 - B. Wizard of Oz
 - C. Thin slice
-- D. Full pilot
+- D. Full pilot with customers
 
 <details><summary>Answer</summary>
 
@@ -395,7 +395,7 @@ Faisal replaces the executive demo with a four-week prototype plan for Najm Assi
 - A. 15 is an odd number
 - B. The questions are cleaner and more typical than real customer inputs, so quality on the real distribution is unknown
 - C. Prompt prototypes cannot measure cost
-- D. He should have used a Wizard of Oz test instead
+- D. He should have used a Wizard of Oz test instead, because a human playing the assistant would show real customer questions
 
 <details><summary>Answer</summary>
 
@@ -406,13 +406,13 @@ Faisal replaces the executive demo with a four-week prototype plan for Najm Assi
 **3. Tariq's team cannot say whether the copilot can reach its target quality bar. What is the best planning response?**
 
 - A. Insist on a firm delivery date and hold the team to it
-- B. Remove the quality bar so the date can be met
-- C. Run a time-boxed spike with a specific question and kill criterion, and agree a smaller fallback product if the target is not reachable
-- D. Wait until a better model is released
+- B. Remove the quality bar so the date can be met, and agree to improve quality in a later release once the product is live and real usage data is available
+- C. Wait until a better model is released
+- D. Run a time-boxed spike with a specific question and kill criterion, and agree a smaller fallback product if the target is not reachable
 
 <details><summary>Answer</summary>
 
-**C.** Uncertain quality is handled with spikes, ranges and a fallback scope. A (a firm date for an unknown result) invites invented estimates; B throws away the requirement that makes the product safe. (🟡 Going deeper.)
+**D.** Uncertain quality is handled with spikes, ranges and a fallback scope. A (a firm date for an unknown result) invites invented estimates; B throws away the requirement that makes the product safe. (🟡 Going deeper.)
 
 </details>
 
@@ -630,7 +630,7 @@ After the fee-waiver incident, Rania asks Faisal to own the **Najm Assist behavi
 
 **1. An engineer changes one sentence in Najm Assist's system prompt to make it "warmer". What should have happened before the change reached customers?**
 
-- A. Nothing; tone changes are low risk
+- A. Nothing; tone changes are low risk because the wording of a single sentence cannot affect what the assistant is able to do
 - B. A registry entry with an owner, a passing regression eval suite including must-never cases, and a staged rollout
 - C. A new model should have been selected
 - D. A customer survey about tone
@@ -643,7 +643,7 @@ After the fee-waiver incident, Rania asks Faisal to own the **Najm Assist behavi
 
 **2. Which control most reliably prevents Najm Assist from freezing the wrong customer's card, even if the model is manipulated?**
 
-- A. A system prompt line saying "only act for the logged-in customer"
+- A. A system prompt line saying "only act for the logged-in customer", repeated at the start and end of every conversation
 - B. A larger, more capable model
 - C. The application checking the customer's session and permissions before running the tool, plus in-app confirmation
 - D. A longer conversation history in the context
@@ -656,14 +656,14 @@ After the fee-waiver incident, Rania asks Faisal to own the **Najm Assist behavi
 
 **3. What does least privilege mean when designing an assistant's tools?**
 
-- A. Give the assistant every tool it might conceivably need, to avoid hand-overs
-- B. Give the smallest set of narrow tools and permissions the job needs, with limits enforced by the application
-- C. Only allow read tools, never write tools
-- D. Let customers choose which tools the assistant uses
+- A. Give the smallest set of narrow tools and permissions the job needs, with limits enforced by the application
+- B. Give the assistant every tool it might conceivably need, to avoid hand-overs and keep each customer conversation moving
+- C. Only allow read tools, never write tools, so that the assistant can never change a limit, a card or an account
+- D. Let customers choose which tools the assistant uses, so that each person can decide how much access it gets in each conversation
 
 <details><summary>Answer</summary>
 
-**B.** Least privilege narrows both the tool set and each tool's scope. C is too strict: a well-limited write tool like "freeze card" with confirmation is appropriate. (🟡 Going deeper.)
+**A.** Least privilege narrows both the tool set and each tool's scope. C is too strict: a well-limited write tool like "freeze card" with confirmation is appropriate. (🟡 Going deeper.)
 
 </details>
 
@@ -682,14 +682,14 @@ After the fee-waiver incident, Rania asks Faisal to own the **Najm Assist behavi
 
 **5. The model provider releases a new version. The prompts have not changed. Which statement is correct?**
 
-- A. No evaluation is needed because the prompts are the same
-- B. The upgrade should be treated as a change to every prompt that runs on it, with the regression suite run before rollout
+- A. The upgrade should be treated as a change to every prompt that runs on it, with the regression suite run before rollout
+- B. No evaluation is needed because the prompts are the same
 - C. Only the cost needs checking
-- D. Prompts must be rewritten from scratch for every new model
+- D. Prompts must be rewritten from scratch for every new model, because prompts are never portable between versions of the same model family
 
 <details><summary>Answer</summary>
 
-**B.** A prompt tuned for one model can behave differently on another. Rerun the evals, then roll out in stages. D overreacts: evals tell you whether any rewrite is needed. (🔴 Expert view.)
+**A.** A prompt tuned for one model can behave differently on another. Rerun the evals, then roll out in stages. D overreacts: evals tell you whether any rewrite is needed. (🔴 Expert view.)
 
 </details>
 

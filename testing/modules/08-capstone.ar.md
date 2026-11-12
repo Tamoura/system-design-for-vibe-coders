@@ -750,7 +750,7 @@ FAILED tests/test_interview_review.py::test_a_rounding_tie_goes_up - AssertionEr
 - A. المجموعة المرجعية (golden set) مرة أخرى، عشر تشغيلات إضافية عند درجة حرارة (temperature) 0.8 لتسوية ضجيج أخذ العينات بالمتوسط (average out sampling noise)
 - B. الاستدعاء (Recall@k) والدقة (precision@k) ومتوسط الرتبة المتبادلة (MRR) على استعلامات الاسترجاع الموسومة (labelled retrieval queries)
 - C. مؤشر استقرار المجتمع الإحصائي (population stability index) على مزيج مواضيع (topic mix) أسئلة العملاء في الأسبوع الماضي (last week)
-- D. اختبارات الفريق الأحمر (red-team tests) التي تزرع وثيقة مسمومة (poisoned document) في الفهرس (index)
+- D. اختبارات الفريق الأحمر (red-team tests) التي تزرع وثيقة مسمومة (poisoned document) في فهرس السياسات (policy index)
 
 <details><summary>الإجابة</summary>
 
@@ -825,7 +825,7 @@ FAILED tests/test_interview_review.py::test_a_rounding_tie_goes_up - AssertionEr
 
 **14. يزعم مورّدان (vendors) أن مساعد الذكاء الاصطناعي (AI assistant) لدى كلٍّ منهما يكتب اختبارات «عالية الجودة» ("high quality")، ويستطيع بلال تشغيل المساعدين كليهما على نظام الدورة النموذجي (course's sample system). كيف ينبغي أن يقارن بينهما (compare them)؟**
 
-- A. اختيار المساعد (assistant) الذي تُبلغ مجموعته المولَّدة (generated suite) عن تغطية أسطر وفروع أعلى (higher line and branch coverage)
+- A. اختيار المساعد (assistant) الذي تُبلغ مجموعته المولَّدة (generated suite) عن تغطية أعلى (higher coverage)
 - B. اختيار المساعد (assistant) الذي يولّد اختبارات أكثر (generates more tests) في الوقت نفسه (same amount of time)
 - C. مطالبة كل مساعد (assistant) بتقييم اختباراته بنفسه (grade its own tests) ثم اختيار الدرجة الأعلى (higher score)
 - D. تشغيل كل مجموعة مرة لكل عيب مزروع (seeded bug) مفعَّلٍ وحده (switched on alone)، وعدّ العيوب المكتشفة (bugs caught)
@@ -944,7 +944,7 @@ FAILED tests/test_interview_review.py::test_a_rounding_tie_goes_up - AssertionEr
 
 - A. الانتظار (wait)، لأن 1,600 طلب لا تزال قليلة جدًا (still too few) على الحَكَم (judge) كي يقرر أي شيء
 - B. ترقية الإصدار (promote)، لأن p95 البالغ 330 مللي ثانية أعلى قليلًا فقط من 310 للنسخة المستقرة (the stable 310 ms)
-- C. ترقية الإصدار (promote)، لأن 8 أخطاء عدد صغير جدًا (very small count) بالأرقام المطلقة (in absolute terms)
+- C. ترقية الإصدار (promote)، لأن 8 أخطاء عدد صغير جدًا (very small count) بالأرقام المطلقة (in absolute terms) لا نسبةً (not a rate)
 - D. التراجع (roll back)، لأن معدل الأخطاء أعلى بكثير من معدل النسخة المستقرة (stable error rate)
 
 <details><summary>الإجابة</summary>
@@ -957,7 +957,7 @@ FAILED tests/test_interview_review.py::test_a_rounding_tie_goes_up - AssertionEr
 
 - A. تقرير تكلفة (cost report) يُظهر التوفير لكل 1,000 سؤال (saving per 1,000 questions)، ما دامت الدقة (accuracy) متساوية
 - B. مقارنة حالة بحالة (per-case comparison) تسرد كل حالة كانت تنجح سابقًا وتفشل الآن (passed before and fails now)
-- C. عشر تشغيلات إضافية (ten more runs) للإصدار الجديد وحده (the new version alone)، لتأكيد أن نتيجته 18 مستقرة (stable)
+- C. عشر تشغيلات إضافية (ten more runs) للإصدار الجديد وحده (the new version alone)، لتأكيد أن نتيجته 18 مستقرة فعلًا (really stable)
 - D. درجة ROUGE بين الإجابات القديمة والجديدة (old and new answers)، لإظهار أنها متشابهة (that they are similar)
 
 <details><summary>الإجابة</summary>
@@ -1020,7 +1020,7 @@ FAILED tests/test_interview_review.py::test_a_rounding_tie_goes_up - AssertionEr
 
 **29. تطلب بوابة (gate) بلال درجة طفرات (mutation score) بنسبة 80% على الشيفرة المالية المتغيّرة (changed money code). تسجّل وحدة رسوم جديدة 94%، وتنجو ست طفرات (six mutants survive) ولم ينظر فيها أحد بعد (nobody has looked at them yet). يطلب طارق 100% قبل الدمج (before merge). ماذا ينبغي أن يوصي راشد؟**
 
-- A. إضافة اختبار لكل طفرة ناجية (survivor) حتى تبلغ الدرجة 100%، مهما كان الاختبار مصطنعًا (however artificial it is)
+- A. إضافة اختبار لكل طفرة ناجية (survivor) حتى تبلغ الدرجة 100%، مهما كان مصطنعًا (artificial)
 - B. رفع البوابة إلى 100% على كل الشيفرة المالية (all money code)، كي لا يمكن الجدال في الدرجة (cannot be argued)
 - C. وسم الناجيات الست كلها (all six survivors) بأنها طفرات مكافئة (equivalent mutants)، ليُظهر التقرير 100%
 - D. إبقاء بوابة (gate) 80%، وترك إنسان يفرز (triage) كل طفرة ناجية على أنها ثغرة (gap) أو مكافئة (equivalent)
@@ -1034,7 +1034,7 @@ FAILED tests/test_interview_review.py::test_a_rounding_tie_goes_up - AssertionEr
 **30. تُبقي نجم إصدارات التطبيق القديمة (old app versions) تعمل لشهور (for months). يجعل فريق طارق (Tariq's squad) الحقل `kind` حقلًا إلزاميًا (required field) في `POST /transfers` ويحدّث وثيقة OpenAPI (OpenAPI document). ينجح كل اختبار حالي (every current test) وتشغيل Schemathesis الليلي (nightly run). بعد أسبوعين (two weeks later) يرى العملاء على أقدم تطبيق (the oldest app) أخطاء (errors). أي اختبار كان سيلتقط ذلك قبل الإصدار (before release)؟**
 
 - A. تشغيل Schemathesis ليلي (nightly run) بقيمة أكبر (larger value) للخيار `--max-examples`
-- B. مخطط استجابة صارم (strict response schema)، مع `additionalProperties: false`، لكل تحويل (every transfer)
+- B. مخطط استجابة صارم (strict response schema)، مع `additionalProperties: false`
 - C. طلب محفوظ من التطبيق القديم (a saved request from the old app)، بلا `kind`، يجب أن يظل يعيد 201
 - D. مصفوفة تفويض (authorisation matrix) بصف واحد (one row) لكل مسار (each route) ولكل دور (each role)
 
@@ -1046,7 +1046,7 @@ FAILED tests/test_interview_review.py::test_a_rounding_tie_goes_up - AssertionEr
 
 **31. يريد فريق طارق (Tariq's squad) إطلاق تدفق التحويل الجديد (new transfer flow) في تطبيق نجم للهاتف (Najm Mobile) لكل مستخدمي أندرويد (every Android user) دفعة واحدة (at once). يقول: «إن تعطّل شيء (if it breaks) تراجعنا عنه (we roll back) كما نفعل مع تطبيق الويب (the web app)». ماذا ينبغي أن تشترطه بوابة الإصدار (release gate) لدى أمل (Amal) بدلًا من ذلك؟**
 
-- A. خطة تراجع عبر المتجر (store rollback plan)، لأن كلا المتجرين يستطيع سحب البناء (withdraw a build) خلال دقائق قليلة (within a few minutes)
+- A. خطة تراجع عبر المتجر (store rollback plan)، لأن كلا المتجرين يستطيع سحب البناء (withdraw a build) خلال دقائق
 - B. إطلاق مرحلي (staged rollout) بنسب 1% ثم 5% ثم 20% ثم 100%، مع قاعدة إيقاف (halt rule) ومفتاح إيقاف عن بُعد (remote kill switch)
 - C. تشغيلان إضافيان لاختبار الانحدار (extra regression runs) على المحاكيات (emulators)، لأنها تعطي نتائج الأجهزة نفسها (same results as devices)
 - D. تجربة بيتا (beta) لأسبوع على أحدث هاتف (newest phone)، ثم إصدار كامل (full release) إن لم يُبلَّغ عن انهيار (no crash is reported)
@@ -1242,7 +1242,7 @@ FAILED tests/test_interview_review.py::test_a_rounding_tie_goes_up - AssertionEr
 **46. يرفض فحص التكامل المستمر (continuous integration, CI) لدى بلال أي أسطر مضافة (added lines) من `pytest.mark.skip` في `tests/`. ويسمح الفريق الآن لوكيل الإصلاح (healer agent) في Playwright بإصلاح اختبارات المتصفح الفاشلة (failing browser tests) في `e2e/`. وفي طلب سحب واحد (pull request) من هذا الوكيل تتحول أربعة اختبارات حمراء (red tests) إلى خضراء (green) ويمرّ الفحص (the check passes). ماذا ينبغي أن يغيّر بلال (What should Bilal change)؟**
 
 - A. توسيع (extend) فحص التخطي (skip check) ليشمل `test.skip` و`test.fixme`، ومراجعة تعديلات وكيل الإصلاح (review healer edits)
-- B. إيقاف وكيل الإصلاح (switch the healer off)، لأن أداة الذكاء الاصطناعي (AI tool) يجب ألا تلمس ملف اختبار (test file) أبدًا
+- B. إيقاف وكيل الإصلاح (switch the healer off)، لأن أداة الذكاء الاصطناعي (AI tool) يجب ألا يُسمح لها بلمس ملف اختبار (test file) أبدًا
 - C. مطالبة وكيل الإصلاح (the healer) بإرفاق لقطة شاشة (screenshot) لكل صفحة مُصلَحة (repaired page) بطلب السحب (its pull request)
 - D. رفع عدد المحاولات المعادة (retries) في إعدادات Playwright (Playwright config) حتى تبقى الاختبارات المُصلَحة خضراء (stay green)
 
@@ -1295,7 +1295,7 @@ FAILED tests/test_interview_review.py::test_a_rounding_tie_goes_up - AssertionEr
 
 - A. أخذ التأكيد (confirmation) من إشارة في التطبيق (app signal)، مثل زر (button)، لا من الكلمات (words) أبدًا
 - B. إلزام النموذج (the model) برؤية كلمة "confirm" مرتين قبل أن يستدعي الأداة (calls the tool)
-- C. إضافة نموذج حَكَم (judge model) يقيّم ما إذا كان العميل يبدو واثقًا بما يكفي (sounds certain enough)
+- C. إضافة نموذج حَكَم (judge model) يقيّم ما إذا كان العميل يبدو واثقًا بما يكفي (sounds certain enough) للتجميد (to freeze)
 - D. إضافة سطر إلى توجيه النظام (system prompt) يقول ألا تُجمَّد بطاقة بناءً على أول رسالة (a first message)
 
 <details><summary>الإجابة</summary>

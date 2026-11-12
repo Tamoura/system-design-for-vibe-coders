@@ -13,7 +13,7 @@
     "en": [
      "A launch review cannot cover bought systems, which arrive already built",
      "Risks introduced at design or data stages, and drift after launch, escape it",
-     "The committee lacks the technical skill to judge a model at the point of launch",
+     "The committee lacks the technical skill to judge a model at launch",
      "It wastes effort, since low-risk systems need no review at any stage at all"
     ],
     "ar": [
@@ -39,7 +39,7 @@
    },
    "o": {
     "en": [
-     "Keep them, as retrieval is not training and Najm pays for the subscription",
+     "Keep them, as retrieval is not training and Najm pays the subscription",
      "Keep them, provided every copilot answer cites the report it draws on",
      "Remove them only if the publisher objects to how they are being used",
      "Have Legal confirm the licence permits this AI use before relying on them"
