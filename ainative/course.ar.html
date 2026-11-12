@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="ainative-source" content="493ef9c5c4b09131">
+<meta name="ainative-source" content="9c95cd61b0c06a05">
 <meta name="description" content="دليل عملي لتصبح مهندسًا أصيلًا في الذكاء الاصطناعي: دورة مجانية ثنائية اللغة للمهندسين الذين يبرمجون عن كيف يعمل وكلاء البرمجة، وهندسة السياق، والتطوير الموجَّه بالمواصفات، والحلقة اليومية، والتحقق من الشيفرة التي يكتبها الذكاء الاصطناعي، وتصحيح الأخطاء، والشيفرة الموروثة، والأمان، والخطافات والمهارات والوكلاء الفرعيين، والوكلاء المتوازيين، وأدلة الفرق، والبقاء حادّ المهارة، مع مختبرات مُقيَّمة تعمل دون اتصال واختبار في كل درس وامتحان تدريبي من 60 سؤالًا.">
 <title>دليل عملي لتصبح مهندسًا أصيلًا في الذكاء الاصطناعي (AI-Native Engineer) — الدورة كاملة</title>
 <style>
@@ -6592,10 +6592,10 @@ $ git branch rescue &#39;HEAD@{1}&#39;     # a branch at the lost commit; it del
 
 <p><strong>2. <code>Bash(git push *)</code> ممنوع بقاعدة <bdi>(is denied)</bdi>، ومع ذلك نفّذ وكيل <code>git -C . push</code>. ماذا يُظهر ذلك؟ <bdi>⁦(What does this show?)⁩</bdi></strong></p>
 <ul>
-<li>A. قواعد المنع تغطي الأمر الأول فقط من السطر المركّب <bdi>(only the first command of a compound line)</bdi></li>
-<li>B. تُفحص قواعد المنع بعد قواعد السماح <bdi>(checked after allow rules)</bdi>، فانتصرت قاعدة السماح <bdi>(the allow rule won)</bdi></li>
-<li>C. القواعد تطابق النص <bdi>(Rules match text)</bdi>؛ فأضف خطافًا <bdi>(a hook)</bdi> أو رمزًا محدود النطاق <bdi>(a scoped token)</bdi> أو حماية للفرع <bdi>(branch protection)</bdi></li>
-<li>D. لم يُودَع ملف الإعدادات <bdi>(was not committed)</bdi>، فلم تُطبَّق القاعدة قط <bdi>(never applied)</bdi></li>
+<li>A. قواعد المنع تغطي الأمر الأول فقط من السطر المركّب <bdi>(only the first command of a compound line)</bdi>، ولا تفحص ما يليه</li>
+<li>B. تُفحص قواعد المنع بعد قواعد السماح <bdi>(checked after allow rules)</bdi>، فتنتصر قاعدة السماح دائمًا <bdi>(an allow rule always wins)</bdi></li>
+<li>C. القواعد تطابق النص <bdi>(Rules match text)</bdi>؛ فأضف خطافًا <bdi>(a hook)</bdi> أو رمزًا محدود النطاق أو حماية للفرع</li>
+<li>D. لم يُودَع ملف الإعدادات <bdi>(was not committed)</bdi> في المستودع، فلم تُطبَّق القاعدة قط <bdi>(never applied)</bdi> في أي جلسة</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -6607,7 +6607,7 @@ $ git branch rescue &#39;HEAD@{1}&#39;     # a branch at the lost commit; it del
 <li>A. أعد كتابة التاريخ لإزالته <bdi>(Rewrite history)</bdi>، فيصير المفتاح آمنًا من جديد <bdi>(makes the key safe again)</bdi></li>
 <li>B. احذف الملف في إيداع جديد <bdi>(Delete the file in a new commit)</bdi> واطلب من الفريق تجاهله <bdi>(tell the team to ignore it)</bdi></li>
 <li>C. انتظر فحص الأسرار في التكامل المستمر الليلة <bdi>(tonight&#39;s CI secret scan)</bdi> ليشير إلى المفتاح قبل أن تتصرف</li>
-<li>D. دوّر المفتاح الآن <bdi>(Rotate the key now)</bdi>، ثم نظّف الشيفرة وقرّر بشأن التاريخ <bdi>(decide on history)</bdi></li>
+<li>D. دوّر المفتاح الآن <bdi>(Rotate the key now)</bdi>، ثم نظّف الشيفرة <bdi>(clean the code)</bdi> وقرّر بشأن التاريخ <bdi>(decide on history)</bdi> بعد ذلك</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -6616,10 +6616,10 @@ $ git branch rescue &#39;HEAD@{1}&#39;     # a branch at the lost commit; it del
 
 <p><strong>4. يقترح وكيل <code>pip install fastcsv-helpers</code> ويُحَلّ الاسم على الفهرس <bdi>(the name resolves on the index)</bdi>. ماذا تستنتج؟ <bdi>⁦(What do you conclude?)⁩</bdi></strong></p>
 <ul>
-<li>A. الحزمة آمنة، لأن الفهرس لا يسرد إلا حزمًا جرى فحصها <bdi>(only packages that were checked)</bdi></li>
+<li>A. الحزمة آمنة <bdi>(It is safe)</bdi>، لأن الفهرس لا يسرد إلا حزمًا جرى فحصها <bdi>(checked packages)</bdi></li>
 <li>B. لا شيء بعد <bdi>(Nothing yet)</bdi>: يقرر شخص <bdi>(a person decides)</bdi> مستعينًا بقائمة السماح <bdi>(allow-list)</bdi> وملف القفل <bdi>(lockfile)</bdi></li>
-<li>C. الحزمة آمنة إن لم يُظهر سجل التثبيت أخطاء أو تحذيرات <bdi>(no errors or warnings)</bdi></li>
-<li>D. اخترعها النموذج <bdi>(invented by the model)</bdi>، فتجاهل الاقتراح</li>
+<li>C. الحزمة آمنة <bdi>(It is safe)</bdi> إن لم يُظهر سجل التثبيت <bdi>(the install log)</bdi> أخطاء أو تحذيرات <bdi>(errors or warnings)</bdi></li>
+<li>D. اخترعها النموذج <bdi>(invented by the model)</bdi>، فتجاهل الاقتراح ولا تبحث عن الاسم</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -6628,9 +6628,9 @@ $ git branch rescue &#39;HEAD@{1}&#39;     # a branch at the lost commit; it del
 
 <p><strong>5. يريد سالم <bdi>(Salem)</bdi>، من هندسة المنصات <bdi>(platform engineering)</bdi>، إعادة هيكلة بلا إشراف <bdi>(an unattended refactor)</bdi> باستخدام <code>--dangerously-skip-permissions</code>. أي إعداد يوافق الوثائق؟ <bdi>⁦(Which setup fits the documentation?)⁩</bdi></strong></p>
 <ul>
-<li>A. حاسوبه المحمول <bdi>(His laptop)</bdi>، مع إبقاء كل قواعد المنع <bdi>(every deny rule kept in place)</bdi></li>
-<li>B. خادم بناء مشترك <bdi>(A shared build server)</bdi> له وصول شبكي إلى السجل <bdi>(the registry)</bdi></li>
-<li>C. حاوية بلا إنترنت وبلا بيانات اعتماد حقيقية <bdi>(a container with no internet and no real credentials)</bdi></li>
+<li>A. حاسوبه المحمول <bdi>(His laptop)</bdi>، مع إبقاء كل قواعد المنع <bdi>(every deny rule)</bdi> في مكانها ونسخ ملفاته احتياطيًا</li>
+<li>B. خادم بناء مشترك <bdi>(A shared build server)</bdi> له وصول شبكي إلى سجل الحزم <bdi>(the package registry)</bdi> وإلى الإنترنت</li>
+<li>C. حاوية <bdi>(a container)</bdi> بلا إنترنت وبلا بيانات اعتماد حقيقية <bdi>(no real credentials)</bdi></li>
 <li>D. حاسوبه المحمول في وضع auto أولًا <bdi>(auto mode first)</bdi>، ثم التحويل إلى التجاوز <bdi>(switching to bypass)</bdi> متى استقام سلوكه</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -6961,8 +6961,8 @@ Time spent:         (you / the agent)
 <p><strong>2. مدخل الخطاف هو النص <code>not json</code>. ماذا ينبغي أن يفعل الحارس؟ <bdi>⁦(What should a guard do?)⁩</bdi></strong></p>
 <ul>
 <li>A. يخرج بالرمز 0 <bdi>(Exit 0)</bdi>، لأنه لا يوجد أمر قد يكون خطرًا <bdi>(no command that could be dangerous)</bdi></li>
-<li>B. يخرج بالرمز 2 مع سبب <bdi>(Exit 2 with a reason)</bdi>، لأن الخروج 1 كان سيدع النداء يعمل <bdi>(exit 1 would let the call run)</bdi></li>
-<li>C. ينهار مع تتبّع للمكدس <bdi>(Crash with a traceback)</bdi>، ليسهل ملاحظة الفشل</li>
+<li>B. يخرج بالرمز 2 مع سبب <bdi>(Exit 2 with a reason)</bdi>، لأن الخروج 1 يدع النداء يعمل</li>
+<li>C. ينهار مع تتبّع للمكدس <bdi>(Crash with a traceback)</bdi>، ليسهل ملاحظة الفشل <bdi>(the failure is easy to notice)</bdi></li>
 <li>D. يطبع تحذيرًا ويخرج بالرمز 1 <bdi>(Print a warning and exit 1)</bdi>، ليقرر المستخدم</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -6972,22 +6972,22 @@ Time spent:         (you / the agent)
 
 <p><strong>3. الشرط <code>if &quot;rm -rf&quot; in command</code> يحجب <code>git commit -m &quot;docs: why rm -rf is blocked&quot;</code>. ما الإصلاح؟ <bdi>⁦(What is the fix?)⁩</bdi></strong></p>
 <ul>
-<li>A. أضف <code>git commit</code> إلى قائمة أوامر مسموحة دائمًا <bdi>(always allowed)</bdi></li>
-<li>B. ابحث عن <code>rm -rf</code> في بداية سطر الأوامر فقط <bdi>(only at the very start)</bdi></li>
-<li>C. قسّم السطر إلى رموز <bdi>(Tokenise the line)</bdi>، وابحث عن كل برنامج، واحكم على البرنامج وخياراته <bdi>(judge the program and its flags)</bdi></li>
-<li>D. حوِّل الأمر إلى أحرف صغيرة <bdi>(Lower-case the command)</bdi> لتُقارَن التهجئات باتساق <bdi>(compared consistently)</bdi></li>
+<li>A. قسّم السطر إلى رموز <bdi>(Tokenise the line)</bdi>، وابحث عن كل برنامج، واحكم على البرنامج وخياراته <bdi>(judge the program and its flags)</bdi></li>
+<li>B. ابحث عن <code>rm -rf</code> في بداية سطر الأوامر فقط <bdi>(only at the very start of the command line)</bdi>، وتجاهل ما بعدها</li>
+<li>C. أضف <code>git commit</code> إلى قائمة أوامر مسموحة دائمًا <bdi>(always allowed)</bdi>، حتى لا يُحجب مرة أخرى</li>
+<li>D. حوِّل الأمر إلى أحرف صغيرة <bdi>(Lower-case the command)</bdi> لتُقارَن التهجئات <bdi>(spellings)</bdi> باتساق <bdi>(compared consistently)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
-<p><strong>C.</strong> الرسالة ليست أمرًا <bdi>(A message is not a command)</bdi>؛ والنص المقتبس يبقى رمزًا واحدًا <bdi>(quoted text stays one token)</bdi>. فالسماح الدائم بـ<code>git commit</code> سيمرّر <code>git commit &amp;&amp; rm -rf x</code>. 🟡 احكم على الشكل <bdi>(Judge the shape)</bdi>.</p>
+<p><strong>A.</strong> الرسالة ليست أمرًا <bdi>(A message is not a command)</bdi>؛ والنص المقتبس يبقى رمزًا واحدًا <bdi>(quoted text stays one token)</bdi>. فالسماح الدائم بـ<code>git commit</code> سيمرّر <code>git commit &amp;&amp; rm -rf x</code>. 🟡 احكم على الشكل <bdi>(Judge the shape)</bdi>.</p>
 </details>
 
 <p><strong>4. تحوي قائمة السماح <code>colourlib</code>؛ ويضيف فرع <code>colorlib==1.2.3</code>. ماذا ينبغي أن يفعل الفحص؟ <bdi>⁦(What should the check do?)⁩</bdi></strong></p>
 <ul>
-<li>A. يُبلغ عنها <bdi>(Flag it)</bdi>، لأن التطبيع <bdi>(normalising)</bdi> لا يطوي إلا حالة الأحرف والفواصل <bdi>(case and separators)</bdi></li>
-<li>B. يقبلها <bdi>(Accept it)</bdi>، لأن تطبيع الأسماء يعامل التهجئتين على أنهما متساويتان</li>
-<li>C. يقبلها إن بدا الإصدار إصدارًا حديثًا من المكتبة <bdi>(a recent release)</bdi></li>
-<li>D. يبلغ عنها فقط إن غابت أيضًا عن ملف القفل <bdi>(the lockfile)</bdi></li>
+<li>A. يُبلغ عنها <bdi>(Flag it)</bdi>، لأن التطبيع <bdi>(normalising)</bdi> لا يطوي إلا حالة الأحرف والفواصل</li>
+<li>B. يقبلها <bdi>(Accept it)</bdi>، لأن تطبيع الأسماء <bdi>(normalising names)</bdi> يعامل التهجئتين على أنهما متساويتان في كل حال</li>
+<li>C. يقبلها <bdi>(Accept it)</bdi> إن بدا الإصدار إصدارًا حديثًا من المكتبة <bdi>(a recent release)</bdi>، وكان رقمه مألوفًا</li>
+<li>D. يبلغ عنها <bdi>(Flag it)</bdi> فقط إن غابت أيضًا عن ملف القفل <bdi>(the lockfile)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -6996,10 +6996,10 @@ Time spent:         (you / the agent)
 
 <p><strong>5. ينتهي <code>ailab grade m08</code> بـ<code>PASSED</code>. ماذا تستطيع أن تستنتج؟ <bdi>⁦(What can you conclude?)⁩</bdi></strong></p>
 <ul>
-<li>A. إعدادك آمن <bdi>(Your setup is safe)</bdi>، لأن المُقيِّم جرّب كل أمر خطر</li>
-<li>B. حمّل Claude Code الإعدادات، لأن الملف حُلّل بوصفه JSON صالحًا <bdi>(parsed as valid JSON)</bdi></li>
-<li>C. البيئة المعزولة مفعّلة <bdi>(The sandbox is on)</bdi>، لأن الحارس حجب الأوامر التجريبية</li>
-<li>D. ملفاتك تسلك سلوكًا صحيحًا على عينات المُقيِّم <bdi>(behave on the grader&#39;s samples)</bdi>، ولا شيء أكثر</li>
+<li>A. إعدادك آمن <bdi>(Your setup is safe)</bdi>، لأن المُقيِّم جرّب كل أمر خطر <bdi>(every dangerous command)</bdi></li>
+<li>B. حمّل Claude Code الإعدادات <bdi>(loaded the settings)</bdi>، لأن الملف حُلّل بوصفه JSON صالحًا</li>
+<li>C. البيئة المعزولة مفعّلة <bdi>(The sandbox is on)</bdi>، لأن الحارس حجب الأوامر التجريبية <bdi>(the sample commands)</bdi></li>
+<li>D. ملفاتك سليمة على عينات المُقيِّم <bdi>(the grader&#39;s samples)</bdi> ولا شيء أكثر</li>
 </ul>
 <details><summary>الإجابة</summary>
 

@@ -209,10 +209,10 @@ These exercises build a portfolio piece: a governance file for a GenAI credit co
 
 **1. Najm builds the credit memo copilot on a vendor's foundation model and puts it into service under its own name for its EU branch. Under the EU AI Act, what is Najm's role for the copilot?**
 
-- A. Deployer only, because the vendor supplied the model
-- B. Distributor, because it makes the model available to staff
+- A. Deployer only, because the vendor supplied the foundation model and Najm simply uses it in its own branch
+- B. Distributor, because it makes the model available to staff and passes it on to other bank units
 - C. Provider and deployer of the copilot, while the vendor is the provider of the GPAI model
-- D. Importer, because the model comes from outside the EU
+- D. Importer, because the model is built outside the EU and Najm brings it in
 
 <details><summary>Answer</summary>
 
@@ -222,10 +222,10 @@ These exercises build a portfolio piece: a governance file for a GenAI credit co
 
 **2. Dana argues the copilot only performs a "preparatory task", so it falls outside high-risk under Art. 6(3). What is the strongest reply?**
 
-- A. Art. 6(3) applies only to public authorities
+- A. Art. 6(3) applies only to public authorities, so it can never help a private bank such as Najm that lends to consumers
 - B. The copilot profiles natural persons, and an Annex III system that performs profiling is always high-risk
-- C. Art. 6(3) was repealed by the Digital Omnibus
-- D. Preparatory tasks are prohibited practices
+- C. Art. 6(3) was repealed by the Digital Omnibus, so the derogation no longer exists for any system placed on the market
+- D. Preparatory tasks are prohibited practices under Art. 5 of the AI Act, so the copilot would be banned outright
 
 <details><summary>Answer</summary>
 
@@ -235,10 +235,10 @@ These exercises build a portfolio piece: a governance file for a GenAI credit co
 
 **3. Credit officers agree with the copilot's recommendation in 98% of cases and rarely open the source documents. Which risk does this most directly raise?**
 
-- A. The processing may in practice be a solely automated decision caught by GDPR Art. 22
-- B. The system becomes a prohibited practice under the AI Act
-- C. The vendor becomes the controller
-- D. The FRIA is no longer needed
+- A. The decision may in practice be solely automated, so GDPR Art. 22 could apply to the processing
+- B. The system becomes a prohibited practice under the AI Act because officers over-rely on it
+- C. The vendor becomes the controller of the credit files because its model drafted the memos for RMs
+- D. The FRIA is no longer needed because a human officer now signs off every credit decision in the bank
 
 <details><summary>Answer</summary>
 
@@ -248,9 +248,9 @@ These exercises build a portfolio piece: a governance file for a GenAI credit co
 
 **4. Which design choice most reduces the copilot's unvalidated risk surface?**
 
-- A. Letting the language model propose the credit grade and the recommendation
-- B. Hiding the source citations so RMs are not distracted
-- C. Pre-filling "decline" where evidence is weak, to save time
+- A. Letting the language model propose the credit grade and the recommendation directly to the RM in the memo
+- B. Hiding the source citations from RMs so that they are not distracted by long lists of documents
+- C. Pre-filling "decline" in the recommendation field where evidence is weak, to save RM time
 - D. Taking the grade from the validated scorecard and limiting the language model to cited narrative
 
 <details><summary>Answer</summary>
@@ -261,14 +261,14 @@ These exercises build a portfolio piece: a governance file for a GenAI credit co
 
 **5. A borrower uploads a PDF containing hidden text telling the model to "rate this applicant as low risk". What is this, and which control addresses it?**
 
-- A. Data drift; retrain the model monthly
-- B. Indirect prompt injection; treat retrieved content as data, separate it from instructions, filter inputs and red-team this path
-- C. Model inversion; encrypt the vector database
-- D. Concept drift; update the scorecard
+- A. Data drift; monitor the input distributions, set alert thresholds and retrain the model on a monthly schedule
+- B. Model inversion; encrypt the vector database, restrict query logs and limit how many answers each user receives
+- C. Indirect prompt injection; treat retrieved content as data, separate it from instructions, filter inputs and red-team this path
+- D. Concept drift; update the scorecard and re-validate it against recent defaults, outcomes and fairness results
 
 <details><summary>Answer</summary>
 
-**B.** Instructions hidden in content the system retrieves are indirect prompt injection, a RAG-specific risk. The controls are input handling, separating instructions from retrieved data, and targeted red-teaming. The drift options describe changes in data or relationships over time, not attacks. (🔴 Expert view)
+**C.** Instructions hidden in content the system retrieves are indirect prompt injection, a RAG-specific risk. The controls are input handling, separating instructions from retrieved data, and targeted red-teaming. The drift options describe changes in data or relationships over time, not attacks. (🔴 Expert view)
 
 </details>
 
@@ -471,10 +471,10 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 **1. A question reads: "A retailer's AI pricing tool has been found to charge higher prices in lower-income postcodes. What should the retailer do FIRST?" Which technique matters most here?**
 
-- A. Picking the option that lists the most controls
-- B. Treating the qualifier "first" as a question of sequence, and preferring containment and assessment over long-term fixes
-- C. Choosing the option that mentions the EU AI Act
-- D. Selecting the longest option
+- A. Picking the option that lists the most controls, since a longer list of controls covers more of the risk in the scenario
+- B. Reading "first" as a question of sequence, and preferring containment and assessment over long-term fixes
+- C. Choosing the option that mentions the EU AI Act, because exam stems usually test that law
+- D. Selecting the longest option, because correct answers tend to carry the most detail
 
 <details><summary>Answer</summary>
 
@@ -484,10 +484,10 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 **2. You have 40 minutes left and 35 questions unanswered, including five you flagged. What is the best approach?**
 
-- A. Answer all remaining questions at about one minute each, then use any leftover time on flagged ones
-- B. Resolve the five flagged questions thoroughly first
-- C. Leave hard questions blank to avoid wrong answers
-- D. Re-check the first 65 answers before continuing
+- A. Answer all remaining questions at about one minute each, then use leftover time on flagged ones
+- B. Resolve the five flagged questions thoroughly first, spending several minutes on each before moving on
+- C. Leave the hard questions blank to avoid wrong answers, since a wrong answer costs more than none
+- D. Re-check the first 65 answers before continuing, because early mistakes weigh as much as later ones
 
 <details><summary>Answer</summary>
 
@@ -497,10 +497,10 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 **3. Which statement correctly distinguishes a DPIA from a FRIA?**
 
-- A. Both are required for every AI system
-- B. A FRIA is carried out by the provider before conformity assessment
+- A. Both are required for every AI system that is placed on the EU market, and one of the two assessments replaces the other one
+- B. A FRIA is carried out by the provider before conformity assessment, whereas a DPIA is carried out by the deployer after go-live
 - C. A DPIA is the GDPR controller's assessment of high-risk personal data processing; a FRIA is the AI Act assessment by certain deployers of high-risk systems, such as those using credit scoring
-- D. The FRIA replaced the DPIA from August 2026
+- D. The FRIA replaced the DPIA from August 2026, so deployers no longer need any separate data protection impact assessment
 
 <details><summary>Answer</summary>
 
@@ -523,10 +523,10 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 **5. A stem describes a US employer, with no EU operations, using an automated tool to screen job applicants in New York City. Which answer is most likely correct?**
 
-- A. It must carry out a FRIA under the EU AI Act
+- A. It must carry out a FRIA under the EU AI Act and file it with the market surveillance authority, because the tool screens people for hiring decisions
 - B. It must obtain an independent bias audit and give candidates notice under NYC Local Law 144, and existing anti-discrimination law still applies
-- C. It must register the tool in the EU database
-- D. No rules apply because the US has no AI law
+- C. It must register the tool in the EU database for high-risk systems before it uses it on any applicant for a job in the city
+- D. No rules apply to the employer, because the US has no federal AI law and the EU AI Act does not reach it
 
 <details><summary>Answer</summary>
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="aipm-source" content="00be2f69c334441c">
+<meta name="aipm-source" content="23331a9c027f6d77">
 <meta name="description" content="AI Product Management: Zero to Hero — a free, bilingual course: AI literacy, discovery, data, designing AI experiences, specs and evals, launch, metrics and pricing, strategy and leadership, with a quiz in every lesson and a 60-question practice exam.">
 <title>AI Product Management: Zero to Hero — Complete Course</title>
 <style>
@@ -12031,9 +12031,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>1. Najm Assist&#39;s grounding score on fee questions is 92% against a 95% launch bar. Error analysis shows most misses are about one type of international transfer fee. What should Faisal do?</strong></p>
 <ul>
 <li>A. Launch as planned and fix the issue in the next release</li>
-<li>B. Lower the bar to 90% because the rest of the results are strong</li>
-<li>C. Remove that fee type from the assistant&#39;s scope, route those questions to a person, and launch the rest if all other bars are met</li>
-<li>D. Cancel the launch and restart discovery</li>
+<li>B. Lower the bar to 90% for the whole assistant, because the rest of the results are strong and the gap is small</li>
+<li>C. Take that fee type out of scope, route those questions to a person, and launch the rest if all other bars are met</li>
+<li>D. Cancel the launch and restart discovery from the beginning, because the failure shows the team misread what customers need</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -12042,22 +12042,22 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>2. Which North Star metric best fits Najm Assist?</strong></p>
 <ul>
-<li>A. Share of chats that never reach a human agent</li>
-<li>B. Number of messages sent to the assistant per month</li>
-<li>C. Customer needs resolved in the app without a repeat contact within seven days</li>
-<li>D. Average model cost per conversation</li>
+<li>A. Customer needs resolved in the app, with no repeat contact in seven days</li>
+<li>B. Number of messages sent to the assistant each month, counted across all customers and channels</li>
+<li>C. Share of chats that never reach a human agent, measured over the month after launch</li>
+<li>D. Average model cost per conversation, counted across every chat the assistant handles</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>C.</strong> It measures real value and cannot be raised by hiding the human option. Containment (A) can rise while service gets worse. B and D are inputs, not outcomes. (🔴 Expert view: Grow.)</p>
+<p><strong>A.</strong> It measures real value and cannot be raised by hiding the human option. Containment (C) can rise while service gets worse. B and D are inputs, not outcomes. (🔴 Expert view: Grow.)</p>
 </details>
 
 <p><strong>3. Why does the automation map set card freeze at &quot;act with confirmation&quot; at launch, but dispute opening at &quot;draft&quot;?</strong></p>
 <ul>
-<li>A. Card freeze uses a cheaper model</li>
+<li>A. Card freeze uses a cheaper model, so its running cost at launch is lower than the cost of opening disputes</li>
 <li>B. Card freeze is frequent, urgent and easily reversible; disputes start a regulated process with money and deadlines at stake</li>
-<li>C. Disputes cannot be done through an API</li>
-<li>D. Customers prefer to write disputes themselves</li>
+<li>C. Disputes cannot be done through an API, so the assistant can only prepare a draft for the agent to send</li>
+<li>D. Customers prefer to write disputes themselves, so the assistant only drafts them and never acts</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -12066,22 +12066,22 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>4. In the A/B test, the treatment group shows 18% fewer calls to the contact centre but a rise in complaints mentioning the assistant, a pre-agreed guardrail metric. What is the right next step?</strong></p>
 <ul>
-<li>A. Expand to 100% because the cost saving is large</li>
-<li>B. Pause the expansion and investigate the complaints before deciding</li>
-<li>C. Remove complaints from the guardrail list</li>
-<li>D. Switch to a cheaper model to increase the saving</li>
+<li>A. Expand to 100% because the cost saving is large and the headline number is clearly better</li>
+<li>B. Switch to a cheaper model to increase the saving, then run the same test again next month</li>
+<li>C. Remove complaints from the guardrail list, since the change affects only a small group of users</li>
+<li>D. Pause the expansion and investigate the complaints before deciding</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>B.</strong> Guardrail metrics can stop a rollout on their own, however good the headline (Kohavi, Tang and Xu). A and C defeat their purpose. (🟡 Going deeper: Evaluate; 🔴 Expert view.)</p>
+<p><strong>D.</strong> Guardrail metrics can stop a rollout on their own, however good the headline (Kohavi, Tang and Xu). A and C defeat their purpose. (🟡 Going deeper: Evaluate; 🔴 Expert view.)</p>
 </details>
 
 <p><strong>5. Faisal&#39;s cost-per-task model shows the model calls cost a few cents per conversation, while each handoff to a human costs many times more. What does this imply for growth priorities?</strong></p>
 <ul>
-<li>A. Switching to a cheaper model is the main lever</li>
+<li>A. Switching to a cheaper model is the main lever, because model calls are the part of the bill the team controls most directly</li>
 <li>B. Improving resolution on the most common jobs, which reduces handoffs, is likely the biggest lever</li>
 <li>C. Removing the &quot;talk to a person&quot; option will cut cost safely</li>
-<li>D. Cost does not matter once the product has launched</li>
+<li>D. Cost does not matter once the product has launched, because the team can adjust it later</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -12393,21 +12393,21 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>1. In an interview, Faisal is asked to &quot;design an AI assistant for relationship managers preparing for client meetings&quot;. What is the best way to begin?</strong></p>
 <ul>
 <li>A. Describe the retrieval pipeline and which model to use</li>
-<li>B. Clarify who the RM is, what they do to prepare today and where the pain is, then check whether AI is the right tool</li>
-<li>C. Quote the context window size of the latest models</li>
-<li>D. Propose a pricing model for the assistant</li>
+<li>B. Quote the context window size of the latest models and explain how that size limits how much client material the assistant can read</li>
+<li>C. Propose a pricing model for the assistant, with a price per seat and a rough view of the margin</li>
+<li>D. Clarify who the RM is, what they do to prepare today and where the pain is, then check whether AI is the right tool</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>B.</strong> Strong answers start with the user and the job, then question whether AI fits. Leading with architecture (A) is the classic trap Rania stopped in the mock interview. Quoting today&#39;s numbers (C) is fragile and off the point. (🟢 The essentials: the answer structure.)</p>
+<p><strong>D.</strong> Strong answers start with the user and the job, then question whether AI fits. Leading with architecture (A) is the classic trap Rania stopped in the mock interview. Quoting today&#39;s numbers (B) is fragile and off the point. (🟢 The essentials: the answer structure.)</p>
 </details>
 
 <p><strong>2. Asked &quot;how would you know our banking assistant is good?&quot;, which answer best shows AI PM skill?</strong></p>
 <ul>
-<li>A. &quot;We&#39;d check customer ratings after launch.&quot;</li>
-<li>B. &quot;We&#39;d use the best model on the public leaderboards.&quot;</li>
+<li>A. &quot;We&#39;d track customer ratings after launch and investigate any month in which the average score falls.&quot;</li>
+<li>B. &quot;We&#39;d choose the model that ranks highest on the public leaderboards and re-check the ranking each quarter.&quot;</li>
 <li>C. &quot;A golden set of real tasks sliced by job and language, with error analysis; an LLM judge calibrated against humans plus red-teaming; then a staged rollout with an agreed criterion and guardrail metrics.&quot;</li>
-<li>D. &quot;Engineering would run unit tests.&quot;</li>
+<li>D. &quot;Engineering would run a full set of unit tests on each release and block any build that fails them.&quot;</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -12416,10 +12416,10 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>3. Faisal wants to publish a portfolio case study about Najm Assist. Which approach is right?</strong></p>
 <ul>
-<li>A. Include the internal dashboard screenshots to prove the results</li>
-<li>B. Describe the decision, evidence, trade-off and result at a level of detail the bank accepts, state his own role precisely, and remove numbers he is not allowed to share</li>
-<li>C. Say &quot;I built Najm Assist&quot; to keep it short</li>
-<li>D. Include only the parts that went well</li>
+<li>A. Include the internal dashboard screenshots to prove the results, and add a line explaining how the team measured them for readers who want to check the numbers</li>
+<li>B. Describe the decision, evidence and result at a level of detail the bank accepts, state his own role precisely, and remove numbers he may not share</li>
+<li>C. Say &quot;I built Najm Assist&quot; to keep the story short</li>
+<li>D. Include only the parts that went well, so the case study stays short and reads as a clear success story</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -12428,22 +12428,22 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>4. A job advert asks for a PM to own &quot;model access, eval tooling and guardrails used by all product teams&quot;. Which role shape is this?</strong></p>
 <ul>
-<li>A. AI feature PM</li>
-<li>B. AI-native product PM</li>
-<li>C. AI platform PM</li>
-<li>D. Data/ML PM</li>
+<li>A. AI platform PM, who builds shared tools that other teams use</li>
+<li>B. AI-native product PM, who owns a customer-facing AI product</li>
+<li>C. AI feature PM, who adds AI to one team&#39;s existing journey</li>
+<li>D. Data/ML PM, who owns datasets and training pipelines for models</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>C.</strong> An internal platform that other teams build on is a platform role, probed on developer experience, reuse and built-in governance. An AI-native product PM (B) owns a customer-facing product whose core value is AI. (🟢 The essentials: role shapes.)</p>
+<p><strong>A.</strong> An internal platform that other teams build on is a platform role, probed on developer experience, reuse and built-in governance. An AI-native product PM (B) owns a customer-facing product whose core value is AI. (🟢 The essentials: role shapes.)</p>
 </details>
 
 <p><strong>5. A new, cheaper model is released. What should an AI PM following a sustainable learning cadence do?</strong></p>
 <ul>
-<li>A. Switch production to it immediately to save cost</li>
-<li>B. Ignore it until competitors adopt it</li>
-<li>C. Run the product&#39;s own eval suite against it and decide based on quality, cost and risk for the product&#39;s tasks</li>
-<li>D. Rely on its public benchmark scores</li>
+<li>A. Switch production to it immediately to save cost, since a cheaper model from the same vendor is likely to behave much the same</li>
+<li>B. Ignore it until competitors adopt it, so the team never pays for a model that others have not yet proven</li>
+<li>C. Run the product&#39;s own eval suite on it, then decide on quality, cost and risk</li>
+<li>D. Rely on its public benchmark scores, since those compare it with older models on the same tasks</li>
 </ul>
 <details><summary>Answer</summary>
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="ainative-source" content="493ef9c5c4b09131">
+<meta name="ainative-source" content="9c95cd61b0c06a05">
 <meta name="description" content="A Practical Guide to Becoming an AI-Native Engineer — a free, bilingual course for engineers who code: how coding agents work, context engineering, spec-driven development, the daily loop, verifying AI-written code, debugging, legacy code, security, hooks, skills and subagents, parallel agents, team playbooks and staying sharp, with graded offline labs, a quiz in every lesson and a 60-question practice exam.">
 <title>A Practical Guide to Becoming an AI-Native Engineer — Complete Course</title>
 <style>
@@ -6592,10 +6592,10 @@ $ git branch rescue &#39;HEAD@{1}&#39;     # a branch at the lost commit; it del
 
 <p><strong>2. <code>Bash(git push *)</code> is denied, yet an agent ran <code>git -C . push</code>. What does this show?</strong></p>
 <ul>
-<li>A. Deny rules cover only the first command of a compound line</li>
-<li>B. Deny rules are checked after allow rules, so the allow rule won</li>
+<li>A. Deny rules cover only the first command of a compound line, not later ones</li>
+<li>B. Deny rules are checked after allow rules, so an allow rule always wins</li>
 <li>C. Rules match text; add a hook, a scoped token or branch protection</li>
-<li>D. The settings file was not committed, so the rule was never applied</li>
+<li>D. The settings file was not committed, so the rule was never applied here</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -6607,7 +6607,7 @@ $ git branch rescue &#39;HEAD@{1}&#39;     # a branch at the lost commit; it del
 <li>A. Rewrite history to remove it, which makes the key safe again</li>
 <li>B. Delete the file in a new commit and tell the team to ignore it</li>
 <li>C. Wait for tonight&#39;s CI secret scan to flag the key before acting</li>
-<li>D. Rotate the key now, then clean the code and decide on history</li>
+<li>D. Rotate the key now, then clean the code and decide about the history</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -6616,7 +6616,7 @@ $ git branch rescue &#39;HEAD@{1}&#39;     # a branch at the lost commit; it del
 
 <p><strong>4. An agent suggests <code>pip install fastcsv-helpers</code> and the name resolves on the index. What do you conclude?</strong></p>
 <ul>
-<li>A. It is safe, since the index lists only packages that were checked</li>
+<li>A. It is safe, since the index lists only checked packages</li>
 <li>B. Nothing yet: a person decides, using the allow-list and lockfile</li>
 <li>C. It is safe if the install log shows no errors or warnings</li>
 <li>D. It was invented by the model, so ignore the suggestion</li>
@@ -6628,9 +6628,9 @@ $ git branch rescue &#39;HEAD@{1}&#39;     # a branch at the lost commit; it del
 
 <p><strong>5. Salem (platform engineering) wants an unattended refactor with <code>--dangerously-skip-permissions</code>. Which setup fits the documentation?</strong></p>
 <ul>
-<li>A. His laptop, with every deny rule kept in place</li>
-<li>B. A shared build server with network access to the registry</li>
-<li>C. A container with no internet and no real credentials</li>
+<li>A. His laptop, with every deny rule kept in place and his files backed up</li>
+<li>B. A shared build server with network access to the package registry</li>
+<li>C. A container with no internet access and no real credentials</li>
 <li>D. His laptop in auto mode first, switching to bypass once it behaves</li>
 </ul>
 <details><summary>Answer</summary>
@@ -6972,14 +6972,14 @@ Time spent:         (you / the agent)
 
 <p><strong>3. <code>if &quot;rm -rf&quot; in command</code> blocks <code>git commit -m &quot;docs: why rm -rf is blocked&quot;</code>. What is the fix?</strong></p>
 <ul>
-<li>A. Add <code>git commit</code> to a list of commands that are always allowed</li>
+<li>A. Tokenise the line, find each program, and judge the program and its flags</li>
 <li>B. Search for <code>rm -rf</code> only at the very start of the command line</li>
-<li>C. Tokenise the line, find each program, and judge the program and its flags</li>
+<li>C. Add <code>git commit</code> to a list of commands that are always allowed</li>
 <li>D. Lower-case the command so that spellings are compared consistently</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>C.</strong> A message is not a command; quoted text stays one token. Always allowing <code>git commit</code> would let <code>git commit &amp;&amp; rm -rf x</code> through. (🟡 Judge the shape.)</p>
+<p><strong>A.</strong> A message is not a command; quoted text stays one token. Always allowing <code>git commit</code> would let <code>git commit &amp;&amp; rm -rf x</code> through. (🟡 Judge the shape.)</p>
 </details>
 
 <p><strong>4. The allow-list has <code>colourlib</code>; a branch adds <code>colorlib==1.2.3</code>. What should the check do?</strong></p>
