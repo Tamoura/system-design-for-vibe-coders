@@ -1,0 +1,95 @@
+name: Maintenance
+
+# Weekly report-only checks: links in the committed course pages, overdue claims,
+# and dependency advisories. Nothing here deploys.
+
+on:
+  schedule:
+    - cron: '17 5 * * 1'   # Mondays, 05:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Same settings and excludes as the link step in publish.yml.
+      - name: Check links in the committed course pages (report only)
+        continue-on-error: true
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0, pinned by commit
+        with:
+          args: >-
+            --no-progress --max-concurrency 8 --timeout 20 --max-retries 2
+            --accept '200..=299,403,429'
+            --exclude-loopback --exclude '^https?://(www\.)?example\.(com|org)'
+            --exclude '^https://www\.(qcb\.gov\.qa|almeezan\.qa|canada\.ca|fda\.gov|mol\.gov\.qa|mohre\.gov\.ae|nafis\.gov\.ae|naukrigulf\.com)/'
+            --exclude '^https://(www\.ftc\.gov/?$|consumer\.ftc\.gov/articles/job-scams$|github\.com/(useautumn/autumn|unkeyed/unkey)$)'
+            'landing.html' 'index*.html' 'assessment*.html' 'about/*.html' '*/index*.html' '*/course*.html' '*/assessment*.html'
+          jobSummary: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  stale-claims:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fail if a claim is past its review-by date
+        run: |
+          python3 - <<'PY'
+          import datetime, glob, os, re, sys
+          today = datetime.date.today()
+          overdue = []
+          rows = 0
+          for path in sorted(glob.glob('academy/claims/*.md')):
+              if os.path.basename(path).lower() == 'readme.md':
+                  continue
+              with open(path, encoding='utf-8') as f:
+                  for n, line in enumerate(f, 1):
+                      if not line.lstrip().startswith('|'):
+                          continue
+                      cells = [c.strip() for c in line.strip().strip('|').split('|')]
+                      if len(cells) < 8 or set(''.join(cells)) <= set('-: '):
+                          continue
+                      if cells[0].lower() == 'id':
+                          continue
+                      rows += 1
+                      m = re.fullmatch(r'\d{4}-\d{2}-\d{2}', cells[6])
+                      if not m:
+                          overdue.append(f'{path}:{n} {cells[0]}: review-by date is not YYYY-MM-DD ({cells[6]!r})')
+                          continue
+                      if datetime.date.fromisoformat(cells[6]) < today:
+                          overdue.append(f'{path}:{n} {cells[0]}: review-by {cells[6]} is past')
+          print(f'{rows} claim row(s) checked on {today}')
+          for o in overdue:
+              print('OVERDUE', o)
+          sys.exit(1 if overdue else 0)
+          PY
+
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: npm audit (production dependencies, high and above)
+        continue-on-error: true
+        run: |
+          set +e
+          npm audit --omit=dev --audit-level=high | tee audit.txt
+          status=${PIPESTATUS[0]}
+          {
+            echo '## npm audit (--omit=dev --audit-level=high)'
+            echo "Exit status: $status (0 means nothing at high or above)"
+            echo '```'
+            cat audit.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $status

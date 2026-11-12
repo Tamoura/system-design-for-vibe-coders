@@ -1,0 +1,4 @@
+# Default owner for everything in the repository.
+# When a named subject expert exists for a course, add a line for that course
+# folder (for example "/cloud/ @their-github-login") so their review is requested.
+* @Tamoura
