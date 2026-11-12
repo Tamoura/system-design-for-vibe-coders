@@ -1,0 +1,242 @@
+{
+  "note": "Schools, level ranges and flagship marks are proposed placements, not decisions. No course is expert-reviewed or piloted. Hours are null until a pilot measures them. See academy/README.md.",
+  "levels": {
+    "100": "Foundation",
+    "200": "Practitioner",
+    "300": "Advanced",
+    "400": "Lead"
+  },
+  "schools": [
+    {
+      "id": "ai-engineering",
+      "title": "AI Engineering"
+    },
+    {
+      "id": "security",
+      "title": "Security"
+    },
+    {
+      "id": "governance-risk-product",
+      "title": "Governance, Risk and Product"
+    },
+    {
+      "id": "platform-data",
+      "title": "Platform and Data"
+    },
+    {
+      "id": "early-talent",
+      "title": "Early Talent (outside the professional catalogue)"
+    }
+  ],
+  "courses": [
+    {
+      "id": "ainative",
+      "title": "A Practical Guide to Becoming an AI-Native Engineer",
+      "titleAr": "دليل عملي لتصبح مهندسًا أصيلًا في الذكاء الاصطناعي (A Practical Guide to Becoming an AI-Native Engineer)",
+      "school": "ai-engineering",
+      "level": "200",
+      "levelProposed": true,
+      "path": "ainative",
+      "lessons": 31,
+      "modules": 15,
+      "languages": [
+        "en",
+        "ar"
+      ],
+      "status": "ai-drafted",
+      "estimatedHours": null,
+      "flagship": true,
+      "flagshipProposed": true
+    },
+    {
+      "id": "aiapps",
+      "title": "Building AI Applications & Agents: Zero to Hero",
+      "titleAr": "بناء تطبيقات الذكاء الاصطناعي والوكلاء (Building AI Applications & Agents): من الصفر إلى الاحتراف",
+      "school": "ai-engineering",
+      "level": "100-200",
+      "levelProposed": true,
+      "path": "aiapps",
+      "lessons": 35,
+      "modules": 17,
+      "languages": [
+        "en",
+        "ar"
+      ],
+      "status": "ai-drafted",
+      "estimatedHours": null,
+      "flagship": false,
+      "flagshipProposed": false
+    },
+    {
+      "id": "secai",
+      "title": "Secure AI & Application Security: Zero to Hero",
+      "titleAr": "أمن الذكاء الاصطناعي والتطبيقات (Secure AI & Application Security): من الصفر إلى الاحتراف",
+      "school": "security",
+      "level": "100-200",
+      "levelProposed": true,
+      "path": "secai",
+      "lessons": 40,
+      "modules": 13,
+      "languages": [
+        "en",
+        "ar"
+      ],
+      "status": "ai-drafted",
+      "estimatedHours": null,
+      "flagship": true,
+      "flagshipProposed": true
+    },
+    {
+      "id": "aigp",
+      "title": "AI Governance: Zero to Hero",
+      "titleAr": "حوكمة الذكاء الاصطناعي (AI Governance): من الصفر إلى الاحتراف",
+      "school": "governance-risk-product",
+      "level": "100-200",
+      "levelProposed": true,
+      "path": "aigp",
+      "lessons": 40,
+      "modules": 13,
+      "languages": [
+        "en",
+        "ar"
+      ],
+      "status": "ai-drafted",
+      "estimatedHours": null,
+      "flagship": true,
+      "flagshipProposed": true
+    },
+    {
+      "id": "aipm",
+      "title": "AI Product Management: Zero to Hero",
+      "titleAr": "إدارة منتجات الذكاء الاصطناعي (AI Product Management): من الصفر إلى الاحتراف",
+      "school": "governance-risk-product",
+      "level": "100-200",
+      "levelProposed": true,
+      "path": "aipm",
+      "lessons": 34,
+      "modules": 11,
+      "languages": [
+        "en",
+        "ar"
+      ],
+      "status": "ai-drafted",
+      "estimatedHours": null,
+      "flagship": false,
+      "flagshipProposed": false
+    },
+    {
+      "id": "cloud",
+      "title": "Cloud & DevOps: Zero to Hero",
+      "titleAr": "السحابة وDevOps (Cloud & DevOps): من الصفر إلى الاحتراف",
+      "school": "platform-data",
+      "level": "100-200",
+      "levelProposed": true,
+      "path": "cloud",
+      "lessons": 24,
+      "modules": 8,
+      "languages": [
+        "en",
+        "ar"
+      ],
+      "status": "ai-drafted",
+      "estimatedHours": null,
+      "flagship": false,
+      "flagshipProposed": false
+    },
+    {
+      "id": "data",
+      "title": "Data Engineering & Analytics: Zero to Hero",
+      "titleAr": "هندسة البيانات والتحليلات (Data Engineering & Analytics): من الصفر إلى الاحتراف",
+      "school": "platform-data",
+      "level": "100-200",
+      "levelProposed": true,
+      "path": "data",
+      "lessons": 24,
+      "modules": 8,
+      "languages": [
+        "en",
+        "ar"
+      ],
+      "status": "ai-drafted",
+      "estimatedHours": null,
+      "flagship": false,
+      "flagshipProposed": false
+    },
+    {
+      "id": "testing",
+      "title": "Software Testing: Zero to Hero in the AI Era",
+      "titleAr": "اختبار البرمجيات (Software Testing): من الصفر إلى الاحتراف في عصر الذكاء الاصطناعي",
+      "school": "platform-data",
+      "level": "100-200",
+      "levelProposed": true,
+      "path": "testing",
+      "lessons": 27,
+      "modules": 9,
+      "languages": [
+        "en",
+        "ar"
+      ],
+      "status": "ai-drafted",
+      "estimatedHours": null,
+      "flagship": false,
+      "flagshipProposed": false
+    },
+    {
+      "id": "saas",
+      "title": "SaaS Building Blocks",
+      "titleAr": "مكوّنات بناء SaaS (SaaS Building Blocks)",
+      "school": "platform-data",
+      "level": "100-200",
+      "levelProposed": true,
+      "path": "saas",
+      "lessons": 31,
+      "modules": 10,
+      "languages": [
+        "en",
+        "ar"
+      ],
+      "status": "ai-drafted",
+      "estimatedHours": null,
+      "flagship": false,
+      "flagshipProposed": false
+    },
+    {
+      "id": "vibe",
+      "title": "System Design for Vibe Coders",
+      "titleAr": "تصميم الأنظمة لمبرمجي الفايب (System Design for Vibe Coders)",
+      "school": "platform-data",
+      "level": "100-200",
+      "levelProposed": true,
+      "path": "modules",
+      "lessons": 69,
+      "modules": 13,
+      "languages": [
+        "en",
+        "ar"
+      ],
+      "status": "ai-drafted",
+      "estimatedHours": null,
+      "flagship": false,
+      "flagshipProposed": false
+    },
+    {
+      "id": "career",
+      "title": "From Graduate to Hired",
+      "titleAr": "من خرّيج إلى موظّف (From Graduate to Hired)",
+      "school": "early-talent",
+      "level": "100",
+      "levelProposed": true,
+      "path": "career",
+      "lessons": 24,
+      "modules": 8,
+      "languages": [
+        "en",
+        "ar"
+      ],
+      "status": "ai-drafted",
+      "estimatedHours": null,
+      "flagship": false,
+      "flagshipProposed": false
+    }
+  ]
+}
